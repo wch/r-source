@@ -2,7 +2,7 @@ include ../MkRules
 
 R_HOME = ../../..
 
-all: profiles fixhtml fixbin fixetc fixshare ../XINSTALL
+all: profiles fixhtml fixbin fixetc fixshare ../XINSTALL svnonly
 
 profiles: $(R_HOME)/library/base/R/Rprofile
 
@@ -38,6 +38,11 @@ fixshare: share/tests.mk
 	$(MKDIR) -p $(R_HOME)/share/make
 	$(CP) -p $^ $(R_HOME)/share/make/wintests.mk
 	@$(ECHO) done > fixshare	
+
+svnonly:
+	@if test ! -f ../../../RESOURCES ; then \
+	  $(MAKE) -C ../../../doc/manual -f Makefile.win svnonly; \
+	fi
 
 clean:
 	$(RM) *~ */*~ fixhtml fixbin fixetc fixshare

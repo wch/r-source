@@ -344,3 +344,8 @@ distclean: clean
 	@-rm -f *.pdf *.dvi *.info* *.html
 maintainer-clean: distclean
 
+svnonly:
+	@makeinfo --number-sections --fill-column=76 --no-split --no-headers resources.texi -o ../../RESOURCES	
+	@makeinfo --number-sections --fill-column=76 --no-split --no-headers R-FAQ.texi -o ../../FAQ
+	@$(TEXI2HTML) --no-headers resources.texi \
+	  -o ../html/resources.html
