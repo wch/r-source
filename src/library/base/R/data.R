@@ -117,6 +117,7 @@ function(package = .packages(), lib.loc = .lib.loc)
     if (first) {
         warning("no data listings found")
         close(outConn)
+        unlink(outFile)
     }
     else {
         if(missing(package))
@@ -129,7 +130,7 @@ function(package = .packages(), lib.loc = .lib.loc)
         close(outConn)
         file.show(outFile, delete.file = TRUE, title = "R data sets")
     }
-    if(!missing(package)) {
+    if(!missing(package) && (length(package) > 0)) {
         if(length(nodata) > 1)
             warning(paste("packages `", paste(nodata, collapse=", "),
                           "' contain no datasets", sep=""))
