@@ -279,7 +279,7 @@
 #undef HAVE_ELF_H
 
 /* Define if you have the <errno.h> header file.  */
-#undef HAVE_ERRNO_H
+#define HAVE_ERRNO_H 1
 
 /* Define if you have the <fcntl.h> header file.  */
 #undef HAVE_FCNTL_H
