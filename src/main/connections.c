@@ -2397,6 +2397,7 @@ SEXP do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, len, n, m = 0;
     Rboolean wasopen;
     Rconnection con = NULL;
+    char *vmax = vmaxget();
 
     checkArity(op, args);
     i = asInteger(CAR(args));
@@ -2423,6 +2424,7 @@ SEXP do_readchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    m++;
 	} else break;
     }
+    vmaxset(vmax);
     if(!wasopen) con->close(con);
     if(m < n) {
 	PROTECT(ans = lengthgets(ans, m));

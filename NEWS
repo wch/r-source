@@ -623,7 +623,7 @@ BUG FIXES
     o   Some X servers displayed random bytes in the window title of
 	graphics windows (PR#1451)
 
-    o   The data editor would segfault if closed with window manager
+    o   The X11 data editor would segfault if closed with window manager
         controls (PR#1453)
 
     o	Interrupt of Sys.sleep() on UNIX no longer causes subsequent
@@ -636,6 +636,9 @@ BUG FIXES
 
     o   type.convert() was not reporting incorrectly formatting complex 
 	inputs. (PR#1477)
+
+    o   readChar() was not resetting vmax, so causing memory build-up.
+	(PR#1483)
 
 
 
