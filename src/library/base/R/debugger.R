@@ -123,6 +123,7 @@ trace <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE
     if(needsAttach) {
         cat("Tracing functions requires the methods package\n  (in rare cases this may change other results: see ?trace)\n")
         require(methods)
+        on.exit(detach("package:methods")) ## in case of error
     }
     if(is.null(signature)) {
         def <- getFunction(what)
@@ -165,6 +166,8 @@ trace <- function(what, tracer = NULL, exit = NULL, at = numeric(), print = TRUE
         assign(what, newFun, where)
     else
         setMethod(what, signature, newFun, where = where)
+    if(needsAttach)
+        on.exit() ## no error
     what
 }
 
