@@ -70,6 +70,9 @@ get away with backslashes here, but forward slashes are safer.
 
 select.list(preselect=) was not working. (PR#7328)
 
+The graphics recording mechanism windows(record = TRUE) could cause memory 
+corruption.
+
 
     -------------------------------------------------------------------
 

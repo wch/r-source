@@ -3351,3 +3351,12 @@ foo[2]
 foo[2] <- NA
 foo
 ## segfaulted in 2.0.0
+
+## closing a graphics window could segfault in Windows
+if(.Platform$OS.type == "windows") {
+    windows(record = TRUE)
+    plot(1)
+    dev.off()
+    gc()
+}
+## segfaulted in 2.0.0
