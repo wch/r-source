@@ -10,7 +10,7 @@
 identical(x, y)
 }
 \arguments{
-  \item{x, y}{ Any R objects. }
+  \item{x, y}{any \R objects.}
 }
 \details{
   A call to \code{identical} is the way to test exact equality in
@@ -55,7 +55,7 @@ identical(x, y)
   A single logical value, \code{TRUE} or \code{FALSE}, never \code{NA}
   and never anything other than a single value.
 }
-\author{ John Chambers}
+\author{John Chambers}
 
 \seealso{
   \code{\link{all.equal}} for descriptions of how two objects differ;
@@ -70,6 +70,9 @@ identical(1, as.integer(1)) ## FALSE, stored as different types
 identical(all.equal(x, y), TRUE)
 ## If all.equal thinks the objects are different, it returns a
 ## character string, and this expression evaluates to FALSE
+
+# even for unusual R objects :
+identical(.GlobalEnv, environment())
 }
 \keyword{ programming }
 \keyword{ logic }
