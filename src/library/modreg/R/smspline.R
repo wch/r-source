@@ -62,7 +62,7 @@ smooth.spline <-
     ybar <- tmp[, 2]/ifelse(wbar > 0, wbar, 1)
     yssw <- sum(tmp[, 3] - wbar*ybar^2)# will be added to RSS for GCV
     nx <- length(ux)
-    if(nx <= 3) stop("need at least for unique `x' values")
+    if(nx <= 3) stop("need at least four unique `x' values")
     if(cv && nx < n)
         warning("crossvalidation with non-unique `x' seems doubtful")
     r.ux <- ux[nx] - ux[1]
