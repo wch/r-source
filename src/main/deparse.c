@@ -902,6 +902,12 @@ static void deparse2buff(SEXP s, LocalParseData *d)
 	sprintf(tpb, "<pointer: %p>", R_ExternalPtrAddr(s));
 	print2buff(tpb, d);
 	break;
+#ifdef BYTECODE
+    case BCODESXP:
+	sprintf(tpb, ".Compiled(...)");
+	print2buff(tpb, d);
+	break;
+#endif
     case WEAKREFSXP:
 	sprintf(tpb, "<weak reference>");
 	print2buff(tpb, d);

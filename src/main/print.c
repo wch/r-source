@@ -626,6 +626,11 @@ void PrintValueRec(SEXP s,SEXP env)
     case EXTPTRSXP:
 	Rprintf("<pointer: %p>\n", R_ExternalPtrAddr(s));
 	break;
+#ifdef BYTECODE
+    case BCODESXP:
+	Rprintf("<bytecode: %p>\n", s);
+	break;
+#endif
     case WEAKREFSXP:
 	Rprintf("<weak reference>\n");
 	break;
