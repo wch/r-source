@@ -4,7 +4,7 @@
 %
 \name{smooth.spline}
 \alias{smooth.spline}
-\alias{print.smooth.spline}
+%\alias{print.smooth.spline}
 \title{Fit a Smoothing Spline}
 \description{
   Fits a cubic smoothing spline to the supplied data.
