@@ -332,7 +332,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(i) {   /* we need to expand out the dots */
 	PROTECT(t = allocList(i+length(actuals)-1));
-	for( s=actuals, m=t; s!=R_NilValue; s=CDR(s),m=CDR(m) ) {
+	for( s=actuals, m=t; s!=R_NilValue; s=CDR(s) ) {
 	    if(TYPEOF(CAR(s)) == DOTSXP) {
 		i=1;
 		for(a=CAR(s); a!=R_NilValue; a=CDR(a), i++, m=CDR(m) ) {
@@ -344,6 +344,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		TAG(m)=TAG(s);
 		CAR(m)=CAR(s);
+		m=CDR(m);
 	    }
         }
 	UNPROTECT(1);
