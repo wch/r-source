@@ -527,7 +527,7 @@ extern SEXP	R_HandlerStack;	/* Condition handler stack */
 extern SEXP	R_RestartStack;	/* Stack of available restarts */
 #endif
 
-Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
+extern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 
 
 /* GUI type */
