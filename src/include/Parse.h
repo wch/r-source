@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-1999 R Development Core Team
+ *  Copyright (C) 1998-2003 R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,10 +22,6 @@
 #define PARSE_INCOMPLETE	2
 #define PARSE_ERROR		3
 #define PARSE_EOF		4
-
-#define INPUT_CONSOLE		1
-#define INPUT_TEXT		2
-#define INPUT_FILE		3
 
 	/* Parse A Single Expression */
 
