@@ -44,12 +44,12 @@ SEXP duplicate(SEXP s)
 	return s;
     case CLOSXP:
 	PROTECT(s);
-	t = allocSExp(CLOSXP);
+	PROTECT(t = allocSExp(CLOSXP));
 	FORMALS(t) = FORMALS(s);
 	BODY(t) = BODY(s);
 	CLOENV(t) = CLOENV(s);
 	ATTRIB(t) = duplicate(ATTRIB(s));
-	UNPROTECT(1);
+	UNPROTECT(2);
 	break;
     case LISTSXP:
 	PROTECT(sp = s);
