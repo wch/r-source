@@ -1597,27 +1597,36 @@ We need to know a little about the way @R{} handles memory allocation.
 The memory allocated for @R{} objects is not freed by the user; instead,
 the memory is from time to time @dfn{garbage collected}.  That is, all
 the allocated memory not being used is freed, and the objects that are
-in use may be moved.  If you create an @R{} object in your C code, you
-must tell @R{} that you are using the object via a call to the
-@code{PROTECT} macro.  This has two effects.  First it tells @R{} that
-the object is in use so it is not destroyed.  Second, it ensures that
-the @code{SEXP} pointer to the object is updated if the object's
-structure is moved in memory during garbage collection.  (Because of
-this it is not safe to save and re-use pointers to parts of an object's
-structure.)
+in use may be moved. 
 
-Protecting a @code{SEXP} pointer protects all the @R{} objects in a
-recursive structure (such as list).
+The @R{} object types are represented by a C structure called
+@code{SEXPREC}, defined by a typedef in @file{Rinternals.h}. It contains
+several things among which are pointers to data blocks and to other
+@code{SEXPREC}s. With the current memory managements scheme, the data
+blocks may be moved in memory during garbage collection, and the
+pointers to them updated. Because of this it is not safe to save and
+re-use pointers to data blocks in an object's structure. A @code{SEXP}
+is simply a pointer to a @code{SEXPREC}.
+
+If you create an @R{} object in your C code, you must tell @R{} that you
+are using the object by using the @code{PROTECT} macro on a pointer to
+the object. This tells @R{} that the object is in use so it is not
+destroyed. Notice that the object is what is protected, not the pointer
+variable. It is a common mistake to believe that if you said
+@code{PROTECT(@var{p})} at some point then @var{p} is protected from
+then on, but that is not true once a new object is assigned to @var{p}.
+
+Protecting an R object automatically protects all the @R{} objects
+pointed to in the corresponding @code{SEXPREC}.
 
 The programmer is solely responsible for housekeeping the calls to
 @code{PROTECT}.  There is a corresponding macro @code{UNPROTECT} that
-takes as argument an @code{int} giving the number of @code{SEXP}s to
+takes as argument an @code{int} giving the number of objects to
 unprotect when they are no longer needed.  The protection mechanism is
 stack-based, so @code{UNPROTECT(@var{n})} unprotects the last @var{n}
 objects which were protected.  The calls to @code{PROTECT} and
-@code{UNPROTECT} must balance when the user's code returns, even if it
-returns because of an error (calling @code{error} or @code{errorcall}
-for example).  @R{} will warn about @code{"stack imbalance in .Call"}
+@code{UNPROTECT} must balance when the user's code returns.
+@R{} will warn about @code{"stack imbalance in .Call"}
 (or @code{.External}) if the housekeeping is wrong.
 
 Here is a small example of creating an @R{} numeric vector in C code.
@@ -1650,20 +1659,30 @@ and then those in @file{Rinternals.h}:
 @end example
 
 Now, the reader may ask how the @R{} object could possibly get removed
-during those manipulations, as it is just our C code that is running.
-The answer is we do not know (nor want to know) what is hiding behind
-the @R{} macros and functions we use, and any of them might cause memory
-to be allocated, hence garbage collection and hence our object @code{ab}
-to be (re)moved.  It is wise to err on the side of caution and assume
+during those manipulations, as it is just our C code that is running. As
+it happens, we can do without the protection in this case, but in
+general we do not know (nor want to know) what is hiding behind the @R{}
+macros and functions we use, and any of them might cause memory to be
+allocated, hence garbage collection and hence our object @code{ab} to be
+(re)moved. It is usually wise to err on the side of caution and assume
 that any of the @R{} macros and functions might (re)move the object.
+
+In some cases it is necessary to keep better track of whether protection
+is really needed. Be particularly aware of situations where a large
+number of objects are generated. The pointer protection stack has a
+fixed size and can overflow. It is not a good idea then to just
+@code{PROTECT} everything in sight and @code{UNPROTECT} several thousand
+objects at the end. It will almost invariably be possible to either
+assign the objects as part of another object (which automatically
+protects them) or unprotect them immediately after use.
 
 Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
 
-There is a less-used@footnote{for historical reasons,
-@code{UNPROTECT_PTR(@var{s})} has existed only since @R{} version 0.63.0
-(Nov.@: 1998)} macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
-@code{SEXP} @var{s}.
+There is a less-used macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
+object pointed to by the @code{SEXP} @var{s}, even if it is not the top
+item on the pointer protection stack. This is rarely needed outside the
+parser (the R sources have one example, in @file{plot3d.c}). 
 @findex UNPROTECT_PTR
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
