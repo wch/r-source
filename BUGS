@@ -432,11 +432,6 @@ Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
 From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
 Date: Wed, 22 Aug 2001 21:56:33 -0500
 --part of PR#1068
-* PR# 1211 *
-Subject: crash bug in get("function.name")()
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
---Still segfaults in 1.5.1 
 * PR# 1880 *
 Subject:  You requested this report 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
@@ -613,44 +608,10 @@ Date: Wed, 18 Sep 2002 23:06:12 +0200 (MET DST)
 Subject: savehistory directories and quitting R
 From: Mark.Bravington@csiro.au
 Date: Thu, 19 Sep 2002 14:53:25 +1000
-* PR# 2039 *
-Subject: Cellspacing
-From: krypton8 <krypton8@pacbell.net>
-Date: Thu, 19 Sep 2002 08:03:29 +0100
-* PR# 2040 *
-Subject: Undeliverable mail--"onmouseout"
-Subject: onmouseout<br>
-From: postmaster <postmaster@r-project.org>
-From: r-bugs@r-project.org<br>
-Date: Thu, 19 Sep 2002 08:06:23 +0100
-* PR# 2041 *
-Subject: [광고] 한번에 찾으세요! 성인/검색/커뮤니티/자료/은행/카드 ... 
-From: Goodsite<opencgi@langoo.com>
-Date: Thu, 19 Sep 2002 20:25:57 -0600
 * PR# 2042 *
 Subject: install.packages() together with pixmap package
 From: w.huber@dkfz.de
 Date: Thu, 19 Sep 2002 18:26:55 +0200 (MET DST)
-* PR# 2043 *
-Subject: [광고]★김민희풍 세무 숄더백! 35,900원!!(와우누리)
-From: 와우누리 <wownuri_38@shinbiro.com>
-Date: Fri, 20 Sep 2002 09:54:32 +0900
-* PR# 2044 *
-Subject: http://bugs.r-project.org
-From: "vanessa@seekercenter.net" <vanessa@seekercenter.net>
-Date: Fri, 20 Sep 2002 18:21:00 +0800
-* PR# 2045 *
-Subject: Honey
-From: info <info@unclecu.org>
-Date: Fri, 20 Sep 2002 05:16:16 -0400 (EDT)
-* PR# 2046 *
-Subject: Urgent Assistance
-From: Johnson Mowete <mjohnson12@hotvoice.com>
-Date: Fri, 20 Sep 2002 15:38:18 +0200
-* PR# 2047 *
-Subject:  
-From: info <info@beatnik.com>
-Date: Fri, 20 Sep 2002 15:52:41 +0200 (added by postmaster@wanadoo.fr)
 * PR# 2048 *
 Subject: Install with 64-bit GCC 3.2
 From: Kev Buckley <k.buckley@lancaster.ac.uk>
@@ -659,11 +620,15 @@ Date: Fri, 20 Sep 2002 17:33:33 +0100 (BST)
 Subject: Install with 64-bit GCC 3.2 : FIX
 From: Kev Buckley <k.buckley@lancaster.ac.uk>
 Date: Fri, 20 Sep 2002 18:07:06 +0100 (BST)
-* PR# 2050 *
-Subject: Purchasing your first home? (5naS4422J3)
-From: DeiterSivert@aol.com
-Date: Sat, 30 Dec 1899 9:30:16 -0400
-* PR# 2051 *
-Subject: [광고] 전화세 47% 할인과 주식비법등의 부업 비밀~!
-From: 지민석 <dskjgdskjghkdsjghdkudkjud@hotmail.com>
-Date: Mon, 23 Sep 2002 03:57:22 +0900
+* PR# 2056 *
+Subject: socket bug ???
+From: Ralf Wieland <rwieland@zalf.de>
+Date: Mon, 23 Sep 2002 16:29:33 +0200
+* PR# 2057 *
+Subject: Rgui.exe crashes on startup
+From: zhenliu66@hotmail.com
+Date: Mon, 23 Sep 2002 17:44:41 +0200 (MET DST)
+* PR# 2058 *
+Subject: Rgui.exe crashes on startup
+From: zhenliu66@hotmail.com
+Date: Mon, 23 Sep 2002 17:44:50 +0200 (MET DST)
