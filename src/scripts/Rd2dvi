@@ -3,7 +3,7 @@
 #
 # Examples:
 #  R CMD Rd2dvi /path/to/Rsrc/src/library/base/man/Normal.Rd
-#  R CMD Rd2dvi `grep -l "\\keyword\\{distr" \
+#  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 #                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
 START_DIR=`pwd`
@@ -76,12 +76,11 @@ if test -d ${BUILD_DIR}; then
   rm -rf ${BUILD_DIR} || echo "cannot write to build dir" && exit 2
 fi
 mkdir ${BUILD_DIR}
-cd ${BUILD_DIR}
 
 sed 's/markright{#1}/markboth{#1}{#1}/' \
-  ${R_HOME}/doc/manual/Rd.sty > Rd2.sty
+  ${R_HOME}/doc/manual/Rd.sty > ${BUILD_DIR}/Rd2.sty
 
-cat > Rd2.tex <<EOF
+cat > ${BUILD_DIR}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}]{book}
 \\usepackage{Rd2}
 \\usepackage{makeidx}
@@ -98,14 +97,15 @@ EOF
 
 for f in ${files}; do
   if ${DEBUG}; then echo ${f}; fi
-  R CMD Rdconv -t latex ${f} >> Rd2.tex
+  R CMD Rdconv -t latex ${f} >> ${BUILD_DIR}/Rd2.tex
 done
 
-cat >> Rd2.tex <<EOF  
+cat >> ${BUILD_DIR}/Rd2.tex <<EOF  
 \\printindex
 \\end{document}
 EOF
 
+cd ${BUILD_DIR}
 ${R_LATEXCMD} Rd2
 ${R_MAKEINDEXCMD} Rd2
 ${R_LATEXCMD} Rd2
