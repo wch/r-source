@@ -30,6 +30,7 @@ LIB = libunix.a
 noinst_LTLIBRARIES = libunix.la
 libunix_la_SOURCES = $(SOURCES)
 libunix_la_OBJECTS = $(OBJECTS:.o=.lo)
+@USE_LIBTOOL_TRUE@libunix_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
 all: Makefile Makedeps R
 
@@ -50,7 +51,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
-	@@WANT_SHLIB_TRUE@$(MAKE) stamp-lo
+	@@WANT_R_SHLIBS_TRUE@$(MAKE) stamp-lo
 
 DLLs:
 	@for g in $(R_GUIS) ""; do \
@@ -72,7 +73,7 @@ $(LIB): $(OBJECTS)
 stamp-lo: $(libunix_la_OBJECTS)
 	@touch $@
 libunix.la: stamp-lo
-	$(LTLINK) -o $@ $(libunix_la_OBJECTS)
+	$(SHLIB_LINK) -o $@ $(libunix_la_LDFLAGS) $(libunix_la_OBJECTS)
 
 mostlyclean: clean
 clean:

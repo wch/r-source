@@ -86,6 +86,7 @@ LIB = libappl.a
 noinst_LTLIBRARIES = libappl.la
 libappl_la_SOURCES = $(SOURCES)
 libappl_la_OBJECTS = $(OBJECTS:.o=.lo)
+@USE_LIBTOOL_TRUE@libappl_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
 all: Makefile Makedeps R
 
@@ -101,7 +102,7 @@ Makedeps: Makefile $(DEPENDS)
 R: Makefile
 	@$(MAKE) Makedeps
 	@$(MAKE) $(LIB)
-	@@WANT_SHLIB_TRUE@$(MAKE) stamp-lo
+	@@WANT_R_SHLIBS_TRUE@$(MAKE) stamp-lo
 
 $(LIB):	$(OBJECTS)
 	$(AR) cr $(LIB) $(OBJECTS)
@@ -110,7 +111,7 @@ $(LIB):	$(OBJECTS)
 stamp-lo: $(libappl_la_OBJECTS)
 	@touch $@
 libappl.la: stamp-lo
-	$(LTLINK) -o $@ $(libappl_la_OBJECTS)
+	$(SHLIB_LINK) -o $@ $(libappl_la_LDFLAGS) $(libappl_la_OBJECTS)
 
 mostlyclean: clean
 clean:
