@@ -43,7 +43,13 @@ NEW FEATURES
 	Unix-alike platforms (but not to other OSes because of
 	potential problems with line endings).
 
-    o	New generic function flush() with a methiod to flush connections.
+    o	New generic function flush() with a method to flush connections.
+
+    o	princomp() no longer allows the use of more variables than
+	units: use prcomp() instead.
+
+    o	prcomp() is now fast for n x m inputs with m >> n, but the 
+	signs of the results may have changed in that case.
 
 
 INSTALLATION CHANGES

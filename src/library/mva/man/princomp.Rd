@@ -75,6 +75,16 @@
 
   If \code{x} is a formula then the standard NA-handling is applied to
   the scores (if requested): see \code{\link{napredict}}.
+
+  \code{princomp} only handles so-called Q-mode PCA, that is feature
+  extraction of variables. If a data matrix is supplied (possibly via a
+  formula) it is required that there are at least as many units as
+  variables.  For R-mode PCA use \code{\link{prcomp}}.
+}
+\note{
+  The signs of the columns of the loadings and scores are arbitrary, and
+  so may differ between different programs for PCA, and even between
+  different builds of \R.
 }
 \references{
   Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
