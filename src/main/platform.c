@@ -1178,8 +1178,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 10));
-    PROTECT(ansnames = allocVector(STRSXP, 10));
+    PROTECT(ans = allocVector(LGLSXP, 11));
+    PROTECT(ansnames = allocVector(STRSXP, 11));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1271,6 +1271,12 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("IEEE754"));
 #if defined(IEEE_754)
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+    SET_STRING_ELT(ansnames, i, mkChar("iconv"));
+#if defined(HAVE_ICONV)
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;

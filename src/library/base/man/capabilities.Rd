@@ -41,6 +41,8 @@ capabilities(what = NULL)
       that this is more correctly known by the international standard
       IEC 60559, and will always be true from \R version 2.0.0.  It is
       now deprecated and will be removed in due course.}
+    \item{iconv}{is internationalization conversion via
+      \code{\link{iconv}} supported?}
 }
 \seealso{\code{\link{.Platform}}}
 
