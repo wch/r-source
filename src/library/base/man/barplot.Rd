@@ -95,7 +95,7 @@ barplot(VADeaths, plot = FALSE, beside = TRUE)
 
 mp <- barplot(VADeaths) # default
 tot <- apply(VADeaths, 2, sum)
-text(mp, tot + 3, format(tot), xpd = NA, col = "blue")
+text(mp, tot + 3, format(tot), xpd = TRUE, col = "blue")
 barplot(VADeaths, beside = TRUE,
         col = c("lightblue", "mistyrose", "lightcyan",
                 "lavender", "cornsilk"),
