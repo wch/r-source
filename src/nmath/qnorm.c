@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  based on AS111 (C) 1977 Royal Statistical Society
+ *  based on AS 111 (C) 1977 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *
  *  SYNOPSIS
  *
- *    double pnorm(double p, double mu, double sigma);
+ *    double qnorm(double p, double mu, double sigma);
  *
  *  DESCRIPTION
  *
