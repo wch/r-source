@@ -426,11 +426,6 @@ case ${ac_cv_f77_mangling} in
     AC_MSG_WARN([FORTRAN compiler uses uppercase external names])
     AC_MSG_ERROR([cannot use FORTRAN])
     ;;
-  *", extra "*)
-    warn_f77_mangling="cannot deal with underscores in FORTRAN"
-    warn_f77_mangling="${warn_f77_mangling} external names"
-    AC_MSG_WARN([${warn_f77_mangling}])
-    ;;
 esac
 AC_CACHE_VAL(r_cv_prog_f77_append_underscore,
 [case ${ac_cv_f77_mangling} in
@@ -1350,7 +1345,9 @@ else
   AC_MSG_RESULT([yes])
   _R_ZLIB_MMAP
 fi
-AM_CONDITIONAL(BUILD_ZLIB, test "x${have_zlib}" = xno)
+AM_CONDITIONAL(BUILD_ZLIB, [test "x${have_zlib}" = xno])
+AM_CONDITIONAL(USE_MMAP_ZLIB,
+[test "x${have_zlib}" = xno && test "x${r_cv_zlib_mmap}" = xyes])
 ])# R_ZLIB
 
 AC_DEFUN([_R_HEADER_ZLIB],
@@ -1384,7 +1381,6 @@ caddr_t hello() {
 	       [r_cv_zlib_mmap=no],
 	       [r_cv_zlib_mmap=yes],
 	       [r_cv_zlib_mmap=yes]))
-AM_CONDITIONAL(USE_MMAP_ZLIB, test "x${r_cv_zlib_mmap}" = xyes)
 ])# _R_ZLIB_MMAP
 
 AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
