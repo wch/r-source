@@ -29,7 +29,7 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 /* The universe will end if the Stack on the Mac grows til it hits the heap. */
 /* This code places a limit on the depth to which eval can recurse. */
 
-#define EVAL_LIMIT 100
+#define EVAL_LIMIT 500
 void isintrpt(){}
 
 #endif
