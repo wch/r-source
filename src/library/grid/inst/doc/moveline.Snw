@@ -57,6 +57,15 @@ grid.line.to(.5, unit(2,"native"))
 \end{center}
 
 @
+% Start a new page
+% Not echoed, not evaluated
+% ONLY here for checkVignettes so that all output doesn't
+% end up on one enormous page
+
+<<eval=FALSE, echo=FALSE>>=
+grid.newpage()
+
+@
 \end{document}
 
 

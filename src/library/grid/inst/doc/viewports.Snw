@@ -343,6 +343,16 @@ pushViewport(viewport(w=0.9, h=0.9))
 <<margin1>>
 <<margin2>>
 <<annguts>>
+popViewport(0)
+
+@
+% Start a new page
+% Not echoed, not evaluated
+% ONLY here for checkVignettes so that all output doesn't
+% end up on one enormous page
+
+<<eval=FALSE, echo=FALSE>>=
+grid.newpage()
 
 @
 \end{document}

@@ -2141,10 +2141,15 @@ SEXP L_locator() {
     PROTECT(answer = allocVector(REALSXP, 2));
     /*
      * Get a mouse click
+     * Fails if user did not click mouse button 1
      */
-    dd->dev->locator(&x, &y, dd->dev);
-    REAL(answer)[0] = fromDeviceX(x, GE_INCHES, dd);
-    REAL(answer)[1] = fromDeviceY(y, GE_INCHES, dd);
+    if (dd->dev->locator(&x, &y, dd->dev)) {
+	REAL(answer)[0] = fromDeviceX(x, GE_INCHES, dd);
+	REAL(answer)[1] = fromDeviceY(y, GE_INCHES, dd);
+    } else {
+	REAL(answer)[0] = NA_REAL;
+	REAL(answer)[1] = NA_REAL;	
+    }
     UNPROTECT(1);
     return answer;
 }

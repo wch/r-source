@@ -139,5 +139,14 @@ popViewport()
 \vspace{.5in}
 \includegraphics{nonfinite-prim2}
 
+% Start a new page
+% Not echoed, not evaluated
+% ONLY here for checkVignettes so that all output doesn't
+% end up on one enormous page
+
+<<eval=FALSE, echo=FALSE>>=
+grid.newpage()
+
+@
 \end{document}
 
