@@ -171,6 +171,9 @@ NEW FEATURES
     o	psigamma(x, deriv=0), a new function generalizes, digamma() etc.
 	All these (psigamma, digamma, trigamma,...) now also work for  x < 0.
 
+    o	pchisq(*, ncp > 0) and hence qchisq() now work with much higher
+	values of ncp; it has become much more accurate in the left tail.
+
     o	read.table() now allows embedded newlines in quoted fields. (PR#4555)
 
     o	rep.default(0-length-vector, length.out=n) now gives a vector
@@ -677,9 +680,9 @@ BUG FIXES
 	alph > 1e5 instead of alph > 1000.  This also improves the accuracy
 	of ppois().
 
-    o	qgamma() now does a final Newton step, increasing accuracy from
-	around 2e-8 to 3e-16 in some cases.  (PR#2214).	 It allows
-	values p close to 1 not returning Inf, with accuracy for
+    o	qgamma() now does one or more final Newton steps, increasing
+	accuracy from around 2e-8 to 3e-16 in some cases.  (PR#2214).
+	It allows values p close to 1 not returning Inf, with accuracy for
 	'lower=FALSE', and values close to 0 not returning 0 for
 	'log=TRUE'.  These also apply to qchisq(), e.g.,
 	qchisq(1e-13, 4, lower=FALSE) is now finite and
@@ -771,7 +774,7 @@ BUG FIXES
 
     o	1:2 * 1e-100  now prints with correct number of spaces.
 
-    o   Negative subscripts that were out of range or NA were not handled 
+    o   Negative subscripts that were out of range or NA were not handled
         correctly.
 
     o   gzfile() connections had trouble at EOF when used on uncompressed

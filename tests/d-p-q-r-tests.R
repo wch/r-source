@@ -21,8 +21,11 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   1 - approx / true, # relative error
 	   true - approx)     # absolute error (e.g. when true=0)
 }
-## Short cut:
-All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 100*.Machine$double.eps)
+## Numerical equality: Here want "rel.error" almost always:
+All.eq <- function(x,y)
+    all.equal.numeric(x,y, tolerance= 64*.Machine$double.eps,
+                      scale = {r <- mean(abs(x),na.rm=TRUE)
+                               if(r > 0) r else 0})
 
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))
@@ -154,12 +157,30 @@ for(sh in round(rlnorm(30),2)) {
 pgamma(1,Inf,scale=Inf) == 0
 all(is.nan(c(pgamma(Inf,1,scale=Inf), pgamma(Inf,Inf,scale=1), pgamma(Inf,Inf,scale=Inf))))
 pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
+
+p <- 7e-4; df <- 0.9
+abs(1-c(pchisq(qchisq(p, df),df)/p, # was 2.31e-8 for R <= 1.8.1
+        pchisq(qchisq(1-p, df,lower=FALSE),df,lower=FALSE)/(1-p),# was 1.618e-11
+        pchisq(qchisq(log(p), df,log=TRUE),df, log=TRUE)/log(p), # was 3.181e-9
+        pchisq(qchisq(log(1-p),df,log=T,lower=F),df, log=T,lower=F)/log(1-p),
+        )# 32b-i386: (2.2e-16, 0,0, 3.3e-16); Opteron: (2.2e-16, 0,0, 2.2e-15)
+    ) < 1e-14
+
 ##-- non central Chi^2 :
 xB <- c(2000,1e6,1e50,Inf)
 for(df in c(0.1, 1, 10))
     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
-          49.77662465615, tol= 1e-11)
+          49.7766246561514, tol= 1e-11)
+for(df in c(0.1, 0.5, 1.5, 4.7, 10, 20,50,100)) {
+    cat("df =", formatC(df, wid=3))
+    xx <- c(10^-(5:1), .9, 1.2, df + c(3,7,20,30,35,38))
+    pp <- pchisq(xx, df=df, ncp = 1) #print(pp)
+    dtol <- 1e-12 *(if(1 < df && df <= 50) 64 else if(df > 50) 20000 else 500)
+    print(all.equal(xx, qchisq(pp, df=df, ncp=1), tol = dtol))# TRUE
+    ##or print(mapply(rErr, xx, qchisq(pp, df=df,ncp=1)), digits = 3)
+}
+
 ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
 psml <- 2^-(10:54)
 q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
@@ -407,5 +428,13 @@ All.eq(log(1 - Pt2),	   pt	    (Rt2,df = 1.01, lower=F, log=T))
 All.eq(log(1 - Punif),	   punif    (Runif, min = .2, max = 2, lower=F, log=T))
 All.eq(log(1 - Pweibull),  pweibull (Rweibull, shape = 3, scale = 2, lower=F, log=T))
 All.eq(log(1 - Pwilcox),   pwilcox  (Rwilcox, m = 13, n = 17, lower=F, log=T))
+
+
+### (Extreme) tail tests added more recently:
+All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
+abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
+All.eq(1, pcauchy(-1e20) / 3.183098861837907e-21)
+for(x in 10^c(15,25,50,100,200))
+    print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.8.1 Patched (2004-01-09), ISBN 3-900051-00-3
+Version 1.9.0 beta (2004-03-22), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -37,8 +37,11 @@ Type 'q()' to quit R.
 + 	   1 - approx / true, # relative error
 + 	   true - approx)     # absolute error (e.g. when true=0)
 + }
-> ## Short cut:
-> All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 100*.Machine$double.eps)
+> ## Numerical equality: Here want "rel.error" almost always:
+> All.eq <- function(x,y)
++     all.equal.numeric(x,y, tolerance= 64*.Machine$double.eps,
++                       scale = {r <- mean(abs(x),na.rm=TRUE)
++                                if(r > 0) r else 0})
 > 
 > if(!interactive())
 +     .Random.seed <- c(0,rep(7654, 3))
@@ -249,13 +252,40 @@ Warning messages:
 3: NaNs produced in: pgamma(q, shape, scale, lower.tail, log.p) 
 > pgamma(Inf,1,scale=xMax) == 1 && pgamma(xMax,1,scale=Inf) == 0
 [1] TRUE
+> 
+> p <- 7e-4; df <- 0.9
+> abs(1-c(pchisq(qchisq(p, df),df)/p, # was 2.31e-8 for R <= 1.8.1
++         pchisq(qchisq(1-p, df,lower=FALSE),df,lower=FALSE)/(1-p),# was 1.618e-11
++         pchisq(qchisq(log(p), df,log=TRUE),df, log=TRUE)/log(p), # was 3.181e-9
++         pchisq(qchisq(log(1-p),df,log=T,lower=F),df, log=T,lower=F)/log(1-p),
++         )# 32b-i386: (2.2e-16, 0,0, 3.3e-16); Opteron: (2.2e-16, 0,0, 2.2e-15)
++     ) < 1e-14
+[1] TRUE TRUE TRUE TRUE
+> 
 > ##-- non central Chi^2 :
 > xB <- c(2000,1e6,1e50,Inf)
 > for(df in c(0.1, 1, 10))
 +     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
 > all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
-+           49.77662465615, tol= 1e-11)
++           49.7766246561514, tol= 1e-11)
 [1] TRUE
+> for(df in c(0.1, 0.5, 1.5, 4.7, 10, 20,50,100)) {
++     cat("df =", formatC(df, wid=3))
++     xx <- c(10^-(5:1), .9, 1.2, df + c(3,7,20,30,35,38))
++     pp <- pchisq(xx, df=df, ncp = 1) #print(pp)
++     dtol <- 1e-12 *(if(1 < df && df <= 50) 64 else if(df > 50) 20000 else 500)
++     print(all.equal(xx, qchisq(pp, df=df, ncp=1), tol = dtol))# TRUE
++     ##or print(mapply(rErr, xx, qchisq(pp, df=df,ncp=1)), digits = 3)
++ }
+df = 0.1[1] TRUE
+df = 0.5[1] TRUE
+df = 1.5[1] TRUE
+df = 4.7[1] TRUE
+df =  10[1] TRUE
+df =  20[1] TRUE
+df =  50[1] TRUE
+df = 100[1] TRUE
+> 
 > ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
 > psml <- 2^-(10:54)
 > q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
@@ -875,6 +905,22 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > All.eq(log(1 - Pwilcox),   pwilcox  (Rwilcox, m = 13, n = 17, lower=F, log=T))
 [1] TRUE
 > 
+> 
+> ### (Extreme) tail tests added more recently:
+> All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
+[1] TRUE
+> abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
+[1] TRUE
+> All.eq(1, pcauchy(-1e20) / 3.183098861837907e-21)
+[1] TRUE
+> for(x in 10^c(15,25,50,100,200))
++     print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.03 0.06 2.92 0 0 
+Time elapsed:  6.98 0.14 11.66 0 0 
 > 
