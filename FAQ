@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-37, 2003-03-10
+Version 1.6-38, 2003-03-12
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1642,6 +1642,10 @@ distributions of R.)
 *hier.part*
      Hierarchical Partitioning: variance partition of a multivariate data
      set.
+
+*hwde*
+     Models and tests for departure from Hardy-Weinberg equilibrium and
+     independence between loci.
 
 *ifs*
      Iterated Function Systems distribution function estimator.
