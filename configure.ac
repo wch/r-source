@@ -332,8 +332,6 @@ AC_MSG_RESULT([${BUILDDIR_IS_SRCDIR}])
 
 ### * Checks for programs.
 
-AC_AIX # Should be called before any macro that runs the C compiler.
-
 AC_PROG_AWK
 AC_PROG_LN_S
 AC_PROG_RANLIB
@@ -499,10 +497,6 @@ R_PROG_CC_MAKEFRAG
 ### *** FORTRAN 77 compiler.
 
 if test -n "${F77}"; then
-  ## <FIXME>
-  ## Remove eventually (1.6 or later).
-  FC="${F77}"
-  ## </FIXME>
   R_PROG_F77_FLIBS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
@@ -515,7 +509,6 @@ else
   R_PROG_F2C_MAKEFRAG
 fi
 
-AC_SUBST(FC)
 AC_SUBST(F2C)
 AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX,
                [test "x${HAVE_DOUBLE_COMPLEX}" != x])
