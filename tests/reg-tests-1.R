@@ -872,6 +872,15 @@ stopifnot(identical(as.double(NA), NaN) == FALSE)
 ## was identical on 1.5.1
 
 
+## safe prediction (PR#1840)
+data(cars)
+cars.1 <- lm(dist ~ poly(speed, degree = 1), data = cars)
+cars1  <- lm(dist ~      speed,              data = cars)
+DF <- data.frame(speed=4)
+stopifnot(all.equal(predict(cars.1, DF), predict(cars1, DF)))
+## error in 1.5.1
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

@@ -62,21 +62,13 @@ terms.default <- function(x, ...) {
 
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
-#delete.response <- function (termobj)
-#{
-#    intercept <- if (attr(termobj, "intercept")) "1" else "0"
-#    terms(reformulate(c(attr(termobj, "term.labels"), intercept), NULL),
-#	  specials = names(attr(termobj, "specials")))
-#}
-
 delete.response <- function (termobj)
 {
     f <- formula(termobj)
-    if (length(f) == 3)
-        f[[2]] <- NULL
+    if (length(f) == 3) f[[2]] <- NULL
     tt <- terms(f, specials = names(attr(termobj, "specials")))
     attr(tt, "intercept") <- attr(termobj, "intercept")
-    if (length(f) == 3)
+    if (length(formula(termobj)) == 3)
         attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
     tt
 }

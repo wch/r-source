@@ -55,10 +55,10 @@ poly <- function(x, ..., degree = 1, coefs = NULL)
     }
     if(degree < 1)
         stop("degree must be at least 1")
-    if(degree >= length(x))
-        stop("degree must be less than number of points")
     n <- degree + 1
     if(is.null(coefs)) { # fitting
+        if(degree >= length(x))
+            stop("degree must be less than number of points")
         xbar <- mean(x)
         x <- x - xbar
         X <- outer(x, seq(length = n) - 1, "^")

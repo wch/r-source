@@ -19,7 +19,7 @@ NEW FEATURES
 
     o	New operator :: in the grammar, for name spaces.
 
-    o	New faster rowsum(), also works on data frames
+    o	New faster rowsum(), also works on data frames.
 
     o	grep(), (g)sub() and regexpr() have a new argument `perl'
 	which if TRUE uses Perl-style regexps from PCRE (if installed).
@@ -318,6 +318,12 @@ BUG FIXES
 
     o	polygon()'s `border' argument was incorrectly documented: in
 	particular `border = 0' plots in background colour.
+
+    o	delete.response() was losing the attribute set for safe
+        prediction. (PR#1840)
+
+    o	poly() was checking the degree against the number of points
+	even when predicting.
 
 
 
