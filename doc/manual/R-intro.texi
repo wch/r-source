@@ -3706,7 +3706,7 @@ levels) and @code{varieties} (@code{v} levels).  If @math{R} and
 efficiency factors are defined as the eigenvalues of the matrix
 @ifnottex
 E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A, where
-A = K^@{-1/2@}NR^@{-1/2@}
+A = K^@{-1/2@}NR^@{-1/2@}.
 @end ifnottex
 @tex
 $$E = I_v - R^{-1/2}N'K^{-1}NR^{-1/2} = I_v - A'A,$$
@@ -4098,25 +4098,32 @@ extractor functions.
 
 The template for a statistical model is a linear regression model with
 independent, homoscedastic errors
+
 @ifnottex
 @display
-y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{} n,
+y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{}, n,
 @end display
-where the e_i are NID(0, sigma^2)
+@noindent
+where the e_i are NID(0, sigma^2).
 @end ifnottex
 @tex
 $$ y_i = \sum_{j=0}^p \beta_j x_{ij} + e_i,
    \qquad e_i \sim {\rm NID}(0,\sigma^2),
-   \qquad i = 1, @dots{} ,n
+   \qquad i = 1, @dots{}, n
 $$
 @end tex
 In matrix terms this would be written
+
 @ifnottex
-    y = X @ beta + e @*
+@display
+y = X @ beta + e
+@end display
 @end ifnottex
 @tex
- $$ y = X \beta + e $$
+$$ y = X \beta + e $$
 @end tex
+
+@noindent
 where the @math{y} is the response vector, @math{X} is the @emph{model
 matrix} or @emph{design matrix} and has columns
 @math{x_0, x_1, @dots{}, x_p},
@@ -5131,7 +5138,7 @@ regression.  Such regressions are useful for highlighting a trend in
 messy data or for data reduction to give some insight into a large data
 set.
 
-Function @code{loess} is the standard package @pkg{stats}, together
+Function @code{loess} is in the standard package @pkg{stats}, together
 with code for projection pursuit regression.
 @findex loess
 
