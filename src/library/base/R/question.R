@@ -38,9 +38,10 @@ topicName <- function(type, topic) {
 
 .helpForCall <- function(expr, envir, doEval = TRUE) {
     f <- expr[[1]] # the function specifier
+    where <- topenv(envir) # typically .GlobalEnv
     if(is.name(f))
         f <- as.character(f)
-    if(!.isMethodsDispatchOn() || !isGeneric(f)){
+    if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)){
         if(!is.character(f) || length(f) != 1)
             stop("The object of class \"", class(f), "\" in the function call \"",
                  deparse(expr), "\"could not be used as a documentation topic")
@@ -55,7 +56,7 @@ topicName <- function(type, topic) {
             f <- fdef@generic
         }
         else
-            fdef <- getGeneric(f)
+            fdef <- getGeneric(f, where = where)
         call <- match.call(fdef, expr)
         ## make the signature
         sigNames <- fdef@signature
