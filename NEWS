@@ -35,6 +35,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	made filled.contour independent on pointsize. Make plot key
+	wider so there's room for a title. Touchup example.
+
     o	font size fixups for the X11 driver (mainly)
 
     o   some.list[[NA]] is NULL, following S, rather than giving spurious
