@@ -31,8 +31,20 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   \item{na}{the string to use for missing values in the data.}
   \item{eol}{the character(s) to print at the end of each line (row).}
 }
+\details{
+  Normally there is no column name for a column of row names
+  If \code{col.names=NA} a blank column name is added. This can be
+  used to write CSV files for input to spreadsheets.
+}
 \seealso{
   \code{\link{read.table}}.
 }
+\example{
+\dontrun{
+## To write a CSV file for input to Excel one might use
+write.table(x, file="foo.csv", sep=",", col.names=NA)
+## and to read this file back into R one needs
+read.table("file.csv", header=TRUE, sep=",", row.names=1)
+}}
 \keyword{print}
 \keyword{file}

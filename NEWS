@@ -65,6 +65,8 @@ NEW FEATURES
     o	image() has a new argument "breaks" and divides the zlim range
 	into equal-length intervals.
 
+    o	write.table() can now write CSV files in the format Excel expects.
+
 
 BUG FIXES
 
@@ -83,7 +85,7 @@ BUG FIXES
 
     o	system() is now (partially) functional on systems without popen.
 
-    o   qbinom(1-1e-16,n,p) looped for ever.
+    o   count.fields and read.table now have the same default quote = "\"'".
 
 
 		CHANGES IN R VERSION 1.0.1
@@ -142,6 +144,8 @@ BUG FIXES
 
     o   as.matrix.data.frame no longer escapes quotes in character
         vectors.
+
+    o   qbinom(1-1e-16, n, p) looped for ever.
 
     o   R would try to save the readline history at the end of
         non-interactive sessions, causing crashes on some systems.

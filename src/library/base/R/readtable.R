@@ -1,4 +1,4 @@
-count.fields <- function(file, sep = "", quote = "", skip = 0)
+count.fields <- function(file, sep = "", quote = "\"\'", skip = 0)
     .Internal(count.fields(file, sep, quote, skip))
 
 
