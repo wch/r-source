@@ -11,6 +11,11 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   logical binops tried to set time series parameters before dimensions
+
+    o	upped the BUFSIZE in model.c (This is really peeing in the pants 
+	to get warm...)
+
     o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
 	for numeric formatting.
     
