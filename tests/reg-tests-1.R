@@ -3497,7 +3497,7 @@ stopifnot(x == c(1,1,1,0,1,2))
 ## gave machine-dependendent silly numbers in 2.0.1
 
 
-## *** no description ***
+## extreme (de-normalized) axis range
 x <- 2^-seq(67, 1067, length=20)
 plot(x^.9, x, type="l", log="xy") # still warning and ugly labels because
                                  ## e.g., 10^-323 |==> 9.881313e-324 numerically
