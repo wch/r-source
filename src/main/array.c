@@ -58,13 +58,19 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nc = asInteger(snc);
 
 
-	if( lendat != 1 && (nr*nc) % lendat != 0 ) {
+	if( lendat > 1 && (nr*nc) % lendat != 0 ) {
 		if( ((lendat>nr) && (lendat/nr)*nr != lendat ) ||
 			((lendat< nr) && (nr/lendat) * lendat != nr ))
 			warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
 		else if( ((lendat>nc) && (lendat/nc)*nc != lendat ) ||
 			((lendat< nc) && (nc/lendat) * lendat != nc ))
 			warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
+	} 
+	else if ((lendat>1) && (nr*nc==0)){
+	  warning("Replacement length not a multiple of the elements to replace in matrix(...) \n");
+	}
+	else if (lendat ==0 && nr*nc>0){
+	  error("No data to replace in matrix(...)\n");
 	}
 
 	PROTECT(snr = allocMatrix(TYPEOF(vals), nr, nc));
