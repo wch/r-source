@@ -36,7 +36,7 @@ BUG FIXES
 	ignoring [foo] outside \code{} statements.
 
     o	lm.influence(), plot.lm(), influence.measures() and the
-	related diagnostic measures now handle lm() fits with 
+	related diagnostic measures now handle lm() fits with
 	na.action=na.exclude.
 
     o	Eliminated segmentation fault in while loops without braces
@@ -44,7 +44,7 @@ BUG FIXES
 
     o	barplot did not accept NA heights unless ylim was specified.
 
-
+    o	predict.lm() failed with single-column model matrix (PR#1018)
 
 
 		CHANGES IN R VERSION 1.3.0
