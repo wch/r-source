@@ -23,13 +23,16 @@ NEW FEATURES
 
     o	New formula interface to cor.test() in package ctest.
 
-    o	"NA" is a valid color name (as NA has been a valid integer
+    o	"NA" is now a valid color name (as NA has been a valid integer
 	color).
 
     o	pairs() function has a new `gap' argument for adjusting the
 	spacing between panels.
 
     o	R CMD check has a new test for unbalanced braces in Rd files.
+
+    o	readBin() has a new argument `signed' to simplify reading
+	unsigned 8- and 16-bit integers.
 
 
 BUG FIXES

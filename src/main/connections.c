@@ -1744,7 +1744,7 @@ static SEXP readOneString(Rconnection con)
 SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, swhat;
-    int i, size, swap, n, m = 0, sizedef= 4, mode = 1;
+    int i, size, signd, swap, n, m = 0, sizedef= 4, mode = 1;
     char *what;
     void *p = NULL;
     Rboolean wasopen;
@@ -1762,6 +1762,9 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     n = asInteger(CAR(args)); args = CDR(args);
     if(n == NA_INTEGER || n < 0) error("invalid value of `n'");
     size = asInteger(CAR(args)); args = CDR(args);
+    signd = asLogical(CAR(args)); args = CDR(args);
+    if(signd == NA_LOGICAL)
+	error("invalid value of `signed'");
     swap = asLogical(CAR(args));
     if(swap == NA_LOGICAL)
 	error("invalid value of `swap'");
@@ -1860,10 +1863,16 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
 		    case sizeof(signed char):
-			INTEGER(ans)[i] = (int)*((signed char *)buf);
+			if(signd)
+			    INTEGER(ans)[i] = (int)*((signed char *)buf);
+			else
+			    INTEGER(ans)[i] = (int)*((unsigned char *)buf);
 			break;
 		    case sizeof(short):
-			INTEGER(ans)[i] = (int)*((short *)buf);
+			if(signd)
+			    INTEGER(ans)[i] = (int)*((short *)buf);
+			else
+			    INTEGER(ans)[i] = (int)*((unsigned short *)buf);
 			break;
 #if SIZEOF_LONG == 8
 		    case sizeof(long):

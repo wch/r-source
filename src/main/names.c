@@ -748,7 +748,7 @@ FUNTAB R_FunTab[] =
 {"stderr", 	do_stderr,	0,      11,     0,      PP_FUNCALL},
 {"readLines", 	do_readLines,	0,      11,     3,      PP_FUNCALL},
 {"writeLines", 	do_writelines,	0,      11,     3,      PP_FUNCALL},
-{"readBin", 	do_readbin,	0,      11,     5,      PP_FUNCALL},
+{"readBin", 	do_readbin,	0,      11,     6,      PP_FUNCALL},
 {"writeBin", 	do_writebin,	0,      11,     4,      PP_FUNCALL},
 {"readChar", 	do_readchar,	0,      11,     2,      PP_FUNCALL},
 {"writeChar", 	do_writechar,	0,      11,     4,      PP_FUNCALL},
