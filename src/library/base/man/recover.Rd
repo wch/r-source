@@ -11,7 +11,6 @@
 \synopsis{recover()}
 \usage{
 recover()
-options(error=recover)% is mentioned below as in "Usage"
 }
 \details{
   When called, \code{recover} prints the list of current calls, and
@@ -42,7 +41,7 @@ options(error=recover)% is mentioned below as in "Usage"
 \value{
   Nothing useful is returned.  However, you \emph{can} invoke
   \code{recover} directly from a function, rather than through the error
-  option shown in the usage section.  In this case, execution continues
+  option shown in the examples.  In this case, execution continues
   after you type \code{0} to exit \code{recover}.
 }
 
