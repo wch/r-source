@@ -121,6 +121,9 @@ NEW FEATURES
     o	New functions write.ftable() and read.ftable() for writing out
 	and reading in flat contingency tables.
 
+    o   Class "dendrogram" in package mva providing general support
+        for tree-like structures (plotting, cutting, ...).
+
 
 BUG FIXES
 
