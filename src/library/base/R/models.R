@@ -179,69 +179,6 @@ case.names.default <- .Alias(rownames)
 offset <- function(object) object
 ## ?
 
-na.action <- function(object, ...)UseMethod("na.action")
-na.action.default <- function(object, ...) attr(object, "na.action")
-
-na.fail <- function(object, ...)UseMethod("na.fail")
-na.fail.default <- function(object)
-{
-    ok <- complete.cases(object)
-    if(all(ok)) object else stop("missing values in object");
-}
-
-na.omit <- function(object, ...)UseMethod("na.omit")
-
-na.omit.default <- function(object)
-{
-    ## only handle vectors and matrices
-    if (!is.atomic(object)) return(object)
-    d <- dim(object)
-    if (length(d) > 2) return(object)
-    omit <- seq(along=object)[is.na(object)]
-    if (length(omit) == 0) return(object)
-    if (length(d)){
-        omit <- unique(((omit-1) %% d[1]) + 1)
-        nm <- rownames(object)
-        object <- object[-omit, , drop=FALSE]
-    } else {
-        nm <- names(object)
-        object <- object[-omit]
-    }
-    if (any(omit)) {
-	names(omit) <- nm[omit]
-	attr(omit, "class") <- "omit"
-	attr(object, "na.action") <- omit
-    }
-    object
-}
-
-na.omit.data.frame <- function(object)
-{
-    ## Assuming a data.frame like object
-    n <- length(object)
-    omit <- FALSE
-    vars <- seq(length = n)
-    for(j in vars) {
-	x <- object[[j]]
-	if(!is.atomic(x)) next
-	## variables are assumed to be either some sort of matrix, numeric,...
-	x <- is.na(x)
-	d <- dim(x)
-	if(is.null(d) || length(d) != 2)
-	    omit <- omit | x
-	else # matrix
-	    for(ii in 1:d[2])
-		omit <- omit | x[, ii]
-    }
-    xx <- object[!omit, , drop = FALSE]
-    if (any(omit)) {
-	temp <- seq(omit)[omit]
-	names(temp) <- row.names(object)[omit]
-	attr(temp, "class") <- "omit"
-	attr(xx, "na.action") <- temp
-    }
-    xx
-}
 
 model.frame <- function(formula, ...) UseMethod("model.frame")
 model.frame.default <-
