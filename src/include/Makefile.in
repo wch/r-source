@@ -20,7 +20,8 @@ SRC_HEADERS = R.h S.h Rdefines.h Rgraphics.h Rinternals.h Rmath.h
 R_EXT_HEADERS = \
 	Applic.h Arith.h Boolean.h Complex.h Constants.h Error.h \
 	Linpack.h Mathlib.h Memory.h Print.h PrtUtil.h R-ftp-http.h \
-	RS.h Random.h RConverters.h Rdynload.h Utils.h eventloop.h 
+	RS.h Random.h RConverters.h Rdynload.h Utils.h eventloop.h \
+	libextern.h
 ## API(2) {these are built, system-dependently}:
 OBJ_HEADERS = Rconfig.h Rversion.h
 
