@@ -53,7 +53,10 @@
 is.tkwin <- function(x) inherits(x, "tkwin")
 
 "$.tclvar" <- function(x, name) .Tcl(paste("set", name))
-"$<-.tclvar" <- function(x, name, value) {.Tcl(paste("set", name, value)); x}
+"$<-.tclvar" <- function(x, name, value) {
+    .Tcl(paste("set ", name, " {", value,"}", sep=""))
+    x
+}
 
 
 .TkWin  <- local({num.subwin<-0 ; environment()})
