@@ -29,8 +29,9 @@ pretty(1.234e100)
 pretty(pi)
 pretty(1001.1001)
 pretty(1001.1001, shrink = 1)
+for(k in 5:11) {cat("k=",k,": "); print(pretty(101 + c(0, pi*10^-k)))}
 for(k in -7:3)
   cat("shrink=",formatC(2^k,wid=9),":",
-      formatC(pretty(x, shrink = 2^k), wid=6),"\n")
+      formatC(pretty(1001.1001, shrink = 2^k), wid=6),"\n")
 }
 \keyword{dplot}
