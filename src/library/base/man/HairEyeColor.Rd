@@ -40,7 +40,7 @@
   \url{http://hotspur.psych.yorku.ca/SCS/Papers/asa92.html}
 }
 \seealso{
-  \code{\link{chisq.test}},
+  \code{\link[ctest]{chisq.test}},
   \code{\link{loglin}},
   \code{\link{mosaicplot}}
 }
