@@ -50,8 +50,8 @@ OBJECTS = sunif.o $(SOURCES:.c=.o)
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in test.c sunif.c
 
-LIB = libmath.a
-SHLIB = libmath.$(SHLIBEXT)
+LIB = libRmath.a
+SHLIB = libRmath.$(SHLIBEXT)
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
@@ -90,7 +90,7 @@ sunif.o: $(srcdir)/sunif.c
 	$(CC) -c -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $<
 
 test: $(srcdir)/test.c
-	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lmath -lm
+	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm
 
 mostlyclean: clean
 clean:

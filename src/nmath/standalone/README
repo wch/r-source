@@ -1,5 +1,5 @@
-Making in this directory will make standalone libraries libmath.a and
-libmath.so.  `make archive'  and `make shared'  make just one of them.
+Making in this directory will make standalone libraries libRmath.a and
+libRmath.so.  `make archive'  and `make shared'  make just one of them.
 
 You may find you need GNU make, especially if builddir != srcdir.
 
