@@ -89,7 +89,7 @@ You are welcome to redistribute it under the terms of the GNU
 General Public License.  For more information about these matters,
 see http://www.gnu.org/copyleft/gpl.html."
 
-function error () {
+error () {
   echo "ERROR: $*" >&2
   exit 1
 }
