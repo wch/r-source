@@ -1,5 +1,5 @@
 #
-# ${R_HOME}/src/library/mva/src/Makefile
+# ${R_HOME}/src/library/ts/src/Makefile
 
 pkg = ts
 
