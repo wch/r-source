@@ -367,8 +367,8 @@ sub parse_description_field { # fieldname
     my $tmp = $description->{$field}, $res = -1;
     if($tmp ne "") {
 	$tmp = lc $tmp;
-	$res = 1 if $tmp eq "yes";
-	$res = 0 if $tmp eq "no";
+	$res = 1 if ($tmp eq "yes") || ($tmp eq "true");
+	$res = 0 if ($tmp eq "no") || ($tmp eq "false");
 	# or throw an error, but then we need to recover
     }
     return $res;

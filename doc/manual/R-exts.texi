@@ -316,10 +316,14 @@ quoted.  Applicable OS-specific collate specifications take precedence.
 
 The optional @samp{LazyLoad} and @samp{LazyData} fields control whether
 the @R{} objects and the datasets (respectively) use lazy-loading: set
-the field's value to @samp{yes} for lazy-loading and @samp{no} (or omit
-it) for no lazy-loading.  Note that these values override the
-command-line options of @code{R CMD INSTALL}, @samp{--[no-]lazy} and
+the field's value to @samp{yes} or @samp{true} for lazy-loading and
+@samp{no} or @sample{false} for no lazy-loading.  (Capitalized values
+are also accepted.)  Note that these values override the command-line
+options of @code{R CMD INSTALL}, @samp{--[no-]lazy} and
 @samp{--[no-]lazy-data}.
+
+The optional @samp{SaveImage} field controls whether the @R{} objects
+are stored in a saved image @pxref{The install.R and R_PROFILE.R files}.
 
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
@@ -348,7 +352,9 @@ presence tells the @code{INSTALL} utility to create a binary image of the
 package workspace.  A binary image is created by executing the code in
 the @file{R} subdirectory and saving the resulting objects.  When the
 package is attached, the code is not executed again but @code{load}ed
-from the saved image.
+from the saved image.  It is preferable to use the @samp{SaveImage}
+field in the @file{DESCRIPTION} file, which takes precedence over the
+presence of an @file{install.R} file.
 
 The second purpose for @file{install.R} is to hold code that needs to be
 executed each time the package is attached, after the image is
@@ -356,10 +362,12 @@ loaded.  Few packages have a need for such code so @file{install.R} is
 normally an empty file.
 
 The optional file @file{R_PROFILE.R} is executed before the code in the
-@file{R} subdirectory and should be used to set up an environment needed
-only to evaluate the code (which is run with the @option{--vanilla}
-command-line flag).  Very few packages will need such code.  Indeed,
-both @file{install.R} and @file{R_PROFILE.R} should be viewed as
+@file{R} subdirectory when saving an image or preparing for
+lazy-loading, and should be used to set up an environment needed only to
+evaluate the code (which is run with the @option{--vanilla} command-line
+flag).  Very few packages will need such code.
+
+Both @file{install.R} and @file{R_PROFILE.R} should be viewed as
 experimental; the mechanism to execute code before attaching or
 installing the package may change in the near future.
 

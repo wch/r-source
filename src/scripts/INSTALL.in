@@ -139,10 +139,10 @@ parse_description_field () { # fieldname
   tmp=`get_dcf_field ${1} DESCRIPTION`
   if test "x$tmp" != "x" ; then
     case "$tmp" in
-      yes|Yes)
+      yes|Yes|true|True|TRUE)
       value=true
       ;;
-      no|No)
+      no|No|false|False|FALSE)
       value=false
       ;;
       *)
