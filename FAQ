@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.64-12, 1999/07/02
+Version 0.64-13, 1999/07/05
 Kurt Hornik
 
 
@@ -170,7 +170,7 @@ R by sending code and bug reports.
 modify the R source code CVS archive.  The group currently consists of Doug
 Bates, Peter Dalgaard, Robert Gentleman, Kurt Hornik, Ross Ihaka, Friedrich
 Leisch, Thomas Lumley, Martin Maechler, Guido Masarotto, Paul Murrell,
-Brian Ripley, Heiner Schwarte, and Luke Tierney.
+Brian Ripley, Heiner Schwarte, Duncan Temple Lang, and Luke Tierney.
 
    R has a home page at `http://stat.auckland.ac.nz/r/r.html'.  It is free
 software distributed under a GNU-style copyleft, and an official part of
@@ -1436,7 +1436,7 @@ either be integers or integers ending with `M', `K', or `k' meaning `Mega'
 (2^20), (computer) `Kilo' (2^10), or regular `kilo' (1000).
 
    E.g., to read in a table of 5000 observations on 40 numeric variables,
-`R --vsize 6M' should do.
+`R --vsize 6M' should do (which currently is the default).
 
    Note that the information on where to find vectors and strings on the
 heap is stored using cons cells.  Thus, it may also be necessary to
@@ -1628,6 +1628,10 @@ configuration; sometimes only 256 colors can be used.)
 the problem occurs when Netscape is running, try (re)starting it with
 either the `-no-install' (to use the default colormap) or the `-install'
 (to install a private colormap) option.
+
+   You could also set the `colortype' of `X11()' to `pseudo.cube' rather
+than the default `pseudo'.  See the help page for `X11()' for more
+information.
 
 7.12 Is R Y2K-compliant?
 ========================
