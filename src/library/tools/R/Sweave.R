@@ -96,7 +96,22 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
     options
 }
 
-
+SweaveGetHooks <- function(options)
+{
+    if(!exists("SweaveHooks", mode="list"))
+        return(NULL)
+    
+    z <- NULL
+    for(k in names(SweaveHooks)){
+        if(k != "" && !is.null(options[[k]]) && options[[k]]){
+            if(is.function(SweaveHooks[[k]]))
+                z <- c(z, parse(text=paste("SweaveHooks$",
+                                k, "()", sep="")))
+        }
+    }
+    z
+}
+           
 
 ###**********************************************************
 
@@ -131,26 +146,15 @@ RweaveLatexSetup <-
     else
         styfile <- "Sweave"
 
-    eval.with.opt <- function (expr, options){
-        if(options$eval){
-            res <- try(.Internal(eval.with.vis(expr, .GlobalEnv, NULL)))
-            if(inherits(res, "try-error")) return(res)
-            if(options$print | (options$term & res$visible))
-                print(res$value)
-        }
-        return(res)
-    }
-    
     options <- list(prefix=TRUE, prefix.string=prefix.string,
                     engine="R", print=FALSE, eval=eval,
                     fig=FALSE, pdf=pdf, eps=eps, 
-                    width=6, height=6, term=FALSE,
+                    width=6, height=6, term=TRUE,
                     echo=echo, results="verbatim", split=split,
                     strip.white=TRUE, include=TRUE)
     
     list(output=output, styfile=styfile,
          debug=debug, quiet=quiet,
-         eval.with.opt = eval.with.opt,
          options=options, chunkout=list())
 }
 
@@ -190,7 +194,8 @@ RweaveLatexRuncode <- function(object, chunk, options)
     else
         chunkout <- object$output
 
-    chunkexps <- parse(text=chunk)
+    chunkexps <- c(SweaveGetHooks(options),
+                   parse(text=chunk))
     openSinput <- FALSE
     
     for(ce in chunkexps){
@@ -210,7 +215,7 @@ RweaveLatexRuncode <- function(object, chunk, options)
         tmpcon <- textConnection("output", "w")
         sink(file=tmpcon)
         err <- NULL
-        if(options$eval) err <- object$eval.with.opt(ce, options)
+        if(options$eval) err <- RweaveEvalWithOpt(ce, options)
         sink()
         close(tmpcon)
         if(inherits(err, "try-error"))
@@ -360,6 +365,18 @@ RweaveChunkPrefix <- function(options)
 
     return(chunkprefix)
 }
+
+RweaveEvalWithOpt <- function (expr, options){
+    if(options$eval){
+        res <- try(.Internal(eval.with.vis(expr, .GlobalEnv, NULL)))
+        if(inherits(res, "try-error")) return(res)
+        if(options$print | (options$term & res$visible))
+            print(res$value)
+    }
+    return(res)
+}
+    
+
 
 ###**********************************************************
             
