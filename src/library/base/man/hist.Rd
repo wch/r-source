@@ -1,7 +1,8 @@
 \name{hist}
 \title{Histograms}
 \usage{
-hist(x, breaks, freq = NULL, col = NULL, border = par("fg"),
+hist(x, breaks, freq = NULL, probability = freq,
+     include.lowest = TRUE, col = NULL, border = par("fg"),
      main = paste("Histogram of" , deparse(substitute(x))),
      xlim = range(breaks),  ylim = range(counts, 0),
      xlab = deparse(substitute(x)),  ylab,
@@ -17,6 +18,9 @@ or a vector giving the breakpoints between histogram cells.}
   histogram is to present a representation of frequencies
   (the default \emph{if} \code{breaks} are equidistant) or relative
   frequencies (``probabilities'').}
+\item{probability}{an \emph{alias} for \code{freq}, for S compatibility.}
+\item{include.lowest}{logical; if \code{TRUE},
+  an `x[i]' equal to the `breaks' value will be included in the first bar.}
 \item{col}{a colour to be used to fill the bars.
   The default of \code{NULL} yields unfilled bars.}
 \item{border}{the color of the border around the bars.}
@@ -57,6 +61,9 @@ par(op)
 
 str(hist(islands, plot= F))
 str(hist(islands, br=12, plot= F))
+#- other examples; need plot=F here as well:
+sum(hist(islands, br=c(12,20,36,80,200,1000,1e5)        )$counts) == 48
+sum(hist(islands, br=c(12,20,36,80,200,1000,max(islands)),include.lowest=FALSE)$counts) == 48
 }
 \keyword{hplot}
 \keyword{iplot}

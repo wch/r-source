@@ -1,20 +1,22 @@
 \name{cut}
 \title{Convert Numeric to Factor}
 \usage{
-cut(x, breaks, labels=NULL, right=TRUE, dig.lab=3)
+cut(x, breaks, labels=NULL, include.lowest = FALSE, right=TRUE, dig.lab=3)
 }
 \alias{cut}
 \arguments{
 \item{x}{a numeric vector which is to be converted to a factor by cutting.}
 \item{break}{either a vector of cut points or number
-giving the number of intervals which \code{x} is to be
-cut into.}
+  giving the number of intervals which \code{x} is to be cut into.}
 \item{labels}{labels for the levels of the resulting category. By default
-labels are constructed using \code{"(a,b]"} interval notation.}.
+  labels are constructed using \code{"(a,b]"} interval notation.}.
+\item{include.lowest}{logical, indicating if an `x[i]' equal to the
+  lowest (or highest, for \code{right = FALSE}) `breaks' value should be
+  included.}
 \item{right}{logical, indicating if the intervals should closed on the
-right (and open on the left) or vice versa.}
+  right (and open on the left) or vice versa.}
 \item{dig.lab}{integer which is used when labels are not given. It
-determines the number of digits used in formatting the break numbers.}
+  determines the number of digits used in formatting the break numbers.}
 }
 \value{
 \code{cut} divides the range of \code{x} into intervals
@@ -22,6 +24,7 @@ and codes the values in \code{x} according to which
 interval they fall.
 The leftmost interval corresponds to level one,
 the next leftmost to level two and so on.
+
 If a \code{labels} parameter is specified, its values are used
 to name the factor levels. If none is specified, the factor
 level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}

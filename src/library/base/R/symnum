@@ -42,7 +42,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
   iS <-
     .C("bincode2", x= as.double(x), length(x),
        as.double(cutpoints), as.integer(ns+1),
-       code= integer(length(x)), NAOK = TRUE)$code
+       code= integer(length(x)), include = TRUE, NAOK = TRUE)$code
   if(any(ii <- is.na(iS))) {
 	  ##-- can get 0, if x[i]== minc  --- only case ?
 	  iS[which(ii)[abs(x[ii] - minc) < eps]] <- 1 #-> symbol[1]
