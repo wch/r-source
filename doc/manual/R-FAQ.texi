@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-30, @value{FAQ-YEAR}-01-07
+@set FAQ-VERSION 1.8-32, @value{FAQ-YEAR}-01-14
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1944,12 +1944,17 @@ Features and strings for nonparametric regression.
 Create and maintain delayed-data packages (DDP's).
 @item gafit
 Genetic algorithm for curve fitting.
+@item gap
+Genetic analysis package for both population and family data.
 @item gbm
 Generalized Boosted Regression Models: implements extensions to Freund
 and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
 machine.  Includes regression methods for least squares, absolute loss,
 logistic, Poisson, Cox proportional hazards partial likelihood, and
 AdaBoost exponential loss.
+@item gclus
+Clustering Graphics.  Orders panels in scatterplot matrices and parallel
+coordinate displays by some merit index.
 @item gee
 An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data.
