@@ -54,6 +54,13 @@ function(dir, outDir)
     ## <FIXME>
     ## Should we do any checking on @code{outDir}?
     ## </FIXME>
+
+    ## If there is an @file{INDEX} file in the package sources, we
+    ## install this, and do not build it.
+    if(.fileTest("-f", file.path(dir, "INDEX")))
+        file.copy(file.path(dir, "INDEX"),
+                  file.path(outDir, "INDEX"),
+                  overwrite = TRUE)
     
     .installPackageRdIndices(dir, outDir)
     .installPackageVignetteIndex(dir, outDir)
@@ -67,14 +74,12 @@ function(dir, outDir)
 {
     dir <- .convertFilePathToAbsolute(dir)
     docsDir <- file.path(dir, "man")
-    if(!.fileTest("-d", docsDir))
-        stop(paste("directory", sQuote(dir),
-                   "does not contain Rd sources"))
+    if(!.fileTest("-d", docsDir)) return()
     
     dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
     
-    indices <- c("CONTENTS.rda", "CONTENTS", "INDEX")
+    indices <- c("CONTENTS.rds", "CONTENTS", "INDEX")
     upToDate <- .fileTest("-nt", file.path(outDir, indices), docsDir)
     if(.fileTest("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
@@ -82,33 +87,32 @@ function(dir, outDir)
         upToDate <-
             c(upToDate,
               .fileTest("-nt",
-                        file.path(outDir, "data", "00Index.dcf"),
+                        file.path(outDir, "data", "00Index.rds"),
                         c(dataDir, docsDir)))
     }
     if(all(upToDate)) return()
 
     contents <- Rdcontents(.listFilesWithType(docsDir, "docs"))
 
-    .writeContentsRDA(contents, file.path(outDir, "CONTENTS.rda"))
+    .writeContentsRDA(contents, file.path(outDir, "CONTENTS.rds"))
 
     .writeContentsDCF(contents, packageName,
                       file.path(outDir, "CONTENTS"))
 
-    ## If there is an @file{INDEX} file in the package sources, we
-    ## install this (in @code{R CMD INSTALL}), and do not build it.
+    ## If there is no @file{INDEX} file in the package sources, we
+    ## build one.
     ## <FIXME>
-    ## Should we install here instead?
+    ## Maybe also save this in RDA format then?
+    ## </FIXME>
     if(!.fileTest("-f", file.path(dir, "INDEX")))
         writeLines(formatDL(.buildRdIndex(contents)),
                    file.path(outDir, "INDEX"))
-    ## </FIXME>
 
     if(.fileTest("-d", dataDir)) {
         outDataDir <- file.path(outDir, "data")
         if(!.fileTest("-d", outDataDir)) dir.create(outDataDir)
-        writeLines(formatDL(.buildDataIndex(dataDir, contents),
-                            style = "list"),
-                   file.path(outDataDir, "00Index.dcf"))
+        .saveRDA(.buildDataIndex(dataDir, contents),
+                 file.path(outDataDir, "00Index.rds"))
     }
     
 }
@@ -124,8 +128,8 @@ function(dir, outDir)
     vignetteIndex <- .buildVignetteIndex(vignetteFiles)
     outVignetteDir <- file.path(outDir, "doc")
     if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
-    writeLines(formatDL(vignetteIndex, style = "list"),
-               file.path(outVignetteDir, "00Index.dcf"))
+    .saveRDA(vignetteIndex,
+             file = file.path(outVignetteDir, "00Index.rds"))
 }
 
 ### * .installPackageDemoIndex
@@ -138,8 +142,14 @@ function(dir, outDir)
     demoIndex <- .buildDemoIndex(demoDir)
     outDemoDir <- file.path(outDir, "demo")
     if(!.fileTest("-d", outDemoDir)) dir.create(outDemoDir)
-    writeLines(formatDL(demoIndex, style = "list"),
-               file.path(outDemoDir, "00Index.dcf"))
+    ## <FIXME>
+    ## Compatibility code for BioC vignette tools.
+    ## Remove eventually ...
+    writeLines(formatDL(vignetteIndex, style = "list"),
+               file.path(outVignetteDir, "00Index.dcf"))
+    ## </FIXME>
+    .saveRDA(demoIndex,
+             file = file.path(outDemoDir, "00Index.rds"))
 }
 
 ### Local variables: ***

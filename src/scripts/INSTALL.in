@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.99 $'
+revision='$Revision: 1.100 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -458,7 +458,7 @@ do_install () {
       fi
     fi
 
-    for f in COPYING INDEX; do
+    for f in COPYING; do
       if test -f "${f}"; then cp "${f}" "${lib}/${pkg}"; fi
     done
     ## Copy DESCRIPTION file, stamp with build information, and remove
@@ -520,15 +520,16 @@ do_install () {
 	    fi)
         fi
       fi
-      (echo "library(tools)"; \
-	echo ".installPackageIndices(\".\", \"${lib}/${pkg}\")") | \
-	  ${R_EXE} --vanilla >/dev/null
-      if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
-	cat "${R_HOME}"/library/*/CONTENTS \
-	  > "${R_HOME}"/doc/html/search/index.txt
-      fi	
     else
       echo "No man pages found in package '${pkg}'"
+    fi
+
+    (echo "library(tools)"; \
+      echo ".installPackageIndices(\".\", \"${lib}/${pkg}\")") | \
+	${R_EXE} --vanilla >/dev/null
+    if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
+      cat "${R_HOME}"/library/*/CONTENTS \
+	> "${R_HOME}"/doc/html/search/index.txt
     fi
 
     if ${clean}; then
