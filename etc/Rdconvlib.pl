@@ -411,6 +411,8 @@ sub text2html {
     $text =~ s/\\right\)/\)/go;
     $text =~ s/\\R/<FONT FACE=\"Courier New,Courier\"
 	COLOR=\"\#666666\"><b>R<\/b><\/FONT>/go;
+    $text =~ s/---/&#151/go;
+    $text =~ s/--/&#150/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
@@ -739,6 +741,9 @@ sub text2nroff {
     $text =~ s/\\epsilon/epsilon/go;
     $text =~ s/\\left\(/\(/go;
     $text =~ s/\\right\)/\)/go;
+    $text =~ s/\\R/R/go;
+    $text =~ s/---/\\(em/go;
+    $text =~ s/--/\\(en/go;
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 

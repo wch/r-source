@@ -5,7 +5,9 @@
 BUG FIXES
 
     o   The Rd format has a new section \details{} (needed for proper
-        Sd2Rd translation).
+        Sd2Rd translation). \R was not understood for nroff
+	conversions, longer dashes (-- and --- in latex syntax) are
+	now converted properly. 
 
     o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc 
 	directories.
