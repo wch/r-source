@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-55 @value{FAQ-YEAR}-03-22
+@set FAQ-VERSION 1.8-56 @value{FAQ-YEAR}-03-26
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -1646,6 +1646,10 @@ Currently, implements methods for cell cycle analysis and for inferring
 large sparse graphical Gaussian models.
 @item HI
 Simulation from distributions supported by nested hyperplanes.
+@item HighProbability
+Estimation of the alternative hypotheses having frequentist or Bayesian
+probabilities at least as great as a specified threshold, given a list
+of @math{p}-values.
 @item Hmisc
 Functions useful for data analysis, high-level graphics, utility
 operations, functions for computing sample size and power, importing
@@ -1757,6 +1761,8 @@ Applications'' by A. Sen and M. Srivastava, 1990, Springer-Verlag.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
+@item SparseLogReg
+Sparse logistic regression.
 @item SparseM
 Basic linear algebra for sparse matrices.
 @item StatDataML
@@ -2193,6 +2199,9 @@ ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
+@item mathgraph
+Tools for constructing and manipulating objects from a class of directed
+and undirected graphs.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
@@ -2462,6 +2471,8 @@ using the RAM approach.
 Simple interfce for serializing to connections.
 @item session
 Functions for interacting with, saving and restoring R sessions.
+@item setRNG
+Set (normal) random number generator and seed.
 @item sfsmisc
 Utilities from Seminar fuer Statistik ETH Zurich.
 @item sgeostat
@@ -2524,6 +2535,8 @@ approximations for global and local Moran's I; and functions for
 estimating spatial simultaneous autoregressive (SAR) models.  (Was
 formerly the three packages: @strong{spweights}, @strong{sptests}, and
 @strong{spsarlm}.)
+@item spe
+Stochastic Proximity Embedding.
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @c <COMMENT>
