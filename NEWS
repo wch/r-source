@@ -33,6 +33,9 @@ BUG FIXES
 	the mode requested if not "any".  A bug in setting the NAMED
 	field in do_get was fixed.
 
+    o	Removed warning about names in persistent strings when aname space
+	is saved.
+
 
 
 
