@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.120 $ ';
+my $revision = ' $Revision: 1.121 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -724,7 +724,12 @@ sub check_pkg {
         my @out = R_runR($Rcmd, "${R_opts} --quiet");
         @out = grep(!/^\>/, @out);
 	if($#out >= 0) {
-	    $log->error();
+	    ## <NOTE>
+	    ## We really want to stop if we find offending assignment
+	    ## functions.  But we cannot use error() because output may
+	    ## contain warnings ...
+	    $log->warning();
+	    ## </NOTE>
 	    $log->print(join("\n", @out) . "\n");
 	    exit(1);
 	}
