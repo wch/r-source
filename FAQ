@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-32, 2001-12-01
+Version 1.3-33, 2001-12-03
 Kurt Hornik
 
 
@@ -589,12 +589,17 @@ mailing lists and the R Bug Tracking system.
 2.11 Can I use R for commercial purposes?
 =========================================
 
-   Yes, one can use R for commercial purposes (e.g., in business or in
-consulting).  The GPL, like all Open Source licenses, permits all and any
-use of the package.  It only restricts distribution of R or of other
-programs containing code from R.  This is made clear in clause 6 ("No
-Discrimination Against Fields of Endeavor") of the Open Source Definition
-(http://www.opensource.org/docs/definition.html):
+   R is released under the GNU General Public License (GPL).  If you have
+any questions regarding the legality of using R in any particular situation
+you should bring it up with your legal counsel.  We are in no position to
+offer legal advice.
+
+   It is the opinion of the R Core Team that one can use R for commercial
+purposes (e.g., in business or in consulting).  The GPL, like all Open
+Source licenses, permits all and any use of the package.  It only restricts
+distribution of R or of other programs containing code from R.  This is
+made clear in clause 6 ("No Discrimination Against Fields of Endeavor") of
+the Open Source Definition (http://www.opensource.org/docs/definition.html):
 
      The license must not restrict anyone from making use of the program in
      a specific field of endeavor.  For example, it may not restrict the
@@ -610,8 +615,11 @@ It is also explicitly stated in clause 0 of the GPL, which says in part
 
    Most add-on packages, including all recommended ones, also explicitly
 allow commercial use in this way.  A few packages are restricted to
-"non-commercial use"; you may need contact the author to clarify whether
-these may be used.
+"non-commercial use"; you should contact the author to clarify whether
+these may be used or seek the advice of your legal counsel.
+
+   None of the discussion in this section constitutes legal advice.  The R
+Core Team does not provide legal advice under any circumstances.
 
 3 R and S
 *********
