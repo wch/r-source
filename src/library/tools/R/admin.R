@@ -1,3 +1,5 @@
+### * .installPackageDescription
+
 .installPackageDescription <-
 function(dir, outDir)
 {
@@ -42,27 +44,41 @@ function(dir, outDir)
     invisible(NULL)
 }
 
+### * .installPackageIndices
+
 .installPackageIndices <-
 function(dir, outDir)
 {
     if(!.fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
-    else {
-        dir <- .convertFilePathToAbsolute(dir)
-        packageName <- basename(dir)
-    }
+    ## <FIXME>
+    ## Should we do any checking on @code{outDir}?
+    ## </FIXME>
+    
+    .installPackageRdIndices(dir, outDir)
+    .installPackageVignetteIndex(dir, outDir)
+}
+
+### * .installPackageRdIndices
+
+.installPackageRdIndices <-
+function(dir, outDir)
+{
+    dir <- .convertFilePathToAbsolute(dir)
     docsDir <- file.path(dir, "man")
     if(!.fileTest("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
+
+    packageName <- basename(dir)
     
     indices <- c("CONTENTS.rda", "CONTENTS", "INDEX")
     if(.fileTest("-d", file.path(dir, "data")))
-        indices <- c(indices, file.path("data", "00Index"))
+        indices <- c(indices, file.path("data", "00Index.dcf"))
     if(all(.fileTest("-nt", file.path(outDir, indices), docsDir)))
         return()
 
-    docsExts <- c("Rd", "rd")
+    docsExts <- .makeFileExts("docs")
     docsFiles <- .listFilesWithExts(docsDir, docsExts)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
         docsFiles <- c(docsFiles,
@@ -70,25 +86,32 @@ function(dir, outDir)
 
     contents <- Rdcontents(docsFiles)
 
+    ## * CONTENTS.rda
+
     ## Change e.g. when we use a different format for the contents db
     ## (e.g., with aliases and keywords not collapsed).
     version <- "0.1"
-
     save(list = c("contents", "version"),
          file = file.path(outDir, "CONTENTS.rda"))
 
-    ## Same code as in Rd2contents(): in the future, we will create all
-    ## indices at install time using .installPackageIndices(), and the
-    ## function Rd2contents() as the R version of the Perl script
-    ## Rd2contents.pl will no longer be needed.
+    ## * CONTENTS
+    
+    ## <NOTE>
+    ## Same code as in @code{Rd2contents()}.
+    ## In the future, we will create all indices at install time using
+    ## @code{.installPackageIndices()}, and @code{Rd2contents()} as the
+    ## R version of the Perl script @file{Rd2contents.pl} will no longer
+    ## be needed.
+    ## </NOTE>
 
     ## <FIXME>
     ## This has 'html' hard-wired.
-    ## Also what about MacOS Classic?
+    ## Note that slashes etc. should be fine for URLs.
     URLs <- paste("../../../library/",
                   packageName,
                   "/html/",
-                  basename(gsub("\.[Rr]d$", "", contents[ , "File"])),
+                  basename(gsub("\\.[[:alpha:]]+$", "",
+                                contents[ , "File"])),
                   ".html",
                   sep = "")
     ## </FIXME>
@@ -101,21 +124,60 @@ function(dir, outDir)
         sep = c("\n", "\n", "\n", "\n", "\n\n"),
         file = file.path(outDir, "CONTENTS"))
 
+    ## * INDEX
+    
     ## <NOTE>
-    ## Code similar to Rdindex() ...
-    writeLines(formatDL(contents[ , c("Name", "Title"), drop = FALSE]),
-               file.path(outDir, "INDEX"))
+    ## Code similar to @code{Rdindex()} ...
+    if(!.fileTest("-f", file.path(dir, "INDEX")))
+        writeLines(formatDL(contents[ , c("Name", "Title"), drop = FALSE]),
+                   file.path(outDir, "INDEX"))
+    ## </NOTE>
 
+    ## * data/00Index.dcf
+
+    ## <NOTE>
+    ## Code similar to @code{Rdindex()} ...
     if(.fileTest("-d", file.path(dir, "data"))) {
-        if(!.fileTest("-d", file.path(outDir, "data")))
-            dir.create(file.path(outDir, "data"))
+        outDataDir <- file.path(outDir, "data")
+        if(!.fileTest("-d", outDataDir)) dir.create(outDataDir)
         ind <- (contents[ , "Keywords"] == "datasets" |
                 contents[ , "Type"] == "data")
-        contents <- contents[ind, , drop = FALSE]
-        writeLines(formatDL(contents[ , c("Name", "Title"),
-                                     drop = FALSE]),
-                   file.path(outDir, "data", "00Index"))
+        contents <- contents[ind, c("Name", "Title"), drop = FALSE]
+        writeLines(formatDL(contents, style = "list"),
+                   file.path(outDataDir, "00Index.dcf"))
     }
     ## </NOTE>
-    
+}    
+
+### * .installPackageVignetteIndex
+
+.installPackageVignetteIndex <-
+function(dir, outDir)
+{
+    vignetteDir <- file.path(dir, "inst", "doc")
+    if(!.fileTest("-d", vignetteDir)) return()
+    vignetteExts <- .makeFileExts("vignette")
+    vignetteFiles <- .listFilesWithExts(vignetteDir, vignetteExts)
+    vignetteIndexEntryRE <-
+        "[[:space:]]*%+[[:space:]]\\\\VignetteIndexEntry\{([^}]*)\}"
+    vignetteTitles <-
+        sapply(vignetteFiles,
+               function(file) {
+                   lines <- grep(vignetteIndexEntryRE, readLines(file),
+                                 value = TRUE)
+                   lines <- gsub(vignetteIndexEntryRE, "\\1", lines[1])
+               })
+    vignetteFiles <-
+        paste(basename(gsub("\\.[[:alpha:]]+$", "", vignetteFiles)),
+              ".pdf", sep = "")
+    outVignetteDir <- file.path(outDir, "doc")
+    if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
+    writeLines(formatDL(cbind(vignetteFiles, vignetteTitles),
+                        style = "list"),
+               file.path(outVignetteDir, "00Index.dcf"))
 }
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
