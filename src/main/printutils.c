@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1999, The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -89,49 +90,61 @@ long Decode2Long(char *p, int *ierr)
 
 char *EncodeLogical(int x, int w)
 {
-	if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
-	else if(x) sprintf(Encodebuf, "%*s", w, "TRUE");
-	else sprintf(Encodebuf, "%*s", w, "FALSE");
-	return Encodebuf;
+    if(x == NA_LOGICAL) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+    else if(x) sprintf(Encodebuf, "%*s", w, "TRUE");
+    else sprintf(Encodebuf, "%*s", w, "FALSE");
+    return Encodebuf;
 }
 
 char *EncodeInteger(int x, int w)
 {
-	if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
-	else sprintf(Encodebuf, "%*d", w, x);
-	return Encodebuf;
+    if(x == NA_INTEGER) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+    else sprintf(Encodebuf, "%*d", w, x);
+    return Encodebuf;
 }
 
 char *EncodeReal(double x, int w, int d, int e)
 {
-	char fmt[20];
-	/* IEEE allows signed zeros (yuck!) */
-	if (x == 0.0) x = 0.0;
-	if (!FINITE(x)) {
+    char fmt[20];
+    /* IEEE allows signed zeros (yuck!) */
+    if (x == 0.0) x = 0.0;
+    if (!FINITE(x)) {
 #ifdef IEEE_754
-		if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
-		else if(ISNAN(x)) sprintf(Encodebuf, "%*s", w, "NaN");
-		else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
-		else sprintf(Encodebuf, "%*s", w, "-Inf");
+	if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	else if(ISNAN(x)) sprintf(Encodebuf, "%*s", w, "NaN");
+	else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
+	else sprintf(Encodebuf, "%*s", w, "-Inf");
 #else
-		sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+	sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
 #endif
-	}
-	else if (e) {
-		if(d) {
-			sprintf(fmt,"%%#%d.%de", w, d);
-			sprintf(Encodebuf, fmt, x);
-		}
-		else {
-			sprintf(fmt,"%%%d.%de", w, d);
-			sprintf(Encodebuf, fmt, x);
-		}
+    }
+    else if (e) {
+#ifndef Win32
+	if(d) {
+	    sprintf(fmt,"%%#%d.%de", w, d);
+	    sprintf(Encodebuf, fmt, x);
 	}
 	else {
-		sprintf(fmt,"%%%d.%df",w,d);
-		sprintf(Encodebuf, fmt, x);
+	    sprintf(fmt,"%%%d.%de", w, d);
+	    sprintf(Encodebuf, fmt, x);
 	}
-	return Encodebuf;
+#else
+	/* Win32 libraries always use e+xxx format so avoid them */
+	int kp = (x == 0.0)? 0 : floor(log10(fabs(x))), ee = 1;
+	x = x / pow(10.0, (double)kp);
+	if(abs(kp) >= 100) ee = 2;
+	if(d)
+	    sprintf(fmt, "%%#%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
+	else
+	    sprintf(fmt, "%%%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
+	sprintf(Encodebuf, fmt, x, kp);
+#endif
+    }
+    else {
+	sprintf(fmt,"%%%d.%df",w,d);
+	sprintf(Encodebuf, fmt, x);
+    }
+    return Encodebuf;
 }
 
 char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
@@ -167,268 +180,269 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 #ifdef OLD
 static int hexdigit(unsigned int x)
 {
-	return ((x <= 9)? '0' :	 'A'-10) + x;
+    return ((x <= 9)? '0' :	 'A'-10) + x;
 }
 #endif
 
 int Rstrlen(char *s)
 {
-	char *p;
-	int len;
-	len = 0;
-	p = s;
-	while(*p) {
-		if(isprint(*p)) {
-			switch(*p) {
-			case '\\':
+    char *p;
+    int len;
+    len = 0;
+    p = s;
+    while(*p) {
+	if(isprint(*p)) {
+	    switch(*p) {
+	    case '\\':
 #ifdef ESCquote
-			case '\'':
+	    case '\'':
 #endif
-			case '\"': len += 2; break;
-			default: len += 1; break;
-			}
-		}
-		else switch(*p) {
-		case '\a':
-		case '\b':
-		case '\f':
-		case '\n':
-		case '\r':
-		case '\t':
-		case '\v':
-			len += 2; break;
-		default:
-#ifdef OLD
-			len += 4; break;
-#else
-			len += 1; break;
-#endif
-		}
-		p++;
+	    case '\"': len += 2; break;
+	    default: len += 1; break;
+	    }
 	}
-	return len;
+	else switch(*p) {
+	case '\a':
+	case '\b':
+	case '\f':
+	case '\n':
+	case '\r':
+	case '\t':
+	case '\v':
+	    len += 2; break;
+	default:
+#ifdef OLD
+	    len += 4; break;
+#else
+	    len += 1; break;
+#endif
+	}
+	p++;
+    }
+    return len;
 }
 
 char *EncodeString(char *s, int w, int quote, int right)
 {
-	int b, i;
-	char *p, *q;
-	q = Encodebuf;
-	if(right) { /*Right justifying */
-		b = w - Rstrlen(s) - (quote ? 2 : 0);
-		for(i=0 ; i<b ; i++) *q++ = ' ';
-	}
-	if(quote) *q++ = quote;
-	if (s == CHAR(NA_STRING) )
-		p = CHAR(print_na_string);
-	else	p = s;
-	while(*p) {
+    int b, i;
+    char *p, *q;
+    q = Encodebuf;
+    if(right) { /*Right justifying */
+	b = w - Rstrlen(s) - (quote ? 2 : 0);
+	for(i=0 ; i<b ; i++) *q++ = ' ';
+    }
+    if(quote) *q++ = quote;
+    if (s == CHAR(NA_STRING) )
+	p = CHAR(print_na_string);
+    else	p = s;
+    while(*p) {
 
-		/* ASCII */
+	/* ASCII */
 
-		if(isprint(*p)) {
-			switch(*p) {
-			case '\\': *q++ = '\\'; *q++ = '\\'; break;
+	if(isprint(*p)) {
+	    switch(*p) {
+	    case '\\': *q++ = '\\'; *q++ = '\\'; break;
 #ifdef ESCquote
-			case '\'': *q++ = '\\'; *q++ = '\''; break;
+	    case '\'': *q++ = '\\'; *q++ = '\''; break;
 #endif
-			case '\"': *q++ = '\\'; *q++ = '\"'; break;
-			default: *q++ = *p; break;
-			}
-		}
+	    case '\"': *q++ = '\\'; *q++ = '\"'; break;
+	    default: *q++ = *p; break;
+	    }
+	}
 
-		/* ANSI Escapes */
+	/* ANSI Escapes */
 
-		else switch(*p) {
-			case '\a': *q++ = '\\'; *q++ = 'a'; break;
-			case '\b': *q++ = '\\'; *q++ = 'b'; break;
-			case '\f': *q++ = '\\'; *q++ = 'f'; break;
-			case '\n': *q++ = '\\'; *q++ = 'n'; break;
-			case '\r': *q++ = '\\'; *q++ = 'r'; break;
-			case '\t': *q++ = '\\'; *q++ = 't'; break;
-			case '\v': *q++ = '\\'; *q++ = 'v'; break;
+	else switch(*p) {
+	case '\a': *q++ = '\\'; *q++ = 'a'; break;
+	case '\b': *q++ = '\\'; *q++ = 'b'; break;
+	case '\f': *q++ = '\\'; *q++ = 'f'; break;
+	case '\n': *q++ = '\\'; *q++ = 'n'; break;
+	case '\r': *q++ = '\\'; *q++ = 'r'; break;
+	case '\t': *q++ = '\\'; *q++ = 't'; break;
+	case '\v': *q++ = '\\'; *q++ = 'v'; break;
 
-		/* Latin1 Swallowed Here */
+	    /* Latin1 Swallowed Here */
 
 #ifdef OLD
-			default: *q++ = '0'; *q++ = 'x';
-				*q++ = hexdigit((*p & 0xF0) >> 4);
-				*q++ = hexdigit(*p & 0x0F);
+	default: *q++ = '0'; *q++ = 'x';
+	    *q++ = hexdigit((*p & 0xF0) >> 4);
+	    *q++ = hexdigit(*p & 0x0F);
 #else
-			default:
-				*q++ = *p; break;
+	default:
+	    *q++ = *p; break;
 #endif
-		}
-		p++;
 	}
-	if(quote) *q++ = quote;
-	if(!right) { /* Left justifying */
-		*q = '\0';
-		b = w - strlen(Encodebuf);
-		for(i=0 ; i<b ; i++) *q++ = ' ';
-	}
+	p++;
+    }
+    if(quote) *q++ = quote;
+    if(!right) { /* Left justifying */
 	*q = '\0';
-	return Encodebuf;
+	b = w - strlen(Encodebuf);
+	for(i=0 ; i<b ; i++) *q++ = ' ';
+    }
+    *q = '\0';
+    return Encodebuf;
 }
 
 char *EncodeElement(SEXP x, int index, int quote)
 {
-	int w, d, e, wi, di, ei;
+    int w, d, e, wi, di, ei;
 
-	switch(TYPEOF(x)) {
-		case LGLSXP:
-			formatLogical(&INTEGER(x)[index], 1, &w);
-			EncodeLogical(INTEGER(x)[index], w);
-			break;
-		case INTSXP:
-			formatInteger(&INTEGER(x)[index], 1, &w);
-			EncodeInteger(INTEGER(x)[index], w);
-			break;
-		case REALSXP:
-			formatReal(&REAL(x)[index], 1, &w, &d, &e);
-			EncodeReal(REAL(x)[index], w, d, e);
-			break;
-		case STRSXP:
-			formatString(&STRING(x)[index], 1, &w, quote);
-			EncodeString(CHAR(STRING(x)[index]), w, quote, adj_left);
-			break;
-		case CPLXSXP:
-			formatComplex(&COMPLEX(x)[index], 1,
-				&w, &d, &e, &wi, &di, &ei);
-			EncodeComplex(COMPLEX(x)[index],
-				w, d, e, wi, di, ei);
-			break;
-	}
-	return Encodebuf;
+    switch(TYPEOF(x)) {
+    case LGLSXP:
+	formatLogical(&INTEGER(x)[index], 1, &w);
+	EncodeLogical(INTEGER(x)[index], w);
+	break;
+    case INTSXP:
+	formatInteger(&INTEGER(x)[index], 1, &w);
+	EncodeInteger(INTEGER(x)[index], w);
+	break;
+    case REALSXP:
+	formatReal(&REAL(x)[index], 1, &w, &d, &e);
+	EncodeReal(REAL(x)[index], w, d, e);
+	break;
+    case STRSXP:
+	formatString(&STRING(x)[index], 1, &w, quote);
+	EncodeString(CHAR(STRING(x)[index]), w, quote, adj_left);
+	break;
+    case CPLXSXP:
+	formatComplex(&COMPLEX(x)[index], 1,
+		      &w, &d, &e, &wi, &di, &ei);
+	EncodeComplex(COMPLEX(x)[index],
+		      w, d, e, wi, di, ei);
+	break;
+    }
+    return Encodebuf;
 }
 
 char *Rsprintf(char *format, ...)
 {
-	va_list(ap);
-	va_start(ap, format);
-	vsprintf(Encodebuf, format, ap);
-	va_end(ap);
-	return Encodebuf;
+    va_list(ap);
+    va_start(ap, format);
+    vsprintf(Encodebuf, format, ap);
+    va_end(ap);
+    return Encodebuf;
 }
 
 void Rprintf(char *format, ...)
 {
-	va_list(ap);
-	va_start(ap, format);
-	if(R_Outputfile) {
-		vfprintf(R_Outputfile, format, ap);
-		fflush(R_Outputfile);
-	}
-	else {
-		char buf[BUFSIZE]; int len;
-		vsprintf(buf, format, ap);
-		len = strlen(buf);
-		R_WriteConsole(buf, len);
-	}
-	va_end(ap);
+    va_list(ap);
+    va_start(ap, format);
+    if(R_Outputfile) {
+	vfprintf(R_Outputfile, format, ap);
+	fflush(R_Outputfile);
+    }
+    else {
+	char buf[BUFSIZE]; int len;
+	vsprintf(buf, format, ap);
+	len = strlen(buf);
+	R_WriteConsole(buf, len);
+    }
+    va_end(ap);
 }
 
 void REprintf(char *format, ...)
 {
-	va_list(ap);
-	va_start(ap, format);
-	if(R_Consolefile) {
-		vfprintf(R_Consolefile, format, ap);
-	}
-	else {
-		char buf[BUFSIZE]; int len;
-		vsprintf(buf, format, ap);
-		len = strlen(buf);
-		R_WriteConsole(buf, len);
-	}
-	va_end(ap);
+    va_list(ap);
+    va_start(ap, format);
+    if(R_Consolefile) {
+	vfprintf(R_Consolefile, format, ap);
+    }
+    else {
+	char buf[BUFSIZE]; int len;
+	vsprintf(buf, format, ap);
+	len = strlen(buf);
+	R_WriteConsole(buf, len);
+    }
+    va_end(ap);
 }
 
 void Rvprintf(const char *format, va_list arg)
 {
-	if(R_Outputfile) {
-		vfprintf(R_Outputfile, format, arg);
-		fflush(R_Outputfile);
-	}
-	else {
-		char buf[BUFSIZE]; int slen;
-		vsprintf(buf, format, arg);
-		slen = strlen(buf);
-		R_WriteConsole(buf, slen);
-	}
+    if(R_Outputfile) {
+	vfprintf(R_Outputfile, format, arg);
+	fflush(R_Outputfile);
+    }
+    else {
+	char buf[BUFSIZE]; int slen;
+	vsprintf(buf, format, arg);
+	slen = strlen(buf);
+	R_WriteConsole(buf, slen);
+    }
 }
 
 void REvprintf(const char *format, va_list arg)
 {
-	if(R_Consolefile) {
-		vfprintf(R_Consolefile, format, arg);
-	}
-	else {
-		char buf[BUFSIZE]; int slen;
-		vsprintf(buf, format, arg);
-		slen = strlen(buf);
-		R_WriteConsole(buf, slen);
-	}
+    if(R_Consolefile) {
+	vfprintf(R_Consolefile, format, arg);
+    }
+    else {
+	char buf[BUFSIZE]; int slen;
+	vsprintf(buf, format, arg);
+	slen = strlen(buf);
+	R_WriteConsole(buf, slen);
+    }
 }
 
 int IndexWidth(int n)
 {
-	return (int) (log10(n + 0.5) + 1);
+    return (int) (log10(n + 0.5) + 1);
 }
 
 void VectorIndex(int i, int w)
 {
-	Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);
+    Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);
 }
 
 void MatrixColumnLabel(SEXP cl, int j, int w)
 {
-	int l;
+    int l;
 
-	if (!isNull(cl)) {
-		l = Rstrlen(CHAR(STRING(cl)[j]));
-		Rprintf("%*s%s", w-l, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left));
-	}
-	else {
-		Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
-	}
+    if (!isNull(cl)) {
+	l = Rstrlen(CHAR(STRING(cl)[j]));
+	Rprintf("%*s%s", w-l, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left));
+    }
+    else {
+	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
+    }
 }
 
 void RightMatrixColumnLabel(SEXP cl, int j, int w)
 {
-	int l;
+    int l;
 
-	if (!isNull(cl)) {
-		l = Rstrlen(CHAR(STRING(cl)[j]));
-		Rprintf("%*s", PRINT_GAP+w,
-			EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_right));
-	}
-	else {
-		Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
-	}
+    if (!isNull(cl)) {
+	l = Rstrlen(CHAR(STRING(cl)[j]));
+	Rprintf("%*s", PRINT_GAP+w,
+		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_right));
+    }
+    else {
+	Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
+    }
 }
+
 void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
-	int l;
+    int l;
 
-	if (!isNull(cl)) {
-		l = Rstrlen(CHAR(STRING(cl)[j]));
-		Rprintf("%*s%s%*s", PRINT_GAP, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
-	}
-	else {
-		Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
-	}
+    if (!isNull(cl)) {
+	l = Rstrlen(CHAR(STRING(cl)[j]));
+	Rprintf("%*s%s%*s", PRINT_GAP, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
+    }
+    else {
+	Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
+    }
 }
 
 void MatrixRowLabel(SEXP rl, int i, int rlabw)
 {
-	int l;
+    int l;
 
-	if (!isNull(rl)) {
-		l = Rstrlen(CHAR(STRING(rl)[i]));
-		Rprintf("\n%s%*s", EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left), rlabw-l, "");
-	}
-	else {
-		Rprintf("\n%*s[%ld,]", rlabw-3-IndexWidth(i + 1), "", i+1);
-	}
+    if (!isNull(rl)) {
+	l = Rstrlen(CHAR(STRING(rl)[i]));
+	Rprintf("\n%s%*s", EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left), rlabw-l, "");
+    }
+    else {
+	Rprintf("\n%*s[%ld,]", rlabw-3-IndexWidth(i + 1), "", i+1);
+    }
 }
