@@ -203,9 +203,8 @@ BUG FIXES
     o   The ave() function had trouble if the grouping contained 
         unused levels. 
 	
-    o   read.fwf got confused by skip > 0 and could infinite loop
+    o   read.fwf() got confused by skip > 0 and could infinite loop
 	under some circumstances.  (PR#7350)
-
 
     o	upgrade(x, ask = FALSE) was broken for a "packageStatus" object.
 
@@ -214,6 +213,8 @@ BUG FIXES
 
     o   function getGroupMembers(), part of the definition of S4
         classes, had been promised for release 2.0, but slipped through.
+
+
 
 
 	*********************************************************
