@@ -88,6 +88,9 @@ recover <-
             message("recover called non-interactively; frames dumped, use debugger() to view")
             return(NULL)
         }
+        else if(identical(options()$show.error.messages, FALSE)) { # from try(silent=TRUE)?
+            return(NULL)
+        }
         calls <- limitedLabels(calls[1:from])
         repeat {
             which <- menu(calls, title="\nEnter a frame number, or 0 to exit  ")
