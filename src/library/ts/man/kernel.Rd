@@ -32,7 +32,7 @@ is.tskernel(k)
   \item{name}{the name of the kernel.}
   \item{r}{the kernel order for a Fejer kernel.}
   \item{digits}{the number of digits to format real numbers.}
-  \item{x}{a \code{"tskernel"} object.}
+  \item{k, x}{a \code{"tskernel"} object.}
   \item{\dots}{arguments passed to or from other methods.}
 }
 \details{

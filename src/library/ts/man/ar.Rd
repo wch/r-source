@@ -53,7 +53,7 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
 
   \item{\dots}{additional arguments for specific methods.}
 
-  \item{ar.obj}{a fit from \code{ar}.}
+  \item{object}{a fit from \code{ar}.}
 
   \item{newdata}{data to which to apply the prediction.}
 

@@ -24,6 +24,8 @@
   \item{main}{plot main title.}
   \item{range.bars}{logical indicating if each plot should have a bar at
     its right side which are of equal heights in user coordinates.}
+  \item{digits}{significant figures used in printing.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \seealso{\code{\link{plot.ts}} and \code{\link{stl}}, particularly for
   examples.}
