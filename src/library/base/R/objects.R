@@ -28,7 +28,7 @@ methods <- function (generic.function, class)
         if(generic.function == "coefficients") generic.function <- "coef"
         if(generic.function == "fitted.values") generic.function <- "fitted"
 	name <- paste("^", generic.function, ".", sep = "")
-        ## also look for registered methods in namespaces
+        ## also look for registered methods from namespaces
         if(generic.function %in% groupGenerics)
             defenv <- .BaseNamespaceEnv
         else {
@@ -154,21 +154,24 @@ getAnywhere <- function(x)
             gen <- paste(parts[1:(i-1)], collapse="")
             cl <- paste(parts[2:length(parts)], collapse="")
             if(!is.null(f <- getS3method(gen, cl, TRUE))) {
+                ev <- topenv(environment(f))
+                nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
-                where <- c(where, paste("registered S3 method for", gen))
+                msg <- paste("registered S3 method for", gen)
+                if(!is.null(nmev))
+                    msg <- paste(msg, "from namespace", nmev)
+                where <- c(where, msg)
                 visible <- c(visible, FALSE)
             }
         }
     }
-    ## now look in namespaces
-    for(i in search()[-1]) {
-        if(!length(grep("^package:", i))) next
-        ns <- try(asNamespace(substring(i, 9)), silent = TRUE)
-        if(inherits(ns, "try-error")) next
+    ## now look in namespaces, visible or not
+    for(i in loadedNamespaces()) {
+        ns <- asNamespace(i)
         if(exists(x, envir = ns, inherits = FALSE)) {
             f <- get(x, envir = ns, inherits = FALSE)
             objs <- c(objs, f)
-            where <- c(where, sub("^package", "namespace", i))
+            where <- c(where, paste("namespace", i, sep=":"))
             visible <- c(visible, FALSE)
         }
     }
