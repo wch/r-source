@@ -22,7 +22,7 @@
 #include "Graphics.h"
 #include "Error.h"
 #include "Fileio.h"
-#include "Platform.h"
+
 #include <stdio.h>
 #include <ctype.h>
 
@@ -46,67 +46,67 @@ Family[] = {
     { "AvantGarde",
       "AvantGarde-Book",		 "agw_____",
       "AvantGarde-Demi",		 "agd_____",
-      "AvantGarde-BookOblique",	         "agwo____",
-      "AvantGarde-DemiOblique",	         "agdo____",
-      "Symbol",			         "sy______", },
+      "AvantGarde-BookOblique",		 "agwo____",
+      "AvantGarde-DemiOblique",		 "agdo____",
+      "Symbol",				 "sy______", },
 
     { "Bookman",
-      "Bookman-Light",		         "bkl_____",
-      "Bookman-Demi",		         "bkd_____",
-      "Bookman-LightItalic",	         "bkli____",
-      "Bookman-DemiItalic",	         "bkdi____",
-      "Symbol",			         "sy______", },
+      "Bookman-Light",			 "bkl_____",
+      "Bookman-Demi",			 "bkd_____",
+      "Bookman-LightItalic",		 "bkli____",
+      "Bookman-DemiItalic",		 "bkdi____",
+      "Symbol",				 "sy______", },
 
     { "Courier",
       "Courier",			 "com_____",
-      "Courier-Bold",		         "cob_____",
+      "Courier-Bold",			 "cob_____",
       "Courier-Oblique",		 "coo_____",
-      "Courier-BoldOblique",	         "cobo____",
-      "Symbol",			         "sy______", },
+      "Courier-BoldOblique",		 "cobo____",
+      "Symbol",				 "sy______", },
 
     { "Helvetica",
-      "Helvetica",		         "hv______",
-      "Helvetica-Bold",		         "hvb_____",
-      "Helvetica-Oblique",	         "hvo_____",
-      "Helvetica-BoldOblique",	         "hvbo____",
-      "Symbol",			         "sy______", },
+      "Helvetica",			 "hv______",
+      "Helvetica-Bold",			 "hvb_____",
+      "Helvetica-Oblique",		 "hvo_____",
+      "Helvetica-BoldOblique",		 "hvbo____",
+      "Symbol",				 "sy______", },
 
 #ifdef NOTYET
     { "Helvetica-Condensed",
       "Helvetica-Condensed",		 "hvc_____",
       "Helvetica-Condensed-Bold",	 "hvcb____",
       "Helvetica-Condensed-Oblique",	 "hvcdo___",
-      "Helvetica-Condensed-BoldObl",     "hvnbo___",
-      "Symbol",			         "sy______", },
+      "Helvetica-Condensed-BoldObl",	 "hvnbo___",
+      "Symbol",				 "sy______", },
 #endif
 
     { "Helvetica-Narrow",
       "Helvetica-Narrow",		 "hvn_____",
-      "Helvetica-Narrow-Bold",	         "hvnb____",
+      "Helvetica-Narrow-Bold",		 "hvnb____",
       "Helvetica-Narrow-Oblique",	 "hvno____",
-      "Helvetica-Narrow-BoldOblique",    "hvnbo___",
-      "Symbol",			         "sy______", },
+      "Helvetica-Narrow-BoldOblique",	 "hvnbo___",
+      "Symbol",				 "sy______", },
 
     { "NewCenturySchoolbook",
-      "NewCenturySchlbk-Roman",	         "ncr_____",
-      "NewCenturySchlbk-Bold",	         "ncb_____",
+      "NewCenturySchlbk-Roman",		 "ncr_____",
+      "NewCenturySchlbk-Bold",		 "ncb_____",
       "NewCenturySchlbk-Italic",	 "nci_____",
-      "NewCenturySchlbk-BoldItalic",     "ncbi____",
-      "Symbol",			         "sy______", },
+      "NewCenturySchlbk-BoldItalic",	 "ncbi____",
+      "Symbol",				 "sy______", },
 
     { "Palatino",
-      "Palatino-Roman",		         "por_____",
-      "Palatino-Bold",		         "pob_____",
+      "Palatino-Roman",			 "por_____",
+      "Palatino-Bold",			 "pob_____",
       "Palatino-Italic",		 "poi_____",
-      "Palatino-BoldItalic",	         "pobi____",
-      "Symbol",			         "sy______", },
+      "Palatino-BoldItalic",		 "pobi____",
+      "Symbol",				 "sy______", },
 
     { "Times",
-      "Times-Roman",		         "tir_____",
-      "Times-Bold",		         "tib_____",
-      "Times-Italic",		         "tii_____",
+      "Times-Roman",			 "tir_____",
+      "Times-Bold",			 "tib_____",
+      "Times-Italic",			 "tii_____",
       "Times-BoldItalic",		 "tibi____",
-      "Symbol",			         "sy______", },
+      "Symbol",				 "sy______", },
 
     NULL
 };
@@ -354,7 +354,7 @@ double PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
     int sum = 0;
     for ( ; *p; p++) {
 	if (*p == '-' && isdigit(p[1]))
-	    sum += metrics->CharInfo[177].WX;	/* n-dash */
+	    sum += metrics->CharInfo[173].WX; /* hyphen (n-dash not avail.!) */
 	else
 	    sum += metrics->CharInfo[*p].WX;
     }
@@ -395,10 +395,10 @@ static void PSEncodeFont(FILE *fp, int index, int encoding)
 	for (i = 0; i < 4 ; i++) {
 	    fprintf(fp, "/%s findfont\n", Family[index].font[i].name);
 	    fprintf(fp, "dup length dict begin\n");
-	    fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
-	    fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
-	    fprintf(fp, "  currentdict\n");
-	    fprintf(fp, "  end\n");
+            fprintf(fp, "  {1 index /FID ne {def} {pop pop} ifelse} forall\n");
+            fprintf(fp, "  /Encoding ISOLatin1Encoding def\n");
+            fprintf(fp, "  currentdict\n");
+            fprintf(fp, "  end\n");
 	    fprintf(fp, "/Font%d exch definefont pop\n", i + 1);
 	}
     }
@@ -410,37 +410,37 @@ static void PSEncodeFont(FILE *fp, int index, int encoding)
 /* region box is for the rotated page. */
 
 static void PSFileHeader(FILE *fp, int font, int encoding, char *papername,
-			 double paperwidth, double paperheight, int landscape,
-			 double left, double bottom, double right, double top)
+                         double paperwidth, double paperheight, int landscape,
+                         double left, double bottom, double right, double top)
 {
     fprintf(fp, "%%!PS-Adobe-3.0\n");
     fprintf(fp, "%%%%DocumentFonts: %s %s %s\n%%%%+ %s %s\n",
-	    Family[font].font[0].name, Family[font].font[1].name,
-	    Family[font].font[2].name, Family[font].font[3].name,
-	    Family[font].font[4].name);
+            Family[font].font[0].name, Family[font].font[1].name,
+            Family[font].font[2].name, Family[font].font[3].name,
+            Family[font].font[4].name);
     fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 ()\n",
-	    papername, paperwidth, paperheight);
+            papername, paperwidth, paperheight);
     fprintf(fp, "%%%%Title: R Graphics Output\n");
     fprintf(fp, "%%%%Creator: R Software\n");
     fprintf(fp, "%%%%Pages: (atend)\n");
     if (landscape) {
-	fprintf(fp, "%%%%Orientation: Landscape\n");
-	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
-		bottom, left, top, right);
+        fprintf(fp, "%%%%Orientation: Landscape\n");
+        fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
+                bottom, left, top, right);
     }
     else {
-	fprintf(fp, "%%%%Orientation: Portrait\n");
-	fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
-		left, bottom, right, top);
+        fprintf(fp, "%%%%Orientation: Portrait\n");
+        fprintf(fp, "%%%%BoundingBox: %.0f %.0f %.0f %.0f\n",
+                left, bottom, right, top);
     }
     fprintf(fp, "%%%%EndComments\n");
     fprintf(fp, "%%%%BeginProlog\n");
     fprintf(fp, "/gs  { gsave } def\n");
     fprintf(fp, "/gr  { grestore } def\n");
     if (landscape)
-	fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate} def\n", paperwidth);
+        fprintf(fp, "/bp  { gs %.2f 0 translate 90 rotate} def\n", paperwidth);
     else
-	fprintf(fp, "/bp  { gs } def\n");
+        fprintf(fp, "/bp  { gs } def\n");
     fprintf(fp, "/ep  { showpage gr } def\n");
     fprintf(fp, "/m   { moveto } def\n");
     fprintf(fp, "/l   { lineto } def\n");
@@ -563,7 +563,7 @@ static void PostScriptWriteString(FILE *fp, char *str)
 	    break;
 	case '-':
 	    if (isdigit(str[1]))
-		fputc(177, fp);
+		fputc(173, fp);
 	    else
 		fputc(*str, fp);
 	    break;
@@ -592,14 +592,14 @@ void PostScriptText(FILE *fp, double x, double y,
 typedef struct {
     char filename[128];
 
-    char papername[64];  /* paper name */
+    char papername[64];	 /* paper name */
     int paperwidth;	 /* paper width in inches */
     int paperheight;	 /* paper height in inches */
     int landscape;	 /* landscape mode */
     int pageno;		 /* page number */
 
     int fontfamily;	 /* font family */
-    int encoding;        /* font encoding */
+    int encoding;	 /* font encoding */
     int fontstyle;	 /* font style, R, B, I, BI, S */
     int fontsize;	 /* font size in points */
     int maxpointsize;
@@ -654,12 +654,12 @@ static void   PS_Text(double, double, int, char*, double, double, double,
 
 static void PostScriptSetCol(FILE *fp, double r, double g, double b)
 {
-        fprintf(fp,"/fg { %.4f %.4f %.4f } def fg rgb\n", r, g, b);
+	fprintf(fp,"/fg { %.4f %.4f %.4f } def fg rgb\n", r, g, b);
 }
 
 static void PostScriptSetFill(FILE *fp, double r, double g, double b)
 {
-        fprintf(fp,"/bg { %.4f %.4f %.4f } def\n", r, g, b);
+	fprintf(fp,"/bg { %.4f %.4f %.4f } def\n", r, g, b);
 }
 
 
@@ -703,7 +703,7 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     strcpy(pd->papername, paper);
     pd->fontfamily = MatchFamily(family);
     pd->encoding = 1;
-    pd->bg = str2col(bg, dd);   /* dd is not used ... */
+    pd->bg = str2col(bg, dd);	/* dd is not used ... */
     pd->col = str2col(fg, dd);
     pd->fill = NA_INTEGER;
     pd->width = width;
@@ -815,31 +815,31 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
     dd->dp.canClip = 0;
 #endif
 
-    /*  Start the driver */
+    /*	Start the driver */
 
     if(!PS_Open(dd, pd)) {
 	free(pd);
 	return 0;
     }
 
-    dd->dp.open       = PS_Open;
+    dd->dp.open	      = PS_Open;
     dd->dp.close      = PS_Close;
     dd->dp.activate   = PS_Activate;
     dd->dp.deactivate = PS_Deactivate;
     dd->dp.resize     = PS_Resize;
     dd->dp.newPage    = PS_NewPage;
-    dd->dp.clip       = PS_Clip;
-    dd->dp.text       = PS_Text;
+    dd->dp.clip	      = PS_Clip;
+    dd->dp.text	      = PS_Text;
     dd->dp.strWidth   = PS_StrWidth;
     dd->dp.metricInfo = PS_MetricInfo;
-    dd->dp.rect       = PS_Rect;
+    dd->dp.rect	      = PS_Rect;
     dd->dp.circle     = PS_Circle;
-    dd->dp.line       = PS_Line;
+    dd->dp.line	      = PS_Line;
     dd->dp.polygon    = PS_Polygon;
     dd->dp.polyline   = PS_Polyline;
     dd->dp.locator    = PS_Locator;
-    dd->dp.mode       = PS_Mode;
-    dd->dp.hold       = PS_Hold;
+    dd->dp.mode	      = PS_Mode;
+    dd->dp.hold	      = PS_Hold;
 
     dd->deviceSpecific = (void *) pd;
     dd->displayListOn = 0;
@@ -1035,7 +1035,7 @@ static void PS_MetricInfo(int c, double *ascent, double *descent,
     *width = floor(dd->gp.cex * dd->gp.ps + 0.5) * *width;
 }
 
-#ifdef NOT_used_currently/*-- out 'def'  (-Wall) --*/
+#ifdef NOT_used_currently/*-- out 'def'	 (-Wall) --*/
 static void PS_MoveTo(double x, double y, int coords, DevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
