@@ -14,9 +14,9 @@ arima0 <- function(x, order = c(0, 0, 0),
 
     arCheck <- function(ar)
     {
-        p <- max(which(c(1,ar) != 0)) - 1
+        p <- max(which(c(1, -ar) != 0)) - 1
         if(!p) return(TRUE)
-        all(Mod(polyroot(c(1, ar[1:p]))) > 1)
+        all(Mod(polyroot(c(1, -ar[1:p]))) > 1)
     }
 
     maInvert <- function(ma)
