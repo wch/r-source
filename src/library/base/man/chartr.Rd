@@ -13,17 +13,17 @@ toupper(x)
 }
 \arguments{
   \item{x}{a character vector.}
-  \item{old}{a character string containing the characters to be
+  \item{old}{a character string specifying the characters to be
     translated.}
-  \item{new}{a character string containing the translations.}
+  \item{new}{a character string specifying the translations.}
 }
 \details{
-  \code{chartr} translates each character in \code{x} that is contained
-  in \code{old} to the corresponding character in \code{new}.  If
-  \code{old} contains more characters than new, an error is signaled; if
-  it contains fewer characters, the extra characters at the end of
-  \code{new} are ignored.  Ranges or character classes are not
-  supported.
+  \code{chartr} translates each character in \code{x} that is specified
+  in \code{old} to the corresponding character specified in \code{new}.
+  Ranges are supported in the specifications, but character classes and
+  repreated characters are not.  If \code{old} contains more characters
+  than new, an error is signaled; if it contains fewer characters, the
+  extra characters at the end of \code{new} are ignored.  
 
   \code{tolower} and \code{toupper} convert upper-case characters in a
   character vector to lower-case, or vice versa.  Non-alphabetic
@@ -32,6 +32,7 @@ toupper(x)
 \examples{
 x <- "MiXeD cAsE 123"
 chartr("iXs", "why", x)
+chartr("a-cX", "D-Fw", x)
 tolower(x)
 toupper(x)
 }
