@@ -69,7 +69,8 @@ validGrob.grob <- function(x, ...) {
   # Validate standard grob slots
   x$name <- checkNameSlot(x$name)
   checkgpSlot(x$gp)
-  x$vp <- checkvpSlot(x$vp)
+  if (!is.null(x$vp))
+    x$vp <- checkvpSlot(x$vp)
   return(x)
 }
 
@@ -226,12 +227,14 @@ validGrob.gTree <- function(x, childrenvp, ...) {
   # Validate standard grob slots
   x$name <- checkNameSlot(x$name)
   checkgpSlot(x$gp)
-  x$vp <- checkvpSlot(x$vp)
+  if (!is.null(x$vp))
+    x$vp <- checkvpSlot(x$vp)
   # Only add childrenvp here so that gTree slots can
   # be validated before childrenvp get made
   # (making of childrenvp and children likely to depend
   #  on gTree slots)
-  x$childrenvp <- checkvpSlot(childrenvp)
+  if (!is.null(childrenvp))
+    x$childrenvp <- checkvpSlot(childrenvp)
   return(x)
 }
 
@@ -910,7 +913,7 @@ editThisGrob <- function(grob, specs) {
       if (match(i, "gp", nomatch=0))
         # Handle NULL as special case
         if (is.null(specs[[i]]))
-          grob[i] <- eval(substitute(list(i=NULL)))
+          grob[i] <- list(gp=NULL)
         else
           grob$gp <- mod.gpar(grob$gp, specs$gp)
       # If there is no slot with the argument name, just ignore that argument
