@@ -174,6 +174,7 @@ FUNTAB R_FunTab[] =
 {"round",	do_round,	10001,	1,	1,	PP_FUNCALL,	0},
 {"atan",	do_atan,	10002,	1,	1,	PP_FUNCALL,	0},
 {"log",		do_log,		10003,	1,	1,	PP_FUNCALL,	0},
+{"signif",	do_signif,	10004,	1,	1,	PP_FUNCALL,	0},
 
 {"abs",		do_math1,	0,	1,	1,	PP_FUNCALL,	0},
 {"floor",	do_math1,	1,	1,	1,	PP_FUNCALL,	0},
@@ -210,7 +211,9 @@ FUNTAB R_FunTab[] =
 /* Mathematical Functions of Two Variables */
 
 {"atan2",	do_math2,	0,	1,	2,	PP_FUNCALL,	0},
-{"signif",	do_math2,	1,	1,	2,	PP_FUNCALL,	0},
+/* KH
+   {"signif",	do_math2,	1,	1,	2,	PP_FUNCALL,	0},
+   */
 
 {"lbeta",	do_math2,	2,	1,	2,	PP_FUNCALL,	0},
 {"beta",	do_math2,	3,	1,	2,	PP_FUNCALL,	0},
