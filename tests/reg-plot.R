@@ -86,3 +86,7 @@ stopifnot(length(lo$text$x) == 1)
 
 plot(ecdf(c(1:4,8,12)), ylab = "ECDF", main=NULL)
 ## ylab didn't work till 1.8.0
+
+plot(1:10, pch = NA) # gave error till 1.9.0
+points(1:3, pch=c("o",NA,"x"))# used "N"
+try(points(4, pch=c(NA,FALSE)))# still give an error

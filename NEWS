@@ -18,14 +18,20 @@ USER-VISIBLE CHANGES
 NEW FEATURES
 
     o	file.edit() function added:  like file.show(), but allows editing.
-	
-    o	edit() and fix() use the object name in the window caption on 
+
+    o	edit() and fix() use the object name in the window caption on
 	some platforms.
-	
+
     o	The 'formula' method for boxplot() has a 'na.action' argument,
 	defaulting to na.pass().  This is mainly useful if the response
 	is a matrix when the previous default of na.omit() would omit
 	entire rows.  (Related to PR#6846.)
+
+	boxplot() and bxp() now obey global 'par' settings and also
+	allow to specify graphical options in much detail, compatibly to
+	S-PLUS (fulfilling wishlist entry PR#6832) thanks to contributions
+	from Arni Magnusson.  For consistency, 'boxwex' is not an explicit
+	argument anymore.
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to na.pass(), rather than the value of
@@ -38,10 +44,10 @@ NEW FEATURES
 	been rationalized so a few more cases will now work -- see
 	?Comparison.
 
-    o	deparse() and dput() have a new 'fordisplay' argument that 
-	indicates that the result is intended to be human-readable.  
-	When TRUE, some details (e.g. attributes, quoting) are omitted.  
-	When FALSE, the result is usually parseable to reproduce the 
+    o	deparse() and dput() have a new 'fordisplay' argument that
+	indicates that the result is intended to be human-readable.
+	When TRUE, some details (e.g. attributes, quoting) are omitted.
+	When FALSE, the result is usually parseable to reproduce the
 	object. dump() always produces the parseable format.
 
     o	The screen devices x11(), windows() and quartz() have a new
@@ -53,7 +59,7 @@ NEW FEATURES
 
     o	Indexing a vector by a character vector was slow if both the
 	vector and index were long (say 10,000).  Now hashing is used
-	and the time should be linear in the longer of the lengths 
+	and the time should be linear in the longer of the lengths
 	(but more memory is used).
 
 
@@ -64,11 +70,11 @@ UTILITIES
 
 C-LEVEL FACILITIES
 
-    o   The header Rmath.h contains a definition for R_VERSION_STRING 
+    o   The header Rmath.h contains a definition for R_VERSION_STRING
         which can be used to track different versions of R and libRmath.
 
     o   The Makefile in src/nmath/standalone now has 'install' and
-	'uninstall' targets -- see the README file in that directory. 
+	'uninstall' targets -- see the README file in that directory.
 
 
 DEPRECATED & DEFUNCT
@@ -106,9 +112,9 @@ BUG FIXES
     o	rbind.data.frame() dropped names/rownames from columns in all but
 	the first data frame.
 
-	
 
-	
+
+
 	**************************************************
 	*						 *
 	*	       1.9 SERIES NEWS			 *
@@ -208,6 +214,11 @@ BUG FIXES
 
     o	approx(list(x=rep(NaN,9),y=1:9), xout=NaN) does not seg.fault
 	anymore (PR#6809).
+
+    o	plot(1, pch=NA) does not give an error anymore and
+	plot(1:2, pch=c("o",NA)) only prints one symbol	 (PR#6876).
+
+    o	diffinv(matrix(3, 7,0)) now works.
 
 
 
