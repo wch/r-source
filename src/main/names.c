@@ -687,10 +687,12 @@ FUNTAB R_FunTab[] =
 {"X11",		do_X11,		0,	111,	8,	PP_FUNCALL},
 {"gnome",	do_Gnome,	0,	111,	4,	PP_FUNCALL},
 {"GTK",		do_GTK,		0,	111,	4,	PP_FUNCALL},
+{"Quartz",	do_Quartz,	0,	111,	7,	PP_FUNCALL},
 #endif
 #ifdef Macintosh
 {"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},
 {"applescript",	do_applescript,	0,	111,	2,	PP_FUNCALL},
+{"Quartz",	do_Quartz,	0,	111,	7,	PP_FUNCALL},
 #endif
 
 /* Graphics */

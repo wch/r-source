@@ -35,6 +35,9 @@ SEXP do_Gnome(SEXP, SEXP, SEXP, SEXP);
 SEXP do_GTK(SEXP, SEXP, SEXP, SEXP);
 SEXP do_XFig(SEXP, SEXP, SEXP, SEXP);
 SEXP do_PDF(SEXP, SEXP, SEXP, SEXP);
+SEXP do_Quartz(SEXP, SEXP, SEXP, SEXP);
+
+
 #ifdef Macintosh
 SEXP do_Macintosh(SEXP, SEXP, SEXP, SEXP);
 SEXP do_applescript(SEXP, SEXP, SEXP, SEXP);
