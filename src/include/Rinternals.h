@@ -328,6 +328,7 @@ extern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define asInteger		Rf_asInteger
 #define asLogical		Rf_asLogical
 #define asReal			Rf_asReal
+#define classgets		Rf_classgets
 #define coerceList		Rf_coerceList
 #define coerceVector		Rf_coerceVector
 #define CoercionWarning		Rf_CoercionWarning
@@ -514,6 +515,7 @@ int asInteger(SEXP);
 int asLogical(SEXP);
 double asReal(SEXP);
 SEXP arraySubscript(int, SEXP, SEXP);
+SEXP classgets(SEXP, SEXP);
 int conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
 void copyListMatrix(SEXP, SEXP, int);

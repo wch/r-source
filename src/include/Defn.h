@@ -421,7 +421,6 @@ extern char*	R_GUIType	INI_as("unknown");
 #define begincontext		Rf_begincontext
 #define checkArity		Rf_checkArity
 #define CheckFormals		Rf_CheckFormals
-#define classgets		Rf_classgets
 #define CleanEd			Rf_CleanEd
 #define DataFrameClass		Rf_DataFrameClass
 #define ddfindVar		Rf_ddfindVar
@@ -534,7 +533,6 @@ int	R_FileExists(char*);
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
-SEXP classgets(SEXP, SEXP);
 void CleanEd(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
