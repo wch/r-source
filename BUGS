@@ -343,3 +343,19 @@ Date: Mon, 1 Nov 1999 16:32:15 -0500
 Subject: problem with "[[<-"
 From: Saikat DebRoy <saikat@stat.wisc.edu>
 Date: 01 Nov 1999 16:11:09 -0600
+* PR# 307 *
+Subject: bugs in scan()
+From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
+Date: Wed, 3 Nov 1999 10:05:26 +1300 (NZDT)
+* PR# 308 *
+Subject:  R abnormal exit when plotting lm 
+From: Ulf Mehlig <umehlig@uni-bremen.de>
+Date: Tue, 2 Nov 1999 22:18:23 +0100
+* PR# 309 *
+Subject: discrepancy between PACKAGES file and contents of the contrib directory
+From: hdreau@cybercable.fr
+Date: Wed, 3 Nov 1999 00:04:45 +0100 (MET)
+* PR# 310 *
+Subject: Re: discrepancy between PACKAGES file and contents of the contrib
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 3 Nov 1999 07:53:58 +0000 (GMT)
