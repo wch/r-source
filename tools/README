@@ -1,0 +1,68 @@
+These files are shell and perl scripts used for configuring/building R.
+They are not required at run time, and hence not installed.
+
+The files are as follows.
+
+  config.guess
+  config.sub
+  install-sh
+  mdate-sh
+  missing
+  mkinstalldirs
+	standard tools from GNU autoconf.  Taken from the autoconf CVS
+	(pserver:anoncvs@subversions.gnu.org:/cvsroot/autoconf, module 
+	`autoconf').
+
+  GETCONFIG
+	create API `Rconfig.h' from the configure information in
+	`config.h'.
+  GETMAKEVAL
+	get the value of a Make variable from a Makefile [this needs to
+	be improved].
+  GETSYMBOLS
+	create `FFDecl.h' and `FFTab.h' from `src/appl/ROUTINES'.
+  GETVERSION
+	create API `Rversion.h' from `VERSION' and `date-stamp'.
+  
+  Rdnewer.pl
+	determine whether any Rd file in an Rd tree is newer than a
+	given file.
+  
+  copy-if-change
+	copy a file if changed; otherwise, do nothing.
+
+  help2man.pl
+	generate simple manual pages from program output.  Taken from
+	the GNU help2man package (ftp://ftp.gnu.org/gnu/help2man/).
+	
+  install-info.pl
+	create or update entry in Info directory.  Taken from the Debian
+	GNU/Linux stable distribution.
+
+  keywords2html.pl
+	convert `KEYWORDS.db' to HTML.
+	
+  ldAIX4
+	writes an export file, assembling the exported symbols by
+	reading the output of nm.  This file is needed on AIX (4.2 and
+	later) to compile shared libs.
+  
+  linkcheck.pl
+	comment out links that are not available.
+
+  ltmain.sh
+	provide generalized library-building support services.  Taken
+	from the libtool CVS
+	(pserver:anoncvs@subversions.gnu.org:/cvsroot/libtool).
+
+  move-if-change
+	move a file if changed; otherwise, remove.
+
+  pkg2tex.pl
+	create a single `PKGNAME-pkg.tex' file from the package docs in
+	LaTeX format.
+
+  texi2dvi
+	run Texinfo or LaTeX files through TeX in turn until all
+	cross-references are resolved, building all indices.  Taken from
+	the GNU texinfo package (http://texinfo.org/).
