@@ -50,8 +50,8 @@ test-src-reg-1 = \
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
 
-all-basic-tests = Examples Specific
-all-extra-tests = Internet Lapack Nafns Postscript Random Reg \
+all-basic-tests = Examples Specific Reg
+all-extra-tests = Internet Lapack Nafns Postscript Random \
   DocArgs FF Methods codoc undoc
 
 DISTFILES = Makefile.in Makefile.win README \
