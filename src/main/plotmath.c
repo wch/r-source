@@ -26,7 +26,6 @@
 #ifdef max
 #undef max
 #endif
-#ifdef Unix
 
 static DevDesc *mathDevice;
 
@@ -416,11 +415,7 @@ static int atomFontFace(SEXP expr)
 	    radicalAtom(expr))
 	    fontFace = 5;
 	else
-#ifdef OLD
-	    fontFace = 3;
-#else
 	fontFace = getFont();
-#endif
     }
     return fontFace;
 }
@@ -2362,16 +2357,3 @@ void GMMathText(SEXP str, int side, double line, int outer, double at, int las,
 	GMathText(at, line, coords, str, xadj, yadj, a, dd);
     }
 }
-
-#else
-
-void GMMathText(SEXP str, int side, double line, int outer, double at, int las)
-{
-    error("Can't print math under Windows ... yet\n");
-}
-
-void GMathText(double x, double y, SEXP expr, double xc, double yc, double rot)
-{
-    error("Can't print math under Windows ... yet\n");
-}
-#endif

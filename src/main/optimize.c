@@ -427,7 +427,7 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* expected function size */
 
     fscale = asReal(CAR(args));
-    if (fscale == NA_REAL) invalid_na(call);
+    if (R_IsNA(fscale)) invalid_na(call);
     args = CDR(args);
 
     omsg = msg = asInteger(CAR(args));
@@ -439,15 +439,15 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
     args = CDR(args);
 
     gradtl = asReal(CAR(args));
-    if (gradtl == NA_REAL) invalid_na(call);
+    if (R_IsNA(gradtl)) invalid_na(call);
     args = CDR(args);
 
     stepmx = asReal(CAR(args));
-    if (stepmx == NA_REAL) invalid_na(call);
+    if (R_IsNA(stepmx)) invalid_na(call);
     args = CDR(args);
 
     steptl = asReal(CAR(args));
-    if (steptl == NA_REAL) invalid_na(call);
+    if (R_IsNA(steptl)) invalid_na(call);
     args = CDR(args);
 
     itnlim = asInteger(CAR(args));
