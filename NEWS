@@ -19,6 +19,10 @@ NEW FEATURES
 	(unquoted) name and so can be a variable name or a quoted
 	character string.
 
+    o	Deparsing (including using dump() and dput()) an integer
+	vector now wraps it in as.integer() so it will be source()d
+	correctly.  (Related to PR#4361)
+
 
 UTILITIES
 

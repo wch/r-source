@@ -1034,16 +1034,19 @@ static void vector2buff(SEXP vector, LocalParseData *d)
     if (tlen == 0) {
 	switch(TYPEOF(vector)) {
 	case LGLSXP: print2buff("logical(0)", d); break;
-	case INTSXP: print2buff("numeric(0)", d); break;
+	case INTSXP: print2buff("integer(0)", d); break;
 	case REALSXP: print2buff("numeric(0)", d); break;
 	case CPLXSXP: print2buff("complex(0)", d); break;
 	case STRSXP: print2buff("character(0)", d); break;
 	}
     }
     else if (tlen == 1) {
+	if(TYPEOF(vector) == INTSXP) print2buff("as.integer(", d);
 	scalar2buff(vector, d);
+	if(TYPEOF(vector) == INTSXP) print2buff(")", d);
     }
     else {
+	if(TYPEOF(vector) == INTSXP) print2buff("as.integer(", d);
 	print2buff("c(", d);
 	for (i = 0; i < tlen; i++) {
 	    strp = EncodeElement(vector, i, quote);
@@ -1054,6 +1057,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 		writeline(d);
 	}
 	print2buff(")", d);
+	if(TYPEOF(vector) == INTSXP) print2buff(")", d);
     }
 
 }
