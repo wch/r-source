@@ -64,6 +64,8 @@ Fixed handling of "--max-mem-size" syntax error on command line.
 In RGui, ^T would not transpose the first and second characters on a
 line.  (PR#5593)
 
+Fixed junk character at start of a pipe(). (PR#5053)
+
 
 
 rw1081
