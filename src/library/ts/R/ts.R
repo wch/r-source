@@ -15,8 +15,14 @@ ts.plot <- function(..., gpars = list())
 }
 
 arima.sim <- function(n, model, rand.gen = rnorm,
-                      innov = rand.gen(n, ...), n.start = 100, ...)
+                      innov = rand.gen(n, ...), n.start = NA, ...)
 {
+    minroots <- min(Mod(polyroot(c(1, -model$ar))))
+    if (minroots <= 1) stop("ar part of model is not stationary")
+    p <- length(model$ar)
+    q <- length(model$ma)
+    if(is.na(n.start)) n.start <- p + q + ceiling(6/log(minroots))
+    if(n.start < p + q) stop("burn-in must be as long as ar + ma")
     x <- ts(c(rnorm(n.start), innov[1:n]), start = 1 - n.start)
     if(length(model$ma)) x <- filter(x, c(1, model$ma), sides = 1)
     if(length(model$ar)) x <- filter(x, model$ar, method = "recursive")
