@@ -44,7 +44,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.70 $ ';
+my $revision = ' $Revision: 1.71 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -312,7 +312,10 @@ foreach my $pkg (@ARGV) {
 	}
 	find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
 	## Add build stamp to the DESCRIPTION file.
-	my $fh = new IO::File(&file_path($pkgname, "DESCRIPTION"), "a");
+	my @lines = &read_lines(&file_path($pkgname, "DESCRIPTION"));
+	@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+	my $fh = new IO::File(&file_path($pkgname, "DESCRIPTION"), "w");
+	$fh->print(join("\n", @lines), "\n");
 	$fh->print("Packaged: ",
 		   scalar(localtime()), "; ",
 		   (getpwuid($<))[0], "\n");
