@@ -38,7 +38,7 @@ and the Introduction to R and Data Import/Export manuals in PDF.
 
 3) The full distribution consists of several zip files:
 
-@RWVER@b1.zip and @RWVER@b2.zip		the base system
+@RWVER@b.zip				the base system
 @RWVER@h.zip				text help
 @RWVER@ch.zip				compiled HTML help
 @RWVER@w.zip				HTML help files
@@ -48,11 +48,11 @@ and the Introduction to R and Data Import/Export manuals in PDF.
 @RWVER@d2.zip				  PDF version of the reference manual
 @RWVER@sp.zip				files to build packages from source
 
-To install, unpack @RWVER@b1.zip and @RWVER@b2.zip anywhere you like.
-They will unpack to a directory tree under @RWVER@.  The help,
+To install, unpack @RWVER@b.zip anywhere you like.
+It will unpack to a directory tree under @RWVER@.  The help,
 compiled HTML, HTML and latex help files are in separate files
 @RWVER@h.zip, @RWVER@ch.zip @RWVER@w.zip and @RWVER@l.zip which should
-be unpacked in the same directory you unpacked @RWVER@b1.zip.
+be unpacked in the same directory you unpacked @RWVER@b.zip.
 
 Files @RWVER@d1.zip and @RWVER@d2.zip contains PDF versions of the
 manuals for R, which unpack into @RWVER@/doc/manual.

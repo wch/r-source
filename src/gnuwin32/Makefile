@@ -188,7 +188,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" EXTRADOCS=$($*-EXTRADOCS) \
+	$(MAKE) DLLNM=$($*-DLLNM)  FLIBS="$(FLIBS)" \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
@@ -206,7 +206,7 @@ endif
 endif
 
 pkgclean-%:
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) RHOME=$(RHOME) \
+	$(MAKE) DLLNM=$($*-DLLNM) RHOME=$(RHOME) \
 	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:
@@ -364,7 +364,7 @@ else
 	unzip -o dosfiles.zip
 endif
 	$(RM) dosfiles.zip
-	$(RM) $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
+	$(RM) $(RPREFIX)b.zip $(RPREFIX)m.zip $(RPREFIX)h.zip \
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip
 	zip -mrX anindex.zip $(RPREFIX)/library/*/help/AnIndex
@@ -385,9 +385,7 @@ endif
 	$(CP) -p ../../doc/html/faq.html ../../doc/html/rw-FAQ.html \
 	  $(RPREFIX)/doc/html
 	zip -rm9X $(RPREFIX)m.zip $(RPREFIX)/library/*/man
-	zip -rm9X $(RPREFIX)b2.zip $(RPREFIX)/library $(RPREFIX)/doc/html \
-	  $(RPREFIX)/afm
-	zip -r9X $(RPREFIX)b1.zip $(RPREFIX)
+	zip -r9X $(RPREFIX)b.zip $(RPREFIX)
 	$(RM) -rf $(RPREFIX)
 
 

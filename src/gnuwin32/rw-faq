@@ -93,7 +93,7 @@ files you need.  There are three versions of the distribution.
 floppy and the remaining `miniR-?.bin' on a floppy each.
 
 3) Via zip files in directory `zip'.  You will need at least the files
-           rw1040b1.zip rw1040b2.zip
+           rw1040b.zip
            rw1040h.zip (text help) or rw1040ch.zip (Compiled HTML help)
 
 and you may want `rw1040w.zip' (the HTML format help files),

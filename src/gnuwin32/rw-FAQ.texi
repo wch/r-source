@@ -133,7 +133,7 @@ on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
 3) Via zip files in directory @code{zip}.  You will need at least the
 files
 @example
-      @RWVER@b1.zip @RWVER@b2.zip
+      @RWVER@b.zip
       @RWVER@h.zip (text help) or @RWVER@ch.zip (Compiled HTML help)
 @end example
 @noindent

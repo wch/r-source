@@ -28,7 +28,7 @@ bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 
 pkg-%:
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
+	$(MAKE) DLLNM=$($*-DLLNM) \
 	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
@@ -43,7 +43,7 @@ endif
 endif
 
 pkgclean-%:
-	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) RHOME=$(RHOME) \
+	$(MAKE) DLLNM=$($*-DLLNM) RHOME=$(RHOME) \
 	  -C $(PKGDIR)/$* PKG=$* -f $(RHOME)/src/gnuwin32/MakePkg clean
 
 pkgcheck-%:

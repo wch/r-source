@@ -41,13 +41,12 @@ IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
 # location where binary packages are kept
-PKGS=C:/R/Rdist/libs1030
+PKGS=U:/Rweb/RWin
 
-R.iss: JRins.pl ../$(RPREFIX)b1.zip ../$(RPREFIX)b2.zip ../$(RPREFIX)h.zip \
+R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
 ../$(RPREFIX)l.zip ../$(RPREFIX)sp.zip ../$(RPREFIX)w.zip
-	unzip -qo ../$(RPREFIX)b1
-	unzip -qo ../$(RPREFIX)b2
+	unzip -qo ../$(RPREFIX)b
 	unzip -qo ../$(RPREFIX)h
 	unzip -qo ../$(RPREFIX)ch -d $(RPREFIX)ch
 	unzip -qo ../$(RPREFIX)d1 -d $(RPREFIX)d1
@@ -79,11 +78,10 @@ R.iss: JRins.pl ../$(RPREFIX)b1.zip ../$(RPREFIX)b2.zip ../$(RPREFIX)h.zip \
 SetupR.exe: R.iss
 	"$(ISDIR)/iscc" R.iss > setupR.log
 
-Rsmall.iss: JRsmall.pl ../$(RPREFIX)b1.zip ../$(RPREFIX)b2.zip \
+Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
   ../$(RPREFIX)h.zip ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip
 	rm -rf $(RPREFIX)*
-	unzip -qo ../$(RPREFIX)b1
-	unzip -qo ../$(RPREFIX)b2
+	unzip -qo ../$(RPREFIX)b
 	unzip -qo ../$(RPREFIX)h
 	unzip -qo ../$(RPREFIX)ch -d $(RPREFIX)ch
 	unzip -qo ../$(RPREFIX)d1 -d $(RPREFIX)d1
