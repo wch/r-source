@@ -33,12 +33,12 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 
 Directory:  Add-ons
 
-* PR# 966 *
-Subject: update.packages() and parse(text="A B")
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Sun, 03 Jun 2001 15:34:41 +0200
---Error in DESCRIPTION file of gregmisc
---Windows pre-compiled version is fixed
+* PR# 981 *
+Subject: read.xport() bug
+From: abroman@jhu.edu
+Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
+--confirmed on Windows and Solaris.
+--Seems that file is not in the expected format
 * PR# 496 *
 From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
@@ -49,6 +49,12 @@ Subject: Re: [R] Crazy plots of time-series against dates
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 01 May 2001 21:33:53 +0200
 --error in chron package
+* PR# 974 *
+Subject: Lattice: panel.superpose with ordered factor groups
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
+--The warning is standard S and R behaviour.
+--Probably xyplot needs to avoid it (by unclassing?)
 * PR# 950 *
 Subject:  lattice: dev.print(postscript) gives probl. false background Info 
 From: Peter Malewski <p.malewski@tu-bs.de>
@@ -64,17 +70,7 @@ none
 
 Directory:  Documentation
 
-* PR# 942 *
-Subject: Minor documentation issue
-From: jebacklund@dowagro.com
-Date: Wed, 16 May 2001 19:58:13 +0200 (MET DST)
---There is an objects() function, and help(objects) documents it. I don't see the
---problem here.
-* PR# 899 *
-Subject: documentation problems in str.Rd
-From: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>
-Date: Sat, 7 Apr 2001 23:08:23 +0200
---fixed (both code and documentation) for 1.3  (MM).
+none
 
 Directory:  Graphics
 
@@ -182,11 +178,6 @@ none
 
 Directory:  Installation
 
-* PR# 924 *
-Subject: bug when compiling using --with-f2c option
-From: wang@rjka.com
-Date: Thu, 26 Apr 2001 19:58:17 +0200 (MET DST)
---same as 923
 * PR# 923 *
 Subject: bug when compiling using --with-f2c option
 From: wang@rjka.com
@@ -219,11 +210,20 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 
 Directory:  Low-level
 
-none
+* PR# 956 *
+Subject: unbelievable parser bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 May 2001 14:25:00 +0200
+--Parser does not accept space + meta (e.g. Alt, AltGr).  Should it?
+--Not really a bug.
 
 Directory:  Misc
 
-none
+* PR# 982 *
+Subject: R CMD check
+From: Roger Bivand <Roger.Bivand@nhh.no>
+Date: Fri, 15 Jun 2001 21:29:33 +0200 (CEST)
+--problem with function not found: need to investigate this example.
 
 Directory:  Models
 
@@ -239,6 +239,11 @@ Directory:  System-specific
 Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
 From: paul@gromit.dlib.vt.edu
 Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
+* PR# 935 *
+Subject:  help.start() fails 
+From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
+Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
+--Report on 1.2.1: on other systems the file is installed with 644.
 * PR# 851 *
 Subject: Comments on R-1.2.1 builds
 From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
@@ -252,16 +257,6 @@ Date: Fri, 16 Feb 2001 17:44:17 -0700 (MST)
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 13 Feb 2001 17:40:46 -0500
-* PR# 935 *
-Subject:  help.start() fails 
-From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
-Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
---Report on 1.2.1: on other systems the file is installed with 644.
-* PR# 863 *
-Subject: src/main/arithmetic.c on OpenBSD
-From: ian@darwinsys.com (Ian Darwin)
-Date: Tue,  6 Mar 2001 19:49:53 -0500 (EST)
---Not applied for 1.2.3 (why?)
 
 Directory:  TooMuchAtOnce
 
@@ -315,38 +310,4 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 982 *
-Subject: R CMD check
-From: Roger Bivand <Roger.Bivand@nhh.no>
-Date: Fri, 15 Jun 2001 21:29:33 +0200 (CEST)
-* PR# 972 *
-Subject: update.packages fails again
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 8 Jun 2001 21:25:08 +0100 (BST)
-* PR# 956 *
-Subject: unbelievable parser bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 May 2001 14:25:00 +0200
-* PR# 977 *
-Subject: R-devel on alpha Tru64: cxml/dxml problem
-From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-Date: Mon, 11 Jun 2001 20:08:27 +0200 (MET DST)
-* PR# 974 *
-Subject: Lattice: panel.superpose with ordered factor groups
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
-* PR# 979 *
-Subject: expand.model.frame() fails when subset is specified
-From: gregory_r_warnes@groton.pfizer.com
-Date: Thu, 14 Jun 2001 20:15:52 +0200 (MET DST)
-* PR# 978 *
-From: "Gregory R. Warnes" <warneg@gsun124.pfizer.com>
-Date: Mon, 11 Jun 2001 16:44:35 -0400 (EDT)
-* PR# 981 *
-Subject: read.xport() bug
-From: abroman@jhu.edu
-Date: Fri, 15 Jun 2001 00:25:54 +0200 (MET DST)
-* PR# 980 *
-Subject: RE: [Rd] expand.model.frame() fails when subset is specified (PR#
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Thu, 14 Jun 2001 17:31:14 -0400
+none
