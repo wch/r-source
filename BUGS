@@ -58,11 +58,6 @@ Date: Tue, 31 Jul 2001 11:24:09 -0400
 Subject: Polymarsall.c
 From: pleu@hotmail.com
 Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
-* PR# 1050 *
-Subject: error in ksmooth C code + patch
-From: htang@hpl.hp.com
-Date: Mon, 13 Aug 2001 04:57:46 +0200 (MET DST)
---fixed for 1.3.1
 
 Directory:  Analyses
 
@@ -200,6 +195,20 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 Subject:  Managed to confuse match.arg 
 From: J.C.Rougier@durham.ac.uk
 Date: Wed, 25 Apr 2001 12:22:54 +0100 (BST)
+* PR# 1052 *
+Subject:  Inconsistent behaviour of is.vector? 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 14 Aug 2001 09:04:57 +0100
+* PR# 1073 *
+Subject: Wierd problem comparing numeric values and list using ==
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Fri, 24 Aug 2001 22:07:41 -0400
+--see also PR#1075
+* PR# 1076 *
+Subject: Re: [Rd] Wierd problem comparing numeric values and list using == 
+From: John Chambers <jmc@research.bell-labs.com>
+Date: Mon, 27 Aug 2001 08:44:22 -0400
+--part of PR#1073
 
 Directory:  Low-level
 
@@ -211,6 +220,16 @@ Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
 Subject: interrupting Sys.sleep
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Mon, 20 Aug 2001 13:55:29 -0700 (PDT)
+* PR# 1068 *
+Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
+From: Luke Tierney <luke@nokomis.stat.umn.edu>
+Date: Wed, 22 Aug 2001 19:32:51 -0500
+--see also followup in PR#1069
+* PR# 1069 *
+Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
+From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
+Date: Wed, 22 Aug 2001 21:56:33 -0500
+--part of PR#1068
 
 Directory:  Macintosh
 
@@ -266,6 +285,10 @@ Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
 Subject: make check failure on SGI-IRIX6.5
 From: laurent@cbs.dtu.dk
 Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
+* PR# 1057 *
+Subject: crt1.o skipped at configure time ?
+From: laurent@cbs.dtu.dk
+Date: Thu, 16 Aug 2001 08:52:34 +0200 (MET DST)
 * PR# 1062 *
 Subject: system.file("",package)
 From: Thomas Lumley <tlumley@u.washington.edu>
@@ -281,51 +304,4 @@ none
 
 Directory:  incoming
 
-* PR# 1052 *
-Subject:  Inconsistent behaviour of is.vector? 
-From: J.C.Rougier@durham.ac.uk
-Date: Tue, 14 Aug 2001 09:04:57 +0100
-* PR# 1054 *
-Subject: documented but missing from the code
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Wed, 15 Aug 2001 12:11:42 -0400
-* PR# 1057 *
-Subject: crt1.o skipped at configure time ?
-From: laurent@cbs.dtu.dk
-Date: Thu, 16 Aug 2001 08:52:34 +0200 (MET DST)
-* PR# 1066 *
-Subject: Corrupted binary??
-From: L C G Rogers <maslcgr@bath.ac.uk>
-Date: Wed, 22 Aug 2001 12:04:44 +0100 (BST)
-* PR# 1067 *
-Subject: cutree
-From: heydebre@molgen.mpg.de
-Date: Wed, 22 Aug 2001 20:29:27 +0200 (MET DST)
-* PR# 1068 *
-Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
-From: Luke Tierney <luke@nokomis.stat.umn.edu>
-Date: Wed, 22 Aug 2001 19:32:51 -0500
-* PR# 1069 *
-Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
-From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
-Date: Wed, 22 Aug 2001 21:56:33 -0500
-* PR# 1071 *
-Subject: postscript & ps.options documentation
-From: Kevin.Wright@pioneer.com
-Date: Thu, 23 Aug 2001 20:38:13 +0200 (MET DST)
-* PR# 1072 *
-Subject: Reading Inf and NaN values under windows
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Fri, 24 Aug 2001 12:00:46 +0200 (CEST)
-* PR# 1073 *
-Subject: Wierd problem comparing numeric values and list using ==
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Fri, 24 Aug 2001 22:07:41 -0400
-* PR# 1074 *
-Subject: WHOLESALE
-From: "James Meyers" <jamesmeyers@etex.net>
-Date: Sat, 25 Aug 2001 15:36:10 -0500
-* PR# 1076 *
-Subject: Re: [Rd] Wierd problem comparing numeric values and list using == 
-From: John Chambers <jmc@research.bell-labs.com>
-Date: Mon, 27 Aug 2001 08:44:22 -0400
+none
