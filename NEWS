@@ -46,6 +46,12 @@ NEW FEATURES
 	`digits' is now an argument to the print method and not to
 	summary.princomp itself.
 
+    o	library(help = PKG) now also returns the information about the
+	package PKG.
+
+    o	formatDL() now also works if both items and descriptions are
+	given in a suitable list or matrix.
+
 
 DEPRECATED & DEFUNCT
 
