@@ -13,12 +13,14 @@ smooth(x)
 }
 \value{
   A vector or time series containing the smoothed values.
+
   Note that there are other smoothing methods which provide
-  rather better results. This one was designed for hand calculations.
+  rather better results.  This one was designed for hand calculations.
 }
 \note{
   \emph{3R} stands for \bold{R}epeated running \code{\link{median}}s
-  of \bold{3}.
+  of \bold{3};   \emph{SR} stands for \bold{R}epeated \bold{S}plitting
+  of horizontal streches of length 2 or 3.
 
   S and S-PLUS use a different Tukey smoother in \code{smooth(*)}.
 
@@ -41,7 +43,7 @@ library(eda)
 data(presidents)
 presidents[is.na(presidents)] <- 0
 plot(presidents)
-lines(smooth(presidents))
+lines(smooth(presidents), col = 2)
 }
 \keyword{robust}
 \keyword{smooth}
