@@ -1,0 +1,17 @@
+The RSMethods package contains class and methods software implementing
+the formal model described in "Programming with Data"
+
+The package can be installed in the usual way:
+
+  R INSTALL RSMethods
+
+If you have version 1.3.0 or later of R, the installation in this way
+will create a saved image at install time.  Look for the message
+
+  Initializing class and method definitions now
+
+during the INSTALL.  If you don't see this, you are running an earlier
+version of R (or at least of the INSTALL script)--not a good idea, and
+not guaranteed to work with RSMethods.
+
+See the Notes.html web page in the  
