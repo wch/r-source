@@ -489,7 +489,7 @@ R_GE_lineend LENDpar(SEXP value, int ind)
     }
 }
 
-SEXP LENDget(unsigned int lend)
+SEXP LENDget(R_GE_lineend lend)
 {
     SEXP ans = R_NilValue;
     int i;
@@ -554,7 +554,7 @@ R_GE_linejoin LJOINpar(SEXP value, int ind)
     }
 }
 
-SEXP LJOINget(unsigned int ljoin)
+SEXP LJOINget(R_GE_linejoin ljoin)
 {
     SEXP ans = R_NilValue;
     int i;
