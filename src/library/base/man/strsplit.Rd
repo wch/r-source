@@ -5,16 +5,28 @@ strsplit(x,split)
 }
 \alias{strsplit}
 \description{
-\code{strsplit} takes two arguments. A character vector to split, \code{x}, and a
-character string, \code{split}, to use as splits (this can also be a vector).
-It returns a list each element of which contains the vector of splits.
+  Split the Strings in \code{x} into substrings according to the
+  presence of substring \code{split} within them.
+}
+\arguments{
+  \item{x}{character vector, to be split.}
+  \item{split}{character string, to use as "split".
+      If \code{split} has length 0, \code{x} is split into single characters.
+      If \code{split} is a vector, it is re-cycled along \code{x}.}
+}
+\value{A list of length \code{length(x)} the \code{i}-th element of
+    which contains the vector of splits of \code{x[i]}.
 }
 \seealso{
-\code{\link{paste}}, \code{\link{nchar}}, \code{\link{substr}}
+    \code{\link{paste}} for the reverse,
+    \code{\link{grep}} and \code{\link{sub}} for string search and
+    manipulation; further \code{\link{nchar}}, \code{\link{substr}.}
 }
 \examples{
+noquote(strsplit("A text I want to display with spaces", NULL)[[1]])
+
 x <- c("asfef","qwerty","yuiop[","b","stuff.blah.yech")
-#split x on the letter e
+# split x on the letter e
 strsplit(x,"e")
 }
 \keyword{character}
