@@ -27,6 +27,12 @@ lm.influence(model, do.coef = TRUE)
   \bold{See Also} provide a more user oriented way of computing a
   variety of regression diagnostics.  These all build on
   \code{lm.influence}.
+
+  An attempt is made to ensure that computed hat values that are
+  probably one are treated as one, and the corresponding rows in
+  \code{sigma} and \code{coefficients} are \code{NaN}.  (Dropping such a
+  case would normally result in a variable being dropped, so it is not
+  possible to give simple drop-one diagnostics.)
 }
 \value{
   A list containing the following components of the same length or

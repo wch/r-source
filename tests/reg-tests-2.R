@@ -1017,3 +1017,7 @@ lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.omit))
 lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.exclude))
 lm.influence(lm(y ~ 0, data=dat, na.action=na.exclude))
 ## last three misbehaved in 1.7.x, none had proper names.
+## a case where hat[1] == 1
+dat <- data.frame(y=rnorm(10), x1=1:10, x2=c(1, rep(0, 9)))
+lm.influence(lm(y ~ x1 + x2, data=dat))
+##

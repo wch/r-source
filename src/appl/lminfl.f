@@ -66,7 +66,7 @@ c   Ross Ihaka, University of Auckland.
 c   `docoef' option added Feb 17, 2003;  Martin Maechler ETH Zurich.
 
       subroutine lminfl(x, ldx, n, k, docoef, qraux, resid,
-     +     hat, coef, sigma)
+     +     hat, coef, sigma, tol)
       integer ldx, n, k, docoef
       double precision x(ldx,k), qraux(k), resid(n),
      +     hat(n), coef(n,k), sigma(n)
@@ -90,6 +90,7 @@ c
      .       dummy, dummy, dummy, 10000, info)
         do 30 i = 1, n
           hat(i) = hat(i)+sigma(i)*sigma(i)
+          if(hat(i) .ge. 1.0d0 - tol) hat(i) = 1.0d0
    30   continue
    40 continue
 c

@@ -317,10 +317,12 @@ BUG FIXES
     o	Corrected many problems with 0-rank (but not necessarily empty
 	model) lm() and glm() fits.
 
-    o	model.matrix.default() was throwing an error on 0-term models.
+    o	model.matrix.default() was throwing an error on 0-term models,
+	but now handles them correctly.
 
     o	lm.influence() now handles 0-rank models, and names its output
-	appropriately.
+	appropriately.  It also ensures that hat values are not greater
+	than one, and rounds values within rounding error of one.
 
 
 

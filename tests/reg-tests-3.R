@@ -15,3 +15,11 @@ if(require(survival)) {
     detach("package:survival")
 }
 ## were different, the last one failed in 1.6.2 (at least)
+
+
+## lm.influence where hat[1] == 1
+if(require(MASS)) {
+fit <- lm(formula = 1000/MPG.city ~ Weight + Cylinders + Type + EngineSize + DriveTrain, data = Cars93)
+lm.influence(fit)
+}
+## row 57 should have hat = 1 and resid=0.

@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-07-01)
+Version 1.8.0 Under development (unstable) (2003-07-02)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3186,4 +3186,39 @@ $wt.res
  0.1718693  2.0840918  0.3675473 
 
 > ## last three misbehaved in 1.7.x, none had proper names.
+> ## a case where hat[1] == 1
+> dat <- data.frame(y=rnorm(10), x1=1:10, x2=c(1, rep(0, 9)))
+> lm.influence(lm(y ~ x1 + x2, data=dat))
+$hat
+        1         2         3         4         5         6         7         8 
+1.0000000 0.3777778 0.2611111 0.1777778 0.1277778 0.1111111 0.1277778 0.1777778 
+        9        10 
+0.2611111 0.3777778 
+
+$coefficients
+   (Intercept)            x1          x2
+1          NaN           NaN         NaN
+2  -0.28430677  3.708349e-02  0.24722328
+3   0.16447756 -2.000403e-02 -0.14447353
+4   0.02563146 -2.746228e-03 -0.02288524
+5   0.02970673 -2.345268e-03 -0.02736146
+6   0.07185900 -1.424940e-18 -0.07185900
+7  -0.02383635 -3.575452e-02  0.05959087
+8  -0.10878516  4.079443e-02  0.06799072
+9  -0.25076175  6.637811e-02  0.18438364
+10  0.38576618 -8.902296e-02 -0.29674321
+
+$sigma
+        1         2         3         4         5         6         7         8 
+      NaN 1.0433228 1.0492371 1.0581493 1.0572283 1.0289050 0.6720032 0.9567448 
+        9        10 
+0.9505636 0.9673114 
+
+$wt.res
+         1          2          3          4          5          6          7 
+ 0.0000000 -0.3461126  0.2956151  0.0677403  0.1227357  0.5748720 -1.8711532 
+         8          9         10 
+ 1.0062627  0.9809210 -0.8308810 
+
+> ##
 > 

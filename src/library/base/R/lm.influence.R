@@ -37,10 +37,12 @@ lm.influence <- function (model, do.coef = TRUE)
         res <- list(hat = rep(0, n), coefficients = matrix(0, n, 0),
                     sigma = rep(sigma, n), wt.res = e)
     } else {
+        ## if we have a point with hat = 1, the corresponding e should be
+        ## exactly zero.  Protect against returning Inf by forcing this
+        e[abs(e) < 100 * .Machine$double.eps * median(abs(e))] <- 0
         n <- as.integer(nrow(model$qr$qr))
         k <- as.integer(model$qr$rank)
         ## in na.exclude case, omit NAs; also drop 0-weight cases
-        e <- na.omit(wt.res)
         if(NROW(e) != n)
             stop("non-NA residual length does not match cases used in fitting")
         do.coef <- as.logical(do.coef)
@@ -53,8 +55,9 @@ lm.influence <- function (model, do.coef = TRUE)
                         model$qr$qraux,
                         wt.res = e,
                         hat = double(n),
-                        coefficients= if(do.coef) matrix(0, n, k) else double(1),
+                        coefficients= if(do.coef) matrix(0, n, k) else double(0),
                         sigma = double(n),
+                        tol = 10 * .Machine$double.eps,
                         DUP = FALSE, PACKAGE="base"
                         )[c("hat", "coefficients", "sigma","wt.res")]
         if(!is.null(model$na.action)) {
@@ -64,7 +67,6 @@ lm.influence <- function (model, do.coef = TRUE)
             if(do.coef) {
                 coefficients <- naresid(model$na.action, res$coefficients)
                 coefficients[is.na(coefficients)] <- 0 # omitted cases have 0 change
-                colnames(coefficients) <- names(coef(model))[!is.na(coef(model))]
                 res$coefficients <- coefficients
             }
             sigma <- naresid(model$na.action, res$sigma)
@@ -76,7 +78,10 @@ lm.influence <- function (model, do.coef = TRUE)
     names(res$hat) <- names(res$sigma) <- names(res$wt.res)
     if(!do.coef) ## drop it
 	res$coefficients <- NULL
-    else rownames(res$coefficients) <- names(res$wt.res)
+    else {
+        rownames(res$coefficients) <- names(res$wt.res)
+        colnames(res$coefficients) <- names(coef(model))[!is.na(coef(model))]
+    }
     res
 }
 
