@@ -156,7 +156,7 @@ The \code{control} argument is a list with components:
 }
 \examples{
 data(stackloss)
-.Random.seed <- 1:4
+set.seed(123)
 lqs(stack.loss ~ ., data = stackloss)
 lqs(stack.loss ~ ., data = stackloss, method = "S", nsamp = "exact")
 }

@@ -128,7 +128,7 @@ cov.mcd(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
 }
 \examples{
 data(stackloss)
-.Random.seed <- 1:4
+set.seed(123)
 cov.rob(stackloss)
 cov.rob(stack.x, method = "mcd", nsamp = "exact")
 }
