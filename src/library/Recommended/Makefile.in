@@ -20,7 +20,7 @@ R = R_LIBS= $(top_builddir)/bin/R
 ## For developers: A shell script, tools/rsync-recommended, updates
 ## packages from the CRAN master directory. 
 
-OBJECTS=$(R_PKGS_RECOMMENDED:=.ts)
+OBJECTS = $(R_PKGS_RECOMMENDED:=.ts)
 
 CLEANFILES = $(OBJECTS)
 DISTCLEANFILES = Makefile
@@ -34,7 +34,12 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 .tgz.ts:
-	$(R) CMD INSTALL -l $(top_builddir)/library $<
+## <FIXME>
+## RG says that with FreeBSD Make calling INSTALL does not work without
+## explicitly passing down MAKE ('unrecognized option -w ...').  But
+## what is really going on?
+	MAKE=$(MAKE) $(R) CMD INSTALL -l $(top_builddir)/library $<
+## </FIXME>
 	@touch $@
 
 ## survival needs to be installed before boot
