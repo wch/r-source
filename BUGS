@@ -292,14 +292,10 @@ none
 
 Directory:  incoming
 
-* PR# 775 *
-Subject: R 1.2.0 : logspline does not install from install.packages(). Missing #include | library ?
-From: charpent@bacbuc.dyndns.org
-Date: Mon, 18 Dec 2000 20:48:42 +0100 (MET)
-* PR# 766 *
-Subject: R1.2.0
-From: Jim Lindsey <james.lindsey@luc.ac.be>
-Date: Fri, 15 Dec 2000 16:12:12 +0100 (MET)
+* PR# 779 *
+Subject: Problem with sink() in 1.20 on Windows
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Tue, 19 Dec 2000 15:04:51 -0500
 * PR# 765 *
 Subject: cannot allocate vector of size in merge
 From: viktorm@pdf.com
@@ -312,6 +308,10 @@ Date: Mon, 18 Dec 2000 09:28:01 +0100 (MET)
 Subject: R on Redhat 7 / glibc problem
 From: B.Rowlingson@lancaster.ac.uk
 Date: Fri, 15 Dec 2000 19:12:29 +0100 (MET)
+* PR# 766 *
+Subject: R1.2.0
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Fri, 15 Dec 2000 16:12:12 +0100 (MET)
 * PR# 774 *
 Subject: \item{x}<cr>{description of x}
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
@@ -324,3 +324,19 @@ Date: 18 Dec 2000 16:13:59 +0100
 Subject: demo(is.things) fails
 From: B.Rowlingson@lancaster.ac.uk
 Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
+* PR# 776 *
+Subject: strwidth does not take font into account
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
+* PR# 775 *
+Subject: R 1.2.0 : logspline does not install from install.packages(). Missing #include | library ?
+From: charpent@bacbuc.dyndns.org
+Date: Mon, 18 Dec 2000 20:48:42 +0100 (MET)
+* PR# 778 *
+Subject: Bug in glm.fit() or plot.lm()
+From: murdoch@stats.uwo.ca (Duncan Murdoch)
+Date: Tue, 19 Dec 2000 14:57:59 -0500
+* PR# 777 *
+Subject: Minor "make check" bug.
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 15:11:24 +0100 (CET)
