@@ -1,9 +1,35 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.0 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.0.0
+
+
+NEW FEATURES
+
+    o	The entry points [dpq]norm no longer exist: the header file
+	R_ext/Mathlib.h must be used and such code re-compiled.
+
+    o	Header files in R_ext must be given explicitly as e.g. 
+	"R_ext/Mathlib.h".
+
+
+BUG FIXES
+
+    o	printutils.c compiles on platforms where va_list is not
+	a pointer.
+
+
+	**************************************************
+	*						 *
 	*	       0.99 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
 
 		CHANGES IN R VERSION 0.99.0
 
@@ -44,7 +70,7 @@ NEW FEATURES
 	The new function set.seed() which uses a single integer to set
 	the random number seeds is now the recommended way to do so.
 
-	It is now possible for a user to plug-in in a new RNG written
+	It is now possible for a user to plug-in a new RNG written
 	in C: consult ?Random and ?Random-user for the details.
 
     o	All the DPQ {probability density quantile} functions have new
