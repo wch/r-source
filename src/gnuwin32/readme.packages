@@ -26,7 +26,7 @@ It may also be possible to use the compilers from the cygwin 1.1
 release with the -mno-cygwin flag.  (You will need the cygwin*, gcc*
 and binutils* bundles. You will need to ensure that you have only one
 version of cygwin1.dll in your path, and there is one in our tools
-distribution.)
+distribution.)  You can no longer use earlier version of cygwin.
 
 We have also successfully used the variant of mingw32 that uses the
 MSVCRT run-time system, and in the case of the mclust library we found
