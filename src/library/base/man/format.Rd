@@ -27,8 +27,10 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 \details{
   These functions convert their first argument to a vector (or array) of
   character strings which have a common format (as is done by
-  \code{\link{print}}).  The trimming with \code{trim = TRUE} is useful
+  \code{\link{print}}), fulfilling \code{length(format*(x, *)) == 
+    length(x)}.  The trimming with \code{trim = TRUE} is useful
   when the strings are to be used for plot \code{\link{axis}} annotation.
+
 
   \code{format.pval} is mainly an auxiliary function for
   \code{\link{print.summary.lm}} etc., does separate formatting for
@@ -37,9 +39,10 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
   The function \code{\link{formatC}} provides a rather more flexible
   formatting facility for numbers, but does \emph{not} provide a common
   format for several numbers.
+
 }
 \note{
-  Currently \code{format} loses trailing zeroes, so \code{format(6.001,
+  Currently \code{format} drops trailing zeroes, so \code{format(6.001,
     digits=2)} gives \code{"6"} and \code{format(c(6.0, 13.1),
     digits=2)} gives \code{c(" 6", "13")}.
 
