@@ -76,6 +76,7 @@
 #undef HAVE_READLINE_HISTORY_H
 
 #undef HAVE_LOCALE_H
+#undef HAVE_UNISTD_H
 
 /* Bug Workarounds */
 #undef HAVE_OSF_SPRINTF_BUG
