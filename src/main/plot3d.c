@@ -447,7 +447,6 @@ int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 	/* Find a gap big enough for the label
 	   use several segments if necessary
 	*/
-	REprintf("%d %d %d\n",ns, jjj, jjj+n+1);
 	dX = xxx[jjj] - xxx[jjj + n + 1]; /*jjj + n + 1 == ns -1 */
 	dY = yyy[jjj] - yyy[jjj + n + 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
