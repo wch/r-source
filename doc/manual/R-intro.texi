@@ -1842,7 +1842,7 @@ the outer product operator is of course non-commutative.  Defining your
 own @R{} functions will be considered further in @ref{Writing your own
 functions}.
 
-@unnumberedsubsec An example: Determinants of 2 by 2 digit matrices
+@subsubheading An example: Determinants of 2 by 2 digit matrices
 
 As an artificial but cute example, consider the determinants of @math{2}
 by @math{2} matrices @math{[a, b; c, d]} where each entry is a
@@ -6431,7 +6431,7 @@ want to save it.
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
-@section Invoking R under UNIX
+@appendixsection Invoking R under UNIX
 
 The command @samp{R} can be used both for starting the main @R{} program
 with a variety of options in the form
@@ -6655,7 +6655,7 @@ to obtain usage information for each of the tools accessible via the
 @code{R CMD} interface.
 
 @node Invoking R under Windows, Invoking R on a Macintosh, Invoking R under UNIX, Invoking R
-@section Invoking R under Windows
+@appendixsection Invoking R under Windows
 
 The startup procedure under Windows is very similar to that under UNIX,
 but necessarily not identical. There are two versions of @R{} for
@@ -6852,7 +6852,7 @@ to obtain usage information for each of the tools accessible via the
 @code{Rcmd} interface.
 
 @node Invoking R on a Macintosh,  , Invoking R under Windows, Invoking R
-@section Invoking R on a Macintosh
+@appendixsection Invoking R on a Macintosh
 
 This section applies to the classic MacOS port, and not to ports of the
 Unix version to MacOS X.
@@ -6985,7 +6985,7 @@ control the printing of diagnostic messages.
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor
 
-@section Preliminaries
+@appendixsection Preliminaries
 
 When the @acronym{GNU} @strong{readline} library is available at the
 time @R{} is configured for compilation under UNIX, an inbuilt command
@@ -7018,7 +7018,7 @@ with @kbd{ESC}.  Thus, to enter @kbd{M-b}, you could type
 terminals with real Meta keys.  Note that case is significant for Meta
 characters.
 
-@section Editing actions
+@appendixsection Editing actions
 
 The @R{} program keeps a history of the commands you type, including the
 error lines, and commands in your history may be recalled, changed if
@@ -7038,7 +7038,7 @@ Other editing actions are summarized in the following table.
 Unfortunately it does not seem to be possible to bind the motion keys,
 for example, to the arrow keys, which is something of a nuisance.
 
-@section Command line editor summary
+@appendixsection Command line editor summary
 
 @subheading Command recall and vertical motion
 
