@@ -3,8 +3,7 @@
 \title{Parse and Evaluate Expressions from a File}
 \description{
   Parses expressions in the given file, and then successively evaluates
-  them in the specified environment.  By default, evaluation is done in
-  the user's workspace (the global environment).
+  them in the specified environment.
 }
 \usage{
 sys.source(file, envir = NULL, chdir = FALSE,
@@ -13,7 +12,10 @@ sys.source(file, envir = NULL, chdir = FALSE,
 \arguments{
   \item{file}{a character string naming the file to be read from}
   \item{envir}{an \R object specifying the environment in which the
-    expressions are to be evaluated.  May also be a list or an integer.}
+    expressions are to be evaluated.  May also be a list or an integer.
+    The default value \code{NULL} corresponds to evaluation in the base
+    environment.  This is probably not what you want; you should
+    typically supply an explicit \code{envir} argument.}
   \item{chdir}{logical; if \code{TRUE}, the \R working directory is
     changed to the directory containing \code{file} for evaluating.}
   \item{keep.source}{logical.  If \code{TRUE}, functions ``keep their
