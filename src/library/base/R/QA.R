@@ -262,7 +262,7 @@ function(file, package, lib.loc = .lib.loc)
     checkTnFandPrint <- function(e, p) {
         if(is.name(e) && (as.character(e) %in% badTnF) && !is.null(p))
             writeLines(paste("found T/F in:", deparse(p)))
-        else if(is.call(e) || is.expression(e)) {
+        else if(is.recursive(e)) {
             for(i in seq(along = e)) Recall(e[[i]], e)
         }
     }
