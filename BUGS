@@ -32,10 +32,11 @@ Date: Wed, 5 Jul 2000 18:32:01 +0200 (CEST)
 
 Directory:  Add-ons
 
-* PR# 611 *
-Subject: bug in loess
-From: hdrees@statlab.uni-heidelberg.de
-Date: Wed, 19 Jul 2000 17:47:04 +0200 (MET DST)
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
+--possibly the RH6.2 Fortran bug
 * PR# 503 *
 Subject: dmvnorm() bug in e1071
 From: "Gregory R. Warnes" <warnes@biostat.washington.edu>
@@ -45,11 +46,6 @@ From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
---possibly the RH6.2 Fortran bug
 
 Directory:  Analyses
 
@@ -61,6 +57,14 @@ none
 
 Directory:  Graphics
 
+* PR# 625 *
+Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 2 Aug 2000 21:38:31 +0100 (GMT Daylight Time)
+* PR# 623 *
+Subject: Re: [R] problem clipping R postscript plots within latex
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 02 Aug 2000 15:01:52 +0200
 * PR# 584 *
 Subject: par(lty = "1") -- lty storage-etc bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -79,32 +83,28 @@ none
 
 Directory:  Installation
 
-* PR# 612 *
-Subject:  Installing R-1.1.0 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Thu, 20 Jul 2000 14:50:21 +0800
-* PR# 466 *
-Subject: Re: R-1.0.0 is released
-From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
-Date: 01 Mar 2000 16:00:54 +0100
-* PR# 485 *
-Subject: Install R1.0.0
-From: Lynn Zhang <lyzhang@umich.edu>
-Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
-* PR# 467 *
-Subject: Re: [R] Re: R-1.0.0 is released
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 01 Mar 2000 20:26:40 +0100
---followup to PR#466
 * PR# 597 *
 Subject: multiply defined symbols
 From: plucas@csd.abdn.ac.uk
 Date: Fri, 7 Jul 2000 12:23:44 +0200 (MET DST)
 --Probably system-specific due to use of fort77
+* PR# 467 *
+Subject: Re: [R] Re: R-1.0.0 is released
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 01 Mar 2000 20:26:40 +0100
+--followup to PR#466
+* PR# 466 *
+Subject: Re: R-1.0.0 is released
+From: bhoel@server.python.net (Berthold=?iso-8859-1?q?_H=F6llmann?=)
+Date: 01 Mar 2000 16:00:54 +0100
 * PR# 571 *
 Subject:  Missing -lc for compilation on AIX (R 1.1.0) 
 From: Thomas Vogels <tov@infiniti.ece.cmu.edu>
 Date: Thu, 15 Jun 2000 13:42:50 -0400
+* PR# 485 *
+Subject: Install R1.0.0
+From: Lynn Zhang <lyzhang@umich.edu>
+Date: Mon, 13 Mar 2000 16:10:52 -0500 (EST)
 
 Directory:  Language
 
@@ -163,10 +163,11 @@ Directory:  Models
 Subject: anova() on three or more objects behaves inconsistently
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Tue, 1 Aug 2000 10:02:18 +0100 (BST)
-* PR# 600 *
-Subject: Faulty handling of aliasing in predict.lm; wrong constant
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Wed, 12 Jul 2000 14:46:56 +1000
+* PR# 614 *
+Subject: scoping problems
+From: halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 24 Jul 2000 17:48:49 -0400
+--issue here is the definition of quasi().
 
 Directory:  Startup
 
@@ -235,39 +236,15 @@ none
 
 Directory:  incoming
 
-* PR# 625 *
-Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
+* PR# 628 *
+Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Wed, 2 Aug 2000 21:38:31 +0100 (GMT Daylight Time)
-* PR# 615 *
-Subject: binomial()
-From: halvorsen <kjetilh@umsanet.edu.bo>
-Date: Mon, 24 Jul 2000 18:11:17 -0400
-* PR# 614 *
-Subject: scoping problems
-From: halvorsen <kjetilh@umsanet.edu.bo>
-Date: Mon, 24 Jul 2000 17:48:49 -0400
-* PR# 618 *
-Subject: min(c()) = inf ???
-From: Peter Malewski <y0004379@tu-bs.de>
-Date: Wed, 26 Jul 2000 13:57:32 +0200 (METDST)
-* PR# 617 *
-Subject: Bug in stem?
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Wed, 26 Jul 2000 11:28:04 +0200
-* PR# 622 *
-Subject:  data editor freeze on empty data frame 
-From: Peter Dalgaard BSA <pd@blueberry.kubism.ku.dk>
-Date: Wed, 2 Aug 2000 11:17:04 +0200
-* PR# 619 *
-Subject: Re: [R] gremlin in rep()
+Date: Mon, 7 Aug 2000 22:41:50 +0100 (BST)
+* PR# 627 *
+Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
 From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Fri, 28 Jul 2000 08:20:21 -0700 (PDT)
-* PR# 624 *
-Subject: text( * , xpd = vv )  doesn't work and help(text.default) is wrong
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 2 Aug 2000 18:40:54 +0200 (CEST)
-* PR# 623 *
-Subject: Re: [R] problem clipping R postscript plots within latex
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 02 Aug 2000 15:01:52 +0200
+Date: Mon, 7 Aug 2000 12:58:22 -0700 (PDT)
+* PR# 626 *
+Subject: predict.lm is broken in 1.1.0-patched (2000-August-7)
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Mon, 7 Aug 2000 19:43:38 +0100 (BST)
