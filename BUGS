@@ -434,7 +434,7 @@ Date: Mon, 25 Sep 2000 10:17:15 +0200
 Subject: Wierd problem comparing numeric values and list using ==
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 24 Aug 2001 22:07:41 -0400
-..see also PR#1075
+..see also PR#1076
 * PR# 1076 *
 Subject: Re: [Rd] Wierd problem comparing numeric values and list using == 
 From: John Chambers <jmc@research.bell-labs.com>
@@ -500,6 +500,7 @@ Date: Mon, 4 Nov 2002 10:18:48 +0100
 Subject: NA %*% 0 == 0
 From: hosking@watson.ibm.com
 Date: Tue, 14 Oct 2003 21:44:09 +0200 (MET DST)
+..This is a function of the BLAS in use
 
 Directory:  Macintosh
 
@@ -701,6 +702,11 @@ Subject: File in use error
 From: oakeley@fmi.ch
 Date: Tue, 2 Sep 2003 11:06:16 +0200 (MET DST)
 ..Windows / R(D)COM
+* PR# 4204 *
+Subject: strptime
+From: pliu3@ncsu.edu
+Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
+..Correct on RH8 ....  Might this be a timezone DST problem?
 * PR# 4246 *
 Subject: creates directory that can't be deleted
 From: xiaobao_wang@yahoo.com
@@ -720,14 +726,6 @@ Date: Mon, 21 Apr 2003 17:01:53 -0400
 Subject: Problem with S4 slots in C code
 From: Laurence Kell FM CEFAS <L.T.Kell@cefas.co.uk>
 Date: Fri, 5 Sep 2003 10:23:38 +0100 
-* PR# 4110 *
-Subject: Problem with 'drop' for 1-D arrays?
-From: "Raubertas, Richard" <richard_raubertas@merck.com>
-Date: Tue, 09 Sep 2003 10:53:39 -0400
-..We were using vector subsetting with fewer than 2 dimensions.
-..Note that even with drop=FALSE  x[1:4] should be a 1-d matrix (none of its
-..extents is 1).
-..
 * PR# 4184 *
 Subject: getGenerics is wrong in 1.8.0 alpha
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -743,14 +741,6 @@ Date: Tue, 16 Sep 2003 12:39:16 +0100 (BST)
 Subject: hclust: median, centroid
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Tue, 16 Sep 2003 22:22:53 +0200 (CEST)
-* PR# 4204 *
-Subject: strptime
-From: pliu3@ncsu.edu
-Date: Wed, 17 Sep 2003 17:13:23 +0200 (MET DST)
-* PR# 4281 *
-Subject: Calling C fn crashes
-From: ashenfluff@yahoo.com
-Date: Wed, 24 Sep 2003 17:54:21 +0200 (MET DST)
 * PR# 4329 *
 Subject: (fwd) package inst directory copied too early?
 From: Duncan Murdoch <dmurdoch@pair.com>
@@ -763,11 +753,6 @@ Date: Tue, 30 Sep 2003 19:28:27 +0200 (CEST)
 Subject: Re: [Rd] another dump/source problem?
 From: Ross Ihaka <ihaka@stat.auckland.ac.nz>
 Date: Wed, 01 Oct 2003 07:45:41 +1200
-* PR# 4450 *
-Subject: 
-From: "Raoul Grasman" <R.P.P.P.Grasman@uva.nl>
-Date: Tue, 7 Oct 2003 17:05:56 +0200
-..det() gives wrong answer rather than error for complex matrices.
 * PR# 4459 *
 Subject: Redhat 7.2 gcc optimisation 
 From: Paul Murrell <p.murrell@auckland.ac.nz>
@@ -776,40 +761,56 @@ Date: Wed, 08 Oct 2003 15:28:11 +1300
 Subject: Memmory Bugs
 From: "Eric R. Riehl" <eriehl@email.unc.edu>
 Date: Wed, 8 Oct 2003 14:30:57 -0400 (EDT)
-* PR# 4558 *
-Subject: R1.8.0 : seq.POSIXt() problems
-From: "Marsland, John" <John.Marsland@CommerzbankIB.com>
-Date: Mon, 13 Oct 2003 09:51:38 +0100
-* PR# 4623 *
-Subject: Bus error
-From: ehsaliba@uncc.edu
-Date: Fri, 17 Oct 2003 15:41:07 +0200 (MET DST)
 * PR# 4630 *
 Subject: =?us-ascii?Q?contact=20me?=
 From: =?us-ascii?Q?okeke=20obi?= <okekeobi@seznam.cz>
 From:Dr HASSNA SULE.
 Date: Sat, 18 Oct 2003 01:48:55 +0200 (CEST)
-* PR# 4631 *
-Subject: (±¤°í)21C ÃÖ°í À¯¸Á ¾Ö¿Ïµ¿¹°°ü¸®»ç Ãëµæ¿­Ç³/¹«·á»ó´ã@
-From: Æ¯º°ÀÌº¥Æ®<vcxlrt4ewri4er34@hotmail.com>
-Date: Sat, 18 Oct 2003 10:23:13 +0900
-* PR# 4632 *
-Subject: MARINE WEEK 2003 - Welcome to Marine Digital
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Sat, 18 Oct 2003 10:29:04 +0900
-* PR# 4646 *
-Subject: cor(*,  use = "pair") bug in R 1.8.0
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Sat, 18 Oct 2003 16:05:24 +0200
 * PR# 4648 *
 Subject: R 1.80 version
 From: xiaopinj@biostat.umn.edu
 Date: Sat, 18 Oct 2003 17:18:37 +0200 (MET DST)
-* PR# 4649 *
-Subject: NOTIFICATION OF WINNING LOTTERY AND PROMOTIONS.
-From: "MR. COOK VAN BROOK." <macomglobalde@phantomemail.com>
-Date: Sat, 18 Oct 2003 10:41:33 +0200
-* PR# 4650 *
-Subject: We Häve üS Lícensëd Döctörs scpfpkqx
-From: "Elisabeth" <anker_pet@keromail.com>
-Date: Sat, 18 Oct 2003 15:03:03 -0400
+* PR# 4661 *
+Subject: On-line Pharmacy - Ambien - Shipped Overnight! bm lnnx dqgmvwbng
+From: "Maricela Melvin" <sharynspackman@velnet.com>
+Date: Sun, 19 Oct 2003 12:42:52 +0200
+* PR# 4662 *
+Subject: Viagra - as low as $2.50 ! w
+From: "Dona Savage" <hoirrage@readthismessage.co.uk>
+Date: Sun, 19 Oct 2003 04:10:51 -0700
+* PR# 4663 *
+Subject: Attn:stone URGENT ASSISTANCE
+From: "edwin kayode" <eed24@tiscali.co.uk>
+Date: Sun, 19 Oct 2003 12:33:01 +0200
+* PR# 4664 *
+Subject: human growth hormone - ideas for weight loss iiog ir omrcbym
+From: "Merle Sneed" <demetrakramb@iamwaiting.com>
+Date: Sat, 18 Oct 03 23:08:00 GMT
+* PR# 4665 *
+Subject: re: how often ? z
+From: "Ervin Poole" <dianaalexander@fsmail.net>
+Date: Sun, 19 Oct 03 17:51:47 GMT
+* PR# 4666 *
+Subject: VPRX ymydw ewlm aexap 
+From: "Daniel Emery" <bgsrfdue7@hotmail.com>
+Date: Sun, 19 Oct 03 11:23:00 GMT
+* PR# 4667 *
+Subject: LETTER FROM MRS MARY J
+From: mary Jonas <mary_2002@123.com>
+Date: Sun, 19 Oct 2003 08:58:21 -0700
+* PR# 4668 *
+Subject: Fwd: check this out
+From: "Delmar Koch" <wmtzjm@yahoo.com>
+Date: Sun, 19 Oct 03 16:16:07 GMT
+* PR# 4669 *
+Subject: =?EUC-KR?B?KLGksO0pIL/suK6+xrHiILq4ubAxyKMgodogvNLB38fRILz4sKPAuyC/tb/4yPchIEAg?=
+From: "¿ì¸®¾Æ±â" <ghldnjs10@hanmir.com>
+Date: Mon, 20 Oct 2003 03:40:27 +0900
+* PR# 4670 *
+Subject: oabin soufale
+From: "Stephen Stubbs" <bknellk@aol.com>
+Date: Sun, 19 Oct 03 18:39:48 GMT
+* PR# 4671 *
+Subject: No Prescription Required Cheap Prices
+From: "Cameron Herrington" <wq28tk@uymail.com>
+Date: Mon, 20 Oct 03 00:57:48 GMT
