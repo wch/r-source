@@ -207,6 +207,7 @@ static void do_apply()
 	if (!strcmp(newGUI.style, "italic")) sty = Italic;
 	pointsize = newGUI.pointsize;
 	fontsty = sty;
+
 	/* Don't delete font: open pagers may be using it */
 	if (strcmp(fontname, "FixedFont"))
 	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0);
@@ -218,13 +219,13 @@ static void do_apply()
 	    R_ShowMessage(msg);
 	    consolefn = FixedFont;
 	}
-	if (!ghasfixedwidth(consolefn)) {
+	/* if (!ghasfixedwidth(consolefn)) {
 	    sprintf(msg,
 		    G_("Font %s-%d-%d has variable width.\nUsing system fixed font"),
 		    fontname, fontsty, pointsize);
 	    R_ShowMessage(msg);
 	    consolefn = FixedFont;
-	}
+	    } */
 	p->f = consolefn;
 	FH = fontheight(p->f);
 	FW = fontwidth(p->f);
