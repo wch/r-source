@@ -2903,7 +2903,7 @@ static int typeofnext(void)
 	    k = 2;
 	else
 	    k = 3;
-	for(i = clen - 1; i >= 0; i--) xxungetc(s[i]);   
+	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
     } else
 #endif
     {
@@ -3288,8 +3288,11 @@ static int SymbolValue(int c)
     if(utf8locale) {
 	while(1) {
 	    wchar_t wc; int i, clen; char s[6];
-	    YYTEXT_PUSH(c, yyp);
-	    c = xxgetc();
+	    clen = utf8clen(c);
+	    for(i = 0; i < clen; i++) {
+	        YYTEXT_PUSH(c, yyp);
+	        c = xxgetc();
+            }
 	    if(c == R_EOF) break;
 	    if(c == '.' || c == '_') continue;
 	    clen = utf8clen(c);
@@ -3297,7 +3300,7 @@ static int SymbolValue(int c)
 		s[0] = c; s[clen] = '\0';
 		for(i = 1; i < clen; i++) s[i] = xxgetc();
 		mbrtowc(&wc, s, clen, NULL);
-		for(i = clen - 1; i >= 0; i--) xxungetc(s[i]);   
+		for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
 		if(!iswalnum(wc)) break;
 	    } else 
 		if(!isalnum(c)) break;
@@ -3369,7 +3372,7 @@ static int token()
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
 	mbrtowc(&wc, s, clen, NULL);
-	for(i = clen - 1; i >= 0; i--) xxungetc(s[i]);   
+	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
  	if (iswdigit(wc)) return NumericValue(c);
     } else
 #endif
@@ -3397,7 +3400,7 @@ static int token()
 	s[0] = c; s[clen] = '\0';
 	for(i = 1; i < clen; i++) s[i] = xxgetc();
 	mbrtowc(&wc, s, clen, NULL);
-	for(i = clen - 1; i >= 0; i--) xxungetc(s[i]);   
+	for(i = clen - 1; i > 0; i--) xxungetc(s[i]);   
  	if (iswalpha(wc)) return SymbolValue(c);
     } else
 #endif
