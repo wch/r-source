@@ -109,7 +109,11 @@ BUG FIXES
 
     o	Using out-of-range font values in text() on a postscript()
 	device on Windows could crash.  .ps.prolog was incorrectly
-	names in some of the documentation.  (PR#914)
+	named in some of the documentation.  (PR#914)
+
+    o	Warning messages of > 8191 chars could crash R (PR#902), as
+	could errors.  Now they are truncated to 8191 chars on
+	machines which have vsnprintf (almost all).
 
 
 
