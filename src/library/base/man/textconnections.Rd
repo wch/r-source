@@ -14,7 +14,7 @@ textConnection(object, open = "r")
     output.
   }
   \item{open}{character.  Either \code{"r"} (or equivalently \code{""})
-    for an input connection or \code{"w"} or \code{"a"}for an output
+    for an input connection or \code{"w"} or \code{"a"} for an output
     connection.}
 }
 \details{
