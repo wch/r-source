@@ -10,8 +10,10 @@ rw1080
 The scrollbars on the data editor work better for very large matrices,
 and correctly for more than 65535 columns.
 
-The initial size and position of an MDI window can be set in Rconsole:
-see the comments in .../etc/Rconsole.
+The initial size and position of the MDI frame can be set in Rconsole:
+see the comments in .../etc/Rconsole.  The initial position of the
+console window can be set in Rconsole and in the GUI Preferences
+editor.
 
 
 

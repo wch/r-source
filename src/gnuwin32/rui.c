@@ -485,7 +485,8 @@ static void menuact(control m)
 
 void readconsolecfg()
 {
-    int   consoler, consolec, pagerrow, pagercol, multiplewin, widthonresize;
+    int   consoler, consolec, consolex, consoley, pagerrow, pagercol, 
+	multiplewin, widthonresize;
     int   bufbytes, buflines;
     rgb   consolebg, consolefg, consoleuser, highlight ;
     int   ok, fnchanged, done, cfgerr;
@@ -497,6 +498,7 @@ void readconsolecfg()
 
     consoler = 32;
     consolec = 90;
+    consolex = consoley = 0;
     consolebg = White;
     consolefg = Black;
     consoleuser = gaRed;
@@ -524,7 +526,6 @@ void readconsolecfg()
     fnchanged = 0;
     while ((ok = optread(opt, '='))) {
 	done = 0;
-	printf("%s, %d\n", opt[0], ok);
 	if (ok == 2) {
 	    if (!strcmp(opt[0], "font")) {
 		strcpy(fn, opt[1]);
@@ -557,6 +558,14 @@ void readconsolecfg()
 	    }
 	    if (!strcmp(opt[0], "columns")) {
 		consolec = atoi(opt[1]);
+		done = 1;
+	    }
+	    if (!strcmp(opt[0], "xconsole")) {
+		consolex = atoi(opt[1]);
+		done = 1;
+	    }
+	    if (!strcmp(opt[0], "yconsole")) {
+		consoley = atoi(opt[1]);
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "pgrows")) {
@@ -678,8 +687,9 @@ void readconsolecfg()
 	app_cleanup();
 	exit(10);
     }
-    setconsoleoptions(fn, sty, pointsize, consoler, consolec, consolefg,
-		      consoleuser, consolebg, highlight,
+    setconsoleoptions(fn, sty, pointsize, consoler, consolec,
+		      consolex, consoley,
+		      consolefg, consoleuser, consolebg, highlight,
 		      pagerrow, pagercol, multiplewin, widthonresize,
 		      bufbytes, buflines);
 }
