@@ -9,7 +9,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   Prints the arguments, coercing them if necessary to character mode first.
 }
 \arguments{
-  \item{\dots}{R objects which are coerced to character strings,
+  \item{\dots}{\R objects which are coerced to character strings,
     concatenated, and printed, with the remaining arguments
     controlling the output.}
   \item{file}{character string naming the file to print to.  If
@@ -21,7 +21,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   }
   \item{sep}{character string to insert between the objects to print.}
   \item{fill}{a logical or numeric controlling how the output is
-    broken into successive lines.  If \code{FALSE}, only newlines
+    broken into successive lines.  If \code{FALSE} (default), only newlines
     created explicitly by \code{\n} are printed.  Otherwise, the
     output is broken into lines with print width equal to the option
     \code{width} if \code{fill} is \code{TRUE}, or the value of
@@ -47,12 +47,17 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   None (invisible \code{NULL}).
 }
 \seealso{
-  \code{\link{print}}, \code{\link{format}}
+  \code{\link{print}}, \code{\link{format}}, and \code{\link{paste}}
+  which concatenates into a string.
 }
 \examples{
 \testonly{iter <- rpois(1, lambda=10)}
 ## print an informative message
 cat("iteration = ", iter <- iter + 1, "\n")
+
+## `fill' and label lines:
+cat(paste(letters, 100* 1:26), fill = TRUE,
+    labels = paste("{",1:10,"}:",sep=""))
 }
 \keyword{print}
 \keyword{file}
