@@ -156,6 +156,11 @@ NEW FEATURES
 
     o   read.fortran reads Fortran-style fixed-format specifications.
 
+    o	On Unix systems, help() now returns information about available
+	documentation for a given topic, and notifies about multiple
+	matches.
+
+
 UTILITIES
 
     o   Package utils now contains a much improved citation function

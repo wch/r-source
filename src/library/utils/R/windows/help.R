@@ -1,5 +1,5 @@
 help <-
-    function(topic, offline = FALSE, package = .packages(),
+    function(topic, offline = FALSE, package = NULL,
              lib.loc = NULL, verbose = getOption("verbose"),
              try.all.packages = getOption("help.try.all.packages"),
              chmhelp = getOption("chmhelp"), htmlhelp = getOption("htmlhelp"),

@@ -64,6 +64,7 @@ export(Rtangle, RtangleSetup, RweaveLatex, RweaveLatexSetup, Stangle,
 
 if(tools:::.OStype() == "unix") {
 export(nsl)
+S3method("print", "help_files_with_topic")
 }
 
 if(tools:::.OStype() == "windows") {

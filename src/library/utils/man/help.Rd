@@ -12,7 +12,7 @@
   \code{?name}.
 }
 \usage{
-help(topic, offline = FALSE, package = .packages(),
+help(topic, offline = FALSE, package = NULL,
      lib.loc = NULL, verbose = getOption("verbose"),
      try.all.packages = getOption("help.try.all.packages"),
 #ifdef unix
@@ -40,8 +40,8 @@ type?topic
    displayed on-line to the screen (the default) or hardcopy of it
    should be produced.}
  \item{package}{a name or character vector giving the packages to look
-   into for documentation.  By default, all packages in the search path
-   are used.}
+   into for documentation, , or \code{NULL}.  By default, all packages
+   in the search path are used.}
  \item{lib.loc}{a character vector of directory names of \R libraries,
    or \code{NULL}.  The default value of \code{NULL} corresponds to all
    libraries currently known.  If the default is used, the loaded
