@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-56, 2001-05-17
+Version 1.2-57, 2001-05-18
 Kurt Hornik
 
 
@@ -1095,6 +1095,9 @@ works, was published in the Journal of Statistical Software
 
    The following packages are available from the CRAN `src/contrib' area.
 
+*AnalyzeIO*
+     Functions for I/O of ANALYZE format `.img' and `.hdr' image files.
+
 *CoCoAn*
      Constrained Correspondence Analysis.
 
@@ -1317,6 +1320,9 @@ works, was published in the Journal of Statistical Software
 *logspline*
      Logspline density estimation.
 
+*lpridge*
+     Local polynomial (ridge) regression.
+
 *maptree*
      Functions with example data for graphing and mapping models from
      hierarchical clustering and classification and regression trees.
@@ -1520,8 +1526,15 @@ these a try, of course.  This area of CRAN currently contains
      An integrated set of functions for fitting curves and surfaces
      including thin plate splines, kriging and neural networks.
 
+*grid*
+     The Grid graphics package, a rewrite of the graphics layout
+     capabilities, plus some support for interaction.
+
 *hdf5*
      Interface to the NCSA HDF5 library.
+
+*lattice*
+     Lattice graphics, an implementation of Trellis Graphics functions.
 
 *maxstat*
      Maximally selected rank and Gauss statistics with several p-value
