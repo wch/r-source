@@ -9,6 +9,8 @@
 
 NEW FEATURES
 
+    o	symnum(x) now nicely codes logical x.
+
     o	convolve() has now "circular = TRUE" allowing "open" convolution
 	as opposed to circular.
 
@@ -27,8 +29,12 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	is.na() didn't work properly for "list" arguments.
+
+    o	symnum() didn't always work with arrays of rank >= 3.
+
     o	in some cases one could get nonblack color instead of
-        black on 2nd x11() window
+	black on 2nd x11() window
 
     o	influence.measures(.) $ is.inf was wrong.
 
