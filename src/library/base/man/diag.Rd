@@ -6,9 +6,16 @@ diag(x) <- value
 }
 \alias{diag}
 \alias{diag<-}
+\description{
+    Extract or replace the diagonal of a matrix,
+    or construct a diagonal matrix.
+}
 \value{
 If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
-\code{x}.  If \code{x} is a vector then \code{x} returns a diagonal
+\code{x}.  The resulting vector will have \code{\link{names}} if the
+matrix \code{x} has matching column and row names.
+
+If \code{x} is a vector then \code{diag(x)} returns a diagonal
 matrix whose diagonal is \code{x}.  If \code{x} is an integer then
 \code{diag(x)} returns an identity matrix of order \code{x}.
 The dimension of the returned matrix can be specified by
@@ -24,8 +31,13 @@ given value(s).
 dim(diag(3))
 diag(10,3,4) # guess what?
 all(diag(1:3) == {m <- matrix(0,3,3); diag(m) <- 1:3; m})
+
+diag(var(M <- cbind(X=1:5, Y=rnorm(5))))#-> vector with names "X" and "Y"
+rownames(M) <- c(colnames(M),rep("",3));
+M; diag(M) #  named as well
+
 \testonly{
-## test behaviour with 0 row or columns
+## test behaviour with 0 rows or columns
 diag(0)
 z <- matrix(0, 0, 4)
 diag(z)
