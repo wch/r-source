@@ -50,6 +50,7 @@ test-src-segfault = no-segfault.R
 test-src-reg-1 = reg-tests-1.R reg-tests-2.R reg-IO.R reg-IO2.R reg-plot.R
 test-src-reg-auto =
 test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
+test-src-reg3 = reg-tests-3.R
 
 test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
@@ -62,6 +63,7 @@ test-out-nafns = $(test-src-nafns:.R=.Rout)
 test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
+test-out-reg3 = $(test-src-reg3:.R=.Rout)
 test-out-segfault = $(test-src-segfault:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
 
@@ -69,7 +71,7 @@ test-out-ts = $(test-src-ts:.R=.Rout)
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-internet) $(test-out-lapack) $(test-out-nafns) \
 	$(test-out-random) $(test-out-postscript) $(test-out-reg) \
-	$(test-out-segfault) $(test-out-ts) $(test-out-isas)
+	$(test-out-reg3) $(test-out-segfault) $(test-out-ts) $(test-out-isas)
 
 .SUFFIXES:
 .SUFFIXES: .R .Rin .Rout
@@ -183,6 +185,7 @@ test-Random:
 test-Reg:
 	@echo "running regression tests ..."
 	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=1
+	@$(MAKE) -f Makefile.win $(test-out-reg3) RVAL_IF_DIFF=0
 
 test-Segfault:
 	@echo "running tests to possibly trigger segfaults"
