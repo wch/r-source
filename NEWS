@@ -819,6 +819,9 @@ BUG FIXES
 
     o	attach(*, pos=1) now gives a warning (and will give an error).
 
+    o	power.*test() now gives an error when sig.level is outside [0,1].
+	(PR#7245)
+
 
 
 	**************************************************
