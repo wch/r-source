@@ -306,9 +306,18 @@ print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 {
 	## check for multiple objects
-
-	args <- function(...) nargs()
-	if(args(...)) return(anova.glmlist(list(object, ...), test=test))
+	dotargs<-list(...)
+	named<- if (is.null(names(dotargs)))
+			rep(F,length(dotargs))
+		else (names(dotargs) != "")
+	dotargs<-dotargs[!named]
+	is.glm<-unlist(lapply(dotargs,function(x) inherits(x,"glm")))
+	dotargs<-dotargs[is.glm]
+	if (length(dotargs)>0)
+		return(anova.glmlist(c(list(object),dotargs),test=test,
+			na.action=na.action))
+	#args <- function(...) nargs()
+	#if(args(...)) return(anova.glmlist(list(object, ...), test=test))
 
 	## extract variables from model
 
@@ -382,7 +391,7 @@ anova.glm <- function(object, ..., test=NULL, na.action=na.omit)
 }
 
 
-anova.glmlist <- function(object, ..., test=NULL)
+anova.glmlist <- function(object, na.action=na.omit, test=NULL)
 {
 
 	# find responses for all models and remove
@@ -401,7 +410,8 @@ anova.glmlist <- function(object, ..., test=NULL)
 	# calculate the number of models
 
 	nmodels <- length(object)
-	if(nmodels==1)	return(anova.glm(object[[1]], ..., test))
+	if(nmodels==1)	return(anova.glm(object[[1]], na.action=na.action,
+test=test))
 
 	# extract statistics
 
