@@ -133,10 +133,10 @@ coplot(ll.dm, data = quakes, number=c(3,7),
 
 data(warpbreaks)
 ## given two factors
-coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks, show.given = 0:1)
-coplot(breaks ~ 1:54 | wool * tension, data = warpbreaks,
-       col = "red", bg = "pink", pch = 21,
-       bar.bg = c(fac = "light blue"))
+Index <- seq(length=nrow(warpbreaks)) # to get nicer default labels
+coplot(breaks ~ Index | wool * tension, data = warpbreaks, show.given = 0:1)
+coplot(breaks ~ Index | wool * tension, data = warpbreaks,
+       col = "red", bg = "pink", pch = 21, bar.bg = c(fac = "light blue"))
 
 ## Example with empty panels:
 data(state)
