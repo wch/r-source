@@ -166,3 +166,7 @@ Date: Tue, 7 Mar 2000 16:35:59 +0100 (MET)
 Subject: lm(rnorm(1000)~rnorm(1000)) kills rw1000
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Tue, 7 Mar 2000 10:34:56 -0800 (PST)
+* PR# 477 *
+Subject: Printing graphs on W98 laptop
+From: P.J.Green@bristol.ac.uk
+Date: Wed, 8 Mar 2000 18:23:33 +0100 (MET)
