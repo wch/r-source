@@ -61,10 +61,7 @@ R:
 	@cd $(top_builddir) && $(MAKE) R
 
 .R.Rout:
-	@if test -f $@; then \
-	  if test -f $@.prev ; then mv $@.prev $@.bakk ; fi ; \
-	  mv $@ $@.prev ; \
-	fi
+	@test -f $@ && mv $@ $@.prev
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
@@ -80,12 +77,6 @@ $(EX_IN_BASE): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
-	  if test -f $@ ; then \
-	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
-	      if test -f $@.prev ; then mv $@.prev $@.bakk ; fi; \
-	      cp -p $@ $@.prev; \
-	    fi; \
-	  fi; \
 	  echo "collecting examples for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--txt --example" $(MAKE) R_PKGS_BASE="$${pkg}" DOCS); \
@@ -106,12 +97,6 @@ $(EX_IN_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -Ex.R`; \
 	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
 	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
-	  if test -f $@ ; then \
-	    if test -n "`tail -6 $@ | grep '^Time elapsed'`" ; then \
-	      if test -f $@.prev ; then mv $@.prev $@.bakk ; fi; \
-	      cp -p $@ $@.prev; \
-	    fi; \
-	  fi; \
 	  echo "collecting examples for package '$${pkg}' ..."; \
 	  f=$${TMPDIR-/tmp}/R$$$$; \
 	  $(PERL) $(top_srcdir)/share/perl/massage-Examples.pl $${pkg} \
