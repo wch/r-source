@@ -25,6 +25,7 @@ stop.list[["base"]] <-
 	## deprecated anyway --pd
 	misc.2 <- c("help.start", "print.plot",
 		    "gctorture", "q", "quit",
+                    "function",##<<<< SHOWS INFINITE LOOPS + BUS error
 		    "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
