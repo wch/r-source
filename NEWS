@@ -263,6 +263,11 @@ BUG FIXES
     o	library.dynam no longer fails if the library appears more than
 	once in lib.loc.
 
+    o   tcltk interface now has better string quoting and no longer breaks on
+        strings with unbalanced braces
+
+    o   tcltk callbacks used to include a "%..." argument on the call if the 
+        callback function had a "..." argument. This is no longer the case.
 
 	**************************************************
 	*						 *

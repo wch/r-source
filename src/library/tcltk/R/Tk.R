@@ -21,7 +21,11 @@
             assign(callback, .Alias(x), envir=current.win)
             return(callback)
         }
-        paste("{", x, "}", sep="", collapse=" ")
+        ## quoting hell...
+        x <- gsub("\\\\", "\\\\\\\\", as.character(x))
+        x <- gsub("\"","\\\\\"", as.character(x))
+        x <- gsub("\\[","\\\\[", as.character(x))
+        paste("\"", x, "\"", sep = "", collapse = " ")
     }
 
     val <- list(...)
@@ -237,7 +241,7 @@ tkplace.slaves    <- function(...) tkcmd("place", "slaves", ...)
 
 
 
-### Widgets commands 
+### Widgets commands
 
 tkactivate  <- function(widget, ...) tkcmd(widget, "activate", ...)
 tkadd       <- function(widget, ...) tkcmd(widget, "add", ...)

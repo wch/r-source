@@ -133,10 +133,13 @@ SEXP dotTclcallback(SEXP args)
        is protected from later GCs. Otherwise we'll have buttons that
        make R go Boom... We need register_callback(closure) or
        something to that effect + a run through registered callbacks
-       in the MarkPhase of GC */
+       in the MarkPhase of GC. [Currently, this is handled by having
+       .Tcl.args assign an alias to the function in the environment of
+       the window with which the callback is associated] */
 
     while ( formals != R_NilValue )
     {
+	if (TAG(formals) ==  R_DotsSymbol) break;
 	sprintf(tmp, " %%%s", CHAR(PRINTNAME(TAG(formals))));
 	strcat(buf, tmp);
 	formals = CDR(formals);
