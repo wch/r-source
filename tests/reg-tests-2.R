@@ -1452,3 +1452,11 @@ factor(x, exclude="")
 print(factor(x), quote=TRUE)
 print(factor(x, exclude=""), quote=TRUE)
 ## last two printed levels differently from values in 2.0.1
+
+
+## write.table in marginal cases
+x <- matrix(, 3, 0)
+write.table(x) # 3 rows
+write.table(x, row.names=FALSE)
+# note: scan and read.table won't read this as they take empty fields as NA
+## was 1 row in 2.0.1

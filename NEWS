@@ -418,6 +418,8 @@ BUG FIXES
 
     o	getDLLRegisteredRoutines.character() was broken.
 
+    o	write.table(x, row.names=FALSE) was incorrect for a 0-column x.
+
 
 
 		CHANGES IN R VERSION 2.0.1

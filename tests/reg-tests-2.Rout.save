@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-12-20), ISBN 3-900051-07-0
+Version 2.0.1 Patched (2004-12-25), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4388,4 +4388,18 @@ Levels: "a" "a \" test" "b"
 [1] "a"         NA          "b"         "a \" test"
 Levels: "a" "a \" test" "b" NA
 > ## last two printed levels differently from values in 2.0.1
+> 
+> 
+> ## write.table in marginal cases
+> x <- matrix(, 3, 0)
+> write.table(x) # 3 rows
+1
+2
+3
+> write.table(x, row.names=FALSE)
+
+
+
+> # note: scan and read.table won't read this as they take empty fields as NA
+> ## was 1 row in 2.0.1
 > 
