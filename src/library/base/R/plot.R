@@ -169,7 +169,7 @@ plot.formula <- function(formula, data = NULL, subset, na.action,
 
 plot.xy <-
     function(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, ...)
-    .Internal(plot.xy(xy, type, pch, lty, col, bg=bg, cex=cex, ...))
+{.Internal(plot.xy(xy, type, pch, lty, col, bg, cex, ...))}
 
 plot.new <- function(ask=NA) .Internal(plot.new(ask))
 
