@@ -11,12 +11,14 @@
 \usage{
 .checkMFClasses(cl, m, ordNotOK = FALSE)
 .MFclass(x)
+.getXlevels(Terms, m)
 }
 \arguments{
   \item{cl}{a character vector of class descriptions to match.}
   \item{m}{a model frame.}
   \item{x}{any \R object.}
   \item{ordNotOK}{logical: are ordered factors different?}
+  \item{Terms}{a \code{terms} object.}
 }
 \details{
   For applications involving \code{model.matrix} such as linear models
@@ -30,5 +32,7 @@
   \code{.MFclass} returns a character string, one of \code{"logical"},
   \code{"ordered"}, \code{"factor"}, \code{"numeric"}, \code{"nmatrix.*"}
   (a numeric matrix with a number of columns appended) or \code{"other"}.
+
+  \code{.getXlevels} returns a named character vector, or \code{NULL}.
 }
 \keyword{internal}

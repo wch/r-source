@@ -18,21 +18,13 @@ lqs.formula <-
     mt <- attr(mf, "terms")
     y <- model.extract(mf, "response")
     x <- model.matrix(mt, mf, contrasts)
-    xvars <- as.character(attr(mt, "variables"))[-1]
-    if(yvar <- attr(mt, "response") > 0)
-	xvars <- xvars[-yvar]
-    xlev <-
-	if(length(xvars) > 0) {
-	    xlev <- lapply(mf[xvars], levels)
-	    xlev[!sapply(xlev, is.null)]
-	}
     xint <- match("(Intercept)", colnames(x), nomatch = 0)
     if(xint) x <- x[, -xint, drop = FALSE]
-    fit <- lqs.default(x, y, intercept = (xint>0), method = method, ...)
+    fit <- lqs.default(x, y, intercept = (xint > 0), method = method, ...)
     fit$terms <- mt
     fit$call <- match.call()
     fit$contrasts <- attr(x, "contrasts")
-    fit$xlevels <- xlev
+    fit$xlevels <- .getXlevels(mt)
     fit$na.action <- attr(mf, "na.action")
     if(model) fit$model <- mf
     if(x.ret) fit$x <- x

@@ -41,12 +41,6 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	   ## else
 	   stop("invalid `method': ", method))
     mt <- attr(mf, "terms") # allow model.frame to update it
-    xvars <- as.character(attr(mt, "variables"))[-1]
-    if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
-    xlev <- if(length(xvars) > 0) {
-	xlev <- lapply(mf[xvars], levels)
-	xlev[!sapply(xlev, is.null)]
-    } # else NULL
 
     Y <- model.response(mf, "numeric")
     ## null model support
@@ -83,7 +77,8 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
     fit <- c(fit, list(call=call, formula=formula,
 		       terms=mt, data=data,
 		       offset=offset, control=control, method=method,
-		       contrasts = attr(X, "contrasts"), xlevels = xlev))
+		       contrasts = attr(X, "contrasts"),
+                       xlevels = .getXlevels(mt, mf)))
     class(fit) <- c("glm", "lm")
     fit
 }

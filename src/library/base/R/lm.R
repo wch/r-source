@@ -20,13 +20,6 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     else if (method != "qr")
 	warning("method = ", method, " is not supported. Using \"qr\".")
     mt <- attr(mf, "terms") # allow model.frame to update it
-    xvars <- as.character(attr(mt, "variables"))[-1]
-    if((yvar <- attr(mt, "response")) > 0) xvars <- xvars[-yvar]
-    xlev <-
-	if(length(xvars) > 0) {
-	    xlev <- lapply(mf[xvars], levels)
-	    xlev[!sapply(xlev, is.null)]
-	}
     y <- model.response(mf, "numeric")
     w <- model.weights(mf)
     offset <- model.offset(mf)
@@ -51,7 +44,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     z$na.action <- attr(mf, "na.action")
     z$offset <- offset
     z$contrasts <- attr(x, "contrasts")
-    z$xlevels <- xlev
+    z$xlevels <- .getXlevels(mt, mf)
     z$call <- cl
     z$terms <- mt
     if (model)
