@@ -122,7 +122,7 @@ Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: user full CJK cust
 Name: "devel"; Description: "Source Package Installation Files"; Types: user full CJK custom
 Name: "tcl"; Description: "Support Files for Package tcltk"; Types: user full CJK custom
 Name: "libdocs"; Description: "Docs for Packages grid and survival"; Types: user full CJK custom
-Name: "trans"; Description: "Message Translations"; Types: user full custom
+Name: "trans"; Description: "Message Translations"; Types: user full CJK custom
 Name: "mbcs"; Description: "Version for East Asian languages"; Types: CJK custom
 Name: "latex"; Description: "Latex Help Files"; Types: full custom
 Name: "refman"; Description: "PDF Reference Manual"; Types: full custom
