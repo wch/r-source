@@ -112,6 +112,10 @@ BUG FIXES
 
     o   hist() now works better and also has a `plot = TRUE' argument.
 
+    o   lm(), lm.fit, lm.wfit (was `lm.w.fit'):  Made more compatible.
+	Dealing with (close to) collinear situations is still not flexible
+	enough.
+
     o   Improvement to many (even most ?) documentation (.Rd) files.
 
    ... and numerous other fixes of minor things ...
