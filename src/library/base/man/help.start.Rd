@@ -53,8 +53,8 @@ help.start(update = TRUE, gui = "irrelevant",
   specified, but \code{help} will still use the file association mechanism.
 
   \code{help.start} and the Java-based search engine have been tested
-  under Internet Explorer 6, Netscape 6.2.3/7.0, Opera 6.01 and
-  Mozilla 1.0.
+  under Internet Explorer 6, Netscape 6.2.3/7.0/7.1, Opera 6.01,
+  Mozilla 1.5 and MozillaFirebird 0.7.
 #endif
 }
 
@@ -70,6 +70,8 @@ help.start(update = TRUE, gui = "irrelevant",
 help.start(browser="C:\\\\Program Files\\\\Internet Explorer\\\\IEXPLORE.EXE")
 help.start(browser="C:/Program Files/Netscape/Netscape/netscp.exe")
 help.start(browser="C:/Program Files/Opera/Opera.exe")
+help.start(browser="C:/Program Files/mozilla.org/Mozilla/mozilla.exe")
+help.start(browser="C:/Program Files/mozilla.org/Firebird/MozillaFirebird.exe")
 #endif
 }}
 \keyword{documentation}
