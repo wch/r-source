@@ -136,9 +136,9 @@ else
 	-@$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
 	@if test -f ${SPKG}/DESCRIPTION; then \
-	  $(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
 	  echo "  adding build stamp to DESCRIPTION" ; \
-	  echo "Built: R" $(RVER)\;  Win32\;  `date` >> ${DPKG}/DESCRIPTION; \
+	  (cat DESCRIPTION; echo; echo "Built: R" $(RVER)\;  Win32\;  `date`) \
+	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION; \
 	else \
 	  echo "A package must contain a DESCRIPTION file"; \
 	  exit 27; \
@@ -164,6 +164,7 @@ else
 	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
 endif
 	@echo "  DLL made"
+	@echo
 
 FORCE:
 

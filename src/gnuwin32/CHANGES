@@ -33,6 +33,14 @@ to use them you will need perl installed).
 
 
 
+rw1062
+======
+
+Source packages with a DESCRIPTION file with an incomplete last line
+are now repaired.
+
+
+
 rw1061
 ======
 
