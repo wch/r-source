@@ -937,6 +937,7 @@ SEXP do_gzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- bzipped file connections --------------------- */
 
+#if defined(HAVE_BZLIB) || defined(Unix)
 #undef ERROR /* for compilation on Windows */
 #include <bzlib.h>
 
@@ -1116,6 +1117,14 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
+#else
+SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    error("libbzip2 is not available on this system");
+    return R_NilValue;		/* -Wall */
+}
+#endif
+
 
 /* ------------------- clipboard connections --------------------- */
 

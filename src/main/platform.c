@@ -997,9 +997,6 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-#if defined(Unix) && !defined(HAVE_PCRE)
-#define HAVE_PCRE 1
-#endif
 
 SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1116,10 +1113,14 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
-    LOGICAL(ans)[i++] = TRUE; /* always true in this version */
+#if defined(HAVE_BZLIB) || defined(Unix)
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
 
     SET_STRING_ELT(ansnames, i, mkChar("PCRE"));
-#if defined(HAVE_PCRE)
+#if defined(HAVE_PCRE) || defined(Unix)
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
