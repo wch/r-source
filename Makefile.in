@@ -83,7 +83,7 @@ install: installdirs
 	@for f in $(INSTFILES); do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
 	done
-@WANT_R_FRAMEWORK_TRUE@$(MAKE) install-R-framework
+@WANT_R_FRAMEWORK_TRUE@	$(MAKE) install-R-framework
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)
 install-strip:
