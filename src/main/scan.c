@@ -1257,17 +1257,18 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(nread = 0; nread < nlines; ) {
 	nbuf = 0; empty = TRUE, skip = FALSE;
 	if (data.ttyflag) sprintf(ConsolePrompt, "%d: ", nread);
-	while((c = scanchar(FALSE, &data)) != R_EOF) {
+	/* want to interpret comments here, not in scanchar */
+	while((c = scanchar(TRUE, &data)) != R_EOF) {
 	    if(nbuf == buf_size) {
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
 		if(!buf)
 		    error("cannot allocate buffer in readTableHead");
 	    }
-	    if(c != '\n') buf[nbuf++] = c; else break;
 	    if(empty && !skip)
 		if(c != ' ' && c != '\t' && c != data.comchar) empty = FALSE;
 	    if(!skip && c == data.comchar) skip = TRUE;
+	    if(c != '\n') buf[nbuf++] = c; else break;
 	}
 	buf[nbuf] = '\0';
 	if(data.ttyflag && empty) break;
