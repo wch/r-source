@@ -112,7 +112,10 @@ NEW FEATURES
 	the formula before the usual search path.
 
     o	.Defunct() now has 'new' and 'package' arguments like those of
-	.Deprecated(). 
+	.Deprecated().
+
+    o	reorder.dendrogram() now has a 'agglo.FUN' argument for
+	specification of a weights agglomeration function.
 
 
 UTILITIES
@@ -389,6 +392,7 @@ BUG FIXES
 	the perl=TRUE option to grep etc were being corrupted and so
 	matches were missed.
 
+    o	qbinom(*, prob = 0, lower.tail = FALSE) now properly gives 0 (PR#6972).
 
 
 		CHANGES IN R VERSION 1.9.0
