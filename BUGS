@@ -325,3 +325,7 @@ Date: Fri, 24 Aug 2001 22:07:41 -0400
 Subject: WHOLESALE
 From: "James Meyers" <jamesmeyers@etex.net>
 Date: Sat, 25 Aug 2001 15:36:10 -0500
+* PR# 1076 *
+Subject: Re: [Rd] Wierd problem comparing numeric values and list using == 
+From: John Chambers <jmc@research.bell-labs.com>
+Date: Mon, 27 Aug 2001 08:44:22 -0400
