@@ -4,7 +4,7 @@
 \description{
   General-purpose optimization based on Nelder--Mead, quasi-Newton and
   conjugate-gradient algorithms. It includes an option for
-  box-constrained optimization.
+  box-constrained optimization and simulated annealing.
 }
 \usage{
 optim(par, fn, gr = NULL,
@@ -17,9 +17,14 @@ optim(par, fn, gr = NULL,
  \item{fn}{A function to be minimized (or maximized), with first
    argument the vector of parameters over which minimization is to take
    place. It should return a scalar result.}
- \item{gr}{A function to return the gradient. Not needed for the
-   \code{"Nelder-Mead"} and \code{"SANN"} method. If it is \code{NULL}
-   and it is needed, a finite-difference approximation will be used.}
+ \item{gr}{A function to return the gradient for the \code{"BFGS"},
+   \code{"CG"} and \code{"L-BFGS-B"} methods.  If it is \code{NULL}, a
+   finite-difference approximation will be used.
+
+   For the \code{"SANN"} method it specifies a function to generate a new
+   candidate point.  If it is \code{NULL} a default Gaussian Markov
+   kernel is used.
+ }
  \item{method}{The method to be used. See \bold{Details}.}
  \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
  \item{control}{A list of control parameters. See \bold{Details}.}
@@ -56,17 +61,19 @@ optim(par, fn, gr = NULL,
   Nocedal and Wright (1999) is a comprehensive reference for the
   previous three methods.
   
-  Method \code{"SANN"} is a variant of simulated annealing
+  Method \code{"SANN"} is by default a variant of simulated annealing
   given in Belisle (1992). Simulated-annealing belongs to the class of
   stochastic global optimization methods. It uses only function values
   but is relatively slow. It will also work for non-differentiable
   functions. This implementation uses the Metropolis function for the
-  acceptance probability. The next candidate point is generated from a
-  Gaussian Markov kernel with scale proportional to the actual temperature.
-  Temperatures are decreased according to the logarithmic cooling
-  schedule as given in Belisle (1992, p. 890). Note that the
-  \code{"SANN"} method depends critically on the settings of the
-  control parameters.  It is not a general-purpose method but can be
+  acceptance probability. By default the next candidate point is
+  generated from a Gaussian Markov kernel with scale proportional to the
+  actual temperature. If a function to generate a new candidate point is
+  given, method \code{"SANN"} can also be used to solve combinatorial
+  optimization problems. Temperatures are decreased according to the
+  logarithmic cooling schedule as given in Belisle (1992, p. 890). Note
+  that the \code{"SANN"} method depends critically on the settings of
+  the control parameters. It is not a general-purpose method but can be 
   very useful in getting to a good value on a very rough surface.
 
   Function \code{fn} can return \code{NA} or \code{Inf} if the function
@@ -173,7 +180,7 @@ optim(par, fn, gr = NULL,
 
   Fletcher, R. and Reeves, C. M. (1964) Function minimization by
   conjugate gradients. \emph{Computer Journal} \bold{7}, 148--154.
-
+  
   Nash, J. C. (1990) \emph{Compact Numerical Methods for
     Computers. Linear Algebra and Function Minimisation.} Adam Hilger.
 
@@ -238,6 +245,54 @@ res
 ## Now improve locally
 (r2 <- optim(res$par, fw, method="BFGS"))
 points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
+
+\dontrun{## Combinatorial optimization: Traveling salesman problem
+## this is rather slow: 20 secs on 1Ghz PIII
+library(mva)
+library(ts) # for embed
+
+data(eurodist)
+eurodistmat <- as.matrix(eurodist)
+
+distance <- function(sq) {  # Target function
+    sq2 <- embed(sq, 2)
+    return(sum(eurodistmat[cbind(sq2[,2],sq2[,1])]))
 }
+
+genseq <- function(sq) {  # Generate new candidate sequence 
+    idx <- seq(2, NROW(eurodistmat)-1, by=1)
+    changepoints <- sample(idx, size=2, replace=FALSE)
+    tmp <- sq[changepoints[1]]
+    sq[changepoints[1]] <- sq[changepoints[2]]
+    sq[changepoints[2]] <- tmp
+    return(sq)
+}
+
+sq <- c(1,2:NROW(eurodistmat),1)  # Initial sequence
+distance(sq)
+
+res <- optim(sq, distance, genseq, method="SANN",
+             control = list(maxit=20000, temp=2000, trace=TRUE))
+res  # Near optimum distance around 12842
+
+loc <- cmdscale(eurodist)
+rx <- range(x <- loc[,1])
+ry <- range(y <- -loc[,2])
+tspinit <- loc[sq,]
+tspres <- loc[res$par,]
+s <- seq(NROW(tspres)-1)
+
+plot(x, y, type="n", asp=1, xlab="", ylab="",
+     main="initial solution of traveling salesman problem")
+arrows(tspinit[s,1], -tspinit[s,2], tspinit[s+1,1], -tspinit[s+1,2],
+       angle=10, col="green") 
+text(x, y, names(eurodist), cex=0.8)
+
+plot(x, y, type="n", asp=1, xlab="", ylab="",
+     main="optim() 'solving' traveling salesman problem") 
+arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
+       angle=10, col="red")
+text(x, y, names(eurodist), cex=0.8)
+}}
 \keyword{nonlinear}
 \keyword{optimize}

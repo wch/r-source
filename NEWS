@@ -27,7 +27,11 @@ NEW FEATURES
     o   basename() and dirname() are now vectorized.
 
     o   mosaicplot() has a new default for `main', and supports the
-	`las' argument.
+	`las' argument (contrinuted by Uwe Ligges and Wolfram Fischer).
+
+    o   optim(method = "SANN") can now cover combinatorial 
+	optimization by supplying a move function as the `gr'
+	argument (contributed by Adrian Trapletti). 
 
 
 INSTALLATION CHANGES
