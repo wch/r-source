@@ -345,7 +345,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     ## handle the column only subsetting ...
 
     if(missing(i)) {
-	x <- x[j]
+        if(!missing(j))
+            x <- x[j]
 	cols <- names(x)
 	if(is.null(cols) || any(nchar(cols) == 0))
 	    stop("not all specified columns exist")
