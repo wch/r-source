@@ -44,7 +44,8 @@ all.equal.numeric(target, current,
     absolute differences are used, otherwise relative differences scaled
     by the mean absolute difference.
 
-    If \code{scale} is positive, comparisons are after scaling by \code{scale}.
+    If \code{scale} is positive, absolute comparisons are after scaling
+    (dividing) by \code{scale}.
 
     For complex arguments, \code{\link{Mod}} of difference is used.
 
