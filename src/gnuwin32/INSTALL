@@ -48,11 +48,6 @@ http://www.activestate.com/Products/ActivePerl/.
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
-The zlib-1.1.3 sources from http://www.gzip.org/zlib/ and mirrors.
-Unpack this from this directory by
-
-unzip zlib113.zip -d bitmap/zlib
-
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
 
