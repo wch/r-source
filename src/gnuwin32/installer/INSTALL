@@ -1,5 +1,27 @@
+Windows-style Installer
+=======================
+
+You can make an install package (SetupR.exe) in the usual Windows style
+(by default in Windows 2000 style) by using the installer kit 
+Inno Setup 2.0.9 (or later) from www.jrsoftware.org. 
+
+First go to the parent of this directory and make the distribution zip
+files by
+
+make tcl
+make distribution
+make packagedist
+
+Then in this directory, edit ISDIR in Makefile and run
+
+make
+make ISclean
+
+
 BDR's rwinst
 ============
+
+This is obselete and no longer maintained.
 
 You need to get Info-Zip's unzip542.zip from one of many mirrors, and
 unzip it in this directory, with say
@@ -11,25 +33,3 @@ Then alter UNZIPDIR in the Makefile if necessary and run `make'.
 dounzip.c is based rather loosely on the windll/uzexampl.c file.
 
 
-Windows-style Installer
-=======================
-
-You can make an install package (SetupR.exe) in the usual Windows style
-(by default in Windows 2000 style) by using the installer kit 
-Inno Setup 2.0.5 (or later) from www.jrsoftware.org. 
-
-First go to the parent of this directory and make the distribution zip
-files by
-
-make tcl
-make distribution
-make packagedist
-
-Then in this directory, edit ISDIR in Makefile and run
-
-make IS
-make ISclean
-
-
-miniR.* is made in the same way, replacing `make IS' by `make miniR.exe'.
-This is a minimal installation that fits on four floppy discs.
