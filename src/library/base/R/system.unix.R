@@ -6,21 +6,17 @@
 	 append.file = function(f1,f2) {# append to 'f1' the file 'f2':
              system(paste("cat", f2, ">>", f1), trash.errors= TRUE)
          },
-         show.libraries = function(lib.loc, fsep) {
-             # result of  library()
-             file <- tempfile("R.")
-             on.exit(unlink(file))
-             first <- TRUE
-             for (lib in lib.loc) {
-                 cat(paste(ifelse(first, "", "\n"), "Packages in library `",
-                           lib, "':\n\n", sep = ""), file = file,
-                     append = TRUE)
-                 .Platform$ append.file(file,
-                                        paste(lib, "LibIndex", sep = fsep))
-                 if(first)first <- FALSE
-             }
-             .Platform$ show.file(file)
-         },
+	 show.data = function(package,lib.loc,fsep) {
+	 ## give `index' of all possible data sets
+             for (lib in lib.loc)
+             for (pkg in package) {
+	      INDEX <- system.file(paste("data", "index.doc", sep = fsep),
+			      pkg, lib)
+	      if (INDEX != "") {
+	       cat(paste("\n\nData sets in package `", pkg, "':\n\n",
+                         sep = fsep))
+               .Platform$ show.file(INDEX)
+              }}},	 
 	 )
 
 bug.report <- function(send=TRUE, method=.Options$mailer)
@@ -75,70 +71,6 @@ bug.report <- function(send=TRUE, method=.Options$mailer)
 		     sep="")
 	system(cmd)
     }
-}
-
-
-data <- function(..., list = character(0), package =c(.packages(), .Autoloaded),
-		 lib.loc = .lib.loc, verbose = .Options$verbose) {
-    names <- c(as.character(substitute(list(...))[-1]), list)
-    if (!missing(package))
-	if (is.name(y <- substitute(package)))# && !is.character(package))
-	    package <- as.character(y)
-    found <- FALSE
-    fsep <- .Platform$file.sep
-    if (length(names) == 0) { ## give `index' of all possible data sets
-	file <- tempfile("Rdata.")
-	on.exit(unlink(file))
-	for (lib in lib.loc)
-	    for (pkg in package) {
-		INDEX <- system.file(paste("data", "index.doc", sep = fsep),
-				     pkg, lib)
-		if (INDEX != "") {
-		    cat(paste(ifelse(found, "\n", ""),
-			      "Data sets in package `", pkg, "':\n\n", sep=""),
-			file = file, append = TRUE)
-		    .Platform$ append.file(file, INDEX)
-		    if(!found) found <- TRUE
-		}
-	    }
-	if (found)
-	    .Platform$ show.file(file)
-    }
-    else for (name in names) {
-	dn <- paste("data", name, sep = fsep)
-	files <- system.file(paste(dn, ".*", sep = ""), package, lib.loc)
-	found <- FALSE
-	if (files != "") {
-	    subpre <- paste(".*", fsep, sep="")
-	    for (file in files) {
-		if(verbose)
-		    cat("name=",name,":\t file= ...",fsep,
-			sub(subpre,"",file),"::\t", sep="")
-		if (found) break
-		found <- TRUE
-		ext <- sub(".*\\.", "", file)
-		## make sure the match is really for `name.ext'
-		if (sub(subpre, "", file) != paste(name, ".", ext, sep = ""))
-		    found <- FALSE
-		else
-		    switch(ext,
-			   "R" =, "r" = source(file),
-			   "RData" =, "rdata" =, "rda" = load(file),
-			   "TXT" =, "txt" =, "tab" =
-			   assign(name, read.table(file, header= TRUE),
-				  env = .GlobalEnv),
-			   "CSV" =, "csv" =
-			   assign(name, read.table(file, header= TRUE, sep=";"),
-				  env = .GlobalEnv),
-			   ## otherwise
-			   found <- FALSE)
-		if (verbose) cat(if(!found) "*NOT* ", "found\n")
-	    }
-	}
-	if (!found)
-	    warning(paste("Data set `", name, "' not found", sep = ""))
-    }
-    invisible(names)
 }
 
 date <- function() { system("date", intern = TRUE) }
