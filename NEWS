@@ -52,11 +52,15 @@ NEW FEATURES
     o	findInterval(x, v) now allows +/-Inf values, and NAs in x.
 
     o   subset() now allows a `drop' argument to remove unused factor
-        levels. The default is still to keep them. 
+        levels.  The default is still to keep them. 
 
-    o	model.frame() methods, for example those for lm and glm, pass
+    o	model.frame() methods, for example those for "lm" and "glm", pass
 	relevant parts of ... onto the default method.  (This has
-	long been documented but not done.)
+	long been documented but not done.)  The default method is now
+	able to code with model classes such as "lqs" and "ppr".
+
+    o	ppr() has a `model' argument to allow the model frame to be
+	returned as part of the fitted object.
 
 
 UTILITIES

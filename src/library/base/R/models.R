@@ -241,6 +241,21 @@ model.frame.default <-
     function(formula, data = NULL, subset = NULL, na.action = na.fail,
 	     drop.unused.levels = FALSE, xlev = NULL,...)
 {
+    ## were we passed just a fitted model object?
+    if(!missing(formula) && nargs() == 1 && is.list(formula)
+       && all(c("terms", "call") %in% names(formula))) {
+        ## the fit might have a saved model object
+        if(!is.null(m <- formula$model)) return(m)
+        ## if not use the saved call.
+        fcall <- formula$call
+        m <- match(c("formula", "data", "subset", "weights", "na.action"),
+                   names(fcall), 0)
+        fcall <- fcall[c(1, m)]
+        fcall[[1]] <- as.name("model.frame")
+        env <- environment(formula$terms)
+	if (is.null(env)) env <- parent.frame()
+        return(eval(fcall, env, parent.frame()))
+    }
     if(missing(formula)) {
 	if(!missing(data) && inherits(data, "data.frame") &&
 	   length(attr(data, "terms")) > 0)
