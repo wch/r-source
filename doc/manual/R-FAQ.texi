@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-9, 2000-08-19
+@set FAQ-VERSION 1.1-10, 2000-09-02
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -399,16 +399,16 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000-08-18:
+@c Linux binaries as of 2000-08-23:
 @c
-@c debian   2.2 i386  1.1.0  Doug Bates
-@c          2.3 i386  1.1.0  Doug Bates
+@c debian   2.2 i386  1.1.1  Doug Bates
+@c          2.3 i386  1.1.1  Doug Bates
 @c linuxppc 5.0 ppc   1.1.0  Alex Buerkle <buerkle@hawaii.edu>
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
 @c suse     5.3 i386  1.0.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-@c          6.4 i386  1.1.0  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
+@c          6.4 i386  1.1.1  Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a CRAN site contains Debian 2.2/2.3
 packages for the i386 platform (now part of the Debian distribution and
@@ -1308,6 +1308,10 @@ A Matrix package.
 @item NISTnls
 A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology.
+@item PHYLOGR
+Manipulation and analysis of phylogenetically simulated data sets (as
+obtained from PDSIMUL in package PDAP) and phylogenetically-based
+analyses using GLS.
 @item RODBC
 ODBC support and a back end database.
 @item RmSQL
@@ -1883,6 +1887,7 @@ dir /opt/R/src/unix
 * How do I convert factors to numeric?::  
 * Are Trellis displays implemented in R?::  
 * What are the enclosing and parent environments?::  
+* How can I substitute into a plot label?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellania, R Miscellania
@@ -2200,7 +2205,7 @@ device resizing) the aspect ratio of the plot.
 (By the way, ``Trellis'' is a trademark which cannot be used in R;
 instead, the term ``lattice'' has been proposed for the R equivalent.)
 
-@node What are the enclosing and parent environments?,  , Are Trellis displays implemented in R?, R Miscellania
+@node What are the enclosing and parent environments?, How can I substitute into a plot label?, Are Trellis displays implemented in R?, R Miscellania
 @section What are the enclosing and parent environments?
 
 Inside a function you may want to access variables in two additional
@@ -2247,6 +2252,25 @@ to see why they differ.  One way to describe the scoping differences
 between R and S is to say that in S the enclosing environment is
 @emph{always} the global workspace, but in R the enclosing environment
 is wherever the function was created.
+
+@node How can I substitute into a plot label?,  , What are the enclosing and parent environments?, R Miscellania
+@section How can I substitute into a plot label?
+
+Often, it is desired to use the value of an R object in a plot label,
+e.g., a title.  This is easily accomplished using @code{paste()} if the
+label is a simple character string, but not always obvious in case the
+label is an expression (for refined mathematical annotation).  In such a
+case, either use @code{parse()} on your pasted character string or use
+@code{substitute()} on an expression.  For example, if @code{ahat} is an
+estimator of your parameter @math{a} of interest, use
+
+@smallexample
+title(substitute(hat(a) == ahat, list(ahat = ahat)))
+@end smallexample
+
+@noindent
+(note that it is @samp{==} and not @samp{=}).  There are more worked
+examples in the mailing list achives.
 
 @node R Programming, R Bugs, R Miscellania, Top
 @chapter R Programming

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-9, 2000-08-19
+Version 1.1-10, 2000-09-02
 Kurt Hornik
 
 
@@ -70,6 +70,7 @@ Table of Contents
   7.13 How do I convert factors to numeric?
   7.14 Are Trellis displays implemented in R?
   7.15 What are the enclosing and parent environments?
+  7.16 How can I substitute into a plot label?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -1041,6 +1042,11 @@ works, was published in the Journal of Statistical Software
      A set of test nonlinear least squares examples from NIST, the U.S.
      National Institute for Standards and Technology.
 
+*PHYLOGR*
+     Manipulation and analysis of phylogenetically simulated data sets (as
+     obtained from PDSIMUL in package PDAP) and phylogenetically-based
+     analyses using GLS.
+
 *RODBC*
      ODBC support and a back end database.
 
@@ -1920,6 +1926,22 @@ see why they differ.  One way to describe the scoping differences between R
 and S is to say that in S the enclosing environment is _always_ the global
 workspace, but in R the enclosing environment is wherever the function was
 created.
+
+7.16 How can I substitute into a plot label?
+============================================
+
+   Often, it is desired to use the value of an R object in a plot label,
+e.g., a title.  This is easily accomplished using `paste()' if the label is
+a simple character string, but not always obvious in case the label is an
+expression (for refined mathematical annotation).  In such a case, either
+use `parse()' on your pasted character string or use `substitute()' on an
+expression.  For example, if `ahat' is an estimator of your parameter a of
+interest, use
+
+     title(substitute(hat(a) == ahat, list(ahat = ahat)))
+
+(note that it is `==' and not `=').  There are more worked examples in the
+mailing list achives.
 
 8 R Programming
 ***************

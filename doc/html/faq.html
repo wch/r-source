@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-9, 2000-08-19</h2>
+<h2>Version 1.1-10, 2000-09-02</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -92,6 +92,7 @@
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">7.13 How do I convert factors to numeric?</a>
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">7.14 Are Trellis displays implemented in R?</a>
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">7.15 What are the enclosing and parent environments?</a>
+<li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">7.16 How can I substitute into a plot label?</a>
 </ul>
 <li><a href="#R%20Programming">8 R Programming</a>
 <ul>
@@ -1370,6 +1371,10 @@ bundle.
 <br><dt><strong>NISTnls</strong>
 <dd>A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology. 
+<br><dt><strong>PHYLOGR</strong>
+<dd>Manipulation and analysis of phylogenetically simulated data sets (as
+obtained from PDSIMUL in package PDAP) and phylogenetically-based
+analyses using GLS. 
 <br><dt><strong>RODBC</strong>
 <dd>ODBC support and a back end database. 
 <br><dt><strong>RmSQL</strong>
@@ -1959,6 +1964,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>: 
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>: 
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>: 
+<li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>: 
 </ul>
 
 <p><hr>
@@ -2342,6 +2348,7 @@ instead, the term "lattice" has been proposed for the R equivalent.)
 
 <p><hr>
 Node:<a name="What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
+Next:<a rel=next href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
 Previous:<a rel=previous href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
 Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
 <br>
@@ -2392,6 +2399,28 @@ to see why they differ.  One way to describe the scoping differences
 between R and S is to say that in S the enclosing environment is
 <em>always</em> the global workspace, but in R the enclosing environment
 is wherever the function was created.
+
+<p><hr>
+Node:<a name="How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
+Previous:<a rel=previous href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
+Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+<br>
+
+<h2>7.16 How can I substitute into a plot label?</h2>
+
+<p>Often, it is desired to use the value of an R object in a plot label,
+e.g., a title.  This is easily accomplished using <code>paste()</code> if the
+label is a simple character string, but not always obvious in case the
+label is an expression (for refined mathematical annotation).  In such a
+case, either use <code>parse()</code> on your pasted character string or use
+<code>substitute()</code> on an expression.  For example, if <code>ahat</code> is an
+estimator of your parameter a of interest, use
+
+<pre>title(substitute(hat(a) == ahat, list(ahat = ahat)))
+</pre>
+
+<p>(note that it is <code>==</code> and not <code>=</code>).  There are more worked
+examples in the mailing list achives.
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
