@@ -136,47 +136,22 @@ It is currently mirrored daily at
 @item http://cran.hu.r-project.org/
 (Semmelweis University, Hungary)
 @item http://cran.uk.r-project.org/
-(University of Bristol, UK)
+(University of Bristol, United Kingdom)
 @item http://cran.us.r-project.org/
-(University of Wisconsin, USA)
+(University of Wisconsin, U.S.A.)
 @item http://cran.za.r-project.org/
 (Rhodes University, South Africa)
 @item http://cran.mirror.aarnet.edu.au/
 (AARNet, Australia [accessible only from Australia and New Zealand])
 @item ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/
-University of Aizu, Japan
+(University of Aizu, Japan)
 @c @item ftp://dola.snu.ac.kr/pub/R/CRAN/
 @c Seoul, South Korea
 @item http://lib.stat.cmu.edu/R/CRAN/
-Statlib, Carnegie Mellon University, USA
+(Statlib, Carnegie Mellon University, U.S.A.)
+@item http://cran.stat.ucla.edu/
+(University of California, Los Angeles, U.S.A.)
 @end table
-@c  @multitable @columnfractions .40 .40
-@c  @item @uref{http://cran.at.r-project.org/}
-@c  @tab (TU Wien, Austria)
-@c  @item @uref{http://cran.au.r-project.org/}
-@c  @tab (PlanetMirror, Australia)
-@c  @item @uref{http://cran.ch.r-project.org/}
-@c  @tab (ETH Zurich, Switzerland)
-@c  @item @uref{http://cran.dk.r-project.org/}
-@c  @tab (SunSITE, Denmark)
-@c  @item @uref{http://cran.hu.r-project.org/}
-@c  @tab (Semmelweis University, Hungary)
-@c  @item @uref{http://cran.uk.r-project.org/}
-@c  @tab (University of Bristol, UK)
-@c  @item @uref{http://cran.us.r-project.org/}
-@c  @tab (University of Wisconsin, USA)
-@c  @item @uref{http://cran.mirror.aarnet.edu.au/}
-@c  @tab (AARNet, Australia [accessible only from Australia and New Zealand])
-@c  @item @uref{ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/}
-@c  @ifinfo
-@c  @tab @item
-@c  @end ifinfo
-@c  @tab University of Aizu, Japan
-@c  @item @uref{ftp://dola.snu.ac.kr/pub/R/CRAN/}
-@c  @tab Seoul, South Korea
-@c  @item @uref{http://lib.stat.cmu.edu/R/CRAN/}
-@c  @tab Statlib, Carnegie Mellon University, USA
-@c  @end multitable
 @end quotation
 
 Many of these sites can also be accessed using FTP.  In the interests of
