@@ -176,6 +176,9 @@ NEW FEATURES
 	expression.  (The blue book only allows a function; current
 	S-Plus a function or an expression.)
 
+    o	Exact p-values are available for the two-sided two-sample
+	Kolmogorov-Smirnov test.
+
 
 
 BUG FIXES

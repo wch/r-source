@@ -1,9 +1,15 @@
 /* ks.c
-   Compute the asymptotic and eventually hopefully also the exact
-   distribution(s) of the Kolmogorov-Smirnov statistics.
+   Compute the asymptotic distribution of the one- and two-sample
+   two-sided Kolmogorov-Smirnov statistics, and the exact distribution
+   in the two-sided two-sample case.
    */
 
 #include <R.h>
+
+static void
+errmsg(char *s) {
+    PROBLEM "%s", s RECOVER(NULL_ENTRY);
+}
 
 void
 pkstwo(Sint *n, double *x, double *tol) {
@@ -24,4 +30,36 @@ pkstwo(Sint *n, double *x, double *tol) {
 	}
 	x[i] = new;
     }
+}
+
+void
+psmirnov2x(double *x, Sint *m, Sint *n) {
+    double md, nd, *u, w;
+    Sint i, j;
+
+    if(*m > *n) {
+	i = *n; *n = *m; *m = i;
+    }
+    md = (double) (*m);
+    nd = (double) (*n);
+    u = Calloc(*n + 1, double);
+    if(!u)
+	errmsg("allocation error in psmirnov2x().");
+    for(j = 0; j <= *n; j++) {
+	u[j] = ((j / nd) > *x) ? 0 : 1;
+    }
+    for(i = 1; i <= *m; i++) {
+	w = (double)(i) / ((double)(i + *n));
+	if((i / md) > *x)
+	    u[0] = 0;
+	else
+	    u[0] = w * u[0];
+	for(j = 1; j <= *n; j++) {
+	    if(fabs(i / md - j / nd) > *x)
+		u[j] = 0;
+	    else
+		u[j] = w * u[j] + u[j - 1];
+	}
+    }
+    *x = u[*n];
 }
