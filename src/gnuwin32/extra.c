@@ -1092,6 +1092,9 @@ SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
     OSVERSIONINFO verinfo;
     
     checkArity(op, args);
+    if(!isString(paths))
+       errorcall(call, "'path' must be a character vector");
+
     /* Fathom out if this is recent enough Windows */
     verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&verinfo);
