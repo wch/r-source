@@ -282,9 +282,28 @@ unsigned char Mac2Lat[] = {
 #if HAVE_AQUA
 extern  DL_FUNC ptr_GetQuartzParameters;
 extern  DL_FUNC ptr_FocusOnConsole;
-extern	Rboolean useaqua;
+extern	Rboolean useaqua, useCocoa;
 
-void GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos) {ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh, quartzpos);}
+extern Rboolean CocoaInnerQuartzDevice(NewDevDesc*dd,char*display,
+					  double width,double height,
+					  double pointsize,char*family,
+					  Rboolean antialias,
+					  Rboolean autorefresh,int quartzpos,
+					  int bg);
+					  
+
+extern void CocoaGetQuartzParameters(double *width, double *height, double *ps, 
+		char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos);
+		
+		
+
+void GetQuartzParameters(double *width, double *height, double *ps, char *family, 
+	Rboolean *antialias, Rboolean *autorefresh, int *quartzpos) {
+	if(useCocoa)
+		CocoaGetQuartzParameters(width, height, ps, family, antialias, autorefresh, quartzpos);
+	else
+		ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh, quartzpos);
+}
 void FocusOnConsole(void) {ptr_FocusOnConsole();}
 #endif
 
@@ -413,7 +432,9 @@ static void Quartz_SetLineWidth(double lwd,  NewDevDesc *dd);
 static void Quartz_SetLineEnd(R_GE_lineend lend,  NewDevDesc *dd);
 static void Quartz_SetLineJoin(R_GE_linejoin ljoin,  NewDevDesc *dd);
 static void Quartz_SetLineMitre(double lmitre,  NewDevDesc *dd);
-static void Quartz_SetFont(int style,  double cex, double ps,  NewDevDesc *dd);
+//static void Quartz_SetFont(int style,  double cex, double ps,  NewDevDesc *dd);
+static void Quartz_SetFont(char *family, 
+			   int style,  double cex, double ps,  NewDevDesc *dd);
 static CGContextRef	GetContext(QuartzDesc *xd);
 
 
@@ -514,7 +535,12 @@ Rboolean QuartzDeviceDriver(DevDesc *dd, char *display,
 			 char *family, Rboolean antialias, Rboolean autorefresh, 
 			 int quartzpos, int bg)
 {
-return innerQuartzDeviceDriver((NewDevDesc *)dd, display,
+  if(useCocoa)
+    return CocoaInnerQuartzDevice((NewDevDesc*)dd,display,width,height,
+				  pointsize,family,antialias,
+				  autorefresh,quartzpos,bg);
+  else
+	return innerQuartzDeviceDriver((NewDevDesc *)dd, display,
 			 width,  height,  pointsize, family, antialias, autorefresh, 
 			 quartzpos, bg);
 }
@@ -964,7 +990,8 @@ static double 	Quartz_StrWidth(char *str,
 
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextInvisible );
 
-    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+ //   Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+    Quartz_SetFont(gc->fontfamily, gc->fontface, gc->cex,  gc->ps, dd);
 
     CGContextShowTextAtPoint( GetContext(xd), 0, 0, str, strlen(str) );
 
@@ -974,13 +1001,68 @@ static double 	Quartz_StrWidth(char *str,
     return(position.x);
 }
 
+/* Return a non-relocatable copy of a string */
+
+static char *SaveFontSpec(SEXP sxp, int offset)
+{
+    char *s;
+    if(!isString(sxp) || length(sxp) <= offset)
+	error("Invalid font specification");
+    s = R_alloc(strlen(CHAR(STRING_ELT(sxp, offset)))+1, sizeof(char));
+    strcpy(s, CHAR(STRING_ELT(sxp, offset)));
+    return s;
+}
+
+/*
+ * Take the fontfamily from a gcontext (which is device-independent)
+ * and convert it into a Quartz-specific font description using
+ * the Quartz font database (see src/library/graphics/R/unix/quartz.R)
+ *
+ * IF gcontext fontfamily is empty ("") 
+ * OR IF can't find gcontext fontfamily in font database 
+ * THEN return xd->family (the family set up when the
+ *   device was created)
+ */
+static char* translateFontFamily(char* family, int face, QuartzDesc* xd) {
+    SEXP graphicsNS, quartzenv, fontdb, fontnames;
+    int i, nfonts;
+    char* result = xd->family;
+    PROTECT_INDEX xpi;
+
+    PROTECT(graphicsNS = R_FindNamespace(ScalarString(mkChar("grDevices"))));
+    PROTECT_WITH_INDEX(quartzenv = findVar(install(".Quartzenv"), 
+					   graphicsNS), &xpi);
+    if(TYPEOF(quartzenv) == PROMSXP)
+	REPROTECT(quartzenv = eval(quartzenv, graphicsNS), xpi);
+    PROTECT(fontdb = findVar(install(".Quartz.Fonts"), quartzenv));
+    PROTECT(fontnames = getAttrib(fontdb, R_NamesSymbol));
+    nfonts = LENGTH(fontdb);
+    if (strlen(family) > 0) {
+	int found = 0;
+	for (i=0; i<nfonts && !found; i++) {
+	    char* fontFamily = CHAR(STRING_ELT(fontnames, i));
+	    if (strcmp(family, fontFamily) == 0) {
+		found = 1;
+		result = SaveFontSpec(VECTOR_ELT(fontdb, i), face-1);
+	    }
+	}
+	if (!found)
+	    warning("Font family not found in Quartz font database");
+    }
+    UNPROTECT(4);
+    return result;
+}
+
+
 
 
 /* This new version of Quartz_SetFont handles correctly the unicode encoding of
    the Symbol font under Panther
  */
 
-static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
+//static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
+static void Quartz_SetFont(char *family,
+			   int style,  double cex, double ps, NewDevDesc *dd)
 {
     QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
     int size = cex * ps + 0.5;
@@ -988,25 +1070,46 @@ static void Quartz_SetFont(int style,  double cex, double ps, NewDevDesc *dd)
     GrafPtr 	savePort;
     Str255	CurrFontName;
     char	CurrFont[256];
-    
+	char *fontFamily;
+	
+	 
     GetPort(&savePort);
     SetPortWindowPort(xd->window);
     
     switch(style){
      case 5:
-      strcpy(CurrFont,"Symbol");
+/*      strcpy(CurrFont,"Symbol");
 	  if(WeAreOnPanther)
  	   CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingFontSpecific);
 	  else 
  	   CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);
      break;
+*/
+	 strcpy(CurrFont,"Symbol");
+	 if(WeAreOnPanther)
+	     CGContextSelectFont( GetContext(xd), CurrFont, size, 
+				  kCGEncodingFontSpecific);
+	 else 
+	     CGContextSelectFont( GetContext(xd), CurrFont, size, 
+				  kCGEncodingMacRoman);
+	 break;
 
      default:
-        if(xd->family)
+/*        if(xd->family)
             strcpy(CurrFont,xd->family);
         else
             strcpy(CurrFont,"Helvetica");
 		    CGContextSelectFont( GetContext(xd), CurrFont, size, kCGEncodingMacRoman);	
+	 break;
+*/
+	 fontFamily = translateFontFamily(family, style, xd);
+//	 fprintf(stderr,"fam=%s,fontfam=%s\n",fontFamily,xd->family);
+	 if (fontFamily)
+	     strcpy(CurrFont,fontFamily);//xd->family);
+	 else
+	     strcpy(CurrFont,"Helvetica");
+	 CGContextSelectFont( GetContext(xd), CurrFont, size, 
+			      kCGEncodingMacRoman);	
      break;
     }
 
@@ -1059,7 +1162,8 @@ static void 	Quartz_Text(double x, double y, char *str,
 
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextFill );
     Quartz_SetFill(gc->col, gc->gamma, dd);
-    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+    //Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+	Quartz_SetFont(gc->fontfamily, gc->fontface, gc->cex,  gc->ps, dd);
     len = strlen(str);
 
     if( (gc->fontface == 5) && (len==1) ){
@@ -1069,7 +1173,8 @@ static void 	Quartz_Text(double x, double y, char *str,
 	   else
 	    symbuf = str[0];
        if( !IsThisASymbol(tmp) ){
-		 Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
+	//	 Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
+		 Quartz_SetFont(gc->fontfamily, -1, gc->cex,  gc->ps, dd);
 		 symbuf = str[0];
        }
 	 if(WeAreOnPanther) 
@@ -1466,7 +1571,8 @@ static void 	Quartz_MetricInfo(int c,
 
     SetPort(GetWindowPort(xd->window));
 
-    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+//    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+    Quartz_SetFont(gc->fontfamily, gc->fontface, gc->cex,  gc->ps, dd);
 
     if(c==0){
         FontMetrics(&myFMetric);
@@ -1479,14 +1585,16 @@ static void 	Quartz_MetricInfo(int c,
     CGContextScaleCTM( GetContext(xd), -1, 1);
     CGContextRotateCTM( GetContext(xd), -1.0 * 3.1416);
     CGContextSetTextDrawingMode( GetContext(xd), kCGTextInvisible );
-    Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
-	
+    //Quartz_SetFont(gc->fontface, gc->cex,  gc->ps, dd);
+	Quartz_SetFont(gc->fontfamily, gc->fontface, gc->cex,  gc->ps, dd);
+
 	tmp = (unsigned char)c;
     if( (gc->fontface == 5) ){
        if( (tmp>31) && IsThisASymbol(tmp))
         testo[0] = (char)Lat2Uni[tmp-31-1];
        else	
-		Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
+	//	Quartz_SetFont(-1, gc->cex,  gc->ps, dd);
+		Quartz_SetFont(gc->fontfamily, -1, gc->cex,  gc->ps, dd);
 	 } else {
         if(tmp>127)
          testo[0] = (char)Lat2Mac[tmp-127-1];

@@ -60,11 +60,14 @@
 #define __DEBUGGING__
 
 #include <R_ext/eventloop.h>
-
+#include <Rdevices.h>
+#include <R_ext/GraphicsDevice.h>
+ 
 #include <Carbon/Carbon.h>
 extern Rboolean useaqua; /* from src/unix/system.c */
 extern Rboolean CocoaGUI; /* from src/unix/system.c */
 extern Rboolean useCocoa; /* from src/unix/system.c */
+
 
 /*
  -------------------------------------------------------- Cocoa interface functions ------
@@ -147,8 +150,30 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, ptr_FocusOnConsole,
         ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, ptr_InitAquaIO,
 		ptr_RSetConsoleWidth;
 
-DL_FUNC ptr_R_ProcessEvents;
+DL_FUNC ptr_R_ProcessEvents, ptr_CocoaInnerQuartzDevice, ptr_CocoaGetQuartzParameters;
 
+Rboolean CocoaInnerQuartzDevice(NewDevDesc *dd,char *display,
+					  double width,double height,
+					  double pointsize,char *family,
+					  Rboolean antialias,
+					  Rboolean autorefresh,int quartzpos,
+					  int bg){
+					  Rboolean x;
+					  x= (Rboolean)ptr_CocoaInnerQuartzDevice(dd, display,
+					   width, height,
+					   pointsize, family,
+					    antialias,
+					   autorefresh, quartzpos,
+					   bg);
+					   fprintf(stderr,"cocoainner=%d",x);
+					   return x;
+					  }
+
+void CocoaGetQuartzParameters(double *width, double *height, double *ps, 
+		char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos){
+		ptr_CocoaGetQuartzParameters(width,  height,  ps, 
+		 family,  antialias,  autorefresh,  quartzpos);
+		}
 
 
 void R_ProcessEvents(void);

@@ -11,7 +11,7 @@ S3method(print, recordedplot)
 
 if(tools:::.OStype() == "unix") {
 export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11,
-       X11Font, X11Fonts)
+       X11Font, X11Fonts, quartzFont, quartzFonts)
 }
 
 if(tools:::.OStype() == "windows") {
