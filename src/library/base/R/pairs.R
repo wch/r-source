@@ -37,6 +37,6 @@ pairs <- function (x, labels, panel=points, main = NULL, font.main=par("font.mai
 			axis(1)
 	}
 	if (!is.null(main)) mtext(main, 3, 3, T, 0.5,
-		cex=cex.main/par("cex"), font=font.main)
+		cex=cex.main, font=font.main)
 	invisible(NULL)
 }

@@ -206,9 +206,9 @@ function (formula, data, given.values, panel=points, rows, columns,
 	}
  }
  mtext(x.name, side=1, at=0.5*(columns/total.columns),
-	outer=TRUE, line=5, xpd=TRUE)
+	outer=TRUE, line=3.5, xpd=TRUE)
  mtext(y.name, side=2, at=0.5*(rows/total.rows),
-	outer=TRUE, line=4, xpd=TRUE)
+	outer=TRUE, line=3.5, xpd=TRUE)
 
  if(show.given) {
 	mar <- par("mar")
