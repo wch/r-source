@@ -481,22 +481,22 @@ predict.lm <- function(object, newdata = model.frame(object),
   p <- object$rank
   p1 <- 1:p
   piv <- object$qr$pivot[p1]
-  if (is.null(scale)){
-    r <- resid(object)
-    f <- fitted(object)
-    w <- weights(object)
-    if (is.null(w)) rss <- sum(r^2)
-    else rss <- sum(r^2 * w)
-    df <- n - p
-    res.var <- rss/df
-  } else
-    res.var <- scale^2
-  R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
-  vcov <- res.var * R
   est <- object$coefficients[piv]
-  predictor <- c(X[, piv, drop = F] %*% est)
+  predictor <- drop(X[, piv, drop = F] %*% est)
   interval <- match.arg(interval)
   if(se.fit || interval != "none") {
+    if (is.null(scale)){
+      r <- resid(object)
+      f <- fitted(object)
+      w <- weights(object)
+      if (is.null(w)) rss <- sum(r^2)
+      else rss <- sum(r^2 * w)
+      df <- n - p
+      res.var <- rss/df
+    } else
+      res.var <- scale^2
+    R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
+    vcov <- res.var * R
     ip <- real(NROW(X))
     for (i in (1:NROW(X))) {
       xi <- X[i, piv]
