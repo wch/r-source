@@ -111,9 +111,9 @@ help.search <- function(pattern, fields = c("alias", "title"),
     fields <- paste(fields, collapse = " or ")
     if (NROW(db) > 0) {
         FILE <- tempfile()
-        cat(paste("Help files with ", fields, " matching `", pattern,
-                  "':\n\n", sep = ""),
-            file = FILE)
+        cat("Help files with ", fields, " matching `", pattern, "':\n",
+            "Type `?FOO' to inspect entry `FOO(PKG) TITLE'.\n\n",
+            sep = "", file = FILE)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
         cat(paste(format(dbnam), dbtit, sep = "   "),
