@@ -9,7 +9,7 @@ dir(path, pattern=NULL, all.files=FALSE,
     full.names=FALSE)
 }
 \arguments{
- \item{path}{the full path name to the directory.}
+ \item{path}{a vector of full path names.}
  \item{pattern}{an optional regular expression.  Only file names
    which match the regular expression will be returned.}
  \item{all.files}{a logical value. If \code{FALSE}, only the
@@ -25,10 +25,16 @@ in the named directory. \code{dir} is an alias.
 }
 \value{
 A character vector containing the names of the files in the
-specified directory, or \code{""} if there were no files.
+specified directory, or \code{""} if there were no files. The files are
+sorted in alphabetical order, on the full path if \item{full.names = TRUE}.
 }
 \author{Ross Ihaka}
-\note{File naming conventions are very platform dependent.}
+\note{
+    File naming conventions are very platform dependent.
+
+    The \code{pattern} argument will be ignored (with a warning) when \R
+    is compiled without a regular expressions library.
+}
 
 \examples{
 list.files(R.home())
