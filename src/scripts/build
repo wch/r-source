@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.18 $'
+revision='$Revision: 1.19 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -423,16 +423,17 @@ buildpkg () {
   done
   ## And finally build the package (bundle)
   cd ..
+  package=`basename ${1}`
   exclude_file=${TMPDIR:-/tmp}/Rbuild${$}
   rm -f ${exclude_file} 2>/dev/null \
     || (echo "cannot create file with exclude patterns" && exit 2)
-  find ${1} -type d -name check >> ${exclude_file}
-  find ${1} -name GNUMakefile >> ${exclude_file}
-  find ${1} -name CVS >> ${exclude_file}
-  find ${1} -name \*~ >> ${exclude_file}
-  message "building \`${start_dir}/${1}_${version}.tar.gz'"
-  tar chfX - ${exclude_file} ${1} | \
-    gzip -c9 > ${start_dir}/${1}_${version}.tar.gz
+  find ${package} -type d -name check >> ${exclude_file}
+  find ${package} -name GNUMakefile >> ${exclude_file}
+  find ${package} -name CVS >> ${exclude_file}
+  find ${package} -name \*~ >> ${exclude_file}
+  message "building \`${start_dir}/${package}_${version}.tar.gz'"
+  tar chfX - ${exclude_file} ${package} | \
+    gzip -c9 > ${start_dir}/${package}_${version}.tar.gz
   rm -f ${exclude_file}
 }
 
