@@ -32,8 +32,8 @@ MANbaseDIR = $(rRHOME)/src/library/base/man
 ##-- Sun make
 #> Rd_files:sh = ../../etc/Rd.files
 ##-- GNU make
-# Rd_files := $(shell $(rRHOME)/etc/Rd.files)
-Rd_files = `$(rRHOME)/etc/Rd.files`
+Rd_files := $(shell $(rRHOME)/etc/Rd.files)
+#THIS FAILS for GNU and Sun make: Rd_files = `$(rRHOME)/etc/Rd.files`
 #this has PATH prepended: Rd_files := $(wildcard $(MANbaseDIR)/*.Rd)
 #________in future_______  (for ALL 'make' versions)
 # FAILS: has directory/. _AND_ is not expanded
@@ -59,7 +59,7 @@ show-Ex:
 
 
 %.R: $(MANbaseDIR)/%.Rd
-	@RHOME=$(rRHOME) $(RHOME)/bin/Rdconv -t example $< > $@
+	@RHOME=$(rRHOME) $$RHOME/bin/Rdconv -t example $< > $@
 	@-echo $@
 
 All-Ex.R: $(R_src)
