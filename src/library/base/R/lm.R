@@ -299,7 +299,7 @@ summary.lm <- function (object, correlation = FALSE, ...)
 
 print.summary.lm <-
     function (x, digits = max(3, getOption("digits") - 3),
-              symbolic.cor = p > 4,
+              symbolic.cor = FALSE,
 	      signif.stars= getOption("show.signif.stars"),	...)
 {
     cat("\nCall:\n")#S: ' ' instead of '\n'

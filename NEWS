@@ -277,6 +277,8 @@ NEW FEATURES
     o	Generic function confint() and `lm' method (formerly in
 	package MASS, which has `glm' and `nls' methods).
 
+    o	summary.{lm,glm} now default to symbolic.cor = FALSE.
+
 
 INSTALLATION CHANGES
 

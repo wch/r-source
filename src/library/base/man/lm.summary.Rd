@@ -9,7 +9,7 @@
 \method{summary}{lm}(object, correlation = FALSE, \dots)
 
 \method{print}{summary.lm}(x, digits = max(3, getOption("digits") - 3),
-      symbolic.cor = p > 4,
+      symbolic.cor = FALSE,
       signif.stars = getOption("show.signif.stars"), \dots)
 }
 \arguments{
@@ -21,7 +21,7 @@
     the estimated parameters is returned and printed.}
   \item{digits}{the number of significant digits to use when printing.}
   \item{symbolic.cor}{logical. If \code{TRUE}, print the correlations in
-    a symbolic form (see \code{\link{symnum}} rather than as numbers.}
+    a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
   \item{signif.stars}{logical. If \code{TRUE}, ``significance stars''
     are printed for each coefficient.}
   \item{\dots}{further arguments passed to or from other methods.}

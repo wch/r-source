@@ -8,7 +8,7 @@
 \method{summary}{glm}(object, dispersion = NULL, correlation = FALSE, \dots)
 
 \method{print}{summary.glm}(x, digits = max(3, getOption("digits") - 3),
-              na.print = "", symbolic.cor = p > 4,
+              na.print = "", symbolic.cor = FALSE,
               signif.stars = getOption("show.signif.stars"), \dots)
 }
 \arguments{
@@ -23,7 +23,7 @@
   \item{digits}{the number of significant digits to use when printing.}
   \item{na.print}{Unused.}
   \item{symbolic.cor}{logical. If \code{TRUE}, print the correlations in
-    a symbolic form (see \code{\link{symnum}} rather than as numbers.}
+    a symbolic form (see \code{\link{symnum}}) rather than as numbers.}
   \item{signif.stars}{logical. If \code{TRUE}, ``significance stars''
     are printed for each coefficient.}
   \item{\dots}{further arguments passed to or from other methods.}

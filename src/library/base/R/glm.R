@@ -587,7 +587,7 @@ summary.glm <- function(object, dispersion = NULL,
 }
 
 print.summary.glm <- function (x, digits = max(3, getOption("digits") - 3),
-			       na.print = "", symbolic.cor = p > 4,
+			       na.print = "", symbolic.cor = FALSE,
 			       signif.stars= getOption("show.signif.stars"), ...)
 {
     cat("\nCall:\n")
