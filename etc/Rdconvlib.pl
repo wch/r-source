@@ -1512,12 +1512,17 @@ sub latex_code_cmd {
 	  if $code =~ /@/;
 	die("\nERROR: found `HYPERLINK(' in \$code: '" . $code ."'\n")
 	  if $code =~ /HYPERLINK\(/;
-	$code = "\\verb@" . $code . "@";
+	## till 0.63.1 
+	## $code = "\\verb@" . $code . "@";
+	##          [Problem: Fails in new Methods.Rd: verb NOT in command arg!
+	$code =~ s/[$LATEX_SPECIAL]/\\$&/go;# escape them (not the "bsl" )
+	$code =~s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
+	$code =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
     }
     else {
 	$code =~ s/HYPERLINK\(([^)]*)\)/\\Link{$1}/go;
-	$code = "\\texttt\{" . $code . "\}";
     }
+    $code = "\\texttt\{" . $code . "\}";
     $code;
 }
 
