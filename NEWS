@@ -19,6 +19,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o  segfault when running out of heap
+
     o  segfault in rbind of a vector without names fixed. cbind, too.
 
     o  fixed symbol size problems with PostScript driver

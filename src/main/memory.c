@@ -127,7 +127,7 @@ SEXP do_gc(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 void mem_err_heap(long size)
 {
-    error("heap memory (%ld Kb) exhausted [needed %ld Kb more]\n       See \"help(Memory)\" on how to increase the heap size.",
+    errorcall(R_NilValue, "heap memory (%ld Kb) exhausted [needed %ld Kb more]\n       See \"help(Memory)\" on how to increase the heap size.",
 	  (R_VSize * sizeof(VECREC))/1024,
   (size * sizeof(VECREC))/1024);
 }
