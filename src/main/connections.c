@@ -1768,7 +1768,7 @@ static int text_vfprintf(Rconnection con, const char *format, va_list ap)
 
     /* copy buf line-by-line to object */
     for(p = b; ; p = q+1) {
-	q = strchr(p, '\n');
+	q = Rf_strchr(p, '\n');
 	if(q) {
 	    int idx = ConnIndex(con);
 	    *q = '\0';

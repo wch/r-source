@@ -31,6 +31,8 @@
 
 /* Simple wrapper for C sprintf function: now (1.6.0) checks the
    types and handles the R specials.
+
+   We make no attempt to allow fmt to be MBCS.
 */
 SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
