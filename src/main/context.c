@@ -245,6 +245,17 @@ void findcontext(int mask, SEXP env, SEXP val)
     }
 }
 
+void R_JumpToContext(RCNTXT *target, int mask, SEXP val)
+{
+    RCNTXT *cptr;
+    for (cptr = R_GlobalContext;
+	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	 cptr = cptr->nextcontext)
+	if (cptr == target)
+	    jumpfun(cptr, mask, val);
+    error("Target context is not on the stack");
+}
+
 
 /* R_sysframe - look back up the context stack until the */
 /* nth closure context and return that cloenv. */
@@ -397,8 +408,8 @@ SEXP do_restart(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(cptr = R_GlobalContext->nextcontext; cptr!= R_ToplevelContext;
 	    cptr = cptr->nextcontext) {
         if (cptr->callflag & CTXT_FUNCTION) {
-		SET_RESTART_BIT_ON(cptr->callflag);
-		break;
+	    SET_RESTART_BIT_ON(cptr->callflag);
+	    break;
 	}
     }
     if( cptr == R_ToplevelContext )
