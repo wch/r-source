@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-33 @value{FAQ-YEAR}-07-16
+@set FAQ-VERSION 1.9-34 @value{FAQ-YEAR}-07-20
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1796,7 +1796,7 @@ G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
 A SINful approach to selection of Gaussian Graphical Markov Models.
 @item SenSrivastava
 Collection of datasets from ``Regression Analysis, Theory, Methods and
-Applications'' by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+Applications'' by A. Sen and M. Srivastava, 1990, Springer.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
@@ -2223,7 +2223,7 @@ single least squares fit.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
-Osborne et al.@: (1998)
+Osborne et al.@: (1998).
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
@@ -2520,6 +2520,11 @@ Fitting Gaussian linear models where the covariance structure is a
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models.
+@item reldist
+Functions for the comparison of distributions, including nonparametric
+estimation of the relative distribution PDF and CDF and numerical
+summaries as described in ``Relative Distribution Methods in the Social
+Sciences'' by Mark S. Handcock and Martina Morris, 1999, Springer.
 @item relimp
 Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
@@ -2609,7 +2614,7 @@ for the skewed @math{t} distribution of Fernandez and Steel.
 @item sm
 Software linked to the book ``Applied Smoothing Techniques for Data
 Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
-A. W. Bowman and A. Azzalini (1997), Oxford University Press.
+A. W. Bowman and A. Azzalini, 1997, Oxford University Press.
 @item sma
 Functions for exploratory (statistical) microarray analysis.
 @item smoothSurv
@@ -3030,8 +3035,8 @@ Creates Universally Unique ID values (UUIDs) in R.
 @item SAGElyzer
 Locates genes based on SAGE tags.
 @item SNAData
-Data from the book ``Social Network Analysis'' by Wasserman & Faust
-(1999).
+Data from the book ``Social Network Analysis'' by Wasserman & Faust,
+1999.
 @item aCGH
 Classes and functions for Array Comparative Genomic Hybridization data.
 @item affy

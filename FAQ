@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-33 2004-07-16
+Version 1.9-34 2004-07-20
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1520,7 +1520,7 @@ distributions of R.)
 
 *SenSrivastava*
      Collection of datasets from "Regression Analysis, Theory, Methods and
-     Applications" by A. Sen and M. Srivastava, 1990, Springer-Verlag.
+     Applications" by A. Sen and M. Srivastava, 1990, Springer.
 
 *SoPhy*
      Soil Physics Tools: simulation of water flux and solute transport in
@@ -2089,7 +2089,7 @@ distributions of R.)
 *lasso2*
      Routines and documentation for solving regression problems while
      imposing an L1 constraint on the estimates, based on the algorithm of
-     Osborne et al. (1998)
+     Osborne et al. (1998).
 
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
@@ -2463,6 +2463,12 @@ distributions of R.)
      likelihood.  Can be used for multivariate models and random effects
      models.
 
+*reldist*
+     Functions for the comparison of distributions, including nonparametric
+     estimation of the relative distribution PDF and CDF and numerical
+     summaries as described in "Relative Distribution Methods in the Social
+     Sciences" by Mark S. Handcock and Martina Morris, 1999, Springer.
+
 *relimp*
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
@@ -2577,7 +2583,7 @@ distributions of R.)
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
-     Bowman and A. Azzalini (1997), Oxford University Press.
+     Bowman and A. Azzalini, 1997, Oxford University Press.
 
 *sma*
      Functions for exploratory (statistical) microarray analysis.
@@ -2993,8 +2999,8 @@ of Bioconductor, with more packages under development.
      Locates genes based on SAGE tags.
 
 *SNAData*
-     Data from the book "Social Network Analysis" by Wasserman & Faust
-     (1999).
+     Data from the book "Social Network Analysis" by Wasserman & Faust,
+     1999.
 
 *aCGH*
      Classes and functions for Array Comparative Genomic Hybridization data.
