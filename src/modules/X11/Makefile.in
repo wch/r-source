@@ -33,7 +33,7 @@ Rexecmodulesdir_LTLIBRARIES = $(R_X11_la)
 R_X11_la_SOURCES = $(SOURCES)
 R_X11_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@R_X11_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
-R_X11_la_LIBADD = $(ALL_X_LIBS) $(LIBPATHS) $(BITMAP_LIBS) $(LIBR)
+R_X11_la_LIBADD = $(ALL_X_LIBS) $(BITMAP_LIBS) $(LIBR)
 
 all: Makefile Makedeps R
 
