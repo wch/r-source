@@ -48,3 +48,12 @@ x <- gl(3, 1)
 a <- glm(y ~ x, family=binomial)$aic
 stopifnot(is.finite(a))
 ## Comments: gave NaN prior to 1.2.1
+
+## PR 802 (crash with scan(..., what=list(,,)))
+##
+m <- matrix(1:9, 3,3)
+write(m, "test.dat", 3)
+try(scan("test.dat", what=list(,,,)))
+unlink("test.dat")
+## Comments: segfaulted in 1.2.0
+
