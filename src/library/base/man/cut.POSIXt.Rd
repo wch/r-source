@@ -1,6 +1,7 @@
 \name{cut.POSIXt}
 \alias{cut.POSIXt}
-\title{Convert a Date-Time Object to a Factor}
+\alias{cut.Date}
+\title{Convert a Date or Date-Time Object to a Factor}
 \description{
   Method for \code{\link{cut}} applied to date-time objects.
 }
@@ -9,19 +10,21 @@
     right = FALSE, \dots)
 }
 \arguments{
-  \item{x}{an object inheriting from class \code{"POSIXt"}.}
+  \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
   \item{breaks}{
     a vector of cut points \emph{or} number giving the number of
     intervals which \code{x} is to be cut into \emph{or} an
     interval specification, one of \code{"sec"}, \code{"min"},
     \code{"hour"}, \code{"day"}, \code{"DSTday"}, \code{"week"},
     \code{"month"} or \code{"year"}, optionally preceded by an integer
-    and a space, or followed by \code{"s"}.
+    and a space, or followed by \code{"s"}.  For \code{"Date"} objects
+    only \code{"day"}, \code{"week"}, \code{"month"} and \code{"year"}
+    are allowed.
   }
   \item{labels}{
     labels for the levels of the resulting category.  By default,
     labels are constructed from the left-hand end of the intervals
-    (which are include for the default value of \code{right}). If
+    (which are include for the default value of \code{right}).  If
     \code{labels = FALSE}, simple integer codes are returned instead
     of a factor.
   }
@@ -30,15 +33,16 @@
   \item{right, \dots}{arguments to be passed to or from other methods.}
 }
 \value{
-     A factor is returned, unless \code{labels = FALSE} which returns
-     the integer level codes.
+  A factor is returned, unless \code{labels = FALSE} which returns
+  the integer level codes.
 }
 \seealso{
-  \code{\link{seq.POSIXt}}, \code{\link{cut}}
+  \code{\link{seq.POSIXt}}, \code{\link{seq.Date}}, \code{\link{cut}}
 }
 \examples{
 ## random dates in a 10-week period
 cut(ISOdate(2001, 1, 1) + 70*86400*runif(100), "weeks")
+cut(as.Date("2001/1/1") + 70*runif(100), "weeks")
 }
 \keyword{manip}
 \keyword{chron}

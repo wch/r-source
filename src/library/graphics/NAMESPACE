@@ -1,5 +1,5 @@
 # leave most of the default methods visible as people seme to call them.
-export(Hershey, abline, arrows, assocplot, axTicks, axis,
+export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
        axis.POSIXct, barplot, barplot, barplot.default, box, boxplot,
        boxplot.default, boxplot.stats, bxp, check.options,
        close.screen, cm.colors, co.intervals, col2rgb, colors,
@@ -25,6 +25,7 @@ S3method(barplot, default)
 S3method(boxplot, default)
 S3method(boxplot, formula)
 S3method(contour, default)
+S3method(hist, Date)
 S3method(hist, default)
 S3method(hist, POSIXt)
 S3method(identify, default)
@@ -38,6 +39,7 @@ S3method(pairs, default)
 S3method(pairs, formula)
 S3method(persp, default)
 S3method(plot, data.frame)
+S3method(plot, Date)
 S3method(plot, default)
 S3method(plot, factor)
 S3method(plot, formula)

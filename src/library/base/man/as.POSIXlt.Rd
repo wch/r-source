@@ -4,6 +4,7 @@
 \alias{as.POSIXct.POSIXlt}
 \alias{as.POSIXct.date}
 \alias{as.POSIXct.dates}
+\alias{as.POSIXct.Date}
 \alias{as.POSIXlt}
 
 \title{Date-time Conversion Functions}
@@ -28,11 +29,13 @@ as.POSIXlt(x, tz = "")
   The \code{as.POSIX*} functions convert an object to one of the two
   classes used to represent date/times (calendar dates plus time to the
   nearest second).  They can take convert a wide variety of objects,
-  including objects of the other class and of classes \code{"date"}
-  (from package \pkg{\link[date:as.date]{date}} or
+  including objects of the other class and of classes \code{"Date"},
+  \code{"date"} (from package \pkg{\link[date:as.date]{date}} or
   \pkg{\link[survival:as.date]{survival}}), \code{"chron"} and
   \code{"dates"} (from package \pkg{\link[chron]{chron}}) to these
-  classes.  They can also convert character strings of the formats
+  classes.  Dates are treated as being at midnight UTC.
+
+  They can also convert character strings of the formats
   \code{"2001-02-03"} and \code{"2001/02/03"} optionally followed by
   white space and a time in the format \code{"14:52"} or
   \code{"14:52:03"}.  (Formats such as \code{"01/02/03"} are ambiguous

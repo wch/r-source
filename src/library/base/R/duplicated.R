@@ -42,7 +42,8 @@ unique.default <- function(x, incomparables = FALSE, ...)
     if(is.factor(x))
 	factor(z, levels = seq(len=nlevels(x)), labels = levels(x),
                ordered = is.ordered(x))
-    else if(inherits(x, "POSIXct")) structure(z, class=class(x))
+    else if(inherits(x, "POSIXct") || inherits(x, "Date"))
+        structure(z, class=class(x))
     else z
 }
 

@@ -1,6 +1,6 @@
 
-R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2003-12-20), ISBN 3-900051-00-3
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 1.9.0 Under development (unstable) (2004-01-29), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -216,6 +216,8 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -495,6 +497,8 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -769,6 +773,8 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1058,6 +1064,8 @@ IS: [1] TRUE
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1354,6 +1362,8 @@ IS: [1] TRUE
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1646,6 +1656,8 @@ IS: [1] TRUE
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -1933,6 +1945,8 @@ IS: [1] TRUE
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
 [1] TRUE
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -2218,6 +2232,8 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ts(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+> f <- try(as.Date( x ), silent = TRUE)
+>   if(!inherits(f, 'try-error')) report(identical(f, as.Date( f )))
 > f <- try(as.POSIXct( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.POSIXct( f )))
 > f <- try(as.POSIXlt( x ), silent = TRUE)
@@ -2306,6 +2322,6 @@ Error: x is not TRUE
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.38 0.03 1.41 0 0 
+Time elapsed:  0.36 0.03 0.39 NA NA 
 > 
 > 

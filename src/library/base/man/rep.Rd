@@ -4,6 +4,7 @@
 \alias{rep.int}
 \alias{rep.POSIXct}
 \alias{rep.POSIXlt}
+\alias{rep.Date}
 \title{Replicate Elements of Vectors and Lists}
 \description{
   \code{rep} replicates the values in \code{x}. It is a generic
@@ -20,7 +21,7 @@ rep.int(x, times)
 }
 \arguments{
   \item{x}{a vector (of any mode including a list) or a pairlist or a
-    \code{POSIXct} or \code{POSIXlt} object.}
+    \code{POSIXct} or \code{POSIXlt} or \code{date} object.}
   \item{times}{optional non-negative integer.  A vector giving the number of
     times to repeat each element if of length \code{length(x)}, or to
     repeat the whole vector if of length 1.}

@@ -2,6 +2,7 @@
 \alias{diff}
 \alias{diff.default}
 \alias{diff.POSIXt}
+\alias{diff.Date}
 \title{Lagged Differences}
 \description{
   Returns suitably lagged and iterated differences.
@@ -12,6 +13,8 @@ diff(x, \dots)
 \method{diff}{default}(x, lag = 1, differences = 1, \dots)
 
 \method{diff}{POSIXt}(x, lag = 1, differences = 1, \dots)
+
+\method{diff}{Date}(x, lag = 1, differences = 1, \dots)
 }
 \arguments{
   \item{x}{a numeric vector or matrix containing the values to be
@@ -22,7 +25,9 @@ diff(x, \dots)
 }
 \details{
   \code{diff} is a generic function with a default method and ones for
-  classes \code{"\link[stats]{ts}"} and \code{"\link{POSIXt}"}.
+  classes \code{"\link[stats]{ts}"}, \code{"\link{POSIXt}"} and
+  \code{"\link{Date}"}.
+
   \code{\link{NA}}'s propagate.
 }
 \value{

@@ -1,5 +1,5 @@
 system.time <- function(expr) {
-    if(!exists("proc.time")) return(rep(NA, 5))
+    if(!exists("proc.time")) return(rep(as.numeric(NA), 5))
     loc.frame <- parent.frame()
     on.exit(cat("Timing stopped at:", proc.time() - time, "\n"))
     expr <- substitute(expr)

@@ -29,9 +29,9 @@ as.POSIXlt <- function(x, tz = "")
     }
 
     if(inherits(x, "POSIXlt")) return(x)
+    if(inherits(x, "Date")) return(.Internal(Date2POSIXlt(x)))
     tzone <- attr(x, "tzone")
-    if(inherits(x, "Date") || inherits(x, "date") || inherits(x, "dates"))
-        x <- as.POSIXct(x)
+    if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
     if(is.character(x)) return(fromchar(x))
     if(is.factor(x))	return(fromchar(as.character(x)))
     if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
@@ -43,6 +43,10 @@ as.POSIXlt <- function(x, tz = "")
 }
 
 as.POSIXct <- function(x, tz = "") UseMethod("as.POSIXct")
+
+as.POSIXct.Date <- function(x, ...)
+    structure(unclass(x)*86400, class=c("POSIXt", "POSIXct"))
+
 
 ## convert from package date
 as.POSIXct.date <- function(x, ...)

@@ -220,6 +220,10 @@ NEW FEATURES
     o	D(), deriv(), etc now also differentiate asin(), acos(), atan(),
 	(thanks to a contribution of Kasper Kristensen).
 
+    o	There is a new class "Date" to represent dates (without times)
+	plus many utility functions similar to those for date-times.
+	See ?Date.
+
 
 UTILITIES
 

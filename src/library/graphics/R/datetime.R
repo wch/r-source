@@ -150,3 +150,121 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
      }
     invisible(res)
 }
+
+
+## methods for class "Date"
+
+axis.Date <- function(side, x, at, format, ...)
+{
+    mat <- missing(at)
+    if(!mat) x <- as.Date(at) else x <- as.Date(x)
+    range <- par("usr")[if(side %%2) 1:2 else 3:4]
+    range[1] <- ceiling(range[1])
+    range[2] <- floor(range[2])
+    ## find out the scale involved
+    d <- range[2] - range[1]
+    z <- c(range, x[is.finite(x)])
+    class(z) <- "Date"
+    if (d < 7) # days of a week
+        if(missing(format)) format <- "%a"
+    if(d < 100) { # month and day
+        z <- structure(pretty(z), class="Date")
+        if(missing(format)) format <- "%b %d"
+    } else if(d < 1.1*365) { # months
+        zz <- as.POSIXlt(z)
+        zz$mday <- 1;
+        zz$mon <- pretty(zz$mon)
+        m <- length(zz$mon)
+        m <- rep.int(zz$year[1], m)
+        zz$year <- c(m, m+1)
+        z <- .Internal(POSIXlt2Date(zz))
+        if(missing(format)) format <- "%b"
+    } else { # years
+        zz <- as.POSIXlt(z)
+        zz$mday <- 1; zz$mon <- 0
+        zz$year <- pretty(zz$year)
+        z <- .Internal(POSIXlt2Date(zz))
+        if(missing(format)) format <- "%Y"
+    }
+    if(!mat) z <- x[is.finite(x)] # override changes
+    z <- z[z >= range[1] & z <= range[2]]
+    z <- sort(unique(z))
+    labels <- format.Date(z, format = format)
+    axis(side, at = z, labels = labels, ...)
+}
+
+plot.Date <- function(x, y, xlab = "", axes = TRUE, frame.plot = axes,
+                         xaxt = par("xaxt"), ...)
+{
+    ## trick to remove arguments intended for title() or plot.default()
+    axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
+                        xlim, ylim, bg, pch, log, asp, ...)
+        axis.Date(1, x, ...)
+    plot.default(x, y, xaxt = "n", xlab = xlab, axes = axes,
+                 frame.plot = frame.plot, ...)
+    if(axes && xaxt != "n") axisInt(x, ...)
+}
+
+hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
+                        plot = TRUE, freq = FALSE,
+                        start.on.monday = TRUE, format)
+{
+    if(!inherits(x, "Date")) stop("wrong method")
+    xlab
+    x <- as.Date(x)
+    incr <- 1
+    ## handle breaks ourselves
+    if (inherits(breaks, "Date")) {
+        breaks <- as.Date(breaks)
+        d <- min(abs(diff(unclass(breaks))))
+        if(d > 1) incr <- 1
+        if(d > 7) incr <- 7
+        if(d > 28) incr <- 28
+        if(d > 366) incr <- 366
+        num.br <- FALSE
+    } else {
+        num.br <- is.numeric(breaks) && length(breaks) == 1
+        if(num.br) {
+        ## specified number of breaks
+        } else if(is.character(breaks) && length(breaks) == 1) {
+            valid <- pmatch(breaks, c("days", "weeks", "months", "years"))
+            if(is.na(valid)) stop("invalid specification of `breaks'")
+            start <- as.POSIXlt(min(x, na.rm = TRUE))
+            incr <- 1
+            if(valid > 1) { start$isdst <- -1}
+            if(valid == 2) {
+                start$mday <- start$mday - start$wday
+                if(start.on.monday)
+                    start$mday <- start$mday + ifelse(start$wday > 0, 1, -6)
+                incr <- 7
+            }
+            if(valid == 3) { start$mday <- 1; incr <- 31 }
+            if(valid == 4) { start$mon <- 0; incr <- 366 }
+            start <- .Internal(POSIXlt2Date(start))
+            maxx <- max(x, na.rm = TRUE)
+            breaks <- seq(start, maxx + incr, breaks)
+            breaks <- breaks[1:(1+max(which(breaks < maxx)))]
+        } else stop("invalid specification of `breaks'")
+    }
+    res <- hist.default(unclass(x), unclass(breaks), plot = FALSE, ...)
+    res$equidist <- TRUE # years are of uneven lengths
+    res$intensities <- res$intensities*incr
+    res$xname <- xlab
+    if(plot) {
+        ## trick to swallow arguments for hist.default, separate out `axes'
+        myplot <- function(res, xlab, freq, format, breaks,
+                           right, include.lowest, labels = FALSE,
+                           axes = TRUE, ...)
+        {
+            plot(res, xlab = xlab, axes = FALSE, freq = freq,
+                 labels = labels, ...)
+            if(axes) {
+                axis(2, ...)
+                if(num.br) breaks <- c.Date(res$breaks)
+                axis.Date(1, at = breaks,  format = format, ...)
+            }
+        }
+        myplot(res, xlab, freq, format, breaks, ...)
+     }
+    invisible(res)
+}
