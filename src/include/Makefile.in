@@ -13,14 +13,14 @@ include $(top_builddir)/Makeconf
 SRC_HEADERS = Applic.h Arith.h Blas.h Complex.h Error.h Errormsg.h \
 	Fortran.h Linpack.h Mathlib.h Memory.h PrtUtil.h Random.h \
 	Rdefines.h Rinternals.h S.h S_compat.h Utils.h f2c.h
-OBJ_HEADERS = Platform.h Version.h
+OBJ_HEADERS = Rconfig.h Rversion.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
 	Defn.h Fileio.h Graphics.h IOStuff.h Parse.h Print.h \
 	Statdecl.h Stattab.h \
 	$(SRC_HEADERS) \
-	Platform.h.in Version.h.in
+	Rconfig.h.in Rversion.h.in
 
 all: Makefile R
 
@@ -29,7 +29,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
 	  $(SHELL) ./config.status
 
-R: Makefile Platform.h FFDecl.h FFTab.h Version.h
+R: Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h
 	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@for f in $(SRC_HEADERS); do \
 	  $(INSTALL_DATA) $(srcdir)/$$f $(top_builddir)/include; \
@@ -38,25 +38,25 @@ R: Makefile Platform.h FFDecl.h FFTab.h Version.h
 	  $(INSTALL_DATA) $$f $(top_builddir)/include; \
 	done
 
-Platform.h: $(top_srcdir)/configure $(srcdir)/Platform.h.in
-	@cd $(top_builddir) && $(MAKE) src/include/Platform.h
+Rconfig.h: $(top_srcdir)/configure $(srcdir)/Rconfig.h.in
+	@cd $(top_builddir) && $(MAKE) src/include/Rconfig.h
 	@touch $@
 
-FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
-	$(top_srcdir)/tools/GETSYMBOLS
-
-Version.h: $(srcdir)/Version.h.in $(top_srcdir)/date-stamp
-	@cp $(srcdir)/Version.h.in $@
+Rversion.h: $(srcdir)/Rversion.h.in $(top_srcdir)/date-stamp
+	@cp $(srcdir)/Rversion.h.in $@
 	@awk -F/ '{ \
 	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
 	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
 	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
 	  $(top_srcdir)/date-stamp >> $@
 
+FFDecl.h FFTab.h:: $(top_srcdir)/src/appl/ROUTINES
+	$(top_srcdir)/tools/GETSYMBOLS
+
 mostlyclean:
 clean:
 distclean:
-	@rm -f GETSYMBOLS Makefile Platform.h FFDecl.h FFTab.h Version.h
+	@rm -f GETSYMBOLS Makefile Rconfig.h Rversion.h FFDecl.h FFTab.h
 maintainer-clean: distclean
 
 install install-strip uninstall::

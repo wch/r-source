@@ -154,10 +154,14 @@
  *
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Fileio.h"
 #include "Graphics.h"		/* KillAllDevices() [nothing else?] */
-#include "Version.h"
+#include "Rversion.h"
 
 #include "devX11.h"
 
@@ -667,18 +671,18 @@ void R_InitialData(void)
     R_RestoreGlobalEnv();
 }
 
-	/* R_CleanUp is invoked at the end of the session to give */
-	/* the user the option of saving their data.  If ask=1 the */
-	/* user is asked their preference, if ask=2 the answer is */
-	/* assumed to be "no" and if ask=3 the answer is assumed to */
-	/* be "yes".  When R is being used non-interactively, and */
-	/* ask=1, the value is changed to DefaultSaveAction, usually 3.  
-	/* The philosophy is */
-	/* that saving unwanted data is less bad than non saving */
-	/* data that is wanted. */
+/* R_CleanUp is invoked at the end of the session to give the user the
+   option of saving their data.  If ask=1 the user is asked their
+   preference, if ask=2 the answer is assumed to be "no" and if ask=3
+   the answer is assumed to be "yes".  When R is being used
+   non-interactively, and ask=1, the value is changed to
+   DefaultSaveAction, usually 3.
+   
+   The philosophy is that saving unwanted data is less bad than non
+   saving data that is wanted.
+   */
 
-
-void R_dot_Last(void); /* in main.c */
+void R_dot_Last(void);		/* in main.c */
 
 void R_CleanUp(int ask)
 {

@@ -24,10 +24,10 @@
 #define COUNTING
 
 #include "Rinternals.h"		/*-> Arith.h, Complex.h, Errormsg.h, Memory.h
-				  PrtUtil.h, Utils.h, Platform.h */
+				  PrtUtil.h, Utils.h, Rconfig.h */
 
 /*  Heap and Pointer Protection Stack Sizes.  */
-/*  These values are minima and can be overriden in Platform.h	*/
+/*  These values are minima and can be overriden in Rconfig.h	*/
 
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 
@@ -144,7 +144,7 @@ typedef struct {
 
 
 /* Evaluation Context Structure */
-/* Note: JMP_BUF is defined in Platform.h */
+/* Note: JMP_BUF is defined in Rconfig.h */
 typedef struct RCNTXT {
     struct RCNTXT *nextcontext;	/* The next context up the chain */
     int callflag;		/* The context "type" */

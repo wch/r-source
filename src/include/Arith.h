@@ -20,7 +20,7 @@
 #ifndef ARITH_H_
 #define ARITH_H_
 
-#include "Platform.h"
+#include "Rconfig.h"
 
 /* Maybe get finite(.): */
 #ifdef HAVE_IEEE754_H

@@ -45,10 +45,13 @@
  *  Also ./printvector.c,  ./printarray.c
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
 #include "Print.h"
 #include "Fileio.h"
-#include "Platform.h"
 #include "S.h"
 
 /* Global print parameter struct: */

@@ -33,7 +33,7 @@ Print.h
 
 Defn.h
    -> Rinternals.h
-	-> Arith.h	-> Platform.h
+	-> Arith.h	-> Rconfig.h
 	-> Complex.h
 	-> Errormsg.h	-> Error.h
 	-> Memory.h
@@ -45,32 +45,32 @@ Defn.h
 ii)
 
 Mathlib.h
-	-> Arith.h	-> Platform.h
+	-> Arith.h	-> Rconfig.h
 	-> Random.h
 	-> Error.h (_iff_ Mathlib in R)
 
 S_compat.h
-	-> S.h		-> Platform.h , Error.h , Memory.h
+	-> S.h		-> Rconfig.h , Error.h , Memory.h
 	-> Fortran.h
-	-> Linpack.h	-> Blas.h ,	Platform.h
+	-> Linpack.h	-> Blas.h ,	Rconfig.h
 
 S.h
-	-> Platform.h
+	-> Rconfig.h
 	-> Error.h
 	-> Memory.h
 
 Applic.h
-	-> Platform.h
+	-> Rconfig.h
 
 Arith.h
-	-> Platform.h
+	-> Rconfig.h
 
 Fortran.h
-	-> Platform.h
+	-> Rconfig.h
 	-> Complex.h
 
 Linpack.h
-	-> Platform.h
+	-> Rconfig.h
 	-> Blas.h
 
 PrtUtil.h

@@ -94,8 +94,8 @@ all: Makefile Makedeps R
 
 Makefile: $(srcdir)/Makefile.in \
   $(top_builddir)/config.status \
-  ../include/Platform.h \
-  ../include/Version.h \
+  ../include/Rconfig.h \
+  ../include/Rversion.h \
   ../include/FFDecl.h \
   $(DEPENDS)
 	@cd $(top_builddir) && \
@@ -111,9 +111,9 @@ R: Makefile
 	  $(MAKE) $${t}; \
 	done
 
-../include/Platform.h:
+../include/Rconfig.h:
 	(cd ../include; $(MAKE) $(@F))
-../include/Version.h:
+../include/Rversion.h:
 	(cd ../include; $(MAKE) $(@F))
 ../include/FFDecl.h: $(top_srcdir)/src/appl/ROUTINES
 	(cd ../include; $(top_srcdir)/tools/GETSYMBOLS)

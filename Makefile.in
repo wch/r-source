@@ -33,8 +33,8 @@ R:
 	  echo "You should \`make docs' now ..."; \
 	fi
 
-src/include/Platform.h: $(srcdir)/configure \
-  $(srcdir)/src/include/Platform.h.in
+src/include/Rconfig.h: $(srcdir)/configure \
+  $(srcdir)/src/include/Rconfig.h.in
 	$(top_srcdir)/configure --srcdir $(top_srcdir)
 
 docs help html latex examples:: FORCE

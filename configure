@@ -5792,7 +5792,7 @@ trap 'rm -fr `echo "Makeconf
   src/unix/Makefile
   tests/Makefile
   tests/Examples/Makefile
- src/include/Platform.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
+ src/include/Rconfig.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
 cat >> $CONFIG_STATUS <<EOF
 
@@ -6068,7 +6068,7 @@ ac_eD='%g'
 if test "${CONFIG_HEADERS+set}" != set; then
 EOF
 cat >> $CONFIG_STATUS <<EOF
-  CONFIG_HEADERS="src/include/Platform.h"
+  CONFIG_HEADERS="src/include/Rconfig.h"
 EOF
 cat >> $CONFIG_STATUS <<\EOF
 fi

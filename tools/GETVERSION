@@ -6,4 +6,4 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 awk '{
   if ($0 ~ /R_MAJOR/) printf "%s.", $3;
   if ($0 ~ /R_MINOR/) printf "%s\n", $3;
-}' ${TOOLS_DIR}/../src/include/Version.h.in | sed -e 's/"//g'
+}' ${TOOLS_DIR}/../src/include/Rversion.h.in | sed -e 's/"//g'

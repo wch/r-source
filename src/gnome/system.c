@@ -108,7 +108,7 @@
 #include "Defn.h"
 #include "Fileio.h"
 #include "Graphics.h"		/* KillAllDevices() [nothing else?] */
-#include "Version.h"
+#include "Rversion.h"
 
 #include "devGNOME.h"
 

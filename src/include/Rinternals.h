@@ -20,7 +20,7 @@
 #ifndef _R_INTERNALS_H_
 #define _R_INTERNALS_H_
 
-#include "Arith.h"             /*-> Platform.h */
+#include "Arith.h"		/*-> Rconfig.h */
 #include "Complex.h"
 #include "Errormsg.h"
 #include "Memory.h"

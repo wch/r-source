@@ -18,13 +18,13 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/* ../appl/bakslv.f -- translated by f2c (version of 1 June 1993  23:00:00).
+/* ../appl/bakslv.f
+   -- translated by f2c (version of 1 June 1993 23:00:00).
+   -- and hand edited by Martin Maechler.
+   */
 
-  --- and hand edited by Martin Maechler.
-*/
-
-#include "Fortran.h"/*-> incl "Platform.h"*/
-#include "Linpack.h"/*-> incl.  Blas.h  */
+#include "Fortran.h"		/* incl Rconfig.h */
+#include "Linpack.h"		/* incl Blas.h    */
 #include "Applic.h"
 
 void bakslv(double *t, int *ldt, int *n,
