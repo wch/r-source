@@ -1094,16 +1094,20 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 static void sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
-    int port = this->port, len = 256;
+    int sock, res, len = 256;
     char buf[256];
 
     if(this->server) {
-	R_SockOpen(this->port);
-	R_SockListen(this->port, buf, len);
+	sock = R_SockOpen(this->port);
+	if(sock < 0) error("port %d cannot be opened", this->port);
+	res = R_SockListen(sock, buf, len);
+	if(res < 0) error("problem in listening on this socket");
     } else {
-	R_SockConnect(port, con->description);
+	sock = R_SockConnect(this->port, con->description);
+	if(sock < 0) error("%s:%d cannot be opened", con->description,
+			   this->port);
     }
-    this->fd = port;
+    this->fd = sock;
     
     con->isopen = TRUE;
     if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
@@ -1114,7 +1118,7 @@ static void sock_open(Rconnection con)
 static void sock_close(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
-    R_SockClose(this->port);
+    R_SockClose(this->fd);
     con->isopen = FALSE;
 }
 
@@ -1126,11 +1130,6 @@ static int sock_fgetc(Rconnection con)
     
     n = R_SockRead(this->fd, (char *)&c, 1);
     return (n == 1) ? con->encoding[c] : R_EOF;
-}
-
-static void sock_destroy(Rconnection con)
-{
-    free(con->private);
 }
 
 static size_t sock_read(void *ptr, size_t size, size_t nitems,
@@ -1169,7 +1168,6 @@ static Rconnection newsock(char *host, int port, int server, char *mode)
     init_con(new, host, mode);
     new->open = &sock_open;
     new->close = &sock_close;
-    new->destroy = &sock_destroy;
     new->vfprintf = &dummy_vfprintf;
     new->fgetc = &sock_fgetc;
     new->read = &sock_read;
