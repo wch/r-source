@@ -170,7 +170,7 @@ static void substr(char *buf, char *str, int sa, int so)
 /* Store the substring	str [sa:so]  into buf[] */
     int i;
 #ifdef SUPPORT_MBCS
-    if(utf8locale && !utf8strIsASCII(buf)) {
+    if(utf8locale && !utf8strIsASCII(str)) {
 	int j, used;
 	mbstate_t mb_st;    
 	mbs_init(&mb_st);
