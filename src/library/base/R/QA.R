@@ -165,18 +165,23 @@ function(dir) {
 
     isS3Generic <- function(fname, envir) {
         f <- get(fname, envir = envir)
-        is.function(f) && any(grep("^UseMethod", deparse(body(f))[1]))
+        ((is.function(f)
+          && any(grep("^UseMethod", deparse(body(f))[1])))
+         || (fname %in% c("as.data.frame", "plot")))
     }
 
-    baseStopList <-
-        ## Explicitly deal with functions in base which `look' like S3
-        ## methods, but are not. 
-        c("boxplot.stats",
-          "close.screen", "close.socket",
-          "format.char", "format.info", "format.pval",
-          "plot.new", "plot.window", "plot.xy",
-          "split.screen",
-          "update.packages")
+    methodStopList <-
+        ## Explicitly deal with functions which `look' like S3 methods,
+        ## but are not.
+        switch(basename(dir),
+               base = c("boxplot.stats",
+               "close.screen", "close.socket",
+               "format.char", "format.info", "format.pval",
+               "plot.new", "plot.window", "plot.xy",
+               "split.screen",
+               "update.packages"),
+               ts = "lag.plot",
+               character(0))
 
     checkArgs <- function(g, m, env) {
         ## Do the arguments of method m (in .CodeEnv) `extend' those of
@@ -232,8 +237,7 @@ function(dir) {
             name <- paste("^", g, ".", sep = "")
             methods <- grep(gsub("([.[])", "\\\\\\1", name),
                             funs, value = TRUE)
-            if(isBase)
-                methods <- methods[! methods %in% baseStopList]
+            methods <- methods[! methods %in% methodStopList]
             for(m in methods)
                 badMethods <- c(badMethods, checkArgs(g, m, env))
         }
@@ -410,7 +414,9 @@ function(dir) {
     ## base package.
     isS3Generic <- function(fname, envir) {
         f <- get(fname, envir = envir)
-        is.function(f) && any(grep("UseMethod", deparse(body(f))[1]))
+        ((is.function(f)
+          && any(grep("^UseMethod", deparse(body(f))[1])))
+         || (fname %in% c("as.data.frame", "plot")))
     }
     allGenerics <- character()
     envList <- list(.CodeEnv)
@@ -424,21 +430,23 @@ function(dir) {
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
-    baseStopList <-
-        ## Explicitly deal with functions in base which `look' like S3
-        ## methods, but are not.
-        c("boxplot.stats",
-          "close.screen", "close.socket",
-          "format.char", "format.info", "format.pval",
-          "plot.new", "plot.window", "plot.xy",
-          "split.screen",
-          "update.packages")
+    methodStopList <-
+        ## Explicitly deal with functions which `look' like S3 methods,
+        ## but are not.
+        switch(basename(dir),
+               base = c("boxplot.stats",
+               "close.screen", "close.socket",
+               "format.char", "format.info", "format.pval",
+               "plot.new", "plot.window", "plot.xy",
+               "split.screen",
+               "update.packages"),
+               ts = "lag.plot",
+               character(0))
     methodsInPackage <- sapply(allGenerics, function(g) {
         name <- paste("^", g, ".", sep = "")
         methods <- grep(gsub("([.[])", "\\\\\\1", name),
                         funs, value = TRUE)
-        if(isBase)
-            methods <- methods[! methods %in% baseStopList]
+        methods <- methods[! methods %in% methodStopList]
         methods
     })
     allMethodsInPackage <- unlist(methodsInPackage)
@@ -485,7 +493,7 @@ function(dir) {
             
         methodsWithFullName <-
             sapply(usages[usages %in% allMethodsInPackage],
-                   function(f) any(grep(f, usageTxt)))
+                   function(f) any(grep(paste(f, "*<-"), usageTxt)))
         methodsWithFullName <-
             methodsWithFullName[methodsWithFullName == TRUE]
 
