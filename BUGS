@@ -615,3 +615,11 @@ Date: Sun, 16 Mar 2003 15:44:14 -0500 (EST)
 Subject: FREE - Underground secrets to wealth on the Web!                                                                            
 From: <Chesterauoc@makemoneywithbulkemail.com>
 Date: Mon, 17 Mar 2003 02:30:25 -0600
+* PR# 2647 *
+Subject: bugs.r-project.org
+From: Julie Scott <sender@wizsystems.com>
+Date: Tue, 18 Mar 2003 03:08:34 +0800 (CST)
+* PR# 2648 *
+Subject: Re: [Rd] R CMD SHLIB uses foo.c instead of foo.cc if both are present
+From: Kurt Hornik <hornik@ci.tuwien.ac.at>
+Date: Mon, 17 Mar 2003 21:32:55 +0100
