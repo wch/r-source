@@ -75,7 +75,7 @@ cov2cor(V)
   For \code{cor()}, if \code{method} is \code{"kendall"} or
   \code{"spearman"}, Kendall's \eqn{\tau}{tau} or Spearman's
   \eqn{\rho}{rho} statistic is used to estimate a rank-based measure of
-  association.  These are more robust and have be recommended if the
+  association.  These are more robust and have been recommended if the
   data do not necessarily come from a bivariate normal distribution.\cr
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
@@ -98,8 +98,7 @@ cov2cor(V)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{cor.test}} (package \pkg{ctest}) for confidence
-  intervals (and tests).
+  \code{\link{cor.test}} for confidence intervals (and tests).
   
   \code{\link{cov.wt}} for \emph{weighted} covariance computation.
 
