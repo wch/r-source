@@ -3,10 +3,10 @@
 \usage{
 line(x, y)
 
-coef(tukeyline.obj)
-residuals(tukeyline.obj)
-fitted(tukeyline.obj)
-print(tukeyline.obj)
+\method{coef}{tukeyline}(object, \dots)
+\method{residuals}{tukeyline}(object, \dots)
+\method{fitted}{tukeyline}(object, \dots)
+\method{print}{tukeyline}(x, \dots)
 }
 \alias{coef.tukeyline}
 %\alias{coefficients.tukeyline}
@@ -16,6 +16,8 @@ print(tukeyline.obj)
 \alias{print.tukeyline}
 \arguments{
   \item{x,y}{the arguments can be any way of specifying x-y pairs.}
+
+  \item{object}{a \code{tukeyline} object, typically the result of \code{line(*)}.}
 }
 \description{
   This function fits a line robustly as recommended in
