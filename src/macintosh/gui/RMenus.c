@@ -222,6 +222,8 @@ extern void Do_About();
 extern SInt32	systemVersion ;
 
 void DoTools(SInt16 menuItem);
+void doUserMenu(SInt16 menuItem);
+
 SavingOption DoWeSaveIt(WindowPtr window);
 
 OSErr MyOpenDocument(FSSpec *documentFSSpec, SFTypeList *typeList);
@@ -229,6 +231,18 @@ OSErr R_EditFile(SEXP call, char *fname, Boolean isanewfile);
 SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho);
 OSErr R_NewFile(SEXP call, char *fname);
 SEXP do_newfile(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+SEXP do_addmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_delmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+SEXP do_getmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+Boolean HaveUserMenu = false;
+
+#define MAX_USER_MENUS 100
+
+char *UserMenuCmds[MAX_USER_MENUS+2];
+MenuHandle	UserMenu = NULL;
+
 
 
 
@@ -238,6 +252,224 @@ enum {
     kButtonCancel,
     kButtonDontSave
 };
+
+
+/* This function adds a user menu item to the User's menu. 
+   Two paramters only: the menu label and the menu command.
+   If the User's menu is not available, R creates it.
+   If the label passed to the function is the same as one
+   of the already present menu items, then only the
+   command is changed.
+   Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
+*/
+
+SEXP do_addmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	 SEXP ml,mc;
+     char *mlabel, *mcommand, *vm; 
+     Str255	mbuf;
+     SInt16 item;
+     
+     checkArity(op, args);
+     vm = vmaxget();
+     ml = CAR(args); args = CDR(args);
+
+     if (!isString(ml))
+ 	  errorcall(call, "invalid menu label specification");
+
+     /* we get the menu item label */
+ 	 if (!isNull(STRING_ELT(ml, 0)))
+	   mlabel = CHAR(STRING_ELT(ml, 0));
+	 else
+	   errorcall(call,"no menu label specified");
+
+      mc = CAR(args); args = CDR(args);
+
+     if (!isString(mc))
+ 	  errorcall(call, "invalid menu command specification");
+
+	 /* we get the menu command */
+ 	 if (!isNull(STRING_ELT(mc, 0)))
+	   mcommand = CHAR(STRING_ELT(mc, 0));
+	 else
+	   errorcall(call,"no menu command assigned");
+
+    /* we have a menu label and a menu command
+       so we try to add it to the user menu or
+       eventually create the user menu and append
+       the menu item
+    */
+       
+	if( ! HaveUserMenu ){
+	 if( (UserMenu = NewMenu(kMenuUser,"\pUser")) == NULL)
+ 	  errorcall(call,"cannot add user menu !");
+
+	 HaveUserMenu = true; /* we have the user menu */
+	 InsertMenu(UserMenu,0);  /* we add it to the menu bar */
+	}
+	else{
+	 if( (UserMenu = GetMenuHandle(kMenuUser)) == NULL)
+      	 errorcall(call,"cannot find user menu !");
+    }
+    
+    CopyCStringToPascal(mlabel,mbuf);
+    
+    /* If a menu item with specified label exists
+       we don't add the menu, just replace the command
+    */   
+    if( (item = FindMenuItemText(UserMenu, mbuf)) == 0){
+     if(CountMenuItems(UserMenu) > MAX_USER_MENUS - 1)
+      errorcall(call,"two many user menus, cannot add more !"); 
+
+ 	 AppendMenu(UserMenu, mbuf);
+ 	 item = CountMenuItems(UserMenu);
+	}
+	
+	if( UserMenuCmds[item] != NULL )
+	 free( UserMenuCmds[item] );
+	
+	if( (UserMenuCmds[item] = (char *)malloc(  strlen(mcommand) + 1)) == NULL){
+	 DeleteMenuItem(UserMenu, item);
+	 if(item == 1){
+	  DeleteMenu(kMenuUser);
+	  HaveUserMenu = false; 
+	 }
+	 errorcall(call,"not enough memory to add menu");
+	}
+	
+	strcpy(  UserMenuCmds[item], mcommand);  
+
+	vmaxset(vm);
+    return R_NilValue;
+
+
+}
+
+/* This function deletes a user menu item. One paramter
+   only: the menu label.
+   Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
+*/
+   
+SEXP do_delmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+     SEXP ml, ans;
+     char *mlabel, *vm; 
+     Str255	mbuf;
+     SInt16 item,totitems,i;
+     
+     checkArity(op, args);
+     vm = vmaxget();
+     ml = CAR(args); args = CDR(args);
+
+     if (!isString(ml))
+ 	  errorcall(call, "invalid menu label specification");
+
+     /* we get the menu item label */
+ 	 if (!isNull(STRING_ELT(ml, 0)))
+	   mlabel = CHAR(STRING_ELT(ml, 0));
+	 else
+	   errorcall(call,"no menu label specified");
+
+    /* we have a menu label now and we can search
+       the items in the User menu if any
+    */
+       
+	if( ! HaveUserMenu ){
+	 errorcall(call,"there is no user menu !");
+
+	if( (UserMenu = GetMenuHandle(kMenuUser)) == NULL)
+      	 errorcall(call,"cannot find user menu !");
+    }
+    
+    CopyCStringToPascal(mlabel,mbuf);
+
+
+    if( (item = FindMenuItemText(UserMenu, mbuf)) == 0){
+      warningcall(call, "menu match failed");
+      return( R_NilValue );
+     } 
+
+	totitems = CountMenuItems(UserMenu);
+
+    /* first we release some memory */	
+	free(UserMenuCmds[item]);
+	
+	for(i = item; i < totitems; i++)
+	{
+	 UserMenuCmds[i] = UserMenuCmds[i+1];
+	 UserMenuCmds[i+1] = NULL;
+	}
+	UserMenuCmds[i+1] = NULL;
+	
+	DeleteMenuItem(UserMenu,item);
+
+    if( CountMenuItems(UserMenu) == 0){
+     DeleteMenu(kMenuUser);
+     HaveUserMenu = false;
+     }
+	
+    vmaxset(vm);
+	
+    return( R_NilValue );
+}
+
+
+/* This function returns the user command associated
+   to one menu item in the User's menu. 
+   One parameter only: the menu label.
+   Added in R 1.4 Nov 2001 Jago, Stefano M. Iacus
+*/
+
+
+SEXP do_getmenucmd(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+	 SEXP ml, ans;
+     char *mlabel, *vm; 
+     Str255	mbuf;
+     SInt16 item;
+     
+     checkArity(op, args);
+     vm = vmaxget();
+     ml = CAR(args); args = CDR(args);
+
+     if (!isString(ml))
+ 	  errorcall(call, "invalid menu label specification");
+
+     /* we get the menu item label */
+ 	 if (!isNull(STRING_ELT(ml, 0)))
+	   mlabel = CHAR(STRING_ELT(ml, 0));
+	 else
+	   errorcall(call,"no menu label specified");
+
+    /* we have a menu label now and we can search
+       the items in the User menu if any
+    */
+       
+	if( ! HaveUserMenu ){
+	 errorcall(call,"there is no user menu !");
+
+	if( (UserMenu = GetMenuHandle(kMenuUser)) == NULL)
+      	 errorcall(call,"cannot find user menu !");
+    }
+    
+    CopyCStringToPascal(mlabel,mbuf);
+
+
+    if( (item = FindMenuItemText(UserMenu, mbuf)) == 0){
+      warningcall(call, "menu match failed");
+      return( R_NilValue );
+     } 
+
+	
+	PROTECT(ans = allocVector(STRSXP, 1));
+    SET_STRING_ELT(ans, 0, mkChar(UserMenuCmds[item]));
+    UNPROTECT(1);
+
+    vmaxset(vm);
+	
+    return( ans );
+}
+
 
 
 /* SetDefaultDirectory
@@ -334,6 +566,7 @@ void PrepareMenus(void)
     Str255		Cur_Title, Menu_Title;
     MenuHandle		windowsMenu=NULL;
     OSStatus		err;
+
 
     /* get a pointer to the frontmost window, if any
      */
@@ -1301,6 +1534,7 @@ OSErr DoQuit(SavingOption saving)
 {
 	WindowPtr	window;
 	OSErr		err;
+	int 		i;
 
 	/* Close all windows
 	 query the user about contents
@@ -1315,6 +1549,11 @@ OSErr DoQuit(SavingOption saving)
 		}
 	}
 	while (window != nil);
+
+   /* we free some memory */
+    for(i = 0; i< MAX_USER_MENUS; i++)
+     if(UserMenuCmds[i]) 
+      free(UserMenuCmds[i]);
 
 	/* set a flag so we drop out of the event loop
 	*/
@@ -1756,6 +1995,20 @@ void DoTools(SInt16 menuItem)
     HiliteMenu(0);
 }
 
+void doUserMenu(SInt16 menuItem)
+{
+    WindowPtr	window = FrontWindow();
+    OSErr	osError, err;
+    EventRecord	myEvent;
+    SInt16	WinIndex;
+    Boolean	haveCancel;
+
+    consolecmd(UserMenuCmds[menuItem]);
+	
+	
+	HiliteMenu(0);
+}
+
 
 /* DoMenuChoice:
    The main function on RMenus.c, it is used to handle where to dispatch
@@ -1801,6 +2054,10 @@ void DoMenuChoice(SInt32 menuChoice, EventModifiers modifiers, WindowPtr window)
 	doConfigMenu(menuItem);
 	break;
 
+    case kMenuUser:
+	 doUserMenu(menuItem);
+	break;
+
 	case kHMHelpMenuID:  /* the help menu */
 	DoHelpChoice(menuItem);
 	break;
@@ -1825,6 +2082,10 @@ OSErr InitializeMenus(void)
 	ItemCount	submenuCount ;
 	ItemCount	itemCount ;
 	SInt32		gestaltResponse ;
+    int 		i;
+   /* we clean the list of user menu commands */
+    for(i = 0; i< MAX_USER_MENUS; i++)
+     UserMenuCmds[i] = NULL;
 
 
  	//	get the 'MBAR' resource
@@ -2242,3 +2503,5 @@ static OSStatus CreateNavTypeList
 
 	return noErr ;
 }
+
+

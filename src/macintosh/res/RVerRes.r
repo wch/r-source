@@ -154,7 +154,8 @@ enum {
 	kMenuEdit,
 	kMenuTools,
 	kMenuWindows,
-	kMenuConfig
+	kMenuConfig,
+	kMenuUser
 };
 
 
