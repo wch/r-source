@@ -155,6 +155,10 @@ double atanh(double);
 /* have popen, but it is said not to work in Windows applications */
 #undef HAVE_POPEN
 
+/* Bitmap headers and libraries */
+#define HAVE_PNG 1
+#define HAVE_JPEG 1
+
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE
@@ -235,7 +239,7 @@ double atanh(double);
 #define lgamma(x) lgammafn(x)
 
 
-/* 27/03/2000 win32-api needs this */
+/* 27/03/2000 win32-api needs this for ANSI compliance */
 #define NONAMELESSUNION
 
 #endif
