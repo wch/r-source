@@ -346,7 +346,7 @@ Then packages can be made as natively, for example by
 	make STAMP=NO PKGDIR=/mysources RLIB=/R/win/library pkg-mypkg
 	make PKGDIR=/mysources RLIB=/R/win/library pkgcheck-mypkg
 	cd /R/win/library
-	zip -r9l /dest/mypkg.zip mypkg
+	zip -r9 /dest/mypkg.zip mypkg
 
 (Rcmd is a Windows executable, so cannot be used.  Notice the STAMP=NO
 on the second line.)
