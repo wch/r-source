@@ -154,7 +154,7 @@ distdir: $(DISTFILES)
 	    || exit 1; \
 	done
 
-dvi info::
+dvi info pdf::
 	-@(cd doc && $(MAKE) $@)
 
 TAGS:
