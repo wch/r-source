@@ -221,9 +221,10 @@ function(x, ..., value) {
 }
 
 as.character.POSIXt <- function(x, ...) format(x, ...)
+
 str.POSIXt <- function(x, ...) {
     cl <- class(x)
-    cat("'", cl[min(2, length(cl))],"', format:", sep = "")
+    cat("`", cl[min(2, length(cl))],"', format:", sep = "")
     str(format(x), ...)
 }
 
