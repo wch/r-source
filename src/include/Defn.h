@@ -32,6 +32,7 @@
    penalty, code that includes Defs.h (or code that explicitly defines
    USE_RINTERNALS) can access SEXPREC's fielrd directly. */
  
+#define TESTING_WRITE_BARRIER
 #ifndef TESTING_WRITE_BARRIER
 # define USE_RINTERNALS
 #endif
