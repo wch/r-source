@@ -24,7 +24,8 @@ R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build
 ## </NOTE>
 R_CMD_BUILD_HELP_OPTS =
 
-R_EXE = $(top_builddir)/bin/R --vanilla
+@USE_WINDOWS_FALSE@R_EXE = $(top_builddir)/bin/R --vanilla
+@USE_WINDOWS_TRUE@R_EXE = $(top_builddir)/bin/rterm.exe --vanilla
 
 PDFLATEX = @PDFLATEX@
 

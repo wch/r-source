@@ -13,8 +13,10 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = scripts include appl nmath unix extra main modules library
-SUBDIRS_WITH_NO_BUILD = gnuwin32
+@USE_WINDOWS_FALSE@SUBDIRS = scripts include appl nmath unix extra main modules library
+@USE_WINDOWS_FALSE@SUBDIRS_WITH_NO_BUILD = gnuwin32
+@USE_WINDOWS_TRUE@SUBDIRS = scripts include appl nmath extra main gnuwin32 modules library
+@USE_WINDOWS_TRUE@SUBDIRS_WITH_NO_BUILD = unix
 
 all: Makefile R
 

@@ -1,0 +1,61 @@
+#
+# ${R_HOME}/src/gnuwin32/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../..
+subdir = src/gnuwin32
+
+include $(top_builddir)/Makeconf
+
+
+SOURCES = \
+  console.c dataentry.c devga.c dodevga.c dynload.c edit.c editor.c extra.c \
+  opt.c pager.c preferences.c psignal.c rhome.c rui.c run.c shext.c \
+  sys-win32.c system.c
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o) e_pow.o
+HEADERS = console.h consolestructs.h devga.h editor.h opt.h rui.h run.h shext.h
+
+MAINLIBS = ../main/libmain.a ../appl/libappl.a ../nmath/libnmath.a
+EXTRALIBS = graphapp/ga.a getline/gl.a ../extra/xdr/xdr.a \
+   ../extra/zlib/libz.a ../extra/pcre/libRpcre.a ../extra/bzip2/libbz2.a
+
+all: Makefile R
+
+Makefile: $(srcdir)/Makefile.in \
+  $(top_builddir)/config.status \
+  ../include/Rversion.h \
+  $(SOURCES)
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+R: Makefile
+	@$(MAKE) Makedeps
+	(cd graphapp; $(MAKE))
+	$(MAKE) --no-print-directory R.a
+	(cd front-ends; $(MAKE))
+
+R.a: $(OBJECTS)
+R.dll: R.a $(OBJS-EXTRA) $(MAINLIBS) $(EXTRALIBS) dllversion.o
+
+mostlyclean: clean
+clean:
+	@-rm -f Makedeps *.d *.o *.a
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+.S.o:
+	gcc -c -o $@ $<
+
+%.o: %.rc
+	rescomp -i $< -o $@
+
+
+## Automagically generated dependencies:

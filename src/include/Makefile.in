@@ -29,7 +29,7 @@ SUBDIRS_WITH_NO_BUILD = Rmodules
 TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
 
 CLEANFILES = $(OBJ_HEADERS) stamp-R $(TIMESTAMPS)
-DISTCLEANFILES = Makefile Rmath.h0 config.h stamp-h
+DISTCLEANFILES = Makefile Rmath.h0 config.h stamp-h @USE_WINDOWS_TRUE@psignal.h
 
 .SUFFIXES:
 .SUFFIXES: .h .ts
@@ -43,10 +43,13 @@ all: Makefile R
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
-R: Makefile stamp-R $(TIMESTAMPS)
+R: Makefile stamp-R $(TIMESTAMPS) @USE_WINDOWS_TRUE@ RWin
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
+RWin:
+	@cp $(top_srcdir)/src/gnuwin32/fixed/h/psignal.h .
+
 stamp-R:
 	@$(MKINSTALLDIRS) $(top_builddir)/include
 	@touch $@
