@@ -188,6 +188,12 @@ NEW FEATURES
     o	Using lm/glm/... with `data' a matrix rather than a data frame
 	now gives a specific error message.
 
+    o	scan() and count.fields() have a new argument `comment.char',
+	default `#', that can be used to start comments on a line.
+	[read.table() will make proper use of this in due course: for
+	now do not use comments in the first few lines of a file.]
+
+
 
 
 BUG FIXES

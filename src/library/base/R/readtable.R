@@ -1,5 +1,5 @@
 count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
-                         blank.lines.skip = TRUE)
+                         blank.lines.skip = TRUE, comment.char = "#")
 {
     if(is.character(file)) {
         file <- file(file)
@@ -7,7 +7,8 @@ count.fields <- function(file, sep = "", quote = "\"'", skip = 0,
     }
     if(!inherits(file, "connection"))
         stop("argument `file' must be a character string or connection")
-    .Internal(count.fields(file, sep, quote, skip, blank.lines.skip))
+    .Internal(count.fields(file, sep, quote, skip, blank.lines.skip,
+                           comment.char))
 }
 
 

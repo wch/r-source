@@ -2,7 +2,7 @@
 \title{Count the Number of Fields per Line}
 \usage{
 count.fields(file, sep = "", quote = "\"'", skip = 0,
-             blank.lines.skip = TRUE)
+             blank.lines.skip = TRUE, comment.char = "#")
 }
 \alias{count.fields}
 \arguments{
@@ -21,6 +21,9 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
     input are ignored.}
+
+  \item{comment.char}{character: a character vector of length one
+    containing a single character or an empty string.}
 }
 \description{
   \code{count.fields} counts the number of fields, as separated by
@@ -29,6 +32,8 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
 \details{
   This used to be used by \code{\link{read.table}} and can still be
   useful in discovering problems in reading a file by that function.
+
+  For the handling of comments, see \code{\link{scan}}.
 }
 \value{
   A vector with the numbers of fields found.

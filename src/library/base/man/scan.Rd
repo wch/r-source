@@ -9,7 +9,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      quote = if (sep=="\n") "" else "'\"", dec = ".",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE,
-     blank.lines.skip = TRUE, multi.line = TRUE)
+     blank.lines.skip = TRUE, multi.line = TRUE, comment.char = "#")
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -83,13 +83,17 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     line, saying how many items have been read.}
 
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
-    input are ignored, except when counting \code{nlines}.}
+    input are ignored, except when counting \code{skip} and \code{nlines}.}
 
   \item{multi.line}{logical. Only used if \code{what} is a list.
     If \code{FALSE}, all of a record must appear on one line (but more
     than one record can appear on a single line).  Note that using
     \code{fill = TRUE} implies that a record will terminated at the end
     of a line.}
+  
+  \item{comment.char}{character: a character vector of length one
+    containing a single character or an empty string.  Use \code{""} to
+    turn off the interpretation of comments altogether.}
 }
 \details{
   The value of \code{what} can be a list of types, in which case
@@ -117,6 +121,12 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   will give an empty file line if the file ends in a linefeed and not it
   it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.
+
+  If \code{comment.char} occurs (except inside a quoted character
+  field), it signals that the rest of the line
+  should be regarded as a comment and be discarded.  Lines beginning
+  with a comment character (possibly after white space) are treated
+  as blank lines. 
 }
 \note{
   The default for \code{multi.line} differs from S.  To read one record
