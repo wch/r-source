@@ -130,11 +130,6 @@ BUG FIXES
     o	model.frame()'s lm and glm methods had 'data' and 'na.action'
 	arguments which they ignored and have been removed.
 
-    o	When lm.{w}fit() disregarded arguments in ... they reported
-	the values and not the names.
-
-    o	lm(singular.ok=FALSE) was looking for 0 rank, not rank < p. 
-
     o	The defaults data=list() in lm() and glm() could never be
 	used and have been removed.  glm had na.action=na.fail, again
 	never used.
@@ -147,6 +142,21 @@ BUG FIXES
 	*	       1.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 1.8.2
+
+
+BUG FIXES
+
+    o	When lm.{w}fit() disregarded arguments in ... they reported
+	the values and not the names.
+
+    o	lm(singular.ok=FALSE) was looking for 0 rank, not rank < p. 
+
+    o	The substitution code for strptime in the sources no longer
+	follows glibc in silently `correcting' invalid inputs.
+
 
 
 		CHANGES IN R VERSION 1.8.1
