@@ -40,8 +40,6 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
-groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
-
 zip and unzip from the Info-ZIP project
 (ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
 
@@ -128,7 +126,7 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin/gcc-2.95.2/patches/
 ).  Apart from the compiler, you need the mingw32 runtime system and
 a cross-built version of binutils 2.9.4.
 
-You will need Perl, nroff zip and unzip installed.
+You will need Perl, zip and unzip installed.
 
 You also need: the R source (R-0.99.0.tgz), and to build the installer,
 unzip5.40.zip from any Info-ZIP mirror.

@@ -33,8 +33,6 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32.)
 
 perl5, available via http://www.perl.com/CPAN/ports.
 
-groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
-
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
 http://msdn.microsoft.com/workshop/author/htmlhelp.
@@ -114,10 +112,11 @@ Fortran source!). First build the import library R.lib by
 Then you can compile the objects and build the DLL by
 
 	cl /MT /Ox /D "WIN32"  /c *.c
-	link /dll /out:mypkg.dll *.obj Rdll.lib
+	link /dll /def:mypkg.def /out:mypkg.dll *.obj Rdll.lib
 
-(at least under VC++ 4.2 and 6.0).  If the C sources use R header files you
-will need to arrange for these to be searched, perhaps by
+where you will need to create the .def file by hand listing the entry
+points to be exported.  If the C sources use R header files you will
+need to arrange for these to be searched, perhaps by
 
 	/I ..\..\..\include
 
@@ -172,8 +171,8 @@ library in which to install the package by RLIB, as in
 make PKGDIR=/mysources RLIB=/R/library pkg-mypkg
 make PKGDIR=/mysources RLIB=/R/library pkgcheck-mypkg
 
-installs the package in \mysources\mypkg as \R\library\mypkg and checks its
-examples.
+which installs the package in \mysources\mypkg as \R\library\mypkg and
+checks its examples.
 
 
 Cross-building packages on Linux
@@ -186,7 +185,7 @@ the Linux installation of the package.
 
 First you need to set up the cross-compilers and tools (see INSTALL)
 and have them in your path. We will assume that your Linux
-installation has Perl5, nroff, unzip and zip.
+installation has Perl5, unzip and zip.
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths as needed,
 and check that Makefile has WINHELP set to NO.

@@ -1,3 +1,15 @@
+rw0990
+======
+
+Following Unix, the handling of help(, offline=TRUE) has been altered.
+It will be necessary to adjust helpPRINT.bat to set the TEXINPUTS path to 
+find Rd.sty. TeX processing of these help files normally uses LaTeX package
+`ae' to handle Latin-1 characters: this can be changed by setting the
+environment variable R_RD4DVI.
+
+The conversion to text help no longer requires groff.
+
+
 rw0901
 ======
 
