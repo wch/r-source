@@ -23,6 +23,8 @@
 \alias{is.na.POSIXlt}
 \alias{all.equal.POSIXct}
 \alias{c.POSIXct}
+\alias{c.POSIXlt}
+\alias{as.matrix.POSIXlt}
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
@@ -108,6 +110,12 @@ time1 lop time2
   representations.
 
   \code{\link{Sys.time}} for clock time as a \code{"POSIXct"} object.
+}
+\section{Warning}{
+  Some Unix-like systems (especially Linux ones) do not have \code{"TZ"}
+  set, yet have internal code that expects it (as does POSIX). We have
+  tried to work around this, but if you get unexpected results try
+  setting \code{"TZ"}.
 }
 \examples{
 (z <- Sys.time())             # the current date, as class "POSIXct"

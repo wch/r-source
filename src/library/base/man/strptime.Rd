@@ -84,10 +84,11 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
     \item{\code{\%X}}{Time, locale-specific.}
     \item{\code{\%y}}{Year without century (00--99). If you use this on
       input, which century you get is system-specific.  So don't!  Often
-      values up to 69 are prefixed by 20 and 70--100 by 19.}
+      values up to 69 are prefixed by 20 and 70--99 by 19.}
     \item{\code{\%Y}}{Year with century.}
     \item{\code{\%Z}}{(output only.) Time zone as a character
-      string (empty if not available).}
+      string (empty if not available). Note: do not use this on Linux
+      unless the \code{TZ} environment variable is set.}
   }
   Where leading zeros are shown they will be used on output but are
   optional on input.
@@ -128,6 +129,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
 \examples{
 ## locale-specific version of date()
 format(Sys.time(), "\%a \%b \%d \%X \%Y")
+## we would include the timezone as in
+## format(Sys.time(), "\%a \%b \%d \%X \%Y %Z")
+## but this crashes some Linux systems
 
 ## read in date info in format `ddmmmyyyy'
 x <- c("1jan1960", "2jan1960", "31mar1960", "30jul1960")
