@@ -32,8 +32,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-01 21:12+0000\n"
-"PO-Revision-Date: 2005-02-01 21:12+0000\n"
+"POT-Creation-Date: 2005-02-05 10:47+0000\n"
+"PO-Revision-Date: 2005-02-05 10:47+0000\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -86,177 +86,6 @@ msgstr ".C(..): ‘[1mtype[0m’ must be “[1minteger[0m” for  “[1md[
 msgid ".C(..): `type' must be \"real\" for this format"
 msgstr ".C(..): ‘[1mtype[0m’ must be “[1mreal[0m” for this format"
 
-#: src/gnuwin32/console.c:834 src/gnuwin32/console.c:874
-msgid "Not enough memory"
-msgstr "Not enough memory"
-
-#: src/gnuwin32/console.c:929 src/gnuwin32/console.c:933
-msgid "Insufficient memory: text not copied to the clipboard"
-msgstr "Insufficient memory: text not copied to the clipboard"
-
-#: src/gnuwin32/console.c:972 src/gnuwin32/extra.c:1062
-#: src/main/connections.c:1324
-msgid "Unable to open the clipboard"
-msgstr "Unable to open the clipboard"
-
-#: src/gnuwin32/console.c:1522
-msgid "Insufficient memory. Please close the console"
-msgstr "Insufficient memory. Please close the console"
-
-#: src/gnuwin32/console.c:1575 src/gnuwin32/console.c:1626
-#: src/gnuwin32/preferences.c:216
-#, c-format
-msgid ""
-"Font %s-%d-%d  not found.\n"
-"Using system fixed font"
-msgstr ""
-"Font %s-%d-%d  not found.\n"
-"Using system fixed font"
-
-#: src/gnuwin32/dataentry.c:216 src/include/Errormsg.h:35 src/main/plot.c:77
-#: src/main/plot.c:3662 src/main/scan.c:1464
-msgid "invalid argument"
-msgstr "invalid argument"
-
-#: src/gnuwin32/dataentry.c:263
-msgid "invalid type for value"
-msgstr "invalid type for value"
-
-#: src/gnuwin32/dataentry.c:277 src/gnuwin32/extra.c:1307
-#: src/gnuwin32/extra.c:1309 src/gnuwin32/extra.c:1349
-msgid "invalid device"
-msgstr "invalid device"
-
-#: src/gnuwin32/dataentry.c:325
-msgid "dataentry: internal memory problem"
-msgstr "dataentry: internal memory problem"
-
-#: src/gnuwin32/dataentry.c:619 src/gnuwin32/dataentry.c:1113
-msgid "dataentry: internal memory error"
-msgstr "dataentry: internal memory error"
-
-#: src/gnuwin32/dataentry.c:738 src/gnuwin32/dataentry.c:751
-msgid "internal type error in dataentry"
-msgstr "internal type error in dataentry"
-
-#: src/gnuwin32/dataentry.c:918
-msgid "dataentry: expression too long"
-msgstr "dataentry: expression too long"
-
-#: src/gnuwin32/dataentry.c:1501
-msgid "Cell width(s)"
-msgstr "Cell width(s)"
-
-#: src/gnuwin32/dataentry.c:1506
-msgid "Cell width"
-msgstr "Cell width"
-
-#: src/gnuwin32/dataentry.c:1509
-msgid "variable"
-msgstr "variable"
-
-#: src/gnuwin32/dataentry.c:1548
-msgid ""
-"Navigation.\n"
-"  Keyboard: cursor keys move selection\n"
-"\tTab move right, Shift+Tab moves left\n"
-"\tPgDn or Ctrl+F: move down one screenful\n"
-"\tPgUp or Ctrl+B: move up one screenful\n"
-"\tHome: move to (1,1) cell\n"
-"\tEnd: show last rows of last column.\n"
-"   Mouse: left-click in a cell, use the scrollbar(s).\n"
-"\n"
-"Editing.\n"
-"  Type in the currently hightlighted cell\n"
-"  Double-click in a cell for an editable field\n"
-"\n"
-"Misc.\n"
-"  Ctrl-L redraws the screen, auto-resizing the columns\n"
-"  Ctrl-C copies selected cell\n"
-"  Ctrl-V pastes to selected cell\n"
-"  Right-click menu for copy, paste, autosize currently selected column\n"
-"\n"
-msgstr ""
-"Navigation.\n"
-"  Keyboard: cursor keys move selection\n"
-"\tTab move right, Shift+Tab moves left\n"
-"\tPgDn or Ctrl+F: move down one screenful\n"
-"\tPgUp or Ctrl+B: move up one screenful\n"
-"\tHome: move to (1,1) cell\n"
-"\tEnd: show last rows of last column.\n"
-"   Mouse: left-click in a cell, use the scrollbar(s).\n"
-"\n"
-"Editing.\n"
-"  Type in the currently hightlighted cell\n"
-"  Double-click in a cell for an editable field\n"
-"\n"
-"Misc.\n"
-"  Ctrl-L redraws the screen, auto-resizing the columns\n"
-"  Ctrl-C copies selected cell\n"
-"  Ctrl-V pastes to selected cell\n"
-"  Right-click menu for copy, paste, autosize currently selected column\n"
-"\n"
-
-#: src/gnuwin32/dataentry.c:1554 src/gnuwin32/dataentry.c:1648
-#: src/gnuwin32/editor.c:714 src/gnuwin32/rui.c:1103
-msgid "Help"
-msgstr "Help"
-
-#: src/gnuwin32/dataentry.c:1556
-msgid "Copy selected cell"
-msgstr "Copy selected cell"
-
-#: src/gnuwin32/dataentry.c:1557
-msgid "Paste to selected cell"
-msgstr "Paste to selected cell"
-
-#: src/gnuwin32/dataentry.c:1558
-msgid "Autosize column"
-msgstr "Autosize column"
-
-#: src/gnuwin32/dataentry.c:1560 src/gnuwin32/pager.c:293
-msgid "Stay on top"
-msgstr "Stay on top"
-
-#: src/gnuwin32/dataentry.c:1562 src/gnuwin32/dataentry.c:1640
-#: src/gnuwin32/pager.c:295 src/gnuwin32/pager.c:458
-msgid "Close"
-msgstr "Close"
-
-#: src/gnuwin32/dataentry.c:1612
-msgid "Data Editor"
-msgstr "Data Editor"
-
-#: src/gnuwin32/dataentry.c:1638 src/gnuwin32/editor.c:662
-#: src/gnuwin32/pager.c:450 src/gnuwin32/rui.c:1053
-msgid "File"
-msgstr "File"
-
-#: src/gnuwin32/dataentry.c:1642 src/gnuwin32/editor.c:680
-#: src/gnuwin32/pager.c:460 src/gnuwin32/rui.c:1074
-msgid "Edit"
-msgstr "Edit"
-
-#: src/gnuwin32/dataentry.c:1643
-msgid "Copy  \tCTRL+C"
-msgstr "Copy  \tCTRL+C"
-
-#: src/gnuwin32/dataentry.c:1644
-msgid "Paste \tCTRL+V"
-msgstr "Paste \tCTRL+V"
-
-#: src/gnuwin32/dataentry.c:1645
-msgid "Delete\tDEL"
-msgstr "Delete\tDEL"
-
-#: src/gnuwin32/dataentry.c:1647
-msgid "Cell widths ..."
-msgstr "Cell widths ..."
-
-#: src/gnuwin32/dataentry.c:1649
-msgid "Data editor"
-msgstr "Data editor"
-
 #: src/gnuwin32/dynload.c:101
 #, c-format
 msgid "DLL attempted to change FPU control word from %x to %x"
@@ -265,171 +94,6 @@ msgstr "DLL attempted to change FPU control word from %x to %x"
 #: src/gnuwin32/dynload.c:139
 msgid "cannot get working directory"
 msgstr "cannot get working directory"
-
-#: src/gnuwin32/editor.c:437 src/gnuwin32/pager.c:170 src/gnuwin32/pager.c:190
-msgid "No RGui console to paste to"
-msgstr "No RGui console to paste to"
-
-#: src/gnuwin32/editor.c:537
-msgid "R EDITOR\n"
-msgstr "R EDITOR\n"
-
-#: src/gnuwin32/editor.c:539
-msgid "A standard text editor for editing and running R code.\n"
-msgstr "A standard text editor for editing and running R code.\n"
-
-#: src/gnuwin32/editor.c:541
-msgid "RUNNING COMMANDS\n"
-msgstr "RUNNING COMMANDS\n"
-
-#: src/gnuwin32/editor.c:542
-msgid "To run a line or section of R code, select the code and either\n"
-msgstr "To run a line or section of R code, select the code and either\n"
-
-#: src/gnuwin32/editor.c:543
-msgid "     Press Ctrl-R\n"
-msgstr "     Press Ctrl-R\n"
-
-#: src/gnuwin32/editor.c:544
-msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr "     Select “[1mRun line or selection[0m” from the “[1mEdit[0m” menu\n"
-
-#: src/gnuwin32/editor.c:545
-msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr "     Press the “[1mRun line or selection[0m” icon on the toolbar\n"
-
-#: src/gnuwin32/editor.c:546
-msgid ""
-"This will copy the selected commands to the console and evaluate them.\n"
-msgstr ""
-"This will copy the selected commands to the console and evaluate them.\n"
-
-#: src/gnuwin32/editor.c:547
-msgid ""
-"If there is no selection, this will just run the current line and advance\n"
-msgstr ""
-"If there is no selection, this will just run the current line and advance\n"
-
-#: src/gnuwin32/editor.c:548
-msgid "the cursor by one line.\n"
-msgstr "the cursor by one line.\n"
-
-#: src/gnuwin32/editor.c:560 src/gnuwin32/editor.c:635
-#: src/gnuwin32/editor.c:696
-msgid "Run line or selection"
-msgstr "Run line or selection"
-
-#: src/gnuwin32/editor.c:562 src/gnuwin32/editor.c:681
-msgid "Undo"
-msgstr "Undo"
-
-#: src/gnuwin32/editor.c:564 src/gnuwin32/editor.c:684
-msgid "Cut"
-msgstr "Cut"
-
-#: src/gnuwin32/editor.c:565 src/gnuwin32/editor.c:686
-#: src/gnuwin32/pager.c:288 src/gnuwin32/pager.c:461 src/gnuwin32/rui.c:1018
-#: src/gnuwin32/rui.c:1075
-msgid "Copy"
-msgstr "Copy"
-
-#: src/gnuwin32/editor.c:566 src/gnuwin32/editor.c:688 src/gnuwin32/rui.c:1022
-#: src/gnuwin32/rui.c:1076
-msgid "Paste"
-msgstr "Paste"
-
-#: src/gnuwin32/editor.c:567 src/gnuwin32/editor.c:690
-msgid "Delete"
-msgstr "Delete"
-
-#: src/gnuwin32/editor.c:569 src/gnuwin32/editor.c:692
-#: src/gnuwin32/pager.c:291 src/gnuwin32/pager.c:467 src/gnuwin32/rui.c:1080
-msgid "Select all"
-msgstr "Select all"
-
-#: src/gnuwin32/editor.c:627 src/gnuwin32/pager.c:414 src/gnuwin32/rui.c:1006
-msgid "Open script"
-msgstr "Open script"
-
-#: src/gnuwin32/editor.c:631
-msgid "Save script"
-msgstr "Save script"
-
-#: src/gnuwin32/editor.c:639 src/gnuwin32/pager.c:434
-msgid "Return focus to Console"
-msgstr "Return focus to Console"
-
-#: src/gnuwin32/editor.c:642
-msgid "Print script"
-msgstr "Print script"
-
-#: src/gnuwin32/editor.c:644 src/gnuwin32/pager.c:429 src/gnuwin32/rui.c:1034
-msgid "Print"
-msgstr "Print"
-
-#: src/gnuwin32/editor.c:663 src/gnuwin32/pager.c:451 src/gnuwin32/rui.c:1055
-msgid "New script"
-msgstr "New script"
-
-#: src/gnuwin32/editor.c:665 src/gnuwin32/pager.c:452 src/gnuwin32/rui.c:1056
-msgid "Open script..."
-msgstr "Open script..."
-
-#: src/gnuwin32/editor.c:667
-msgid "Save"
-msgstr "Save"
-
-#: src/gnuwin32/editor.c:669
-msgid "Save as..."
-msgstr "Save as..."
-
-#: src/gnuwin32/editor.c:672 src/gnuwin32/pager.c:453 src/gnuwin32/rui.c:1069
-msgid "Print..."
-msgstr "Print..."
-
-#: src/gnuwin32/editor.c:675
-msgid "Close script"
-msgstr "Close script"
-
-#: src/gnuwin32/editor.c:678 src/gnuwin32/rui.c:1072
-msgid "Exit"
-msgstr "Exit"
-
-#: src/gnuwin32/editor.c:694 src/gnuwin32/rui.c:1081
-msgid "Clear console"
-msgstr "Clear console"
-
-#: src/gnuwin32/editor.c:698
-msgid "Run all"
-msgstr "Run all"
-
-#: src/gnuwin32/editor.c:701
-msgid "Find..."
-msgstr "Find..."
-
-#: src/gnuwin32/editor.c:703
-msgid "Replace..."
-msgstr "Replace..."
-
-#: src/gnuwin32/editor.c:706 src/gnuwin32/rui.c:1085
-msgid "GUI preferences..."
-msgstr "GUI preferences..."
-
-#: src/gnuwin32/editor.c:715
-msgid "Editor"
-msgstr "Editor"
-
-#: src/gnuwin32/editor.c:771
-msgid "Maximum number of editors reached"
-msgstr "Maximum number of editors reached"
-
-#: src/gnuwin32/editor.c:776
-msgid "Unable to create editor window"
-msgstr "Unable to create editor window"
-
-#: src/gnuwin32/editor.c:785
-msgid "Untitled"
-msgstr "Untitled"
 
 #: src/gnuwin32/extra.c:46
 msgid "invalid 'tempdir' in R_tmpnam"
@@ -531,7 +195,7 @@ msgstr "invalid ‘[1mitemname[0m’ argument"
 msgid "unable to add menu item (%s)"
 msgstr "unable to add menu item (%s)"
 
-#: src/gnuwin32/extra.c:589 src/gnuwin32/rui.c:1321 src/gnuwin32/rui.c:1393
+#: src/gnuwin32/extra.c:589
 msgid "menu does not exist"
 msgstr "menu does not exist"
 
@@ -580,6 +244,10 @@ msgstr "invalid ‘[1mpreselect[0m’ argument"
 msgid "argument must be a character vector"
 msgstr "argument must be a character vector"
 
+#: src/gnuwin32/extra.c:1062 src/main/connections.c:1324
+msgid "Unable to open the clipboard"
+msgstr "Unable to open the clipboard"
+
 #: src/gnuwin32/extra.c:1067 src/main/connections.c:1328
 msgid "Unable to write to the clipboard"
 msgstr "Unable to write to the clipboard"
@@ -616,6 +284,11 @@ msgstr "‘[1mwhich[0m’ must be length 1"
 msgid "invalid value of 'which'"
 msgstr "invalid value of ‘[1mwhich[0m’"
 
+#: src/gnuwin32/extra.c:1307 src/gnuwin32/extra.c:1309
+#: src/gnuwin32/extra.c:1349
+msgid "invalid device"
+msgstr "invalid device"
+
 #: src/gnuwin32/extra.c:1310
 msgid "requires SDI mode"
 msgstr "requires SDI mode"
@@ -631,351 +304,6 @@ msgstr "bad device"
 #: src/gnuwin32/extra.c:1592 src/gnuwin32/extra.c:1600
 msgid "invalid input in Rmbstowcs"
 msgstr "invalid input in Rmbstowcs"
-
-#: src/gnuwin32/pager.c:77
-msgid "Error opening file"
-msgstr "Error opening file"
-
-#: src/gnuwin32/pager.c:84
-msgid "Insufficient memory to display file in internal pager"
-msgstr "Insufficient memory to display file in internal pager"
-
-#: src/gnuwin32/pager.c:162 src/gnuwin32/pager.c:174 src/gnuwin32/pager.c:194
-#: src/gnuwin32/rui.c:215 src/gnuwin32/rui.c:242
-msgid "No selection"
-msgstr "No selection"
-
-#: src/gnuwin32/pager.c:289 src/gnuwin32/pager.c:419 src/gnuwin32/pager.c:463
-msgid "Paste to console"
-msgstr "Paste to console"
-
-#: src/gnuwin32/pager.c:290 src/gnuwin32/pager.c:424 src/gnuwin32/pager.c:465
-msgid "Paste commands to console"
-msgstr "Paste commands to console"
-
-#: src/gnuwin32/pager.c:455 src/gnuwin32/rui.c:1070
-msgid "Save to File..."
-msgstr "Save to File..."
-
-#: src/gnuwin32/pager.c:470
-msgid "View"
-msgstr "View"
-
-#: src/gnuwin32/pager.c:499
-msgid "Unable to create pager window"
-msgstr "Unable to create pager window"
-
-#: src/gnuwin32/preferences.c:223
-#, c-format
-msgid ""
-"Font %s-%d-%d has variable width.\n"
-"Using system fixed font"
-msgstr ""
-"Font %s-%d-%d has variable width.\n"
-"Using system fixed font"
-
-#: src/gnuwin32/rui.c:103
-msgid "R files (*.R)"
-msgstr "R files (*.R)"
-
-#: src/gnuwin32/rui.c:104
-msgid "Select file to source"
-msgstr "Select file to source"
-
-#: src/gnuwin32/rui.c:125 src/gnuwin32/rui.c:141
-msgid "R images (*.RData)"
-msgstr "R images (*.RData)"
-
-#: src/gnuwin32/rui.c:126
-msgid "Select image to load"
-msgstr "Select image to load"
-
-#: src/gnuwin32/rui.c:142
-msgid "Save image in"
-msgstr "Save image in"
-
-#: src/gnuwin32/rui.c:156 src/gnuwin32/rui.c:170 src/gnuwin32/rui.c:1138
-msgid "All files (*.*)"
-msgstr "All files (*.*)"
-
-#: src/gnuwin32/rui.c:157
-msgid "Load history from"
-msgstr "Load history from"
-
-#: src/gnuwin32/rui.c:171
-msgid "Save history in"
-msgstr "Save history in"
-
-#: src/gnuwin32/rui.c:224 src/gnuwin32/rui.c:233
-msgid "No text available"
-msgstr "No text available"
-
-#: src/gnuwin32/rui.c:282
-msgid "Name of data frame or matrix"
-msgstr "Name of data frame or matrix"
-
-#: src/gnuwin32/rui.c:289
-#, c-format
-msgid "'%s' cannot be found"
-msgstr "‘[1m%s[0m’ cannot be found"
-
-#: src/gnuwin32/rui.c:349
-msgid "Are you sure?"
-msgstr "Are you sure?"
-
-#: src/gnuwin32/rui.c:423
-msgid "Help on"
-msgstr "Help on"
-
-#: src/gnuwin32/rui.c:464
-msgid "Search help"
-msgstr "Search help"
-
-#: src/gnuwin32/rui.c:479
-msgid "Apropos"
-msgstr "Apropos"
-
-#: src/gnuwin32/rui.c:806
-#, c-format
-msgid "Error at line %d of file %s"
-msgstr "Error at line %d of file %s"
-
-#: src/gnuwin32/rui.c:847
-msgid "Can only drag-and-drop .R, .RData and .rda files"
-msgstr "Can only drag-and-drop .R, .RData and .rda files"
-
-#: src/gnuwin32/rui.c:900
-msgid "Packages"
-msgstr "Packages"
-
-#: src/gnuwin32/rui.c:901
-msgid "Load package..."
-msgstr "Load package..."
-
-#: src/gnuwin32/rui.c:903
-msgid "Set CRAN mirror..."
-msgstr "Set CRAN mirror..."
-
-#: src/gnuwin32/rui.c:905
-msgid "Install package(s) from CRAN..."
-msgstr "Install package(s) from CRAN..."
-
-#: src/gnuwin32/rui.c:907
-msgid "Update packages from CRAN"
-msgstr "Update packages from CRAN"
-
-#: src/gnuwin32/rui.c:910
-msgid "Install package(s) from local zip files..."
-msgstr "Install package(s) from local zip files..."
-
-#: src/gnuwin32/rui.c:913
-msgid "Install package(s) from Bioconductor..."
-msgstr "Install package(s) from Bioconductor..."
-
-#: src/gnuwin32/rui.c:915
-msgid "Update packages from Bioconductor"
-msgstr "Update packages from Bioconductor"
-
-#: src/gnuwin32/rui.c:927
-msgid "FAQ on R"
-msgstr "FAQ on R"
-
-#: src/gnuwin32/rui.c:929
-msgid "FAQ on R for &Windows"
-msgstr "FAQ on R for &Windows"
-
-#: src/gnuwin32/rui.c:938 src/gnuwin32/rui.c:941
-msgid "Manuals (in PDF)"
-msgstr "Manuals (in PDF)"
-
-#: src/gnuwin32/rui.c:942
-msgid "An &Introduction to R"
-msgstr "An &Introduction to R"
-
-#: src/gnuwin32/rui.c:945
-msgid "R &Reference Manual"
-msgstr "R &Reference Manual"
-
-#: src/gnuwin32/rui.c:948
-msgid "R Data Import/Export"
-msgstr "R Data Import/Export"
-
-#: src/gnuwin32/rui.c:951
-msgid "R Language Definition"
-msgstr "R Language Definition"
-
-#: src/gnuwin32/rui.c:954
-msgid "Writing R Extensions"
-msgstr "Writing R Extensions"
-
-#: src/gnuwin32/rui.c:962
-msgid "R functions (text)..."
-msgstr "R functions (text)..."
-
-#: src/gnuwin32/rui.c:963
-msgid "Html help"
-msgstr "Html help"
-
-#: src/gnuwin32/rui.c:965
-msgid "Search help..."
-msgstr "Search help..."
-
-#: src/gnuwin32/rui.c:967
-msgid "Apropos..."
-msgstr "Apropos..."
-
-#: src/gnuwin32/rui.c:969
-msgid "R Project home page"
-msgstr "R Project home page"
-
-#: src/gnuwin32/rui.c:970
-msgid "CRAN home page"
-msgstr "CRAN home page"
-
-#: src/gnuwin32/rui.c:972
-msgid "About"
-msgstr "About"
-
-#: src/gnuwin32/rui.c:1010
-msgid "Load image"
-msgstr "Load image"
-
-#: src/gnuwin32/rui.c:1014
-msgid "Save image"
-msgstr "Save image"
-
-#: src/gnuwin32/rui.c:1026
-msgid "Copy and paste"
-msgstr "Copy and paste"
-
-#: src/gnuwin32/rui.c:1030
-msgid "Stop current computation"
-msgstr "Stop current computation"
-
-#: src/gnuwin32/rui.c:1054
-msgid "Source R code..."
-msgstr "Source R code..."
-
-#: src/gnuwin32/rui.c:1057
-msgid "Display file(s)..."
-msgstr "Display file(s)..."
-
-#: src/gnuwin32/rui.c:1059
-msgid "Load Workspace..."
-msgstr "Load Workspace..."
-
-#: src/gnuwin32/rui.c:1060
-msgid "Save Workspace..."
-msgstr "Save Workspace..."
-
-#: src/gnuwin32/rui.c:1062
-msgid "Load History..."
-msgstr "Load History..."
-
-#: src/gnuwin32/rui.c:1064
-msgid "Save History..."
-msgstr "Save History..."
-
-#: src/gnuwin32/rui.c:1067
-msgid "Change dir..."
-msgstr "Change dir..."
-
-#: src/gnuwin32/rui.c:1077
-msgid "Paste commands only"
-msgstr "Paste commands only"
-
-#: src/gnuwin32/rui.c:1079
-msgid "Copy and Paste"
-msgstr "Copy and Paste"
-
-#: src/gnuwin32/rui.c:1083
-msgid "Data editor..."
-msgstr "Data editor..."
-
-#: src/gnuwin32/rui.c:1087
-msgid "Misc"
-msgstr "Misc"
-
-#: src/gnuwin32/rui.c:1088
-msgid "Stop current computation           \tESC"
-msgstr "Stop current computation           \tESC"
-
-#: src/gnuwin32/rui.c:1091
-msgid "Break to debugger"
-msgstr "Break to debugger"
-
-#: src/gnuwin32/rui.c:1093
-msgid "Buffered output"
-msgstr "Buffered output"
-
-#: src/gnuwin32/rui.c:1095
-msgid "List objects"
-msgstr "List objects"
-
-#: src/gnuwin32/rui.c:1096
-msgid "Remove all objects"
-msgstr "Remove all objects"
-
-#: src/gnuwin32/rui.c:1097
-msgid "List &search path"
-msgstr "List &search path"
-
-#: src/gnuwin32/rui.c:1104
-msgid "Console"
-msgstr "Console"
-
-#: src/gnuwin32/rui.c:1139
-msgid "Select file"
-msgstr "Select file"
-
-#: src/gnuwin32/rui.c:1186
-msgid "'mname' is limited to 100 chars"
-msgstr "‘[1mmname[0m’ is limited to 100 chars"
-
-#: src/gnuwin32/rui.c:1226
-#, c-format
-msgid "menu %s does not exist"
-msgstr "menu %s does not exist"
-
-#: src/gnuwin32/rui.c:1268
-msgid "Only 16 menus are allowed"
-msgstr "Only 16 menus are allowed"
-
-#: src/gnuwin32/rui.c:1272
-msgid "'menu' is limited to 50 chars"
-msgstr "‘[1mmenu[0m’ is limited to 50 chars"
-
-#: src/gnuwin32/rui.c:1282
-msgid "base menu does not exist"
-msgstr "base menu does not exist"
-
-#: src/gnuwin32/rui.c:1297
-msgid "failed to allocate menu"
-msgstr "failed to allocate menu"
-
-#: src/gnuwin32/rui.c:1309
-msgid "too many menu items have been created"
-msgstr "too many menu items have been created"
-
-#: src/gnuwin32/rui.c:1313 src/gnuwin32/rui.c:1424
-msgid "menu + item is limited to 100 chars"
-msgstr "menu + item is limited to 100 chars"
-
-#: src/gnuwin32/rui.c:1339 src/gnuwin32/rui.c:1352 src/gnuwin32/rui.c:1357
-msgid "failed to allocate char storage"
-msgstr "failed to allocate char storage"
-
-#: src/gnuwin32/rui.c:1365
-msgid "failed to allocate menuitem"
-msgstr "failed to allocate menuitem"
-
-#: src/gnuwin32/rui.c:1414
-msgid "menu not found"
-msgstr "menu not found"
-
-#: src/gnuwin32/rui.c:1432
-msgid "menu or item does not exist"
-msgstr "menu or item does not exist"
 
 #: src/gnuwin32/run.c:43
 msgid "Insufficient memory (expandcmd)"
@@ -1060,60 +388,44 @@ msgstr "file.show(): file %s does not exist\n"
 msgid "Invalid R_HOME"
 msgstr "Invalid R_HOME"
 
-#: src/gnuwin32/system.c:834
+#: src/gnuwin32/system.c:841
 msgid "WARNING: no max-mem-size given\n"
 msgstr "WARNING: no max-mem-size given\n"
 
-#: src/gnuwin32/system.c:840
+#: src/gnuwin32/system.c:847
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "WARNING: --max-mem-size value is invalid: ignored\n"
 
-#: src/gnuwin32/system.c:842
+#: src/gnuwin32/system.c:849
 #, c-format
 msgid "WARNING: --max-mem-size=%lu`%c': too large and ignored\n"
 msgstr "WARNING: --max-mem-size=%lu‘[1m%c[0m’: too large and ignored\n"
 
-#: src/gnuwin32/system.c:847
+#: src/gnuwin32/system.c:854
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 
-#: src/gnuwin32/system.c:857
+#: src/gnuwin32/system.c:864
 #, c-format
 msgid "WARNING: unknown option %s\n"
 msgstr "WARNING: unknown option %s\n"
 
-#: src/gnuwin32/system.c:900
+#: src/gnuwin32/system.c:907
 msgid "you must specify `--save', `--no-save' or `--vanilla'"
 msgstr ""
 "you must specify ‘[1m--save[0m’, ‘[1m--no-save[0m’ or ‘[1m--vanilla[0m’"
 
-#: src/gnuwin32/system.c:905
+#: src/gnuwin32/system.c:912
 msgid ""
 "impossible to create 'reader thread'; you must free some system resources"
 msgstr ""
 "impossible to create 'reader thread'; you must free some system resources"
 
-#: src/gnuwin32/system.c:914
+#: src/gnuwin32/system.c:921
 msgid "WARNING: invalid R_HISTSIZE ignored;"
 msgstr "WARNING: invalid R_HISTSIZE ignored;"
-
-#: src/gnuwin32/graphapp/gmenus.c:47
-msgid "Windows"
-msgstr "Windows"
-
-#: src/gnuwin32/graphapp/gmenus.c:48
-msgid "Cascade"
-msgstr "Cascade"
-
-#: src/gnuwin32/graphapp/gmenus.c:49
-msgid "Tile"
-msgstr "Tile"
-
-#: src/gnuwin32/graphapp/gmenus.c:50
-msgid "Arrange Icons"
-msgstr "Arrange Icons"
 
 #: src/include/Errormsg.h:31
 msgid "NaNs produced"
@@ -1122,6 +434,11 @@ msgstr "NaNs produced"
 #: src/include/Errormsg.h:33
 msgid "Non-numeric argument to mathematical function"
 msgstr "Non-numeric argument to mathematical function"
+
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
+#: src/main/scan.c:1464
+msgid "invalid argument"
+msgstr "invalid argument"
 
 #: src/include/Errormsg.h:37
 msgid "first argument must be a character string"
@@ -1139,7 +456,7 @@ msgstr "second argument must be a character string"
 msgid "secong argument must be a list"
 msgstr "secong argument must be a list"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2574 src/main/subscript.c:203
+#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
 #: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
 msgid "subscript out of bounds"
 msgstr "subscript out of bounds"
@@ -1743,7 +1060,7 @@ msgstr "repeated formal argument ‘[1muse.names[0m’"
 msgid "argument not a list"
 msgstr "argument not a list"
 
-#: src/main/bind.c:873 src/main/eval.c:1814 src/main/eval.c:1824
+#: src/main/bind.c:873 src/main/eval.c:1834 src/main/eval.c:1844
 #: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
 #: src/main/objects.c:681
 #, c-format
@@ -1835,9 +1152,9 @@ msgid "length<- missing value for length"
 msgstr "length<- missing value for length"
 
 #: src/main/builtin.c:652 src/main/coerce.c:1922 src/main/coerce.c:1953
-#: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1374
-#: src/main/eval.c:1423 src/main/eval.c:1477 src/main/eval.c:1681
-#: src/main/eval.c:3000 src/main/eval.c:3088
+#: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
+#: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
+#: src/main/eval.c:3036 src/main/eval.c:3128
 msgid "... used in an incorrect context"
 msgstr "... used in an incorrect context"
 
@@ -2096,8 +1413,8 @@ msgstr "cannot coerce to vector"
 msgid "list argument expected"
 msgstr "list argument expected"
 
-#: src/main/coerce.c:1276 src/main/eval.c:1552 src/main/eval.c:3342
-#: src/main/eval.c:3345
+#: src/main/coerce.c:1276 src/main/eval.c:1558 src/main/eval.c:3382
+#: src/main/eval.c:3385
 msgid "invalid environment"
 msgstr "invalid environment"
 
@@ -2980,7 +2297,7 @@ msgid "bad environment"
 msgstr "bad environment"
 
 #: src/main/deparse.c:359 src/main/eval.c:338 src/main/eval.c:784
-#: src/main/eval.c:2443
+#: src/main/eval.c:2471
 #, c-format
 msgid "Object \"%s\" not found"
 msgstr "Object “[1m%s[0m” not found"
@@ -3420,7 +2737,7 @@ msgstr "The ... list does not contain %d elements"
 msgid "..%d used in an incorrect context, no ... to look in"
 msgstr "..%d used in an incorrect context, no ... to look in"
 
-#: src/main/envir.c:1216 src/main/eval.c:342 src/main/eval.c:2446
+#: src/main/envir.c:1216 src/main/eval.c:342 src/main/eval.c:2474
 #, c-format
 msgid "Argument \"%s\" is missing, with no default"
 msgstr "Argument “[1m%s[0m” is missing, with no default"
@@ -3820,15 +3137,15 @@ msgid ""
 msgstr ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 
-#: src/main/eval.c:344 src/main/eval.c:2447
+#: src/main/eval.c:344 src/main/eval.c:2475
 msgid "Argument is missing, with no default"
 msgstr "Argument is missing, with no default"
 
-#: src/main/eval.c:359 src/main/eval.c:2391
+#: src/main/eval.c:359 src/main/eval.c:2419
 msgid "recursive default argument reference"
 msgstr "recursive default argument reference"
 
-#: src/main/eval.c:421 src/main/eval.c:2948
+#: src/main/eval.c:421 src/main/eval.c:2984
 msgid "attempt to apply non-function"
 msgstr "attempt to apply non-function"
 
@@ -3879,211 +3196,215 @@ msgstr "multi-argument returns are deprecated"
 msgid "empty expression in return value"
 msgstr "empty expression in return value"
 
-#: src/main/eval.c:1147
+#: src/main/eval.c:1153
 msgid "invalid (NULL) left side of assignment"
 msgstr "invalid (NULL) left side of assignment"
 
-#: src/main/eval.c:1169
+#: src/main/eval.c:1175
 msgid "Target of assignment expands to non-language object"
 msgstr "Target of assignment expands to non-language object"
 
-#: src/main/eval.c:1208
+#: src/main/eval.c:1214
 msgid "cannot do complex assignments in base namespace"
 msgstr "cannot do complex assignments in base namespace"
 
-#: src/main/eval.c:1210
+#: src/main/eval.c:1216
 msgid "cannot do complex assignments in NULL environment"
 msgstr "cannot do complex assignments in NULL environment"
 
-#: src/main/eval.c:1223 src/main/eval.c:1241
+#: src/main/eval.c:1229 src/main/eval.c:1247
 msgid "invalid function in complex assignment"
 msgstr "invalid function in complex assignment"
 
-#: src/main/eval.c:1225 src/main/eval.c:1243
+#: src/main/eval.c:1231 src/main/eval.c:1249
 #, c-format
 msgid "overlong name in %s"
 msgstr "overlong name in %s"
 
-#: src/main/eval.c:1317
+#: src/main/eval.c:1323
 msgid "invalid (do_set) left-hand side to assignment"
 msgstr "invalid (do_set) left-hand side to assignment"
 
-#: src/main/eval.c:1332
+#: src/main/eval.c:1338
 msgid "invalid assignment lhs"
 msgstr "invalid assignment lhs"
 
-#: src/main/eval.c:1507
+#: src/main/eval.c:1513
 msgid "invalid formal argument list for \"function\""
 msgstr "invalid formal argument list for “[1mfunction[0m”"
 
-#: src/main/eval.c:1528 src/main/random.c:401
+#: src/main/eval.c:1534 src/main/random.c:401
 msgid "invalid third argument"
 msgstr "invalid third argument"
 
-#: src/main/eval.c:1549
+#: src/main/eval.c:1555
 msgid "numeric 'envir' arg not of length one"
 msgstr "numeric ‘[1menvir[0m’ arg not of length one"
 
-#: src/main/eval.c:1556 src/main/random.c:405
+#: src/main/eval.c:1562 src/main/random.c:405
 msgid "invalid second argument"
 msgstr "invalid second argument"
 
-#: src/main/eval.c:1619
+#: src/main/eval.c:1573 src/main/eval.c:1592
+msgid "restarts not supported in eval"
+msgstr "restarts not supported in eval"
+
+#: src/main/eval.c:1639
 msgid "Recall called from outside a closure"
 msgstr "Recall called from outside a closure"
 
-#: src/main/eval.c:1675
+#: src/main/eval.c:1695
 msgid "value in ... is not a promise"
 msgstr "value in ... is not a promise"
 
-#: src/main/eval.c:1867 src/main/objects.c:655
+#: src/main/eval.c:1887 src/main/objects.c:655
 #, c-format
 msgid "call name too long in %s"
 msgstr "call name too long in %s"
 
-#: src/main/eval.c:1888
+#: src/main/eval.c:1908
 #, c-format
 msgid "generic name too long in %s"
 msgstr "generic name too long in %s"
 
-#: src/main/eval.c:1920
+#: src/main/eval.c:1940
 #, c-format
 msgid "Incompatible methods (\"%s\", \"%s\") for \"%s\""
 msgstr "Incompatible methods (“[1m%s[0m”, “[1m%s[0m”) for “[1m%s[0m”"
 
-#: src/main/eval.c:1984
+#: src/main/eval.c:2004
 msgid "dispatch error"
 msgstr "dispatch error"
 
-#: src/main/eval.c:2355
+#: src/main/eval.c:2383
 msgid "node stack overflow"
 msgstr "node stack overflow"
 
-#: src/main/eval.c:2361
+#: src/main/eval.c:2389
 msgid "integer stack overflow"
 msgstr "integer stack overflow"
 
-#: src/main/eval.c:2429
+#: src/main/eval.c:2457
 msgid "Bad opcode"
 msgstr "Bad opcode"
 
-#: src/main/eval.c:2576
+#: src/main/eval.c:2604
 msgid "not a vector object"
 msgstr "not a vector object"
 
-#: src/main/eval.c:2584 src/main/eval.c:2606 src/main/eval.c:2630
-#: src/main/eval.c:2654
+#: src/main/eval.c:2612 src/main/eval.c:2634 src/main/eval.c:2658
+#: src/main/eval.c:2682
 msgid "can only handle simple real vectors"
 msgstr "can only handle simple real vectors"
 
-#: src/main/eval.c:2593 src/main/eval.c:2640
+#: src/main/eval.c:2621 src/main/eval.c:2668
 msgid "not a simple vector"
 msgstr "not a simple vector"
 
-#: src/main/eval.c:2610 src/main/eval.c:2658 src/main/subassign.c:885
+#: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
 #: src/main/subset.c:735
 msgid "incorrect number of subscripts"
 msgstr "incorrect number of subscripts"
 
-#: src/main/eval.c:2621 src/main/eval.c:2672
+#: src/main/eval.c:2649 src/main/eval.c:2700
 msgid "not a simple matrix"
 msgstr "not a simple matrix"
 
-#: src/main/eval.c:2706
+#: src/main/eval.c:2734
 msgid "bytecode version mismatch; using eval"
 msgstr "bytecode version mismatch; using eval"
 
-#: src/main/eval.c:2711
+#: src/main/eval.c:2739
 msgid "bytecode version is too old"
 msgstr "bytecode version is too old"
 
-#: src/main/eval.c:2712
+#: src/main/eval.c:2740
 msgid "bytecode version is too new"
 msgstr "bytecode version is too new"
 
-#: src/main/eval.c:2717
+#: src/main/eval.c:2745
 msgid "byte code version mismatch"
 msgstr "byte code version mismatch"
 
-#: src/main/eval.c:2733
+#: src/main/eval.c:2761
 msgid "missing value where logical needed"
 msgstr "missing value where logical needed"
 
-#: src/main/eval.c:2734
+#: src/main/eval.c:2762
 msgid "argument of if(*) is not interpretable as logical"
 msgstr "argument of if(*) is not interpretable as logical"
 
-#: src/main/eval.c:2768
+#: src/main/eval.c:2796
 msgid "invalid sequence argument in for loop"
 msgstr "invalid sequence argument in for loop"
 
-#: src/main/eval.c:2910 src/main/eval.c:2931 src/main/eval.c:3038
+#: src/main/eval.c:2946 src/main/eval.c:2967 src/main/eval.c:3074
 msgid "not a BUILTIN function"
 msgstr "not a BUILTIN function"
 
-#: src/main/eval.c:3026
+#: src/main/eval.c:3062
 msgid "bad function"
 msgstr "bad function"
 
-#: src/main/eval.c:3055
+#: src/main/eval.c:3095
 msgid "not a SPECIAL function"
 msgstr "not a SPECIAL function"
 
-#: src/main/eval.c:3284
+#: src/main/eval.c:3324
 msgid "cannot find index for threaded code address"
 msgstr "cannot find index for threaded code address"
 
-#: src/main/eval.c:3358
+#: src/main/eval.c:3398
 msgid "invalid symbol"
 msgstr "invalid symbol"
 
-#: src/main/eval.c:3402
+#: src/main/eval.c:3442
 msgid "argument is not a byte code object"
 msgstr "argument is not a byte code object"
 
-#: src/main/eval.c:3425
+#: src/main/eval.c:3465
 msgid "bad file name"
 msgstr "bad file name"
 
-#: src/main/eval.c:3429
+#: src/main/eval.c:3469
 msgid "unable to open file for loading"
 msgstr "unable to open file for loading"
 
-#: src/main/eval.c:3444 src/main/saveload.c:1921
+#: src/main/eval.c:3484 src/main/saveload.c:1921
 msgid "'file' must be non-empty string"
 msgstr "‘[1mfile[0m’ must be non-empty string"
 
-#: src/main/eval.c:3446 src/main/saveload.c:1923 src/main/saveload.c:2185
+#: src/main/eval.c:3486 src/main/saveload.c:1923 src/main/saveload.c:2185
 #: src/main/serialize.c:1696
 msgid "'ascii' must be logical"
 msgstr "‘[1mascii[0m’ must be logical"
 
-#: src/main/eval.c:3450 src/main/saveload.c:1936 src/main/saveload.c:2033
+#: src/main/eval.c:3490 src/main/saveload.c:1936 src/main/saveload.c:2033
 #: src/unix/edit.c:120
 msgid "unable to open file"
 msgstr "unable to open file"
 
-#: src/main/eval.c:3475 src/main/eval.c:3482
+#: src/main/eval.c:3515 src/main/eval.c:3522
 msgid "R_CompiledFileName: buffer too small"
 msgstr "R_CompiledFileName: buffer too small"
 
-#: src/main/eval.c:3515
+#: src/main/eval.c:3555
 msgid "code must be a generic vector"
 msgstr "code must be a generic vector"
 
-#: src/main/eval.c:3554
+#: src/main/eval.c:3594
 msgid "profile timer in use"
 msgstr "profile timer in use"
 
-#: src/main/eval.c:3556
+#: src/main/eval.c:3596
 msgid "already byte code profiling"
 msgstr "already byte code profiling"
 
-#: src/main/eval.c:3574
+#: src/main/eval.c:3614
 msgid "setting profile timer failed"
 msgstr "setting profile timer failed"
 
-#: src/main/eval.c:3591
+#: src/main/eval.c:3631
 msgid "not byte code profiling"
 msgstr "not byte code profiling"
 
@@ -7187,11 +6508,11 @@ msgstr "allocation failure in mbcsToLatin1"
 msgid "invalid input found in mbcsToLatin1"
 msgstr "invalid input found in mbcsToLatin1"
 
-#: src/main/util.c:1278
+#: src/main/util.c:1288
 msgid "error message truncated to 255 chars"
 msgstr "error message truncated to 255 chars"
 
-#: src/main/util.c:1291
+#: src/main/util.c:1301
 msgid "warning message truncated to 255 chars"
 msgstr "warning message truncated to 255 chars"
 
@@ -7577,7 +6898,7 @@ msgstr ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=“[1mpseudo.cube[0m” or “[1mgray[0m”."
 
-#: src/modules/X11/devX11.c:818
+#: src/modules/X11/devX11.c:816
 msgid ""
 "Could not find any X11 fonts\n"
 "Check that the Font Path is correct."
@@ -7585,130 +6906,130 @@ msgstr ""
 "Could not find any X11 fonts\n"
 "Check that the Font Path is correct."
 
-#: src/modules/X11/devX11.c:882
+#: src/modules/X11/devX11.c:880
 #, c-format
 msgid "X11 used font size %d when %d was requested"
 msgstr "X11 used font size %d when %d was requested"
 
-#: src/modules/X11/devX11.c:941
+#: src/modules/X11/devX11.c:939
 #, c-format
 msgid "X11 font at size %d could not be loaded"
 msgstr "X11 font at size %d could not be loaded"
 
-#: src/modules/X11/devX11.c:969
+#: src/modules/X11/devX11.c:967
 msgid "Invalid line end"
 msgstr "Invalid line end"
 
-#: src/modules/X11/devX11.c:987
+#: src/modules/X11/devX11.c:985
 msgid "Invalid line join"
 msgstr "Invalid line join"
 
-#: src/modules/X11/devX11.c:1056
+#: src/modules/X11/devX11.c:1054
 #, c-format
 msgid "X11 protocol error: %s"
 msgstr "X11 protocol error: %s"
 
-#: src/modules/X11/devX11.c:1073
+#: src/modules/X11/devX11.c:1071
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 fatal IO error: please save work and shut down R"
 
-#: src/modules/X11/devX11.c:1096
+#: src/modules/X11/devX11.c:1094
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr "locale not supported by Xlib: some X ops will operate in C locale"
 
-#: src/modules/X11/devX11.c:1097
+#: src/modules/X11/devX11.c:1095
 msgid "X cannot set locale modifiers"
 msgstr "X cannot set locale modifiers"
 
-#: src/modules/X11/devX11.c:1104
+#: src/modules/X11/devX11.c:1102
 msgid "No png support in this version of R"
 msgstr "No png support in this version of R"
 
-#: src/modules/X11/devX11.c:1108
+#: src/modules/X11/devX11.c:1106
 msgid "filename too long in png() call"
 msgstr "filename too long in png() call"
 
-#: src/modules/X11/devX11.c:1112 src/modules/X11/devX11.c:1519
+#: src/modules/X11/devX11.c:1110 src/modules/X11/devX11.c:1517
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "could not open PNG file ‘[1m%s[0m’"
 
-#: src/modules/X11/devX11.c:1125
+#: src/modules/X11/devX11.c:1123
 msgid "No jpeg support in this version of R"
 msgstr "No jpeg support in this version of R"
 
-#: src/modules/X11/devX11.c:1131
+#: src/modules/X11/devX11.c:1129
 msgid "filename too long in jpeg() call"
 msgstr "filename too long in jpeg() call"
 
-#: src/modules/X11/devX11.c:1135 src/modules/X11/devX11.c:1526
+#: src/modules/X11/devX11.c:1133 src/modules/X11/devX11.c:1524
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "could not open JPEG file ‘[1m%s[0m’"
 
-#: src/modules/X11/devX11.c:1156
+#: src/modules/X11/devX11.c:1154
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "unable to open connection to X11 display ‘[1m%s[0m’"
 
-#: src/modules/X11/devX11.c:1182
+#: src/modules/X11/devX11.c:1180
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg() does not support transparency: using white bg"
 
-#: src/modules/X11/devX11.c:1213
+#: src/modules/X11/devX11.c:1211
 msgid "unable to create X11 window"
 msgstr "unable to create X11 window"
 
-#: src/modules/X11/devX11.c:1259
+#: src/modules/X11/devX11.c:1257
 msgid "unable to create pixmap"
 msgstr "unable to create pixmap"
 
-#: src/modules/X11/devX11.c:1293
+#: src/modules/X11/devX11.c:1291
 msgid "Invalid font specification"
 msgstr "Invalid font specification"
 
-#: src/modules/X11/devX11.c:1332
+#: src/modules/X11/devX11.c:1330
 msgid "Font family not found in X11 font database"
 msgstr "Font family not found in X11 font database"
 
-#: src/modules/X11/devX11.c:2246
+#: src/modules/X11/devX11.c:2244
 msgid "invalid string argument"
 msgstr "invalid string argument"
 
-#: src/modules/X11/devX11.c:2280
+#: src/modules/X11/devX11.c:2278
 #, c-format
 msgid "unable to start device %s"
 msgstr "unable to start device %s"
 
-#: src/modules/X11/devX11.c:2307
+#: src/modules/X11/devX11.c:2305
 msgid "invalid width or height"
 msgstr "invalid width or height"
 
-#: src/modules/X11/devX11.c:2311
+#: src/modules/X11/devX11.c:2309
 msgid "invalid gamma value"
 msgstr "invalid gamma value"
 
-#: src/modules/X11/devX11.c:2314
+#: src/modules/X11/devX11.c:2312
 msgid "invalid colortype passed to X11 driver"
 msgstr "invalid colortype passed to X11 driver"
 
-#: src/modules/X11/devX11.c:2328
+#: src/modules/X11/devX11.c:2326
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "unknown X11 color/colour model -- using monochrome"
 
-#: src/modules/X11/devX11.c:2338
+#: src/modules/X11/devX11.c:2336
 msgid "invalid value of 'bg'"
 msgstr "invalid value of ‘[1mbg[0m’"
 
-#: src/modules/X11/devX11.c:2343
+#: src/modules/X11/devX11.c:2341
 msgid "invalid value of 'canvas'"
 msgstr "invalid value of ‘[1mcanvas[0m’"
 
-#: src/modules/X11/devX11.c:2348
+#: src/modules/X11/devX11.c:2346
 msgid "invalid value of 'fonts'"
 msgstr "invalid value of ‘[1mfonts[0m’"
 
-#: src/modules/X11/devX11.c:2385
+#: src/modules/X11/devX11.c:2383
 msgid "Cannot allocate memory for X11Routines structure"
 msgstr "Cannot allocate memory for X11Routines structure"
 
