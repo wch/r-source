@@ -2,6 +2,7 @@
 \alias{col2rgb}
 \title{Color to RGB Conversion}
 \description{
+  ``Any \R color'' to RGB (red/green/blue) conversion.
 }
 \usage{
 col2rgb(col)
@@ -11,6 +12,13 @@ col2rgb(col)
     a color name (an element of \code{\link{colors}()}), a hexadecimal
     string of the form \code{"#rrggbb"}, or an integer \code{i} meaning
     \code{palette()[i]}.}
+}
+\details{
+  For integer colors, \code{0} is shorthand for the current
+  \code{par("bg")}, and \code{\link{NA}} means ``nothing'' which
+  effectively does not draw the corresponding item.
+
+  For character colors, \code{"NA"} is equivalent to \code{NA} above.
 }
 \value{
   an integer matrix with three rows and number of columns the length
