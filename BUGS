@@ -245,6 +245,10 @@ none
 
 Directory:  incoming
 
+* PR# 845 *
+Subject: Bug in pictex output.
+From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
+Date: Sun, 11 Feb 2001 14:53:20 +0100 (MET)
 * PR# 844 *
 Subject: default data= arg to glm()
 From: pperkins@ucsd.edu
