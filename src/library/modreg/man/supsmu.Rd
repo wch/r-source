@@ -5,13 +5,12 @@
   Smooth the (x, y) values by Friedman's \dQuote{super smoother}.
 }
 \usage{
-supsmu(x, y, wt = rep(1, length(y)), span = "cv", periodic = FALSE,
-       bass = 0)
+supsmu(x, y, wt, span = "cv", periodic = FALSE, bass = 0)
 }
 \arguments{
   \item{x}{x values for smoothing}
   \item{y}{y values for smoothing}
-  \item{wt}{case weights}
+  \item{wt}{case weights, by default all equal}
   \item{span}{the fraction of the observations in the span of the running
     lines smoother, or \code{"cv"} to choose this by leave-one-out
     cross-validation.}

@@ -16,7 +16,10 @@ acf(x, lag.max = NULL,
     type = c("correlation", "covariance", "partial"),
     plot = TRUE, na.action = na.fail, demean = TRUE, \dots)
 
-pacf(x, lag.max = NULL, plot = TRUE, na.action = na.fail, \dots)
+pacf(x, lag.max, plot, na.action, \dots)
+
+\method{pacf}{default}(x, lag.max = NULL, plot = TRUE, na.action = na.fail, 
+    ...) 
 
 ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE, na.action = na.fail, \dots)
@@ -31,7 +34,7 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     Allowed values are
     \code{"correlation"} (the default), \code{"covariance"} or
     \code{"partial"}.}
-  \item{plot}{logical. If \code{TRUE} the acf is plotted.}
+  \item{plot}{logical. If \code{TRUE} (the default) the acf is plotted.}
   \item{na.action}{function to be called to handle missing
     values. \code{na.pass} can be used.}
   \item{demean}{logical.  Should the covariances be about the sample

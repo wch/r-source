@@ -21,8 +21,10 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
     the function will do exponential smoothing.}
   \item{gamma}{\eqn{gamma} parameter used for the seasonal component.
     If set to 0, an non-seasonal model is fitted.}
-  \item{seasonal}{Selects an \code{"additive"} or \code{"multiplicative"}
-    seasonal model. (Only takes effect if \code{gamma} is non-zero).}
+  \item{seasonal}{Character string to select an \code{"additive"} 
+    (the default) or \code{"multiplicative"} seasonal model. The first
+    few characters are sufficient. (Only takes effect if 
+    \code{gamma} is non-zero).}
   \item{start.periods}{Start periods used in the autodetection of start
     values. Must be at least 3.}
   \item{l.start}{Start value for level (a[0]).}

@@ -1,8 +1,7 @@
 \name{exists}
 \title{Is an Object Defined?}
 \usage{
-exists(x, where = -1, envir = parent.frame(),
-       frame = NULL, mode = "any", inherits = TRUE)
+exists(x, where = -1, envir, frame, mode = "any", inherits = TRUE)
 }
 \alias{exists}
 \arguments{
