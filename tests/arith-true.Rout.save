@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-10-03)
+Version 1.2.0 Under development (unstable) (2000-10-10)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -159,6 +159,10 @@ NaNs produced in: log(x)
 [1] TRUE
 > ##P table(2*abs(Isi-1)	/ Meps)
 > 
+> ## polyroot():
+> all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
+[1] TRUE
+> 
 > ## gamma():
 > abs(gamma(1/2)^2 - pi) < 4* Meps
 [1] TRUE
@@ -254,5 +258,5 @@ NaNs produced in: log(x)
 > 
 > ## Last Line:
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  4.83 0.17 5 0 0 
+Time elapsed:  4.63 0.12 7.12 0 0 
 > 

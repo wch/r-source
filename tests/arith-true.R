@@ -99,6 +99,9 @@ Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
 all(abs(Isi-1) < 100* Meps)
 ##P table(2*abs(Isi-1)	/ Meps)
 
+## polyroot():
+all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
+
 ## gamma():
 abs(gamma(1/2)^2 - pi) < 4* Meps
 r <- rlnorm(5000)
