@@ -5,25 +5,25 @@ cancor(x, y, xcenter=TRUE, ycenter=TRUE)
 }
 \alias{cancor}
 \arguments{
-\item{x}{a matrix containing the x coordinates.}
-\item{y}{a matrix containing the y coordinates.}
-\item{xcenter}{a parameter describing any centering to be done
-on the x values before the analysis.  The default is substract
-the column means, but it is possible to supply a vector of
-values to be subtracted from the columns. It is possible to
-turn off any adjustment.}
-\item{ycenter}{like the parameter \code{xcenter}, but for the
-y values.}
+\item{x}{numeric matrix (\eqn{n \times p_1}{n * p1}), containing the x
+    coordinates.}
+\item{y}{numeric matrix (\eqn{n \times p_2}{n * p2}) of y coordinates.}
+\item{xcenter}{logical or numeric vector of length \eqn{p_1}{p1},
+    describing any centering to be done on the x values before the
+    analysis.  If \code{TRUE} (default), subtract the column means,
+    If \code{FALSE}, do not adjust the columns.
+    Otherwise, a vector of values to be subtracted from the columns.}
+\item{ycenter}{analogous to \code{xcenter}, but for the y values.}
 }
 \description{
-This function performs a canonical correlation
-analysis for the given data.  The analysis seeks
-linear combinations of the y variables which are
-well explained by linear combinations of the
-x variables.
+    Compute the canonical correlations between \code{x} and \code{y}.
+    The canonical correlation analysis seeks
+    linear combinations of the y variables which are
+    well explained by linear combinations of the x variables.
 }
 \value{
 A list containing the following components:
+\item{cor}{correlations.}
 \item{xcoef}{estimated coefficients for the x variables.}
 \item{ycoef}{estimated coefficients for the y variables.}
 \item{xcenter}{the values used to adjust the x variables.}
@@ -35,14 +35,23 @@ Hotelling H. (1936).
 \emph{Biometrika}, \bold{28}, 321-327.
 
 Seber, G. A. F. (1984).
-\emph{Multivariate Analysis}. New York: Wiley.
+\emph{Multivariate Analysis}. New York: Wiley, p. 506f.
 }
 \seealso{
 \code{\link{qr}}, \code{\link{svd}}.
 }
 \examples{
-soil <- evap.x[,1:3]
-air <- evap.x[,-(1:3)]
-airsoil <- cancor(air, soil)
+data(savings)
+pop <- savings[, 2:3]
+oec <- savings[,-(2:3)]
+str(cancor(pop, oec))
+
+x <- matrix(rnorm(150), 50, 3)
+y <- matrix(rnorm(250), 50, 5)
+str(cxy <- cancor(x, y))
+all(abs(cor(x \%*\% cxy$xcoef,
+            y \%*\% cxy$ycoef)[,1:3] - diag(cxy $ cor)) < 1e-15)
+all(abs(cor(x \%*\% cxy$xcoef) - diag(3)) < 1e-15)
+all(abs(cor(y \%*\% cxy$ycoef) - diag(5)) < 1e-15)
 }
 \keyword{multivariate}
