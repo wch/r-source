@@ -43,11 +43,16 @@
 #define	ftUnicodeTextDocument	'utxt'
 #define fbRImage				'BINA'
 
+#include "RVerDefs.h"
+
+/* These are generate by GETVERSION 
 #define kMajorVersNumber	0x01
 #define kMinorVersNumber	0x40
-#define kReleaseStage		Development
 #define kNonFinalRelease	0x01
 #define kVersString			"1.4.0"
+*/
+
+#define kReleaseStage		Development
 
 #define kRegionCode			verUS
 
@@ -71,7 +76,7 @@ resource 'vers' (2) {
 	kNonFinalRelease,
 	kRegionCode,
 	kVersString,
-	"R for MacOS " kVersString
+	"R for MacOS " kVersString ", " kStatusString
 };
 
 #define		kDITLAboutR		137
@@ -88,7 +93,8 @@ resource 'DITL' ( kDITLAboutR, "R about", purgeable )
 		{ 13, 221, 92, 500 }, StaticText {enabled, 
 		"R for MacOS and MacOS X\n"	/*	Version */
 		"\0xA9 2001 R Development Core Team\n"	/*	(c)  */
-		"http://www.r-project.org"			/*	HTTP URL */
+		"http://www.r-project.org\n"/*	HTTP URL */
+		kVersString " , " kStatusString 
 		 },
 		 
 		/* GNU License */
