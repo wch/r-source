@@ -47,7 +47,7 @@ SOURCES = \
 	signrank.c
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = dpq.h nmath.h
+HEADERS = bessel.h dpq.h nmath.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in Makefile.win $(SOURCES) $(HEADERS)
