@@ -46,65 +46,43 @@ pacf.default <- function(x, lag.max = NULL, plot = TRUE,
                          na.action = na.fail, ...)
 {
     series <- deparse(substitute(x))
-    if(is.matrix(x))
-        return(pacf(as.ts(x), lag.max=lag.max, plot=plot,
-                    na.action=na.action, ...))
-    x <- na.action(as.ts(x))
-    if(!is.numeric(x))
-        stop("`x' must be numeric")
+    x <- drop(na.action(as.ts(x)))  # use univariate code for a single series
+    if(!is.numeric(x)) stop("`x' must be numeric")
     x.freq <- frequency(x)
-    if(is.matrix(x))
-        if(ncol(x) > 1) stop("univariate ts method")
-        else x <- drop(x)
     sampleT <- length(x)
-    if (is.null(lag.max))
-        lag.max <- floor(10 * (log10(sampleT)))
+    if (is.null(lag.max)) lag.max <- floor(10 * (log10(sampleT)))
     lag.max <- min(lag.max, sampleT - 1)
     if (lag.max < 1) stop("lag.max must be at least 1")
-    x <- scale(x, TRUE, FALSE)
-    acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
-                    na.action = na.action)$acf)
-    pacf <- array(.C("uni_pacf",
-               as.double(acf),
-               pacf = double(lag.max),
-               as.integer(lag.max), PACKAGE="ts")$pacf, dim=c(lag.max,1,1))
-    acf.out <- structure(.Data = list(acf = pacf, type = "partial",
-                         n.used = sampleT,
-                         lag = array((1:lag.max)/x.freq, dim=c(lag.max,1,1)),
-                         series = series, snames = NULL),
-                         class = "acf")
-    if (plot) {
-        plot.acf(acf.out, ...)
-        return(invisible(acf.out))
-    } else return(acf.out)
-}
 
-pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
-{
-    series <- deparse(substitute(x))
-    x <- na.action(as.ts(x))
-    x.freq <- frequency(x)
-    x <- as.matrix(x)
-    if(any(is.na(x))) stop("NAs in x")
-    sampleT <- nrow(x)
-    nser <- ncol(x)
-    if (is.null(lag.max))
-        lag.max <- floor(10 * (log10(sampleT) - log10(nser)))
-    lag.max <- min(lag.max, sampleT - 1)
-    if (lag.max < 1) stop("lag.max must be at least 1")
-    x <- sweep(x, 2, colMeans(x))
-    lag <- matrix(1, nser, nser)
-    lag[lower.tri(lag)] <- -1
-    acf <- ar.yw(x, order.max = lag.max)$partialacf
-    lag <- outer(1:lag.max, lag/x.freq)
-    acf.out <- structure(.Data = list(acf = acf, type = "partial",
+    if(is.matrix(x)) {
+        if(any(is.na(x))) stop("NAs in x")
+        nser <- ncol(x)
+        x <- sweep(x, 2, colMeans(x))
+        lag <- matrix(1, nser, nser)
+        lag[lower.tri(lag)] <- -1
+        pacf <- ar.yw(x, order.max = lag.max)$partialacf
+        lag <- outer(1:lag.max, lag/x.freq)
+        snames <- colnames(x)
+    } else {
+        x <- scale(x, TRUE, FALSE)
+        acf <- drop(acf(x, lag.max = lag.max, plot = FALSE,
+                        na.action = na.action)$acf)
+        pacf <- array(.C("uni_pacf",
+                         as.double(acf),
+                         pacf = double(lag.max),
+                         as.integer(lag.max), PACKAGE="ts")$pacf,
+                      dim=c(lag.max,1,1))
+        lag <- array((1:lag.max)/x.freq, dim=c(lag.max,1,1))
+        snames <- NULL
+    }
+
+    acf.out <- structure(.Data = list(acf = pacf, type = "partial",
                          n.used = sampleT, lag = lag, series = series,
-                         snames = colnames(x)),
-                         class = "acf")
+                         snames = snames), class = "acf")
     if (plot) {
         plot.acf(acf.out, ...)
-        return(invisible(acf.out))
-    } else return(acf.out)
+        invisible(acf.out)
+    } else acf.out
 }
 
 plot.acf <-

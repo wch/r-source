@@ -130,8 +130,8 @@ DEPRECATED & DEFUNCT
 
     o	The deprecated argument 'white' of parse() has been removed.
 
-    o	plot.mts() has been deprecated and its functionality
-	incorporated into plot.ts().
+    o	pacf/plot.mts() have been removed and their functionality
+	incorporated into pacf.default/plot.ts().
 
 
 INSTALLATION CHANGES

@@ -3,8 +3,6 @@
 \alias{ccf}
 \alias{pacf}
 \alias{pacf.default}
-\alias{pacf.ts}
-\alias{pacf.mts}
 \title{Auto- and Cross- Covariance and -Correlation Function Estimation}
 \description{
   The function \code{acf} computes (and by default plots) estimates of
@@ -22,7 +20,7 @@ ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE, na.action = na.fail, \dots)
 }
 \arguments{
-  \item{x, y}{a univariate or multivariate (not \code{ccf}) time
+  \item{x, y}{a univariate or multivariate (not \code{ccf}) numeric time
     series object or a numeric vector or matrix.}
   \item{lag.max}{maximum number of lags at which to calculate the acf.
     Default is \eqn{10\log_{10}(N)}{10*log10(N)} where \eqn{N} is the
