@@ -626,6 +626,7 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define jump_to_toplevel	Rf_jump_to_toplevel
 # define levelsgets		Rf_levelsgets
 # define mainloop		Rf_mainloop
+# define ParseBrowser	Rf_ParseBrowser
 # define mat2indsub		Rf_mat2indsub
 # define match			Rf_match
 # define mkCLOSXP		Rf_mkCLOSXP
