@@ -1017,3 +1017,14 @@ lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.omit))
 lm.influence(lm(y ~ 0 + x3, data=dat, weights=wt, na.action=na.exclude))
 lm.influence(lm(y ~ 0, data=dat, na.action=na.exclude))
 ## last three misbehaved in 1.7.x, none had proper names.
+
+
+## length of results in ARMAacf when lag.max is used
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=1) # was 4 in 1.7.1
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=2)
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=3)
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=4)
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=5) # failed in 1.7.1
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=6)
+ARMAacf(ar=c(1.3,-0.6, -0.2, 0.1),lag.max=10)
+##

@@ -326,6 +326,12 @@ BUG FIXES
 	appropriately.  It also ensures that hat values are not greater
 	than one, and rounds values within rounding error of one.
 
+    o	ARMAacf() sometimes gave too many results or failed if `lag.max'
+	was used.
+
+    o	filter(method="recursive") was unnecessarily requiring the
+	time series to be longer than the filter.
+
 
 
 

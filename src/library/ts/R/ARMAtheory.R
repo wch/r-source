@@ -30,14 +30,14 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
             xx <- rep(0, lag.max - p)
             Acf <- c(Acf, filter(xx, ar, "recursive", init = Acf))
         }
-        Acf <- c(1, Acf)
+        Acf <- c(1, Acf[1:lag.max])
     } else if(q > 0) {
         x <- c(1, ma)
         Acf <- filter(c(x, rep(0, q)), rev(x), sides=1)[-(1:q)]
         if(lag.max > q) Acf <- c(Acf, rep(0, lag.max - q))
         Acf <- Acf/Acf[1]
     }
-    names(Acf) <- 0:max(p, lag.max)
+    names(Acf) <- 0:lag.max
     if(pacf) .C("uni_pacf", as.double(Acf), pacf = double(lag.max),
                 as.integer(lag.max), PACKAGE = "ts")$pacf
     else Acf

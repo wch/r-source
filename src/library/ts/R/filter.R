@@ -10,9 +10,9 @@ filter <- function(x, filter, method = c("convolution", "recursive"),
     series <- colnames(x)
     nfilt <- length(filter)
     if(any(is.na(filter))) stop("missing values in filter")
-    if(nfilt > n) stop("filter is longer than time series")
     y <- matrix(NA, n, nser)
     if(method == "convolution") {
+        if(nfilt > n) stop("filter is longer than time series")
         if(sides != 1 && sides != 2)
             stop("argument sides must be 1 or 2")
         for (i in 1:nser)
