@@ -15,16 +15,25 @@
   tree-like structures.  It is intended as a replacement for similar
   functions in hierarchical clustering and classification/regression
   trees, such that all of these can use the same engine for plotting or
-  cutting trees.  Currently the code is in alpha stage and the API may
-  change at any point in time.
+  cutting trees.
+
+  The code is still in testing stage and the API may
+  change in the future.
 }
 \usage{
+as.dendrogram(object, \dots)
+as.dendrogram.hclust(object, \dots)
 \method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
          center=FALSE, edge.root= !is.null(attr(x,"edgetext")),
-         nodePar = NULL, edgePar = list(), xlab="", ylab="", ...)
-\method{cut}{dendrogram}(x, h, ...)
+         nodePar = NULL, edgePar = list(), xlab="", ylab="",
+         horiz = FALSE, \dots)
+\method{cut}{dendrogram}(x, h, \dots)
+\method{str}{dendrogram}(x, \dots)
+\method{print}{dendrogram}(x, \dots)
 }
 \arguments{
+  \item{object}{any \R object that can be made into a class
+    \code{"dendrogram"} one.}
   \item{x}{object of class \code{"dendrogram"}.}
   \item{type}{type of plot.}
   \item{center}{logical; if \code{TRUE}, nodes are plotted centered with
@@ -40,6 +49,8 @@
   \item{edgePar}{a \code{list} of plotting parameters to use for the
     edge (see \code{\link{lines}}).  The list may contain components
     named \code{col}, \code{lty} and/or \code{lwd}.}
+  \item{horiz}{logical indicating if the dendrogram should be draw
+    \emph{horizontally} or not.}
   \item{h}{height at which the tree is cut.}
   \item{\dots, xlab, ylab}{graphical parameters, or arguments for
     other methods.}
@@ -63,10 +74,10 @@
     \item{\code{text}}{character; the label of the node}
     \item{\code{edgetext}}{character; the label for the edge leading to
       the node}
-    \item{\code{nodePar}}{a named list of length-1 vectors indicating
+    \item{\code{nodePar}}{a named list of length one vectors specifying
       node-specific attributes for \code{\link{points}} plotting, see
       the \code{nodePar} argument above.}
-    \item{\code{edgePar}}{a named list of length-1 vectors indicating
+    \item{\code{edgePar}}{a named list of length one vectors specifying
       attributes for \code{\link{segments}} plotting of the edge leading
       to the node, see the \code{edgePar} argument above.}
     \item{\code{edgetext}}{character; the label for the edge leading to
@@ -99,16 +110,24 @@ data(USArrests)
 hc <- hclust(dist(USArrests), "ave")
 (dend1 <- as.dendrogram(hc)) # "print()" method
 str(dend1) # "str()" method
+
+op <- par(mfrow= c(2,2), mar = c(3,3,1,1))
 plot(dend1)
+## "triangle" type and show inner nodes:
 plot(dend1, nodePar=list(pch = c(1,NA),cex=0.8), type = "t", center=TRUE)
+plot(dend1, edgePar=list(col = 1:2, lty = 2:3), edge.root = TRUE)
+plot(dend1, nodePar=list(pch = 2:1,cex=.4*2:1, col = 2:3), horiz = TRUE)
 
 dend2 <- cut(dend1, h=70)
 plot(dend2$upper)
+## leafs are wrong horizontally:%% FIXME ?!?
 plot(dend2$upper, nodePar=list(pch = c(1,7), col = 2:1))
 ##  dend2$lower is *NOT* a dendrogram, but a list of .. :
-plot(dend2$lower[[3]], nodePar=list(col=4))
+plot(dend2$lower[[3]], nodePar=list(col=4), horiz = TRUE, type = "tr")
+## "inner" and "leaf" edges in different type & color :
 plot(dend2$lower[[2]], nodePar=list(col=1),# non empty list
      edgePar = list(lty=1:2, col=2:1), edge.root=TRUE)
+par(op)
 }
-%FIXME !! -- proper Keyword !!
 \keyword{multivariate}
+\keyword{hplot}% only for plot.()

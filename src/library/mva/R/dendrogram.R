@@ -130,55 +130,66 @@ plot.dendrogram <-
     function(x, type = c("rectangle", "triangle"),
              center = FALSE, edge.root= !is.null(attr(x,"edgetext")),
              nodePar = NULL, edgePar = list(),
-             xlab = "", ylab = "", ...)
+             xlab = "", ylab = "", horiz = FALSE, ...)
 {
     type <- match.arg(type)
     hgt <- attr(x, "height")
     if(edge.root && is.logical(edge.root))
         edge.root <- 0.0625 * hgt
     mem.x <- .memberDend(x)
+    yTop <- hgt + edge.root
     if(center) { x1 <- 0.5 ; x2 <- mem.x + 0.5 }
     else       { x1 <- 1   ; x2 <- mem.x }
-    plot(0, xlim = c(x1 - 1/2, x2 + 1/2),
-         ylim = c(0, (yTop <- hgt + edge.root)),
-         type = "n", xlab = xlab, ylab = ylab, ...)
+    xlim <- c(x1 - 1/2, x2 + 1/2)
+    ylim <- c(0, yTop)
+    if(horiz) { ## swap and reverse direction on `x':
+        xl <- xlim; xlim <- rev(ylim); ylim <- xl
+    }
+    plot(0, xlim = xlim, ylim = ylim, type = "n", xlab = xlab, ylab = ylab, ...)
     if(edge.root) {
         x0 <- plotNodeLimit(x1, x2, x, center)$ x
-        segments(x0, hgt, x0, yTop)
-        if(!is.null(et <- attr(x,"edgetext")))
-            text(x0, mean(hgt, yTop), et)
+        if(horiz) segments(hgt, x0, yTop, x0) else segments(x0, hgt, x0, yTop)
+        if(!is.null(et <- attr(x,"edgetext"))) {
+            my <- mean(hgt, yTop)
+            if(horiz) text(my,x0, et) else text(x0, my, et)
+        }
     }
     plotNode(x1, x2, x, type = type, center = center,
-             nodePar = nodePar, edgePar = edgePar)
+             nodePar = nodePar, edgePar = edgePar, horiz = horiz)
 }
 
 
 ### the work horse: plot node (if pch) and lines to all children
-plotNode <- function(x1, x2, subtree, type, center, nodePar, edgePar)
+plotNode <-
+    function(x1, x2, subtree, type, center, nodePar, edgePar, horiz = FALSE)
 {
     inner <- is.recursive(subtree) && x1 != x2
     yTop <- attr(subtree, "height")
     bx <- plotNodeLimit(x1, x2, subtree, center)
     xTop <- bx$x
+
+    ## handle node specific parameters in "nodePar":
+    hasP <- !is.null(nPar <- attr(subtree, "nodePar"))
+    if(!hasP) nPar <- nodePar
+
     if(getOption("verbose")) {
-        cat(if(inner)"inner node"else"leaf", ":",
-            if(inner)paste(" height", formatC(yTop),"; "),
+        cat(if(inner)"inner node" else "leaf", ":")
+        if(!is.null(nPar)) { cat(" with node pars\n"); str(nPar) }
+        cat(if(inner)paste(" height", formatC(yTop),"; "),
             "(x1,x2)= (",formatC(x1,wid=4),",",formatC(x2,wid=4),")",
             "--> xTop=", formatC(xTop, wid=8),"\n", sep="")
     }
 
     Xtract <- function(nam, L, default, indx)
         rep(if(any(nam == names(L))) L[[nam]] else default, length = indx)[indx]
-    ## node specific parameters
-    hasP <- !is.null(nPar <- attr(subtree, "nodePar"))
-    if(!hasP) nPar <- nodePar
     if(!is.null(nPar)) { ## draw this node
         i <- if(inner || hasP) 1 else 2 # only 1 node specific par
         pch <- Xtract("pch", nPar, default = 1:2,        i)
         cex <- Xtract("cex", nPar, default = c(1,1),     i)
         col <- Xtract("col", nPar, default = par("col"), i)
         bg  <- Xtract("bg",  nPar, default = par("bg"),  i)
-        points(xTop, yTop, pch = pch, bg = bg, col = col, cex = cex)
+        points(if(horiz)cbind(yTop, xTop) else cbind(xTop, yTop),
+               pch = pch, bg = bg, col = col, cex = cex)
     }
     ## FIXME: Label the node with  attr(subtree, "text")  {if ..}
     if(inner) {
@@ -198,16 +209,21 @@ plotNode <- function(x1, x2, subtree, type, center, nodePar, edgePar)
             col <- Xtract("col", ePar, default = par("col"), i)
             lty <- Xtract("lty", ePar, default = par("lty"), i)
             lwd <- Xtract("lwd", ePar, default = par("lwd"), i)
-            if(type == "triangle")
-                segments(xTop,yTop, xBot,yBot, col=col, lty=lty, lwd=lwd)
+            segmentsHV <- function(x0, y0, x1, y1) {
+                if(horiz) segments(y0, x0, y1, x1, col=col, lty=lty, lwd=lwd)
+                else	  segments(x0, y0, x1, y1, col=col, lty=lty, lwd=lwd)
+            }
+            if(type == "triangle") {
+                    segmentsHV(xTop,yTop, xBot,yBot)
+            }
             else { # rectangle
-                segments(xTop,yTop, xBot,yTop, col=col, lty=lty, lwd=lwd)# h
-                segments(xBot,yTop, xBot,yBot, col=col, lty=lty, lwd=lwd)# v
+                segmentsHV(xTop,yTop, xBot,yTop)# h
+                segmentsHV(xBot,yTop, xBot,yBot)# v
             }
             ## FIXME: draw attr(child, "edgetext")  {if ..}
 
             plotNode(bx$limit[k], bx$limit[k+1],
-                     subtree = child, type, center, nodePar, edgePar)
+                     subtree = child, type, center, nodePar, edgePar, horiz)
         }
     }
 }

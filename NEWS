@@ -44,7 +44,7 @@ NEW FEATURES
 	in "Programming with Data" (section 7.6).
 
     o	New methods ([[, print, str) and extended plot() method
-	for "dendrogram" class.
+	(incl. logical `horiz') for "dendrogram" class.
 
     o	sprintf() now checks the agreement between formats and object
 	types, and handles special values (NA, Inf, ...) correctly.
@@ -226,9 +226,9 @@ DEPRECATED & DEFUNCT
 	removed in favor of the internal functions .dynLibs() and
 	.libPaths().
 
-    o   restart() is deprecated in preparation for proper exception 
+    o   restart() is deprecated in preparation for proper exception
 	handling. Use try(), as has long been recommended.
-	
+
 
 DOCUMENTATION CHANGES
 
