@@ -58,6 +58,7 @@ Real.primitives <-
 	 ".Alias",
 	 "call", "as.call", "expression", "substitute",
 	 "UseMethod", ## ? really ?
+         "standardGeneric",
 	 "invisible",
 	 ),
 

@@ -707,3 +707,30 @@ SEXP do_inherits(SEXP call, SEXP op, SEXP args, SEXP env)
     return rval;
 }
 	
+
+/* standardGeneric:  uses a pointer to R_standardGeneric, to be
+   initialized when the methods package is attached.  When and if the
+   methods code is automatically included, the pointer will not be
+   needed 
+*/
+
+typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
+
+R_stdGen_ptr_t R_standardGeneric_ptr = 0;
+
+SEXP do_standardGeneric(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+  SEXP arg, value;
+  if(!R_standardGeneric_ptr)
+    error("Using standardGeneric before the methods package has been attached");
+
+  checkArity(op, args);
+
+  PROTECT(arg = CAR(args));
+
+  value = (*R_standardGeneric_ptr)(arg, env);
+  
+  UNPROTECT(1);
+  return value;
+}
+

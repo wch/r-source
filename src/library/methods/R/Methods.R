@@ -101,47 +101,9 @@ removeGeneric <-
         warning(paste("Function \"", name, "\" not found for removal", sep=""))
 }
 
-standardGeneric <-
-  ## Dispatches a method from the current function call for the generic function `fname'.
-  ## Generic functions should usually have a call to `standardGeneric' as their entire
-  ## body.  They can, however, do any other computations as well.
-  ##
-  ## The usual use of `setMethod' or `setGeneric' creates a function with a call to
-  ## `standardGeneric'.
-  function(fname)
-{
-    ev <- sys.frame(-1)
-    .Call("R_standardGeneric",fname, ev, PACKAGE = "methods")
-}
-
 evalSelectedMethod <-
     function(f, ev, fname)
     .Call("R_eval_selected_method", f, ev, fname, PACKAGE = "methods")
-
-
-OldEvalSelectedMethod <-
-  ## Evaluate the selected method, f, in the environment, ev.
-  ##
-  ## The general case is that f is a closure (an ordinary function), in which case
-  ## the body is evaluated in the given environment.
-  ##
-  ## The special cases (primitive and internal) have to be faked by going back to the
-  ## environment of the call to the generic.
-    function(f, ev, fname)
-{
-    type <- typeof(f)
-    switch(type,
-           closure = eval(body(f), ev),
-           builtin = ,
-           ## call doPrimitive with the call to the generic function, and the frame of
-           ## the caller to the generic.
-           special = doPrimitiveMethod(fname, f, sys.call(-2), sys.frame(-3)),
-       {
-           warning(paste("Unexpected method of type \"", type, "\" for function \"",
-                         fname, "\"", sep=""))
-           doPrimitiveMethod(fname, f, sys.call(-2), sys.frame(-3))
-       })
-}
 
 
 

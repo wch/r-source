@@ -1,13 +1,14 @@
 setClass <-
   ## Define Class to be an S-style class.
   function(Class, representation = list(), prototype = NULL,
-                     contains = character(), validity, access,
+                     contains = character(), validity = NULL, access = NULL,
                      where = 1, version = FALSE)
 {
     slots <- nchar(allNames(representation))>0
     extends <- c(as.character(representation[!slots]), contains)
     properties <- representation[slots]
-    setSClass(Class, properties,extends, prototype, where=where)
+    setSClass(Class, properties,extends, prototype, where=where,
+              validity = validity, access = access)
 }
 
 representation <-
@@ -38,9 +39,8 @@ setSClass <-
   ## Set the Class Definition.
   ## The formal definition of the class is set according to the arguments.
   ##
-  ## This function is not S-Plus compatible unless the OOP library is included in
-  ## the S-Plus run.  For greater compatibility, use `setClass' instead.
-  function(name, properties = list(), extends = character(), prototype = NULL, generatorFunction, where = 1, subclasses = character(), virtual = NA)
+  ## Users should call setClass instead of this function.
+  function(name, properties = list(), extends = character(), prototype = NULL, generatorFunction, where = 1, subclasses = character(), virtual = NA, validity = NULL, access = NULL)
 {
     ## remove from the cached definitions (only) right away
     removeClass(name, where = 0)
@@ -52,7 +52,8 @@ setSClass <-
         ## make the prototype look like a "legal" element of the class
         prototype <- reconcilePropertiesAndPrototype(name, properties, prototype)
     }
-    ev <- newClassEnvironment(name, properties, extends, prototype, subclasses, virtual)
+    ev <- newClassEnvironment(name, properties, extends, prototype, subclasses,
+                              virtual, validity, access)
     if(missing(generatorFunction)) {
         f <- quote(function(...)new(Class=, ...))
     }

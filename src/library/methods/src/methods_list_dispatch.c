@@ -43,10 +43,17 @@ static SEXP R_short_skeletons, R_empty_skeletons;
 static SEXP f_x_i_skeleton, fgets_x_i_skeleton, f_x_skeleton, fgets_x_skeleton;
 
 
+/* from main/objects.c */
+typedef SEXP (*R_stdGen_ptr_t)(SEXP, SEXP);
+
+extern R_stdGen_ptr_t R_standardGeneric_ptr;
+
+
 void R_initMethodDispatch()
 {
     if(initialized)
 	return;
+    R_standardGeneric_ptr = R_standardGeneric;
     s_dot_Arguments = Rf_install(".Arguments");
     s_expression = Rf_install("expression");
     s_function = Rf_install("function");
@@ -591,7 +598,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
 {
     char *arg_name, *class;
     SEXP arg_slot, arg_sym, arg, method, this_method, child, class_obj;
-    int inherited;
+    int inherited, nprotect = 0;
     *final_p = mlist; /* to signal possible re-computation of mlist to add
 			 inherited element. */
     PROTECT(arg_slot = R_get_attr(mlist, "argument"));
@@ -623,13 +630,10 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
     if(arg == R_MissingArg) {
 	arg = R_NilValue;
 	class_obj = s_missing;
-	PROTECT(arg); PROTECT(class_obj); /* for consistency */
     }
     else {
-	/* should be a formal argument in the frame, get its value */
-	if(TYPEOF(arg) == PROMSXP)
-	    PROTECT(arg = eval(arg, ev));
-	class_obj = PROTECT(R_data_class(arg, TRUE));
+	/* should be a formal argument in the frame, get its class */
+      PROTECT(class_obj = R_data_class(eval(arg_sym, ev), TRUE)); nprotect++;
     }
     class = CHAR(asChar(class_obj));
     method = R_find_method(mlist, class, fname, ev, arg, class_obj, &inherited);
@@ -643,13 +647,12 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
     if(!isFunction(method)) {
 	/* assumes method is a methods list itself.  */
 	SEXP temp;
-	PROTECT(method);
+	PROTECT(method); nprotect++;
 	/* call do_dispatch recursively.  Note the NULL for fname; this is
 	   passed on to the S language search function for inherited
 	   methods, to indicate a recursive call, not one to be stored in
 	   the methods metadata */
 	temp = do_dispatch(R_NilValue, ev, optional, method, &child);
-	UNPROTECT(1);
 	method = temp;
     }
     else
@@ -662,7 +665,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP optional, SEXP mlist,
 
 	   (we use child, the possibly modified version of this_method) */
 	*final_p = R_insert_element(mlist, class, child);
-    UNPROTECT(2);
+    UNPROTECT(nprotect); nprotect = 0;
     return method;
 }
 

@@ -203,8 +203,9 @@ doPrimitiveMethod <-
   ## A call to `doPrimitiveMethod' is used when the actual method is a .Primitive.
   ##  (because primitives don't behave correctly as ordinary functions,
   ## not having either formal arguments nor a function body).
-  function(name, def, call = sys.call(-1), ev = sys.frame(-2))
+  function(name, def, call = sys.call(-1), ev = sys.frame(sys.parent(2)))
 {
+  cat("called doPrimitiveMethod\n\n")
     ## Store a local version of function `name' back where the current version was
     ## called.  Restore the previous state there on exit, either removing or re-assigning.
     if(exists(name, envir=ev, inherits=FALSE)) {

@@ -139,6 +139,8 @@ completeClassDefinition <-
         }
         prototype <- makePrototypeFromClassDef(properties, getPrototype(ClassDef), immediate)
         virtual <- getVirtual(ClassDef)
+        validity <- getValidity(ClassDef)
+        access <- getAccess(ClassDef)
         if(is.na(virtual))
             ## compute it from the immediate extensions, but all the properties
             virtual <- testVirtual(properties, immediate, prototype)
@@ -146,7 +148,9 @@ completeClassDefinition <-
                                      completeExtends(ClassDef),
                                      prototype,
                                      getSubclasses(ClassDef),
-                                     virtual)
+                                     virtual,
+                                     validity,
+                                     access)
         environment(ClassDef) <- newEv
         assignClassDef(Class, ClassDef, 0)
         value <- ClassDef
@@ -216,6 +220,19 @@ getExtends <-
   function(ClassDef)
     getFromClassDef(ClassDef, ".Extends")
 
+getValidity <-
+   ## extract the class's Validity method (or NULL) from the class representation (only, not from
+  ## the name of the class)
+  function(ClassDef)
+    getFromClassDef(ClassDef, ".Validity")
+ 
+
+getAccess <-
+   ## extract the class's Access method (or NULL) from the class representation (only, not from
+  ## the name of the class)
+  function(ClassDef)
+    getFromClassDef(ClassDef, ".Access")
+ 
 
 getAllSuperClasses <-
   ## Get the names of all the classes that this class definition extends.
@@ -310,7 +327,7 @@ assignClassDef <-
   }
 
 newClassEnvironment <-
-  function(name, properties, extends, prototype, subclasses, virtual) {
+  function(name, properties, extends, prototype, subclasses, virtual, validity, access) {
     ev <- new.env()
     assign(".ClassName", name, ev)
     assign(".Extends", extends, ev)
@@ -318,6 +335,8 @@ newClassEnvironment <-
     assign(".Prototype", prototype, ev)
     assign(".Subclasses", subclasses, ev)
     assign(".Virtual", virtual, ev)
+    assign(".Validity", validity, ev)
+    assign(".Access", access, ev)
     return(ev)
   }
 

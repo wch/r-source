@@ -161,6 +161,11 @@ NEW FEATURES
     o   Finalizers can be regeitered to be run on system exit for both
 	reachable and unreachable objects.
 
+    o   Methods dispatch for formal methods (the standardGeneric
+        function), is now a primitive.  Aside from efficiency issues,
+        this allows S3-style generics to also have formal methods (not
+        really recommended in the long run, but it should at least work).
+
 
 
 BUG FIXES
