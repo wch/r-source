@@ -1,5 +1,10 @@
 		CHANGES IN R VERSION 0.63.1
 
+NEW FEATURES
+
+    o   xy.coords(.) has a  "recycle = FALSE" argument,  used in text().
+
+
 BUG FIXES
 
     o	build-help --dosnames should now also work for text help,
