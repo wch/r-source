@@ -277,6 +277,12 @@ C-LEVEL FACILITIES
 	[Not currently operational on MacOS X unless vecLib is used,
 	and vecLib and libsunperf give incomplete libraries.]
 
+    o	R will automatically call initialization and unload routines, if
+	present, in shared libraries/DLLs during dyn.load() and
+	dyn.unload() calls. The routines are named R_init_<dll name>
+	and R_unload_<dll name>, respectively.  See Writing R
+	Extensions Manual for more information.
+
 
 BUG FIXES
 

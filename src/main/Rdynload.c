@@ -152,6 +152,7 @@ OSDynSymbol Rf_osDynSymbol;
 OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
 void R_init_base(DllInfo *); /* In Registration.c */
+static DL_FUNC R_dlsym(DllInfo *dll, char const *name, R_RegisteredNativeSymbol *symbol);
 
 void
 InitDynload()
@@ -392,6 +393,21 @@ Rf_freeDllInfo(DllInfo *info)
 }
 
 
+static Rboolean
+R_callDLLUnload(DllInfo *dllInfo)
+{
+    char buf[1024];
+    DL_FUNC f;
+    R_RegisteredNativeSymbol sym;
+
+    sprintf(buf, "R_unload_%s", dllInfo->name);
+    f = R_dlsym(dllInfo, buf, &sym);
+    if(f) 
+       f(dllInfo);
+
+    return(TRUE);
+}
+
 	/* Remove the specified DLL from the current DLL list */
 	/* Returns 1 if the DLL was found and removed from */
 	/* the list and returns 0 otherwise. */
@@ -412,6 +428,7 @@ static int DeleteDLL(char *path)
     if(R_osDynSymbol->deleteCachedSymbols)
         R_osDynSymbol->deleteCachedSymbols(&LoadedDLL[loc]);
 #endif
+    R_callDLLUnload(&LoadedDLL[loc]);
     R_osDynSymbol->closeLibrary(LoadedDLL[loc].handle);
     Rf_freeDllInfo(LoadedDLL+loc);
     for(i = loc + 1 ; i < CountDLL ; i++) {
@@ -463,8 +480,6 @@ static char DLLerror[DLLerrBUFSIZE] = "";
 	/* and returns 0 if the library table is full or */
 	/* or if dlopen fails for some reason. */
 
-
-static DL_FUNC R_dlsym(DllInfo *dll, char const *name, R_RegisteredNativeSymbol *symbol);
 
 static int AddDLL(char *path, int asLocal, int now)
 {

@@ -1969,6 +1969,52 @@ resolved when the library is loaded, governed by the arguments
 particular using @code{now=FALSE} and then calling an unresolved symbol
 will terminate @R{} unceremoniously.
 
+R provides a way of executing some code automatically when a
+library/DLL is either loaded or unloaded.  This can be used, for
+example, to register native routines with R's dynamic symbol
+mechanism, initialize some data in the native code, or initialize a
+third party library.  On loading a DLL, R will look for a routine
+within that DLL named @code{R_init_<lib>} where @code{<lib>} is the
+name of the DLL file with the extension removed.  For example, in the
+command
+
+@smallexample
+library.dynam("mylib", package, lib.loc)
+@end smallexample
+
+@noindent
+R looks for the symbol named @code{R_init_mylib}.  Similarly, when
+unloading the library, R looks for a routine named
+@code{R_unload_<lib>}, e.g. @code{R_init_mylib}. In either case, if
+the routine is present, R will invoke it and pass it a single argument
+describing the DLL. This is a value of type @code{DllInfo} which is
+defined in the @file{Rdynload.h} file in the @file{R_ext/} directory.
+
+The following example shows templates for the initialization and
+unload routines for the @code{mylib} DLL.
+
+@cartouche
+@smallexample
+#include <Rdefines.h>
+#include <R_ext/Rdynload.h>
+
+void
+R_init_mylib(DllInfo *info)
+@{
+  /* Register routines, allocate resources. */
+@}
+
+void
+R_unload_mylib(DllInfo *info)
+@{
+  /* Release resources. */
+@}
+
+
+@end smallexample
+@end cartouche
+
+
 If a library/DLL is loaded more than once the most recent version is
 used.  More generally, if the same symbol name appears in several
 libraries, the most recently loaded occurrence is used.  The
