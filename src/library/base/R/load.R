@@ -26,8 +26,10 @@ load <- function (file, envir = parent.frame()) {
     else .Internal(loadFromConn(con, envir))
 }
 
-save <- function(..., list = character(0), file = "", ascii = FALSE,
-	         version = NULL, envir = parent.frame(), compress = FALSE)
+save <- function(..., list = character(0),
+                 file = stop("`file' must be specified"),
+                 ascii = FALSE, version = NULL, envir = parent.frame(),
+                 compress = FALSE)
 {
     names <- as.character( substitute( list(...)))[-1]
     list<- c(list, names)

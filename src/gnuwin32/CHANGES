@@ -86,6 +86,9 @@ and RESOURCES file in binary distribution.
 Printing and copying from the menu of a graphics device now preserve
 the active graphics device.
 
+Fixed a crash that occurred when an attempt was made to view a file in
+the pager but the file could not be opened (e.g. because another 
+application had it opened with exclusive access).
 
 
 rw1061
