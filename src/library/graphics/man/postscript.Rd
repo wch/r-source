@@ -3,6 +3,7 @@
 \alias{ps.options}
 %\alias{.PostScript.Options}
 \alias{.ps.prolog}
+\concept{encoding}
 \title{PostScript Graphics}
 \description{
   \code{postscript} starts the graphics device driver for producing
