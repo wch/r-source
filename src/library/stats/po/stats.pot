@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-01-26 05:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr ""
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr ""
+
+#: arima.c:60 arima.c:153 arima.c:329
+msgid "invalid argument type"
+msgstr ""
+
+#: arima.c:383 arima.c:471 pacf.c:302 pacf.c:342
+msgid "can only transform 100 pars in arima0"
+msgstr ""
+
+#: distance.c:145
+msgid "dist(.,\"binary\"): treating non-finite values as NA"
+msgstr ""
+
+#: distance.c:214
+msgid "distance(): invalid p"
+msgstr ""
+
+#: distance.c:217
+msgid "distance(): invalid distance"
+msgstr ""
+
+#: ksmooth.c:66
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr ""
+
+#: loessc.c:226
+msgid "span is too small"
+msgstr ""
+
+#: mburg.c:197
+msgid "Invalid vmethod"
+msgstr ""
+
+#: mburg.c:333
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr ""
+
+#: nls.c:75
+msgid "control must be a list"
+msgstr ""
+
+#: nls.c:77
+msgid "m must be a list"
+msgstr ""
+
+#: nls.c:83
+msgid "control$maxiter absent"
+msgstr ""
+
+#: nls.c:88
+msgid "control$tol absent"
+msgstr ""
+
+#: nls.c:93
+msgid "control$minFactor absent"
+msgstr ""
+
+#: nls.c:102
+msgid "m$conv() absent"
+msgstr ""
+
+#: nls.c:107
+msgid "m$incr() absent"
+msgstr ""
+
+#: nls.c:112
+msgid "m$deviance() absent"
+msgstr ""
+
+#: nls.c:117
+msgid "m$trace() absent"
+msgstr ""
+
+#: nls.c:122
+msgid "m$setPars() absent"
+msgstr ""
+
+#: nls.c:127
+msgid "m$getPars() absent"
+msgstr ""
+
+#: nls.c:154
+msgid "singular gradient"
+msgstr ""
+
+#: nls.c:173
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr ""
+
+#: nls.c:181
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr ""
+
+#: nls.c:202
+msgid "theta should be of type character"
+msgstr ""
+
+#: nls.c:204
+msgid "rho should be an environment"
+msgstr ""
+
+#: nls.c:221 nls.c:243
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr ""
+
+#: pacf.c:72
+msgid "bad Starma struct"
+msgstr ""
+
+#: pacf.c:218
+#, c-format
+msgid "starma error code %d"
+msgstr ""
+
+#: pacf.c:281
+#, c-format
+msgid "forkal error code %d"
+msgstr ""
+
+#: pacf.c:445
+msgid "invalid value of lag.max"
+msgstr ""
+
+#: qr.c:30
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr ""
+
+#: qr.c:68
+msgid "Singular matrix in qr_solve"
+msgstr ""
+
+#: qr.c:111
+msgid "Singular matrix in ldet"
+msgstr ""
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr ""
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr ""
+
+#: smooth.c:242 smooth.c:252
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr ""
+
+#: smooth.c:262
+msgid "allocation error in smooth(*, '3R')."
+msgstr ""
+
+#: starma.c:361
+#, c-format
+msgid "missing value in last %d observations"
+msgstr ""
