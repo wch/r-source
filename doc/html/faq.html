@@ -6,117 +6,19 @@
 <link href="http://texinfo.org/" rel=generator-home>
 </head><body>
 
-<html>
-<head>
-<TITLE>R FAQ</TITLE>
-</head>
-
-<body>
-<h1>R FAQ</h1>
-<h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.2-10, 2001-01-03</h2>
-<address>Kurt Hornik</address>
-<p><p><hr><p>
-
-
-<h1>Table of Contents</h1>
-<ul>
-<li><a href="#Introduction">1 Introduction</a>
-<ul>
-<li><a href="#Legalese">1.1 Legalese</a>
-<li><a href="#Obtaining%20this%20document">1.2 Obtaining this document</a>
-<li><a href="#Citing%20this%20document">1.3 Citing this document</a>
-<li><a href="#Notation">1.4 Notation</a>
-<li><a href="#Feedback">1.5 Feedback</a>
-</ul>
-<li><a href="#R%20Basics">2 R Basics</a>
-<ul>
-<li><a href="#What%20is%20R%3f">2.1 What is R?</a>
-<li><a href="#What%20machines%20does%20R%20run%20on%3f">2.2 What machines does R run on?</a>
-<li><a href="#What%20is%20the%20current%20version%20of%20R%3f">2.3 What is the current version of R?</a>
-<li><a href="#How%20can%20R%20be%20obtained%3f">2.4 How can R be obtained?</a>
-<li><a href="#How%20can%20R%20be%20installed%3f">2.5 How can R be installed?</a>
-<ul>
-<li><a href="#How%20can%20R%20be%20installed%20(Unix)">2.5.1 How can R be installed (Unix)</a>
-<li><a href="#How%20can%20R%20be%20installed%20(Windows)">2.5.2 How can R be installed (Windows)</a>
-<li><a href="#How%20can%20R%20be%20installed%20(Macintosh)">2.5.3 How can R be installed (Macintosh)</a>
-</ul>
-<li><a href="#Are%20there%20Unix%20binaries%20for%20R%3f">2.6 Are there Unix binaries for R?</a>
-<li><a href="#What%20documentation%20exists%20for%20R%3f">2.7 What documentation exists for R?</a>
-<li><a href="#Citing%20R">2.8 Citing R</a>
-<li><a href="#What%20mailing%20lists%20exist%20for%20R%3f">2.9 What mailing lists exist for R?</a>
-<li><a href="#What%20is%20CRAN%3f">2.10 What is <small>CRAN</small>?</a>
-</ul>
-<li><a href="#R%20and%20S">3 R and S</a>
-<ul>
-<li><a href="#What%20is%20S%3f">3.1 What is S?</a>
-<li><a href="#What%20is%20S-PLUS%3f">3.2 What is <small>S-PLUS</small>?</a>
-<li><a href="#What%20are%20the%20differences%20between%20R%20and%20S%3f">3.3 What are the differences between R and S?</a>
-<ul>
-<li><a href="#Lexical%20scoping">3.3.1 Lexical scoping</a>
-<li><a href="#Models">3.3.2 Models</a>
-<li><a href="#Others">3.3.3 Others</a>
-</ul>
-<li><a href="#Is%20there%20anything%20R%20can%20do%20that%20S-PLUS%20cannot%3f">3.4 Is there anything R can do that <small>S-PLUS</small> cannot?</a>
-</ul>
-<li><a href="#R%20Web%20Interfaces">4 R Web Interfaces</a>
-<li><a href="#R%20Add-On%20Packages">5 R Add-On Packages</a>
-<ul>
-<li><a href="#Which%20add-on%20packages%20exist%20for%20R%3f">5.1 Which add-on packages exist for R?</a>
-<li><a href="#How%20can%20add-on%20packages%20be%20installed%3f">5.2 How can add-on packages be installed?</a>
-<li><a href="#How%20can%20add-on%20packages%20be%20used%3f">5.3 How can add-on packages be used?</a>
-<li><a href="#How%20can%20add-on%20packages%20be%20removed%3f">5.4 How can add-on packages be removed?</a>
-<li><a href="#How%20can%20I%20create%20an%20R%20package%3f">5.5 How can I create an R package?</a>
-<li><a href="#How%20can%20I%20contribute%20to%20R%3f">5.6 How can I contribute to R?</a>
-</ul>
-<li><a href="#R%20and%20Emacs">6 R and Emacs</a>
-<ul>
-<li><a href="#Is%20there%20Emacs%20support%20for%20R%3f">6.1 Is there Emacs support for R?</a>
-<li><a href="#Should%20I%20run%20R%20from%20within%20Emacs%3f">6.2 Should I run R from within Emacs?</a>
-<li><a href="#Debugging%20R%20from%20within%20Emacs">6.3 Debugging R from within Emacs</a>
-</ul>
-<li><a href="#R%20Miscellanea">7 R Miscellanea</a>
-<ul>
-<li><a href="#Why%20does%20R%20run%20out%20of%20memory%3f">7.1 Why does R run out of memory?</a>
-<li><a href="#Why%20does%20sourcing%20a%20correct%20file%20fail%3f">7.2 Why does sourcing a correct file fail?</a>
-<li><a href="#How%20can%20I%20set%20components%20of%20a%20list%20to%20NULL%3f">7.3 How can I set components of a list to NULL?</a>
-<li><a href="#How%20can%20I%20save%20my%20workspace%3f">7.4 How can I save my workspace?</a>
-<li><a href="#How%20can%20I%20clean%20up%20my%20workspace%3f">7.5 How can I clean up my workspace?</a>
-<li><a href="#How%20can%20I%20get%20eval()%20and%20D()%20to%20work%3f">7.6 How can I get eval() and D() to work?</a>
-<li><a href="#Why%20do%20my%20matrices%20lose%20dimensions%3f">7.7 Why do my matrices lose dimensions?</a>
-<li><a href="#How%20does%20autoloading%20work%3f">7.8 How does autoloading work?</a>
-<li><a href="#How%20should%20I%20set%20options%3f">7.9 How should I set options?</a>
-<li><a href="#How%20do%20file%20names%20work%20in%20Windows%3f">7.10 How do file names work in Windows?</a>
-<li><a href="#Why%20does%20plotting%20give%20a%20color%20allocation%20error%3f">7.11 Why does plotting give a color allocation error?</a>
-<li><a href="#Is%20R%20Y2K-compliant%3f">7.12 Is R Y2K-compliant?</a>
-<li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">7.13 How do I convert factors to numeric?</a>
-<li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">7.14 Are Trellis displays implemented in R?</a>
-<li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">7.15 What are the enclosing and parent environments?</a>
-<li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">7.16 How can I substitute into a plot label?</a>
-<li><a href="#What%20are%20valid%20names%3f">7.17 What are valid names?</a>
-<li><a href="#Are%20GAMs%20implemented%20in%20R%3f">7.18 Are GAMs implemented in R?</a>
-</ul>
-<li><a href="#R%20Programming">8 R Programming</a>
-<ul>
-<li><a href="#How%20should%20I%20write%20summary%20methods%3f">8.1 How should I write summary methods?</a>
-<li><a href="#How%20can%20I%20debug%20dynamically%20loaded%20code%3f">8.2 How can I debug dynamically loaded code?</a>
-<li><a href="#How%20can%20I%20inspect%20R%20objects%20when%20debugging%3f">8.3 How can I inspect R objects when debugging?</a>
-<li><a href="#How%20can%20I%20change%20compilation%20flags%3f">8.4 How can I change compilation flags?</a>
-</ul>
-<li><a href="#R%20Bugs">9 R Bugs</a>
-<ul>
-<li><a href="#What%20is%20a%20bug%3f">9.1 What is a bug?</a>
-<li><a href="#How%20to%20report%20a%20bug">9.2 How to report a bug</a>
-</ul>
-<li><a href="#Acknowledgments">10 Acknowledgments</a>
-</ul>
-
 <p><hr>
 Node:<a name="Top">Top</a>,
 Next:<a rel=next href="#Introduction">Introduction</a>,
 Previous:<a rel=previous href="#(dir)">(dir)</a>,
 Up:<a rel=up href="#(dir)">(dir)</a>
 <br>
+
+<h1>R FAQ</h1>
+
+<h2>Frequently Asked Questions on R</h2>
+<h2>Version 1.2-10, 2001-01-03</h2>
+<address>Kurt Hornik</address>
+<p><p><hr><p>
 
 <ul>
 <li><a href="#Introduction">Introduction</a>: 
