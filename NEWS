@@ -104,7 +104,10 @@ BUG FIXES
 	distributions have in order to guard against truncation.
 
     o   The "=" assignment operator behaved as "<<-" in some constructions 
-	with composite left hand sides 
+	with composite left-hand sides.
+
+    o   Added print.AsIs() method to ensure "AsIs" objects are printed
+	by the method for their real class. (PR#1587)
 
 
 

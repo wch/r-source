@@ -27,6 +27,14 @@ is.data.frame <- function(x) inherits(x, "data.frame")
 
 I <- function(x) { structure(x, class = unique(c("AsIs", class(x)))) }
 
+print.AsIs <- function (x, ...)
+{
+    cl <- class(x)
+    class(x) <- cl[cl != "AsIs"]
+    NextMethod("print")
+    invisible(x)
+}
+
 plot.data.frame <- function (x, ...) {
     if(!is.data.frame(x))
 	stop("plot.data.frame applied to non data frame")
