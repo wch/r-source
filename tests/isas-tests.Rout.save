@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-01-17)
+Version 1.7.0 Under development (unstable) (2003-01-19)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -154,253 +154,157 @@ Error in ts(x) : ts object must have one or more observations
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 IS: [1] TRUE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 [1] TRUE
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 Error in as.call(x) : invalid argument list
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Modes: numeric, list"                                
-[2] "Component 1: Lengths: 0, 1"                                       
-[3] "Component 1: names for current but not for target"                
-[4] "Component 1: Attributes: < Modes: NULL, list >"                   
-[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component 1: Attributes: < names for current but not for target >"
-[7] "Component 1: Attributes: < target is NULL, current is list >"     
-[8] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
-[1] "Names: 1 string mismatches"
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
+[1] FALSE
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
- [1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [3] "Component 1: Modes: numeric, list"                                             
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: numeric, list"                                             
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is numeric, current is data.frame"                         
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 Error in as.environment(x) : invalid "pos" argument
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 [1] TRUE
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 Error in as.name(x) : Invalid data of mode "integer" (too short)
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 [1] TRUE
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 Error in as.symbol(x) : Invalid data of mode "integer" (too short)
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 Error in ts(x) : ts object must have one or more observations
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -542,257 +446,161 @@ Error in ts(x) : ts object must have one or more observations
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 [1] FALSE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 Error in as.array(x) : attempt to set an attribute on NULL
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 Error in as.call(x) : invalid argument list
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Modes: NULL, list"                                   
-[2] "Component 1: Lengths: 0, 1"                                       
-[3] "Component 1: names for current but not for target"                
-[4] "Component 1: Attributes: < Modes: NULL, list >"                   
-[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component 1: Attributes: < names for current but not for target >"
-[7] "Component 1: Attributes: < target is NULL, current is list >"     
-[8] "Component 1: target is NULL, current is data.frame"               
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in sort(unique.default(x), na.last = TRUE) : 
 	`x' must be atomic
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce NULL into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
 [1] TRUE
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
- [1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [3] "Component 1: Modes: NULL, list"                                                
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Modes: NULL, list"                                                
- [5] "Component 1: Lengths: 0, 1"                                                    
- [6] "Component 1: names for current but not for target"                             
- [7] "Component 1: Attributes: < Modes: NULL, list >"                                
- [8] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [9] "Component 1: Attributes: < names for current but not for target >"             
-[10] "Component 1: Attributes: < target is NULL, current is list >"                  
-[11] "Component 1: target is NULL, current is data.frame"                            
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 [1] TRUE
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 Error in sort(unique.default(x), na.last = TRUE) : 
 	`x' must be atomic
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 [1] TRUE
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 Error in as.function.default(x, envir) : argument must have length at least 1
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 Error in as.function.default(x, envir) : argument must have length at least 1
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
 	attempt to set an attribute on NULL
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
 	attempt to set an attribute on NULL
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 Error in as.name(x) : invalid type/length (1/0) in vector allocation
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 Error in sort(unique.default(x), na.last = TRUE) : 
 	`x' must be atomic
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 Error in as.symbol(x) : invalid type/length (1/0) in vector allocation
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 Error in ts(x) : ts object must have one or more observations
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -933,248 +741,162 @@ Error in ts(x) : ts object must have one or more observations
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 IS: [1] TRUE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 [1] TRUE
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 Error in as.call(x) : illegal length 0 argument
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 Error in as.complex.default(x) : (list) object cannot be coerced to vector type 15
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Lengths: 0, 1"                                       
-[2] "Component 1: names for current but not for target"                
-[3] "Component 1: Attributes: < Modes: NULL, list >"                   
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component 1: Attributes: < names for current but not for target >"
-[6] "Component 1: Attributes: < target is NULL, current is list >"     
-[7] "Component 1: Length mismatch: comparison on first 0 components"   
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in sort(unique.default(x), na.last = TRUE) : 
 	`x' must be atomic
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
 [1] TRUE
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[2] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[3] "Component 1: Lengths: 0, 1"                                                    
-[4] "Component 1: names for current but not for target"                             
-[5] "Component 1: Attributes: < Modes: NULL, list >"                                
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[7] "Component 1: Attributes: < names for current but not for target >"             
-[8] "Component 1: Attributes: < target is NULL, current is list >"                  
-[9] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
- [1] "Names: 1 string mismatches"                                                    
- [2] "Attributes: < Component 2: Lengths: 0, 1 >"                                    
- [3] "Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
- [4] "Component 1: Lengths: 0, 1"                                                    
- [5] "Component 1: names for current but not for target"                             
- [6] "Component 1: Attributes: < Modes: NULL, list >"                                
- [7] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
- [8] "Component 1: Attributes: < names for current but not for target >"             
- [9] "Component 1: Attributes: < target is NULL, current is list >"                  
-[10] "Component 1: Length mismatch: comparison on first 0 components"                
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 Error in as.environment(x) : Invalid object for as.environment
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 Error in sort(unique.default(x), na.last = TRUE) : 
 	`x' must be atomic
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 Error in as.function.default(x, envir) : argument must have length at least 1
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 Error in as.function.default(x, envir) : argument must have length at least 1
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 Error in as.integer.default(x) : (list) object cannot be coerced to vector type 13
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 Error in as.name(x) : (list) object cannot be coerced to vector type 1
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 Error in sort(unique.default(x), na.last = TRUE) : 
 	`x' must be atomic
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 Error in as.double.default(x) : (list) object cannot be coerced to vector type 14
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : 
 	(list) object cannot be coerced to vector type 14
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 Error in structure(.Internal(as.vector(x, "double")), Csingle = TRUE) : 
 	(list) object cannot be coerced to vector type 14
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 Error in as.symbol(x) : (list) object cannot be coerced to vector type 1
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 Error in ts(x) : ts object must have one or more observations
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -1310,234 +1032,157 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 IS: [1] TRUE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 [1] TRUE
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 Error in as.call(x) : invalid argument list
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Modes: numeric, list"                                
-[2] "Component 1: names for current but not for target"                
-[3] "Component 1: Attributes: < Modes: NULL, list >"                   
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component 1: Attributes: < names for current but not for target >"
-[6] "Component 1: Attributes: < target is NULL, current is list >"     
-[7] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
-[1] "Names: 1 string mismatches"
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
+[1] FALSE
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component 2: 1 string mismatches >"                 
-[2] "Component 1: Modes: numeric, list"                                
-[3] "Component 1: names for current but not for target"                
-[4] "Component 1: Attributes: < Modes: NULL, list >"                   
-[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component 1: Attributes: < names for current but not for target >"
-[7] "Component 1: Attributes: < target is NULL, current is list >"     
-[8] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
-Error in target[[i]] : object is not subsettable
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
+[1] TRUE
+> f <- as.formula( x );  identical(f, as.formula( f ))
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 [1] TRUE
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 [1] TRUE
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 [1] TRUE
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 [1] TRUE
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 [1] TRUE
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 [1] TRUE
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -1673,234 +1318,157 @@ Error in is.single(x) : type "single" unimplemented in R
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 IS: [1] TRUE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 [1] TRUE
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 Error in as.call(x) : invalid argument list
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Modes: numeric, list"                                
-[2] "Component 1: names for current but not for target"                
-[3] "Component 1: Attributes: < Modes: NULL, list >"                   
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component 1: Attributes: < names for current but not for target >"
-[6] "Component 1: Attributes: < target is NULL, current is list >"     
-[7] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce numeric into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
-[1] "Names: 1 string mismatches"
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
+[1] FALSE
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component 2: 1 string mismatches >"                 
-[2] "Component 1: Modes: numeric, list"                                
-[3] "Component 1: names for current but not for target"                
-[4] "Component 1: Attributes: < Modes: NULL, list >"                   
-[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component 1: Attributes: < names for current but not for target >"
-[7] "Component 1: Attributes: < target is NULL, current is list >"     
-[8] "Component 1: target is numeric, current is data.frame"            
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: numeric, list"                                
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is numeric, current is data.frame"            
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 [1] TRUE
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 [1] TRUE
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 [1] TRUE
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 [1] TRUE
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 [1] TRUE
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 [1] TRUE
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 [1] TRUE
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 [1] TRUE
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -2036,236 +1604,159 @@ Error in as.table.default(x) : cannot coerce into a table
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 IS: [1] TRUE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in fromchar(x) : character string is not in a standard unambiguous format
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in fromchar(x) : character string is not in a standard unambiguous format
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in fromchar(x) : character string is not in a standard unambiguous format
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 [1] TRUE
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 Error in as.call(x) : invalid argument list
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Modes: character, list"                              
-[2] "Component 1: names for current but not for target"                
-[3] "Component 1: Attributes: < Modes: NULL, list >"                   
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[5] "Component 1: Attributes: < names for current but not for target >"
-[6] "Component 1: Attributes: < target is NULL, current is list >"     
-[7] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in fromchar(x) : character string is not in a standard unambiguous format
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce character into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
-[1] "Names: 1 string mismatches"
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
+[1] FALSE
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component 2: 1 string mismatches >"                 
-[2] "Component 1: Modes: character, list"                              
-[3] "Component 1: names for current but not for target"                
-[4] "Component 1: Attributes: < Modes: NULL, list >"                   
-[5] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[6] "Component 1: Attributes: < names for current but not for target >"
-[7] "Component 1: Attributes: < target is NULL, current is list >"     
-[8] "Component 1: target is character, current is data.frame"          
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                       
-[2] "Attributes: < Component 2: 1 string mismatches >"                 
-[3] "Component 1: Modes: character, list"                              
-[4] "Component 1: names for current but not for target"                
-[5] "Component 1: Attributes: < Modes: NULL, list >"                   
-[6] "Component 1: Attributes: < Lengths: 0, 2 >"                       
-[7] "Component 1: Attributes: < names for current but not for target >"
-[8] "Component 1: Attributes: < target is NULL, current is list >"     
-[9] "Component 1: target is character, current is data.frame"          
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Warning message: 
 no finite arguments to min; returning Inf 
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 Error in as.environment(x) : Package named "1.3" not found in search list
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 [1] TRUE
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 Error in as.function.default(x, envir) : list argument expected
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 [1] TRUE
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 [1] TRUE
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 [1] TRUE
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 [1] TRUE
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -2401,234 +1892,157 @@ Error in as.table.default(x) : cannot coerce into a table
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 IS: [1] TRUE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 [1] TRUE
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 [1] TRUE
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Names: 1 string mismatches"                                       
-[2] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[3] "Component 1: Attributes: < names for current but not for target >"             
-[4] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[5] "Component 1: Component 1: Modes: numeric, list"                                
-[6] "Component 1: Component 1: names for current but not for target"                
-[7] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 Error in if (i > 1) class(x) <- cl[-(1:(i - 1))] : 
 	missing value where TRUE/FALSE needed
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce list into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
 [1] TRUE
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 Error in ceiling(length.out) : Non-numeric argument to mathematical function
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
 Error in 1:nrows : NA/NaN argument
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component 2: 1 string mismatches >"                              
-[2] "Component 1: Names: 1 string mismatches"                                       
-[3] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[4] "Component 1: Attributes: < names for current but not for target >"             
-[5] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[6] "Component 1: Component 1: Modes: numeric, list"                                
-[7] "Component 1: Component 1: names for current but not for target"                
-[8] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                    
-[2] "Attributes: < Component 2: 1 string mismatches >"                              
-[3] "Component 1: Names: 1 string mismatches"                                       
-[4] "Component 1: Attributes: < Lengths: 0, 2 >"                                    
-[5] "Component 1: Attributes: < names for current but not for target >"             
-[6] "Component 1: Attributes: < Length mismatch: comparison on first 0 components >"
-[7] "Component 1: Component 1: Modes: numeric, list"                                
-[8] "Component 1: Component 1: names for current but not for target"                
-[9] "Component 1: Component 1: target is numeric, current is list"                  
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 Error in as.environment(x) : Invalid object for as.environment
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  : 
 	invalid formula
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 [1] TRUE
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 [1] TRUE
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 Error in 1:p : NA/NaN argument
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 Error in NextMethod(generic, object, ...) : 
 	object not specified
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 Error in as.name(x) : invalid type/length (1/1) in vector allocation
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 [1] TRUE
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > 
 > ###--------
@@ -2768,204 +2182,157 @@ Error in ts(x) : ts object must have one or more observations
 > if(is.vector(x)) { cat('IS: ');all.equal(x, as.vector( x ), tol=0)
 + } else   !isall.equal(x, as.vector( x ))
 [1] FALSE
-> f <- as.POSIXct( x );  all.equal(f, as.POSIXct( f ), tol=0)
+> f <- as.POSIXct( x );  identical(f, as.POSIXct( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXct.POSIXlt( x );  all.equal(f, as.POSIXct.POSIXlt( f ), tol=0)
+> f <- as.POSIXct.POSIXlt( x );  identical(f, as.POSIXct.POSIXlt( f ))
 Error in structure(.Internal(as.POSIXct(x, tz)), class = c("POSIXt", "POSIXct")) : 
 	invalid `x' argument
-> f <- as.POSIXct.date( x );  all.equal(f, as.POSIXct.date( f ), tol=0)
+> f <- as.POSIXct.date( x );  identical(f, as.POSIXct.date( f ))
 Error in as.POSIXct.date(x) : `x' is not a "dates" object
-> f <- as.POSIXct.dates( x );  all.equal(f, as.POSIXct.dates( f ), tol=0)
+> f <- as.POSIXct.dates( x );  identical(f, as.POSIXct.dates( f ))
 Error in as.POSIXct.dates(x) : `x' is not a "dates" object
-> f <- as.POSIXct.default( x );  all.equal(f, as.POSIXct.default( f ), tol=0)
+> f <- as.POSIXct.default( x );  identical(f, as.POSIXct.default( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.POSIXlt( x );  all.equal(f, as.POSIXlt( f ), tol=0)
+> f <- as.POSIXlt( x );  identical(f, as.POSIXlt( f ))
 Error in as.POSIXlt(x) : Don't know how to convert `x' to class "POSIXlt"
-> f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
+> f <- as.array( x );  identical(f, as.array( f ))
 Error in "dimnames<-.data.frame"(*tmp*, value = list(n)) : 
 	invalid dimnames given for data frame
-> f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
+> f <- as.call( x );  identical(f, as.call( f ))
 [1] TRUE
-> f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
+> f <- as.character( x );  identical(f, as.character( f ))
 [1] TRUE
-> f <- as.character.POSIXt( x );  all.equal(f, as.character.POSIXt( f ), tol=0)
+> f <- as.character.POSIXt( x );  identical(f, as.character.POSIXt( f ))
 [1] TRUE
-> f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
+> f <- as.character.default( x );  identical(f, as.character.default( f ))
 [1] TRUE
-> f <- as.character.factor( x );  all.equal(f, as.character.factor( f ), tol=0)
+> f <- as.character.factor( x );  identical(f, as.character.factor( f ))
 [1] TRUE
-> f <- as.character.octmode( x );  all.equal(f, as.character.octmode( f ), tol=0)
+> f <- as.character.octmode( x );  identical(f, as.character.octmode( f ))
 Error in as.character.octmode(x) : calling wrong method
-> f <- as.complex( x );  all.equal(f, as.complex( f ), tol=0)
+> f <- as.complex( x );  identical(f, as.complex( f ))
 [1] TRUE
-> f <- as.complex.default( x );  all.equal(f, as.complex.default( f ), tol=0)
+> f <- as.complex.default( x );  identical(f, as.complex.default( f ))
 [1] TRUE
-> f <- as.data.frame( x );  all.equal(f, as.data.frame( f ), tol=0)
+> f <- as.data.frame( x );  identical(f, as.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.AsIs( x );  all.equal(f, as.data.frame.AsIs( f ), tol=0)
-[1] "Component 1: Names: 1 string mismatches"            
-[2] "Component 1: Component 1: `current' is not a factor"
-> f <- as.data.frame.POSIXct( x );  all.equal(f, as.data.frame.POSIXct( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.POSIXlt( x );  all.equal(f, as.data.frame.POSIXlt( f ), tol=0)
+> f <- as.data.frame.AsIs( x );  identical(f, as.data.frame.AsIs( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXct( x );  identical(f, as.data.frame.POSIXct( f ))
+[1] FALSE
+> f <- as.data.frame.POSIXlt( x );  identical(f, as.data.frame.POSIXlt( f ))
 Error in as.POSIXct.default(x) : Don't know how to convert `x' to class "POSIXct"
-> f <- as.data.frame.character( x );  all.equal(f, as.data.frame.character( f ), tol=0)
+> f <- as.data.frame.character( x );  identical(f, as.data.frame.character( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.data.frame.complex( x );  all.equal(f, as.data.frame.complex( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.data.frame( x );  all.equal(f, as.data.frame.data.frame( f ), tol=0)
+> f <- as.data.frame.complex( x );  identical(f, as.data.frame.complex( f ))
+[1] FALSE
+> f <- as.data.frame.data.frame( x );  identical(f, as.data.frame.data.frame( f ))
 [1] TRUE
-> f <- as.data.frame.default( x );  all.equal(f, as.data.frame.default( f ), tol=0)
+> f <- as.data.frame.default( x );  identical(f, as.data.frame.default( f ))
 Error in as.data.frame.default(x) : can't coerce data.frame into a data.frame
-> f <- as.data.frame.factor( x );  all.equal(f, as.data.frame.factor( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.integer( x );  all.equal(f, as.data.frame.integer( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.list( x );  all.equal(f, as.data.frame.list( f ), tol=0)
+> f <- as.data.frame.factor( x );  identical(f, as.data.frame.factor( f ))
+[1] FALSE
+> f <- as.data.frame.integer( x );  identical(f, as.data.frame.integer( f ))
+[1] FALSE
+> f <- as.data.frame.list( x );  identical(f, as.data.frame.list( f ))
 [1] TRUE
-> f <- as.data.frame.logLik( x );  all.equal(f, as.data.frame.logLik( f ), tol=0)
+> f <- as.data.frame.logLik( x );  identical(f, as.data.frame.logLik( f ))
 [1] TRUE
-> f <- as.data.frame.logical( x );  all.equal(f, as.data.frame.logical( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.matrix( x );  all.equal(f, as.data.frame.matrix( f ), tol=0)
+> f <- as.data.frame.logical( x );  identical(f, as.data.frame.logical( f ))
+[1] FALSE
+> f <- as.data.frame.matrix( x );  identical(f, as.data.frame.matrix( f ))
 [1] TRUE
-> f <- as.data.frame.model.matrix( x );  all.equal(f, as.data.frame.model.matrix( f ), tol=0)
-[1] "Names: 1 string mismatches"                         
-[2] "Component 1: Names: 1 string mismatches"            
-[3] "Component 1: Component 1: `current' is not a factor"
-> f <- as.data.frame.numeric( x );  all.equal(f, as.data.frame.numeric( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.ordered( x );  all.equal(f, as.data.frame.ordered( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.table( x );  all.equal(f, as.data.frame.table( f ), tol=0)
+> f <- as.data.frame.model.matrix( x );  identical(f, as.data.frame.model.matrix( f ))
+[1] FALSE
+> f <- as.data.frame.numeric( x );  identical(f, as.data.frame.numeric( f ))
+[1] FALSE
+> f <- as.data.frame.ordered( x );  identical(f, as.data.frame.ordered( f ))
+[1] FALSE
+> f <- as.data.frame.table( x );  identical(f, as.data.frame.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.data.frame.ts( x );  all.equal(f, as.data.frame.ts( f ), tol=0)
-[1] "Attributes: < Component 2: 1 string mismatches >"                                           
-[2] "Component 1: Names: 1 string mismatches"                                                    
-[3] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[4] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[5] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.data.frame.vector( x );  all.equal(f, as.data.frame.vector( f ), tol=0)
-[1] "Names: 1 string mismatches"                                                                 
-[2] "Attributes: < Component 2: 1 string mismatches >"                                           
-[3] "Component 1: Names: 1 string mismatches"                                                    
-[4] "Component 1: Attributes: < Component 2: Lengths: 0, 1 >"                                    
-[5] "Component 1: Attributes: < Component 2: Lengths (0, 1) differ (string compare on first 0) >"
-[6] "Component 1: Component 1: `current' is not a factor"                                        
-> f <- as.difftime( x );  all.equal(f, as.difftime( f ), tol=0)
+> f <- as.data.frame.ts( x );  identical(f, as.data.frame.ts( f ))
+[1] FALSE
+> f <- as.data.frame.vector( x );  identical(f, as.data.frame.vector( f ))
+[1] FALSE
+> f <- as.difftime( x );  identical(f, as.difftime( f ))
 Error in strptime(tim, format = format) : invalid `x' argument
-> f <- as.double( x );  all.equal(f, as.double( f ), tol=0)
+> f <- as.double( x );  identical(f, as.double( f ))
 [1] TRUE
-> f <- as.double.default( x );  all.equal(f, as.double.default( f ), tol=0)
+> f <- as.double.default( x );  identical(f, as.double.default( f ))
 [1] TRUE
-> f <- as.environment( x );  all.equal(f, as.environment( f ), tol=0)
+> f <- as.environment( x );  identical(f, as.environment( f ))
 Error in as.environment(x) : Invalid object for as.environment
-> f <- as.expression( x );  all.equal(f, as.expression( f ), tol=0)
+> f <- as.expression( x );  identical(f, as.expression( f ))
 [1] TRUE
-> f <- as.expression.default( x );  all.equal(f, as.expression.default( f ), tol=0)
+> f <- as.expression.default( x );  identical(f, as.expression.default( f ))
 [1] TRUE
-> f <- as.factor( x );  all.equal(f, as.factor( f ), tol=0)
+> f <- as.factor( x );  identical(f, as.factor( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.formula( x );  all.equal(f, as.formula( f ), tol=0)
+> f <- as.formula( x );  identical(f, as.formula( f ))
 [1] TRUE
-> f <- as.function( x );  all.equal(f, as.function( f ), tol=0)
+> f <- as.function( x );  identical(f, as.function( f ))
 [1] TRUE
-> f <- as.function.default( x );  all.equal(f, as.function.default( f ), tol=0)
+> f <- as.function.default( x );  identical(f, as.function.default( f ))
 [1] TRUE
-> f <- as.integer( x );  all.equal(f, as.integer( f ), tol=0)
+> f <- as.integer( x );  identical(f, as.integer( f ))
 [1] TRUE
-> f <- as.integer.default( x );  all.equal(f, as.integer.default( f ), tol=0)
+> f <- as.integer.default( x );  identical(f, as.integer.default( f ))
 [1] TRUE
-> f <- as.list( x );  all.equal(f, as.list( f ), tol=0)
+> f <- as.list( x );  identical(f, as.list( f ))
 [1] TRUE
-> f <- as.list.data.frame( x );  all.equal(f, as.list.data.frame( f ), tol=0)
+> f <- as.list.data.frame( x );  identical(f, as.list.data.frame( f ))
 [1] TRUE
-> f <- as.list.default( x );  all.equal(f, as.list.default( f ), tol=0)
+> f <- as.list.default( x );  identical(f, as.list.default( f ))
 [1] TRUE
-> f <- as.logical( x );  all.equal(f, as.logical( f ), tol=0)
+> f <- as.logical( x );  identical(f, as.logical( f ))
 [1] TRUE
-> f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
+> f <- as.logical.default( x );  identical(f, as.logical.default( f ))
 [1] TRUE
-> f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+> f <- as.matrix( x );  identical(f, as.matrix( f ))
 [1] TRUE
-> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+> f <- as.matrix.POSIXlt( x );  identical(f, as.matrix.POSIXlt( f ))
 [1] TRUE
-> f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
+> f <- as.matrix.data.frame( x );  identical(f, as.matrix.data.frame( f ))
 [1] TRUE
-> f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
+> f <- as.matrix.default( x );  identical(f, as.matrix.default( f ))
 [1] TRUE
-> f <- as.matrix.noquote( x );  all.equal(f, as.matrix.noquote( f ), tol=0)
+> f <- as.matrix.noquote( x );  identical(f, as.matrix.noquote( f ))
 [1] TRUE
-> f <- as.name( x );  all.equal(f, as.name( f ), tol=0)
+> f <- as.name( x );  identical(f, as.name( f ))
 Error in as.name(x) : invalid type/length (1/1) in vector allocation
-> f <- as.null( x );  all.equal(f, as.null( f ), tol=0)
+> f <- as.null( x );  identical(f, as.null( f ))
 [1] TRUE
-> f <- as.null.default( x );  all.equal(f, as.null.default( f ), tol=0)
+> f <- as.null.default( x );  identical(f, as.null.default( f ))
 [1] TRUE
-> f <- as.numeric( x );  all.equal(f, as.numeric( f ), tol=0)
+> f <- as.numeric( x );  identical(f, as.numeric( f ))
 [1] TRUE
-> f <- as.ordered( x );  all.equal(f, as.ordered( f ), tol=0)
+> f <- as.ordered( x );  identical(f, as.ordered( f ))
 Error in unique.default(x) : unique() applies only to vectors
-> f <- as.pairlist( x );  all.equal(f, as.pairlist( f ), tol=0)
+> f <- as.pairlist( x );  identical(f, as.pairlist( f ))
 [1] TRUE
-> f <- as.qr( x );  all.equal(f, as.qr( f ), tol=0)
+> f <- as.qr( x );  identical(f, as.qr( f ))
 Error in as.qr(x) : you cannot be serious
-> f <- as.real( x );  all.equal(f, as.real( f ), tol=0)
+> f <- as.real( x );  identical(f, as.real( f ))
 [1] TRUE
-> f <- as.single( x );  all.equal(f, as.single( f ), tol=0)
+> f <- as.single( x );  identical(f, as.single( f ))
 [1] TRUE
-> f <- as.single.default( x );  all.equal(f, as.single.default( f ), tol=0)
+> f <- as.single.default( x );  identical(f, as.single.default( f ))
 [1] TRUE
-> f <- as.symbol( x );  all.equal(f, as.symbol( f ), tol=0)
+> f <- as.symbol( x );  identical(f, as.symbol( f ))
 Error in as.symbol(x) : invalid type/length (1/1) in vector allocation
-> f <- as.table( x );  all.equal(f, as.table( f ), tol=0)
+> f <- as.table( x );  identical(f, as.table( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.default( x );  all.equal(f, as.table.default( f ), tol=0)
+> f <- as.table.default( x );  identical(f, as.table.default( f ))
 Error in as.table.default(x) : cannot coerce into a table
-> f <- as.table.ftable( x );  all.equal(f, as.table.ftable( f ), tol=0)
+> f <- as.table.ftable( x );  identical(f, as.table.ftable( f ))
 Error in as.table.ftable(x) : x must be an `ftable'
-> f <- as.ts( x );  all.equal(f, as.ts( f ), tol=0)
+> f <- as.ts( x );  identical(f, as.ts( f ))
 Error in ts(x) : ts object must have one or more observations
-> f <- as.vector( x );  all.equal(f, as.vector( f ), tol=0)
+> f <- as.vector( x );  identical(f, as.vector( f ))
 [1] TRUE
-> f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
+> f <- as.vector.factor( x );  identical(f, as.vector.factor( f ))
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  1.26 0.11 1.35 0 0 
+Time elapsed:  0.38 0.03 0.42 0 0 
 > 
 > 

@@ -32,6 +32,6 @@ for(x in ex.list) {
 
     ## f <- as.foo(x)  ==>  as.foo(f) == f :
     for(r in aroot)
-        cat("f <- as.",r,"( x );  all.equal(f, as.",r,"( f ), tol=0)\n", sep="")
+        cat("f <- as.",r,"( x );  identical(f, as.",r,"( f ))\n", sep="")
 }
 cat("cat('Time elapsed: ', proc.time() - .proctime00,'\\n')\n")

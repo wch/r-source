@@ -267,52 +267,55 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(matchedarg = cptr->promargs);
     PROTECT(newcall = duplicate(cptr->call));
 
-    if (isObject(obj)) {
+    if(R_has_methods(NULL)) /* if the methods package has been attached */
+        class = R_data_class(obj, FALSE);
+    else if (isObject(obj)) 
 	class = getAttrib(obj, R_ClassSymbol);
-	nclass = length(class);
-	for (i = 0; i < nclass; i++) {
-	    sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
-	    method = install(buf);
+    else
+        class = R_NilValue;
+    nclass = length(class);
+    for (i = 0; i < nclass; i++) {
+	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
+	method = install(buf);
 #ifdef EXPERIMENTAL_NAMESPACES
-	    sxp = R_LookupMethod(method, rho, callrho, defrho);
+	sxp = R_LookupMethod(method, rho, callrho, defrho);
 #else
-	    sxp = findVar(method, rho);
+	sxp = findVar(method, rho);
 #endif
-	    /* autoloading requires that promises be evaluated <TSL>*/
-	    if (TYPEOF(sxp)==PROMSXP){
-		PROTECT(tmp=eval(sxp, rho));
-		sxp=tmp;
-		UNPROTECT(1);
-	    }
-	    if (isFunction(sxp)) {
-		defineVar(install(".Generic"), mkString(generic), newrho);
-		if (i > 0) {
-		    PROTECT(t = allocVector(STRSXP, nclass - i));
-		    for (j = 0; j < length(t); j++, i++)
-			SET_STRING_ELT(t, j, STRING_ELT(class, i));
-		    setAttrib(t, install("previous"), class);
-		    defineVar(install(".Class"), t, newrho);
-		    UNPROTECT(1);
-		}
-		else
-		    defineVar(install(".Class"), class, newrho);
-		PROTECT(t = mkString(buf));
-		defineVar(install(".Method"), t, newrho);
-		UNPROTECT(1);
+	/* autoloading requires that promises be evaluated <TSL>*/
+	if (TYPEOF(sxp)==PROMSXP){
+	  PROTECT(tmp=eval(sxp, rho));
+	  sxp=tmp;
+	  UNPROTECT(1);
+	}
+	if (isFunction(sxp)) {
+	  defineVar(install(".Generic"), mkString(generic), newrho);
+	  if (i > 0) {
+	    PROTECT(t = allocVector(STRSXP, nclass - i));
+	    for (j = 0; j < length(t); j++, i++)
+	      SET_STRING_ELT(t, j, STRING_ELT(class, i));
+	    setAttrib(t, install("previous"), class);
+	    defineVar(install(".Class"), t, newrho);
+	    UNPROTECT(1);
+	  }
+	  else
+	    defineVar(install(".Class"), class, newrho);
+	  PROTECT(t = mkString(buf));
+	  defineVar(install(".Method"), t, newrho);
+	  UNPROTECT(1);
 #ifdef EXPERIMENTAL_NAMESPACES
-		if (R_UseNamespaceDispatch) {
-		    defineVar(install(".GenericCallEnv"), callrho, newrho);
-		    defineVar(install(".GenericDefEnv"), defrho, newrho);
-		}
+	  if (R_UseNamespaceDispatch) {
+	    defineVar(install(".GenericCallEnv"), callrho, newrho);
+	    defineVar(install(".GenericDefEnv"), defrho, newrho);
+	  }
 #endif
-		t = newcall;
-		SETCAR(t, method);
-		R_GlobalContext->callflag = CTXT_GENERIC;
-		*ans = applyMethod(t, sxp, matchedarg, rho, newrho);
-		R_GlobalContext->callflag = CTXT_RETURN;
-		UNPROTECT(4);
-		return 1;
-	    }
+	  t = newcall;
+	  SETCAR(t, method);
+	  R_GlobalContext->callflag = CTXT_GENERIC;
+	  *ans = applyMethod(t, sxp, matchedarg, rho, newrho);
+	  R_GlobalContext->callflag = CTXT_RETURN;
+	  UNPROTECT(4);
+	  return 1;
 	}
     }
     sprintf(buf, "%s.default", generic);
@@ -1176,7 +1179,7 @@ Rboolean R_has_methods(SEXP op)
     R_stdGen_ptr_t ptr = R_get_standardGeneric_ptr(); int offset;
     if(NOT_METHODS_DISPATCH_PTR(ptr))
 	return(FALSE);
-    if(!op) /* just testing for the package */
+    if(!op || TYPEOF(op) == CLOSXP) /* except for primitives, just test for the package */
 	return(TRUE);
     offset = PRIMOFFSET(op);
     if(offset > curMaxOffset || prim_methods[offset] == NO_METHODS
