@@ -62,6 +62,8 @@ lfactorial(x)
   defined for all real numbers \eqn{n} and integer \eqn{k}.  For \eqn{k
     \ge 1}{k >= 1} as \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
   as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
+  \cr \code{choose(*,k)} uses direct arithmetic (instead of
+  \code{[l]gamma} calls) for small \code{k}, for speed and accuracy reasons.
 
   All the \code{*gamma*} functions are generic: methods can be
   defined for them individually or via the \code{\link{Math}} group generic.
