@@ -52,6 +52,7 @@ drop1.glm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
     whether all columns of the design matrix should be used. If
     \code{FALSE} then non-estimable columns are dropped, but the result
     is not usually statistically meaningful.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   Compute all the single terms in the \code{scope} argument that can be

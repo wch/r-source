@@ -12,15 +12,16 @@
         terms = NULL, \dots)
 }
 \arguments{
- \item{object}{Object of class inheriting from \code{"lm"}}
- \item{newdata}{Data frame in which to predict}
- \item{se.fit}{A switch indicating if standard errors are required.}
- \item{scale}{Scale parameter for std.err. calculation}
- \item{df}{Degrees of freedom for scale}
- \item{interval}{Type of interval calculation}
- \item{level}{Tolerance/confidence level}
- \item{type}{Type of prediction (response or model term)}
- \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
+  \item{object}{Object of class inheriting from \code{"lm"}}
+  \item{newdata}{Data frame in which to predict}
+  \item{se.fit}{A switch indicating if standard errors are required.}
+  \item{scale}{Scale parameter for std.err. calculation}
+  \item{df}{Degrees of freedom for scale}
+  \item{interval}{Type of interval calculation}
+  \item{level}{Tolerance/confidence level}
+  \item{type}{Type of prediction (response or model term)}
+  \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   \code{predict.lm} produces predicted values, obtained by evaluating

@@ -41,6 +41,10 @@ zapsmall(x, digits= getOption("digits"))
   \code{round(x, digits = dr)} such that values ``close to zero'' values
   are ``zapped'', i.e., treated as \code{0}.
 }
+\arguments{
+  \item{x}{a numeric vector.}
+  \item{digits}{integer indicating the precision to be used.}
+}
 \seealso{
   \code{\link{as.integer}}.
 }

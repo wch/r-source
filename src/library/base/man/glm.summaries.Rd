@@ -35,6 +35,7 @@ print.summary(summary.glm.obj, digits = max(3, getOption("digits") - 3),
   \item{type}{the type of residuals which should be returned.
     The alternatives are: \code{"deviance"} (default), \code{"pearson"},
     \code{"working"}, \code{"response"}, and \code{"partial"}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   These functions are all \code{\link{methods}} for class \code{glm} or

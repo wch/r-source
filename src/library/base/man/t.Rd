@@ -10,6 +10,9 @@ t(x)
 Given a matrix or \code{\link{data.frame}} \code{x},
 \code{t} returns the transpose (matrix or data.frame) of \code{x}.
 }
+\arguments{
+  \item{x}{a matrix or data frame.}
+}
 \examples{
 a <- matrix(1:30, 5,6)
 ta <- t(a) ##-- i.e.,  a[i,j] == ta[j,i] for all i,j :

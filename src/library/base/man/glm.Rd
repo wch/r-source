@@ -72,6 +72,10 @@ weights.glm(object, type = c("prior", "working"), ...)
   \item{object}{an object inheriting from class \code{"glm"}.}
   \item{type}{character, partial matching allowed.  Type of weights to
     extract from the fitted model object.}
+
+  \item{intercept}{logical. Should an intercept be included?}
+  
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   \code{glm} is used to fit generalized linear models, specified by

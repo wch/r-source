@@ -10,7 +10,6 @@
 \alias{row.names<-.data.frame}
 \alias{row.names<-.default}
 %- methods:
-\alias{print.data.frame}
 \alias{plot.data.frame}
 %
 \alias{[.AsIs}
@@ -46,8 +45,6 @@ is.data.frame(x)
 
 row.names(x)
 row.names(x) <- names
-print(x, \dots, digits = NULL, quote = FALSE, right = TRUE)
-plot (x, \dots)
 }
 \arguments{
   \item{\dots}{these arguments are of either the form \code{value} or
@@ -61,10 +58,9 @@ plot (x, \dots)
     variables in the data frame are checked to ensure that they are
     syntactically valid variable names.  If necessary they are adjusted
     (by \code{\link{make.names}}) so that they are.}
-  \item{data.frame.obj}{objects of class \code{data.frame}.}
-  \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
   \item{optional}{logical. If \code{TRUE}, setting row names is
     optional.}
+  \item{x}{object of class \code{data.frame}.}
 }
 \value{
   For \code{data.frame(.)} a data frame, a matrix-like stucture whose
@@ -86,9 +82,6 @@ plot (x, \dots)
   \code{\link{plot.default}} (scatterplot) for \emph{two} variables, and
   \code{\link{pairs}} (scatterplot matrix) otherwise.
 
-  For the \code{\link{print}} method (\code{print.data.frame}), see
-  \code{\link{print.matrix}}.
-
   \code{xpdrows.data.frame} is an auxiliary function which expands the
   rows of a data frame.  It is used by the data frame methods of
   \code{[<-} and \code{[[<-} (which perform subscripted assignments on a
@@ -108,6 +101,7 @@ plot (x, \dots)
   converted to factors.
 }
 \seealso{
+  \code{\link{print.data.frame}},
   \code{\link{read.table}},
   \code{\link{Math.data.frame}} etc, about
   \emph{Group} methods for \code{data.frame}s;

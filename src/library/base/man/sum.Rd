@@ -12,4 +12,8 @@ value in any of the arguments will cause
 a value of \code{NA} to be returned, otherwise
 \code{NA} values are ignored.
 }
+\arguments{
+  \item{\dots}{numeric vectors.}
+  \item{na.rm}{logical. Should missing values be removed?}
+}
 \keyword{arith}

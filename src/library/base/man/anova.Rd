@@ -1,13 +1,12 @@
 \name{anova}
-\title{Anova Tables}
-\usage{
-anova(object, \dots)
-print(anova.object)
-}
 \alias{anova}
 \alias{anova.mlm}
 % others in ./lm.summaries.Rd
 \alias{print.anova}
+\title{Anova Tables}
+\usage{
+anova(object, \dots)
+}
 \description{
   Compute analysis of variance (or deviance) tables for one or more
   fitted model objects.

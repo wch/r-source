@@ -18,6 +18,12 @@ print.ordered(x, quote = FALSE, \dots)
     \code{\link{invisible}(x)}).  It is a generic function which means that
     new printing methods can be easily added for new \code{\link{class}}es.
 }
+\arguments{
+  \item{x}{an object used to select a method.}
+  \item{\dots}{further arguments passed to or from other methods.}
+  \item{quote}{logical, indicating whether or not strings should be
+    printed with surrounding quotes.}
+}
 \details{
     The default method, \code{\link{print.default}} has its own help page.
     Use \code{\link{methods}("print")} to get all the methods for the

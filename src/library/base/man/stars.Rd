@@ -40,6 +40,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
     \code{dimnames(x)} is used, if available.}
   \item{key.xpd}{clipping switch for the unit key (drawing and
     labeling), see \code{\link{par}("xpd")}.}
+  \item{draw.segments}{logical. If \code{TRUE} draw a segment diagram.}
   \item{axes}{logical flag: if \code{TRUE} axes are added to the
     plot.}
   \item{cex}{character expansion factor for the labels.}

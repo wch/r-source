@@ -18,8 +18,8 @@
   \item{na.rm}{logical; if true, any \code{\link{NA}} and \code{NaN}'s
     are removed from \code{x} before the quantiles are computed.}
   \item{names}{logical; if true, the result has a \code{\link{names}}
-    attribute.  Set to \code{FALSE} for speedup with many \code{probs}.
-  }
+    attribute.  Set to \code{FALSE} for speedup with many \code{probs}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   A vector of length \code{length(probs)} is returned;

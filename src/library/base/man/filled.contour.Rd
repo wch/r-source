@@ -51,7 +51,7 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     labeling.}
  \item{las}{the style of labeling to be used.  The default is to
     use horizontal labeling. }
- \item{\dots}{additional graphical parameters.}
+ \item{axes, \dots}{additional graphical parameters.}
 }
 \description{
     This function produces a contour plot with the areas between

@@ -3,7 +3,6 @@
 \usage{
 aov(formula, data = NULL, projections = FALSE, qr = TRUE,
     contrasts = NULL, \dots)
-se.aov(object, n, type = "means") 
 }
 \alias{aov}
 \alias{print.aov}

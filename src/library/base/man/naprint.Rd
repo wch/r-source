@@ -16,6 +16,7 @@ naprint(x, \dots)
   \item{x}{
     An object produced by an \code{na.action} function.
   }
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
   This is a generic function, and the exact information differs by

@@ -19,6 +19,7 @@ model.matrix   (object, \dots)
     the names of columns of \code{data} containing \code{\link{factor}}s.}
   \item{xlev}{to be used as argument of \code{\link{model.frame}} if
     \code{data} has no \code{"terms"} attribute.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   \code{model.matrix} creates a design matrix.

@@ -11,8 +11,6 @@ poisson(link = "log")
 quasi(link = "identity", variance = "constant")
 quasibinomial(link = "logit")
 quasipoisson(link = "log")
-
-print.family(x, \dots)
 }
 \alias{family}
 \alias{binomial}

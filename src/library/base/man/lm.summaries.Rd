@@ -11,7 +11,7 @@ residuals(object,
           type=c("working","response", "deviance","pearson", "partial"), \dots)
 weights(object, \dots)
 
-print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
+print(x, digits = max(3, getOption("digits") - 3),
       symbolic.cor = p > 4,
       signif.stars= getOption("show.signif.stars"), \dots)
 }
@@ -34,6 +34,7 @@ print(summary.lm.obj, digits = max(3, getOption("digits") - 3),
 \arguments{
   \item{object, x}{an object of class \code{lm}, usually, a result of a
     call to \code{\link{lm}}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
 All these functions are \code{\link{methods}} for class \code{lm} or

@@ -16,7 +16,6 @@ qnbinom(p, size, prob, mu, lower.tail = TRUE, log.p = FALSE)
 rnbinom(n, size, prob, mu)
 }
 \arguments{
-  \item{x, q}{vector of quantiles.}
   \item{x}{vector of (non-negative integer) quantiles.}
   \item{q}{vector of quantiles.}
   \item{p}{vector of probabilities.}

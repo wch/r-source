@@ -8,6 +8,11 @@ numeric(length = 0)
 as.numeric(x, \dots)
 is.numeric(x)
 }
+\arguments{
+  \item{length}{desired length.}
+  \item{x}{object to be coerced or tested.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \description{
   \code{numeric} creates a real vector of the specified length.  The
   elements of the vector are all equal to \code{0}.

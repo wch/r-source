@@ -1,11 +1,16 @@
 \name{is.language}
-\title{Is an Object a Language Object?}
-\usage{is.language(x)}
 \alias{is.language}
+\title{Is an Object a Language Object?}
+\usage{
+is.language(x)
+}
 \description{
   \code{is.language} returns \code{TRUE} if \code{x} is either a
   variable \code{\link{name}}, a \code{\link{call}}, or an
   \code{\link{expression}}.
+}
+\arguments{
+  \item{x}{object to be tested.}
 }
 \examples{
 ll <- list(a = expression(x^2 - 2*x + 1), b = as.name("Jim"),

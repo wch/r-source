@@ -22,6 +22,9 @@ asin(x)
 atan(x)
 atan2(y, x)
 }
+\arguments{
+  \item{x, y}{numeric vector}
+}
 \details{
   The arc-tangent of two arguments \code{atan2(y,x)} returns the angle
   between the x-axis and the vector from the origin to \eqn{(x,y)}, i.e., for

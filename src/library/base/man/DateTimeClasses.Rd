@@ -50,7 +50,6 @@ time + number
 time - number
 time1 lop time2
 
-c(time1, ..., recursive = FALSE)
 mean(time)
 }
 \arguments{
@@ -59,7 +58,7 @@ mean(time)
     should be high enough to represent the least important time unit
     exactly.}
   \item{\dots}{Further arguments to be passed from or to other methods.}
-  \item{time, time1, time2, \dots}{date-time objects.}
+  \item{time, time1, time2}{date-time objects.}
   \item{number}{a numeric object.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
@@ -122,7 +121,7 @@ mean(time)
   be wrong if the system has changed since build time, just possibly by
   changing locales.)
 
-  Using \code{c} on \code{"POSIXlt"} objects converts them to the
+  Using \code{\link{c}} on \code{"POSIXlt"} objects converts them to the
   current time zone.
 
 }

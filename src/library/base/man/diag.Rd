@@ -10,6 +10,10 @@ diag(x) <- value
   Extract or replace the diagonal of a matrix,
   or construct a diagonal matrix.
 }
+\arguments{
+  \item{x}{a matrix, vector or 1D array.}
+  \item{nrow, ncol}{Optional dimensions for the result.}
+}
 \value{
   If \code{x} is a matrix then \code{diag(x)} returns the diagonal of
   \code{x}.  The resulting vector will have \code{\link{names}} if the

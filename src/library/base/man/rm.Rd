@@ -11,6 +11,7 @@ rm    (\dots, list = character(0), pos = -1, envir = as.environment(pos),
 \arguments{
   \item{\dots}{the objects to be removed, supplied individually and/or as a
     character vector}
+  \item{list}{a character vector naming objects to be removed.}
   \item{pos}{where to do the removal.  By default, uses the
     current environment.  See the details for other possibilities.}
   \item{envir}{the \code{\link{environment}} to use. See the details section.}

@@ -16,4 +16,4 @@ make.tables.aovprojlist(proj.cols, strata.cols, model.cols, projections,
 %%              ___ SOURCE in ../R/model.tables.R ___
 %% }
 \seealso{\code{\link{model.tables}}}
-\keyword{models}
+\keyword{internal}

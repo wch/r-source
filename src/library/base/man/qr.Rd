@@ -7,7 +7,7 @@ qr.qy(qr, y)
 qr.qty(qr, y)
 qr.resid(qr, y)
 qr.fitted(qr, y, k = qr$rank)
-qr.solve(a, b, tol = 1e-7, ...)
+qr.solve(a, b, tol = 1e-7)
 
 is.qr(x)
 as.qr(x)
@@ -28,6 +28,7 @@ as.qr(x)
   \item{qr}{a QR decomposition of the type computed by \code{qr}.}
   \item{y, b}{a vector or matrix of right-hand sides of equations.}
   \item{a}{A matrix or QR decomposition.}
+  \item{k}{effective rank.}
 }
 \description{
   \code{qr} computes the QR decomposition of a matrix.  It provides an

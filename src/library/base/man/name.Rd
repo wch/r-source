@@ -22,6 +22,9 @@ is.name(y)
   or \code{FALSE} depending on whether its argument is a symbol
   (i.e. name) or not.
 }
+\arguments{
+  \item{x, y}{objects to be coerced or tested.} 
+}
 \note{
   The term ``symbol'' is from the lisp background of \R, whereas ``name''
   has been the standard S term for this.

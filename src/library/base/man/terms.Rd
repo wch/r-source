@@ -13,6 +13,10 @@ terms(x, \dots)
   which can be used to extract \emph{terms} objects
   from various kinds of \R data objects.
 }
+\arguments{
+  \item{x}{object used to select a method to dispatch.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \details{
   There are methods for classes \code{"aovlist"}, and \code{"terms"}
   \code{"formula"} (see \code{\link{terms.formula}}):

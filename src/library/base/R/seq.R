@@ -1,4 +1,4 @@
-seq <- function(x, ...) UseMethod("seq")
+seq <- function(...) UseMethod("seq")
 
 seq.default <-
     function(from = 1, to = 1, by = ((to - from)/(length.out - 1)),

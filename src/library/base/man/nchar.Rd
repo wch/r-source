@@ -9,6 +9,9 @@ the corresponding element of \code{x}.
 It only accepts character vectors as arguments if you want to operate
 on other objects passing them through \code{deparse} first will be required.
 }
+\arguments{
+  \item{x}{character vector.} 
+}
 \seealso{
 \code{\link{strwidth}} giving width of strings for plotting;
 \code{\link{paste}}, \code{\link{substr}}, \code{\link{strsplit}}

@@ -14,6 +14,7 @@ exists(x, where = NULL, envir = parent.frame(),
     but it's usually simpler to just use the \code{where} argument.}
   \item{frame}{a frame in the calling list.  Equivalent to giving \code{where}
     as \code{sys.frame(frame)}.}
+  \item{mode}{the mode of object sought.}
   \item{inherits}{should the enclosing frames of the environment be inspected.}
 }
 \description{

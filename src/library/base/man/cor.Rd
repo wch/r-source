@@ -23,7 +23,9 @@ cov(x, y = NULL, use = "all.obs")
   \item{use}{an optional character string giving a
     method for computing covariances in the presence
     of missing values.  This must be (an abbreviation of) one of the strings
-    \code{"all.obs"}, \code{"complete.obs"} or \code{"pairwise.complete.obs"}.}
+    \code{"all.obs"}, \code{"complete.obs"}
+    or \code{"pairwise.complete.obs"}.}
+  \item{na.rm}{logical. Should missing values be removed?}
 }
 \details{
   For \code{cov} and \code{cor} one must \emph{either} give a matrix or data

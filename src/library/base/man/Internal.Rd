@@ -9,6 +9,9 @@
 which is built in to the \R interpreter.
 Only true \R wizards should even consider using this function.
 }
+\arguments{
+  \item{call}{a call expression}
+}
 \seealso{
 \code{\link{.Primitive}}, \code{\link{.C}}, \code{\link{.Fortran}}.
 }

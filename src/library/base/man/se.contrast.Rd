@@ -25,6 +25,7 @@ se.contrast.aovlist(object, contrast.obj,
    value is the first Helmert contrast, which contrasts the first and
    second cell means specified by the list.}
  \item{data}{The data frame used to evaluate \code{contrast.obj}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
  Returns the standard errors for one or more contrasts in an \code{aov}

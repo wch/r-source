@@ -7,13 +7,19 @@
   Plotting methods for objects of class \code{"ts"} or \code{"mts"}
   (multivariate time-series).
 }
+\synopsis{
+plot.ts(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
+	  xlab = "Time", ylab, log = "",
+	  col = par("col"), bg = NA,
+	  pch = par("pch"), cex = par("cex"),
+	  lty = par("lty"), lwd = par("lwd"),
+	  axes = TRUE, frame.plot = axes, ann = par("ann"),
+	  main = NULL, plot.type = c("multiple", "single"),
+	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
+}
 \usage{
-\method{plot}{ts}(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
-     xlab = "Time", ylab, log = "",
-     col = par("col"), bg = NA, pch = par("pch"), cex = par("cex"),
-     lty = par("lty"), lwd = par("lwd"),
-     axes = TRUE, frame.plot = axes, ann = par("ann"),
-     main = NULL, plot.type = c("multiple", "single"),
+\method{plot}{ts}(x, y = NULL, type = "l", frame.plot = axes,
+     plot.type = c("multiple", "single"),
      xy.labels = n <= 150, xy.lines = do.lab, panel=lines, ...)
 
 lines(x, \dots)
@@ -23,6 +29,8 @@ lines(x, \dots)
 
   \item{type}{the type of plot, see \code{\link{plot}}.  When \code{y}
     is present, the default will depend on \code{xy.labels}, see below.}
+
+  \item{frame.plot}{a function to give the `frame' for each panel.}
 
   \item{plot.type}{for multivariate time series, should the series by
     plotted separately (with a common time axis) or on a single plot?}

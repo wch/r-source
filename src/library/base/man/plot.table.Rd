@@ -17,8 +17,7 @@ plot.table(x, type = "h", ylim = c(0, max(x)), lwd = 2,
   \item{type}{plotting type.}
   \item{ylim}{range of y-axis.}
   \item{lwd}{line width of bars when \code{type = "h"} is used.}
-  \item{xlab,ylab}{x- and y-axis labels.}
-  \item{ylab}{ ~~Describe \code{ylab} here~~ }
+  \item{xlab, ylab}{x- and y-axis labels.}
   \item{frame.plot}{logical indicating if a frame (\code{\link{box}})
     should be drawn.  Default are ~~Describe \code{frame.plot} here~~ }
   \item{\dots}{further graphical arguments, see \code{\link{plot.default}}.}

@@ -13,4 +13,4 @@ se.aovlist(object, dn.proj, dn.strata, factors, mf, efficiency,
 \author{B. D. Ripley}
 \seealso{\code{\link{model.tables}}}
 
-\keyword{utilities}
+\keyword{internal}

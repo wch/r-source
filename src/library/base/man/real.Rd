@@ -17,6 +17,11 @@ is.real(x)
   \code{is.real} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of real type or not.
 }
+\arguments{
+  \item{length}{desired length.}
+  \item{x}{object to be coerced or tested.}
+  \item{\dots}{further arguments passed to or from other methods.}
+}
 \note{
   \emph{\R has no single precision data type.
     All real numbers are stored in double precision format}.

@@ -11,6 +11,9 @@ These functions compute miscellaneous mathematical functions.
 The naming follows the standard for computer languages
 such as C or Fortran.
 }
+\arguments{
+  \item{x}{a numeric vector}
+}
 \seealso{
 \code{\link{Arithmetic}} for simple, \code{\link{log}} for logarithmic,
 \code{\link{sin}} for trigonometric, and \code{\link{Special}} for

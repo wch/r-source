@@ -10,7 +10,7 @@ det(x, method = c("qr","eigenvalues"))
   \code{\link{eigen}}.
   }
 \arguments{
-  \item{z}{numeric matrix.}
+  \item{x}{numeric matrix.}
   \item{method}{\code{"qr"} (default) or \code{"eigenvalues"}}
 }
 \note{

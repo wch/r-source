@@ -11,6 +11,9 @@ giving x and y coordinates of points to be plotted
 or a single vector giving y values to be plotted
 against their indexes.
 }
+\arguments{
+  \item{x}{a formal argument.}
+}
 \seealso{\code{\link{substitute}} for argument expression;
     \code{\link{NA}} for ``missing values'' in data.}
 \examples{

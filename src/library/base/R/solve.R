@@ -1,4 +1,4 @@
-qr.solve <- function(a, b, tol = 1e-7, ...)
+solve.qr <- function(a, b, tol = 1e-7, ...)
 {
     if( !is.qr(a) )
 	a <- qr(a, tol = tol)
@@ -37,4 +37,4 @@ solve.default <- function(a, b, tol = 1e-7, ...)
 }
 
 solve <- function(a, b, ...) UseMethod("solve")
-solve.qr <- .Alias(qr.solve)
+qr.solve <- function(a, b, tol = 1e-7) solve.qr(a, b, tol)

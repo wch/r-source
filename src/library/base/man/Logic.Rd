@@ -18,6 +18,9 @@ xor(x, y)
 \description{
   These operators act on logical vectors.
 }
+\arguments{
+  \item{x, y}{logical vectors}
+}
 \details{
   \code{!} indicates logical negation (NOT).
 

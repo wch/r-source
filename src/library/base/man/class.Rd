@@ -15,6 +15,12 @@ inherits(x, what, which = FALSE)
   an object-oriented style of programming.  Method despatch takes place
   based on the class of the first argument to the generic function.
 }
+\arguments{
+  \item{x}{an objects}
+  \item{what}{a character vector naming classes.}
+  \item{which}{logical affecting return value: see Details.}
+}
+
 \details{
   An \R ``object'' is a data object which has a \code{class} attribute.
   A class attribute is a character vector giving the names of
@@ -34,7 +40,7 @@ inherits(x, what, which = FALSE)
   information removed.
 
   \code{inherits} indicates whether its first argument inherits from any
-  of the classes specified in the \code{what} argument. If \code{which}
+  of the classes specified in the \code{what} argument.  If \code{which}
   is \code{TRUE} then an integer vector of the same length as
   \code{what} is returned. Each element indicates the position in the
   \code{class(x)} matched by the element of \code{what}; zero indicates
