@@ -1732,6 +1732,8 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     contrast = R_NilValue;	/* -Wall */
     for (k = 0; k < nterms; k++) {
 	for (i = 0; i < nvar; i++) {
+	    if (INTEGER(columns)[i] == 0)
+		continue;
 	    var_i = VECTOR(variable)[i];
 	    fik = INTEGER(factors)[i + k * nvar];
 	    if (fik) {
