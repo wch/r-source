@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-16, 2003-06-04
+Version 1.7-17, 2003-06-11
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1535,6 +1535,9 @@ distributions of R.)
 *effects*
      Graphical and tabular effect displays, e.g., of interactions, for
      linear and generalised linear models.
+
+*eha*
+     A package for survival and event history analysis.
 
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.

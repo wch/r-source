@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.7-16, @value{FAQ-YEAR}-06-04
+@set FAQ-VERSION 1.7-17, @value{FAQ-YEAR}-06-11
 @set REL-VERSION 1.7.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1770,6 +1770,8 @@ more.
 @item effects
 Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.
+@item eha
+A package for survival and event history analysis.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
 @item emplik
