@@ -535,7 +535,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 	}
 	n++;
     }
-    if (!quiet) REprintf("Read %d lines\n", n);
+    if (!quiet) REprintf("Read %d records\n", n);
     if (ttyflag) ConsolePrompt[0] = '\0';
 
     for (i = 0; i < nc; i++) {
