@@ -34,6 +34,7 @@ OBJS = \
 	dqrsl.o \
 	dqrutl.o \
 	dsvdc.o \
+	dtrco.o \
 	dtrsl.o \
 	eigen.o \
 	fortran.o \

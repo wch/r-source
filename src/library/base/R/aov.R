@@ -1,193 +1,567 @@
 #### copyright (C) 1998 W. N. Venables and B. D. Ripley
-aov <- function(formula, data = sys.parent(),
-                projections = FALSE, contrasts = NULL, ...)
+aov <-
+  function(formula, data = NULL, projections = FALSE, qr = TRUE,
+           contrasts = NULL, ...)
 {
-    if(projections) stop("projections are not implemented")
-    lmcall <- Call <- match.call()
-    lmcall[[1]] <- as.name("lm")
-    lmcall$singular.ok <- TRUE
-    lmcall$projections <- NULL
+  Terms <- if(missing(data)) terms(formula, "Error")
+           else terms(formula, "Error", data = data)
+  indError <- attr(Terms, "specials")$Error
+  if(length(indError) > 1)
+    stop(paste("There are", length(indError),
+               "Error terms: only 1 is allowed"))
+  lmcall <- Call <- match.call()
+  lmcall[[1]] <- as.name("lm")
+  lmcall$singular.ok <- TRUE # not currently used in R
+  if(projections) qr <- lmcall$qr <- TRUE
+  lmcall$projections <- NULL
+  if(is.null(indError)) {
+    # no Error term
     fit <- eval(lmcall, sys.frame(sys.parent()))
-    class(fit) <- c("aov", "lm")
+    if(projections) fit$projections <- proj(fit)
+     class(fit) <- if(inherits(fit, "mlm"))
+      c("maov", "aov", class(fit)) else c("aov", class(fit))
     fit$call <- Call
-    fit
+    return(fit)
+  } else {
+#  helmert contrasts can be helpful: do we want to force them?
+#  this version does for the Error model.
+    cons <- options("contrasts")
+    options(contrasts=c("contr.helmert", "contr.poly"))
+    on.exit(options(cons))
+    allTerms <- Terms
+    errorterm <-  attr(Terms, "variables")[[1 + indError]]
+    eTerm <- deparse(errorterm[[2]])
+    intercept <- attr(Terms, "intercept")
+    ecall <- lmcall
+    ecall$formula <- as.formula(paste(deparse(formula[[2]]), "~", eTerm,
+                                   if(!intercept) "- 1"))
+    ecall$method <- "qr"
+    ecall$qr <- TRUE
+    ecall$contrasts <- NULL
+    er.fit <- eval(ecall, sys.frame(sys.parent()))
+    options(cons)
+    nmstrata <- attr(terms(er.fit),"term.labels")
+    if(intercept) nmstrata <- c("(Intercept)", nmstrata)
+    qr.e <- er.fit$qr
+    rank.e <- er.fit$rank
+    qty <- er.fit$resid
+    maov <- is.matrix(qty)
+    asgn.e <- er.fit$assign[qr.e$piv[1:rank.e]]
+    # we want this to label the rows of qtx, not cols of x.
+    nobs <- NROW(qty)
+    if(nobs > rank.e) {
+      result <- vector("list", max(asgn.e) + 2)
+      asgn.e[(rank.e+1):nobs] <- max(asgn.e) + 1
+      nmstrata <- c(nmstrata, "Within")
+    } else result <- vector("list", max(asgn.e) + 1)
+    names(result) <- nmstrata
+    lmcall$formula <- form <-
+      update(formula, paste(". ~ .-", deparse(errorterm)))
+    Terms <- terms(form)
+    lmcall$method <- "model.frame"
+    mf <- eval(lmcall, sys.frame(sys.parent()))
+    xvars <- as.character(attr(Terms, "variables"))[-1]
+    if (yvar <- attr(Terms, "response") > 0) 
+        xvars <- xvars[-yvar]
+    if (length(xvars) > 0) {
+        xlev <- lapply(mf[xvars], levels)
+        xlev <- xlev[!sapply(xlev, is.null)]
+    } else xlev <- NULL
+    resp <- model.response(mf)
+    qtx <- model.matrix(Terms, mf, contrasts)
+    cons <- attr(qtx, "contrasts")
+    dnx <- colnames(qtx)
+    asgn.t <- attr(qtx, "assign")
+    if(length(wts <- model.extract(mf, weights))) {
+      wts <- sqrt(wts)
+      resp <- resp * wts
+      qtx <- qtx * wts
+    }
+    qty <- as.matrix(qr.qty(qr.e, resp))
+    if((nc <- ncol(qty)) > 1) {
+      dny <- colnames(resp)
+      if(is.null(dny)) dny <- paste("Y", 1:nc, sep="")
+      dimnames(qty) <- list(seq(nrow(qty)), dny)
+    } else dimnames(qty) <- list(seq(nrow(qty)), NULL)
+    qtx <- qr.qty(qr.e, qtx)
+    dimnames(qtx) <- list(seq(nrow(qtx)) , dnx)
+    for(i in seq(along=nmstrata)) {
+      select <- asgn.e==(i-1)
+      ni <- sum(select)
+      if(!ni) next
+      # helpful to drop constant columns.
+      xi <- qtx[select, , drop = FALSE]
+      cols <- apply(xi^2, 2, sum) > 1e-5
+      if(any(cols)) {
+        xi <- xi[, cols, drop = FALSE]
+        attr(xi, "assign") <- asgn.t[cols]
+        fiti <- lm.fit(xi, qty[select,])
+        fiti$terms <- Terms
+      } else {
+        y <- qty[select,,drop=FALSE]
+        fiti <- list(coefficients = numeric(0), residuals = y, 
+                            fitted.values = 0 * y, weights = wts, rank = 0, 
+                            df.residual = NROW(y))
+      }
+      if(projections) fiti$projections <- proj(fiti)
+      class(fiti) <- c(if(maov) "maov", "aov", class(er.fit))
+      result[[i]] <- fiti
+    }
+    class(result) <- c("aovlist", "listof")
+    if(qr) attr(result, "error.qr") <- qr.e
+    attr(result, "call") <- Call
+    if(length(wts)) attr(result, "weights") <- wts
+    attr(result, "terms") <- allTerms
+    attr(result, "contrasts") <- cons
+    attr(result, "xlevels") <- xlev
+    result 
+  }
 }
 
-print.aov <- function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
+print.aov <-
+function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
 {
-    if(!is.null(cl <- x$call)) {
-	cat("Call:\n   ")
-	dput(cl)
+  if(!is.null(cl <- x$call)) {
+    cat("Call:\n   ")
+    dput(cl)
+  }
+  asgn <- x$assign[x$qr$pivot[1:x$rank]]
+  effects <- x$effects
+  if(!is.null(effects))
+    effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
+  rdf <- x$df.resid
+  uasgn <- unique(asgn)
+  nmeffect <- c("(Intercept)", attr(x$terms, "term.labels"))[1+uasgn]
+  nterms <- length(uasgn)
+  nresp <- NCOL(effects)
+  df <- numeric(nterms)
+  ss <- matrix(NA, nterms, nresp)
+  if(nterms) {
+    for(i in seq(nterms)) {
+      ai <- asgn==uasgn[i]
+      df[i] <- sum(ai)
+      ef <- effects[ai,, drop=FALSE]
+      ss[i,] <- if(sum(ai) > 1) apply(ef^2, 2, sum) else ef^2
     }
-    asgn <- x$assign[x$qr$pivot[1:x$rank]] # changed
-    effects <- x$effects[seq(along=asgn)]
-    nmeffect <- c("(Intercept)", attr(x$terms, "term.labels"))
-    nterms <- max(asgn)+1
-    df <- ss <- numeric(nterms)
-    if(nterms) {
-	for(i in seq(nterms)) {
-	    ai <- asgn==(i-1) # delete line
-	    df[i] <- sum(ai)
-	    ss[i] <- sum(effects[ai]^2)
-	}
-	keep <- df > 0
-	if(!intercept) keep[1] <- FALSE
-	nmeffect <- nmeffect[keep]
-	df <- df[keep]
-	ss <- ss[keep]
-	nterms <- length(df)
+    keep <- df > 0
+    if(!intercept && uasgn[1] == 0) keep[1] <- FALSE
+    nmeffect <- nmeffect[keep]
+    df <- df[keep]
+    ss <- ss[keep,,drop=FALSE]
+    nterms <- length(df)
+  }
+  cat("\nTerms:\n")
+  if(nterms == 0) {
+    # empty model
+    if(rdf > 0) {
+      ss <- apply(as.matrix(x$residuals)^2,2,sum)
+      ssp <- sapply(ss, format)
+      tmp <- as.matrix(c(ssp, format(rdf)))
+      rn <- if(length(ss) > 1) colnames(x$fitted) else "Sum of squares"
+      dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), "Residuals")
+      print.matrix(tmp, quote = FALSE, right = TRUE)
+      cat("\n")
+      cat("Residual standard error:", sapply(sqrt(ss/rdf), format), "\n")
+    } else
+      print.matrix(matrix(0, 2, 1,
+        dimnames=list(c("Sum of Squares", "Deg. of Freedom"), "<empty>")))
+  } else {
+    if(rdf > 0) {
+      resid <- as.matrix(x$residuals)
+      nterms <- nterms + 1
+      df <- c(df, rdf)
+      ss <- rbind(ss, apply(resid^2, 2, sum))
+      nmeffect <- c(nmeffect, "Residuals")
     }
-    cat("\nTerms:\n")
-    if(nterms == 0) {
-	## empty model
-	print(matrix(0, 1, 2, dimnames=list("<empty>",
-			      c("Sum of Squares", "Deg. of Freedom"))))
-	return(invisible(x))
-    }
-    df.res <- x$df.resid
-    if(is.null(df.res))
-	df.res <- length(x$resid) - length(asgn)
-    if(df.res > 0) {
-	resid <- x$resid
-	nterms <- nterms + 1
-	df[nterms] <- df.res
-	ss[nterms] <- sum(resid^2)
-	nmeffect[nterms] <- "Residuals"
-    }
-    print(matrix(c(format(ss), format(df)), 2, nterms, byrow=TRUE,
-		 dimnames=list(c("Sum of Squares", "Deg. of Freedom"),
-		 nmeffect)),
-	  quote = FALSE, right = TRUE)
+    ssp <- apply(zapsmall(ss), 2, format)
+    tmp <- t(cbind(ssp, format(df)))
+    if(ncol(effects) > 1) {
+      rn <- colnames(x$coef)
+      if(is.null(rn)) rn <- paste("resp", seq(ncol(effects)))
+    } else rn <- "Sum of squares"
+    dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), nmeffect)
+    print.matrix(tmp, quote = FALSE, right = TRUE)
     rank <- x$rank
-    int <- attr(x$terms, "int")
-    nobs <- length(x$residuals) - !(is.null(int) || int == 0)
-    rdf <- x$df.resid
-    if(is.null(rdf)) rdf <- nobs - rank
+    int <- attr(x$terms, "intercept")
+    nobs <- NROW(x$residuals) - !(is.null(int) || int == 0)
     cat("\n")
-    if(rdf > 0)
-	cat("Residual standard error:",
-            format(sqrt(sum(x$residuals^2)/ rdf)), "\n")
-    coef <- x$coef
-    R <- x$qr$qr
-    R <- R[1:ncol(R), ]
-    R[lower.tri(R)] <- 0
-    if(rank < (nc <- length(coef)))
-    {
-	cat(paste(nc - rank, "out of", nc, "effects not estimable\n"))
-	R <- R[, 1:rank, drop = FALSE]
+    if(rdf > 0) {
+      rs <- sqrt(apply(as.matrix(x$residuals)^2,2,sum)/rdf)
+      cat("Residual standard error:", sapply(rs, format), "\n")
     }
-    dm <- dim(R)
-    d <- seq(1, length = min(dm), by = dm[1] + 1)
-    R <- abs(R)
-    if(sum(R[ - d])/sum(R[d]) > tol)
-	cat("Estimated effects may be unbalanced\n")
+    coef <- as.matrix(x$coef)[,1]
+    R <- x$qr$qr
+    R <- R[1:min(dim(R)), ,drop=FALSE]
+    R[lower.tri(R)] <- 0
+    if(rank < (nc <- length(coef))) {
+      cat(paste(nc - rank, "out of", nc, "effects not estimable\n"))
+      R <- R[, 1:rank, drop = FALSE]
+    }
+    d2 <- sum(abs(diag(R)))
+    diag(R) <- 0
+    if(sum(abs(R))/d2 > tol)
+      cat("Estimated effects may be unbalanced\n")
     else cat("Estimated effects are balanced\n")
-    invisible(x)
+  }
+  invisible(x)
 }
 
-summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE, ...)
+summary.aov <- function(object, intercept = FALSE, keep.zero.df = TRUE,
+                        signif.stars = .Options$show.signif.stars, ...)
 {
-    asgn <- object$assign[object$qr$pivot[1:object$rank]] # changed
-    nterms <- max(asgn)+1
-    effects <- object$effects[seq(along=asgn)]
-    nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
-    resid <- object$residuals
-    wt <- object$weights
-    if(!is.null(wt)) resid <- resid * wt^0.5
+  asgn <- object$assign[object$qr$pivot[1:object$rank]]
+  uasgn <- unique(asgn)
+  nterms <- length(uasgn)
+  effects <- object$effects
+  if(!is.null(effects))
+    effects <- as.matrix(effects)[seq(along=asgn),,drop=FALSE]
+  rdf <- object$df.resid
+  nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))
+  coef <- as.matrix(object$coef)
+  resid <- as.matrix(object$residuals)
+  wt <- object$weights
+  if(!is.null(wt)) resid <- resid * wt^0.5
+  nresp <- NCOL(resid)
+  for (y in 1:nresp) {
+    if(nresp > 1) {
+      cn <- colnames(resid)[y]
+      if(is.null(cn) || cn == "") cn <- y
+      cat("\n  Response:", cn ,"\n")
+    }
     if(is.null(effects)) {
-	df <- nterms  <- 0
-	ss <- ms <- numeric(0)
-	nmrows <- character(0)
+      df <- nterms <- neff <- 0
+      ss <- ms <- numeric(0)
+      nmrows <- character(0)
+    } else {
+      nobs <- length(resid[, y])
+      df <- ss <- numeric(nterms)
+      nmrows <- character(nterms)
+      for(i in seq(nterms)) {
+        ai <- (asgn == uasgn[i])
+        df[i] <- sum(ai)
+        ss[i] <- sum(effects[ai, y]^2)
+        nmrows[i] <- nmeffect[1 + uasgn[i]]
+      }
     }
-    else {
-	nobs <- length(resid)
-	nterms <- max(asgn)+1
-	df <- ss <- numeric(nterms)
-	nmrows <- character(nterms)
-	for(i in 1:nterms) {
-	    ai <- asgn == (i-1) # changed
-	    df[i] <- sum(ai)
-	    ss[i] <- sum(effects[ai]^2)
-	    nmrows[i] <- nmeffect[i]
-	}
+    nt <- nterms
+    if(rdf > 0) {
+      nt <- nterms + 1
+      df[nt] <- rdf
+      ss[nt] <- sum(resid[,y]^2)
+      nmrows[nt] <- "Residuals"
     }
-    df.res <- object$df.resid
-    if(df.res > 0) {
-	nterms <- nterms + 1
-	df[nterms] <- df.res
-	ss[nterms] <- sum(resid^2)
-	nmrows[nterms] <- "Residuals"
-    }
-    ok <- df > 0
-    if(all(ok)) ms <- ss/df
-    else {
-	ms <- rep(NA, nterms)
-	ms[ok] <- ss[ok]/df[ok]
-    }
-    x <- list(Df = df, "Sum Sq" = ss, "Mean Sq" = ms)
-    if(df.res > 0) {
-	TT <- ms/ms[nterms]
-	TP <- 1 - pf(TT, df, df.res)
-	TT[nterms] <- TP[nterms] <- NA
-	x$"F Value" <- TT
-	x$"Pr(>F)" <- TP
+    ms <- ifelse(df > 0, ss/df, NA)
+    x <- list(Df = df, "Sum of Sq" = ss, "Mean Sq" = ms)
+    if(rdf > 0) {
+      TT <- ms/ms[nt]
+      TP <- 1 - pf(TT, df, rdf)
+      TT[nt] <- TP[nt] <- NA
+      x$"F Value" <- TT
+      x$"Pr(F)" <- TP
+      if(signif.stars)
+        x$Signif <- c(symnum(TP[ -nt], corr = FALSE,
+                             cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                             symbols = c("***", "**", "*", ".", " ")),
+                      "")
+      ## 'nterms' ~= 'Residuals' have no P-value
     }
     class(x) <- c("anova", "data.frame")
     row.names(x) <- format(nmrows)
     if(!keep.zero.df) x <- x[df > 0, ]
-    if(!intercept) x <- x[-1,]
-    x
+    pm <- pmatch("(Intercept)", row.names(x), 0)
+    if(!intercept&& pm > 0) x <- x[-pm ,]
+    ## Temporary stopgap measure, because print.anova doesn't work	
+    ## print(x)
+    print.data.frame(x)
+  }
+  invisible(x)
 }
 
 coef.aov <- function(x) {
-    z <- x$coef
-    z[!is.na(z)]
+  z <- x$coef
+  z[!is.na(z)]
 }
 
 alias <- function(object, ...) UseMethod("alias")
 
 alias.formula <- function(object, data, ...)
 {
-    lm.obj <- if(missing(data)) aov(object) else aov(object, data)
-    alias(lm.obj, ...)
+  lm.obj <- if(missing(data)) aov(object) else aov(object, data)
+  alias(lm.obj, ...)
 }
 
-alias.lm <- function(object, complete = TRUE, partial = FALSE, ...)
+alias.lm <-
+function(object, complete = TRUE, partial = FALSE,
+         partial.pattern = FALSE, ...)
 {
-    pattern <- function(x, ...) {
-	x[abs(x) < 1e-6] <- 0
-	if(exists("fractions", mode="function")) fractions(x) else x
+  CompPatt <- function(x, ...) {
+    x[abs(x) < 1e-6] <- 0
+    if(exists("fractions", mode="function")) fractions(x)
+    else {
+      class(x) <- "mtable"
+      x[abs(x) < 1e-6] <- NA
+      x
     }
-    Model <- object$terms
-    attributes(Model) <- NULL
-    value <- list(Model = Model)
-    R <- object$qr$qr
-    R <- R[1:ncol(R), ]
-    R[lower.tri(R)] <- 0
-    d <- dim(R)
-    rank <- object$rank
-    p <- d[2]
-    if(complete) { # full rank, no aliasing
-	value$Complete <-
-	    if(is.null(p) || rank == p) NULL else {
-		p1 <- 1:rank
-		dn <- dimnames(R)[[2]]
-		X <- R[p1, p1]
-		Y <-  R[p1, -p1, drop = FALSE]
-		beta12 <- as.matrix(qr.coef(qr(X), Y))
-		dimnames(beta12) <- list(dn[p1], dn[ -p1])
-		pattern(t(beta12))
-	    }
+  }
+  PartPatt <- function(x) {
+    z <- zapsmall(x) != 0
+    if(any(z)) {
+      xx <- abs(signif(x[z], 2))
+      ll <- length(unique(xx))
+      if(ll > 10) xx <- cut(xx, 9) else if(ll == 1) x[] <- 1
+      x[z] <- paste(ifelse(x[z] > 0, " ", "-"), xx, sep = "")
     }
-    if(partial) {
-	tmp <- summary.lm(object)$cov.unscaled
-	ses <- sqrt(diag(tmp))
-	beta11 <- tmp /outer(ses, ses)
-	beta11[row(beta11) >= col(beta11)] <- 0
-	beta11[abs(beta11) < 1e-6] <- 0
-	if(all(beta11 == 0)) beta11 <- NULL
-	value$Partial <- beta11
+    x[!z] <- ""
+    collabs <- colnames(x)
+    if(length(collabs)) {
+      collabs <- abbreviate(sub("\\.", "", collabs), 3)
+    } else  collabs <-1:ncol(x)
+    colnames(x) <- collabs
+    class(x) <- "mtable"
+    x
+  }
+  Model <- object$terms
+  attributes(Model) <- NULL
+  value <- list(Model = Model)
+  R <- object$qr$qr
+  R <- R[1:min(dim(R)),, drop=FALSE]
+  R[lower.tri(R)] <- 0
+  d <- dim(R)
+  rank <- object$rank
+  p <- d[2]
+  if(complete) { # full rank, no aliasing
+    value$Complete <-
+      if(is.null(p) || rank == p) NULL else {
+        p1 <- 1:rank
+        dn <- colnames(R)
+        X <- R[p1, p1]
+        Y <-  R[p1, -p1, drop = FALSE]
+        beta12 <- as.matrix(qr.coef(qr(X), Y))
+        dimnames(beta12) <- list(dn[p1], dn[ -p1])
+        CompPatt(t(beta12))
+      }
+  }
+  if(partial) {
+    tmp <- summary.lm(object)$cov.unscaled
+    ses <- sqrt(diag(tmp))
+    beta11 <- tmp /outer(ses, ses)
+    beta11[row(beta11) >= col(beta11)] <- 0
+    beta11[abs(beta11) < 1e-6] <- 0
+    if(all(beta11 == 0)) beta11 <- NULL
+    else if(partial.pattern) beta11 <- PartPatt(beta11)
+    value$Partial <- beta11
+  }
+  class(value) <- "listof"
+  value
+}
+
+print.aovlist <- function(x, ...)
+{
+  cl <- attr(x, "call")
+  if(!is.null(cl)) {
+    cat("\nCall:\n")
+    dput(cl)
+  }
+  if(!is.null(attr(x, "weights")))
+    cat("Note: The results below are on the weighted scale\n")
+  nx <- names(x)
+  if(nx[1] == "(Intercept)") {
+    mn <- x[[1]]$coef
+    if(is.matrix(mn)) {
+      cat("\nGrand Means:\n")
+      print(format(mn[1,]), quote=FALSE)
+    } else cat("\nGrand Mean:", format(mn[1]), "\n")
+    nx <- nx[-1]
+  }
+  for(ii in seq(along = nx)) {
+    i <- nx[ii]
+    cat("\nStratum ", ii, ": ", i, "\n", sep = "")
+    xi <- x[[i]]
+    print(xi, ...)
+  }
+  invisible(x)
+}
+
+summary.aovlist <-
+function(object, ...)
+{
+  if(!is.null(attr(object, "weights")))
+    cat("Note: The results below are on the weighted scale\n")
+  dots <- list(...)
+  strata <- names(object)
+  if(strata[1] == "(Intercept)") {
+    strata <- strata[-1]
+    object <- object[-1]
+  }
+  x <- vector(length = length(strata), mode = "list")
+  names(x) <- paste("Error:", strata)
+  for(i in seq(along = strata)) {
+    cat("\nError:", strata[i], "\n")
+    x[[i]] <- do.call("summary", append(list(object = object[[i]]), dots))
+  }
+}
+
+coef.listof <- function(object)
+{
+  val <- vector("list", length(object))
+  names(val) <- names(object)
+  for(i in seq(along=object)) val[[i]] <- coef(object[[i]])
+  class(val) <- "listof"
+  val
+}
+
+se.contrast <- function(x, ...) UseMethod("se.contrast")
+
+se.contrast.aov <- 
+function(object, contrast.obj, coef = contr.helmert(ncol(contrast))[, 1],
+         data = NULL)
+{
+  contrast.weight.aov <- function(object, contrast)
+  {
+    asgn <- object$assign[object$qr$pivot[1:object$rank]]
+    uasgn <- unique(asgn)
+    nterms <- length(uasgn)
+    nmeffect <- c("(Intercept)", attr(object$terms, "term.labels"))[1 + uasgn]
+    effects <- as.matrix(qr.qty(object$qr, contrast))
+    effect.sq <- effects[seq(along=asgn), , drop = FALSE]^2
+    res <- matrix(0, nrow = nterms, ncol = ncol(effects), 
+                  dimnames = list(nmeffect, colnames(contrast)))
+    for(i in seq(nterms)) {
+      select <- (asgn == uasgn[i])
+      res[i,  ] <- rep(1, sum(select)) %*% effect.sq[select, , drop = FALSE]
     }
-    class(value) <- "listof"
-    value
+    res
+  }
+  if(is.null(data)) contrast.obj <- eval(contrast.obj)
+  else contrast.obj <- eval(substitute(contrast.obj), data)
+  if(!missing(coef)) {
+    if(sum(coef) != 0)
+      stop("coef must define a contrast, i.e., sum to 0")
+    if(length(coef) != length(contrast.obj))
+      stop("coef must have same length as contrast.obj")
+  }
+  if(!is.matrix(contrast.obj)) {
+    contrast <-
+      sapply(contrast.obj, function(x)
+             {
+               if(!is.logical(x))
+                 stop(paste("Each element of", substitute(contrasts.list),
+                            " must be\nlogical"))
+               x/sum(x)
+             })
+    contrast <- contrast %*% coef
+    if(!any(contrast) || all(is.na(contrast)))
+      stop("The contrast defined is empty (has no TRUE elements)")
+  } else {
+    contrast <- contrast.obj
+    if(any(round(rep(1, nrow(contrast)) %*% contrast, 8) != 0))
+      stop("Columns of contrast.obj must define a contrast (sum to zero)")
+    if(length(colnames(contrast)) == 0)
+      colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
+  }
+  weights <- contrast.weight.aov(object, contrast)
+  rdf <- object$df.resid
+  rse <- sum(object$residuals^2)/rdf
+  if(!is.matrix(contrast.obj)) sqrt(sum(weights) * rse)
+  else sqrt(rse * (rep(1, nrow(weights)) %*% weights))
+}
+
+se.contrast.aovlist <- 
+  function(object, contrast.obj, coef = contr.helmert(ncol(contrast))[, 1],
+           data = NULL)
+{
+  contrast.weight.aovlist <- function(object, contrast, onedf = TRUE)
+  {
+    e.qr <- attr(object, "error.qr")
+    if(!is.qr(e.qr))
+      stop("Argument does not include an error qr component")
+    c.qr <- qr.qty(e.qr, contrast)
+    e.assign <- attr(e.qr$qr, "assign")
+    n.object <- length(object)
+    if(length(e.assign) < n.object)
+      e.assign[[names(object)[n.object]]] <- attr(e.qr$qr, "assign.residual")
+    res <- vector(length = n.object, mode = "list")
+    names(res) <- names(object)
+    for(strata.nm in names(object)) {
+      strata <- object[[strata.nm]]
+      if(is.qr(strata$qr)) {
+        scontrast <- c.qr[e.assign[[strata.nm]], , drop = FALSE]
+        effects <- as.matrix(qr.qty(strata$qr, scontrast))
+        asgn <- strata$assign
+        asgn <- strata$assign[strata$qr$pivot[1:strata$rank]]
+        uasgn <- unique(asgn)
+        res.i <- matrix(0, nrow = length(asgn), ncol = ncol(effects),
+                        dimnames = list(names(asgn), colnames(contrast)))
+        for(i in seq(along = asgn)) {
+          select <- (asgn == uasgn[i])
+          res.i[i,  ] <- rep(1, length(select)) %*%
+            effect[select, , drop = FALSE]^2
+        }
+        res[[strata.nm]] <- res.i
+      }
+    }
+    res
+  }
+  SS <- function(aov.object)
+  {
+    rdf <- aov.object$df.resid
+    if(is.null(rdf)) {
+      nobs <- length(aov.object$residuals)
+      rank <- aov.object$rank
+      rdf <- nobs - rank
+    }
+    sum(aov.object$residuals^2)/rdf
+  }
+  if(is.null(attr(object, "error.qr"))) {
+    cat("Refitting model to allow projection\n")
+    object <- update(object, qr = TRUE)
+  }
+  if(is.null(data)) contrast.obj <- eval(contrast.obj)
+  else contrast.obj <- eval(substitute(contrast.obj), data)
+  if(!missing(coef)) {
+    if(sum(coef) != 0)
+      stop("coef must define a contrast, i.e., sum to 0")
+    if(length(coef) != length(contrast.obj))
+      stop("coef must have same length as contrast.obj")
+  }
+  if(!is.matrix(contrast.obj)) {
+    contrast <- sapply(contrast.obj, function(x)
+                       {
+                         if(!is.logical(x))
+                           stop(paste("Each element of", substitute(contrast.obj), " must be\nlogical"))
+                         x/sum(x)
+                       }
+                       )
+    contrast <- contrast %*% coef
+    if(!any(contrast))
+      stop("The contrast defined is empty (has no TRUE elements)")
+  }
+  else {
+    contrast <- contrast.obj
+    if(any(round(rep(1, nrow(contrast)) %*% contrast, 8) != 0))
+      stop("Columns of contrast.obj must define a contrast(sum to zero)")
+    if(length(colnames(contrast)) == 0)
+      colnames(contrast) <- paste("Contrast", seq(ncol(contrast)))
+  }
+  weights <- contrast.weight.aovlist(object, contrast, onedf = FALSE)
+  weights <- weights[-match("(Intercept)", names(weights))]
+  effic <- eff.aovlist(object)
+  #Need to identify the lowest stratum where each nonzero term appears
+  eff.used <- apply(effic, 2, function(x, ind = seq(length(x)))
+                    {
+                      temp <- (x > 0)
+                      if(sum(temp) == 1) temp
+                      else max(ind[temp]) == ind
+                    }
+                    )
+  strata.nms <- rownames(effic)[row(eff.used)[eff.used]]
+  var.nms <- colnames(effic)[col(eff.used)[eff.used]]
+  rse.list <- sapply(object[unique(strata.nms)], SS)
+  wgt <- matrix(0, nrow = length(var.nms), ncol = ncol(contrast), 
+                dimnames = list(var.nms, colnames(contrast)))
+  for(i in seq(length(var.nms)))
+    wgt[i,  ] <- weights[[strata.nms[i]]][var.nms[i],  , drop = FALSE]
+  rse <- rse.list[strata.nms]
+  eff <- effic[eff.used]
+  sqrt((rse/eff^2) %*% wgt)
 }
