@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-10
+Version 2.0.2005-01-12
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2972,6 +2972,10 @@ distributions of R.)
 
 *xtable*
      Export data to LaTeX and HTML tables.
+
+*zicounts*
+     Fit classical, zero-inflated and interval censored count data
+     regression models.
 
 *zoo*
      A class with methods for totally ordered indexed observations such as
