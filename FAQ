@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-13, 2003-11-08
+Version 1.8-14, 2003-11-08
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -390,7 +390,7 @@ The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
 maintained by Dirk Eddelbuettel), Mandrake 9.0/9.1 i386 packages by Michele
 Alzetta, Red Hat 7.x/8.x/9 i386 packages by Martyn Plummer, SuSE
-7.3/8.0/8.1/8.2 i386 packages by Detlef Steuer, and VineLinux 2.6 i386
+7.3/8.0/8.1/8.2/9.0 i386 packages by Detlef Steuer, and VineLinux 2.6 i386
 packages by Susunu Tanimura.
 
    The Debian packages can be accessed through APT, the Debian package
