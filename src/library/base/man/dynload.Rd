@@ -52,7 +52,11 @@ symbol.For(name)
     entirely in lower case (but this may be system-dependent).}
 }
 \details{
-  See `See Also' and the \emph{Writing R Extensions} manual for how to
+  See
+#ifdef windows
+`readme.packages',
+#endif
+`See Also' and the \emph{Writing R Extensions} manual for how to
   create a suitable shared library.  Note that unlike some versions of
   S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
   shared library or DLL.
