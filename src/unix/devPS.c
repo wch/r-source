@@ -22,6 +22,7 @@
 #include "PS.h"
 #include "Errormsg.h"
 #include "Fileio.h"
+#include "Platform.h"
 #include <stdio.h>
 
 unsigned int str2col(char*);
@@ -402,7 +403,11 @@ static int PS_Open(DevDesc *dd, postscriptDesc *pd)
 			return 0;
 	}
 
-	if(!(pd->psfp = R_fopen(pd->filename, "w"))) return 0;
+	if (strlen(pd->filename) == 0)
+		pd->psfp = popen(R_PRINTCMD, "w");
+	else
+		pd->psfp = R_fopen(pd->filename, "w");
+	if (!pd->psfp) return 0;
 
 	if(pd->landscape)
 		PostScriptFileHeader(pd->psfp,
