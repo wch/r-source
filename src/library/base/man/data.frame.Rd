@@ -1,7 +1,8 @@
 \name{data.frame}
 \title{Data Frames}
 \usage{
-data.frame(\dots, row.names = NULL, col.names = NULL, as.is = FALSE)
+data.frame(\dots, row.names = NULL, check.rows = FALSE,
+        check.names = TRUE)
 
 as.data.frame(x)
 is.data.frame(x)
@@ -20,10 +21,11 @@ print(data.frame.obj)
     present) or the deparsed argument itself.}
   \item{row.names}{a character vector giving the row names for the data
     frame.}
-  \item{col.names}{a character vector giving names for the variables in
-    the data frame.}
-  \item{as.is}{a logical value indicating whether character variables
-    should be left ``as is'' or converted to factors.}
+  \item{check.rows}{if \code{TRUE} then the rows are checked for
+    consistency of length and names.}
+  \item{check.names}{if \code{TRUE} then the names of the variables
+    in the data frame are checked to ensure that they are valid
+    variable names.  If necessary they are adjusted so that they are.}
 }
 \value{
   A data frame.  Data frames are the fundamental data structure used by
