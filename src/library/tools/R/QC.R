@@ -1944,7 +1944,11 @@ function(package, dir, lib.loc = NULL)
             }
 
             for(m in methods)
-                badMethods <- c(badMethods, checkArgs(g, m, env))
+                ## both all() and all.equal() are generic.
+                badMethods <- if(g == "all") {
+                    m1 <- m[-grep("^all\\.equal", m)]
+                    c(badMethods, if(length(m1)) checkArgs(g, m1, env))
+                } else c(badMethods, checkArgs(g, m, env))
         }
     }
 

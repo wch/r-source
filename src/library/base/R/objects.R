@@ -1,6 +1,5 @@
 methods <- function (generic.function, class)
 {
-## FIXME: findGeneric() is almost identical inside getS3method() !
     findGeneric <- function(fname, envir) {
         if(!exists(fname, mode = "function", envir = envir)) return("")
         if(any(fname == tools:::.getInternalS3generics())) return(fname)
@@ -30,7 +29,6 @@ methods <- function (generic.function, class)
         isUME(body(f))
     }
 
-## FIXME[MM]: An abstraction of this function should go to "tools" or similar:
     rbindSome <- function(df, nms, msg) {
         ## rbind.data.frame() -- dropping duplicated rows
         seriDf <- function(x)
@@ -95,6 +93,9 @@ methods <- function (generic.function, class)
         if(length(S3reg))
             info <- rbindSome(info, S3reg, msg =
                               paste("registered S3method for", generic.function))
+        ## both all() and all.equal() are generic, so
+        if(generic.function == "all")
+            info <- info[-grep("^all\\.equal", row.names(info)), ]
     }
     else if (!missing(class)) {
 	if (!is.character(class))
