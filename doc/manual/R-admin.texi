@@ -1047,11 +1047,11 @@ also available from Fink, then you will also need to use the
 @node Solaris, HPUX, MacOS X, Platform notes
 @subsection Solaris on Sparc
 
-@R{} has been built successfully on Solaris 2.7 using
-@command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} compilers, and
-less regularly on 2.5.1, 2.6 and 8.  GNU @command{make} is needed prior
-to 2.7 for building other than in the source tree, and perhaps even
-then.
+@R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
+5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6}
+compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
+@command{make} is needed prior to 2.7 for building other than in the
+source tree, and perhaps even then.
 
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
@@ -1204,15 +1204,15 @@ suppress @code{SIGFPE}'s.  Currently R does not set a signal handler for
 @code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic, so
 these are fatal.
 
-@command{make check} passes with no problems.  @command{make
-test-all-extras} in the @file{tests} directory fails at the end of
-@code{reg-tests-1.R} since this system does not have @code{vsnprintf}.
-As currently written, the test at the end of @code{reg-tests-1.R} causes
-a segfault in this case.  You can complete the tests by executing
+@command{make check} passes with no problems.  
+@c @command{make test-all-extras} in the @file{tests} directory fails at the end of
+@c @code{reg-tests-1.R} since this system does not have @code{vsnprintf}.
+@c As currently written, the test at the end of @code{reg-tests-1.R} causes
+@c a segfault in this case.  You can complete the tests by executing
 
-@smallexample
-touch reg-tests-1.Rout
-@end smallexample
+@c @smallexample
+@c touch reg-tests-1.Rout
+@c @end smallexample
 
 
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
