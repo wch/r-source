@@ -88,7 +88,7 @@ AC_DEFUN(R_PROG_CC_M,
       cat << \EOF > ${depend_rules_frag}
 .c.d:
 	@echo "making $[@] from $<"
-	@$(CC) -M $(ALL_CPPFLAGS) $< -o $[@]
+	@$(CC) -M $(ALL_CPPFLAGS) $< > $[@]
 EOF
     else
       cat << \EOF > ${depend_rules_frag}

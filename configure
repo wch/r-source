@@ -1635,7 +1635,7 @@ echo "$ac_t""$r_cv_prog_cc_m" 1>&6
       cat << \EOF > ${depend_rules_frag}
 .c.d:
 	@echo "making $@ from $<"
-	@$(CC) -M $(ALL_CPPFLAGS) $< -o $@
+	@$(CC) -M $(ALL_CPPFLAGS) $< > $@
 EOF
     else
       cat << \EOF > ${depend_rules_frag}
