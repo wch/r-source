@@ -492,7 +492,7 @@ SEXP do_lengthgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP name, val, aenv;
-	int ginherits;
+	int ginherits=0;
 
 	checkArity(op, args);
 	name = findVar(CAR(args), rho);
@@ -533,7 +533,7 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP name, aenv, tsym, tenv, tframe;
-	int ginherits;
+	int ginherits=0;
 	int set, i;
 
 	checkArity(op, args);
@@ -585,7 +585,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP rval, genv, t1;
 	SEXPTYPE gmode;
-	int ginherits, where;
+	int ginherits=0, where;
 
 	checkArity(op, args);
 
@@ -613,16 +613,14 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* Now we get the where= argument */
 
-	if (CADR(args) != R_NilValue) {
-		if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
-			where = asInteger(CADR(args));
-			genv = sysframe(where,R_GlobalContext);
-		}
-		else if (TYPEOF(CADR(args)) != ENVSXP)
-			errorcall(call,"invalid envir argument\n");
-		else
-			genv = CADR(args);
+	if (TYPEOF(CADR(args)) == REALSXP || TYPEOF(CADR(args)) == INTSXP) {
+		where = asInteger(CADR(args));
+		genv = sysframe(where,R_GlobalContext);
 	}
+	else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
+		genv = CADR(args);
+	else 
+		errorcall(call,"invalid envir argument\n");
 
 	/* The mode of the object being sought */
 

@@ -2,6 +2,9 @@
 
 BUG FIXES
 
+    o   Using get with pos=length(search()) or envir=NULL was
+	actually actually starting the search in .GlobalEnv.
+
     o   first=0 (or negative) argument to substr() caused trouble.
 
     o   1%o%1 would segfault
