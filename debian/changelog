@@ -1,3 +1,9 @@
+r-base (1.4.0-0) unstable; urgency=low
+
+  * Test builds for new upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 24 Oct 2001 08:23:50 -0500
+
 r-base (1.3.1-2) unstable; urgency=low
 
   * Non-maintainer upload, coordinated with the maintainer
