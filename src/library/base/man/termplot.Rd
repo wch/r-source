@@ -43,7 +43,7 @@ termplot(model, data=model.frame(model), partial.resid=FALSE, rug=FALSE,
 
   For the \code{partial.resid=TRUE} option it must have a
   \code{\link{residuals}} method that accepts \code{type="partial"},
-  currently only \code{\link{glm}} does.
+  which \code{\link{lm}} and \code{\link{glm}} do.
 
   It is often necessary to specify the \code{data} argument, because it is
   not possible to reconstruct eg \code{x} from a model frame containing
