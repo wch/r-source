@@ -9,7 +9,7 @@ file.show(\dots, header, title="R Information",
 \arguments{
   \item{\dots}{one or more character vectors containing the names of the
     files to be displayed.}
-  \item{header}{vector (of the same length as the number of files
+  \item{header}{character vector (of the same length as the number of files
     specified in \code{\dots}) giving a header for each file being
     displayed.  Defaults to empty strings.} 
   \item{title}{an overall title for the display.  If a single separate
