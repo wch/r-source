@@ -9,34 +9,41 @@
 <address>S. M. Iacus</address>
 <p>
 Changes and bug fixing specific to this version:
-
-<ul> Added the Preferences panel. The settings in .Renviron
+<ul>
+<li> Added the Preferences panel. The settings in .Renviron
   are now superseeded by the prefences settings
   .Renviron can be still used to simulate the Environment
-  for the Sys.getenv() call.</ul>
-<ul>  Added the item "Link Packages Help" to the "Help" menu.</ul>
-<ul>  Fixed a big that leaves help menu items ghosted after
-  using them.</ul>
-<ul>  Some MRC Apple's Compiler specific fixing.</ul>
-<ul>  Fixed problems with current working directory in different
-  points (.Rprofile, .Renviron, etc).</ul>
-<ul>  Solved the problem of line endings that are different from
+  for the Sys.getenv() call.</li>
+<li>  Added the item "Link Packages Help" to the "Help" menu.</li>
+<li>  Fixed a big that leaves help menu items ghosted after
+  using them.</li>
+<li>  Some MRC Apple's Compiler specific fixing.</li>
+<li>  Fixed problems with current working directory in different
+  points (.Rprofile, .Renviron, etc).</li>
+<li>  Solved the problem of line endings that are different from
   MacOS and OS X. Now text files generated under both systems
-  are fine to R.</ul>
-<ul>  Makefiles and perl scripts have been fixed so that now R
+  are fine to R.</li>
+<li>  Makefiles and perl scripts have been fixed so that now R
   builds via MPW shell scripts and help files are generated
-  as well.</ul>
-<ul>  A bug in the internal file viewer that suppressed the "_"
-  symbols from the text has been fixed.</ul>
-<ul>  This version of R is slower at startup but faster than
-  then previous release (by a factor of 10%) in calculations.</ul>
-<ul>  The initial window at startup has been suppressed in this
+  as well.</li>
+<li>  A bug in the internal file viewer that suppressed the "_"
+  symbols from the text has been fixed.</li>
+<li>  This version of R is slower at startup but faster than
+  then previous release (by a factor of 10%) in calculations.</li>
+<li>  The initial window at startup has been suppressed in this
   in the hope to provide am applescript analogous to pass
-  initial arguments to R.</ul>
-  <ul> The about box now reports informations on the current
-  release of R</ul>  
-<ul> Added the zlib capability so now R can manage gzipped files and connentions</ul>  
-<ul> Fixed some wrong links in html help files</ul>
+  initial arguments to R.</li>
+  <li> The about box now reports informations on the current
+  release of R</li>  
+<li> Added the zlib capability so now R can manage gzipped files and connentions</li>  
+<li> Fixed some wrong links in html help files</li>
+<li>  Finally fixed copy and paste of graphic windows contents
+  and saving of them onto files. For some reason the previous
+  algorithm did not copy text characters under MacOS X.</li>
+  </ul>
+
+
+
 
 <p><p><hr><p>
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
@@ -834,19 +841,7 @@ negative length vectors are not allowed
 To solve this problem you just need to resize the device window to a 
 bigger size with your mouse and resubmit the graphic command in R.
 <br> 
-<ul><li>
-On MacOS X  copying to the clipboard an image or saving it in a file 
-produces a picture without text in it. This problem is (probably) due to
-the fact that the fonts we use are saved as polygons/vectors and not 
-as images.</li>
-<li>
-From version 1.2.2, at startup time you can run scripts by selecting 
-input and output file and options (this is usefule when you want to run
-tests/checks). Both under MacOS and MacOS X you cannot choose a file 
-that is outside the directory where the R application is. This problem
-is not due to the R application but to a bug in Sioux Interface provided 
-by the compiler. This problem will be fixed with the next release of the
-compiler.</li>
+<ul>
 
 <li>For some reason MacZip does not intercat too much with R under MacOS
 X.  Moreover MacZip has not yet been “carbonized” so when R calls

@@ -31,6 +31,9 @@ rm140
 * Added the zlib capability so now R can manage gzipped 
   files and connentions
 * Fixed some wrong links in html help files
+* Finally fixed copy and paste of graphic windows contents
+  and saving of them onto files. For some reason the previous
+  algorithm did not copy text characters under MacOS X.
 
 
 
