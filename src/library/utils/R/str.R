@@ -210,7 +210,18 @@ str.default <-
 		       if(nl) P0(pasteCh(lev.att[1:ml]), collapse = lsep),
 		       if(ml < nl) P0(lsep,".."), ":")
 
-	    std.attr <- c("levels","class")
+	    std.attr <- c("levels", "class")
+	} else if (typeof(x) %in% c("externalptr", "weakref")) {
+            ## Careful here, we don't want to change pointer objects
+            if(has.class)
+                cat("Class", if(length(cl) > 1) "es",
+		" '", paste(cl, collapse = "', '"), "' ", sep="")
+            le <- v.len <- 0
+            str1 <- paste("<", typeof(x), ">", sep="")
+            has.class <- TRUE # fake for later
+	    std.attr <- "class"
+            ## ideally we would figure out if as.character has a
+            ## suitable method and use that.
 	} else if(has.class) {
 	    cat("Class", if(length(cl) > 1) "es",
 		" '", paste(cl, collapse = "', '"), "' ", sep="")
@@ -250,8 +261,8 @@ str.default <-
 	    ##-- has.class superfluous --
 	    mod <- mode(object)
 	    give.mode <- FALSE
-	    if (any(mod == c("call", "language", "(", "symbol",
-		    "externalptr", "weakref")) || is.environment(object)) {
+	    if (any(mod == c("call", "language", "(", "symbol"))
+                || is.environment(object)) {
 		##give.mode <- !is.vector(object)# then it has not yet been done
 		if(mod == "(") give.mode <- TRUE
 		typ <- typeof(object)

@@ -288,6 +288,12 @@ BUG FIXES
 
     o	contrib.url() now handles URLs ending in '/' correctly.
 
+    o	str() removed any class from externalptr objects.
+
+    o	logLik() and hence AIC() failed or gave incorrect answers 
+	on "lm" fits with na.action = na.exclude (and perhaps other 
+	na.actions's except na.omit).
+
 
 
 	*********************************************************
