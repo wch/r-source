@@ -116,9 +116,21 @@ typedef struct {
 
 struct _GEDevDesc {
     int newDevStruct;
+    /* 
+     * Stuff that the devices can see (and modify).
+     * All detailed in GraphicsDevice.h
+     */
     NewDevDesc *dev;
-    /* Information about a device which has nothing to do with
-     * R's concept of a graphics engine.
+    /*
+     * Stuff about the device that only the graphics engine sees
+     * (the devices don't see it).
+     * Display list stuff should come here from NewDevDesc struct.
+     */
+    Rboolean dirty;  /* Has the device received any output? */
+    /* 
+     * Stuff about the device that only graphics systems see.
+     * The graphics engine has no idea what is in here.
+     * Used by graphics systems to store system state per device.
      */
     GESystemDesc *gesd[MAX_GRAPHICS_SYSTEMS];
 };
@@ -303,6 +315,10 @@ void R_GE_VText(double x, double y, char *s,
 #define	DEG2RAD 0.01745329251994329576
 
 GEDevDesc* GEcurrentDevice();
+Rboolean GEdeviceDirty(GEDevDesc *dd);
+void GEdirtyDevice(GEDevDesc *dd);
+Rboolean GEcheckState(GEDevDesc *dd);
+void GErecordGraphicOperation(SEXP op, SEXP args, GEDevDesc *dd);
 void GEinitDisplayList(GEDevDesc *dd);
 void GEplayDisplayList(GEDevDesc *dd);
 void GEcopyDisplayList(int fromDevice);

@@ -23,7 +23,13 @@ typedef struct {
     GPar dp;		/* current device default parameters */
     GPar gp;		/* current device current parameters */
     GPar dpSaved;		/* saved device default parameters */
+    /*
+     * Has the device received base output?
+     */
+    Rboolean baseDevice;  
 } baseSystemState;
 
 void registerBase();
 
+Rboolean Rf_baseDevice(DevDesc *dd);
+void Rf_setBaseDevice(Rboolean val, DevDesc *dd);

@@ -75,10 +75,6 @@ SEXP L_initGrid(SEXP GridEvalEnv)
 SEXP L_killGrid() 
 {
     GEunregisterSystem(gridRegisterIndex);
-    /* This variable lives in an environment that goes away with the
-       namespace, and this is only called on .onUnload.
-     */
-    /* setSymbolValue(".GRID.STATE", R_NilValue); */
     return R_NilValue;
 }
 
@@ -91,12 +87,10 @@ GEDevDesc* getDevice()
 
 /* If this is the first time that a grid operation has occurred for 
  * this device, do some initialisation.
- * NOTE that this does some things that make base R graphics risky
- * on the device hereafter.
  */
 void dirtyGridDevice(GEDevDesc *dd) {
-    SEXP gsd, griddev;
     if (!LOGICAL(gridStateElement(dd, GSS_GRIDDEVICE))[0]) {
+	SEXP gsd, griddev;
 	/* Record the fact that this device has now received grid output
 	 */
 	gsd = (SEXP) dd->gesd[gridRegisterIndex]->systemSpecific;
@@ -104,34 +98,18 @@ void dirtyGridDevice(GEDevDesc *dd) {
 	LOGICAL(griddev)[0] = TRUE;
 	SET_VECTOR_ELT(gsd, GSS_GRIDDEVICE, griddev);
 	UNPROTECT(1);
-	/* FIXME: Gross hack to stop the base graphics moaning at me.
-	 * This should be removed when base graphics have been 
-	 * properly split from the graphics engine.
-	 */
-	/* This is dangerous if base graphics are used in same device
-	 * because could then do base graphics operations that 
-	 * base graphics would normally not allow because 
-	 * plot.new() has not been called
-	 */
-	/* There is further danger that base graphics could switch it
-	 * off again, thereby incapacitating grid graphics.
-	 * For example, this might happen if a device is made too
-	 * small.
-	 */
-	GSetState(1, (DevDesc*) dd);
-	/* Even grosser hack to stop base graphics moaning
-	 */
-	/* This is currently the only way to set gpptr(dd)->valid
-	 * Needs fixing (in base graphics)!
-	 */
-	/* NOTE that this needs to go before the createGridSystemState
-	 * so that the silly clipping region it sets will get
-	 * overridden by the top-level viewport
-	 */
-	GNewPlot(FALSE);
-	/* Create a top-level viewport for this device
-	 */
 	initVP(dd);
+	/*
+	 * Start the first page on the device
+	 * (But only if no other graphics system has not already done so)
+	 */
+	if (!GEdeviceDirty(dd)) {
+	    R_GE_gcontext gc;
+	    SEXP currentgp = gridStateElement(dd, GSS_GPAR);
+	    gcontextFromgpar(currentgp, 0, &gc);
+	    GENewPage(&gc, dd);
+	    GEdirtyDevice(dd);
+	}
 	/* The top-level viewport goes at the start of the display list
 	 */
 	initDL(dd);

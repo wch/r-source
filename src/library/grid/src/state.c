@@ -255,30 +255,6 @@ SEXP gridCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 		currentgp = gridStateElement(dd, GSS_GPAR);
 		gcontextFromgpar(currentgp, 0, &gc);
 		GENewPage(&gc, dd);
-		/*
-		 * Instead of using the current fill, use ".grid.redraw.fill"
-		 * because if the current fill is transparent then the 
-		 * screen will not be cleared on a redraw
-		 * NOTE that this is a temporary fix awaiting a more complete
-		 * and complex fix (requiring changes to base)
-		 *
-		 
-		 fillsxp = getSymbolValue(".grid.redraw.fill");
-		 
-		*/
-		/*
-		 * Just fill a rect rather than calling GENewPage
-		 
-		 if (isNull(fillsxp))
-		 fill = NA_INTEGER;
-		 else
-		 fill = RGBpar(fillsxp, 0);
-		 GERect(toDeviceX(-.1, GE_NDC, dd), toDeviceY(-.1, GE_NDC, dd),
-		 toDeviceX(1.1, GE_NDC, dd), toDeviceY(1.1, GE_NDC, dd),
-		 NA_INTEGER, fill, gpGamma(currentgp), 
-		 gpLineType(currentgp), gpLineWidth(currentgp), dd);
-		 
-		*/
 		initGPar(dd);
 		initVP(dd);
 		initOtherState(dd);

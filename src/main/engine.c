@@ -70,6 +70,7 @@ GEDevDesc* GEcreateDevDesc(NewDevDesc* dev)
 	dd->gesd[i] = NULL;
     dd->newDevStruct = 1;
     dd->dev = dev;
+    dd->dirty = FALSE;
     return dd;
 }
 
@@ -2064,6 +2065,69 @@ void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd)
 }
 
 /****************************************************************
+ * GEdeviceDirty
+ ****************************************************************
+ * 
+ * Has the device received output from any graphics system?
+ */
+
+Rboolean GEdeviceDirty(GEDevDesc *dd)
+{
+    return dd->dirty;
+}
+
+/****************************************************************
+ * GEdirtyDevice
+ ****************************************************************
+ *
+ * Indicate that the device has received output from at least one
+ * graphics system.
+ */
+
+void GEdirtyDevice(GEDevDesc *dd)
+{
+    dd->dirty = TRUE;
+}
+
+/****************************************************************
+ * GEcheckState
+ ****************************************************************
+ *
+ * Check whether all registered graphics systems are in a 
+ * "valid" state.
+ */
+
+Rboolean GEcheckState(GEDevDesc *dd)
+{
+    int i;
+    Rboolean result = TRUE;
+    for (i=0; i<numGraphicsSystems; i++)
+	if (dd->gesd[i] != NULL)
+	    if (!LOGICAL((dd->gesd[i]->callback)(GE_CheckPlot, dd, 
+						 R_NilValue))[0])
+		result = FALSE;
+    return result;
+}
+
+/****************************************************************
+ * GErecordGraphicOperation
+ ****************************************************************
+ */
+
+void GErecordGraphicOperation(SEXP op, SEXP args, GEDevDesc *dd)
+{
+    SEXP lastOperation = lastElt(dd->dev->displayList);
+    if (dd->dev->displayListOn) {
+	SEXP newOperation = CONS(op, args);
+	if (lastOperation == R_NilValue)
+	    dd->dev->displayList = CONS(newOperation,
+						       R_NilValue);
+	else
+	    SETCDR(lastOperation, CONS(newOperation, R_NilValue));
+    }
+}
+
+/****************************************************************
  * GEinitDisplayList
  ****************************************************************
  */
@@ -2113,13 +2177,10 @@ void GEplayDisplayList(GEDevDesc *dd)
 	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
 	    /* Check with each graphics system that the plotting went ok
 	     */
-	    for (i=0; i<numGraphicsSystems; i++)
-		if (dd->gesd[i] != NULL)
-		    if (!LOGICAL((dd->gesd[i]->callback)(GE_CheckPlot, dd, 
-							 R_NilValue))[0]) {
-			plotok = 0;
-			warning("Display list redraw incomplete");
-		    }
+	    if (!GEcheckState(dd)) {
+		plotok = 0;
+		warning("Display list redraw incomplete");
+	    }
 	    theList = CDR(theList);
 	}
 	selectDevice(savedDevice);
@@ -2148,10 +2209,14 @@ GEDevDesc* GEcurrentDevice()
  */
 void GEcopyDisplayList(int fromDevice)
 {
+    SEXP tmp;
     GEDevDesc *dd = GEcurrentDevice();
     DevDesc* fromDev = GetDevice(fromDevice);
     int i;
-    dd->dev->displayList = Rf_displayList(fromDev);
+    tmp = Rf_displayList(fromDev);
+    if(!isNull(tmp)) 
+	tmp = duplicate(tmp);
+    dd->dev->displayList = tmp;
     /* Get each registered graphics system to copy system state
      * information from the "from" device to the current device
      */

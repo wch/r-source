@@ -1810,8 +1810,18 @@ DevDesc *GNewPlot(Rboolean recording)
 	G_ERR_MSG("Figure margins too large");
     } else if (!validPlotRegion(dd)) {
 	G_ERR_MSG("Plot region too large");
-    } else
+    } else {
 	Rf_dpptr(dd)->valid = Rf_gpptr(dd)->valid = TRUE;
+	/*
+	 * At this point, base output has been successfully 
+	 * produced on the device, so mark the device "dirty"
+	 * with respect to base graphics.
+	 * This is used when checking whether the device is 
+	 * "valid" with respect to base graphics
+	 */
+	Rf_setBaseDevice(TRUE, dd);
+	GEdirtyDevice((GEDevDesc*) dd);
+    } 
 
     return dd;
 }

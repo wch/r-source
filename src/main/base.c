@@ -66,6 +66,10 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	/* Initialise the gp settings too.
 	 */
 	/* copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp)); */
+	/*
+	 * The device has not yet received any base output
+	 */
+	((baseSystemState*) sd->systemSpecific)->baseDevice = FALSE;
 	break;
     case GE_CopyState:
 	sd = dd->gesd[baseRegisterIndex];
@@ -119,7 +123,17 @@ SEXP baseCallback(GEevent task, GEDevDesc *dd, SEXP data) {
 	 */
 	sd = dd->gesd[baseRegisterIndex];
 	PROTECT(valid = allocVector(LGLSXP, 1));
-	LOGICAL(valid)[0] = ((baseSystemState*) sd->systemSpecific)->gp.valid;
+	/*
+	 * If there has not been any base output on the device
+	 * then ignore "valid" setting
+	 */
+	if (((baseSystemState*) sd->systemSpecific)->baseDevice) {
+	    LOGICAL(valid)[0] = 
+		(((baseSystemState*) sd->systemSpecific)->gp.state == 1) &&
+		((baseSystemState*) sd->systemSpecific)->gp.valid;
+	} else {
+	    LOGICAL(valid)[0] = TRUE;
+	}
 	UNPROTECT(1);
 	result = valid;
 	break;
@@ -175,6 +189,16 @@ GPar* Rf_dpptr(DevDesc *dd) {
 GPar* Rf_dpSavedptr(DevDesc *dd) {
     return &(((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
 					       baseRegisterIndex))->dpSaved);
+}
+
+Rboolean Rf_baseDevice(DevDesc *dd) {
+    return ((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+					     baseRegisterIndex))->baseDevice;
+}
+
+void Rf_setBaseDevice(Rboolean val, DevDesc *dd) {
+    ((baseSystemState*) GEsystemState((GEDevDesc*) dd, 
+				      baseRegisterIndex))->baseDevice = val;
 }
 
 SEXP Rf_displayList(DevDesc *dd) {

@@ -29,7 +29,8 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <Rdevices.h>
+
+#include <Graphics.h>
 
 #include <R_ext/RConverters.h>
 
@@ -1290,23 +1291,29 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_Externalgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP retval = do_External(call, op, args, env);
+    SEXP retval;
+    PROTECT(retval = do_External(call, op, args, env));
     if (call != R_NilValue) {
-        DevDesc *dd = CurrentDevice();
-        GCheckState(dd);
-	recordGraphicOperation(op, args, dd);
+        GEDevDesc *dd = GEcurrentDevice();
+	if (!GEcheckState(dd))
+	    error("Invalid graphics state");
+	GErecordGraphicOperation(op, args, dd);
     }
+    UNPROTECT(1);
     return retval;
 }
 
 SEXP do_dotcallgr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP retval = do_dotcall(call, op, args, env);
+    SEXP retval;
+    PROTECT(retval = do_dotcall(call, op, args, env));
     if (call != R_NilValue) {
-        DevDesc *dd = CurrentDevice();
-	GCheckState(dd);
-	recordGraphicOperation(op, args, dd);
+        GEDevDesc *dd = GEcurrentDevice();
+	if (!GEcheckState(dd))
+	    error("Invalid graphics state");
+	GErecordGraphicOperation(op, args, dd);
     }
+    UNPROTECT(1);
     return retval;
 }
 
