@@ -23,7 +23,7 @@
 
 /*#include "config.h"*/
 #include "R_ext/Complex.h"
-#include "R_ext/Constants.h" /* TRUE/FALSE */
+#include "R_ext/Boolean.h" /* TRUE/FALSE */
 
 	/* General F2C Macros */
 

@@ -156,7 +156,7 @@
 #ifdef MATHLIB_STANDALONE
  typedef enum { FALSE = 0, TRUE } Rboolean;
 #else
-# include "R_ext/Constants.h"
+# include "R_ext/Boolean.h"
 
 /* for API back-compatibility -- DEPRECATED since R 1.2 -- */
 #define LTRUE  TRUE

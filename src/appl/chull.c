@@ -13,7 +13,7 @@
 #include <config.h>
 #endif
 
-#include "R_ext/Constants.h" /* TRUE,... */
+#include "R_ext/Boolean.h" /* TRUE,... */
 
 static void split(int n, double *x,
 		  int m, int *in,

@@ -3520,12 +3520,14 @@ use @code{ln(x)} for the natural logarithm (@code{log(x)} in @R{}).
 @end multitable
 @end quotation
 
+There are a set of constants (@code{PI}, @code{DOUBLE_EPS}) defined in the
+included header @file{R_ext/Constants.h}, the latter two mainly for compatibility with @Sl{}.
+
 @findex TRUE
 @findex FALSE
-There are a set of constants (for example @code{TRUE}, @code{FALSE},
-@code{PI}, @code{DOUBLE_EPS}) defined in the included header
-@file{R_ext/Constants.h}, the latter two mainly for compatibility with @Sl{}.
-Note that @code{TRUE} and @code{FALSE} are of type @code{Rboolean}
+Further, the included header @file{R_ext/Boolean.h}
+has constants @code{TRUE} and @code{FALSE = 0} of type @code{Rboolean} in
+order to provide a way of using ``logical'' variables in C.
 
 @node Utility functions, Version information, Mathematical Constants, The R API
 @section Utility functions

@@ -42,8 +42,9 @@ extern "C" {
 #include "Rconfig.h"
 #include "Rversion.h"         /* R_VERSION */
 #include "R_ext/Arith.h"      /* R_FINITE, ISNAN, ... */
+#include "R_ext/Boolean.h"    /* Rboolean type */
 #include "R_ext/Complex.h"    /* Rcomplex type */
-#include "R_ext/Constants.h"  /* Rboolean, PI, DOUBLE_EPS, etc */
+#include "R_ext/Constants.h"  /* PI, DOUBLE_EPS, etc */
 #include "R_ext/Error.h"      /* error and warning */
 #include "R_ext/Memory.h"     /* R_alloc and S_alloc */
 #include "R_ext/Random.h"     /* RNG interface */

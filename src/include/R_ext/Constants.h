@@ -21,10 +21,6 @@
 #ifndef R_EXT_CONSTANTS_H_
 #define R_EXT_CONSTANTS_H_
 
-#undef FALSE
-#undef TRUE
-typedef enum { FALSE = 0, TRUE /*, MAYBE */ } Rboolean;
-
 #ifndef M_PI
 #define M_PI 3.141592653589793238462643383279502884197169399375
 #endif
