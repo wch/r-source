@@ -57,7 +57,6 @@ tkdestroy(win)
 is.tkwin(x)
 
 tclVar(init="")
-# x of class "tclVar"
 \method{as.character}{tclVar}(x)
 \method{tclvalue}{tclVar}(x)
 \method{tclvalue}{tclVar}(x) <- value
@@ -67,13 +66,11 @@ tclObj(x) <- value
 as.tclObj(x, drop=FALSE)
 is.tclObj(x)
 
-# x of class "tclObj"
 \method{as.character}{tclObj}(x)
 \method{as.integer}{tclObj}(x, ...)
 \method{as.double}{tclObj}(x, ...)
 \method{tclvalue}{tclObj}(x)
 
-# Default methods for tclvalue: use as.character(x) as Tcl name
 \method{tclvalue}{default}(x)
 \method{tclvalue}{default}(x) <- value
 
