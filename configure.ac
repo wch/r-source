@@ -1122,7 +1122,7 @@ case "${host_os}" in
    
     ## LIBR_LDFLAGS="-dynamiclib -install_name ${R_FRAMEWORK_DIR}/Versions/${PACKAGE_VERSION}/Resources/bin/libR.dylib -compatibility_version ${PACKAGE_VERSION}  -current_version ${PACKAGE_VERSION}"
     MAJR_VERSION=`echo "${PACKAGE_VERSION}" | sed  -e "s/[[\.]][[1-9]]$/.0/"` 
-    LIBR_LDFLAGS="-dynamiclib -install_name ${R_FRAMEWORK_DIR}/Versions/${PACKAGE_VERSION}/Resources/lib/libR.dylib libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
+    LIBR_LDFLAGS="-dynamiclib -install_name libR.dylib -compatibility_version ${MAJR_VERSION}  -current_version ${PACKAGE_VERSION}  -headerpad_max_install_names"
     ##    fi
     ## <FIXME>
     ## We need '-framework Carbon' because currently the Quartz device
