@@ -38,6 +38,10 @@ SOURCES_C = \
 	eval.c \
 	format.c \
 	fourier.c \
+	g_her_glyph.c \
+	g_fontdb.c \
+	g_cntrlify.c \
+	g_alab_her.c \
 	gram.c \
 	gram-ex.c \
 	graphics.c \
