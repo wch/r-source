@@ -5774,9 +5774,10 @@ analogues using the @code{vprintf} interface.
 @subsection Printing from FORTRAN
 @cindex Printing from FORTRAN
 
-In theory FORTRAN @code{write} and @code{print} statements can be used,
-but the output may not interleave well with that of C, and will be
-invisible on @acronym{GUI} interfaces.  They are best avoided.
+On many systems FORTRAN @code{write} and @code{print} statements can be
+used, but the output may not interleave well with that of C, and will be
+invisible on @acronym{GUI} interfaces.  They are not portable and best
+avoided.
 
 Three subroutines are provided to ease the output of information from
 FORTRAN code.

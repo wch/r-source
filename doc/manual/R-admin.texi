@@ -1965,7 +1965,7 @@ been available separately.}  At least on @code{ix86} and @code{x86_64}
 Linux and MacOS X there is a problem with using the dynamic version of
 the Fortran runtime @code{libgfortran}: if this is loaded redirection of
 C @file{stdin} (which @R{} uses in many of its scripts) becomes
-non-functional.  The workaround is to use the static version of
+non-functional.  A workaround is to use the static version of
 @code{libgfortran} if possible.@footnote{On some platforms this will not
 have been compiled with PIC flags and so it will not be possible.}  One
 way to do so is to set @code{FLIBS} @emph{before} configuration, for
@@ -1974,6 +1974,10 @@ example by including
 FLIBS=/usr/local/lib/libgfortran.a
 @end example
 on the @command{configure} command-line.
+
+In theory it should be possible to work around this by setting the
+environment variable @env{GFORTRAN_STDIN_UNIT} to @code{-1}, but
+currently (April 2005) there is a bug causing the setting to be ignored.
 
 Note: loading a package linked against the dynamic version of
 @code{libgfortran} is sufficient to cause the problem.
