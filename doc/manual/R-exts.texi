@@ -47,10 +47,10 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 
 @contents
 
-@node Top, Acknowledgments, (dir), (dir)
+@node Top, Acknowledgements, (dir), (dir)
 
 @menu
-* Acknowledgments::
+* Acknowledgements::
 * Creating R packages::
 * Writing R documentation::
 * System and foreign language interfaces::
@@ -61,15 +61,15 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 * Concept index::
 @end menu
 
-@node Acknowledgments, Creating R packages, Top, Top
-@unnumbered Acknowledgments
+@node Acknowledgements, Creating R packages, Top, Top
+@unnumbered Acknowledgements
 
 
 The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
 provided information on the C++ interface) are gratefully acknowledged.
 
-@node Creating R packages, Writing R documentation, Acknowledgments, Top
+@node Creating R packages, Writing R documentation, Acknowledgements, Top
 @chapter Creating R packages
 @cindex Packages
 @cindex Creating packages
@@ -745,7 +745,7 @@ info).
 
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
-(as listed in thefile @file{$R_HOME/doc/KEYWORDS}).  There must be at
+(as listed in the file @file{$R_HOME/doc/KEYWORDS}).  There must be at
 least one @code{\keyword} entry, but can be more that one if the @R{}
 object being documented falls into more than one category.
 @end table
@@ -842,7 +842,7 @@ For consistency with the pre-assigned sections, the section name (the
 first argument to @code{\section}) should be capitalized (but not all
 upper case).
 
-Note that the additonal named sections are always inserted at fixed
+Note that the additional named sections are always inserted at fixed
 positions in the output (before @code{\note}, @code{\seealso} and the
 examples), no matter where they appear in the input.
 
@@ -1100,7 +1100,7 @@ provides two user-level programs for processing Rd format.
 file, and is particularly useful as a previewer when writing Rd format
 documentation within Emacs.  @code{R CMD Rd2dvi} generates DVI (or, if
 option @option{--pdf} is given, PDF) output from documentation in
-Rd files, which can be specified either explictly or by the path to a
+Rd files, which can be specified either explicitly or by the path to a
 directory with the sources of a package.  In the latter case, a
 reference manual for all documented objects in the package is created.
 Future versions will also add the information in the @file{DESCRIPTION}
@@ -1117,7 +1117,7 @@ used to automatically create these indices when building a package.
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
 (which use an extended Nroff format) to Rd format.  This is useful when
-porting a package orginally written for the @Sl{} system to @R{}.
+porting a package originally written for the @Sl{} system to @R{}.
 
 The exact usage and a detailed list of available options for each of the
 above commands can be obtained by running @code{R CMD command --help},
@@ -1606,6 +1606,7 @@ force the variant object to the right type.
 * Classes::
 * Handling lists::
 * Finding and setting variables::
+* Changes in R version 1.2::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -1875,8 +1876,8 @@ SEXP out(SEXP x, SEXP y)
   setAttrib(ans, R_DimSymbol, dim);
 
   PROTECT(dimnames = allocVector(VECSXP, 2));
-  VECTOR(dimnames)[0] = getAttrib(x, R_NamesSymbol);
-  VECTOR(dimnames)[1] = getAttrib(y, R_NamesSymbol);
+  SET_VECTOR_ELT(dimnames, 0, getAttrib(x, R_NamesSymbol));
+  SET_VECTOR_ELT(dimnames, 1, getAttrib(y, R_NamesSymbol));
   setAttrib(ans, R_DimNamesSymbol, dimnames);
   UNPROTECT(3);
   return(ans);
@@ -1932,7 +1933,7 @@ We can use
   SEXP ans, dim, dimnames, class;
     ....
   PROTECT(class = allocVector(STRSXP, 1));
-  STRING(class)[0] = COPY_TO_USER_STRING("mat");
+  SET_STRING(class, 0, mkChar("mat"));
   classgets(ans, class);
   UNPROTECT(4);
   return(ans);
@@ -1941,8 +1942,8 @@ We can use
 
 @noindent
 As the value is a character vector, we have to know how to create that
-from a C character array, which we do using the macro
-@code{COPY_TO_USER_STRING} defined in @file{Rdefines.h}.
+from a C character array, which we do using the function
+@code{mkChar}.
 
 @node Handling lists, Finding and setting variables, Classes, Handling R objects in C
 @subsection Handling lists
@@ -1967,7 +1968,7 @@ Then we can access @code{a$g} as @code{a[[2]]} by
 @example
   double g;
     ....
-  g = REAL(VECTOR(a)[1])[0];
+  g = REAL(VECTOR_ELT(a, 1))[0];
 @end example
 
 This can rapidly become tedious, and the following function (based on
@@ -1982,8 +1983,8 @@ SEXP getListElement(SEXP list, char *str)
   int i;
 
   for (i = 0; i < length(list); i++)
-    if(strcmp(CHAR(STRING(names)[i]), str) == 0) @{
-      elmt = VECTOR(list)[i];
+    if(strcmp(CHAR(STRING_ELT(names, i)), str) == 0) @{
+      elmt = VECTOR_ELT(list, i);
       break;
     @}
   return elmt;
@@ -1998,7 +1999,7 @@ and enables us to say
   g = REAL(getListElement(a, "g"))[0];
 @end example
 
-@node Finding and setting variables,  , Handling lists, Handling R objects in C
+@node Finding and setting variables, Changes in R version 1.2, Handling lists, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables
@@ -2018,7 +2019,7 @@ SEXP getvar(SEXP name, SEXP rho)
      error("name is not a single string");
   if(!isEnvironment(rho))
     error("rho should be an environment");
-  ans = findVar(install(CHAR(STRING(name)[0])), rho);
+  ans = findVar(install(CHAR(STRING_ELT(name, 0))), rho);
   printf("first value is %f\n", REAL(ans)[0]);
   return(R_NilValue);
 @}
@@ -2043,6 +2044,33 @@ void setVar(SEXP symbol, SEXP value, SEXP rho)
 can be used to assign values to @R{} objects, in the specified
 environment frame and to perform the equivalent of @code{assign(x,
 value, envir = rho, inherits = TRUE)} respectively.
+
+@node Changes in R version 1.2,  , Finding and setting variables, Handling R objects in C
+@subsection Changes in @R{} version 1.2
+
+
+@R{} version 1.2.0 introduced a new `generational' garbage collector
+which meant that strings and vectors (and language objects) are handled
+differently from the numerical atomic types.
+
+Earlier code was written in a style like.
+@example
+  VECTOR(dimnames)[0] = getAttrib(x, R_NamesSymbol);
+@end example
+@noindent
+but that is no longer allowed.  The functions @code{VECTOR_ELT} and
+@code{SET_VECTOR_ELT} must now be used to access and set elements of a
+generic vector.  There are analogous functions @code{STRING_ELT} and
+@code{SET_STRING_ELT} for character vectors.
+
+To convert existing code, use the following replacements.
+@example
+  foo = VECTOR(bar)[i]                    foo = VECTOR_ELT(bar, i)
+  VECTOR(foo)[j] = bar                    SET_VECTOR_ELT(foo, j, bar)
+  foo = STRING(bar)[i]                    foo = STRING_ELT(bar, i)
+  STRING(foo)[j] = bar                    SET_STRING_ELT(foo, j, bar)
+@end example
+
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}
@@ -2162,8 +2190,8 @@ SEXP convolveE(SEXP args)
   double *xa, *xb, *xab;
   SEXP a, b, ab;
 
-  PROTECT(a = coerceVector(CADR(args), REALSXP)));
-  PROTECT(b = coerceVector(CADDR(args), REALSXP)));
+  PROTECT(a = coerceVector(CADR(args), REALSXP));
+  PROTECT(b = coerceVector(CADDR(args), REALSXP));
     ...
 @}
 @end example
@@ -2200,10 +2228,12 @@ handle calls with a variable number of arguments, as @code{length(args)}
 will give the number of arguments supplied (of which the first is
 ignored).  We may need to know the names (`tags') given to the actual
 arguments, which we can by using the @code{TAG} macro and using
-something like the following example, that print the names and the first
+something like the following example, that prints the names and the first
 value of its arguments if they are vector types.
 
 @example
+#include "R_ext/PrtUtil.h"
+
 SEXP showArgs(SEXP args)
 @{
   int i, nargs;
@@ -2216,22 +2246,22 @@ SEXP showArgs(SEXP args)
       name = CHAR(PRINTNAME(TAG(args)));
       switch(TYPEOF(CAR(args))) @{
       case REALSXP:
-        printf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
+        Rprintf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
         break;
       case LGLSXP:
       case INTSXP:
-        printf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
+        Rprintf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
         break;
       case CPLXSXP:
         cpl = COMPLEX(CAR(args))[0];
-        printf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
+        Rprintf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
         break;
       case STRSXP:
-        printf("[%d] '%s' %s\n", i+1, name,
-               CHAR(STRING(CAR(args))[0]));
+        Rprintf("[%d] '%s' %s\n", i+1, name,
+               CHAR(STRING_ELT(CAR(args), 0)));
         break;
       default:
-        printf("[%d] '%s' R type\n", i+1, name);
+        Rprintf("[%d] '%s' R type\n", i+1, name);
       @}
     @}
   @}
@@ -2335,8 +2365,8 @@ SEXP lapply(SEXP list, SEXP expr, SEXP rho)
   if(!isEnvironment(rho)) error("`rho' should be an environment");
   PROTECT(ans = allocVector(VECSXP, n));
   for(i = 0; i < n; i++) @{
-    defineVar(install("x"), VECTOR(list)[i], rho);
-    VECTOR(ans)[i] = eval(expr, rho);
+    defineVar(install("x"), VECTOR_ELT(list, i), rho);
+    SET_VECTOR_ELT(ans, i, eval(expr, rho));
   @}
   setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
   UNPROTECT(1);
@@ -2354,7 +2384,7 @@ obscure) to do this in C code.  The following is based on the code in
 SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
 @{
   int i, n = length(list);
-  SEXP R_fcall, s, ans;
+  SEXP R_fcall, ans;
 
   if(!isNewList(list)) error("`list' must be a list");
   if(!isFunction(fn)) error("`fn' must be a function");
@@ -2362,8 +2392,8 @@ SEXP lapply2(SEXP list, SEXP fn, SEXP rho)
   PROTECT(R_fcall = lang2(fn, R_NilValue));
   PROTECT(ans = allocVector(VECSXP, n));
   for(i = 0; i < n; i++) @{
-    CADR(R_fcall) = VECTOR(list)[i];
-    VECTOR(ans)[i] = eval(R_fcall, rho);
+    SETCADR(R_fcall, VECTOR_ELT(list, i));
+    SET_VECTOR_ELT(ans, i, eval(R_fcall, rho));
   @}
   setAttrib(ans, R_NamesSymbol, getAttrib(list, R_NamesSymbol));
   UNPROTECT(2);
@@ -2431,7 +2461,6 @@ SEXP zero(SEXP f, SEXP guesses, SEXP stol, SEXP rho)
     double x0 = REAL(guesses)[0], x1 = REAL(guesses)[1],
            tol = REAL(stol)[0];
     double f0, f1, fc, xc;
-    SEXP res;
 
     if(tol <= 0.0) error("non-positive tol value");
     f0 = feval(x0, f, rho); f1 = feval(x1, f, rho);
@@ -2525,14 +2554,14 @@ SEXP numeric_deriv(SEXP args)
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
     error("theta should be of type character");
-  if(!isEnvironment(rho = CADDR(args)))
+  if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 
   PROTECT(ans = coerceVector(eval(expr, rho), REALSXP));
   PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), LENGTH(theta)));
 
   for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-    PROTECT(par = findVar(install(CHAR(STRING(theta)[i])), rho));
+    PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
     tt = REAL(par)[0];
     xx = fabs(tt);
     delta = (xx < 1) ? eps : xx*eps;
@@ -2546,7 +2575,7 @@ SEXP numeric_deriv(SEXP args)
   @}
 
   PROTECT(dimnames = allocVector(VECSXP, 2));
-  VECTOR(dimnames)[1] = theta;
+  SET_VECTOR_ELT(dimnames, 1,  theta);
   dimnamesgets(gradient, dimnames);
   setAttrib(ans, install("gradient"), gradient);
   UNPROTECT(3); /* ans  gradient  dimnames */
@@ -2560,7 +2589,7 @@ The code to handle the arguments is
   expr = CADR(args);
   if(!isString(theta = CADDR(args)))
     error("theta should be of type character");
-  if(!isEnvironment(rho = CADDR(args)))
+  if(!isEnvironment(rho = CADDDR(args)))
     error("rho should be an environment");
 @end example
 
@@ -2592,14 +2621,14 @@ arguments are the numbers of rows and columns.
 
 @example
   for(i = 0, start = 0; i < LENGTH(theta); i++, start += LENGTH(ans)) @{
-    PROTECT(par = findVar(install(CHAR(STRING(theta)[i])), rho));
+    PROTECT(par = findVar(install(CHAR(STRING_ELT(theta, i))), rho));
 @end example
 
 @noindent
 Here, we are entering a for loop.  We loop through each of the
 variables.  In the @code{for} loop, we first create a symbol
 corresponding to the @code{i}'th element of the @code{STRSXP}
-@code{theta}.  Here, @code{STRING(theta)[i]} accesses the @code{i}'th
+@code{theta}.  Here, @code{STRING_ELT(theta, i)} accesses the @code{i}'th
 element of the @code{STRSXP} @code{theta}.  Macro @code{CHAR()} extracts
 the actual character representation of it: it returns a pointer.  We
 then install the name and use @code{findVar} to find its value.
@@ -2636,7 +2665,7 @@ it is accessed: @R{} stores matrices by column (like Fortran).
 
 @example
   PROTECT(dimnames = allocVector(VECSXP, 2));
-  VECTOR(dimnames)[1] = theta;
+  SET_VECTOR_ELT(dimnames, 1, theta);
   dimnamesgets(gradient, dimnames);
   setAttrib(ans, install("gradient"), gradient);
   UNPROTECT(3);
@@ -2835,7 +2864,7 @@ $7 = 5
 * Random numbers::
 * Missing and IEEE values::
 * Printing::
-* Calling Fortran from C::
+* Calling C from Fortran and vice versa::
 * Numerical analysis subroutines::
 * Distribution functions::
 * Mathematical Utilities::
@@ -3083,7 +3112,7 @@ which could occur in ordinary computations which run out of control,
 so you may need to test that they have not been generated inadvertently.
 
 
-@node Printing, Calling Fortran from C, Missing and IEEE values, The R API
+@node Printing, Calling C from Fortran and vice versa, Missing and IEEE values, The R API
 @section Printing
 @cindex Printing from C
 @findex Rprintf
@@ -3131,9 +3160,9 @@ line and then print @var{data} as if it were an @R{} vector on
 subsequent line(s).  They work with zero @var{ndata}, and so can be used
 to print a label alone.
 
-@node Calling Fortran from C, Numerical analysis subroutines, Printing, The R API
-@section Calling Fortran from C
-@cindex Calling Fortran from C
+@node Calling C from Fortran and vice versa, Numerical analysis subroutines, Printing, The R API
+@section Calling C from Fortran and vice versa
+@cindex Calling C from Fortran and vice versa
 
 Naming conventions for symbols generated by Fortran differ by platform:
 it is not safe to assume that Fortran names appear to C with a trailing
@@ -3154,7 +3183,7 @@ to access a Fortran common block from C
 @end table
 
 
-@node Numerical analysis subroutines, Distribution functions, Calling Fortran from C, The R API
+@node Numerical analysis subroutines, Distribution functions, Calling C from Fortran and vice versa, The R API
 @section Numerical analysis subroutines
 @cindex Numerical analysis subroutines from C
 
@@ -3702,7 +3731,7 @@ When you (as @R{} developer) add new functions to the R base (all the
 packages distributed with @R{}), be careful to check if @code{make
 test-Specific} or particularly, @code{cd tests; make no-segfault.Rout}
 still works (without interactive user intervention, and on a standalone
-computer).  If the new function, for example, accesses the internet, or
+computer).  If the new function, for example, accesses the Internet, or
 requires GUI interaction, please add its name to the ``stop list'' in
 @file{tests/make-no-segfault.R}.
 
