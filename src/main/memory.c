@@ -98,8 +98,8 @@ static SEXPREC UnmarkedNodeTemplate;
 
 #ifdef USE_GENERATIONAL_GC
 
-#ifdef ALLOW_OLD_SAVE_RESTORE
-#error old workspaces are not compatible with generational GC
+#ifdef ALLOW_OLD_SAVE
+#error saving old-style workspaces is not compatible with generational GC
 #endif
 
 

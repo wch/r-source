@@ -530,7 +530,7 @@ static void BinarySave(SEXP s, FILE *fp)
 }
 #endif /* HAVE_RPC_XDR_H */
 
-#ifdef ALLOW_OLD_SAVE_RESTORE
+#ifdef ALLOW_OLD_SAVE
 static void MarkSave(SEXP s)
 {
     int i, len;
@@ -637,7 +637,7 @@ static SEXP OffsetToNode(int offset)
 
 static void DataSave(SEXP s, FILE *fp)
 {
-#ifdef ALLOW_OLD_SAVE_RESTORE
+#ifdef ALLOW_OLD_SAVE
   BEGIN_SUSPEND_INTERRUPTS {
     int i, j, k, l, n;
 

@@ -43,7 +43,7 @@
 #include "Errormsg.h"
 
 #ifndef USE_GENERATIONAL_GC
-# define ALLOW_OLD_SAVE_RESTORE
+# define ALLOW_OLD_SAVE
 #endif
 
 /* PSIGNAL may be defined on Win32 in config.h */
@@ -623,7 +623,7 @@ int tsConform(SEXP,SEXP);
 SEXP tspgets(SEXP, SEXP);
 SEXP type2str(SEXPTYPE);
 void unbindVar(SEXP, SEXP);
-#ifdef ALLOW_OLD_SAVE_RESTORE
+#ifdef ALLOW_OLD_SAVE
 void unmarkPhase(void);
 #endif
 int usemethod(char*, SEXP, SEXP, SEXP, SEXP, SEXP*);
