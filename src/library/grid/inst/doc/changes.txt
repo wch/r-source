@@ -1,3 +1,14 @@
+Changes from grid_1.9.0 to grid_1.9.1:
+------------------------------------
+
+1.  Fixed (unreported) bug in internal calculation of unitArithmetic
+    object when op = * and numeric operand longer than unit operand
+
+2.  Fixed (unreported) bug in creation of unitArithmetic objects
+    when numeric operand is integer.  All numeric operands are now
+    coerced to real.
+
+
 Changes from grid_1.8.0 to grid_1.9.0:
 ------------------------------------
 

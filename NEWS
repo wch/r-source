@@ -353,14 +353,13 @@ BUG FIXES
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
-    o	Copying lattice (grid) output to another device now works again
-	(PR#6915, #6947/8).
+    o   Copying lattice (grid) output to another device now works again
+        (There were intermittent problems in 1.9.0 - PR#6915, #6947/8.)  
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
 
     o	jitter(x) now returns x when length(x) == 0.
-
 
 
 		CHANGES IN R VERSION 1.9.0
