@@ -109,6 +109,7 @@ Ops.factor <- function(e1, e2)
 {
     y <- NextMethod("[")
     class(y)<-class(x)
+    attr(y,"contrasts")<-attr(x,"contrasts")
     attr(y,"levels")<-attr(x,"levels")
     if ( drop ) factor(y) else y
 }
