@@ -22,10 +22,6 @@ This is a guide to extending R.
 
 Copyright 1999, 2000 R Development Core Team
 
-Permission is granted to make and distribute verbatim copies of this
-manual provided the copyright notice and this permission notice are
-preserved on all copies.
-
 @ignore
 Permission is granted to process this file through TeX and print the
 results, provided the printed document carries a copying permission
@@ -33,15 +29,9 @@ notice identical to this one except for the removal of this paragraph
 (this paragraph not being relevant to the printed manual).
 
 @end ignore
-Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided that the
-entire resulting derived work is distributed under the terms of a
-permission notice identical to this one.
 
-Permission is granted to copy and distribute translations of this manual
-into another language, under the above conditions for modified versions,
-except that this permission notice may be stated in a translation
-approved by the R Development Core Team.
+@permission{}
+@c ---------- ^- read that
 @end ifinfo
 
 @titlepage
@@ -50,19 +40,7 @@ approved by the R Development Core Team.
 @author R Development Core Team
 @page
 @vskip 0pt plus 1filll
-Permission is granted to make and distribute verbatim copies of this
-manual provided the copyright notice and this permission notice are
-preserved on all copies.
-
-Permission is granted to copy and distribute modified versions of this
-manual under the conditions for verbatim copying, provided that the
-entire resulting derived work is distributed under the terms of a
-permission notice identical to this one.
-
-Permission is granted to copy and distribute translations of this manual
-into another language, under the above conditions for modified versions,
-except that this permission notice may be stated in a translation
-approved by the R Development Core Team.
+@permission{}
 
 Copyright @copyright{} 1999, 2000 R Development Core Team
 @end titlepage
@@ -72,14 +50,14 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Acknowledgments, (dir), (dir)
 
 @menu
-* Acknowledgments::             
-* Creating R packages::         
-* Writing R documentation::     
-* System and foreign language interfaces::  
-* The R API::                   
-* R (internal) programming miscellania::  
-* Function and variable index::  
-* Concept index::               
+* Acknowledgments::
+* Creating R packages::
+* Writing R documentation::
+* System and foreign language interfaces::
+* The R API::
+* R (internal) programming miscellania::
+* Function and variable index::
+* Concept index::
 @end menu
 
 @node Acknowledgments, Creating R packages, Top, Top
@@ -100,9 +78,9 @@ documentation as needed.  The @R{} distribution provides several
 packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 @menu
-* Package structure::           
-* Configure and cleanup::       
-* Checking and building packages::  
+* Package structure::
+* Configure and cleanup::
+* Checking and building packages::
 @end menu
 
 @node Package structure, Configure and cleanup, Creating R packages, Creating R packages
@@ -118,10 +96,10 @@ before and after installation, @xref{Configure and cleanup}.
 
 
 @menu
-* The DESCRIPTION file::        
-* Other files::                 
-* Package subdirectories::      
-* Package bundles::             
+* The DESCRIPTION file::
+* Other files::
+* Package subdirectories::
+* Package bundles::
 @end menu
 
 @node The DESCRIPTION file, Other files, Package structure, Package structure
@@ -407,15 +385,15 @@ of the @R{} package builder. There is no Windows equivalent.
 @cindex Documentation, writing
 
 @menu
-* Rd format::                   
-* Sectioning::                  
-* Marking text::                
-* Lists and tables::            
-* Cross-references::            
-* Mathematics::                 
-* Insertions::                  
-* Platform-specific sections::  
-* Processing Rd format::        
+* Rd format::
+* Sectioning::
+* Marking text::
+* Lists and tables::
+* Cross-references::
+* Mathematics::
+* Insertions::
+* Platform-specific sections::
+* Processing Rd format::
 @end menu
 
 @node Rd format, Sectioning, Writing R documentation, Writing R documentation
@@ -1022,15 +1000,15 @@ usage information.
 @chapter System and foreign language interfaces
 
 @menu
-* Operating system access::     
-* Interface functions .C and .Fortran::  
-* dyn.load and dyn.unload::     
-* Creating shared libraries::   
-* Interfacing C++ code::        
-* Handling R objects in C::     
-* Interface functions .Call and .External::  
-* Evaluating R expressions from C::  
-* Debugging::                   
+* Operating system access::
+* Interface functions .C and .Fortran::
+* dyn.load and dyn.unload::
+* Creating shared libraries::
+* Interfacing C++ code::
+* Handling R objects in C::
+* Interface functions .Call and .External::
+* Evaluating R expressions from C::
+* Debugging::
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1471,13 +1449,13 @@ code, much use is made of coercion to force the variant object to the
 right type.
 
 @menu
-* Garbage Collection::          
-* Allocating storage::          
-* Details of R types::          
-* Attributes::                  
-* Classes::                     
-* Handling lists::              
-* Finding and setting variables::  
+* Garbage Collection::
+* Allocating storage::
+* Details of R types::
+* Attributes::
+* Classes::
+* Handling lists::
+* Finding and setting variables::
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -1907,9 +1885,9 @@ based on the interface of the same name in S version 4, and
 complex but allows a variable number of arguments.
 
 @menu
-* Calling .Call::               
-* Calling .External::           
-* Missing and special values::  
+* Calling .Call::
+* Calling .External::
+* Missing and special values::
 @end menu
 
 @node Calling .Call, Calling .External, Interface functions .Call and .External, Interface functions .Call and .External
@@ -2515,8 +2493,8 @@ compiled code loaded into @R{}.	 Some ``tricks'' are worth knowing.
 
 
 @menu
-* Finding entry points::        
-* Inspecting R objects::        
+* Finding entry points::
+* Inspecting R objects::
 @end menu
 
 @node Finding entry points, Inspecting R objects, Debugging, Debugging
@@ -2686,15 +2664,15 @@ $7 = 5
 @chapter The R API: entry points for C code
 
 @menu
-* Memory allocation::           
-* Error handling::              
-* Random number generation::    
-* Missing and IEEE values::     
-* Printing::                    
-* Calling C from Fortran::      
-* Numerical analysis subroutines::  
-* Utility functions::           
-* Version information::         
+* Memory allocation::
+* Error handling::
+* Random number generation::
+* Missing and IEEE values::
+* Printing::
+* Calling C from Fortran::
+* Numerical analysis subroutines::
+* Utility functions::
+* Version information::
 @end menu
 
 There are a large number of entry points in the @R{} executable/DLL that
@@ -2730,8 +2708,8 @@ files when using these entry points.
 
 
 @menu
-* Transient::                   
-* User-controlled::             
+* Transient::
+* User-controlled::
 @end menu
 
 There are two types of memory allocation available to the C programmer,
@@ -3080,8 +3058,8 @@ header file @file{Rversion.h} for their format.
 @appendix R (internal) programming miscellania
 
 @menu
-* .Internal and .Primitive::    
-* Testing R code::              
+* .Internal and .Primitive::
+* Testing R code::
 @end menu
 
 @node .Internal and .Primitive, Testing R code, R (internal) programming miscellania, R (internal) programming miscellania
