@@ -1,7 +1,7 @@
 \name{log}
 \title{Logarithms and Exponentials}
 \usage{
-log(x, base)
+log(x, base = exp(1))
 log10(x)
 log2(x)
 exp(x)

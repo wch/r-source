@@ -9,7 +9,8 @@
 }
 \usage{
 points(x, \dots)
-points.default(x, y=NULL, type="p", pch=1, col="black", bg=NA, cex=1, \dots)
+points.default(x, y=NULL, type="p", pch=par("ch"), col=par("col"),
+               bg=NA, cex=1, \dots)
 }
 \arguments{
   \item{x, y}{coordinate vectors of points to plot.}

@@ -14,11 +14,11 @@
 ar(x, aic = TRUE, order.max = NULL,
    method=c("yule-walker", "burg", "ols", "mle", "yw"), na.action,
    series, \dots)
-\method{ar.burg}{default}(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
-        series, var.method = 1, \dots)
-\method{ar.yw}{default}(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
-      series, \dots)
-ar.mle(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
+\method{ar.burg}{default}(x, aic = TRUE, order.max = NULL,
+        na.action = na.fail, demean = TRUE, series, var.method = 1, \dots)
+\method{ar.yw}{default}(x, aic = TRUE, order.max = NULL,
+      na.action = na.fail, demean = TRUE, series, \dots)
+ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail, demean = TRUE,
        series, \dots)
 
 \method{predict}{ar}(object, newdata, n.ahead = 1, se.fit = TRUE, \dots)

@@ -13,16 +13,16 @@
 \synopsis{
 D(expr, name)
 deriv(expr, ...)
-deriv.default(expr, namevec, function.arg, tag, hessian, ...)
-deriv.formula(expr, namevec, function.arg, tag, hessian, ...)
+deriv.default(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE, ...)
+deriv.formula(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE, ...)
 deriv3(expr, ...)
-deriv3.default(expr, namevec, function.arg, tag, hessian, ...)
-deriv3.formula(expr, namevec, function.arg, tag, hessian, ...)
+deriv3.default(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE, ...)
+deriv3.formula(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE, ...)
 }
 \usage{
     D (expr, name)
- deriv(expr, namevec, function.arg = NULL, tag = ".expr", hessian = FALSE)
-deriv3(expr, namevec, function.arg = NULL, tag = ".expr", hessian = TRUE)
+ deriv(expr, namevec, function.arg, tag = ".expr", hessian = FALSE)
+deriv3(expr, namevec, function.arg, tag = ".expr", hessian = TRUE)
 }
 \arguments{
   \item{expr}{\code{\link{expression}} or \code{\link{call}} to

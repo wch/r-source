@@ -7,7 +7,7 @@
 \usage{
 arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
-       xreg = NULL, include.mean, na.action = na.fail,
+       xreg = NULL, include.mean = TRUE, na.action = na.fail,
        delta = 0.01, transform.pars = 2)
 
 \method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)

@@ -7,8 +7,8 @@
 \title{Construct Design Matrices}
 \usage{
 model.matrix   (object, \dots)
-\method{model.matrix}{default}(object, data, contrasts.arg = NULL,
-                xlev = NULL, \dots)
+\method{model.matrix}{default}(object, data = environment(object),
+             contrasts.arg = NULL, xlev = NULL, \dots)
 }
 \arguments{
   \item{object}{an object of an appropriate class. For the default

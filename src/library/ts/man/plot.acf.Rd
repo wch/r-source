@@ -5,15 +5,17 @@
   Plotting method for objects of class \code{"acf"}.
 }
 \usage{
-\method{plot}{acf}(x, ci = 0.95, type = "h",
-     xlab = "Lag", ylab = NULL, ylim = NULL, main = NULL,
-     ci.col="blue", ci.type = c("white", "ma"), max.mfrow = 5,
-     ask = Npgs > 1 && dev.interactive(),
-     mar = if(nser > 2) c(3,3,2,1.2) else par("mar"),
-     oma = if(nser > 2) c(1, 1.2, 1, 1) else par("oma"),
-     mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
-     cex.main = if(nser > 2) 1 else par("cex.main"),
-     verbose = getOption("verbose"), \dots)
+\method{plot}{acf}(x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,
+              ylim = NULL, main = NULL, ci.col="blue",
+              ci.type = c("white", "ma"),
+              max.mfrow = 6,
+              ask = Npgs > 1 && dev.interactive(),
+              mar = if(nser > 2) c(3,2,2,0.8) else par("mar"),
+              oma = if(nser > 2) c(1,1.2,1,1) else par("oma"),
+              mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
+              cex.main = if(nser > 2) 1 else par("cex.main"),
+              verbose = getOption("verbose"),
+              \dots)
 }
 \arguments{
   \item{x}{an object of class \code{"acf"}.}

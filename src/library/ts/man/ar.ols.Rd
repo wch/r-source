@@ -2,8 +2,8 @@
 \alias{ar.ols}
 \title{Fit Autoregressive Models to Time Series by OLS}
 \usage{
-ar.ols(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE,
-       intercept = demean, series, \dots)
+ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
+       demean = TRUE, intercept = demean, series, \dots)
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}

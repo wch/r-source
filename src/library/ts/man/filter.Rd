@@ -2,8 +2,8 @@
 \alias{filter}
 \title{Linear Filtering on a Time Series}
 \usage{
-filter(x, filter, method="convolution", sides=2,
-      circular=FALSE, init)
+filter(x, filter, method = c("convolution", "recursive"),
+       sides = 2, circular = FALSE, init)
 }
 \arguments{
   \item{x}{a univariate or multivariate time series.}

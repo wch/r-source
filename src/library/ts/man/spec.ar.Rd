@@ -2,7 +2,7 @@
 \alias{spec.ar}
 \title{Estimate Spectral Density of a Time Series from AR Fit}
 \usage{
-spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action,
+spec.ar(x, n.freq, order = NULL, plot = TRUE, na.action = na.fail,
         method = "yule-walker", ...)
 }
 \arguments{
