@@ -50,7 +50,7 @@ getOption(x)
   }
 
   \item{browser}{default HTML browser used by \code{\link{help.start}()}
-    on UNIX.}
+    on UNIX, or a non-default browser on Windows.}
 
   \item{mailer}{default mailer used by \code{\link{bug.report}()}. can
     be \code{"none"}.}

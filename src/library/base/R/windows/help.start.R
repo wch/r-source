@@ -1,5 +1,5 @@
 help.start <- function(update = TRUE, gui = "irrelevant",
-                       browser = "irrelevant")
+                       browser = getOption("browser"))
 {
     a <- file.path(R.home(), "doc/html/rwin.html")
     if(!file.exists(a))
@@ -14,6 +14,10 @@ help.start <- function(update = TRUE, gui = "irrelevant",
     }
     a <- gsub("/", "\\\\", a)
     cat("If nothing happens, you have to open `", a, "' yourself\n")
-    .Internal(help.start());
+    if(is.null(browser)) .Internal(help.start())
+    else {
+        cmd <- paste('"', browser, '" ', a, sep="")
+        system(cmd, wait=FALSE)
+    }
     invisible("")
 }

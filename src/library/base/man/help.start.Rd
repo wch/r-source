@@ -5,13 +5,15 @@
 help.start(gui = "irrelevant", browser = getOption("browser"), remote = NULL)
 #endif
 #ifdef windows  
-help.start(update = TRUE, gui = "irrelevant", browser = "irrelevant")
+help.start(update = TRUE, gui = "irrelevant", browser = getOption("browser"))
 #endif
 }
 \alias{help.start}
 \arguments{
   \item{gui}{just for compatibility with S-PLUS.}
-  \item{browser}{the name of the program to be used as hypertext browser.}
+  \item{browser}{the name of the program to be used as hypertext
+    browser. It should be in the PATH, or a full path specified.
+  }
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the
     \file{\$R\_HOME} directory on a remote location.}
@@ -32,8 +34,8 @@ help.start(update = TRUE, gui = "irrelevant", browser = "irrelevant")
   The \code{browser} needs to work with a \code{"-remote openURL(...)"}
   call. Then, the hypertext \R help interface is opened in any already
   running browser or a new one if necessary.  Browsers that support this
-  interface include Netscape 4.x, 6.2 (but not 6.0/1), Opera 5 and
-  Mozilla 0.9.5.
+  interface include Netscape 4.x, 6.2.x (but not 6.0/1), Opera 5 and
+  Mozilla >= 0.9.5.
 
   If the browser given by the \code{browser} argument is different from
   the default browser as specified by \code{options("browser")}, the
@@ -47,6 +49,9 @@ help.start(update = TRUE, gui = "irrelevant", browser = "irrelevant")
   Unlike Unix systems, running \code{help.start} does not send all
   future help requests to the browser: use \code{options(htmlhelp=TRUE)}
   to set that.
+
+  Alternatively, a specific browser can be started if \code{browser} is
+  specified, but \code{help} will still use the file association mechanism.
 #endif
 }
 
@@ -62,6 +67,8 @@ help.start(update = TRUE, gui = "irrelevant", browser = "irrelevant")
   PostScript format.
 }
 \examples{
-\dontrun{help.start()}
+\dontrun{help.start()
+help.start(browser="C:\\Program Files\\Internet Explorer\\IEXPLORE.EXE")
+help.start(browser="C:/Program Files/Netscape/Netscape 6/netscp6.exe")}
 }
 \keyword{documentation}
