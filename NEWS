@@ -183,6 +183,14 @@ NEW FEATURES
 	estimators of the location or scale parameter of interest along
 	with confidence intervals for these.
 
+    o   The INSTALL command for package installation allows a --save
+        option.  Using it causes a binary image of the package contents to
+        be created at INSTALL time and loaded when the library is
+        attached.  This saves time, but also uses a more standard way
+        of source-ing the package.  Packages that do more than just
+        assign object definitions may need to install with --save.
+
+
 
 BUG FIXES
 
