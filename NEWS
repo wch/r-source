@@ -9,11 +9,13 @@
 
 
 NEW FEATURES
+
     o   `examples' sections have been added to the documentation
         for most of the data sets in the base library.
 
     o   update.packages & friends have new argument contriburl for
-        incomplete CRAN mirrors
+        incomplete CRAN mirrors. Package bundles such as VR can be
+        directly installed both from the shell and from inside R.
 
     o	RLIBS is no longer accepted as well as R_LIBS (which has been
 	the documented form since 0.65.0).
