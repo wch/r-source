@@ -102,7 +102,9 @@ int main(int ac, char **av)
 }
 
 #ifdef HAVE_AQUA
-/* this should be a global variable as it used in unix/devQuartz.c */
+/*  this should be a global variable as it used in unix/devQuartz.c 
+	and in unix/main.c
+*/
 Rboolean useaqua = FALSE;
 #endif
 

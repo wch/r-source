@@ -42,7 +42,8 @@
 #endif
 
 #ifdef HAVE_AQUA
-extern void InitAquaIO(void);
+extern void InitAquaIO(void);			/* from src/modules/aqua/aquaconsole.c */
+extern void RSetConsoleWidth(void);		/* from src/modules/aqua/aquaconsole.c */
 #endif
 
 /* The `real' main() program is in ../<SYSTEM>/system.c */
@@ -453,8 +454,10 @@ void setup_Rmainloop(void)
     InitGraphics();
     R_Is_Running = 1;
 #ifdef HAVE_AQUA 
-    if (strcmp(R_GUIType, "AQUA") == 0) 
-	InitAquaIO(); /* must be after InitTempDir() */
+    if (strcmp(R_GUIType, "AQUA") == 0){ 
+		InitAquaIO(); /* must be after InitTempDir() */
+		RSetConsoleWidth();
+	}
 #endif
 #ifdef HAVE_NL_LANGINFO
     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
@@ -539,7 +542,6 @@ void setup_Rmainloop(void)
 
     /* Print a platform and version dependent */
     /* greeting and a pointer to the copyleft. */
-
     if(!R_Quiet)
 	PrintGreeting();
     if(utf8locale) Rprintf("\tUTF-8 locales are not currently supported\n\n");

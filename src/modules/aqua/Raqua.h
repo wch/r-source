@@ -68,6 +68,7 @@ typedef struct
 	int			GrabStderr;
 	int			SaveConsolePos;
 	int			QuartzPos;
+	int			SetConsoleWidthOnResize;
 }  RAquaPrefs, *RAquaPrefsPointer, **RAquaPrefsHandle;
 
 

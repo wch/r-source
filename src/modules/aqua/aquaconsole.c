@@ -159,6 +159,7 @@ void GraphicCopy(WindowPtr window);
 #define kRSearchHelpOn		'rsho'
 #define kRExampleRun		'rexr'
 #define kRAquaFAQ		'rfaq'
+#define kRAquaWhatsNew		'rwsn'
 
 #define kRDlog	  'RDLG'
 #define	kRDlogMsg  1000
@@ -319,7 +320,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 static pascal OSStatus
 RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData );
 void RescaleInOut(double prop);
-
+void RSetConsoleWidth(void);
 
 OSErr DoSelectDirectory( char *buf, char *title );
 OSStatus SelectFile(FSSpec *outFSSpec,  char *Title, Boolean saveit, Boolean HaveFName);
@@ -433,6 +434,7 @@ static void Aqua_FlushBuffer(void);
 MenuRef HelpMenu = NULL; /* Will be the Reference to Apple's Help Menu */
 static 	short 	RHelpMenuItem=-1;
 static 	short 	RAquaFAQMenuItem=-1;
+static 	short 	RAquaWhatsNewMenuItem=-1;
 static 	short 	RTopicHelpItem=-1;
 static	short 	RunExampleItem=-1;
 static	short	SearchHelpItem=-1;
@@ -613,7 +615,6 @@ OSStatus SetUPConsole(void){
 void	Raqua_ProcessEvents(void);
 
 
-Boolean AlreadyRunning = false;           
 
 
 
@@ -717,7 +718,7 @@ void Raqua_StartConsole(Rboolean OpenConsole)
     if(ConsoleWindow != NULL)
      SelectWindow(ConsoleWindow);
      InitCursor();
-
+	
     return;
             
 noconsole:
@@ -771,12 +772,19 @@ void SetUpRAquaMenu(void){
                 SetMenuItemCommandKey(HelpMenu, RHelpMenuItem, false, '?');
  
 
-                CopyCStringToPascal("RAqua FAQ", menuStr);
+		CopyCStringToPascal("R with aqua FAQ", menuStr);
 		AppendMenu(HelpMenu, menuStr);
+		
 		RAquaFAQMenuItem = CountMenuItems(HelpMenu);
-                SetMenuItemCommandID(HelpMenu, RAquaFAQMenuItem, kRAquaFAQ); 
+		SetMenuItemCommandID(HelpMenu, RAquaFAQMenuItem, kRAquaFAQ); 
 
-                CopyCStringToPascal("Help On Topic...", menuStr);
+		CopyCStringToPascal("What's new in this version", menuStr);
+		AppendMenu(HelpMenu, menuStr);
+
+        RAquaWhatsNewMenuItem = CountMenuItems(HelpMenu);
+		SetMenuItemCommandID(HelpMenu, RAquaWhatsNewMenuItem, kRAquaWhatsNew); 
+
+        CopyCStringToPascal("Help On Topic...", menuStr);
 		AppendMenu(HelpMenu, menuStr);
 		RTopicHelpItem = CountMenuItems(HelpMenu);
                 SetMenuItemCommandID(HelpMenu, RTopicHelpItem, kRHelpOnTopic); 
@@ -1888,7 +1896,11 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
               
               case kRAquaFAQ:
-                consolecmd("system(\"open http://cran.r-project.org/bin/macosx/RAqua-FAQ.html\")");
+                consolecmd("system(\"open $R_HOME/RAqua-FAQ.html\")");
+              break;
+
+              case kRAquaWhatsNew:
+                consolecmd("file.show(file.path(R.home(),\"NEWS.aqua\"))");
               break;
 
               case kRHelpOnTopic:  
@@ -2191,12 +2203,14 @@ void Raqua_Busy(int which)
     else 
      Raqua_hidearrow();
 }
+
    
 void RescaleInOut(double prop)
 {  
-  Rect 	WinBounds, InRect, OutRect;
+  Rect 	WinBounds, InRect, OutRect,bnd;
   ControlRef	RGUIControl;
-
+  FontInfo  finfo;
+  
   GetWindowPortBounds(ConsoleWindow, &WinBounds);
   GetControlByID(ConsoleWindow, &RGUIBusy, &RGUIControl);
   MoveControl (RGUIControl, WinBounds.right - 20, 4);
@@ -2214,9 +2228,18 @@ void RescaleInOut(double prop)
   TXNForceUpdate(RConsoleInObject);
   TXNDraw(RConsoleOutObject, NULL);
   TXNDraw(RConsoleInObject, NULL);
-  EndUpdate(ConsoleWindow); 				 	           
+  EndUpdate(ConsoleWindow);
+  RSetConsoleWidth();
+
+						   			 	           
 }
 
+void RSetConsoleWidth(void){
+	Rect WinBounds;
+	TXNGetViewRect(RConsoleOutObject, &WinBounds);
+	if(R_Is_Running && CurrentPrefs.SetConsoleWidthOnResize)					 	
+		R_SetOptionWidth(floor((double)WinBounds.right / (double)RFontSizes[CurrentPrefs.RFontSize-1] * 1.61));
+}
 
 static pascal OSStatus
 RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )

@@ -43,10 +43,11 @@ void DeactivatePrefsWindow(void);
 
 void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To);
 
-void RSetTab(void);
-void RSetFontSize(void);
-void RSetFont(void);
-
+extern void RSetTab(void);
+extern void RSetFontSize(void);
+extern void RSetFont(void);
+extern void RSetConsoleWidth(void);
+extern void RescaleInOut(double prop);
 
 RAquaPrefs DefaultPrefs;
 RAquaPrefs CurrentPrefs, TempPrefs;
@@ -99,7 +100,7 @@ void CallFontPanel(void);
 #define kGrabStdoutBox		6000
 #define kGrabStderrBox		6001
 #define kSaveConsolePosBox  6002
-
+#define kSetConsoleWidthBox 6003
 
 #define kApplyPrefsButton	5000
 #define kCancelPrefsButton	5001 
@@ -135,6 +136,7 @@ ControlID   GlobalPackagesID = {kPrefControlsSig, kGlobalPackagesBox };
 ControlID   GrabStdoutID = {kPrefControlsSig, kGrabStdoutBox };
 ControlID   GrabStderrID = {kPrefControlsSig, kGrabStderrBox };
 ControlID   SaveConsolePosID = {kPrefControlsSig, kSaveConsolePosBox };
+ControlID   SetConsoleWidthID = {kPrefControlsSig, kSetConsoleWidthBox};
 
 
 static	int		DefaultRFontFace = 4;
@@ -160,6 +162,7 @@ static  int             DefaultGlobalPackages = 0;
 static  int             DefaultGrabStdout = 0;
 static  int             DefaultGrabStderr = 0;
 static  int             DefaultSaveConsolePos = 1;
+static  int             DefaultSetConsoleWidthOnResize = 1;
 static  Rect		BrokenConsoleWindowBounds = {0, 0, 0, 0};
 
 Rect	ConsoleWindowBounds;
@@ -214,7 +217,7 @@ CFStringRef outfgKey, outbgKey, infgKey, inbgKey, bufferingKey, bufferSizeKey;
 CFStringRef devWidthKey, devHeightKey, devPSizeKey;
 CFStringRef devAutoRefreshKey, devAntialiasingKey, devOverrideRDefKey;
 CFStringRef CRANmirrorKey, BIOCmirrorKey, GlobalPackagesKey, GrabStderrKey, GrabStdoutKey;
-CFStringRef SaveConsolePosKey, ConsoleBoundsKey, devQuartzPosKey;
+CFStringRef SaveConsolePosKey, ConsoleBoundsKey, devQuartzPosKey, SetConsoleWidthKey;
 
            
          
@@ -248,6 +251,7 @@ void	SetUpPrefSymbols(void){
     GrabStdoutKey = CFSTR("Grab Stdout");
     GrabStderrKey = CFSTR("Grab Stderr");
     SaveConsolePosKey = CFSTR("Save Console Position");
+	SetConsoleWidthKey = CFSTR("Set Console Width on Resize");
 	ConsoleBoundsKey = CFSTR("Console Window Bounds");
 }
 
@@ -351,6 +355,7 @@ void SetDefaultPrefs(void)
     DefaultPrefs.GrabStdout = DefaultGrabStdout;
     DefaultPrefs.GrabStderr = DefaultGrabStderr;
     DefaultPrefs.SaveConsolePos = DefaultSaveConsolePos;
+	DefaultPrefs.SetConsoleWidthOnResize = DefaultSetConsoleWidthOnResize;
 }
 
 void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
@@ -379,6 +384,7 @@ void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
     To->GrabStdout = From->GrabStdout;
     To->GrabStderr = From->GrabStderr;
 	To->SaveConsolePos = From->SaveConsolePos;
+	To->SetConsoleWidthOnResize = From->SetConsoleWidthOnResize;
 }
 
     
@@ -394,7 +400,7 @@ void GetRPrefs(void)
 	Rect		consolebounds;
     char  devicefont[255], CRANmirror[255], BIOCmirror[255];
     int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
-    int	grabstdout, grabstderr, globalpackages, saveconsolepos;
+    int	grabstdout, grabstderr, globalpackages, saveconsolepos, setconsolewidth;
     
     
     SetUpPrefSymbols();
@@ -649,6 +655,15 @@ void GetRPrefs(void)
 
     CurrentPrefs.SaveConsolePos = saveconsolepos;
 	
+    value = CFPreferencesCopyAppValue(SetConsoleWidthKey, appName);   
+    if (value) {
+	if (!CFNumberGetValue(value, kCFNumberIntType, &setconsolewidth)) setconsolewidth = DefaultPrefs.SetConsoleWidthOnResize;
+	CFRelease(value);
+    } else 
+	setconsolewidth = DefaultPrefs.SetConsoleWidthOnResize; /* set default value */
+
+    CurrentPrefs.SetConsoleWidthOnResize = setconsolewidth;
+
 	bounds = CFPreferencesCopyAppValue(ConsoleBoundsKey, appName);   
     if (bounds) {
       CFDataGetBytes (bounds, CFRangeMake(0,CFDataGetLength(bounds)), (UInt8*)&consolebounds); 
@@ -757,6 +772,9 @@ void SetUpPrefsWindow(RAquaPrefsPointer Settings)
 
     GetControlByID(RPrefsWindow, &SaveConsolePosID, &myControl);
     SetControl32BitValue(myControl, Settings->SaveConsolePos);
+
+    GetControlByID(RPrefsWindow, &SetConsoleWidthID, &myControl);
+    SetControl32BitValue(myControl, Settings->SetConsoleWidthOnResize);
 }
 
 
@@ -785,7 +803,7 @@ void SaveRPrefs(void)
     RGBColor    fgout,bgout,fgin,bgin;
 	char 	 devicefont[255], cran[255], bioc[255];
     int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
-    int	grabstdout, grabstderr, globalpackages, saveconsolepos;
+    int	grabstdout, grabstderr, globalpackages, saveconsolepos, setconsolewidth;
 
 
     
@@ -811,6 +829,7 @@ void SaveRPrefs(void)
     grabstdout = CurrentPrefs.GrabStdout;
     grabstderr = CurrentPrefs.GrabStderr;
 	saveconsolepos = CurrentPrefs.SaveConsolePos;
+	setconsolewidth = CurrentPrefs.SetConsoleWidthOnResize;
     strcpy(bioc, CurrentPrefs.BIOCmirror);
     strcpy(cran, CurrentPrefs.CRANmirror);
 	
@@ -934,6 +953,10 @@ void SaveRPrefs(void)
     CFPreferencesSetAppValue(SaveConsolePosKey, value, appName);
     CFRelease(value);
 	
+    value = CFNumberCreate(NULL, kCFNumberIntType, &setconsolewidth); 
+    CFPreferencesSetAppValue(SetConsoleWidthKey, value, appName);
+    CFRelease(value);
+
 	(void)CFPreferencesAppSynchronize(appName);
 }
 
@@ -1028,7 +1051,9 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
             RSetTab();
             RSetFontSize();
             RSetFont();
-	    RSetPackagePrefs();
+			RescaleInOut(0.8);
+			RSetConsoleWidth();
+			RSetPackagePrefs();
             RSetPipes();
         break;
         
@@ -1042,7 +1067,9 @@ static  OSStatus GenContEventHandlerProc( EventHandlerCallRef inCallRef, EventRe
          RSetTab();
          RSetFontSize();
          RSetFont();
-	 RSetPackagePrefs();
+		 RescaleInOut(0.8);
+		 RSetConsoleWidth();
+		 RSetPackagePrefs();
          RSetPipes();
          SaveRPrefs();
          HideWindow(theWindow);
@@ -1259,6 +1286,9 @@ void GetDialogPrefs(void)
     
     GetControlByID( RPrefsWindow, &SaveConsolePosID, &controlField );
     CurrentPrefs.SaveConsolePos = GetControl32BitValue(controlField);
+
+    GetControlByID( RPrefsWindow, &SetConsoleWidthID, &controlField );
+    CurrentPrefs.SetConsoleWidthOnResize = GetControl32BitValue(controlField);
 }
 
 void pickColor(RGBColor inColour, RGBColor *outColor){

@@ -82,7 +82,8 @@ extern DL_FUNC 	ptr_R_ReadConsole, ptr_R_WriteConsole, ptr_R_ResetConsole,
 
 DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters, 
         ptr_Raqua_Edit, ptr_do_dataentry, ptr_do_browsepkgs, ptr_do_datamanger,
-        ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, ptr_InitAquaIO;
+        ptr_do_packagemanger, ptr_do_flushconsole, ptr_do_hsbrowser, ptr_InitAquaIO,
+		ptr_RSetConsoleWidth;
 
 
 void R_ProcessEvents(void);
@@ -170,6 +171,8 @@ void R_load_aqua_shlib(void)
     if(!ptr_R_Busy) R_Suicide("Cannot load Raqua_Busy");
     ptr_InitAquaIO = Rdlsym(handle, "InitAquaIO");
     if(!ptr_InitAquaIO) R_Suicide("Cannot load InitAquaIO");
+    ptr_RSetConsoleWidth = Rdlsym(handle, "RSetConsoleWidth");
+    if(!ptr_RSetConsoleWidth) R_Suicide("Cannot load RSetConsoleWidth");
 
 #ifdef AQUA_POLLED_EVENTS 
     otherPolledEventHandler = R_PolledEvents;
@@ -230,6 +233,10 @@ void InitAquaIO(void){
  ptr_InitAquaIO();
 }
 
+void RSetConsoleWidth(void);
+void RSetConsoleWidth(void){
+ ptr_RSetConsoleWidth();
+}
 
 void R_ProcessEvents(void)
 {
