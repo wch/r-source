@@ -281,21 +281,6 @@ foreach $pkg (@ARGV){
     if($res) {
 	printf "*** Installation of $pkgname failed ***\n";
     } else {
-        if($opt_build) {
-	    my $filename = "${pkgname}_" . $description->{"Version"};
-	    chdir($library);
-	    $startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
-	    system("rm -f  $startdir/$filename.zip");
-	    system("zip -r9Xq $startdir/$filename.zip $zippkgs");
-	    if ($is_bundle) {
-		## Need to get the toplevel files in there
-		$currentDir = cwd();
-		chdir($canonpkg);
-		system("zip $startdir/$filename.zip $topLevelFiles");
-		chdir($currentDir);
-	    }
-	}
-
 	if($lazyload) {
 	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir";
 	    if($is_bundle) {
@@ -315,6 +300,22 @@ foreach $pkg (@ARGV){
 	    }
 	    system($cmd);
 	}
+
+        if($opt_build) {
+	    my $filename = "${pkgname}_" . $description->{"Version"};
+	    chdir($library);
+	    $startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
+	    system("rm -f  $startdir/$filename.zip");
+	    system("zip -r9Xq $startdir/$filename.zip $zippkgs");
+	    if ($is_bundle) {
+		## Need to get the toplevel files in there
+		$currentDir = cwd();
+		chdir($canonpkg);
+		system("zip $startdir/$filename.zip $topLevelFiles");
+		chdir($currentDir);
+	    }
+	}
+
     } # end of if($res)
 
     system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean && $is_bundle == 0);
@@ -351,7 +352,7 @@ foreach $pkg (@ARGV){
     }
     # wipe out lockdir
     rmtree($lockdir);
-    exit $res;
+    exit $res if $res;
 }
 
 
