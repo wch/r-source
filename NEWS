@@ -508,6 +508,9 @@ BUG FIXES
     o	optim() needed a check that the objective function returns a
 	value of length 1 (spotted by Ben Bolker).
 
+    o	X11() was only scaling its fonts to pointsize if the dpi
+	was within 0.5 of 100dpi.
+
 
 
 
