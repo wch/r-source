@@ -3,7 +3,7 @@ include ../../../gnuwin32/MkRules
 
 run: $(PKG)-Ex.R
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	../../../../bin/rterm --vsize 6M < $(PKG)-Ex.R > $(PKG)-Ex.Rout
+	../../../../bin/rterm < $(PKG)-Ex.R > $(PKG)-Ex.Rout
 
 
 $(PKG)-Ex.R: ../../../../library/$(PKG)/R-ex/*.R
