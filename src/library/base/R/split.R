@@ -20,3 +20,21 @@ split.default <- function(x, f) {
 split.data.frame <- function(x, f) {
     lapply(split(1:nrow(x), f), function(ind) x[ind, , drop = FALSE ])
 }
+
+"split<-" <- function(x, f, value) UseMethod("split<-")
+
+"split<-.default" <- function(x, f, value){
+    x[unlist(split(seq(along=x), f))] <- unlist(value)
+    x
+}
+
+"split<-.data.frame" <- function(x, f, value){
+    x[unlist(split(rownames(x), f)),] <- do.call("rbind", value)
+    x
+}
+
+unsplit <- function(v, f) {
+    x <- vector(mode=typeof(v[[1]]), length=length(f))
+    split(x, f) <- v
+    x
+}

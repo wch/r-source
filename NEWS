@@ -60,44 +60,44 @@ NEW FEATURES
     o	formatDL() now also works if both items and descriptions are
 	given in a suitable list or matrix.
 
-   o	gzfile() is guaranteed to be available, and hence the
+    o	gzfile() is guaranteed to be available, and hence the
 	`compress' option to save() and save.image().
 
-   o	An extensible approach to safe prediction for models with e.g.
+    o	An extensible approach to safe prediction for models with e.g.
 	poly(), bs() or ns() terms, using the new generic function
 	makepredictcall().  Used by most model-fitting functions
 	including lm() and glm().  See ?poly, ?cars and ?ns for
 	examples.
 
-   o	poly() now works with more than one vector or a matrix as input,
+    o	poly() now works with more than one vector or a matrix as input,
 	and has a predict method for objects created from a single
 	vector.
 
-   o	Argument `split' of summary.{aov,aovlist} is now implemented.
+    o	Argument `split' of summary.{aov,aovlist} is now implemented.
 
-   o	library() now checks the dependence on R version (if any) and
+    o	library() now checks the dependence on R version (if any) and
 	warns if the package was built under a later version of R.
 
-   o	warning() has new argument `call.', like stop()'s.
+    o	warning() has new argument `call.', like stop()'s.
 
-   o	zip.file.extract() is no longer provisional and has an
+    o	zip.file.extract() is no longer provisional and has an
 	"internal" method available on all platforms.
 
-   o	New read-only connections to files in zip files via unz().
+    o	New read-only connections to files in zip files via unz().
 
-   o    The tcltk package now works with the gnome user interface.
+    o   The tcltk package now works with the gnome user interface.
 
-   o    chol() allows pivoting via new argument `pivot'.
+    o   chol() allows pivoting via new argument `pivot'.
 
-   o    acosh(), asinh(), atanh() are guaranteed to be available.
+    o   acosh(), asinh(), atanh() are guaranteed to be available.
 
-   o    New na.action function na.pass() passes through NAs unaltered.
+    o   New na.action function na.pass() passes through NAs unaltered.
 
-   o    piechart() has been renamed to pie(), as piechart is a Trellis
+    o   piechart() has been renamed to pie(), as piechart is a Trellis
 	function for arrays of pie charts.  The default fill colours
 	are now a set of pastel shades, rather than par("bg").
 
-   o	Changes in package ts:
+    o	Changes in package ts:
 
 	-  More emphasis on handling time series with missing values
 	   where possible, for example in acf() and in the
@@ -124,28 +124,28 @@ NEW FEATURES
 	-  New function acf2AR() to compute the AR process with a given
            autocorrelation function.
 
-   o    Much improved printing of matrices and arrays of type "list".
+    o   Much improved printing of matrices and arrays of type "list".
 
-   o    deriv/deriv3() can now handle expressions involving pnorm and
+    o   deriv/deriv3() can now handle expressions involving pnorm and
 	dnorm (with a single argument), as in S-PLUS.
 
-   o	rug() now has a "..." argument allowing its location to be specified.
+    o	rug() now has a "..." argument allowing its location to be specified.
 
-   o	polyroot() now handles coefficient vectors with terminal
+    o	polyroot() now handles coefficient vectors with terminal
 	zeroes (as in S).
 
-   o	plclust() in package mva, for more S-PLUS compatibility.
+    o	plclust() in package mva, for more S-PLUS compatibility.
 
-   o	New function expm1() both in R and in C API, for accurate exp(x)-1;
+    o	New function expm1() both in R and in C API, for accurate exp(x)-1;
 	precision improvement in pexp() and pweibull() in some cases.
 	(PR#1334-5)
 
-   o	The "Knuth-TAOCP" option for random-number generation has been
+    o	The "Knuth-TAOCP" option for random-number generation has been
 	given an option of using the 2002 revision.  See ?RNG for the
 	details: the R usage already protected against the
 	reported `weakness'.
 
-   o    Changes in package "methods"
+    o   Changes in package "methods"
 
        -  New function validSlotNames().
 
@@ -160,9 +160,12 @@ NEW FEATURES
           selected if the currently active method didn't exist.  See
           the online documentation.  This is an extension to the API.
 
-   o    New function TukeyHSD for multiple comparisons in the results
+    o   New assignment forms of split(); new function unsplit().
+
+    o   New function TukeyHSD for multiple comparisons in the results
 	of aov().  (Formerly function Tukey in package Devore5 by
 	Douglas Bates.)
+
 
 
 DEPRECATED & DEFUNCT
