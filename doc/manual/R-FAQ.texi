@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-33, 2000-12-08
+@set FAQ-VERSION 1.1-34, 2000-12-09
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1152,7 +1152,7 @@ you should always use @code{TRUE} and @code{FALSE}.
 
 @item
 In R, @code{dyn.load()} can only load @emph{shared libraries}, as
-created for example by @kbd{R SHLIB}.
+created for example by @kbd{R CMD SHLIB}.
 
 @item
 In R, @code{attach()} currently only works for lists and data frames,
@@ -1250,13 +1250,13 @@ In S, @code{tapply(simplify=TRUE)} returns a vector where R returns a
 one-dimensional array (which can have named dimnames).
 
 @item
-In S(-PLUS) the C locale is used, whereas in R the current operating
-system locale is used for determining which characters are alphanumeric
-and how they are sorted.  This affects the set of valid names for R
-objects (for example accented chars may be allowed in R) and ordering in
-sorts and comparisons (such as whether @code{"aA" < "Bb"} is true or
-false).  From version 1.2.0 the locale can be (re-)set in R by the
-@code{Sys.setlocale()} function.
+In S(-@sc{Plus}) the C locale is used, whereas in R the current
+operating system locale is used for determining which characters are
+alphanumeric and how they are sorted.  This affects the set of valid
+names for R objects (for example accented chars may be allowed in R) and
+ordering in sorts and comparisons (such as whether @code{"aA" < "Bb"} is
+true or false).  From version 1.2.0 the locale can be (re-)set in R by
+the @code{Sys.setlocale()} function.
 
 @item
 In S, @code{missing(@var{arg})} remains @code{TRUE} if @var{arg} is
@@ -1350,7 +1350,7 @@ MODern REGression: smoothing and local methods.
 @item mva
 MultiVariate Analysis.  Currently contains code for principal
 components, canonical correlations, metric multidimensional scaling, and
-hierarchical and k-means clustering.
+hierarchical and @math{k}-means clustering.
 @item nls
 Nonlinear regression routines.
 @item splines
@@ -1523,7 +1523,7 @@ including stabilized test procedures by Laeuter et.@: al.
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
 @item mvtnorm
-Multivariate normal and t distributions.
+Multivariate normal and @math{t} distributions.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @item nnet
@@ -1607,7 +1607,7 @@ Matrices with numeric indices starting at zero rather than one.
 @end table
 
 @noindent
-See @acronym{CRAN} @file{src/contrib/INDEX} for more information.
+See @acronym{CRAN} @file{src/contrib/PACKAGES} for more information.
 
 There is also a @acronym{CRAN} @file{src/contrib/Devel} directory which
 contains packages still ``under development'' or depending on features
@@ -1626,7 +1626,7 @@ Functions for exporting R objects as @HTML{} tables.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item StatDataML
-Read and write StatDataML
+Read and write StatDataML.
 @item cmprsk
 Estimation, testing and regression modeling of subdistribution functions
 in competing risks.
@@ -2021,6 +2021,7 @@ dir /opt/R/src/unix
 * Are Trellis displays implemented in R?::  
 * What are the enclosing and parent environments?::  
 * How can I substitute into a plot label?::  
+* What are valid names?::       
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2390,7 +2391,7 @@ between R and S is to say that in S the enclosing environment is
 @emph{always} the global workspace, but in R the enclosing environment
 is wherever the function was created.
 
-@node How can I substitute into a plot label?,  , What are the enclosing and parent environments?, R Miscellanea
+@node How can I substitute into a plot label?, What are valid names?, What are the enclosing and parent environments?, R Miscellanea
 @section How can I substitute into a plot label?
 
 Often, it is desired to use the value of an R object in a plot label,
@@ -2408,6 +2409,54 @@ title(substitute(hat(a) == ahat, list(ahat = ahat)))
 @noindent
 (note that it is @samp{==} and not @samp{=}).  There are more worked
 examples in the mailing list achives.
+
+@node What are valid names?,  , How can I substitute into a plot label?, R Miscellanea
+@section What are valid names?
+
+When creating data frames using @code{data.frame} or @code{read.table},
+R by default ensures that the variable names are syntactically valid.
+(The argument @option{check.names} to these functions controls whether
+variable names are checked and adjusted by @code{make.names} if needed.)
+
+To understand what names are ``valid'', one needs to take into account
+that the term ``name'' is used in several different (but related) ways
+in the language:
+
+@enumerate
+@item
+A @emph{syntactic name} is a string the parser interprets as this type
+of expression.  It consists of letters, numbers, and the dot character
+and starts with a letter or the dot.
+
+@item
+An @emph{object name} is a string associated with an object that is
+assigned in an expression either by having the object name on the left
+of an assignment operation or as an argument to the @code{assign}
+function.  It is usually a syntactic name as well, but can be any
+non-empty string if it is quoted (and it is always quoted in the call to
+@code{assign}).
+
+@item
+An @emph{argument name} is what appears to the left of the equals sign
+when supplying an argument in a function call (for example,
+@code{f(trim=.5)}).  Argument names are also usually syntactic names,
+but again can be anything if they are quoted.
+
+@item
+An @emph{element name} is a string that identifies a piece of an object
+(a component of a list, for example.)  When it is used on the right of
+the @samp{$} operator, it must be a syntactic name, or quoted.
+Otherwise, element names can be any strings.  (When an object is used as
+a database, as in a call to @code{eval} or @code{attach}, the element
+names become object names.)
+
+@item
+Finally, a @emph{file name} is a string identifying a file in the
+operating system for reading, writing, etc.  It really has nothing much
+to do with names in the language, but it is traditional to call these
+strings file ``names''.
+@end enumerate
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming

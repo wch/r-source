@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-33, 2000-12-08
+Version 1.1-34, 2000-12-09
 Kurt Hornik
 
 
@@ -71,6 +71,7 @@ Table of Contents
   7.14 Are Trellis displays implemented in R?
   7.15 What are the enclosing and parent environments?
   7.16 How can I substitute into a plot label?
+  7.17 What are valid names?
 
 8 R Programming
   8.1 How should I write summary methods?
@@ -878,7 +879,7 @@ the same time being as compatible as possible with S.
      use `TRUE' and `FALSE'.
 
    * In R, `dyn.load()' can only load _shared libraries_, as created for
-     example by `R SHLIB'.
+     example by `R CMD SHLIB'.
 
    * In R, `attach()' currently only works for lists and data frames, but
      not for directories.  (In fact, `attach()' also works for R data files
@@ -953,12 +954,12 @@ the same time being as compatible as possible with S.
      one-dimensional array (which can have named dimnames).
 
    * In S(-PLUS) the C locale is used, whereas in R the current operating
-     system locale is used for determining which characters are alphanumeric
-     and how they are sorted.  This affects the set of valid names for R
-     objects (for example accented chars may be allowed in R) and ordering
-     in sorts and comparisons (such as whether `"aA" < "Bb"' is true or
-     false).  From version 1.2.0 the locale can be (re-)set in R by the
-     `Sys.setlocale()' function.
+     system locale is used for determining which characters are
+     alphanumeric and how they are sorted.  This affects the set of valid
+     names for R objects (for example accented chars may be allowed in R)
+     and ordering in sorts and comparisons (such as whether `"aA" < "Bb"' is
+     true or false).  From version 1.2.0 the locale can be (re-)set in R by
+     the `Sys.setlocale()' function.
 
    * In S, `missing(ARG)' remains `TRUE' if ARG is subsequently modified;
      in R it doesn't.
@@ -1360,7 +1361,7 @@ works, was published in the Journal of Statistical Software
 *zmatrix*
      Matrices with numeric indices starting at zero rather than one.
 
-See CRAN `src/contrib/INDEX' for more information.
+See CRAN `src/contrib/PACKAGES' for more information.
 
    There is also a CRAN `src/contrib/Devel' directory which contains
 packages still "under development" or depending on features only present in
@@ -1380,7 +1381,7 @@ these a try, of course.  This area of CRAN currently contains
      An interface between R and the MySQL database system.
 
 *StatDataML*
-     Read and write StatDataML
+     Read and write StatDataML.
 
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
@@ -2039,6 +2040,46 @@ interest, use
 
 (note that it is `==' and not `=').  There are more worked examples in the
 mailing list achives.
+
+7.17 What are valid names?
+==========================
+
+   When creating data frames using `data.frame' or `read.table', R by
+default ensures that the variable names are syntactically valid.  (The
+argument `check.names' to these functions controls whether variable names
+are checked and adjusted by `make.names' if needed.)
+
+   To understand what names are "valid", one needs to take into account
+that the term "name" is used in several different (but related) ways in the
+language:
+
+  1. A _syntactic name_ is a string the parser interprets as this type of
+     expression.  It consists of letters, numbers, and the dot character
+     and starts with a letter or the dot.
+
+  2. An _object name_ is a string associated with an object that is
+     assigned in an expression either by having the object name on the left
+     of an assignment operation or as an argument to the `assign' function.
+     It is usually a syntactic name as well, but can be any non-empty
+     string if it is quoted (and it is always quoted in the call to
+     `assign').
+
+  3. An _argument name_ is what appears to the left of the equals sign when
+     supplying an argument in a function call (for example, `f(trim=.5)').
+     Argument names are also usually syntactic names, but again can be
+     anything if they are quoted.
+
+  4. An _element name_ is a string that identifies a piece of an object (a
+     component of a list, for example.)  When it is used on the right of
+     the `$' operator, it must be a syntactic name, or quoted.  Otherwise,
+     element names can be any strings.  (When an object is used as a
+     database, as in a call to `eval' or `attach', the element names become
+     object names.)
+
+  5. Finally, a _file name_ is a string identifying a file in the operating
+     system for reading, writing, etc.  It really has nothing much to do
+     with names in the language, but it is traditional to call these
+     strings file "names".
 
 8 R Programming
 ***************

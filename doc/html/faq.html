@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-33, 2000-12-08</h2>
+<h2>Version 1.1-34, 2000-12-09</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -93,6 +93,7 @@
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">7.14 Are Trellis displays implemented in R?</a>
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">7.15 What are the enclosing and parent environments?</a>
 <li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">7.16 How can I substitute into a plot label?</a>
+<li><a href="#What%20are%20valid%20names%3f">7.17 What are valid names?</a>
 </ul>
 <li><a href="#R%20Programming">8 R Programming</a>
 <ul>
@@ -1194,7 +1195,7 @@ factors with levels <code>"T"</code> or <code>"F"</code>.)  Hence, when writing 
 you should always use <code>TRUE</code> and <code>FALSE</code>.
 
 <li>In R, <code>dyn.load()</code> can only load <em>shared libraries</em>, as
-created for example by <kbd>R SHLIB</kbd>.
+created for example by <kbd>R CMD SHLIB</kbd>.
 
 <li>In R, <code>attach()</code> currently only works for lists and data frames,
 but not for directories.  (In fact, <code>attach()</code> also works for R
@@ -1272,13 +1273,13 @@ statement is executed.
 <li>In S, <code>tapply(simplify=TRUE)</code> returns a vector where R returns a
 one-dimensional array (which can have named dimnames).
 
-<li>In S(-PLUS) the C locale is used, whereas in R the current operating
-system locale is used for determining which characters are alphanumeric
-and how they are sorted.  This affects the set of valid names for R
-objects (for example accented chars may be allowed in R) and ordering in
-sorts and comparisons (such as whether <code>"aA" &lt; "Bb"</code> is true or
-false).  From version 1.2.0 the locale can be (re-)set in R by the
-<code>Sys.setlocale()</code> function.
+<li>In S(-<small>PLUS</small>) the C locale is used, whereas in R the current
+operating system locale is used for determining which characters are
+alphanumeric and how they are sorted.  This affects the set of valid
+names for R objects (for example accented chars may be allowed in R) and
+ordering in sorts and comparisons (such as whether <code>"aA" &lt; "Bb"</code> is
+true or false).  From version 1.2.0 the locale can be (re-)set in R by
+the <code>Sys.setlocale()</code> function.
 
 <li>In S, <code>missing(<var>arg</var>)</code> remains <code>TRUE</code> if <var>arg</var> is
 subsequently modified; in R it doesn't.
@@ -1635,7 +1636,7 @@ main new feature being penalized (partial) likelihood.
 <dd>Matrices with numeric indices starting at zero rather than one. 
 </dl>
 
-<p>See <small>CRAN</small> <code>src/contrib/INDEX</code> for more information.
+<p>See <small>CRAN</small> <code>src/contrib/PACKAGES</code> for more information.
 
 <p>There is also a <small>CRAN</small> <code>src/contrib/Devel</code> directory which
 contains packages still "under development" or depending on features
@@ -1654,7 +1655,7 @@ functions to match the interface metadata structures.
 <br><dt><strong>RMySQL</strong>
 <dd>An interface between R and the MySQL database system. 
 <br><dt><strong>StatDataML</strong>
-<dd>Read and write StatDataML
+<dd>Read and write StatDataML. 
 <br><dt><strong>cmprsk</strong>
 <dd>Estimation, testing and regression modeling of subdistribution functions
 in competing risks. 
@@ -2071,6 +2072,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>: 
 <li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>: 
 <li><a href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>: 
+<li><a href="#What%20are%20valid%20names%3f">What are valid names?</a>: 
 </ul>
 
 <p><hr>
@@ -2508,6 +2510,7 @@ is wherever the function was created.
 
 <p><hr>
 Node:<a name="How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
+Next:<a rel=next href="#What%20are%20valid%20names%3f">What are valid names?</a>,
 Previous:<a rel=previous href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
 Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
 <br>
@@ -2527,6 +2530,53 @@ estimator of your parameter a of interest, use
 
 <p>(note that it is <code>==</code> and not <code>=</code>).  There are more worked
 examples in the mailing list achives.
+
+<p><hr>
+Node:<a name="What%20are%20valid%20names%3f">What are valid names?</a>,
+Previous:<a rel=previous href="#How%20can%20I%20substitute%20into%20a%20plot%20label%3f">How can I substitute into a plot label?</a>,
+Up:<a rel=up href="#R%20Miscellanea">R Miscellanea</a>
+<br>
+
+<h2>7.17 What are valid names?</h2>
+
+<p>When creating data frames using <code>data.frame</code> or <code>read.table</code>,
+R by default ensures that the variable names are syntactically valid. 
+(The argument <code>check.names</code> to these functions controls whether
+variable names are checked and adjusted by <code>make.names</code> if needed.)
+
+<p>To understand what names are "valid", one needs to take into account
+that the term "name" is used in several different (but related) ways
+in the language:
+
+<ol type=1 start=1>
+</p><li>A <em>syntactic name</em> is a string the parser interprets as this type
+of expression.  It consists of letters, numbers, and the dot character
+and starts with a letter or the dot.
+
+<li>An <em>object name</em> is a string associated with an object that is
+assigned in an expression either by having the object name on the left
+of an assignment operation or as an argument to the <code>assign</code>
+function.  It is usually a syntactic name as well, but can be any
+non-empty string if it is quoted (and it is always quoted in the call to
+<code>assign</code>).
+
+<li>An <em>argument name</em> is what appears to the left of the equals sign
+when supplying an argument in a function call (for example,
+<code>f(trim=.5)</code>).  Argument names are also usually syntactic names,
+but again can be anything if they are quoted.
+
+<li>An <em>element name</em> is a string that identifies a piece of an object
+(a component of a list, for example.)  When it is used on the right of
+the <code>$</code> operator, it must be a syntactic name, or quoted. 
+Otherwise, element names can be any strings.  (When an object is used as
+a database, as in a call to <code>eval</code> or <code>attach</code>, the element
+names become object names.)
+
+<li>Finally, a <em>file name</em> is a string identifying a file in the
+operating system for reading, writing, etc.  It really has nothing much
+to do with names in the language, but it is traditional to call these
+strings file "names".
+</ol>
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
