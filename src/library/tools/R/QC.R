@@ -431,7 +431,6 @@ function(package, dir, lib.loc = NULL,
 print.codoc <-
 function(x, ...)
 {
-    codeNotInUsages <- attr(x, "codeNotInUsages")
     ## In general, functions in the code which only have an \alias but
     ## no \usage entry are not necessarily a problem---they might be
     ## mentioned in other parts of the Rd object documenting them, or be
@@ -440,19 +439,33 @@ function(x, ...)
     ## functions should have \usage entries.  As extract-usage.pl has
     ## problems with the typical \usage style for replacement functions,
     ## we exclude all these.
-    if(length(codeNotInUsages)
-       && identical(TRUE, attr(x, "hasNamespace"))) {
-        codeNotInUsages <-
-            codeNotInUsages[! codeNotInUsages %in% grep("<-$",
-                                                        codeNotInUsages,
-                                                        value = TRUE)]
-        if(length(codeNotInUsages)) {
-            writeLines("Exported objects without usage information:")
-            print(codeNotInUsages)
-            writeLines("")
-        }
-    }
-
+    ## <FIXME>
+    ## Things are not quite that simple.
+    ## E.g., for generic functions with just a default and a formula
+    ## method we typically do not have \usage for the generic itself.
+    ## Also, extract-usage.pl currently only picks up functions, so all
+    ## variables will come out as 'without usage information' ...
+    ## As we can always access the information via
+    ##    attr(codoc("foo"), "codeNotInUsages")
+    ## disable reporting this for the time being ...
+    ## <COMMENT>
+    ##     codeNotInUsages <- attr(x, "codeNotInUsages")
+    ##     if(length(codeNotInUsages)
+    ##        && identical(TRUE, attr(x, "hasNamespace"))) {
+    ##         codeNotInUsages <-
+    ##             codeNotInUsages[! codeNotInUsages
+    ##                             %in% grep("<-$",
+    ##                                       codeNotInUsages,
+    ##                                       value = TRUE)]
+    ##         if(length(codeNotInUsages)) {
+    ##             writeLines("Exported objects without usage information:")
+    ##             print(codeNotInUsages)
+    ##             writeLines("")
+    ##         }
+    ##     }
+    ## </COMMENT>
+    ## </FIXME>
+    
     usagesNotInCode <- attr(x, "usagesNotInCode")
     if(length(usagesNotInCode) > 0) {
         for(fname in names(usagesNotInCode)) {
@@ -575,7 +588,8 @@ function(package, dir, lib.loc = NULL)
 
     ## Find the assignment functions in the given package.
     assignFuns <- c(grep("<-", lsCode, value = TRUE), S3reg)
-    ## Find the assignment functions with last arg not named 'value'.
+    ## Find the assignment functions (which have formal arguments) with
+    ## last arg not named 'value'.
     badAssignFuns <-
         assignFuns[sapply(assignFuns, function(f) {
             gf <- if(f %in% S3reg)
@@ -583,8 +597,11 @@ function(package, dir, lib.loc = NULL)
             else
                 get(f, envir = codeEnv)
             argNames <- names(formals(gf))
-            argNames[length(argNames)] != "value"
-        }) == TRUE]
+            if(!length(argNames))
+                TRUE                    # most likely a .Primitive()
+            else
+                identical(argNames[length(argNames)], "value")
+        }) == FALSE]
 
     class(badAssignFuns) <- "checkAssignFuns"
     badAssignFuns
