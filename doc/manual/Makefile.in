@@ -29,6 +29,10 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = @MAKEINFO@
+MAKEINFO_HTML_OPTS = --html --no-split
+MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
+TEXI2HTML = $(MAKEINFO) $(MAKEINFO_HTML_OPTS)
+TEXI2TEXT = $(MAKEINFO) $(MAKEINFO_TEXT_OPTS)
 TEXI2DVI = $(top_srcdir)/tools/texi2dvi --texinfo="@set UseExternalXrefs"
 TEXI2PDF = $(TEXI2DVI) --pdf
 PDFLATEX = @PDFLATEX@
@@ -67,7 +71,7 @@ docs: html
 	fi
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2DVI) $<
 .texi.html:
-	$(MAKEINFO) --html -I$(srcdir) $< -o $@ || touch $@
+	$(TEXI2HTML) -I$(srcdir) $< -o $@ || touch $@
 .texi.info:
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
@@ -284,7 +288,6 @@ distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean
 
-MAKEINFO_TEXT_OPTS = --number-sections --fill-column=76 --no-split --no-headers
 maintainer-build: \
   $(top_srcdir)/FAQ \
   $(top_srcdir)/RESOURCES \
@@ -296,31 +299,31 @@ $(top_srcdir)/FAQ: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-FAQ.texi
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
+	$(TEXI2TEXT) $< -o $@
 $(top_srcdir)/doc/html/faq.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-FAQ.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --html --number-sections $< -o $@
+	$(TEXI2HTML) --number-sections $< -o $@
 $(top_srcdir)/RESOURCES: @MAINTAINER_MODE_TRUE@ $(srcdir)/resources.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) $(MAKEINFO_TEXT_OPTS) $< -o $@
+	$(TEXI2TEXT) $< -o $@
 $(top_srcdir)/doc/html/resources.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/resources.texi
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --html --no-headers $< -o $@
+	$(TEXI2HTML) --no-headers $< -o $@
 $(top_srcdir)/doc/html/R-admin.html: @MAINTAINER_MODE_TRUE@ $(srcdir)/R-admin.texi $(texiincludes)
 	@if test "$(MAKEINFO)" = false; then \
 	  echo "ERROR: \`makeinfo' v4 needed but missing on your system."; \
 	  exit 1; \
 	fi
-	$(MAKEINFO) --html --no-headers --number-sections -I$(srcdir) $< -o $@
+	$(TEXI2HTML) --no-headers --number-sections -I$(srcdir) $< -o $@
 
 distdir: $(DISTFILES)
 	@for f in $(DISTFILES); do \
