@@ -2,6 +2,9 @@
 \alias{barplot}
 \alias{barplot.default}
 \title{Bar Plots}
+\description{
+  Creates a bar plot with vertical or horizontal bars.
+}
 \usage{
 \method{barplot}{default}(height, width = 1, space = NULL,
         names.arg = NULL, legend.text = NULL, beside = FALSE,
@@ -11,7 +14,7 @@
         xlim = NULL, ylim = NULL, xpd = TRUE,
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-        inside = TRUE, plot = TRUE, axis.lty = 0, \dots)
+        inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -83,12 +86,11 @@
   \item{axis.lty}{the graphics parameter \code{lty} applied to the axis
     and tick marks of the categorical (default horizontal) axis.  Note
     that by default the axis is suppressed.}
+  \item{offset}{a vector indicating how much the bars should be shifted
+    relative to the x axis.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
     passed to \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
-}
-\description{
-  Creates a bar plot with vertical or horizontal bars.
 }
 \details{
   This is a generic function, it currently only has a default method.

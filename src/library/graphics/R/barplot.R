@@ -9,7 +9,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	 xlim = NULL, ylim = NULL, xpd = TRUE,
 	 axes = TRUE, axisnames = TRUE,
 	 cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-	 inside = TRUE, plot = TRUE, axis.lty = 0, ...)
+	 inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, ...)
 {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)# -> help(.)
 
@@ -40,21 +40,26 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     if (beside) {
 	if (length(space) == 2)
 	    space <- rep.int(c(space[2], rep.int(space[1], NR - 1)), NC)
-	width <- rep(width, length.out = NR * NC)
+	width <- rep(width, length.out = NR)
     } else {
 	width <- rep(width, length.out = NC)
 	height <- rbind(0, apply(height, 2, cumsum))
     }
+
+    offset <- rep(as.vector(offset), length.out = length(width))
+
     delta <- width / 2
     w.r <- cumsum(space + width)
     w.m <- w.r - delta
     w.l <- w.m - delta
     if (horiz) {
-	if (missing(xlim)) xlim <- range(-0.01 * height, height, na.rm=TRUE)
+	if (missing(xlim)) xlim <- range(-0.01 * height + offset,
+                                         height + offset, na.rm = TRUE)
 	if (missing(ylim)) ylim <- c(min(w.l), max(w.r))
     } else {
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
-	if (missing(ylim)) ylim <- range(-0.01 * height, height, na.rm=TRUE)
+	if (missing(ylim)) ylim <- range(-0.01 * height + offset,
+                                         height + offset, na.rm = TRUE)
     }
     if (beside)
 	w.m <- matrix(w.m, nc = NC)
@@ -73,13 +78,13 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		rect(y1,x1, y2,x2, ...)
 	}
 	if (beside)
-	    xyrect(0, w.l, c(height), w.r, horizontal = horiz,
+	    xyrect(0 + offset, w.l, c(height) + offset, w.r, horizontal = horiz,
 		   angle = angle, density = density, col = col, border = border)
 	else {
 	    ## noInside <- NC > 1 && !inside # outside border, but not inside
 	    ## bordr <- if(noInside) 0 else border
 	    for (i in 1:NC) {
-		xyrect(height[1:NR, i], w.l[i], height[-1, i], w.r[i],
+		xyrect(height[1:NR, i] + offset[i], w.l[i], height[-1, i] + offset[i], w.r[i],
 		       horizontal = horiz, angle = angle, density = density,
 		       col = col, border = border)# = bordr
                 ## if(noInside)
