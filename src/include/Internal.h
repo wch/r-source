@@ -38,6 +38,8 @@ SEXP do_PDF(SEXP, SEXP, SEXP, SEXP);
 #ifdef Macintosh
 SEXP do_Macintosh(SEXP, SEXP, SEXP, SEXP);
 SEXP do_applescript(SEXP, SEXP, SEXP, SEXP);
+SEXP do_fileedit(SEXP, SEXP, SEXP, SEXP);
+SEXP do_newfile(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 /* Function Names */
