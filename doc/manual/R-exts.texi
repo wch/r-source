@@ -110,6 +110,13 @@ before reading on.  If the package you are writing uses the
 @pkg{methods} package, look at the corresponding section in
 @code{?INSTALL}.
 
+Once a source package is created, it must be installed.  Under
+Unix-alikes that is done by @code{R CMD INSTALL}.  Under Windows,
+@code{Rcmd INSTALL} is used, but please see the file
+@file{readme.packages} (in the top-level directory of the binary
+installation) for the tools that you need to have installed.  (No simple
+way to install packages is available for Classic MacOS users.)
+
 @menu
 * Package structure::
 * Configure and cleanup::
@@ -138,6 +145,9 @@ Optionally the package can contain (Bourne shell) script files
 @file{configure} and @file{cleanup} which are executed before and
 (provided that option @option{--clean} was given) after installation on
 Unix, see @ref{Configure and cleanup}.
+
+The @R{} function @code{package.skeleton} can help to create the
+structure for a new package: see its help page for details.
 
 @menu
 * The DESCRIPTION file::
@@ -737,10 +747,19 @@ obtain more information about the usage of the @R{} package builder.
 binary distributions.
 
 @quotation
+@strong{Note:} @code{R CMD check} and @code{R CMD build} run @R{} with
+@option{--vanilla}, so none of the user's startup files are read.
+If you need @code{R_LIBS} set (to find packages in a non-standard
+library) you will need to set it in the environment.
+@end quotation
+
+@quotation
 @strong{Note to Windows users:} @code{Rcmd check} and @code{Rcmd build}
-work well under Windows NT4/2000 but may not work correctly on Windows
+work well under Windows NT4/2000/XP but may not work correctly on Windows
 95/98/ME because of problems with some versions of Perl on those limited
 OSes.  Experiences vary.
+To use them you will need to have installed the files for building
+source packages.
 @end quotation
 
 
