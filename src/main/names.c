@@ -986,6 +986,9 @@ void InitNames()
     /*  Unbound values which are to be preserved through GCs */
     R_PreciousList = R_NilValue;
     framenames = R_NilValue;
+#ifdef BYTECODE
+    R_initialize_bcode();
+#endif
 }
 
 
