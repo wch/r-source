@@ -272,10 +272,14 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level, SEXP call)
     case 2016:	/* expression <- character  */
     case 2019:  /* expression <- vector     */
 
-	/* Note : No coercion is needed here. */
-	/* We just insert the RHS into the LHS. */
-	/* FIXME: is this true or should it be just like the "vector" case? */
-	redo_which = FALSE;
+	if (level == 1) {
+	    /* Coerce the RHS into a list */
+	    *y = coerceVector(*y, VECSXP);
+	} else {
+	    /* Note : No coercion is needed here. */
+	    /* We just insert the RHS into the LHS. */
+	    redo_which = FALSE;
+	}
 	break;
 
     default:
@@ -515,11 +519,11 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	}
 	break;
 
-    case 1019:  /* vector     <- logical   */
-    case 1319:  /* vector     <- integer   */
-    case 1419:  /* vector     <- real      */
-    case 1519:  /* vector     <- complex   */
-    case 1619:  /* vector     <- character */
+    case 1019:  /* logial     <- vector   */
+    case 1319:  /* integer    <- vector   */
+    case 1419:  /* real       <- vector   */
+    case 1519:  /* complex    <- vector   */
+    case 1619:  /* character  <- vector   */
 
     case 1910:  /* vector     <- logical    */
     case 1913:  /* vector     <- integer    */
@@ -544,6 +548,8 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
     case 2014:	/* expression <- real	    */
     case 2015:	/* expression <- complex    */
     case 2016:	/* expression <- character  */
+    case 2019:	/* expression <- vector, needed if we have promoted a
+		   RHS  to a list */
     case 2020:	/* expression <- expression */
 
 	for (i = 0; i < n; i++) {

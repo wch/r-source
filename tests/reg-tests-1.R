@@ -3343,3 +3343,11 @@ stopifnot(inherits(try(sort(x1)), "try-error"),
 ## pmax failed with NA inputs
 pmax(c(1,2,NA), c(3,4,NA), na.rm=TRUE)
 ## failed after for 2.0.0 change to subassignment
+
+
+## subassigning expression could segfault (PR#7326)
+foo <- expression(alpha, beta, gamma)
+foo[2]
+foo[2] <- NA
+foo
+## segfaulted in 2.0.0
