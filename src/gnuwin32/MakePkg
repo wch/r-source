@@ -26,15 +26,14 @@ SSPKG=$(SPKG)/$(SRC)
 
 # src Makefile?
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
+SDYNLIB=$(SSPKG)/$(DLLNAME).dll
 
 LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f $(SSPKG)/*.cc \
 	$(SSPKG)/*.cpp $(SSPKG)/*.C)
-ifeq ($(strip $(LSOURCES) $(SRCMAKE)),)
+ifeq ($(strip $(LSOURCES)),)
   LOBJS=
-  DYNLIB=
 else
   LOBJS=$(foreach i, $(LSOURCES), $(basename $i).o)
-  DYNLIB=$(DPKG)/libs/$(DLLNAME).dll
 endif
 
 # data
@@ -65,7 +64,7 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 # Others
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
-all:  $(DPKG)/zzzz $(DYNLIB) R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
+all:  $(DPKG)/zzzz Dynlib R $(DPKG)/demo $(DPKG)/exec $(DATA) mansrcs \
   indices
 bare: $(DPKG)/zzzz R $(DPKG)/demo
 
@@ -73,7 +72,7 @@ include $(RHOME)/src/gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
-	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.* $(SSPKG)/*.d $(SSPKG)/Makedeps
+	$(RM) $(SDYNLIB) $(LOBJS) $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.* $(SSPKG)/*.d $(SSPKG)/Makedeps
 else
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif
@@ -81,7 +80,7 @@ endif
 
 ## used to build skeletal versions of packages, enough to run
 ## package tools to install them properly
-Rcode: Rcode0 $(DYNLIB)
+Rcode: Rcode0 Dynlib
 
 Rcode0:
 	@$(MKDIR) -p $(DPKG) $(DPKG)/R
@@ -169,21 +168,26 @@ $(DATA): $(DSOURCES)
 	@$(CP) $^  $@
 
 
-$(DYNLIB): $(SSPKG)/$(DLLNAME).dll
-	@$(MKDIR) -p $(DPKG)/libs
-	@$(CP) $^ $@
+Dynlib: srcDynlib
+	@if test -f $(SDYNLIB) ; then \
+	  $(ECHO) "  installing DLL" ; \
+	  $(MKDIR) -p $(DPKG)/libs ; \
+	  $(CP) $(SDYNLIB) $(DPKG)/libs ; \
+	fi
 
-$(SSPKG)/$(DLLNAME).dll: FORCE
-	@$(ECHO) "  making DLL ..."
+srcDynlib:
 ifeq ($(strip $(SRCMAKE)),)
+ifneq ($(strip $(LOBJS)),)
+	@$(ECHO) "  making DLL ..."
 	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakeDll DLLNAME=$(DLLNAME)
-else
-	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
-endif
 	@$(ECHO) "  ... DLL made"
-
-FORCE:
+endif
+else
+	@$(ECHO) "  running src/Makefile.win ..."
+	@$(MAKE) --no-print-directory -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
+	@$(ECHO) "  ... done"
+endif
 
 AA=$(wildcard R/Makefile.win)
 ifeq ($(AA),)

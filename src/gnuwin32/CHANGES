@@ -36,6 +36,10 @@ Calling dev.off() (or ending a session) when a windows() device is
 open and recording plots automatically saves the current plot as the
 last saved plot.
 
+When building a package, src/Makefile.win is run if present, and if
+that generates src/$(DLLNAME).dll the DLL is installed.  (DLLNAME is
+the package name unless overridden.)
+
 
 
 rw1072
