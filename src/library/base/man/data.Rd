@@ -16,9 +16,12 @@ show.data(package = .packages(), lib.loc = .lib.loc)
   \item{list}{a character vector.}
   \item{package}{a name or character vector giving the packages to
     look into for data sets.  By default, all packages in the search
-    path are used.} 
+    path are used, then the \code{data} directory (if present) of the
+    current working directory.} 
   \item{lib.loc}{a character vector of directory names of \R
-    libraries.  Defaults to all libraries currently known.}}
+    libraries.  Defaults to all libraries currently known.  If the
+    default is used, the loaded packages are searched before the libraries.}
+}
 \value{
   \code{data()} returns a character vector of all data sets specified,
   an empty character vector if none were specified.
@@ -54,10 +57,11 @@ show.data(package = .packages(), lib.loc = .lib.loc)
   a listing.  If there is a \file{data} area but no index a warning is
   given: such packages are incomplete.
 
-  If \code{lib.loc} is not specified, the packages are searched for
-  amongst those already loaded, followed by the \file{data} directory
-  (if any) of the current working directory.  If \code{lib.loc} is
-  specified, they are searched for in the specified libraries, even if
+  If \code{lib.loc} is not specified,  the datasets are searched for
+  amongst those packages already loaded, followed by the \file{data}
+  directory (if any) of the current working directory and then packages
+  in the specified libraries.  If \code{lib.loc} \emph{is}
+  specified, packages are searched for in the specified libraries, even if
   they are already loaded from another library.
 
   To just look in the \file{data} directory of the current working
@@ -71,9 +75,9 @@ show.data(package = .packages(), lib.loc = .lib.loc)
   \file{filelist} of file names in that directory.
 
   One can take advantage of the search order and the fact that a
-  \file{.R} file will change directory. If raw data are stored in
+  \file{.R} file will change directory.  If raw data are stored in
   \file{mydata.txt} then one can set up \file{mydata.R} to read
-  \file{mydata.txt} and preprocess it, e.g. using \code{transform}. For
+  \file{mydata.txt} and pre-process it, e.g. using \code{transform}. For
   instance one can convert numeric vectors to factors with the
   appropriate labels.
   Thus, the \file{.R} file can effectively contain a metadata

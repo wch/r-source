@@ -209,7 +209,7 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
 }
 
-.path.package <- function(package = .packages())
+.path.package <- function(package = .packages(), quiet = FALSE)
 {
     if(length(package) == 0) return(character(0))
     s <- search()
@@ -219,9 +219,11 @@ require <- function(package, quietly = FALSE, warn.conflicts = TRUE,
     pkgs <- paste("package", package, sep=":")
     pos <- match(pkgs, s)
     if(any(m <- is.na(pos))) {
-        miss <- paste(package[m], collapse=", ")
-        if(all(m)) stop(paste("none of the packages are not loaded"))
-        else warning(paste("package(s)", miss, "are not loaded"))
+        if(!quiet) {
+            miss <- paste(package[m], collapse=", ")
+            if(all(m)) stop(paste("none of the packages are not loaded"))
+            else warning(paste("package(s)", miss, "are not loaded"))
+        }
         pos <- pos[!m]
     }
     unlist(searchpaths[pos], use.names=FALSE)
