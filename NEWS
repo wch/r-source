@@ -289,6 +289,10 @@ NEW FEATURES
 
     o   reshape() extends reshapeLong, reshapeWide, which are deprecated.
 
+    o   step() is now closer to stepAIC() and so handles a wider range
+	of objects (but stepAIC [in MASS] is still more powerful).
+
+
 
 BUG FIXES
 

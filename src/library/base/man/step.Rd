@@ -13,7 +13,8 @@ step(object, scope, scale = 0,
 \alias{step}
 \arguments{
   \item{object}{
-    an object representing a model of an appropriate class.
+    an object representing a model of an appropriate class (mainly
+    \code{"lm"} and \code{"glm"}).
     This is used as the initial model in the stepwise search.
   }
   \item{scope}{
@@ -102,6 +103,9 @@ step(object, scope, scale = 0,
 \note{
   This function differs considerably from the function in S, which uses a
   number of approximations and does not compute the correct AIC.
+
+  This is a minimal implementation. Use \code{\link[MASS]{stepAIC}} for
+  a wider range of object classes.
 }
 \section{Warning}{
   The model fitting must apply the models to the same dataset. This
@@ -110,7 +114,7 @@ step(object, scope, scale = 0,
   missing values first.
 }
 \seealso{
-  \code{\link{add1}}, \code{\link{drop1}}
+  \code{\link[MASS]{stepAIC}}, \code{\link{add1}}, \code{\link{drop1}}
 }
 \author{B. D. Ripley}
 \examples{

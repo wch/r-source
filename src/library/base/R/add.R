@@ -1,4 +1,4 @@
-#### copyright (C) 1998 B. D. Ripley
+#### copyright (C) 1998-2001 B. D. Ripley
 add1 <- function(object, scope, ...) UseMethod("add1")
 
 add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
@@ -527,6 +527,11 @@ step <- function(object, scope, scale = 0,
         environment(form)<-environment(tt)
         form
     }
+    mydeviance <- function(x, ...)
+    {
+        dev <- deviance(x)
+        if(!is.null(dev)) dev else extractAIC(x, k=0)[2]
+    }
 
     cut.string <- function(string)
     {
@@ -619,7 +624,7 @@ step <- function(object, scope, scale = 0,
 	cat("Start:  AIC=", format(round(bAIC, 2)), "\n",
 	    cut.string(deparse(as.vector(formula(fit)))), "\n\n")
 
-    models[[nm]] <- list(deviance = deviance(fit), df.resid = n - edf,
+    models[[nm]] <- list(deviance = mydeviance(fit), df.resid = n - edf,
 			 change = "", AIC = bAIC)
     if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
     usingCp <- FALSE
@@ -682,7 +687,7 @@ step <- function(object, scope, scale = 0,
 	if(bAIC >= AIC) break
 	nm <- nm + 1
 	edf <- models[[nm]] <-
-	    list(deviance = deviance(fit), df.resid = n - edf,
+	    list(deviance = mydeviance(fit), df.resid = n - edf,
 		 change = change, AIC = bAIC)
 	if(!is.null(keep)) keep.list[[nm]] <- keep(fit, bAIC)
     }
