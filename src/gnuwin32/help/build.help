@@ -229,8 +229,8 @@ if($opt_latex){
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".tex"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
-	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
+#	print "$dest/latex/$destfile\n" unless defined $manfiles{$destfilebase};
+	unlink "$dest/latex/$destfile" unless defined $manfiles{$destfilebase};
     }
 }
 if($opt_example){
@@ -241,8 +241,8 @@ if($opt_example){
     foreach $destfile (@destdir) {
 	$destfilebase = basename($destfile, (".R"));
 	if($destfile eq "." || $destfile eq "..") { next; }
-#	print "$dest/html/$destfile\n" unless defined $manfiles{$destfilebase};
-	unlink "$dest/html/$destfile" unless defined $manfiles{$destfilebase};
+#	print "$dest/R-ex/$destfile\n" unless defined $manfiles{$destfilebase};
+	unlink "$dest/R-ex/$destfile" unless defined $manfiles{$destfilebase};
     }
 if($opt_chm){
     my @destdir;
