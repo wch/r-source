@@ -501,3 +501,19 @@ Date: Thu, 30 May 2002 11:54:06 -0400 (EDT)
 Subject: cluster installation hangs or too many args
 From: felix@sprintlabs.com
 Date: Sun, 2 Jun 2002 02:45:54 +0200 (MET DST)
+* PR# 1630 *
+Subject: build fails dumping R code in 'methods' on i686-pc-linux-gnu
+From: "George N. White III" <aa056@chebucto.ca>
+Date: 	Mon, 3 Jun 2002 20:11:25 -0300 (ADT)
+* PR# 1632 *
+Subject: Re: build fails dumping R code in 'methods' on i686-pc-linux-gnu 
+From: John Chambers <jmc@research.bell-labs.com>
+Date: Tue, 04 Jun 2002 10:04:25 -0400
+* PR# 1633 *
+Subject: ¥®¨à¾Ç²ß»y¨¥ªº³Ì¨Î¤u¨ã¡I¡I
+From: 5_21g5e121cc@detemobil.de
+Date: 04 Jun 2002 12:39:12 +0800
+* PR# 1634 *
+Subject: ???? ????ºñµð??,?±±?,?????¬,???? µ??µ?? °¨???????? !
+From: "wook_20@yah.com"<wook_20@yah.com>
+Date: Wed, 5 Jun 2002 07:47:47 +0900
