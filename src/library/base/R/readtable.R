@@ -32,7 +32,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop("file' must be a character string or connection")
+        stop("'file' must be a character string or connection")
     if(!isOpen(file)) {
         open(file, "r")
         on.exit(close(file))

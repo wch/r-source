@@ -3,7 +3,7 @@ rowsum<-function(x,group,reorder=TRUE,...)
 
 rowsum.default <-function(x,group,reorder=TRUE,...){
     if (!is.numeric(x))
-        stop("x must be numeric")
+        stop("'x' must be numeric")
     if (length(group) != NROW(x))
         stop("incorrect length for 'group'")
     if (any(is.na(group)))
