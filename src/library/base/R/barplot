@@ -16,6 +16,9 @@ function(height, width = 1, space = NULL, names.arg = NULL,
  if (is.vector(height)) {
 	height <- cbind(height)
 	beside <- TRUE
+ } else if (is.array(height) && (length(dim(height)) == 1)) {
+   height <- rbind(height)
+   bedide <- TRUE
  } else if (!is.matrix(height))
 	stop("`height' must be a vector or a matrix")
 
