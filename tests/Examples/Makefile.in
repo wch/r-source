@@ -50,7 +50,7 @@ test-Examples-Base: Makefile
 
 ## <NOTE>
 ## We do *not* want this to be added to test-Examples conditional on
-## @USE_RECOMMENDED_PACKAGES_TRUE.
+## @USE_RECOMMENDED_PACKAGES_TRUE@.
 ## 'make fullcheck' is used for running test-Examples-Recommended in
 ## addition to 'make check'.
 test-Examples-Recommended: test-Examples-Base
@@ -61,7 +61,7 @@ R:
 	@cd $(top_builddir) && $(MAKE) R
 
 .R.Rout:
-	@test -f $@ && mv $@ $@.prev
+	@if test -f $@; then mv $@ $@.prev; fi
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
 	@echo "$(ECHO_T) OK"
