@@ -624,6 +624,9 @@ BUG FIXES
     o	The GNOME interface was in some circumstances failing if run
 	from a menu -- it needed to always specify that R be interactive.
 
+    0	depMtrxToStrings (part of pkgDepends) applied nrow() to a
+        non-matrix and aborted on the result.
+
 
 
 

@@ -271,7 +271,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
                     outRow <- minRow
             }
             if (quietly == FALSE)
-                warning("Package ",pkg," had its dependencies ",
+                warning("Package ", pkg, " had its dependencies ",
                         "reduced to a minimal set.")
         }
 	pkgMtrx[outRow,]
@@ -281,7 +281,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
 }
 
 depMtrxToStrings <- function(depMtrx) {
-    if ((!is.null(depMtrx))&&(nrow(depMtrx) > 0)) {
+    if (length(depMtrx) > 0) {
         apply(depMtrx, 1, function(x){
             if (is.na(x[2]))
                 x[1]
