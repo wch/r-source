@@ -1,8 +1,8 @@
 library <-
-    function(package, help, lib.loc = NULL, character.only = FALSE,
-             logical.return = FALSE, warn.conflicts = TRUE,
-             keep.source = getOption("keep.source.pkgs"),
-             verbose = getOption("verbose"), version)
+function(package, help, lib.loc = NULL, character.only = FALSE,
+         logical.return = FALSE, warn.conflicts = TRUE,
+         keep.source = getOption("keep.source.pkgs"),
+         verbose = getOption("verbose"), version)
 {
     testRversion <- function(descfile)
     {
@@ -129,10 +129,10 @@ library <-
 	   ## Need to find the proper package to install
 	   pkgDirs <- list.files(lib.loc,
                                  pattern = paste("^", package, sep=""))
-           ## See if any directories in lib.loc match the pattern of 'package',
-           ## if none do, just continue as it will get caught below.  Otherwise,
-           ## if there is actually a 'package', use that, and if not, then use
-           ## the highest versioned dir.
+           ## See if any directories in lib.loc match the pattern of
+           ## 'package', if none do, just continue as it will get caught
+           ## below.  Otherwise, if there is actually a 'package', use
+           ## that, and if not, then use the highest versioned dir.
 	   if (length(pkgDirs) > 0) {
 	       if (!(package %in% pkgDirs)) {
 		   ## Need to find the highest version available
@@ -176,9 +176,9 @@ library <-
                                     lib.loc = which.lib.loc)
             if(nchar(descfile)) testRversion(descfile)
             else stop("This is not a valid package -- no DESCRIPTION exists")
-            # if the name space mechanism is available and the package
-            # has a name space, then the name space loading mechanism
-            # takes over.
+            ## If the name space mechanism is available and the package
+            ## has a name space, then the name space loading mechanism
+            ## takes over.
             if (packageHasNamespace(package, which.lib.loc)) {
                 tt <- try({
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
@@ -363,8 +363,8 @@ library <-
 }
 
 library.dynam <-
-    function(chname, package = .packages(), lib.loc = NULL, verbose =
-             getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
+function(chname, package = .packages(), lib.loc = NULL, verbose =
+         getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
     sQuote <- function(s) paste("'", s, "'", sep = "")
 
@@ -394,11 +394,11 @@ library.dynam <-
 }
 
 require <-
-    function(package, quietly = FALSE, warn.conflicts = TRUE,
-             keep.source = getOption("keep.source.pkgs"), character.only=FALSE,
-	     version)
+function(package, quietly = FALSE, warn.conflicts = TRUE,
+         keep.source = getOption("keep.source.pkgs"),
+         character.only = FALSE, version)
 {
-   if( !character.only )
+    if( !character.only )
         package <- as.character(substitute(package)) # allowing "require(eda)"
     if (missing(version))
         pkgName <- package
@@ -408,9 +408,9 @@ require <-
 
     if (is.na(match(paste("package", pkgName, sep = ":"), search()))) {
 	if (!quietly) cat("Loading required package:", package, "\n")
-	library(package, char = TRUE, logical = TRUE,
+	library(package, character.only = TRUE, logical = TRUE,
 		warn.conflicts = warn.conflicts, keep.source = keep.source,
-                version=version)
+                version = version)
     } else TRUE
 }
 
