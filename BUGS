@@ -401,11 +401,6 @@ Subject: Maybe a problem in binary read/write
 From: accot@free.fr
 Date: Tue, 18 Jun 2002 22:51:17 +0200 (MET DST)
 ..I don't think file() is said to work with devices!
-* PR# 6605 *
-Subject: Segmentation fault with fix()
-From: f.gherardini@pigrecodata.net
-Date: Mon, 23 Feb 2004 01:27:05 +0100 (CET)
-..actually with the data editor on UNIX
 
 Directory:  Installation
 
@@ -806,34 +801,11 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6667 *
-Subject: Re: [R] No traceback available when using try(...)
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Fri, 12 Mar 2004 09:07:20 -0500
-..works as intended: see 6669.  Docs updated for 1.9.0
-* PR# 6668 *
-Subject: Re: [R] No traceback available when using try(...)
-From: "Roger D. Peng" <rpeng@jhsph.edu>
-Date: Fri, 12 Mar 2004 11:44:14 -0500
-..part of 6667
-* PR# 6669 *
-Subject: Re: [R] No traceback available when using try(...)
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Fri, 12 Mar 2004 15:38:33 -0500
-..part of 6667
-* PR# 6674 *
-Subject: Misspelled summary of "mle" class object
-From: vincent.goulet@act.ulaval.ca
-Date: Wed, 17 Mar 2004 17:26:10 +0100 (CET)
-* PR# 6675 *
-Subject: termplot has problems with a single term (fix included)
-From: Kasper Daniel Hansen <k.hansen@biostat.ku.dk>
-Date: Thu, 18 Mar 2004 13:33:42 +0100
-* PR# 6676 *
-Subject: (PR6675)
-From: Kasper Daniel Hansen <k.hansen@biostat.ku.dk>
-Date: Thu, 18 Mar 2004 14:03:57 +0100
-* PR# 6679 *
-Subject: Re: [Rd] termplot has problems with a single term (fix included)
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Thu, 18 Mar 2004 11:52:58 -0800 (PST)
+* PR# 6684 *
+Subject: http://cran.r-project.org/bin/macosx/RAqua-FAQ.html not found
+From: Markus Gail <gail@gmx.de>
+Date: Mon, 22 Mar 2004 13:13:24 +0100
+* PR# 6685 *
+Subject: Re: RPZ, avengers came from
+From: "Marcella Quick" <hirjdf@yahoo.com.hk>
+Date: Mon, 22 Mar 2004 17:51:06 -0400
