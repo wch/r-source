@@ -4,8 +4,10 @@
  PERL=${PERL-'/usr/bin/perl'}
  TAR=${TAR-'tar'}
  
-+R_LIBS="/usr/local/lib/R/site-library:/usr/lib/R/site-library:/usr/lib/R/library"
-+
++# edd Apr 2004  Allow local install in /usr/local, also add a directory for
++#               Debian packaged CRAN packages, and finally the default dir 
++R_LIBS=${R_LIBS-'/usr/local/lib/R/site-library:/usr/lib/R/site-library:/usr/lib/R/library'}
+
  ### Local Variables: ***
  ### mode: sh ***
  ### sh-indentation: 2 ***
