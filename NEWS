@@ -60,6 +60,9 @@ BUG FIXES
 	now result in an error (PR#4688).  It silently truncated
 	non-integer 'x' instead of rounding.
 
+    o	cutree(a, h=h) silently gave wrong results when 'a' was an
+	agnes object; now gives an error and reminds of as.hclust().
+
 
 
 		CHANGES IN R VERSION 1.8.1
