@@ -19,8 +19,9 @@ NEW FEATURES
 
     o	Option for user-supplied normal random generator in RNGkind().
 
-    o	New functions tolower() and toupper() for converting alphabetic
-	characters to lower-case and upper-case, respectively.
+    o	New functions chartr() for general-purpose character translation
+	in character vectors, and tolower() and toupper() for converting
+	alphabetic characters to lower-case and upper-case, respectively.
 
     o	Command line option `-g' can now be used as short version of
 	`--gui'.
