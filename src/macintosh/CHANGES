@@ -58,6 +58,11 @@ rm140
   and get.num.cmd(menunum) the user can remove or get the
   command associated to the menu numbered "menunum". See 
   the help pages for details and examples.
+* Fixed some problems with windows naming (duplicates
+  and so forth)
+* Windows (both text and graphic) now appears only after
+  repositioning
+    
    
    
    
