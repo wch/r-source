@@ -1,5 +1,6 @@
-fisher.test <- function(x, y = NULL, workspace = 200000, hybrid = FALSE,
-                        alternative = "two.sided", conf.level = 0.95) {
+fisher.test <-
+function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
+         alternative = "two.sided", conf.level = 0.95) {
     DNAME <- deparse(substitute(x))
 
     if(is.data.frame(x))
@@ -36,23 +37,16 @@ fisher.test <- function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         if(!((length(conf.level) == 1) && is.finite(conf.level) &&
              (conf.level > 0) && (conf.level < 1)))
             stop("conf.level must be a single number between 0 and 1")
+        if(!missing(or) && (length(or) > 1 || is.na(or) || or < 0))
+            stop("or must be a single number between 0 and Inf")
     }
 
-    if((nr == 2) && (nc == 2) && (alternative != "two.sided")) {
-        ## It is more efficient to compute p-values for the two-sided
-        ## 2x2 case via C.  Alternatively, we could do
-        ##   lo <- max(0, k - n)
-        ##   hi <- min(k, m)
-        ##   d <- dhyper(lo : hi, m, n, k)
-        ##   PVAL <- sum(d[d <= dhyper(x, m, n, k)])
-        m <- sum(x[, 1])
-        n <- sum(x[, 2])
-        k <- sum(x[1, ])
-        x <- x[1, 1]
-        PVAL <- switch(alternative,
-                       less = phyper(x, m, n, k),
-                       greater = 1 - phyper(x - 1, m, n, k))
-    } else {
+    PVAL <- NULL
+    if((nr != 2)
+       || (nc != 2)
+       || (alternative == "two.sided") && (or == 1)) {
+        ## Note that it is more efficient to compute p-vaues in C for
+        ## the two-sided 2-by-2 case with odds ratio 1
         if(hybrid) {
             warning("p-values may be incorrect")
             PVAL <- .C("fexact",
@@ -80,25 +74,67 @@ fisher.test <- function(x, y = NULL, workspace = 200000, hybrid = FALSE,
                        p = as.double(0),
                        as.integer(workspace),
                        PACKAGE = "ctest")$p
+        RVAL <- list(p.value = PVAL)
     }
-
-    RVAL <- list(p.value = PVAL)
-
     if((nr == 2) && (nc == 2)) {
-        NVAL <- 1
-        names(NVAL) <- "odds ratio"
-        if(alternative == "two.sided") {
-            m <- sum(x[, 1])
-            n <- sum(x[, 2])
-            k <- sum(x[1, ])
-            x <- x[1, 1]
-        }
-        ## Compute the MLE and confidence intervals for the odds ratio.
-        ## Note that in general the conditional distribution of x given
-        ## the marginals is a non-central hypergeometric distribution H
-        ## with non-centrality parameter ncp, the odds ration.
+        m <- sum(x[, 1])
+        n <- sum(x[, 2])
+        k <- sum(x[1, ])
+        x <- x[1, 1]
         lo <- max(0, k - n)
         hi <- min(k, m)
+        NVAL <- or
+        names(NVAL) <- "odds ratio"
+        ## Note that in general the conditional distribution of x given
+        ## the marginals is a non-central hypergeometric distribution H
+        ## with non-centrality parameter ncp, the odds ratio.
+        pnhyper <- function(q, ncp = 1, upper.tail = FALSE) {
+            if(ncp == 1) {
+                if(upper.tail)
+                    return(1 - phyper(x - 1, m, n, k))
+                else
+                    return(phyper(x, m, n, k))
+            }
+            if(ncp == 0) {
+                if(upper.tail)
+                    return(as.numeric(q <= lo))
+                else
+                    return(as.numeric(q >= lo))
+            }
+            if(ncp == Inf) {
+                if(upper.tail)
+                    return(as.numeric(q <= hi))
+                else
+                    return(as.numeric(q >= hi))
+            }
+            u <- lo : hi
+            d <- dhyper(u, m, n, k) * ncp ^ (0 : (hi - lo))
+            d <- d / sum(d)
+            if(upper.tail)
+                sum(d[u >= q])
+            else
+                sum(d[u <= q])
+        }
+        if(is.null(PVAL)) {
+            PVAL <-
+                switch(alternative,
+                       less = pnhyper(x, or),
+                       greater = pnhyper(x, or, upper = TRUE),
+                       two.sided = {
+                           if(or == 0)
+                               as.numeric(x == lo)
+                           else if(or == Inf)
+                               as.numeric(x == hi)
+                           else {
+                               u <- lo : hi
+                               d <- (dhyper(lo : hi, m, n, k)
+                                     * or ^ (0 : (hi - lo)))
+                               d <- d / sum(d)
+                               sum(d[d <= d[x - lo + 1]])
+                           }
+                       })
+            RVAL <- list(p.value = PVAL)
+        }
         ## Determine the MLE for ncp by solving E(X) = x, where the
         ## expectation is with respect to H.
         mle <- function(x) {
@@ -127,27 +163,6 @@ fisher.test <- function(x, y = NULL, workspace = 200000, hybrid = FALSE,
         ESTIMATE <- mle(x)
         names(ESTIMATE) <- "odds ratio"
         ## Determine confidence intervals for the odds ratio.
-        pnhyper <- function(q, ncp = 1, upper.tail = FALSE) {
-            if(upper.tail) {
-                if(ncp == 0)
-                    return(as.integer(q <= lo))
-                if(ncp == Inf)
-                    return(as.integer(q <= hi))
-            }
-            else {
-                if(ncp == 0)
-                    return(as.integer(q >= lo))
-                if(ncp == Inf)
-                    return(as.integer(q >= hi))
-            }
-            u <- lo : hi
-            d <- dhyper(u, m, n, k) * ncp ^ (0 : (hi - lo))
-            d <- d / sum(d)
-            if(upper.tail)
-                sum(d[u >= q])
-            else
-                sum(d[u <= q])
-        }
         ncp.U <- function(x, alpha) {
             if(x == hi)
                 return(Inf)

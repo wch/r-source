@@ -7,7 +7,7 @@
 }
 \usage{
 fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
-            alternative = "two.sided", conf.level = 0.95)
+            or = 1, alternative = "two.sided", conf.level = 0.95)
 }
 \arguments{
   \item{x}{either a two-dimensional contingency table in matrix form,
@@ -19,6 +19,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     (default) or a hybrid approximation thereof should be computed.
     In the hybrid case, asymptotic chi-square probabilies are only
     used provided that the ``Cochran'' conditions are satisfied.}
+  \item{or}{the hypothesized odds ratio.  Only used in the 2 by 2 case.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
     You can specify just the initial letter.  Only used in the 2 by
@@ -29,13 +30,13 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
 \value{
   A list with class \code{"htest"} containing the following components:
   \item{p.value}{the p-value of the test.}
-  \item{conf.int}{a confidence interval for the odds ration.
+  \item{conf.int}{a confidence interval for the odds ratio.
     Only present in the 2 by 2 case.}
   \item{estimate}{an estimate of the odds ratio.  Note that the
     \emph{conditional} Maximum Likelihood Estimate (MLE) rather than the
     unconditional MLE (the sample odds ratio) is used.
     Only present in the 2 by 2 case.}
-  \item{null.value}{the odds ratio under the null, \code{1}.
+  \item{null.value}{the odds ratio under the null, \code{or}.
     Only present in the 2 by 2 case.}
   \item{alternative}{a character string describing the alternative
     hypothesis.} 
