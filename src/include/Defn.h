@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  The R Development Core Team.
+ *  Copyright (C) 1998--2002  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,14 +60,6 @@ void R_ProcessEvents(void);
 # include <signal.h>
 # include <setjmp.h>
 #endif
-
-/*
-#include <time.h>
-
-#ifdef HAVE_LOCALE_H
-# include <locale.h>
-#endif
-*/
 
 #ifdef Unix
 # define OSTYPE      "unix"
@@ -140,19 +132,6 @@ extern int strncasecmp(const char *s1, const char *s2, size_t n);
 #if defined(HAVE_DECL_VSNPRINTF) && !HAVE_DECL_VSNPRINTF
 extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 #endif
-
-
-/* all these are in Rinternals.h
-#include <errno.h>
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <string.h>
-#include <limits.h>
-#include <float.h>
-#include <ctype.h>
-*/
 
 /* Getting the working directory */
 #if defined(HAVE_GETCWD)
