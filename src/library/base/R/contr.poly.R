@@ -37,6 +37,7 @@ contr.poly <- function (n, contrasts = TRUE)
 }
 
 ## implemented by BDR 29 May 1998
+## `coefs' code added by KH
 poly <- function(x, degree=1)
 {
     if(is.matrix(x)) stop("poly is only implemented for vectors")
@@ -46,10 +47,13 @@ poly <- function(x, degree=1)
     z <- QR$qr
     z <- z *(row(z) == col(z))
     raw <- qr.qy(QR, z)
+    norm2 <- diag(crossprod(raw))
+    alpha <- diag(crossprod(raw, x * raw)) / norm2
     s <- apply(raw, 2, function(x) sqrt(sum(x^2)))
     Z <- sweep(raw, 2, s, "/")
     dimnames(Z)[[2]] <- 1:n - 1
     Z <- Z[, -1]
     attr(Z, "degree") <- 1:degree
+    attr(Z, "coefs") <- list(alpha = alpha, norm2 = c(1, norm2))
     Z
 }
