@@ -46,13 +46,13 @@ lchoose(n,k)
 }
 \references{
   Abramowitz, M. and Stegun, I. A. (1972)
-  \emph{Handbook of Mathematical Functions.} New York: Dover. 
+  \emph{Handbook of Mathematical Functions.} New York: Dover.
   Chapter 6: Gamma and Related Functions.
 }
 \seealso{
-    \code{\link{Arithmetic}} for simple, \code{\link{Math}} for
-    miscellaneous mathematical functions and \code{\link{Bessel}} for the
-    real Bessel functions.
+  \code{\link{Arithmetic}} for simple, \code{\link{sqrt}} for
+  miscellaneous mathematical functions and \code{\link{Bessel}} for the
+  real Bessel functions.
 }
 \examples{
 choose(5, 2)
