@@ -1918,16 +1918,21 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
     GCheckState(dd);
     GSavePars(dd);
     which = asInteger(CAR(args));
+    args = CDR(args);
     if(which < 1 || which > 4)
 	errorcall(call, "invalid \"which\" specification\n");
     col = dd->gp.col;
-    fg = dd->gp.fg;
+    fg = dd->gp.col;
     dd->gp.col = NA_INTEGER;
     dd->gp.fg = NA_INTEGER;
+    ProcessInlinePars(args, dd); 
+    if (dd->gp.col == NA_INTEGER) {
+        if (dd->gp.fg == NA_INTEGER)
+            dd->gp.col = col;
+        else
+            dd->gp.col = dd->gp.fg;
+    }
     dd->gp.xpd = 1;
-    if(dd->gp.col == NA_REAL) fg = dd->gp.col;
-    if(dd->gp.fg == NA_REAL) fg = dd->gp.fg;
-    dd->gp.col = fg;
     GMode(dd, 1);
     GBox(which, dd);
     GMode(dd, 0);
