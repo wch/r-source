@@ -731,6 +731,7 @@ FUNTAB R_FunTab[] =
 {"isIncomplete",do_isincomplete,0,      11,     1,      PP_FUNCALL},
 {"close", 	do_close,	0,      11,     2,      PP_FUNCALL},
 {"file", 	do_file,	0,      11,     3,      PP_FUNCALL},
+{"pipe", 	do_pipe,	0,      11,     2,      PP_FUNCALL},
 {"seek", 	do_seek,	0,      11,     3,      PP_FUNCALL},
 {"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},
 {"pushBackLength",do_pushbacklength,0,  11,     1,      PP_FUNCALL},

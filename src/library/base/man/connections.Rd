@@ -2,12 +2,13 @@
 \alias{file}
 \alias{textConnection}
 \alias{open}
-\alias{open.default}
+\alias{open.connection}
 \alias{isOpen}
 \alias{isIncomplete}
 \alias{close}
 \alias{close.connection}
 \alias{seek}
+\alias{seek.connection}
 \alias{print.connection}
 \alias{summary.connection}
 \title{Functions to Manipulate Connections}
@@ -16,6 +17,7 @@
 }
 \usage{
 file(description, open = "", blocking = TRUE)
+pipe(description, open = "")
 textConnection(description, open =  "")
 
 open(con, open = "rt", blocking = TRUE)
@@ -37,10 +39,13 @@ isIncomplete(con)
   \item{rw}{character.  Currently ignored.}
 }
 \details{
-  The first two functions create connections.  By default the connection
+  The first three functions create connections.  By default the connection
   is not opened, but may be opened by setting a non-empty value of
   argument \code{open}.
 
+  \code{open}, \code{close} and \code{seek} are generic functions: the
+  following applies to the methods relevant to connections.
+  
   \code{open} opens a connection.  In general functions using
   connections will open them if they are not open, but then close them
   again, so to leave a connection open call \code{open} explicitly.
@@ -74,7 +79,7 @@ isIncomplete(con)
   connections open for reading in text mode.
 }
 \value{
-  \code{file} and \code{textConnection} 
+  \code{file}, \code{pipe} and  \code{textConnection} 
   return a connection object which inherits from class
   \code{"connection"}.
 
@@ -91,8 +96,8 @@ isIncomplete(con)
   \R's connections are modelled on those in S version 4 (see Chamber,
   1998), but the implementation is currently incomplete.  In particular:
   \itemize{
-    \item Pipes and fifos are not yet implemented.  We also envisage
-    having connections to sockets.
+    \item Pipes are only implemented on Unix. Fifos are not yet
+    implemented. We also envisage having connections to sockets.
 
     \item Svr4 has separate read and write positions for files: \R does
     not.

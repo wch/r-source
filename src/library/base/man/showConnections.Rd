@@ -2,6 +2,7 @@
 \alias{showConnections}
 \alias{getConnection}
 \alias{getAllConnections}
+\alias{closeAllConnections}
 \alias{stdin}
 \alias{stdout}
 \alias{stderr}
@@ -12,6 +13,7 @@
 \usage{
 showConnections(all=FALSE)
 getConnection(what)
+closeAllConnections()
 
 stdin()
 stdout()
@@ -38,6 +40,8 @@ stderr()
   will take a row number from the table and return a connection object
   for that connection, which can be used to close the connection,
   for example.
+
+  \code{closeAllConnections} closes all open user connections.
 }
 \value{
   \code{stdin()}, \code{stdout()} and \code{stderr()} return connection

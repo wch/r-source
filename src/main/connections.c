@@ -108,19 +108,19 @@ static size_t null_write(const void *ptr, size_t size, size_t nitems,
 static void file_open(Rconnection con)
 {
     FILE *fp;
-    int fd, flags;
+/*    int fd, flags; */  /* fcntl does not exist on Windows */
 
     fp = R_fopen(R_ExpandFileName(con->description), con->mode);
     if(!fp) error("cannot open file `%s'", 
 		  R_ExpandFileName(con->description));
     ((Rfileconn)(con->private))->fp = fp;
     con->isopen = 1;
-    if(!con->blocking) {
+/*    if(!con->blocking) {
 	fd = fileno(fp);
 	flags = fcntl(fd, F_GETFL);
 	flags |= O_NONBLOCK;
 	fcntl(fd, F_SETFL, flags);
-    }
+	}*/
 }
 
 static void file_close(Rconnection con)
@@ -143,7 +143,7 @@ static int file_vfprintf(Rconnection con, const char *format, va_list ap)
 static int file_fgetc(Rconnection con)
 {
     FILE *fp = ((Rfileconn)(con->private))->fp;
-    return R_fgetc(fp); /* R_fgetc? */
+    return fgetc(fp); /* R_fgetc fails on Windows */
 }
 
 static int file_ungetc(int c, Rconnection con)
@@ -210,7 +210,7 @@ static Rconnection newfile(char *description, char *mode)
     new->read = &file_read;
     new->write = &file_write;
     new->nPushBack = 0;
-    new->private = (void*) malloc(sizeof(struct fileconn));
+    new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) error("allocation of file connection failed");
     return new;
 }
@@ -251,6 +251,105 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* ------------------- pipe connections --------------------- */
+
+static void pipe_open(Rconnection con)
+{
+    FILE *fp;
+
+    fp = popen(con->description, con->mode);
+    if(!fp) error("cannot open cmd `%s'", con->description);
+    ((Rfileconn)(con->private))->fp = fp;
+    con->isopen = 1;
+}
+
+static void pipe_close(Rconnection con)
+{
+    pclose(((Rfileconn)(con->private))->fp);
+    con->isopen = 0;
+}
+
+static void pipe_destroy(Rconnection con)
+{
+    free(con->private);
+}
+
+static long pipe_seek(Rconnection con, int where)
+{
+    warning("seek is not implemented for pipes");
+    return 0;
+}
+
+static Rconnection newpipe(char *description, char *mode)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of pipe connection failed");
+    new->class = (char *) malloc(strlen("pipe") + 1);
+    if(!new->class) error("allocation of pipe connection failed");
+    strcpy(new->class, "pipe");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) error("allocation of pipe connection failed");
+    strcpy(new->description, description);
+    strcpy(new->mode, mode);
+    new->isopen = new->incomplete = 0;
+    new->canwrite = (mode[0] == 'w');
+    new->canread = !new->canwrite;
+    new->text = 1;
+    if(strlen(mode) >= 2 && mode[2] == 'b') new->text = 0;
+    new->open = &pipe_open;
+    new->close = &pipe_close;
+    new->destroy = &pipe_destroy;
+    new->vfprintf = &file_vfprintf;
+    new->fgetc = &file_fgetc;
+    new->ungetc = &file_ungetc;
+    new->seek = &pipe_seek;
+    new->fflush = &file_fflush;
+    new->read = &file_read;
+    new->write = &file_write;
+    new->nPushBack = 0;
+    new->private = (void *) malloc(sizeof(struct fileconn));
+    if(!new->private) error("allocation of pipe connection failed");
+    return new;
+}
+
+SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_POPEN
+    SEXP scmd, sopen, ans, class;
+    char *file, *open;
+    int ncon;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    scmd = CAR(args);
+    if(!isString(scmd) || length(scmd) != 1)
+	error("invalid `description' argument");
+    file = CHAR(STRING_ELT(scmd, 0));
+    sopen = CADR(args);
+    if(!isString(sopen) || length(sopen) != 1)
+	error("invalid `open' argument");
+    open = CHAR(STRING_ELT(sopen, 0));
+    ncon = NextConnection();
+    con = Connections[ncon] = newpipe(file, strlen(open) ? open : "r");
+
+    /* open it if desired */
+    if(strlen(open)) con->open(con);
+
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = ncon;
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("pipe"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    UNPROTECT(2);
+
+    return ans;
+#else
+    error("pipes are not available on this system");
+    return R_NilValue; /* -Wall */
+#endif
+}
 
 /* ------------------- terminal connections --------------------- */
 
@@ -706,7 +805,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     nnn = (n < 0) ? INT_MAX : n;
     PROTECT(ans = allocVector(STRSXP, nn));
     for(nread = 0; nread < nnn; nread++) {
-	if(nread > nn) {
+	if(nread >= nn) {
 	    ans2 = allocVector(STRSXP, 2*nn);
 	    for(i = 0; i < nn; i++) 
 		SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
@@ -780,6 +879,22 @@ SEXP do_writelines(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+#if 0
+/* ------------------- read, write  binary --------------------- */
+
+
+SEXP do_readraw(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    return R_NilValue;
+}
+
+SEXP do_writeraw(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    checkArity(op, args);
+    return R_NilValue;
+}
+#endif
 
 /* ------------------- push back text  --------------------- */
 

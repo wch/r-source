@@ -18,8 +18,11 @@ writeLines <- function(text, con = stdout(), sep = "\n")
 open <- function(con, ...)
     UseMethod("open")
 
-open.default <- function(con, open = "r", blocking = TRUE)
+open.connection <- function(con, open = "r", blocking = TRUE)
+{
+    if(!inherits(con, "connection")) stop("argument is not a connection")
     invisible(.Internal(open(con, open, blocking)))
+}
 
 isOpen <- function(con, rw = "")
 {
@@ -42,10 +45,16 @@ close.connection <- function (con, type = "rw")
 file <- function(description, open = "", blocking = TRUE)
     .Internal(file(description, open, blocking))
 
+pipe <- function(description, open = "")
+    .Internal(pipe(description, open))
+
 textConnection <- function(object, open = "")
     .Internal(textConnection(deparse(substitute(object)), object, open))
 
-seek <- function(con, where = NA, rw = "")
+seek <- function(con, ...)
+    UseMethod("seek")
+
+seek.connection <- function(con, where = NA, rw = "")
     .Internal(seek(con, as.integer(where), rw))
 
 pushBack <- function(data, connection, newLine = TRUE)
@@ -84,4 +93,13 @@ getConnection <- function(what)
     set <- getAllConnections()
     if(what %in% set) structure(what, class="connection")
     else NULL
+}
+
+closeAllConnections <- function()
+{
+    sink() # might be on a user connection
+    set <- getAllConnections()
+    set <- set[set > 2]
+    for(i in seq(along=set)) close(set[i])
+    invisible()
 }

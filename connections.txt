@@ -21,6 +21,7 @@ close
 seek
 
 file
+pipe  (operational only on Unix)
 textConnection
 isOpen
 isIncomplete
@@ -35,6 +36,7 @@ stdin, stdout, stderr
 writeLines
 
 
-Things which are under testing are output textConnections and output
-pipes (on Unix).  In principle we could add fifos and sockets.
+Things which are under testing are output textConnections.  In
+principle we could add fifos and sockets.  We also aim to add pipes
+on Windows.
 
