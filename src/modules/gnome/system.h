@@ -18,7 +18,7 @@
  */
 
 #include <Rinternals.h>
-#include <Rinterface.h>
+#include "Rinterface.h"
 #include <Startup.h>
 
 /* defined in GNOME GUI */

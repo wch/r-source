@@ -43,7 +43,7 @@
 #include <Rversion.h>
 
 #include <Rinternals.h>
-#include <Rinterface.h>
+#include "Rinterface.h"
 #include <Startup.h>
 #include <Rdevices.h> /* for KillAllDevices */
 #include <R_ext/Print.h> /* for Rprintf */
