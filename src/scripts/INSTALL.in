@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.101 $'
+revision='$Revision: 1.102 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -119,7 +119,6 @@ get_packages () {
   fi
 }
 
-
 if test -n "${R_LIBS}"; then
   lib=`echo "${R_LIBS}" | cut -f1 -d:`
 else
@@ -251,7 +250,6 @@ elif ${debug}; then
   build_help_opts="--debug ${build_help_opts}"
 fi
 
-
 do_install_binary () {
   ## Install a binary package from the current directory.
   pkg="${1}"
@@ -493,7 +491,6 @@ do_install_source () {
   stars="*"
 }
 
-
 do_install () {
   cd "${1}"
   pkg=`basename "${1}"`
