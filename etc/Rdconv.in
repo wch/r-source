@@ -1,4 +1,5 @@
 #! @PERL@
+#-*- perl -*- (for Rdconv.in ..)
 
 # Convert R documentation into HTML, LaTeX and nroff format
 
@@ -68,7 +69,7 @@ if($opt_type) {
 rdoc2html()  if $opt_type =~ /html/i;
 rdoc2nroff() if $opt_type =~ /nroff/i;
 rdoc2latex() if $opt_type =~ /tex/i;
-rdoc2ex()    if $opt_type =~ /examp/i;
+rdoc2ex()    if $opt_type =~ /example/i;
 
 
 
@@ -126,8 +127,7 @@ sub get_blocks {
 	    print stderr "found: $block\n" if $opt_debug;
 	    if((($block =~ /usage/) || ($block =~ /examples/))){
 		$blocks{$block} =~ s/^[ \t]+$//; #- multiple empty lines to one
-                $blocks{$block} =~ s/\n\n\n/\n\n/gom;
-		$blocks{$block} =~ s/\n\n/\n/gom;
+		$blocks{$block} =~ s/\n\n\n/\n\n/gom;
 	    } else {
 		$blocks{$block} =~ s/^\s*(\S)/$1/;
 		$blocks{$block} =~ s/\n[ \t]*(\S)/\n$1/g;
