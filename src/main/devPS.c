@@ -825,6 +825,11 @@ static void PSFileHeader(FILE *fp, char* encname,
     else
 	fprintf(fp, "/bp  { gs gs } def\n");
     prolog = findVar(install(".ps.prolog"), R_GlobalEnv);
+    if(prolog == R_UnboundValue) {
+	/* if no object is visible, look in the graphics namespace */
+	SEXP graphicsNS = R_FindNamespace(ScalarString(mkChar("graphics")));
+	prolog = findVar(install(".ps.prolog"), graphicsNS);
+    }
     if(!isString(prolog))
 	error("Object .ps.prolog is not a character vector");
     fprintf(fp, "%% begin .ps.prolog\n");

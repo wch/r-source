@@ -126,6 +126,8 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre, old$print.it, old$command,
                  title))
+    # if .ps.prolog is searched for and fails, NULL got returned.
+    invisible()
 }
 
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),

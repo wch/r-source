@@ -133,7 +133,8 @@ ps.options(paper, horizontal, width, height, family, encoding,
   Most of the PostScript prologue used is taken from the \R character
   vector \code{.ps.prolog}.  This is marked in the output, and can be
   changed by changing that vector.  (This is only advisable for
-  PostScript experts.)
+  PostScript experts: the standard version is in
+  \code{namespace:graphics}.)
 
   \code{ps.options} needs to be called before calling \code{postscript},
   and the default values it sets can be overridden by supplying
