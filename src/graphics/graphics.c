@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997 Robert Gentleman, Ross Ihaka and the R Core Team
  *
@@ -501,8 +501,7 @@ static int oldstate = -99;		/*  Interpretation  */
 
 void GMode(int state)
 {
-	if(!DevInit)
-		error("No graphics device is active\n");
+	if(!DevInit) error("No graphics device is active\n");
 	if(state != oldstate)
 		DevMode(state);
 	DP->new = GP->new = 0;
@@ -514,7 +513,7 @@ void GMode(int state)
 
 void GRestore()
 {
-	if( !DevInit ) error("No graphics device is active\n");
+	if(!DevInit) error("No graphics device is active\n");
 	memcpy(GP, DP, sizeof(GPar));
 }
 
@@ -620,7 +619,7 @@ void GSavePars(void)
 }
 
 
-/*  GSavePars -- Restore temorarily saved inline parameter values  */
+/*  GRestorePars -- Restore temorarily saved inline parameter values  */
 
 void GRestorePars(void)
 {
@@ -703,20 +702,13 @@ void GForceClip()
 	clipstate = GP->xpd;
 }
 
-#ifdef OUT
-void GLPretty(double*, double*, int*);
-void GPretty(double*, double*, int*);
-void GLScale(double, double, int);
-void GScale(double, double, int);
-#endif
-
-/*  GLPretty -- Set scale and ticks for logarithmic scales  */
-/*  Note: 1 2 5 10 looks good on logarithmic scales  */
+/* GLPretty -- Set scale and ticks for logarithmic scales */
+/*	  Note: 1 2 5 10 looks good on logarithmic scales */
 
 void GLPretty(double *xmin, double *xmax, int *n)
 {
 	double u1, u2, v1, v2, p1, p2;
-	
+
 	if((*xmax) <= 7.8651*(*xmin))
 		GPretty(xmin, xmax, n);
 	else {
@@ -733,7 +725,7 @@ void GLPretty(double *xmin, double *xmax, int *n)
 				u2 = u1;
 			}
 			else (*n)++;
-	
+
 			v2 = 5.0*v1;
 			if(v2 >= *xmax) {
 				v2 = v1;
@@ -750,6 +742,7 @@ void GLPretty(double *xmin, double *xmax, int *n)
 	}
 }
 
+/*   GPretty(&xmin, &xmax, &n) */
 void GPretty(double *s, double *u, int *ndiv)
 {
 	double base, cell, unit, tmp;
@@ -765,20 +758,22 @@ void GPretty(double *s, double *u, int *ndiv)
 	if(fabs((tmp = 2.0*base)-cell) < fabs(unit-cell)) unit = tmp;
 	if(fabs((tmp = 5.0*base)-cell) < fabs(unit-cell)) unit = tmp;
 	if(fabs((tmp = 10.0*base)-cell) < fabs(unit-cell)) unit = tmp;
-	
+
 	ns = floor(*s/unit);
 	while(ns*unit > *s - FLT_EPSILON) ns--;
 	ns++;
 	*s = unit*ns;
-	
+
 	nu = ceil(*u/unit);
 	while(nu*unit < *u + FLT_EPSILON) nu++;
 	nu--;
 	*u = unit*nu;
-	
+
 	*ndiv = (*u-*s)/unit+0.5;
 }
 
+/*  GScale -- setup proper plotting range (pretty), define
+		GP & DP  "usr" &  "xaxp" or "yaxp" */
 void GScale(double xmin, double xmax, int axis)
 {
 	int log, n, style, swap;
@@ -810,20 +805,24 @@ void GScale(double xmin, double xmax, int axis)
 			xmin = -1;
 			xmax =  1;
 		}
-		else {
+		else if(xmin > 0) {
 			xmin = 0.6 * xmin;
 			xmax = 1.4 * xmax;
+		}
+		else { /* < 0 */
+			xmin = 1.4 * xmin;
+			xmax = 0.6 * xmax;
 		}
 	}
 
 	switch(style) {
-		case 'r':
+		case 'r': /* add  4%  on both sides */
 			temp = 0.04 * (xmax-xmin);
 			xmin = xmin - temp;
 			xmax = xmax + temp;
 		case 'i':
 			break;
-		case 's':
+		case 's':/* TODO */
 		case 'e':
 		default:
 			error("axis style \"%c\" unimplemented\n", style);
@@ -840,9 +839,7 @@ void GScale(double xmin, double xmax, int axis)
 
 	if(xmin > xmax) {
 		swap = 1;
-		temp = xmin;
-		xmin = xmax;
-		xmax = temp;
+		temp = xmin; xmin = xmax; xmax = temp;
 	}
 	else swap = 0;
 
@@ -853,9 +850,7 @@ void GScale(double xmin, double xmax, int axis)
 	GPretty(&xmin, &xmax, &n);
 
 	if(swap) {
-		temp = xmin;
-		xmin = xmax;
-		xmax = temp;
+		temp = xmin; xmin = xmax; xmax = temp;
 	}
 
 	if(axis == 1 || axis == 3) {
@@ -871,7 +866,9 @@ void GScale(double xmin, double xmax, int axis)
 }
 
 
-/*  GSetupAxis -- Set up the default axis information  */
+/*  GSetupAxis -- Set up the default axis information:
+                from  lab & usr,
+		set    (x/y)axp  */
 
 void GSetupAxis(int axis)
 {
@@ -917,7 +914,7 @@ void GMoveTo(double x, double y)
 
 /*  GArrow -- Draw an arrow  */
 
-void GArrow(double xfrom, double yfrom, double xto, double yto, 
+void GArrow(double xfrom, double yfrom, double xto, double yto,
 	double length, double angle, int code)
 {
 	double rot, x1, x2, xc,  y1, y2, yc;
@@ -1098,7 +1095,7 @@ static void CSclip(double x1, double y1, double x2, double y2)
 
 	xstart = x1;
 	ystart = y1;
-	
+
 	c1 = clipcode(x1, y1);
 	c2 = clipcode(x2, y2);
 	while( c1 || c2 ) {
@@ -1454,7 +1451,7 @@ void GSymbol(double x, double y, int pch)
 			xx[2] = x-xc; yy[2] = y-yc;
 			GPolygon(3, xx, yy, GP->col, NA_INTEGER, 0, zz);
 			break;
-			
+
 		case 18:
 			unit = RADIUS * GStrWidth("0", 3);
 			Inch2Fig(unit, &xc, &yc);
@@ -1802,7 +1799,7 @@ void GTitles(char *main, char *sub, char *xlab, char *ylab)
 void GText(double x, double y, char *str, double xc, double yc, double rot)
 {
 	double ix, iy, xtest, ytest;
-	
+
 	ix = XFMAP(x);
 	iy = YFMAP(y);
 	if(str && *str)
@@ -1858,37 +1855,37 @@ void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
 	q = v * (1 - s * f);
 	t = v * (1 - (s * (1 - f)));
 	switch (i) {
-	case 0: 
-		*r = v; 
-		*g = t; 
-		*b = p; 
+	case 0:
+		*r = v;
+		*g = t;
+		*b = p;
 		break;
-	case 1: 
-		*r = q; 
-		*g = v; 
-		*b = p; 
+	case 1:
+		*r = q;
+		*g = v;
+		*b = p;
 		break;
-	case 2: 
-		*r = p; 
-		*g = v; 
-		*b = t; 
+	case 2:
+		*r = p;
+		*g = v;
+		*b = t;
 		break;
-	case 3: 
-		*r = p; 
-		*g = q; 
-		*b = v; 
+	case 3:
+		*r = p;
+		*g = q;
+		*b = v;
 		break;
-	case 4: 
-		*r = t; 
-		*g = p; 
-		*b = v; 
+	case 4:
+		*r = t;
+		*g = p;
+		*b = v;
 		break;
-	case 5: 
-		*r = v; 
-		*g = p; 
-		*b = q; 
+	case 5:
+		*r = v;
+		*g = p;
+		*b = q;
 		break;
-	default: 
+	default:
 		error("bad hsv to rgb color conversion\n");
 	}
 }
