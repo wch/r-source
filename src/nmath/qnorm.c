@@ -64,13 +64,13 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
     q = p_ - 0.5;
 
 #ifdef DEBUG_qnorm
-    REprintf("qnorm(p=%10.7g, m=%7g, s=%7g, l.t.=%2d, log=%2d): q = %7g\n",
+    REprintf("qnorm(p=%10.7g, m=%g, s=%g, l.t.= %d, log= %d): q = %g\n",
 	     p,mu,sigma, lower_tail, log_p, q);
 #endif
 
     if (fabs(q) <= 0.42) {
 
-	/* 0.08 < p < 0.92 */
+	/* 0.08 <= p <= 0.92 */
 
 	r = q * q;
 	val = q * (((-25.44106049637 * r + 41.39119773534) * r
@@ -91,10 +91,11 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 #endif
 
 	if(r > DBL_EPSILON) {
-	    r = sqrt(- ((log_p && ((lower_tail && q <= 0) || (!lower_tail && q > 0))) ?
+	    r = sqrt(- ((log_p &&
+			 ((lower_tail && q <= 0) || (!lower_tail && q > 0))) ?
 			p : /* else */ log(r)));
 #ifdef DEBUG_qnorm
-	    REprintf(" new r = %7g ( =? sqrt(- log(r)) )\n", r);
+	    REprintf("\t new r = %7g ( =? sqrt(- log(r)) )\n", r);
 #endif
 	    val = (((2.32121276858 * r + 4.85014127135) * r
 		    - 2.29796479134) * r - 2.78718931138)
@@ -105,6 +106,10 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	else if(r >= DBL_MIN) { /* r = p <= eps : Use Wichura */
 	    val = -2 * (log_p ? R_D_Lval(p) : log(R_D_Lval(p)));
 	    r = log(2 * M_PI * val);
+#ifdef DEBUG_qnorm
+	    REprintf("\t DBL_MIN <= r <= DBL_EPS: val = %g, new r = %g\n",
+		     val, r);
+#endif
 	    p = val * val;
 	    r = r/val + (2 - r)/p + (-14 + 6 * r - r * r)/(2 * p * val);
 	    val = sqrt(val * (1 - r));
@@ -113,6 +118,9 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	    return mu + sigma * val;
 	}
 	else {
+#ifdef DEBUG_qnorm
+	    REprintf("\t r < DBL_MIN : giving up (-> +- Inf \n");
+#endif
 	    ML_ERROR(ME_RANGE);
 	    if(q < 0.0) return ML_NEGINF;
 	    else	return ML_POSINF;
