@@ -151,8 +151,8 @@ Using Borland C++
 
 Borland C++5.5 is available as a free download from
 http://www.borland.com/bcppbuilder/freecompiler/ and as part of C++
-Builder 5.  The following will make convolve.dll from convolve.c (-6
-for a Pentium II/III)
+Builder 5.  The following will make convolve.dll from convolve.c (flag
+-6 optimizes for a Pentium II/III)
 
 bcc32 -u- -6 -O2 -WDE convolve.c
 
