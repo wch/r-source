@@ -45,7 +45,8 @@ library <-
                        "See the Note in ?library"))
     }
 
-    checkNoGenerics <- function(env) {
+    checkNoGenerics <- function(env)
+    {
         if (exists(".noGenerics", envir = env, inherits = FALSE))
             TRUE
         else {
@@ -92,38 +93,30 @@ library <-
         }
     }
 
-   libraryPkgName <- function(pkgName,sep="_") {
-	splitName <- unlist(strsplit(pkgName,sep))
-	splitName[1]
+    libraryPkgName <- function(pkgName, sep = "_")
+	unlist(strsplit(pkgName, sep))[1]
+
+    libraryPkgVersion <- function(pkgName, sep = "_")
+    {
+        splitName <- unlist(strsplit(pkgName, sep))
+	if (length(splitName) > 1) splitName[2] else NULL
     }
 
-    libraryPkgVersion <- function(pkgName, sep="_") {
-        splitName <- unlist(strsplit(pkgName,sep))
-	if (length(splitName) > 1)
-		return(splitName[2])
-	else
-		return(NULL)
-    }
-
-    libraryMaxVersPos <- function(vers) {
+    libraryMaxVersPos <- function(vers)
+    {
 	## Takes in a character vector of version numbers
         ## returns the position of the maximum version utilizing
         ## compareVersion.  Can't do as.numeric due to the "-" in versions.
 	max <- vers[1]
 
-        for (ver in vers) {
-	    if (compareVersion(max,ver) < 0)
-		max <- ver
-        }
+        for (ver in vers) if (compareVersion(max, ver) < 0) max <- ver
 	out <- match(max, vers)
 	out
     }
 
     sQuote <- function(s) paste("'", s, "'", sep = "")
 
-    if (is.null(lib.loc)) {
-        lib.loc <- .libPaths()
-    }
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
 
     if(!missing(package)) {
 	if(!character.only)
@@ -134,15 +127,16 @@ library <-
         }
 	else {
 	   ## Need to find the proper package to install
-	   pkgDirs <- dir(lib.loc,pattern=paste("^",package,sep=""))
+	   pkgDirs <- list.files(lib.loc,
+                                 pattern = paste("^", package, sep=""))
            ## See if any directories in lib.loc match the pattern of 'package',
            ## if none do, just continue as it will get caught below.  Otherwise,
            ## if there is actually a 'package', use that, and if not, then use
            ## the highest versioned dir.
 	   if (length(pkgDirs) > 0) {
 	       if (!(package %in% pkgDirs)) {
-		   ## Need to find the highest version avail
-		   vers <- unlist(lapply(pkgDirs,libraryPkgVersion))
+		   ## Need to find the highest version available
+		   vers <- unlist(lapply(pkgDirs, libraryPkgVersion))
 		   pos <- libraryMaxVersPos(vers)
 		   if (length(pos) > 0)
 			   package <- pkgDirs[pos]
@@ -171,7 +165,7 @@ library <-
 			     sQuote(libraryPkgName(package)))
 		vers <- libraryPkgVersion(package)
 		if (!is.null(vers))
-		   txt <- paste(txt,", version ",vers,sep="")
+		   txt <- paste(txt, ", version ", vers, sep="")
                 if(logical.return) {
                     warning(txt)
 		    return(FALSE)
@@ -190,8 +184,8 @@ library <-
                     ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
                     env <- attachNamespace(ns)
                 })
-                if (inherits(tt, "try-error")) 
-                    if (logical.return) 
+                if (inherits(tt, "try-error"))
+                    if (logical.return)
                         return(FALSE)
                     else stop("package/namespace load failed")
                 else {
@@ -207,7 +201,8 @@ library <-
                         return(invisible(.packages()))
                 }
             }
-            codeFile <- file.path(which.lib.loc, package, "R", libraryPkgName(package))
+            codeFile <- file.path(which.lib.loc, package, "R",
+                                  libraryPkgName(package))
 	    ## create environment (not attached yet)
 	    loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
 	    ## source file into loadenv
@@ -545,6 +540,5 @@ print.packageInfo <- function(x, ...)
     invisible(x)
 }
 
-manglePackageName <- function(pkgName, pkgVersion) {
-    return(paste(pkgName,"_",pkgVersion,sep=""))
-}
+manglePackageName <- function(pkgName, pkgVersion)
+    paste(pkgName, "_", pkgVersion, sep = "")
