@@ -11,7 +11,9 @@
 
 BUG FIXES
 
-    o	hist(<datetime>, cex.axis = f)  now works for x-axis too.
+    o	hist(<datetime>, cex.axis = f)	now works for x-axis too.
+
+    o	prompt() gave wrong \usage{.} for long argument default expressions.
 
 
 
