@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.5-18, 2002-08-09
+Version 1.5-19, 2002-08-22
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -237,12 +237,12 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.5.1.  Conforming to this
-`major.minor.patchlevel' numbering scheme, there are three development
-versions of R, working towards the next patch (`r-patched'), minor
-(`r-devel'), and major (`r-ng') releases of R, respectively.  Version
+   The current released version is 1.5.1.  Based on this
+`major.minor.patchlevel' numbering scheme, there are two development
+versions of R, working towards the next patch (`r-patched') and minor or
+eventually major (`r-devel') releases of R, respectively.  Version
 r-patched is for bug fixes mostly.  New features are typically introduced
-in r-devel.  Version r-ng will eventually become the next generation of R.
+in r-devel.
 
 2.4 How can R be obtained?
 ==========================
@@ -255,14 +255,13 @@ in r-devel.  Version r-ng will eventually become the next generation of R.
      rsync -rC rsync.r-project.org::MODULE R
 
 to create a copy of the source tree specified by MODULE in the subdirectory
-`R' of the current directory, where MODULE specifies one of the four
+`R' of the current directory, where MODULE specifies one of the three
 existing flavors of the R sources, and can be one of `r-release' (current
 released version), `r-patched' (patched released version), and `r-devel'
-(development version, less stable), and `r-ng' (next generation, unstable).
-The rsync trees are created directly from the master CVS archive and are
-updated hourly.  The `-C' option in the `rsync' command is to cause it to
-skip the CVS directories.  Further information on `rsync' is available at
-`http://rsync.samba.org/rsync/'.
+(development version).  The rsync trees are created directly from the
+master CVS archive and are updated hourly.  The `-C' option in the `rsync'
+command is to cause it to skip the CVS directories.  Further information on
+`rsync' is available at `http://rsync.samba.org/rsync/'.
 
 2.5 How can R be installed?
 ===========================
@@ -371,12 +370,12 @@ directory of a CRAN site.
 2.6 Are there Unix binaries for R?
 ==================================
 
-   The `bin/linux' directory of a CRAN site contains Debian potato/woody
+   The `bin/linux' directory of a CRAN site contains Debian stable/testing
 packages for the i386 platform (now part of the Debian distribution and
-maintained by Doug Bates and Dirk Eddelbuettel, respectively), Red Hat 6.x
-i386, 7.x i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn
-Plummer and Naoki Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by
-Detlef Steuer, and Mandrake 8.1 and 8.2 i386 packages by Michele Alzetta.
+maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x i386 and 7.x alpha
+packages (maintained by Stephen Eglen, Martyn Plummer and Naoki
+Takebayashi, respectively), SuSE 7.3/8.0 i386 packages by Detlef Steuer,
+and Mandrake 8.2 i386 packages by Michele Alzetta.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -429,9 +428,18 @@ available for web browsing at `http://stat.ethz.ch/R/manual/'.
 
    * "R Installation and Administration" (`R-admin').
 
-   In addition to material written specifically for R, documentation for
-S/S-PLUS (see *Note R and S::) can be used in combination with this FAQ
-(*note What are the differences between R and S?::).  We recommend
+   Books on R include
+
+     Peter Dalgaard (2002), "Introductory Statistics with R", Springer: New
+     York, ISBN 0-387-95475-9.
+
+     J. Fox (2002), "An R and S-PLUS Companion to Applied Regression", Sage
+     Publications (`http://www.socsci.mcmaster.ca/jfox/Books/Companion/').
+
+   In addition to material written specifically or explicitly for R,
+documentation for S/S-PLUS (see *Note R and S::) can be used in combination
+with this FAQ (*note What are the differences between R and S?::).  We
+recommend
 
      W. N. Venables and B. D. Ripley (1999), "Modern Applied Statistics with
      S-PLUS.  Third Edition".  Springer, ISBN 0-387-98825-4.
@@ -1909,7 +1917,7 @@ Currently, there are
 
 *RSMethods*
      An implementation of S version 4 methods and classes for R, consistent
-     with the basic material in "Programming with data" by John M.
+     with the basic material in "Programming with Data" by John M.
      Chambers, 1998, Springer NY.
 
 *RSPerl*
@@ -1919,6 +1927,9 @@ Currently, there are
 *RSPython*
      Allows Python programs to invoke S functions, methods, etc., and S code
      to call Python functionality.
+
+*RXLisp*
+     An interface to call XLisp-Stat functions from within R.
 
 *SASXML*
      Example for reading XML files in SAS 8.2 manner.
