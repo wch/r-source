@@ -1,4 +1,4 @@
-### $Id: profile.R,v 1.4 2000/02/16 21:38:45 pd Exp $
+### $Id: profile.R,v 1.5 2000/02/20 15:32:13 bates Exp $
 ###
 ### Profiling nonlinear least squares for R
 ###
@@ -98,8 +98,8 @@ profiler.nls <-
                  fittedModel$setVarying(vary)
                  fittedModel$setPars(startPars[vary])
                  profiledModel <-
-                   .External("nls_iter", fittedModel, ctrl, trace,
-                             PACKAGE = "nls")
+                   .Call("nls_iter", fittedModel, ctrl, trace,
+                         PACKAGE = "nls")
                  fstat <- (profiledModel$deviance()-S.hat)/s2.hat
                  fittedModel$setVarying()
                  ans <- list(fstat = fstat,

@@ -1,5 +1,5 @@
 /*
- *  $Id: nls.c,v 1.2 2000/01/22 20:10:00 ripley Exp $ 
+ *  $Id: nls.c,v 1.3 2000/02/20 15:32:13 bates Exp $ 
  *
  *  Routines used in calculating least squares solutions in a
  *  nonlinear model in nls library for R.
@@ -69,23 +69,15 @@ getListElement(SEXP list, SEXP names, char *str) {
  */
 
 SEXP
-nls_iter(SEXP args) {
+nls_iter(SEXP m, SEXP control, SEXP doTraceArg) {
 
   double dev, fac, minFac, tolerance, newDev, convNew;
   int i, j, maxIter, hasConverged, nPars, doTrace;
-  SEXP m, control, tmp, conv, incr, deviance, setPars, getPars, pars,
+  SEXP tmp, conv, incr, deviance, setPars, getPars, pars,
     newPars, newIncr, trace;
 
-  args = CDR(args);
-  m = CAR(args);
-  args = CDR(args);
-  control = CAR(args);
-  args = CDR(args);
-  doTrace = asLogical(CAR(args));
+  doTrace = asLogical(doTraceArg);
   
-  PROTECT(m);
-
-  PROTECT(control);
   if(!isNewList(control))
     error("control must be a list\n");
   if(!isNewList(m))
@@ -108,7 +100,7 @@ nls_iter(SEXP args) {
     error("control$minFactor absent");
   minFac = asReal(conv);
 
-  UNPROTECT(2);
+  UNPROTECT(1);
 
   PROTECT(tmp = getAttrib(m, R_NamesSymbol));
 
@@ -165,7 +157,7 @@ nls_iter(SEXP args) {
 
       PROTECT(tmp = lang2(setPars, newPars));
       if (asLogical(eval(tmp, R_GlobalEnv))) { /* singular gradient */
-	UNPROTECT(12);
+	UNPROTECT(11);
         error("singular gradient");
       }
       UNPROTECT(1);
@@ -184,43 +176,36 @@ nls_iter(SEXP args) {
     }
     UNPROTECT(1);
     if( fac < minFac ) {
-      UNPROTECT(10);
+      UNPROTECT(9);
       error("step factor reduced below minimum");
     }
     if(doTrace) eval(trace,R_GlobalEnv); 
   }
 
   if(!hasConverged) {
-    UNPROTECT(10);
+    UNPROTECT(9);
     error("maximum number of iterations exceeded");
   }
 
-  UNPROTECT(10);
+  UNPROTECT(9);
   return m;
 }
 
 /*
  *  call to numeric_deriv from R -
- *  .External("numeric_deriv", expr, theta, rho)
+ *  .Call("numeric_deriv", expr, theta, rho)
  *  Returns: ans
  */
 
 SEXP
-numeric_deriv(SEXP args) {
+numeric_deriv(SEXP expr, SEXP theta, SEXP rho) {
 
-  SEXP theta, expr, rho, ans, ans_del, gradient, pars,
-    gradNames, gradDims, dims, temp;
-  double origPar, xx, delta, eps = sqrt(DOUBLE_EPS);
-  long start, i, j, k, lengthDims, nGradNames;
+  SEXP ans, gradient, pars, dims;
+  double eps = sqrt(DOUBLE_EPS);
+  int start, i, j, k, lengthTheta = 0;
 
-  args = CDR(args);
-  expr = CAR(args);
-  args = CDR(args);
-  theta = CAR(args);
   if(!isString(theta))
     error("theta should be of type character");
-  args = CDR(args);
-  rho = CAR(args);
   if(!isEnvironment(rho))
     error("rho should be an environment");
 
@@ -228,55 +213,36 @@ numeric_deriv(SEXP args) {
 
   PROTECT(ans = eval(expr, rho));
   if(!isReal(ans)) {
+    SEXP temp;
     temp = coerceVector(ans, REALSXP);
     UNPROTECT(1);
     PROTECT(ans = temp);
   }
-  PROTECT(dims = getAttrib(ans, R_DimSymbol));
-  lengthDims = length(dims);
-  PROTECT(gradDims = allocVector(INTSXP, lengthDims?(lengthDims+1):2));
-  for(i = 0; i < lengthDims; i++)
-    INTEGER(gradDims)[i] = INTEGER(dims)[i];
-  if(lengthDims == 0) {
-    INTEGER(gradDims)[0] = LENGTH(ans);
-    lengthDims = 1;
-  }
-  INTEGER(gradDims)[lengthDims] = 0;
   for(i = 0; i < LENGTH(theta); i++) {
     VECTOR(pars)[i] = findVar(install(CHAR(STRING(theta)[i])), rho);
-    INTEGER(gradDims)[lengthDims] += LENGTH(VECTOR(pars)[i]);
+    lengthTheta += LENGTH(VECTOR(pars)[i]);
   }
-  PROTECT(gradient = allocArray(REALSXP, gradDims));
-  PROTECT(gradNames = allocVector(STRSXP, INTEGER(gradDims)[lengthDims]));
+  PROTECT(gradient = allocMatrix(REALSXP, LENGTH(ans), lengthTheta));
 
-  nGradNames = 0;
   for(i = 0, start = 0; i < LENGTH(theta); i++) {
     for(j = 0; j < LENGTH(VECTOR(pars)[i]); j++, start += LENGTH(ans)) {
+      SEXP ans_del;
+      double origPar, xx, delta;
+
       origPar = REAL(VECTOR(pars)[i])[j];
       xx = fabs(origPar);
       delta = (xx == 0) ? eps : xx*eps;
       REAL(VECTOR(pars)[i])[j] += delta;
-      ans_del = eval(expr, rho);
+      PROTECT(ans_del = eval(expr, rho));
       if(!isReal(ans_del)) ans_del = coerceVector(ans_del, REALSXP);
+      UNPROTECT(1);
       for(k = 0; k < LENGTH(ans); k++)
 	REAL(gradient)[start + k] = (REAL(ans_del)[k] -
 				     REAL(ans)[k])/delta;
       REAL(VECTOR(pars)[i])[j] = origPar;
-      /*      if(LENGTH(VECTOR(pars)[i]) > 1) {
-	tempChar = allocString(strlen(CHAR(STRING(theta)[i])) + 2);
-	sprintf(CHAR(tempChar), "%s%c", CHAR(STRING(theta)[i]), '0' + j);
-	STRING(gradNames)[nGradNames] = mkChar(CHAR(tempChar));
-      } else
-      STRING(gradNames)[nGradNames] = STRING(theta)[i];*/
-
-      ++nGradNames;
     }
   }
-  /*  dimnames = allocVector(VECSXP, lengthDims + 1);
-  VECTOR(dimnames)[lengthDims] = gradNames;
-  eval(lang2(install("print"),gradNames), rho);
-  setAttrib(gradient, R_DimNamesSymbol, dimnames); */
   setAttrib(ans, install("gradient"), gradient);
-  UNPROTECT(6);
+  UNPROTECT(3);
   return ans;
 }

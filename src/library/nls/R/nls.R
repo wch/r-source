@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.4 2000/01/31 10:01:52 hornik Exp $
+### $Id: nls.R,v 1.5 2000/02/20 15:32:13 bates Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -24,9 +24,29 @@
 
 .First.lib <- function(lib, pkg) library.dynam( "nls", pkg, lib )
 
+newEnv <- function(enclos) {
+    if (missing(enclos))
+        eval.parent(quote((function() environment())()))
+    else
+        eval(quote((function() environment())()), envir = enclos)
+}
+
+numericDeriv <- function(expr, theta, rho = parent.frame()) {
+    val <- .Call("numeric_deriv", expr, theta, rho, PACKAGE="nls")
+    valDim <- dim(val)
+    if (!is.null(valDim)) {
+        if (valDim[length(valDim)] == 1)
+            valDim <- valDim[-length(valDim)]
+        if(length(valDim) > 1)
+            dim(attr(val, "gradient")) <- c(valDim,
+                                            dim(attr(val, "gradient"))[-1])
+    }
+    val
+}
+
 nlsModel.plinear <- function( form, data, start ) {
     thisEnv <- environment()
-    env <- new.env() 
+    env <- newEnv() 
     for( i in names( data ) ) {
         assign( i, data[[i]], envir = env )
     }
@@ -51,7 +71,7 @@ nlsModel.plinear <- function( form, data, start ) {
     useParams <- rep(TRUE, p2)
     if( is.null( attr( rhs, "gradient" ) ) ) {
         getRHS.noVarying <- function()
-          .External("numeric_deriv", form[[3]], names(ind), env, PACKAGE="nls")
+          numericDeriv(form[[3]], names(ind), env)
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
     } else {
@@ -204,7 +224,7 @@ nlsModel.plinear <- function( form, data, start ) {
            },
            predict = function(newdata = list(), qr = FALSE)
            {
-               Env <- new.env()
+               Env <- newEnv()
                for (i in objects(envir = env)) {
                    assign(i, get(i, envir = env), envir = Env)
                }
@@ -222,7 +242,7 @@ nlsModel.plinear <- function( form, data, start ) {
 
 nlsModel <- function( form, data, start ) {
     thisEnv <- environment()
-    env <- new.env() 
+    env <- newEnv() 
     for( i in names( data ) ) {
         assign( i, data[[i]], envir = env )
     }
@@ -242,7 +262,7 @@ nlsModel <- function( form, data, start ) {
     dev <- sum( resid^2 )
     if( is.null( attr( rhs, "gradient" ) ) ) {
         getRHS.noVarying <- function()
-          .External("numeric_deriv", form[[3]], names(ind), env, PACKAGE="nls")
+          numericDeriv(form[[3]], names(ind), env)
         getRHS <- getRHS.noVarying
         rhs <- getRHS()
     } else {
@@ -363,7 +383,7 @@ nlsModel <- function( form, data, start ) {
            Rmat = function() qr.R( QR ),
            predict = function(newdata = list(), qr = FALSE)
            {
-               Env <- new.env()
+               Env <- newEnv()
                for (i in objects(envir = env)) {
                    assign(i, get(i, envir = env), envir = Env)
                }
@@ -421,7 +441,7 @@ nls <-
         control <- as.list(control)
         ctrl[names(control)] <- control
     }
-    nls.out <- list(m = .External( "nls_iter", m, ctrl, trace ),
+    nls.out <- list(m = .Call( "nls_iter", m, ctrl, trace ),
                     data = substitute( data ), call = match.call(),
                     PACKAGE="nls")
     nls.out$call$control <- ctrl
