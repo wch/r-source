@@ -2797,6 +2797,8 @@ as surrogates for a full data set, and search for subsets which are
 optimal under various criteria.
 @item supclust
 Methodology for supervised grouping of predictor variables.
+@item superpc
+Supervised principal components.
 @item survey
 Summary statistics, generalized linear models, and general maximum
 likelihood estimation for stratified, cluster-sampled, unequally
