@@ -329,7 +329,7 @@ str.default <-
 	if(is.na(le)) { warning("'str.default': 'le' is NA !!"); le <- 0}
 
 	if(char.like) {
-            en_object <- encodeString(as.character(object))
+            en_object <- encodeString(object)
 	    v.len <-
 		if(missing(vec.len))
 		    max(1,sum(cumsum(3 + if(le>0) nchar(en_object) else 0) <
@@ -343,7 +343,7 @@ str.default <-
 		    object[ii] <- P0(substr(en_object[ii], 1, nchar.max),
 				     "| __truncated__")
 	    }
-	    formObj <- function(x) paste(encodeString(as.character(x),
+	    formObj <- function(x) paste(encodeString(x,
                                                       quote='"',
                                                       na=FALSE),
                                          collapse=" ")

@@ -10,7 +10,8 @@
 encodeString(x, w = 0, quote = "", right = FALSE, na = TRUE)
 }
 \arguments{
-  \item{x}{A character vector.}
+  \item{x}{A character vector, or an object that can be coerced to one
+    by \code{\link{as.character}}.}
   \item{w}{integer: the minimum field width.}
   \item{quote}{character: quoting character, if any.}
   \item{right}{logical: if the escaped string is shorter than \code{w}

@@ -180,7 +180,7 @@ is.numeric.factor <- function(x) FALSE
 is.integer.factor <- function(x) FALSE
 
 encodeString <- function(x, w=0, quote="", right=FALSE, na=TRUE)
-    .Internal(encodeString(x, w, quote, right, na))
+    .Internal(encodeString(as.character(x), w, quote, right, na))
 
 ## base has no S4 generics
 .noGenerics <- TRUE

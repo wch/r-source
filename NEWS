@@ -314,6 +314,10 @@ BUG FIXES
     o	str() no longer interprets control characters in character
 	strings and factor levels.
 
+    o	print.factor(quote=TRUE) was not quoting levels, causing
+	ambiguity when the levels contained spaces or quotes.
+
+
 
 
 	**************************************************

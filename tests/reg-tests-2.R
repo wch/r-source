@@ -1442,3 +1442,12 @@ str(x)
 str(factor(x))
 str(factor(x, exclude=""))
 ##
+
+
+## print.factor(quote=TRUE) was not quoting levels
+x <- c("a", NA, "b", 'a " test')
+factor(x)
+factor(x, exclude="")
+print(factor(x), quote=TRUE)
+print(factor(x, exclude=""), quote=TRUE)
+## last two printed levels differently from values in 2.0.1
