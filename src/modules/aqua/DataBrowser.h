@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2002 the R Development Core Team
+ *  Copyright (C) 1998-1999  Ross Ihaka
+ *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,16 +15,37 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- */
+ *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+*/
 
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-#include <Defn.h>
-#ifdef HAVE_AQUA
-#include "../macintosh/DataBrowser.c"
-#endif
+
+#ifndef __OBJECT_BROWSER_H__
+#define __OBJECT_BROWSER_H__
 
 
+/* for the data browser */
+
+enum {
+	kMyCreator			= 'ERRE',
+	kMyDataBrowser		= 'Brsr',
+	kObjectColumn		= 'objs',
+	kTypeColumn			= 'type',
+	kSizeColumn			= 'size',
+	kDontKnow			= '????'
+};
+
+ 
+
+
+
+const DataBrowserTableViewColumnID columns[] = 
+	{ kObjectColumn, kTypeColumn, kSizeColumn };
+
+
+#endif /* __OBJECT_BROWSER_H__ */
+
+
+ 

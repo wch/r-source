@@ -11,8 +11,8 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-SOURCES = aquaconsole.c
-HEADERS =
+SOURCES = aquaconsole.c DataBrowser.c
+HEADERS = DataBrowser.h
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.lo)
 
