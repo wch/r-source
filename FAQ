@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-25, 2003-07-08
+Version 1.7-26, 2003-07-15
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1517,6 +1517,9 @@ distributions of R.)
      Color schemes for dichromats: collapse red-green distinctions to
      simulate the effects of colour-blindness.
 
+*diptest*
+     Compute Hartigan's dip test statistic for unimodality.
+
 *dispmod*
      Functions for modelling dispersion in GLMs.
 
@@ -1581,6 +1584,10 @@ distributions of R.)
      and thin plate splines, universal Kriging and Kriging for large data
      sets.  The main feature is that any covariance function implemented in
      R can be used for spatial prediction.
+
+*flexmix*
+     Flexible Mixture Modeling: a general framework for finite mixtures of
+     regression models using the EM algorithm.
 
 *foreign*
      Functions for reading and writing data stored by statistical software
@@ -1782,6 +1789,9 @@ distributions of R.)
 *meanscore*
      Mean Score method for missing covariate data in logistic regression
      models.
+
+*merror*
+     Accuracy and precision of measurements.
 
 *mgcv*
      Routines for GAMs and other genralized ridge regression problems with
