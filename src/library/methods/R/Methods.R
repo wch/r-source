@@ -266,10 +266,10 @@ setMethod <-
              "\" is locked; cannot assign methods for function \"",
              f, "\"")
     hasMethods <- !is.null(fdef)
-    deflt <- NULL
+    deflt <- getFunction(f, generic = FALSE, mustFind = FALSE, where = where)
     ## where to insert the methods in generic
         gwhere <- NULL
-        allWhere <- findFunction(f, where = if(isNamespace(where)) where else .GlobalEnv)
+        allWhere <- findFunction(f, where = where)
         generics <-logical(length(allWhere))
         if(length(allWhere)>0) { # put methods into existing generic
             for(i in seq(along = allWhere)) {
