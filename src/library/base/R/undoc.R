@@ -36,16 +36,12 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         files <- listFilesWithExts(docsDir, docsExts)
         if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
             files <- c(files, listFilesWithExts(docsOSDir, docsExts))
-        fname <- falias <- character(0)
+        aliases <- character(0)
         for(f in files) {
-            allDocs <- readLines(f)
-            fname  <-
-                c(fname, grep("^\\\\name", allDocs, value = TRUE))
-            falias <-
-                c(falias, grep("^\\\\alias", allDocs, value = TRUE))
+            aliases <- c(aliases,
+                         grep("^\\\\alias", readLines(f), value = TRUE))
         }
-        objsdocs <- c(gsub("\\\\name{(.*)}.*", "\\1", fname), 
-                      gsub("\\\\alias{(.*)}.*", "\\1", falias))
+        objsdocs <- gsub("\\\\alias{(.*)}.*", "\\1", aliases)
         objsdocs <- gsub("\\\\%", "%", objsdocs)
         objsdocs <- gsub(" ", "", objsdocs)
         objsdocs <- sort(unique(objsdocs))
