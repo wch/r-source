@@ -1,28 +1,17 @@
-##-*- mode: R; kept-new-versions: 21; kept-old-versions: 12; -*-
 plot.design <-
     function(x, y = NULL, fun = mean, data = NULL, ...,
              ylim = NULL, xlab = "Factors", ylab = NULL, main = NULL,
              ask = NULL, xaxt = par("xaxt"), axes = TRUE, xtick = FALSE)
 {
-    ## Purpose: plot method for "design"s -- White book, p.546-7 (+ p.163-164)
-    ## ----------------------------------------------------------------------
-    ## Arguments:
-    ## ----------------------------------------------------------------------
-    ## Authors: Martin Maechler & Roberto Frisullo, Dez.2002 - Jan.2003
-
-    ## Definition von Hilfsfkt. .plot.des()
-
     .plot.des <-
         function(x, y, fun, ylab, ylim = NULL, ...) {
-	## Purpose: auxilary for plot.design()
-	## --------------------------------------------------------------------
 	## Arguments: x : data.frame with only factor columns
 	##	      y : one numeric vector
 
 	if(!is.numeric(y))
 	    stop("`y' must be a numeric vector")
-	if(!(is.data.frame(x))) # or allow factor (see 2 lines below)?? {FIXME}
-	    stop("`x' must be a data.frame")
+	if(!is.data.frame(x)) # or allow factor (see 2 lines below)?? {FIXME}
+	    stop("`x' must be a data frame")
 	if(!all(sapply(x, is.factor)) & !is.factor(x)) # incl "ordered"
 	    stop("all columns/components of `x' must be factors")
 	k <- ncol(x)
@@ -55,14 +44,13 @@ plot.design <-
                  ...)
     } ## .plot.des()
 
-    ## Argument fun bearbeiten
+    ## `fun' dealing
     fname <- deparse(substitute(fun))
     fun <- match.fun(fun)
-    ## x ist entweder ein Dataframe oder eine Formel
     if (!(is.data.frame(x) | inherits(x,"formula")))
 	stop("x must be a dataframe or a formula!")
 
-    ## Fallunterscheidungen und Aufruf von pl.ds0():
+    ## case `switch' :
     if(is.data.frame(x)) {
 	if(is.null(y)) { ## nothing to do
 	} else if(inherits(y,"formula")) {
@@ -92,7 +80,6 @@ plot.design <-
 	x <- model.frame(x)
     }
 
-    ## pl.ds0() :
     i.fac <- sapply(x, is.factor)
     i.num <- sapply(x, is.numeric)
     nResp <- sum(i.num)
