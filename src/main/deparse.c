@@ -1,6 +1,7 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,13 +28,13 @@
  *
  *	linenumber: counts the number of lines that have been written,
  *	this is used to setup storage for deparsing.
- * 
+ *
  *	len: counts the length of the current line, it will be used to
  *	determine when to break lines.
  *
  *	incurly: keeps track of whether we are inside a curly or not,
  *	this affects the printing of if-then-else.
- *	
+ *
  *	inlist: keeps track of whether we are inside a list or not,
  *	this affects the printing of if-then-else.
  *
@@ -53,7 +54,7 @@
 #define MIN_Cutoff 20
 #define DEFAULT_Cutoff 60
 #define MAX_Cutoff (BUFSIZE - 12)
-/* ----- MAX_Cutoff  <  BUFSIZE !! */
+/* ----- MAX_Cutoff  <	BUFSIZE !! */
 
 static int cutoff = DEFAULT_Cutoff;
 
@@ -72,7 +73,9 @@ static void print2buff(char *);
 static void printtab2buff(int);
 static void scalar2buff(SEXP);
 static void writeline(void);
+#ifdef NotUsed
 static void factor2buff(SEXP, int);
+#endif
 static void vector2buff(SEXP);
 static void vec2buff(SEXP);
 static void linebreak();
@@ -95,7 +98,7 @@ void deparse2(SEXP, SEXP);
 	call this deeper function with the appropriate argument.
 
 	I wonder why I didn't just do this? -- it would have been
-	quicker than writing this note.  I guess it needs a bit
+	quicker than writing this note.	 I guess it needs a bit
 	more thought ...
 */
 
@@ -112,7 +115,7 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 	cutoff = DEFAULT_Cutoff;
 	if(!isNull(CAR(args))) {
 		cut0 = asInteger(CAR(args));
-		if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff) 
+		if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff)
 			warning("invalid 'cutoff' for deparse, used default\n");
 		else
 			cutoff = cut0;
@@ -124,7 +127,7 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* The function deparse1 gets a second argument; abbrev. */
 	/* If abbrev is 1 then the returned value is a STRSXP of */
-	/* length 1 with at most 10 characters.  This is use for */
+	/* length 1 with at most 10 characters.	 This is use for */
 	/* plot labelling etc. */
 
 SEXP deparse1(SEXP call, int abbrev)
@@ -138,7 +141,7 @@ SEXP deparse1(SEXP call, int abbrev)
 	PROTECT(svec = allocVector(STRSXP, linenumber));
 	deparse2(call, svec);
 	UNPROTECT(1);
-	if (abbrev == 1) { 
+	if (abbrev == 1) {
 		buff[0]='\0';
 		strncat(buff, CHAR(STRING(svec)[0]), 10);
 		if (strlen(CHAR(STRING(svec)[0])) > 10)
@@ -190,17 +193,17 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	FILE *fp;
 
 	checkArity(op, args);
-	
+
 	names = CAR(args);
 	file = CADR(args);
 	if(!isString(names) || !isString(file))
 		errorcall(call, "character arguments expected\n");
 	nobjs = length(names);
-	if(nobjs < 1 || length(file) < 1) 
+	if(nobjs < 1 || length(file) < 1)
 		errorcall(call, "zero length argument\n");
 
 	PROTECT(o = objs = allocList(nobjs));
-	
+
 	for(i=0 ; i<nobjs ; i++) {
 		CAR(o) = eval(install(CHAR(STRING(names)[i])), rho);
 		o = CDR(o);
@@ -358,7 +361,7 @@ static void deparse2buff(SEXP s)
 		break;
 	case CLOSXP:
 		print2buff("function (");
-		args2buff(FORMALS(s), 0, 1); 
+		args2buff(FORMALS(s), 0, 1);
 		print2buff(") ");
 		writeline();
 		deparse2buff(BODY(s));
@@ -507,7 +510,7 @@ static void deparse2buff(SEXP s)
 					printcomment(s);
 					print2buff(CHAR(PRINTNAME(op)));
 					print2buff("(");
-					args2buff(FORMALS(s), 0, 1); 
+					args2buff(FORMALS(s), 0, 1);
 					print2buff(") ");
 					deparse2buff(CADR(s));
 					break;
@@ -593,7 +596,7 @@ static void deparse2buff(SEXP s)
 			args2buff(CDR(s), 0, 0);
 			print2buff(")");
 		}
-		else { 
+		else {
 			deparse2buff(CAR(s));
 			if( CDR(s) != R_NilValue ) {
 				/* we have a lambda expression and need
@@ -618,7 +621,7 @@ static void deparse2buff(SEXP s)
 	}
 }
 
-/* 
+/*
    if there is a string array active point to that, and
    otherwise we are counting lines so don't do anything
  */
@@ -696,6 +699,7 @@ static void vector2buff(SEXP vector)
 
 }
 
+#ifdef NotUsed
 static void factor2buff(SEXP vector, int ordered)
 {
 	int tlen, i;
@@ -717,7 +721,7 @@ static void factor2buff(SEXP vector, int ordered)
 	print2buff(strp);
 	print2buff(")");
 }
-
+#endif
 /* vec2buff : New Code */
 /* Deparse vectors of S-expressions. */
 /* In particular, this deparses objects of mode expression. */
@@ -788,7 +792,7 @@ static void printtab2buff(int ntab)
 
 	for (i = 1; i <= ntab; i++)
 		if (i <= 4)
-			print2buff("        ");
+			print2buff("	    ");
 		else
 			print2buff(" ");
 }
