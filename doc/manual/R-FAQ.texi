@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-31 @value{FAQ-YEAR}-07-09
+@set FAQ-VERSION 1.9-33 @value{FAQ-YEAR}-07-16
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1706,6 +1706,9 @@ ordering of all the available alternatives.
 Data sets from the book ``Introduction to Linear Regression Analysis''
 by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
 Sons.
+@item Malmig
+An implementation of Malecot migration model together with a number of
+related functions.
 @item Matrix
 A Matrix package.
 @item NADA
@@ -1809,6 +1812,8 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item UNF
+Tools for creating universal numeric fingerprints for data.
 @item VLMC
 Functions, classes & methods for estimation, prediction, and simulation
 (bootstrap) of VLMC (Variable Length Markov Chain) models.
@@ -1818,6 +1823,9 @@ Methods for calculation of Value at Risk (VaR).
 Facilities for reading @XML{} documents and DTDs.
 @item abind
 Combine multi-dimensional arrays.
+@item accuracy
+A suite of tools designed to test and improve the accuracy of
+statistical computation.
 @item acepack
 ACE (Alternating Conditional Expectations) and AVAS (Additivity and
 VAriance Stabilization for regression) methods for selecting regression
@@ -2742,6 +2750,9 @@ Various help functions for vegetation scientists and community
 ecologists.
 @item verify
 Construction of test suites using verify objects.
+@item vioplot
+Violin plots, which are a combination of a box plot and a kernel density
+plot.
 @item waveslim
 Basic wavelet routines for time series analysis.
 @item wavethresh
