@@ -195,15 +195,12 @@
 \alias{grid.strip}
 \alias{height.post.details}
 \alias{height.pre.details}
+\alias{is.unit}
 \alias{layoutRegion}
 \alias{viewport.layout}
 \alias{viewport.transform}
 \alias{width.post.details}
 \alias{width.pre.details}
-%% </LIST>
-%% Currently (?) exported as needed by Hmisc and Design ...
-%% <LIST>
-\alias{is.unit}
 %% </LIST>
 %% Currently (?) exported as used in the grid.layout.Rd \example ...
 %% <LIST>

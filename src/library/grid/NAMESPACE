@@ -11,10 +11,10 @@ export("absolute.size", "convertNative", "current.viewport",
        "grid.plot.and.legend", "grid.points", "grid.polygon",
        "grid.pretty", "grid.rect", "grid.segments", "grid.set",
        "grid.show.layout", "grid.show.viewport", "grid.text",
-       "grid.xaxis", "grid.yaxis", "height.details", "plotViewport",
-       "pop.viewport", "push.viewport", "unit", "unit.c", "unit.length",
-       "unit.pmax", "unit.pmin", "unit.rep", "viewport",
-       "width.details")
+       "grid.xaxis", "grid.yaxis", "height.details", "is.unit",
+       "plotViewport", "pop.viewport", "push.viewport", "unit",
+       "unit.c", "unit.length", "unit.pmax", "unit.pmin", "unit.rep",
+       "viewport", "width.details")
 
 ## Documented as internal but in Paul's first attempt at a sensible
 ## export list:
@@ -31,11 +31,6 @@ export("draw.details", "editDetails", "grid.legend", "grid.multipanel",
 ## <FIXME>
 ## In the grid.layout.Rd \example ...
 export("layout.torture")
-## </FIXME>
-
-## <FIXME>
-## Needed by Hmisc and Design ...
-export("is.unit")
 ## </FIXME>
 
 ## S3 methods for generics in base
