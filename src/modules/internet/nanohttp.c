@@ -49,6 +49,7 @@ extern void R_ProcessEvents(void);
 #endif
 
 #include <R_ext/R-ftp-http.h>
+#include <R_ext/PrtUtil.h>
 
 #ifdef HAVE_STRINGS_H
    /* may be needed to define bzero in FD_ZERO (eg AIX) */
@@ -1118,7 +1119,10 @@ RxmlNanoHTTPMethod(const char *URL, const char *method, const char *input,
     char *bp, *p;
     int blen, ilen, ret;
     int head;
-    int nbRedirects = 0, nAuthenticate = 0;
+    int nbRedirects = 0;
+#ifdef Win32
+    int nAuthenticate = 0;
+#endif
     char *redirURL = NULL;
     char buf[1000];
 

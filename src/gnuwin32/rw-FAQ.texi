@@ -452,9 +452,22 @@ We have had several reports of this, although they do work for us on
 (a) Use the alternative @code{internet2.dll} by starting R with the flag
 @code{--internet2} (@pxref{How do I install R for Windows?}) which uses
 the Internet Explorer internals (and so needs Internet Explorer 4 or
-later installed).
+later installed).  Note that this does not work with proxies that need
+authentication.
 
-(b) A proxy needs to be set up: see @code{?download.file}.
+(b) A proxy needs to be set up: see @code{?download.file}.  Here are two
+versions of an example (a real one, but from a machine that is only
+available locally) of a command-line in a short cut:
+
+@smallexample
+/R/rw1070/bin/RGui.exe http_proxy=http://user:pass@@gannet:80/
+
+/R/rw1070/bin/RGui.exe http_proxy=http://gannet/ http_proxy_user=ask
+@end smallexample
+
+@noindent
+The second version will prompt the user for the proxy username and
+password when HTTP downloads are first used.
 
 
 @node Entering certain characters crashes Rgui., Other strange crashes., The internet download functions fail., Installation and Usage
@@ -1117,14 +1130,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2003 January 14 by Professor B. D. Ripley
+Last edited 2003 January 22 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2003 January 14 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2003 January 22 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
