@@ -44,7 +44,7 @@ Real.primitives <-
 	   "interactive",
 	   ".Primitive", ".Internal", ".External", ".Call",
 	   ".C", ".Fortran", "symbol.C", "symbol.For",
-	   "globalenv", "pos.to.env", "unclass", "attr",
+	   "globalenv", "pos.to.env", "unclass", "attr", "as.character",
 
 	   ##maybe ? "gc", "gcinfo",
 	   ##

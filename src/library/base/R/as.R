@@ -15,7 +15,7 @@ as.single <- function(x,...) UseMethod("as.single")
 as.single.default <- function(x,...) {
     structure(.Internal(as.vector(x,"double")), Csingle=TRUE)
 }
-as.character<- function(x,...) UseMethod("as.character")
+
 as.character.default <- function(x,...) .Internal(as.vector(x,"character"))
 
 as.expression <- function(x,...) UseMethod("as.expression")

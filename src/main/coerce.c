@@ -982,6 +982,25 @@ static SEXP ascommon(SEXP call, SEXP u, int type)
     return u;/* -Wall */
 }
 
+SEXP do_ascharacter(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP ans;
+
+    if (DispatchOrEval(call, op, args, rho, &ans, 1))
+	return(ans);
+
+    /* Method dispatch has failed, we now just */
+    /* run the generic internal code */
+
+    PROTECT(args = ans);
+    checkArity(op, args);
+
+    ans = ascommon(call, CAR(args), STRSXP);
+    UNPROTECT(1);
+    return ans;
+}
+
+
 SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;

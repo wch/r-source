@@ -79,6 +79,7 @@ SEXP do_restart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_primitive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_symbols(SEXP, SEXP, SEXP, SEXP);
 SEXP do_attr(SEXP, SEXP, SEXP, SEXP);
+SEXP do_ascharacter(SEXP, SEXP, SEXP, SEXP);
 
 FUNTAB R_FunTab[] =
 {
@@ -424,6 +425,7 @@ FUNTAB R_FunTab[] =
 
 /* Type coercion */
 
+{"as.character",do_ascharacter,	0,	0,	1,	PP_FUNCALL},
 {"as.vector",	do_asvector,	0,	10,	2,	PP_FUNCALL},
 {"paste",	do_paste,	0,	11,	3,	PP_FUNCALL},
 {"format",	do_format,	0,	11,	-1,	PP_FUNCALL},
