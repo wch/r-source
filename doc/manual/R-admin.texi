@@ -166,8 +166,8 @@ svn checkout https://svn.r-project.org/R/trunk/ @var{path}
 @noindent
 to check out r-devel into directory @var{path}.
 
-Note that @code{https:} is required, and that the SSL certificate for the
-Subversion server of the R project is
+Note that @samp{https:} is required, and that the SSL certificate for
+the Subversion server of the R project is
 
 @smallexample
 Certificate information:
@@ -400,10 +400,11 @@ a different papersize, you should first delete the file
 There are some issues with making the reference manual, and in
 particular with the PDF version @file{refman.pdf}.  The help files
 contain both ISO Latin1 characters (e.g. in @file{text.Rd}) and upright
-quotes, neither of which are contained in the standard LaTeX Computer
+quotes, neither of which are contained in the standard La@TeX{} Computer
 Modern fonts.  We have provided four alternatives:
-@itemize @bullet
-@item @code{times}
+
+@table @code
+@item times
 Using standard PostScript fonts.  This works well both for on-screen
 viewing and for printing, and is the default from @R{} 2.0.0.  The one
 disadvantage is that the Usage and Examples sections may come out rather
@@ -411,7 +412,7 @@ wide.
 
 @item @code{lm}
 Using the @emph{Latin Modern} fonts.  These are not often installed as
-part of a TeX distribution, but can obtained from
+part of a @TeX{} distribution, but can obtained from
 @uref{http://www.ctan.org/tex-archive/fonts/ps-type1/lm} and mirrors.
 This uses fonts rather similar to Computer Modern, but is not so good
 on-screen as @code{times}.
@@ -430,8 +431,9 @@ previous two options.  There are three fonts for which it will need to
 use bitmapped fonts, @file{tctt0900.600pk}, @file{tctt1000.600pk} and 
 @file{tcrm1000.600pk}.  Unfortunately, if those files are not available,
 Acrobat Reader will substitute completely incorrect glyphs so you need
-to examine the logs carefully.  This was the default in @R{} version 1.x.y.
-@end itemize
+to examine the logs carefully.  This was the default in @R{} version
+1.x.y.
+@end table
 
 Both Unix and Windows installations default to @code{times}.  The choice
 can be overridden by setting the environment variable @code{R_RD4PDF}.
@@ -593,12 +595,12 @@ and install some tools as explained in the document. Than you have to
 expand the @R{} sources and configure @R{} appropriately, for example
 
 
-@smallexample
+@example
 tar zxvf R-@value{VERSIONno}.tgz
 cd R-@value{VERSIONno}
 ./configure --with-blas='-framework vecLib' --with-lapack --with-aqua 
 make
-@end smallexample
+@end example
 
 @noindent
 sit back and wait. The last option @option{--with-aqua} is needed only
@@ -701,7 +703,7 @@ interface to @code{install.packages}, @code{update.packages} and
 On Mac OS X @code{install.packages} works as it does on other Unix
 systems, but there is an additional function @code{install.binaries}
 that will download and install binary packages from @acronym{CRAN}.
-These Macintosh binary package files have the extension @code{tgz}. The
+These Macintosh binary package files have the extension @samp{tgz}.  The
 Aqua GUI provides for installation of either binary or source packages,
 from @acronym{CRAN} or local files.
 
@@ -1022,7 +1024,7 @@ You can use @option{--without-foo} or @option{--disable-foo} for the
 negatives.
 
 You will want to use @option{--disable-R-profiling} if you are building
-a profiled executable of @R{} (e.g. with @samp{-pg)}.
+a profiled executable of @R{} (e.g.@: with @samp{-pg)}.
 
 Flag @option{--enable-R-shlib} causes the make process to build @R{} as
 a dynamic (shared) library, typically called @file{libR.so}, and link
@@ -1310,10 +1312,10 @@ A discussion of which Linux systems support large files can be found at
 @uref{http://www.suse.de/~aj/linux_lfs.html}: it has been available
 since about 2001.
 
-R used to include the compiler flag @option{-mieee-fp}, but it seems this
-was really an alias for the linker flag @option{-lieee}.  Neither are
-needed for a modern Linux (e.g. using @code{glibc} 2.2 or 2.3) but could
-conceivably be needed on an older version.
+R used to include the compiler flag @option{-mieee-fp}, but it seems
+this was really an alias for the linker flag @option{-lieee}.  Neither
+are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
+could conceivably be needed on an older version.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -1367,7 +1369,7 @@ needed prior to Solaris 2.7 for building other than in the source tree,
 and perhaps even then.
 
 The Solaris versions of several of the tools needed to build @R{}
-(e.g. @command{make}, @command{ar} and @command{ld}) are in
+(e.g.@: @command{make}, @command{ar} and @command{ld}) are in
 @code{/usr/ccs/bin}, so if using those tools ensure this is in your
 path.
 
@@ -1399,7 +1401,7 @@ fail.  The maximal set of optimization options known to work is
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
 compiler: the @command{gcc}/@command{f77} combination works well.  For
-many C++ applications (e.g. package @pkg{Matrix}) Forte 7 requires
+many C++ applications (e.g.@: package @pkg{Matrix}) Forte 7 requires
 @code{-lCstd}, which the configure script will add to
 @code{SHLIB_CXXLDFLAGS} if it identifies the compiler correctly.
 
@@ -1512,12 +1514,12 @@ last paragraph.  Static libraries that might be found and would cause
 problems are
 
 @smallexample
-BLAS                   use --without-blas
-Tcl/Tk                 use --without-tcltk
-GNOME                  not built by default
-libpng                 use --without-libpng
-jpeg                   use --without-jpeglib
-zlib                   use --without-zlib
+BLAS                   @r{use @option{--without-blas}}
+Tcl/Tk                 @r{use @option{--without-tcltk}}
+GNOME                  @r{not built by default}
+libpng                 @r{use @option{--without-libpng}}
+jpeg                   @r{use @option{--without-jpeglib}}
+zlib                   @r{use @option{--without-zlib}}
 @end smallexample
 
 @noindent
@@ -1591,7 +1593,7 @@ check} but failed @command{make test-all-extras} in the complex LAPACK
 tests.
 
 George N. White III reports that the @code{strptime} tests in 1.9.0 fail
-on IRIX 6.5 systems prior to 6.5.22m (e.g. 6.5.19m and 6.5.21m) unless
+on IRIX 6.5 systems prior to 6.5.22m (e.g.@: 6.5.19m and 6.5.21m) unless
 Arthur Olson's timezone data @uref{ftp://elsie.nci.nih.gov/pub/} (see
 also @uref{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html}) are
 installed and @code{-ltz} is added to the list of libraries (for
@@ -1655,11 +1657,11 @@ success building @R{} 1.7.0 under AIX 5.1 with
 CC=xlc
 F77=xlf
 CXX=xlC
-CFLAGS=-O3 -qstrict -qmaxmem=8192
-FFLAGS=-O3 -qstrict -qmaxmem=8192
-CXXFLAGS=-O2 -qmaxmem=8192
-MAIN_LDFLAGS=-Wl,-brtl
-SHLIB_LDFLAGS=-Wl,-G
+CFLAGS='-O3 -qstrict -qmaxmem=8192'
+FFLAGS='-O3 -qstrict -qmaxmem=8192'
+CXXFLAGS='-O2 -qmaxmem=8192'
+MAIN_LDFLAGS='-Wl,-brtl'
+SHLIB_LDFLAGS='-Wl,-G'
 @end smallexample
 
 @noindent
@@ -1751,8 +1753,8 @@ make install
 @end example
 
 @noindent
-This installs the two files @file{R_HOME/bin/exec/Rgnome} and
-@file{R_HOME/share/glade/gnome-interface.glade}.
+This installs the two files @file{bin/exec/Rgnome} and
+@file{share/glade/gnome-interface.glade} in @file{@var{R_HOME}}.
 
 The full list of options to this @command{configure} is
 
@@ -1834,10 +1836,7 @@ Environment @code{j2re 1.4.2_03} does not work under Solaris, whereas
 @code{jre 1.5.0} and @code{j2re 1.4.2_01} (available from
 @uref{http://java.sun.com/products/archive/}) do.
 
-@smallexample
-http://www.MedAnalytics.com/INSTALL
-@end smallexample
-
+See @uref{http://www.MedAnalytics.com/INSTALL} for more information.
 
 @node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
