@@ -1460,7 +1460,7 @@ DEPRECATED & DEFUNCT
 
     o	printNoClass() is defunct.
 
-    o	The classic MacOS port is no longer supported, and its files
+    o	The classic Mac OS port is no longer supported, and its files
 	have been removed from the sources.
 
     o	The deprecated argument 'white' of parse() has been removed.
@@ -1704,7 +1704,8 @@ BUG FIXES
 
     o	Fixed some malformed error messages in the methods package.
 
-    o	pipes were not opening properly when profiling on a Mac. (PR#1140)
+    o	pipes were not opening properly when profiling on a Mac OS.
+        (PR#1140)
 
     o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
 	corrected.
@@ -2509,7 +2510,7 @@ BUG FIXES
     o	Sys.sleep() on Unix was having trouble with waits of less than 0.5s
 
     o	The fix to PR#2396 broke read.table() on files with CR line
-	endings. (PR#2469)   Separate problem with this on Carbon MacOS
+	endings. (PR#2469)   Separate problem with this on Carbon Mac OS
 	build fixed as well.
 
     o	Converting Sweave files to noweb syntax using SweaveSyntConv()
@@ -2906,7 +2907,7 @@ BUG FIXES
 
     o	Startup.Rd described the processing under Unix-alikes but
 	incorrectly implied it happened that way on the Windows and
-	MacOS ports.  Neither use Renviron.site, for example.
+	Mac OS ports.  Neither use Renviron.site, for example.
 
     o	besselK(x,*) now returns 0 instead of Inf for large x. (PR#2179)
 
@@ -3639,7 +3640,7 @@ BUG FIXES
     o	ccf(plot = FALSE) was returning a spurious extra 0 at lag 0.
 
     o	On console-based versions of R (Windows, GNOME, probably
-	MacOS) warning/error messages longer than 8192 chars could
+	Mac OS) warning/error messages longer than 8192 chars could
 	crash R. (PR#1651)
 
     o	Comparisons between objects of mode "call" using "==" now return
@@ -5013,7 +5014,7 @@ BUG FIXES
     o	The [pqr]signrank and [pqr]wilcox functions failed to check that
 	memory has been allocated (PR#1149), and had (often large)
 	memory leaks if interrupted.  They now can be interrupted on
-	Windows and MacOS and don't leak memory.
+	Windows and Mac OS and don't leak memory.
 
     o	range(numeric(0)) is now c(NA, NA) not NA.
 
@@ -5023,7 +5024,7 @@ BUG FIXES
 
     o	Several memory leaks on interrupting functions have been
 	circumvented.  Functions lqs() and mve() can now be
-	interrupted on Windows and MacOS.
+	interrupted on Windows and Mac OS.
 
     o	image() was finding incorrect breakpoints from
 	irregularly-spaced midpoints. (PR#1160)
