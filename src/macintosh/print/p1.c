@@ -33,6 +33,8 @@
  *	C port by John C. Daub
  */
 
+#include <RCarbon.h>
+
 #include <Devices.h>
 #include <Dialogs.h>
 #include <Fonts.h>

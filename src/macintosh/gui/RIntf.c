@@ -41,6 +41,9 @@
    functions, which have then been placed here.
 */
 
+
+#include <RCarbon.h>
+
 #ifndef	__WEDEMOAPP__
 #include "RIntf.h"
 #endif

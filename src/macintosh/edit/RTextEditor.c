@@ -37,6 +37,8 @@
  *	C port by John C. Daub
  */
 
+#include <RCarbon.h>
+
 #include "RIntf.h"
 
 #ifdef HAVE_CONFIG_H

@@ -38,6 +38,10 @@
  *			All rights reserved.
  */
 
+ 
+#include <RCarbon.h>
+
+
 #ifndef __SMARTSCROLL__
 #include "SmartScroll.h"
 #endif

@@ -56,6 +56,10 @@
 
 
 /*            INCLUDE HEADER FILE           */
+
+
+#include <RCarbon.h>
+
 #ifndef __ALIASES__
 #include <Aliases.h>
 #endif
@@ -763,13 +767,12 @@ OSErr SourceFile(FSSpec  	*myfss)
     char 		cmd[FILENAME_MAX+25];
     SInt16		pathLen;
     Handle		pathName=NULL;
-    FInfo		fileInfo;
 
     if(myfss == NULL)
      return(-1);
      
-    err = FSpGetFInfo(myfss, &fileInfo);
-    if (err != noErr) return err;
+    cmd[0] = '\0';
+     
     FSpGetFullPath(myfss, &pathLen, &pathName);
     HLock((Handle)pathName);
     strncpy(sourcefile, *pathName, pathLen);
@@ -779,7 +782,8 @@ OSErr SourceFile(FSSpec  	*myfss)
     sprintf(cmd,"source(\"%s\")",sourcefile);
 
     consolecmd(cmd);
-
+    if(pathName)
+     DisposeHandle(pathName);
 
 }
 
