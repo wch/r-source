@@ -22,7 +22,7 @@
 use Getopt::Long;
 use R::Utils;
 
-my $revision = ' $Revision: 1.20 $ ';
+my $revision = ' $Revision: 1.21 $ ';
 my $version;
 my $name;
 
@@ -168,6 +168,8 @@ sub doS3 {
       if ($word[1] =~ /REFERENCE/) {
 	&section(0, "\\references\{");
 	$inReferences = 1;
+      } elsif ($word[1] =~ /AUTHOR/) {
+	&section(0, "\\author\{");
       } elsif ($word[1] =~ /NOTE/) {
 	&section(0, "\\note\{");
       } elsif ($word[1] =~ /SOURCE/) {
@@ -175,7 +177,9 @@ sub doS3 {
 	$inReferences = 1;
       } elsif ($word[1] =~ /SUMMARY/) {
 	&section(0, "\\description\{");
-      } elsif ($word[1] =~ /Warning/) {
+      } elsif ($word[1] =~ /WARNINGS/) {
+	&section(0, "\\section{Warnings}\{");
+      } elsif ($word[1] =~ /WARNING/) {
 	&section(0, "\\section{Warning}\{");
       } elsif (join(" ", @word[1..2]) =~ /DATA DESCRIPTION/) {
 	&section(0, "\\usage\{\ndata($fun)");
@@ -186,7 +190,13 @@ sub doS3 {
 	&section(0, "\\section\{$tmp\}\{");
       }
     }
-    if (/^\.sp/) { output("\n"); }
+    if (/^\.sp/) {
+      if($word[1] == 0) {
+	output("\\cr")
+      } else {
+	output("\n")
+      }
+    }
     if (/^\.TL/) {
       print("\\name\{$fun\}\n");
       print("\\alias\{", join("\}\n\\alias\{", @aliases), "\}\n");
