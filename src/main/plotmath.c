@@ -2905,7 +2905,15 @@ double GEExpressionWidth(SEXP expr,
     SetFont(PlainFont);
     bbox = RenderElement(expr, 0);
     width  = bboxWidth(bbox);
-    return toDeviceWidth(width, GE_INCHES, dd);
+    /* 
+     * NOTE that we do fabs() here in case the device
+     * runs right-to-left.
+     * This is so that these calculations match those
+     * for string widths and heights, where the width
+     * and height of text is positive no matter how
+     * the device drawing is oriented.
+     */
+    return fabs(toDeviceWidth(width, GE_INCHES, dd));
 }
 
 double GEExpressionHeight(SEXP expr, 
@@ -2923,7 +2931,14 @@ double GEExpressionHeight(SEXP expr,
     SetFont(PlainFont);
     bbox = RenderElement(expr, 0);
     height = bboxHeight(bbox) + bboxDepth(bbox);
-    return toDeviceHeight(height, GE_INCHES, dd);
+    /* NOTE that we do fabs() here in case the device
+     * draws top-to-bottom (like an X11 window).
+     * This is so that these calculations match those
+     * for string widths and heights, where the width
+     * and height of text is positive no matter how
+     * the device drawing is oriented.
+     */
+    return fabs(toDeviceHeight(height, GE_INCHES, dd));
 }
 
 void GEMathText(double x, double y, SEXP expr,
