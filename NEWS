@@ -685,8 +685,9 @@ BUG FIXES
 	vectors.
 
     o	spec.pgram(x, ..., pad, fast, ...) computed the periodogram with
-	a bias (downward) whenever 'pad > 0' (non-default) or 'fast =
-	TRUE' (default) and nextn(n) > n where n = length(x).
+	a bias (downward) whenever 'pad > 0' (non-default) or 'fast = TRUE'
+	(default) and nextn(n) > n where n = length(x); similarly for
+	'df' (approximate degrees of freedom for chisq).
 
     o	dgamma(0, a) now gives Inf for a < 1 (instead of NaN), and
 	so does dchisq(0, 2*a, ncp).

@@ -123,18 +123,18 @@ spec.pgram <-
         }
     }
     if(!is.null(kernel)) {
-        for (i in 1:ncol(x)) for (j in 1:ncol(x))
-                pgram[, i, j] <- kernapply(pgram[, i, j], kernel,
-                                           circular = TRUE)
-        df <- df.kernel(kernel)
-        bandwidth <- bandwidth.kernel(kernel)
+	for (i in 1:ncol(x)) for (j in 1:ncol(x))
+	    pgram[, i, j] <- kernapply(pgram[, i, j], kernel, circular = TRUE)
+	df <- df.kernel(kernel)
+	bandwidth <- bandwidth.kernel(kernel)
     } else {
-        df <- 2
-        bandwidth <- sqrt(1/12)
+	df <- 2
+	bandwidth <- sqrt(1/12)
     }
     df <- df/(u4/u2^2)
+    df <- df  * (N0 / N) ## << since R 1.9.0
     bandwidth <- bandwidth * xfreq/N
-    pgram <- pgram[1+(1:Nspec),,, drop=FALSE]
+    pgram <- pgram[2:(Nspec+1),,, drop=FALSE]
     spec <- matrix(NA, nrow = Nspec, ncol = nser)
     for (i in 1:nser) spec[, i] <- Re(pgram[1:Nspec, i, i])
     if (nser == 1) {
