@@ -35,6 +35,16 @@ boxplot.stats(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
   order, unlike S, and that \code{$n} and \code{$out} include any
   \code{+- Inf} values.
 }
+\details{
+  The two ``hinge''s are versions of the first first and third quartile,
+  i.e. close to \code{\link{quantile}(x, c(1,3)/4)}.  The hinges equal
+  the quartiles for odd \eqn{n} (where \code{n <- length(x)}) and
+  differ for even \eqn{n}. Where the quartiles only equal observations
+  for \code{n \%\% 4 == 1} (\eqn{n\equiv 1 (\mod 4)}{n = 1 (mod 4)}),
+  the hinges do so \emph{additionally} for
+  \code{n \%\% 4 == 2} (\eqn{n\equiv 2 (\mod 4)}{n = 2 (mod 4)}),
+  and are in the middle of two observations otherwise.
+}
 \seealso{
   \code{\link{fivenum}}, \code{\link{boxplot}}, \code{\link{bxp}}.
 }
@@ -50,5 +60,24 @@ str(boxplot.stats(x, coef = 0))
 str(boxplot.stats(c(x, NA))) # slight change : n + 1
 str(r <- boxplot.stats(c(x, -1:1/0)))
 stopifnot(r$out == c(1000, -Inf, Inf))
+
+%% extended example (for the NG of Rdoc):
+\testonly{
+ ## Difference between quartiles and hinges :
+ nn <- 1:17 ;  n4 <- nn \%\% 4
+ hin <- sapply(sapply(nn, seq), function(x) boxplot.stats(x)$stats[c(2,4)])
+ q13 <- sapply(sapply(nn, seq), quantile, probs = c(1,3)/4, names = FALSE)
+ m <- t(rbind(q13,hin))[, c(1,3,2,4)]
+ dimnames(m) <- list(paste(nn), c("q1","lH", "q3","uH"))
+ stopifnot(m[n4==1, 1:2] == (nn[n4==1] + 3)/4,# quart. = hinge
+           m[n4==1, 3:4] == (3*nn[n4==1]+1)/4,
+           m[,"lH"] == ( (nn+3) \%/\% 2) / 2,
+           m[,"uH"] == ((3*nn+2)\%/\% 2) / 2)
+ cm <- noquote(format(m))
+ cm[m[,2] == m[,1], 2] <- " = "
+ cm[m[,4] == m[,3], 4] <- " = "
+ cm
+}
+
 }
 \keyword{dplot}
