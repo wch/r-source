@@ -33,11 +33,7 @@ Date: Wed, 10 Mar 1999 17:21:16 +0100
 
 Directory:  Add-ons
 
-* PR# 137 *
-Subject: funfits
-From: "Alvaro A. Novo" <novo@uiuc.edu>
-Date: Tue, 9 Mar 1999 22:24:54 -0600
---Not our problem. Dubious whether a bug at all.
+none
 
 Directory:  Analyses
 
@@ -55,11 +51,6 @@ none
 
 Directory:  Graphics
 
-* PR# 61 *
-Subject: points(...,  cex = ..)  is pretty wrong...
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 2 Nov 1998 19:15:06 +0100
---Symbols getting decentered when too large cex for X. Still there 22feb99  
 * PR# 69 *
 Subject: Some graphics bugs
 From: Martyn Plummer <plummer@iarc.fr>
@@ -72,11 +63,6 @@ Subject: graphics bug: type="l"
 From: Matthew Wiener <mcw@ln.nimh.nih.gov>
 Date: Tue, 16 Feb 1999 15:30:25 -0500 (EST)
 --X server problem drawing > 64K lines at once. Workaround?
-* PR# 123 *
-Subject: Text in plot
-From: Ennapadam Venkatraman <venkat@biosta.mskcc.org>
-Date: Thu, 18 Feb 1999 13:05:37 -0500
---Multiline text not working
 * PR# 130 *
 Subject: lty=0 -- shouldn't it give an invisible line?
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
@@ -119,10 +105,25 @@ Subject: axis ignores srt/crt
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Mon, 16 Aug 1999 15:51:49 -0700 (PDT)
 --`its's not a bug it is an imcomptibility'
+* PR# 258 *
+Subject: Greek letters in outer margins.
+From: "BXC (Bendix Carstensen)" <BXC@NOVO.dk>
+Date: Thu, 26 Aug 1999 12:09:17 +0200
+--Uses *current* plot margins. 
+--
+--remove paste() from repro. instr.
 * PR# 267 *
 Subject: matplot(... panel.first=..) fails  <==> dealing with "..."
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 6 Sep 1999 11:04:03 +0200
+* PR# 281 *
+Subject: mtext(. col = ...) stopped working in 0.65.0
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 17 Sep 1999 15:10:40 +0200
+* PR# 287 *
+Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 27 Sep 1999 11:12:08 +0200
 
 Directory:  In-Out
 
@@ -135,16 +136,21 @@ Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 --Documentation and ``merge'' of format() and formatC() would be desired - MM
-* PR# 207 *
-Subject: Lines longer than ~1000 chars truncated at parsing
-From: msa@biostat.mgh.harvard.edu
-Date: Mon, 7 Jun 1999 22:27:10 +0200 (MET DST)
---Fixed buffer used during input.
---Not fixable without major changes to readline lib.
+* PR# 248 *
+Subject: scan() + error interferes with count.fields() in some cases
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 13 Aug 1999 17:44:48 +0200
 
 Directory:  Installation
 
-none
+* PR# 288 *
+Subject: configure bug with IRIX 6.5 (Makedep)
+From: caves@yorvic.york.ac.uk
+Date: Tue, 28 Sep 1999 10:30:54 +0200 (MET DST)
+* PR# 290 *
+Subject: Error compiling R on RS6000
+From: pgutwin@us.ibm.com
+Date: Thu, 30 Sep 1999 21:18:49 +0200 (MET DST)
 
 Directory:  Language
 
@@ -169,11 +175,16 @@ Subject: Re: cbind is not generic as claimed, omits labels where S has them
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 6 Aug 1999 06:52:35 +0100 (BST)
 --See PR#239
+* PR# 257 *
+Subject:  dimnames names lost when subscripting 
+From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
+Date: Wed, 25 Aug 1999 12:45:28 +0200
 * PR# 263 *
 Subject: Problems sourcing functions with R65.0
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
---There is a 64K limit on functions wirh keep.source set. Try modular programming!
+--There is a 128K limit on functions wirh keep.source set. Try modular
+--programming!
 
 Directory:  Low-level
 
@@ -213,11 +224,6 @@ Subject: definition of R_problem_buf in S.h
 From: vogels@ieee.org
 Date: Mon, 14 Jun 1999 17:56:04 +0200 (MET DST)
 --Same as #185
-* PR# 235 *
-Subject:  round(numeric(0)) 
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 29 Jul 1999 15:20:21 +0100 (BST)
---Some followup of this on R-devel not sent here.
 
 Directory:  Misc
 
@@ -227,24 +233,10 @@ From: Rashid Nassar <rnassar@duke.edu>
 Date: Sat, 9 Jan 1999 14:50:58 -0500 (EST)
 --Remaining issue is whether we can do something more friendly than dumping 
 --users into vi?
-* PR# 259 *
-Subject: R without X11?
-From: "Jack N." <jnf@pcisys.net>
-Date: Sat, 28 Aug 1999 09:22:57 -0600
 
 Directory:  Models
 
-* PR# 121 *
-Subject:  model.frame mangles time series 
-From: Peter Dalgaard BSA <pd@biostat.ku.dk>
-Date: Thu, 18 Feb 1999 15:47:24 +0100
---Subset in C code + attributes = mess
---Switch to interpreted ("[")
-* PR# 279 *
-Subject: plot ( <aov.obj> ) failed -- easy fix
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Wed, 15 Sep 1999 18:42:56 +0200
---Fixed for 0.65.1
+none
 
 Directory:  Startup
 
@@ -316,67 +308,4 @@ Date: Wed, 8 Sep 1999 17:56:12 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 248 *
-Subject: scan() + error interferes with count.fields() in some cases
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 13 Aug 1999 17:44:48 +0200
-* PR# 250 *
-From: Peter Malewski <peter@tu-bs.de>
-Date: Tue, 17 Aug 1999 12:21:38 +0200 (CEST)
-* PR# 251 *
-From: Peter Malewski <peter@tu-bs.de>
-Date: Tue, 17 Aug 1999 12:21:45 +0200 (CEST)
-* PR# 253 *
-Subject: seg.fault for some illegal .Random.seed (new since 0.64)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 20 Aug 1999 14:17:31 +0200
-* PR# 255 *
-Subject: broken link in R FAQ page?
-From: Tian-Xiong Lu <tian@chico.ma.adfa.edu.au>
-Date: Tue, 24 Aug 1999 13:41:21 +1000 (EST)
-* PR# 257 *
-Subject:  dimnames names lost when subscripting 
-From: Andreas Weingessel <weingessel@ci.tuwien.ac.at>
-Date: Wed, 25 Aug 1999 12:45:28 +0200
-* PR# 258 *
-Subject: Greek letters in outer margins.
-From: "BXC (Bendix Carstensen)" <BXC@NOVO.dk>
-Date: Thu, 26 Aug 1999 12:09:17 +0200
-* PR# 262 *
-Subject: Problems compiling R65.0
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 1 Sep 1999 11:52:29 +0200 (MET DST)
-* PR# 264 *
-Subject: R 0.65.x bug :  attach()/eval() {was "lib.source() within library()"}
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Thu, 2 Sep 1999 12:23:43 +0200
-* PR# 266 *
-Subject: Re: [R] data frame component replacement: feature or bug?
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 06 Sep 1999 00:03:29 +0200
-* PR# 277 *
-Subject: Re: chisqsim broken on alpha - solved + next bug in fft found
-From: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-Date: Wed, 15 Sep 1999 15:33:09 +0200 (MET DST)
---problem 1 is follow up to PR#276 - solved
---problem 2 (crash in fft) remains open
-* PR# 281 *
-Subject: mtext(. col = ...) stopped working in 0.65.0
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 17 Sep 1999 15:10:40 +0200
-* PR# 283 *
-Subject: hsv strangeness
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 18 Sep 1999 21:07:50 +0200
-* PR# 287 *
-Subject: text( col=, cex=, font=) : doesn't allow more than length-1 arg
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 27 Sep 1999 11:12:08 +0200
-* PR# 288 *
-Subject: configure bug with IRIX 6.5 (Makedep)
-From: caves@yorvic.york.ac.uk
-Date: Tue, 28 Sep 1999 10:30:54 +0200 (MET DST)
-* PR# 289 *
-Subject: Collating sequences are used inconsistently.
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 28 Sep 1999 15:43:45 +0100 (BST)
+none
