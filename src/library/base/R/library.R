@@ -3,7 +3,7 @@
 ##	  ~~~~~~~~~
 
 library <- function (name, help, lib.loc = .lib.loc, character.only = FALSE,
-		     logical.return = FALSE, warn.conflicts = TRUE)
+		     logical.return = FALSE, warn.conflicts = name != "MASS")
 {
     fsep <- .Platform$file.sep
     if (!missing(name)) {
