@@ -177,8 +177,9 @@ function(formula, data = NULL, subset=NULL, na.action = na.fail,
 	rownames <- attr(data, "row.names")
         varnames <- as.character(attr(formula, "variables")[-1])
 	variables <- eval(attr(formula, "variables"), data)
-	print(extranames <- as.character(substitute(list(...))[-1]))
-        print(extras <- list(...))
+	extranames <- as.character(substitute(list(...))[-1])
+        extras <- substitute(list(...))
+	extras <- eval(extras, data)
         subset <- eval(substitute(subset), data)
 	data <- .Internal(model.frame(formula, rownames, variables, varnames,
 		extras, extranames, subset, na.action))

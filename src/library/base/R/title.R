@@ -1,4 +1,4 @@
-title <- function(main=NULL, sub=NULL, xlab=NULL, ylab=NULL, ...)
+title <- function(main=NULL, sub=NULL, xlab=NULL, ylab=NULL, ...) {
 	.Internal(title(
 		as.char.or.expr(main),
 		as.char.or.expr(sub),
@@ -6,3 +6,4 @@ title <- function(main=NULL, sub=NULL, xlab=NULL, ylab=NULL, ...)
 		as.char.or.expr(ylab),
 		...
 	))
+}
