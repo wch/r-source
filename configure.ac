@@ -110,9 +110,8 @@ fi
 
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
-## <FIXME>
-## GCC 3.1 seems to be very unhappy about '/usr/local/include' to the
-## header search path seems ... 
+## We do it here because AC_ARG_WITH(gnome) may add to CPPFLAGS and
+## LDFLAGS.
 if test -f "/sw/etc/fink.conf"; then
   : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
@@ -120,7 +119,6 @@ else
   : ${CPPFLAGS="-I/usr/local/include"}
   : ${LDFLAGS="-L/usr/local/lib"}
 fi
-## </FIXME>
 
 ### ** Handle arguments to configure.
 
@@ -358,6 +356,7 @@ AC_PROG_CC
 AC_PROG_CC_STDC
 AC_PROG_GCC_TRADITIONAL
 AC_PROG_CPP
+R_PROG_CPP_CPPFLAGS
 R_PROG_F77_OR_F2C
 AC_PROG_CXX
 AC_PROG_CXXCPP
@@ -822,7 +821,7 @@ case "${host_os}" in
     fpicflags=
     ;;
   netbsd*)
-    if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
+    if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
       main_ldflags="-export-dynamic"
       shlib_ldflags="-shared"
     else
