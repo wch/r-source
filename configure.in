@@ -78,6 +78,14 @@ AC_ARG_ENABLE(maintainer-mode,
   use_maintainer_mode=${enableval},
   use_maintainer_mode=no)
 
+## Enable testing the write barrier.
+AC_ARG_ENABLE(write-barrier,
+  [  --enable-write-barrier  enable testing the write barrier],
+  [ if test "${enableval}" = yes; then
+      AC_DEFINE(TESTING_WRITE_BARRIER, 1)
+    fi],
+  [])
+
 ## Allow the user to force us to use f2c.
 AC_ARG_WITH(f2c,
   [  --with-f2c              use f2c even if FORTRAN compiler is available],
