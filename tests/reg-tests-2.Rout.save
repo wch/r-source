@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-03-16)
+Version 1.5.0 Under development (unstable) (2002-03-19)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -846,4 +846,12 @@ Eye:Sex   3    23.08 201.83
   x y z
 1 1 A 6
 > ## 1.4.1 got confused by inconsistencies in as.character
+> 
+> ## PR#1394 (levels<-.factor)
+> f <- factor(c("a","b"))
+> levels(f) <- list(C="C", A="a", B="b")
+> f
+[1] A B
+Levels:  C A B 
+> ## was  [1] C A; Levels:  C A  in 1.4.1
 > 

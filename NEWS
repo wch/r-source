@@ -412,6 +412,11 @@ BUG FIXES
     o	merge() could be confused by inconsistent use of as.character()
 	giving leading spaces.
 
+    o	levels<-.factor() was using correctly list values longer than
+	the number of levels (PR#1394), and incorrectly documented
+	that a character value could not be longer than the existing 
+	levels.
+
 
 
 	**************************************************

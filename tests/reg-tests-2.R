@@ -387,3 +387,9 @@ runif(4)
 d.df <- data.frame(x = 1:3, y = c("A","D","E"), z = c(6,9,10))
 merge(d.df[1,], d.df)
 ## 1.4.1 got confused by inconsistencies in as.character
+
+## PR#1394 (levels<-.factor)
+f <- factor(c("a","b"))
+levels(f) <- list(C="C", A="a", B="b")
+f
+## was  [1] C A; Levels:  C A  in 1.4.1
