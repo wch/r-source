@@ -152,7 +152,26 @@ Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 
 Directory:  Installation
 
-none
+* PR# 416 *
+Subject: DEC cc doesn't like c++ comments
+From: albrecht.gbehardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 10:56:55 +0100 (MET)
+* PR# 417 *
+Subject: Re: [R] Alpha Linux compile failure with 0.99
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 8 Feb 2000 10:03:44 +0000 (GMT)
+* PR# 418 *
+Subject: Compilation problems on Digital Unix 4.0c with gcc
+From: PETER_HOPFGARTNER@memc.it
+Date: Tue, 8 Feb 2000 11:07:22 +0100
+* PR# 419 *
+Subject: configure doesn't accept f77 on alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 11:08:23 +0100 (MET)
+* PR# 420 *
+Subject: extra flags for cc and f77 on alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 11:21:36 +0100 (MET)
 
 Directory:  Language
 
@@ -293,26 +312,6 @@ Date: Mon, 7 Feb 2000 18:28:04 -0500
 Subject: fix() changes character to factor
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Tue, 8 Feb 2000 10:48:24 +0100
-* PR# 416 *
-Subject: DEC cc doesn't like c++ comments
-From: albrecht.gbehardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 10:56:55 +0100 (MET)
-* PR# 417 *
-Subject: Re: [R] Alpha Linux compile failure with 0.99
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 8 Feb 2000 10:03:44 +0000 (GMT)
-* PR# 418 *
-Subject: Compilation problems on Digital Unix 4.0c with gcc
-From: PETER_HOPFGARTNER@memc.it
-Date: Tue, 8 Feb 2000 11:07:22 +0100
-* PR# 419 *
-Subject: configure doesn't accept f77 on alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 11:08:23 +0100 (MET)
-* PR# 420 *
-Subject: extra flags for cc and f77 on alpha
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 8 Feb 2000 11:21:36 +0100 (MET)
 * PR# 421 *
 Subject: problem with va_list type (alpha)
 From: albrecht.gebhardt@uni-klu.ac.at
@@ -324,10 +323,6 @@ From: Martyn Plummer <plummer@iarc.fr>
 From: Tim Powers <timp@redhat.com>
 Date: Tue, 08 Feb 2000 11:07:58 +0100 (CET)
 Date: Mon, 7 Feb 2000 17:21:20 -0500
-* PR# 423 *
-Subject: installing online help
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 8 Feb 2000 12:29:29 +0100 (MET)
 * PR# 424 *
 Subject: strsplit
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
@@ -340,3 +335,15 @@ Date: Wed, 09 Feb 2000 18:46:07 +0100 (CET)
 Subject: gnome support fail on startup
 From: robert.king@mailbox.gu.edu.au
 Date: Thu, 10 Feb 2000 09:20:48 +0100 (MET)
+* PR# 429 *
+Subject: R hangs sometimes and crashes 
+From: kjetikj@astro.uio.no
+Date: Fri, 11 Feb 2000 11:54:56 +0100 (MET)
+* PR# 431 *
+Subject:  R CMD check [nlme|MASS] fails 
+From: Berwin Turlach <berwin@maths.uwa.edu.au>
+Date: Fri, 11 Feb 2000 19:58:01 +0800
+* PR# 433 *
+Subject: Something strange in "?assign"?
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Fri, 11 Feb 2000 12:22:12 +0000 (GMT)
