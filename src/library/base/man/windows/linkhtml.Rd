@@ -4,16 +4,16 @@
 \alias{make.search.html}
 \title{Update HTML documentation files}
 \usage{
-link.html.help(verbose=FALSE, lib.loc=.Library)
-make.packages.html(lib.loc=.libPaths())
-make.search.html(lib.loc=.Library)
+link.html.help(verbose = FALSE, lib.loc = .libPaths())
+make.packages.html(lib.loc = .libPaths())
+make.search.html(lib.loc = .libPaths())
 }
 \description{
   Functions to re-create the HTML documentation files to reflect all
   installed packages. \code{make.packages.html} creates
   the list of packages and \code{make.search.html} creates the
   database used by the Java search engine. \code{link.html.help} runs
-  both
+  both.
 }
 \arguments{
   \item{verbose}{logical. If true, print out a message. For use to
@@ -21,11 +21,9 @@ make.search.html(lib.loc=.Library)
   \item{lib.loc}{character vector. List of libraries to be included.}
 }
 \details{
-  Only packages in the system library \code{.Library} are included
-  in the search database by default, as cross-library links do not work
-  on this platform.
+  Cross-library links do not work on this platform.
 
-  This will give a warning if the files are not writeable.
+  The functions will give a warning if the files are not writeable.
 }
 \value{
   No value is returned. The file(s)

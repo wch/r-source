@@ -13,6 +13,9 @@ the `R_ENVIRON' environment variable) is now implemented on Windows.
 The format of packages.html has changed, with packages listed by
 library tree (as happens on Unix) when there is more than one tree.
 
+The Java-based search index now covers all packages in all current
+library trees.
+
 The output when building R or source packages is much quieter.
 
 Rcmd.exe and Rprof have been moved to the main distribution (although 

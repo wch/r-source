@@ -1,4 +1,4 @@
-link.html.help <- function(verbose=FALSE, lib.loc=.Library)
+link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 {
     if(!file.exists(file.path(R.home(), "doc", "html", "search")))
        return(invisible(NULL))
@@ -57,7 +57,7 @@ make.packages.html <- function(lib.loc=.libPaths())
     invisible(TRUE)
 }
 
-make.search.html <- function(lib.loc=.Library)
+make.search.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home(), "doc/html/search/index.txt")
     out <- file(f.tg, open = "w")
@@ -65,9 +65,28 @@ make.search.html <- function(lib.loc=.Library)
         warning("cannot update HTML search index")
         return()
     }
-    for (i in  .packages(all.available = TRUE, lib.loc = lib.loc)) {
-        cfile <- system.file("CONTENTS", package = i)
-        if(nchar(cfile)) writeLines(readLines(cfile), out)
+    for (lib in lib.loc) {
+        rh <- gsub("\\\\", "/", R.home())
+        drive <- substring(rh, 1, 2)
+        pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        ## use relative indexing for .Library
+        if(is.na(pmatch(rh, lib))) {
+            if(substring(lib, 2, 2) != ":")
+                lib <- paste(drive, lib, sep="")
+            lib <- paste("URL: file:///", lib, sep="")
+            sed.it <- TRUE
+        } else {
+            sed.it <- FALSE
+        }
+        for (i in pg) {
+            cfile <- system.file("CONTENTS", package = i)
+            if(nchar(cfile)) {
+                tmp <- if(sed.it)
+                    gsub("^URL: ../../../library", lib, readLines(cfile))
+                else readLines(cfile)
+                writeLines(tmp, out)
+            }
+        }
     }
     close(out)
 }
