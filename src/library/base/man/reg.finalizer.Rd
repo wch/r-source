@@ -26,6 +26,6 @@
 f <- function(e) print("cleaning....")
 g <- function(x){e<-environment(); reg.finalizer(e,f)}
 g() 
-gc() # trigger cleanup
+invisible(gc()) # trigger cleanup
 }
 \keyword{programming}
