@@ -113,7 +113,7 @@ BUG FIXES
     o	kmeans was failing on vector inputs (although not documented
 	to accept such).
 
-
+    o   fixes in predict.lm (John Maindonald)
 
 		CHANGES IN R VERSION 1.1.0
 
