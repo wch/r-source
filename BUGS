@@ -262,6 +262,11 @@ From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book
 Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
 Date: Mon, 1 Dec 2003 21:53:06 -0500
 ..model.frame() fails on character input: should it coerce to factor?
+* PR# 6750 *
+Subject: Incorrect handling of NA's in cor()
+From: msa@biostat.mgh.harvard.edu
+Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
+..matter of debate
 
 Directory:  Documentation
 
@@ -423,6 +428,20 @@ Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
 Subject: postscript image problem
 From: jonathan_lees@unc.edu
 Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
+* PR# 6776 *
+Subject: barplot() does not draw bars correctly in R 1.9.0
+From: "Philippe Grosjean" <phgrosjean@sciviews.org>
+Date: Fri, 16 Apr 2004 11:40:00 +0200
+* PR# 6777 *
+Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
+From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
+Date: Fri, 16 Apr 2004 15:44:52 +0200
+..part of 6776
+* PR# 6778 *
+Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
+From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
+Date: Fri, 16 Apr 2004 16:53:03 +0200
+..part of 6776
 
 Directory:  In-Out
 
@@ -831,24 +850,6 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6750 *
-Subject: Incorrect handling of NA's in cor()
-From: msa@biostat.mgh.harvard.edu
-Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
-* PR# 6776 *
-Subject: barplot() does not draw bars correctly in R 1.9.0
-From: "Philippe Grosjean" <phgrosjean@sciviews.org>
-Date: Fri, 16 Apr 2004 11:40:00 +0200
-* PR# 6777 *
-Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
-From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
-Date: Fri, 16 Apr 2004 15:44:52 +0200
-..part of 6776
-* PR# 6778 *
-Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
-From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
-Date: Fri, 16 Apr 2004 16:53:03 +0200
-..part of 6776
 * PR# 6797 *
 Subject: R.spec
 From: joachim.geiger@ipp.mpg.de
@@ -866,23 +867,4 @@ Date: Wed, 21 Apr 2004 17:49:03 -0400
 Subject: 'R CMD build' fails when there are spaces in the path
 From: ellis@stat.harvard.edu
 Date: Tue, 27 Apr 2004 16:18:44 +0200 (CEST)
-* PR# 6832 *
-Subject: boxplot graphical arguments
-From: Arni Magnusson <arnima@u.washington.edu>
-Date: Tue, 27 Apr 2004 19:42:00 -0700 (PDT)
-* PR# 6839 *
-Subject: model.tabels warning refers to wrong function
-From: cmoffet@nwrc.ars.usda.gov
-Date: Thu, 29 Apr 2004 16:48:31 +0200 (CEST)
-* PR# 6840 *
-Subject: Qctcip Med source
-From: "kristopher cavazos" <deliriand@christianitymail.com>
-Date: Fri, 30 Apr 2004 01:37:28 -1000
-* PR# 6841 *
-Subject: ELGORDO LOTTERY WINNING RESULT
-From: el_promotions <el_promotions@telstra.com>
-Date: Fri, 30 Apr 2004 22:51:47 +0300
-* PR# 6842 *
-Subject: ELGORDO LOTTERY WINNING RESULT
-From: el_promotions <el_promotions@telstra.com>
-Date: Fri, 30 Apr 2004 22:58:45 +0300
+..On Unix.
