@@ -1,15 +1,16 @@
-\name{update.model}
+\name{update.formula}
 \title{Model Updating}
 \usage{
-update.model(old, new)
+update.formula(old, new)
 }
-\alias{update.model}
+\alias{update}
+\alias{update.formula}
 \arguments{
 \item{old}{a model formula to be updated.}
 \item{new}{a formula giving a template which specifies how to update.}
 }
 \description{
-\code{update.model} is used to update model formulae.
+\code{update.formula} is used to update model formulae.
 This typically involves adding or dropping terms,
 but updates can be more general.
 
