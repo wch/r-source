@@ -45,8 +45,7 @@ hist.default <-
     if (!use.br && any(h <= 0))
         stop("not strictly increasing `breaks'.")
     if (is.null(freq)) {
-        freq <- !missing(probability) && !as.logical(probability) ||
-                equidist
+        freq <- if(!missing(probability)) !as.logical(probability) else equidist
     } else if(!missing(probability) && any(probability == freq))
         stop("`probability' is an alias for `!freq', however they differ.")
 

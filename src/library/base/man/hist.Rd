@@ -23,7 +23,7 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
     the \code{counts} component of the result; if \code{FALSE},
     \emph{relative} frequencies (``probabilities''), the \code{rel.freqs},
     are plotted.   Defaults to \code{TRUE} \emph{iff} \code{breaks} are
-    equidistant.}
+    equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
   \item{include.lowest}{logical; if \code{TRUE},
     an `x[i]' equal to the `breaks' value will be included in the first

@@ -225,6 +225,9 @@ BUG FIXES
 
     o   Using a pushback with more than two lines at a time could crash.
 
+    o   hist.default() was ignoring its `probability' argument for
+	equi-spaced breaks.
+
 
 
 	**************************************************
