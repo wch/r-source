@@ -47,27 +47,29 @@ dnl
 dnl R_PROG_PERL
 dnl
 AC_DEFUN(R_PROG_PERL,
-  [ AC_PATH_PROG(PERL, perl)
-    if test -n "${PERL}"; then
-      AC_CACHE_CHECK([whether perl version is at least 5],
-	r_cv_prog_perl_v5,
-        [ perl_version=`${PERL} -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
-	  if test ${perl_version} -ge 5; then
-	    r_cv_prog_perl_v5=yes
-	  else
-	    r_cv_prog_perl_v5=no
-	  fi
-	])
-    else
-      PERL=false
-    fi
-    if test "${r_cv_prog_perl_v5}" = yes; then
-      NO_PERL5=false
-    else
-      NO_PERL5=true
-    fi
-    AC_SUBST(NO_PERL5)
-  ])
+ [AC_PATH_PROG(PERL, perl)
+  if test -n "${PERL}"; then
+    AC_CACHE_CHECK([whether perl version is at least 5],
+      r_cv_prog_perl_v5,
+      [ perl_version=`${PERL} -v | \
+	  sed -n 's/^.*perl.*version \(.\).*/\1/p'`
+	if test ${perl_version} -ge 5; then
+	  r_cv_prog_perl_v5=yes
+	else
+	  r_cv_prog_perl_v5=no
+	fi
+      ])
+  else
+    PERL=false
+  fi
+  if test "${r_cv_prog_perl_v5}" = yes; then
+    NO_PERL5=false
+  else
+    AC_MSG_WARN([you cannot build the object documentation system])
+    NO_PERL5=true
+  fi
+  AC_SUBST(NO_PERL5)
+ ])
 dnl
 dnl R_PROG_TEXMF
 dnl
@@ -75,17 +77,34 @@ AC_DEFUN(R_PROG_TEXMF,
  [AC_REQUIRE([R_PROG_PERL])
   AC_PATH_PROG(DVIPS, [${DVIPS} dvips], false)
   AC_PATH_PROG(LATEX, [${LATEX} latex], false)
+  if test "{ac_cv_path_LATEX}" = false; then
+    AC_MSG_WARN([you cannot build DVI versions of the R manuals])
+  fi
   AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
   AC_PATH_PROG(PDFLATEX, [${PDFLATEX} pdflatex], false)
-  AC_PATH_PROG(MAKEINFO, [${MAKEINFO} makeinfo], false)
-  makeinfo_version=`${MAKEINFO} --version | grep "^makeinfo" | \
-    sed 's/[[^)]]*) \(.\).*/\1/'`	
-  if test -z "${makeinfo_version}"; then
-    MAKEINFO=false
-  elif test ${makeinfo_version} -lt 4; then
+  if test "{ac_cv_path_PDFLATEX}" = false; then
+    AC_MSG_WARN([you cannot build PDF versions of the R manuals])
+  fi
+  AC_PATH_PROG(MAKEINFO, [${MAKEINFO} makeinfo])
+  if test -n "${MAKEINFO}"; then
+    AC_CACHE_CHECK([whether makeinfo version is at least 4],
+      r_cv_prog_makeinfo_v4,
+      [ makeinfo_version=`${MAKEINFO} --version | grep "^makeinfo" | \
+          sed 's/[[^)]]*) \(.\).*/\1/'`
+	if test -z "${makeinfo_version}"; then
+	  r_cv_prog_makeinfo_v4=no
+	elif test ${makeinfo_version} -lt 4; then
+	  r_cv_prog_makeinfo_v4=no
+	else
+	  r_cv_prog_makeinfo_v4=yes
+	fi
+      ])
+  fi
+  if test "${r_cv_prog_makeinfo_v4}" != yes; then
+    AC_MSG_WARN([you cannot build info versions of the R manuals])
     MAKEINFO=false
   fi
-  if test -n "${PERL}"; then
+  if test "${PERL}" != false; then
     INSTALL_INFO="\$(top_builddir)/tools/install-info"
     AC_SUBST(INSTALL_INFO)
   else
