@@ -676,6 +676,8 @@ static SEXP assignCall(SEXP op, SEXP symbol, SEXP fun,
 static Rboolean asLogicalNoNA(SEXP s, SEXP call)
 {
     Rboolean cond = asLogical(s);
+    if (length(s) > 1)
+	warningcall(call, "the condition has length > 1 and only the first element will be used");
     if (cond == NA_LOGICAL) {
 	char *msg = isLogical(s) ?
 	    "missing value where logical needed" :
@@ -690,8 +692,6 @@ SEXP do_if(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP Cond = eval(CAR(args), rho);
 
-    if (length(Cond) > 1)
-	warningcall(call, "the condition has length > 1 and only the first element will be used");
     if (asLogicalNoNA(Cond, call))
 	return (eval(CAR(CDR(args)), rho));
     else if (length(args) > 2)
@@ -819,10 +819,7 @@ SEXP do_while(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT_WITH_INDEX(t, &tpi);
     begincontext(&cntxt, CTXT_LOOP, R_NilValue, rho, R_NilValue, R_NilValue);
     if (SETJMP(cntxt.cjmpbuf) != CTXT_BREAK) {
-	SEXP Cond = eval(CAR(args), rho);
-	if (length(Cond) > 1)
-	    warningcall(call, "the condition has length > 1 and only the first element will be used");
-	while (asLogicalNoNA(Cond, call)) {
+	while (asLogicalNoNA(eval(CAR(args), rho), call)) {
 	    DO_LOOP_DEBUG(call, op, args, rho, bgn);
 	    REPROTECT(t = eval(body, rho), tpi);
 	}
