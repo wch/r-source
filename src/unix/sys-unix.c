@@ -261,7 +261,7 @@ SEXP do_tempdir(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!tmp) tmp = getenv("TEMP");
     else tmp = "/tmp";
     PROTECT(ans = allocVector(STRSXP, 1));
-    SET_STRING_ELT(ans, 1, mkChar(tmp));
+    SET_STRING_ELT(ans, 0, mkChar(tmp));
     UNPROTECT(1);
     return (ans);
 }

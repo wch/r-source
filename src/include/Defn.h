@@ -454,6 +454,9 @@ extern Rboolean	R_Verbose	INI_as(FALSE);	/* Be verbose */
 extern FILE*	R_Consolefile	INI_as(NULL);	/* Console output file */
 extern FILE*	R_Outputfile	INI_as(NULL);	/* Output file */
 extern int	R_ErrorCon	INI_as(2);	/* Error connection */
+#ifdef Win32
+extern char*	R_TempDir	INI_as(NULL);	/* Name of per-session dir */
+#endif
 
 /* Objects Used In Parsing  */
 extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
@@ -538,6 +541,7 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 # define InitMemory		Rf_InitMemory
 # define InitNames		Rf_InitNames
 # define InitOptions		Rf_InitOptions
+# define InitTempDir		Rf_InitTempDir
 # define initStack		Rf_initStack
 # define internalTypeCheck	Rf_internalTypeCheck
 # define isValidName		Rf_isValidName
@@ -655,6 +659,7 @@ void InitMemory(void);
 void InitNames(void);
 void InitOptions(void);
 void Init_R_Variables(SEXP);
+void InitTempDir(void);
 void initStack(void);
 void internalTypeCheck(SEXP, SEXP, SEXPTYPE);
 int isValidName(char *);

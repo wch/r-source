@@ -131,10 +131,11 @@ NEW FEATURES
     o   pdf() now uses PDF not R code for clipping, which ensures that
 	partially visible text strings are (partially) shown.
 
-    o   Each R session on Unix uses a per-session temporary directory
-	which is removed at normal termination.  The directory is
-	given by the tempdir() function, and filenames returned by
-	tempfile() will be within that directory.
+    o	Each R session on Unix/Windows uses a per-session temporary
+	directory which is removed at normal termination.  The
+	directory name is given by the tempdir() function, and
+	filenames returned by tempfile() will be within that
+	directory.
 
     o   help.start() on Unix now uses the per-session temporary
 	directory and not ~/.R.  A side effect is that ~/.R is now never

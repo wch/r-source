@@ -652,7 +652,7 @@ FUNTAB R_FunTab[] =
 {"file.info",	do_fileinfo,	0,	11,	1,	PP_FUNCALL},
 {"file.access",	do_fileaccess,	0,	11,	2,	PP_FUNCALL},
 {"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
-#ifdef Unix
+#ifndef Macintosh
 {"tempdir",	do_tempdir,	0,	11,	0,	PP_FUNCALL},
 #endif
 {"R.home",	do_Rhome,	0,	11,	0,	PP_FUNCALL},

@@ -38,6 +38,8 @@
 #include "run.h"
 #include "Startup.h"
 #include <stdlib.h>		/* for exit */
+void CleanTempDir();		/* from extra.c */
+
 
 R_size_t R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;
@@ -396,6 +398,7 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     }
     R_RunExitFinalizers();
     CleanEd();
+    CleanTempDir();
     closeAllHlpFiles();
     KillAllDevices();
     AllDevicesKilled = TRUE;

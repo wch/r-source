@@ -103,7 +103,8 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
   is the directory to which packages will be downloaded. If it is
   \code{NULL} (the default) a temporary directory is used, and the user
   will be given the option of deleting the temporary files once the
-  packages are installed.
+  packages are installed.  (They will always be deleted at the end of
+  the \R session.)
 }
 \seealso{
   See \code{\link{download.file}} for how to handle proxies and
