@@ -37,7 +37,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black", lty, lwd, pch,
   \item{bty}{the type of box to be drawn around the legend.  The allowed
     values are \code{"o"} (the default) and \code{"n"}.}
   \item{bg}{the background color for the legend box.  (Note that this is
-    only used if \code{bty = "n"}.)}
+    only used if \code{bty != "n"}.)}
   \item{pt.bg}{the background color for the \code{\link{points}}.}
   \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.}
