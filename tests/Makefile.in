@@ -57,16 +57,19 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 Makedeps: Makefile
 	@(for f in $(test-src); do \
-	    if [ -f $(srcdir)/${f}out.save ]; then \
+	    if test -f $(srcdir)/$${f}out.save ; then \
 	      echo "$${f}out: $${f} \$$(srcdir)/$${f}out.save \$$(FORCE)"; \
 	    else \
 	      echo "$${f}out: $${f} \$$(FORCE)"; \
-	    fi \
+	    fi; \
+	    if test -f $(srcdir)/$${f}in; then \
+	      echo "$${f}: \$$(srcdir)/$${f}in stamp-R"; \
+	    fi; \
 	  done) >> Makefile
 	@touch $@
 FORCE:
 
-.Rin.R: stamp-R
+.Rin.R:
 	@echo "creating \`$@'"
 	@$(R) < $< > /dev/null
 
