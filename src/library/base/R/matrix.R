@@ -26,6 +26,7 @@ rownames <- function(x, do.NULL = TRUE, prefix = "row")
 "rownames<-" <- function(x, value) {
     dn <- dimnames(x)
     dimnames(x) <- list(value, if(!is.null(dn)) dn[[2]])
+    names(dimnames(x)) <- names(dn)
     x
 }
 colnames <- function(x, do.NULL = TRUE, prefix = "col")
@@ -40,6 +41,7 @@ colnames <- function(x, do.NULL = TRUE, prefix = "col")
 "colnames<-" <- function(x, value) {
     dn <- dimnames(x)
     dimnames(x) <- list(if(!is.null(dn)) dn[[1]], value)
+    names(dimnames(x)) <- names(dn)
     x
 }
 
