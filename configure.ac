@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2003 R Core Team
+### Copyright (C) 1998-2004 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -22,7 +22,7 @@
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
-AC_PREREQ(2.57)
+AC_PREREQ(2.59)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
