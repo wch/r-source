@@ -1,11 +1,11 @@
-medpolish <- function (x, eps=0.01, maxiter=10)
+medpolish <- function (x, eps=0.01, maxiter=10, trace.iter = TRUE)
 {
     z <- as.matrix(x)
     nr <- nrow(z)
     nc <- ncol(z)
     t <- 0
-    r <- rep(0, nr)
-    c <- rep(0, nc)
+    r <- numeric(nr)
+    c <- numeric(nc)
     oldsum <- 0
     for(iter in 1:maxiter) {
 	rdelta <- apply(z, 1, median)
@@ -21,12 +21,13 @@ medpolish <- function (x, eps=0.01, maxiter=10)
 	r <- r - delta
 	t <- t + delta
 	newsum <- sum(abs(z))
-	if(abs(1-oldsum/newsum)<eps) break;
+	converged <- newsum==0 || abs(1-oldsum/newsum) < eps
+        if(converged) break
 	oldsum <- newsum
-	cat(newsum,"\n")
-
+	if(trace.iter) cat(iter,":", newsum,"\n")
     }
-    cat(newsum,"\n")
+    if(converged) { if(trace.iter) cat("Final:", newsum,"\n")
+    } else warning(paste("medpolish() not converged in",maxiter,"iterations"))
     names(r) <- rownames(z)
     names(c) <- colnames(z)
     ans <- list(overall=t, row=r, col=c, residuals=z,
@@ -37,14 +38,14 @@ medpolish <- function (x, eps=0.01, maxiter=10)
 
 print.medpolish <- function(x) {
     cat("\nMedian Polish Results (Dataset: \"", x$name, "\")\n", sep="")
-    cat("\nOverall:", x$overall, "\n")
-    cat("\nRow Effects:\n")
+    cat("\nOverall:", x$overall, "\n\nRow Effects:\n")
     print(x$row)
     cat("\nColumn Effects:\n")
     print(x$col)
     cat("\nResiduals:\n")
     print(x$residuals)
     cat("\n")
+    invisible(x)
 }
 
 plot.medpolish <- function(x, main="Tukey Additivity Plot", ...) {
