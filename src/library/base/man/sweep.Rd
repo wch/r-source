@@ -10,8 +10,8 @@ sweep(x, MARGIN, STATS, FUN="-", \dots)
 }
 \arguments{
   \item{x}{an array.}
-  \item{MARGIN}{a giving the extents of \code{x} which correspond to
-    \code{STATS}.}
+  \item{MARGIN}{a vector of integers giving the extents of \code{x}
+    which correspond to \code{STATS}.}
   \item{STATS}{the summary statistic which is to be swept out.}
   \item{FUN}{the function to be used to carry out the sweep.  In the
     case of binary operators such as \code{"/"} etc., the function name
