@@ -1,11 +1,10 @@
-
-.First.lib <- function(lib, pkg) {
+.onLoad <- function(lib, pkg) {
   library.dynam( "grid", pkg, lib )
   .Call("L_initGrid", PACKAGE="grid")
   .grid.loaded <<- TRUE
 }
 
-.Last.lib <-function(libpath) {
+.onUnload <-function(libpath) {
   if (.grid.loaded) {
     # Kill all existing devices to avoid replay
     # of display list which tries to run grid code
@@ -15,4 +14,3 @@
     .Call("L_killGrid", PACKAGE="grid")
   }
 }
-

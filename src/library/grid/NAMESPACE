@@ -1,0 +1,84 @@
+useDynLib("grid")
+
+export("absolute.size", "convertNative", "current.viewport",
+       "dataViewport", "gpar", "grid.arrows", "grid.circle",
+       "grid.collection", "grid.convert", "grid.convertHeight",
+       "grid.convertWidth", "grid.convertX", "grid.convertY",
+       "grid.copy", "grid.display.list", "grid.draw", "grid.edit",
+       "grid.frame", "grid.get", "grid.grill", "grid.grob",
+       "grid.layout", "grid.line.to", "grid.lines", "grid.locator",
+       "grid.move.to", "grid.newpage", "grid.pack", "grid.place",
+       "grid.plot.and.legend", "grid.points", "grid.polygon",
+       "grid.pretty", "grid.rect", "grid.segments", "grid.set",
+       "grid.show.layout", "grid.show.viewport", "grid.text",
+       "grid.xaxis", "grid.yaxis", "height.details", "plotViewport",
+       "pop.viewport", "push.viewport", "unit", "unit.c", "unit.length",
+       "unit.pmax", "unit.pmin", "unit.rep", "viewport",
+       "width.details")
+
+## Documented as internal but in Paul's first attempt at a sensible
+## export list:
+export("draw.details", "editDetails", "grid.legend", "grid.multipanel",
+       "grid.panel", "grid.prop.list", "grid.strip", 
+       "height.post.details", "height.pre.details", "layoutRegion",
+       "viewport.layout", "viewport.transform", "width.post.details",
+       "width.pre.details")
+
+## <FIXME>
+## Manipulated via C code ...
+export("get.gpar", "grid.top.level.vp", "height", "height.post",
+       "height.pre", "width", "width.post", "width.pre")
+## </FIXME>
+
+## <FIXME>
+## In the grid.layout.Rd \example ...
+export("layout.torture")
+## </FIXME>
+
+
+S3method("[", "unit")
+S3method("[", "unit.arithmetic")
+S3method("[", "unit.list")
+S3method("Ops", "unit")
+S3method("Summary", "unit")
+S3method("as.character", "unit")
+S3method("as.character", "unit.arithmetic")
+S3method("as.character", "unit.list")
+S3method("print", "grob")
+S3method("print", "unit")
+S3method("print", "viewport")
+
+S3method("draw.details", "arrows")
+S3method("draw.details", "circle")
+S3method("draw.details", "collection")
+S3method("draw.details", "default")
+S3method("draw.details", "frame")
+S3method("draw.details", "glist")
+S3method("draw.details", "line.to")
+S3method("draw.details", "lines")
+S3method("draw.details", "move.to")
+S3method("draw.details", "points")
+S3method("draw.details", "polygon")
+S3method("draw.details", "rect")
+S3method("draw.details", "segments")
+S3method("draw.details", "text")
+S3method("draw.details", "viewport")
+S3method("draw.details", "xaxis")
+S3method("draw.details", "yaxis")
+S3method("editDetails", "default")
+S3method("editDetails", "xaxis")
+S3method("editDetails", "yaxis")
+S3method("height.details", "default")
+S3method("height.details", "frame")
+S3method("height.details", "rect")
+S3method("height.details", "text")
+S3method("height.details", "viewport")
+S3method("height.post.details", "default")
+S3method("height.pre.details", "default")
+S3method("width.details", "default")
+S3method("width.details", "frame")
+S3method("width.details", "rect")
+S3method("width.details", "text")
+S3method("width.details", "viewport")
+S3method("width.post.details", "default")
+S3method("width.pre.details", "default")
