@@ -194,6 +194,9 @@ BUG FIXES
 
     o   Assigning functions to list elements is not longer disallowed.
 
+    o   Unified usage statement to R CMD xxx for all commands
+
+
 
 	**************************************************
 	*						 *
