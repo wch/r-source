@@ -4,14 +4,14 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.5 1998/09/10 10:15:30 maechler Exp $
+    ## $Id: str.R,v 1.6 1998/09/29 08:39:21 maechler Exp $
     if(! is.data.frame(object)) {
-	warning("str.data.frame(.) called with non-data.frame. Trying to coerce it")
+	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
     }
 
-    ##- Show further classes // Assume that they do NOT have an own Method --
-    ##- not quite perfect ! (.Class = 'remaining classes', starting with current)
+    ## Show further classes // Assume that they do NOT have an own Method --
+    ## not quite perfect ! (.Class = 'remaining classes', starting with current)
     cl <- class(object); cl <- cl[cl != "data.frame"]  #- not THIS class
     if(0 < length(cl)) cat("Classes", cl, " and ")
 
@@ -19,9 +19,6 @@ str.data.frame <- function(object, ...)
 	length(object), "variables:\n")
 
     ## calling next method, usually  str.default:
-    ## still wrong(0.14):
-    ## fails for 0.16.1, lm.xy $ model.frame:
-    ##invisible(NextMethod("str", give.length=FALSE,...))
     if(!is.null(list(...)) && any("give.length" == names(list(...))))
 	invisible(NextMethod("str", ...))
     else invisible(NextMethod("str", give.length=FALSE,...))
@@ -38,14 +35,13 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Purpose: Display STRucture of any R - object (in a compact form).
     ## -------------------------------------------------------------------------
     ## Arguments: --- see HELP file --
-    ##	  max.level: Maximal level of nesting to be reported (0: as many as nec.)
+    ##	 max.level: Maximal level of nesting to be reported (0: as many as nec.)
     ##
     ## -------------------------------------------------------------------------
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## -------------------------------------------------------------------------
-    ## $Id: str.R,v 1.5 1998/09/10 10:15:30 maechler Exp $
-
+    ## $Id: str.R,v 1.6 1998/09/29 08:39:21 maechler Exp $
 
     oo <- options(digits = digits.d)
     ##was .Options $ digits <- digits.d # only in this function frame !
@@ -67,18 +63,20 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    deparse(object)  else { dp <- deparse(ao); dp[-length(dp)] },"\n")
     } else if (is.null(object))
 	cat(" NULL\n")
-    else if(is.list(object)) {
-	if(le == 0) { cat(" list()\n"); return(invisible()) }
+    else if((i.l <- is.list(object)) || is.pairlist(object)) {
+	if(le == 0) { cat(" ",if(!i.l)"pair","list()\n",sep="")
+		      return(invisible()) }
 	is.d.f <- is.data.frame(object)
 	if(is.d.f ||
-	   (has.class &&
-	    any(sapply(paste("str", cl, sep="."), #use sys.function(.) ..
-		       function(ob)exists(ob,mode="function", inherits = TRUE))))) {
+	   (has.class && any(sapply(paste("str", cl, sep="."),
+					#use sys.function(.) ..
+				    function(ob)exists(ob, mode = "function",
+						       inherits = TRUE))))) {
 	    ##---- str.default	is a 'NextMethod' : omit the 'List of ..' ----
 	    std.attr <- c(std.attr, "class", if(is.d.f) "row.names")
 	} else {
-	    cat("List of ", le, "\n", sep="")
-	    ##cat("List with ", le, " item", ifelse(le>1,"s",""), "\n",sep="")
+	    cat(if(i.l) "List" else "Dotted pair list",
+		" of ", le, "\n", sep="")
 	}
 	if (max.level==0 || nest.lev < max.level) {
 	    nam.ob <-
@@ -90,26 +88,28 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		cat(indent.str,"$ ", nam.ob[i], ":", sep="")
 		str(object[[i]], nest.lev = nest.lev + 1,
 		    indent.str = paste(indent.str,".."),
-		    max.level = max.level, vec.len = vec.len, digits.d = digits.d,
+		    max.level= max.level, vec.len= vec.len, digits.d= digits.d,
 		    give.attr = give.attr, give.length= give.length, wid=wid)
 	    }
 	}
     } else { #- not function, not list
 	if(is.vector(object)
 	   || (is.array(object) && is.atomic(object))
-	   || is.vector(object, mode='language')## R bug (<=0.50-a4) should be part
-	   || is.vector(object, mode='symbol')	## R bug (<=0.50-a4) should be part
+	   || is.vector(object, mode='language')
+	   || is.vector(object, mode='symbol')## R bug(<=0.50-a4) should be part
 	   ) { ##-- Splus: FALSE for 'named vectors'
 	    if(is.atomic(object)) {
 		##-- atomic:   numeric	complex	 character  logical
 		mod <- substr(mode(object), 1, 4)
-		if     (mod == "nume") mod <- if(is.integer(object))"int" else "num"
+		if     (mod == "nume")
+		    mod <- if(is.integer(object))"int" else "num"
 		else if(mod == "char") mod <- "chr"
 		else if(mod == "comp") mod <- "cplx" #- else: keep 'logi'
 		if(is.array(object)) {
 		    di <- dim(object)
-		    di <- paste(ifelse(di>1, "1:",""), di, ifelse(di>0,""," "), sep = "")
-		    le.str <- paste(c("[", paste(di[ - length(di)], ", ", sep = ""),
+		    di <- paste(ifelse(di>1, "1:",""), di,
+				ifelse(di>0, "" ," "), sep = "")
+		    le.str <- paste(c("[", paste(di[-length(di)], ", ", sep=""),
 				      di[length(di)], "]"), collapse = "")
 		    std.attr <- "dim" #- "names"
 		} else if(!is.null(names(object))) {
@@ -118,16 +118,17 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 		}
 		str1 <- if(le == 1) paste(NULL, mod)
 		else	   paste(" ", mod, if(le>0)" ", le.str, sep = "")
-	    } else {			      #-- not atomic, but vector: #
-		mod <- typeof(object)#-- was mode(..);	typeof(.) is more precise!
-		## mode: call expression argument graphics name comment.expression ...
+	    } else { ##-- not atomic, but vector: #
+		mod <- typeof(object)#-- typeof(.) is more precise than mode!
 		str1 <- switch(mod,
 			       call = " call",
 			       language = " language",
 			       symbol = " symbol",
-			       expression = " ", # "expression(..)" put by deparse(.)
+			       expression = " ",# "expression(..)" by deparse(.)
 			       name = " name",
-			       ##not in R:argument = "",  #-- .Argument(.) by deparse(.)
+			       ##not in R:argument = "",# .Argument(.) by deparse(.)
+			       ## in R (once):	comment.expression
+
 			       ## default :
 			       paste("		#>#>", mod, NULL)
 			       )
@@ -135,15 +136,17 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	} else if (inherits(object,"rts") || inherits(object,"cts")
 		   || inherits(object,"its")) {
 	    tsp.a <- tspar(object)
-	    t.cl <- cl[b.ts <- substring(cl,2,3) == "ts"] #- "rts"  "cts" or "its"
-	    ts.kind <- switch(t.cl, rts="Regular", cts="Calendar", its="Irregular")
+	    t.cl <- cl[b.ts <- substring(cl,2,3) == "ts"] # "rts" "cts" or "its"
+	    ts.kind <- switch(t.cl,
+			      rts="Regular", cts="Calendar", its="Irregular")
 	    ## from  print.summary.ts(.) :
 	    pars <- unlist(sapply(summary(object)$ pars, format,
 				  nsmall=0, digits=digits.d, justify = "none"))
 	    if(length(pars)>=4) pars <- pars[-3]
 	    pars <- paste(abbreviate(names(pars),min=2), pars,
 			  sep= "=", collapse=", ")
-	    str1 <- paste(ts.kind, " Time-Series ", le.str, " ", pars, ":", sep = "")
+	    str1 <- paste(ts.kind, " Time-Series ", le.str, " ", pars, ":",
+			  sep = "")
 	    vec.len <- switch(t.cl,rts=.8, cts=.6, its=.9) * vec.len
 	    class(object) <- if(any(!b.ts)) cl[!b.ts]
 	    std.attr <- c(std.attr, "tspar")
@@ -193,13 +196,13 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
 	    give.mode <- FALSE
 	    if (mod == "call" || mod == "language" || mod == "symbol"
 		|| is.environment(object)) {
-		##give.mode <- !is.vector(object) #-- then it has not yet been done
+		##give.mode <- !is.vector(object)#--then it hasn't yet been done
 		object <- deparse(object)
-		le <- length(object) # == 1 , always(?), depending on 'char.length??
+		le <- length(object) #== 1, always / depending on char.length ?
 		format.fun <- function(x)x
 		vec.len <- round(.5 * vec.len)
 	    } else if (mod == "expression") {
-		##give.mode <- !is.vector(object) #-- then it has not yet been done
+		##give.mode <- !is.vector(object)#--then it hasn't yet been done
 		format.fun <- function(x) deparse(as.expression(x))
 		vec.len <- round(.75 * vec.len)
 	    } else if (mod == "name"){
@@ -258,12 +261,12 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     if(give.attr) { #possible:	 || has.class && any(cl == 'terms')
 	nam <- names(a)
 	for (i in seq(len=length(a)))
-	    if (all(nam[i] != std.attr)) { #-- only show ``non-standard'' attributes:
-		cat(indent.str, paste('- attr(*, "',nam[i],'")=', sep=''), sep="")
+	    if (all(nam[i] != std.attr)) { #-- only ``non-standard'' attributes:
+		cat(indent.str, paste('- attr(*, "',nam[i],'")=',sep=''),sep="")
 		str(a[[i]],
-		    indent.str = paste(indent.str,".."), nest.lev = nest.lev + 1,
-		    max.level = max.level, vec.len = vec.len, digits.d = digits.d,
-		    give.attr = give.attr, give.length = give.length, wid = wid)
+		    indent.str = paste(indent.str,".."), nest.lev= nest.lev + 1,
+		    max.level= max.level, vec.len= vec.len, digits.d= digits.d,
+		    give.attr= give.attr, give.length = give.length, wid = wid)
 	    }
     }
     invisible()	 ## invisible(object)#-- is SLOOOOW on large objects
