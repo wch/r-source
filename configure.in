@@ -547,12 +547,14 @@ if test -n "${XMKMF}"; then
   echo > Imakefile
   ${XMKMF} > /dev/null
   cc=`${srcdir}/tools/GETMAKEVAL CC`
+  cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
     shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fpicflags=${cpicflags}
   fi
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
+  cxx=`echo ${cxx} | sed "s/ .*//"`
   if test "`which ${cxx}`" = "`which ${CXX}`"; then
     cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
   fi
