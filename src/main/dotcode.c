@@ -295,6 +295,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     DL_FUNC fun;
     SEXP retval, cargs[MAX_ARGS], pargs;
     int nargs;
+    char *vmax = vmaxget();
     op = CAR(args);
     if (!isString(op))
         errorcall(call,"function name must be a string\n");
@@ -960,6 +961,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "too many arguments, sorry\n");
     }
+    vmaxset(vmax);
     return retval;
 }
 

@@ -385,6 +385,10 @@ static char *XdrInString(FILE *fp)
     return buf;
 }
 
+#ifdef EXPERIMENTAL
+#include "saveload-x.c"
+#endif
+
 static void XdrSave(SEXP s, FILE *fp)
 {
     OutInit = XdrOutInit;
@@ -395,7 +399,11 @@ static void XdrSave(SEXP s, FILE *fp)
     OutSpace = Dummy;
     OutNewline = Dummy;
     OutTerm = XdrOutTerm;
+#ifdef EXPERIMENTAL
+    cky_DataSave(s, fp);
+#else
     DataSave(s, fp);
+#endif
 }
 
 static SEXP XdrLoad(FILE *fp)
@@ -407,7 +415,11 @@ static SEXP XdrLoad(FILE *fp)
     InComplex = XdrInComplex;
     InString = XdrInString;
     InTerm = XdrInTerm;
+#ifdef EXPERIMENTAL
+    return cky_DataLoad(fp);
+#else
     return DataLoad(fp);
+#endif
 }
 #endif
 
@@ -508,7 +520,6 @@ SEXP BinaryLoadOld(FILE *fp, int version)
     InTerm = Dummy;
     return DataLoad(fp);
 }
-
 
 /*   Magic Numbers for R Save File Types   */
 
