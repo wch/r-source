@@ -14,6 +14,8 @@ all.equal(target, current, \dots)
 
 \method{all.equal}{numeric}(target, current,
           tolerance= .Machine$double.eps ^ 0.5, scale=NULL, \dots)
+
+attr.all.equal(target, current, \dots)
 }
 \arguments{
   \item{target}{\R object.}
@@ -48,7 +50,8 @@ all.equal(target, current, \dots)
     (dividing) by \code{scale}.
 
     For complex arguments, the modulus \code{\link{Mod}} of the difference 
-    is used.
+    is used: \code{all.numeric.numeric} is called so arguments
+    \code{tolerance} and \code{scale} are available.
 
     \code{attr.all.equal} is used for comparing
     \code{\link{attributes}}, returning \code{NULL} or \code{character}.
