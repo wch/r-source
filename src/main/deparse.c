@@ -206,11 +206,12 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff)
     */
     LocalParseData localData =
 	    {0, 0, 0, 0, /*startline = */TRUE, 0,
-	     /*strvec = */R_NilValue,
+	     NULL,
 	     /*DeparseBuffer=*/{NULL, 0, BUFSIZE},
 	     DEFAULT_Cutoff};
     DeparseBuffer *buffer = &localData.buffer;
     localData.cutoff = cutoff;
+    localData.strvec = R_NilValue;
 
     PrintDefaults(R_NilValue);/* from global options() */
     savedigits = R_print.digits;

@@ -41,7 +41,7 @@ typedef struct {
  SEXP NAstrings;
  int quiet;
  int sepchar; /*  = 0 */
- int decchar; /* = '.' */;
+ int decchar; /* = '.' */
  char *quoteset;
  char *quotesave; /* = NULL */
  int comchar;
@@ -656,7 +656,8 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP ans, file, sep, what, stripwhite, dec, quotes, comstr;
     int i, c, nlines, nmax, nskip, flush, fill, blskip, multiline;
     char *p;
-    LocalData data = {R_NilValue, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    data.NAstrings = R_NilValue;
 
     checkArity(op, args);
 
@@ -775,7 +776,8 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nfields, nskip, i, c, inquote, quote = 0;
     int blocksize, nlines, blskip;
     char *p;
-    LocalData data = {R_NilValue, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    data.NAstrings = R_NilValue;
 
     checkArity(op, args);
 
@@ -937,7 +939,8 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     Rboolean islogical = TRUE, isinteger = TRUE, isreal = TRUE, 
 	iscomplex = TRUE, done = FALSE;
     char *endp, *tmp = NULL;
-    LocalData data = {R_NilValue, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    data.NAstrings = R_NilValue;
 
     checkArity(op,args);
 
@@ -1150,7 +1153,8 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     double first;
     char buffer[MAXELTSIZE], *bufp = buffer;
     SEXP ans;
-    LocalData data = {R_NilValue, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    data.NAstrings = R_NilValue;
 
     checkArity(op,args);
 
@@ -1196,8 +1200,9 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     int nlines, i, c, nread, nbuf, buf_size = BUF_SIZE;
     char *p, *buf;
     Rboolean empty, skip;
-    LocalData data = {R_NilValue, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
-    
+    LocalData data = {NULL, 0, 0, 0, NULL, NULL, NO_COMCHAR, 0, 0, FALSE, 0};
+    data.NAstrings = R_NilValue;
+
     checkArity(op, args);
 
     file = CAR(args);		   args = CDR(args);

@@ -1125,7 +1125,8 @@ static void NewDataSave (SEXP s, FILE *fp, OutputRoutines *m, SaveLoadData *d)
     SEXP sym_table, env_table, iterator;
     int sym_count, env_count;
     RCNTXT cntxt;
-    OutputCtxtData cinfo = {fp, m, d};
+    OutputCtxtData cinfo;
+    cinfo.fp = fp; cinfo.methods = m;  cinfo.data = d;
 
     PROTECT(sym_table = MakeHashTable());
     PROTECT(env_table = MakeHashTable());
@@ -1318,7 +1319,8 @@ static SEXP NewDataLoad (FILE *fp, InputRoutines *m, SaveLoadData *d)
     int sym_count, env_count, count;
     SEXP sym_table, env_table, obj;
     RCNTXT cntxt;
-    InputCtxtData cinfo = {fp, m, d};
+    InputCtxtData cinfo;
+    cinfo.fp = fp; cinfo.methods = m; cinfo.data = d;
 
     m->InInit(fp, d);
 
