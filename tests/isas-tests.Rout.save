@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (May 16, 2000)
+Version 1.1.0 Under development (unstable) (May 22, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -146,8 +146,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : invalid argument list
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
-[1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
@@ -427,8 +425,6 @@ Error in ts(x) : ts object must have one or more observations
 Error in as.array(x) : attempt to set an attribute on NULL
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : invalid argument list
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
-[1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
@@ -708,8 +704,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : illegal length 0 argument
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
-[1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
@@ -987,8 +981,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : invalid argument list
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
-[1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
@@ -1257,8 +1249,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : invalid argument list
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
-[1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
@@ -1527,8 +1517,6 @@ IS: [1] TRUE
 [1] TRUE
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
 Error in as.call(x) : invalid argument list
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
-[1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
 > f <- as.character.default( x );  all.equal(f, as.character.default( f ), tol=0)
@@ -1796,8 +1784,6 @@ IS: [1] TRUE
 > f <- as.array( x );  all.equal(f, as.array( f ), tol=0)
 [1] TRUE
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
-[1] TRUE
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
 [1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
@@ -2069,8 +2055,6 @@ Error in ts(x) : ts object must have one or more observations
 Error in dimnames<-.data.frame(*tmp*, value = list(n)) : 
 	invalid dimnames given for data frame
 > f <- as.call( x );  all.equal(f, as.call( f ), tol=0)
-[1] TRUE
-> f <- as.char.or.expr( x );  all.equal(f, as.char.or.expr( f ), tol=0)
 [1] TRUE
 > f <- as.character( x );  all.equal(f, as.character( f ), tol=0)
 [1] TRUE
