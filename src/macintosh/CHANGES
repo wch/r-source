@@ -17,4 +17,7 @@ rm160
 * implemented browseURL
 * implemented tempdir and tempfile according to Unix/Windows
   behaviour
+* Date arithmetic fails (PR#1819). This bug have been partially
+  fixed. Arithmetic is fine now but there is still a problem 
+  with the TZ (Time Zone) settings.
 
