@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-40 2004-08-05</h2>
+<h2>Version 1.9-41 2004-08-06</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1997,6 +1997,9 @@ graphical meta data and graphical models, and illustrates how
 hierarchical log-linear models may be implemented and combined with
 <strong>dynamicGraph</strong>. 
 <br><dt><strong>gafit</strong><dd>Genetic algorithm for curve fitting. 
+<br><dt><strong>gam</strong><dd>Functions for fitting and working with Generalized Additive Models, as
+described in chapter 7 of the White Book, and in &ldquo;Generalized Additive
+Models&rdquo; by T. Hastie and R. Tibshirani (1990). 
 <br><dt><strong>gap</strong><dd>Genetic analysis package for both population and family data. 
 <br><dt><strong>gbm</strong><dd>Generalized Boosted Regression Models: implements extensions to Freund
 and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
@@ -2997,9 +3000,8 @@ capable of running R.  So, simply using it and communicating problems is
 certainly of great value.
 
    <p>One place where functionality is still missing is the modeling software
-as described in &ldquo;Statistical Models in S&rdquo; (see <a href="#What-is-S_003f">What is S?</a>);
-Generalized Additive Models (see <a href="#Are-GAMs-implemented-in-R_003f">Are GAMs implemented in R?</a>) and
-some of the nonlinear modeling code are not there yet.
+as described in &ldquo;Statistical Models in S&rdquo; (see <a href="#What-is-S_003f">What is S?</a>); some
+of the nonlinear modeling code is not there yet.
 
    <p>The <a href="http://developer.R-project.org/">R Developer Page</a> acts as an
 intermediate repository for more or less finalized ideas and plans for
@@ -3734,12 +3736,15 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 
 <h3 class="section">7.17 Are GAMs implemented in R?</h3>
 
-<p>There is a <code>gam()</code> function for Generalized Additive Models in
-package <strong>mgcv</strong>, but it is not an exact clone of what is described
-in the White Book (no <code>lo()</code> for example).  Package <strong>gss</strong>
-can fit spline-based GAMs too.  And if you can accept regression splines
-you can use <code>glm()</code>.  For gaussian GAMs you can use <code>bruto()</code>
-from package <strong>mda</strong>.
+<p>Package <strong>gam</strong> from <acronym>CRAN</acronym> implements all the Generalized
+Additive Models (GAM) functionality as described in the GAM chapter of
+the White Book.  In particular, it implements backfitting with both
+local regression and smoothing splines, and is extendable.  There is a
+<code>gam()</code> function for GAMs in package <strong>mgcv</strong>, but it is not
+an exact clone of what is described in the White Book (no <code>lo()</code>
+for example).  Package <strong>gss</strong> can fit spline-based GAMs too.  And
+if you can accept regression splines you can use <code>glm()</code>.  For
+gaussian GAMs you can use <code>bruto()</code> from package <strong>mda</strong>.
 
 <div class="node">
 <p><hr>
