@@ -72,7 +72,7 @@ This will install to the following directories:
 
 	$prefix/bin		(some) executables
 	$prefix/man/man1	man pages
-	$prefix/share/R		all the rest (libraries, online help
+	$prefix/lib/R		all the rest (libraries, online help
 				system, ...)
 
 where prefix is determined during configuration (typically /usr/local)
@@ -80,8 +80,9 @@ and can be set by running configure with the option
 
 	./configure --prefix=/where/you/want/R/to/go
 
-The prefix of the installation directories can also be seen in the
-status message that is displayed at the end of configure.
+Then the R executable will be installed in /where/you/want/R/to/go/bin,
+and so on.  The prefix of the installation directories can also be seen
+in the status message that is displayed at the end of configure.
 
 You do not necessarily have to build R in the top-level source
 directory (say, TOP_SRCDIR).  To build in BUILDDIR, cd there and run 
@@ -110,7 +111,11 @@ found first; if none is found, R cannot be compiled.  The search
 mechanism can be changed using the `--with-g77', `--with-f77', and
 `--with-f2c' command line options to configure.  If your FORTRAN
 compiler is in a non-standard location, you should set the enviroment
-vaiable PATH accordingly before running configure.
+variable PATH accordingly before running configure.
+
+If your FORTRAN libraries are in slightly peculiar places, you should
+also look at LD_LIBRARY_PATH to make sure that all libraries are on this
+path.
 
 
 NEW PLATFORMS (Standards Hah!)
