@@ -25,7 +25,7 @@ print(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{summary.mlm}
 \alias{coefficients.lm}
 \alias{df.residual.lm}
-%in ./family.lm \alias{family.lm}
+\alias{family.lm}
 \alias{formula.lm}
 \alias{fitted.values.lm}
 \alias{residuals.lm}
