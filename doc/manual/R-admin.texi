@@ -2433,10 +2433,11 @@ than the @code{x11()} device.  The @code{gnome()} device used the
 @acronym{GNOME} canvas, and is not currently available.
 
 The sources for the @acronym{GNOME} console for @R{} are currently
-only available by
+available by
 @example
 svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
 @end example
+and they will constitute the package @pkg{gnomeGUI} on @acronym{CRAN}.
 
 You need to have built @R{} first with the @option{--enable-R-shlib}
 option, and installed @R{} to where you are going to use it from.
@@ -2468,7 +2469,10 @@ extension @samp{-devel}.  If you use a pre-packaged version of
 @acronym{GNOME} then you must have the developer versions of the above
 packages in order to compile the R-GNOME console.
 
-The console is a separate front-end program that is configured and
+It is possible to install the front-end in the same way as an @R{}
+package, via @code{R CMD INSTALL} or @code{install.packages}.
+
+The console is a separate front-end program that can be configured and
 built independently of @R{}.  Create a build directory, and from there
 run
 

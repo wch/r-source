@@ -435,6 +435,39 @@ do_install_source () {
   export R_PACKAGE_DIR
   export R_PACKAGE_NAME
 
+  Type=`get_dcf_field Type DESCRIPTION`
+  if test "$Type" = "Frontend" ; then
+    message "Installing *Frontend* package '${pkg_name}' ..."
+    if ${use_configure} && test -x ./configure ; then
+      eval ${configure_vars} ./configure ${configure_args}
+      if test ${?} -ne 0; then
+	error "configuration failed for package '${pkg_name}'"
+	do_exit_on_error
+      fi
+    fi
+    if test -f ./Makefile ; then
+	${MAKE}
+      if test ${?} -ne 0; then
+	error "make failed for package '${pkg_name}'"
+	do_exit_on_error
+      fi
+      if ${clean}; then
+	${MAKE} clean
+      fi
+      return
+    fi
+  fi
+  if test "$Type" = "Translation" ; then
+    message "Installing *Translation* package '${pkg_name}' ..."
+    if test -d "share"; then
+      cp -r ./share ${R_HOME}
+    fi
+    if test -d "library"; then
+      cp -r ./library ${R_HOME}
+    fi
+    return
+  fi
+
   if test "${pkg_name}" = "${R_PACKAGE_NAME}"; then
     message "Installing *source* package '${pkg_name}' ..."
   else
@@ -479,6 +512,7 @@ do_install_source () {
       do_exit_on_error
     fi
   fi
+
 
   for f in COPYING NAMESPACE; do
     if test -f "${f}"; then

@@ -283,6 +283,14 @@ foreach my $pkg (@ARGV) {
 	    $log->result("NO");
 	    exit(1);
 	}
+	if($description->{"Type"}) { # standard packages do not have this
+	    $log->checking("Package type");
+	    $log->result($description->{"Type"});
+	    if($description->{"Type"} ne "Package") {
+		$log->print("Only Type=Package packages can be checked.\n");
+		exit(0);
+	    }
+	}
 
 	if($description->{"Bundle"}) {
 	    $is_bundle = 1;
