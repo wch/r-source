@@ -2828,7 +2828,7 @@ double GStrWidth(char *str, int units, DevDesc *dd)
     return w;
 #else
     double w;
-    static *sbuf = NULL;
+    static char *sbuf = NULL;
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
@@ -2836,9 +2836,11 @@ double GStrWidth(char *str, int units, DevDesc *dd)
     }
     w = 0;
     if(str && *str) {
-        char *s, *sbuf, *sb;
+        char *s, *sb;
 	double wdash;
 	sbuf = (char*)malloc(strlen(str) + 1);
+        if (sbuf == NULL)
+            error("unable to allocate memory (in GStrWidth)\n");
 	sb = sbuf;
         for(s = str; ; s++) {
             if (*s == '\n' || *s == '\0') {
@@ -2852,6 +2854,10 @@ double GStrWidth(char *str, int units, DevDesc *dd)
 	}
 	if (units != DEVICE)
 	    w = GConvertXUnits(w, DEVICE, units, dd);
+    }
+    if (sbuf) {
+	free(sbuf);
+	sbuf = NULL;
     }
     return w;
 #endif
