@@ -47,7 +47,7 @@ mostlyclean:
 clean:
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -rf [a-z]*; \
-	done
+	fi
 distclean:
 	@rm -f Makefile
 maintainer-clean: distclean
