@@ -531,7 +531,8 @@ function(package, dir, lib.loc = NULL,
         Rd_db(dir = dir)
 
     db <- lapply(db,
-                 function(f) paste(Rd_pp(f), collapse = "\n"))
+                 function(f) paste(.Rd_iconv_if_necessary(Rd_pp(f)),
+                                   collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
     if(is_base) {
         ind <- db_names %in% c("base-defunct")
@@ -830,7 +831,7 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
-    db <- lapply(db, Rd_pp)
+    db <- lapply(db, function(f) .Rd_iconv_if_necessary(Rd_pp(f)))
 
     ## Need some heuristics now.  When does an Rd object document just
     ## one S4 class so that we can compare (at least) the slot names?
@@ -970,7 +971,7 @@ function(package, lib.loc = NULL)
 
     ## Build Rd data base.
     db <- Rd_db(package, lib.loc = dirname(dir))
-    db <- lapply(db, Rd_pp)
+    db <- lapply(db, function(f) .Rd_iconv_if_necessary(Rd_pp(f)))
 
     ## Need some heuristics now.  When does an Rd object document a
     ## data.frame (could add support for other classes later) variable
@@ -1134,7 +1135,7 @@ function(package, dir, lib.loc = NULL)
     else
         Rd_db(dir = dir)
 
-    db <- lapply(db, Rd_pp)
+    db <- lapply(db, function(f) .Rd_iconv_if_necessary(Rd_pp(f)))
     ## Do vectorized computations for metadata first.
     db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
     dbKeywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
@@ -1484,7 +1485,8 @@ function(package, dir, lib.loc = NULL)
         Rd_db(dir = dir)
 
     db <- lapply(db,
-                 function(f) paste(Rd_pp(f), collapse = "\n"))
+                 function(f) paste(.Rd_iconv_if_necessary(Rd_pp(f)),
+                                   collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
 
     db_usage_texts <-
@@ -2229,8 +2231,9 @@ function(package, dir, file, lib.loc = NULL)
         }
     }
     for(file in docs_files) {
-        txt <- paste(Rd_pp(.read_Rd_lines_quietly(file)),
-                     collapse = "\n")
+        txt <-
+            paste(.Rd_iconv_if_necessary(Rd_pp(.read_Rd_lines_quietly(file))), 
+                  collapse = "\n")
         txt <- .get_Rd_example_code(txt)
         exprs <- find_TnF_in_code(file, txt)
         if(length(exprs) > 0) {

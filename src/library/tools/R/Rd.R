@@ -406,6 +406,8 @@ function(file, text = NULL)
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
 
+    lines <- .Rd_iconv_if_necessary(lines)
+    
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
@@ -414,10 +416,11 @@ function(file, text = NULL)
         list(aliases = .get_Rd_metadata_from_Rd_lines(lines, "alias"),
              concepts = .get_Rd_metadata_from_Rd_lines(lines, "concept"),
              keywords = .get_Rd_metadata_from_Rd_lines(lines, "keyword"),
-             doc_type = .get_Rd_metadata_from_Rd_lines(lines, "docType"))
+             doc_type = .get_Rd_metadata_from_Rd_lines(lines, "docType"),
+             encoding = .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
     ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
-                    "(alias|concept|keyword|docType)",
+                    "(alias|concept|keyword|docType|encoding)",
                     "\\{[[:space:]]*([^}]*[^}[:space:]])[[:space:]]*\\}.*",
                     sep = ""),
               lines)
@@ -720,6 +723,21 @@ function(db)
         }
     }
     unlist(Rd_names)
+}
+
+### .Rd_iconv_if_necessary
+
+.Rd_iconv_if_necessary <-
+function(lines)
+{
+    ## Recode if necessary (and possible).
+    encoding <- .get_Rd_metadata_from_Rd_lines(lines, "encoding")
+    if(length(encoding) && (Sys.getlocale("LC_CTYPE") != "C")) {
+        encoding <- encoding[1]         # Just making sure ...
+        utils::iconv(lines, encoding, "")
+    }
+    else
+        lines
 }
 
 
