@@ -259,12 +259,12 @@ check out its help page.
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get @code{rwXxxxsp.zip} from the distribution
-(see Q1.1) and unpack it in @code{rwXxxx}. Then @code{cd src\gnuwin32}
-and read @code{README.packages}. You will need to collect and install
-several tools to use this. Once you have done so, installation is easy:
-just run @code{Rcmd INSTALL pkgname}. To check the package (run all the
-examples on its help pages and in its test suite, if any) use @code{Rcmd
-check pkgname}.
+(see Q1.1) and unpack it in @code{rwXxxx}.  Then read the
+@file{readme.packages}.  You will need to collect and install several
+tools to use this.  Once you have done so, installation is easy: just run
+@code{Rcmd INSTALL pkgname}. To check the package (run all the examples
+on its help pages and in its test suite, if any) use @code{Rcmd check
+pkgname}.
 
 @node I don't have permission to write to the rwXxxx/library directory, The packages I installed do not appear in the HTML help system, Can I install packages (libraries) in this version?, Packages
 @section I don't have permission to write to the @file{rwXxxx/library} directory.

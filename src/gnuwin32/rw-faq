@@ -200,11 +200,11 @@ directory, using `unzip' or similar, or using the installer
 
 If there is not a binary version or that is not up-to-date or you prefer
 compiling from source, get `rwXxxxsp.zip' from the distribution (see
-Q1.1) and unpack it in `rwXxxx'. Then `cd src\gnuwin32' and read
-`README.packages'. You will need to collect and install several tools
-to use this. Once you have done so, installation is easy: just run
-`Rcmd INSTALL pkgname'. To check the package (run all the examples on
-its help pages and in its test suite, if any) use `Rcmd check pkgname'.
+Q1.1) and unpack it in `rwXxxx'.  Then read the `readme.packages'.  You
+will need to collect and install several tools to use this.  Once you
+have done so, installation is easy: just run `Rcmd INSTALL pkgname'. To
+check the package (run all the examples on its help pages and in its
+test suite, if any) use `Rcmd check pkgname'.
 
 3.2 I don't have permission to write to the `rwXxxx/library' directory.
 =======================================================================
