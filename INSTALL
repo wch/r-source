@@ -130,9 +130,11 @@ MAKING THE MANUALS
 There is a set of manuals that can be built from the sources,
 
 	refman		Printed versions of all the help pages.
-	R-intro		``An Introduction to R''.
-	R-exts		``Writing R Extensions''.
 	R-FAQ		R FAQ (which is already built for you).
+	R-intro		``An Introduction to R''.
+	R-data		``R Data Import/Export''.
+	R-exts		``Writing R Extensions''.
+	R-lang		``The R Language Definition''.
 
 To make these, cd to the `doc/manual' directory and use
 
