@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-13
+Version 2.0.2004-12-14
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1671,6 +1671,11 @@ distributions of R.)
      Methods and Their Applications" by A. C. Davison and D. V. Hinkley,
      1997, Cambridge University Press.  _Recommended_.
 
+*bootstrap*
+     Software (bootstrap, cross-validation, jackknife), data and errata for
+     the book "An Introduction to the Bootstrap" by B. Efron and R.
+     Tibshirani, 1993, Chapman and Hall.
+
 *bqtl*
      QTL mapping toolkit for inbred crosses and recombinant inbred lines.
      Includes maximum likelihood and Bayesian tools.
@@ -2957,9 +2962,6 @@ See CRAN `src/contrib/PACKAGES' for more information.
 packages still "under development" or depending on features only present in
 the current development versions of R.  Volunteers are invited to give
 these a try, of course.  This area of CRAN currently contains
-
-*Dopt*
-     Finding D-optimal experimental designs.
 
 *GLMMGibbs*
      Generalised Linear Mixed Models by Gibbs sampling.

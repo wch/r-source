@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-13
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-14
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1977,13 +1977,10 @@ Boosting methods for real and simulated data, featuring `BagBoost',
 Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,
 1997, Cambridge University Press.  @emph{Recommended}.
-@c <COMMENT>
-@c Moved to the Archive on 2004-09-30.
-@c @item bootstrap
-@c Software (bootstrap, cross-validation, jackknife), data and errata for
-@c the book ``An Introduction to the Bootstrap'' by B. Efron and
-@c R. Tibshirani, 1993, Chapman and Hall.
-@c </COMMENT>
+@item bootstrap
+Software (bootstrap, cross-validation, jackknife), data and errata for
+the book ``An Introduction to the Bootstrap'' by B. Efron and
+R. Tibshirani, 1993, Chapman and Hall.
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
@@ -3029,8 +3026,11 @@ invited to give these a try, of course.  This area of @CRAN{} currently
 contains
 
 @table @strong
-@item Dopt
-Finding D-optimal experimental designs.
+@c <COMMENT>
+@c Moved to Attic on 2004-12-14 as requested by maintainer.
+@c @item Dopt
+@c Finding D-optimal experimental designs.
+@c </COMMENT>
 
 @c <COMMENT>
 @c Moved to Devel for 1.8 as it fails R CMD check.
