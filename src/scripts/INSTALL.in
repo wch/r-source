@@ -152,6 +152,11 @@ for pkg in ${PKGS}; do
     chmod 755 ${lib}/${pkg}/exec/*
   fi
 
+  if test -d inst; then
+    echo " inst"
+    cp -r inst/* ${lib}/${pkg}
+  fi
+
   if test -f INDEX; then
     cp INDEX ${lib}/${pkg}
   fi
