@@ -99,6 +99,8 @@ BUG FIXES
     o   Overflow in deparse() in terms(formula) with very long left-hand
 	side fixed (PR#873)
 
+    o   as.numeric(), as.integer(), as.complex() returned zero on
+        completely blank strings. Now they return NA. (PR#870)
 
 	**************************************************
 	*						 *
