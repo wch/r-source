@@ -857,6 +857,12 @@ foo
 print(foo)
 show(foo)
 print(foo, digits = 4)
+
+setClassUnion("integer or NULL", members = c("integer","NULL"))
+setClass("c1", representation(x = "integer", code = "integer or NULL"))
+nc <- new("c1", x = 1:2)
+str(nc)# gave ^ANULL^A in 2.0.0
+
 if(!hasMethods) detach("package:methods")
 ##
 

@@ -69,10 +69,8 @@ str.default <-
     } else if (is.null(object))
 	cat(" NULL\n")
     else if(has.class && S4) {
-	if(!give.attr) a <- attributes(object) # otherwise, have them
-	a <- a[names(a) != "class"]
-	cat("Formal class",
-	    " '", paste(cl, collapse = "', '"),
+        a <- sapply(slotNames(object), slot, object=object)
+	cat("Formal class", " '", paste(cl, collapse = "', '"),
 	    "' [package \"", attr(cl,"package"), "\"] with ",
 	    length(a)," slots\n", sep="")
 	str(a, no.list = TRUE, comp.str = "@ ", # instead of "$ "
