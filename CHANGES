@@ -41,6 +41,10 @@ NEW FEATURES
 
     o	new is.R() function.
 
+    o   glm() now also returns an AIC value [from JL].
+	In summary.glm(..., correlation=..), the default has been changed to
+	corr. = FALSE  which is consistent with  summary.lm().
+
     o	nlm() returns the number of iterations used [from J.Lindsey].
 
     o	cut, diff, hist, mean, quantile, seq, trunc()  are now all generic.
@@ -50,6 +54,8 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   data.frame(.) now uses "1:n" as default row.names.
 
     o   format(NULL) now works.
 
