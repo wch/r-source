@@ -7,21 +7,27 @@ See the file NEWS for changes that affect all versions of R.
 rw1010
 ======
 
-Console preferences editor on the Edit menu in Rgui.
+There is now a console preferences editor on the Edit menu in Rgui.
 
 The postscript() device can now spool plots to a printer. You will
-need a suitable program to send a file to the spooler (or even to set
+need a suitable program to send a file to the spooler (or even to send
 it to ghostscript to interpret PostScript for the printer): the RedMon
 suite available from http://www.cs.wisc.edu/~ghost/rjl.html should
 provide suitable tools.
 
-The placement of multiple pagers is now `random' and under the MDI
-interface the pager rows and columns settings are respected.
+The placement of multiple pagers is now `random' (so they will not
+always appear in the centre of the screen) and under the MDI interface
+the pager rows and columns settings are respected.
 
 The new xfig() device can be used, and a port of xfig to Windows (with
-an X server and the Cygwin B20 environment and X11R6.4 installed) is at
+an X server and the Cygwin B20.1 environment and X11R6.4 installed) is at
 ftp.franken.de:/pub/win32/develop/gnuwin32/cygwin/porters/Humblet_Pierre_A/B20
 as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz
+
+The internal unzip and the installer now use unzip5.41, not unzip5.40, and
+the DLL interface is incompatible.
+
+The R DLL now has standard Windows version information.
 
 
 rw1002

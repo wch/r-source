@@ -1,9 +1,9 @@
-R 1.1.0 for Windows 9x and NT
-=============================
+R 1.1.0 for Windows
+====================
 
-This distribution contains a binary distribution of R-1.1.0 to run on
-Windows 95, 98, NT4 and 2000 on Intel/clone chips. See README for fuller
-details, including how to install the binary versions.
+This distribution contains the sources to build a port of R-1.1.0 to
+run on Windows 95, 98, NT4 and 2000 on Intel/clone chips. See readme
+for fuller details, including how to install the binary versions.
 
 
 Building From Source
