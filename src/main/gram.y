@@ -1557,6 +1557,9 @@ int isValidName(char *name)
     if( isdigit(c) )
         return 0;
 
+    if( c == '.' && strlen(name)==1 )
+	return 1;
+
     for (i = 0; keywords[i].name; i++)
         if (strcmp(keywords[i].name, name) == 0 && !(strcmp(name, "...")==0))
                 return 0;
