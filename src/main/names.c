@@ -28,6 +28,8 @@
 #include "Print.h"
 #include "arithmetic.h"
 
+#include "R_ext/RConverters.h"
+
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========
  *
@@ -770,6 +772,12 @@ FUNTAB R_FunTab[] =
 
 
 {"readDCF", 	do_readDCF,	0,      11,     2,      PP_FUNCALL},
+
+{"getNumRtoCConverters", do_getNumRtoCConverters, 0, 11, 0, PP_FUNCALL},
+{"getRtoCConverterDescriptions", do_getRtoCConverterDescriptions, 0, 11, 0, PP_FUNCALL},
+{"getRtoCConverterStatus", do_getRtoCConverterStatus, 0, 11, 0, PP_FUNCALL},
+{"setToCConverterActiveStatus", do_setToCConverterActiveStatus, 0, 11, 2, PP_FUNCALL},
+{"removeToCConverterActiveStatus", do_setToCConverterActiveStatus, 1, 11, 1, PP_FUNCALL},
 
 {NULL,		NULL,		0,	0,	0,	0},
 };

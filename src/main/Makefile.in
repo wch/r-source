@@ -11,6 +11,7 @@ subdir = src/main
 include $(top_builddir)/Makeconf
 
 SOURCES_C = \
+        CConverters.c \
 	Rdynload.c RNG.c \
 	apply.c arithmetic.c array.c attrib.c \
 	bind.c builtin.c \
@@ -34,6 +35,7 @@ SOURCES_C = \
 	subassign.c subscript.c subset.c summary.c \
 	unique.c util.c \
 	version.c
+
 SOURCES_F = \
 	xxxpr.f
 ## FIXME: Need better names ...
