@@ -32,7 +32,8 @@ INSTALLATION ISSUES
 	manual for details.
 
     o   Added some patches to allow non-IEEE-754 installations to work
-	reasonably well.
+	reasonably well.  (Infs and NAs are still not handled properly
+	in complex arithmetics and functions such a sin.)
 
 
 BUG FIXES
