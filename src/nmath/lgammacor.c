@@ -40,7 +40,7 @@
 
 double lgammacor(double x)
 {
-    static double algmcs[15] = {
+    static /* const */ double algmcs[15] = {
 	+.1666389480451863247205729650822e+0,
 	-.1384948176067563840732986059135e-4,
 	+.9810825646924729426157171547487e-8,
@@ -57,16 +57,19 @@ double lgammacor(double x)
 	-.3401102254316748799999999999999e-29,
 	+.1276642195630062933333333333333e-30
     };
-    static int nalgm = 0;
-    static double xbig = 0;
-    static double xmax = 0;
+
     double tmp;
 
-    if (nalgm == 0) {/* initialize machine dependent constants _ONCE_ */
-	nalgm = chebyshev_init(algmcs, 15, d1mach(3));
-	xbig = 1 / sqrt(d1mach(3)); /* ~ 94906265.6 for IEEE double */
-	xmax = exp(fmin2(log(d1mach(2) / 12), -log(12 * d1mach(1))));
-		/* ~= 3.745 e306 for IEEE double */
+    static int nalgm = 0;
+    static double xbig = 0, xmax = 0;
+
+    /* Initialize machine dependent constants, the first time gamma() is called.
+	FIXME for threads ! */
+    if (nalgm == 0) {
+	nalgm = chebyshev_init(algmcs, 15, DBL_EPSILON/2);/*was d1mach(3)*/
+	xbig = 1 / sqrt(DBL_EPSILON/2); /* ~ 94906265.6 for IEEE double */
+	xmax = exp(fmin2(log(DBL_MAX / 12), -log(12 * DBL_MIN)));
+	/*   = DBL_MAX / 48 ~= 3.745e306 for IEEE double */
     }
     if (x < 10)
 	ML_ERR_return_NAN

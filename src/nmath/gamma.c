@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +40,7 @@
 
 double gammafn(double x)
 {
-    static double gamcs[42] = {
+    static /* const */ double gamcs[42] = {
 	+.8571195590989331421920062399942e-2,
 	+.4415381324841006757191315771652e-2,
 	+.5685043681599363378632664588789e-1,
@@ -84,21 +85,21 @@ double gammafn(double x)
 	-.5793070335782135784625493333333e-31
     };
 
-    static int ngam = 0;
-    static double xmin = 0.;
-    static double xmax = 0.;
-    static double xsml = 0.;
-    static double dxrel = 0.;
-
     int i, n;
     double y;
     double sinpiy, value;
 
+    static int ngam = 0;
+    static double xmin = 0, xmax = 0., xsml = 0., dxrel = 0.;
+
+    /* Initialize machine dependent constants, the first time gamma() is called.
+	FIXME for threads ! */
     if (ngam == 0) {
-	ngam = chebyshev_init(gamcs, 42, 0.1 * d1mach(3));
+	ngam = chebyshev_init(gamcs, 42, DBL_EPSILON/20);/*was .1*d1mach(3)*/
 	gammalims(&xmin, &xmax);
-	xsml = exp(fmax2(log(d1mach(1)), -log(d1mach(2)))+0.01);
-	dxrel = sqrt(d1mach(4));
+	xsml = exp(fmax2(log(DBL_MIN), -log(DBL_MAX)) + 0.01);
+	/*   = exp(.01)*DBL_MIN = 2.247e-308 for IEEE */
+	dxrel = sqrt(1/DBL_EPSILON);/*was (1/d1mach(4)) */
     }
 
     if(ISNAN(x)) return x;
@@ -107,9 +108,9 @@ double gammafn(double x)
 
     if (y <= 10) {
 
-	/* Compute gamma(x) for -10 <= x <= 10. */
-	/* Reduce the interval and find gamma(1 + y) for */
-	/* 0 <= y < 1 first of all. */
+	/* Compute gamma(x) for -10 <= x <= 10
+	 * Reduce the interval and find gamma(1 + y) for 0 <= y < 1
+	 * first of all. */
 
 	n = x;
 	if(x < 0) --n;
