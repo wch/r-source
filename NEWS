@@ -22,7 +22,7 @@ USER-VISIBLE CHANGES
 
     o	pie() replaces piechart() and defaults to using pastel colours.
 
-    o	formatC has new arguments (see below) and formatC(*, d = <dig>) 
+    o	formatC has new arguments (see below) and formatC(*, d = <dig>)
 	is no longer valid and must be written as formatC(*, digits = <dig>).
 
 [Changes to NA strings are currently in progress:
@@ -484,7 +484,7 @@ BUG FIXES
 
     o   legend() did not deal correctly with `angle' arguments. (PR#1404)
 
-    o   sum() tried to give an integer result for integer arguments, 
+    o   sum() tried to give an integer result for integer arguments,
 	but (PR#1408)
 	- this was not documented
 	- it sometimes warned on overflow, sometimes not
@@ -499,6 +499,8 @@ BUG FIXES
 
     o	seq.default() was returning only one element for a relative
 	range of less than about 1e-8, which was excessively conservative.
+
+    o	tsp(x) <- NULL  now also works after library(methods).
 
 
 	**************************************************
