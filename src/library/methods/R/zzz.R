@@ -34,6 +34,7 @@
         .InitBasicClasses(where)
         .InitMethodsListClass(where)
         .makeBasicFunsList(where)
+        .setCoerceGeneric(where)
         assign(".saveImage", TRUE, envir = where)
     }
 }

@@ -48,7 +48,7 @@ coerce <-
     if(is.null(value))
         stop(paste("Unable to perform default coerce from \"",
                    data.class(object), "\" to \"", toClass, "\"", sep=""))
-    data.class(value) <- toClass
+    class(value) <- toClass
     value
 }
 
@@ -132,3 +132,7 @@ setAs <-
       setMethod("coerce", c(from, to), def, where = where)
     }
   }
+
+.setCoerceGeneric <- function(where) {
+  setGeneric("coerce", where = where)
+}
