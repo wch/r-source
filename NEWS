@@ -152,6 +152,8 @@ NEW FEATURES
     o   edit() or fix() applied to a numeric or character matrix now
 	uses the data entry editor.
 
+    o   New bitmap devices png() and jpeg() on Unix/X11.
+
 
 BUG FIXES
 

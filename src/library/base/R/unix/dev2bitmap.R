@@ -62,3 +62,18 @@ bitmap <- function(file, type="png256", height=6, width=6, res=72,
                pointsize=pointsize, paper="special", horizontal=FALSE, ...)
     invisible()
 }
+
+png <- function(filename = "Rplot.png", width=480, height=480, pointsize=12,
+                gamma = 1, colortype = getOption("X11colortype"),
+                maxcubesize = 256)
+    .Internal(X11(paste("png::", filename, sep=""),
+                  width, height, pointsize, gamma,
+                  colortype, maxcubesize))
+
+jpeg <- function(filename = "Rplot.jpeg", width=480, height=480, pointsize=12,
+                 quality = 75,
+                 gamma = 1, colortype = getOption("X11colortype"),
+                 maxcubesize = 256)
+    .Internal(X11(paste("jpeg::", quality, ":", filename, sep=""),
+                  width, height, pointsize, gamma,
+                  colortype, maxcubesize))

@@ -143,6 +143,10 @@
 #undef HAVE_BSD_NETWORKING
 #undef HAVE_POPEN
 
+/* Bitmap libraries */
+#undef HAVE_PNG_H
+#undef HAVE_JPEGLIB_H
+
 /* Some platforms other than ELF drop the leading _ */
 #undef HAVE_NO_SYMBOL_UNDERSCORE
 #ifndef HAVE_NO_SYMBOL_UNDERSCORE
