@@ -1,3 +1,13 @@
+testPlatformEquivalence <- function(built, run)
+{
+    ## args are "cpu-vendor-os", but os might be 'linux-gnu'!
+    ## remove vendor field
+    built <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", built)
+    run <- gsub("([^-]*)-([^-]*)-(.*)", "\\1-\\3", run)
+    ## allow for small mismatches, e.g. OS version number and i686 vs i586.
+    length(agrep(built, run)) > 0
+}
+
 library <-
 function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
@@ -30,14 +40,11 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                         call. = FALSE)
             if(.Platform$OS.type == "unix") {
                 platform <- built$Platform
-                if(length(grep("\\w", platform))) {
-                    ## allow for small mismatches, e.g. OS version number.
-                    m <- agrep(platform, R.version$platform)
-                    if(!length(m))
-                        stop(paste("package", sQuote(pkgname),
-                                   "was built for", platform),
-                             call. = FALSE)
-		}
+		if(length(grep("\\w", platform)) &&
+                   !testPlatformEquivalence(platform, R.version$platform))
+                    stop(paste("package", sQuote(pkgname),
+                               "was built for", platform),
+                         call. = FALSE)
             }
         }
         else

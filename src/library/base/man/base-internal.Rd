@@ -5,6 +5,8 @@
 \alias{.path.package}
 \alias{.getRequiredPackages}
 \alias{.getRequiredPackages2}
+\alias{testPlatformEquivalence}
+
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -23,6 +25,8 @@
                      useImports = FALSE)
 .getRequiredPackages2(pkgInfo, quietly = FALSE, lib.loc = NULL,
                       useImports = FALSE)
+
+testPlatformEquivalence(built, run)
 }
 \arguments{
   \item{x}{object from which to extract elements.}
@@ -39,6 +43,7 @@
   \item{quietly}{logical: should progress messages be given.}
   \item{pkginfo}{A processed \file{DESCRIPTION} file of class
     \code{"packageDescription2"}.}
+  \item{built, run}{platform strings of the form \code{"cpu-vendor-os"}.}
 }
 \details{
   The functions \code{.subset} and \code{.subset2} are essentially
@@ -72,6 +77,13 @@
 
   \code{.getRequiredPackages} is a wrapper to
   \code{.getRequiredPackages2} using a \file{DESCRIPTION} file.
+
+  \code{testPlatformEquivalence} is used to test if a package with 
+  compiled code can safely be loaded into a build of \R, which it does by
+  comparing their \sQuote{canonical} \code{"cpu-vendor-os"} descriptions.
+  The default function omits the \code{vendor} part and allows small 
+  mismatches elsewhere.  Cognescenti can replace this function in the
+  \code{base} namespace.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character
@@ -79,5 +91,7 @@
   
   \code{.getRequiredPackages} and \code{.getRequiredPackages2}
   return \code{invisible()}.
+
+  \code{testPlatformEquivalence}: \code{TRUE} or \code{FALSE}.
 }
 \keyword{internal}
