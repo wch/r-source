@@ -11,7 +11,10 @@
 #    form.  Corresponding, the underlying C code does not need to
 #    extract the function from the passed "list".
 
-dyn.load(system.file("demos/dynload", "zero.so"))
+dyn.load("zero.so")
+##-- you probably should change this to
+## dyn.load("<RHOME>/demos/dynload/zero.so")
+##-- substituting the proper path for <RHOME>
 
 zero <- function(f, guesses, tol=1e-7) {
 	f.check <- function(x) {
