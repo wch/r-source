@@ -4,7 +4,5 @@ typedef struct {
     GPar dpSaved;		/* saved device default parameters */
 } baseSystemState;
 
-int baseRegisterIndex;
-
 void registerBase();
 

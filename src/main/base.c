@@ -6,6 +6,8 @@
 #include <Graphics.h>
 #include <Rdevices.h>
 
+int baseRegisterIndex;
+
 void baseCallback(GEevent task, GEDevDesc *dd) {
     GESystemDesc *sd;
     NewDevDesc *dev;
@@ -47,7 +49,8 @@ void baseCallback(GEevent task, GEDevDesc *dd) {
 	ddp->ps = dev->startps;
 	ddp->col = ddp->fg = dev->startcol;
 	ddp->bg = dev->startfill;
-	ddp->lty = dev->startlty;
+	/* ddp->font = dev->startfont; */
+	/* ddp->lty = dev->startlty; */
 	/* Initialise the gp settings too.
 	 */
 	copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp));

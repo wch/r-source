@@ -40,6 +40,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+extern int baseRegisterIndex;
+
 static char HexDigits[] = "0123456789ABCDEF";
 
 
@@ -6055,6 +6057,13 @@ void playDisplayList(DevDesc *dd)
 }
 
 
+/* FIXME:  This assumes that the only drawing is base graphics drawing.
+ * For example, copying a display list containing grid drawing will
+ * not work properly (grid drawing is not based on a dpSavedptr;  grid 
+ * drawing IS based on its own separate graphics state)
+ * Once the conversion of device drivers is complete, this should just
+ * be able to call GEcopyDisplayList
+ */
 void copyDisplayList(int fromDevice)
 {
     DevDesc *dd = CurrentDevice();
@@ -6068,8 +6077,12 @@ void copyDisplayList(int fromDevice)
 	    initDisplayList(dd);
     } else {
 	dd->displayList = R_Devices[fromDevice]->displayList;
-	/* How did this ever work?
+	/* Used to be a shallow copy -- most uses just close
+	 * the device copied to.
+	 * 
 	 * dd->dpSaved = R_Devices[fromDevice]->dpSaved;
+	 * 
+	 * NOTE that the display list is still only shallow-copied.
 	 */
 	copyGPar(dpSavedptr(R_Devices[fromDevice]),
 		 dpSavedptr(dd));
