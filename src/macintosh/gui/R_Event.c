@@ -150,14 +150,6 @@ void AdjustCursor ( Point mouseLoc, RgnHandle mouseRgn )
 
 	SetRectRgn ( mouseRgn, -0x7FFF, -0x7FFF, 0x7FFF, 0x7FFF ) ;
 
-#if ! TARGET_API_MAC_CARBON
-	// give text services a chance to set the cursor shape
-	// (this call is not needed for Carbon clients)
-	if ( SetTSMCursor( mouseLoc ) )
-	{
-		return ;
-	}
-#endif
 
 	// if there is a window open, give WEAdjustCursor an opportunity to set the cursor
 	// WEAdjustCursor intersects mouseRgn (if supplied) with a region within which

@@ -92,6 +92,7 @@ OSStatus DoubleClickFile(char *filename);
  
 void R_Suicide(char *s);
 void GetSysVersion(void);
+void CleanTempDir(void);
 
 
 
@@ -638,6 +639,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     
     
     R_RunExitFinalizers();
+    CleanEd();
+    CleanTempDir();
     KillAllDevices();
     if(saveact != SA_SUICIDE && R_CollectWarnings)
 	PrintWarnings();	/* from device close and .Last */
@@ -1021,7 +1024,7 @@ void InitEd(){
 
 void CleanEd()
 {
-    if(EdFileUsed==0) unlink(DefaultFileName);
+    if(EdFileUsed==0) R_unlink(DefaultFileName,1);
 }
 
 
@@ -2077,7 +2080,7 @@ cleanup:
 
 
 
-void CleanTempDir()
+void CleanTempDir(void)
 {
     R_unlink(R_TempDir, 1);
 }

@@ -451,20 +451,8 @@ enum {
 
 /* for the data browser */
 
-enum {
-	kMyCreator			= 'ERRE',
-	kMyDataBrowser		= 'Brsr',
-	kObjectColumn		= 'objs',
-	kTypeColumn			= 'type',
-	kSizeColumn			= 'size'
-};
+#include "DataBrowser.h"
 
- 
-
-
-
-const DataBrowserTableViewColumnID columns[] = 
-	{ kObjectColumn, kTypeColumn, kSizeColumn };
 
 
 /*	Alert & dialog template resource IDs
