@@ -6,7 +6,7 @@
 
 # @configure_input@
 
-VERSION="0.2-1"
+VERSION="0.2-2"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 CLEAN=false
@@ -161,7 +161,8 @@ do_install () {
   if test "${dir}"; then
     echo " ${dir}"
     mkdir -p ${lib}/${pkg}/R
-    cat `ls ${dir}/*.[RSqrs]` > ${lib}/${pkg}/R/${pkg}
+    cat `ls ${dir}/*.[RSqrs] ${dir}/unix/*.[RSqrs] 2>/dev/null` \
+      > ${lib}/${pkg}/R/${pkg}
   fi
   dir=
 
