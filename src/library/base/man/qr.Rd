@@ -40,8 +40,8 @@ as.qr(x)
   The functions \code{qr.coef}, \code{qr.resid}, and \code{qr.fitted}
   return the coefficients, residuals and fitted values obtained when
   fitting \code{y} to the matrix with QR decomposition \code{qr}.
-  \code{qr.qy} and \code{qr.qty} return \code{Q %*% y} and \code{t(Q)
-  %*% y}, where \code{Q} is the \eqn{\bold{Q}} matrix.
+  \code{qr.qy} and \code{qr.qty} return \code{Q \%*\% y} and
+  \code{t(Q) \%*\% y}, where \code{Q} is the \eqn{\bold{Q}} matrix.
 
   \code{qr.solve} solves systems of equations via the QR decomposition.
 
@@ -76,15 +76,15 @@ as.qr(x)
 \examples{
 hilbert <- function(n) { i <- 1:n; 1 / outer(i - 1, i, "+") }
 h9 <- hilbert(9); h9
-qr(h9)$rank           ##--> only 7
+qr(h9)$rank           #--> only 7
 qrh9 <- qr(h9, tol = 1e-10)
-qrh9$rank             ##--> 9
+qrh9$rank             #--> 9
 ##-- Solve linear equation system  H \%*\% x = y :
 y <- 1:9/10
-x <- qr.solve(h9, y, tol = 1e-10) ## or equivalently :
-x <- qr.coef(qrh9, y) ##-- is == but much better than
-                      ##-- solve(h9) \%*\% y
-h9 \%*\% x            ## = y
+x <- qr.solve(h9, y, tol = 1e-10) # or equivalently :
+x <- qr.coef(qrh9, y) #-- is == but much better than
+                      #-- solve(h9) \%*\% y
+h9 \%*\% x              # = y
 }
 \keyword{algebra}
 \keyword{array}

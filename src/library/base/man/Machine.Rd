@@ -40,13 +40,13 @@ Machine()
   \item{"double.base"}{the radix for the floating-point representation}
   \item{"double.digits"}{the number of base digits in the floating-point
     significand}
-  \item{"double.rounding"}{the rounding action.
-    0 if floating-point addition chops; \\
-    1 if floating-point addition rounds, but not in the IEEE style; \\
-    2 if floating-point addition rounds in the IEEE style; \\
-    3 if floating-point addition chops, and there is partial underflow; \\
+  \item{"double.rounding"}{the rounding action. \cr
+    0 if floating-point addition chops; \cr
+    1 if floating-point addition rounds, but not in the IEEE style; \cr
+    2 if floating-point addition rounds in the IEEE style; \cr
+    3 if floating-point addition chops, and there is partial underflow; \cr
     4 if floating-point addition rounds, but not in the IEEE style, and
-    there is partial underflow; \\
+    there is partial underflow; \cr
     5 if floating-point addition rounds in the IEEE style, and there is
     partial underflow}
   \item{"double.guard"}{the number of guard digits for multiplication
@@ -71,7 +71,7 @@ Machine()
     the smallest positive power of \code{base} that overflows.}
   \item{"integer.max"}{the largest integer which can be represented.}
 }
-\reference{
+\references{
   W. J. Cody (1988),
   \emph{MACHAR: A Subroutine to Dynamically Determine Machine
     Parameters}.
