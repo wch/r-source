@@ -11,6 +11,8 @@
 
 NEW FEATURES
 
+    o   R INSTALL now also copies DESCRIPTION file to target dir.
+
     o	offsets should work with lm as well as with glm now
 
     o	range() is now in the Summary group, trunc() back in the Math
