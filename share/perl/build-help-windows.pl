@@ -70,7 +70,7 @@ if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
     $opt_txt = 1;
     $opt_latex = 1;
     $opt_example = 1;
-    $opt_chm = 1;
+    $opt_chm = 1 unless $opt_index;
 }
 
 ($pkg, $version, $lib, @mandir) = buildinit();
