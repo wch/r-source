@@ -14,8 +14,8 @@ colMeans(x, na.rm = FALSE, dims = 1)
 rowMeans(x, na.rm = FALSE, dims = 1)
 }
 \arguments{
-  \item{x}{an array or two or more dimensions, containing numeric,
-    complex, integer or logical values.}
+  \item{x}{an array of two or more dimensions, containing numeric,
+    complex, integer or logical values, or a numeric data frame.}
   \item{na.rm}{logical. Should missing values (including \code{NaN})
     be omitted from the calculations?}
   \item{dims}{Which dimensions are regarded as ``rows'' or ``columns''

@@ -1,5 +1,6 @@
 colSums <- function(x, na.rm = FALSE, dims = 1)
 {
+    if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2)
         stop("`x' must be an array of at least two dimensions")
     if(dims < 1 || dims > length(dn) - 1)
@@ -19,6 +20,7 @@ colSums <- function(x, na.rm = FALSE, dims = 1)
 
 colMeans <- function(x, na.rm = FALSE, dims = 1)
 {
+    if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2)
         stop("`x' must be an array of at least two dimensions")
     if(dims < 1 || dims > length(dn) - 1)
@@ -38,6 +40,7 @@ colMeans <- function(x, na.rm = FALSE, dims = 1)
 
 rowSums <- function(x, na.rm = FALSE, dims = 1)
 {
+    if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2)
         stop("`x' must be an array of at least two dimensions")
     if(dims < 1 || dims > length(dn) - 1)
@@ -57,6 +60,7 @@ rowSums <- function(x, na.rm = FALSE, dims = 1)
 
 rowMeans <- function(x, na.rm = FALSE, dims = 1)
 {
+    if(is.data.frame(x)) x <- as.matrix(x)
     if(!is.array(x) || length(dn <- dim(x)) < 2)
         stop("`x' must be an array of at least two dimensions")
     if(dims < 1 || dims > length(dn) - 1)
