@@ -452,7 +452,7 @@ void setup_Rmainloop(void)
 #ifdef ENABLE_NLS
     setlocale(LC_MESSAGES,"");
     textdomain(PACKAGE);
-    strcpy(localedir, getenv("R_HOME")); strcat(localedir, "/share/locale");
+    strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
     bindtextdomain(PACKAGE, localedir);
 #endif
 #endif
