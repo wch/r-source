@@ -292,7 +292,9 @@ BUG FIXES
 	was specified.  (PR#3058)
 
     o   R CMD check gives now a clearer message when latex produces
-        errors on the package manual (PR#3070).
+        errors on the package manual.  (PR#3070)
+
+    o   isSeekable() was incorrectly returning FALSE on all file connections.
 
 
 

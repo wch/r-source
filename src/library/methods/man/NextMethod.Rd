@@ -82,21 +82,21 @@ Calling with no arguments is often the natural way to use
 ## some class definitions with simple inheritance
 setClass("B0" , representation(b0 = "numeric"))
 
-setClass("B1", "B0")
+setClass("B1", representation(b1 = "character"), contains = "B0")
 
-setClass("B2", representation("B1", b2 = "logical"))
+setClass("B2", representation(b2 = "logical"), contains = "B1")
 
 ## and a rather silly function to illustrate callNextMethod
 
 f <- function(x) class(x)
 
-setMethod("f", "B0", function(x) c(x@b0, callNextMethod()))
-
+setMethod("f", "B0", function(x) c(x@b0^2, callNextMethod()))
+setMethod("f", "B1", function(x) c(paste(x@b1,":"), callNextMethod()))
 setMethod("f", "B2", function(x) c(x@b2, callNextMethod()))
 
-b2 <- new("B2", b2 = FALSE, b0 = 10)
+b1 <- new("B1", b0 = 2, b1 = "Testing")
 
-b1 <- new("B1", b0 = 2)
+b2 <- new("B2", b2 = FALSE, b1 = "More testing", b0 = 10)
 
 f(b2)
 
@@ -104,11 +104,11 @@ f(b1)
 
 \testonly{
 
-stopifnot(identical(f(b2), c(b2@b2, b2@b0, "B2")))
+stopifnot(identical(f(b2), c(b2@b2, paste(b2@b1,":"), b2@b0^2, "B2")))
 
+## a version of the example with 1 more layer of nesting
 
-
-## next methods calling next methods; using group generics
+## next methods calling next methods, with arguments; using group generics
 setMethod("Ops", "B2",
     function(e1, e2) callNextMethod())
 setMethod("Ops", c("B0","numeric"),

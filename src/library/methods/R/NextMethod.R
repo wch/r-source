@@ -21,7 +21,28 @@
     ## nextMethod in the methods list object for the generic.  (Inconsistent
     ## results are possible with next methods)
     value <- selectMethod(f, method@target, optional, TRUE, mlist)
+    if(!is(value, "MethodWithNext") && is(value, "MethodDefinition") &&
+       .hasCallNextMethod(value@.Data)) {
+        ## complete the chain of callNextMethod's
+        excluded <- c(excluded, list(value@defined))
+        nextMethod <- .findNextMethod(value, f, mlist, optional, excluded, envir)
+        value <- new("MethodWithNext", value, nextMethod = nextMethod, excluded = excluded)
+    }
     value
+}
+
+## find a call to callNextMethod in the body or one of the default arg. expressions
+## (If the R version of all.names, all.vars worked on function definitions would be no need
+## for the loop)
+.hasCallNextMethod <- function(def) {
+    if(!identical(typeof(def), "closure"))
+        return(FALSE)
+    def <- as.list(def)
+    for(i in rev(seq(along = def))) {
+        if(is.call(def[[i]]) && !is.na(match("callNextMethod", all.names(def[[i]]))))
+            return(TRUE)
+    }
+    FALSE
 }
 
 callNextMethod <- function(...) {
@@ -73,6 +94,7 @@ callNextMethod <- function(...) {
             }
             nextMethod <- method@nextMethod
             assign(".nextMethod", nextMethod, envir = envir)
+            assign(".Generic", f, envir = envir)
         }
     }
     else if(is.null(method)) {
@@ -80,12 +102,15 @@ callNextMethod <- function(...) {
             stop("call to NextMethod doesn't appear to be in a method or callNextMethod context")
         ## else, callNextMethod() from another callNextMethod
         method <- nextMethod
-        if(!is(method, "MethodWithNext"))
+        if(!is(method, "MethodWithNext")) {
             method <- addNextMethod(method, f, getMethods(f), envir=envir)
+        }
         nextMethod <- method@nextMethod
         ## store the nextmethod in the previous nextmethod's 
         assign(".nextMethod", nextMethod, envir = envir)
+        assign(".Generic", f, envir = envir)
         assign(".nextMethod", method, envir = env2)
+        assign(".Generic", f, envir = env2)
     }
     else 
         stop("Bad object found as method (class \"", class(method), "\")")
