@@ -2,10 +2,10 @@ R @RVER@ for Windows
 ===================
 
 This distribution contains a binary distribution of R-@RVER@ to run on
-Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips.  It is designed
-to be as close as possible to the implementation on Unix, but see the
-list of differences below.  The port was by Guido Masarotto, Brian
-Ripley and Duncan Murdoch.
+Windows 95, 98, ME, NT4, 2000, XP and 2003 Server on Intel/clone
+chips.  It is designed to be as close as possible to the
+implementation on Unix, but see the list of differences below.  The
+port was by Guido Masarotto, Brian Ripley and Duncan Murdoch.
 
 See the file `CHANGES' for the new features of this version.
 
@@ -105,7 +105,7 @@ jobs. You can also use it via R CMD BATCH: see ?BATCH or R CMD BATCH
 --help.
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in ESS
-under NTEmacs, for example with ess-5.1.20.  The pager is
+under NTEmacs, for example with ess-5.2.1.  The pager is
 automatically set to "console" so text help will be displayed in emacs
 buffers.
 

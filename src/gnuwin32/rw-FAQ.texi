@@ -135,9 +135,9 @@ versions of the help files and the @emph{An Introduction to R} and
 @node How do I install R for Windows?, Can I customize the installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-You need Windows 95/98/ME/NT4/2000/XP: Windows 3.11+win32s will not
-work.  Your file system must allow long file names (as is likely except
-perhaps for some network-mounted systems).
+You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
+will not work.  Your file system must allow long file names (as is
+likely except perhaps for some network-mounted systems).
 
 If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
