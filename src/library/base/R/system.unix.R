@@ -137,13 +137,21 @@ installed.packages <- function(lib.loc = .lib.loc)
 
 
 
-CRAN.packages <- function(CRAN=options("CRAN"), method="auto")
+CRAN.packages <- function(CRAN=.Options$CRAN, method="auto")
 {
-    tmpf <- tempfile()
-    download.file(url=paste(CRAN, "/src/contrib/PACKAGES", sep=""),
-                  destfile=tmpf, method=method)
+    localcran <- length(grep("^file:", CRAN)) > 0
+    if(localcran)
+        tmpf <- file.path(substring(CRAN,6),
+                          "src", "contrib", "PACKAGES")
+    else{
+        tmpf <- tempfile()
+        download.file(url=paste(CRAN, "/src/contrib/PACKAGES", sep=""),
+                      destfile=tmpf, method=method)
+    }
     alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
-    unlink(tmpf)
+    if(!localcran)
+        unlink(tmpf)
+    
     pkgstart <- c(grep("^Package:", alldesc), length(alldesc)+1)
     retval <- NULL
     for(k in 1:(length(pkgstart)-1)){
@@ -155,7 +163,7 @@ CRAN.packages <- function(CRAN=options("CRAN"), method="auto")
 }
 
 
-update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
+update.packages <- function(lib.loc=.lib.loc, CRAN=.Options$CRAN,
                             method="auto", instlib=NULL)
 {
     instp <- installed.packages(lib.loc=lib.loc)
@@ -188,9 +196,10 @@ update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
 }
 
 
-install.packages <- function(pkglist, lib, CRAN=options("CRAN"),
+install.packages <- function(pkglist, lib, CRAN=.Options$CRAN,
                              method="auto", available=NULL)
 {
+    localcran <- length(grep("^file:", CRAN)) > 0
     pkgs <- NULL
     tmpd <- tempfile("dir")
     system(paste("mkdir", tmpd))
@@ -216,14 +225,18 @@ install.packages <- function(pkglist, lib, CRAN=options("CRAN"),
                 }
             }
         }
+        cat("\n")
+        if(!localcran){
+            answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
+            if(answer == "y" | answer == "Y")
+                unlink(tmpd)
+            else
+                cat("The packages are in", tmpd)
+            cat("\n")
+        }
     }
-    cat("\n")
-    answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
-    if(answer == "y" | answer == "Y")
-        system(paste("rm -rf", tmpd))
     else
-        cat("The packages are in", tmpd)
-    cat("\n")
+        unlink(tmpd)
 }
 
 
@@ -257,8 +270,9 @@ download.file <- function(url, destfile, method="auto")
     
     
 download.packages <- function(pkgs, destdir, available=NULL, 
-                              CRAN=options("CRAN"), method="auto")
+                              CRAN=.Options$CRAN, method="auto")
 {
+    localcran <- length(grep("^file:", CRAN)) > 0
     if(is.null(available))
         available <- CRAN.packages(CRAN=CRAN, method=method)
 
@@ -267,13 +281,19 @@ download.packages <- function(pkgs, destdir, available=NULL,
     {
         ok <- available[,"Package"] == p
         fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
-        url <- paste(CRAN, "src/contrib", fn, sep="/")
-        destfile <- file.path(destdir, fn)
+        if(localcran){
+            fn <- file.path(substring(CRAN, 6), "src", "contrib", fn)
+            retval <- rbind(retval, c(p, fn))
+        }
+        else{
+            url <- paste(CRAN, "src/contrib", fn, sep="/")
+            destfile <- file.path(destdir, fn)
         
-        if(download.file(url, destfile, method) == 0)
-            retval <- rbind(retval, c(p, destfile))
-        else
-            warning(paste("Download of package", p, "failed"))
+            if(download.file(url, destfile, method) == 0)
+                retval <- rbind(retval, c(p, destfile))
+            else
+                warning(paste("Download of package", p, "failed"))
+        }
     }
 
     retval
