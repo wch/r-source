@@ -29,6 +29,9 @@ NEW FEATURES
     o	New functions factanal(), varimax(), promax() and examples in
 	package mva.
 
+    o	New functions readBin() and writeBin() to transfer binary data
+	to and from connections.
+
 
 BUG FIXES
     
@@ -67,12 +70,13 @@ BUG FIXES
     o   is.vector() is now correctly documented: complex vectors and
 	lists return TRUE.
 
-    o   The convergence criterion in the Forrtan SVD code has ben
+    o   The convergence criterion in the Fortran SVD code has been
 	changed to circumvent spurious convergence errors when
 	comparing extended-precision quantities on ix86 Linux (and
 	some compilers and options).
 
     o   Rdindex now handles multi-line \title{}'s correctly
+
 
 
 		CHANGES IN R VERSION 1.2.0
