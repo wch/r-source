@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-5 @value{FAQ-YEAR}-04-21
+@set FAQ-VERSION 1.9-6 @value{FAQ-YEAR}-04-22
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -180,7 +180,7 @@ In particular, note that I do not have access to Windows or Macintosh
 systems.  Features specific to the Windows and Mac OS X ports of R are
 described in the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R
 for Windows @acronym{FAQ}''} and the
-@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+@uref{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 Mac OS X @acronym{FAQ}}.  If you have information on Macintosh or Windows
 systems that you think should be added to this document, please let me
 know.
@@ -206,6 +206,7 @@ know.
 * What is CRAN?::               
 * Can I use R for commercial purposes?::  
 * Why is R named R?::           
+* What is the R Foundation?::   
 @end menu
 
 @node What is R?, What machines does R run on?, R Basics, R Basics
@@ -439,7 +440,7 @@ be used with RAqua corresponding to the ``@var{x}.@var{y}'' release of
 R. The installation of these packages is available through the
 ``Package'' menu of the RAqua GUI.  This port of R for Mac OS X is
 maintained by @email{Stefano.Iacus@@R-project.org, Stefano Iacus}.  The
-@uref{http://cran.r-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
+@uref{http://cran.R-project.org/bin/macosx/RMacOSX-FAQ.html, ``R for
 Mac OS X @acronym{FAQ}} has more details.
 
 The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
@@ -525,6 +526,12 @@ for on-line reading in @HTML{} and PDF formats, and as hardcopy via
 La@TeX{}, see @ref{How can R be installed?}.  An up-to-date @HTML{}
 version is always available for web browsing at
 @uref{http://stat.ethz.ch/R-manual/}.
+
+Printed copies of the R reference manual for some version(s) are
+available from Network Theory Ltd, at
+@uref{http://www.network-theory.co.uk/R/base/}.  For each set of manuals
+sold, the publisher donates USD 10 to the R Foundation (@pxref{What is
+the R Foundation?}).
 
 The R distribution also comes with the following manuals.
 
@@ -696,7 +703,7 @@ archives is provided by the web interface at
 subscribe (or unsubscribe) via email, e.g.@: to R-help by sending
 @samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
 message (not in the subject!) to
-@email{R-help-request@@lists.r-project.org}.
+@email{R-help-request@@lists.R-project.org}.
 
 Send email to @email{R-help@@lists.R-project.org} to send a message to
 everyone on the R-help mailing list.  Subscription and posting to the
@@ -716,10 +723,10 @@ code which reliably reproduces the problem.  Also, make sure that you
 include information on the system and version of R being used.  See
 @ref{R Bugs} for more details.
 
-Please read the @uref{http://www.r-project.org/posting-guide.html,
+Please read the @uref{http://www.R-project.org/posting-guide.html,
 posting guide} @emph{before} sending anything to any mailing list.
 
-See @uref{http://www.r-project.org/mail.html} for more information on
+See @uref{http://www.R-project.org/mail.html} for more information on
 the R mailing lists.
 
 The R Core Team can be reached at @email{R-core@@lists.R-project.org}
@@ -776,7 +783,7 @@ Daily mirrors are available at @acronym{URL}s including
 @end quotation
 
 @noindent
-See @uref{http://cran.r-project.org/mirrors.html} for a complete list of
+See @uref{http://cran.R-project.org/mirrors.html} for a complete list of
 mirrors.  Please use the @CRAN{} site closest to you to reduce network
 load.
 
@@ -842,7 +849,7 @@ these may be used or seek the advice of your legal counsel.
 None of the discussion in this section constitutes legal advice.  The R
 Core Team does not provide legal advice under any circumstances.
 
-@node Why is R named R?,  , Can I use R for commercial purposes?, R Basics
+@node Why is R named R?, What is the R Foundation?, Can I use R for commercial purposes?, R Basics
 @section Why is R named R?
 
 The name is partly based on the (first) names of the first two R authors
@@ -851,6 +858,18 @@ Bell Labs language `S' (@pxref{What is S?}).
 
 @c At the time the name was coined no one expected that the software would
 @c get used outside of Auckland, so it seemed ok to make a joke of it.
+
+@node What is the R Foundation?,  , Why is R named R?, R Basics
+@section What is the R Foundation?
+
+The R Foundation is a not for profit organization working in the public
+interest.  It was founded by the members of the R Core Team in order to
+provide support for the R project and other innovations in statistical
+computing, provide a reference point for individuals, instititutions or
+commercial enterprises that want to support or interact with the R
+development community, and to hold and administer the copyright of R
+software and documentation.  See
+@uref{http://www.R-project.org/foundation/} for more information.
 
 @node R and S, R Web Interfaces, R Basics, Top
 @chapter R and S
@@ -2283,11 +2302,8 @@ removed such that the reduced data set has complete separation.
 Estimating the number of essential genes in a genome on the basis of
 data from a random transposon mutagenesis experiment, through the use of
 a Gibbs sampler.
-@c <COMMENT>
-@c Removed as we now have ncdf ...
-@c @item netCDF
-@c Read data from netCDF files.
-@c </COMMENT>
+@item netCDF
+Read data from netCDF files.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @emph{Recommended}.
