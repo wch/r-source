@@ -63,6 +63,6 @@ Based on files which are
 
 src/gnuwin32/front-ends/SC_proxy.h, bdx.[ch], rp*.[ch]
 
-	Copyright (C) 1999 Thomas Baier
+	Copyright (C) 1999-2001 Thomas Baier
 
 distributed under the LGPL.

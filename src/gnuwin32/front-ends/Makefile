@@ -56,7 +56,7 @@ clean:
 bdx-CFLAGS=-I../../include
 rproxy-DLLFLAGS=-mwindows
 rproxy-DLLLIBS=-L.. -lR
-rproxy.dll: rproxy.o rproxy_impl.o bdx.o rtico.o
+rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o bdx.o rtico.o
 
 ../../../bin/Rproxy.dll: rproxy.dll
 	$(MKDIR) -p ../../../bin
