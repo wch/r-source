@@ -17,9 +17,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <R.h>
-#include <Rdefines.h>
-#include <Rinternals.h>
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+#include <Defn.h>
 
 
 /* MEMCMP: a general, quicker (in principle) test for non-recursive
