@@ -221,6 +221,10 @@ NEW FEATURES
 	Previously only \n and \r were interpreted, and then only
 	within quoted strings when no separator was supplied.
 
+    o	LC_MONETARY is set to the locale, which affects the result of
+	Sys.localeconv(), but nothing else in R itself.  (It could
+	affect addon packages.)
+
 
 
 UTILITIES

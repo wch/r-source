@@ -431,11 +431,14 @@ void setup_Rmainloop(void)
 	else setlocale(LC_COLLATE, Rlocale);
 	if((p = getenv("LC_TIME"))) setlocale(LC_TIME, p);
 	else setlocale(LC_TIME, Rlocale);
+	if((p = getenv("LC_MONETARY"))) setlocale(LC_MONETARY, p);
+	else setlocale(LC_MONETARY, Rlocale);
     }
 #else
     setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
     setlocale(LC_COLLATE, "");/*- alphabetically sorting */
     setlocale(LC_TIME, "");/*- names and defaults for date-time formats */
+    setlocale(LC_MONETARY, "");/*- currency units */
     /* setlocale(LC_MESSAGES,""); */
 #endif
 #endif

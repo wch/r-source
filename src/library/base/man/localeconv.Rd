@@ -3,10 +3,21 @@
 \alias{Sys.localeconv}
 \title{Find Details of the Numerical Representations in the Current Locale}
 \description{
-  Get details of the numerical representations in the current locale.
+  Get details of the numerical and monetary representations in the
+  current locale.
 }
 \usage{
 Sys.localeconv()
+}
+\details{
+  These settings are usually controlled by the environment variables
+  \code{LC_NUMERIC} and \code{LC_MONETARY} and if not set the values of
+  \code{LC_ALL} or \code{LANG}.
+
+  Normally \R is run without looking at the value of \code{LC_NUMERIC},
+  so the decimal point remains '\code{.}'.  So the first three of these
+  values will not be useful unless you have set \code{LC_NUMERIC} in
+  the current \R session.
 }
 \value{
   A character vector with 18 named components. See your ISO C
@@ -16,13 +27,11 @@ Sys.localeconv()
   case the value will be \code{NULL}.
 }
 \seealso{
-  \code{\link{Sys.setlocale}} for ways to set locales:
-  by default \R uses the C locale for \code{"LC_NUMERIC"}
-  and \code{"LC_MONETARY"}.
+  \code{\link{Sys.setlocale}} for ways to set locales.
 }
 \examples{
 Sys.localeconv()
-## The results in the default C locale are
+## The results in the C locale are
 ##    decimal_point     thousands_sep          grouping   int_curr_symbol 
 ##              "."                ""                ""                "" 
 ##  currency_symbol mon_decimal_point mon_thousands_sep      mon_grouping 
