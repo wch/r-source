@@ -38,7 +38,7 @@ binary-arch: build
 	(cd debian/tmp/usr/lib/R/etc; rm -rf older-stuff undoc config.guess config.sub tasks)
 	sed -e '/^RHOME=.*/s::RHOME=/usr/lib/R:' < bin/R > debian/tmp/usr/bin/R
 	chmod +x debian/tmp/usr/bin/R
-	sed -e '1s:local/::' < doc/keyword-test > debian/tmp/usr/lib/R/doc/keyword-test
+#	sed -e '1s:local/::' < doc/keyword-test > debian/tmp/usr/lib/R/doc/keyword-test
 	cp -a debian/tmp/usr/bin/R debian/tmp/usr/lib/R/bin
 	dh_installdocs
 	(cd debian/tmp/usr/doc/r-base && ln -s ../../lib/R/html .)
