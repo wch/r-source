@@ -1,0 +1,27 @@
+#
+# ${RHOME}/tests/Makefile
+
+srcdir = .
+
+RHOME= ..
+
+R= $(RHOME)/bin/rterm  --vanilla
+
+TESTsrc = simple-true.R arith-true.R arith.R d-p-q-r-tests.R \
+	 is-things.R primitive-funs.R eval-etc.R print-tests.R 
+
+TESTout = $(TESTsrc:.R=.Rout)
+
+strict-tests: $(TESTout)
+
+clean:
+	@rm -f *.Rout *.Rout.fail
+
+%.Rout: %.R
+	@rm -f $@.fail
+	@(SRCDIR=$(srcdir); export SRCDIR; \
+	  echo "$(R) < $< > $@"; \
+	  $(R) < $< > $@)
+	@echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
+	@$(srcdir)/Rdiff $@ $(srcdir)/$@.save || (mv $@ $@.fail && exit 1)
+	@echo " OK"
