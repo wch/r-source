@@ -88,6 +88,8 @@ extern OSStatus OpenPrintDialog(WindowRef window);
 
 /* Items for the Tools menu */
 #define kRCmdFileShow		'fshw'
+#define kRCmdEditFile		'edtf'
+
 
 /* Items for the Tools menu */
 #define kRCmdShowWSpace		'dols'
@@ -157,7 +159,7 @@ void RescaleInOut(double prop);
 
 
 OSErr DoSelectDirectory( void );
-OSStatus SelectFile(FSSpec *outFSSpec,  char *Title);
+OSStatus SelectFile(FSSpec *outFSSpec,  char *Title, Boolean saveit, Boolean HaveFName);
 OSStatus FSPathMakeFSSpec(const UInt8 *path, FSSpec *spec, Boolean *isDirectory);
 OSStatus FSMakePath(SInt16 volRefNum, SInt32 dirID, ConstStr255Param name, UInt8 *path,
 	UInt32 maxPathSize);
@@ -245,6 +247,7 @@ void mac_savehistory(char *file);
 void mac_loadhistory(char *file);
 SEXP Raqua_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP Raqua_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
+OSStatus SaveWindow(WindowRef window, Boolean ForceNewFName);
 
 MenuRef HelpMenu = NULL; /* Will be the Reference to Apple's Help Menu */
 static 	short 	RHelpMenuItem=-1;
@@ -364,10 +367,10 @@ void Raqua_StartConsole(void)
                     goto noconsole;
 		        
 			
-                err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&OutframeID);
-                err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleOutObject);
-                err = SetWindowProperty(ConsoleWindow,'GRIT','tFrm',sizeof(TXNFrameID),&InframeID);
-                err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleInObject);
+                err = SetWindowProperty(ConsoleWindow,'RCON','tFrm',sizeof(TXNFrameID),&OutframeID);
+                err = SetWindowProperty(ConsoleWindow,'RCON','tObj',sizeof(TXNObject),&RConsoleOutObject);
+                err = SetWindowProperty(ConsoleWindow,'RCON','tFrm',sizeof(TXNFrameID),&InframeID);
+                err = SetWindowProperty(ConsoleWindow,'RCON','tObj',sizeof(TXNObject),&RConsoleInObject);
             }
 
         } 
@@ -649,6 +652,9 @@ static OSStatus KeybHandler(EventHandlerCallRef inCallRef, EventRef REvent, void
  UInt32		RKeyCode;
  char c;
  
+ if(FrontWindow() != ConsoleWindow)
+  return(err);
+  
  if(!EditingFinished)
   return(err);
   
@@ -859,6 +865,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
         FSSpec 			tempfss;
         char			buf[300],cmd[2500];
         WindowRef		EventWindow = NULL; 
+        int len;
 
 	switch ( GetEventClass( inEvent ) )
 	{
@@ -874,7 +881,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               
 /* File Menu */
               case kHICommandOpen:
-               result = SelectFile(&tempfss,"Select File to Source");
+               result = SelectFile(&tempfss,"Select File to Source", false, false);
                if(result != noErr)
                 return err;
                result = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, buf, 300);  
@@ -882,8 +889,16 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                consolecmd(cmd);
               break;
               
+              case kHICommandSave:
+               SaveWindow(FrontWindow(),false);  
+              break;
+          
+              case kHICommandSaveAs:
+               SaveWindow(FrontWindow(),true);  
+              break;
+                
               case kRCmdFileShow:
-               result = SelectFile(&tempfss,"Select File to Show");
+               result = SelectFile(&tempfss,"Select File to Show",false, false);
                if(result != noErr)
                 return err;
                result = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, buf, 300);  
@@ -892,9 +907,15 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
               break;
               
               case kHICommandNew:
-               fprintf(stderr,"\n open a new editable window");
+               result = NewEditWindow(NULL);
               break;
              
+              case kRCmdEditFile:
+               result = SelectFile(&tempfss,"Select File to Edit",false, false);
+               result = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, buf, 300);  
+               result = NewEditWindow(buf);
+              break;
+
               case kHICommandPrint:
                OpenPrintDialog(FrontWindow());
               break; 
@@ -1032,7 +1053,102 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 }
 
 
+OSStatus SaveWindow(WindowRef window, Boolean ForceNewFName){
+    OSStatus	err = noErr;
+    char	filename[300];
+    FSSpec 	tempfss;
+    Str255	WinTitle;
+    char 	*buf;
+    int 	fsize, txtlen, i;
+    TXNObject	tmpObj;
+    Handle 	DataHandle;
+    FILE 	*fp;
+   
+    
+    if(window == NULL)
+     return(-1);
+     
+    if(window == ConsoleWindow){  
+     if( GetWindowProperty(window,'RCON', 'fssp', sizeof(FSSpec), NULL, &tempfss) != noErr){
+       ForceNewFName = true;
+       CopyCStringToPascal("RConsole.txt", tempfss.name);
+      }
+     if(ForceNewFName) 
+      err = SelectFile(&tempfss,"Choose Where to Save File", true, ForceNewFName);
+    } else {
+        if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+            if( (err = GetWindowProperty(window,'REDT', 'fssp', sizeof(FSSpec), NULL, &tempfss)) != noErr){ 
+                    ForceNewFName = true;
+                    GetWTitle( window, tempfss.name );
+                } 
+                   
+            if(ForceNewFName) 
+                err = SelectFile(&tempfss,"Choose Where to Save File", true, ForceNewFName);
+        } else err = -1;
+    }
+    
+    if(err != noErr)
+        return err;
 
+    err = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, filename, 300);  
+ 
+       if(window == ConsoleWindow){
+        txtlen = TXNDataSize(RConsoleOutObject)/2;
+        err = TXNGetDataEncoded(RConsoleOutObject, 0, txtlen, &DataHandle, kTXNTextData);
+    } else {
+             if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+                txtlen = TXNDataSize(tmpObj)/2;
+                err = TXNGetDataEncoded(tmpObj, 0, txtlen, &DataHandle, kTXNTextData);
+             } else err = -1;
+             
+    }
+        
+        
+    if(err != noErr)
+     return err;
+         
+    HLock( DataHandle );
+    buf = malloc(txtlen+1);
+    if(buf != NULL){
+        strncpy(buf,*DataHandle,txtlen);
+        for(i=0;i<txtlen;i++){
+            if( buf[i] == '\r') 
+                buf[i] = '\n';
+        } 
+        buf[txtlen] = '\0';
+    } else {
+     err = -1;
+     goto  nomem;        
+    }
+    if( (fp = R_fopen(R_ExpandFileName(filename), "w")) ){
+        fprintf(fp, "%s", buf);
+        fclose(fp);
+    } else fprintf(stderr,"\n no fp");
+    free(buf);
+
+nomem:        
+    HUnlock( DataHandle );
+    if(DataHandle)
+        DisposeHandle( DataHandle );
+
+    if(err != noErr)
+     return err;
+     
+    if(window == ConsoleWindow){
+         err = SetWindowProperty(window,'RCON', 'fssp', sizeof(FSSpec), &tempfss);
+        return err;
+    }
+    
+    if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+        err = SetWindowProperty(window,'REDT', 'fssp', sizeof(FSSpec), &tempfss);
+        SetWTitle(window,tempfss.name);
+        return err;
+     }
+           
+
+}
+
+   
 void RescaleInOut(double prop)
 {  
   Rect 	WinBounds, InRect, OutRect;
@@ -1354,16 +1470,16 @@ int NewEditWindow(char *fileName)
     SInt16 	refNum = 0;
     TXNFrameOptions	frameOptions;
     SInt16      tempFileRefNum;
-    Boolean isDirectory;
+    Boolean isDirectory, WeHaveFSS = false;
     char buf[300], filenm[300], *fbuf=NULL;
     FInfo             fileInfo;
     TXNControlTag tabtag = kTXNTabSettingsTag;
     TXNControlData tabdata;
     TXNBackground RBGInfo;   
     TXNTypeAttributes	typeAttr;
-        SInt16                  fontID;
-        Str255			fontname;
-  int fsize,flen;
+    SInt16                  fontID;
+    Str255			fontname;
+    int fsize,flen;
     FILE *fp;
                           
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNDrawGrowIconMask; 
@@ -1377,19 +1493,24 @@ int NewEditWindow(char *fileName)
     
     InstallStandardEventHandler( GetWindowEventTarget(EditWindow));
 
-    err = FSPathMakeFSSpec(fileName, &fsspec, &isDirectory);
-    if(err != noErr)
-     goto fail;
-     
-    CopyPascalStringToC(fsspec.name,buf);
-
+    if(fileName != NULL){
+     err = FSPathMakeFSSpec(fileName, &fsspec, &isDirectory);
+     if(err != noErr)
+      goto fail;
+     CopyPascalStringToC(fsspec.name,buf);
+     WeHaveFSS = true;
+    } else
+     strcpy(buf,"New Edit Window");
+    
     CopyCStringToPascal(buf,Title);
     SetWTitle(EditWindow, Title);
-
-    err = FSpGetFInfo(&fsspec,&fileInfo);
-    if(err != noErr)
-     goto fail;
    
+    if(WeHaveFSS){
+     err = FSpGetFInfo(&fsspec,&fileInfo);
+     if(err != noErr)
+      goto fail;
+    }
+    
     if(fileInfo.fdType == NULL)
         fileInfo.fdType = kTXNTextFile;
     
@@ -1443,12 +1564,15 @@ int NewEditWindow(char *fileName)
 
     err = SetWindowProperty(EditWindow,'REDT','robj', sizeof(TXNObject), &REditObject);
     err = SetWindowProperty(EditWindow,'REDT','rfrm', sizeof(TXNFrameID), &EditFrameID);
-    err = SetWindowProperty(EditWindow,'REDT', 'fssp', sizeof(fsspec), &fsspec);
-    fsize = strlen(fileName);
-    err = SetWindowProperty(EditWindow, 'REDT', 'fsiz', sizeof(int), &fsize);
-    err = SetWindowProperty(EditWindow, 'REDT', 'fnam', fsize, fileName);
-
-    SetWindowProxyFSSpec(EditWindow,&fsspec);
+    if(WeHaveFSS){
+     err = SetWindowProperty(EditWindow,'REDT', 'fssp', sizeof(fsspec), &fsspec);
+     SetWindowProxyFSSpec(EditWindow,&fsspec);
+    }
+    if(fileName != NULL){
+     fsize = strlen(fileName);
+     err = SetWindowProperty(EditWindow, 'REDT', 'fsiz', sizeof(int), &fsize);
+     err = SetWindowProperty(EditWindow, 'REDT', 'fnam', fsize, fileName);
+    }
     SetWindowModified(EditWindow,false);
 
     err = InstallWindowEventHandler( EditWindow, NewEventHandlerUPP(DoCloseHandler), 
@@ -1456,7 +1580,8 @@ int NewEditWindow(char *fileName)
                                           RCloseWinEvent, (void *)EditWindow, NULL);
                     
     TXNActivate(REditObject, EditFrameID, kScrollBarsAlwaysActive);
-    if( (fp = R_fopen(R_ExpandFileName(fileName), "r")) ){
+    if(WeHaveFSS){
+     if( (fp = R_fopen(R_ExpandFileName(fileName), "r")) ){
         fseek(fp, 0L, SEEK_END);
         flen = ftell(fp);
         rewind(fp);
@@ -1468,8 +1593,8 @@ int NewEditWindow(char *fileName)
          free(fbuf);
          }
         fclose(fp);
+     }
     }
-
     TXNSetSelection(REditObject,0,0);              
     ShowWindow(EditWindow);
     BeginUpdate(EditWindow);
@@ -1515,7 +1640,7 @@ int Raqua_ChooseFile(int new, char *buf, int len)
 
   *buf = '\0';
    
-  if( SelectFile(&tempfss,"Choose file name") == noErr){
+  if( SelectFile(&tempfss,"Choose file name",false,false) == noErr){
      err = FSMakePath(tempfss.vRefNum, tempfss.parID, tempfss.name, fname, 300);  
      strncpy(buf, fname, len);
      buf[len - 1] = '\0';
@@ -1759,20 +1884,26 @@ BadParameter:
 }
 
 
-OSStatus SelectFile(FSSpec *outFSSpec,  char *Title)
+OSStatus SelectFile(FSSpec *outFSSpec,  char *Title, Boolean saveit, Boolean HaveFName)
 {
     NavDialogOptions    dialogOptions;
     NavEventUPP         eventProc = nil; 
     NavObjectFilterUPP  filterProc = nil;
     OSErr               anErr = noErr;
-    
+    char 		fname[300], outname[300];
+    Boolean		ItExists = false;
     
     /*  Specify default options for dialog box */
     anErr = NavGetDefaultDialogOptions(&dialogOptions);
 
     CopyCStringToPascal(Title,dialogOptions.message);
 
-         
+     
+    if( HaveFName ){
+     CopyPascalStringToC(outFSSpec->name, fname);
+     CopyCStringToPascal(fname,dialogOptions.savedFileName);
+    }
+     
     if (anErr == noErr)
     {
         /*  Adjust the options to fit our needs
@@ -1792,10 +1923,13 @@ OSStatus SelectFile(FSSpec *outFSSpec,  char *Title)
             /* Call NavGetFile() with specified options and
                declare our app-defined functions and type list
              */
-             anErr = NavGetFile (nil, &reply, &dialogOptions,
-                                nil, nil, nil,
-                                deftypeList, nil);     
-               
+            if(saveit)
+             anErr = NavPutFile(nil, &reply, &dialogOptions, nil, 
+                                nil, 'ttxt', nil);
+            else
+             anErr = NavGetFile(nil, &reply, &dialogOptions, nil, nil,
+                                nil, deftypeList, nil);     
+                                                
             if (anErr == noErr && reply.validRecord)
             {
                 /*  Deal with multiple file selection */
@@ -1832,6 +1966,22 @@ OSStatus SelectFile(FSSpec *outFSSpec,  char *Title)
         }
     }
 
+            
+    if( FSMakePath(outFSSpec->vRefNum, outFSSpec->parID, outFSSpec->name, outname, 300) != noErr)
+     ItExists = false;
+    else
+     ItExists = true;
+     
+    if(saveit && !ItExists){
+        SInt16	dataForkRefNum = -1 ;
+        FSpCreateResFile(outFSSpec, 'ttxt', 'TEXT', smSystemScript);
+        if( (anErr = ResError()) != noErr) 
+         goto cleanup;
+        if( (anErr = FSpOpenDF(outFSSpec, fsRdWrPerm, &dataForkRefNum)) != noErr)
+         goto cleanup;
+        if ( dataForkRefNum != -1 )
+         FSClose ( dataForkRefNum ) ;
+    }
 cleanup:  
       return anErr;
 }
@@ -2049,19 +2199,15 @@ void Raqua_ProcessEvents(void)
     EventRef		theEvent;
     EventTargetRef	theTarget = GetEventDispatcherTarget();
 
-    if(CheckEventQueueForUserCancel()){  
-	Rprintf("\n");
-	error("user break");
-	raise(SIGINT);
-	return;
-    }
+    if(CheckEventQueueForUserCancel())
+       onintr();
+
    
    if( ReceiveNextEvent(0, NULL, kEventDurationNoWait, true, &theEvent) == noErr ){
      SendEventToEventTarget( theEvent, theTarget );    
      ReleaseEvent( theEvent );
     }
 }
-
 
 
 
