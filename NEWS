@@ -102,6 +102,8 @@ BUG FIXES
 
     o	aggregate.ts is closer to S-PLUS's aggregate.rts.
 
+    o	quantile(x) now works when x contains several +/- Inf's.
+
 
 	*********************************************************
 	*							*
