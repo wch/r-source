@@ -76,10 +76,10 @@ SEXP do_codesgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 				iy = INTEGER(y)[i];
 				break;
 			case REALSXP:
-				if (NAN(yi)) iy = NA_INTEGER;
+				if (ISNAN(REAL(y)[i])) iy = NA_INTEGER;
 				else {
 					yi = floor(REAL(y)[i]+0.5);
-					if (NAN(yi) || iy < 1 || yi > lx)
+					if (ISNAN(yi) || yi < 1 || yi > lx)
 						iy = NA_INTEGER;
 					else
 						iy = NA_INTEGER;
@@ -461,12 +461,12 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 		break;
 	case REALSXP:
 		for (i = 0; i < length(x); i++)
-			LOGICAL(ans)[i] = NAN(REAL(x)[i]);
+			LOGICAL(ans)[i] = ISNAN(REAL(x)[i]);
 		break;
 	case CPLXSXP:
 		for (i = 0; i < length(x); i++)
-			LOGICAL(ans)[i] = (NAN(COMPLEX(x)[i].r)
-					|| NAN(COMPLEX(x)[i].i));
+			LOGICAL(ans)[i] = (ISNAN(COMPLEX(x)[i].r)
+					|| ISNAN(COMPLEX(x)[i].i));
 		break;
 	case STRSXP:
 		for (i = 0; i < length(x); i++)
@@ -486,14 +486,14 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 					LOGICAL(ans)[i] = (INTEGER(CAR(x))[0] == NA_INTEGER);
 					break;
 				case REALSXP:
-					LOGICAL(ans)[i] = NAN(REAL(CAR(x))[0]);
+					LOGICAL(ans)[i] = ISNAN(REAL(CAR(x))[0]);
 					break;
 				case STRSXP:
 					LOGICAL(ans)[i] = (STRING(CAR(x))[0] == NA_STRING);
 					break;
 				case CPLXSXP:
-					LOGICAL(ans)[i] = (NAN(COMPLEX(CAR(x))[0].r)
-						|| NAN(COMPLEX(CAR(x))[0].i));
+					LOGICAL(ans)[i] = (ISNAN(COMPLEX(CAR(x))[0].r)
+						|| ISNAN(COMPLEX(CAR(x))[0].i));
 					break;
 				}
 			}
@@ -739,7 +739,7 @@ static SEXP coerceToLogical(SEXP v)
 		break;
 	case REALSXP:
 		for (i = 0; i < n; i++) {
-			if(NAN(REAL(v)[i]))
+			if(ISNAN(REAL(v)[i]))
 				LOGICAL(ans)[i] = NA_LOGICAL;
 			else
 				LOGICAL(ans)[i] = (REAL(v)[i] != 0);
@@ -747,7 +747,7 @@ static SEXP coerceToLogical(SEXP v)
 		break;
 	case CPLXSXP:
 		for (i = 0; i < n; i++) {
-			if(NAN(COMPLEX(v)[i].r) || NAN(COMPLEX(v)[i].i))
+			if(ISNAN(COMPLEX(v)[i].r) || ISNAN(COMPLEX(v)[i].i))
 				LOGICAL(ans)[i] = NA_LOGICAL;
 			else
 				LOGICAL(ans)[i] = (COMPLEX(v)[i].r != 0 || COMPLEX(v)[i].i != 0);
@@ -879,7 +879,7 @@ static SEXP coerceToInteger(SEXP v)
 		break;
 	case REALSXP:
 		for (i = 0; i < n; i++) {
-			if(NAN(REAL(v)[i]) )
+			if(ISNAN(REAL(v)[i]) )
 				INTEGER(ans)[i] = NA_INTEGER;
 			else if (REAL(v)[i] > INT_MAX) {
 				INTEGER(ans)[i] = INT_MAX;
@@ -894,7 +894,7 @@ static SEXP coerceToInteger(SEXP v)
 		break;
 	case CPLXSXP:
 		for (i = 0; i < n; i++) {
-			if (NAN(COMPLEX(v)[i].r) || NAN(COMPLEX(v)[i].i))
+			if (ISNAN(COMPLEX(v)[i].r) || ISNAN(COMPLEX(v)[i].i))
 				INTEGER(ans)[i] = NA_INTEGER;
 			else if (COMPLEX(v)[i].r > INT_MAX) {
 				warn = 1;
@@ -1056,7 +1056,7 @@ static SEXP coerceToComplex(SEXP v)
 		break;
 	case REALSXP:
 		for (i = 0; i < n; i++) {
-			if (NAN(REAL(v)[i])) {
+			if (ISNA(REAL(v)[i])) {
 				COMPLEX(ans)[i].r = NA_REAL;
 				COMPLEX(ans)[i].i = NA_REAL;
 			}

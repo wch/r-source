@@ -30,11 +30,11 @@
 
 double dt(double x, double n)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || isnan(n) ||
+    if (ISNAN(x) || ISNAN(n))
+	return x + n;
 #endif
-	n <= 0.0) {
+    if (n <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

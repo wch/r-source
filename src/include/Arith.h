@@ -41,14 +41,18 @@ extern double	R_NaReal;		/* NA_REAL */
 
 #define MATH_CHECK(call)	(call)
 #define FINITE(x)		finite(x)
-#define NAN(x)			((x)!=(x))
+#define ISNAN(x)		((x)!=(x))
+#define ISNA(x)			R_IsNA(x)
 
 #else
 
 #define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
 #define FINITE(x)		((x)!=NA_REAL)
-#define NAN(x)			((x)!=NA_REAL)
+#define ISNAN(x)		((x)!=NA_REAL)
+#define ISNA(x)			((x)!=NA_REAL)
 
 #endif
+
+#define NAN(x)			ISNAN(x)
 
 #endif

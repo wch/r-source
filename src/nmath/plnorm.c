@@ -30,11 +30,11 @@
 
 double plnorm(double x, double logmean, double logsd)
 {
-    if (
 #ifdef IEEE_754
-	!finite(x) || !finite(logmean) || !finite(logsd) ||
+    if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
+	return x + logmean + logsd;
 #endif
-	logsd <= 0) {
+    if (logsd <= 0) {
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }

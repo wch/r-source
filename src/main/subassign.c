@@ -407,7 +407,7 @@ static SEXP vectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 			if(ii == NA_INTEGER) continue;
 			ii = ii - 1;
 			ry = REAL(y)[i % ny];
-			if(!FINITE(ry)) {
+			if(ISNA(ry)) {
 				COMPLEX(x)[ii].r = NA_REAL;
 				COMPLEX(x)[ii].i = NA_REAL;
 			}
@@ -630,7 +630,7 @@ static SEXP matrixAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 				ii = ii - 1;
 				ij = ii + jj * nr;
 				ry = REAL(y)[k];
-				if(!FINITE(ry)) {
+				if(ISNA(ry)) {
 					COMPLEX(x)[ij].r = NA_REAL;
 					COMPLEX(x)[ij].i = NA_REAL;
 				}
@@ -814,7 +814,7 @@ static SEXP arrayAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 		case 1514:	/* complex   <- real      */
 
 			ry = REAL(y)[i % ny];
-			if(!FINITE(ry)) {
+			if(ISNA(ry)) {
 				COMPLEX(x)[ii].r = NA_REAL;
 				COMPLEX(x)[ii].i = NA_REAL;
 			}
@@ -1321,7 +1321,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 		case 1514:	/* complex   <- real      */
 
-			if(!FINITE(REAL(y)[0])) {
+			if(ISNA(REAL(y)[0])) {
 				COMPLEX(x)[offset].r = NA_REAL;
 				COMPLEX(x)[offset].i = NA_REAL;
 			}

@@ -30,11 +30,10 @@
 
 double dgeom(double x, double p)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(p) ||
+    if (ISNAN(x) || ISNAN(p)) return x + p;
 #endif
-	p <= 0 || p >= 1) {
+    if (p <= 0 || p >= 1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

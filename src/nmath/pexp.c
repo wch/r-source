@@ -31,11 +31,11 @@
 
 double pexp(double x, double scale)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(scale))
+	return x + scale;
 #endif
-	scale <= 0.0) {
+    if (scale <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

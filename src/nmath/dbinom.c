@@ -30,12 +30,12 @@
 
 double dbinom(double x, double n, double p)
 {
-    n = floor(n + 0.5);
-    if(
 #ifdef IEEE_754
-	isnan(x) || !finite(n) || !finite(p) ||
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(n) || ISNAN(p)) return x + n + p;
 #endif
-	n <= 0 || p < 0 || p > 1) {
+    n = floor(n + 0.5);
+    if(n <= 0 || p < 0 || p > 1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

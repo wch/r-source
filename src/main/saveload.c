@@ -96,7 +96,7 @@ static int AsciiInInteger(FILE *fp)
 static void AsciiOutReal(FILE *fp, double x)
 {
 	if(!FINITE(x)) {
-		if(NAN(x)) fprintf(fp, "NA");
+		if(ISNAN(x)) fprintf(fp, "NA");
 		else if (x < 0) fprintf(fp, "-Inf");
 		else fprintf(fp, "Inf");
 	}
@@ -116,7 +116,7 @@ static double AsciiInReal(FILE *fp)
 
 static void AsciiOutComplex(FILE *fp, complex x)
 {
-	if(NAN(x.r) || NAN(x.i))
+	if(ISNAN(x.r) || ISNAN(x.i))
 		fprintf(fp, "NA NA");
 	else fprintf(fp, "%g %g", x.r, x.i);
 }

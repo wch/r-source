@@ -205,10 +205,11 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
     int left, right, sleft;
     int mnl, mxl, rt, mxsl, mxns, mF;
     int neg, sgn, kpower, nsig;
-    int i, naflag, posinf, neginf;
+    int i, naflag, nanflag, posinf, neginf;
 
     eps = pow(10.0, -(double)print_digits);
 
+    nanflag = 0;
     naflag = 0;
     posinf = 0;
     neginf = 0;
@@ -218,10 +219,13 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
 
     for (i=0; i<l; i++) {
 	if (!FINITE(x[i])) {
-	    if(NAN(x[i])) naflag = 1;
 #ifdef IEEE_754
+	    if(ISNA(x[i])) naflag = 1;
+	    else if(ISNAN(x[i])) nanflag = 1;
 	    else if(x[i] > 0) posinf = 1;
 	    else neginf = 1;
+#else
+	    nanflag = 1;
 #endif
 	} else {
 	    scientific(&x[i], &sgn, &kpower, &nsig);
@@ -271,49 +275,60 @@ void formatReal(double *x, int l, int *m, int *n, int *e)
     if (naflag && *m < print_na_width)
 	*m = print_na_width;
 #ifdef IEEE_754
+    if (nanflag && *m < 3) *m = 3;
     if (posinf && *m < 3) *m = 3;
     if (neginf && *m < 4) *m = 4;
 #endif
 }
 
-#ifdef COMPLEX_DATA
+
 void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 				      int *mi, int *ni, int *ei)
 {
-	int left, right, sleft;
-	int rt, mnl, mxl, mxsl, mxns, mF;
-	int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
-	int neg, sgn;
-	int i, kpower, nsig;
-	int naflag;
+    int left, right, sleft;
+    int rt, mnl, mxl, mxsl, mxns, mF;
+    int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
+    int neg, sgn;
+    int i, kpower, nsig;
+    int naflag;
 #ifdef IEEE_754
-	int posinf;
+    int rnanflag, rposinf, rneginf, inanflag, iposinf, ineginf;
 #endif
 
-	eps = pow(10.0, -(double)print_digits);
+    eps = pow(10.0, -(double)print_digits);
 
-	naflag = 0;
+    naflag = 0;
 #ifdef IEEE_754
-	posinf;
+    rnanflag = 0;
+    rposinf = 0;
+    rneginf = 0;
+    inanflag = 0;
+    iposinf = 0;
+    ineginf = 0;
 #endif
-	neg = 0;
+    neg = 0;
 
-	rt  =  mxl =  mxsl =  mxns = INT_MIN;
-	i_rt= i_mxl= i_mxsl= i_mxns= INT_MIN;
-	i_mnl = mnl = INT_MAX;
+    rt  =  mxl =  mxsl =  mxns = INT_MIN;
+    i_rt= i_mxl= i_mxsl= i_mxns= INT_MIN;
+    i_mnl = mnl = INT_MAX;
 
-	for (i=0; i<l; i++) {
+    for (i=0; i<l; i++) {
 
+	if(ISNA(x[i].r) || ISNA(x[i].i)) {
+	    naflag = 1;
+	}
+	else {
+	    
 	    /* real part */
 
-	    if(!FINITE(x[i].r)) {
-		if (NAN(x[i].r)) naflag = 1;
 #ifdef IEEE_754
-		else posinf = 1;
-#endif
-		goto done;
+	    if(!FINITE(x[i].r)) {
+		if (ISNAN(x[i].r)) rnanflag = 1;
+		else if (x[i].r > 0) rposinf = 1;
+		else rneginf = 1;
 	    }
 	    else {
+#endif
 
 		scientific(&(x[i].r), &sgn, &kpower, &nsig);
 
@@ -329,19 +344,18 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 		if (nsig > mxns) mxns = nsig;	/* max sig digits */
 
 	    }
-		/* imaginary part */
+	    /* imaginary part */
 
-		/* this is always unsigned */
-		/* we explicitly put the sign in when we print */
+	    /* this is always unsigned */
+	    /* we explicitly put the sign in when we print */
 
-	    if(!FINITE(x[i].i)) {
-		if (NAN(x[i].i)) naflag = 1;
 #ifdef IEEE_754
-		else posinf = 1;
-#endif
-	       	goto done;
+	    if(!FINITE(x[i].i)) {
+		if (ISNAN(x[i].i)) inanflag = 1;
+		else iposinf = 1;
 	    }
             else {
+#endif
 
 		scientific(&(x[i].i), &sgn, &kpower, &nsig);
 
@@ -355,24 +369,16 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 		if (sleft> i_mxsl) i_mxsl = sleft;
 		if (nsig > i_mxns) i_mxns = nsig;
 	    }
-	done:
-		;
+	  done:
+	    ;
 	}
+    }
 
-        /* overall format for real part	*/
-	/* see comments see in formatReal() */
+    /* see comments in formatReal() for details on this */
 
-	if (mnl == INT_MAX) {
-		*er = 0; *ei = 0;
-		if (naflag)
-		    *mr = print_na_width - 2;
-		else
-		    *mr = 1;    /* 3 - 2 */
-		*mi = 0;
-		*nr = 0; *ni = 0;
-		return;
-	}
+    /* overall format for real part	*/
 
+    if (mxl != INT_MIN) {
 	if (mxl < 0) mxsl = 1 + neg;
 	if (rt < 0) rt = 0;
 	mF = mxsl + rt + (rt != 0);
@@ -382,13 +388,25 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 	*nr = mxns - 1;
 	*mr = neg + (*nr > 0) + *nr + 4 + *er;
 	if (mF <= *mr) { /* IFF it needs less space : "F" (Fixpoint) format */
-		*er = 0;
-		*nr = rt;
-		*mr = mF;
+	    *er = 0;
+	    *nr = rt;
+	    *mr = mF;
 	}
+    }
+    else {
+	*er = 0;
+	*mr = 0;
+	*nr = 0;
+    }
+#ifdef IEEE_754
+    if (rnanflag && *mr < 3) *mr = 3;
+    if (rposinf && *mr < 3) *mr = 3;
+    if (rneginf && *mr < 4) *mr = 4;
+#endif
 
-        /* overall format for imaginary part */
+    /* overall format for imaginary part */
 
+    if (i_mxl != INT_MIN) {
 	if (i_mxl < 0) i_mxsl = 1;
 	if (i_rt < 0) i_rt = 0;
 	mF = i_mxsl + i_rt + (i_rt != 0);
@@ -398,14 +416,26 @@ void formatComplex(complex *x, int l, int *mr, int *nr, int *er,
 	*ni = i_mxns - 1;
 	*mi = (*ni > 0) + *ni + 4 + *ei;
 	if (mF <= *mi) { /* IFF it needs less space : "F" (Fixpoint) format */
-		*ei = 0;
-		*ni = i_rt;
-		*mi = mF;
+	    *ei = 0;
+	    *ni = i_rt;
+	    *mi = mF;
 	}
-	if (naflag && *mr < print_na_width)
-		*mr = print_na_width;
+    }
+    else {
+	*ei = 0;
+	*mi = 0;
+	*ni = 0;
+    }
 #ifdef IEEE_754
-	if (posinf && *mr < 3) *mr = 3;
+    if (inanflag && *mr < 3) *mi = 3;
+    if (iposinf && *mr < 3) *mi = 3;
+    if (ineginf && *mr < 4) *mi = 4;
 #endif
+    if(*mr < 0) *mr = 0;
+    if(*mi < 0) *mi = 0;
+
+    /* finally, ensure that there is space for NA */
+
+    if (naflag && *mr+*mi+2 < print_na_width)
+	*mr += (print_na_width -(*mr + *mi + 2));
 }
-#endif

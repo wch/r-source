@@ -32,10 +32,8 @@ double dhyper(double x, double NR, double NB, double n)
 {
     double N;
 #ifdef IEEE_754
-    if(!finite(x) || !finite(NR) || !finite(NB) || !finite(n)) {
-	ML_ERROR(ME_DOMAIN);
-	return ML_NAN;
-    }
+    if (ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
+	return x + NR + NB + n;
 #endif
     x = floor(x + 0.5);
     NR = floor(NR + 0.5);

@@ -34,11 +34,11 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 	}
 	n1 = asReal(s1);
 	n2 = asReal(s2);
-	if (NAN(n1) || NAN(n2))
-		errorcall(call, "NA argument\n");
+	if (ISNAN(n1) || ISNAN(n2))
+		errorcall(call, "NA/NaN argument\n");
 
 	if (n1 <= INT_MIN || n2 <= INT_MIN || n1 > INT_MAX || n2 > INT_MAX)
-		errorcall(call, "argument to large in magnitude\n");
+		errorcall(call, "argument too large in magnitude\n");
 
 	if (n1 <= n2) {
 		n = n2 - n1 + 1 + FLT_EPSILON;

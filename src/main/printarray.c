@@ -214,77 +214,79 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c, SEXP rl, SEXP cl)
 	}
 }
 
-#ifdef COMPLEX_DATA
 static void printComplexMatrix(SEXP sx, int offset, int r, int c, SEXP rl, SEXP cl)
 {
-	SEXP sdr, ser, swr, sdi, sei, swi, sw;
-	complex *x;
-	int *dr, *er, *wr, *di, *ei, *wi, *w;
-	int width, rlabw, clabw;
-	int i, j, jmin, jmax;
+    SEXP sdr, ser, swr, sdi, sei, swi, sw;
+    complex *x;
+    int *dr, *er, *wr, *di, *ei, *wi, *w;
+    int width, rlabw, clabw;
+    int i, j, jmin, jmax;
 
-	if (!isNull(rl)) formatString(STRING(rl), r, &rlabw, 0);
-	else rlabw = IndexWidth(r + 1) + 3;
+    if (!isNull(rl)) formatString(STRING(rl), r, &rlabw, 0);
+    else rlabw = IndexWidth(r + 1) + 3;
 
-	PROTECT(sdr = allocVector(INTSXP, c));
-	PROTECT(ser = allocVector(INTSXP, c));
-	PROTECT(swr = allocVector(INTSXP, c));
-	PROTECT(sdi = allocVector(INTSXP, c));
-	PROTECT(sei = allocVector(INTSXP, c));
-	PROTECT(swi = allocVector(INTSXP, c));
-	PROTECT(sw = allocVector(INTSXP, c));
-	UNPROTECT(7);
-	x = COMPLEX(sx)+offset;
-	dr = INTEGER(sdr);
-	er = INTEGER(ser);
-	wr = INTEGER(swr);
-	di = INTEGER(sdi);
-	ei = INTEGER(sei);
-	wi = INTEGER(swi);
-	w = INTEGER(sw);
+    PROTECT(sdr = allocVector(INTSXP, c));
+    PROTECT(ser = allocVector(INTSXP, c));
+    PROTECT(swr = allocVector(INTSXP, c));
+    PROTECT(sdi = allocVector(INTSXP, c));
+    PROTECT(sei = allocVector(INTSXP, c));
+    PROTECT(swi = allocVector(INTSXP, c));
+    PROTECT(sw = allocVector(INTSXP, c));
+    UNPROTECT(7);
+    x = COMPLEX(sx)+offset;
+    dr = INTEGER(sdr);
+    er = INTEGER(ser);
+    wr = INTEGER(swr);
+    di = INTEGER(sdi);
+    ei = INTEGER(sei);
+    wi = INTEGER(swi);
+    w = INTEGER(sw);
 
-		/* Determine the column widths */
+    /* Determine the column widths */
 
-	for (j=0; j<c; j++) {
-		formatComplex(&x[j * r], r, &wr[j], &dr[j], &er[j],
-			&wi[j], &di[j], &ei[j]);
-		if (!isNull(cl)) clabw = strlen(CHAR(STRING(cl)[j]));
-		else clabw = IndexWidth(j+1) + 3;
-		w[j] = wr[j] + wi[j] + 2;
-		if (w[j] < clabw) w[j] = clabw;
-		w[j] += PRINT_GAP;
-	}
+    for (j=0; j<c; j++) {
+	formatComplex(&x[j * r], r, &wr[j], &dr[j], &er[j],
+		      &wi[j], &di[j], &ei[j]);
+	if (!isNull(cl)) clabw = strlen(CHAR(STRING(cl)[j]));
+	else clabw = IndexWidth(j+1) + 3;
+	w[j] = wr[j] + wi[j] + 2;
+	if (w[j] < clabw) w[j] = clabw;
+	w[j] += PRINT_GAP;
+    }
 
-	jmin = 0;
-	jmax = 0;
-	while(jmin < c) {
-		width = rlabw;
-		do {
-			width += w[jmax];
-			jmax++;
-		} while(jmax < c && width+w[jmax] < PRINT_WIDTH);
+    jmin = 0;
+    jmax = 0;
+    while(jmin < c) {
+	width = rlabw;
+	do {
+	    width += w[jmax];
+	    jmax++;
+	} while(jmax < c && width+w[jmax] < PRINT_WIDTH);
 
-		Rprintf("%*s", rlabw, " ");
-		for(j=jmin; j<jmax ; j++)
-			MatrixColumnLabel(cl, j, w[j]);
-		for (i = 0; i < r; i++) {
-			MatrixRowLabel(rl, i, rlabw);
-			for (j=jmin; j<jmax; j++) {
-				if(FINITE(x[i+j*r].r) && FINITE(x[i+j*r].i)) {
-					Rprintf("%*s%s", PRINT_GAP, "", EncodeReal(x[i+j*r].r, wr[j], dr[j], er[j]));
-					if(x[i+j*r].i >= 0)
-						Rprintf("+%si", EncodeReal(x[i+j*r].i, wi[j], di[j], ei[j]));
-					else
-						Rprintf("-%si", EncodeReal(-x[i+j*r].i, wi[j], di[j], ei[j]));
-				}
-				else Rprintf("%s", EncodeReal(NA_REAL, w[j], 0, 0));
-			}
-		}
-		Rprintf("\n");
-		jmin = jmax;
-	}
-}
+	Rprintf("%*s", rlabw, " ");
+	for(j=jmin; j<jmax ; j++)
+	    MatrixColumnLabel(cl, j, w[j]);
+	for (i = 0; i < r; i++) {
+	    MatrixRowLabel(rl, i, rlabw);
+	    for (j=jmin; j<jmax; j++) {
+		if (ISNA(x[i+j*r].r) || ISNA(x[i+j*r].i))
+		    Rprintf("%s", EncodeReal(NA_REAL, w[j], 0, 0));
+		else
+#ifdef OLD
+		    Rprintf("%*s%s", PRINT_GAP, "", 
+			EncodeComplex(x[i+j*r], wr[j], dr[j], er[j],
+			    wi[j], dr[j], er[j]));
+#else
+		    Rprintf("%s", EncodeComplex(x[i+j*r],
+			    wr[j] + PRINT_GAP, dr[j], er[j],
+			    wi[j], dr[j], er[j]));
 #endif
+	    }
+	}
+	Rprintf("\n");
+	jmin = jmax;
+    }
+}
 
 static void printStringMatrix(SEXP sx, int offset, int r, int c, int quote, SEXP rl, SEXP cl)
 {

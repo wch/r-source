@@ -61,7 +61,7 @@ double lgamma(double x)
     signgam = 1;
 
 #ifdef IEEE_754
-    if(isnan(x)) return ML_NAN;
+    if(ISNAN(x)) return x;
 #endif
 
     y = fabs(x);

@@ -31,11 +31,11 @@
 double df(double x, double n1, double n2)
 {
 	double a;
-	if (
 #ifdef IEEE_754
-	    isnan(x) || !finite(n2) || !finite(n2) ||
+    if (ISNAN(x) || ISNAN(n1) || ISNAN(n2))
+	return x + n1 + n2;
 #endif
-	    n1 <= 0 || n2 <= 0) {
+	if (n1 <= 0 || n2 <= 0) {
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
 	}

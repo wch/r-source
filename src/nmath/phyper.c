@@ -31,12 +31,16 @@
 double phyper(double x, double NR, double NB, double n)
 {
     double N, xstart, xend, xr, xb, sum, term;
+
 #ifdef IEEE_754
+    if(ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))
+	return x + NR + NB + n;
     if(!finite(x) || !finite(NR) || !finite(NB) || !finite(n)) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
 #endif
+
     x = floor(x);
     NR = floor(NR + 0.5);
     NB = floor(NB + 0.5);

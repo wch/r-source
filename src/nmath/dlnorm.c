@@ -33,11 +33,11 @@ double dlnorm(double x, double logmean, double logsd)
     static double sqrpi = 0.398942280401432677939946059934;
     double y;
 
-    if(
 #ifdef IEEE_754
-	!finite(x) || !finite(logmean) || !finite(logsd) ||
+    if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
+	return x + logmean + logsd;
 #endif
-	logsd <= 0) {
+    if(logsd <= 0) {
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }

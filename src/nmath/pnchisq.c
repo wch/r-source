@@ -26,11 +26,15 @@ double pnchisq(double x, double n, double lambda)
 	double acc = 1.0e-12;
 
 	n = floor(n + 0.5);
-	if (
 #ifdef IEEE_754
-	    !isnan(x) || !finite(n) || !finite(lambda) ||
+	if (ISNAN(x) || ISNAN(n) || ISNAN(lambda))
+		return x + n + lambda;
+	if (!finite(n) || !finite(lambda)) {
+		ML_ERROR(ME_DOMAIN);
+		return ML_NAN;
+	}
 #endif
-	    n <= 0 || lambda < 0) {
+	if (n <= 0 || lambda < 0) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}

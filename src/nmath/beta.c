@@ -47,6 +47,11 @@ double beta(double a, double b)
 	    alnsml = log(d1mach(1));
     }
 
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+    if(ISNAN(a) || ISNAN(b)) return a + b;
+#endif
+
     if (a <= 0 || b <= 0) {
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;

@@ -35,6 +35,11 @@
 
 double fmod(double x, double y)
 {
-    double quot = x / y;
+    double quot;
+#ifdef IEEE_754
+    if (ISNAN(x) || ISNAN(y))
+	return x + y;
+#endif
+    quot = x / y;
     return x - (quot < 0.0 ? ceil(quot) : floor(quot)) * y;
 }

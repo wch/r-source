@@ -95,11 +95,11 @@ double qgamma(double p, double alpha, double scale)
 
     /* test arguments and initialise */
 
-    if (
 #ifdef IEEE_754
-        isnan(x) || !finite(alpha) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(alpha) || ISNAN(scale))
+	return x + alpha + scale;
 #endif 
-	p < pmin || p > pmax || alpha <= 0) {
+    if (p < pmin || p > pmax || alpha <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

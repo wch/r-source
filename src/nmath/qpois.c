@@ -39,11 +39,15 @@
 double qpois(double x, double lambda)
 {
     double mu, sigma, gamma, z, y;
-    if(
 #ifdef IEEE_754
-	isnan(x) || !finite(lambda) ||
+    if (ISNAN(x) || ISNAN(lambda))
+	return x + lambda;
+    if(!FINITE(lambda)) {
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
+    }
 #endif
-	x < 0 || x > 1 || lambda <= 0) {
+    if(x < 0 || x > 1 || lambda <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

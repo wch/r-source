@@ -67,11 +67,11 @@ double qbeta(double alpha, double p, double q)
 
 	/* test for admissibility of parameters */
 
-	if(
 #ifdef IEEE_754
-	!finite(p) || !finite(q) || !finite(alpha) ||
+	if (ISNAN(p) || ISNAN(q) || ISNAN(alpha))
+		return p + q + alpha;
 #endif
-	p < zero || q < zero || alpha < zero || alpha > 1) {
+	if(p < zero || q < zero || alpha < zero || alpha > 1) {
 		ML_ERROR(ML_DOMAIN);
 		return ML_NAN;
 	}

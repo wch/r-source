@@ -44,11 +44,11 @@ double lchoose(double n, double k)
 {
 	n = floor(n + 0.5);
 	k = floor(k + 0.5);
-	if (
 #ifdef IEEE_754
-	    !finite(n) || !finite(k) ||
+	/* NaNs propagated correctly */
+	if(ISNAN(n) || ISNAN(k)) return n + k;
 #endif
-	    k < 0 || n < k) {
+	if (k < 0 || n < k) {
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
         }
@@ -59,11 +59,11 @@ double choose(double n, double k)
 {
 	n = floor(n + 0.5);
 	k = floor(k + 0.5);
-	if (
 #ifdef IEEE_754
-	    !finite(n) || !finite(k) ||
+	/* NaNs propagated correctly */
+	if(ISNAN(n) || ISNAN(k)) return n + k;
 #endif
-	    k < 0 || n < k) {
+	if (k < 0 || n < k) {
 	    ML_ERROR(ME_DOMAIN);
 	    return ML_NAN;
         }

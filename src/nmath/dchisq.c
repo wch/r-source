@@ -30,5 +30,8 @@
 
 double dchisq(double x, double df)
 {
+#ifdef IEEE_754
+    /* NaNs propagated correctly */
+#endif
     return dgamma(x, df / 2.0, 2.0);
 }

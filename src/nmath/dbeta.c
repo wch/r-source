@@ -31,11 +31,11 @@
 double dbeta(double x, double a, double b)
 {
     double y;
-    if (
 #ifdef IEEE_754
-	!finite(a) || !finite(b) ||
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(a) || ISNAN(b)) return x + a + b;
 #endif
-	a <= 0.0 || b <= 0.0) {
+    if (a <= 0.0 || b <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

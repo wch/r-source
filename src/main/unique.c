@@ -91,30 +91,28 @@ static int iequal(SEXP x, int i, SEXP y, int j)
 
 static int requal(SEXP x, int i, SEXP y, int j)
 {
-	if(!NAN(REAL(x)[i]) && !NAN(REAL(y)[j])) {
+	if(!ISNAN(REAL(x)[i]) && !ISNAN(REAL(y)[j])) {
 		return (REAL(x)[i] == REAL(y)[j]);
 	}
-	else if(NAN(REAL(x)[i]) && NAN(REAL(y)[j])) {
+	else if(ISNAN(REAL(x)[i]) && ISNAN(REAL(y)[j])) {
 		return 1;
 	}
 	return 0;
 }
 
-#ifdef COMPLEX_DATA
 static int cequal(SEXP x, int i, SEXP y, int j)
 {
-	if(!NAN(COMPLEX(x)[i].r) && !NAN(COMPLEX(x)[i].i)
-	&& !NAN(COMPLEX(y)[j].r) && !NAN(COMPLEX(y)[j].i)) {
+	if(!ISNAN(COMPLEX(x)[i].r) && !ISNAN(COMPLEX(x)[i].i)
+	&& !ISNAN(COMPLEX(y)[j].r) && !ISNAN(COMPLEX(y)[j].i)) {
 		return COMPLEX(x)[i].r == COMPLEX(y)[j].r &&
 			COMPLEX(x)[i].i == COMPLEX(y)[j].i;
 	}
-	else if((NAN(COMPLEX(x)[i].r) || NAN(COMPLEX(x)[i].i))
-	     && (NAN(COMPLEX(y)[j].r) || NAN(COMPLEX(y)[j].i))) {
+	else if((ISNAN(COMPLEX(x)[i].r) || ISNAN(COMPLEX(x)[i].i))
+	     && (ISNAN(COMPLEX(y)[j].r) || ISNAN(COMPLEX(y)[j].i))) {
 		return 1;
 	}
 	return 0;
 }
-#endif
 
 static int sequal(SEXP x, int i, SEXP y, int j)
 {

@@ -22,11 +22,11 @@
 double dlogis(double x, double location, double scale)
 {
 	double e, f;
-	if (
 #ifdef IEEE_754
-	    isnan(x) || !finite(location) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
+	return x + location + scale;
 #endif
-	    scale <= 0.0) {
+	if (scale <= 0.0) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}

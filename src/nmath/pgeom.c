@@ -30,12 +30,12 @@
 
 double pgeom(double x, double p)
 {
-    x = floor(x);
-    if(
 #ifdef IEEE_754
-	isnan(x) || isnan(p) ||
+    if (ISNAN(x) || ISNAN(p))
+	return x + p;
 #endif
-	p <= 0 || p >= 1) {
+    x = floor(x);
+    if(p <= 0 || p >= 1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

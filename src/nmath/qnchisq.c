@@ -24,12 +24,16 @@ double qnchisq(double p, double n, double lambda)
 	double ux, lx, nx;
 	double acu = 1.0e-12;
 
-	n = floor(n + 0.5);
-	if (
 #ifdef IEEE_754
-	    !finite(p) || !finite(n) || !finite(lambda) ||
+	if (ISNAN(p) || ISNAN(n) || ISNAN(lambda))
+		return p + n + lambda;
+	if (!FINITE(n)) {
+		ML_ERROR(ME_DOMAIN);
+		return ML_NAN;
+	}
 #endif
-	    p < 0 || p >= 1 || n < 1 || lambda < 0) {
+	n = floor(n + 0.5);
+	if (p < 0 || p >= 1 || n < 1 || lambda < 0) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}

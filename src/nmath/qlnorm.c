@@ -30,11 +30,11 @@
 
 double qlnorm(double x, double logmean, double logsd)
 {
-    if(
 #ifdef IEEE_754
-        !finite(x) || !finite(logmean) || !finite(logsd) ||
+    if (ISNAN(x) || ISNAN(logmean) || ISNAN(logsd))
+	return x + logmean + logsd;
 #endif
-	x < 0 || x >= 1 || logsd <= 0) {
+    if(x < 0 || x >= 1 || logsd <= 0) {
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }

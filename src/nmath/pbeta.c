@@ -139,11 +139,12 @@ double pbeta_raw(double x, double pin, double qin)
 
 double pbeta(double x, double pin, double qin)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(pin) || !finite(qin) ||
+    if (ISNAN(x) || ISNAN(pin) || ISNAN(qin))
+	return x + pin + qin;
 #endif
-	pin <= 0 || qin <= 0) {
+
+    if (pin <= 0 || qin <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

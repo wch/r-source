@@ -17,6 +17,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/* NaNs propagated correctly */
+
 #include "Mathlib.h"
 
 double d1mach(int i)

@@ -44,12 +44,16 @@ double qnbinom(double x, double n, double p)
 {
     double P, Q, mu, sigma, gamma, z, y;
 
-    n = floor(n + 0.5);
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(n) || !finite(p) ||
+    if (ISNAN(x) || ISNAN(n) || ISNAN(p))
+	return x + n + p;
+    if (!FINITE(x)) {
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
+    }
 #endif
-	x < 0 || x > 1 || p <= 0 || p >= 1 || n <= 0) {
+    n = floor(n + 0.5);
+    if (x < 0 || x > 1 || p <= 0 || p >= 1 || n <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

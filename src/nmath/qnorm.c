@@ -50,11 +50,11 @@ double qnorm(double p, double mu, double sigma)
 {
     double q, r, val;
 
-    if (
 #ifdef IEEE_754
-	isnan(p) || !finite(mu) || !finite(sigma) ||
+    if (ISNAN(p) || ISNAN(mu) || ISNAN(sigma))
+	return p + mu + sigma;
 #endif
-	p < 0.0 || p > 1.0) {
+    if (p < 0.0 || p > 1.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

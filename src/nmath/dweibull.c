@@ -31,11 +31,11 @@
 double dweibull(double x, double shape, double scale)
 {
     double tmp1, tmp2;
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(shape) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
+	return x + shape + scale;
 #endif
-	shape <= 0 || scale <= 0) {
+    if (shape <= 0 || scale <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

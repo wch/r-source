@@ -58,8 +58,9 @@ double fround(double x, double digits)
 	double pow10, sgn, intx;
 	static double maxdigits = DBL_DIG - 1;
 
-	if(x != x) return x;
 #ifdef IEEE_754
+	if (ISNAN(x) || ISNAN(digits))
+		return x + digits;
 	if(!finite(x)) return x;
 #endif
 

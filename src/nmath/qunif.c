@@ -30,11 +30,11 @@
 
 double qunif(double x, double a, double b)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(a) || !finite(b) ||
+    if (ISNAN(x) || ISNAN(a) || ISNAN(b))
+	return x + a + b;
 #endif
-	b <= a || x < 0 || x > 1) {
+    if (b <= a || x < 0 || x > 1) {
 	ML_ERROR(ML_DOMAIN);
 	return ML_NAN;
     }

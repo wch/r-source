@@ -107,7 +107,7 @@ double gamma(double x)
     }
 
 #ifdef IEEE_754
-    if(x != x) return ML_NAN;
+    if(ISNAN(x)) return x;
 #endif
 
     y = fabs(x);

@@ -30,12 +30,12 @@
 
 double dpois(double x, double lambda)
 {
-    x = floor(x + 0.5);
-    if(
 #ifdef IEEE_754
-	isnan(x) || !finite(lambda) ||
+    if(ISNAN(x) || ISNAN(lambda))
+	return x + lambda;
 #endif
-	lambda <= 0.0) {
+    x = floor(x + 0.5);
+    if(lambda <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

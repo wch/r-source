@@ -35,11 +35,11 @@ double dnorm(double x, double mu, double sigma)
     /* sqrpi = 1 / sqrt(2 * pi) */
     static double sqrpi = 0.398942280401432677939946059934;
 
-    if (
 #ifdef IEEE_754
-    	!finite(x) || !finite(mu) || !finite(sigma) ||
+    if (ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+	return x + mu + sigma;
 #endif
-    	sigma <= 0) {
+    if (sigma <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

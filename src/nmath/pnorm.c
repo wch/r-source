@@ -114,11 +114,11 @@ double pnorm(double x, double mu, double sigma)
     /* carefully thought through.  For example, if x == mu */
     /* and sigma == 0, we still get the correct answer. */
 
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(mu) || !finite(sigma) ||
+    if(ISNAN(x) || ISNAN(mu) || ISNAN(sigma))
+	return x + mu + sigma;
 #endif
-	sigma < 0) {
+    if (sigma < 0) {
 	ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }

@@ -82,11 +82,12 @@ char *EncodeInteger(int x, int w)
 char *EncodeReal(double x, int w, int d, int e)
 {
 	char fmt[20];
-	/* BUG - Sun IEEE  & -0 */
+	/* IEEE allows signed zeros (yuck!) */
 	if (x == 0.0) x = 0.0;
 	if (!FINITE(x)) {
 #ifdef IEEE_754
-		if(NAN(x)) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+		if(ISNA(x)) sprintf(Encodebuf, "%*s", w, CHAR(print_na_string));
+		else if(ISNAN(x)) sprintf(Encodebuf, "%*s", w, "NaN");
 		else if(x > 0) sprintf(Encodebuf, "%*s", w, "Inf");
 		else sprintf(Encodebuf, "%*s", w, "-Inf");
 #else
@@ -110,70 +111,31 @@ char *EncodeReal(double x, int w, int d, int e)
 	return Encodebuf;
 }
 
-#ifdef COMPLEX_DATA
-
 char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 {
-	char fmt[64], *hashr, *hashi, *efr, *efi, *sgni;
+    char fmt[64], *efr, *efi;
 
-	/* BUG - Sun IEEE  & -0 */
-	if (x.r == 0.0) x.r = 0.0;
-	if (x.i == 0.0) x.i = 0.0;
-	if (!FINITE(x.r) || !FINITE(x.i)) {
-		if(NAN(x.r) || NAN(x.i))
-			sprintf(Encodebuf, "%*s%*s", PRINT_GAP, "", wr+wi+2, CHAR(print_na_string));
-		else
-			sprintf(Encodebuf, "%*s%*s", PRINT_GAP, "", wr+wi+2, "Inf");
-	}
-	else if (x.r == 0.0) {
-		if(ei) {
-			efi = "e";
-			if(di) hashi = "#";
-			else hashi = "";
-		}
-		else {
-			efi = "f";
-			hashi = "";
-		}
-		sprintf(fmt, "%%%s%d.%d%si",
-				hashi, wi, di, efi);
+    /* IEEE allows signed zeros */
+    /* We strip these here */
 
-		sprintf(Encodebuf, fmt, x.i);
-	}
-	else {
-		if(x.i < 0) {
-			x.i = -x.i;
-			wi -= 1;
-			sgni = "-";
-		}
-		else sgni = "+";
-		if(er) {
-			efr = "e";
-			if(dr) hashr = "#";
-			else hashr = "";
-		}
-		else {
-			efr = "f";
-			hashr = "";
-		}
-		if(ei) {
-			efi = "e";
-			if(di) hashi = "#";
-			else hashi = "";
-		}
-		else {
-			efi = "f";
-			hashi = "";
-		}
-		sprintf(fmt, "%%%s%d.%d%s%s%%%s%d.%d%si",
-				hashr, wr, dr, efr, sgni,
-				hashi, wi, di, efi);
+    if (x.r == 0.0) x.r = 0.0;
+    if (x.i == 0.0) x.i = 0.0;
 
-		sprintf(Encodebuf, fmt, x.r, x.i);
-	}
-	return Encodebuf;
+    if (ISNA(x.r) || ISNA(x.i)) {
+	sprintf(Encodebuf, "%*s%*s", PRINT_GAP, "", wr+wi+2,
+		CHAR(print_na_string));
+    }
+    else {
+	if(er) efr = "e";
+	else efr = "f";
+	if(ei) efi = "e";
+	else efi = "f";
+	sprintf(fmt,"%%%d.%d%s%%+%d.%d%si", wr, dr, efr, wi, di, efi);
+	sprintf(Encodebuf, fmt, x.r, x.i);
+	
+    }
+    return Encodebuf;
 }
-#endif
 
 	/* There is a heavy ASCII emphasis here */
 	/* Latin1 types are (rightfully) upset */

@@ -436,6 +436,11 @@ void Reset_C_alloc(void);
 char *C_alloc(long, int);
 void C_free(char *);
 
+		/* Missing Value Test */
+		/* Special NaN */
+
+int R_IsNA(double);
+
 		/* Internally Used Functions */
 
 SEXP allocArray(SEXPTYPE, SEXP);

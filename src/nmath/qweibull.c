@@ -30,11 +30,11 @@
 
 double qweibull(double x, double shape, double scale)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(shape) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(shape) || ISNAN(scale))
+	return x + shape + scale;
 #endif
-	shape <= 0 || scale <= 0 || x < 0 || x > 1) {
+    if (shape <= 0 || scale <= 0 || x < 0 || x > 1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

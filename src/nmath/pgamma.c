@@ -63,11 +63,11 @@ double pgamma(double x, double p, double scale)
 
     /* check that we have valid values for x and p */
 
-    if(
 #ifdef IEEE_754
-	isnan(x) || !finite(p) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(p) || ISNAN(scale))
+	return x + p + scale;
 #endif
-	p <= zero || scale <= zero) {
+    if(p <= zero || scale <= zero) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

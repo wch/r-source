@@ -21,11 +21,11 @@
 
 double qlogis(double x, double location, double scale)
 {
-	if (
 #ifdef IEEE_754
-	    isnan(x) || !finite(location) || !finite(scale) ||
+	if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
+		return x + location + scale;
 #endif
-	    scale <= 0.0 || x < 0 || x >= 1) {
+	if (scale <= 0.0 || x < 0 || x > 1) {
 		ML_ERROR(ME_DOMAIN);
 		return ML_NAN;
 	}

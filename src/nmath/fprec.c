@@ -61,7 +61,8 @@ double fprec(double x, double digits)
     static double max10e = DBL_MAX_EXP * M_LOG10_2;
 	
 #ifdef IEEE_754
-    if (x != x || digits != digits) return ML_NAN;
+    if (ISNAN(x) || ISNAN(digits))
+	return x + digits;
     if (!finite(x)) return x;
     if (!finite(digits)) {
 	if(digits > 0) return x;

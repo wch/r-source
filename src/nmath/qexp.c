@@ -31,11 +31,11 @@
 
 double qexp(double x, double scale)
 {
-    if (
 #ifdef IEEE_754
-	isnan(x) || !finite(scale) ||
+    if (ISNAN(x) || ISNAN(scale))
+	return x + scale;
 #endif
-	scale <= 0 || x < 0 || x >= 1) {
+    if (scale <= 0 || x < 0 || x > 1) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

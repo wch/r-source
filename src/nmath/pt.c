@@ -22,11 +22,11 @@
 double pt(double x, double n)
 {
     double val;
-    if (
 #ifdef IEEE_754
-	isnan(x) || isnan(n) ||
+    if (ISNAN(x) || ISNAN(n))
+	return x + n;
 #endif
-	n <= 0.0) {
+    if (n <= 0.0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

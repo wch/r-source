@@ -31,11 +31,12 @@
 double dcauchy(double x, double location, double scale)
 {
     double y;
-    if (
 #ifdef IEEE_754
-    	!finite(x) || !finite(location) || !finite(scale) ||
+    /* NaNs propagated correctly */
+    if (ISNAN(x) || ISNAN(location) || ISNAN(scale))
+	return x + location + scale;
 #endif
-    	scale <= 0) {
+    if (scale <= 0) {
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }

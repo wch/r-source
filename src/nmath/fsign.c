@@ -32,5 +32,9 @@
 
 double fsign(double x, double y)
 {
+#ifdef IEEE_754
+    if (ISNAN(x) || ISNAN(y))
+	return x + y;
+#endif
     return ((y >= 0) ? fabs(x) : -fabs(x));
 }
