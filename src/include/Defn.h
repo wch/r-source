@@ -645,6 +645,7 @@ SEXP promiseArgs(SEXP, SEXP);
 void Rcons_vprintf(const char *, va_list);
 void RemoveClass(SEXP, char *);
 SEXP R_LoadFromFile(FILE*, int);
+SEXP R_NewHashTable(int, int);
 extern int R_Newhashpjw(char*);
 FILE* R_OpenLibraryFile(char *);
 void R_PreserveObject(SEXP);
