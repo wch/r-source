@@ -204,12 +204,18 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                 nopkgs <- c(nopkgs, lib)
         }
         colnames(db) <- c("Package", "LibPath", "Title")
+        if((length(nopkgs) > 0) && !missing(lib.loc)) {
+            if(length(nopkgs) > 1)
+                warning(paste("libraries",
+                              paste(sQuote(nopkgs), collapse = ", "),
+                              "contain no packages"))
+            else
+                warning(paste("library",
+                              paste(sQuote(nopkgs)),
+                              "contains no package"))
+        }
 
         y <- list(header = NULL, results = db, footer = NULL)
-        ## <FIXME>
-        ## Should do something about libraries without packages, as
-	## recorded in nopkgs.
-        ## </FIXME>
         class(y) <- "libraryIQR"
         return(y)
     }
@@ -223,43 +229,41 @@ library.dynam <-
 function(chname, package = .packages(), lib.loc = NULL, verbose =
          getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
 {
-    ## <FIXME>
+    ## <NOTE>
     ## Versions of R prior to 1.4.0 had .Dyn.libs in .AutoloadEnv
     ## (and did not always ensure getting it from there).
     ## We now consistently use the base environment.
+    ## </NOTE>
+
+    sQuote <- function(s) paste("`", s, "'", sep = "")
+    
     if(!exists(".Dyn.libs", envir = NULL)) {
         assign(".Dyn.libs", character(0), envir = NULL)
     }
-    if(missing(chname) || (LEN <- nchar(chname)) == 0)
+    if(missing(chname) || (ncChname <- nchar(chname)) == 0)
         return(get(".Dyn.libs", envir = NULL))
-    nc.ext <- nchar(file.ext)
-    if(substr(chname, LEN - nc.ext + 1, LEN) == file.ext)
-        chname <- substr(chname, 1, LEN - nc.ext)
+    ncFileExt <- nchar(file.ext)
+    if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
+        chname <- substr(chname, 1, ncChname - ncFileExt)
     if(is.na(match(chname, get(".Dyn.libs", envir = NULL)))) {
-        ## <FIXME>
-        ## Do we really want `quiet = TRUE'?
-        for(pkg in .find.package(package, lib.loc, quiet = TRUE,
-                                 verbose = verbose)) {
+        for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
             file <- file.path(pkg, "libs",
                               paste(chname, file.ext, sep = ""))
             if(file.exists(file)) break
             else
                 file <- ""
         }
-        ## </FIXME>
         if(file == "") {
-            stop(paste("dynamic library `", chname, "' not found",
-                       sep = ""))
+            stop(paste("dynamic library", sQuote(chname), "not found"))
         }
         if(verbose)
-            cat("now dyn.load(", file, ")..\n", sep = "")
+            cat("now dyn.load(", file, ") ...\n", sep = "")
         dyn.load(file, ...)
         assign(".Dyn.libs",
                c(get(".Dyn.libs", envir = NULL), chname),
                envir = NULL)
     }
     invisible(get(".Dyn.libs", envir = NULL))
-    ## </FIXME>
 }
 
 require <-
@@ -321,17 +325,14 @@ function(package = .packages(), quiet = FALSE)
 }
 
 .find.package <-
-function(package, lib.loc = NULL, use.attached, quiet = FALSE,
+function(package, lib.loc = NULL, quiet = FALSE,
          verbose = getOption("verbose"))
 {
     sQuote <- function(s) paste("`", s, "'", sep = "")
 
-    if(!missing(use.attached))
-        warning(paste("argument", sQuote("use.attached"),
-                      "is deprecated"))
-    use.attached <- FALSE
+    useAttached <- FALSE
     if(is.null(lib.loc)) {
-        use.attached <- TRUE
+        useAttached <- TRUE
         lib.loc <- .libPaths()
     }
 
@@ -343,7 +344,7 @@ function(package, lib.loc = NULL, use.attached, quiet = FALSE,
 
     for(pkg in package) {
         fp <- file.path(lib.loc, pkg)
-        if(use.attached)
+        if(useAttached)
             fp <- c(.path.package(pkg, TRUE), fp)
         fp <- unique(fp[file.exists(fp)])
         if(length(fp) == 0) {
