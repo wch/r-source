@@ -10,8 +10,7 @@ export(Hershey, check.options, col2rgb, colors, colours, cm,
        palette, pdf, pictex, postscript, postscriptFont,
        postscriptFonts, ps.options, rainbow, recordGraphics,
        recordPlot, replayPlot,
-       rgb, rgb2hsv, terrain.colors, topo.colors, xfig, xinch,
-       xyinch, yinch)
+       rgb, rgb2hsv, terrain.colors, topo.colors, xfig)
 
 S3method(print, recordedplot)
 S3method(print, colorConverter)

@@ -2,7 +2,6 @@
 \alias{xinch}
 \alias{yinch}
 \alias{xyinch}
-\alias{cm}
 \title{Graphical Units}
 \description{
   \code{xinch} and \code{yinch} convert the specified number of inches
@@ -13,14 +12,11 @@
 
   \code{xyinch} does the same for a pair of numbers \code{xy},
   simultaneously.
-
-  \code{cm} translates inches in to cm (centimeters).
 }
 \usage{
 xinch(x = 1, warn.log = TRUE)
 yinch(y = 1, warn.log = TRUE)
 xyinch(xy = 1, warn.log = TRUE)
-cm(x)
 }
 \arguments{
   \item{x,y}{numeric vector}
@@ -32,8 +28,6 @@ cm(x)
 all(c(xinch(),yinch()) == xyinch()) # TRUE
 xyinch()
 xyinch #- to see that is really   delta{"usr"} / "pin"
-
-cm(1)# = 2.54
 
 ## plot labels offset 0.12 inches to the right
 ## of plotted symbols in a plot

@@ -236,6 +236,9 @@ NEW FEATURES
 	pbinom(), pf(), qbeta() and other functions using pbeta at C
 	level.)
 
+    o   the functions xinch(), yinch(), and xyinch() have been moved
+	from package 'grDevices' into package 'graphics'.
+        
     o   Replacement in a non-existent column of a data frame tries
 	harder to create a column of the correct length and so avoid a
 	corrupt data frame.
