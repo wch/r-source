@@ -98,7 +98,7 @@ void   GWdoConcatPStrings		  (Str255,Str255);
 void   doSetStandardState                 (WindowPtr);
 void   RnWrite                            (char*, SInt16);
 
-
+extern Boolean              Have_Console;
 // Function with empty content
 void R_ResetConsole(void);
 void R_FlushConsole(void);
@@ -402,7 +402,12 @@ void maintain_cmd_History(char *buf)
 /* R_WriteConsole
 This function writes the given buffer out to the console. No special actions are required. (Specify
 the length of the buffer)
+
+Now user can break lengthy output
+Jago 4 June 2001, Stefano M. Iacus
 */
+
+
 void R_WriteConsole1(char *buf, SInt32 buflen)
 {
     SInt32 i;
@@ -410,6 +415,8 @@ void R_WriteConsole1(char *buf, SInt32 buflen)
     Boolean ended = false;
     WEReference we;
     char *stringona=NULL;
+    Boolean gotEvent;
+    EventRecord event;
 
     outlen =   strlen(buf);
 
@@ -422,13 +429,16 @@ void R_WriteConsole1(char *buf, SInt32 buflen)
     we = GetWindowWE ( Console_Window );
 
     if(we)
+    { 
      WEPut(kCurrentSelection,kCurrentSelection, stringona, outlen,kTextEncodingMultiRun, 0,0,nil,nil,we );
+      QDFlushPortBuffer(GetWindowPort(Console_Window), NULL);
+    }
+    isintrpt();
      
     if(stringona)
      free(stringona);
     }
 }
-
 
 Boolean inRange(int start, int end , int back, int length)
 {
