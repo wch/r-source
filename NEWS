@@ -54,6 +54,10 @@ NEW FEATURES
 
     o	New functions substr<-() and substring<-().
 
+    o	Under Unix, shlib modules for add-on packages are now linked
+	against R as a shared library (`libR') if this exists.  (This
+	allows for improved embedding of R into other applications.)
+
 
 BUG FIXES
 
