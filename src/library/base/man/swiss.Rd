@@ -6,18 +6,18 @@
   which is in percent, i.e., in \eqn{[0,100]}.
 
   \tabular{cll}{
-    [,1] \tab Fertility		\tab \eqn{I_g}{Ig}, ``common standardized
-                                      fertility measure''\cr
-	 \tab \tab \cr
-	 \tab \bold{all} following: \tab \emph{Proportion of population}\dots\cr
-	 \tab \tab \cr
+    [,1] \tab Fertility \tab \eqn{I_g}{Ig}, ``common standardized
+                                     fertility measure''\cr
+  \tab \tab \cr
+  \tab \bold{all} following: \tab \emph{Proportion of population}\dots\cr
+  \tab \tab \cr
 
-    [,2] \tab Agriculture	\tab \% involved in agriculture as occupation\cr
-    [,3] \tab Examination	\tab \% ``draftees'' receiving highest mark\cr
-	 \tab			\tab on army examination\cr
-    [,4] \tab Education		\tab \% education beyond primary school.\cr
-    [,5] \tab Catholic		\tab \% catholic (as opposed to "protestant").\cr
-    [,6] \tab Infant.Mortality	\tab live births who live less than 1 year.\cr
+    [,2] \tab Agriculture\tab \% involved in agriculture as occupation\cr
+    [,3] \tab Examination\tab \% ``draftees'' receiving highest mark\cr
+ \tab \tab on army examination\cr
+    [,4] \tab Education \tab \% education beyond primary school.\cr
+    [,5] \tab Catholic \tab \% catholic (as opposed to "protestant").\cr
+    [,6] \tab Infant.Mortality\tab live births who live less than 1 year.\cr
   }
 }
 \description{(paraphrasing Mosteller and Tukey):
