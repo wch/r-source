@@ -1,7 +1,7 @@
-You can make an install package (rw1062.exe) in the usual Windows
-style (by default in Windows 2000 style) by using the installer kit
-Inno Setup 2.0.x, x >= 17 from www.jrsoftware.org.  (Inno Setup 3 will
-also work.)
+You can make an install package (rw1062.exe) in the current Windows
+style by using the installer kit Inno Setup 3.0.x, x >= 6 from
+jrsoftware.org.  (Inno Setup 2.0.x, x >= 17 will also work if MkRules
+is edited correctly.)
 
 You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).
@@ -13,7 +13,7 @@ files and the recommended packages by
 make distribution
 make recommended
 
-Then edit ISDIR in ../MkRules and run
+Then edit ISDIR and IS_VERSION in ../MkRules and run
 
 make
 make clean

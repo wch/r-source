@@ -31,8 +31,10 @@ TCL_VERSION = 83
 
 ## ====== configuration macros for building installers ===========
 
-# location where Inno Setup 2.0.x was installed
-ISDIR=C:/packages/Inno
+# location where Inno Setup 3.x or 2.0.x was installed
+ISDIR=C:/packages/Inno3
+# Inno Setup major version number
+IS_VERSION=3
 
 ## =================== cross-compiler settings  =================
 
