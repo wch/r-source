@@ -80,8 +80,7 @@ set.seed(seed, kind = NULL)
     }
 
     \item{\code{"Knuth-TAOCP":}}{
-      From Knuth (1997), as updated in Knuth (2002).
-      A GFSR using lagged Fibonacci sequences with
+      From Knuth (1997).  A GFSR using lagged Fibonacci sequences with
       subtraction. That is, the recurrence used is
       \deqn{X_j = (X_{j-100} - X_{j-37}) \bmod 2^{30}%
       }{X[j] = (X[j-100] - X[j-37]) mod 2^30}
@@ -93,9 +92,7 @@ set.seed(seed, kind = NULL)
     \item{\code{"Knuth-TAOCP-2002":}}{
       The 2002 version which not backwards compatible with the earlier
       version: the initialization of the GFSR from the seed was altered.
-      So although workspaces with a saved \code{.Random.seed} will
-      work unchanged, the sequence set by \code{set.seed} is different
-      in the two versions.  \R did not allow you to choose consecutive
+      \R did not allow you to choose consecutive
       seeds, the reported `weakness', and already scrambled the seeds.
     }
 
