@@ -22,7 +22,7 @@ setClass <-
         if(is.character(representation) && length(representation) == 1 &&
            is.null(names(representation)))
             representation <- list(representation)
-        slots <- nchar(allNames(representation))>0
+        slots <- nchar(allNames(representation)) > 0
         superClasses <- c(as.character(representation[!slots]), contains)
         properties <- representation[slots]
         classDef <- makeClassRepresentation(Class, properties,superClasses, prototype, package,
@@ -41,19 +41,19 @@ setClass <-
         for(class2 in superClasses)
             if(is(try(setIs(Class, class2, classDef = classDef, where = where)), "try-error"))
                 badContains <- c(badContains, class2)
-        if(length(badContains)>0) {
+        if(length(badContains) > 0) {
             msg <- paste(dQuote(badContains), collapse = ", ")
             if(is(try(removeClass(Class, where)), "try-error"))
-                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to remove definition from \"%s\"",
+                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to remove definition from '%s'",
                               msg, Class, getPackageName(where)), domain = NA)
             if(is.null(oldDef))
-                stop(gettextf("error in contained classes (%s) for class \"%s\"; class definition removed from \"%s\"",
+                stop(gettextf("error in contained classes (%s) for class \"%s\"; class definition removed from '%s'",
                               msg, Class, getPackageName(where)), domain = NA)
             else if(is(try(setClass(Class, oldDef, where=where)), "try-error"))
-                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to restore previous definition from \"%s\"",
+                stop(gettextf("error in contained classes (%s) for class \"%s\" and unable to restore previous definition from '%s'",
                               msg, Class, getPackageName(where)), domain = NA)
             else
-                stop(gettextf("error in contained classes (%s) for class \"%s\"; previous definition restored to \"%s\"",
+                stop(gettextf("error in contained classes (%s) for class \"%s\"; previous definition restored to '%s'",
                               msg, Class, getPackageName(where)), domain = NA)
         }
         if(sealed) {
@@ -82,12 +82,14 @@ representation <-
     includes <- as.character(value[nchar(anames)==0])
     if(any(duplicated(includes)))
         stop(gettextf("duplicate class names among superclasses: %s",
-                      paste(includes[duplicated(includes)], collapse = ", ")),
+                      paste(dQuote(includes[duplicated(includes)]),
+                            collapse = ", ")),
              domain = NA)
     slots <- anames[nchar(anames)>0]
     if(any(duplicated(slots)))
        stop(gettextf("duplicated slot names: %s",
-                     paste(slots[duplicated(slots)], collapse="")), domain = NA)
+                     paste(sQuote(slots[duplicated(slots)]), collapse="")),
+            domain = NA)
     value
 }
 
@@ -236,7 +238,7 @@ checkSlotAssignment <- function(obj, name, value)
     ## the class environment of obj (change validObject too if a better way is found)
     ok <- possibleExtends(valueClass, slotClass, ClassDef2 = getClassDef(slotClass, where = .classEnv(ClassDef)))
     if(identical(ok, FALSE))
-       stop(gettextf("assignment of an object of class \"%s\" is not valid for slot \"%s\" in an object of class \"%s\"; is(value, \"%s\") is not TRUE",
+       stop(gettextf("assignment of an object of class \"%s\" is not valid for slot '%s' in an object of class \"%s\"; is(value, \"%s\") is not TRUE",
                      class(value),  name, class(obj), slotClass),
             domain = NA)
     else if(identical(ok, TRUE))
@@ -360,56 +362,62 @@ getClasses <-
 }
 
 
-validObject <- function(object, test = FALSE) {
+validObject <- function(object, test = FALSE)
+{
     Class <- class(object)
-  classDef <- getClassDef(Class)
+    classDef <- getClassDef(Class)
     where <- .classEnv(classDef)
-  anyStrings <- function(x) if(identical(x, TRUE)) character() else x
-  ## perform, from bottom up, the default and any explicit validity tests
-  ## First, validate the slots.
-  errors <- character()
-  slotTypes <- classDef@slots
-  slotNames <- names(slotTypes)
-  for(i in seq(along=slotTypes)) {
-    classi <- slotTypes[[i]]
-    sloti <- slot(object, slotNames[[i]])
-    ## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
-    ## future revision improves on it!
-    ok <- possibleExtends(class(sloti), classi, ClassDef2 = getClassDef(classi, where = where))
-    if(identical(ok, FALSE))
-      errors <- c(errors, paste("Invalid object for slot \"", slotNames[[i]],
-                               "\" in class \"", Class,
-                               "\": got class \"", class(sloti),
-                               "\", should be or extend class \"", classi, "\"", sep = ""))
-  }
-  extends <- rev(classDef@contains); i <- 1
-  while(length(errors) == 0 && i <= length(extends)) {
-      exti <- extends[[i]]
-    superClass <- exti@superClass
-    i <- i+1
-    if(!exti@simple && !is(object, superClass))
-        next ## skip conditional relations that don't hold for this object
-    superDef <- getClassDef(superClass, where = where)
-      if(is.null(superDef)) {
-          errors <- c(errors, paste("Super class \"", superClass, "\" not defined in the environment of the object's class", sep=""))
-          next
-      }
-      validityMethod <- superDef@validity
-      if(is(validityMethod, "function"))
+    anyStrings <- function(x) if(identical(x, TRUE)) character() else x
+    ## perform, from bottom up, the default and any explicit validity tests
+    ## First, validate the slots.
+    errors <- character()
+    slotTypes <- classDef@slots
+    slotNames <- names(slotTypes)
+    for(i in seq(along=slotTypes)) {
+        classi <- slotTypes[[i]]
+        sloti <- slot(object, slotNames[[i]])
+        ## note that the use of possibleExtends is shared with checkSlotAssignment(), in case a
+        ## future revision improves on it!
+        ok <- possibleExtends(class(sloti), classi, ClassDef2 = getClassDef(classi, where = where))
+        if(identical(ok, FALSE))
+            errors <- c(errors,
+                        paste("invalid object for slot \"", slotNames[[i]],
+                              "\" in class \"", Class,
+                              "\": got class \"", class(sloti),
+                              "\", should be or extend class \"", classi, "\"", sep = ""))
+    }
+    extends <- rev(classDef@contains); i <- 1
+    while(length(errors) == 0 && i <= length(extends)) {
+        exti <- extends[[i]]
+        superClass <- exti@superClass
+        i <- i+1
+        if(!exti@simple && !is(object, superClass))
+            next ## skip conditional relations that don't hold for this object
+        superDef <- getClassDef(superClass, where = where)
+        if(is.null(superDef)) {
+            errors <- c(errors, paste("superclass \"", superClass, "\" not defined in the environment of the object's class", sep=""))
+            next
+        }
+        validityMethod <- superDef@validity
+        if(is(validityMethod, "function"))
             errors <- c(errors, anyStrings(validityMethod(as(object, superClass))))
-  }
-  validityMethod <- classDef@validity
-  if(length(errors) == 0 && is(validityMethod, "function")) {
-    errors <- c(errors, anyStrings(validityMethod(object)))
-  }
-  if(length(errors) > 0) {
-    if(test)
-      errors
-    else if(length(errors) > 1)
-      stop(paste("Invalid \"", Class, "\" object: ", paste(paste(1:length(errors), errors, sep=": ")),
-                 sep="", collapse = "\n"))
-    else stop(paste("Invalid \"", Class, "\" object: ", errors, sep=""))
-  }
+    }
+    validityMethod <- classDef@validity
+    if(length(errors) == 0 && is(validityMethod, "function")) {
+        errors <- c(errors, anyStrings(validityMethod(object)))
+    }
+    if(length(errors) > 0) {
+        if(test)
+            errors
+        else {
+            msg <- gettextf("invalid class \"%s\" object:", Class)
+            if(length(errors) > 1)
+                stop(paste(msg,
+                           paste(paste(1:length(errors), errors, sep=": ")),
+                           collapse = "\n"), domain = NA)
+            else stop(msg, " ", errors, domain = NA)
+    }
+}
   else
     TRUE
 }
@@ -451,7 +459,7 @@ resetClass <- function(Class, classDef, where) {
             if(missing(classDef)) {
                 classDef <- getClassDef(Class, where)
                 if(is.null(classDef)) {
-                    warning(gettextf("class \"%s\" not found on %s; resetClass will have no effect", Class, getPackageName(where)), domain = NA)
+                    warning(gettextf("class \"%s\" not found on '%s'; 'resetClass' will have no effect", Class, getPackageName(where)), domain = NA)
                     return(classDef)
                 }
             }
@@ -460,7 +468,7 @@ resetClass <- function(Class, classDef, where) {
             package <- getPackageName(where)
         }
         if(classDef@sealed)
-            warning(gettextf("class \"%s\" is sealed; resetClass will have no effect", Class), domain = NA)
+            warning(gettextf("class \"%s\" is sealed; 'resetClass' will have no effect", Class), domain = NA)
         else {
             classDef <-  .uncompleteClassDefinition(classDef)
             classDef <- completeClassDefinition(Class, classDef, where)
@@ -517,7 +525,7 @@ initialize <- function(.Object, ...) {
                         as(.Object, Classi) <- as(obj, Classi, strict = FALSE)
                     }
                     else
-                        stop(gettextf("cannot use object of class \"%s\" in new():  Class \"%s\" does not extend that class", Classi, Class), domain = NA)
+                        stop(gettextf("cannot use object of class \"%s\" in new():  class \"%s\" does not extend that class", Classi, Class), domain = NA)
                 }
             }
         }
@@ -525,7 +533,7 @@ initialize <- function(.Object, ...) {
             snames <- names(elements)
             if(any(duplicated(snames)))
                 stop(gettextf("duplicated slot names: %s",
-                              paste(snames[duplicated(snames)],
+                              paste(sQuote(snames[duplicated(snames)]),
                                     collapse = ", ")), domain = NA)
             which  <- match(snames, names(slotDefs))
             if(any(is.na(which)))
@@ -576,7 +584,8 @@ findClass <- function(Class, where = topenv(parent.frame()), unique = "") {
                               Class, unique), domain = NA)
             if(length(where) > 1) {
                 where <- where[[1]]
-                warning(gettextf("multiple definitions of class \"%s\" visible; using the definition on package '%s' for %s",
+                ## problem: 'unique'x is text passed in, so do not translate
+                warning(sprintf("multiple definitions of class \"%s\" visible; using the definition on package '%s' for %s",
                                  Class, getPackageName(where), unique),
                         domain = NA)
             }

@@ -422,9 +422,11 @@ matchSignature <-
         unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])
-            warning(gettextf("in the method signature for function '%s' no definition for class(es): %s",
-                             fun@generic,
-                             paste("\"", unknown, "\"", sep="", collapse = ", ")),
+            warning(sprintf(ngettext(length(unknown),
+                                     "in the method signature for function '%s' no definition for class: %s",
+                                     "in the method signature for function '%s' no definition for classes: %s"),
+                            fun@generic,
+                            paste(dQuote(unknown), collapse = ", ")),
                     domain = NA)
         }
     }

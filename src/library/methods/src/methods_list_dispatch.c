@@ -273,7 +273,7 @@ static SEXP R_find_method(SEXP mlist, char *class, SEXP fname)
     SEXP value, methods;
     methods = R_do_slot(mlist, s_allMethods);
     if(methods == R_NilValue) {
-	error(_("no \"allMethods\" slot found in objectof class \"%s\" used as methods list for function '%s'"),
+	error(_("no \"allMethods\" slot found in object of class \"%s\" used as methods list for function '%s'"),
 	      class_string(mlist), CHAR_STAR(fname));
 	return(R_NilValue); /* -Wall */
     }

@@ -1,4 +1,3 @@
-
 testVirtual <-
   ## Test for a Virtual Class.
   ## Figures out, as well as possible, whether the class with these properties,
@@ -167,7 +166,7 @@ makePrototypeFromClassDef <-
     if(any(check))
         stop(gettextf("in making the prototype for class \"%s\" elements of the prototype failed to match the corresponding slot class: %s",
                       className,
-                      paste(pnames[check], "(class \"", slotDefs[match(pnames[check], slotNames)], "\")", collapse = ", ")), domain = NA)
+                      paste(pnames[check], "(class", dQuote(slotDefs[match(pnames[check], slotNames)]), ")", collapse = ", ")), domain = NA)
     prototype
 }
 
@@ -555,7 +554,7 @@ reconcilePropertiesAndPrototype <-
                   }
                   else if(!extends(dataPartClass, thisDataPart) &&
                           !isVirtualClass(thisDataPart, where = where))
-                      warning(gettextf("more than one possible class for the data part:  using \"%s\" rather than \"%s\"",
+                      warning(gettextf("more than one possible class for the data part: using \"%s\" rather than \"%s\"",
                                        dataPartClass, thisDataPart),
                               domain = NA)
               }
@@ -644,7 +643,7 @@ reconcilePropertiesAndPrototype <-
           if((is.na(match(dataPartClass, .BasicClasses)) &&
              !isVirtualClass(dataPartDef)) ||
              length(dataPartDef@slots) > 0)
-              stop(gettextf("\%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots",dataPartClass),
+              stop(gettextf("\%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)", dataPartClass),
                    domain = NA)
           if(extends(prototypeClass, "classPrototypeDef"))
           {}
@@ -925,7 +924,7 @@ completeSubclasses <-
             }
         }
         else
-            stop(gettextf("the %s list for class, \"%s\", includes an undefined class, \"%s\"",
+            stop(gettextf("the '%s' list for class \"%s\", includes an undefined class \"%s\"",
                           if(superClassCase) "superClass" else "subClass",
                           className,.className(by)),
                  domain = NA)
@@ -952,7 +951,8 @@ completeSubclasses <-
                     whatError <- "have itself as a subclass"
                     relation <- "has subclass"
                 }
-                stop(gettextf("class \"%s\" may not %s: it %s class \"%s\", with a circular relation back to \"%s\"",
+                ## this is not translatable
+                stop(sprintf("class \"%s\" may not %s: it %s class \"%s\", with a circular relation back to \"%s\"",
                               className, whatError, relation, fromTo, className),
                      domain = NA)
             }
@@ -998,7 +998,7 @@ requireMethods <-
         method <- getMethod(f, optional = TRUE)
         if(!is.function(method))
             method <- getGeneric(f, where = where)
-        body(method) <- substitute(stop(methods:::.missingMethod(FF, MESSAGE, if(exists(".Method")).Method else NULL)), list(FF=f, MESSAGE=message))
+        body(method) <- substitute(stop(methods:::.missingMethod(FF, MESSAGE, if(exists(".Method")).Method else NULL), domain=NA), list(FF=f, MESSAGE=message))
         environment(method) <- .GlobalEnv
         setMethod(f, signature, method, where = where)
     }
@@ -1112,7 +1112,7 @@ setDataPart <- function(object, value) {
             if(.identC(cl, "ts"))
                 value <- cl
             else
-                warning(gettextf("old-style (``S3'') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
+                warning(gettextf("old-style ('S3') class \"%s\" supplied as a superclass of \"%s\", but no automatic conversion will be peformed for S3 classes",
                                  cl, .className(inClass)), domain = NA)
         }
         else if(identical(ClassDef@virtual, TRUE) &&

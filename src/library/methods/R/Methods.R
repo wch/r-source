@@ -17,7 +17,7 @@ setGeneric <-
     if(exists(name, "package:base") &&
        typeof(get(name, "package:base")) != "closure") {
         getGeneric(name) # will fail if this can't have methods
-        msg <- gettextf("'%s' is a primitive function;  methods can be defined, but the generic function is implicit, and can't be changed.", name)
+        msg <- gettextf("'%s' is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", name)
         if(nargs() == 1)
             warning(msg, domain = NA)
         else
@@ -112,7 +112,7 @@ isGeneric <-
     else if(missing(f) || .identC(gen, f))
         return(TRUE)
     else {
-        warning(gettextf("function '%s' appears to be a Generic function, but with generic name '%s'", f, gen), domain = NA)
+        warning(gettextf("function '%s' appears to be a generic function, but with generic name '%s'", f, gen), domain = NA)
         return(FALSE)
     }
 }
@@ -323,7 +323,7 @@ setMethod <-
     else if(identical(gwhere, NA)) {
         ## better be a primitive since getGeneric returned a generic, but none was found
         if(is.null(elNamed(.BasicFunsList, f)))
-            stop(gettextf("apparent internal error: a generic function was found for '%s' , but no corresponding object was found searching from '%s'",
+            stop(gettextf("apparent internal error: a generic function was found for '%s', but no corresponding object was found searching from '%s'",
                           f, getPackageName(where)), domain = NA)
     }
     if(isSealedMethod(f, signature, fdef))
@@ -775,11 +775,11 @@ removeMethods <-
 resetGeneric <- function(f, fdef = getGeneric(f, where = where), mlist = getMethods(fdef), where = topenv(parent.frame()), deflt = finalDefaultMethod(mlist)) {
     if(!is(fdef, "genericFunction")) {
         if(missing(mlist)) {
-            warning(gettextf("Cannot reset '%s', the definition is not a generic function object", f), domain = NA)
+            warning(gettextf("cannot reset '%s', the definition is not a generic function object", f), domain = NA)
             return(NULL)
         }
         else
-            stop(gettextf("error in updating generic function '%s'; the function definition is not a generic function (class \"%s\"", f, class(fdef)),
+            stop(gettextf("error in updating generic function '%s'; the function definition is not a generic function (class \"%s\")", f, class(fdef)),
                  domain = NA)
     }
     ## uncache
@@ -839,7 +839,7 @@ callGeneric <- function(...)
 
     if(is.primitive(fdef)) {
         if(nargs() == 0)
-            stop("'callGeneric' with a primitive needs explict arguments (no formal args defined)")
+            stop("'callGeneric' with a primitive needs explicit arguments (no formal args defined)")
         else {
             fname <- sys.call(frame)[[1]]
             call <- substitute(fname(...))

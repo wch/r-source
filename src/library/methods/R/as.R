@@ -29,7 +29,7 @@ as <-
                 ClassDef <- getClassDef(Class, where)
                 ## use the ext information, computed or supplied
                 if(identical(ext, FALSE))
-                    stop(gettextf("internal problem in as():  \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE", thisClass, Class), domain = NA)
+                    stop(gettextf("internal problem in as(): \"%s\" is(object, \"%s\") is TRUE, but the metadata asserts that the 'is' relation is FALSE", thisClass, Class), domain = NA)
                 else if(identical(ext, TRUE))
                     asMethod <- .makeAsMethod(quote(from), TRUE, Class, ClassDef, where)
                 else {
@@ -199,7 +199,7 @@ setAs <-
                     ll <- list(quote(from), quote(value))
                     names(ll) <- args
                     replace <- substituteDirect(replace, ll)
-                    warning(gettextf("argument names in replace changed to agree with \"coerce<-\" generic:\n%s", paste(deparse(bdy), sep="\n    ")),
+                    warning(gettextf("argument names in replace changed to agree with 'coerce<-' generic:\n%s", paste(deparse(bdy), sep="\n    ")),
                             domain = NA)
                 }
                 method <- eval(function(from, to, value)NULL)

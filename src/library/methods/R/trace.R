@@ -176,9 +176,9 @@
             def <- Recall(def, tracer, exit, at, print, FALSE)
         def2 <- edit(def, editor = editor, file = file)
         if(!is.function(def2))
-            stop(gettextf("The editing in trace() can only change the body of the function; got an object of class \"%s\"", class(def2)), domain = NA)
+            stop(gettextf("the editing in trace() can only change the body of the function; got an object of class \"%s\"", class(def2)), domain = NA)
         if(!identical(args(def), args(def2)))
-            stop("The editing in trace() can only change the body of the function, not the arguments or defaults")
+            stop("the editing in trace() can only change the body of the function, not the arguments or defaults")
         fBody <- body(def2)
     }
     else {

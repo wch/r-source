@@ -10,7 +10,7 @@
            genericFunction = NULL) {
       checkTrace <- function(fun, what, f) {
           if(is(fun, "traceable")) {
-              warning(gettextf("The function being used as %s in making a generic function for '%s' is currently traced; the function used will have tracing removed",
+              warning(gettextf("the function being used as %s in making a generic function for '%s' is currently traced; the function used will have tracing removed",
                                what, f), domain = NA)
               .untracedFunction(fun)
           }
@@ -32,7 +32,7 @@
       else if(is(genericFunction, "genericFunction"))
           value <- genericFunction
       else
-          stop(gettextf("the `genericFunction' argument must be NULL or a generic function object; got an object of class \"%s\"", class(genericFunction)),
+          stop(gettextf("the 'genericFunction' argument must be NULL or a generic function object; got an object of class \"%s\"", class(genericFunction)),
                domain = NA)
       value@.Data <- fdef
       value@generic <- f
@@ -59,7 +59,7 @@
           fdefault <- checkTrace(fdefault)
           if(!identical(formalArgs(fdefault), formalArgs(fdef)) &&
              !is.primitive(fdefault))
-              stop(gettextf("the formal arguments of the generic function for '%s' (%s) differ from those of the non-generic to be used as the default, (%s)",
+              stop(gettextf("the formal arguments of the generic function for '%s' (%s) differ from those of the non-generic to be used as the default (%s)",
                             f, paste(formalArgs(fdef), collapse = ", "),
                             paste(formalArgs(fdefault), collapse = ", ")),
                    domain = NA)
@@ -147,8 +147,7 @@ makeStandardGeneric <-
         fgen <- function(x, ...) {}
       }
       else {
-          message(gettextf("Making a generic for special function \"%s\"",
-                           f),
+          message(gettextf("making a generic for special function \"%s\"", f),
                   domain = NA)
           setPrimitiveMethods(f, fdef, "reset", fgen, NULL)
       }
@@ -170,9 +169,8 @@ generic.skeleton <-
     }
     if(is.null(fdefault)) {
       fdefault <- fdef
-      body(fdefault) <- substitute(stop(MESSAGE), list(MESSAGE=
-          paste("invalid call in method dispatch to \"",name, "\" (no default method)",
-                sep="")))
+      body(fdefault) <- substitute(stop(MESSAGE, domain = NA), list(MESSAGE=
+          gettextf("invalid call in method dispatch to '%s' (no default method)", name)))
       environment(fdefault) <- NULL
     }
     skeleton[[1]] <- fdefault
@@ -192,18 +190,18 @@ defaultDumpName <-
 
 getAllMethods <-
   ## a generic function (with methods) representing the merge of all the methods
-  ## for `f' on the specified packages (anything on the current search path by default).
+  ## for 'f' on the specified packages (anything on the current search path by default).
   ##
-  ## If the generic `f' has a group generic, methods for this group generic (and further
+  ## If the generic 'f' has a group generic, methods for this group generic (and further
   ## generations of group generics, if any) are also merged.  The merging rule is as follows:
   ## each generic is merged across packages, and the group generics are then merged, finally
-  ## adding the directly defined methods of `f'.
+  ## adding the directly defined methods of 'f'.
   ##
-  ## The effect of the merging rule is that any method directly defined for `f' on any
+  ## The effect of the merging rule is that any method directly defined for 'f' on any
   ## included package overrides a method for the same signature defined for the group generic;
   ## similarly for the group generic and its group, if any, etc.
   ##
-  ## For `f' or for a specific group generic, methods override in the order of the packages
+  ## For 'f' or for a specific group generic, methods override in the order of the packages
   ## being searched.  A method for a particular signature on a particular package overrides
   ## any methods for the same signature on packages later on in the list of packages being
   ## searched.
@@ -237,11 +235,11 @@ getAllMethods <-
           fdef <- getGeneric(f, TRUE, where)
       }
       else if(is.function(fdef) && search) {
-          warning(gettextf("'%s' from '%s' is anon-generic function; no methods available", f, packageName(gwhere)), domain = NA)
+          warning(gettextf("'%s' from '%s' is a non-generic function; no methods available", f, packageName(gwhere)), domain = NA)
           return(NULL)
       }
       else
-          stop(gettextf("Invalid 'fdef' for '%s' in 'getAllMethods'; expected either a 'genericFunction object' or a primitive function, got an object of class \"%s\"", f, class(fdef)), domain = NA)
+          stop(gettextf("invalid 'fdef' for '%s' in 'getAllMethods'; expected either a 'genericFunction object' or a primitive function, got an object of class \"%s\"", f, class(fdef)), domain = NA)
       metaname <- mlistMetaName(fdef@generic, where)
       primCase <- is.primitive(deflt)
       ## NOTE: getGroup & getGeneric have to be called with the default
@@ -300,16 +298,16 @@ mergeMethods <-
   }
 
 doPrimitiveMethod <-
-  ## do a primitive call to builtin function `name' the definition and call
-  ## provided, and carried out in the environment `ev'.
+  ## do a primitive call to builtin function 'name' the definition and call
+  ## provided, and carried out in the environment 'ev'.
   ##
-  ## A call to `doPrimitiveMethod' is used when the actual method is a .Primitive.
+  ## A call to 'doPrimitiveMethod' is used when the actual method is a .Primitive.
   ##  (because primitives don't behave correctly as ordinary functions,
   ## not having either formal arguments nor a function body).
   function(name, def, call = sys.call(sys.parent()), ev = sys.frame(sys.parent(2)))
 {
   cat("called doPrimitiveMethod\n\n")
-    ## Store a local version of function `name' back where the current version was
+    ## Store a local version of function 'name' back where the current version was
     ## called.  Restore the previous state there on exit, either removing or re-assigning.
     if(exists(name, envir=ev, inherits=FALSE)) {
         prev <- get(name, envir=ev)
@@ -334,17 +332,14 @@ conformMethod <-
         return(signature)
     label <- paste("In method for function \"", f,"\": ", sep="")
     if(!all(diff(seq(along=fnames)[!omitted]) > 0))
-        stop(label, "Formal arguments in method and function don't appear in the same order")
+        stop(label, "formal arguments in method and function do not appear in the same order")
     signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
     if(any(is.na(match(signature[omitted], c("ANY", "missing"))))) {
         bad <- omitted & is.na(match(signature[omitted], c("ANY", "missing")))
-        stop(label, "Formal arguments omitted in the method definition cannot be in the signature (",
-                   paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", "),
-             ")")
+        stop(label, gettextf("formal arguments omitted in the method definition cannot be in the signature (%s)", paste(fnames[bad], " = \"", signature[bad], "\"", sep = "", collapse = ", ")), domain = NA)
     }
     else if(!all(signature[omitted] == "missing")) {
-        .message(label, "Expanding the signature to include omitted arguments in definition: ",
-                 paste(fnames[omitted], "= \"missing\"",collapse = ", "))
+        .message(label, gettextf("expanding the signature to include omitted arguments in definition: %s", paste(fnames[omitted], "= \"missing\"",collapse = ", ")))
         signature[omitted] <- "missing"
     }
     ## remove trailing "ANY"'s
@@ -446,7 +441,7 @@ getGeneric <-
 }
 
 getGroup <-
-  ## return the groups to which this generic belongs.  If `recursive=TRUE', also all the
+  ## return the groups to which this generic belongs.  If 'recursive=TRUE', also all the
   ## group(s) of these groups.
   function(fdef, recursive = FALSE, where = topenv(parent.frame()))
 {
@@ -646,8 +641,8 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
         if(is.numeric(where))
             where <- search()[where]
         warning(message,
-                gettextf(" found on: %s; using the first one",
-                         paste(sQuote(where), collapse = ", ")),
+                sprintf(" found on: %s; using the first one",
+                        paste(sQuote(where), collapse = ", ")),
                 domain = NA)
             where <- where[1]
     }
@@ -764,11 +759,7 @@ sigToEnv <- function(signature, generic) {
         for(Cl in classes)
             if(is(object, Cl))
                return(object)
-        stop(paste("Invalid value from generic function \"",
-                   fname, "\", class \"", class(object),
-                   "\", expected ",
-                   paste("\"", classes, "\"", sep = "", collapse = " or "),
-                   sep = ""))
+        stop(gettextf("invalid value from generic function '%s', class \"%s\", expected %s", fname, class(object), paste("\"", classes, "\"", sep = "", collapse = " or ")), domain = NA)
     }
     ## empty test is allowed
     object
@@ -928,24 +919,22 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
 
 .ChangeFormals <- function(def, defForArgs, msg = "<unidentified context>") {
     if(!is(def, "function"))
-        stop("Trying to change the formal arguments in ", msg,", in an object of class \"",
-             class(def), "\"; expected a function definition")
+        stop(gettextf("trying to change the formal arguments in %s, in an object of class \"%s\"; expected a function definition", msg, class(def)),
+             domain = NA)
     if(!is(defForArgs, "function"))
-        stop("Trying to change the formal arguments in ", msg,
-             ", but getting the new formals from an object of class \"",
-             class(def), "\"; expected a function definition")
+        stop(gettextf("trying to change the formal arguments in %s, but getting the new formals from an object of class \"%s\"; expected a function definition", msg, class(def)), domain = NA)
     old <- formalArgs(def)
     new <- formalArgs(defForArgs)
     if(length(old) < length(new))
-        stop("Trying to change the formal arguments in ", msg,
-             ", but the number of existing arguments is less than the number of new arguments: (",
-             paste("\"", old, "\"", sep ="", collapse=", "),  ") vs (",
-             paste("\"", new, "\"", sep ="", collapse=", "), ")")
+        stop(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is less than the number of new arguments: (%s) vs (%s)",
+                      msg, paste("\"", old, "\"", sep ="", collapse=", "),
+                      paste("\"", new, "\"", sep ="", collapse=", ")),
+             domain = NA)
     if(length(old) > length(new))
-        warning("Trying to change the formal arguments in ", msg,
-             ", but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (",
-             paste("\"", old, "\"", sep ="", collapse=", "),  ") vs (",
-             paste("\"", new, "\"", sep ="", collapse=", "), ")")
+        warning(gettextf("trying to change the formal arguments in %s, but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): (%s) vs (%s)",
+                         msg, paste("\"", old, "\"", sep ="", collapse=", "),
+                         paste("\"", new, "\"", sep ="", collapse=", ")),
+                domain = NA)
     if(identical(old, new)) # including the case of 0 length
         return(def)
     dlist <- as.list(def)
@@ -957,9 +946,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     dnames <- names(dlist)
     whereNames <- match(old, dnames)
     if(any(is.na(whereNames)))
-        stop("In changing formal argumentsin ", msg,
-             ", some of the old names are not in fact arguments: ",
-             paste("\"", old[is.na(match(old, names(dlist)))], "\"", sep ="", collapse=", "))
+        stop(gettextf("in changing formal arguments in %s, some of the old names are not in fact arguments: %s", msg, paste("\"", old[is.na(match(old, names(dlist)))], "\"", sep ="", collapse=", ")), domain = NA)
     dnames[whereNames] <- new
     names(vlist) <- dnames
     as.function(vlist, envir = environment(def))
@@ -974,7 +961,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         value <- list(env)
         repeat {
             if(is.null(env))
-                stop("botched namespace: Failed to find base namespace in its parents")
+                stop("botched namespace: failed to find 'base' namespace in its parents")
             env <- parent.env(env)
             value <- c(value, list(env))
             if(isBaseNamespace(env))
