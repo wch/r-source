@@ -39,6 +39,14 @@ BUG FIXES
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
 
+   o    Slots in prototype objects can inherit from locally defined
+        classes (which were not being found correctly before).
+
+   o    Several fixes to the behavior of as() when there are either
+        coerce= or replace= methods supplied in a call to
+        setIs(). Related fixes to setIs() to handle correctly previous
+        methods, if there were any.
+
 
 
 	**************************************************
