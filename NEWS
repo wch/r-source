@@ -49,8 +49,7 @@ NEW FEATURES
 	axes) are now consistent with other plot functions.  The key symbol
 	is not clipped anymore into the plot region by default.
 
-    o	Date-time quantities are now printed with the timezone, if
-	known.
+    o	Date-time quantities are now printed with the timezone, if known.
 
     o	R CMD build now ignores all files specified (via Perl regexps)
 	in file `.Rbuildignore' in the top-level source	directory of a
@@ -67,9 +66,16 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   There have been many small improvements/corrections in the
+	documentation. In particular:
+
+	The help pages for lm and glm now describe the fitted objects.
+
+	is.vector() is now correctly documented: complex vectors and
+	lists return TRUE.
+
     o   The default sortedXyData constructor in the nls package now
-        handles missing values in the response.  Minor documentation
-        fixes exposed by codoc have been made in the nls package.
+        handles missing values in the response.
 
     o	On startup, file .RData is now restored *after* the site and
 	user profiles are loaded (if at all).  This is as previously
@@ -94,7 +100,7 @@ BUG FIXES
     o	ts(1:10, start= c(1999,6), end = c(2000,3), frequency = 12)
 	now prints both years (as it should).
 
-    o	monthly multivariate time series now print proper month names
+    o	Monthly multivariate time series now print proper month names
 	in all cases.
 
     o	print.stl(), print.princomp() and print.prcomp() now pass on
@@ -114,9 +120,6 @@ BUG FIXES
     o	besselJ(*, nu) is now ok for nu < 1; fix improves accuracy of
 	other values by a few bits as well.
 
-    o	is.vector() is now correctly documented: complex vectors and
-	lists return TRUE.
-
     o	The convergence criterion in the Fortran SVD code has been
 	changed to circumvent spurious convergence errors when
 	comparing extended-precision quantities on ix86 Linux (and
@@ -124,11 +127,9 @@ BUG FIXES
 
     o	Rdindex now handles multi-line \title{}'s correctly.
 
-    o	Add weights.glm so that plot.lm gets the correct weights from
+    o	Add weights.glm() so that plot.lm() gets the correct weights from
 	glm objects (the ones that go with deviance residuals not the
 	working residuals).
-
-    o	The help pages for lm and glm now describe the fitted objects.
 
     o	Printing a language object (e.g. a formula) in a list was
 	clobbering the buffer holding the tag labels which then were
@@ -166,10 +167,10 @@ BUG FIXES
     o	plot() with small relative ranges gave an error, which e.g. broke
 	library(ts); plot(stl(ts(rep(1:7, 15), freq = 7), s.win = "per"))
 
-    o	Using scan() with 0-length `what' argument now gives an error
+    o	Using scan() with a 0-length `what' argument now gives an error
 	message rather than a segfault.
 
-    o	Loading .Random.seed could very rarely and with some
+    o	Loading .Random.seed could extremely rarely and with some
 	generators reject a value as NA_INTEGER when it was valid.
 
     o   save(..., ascii=TRUE) created broken files when saving strings
@@ -206,9 +207,12 @@ BUG FIXES
 
     o	file.show() handles the case of zero files better.
 
-    o	formula.lm uses fit$formula if it exists, in preference to fit$terms.
+    o	formula.lm uses object$formula if it exists, in preference 
+	to object$terms.
 
-    o	strsplit() is corrected for empty split pattern.
+    o	strsplit() is corrected for an empty split pattern.
+
+    o	kronecker() now does a better job when creating dimnames.
 
 
 
