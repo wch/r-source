@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -82,6 +82,10 @@ typedef struct GlobalsStruct GlobalsStruct;
 GlobalsStruct	g;	/*	Globals */
 
 void Raqua_ProcessEvents(void);
+extern OSStatus InitPrintSession(void);
+extern void ClosePrintSession(void);
+extern OSStatus OpenPageSetup(WindowRef window);
+extern OSStatus OpenPrintDialog(WindowRef window);
 
 
 /* Items for the Tools menu */
@@ -444,8 +448,8 @@ void Raqua_StartConsole(void)
        
        EnableMenuCommand(NULL, kHICommandPreferences);
        
+       InitPrintSession();
         
-	
 noconsole:
     if(bundleURL)
      CFRelease( bundleURL );
@@ -857,6 +861,7 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	UInt32			eventKind = GetEventKind( inEvent );
         FSSpec 			tempfss;
         char			buf[300],cmd[2500];
+        WindowRef		EventWindow = NULL; 
 
 	switch ( GetEventClass( inEvent ) )
 	{
@@ -893,6 +898,16 @@ RCmdHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
                fprintf(stderr,"\n open a new editable window");
               break;
              
+              case kHICommandPrint:
+               OpenPrintDialog(FrontWindow());
+              break; 
+            
+               case kHICommandPageSetup:
+                OpenPageSetup(FrontWindow());
+               break;
+
+
+
 /* Edit Menu */             
 
               case kHICommandPaste:

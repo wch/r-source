@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  file DataBrowser.c
- *  Copyright (C) 2002       Stefano M. Iacus and the R core team
+ *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
+ *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,14 +16,8 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- *
- *  First working code of a graphical workspace browser.
- *  This is Macintosh only. Can be adapted for the Darwin version
- *  too without problems.
- *  Known issues: refresh instead of close and reopen.
- *  Today, Aug 6 2002, S.M. Iacus
-*/
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ */
 
 #ifndef __AQUA_DATA_BROWSER__
 #define __AQUA_DATA_BROWSER__
