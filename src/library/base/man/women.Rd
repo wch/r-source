@@ -11,9 +11,13 @@
 \source{The World Almanac and Book of Facts, 1975.
 
 }
-\description{This data set gives the average heights and weights for American
-women aged 30-39.
+\description{This data set gives the average heights and weights for
+American women aged 30-39.  The data set appears to have been taken
+from the American Society of Actuaries \emph{Build and Blood Pressure
+Study} for some (unknown to us) earlier year.
 
+The World Almanac notes: ``The figures represent weights in ordinary
+indoor clothing and shoes, and heights with shoes.
 }
 \references{McNeil, D. R. (1977).  Interactive Data Analysis.  Wiley.
 
