@@ -1674,6 +1674,7 @@ OSErr InitializeMenus(void)
 	if (HelpMenu != nil) {
 		AppendMenu(HelpMenu, "\pR Help");
 		RHelpMenuItem=CountMenuItems(HelpMenu);
+		SetItemCmd(HelpMenu,RHelpMenuItem,'?');
 		AppendMenu(HelpMenu, "\pHelp On Topic...");
 		RTopicHelpItem=CountMenuItems(HelpMenu);
    	    AppendMenu(HelpMenu,"\pSearch Help On...");
