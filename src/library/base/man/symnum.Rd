@@ -50,6 +50,9 @@ symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"))
 symnum(ii, cut= 2*(0:4), sym = c(".", "-", "+", "$"), show.max=T)
 
 ##-- Symbolic correlation matrices:
+data(attitude)
+symnum(cor(attitude), diag = F)
+
 symnum(cor(rbind(1, rnorm(25), rnorm(25)^2)))
 symnum(cor(matrix(rexp(30, 1), 5, 18))) # <<-- PATTERN ! --
 symnum(cm1 <- cor(matrix(rnorm(90) ,  5, 18))) # < White Noise SMALL n
