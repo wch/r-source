@@ -45,6 +45,11 @@ void fpu_setup(int);     /* in sys-unix.c */
 #include <unistd.h> /* for unlink */
 #endif
 
+#ifdef HAVE_SYS_TIME_H
+#include <sys/time.h> /* for struct timeval */
+#endif
+
+
 extern int UsingReadline;
 
 /*
@@ -201,16 +206,31 @@ getInputHandler(InputHandler *handlers, int fd)
  mechanism. The return type of this routine has changed.
 */
 
+/* A package can enable polled event handling by making R_PolledEvents
+   point to a non-dummy routine and setting R_wait_usec to a suitable
+   timeout value (e.g. 100000) */
+
+static void nop(void){}
+
+void (* R_PolledEvents)(void) = nop;
+
+int R_wait_usec = 0; /* 0 means no timeout */
+
 static int setSelectMask(InputHandler *, fd_set *);
 
 static InputHandler* waitForActivity()
 {
     int maxfd;
     fd_set readMask;
+    struct timeval tv;
 
-    maxfd = setSelectMask(R_InputHandlers, &readMask);
 
-    select(maxfd+1, &readMask, NULL, NULL, NULL);
+    do {
+	R_PolledEvents();
+	tv.tv_sec = 0;
+	tv.tv_usec = R_wait_usec;
+	maxfd = setSelectMask(R_InputHandlers, &readMask);
+    } while (!select(maxfd+1, &readMask, NULL, NULL, &tv));
 
     return(getSelectedHandler(R_InputHandlers, &readMask));
 }

@@ -41,4 +41,7 @@ InputHandler *R_InputHandlers;
 extern InputHandler *R_InputHandlers;
 #endif
 
+extern void (* R_PolledEvents)(void);
+extern int R_wait_usec;
+
 #endif
