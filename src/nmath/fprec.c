@@ -97,7 +97,7 @@ double fprec(double x, double digits)
 	return(sgn*(floor((x*pow10)*p10+0.5)/pow10)/p10);
     } else { /* -- LARGE or small -- */
 	do_round = max10e - l10	 >= R_pow_di(10., -dig);
-	e2 = dig + ((e10>0)? 16 : -16);
+	e2 = dig + ((e10>0)? 1 : -1) * MAX_DIGITS;
 	p10 = R_pow_di(10., e2);	x *= p10;
 	P10 = R_pow_di(10., e10-e2);	x *= P10;
 	/*-- p10 * P10 = 10 ^ e10 */

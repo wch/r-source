@@ -71,12 +71,12 @@ old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
 
     ## for bundles it is sufficient to install the first package
     ## contained in the bundle, as this will install the complete bundle
+    ## However, a bundle might be installed in more than one place.
     for(b in unique(instp[,"Bundle"])){
-        if(!is.na(b)){
-            ok <- which(instp[,"Bundle"] == b)
-            if(length(ok)>1){
-                instp <- instp[-ok[-1],]
-            }
+        if(!is.na(b))
+            for (w in unique(instp[,"LibPath"])) {
+            ok <- which(instp[,"Bundle"] == b & instp[,"LibPath"] == w)
+            if(length(ok)>1) instp <- instp[-ok[-1],]
         }
     }
 

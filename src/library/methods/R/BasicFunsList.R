@@ -343,8 +343,7 @@ list("!" = function(e1)
 .addBasicGeneric <-
     function(funslist, f, fdef, group = "", env)
 {
-    elNamed(funslist, f) <- makeGeneric(f, fdef, keepMethods = FALSE, group = group)
-    ## rm(list = f, pos = 1)
+    elNamed(funslist, f) <- makeGeneric(f, fdef, group = group)
     funslist
 }
 

@@ -192,9 +192,11 @@ qr.R <- function (qr, complete = FALSE)
 qr.X <- function (qr, complete = FALSE,
 		  ncol = if (complete) nrow(R) else min(dim(R)))
 {
-
     if(!is.qr(qr)) stop("argument is not a QR decomposition")
+    pivoted <- !identical(qr$pivot, seq(along=qr$pivot))
     R <- qr.R(qr, complete = TRUE)
+    if(pivoted && ncol < length(qr$pivot))
+        stop("need larger value of ncol as pivoting occurred")
     cmplx <- mode(R) == "complex"
     p <- dim(R)[2]
     if (ncol < p)
@@ -205,6 +207,6 @@ qr.X <- function (qr, complete = FALSE,
 	R <- tmp
     }
     res <- qr.qy(qr, R)
-    res[, qr$pivot] <- res[, seq(along=qr$pivot)]
+    if(pivoted) res[, qr$pivot] <- res[, seq(along=qr$pivot)]
     res
 }

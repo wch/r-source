@@ -620,6 +620,22 @@ info$isdir
 stopifnot(info$isdir == TRUE)
 ## 1.4.1 had a TRUE value that was not internally integer 1.
 
+## PR#1473 predict.*bSpline() bugs extrapolating for deriv >= 1
+library(splines)
+x <- c(1:3,5:6)
+y <- c(3:1,5:6)
+(isP <- interpSpline(x,y))# poly-spline representation
+(isB <- interpSpline(x,y, bSpl = TRUE))# B-spline repr.
+xo <- c(0, x, 10)# x + outside points
+op <- options(digits = 4)
+for(der in 0:3) # deriv=3 fails!
+    print(formatC(try(predict(isP, xo, deriv = der)$y), wid=7,format="f"),
+          quote = FALSE)
+## and for B-spline (instead of polynomial):
+for(der in 0:3)  # deriv=3 failed
+    print(formatC(try(predict(isB, xo, deriv = der)$y), wid=7,format="f"),
+          quote = FALSE)
+options(op)
 
 ## This example last: needed < 1.5.0 ##
 
@@ -633,4 +649,84 @@ provoke.bug()
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above paragraph at the end of this file
 
-## This example last ##
+
+## PR#1510 merge with multiple match rows and different names.
+df1 <- data.frame(z = 1:10, m = letters[1:10], w = rnorm(10))
+df2 <- data.frame(x = 1:10, y = rnorm(10), n = letters[1:10])
+merge(df2, df1, by.x = c("x", "n"), by.y = c("z", "m"))
+## failed in 1.5.0
+
+
+## PR 1524  Problems with paste/unlist
+l <- names(unlist(list(aa = list(bb = 1))))
+l
+# this is exactly "aa.bb"
+stopifnot(identical(l, "aa.bb"))
+l2 <- paste(l, "this should be added")
+stopifnot(identical(l2, "aa.bb this should be added"))
+## 1.5.0 gave l2 printing as l.
+
+
+## PR 1530 drop inconsistency for data frames
+DF <- data.frame(x = 1:3, y = c("A","D","E"), z = c(6,9,10))
+a1 <- DF[1,1:3]
+xx <- DF[1,]
+a2 <- xx[, 1:3]
+a3 <- DF[1,1:3, drop = TRUE]
+a4 <- xx[, 1:3, drop = TRUE]
+stopifnot(identical(a1, a2), identical(a3, a4))
+## <= 1.5.0 had a2 == a3.
+
+
+## PR 1536 rbind.data.frame converts logical to factor
+df <- data.frame(a = 1:10)
+df$b <- df$a < 5
+ddf <- rbind(df, df)
+stopifnot(!is.factor(ddf$b))
+## 1.5.0 had b as a factor.
+
+## PR 1548 : prettyNum inserted leading commas
+stopifnot(prettyNum(123456, big.mark=",") == "123,456")
+
+## PR 1552: cut.dendrogram
+library(mva)
+data(USArrests)
+hc <- hclust(dist(USArrests), "ave")
+cc <- cut(as.dendrogram(hc), h = 20)## error in 1.5.0
+detach("package:mva")
+
+## predict.smooth.spline(*, deriv > 0) :
+require(modreg)
+x <- (1:200)/32
+ss <- smooth.spline(x, 10*sin(x))
+stopifnot(length(x) == length(predict(ss,deriv=1)$x))# not yet in 1.5.0
+detach("package:modreg")
+
+## pweibull(large, log=T):
+stopifnot(all(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0))
+
+## selfStart.default() w/ no parameters:
+## --> make this into example(selfStart) {with data and nls()!}
+require(nls)
+logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
+                function(x, Asym, xmid, scal){} )
+logistInit <- function(mCall, LHS, data) {
+    xy <- sortedXyData(mCall[["x"]], LHS, data)
+    if(nrow(xy) < 3) stop("Too few distinct input values to fit a logistic")
+    Asym <- max(abs(xy[,"y"]))
+    if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
+    xmid <- NLSstClosestX(xy, 0.5 * Asym)
+    scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
+    value <- c(Asym, xmid, scal)
+    names(value) <- mCall[c("Asym", "xmid", "scal")]
+    value
+}
+logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
+str(logist)
+detach("package:nls")
+
+## part of PR 1662: fisher.test with total one
+fisher.test(cbind(0, c(0,0,0,1)))
+## crashed in R <= 1.5.0
+
+stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0

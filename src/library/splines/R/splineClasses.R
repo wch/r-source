@@ -1,4 +1,4 @@
-## $Id: splineClasses.R,v 1.8 2002/03/04 08:43:25 maechler Exp $
+## $Id: splineClasses.R,v 1.8.2.1 2002/05/07 17:18:47 maechler Exp $
 ##
 ## Classes and methods for determining and manipulating interpolation
 ## splines.
@@ -33,13 +33,12 @@
 ## as http://www.gnu.org/copyleft or by writing to the Free Software
 ## Foundation, 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 ##
-
 splineDesign <-
     ## Creates the "design matrix" for a collection of B-splines.
     function(knots, x, ord = 4, derivs = integer(nx))
 {
     knots <- sort(as.numeric(knots))
-    nk <- length(knots)
+    if((nk <- length(knots)) <= 0) stop("must have at least `ord' knots")
     x <- as.numeric(x)
     nx <- length(x)
     if(length(derivs) != nx)
@@ -67,7 +66,8 @@ interpSpline <-
 interpSpline.default <-
     function(obj1, obj2, bSpline = FALSE, period = NULL, na.action = na.fail)
 {
-    ord <- 4 # spline order -- want to use other `order'/`degree'!
+    ord <- 4 # spline order -- future: want to use other `order'/`degree'!
+    deg <- ord - 1
 
     frm <- na.action(data.frame(x = as.numeric(obj1), y = as.numeric(obj2)))
     frm <- frm[order(frm$x), ]
@@ -75,11 +75,11 @@ interpSpline.default <-
     x <- frm$x
     if(any(duplicated(x)))
         stop("values of x must be distinct")
-    # ord-1 extra knots on each side
-    knots <- c(x[1:3] + x[1] - x[4], x,
-               x[ndat + (1:3) - 3] + x[ndat] - x[ndat - 3])
-    derivs <- c(2, integer(ndat), 2)
-    x <- c(x[1], x, x[ndat])
+    ## `deg' extra knots (shifted) out on each side :
+    knots <- c(x[1:deg] + x[1] - x[ord], x,
+               x[ndat + (1:deg) - deg] + x[ndat] - x[ndat - deg])
+    derivs <- c(2, integer(ndat), 2) # 2nd derivs coerced to 0 in solve() below
+    x      <- c(x[1], x, x[ndat])
 ## Solving the system of equations for the spline coefficients can be
 ## simplified by using banded matrices but the required Linpack routines
 ## are not loaded as part of S.
@@ -125,7 +125,7 @@ interpSpline.default <-
     value <- polySpline(value)
     coeff <- coef(value)
     coeff[ , 1] <- frm$y
-    coeff[1, 3] <- coeff[nrow(coeff), 3] <- 0
+    coeff[1, deg] <- coeff[nrow(coeff), deg] <- 0
     value$coefficients <- coeff
     value
 }
@@ -329,17 +329,14 @@ predict.bSpline <- function(object, x, nseg = 50, deriv = 0, ...)
     ord <- splineOrder(object)
     if(deriv < 0 || deriv >= ord)
         stop(paste("deriv must be between 0 and", ord - 1))
-    ncoeff <- length(coef(object))
+    ncoeff <- length(coeff <- coef(object))
     if(missing(x)) {
         x <- seq(knots[ord], knots[ncoeff + 1], length = nseg + 1)
         accept <- TRUE
     } else accept <- knots[ord] <= x & x <= knots[ncoeff + 1]
     y <- x
     y[!accept] <- NA
-    xx <- x[accept]
-    knots <- splineKnots(object)
-    coeff <- coef(object)
-    y[accept] <- .Call("spline_value", knots, coeff, ord, xx, deriv,
+    y[accept] <- .Call("spline_value", knots, coeff, ord, x[accept], deriv,
                        PACKAGE = "splines")
     xyVector(x = x, y = y)
 }
@@ -353,25 +350,29 @@ predict.nbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 
     x <- value$x
     y <- value$y
+    ## Compute y[] for x[] outside knots:
     knots <- splineKnots(object)
     ord <- splineOrder(object)
-    coeff <- array(0, c(2, ord))
     ncoeff <- length(coef(object))
-    coeff[, 1] <- asVector(predict(object, c(knots[ord], knots[ncoeff + 1])))
-    coeff[, 2] <- asVector(predict(object, c(knots[ord], knots[ncoeff + 1]),
-                                   deriv = 1))
-    deriv <- as.integer(deriv)
-    if(deriv > 0 && deriv < ord) {
-        while(deriv) {
-            ord <- ord - 1
-            coeff <- t(t(coeff[, -1]) * (1:ord))
-            deriv <- deriv - 1
-        }
+    bKn <- knots[c(ord,ncoeff + 1)]
+    coeff <- array(0, c(2, ord))
+    ## Extrapolate using a + b*(x - boundary.knot) (ord=4 specific?)
+    coeff[,1] <- asVector(predict(object, bKn))
+    coeff[,2] <- asVector(predict(object, bKn, deriv = 1))
+    deriv <- as.integer(deriv)## deriv < ord already tested in NextMethod()
+    while(deriv) {
+        ord <- ord - 1
+        ## could be simplified when coeff has <= 2 non-zero cols:
+        coeff <- t(t(coeff[, -1]) * (1:ord))# 1:ord = the `k' in k* x^{k-1}
+        deriv <- deriv - 1
     }
-    if(any(which <- (x < knots[ord]) & is.na(y)))
-        y[which] <- coeff[1, 1] + coeff[1, 2] * (x[which] - knots[ord])
-    if(any(which <- (x > knots[ncoeff + 1]) & is.na(y)))
-        y[which] <- coeff[2, 1] + coeff[2, 2] * (x[which] - knots[ncoeff + 1])
+    nc <- ncol(coeff)
+    if(any(which <- (x < bKn[1]) & is.na(y)))
+        y[which] <- if(nc==0) 0 else if(nc==1) coeff[1, 1]
+        else coeff[1, 1] + coeff[1, 2] * (x[which] - bKn[1])
+    if(any(which <- (x > bKn[2]) & is.na(y)))
+        y[which] <- if(nc==0) 0 else if(nc==1) coeff[1, 1]
+        else coeff[2, 1] + coeff[2, 2] * (x[which] - bKn[2])
     xyVector(x = x, y = y)
 }
 
@@ -396,27 +397,30 @@ predict.pbSpline <- function(object, x, nseg = 50, deriv = 0, ...)
 predict.npolySpline <- function(object, x, nseg = 50, deriv = 0, ...)
 {
     value <- NextMethod()
-    if(!any(is.na(value$y)))
+    if(!any(is.na(value$y))) # when x were inside knots
         return(value)
 
     x <- value$x
     y <- value$y
-    knots <- splineKnots(object)
-    coeff <- coef(object)[ - (2:(length(knots) - 1)),  ]
+    ## Compute y[] for x[] outside knots:
+    nk <- length(knots <- splineKnots(object))
+    coeff <- coef(object)[ - (2:(nk - 1)), ] # only need col 1:2
     ord <- dim(coeff)[2]
-    coeff[, 3:ord] <- 0
+    if(ord >= 3) coeff[, 3:ord] <- 0
     deriv <- as.integer(deriv)
-    if(deriv > 0 && deriv < ord) {
-        while(deriv) {
-            ord <- ord - 1
-            coeff <- t(t(coeff[, -1]) * (1:ord))
-            deriv <- deriv - 1
-        }
+    while(deriv) {
+        ord <- ord - 1
+        ## could be simplified when coeff has <= 2 non-zero cols:
+        coeff <- t(t(coeff[, -1]) * (1:ord))# 1:ord = the `k' in k* x^{k-1}
+        deriv <- deriv - 1
     }
+    nc <- ncol(coeff)
     if(any(which <- (x < knots[1]) & is.na(y)))
-        y[which] <- coeff[1, 1] + coeff[1, 2] * (x[which] - knots[1])
-    if(any(which <- (x > knots[2]) & is.na(y)))
-        y[which] <- coeff[2, 1] + coeff[2, 2] * (x[which] - knots[length(knots)])
+        y[which] <- if(nc==0) 0 else if(nc==1) coeff[1, 1]
+        else coeff[1, 1] + coeff[1, 2] * (x[which] - knots[1])
+    if(any(which <- (x > knots[nk]) & is.na(y)))
+        y[which] <- if(nc==0) 0 else if(nc==1) coeff[1, 1]
+        else coeff[2, 1] + coeff[2, 2] * (x[which] - knots[nk])
 
     xyVector(x = x, y = y)
 }

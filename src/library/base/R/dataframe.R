@@ -27,6 +27,14 @@ is.data.frame <- function(x) inherits(x, "data.frame")
 
 I <- function(x) { structure(x, class = unique(c("AsIs", class(x)))) }
 
+print.AsIs <- function (x, ...)
+{
+    cl <- class(x)
+    class(x) <- cl[cl != "AsIs"]
+    NextMethod("print")
+    invisible(x)
+}
+
 plot.data.frame <- function (x, ...) {
     if(!is.data.frame(x))
 	stop("plot.data.frame applied to non data frame")
@@ -325,6 +333,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 "[.data.frame" <-
     function(x, i, j, drop = if(missing(i)) TRUE else length(cols) == 1)
 {
+    mdrop <- missing(drop)
     if(nargs() < 3) {
 	if(missing(i))
 	    return(x)
@@ -381,7 +390,9 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	    if(length(dim(xj)) == 2)
 		nrow <- dim(xj)[1]
 	    else nrow <- length(xj)
-	    if(nrow == 1) {
+            ## for consistency with S: don't drop (to a list)
+            ## if only one row unless explicitly asked for
+	    if(!mdrop && nrow == 1) {
 		drop <- TRUE
 		names(x) <- cols
 		attr(x, "row.names") <- NULL
@@ -390,7 +401,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
     }
     if(!drop) {
 	names(x) <- cols
-	if(any(duplicated(rows)))
+        ## might have NAs, which make.names eliminates.
+	if(any(is.na(rows) | duplicated(rows)))
 	    rows <- make.names(rows, unique = TRUE)
 	attr(x, "row.names") <- rows
 	class(x) <- cl
@@ -695,7 +707,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
 		paste(nmi, ri, sep = ".")
 	    else nmi
 	}
-	else if(nrow > 0 && all(ri == 1:ni))
+	else if(nrow > 0 && identical(ri, 1:ni))
 	    seq(from = nrow + 1, length = ni)
 	else ri
     }
@@ -823,7 +835,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     for(j in 1:nvar) {
 	xj <- value[[j]]
 	if(!has.dim[j] && !inherits(xj, "AsIs") &&
-		(is.character(xj) || is.logical(xj)))
+		is.character(xj))
 	    value[[j]] <- factor(xj)
     }
     rlabs <- unlist(rlabs)

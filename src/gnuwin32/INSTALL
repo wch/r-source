@@ -1,7 +1,7 @@
-R 1.5.0 for Windows
+R 1.5.1 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.5.0 to
+This distribution contains the sources to build a port of R-1.5.1 to
 run on Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
@@ -24,9 +24,7 @@ diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
 those from the cygwin distribution
 (http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at
-http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.  You may need to copy
-sh.exe to c:\bin\sh.exe; the exact circumstances are mysterious, but
-the error message will be `make[1]: /bin/sh.exe: Command not found'.
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier
@@ -38,10 +36,9 @@ from http://sourceforge.net/projects/mingw/.  For example, at the time
 of writing, MinGW-1.1.tar.gz based on gcc-2.95.3.  Just unpack this
 somewhere and put its bin directory in your path, *after* our tools.
 It is desirable to update the header files, for example with
-mingw-runtime-1.3.tar.gz and w32api-1.3.tar.gz.  (Version 2 of the
-mingw-runtime is a beta and needs some changes.  When a version based
-on gcc-3.1 is released, it is expected that yet other changes will be
-required.)
+mingw-runtime-1.3.tar.gz and w32api-1.5.tar.gz.  (It is also possible
+to use the beta versions of gcc-3.1 and mingw-runtime-2.0 on that
+site, and when released these will become the recommended versions.)
 
 No earlier Mingw compiler has been tested and support for using the
 Cygwin compiler has been withdrawn.  If you see errors about `-shared'
@@ -51,14 +48,14 @@ recommended compiler.
 
 The Windows port of perl5, available via
 http://www.activestate.com/Products/ActivePerl/.
+BEWARE: you do need the *Windows* port and not the Cygwin one.
 
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors, and included in our tools.zip).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
-
-http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
+http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp
 and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
 
 You may need this on the same drive as the other tools. (Although we
@@ -87,11 +84,11 @@ zip.exe, unzip.exe, hhc.exe
 Building
 --------
 
-You also need the R source (R-1.5.0.tgz).
+You also need the R source (R-1.5.1.tgz).
 
-Then: untar R-1.5.0.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.5.1.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.5.0/src/gnuwin32
+	cd /somewhere/R-1.5.1/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed and to
 set the type(s) of help that you want built.
@@ -101,7 +98,7 @@ Then run
 	make
 
 
-Note 1: The file rw1050\bin\Rchtml.dll is only built if CHM help is
+Note 1: The file rw1051\bin\Rchtml.dll is only built if CHM help is
 specified in MkRules. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions to
 build it under VC++6, and it is preferable to use that as the VC++
@@ -150,7 +147,7 @@ configurations.
 Building bitmap device support
 ------------------------------
 
-The file rw1050\bin\Rbitmap.dll is not built automatically:
+The file rw1051\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.
 
 
@@ -199,7 +196,8 @@ To make HTML versions of the manuals (not the Reference Manual) use
 	cd ../../doc/manual
 	make -f Makefile.win html
 
-This makes use of tidy.exe, from http://www.w3.org/.
+This makes use of tidy.exe, available via http://tidy.sourceforge.net/,
+with a compiled version included in our tool set.
 
 The fptex distribution of TeX (via www.fptex.org) includes a suitable
 port of pdftex.
@@ -210,7 +208,7 @@ Building the installers
 
 See installer/INSTALL.  You need a complete R build first, including 
 bitmap and Tcl/Tk support and the manuals, as well as the recommended
-packages in R-1.5.0-recommended.tgz.
+packages in R-1.5.1-recommended.tgz.
 
 
 Recommended packages
@@ -239,11 +237,11 @@ There is currently a complete set of tools at
 
 You will need Perl, zip and unzip installed.
 
-You also need the R source (R-1.5.0.tgz).
+You also need the R source (R-1.5.1.tgz).
 
-Then: untar R-1.5.0.tgz somewhere, and
+Then: untar R-1.5.1.tgz somewhere, and
 
-	cd /somewhere/R-1.5.0/src/gnuwin32
+	cd /somewhere/R-1.5.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.

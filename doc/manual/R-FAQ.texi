@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-0, 2002-04-28
-@set REL-VERSION 1.5.0
+@set FAQ-VERSION 1.5-10, 2002-06-13
+@set REL-VERSION 1.5.1
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
 
@@ -165,9 +165,10 @@ In particular, note that I do not have access to Windows or Mac systems.
 Features specific to the Windows and Mac OS ports of R are described in
 the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for Windows
 @acronym{FAQ}''} and the
-@uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
-@acronym{FAQ}/DOC''}.  If you have information on Mac or Windows systems
-that you think should be added to this document, please let me know.
+@uref{http://cran.r-project.org/bin/macos/rmac-FAQ.html, ``R for
+Macintosh @acronym{FAQ}/DOC''}.  If you have information on Mac or
+Windows systems that you think should be added to this document, please
+let me know.
 
 @c <FIXME>
 @c Should we maybe have direct links inside the R tree to the various
@@ -423,25 +424,26 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-12-23:
+@c Linux binaries as of 2002-06-02:
 @c
-@c debian   2.2 i386  1.3.1  Dirk Eddelbuettel <edd@debian.org>
-@c          3.0 i386  1.4.1  Dirk Eddelbuettel <edd@debian.org>
-@c linuxppc 5.0 ppc   1.4.1  Alex Buerkle <buerkla@uwec.edu>
-@c mandrake 7.x i386  1.3.0  Maximino Ameneiro Gomez <maximino.ameneiro@metropoli2000.com>
-@c          8.1 i386  1.4.1  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x i386  1.4.1  Stephen Eglen <stephen@gnu.org>
-@c          7.x alpha 1.4.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.4.1  Martyn Plummer <plummer@iarc.fr>
+@c debian   2.2 i386  1.5.0  Douglas Bates <bates@stat.wisc.edu>
+@c          3.0 i386  1.5.0  Dirk Eddelbuettel <edd@debian.org>
+@c linuxppc 5.0 ppc   1.5.0  Alex Buerkle <buerkla@uwec.edu>
+@c mandrake 8.1 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
+@c          8.2 i386  1.5.0  Michele Alzetta <mikalzet@libero.it>
+@c redhat   6.x i386  1.5.0  Stephen Eglen <stephen@gnu.org>xsx1
+@c          7.x alpha 1.5.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.5.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 potato/woody packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
-i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
-and Naoki Takebayashi, respectively), SuSE 7.2 i386 packages by Albrecht
-Gebhardt, Mandrake 8.1 and 7.2 i386 packages by Michele Alzetta and
-Maximino Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
+distribution and maintained by Doug Bates and Dirk Eddelbuettel,
+respectively), Red Hat 6.x i386, 7.x i386 and 7.x alpha packages
+(maintained by Stephen Eglen, Martyn Plummer and Naoki Takebayashi,
+respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt, Mandrake 8.1
+and 8.2 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by Alex
+Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1378,8 +1380,7 @@ enter most of the commands for users without writing CGI scripts.
 Graphical output is possible in PostScript or GIF formats and the
 executed code is presented to the user for revision.
 
-Demo and download are available from
-@uref{http://www.mth.uea.ac.uk/~h089/Rcgi/}.
+See @uref{http://stats.mth.uea.ac.uk/Rcgi/} for more information.
 
 @strong{Rweb} is developed and maintained by
 @email{jeff@@math.montana.edu, Jeff Banfield}.  The
@@ -1461,6 +1462,10 @@ Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
 @item CoCoAn
 Constrained Correspondence Analysis.
+@item DBI
+A common database interface (DBI) class and method definitions.  All
+classes in this package are virtual and need to be extended by the
+various DBMS implementations.
 @item Devore5
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
@@ -1492,6 +1497,10 @@ Arrays with arbitrary offsets.
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
+@item PTAk
+A multiway method to decompose a tensor (array) of any order, as a
+generalisation of SVD also supporting non-identity metrics and
+penalisations.  Also includes some other multiway methods.
 @item RArcInfo
 Functions to import Arc/Info V7.x coverages and data.
 @item RMySQL
@@ -1512,6 +1521,8 @@ engine in R.
 A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument).
+@item RandomFields
+Creating random fields using various methods.
 @item RmSQL
 An interface between R and the mSQL database system.
 @item Rmpi
@@ -1574,6 +1585,9 @@ R. Tibshirani, 1993, Chapman and Hall.
 @item bqtl
 QTL mapping toolkit for inbred crosses and recombinant inbred lines.
 Includes maximum likelihood and Bayesian tools.
+@item brlr
+Bias-reduced logistic regression: fits logistic regression models by
+maximum penalized likelihood.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
@@ -1620,6 +1634,9 @@ data.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
+@item dichromat
+Color schemes for dichromats: collapse red-green distinctions to
+simulate the effects of colour-blindness.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
@@ -1697,6 +1714,10 @@ capabilities, plus some support for interaction.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
+@item gtkDevice
+GTK graphics device driver that may be used independently of the R-GNOME
+interface and can be used to create R devices as embedded components in
+a GUI using a Gtk drawing area widget, e.g., using RGtk.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item ifs
@@ -1710,6 +1731,13 @@ Inequality, concentration and poverty measures, and Lorenz curves
 Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
 of prediction error.
+@item knnTree
+Construct or predict with @math{k}-nearest-neighbor classifiers, using
+cross-validation to select @math{k}, choose variables (by forward or
+backwards selection), and choose scaling (from among no scaling, scaling
+each column by its SD, or scaling each column by its MAD).  The finished
+classifier will consist of a classification tree with one such
+@math{k}-nn classifier in each leaf.
 @item lasso2
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
@@ -1831,11 +1859,17 @@ Analysis of experimental crosses to identify QTLs.
 For solving quadratic programming problems.
 @item quantreg
 Quantile regression and related methods.
+@item qvcalc
+Functions to compute quasi-variances and associated measures of
+approximation error.
 @item randomForest
 Breiman's random forest classifier.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
+@item relimp
+Functions to facilitate inference on the relative importance of
+predictors in a linear or generalized linear model.
 @item rmeta
 Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
@@ -1853,6 +1887,8 @@ Plots a three dimensional (3D) point cloud perspectively.
 Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach.
+@item serialize
+Simple interfce for serializing to connections.
 @item sgeostat
 An object-oriented framework for geostatistical modeling.
 @item sm
@@ -1927,8 +1963,14 @@ optimal under various criteria.
 @c @strong{splines}).
 @item survival
 Functions for survival analysis, including penalised likelihood.
+@item systemfit
+Contains functions for fitting simultaneous systems of equations using
+Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
+Three-Stage Least Squares (3SLS).
 @item tensor
 Tensor product of arrays.
+@item tkrplot
+Simple mechanism for placing R graphics in a Tk widget.
 @item tree
 Classification and regression trees.
 @item tripack
@@ -1963,30 +2005,17 @@ invited to give these a try, of course.  This area of @acronym{CRAN}
 currently contains
 
 @table @strong
-@item DBI
-A common database interface (DBI) class and method definitions.  All
-classes in this package are virtual and need to be extended by the
-various DBMS implementations.
 @item GRASS
 Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures.
-@c <NOTE>
-@c Moved to Devel for 1.5 as it fails R CMD check.
-@item PTAk
-A multiway method to decompose a tensor (array) of any order, as a
-generalisation of SVD also supporting non-identity metrics and
-penalisations.  Also includes some other multiway methods.
-@c </NOTE>
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
 @c <NOTE>
 @c Moved to Devel for 1.5 as it fails R CMD check.
 @item RODBC
 An @acronym{ODBC} database interface.
-@item RandomFields
-Creating random fields using various methods.
 @c </NOTE>
 @c <FIXME>
 @c Tim Keitt should tell us what do to with these ...
@@ -2056,6 +2085,9 @@ per-record, aggregate and trigger functions.
 @item RGnumeric
 A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc.
+@item RGtkViewers
+A collection of tools for viewing different S objects, databases, class
+and widget hierarchies, S source file contents, etc.
 @item RJavaDevice
 A graphics device for R that uses Java components and graphics
 @acronym{API}s.
@@ -2092,6 +2124,67 @@ An extension module for libxslt, the XML-XSL document translator, that
 allows XSL functions to be implemented via R functions.
 @end table
 
+The @uref{http://www.bioconductor.org, Bioconductor Project} produces an
+open source software framework that will assist biologists and
+statisticians working in bioinformatics, with primary emphasis on
+inference using DNA microarrays.  Currently, the following R packages
+can be obtained from
+@url{http://www.bioconductor.org/packages/devel/html/}, with more
+packages in development.
+
+@table @strong
+@item AnnBuilder
+Processing information from Unigene, LocusLink, and Gene Ontology
+Consortium, storing the data to tables in a local database, and
+generating XML annotation files.
+@item Biobase
+Base functions for Bioconductor.
+@item ROC
+Utilities for ROC, with uarray focus.
+@item affy
+Methods for Affymetrix Oligonucleotide Arrays.
+@item annotate
+Annotation for microarrays.
+@item edd
+Expression density diagnostics.
+@item genefilter
+Basic functions for filtering genes.
+@item geneplotter
+Basic functions for plotting genetic data.
+@item marrayClasses
+Class definitions for pre-normalized and normalized cDNA microarray
+data.  Basic methods for accessing/replacing, printing, and subsetting.
+@item marrayInput
+Functions for reading microarray data into R from different image
+analysis output files, and probe and target description files.  Widgets
+are supplied to facilitate and automate data input and the creation of
+microarray specific R objects for storing these data.
+@item marrayNorm
+Functions for location and scale normalization procedures based on
+robust local regression.
+@item marrayPlots
+Functions for diagnostic plots for pre- and post-normalization cDNA
+microarray intensity data: boxplots, scatter-plots, color images. 
+@item multtest
+Multiple testing procedures.  Includes resampling-based multiple testing
+procedures for controlling the family-wise error rate (FWER):
+Bonferroni, Hochberg (1988), Holm (1979), Sidak, Westfall & Young (1993)
+(referred to as minP and maxT).  Also includes procedures for
+controlling the false discovery rate (FDR): Benjamini & Hochberg (1995),
+Benjamini & Yekutieli (2001) step-up procedures.  These procedures are
+implemented for tests based on t-statistics, F-statistics, paired
+t-statistics,  block F-statistics, Wilcoxon statistics.  Results are
+reported in terms of adjusted p-values.  The procedures are directly
+applicable to identify differentially expressed genes in DNA microarray
+experiments.
+@item rhdf5
+An HDF5 interface for R.
+@item tkWidgets
+R based Tk widgets to provide user interfaces.
+@end table
+
+These packages will soon be made available via @acronym{CRAN} as well.
+
 @email{jlindsey@@luc.ac.be, Jim Lindsey} has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
 of @strong{event} (event history procedures and models), @strong{gnlm}
@@ -2111,10 +2204,9 @@ analysis of DNA sequences.  Jim's packages can be obtained from
 @c package for additive hazards regression, which can be obtained from
 @c @uref{http://www.med.uio.no/imb/stat/addreg/}.
 
-@email{fharrell@@virginia.edu, Frank Harrell} has recently made an R
-port of his @strong{Hmisc} package available via
-@uref{http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html}; a port of
-his @strong{Design} package is currently under way.
+@email{fharrell@@virginia.edu, Frank Harrell} has made R ports of his
+@strong{Design} and @strong{Hmisc} packages available via
+@uref{http://hesweb1.med.virginia.edu/biostat/s/library/r/}.
 
 More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.

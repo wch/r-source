@@ -1,9 +1,0 @@
-TITLE(lrplot @@ Leverage-Residual Plot)
-USAGE(
-lrplot(reglist)
-)
-DESCRIPTION(
-LANG(lrplot) draws a leverage-residual plot for the data
-in its argument.
-LANG(reglist) is assumed to have been obtained from LANG(regress).
-)

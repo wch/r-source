@@ -15,9 +15,7 @@ You will need suitable versions of at least make, sh, cat, cp, diff,
 echo, mkdir, mv, rm, sed; we have packaged a set at
 http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
 cygwin distribution (http://www.cygwin.com/mirrors.html) or (gzip)
-compiled from the sources.  You may need to copy sh.exe to
-c:\bin\sh.exe; the exact circumstances are mysterious, but the error
-message will be `make[1]: /bin/sh.exe: Command not found'.
+compiled from the sources.
 
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
@@ -30,10 +28,9 @@ from http://sourceforge.net/projects/mingw/.  For example, at the time
 of writing, MinGW-1.1.tar.gz based on gcc-2.95.3.  Just unpack this
 somewhere and put its bin directory in your path, *after* our tools.
 It is desirable to update the header files, for example with
-mingw-runtime-1.3.tar.gz and w32api-1.3.tar.gz.  (Version 2 of the
-mingw-runtime is a beta and needs some changes.  When a version based
-on gcc-3.1 is released, it is expected that yet other changes will be
-required.)
+mingw-runtime-1.3.tar.gz and w32api-1.5.tar.gz.  (It is also possible
+to use the beta versions of gcc-3.1 and mingw-runtime-2.0 on that
+site, and when released these will become the recommended versions.)
 
 No earlier Mingw compiler has been tested and support for using the
 Cygwin compiler has been withdrawn.  If you see errors about `-shared'
@@ -43,12 +40,12 @@ recommended compiler.
 
 The Windows port of perl5, available via
 http://www.activestate.com/Products/ActivePerl/.
+BEWARE: you do need the *Windows* port and not the Cygwin one.
 
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
-
-http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwMicrosoftHTMLHelpDownloads.asp
+http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp
 and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
 
 You may need this on the same drive as the other tools. (Although we
@@ -69,7 +66,8 @@ appropriate environment variables set.  Edit MkRules to set the
 appropriate paths as needed.
 
 BEWARE: if you have Norton Anti-Virus you may need to disable it.
-Some versions lock up the machine when windres is run.
+Some versions lock up the machine when windres is run.  (Norton
+Anti-Virus 2002 causes no problems.)
 
 BEWARE: Don't expect this to work if the path to R_HOME contains spaces.
 As from R 1.5.0 it may work, but we don't recommend it.
@@ -77,7 +75,7 @@ As from R 1.5.0 it may work, but we don't recommend it.
 Then
 
 	cd R_HOME\src\gnuwin32
-	make libR.a
+	make libR.a libRblas.a
 
 which might take up to a minute.  This only needs to be done once for
 each R release, and will be done automatically when needed if

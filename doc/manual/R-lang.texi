@@ -1243,11 +1243,11 @@ same as other statements you can assign the value of them.  The two
 examples below are equivalent.
 
 @smallexample
-> if( any(x) <= 0 ) y <- log(1+x) else y <- log(x)
-> y <- if( any(x)<= 0 ) log(1+x) else log(x)
+> if( any(x <= 0) ) y <- log(1+x) else y <- log(x)
+> y <- if( any(x <= 0) ) log(1+x) else log(x)
 @end smallexample
 
-The @code{else} clause is optional.  The statement @code{if(any(x) <= 0)
+The @code{else} clause is optional.  The statement @code{if(any(x <= 0))
 x <- x[x <= 0]} is valid.  When the @code{if} statement is not in a
 block the @code{else}, if present, must appear on the same line as
 @var{statement1}.  Otherwise the new line at the end of @var{statement1}

@@ -49,6 +49,15 @@ extern "C" {
 #include "zlib.h"
 #endif
 
+/* workaround for NetBSD vandalism on zconf.h */
+#ifndef OF /* function prototypes */
+#  ifdef STDC
+#    define OF(args)  args
+#  else
+#    define OF(args)  ()
+#  endif
+#endif
+
 #if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
 /* like the STRICT of WIN32, we define a pointer that cannot be converted
     from (void*) without cast */

@@ -62,6 +62,14 @@ symbols(x, y, circles, squares, rectangles, stars,
   parameters are not plotted.  The exception to this is \emph{stars}.
   In that case, the length of any rays which are \code{NA} is reset
   to zero.
+
+  Circles of radius zero are plotted at radius one pixel (which is
+  device-dependent).
+#ifdef windows
+  On \code{\link{windows}} devices circles are plotted
+  at radius at least one pixel as some Windows versions omit smaller
+  circles.
+#endif
 }
 \references{
   W. S. Cleveland (1985)

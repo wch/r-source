@@ -53,7 +53,7 @@ optim(par, fn, gr = NULL,
   method. If non-trivial bounds are supplied, this method will be
   selected, with a warning.
 
-  Nocedal and Wright (1999) is a comprehansive reference for the
+  Nocedal and Wright (1999) is a comprehensive reference for the
   previous three methods.
   
   Method \code{"SANN"} is a variant of simulated annealing

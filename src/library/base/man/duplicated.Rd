@@ -12,7 +12,7 @@ duplicated(x, incomparables = FALSE)
   indicating which elements (rows) are duplicates.
 }
 \arguments{
-  \item{x}{an atomic vector or a data fram.e}
+  \item{x}{an atomic vector or a data frame.}
   \item{incomparables}{a vector of values that cannot be compared.
     Currently, \code{FALSE} is the only possible value, meaning that all
     values can be compared.}

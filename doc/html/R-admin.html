@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.5.0 (2002-04-29).
+<p>The current version of this document is 1.5.1 (2002-06-17).
 
 ISBN 3-901167-52-8
 
@@ -373,9 +373,10 @@ more than one library, of course.
 <br><pre>R CMD INSTALL -l /path/to/library <var>pkg1</var> <var>pkg2</var> <small>...</small>
 </pre>
 
-<p>The part <code>-l /path/to/library</code> can be omitted, when the first
-library in <code>R_LIBS</code> is used if set, otherwise the main library
-<code><var>R_HOME</var>/library</code>.
+<p>The part <code>-l /path/to/library</code> can be omitted, in which case the
+first library in <code>R_LIBS</code> is used if set, otherwise the main
+library <code><var>R_HOME</var>/library</code> is used.  (<code>R_LIBS</code> is looked
+for in the environment: <code>.Renviron</code> is not read by <code>R CMD</code>.)
 
 <p>The Windows equivalent is<a rel=footnote href="#fn-1"><sup>1</sup></a>
 
@@ -499,9 +500,9 @@ will be compiled in.
 
 <p>The bitmapped graphics devices <code>jpeg()</code> and <code>png()</code> need the
 appropriate libraries installed: <code>jpeg</code> (version 6b or later) or
-<code>libpng</code> (versions 1.0.5 to 1.2.1) and <code>zlib</code> (version 1.1.3
-or later) respectively.  <code>libpng-1.2.2</code> has moved its header files,
-and you will need add something like
+<code>libpng</code> (versions 1.0.5 to 1.2.1 or 1.2.3 or later) and
+<code>zlib</code> (version 1.1.3 or later) respectively.  <code>libpng-1.2.2</code>
+moved its header files, and you will need add something like
 <code>-I/usr/local/include/libpng12</code> to <code>CPPFLAGS</code> to make use of
 it.
 
@@ -650,7 +651,8 @@ arguments, even if no cache is used.
 all these variables.
 
 <p>One common variable to change is <code>R_PAPERSIZE</code>, which defaults to
-<code>a4</code>, not <code>letter</code>.
+<code>a4</code>, not <code>letter</code>.  (Valid values are <code>a4</code>,
+<code>letter</code>, <code>legal</code> and <code>executive</code>.)
 
 <p>If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables <code>LDFLAGS</code> (for libraries,
@@ -898,11 +900,15 @@ compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
 <code>make</code> is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
-<p>If using <code>gcc</code>, do ensure that the compiler was compiled for
-the version of Solaris in use.  (This can be discerned from
-<code>gcc -v</code>.)  <code>gcc</code> makes modified versions
-of some header files, and so (for example) <code>gcc</code> compiled under
-Solaris 2.6 will not compile R under Solaris 2.7.
+<p>If using <code>gcc</code>, do ensure that the compiler was compiled for the
+version of Solaris in use.  (This can be discerned from <code>gcc
+-v</code>.)  <code>gcc</code> makes modified versions of some header files, and
+so (for example) <code>gcc</code> compiled under Solaris 2.6 will not
+compile R under Solaris 2.7.  Also, do ensure that it was compiled
+for the assembler/loader in use.  If you download <code>gcc</code> from
+<a href="http://www.sunfreeware.com">http://www.sunfreeware.com</a> then you need to download
+<code>binutils</code> too.  To avoid all these pitfalls we strongly
+recommended you compile <code>gcc</code> from the sources yourself.
 
 <p>When using the SunPro compilers do <em>not</em> specify <code>-fast</code>, as
 this disables <small>IEEE</small> arithmetic and <code>make check</code> will

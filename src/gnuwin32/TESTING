@@ -50,6 +50,8 @@ Testing R build under Windows
 
     o Try the various resize options on the graphics window's menu.
 
+    o Try printing and saving from a graphics window's menu.
+
     o Experiment with printing from the console, from a pager and
       printing to a win.print() device.
 
@@ -94,7 +96,7 @@ Testing R build under Windows
 
 - Using the installed copy, try building a copy of packages and a
   bundle (e.g. VR) using Rcmd INSTALL, and try Rcmd check and Rcmd
-  build too.
+  build too.  Also a package that uses BLAS (e.g. quadprog).
 
 - If you have latex installed, customize .../bin/helpPRINT.bat and
   test help(offline=TRUE).
@@ -108,5 +110,5 @@ Testing R build under Windows
 
 
 BDR
-2001-12-13
+2001-12-13, 2002-06-04
 

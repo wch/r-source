@@ -97,9 +97,10 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     undef @section_title;
 
     $skipping = 0;
-    ## remove comments (everything after a %)
+    ## remove comments (everything after a %) and CR in CRLF terminators.
     while(<rdfile>){
 	$_ = expand $_;
+	s/\r//;
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
 	    if ($1 ne $main::OSdir) { $skipping = 1; }
 	    next;
@@ -2006,7 +2007,7 @@ sub rdoc2latex {# (filename)
 
     my $current = $blocks{"name"}, $generic, $cmd;
     foreach (sort foldorder @aliases) {
-	next if ($_ eq "(" || $_ eq "{");  # these two break the PDF indexing
+	next if (/\(/ || /\{/);  # these two break the PDF indexing
 	$generic = $a = $_;
 	$generic =~ s/\.data\.frame$/.dataframe/o;
 	$generic =~ s/\.model\.matrix$/.modelmatrix/o;

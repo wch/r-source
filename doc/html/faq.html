@@ -18,7 +18,7 @@ Up:<a rel=up href="#dir">(dir)</a>
 <h2>R FAQ</h2>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.5-0, 2002-04-28</h2>
+<h2>Version 1.5-10, 2002-06-13</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -151,8 +151,9 @@ Up:<a rel=up href="#Introduction">Introduction</a>
 <p>In particular, note that I do not have access to Windows or Mac systems. 
 Features specific to the Windows and Mac OS ports of R are described in
 the <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">"R for Windows <small>FAQ</small>"</a> and the
-<a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a>.  If you have information on Mac or Windows systems
-that you think should be added to this document, please let me know.
+<a href="http://cran.r-project.org/bin/macos/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a>.  If you have information on Mac or
+Windows systems that you think should be added to this document, please
+let me know.
 
 <p><hr>
 Node:<a name="R%20Basics">R Basics</a>,
@@ -258,7 +259,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h3>2.3 What is the current version of R?</h3>
 
-<p>The current released version is 1.5.0.  Conforming to this
+<p>The current released version is 1.5.1.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -443,11 +444,12 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
 potato/woody packages for the i386 platform (now part of the Debian
-distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
-i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
-and Naoki Takebayashi, respectively), SuSE 7.2 i386 packages by Albrecht
-Gebhardt, Mandrake 8.1 and 7.2 i386 packages by Michele Alzetta and
-Maximino Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
+distribution and maintained by Doug Bates and Dirk Eddelbuettel,
+respectively), Red Hat 6.x i386, 7.x i386 and 7.x alpha packages
+(maintained by Stephen Eglen, Martyn Plummer and Naoki Takebayashi,
+respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt, Mandrake 8.1
+and 8.2 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by Alex
+Buerkle.
 
 <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1333,8 +1335,7 @@ enter most of the commands for users without writing CGI scripts.
 Graphical output is possible in PostScript or GIF formats and the
 executed code is presented to the user for revision.
 
-<p>Demo and download are available from
-<a href="http://www.mth.uea.ac.uk/~h089/Rcgi/">http://www.mth.uea.ac.uk/~h089/Rcgi/</a>.
+<p>See <a href="http://stats.mth.uea.ac.uk/Rcgi/">http://stats.mth.uea.ac.uk/Rcgi/</a> for more information.
 
 <p><strong>Rweb</strong> is developed and maintained by
 <a href="mailto:jeff@math.montana.edu">Jeff Banfield</a>.  The
@@ -1428,6 +1429,10 @@ Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 Jammalamadaka and A. SenGupta, 2001, World Scientific. 
 <br><dt><strong>CoCoAn</strong>
 <dd>Constrained Correspondence Analysis. 
+<br><dt><strong>DBI</strong>
+<dd>A common database interface (DBI) class and method definitions.  All
+classes in this package are virtual and need to be extended by the
+various DBMS implementations. 
 <br><dt><strong>Devore5</strong>
 <dd>Data sets and sample analyses from "Probability and Statistics for
 Engineering and the Sciences (5th ed)" by Jay L. Devore, 2000, Duxbury. 
@@ -1459,6 +1464,10 @@ U.S. National Institute for Standards and Technology.
 <dd>Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS. 
+<br><dt><strong>PTAk</strong>
+<dd>A multiway method to decompose a tensor (array) of any order, as a
+generalisation of SVD also supporting non-identity metrics and
+penalisations.  Also includes some other multiway methods. 
 <br><dt><strong>RArcInfo</strong>
 <dd>Functions to import Arc/Info V7.x coverages and data. 
 <br><dt><strong>RMySQL</strong>
@@ -1479,6 +1488,8 @@ engine in R.
 <dd>A collection of programs for reading and plotting SKEW-T,log p diagrams
 and wind profiles for data collected by radiosondes (the typical weather
 balloon-borne instrument). 
+<br><dt><strong>RandomFields</strong>
+<dd>Creating random fields using various methods. 
 <br><dt><strong>RmSQL</strong>
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>Rmpi</strong>
@@ -1535,6 +1546,9 @@ R. Tibshirani, 1993, Chapman and Hall.
 <br><dt><strong>bqtl</strong>
 <dd>QTL mapping toolkit for inbred crosses and recombinant inbred lines. 
 Includes maximum likelihood and Bayesian tools. 
+<br><dt><strong>brlr</strong>
+<dd>Bias-reduced logistic regression: fits logistic regression models by
+maximum penalized likelihood. 
 <br><dt><strong>car</strong>
 <dd>Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
@@ -1581,6 +1595,9 @@ data.
 <br><dt><strong>deldir</strong>
 <dd>Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set. 
+<br><dt><strong>dichromat</strong>
+<dd>Color schemes for dichromats: collapse red-green distinctions to
+simulate the effects of colour-blindness. 
 <br><dt><strong>diamonds</strong>
 <dd>Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
@@ -1658,6 +1675,10 @@ capabilities, plus some support for interaction.
 <br><dt><strong>gss</strong>
 <dd>A comprehensive package for structural multivariate function estimation
 using smoothing splines. 
+<br><dt><strong>gtkDevice</strong>
+<dd>GTK graphics device driver that may be used independently of the R-GNOME
+interface and can be used to create R devices as embedded components in
+a GUI using a Gtk drawing area widget, e.g., using RGtk. 
 <br><dt><strong>hdf5</strong>
 <dd>Interface to the <small>NCSA</small> HDF5 library. 
 <br><dt><strong>ifs</strong>
@@ -1669,6 +1690,13 @@ using smoothing splines.
 <dd>Improved predictive models by direct and indirect bootstrap aggregation
 in classification and regression as well as resampling based estimators
 of prediction error. 
+<br><dt><strong>knnTree</strong>
+<dd>Construct or predict with k-nearest-neighbor classifiers, using
+cross-validation to select k, choose variables (by forward or
+backwards selection), and choose scaling (from among no scaling, scaling
+each column by its SD, or scaling each column by its MAD).  The finished
+classifier will consist of a classification tree with one such
+k-nn classifier in each leaf. 
 <br><dt><strong>lasso2</strong>
 <dd>Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
@@ -1783,8 +1811,14 @@ manipulations.
 <dd>For solving quadratic programming problems. 
 <br><dt><strong>quantreg</strong>
 <dd>Quantile regression and related methods. 
+<br><dt><strong>qvcalc</strong>
+<dd>Functions to compute quasi-variances and associated measures of
+approximation error. 
 <br><dt><strong>randomForest</strong>
 <dd>Breiman's random forest classifier. 
+<br><dt><strong>relimp</strong>
+<dd>Functions to facilitate inference on the relative importance of
+predictors in a linear or generalized linear model. 
 <br><dt><strong>rmeta</strong>
 <dd>Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes. 
@@ -1802,6 +1836,8 @@ APIs, and examples and documentation for its use.
 <dd>Functions for fitting general linear Structural Equation Models (with
 observed and unobserved variables) by the method of maximum likelihood
 using the RAM approach. 
+<br><dt><strong>serialize</strong>
+<dd>Simple interfce for serializing to connections. 
 <br><dt><strong>sgeostat</strong>
 <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>sm</strong>
@@ -1845,8 +1881,14 @@ as surrogates for a full data set, and search for subsets which are
 optimal under various criteria. 
 <br><dt><strong>survival</strong>
 <dd>Functions for survival analysis, including penalised likelihood. 
+<br><dt><strong>systemfit</strong>
+<dd>Contains functions for fitting simultaneous systems of equations using
+Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
+Three-Stage Least Squares (3SLS). 
 <br><dt><strong>tensor</strong>
 <dd>Tensor product of arrays. 
+<br><dt><strong>tkrplot</strong>
+<dd>Simple mechanism for placing R graphics in a Tk widget. 
 <br><dt><strong>tree</strong>
 <dd>Classification and regression trees. 
 <br><dt><strong>tripack</strong>
@@ -1880,25 +1922,15 @@ invited to give these a try, of course.  This area of <small>CRAN</small>
 currently contains
 
 <dl>
-<dt><strong>DBI</strong>
-<dd>A common database interface (DBI) class and method definitions.  All
-classes in this package are virtual and need to be extended by the
-various DBMS implementations. 
-<br><dt><strong>GRASS</strong>
+<dt><strong>GRASS</strong>
 <dd>Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures. 
-<br><dt><strong>PTAk</strong>
-<dd>A multiway method to decompose a tensor (array) of any order, as a
-generalisation of SVD also supporting non-identity metrics and
-penalisations.  Also includes some other multiway methods. 
 <br><dt><strong>R2HTML</strong>
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
 <br><dt><strong>RODBC</strong>
 <dd>An <small>ODBC</small> database interface. 
-<br><dt><strong>RandomFields</strong>
-<dd>Creating random fields using various methods. 
 <br><dt><strong>StatDataML</strong>
 <dd>Read and write StatDataML. 
 <br><dt><strong>cxx</strong>
@@ -1951,6 +1983,9 @@ per-record, aggregate and trigger functions.
 <br><dt><strong>RGnumeric</strong>
 <dd>A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc. 
+<br><dt><strong>RGtkViewers</strong>
+<dd>A collection of tools for viewing different S objects, databases, class
+and widget hierarchies, S source file contents, etc. 
 <br><dt><strong>RJavaDevice</strong>
 <dd>A graphics device for R that uses Java components and graphics
 <small>API</small>s. 
@@ -1987,6 +2022,67 @@ from C objects, call graphs, etc.
 allows XSL functions to be implemented via R functions. 
 </dl>
 
+<p>The <a href="http://www.bioconductor.org">Bioconductor Project</a> produces an
+open source software framework that will assist biologists and
+statisticians working in bioinformatics, with primary emphasis on
+inference using DNA microarrays.  Currently, the following R packages
+can be obtained from
+&lt;<code>http://www.bioconductor.org/packages/devel/html/</code>&gt;, with more
+packages in development.
+
+<dl>
+<dt><strong>AnnBuilder</strong>
+<dd>Processing information from Unigene, LocusLink, and Gene Ontology
+Consortium, storing the data to tables in a local database, and
+generating XML annotation files. 
+<br><dt><strong>Biobase</strong>
+<dd>Base functions for Bioconductor. 
+<br><dt><strong>ROC</strong>
+<dd>Utilities for ROC, with uarray focus. 
+<br><dt><strong>affy</strong>
+<dd>Methods for Affymetrix Oligonucleotide Arrays. 
+<br><dt><strong>annotate</strong>
+<dd>Annotation for microarrays. 
+<br><dt><strong>edd</strong>
+<dd>Expression density diagnostics. 
+<br><dt><strong>genefilter</strong>
+<dd>Basic functions for filtering genes. 
+<br><dt><strong>geneplotter</strong>
+<dd>Basic functions for plotting genetic data. 
+<br><dt><strong>marrayClasses</strong>
+<dd>Class definitions for pre-normalized and normalized cDNA microarray
+data.  Basic methods for accessing/replacing, printing, and subsetting. 
+<br><dt><strong>marrayInput</strong>
+<dd>Functions for reading microarray data into R from different image
+analysis output files, and probe and target description files.  Widgets
+are supplied to facilitate and automate data input and the creation of
+microarray specific R objects for storing these data. 
+<br><dt><strong>marrayNorm</strong>
+<dd>Functions for location and scale normalization procedures based on
+robust local regression. 
+<br><dt><strong>marrayPlots</strong>
+<dd>Functions for diagnostic plots for pre- and post-normalization cDNA
+microarray intensity data: boxplots, scatter-plots, color images. 
+<br><dt><strong>multtest</strong>
+<dd>Multiple testing procedures.  Includes resampling-based multiple testing
+procedures for controlling the family-wise error rate (FWER):
+Bonferroni, Hochberg (1988), Holm (1979), Sidak, Westfall &amp; Young (1993)
+(referred to as minP and maxT).  Also includes procedures for
+controlling the false discovery rate (FDR): Benjamini &amp; Hochberg (1995),
+Benjamini &amp; Yekutieli (2001) step-up procedures.  These procedures are
+implemented for tests based on t-statistics, F-statistics, paired
+t-statistics,  block F-statistics, Wilcoxon statistics.  Results are
+reported in terms of adjusted p-values.  The procedures are directly
+applicable to identify differentially expressed genes in DNA microarray
+experiments. 
+<br><dt><strong>rhdf5</strong>
+<dd>An HDF5 interface for R. 
+<br><dt><strong>tkWidgets</strong>
+<dd>R based Tk widgets to provide user interfaces. 
+</dl>
+
+<p>These packages will soon be made available via <small>CRAN</small> as well.
+
 <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting
 of <strong>event</strong> (event history procedures and models), <strong>gnlm</strong>
@@ -2002,10 +2098,9 @@ Jim has also started <strong>dna</strong>, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
 
-<a href="mailto:fharrell@virginia.edu">Frank Harrell</a> has recently made an R
-port of his <strong>Hmisc</strong> package available via
-<a href="http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html">http://hesweb1.med.virginia.edu/biostat/s/Hmisc.html</a>; a port of
-his <strong>Design</strong> package is currently under way.
+<a href="mailto:fharrell@virginia.edu">Frank Harrell</a> has made R ports of his
+<strong>Design</strong> and <strong>Hmisc</strong> packages available via
+<a href="http://hesweb1.med.virginia.edu/biostat/s/library/r/">http://hesweb1.med.virginia.edu/biostat/s/library/r/</a>.
 
 <p>More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.

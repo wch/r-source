@@ -14,6 +14,11 @@ sprintf(fmt, \dots)
   \item{\dots}{values to be passed into \code{fmt}}
 }
 \details{
+  This is just a wrapper for the system's C call.  No attempt is made to
+  check that the mode of the values passed match the format supplied,
+  and \R's special values (\code{NA}, \code{Inf}, \code{-Inf} and on
+  most platforms \code{NaN}) are unlikely to be handled correctly.
+  
   The following is abstracted from K&R (see References, below).  The
   string \code{fmt} contains normal characters, which are passed through
   to the output string, and also special characters that operate on the
@@ -68,8 +73,12 @@ sprintf(fmt, \dots)
 
 \author{Jonathan Rougier, \email{J.C.Rougier@durham.ac.uk}}
 
-\seealso{\code{\link{formatC}} for a way of formatting vectors of
-  numbers in a similar fashion, \code{\link{paste}} for another way of
+\seealso{
+  \code{\link{formatC}} for a way of formatting vectors of
+  numbers in a similar fashion but with more error-checking and with
+  handling of special values.
+
+  \code{\link{paste}} for another way of
   creating a vector combining text and values.
 }
 

@@ -743,6 +743,7 @@ LibExtern cursor	CaretCursor;	/* insert text */
 LibExtern cursor	TextCursor;	/* insert text */
 LibExtern cursor	HandCursor;	/* hand pointer */
 #undef LibExtern
+#undef extern
 
 #ifdef __cplusplus
 }

@@ -64,13 +64,6 @@ Duplicate -y :tools:FF_CREATE :tools:FF_CREATE.ux
 translate ¶0x0a ¶0x0d <:tools:FF_CREATE.ux >:tools:FF_CREATE
 delete -y :tools:FF_CREATE.ux
 
-Duplicate  -y ::library:BuildAll.mac ::library:B_All.ux
-translate ¶0x0a ¶0x0d <::library:B_All.ux >::library:BuildAll.mac
-delete -y ::library:B_All.ux
-
-Duplicate -y ::modules:BuildAll.mac ::modules:B_All.ux
-translate ¶0x0a ¶0x0d <::modules:B_All.ux >::modules:BuildAll.mac
-delete -y ::modules:B_All.ux
 
 
 echo "Start creating MakeR"
@@ -82,9 +75,16 @@ if `Exists ::main:alloca.c`
 end
 
 
-if `Exists ::main:qsort-body.c`
+if "`Exists ::main:qsort-body.c`"
  Rename "::main:qsort-body.c" "::main:qsort-body_c" 
 end
+
+
+
+
+
+### if - Expected a number when "body.c" was encountered.
+### MPW Shell - Execution of input terminated.
 
 echo "Setting variables and file list..."
 echo " "
@@ -411,7 +411,7 @@ for f in {FortList}
  end
 end
 
-if 'Exists ::main:qsort-body_c'
+if "`Exists ::main:qsort-body_c`"
  Rename "::main:qsort-body_c" "::main:qsort-body.c" 
 end
 echo " "
@@ -445,4 +445,5 @@ echo " "
 echo "Make -f MakeR R > MyMake"
 echo "MyMake"
 echo " "
+
 

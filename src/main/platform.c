@@ -285,7 +285,7 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 #ifdef Win32
-# include <io.h>		/* for unlink */
+int Rwin_rename(char *from, char *to);  /* in src/gnuwin32/extra.c */
 #endif
 
 SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -307,8 +307,12 @@ SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("expanded destination name too long");
     strncpy(to, p, PATH_MAX - 1);
 
-#if defined(Win32) || defined(Macintosh)
-    /* rename() on Windows does not overwrite files */
+#ifdef Win32
+    return Rwin_rename(from, to) == 0 ? mkTrue() : mkFalse();
+#endif
+
+#if defined(Macintosh)
+    /* rename() on Windows/Mac does not overwrite files */
     if (!unlink(to))
 	if (errno == EACCES) return mkFalse();
 #endif
@@ -871,6 +875,10 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     int i = 0;
+#ifdef Unix
+    Rboolean X11 = (strcmp(R_GUIType, "X11") == 0) || 
+	(strcmp(R_GUIType, "GNOME") == 0);
+#endif
     
     checkArity(op, args);
     PROTECT(ans = allocVector(LGLSXP, 13));
@@ -879,7 +887,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
 #ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+    LOGICAL(ans)[i++] = X11;
 #else
     LOGICAL(ans)[i++] = TRUE;
 #endif
@@ -890,7 +898,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
 #ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+    LOGICAL(ans)[i++] = X11;
 #else
     LOGICAL(ans)[i++] = TRUE;
 #endif
@@ -907,7 +915,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("X11"));
 #ifdef Unix
-    LOGICAL(ans)[i++] = strcmp(R_GUIType, "X11") == 0;
+    LOGICAL(ans)[i++] = X11;
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif

@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-04-06)
+Version 1.5.0 Patched (2002-06-13)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -993,4 +993,5 @@ Warning messages:
 10: Step size truncated: out of bounds
 11: Algorithm did not converge in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
 12: Algorithm stopped at boundary value in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
+> 
 > 

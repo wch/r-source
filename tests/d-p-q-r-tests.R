@@ -22,7 +22,7 @@ rErr <- function(approx, true, eps = .Options$rErr.eps)
 	   true - approx)     # absolute error (e.g. when true=0)
 }
 ## Short cut:
-All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 1e-14)
+All.eq <- function(x,y) all.equal.numeric(x,y, tolerance = 100*.Machine$double.eps)
 
 if(!interactive())
     .Random.seed <- c(0,rep(7654, 3))

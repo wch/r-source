@@ -50,8 +50,9 @@ x$name
   entries in that dimension are selected.
 
   When \code{[.data.frame} is used for subsetting rows of a
-  \code{\link{data.frame}}, it returns a dataframe with unique row names,
-  using \code{\link{make.names}( * , unique = TRUE)}, see the \code{swiss}
+  \code{\link{data.frame}}, it returns a dataframe with unique
+  (and non-missing)row names, if necessary transforming the names using
+  \code{\link{make.names}( * , unique = TRUE)}. See the \code{swiss}
   example below.
 
   When operating on a list, the \code{[[} operator gives the specified

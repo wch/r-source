@@ -193,7 +193,7 @@ static void R_EndProfiling()
     setitimer(ITIMER_PROF, &itv, NULL);
     signal(SIGPROF, doprof_null);
 #endif /* not Win32 */
-    fclose(R_ProfileOutfile);
+    if(R_ProfileOutfile) fclose(R_ProfileOutfile);
     R_ProfileOutfile = NULL;
     R_Profiling = 0;
 }
@@ -1042,7 +1042,8 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     tmploc = R_findVarLocInFrame(rho, R_TmpvalSymbol);
 
     /*  Do a partial evaluation down through the LHS. */
-    lhs = evalseq(CADR(expr), rho, PRIMVAL(op)==1, tmploc);
+    lhs = evalseq(CADR(expr), rho, 
+                  PRIMVAL(op)==1 || PRIMVAL(op)==3, tmploc);
 
     PROTECT(lhs);
     PROTECT(rhs); /* To get the loop right ... */

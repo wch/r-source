@@ -88,7 +88,7 @@ makePrototypeFromClassDef <-
                        dataPartClass,"\"", sep=""))
         snames <- snames[-match(".Data", snames)]
     }
-    for(j in seq(along = properties)) {
+    for(j in seq(along = snames)) {
         name <- el(snames, j)
         i <- match(name, pnames)
         if(is.na(i))
@@ -446,9 +446,7 @@ newClassEnvironment <-
 
 
 newBasic <-
-  ## the implementation of the function `new' for basic classes that don't have
-  ## a formal definition.  Any of these could have a formal definition, except for
-  ## Class="NULL" (disallowed because NULL can't have attributes).
+  ## the implementation of the function `new' for basic classes.
   ##
   ## See `new' for the interpretation of the arguments.
   function(Class, ...) {
@@ -1168,13 +1166,18 @@ validSlotNames <- function(names) {
 }
 
 getDataPart <- function(object) {
-    if(is.na(match(".Data", slotNames(class(object)))))
+    temp <- getSlots(class(object))
+    slots <- names(temp)
+    iData <- match(".Data", slots)
+    if(is.na(iData))
         stop(paste("class \"", class(object),
                    "\" does not have a data part (a .Data slot) defined",
                    sep=""))
-    ## following should be extended to allow matrix, etc.
-    ## by exempting some attributes from deletion
-    attributes(object) <- NULL
+    dataClass <- temp[[iData]]
+    slots <- slots[-iData]
+    for(what in slots)
+        attr(object, what) <- NULL
+    class(object) <- dataClass
     object
 }
 
@@ -1185,8 +1188,7 @@ setDataPart <- function(object, value) {
                    "\" does not have a data part (a .Data slot) defined",
                    sep=""))
     value <- as(value, dataClass)
-    attributes(value) <- attributes(object)
-    value
+    .mergeAttrs(value, object)
 }
 
 .validDataPartClass <- function(cl) {
@@ -1202,6 +1204,23 @@ setDataPart <- function(object, value) {
                length(getProperties(ClassDef)) == 0)
                 value <- cl
         }
+    }
+    value
+}
+
+.mergeAttrs <- function(value, object, explicit = NULL) {
+    supplied <- attributes(object)
+    if(length(explicit)>0)
+        supplied[names(explicit)] <- explicit
+    valueAttrs <- attributes(value)
+    if(length(valueAttrs) == 0) # nothing to protect
+        attributes(value) <- supplied
+    else {
+        valueAttrs$class <- NULL # copy in class if it's supplied
+           # otherwise, don't overwrite existing attrs
+        for(what in names(supplied))
+            if(is.null(valueAttrs[[what]]))
+                attr(value, what) <- supplied[[what]]
     }
     value
 }

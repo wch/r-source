@@ -86,7 +86,9 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \code{prettyNum} is the utility function for prettifying \code{x}. If
   \code{x} is not a character, \code{format(x[i], ...)} is applied to
   each element, and then it is left unchanged if all the other arguments
-  are at their defaults.
+  are at their defaults.  Note that \code{prettyNum(x)} may behave
+  unexpectedly if \code{x} is a \code{character} not resulting from
+  something like \code{format(<number>)}.
 }
 \note{
   Currently \code{format} drops trailing zeroes, so \code{format(6.001,
@@ -115,6 +117,14 @@ r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
 prettyNum(r, big.mark = ",")
 ## Some Europeans:
 prettyNum(r, big.mark = "'", decimal.mark = ",")
+
+(dd <- sapply(1:10, function(i)paste((9:0)[1:i],collapse="")))
+prettyNum(dd, big.mark="'")
+\testonly{
+ np <- nchar(pd <- prettyNum(dd, big.mark="'"))
+ stopifnot(sapply(0:2, function(m)
+           all(grep("'", substr(pd, 1, np - 4*m)) == (4+3*m):10)))
+}
 
 pN <- pnorm(1:7, lower=FALSE)
 cbind(format (pN, small.mark = " ", digits = 15))

@@ -37,6 +37,7 @@
 #include <io.h>			/* for isatty, chdir */
 #include "run.h"
 #include "Startup.h"
+#include <stdlib.h>		/* for exit */
 
 unsigned int R_max_memory = INT_MAX;
 Rboolean UseInternet2 = FALSE;

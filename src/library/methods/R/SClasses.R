@@ -70,7 +70,7 @@ setSClass <-
     setValidity(f, validity)
     assignClassDef(name, f, where)
     ## confirm the validity of the class definition (it may be incomplete)
-    on.exit(removeClassDef(name, where))
+    on.exit(removeClass(name, where=where))
     completeClassDefinition(name, f)
     ## if no error, allow assignment to stay
     on.exit()

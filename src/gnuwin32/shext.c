@@ -34,10 +34,10 @@ void selectfolder(char *folder)
     LPITEMIDLIST pidlBrowse;
  
     strcpy(folder, "");
-    // Get the shell's allocator. 
+    /* Get the shell's allocator. */
     if (!SUCCEEDED(SHGetMalloc(&g_pMalloc))) return; 
       
-    // Get the PIDL for the desktop. 
+    /* Get the PIDL for the desktop. */
     if (!SUCCEEDED(SHGetSpecialFolderLocation(hwnd, CSIDL_DESKTOP, 
 					      &pidlDesktop))) return; 
  
@@ -49,12 +49,12 @@ void selectfolder(char *folder)
     bi.lpfn = NULL; 
     bi.lParam = 0; 
  
-    // Browse for a folder and return its PIDL. 
+    /* Browse for a folder and return its PIDL. */
     pidlBrowse = SHBrowseForFolder(&bi); 
     if (pidlBrowse != NULL) {
 	SHGetPathFromIDList(pidlBrowse, folder); 
         g_pMalloc->lpVtbl->Free(g_pMalloc, pidlBrowse); 
     } 
-    // Clean up. 
+    /* Clean up. */
     g_pMalloc->lpVtbl->Free(g_pMalloc, pidlDesktop); 
 }

@@ -73,7 +73,9 @@ static void AllocBuffer(int len)
     if(len*sizeof(char) < bufsize) return;
     len = (len+1)*sizeof(char);
     if(len < BUFSIZE) len = BUFSIZE;
-    Encodebuf = (char *) realloc(Encodebuf, len);
+    /* Protect against broken realloc */
+    if(Encodebuf) Encodebuf = (char *) realloc(Encodebuf, len);
+    else Encodebuf = (char *) malloc(len);
     bufsize = len;
     if(!Encodebuf) {
 	bufsize = 0;
@@ -284,11 +286,13 @@ char *EncodeString(char *s, int w, int quote, int right)
 
     if (s == CHAR(NA_STRING)) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
+	i = quote ? 2 : 4;
 	quote = 0;
-    } else 
+    } else {
 	p = s;
-
-    i = Rstrlen(s, quote);
+	i = Rstrlen(s, quote);
+    }
+    
     AllocBuffer((i+2 >= w)?(i+2):w); /* +2 allows for quotes */
     q = Encodebuf;
     if(right) { /* Right justifying */
@@ -468,9 +472,11 @@ void REvprintf(const char *format, va_list arg)
     if(R_Consolefile) {
 	vfprintf(R_Consolefile, format, arg);
     } else {
-	char buf[BUFSIZE]; int slen;
+	char buf[BUFSIZE];
+	int slen;
 
-	vsprintf(buf, format, arg);
+	vsnprintf(buf, BUFSIZE, format, arg);
+	buf[BUFSIZE-1] = '\0';
 	slen = strlen(buf);
 	R_WriteConsole(buf, slen);
     }

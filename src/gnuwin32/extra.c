@@ -125,7 +125,7 @@ static int R_unlink_one(char *dir, char *name, int recursive)
     if(strcmp(name, ".") == 0) return 0;
     if(strcmp(name, "..") == 0) return 0;
     if(strlen(dir)) {
-	strcpy(tmp, dir); 
+	strcpy(tmp, dir);
 	if(*(dir + strlen(dir) - 1) != '\\') strcat(tmp, "\\");
 	strcat(tmp, name);
     } else strcpy(tmp, name);
@@ -304,7 +304,7 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 /* defined in w32api 1.2, but not in 1.1 or earlier */
-#ifndef VER_NT_WORKSTATION 
+#ifndef VER_NT_WORKSTATION
 #define VER_NT_WORKSTATION              0x0000001
 #define VER_NT_DOMAIN_CONTROLLER        0x0000002
 #define VER_NT_SERVER                   0x0000003
@@ -406,8 +406,8 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
                else
 		   type = "Server";
             }
- 	    
-	    sprintf(ver, 
+
+	    sprintf(ver,
 		    "Windows %s %s (build %d) Service Pack %d.%d",
 		    desc, type,
 		    LOWORD(osvi.dwBuildNumber),
@@ -570,7 +570,7 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
     sitem = CADR(args);
     if (isNull(sitem)) { /* delete a menu */
 	res = windelmenu (CHAR(STRING_ELT(smenu, 0)), errmsg);
-	if (res > 0) 
+	if (res > 0)
 	    errorcall(call, "menu does not exist");
     } else { /* delete an item */
 	if(!isString(sitem) || length(sitem) != 1)
@@ -597,7 +597,7 @@ void Rwin_fpset()
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    
+
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
@@ -612,7 +612,7 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    
+
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
@@ -630,7 +630,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     OSVERSIONINFO verinfo;
-    char isNT[8]="??", ver[256], 
+    char isNT[8]="??", ver[256],
 	name[MAX_COMPUTERNAME_LENGTH + 1], user[UNLEN+1];
     DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
 
@@ -657,7 +657,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     sprintf(ver, "%s %d.%d", isNT,
 	    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion);
     SET_STRING_ELT(ans, 1, mkChar(ver));
-    sprintf(ver, "(build %d) %s", LOWORD(verinfo.dwBuildNumber), 
+    sprintf(ver, "(build %d) %s", LOWORD(verinfo.dwBuildNumber),
 	    verinfo.szCSDVersion);
     SET_STRING_ELT(ans, 2, mkChar(ver));
     GetComputerName(name, &namelen);
@@ -680,11 +680,11 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
-{    
+{
     DWORD mtime;
     int ntime;
     double time;
-    
+
     checkArity(op, args);
     time = asReal(CAR(args));
     if (ISNAN(time) || time < 0)
@@ -722,13 +722,13 @@ SEXP do_memsize(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans;
     int maxmem;
-    
+
     checkArity(op, args);
     if(isLogical(CAR(args))) {
 	maxmem = asLogical(CAR(args));
 	PROTECT(ans = allocVector(INTSXP, 1));
 #ifdef LEA_MALLOC
-	if(maxmem == NA_LOGICAL) 
+	if(maxmem == NA_LOGICAL)
 	    INTEGER(ans)[0] = R_max_memory;
 	else if(maxmem)
 	    INTEGER(ans)[0] = max_total_mem;
@@ -759,7 +759,7 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     char *dll;
     DWORD dwVerInfoSize;
     DWORD dwVerHnd;
-    
+
     checkArity(op, args);
     path = CAR(args);
     if(!isString(path) || LENGTH(path) != 1)
@@ -778,7 +778,7 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 	lpstrVffInfo = (LPSTR) malloc(dwVerInfoSize);
 	if (GetFileVersionInfo(dll, 0L, dwVerInfoSize, lpstrVffInfo))
 	{
-	    
+
 	    fRet = VerQueryValue(lpstrVffInfo,
 				 TEXT("\\StringFileInfo\\040904E4\\FileVersion"),
 				 (LPVOID)&lszVer, &cchVer);
@@ -794,7 +794,7 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
 				     (LPVOID)&lszVer, &cchVer);
 		if(fRet) SET_STRING_ELT(ans, 1, mkChar(lszVer));
 	    }
-	    
+
 	} else ans = R_NilValue;
 	free(lpstrVffInfo);
     } else ans = R_NilValue;
@@ -866,7 +866,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     xmax = max(170, 8*mw+60);
     ylist = min(20*n, 300);
     ymax = ylist + 60;
-    wselect = newwindow(multiple ? "Select" : "Select one", 
+    wselect = newwindow(multiple ? "Select" : "Select one",
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal);
     setbackground(wselect, dialog_bg());
@@ -894,10 +894,29 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else {
 	PROTECT(ans = allocVector(STRSXP, 1));
-	SET_STRING_ELT(ans, 0, mkChar(selected));	
+	SET_STRING_ELT(ans, 0, mkChar(selected));
     }
     cleanup();
     show(RConsole);
     UNPROTECT(1);
     return ans;
+}
+
+int Rwin_rename(char *from, char *to)
+{
+    int res = 0;
+    OSVERSIONINFO verinfo;
+
+    verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+    GetVersionEx(&verinfo);
+    switch(verinfo.dwPlatformId) {
+    case VER_PLATFORM_WIN32_NT:
+	res = (MoveFileEx(from, to, MOVEFILE_REPLACE_EXISTING) == 0);
+	break;
+    default:
+	if (!DeleteFile(to) && GetLastError() != ERROR_FILE_NOT_FOUND)
+	    return 1;
+	res = (MoveFile(from, to) == 0);
+    }
+    return res;
 }

@@ -29,7 +29,7 @@ AC_PREREQ(2.50)
 ## of M4 magic.  Note that M4 esyscmd has a trailing newline because the
 ## shell command output has one, hence the patsubst() trick.
 m4_define([R_VERSION],
-          patsubst(m4_esyscmd([cat VERSION]), [ \(\w\|\W\)*]))
+          patsubst(m4_esyscmd([cat VERSION]), [\([0-9.]*\)\(\w\|\W\)*], [\1]))
 AC_INIT([R], R_VERSION, [r-bugs@R-project.org])
 AC_CONFIG_SRCDIR([src/include/Defn.h])
 AC_CONFIG_AUX_DIR([tools])
@@ -1107,7 +1107,8 @@ AC_DEFINE_UNQUOTED(R_PRINTCMD, "${R_PRINTCMD}",
 ## Default paper size.
 AC_PATH_PROG(PAPERCONF, paperconf, false)
 papersize=`${PAPERCONF}`
-: ${R_PAPERSIZE="${papersize-a4}"}
+test -z "${papersize}" && papersize=a4
+: ${R_PAPERSIZE="${papersize}"}
 AC_SUBST(R_PAPERSIZE)
 
 ## Saving.

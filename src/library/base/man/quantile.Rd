@@ -27,7 +27,7 @@
 
   \code{quantile(x,p)} as a function of \code{p} linearly interpolates
   the points ( (i-1)/(n-1), ox[i] ), where
-  \code{ox <- order(x)} (the ``order statistics'') and \code{n <- length(x)}.
+  \code{ox <- sort(x)} and \code{n <- length(x)}.
 
   This gives \code{quantile(x, p) == (1-f)*ox[i] + f*ox[i+1]}, where
   \code{r <- 1 + (n-1)*p}, \code{i <- floor(r)}, \code{f <- r - i}
@@ -36,8 +36,8 @@
   \code{\link{NA}} and \code{\link{NaN}} values in \code{probs} are
   propagated to the result.
 }
-\seealso{\code{\link[stepfun]{ecdf}} for empirical distributions of
-  which \code{quantile} is the "inverse".
+\seealso{\code{\link[stepfun]{ecdf}} (in the \code{stepfun} package) for
+  empirical distributions of which \code{quantile} is the "inverse".
   \code{\link{boxplot.stats}} and \code{\link{fivenum}} for computing
   ``versions'' of quartiles, etc.
 }

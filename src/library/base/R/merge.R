@@ -55,7 +55,10 @@ merge.data.frame <-
             by <- y[, by.y]; if(is.factor(by)) by <- as.character(by)
         } else {
             ## Do these together for consistency in as.character.
-            bz <- do.call("paste", c(rbind(x[, by.x], y[, by.y]), sep = "\r"))
+            ## Use same set of names.
+            bx <- x[, by.x, drop=FALSE]; by <- y[, by.y, drop=FALSE]
+            names(bx) <- names(by) <- paste("V", 1:ncol(bx), sep="")
+            bz <- do.call("paste", c(rbind(bx, by), sep = "\r"))
             bx <- bz[1:nx]
             by <- bz[nx + (1:ny)]
         }

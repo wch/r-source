@@ -30,9 +30,9 @@
     direction for each dimension of the contingency table.  The
     default consists of alternating directions, beginning with a
     vertical split.}
-  \item{color}{(\code{TRUE} or vector of integer colors) for color
-    shading or (\code{FALSE}, the default) for empty boxes with no
-    shading.  Ignored if \code{shade} is not \code{FALSE}.}
+  \item{color}{logical or (recycling) vector of colors for color
+    shading, used only when \code{shade} is \code{FALSE}.  The default
+    \code{color=FALSE} gives empty boxes with no shading.}
   \item{shade}{a logical indicating whether to produce extended mosaic
     plots, or a numeric vector of at most 5 distinct positive numbers
     giving the absolute values of the cut points for the residuals.  By
@@ -125,6 +125,7 @@ mosaicplot(HairEyeColor, shade = TRUE)
 ## Independence model of hair and eye color and sex.  Indicates that
 ## there are significantly more blue eyed blond females than expected
 ## in the case of independence (and too few brown eyed blond females).
+
 mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## Model of joint independence of sex from hair and eye color.  Males
 ## are underrepresented among people with brown hair and eyes, and are
@@ -135,5 +136,6 @@ mosaicplot(HairEyeColor, shade = TRUE, margin = list(c(1,2), 3))
 ## of gears and carburettors in Motor Trend car data.
 data(mtcars)
 mosaicplot(~ gear + carb, data = mtcars, color = TRUE)
+mosaicplot(~ gear + carb, data = mtcars, color = 2:3)# color recycling
 }
 \keyword{hplot}

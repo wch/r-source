@@ -81,12 +81,14 @@ oo <- order(pivot)
 all.equal(t(Q[, oo]) \%*\% Q[, oo], m) # TRUE
 all.equal(t(Q) \%*\% Q, m[pivot, pivot]) # TRUE
 
-# now for something postitive semi-definite
+# now for something positive semi-definite
 x <- cbind(x, x[, 1]+3*x[, 2])
 m <- crossprod(x)
 qr(m)$rank # is 2, as it should be
 
-test <- try(Q <- chol(m))
+# chol() may fail, depending on numerical rounding:
+# chol() unlike qr() does not use a tolerance.
+test <- try(Q <- chol(m))     
 
 (Q <- chol(m, pivot = TRUE)) # NB wrong rank here ... you have been warned!
 pivot <- attr(Q, "pivot")

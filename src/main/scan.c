@@ -92,11 +92,32 @@ static int Strtoi(const char *nptr, int base)
     return(res);
 }
 
+/* Like R_strtod, but allow NA to be a failure if NA is false */
+static double Rs_strtod(const char *c, char **end, Rboolean NA)
+{
+    double x;
 
-static double Strtod (const char *nptr, char **endptr) 
+    if (NA && strncmp(c, "NA", 2) == 0){
+	x = NA_REAL; *end = (char *)c + 2; /* coercion for -Wall */
+    }
+    else if (strncmp(c, "NaN", 3) == 0) {
+	x = R_NaN; *end = (char *)c + 3;
+    }
+    else if (strncmp(c, "Inf", 3) == 0) {
+	x = R_PosInf; *end = (char *)c + 3;
+    }
+    else if (strncmp(c, "-Inf", 4) == 0) {
+	x = R_NegInf; *end = (char *)c + 4;
+    }
+    else
+        x = strtod(c, end);
+    return x;
+}
+
+static double Strtod (const char *nptr, char **endptr, Rboolean NA) 
 {
     if (decchar == '.')
-	return R_strtod(nptr, endptr);
+	return Rs_strtod(nptr, endptr, NA);
     else { 
 	/* jump through some hoops... This is a kludge! 
 	   Should most likely use regexps instead */
@@ -112,19 +133,19 @@ static double Strtod (const char *nptr, char **endptr)
 		convbuf[i] = '.';
 	    else if (convbuf[i] == '.')
 		convbuf[i] = decchar;
-	x = R_strtod(convbuf, &end);
+	x = Rs_strtod(convbuf, &end, NA);
 	*endptr = (char *) nptr + (end - convbuf);
 	return x;
     } 
 }	
 
-static Rcomplex strtoc(const char *nptr, char **endptr)
+static Rcomplex strtoc(const char *nptr, char **endptr, Rboolean NA)
 {
     Rcomplex z;
     double x, y;
     char *s, *endp;
 
-    x = Strtod(nptr, &endp);
+    x = Strtod(nptr, &endp, NA);
     if (isBlankString(endp)) {
 	z.r = x; z.i = 0;
     }
@@ -134,7 +155,7 @@ static Rcomplex strtoc(const char *nptr, char **endptr)
     }
     else {
 	s = endp;
-	y = Strtod(s, &endp);
+	y = Strtod(s, &endp, NA);
 	if (*endp == 'i') {
 	    z.r = x; z.i = y;
 	    endp++;
@@ -179,7 +200,9 @@ static void AllocBuffer(int len)
 	if(len*sizeof(char) < bufsize) return;
 	len = (len+1)*sizeof(char);
 	if(len < MAXELTSIZE) len = MAXELTSIZE;
-	buffer = (char *) realloc(buffer, len);
+	/* Protect against broken realloc */
+	if(buffer) buffer = (char *) realloc(buffer, len);
+	else buffer = (char *) malloc(len);
 	bufsize = len;
 	if(!buffer) {
 	    bufsize = 0;
@@ -368,7 +391,7 @@ static void extractItem(char *buffer, SEXP ans, int i)
 	if (isNAstring(buffer, 0))
 	    REAL(ans)[i] = NA_REAL;
 	else {
-	    REAL(ans)[i] = Strtod(buffer, &endp);
+	    REAL(ans)[i] = Strtod(buffer, &endp, TRUE);
 	    if (!isBlankString(endp))
 		expected("a real", buffer);
 	}
@@ -377,7 +400,7 @@ static void extractItem(char *buffer, SEXP ans, int i)
 	if (isNAstring(buffer, 0))
 	    COMPLEX(ans)[i].r = COMPLEX(ans)[i].i = NA_REAL;
 	else {
-	    COMPLEX(ans)[i] = strtoc(buffer, &endp);
+	    COMPLEX(ans)[i] = strtoc(buffer, &endp, TRUE);
 	    if (!isBlankString(endp))
 		expected("a complex", buffer);
 	}
@@ -702,7 +725,9 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
 	quoteset = CHAR(STRING_ELT(quotes, 0));
-	quotesave = realloc(quotesave, strlen(quoteset) + 1);
+	/* Protect against broken realloc */
+	if(quotesave) quotesave = realloc(quotesave, strlen(quoteset) + 1);
+	else quotesave = malloc(strlen(quoteset) + 1);
 	if (!quotesave)
 	    errorcall(call, "out of memory");
 	strcpy(quotesave, quoteset);
@@ -792,7 +817,9 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
 	quoteset = CHAR(STRING_ELT(quotes, 0));
-	quotesave = realloc(quotesave, strlen(quoteset) + 1);
+	/* Protect against broken realloc */
+	if(quotesave) quotesave = realloc(quotesave, strlen(quoteset) + 1);
+	else quotesave = malloc(strlen(quoteset) + 1);
 	if (!quotesave)
 	    errorcall(call, "out of memory");
 	strcpy(quotesave, quoteset);
@@ -971,8 +998,8 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    islogical = FALSE;
 
 	res = Strtoi(tmp, 10); if (res == NA_INTEGER) isinteger = FALSE;
-	Strtod(tmp, &endp); if (!isBlankString(endp)) isreal = FALSE;
-	strtoc(tmp, &endp); if (!isBlankString(endp)) iscomplex = FALSE;
+	Strtod(tmp, &endp, TRUE); if (!isBlankString(endp)) isreal = FALSE;
+	strtoc(tmp, &endp, TRUE); if (!isBlankString(endp)) iscomplex = FALSE;
     }
     
     if (islogical) {
@@ -1019,7 +1046,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
 		REAL(rval)[i] = NA_REAL;
 	    else {
-		REAL(rval)[i] = Strtod(tmp, &endp);
+		REAL(rval)[i] = Strtod(tmp, &endp, FALSE);
 		if (!isBlankString(endp)) {
 		    isreal = FALSE;
 		    break;
@@ -1036,7 +1063,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
 		COMPLEX(rval)[i].r = COMPLEX(rval)[i].i = NA_REAL;
 	    else {
-		COMPLEX(rval)[i] = strtoc(tmp, &endp);
+		COMPLEX(rval)[i] = strtoc(tmp, &endp, FALSE);
 		if (!isBlankString(endp)) {
 		    iscomplex = FALSE;
 		    break;
@@ -1054,9 +1081,11 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(rval = allocVector(INTSXP, len));
 	    PROTECT(dup = duplicated(cvec));
 	    j = 0;
-	    for (i = 0; i < len; i++)
+	    for (i = 0; i < len; i++) {
 		if (LOGICAL(dup)[i] == 0 && !isNAstring(CHAR(STRING_ELT(cvec, i)), 1))
 		    j++;
+	    }
+	    
 	    PROTECT(levs = allocVector(STRSXP,j));
 	    j = 0;
 	    for (i = 0; i < len; i++)
@@ -1154,7 +1183,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (isspace((int)*bufp)) bufp++;
     first = LENGTH(CAR(args)) + 1;
     if (isdigit((int)*bufp)) {
-	first = Strtod(buffer, NULL);
+	first = Strtod(buffer, NULL, TRUE);
     }
     else {
 	for (j = 0; j < LENGTH(CAR(args)); j++) {

@@ -48,7 +48,7 @@ aov(formula, data = NULL, projections = FALSE, qr = TRUE,
 \author{B. D. Ripley}
 \seealso{
   \code{\link{lm}}, \code{\link{summary.aov}}, \code{\link{alias}},
-  \code{\link{proj}}, \code{\link{model.tables}, \code{\link{TukeyHSD}}
+  \code{\link{proj}}, \code{\link{model.tables}}, \code{\link{TukeyHSD}}
 }
 \examples{
 ## From Venables and Ripley (1997) p.210.

@@ -6,6 +6,201 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.5.1
+
+
+NEW FEATURES
+
+    o	Enhancements to mathematical annotation of plots:
+
+	- expressions involving dot(<something>) now produce a dot accent
+	  above the <something> (initial patch from Ben Bolker).
+
+	- within an expression, the symbol partialdiff is now converted
+	  to a partial differential symbol (greek delta).
+
+    o	smooth.spline() has a new argument `nknots' allowing to set the
+	default number of knots (when `all.knots = FALSE' as per default).
+
+
+BUG FIXES
+
+    o	Rdconv now skips CRs in input files, even on Unix.
+
+    o	readBin() had a (very slow) memory leak if changing size or reading
+	character strings.  writeChar() had a memory leak.
+
+    o	polygon() and rect() with lty = "blank" were omitting the fill
+	colour (if present).  symbols(circles=, lty="blank") was
+	drawing the border of the disks.
+
+    o	Subsetting non-existent rows in a data frame would produce
+	missing row names, which are not allowed.
+
+    o	On Unix, R_PAPERSIZE was set to '' instead of 'a4' as default on
+	systems without paperconf.
+
+    o	Under GNOME, capabilities() now reports correctly that X11, png
+	and jpeg are available (if they are under X11).
+
+    o	The names of some results of unlist() had the wrong internal
+	length, which confused paste().	 Both have been corrected. (PR#1524)
+
+    o	RweaveLatex.Rd had unbalanced braces in section "Supported
+	Options".
+
+    o	merge() with multiple and differently-named match columns
+	failed. (PR#1510)
+
+    o	NAs in right-justified unquoted character matrices were being
+	mis-aligned.  This mainly affected printing data frames.
+
+    o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
+	and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
+
+    o	qr.X was failing if n < p.  Fixed, but only in the case when
+	pivoting does not occur. (PR#1519)
+
+    o	xx[, 1:3] was returning a list if xx had only one row, even
+	though xx[1, 1:3] was a data frame. (PR#1530)
+
+    o	nls() was reporting incorrectly the number of iterations if the
+	maximum was reached.
+
+    o	rbind.data.frame() was coercing logical columns to factors.
+	(PR#1536)
+
+    o	Rprof(NULL) or Rprof("") called when not profiling caused a
+	segfault: now silently ignored.	 (PR#1471)
+
+    o	On systems (e.g. Windows) using R's own code for expm1, the
+	values were wrong for large negative x, and this affected
+	pweibull(), for example.
+
+    o	prettyNum(*, bigmark=*) added extra marks in some cases. (PR#1548)
+
+    o	cut.dendrogram() failed in some cases. (PR#1552)
+
+    o	The links in refman.pdf were broken by a single invalid
+	\alias{}. Now Rdconv checks more comprehensively. (PR#1550)
+
+    o	predict(smooth.spline(x,*), deriv =1) did not predict at all `x'
+	values, and
+	smooth.spline(x,*, all.knots = TRUE) used much too much memory
+	when length(x) was largish.
+	smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
+
+    o	pexp(x, log=TRUE) and pweibull(*) were losing precision for large x.
+
+    o	Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
+
+    o	Conversions to numeric in type.convert were always treating "NA" as
+	missing whatever the setting of na.strings. (PR#1568)
+
+    o	R CMD check now deals correctly with package names containing a
+	'.' in the Depends field of a DESCRIPTION file. (PR#1591)
+
+    o	pbinom() and pbinom() were misssing the "fuzz" that other discrete
+	distributions have in order to guard against truncation.
+
+    o	The "=" assignment operator behaved as "<<-" in some constructions
+	with composite left-hand sides.
+
+    o	Added print.AsIs() method to ensure "AsIs" objects are printed
+	by the method for their real class. (PR#1587)
+
+    o	mosaicplot(*, color = v) now recycles v[] if needed.
+
+    o	Calling dev.control("inhibit") with no graphics device open
+	crashed R. (PR#1605)
+
+    o	read.dcf() was not checking that memory allocation succeeded.
+
+    o	The C function fprec might overflow for > 16 digits, showing
+	up in example(str) on some platforms.
+
+    o	Changes to the methods package:
+
+	- Nonstandard generic function definitions given to
+	  setGeneric now work; these were previously ignored.
+
+	- Classes that extend matrix, etc. as the data part previously lost
+	  their attributes.
+
+	- There were bugs in distinguishing methods for "missing" from
+	  methods for "ANY".
+
+	- Some coerce methods were not selected correctly when the two classes
+	  were related by an "is" relation.
+
+	- extends() now works correctly if given a class definition rather
+	  than a name.
+
+	- class()<- was leaving in an explicit class attribute for basic data
+	  types.
+
+	- Method signatures including arguments following "..." in the
+	  argument list of the generic didn't work.
+
+    o	par(mgp = v) now allows negative `v' (S-compatibly and sensibly).
+
+    o	identify.hclust() masked its `x' argument and so failed.
+
+    o	System rint was never being used in fround.c.
+
+    o	round/trunc.POSIXt were erroneously retaining information on
+	DST. (PR#1543)
+
+    o	tcltk package didn't work with tcl8.0.x.  Compatibility code
+	inserted (PR#1640, thanks to René Bertin for helping out with
+	this).
+
+    o	selfStart() {pkg "nls"} now works again when parameter names are
+	not specified (but implicit).
+
+    o	legend() now treats lty="0" properly (as solid).
+
+    o	ARMAacf was failing if 0 < p < q+1: it failed to say that ar needed
+	to be padded with zeroes, and now the code does that.
+
+    o	old.packages() was assuming a bundle was installed in only one
+	library, and so update.packages() would only update a bundle
+	in the first location in lib.loc.
+
+    o	fisher.test() could miscalculate odds ratio and confidence
+	interval for tables with large entries, due to numerical
+	overflow.
+
+    o	Using lty = "1" (or "10") does no longer produce invalid
+	postscript or pdf.  Using "0" in a character lty is currently not
+	implemented device-independently and needs more fixing.
+
+    o	ccf(plot = FALSE) was returning a spurious extra 0 at lag 0.
+
+    o	On console-based versions of R (Windows, GNOME, probably
+	MacOS) warning/error messages longer than 8192 chars could
+	crash R. (PR#1651)
+
+    o	Comparisons between objects of mode "call" using "==" now return
+	TRUE if both sides deparse to the same string (as always intended).
+
+    o	HoltWinters() now initializes correctly in the exponential
+	smoothing case, and plot.HoltWinters() allows lty to be set.
+
+    o	fisher.test() crashed due to corruption on some large
+	problems.  It also crashed on tables with total one. (PR#1662)
+
+    o	The substitution code for strptime (used e.g. on Windows)
+	cached the month names and so did not recognise locale changes
+	during an R session, as used by get.hist.quote{tseries}.
+	Caching has been supressed.  (PR#1116)
+
+    o	Some functions used the non-existing error() function instead
+	of stop().
+
+    o	vector("complex",n)  doesn't return random garbage anymore.
+
+
 		CHANGES IN R VERSION 1.5.0
 
 
@@ -35,7 +230,7 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   Changes in handing missing character strings:
+    o   Changes in handling missing character strings:
 
         -  "NA" is no longer automatically coerced to a missing value
 	   for a character string.  Use as.character(NA) where a missing
@@ -82,7 +277,7 @@ NEW FEATURES
 
         -  Now works with the GNOME user interface.
 
-        -  Several new functions allow access to C level Tcl objects. 
+        -  Several new functions allow access to C level Tcl objects.
 	   These are implemented using a new `tclObj' class, and this
 	   is now the class of the return value from .Tcl() and tkcmd().
 
@@ -121,7 +316,7 @@ NEW FEATURES
 
 	-  New function monthplot() (contributed by Duncan Murdoch).
 
-	-  New functions decompose() and HoltWinters() (contributed by 
+	-  New functions decompose() and HoltWinters() (contributed by
 	   David Meyer) for classical seasonal decomposition and
 	   exponentially-weighted forecasting.
 
@@ -634,7 +829,7 @@ BUG FIXES
 
     o   rect(lty = "blank") was incorrectly drawing with a dashed line.
 
-    o   type.convert() was not reporting incorrectly formatting complex 
+    o   type.convert() was not reporting incorrectly formatted complex
 	inputs. (PR#1477)
 
     o   readChar() was not resetting vmax, so causing memory build-up.

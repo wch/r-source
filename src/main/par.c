@@ -519,9 +519,18 @@ static void Specify(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "mgp")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 3);
+#ifdef till_R_1_5_0
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
+#else /* S-compatible */
+	naRealCheck(REAL(value)[0], what);
+	naRealCheck(REAL(value)[1], what);
+	naRealCheck(REAL(value)[2], what);
+	if(REAL(value)[0] * REAL(value)[1] < 0 ||
+	   REAL(value)[0] * REAL(value)[2] < 0)
+	    warningcall(gcall, "`mgp[1:3]' are of differing sign");
+#endif
 	Rf_dpptr(dd)->mgp[0] = Rf_gpptr(dd)->mgp[0] = REAL(value)[0];
 	Rf_dpptr(dd)->mgp[1] = Rf_gpptr(dd)->mgp[1] = REAL(value)[1];
 	Rf_dpptr(dd)->mgp[2] = Rf_gpptr(dd)->mgp[2] = REAL(value)[2];
@@ -983,9 +992,18 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
     else if (streql(what, "mgp")) {
 	value = coerceVector(value, REALSXP);
 	lengthCheck(what, value, 3);
+#ifdef till_R_1_5_0
 	nonnegRealCheck(REAL(value)[0], what);
 	nonnegRealCheck(REAL(value)[1], what);
 	nonnegRealCheck(REAL(value)[2], what);
+#else /* S-compatible */
+	naRealCheck(REAL(value)[0], what);
+	naRealCheck(REAL(value)[1], what);
+	naRealCheck(REAL(value)[2], what);
+	if(REAL(value)[0] * REAL(value)[1] < 0 ||
+	   REAL(value)[0] * REAL(value)[2] < 0)
+	    warningcall(gcall, "`mgp[1:3]' are of differing sign");
+#endif
 	Rf_gpptr(dd)->mgp[0] = REAL(value)[0];
 	Rf_gpptr(dd)->mgp[1] = REAL(value)[1];
 	Rf_gpptr(dd)->mgp[2] = REAL(value)[2];
@@ -1578,7 +1596,7 @@ SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
     int nreadonly;
 
     checkArity(op, args);
-    /* need a device open: called from par() which would open a 
+    /* need a device open: called from par() which would open a
        device later, so do it now */
     if (NoDevices()) {
 	SEXP defdev = GetOption(install("device"), R_NilValue);
@@ -1592,9 +1610,9 @@ SEXP do_readonlypars(SEXP call, SEXP op, SEXP args, SEXP env)
     dd = GEcurrentDevice();
     canChangeGamma = dd->dev->canChangeGamma;
 
-    if (canChangeGamma) 
+    if (canChangeGamma)
 	nreadonly = 5;
-    else 
+    else
 	nreadonly = 6;
     PROTECT(result = allocVector(STRSXP, nreadonly));
     SET_STRING_ELT(result, 0, mkChar("cin"));

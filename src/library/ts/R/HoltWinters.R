@@ -33,10 +33,12 @@ function (x,
     ## initialization
     if (!is.null(gamma) && gamma == 0) {
         ## non-seasonal Holt-Winters
-        if (is.null(l.start)) l.start <- x[2] #FIXME: use x[1] in case of beta=0?
-        if (is.null(b.start))
-            if (is.null(beta) || beta > 0) b.start <- x[2] - x[1]
-        start.time <- 3
+        expsmooth <- !is.null(beta) && (beta == 0)
+        if(is.null(l.start))
+            l.start <- if(expsmooth) x[1] else x[2]
+        if(is.null(b.start))
+            if(is.null(beta) || beta > 0) b.start <- x[2] - x[1]
+        start.time <- 3 - expsmooth
         s.start    <- 0
     } else {
         ## seasonal Holt-Winters
@@ -203,10 +205,10 @@ residuals.HoltWinters <- function (object, ...) object$x - object$fitted
 
 
 plot.HoltWinters <-
-    function (x, predicted.values = NA, intervals = TRUE,
-              separator = TRUE, col = 1, col.predicted = 2, col.intervals = 4,
-              lty.separator = 3, ylab = "Observed / Fitted",
-              main = "Holt-Winters filtering", ...)
+    function (x, predicted.values = NA, intervals = TRUE, separator = TRUE,
+              col = 1, col.predicted = 2, col.intervals = 4, col.separator = 1,
+              lty = 1, lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
+              ylab = "Observed / Fitted", main = "Holt-Winters filtering", ...)
 {
     ## plot fitted/predicted values
     plot(ts(c(x$fitted, if(!is.na(predicted.values)) predicted.values[,1]),
@@ -215,21 +217,23 @@ plot.HoltWinters <-
          col = col.predicted,
          ylim = range(na.omit(c(x$fitted,x$x,predicted.values))),
          ylab = ylab, main = main,
+         lty = lty.predicted,
          ...
          )
 
     ## plot prediction interval
     if(!is.na(predicted.values) && intervals && ncol(predicted.values) > 1) {
-        lines(predicted.values[,2], col = col.intervals)
-        lines(predicted.values[,3], col = col.intervals)
+        lines(predicted.values[,2], col = col.intervals, lty = lty.intervals)
+        lines(predicted.values[,3], col = col.intervals, lty = lty.intervals)
     }
 
     ## plot observed values
-    lines(x$x, col = col)
+    lines(x$x, col = col, lty = lty)
 
     ## plot separator
     if (separator && !is.na(predicted.values))
-        abline (v = time(x$x)[length(x$x)], lty = lty.separator)
+        abline (v = time(x$x)[length(x$x)], lty = lty.separator,
+                col = col.separator)
 }
 
 ## print function
@@ -239,7 +243,7 @@ print.HoltWinters <- function (x, ...)
          if (x$beta == 0) "without" else "with", "trend and",
          if (x$gamma == 0) "without" else
          paste(if (x$beta==0) "with ", x$seasonal, sep=""),
-         "seasonal componenent.\n")
+         "seasonal component.\n")
     cat ("\nCall:\n", deparse (x$call), "\n\n")
     cat ("Smoothing parameters:\n")
     cat (" alpha: ", x$alpha, "\n")

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -778,7 +778,7 @@ static void menuclpbm(control m)
 static void menuprint(control m)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
-    SaveAsWin(dd, "win.print");
+    SaveAsWin(dd, "win.print:");
 }
 
 
@@ -2040,7 +2040,6 @@ static void GA_Text(double x, double y, char *str,
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     size = cex * ps + 0.5;
-//    SetFont(font, size, 0.0, dd);
     pixs = - 1;
     xl = 0.0;
     yl = -pixs;

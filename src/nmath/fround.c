@@ -28,6 +28,7 @@
  *
  */
 
+#include <config.h> /* needed for HAVE_RINT */
 #include "nmath.h"
 
 #ifndef HAVE_RINT
@@ -37,34 +38,6 @@
 #ifdef USE_BUILTIN_RINT
 #define R_rint private_rint
 
-/* Old version was inaccurate, confused on i386 with 80-bit intermediate
-   results, and did not round to even as the help page says */
-#ifdef OLD
-	/* The largest integer which can be represented */
-	/* exactly in floating point form. */
-
-#define BIGGEST 4503599627370496.0E0		/* 2^52 for IEEE */
-
-static double private_rint(double x)
-{
-    static double biggest = BIGGEST;
-    double tmp;
-
-    if (x != x) return x;			/* NaN */
-
-    if (fabs(x) >= biggest)			/* Already integer */
-	return x;
-
-    if(x >= 0) {
-	tmp = x + biggest;
-	return tmp - biggest;
-    }
-    else {
-	tmp = x - biggest;
-	return tmp + biggest;
-    }
-}
-#else
 static double private_rint(double x)
 {
     double tmp, sgn = 1.0;
@@ -89,8 +62,6 @@ static double private_rint(double x)
     }
     return sgn * tmp;
 }
-#endif
-
 #else
 #define R_rint rint
 #endif

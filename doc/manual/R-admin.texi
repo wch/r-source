@@ -487,9 +487,10 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 @end smallexample
 
 @noindent
-The part @samp{-l /path/to/library} can be omitted, when the first
-library in @env{R_LIBS} is used if set, otherwise the main library
-@file{@var{R_HOME}/library}.
+The part @samp{-l /path/to/library} can be omitted, in which case the
+first library in @env{R_LIBS} is used if set, otherwise the main
+library @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked
+for in the environment: @file{.Renviron} is not read by @command{R CMD}.)
 
 The Windows equivalent is@footnote{if you have the source-code package
 files installed}
@@ -629,9 +630,9 @@ will be compiled in.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate libraries installed: @code{jpeg} (version 6b or later) or
-@code{libpng} (versions 1.0.5 to 1.2.1) and @code{zlib} (version 1.1.3
-or later) respectively.  @code{libpng-1.2.2} has moved its header files,
-and you will need add something like
+@code{libpng} (versions 1.0.5 to 1.2.1 or 1.2.3 or later) and
+@code{zlib} (version 1.1.3 or later) respectively.  @code{libpng-1.2.2}
+moved its header files, and you will need add something like
 @samp{-I/usr/local/include/libpng12} to @code{CPPFLAGS} to make use of
 it.
 
@@ -795,7 +796,8 @@ See the variable output section of @code{configure --help} for a list of
 all these variables.
 
 One common variable to change is @env{R_PAPERSIZE}, which defaults to
-@samp{a4}, not @samp{letter}.
+@samp{a4}, not @samp{letter}.  (Valid values are @samp{a4},
+@samp{letter}, @samp{legal} and @samp{executive}.)
 
 If you have libraries and header files, e.g., for GNU readline, in
 non-system directories, use the variables @code{LDFLAGS} (for libraries,
@@ -1062,11 +1064,15 @@ compilers, and less regularly on Solaris 2.5.1, 2.6 and 8.  GNU
 @command{make} is needed prior to 2.7 for building other than in the
 source tree, and perhaps even then.
 
-If using @command{gcc}, do ensure that the compiler was compiled for
-the version of Solaris in use.  (This can be discerned from
-@command{gcc -v}.)  @command{gcc} makes modified versions
-of some header files, and so (for example) @command{gcc} compiled under
-Solaris 2.6 will not compile @R{} under Solaris 2.7.
+If using @command{gcc}, do ensure that the compiler was compiled for the
+version of Solaris in use.  (This can be discerned from @command{gcc
+-v}.)  @command{gcc} makes modified versions of some header files, and
+so (for example) @command{gcc} compiled under Solaris 2.6 will not
+compile @R{} under Solaris 2.7.  Also, do ensure that it was compiled
+for the assembler/loader in use.  If you download @command{gcc} from
+@uref{http://www.sunfreeware.com} then you need to download
+@code{binutils} too.  To avoid all these pitfalls we strongly
+recommended you compile @command{gcc} from the sources yourself.
 
 When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will

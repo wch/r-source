@@ -8,20 +8,24 @@
 }
 \usage{
 \method{plot}{HoltWinters}(x, predicted.values = NA, intervals = TRUE,
-                 separator = TRUE, col = 1, col.predicted = 2,
-                 col.intervals = 4, lty.separator = 3,
-                 ylab = "Observed / Fitted",
-                 main = "Holt-Winters filtering", ...)
+        separator = TRUE, col = 1, col.predicted = 2,
+        col.intervals = 4, col.separator = 1, lty = 1,
+        lty.predicted = 1, lty.intervals = 1, lty.separator = 3,
+        ylab = "Observed / Fitted",
+        main = "Holt-Winters filtering", ...)
 }
 \arguments{
   \item{x}{Object of class \code{"HoltWinters"}}
   \item{predicted.values}{Predicted values as returned by \code{predict.HoltWinters}}
   \item{intervals}{If \code{TRUE}, the prediction intervals are plotted (default).}
   \item{separator}{If \code{TRUE}, a separating line between fitted and predicted values is plotted (default).}
-  \item{col}{Color of original data (default: black)}
-  \item{col.predicted}{Color of fitted/predicted values (default: black).}
-  \item{col.intervals}{Color of predicition intervals (default: blue).}
-  \item{lty.separator}{Line type of the separator (default: dashed line).}
+  \item{col, lty}{Color/line type of original data (default: black solid).}
+  \item{col.predicted, lty.predicted}{Color/line type of
+    fitted and predicted values (default: red solid).}
+  \item{col.intervals, lty.intervals}{Color/line type of prediction
+    intervals (default: blue solid).}
+  \item{col.separator, lty.separator}{Color/line type of
+    observed/predicted values separator (default: black dashed).}
   \item{ylab}{Label of the y-axis.}
   \item{main}{Main title.}
   \item{\dots}{Other graphics parametes.}

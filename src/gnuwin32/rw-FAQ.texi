@@ -364,6 +364,9 @@ the date-time functions.
 It seems that on some versions of Windows (but not 2000/XP) you also
 need to put the @code{@RWVER@\bin} directory early in your path.
 
+We have installed a workaround as from @code{rw1051} that hopefully
+avoids this.
+
 @node The internet download functions fail.,  , Entering certain characters crashes Rgui., Installation and Usage
 @section The internet download functions fail.
 
@@ -844,7 +847,12 @@ appropriate section in @file{readme.packages}.
 
 You will need a suitable version of @code{gdb}: we normally use that
 from the Cygwin distribution.  Debugging under Windows is often a
-fraught process, and sometimes does not work at all.
+fraught process, and sometimes does not work at all.  If all you need is
+a @emph{just-in-time} debugger to catch crashes, consider
+@code{Dr. Mingw} from
+@uref{http://mefriss1.swan.ac.uk/~jfonseca/gnu-win32/software/drmingw/}.
+That will be able to pinpoint the error, most effectively if you build a
+version of R with debugging information as described below.
 
 First, build a version of the R system with debugging information by
 
@@ -873,13 +881,13 @@ However, note
 
 @itemize @bullet
 @item
-gdb will only be able to find the source code if we run in the
+@code{gdb} will only be able to find the source code if we run in the
 location where the source was compiled (@code{@RWVER@/src/gnuwin32} for
 the main system, @code{@RWVER@/src/library/mypkg/src} for a package),
 unless told otherwise by the @code{directory} command.  It is most
-convenient to set a list of code locations via @code{directory}
-commands in the file @file{.gdbinit} in the directory from which
-@code{gdb} is run.
+convenient to set a list of code locations via @code{directory} commands
+in the file @file{.gdbinit} in the directory from which @code{gdb} is
+run.
 
 @item
 It is only possible to set breakpoints in a DLL after the DLL has
@@ -995,14 +1003,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2002 April 13 by Professor B. D. Ripley
+Last edited 2002 June 01 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2002 April 13 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2002 June 01 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

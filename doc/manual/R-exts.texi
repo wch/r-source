@@ -788,6 +788,9 @@ and send a message to @url{cran@@r-project.org} about it.  The
 @acronym{CRAN} maintainers will run these tests before putting a
 submission in the main archive.
 
+Currently, packages containing compiled code should contain at most one
+dot in their name to work smoothly under Windows.
+
 Note that the fully qualified name of the @file{.tar.gz} file must be of
 the form
 
@@ -4273,7 +4276,7 @@ routine, normally used to carry auxiliary information.
 Some of the methods also require a gradient function
 
 @smallexample
-typedef double optimgr(int n, double *par, double *gr, void *ex);
+typedef void optimgr(int n, double *par, double *gr, void *ex);
 @end smallexample
 
 @noindent

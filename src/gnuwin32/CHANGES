@@ -4,6 +4,29 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1051
+======
+
+file.rename() (which is by default used when saving workspaces) now
+uses Windows API rather than ISO C functions.  This works around a
+reported problem with Windows thinking a file was in use, and on
+NT/2000/XP machines makes renaming an atomic operation (rather than
+delete followed by move).
+
+Bulding the standalone Rmath.dll was not making the import library
+libRmath.a.
+
+We may have been able to track down (to the isprint routine) the cause
+of the FAQ Q2.14 about crashes caused be non-ASCII characters, and
+hence to circumvent it.
+
+File | Print on the menu of a windows() graphics device was not working.
+
+The binary distribution could not make packages which needed to link
+to Rblas.dll.
+
+
+
 rw1050
 ======
 

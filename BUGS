@@ -29,6 +29,13 @@ Directory:  Accuracy
 Subject: bug with var(rep(1e30, 3))
 From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
 Date: Wed, 26 Dec 2001 13:03:31 +0100
+* PR# 1664 *
+Subject: Bug in rnorm.
+From: Rolf Turner <rolf@math.unb.ca>
+Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
+--Strange interaction between "Marsaglia-Multicarry" generator and
+--"Kinderman-Ramage" 
+--method for normal variates. Apparently, switching either of them will help.
 
 Directory:  Add-ons
 
@@ -48,12 +55,6 @@ Date: Tue, 31 Jul 2001 11:24:09 -0400
 Subject: Polymarsall.c
 From: pleu@hotmail.com
 Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
-* PR# 1116 *
-Subject: get.hist.quote does not work
-From: arto.luoma@uta.fi
-Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
---Seems specific to one locale on one system.
---The bug is unlikely to be in R.
 * PR# 1178 *
 Subject: segfault using svm from e1071
 From: Jan Rychter <jan@rychter.com>
@@ -71,6 +72,17 @@ Subject: Matrix identification bug
 From: hyu@stats.uwo.ca
 Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
 --seems to be about Matrix package, not solve
+* PR# 1580 *
+Subject: R bug in cluster package
+From: David Hitchcock <dhitchco@stat.ufl.edu>
+Date: Mon, 20 May 2002 14:33:24 -0400
+* PR# 1662 *
+Subject: fisher.test FEXACT memory bug "should not occur"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 13 Jun 2002 08:21:50 +0200
+--The supplementary (table of sum one) is fixed for 1.5.1.
+--Detection code for the first problem has been added to 1.5.1 which will stop
+--the crash, but the underlying cause is still open.
 
 Directory:  Analyses
 
@@ -91,16 +103,10 @@ Subject: cex/col/etc. in title(): documentation?
 From: Ben Bolker <ben@zoo.ufl.edu>
 Date: Mon, 22 Oct 2001 11:55:14 -0400 (EDT)
 --MM:actually the documentation still could elaborate a bit..
-* PR# 1195 *
-Subject: help(dbinom) recommended documentation improvement
-From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
-Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
---This isn't really a bug: the line in question is a plain-text equation, not a
---piece of R code.
-* PR# 1442 *
-Subject: Undocumenten in: R INSTALL --help
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Mon, 8 Apr 2002 17:19:20 +0200 (CEST)
+* PR# 1582 *
+Subject: No documentation for class AsIs
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Mon, 20 May 2002 17:30:42 -0400
 
 Directory:  Graphics
 
@@ -229,6 +235,22 @@ Date: Sat, 20 Apr 2002 22:21:44 +0200 (MET DST)
 Subject: Bug: persp and colors
 From: oliver.niggemann@acterna.com
 Date: Tue, 23 Apr 2002 09:41:37 +0200 (MET DST)
+* PR# 1505 *
+Subject: pictex 
+From: luchini@ehess.cnrs-mrs.fr
+Date: Thu, 2 May 2002 12:23:21 +0200 (MET DST)
+* PR# 1653 *
+Subject: coplot behaviour
+From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
+Date: Mon, 10 Jun 2002 20:11:02 +0200
+* PR# 1654 *
+Subject: R 1.5.0: axis() does not honor the xaxp argument
+From: "Robert D. Merithew" <merithew@ccmr.cornell.edu>
+Date: Tue, 11 Jun 2002 09:29:39 -0400 (EDT)
+* PR# 1659 *
+Subject:  mtext() alignment of perpendicular text 
+From: p.murrell@auckland.ac.nz
+Date: Wed, 12 Jun 2002 13:29:45 +1200 (NZST)
 
 Directory:  In-Out
 
@@ -263,6 +285,26 @@ From: brower@bst.rochester.edu
 Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
 --problems with g++ not finding -lstdc++
 --Not a problem with R per se
+* PR# 1500 *
+Subject: configure script fails on comment in tkConfig.sh
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 30 Apr 2002 16:41:51 +0200 (CEST)
+* PR# 1501 *
+Subject: configure error: Maybe change CFLAGS or FFLAGS?
+From: ale@ini.phys.ethz.ch
+Date: Wed, 1 May 2002 15:23:14 +0200 (MET DST)
+* PR# 1656 *
+Subject: command line editing does not work
+From: Petr.Savicky@cuni.cz
+Date: Tue, 11 Jun 2002 19:51:24 +0200
+* PR# 1657 *
+Subject: command line editing does not work (2)
+From: Petr.Savicky@cuni.cz
+Date: Tue, 11 Jun 2002 20:20:11 +0200
+* PR# 1658 *
+Subject: make install fails - index.html not found
+From: dhouston@bio.ri.ccf.org
+Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
 
 Directory:  Language
 
@@ -327,21 +369,11 @@ Subject: Interrupts (was Re: [Rd] X11 protocol errors ...)
 From: "John W. Eaton" <jwe@bevo.che.wisc.edu>
 Date: Wed, 22 Aug 2001 21:56:33 -0500
 --part of PR#1068
-* PR# 1120 *
-Subject: bug in write.table?
-From: Ott Toomet <siim@obs.ee>
-Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
---Traced down to an effect of read.dta in foreign interacting with do_paste. Fixed
---in foreign, but do_paste may need to use strlen() rather than LENGTH().
---
 * PR# 1211 *
 Subject: crash bug in get("function.name")()
 From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
-* PR# 1247 *
-Subject: Mishandling missing "..."
-From: David Brahm  <brahm@alum.mit.edu>
-Date: Mon, 7 Jan 2002 10:52:09 -0500
+--Still segfaults in 1.5.1 
 
 Directory:  Macintosh
 
@@ -357,6 +389,12 @@ Date: Wed, 10 Oct 2001 18:24:29 +0200 (MET DST)
 Subject: bug.report()sends empty message
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Mon, 05 Nov 2001 10:05:27 -0500
+* PR# 1503 *
+Subject: R-GNOME
+From: Patrick Gonin <gonin@genethon.fr>
+Date: Thu, 2 May 2002 09:29:07 +0200
+--1) is not a bug, as jpeg etc work.  capabilities() has been changed for 1.5.1
+--2) system() needs a new version for GNOME.
 
 Directory:  Models
 
@@ -382,6 +420,8 @@ Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
 Subject: R 1.3.1 fails 'make check' on arm in the Bessel example
 From: Dirk Eddelbuettel <edd@debian.org>
 Date: Thu, 20 Sep 2001 23:54:19 -0500
+--This platform turned out to have badly broken FPU behaviour. Given up, at 
+--least for now .
 * PR# 1140 *
 Subject: Possible bug, Rprof() and scan(pipe())
 From: Don MacQueen <macq@llnl.gov>
@@ -420,6 +460,10 @@ Date: Mon, 18 Feb 2002 18:53:41 +0100 (MET)
 Subject: make check fails d-p-q-r-tests.R - OpenBSD 3.0
 From: Jason Turner <jasont@indigoindustrial.co.nz>
 Date: Mon, 15 Apr 2002 10:13:36 +0000
+* PR# 1606 *
+Subject: hitting ^C breaks readline history
+From: Cyril Humbert <humbertc@univ-mlv.fr>
+Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
 
 Directory:  TooMuchAtOnce
 
@@ -427,51 +471,32 @@ none
 
 Directory:  Windows
 
-none
+* PR# 1507 *
+Subject: copy or save to metafile from graphics device shrinks plots
+From: drew.tyre@csiro.au
+Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
+--report on 1.4.0, about copying of graphics.
+--Awaiting test under 1.5.0.
 
 Directory:  incoming
 
-* PR# 1471 *
-Subject: Rprof segfault
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 20 Apr 2002 23:48:01 +0200
-* PR# 1473 *
-Subject: predict.*bSpline() bugs extrapolating for deriv >= 1
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 22 Apr 2002 12:30:12 +0200
-* PR# 1484 *
-Subject: Want an Investment Backed By Real Property?
-From: "Customer Service" <B.Chase@forfas.ie>
-Date: Fri, 26 Apr 2002 03:08:11 -1900
-* PR# 1485 *
-Subject: A special  new website
-From: r-devel-request <r-devel-request@hypatia.math.ethz.ch>
-Date: Fri, 26 Apr 2002 20:45:19 +0800 (CST)
-* PR# 1486 *
-Subject: Can't install packages
-From: Poizot Emmanuel <poizot@cnam.fr>
-Date: Fri, 26 Apr 2002 17:13:05 +0200
-* PR# 1487 *
-Subject: <±¤,°?>??´?M??µ? ???º´????¡!!
-From: IMCARD <i@i.net>
-Date: Sat, 27 Apr 2002 04:04:17 +0900
-* PR# 1488 *
-Subject: Align
-From: smithk <smithk@stolaf.edu>
-Date: Fri, 26 Apr 2002 22:11:05 -0500 (CDT)
-* PR# 1489 *
-Subject: Document.writeln(
-From: r-help-request <r-help-request@hypatia.math.ethz.ch>
-Date: Sat, 27 Apr 2002 12:37:57 +0800 (CST)
-* PR# 1490 *
-Subject: Can be found at the 
-From: julie326 <julie326@hotmail.com>
-Date: Sun, 28 Apr 2002 12:08:53 +0800 (CST)
-* PR# 1491 *
-Subject:  
-From: 690460109 <690460109@s90.tku.edu.tw>
-Date: Sun, 28 Apr 2002 19:28:18 +0800 (CST)
-* PR# 1492 *
-Subject: [±¤°?]1?????? ´???°?´??? °??¥º?±? ?±?°
-From: ?ý?°?¤º? <moduda7@lycos.co.kr>
-Date: Sun, 28 Apr 2002 22:29:37 +0900
+* PR# 1556 *
+Subject: lib.fixup, .GlobalEnv, and R1.5.0
+From: mark.bravington@csiro.au
+Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
+* PR# 1672 *
+Subject: [??????´º?º] ??~?ð?????© ?????¶°­°? µ??µ?? °?°?!! ????±? ???????? ??°?!!   
+From: "??¶???????´?..............."<erokorea17@hotmail.com>
+Date: Sat, 15 Jun 2002 17:08:44 -0600
+* PR# 1673 *
+Subject: Late Make Problem with Readline
+From: jerfox@stanford.edu
+Date: Sat, 15 Jun 2002 12:00:07 +0200 (MET DST)
+* PR# 1674 *
+Subject: ???? ¾?´? ???? ??µ??? 8°­ !!! [±¤°?]
+From: ????´???<mhpark@hananet.net>
+Date: Sat, 15 Jun 2002 12:45:33 +0200 (MET DST)
+* PR# 1675 *
+Subject: ¢????????? ????????[±?±???][±¤°?]
+From: ?º?¾?? <eunjw234@dreamwiz.com>
+Date: Tue, 16 Apr 2002 02:44:59 +0900
