@@ -35,7 +35,7 @@ DISTFILES = Makefile.in README \
 SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
-RDIFF = $(top_srcdir)/bin/Rdiff
+RDIFF = $(top_builddir)/bin/Rdiff
 
 test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
 test-src-sloppy = $(test-src-sloppy-1) $(test-src-sloppy-auto)
