@@ -1,10 +1,12 @@
 \name{persp}
 \title{Perspective Plots}
 \usage{
-persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
-        z, xlim = range(x), ylim = range(y), zlim = range(z, na.rm=T),
-        theta = 0, phi = 15, d = 1, scale = TRUE, col, border,
-        ltheta = -135, lphi = 0, shade = NA, box = TRUE, axes = TRUE, \dots)
+persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
+      xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
+      theta = 0, phi = 15, r = sqrt(3), d = 1,
+      scale = TRUE, expand = 1, 
+      col = NULL, border = NULL, ltheta = -135, lphi = 0,
+      shade = NA, box = TRUE, axes = TRUE, ...) 
 }
 \alias{persp}
 \arguments{
@@ -21,6 +23,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
     the colattitude.}
+  \item{r}{the distance of the eyepoint from the centre of the plotting box.}
   \item{d}{a value which can be used to vary the strength of
     the perspective transformation.  Values of \code{d} greater
     than 1 will lessen the perspective effect and values less
@@ -31,6 +34,9 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     are transformed separately.  If \code{scale} is \code{FALSE}
     the coordinates are scaled so that aspect ratios are retained.
     This is useful for rendering things like DEM information.}
+  \item{expand}{a expansion factor applied to the \code{z}
+    coordinates. Often used with \code{0 < expand < 1} to shrink the
+    plotting box in the \code{z} direction.}
   \item{col}{the color of the surface facets.}
   \item{border}{the color of the line drawn around the surface facets.
     A value of \code{NA} will disable the drawing of borders.  This is
