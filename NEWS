@@ -1,9 +1,50 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.5 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.5.0
+
+
+USER-VISIBLE CHANGES
+
+NEW FEATURES
+
+    o	cmdscale() now takes rownames from a dist object `d' as well
+	as from a matrix.
+
+
+DEPRECATED & DEFUNCT
+
+DOCUMENTATION CHANGES
+
+UTILITIES
+
+C-LEVEL FACILITIES
+
+BUG FIXES
+
+
+
+
+	**************************************************
+	*						 *
 	*	       1.4 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 1.4.1
+
+
+BUG FIXES
+
+    o	scan(multi.line = FALSE) now always gives an immediate error
+	message if a line is incomplete. (As requested in PR#1210)
+
 
 
 		CHANGES IN R VERSION 1.4.0

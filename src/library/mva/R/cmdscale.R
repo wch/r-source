@@ -16,7 +16,8 @@ cmdscale <- function (d, k = 2, eig = FALSE) {
     e <- La.eigen(Tmat, symmetric = TRUE)
     ev <- e$values[1:k]
     points <- e$vectors[, 1:k] %*% diag(sqrt(ev))
-    dimnames(points) <- list(dimnames(d)[[1]], NULL)
+    rn <- if(is.matrix(d)) rownames(d) else names(d)
+    dimnames(points) <- list(rn, NULL)
     if (eig) list(points = points, eig = ev)
     else points
 }
