@@ -155,6 +155,10 @@ plot.factor <- function(x, y, legend.text=levels(y), ...)
     else NextMethod("plot")
 }
 
+## FIXME (ideas/wishes):
+## o for 1-D tables:
+##   - alternatively, and/or as default, type = "bar" ??!??
+##   - if "h", make the default lwd depend on number of classes
 plot.table <- function(x, type = "h", ylim = c(0, max(x)), lwd = 2,
                        xlab = NULL, ylab = deparse(substitute(x)),
                        frame.plot = is.num,
