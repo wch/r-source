@@ -37,6 +37,7 @@ BUG FIXES
 	*does* clipping (of the horizontal lines) as desired (xpd = NA was
 	used before, erronously in most cases).
 
+    o	predict(smooth.spline(.), deriv = 1) now works.
 
 
 		CHANGES IN R VERSION 1.4.0
