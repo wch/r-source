@@ -70,10 +70,5 @@ mtext("dnorm(x, log=TRUE)", adj=0); mtext("log(dnorm(x))", col="red", adj=1)
 plot(function(x)pnorm(x, log=TRUE), -50, 10, main = "log { Normal Cumulative }")
 curve(log(pnorm(x)), add=TRUE, col="red",lwd=2)
 mtext("pnorm(x, log=TRUE)", adj=0); mtext("log(pnorm(x))", col="red", adj=1)
-
-## Wichura's test data :
-all.equal(qnorm(c( 0.25,  .001,  1e-20)),
-          c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
-          tol = 1e-15)
 }
 \keyword{distribution}
