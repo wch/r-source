@@ -153,6 +153,20 @@ esac
 
 ## FORTRAN compiler
 ##
+### We need these before trying to find libf2c.
+
+if test -z "$AR"; then
+  AR=ar
+fi
+AC_SUBST(AR)
+
+if test -z "$ARFLAGS"; then
+  ARFLAGS="rc"
+fi
+AC_SUBST(ARFLAGS)
+
+AC_PROG_RANLIB
+
 ## If we haven't been forced to use a particular FORTRAN compiler, try
 ## to find one using one of the several common names.
 ##
@@ -189,7 +203,7 @@ else
     F77=${FC}
   fi
   if test -z "${F77}"; then
-    AC_CHECK_PROG(F2C, f2c)
+    AC_CHECK_PROGS(F2C, f2c)
   fi
 fi
 
@@ -233,9 +247,37 @@ EOF
 
 EOF
 elif test -n "${F2C}"; then
+### -- I cannibalized most of the following out of octave 2.0.5, 
+### -- I have only a vague idea how it works... (-pd)
+
+### Not necessary (?)
+#  AC_DEFINE(F77_APPEND_UNDERSCORE, 1)
+#  AC_MSG_RESULT([defining F77_APPEND_UNDERSCORE to be 1])
+
+### This seems to be necessary on some Linux system.
+### -- you bet! -pd
+
+  cat > conftest.$ac_ext << EOF
+int MAIN_ () { return 0; }
+int MAIN__ () { return 0; }
+EOF
+
+### XXX FIXME XXX -- these shouldn't be fixed names, eh?
+
+  R_conflib=libconflib.a
+  R_obj_ext=o
+
+  if AC_TRY_EVAL(ac_compile); then
+    $AR $ARFLAGS $R_conflib conftest.$R_obj_ext 1>&AC_FD_CC
+    if test -n "$RANLIB"; then
+      $RANLIB $R_conflib 1>&AC_FD_CC
+    fi
+  fi
+  rm -f conftest*
+
   LDCMD=${CC}
   AC_DEFINE(HAVE_F77_UNDERSCORE)
-  AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -lm)
+  AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -L. -lconflib -lm)
   if test -z "${FLIBS}"; then
     AC_CHECK_LIB(F77, d_sin, FLIBS=-lF77, FLIBS=, -lm)
     if test -n "${FLIBS}"; then
@@ -246,12 +288,14 @@ elif test -n "${F2C}"; then
     AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
   fi
   f77_rules_frag=Makefrag.f77
+  ### for some reason these can't be .f.c/.f.o, at least in GNU make
+  ### this probably makes *other* makes useless... (-pd)
   cat << \EOF > ${f77_rules_frag}
 
-.f.c:
+%.c : %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
 
-.f.o:
+%.o : %.f
 
 EOF
 else

@@ -2,14 +2,14 @@ subset.data.frame <-
 function (dfr, subset, select) 
 {
 	if(missing(subset))
-		r<-NULL
+		r<-TRUE
 	else {
 		e <- substitute(subset)
 		r <- eval(e,dfr)
 		r <- r & !is.na(r)
 	}
 	if(missing(select))
-		vars<-NULL
+		vars<-TRUE
 	else {
 		nl<-as.list(1:ncol(dfr))
 		names(nl)<-names(dfr)
