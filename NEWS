@@ -28,17 +28,17 @@ BUG FIXES
     o	rbind() with a mixture of data frames and matrices treated the
 	matrices as vectors. (PR#2266)
 
-    o   stripchart(method="stack") was not handling missing values. (PR#2018)
+    o	stripchart(method="stack") was not handling missing values. (PR#2018)
 
-    o   Arithmetic functions such as log() lost the object bit from
+    o	Arithmetic functions such as log() lost the object bit from
 	classed objects if coercion was needed. (PR#2315)
 
-    o   exp_rand would go into an infinite loop if unif_rand returned 0.
+    o	exp_rand would go into an infinite loop if unif_rand returned 0.
 
-    o   formatC(x, format="fg") could return exponential format if
+    o	formatC(x, format="fg") could return exponential format if
 	rounding pushed x over a positive power of 10. (PR#2299)
 
-    o   attr(x, foo) used partial matching for `foo' (even though not
+    o	attr(x, foo) used partial matching for `foo' (even though not
 	documented to do so), and failed to find `foo' if there were
 	two or more partial matches before the exact match in the list
 	of attributes.
@@ -67,16 +67,16 @@ BUG FIXES
 	when using the BSD-compatible install system program found by
 	configure.  We now always use install-sh on HP-UX. (PR#2091)
 
-    o   c() was converting NA names to "NA": now proper NA strings are
+    o	c() was converting NA names to "NA": now proper NA strings are
 	used wherever possible. (PR#2358)
 
-    o   A typo was causing segfaults when using data.entry under SuSE.
+    o	A typo was causing segfaults when using data.entry under SuSE.
 
-    o   mostattributes<-() was failing to copy across dimnames when
+    o	mostattributes<-() was failing to copy across dimnames when
 	one component was NULL, affecting pmax() and pmin() when the
 	first argument was a matrix.  (root cause of PR#2357)
 
-    o   The pdf() device now initialises graphical parameters
+    o	The pdf() device now initialises graphical parameters
 	properly.  (PR#2281)
 
 
