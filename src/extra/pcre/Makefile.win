@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS = -I../../include -I. -O2 -DWIN32
+CFLAGS = -I../../include -I. -O2 -DWIN32# -DSUPPORT_UTF8
 
 all: libpcre.a
 

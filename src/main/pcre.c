@@ -37,7 +37,7 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, vec, ind, ans;
     int i, j, n, nmatches;
-    int igcase_opt, value_opt, options = 0, erroffset;
+    int igcase_opt, value_opt, options = 0/* PCRE_UTF8 */, erroffset;
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
@@ -56,17 +56,17 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     /* NAs are removed in R code so this isn't used */
     /* it's left in case we change our minds again */
     /* special case: NA pattern matches only NAs in vector */
-    if (STRING_ELT(pat,0)==NA_STRING){
-	n = length(vec);\
-	nmatches=0;
+    if (STRING_ELT(pat,0) == NA_STRING) {
+	n = length(vec);
+	nmatches = 0;
 	PROTECT(ind = allocVector(LGLSXP, n));
-	for(i=0; i<n; i++){
-	    if(STRING_ELT(vec,i)==NA_STRING){
-		INTEGER(ind)[i]=1;
+	for(i = 0; i < n; i++) {
+	    if(STRING_ELT(vec,i) == NA_STRING){
+		INTEGER(ind)[i] = 1;
 		nmatches++;
 	    } 
 	    else
-		INTEGER(ind)[i]=0;
+		INTEGER(ind)[i] = 0;
 	}
 	if (value_opt) {
 	    ans = allocVector(STRSXP, nmatches);
@@ -75,8 +75,7 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (INTEGER(ind)[i]) {
 		    SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
 		}
-	}
-	else {
+	} else {
 	    ans = allocVector(INTSXP, nmatches);
 	    j = 0;
 	    for (i = 0 ; i < n ; i++)
@@ -100,8 +99,8 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector;
 	char *s = CHAR(STRING_ELT(vec, i));
-	if (STRING_ELT(vec,i)==NA_STRING){
-	    INTEGER(ind)[i]=0;
+	if (STRING_ELT(vec,i) == NA_STRING){
+	    INTEGER(ind)[i] = 0;
 	    continue;
 	}
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, &ovector, 0);
@@ -193,7 +192,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, rep, vec, ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
-    int global, igcase_opt, options = 0, erroffset;
+    int global, igcase_opt, options = 0/* PCRE_UTF8 */, erroffset;
     char *s, *t, *u, *uu;
     const char *errorptr;
     pcre *re_pcre;
@@ -234,14 +233,14 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* NA `pat' are removed in R code, the C code is left */
 	/* in case we change our minds again */
 	/* NA matches only itself */
-        if (STRING_ELT(vec,i)==NA_STRING){
-	    if (STRING_ELT(pat,0)==NA_STRING) 
+        if (STRING_ELT(vec,i) == NA_STRING){
+	    if (STRING_ELT(pat,0) == NA_STRING) 
 		SET_STRING_ELT(ans, i, STRING_ELT(rep,0));
 	    else
 		SET_STRING_ELT(ans, i, NA_STRING);
 	    continue;
 	}
-	if (STRING_ELT(pat, 0)==NA_STRING){
+	if (STRING_ELT(pat, 0) == NA_STRING){
 	    SET_STRING_ELT(ans, i, STRING_ELT(vec,i));
 	    continue;
 	}
@@ -313,8 +312,8 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, R_MSG_IA);
 
     tables = pcre_maketables();
-    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), 0, &errorptr, 
-			   &erroffset, tables);
+    re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), 0/* PCRE_UTF8 */, 
+			   &errorptr, &erroffset, tables);
     if (!re_pcre) errorcall(call, "invalid regular expression");
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
@@ -323,8 +322,8 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     for (i = 0 ; i < n ; i++) {
 	int rc, ovector[3];
 	char *s = CHAR(STRING_ELT(text, i));
-	if (STRING_ELT(text,i)==NA_STRING){
-	    INTEGER(ans)[i]=INTEGER(matchlen)[i]=R_NaInt;
+	if (STRING_ELT(text,i) == NA_STRING){
+	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = R_NaInt;
 	    continue;
 	}
 	rc = pcre_exec(re_pcre, NULL, s, strlen(s), 0, 0, ovector, 3);

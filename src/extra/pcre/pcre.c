@@ -4461,7 +4461,7 @@ pcre_compile(const char *pattern, int options, const char **errorptr,
 {
 real_pcre *re;
 int length = 1 + LINK_SIZE;      /* For initial BRA plus length */
-int runlength;
+/* int runlength; */
 int c, firstbyte, reqbyte;
 int bracount = 0;
 int branch_extra = 0;
@@ -4808,7 +4808,7 @@ while ((c = *(++ptr)) != 0)
 #ifdef SUPPORT_UTF8
           if (-c == ESC_p || -c == ESC_P)
             {
-b            if (!class_utf8)
+            if (!class_utf8)
               {
               class_utf8 = TRUE;
               length += LINK_SIZE + 2;

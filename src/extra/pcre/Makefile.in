@@ -11,8 +11,8 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-PCRE_CPPFLAGS = -I$(srcdir)
-ALL_CPPFLAGS = $(BZIP2_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
+PCRE_CPPFLAGS = -I$(srcdir)# -DSUPPORT_UTF8
+ALL_CPPFLAGS = $(PCRE_CPPFLAGS) $(R_XTRA_CPPFLAGS) $(CPPFLAGS) $(DEFS)
 
 SOURCES = get.c maketables.c pcre.c study.c
 
