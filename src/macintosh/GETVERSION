@@ -13,6 +13,7 @@ set maj `sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < :::VERSION`
 set min `sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < :::VERSION`
 set rev `sed 's/\([^ .]*\).\([^ .]*\).\([^ .]*\).\([^ \p]*\)/\4/' < :::VERSION` >::nil
 
+
 set pl  `echo {min} | sed 's/\..*//'`
 set sl  `echo {min} | sed 's/.*\.//'`
 set ver `evaluate {maj} * 65536 + {pl} * 256 + {sl}`
