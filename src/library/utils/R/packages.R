@@ -106,7 +106,7 @@ old.packages <- function(lib.loc = NULL, CRAN = getOption("CRAN"),
         if(is.na(z)) next
         onCran <- available[z, ]
         ## OK if Built: is missing (it which should not be)
-        if(package_version(instp[k, "Built"]) >= minorR &&
+	if((!checkBuilt || package_version(instp[k, "Built"]) >= minorR) &&
            package_version(onCran["Version"]) <=
            package_version(instp[k, "Version"])) next
         deps <- onCran["Depends"]
