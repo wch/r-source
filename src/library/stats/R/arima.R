@@ -5,7 +5,7 @@ arima <- function(x, order = c(0, 0, 0),
                   method = c("CSS-ML", "ML", "CSS"), n.cond,
                   optim.control = list(), kappa = 1e6)
 {
-    "%+%" <- function(a, b) .Call("convolve", a, b, PACKAGE = "stats")
+    "%+%" <- function(a, b) .Call("TSconv", a, b, PACKAGE = "stats")
 
     upARIMA <- function(mod, phi, theta)
     {

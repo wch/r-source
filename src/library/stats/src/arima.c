@@ -724,7 +724,7 @@ ARIMA_CSS(SEXP sy, SEXP sarma, SEXP sPhi, SEXP sTheta,
     }
 }
 
-SEXP convolve(SEXP a, SEXP b)
+SEXP TSconv(SEXP a, SEXP b)
 {
     int i, j, na, nb, nab;
     SEXP ab;

@@ -121,7 +121,7 @@ static R_CallMethodDef CallEntries[] = {
     {"ARIMA_Gradtrans", (DL_FUNC) &ARIMA_Gradtrans, 2},
     {"ARIMA_Like", (DL_FUNC) &ARIMA_Like, 9},
     {"ARIMA_CSS", (DL_FUNC) &ARIMA_CSS, 6},
-    {"convolve", (DL_FUNC) &convolve, 2},
+    {"TSconv", (DL_FUNC) &TSconv, 2},
     {NULL, NULL, 0}
 };
 
