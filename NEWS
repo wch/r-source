@@ -21,6 +21,9 @@ BUG FIXES
 
     o	str(x) now also works when x is an "externalptr" (or "weakref").
 
+    o	rbeta(), rf(), and rt() now support infinite parameter values; 
+	other distributions return NaN instead of NA for such.
+
 
 
 		CHANGES IN R VERSION 1.7.0
