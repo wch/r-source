@@ -153,8 +153,6 @@ struct Rf_RegisteredNativeSymbol {
         processing the library path. 
    */
 typedef struct {
-    CFunTabEntry *CFunTab; /* Collection of exported symbols from the R engine. */
-
     HINSTANCE (*loadLibrary)(const char *path, int asLocal, int now); 
     /* Load the dynamic library. */
     DL_FUNC  (*dlsym)(DllInfo *info, char const *name); 
@@ -163,8 +161,7 @@ typedef struct {
     /* Unload the dynamic library from process. */
     void     (*getError)(char *buf, int len); 
     /* Put the current system error in DLLerror. */
-    DL_FUNC  (*getBaseSymbol)(const char *name); 
-    /* lookup symbol in R itself. */
+
 
     void    (*deleteCachedSymbols)(DllInfo *dll);  /* Discard cached symbols */
     DL_FUNC (*lookupCachedSymbol)(const char *name, const char *pkg, int all);

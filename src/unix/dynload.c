@@ -50,16 +50,6 @@
 # endif
 #endif
 
-#ifdef USE_CFUNTAB
-#include "FFDecl.h"
-
-static CFunTabEntry CFunTab[] =
-{
-#include "FFTab.h"
-    {NULL, NULL}
-};
-#endif
-
 #ifdef HAVE_DYNAMIC_LOADING
 
 static void *loadLibrary(const char *path, int asLocal, int now);
@@ -67,7 +57,6 @@ static void closeLibrary(void *handle);
 static void deleteCachedSymbols(DllInfo *);
 static DL_FUNC R_dlsym(DllInfo *info, char const *name);
 static void getFullDLLPath(SEXP call, char *buf, char *path);
-static DL_FUNC getBaseSymbol(const char *name);
 static void getSystemError(char *buf, int len);
 
 static int computeDLOpenFlag(int asLocal, int now);
@@ -78,14 +67,10 @@ void InitFunctionHashing()
     R_osDynSymbol->dlsym = R_dlsym;
     R_osDynSymbol->closeLibrary = closeLibrary;
     R_osDynSymbol->getError = getSystemError;
-    R_osDynSymbol->getBaseSymbol = getBaseSymbol;
 
     R_osDynSymbol->deleteCachedSymbols = deleteCachedSymbols;
     R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
 
-#ifdef OLD_DYNLOAD_BASE
-    R_osDynSymbol->CFunTab = CFunTab;
-#endif
     R_osDynSymbol->getFullDLLPath = getFullDLLPath;
 }
 
@@ -142,24 +127,6 @@ static void deleteCachedSymbols(DllInfo *dll)
 #endif /* Macintosh */
 #endif /* CACHE_DLL_SYM */
 }
-
-
-static DL_FUNC getBaseSymbol(const char *name)
-{
-    int i;
-
-#ifdef USE_CFUNTAB
-    for(i = 0 ; R_osDynSymbol->CFunTab[i].name ; i++)
-	if(!strcmp(name, R_osDynSymbol->CFunTab[i].name))
-	    return R_osDynSymbol->CFunTab[i].func;
-#else
-    return(R_dlsym(getBaseDllInfo(), name));
-
-#endif
-
-    return((DL_FUNC) NULL);
-}
-
 
 
  /*

@@ -787,9 +787,7 @@ DL_FUNC R_FindSymbol(char const *name, char const *pkg,
 	}
 	if(doit > 1) return (DL_FUNC) NULL;  /* Only look in the first-matching DLL */
     }
-    if(all || !strcmp(pkg, "base")) { 
-	return(R_osDynSymbol->getBaseSymbol(name));
-    }
+
     return (DL_FUNC) NULL;
 }
 

@@ -99,12 +99,9 @@ void InitFunctionHashing()
     R_osDynSymbol->dlsym = getRoutine;
     R_osDynSymbol->closeLibrary = closeLibrary;
     R_osDynSymbol->getError = R_getDLLError;
-    R_osDynSymbol->getBaseSymbol = NULL;
 
     R_osDynSymbol->deleteCachedSymbols = R_deleteCachedSymbols;
     R_osDynSymbol->lookupCachedSymbol = Rf_lookupCachedSymbol;
-
-    R_osDynSymbol->CFunTab = NULL;
 
     R_osDynSymbol->fixPath = fixPath;
     R_osDynSymbol->getFullDLLPath = GetFullDLLPath;
