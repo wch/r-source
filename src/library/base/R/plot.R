@@ -69,28 +69,28 @@ function (x, y=NULL, type="p", col=par("fg"), bg=NA, pch=par("pch"), xlim=NULL,
 	panel.last=NULL, ann=par("ann"), main=NULL, xlab=NULL, ylab=NULL,
 	cex=par("cex"), lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
 {
-	xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
-	ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
-	xy <- xy.coords(x, y, xlabel, ylabel)
-	xlab <- if (missing(xlab)) xy$xlab	else xlab
-	ylab <- if (missing(ylab)) xy$ylab	else ylab
-	xlim <- if (missing(xlim)) range(xy$x, na.rm=TRUE)	else xlim
-	ylim <- if (missing(ylim)) range(xy$y, na.rm=TRUE)	else ylim
-	plot.new()
-	plot.window(xlim, ylim, log, asp, ...)
-	panel.first
-	plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
-	panel.last
-	pars <- list(...)
-	if (axes) {
-		axis(1, pars=pars)
-		axis(2, pars=pars)
-	}
-	if (frame.plot)
-		box(...)
-	if (ann)
-		title(main=main, xlab=xlab, ylab=ylab, pars=pars)
-	invisible()
+ xlabel <- if (!missing(x)) deparse(substitute(x))	else NULL
+ ylabel <- if (!missing(y)) deparse(substitute(y))	else NULL
+ xy <- xy.coords(x, y, xlabel, ylabel)
+ xlab <- if (is.null(xlab)) xy$xlab	else xlab
+ ylab <- if (is.null(ylab)) xy$ylab	else ylab
+ xlim <- if (is.null(xlim)) range(xy$x, finite=TRUE) else xlim
+ ylim <- if (is.null(ylim)) range(xy$y, finite=TRUE) else ylim
+ plot.new()
+ plot.window(xlim, ylim, log, asp, ...)
+ panel.first
+ plot.xy(xy, type, col=col, pch=pch, cex=cex, bg=bg, lty=lty, lwd=lwd, ...)
+ panel.last
+ pars <- list(...)
+ if (axes) {
+	axis(1, pars=pars)
+	axis(2, pars=pars)
+ }
+ if (frame.plot)
+	box(...)
+ if (ann)
+	title(main=main, xlab=xlab, ylab=ylab, pars=pars)
+ invisible()
 }
 
 plot.factor <-
@@ -103,7 +103,7 @@ function(x, y, ...) {
 }
 
 plot.formula <-
-function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {   
+function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {
   if (missing(na.action)) na.action <- options()$na.action
   m <- match.call(expand.dots = F)
   if (is.matrix(eval(m$data, sys.parent())))
@@ -121,7 +121,7 @@ function(formula, data = NULL, subset, na.action, ..., ask = TRUE) {
       on.exit(par(opar))
     }
     for (i in varnames[-response])
-      plot(mf[[i]], y, xlab = i, ylab = ylab, ...)      
+      plot(mf[[i]], y, xlab = i, ylab = ylab, ...)
   }
   else plot.data.frame(mf)
 }
@@ -136,12 +136,12 @@ plot.new <- function(ask=NA)
 frame <- plot.new
 
 save.plot <- function(...)
-  {
-    stop("save.plot() is deprecated, use dev.copy() instead")
-  }
+{
+	stop("save.plot() is deprecated, use dev.copy() instead")
+}
 
 print.plot <- function(...)
-  {
-    stop("print.plot() is deprecated, use dev.print() instead")
-  }
+{
+	stop("print.plot() is deprecated, use dev.print() instead")
+}
 
