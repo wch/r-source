@@ -201,6 +201,8 @@ int Rf_initialize_R(int ac, char **av)
 	R_load_aqua_shlib();
 	R_GUIType = "AQUA";
     }
+	if(useCocoa)
+	R_GUIType = "AQUA";
 #endif
 #ifdef HAVE_TCLTK
     if(useTk) {
