@@ -1440,6 +1440,10 @@ static int NumericValue(int c)
     return NUM_CONST;
 }
 
+/* Strings may contain the standard ANSI escapes and octal */
+/* specifications of the form \o, \oo or \ooo, where 'o' */
+/* is an octal digit. */
+
 static int StringValue(int c)
 {
     int quote = c;
@@ -1451,31 +1455,45 @@ static int StringValue(int c)
 	}
 	if (c == '\\') {
 	    c = xxgetc();
-	    switch (c) {
-	    case 'a':
-		c = '\a';
-		break;
-	    case 'b':
-		c = '\b';
-		break;
-	    case 'f':
-		c = '\f';
-		break;
-	    case 'n':
-		c = '\n';
-		break;
-	    case 'r':
-		c = '\r';
-		break;
-	    case 't':
-		c = '\t';
-		break;
-	    case 'v':
-		c = '\v';
-		break;
-	    case '\\':
-		c = '\\';
-		break;
+	    if ('0' <= c && c <= '8') {
+		int octal = c - '0';
+		if ('0' <= (c = xxgetc()) && c <= '8') {
+		    octal = 8 * octal + c - '0';
+		    if ('0' <= (c = xxgetc()) && c <= '8') {
+			octal = 8 * octal + c - '0';
+		    }
+		    else xxungetc(c);
+		}
+		else xxungetc(c);
+		c = octal;
+	    }
+	    else {
+		switch (c) {
+		case 'a':
+		    c = '\a';
+		    break;
+		case 'b':
+		    c = '\b';
+		    break;
+		case 'f':
+		    c = '\f';
+		    break;
+		case 'n':
+		    c = '\n';
+		    break;
+		case 'r':
+		    c = '\r';
+		    break;
+		case 't':
+		    c = '\t';
+		    break;
+		case 'v':
+		    c = '\v';
+		    break;
+		case '\\':
+		    c = '\\';
+		    break;
+		}
 	    }
 	}
 	*p++ = c;
