@@ -279,6 +279,8 @@ BUG FIXES
     o	pretty(x <- c(2.8,3))[1] - x[1] is now 0; in general,
 	p <- pretty(x) now again fulfills  p[1] <= x[] <= p[length(p)].
 
+    o	model.matrix() can now handle NAs in factors.
+
 
 	**************************************************
 	*						 *

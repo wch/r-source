@@ -1400,7 +1400,8 @@ static void firstfactor(double *x, int nrx, int ncx,
 	xj = &x[j*nrx];
 	cj = &c[j*nrc];
 	for (i = 0; i < nrx; i++)
-	    xj[i] = cj[v[i]-1];
+	    if(v[i] == NA_INTEGER) xj[i] = NA_REAL;
+	    else xj[i] = cj[v[i]-1];
     }
 }
 
@@ -1416,7 +1417,8 @@ static void addfactor(double *x, int nrx, int ncx,
 	    yj = &x[(k*ncx+j)*nrx];
 	    ck = &c[k*nrc];
 	    for (i = 0; i < nrx; i++)
-		yj[i] = ck[v[i]-1] * xj[i];
+	    if(v[i] == NA_INTEGER) yj[i] = NA_REAL;
+	    else yj[i] = ck[v[i]-1] * xj[i];
 	}
     }
 }
