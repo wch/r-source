@@ -516,6 +516,7 @@ void markPhase(void)
     markSExp(R_CommentSxp);
 
     markSExp(R_GlobalEnv);	           /* Global environent */
+    markSExp(R_Warnings);	           /* Warnings, if any */
 
     for (i = 0; i < HSIZE; i++)	           /* Symbol table */
 	markSExp(R_SymbolTable[i]);
