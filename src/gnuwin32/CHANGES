@@ -38,6 +38,9 @@ Fixed bugs that caused crash when windows were resized repeatedly.(PR#1711)
 Changed help to use the 'title' parameter of file.show when displaying 
 help, for consistency with Unix versions.
 
+Default in installer changed so a normal user installation will 
+include the source package installation files.
+
 
 
 rw1070
