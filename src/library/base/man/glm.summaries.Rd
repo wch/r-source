@@ -9,8 +9,8 @@ coefficients(x) ; coef(x)
 df.residual(x)
 family(x)
 fitted.values(x) ; fitted(x)
-residuals(x, type="deviance")
-
+residuals(x, type = c("deviance", "pearson", "working", "response", "partial"),
+          ...)
 print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
               na.print="", symbolic.cor = p > 4,
 	      signif.stars= .Options$show.signif.stars, ...)
@@ -37,9 +37,9 @@ print.summary(summary.glm.obj, digits = max(3, .Options$digits - 3),
     By default it is obtained from \code{glm.obj}.}
   \item{correlation}{logical; if \code{TRUE}, the correlation matrix of
     the estimated parameters is returned and printed.}
-  \item{type}{the type of residuals which should be returned.  The
-    alternatives are: \code{"deviance"}, \code{"pearson"},
-    \code{"working"}, \code{"response"}.}
+  \item{type}{the type of residuals which should be returned.
+    The alternatives are: \code{"deviance"} (default), \code{"pearson"},
+    \code{"working"}, \code{"response"}, and \code{"partial"}.}
 }
 \description{
 These functions are all \code{\link{methods}} for class \code{glm} or

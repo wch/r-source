@@ -611,23 +611,24 @@ fitted.glm <- function(object, ...) object$fitted.values
 
 family.glm <- function(object, ...) object$family
 
-residuals.glm <- function(object, type="deviance", ...)
+residuals.glm <-
+    function(object,
+             type = c("deviance", "pearson", "working", "response", "partial"),
+             ...)
 {
-    ntyp <- match(type, c("deviance", "pearson", "working", "response", "partial"))
-    if(is.na(ntyp))
-	stop(paste("invalid `type':", type))
+    type <- match.arg(type)
     y  <- object$y
     mu <- object$fitted.values
     wts <- object$prior.weights
-    switch(ntyp,
+    switch(type,
 	   deviance = if(object$df.res > 0) {
 	       d.res <- sqrt((object$family$dev.resids)(y, mu, wts))
 	       ifelse(y > mu, d.res, -d.res)
 	   } else rep(0, length(mu)),
-	   pearson	 = object$residuals * sqrt(object$weights),
-	   working	 = object$residuals,
+	   pearson = object$residuals * sqrt(object$weights),
+	   working = object$residuals,
 	   response = y - mu,
-           partial=object$residuals+predict(object,type="terms")
+           partial = object$residuals + predict(object,type="terms")
 	   )
 }
 
