@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-12 @value{FAQ-YEAR}-05-07
+@set FAQ-VERSION 1.9-13 @value{FAQ-YEAR}-05-12
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2444,6 +2444,9 @@ Breiman's random forest classifier.
 @c @item ratetables
 @c US national and state mortality data (requires @strong{survival4} and
 @c @strong{date}), for use with @strong{survival4}.
+@item rbugs
+Functions to prepare files needed for running BUGS in batch mode, and
+running BUGS from R.  Support for Linux systems with Wine is emphasized.
 @item ref
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
