@@ -685,26 +685,31 @@ void DoWindowEvent( const EventRecord *event )
     EventRecord event;
     Boolean gotEvent,  haveResize = false;
     WindowPtr windowPtr;
-    DevDesc  *dd;
+    NewDevDesc  *dd;
+    GEDevDesc  *gedd;
+    MacDesc	*xd;
     SInt16 Console_Width, NumofChar;
     GrafPtr savePort;
     RgnHandle cursorRgn;
     Rect portRect ;
     CGrafPtr thePort;
+    double left,right,bottom,top;
   
     gotEvent = WaitNextEvent( everyEvent, &event, sSleepTime, sMouseRgn );
 
-#if ! TARGET_API_MAC_CARBON
-	// give text services a chance to intercept this event
-	// if TSMEvent( ) handles the event, it will set event.what to nullEvent
-	// this call is not needed for Carbon clients
-	TSMEvent ( & event ) ;
-#endif
-
     if (gExpose) {
-	dd = (DevDesc*)gGReference[gExpose].devdesc;
-	dd-> dp.resize(dd);
-	playDisplayList(dd);
+	dd = (NewDevDesc*)gGReference[gExpose].newdevdesc;
+	gedd = (GEDevDesc*)gGReference[gExpose].gedevdesc;
+    xd = (MacDesc *)dd->deviceSpecific;
+	dd->size(&left,&right,&bottom,&top,dd);
+	dd->left = left;
+	dd->right = right;
+	dd->top = top;
+	dd->bottom = bottom; 
+	xd->resize=TRUE;
+	playDisplayList((DevDesc *)gedd);
+	xd = (MacDesc *)dd->deviceSpecific;
+	xd->resize = false;
 	haveResize = true;
 	gExpose = false;
     }

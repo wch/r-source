@@ -521,7 +521,8 @@ struct Graphic_Ref
     GWorldPtr offScreen2;
     GWorldPtr offScreen;
     PixMapHandle offPixMapHandle;
-    Ptr devdesc;  
+    Ptr gedevdesc;  
+    Ptr newdevdesc;
     CGrafPtr colorPort;
     GDHandle colorDevice;
 #if TARGET_API_MAC_CARBON

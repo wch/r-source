@@ -78,16 +78,16 @@ void CStrToUniCode(char *someText, UniCharArrayPtr *ucap, UniCharCount *ucc)
     int i;
         
 	status = TECCreateConverter(&ec, kTextEncodingMacRoman, kTextEncodingUnicodeDefault);
-	if (status != noErr) DebugStr("\p TECCreateConverter failed");
+	if (status != noErr) warning("TECCreateConverter failed [Internal MacError]");
 	
 	iLen = MyStrLen(someText);
 	oLen = 2 * iLen;
 	buffer = NewPtr(oLen);
 	
 	status = TECConvertText(ec, (ConstTextPtr)someText, iLen, &ail, (TextPtr)buffer, oLen, &aol);
-	if (status != noErr) DebugStr("\p TECConvertText failed");
+	if (status != noErr) warning("TECConvertText failed [Internal MacError]");
 	status = TECDisposeConverter(ec);
-	if (status != noErr) DebugStr("\p TECDisposeConverter failed");
+	if (status != noErr) warning("TECDisposeConverter failed [Internal MacError]");
 	*ucap = (UniCharArrayPtr)NewPtr(aol);
 	BlockMove(buffer, (*ucap), aol);
 	DisposePtr(buffer);
@@ -195,13 +195,13 @@ OSErr NewRasterTextRotation(char *str, int face, int size, int color, int xx, in
 	// and it's the default style
 	styles = (ATSUStyle *)NewPtr(numberOfRuns * sizeof(ATSUStyle));
 	status = ATSUCreateStyle(&tempS);
-	if (status != noErr) DebugStr("\p ATSUCreateStyle failed");
+	if (status != noErr) warning("ATSUCreateStyle failed [Internal MacError]");
     styles[0] = tempS;
 
 	// and we create the text layout
 	status = ATSUCreateTextLayoutWithTextPtr(theUnicodeText, 0, uTextLength, uTextLength, 
 		numberOfRuns, runLengths, styles, &tempTL);
-	if (status != noErr) DebugStr("\p ATSUCreateTextLayoutWithTextPtr failed");
+	if (status != noErr) warning("ATSUCreateTextLayoutWithTextPtr failed [Internal MacError]");
 	textLayout = tempTL;
 	
 	// to be drawn at
@@ -246,7 +246,7 @@ OSErr NewRasterTextRotation(char *str, int face, int size, int color, int xx, in
      fontID = GetFontIDFromMacFontName(PostFont);
      
     if (fontID == kATSUInvalidFontID) 
-     DebugStr("\p can't find this font");
+     warning("can't find font [Internal MacError]");
 
     fontPointSize = ff(size);
 	
@@ -261,12 +261,12 @@ OSErr NewRasterTextRotation(char *str, int face, int size, int color, int xx, in
 	values[4] = &fontID;
     
     status = ATSUSetAttributes(tempS, 5, tags, sizes, values);
-	if (status != noErr) DebugStr("\p ATSUSetAttributes failed");
+	if (status != noErr) warning("ATSUSetAttributes failed [Internal MacError]");
 	
     /* we finally draw the text */
     
 	status = ATSUDrawText(textLayout, 0, uTextLength, xLocation, yLocation);
-				if (status != noErr) DebugStr("\p ATSUDrawText failed");
+				if (status != noErr) warning("ATSUDrawText failed [Internal MacError]");
 	if(runLengths)
 	 DisposePtr((char *)runLengths);			
 	if(styles)

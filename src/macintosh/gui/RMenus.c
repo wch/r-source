@@ -1856,7 +1856,7 @@ void DoFileChoice(SInt16 menuItem, WindowPtr window)
     case kItemOpen:
 	if (isGraphicWindow(window)){
 	    WinIndex = isGraphicWindow(window);
-	    selectDevice(deviceNumber((DevDesc *)gGReference[WinIndex].devdesc));
+	    selectDevice(deviceNumber((DevDesc *)gGReference[WinIndex].gedevdesc));
 	}
 	else
 	    DoSource();  

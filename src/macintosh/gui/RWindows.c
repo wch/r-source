@@ -969,7 +969,9 @@ void DoUpdate ( WindowRef window )
 	GrafPtr		savePort ;
 	RgnHandle	updateRgn ;
 	SInt16 		WinIndex;
-    DevDesc *dd;
+    GEDevDesc *gedd;
+    NewDevDesc *dd;
+    double left,right,top,bottom;
   
 #if TARGET_API_MAC_CARBON
 	Rect		portRect ;
@@ -1017,9 +1019,16 @@ void DoUpdate ( WindowRef window )
     //    QDFlushPortBuffer(GetWindowPort(window), NULL);
  /* This way of refreshing windows is rather slow */
     WinIndex = isGraphicWindow(window);
-      dd = (DevDesc*)gGReference[WinIndex].devdesc;
+    dd = (NewDevDesc *)gGReference[WinIndex].newdevdesc;
+    gedd = (GEDevDesc *)gGReference[WinIndex].gedevdesc;
+	dd->size(&left,&right,&bottom,&top,dd);
+	dd->left = left;
+	dd->right = right;
+	dd->top = top;
+	dd->bottom = bottom; 
+
    
-     playDisplayList(dd);
+     playDisplayList((DevDesc *)gedd);
 }
 
 	// tell everything we're done updating
