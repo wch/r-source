@@ -21,9 +21,8 @@ Command-line editing and history in interactive use
 
 Input editing handles a single line and so scrolls long lines left and
 right on the same line.  Until the user presses the RETURN key they
-can use emacs-style line editing commands and can traverse the history
+can use Emacs-style line editing commands and can traverse the history
 of lines previously typed.
-
 
 Entering printable keys generally inserts new text into the buffer (unless
 in overwrite mode, see below).  Other special keys can be used to modify
@@ -31,26 +30,19 @@ the text in the buffer.  In the description of the keys below, ^n means
 Control-n, or holding the CONTROL key down while pressing "n".  Errors
 will ring the terminal bell.
 
-Arrow key sequences are recognized, and act like:
-
-  up    : same as ^P
-  down  : same as ^N
-  left  : same as ^B
-  right : same as ^F
-
-
-^A/^E	: Move cursor to beginning/end of the line.
-^F/^B   : Move cursor forward/backward one character.
+left/right, ^F/^B   : Move cursor forward/backward one character.
+up/down,    ^P/^N   : Move to previous/next item on history list.
+Home, ^A	: Move cursor to beginning of the line.
+End,  ^E 	: Move cursor to end of the line.
 ESC-F	: Move cursor forward one word.
 ESC-B   : Move cursor backward one word.
-^D	: Delete the character under the cursor.
-^H, DEL : Delete the character to the left of the cursor.
+^D, DEL	: Delete the character under the cursor.
+^H	: Delete the character to the left of the cursor.
 ^K	: Kill from the cursor to the end of line.
 ^L	: Redraw current line.
 ^O	: Toggle overwrite/insert mode. Initially in insert mode. Text
 	  added in overwrite mode (including yanks) overwrite
 	  existing text, while insert mode does not overwrite.
-^P/^N   : Move to previous/next item on history list.
 ^R/^S   : Perform incremental reverse/forward search for string on
 	  the history list.  Typing normal characters adds to the current
 	  search string and searches for a match. Typing ^R/^S marks
@@ -63,7 +55,7 @@ ESC-B   : Move cursor backward one word.
 	  begins from the start of the history list.  Typing ESC or 
 	  any other editing character accepts the current match and 
 	  loads it into the buffer, terminating the search.
-^T	: Toggle the characters under and to the left of the cursor.
+^T	: Transpose the characters under and to the left of the cursor.
 ^U      : Deletes the entire line
 ^Y	: Yank previously killed text back at current location.  Note that
 	  this will overwrite or insert, depending on the current mode.

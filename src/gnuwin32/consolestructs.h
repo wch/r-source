@@ -25,6 +25,7 @@ struct structConsoleData {
     rgb   bg, fg, ufg;		/* colours */
     int   fv, fc;		/* first line and first char visible */
     int   r, c;			/* cursor position */
+    int   overwrite;		/* overwrite mode */
     int   sel, mx0, my0, mx1, my1;	/* selection */
     xbuf  lbuf;			/* lines buffer */
     int   firstkey, numkeys;	/* keys buffer */

@@ -32,9 +32,10 @@ To install manually, unpack @RWVER@b1.zip and @RWVER@b2.zip anywhere you
 like. They will unpack to a directory tree under @RWVER@. The help,
 compiled HTML, HTML and latex help files are in separate files
 @RWVER@h.zip, @RWVER@ch.zip @RWVER@w.zip and @RWVER@l.zip which should be
-unpacked in the same directory you unpacked @RWVER@b1.zip.  Files
-@RWVER@d1.zip and @RWVER@d2.zip contains PDF versions of the manuals for
-R, which unpack into @RWVER@/doc/manual.
+unpacked in the same directory you unpacked @RWVER@b1.zip.
+
+Files @RWVER@d1.zip and @RWVER@d2.zip contains PDF versions of the
+manuals for R, which unpack into @RWVER@/doc/manual.
 
 You should install at least one of the text help and the compiled HTML help.
 
@@ -49,7 +50,7 @@ GUI:
 Rgui.exe runs as a standard Windows GUI executable and provides an R
 console in its own window. It takes the standard R command-line
 arguments; these are most easily set by making a shortcut to
-...\@RWVER@\bin\rgui.exe and adding the arguments in the Target field.
+...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
 loaded from).
@@ -83,7 +84,7 @@ Window running the standard shells, command.com (9x) and cmd.exe (NT),
 as well as the ports of bash and tcsh that we use.  Its primary
 purpose is to allow batch operation, but it does provide all the
 facilities needed for interactive use, including simple command-line
-editing.
+editing (see the file README.Rterm).
 
 Batch use: At its simplest, Rterm.exe can be used in a batch mode by
 commands like
@@ -191,7 +192,7 @@ file .Rprofile. In particular:
   a single window or a different window for each topic shown
   (configurable in Rconsole). Other possibilities we have
   used are "notepad" and "pfe32 /v", and "console" to list the files in
-  the console (rgui.exe) or terminal window (rterm.exe).
+  the console (Rgui.exe) or terminal window (Rterm.exe).
 
 
 Adding packages

@@ -232,6 +232,7 @@ newconsoledata(font f, int rows, int cols,
     p->firstkey = p->numkeys = 0;
     p->clp = NULL;
     p->r = -1;
+    p->overwrite = 0;
     p->lazyupdate = 1;
     p->needredraw = 0;
     p->my0 = p->my1 = -1;
@@ -482,16 +483,20 @@ FBEGIN
   REDRAW;
 FVOIDEND
 
+/* These are the getline keys ^A ^E ^B ^F ^N ^P ^K ^H ^D ^U ^T */
 #define BEGINLINE 1
-#define ENDLINE   2
-#define CHARLEFT 3
-#define CHARRIGHT 4
-#define NEXTHISTORY 5
-#define PREVHISTORY 6
-#define KILLRESTOFLINE 7
+#define ENDLINE   5
+#define CHARLEFT 2
+#define CHARRIGHT 6
+#define NEXTHISTORY 14
+#define PREVHISTORY 16
+#define KILLRESTOFLINE 11
 #define BACKCHAR  8
-#define DELETECHAR 22 /* ^I is printable in some systems */
+#define DELETECHAR 4
 #define KILLLINE 21
+#define CHARTRANS 20
+#define OVERWRITE 15
+/* free ^G ^L ^Q ^R ^S */
 
 static void storekey(control c,int k)
 FBEGIN
@@ -678,36 +683,10 @@ FBEGIN
     }
     if (st == CtrlKey)
 	switch (k + 'A' - 1) {
-	case 'A':
-	    k = BEGINLINE;
-	    break;
-	case 'B':
-	    k = CHARLEFT;
-	    break;
+	    /* most are stored as themselves */
 	case 'C':
 	    consolecopy(c);
 	    st = -1;
-	    break;
-	case 'D':
-	    k = DELETECHAR;
-	    break;
-	case 'E':
-	    k = ENDLINE;
-	    break;
-	case 'F':
-	    k = CHARRIGHT;
-	    break;
-	case 'K':
-	    k = KILLRESTOFLINE;
-	    break;
-	case 'N':
-	    k = NEXTHISTORY;
-	    break;
-	case 'P':
-	    k = PREVHISTORY;
-	    break;
-	case 'U':
-	    k = KILLLINE;
 	    break;
 	case 'V':
 	case 'Y':
@@ -723,6 +702,15 @@ FBEGIN
 	    consoletogglelazy(c);
 	    st = -1;
 	    break;
+	case 'L':
+	    p->needredraw = 1;
+	    REDRAW;
+	    st = -1;
+	    break;
+	case 'O':
+	    p->overwrite = !p->overwrite;
+	    st = -1;
+	    break;
 	}
     if (p->sel) {
 	p->sel = 0;
@@ -730,7 +718,7 @@ FBEGIN
 	REDRAW;
     }
     if (st == -1) return;
-    storekey(c,k);
+    storekey(c, k);
 FVOIDEND
 
 void console_ctrlkeyin(control c, int key)
@@ -939,13 +927,17 @@ FBEGIN
 	    ((unsigned char)cur_char > 0x7f);
 	if(chtype && (max_pos < len - 2)) {
 	    int i;
-	    for(i = max_pos; i > cur_pos; i--) {
-		cur_line[i] = cur_line[i - 1];
+	    if(!p->overwrite) {
+		for(i = max_pos; i > cur_pos; i--) {
+		    cur_line[i] = cur_line[i - 1];
+		}
 	    }
 	    cur_line[cur_pos] = cur_char;
+	    if(!p->overwrite || cur_pos == max_pos) {
+		max_pos += 1;
+		cur_line[max_pos] = '\0';
+	    }
 	    cur_pos += 1;
-	    max_pos += 1;
-	    cur_line[max_pos] = '\0';
 	    draweditline(c);
 	} else {
 	    /* do normal editing commands */
@@ -998,6 +990,12 @@ FBEGIN
 			cur_line[i] = cur_line[i + 1];
 		    max_pos -= 1;
 		}
+		break;
+	    case CHARTRANS:
+		if(cur_pos < 2) break;
+		cur_char = cur_line[cur_pos];
+		cur_line[cur_pos] = cur_line[cur_pos-1];
+		cur_line[cur_pos-1] = cur_char;
 		break;
 	    default:
 		if (chtype || (cur_char=='\n')) {
@@ -1277,9 +1275,13 @@ void  consolehelp()
     strcat(s,"  Copy and paste.\n");
     strcat(s,"     Use the mouse (with the left button held down) to mark (select) text.\n");
     strcat(s,"     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n");
-    strcat(s,"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)\n");
-    strcat(s,"     to the console, Ctrl+X first copy then paste\n\n");
-    strcat(s,"Note: Console is updated only when some input is required.\n");
+    strcat(s,"     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard (if any)  \n");
+    strcat(s,"     to the console, Ctrl+X first copy then paste\n");
+    strcat(s,"  Misc:\n");
+    strcat(s,"     Ctrl+L: Redraw console.\n");
+    strcat(s,"     Ctrl+O: Toggle overwrite mode: initially off.\n");
+    strcat(s,"     Ctrl+T: Interchange current char with one to the left.\n");
+    strcat(s,"\nNote: Console is updated only when some input is required.\n");
     strcat(s,"  Use Ctrl+W to toggle this feature off/on.\n\n");
     strcat(s,"Use ESC to stop the interpreter.\n\n");
     strcat(s,"Standard Windows hotkeys can be used to switch to the\n");
