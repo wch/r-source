@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.43 $ ';
+my $revision = ' $Revision: 1.44 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -48,10 +48,11 @@ my $opt_examples = 1;
 my $opt_tests = 1;
 my $opt_latex = 1;
 my $opt_use_gct = 0;
+my $opt_codoc = 1;
 
 my @knownoptions = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
-		    "use-gct" => \$opt_use_gct);
+		    "use-gct" => \$opt_use_gct, "no-codoc");
 GetOptions (@knownoptions) || usage();
 
 R_version("R add-on package checker", $version) if $opt_version;
@@ -61,6 +62,7 @@ $opt_clean = 0 if $opt_no_clean;
 $opt_examples = 0 if $opt_no_examples;
 $opt_tests = 0 if $opt_no_tests;
 $opt_latex = 0 if $opt_no_latex;
+$opt_codoc = 0 if $opt_no_codoc;
 
 my $startdir=cwd();
 $opt_outdir=$startdir unless $opt_outdir;
@@ -140,8 +142,8 @@ while(<KEYWORDS>) {
 close KEYWORDS;
 
 ## this is the main loop over all packages to be checked
+$#ARGV >= 0 || die "Error: no packages were specified";
 my $pkg;
-$#ARGV >=0 || die "Error: no packages were specified";
 foreach $pkg (@ARGV){
     my $is_bundle=0;
 
@@ -527,6 +529,39 @@ sub check_pkg {
 	}
     }
 
+    ## Check for code/documentation mismatches
+
+    if($opt_codoc && ((-d "R") || (-d "data")) && -d "man") {
+	$log->checking("for code/documentation mismatches");
+
+	my $Rcmd = "$TMPDIR/Rcmd.$$";
+	my $Rout = "$TMPDIR/Rout.$$";
+	open Rcmd, "> $Rcmd" || die "Cannot write to \`$Rcmd'\n";
+        print Rcmd "codoc(dir = \"${pkgdir}\")\n";
+        close Rcmd;
+        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        my @out;
+        open Rout,  "< $Rout";
+        while(<Rout>) {chomp; push(@out, $_);}
+        close Rout;
+        unlink($Rcmd);
+        unlink($Rout);
+
+	## <FIXME>
+	## With the current heuristics codoc() may throw an error even
+	## though the documentation is valid.  Change this when we know
+	## what must be valid R code, similar to the above for undoc().
+	@out = grep {/^(\$| *\[|Multiple|Error)/} @out;
+	if($#out>=0){
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else{
+	    $log->result("OK");
+	}
+	## </FIXME>
+    }
+
     chdir($pkgoutdir);
 
     if($opt_examples && <$library/$pkgname/R-ex/*.R>) {
@@ -719,6 +754,7 @@ Options:
                         (default is \`pkg.Rcheck\' in current directory,
 			where \`pkg\' is the name of the package checked)
       --no-clean        do not clean outdir before using it
+      --no-codoc        do not check for code/documentation mismatches
       --no-examples     do not run the examples in the Rd files
       --no-tests        do not run code in tests subdirectory
       --no-latex        do not run LaTeX on help files

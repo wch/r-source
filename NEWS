@@ -10,7 +10,8 @@
 
 
 NEW FEATURES
-    o	persp, image and qqnorm  are now generic functions
+
+    o	persp(), image() and qqnorm() are now generic functions.
 
     o	Changes to connections:
 
@@ -177,9 +178,9 @@ NEW FEATURES
     o	The Bartlett, Fligner-Killeen, Friedman, Kruskal-Wallis, and
 	Quade tests in package ctest now have formula interfaces.
 
-    o	R::Dcf.pm can now also handle files with more than one
-	record and checks (a little bit) for continuation lines
-	without leading whitespace. 
+    o	R::Dcf.pm can now also handle files with more than one record
+	and checks (a little bit) for continuation lines without leading
+	whitespace.
 
     o	[dpqr]nbinom also accept an alternative parametrization via the
 	mean and the dispersion parameter (thanks to Ben Bolker).
@@ -224,13 +225,15 @@ NEW FEATURES
     o	read.table() now uses a single pass through the dataset.
 
     o	R CMD check now also checks the keyword entries against the list
-	of standard keywords and for sufficient file permissions (Unix
-	only).	It also has a new new command line option `--use-gct' to
-	use `gctorture(TRUE)' when running R code.
+	of standard keywords, for code/documentation mismatches (this
+	can be turned off by the command line option `--no-codoc'), and
+	for sufficient file permissions (Unix only).  It also has a new
+	new command line option `--use-gct' to use `gctorture(TRUE)'
+	when running R code.
 
     o	Matrix multiplication functions %*% and crossprod now use a
 	level-3 BLAS routine dgemm.  When R is linked with the ATLAS
-	or other enahnced BLAS libraries this can be substantially
+	or other enhanced BLAS libraries this can be substantially
 	faster than the previous code.
 
     o	R CMD Rd2dvi has better support for producing reference manuals
@@ -244,7 +247,7 @@ NEW FEATURES
 
     o	New manual `R Installation and Administration' with fuller
 	details on the installation process: file `INSTALL' is now a
-	brief introduction referencing that manual
+	brief introduction referencing that manual.
 
     o	New functions La.eigen() and La.svd() for eigenvector and
 	singular value decompositions, based on LAPACK.	 These are
@@ -263,12 +266,12 @@ NEW FEATURES
     o	Contingency tables created by xtabs() or table() now have a
 	summary() method.
 
-    o	model.frame() now calls na.action with the terms attribute
-	set on the data frame (needed to distiguish the response,
-	for example).
+    o	model.frame() now calls na.action with the terms attribute set
+	on the data frame (needed to distiguish the response, for
+	example).
 
     o	print.htest() can now handle test names that are longer than
-	one line 
+	one line.
 
     o	New generic functions naresid(), napredict() and naprint()
 	(formerly in packages survival5 and MASS, also used in rpart).
@@ -284,8 +287,8 @@ NEW FEATURES
     o	Generic functions logLik() and AIC() moved from nls an nlme to
 	base, as well as their *.lm methods.
 
-    o	plot.acf() makes better use of white space for `nser > 2', 
-	has new optional arguments and uses a much better layout when more
+    o	plot.acf() makes better use of white space for `nser > 2', has
+	new optional arguments and uses a much better layout when more
 	than one page of plots is produced.
 
     o	format() on character arrays was losing the dimensions.
