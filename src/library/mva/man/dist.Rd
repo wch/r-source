@@ -1,9 +1,10 @@
 \name{dist}
 \title{Distance Matrix Computation}
 \usage{
-dist(x, method = "euclidian", diag = FALSE)
+dist(x, method = "euclidian", diag = FALSE, upper=FALSE)
 
-print.dist(dist.obj)
+print.dist(dist.obj, diag = NULL, upper = NULL)
+as.matrix.dist(dist.obj)
 }
 \arguments{
   \item{x}{a matrix or (data frame).  Distances between the rows of
@@ -13,7 +14,9 @@ print.dist(dist.obj)
     \code{"canberra"} or \code{"binary"}.
     Any unambiguous substring can be given.}
   \item{diag}{a logical value indicating whether the diagonal of the
-    distance matrix should be included in the result.}
+    distance matrix should be printed by \code{print.dist}.}
+  \item{upper}{a logical value indicating whether the upper triangle of the
+    distance matrix should be be printed by \code{print.dist}.}
 }
 \description{
   This function computes and returns the distance matrix computed by
@@ -35,10 +38,10 @@ print.dist(dist.obj)
   } 
 }
 \value{
-  The lower triangle of the distance matrix (with or without its
-  diagonal as specified by \code{diag}) and stored by columns in a
-  single vector.  The vector has the attributes \code{"size"},
-  \code{"diag"}, \code{"labels"} and \code{class} equal to "dist".
+  The lower triangle of the distance matrix stored by columns in a
+  single vector.  The vector has the attributes \code{"Size"},
+  \code{"Diag"}, \code{"Upper"}, \code{"Labels"} and \code{"class"} equal
+  to \code{"dist"}. 
 }
 \references{
   Mardia, K. V., J. T. Kent and J. M. Bibby (1979).
@@ -48,5 +51,9 @@ print.dist(dist.obj)
   \code{\link{hclust}}.
 }
 \examples{
-# There are no examples yet.
+x<-matrix(rnorm(100),nrow=5)
+dist(x)
+dist(x, diag = TRUE)
+dist(x, upper = TRUE)
+as.matrix(dist(x))
 }
