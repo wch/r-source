@@ -65,18 +65,18 @@ dx2x <- deriv(~ x^2, "x") ; dx2x
 ##-         .value
 ##- })
 mode(dx2x)
-e.dx2x <- eval(dx2x); mode(e.dx2x)
 x <- -1:2
-eval(e.dx2x)
+eval(dx2x)
+
 
 ## Something `tougher':
 trig.exp <- expression(sin(cos(x + y^2)))
-D(trig.exp, c("x", "y"))
+( D.sc <- D(trig.exp, c("x", "y")) )
 
-dxy <- deriv(trig.exp, c("x", "y"))
-dxy
+( dxy <- deriv(trig.exp, c("x", "y")) )
 y <- 1
-eval(eval(dxy))
+eval(dxy)
+eval(D.sc)
 }
 \keyword{math}
 \keyword{nonlinear}
