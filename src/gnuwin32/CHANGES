@@ -17,7 +17,8 @@ initial position, overriding the settings in Rconsole.
 
 The windows() device has a form of double-buffering: the visible plot
 is updated only when there has been no plotting for 0.1sec or if the
-plot has not been updated for 0.5sec.
+plot has not been updated for 0.5sec.  This is optional (but on by
+default) and the timings can be changed: see ?windows.
 
 Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.

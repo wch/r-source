@@ -14,7 +14,9 @@
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        canvas = "white", gamma = getOption("gamma"), xpos = NA, ypos = NA)
+        canvas = "white", gamma = getOption("gamma"),
+        xpos = NA, ypos = NA, buffered = getOption("windowsBuffered"))
+
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
@@ -52,6 +54,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
     \file{\link{Rconsole}} file, which in turn defaults to
     \code{xpos=-25, ypos=0}: this puts the right edge of the windows 25
     pixels from the right edge of the monitor.}
+  \item{buffered}{logical.  Should the screen output be double-buffered?}
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
 }
@@ -123,6 +126,12 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   of class \code{"recordedplot"} they can be replayed by printing them:
   see \code{\link{recordPlot}}.  The active plot history is stored in
   variable \code{.SavedPlots} in package \pkg{base}.
+
+  When a screen device is double-buffered (the default from \R 1.8.0) the
+  screen is updated 100ms after last plotting call or every 500ms during
+  continuous plotting.  These times can be altered by setting
+  \code{options("windowsTimeout")} to a vector of two integers before
+  opening the device.
 }
 
 \value{

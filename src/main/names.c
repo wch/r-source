@@ -702,7 +702,7 @@ FUNTAB R_FunTab[] =
 {"XFig",	do_XFig,	0,	111,   11,	{PP_FUNCALL, PREC_FN,	0}},
 {"PDF",		do_PDF,		0,	111,   10,	{PP_FUNCALL, PREC_FN,	0}},
 #ifdef Win32
-{"devga",	do_devga,	0,	111,   12,	{PP_FUNCALL, PREC_FN,	0}},
+{"devga",	do_devga,	0,	111,   13,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	8,	{PP_FUNCALL, PREC_FN,	0}},

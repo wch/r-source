@@ -86,18 +86,13 @@ static rgb GArgb(int color, double gamma)
 
 #define TRACEDEVGA(a)
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
-#ifdef BUFFERED
 
 static drawing _d;
-#define DRAW(a) {if(xd->kind==SCREEN) _d=xd->bm;else _d=xd->gawin; CLIP;a;}
+
+#define DRAW(a) {if(xd->kind != SCREEN) {_d=xd->gawin; CLIP; a;} else {_d=xd->bm; CLIP; a; if(!xd->buffered) {_d=xd->gawin; CLIP; a;} _d=xd->bm; CLIP; a;}}
+
 #define SHOW  if(xd->kind==SCREEN) gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));
-#define SH if(xd->kind==SCREEN) GA_Timer(xd)
-#else
-#define NOBM(a) if(xd->kind==SCREEN){a;}
-#define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
-#define SHOW  gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));
-#define SH
-#endif
+#define SH if(xd->kind==SCREEN && xd->buffered) GA_Timer(xd)
 
 
 #define SF 20  /* scrollbar resolution */
@@ -174,6 +169,8 @@ typedef struct {
     double rescale_factor;
     int fast; /* Use fast fixed-width lines? */
     unsigned int pngtrans; /* what PNG_TRANS get mapped to */
+    Rboolean buffered;
+    int timeafter, timesince;
 } gadesc;
 
 rect getregion(gadesc *xd)
@@ -186,7 +183,6 @@ rect getregion(gadesc *xd)
     return r;
 }
 
-#ifdef BUFFERED
 /* Update the screen 100ms after last plotting call or 500ms after last
    update */
 
@@ -206,15 +202,14 @@ static void GA_Timer(gadesc *xd)
 {
     DWORD now = GetTickCount();
     if(TimerNo != 0) KillTimer(0, TimerNo);
-    if(now > GALastUpdate + 500) {
+    if(now > GALastUpdate + xd->timesince) {
 	gbitblt(xd->gawin, xd->bm, pt(0,0), getrect(xd->bm));
 	GALastUpdate = now;
     } else {
 	GA_xd = xd;
-	TimerNo = SetTimer(0, 0, (UINT) 100, GA_timer_proc);
+	TimerNo = SetTimer(0, 0, (UINT) xd->timeafter, GA_timer_proc);
     }
 }
-#endif
 
 	/********************************************************/
 	/* There are a number of actions that every device 	*/
@@ -326,7 +321,7 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, White, 1, NA_INTEGER, NA_INTEGER))
+		       0, 1, White, 1, NA_INTEGER, NA_INTEGER, FALSE))
         PrivateCopyDevice(dd, ndd, display);
 }
 
@@ -2198,9 +2193,7 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
     gsetcursor(xd->gawin, CrossCursor);
     setstatus("Locator is active");
     while (!xd->clicked) {
-#ifdef BUFFERED
-	SHOW;
-#endif
+	if(xd->buffered) SHOW;
         WaitMessage();
 	R_ProcessEvents();
     }
@@ -2281,7 +2274,7 @@ static void GA_Hold(NewDevDesc *dd)
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
 			Rboolean recording, int resize, int canvas,
-			double gamma, int xpos, int ypos)
+			double gamma, int xpos, int ypos, Rboolean buffered)
 {
     /* if need to bail out with some sort of "error" then */
     /* must free(dd) */
@@ -2401,6 +2394,18 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 
     xd->resize = (resize == 3);
     xd->locator = FALSE;
+    xd->buffered = buffered; 
+    {
+	SEXP timeouts = GetOption(install("windowsTimeouts"), R_NilValue);
+	if(isInteger(timeouts)){
+	    xd->timeafter = INTEGER(timeouts)[0]; 
+	    xd->timesince = INTEGER(timeouts)[1];
+	} else {
+	    warning("option `windowsTimeouts' should be integer");
+	    xd->timeafter = 100;
+	    xd->timesince = 500;
+	}
+    }
     dd->displayListOn = (xd->kind == SCREEN);
     if (RConsole && (xd->kind!=SCREEN)) show(RConsole);
     return TRUE;
