@@ -762,6 +762,7 @@ FUNTAB R_FunTab[] =
 {"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},
 {"pushBackLength",do_pushbacklength,0,  11,     1,      PP_FUNCALL},
 {"textConnection",do_textconnection,0,	11,     3,      PP_FUNCALL},
+{"socketConnection",do_sockconn,0,	11,     6,      PP_FUNCALL},
 {"getAllConnections",do_getallconnections,0,	11,     0,      PP_FUNCALL},
 {"summary.connection",do_sumconnection,0,	11,     1,      PP_FUNCALL},
 {"download", 	do_download,	0,      11,     4,      PP_FUNCALL},

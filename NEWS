@@ -34,7 +34,8 @@ NEW FEATURES
 	-  New function truncate() to truncate a connection open for
 	   writing at the current position.
 
-	-  More to come.
+	-  Socket connections via function socketConnection().
+	   [Not yet operational.]
 
     o	The default method for download.file() (and functions which use
 	it such as update.packages()) is now "internal", and uses code

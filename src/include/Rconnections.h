@@ -76,6 +76,13 @@ typedef struct urlconn {
     UrlScheme type;
 } *Rurlconn;
 
+typedef struct sockconn {
+    int port;
+    int server;
+    int fd;
+    char *host;
+} *Rsockconn;
+
 int Rconn_fgetc(Rconnection con);
 int Rconn_ungetc(int c, Rconnection con);
 int Rconn_getline(Rconnection con, char *buf, int bufsize);

@@ -1113,6 +1113,170 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* ------------------- socket connections  --------------------- */
+
+/* R interface (Rsock.c) :*/
+void Rsockopen(int *port);
+void Rsocklisten(int *sock, char **buf, int *len);
+void Rsockconnect(int *port, char **host);
+void Rsockclose(int *sockp);
+void Rsockread (int *sockp, char **buf, int *maxlen);
+void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
+
+
+static void sock_open(Rconnection con)
+{
+    Rsockconn this = (Rsockconn)con->private;
+    int port = this->port, len = 256;
+    char buf[256], *ptr = buf;
+
+    if(this->server) {
+	Rsockopen(&port);
+	Rsocklisten(&port, &ptr, &len);
+    } else {
+	Rsockconnect(&port, &(con->description));
+    }
+    this->fd = port;
+    
+    con->isopen = TRUE;
+    con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
+    con->canread = !con->canwrite;
+    if(strlen(con->mode) >= 2 && con->mode[1] == 'b') con->text = FALSE;
+    else con->text = TRUE;
+    con->save = -1000;
+}
+
+static void sock_close(Rconnection con)
+{
+    /* close socket here */
+    con->isopen = FALSE;
+}
+
+static void sock_destroy(Rconnection con)
+{
+    free(con->private);
+}
+
+static size_t sock_read(void *ptr, size_t size, size_t nitems,
+			Rconnection con)
+{
+    Rsockconn this = (Rsockconn)con->private;
+    char *buf = ptr;
+    int len = size * nitems;
+
+    Rsockread(&(this->fd), &buf, &len);
+    return len;
+}
+
+static size_t sock_write(const void *ptr, size_t size, size_t nitems,
+			 Rconnection con)
+{
+    Rsockconn this = (Rsockconn)con->private;
+    char *buf = ptr;
+    int len = size * nitems, start = 0, end = len;
+
+    Rsockwrite(&(this->fd), &buf, &start, &end, &len);
+    return len;
+}
+
+static Rconnection newsock(char *host, int port, int server, int blocking,
+			   char *mode)
+{
+    Rconnection new;
+
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of file connection failed");
+    new->class = (char *) malloc(strlen("socket") + 1);
+    if(!new->class) {
+	free(new);
+	error("allocation of socket connection failed");
+    }
+    strcpy(new->class, "socket");
+    new->description = (char *) malloc(strlen(host) + 10);
+    if(!new->description) {
+	free(new->class); free(new);
+	error("allocation of socket connection failed");
+    }
+    strcpy(new->description, host);
+    strncpy(new->mode, mode, 4); new->mode[4] = '\0';
+    new->isopen = new->incomplete = FALSE;
+    new->canread = new->canwrite = TRUE; /* in principle */
+    new->canseek = TRUE;
+    new->text = TRUE;
+    new->open = &sock_open;
+    new->close = &sock_close;
+    new->destroy = &sock_destroy;
+    new->vfprintf = &null_vfprintf;
+    new->fgetc = &null_fgetc;
+    new->seek = &null_seek;
+    new->truncate = &null_truncate;
+    new->fflush = &null_fflush;
+    new->read = &null_read;
+    new->write = &null_write;
+    new->nPushBack = 0;
+    new->private = (void *) malloc(sizeof(struct sockconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of socket connection failed");
+    }
+    ((Rsockconn)new->private)-> port = port;
+    ((Rsockconn)new->private)-> server = server;
+    return new;
+}
+
+/* socketConnection(host, port, server, blocking, open, encoding) */
+SEXP do_sockconn(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP scmd, sopen, ans, class, enc;
+    char *host, *open;
+    int i, ncon, port, server, blocking;
+    Rconnection con = NULL;
+
+    checkArity(op, args);
+    error("socket connections are not yet operational");
+    scmd = CAR(args);
+    if(!isString(scmd) || length(scmd) != 1)
+	error("invalid `host' argument");
+    host = CHAR(STRING_ELT(scmd, 0));
+    args = CDR(args);
+    port = asInteger(CAR(args));
+    if(port == NA_INTEGER || port < 0)
+	error("invalid `port' argument");
+    args = CDR(args);
+    server = asLogical(CAR(args));
+    if(server == NA_LOGICAL)
+	error("invalid `server' argument");
+    args = CDR(args);
+    blocking = asLogical(CAR(args));
+    if(blocking == NA_LOGICAL)
+	error("invalid `blocking' argument");
+    sopen = CAR(args);
+    if(!isString(sopen) || length(sopen) != 1)
+	error("invalid `open' argument");
+    open = CHAR(STRING_ELT(sopen, 0));
+    enc = CADDR(args);
+    if(!isInteger(enc) || length(enc) != 256)
+	error("invalid `enc' argument");
+
+    ncon = NextConnection();
+    Connections[ncon] = newsock(host, port, server, blocking, open);
+    for(i = 0; i < 256; i++)
+	con->encoding[i] = (unsigned char) INTEGER(enc)[i];
+
+    /* open it if desired */
+    if(strlen(open)) con->open(con);
+
+    PROTECT(ans = allocVector(INTSXP, 1));
+    INTEGER(ans)[0] = ncon;
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("sockconn"));
+    SET_STRING_ELT(class, 1, mkChar("connection"));
+    classgets(ans, class);
+    UNPROTECT(2);
+
+    return ans;
+}
+
 /* ------------------- open, close, seek --------------------- */
 
 SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)

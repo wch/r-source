@@ -4,6 +4,7 @@
 \alias{pipe}
 \alias{gzfile}
 \alias{url}
+\alias{socketConnection}
 \alias{open}
 \alias{open.connection}
 \alias{isOpen}
@@ -31,6 +32,8 @@ pipe(description, open = "", encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
 url(description, open = "", encoding = getOption("encoding"))
+socketConnection(host = "localhost", port, server = FALSE, blocking = TRUE,
+                 open = "r", encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "r", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
@@ -47,6 +50,9 @@ isSeekable(con)
     For \code{url} it is a complete URL, including schemes
     (\code{http://}, \code{ftp://} or \code{file://}).
   }
+  \item{host}{character.  Host name for port.}
+  \item{port}{integer.  The TCP port number.}
+  \item{server}{logical.  Should the socket be a client or a server?}
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
   \item{blocking}{logical.  Currently ignored.}
@@ -62,13 +68,14 @@ isSeekable(con)
     \code{"end"}.}
 }
 \details{
-  The first four functions create connections.  By default the connection
-  is not opened, but may be opened by setting a non-empty value of
+  The first five functions create connections.  By default the connection
+  is not opened (except for \code{socketConnection}, but may be opened
+  by setting a non-empty value of
   argument \code{open}.  \code{gzfile} applies to files compressed by
   \code{gzip}: such connections can only be binary.
 
-  Proxies can be specified for \code{url} connections by environment
-  variables: see \code{\link{download.file}}.
+  Proxies can be specified for \code{url} connections: see
+  \code{\link{download.file}}.
   
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.
