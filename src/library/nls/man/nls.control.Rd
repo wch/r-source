@@ -2,8 +2,8 @@
 \alias{nls.control}
 \title{Control the Iterations in nls}
 \description{
-    Allow the user to set some characteristics of the \code{nls}
-    nonlinear least squares algorithm.
+  Allow the user to set some characteristics of the \code{nls}
+  nonlinear least squares algorithm.
 }
 \usage{
 nls.control(maxiter=50, tol=1e-05, minFactor=1/1024)
@@ -25,6 +25,7 @@ nls.control(maxiter=50, tol=1e-05, minFactor=1/1024)
   \item{maxiter}{}
   \item{tol}{}
   \item{minFactor}{}
+  with meanings as explained under `Arguments'.
 }
 \references{
   Bates and Watts (1988),
