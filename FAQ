@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-29, 2000-11-23
+Version 1.1-30, 2000-11-25
 Kurt Hornik
 
 
@@ -1460,13 +1460,13 @@ named `PKG_VERSION.tar.gz', which may in fact be "bundles" containing more
 than one package.  Provided that `tar' and `gzip' are available on your
 system, type
 
-     $ R INSTALL /path/to/PKG_VERSION.tar.gz
+     $ R CMD INSTALL /path/to/PKG_VERSION.tar.gz
 
 at the shell prompt to install to the default R directory tree (the
 `library' subdirectory of `R_HOME').  To install to another tree (e.g.,
 your private one), use
 
-     $ R INSTALL -l LIB /path/to/PKG_VERSION.tar.gz
+     $ R CMD INSTALL -l LIB /path/to/PKG_VERSION.tar.gz
 
 where LIB gives the path to the library tree to install to.
 
@@ -1543,11 +1543,11 @@ at the R prompt.
    To remove the packages PKG_1, ..., PKG_N from the default library or the
 library LIB, do
 
-     $ R REMOVE PKG_1 ... PKG_N
+     $ R CMD REMOVE PKG_1 ... PKG_N
 
 or
 
-     $ R REMOVE -l LIB PKG_1 ... PKG_N
+     $ R CMD REMOVE -l LIB PKG_1 ... PKG_N
 
 respectively.
 
