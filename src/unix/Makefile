@@ -12,7 +12,7 @@ OBJ= \
 	PostScript.o \
 	rotated.o \
 	system.o \
-	devPicTeX.o \
+	devPicTeX.o
 
 LIB=		../lib/libunix.a
 

@@ -93,6 +93,15 @@ extern double m_tiny;
 #define sunif	unif_rand
 #define sexp	exp_rand
 
+	/* Undo SGI Madness */
+
+#ifdef ftrunc
+#undef ftrunc
+#endif
+#ifdef qexp
+#undef qexp
+#endif
+
 	/* Name Hiding to Avoid Clashes with Fortran */
 
 #ifdef HIDE_NAMES
