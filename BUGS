@@ -15,8 +15,8 @@ If you happen to know how to fix a problem please send
 patches to the bug repository, too.
 
 New bugs are reported either through the web
-interface at r-bugs.biostat.ku.dk or via email to
-r-bugs@biostat.ku.dk. The bug.report() function can be
+interface at r-bugs.r-project.org or via email to
+r-bugs@r-project.org. The bug.report() function can be
 used to automate parts of the procedure on many systems.
 Followups on older bugs can be done by including the string
 "(PR#999)" in the Subject of an email (change 999 to the
@@ -223,22 +223,26 @@ none
 
 Directory:  incoming
 
-* PR# 660 *
-Subject: identify.default ignores any setting of cex.
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
-* PR# 640 *
-Subject: diff.default / diff.ts in wrong package bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
-* PR# 653 *
-Subject: bug in spline()?
-From: Ian White <imsw@holyrood.ed.ac.uk>
-Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
+* PR# 662 *
+Subject: phantom(0) doesn't do what I expect it to [plotmath]
+From: M.B.Gillies@pharm.uu.nl
+Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
 * PR# 652 *
 Subject: R INSTALL *.tgz fails (minor docs/feature bug)
 From: RPO <bobbyo@speakeasy.org>
 Date: Sat, 2 Sep 2000 13:34:22 -0700 (PDT)
+* PR# 640 *
+Subject: diff.default / diff.ts in wrong package bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 21 Aug 2000 18:28:36 +0200 (CEST)
+* PR# 655 *
+Subject: Installing R from source 
+From: jniesch@gwdg.de
+Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
+* PR# 653 *
+Subject: bug in spline()?
+From: Ian White <imsw@holyrood.ed.ac.uk>
+Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 * PR# 658 *
 Subject: PR 640 (diff.default computes an incorrect starting time)
 From: Laimonis Kavalieris <lkavalieris@maths.otago.ac.nz>
@@ -247,7 +251,11 @@ Date: Wed, 13 Sep 2000 13:44:38 +0000
 Subject: .Random.seed resetting
 From: lej25@statslab.cam.ac.uk
 Date: Mon, 11 Sep 2000 13:13:27 +0200 (MET DST)
-* PR# 655 *
-Subject: Installing R from source 
-From: jniesch@gwdg.de
-Date: Fri, 8 Sep 2000 11:40:00 +0200 (MET DST)
+* PR# 661 *
+Subject:  bug with line widths in postscript output
+From: "White, Paul" <Paul.White@dsto.defence.gov.au>
+Date: Mon, 18 Sep 2000 14:33:36 +1100
+* PR# 660 *
+Subject: identify.default ignores any setting of cex.
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Fri, 15 Sep 2000 10:23:39 +0100 (BST)
