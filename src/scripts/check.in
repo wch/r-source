@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.45 $ ';
+my $revision = ' $Revision: 1.46 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -80,7 +80,7 @@ my $R_CMD = $ENV{'R_CMD'} ||
 my $OS = R_getenv("R_OSTYPE", "unix");
 my $R_exe = "${R_HOME}/bin/R";
 my $TMPDIR = R_getenv("TMPDIR", "/tmp");
-my $WINDOWS = ($OS eq "windows");
+$WINDOWS = ($OS eq "windows");
 if($WINDOWS){
     $TMPDIR = R_getenv("TMPDIR", "/TEMP");
     die "Please set TMPDIR to a valid temporary directory\n" 
@@ -88,6 +88,7 @@ if($WINDOWS){
     $R_exe = "Rterm.exe";
     $LATEX = "latex";
     $MAKE = "make";
+    $cfile = "$TMPDIR/Rcmd.$$";
 }
 
 my $R_LIBS = $ENV{'R_LIBS'};
@@ -117,11 +118,10 @@ if($opt_latex){
 	"test\\end\{document\}\n";
     close texfile;
     chdir($TMPDIR);
-    if(system("$LATEX Rtextest$$ > Rtextest$$.out")){
+    if(Rsystem("$LATEX Rtextest$$ > Rtextest$$.out")) {
 	$log->result("NO");
 	$HAVE_LATEX=0;
-    }
-    else{
+    } else {
 	$log->result("OK");
 	$HAVE_LATEX=1;
     }
@@ -610,25 +610,15 @@ sub check_pkg {
             $cmd = "${R_CMD} massage-Examples.sh ".
   		     "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
   		     "> ${pkgname}-Ex.R";
-            $cfile = "$TMPDIR/Rcmd.$$";
-            open cfile,  "> $cfile" || die "Cannot write to \`$cfile'\n";
-            print cfile "$cmd\n";
-            close cfile;
-            if(system("sh $cfile")) {
-	        $log->error();
-                unlink($cfile);
-	        exit(1);
-            } else {
-                unlink($cfile);
-            }
         } else {
 	    $cmd = "${R_CMD} sh ${R_HOME}/share/sh/massage-Examples.sh ".
 	             "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
 		     "> ${pkgname}-Ex.R";
- 	    if(system($cmd)) {
-  	        $log->error();
-  	        exit(1);
-  	    }
+        }
+
+ 	if(Rsystem($cmd)) {
+  	    $log->error();
+  	    exit(1);
         }
         if($iszipped) {
             unlink(<${library}/${pkgname}/R-ex/*.R>);
@@ -645,24 +635,9 @@ sub check_pkg {
             $cmd = "${R_exe} ${R_opts} " .
 		      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout";
 	}
-        if($WINDOWS) {
-            $cfile = "$TMPDIR/Rcmd.$$";
-            open cfile,  "> $cfile" || die "Cannot write to \`$cfile'\n";
-            print cfile "$cmd\n";
-            close cfile;
-            if(system("sh $cfile")) {
-	        $log->error("running examples failed");
-                unlink($cfile);
-	        exit(1);
-            } else {
-                unlink($cfile);
-            }
-        }
-        else {
-	    if(system($cmd)) {
-	        $log->error("running examples failed");
-	        exit(1);
-	    }
+	if(Rsystem($cmd)) {
+	    $log->error("running examples failed");
+	    exit(1);
 	}
 	$log->result("OK");
     }
@@ -753,7 +728,7 @@ sub check_pkg {
         if($HAVE_LATEX){
             $log->checking("${pkgname}-manual.tex");
             print "\n";
-            if(system("$LATEX ${pkgname}-manual")){
+            if(Rsystem("$LATEX ${pkgname}-manual")){
                 $log->error();
                 exit(1);
             }
@@ -764,6 +739,21 @@ sub check_pkg {
             
 
 #**********************************************************
+
+sub Rsystem 
+{
+    my $cmd = $_[0];
+    if($WINDOWS) {
+	open cfile,  "> $cfile" || die "Cannot write to \`$cfile'\n";
+	print cfile "$cmd\n";
+	close cfile;
+	$res = system("sh $cfile");
+	unlink($cfile);
+	return $res;
+    } else {
+	return system($cmd);
+    }
+}
 
 sub usage {
     print STDERR <<END;
