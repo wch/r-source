@@ -407,37 +407,45 @@ packages to CRAN.
 Before submitting a package @code{mypkg}, do run the following steps to
 test it is complete and will install properly.  (Unix procedures only,
 run from the directory containing @file{mypkg} as a subdirectory.)
+
 @enumerate
-@item Install the package (by @code{R INSTALL mypkg}).  
-This will warn about missing cross-references and duplicate aliases in
-help files.  If you can, do the install on a `vanilla' system with no
-additional packages installed.
+@item
+Install the package (by @code{R INSTALL mypkg}).  This will warn about
+missing cross-references and duplicate aliases in help files.  If you
+can, do the install on a `vanilla' system with no additional packages
+installed.
 
-@item Run @code{R CMD check} to check that all the examples on the help
-pages can be run, and to check the test suite in @file{tests} (if any).
+@item
+Run @code{R CMD check} to check that all the examples on the help pages
+can be run, and to check the test suite in @file{tests} (if any).
 
-@item Run @code{R CMD Rd2dvi mypkg/man} to build a La@TeX{} version of the
+@item
+Run @code{R CMD Rd2dvi mypkg/man} to build a La@TeX{} version of the
 reference manual.  (This checks the @code{latex}-specific parts of the
 help files.)  An even better check if you have @code{pdftex} installed
 is @code{R CMD Rd2dvi --pdf mypkg/man} as this will build the PDF
 documentation as installed on CRAN.
 
-@item Run @code{R CMD build} to run further checks on the help files
-and documentation files such as @file{DESCRIPTION} and to make the 
-release @code{.tar.gz} file.
+@item
+Run @code{R CMD build} to run further checks on the help files and
+documentation files such as @file{DESCRIPTION} and to make the release
+@file{.tar.gz} file.
 @end enumerate
+
 @noindent
 Please ensure that you can run through the complete procedure with only
 warnings that you understand and have reasons not to eliminate.
 
-When all the testing is done, upload the @code{.tar.gz} file to
+When all the testing is done, upload the @file{.tar.gz} file to
+
 @smallexample
 @url{ftp://ftp.ci.tuwien.ac.at/incoming}
 @end smallexample
+
 @noindent
-and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.
-The CRAN maintainers will run these tests before putting a submission in
-the main archive.
+and send a message to @url{WWWadmin@@ci.tuwien.ac.at} about it.  The
+CRAN maintainers will run these tests before putting a submission in the
+main archive.
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
