@@ -58,9 +58,9 @@ NEW FEATURES
     o	install.packages() and friends now accept a vector of URLs for
 	'repos' or 'contriburl' and get the newest available version of
 	a package from the first repository on the list in which it is
-	found.  The argument 'CRAN' is still accepted, but deprecated.
+	found.	The argument 'CRAN' is still accepted, but deprecated.
 
-     	New function new.packages() to report uninstalled packages
+	New function new.packages() to report uninstalled packages
 	available at the requested repositories.
 
 	New function available.packages(), similar to CRAN.packages()
@@ -82,7 +82,7 @@ NEW FEATURES
     o	R CMD check will now work on a source tarball and prints out
 	information about the version of R and the package.
 
-    o   New function recordGraphics() to encapsulate calculations
+    o	New function recordGraphics() to encapsulate calculations
 	and graphics output together on graphics engine display list.
 	To be used with care.
 
@@ -99,6 +99,9 @@ NEW FEATURES
     o	unclass() is no longer allowed for environments and external
 	pointers (since these cannot be copied and so unclass() was
 	destructive of its argument).
+
+    o	choose(n,k) and lchoose(.) now also work for arbitrary (real) n in
+	accordance with the general binomial theorem.
 
 
 UTILITIES

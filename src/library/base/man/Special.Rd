@@ -30,8 +30,8 @@ factorial(x)
 lfactorial(x)
 }
 \arguments{
-  \item{a, b, x}{numeric vectors.}
-  \item{n, k, deriv}{integer vectors.}
+  \item{a, b, x, n}{numeric vectors.}
+  \item{k, deriv}{integer vectors.}
 }
 \details{
   The functions \code{beta} and \code{lbeta} return the beta function
@@ -41,7 +41,7 @@ lfactorial(x)
   The formal definition is
   \deqn{B(a, b) = \int_0^1 t^{a-1} (1-t)^{b-1} dt}{integral_0^1 t^(a-1) (1-t)^(b-1) dt}
   (Abramowitz and Stegun (6.2.1), page 258).
-  
+
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
   gamma function.  The gamma function is defined by (Abramowitz and Stegun (6.1.1), page 255)
@@ -58,7 +58,10 @@ lfactorial(x)
     \code{digamma(x)} = psi(x) = d/dx {ln Gamma(x)} = Gamma'(x) / Gamma(x)}
 
   The functions \code{choose} and \code{lchoose} return binomial
-  coefficients and their logarithms.
+  coefficients and their logarithms.  Note that \code{choose(n,k)} is
+  defined for all real numbers \eqn{n} and integer \eqn{k}.  For \eqn{k
+    \ge 1}{k >= 1} as \eqn{n(n-1)\cdots(n-k+1) / k!}{n(n-1)...(n-k+1) / k!},
+  as \eqn{1} for \eqn{k = 0} and as \eqn{0} for negative \eqn{k}.
 
   All the \code{*gamma*} functions are generic: methods can be
   defined for them individually or via the \code{\link{Math}} group generic.
@@ -111,5 +114,7 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
   if (is.deriv) lines(x[-1], dy, col = "blue", lty = 2)
 }
 
+## "Extended" Pascal triangle:
+for (n in -4:10) cat(formatC(n,wid=2),":",choose(n, k= -2:max(3,n+2)), "\n")
 }
 \keyword{math}

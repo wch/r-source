@@ -1,6 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
+ *  Copyright (C) 2004 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,53 +22,101 @@
  *    #include <Rmath.h>
  *    double choose(double n, double k);
  *    double lchoose(double n, double k);
- *    (and private)
- *    double fastchoose(double n, double k);
+ * (and private)
  *    double lfastchoose(double n, double k);
  *
  *  DESCRIPTION
  *
- *    Binomial coefficients.
+ *	Binomial coefficients.
+ *
+ *	These should work for the generalized binomial theorem,
+ *	i.e., are also defined for non-integer n  (integer k).
  */
+
 #include "nmath.h"
+
+extern int signgam;/* set in each call to lgammafn() */
+static int s_choose;
 
 double lfastchoose(double n, double k)
 {
-	return -log(n + 1.) - lbeta(n - k + 1., k + 1.);
-	/* the same (but less stable):
-	 * == lgammafn(n + 1.0) - lgammafn(k + 1.0) - lgammafn(n - k + 1.0); */
+    return -log(n + 1.) - lbeta(n - k + 1., k + 1.);
+}
+/* mathematically the same:
+   less stable typically, but useful if n-k+1 < 0 : */
+static
+double lfastchoose2(double n, double k)
+{
+    double r;
+    r = lgammafn(n - k + 1.);
+    s_choose = signgam;
+    return lgammafn(n + 1.) - lgammafn(k + 1.) - r;
 }
 
-double fastchoose(double n, double k)
-{
-	return exp(lfastchoose(n, k));
-}
+#define ODD(_K_) ((_K_) != 2 * floor((_K_) / 2.))
+/* matching R_D_nonint() in ./dpq.h : */
+#define R_IS_INT(x) 	  (fabs((x) - floor((x)+0.5)) <= 1e-7)
 
 double lchoose(double n, double k)
 {
-	n = floor(n + 0.5);
-	k = floor(k + 0.5);
+    k = floor(k + 0.5);
 #ifdef IEEE_754
-	/* NaNs propagated correctly */
-	if(ISNAN(n) || ISNAN(k)) return n + k;
+    /* NaNs propagated correctly */
+    if(ISNAN(n) || ISNAN(k)) return n + k;
 #endif
-	if (n < 0) ML_ERR_return_NAN;
-	if (k < 0 || n < k) return ML_NEGINF;
-
+    if (k < 2) {
+	if (k <	 0) return ML_NEGINF;
+	if (k == 0) return 0.;
+	/*else: k == 1 */ return log(n);
+    }
+    /* else: k >= 2 */
+    if (n < 0) {/* -n+ k-1 > 1 */
+	if (ODD(k)) return ML_NAN;/* log( <negative> ) */
+	return lchoose(-n+ k-1, k);
+    }
+    else if (R_IS_INT(n)) {
+	if(n < k) return ML_NEGINF;
 	return lfastchoose(n, k);
+    }
+    /* else non-integer n >= 0 : */
+    if (n < k-1) {
+	if (fmod(floor(n-k+1), 2.) == 0) /* choose() < 0 */
+	    return ML_NAN;
+	return lfastchoose2(n, k);
+    }
+    return lfastchoose(n, k);
 }
 
 double choose(double n, double k)
 {
-	n = floor(n + 0.5);
-	k = floor(k + 0.5);
+    double r;
+    k = floor(k + 0.5);
 #ifdef IEEE_754
-	/* NaNs propagated correctly */
-	if(ISNAN(n) || ISNAN(k)) return n + k;
+    /* NaNs propagated correctly */
+    if(ISNAN(n) || ISNAN(k)) return n + k;
 #endif
-	if (n < 0) ML_ERR_return_NAN;/* could be defined instead as
-					(-1)^k (-n + k - 1 \\ k) {k>=0}*/
-	if (k < 0 || n < k) return 0.;
-
+    if (k < 2) {
+	if (k <	 0) return 0.;
+	if (k == 0) return 1.;
+	/*else: k == 1 */ return n;
+    }
+    /* else: k >= 2 */
+    if (n < 0) {/* -n+ k-1 > 1 */
+	r = choose(-n+ k-1, k);
+	if (ODD(k)) r = -r;
+	return r;
+    }
+    else if (R_IS_INT(n)) {
+	if(n < k) return 0.;
 	return floor(exp(lfastchoose(n, k)) + 0.5);
+    }
+    /* else non-integer n >= 0 : */
+    if (n < k-1) {
+	r = lfastchoose2(n, k);/* -> s_choose */
+	return s_choose * exp(r);
+    }
+    return exp(lfastchoose(n, k));
 }
+
+#undef ODD
+#undef R_IS_INT
