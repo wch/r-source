@@ -240,8 +240,6 @@ void jump_to_toplevel()
     SEXP s, t;
     int nback = 0;
 
-    if(!R_Error_Halt && R_Verbose)
-	REprintf(" >ERR: jump_to_toplevel()\n");
     inError = 1;
 
     if( R_CollectWarnings ) {
@@ -314,11 +312,7 @@ static void jump_now()
     R_PPStackTop = 0;
     R_Warnings = R_NilValue;
     R_CollectWarnings = 0;
-    if (R_Interactive || !R_Error_Halt)
-	LONGJMP(R_ToplevelContext->cjmpbuf, 0);
-    else
-	REprintf("Execution halted\n");
-    exit(1);
+    LONGJMP(R_ToplevelContext->cjmpbuf, 0);
 }
 
 #ifdef OLD_Macintosh

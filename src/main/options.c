@@ -170,7 +170,7 @@ int R_SetOptionWarn(int w)
 void InitOptions(void)
 {
     SEXP t, val, v;
-    PROTECT(v = val = allocList(12));
+    PROTECT(v = val = allocList(11));
 
     TAG(v) = install("prompt");
     CAR(v) = mkString("> ");
@@ -225,13 +225,6 @@ void InitOptions(void)
     CAR(v) = allocVector(LGLSXP, 1);
     LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
                                 /* turned on after load of base  */
-    v = CDR(v);
-
-    TAG(v) = install("error.halt");
-    CAR(v) = allocVector(LGLSXP, 1);
-    LOGICAL(CAR(v))[0] = R_Error_Halt;
-    /* stop on error()/stop() if not interactive() */
-
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }
@@ -400,12 +393,6 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   */
 		R_Slave = !k;
 		VECTOR(value)[i] = SetOption(tag, ScalarLogical(k));
-	    }
-	    else if (streql(CHAR(namei), "error.halt")) {
-		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
-		    errorcall(call, "error.halt parameter invalid");
-		R_Error_Halt = asLogical(argi);
-		VECTOR(value)[i] = SetOption(tag, ScalarLogical(R_Error_Halt));
 	    }
 	    else {
 		VECTOR(value)[i] = SetOption(tag, duplicate(argi));

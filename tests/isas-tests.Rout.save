@@ -13,8 +13,6 @@ Type	"demo()" for some demos, "help()" for on-line help, or
     	"help.start()" for a HTML browser interface to help.
 Type	"q()" to quit R.
 
-> options(error.halt = FALSE) # don't stop on error in batch
-> ##~~~~~~~~~~~~~~
 > 
 > ###--------
 >  x <- 1

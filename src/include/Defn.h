@@ -306,7 +306,6 @@ extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
 
 /* File Input/Output */
 extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */
-extern int	R_Error_Halt	INI_as(1);	/* For non-interactive.. */
 extern int	R_Quiet		INI_as(0);	/* Be as quiet as possible */
 extern int	R_Slave		INI_as(0);	/* Run as a slave process */
 extern int	R_Verbose	INI_as(0);	/* Be verbose */
