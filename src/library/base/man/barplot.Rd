@@ -82,6 +82,11 @@
   If \code{beside} is true, use \code{apply(mp, 2, mean)} for the
   midpoints of each \emph{group} of bars, see example.
 }
+\note{
+  The axis labels are re-sized by the current setting of \code{cex.axis}
+  (see \code{\link{par}}) \emph{but} this cannot be included in
+  \code{\dots}.
+}
 \seealso{
   \code{\link{plot}(\dots, type="h")}, \code{\link{dotchart}},
   \code{\link{hist}}.
