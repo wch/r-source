@@ -6,6 +6,11 @@ BUG FIXES
 	the names of its data arg, but the data arg was defaulting to an
 	unnamed list, so  model.matrix(~x)  failed...
 
+    o   Indexing with [[]] and a zero-length vector segfaulted.
+
+    o   Coercion of factors as in S-plus
+
+    o   dyn.load statement in demos/dynload/zero.R fixed
 
 		CHANGES IN R VERSION 0.61.1
 
