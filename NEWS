@@ -143,6 +143,8 @@ NEW FEATURES
     o   approx() and approxfun() have an extra argument ties= to control
  	handling of tied x values
 
+    o   termplot() has similar functionality to plot.gam
+
     o   Many interface enhancements to the data editor, which now uses
 	variable-width columns and much less redrawing.  See
 	?dataentry for a description of the current user interface.
