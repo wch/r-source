@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.5-9, 2002-06-06
+@set FAQ-VERSION 1.5-9, 2002-06-11
 @set REL-VERSION 1.5.0
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
@@ -1714,6 +1714,10 @@ capabilities, plus some support for interaction.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
+@item gtkDevice
+GTK graphics device driver that may be used independently of the R-GNOME
+interface and can be used to create R devices as embedded components in
+a GUI using a Gtk drawing area widget, e.g., using RGtk.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item ifs
