@@ -57,7 +57,8 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
 	Makefile.in Makefile.win dllversion.rc $(HEADERS) $(SOURCES_C) \
 	$(SOURCES_F_BASE) $(SOURCES_F_DOUBLE_COMPLEX) \
-	$(SOURCES_BLAS_BASE) $(SOURCES_BLAS_DOUBLE_COMPLEX)
+	$(SOURCES_BLAS_BASE) $(SOURCES_BLAS_DOUBLE_COMPLEX) \
+	lapack.mcp.hqx
 
 ## FIXME:
 ## Change to `lapack.la' when using libtool for shlibs.
