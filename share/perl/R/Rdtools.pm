@@ -129,7 +129,9 @@ sub get_usages {
 	    $match =~ s/>>/>>\"/g; # foo = <<see below>> style
 	    $match =~ s/\\%/%/g; # comments
 
-	    if($rest =~ /^\s*(\n|$)/) {
+	    if($rest =~ /^\s*([\#\n]|$)/) {
+		## Note that we need to allow for R comments in the
+		## above regexp.
 		if($prefix) {
 		    ## $prefix should now be the function name, and
 		    ## $match its arg list.
@@ -197,11 +199,9 @@ sub get_usages {
 		    $prefix = "$prefix<-";
 		}
 		$funs{"\"$prefix\""} = substr($match, 0, -1) . ", $1)";
-		$rest =~ s/^.*(\n|$)//g;
 	    }
-	    else {
-		$rest =~ s/^.*(\n|$)//g;
-	    }
+
+	    $rest =~ s/^.*(\n|$)//g;
 	    $usage = $rest;
 	}
 
