@@ -1,5 +1,5 @@
-#   File:       splinesLib.make
-#   Target:     splinesLib
+#   File:       mvaLib.make
+#   Target:     mvaLib
 #   Created:    Jago, Jul 2001, Stefano M. Iacus
 #
 #   This script assumes that R binary already exists in 
@@ -13,43 +13,61 @@
 #   CarbonLib 1.4
 #
 
-DLib			= splines
+DLib            = mva
+
 MAKEFILE        = Makefile.mac
 ¥MondoBuild¥    = {MAKEFILE}  # Make blank to avoid rebuilds when makefile is modified
 
+MacF2C     		=  "::::macintosh:Mac F2C"
+F2CDir          =  ::::macintosh:f2c:
 Includes        = -i ::::include: ¶
 				  -i ::::macintosh: ¶
-
+                  -i "{F2CDir}"
+				  
 Sym-PPC         = -sym off
 
 PPCCOptions     = {Includes} {Sym-PPC} -opt off -includes unix -w 35,2 -shared_lib_export on -d HAVE_CONFIG_H -d Macintosh ¶
-					-d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power
-					
+                  -d TARGET_API_MAC_CARBON=1 -prefix RHeaders.h -align power 
+				  
 ### Library directory ###
 
 LibDir     		= :::::library:{DLib}:libs
 
 ### Source Files ###
+ 
+SrcFiles        =  	dblcen.c ¶
+					distance.c ¶
+					hclust-utils.c ¶
+					init.c ¶
+					hclust.c ¶
+					kmns.c
 
-SrcFiles        =  splines.c
+FortFiles		=	kmns.f ¶
+					hclust.f
 
 ### Object Files ###
 
-ObjFiles-PPC    =  splines.o
+ObjFiles-PPC    =   dblcen.o ¶
+					distance.o ¶
+					hclust-utils.o ¶
+					init.o ¶
+					hclust.o ¶
+					kmns.o
+ 
 
 ### Libraries ###
 
 LibFiles-PPC    =  ¶
 				  "{SharedLibraries}CarbonLib" ¶
 				  "{PPCLibraries}PPCCRuntime.o" ¶
-				  ":::::R"
+				  "{SharedLibraries}StdCLib" ¶
+				  ":::::R"  
 
 
 ### Default Rules ### 
 
 .o  Ä  .c  {¥MondoBuild¥}
 	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
-
 
 
 ### Build Rules ###
@@ -68,7 +86,7 @@ LibFiles-PPC    =  ¶
     end
 # Build the vfonts module	
 	PPCLink ¶
-		-o {LibDir}:{Dlib}Lib ¶
+		-o {LibDir}:{DLib}Lib ¶
 		{ObjFiles-PPC} ¶
 		{LibFiles-PPC} ¶
 		{Sym-PPC} ¶
@@ -76,18 +94,26 @@ LibFiles-PPC    =  ¶
 		-t 'shlb' ¶
 		-c '????' ¶
 		-xm s ¶
-		-@export expvar     
+		-@export expvar
 # Removing mass
-#    Delete   Å.x
-#	Delete   Å.o 
-#    Delete :expvar
+#    Delete   :Å.x
+#	Delete   :Å.o 
+#    Delete   :expvar
 	
 ### Required Dependencies ###
 
-nls.o  Ä  nls.c
-
-
-
+dblcen.o  Ä dblcen.c
+distance.o  Ä distance.c
+hclust-utils.o Ä hclust-utils.c   
+init.o  Ä init.c
+hclust.o  Ä hclust.c
+kmns.o  Ä kmns.c
+# f2c dependencies
+hclust.c Ä hclust.f
+	 {MacF2C} -wait {FortFiles}  
+hclust.c Ä hclust.f
+kmns.c Ä kmns.f
+	
 ### Optional Dependencies ###
 ### Build this target to generate "include file" dependencies. ###
 
