@@ -394,6 +394,8 @@ BUG FIXES
     o   Using write.table() setting the dec argument and with no
 	numeric columns failed.  (PR#3532)
 
+    o   Registered group generics were not being used. (PR#3536)
+
 
 
 
