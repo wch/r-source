@@ -2396,6 +2396,10 @@ There are optional arguments specified as
 @code{\link[@var{pkg}]@{@var{foo}@}} and
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
 @var{pkg} with topic (file?) @var{foo} and @var{bar} respectively.
+These are rarely needed, perhaps to refer to not-yet-installed packages
+(but there the HTML help will resolve the link at run time) or in the
+normally undesirable event that more than one package offers help on a
+topic.
 
 @node Mathematics, Insertions, Cross-references, Writing R documentation files
 @section Mathematics
