@@ -2151,7 +2151,7 @@ Flexible Mixture Modeling: a general framework for finite mixtures of
 regression models using the EM algorithm.
 @item foreign
 Functions for reading and writing data stored by statistical software
-like Minitab, SAS, SPSS, Stata, etc.  @emph{Recommended}.
+like Minitab, S, SAS, SPSS, Stata, Systat, etc.  @emph{Recommended}.
 @item fork
 Functions for handling multiple processes: simple wrappers around the
 Unix process management API calls.
@@ -2555,6 +2555,8 @@ An interface for the Ordinary Differential Equation (ODE) solver lsoda.
 ODEs are expressed as R functions.
 @item orientlib
 Representations, conversions and display of orientation SO(3) data.
+@item ouch
+Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
 @item oz
 Functions for plotting Australia's coastline and state boundaries.
 @item pamr
@@ -2878,8 +2880,6 @@ with essentialy the same cost as a single SVM fit.
 Contains functions for fitting simultaneous systems of equations using
 Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
 Three-Stage Least Squares (3SLS).
-@item systat
-Functions for reading data stored by Systat.
 @item tapiR
 Tools for accessing (UK) parliamentary information in R.
 @item taskPR

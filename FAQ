@@ -1922,7 +1922,7 @@ distributions of R.)
 
 *foreign*
      Functions for reading and writing data stored by statistical software
-     like Minitab, SAS, SPSS, Stata, etc.  _Recommended_.
+     like Minitab, S, SAS, SPSS, Stata, Systat, etc.  _Recommended_.
 
 *fork*
      Functions for handling multiple processes: simple wrappers around the
@@ -2416,6 +2416,9 @@ distributions of R.)
 *orientlib*
      Representations, conversions and display of orientation SO(3) data.
 
+*ouch*
+     Ornstein-Uhlenbeck models for phylogenetic comparative hypotheses.
+
 *oz*
      Functions for plotting Australia's coastline and state boundaries.
 
@@ -2786,9 +2789,6 @@ distributions of R.)
      Contains functions for fitting simultaneous systems of equations using
      Ordinary Least Sqaures (OLS), Two-Stage Least Squares (2SLS), and
      Three-Stage Least Squares (3SLS).
-
-*systat*
-     Functions for reading data stored by Systat.
 
 *tapiR*
      Tools for accessing (UK) parliamentary information in R.
