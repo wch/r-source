@@ -172,10 +172,10 @@ none
 
 Directory:  incoming
 
-* PR# 526 *
-Subject: INSTALL_SCRIPT during installation
-From: "Johnny C. Lam" <lamj@stat.cmu.edu>
-Date: Wed, 19 Apr 2000 11:27:52 -0400
+* PR# 527 *
+Subject: Comments on Win95 R Distribution
+From: Art Salwin <salwin@mitretek.org>
+Date: Mon, 24 Apr 2000 14:38:42 -0400
 * PR# 520 *
 Subject: Rd2Sd conversion: files
 From: Sergei Zuyev <sergei@stams.strath.ac.uk>
@@ -192,10 +192,6 @@ Date: Mon, 17 Apr 2000 11:52:28 +0100
 Subject: akima core dumps on loading
 From: santini@dsi.unimi.it
 Date: Mon, 17 Apr 2000 11:30:41 +0200 (MET DST)
-* PR# 525 *
-Subject: Windows-specific: image(z,zlim=()) gives bogus colors outside range
-From: Ben Bolker <ben@zoo.ufl.edu>
-Date: Wed, 19 Apr 2000 10:20:12 -0400 (EDT)
 * PR# 524 *
 Subject: strheight() crashes without opened device
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
@@ -204,3 +200,11 @@ Date: Tue, 18 Apr 2000 19:42:00 +0200
 Subject: Maths in R documentation
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Mon, 17 Apr 2000 18:18:55 +0200 (CEST)
+* PR# 526 *
+Subject: INSTALL_SCRIPT during installation
+From: "Johnny C. Lam" <lamj@stat.cmu.edu>
+Date: Wed, 19 Apr 2000 11:27:52 -0400
+* PR# 525 *
+Subject: Windows-specific: image(z,zlim=()) gives bogus colors outside range
+From: Ben Bolker <ben@zoo.ufl.edu>
+Date: Wed, 19 Apr 2000 10:20:12 -0400 (EDT)
