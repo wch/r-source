@@ -192,6 +192,8 @@ BUG FIXES
     o   Rd2contents assumed the \name field was the file name, so
 	searches could lead to non-existent links.
 
+    o   Assigning functions to list elements is not longer disallowed.
+
 
 	**************************************************
 	*						 *
