@@ -112,6 +112,9 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
 
+    if((R_Home = R_HomeDir()) == NULL)
+	R_Suicide("R home directory is not defined");
+
     process_global_Renviron();
 
 #ifdef HAVE_TIMES
@@ -208,9 +211,6 @@ int Rf_initialize_R(int ac, char **av)
     R_Consolefile = stdout;
     R_Outputfile = stdout;
     R_Sinkfile = NULL;
-    if((R_Home = R_HomeDir()) == NULL) {
-	R_Suicide("R home directory is not defined");
-    }
 /*
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.
