@@ -132,6 +132,7 @@ BUG FIXES
     o	boxplot(*, range = 0) and boxplot.stats(*, coef = 0) now
 	don't return outliers anymore (PR#917).
 
+    o   segmentation fault with tmp[[1,]] (PR#904)
 
 
 		CHANGES IN R VERSION 1.2.2
