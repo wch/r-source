@@ -1,0 +1,95 @@
+LIBLOC=../../../library
+LIBINDEX=$(wildcard $(LIBLOC)/LibIndex)
+DPKG=$(LIBLOC)/$(PKG)
+SPKG=.
+
+ifeq ($(strip $(DLLNM)),)
+  DLLNAME=$(PKG)
+else
+  DLLNAME=$(DLLNM)
+endif
+#this can be overwriten by the caller
+SRC = src
+
+#source directory
+SSPKG=$(SPKG)/$(SRC)
+
+LSOURCES=$(wildcard $(SSPKG)/*.c $(SSPKG)/*.f)
+ifeq ($(strip $(LSOURCES)),)
+  DYNLIB=
+else
+  LOBJS=$(foreach i,$(LSOURCES),$(basename $i).o)
+  DYNLIB=$(DPKG)/libs/$(DLLNAME).dll
+endif
+
+# data
+DSOURCES=$(wildcard $(SPKG)/data/*)
+ifeq ($(strip $(DSOURCES)),)
+  DATA= 
+else
+  DATA=$(DPKG)/data
+endif
+
+# R
+PKGRFILES0=$(wildcard $(SPKG)/R/*.[RSqrs])
+RWIN32=$(wildcard $(SPKG)/R/*.gnw.[rR]) 
+ifeq ($(strip RWIN32),)
+  PKGRFILES=$(PKGRFILES0)
+else
+  R1 = $(foreach i,$(RWIN32),$(basename $(basename $i)))
+  R2 = $(foreach i,$(R1),$i.r $i.R $i.unix.r $i.unix.R $i.win.r $i.win.R $i.mac.r $i.mac.R)
+  PKGRFILES=$(filter-out $(R2),$(PKGRFILES0)) 
+endif
+
+# Others
+OFILES0=$(wildcard $(SPKG)/*)
+OFILES1= DESCRIPTION INDEX TITLE
+OFILES-NO= R r data man src src-c Makefile.in inst check orig\
+	DESCRIPTION INDEX TITLE index title
+OFILES3=$(foreach i, $(OFILES1), $(SPKG)/$i)
+OFILES2=$(foreach i, $(OFILES-NO), $(SPKG)/$i)
+OFILES=$(filter-out $(OFILES2),$(OFILES0))
+INSTFILES=$(wildcard $(SPKG)/inst/*)
+
+
+all:  $(DPKG)/zzzz  $(DPKG)/R/$(PKG)  $(DATA) $(DYNLIB)
+
+include ../../gnuwin32/MkRules
+
+SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
+
+$(DPKG)/R/$(PKG): $(PKGRFILES)
+ifneq ($(strip $(PKGRFILES)),)
+	$(MKDIR) -p $(DPKG)/R
+	$(CAT) $(PKGRFILES) | sed $(SEDP)  > $@
+else
+	@$(ECHO) "  no R files in this package"
+endif
+
+
+# This fails if DESCRIPTION.. doesn't exist.
+# $(DPKG)/zzzz: $(OFILES3) $(OFILES)
+# On the other hand, ...zzzz is never created so
+$(DPKG)/zzzz: 
+	@$(ECHO) "---------- Making package $(PKG) ------------"
+	$(MKDIR) -p $(DPKG)
+ifeq ($(strip $(INSTFILES)),)
+	-$(CP) -r  $(OFILES3) $(OFILES) $(DPKG)/
+else
+	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
+endif
+
+$(DATA): $(DSOURCES)
+	$(MKDIR) -p $(DATA)
+	$(CP) $^ $@
+
+
+$(DYNLIB): $(SSPKG)/$(DLLNAME).dll
+	$(MKDIR) -p $(DPKG)/libs
+	$(CP) $^ $@
+	
+$(SSPKG)/$(DLLNAME).dll: FORCE
+	$(MAKE) -C $(SSPKG) -f ../../../gnuwin32/MakeDll DLLNAME=$(DLLNAME)
+
+FORCE:
+
