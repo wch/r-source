@@ -1,4 +1,4 @@
-gammaC <- function(x) .Internal(gammaCody(x))
+gammaCody <- function(x) .Internal(gammaCody(x))
 
 besselI <- function(x, nu, expon.scaled = FALSE)
 {
