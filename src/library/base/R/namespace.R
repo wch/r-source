@@ -157,17 +157,19 @@ loadNamespace <- function (package, lib.loc = NULL,
         # process imports
         for (i in nsInfo$imports) {
             if (is.character(i))
-                namespaceImport(ns, loadNamespace(i, lib.loc, keep.source))
+                namespaceImport(ns, loadNamespace(i, c(lib.loc, .libPaths()),
+                                                  keep.source))
             else
-                namespaceImportFrom(ns, loadNamespace(i[[1]], lib.loc,
-                                                      keep.source),
-                                    i[[2]])
+                namespaceImportFrom(ns,
+                                    loadNamespace(i[[1]],
+                                                  c(lib.loc, .libPaths()),
+                                                  keep.source), i[[2]])
         }
 
         # load the code
         env <- asNamespace(ns)
         codeFile <- file.path(package.lib, package, "R", package)
-        if (file.exists(codeFile)) 
+        if (file.exists(codeFile))
             sys.source(codeFile, env, keep.source = keep.source)
         else warning(paste("Package ", fQuote(package), "contains no R code"))
 
@@ -209,7 +211,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         on.exit()
 
         ns
-    }                               
+    }
 }
 topenv <- function(envir = parent.frame()) {
     while (! is.null(envir)) {
