@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003 The R Development Core Team
+ *                2003-6 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,8 +28,16 @@
 #include <R_ext/GraphicsDevice.h>
 #include <R_ext/GraphicsEngine.h>
 
-/* All lattice type names are prefixed with an "L" 
- * All lattice global variable names are prefixe with an "L_" 
+#include <Rinternals.h>
+#ifdef ENABLE_NLS
+#include <libintl.h>
+#define _(String) dgettext ("grid", String)
+#else
+#define _(String) (String)
+#endif
+
+/* All grid type names are prefixed with an "L" 
+ * All grid global variable names are prefixed with an "L_" 
  */
 
 /* This information is stored with R's graphics engine so that 

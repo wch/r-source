@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003 The R Development Core Team
+ *                2003-5 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -255,7 +255,7 @@ double pureNullUnitValue(SEXP unit, int index)
 	    }
 	}
 	else 
-	    error("Unimplemented unit function");
+	    error(_("Unimplemented unit function"));
     } else if (isUnitList(unit)) {
 	result = unitValue(VECTOR_ELT(unit, index), 0);
     } else
@@ -395,7 +395,7 @@ int pureNullUnitArithmetic(SEXP unit, int index, GEDevDesc *dd) {
 	}
     } 
     else 
-	error("Unimplemented unit function");
+	error(_("Unimplemented unit function"));
     return result;
 }
 
@@ -754,7 +754,7 @@ double transform(double value, int unit, SEXP data,
 	result = evaluateNullUnit(result, thisCM, nullLMode, nullAMode);
 	break;
     default:
-	error("Illegal unit or unit not yet implemented");
+	error(_("Illegal unit or unit not yet implemented"));
     }
     return result;
 }
@@ -1037,7 +1037,7 @@ double transformXArithmetic(SEXP x, int index,
 	}
     }
     else 
-	error("Unimplemented unit function");
+	error(_("Unimplemented unit function"));
     return result;
 }
 
@@ -1117,7 +1117,7 @@ double transformYArithmetic(SEXP y, int index,
 	}
     }
     else 
-	error("Unimplemented unit function");
+	error(_("Unimplemented unit function"));
     return result;
 }
 
@@ -1197,7 +1197,7 @@ double transformWidthArithmetic(SEXP width, int index,
 	}
     }
     else 
-	error("Unimplemented unit function");
+	error(_("Unimplemented unit function"));
     return result;
 }
 
@@ -1277,7 +1277,7 @@ double transformHeightArithmetic(SEXP height, int index,
 	}
     }
     else 
-	error("Unimplemented unit function");
+	error(_("Unimplemented unit function"));
     return result;
 }
 
@@ -1470,7 +1470,7 @@ double transformFromINCHES(double value, int unit,
     case L_GROBHEIGHT:
     case L_NULL:
     default:
-	error("Illegal unit or unit not yet implemented");
+	error(_("Illegal unit or unit not yet implemented"));
     }
     return result;
 }
@@ -1578,7 +1578,7 @@ int convertUnit(SEXP unit, int index)
 	i += 1;
     }
     if (result < 0)
-	error("Invalid unit");
+	error(_("Invalid unit"));
     return result;
 }
 	    
@@ -1594,10 +1594,10 @@ SEXP validUnits(SEXP units)
 		INTEGER(answer)[i] = convertUnit(units, i);
 	    UNPROTECT(1);
 	} else {
-	    error("Units must be character");
+	    error(_("Units must be character"));
 	}
     } else {
-	error("Units must be of length > 0");
+	error(_("Units must be of length > 0"));
     }
     return answer;
 }

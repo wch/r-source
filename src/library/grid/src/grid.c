@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 2001-3 Paul Murrell
- *                2003 The R Development Core Team
+ *                2003-5 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -210,7 +210,7 @@ SEXP doSetViewport(SEXP vp,
     else if (viewportClip(vp)) {
 	double rotationAngle = REAL(viewportRotation(vp))[0];
 	if (rotationAngle != 0)
-	    warning("Cannot clip to rotated viewport");
+	    warning(_("Cannot clip to rotated viewport"));
 	else {
 	    /* Calculate a clipping region and set it
 	     */
@@ -640,12 +640,12 @@ SEXP L_unsetviewport(SEXP n)
      */
     SEXP newvp = VECTOR_ELT(gvp, PVP_PARENT);
     if (isNull(newvp))
-	error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+	error(_("Cannot pop the top-level viewport (grid and graphics output mixed?)"));
     for (i = 1; i < INTEGER(n)[0]; i++) {
 	gvp = newvp;
 	newvp = VECTOR_ELT(gvp, PVP_PARENT);
 	if (isNull(newvp))
-	    error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+	    error(_("Cannot pop the top-level viewport (grid and graphics output mixed?)"));
     }
     /* 
      * Remove the parent from the child
@@ -738,12 +738,12 @@ SEXP L_upviewport(SEXP n)
     SEXP gvp = gridStateElement(dd, GSS_VP);
     SEXP newvp = VECTOR_ELT(gvp, PVP_PARENT);
     if (isNull(newvp))
-	error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+	error(_("Cannot pop the top-level viewport (grid and graphics output mixed?)"));
     for (i = 1; i < INTEGER(n)[0]; i++) {
 	gvp = newvp;
 	newvp = VECTOR_ELT(gvp, PVP_PARENT);
 	if (isNull(newvp))
-	    error("Cannot pop the top-level viewport (grid and graphics output mixed?)");
+	    error(_("Cannot pop the top-level viewport (grid and graphics output mixed?)"));
     }
     /* Get the current device size 
      */
@@ -1204,7 +1204,7 @@ SEXP L_layoutRegion(SEXP layoutPosRow, SEXP layoutPosCol) {
      * Only proceed if there is a layout currently defined
      */
     if (isNull(viewportLayout(currentvp)))
-	error("There is no layout defined");
+	error(_("There is no layout defined"));
     /* 
      * The result is a numeric containing left, bottom, width, and height
      */
@@ -1781,7 +1781,7 @@ static SEXP gridCircle(SEXP x, SEXP y, SEXP r, Rboolean draw)
 	 * A negative radius is invalid
 	 */
 	if (rr < 0)
-	    error("Invalid circle radius (must be non-negative)");
+	    error(_("Invalid circle radius (must be non-negative)"));
 	if (R_FINITE(xx) && R_FINITE(yy) && R_FINITE(rr)) {
 	    if (draw) {
                 /* The graphics engine only takes device coordinates

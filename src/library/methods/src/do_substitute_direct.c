@@ -3,6 +3,7 @@
 #include <Rdefines.h>
 #define NewEnvironment		Rf_NewEnvironment
 #define substitute		Rf_substitute
+#include "methods.h"
 
 extern SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho);
 
@@ -19,7 +20,7 @@ SEXP do_substitute_direct(SEXP f, SEXP env)
     else if (TYPEOF(env) == LISTSXP)
 	env = NewEnvironment(R_NilValue, duplicate(env), R_NilValue);
     if(TYPEOF(env) != ENVSXP)
-	error("invalid list for substitution");
+	error(_("invalid list for substitution"));
     PROTECT(env);
     PROTECT(f);
     s = substitute(f, env);

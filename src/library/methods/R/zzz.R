@@ -9,6 +9,7 @@
   ##  - define the classes needed to represent methods
   function(libname, pkgname, where)
 {
+    .C("methods_init", file.path(libname, pkgname), PACKAGE="methods")
     if(missing(where)) {
         where <- match(paste("package:", pkgname, sep=""), search())
         if(is.na(where)) {
