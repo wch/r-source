@@ -108,10 +108,6 @@ Subject: Formatting in formatC and format
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Sun, 28 Feb 1999 08:53:34 +0000 (GMT)
 --Documentation and ``merge'' of format() and formatC() would be desired - MM
-* PR# 248 *
-Subject: scan() + error interferes with count.fields() in some cases
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Fri, 13 Aug 1999 17:44:48 +0200
 
 Directory:  Installation
 
@@ -283,10 +279,6 @@ Date:          Tue, 23 Nov 1999 15:14:23 CET (+0100)
 Subject: Re: [R] problems with postscript device
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 23 Nov 1999 16:47:45 +0100 (MET)
-* PR# 337 *
-Subject: as.name() is not idempotent
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 23 Nov 1999 17:42:25 +0100 (MET)
 * PR# 340 *
 Subject: "outer" argument in mtext
 From: Douglas Bates <bates@stat.wisc.edu>
@@ -299,10 +291,6 @@ Date: Wed, 24 Nov 1999 00:18:55 -0500
 Subject: segfault in garbage collection
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Thu, 25 Nov 1999 17:54:15 +0100
-* PR# 345 *
-Subject: Bug in version 65.0
-From: mhdelsemme@ulg.ac.be
-Date: Fri, 26 Nov 1999 10:54:23 +0100 (MET)
 * PR# 346 *
 Subject: .Rprofile results in corruption of .RData?
 From: Rashid Nassar <rnassar@duke.edu>
@@ -311,10 +299,6 @@ Date: Fri, 26 Nov 1999 20:59:53 -0500 (EST)
 Subject: 你离不开“乔登”
 From: "华立服务" <hualicn@cmmail.com>
 Date: Tue, 23 Nov 1999 12:31:35
-* PR# 348 *
-Subject: portfolio.optim.default, Packages tseries quadprog
-From: steland@euv-frankfurt-o.de
-Date: Sat, 27 Nov 1999 11:30:20 +0100 (MET)
 * PR# 349 *
 Subject: size of text and numbers in graphs
 From: "Wolfgang Koller" <koller2@fgr.wu-wien.ac.at>
@@ -323,22 +307,12 @@ Date: Sat, 27 Nov 1999 17:03:53 CET (+0100)
 Subject: rstandard forgotten?
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sat, 27 Nov 1999 12:41:09 -0500 (EST)
-* PR# 352 *
-Subject: image stops detecting wrong sized z matrix
-From: albrecht.gebhardt@uni-klu.ac.at
-Date: Tue, 30 Nov 1999 14:28:10 +0100 (MET)
-* PR# 354 *
-Subject: odd result of length() with factor arguments with NA
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Tue, 30 Nov 1999 21:11:24 -0500 (EST)
 * PR# 355 *
 Subject: PRIVATE: Printing Problems
 From: mlamias@umich.edu
 Date: Wed, 1 Dec 1999 08:05:05 +0100 (MET)
-* PR# 356 *
-Subject: Error in plot.aov()
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Thu, 02 Dec 1999 13:42:21 +1100
+--It's a bit hard to deal with this. There is no rw0652, but rw0651 seems to
+--work for other people. If it was rw0642, who knows now?
 * PR# 357 *
 Subject: filled.contour
 From: steuer@statistik.uni-dortmund.de
@@ -347,10 +321,6 @@ Date: Fri, 3 Dec 1999 15:32:29 +0100 (MET)
 Subject: [[ substitution
 From: clive@bell-labs.com
 Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
-* PR# 359 *
-Subject: Inconsistent messages with [[ list indexing
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sat, 4 Dec 1999 14:13:07 +0000 (GMT)
 * PR# 361 *
 Subject: "function" function -- infinite loops and bus error [not user problem]
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -379,11 +349,3 @@ Date: Wed, 8 Dec 1999 12:50:44 +0100 (MET)
 Subject: plot math - segfault and "frac", "^" bug(s)..
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 8 Dec 1999 17:27:46 +0100 (MET)
-* PR# 369 *
-Subject: R for Macintosh?  Where?
-From: rbl@hal.EPBI.CWRU.Edu
-Date: Thu, 9 Dec 1999 14:47:31 +0100 (MET)
-* PR# 370 *
-Subject:  	estonly confuses examples 
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 9 Dec 1999 13:54:06 GMT
