@@ -46,7 +46,7 @@ USER-VISIBLE CHANGES
     o   substring() and substring()<- do nothing silently on a
         character vector of length 0, rather than generating an
         error.  This is consistent with other functions and with S.
- 
+
     o	For compatibility with S4, any arithmetic operation using a
 	zero-length vector has a zero-length result.  (This was
 	already true for logical operations, which were compatible
@@ -62,6 +62,8 @@ USER-VISIBLE CHANGES
 	variable `R_ENVIRON' if set or `R_HOME/etc/Renviron.site' if
 	not), *and* then for a user `.Renviron' file in the current or
 	the user's home directory.
+
+    o	former stars(*, colors = v) must now be stars(*, col.segments = v).
 
 
 NEW FEATURES
@@ -349,6 +351,8 @@ NEW FEATURES
 	stars() now returns the locations invisibly.
 
     o	contour() is now generic.
+
+    o	rle() now returns a class, has a print method and an inverse.
 
 
 DOCUMENTATION CHANGES
