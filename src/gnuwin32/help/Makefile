@@ -4,33 +4,36 @@ PERL=perl
 CAT=cat
 CP=cp
 RM=rm
+MKDIR=mkdir
 
 RHOME=$(shell cd ../../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 PKGDIR=../../library
 RLIB=$(RHOME)/library
 
+# need not have HTML installed when building packages
 indices:
+	@$(MKDIR) -p $(RHOME)/doc/html
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
 
-pkg-% help-%: 
+pkg-% help-%:
+	@$(MKDIR) -p $(RHOME)/doc/html
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -txt -html -example -latex $(PKGDIR)/$* $(RLIB)
 
-chm-%: 
+chm-%:
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -chm $(PKGDIR)/$* $(RLIB)
 # hhc always gives an error code
 	$(MAKE) -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.chm
-	mkdir -p $(RLIB)/$*/chtml
+	$(MKDIR) -p $(RLIB)/$*/chtml
 	$(CP) $(PKGDIR)/$*/chm/$*.chm $(RLIB)/$*/chtml
 
 winhlp-%: chm-%
 	$(MAKE) -C $(PKGDIR)/$*/chm -f $(RHOME)/src/gnuwin32/help/Makefile $*.hlp
-	mkdir -p $(RLIB)/$*/winhlp
+	$(MKDIR) -p $(RLIB)/$*/winhlp
 	$(CP) $(PKGDIR)/$*/chm/$*.cnt $(PKGDIR)/$*/chm/$*.hlp $(RLIB)/$*/winhlp
 
-# need not have HTML installed when building packages
 contents-%:
 	$(PERL) Rd2contents $(PKGDIR)/$* $(RLIB)/$*/CONTENTS
-	@mkdir -p $(RHOME)/doc/html/search
+	@$(MKDIR) -p $(RHOME)/doc/html/search
 	$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 	PERL5LIB=$(RHOME)/share/perl $(PERL) build.help ${DOS} -htmllists
 
