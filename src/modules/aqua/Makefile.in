@@ -19,7 +19,7 @@ OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = AquaReadMe.txt  Raete.r Makefile.in Info.plist.in \
-  CHANGES RAqua-FAQ.html $(SOURCES) $(HEADERS)
+  CHANGES RMacOSX-FAQ.html RMacOSX-FAQ.texi $(SOURCES) $(HEADERS)
 
 SUBDIRS_WITH_NO_BUILD = Contents
 
