@@ -17,7 +17,7 @@ DISTFILES = Common.R Makefile.in Rprofile.mac Rprofile.unix Rprofile.win
 ## Should be EASY
 
 all: $(srcdir)/Common.R $(srcdir)/Rprofile.unix
-	@echo "Building system startup profile"
+	@echo "building system startup profile"
 	@cat $(srcdir)/Common.R $(srcdir)/Rprofile.unix \
 		> $(top_builddir)/library/base/R/Rprofile
 
