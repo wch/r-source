@@ -13,9 +13,9 @@
 \details{
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
-  first directory given in \code{\$R\_LIBS} if this is set and non-null,
-  and to the default library tree (which is rooted at
-  \file{\$R\_HOME/library}) otherwise.
+  first directory given in the environment variable \code{R\_LIBS} if
+  this is set and non-null, and to the default library tree (which is
+  rooted at \file{\$R\_HOME/library}) otherwise.
 
   To install into the library tree \code{lib}, use
   \code{R CMD INSTALL -l lib pkgs}.
