@@ -19,7 +19,9 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
 }
 \arguments{
  \item{fit}{fitted model, usually the result of a fitter like \code{\link{lm}}.}
- \item{scale}{optional numeric specifying the scale parameter of the model.}
+ \item{scale}{optional numeric specifying the scale parameter of the
+     model, see \code{scale} in \code{\link{step}}.
+ }
  \item{k}{numeric specifying the ``weight'' of the
      \emph{equivalent degrees of freedom} (\eqn{\equiv}{=:}\code{edf})
      part in the AIC formula.}
@@ -34,15 +36,14 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
     parameters for usual parametric models) of \code{fit}.
 }
 \details{For generalized linear models (i.e., for \code{\link{lm}},
-	\code{\link{aov}}, and \code{\link{glm}}), \eqn{-2\log L} is
-	the \emph{deviance}, as computed by \code{\link{deviance}(fit)}.
-
-	\code{k = 2} corresponds to the traditional AIC, using \code{k =
-	    log(n)} provides the BIC (Bayes IC) instead.
-
-	%% what exactly should happen for  scale = 0 ?
-
-	%% what (the same) for  missing scale ?
+    \code{\link{aov}}, and \code{\link{glm}}), \eqn{-2\log L} is
+    the \emph{deviance}, as computed by \code{\link{deviance}(fit)}.
+    
+    \code{k = 2} corresponds to the traditional AIC, using \code{k =
+	log(n)} provides the BIC (Bayes IC) instead.
+    
+    For further information, particularly about \code{scale}, see
+    \code{\link{step}}.
 }
 \note{These functions are used in \code{\link{add1}},
     \code{\link{drop1}} and \code{\link{step}} and that may be their
@@ -50,7 +51,7 @@ extractAIC.survreg(fit, scale, k = 2, \dots)
 }
 \value{
   A numeric vector of length 2, giving
-  \item{edf}{the ``\bold{e}quivalent \bold{d}egrees of \bold{f}reedom
+  \item{edf}{the ``\bold{e}quivalent \bold{d}egrees of \bold{f}reedom''
   of the fitted model \code{fit}.}
   \item{AIC}{the (generalized) Akaike Information Criterion for \code{fit}.}
 }
