@@ -1,6 +1,6 @@
 ##-*- R -*- (emacs font-lock)
-##--- Here are subroutines/functions that we want to be linked into R.binary
-##--- but are only called
+## Here are subroutines/functions that we want to be linked into the R
+## binary but are only called
 ##	either as .C() or .Fortran() in R
 ##	or     by e.g. mva.so or modreg.so when that one is loaded.
 ##
@@ -70,4 +70,3 @@ C_FUNCTION(Rsockclose)
 C_FUNCTION(Rsockread)
 C_FUNCTION(Rsockwrite)
 C_FUNCTION(Rsockfork)
-

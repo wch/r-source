@@ -1,24 +1,24 @@
 #!/bin/sh
 # Shell wrapper for R executable.
 
-R_HOME=${R_HOME-R_HOME_DIR}
+: ${R_HOME=R_HOME_DIR}
 export R_HOME
 
-R_BINARY="R.binary"
+R_BINARY="R.X11"
 
 # Default printer paper size
 # Choose one of the following:
 # R_PAPERSIZE="a4"
 # R_PAPERSIZE="letter"
 # R_PAPERSIZE="none"
-R_PAPERSIZE=${R_PAPERSIZE:-@R_PAPERSIZE@}
+: ${R_PAPERSIZE=@R_PAPERSIZE@}
 export R_PAPERSIZE
 
 # Default print command
 # Choose one of the following:
 # R_PRINTCMD="lpr"
 # R_PRINTCMD="lp"
-R_PRINTCMD=${R_PRINTCMD:-@R_PRINTCMD@}
+: ${R_PRINTCMD=@R_PRINTCMD@}
 export R_PRINTCMD
 
 # Default LaTeX and dvips commands
@@ -27,12 +27,12 @@ R_DVIPSCMD=${R_DVIPSCMD:-${DVIPS:-@DVIPS@}}
 export R_LATEXCMD R_DVIPSCMD
 
 # Default zip/unzip commands
-R_UNZIPCMD=${R_UNZIPCMD:-@R_UNZIPCMD@}
-R_ZIPCMD=${R_ZIPCMD:-@R_ZIPCMD@}
+: ${R_UNZIPCMD=@R_UNZIPCMD@}
+: ${R_ZIPCMD=@R_ZIPCMD@}
 export R_UNZIPCMD R_ZIPCMD
 
 # Default environment file
-R_ENVIRON=${R_ENVIRON:-"${HOME}/.Renviron"}
+: ${R_ENVIRON="${HOME}/.Renviron"}
 USE_R_ENVIRON=true
 
 # Argument loop

@@ -50,12 +50,16 @@ install: all installdirs
 	    $(INSTALL_DATA) $${f} $(rhome); \
 	  done)
 	@echo "Installing executables ..."
-	@$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
+	@$(INSTALL_PROGRAM) bin/R.X11 $(rhome)/bin
+	@if test -x bin/R.gnome; then \
+	  $(INSTALL_PROGRAM) bin/R.gnome $(rhome)/bin; \
+	fi
 	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(rhome)/bin/R
 	@cat bin/R | sed "s@R_HOME=.*@R_HOME=$(rhome)@" > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
 	@for f in `ls bin/* | grep -v '^bin/R\**$$' \
-                            | grep -v '^bin/R.binary\**$$'`; do \
+                            | grep -v '^bin/R.X11\**$$' \
+                            | grep -v '^bin/R.gnome\**$$'`; do \
 	  $(INSTALL) $${f} $(rhome)/bin; \
 	done
 	@for f in Rd2txt Rdconv Rdindex Sd2Rd; do \

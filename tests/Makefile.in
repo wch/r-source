@@ -32,13 +32,20 @@ TESTout = $(TESTsrc:.R=.Rout)
 	  (mv $@ $@.fail && exit 1)
 	@echo " OK"
 
-test-All: test-Examples test-Specific
+all: Makefile test-All
+
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
+	cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+test-All: Makefile test-Examples test-Specific
 
 test-Examples:
 	@cd Examples && $(MAKE) $@
 test-Specific: $(TESTout)
 
-stamp-R:: $(top_builddir)/bin/R.binary $(top_builddir)/library/base/R/base
+stamp-R:: $(top_builddir)/bin/R.X11 $(top_builddir)/library/base/R/base
 	@cd $(top_builddir) && $(MAKE) R
 	@touch $@
 
