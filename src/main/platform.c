@@ -1113,7 +1113,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("bzip2"));
-#if defined(HAVE_BZLIB) || defined(Unix)
+#if defined(HAVE_BZLIB) || defined(Unix) || defined(Win32)
     LOGICAL(ans)[i++] = TRUE;
 #else
     LOGICAL(ans)[i++] = FALSE;
