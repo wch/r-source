@@ -420,3 +420,11 @@ Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
 Subject: detach(package:base) kills R
 From: david.heffernan@orcina.com
 Date: Thu, 17 Jan 2002 09:54:14 +0100 (MET)
+* PR# 1274 *
+Subject: data(): Error in FUN(X[[2]], ...) : subscript out of bounds
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Tue, 22 Jan 2002 10:24:34 +0100 (CET)
+* PR# 1275 *
+Subject: compile problem with bessel_i.c on IRIX64 flexor 6.5 10100655 IP35 (uname -a)
+From: Walter Tautz <wtautz@math.uwaterloo.ca>
+Date: Tue, 22 Jan 2002 10:05:20 -0500 (EST)
