@@ -3,6 +3,7 @@
 \usage{
 noquote(obj)
 print.noquote(obj, \dots)
+obj[j]
 }
 \alias{noquote}
 \alias{[.noquote}
@@ -17,8 +18,10 @@ print.noquote(obj, \dots)
   \code{\link{class}} and object orientation.
 }
 \value{
-  \code{\link{noquote}} returns its argument as an object of class
-  \code{"noquote"}.
+  \code{noquote} returns its argument as an object of class
+  \code{"noquote"}.  The function \code{"[.noquote"} ensures that the
+  class is not lost by subsetting.
+
   For (default) printing, \code{print.noquote} will be used which prints
   characters \emph{without} quotes (\code{"\dots"}).
 }
@@ -27,7 +30,10 @@ print.noquote(obj, \dots)
 }
 \examples{
 letters
-noquote(letters)
+nql <- noquote(letters)
+nql
+nql[1:4] <- "oh"
+nql[1:12]
 
 cmp.logical <- function(log.v)
 {
