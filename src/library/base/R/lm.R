@@ -146,8 +146,8 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
 	ok <- w != 0
 	nok <- !ok
 	w <- w[ok]
-	x0 <- x[!ok, ]
-	x <- x[ok, ]
+	x0 <- x[!ok, , drop = FALSE]
+	x <- x[ok,  , drop = FALSE]
 	n <- nrow(x)
 	y0 <- if (ny > 1) y[!ok, , drop = FALSE] else y[!ok]
 	y  <- if (ny > 1) y[ ok, , drop = FALSE] else y[ok]
