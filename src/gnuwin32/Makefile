@@ -320,6 +320,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
+	$(RM) ../library/Recommended/*.tgz ../library/Recommended/*.tar.gz
 	$(RM) R.exp Rm.exp COPYRIGHTS
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
