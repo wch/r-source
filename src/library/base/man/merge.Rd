@@ -93,4 +93,5 @@ merge(authors, books, by.x = "surname", by.y = "name", all = TRUE)
  merge(authors, b2[7,], all.x = TRUE)
 }
 }
-\keyword{iteration}
+\keyword{array}
+\keyword{manip}
