@@ -228,6 +228,8 @@ BUG FIXES
     o	sum(), max(), min(), prod(), any() and all() were incorrectly
 	using partial matching for their na.rm argument.
 
+    o	kmeans() now ensures that the initial cluster centers it chooses
+	are distinct.
 
 
 
