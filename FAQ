@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-61, 2001-05-27
+Version 1.2-62, 2001-06-01
 Kurt Hornik
 
 
@@ -1147,6 +1147,9 @@ works, was published in the Journal of Statistical Software
 *RArcInfo*
      Functions to import Arc/Info V7.x coverages and data.
 
+*RandomFields*
+     Creating random fields using various methods.
+
 *RMySQL*
      An interface between R and the MySQL database system.
 
@@ -1585,6 +1588,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *strucchange*
      Various tests on structural change in linear regression models.
+
+*survival*
+     Functions for survival analysis.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
