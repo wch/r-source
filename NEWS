@@ -117,8 +117,8 @@ NEW FEATURES
     o	prompt()'s default and data.frame methods have a new 3rd argument
 	`name' allowing to use them more easily in scripts and loops.
 
-    o	rgb() has a new `int256' argument, allowing r,g,b in 0:255
-	efficiently and not error-prone.
+    o	rgb() has a new `maxColorValue' argument, allowing r,g,b in [0,M],
+	particularly in {0:255} efficiently and non-error-prone.
 
 
 DEPRECATED & DEFUNCT

@@ -149,7 +149,7 @@ typedef struct {
     double mkh;		/* Mark size in inches */
     int	pch;		/* Plotting character */
     int	ps;		/* Text & symbol pointsize */
-    double smo;		/* Curve smoothness */
+    int	smo;		/* Curve smoothness */
     double srt;		/* String Rotation */
     double tck;		/* Tick size as in S */
     double tcl;		/* Tick size in "lines" */
@@ -335,7 +335,7 @@ typedef struct {
  * currently existing device drivers:
  * FILE				driver name prefix
  * ----------------------	------------------
- * ../main/devPS.c		PS  _and_  XFig
+ * ../main/devPS.c		PS , PDF _and_  XFig
  * ../main/devPicTeX.c		PicTeX
  * ../modules/X11/devX11.c	X11
  * ../gnuwin32/devga.c		GA
@@ -390,6 +390,7 @@ unsigned int str2col(char *);
 char* col2name(unsigned int);
 
 unsigned int ScaleColor(double x);
+unsigned int CheckColor(int x);
 
 char* RGB2rgb(unsigned int, unsigned int, unsigned int);
 

@@ -1,5 +1,10 @@
-rgb <- function(red, green, blue, names=NULL)
-    .Internal(rgb(red, green, blue, names))
+rgb <- function(red, green, blue, names=NULL, maxColorValue = 1)
+{
+    ## in the first case, (r,g,b) are (coerced to) integer, otherwise double.
+    if(maxColorValue == 255)
+        .Internal(rgb256(red, green, blue, names))
+    else .Internal(rgb(red, green, blue, maxColorValue, names))
+}
 
 hsv <- function(h=1,s=1,v=1,gamma=1)
     .Internal(hsv(h,s,v,gamma))
