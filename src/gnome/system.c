@@ -107,7 +107,7 @@ static gboolean on_term_key_press_event (GtkWidget *widget,
 #ifdef HAVE_LIBREADLINE
 static void r_gnome_rl_lhandler (char *line);
 #endif /* HAVE_LIBREADLINE */
-static gboolean read_terminal (unsigned char *buf, int size);
+static gboolean read_terminal (unsigned char *buf, int size, int hist);
 static void R_ShowQueuedMessages ();
 static void showfiles_print (GtkWidget *widget, gpointer data);
 static void showfiles_top (GtkWidget *widget, gpointer data);
@@ -186,10 +186,13 @@ static void write_terminal (unsigned char *buf, int size)
     free (b);
 }
 
-static void incoming_keys (gpointer data, gint source,
+/* Filled in as data is read */
+struct _r_read_callback_data *data;
+
+static void incoming_keys (gpointer user_data, gint source,
 			   GdkInputCondition condition)
 {
-    int size;
+    int size, i;
     char buf[IO_BUF_SIZE];
     GtkWidget *term;
 
@@ -205,7 +208,20 @@ static void incoming_keys (gpointer data, gint source,
 	    term = glade_xml_get_widget (main_xml, "terminal");
 	    
 	    while ((size = read (source, buf, IO_BUF_SIZE)) > 0) {
-		zvt_term_feed (ZVT_TERM (term), buf, size);
+		for (i = 0; i < size && data->pos < data->size; i++, data->pos++) {
+		    if (buf[i] == '\r' || buf[i] == '\n') {
+			data->buf[data->pos] = '\n';
+			gtk_main_quit ();
+		    }
+		    else {
+			data->buf[data->pos] = buf[i];
+		    }
+		}
+
+		write_terminal (data->buf + data->pos - size, size);
+
+		if (data->pos == data->size)
+		    gtk_main_quit ();
 	    }
 	}
     fprintf (stderr, "  incoming_keys: end\n");
@@ -233,9 +249,6 @@ static void output_text (gpointer data, gint source,
     fprintf (stderr, "  output_text: end\n");
 }
 
-/* Filled in as data is read */
-struct _r_read_callback_data *data;
-
 static gboolean on_term_key_press_event (GtkWidget *widget,
 					 GdkEventKey *event,
 					 gpointer user_data)
@@ -259,7 +272,24 @@ static gboolean on_term_key_press_event (GtkWidget *widget,
 	    handled = TRUE;
 	    break;
 
-	case GDK_u:  /* kill line */
+	case GDK_d:  /* EOF */
+	case GDK_D:
+	    if (data->pos == 0) {
+		data->eof = TRUE;
+		gtk_main_quit ();
+	    }
+	    else {
+		gdk_beep ();
+	    }
+	    handled = TRUE;
+	    break;
+
+	case GDK_s:
+	case GDK_S:
+	    handled = TRUE;
+	    break;
+
+	case GDK_u:  /* kill line (only necessary if not using readline */
 	case GDK_U:
 #ifdef HAVE_LIBREADLINE
 	    if (!UsingReadline)
@@ -274,41 +304,29 @@ static gboolean on_term_key_press_event (GtkWidget *widget,
 		    handled = TRUE;
 		}
 	    break;
-
-	case GDK_d:  /* EOF */
-	case GDK_D:
-#ifdef HAVE_LIBREADLINE
-	    if (!UsingReadline)
-#endif /* HAVE_LIBREADLINE */
-		{
-		    if (data->pos == 0) {
-			data->eof = TRUE;
-			gtk_main_quit ();
-		    }
-		    else {
-			gdk_beep ();
-		    }
-		    handled = TRUE;
-		}
-	    break;
 	}
     }
 
 #ifdef HAVE_LIBREADLINE
-    if (!UsingReadline)
+    if (UsingReadline) {
+	if (handled) {
+	    if (ZVT_TERM (term)->scroll_on_keystroke) {
+		gtk_adjustment_set_value (ZVT_TERM (term)->adjustment,
+					  ZVT_TERM (term)->adjustment->upper -
+					  ZVT_TERM (term)->adjustment->page_size);
+	    }
+	    gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
+	    return TRUE;
+	}
+	else {
+	    return FALSE;
+	}
+    }
+    else
 #endif /* HAVE_LIBREADLINE */
 	{
 	    if (!handled) {
 		switch (event->keyval) {
-		case GDK_KP_Enter:
-		case GDK_ISO_Enter:
-		case GDK_3270_Enter:
-		case GDK_Return:
-		    zvt_term_feed (ZVT_TERM (term), "\r\n", 2);
-		    gtk_main_quit ();
-		    handled = TRUE;
-		    break;
-		    
 		case GDK_BackSpace:
 		case GDK_Delete:
 		case GDK_KP_Delete:
@@ -345,64 +363,17 @@ static gboolean on_term_key_press_event (GtkWidget *widget,
 		case GDK_Multi_key:
 		    handled = TRUE;
 		    break;
-
-		case GDK_KP_0:  case GDK_KP_1:  case GDK_KP_2:  case GDK_KP_3:
-		case GDK_KP_4:  case GDK_KP_5:  case GDK_KP_6:  case GDK_KP_7:
-		case GDK_KP_8:  case GDK_KP_9:
-		    c = '0' + (event->keyval - GDK_KP_0);
-		    data->buf [data->pos++] = c;
-		    zvt_term_feed (ZVT_TERM (term), &c, 1);
-		    handled = TRUE;
-		    break;
-		    
-		case GDK_KP_Add:
-		    c = '+';
-		    data->buf [data->pos++] = c;
-		    zvt_term_feed (ZVT_TERM (term), &c, 1);
-		    handled = TRUE;
-		    break;
-		    
-		case GDK_KP_Subtract:
-		case GDK_KP_Separator:
-		    c = '-';
-		    data->buf [data->pos++] = c;
-		    zvt_term_feed (ZVT_TERM (term), &c, 1);
-		    handled = TRUE;
-		    break;
-		    
-		case GDK_KP_Decimal:
-		    c = '.';	    
-		    data->buf [data->pos++] = c;
-		    zvt_term_feed (ZVT_TERM (term), &c, 1);
-		    handled = TRUE;
-		    break;
-		    
-		case GDK_KP_Multiply:
-		    c = '*';
-		    data->buf [data->pos++] = c;
-		    zvt_term_feed (ZVT_TERM (term), &c, 1);
-		    handled = TRUE;
-		    break;
-		    
-		case GDK_KP_Divide:
-		    c = '/';
-		    data->buf [data->pos++] = c;
-		    zvt_term_feed (ZVT_TERM (term), &c, 1);
-		    handled = TRUE;
-		    break;
 		    
 		case GDK_KP_Page_Up: case GDK_Page_Up:
 		case GDK_KP_Page_Down: case GDK_Page_Down:
+		    /* FIXME: do a PageUp/PageDown */
+		    handled = TRUE;
 		    break;
 		    
 		default:
-		    data->buf [data->pos++] = *(event->string);
 		    break;
 		}
 	    }
-
-	    if (data->pos == data->size)
-		gtk_main_quit ();
 	}
 
     if (handled) {
@@ -411,11 +382,13 @@ static gboolean on_term_key_press_event (GtkWidget *widget,
 				      ZVT_TERM (term)->adjustment->upper -
 				      ZVT_TERM (term)->adjustment->page_size);
 	}
-	gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
-	return TRUE;
+    }
+    else {
+	    write (ZVT_TERM (term)->vx->vt.keyfd, event->string, event->length);
     }
 
-    return FALSE;
+    gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
+    return TRUE;
 }
 
 #ifdef HAVE_LIBREADLINE
@@ -445,7 +418,7 @@ static void r_gnome_rl_lhandler (char *line)
  *  into buf.  The last two characters are set to "\n\0".  If
  *  (!R_Slave) then the characters are echoed.  Returns FALSE if eof.
  **/
-static gboolean read_terminal (unsigned char *buf, int size)
+static gboolean read_terminal (unsigned char *buf, int size, int hist)
 {
     gboolean eof;
     GtkWidget *term;
@@ -471,6 +444,12 @@ static gboolean read_terminal (unsigned char *buf, int size)
     gtk_main();
 
     eof = data->eof;
+#ifdef HAVE_READLINE_HISTORY_H
+    buf [data->pos] = '\0';
+    if (!eof && strlen (buf) && hist) {
+	add_history (buf);
+    }
+#endif
     buf [data->pos] = '\n';
     buf [data->pos + 1] = '\0';
 
@@ -494,6 +473,8 @@ int  R_ReadConsole (char *prompt, unsigned char *buf, int buflen, int hist)
 {
     fprintf (stderr, "R_ReadConsole: start\n");
 
+    R_FlushConsole ();
+
     /* FIXME: handle !R_Interactive */
     if (R_Interactive || !R_Slave) {
 #ifdef HAVE_LIBREADLINE
@@ -506,10 +487,11 @@ int  R_ReadConsole (char *prompt, unsigned char *buf, int buflen, int hist)
 		write_terminal (prompt, strlen (prompt));
 	    }
     }
-    if (!read_terminal (buf, buflen)) {
+    if (!read_terminal (buf, buflen, hist)) {
 	fprintf (stderr, "R_ReadConsole: end (EOF)\n");
 	return 0;
     }
+
     fprintf (stderr, "R_ReadConsole: end\n");
     return 1;
 }
@@ -518,20 +500,35 @@ int  R_ReadConsole (char *prompt, unsigned char *buf, int buflen, int hist)
  *  This function writes the given buffer out to the console.  No
  *  special actions are required.
  **/
+static char line_buf[IO_BUF_SIZE];
+static int line_pos = 0;
+
 void  R_WriteConsole (char *buf, int buflen)
 {
     fprintf (stderr, "R_WriteConsole: start\n");
-    write_terminal (buf, buflen);
+    if (line_pos + buflen >= IO_BUF_SIZE) {
+	R_FlushConsole ();
+	write_terminal (buf, buflen);
+    }
+    else {
+	strncpy (line_buf + line_pos, buf, buflen);
+	line_pos += buflen;
+    }
     fprintf (stderr, "R_WriteConsole: end\n");
+}
+
+void  R_FlushConsole (void)
+{
+    fprintf (stderr, "R_FlushConsole: start\n");
+    write_terminal (line_buf, line_pos);
+    line_pos = 0;
+    fprintf (stderr, "R_FlushConsole: end\n");
 }
 
 /**
  *  Unused functions.
  **/
 void  R_ResetConsole (void)
-{
-}
-void  R_FlushConsole (void)
 {
 }
 void  R_ClearerrConsole (void)
@@ -664,9 +661,14 @@ void  R_CleanUp (int saveact, int status, int runLast)
 	    R_dot_Last ();
 	if (R_DirtyImage)
 	    R_SaveGlobalEnv ();
-	if (R_Interactive) {
-	    /* FIXME: save readline history */
+#ifdef HAVE_LIBREADLINE
+#ifdef HAVE_READLINE_HISTORY_H
+	if(R_Interactive && UsingReadline) {
+	    stifle_history(R_HistorySize);
+	    write_history(R_HistoryFile);
 	}
+#endif
+#endif
 	break;
     case SA_NOSAVE:
 	if (runLast)
@@ -929,6 +931,13 @@ static void set_terminal_hints (GtkWidget *widget)
 				   GDK_HINT_MIN_SIZE | GDK_HINT_BASE_SIZE);
 }
 
+gboolean term_configure_event (GtkWidget *widget,
+			  GdkEventConfigure *event,
+			  gpointer user_data)
+{
+    gtk_widget_queue_draw (widget);
+}
+
 /*  r_gnome_create_terminal is called by libglade to construct the zvt widget */
 GtkWidget *r_gnome_create_terminal ()
 {
@@ -979,6 +988,11 @@ static void load_main_window (void)
 
     gtk_range_set_adjustment (GTK_RANGE (vscrollbar),
 			      GTK_ADJUSTMENT (ZVT_TERM (term)->adjustment));
+
+    /* handle resizes */
+    gtk_signal_connect_object (GTK_OBJECT (window), "configure_event",
+			       GTK_SIGNAL_FUNC (term_configure_event),
+			       GTK_OBJECT (term));
 
     gtk_widget_realize (window);
 
