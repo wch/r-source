@@ -83,7 +83,6 @@ function(package, dir, lib.loc = NULL)
             for(p in nsInfo$exportPatterns)
                 OK <- c(OK, grep(p, codeObjs, value = TRUE))
             codeObjs <- unique(OK)
-
         }
     }
 
@@ -202,13 +201,13 @@ function(package, dir, lib.loc = NULL,
          ignore.generic.functions = FALSE,
          verbose = getOption("verbose"))
 {
+    hasNamespace <- FALSE
     ## If a package has a namespace, we need to determine the S3 methods
     ## which are registered but not exported: these *may* have explicit
     ## usage documentation (e.g., if they have 'surprising arguments'),
     ## and hence not be included in the information about objects with
     ## usage but 'missing from the code'.
     S3reg <- character(0)
-    hasNamespace <- FALSE
 
     ## Argument handling.
     if(!missing(package)) {
@@ -239,7 +238,8 @@ function(package, dir, lib.loc = NULL,
         if(packageHasNamespace(package, dirname(dir))) {
             hasNamespace <- TRUE
             ## Determine unexported but declared S3 methods.
-            S3reg <- .getNamespaceS3methodNames(package)
+            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
+            S3reg <- as.character(sapply(nsS3methodsList, "[[", 3))
             S3reg <- S3reg[! S3reg %in% lsCode]
         }
     }
@@ -291,7 +291,8 @@ function(package, dir, lib.loc = NULL,
                 OK <- c(OK, grep(p, lsCode, value = TRUE))
             lsCode <- unique(OK)
             ## Determine unexported but declared S3 methods.
-            S3reg <- .getNamespaceS3methodNames(nsInfo = nsInfo)
+            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+            S3reg <- as.character(sapply(nsS3methodsList, "[[", 3))
             S3reg <- S3reg[! S3reg %in% lsCode]
         }
     }
@@ -394,7 +395,8 @@ function(package, dir, lib.loc = NULL,
         ## add this as an attribute to the badDocObjs object returned.
         ## It might be nicer to do this differently ...
         ## </NOTE>
-        badUsagesInFile <- usages[! usages %in% c(lsCode, S3reg)]
+        badUsagesInFile <-
+            usages[! usages %in% c(lsCode, S3reg, ".__Usage__.")]
         if(length(badUsagesInFile) > 0)
             usagesNotInCode[[docObj]] <- badUsagesInFile
 
@@ -575,25 +577,38 @@ function(package, dir, lib.loc = NULL)
             unlist(strsplit(gsub("# arglist: *", "", argList), " +"))
         argsInUsage <-
             unlist(lapply(lsArgs,
-                          function(f)
-                          names(formals(get(f, envir = argsEnv)))))
+                          function(f) {
+                              f <- get(f, envir = argsEnv)
+                              if(is.function(f))
+                                  names(formals(f))
+                              else
+                                  character()
+                          }))
 
         argsInUsageMissingInArgList <-
             argsInUsage[!argsInUsage %in% argsInArgList]
         argsInArgListMissingInUsage <-
             argsInArgList[!argsInArgList %in% argsInUsage]
+        if(length(argsInArgListMissingInUsage) > 0) {
+            usageText <- get(".__Usage__.", envir = argsEnv)
+            ## In the case of 'over-documented' arguments, try to be
+            ## defensive and reduce to arguments that do not match the
+            ## \usage text (modulo word boundaries).
+            bad <- sapply(argsInArgListMissingInUsage,
+                          function(x)
+                          regexpr(paste("\\b", x, "\\b", sep = ""),
+                                  usageText) == -1)
+            argsInArgListMissingInUsage <-
+                argsInArgListMissingInUsage[bad]
+            ## Note that the fact that we can parse the raw \usage does
+            ## not imply that over-documented arguments are a problem:
+            ## this works for Rd files documenting e.g. shell utilities
+            ## but fails for files with special syntax (Extract.Rd).
+        }
 
-        ## <NOTE>
-        ## Currently, we only record 'over-documented' arguments in case
-        ## we found arguments in \usage.  On the one hand, this allows
-        ## dealing with Rd files documenting e.g. shell utilities (or
-        ## non-function syntax).  However, an empty \usage together with
-        ## a non-empty documented list of arguments would go unnoticed.
-        ## </NOTE>
         if((length(argsInUsageMissingInArgList) > 0)
            || any(duplicated(argsInArgList))
-           || ((length(argsInArgListMissingInUsage) > 0)
-               && (length(argsInUsage) > 0)))
+           || (length(argsInArgListMissingInUsage) > 0))
             badDocObjs[[docObj]] <-
                 list(missing = argsInUsageMissingInArgList,
                      duplicated =
@@ -612,10 +627,8 @@ print.checkDocArgs <-
 function(x, ...)
 {
     for(docObj in names(x)) {
-        needLineAtEOR <- FALSE
         argsInUsageMissingInArgList <- x[[docObj]][["missing"]]
         if(length(argsInUsageMissingInArgList) > 0) {
-            needLineAtEOR <- TRUE
             writeLines(paste("Undocumented arguments",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
@@ -623,33 +636,19 @@ function(x, ...)
         }
         duplicatedArgsInArgList <- x[[docObj]][["duplicated"]]
         if(length(duplicatedArgsInArgList) > 0) {
-            needLineAtEOR <- TRUE
             writeLines(paste("Duplicated \\argument entries",
                              " in documentation object ",
                              sQuote(docObj), ":", sep = ""))
             print(duplicatedArgsInArgList)
         }
-        ## It would be nice if we could also realibly warn about
-        ## arguments documented in \arguments but not in \usage.  The
-        ## current code for analyzing \usage sections cannot deal with
-        ## non-function syntax, e.g. in 'base/man/DateTimeClasses.Rd'.
-        ## We could special-case the problem cases in the high-priority
-        ## packages, but it seems better to find a general solution.
-        ## E.g., one could try matching the words in the \usage sections
-        ## for the missing arguments ...
-        ## As we can always access the information via
-        ##    lapply(checkDocArgs("foo"), "[[", "overdoc")
-        ## disable reporting this for the time being ...
-        ## <COMMENT>
-        ##    argsInArgListMissingInUsage <- x[[docObj]][["overdoc"]]
-        ##    if(length(argsInArgListMissingInUsage) > 0) {
-        ##       writeLines(paste("Documented arguments not in \\usage",
-        ##                        " in documentation object ",
-        ##                        sQuote(docObj), ":", sep = ""))
-        ##       print(unique(argsInArgListMissingInUsage))
-        ##    }
-        ## </COMMENT>
-        if(needLineAtEOR) writeLines("")
+        argsInArgListMissingInUsage <- x[[docObj]][["overdoc"]]
+        if(length(argsInArgListMissingInUsage) > 0) {
+            writeLines(paste("Documented arguments not in \\usage",
+                             " in documentation object ",
+                             sQuote(docObj), ":", sep = ""))
+            print(unique(argsInArgListMissingInUsage))
+        }
+        writeLines("")
     }
     invisible(x)
 }
@@ -659,9 +658,7 @@ function(x, ...)
 checkDocStyle <-
 function(package, dir, lib.loc = NULL)
 {
-    ## If an installed package has a namespace, we also want to test all
-    ## S3 methods which are registered but not exported.
-    S3reg <- character(0)
+    hasNamespace <- FALSE
 
     ## Argument handling.
     if(!missing(package)) {
@@ -690,9 +687,14 @@ function(package, dir, lib.loc = NULL)
 
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
-            ## Determine unexported but declared S3 methods.
-            S3reg <- .getNamespaceS3methodNames(package)
-            S3reg <- S3reg[! S3reg %in% lsCode]
+            hasNamespace <- TRUE
+            ## Determine names of declared S3 methods and associated S3
+            ## generics. 
+            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
+            nsS3generics <-
+                as.character(sapply(nsS3methodsList, "[[", 1))
+            nsS3methods <-
+                as.character(sapply(nsS3methodsList, "[[", 3))                
         }
     }
     else {
@@ -728,13 +730,33 @@ function(package, dir, lib.loc = NULL)
         }
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
+
+        ## Does the package have a NAMESPACE file?  Note that when
+        ## working on the sources we (currently?) cannot deal with the
+        ## (experimental) alternative way of specifying the namespace.
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
+            hasNamespace <- TRUE
+            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+            ## Determine exported objects.
+            OK <- lsCode[lsCode %in% nsInfo$exports]
+            for(p in nsInfo$exportPatterns)
+                OK <- c(OK, grep(p, lsCode, value = TRUE))
+            lsCode <- unique(OK)
+            ## Determine names of declared S3 methods and associated S3
+            ## generics. 
+            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+            nsS3generics <-
+                as.character(sapply(nsS3methodsList, "[[", 1))
+            nsS3methods <-
+                as.character(sapply(nsS3methodsList, "[[", 3))                
+        }
+        
     }
 
     ## Find the function objects in the given package.
     funs <-
         lsCode[sapply(lsCode, function(f)
                       is.function(get(f, envir = codeEnv))) == TRUE]
-    funs <- c(funs, S3reg)
 
     ## Find all generic functions in the given package and (the current)
     ## base package.
@@ -742,7 +764,13 @@ function(package, dir, lib.loc = NULL)
     envList <- list(codeEnv)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
-        allObjs <- ls(envir = env, all.names = TRUE)
+        ## Find all available S3 generics.
+        allObjs <- if(identical(env, codeEnv)) {
+            ## We only want the exported ones anyway ...
+            funs
+        }
+        else
+            ls(envir = env, all.names = TRUE)
         allGenerics <-
             c(allGenerics,
               allObjs[sapply(allObjs, .isS3Generic, env) == TRUE])
@@ -753,10 +781,19 @@ function(package, dir, lib.loc = NULL)
     ## generic functions.
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
     methodsInPackage <- sapply(allGenerics, function(g) {
+        ## <FIXME>
+        ## Code taken from older versions of methods().
+        ## We should really determine the name g dispatches for, see
+        ## a current version of methods() [2003-07-07].
         name <- paste("^", g, ".", sep = "")
         methods <- grep(gsub("([.[])", "\\\\\\1", name),
                         funs, value = TRUE)
+        ## </FIXME>
         methods <- methods[! methods %in% methodsStopList]
+        if(hasNamespace) {
+            ## Find registered methods for generic g.
+            methods <- c(methods, nsS3methods[nsS3generics == g])
+        }
         methods
     })
     allMethodsInPackage <- unlist(methodsInPackage)
@@ -790,12 +827,19 @@ function(package, dir, lib.loc = NULL)
         ## usageTxt for later, but of course need to replace it by the
         ## GENERIC.CLASS S3 function names for parsing.
         ## </NOTE>
+        ## <FIXME>
+        ## Need to deal with possible S3 method renaming in namespaces.
+        ## However, matching \method{} markup against the registration
+        ## information seems rather costly: maybe record GENERIC.CLASS
+        ## as the function name in methodsInPackage even in the case of
+        ## renaming?
         exprs <- try(parse(n = -1,
                            text = gsub(paste("\\\\method",
                                              "{([a-zA-Z0-9.]+)}",
                                              "{([a-zA-Z0-9.]+)}",
                                              sep = ""),
                                        "\\1.\\2", usageTxt)))
+        ## </FIXME>
         if(inherits(exprs, "try-error"))
             stop(paste("cannot parse usages in documentation object",
                        sQuote(docObj)))
@@ -988,8 +1032,10 @@ function(x, ...)
 checkMethods <-
 function(package, dir, lib.loc = NULL)
 {
-    ## If an installed package has a namespace, we also want to test all
-    ## S3 methods which are registered but not exported.
+    hasNamespace <- FALSE
+    ## If an installed package has a namespace, we need to record the S3
+    ## methods which are registered but not exported (so that we can
+    ## get() them from the right place).
     S3reg <- character(0)
 
     ## Argument handling.
@@ -1015,9 +1061,16 @@ function(package, dir, lib.loc = NULL)
 
         ## Does the package have a namespace?
         if(packageHasNamespace(package, dirname(dir))) {
+            hasNamespace <- TRUE
+            ## Determine names of declared S3 methods and associated S3
+            ## generics. 
+            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
+            nsS3generics <-
+                as.character(sapply(nsS3methodsList, "[[", 1))
+            nsS3methods <-
+                as.character(sapply(nsS3methodsList, "[[", 3))                
             ## Determine unexported but declared S3 methods.
-            S3reg <- .getNamespaceS3methodNames(package)
-            S3reg <- S3reg[! S3reg %in% lsCode]
+            S3reg <- nsS3methods[! nsS3methods %in% lsCode]
         }
     }
     else {
@@ -1049,13 +1102,33 @@ function(package, dir, lib.loc = NULL)
         }
 
         lsCode <- ls(envir = codeEnv, all.names = TRUE)
+
+        ## Does the package have a NAMESPACE file?  Note that when
+        ## working on the sources we (currently?) cannot deal with the
+        ## (experimental) alternative way of specifying the namespace.
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
+            hasNamespace <- TRUE
+            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+            ## Determine exported objects.
+            OK <- lsCode[lsCode %in% nsInfo$exports]
+            for(p in nsInfo$exportPatterns)
+                OK <- c(OK, grep(p, lsCode, value = TRUE))
+            lsCode <- unique(OK)
+            ## Determine names of declared S3 methods and associated S3
+            ## generics. 
+            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+            nsS3generics <-
+                as.character(sapply(nsS3methodsList, "[[", 1))
+            nsS3methods <-
+                as.character(sapply(nsS3methodsList, "[[", 3))                
+        }
+        
     }
 
     ## Find the function objects in the given package.
     funs <-
         lsCode[sapply(lsCode, function(f)
                       is.function(get(f, envir = codeEnv))) == TRUE]
-    funs <- c(funs, S3reg)
 
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
 
@@ -1070,7 +1143,7 @@ function(package, dir, lib.loc = NULL)
         if(g == "plot") gArgs <- gArgs[-2]
         ogArgs <- gArgs
         gm <- if(m %in% S3reg) {
-            ## See registerS3method() in namespaces.R.
+            ## See registerS3method() in namespace.R.
             defenv <- if (typeof(genfun) == "closure") environment(genfun)
             else .BaseNamespaceEnv
             S3Table <- get(".__S3MethodsTable__.", envir = defenv)
@@ -1115,16 +1188,31 @@ function(package, dir, lib.loc = NULL)
     envList <- list(codeEnv)
     if(!isBase) envList <- c(envList, list(as.environment(NULL)))
     for(env in envList) {
-        allObjs <- ls(envir = env, all.names = TRUE)
+        ## Find all available S3 generics.
+        allObjs <- if(identical(env, codeEnv)) {
+            ## We only want the exported ones anyway ...
+            funs
+        }
+        else
+            ls(envir = env, all.names = TRUE)
         genFuns <- allObjs[sapply(allObjs, .isS3Generic, env) == TRUE]
 
         for(g in genFuns) {
-            ## Find all methods in funs for generic g.  Taken from the
-            ## current code for methods().
+            ## Find all methods in funs for generic g.
+            ## <FIXME>
+            ## Code taken from older versions of methods().
+            ## We should really determine the name g dispatches for, see
+            ## a current version of methods() [2003-07-07].
             name <- paste("^", g, ".", sep = "")
             methods <- grep(gsub("([.[])", "\\\\\\1", name),
                             funs, value = TRUE)
+            ## </FIXME>
             methods <- methods[! methods %in% methodsStopList]
+            if(hasNamespace) {
+                ## Find registered methods for generic g.
+                methods <- c(methods, nsS3methods[nsS3generics == g])
+            }
+
             for(m in methods)
                 badMethods <- c(badMethods, checkArgs(g, m, env))
         }
@@ -1156,10 +1244,8 @@ function(x, ...)
 checkReplaceFuns <-
 function(package, dir, lib.loc = NULL)
 {
-    ## If an installed package has a namespace, we also want to test all
-    ## S3 replacement methods which are registered but not exported.
-    S3reg <- character(0)
-
+    hasNamespace <- FALSE
+    
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -1176,27 +1262,20 @@ function(package, dir, lib.loc = NULL)
         ## Load package into codeEnv.
         if(!isBase)
             .loadPackageQuietly(package, lib.loc)
-        codeEnv <-
-            as.environment(paste("package", package, sep = ":"))
-
-        lsCode <- ls(envir = codeEnv, all.names = TRUE)
-
-        ## Does the package have a namespace?
+        ## In case the package has a namespace, we really want to check
+        ## all replacement functions in the package.  (If not, we need
+        ## to change the code for the non-installed case to only look at
+        ## exported (replacement) functions.)
         if(packageHasNamespace(package, dirname(dir))) {
-            ## Determine unexported but declared S3 replacement methods.
-            S3reg <- .getNamespaceS3methodNames(package)
-            S3reg <- S3reg[! S3reg %in% lsCode]
-            S3reg <- grep("<-", S3reg, value = TRUE)
-            if(length(S3reg) > 0) {
-                S3Table <- get(".__S3MethodsTable__.", envir = NULL)
-                ## <FIXME>
-                ## Methods are not in that table if their generic is in
-                ## the package.  Let's ignore those for now.
-                S3reg <- S3reg[S3reg %in% ls(S3Table, all.names = TRUE)]
-                ## </FIXME>
-            }
+            hasNamespace <- TRUE
+            codeEnv <- asNamespace(package)
+            nsS3methodsList <- getNamespaceInfo(package, "S3methods")
         }
+        else
+            codeEnv <-
+                as.environment(paste("package", package, sep = ":"))
     }
+
     else {
         if(missing(dir))
             stop(paste("you must specify", sQuote("package"),
@@ -1225,20 +1304,41 @@ function(package, dir, lib.loc = NULL)
             stop("cannot source package code")
         }
 
-        lsCode <- ls(envir = codeEnv, all.names = TRUE)
+        ## Does the package have a NAMESPACE file?  Note that when
+        ## working on the sources we (currently?) cannot deal with the
+        ## (experimental) alternative way of specifying the namespace.
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
+            hasNamespace <- TRUE
+            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
+            nsS3methodsList <- .getNamespaceS3methodsList(nsInfo)
+        }
+    }
+    
+    lsCode <- ls(envir = codeEnv, all.names = TRUE)
+    replaceFuns <- character()
+
+    if(hasNamespace) {
+        nsS3generics <-
+            as.character(sapply(nsS3methodsList, "[[", 1))
+        nsS3methods <-
+            as.character(sapply(nsS3methodsList, "[[", 3))
+        ## S3 replacement methods from namespace registration?
+        idx <- grep("<-$", nsS3generics)
+        if(any(idx)) replaceFuns <- nsS3methods[idx]
+        ## Now remove the functions registered as S3 methods.
+        lsCode <- lsCode[! lsCode %in% nsS3methods]
     }
 
-    ## Find the replacement functions in the given package.
-    replaceFuns <- c(grep("<-", lsCode, value = TRUE), S3reg)
+    replaceFuns <- c(replaceFuns, grep("<-", lsCode, value = TRUE))
     ## Find the replacement functions (which have formal arguments) with
     ## last arg not named 'value'.
     badReplaceFuns <-
         replaceFuns[sapply(replaceFuns, function(f) {
-            gf <- if(f %in% S3reg)
-                get(f, envir = S3Table)
-            else
-                get(f, envir = codeEnv)
-            argNames <- names(formals(gf))
+            ## Always get the functions from codeEnv ...
+            ## Should maybe get S3 methods from the registry ...
+            f <- get(f, envir = codeEnv)
+            if(!is.function(f)) return(TRUE)
+            argNames <- names(formals(f))
             if(!length(argNames))
                 TRUE                    # most likely a .Primitive()
             else
@@ -1247,6 +1347,13 @@ function(package, dir, lib.loc = NULL)
 
     class(badReplaceFuns) <- "checkReplaceFuns"
     badReplaceFuns
+}
+
+print.checkReplaceFuns <-
+function(x, ...)
+{
+    if(length(x) > 0) print(unclass(x), ...)
+    invisible(x)
 }
 
 print.checkReplaceFuns <-
