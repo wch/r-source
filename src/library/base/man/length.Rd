@@ -26,6 +26,9 @@ length(x) <- value
   a vector is shortened, extra values are discarded and when a vector is
   lengthened, it is padded out to its new length with \code{\link{NA}}s.
 }
+\seealso{\code{nchar} for counting the number of characters in
+  character vectors.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
