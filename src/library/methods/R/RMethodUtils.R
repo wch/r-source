@@ -424,19 +424,9 @@ getGeneric <-
       baseDef <- get(f, "package:base")
       if(is.primitive(baseDef)) {
           value <- genericForPrimitive(f)
-          if(is.function(value) && !is.object(value)) {
-              ## FIXME:  This should never happen?
-              ## initialize the generic function in the list on base
-              value <- makeGeneric(f, makeStandardGeneric(f, value), value, package = "base")
-              mlist <- elNamed(.BasicFunsMethods, f)
-              if(!is.null(mlist)) {
-                  ## initialize the methods for this generic with precomputed mlist
-                  where <- find(".BasicFunsMethods")
-                  assign(mlistMetaName(value), mlist, where)
-              }
-              setGenericForPrimitive(f, value, where, mlist)
-              ## save the modified version
-          }
+          if(!is.function(value) && mustFind)
+              stop("Methods cannot be defined for the primitive function \"",
+                   f, "\"")
       }
   }
     if(is.function(value))
