@@ -82,8 +82,7 @@ static GdkColor *gnome_config_get_color (char *key);
 
 
 /**
- *  r_gnome_config_set_color fills in color with the parsed version
- *  of the color string found in key.
+ *  r_gnome_config_set_color sets key to the string version of color.
  **/
 static void r_gnome_config_set_color (char *key, GdkColor *color)
 {
@@ -103,7 +102,9 @@ static void r_gnome_config_get_color (char *key, GdkColor *color)
 {
     char *retbuf;
 
-    retbuf = gnome_config_set_string (key);
+    retbuf = gnome_config_get_string (key);
+    gdk_color_parse (retbuf, color);
+    g_free (retbuf);
 }
 
 /**
@@ -170,28 +171,21 @@ void r_load_gui_prefs (void)
 
     r_gnome_prefs.console_font_name =
 	gnome_config_get_string ("console_font=fixed");
-
     r_gnome_prefs.console_font =
 	gdk_font_load (r_gnome_prefs.console_font_name);
 
     r_gnome_prefs.console_bold_user_input =
 	gnome_config_get_bool ("console_bold_user_input=false");
-
     r_gnome_prefs.console_color_user_input =
-	gnome_config_get_bool ("console_color_user_input=true");
+        gnome_config_get_bool ("console_color_user_input=true");
 
-    retbuf = gnome_config_get_string ("console_text_color=rgb:0000/0000/0000");
-    gdk_color_parse (retbuf, &r_gnome_prefs.console_text_color);
-    g_free (retbuf);
-
-    retbuf = gnome_config_get_string ("console_input_color=rgb:0000/8888/0000");
-    gdk_color_parse (retbuf, &r_gnome_prefs.console_input_color);
-    g_free (retbuf);
-
-    retbuf = gnome_config_get_string ("console_bg_color=rgb:ffff/ffff/ffff");
-    gdk_color_parse (retbuf, &r_gnome_prefs.console_bg_color);
-    g_free (retbuf);
-
+    r_gnome_config_get_color ("console_text_color=rgb:0000/0000/0000",
+			      &r_gnome_prefs.console_text_color);
+    r_gnome_config_get_color ("console_input_color=rgb:0000/8888/0000",
+			      &r_gnome_prefs.console_input_color);
+    r_gnome_config_get_color ("console_bg_color=rgb:ffff/ffff/ffff",
+			      &r_gnome_prefs.console_bg_color);
+    
     gnome_config_pop_prefix ();
 
     /** Pager **/
@@ -212,18 +206,13 @@ void r_load_gui_prefs (void)
     r_gnome_prefs.pager_emphasis_font =
 	gdk_font_load (r_gnome_prefs.pager_emphasis_font_name);
 
-    retbuf = gnome_config_get_string ("pager_title_color=rgb:0000/0000/0000");
-    gdk_color_parse (retbuf, &r_gnome_prefs.pager_title_color);
-    g_free (retbuf);
-
-    retbuf = gnome_config_get_string ("pager_text_color=rgb:0000/8888/0000");
-    gdk_color_parse (retbuf, &r_gnome_prefs.pager_text_color);
-    g_free (retbuf);
-
-    retbuf = gnome_config_get_string ("pager_emphasis_color=rgb:ffff/ffff/ffff");
-    gdk_color_parse (retbuf, &r_gnome_prefs.pager_emphasis_color);
-    g_free (retbuf);
-
+    r_gnome_config_get_color ("pager_title_color=rgb:0000/0000/0000",
+			      &r_gnome_prefs.pager_title_color);
+    r_gnome_config_get_color ("pager_text_color=rgb:0000/8888/0000",
+			      &r_gnome_prefs.pager_text_color);
+    r_gnome_config_get_color ("pager_emphasis_color=rgb:ffff/ffff/ffff",
+			      &r_gnome_prefs.pager_emphasis_color);
+    
     gnome_config_pop_prefix ();
 }
 
@@ -307,13 +296,23 @@ static void set_widgets_from_prefs (GladeXML *prefs_xml)
     widget = glade_xml_get_widget (prefs_xml,
 				   "console_text_color");
     gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
-				r_gnome_prefs.console_text_color.
+				r_gnome_prefs.console_text_color.red,
+				r_gnome_prefs.console_text_color.green,
+				r_gnome_prefs.console_text_color.blue, 0);
 
     widget = glade_xml_get_widget (prefs_xml,
 				   "console_input_color");
+    gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
+				r_gnome_prefs.console_input_color.red,
+				r_gnome_prefs.console_input_color.green,
+				r_gnome_prefs.console_input_color.blue, 0);
 
     widget = glade_xml_get_widget (prefs_xml,
 				   "console_bg_color");
+    gnome_color_picker_set_i16 (GNOME_COLOR_PICKER (widget),
+				r_gnome_prefs.console_bg_color.red,
+				r_gnome_prefs.console_bg_color.green,
+				r_gnome_prefs.console_bg_color.blue, 0);
 
     /** Pager **/
 
