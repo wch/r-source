@@ -7,8 +7,11 @@
   \item{pkgs}{A list with the path names of the packages to be
     installed.}
   \item{lib}{the path name of the \R library tree to install to.}
-  \item{options}{a list of options through which in particular the
-    process for building the help files can be controlled.}
+  \item{options}{a space-separated list of options through which in
+    particular the process for building the help files can be
+    controlled.  Options should only be given once.
+    Use \code{R CMD INSTALL --help} for the current list of options.
+  }
 }
 \details{
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
@@ -33,8 +36,9 @@
   configure variables \code{LIBS} and \code{CPPFLAGS} to specify these
   locations (and set these via \option{--configure-vars}), see section
   \dQuote{Configuration variables} in \dQuote{R Installation and
-    Administration} for more information.  One can also bypass the
-  configure mechanism using the option \option{--no-configure}.
+    Administration} for more information.  (If these are used more than
+  once on the command line, only the last instance is used.)  One can
+  bypass the configure mechanism using the option \option{--no-configure}.
   
   If \option{--no-docs} is given, no help files are built.  Options
   \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
@@ -61,16 +65,16 @@
 
 \section{Packages using the methods package}{
   Packages that require the methods package, and that use functions such
-  as \code{\link[methods]{setMethod}} or
-  \code{\link[methods]{setClass}}, should be installed by creating a
-  binary image.
+  as \code{\link[methods]{setMethod}} or \code{\link[methods]{setClass}},
+  should be installed by creating a binary image.
 
   The presence of a file named
   \file{install.R} in the package's main directory causes an image to
   be saved.  Note that the file is not in the \file{R} subdirectory: all
   the code in that subdirectory is used to construct the binary image.
 
-  Normally, the file \file{install.R} will be empty; if it does contain R expressions
+  Normally, the file \file{install.R} will be empty; if it does contain
+  R expressions
   these will be evaluated when the package is attached, e.g. by a call to
   the function \code{\link{library}}.  (Specifically, the source code
   evaluated for a package with a saved image consists of a suitable
@@ -79,7 +83,8 @@
 
 }
 \seealso{
-  \code{\link{REMOVE}},
+  \code{\link{REMOVE}} and \code{\link{library}} for information on
+  using several library trees;
   \code{\link{update.packages}} for automatic update of packages using
   the internet;
   the chapter on \dQuote{Creating R packages} in \dQuote{Writing \R
