@@ -1213,7 +1213,9 @@ sub rdoc2txt { # (filename); 0 for STDOUT
     }
 
     $Text::Wrap::columns=72;
-    $INDENT = 3;
+    $INDENT = 3;  # indent for \itemize and \enumerate first line
+    $INDENTD = 0; # indent for \describe list first line
+    $INDENTDD = 7; # indent for \describe list bodies
 
     if ($pkgname) {
 	my $pad = 75 - length($blocks{"name"}) - length($pkgname) - 30;
@@ -1356,12 +1358,13 @@ sub text2txt {
     # handle "\describe"
     $text = replace_command($text,
 			    "describe",
-			    "\n.in +$INDENT\n",
-			    "\n.in -$INDENT\n");
+			    "\n.in +$INDENTD\n",
+			    "\n.in -$INDENTD\n");
     while(checkloop($loopcount++, $text, "\\item") && $text =~ /\\itemnormal/s)
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
-	$descitem = "\n.ti " . text2txt($arg) . " \n" . text2txt($desc);
+	my $descitem = text2txt($arg);
+	$descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
 
@@ -1393,7 +1396,12 @@ sub code2txt {
 sub mywrap {
     my ($pre1, $pre2, $text) = @_;
 
-    my $ntext = wrap($pre1, $pre2, $text);
+    my $ntext;
+    if(length($text) > 0) {
+	$ntext = wrap($pre1, $pre2, $text);
+    } else {
+	$ntext = $pre1;
+    }
     my @lines = split /\n/, $ntext;
     my $out = "", $line;
     foreach $line (@lines) {
@@ -1426,6 +1434,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
     foreach $para (@paras) {
 	# strip leading white space
 	$para  =~ s/^\s+//;
+#	print "$para\n\n";
 	my $para0 = $para;
 	$para0 =~ s/\n\s*/ /go;
 	# check for a item in itemize etc
@@ -1437,7 +1446,17 @@ sub txt_fill { # pre1, base, "text to be formatted"
 		$enum{$enumlevel} += 1;
 	    }
 	}
-
+	# check for a item in describe etc
+	if ($para =~ s/^[\n]*\.tide ([^\n]+)\n//) {
+	    my $short = length($indent) + $INDENTDD - length($1);
+	    if ($short >= 0) {
+		$indent1 = " " x $short . $1;
+	    } else {
+		$indent1 = "  " . $1;
+		$para = "\\cr ". $para;
+	    }    
+	    $indent2 = $indent . (" " x $INDENTDD);    
+	}
         # check for .in or .inen command
 	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
 	    $INDENT = $INDENT + $para;
