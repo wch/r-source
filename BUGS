@@ -74,7 +74,18 @@ Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
 
 Directory:  Analyses
 
-none
+* PR# 1531 *
+Subject: cut.dendrogram
+From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
+Date: Thu, 09 May 2002 03:17:17 -0700
+--see #1552 (fixed for 1.5.1)
+* PR# 1552 *
+Subject: RE: cut.dendrogram
+Subject: Re: cut.dendrogram
+From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
+From: Martin Maechler
+Date: Tue, 14 May 2002 06:22:17 -0700
+--fixed for 1.5.1
 
 Directory:  Documentation
 
@@ -354,6 +365,11 @@ Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
 Subject: Mishandling missing "..."
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Mon, 7 Jan 2002 10:52:09 -0500
+* PR# 1548 *
+Subject: prettyNum inserts leading commas
+From: David Brahm  <brahm@alum.mit.edu>
+Date: Mon, 13 May 2002 14:21:08 -0400
+--fixed for 1.5.1 (using the suggestion)
 
 Directory:  Macintosh
 
@@ -454,65 +470,19 @@ Date: Fri, 3 May 2002 04:26:07 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 1509 *
-Subject:  Behaviour of environment(foo)<- 
-From: J.C.Rougier@durham.ac.uk
-Date: Fri, 3 May 2002 11:10:21 +0100
-* PR# 1531 *
-Subject: cut.dendrogram
-From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
-Date: Thu, 09 May 2002 03:17:17 -0700
-* PR# 1542 *
-Subject: [±¤ °?] ???? ?¨?????? ?¦????°?
-From: HomeBay <hanbay17@hotmail.com>
-Date: Sun, 12 May 2002 14:19:22 +0900
 * PR# 1543 *
 Subject: {round,trunc}.POSIXt and daylight savings time
 From: Don MacQueen <macq@llnl.gov>
 Date: Sat, 11 May 2002 22:22:41 -0700
-* PR# 1544 *
-Subject: URGENT BUSINESS ASSISTANCE
-From: "Kelvin Ugo" <kel_ug@qrio.com>
-Date: Sun, 12 May 2002 20:58:46 -0700
-* PR# 1545 *
-Subject: Visibility
-From: stlib <stlib@stat.sinica.edu.tw>
-Date: Mon, 13 May 2002 05:42:17 +0800 (CST)
-* PR# 1546 *
-Subject: [±¤°?] ??????´? ???­ º???°? µ?´? °??? ?®???? ???ý
-From: ?????? <sbd88@lycos.co.kr>
-Date: Tue, 14 May 2002 00:54:54 +0900
-* PR# 1547 *
-Subject: [±¤°?] ??´??? ¾²´? ??°ü?? ??²??? µ??? º???´?´?.
-From: ±????? <dajungham66@lycos.co.kr>
-Date: Tue, 14 May 2002 02:31:55 +0900
-* PR# 1548 *
-Subject: prettyNum inserts leading commas
-From: David Brahm  <brahm@alum.mit.edu>
-Date: Mon, 13 May 2002 14:21:08 -0400
-* PR# 1549 *
-Subject: Your password
-From: thomas <thomas@biostat.washington.edu>
-Date: Mon, 13 May 2002 13:49:49 -0500
-* PR# 1550 *
-Subject: Problem with Refman.pdf
-From: carne006@umn.edu
-Date: Mon, 13 May 2002 22:25:44 +0200 (MET DST)
-* PR# 1551 *
-Subject: ????°? ?©?????? ?µ¾??¬??
-From: ISCKOREA <isckorea@dreamwiz.com>
-Date: Tue, 14 May 2002 17:33:38 +0900
-* PR# 1552 *
-Subject: RE: cut.dendrogram
-Subject: Re: cut.dendrogram
-From: "Grum, Mikkel" <M.GRUM@CGIAR.ORG>
-From: Martin Maechler
-Date: Tue, 14 May 2002 06:22:17 -0700
-* PR# 1553 *
-Subject: ?­?????º?? ??º°???? ??º¥?® ?? 13????  ( ±¤ °? )
-From: "info" <mailer01@365mail.net>
-Date: 2002-05-14
 * PR# 1554 *
 Subject: R-admin docs, Installing packages
 From: david.firth@nuffield.ox.ac.uk
 Date: Tue, 14 May 2002 17:13:14 +0200 (MET DST)
+* PR# 1556 *
+Subject: lib.fixup, .GlobalEnv, and R1.5.0
+From: mark.bravington@csiro.au
+Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
+* PR# 1560 *
+Subject: ?®???? ?????? ??º??¦ ?????????[±¤°?]
+From: ?????? PR <khs5756@lycos.co.kr>
+Date: Thu, 16 May 2002 02:52:11 +0900
