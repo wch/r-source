@@ -10,6 +10,10 @@ RLIBS is no longer accepted for the library directory: use R_LIBS
 The code to set the `cra' parameter for a windows() device (and hence
 the base character size of symbols) is more robust.
 
+The code handling Ctrl-like keys has been changed and ought to be more
+robust (AltGr on Danish Windows NT used to misbehave.)
+
+
 
 rw0900
 ======

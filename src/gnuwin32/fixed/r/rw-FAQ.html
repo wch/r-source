@@ -240,7 +240,7 @@ path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %
 1.7)&nbsp;<a NAME="q18"></a>Can I use <tt>rw0xxx</tt> with ESS and emacs?</h3>
 
 <p>
-Yes. The latest versions of ESS (e.g. 5.1.9) come with support for
+Yes. The latest versions of ESS (e.g. 5.1.11) come with support for
 this version of R, and <tt>rw0650</tt> and later have support for
 interrupting the R process from ESS (by </tt>C-c C-c</tt>).
 
@@ -606,7 +606,7 @@ You need to do two things:
 <p>
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 <tt>X.cc</tt> contains your C++ code, and <tt>X_R.cc</tt> is the
-wrapper. Then build the DLL by (<tt>gcc-2.95</tt>)
+wrapper. Then build the DLL by (<tt>gcc-2.95.x</tt>)
 <pre>
     g++ -c X.cc X_R.cc
     dlltool --export-all-symbols --output-def X.def X_R.o
@@ -638,7 +638,7 @@ console. (This <em>will</em> work with <tt>Rterm.exe</tt>.)  Use
 
 <hr WIDTH="100%">
 <address>
-Last edited 13 November 1999 by Brian Ripley
+Last edited 9 December 1999 by Brian Ripley
 <code><a href="mailto:ripley@stats.ox.ac.uk">ripley@stats.ox.ac.uk</a></code>
 </address>
 
