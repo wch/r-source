@@ -368,7 +368,7 @@ FUNTAB R_FunTab[] =
 
 {"rhyper",	do_random3,	0,	11,	4,	PP_FUNCALL},
 
-{"sample",	do_sample,	0,	11,	3,	PP_FUNCALL},
+{"sample",	do_sample,	0,	11,	4,	PP_FUNCALL},
 
 
 /* Data Summaries */

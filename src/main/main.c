@@ -221,6 +221,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 			     buf, 1024, 1) == 0) return;
 	    bufp = buf;
 	}
+#ifdef SHELL_ESCAPE
 	if (*bufp == '!') {
 #ifdef HAVE_SYSTEM
 	    system(&buf[1]);
@@ -230,6 +231,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 	    buf[0] = '\0';
 	    continue;
 	}
+#endif
 	while((c = *bufp++)) {
 	    R_IoBufferPutc(c, &R_ConsoleIob);
 	    if(c == ';' || c == '\n') {
