@@ -8,9 +8,7 @@
 \title{Check Code/Documentation Consistency}
 \usage{
 codoc(package, dir, lib.loc = NULL,
-      use.values = NULL, use.positions = TRUE,
-      ignore.generic.functions = FALSE,
-      verbose = getOption("verbose"))
+      use.values = NULL, verbose = getOption("verbose"))
 codocClasses(package, lib.loc = NULL)
 codocData(package, lib.loc = NULL)
 }
@@ -32,14 +30,10 @@ codocData(package, lib.loc = NULL)
     or \code{NULL}.  The default value of \code{NULL} corresponds to all
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
-  \item{use.positions}{a logical indicating whether to use the positions
-    of function arguments when comparing.  \emph{Deprecated}.}
   \item{use.values}{if \code{FALSE}, do not use function default values
     when comparing code and docs.  Otherwise, compare \emph{all} default
     values if \code{TRUE}, and only the ones documented in the usage
     otherwise (default).}
-  \item{ignore.generic.functions}{if \code{TRUE}, functions recognized
-    as S3 generics are ignored.  \emph{Deprecated}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }
@@ -62,9 +56,8 @@ codocData(package, lib.loc = NULL)
   extracted and parsed \dQuote{as much as possible} to give the formals
   documented.  For interpreted functions in the code environment, the
   formals are compared between code and documentation according to the
-  values of the arguments \code{use.positions} and \code{use.values}.
-  Synopsis sections are used if present; their occurrence is reported if
-  \code{verbose} is true.
+  values of the argument \code{use.values}.  Synopsis sections are used
+  if present; their occurrence is reported if \code{verbose} is true.
 
   Currently, the R documentation format has no high-level markup for the
   basic \dQuote{structure} of classes and data sets (similar to the
