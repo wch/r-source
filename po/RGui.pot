@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-08 11:18+0000\n"
+"POT-Creation-Date: 2005-02-08 12:24+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,7 +130,8 @@ msgstr ""
 msgid "Autosize column"
 msgstr ""
 
-#: dataentry.c:1561 pager.c:293 ../library/grDevices/src/devWindows.c:1593
+#: dataentry.c:1561 pager.c:293 rui.c:868
+#: ../library/grDevices/src/devWindows.c:1593
 msgid "Stay on top"
 msgstr ""
 
@@ -229,11 +230,12 @@ msgstr ""
 msgid "Cut"
 msgstr ""
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:1030 rui.c:1087
+#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:858 rui.c:1030
+#: rui.c:1087
 msgid "Copy"
 msgstr ""
 
-#: editor.c:567 editor.c:689 rui.c:1034 rui.c:1088
+#: editor.c:567 editor.c:689 rui.c:859 rui.c:1034 rui.c:1088
 msgid "Paste"
 msgstr ""
 
@@ -241,7 +243,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:1092
+#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:865 rui.c:1092
 msgid "Select all"
 msgstr ""
 
@@ -390,7 +392,7 @@ msgstr ""
 msgid "Save image in"
 msgstr ""
 
-#: rui.c:158 rui.c:172 rui.c:1150 graphapp/dialogs.c:357
+#: rui.c:158 rui.c:172 rui.c:1150 graphapp/dialogs.c:358
 msgid "All files (*.*)"
 msgstr ""
 
@@ -438,6 +440,22 @@ msgstr ""
 
 #: rui.c:854
 msgid "Can only drag-and-drop .R, .RData and .rda files"
+msgstr ""
+
+#: rui.c:860 rui.c:1089
+msgid "Paste commands only"
+msgstr ""
+
+#: rui.c:861 rui.c:1038
+msgid "Copy and paste"
+msgstr ""
+
+#: rui.c:863
+msgid "Clear window"
+msgstr ""
+
+#: rui.c:867 rui.c:1105
+msgid "Buffered output"
 msgstr ""
 
 #: rui.c:907
@@ -544,10 +562,6 @@ msgstr ""
 msgid "Save image"
 msgstr ""
 
-#: rui.c:1038
-msgid "Copy and paste"
-msgstr ""
-
 #: rui.c:1042
 msgid "Stop current computation"
 msgstr ""
@@ -580,10 +594,6 @@ msgstr ""
 msgid "Change dir..."
 msgstr ""
 
-#: rui.c:1089
-msgid "Paste commands only"
-msgstr ""
-
 #: rui.c:1091
 msgid "Copy and Paste"
 msgstr ""
@@ -602,10 +612,6 @@ msgstr ""
 
 #: rui.c:1103
 msgid "Break to debugger"
-msgstr ""
-
-#: rui.c:1105
-msgid "Buffered output"
 msgstr ""
 
 #: rui.c:1107
@@ -685,49 +691,49 @@ msgstr ""
 msgid "Save workspace image?"
 msgstr ""
 
-#: graphapp/dialogs.c:101 graphapp/dialogs.c:118
+#: graphapp/dialogs.c:102 graphapp/dialogs.c:119
 msgid "Question"
 msgstr ""
 
-#: graphapp/dialogs.c:138
+#: graphapp/dialogs.c:139
 msgid " Change working directory to:"
 msgstr ""
 
-#: graphapp/dialogs.c:141
+#: graphapp/dialogs.c:142
 #, c-format
 msgid "Unable to set '%s' as working directory"
 msgstr ""
 
-#: graphapp/dialogs.c:366
+#: graphapp/dialogs.c:367
 msgid "Select working directory"
 msgstr ""
 
-#: graphapp/dialogs.c:570
+#: graphapp/dialogs.c:571
 msgid "User"
 msgstr ""
 
-#: graphapp/dialogs.c:571
+#: graphapp/dialogs.c:572
 msgid "Password"
 msgstr ""
 
-#: graphapp/dialogs.c:732 graphapp/dialogs.c:738
+#: graphapp/dialogs.c:733 graphapp/dialogs.c:739
 #, c-format
 msgid "\"%s\" not found"
 msgstr ""
 
-#: graphapp/gmenus.c:47
+#: graphapp/gmenus.c:48
 msgid "Windows"
 msgstr ""
 
-#: graphapp/gmenus.c:48
+#: graphapp/gmenus.c:49
 msgid "Cascade"
 msgstr ""
 
-#: graphapp/gmenus.c:49
+#: graphapp/gmenus.c:50
 msgid "Tile"
 msgstr ""
 
-#: graphapp/gmenus.c:50
+#: graphapp/gmenus.c:51
 msgid "Arrange Icons"
 msgstr ""
 
