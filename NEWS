@@ -7,6 +7,13 @@
 
 NEW FEATURES
 
+    o   scan() now supports complex numbers.
+
+    o   New function undoc() for listing undocumented objects.
+
+    o   New function help.search() for searching the names, titles,
+	aliases, or keywords in the help system.
+
     o   User's .Rprofile now executes in global environment
 
     o   image() allows x and y to specify either the boundaries or the 
@@ -100,6 +107,10 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   Empty lists now deparse correctly.
+
+    o   Fix problems in scan(flush = TRUE).
 
     o	apply should now work for all un-dimnamed arrays (PR#318).
 
