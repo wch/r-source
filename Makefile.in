@@ -84,6 +84,8 @@ install: installdirs
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome); \
 	done
 @WANT_R_FRAMEWORK_TRUE@	$(MAKE) install-R-framework
+@WANT_R_FRAMEWORK_TRUE@	sed 's/^LIBR =.*/LIBR = -framework R/' \
+@WANT_R_FRAMEWORK_TRUE@	$(top_builddir)/etc/Makeconf > $(rhome)/etc/Makeconf
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)
 install-strip:
