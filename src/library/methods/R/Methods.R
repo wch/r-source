@@ -232,7 +232,7 @@ setMethod <-
     if(is.null(fdef))
       stop(paste("No existing definition for function \"",f,"\"", sep=""))
     if(isSealedMethod(f, signature, fdef))
-      stop("The method for function \"", f, "\" and signature ", .signatureString(fdef, signature),
+        stop("The method for function \"", f, "\" and signature ", .signatureString(fdef, signature),
            " is sealed and cannot be re-defined")
     if(!hasMethods) {
         if(identical(where, 1) || identical(where, .GlobalEnv))
@@ -729,6 +729,13 @@ isSealedMethod <- function(f, signature, fdef = getGeneric(f, FALSE)) {
         signature <- matchSignature(signature, fdef)
     if(length(signature)==0)
         TRUE # default method for primitive
-    else
-        !is.na(match(signature[[1]], .BasicClasses))
+    else {
+        sealed <- !is.na(match(signature[[1]], .BasicClasses))
+        if(sealed && 
+           !is.na(match("Ops", c(f, getGroup(f, TRUE)))))
+            ## Ops methods are only sealed if both args are basic classes
+            sealed <- sealed && (length(signature) > 1) &&
+                      !is.na(match(signature[[2]], .BasicClasses))
+        sealed
+    }
 }
