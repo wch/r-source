@@ -73,6 +73,6 @@ as.name <- function(x) .Internal(as.vector(x, "name"))
 ## as.call <- function(x) stop("type call cannot be assigned")
 as.numeric <- as.double
 as.qr <- function(x) stop("you cannot be serious")
-as.ts <- function(x) if(is.ts(x)) x else ts(x)
+## as.ts <- function(x) if(is.ts(x)) x else ts(x) # in ts.R
 as.formula <- function(object)
     if(inherits(object, "formula")) object else formula(object)
