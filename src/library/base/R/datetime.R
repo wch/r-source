@@ -233,7 +233,8 @@ as.data.frame.POSIXct <- .Alias(as.data.frame.vector)
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
 c.POSIXct <- function(..., recursive=FALSE)
-    structure(c(unlist(lapply(list(...), unclass))), class="POSIXct")
+    structure(c(unlist(lapply(list(...), unclass))),
+              class=c("POSIXt","POSIXct"))
 
 ## we need conversion to POSIXct as POSIXlt objects can be in different tz.
 c.POSIXlt <- function(..., recursive=FALSE)
