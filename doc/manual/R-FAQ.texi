@@ -1880,6 +1880,8 @@ transformations.
 Adaptive quadrature in up to 20 dimensions.
 @item ade4
 Multivariate data analysis and graphical display.
+@item adehabitat
+A collection of tools for the analysis of habitat selection by animals.
 @item agce
 Analysis of growth curve experiments.
 @item akima
