@@ -10,6 +10,7 @@ distclean: ISdistclean
 # section for JR software installer.
 
 RECOMMENDED=KernSmooth VR boot cluster foreign mgcv nlme rpart survival
+EXTRA=grid lattice
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
@@ -22,7 +23,7 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	unzip -qo ../$(RPREFIX)l -d $(RPREFIX)l
 	unzip -qo ../$(RPREFIX)sp -d $(RPREFIX)sp
 	unzip -qo ../$(RPREFIX)w -d $(RPREFIX)w
-	for p in $(RECOMMENDED); do \
+	for p in $(RECOMMENDED) $(EXTRA); do \
 	  unzip -qo $(PKGS)/$${p} -d $(RPREFIX)/library; \
 	done
 	zip -rmq foo.zip $(RPREFIX)/library/*/html
@@ -34,6 +35,7 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	zip -rmq foo.zip $(RPREFIX)/library/*/latex
 	unzip -qo foo -d $(RPREFIX)l
 	rm foo.zip
+	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
 	  $(RPREFIX)w/$(RPREFIX)/doc/html/search/index.txt
 	$(CP) $(RPREFIX)w/$(RPREFIX)/doc/html/packages-head.html $(RPREFIX)/doc/html
