@@ -13,7 +13,7 @@
      which will be the object to finalize.}
 }
 \value{
-    NULL.
+  \code{NULL}.
 }
 \note{The purpose of this function is mainly to allow objects that 
    refer to external items (a temporary file, say) 
@@ -23,9 +23,9 @@
    and external pointers.}
 
 \examples{
- f <- function(e) print("cleaning....")
- g <- function(x){e<-environment(); reg.finalizer(e,f)}
- g() 
- gc() # trigger cleanup
+f <- function(e) print("cleaning....")
+g <- function(x){e<-environment(); reg.finalizer(e,f)}
+g() 
+gc() # trigger cleanup
 }
 \keyword{programming}
