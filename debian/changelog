@@ -1,3 +1,50 @@
+r-base (1.7.1.cvs.20030731-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-07-31 of R 1.7.2 (or 1.8.0)
+  * Upstream release candidate sources do not contain the source for the
+    r-recommended package so tools/rsync-recommended was used to obtain
+    these and a new, Debian-only, orig.tar.gz of both was created
+  * debian/control: r-base-dev now has a versioned Depends on r-base-core
+    which requires equal version numbers between the two (Closes: #199295)
+  * debian/control: Upgraded Standards-Version to 3.6.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 31 Jul 2003 20:35:49 -0500
+
+r-base (1.7.1-1) unstable; urgency=low
+
+  * New upstream version 1.7.1 released today
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 16 Jun 2003 19:36:45 -0500
+
+r-base (1.7.0.cvs.20030607-1) unstable; urgency=low
+
+  * Upgraded to initial release candidate (dated 2003-06-07) of R 1.7.1
+  * debian/{control,rules}: Switch back to default compiler version as 3.3 
+    is in unstable and testing; m68k still needs f2c for Fortan code
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat,  7 Jun 2003 12:23:59 -0500
+
+r-base (1.7.0.cvs.20030602-1) unstable; urgency=low
+
+  * Upgraded to initial release candidate (dated 2003-06-02) of R 1.7.1
+  * debian/{rules,control}: Try f2c on m68k as a last resort
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon,  2 Jun 2003 21:31:42 -0500
+
+r-base (1.7.0.cvs.20030526-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-05-26 of R 1.7.1
+  * Manually rsync'ed r-recommendeds sources as R-patched pre-release do
+    not comprise r-recommended, also manually re-built upstream tarball
+  * debian/control: Require gcc/g++/g77-3.2 as version 3.3 is in unstable
+    gcc 3.2 works fine everywhere with the exception of m68k (Closes: #194175)
+  * debian/shlibs.local: Have libatlas imply either the actual atlas2-base 
+    or the virtual atlas2 provided by tuned libraries (Closes: #193831)
+  * debian/control: Added 'xpdf-reader | pdf-viewer' to Build-Depends
+  * debian/control: Upgraded Standards-Version to 3.5.10
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 26 May 2003 19:47:20 -0500
+
 r-base (1.7.0-3) unstable; urgency=low
 
   * debian/rules: No longer configure for use of an external lapack library

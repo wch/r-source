@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.52 2003/06/09 13:53:31 hornik Exp $
+# $Id: rules,v 1.53 2003/08/09 20:46:37 bates Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -42,30 +42,35 @@ endif
 #export DH_VERBOSE = 1
 export DH_COMPAT  = 3
 
-# edd 15 Aug 2001: default to blas, atlas can override it 
-atlas 		= --with-blas=blas
+# edd 15 Aug 2001  default to blas, atlas can override it 
+#atlas 		= --with-blas=blas
 # dmb 04 Apr 2003  better to use no specify blas
 # atlas 		= --with-blas
 # edd 28 Apr 2003  try configuring with atlas
 atlas		= --with-blas=atlas
-# edd 08 Mar 2003: use the new lapack feature
-# edd 27 Apr 2003: Set this to =no as we currently see numerical errors
+# edd 08 Mar 2003  use the new lapack feature
+# edd 27 Apr 2003  Set this to =no as we currently see numerical errors
 lapack		= --with-lapack=no
 
-# edd 02 Sep 2001: default to g77 but let m68k use f2c
-# edd 06 Mar 2003: enforce 3.2 versions explicitly so that on testing we will pick them over 2.95
-fortrancompiler	= F77=g77-3.2
-compiler	= gcc-3.2
-cxxcompiler	= g++-3.2
+# edd 02 Sep 2001  default to g77 but let m68k use f2c
+# edd 06 Mar 2003  enforce 3.2 versions explicitly 
+#                  so that on testing we will pick them over 2.95
+# edd 07 Jun 2003  let's fall back to the default compilers
+fortrancompiler	= F77=g77
+compiler	= gcc
+cxxcompiler	= g++
 compilerflags	= -O2
 
 # edd 04 Sep 2001  default compiler flags, lowered for m68k
 compilerflags	= -O2
 # m68k barks when using g77, and when gcc use -O2
 # edd 26 Nov 2002  switched back to g77
-#ifeq ($(arch),m68k-linux)
-#fortrancompiler	= F2C=f2c
-#endif
+# edd 02 Jun 2003  switched back
+# cts 04 Jun 2003  use -O1 on m68k
+ifeq ($(arch),m68k-linux)
+fortrancompiler	= F2C=f2c
+compilerflags	= -O1
+endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
 #ifeq ($(arch),ia64-linux)
@@ -81,25 +86,19 @@ compilerflags   = -O2 -ffunction-sections
 endif
 
 ## edd 20 Jun 2002      no optimisation or debugging on baby systems
-ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
+## edd 02 Jun 2003	use this on arm only 
+##ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
+ifneq "$(findstring $(arch), arm-linux)" ""
 compilerflags	= -O0 -g0
 endif
-
-## try gcc-3.0 on i386 -- appears to work
-#ifeq ($(arch),i386-linux)
-#fortrancompiler= F77=g77-3.0
-#compiler	= gcc-3.0
-#cxxcompiler	= g++-3.0
-#compilerflags	= -O2
-#endif
 
 get-orig-source: upstream
 upstream:
 	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
-	#links ftp://ftp.stat.math.ethz.ch/Software/R
-	links http://cran.us.r-project.org/src/base
+	links ftp://ftp.stat.math.ethz.ch/Software/R
+	#links http://cran.us.r-project.org/src/base
 
 build: build-arch build-indep
 
@@ -134,6 +133,7 @@ configure-stamp:
 		    $(gnomeconfig)			\
 		    --enable-R-profiling		\
 		    --enable-R-shlib			\
+		    --with-recommended-packages		\
 		    --build $(arch)
 
 #		    --with-tcl-config=/usr/lib/tcl8.3/tclConfig.sh	
@@ -149,14 +149,14 @@ make-arch-stamp:
 			FFLAGS="$(compilerflags)"		\
 			CC=${compiler} 				\
 			CXX=${cxxcompiler}			\
-			FC=${fortrancompiler}			\
+			${fortrancompiler}			\
 			R
 	make		CFLAGS="$(compilerflags)"		\
 			CXXFLAGS="$(compilerflags)"		\
 			FFLAGS="$(compilerflags)"		\
 			CC=${compiler} 				\
 			CXX=${cxxcompiler}			\
-			FC=${fortrancompiler}			\
+			${fortrancompiler}			\
 			stamp-recommended
         # currently needed for binary package with docs [FIXME: how?]
 	make docs
@@ -168,7 +168,7 @@ make-arch-stamp:
 			FFLAGS="$(compilerflags) -D_REENTRANT"	\
 			CC=${compiler} 				\
 			CXX=${cxxcompiler} 			\
-			FC=${fortrancompiler}			\
+			${fortrancompiler}			\
 			libRmath_la_LDFLAGS=-Wl,-soname,libRmath.so.$(somaj) \
 			)
         # FIXME
@@ -263,7 +263,7 @@ endif
 
         # edd 10 Jan 2003 fix Perl interpreter path
 	(cd $(debtmp)/usr/lib/R/bin; 					\
-	    for file in Rdconv Rprof Sd2Rd build check; do 		\
+	    for file in Rdconv Rdindex Rprof Sd2Rd build check; do 	\
 		perl -p -i -e "s|/usr/local/bin/perl|/usr/bin/perl|" 	\
 		   $${file};						\
 	done)
