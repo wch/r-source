@@ -68,6 +68,9 @@ NEW FEATURES
 
      o  if() and while() give a warning if called with a vector condition.
 
+     o  ts() now allows arbitrary values for y in start/end = (x, y):
+	it always allowed y < 1 but objected to y > frequency.
+
 
 INSTALLATION CHANGES
 
