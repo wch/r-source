@@ -16,7 +16,7 @@ plot(y ~ x, \dots)
   \item{y}{the y coordinates of points in the plot, \emph{optional}
       if \code{x} is an appropriate structure.}
   \item{xlim, ylim}{the ranges to be encompassed by the x and y axes.}
-  \item{type}{what type of plot should be drawn. Possible types are
+  \item{type}{what type of plot should be drawn.  Possible types are
     \itemize{
       \item \code{"p"} for \bold{p}oints,
       \item \code{"l"} for \bold{l}ines,
@@ -28,6 +28,9 @@ plot(y ~ x, \dots)
       \item \code{"S"} for other \bold{s}teps,
       \item \code{"n"} for no plotting.
     }
+    All other \code{type}s give a warning or an error; using, e.g.,
+    \code{type = "punkte"} being equivalent to \code{type = "p"} for S
+    compatibility.
   }
   \item{main}{an overall title for the plot.}
   \item{xlab}{a title for the x axis.}
@@ -60,5 +63,9 @@ plot(sin, -pi, 2*pi)
 ## Discrete Distribution Plot:
 plot(table(rpois(100,5)), type = "h", col = "red", lwd=10,
      main="rpois(100,lambda=5)")
+
+## Simple quantiles/ECDF, see ecdf() {library(stepfun)} for a better one:
+plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
+points(x, cex = .5, col = "dark red")
 }
 \keyword{hplot}

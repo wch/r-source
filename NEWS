@@ -58,14 +58,18 @@ BUG FIXES
     o	Recording plots used to ignore graphics events before the last
 	replay.
 
+    o	plot(), points(), etc now give warnings and error for invalid
+	`type' arguments.
+
+    o	matplot() now allows the same `type's as plot().
+
     o	dev.print() and dev.copy2eps() now work when called from a function.
 
     o	anova.glmlist works correctly with decreasing models and
 	test="F" now gets the correct residual df.
 
-    o	functions created (not just edited) with fix() now get 
+    o	functions created (not just edited) with fix() now get
 	environment .GlobalEnv not the body of fix.
-
 
 
 		CHANGES IN R VERSION 1.1.0
