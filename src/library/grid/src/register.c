@@ -41,6 +41,8 @@ static const R_CallMethodDef callMethods[] = {
     {"L_setDLindex", (DL_FUNC) &L_setDLindex, 1},
     {"L_getDLon", (DL_FUNC) &L_getDLon, 0},
     {"L_setDLon", (DL_FUNC) &L_setDLon, 1},
+    {"L_getEngineDLon", (DL_FUNC) &L_getEngineDLon, 0},
+    {"L_setEngineDLon", (DL_FUNC) &L_setEngineDLon, 1},
     {"L_currentGPar", (DL_FUNC) &L_currentGPar, 0},
     {"L_newpagerecording", (DL_FUNC) &L_newpagerecording, 1},
     {"L_newpage", (DL_FUNC) &L_newpage, 0},

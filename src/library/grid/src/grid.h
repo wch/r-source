@@ -46,6 +46,7 @@
 #define GSS_GLOBALINDEX 8
 #define GSS_GRIDDEVICE 9
 #define GSS_PREVLOC 10
+#define GSS_ENGINEDLON 11
 
 /*
  * Structure of a viewport
@@ -247,6 +248,8 @@ SEXP L_getDLindex();
 SEXP L_setDLindex(SEXP index);
 SEXP L_getDLon();
 SEXP L_setDLon(SEXP value);
+SEXP L_getEngineDLon();
+SEXP L_setEngineDLon(SEXP value);
 SEXP L_currentGPar();
 SEXP L_newpagerecording(SEXP ask);
 SEXP L_newpage();

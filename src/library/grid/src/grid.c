@@ -830,6 +830,23 @@ SEXP L_setDLon(SEXP value)
     return R_NilValue;
 }
 
+SEXP L_getEngineDLon()
+{
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    return gridStateElement(dd, GSS_ENGINEDLON);
+}
+
+SEXP L_setEngineDLon(SEXP value)
+{
+    /* Get the current device 
+     */
+    GEDevDesc *dd = getDevice();
+    setGridStateElement(dd, GSS_ENGINEDLON, value);
+    return R_NilValue;
+}
+
 SEXP L_currentGPar()
 {
     /* Get the current device 

@@ -350,6 +350,10 @@ record.down <- function(x) {
   inc.display.list()
 }
 
+# This controls whether grid is using the graphics engine's display list
+engine.display.list <- function(on=TRUE) {
+  grid.Call("L_setEngineDLon", as.logical(on))
+}
 
 # Wrapper for .Call and .Call.graphics
 # Used to make sure that grid-specific initialisation occurs just before
@@ -364,7 +368,15 @@ grid.Call <- function(fnname, ...) {
 }
 
 grid.Call.graphics <- function(fnname, ...) {
-  .Call.graphics("L_gridDirty", PACKAGE="grid")
-  .Call.graphics(fnname, ..., PACKAGE="grid")
+  # Only record graphics operations on the graphics engine's display
+  # list if the engineDLon flag is set
+  engineDLon <- grid.Call("L_getEngineDLon")
+  if (engineDLon) {
+    .Call.graphics("L_gridDirty", PACKAGE="grid")
+    .Call.graphics(fnname, ..., PACKAGE="grid")
+  } else {
+    .Call("L_gridDirty", PACKAGE="grid")
+    .Call(fnname, ..., PACKAGE="grid")
+  }
 }
 
