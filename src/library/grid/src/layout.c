@@ -93,7 +93,8 @@ void allocateKnownWidths(SEXP layout,
 	if (!relativeWidths[i]) {
 	    npcWidths[i] = transformWidth(widths, i, parentContext,
 					  parentgc,
-					  parentWidthCM, parentHeightCM, dd);
+					  parentWidthCM, parentHeightCM, dd)/
+		(parentWidthCM/2.54);
 	    *widthLeftCM -= npcWidths[i]*parentWidthCM;
 	}
 }
@@ -112,7 +113,8 @@ void allocateKnownHeights(SEXP layout,
 	if (!relativeHeights[i]) {
 	    npcHeights[i] = transformHeight(heights, i, parentContext,
 					    parentgc,
-					    parentWidthCM, parentHeightCM, dd);
+					    parentWidthCM, parentHeightCM, dd)/
+		(parentHeightCM/2.54);
 	    *heightLeftCM -= npcHeights[i]*parentHeightCM;
 	}
 }
@@ -244,7 +246,8 @@ void allocateRespected(SEXP layout,
 						  parentgc,
 						  tempWidthCM, 
 						  tempHeightCM, 
-						  dd);
+						  dd)/
+			(tempWidthCM/2.54);
 		    *reducedWidthCM -= npcWidths[i] * tempWidthCM;
 		    npcWidths[i] = npcWidths[i]*hmult;
 		    UNPROTECT(1);
@@ -261,7 +264,8 @@ void allocateRespected(SEXP layout,
 						    parentgc,
 						    tempWidthCM, 
 						    tempHeightCM,
-						    dd);
+						    dd)/
+			(tempHeightCM/2.54);
 		    *reducedHeightCM -= npcHeights[i] * tempHeightCM;
 		    npcHeights[i] = npcHeights[i]*vmult;
 		    UNPROTECT(1);
