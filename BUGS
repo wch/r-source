@@ -298,3 +298,7 @@ Date: Mon, 3 Jan 2000 22:45:18 +0100 (MET)
 Subject: formatC (bug and fix)
 From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
 Date: Tue, 4 Jan 2000 10:31:53 +0100
+* PR# 395 *
+Subject: bug in glm.fit
+From: Peter Holzer <holzer@stat.math.ethz.ch>
+Date: Wed, 5 Jan 2000 19:08:23 +0100 (MET)
