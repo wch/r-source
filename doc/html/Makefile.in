@@ -28,7 +28,7 @@ INSTFILES = \
 ## build-help really should not create package.html in *this* directory.
 CLEANFILES = packages.html packages-foot.html
 ## </FIXME>
-DISTFILES = Makefile.in $(INSTFILES) index-default.html
+DISTFILES = Makefile.in $(INSTFILES) index-default.html R-admin.html
 SUBDIRS = search
 
 OBJECTS = index.html

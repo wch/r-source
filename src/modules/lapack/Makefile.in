@@ -12,7 +12,7 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 SOURCES_C = Lapack.c
-SOURCES_F = \
+SOURCES_F_BASE = \
   dbdsqr.f dgebak.f dgebal.f dgebd2.f dgebrd.f dgecon.f dgees.f dgeesx.f \
   dgeev.f dgeevx.f dgehd2.f dgehrd.f dgelq2.f dgelqf.f dgeqr2.f dgeqrf.f \
   dgesc2.f dgesvd.f dhseqr.f dlabad.f dlabrd.f dlacon.f dlacpy.f dladiv.f \
@@ -24,7 +24,8 @@ SOURCES_F = \
   dorgbr.f dorghr.f dorgl2.f dorglq.f dorgql.f dorgqr.f dorgtr.f dorm2r.f \
   dormbr.f dorml2.f dormlq.f dormqr.f drscl.f dsteqr.f dsterf.f dsyev.f \
   dsytd2.f dsytrd.f dtrevc.f dtrexc.f dtrsen.f dtrsna.f dtrsyl.f \
-  ieeeck.f ilaenv.f @COMPILE_DOUBLE_COMPLEX_FALSE@ \
+  ieeeck.f ilaenv.f
+SOURCES_F_DOUBLE_COMPLEX = \
   zgeqp3.f zgeqr2.f zgeqrf.f zgeru.f zgesv.f zgetf2.f zgetrf.f zgetrs.f \
   dlapy3.f zlacgv.f zladiv.f zlaqp2.f zlaqps.f zlarf.f zlarfb.f zlarfg.f \
   zlarft.f zlaswp.f ztrtrs.f zunm2r.f zunmqr.f \
@@ -32,21 +33,28 @@ SOURCES_F = \
   zlacpy.f \
   zlange.f zlascl.f zlaset.f zlasr.f zlassq.f zungbr.f zunglq.f zungl2.f \
   zungqr.f zungrq.f zungr2.f zung2r.f zunmbr.f zunmlq.f zunml2.f
+SOURCES_F = $(SOURCES_F_BASE) \
+  @COMPILE_DOUBLE_COMPLEX_FALSE@ $(SOURCES_F_DOUBLE_COMPLEX)
 
-SOURCES_BLAS = \
-   dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f \
-   @COMPILE_DOUBLE_COMPLEX_FALSE@ dznrm2.f izamax.f \
+SOURCES_BLAS_BASE = \
+   dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f
+SOURCES_BLAS_DOUBLE_COMPLEX = \
+   dznrm2.f izamax.f \
    zcopy.f zdscal.f zgemm.f zgemv.f zgerc.f zswap.f zscal.f \
    ztrmm.f ztrmv.f ztrsm.f
+SOURCES_BLAS = $(SOURCES_BLAS_BASE) \
+  @COMPILE_DOUBLE_COMPLEX_FALSE@ $(SOURCES_BLAS_DOUBLE_COMPLEX)
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
   @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.o)
-HEADERS = 
+HEADERS = Lapack.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	Makefile.in $(SOURCES) $(HEADERS)
+	Makefile.in Makefile.win dllversion.rc $(HEADERS) $(SOURCES_C) \
+	$(SOURCES_F_BASE) $(SOURCES_F_DOUBLE_COMPLEX) \
+	$(SOURCES_BLAS_BASE) $(SOURCES_BLAS_DOUBLE_COMPLEX)
 
 ## FIXME:
 ## Change to `lapack.la' when using libtool for shlibs.
