@@ -6,7 +6,7 @@ stars <-
 function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	 labels = dimnames(x)[[1]], locations = NULL,
          nrow = NULL, ncol = NULL, len = 1,
-         key.loc = NULL, key.labels = NULL, key.xpd = TRUE,
+         key.loc = NULL, key.labels = dimnames(x)[[2]], key.xpd = TRUE,
          xlim = NULL, ylim = NULL, flip.labels = NULL,
          draw.segments = FALSE, col.segments = 1:n.seg,
          col.stars = NA,
@@ -94,24 +94,13 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     plot(0, type="n", ..., xlim=xlim, ylim=ylim,
 	 main = main, sub = sub, xlab = xlab, ylab=ylab, asp = 1, axes = axes)
 
-    if(!is.null(labels)) {
-        ## vertical text offset from center
-        y.off <- (mx * (if(full) 1 else 0.1)) +
-            (if(flip.labels) cex*par("cxy")[2] *
-             ((1:n.loc)%%2 - if(full) .4 else 0) else 0)
-        ##DBG cat("mx=",format(mx),"y.off:"); str(y.off)
-    }
-
     s.x <- xloc + x * rep(cos(angles), rep(n.loc,n.seg))
     s.y <- yloc + x * rep(sin(angles), rep(n.loc,n.seg))
 
     if ( draw.segments ) {
         aangl <- c(angles, if(full)2*pi else pi)
-	## for each location, draw a segment diagram
-	for (i in 1:n.loc) {
+	for (i in 1:n.loc) { ## for each location, draw a segment diagram
 	    px <- py <- numeric()
-
-### FIXME : do without the following inner loop! (same FIXME for "key")
 	    for (j in 1:n.seg) {
 		k <- seq(from = aangl[j], to = aangl[j+1], by = 1*deg)
 		px <- c(px, xloc[i], s.x[i,j], x[i,j]*cos(k) + xloc[i], NA)
@@ -120,8 +109,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	    polygon(px, py, col = col.segments, lwd=lwd, lty=lty)
 	}
     } # Segment diagrams
-    else { # Draw stars instead
 
+    else { # Draw stars instead
 	for (i in 1:n.loc) {
 	    polygon(s.x[i,], s.y[i,], lwd=lwd, lty=lty, col = col.stars[i])
 	    if (radius)
@@ -131,47 +120,44 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	}
     }
 
-    if (!is.null(labels))
+    if(!is.null(labels)) {
+        ## vertical text offset from center
+        y.off <- mx * (if(full) 1 else 0.1)
+        if(flip.labels)
+            y.off <- y.off + cex*par("cxy")[2] *
+                ((1:n.loc)%%2 - if(full) .4 else 0)
+        ##DBG cat("mx=",format(mx),"y.off:"); str(y.off)
         text(xloc, yloc - y.off, labels, cex=cex, adj=c(0.5, 1))
+    }
 
     if ( !is.null(key.loc) ) { ## Draw unit key
-        ## allow drawing outside plot region (inside figure region):
+
+        ## usually allow drawing outside plot region:
         par(xpd = key.xpd) # had `xpd' already above
-        key.x.coord <- cos(angles) * len + key.loc[1]
-        key.y.coord <- sin(angles) * len + key.loc[2]
-	if ( draw.segments ) {
+        key.x <- len * cos(angles) + key.loc[1]
+        key.y <- len * sin(angles) + key.loc[2]
+	if (draw.segments) {
 	    px <- py <- numeric()
 	    for (j in 1:n.seg) {
-		px <- c(px, key.loc[1],key.x.coord[j])
-		py <- c(py, key.loc[2],key.y.coord[j])
-		k <- angles[j] + deg
-		next.angle <- aangl[j+1]
-		while (k < next.angle) {
-		    px <- c(px, len * cos(k) + key.loc[1])
-		    py <- c(py, len * sin(k) + key.loc[2])
-		    k <- k + deg
-		}
-		px <- c(px, len * cos(next.angle) + key.loc[1], NA)
-		py <- c(py, len * sin(next.angle) + key.loc[2], NA)
+		k <- seq(from = aangl[j], to = aangl[j+1], by = 1*deg)
+		px <- c(px, key.loc[1], key.x[j], len * cos(k) + key.loc[1], NA)
+		py <- c(py, key.loc[2], key.y[j], len * sin(k) + key.loc[2], NA)
 	    }
 	    polygon(px, py, col = col.segments, lwd=lwd, lty=lty)
 	}
 	else { # draw unit star
-	    polygon(key.x.coord, key.y.coord, lwd=lwd, lty=lty)
+	    polygon(key.x, key.y, lwd=lwd, lty=lty)
 	    if (radius)
 		segments(rep(key.loc[1],n.seg), rep(key.loc[2],n.seg),
-			 key.x.coord, key.y.coord, lwd=lwd, lty=lty)
+			 key.x, key.y, lwd=lwd, lty=lty)
 	}
-	if (is.null(key.labels))
-	    key.labels <- dimnames(x)[[2]]
 
+        ## Radial Labeling -- should this be a standalone function ?
 	lab.angl <- angles +
             if(draw.segments) (angles[2] - angles[1]) / 2 else 0
-
-	label.x <- cos(lab.angl) * len * 1.1 + key.loc[1]
-	label.y <- sin(lab.angl) * len * 1.1 + key.loc[2]
-
-        ##-- FIXME : Do the following witout loop {need not use adj but ..)!
+	label.x <- 1.1 * len * cos(lab.angl) + key.loc[1]
+	label.y <- 1.1 * len * sin(lab.angl) + key.loc[2]
+        ## Maybe do the following without loop {need not use adj but ..)!
 	for (k in 1:n.seg) {
 	    text.adj <-
                 c(## horizontal
@@ -185,7 +171,6 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
                   else ## lab.angl[k] > 270*deg
                   1 - (lab.angl[k] - 270*deg) / (180*deg)
                   )
-
 	    text(label.x[k], label.y[k],
                  labels= key.labels[k], cex = cex, adj = text.adj)
 	}
