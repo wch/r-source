@@ -35,6 +35,9 @@ BUG FIXES
 
     o   exp_rand would go into an infinite loop if unif_rand returned 0.
 
+    o   formatC(x, format="fg") could return exponential format if
+	rounding pushed x over a positive power of 10. (PR#2299)
+
 
 
 		CHANGES IN R VERSION 1.6.1
