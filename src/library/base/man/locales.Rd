@@ -14,7 +14,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   \item{category}{character string. Must be one of \code{"LC_ALL"},
     \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"},
     \code{"LC_NUMERIC"} or \code{"LC_TIME"}.}
-  \item{locale}{character string. A valid locale name on the system in
+  \item{locale}{character string.  A valid locale name on the system in
     use. Normally \code{""} (the default) will pick up the default
     locale for the system.}
 }
@@ -22,10 +22,11 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   The locale describes aspects of the internationalization of a program.
   Initially most aspects of the locale of \R are set to \code{"C"} (which
   is the default for the C language and reflects North-American usage).
-  \R does set \code{"LC_CTYPE"} and \code{"LC_COLLATE"}, which allow the
-  use of a different character set (typically ISO Latin 1) and alphabetic
+  \R sets \code{"LC_CTYPE"} and \code{"LC_COLLATE"}, which allow the
+  use of a different character set and alphabetic
   comparisons in that character set (including the use of
-  \code{\link{sort}}) and \code{"LC_TIME"} may affect
+  \code{\link{sort}}), \code{"LC_MONETARY"} (for use by
+  \code{\link{Sys.localeconv}}) and \code{"LC_TIME"} may affect
   the behaviour of \code{\link{as.POSIXlt}} and \code{\link{strptime}}
   and functions which use them (but not \code{\link{date}}).
 
@@ -34,6 +35,10 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   Some systems will have other locale categories, but the six described
   here are those specified by POSIX.
+
+  Note that setting \code{"LC_ALL"} as from \R 2.1.0 sets only
+  \code{"LC_COLLATE"}, \code{"LC_CTYPE"}, \code{"LC_MONETARY"} and
+  \code{"LC_TIME"}.
 }
 \value{
   A character string of length one describing the locale in use (after
@@ -50,13 +55,16 @@ Sys.setlocale(category = "LC_ALL", locale = "")
   machine.
 }
 \section{Warning}{
-  Setting \code{"LC_NUMERIC"} can produce output that \R cannot then
-  read by \code{scan} or \code{read.table} with their default arguments,
-  which are not locale-specific.
+  Setting \code{"LC_NUMERIC"} may cause \R to function
+  anomalously, so gives a warning.  (The known problems are with
+  input conversion in locales with \code{,} as the decimal point.)
+  Setting it temporarily to produce graphical or text output may work
+  well enough.
 }
 \seealso{
   \code{\link{strptime}} for uses of \code{category = "LC_TIME"}.
-  \code{\link{Sys.localeconv}} for details of numerical representations.
+  \code{\link{Sys.localeconv}} for details of numerical and monetary
+  representations.
 }
 \examples{
 Sys.getlocale()

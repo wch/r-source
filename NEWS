@@ -325,6 +325,10 @@ NEW FEATURES
     o	The default in options("expressions") has been increased to 5000,
 	and the maximal settable value to 500000.
 
+    o	Sys.setlocale("LC_ALL", ) now only sets the locale categories
+	which R uses, and Sys.setlocale("LC_NUMERIC", ) now gives a
+	warning (as it can cause R to malfunction).
+
 
 INTERNATIONALIZATION
 
@@ -530,9 +534,9 @@ DEPRECATED & DEFUNCT
 
     o	Option "repositories" is no longer used and so not set.
 
-    o	loadURL() is now deprecated.
+    o	loadURL() is deprecated.
 
-    o 	delay() is now deprecated.
+    o 	delay() is deprecated.
 
 
 INSTALLATION CHANGES
@@ -565,7 +569,7 @@ INSTALLATION CHANGES
 	afm files are now in package grDevices.
 
     o	R is now linked against ncurses/termlib/termcap only if
-	readline is specified (the default) and that requires it.
+	readline is specified (now the default) and that requires it.
 
     o	Makeinfo 4.7 or later is now required for building the HTML and
 	Info versions of the manuals.
