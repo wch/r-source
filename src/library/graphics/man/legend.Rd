@@ -9,7 +9,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
        xjust = 0, yjust = 1, x.intersp = 1, y.intersp = 1,
        adj = c(0, 0.5), text.width = NULL, text.col = par("col"),
        merge = do.lines && has.pch, trace = FALSE,
-       plot = TRUE, ncol = 1, horiz = FALSE, title = NULL, 
+       plot = TRUE, ncol = 1, horiz = FALSE, title = NULL,
        inset = 0)
 }
 \description{
@@ -53,8 +53,8 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
   \item{x.intersp}{character interspacing factor for horizontal (x) spacing.}
   \item{y.intersp}{the same for vertical (y) line distances.}
   \item{adj}{numeric of length 1 or 2; the string adjustment for legend
-      text.  Useful for y-adjustment when \code{labels} are
-      \link{plotmath} expressions.}
+    text.  Useful for y-adjustment when \code{labels} are
+    \link{plotmath} expressions.}
   \item{text.width}{the width of the legend text in x (\code{"user"})
     coordinates.
     Defaults to the proper value computed by \code{\link{strwidth}(legend)}.}
@@ -67,13 +67,13 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
     sizes are returned.}
   \item{ncol}{the number of columns in which to set the legend items
     (default is 1, a vertical legend).}
-  \item{horiz}{logical; if \code{TRUE}, set the legend horizontally rather than
-     vertically (specifying \code{horiz} overrides the \code{ncol}
-     specification).}
+  \item{horiz}{logical; if \code{TRUE}, set the legend horizontally
+    rather than vertically (specifying \code{horiz} overrides the \code{ncol}
+    specification).}
   \item{title}{a text value giving a title to be placed at the top of the
-     legend.}
-  \item{inset}{inset distance(s) from the margins as a fraction of the plot
-          region when legend is placed by keyword.}
+    legend.}
+  \item{inset}{inset distance(s) from the margins as a fraction of the
+    plot region when legend is placed by keyword.}
 
 }
 \details{
@@ -89,7 +89,7 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
   legend.  If it gives the coordinates of two points, these specify
   opposite corners of the rectangle (either pair of corners, in any
   order).
-  
+
   The location may also be specified by setting \code{x} to a single
   keyword from the list \code{"bottomright"}, \code{"bottom"},
   \code{"bottomleft"}, \code{"left"}, \code{"topleft"},
