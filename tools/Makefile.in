@@ -28,7 +28,6 @@ DISTFILES = README \
 	ltmain.sh \
 	mdate-sh \
 	missing \
-	mkinstalldirs \
 	move-if-change \
 	pkg2tex.pl \
 	rsync-recommended

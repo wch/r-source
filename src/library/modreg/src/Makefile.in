@@ -38,9 +38,9 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 shlib: $(SHLIB)
-	@$(top_srcdir)/tools/mkinstalldirs \
+	@$(SHELL) $(top_srcdir)/src/scripts/mkinstalldirs \
 	  $(top_builddir)/library/$(pkg)/libs
-	@$(top_srcdir)/tools/copy-if-change $(SHLIB) \
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(SHLIB) \
 	  $(top_builddir)/library/$(pkg)/libs/$(SHLIB)
 
 include $(top_srcdir)/share/make/shlib.mk
