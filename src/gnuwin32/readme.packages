@@ -11,14 +11,15 @@ from http://www.mingw.org/ or
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of make, sh, cat, cp, diff, echo, g(awk),
 mkdir, mv, rm, sed; we have packaged a set at
-http://www.stats.ox.ac.uk/pub/bdr/RWin/tools.zip extracted from the
-cygwin distribution (http://sourceware.cygnus.com/cygwin and several
-mirrors) or (make) compiled from the GNU sources ourselves.  
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip extracted from the
+cygwin distribution (http://sourceware.cygnus.com/cygwin/mirrors.html)
+or (make, gzip, tar) compiled from the sources.
 
 BEWARE: Most `native' ports of make are _not_ suitable, and the 18 Jan
-2000 cygwin port crashes when building packages.  There are other
-problems with version 1.1.1 of the cygwin1.dll.  To avoid frustration,
-please use our tool set.
+2000 cygwin port of make crashes when building packages.  There are
+also problems with version 1.1.1 of the cygwin1.dll and we have used a
+later snapshot of the DLL.  To avoid frustration, please use our tool
+set.
 
 
 It is also possible to use the compilers from the cygwin 1.1 release
@@ -28,18 +29,18 @@ version of cygwin1.dll in your path, and there is one in our tools
 distribution.)  We have also successfully used the variant of mingw32
 that uses the MSVCRT run-time system (under gcc-2.95.x but not earlier
 versions), and in the case of the mclust library we found this more
-successful that the standard version.  Be aware that many Windows 95
+successful than the standard version.  Be aware that many Windows 95
 machines do not have MSVCRT.DLL installed.
 
-perl5, available via http://www.perl.com/CPAN/ports.
+perl5, available via http://www.activestate.com/Products/ActivePerl/
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
-http://msdn.microsoft.com/workshop/author/htmlhelp.
+http://msdn.microsoft.com/workshop/author/htmlhelp/.
 
 If you want to make Window help files you will need hcrtf.exe from a
 Windows compiler installation (this has been available for download at
-ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe), or hcp505.exe.
+ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe).
 
 For large packages it is helpful to make zipped help and/or data
 files: for that you need zip and unzip from the Info-ZIP project
@@ -206,9 +207,9 @@ be omitted.
 You will need 
 
 suitable versions of make, sh, rm, sed, awk, mkdir, echo, cp and cat;
-we have packaged a set at http://www.stats.ox.ac.uk/pub/bdr/RWin/tools.zip.
+we have packaged a set at http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
 
-perl5, available via http://www.perl.com/CPAN/ports.
+perl5, available via http://www.activestate.com/Products/ActivePerl/
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.

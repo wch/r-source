@@ -2,8 +2,9 @@ R @RVER@ for Windows
 ====================
 
 This distribution contains the sources to build a port of R-@RVER@ to
-run on Windows 95, 98, NT4 and 2000 on Intel/clone chips. See readme
-for fuller details, including how to install the binary versions.
+run on Windows 95, 98, NT4 and 2000 on Intel/clone chips. See the file
+readme for fuller details, including how to install the binary
+versions.
 
 
 Building From Source on Windows
@@ -21,14 +22,17 @@ from http://www.mingw.org/ or
 ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32.  You will also
 need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
 egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed, touch; we use those
-from the cygwin distribution (http://sourceware.cygnus.com/cygwin and
-several mirrors) or (make) compiled from the GNU sources ourselves.
-We have packaged a set at
-http://www.stats.ox.ac.uk/pub/bdr/RWin/tools.zip.  BEWARE: Most
-`native' ports of make are not suitable (including that at the mingw32
-site), nor is the make dated 18-Jan-2000 in the Cygwin 1.1 net
-release.  There are other problems with version 1.1.1 of the
-cygwin1.dll.
+from the cygwin distribution
+(http://sourceware.cygnus.com/cygwin/mirrors.html) or (make, gzip,
+tar) compiled from the sources.  We have packaged a set at
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+
+BEWARE: Most `native' ports of make are not suitable (including that
+at the mingw32 site), nor is the make dated 18-Jan-2000 in the Cygwin
+1.1 net release. (We supply a patched version of the Cygwin make.)
+There are also problems with version 1.1.1 of the cygwin1.dll and we
+have used a later snapshot of the DLL. To avoid frustration, please
+use our tool set.
 
 It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
@@ -38,11 +42,11 @@ that to build packages.  You will need to ensure that you have
 only one version of cygwin1.dll in your path (and there is one in our
 tools distribution).
 
-We have also successfully used the variant of
-mingw32 that uses the MSVCRT run-time system.  Be aware that many
-Windows 95 machines do not have MSVCRT.DLL installed.
+We have also successfully used the variant of mingw32 that uses the
+MSVCRT run-time system.  Be aware that many Windows 95 machines do not
+have MSVCRT.DLL installed.
 
-perl5, available via http://www.perl.com/CPAN/ports/.
+perl5, available via http://www.activestate.com/Products/ActivePerl/
 
 zip and unzip from the Info-ZIP project (http://www.info-zip.org and
 mirrors).
@@ -57,6 +61,7 @@ ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe.
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
+
 
 Building
 --------
@@ -118,7 +123,7 @@ can just copy this from a binary distribution.
 Building Tcl/Tk support
 -----------------------
 
-The TclTk support library is not built automatically.  To use this you
+The TclTk support package is not built automatically.  To use this you
 need to install tcl831.exe from dev.scriptics.com, and set TCL_HOME in
 MkRules to where you installed it (perhaps c:/Program Files/Tcl).
 Then
@@ -134,7 +139,7 @@ Cross-building on ix86 Linux
 You will need i386-mingw32 cross-compilers installed and in your path.
 There is currently a complete set of tools at
 
-    http://www.stats.ox.ac.uk/pub/bdr/RWin/i386cross.tar.bz2
+    http://www.stats.ox.ac.uk/pub/Rtools/i386cross.tar.bz2
 
 (Just unpack this somewhere and put its bin directory in your path.)
 
@@ -170,13 +175,14 @@ Building the Manuals
 ====================
 
 To make the PDF versions of the manuals you will need pdftex installed
-and configured to work with a large file: see doc/manual/README.  Then the
-pdf manuals can be made by
+and configured to work with a large file: see doc/manual/README.  You
+also need texindex (included in our tool set).  Then the pdf manuals
+can be made by
 
 	make docs
 
 If you want to make the info versions, you will need a version of
-makeinfo 4.0 for Windows and texindex. Then
+makeinfo 4.0 (included in our tool set). Then
 
 	cd ../../doc/manuals
 	make -f Makefile.win info
@@ -188,9 +194,9 @@ There is no provision to make DVI versions of the manuals, although
 
 The fptex distribution of TeX (from
 ftp://ftp.ese-metz.fr/pub/tex/win32-beta/fptex-0.4alpha3/ at present)
-includes both pdftex and makeinfo 4.0 (in texinfo.zip).  (The cygwin
-makeinfo, even in release 1.1, is 3.12, but the fptex version is
-supplied in our tools.zip.)
+includes pdftex and makeinfo 4.0 and texindex (in texinfo.zip).  (The
+cygwin makeinfo, even in release 1.1, is 3.12, but the fptex version
+is supplied in our tools.zip.)
 
 
 
