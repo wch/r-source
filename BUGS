@@ -405,3 +405,7 @@ Date: Thu, 16 Sep 1999 22:43:34 +0200 (MET DST)
 Subject: mtext(. col = ...) stopped working in 0.65.0
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 17 Sep 1999 15:10:40 +0200
+* PR# 282 *
+Subject: Re: lambda error update
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 18 Sep 1999 11:44:26 +0200
