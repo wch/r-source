@@ -31,8 +31,8 @@ function(dir)
     docsExts <- c("Rd", "rd")
     files <- listFilesWithExts(docsDir, docsExts, path = FALSE)
     if(basename(dir) == "base") {
-        baseStopList <- c("Devices.Rd") # add more if needed
-	files <- files[-grep(baseStopList, files, ignore.case = TRUE)]
+        baseStopList <- c("Defunct.Rd", "Deprecated.Rd", "Devices.Rd")
+	files <- files[!files %in% baseStopList]
     }
     files <- file.path(docsDir, files)
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
