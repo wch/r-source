@@ -136,13 +136,14 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 				for(nc=0; nc<ncols(retval); nc++){
 				    SET_STRING_ELT(retval2,
 						   nr+nc*nrows(retval2),
-						   mkChar(CHAR(STRING_ELT(retval,
-									  nr+nc*nrows(retval)))));
+						   STRING_ELT(retval,
+							      nr+nc*nrows(retval)));
 				}
 			    }
 			}
 			UNPROTECT_PTR(retval);
-			UNPROTECT_PTR(what);			retval = retval2;
+			UNPROTECT_PTR(what);
+			retval = retval2;
 			what=what2;
 			need = strlen(line+regmatch[0].rm_eo);
 			if(buflen < need){
