@@ -302,7 +302,7 @@ function(packages = NULL, FUN, ...)
     ## The default corresponds to all installed packages with high
     ## priority.
     if(is.null(packages))
-        packages <- installed.packages(priority = "high")[ , 1]
+        packages <- unique(installed.packages(priority = "high")[ , 1])
     out <- lapply(packages, FUN, ...)
     names(out) <- packages
     out
