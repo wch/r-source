@@ -52,6 +52,9 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   Function \code{\link[MASS]{write.matrix}} in package \pkg{MASS}
   may be much more efficient if \code{x} is a matrix or can be
   represented in a numeric matrix.
+
+  If the table has no columns the rownames will be written if
+  \code{row=TRUE}, and vice versa.
 }
 
 \seealso{

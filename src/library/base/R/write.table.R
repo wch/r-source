@@ -7,7 +7,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if(!is.data.frame(x))
 	x <- data.frame(x)
-	
+
+    nocols <- NCOL(x)==0
+    if (nocols) quote <- FALSE
+    
     if(is.logical(quote) && quote)
 	quote <- which(unlist(lapply(x, function(x)
                                      is.character(x) || is.factor(x))))
@@ -18,10 +21,12 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
            x[num] <- lapply(x[num],
                             function(z) gsub("\\.", ",", as.character(z)))
     }
-    i <- is.na(x)
     x <- as.matrix(x)
-    if(any(i))
-        x[i] <- na
+    if (!nocols){
+        i <- is.na(x)
+        if(any(i))
+            x[i] <- na
+    }
     p <- ncol(x)
     d <- dimnames(x)
 
@@ -79,6 +84,9 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
         writeLines(paste(col.names, collapse = sep), file, sep = eol)
     }
 
+    if (NROW(x) == 0)
+        return(invisible(x))
+    
     qstring <-                          # quoted embedded quote string
         switch(qmethod,
                "escape" = '\\\\"',
@@ -86,8 +94,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     for(i in quote)
 	x[, i] <- paste('"', gsub('"', qstring, as.character(x[, i])),
                         '"', sep = "")
-
-    writeLines(paste(c(t(x)), c(rep.int(sep, ncol(x) - 1), eol),
-                     sep = "", collapse = ""),
-               file, sep = "")
+    if (ncol(x))
+        writeLines(paste(c(t(x)), c(rep.int(sep, ncol(x) - 1), eol),
+                         sep = "", collapse = ""),
+                   file, sep = "")
+    else
+        cat(eol,file=file)
 }
