@@ -24,7 +24,7 @@
 
 AC_PREREQ(2.57)
 
-AC_REVISION($Revision: 1.87 $)
+AC_REVISION($Revision: 1.88 $)
 
 ## We want to get the version number from file 'VERSION' (rather than
 ## specifying the version info in 'configure.ac'.  Hence, we need a bit
@@ -1284,6 +1284,7 @@ AC_CONFIG_FILES(
   src/library/tcltk/src/Makefile
   src/library/tools/DESCRIPTION
   src/library/tools/Makefile
+  src/library/tools/src/Makefile
   src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
