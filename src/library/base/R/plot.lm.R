@@ -36,15 +36,15 @@ function(x, which = 1:4,
     else {
 	id.n <- as.integer(id.n)
 	if(id.n < 0 || id.n > n)
-	    stop(paste("`id.n' must be in { 1,..,",n,"}"))
+	    stop("`id.n' must be in {1,..,",n,"}")
     }
-    if(id.n > 0) {
+    if(id.n > 0) { ## label the largest residuals
         if(is.null(labels.id))
             labels.id <- paste(1:n)
         iid <- 1:id.n
-	show.r <- order(-abs(r))[iid]
+	show.r <- sort.list(abs(r), decreasing = TRUE)[iid]
         if(any(show[2:3]))
-            show.rs <- order(-abs(rs))[iid]
+            show.rs <- sort.list(abs(rs), decreasing = TRUE)[iid]
         text.id <- function(x,y, ind, adj.x = FALSE)
             text(x - if(adj.x) strwidth(" ")*cex.id else 0, y, labels.id[ind],
                  cex = cex.id, xpd = TRUE, adj = if(adj.x) 1)
@@ -72,7 +72,7 @@ function(x, which = 1:4,
 	}
 	abline(h = 0, lty = 3, col = "gray")
     }
-    if (show[2]) {
+    if (show[2]) { ## Normal
 	ylim <- range(rs, na.rm=TRUE)
 	ylim[2] <- ylim[2] + diff(ylim) * 0.075
 	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
