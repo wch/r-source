@@ -50,11 +50,14 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
             stop("argument `package' must be of length 1")
 	pkgname <- paste("package", package, sep = ":")
 	if(is.na(match(pkgname, search()))) {
-            ## check for the methods package before attaching this package.
-            ## Only if it is _already_ here do we do cacheMetaData
-            ## The methods package caches all other libs when it is attached.
-            ## Note for detail: this does _not_ test whether dispatch is currently
-            ## on, but rather whether the package is attached (cf .isMethodsDispachOn)
+            ## Check for the methods package before attaching this
+            ## package.
+            ## Only if it is _already_ here do we do cacheMetaData.
+            ## The methods package caches all other libs when it is
+            ## attached. 
+            ## Note for detail: this does _not_ test whether dispatch is
+            ## currently on, but rather whether the package is attached
+            ## (cf .isMethodsDispachOn).
             hasMethods <- !is.na(match("package:methods", search()))
             pkgpath <- .find.package(package, lib.loc, quiet = TRUE,
                                      verbose = verbose)
@@ -280,8 +283,7 @@ function(all.available = FALSE, lib.loc = NULL)
         for(lib in lib.loc) {
             a <- list.files(lib, all.files = FALSE, full.names = FALSE)
             for(nam in a) {
-                if(file.exists(file.path(lib, nam, "R", nam))
-                   || file.exists(file.path(lib, nam, "data")))
+                if(file.exists(file.path(lib, nam, "DESCRIPTION")))
                     ans <- c(ans, nam)
             }
         }
