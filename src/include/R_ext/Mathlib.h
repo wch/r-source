@@ -204,6 +204,8 @@
 #define dweibull	Rf_dweibull
 #define dwilcox		Rf_dwilcox
 #define fastchoose	Rf_fastchoose
+#define bd0       	Rf_bd0
+#define stirlerr       	Rf_stirlerr
 #define fcube		Rf_fcube
 #define fmax2		Rf_fmax2
 #define fmin2		Rf_fmin2
@@ -547,7 +549,8 @@ double	chebyshev_eval(double, double *, int);
 	/* Gamma and Related Functions */
 
 void	gammalims(double*, double*);
-double	lgammacor(double);
+double	lgammacor(double);/* log(gamma) correction */
+double  stirlerr(int);/* Stirling expansion "error"  */
 double	gammafn(double);
 double	gamma_cody(double);
 double	lgammafn(double);
@@ -561,6 +564,9 @@ double	choose(double, double);
 double	lchoose(double, double);
 double	fastchoose(double, double);
 double	lfastchoose(double, double);
+
+
+double  bd0(double, double);
 
 	/* Bessel Functions of All Kinds */
 

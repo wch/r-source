@@ -34,6 +34,11 @@
  *
  *    This routine is a translation into C of a Fortran subroutine
  *    written by W. Fullerton of Los Alamos Scientific Laboratory.
+ *
+ *  SEE ALSO
+ *
+ *    Loader(1999)'s stirlerr() {in ./stirlerr.c} is *very* similar in spirit,
+ *    is faster and cleaner, but is only defined for integers.
  */
 
 #include "nmath.h"
