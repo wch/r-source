@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.159 $ ';
+my $revision = ' $Revision: 1.160 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1460,10 +1460,11 @@ sub check_pkg {
 	    $log->error();
 	    $log->print("Running examples in ${pkgname}-Ex.R failed.\n");
 	    ## Try to spot the offending example right away.
-	    open(FILE, "< ${pkgname}-Ex.Rout");
-	    my @lines = <FILE>;
-	    close(FILE);
-	    my $txt = join("", @lines);
+	    my $txt = join("\n", &read_lines("${pkgname}-Ex.Rout"));
+	    #open(FILE, "< ${pkgname}-Ex.Rout");
+	    #my @lines = <FILE>;
+	    #close(FILE);
+	    #my $txt = join("", @lines);
 	    ## Look for the header section anchored by a subsequent call
 	    ## to flush(): needs to be kept in sync with the code in
 	    ## massage-Examples.pl.  Should perhaps also be more
@@ -1472,7 +1473,7 @@ sub check_pkg {
 	    if($#chunks > 1) {
 		$log->print("The error most likely occurred in:\n\n");
 		$log->print($chunks[$#chunks - 1]);
-		$log->print($chunks[$#chunks]);
+		$log->print($chunks[$#chunks] . "\n");
 	    }
 	    exit(1);
 	}
@@ -1480,14 +1481,15 @@ sub check_pkg {
 	## being, report warnings about use of deprecated functions, as
 	## the next release will make them defunct and hence using them
 	## an error.
-	open(FILE, "< ${pkgname}-Ex.Rout");
-	my @lines = <FILE>;
-	close(FILE);
+	my @lines = &read_lines("${pkgname}-Ex.Rout");
+	#open(FILE, "< ${pkgname}-Ex.Rout");
+	#my @lines = <FILE>;
+	#close(FILE);
 	@lines = grep(/^Warning: .*is deprecated.$/, @lines);
 	if($#lines >= 0) {
 	    $log->warning();
 	    $log->print("Found the following significant warnings:\n");
-	    $log->print("  " . join("\n  ", @lines));
+	    $log->print("  " . join("\n  ", @lines) . "\n");
 	    $log->print(wrap("", "",
 			     ("Deprecated functions may be defunct as",
 			      "soon as of the next release of R.\n",
@@ -1598,9 +1600,9 @@ sub check_pkg {
 	    ## packages, or just base?
 	    my $Rcmd = "library(tools)\n";
 	    if($opt_install) {
-		$Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
-		         "lib.loc = \"$pkgoutdir\", " .
-		         "workdir=\"src\")\n";
+		$Rcmd .= "checkVignettes(package = \"${pkgname}\", " .
+		         "lib.loc = \"${library}\", " .
+		         "workdir = \"src\")\n";
 	    }
 	    else {
 		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
