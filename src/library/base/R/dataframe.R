@@ -201,16 +201,16 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 		if(all(current == new) || all(current == ""))
 		    return(new)
 		stop(paste("mismatch of row names in elements of",
-                           "\"data.frame\", item", i))
+			   "\"data.frame\", item", i))
 	    }
 	else function(current, new, i) {
 	    if(is.null(current)) {
-                if(adup <- any(dup <- duplicated(new <- as.character(new)))) {
-                    warning(paste("some row.names duplicated:",
-                                  paste(which(dup),collapse=","),
-                                  " --> row.names NOT used."))
-                    current
-                } else new
+		if(adup <- any(dup <- duplicated(new <- as.character(new)))) {
+		    warning(paste("some row.names duplicated:",
+				  paste(which(dup),collapse=","),
+				  " --> row.names NOT used."))
+		    current
+		} else new
 	    } else current
 	}
     object <- as.list(substitute(list(...)))[-1]
@@ -452,11 +452,11 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	    if(max(jseq) > nvars) {
 		new.cols <- c(names(x),
 			      paste("V", seq(from = nvars + 1,
-                                             to = max(jseq)),
+					     to = max(jseq)),
 				    sep = ""))
 		if(length(new.cols) - nvars != sum(jseq > nvars))
 		    stop(paste("new columns would leave holes",
-                               "after existing columns"))
+			       "after existing columns"))
 	    }
 	}
     }
@@ -474,15 +474,15 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	else stop(paste(nrowv, "rows in value to replace", n, "rows"))
     }
     else if(nrowv > n)
-        warning(paste("replacement data has", nrowv, "rows to replace",
-                      n, "rows"))
+	warning(paste("replacement data has", nrowv, "rows to replace",
+		      n, "rows"))
     vseq <- 1:n
     ncolv <- dimv[[2]]
     jvseq <- 1:p
     if(ncolv < p) jvseq <- rep(1:ncolv, length=p)
     else if(ncolv > p)
-        warning(paste("provided", ncolv, "variables to replace", p,
-                      "variables"))
+	warning(paste("provided", ncolv, "variables to replace", p,
+		      "variables"))
     if(has.i)
 	for(jjj in 1:p) {
 	    jj <- jseq[jjj]
@@ -520,7 +520,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 		value <- as.data.frame(value)
 	    if(length(value) != 1)
 		stop(paste("trying to replace one column with",
-                           length(value)))
+			   length(value)))
 	    if(length(row.names(value)) != nrows)
 		stop(paste("replacement has", length(value),
 			   "rows, data has", nrows))
@@ -567,7 +567,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	jseq <- match(j, names(x))
 	if(any(is.na(jseq)))
 	    stop(paste("replacing element in non-existent column:",
-                       j[is.na(jseq)]))
+		       j[is.na(jseq)]))
     }
     else if(is.logical(j) || min(j) < 0)
 	jseq <- seq(along = x)[j]
@@ -575,7 +575,7 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
 	jseq <- j
 	if(max(jseq) > nvars)
 	    stop(paste("replacing element in non-existent column:",
-                       jseq[jseq>nvars]))
+		       jseq[jseq>nvars]))
     }
     if(length(iseq) > 1 || length(jseq) > 1)
 	stop("only a single element should be replaced")
@@ -591,28 +591,28 @@ function(x, old.rows, new.rows) {
     nrn <- length(new.rows)
     nr <- nro + nrn
     for (i in seq(length = nc)) {
-        y <- x[[i]]
-        dy <- dim(y)
-        cy <- class(y)
-        class(y) <- NULL
-        if (length(dy) == 2) {
-            dny <- dimnames(y)
-            if (length(dny[[1]]) > 0)
-                dny[[1]] <- c(dny[[1]], new.rows)
-            z <- array(y[1], dim = c(nr, nc), dimnames = dny)
-            z[1 : nro, ] <- y
-            class(z) <- cy
-            x[[i]] <- z
-        }
-        else {
-            ay <- attributes(y)
-            if (length(names(y)) > 0)
-                ay$names <- c(ay$names, new.rows)
-            length(y) <- nr
-            attributes(y) <- ay
-            class(y) <- cy
-            x[[i]] <- y
-        }
+	y <- x[[i]]
+	dy <- dim(y)
+	cy <- class(y)
+	class(y) <- NULL
+	if (length(dy) == 2) {
+	    dny <- dimnames(y)
+	    if (length(dny[[1]]) > 0)
+		dny[[1]] <- c(dny[[1]], new.rows)
+	    z <- array(y[1], dim = c(nr, nc), dimnames = dny)
+	    z[1 : nro, ] <- y
+	    class(z) <- cy
+	    x[[i]] <- z
+	}
+	else {
+	    ay <- attributes(y)
+	    if (length(names(y)) > 0)
+		ay$names <- c(ay$names, new.rows)
+	    length(y) <- nr
+	    attributes(y) <- ay
+	    class(y) <- cy
+	    x[[i]] <- y
+	}
     }
     attr(x, "row.names") <- as.character(c(old.rows, new.rows))
     x
@@ -650,8 +650,8 @@ rbind.data.frame <- function(..., deparse.level = 1)
     n <- length(allargs)
     if(n == 0)
 	return(structure(list(),
-                         class = "data.frame",
-                         row.names = character()))
+			 class = "data.frame",
+			 row.names = character()))
     nms <- names(allargs)
     if(is.null(nms))
 	nms <- character(length(allargs))
@@ -768,7 +768,7 @@ rbind.data.frame <- function(..., deparse.level = 1)
     }
     for(j in 1:nvar) {
 	xj <- value[[j]]
-	if(!has.dim[j] && !inherits(xj, "AsIs") && 
+	if(!has.dim[j] && !inherits(xj, "AsIs") &&
 		(is.character(xj) || is.logical(xj)))
 	    value[[j]] <- factor(xj)
     }
@@ -861,30 +861,30 @@ as.matrix.data.frame <- function (x)
     X
 }
 
-#Math.data.frame <- function(x, ...)
-#{
-#    X <- x
-#    class(X) <- NULL
-#    f <- get(.Generic, mode = "function")
-#    call <- match.call(f, sys.call())
-#    call[[1]] <- as.name(.Generic)
-#    arg <- names(formals(f))[[1]]
-#    call[[arg]] <- as.name("xx")
-#    for(j in names(X)) {
-#	xx <- X[[j]]
-#	if(!is.numeric(xx) && mode(xx) != "complex")
-#	    stop(paste("Non-numeric variable:", j))
-#	X[[j]] <- eval(call)
-#    }
-#    attr(X, "class") <- class(x)
-#    X
-#}
+if(FALSE)
+Math.data.frame <- function(x, ...)
+{
+    X <- x
+    class(X) <- NULL
+    f <- get(.Generic, mode = "function")
+    call <- match.call(f, sys.call())
+    call[[1]] <- as.name(.Generic)
+    arg <- names(formals(f))[[1]]
+    call[[arg]] <- as.name("xx")
+    for(j in names(X)) {
+	xx <- X[[j]]
+	if(!is.numeric(xx) && mode(xx) != "complex")
+	    stop(paste("Non-numeric variable:", j))
+	X[[j]] <- eval(call)
+    }
+    attr(X, "class") <- class(x)
+    X
+}
 
-"Math.data.frame" <-
-function (x, ...) 
+Math.data.frame <- function (x, ...)
 {
     f <- get(.Generic, mode = "function")
-    if (is.null(formals(f))) 
+    if (is.null(formals(f)))
 	f <- function(x, ...) {
 	}
     call <- match.call(f, sys.call())
@@ -893,7 +893,7 @@ function (x, ...)
     call[[arg]] <- as.name("xx")
     encl <- sys.frame(sys.parent())
     var.f <- function(x) eval(call, list(xx = x), encl)
-    mode.ok <- sapply(x, is.numeric) & !sapply(x, is.factor) | 
+    mode.ok <- sapply(x, is.numeric) & !sapply(x, is.factor) |
 	sapply(x, is.complex)
     if (all(mode.ok)) {
 	r <- lapply(x, var.f)
@@ -961,11 +961,11 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	value[[j]] <- eval(f)
     }
     if(any(.Generic == c("+","-","*","/","%%","%/%"))) {
-        names(value) <- cn
-        data.frame(value, row.names=rn)
+	names(value) <- cn
+	data.frame(value, row.names=rn)
     }
     else matrix(unlist(value,recursive = FALSE, use.names=FALSE),
-                nrow=length(rn), dimnames=list(rn,cn))
+		nrow=length(rn), dimnames=list(rn,cn))
 }
 
 Summary.data.frame <- function(x, ...)
