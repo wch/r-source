@@ -107,6 +107,9 @@ NEW FEATURES
 	the environment of the formula before the usual search path,
 	in the same way lm() etc look for variables in their formulae.
 
+    o	ftable.formula() now looks for variables in the environment of
+	the formula before the usual search path.
+
 
 UTILITIES
 
