@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-02-02), ISBN 3-900051-00-3
+Version 1.9.0 Under development (unstable) (2004-02-03), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3677,4 +3677,18 @@ Residual standard error: 1.123464
 Estimated effects may be unbalanced
 > ## wrong assignment to strata labels < 1.9.0
 > ## Note this is unbalanced and not a good example
+> 
+> binom.test(c(800,10))# p-value < epsilon
+
+	Exact binomial test
+
+data:  800 and 810 
+number of successes = 800, number of trials = 810, p-value < 2.2e-16
+alternative hypothesis: true probability of success is not equal to 0.5 
+95 percent confidence interval:
+ 0.9774134 0.9940643 
+sample estimates:
+probability of success 
+             0.9876543 
+
 > 

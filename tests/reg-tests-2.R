@@ -1181,3 +1181,5 @@ aov(y ~ a + b + Error(c), data=test.df)
 aov(y ~ a + b - 1 + Error(c), data=test.df)
 ## wrong assignment to strata labels < 1.9.0
 ## Note this is unbalanced and not a good example
+
+binom.test(c(800,10))# p-value < epsilon
