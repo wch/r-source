@@ -1,7 +1,7 @@
 #-*- Makefile -*-
 include ../../gnuwin32/MkRules
 
-CFLAGS = -I../../include -I. -O2 -DSTATIC
+CFLAGS = -I../../include -I. -O2 -DWIN32
 
 all: libRpcre.a
 
