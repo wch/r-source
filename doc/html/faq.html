@@ -31,7 +31,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
 <p><h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.9-44 2004-08-13</h2>
+<h2>Version 1.9-45 2004-08-14</h2>
 <h2>ISBN 3-900051-01-1</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -1608,7 +1608,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Which-add_002don-packages-exist-for-R_
 <p>The R distribution comes with the following packages:
 
      <dl>
-<dt><strong>base</strong><dd>Base R functions and datasets. 
+<!-- <FIXME> -->
+<!-- 2.0 -->
+<dt><strong>base</strong><dd>Base R functions (and datasets before R 2.0). 
+<br><dt><strong>datasets</strong><dd>Base R datasets (added in R 2.0). 
+<!-- </FIXME> -->
 <br><dt><strong>graphics</strong><dd>R functions for base graphics. 
 <br><dt><strong>grid</strong><dd>A rewrite of the graphics layout capabilities, plus some support for
 interaction. 
@@ -1774,7 +1778,11 @@ balloon-borne instrument).
 <br><dt><strong>RandomFields</strong><dd>Creating random fields using various methods. 
 <br><dt><strong>Rcmdr</strong><dd>A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the <strong>tcltk</strong> package. 
-<br><dt><strong>RmSQL</strong><dd>An interface between R and the mSQL database system. 
+<!-- <NOTE> -->
+<!-- Moved to the Archive on 2004-08-11. -->
+<!-- @item RmSQL -->
+<!-- An interface between R and the mSQL database system. -->
+<!-- </NOTE> -->
 <br><dt><strong>Rmpi</strong><dd>An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides an interactive R slave environment in which distributed
 statistical computing can be carried out. 

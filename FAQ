@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-44 2004-08-13
+Version 1.9-45 2004-08-14
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1186,7 +1186,10 @@ and one without) as well as the original code are available from
 The R distribution comes with the following packages:
 
 *base*
-     Base R functions and datasets.
+     Base R functions (and datasets before R 2.0).
+
+*datasets*
+     Base R datasets (added in R 2.0).
 
 *graphics*
      R functions for base graphics.
@@ -1474,9 +1477,6 @@ distributions of R.)
 *Rcmdr*
      A platform-independent basic-statistics GUI (graphical user interface)
      for R, based on the *tcltk* package.
-
-*RmSQL*
-     An interface between R and the mSQL database system.
 
 *Rmpi*
      An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It

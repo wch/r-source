@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-44 @value{FAQ-YEAR}-08-13
+@set FAQ-VERSION 1.9-45 @value{FAQ-YEAR}-08-14
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -1557,8 +1557,13 @@ available from @uref{http://www.ms.uky.edu/~statweb}.
 The R distribution comes with the following packages:
 
 @table @strong
+@c <FIXME>
+@c 2.0
 @item base
-Base R functions and datasets.
+Base R functions (and datasets before R 2.0).
+@item datasets
+Base R datasets (added in R 2.0).
+@c </FIXME>
 @item graphics
 R functions for base graphics.
 @item grid
@@ -1783,8 +1788,11 @@ Creating random fields using various methods.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
-@item RmSQL
-An interface between R and the mSQL database system.
+@c <NOTE>
+@c Moved to the Archive on 2004-08-11.
+@c @item RmSQL
+@c An interface between R and the mSQL database system.
+@c </NOTE>
 @item Rmpi
 An interface (wrapper) to MPI (Message-Passing Interface) APIs.  It also
 provides an interactive R slave environment in which distributed
