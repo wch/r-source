@@ -16,15 +16,15 @@
 # A copy of the GNU General Public License is available via WWW at
 # http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
 # writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA.
+# Suite 330, Boston, MA	 02111-1307  USA.
 
 # Send any bug reports to r-bugs@r-project.org
 
-package  R::Rdconv;
+package	 R::Rdconv;
 
-require  Exporter;
-@ISA     = qw(Exporter);
-@EXPORT  = qw(Rdconv);
+require	 Exporter;
+@ISA	 = qw(Exporter);
+@EXPORT	 = qw(Rdconv);
 
 use Text::Tabs;
 use FileHandle;
@@ -146,7 +146,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
 	get_blocks($complete_text);
 
-	if($type =~ /html/i || $type =~ /txt/i || $type =~ /Sd/    ||
+	if($type =~ /html/i || $type =~ /txt/i || $type =~ /Sd/	   ||
 	   $type =~ /Ssgm/  || $type =~ /tex/i || $type =~ /chm/i ) {
 
 	    get_sections($complete_text);
@@ -470,7 +470,7 @@ sub replace_prepend_command {
 	$text =~ /\\$cmd$id(.*)$id/s;
 	$arg = $1;
 	$arg =~ s/^/$prepend/gmo;# prepend at all line beginnings
-	$arg =~ s/^$prepend//;   # but NOT the very beginning..
+	$arg =~ s/^$prepend//;	 # but NOT the very beginning..
 	$text =~ s/\\$cmd$id.*$id/$before$arg$after/s;
     }
     $text;
@@ -528,7 +528,7 @@ sub text2html {
     my $inarglist = $_[2];
 
     if($outerpass) {
-        $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
+	$text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
 	$text =~ s/\\%/%/go;
@@ -599,7 +599,7 @@ sub text2html {
 	    }
 	}
 	else {
-	    $main::misslink = $main::misslink . " " . $argkey 
+	    $main::misslink = $main::misslink . " " . $argkey
 		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
@@ -729,13 +729,13 @@ sub code2html {
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$uxfile\">$arg<\/a>/s;
 		    }
 		 else{
-		 	$text =~
+			$text =~
 		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
-		 }   
+		 }
 	    }
 	}
 	else{
-	    $main::misslink = $main::misslink . " " . $argkey 
+	    $main::misslink = $main::misslink . " " . $argkey
 		unless $opt ne "";
 	    if($using_chm){
 		if($opt ne "") {
@@ -745,7 +745,7 @@ sub code2html {
 #		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic$HTML";
 		    $htmlfile = mklink($opt, $topic . $HTML);
 #		    print "$htmlfile\n";
-       		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
+		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
 		}
@@ -764,7 +764,7 @@ sub code2html {
     }
 
     $text = undefine_command($text, "dontrun");
-    $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "testonly");## HTML
     $text =~ s/\\\\/\\/go;
 
     $text = unmark_brackets($text);
@@ -998,10 +998,10 @@ sub chm_functionhead
     $retval .= "<object type=\"application/x-oleobject\" classid=\"clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e\">\n";
     foreach(@aliases) {
 #	print "alias: $_\n";
-	$retval .= "<param name=\"keyword\" value=\"R:   $_\">\n";
+	$retval .= "<param name=\"keyword\" value=\"R:	 $_\">\n";
     }
     $title =~ s/\"/'/go;  #'
-    $title =~ s/,//go;  # commas seem to give problems
+    $title =~ s/,//go;	# commas seem to give problems
     $retval .= "<param name=\"keyword\" value=\" $title\">\n" .
 	"</object>\n\n";
     $retval .= "\n<h2>$title</h2>\n\n";
@@ -1173,7 +1173,7 @@ sub text2txt {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	my $descitem = text2txt($arg);
 	my $ll = length($desc);
-	$descitem =~ s/\n/ /go;  # no NLs in items
+	$descitem =~ s/\n/ /go;	 # no NLs in items
 	if($ll > 0) {
 	    $descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
 	} else {
@@ -1199,7 +1199,7 @@ sub code2txt {
 
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "dontrun");
-    $text = drop_full_command($text, "testonly");
+    $text = drop_full_command($text, "testonly");# text
 
     $text = unmark_brackets($text);
     ## \method{CLASS}{GENERIC}
@@ -1288,7 +1288,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 
     $text =~ s/\\\\/\\bsl{}/go;
     $text =~ s/\\&\./\./go; # unescape code pieces
-# A mess:  map  & \& \\& \\\& to  & & \& \&
+# A mess:  map	& \& \\& \\\& to  & & \& \&
     $text =~ s/\\&/&/go;
     $text =~ s/\\ / /go;
     $text =~ s/\\_/_/go;
@@ -1320,7 +1320,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    $indent1 = " " x ($INDENT - $INDENTDD) . txt_header($1);
 	    $indent2 = $indent;
 	}
-        # check for .in or .inen command
+	# check for .in or .inen command
 	if ($para =~ s/^[\n]*\.in([^\ ]*) (.*)/\2/) {
 	    $INDENT = $INDENT + $para;
 	    $indent1 = $indent2 = $indent = " " x $INDENT;
@@ -1334,7 +1334,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    } else {
 		$enumlevel -= 1;
 	    }
-        # check for a \deqn block
+	# check for a \deqn block
 	} elsif ($para0 =~ s/^\s*\.DS B\s*(.*)\.DE/\1/) {
 	    $para0 =~ s/\s*$//o;
 	    if(length($para0) > 65) {
@@ -1459,7 +1459,7 @@ sub txt_print_codeblock {
 	$ntext =~ s/\\&\././go;
 	foreach $line (split /\n/, $ntext) {
 	    $line =~ s/\\\\/\\/go;
-	    $line =~ s/^\t/        /o;
+	    $line =~ s/^\t/	   /o;
 	    $line =~ s/^\s+$//o;
 	    if(length($line) > 0) {
 		print $txtout $indent, $line, "\n";
@@ -1507,10 +1507,10 @@ sub txt_print_argblock {
 		}
 		$text =~ s/.*$id//s;
 	    }
-	    txt_fill("     ", 5, text2txt($text));
+	    txt_fill("	   ", 5, text2txt($text));
 	}
 	else{
-	    txt_fill("     ", 5, text2txt($text));
+	    txt_fill("	   ", 5, text2txt($text));
 	}
     }
 }
@@ -1597,7 +1597,7 @@ sub rdoc2Sd { # (filename)
     local $Sdout;
     if($_[0]) {
 	$Sdout = new FileHandle;
-	open $Sdout, "> $_[0]";  # will be closed when goes out of scope
+	open $Sdout, "> $_[0]";	 # will be closed when goes out of scope
     } else {
 	$Sdout = "STDOUT";
     }
@@ -1967,7 +1967,16 @@ sub code2examp {
     $text =~ s/\\dots/.../go;
 
     $text = undefine_command($text, "link");
+
     $text = undefine_command($text, "testonly");
+    ## Ideas for alternatives :
+    ## 1) if the comments were shown in example() at all :
+    ## $text = replace_command($text, "testonly",
+    ##			    "## BEGIN{testonly}\n", "\n## END{testonly}}");
+    ## 2)
+    ## $text = replace_command($test, "testonly",
+    ##	      "if(is.null(F) || <call from example(*, testonly = TRUE)>)) {\\n",
+    ##				"\\n}");
     $text = replace_prepend_command($text, "dontrun","##Don't run: ", "",
 				    "##D ");
     $text =~ s/\\\\/\\/g;
@@ -2007,7 +2016,7 @@ sub rdoc2latex {# (filename)
 
     my $current = $blocks{"name"}, $generic, $cmd;
     foreach (sort foldorder @aliases) {
-	next if (/\(/ || /\{/);  # these two break the PDF indexing
+	next if (/\(/ || /\{/);	 # these two break the PDF indexing
 	$generic = $a = $_;
 	$generic =~ s/\.data\.frame$/.dataframe/o;
 	$generic =~ s/\.model\.matrix$/.modelmatrix/o;
@@ -2086,7 +2095,7 @@ sub text2latex {
     $text =~ s/\\DITEM/\\item/og;
 
     $text =~ s/\\\\/\\bsl{}/go;
-# A mess:  map  & \& \\& \\\& to  \& \& \bsl{}\& \bsl{}\&
+# A mess:  map	& \& \\& \\\& to  \& \& \bsl{}\& \bsl{}\&
     $text =~ s/([^\\])&/$1\\&/go;
     $text =~ s/\\R(\s+)/\\R\{\}$1/go;
     $text =~ s/\\cr\n\[/\\\\\{\}\n\[/go;
@@ -2383,7 +2392,7 @@ sub rdoc2Ssgm { # (filename) ; 0 for STDOUT
     if ($#keywords > 0) {
 	print $sgmlout "<s-keywords>\n";
 	while ($#keywords >= 0) {
-	    print $sgmlout "<s-keyword>", shift( @keywords ), 
+	    print $sgmlout "<s-keyword>", shift( @keywords ),
 	    "</s-keyword>\n";
 	}
 	print $sgmlout "</s-keywords>\n";
@@ -2401,7 +2410,7 @@ sub text2Ssgm {
     my $inarglist = $_[2];
 
     if($outerpass) {
-        $text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
+	$text =~ s/&([^#])/&amp;\1/go; # might have explicit &# in source
 	$text =~ s/>/&gt;/go;
 	$text =~ s/</&lt;/go;
 	$text =~ s/\]/&rsqb;/go;
@@ -2555,7 +2564,7 @@ sub Ssgm_print_block {
 
     my ($block,$sname) = @_;
 
-    Ssgm_print_a_section("<$sname>", $blocks{$block}, "</$sname>") 
+    Ssgm_print_a_section("<$sname>", $blocks{$block}, "</$sname>")
 	if defined $blocks{$block};
 }
 
@@ -2563,16 +2572,16 @@ sub Ssgm_print_block_named {
 
     my ($block,$name) = @_;
 
-    Ssgm_print_a_section("<s-section name=\"".uc($name)."\">", 
-			 $blocks{$block}, "</s-section>") 
+    Ssgm_print_a_section("<s-section name=\"".uc($name)."\">",
+			 $blocks{$block}, "</s-section>")
 	if defined $blocks{$block};
 }
 
 sub Ssgm_print_usage {
 
     if(defined $blocks{"usage"}){
-	print $sgmlout ("<s-usage>\n<s-old-style-usage>", 
-			code2Ssgm($blocks{"usage"}), 
+	print $sgmlout ("<s-usage>\n<s-old-style-usage>",
+			code2Ssgm($blocks{"usage"}),
 			"</s-old-style-usage>\n</s-usage>\n\n");
     }
 }
@@ -2581,7 +2590,7 @@ sub Ssgm_print_examples {
 
     if(defined $blocks{"examples"}){
 	print $sgmlout ("<s-examples>\n<s-example type = text>",
-			code2Ssgm($blocks{"examples"}), 
+			code2Ssgm($blocks{"examples"}),
 			"</s-example>\n</s-examples>\n");
     }
 }
@@ -2589,7 +2598,7 @@ sub Ssgm_print_examples {
 sub Ssgm_print_seealso {
 
     if(defined $blocks{"seealso"}){
-	print $sgmlout ("<s-see>\n", see2Ssgm($blocks{"seealso"}), 
+	print $sgmlout ("<s-see>\n", see2Ssgm($blocks{"seealso"}),
 			"\n</s-see>\n\n");
     }
 }
@@ -2659,7 +2668,7 @@ sub Ssgm_print_valueblock {
 		print $sgmlout ("<s-return-component name=\"",
 				text2Ssgm($arg, 1, 1),
 				"\">\n",
-				text2Ssgm($desc, 1, 1), 
+				text2Ssgm($desc, 1, 1),
 				"</s-return-component>\n");
 		$text =~ s/.*$id//s;
 	    }
@@ -2709,7 +2718,7 @@ sub Ssgm_unescape_codes {
 	  && $text =~ /$ECODE($ID)/){
 	my $id = $1;
 	my $ec = code2Ssgm($ecodes{$id});
-	if($ec =~ /<s-function/) { 
+	if($ec =~ /<s-function/) {
 	    # <s-expression cannot contain <s-function>
 	    $text =~ s/$ECODE$id/$ec/;
 	} else {
@@ -2761,7 +2770,7 @@ sub Ssgm_tables {
 	my $table = "<p>\n<!-- no support for tables -->\n";
 	my @rows = split(/\\cr/, $arg);
 	for($k=0; $k<=$#rows;$k++){
-	    $table .= "    ";
+	    $table .= "	   ";
 	    my @cols = split(/\\tab/, $rows[$k]);
 	    die("Error:\n  $rows[$k]\\cr\n" .
 		"does not fit tabular format \{$format\}\n")
@@ -2792,7 +2801,7 @@ sub Ssgm_functionhead
 {
     my ($name,$title) = @_;
 
-    my $retval = 
+    my $retval =
     "<!doctype s-function-doc system \"s-function-doc.dtd\" [\n".
     "<!entity % S-OLD \"INCLUDE\">\n]\n>\n".
     "<s-function-doc>\n";
