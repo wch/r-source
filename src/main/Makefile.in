@@ -127,10 +127,15 @@ Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile
 	@touch $@
 
+## This target has been changed to ensure that R.bin and libR get
+## installed in the build tree if necessary, even if the corresponding 
+## objects are not re-made.
+## Note that dependencies in the test Makefiles depend on these objects,
+## so copy-if-change is used.
 R: Makefile
 	@$(MAKE) Makedeps
-@WANT_R_SHLIB_TRUE@	@$(MAKE) $(Rexeclib_LTLIBRARIES)
-	@$(MAKE) $(Rexecbin_PROGRAMS)
+@WANT_R_SHLIB_TRUE@	@$(MAKE) install-lib-local
+	@$(MAKE) install-bin-local
 
 
 ../include/config.h ../include/Rversion.h:
@@ -139,10 +144,9 @@ R: Makefile
 $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 @WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
 @WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
-## <FIXME>
-## Not sure if we want to do this ...
+
+install-bin-local: $(R_binary)
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-bin
-## </FIXME>
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
@@ -160,10 +164,9 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ## cannot use libtool anyway).
 	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(LIBS)
 ## </FIXME>
-## <FIXME>
-## Not sure if we want to do this ...
+
+install-lib-local: $(libR_la)
 	@$(MAKE) rhome=`cd $(top_builddir); pwd` install-lib
-## </FIXME>
 
 ../appl/stamp-lo ../nmath/stamp-lo ../unix/stamp-lo:
 	(cd $(@D); $(MAKE) $(@F))
@@ -180,6 +183,9 @@ installdirs:
 	@$(MKINSTALLDIRS) $(Rexecbindir) $(Rexecbindir)/exec
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
 install-bin:installdirs
+## <FIXME> Temporary precautionary clearout 
+	@rm -f $(Rexecbindir)/R.bin
+## </FIXME>
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) $(Rexecbindir)/exec/R
 install-lib: installdirs
 @USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
