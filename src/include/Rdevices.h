@@ -56,23 +56,6 @@ void KillAllDevices(void);
  */
 void freeType1Fonts(void);
 
-/* Drivers from ../main/devices.c , 
- * description there;   platform-specific drivers in platform directories! */
-
-Rboolean 
-PSDeviceDriver(DevDesc*, char*, char*, char*, char**,
-	       char*, char*, char*, double, double, Rboolean, double, 
-	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
-Rboolean 
-XFigDeviceDriver(DevDesc*, char*, char*, char*,
-		 char*, char*, double, double, 
-		 Rboolean, double, Rboolean, Rboolean);
-Rboolean
-PDFDeviceDriver(DevDesc* dd, char *, char *, char *, 
-		char *, char *, double, double, double,
-		int, char*, SEXP, int, int);
-
-
 
 /*-------------------------------------------------------------------
  *
