@@ -159,7 +159,7 @@ extern int vsnprintf (char *str, size_t count, const char *fmt, va_list arg);
 # define SIGSETJMP(x,s) sigsetjmp(x,s)
 # define SIGLONGJMP(x,i) siglongjmp(x,i)
 # define JMP_BUF sigjmp_buf
-# define SETJMP(x) sigsetjmp(x,1)
+# define SETJMP(x) sigsetjmp(x,0)
 # define LONGJMP(x,i) siglongjmp(x,i)
 #else
 # define SIGJMP_BUF jmp_buf
