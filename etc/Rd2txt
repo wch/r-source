@@ -1,8 +1,7 @@
 #!/bin/sh
-RHOME=`dirname $0`/..           # relative
-RHOME=`cd ${RHOME}; pwd`        # absolute
-export RHOME
-#
+
+RHOME=`R RHOME`
+
 $RHOME/etc/Rdconv -t nroff $1 \
   | tbl \
   | nroff -ms 2> /dev/null \
