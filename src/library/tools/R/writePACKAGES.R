@@ -1,16 +1,19 @@
 write_PACKAGES <-
-    function(dir, fields, type = c("source", "winBinary"), verbose = FALSE)
+    function(dir, fields,
+             type = c("source", "mac.binary", "win.binary"),
+             verbose = FALSE)
 {
-    if(missing(type) && .Platform$OS.type == "windows") type <- "winBinary"
+    if(missing(type) && .Platform$OS.type == "windows") type <- "win.binary"
     type <- match.arg(type)
     files <- list.files(dir,
                         pattern = switch(type,
                         "source" = "\.tar\.gz$",
-                        "winBinary" = "\.zip$")
+                        "mac.binary" = "\.tgz$",
+                        "win.binary" = "\.zip$")
                         )
     if(length(files)) {
         ## Standard set of fields required to build a
-        ## Windows repository's PACKAGES file:
+        ## repository's PACKAGES file:
         if(missing(fields))
             fields <- c("Package", "Bundle", "Priority", "Version",
                         "Depends", "Suggests", "Imports", "Contains")
@@ -21,7 +24,7 @@ write_PACKAGES <-
         ## warnings are *expected*, hence suppressed
         op <- options(warn = -1)
         if(verbose) cat(gettext("Processing packages:\n"))
-        if(type == "winBinary") {
+        if(type == "win.binary") {
             for(i in seq(along = files)) {
                 if(verbose) cat("  ", files[i], "\n", sep ="")
                 ## for bundles:
@@ -42,7 +45,11 @@ write_PACKAGES <-
             }
         } else {
             dir <- file_path_as_absolute(dir)
-            files <- list.files(dir, pattern="\.tar\.gz$", full.names=TRUE)
+            files <- list.files(dir,
+                                pattern=switch(type,
+                                "source" = "\.tar\.gz$",
+                                "mac.binary" = "\.tgz$"),
+                                full.names=TRUE)
             cwd <- getwd()
             td <- tempfile("PACKAGES")
             if(!dir.create(td)) stop("unable to create ", td)

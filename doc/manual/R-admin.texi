@@ -63,20 +63,20 @@ The current version of this document is @value{VERSION}.
 @end ifnottex
 
 @menu
-* Obtaining R::
-* Installing R under Unix-alikes::
-* Installing R under Windows::
-* Installing R under Mac OS X::
-* Add-on packages::
-* Internationalization::
-* Essential and useful other programs in Unix::
-* Configuration on Unix::
-* Building the GNOME console::
-* Enabling search in HTML help::
-* The Windows toolset::
-* New platforms::
-* Function and variable index::
-* Concept index::
+* Obtaining R::                 
+* Installing R under Unix-alikes::  
+* Installing R under Windows::  
+* Installing R under Mac OS X::  
+* Add-on packages::             
+* Internationalization::        
+* Essential and useful other programs in Unix::  
+* Configuration on Unix::       
+* Building the GNOME console::  
+* Enabling search in HTML help::  
+* The Windows toolset::         
+* New platforms::               
+* Function and variable index::  
+* Concept index::               
 @end menu
 
 @node Obtaining R, Installing R under Unix-alikes, Top, Top
@@ -88,8 +88,8 @@ Sources, binaries and documentation for @R{} can be obtained via
 members are listed at @url{http://cran.r-project.org/mirrors.html}.
 
 @menu
-* Getting and unpacking the sources::
-* Getting patched and development versions::
+* Getting and unpacking the sources::  
+* Getting patched and development versions::  
 @end menu
 
 @node Getting and unpacking the sources, Getting patched and development versions, Obtaining R, Obtaining R
@@ -145,7 +145,7 @@ versions) and unpack as described in the previous section.  They are
 built in exactly the same way as distributions of R releases.
 
 @menu
-* Using Subversion and rsync::
+* Using Subversion and rsync::  
 @end menu
 
 @node Using Subversion and rsync,  , Getting patched and development versions, Getting patched and development versions
@@ -231,9 +231,9 @@ details.  These are installed in platform-specific ways, so for the rest
 of this chapter we consider only building from the sources.
 
 @menu
-* Simple compilation::
-* Making the manuals::
-* Installation::
+* Simple compilation::          
+* Making the manuals::          
+* Installation::                
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
@@ -540,23 +540,23 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
 
 @menu
-* Building from source::
+* Building from source::        
 @end menu
 
 @node Building from source,  , Installing R under Windows, Installing R under Windows
 @section Building from source
 
 @menu
-* Getting the tools::
-* Getting the source files::
-* Building the core files::
-* Building the bitmap files::
-* Windows internationalization::
-* Building the recommended packages::
-* Building the manuals::
-* Building the installers::
-* Checking the build::
-* Cross-building on ix86 Linux::
+* Getting the tools::           
+* Getting the source files::    
+* Building the core files::     
+* Building the bitmap files::   
+* Windows internationalization::  
+* Building the recommended packages::  
+* Building the manuals::        
+* Building the installers::     
+* Checking the build::          
+* Cross-building on ix86 Linux::  
 @end menu
 
 @node Getting the tools, Getting the source files, Building from source, Building from source
@@ -826,7 +826,7 @@ You can test a build by (optionally) building the recommended packages
 the absolute path to a suitable temporary directory: the default is
 @file{c:/TEMP}.  (Use forward slashes and do not use a path including spaces.)
 
-@node Cross-building on ix86 Linux, , Checking the build, Building from source
+@node Cross-building on ix86 Linux,  , Checking the build, Building from source
 @subsection Cross-building on ix86 Linux
 
 You will need i386-mingw32 cross-compilers installed and in your path.
@@ -888,7 +888,7 @@ See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS
 @acronym{FAQ}} for more details.
 
 @menu
-* Building from source on Mac OS X::
+* Building from source on Mac OS X::  
 @end menu
 
 @node Building from source on Mac OS X,  , Installing R under Mac OS X, Installing R under Mac OS X
@@ -931,9 +931,10 @@ the @file{R.framework} has not to be specified in the path.
 @cindex Packages
 
 @menu
-* Installing packages::
-* Updating packages::
-* Removing packages::
+* Installing packages::         
+* Updating packages::           
+* Removing packages::           
+* Setting up a package repository::  
 @end menu
 
 It is helpful to use the correct terminology.  A @emph{package} is
@@ -1038,10 +1039,10 @@ Aqua GUI provides for installation of either binary or source packages,
 from @acronym{CRAN} or local files.
 
 @menu
-* Customising compilation in Windows::
+* Customising compilation in Windows::  
 @end menu
 
-@node Customising compilation in Windows, , Installing packages, Installing packages
+@node Customising compilation in Windows,  , Installing packages, Installing packages
 @subsection Customising compilation in Windows
 @findex MakeDll
 @findex Makevars.win
@@ -1175,7 +1176,7 @@ overview of installed and available packages, the @code{upgrade} method
 offers to fetch and install the latest versions of outdated packages.
 
 
-@node Removing packages,  , Updating packages, Add-on packages
+@node Removing packages, Setting up a package repository, Updating packages, Add-on packages
 @section Removing packages
 @findex remove.packages
 @cindex Packages, removing
@@ -1199,6 +1200,39 @@ from the library.
 
 @strong{Note}: only @code{remove.packages} can remove package
 @emph{bundles}.
+
+
+@node Setting up a package repository,  , Removing packages, Add-on packages
+@section Setting up a package repository
+
+Utilities such as @code{install.packages} can be pointed at any
+CRAN-style repository, and @R{} users may want to set up their own.  The
+`base' of a repository is a URL such as @uref{http://www.omegahat.org/R}:
+this must be an URL scheme that @code{download.packages} supports which
+also includes @code{ftp://} and @code{file://}.  Under that base URL
+there should be directory trees for one or more of the following types
+of package distributions:
+
+@itemize
+@item 
+@code{"source"}: located at @code{src/contrib} and containing
+@code{.tar.gz} files.
+
+@item 
+@code{"win.binary"}: located at @code{bin/windows/contrib/x.y} for @R{}
+versions @code{x.y.z} and containing @code{.zip} files.
+
+@item 
+@code{"mac.binary"}: located at @code{bin/macosx/x.y} for @R{} 
+versions @code{x.y.z} and containing @code{.tgz} files.
+@end itemize
+
+Each terminal directory must also contain a @file{PACKAGES} file.  This
+can be a concatenation of the @file{DESCRIPTION} files of the packages
+(provided there are no bundles), but only a few of the fields are
+needed.  The simplest way to set up such a file is to use function
+@code{write_PACKAGES} in the @pkg{tools} packages, and its help explains
+which fields are needed.
 
 
 @node Internationalization, Essential and useful other programs in Unix, Add-on packages, Top
@@ -1227,7 +1261,7 @@ install if it is selected in the installer.
 All versions of @R{} support all single-byte character sets that the
 underlying OS can handle.  These are interpreted according to the
 @cindex Locale
-current @code{locale}, as sufficiently complicated topic to merit a
+current @code{locale}, a sufficiently complicated topic to merit a
 separate section.  Fully internationalized versions can also handle most
 multi-byte locales, in which a single character is represented by one,
 two or more consecutive bytes: examples of such locales are those using
@@ -1242,8 +1276,8 @@ translation of messages.  This is enabled in almost all builds of @R{}
 as from version 2.1.0.
 
 @menu
-* Locales::
-* Localization of messages::
+* Locales::                     
+* Localization of messages::    
 @end menu
 
 @node Locales, Localization of messages, Internationalization, Internationalization
@@ -1288,8 +1322,9 @@ one charset each for many languages.  Note too the remark above about
 Chinese.
 
 @menu
-* Locales under Linux::
-* Locales under Windows::
+* Locales under Linux::         
+* Locales under Windows::       
+* Locales under Mac OS X::      
 @end menu
 
 @node Locales under Linux, Locales under Windows, Locales, Locales
@@ -1302,13 +1337,27 @@ above.  (See @command{man locale} and @command{locale -a} for more
 details.)  Similar schemes (but often in different cases) are used by
 most Unix-alikes.
 
-@node Locales under Windows,  , Locales under Linux, Locales
+@node Locales under Windows, Locales under Mac OS X, Locales under Linux, Locales
 @subsection Locales under Windows
 
 Windows also uses locales, but specified in a rather less concise way.
 Most users will encounter locales only via drop-down menus, but more
 information and lists can be found at
 @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}.
+
+@node Locales under Mac OS X,  , Locales under Windows, Locales
+@subsection Locales under Mac OS X
+
+Mac OS X supports locales in its own particular way, but the R GUI tries
+to make this easier for users. See
+
+@uref{http://developer.apple.com/documentation/MacOSX/Conceptual/BPInternational/}
+
+for how users can set their locales. As with Windows, end users will
+generally only see lists of languages/territories.
+
+Internally Mac OS X uses a form similar to Linux but without specifying
+the encoding (which is @code{.UTF-8}).
 
 
 @node Localization of messages,  , Locales, Internationalization
@@ -1381,8 +1430,8 @@ extension @samp{-devel} or @samp{-dev}: you need both versions
 installed.
 
 @menu
-* Essential programs::
-* Useful libraries and programs::
+* Essential programs::          
+* Useful libraries and programs::  
 @end menu
 
 @node Essential programs, Useful libraries and programs, Essential and useful other programs in Unix, Essential and useful other programs in Unix
@@ -1457,8 +1506,8 @@ not need to change this.  In particular, the version of @code{zlib}
 systems on 32-bit platforms.
 
 @menu
-* Tcl/Tk::
-* Linear algebra::
+* Tcl/Tk::                      
+* Linear algebra::              
 @end menu
 
 @node Tcl/Tk, Linear algebra, Useful libraries and programs, Useful libraries and programs
@@ -1615,13 +1664,13 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 @appendix Configuration on Unix
 
 @menu
-* Configuration options::
-* Internationalization support::
-* Configuration variables::
-* Using make::
-* Using FORTRAN::
-* Compile and load flags::
-* Platform notes::
+* Configuration options::       
+* Internationalization support::  
+* Configuration variables::     
+* Using make::                  
+* Using FORTRAN::               
+* Compile and load flags::      
+* Platform notes::              
 @end menu
 
 @node Configuration options, Internationalization support, Configuration on Unix, Configuration on Unix
@@ -1744,10 +1793,10 @@ Note that caching is turned @emph{off} by default: use the command line
 option @option{--config-cache} (or @option{-C}) to enable caching.
 
 @menu
-* Setting paper size::
-* Setting the browser::
-* Compilation flags::
-* Making manuals::
+* Setting paper size::          
+* Setting the browser::         
+* Compilation flags::           
+* Making manuals::              
 @end menu
 
 @node Setting paper size, Setting the browser, Configuration variables, Configuration variables
@@ -1933,14 +1982,14 @@ based on that in the Single Unix specification: see
 However, this is only covered under Linux and Solaris.
 
 @menu
-* Linux::
-* Mac OS X::
-* Solaris::
-* HP-UX::
-* IRIX::
-* Alpha/OSF1::
-* Alpha/FreeBSD::
-* AIX::
+* Linux::                       
+* Mac OS X::                    
+* Solaris::                     
+* HP-UX::                       
+* IRIX::                        
+* Alpha/OSF1::                  
+* Alpha/FreeBSD::               
+* AIX::                         
 @end menu
 
 @node Linux, Mac OS X, Platform notes, Platform notes
@@ -2469,10 +2518,10 @@ Many thanks to Marc Schwartz in tracking down many of these issues with
 enabling the Java search engine.
 
 @menu
-* Java Virtual Machines on Linux ::
-* Java Virtual Machines on Unix::
-* Java Virtual Machines on Windows::
-* Java Virtual Machines on Mac OS X::
+* Java Virtual Machines on Linux ::  
+* Java Virtual Machines on Unix::  
+* Java Virtual Machines on Windows::  
+* Java Virtual Machines on Mac OS X::  
 @end menu
 
 @node Java Virtual Machines on Linux , Java Virtual Machines on Unix, Enabling search in HTML help, Enabling search in HTML help
@@ -2597,12 +2646,12 @@ version of the Cygwin dlls, so it is safest not to have
 any other version of the Cygwin dlls in your path.
 
 @menu
-* The command line tools::
-* Perl::
-* The MinGW compilers::
-* The Microsoft HTML Help Workshop::
-* LaTeX::
-* The Inno Setup installer::
+* The command line tools::      
+* Perl::                        
+* The MinGW compilers::         
+* The Microsoft HTML Help Workshop::  
+* LaTeX::                       
+* The Inno Setup installer::    
 @end menu
 
 @node The command line tools, Perl, The Windows toolset, The Windows toolset
@@ -2674,7 +2723,7 @@ Please read @ref{Making the manuals} about how to
 make @file{refman.pdf} and set the environment variables @code{R_RD4DVI} and
 @code{R_RD4PDF} suitably; ensure you have the required fonts installed.
 
-@node The Inno Setup installer, , LaTeX, The Windows toolset
+@node The Inno Setup installer,  , LaTeX, The Windows toolset
 @section The Inno Setup installer
 
 To make the install package (@file{@value{RWVERSION}.exe}) in the

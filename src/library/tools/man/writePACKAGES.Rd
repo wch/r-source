@@ -6,7 +6,9 @@
   Windows binary packages.
 }
 \usage{
-write_PACKAGES(dir, fields, type = c("source", "winBinary"), verbose = FALSE)
+write_PACKAGES(dir, fields,
+               type = c("source", "mac.binary", "win.binary"),
+               verbose = FALSE)
 }
 \arguments{
   \item{dir}{
@@ -24,12 +26,12 @@ write_PACKAGES(dir, fields, type = c("source", "winBinary"), verbose = FALSE)
   \item{type}{
     Type of packages: currently source \code{.tar.gz} archives
     and Windows binary \code{.zip} packages are supported.  Defaults to
-    \code{"winBinary"} on Windows and to \code{"source"} otherwise.
+    \code{"win.binary"} on Windows and to \code{"source"} otherwise.
   }
   \item{verbose}{logical. Should packages be listed as they are processed?}
 }
 \details{
-  \code{type = "winBinary"} uses \code{\link{unz}} connections to read all
+  \code{type = "win.binary"} uses \code{\link{unz}} connections to read all
   \file{DESCRIPTION} files contained in the (zipped) binary packages for
   Windows in the given directory \code{dir}, and builds a
   \file{PACKAGES} file from these information.
@@ -57,7 +59,8 @@ write_PACKAGES(dir, fields, type = c("source", "winBinary"), verbose = FALSE)
 \examples{
 \dontrun{
 write_PACKAGES("c:/myFolder/myRepository")  # on Windows
-write_PACKAGES("/pub/RWin/bin/windows/2.1", type="winBinary")  # on Linux
+write_PACKAGES("/pub/RWin/bin/windows/contrib/2.1",
+               type="win.binary")  # on Linux
 }}
 \keyword{file}
 \keyword{utilities}
