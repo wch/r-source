@@ -325,6 +325,11 @@ Date: Tue, 11 Dec 2001 17:34:07 -0500 (EST)
 Subject: Mishandling missing "..."
 From: David Brahm  <brahm@alum.mit.edu>
 Date: Mon, 7 Jan 2002 10:52:09 -0500
+* PR# 1267 *
+Subject: hashing NaN
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Wed, 16 Jan 2002 16:29:35 -0800 (PST)
+--Patch put in R-devel for further testing.
 
 Directory:  Macintosh
 
@@ -379,6 +384,22 @@ From: Gordon Lack <gml4410@ggr.co.uk>
 Date: Fri, 26 Oct 2001 19:04:04 +0100
 --error from using SGI libblas (not reported on other systems?)
 --use --without-blas
+* PR# 1261 *
+Subject: R_140 AND RHL_72 AND Packages
+From: Patrick Gonin <gonin@genethon.fr>
+Date: Wed, 15 Jan 2003 13:25:17 +0100
+--Seems to relate to RH7.2 rpms
+* PR# 1268 *
+Subject: Solaris 2.6 Compile
+From: gm81640@development.nssmb.com
+Date: Thu, 17 Jan 2002 06:28:26 +0100 (MET)
+--Most likely a compiler installation problem
+* PR# 1272 *
+Subject: eigen segfault with GCC 3 on Solaris
+From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
+Date: Thu, 17 Jan 2002 15:14:33 -0500
+--Seems to be a problem with g77 in gcc 3.0.2 on Solaris only.
+--Probably a compiler bug
 
 Directory:  TooMuchAtOnce
 
@@ -394,51 +415,15 @@ Directory:  incoming
 Subject:  R CMD check 
 From: hoffmann@wsl.ch
 Date: Fri, 4 Jan 2002 12:51:15 +0100 (MET)
-* PR# 1261 *
-Subject: R_140 AND RHL_72 AND Packages
-From: Patrick Gonin <gonin@genethon.fr>
-Date: Wed, 15 Jan 2003 13:25:17 +0100
-* PR# 1262 *
-Subject: La.eigen() segfaults (asymmetric , only.values = TRUE)
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 15 Jan 2002 14:20:21 +0100
-* PR# 1263 *
-Subject: labels returned by cut() when include.lowest=T
-From: stephen@cogsci.ed.ac.uk
-Date: Tue, 15 Jan 2002 17:12:37 +0100 (MET)
-* PR# 1264 *
-Subject: typos in hist.Rd
-From: stephen@cogsci.ed.ac.uk
-Date: Tue, 15 Jan 2002 20:54:54 +0100 (MET)
-* PR# 1265 *
-Subject: Re:New project
-From: "" <email@ewasher.org>
-Date: Tue, 15 Jan 2002 21:43:17 +0100 (MET)
 * PR# 1266 *
 Subject: bug in survival package basehaz function
 From: Nicholas Lewin-Koh <kohnicho@comp.nus.edu.sg>
 Date: Wed, 16 Jan 2002 14:15:21 +0800 (GMT-8)
-* PR# 1267 *
-Subject: hashing NaN
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Wed, 16 Jan 2002 16:29:35 -0800 (PST)
-* PR# 1268 *
-Subject: Solaris 2.6 Compile
-From: gm81640@development.nssmb.com
-Date: Thu, 17 Jan 2002 06:28:26 +0100 (MET)
-* PR# 1269 *
-Subject: Solaris 2.6 Compile
-From: gm81640@development.nssmb.com
-Date: Thu, 17 Jan 2002 06:28:49 +0100 (MET)
-* PR# 1270 *
-Subject: Notification:  You are hereby.....
-From: angelus@truthmail.com (Administrator)
-Date: Thu, 17 Jan 2002 01:34:20 -0500
 * PR# 1271 *
 Subject: detach(package:base) kills R
 From: david.heffernan@orcina.com
 Date: Thu, 17 Jan 2002 09:54:14 +0100 (MET)
-* PR# 1272 *
-Subject: eigen segfault with GCC 3 on Solaris
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Thu, 17 Jan 2002 15:14:33 -0500
+* PR# 1273 *
+Subject: 32 bit error compiling R on sparc-sun-solaris
+From: vinod.rajakumar@vectorpartners.com
+Date: Fri, 18 Jan 2002 15:17:05 +0100 (MET)
