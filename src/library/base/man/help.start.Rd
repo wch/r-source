@@ -5,7 +5,7 @@
 help.start(gui = "irrelevant", browser = getOption("browser"), remote = NULL)
 #endif
 #ifdef windows  
-help.start(gui = "irrelevant", browser = "irrelevant")
+help.start(update = TRUE, gui = "irrelevant", browser = "irrelevant")
 #endif
 }
 \alias{help.start}
@@ -15,6 +15,10 @@ help.start(gui = "irrelevant", browser = "irrelevant")
 #ifdef unix  
   \item{remote}{A character giving a valid URL for the
     \file{\$R\_HOME} directory on a remote location.}
+#endif
+#ifdef windows  
+  \item{update}{logical: should this attempt to update the indices to
+    reflect the currently installed packages.}
 #endif
 }
 \description{

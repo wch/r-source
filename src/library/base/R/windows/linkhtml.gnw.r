@@ -15,6 +15,10 @@ make.packages.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home(), "doc/html/packages.html")
     f.hd <- file.path(R.home(), "doc/html/packages-head.html")
+    if(file.access(f.tg, 2)) {
+        warning("cannot update HTML package index")
+        return()
+    }
     file.create(f.tg)
     file.append(f.tg, f.hd)
     out <- file(f.tg, open="a")
@@ -52,6 +56,10 @@ make.packages.html <- function(lib.loc=.libPaths())
 make.search.html <- function(lib.loc=.Library)
 {
     f.tg <- file.path(R.home(), "doc/html/search/index.txt")
+    if(file.access(f.tg, 2)) {
+        warning("cannot update HTML search index")
+        return()
+    }
     if(file.exists(f.tg)) unlink(f.tg)
     out <- file(f.tg, open="w")
     for (i in  .packages(all.available=TRUE, lib.loc=lib.loc)) {

@@ -24,6 +24,8 @@ make.search.html(lib.loc=.Library)
   Only packages in the system library \code{.Library} are included
   in the search database by default, as cross-library links do not work
   on this platform.
+
+  This will give a warning if the files are not writeable.
 }
 \value{
   No value is returned. The file(s)
