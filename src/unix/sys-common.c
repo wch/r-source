@@ -88,12 +88,23 @@ FILE *R_OpenSiteFile(void)
 void R_RestoreGlobalEnv(void)
 {
     FILE *fp;
+    SEXP lst;
+
     if(RestoreAction == SA_RESTORE) {
 	if(!(fp = R_fopen(".RData", "rb"))) { /* binary file */
 	    /* warning here perhaps */
 	    return;
 	}
+#ifdef OLD
 	FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 1);
+#else
+	PROTECT(lst = R_LoadFromFile(fp, 1));
+	while (lst != R_NilValue) {
+	    setVarInFrame(R_GlobalEnv, TAG(lst), CAR(lst));
+	    lst = CDR(lst);
+	}
+        UNPROTECT(1);
+#endif
 	if(!R_Quiet)
 	    Rprintf("[Previously saved workspace restored]\n\n");
         fclose(fp);

@@ -105,6 +105,10 @@ static int newhashpjw(char *s)
   'hashcode' must be provided by user.  Allocates some memory for list
   entries.
 
+  At some point we need to remove the sanity checks here.  This
+  code is going to be called a lot and the places it is called
+  from are very controlled.
+
 */
 
 void R_HashSet(int hashcode, SEXP symbol, SEXP table, SEXP value)
@@ -313,6 +317,8 @@ int R_HashSizeCheck(SEXP table)
   Hashing for environments frames.  This function ensures that the
   first frame in the given environment hash been hashed.
 
+  FIXME: This name is much too obscure.
+
 */
 
 SEXP R_HashEnv2Hash(SEXP rho)
@@ -401,6 +407,7 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 void InitGlobalEnv()
 {
     R_GlobalEnv = NewEnvironment(R_NilValue, R_NilValue, R_NilValue);
+    HASHTAB(R_GlobalEnv) = R_NewHashTable(100, HASHTABLEGROWTHRATE);
 }
 
 

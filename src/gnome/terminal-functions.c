@@ -93,6 +93,7 @@ void R_gtk_terminal_quit()
 static void file_open_ok(GtkWidget *widget, gpointer data)
 {
   FILE *fp;
+  SEXP lst;
 
   R_gtk_terminal_run("\n");
 
@@ -103,7 +104,16 @@ static void file_open_ok(GtkWidget *widget, gpointer data)
     return;
   }
 
-  FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 0);
+#ifdef OLD
+        FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 1);
+#else
+        PROTECT(lst = R_LoadFromFile(fp, 1));
+        while (lst != R_NilValue) {
+            setVarInFrame(R_GlobalEnv, TAG(lst), CAR(lst));
+            lst = CDR(lst);
+        }
+        UNPROTECT(1);
+#endif
   Rprintf("Previously saved workspace restored\n");
   fclose(fp);
 
