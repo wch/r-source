@@ -483,6 +483,9 @@ static SEXP StripUnmatched(SEXP s)
 	if(CAR(s) == R_MissingArg) {
 		return StripUnmatched(CDR(s));
 	}
+	else if (CAR(s) == R_DotsSymbol ) {
+		return StripUnmatched(CDR(s));
+	}
 	else {
 		CDR(s) = StripUnmatched(CDR(s));
 		return s;
@@ -576,13 +579,15 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 		TAG(b)=TAG(f);
 	}
 
-		/* Eliminate any unmatched formals */
-
-	rlist = StripUnmatched(rlist);
 
 		/* Handle the dots */
 
 	PROTECT(rlist = ExpandDots(rlist, expdots));
+
+	/* Eliminate any unmatched formals and any that match R_DotSymbol */
+	/* This needs to be after ExpandDots as the DOTSXP might match ... */
+
+	rlist = StripUnmatched(rlist);
 
 	PROTECT(rval = allocSExp(LANGSXP));
 	CAR(rval) = duplicate(CAR(CAR(CDR(args))));
