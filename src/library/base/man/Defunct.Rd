@@ -27,7 +27,7 @@
 \seealso{
   \code{\link{Deprecated}}.
 
-  \code{\link{base-defunct}} and so on which list the defunct functions
+  \code{base-defunct} and so on which list the defunct functions
   in the packages.
 }
 \keyword{documentation}
