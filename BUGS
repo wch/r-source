@@ -823,19 +823,11 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6651 *
-Subject: Thank you for your feedback
-From: "L-Soft list server at Sun Microsystems Inc. (1.8e)" <LISTSERV@java.sun.com>
-Date: Sun, 7 Mar 2004 15:04:40 -0700
 * PR# 6652 *
 Subject: Bug in points.formula 
 From: Berwin A Turlach <berwin@maths.uwa.edu.au>
 Date: Mon, 08 Mar 2004 16:16:58 +0800
-* PR# 6653 *
-Subject: R search engine broken
-From: stephane.gourichon@lip6.fr
-Date: Mon,  8 Mar 2004 13:58:09 +0100 (CET)
-* PR# 6654 *
-Subject: =?iso-8859-1?q?Gesch=E4ftliches_Angebot?=
-From: Muzenda <muzen2004@tiscali.co.uk>
-Date: Mon, 08 Mar 2004 15:06:26 +0100
+* PR# 6656 *
+Subject: update forgets about offset()
+From: <Mark.Bravington@csiro.au>
+Date: Tue, 9 Mar 2004 16:51:06 +1100
