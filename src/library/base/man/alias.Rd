@@ -2,14 +2,10 @@
 % copyright (C) 1998 B. D. Ripley
 %
 \name{alias}
-\title{Find Aliases (Dependencies) in a Model }
+\title{Find Aliases (Dependencies) in a Model}
 \usage{
 alias(object, ...)
-}
-\usage{
 alias.formula(object, data, ...)
-}
-\usage{
 alias.lm(object, complete = TRUE, partial = FALSE, partial.pattern = FALSE)
 }
 \alias{alias}
