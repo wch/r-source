@@ -104,7 +104,7 @@ Then run
 	make
 
 
-Note 1: The file rw1060\bin\Rchtml.dll is only built if CHM help is
+Note 1: The file rw1061\bin\Rchtml.dll is only built if CHM help is
 specified in MkRules. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions to
 build it under VC++6, and it is preferable to use that as the VC++
@@ -152,7 +152,7 @@ in the windows/contrib/ATLAS area on CRAN.
 Building bitmap device support
 ------------------------------
 
-The file rw1060\bin\Rbitmap.dll is not built automatically:
+The file rw1061\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.
 
 If everything is set up in directory bitmap,
