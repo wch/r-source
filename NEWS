@@ -68,6 +68,11 @@ NEW FEATURES
 	for gigabytes.  The setting of maximum vsize is now only
 	limited by the platform's address space.
 
+    o	All warning and error messages are truncated to a length set
+	by options(warning.length=), defaulting to 1000.  (Previously
+	most (but not quite all) were truncated at 8192 characters.
+
+
 
 DEPRECATED & DEFUNCT
 

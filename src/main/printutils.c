@@ -471,6 +471,7 @@ void REvprintf(const char *format, va_list arg)
 	int slen;
 
 	vsnprintf(buf, BUFSIZE, format, arg);
+	buf[BUFSIZE-1] = '\0';
 	slen = strlen(buf);
 	R_WriteConsole(buf, slen);
     }

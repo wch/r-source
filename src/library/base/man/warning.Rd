@@ -26,6 +26,9 @@ warning(\dots, call. = TRUE)
   If \code{warn} is zero (the default), a top-level variable
   \code{last.warning} is created.  It contains the warnings which can be
   printed via a call to \code{\link{warnings}}.
+
+  Warnings will be truncated to \code{getOption("warning.length")}
+  characters, default 1000.
 }
 \seealso{
   \code{\link{stop}} for fatal errors,

@@ -129,6 +129,14 @@ getOption(x)
     one, warnings are printed as they occur.  If \code{warn} is two or
     larger all warnings are turned into errors.}
 
+  \item{warning.length}{sets the truncation limit for error and warning
+    messages.  A non-negative integer, with allowed values 100--8192,
+    default 1000.}
+
+  \item{warning.expression}{an \R code expression to be called if a
+    warning is generated, replacing the standard message.  If non-null is
+    called irrespective of the value of option \code{warn}.}
+
   \item{check.bounds}{logical, defaulting to \code{FALSE}.  If true, a
     \link{warning} is produced whenever a ``generalized vector''
     (atomic or \code{\link{list}}) is extended, by something like
@@ -217,7 +225,9 @@ getOption(x)
     \code{na.action} \tab \code{na.omit} \tab
     \code{ts.eps} \tab \code{1e-5}\cr
     \code{error} \tab \code{NULL} \tab
-    \code{warn} \tab \code{0}\cr
+    \code{show.error.messags} \tab \code{TRUE} \cr
+    \code{warn} \tab \code{0}\tab
+    \code{warning.length} \tab \code{1000}\cr
     \code{echo} \tab \code{TRUE} \tab
     \code{verbose} \tab \code{FALSE}
   }

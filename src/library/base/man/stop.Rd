@@ -23,6 +23,9 @@ geterrmessage()
   error-handler) in interactive use is
   to return to the top level prompt, and in non-interactive use to
   (effectively) call \code{\link{q}("no", status=1, runLast=FALSE}).
+
+  Errors will be truncated to \code{getOption("warning.length")}
+  characters, default 1000.
 }
 \value{
   \code{geterrmessage} gives the last error message, as character string

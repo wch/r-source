@@ -442,6 +442,7 @@ extern Rboolean	R_KeepSource	INI_as(FALSE);	/* options(keep.source) */
 #ifdef EXPERIMENTAL_NAMESPACES
 extern int	R_UseNamespaceDispatch INI_as(TRUE);
 #endif
+extern int	R_WarnLength	INI_as(1000);	/* Error/warning max length */
 
 /* File Input/Output */
 LibExtern Rboolean R_Interactive	INI_as(TRUE);	/* TRUE during interactive use*/

@@ -68,6 +68,7 @@
  *	"error.messages"
  *	"show.error.messages"
  *	"warn"
+ *	"warning.length"
  *	"warning.expression"
 
  *
@@ -274,6 +275,10 @@ void InitOptions(void)
     SETCAR(v, allocVector(LGLSXP, 1));
     LOGICAL(CAR(v))[0] = 1;
 
+    SET_TAG(v, install("warnings.length"));
+    SETCAR(v, allocVector(INTSXP, 1));
+    INTEGER(CAR(v))[0] = 1000;
+
     SET_SYMVALUE(install(".Options"), val);
     UNPROTECT(2);
 }
@@ -416,6 +421,13 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else if (streql(CHAR(namei), "warn")) {
 		if (!isNumeric(argi) || length(argi) != 1)
 		    errorcall(call, "warn parameter invalid");
+                SET_VECTOR_ELT(value, i, SetOption(tag, argi));
+	    }
+	    else if (streql(CHAR(namei), "warning.length")) {
+		k = asInteger(argi);
+		if (k < 100 || k > 8192)
+		    errorcall(call, "warning.length parameter invalid");
+		R_WarnLength = k;
                 SET_VECTOR_ELT(value, i, SetOption(tag, argi));
 	    }
 	    else if ( streql(CHAR(namei), "warning.expression") )  {
