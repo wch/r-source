@@ -1,0 +1,41 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-01-25 15:40+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/main/version.c:34
+msgid ""
+"R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
+"You are welcome to redistribute it under certain conditions.\n"
+"Type 'license()' or 'licence()' for distribution details.\n"
+"\n"
+msgstr ""
+
+#: src/main/version.c:37
+msgid ""
+"R is a collaborative project with many contributors.\n"
+"Type 'contributors()' for more information and\n"
+"'citation()' on how to cite R or R packages in publications.\n"
+"\n"
+msgstr ""
+
+#: src/main/version.c:40
+msgid ""
+"Type 'demo()' for some demos, 'help()' for on-line help, or\n"
+"'help.start()' for a HTML browser interface to help.\n"
+"Type 'q()' to quit R.\n"
+"\n"
+msgstr ""

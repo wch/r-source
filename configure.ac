@@ -1473,6 +1473,7 @@ AC_CONFIG_FILES(
   etc/Makeconf
   etc/Renviron
   m4/Makefile
+  po/Makefile.in 
   share/Makefile
   src/Makefile
   src/appl/Makefile

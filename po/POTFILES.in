@@ -1,0 +1,4 @@
+# List of source files containing translatable strings.
+# The last line must not be a comment.
+
+src/main/version.c
