@@ -220,8 +220,18 @@ printer.</td>
 <td>&nbsp;&nbsp; S</td>
 
 <td>Save the window. This could be the content ofthe R Console i.e. your
+current R session any text window or the graphic device window. </td>
+</tr>
+<tr>
+<td></td>
+
+<td>Save As...</td>
+
+<td>&nbsp;&nbsp; </td>
+
+<td>Save the window. This could be the content ofthe R Console i.e. your
 current R session any text window or the graphicdevice window. This menu
-acts as a "Save As" menu so you&nbsp;&nbsp; have to specify each time the
+acts as a standard "Save As" menu so you&nbsp;&nbsp; have to specify each time the
 filename.</td>
 </tr>
 
@@ -653,6 +663,21 @@ of a line means that this is a commented out line.
 <p># The history size
 <br># Default: RHISTSIZE=512
 <br>RHISTSIZE=512
+
+<p>R behaviour when R application receive a "break" event:
+<br>-------------------------------------------------------
+<p># R can handle user breaks to
+<br># interrupt lengthy calculations
+<br># or output. As this code is not
+<br># yet optimized, by default R
+<br># does not accept user breaks.
+<br># If the "Interrupt" switch
+<br># is set to TRUE then R intercept
+<br># user breaks. With this swtich on
+<br># R is a bit slower than with the
+<br># switch off
+<br># Default: Interrupt=FALSE
+<br>&nbsp;
 <p>R behaviour when R application receive an "open" event:
 <br>-------------------------------------------------------
 <p># Wheter to show or source a file
@@ -805,6 +830,10 @@ it to&nbsp; uncompress items it also starts up Classic Environment. We
 suggest to&nbsp; uncompress the help and examples files directly by using
 Stuffit Expander&nbsp; that is part of the utilities provided with System
 X.</li>
+
+<li> This version of R and Adobe ATM are incompatible. We are looking at 
+the problem. The solution is that you should switch ATM off before running 
+R. (Thanks to R. Gill for feedback on this bug)</li>
 
 <li>Internet functionality is not available yet. We are working on this.</li>
 
