@@ -34,9 +34,9 @@ rpois(n, lambda)
 
   If an element of \code{x} is not integer, the result of \code{dpois}
   is zero, with a warning.
-
-  The quantile is left continuous: \code{qpois(q, lambda)} is the
-  largest integer \eqn{x} such that \eqn{P(X \le x) < q}.
+  
+  The quantile is left continuous: \code{qgeom(q, prob)} is the largest
+  integer \eqn{x} such that \eqn{P(X \le x) < q}.
 }
 \seealso{
   \code{\link{dbinom}} for the binomial and \code{\link{dnbinom}} for

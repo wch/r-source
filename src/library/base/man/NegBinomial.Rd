@@ -49,8 +49,8 @@ rnbinom(n, size, prob)
   If an element of \code{x} is not integer, the result of \code{dnbinom}
   is zero, with a warning.
 
-  The quantile is left continuous: \code{qnbinom(q, \dots)} is the 
-  largest integer \eqn{x} such that \eqn{P(X \le x) < q}.
+  The quantile is defined as the smallest value \eqn{x} such that
+  \eqn{F(x) \ge p}, where \eqn{F} is the distribution function.
 }
 \seealso{
   \code{\link{dbinom}} for the binomial, \code{\link{dpois}} for the
