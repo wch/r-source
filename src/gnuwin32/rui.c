@@ -223,6 +223,31 @@ static void menucopypaste(control m)
 /*    show(RConsole); */
 }
 
+/* button* versions force focus back to the console: needed for PR#3285 */
+static void buttoncopy(control m)
+{
+    menucopy(m);
+    show(RConsole);
+}
+
+static void buttonpaste(control m)
+{
+    menupaste(m);
+    show(RConsole);
+}
+
+static void buttoncopypaste(control m)
+{
+    menucopypaste(m);
+    show(RConsole);
+}
+
+static void buttonkill(control m)
+{
+    show(RConsole);
+    UserBreak = TRUE;
+}
+
 static void menuclear(control m)
 {
     consoleclear(RConsole);
@@ -262,7 +287,7 @@ static void menulazy(control m)
 
 static void menukill(control m)
 {
-/*    show(RConsole); */
+    /*  show(RConsole); */
     UserBreak = TRUE;
 }
 
@@ -758,19 +783,19 @@ int setupui()
           MCHECK(addtooltip(bt,  "Save image"));
           r.x += (btsize + 6);
 
-          MCHECK(bt = newtoolbutton(copy_image, r, menucopy));
+          MCHECK(bt = newtoolbutton(copy_image, r, buttoncopy));
           MCHECK(addtooltip(bt, "Copy"));
           r.x += (btsize + 1);
 
-          MCHECK(bt = newtoolbutton(paste_image, r, menupaste));
+          MCHECK(bt = newtoolbutton(paste_image, r, buttonpaste));
           MCHECK(addtooltip(bt, "Paste"));
           r.x += (btsize + 1);
 
-          MCHECK(bt = newtoolbutton(copypaste_image, r, menucopypaste));
+          MCHECK(bt = newtoolbutton(copypaste_image, r, buttoncopypaste));
           MCHECK(addtooltip(bt, "Copy and paste"));
           r.x += (btsize + 6);
 
-          MCHECK(bt = newtoolbutton(stop_image,r,menukill));
+          MCHECK(bt = newtoolbutton(stop_image, r, buttonkill));
           MCHECK(addtooltip(bt,"Stop current computation"));
           r.x += (btsize + 6) ;
 

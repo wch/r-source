@@ -11,6 +11,9 @@ The changes to versioned install had ensured that the currently
 installed copy of a package had its MD5 sums checked, not the version
 waiting to be installed.  Now the correct version is checked.
 
+The Copy, Paste, Copy&Paste and Kill buttons in the MDI mode failed to
+restore focus to the console (see rw1070 RGui changes).
+
 
 
 rw1071
