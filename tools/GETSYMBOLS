@@ -28,3 +28,5 @@ s/C_FUNCTION(\(.*\))/	{ "\1",	\1 },/
 ' ${tmpROUT} > /tmp/FFTab.h
 
 ${AUXDIR}/move-if-change /tmp/FFTab.h  FFTab.h
+
+rm -f ${tmpROUT}
