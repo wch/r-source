@@ -13,7 +13,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
 }
 \arguments{
   \item{subject}{Subject of the email. Please do not use single quotes
-    (\code{'}) in the subject!}
+    (\code{'}) in the subject! File separate bug reports for multiple bugs}
   \item{ccaddress}{Optional email address for copies (default is current
     user).  Use \code{ccaddress = FALSE} for no copies.}
   \item{method}{Submission method, one of \code{"mailx"},
@@ -27,7 +27,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
 }
 \description{
   Invokes an editor to write a bug report and optionally mail it to the
-  r-bugs list at \email{r-bugs@r-project.org}.  Some standard
+  automated r-bugs repository at \email{r-bugs@r-project.org}.  Some standard
   information on the current version and configuration of \R are 
   included automatically.
 }
@@ -82,12 +82,13 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
    probably best not to complain about such a problem until you have
    checked the documentation in the usual ways, feel confident that you
    understand it, and know for certain that what you want is not
-   available.  If you are not sure what the command is supposed to do
+   available. The mailing list \code{r-devel@r-project.org} is a better
+   place for discussions of this sort than the bug list.
+
+   If you are not sure what the command is supposed to do
    after a careful reading of the manual this indicates a bug in the
    manual.  The manual's job is to make everything clear.  It is just as
-   important to report documentation bugs as program bugs. However, we
-   know that the introductory documentation is seriously inadequate, so
-   you don't need to report this.
+   important to report documentation bugs as program bugs.
 
    If the online argument list of a function disagrees with the manual,
    one of them must be wrong, so report the bug.
@@ -98,7 +99,8 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   exact description of what commands you type, from when you start \R
   until the problem happens.  Always include the version of \R, machine,
   and operating system that you are using; type `version' in \R to print
-  this. 
+  this. To help us keep track of which bugs have been fixed and which
+  are still open please send a separate report for each bug.
 
   The most important principle in reporting a bug is to report FACTS,
   not hypotheses or categorizations.  It is always easier to report the

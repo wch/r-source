@@ -34,6 +34,8 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{times}{The values to use for a newly created \code{timevar}
     variable in long format}
   \item{drop}{A vector of names of variables to drop before reshaping}
+  \item{direction}{\code{"wide" to reshape to wide format, "long" to
+  reshape to long format}}
   \item{fix.row.names}{if \code{TRUE} and \code{direction="wide"},
   create new row names in long format from the values of the id and time
   variables}
@@ -77,7 +79,7 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 The reshaped data frame with added attributes to simplify reshaping back to the
 original form.
 }
-\seealso{\code{\link{stack}}, \code{link{aperm}}}
+\seealso{\code{\link{stack}}, \code{\link{aperm}}}
 
 \examples{
 data(Indometh,package="nls")
