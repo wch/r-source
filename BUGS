@@ -260,3 +260,7 @@ Date: Mon, 15 Nov 1999 16:07:43 -0500 (EST)
 Subject: spikes in contour and persp
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Tue, 16 Nov 1999 08:56:57 +0100 (MET)
+* PR# 331 *
+Subject: continuous key press results in core dump
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 21 Nov 1999 14:43:07 -0500 (EST)
