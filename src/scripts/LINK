@@ -7,20 +7,27 @@ largs=
 Largs=
 rpath=
 
-for arg in ${*}; do
-  case "${arg}" in
+while test -n "${1}"; do
+  case "${1}" in
+    -avoid-version)
+      ;;
+    -rpath)
+      rpath="${rpath} ${2}"
+      shift
+      ;;
     -l*)
-      largs="${largs} ${arg}"
+      largs="${largs} ${1}"
       ;;
     -L*)
-      Largs="${Largs} ${arg}"
-      arg=`echo "${arg}" | sed -e 's/^-L//'`
-      rpath="${rpath}:${arg}"
+      Largs="${Largs} ${1}"
+      arg=`echo "${1}" | sed -e 's/^-L//'`
+      rpath="${rpath}:${1}"
       ;;
     *)
-      args="${args} ${arg}"
+      args="${args} ${1}"
       ;;
   esac
+  shift
 done
 
 LD_RUN_PATH="${rpath}"
