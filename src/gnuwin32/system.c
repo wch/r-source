@@ -818,8 +818,8 @@ int cmdlineoptions(int ac, char **av)
 		    if(ierr < 0)
 			sprintf(s, "WARNING: --max-mem-size value is invalid: ignored\n");
 		    else
-		    sprintf(s, "WARNING: --max-mem-size=%ld`%c': too large and ignored\n",
-			    value,
+		    sprintf(s, "WARNING: --max-mem-size=%lu`%c': too large and ignored\n",
+			    (unsigned long) value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(s);
 		} else if (value < 10*Mega) {
