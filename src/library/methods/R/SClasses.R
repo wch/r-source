@@ -175,7 +175,7 @@ getClassDef <-
     if(exists(cname, where))
         value <- get(cname, where)
     else if(!is.null(package)) {
-        where <- .requirePackage(package, TRUE) # try for a namespace that the class refers to
+        where <- .requirePackage(package) 
         if(exists(cname, where))
             value <- get(cname, where)
     }

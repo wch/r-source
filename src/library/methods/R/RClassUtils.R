@@ -959,23 +959,23 @@ requireMethods <-
   ## results.
   function(functions, signature,
            message = paste("No method defined for signature",
-           paste(signature, collapse=", ")))
+           paste(signature, collapse=", ")), where = topenv(parent.frame()))
 {
     for(f in functions) {
         method <- getMethod(f, optional = TRUE)
         if(!is.function(method))
-            method <- getGeneric(f)
+            method <- getGeneric(f, where = where)
         body(method) <- substitute(stop(MESSAGE), list(MESSAGE=message))
         environment(method) <- .GlobalEnv
-        setMethod(f, signature, method)
+        setMethod(f, signature, method, where = where)
     }
 }
 
-getSlots <- function(x, complete = TRUE) {
+getSlots <- function(x) {
     if(isClassDef(x))
         classDef <- x
     else
-        classDef <- (if(complete) getClass(x) else getClassDef(x))
+        classDef <- getClass(x)
     props <- classDef@slots
     value <- as.character(props)
     names(value) <- names(props)
@@ -1331,26 +1331,40 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 .requirePackage <- function(package)
     topenv(parent.frame())
 
+.PackageEnvironments <- new.env(hash=TRUE) # caching for required packages
+
 ## real version of .requirePackage
-..requirePackage <- function(package,useNamespace = FALSE) {
-    if(.identC(package, ".GlobalEnv"))
-        return(.GlobalEnv)
-    if(.identC(package, "methods"))
-        return(topenv(parent.frame())) # must have methods available if .requirePackage is called
+..requirePackage <- function(package) {
     value <- package
-    if(is.character(package))
-            value <- trySilent(loadNamespace(package))
+    if(is.character(package)) {
+        if(package %in% loadedNamespaces())
+            value <- getNamespace(package)
+        else {
+            if(identical(package, ".GlobalEnv"))
+                return(.GlobalEnv)
+            if(identical(package, "methods"))
+                return(topenv(parent.frame())) # booting methods
+            if(exists(package, envir = .PackageEnvironments, inherits = FALSE))
+                return(get(package, envir = .PackageEnvironments)) #cached, but only if no namespace
+        }
+    }
     if(is.environment(value))
         return(value)
-    if(exists(".packageName", .GlobalEnv, inherits=TRUE) &&
-       .identC(package, get(".packageName", .GlobalEnv)))
-        return(.GlobalEnv) # kludge for running package code
-    require(package, character.only = TRUE)
-    .asEnvironmentPackage(package)
+    topEnv <- options()$topLevelEnvironment
+    if(is.null(topEnv))
+        topEnv <- .GlobalEnv
+    if(exists(".packageName", topEnv, inherits=TRUE) &&
+       .identC(package, get(".packageName", topEnv)))
+        return(topEnv) # kludge for source'ing package code
+    if(!require(package, character.only = TRUE))
+        stop("Unable to find required package \"", package, "\"")
+    value <- .asEnvironmentPackage(package)
+    assign(package, value, envir = .PackageEnvironments)
+    value
 }
 
 .classDefEnv <- function(classDef) {
-    .requirePackage(classDef@package, TRUE)
+    .requirePackage(classDef@package)
 }
 
 
