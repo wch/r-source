@@ -16,9 +16,10 @@ USER-VISIBLE CHANGES
 	quartile ones.
 
     o	Unix-alike versions of R can now be used in UTF-8 locales on
-	suitably equipped OSes.  [This is incomplete at present.
-	The changes to the X11 devices are based on the Japanization
-	patches of Eiji Nakama.]
+	suitably equipped OSes.  [This is incomplete at present, and
+	only switched on at all by the undocumented configure flag
+	--enable-utf8.  The changes to font handling in the X11
+	devices are based on the Japanization patches of Eiji Nakama.]
 
 
 NEW FEATURES
