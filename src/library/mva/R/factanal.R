@@ -246,20 +246,20 @@ varimax <- function(x, normalize = TRUE, eps = 1e-5)
         x <- x/sc
     }
     p <- nrow(x)
-    T <- diag(nc)
+    TT <- diag(nc)
     d <- 0
     for(i in 1:1000) {
-        z <- x %*% T
+        z <- x %*% TT
         B  <- t(x) %*% (z^3 - z %*% diag(drop(rep(1, p) %*% z^2))/p)
         sB <- La.svd(B)
-        T <- sB$u %*% sB$vt
+        TT <- sB$u %*% sB$vt
         dpast <- d
         d <- sum(sB$d)
         if(d < dpast * (1 + eps)) break
     }
     if(normalize) z <- z * sc
     dimnames(z) <- dimnames(x)
-    list(loadings = z, rotmat = T)
+    list(loadings = z, rotmat = TT)
 }
 
 promax <- function(x, m = 4)

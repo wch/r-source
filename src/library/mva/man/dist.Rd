@@ -5,7 +5,7 @@ dist(x, method = "euclidean", diag = FALSE, upper = FALSE)
 
 print.dist(x, diag = NULL, upper = NULL, \dots)
 as.matrix.dist(x)
-as.dist(m, diag = NULL, upper = NULL)
+as.dist(m, diag = FALSE, upper = FALSE)
 }
 \alias{dist}
 \alias{print.dist}
@@ -24,9 +24,9 @@ as.dist(m, diag = NULL, upper = NULL)
   \item{diag}{A logical value indicating whether the diagonal of the
     distance matrix should be printed by \code{print.dist}.}
   \item{upper}{A logical value indicating whether the upper triangle of the
-      distance matrix should be printed by \code{print.dist}.}
-    \item{m}{A matrix of distances to be converted to a \code{"dist"}
-      object (only the lower triangle is used, the rest is ignored).}
+    distance matrix should be printed by \code{print.dist}.}
+  \item{m}{A matrix of distances to be converted to a \code{"dist"}
+    object (only the lower triangle is used, the rest is ignored).}
   \item{\dots}{further arguments, passed to the (next) \code{print} method.}
 }
 \description{
