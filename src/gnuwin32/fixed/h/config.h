@@ -91,6 +91,7 @@ extern int _finite(double);
 #define HAVE_ASINH 1
 #define HAVE_ACOSH 1
 #define HAVE_ATANH 1
+#define HAVE_HYPOT 1
 double asinh(double);
 double acosh(double);
 double atanh(double);
