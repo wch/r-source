@@ -101,7 +101,7 @@ Rcode: fixed/fixdesc
 	done
 	@$(ECHO) "  ... done"
 
-LAZY_PKGS = utils graphics stats grid # methods is done directly
+LAZY_PKGS = graphics grDevices grid stats utils # methods is done directly
 
 rpackage: ../../library/R.css
 ifeq ($(strip $(HELP)),YES)
