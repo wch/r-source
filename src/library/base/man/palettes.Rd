@@ -57,7 +57,7 @@ cm.colors(n)
 }
 \examples{
 # A Color Wheel
-piechart(rep(1,12), col=rainbow(12))
+pie(rep(1,12), col=rainbow(12))
 
 ##------ Some palettes ------------
 ch.col <- c("rainbow(n, start=.7, end=.1)", "heat.colors(n)",
