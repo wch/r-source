@@ -660,7 +660,8 @@ BUG FIXES
 	documented in the same way as S, and now behaves as
 	documented.  (PR#3504)
     
-    o	readBin(what = "foo") didn't convert `what' to its type.
+    o	readBin(what = "foo") didn't convert `what' to its type. 
+	(PR#4043)
     
 
 
