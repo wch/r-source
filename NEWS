@@ -314,6 +314,7 @@ NEW FEATURES
     o	merge.data.frame() has new arguments, `all[.xy]' and `suffixes',
 	for S compatibility.
 
+    o	boxplot() and bxp() have a new argument `at'
 
 
 BUG FIXES

@@ -12,7 +12,7 @@ boxplot.default(x, \dots, range = 1.5, width = NULL,
         varwidth = FALSE, notch = FALSE, names, boxwex = 0.8,
         data = parent.frame(), plot = TRUE,
         border = par("fg"), col = NULL, log = "", pars = NULL,
-        horizontal = FALSE, add = FALSE)
+        horizontal = FALSE, add = FALSE, at = NULL)
 boxplot.formula(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
@@ -62,9 +62,12 @@ boxplot.formula(formula, data = NULL, subset, na.action, \dots)
     be plotted in log scale.}
   \item{pars}{graphical parameters can also be passed as arguments to
     \code{boxplot}.}
-  \item{horizontal}{logical indicating if the  boxplots should be
+  \item{horizontal}{logical indicating if the boxplots should be
     horizontal; default \code{FALSE} means vertical boxes.}
   \item{add}{logical, if true \emph{add} boxplot to current plot.}
+  \item{at}{numeric vector giving the locations where the boxplots should
+    be drawn, particularly when \code{add = TRUE};
+    defaults to \code{1:n} where \code{n} is the number of boxes.}
 
   \item{formula}{a formula, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
@@ -112,6 +115,16 @@ data(OrchardSprays)
 boxplot(decrease ~ treatment, data = OrchardSprays,
         log = "y", col="bisque")
 
+rb <- boxplot(decrease ~ treatment, data = OrchardSprays, col="bisque")
+title("Comparing boxplot()s and non-robust mean +/- SD")
+
+mn.t <- tapply(OrchardSprays$decrease, OrchardSprays$treatment, mean)
+sd.t <- tapply(OrchardSprays$decrease, OrchardSprays$treatment, sd)
+xi <- 0.3 + seq(rb$n)
+points(xi, mn.t, col = "orange", pch = 18)
+arrows(xi, mn.t - sd.t, xi, mn.t + sd.t,
+       code = 3, col = "pink", angle = 75, length = .1)
+
 ## boxplot on a matrix:
 mat <- cbind(Uni05 = (1:100)/21, Norm = rnorm(100),
              T5 = rt(100, df = 5), Gam2 = rgamma(100, shape = 2))
@@ -119,5 +132,21 @@ boxplot(data.frame(mat), main = "boxplot(data.frame(mat), main = ...)")
 par(las=1)# all axis labels horizontal
 boxplot(data.frame(mat), main = "boxplot(*, horizontal = TRUE)",
         horizontal = TRUE)
+
+## Using `at = ' and adding boxplots -- example idea by Roger Bivand :
+
+data(ToothGrowth)
+boxplot(len ~ dose, data = ToothGrowth,
+        boxwex = 0.25, at = 1:3 - 0.2,
+        subset= supp == "VC", col="yellow",
+        main="Guinea Pigs' Tooth Growth",
+        xlab="Vitamin C dose mg",
+        ylab="Guinea pig tooth length", ylim=c(0,35))
+abline(h=seq(0,35,5), lty=3, col="light grey")
+boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
+        boxwex = 0.25, at = 1:3 + 0.2,
+        subset= supp == "OJ", col="orange")
+legend(2, 9, c("Ascorbic acid","Orange juice"),
+       fill = c("yellow","orange"))
 }
 \keyword{hplot}

@@ -3,7 +3,8 @@
 \usage{
 bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
     boxwex = 0.8, border = par("fg"), col = NULL, log = "",
-    pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE, \dots)
+    pars = NULL, frame.plot = axes, horizontal = FALSE, add = FALSE,
+    at = NULL, \dots)
 }
 \alias{bxp}
 \arguments{
@@ -36,6 +37,9 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
 \item{horizontal}{logical indicating if the  boxplots should be
   horizontal; default \code{FALSE} means vertical boxes.}
 \item{add}{logical, if true \emph{add} boxplot to current plot.}
+\item{at}{numeric vector giving the locations where the boxplots should
+  be drawn, particularly when \code{add = TRUE};
+  defaults to \code{1:n} where \code{n} is the number of boxes.}
 \item{pars,\dots}{Graphical parameters can be passed as arguments to
   this function, either as a list (\code{pars}) or normally(\code{\dots}).}
 }
@@ -44,8 +48,9 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, notch.frac = 0.5,
   \code{z}.  It is usually called from within \code{\link{boxplot}(..)},
   but can be invoked directly.
 }
-\value{An invisible vector with the x-coordinates of box centers, useful
-  for adding to the plot.
+\value{An invisible vector, actually identical to the \code{at}
+  argument, with the coordinates ("x" if horizontal is false, "y"
+  otherwise) of box centers, useful for adding to the plot.
 }
 \examples{
 str(bx.p <- boxplot(split(rnorm(100), gl(5,20))))
