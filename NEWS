@@ -225,8 +225,9 @@ BUG FIXES
 	model.matrix() was sometimes incorrectly determining the first
 	factor in a formula without an intercept.
 
-
     o   termplot() now needs data= argument more rarely (PR#828)
+
+    o   abline() on log scale doesn't draw -ve points (PR#1243)
 
 
 	**************************************************

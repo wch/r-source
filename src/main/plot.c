@@ -2616,7 +2616,7 @@ static void getylimits(double *y, DevDesc *dd) {
 SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, b, h, v, untf, col, lty, lwd;
-    int i, ncol, nlines, nlty, nlwd;
+    int i, ncol, nlines, nlty, nlwd, lstart, lstop;
     double aa, bb, x[2], y[2];
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
@@ -2692,6 +2692,9 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	 * still a risk that we could produce a number which is too
 	 * big for the computer's brain.
 	 * Paul.
+	 *
+	 * The problem is worse -- you could get NaN, which at least the
+	 * X11 device coerces to -2^31 <TSL>
 	 */
 	getxlimits(x, dd);
 	if (R_FINITE(Rf_gpptr(dd)->lwd)) {
@@ -2704,7 +2707,20 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		xx[100] = x[1];
 		yy[100] = aa + x[1] * bb;
-		GPolyline(101, xx, yy, USER, dd);
+		
+		/* now get rid of -ve values */
+		lstart=0;lstop=100;
+		if (Rf_gpptr(dd)->xlog){
+			for(;xx[lstart]<=0 && lstart<101;lstart++);
+			for(;xx[lstop]<=0 && lstop>0;lstop--);
+		}
+		if (Rf_gpptr(dd)->ylog){
+			for(;yy[lstart]<=0 && lstart<101;lstart++);
+			for(;yy[lstop]<=0 && lstop>0;lstop--);
+		}
+					
+	    
+		GPolyline(lstop-lstart+1, xx+lstart, yy+lstart, USER, dd);
 	    }
 	    else {
 		double x0, x1;
