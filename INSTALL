@@ -9,10 +9,11 @@ Pre-made binaries are made available for some systems with varying
 regularity and can be obtained from CRAN (see the RESOURCES file).
 
 R will configure and build under a number of common Unix-like
-platforms (including dec-alpha-osf, freebsd, hpux, linux-elf,
-rs6000-ibm-aix, sgi-irix, solaris, and sunos) and on Windows (see
-src/gnuwin32/readme).  In general it is relatively easy to adapt R to
-new platforms.  See the section on new platforms for details.
+platforms (including i386-freebsd, i386-linux, ppc-linux,
+mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
+hppa-hp-hpux, sparc-linux, and sparc-sun-solaris) and on Windows 9x/NT
+(see src/gnuwin32/readme).  In general it is relatively easy to adapt
+R to new platforms.  See the section on new platforms for details.
 
 
 GETTING AND UNPACKING THE SOURCES
@@ -25,7 +26,7 @@ and unpack them with
 on systems that have GNU tar installed. On other systems you need at
 least to have the "gzip" program installed. Then you can do
 
-	gzip -dc | tar xvf -
+	gzip -dc R-x.yy.z.tgz | tar xvf -
 
 If you need to transport the sources on floppy disks, you can download the
 R-x.yy.z.tgz-split.* files. and paste them together at the destination
@@ -165,6 +166,8 @@ path.
 
 BUILDING THE GNOME INTERFACE
 
+This interface is experimental and currently incomplete.
+
 The GNOME interface for R will only be built if you specify it by
 running configure with the --with-gnome option.  For example, you
 might run
@@ -179,8 +182,8 @@ versions you have by
 	gnome-config --version
 	gtk-config --version
 
-We know 1.0.10 and 1.2.3 suffice. Updates are available, for example
-from update.redhat.com for rpm-based systems. You need all of the
+We know 1.0.10 and 1.2.3 suffice.  Updates are available, for example
+from update.redhat.com for rpm-based systems.  You need all of the
 following rpms installed
 
 	gnome-libs
@@ -188,8 +191,8 @@ following rpms installed
 	gtk+
 	gtk+-devel
 
-You will need libglade 0.3 to build the GNOME interface.  For more 
-information on libglade and to download the source, see 
+You will need also libglade 0.3.  For more information on libglade and
+to download the source, see
 
     http://www.daa.com.au/~james/gnome/
 
