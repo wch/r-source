@@ -169,6 +169,10 @@ void next1(button b)
 	    return;
 	}
     }
+    if(!FullInstall && strcmp("rw0900", dest + strlen(dest) - 6) == 0 ) {
+	strcat(dest, "\\library");
+    }
+    
     cleanpage1();
     if(FullInstall) page2(); else pagepkg1();
 }
@@ -507,7 +511,12 @@ void page1()
     fRver = newfield(Rver, rect(180, ypos+30, 75, 20));
     pkg =   newradiobutton("An add-on package",
 			   rect(100, ypos+60, 200, 20), cPkg);
-    if(FullInstall) check(sys); else check(pkg);
+    if(FullInstall) 
+	check(sys); 
+    else {
+	check(pkg); 
+	disable(fRver);
+    }
 
     ypos = 150;
     lsrc = newlabel("Source location:", rect(10, ypos+2, 80, 20), AlignRight);
@@ -818,6 +827,7 @@ void pagepkg1()
 	while ((de = readdir(dir))) {
 	    p = de->d_name;
 	    p1 = p + strlen(p) - 4;
+	    if(!strcmp(p, "rw")) continue;
 	    if(strcmp(p1, ".zip")) continue;
 	    pkglist[npkgs] =
 		(char *)malloc((strlen(p)+1) * sizeof(char));
@@ -887,12 +897,10 @@ void pagepkg2()
     ypos += 20;
     chmhelp   = newcheckbox("compiled HTML", rect(xpos, ypos, 150, 20), NULL);
     if(prwch) check(chmhelp); else uncheck(chmhelp);
-    disable(chmhelp); hide(chmhelp);
 
     ypos += 20;
     winhelp   = newcheckbox("Windows help", rect(xpos, ypos, 150, 20), NULL);
     if(prwwh) check(winhelp); else uncheck(winhelp);
-    disable(winhelp); hide(winhelp);
 
     overwrite = newcheckbox("overwrite existing files?",
 			    rect(30, 220, 150, 20), NULL);
@@ -944,7 +952,6 @@ void pagepkg3()
 	    p = xfiles[nxfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/latex/*");
 	}
-	if(FALSE) {
 	if(!prwch) {
 	    p = xfiles[nxfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/chtml/*");
@@ -952,7 +959,6 @@ void pagepkg3()
 	if(!prwwh) {
 	    p = xfiles[nxfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/winhlp/*");
-	}
 	}
     } else {
 	if(prww) {
@@ -963,7 +969,6 @@ void pagepkg3()
 	    p = files[nfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/latex/*");
 	}
-	if(FALSE) {
 	if(prwch) {
 	    p = files[nfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/chtml/*");
@@ -971,7 +976,6 @@ void pagepkg3()
 	if(prwwh) {
 	    p = files[nfiles++] = (char*) malloc(50);
 	    strcpy(p, selpkg); strcat(p, "/winhlp/*");
-	}
 	}
     }
     rc = do_unzip(zipname, dest, nfiles, files, nxfiles, xfiles, over);
@@ -982,7 +986,12 @@ void pagepkg3()
 	lresp2 = newlabel(cmd, rect(50, 220, 300, 20), Center);
     }
     enable(bBack); 
-    if(ispkgs < nspkgs) enable(bNext); else enable(bFinish);
+    if(ispkgs < nspkgs) 
+	enable(bNext); 
+    else {
+	enable(bFinish);
+	if(prww) askok("You will need to run\n\nlink.html.help()\n\nin R to update the\npackages list for help.start()");
+    }
     setkeydown(w, keypkg3);
     show(w);
 }
