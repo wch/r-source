@@ -25,7 +25,6 @@ function(dir)
     if(!file.exists(docsDir <- file.path(dir, "man")))
         stop(paste("directory", fQuote(dir),
                    "does not contain Rd sources"))
-    isBase <- basename(dir) == "base"
 
     docsFile <- tempfile("Rdocs")
     on.exit(unlink(docsFile))
@@ -88,7 +87,6 @@ function(dir)
                 print(argsInArgList[duplicated(argsInArgList)])
             }
         }
-
 
         ## Clean up .ArgsEnv
         rm(list = lsArgs, envir = .ArgsEnv)
