@@ -272,7 +272,6 @@ sub build_index { # lib, dest
 	if($rdcf->{"Title"}) {
 	    $title = $rdcf->{"Title"};
 	    chomp $title;
-	    $title =~ s/^\S*\s*(.*)/$1/;
 	}
     }
 
