@@ -1,7 +1,7 @@
 \name{screen}
 \title{Creating and Controlling Multiple Screens on a Single Device}
 \usage{
-split.screen(figs, screen = , erase = TRUE)
+split.screen(figs, screen, erase = TRUE)
 screen(n = , new = TRUE)
 erase.screen(n = )
 close.screen(n, all.screens = FALSE)
@@ -14,7 +14,9 @@ close.screen(n, all.screens = FALSE)
   \item{figs}{A two-element vector describing the number of rows and the
     number of columns in a screen matrix \emph{or} a matrix with 4 columns.
     If a matrix, then each row describes a screen with values for the left,
-    right, bottom, and top of the screen (in that order) in NDC units.}
+    right, bottom, and top of the screen (in that order) in NDC units,
+    that is 0 at the lower left coner of the device surface, and 1 at
+    the upper right corner.}
   \item{screen}{A number giving the screen to be split.  It defaults to
     the current screen if there is one, otherwise the whole device region.}
   \item{erase}{logical: should be selected screen be cleared?}
@@ -45,7 +47,7 @@ close.screen(n, all.screens = FALSE)
   mode.  The other split-screen functions only work within this mode.
   While in this mode, certain other commands should be avoided (see the
   Warnings section below).  Split-screen mode is exited by the command
-  \code{close.screen(all = TRUE)}
+  \code{close.screen(all = TRUE)}.
 }
 \value{
   \code{split.screen} returns a vector of screen numbers for the
@@ -70,11 +72,11 @@ close.screen(n, all.screens = FALSE)
   may result in problems that are not readily visible.
 
   These functions are totally incompatible with the other mechanisms for
-  arranging plots on a device: \code{par(mfrow)}, \code{par(mfcol)} and
-  \code{layout()}.
+  arranging plots on a device: \code{\link{par}(mfrow)},
+  \code{par(mfcol)} and \code{\link{layout}()}.
 
   The functions are also incompatible with some plotting functions,
-  such as \code{coplot}, which make use of these other mechanisms.
+  such as \code{\link{coplot}}, which make use of these other mechanisms.
 
   The functions should not be used with multiple devices.
 
