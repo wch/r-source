@@ -125,6 +125,8 @@ NEW FEATURES
     o	split() now allows splitting on a list of factors in which case
 	their interaction defines the grouping.
 
+    o	rep() now handles lists (as generic vectors).
+
 
 
 BUG FIXES

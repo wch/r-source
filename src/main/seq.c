@@ -261,6 +261,11 @@ static SEXP rep(SEXP s, SEXP ncopy)
 	for (t = a; t != R_NilValue; t = CDR(t), i++)
 	    SETCAR(t, duplicate(CAR(nthcdr(s, (i % ns)))));
 	break;
+    case VECSXP:
+	i = 0;
+	for (i = 0; i < na; i++)
+	    SET_VECTOR_ELT(a, i, duplicate(VECTOR_ELT(s, i% ns)));
+	break;
     default:
 	UNIMPLEMENTED("rep");
     }
