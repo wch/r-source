@@ -62,7 +62,7 @@ make.search.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home(), "doc/html/search/index.txt")
     out <- file(f.tg, open = "w")
-    if(class(out) == "try-error") {
+    if(inherits(out, "try-error")) {
         warning("cannot update HTML search index")
         return()
     }
@@ -114,7 +114,7 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     for(f in files) {
         page <- readLines(f)
         try(out <- file(f, open = "w"))
-        if(class(out) == "try-error") {
+        if(inherits(out, "try-error")) {
             warning("cannot update", f)
             next
         }
