@@ -271,7 +271,7 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
         dev <- dev - dev[1] ; dev[1] <- NA
         nas <- !is.na(dev)
         P <- dev
-        P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
+        P[nas] <- pchisq(dev[nas], dfs[nas], lower.tail = FALSE)
         aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
     head <- c("Single term deletions", "\nModel:",

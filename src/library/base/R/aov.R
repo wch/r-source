@@ -332,7 +332,7 @@ summary.aov <- function(object, intercept = FALSE, split,
         x <- list(Df = df, "Sum Sq" = ss, "Mean Sq" = ms)
         if(rdf > 0) {
             TT <- ms/ms[nt]
-            TP <- 1 - pf(TT, df, rdf)
+            TP <- pf(TT, df, rdf, lower.tail = FALSE)
             TT[nt] <- TP[nt] <- NA
             x$"F value" <- TT
             x$"Pr(>F)" <- TP

@@ -182,7 +182,7 @@ plot.spec <-
             stop("coverage probability out of range [0,1)")
         tail <- (1 - coverage)
         df <- spec.obj$df
-        upper.quantile <- 1 - tail * (1 - pchisq(df, df))
+        upper.quantile <- 1 - tail * pchisq(df, df, lower.tail = FALSE)
         lower.quantile <- tail * pchisq(df, df)
         1/(qchisq(c(upper.quantile, lower.quantile), df)/df)
     }

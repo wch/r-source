@@ -242,7 +242,7 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
     regss <- totss - resss
     rsquared <- regss/totss
     fstat <- (regss/degfree)/(resss/(n-p))
-    pvalue <- 1 - pf(fstat, degfree, (n-p))
+    pvalue <- pf(fstat, degfree, (n-p), lower.tail = FALSE)
 
     ## construct summary
 
@@ -270,7 +270,8 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 	covmat <- (resss[i]/(n[i]-p)) * (qrinv%*%t(qrinv))
 	se <- diag(covmat)^.5
 	coef.table[[i]] <- cbind(coef[, i], se, coef[, i]/se,
-				 2*(1 - pt(abs(coef[, i]/se), n[i]-p)))
+				 2*pt(abs(coef[, i]/se), n[i]-p,
+                                      lower.tail = FALSE))
 	dimnames(coef.table[[i]]) <-
 	    list(colnames(lsqr$qr),
 		 c("Estimate", "Std.Err", "t-value", "Pr(>|t|)"))
@@ -280,9 +281,9 @@ ls.print <- function(ls.out, digits=4, print.it=TRUE)
 	if(print.it) {
 	    if(m.y>1)
 		cat("Response:", Ynames[i], "\n\n")
-	    cat(paste("Residual Standard Error=", format(round(
-							       resse[i], digits)), "\nR-Square=", format(round(
-													       rsquared[i], digits)), "\nF-statistic (df=",
+	    cat(paste("Residual Standard Error=",
+                      format(round(resse[i], digits)), "\nR-Square=",
+                      format(round(rsquared[i], digits)), "\nF-statistic (df=",
 		      format(degfree), ", ", format(n[i]-p), ")=",
 		      format(round(fstat[i], digits)), "\np-value=",
 		      format(round(pvalue[i], digits)), "\n\n", sep=""))

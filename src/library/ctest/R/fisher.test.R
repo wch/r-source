@@ -92,7 +92,7 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
         pnhyper <- function(q, ncp = 1, upper.tail = FALSE) {
             if(ncp == 1) {
                 if(upper.tail)
-                    return(1 - phyper(x - 1, m, n, k))
+                    return(phyper(x - 1, m, n, k, lower.tail = FALSE))
                 else
                     return(phyper(x, m, n, k))
             }

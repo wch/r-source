@@ -13,7 +13,7 @@ anova.lm.null <- function (object, ...)
     df <- dfr
     ms <- ss/df
     f <- ms/(ssr/dfr)
-    p <- 1 - pf(f, df, dfr)
+    p <- pf(f, df, dfr, lower.tail = FALSE)
     table <- data.frame(df, ss, ms, f, p)
     table[length(p), 4:5] <- NA
     dimnames(table) <- list(c(attr(object$terms, "term.labels"), "Residuals"),

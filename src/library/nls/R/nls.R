@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.18 2001/11/19 20:18:09 rgentlem Exp $
+### $Id: nls.R,v 1.19 2002/03/22 18:31:09 maechler Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -514,7 +514,7 @@ summary.nls <- function (object, ...)
     ans <- list(formula = formula(z), residuals = r, sigma = sqrt(resvar),
                 df = c(p, rdf), cov.unscaled = R, correlation = correl)
     tval <- param/se
-    param <- cbind( param, se, tval, 2 * (1 - pt(abs(tval), rdf)) )
+    param <- cbind( param, se, tval, 2 * pt(abs(tval), rdf, lower.tail = FALSE))
     dimnames(param) <-
       list(pnames, c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
     ans$parameters <- param
@@ -665,11 +665,11 @@ anovalist.nls <- function (object, ..., test = NULL)
     for(i in 2:nmodels) {
 	if(df[i] > 0) {
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])
-	    p[i] <- 1 - pf(f[i], df[i], df.r[i])
+	    p[i] <- pf(f[i], df[i], df.r[i], lower.tail = FALSE)
 	}
 	else if(df[i] < 0) {
 	    f[i] <- ms[i]/(ss.r[i-1]/df.r[i-1])
-	    p[i] <- 1 - pf(f[i], -df[i], df.r[i-1])
+	    p[i] <- pf(f[i], -df[i], df.r[i-1], lower.tail = FALSE)
 	}
 	else { # df[i] == 0
 	  ss[i] <- 0

@@ -1,3 +1,4 @@
+## Hmm, MM thinks diag(.) needs checking { diag(vec) when length(vec)==1 !}
 factanal <-
     function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
               subset, na.action, start = NULL,
@@ -233,7 +234,7 @@ print.factanal <- function(x, digits = 3, ...)
         cat("The chi square statistic is", round(stat, 2), "on", dof,
             if(dof == 1) "degree" else "degrees",
             "of freedom.\nThe p-value is",
-            signif(1 - pchisq(stat, dof), 3), "\n")
+            signif(pchisq(stat, dof, lower.tail = FALSE), 3), "\n")
     } else {
         cat(paste("\nThe degrees of freedom for the model is",
                   x$dof, "and the fit was", round(x$criteria["objective"], 4),

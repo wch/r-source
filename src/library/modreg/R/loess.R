@@ -484,7 +484,7 @@ anova.loess <- function(object, ...)
     dfnum <- c(d1diff^2/abs(diff(delta2)))
     dfden <- (delta1^2/delta2)[max.enp]
     Fvalue <- c(NA, (abs(diff(rss))/d1diff)/s[max.enp]^2)
-    pr <- 1 - pf(Fvalue, dfnum, dfden)
+    pr <- pf(Fvalue, dfnum, dfden, lower.tail = FALSE)
     ans <- data.frame(ENP = round(enp,2), RSS = rss, "F-value" = Fvalue,
 		      "Pr(>F)" = pr, check.names = FALSE)
     attr(ans, "heading") <-
