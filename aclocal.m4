@@ -1532,13 +1532,10 @@ caddr_t hello() {
 AC_DEFUN([R_PCRE],
 [AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
 if test "${have_pcre}" = yes; then
-  AC_CHECK_HEADER(pcre.h, [have_pcre=yes], [have_pcre=no])
-  if test "${have_pcre}" = no; then
-    AC_CHECK_HEADER(pcre/pcre.h, [have_pcre=yes], [have_pcre=no])
-    if test "${have_pcre}" = yes; then
-      AC_DEFINE(HAVE_PCRE_IN_PCRE, 1,
-            [Define if you have the PCRE headers in pcre/.])
-    fi
+  AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
+  if test "${ac_cv_header_pcre_h}" = no \
+      && test "${ac_cv_header_pcre_pcre_h}" = no; then
+    have_pcre=no
   fi
 fi
 if test "${have_pcre}" = yes; then
