@@ -1203,7 +1203,14 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
     expr = eval(expr, rho);
     UNPROTECT(5);
     unbindVar(R_TmpvalSymbol, rho);
+#ifdef CONSERVATIVE_COPYING
     return duplicate(saverhs);
+#else
+    /* we do not duplicate the value, so to be conservative mark the
+       value as NAMED = 2 */
+    SET_NAMED(saverhs, 2);
+    return saverhs;
+#endif
 }
 
 /* Defunct in in 1.5.0
@@ -1693,8 +1700,9 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	   in a promise, so evaluating it again should be no problem. */
 	*ans = EvalArgs(args, rho, dropmissing);
     else {
-	*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
+	PROTECT(*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing)));
 	SET_TAG(*ans, CreateTag(TAG(args)));
+	UNPROTECT(1);
     }
     }
     else *ans = args;
@@ -1726,8 +1734,9 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	}
     }
     /* else PROTECT(args); */
-    *ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
+    PROTECT(*ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing)));
     SET_TAG(*ans, CreateTag(TAG(args)));
+    UNPROTECT(1);
 #endif
     UNPROTECT(nprotect);
     return 0;
