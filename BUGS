@@ -160,4 +160,7 @@ Date: Thu, 28 Dec 2000 17:54:47 +0100
 
 Directory:  incoming
 
-none
+* PR# 805 *
+Subject:  Inconsistent behaviour in solve 
+From: J.C.Rougier@durham.ac.uk
+Date: Tue, 9 Jan 2001 17:25:55 GMT
