@@ -89,7 +89,7 @@ Go to any CRAN site (see `http://cran.r-project.org/mirrors.html' for a
 list), navigate to the `bin/windows/base' directory and collect the
 files you need.  There are three versions of the distribution.
 
-1) `SetupR.exe' is about 18Mb and gives a complete installation.
+1) `SetupR.exe' is about 19Mb and gives a complete installation.
 
 2) Directory `miniR' contains `miniR.exe' and eight files
 `miniR-?.bin'.  You can put  `miniR.exe' and `miniR-1.bin' on one
@@ -835,6 +835,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2002 April 13 by Professor B. D. Ripley
+Last edited 2002 June 01 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 
