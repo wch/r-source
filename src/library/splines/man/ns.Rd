@@ -57,11 +57,6 @@ ns(x, df = NULL, knots = NULL, intercept = FALSE,
   Chapter 7 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
-\seealso{
-  \code{\link{bs}},
-  \code{\link{poly}},
-  \code{\link{predict.ns}}, \code{\link{SafePrediction}}
-}
 \examples{
 ns(women$height, df = 5)
 summary(fm1 <- lm(weight ~ ns(height, df = 5), data = women))
