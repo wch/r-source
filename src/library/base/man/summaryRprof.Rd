@@ -1,15 +1,13 @@
 \name{summaryRprof}
 \alias{summaryRprof}
-%- Also NEED an `\alias' for EACH other topic documented here.
-\title{Summarise output of R profiler}
+\title{Summarise Output of R Profiler}
 \description{
 Summarise the output of the \code{\link{Rprof}} function to show the
 amount of time used by different \R functions.
 }
 \usage{
-summaryRprof(filename="Rprof.out", chunksize = 5000)
+summaryRprof(filename = "Rprof.out", chunksize = 5000)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
   \item{filename}{Name of a file produced by \code{Rprof()}}
   \item{chunksize}{Number of lines to read at a time}
@@ -40,12 +38,11 @@ will make the function run faster if sufficient memory is available.
 \examples{
 \dontrun{
 ## Rprof() is not available on all platforms
-tmp<-tempfile()
-Rprof(tmp<-tempfile())
+Rprof(tmp <- tempfile())
 example(glm)
 Rprof()
 summaryRprof(tmp)
 unlink(tmp)
 }
 }
-\keyword{utilities}% at least one, from doc/KEYWORDS
+\keyword{utilities}
