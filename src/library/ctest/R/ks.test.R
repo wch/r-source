@@ -37,7 +37,8 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
             PVAL <- .C("psmirnov2x",
                        p = as.double(STATISTIC),
                        as.integer(n.x),
-                       as.integer(n.y))$p
+                       as.integer(n.y),
+                       PACKAGE = "ctest")$p
     }
     else {
         if(is.character(y))
