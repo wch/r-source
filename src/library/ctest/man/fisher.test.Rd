@@ -6,7 +6,7 @@
   rows and columns in a contingency table with fixed marginals.
 }
 \usage{
-fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
+fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE, control = list(),
             or = 1, alternative = "two.sided", conf.level = 0.95)
 }
 \arguments{
@@ -19,6 +19,7 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
     (default) or a hybrid approximation thereof should be computed.
     In the hybrid case, asymptotic chi-squared probabilities are only
     used provided that the \dQuote{Cochran} conditions are satisfied.}
+  \item{control}{a list with named components for low level algorithm control.}
   \item{or}{the hypothesized odds ratio.  Only used in the 2 by 2 case.}
   \item{alternative}{indicates the alternative hypothesis and must be
     one of \code{"two.sided"}, \code{"greater"} or \code{"less"}.
@@ -56,7 +57,8 @@ fisher.test(x, y = NULL, workspace = 200000, hybrid = FALSE,
   a C version of the FORTRAN subroutine FEXACT which implements the
   network developed by Mehta and Patel (1986) and improved by Clarkson,
   Fan & Joe (1993).  The FORTRAN code can be obtained from
-  \url{http://www.netlib.org/toms/643}.
+  \url{http://www.netlib.org/toms/643}.  Note this fails (with an error
+  message) when the entries of the table are too large.
 
   In the 2 by 2 case, the null of conditional independence is equivalent
   to the hypothesis that the odds ratio equals one.  Exact inference can
