@@ -178,6 +178,10 @@ qnorm(1) ==  Inf && qnorm(0, log = TRUE) == Inf
 is.nan(qnorm(1.1)) &&
 is.nan(qnorm(-.1)) # + warn
 
+x <- c(-Inf, -1e100, 1:6, 1e200, Inf)
+rbind(d.s0 =dnorm(x,3,s=0),   p.s0 = pnorm(x,3,s=0),
+      d.sI =dnorm(x,3,s=Inf), p.sI = pnorm(x,3,s=Inf))
+
 ## 3 Test data from Wichura (1988) :
 all.equal(qnorm(c( 0.25,  .001,	 1e-20)),
 	  c(-0.6744897501960817, -3.090232306167814, -9.262340089798408),
