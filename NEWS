@@ -86,11 +86,14 @@ BUG FIXES
 
     o	predict(smooth.spline(x,*), deriv =1) did not predict at all `x'
 	values, and
-    o	smooth.spline(x,*, all.knots = TRUE) used much too much memory
+     	smooth.spline(x,*, all.knots = TRUE) used much too much memory
 	when length(x) was largish.
-    o   smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
+        smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
 
     o   pexp(x, log=TRUE) and pweibull(*) were losing precision for large x.
+
+    o   Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
+
 
 
 		CHANGES IN R VERSION 1.5.0
