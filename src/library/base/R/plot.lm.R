@@ -4,8 +4,7 @@ function(x, which = 1:4,
          "Scale-Location plot", "Cook's distance plot"),
          panel = points,
          sub.caption = deparse(x$call), main = "",
-         ask = interactive() && nb.fig < length(which)
-         	&& .Device != "postscript",
+         ask = nb.fig < length(which) && dev.interactive(),
          ...,
          id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75)
 {
