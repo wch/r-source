@@ -130,7 +130,7 @@ It is currently mirrored daily at
 @item http://cran.au.r-project.org/
 (PlanetMirror, Australia)
 @item http://cran.ch.r-project.org/
-(ETH Z@"urich, Switzerland)
+(ETH Zurich, Switzerland)
 @item http://cran.dk.r-project.org/
 (SunSITE, Denmark)
 @item http://cran.hu.r-project.org/
@@ -154,7 +154,7 @@ Statlib, Carnegie Mellon University, USA
 @c  @item @uref{http://cran.au.r-project.org/}
 @c  @tab (PlanetMirror, Australia)
 @c  @item @uref{http://cran.ch.r-project.org/}
-@c  @tab (ETH Z@"urich, Switzerland)
+@c  @tab (ETH Zurich, Switzerland)
 @c  @item @uref{http://cran.dk.r-project.org/}
 @c  @tab (SunSITE, Denmark)
 @c  @item @uref{http://cran.hu.r-project.org/}
