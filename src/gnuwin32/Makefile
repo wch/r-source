@@ -44,7 +44,7 @@ FLIBS+=-lRblas
 SOURCES = $(filter-out malloc.c blas00.c,$(wildcard *.c *.f))
 OBJS = $(SOURCES:.c=.o)
 MAINLIBS = libmain.a libappl.a libmath.a
-EXTRALIBS = ga.a gl.a xdr.a em.a ../extra/zlib/libz.a
+EXTRALIBS = ga.a gl.a xdr.a ../extra/zlib/libz.a
 
 LIBFILES = $(foreach i, $(ALLPACKAGES), ../../library/$i) ../../library/R.css
 PKGS = $(foreach i,$(PACKAGES),pkg-$i)
@@ -89,7 +89,6 @@ rlibs:
 	$(MAKE) -C ./graphapp
 	$(MAKE) -C ./getline
 	$(MAKE) -C ../extra/xdr -f Makefile.win
-	$(MAKE) -C ./math
 
 rmodules: libRm.a
 	$(MAKE) -C ../modules OPTFLAGS='$(OPTFLAGS)' FOPTFLAGS='$(FOPTFLAGS)' \
@@ -316,7 +315,6 @@ cleanwin:
 	$(MAKE) -C help clean
 	$(MAKE) -C front-ends clean
 	$(MAKE) -C ../extra/xdr -f Makefile.win clean
-	$(MAKE) -C math clean
 	$(MAKE) -C bitmap clean
 	-$(MAKE) -C installer clean ISclean
 
