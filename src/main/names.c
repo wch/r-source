@@ -496,6 +496,7 @@ FUNTAB R_FunTab[] =
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
 {"commandArgs", do_commandArgs, 0,	11,	0,	PP_FUNCALL},
+{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
 #ifdef Win32
 {"system",	do_system,	0,	11,	3,	PP_FUNCALL},
 #else
@@ -506,7 +507,6 @@ FUNTAB R_FunTab[] =
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
 {"flush.console",do_flushconsole,0,	11,	0,	PP_FUNCALL},
-{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
 {"win.version", do_winver,	0,	11,	0,	PP_FUNCALL},
 {"saveDevga",	do_saveDevga,	0,	11,	3,	PP_FUNCALL},
 {"shell.exec",	do_shellexec,	0,	11,	1,	PP_FUNCALL},

@@ -55,7 +55,6 @@ SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
 SEXP do_dircreate(SEXP, SEXP, SEXP, SEXP);
-SEXP do_int_unzip(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 #ifdef Win32
@@ -216,6 +215,7 @@ SEXP do_if(SEXP, SEXP, SEXP, SEXP);
 SEXP do_image(SEXP, SEXP, SEXP, SEXP);
 SEXP do_indexsearch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_inherits(SEXP, SEXP, SEXP, SEXP);
+SEXP do_int_unzip(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interactive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_internal(SEXP, SEXP, SEXP, SEXP);
 SEXP do_invisible(SEXP, SEXP, SEXP, SEXP);

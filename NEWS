@@ -81,6 +81,9 @@ NEW FEATURES
 
    o	warning() has new argument `call.', like stop()'s.
 
+   o	zip.file.extract() is no longer provisional and has an
+	"internal" method available on all platforms.
+
 
 DEPRECATED & DEFUNCT
 
