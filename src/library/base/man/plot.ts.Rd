@@ -5,38 +5,22 @@
 \description{
   Plotting method for objects inheriting from class \code{"ts"}.
 }
-\synopsis{
-plot.ts(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
-	xlab = "Time", ylab, log = "",
-	col = par("col"), bg = NA,
-	pch = par("pch"), cex = par("cex"),
-	lty = par("lty"), lwd = par("lwd"),
-	axes = TRUE, frame.plot = axes, ann = par("ann"),
-	main = NULL, plot.type = c("multiple", "single"),
-	xy.labels = (n <= 150), xy.lines = do.lab, panel = lines,
-        oma = c(6, 0, 5, 0), nc, ...)
-}
 \usage{
-\method{plot}{ts}(x, y = NULL, type = "l", frame.plot = axes,
-     plot.type = c("multiple", "single"),
-     xy.labels = (n <= 150), xy.lines = do.lab, panel = lines, nc, ...)
+\method{plot}{ts}(x, y = NULL, plot.type = c("multiple", "single"),
+     xy.labels, xy.lines, panel = lines, nc, ...)
 
-lines(x, \dots)
+\method{lines}{ts}(x, \dots)
 }
 \arguments{
   \item{x, y}{time series objects, usually inheriting from class \code{"ts"}.}
-
-  \item{type}{the type of plot, see \code{\link{plot}}.  When \code{y}
-    is present, the default will depend on \code{xy.labels}, see below.}
-
-  \item{frame.plot}{a function to give the `frame' for each panel.}
 
   \item{plot.type}{for multivariate time series, should the series by
     plotted separately (with a common time axis) or on a single plot?}
 
   \item{xy.labels}{logical, indicating if \code{\link{text}()} labels
     should be used for an x-y plot, \emph{or} character, supplying a
-    vector of labels to be used.}
+    vector of labels to be used.  The default is to label for up to 150
+    points, and not for more.}
 
   \item{xy.lines}{logical, indicating if \code{\link{lines}}
     should be drawn for an x-y plot.  Defaults to the value of

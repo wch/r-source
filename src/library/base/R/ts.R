@@ -392,142 +392,152 @@ print.ts <- function(x, calendar, ...)
     invisible(x.orig)
 }
 
-plot.ts <-
-function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
-	  xlab = "Time", ylab, log = "",
-	  col = par("col"), bg = NA,
-	  pch = par("pch"), cex = par("cex"),
-	  lty = par("lty"), lwd = par("lwd"),
-	  axes = TRUE, frame.plot = axes, ann = par("ann"),
-	  main = NULL, plot.type = c("multiple", "single"),
-	  xy.labels = (n <= 150), xy.lines = do.lab, panel = lines,
-          oma = c(6, 0, 5, 0), nc, ...)
+plot.ts <- function(x, y = NULL, plot.type = c("multiple", "single"),
+                    xy.labels, xy.lines, panel = lines, nc, ...)
 {
-    plot.type <- match.arg(plot.type)
-    nser <- NCOL(x)
-
-    if(plot.type == "multiple" && nser > 1) {
-        addmain <- function(main, cex.main=par("cex.main"),
-                            font.main=par("font.main"),
-                            col.main=par("col.main"), ...)
-            mtext(main, 3, 3, cex=cex.main, font=font.main, col=col.main, ...)
-
-        panel <- match.fun(panel)
+    plotts <-
+        function (x, y = NULL, plot.type = c("multiple", "single"),
+                  xy.labels, xy.lines, panel = lines, oma = c(6, 0, 5, 0), nc,
+                  xlabel, ylabel,
+                  type = "l", xlim = NULL, ylim = NULL,
+                  xlab = "Time", ylab, log = "",
+                  col = par("col"), bg = NA,
+                  pch = par("pch"), cex = par("cex"),
+                  lty = par("lty"), lwd = par("lwd"),
+                  axes = TRUE, frame.plot = axes, ann = par("ann"),
+                  main = NULL, ...)
+    {
+        plot.type <- match.arg(plot.type)
         nser <- NCOL(x)
-        if(nser > 10) stop("Can't plot more than 10 series")
-        if(is.null(main)) main <- deparse(substitute(x))
-        nm <- colnames(x)
-        if(is.null(nm)) nm <- paste("Series", 1:nser)
-        if(missing(nc)) nc <- if(nser >  4) 2 else 1
-        oldpar <- par("mar", "oma", "mfcol")
-        on.exit(par(oldpar))
-        par(mar = c(0, 5.1, 0, 2.1), oma = oma)
-        nr <- ceiling(nser / nc)
-        par(mfcol = c(nr, nc))
-        for(i in 1:nser) {
-            plot(x[, i], axes = FALSE, xlab="", ylab="",
-                 log = log, col = col, bg = bg, pch = pch, ann = ann,
-                 type = "n", ...)
-            panel(x[, i], col = col, bg = bg, pch = pch, type=type, ...)
-            box()
-            axis(2, xpd=NA)
-            mtext(nm[i], 2, 3)
-            if(i%%nr==0 || i==nser) axis(1, xpd=NA)
-        }
-        if(ann) {
-            mtext(xlab, 1, 3, ...)
-            if(!is.null(main)) {
-                par(mfcol=c(1,1))
-                addmain(main, ...)
+
+        if(plot.type == "multiple" && nser > 1) {
+            addmain <- function(main, cex.main=par("cex.main"),
+                                font.main=par("font.main"),
+                                col.main=par("col.main"), ...)
+                mtext(main, 3, 3, cex=cex.main, font=font.main, col=col.main, ...)
+
+            panel <- match.fun(panel)
+            nser <- NCOL(x)
+            if(nser > 10) stop("Can't plot more than 10 series")
+            if(is.null(main)) main <- xlabel
+            nm <- colnames(x)
+            if(is.null(nm)) nm <- paste("Series", 1:nser)
+            if(missing(nc)) nc <- if(nser >  4) 2 else 1
+            oldpar <- par("mar", "oma", "mfcol")
+            on.exit(par(oldpar))
+            par(mar = c(0, 5.1, 0, 2.1), oma = oma)
+            nr <- ceiling(nser / nc)
+            par(mfcol = c(nr, nc))
+            for(i in 1:nser) {
+                plot.default(x[, i], axes = FALSE, xlab="", ylab="",
+                     log = log, col = col, bg = bg, pch = pch, ann = ann,
+                     type = "n", ...)
+                panel(x[, i], col = col, bg = bg, pch = pch, type=type, ...)
+                box()
+                axis(2, xpd=NA)
+                mtext(nm[i], 2, 3)
+                if(i%%nr==0 || i==nser) axis(1, xpd=NA)
             }
+            if(ann) {
+                mtext(xlab, 1, 3, ...)
+                if(!is.null(main)) {
+                    par(mfcol=c(1,1))
+                    addmain(main, ...)
+                }
+            }
+            return(invisible())
         }
-	return(invisible())
-    }
-    ## end of multiple plot section
+        ## end of multiple plot section
 
-    xlabel <- if (!missing(x)) deparse(substitute(x))## else NULL
-    ylabel <- if (!missing(y)) deparse(substitute(y))
-    x <- as.ts(x)
-    if(!is.null(y)) {
-	## want ("scatter") plot of y ~ x
-	y <- hasTsp(y)
-	if(NCOL(x) > 1 || NCOL(y) > 1)
-	    stop("scatter plots only for univariate time series")
-	if(is.ts(x) && is.ts(y)){
-	    xy <- ts.intersect(x, y)
-	    xy <- xy.coords(xy[,1], xy[,2], xlabel, ylabel, log)
-	} else
-	    xy <- xy.coords(x, y, xlabel, ylabel, log)
-	xlab <- if (missing(xlab)) xy$xlab else xlab
-	ylab <- if (missing(ylab)) xy$ylab else ylab
-	xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
-	ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
-	n <- length(xy $ x) #-> default for xy.l(ines|abels)
-	if(!is.logical(xy.labels)) {
-	    if(!is.character(xy.labels))
-		stop("`xy.labels' must be logical or character")
-	    do.lab <- TRUE
-	} else do.lab <- xy.labels
+        x <- as.ts(x)
+        if(!is.null(y)) {
+            ## want ("scatter") plot of y ~ x
+            y <- hasTsp(y)
+            if(NCOL(x) > 1 || NCOL(y) > 1)
+                stop("scatter plots only for univariate time series")
+            if(is.ts(x) && is.ts(y)){
+                xy <- ts.intersect(x, y)
+                xy <- xy.coords(xy[,1], xy[,2], xlabel, ylabel, log)
+            } else
+            xy <- xy.coords(x, y, xlabel, ylabel, log)
+            xlab <- if (missing(xlab)) xy$xlab else xlab
+            ylab <- if (missing(ylab)) xy$ylab else ylab
+            xlim <- if (is.null(xlim)) range(xy$x[is.finite(xy$x)]) else xlim
+            ylim <- if (is.null(ylim)) range(xy$y[is.finite(xy$y)]) else ylim
+            n <- length(xy $ x)           #-> default for xy.l(ines|abels)
+            if(missing(xy.labels)) xy.labels <- (n <= 150)
+            if(!is.logical(xy.labels)) {
+                if(!is.character(xy.labels))
+                    stop("`xy.labels' must be logical or character")
+                do.lab <- TRUE
+            } else do.lab <- xy.labels
 
-        ptype <-
-            if(do.lab) "n" else if(missing(type)) "p" else type
-	plot.default(xy, type = ptype,
-		     xlab = xlab, ylab = ylab,
-		     xlim = xlim, ylim = ylim, log = log, col = col, bg = bg,
-		     pch = pch, axes = axes, frame.plot = frame.plot,
-		     ann = ann, main = main, ...)
-	if(do.lab)
-	    text(xy, labels =
-		 if(is.character(xy.labels)) xy.labels
-		 else if(all(tsp(x) == tsp(y))) formatC(time(x), wid = 1)
-		 else seq(along = x),
-		 col = col, cex = cex)
-	if(xy.lines)
-	    lines(xy, col = col, lty = lty, lwd = lwd,
-                  type = if(do.lab) "c" else "l")
-	return(invisible())
-    }
-    ## Else : no y, only x
+            ptype <-
+                if(do.lab) "n" else if(missing(type)) "p" else type
+            plot.default(xy, type = ptype,
+                         xlab = xlab, ylab = ylab,
+                         xlim = xlim, ylim = ylim, log = log, col = col, bg = bg,
+                         pch = pch, axes = axes, frame.plot = frame.plot,
+                         ann = ann, main = main, ...)
+            if(missing(xy.lines)) xy.lines <- do.lab
+            if(do.lab)
+                text(xy, labels =
+                     if(is.character(xy.labels)) xy.labels
+                     else if(all(tsp(x) == tsp(y))) formatC(time(x), wid = 1)
+                     else seq(along = x),
+                     col = col, cex = cex)
+            if(xy.lines)
+                lines(xy, col = col, lty = lty, lwd = lwd,
+                      type = if(do.lab) "c" else "l")
+            return(invisible())
+        }
+        ## Else : no y, only x
 
-    if(missing(ylab)) {
-        ylab <- colnames(x)
-        if(length(ylab) != 1)
-            ylab <- xlabel
+        if(missing(ylab)) {
+            ylab <- colnames(x)
+            if(length(ylab) != 1)
+                ylab <- xlabel
+        }
+        ## using xy.coords() mainly for the log treatment
+        if(is.matrix(x)) {
+            k <- ncol(x)
+            tx <- time(x)
+            xy <- xy.coords(x = matrix(rep.int(tx, k), ncol = k),
+                            y = x, log=log)
+            xy$x <- tx
+        }
+        else xy <- xy.coords(x, NULL, log=log)
+        if(is.null(xlim)) xlim <- range(xy$x)
+        if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
+        plot.new()
+        plot.window(xlim, ylim, log, ...)
+        if(is.matrix(x)) {
+            for(i in seq(length=k))
+                lines.default(xy$x, x[,i],
+                              col = col[(i-1) %% length(col) + 1],
+                              lty = lty[(i-1) %% length(lty) + 1],
+                              lwd = lwd[(i-1) %% length(lwd) + 1],
+                              bg  =	 bg[(i-1) %% length(bg)	 + 1],
+                              pch = pch[(i-1) %% length(pch) + 1],
+                              type = type)
+        }
+        else {
+            lines.default(xy$x, x, col = col[1], bg = bg, lty = lty[1],
+                          lwd = lwd[1], pch = pch[1], type = type)
+        }
+        if (ann)
+            title(main = main, xlab = xlab, ylab = ylab, ...)
+        if (axes) {
+            axis(1, ...)
+            axis(2, ...)
+        }
+        if (frame.plot) box(...)
     }
-    ## using xy.coords() mainly for the log treatment
-    if(is.matrix(x)) {
-        k <- ncol(x)
-        tx <- time(x)
-        xy <- xy.coords(x = matrix(rep.int(tx, k), ncol = k),
-                        y = x, log=log)
-        xy$x <- tx
-    }
-    else xy <- xy.coords(x, NULL, log=log)
-    if(is.null(xlim)) xlim <- range(xy$x)
-    if(is.null(ylim)) ylim <- range(xy$y[is.finite(xy$y)])
-    plot.new()
-    plot.window(xlim, ylim, log, ...)
-    if(is.matrix(x)) {
-	for(i in seq(length=k))
-	    lines.default(xy$x, x[,i],
-			  col = col[(i-1) %% length(col) + 1],
-			  lty = lty[(i-1) %% length(lty) + 1],
-			  lwd = lwd[(i-1) %% length(lwd) + 1],
-			  bg  =	 bg[(i-1) %% length(bg)	 + 1],
-			  pch = pch[(i-1) %% length(pch) + 1],
-			  type = type)
-    }
-    else {
-	lines.default(xy$x, x, col = col[1], bg = bg, lty = lty[1],
-		      lwd = lwd[1], pch = pch[1], type = type)
-    }
-    if (ann)
-	title(main = main, xlab = xlab, ylab = ylab, ...)
-    if (axes) {
-	axis(1, ...)
-	axis(2, ...)
-    }
-    if (frame.plot) box(...)
+    xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
+    ylabel <- if (!missing(y)) deparse(substitute(y))else NULL
+    plotts(x = x, y = y, plot.type = plot.type,
+           xy.labels = xy.labels, xy.lines = xy.lines,
+           panel = panel, nc = nc, xlabel = xlabel, ylabel = ylabel, ...)
 }
 
 lines.ts <- function(x, ...)
