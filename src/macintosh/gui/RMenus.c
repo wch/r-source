@@ -1543,7 +1543,7 @@ void DoTools(SInt16 menuItem)
     break;
 
     case kItemSaveWSpace:
-    	consolecmd("saveimage()");
+    	consolecmd("save.image()");
     break;
 
     case kItemLoadHistory:
@@ -1669,7 +1669,7 @@ OSErr InitializeMenus(void)
 		RHelpMenuItem=CountMenuItems(HelpMenu);
 		AppendMenu(HelpMenu, "\pHelp On Topic...");
 		RTopicHelpItem=CountMenuItems(HelpMenu);
-   	    AppendMenu(HelpMenu,"\pSearch Help on...");
+   	    AppendMenu(HelpMenu,"\pSearch Help On...");
    	    SearchHelpItem=CountMenuItems(HelpMenu);
 		AppendMenu(HelpMenu, "\pRun An Example...");
 		RunExampleItem=CountMenuItems(HelpMenu);
