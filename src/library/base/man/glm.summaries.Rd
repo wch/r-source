@@ -2,8 +2,8 @@
 \title{Accessing Generalized Linear Model Fits}
 \usage{
 summary(object, dispersion = NULL, correlation = FALSE, \dots)
-anova(object, \dots, test = NULL)
-anova.glmlist(object, test = NULL, \dots)
+anova(object, dispersion = NULL, \dots, test = NULL)
+anova.glmlist(object, dispersion = NULL, test = NULL, \dots)
 coefficients(x) ; coef(x)
 df.residual(x)
 family(x)
@@ -72,6 +72,7 @@ print.summary(summary.glm.obj, digits = max(3, getOption("digits") - 3),
 summary(glm.D93)
 anova(glm.D93)
 anova(glm.D93, test = "Cp")
+anova(glm.D93, test = "Chisq")
 }
 \keyword{models}
 \keyword{regression}

@@ -336,7 +336,7 @@ print.glm <- function(x, digits= max(3, getOption("digits") - 3),
 }
 
 
-anova.glm <- function(object, ..., test=NULL)
+anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
 {
     ## check for multiple objects
     dotargs <- list(...)
@@ -396,7 +396,8 @@ anova.glm <- function(object, ..., test=NULL)
 
     ## construct table and title
 
-    table <- data.frame(c(NA, -diff(resdf)), c(NA, -diff(resdev)), resdf, resdev)
+    table <- data.frame(c(NA, -diff(resdf)),
+                        c(NA, pmax(0, -diff(resdev))), resdf, resdev)
     if (nvars == 0) table <- table[1,,drop=FALSE] # kludge for null model
     dimnames(table) <- list(c("NULL", attr(object$terms, "term.labels")),
 			    c("Df", "Deviance", "Resid. Df", "Resid. Dev"))
@@ -407,16 +408,19 @@ anova.glm <- function(object, ..., test=NULL)
 
     ## calculate test statistics if needed
 
+    df.dispersion <- Inf
+    if(is.null(dispersion)) {
+        dispersion <- summary(object, dispersion=dispersion)$dispersion
+        df.dispersion <- if (dispersion == 1) Inf else object$df.residual
+    } else df.scale <- Inf
     if(!is.null(test))
-	table <- stat.anova(table=table, test=test,
-			    scale=sum(object$weights*object$residuals^2)/
-			    object$df.residual,
-			    df.scale=object$df.residual, n=NROW(x))
+	table <- stat.anova(table=table, test=test, scale=dispersion,
+			    df.scale=df.dispersion, n=NROW(x))
     structure(table, heading = title, class= c("anova", "data.frame"))
 }
 
 
-anova.glmlist <- function(object, test=NULL, ...)
+anova.glmlist <- function(object, dispersion=NULL, test=NULL, ...)
 {
 
     ## find responses for all models and remove
@@ -445,7 +449,8 @@ anova.glmlist <- function(object, test=NULL, ...)
 
     ## construct table and title
 
-    table <- data.frame(resdf, resdev, c(NA, -diff(resdf)), c(NA, -diff(resdev)))
+    table <- data.frame(resdf, resdev, c(NA, -diff(resdf)),
+                        c(NA, pmax(0, -diff(resdev)) ) )
     variables <- as.character(lapply(object, function(x) {
 	deparse(formula(x)[[3]])} ))
     dimnames(table) <- list(variables, c("Resid. Df", "Resid. Dev", "Df",
@@ -456,10 +461,11 @@ anova.glmlist <- function(object, test=NULL, ...)
     ## calculate test statistic if needed
 
     if(!is.null(test)) {
-	bigmodel <- object[[(order(resdf)[1])]]
+	bigmodel <- object[[(rdf <- order(resdf)[1])]]
+        dispersion <- summary(bigmodel, dispersion=dispersion)$dispersion
+        df.dispersion <- if (dispersion == 1) Inf else rdf
 	table <- stat.anova(table=table, test=test,
-			    scale=sum(bigmodel$weights * bigmodel$residuals^2)/
-			    bigmodel$df.residual, df.scale=min(resdf),
+			    scale=dispersion, df.scale=df.dispersion,
 			    n=length(bigmodel$residuals))
     }
     structure(table, heading = title, class= c("anova", "data.frame"))
@@ -473,13 +479,14 @@ stat.anova <- function(table, test=c("Chisq", "F", "Cp"), scale, df.scale, n)
     if(is.na(dev.col)) dev.col <- match("Sum of Sq", colnames(table))
     switch(test,
 	   "Chisq" = {
-	       cbind(table,"P(>|Chi|)"= 1-pchisq(abs(table[, dev.col]),
-			     abs(table[, "Df"])))
+	       cbind(table,"P(>|Chi|)"= pchisq(abs(table[, dev.col]/scale),
+			     abs(table[, "Df"]), lower.tail=FALSE))
 	   },
 	   "F" = {
 	       Fvalue <- abs((table[, dev.col]/table[, "Df"])/scale)
 	       cbind(table, F = Fvalue,
-		     "Pr(>F)" = 1-pf(Fvalue, abs(table[, "Df"]), abs(df.scale)))
+		     "Pr(>F)" = pf(Fvalue, abs(table[, "Df"]),
+                     abs(df.scale), lower.tail=FALSE))
 	   },
 	   "Cp" = {
 	       cbind(table, Cp = table[,"Resid. Dev"] +
@@ -495,8 +502,7 @@ summary.glm <- function(object, dispersion = NULL,
     df.r <- object$df.residual
     if(is.null(dispersion))	# calculate dispersion if needed
 	dispersion <-
-	    if(any(object$family$family == c("poisson", "binomial")))
-		1
+	    if(any(object$family$family == c("poisson", "binomial")))  1
 	    else if(df.r > 0) {
 		est.disp <- TRUE
 		if(any(object$weights==0))

@@ -9,6 +9,8 @@ Gamma(link = "inverse")
 inverse.gaussian(link = "1/mu^2")
 poisson(link = "log")
 quasi(link = "identity", variance = "constant")
+quasibinomial(link = "logit")
+quasipoisson(link = "log")
 
 print.family(x, \dots)
 }
@@ -19,6 +21,8 @@ print.family(x, \dots)
 \alias{inverse.gaussian}
 \alias{poisson}
 \alias{quasi}
+\alias{quasibinomial}
+\alias{quasipoisson}
 \alias{print.family}
 \arguments{
   \item{link}{a specification for the model link function.
@@ -53,6 +57,17 @@ print.family(x, \dots)
   documentation for \code{\link{glm}} for the details on how such model
   fitting takes place.
 }
+\details{
+  The \code{quasibinomial} and \code{quasipoisson} families differ from
+  the \code{binomial} and \code{poisson} families only in that the
+  dispersion parameter is not fixed at one, so they can ``model''
+  over-dispersion.  For the binomial case see McCullagh and Nelder
+  (1989, pp. 124--8).  Although they show that there is (under some
+  restrictions) a model with
+  variance proportional to mean as in the quasi-binomial model, note
+  that \code{glm} does not compute maximum-likelihood estimates in that
+  model.  The behaviour of S-PLUS is closer to the quasi- variants. 
+}
 \references{
   McCullagh P. and Nelder, J. A. (1989)
   \emph{Generalized Linear Models.}
@@ -80,6 +95,20 @@ str(gf)
 gf$linkinv
 all(1:10 == gf$linkfun(gf$linkinv(1:10)))# is TRUE
 gf$variance(-3:4) #- == (.)^2
+
+## quasipoisson. compare with example(glm)
+counts <- c(18,17,15,20,10,20,25,13,12)
+outcome <- gl(3,1,9)
+treatment <- gl(3,3)
+d.AD <- data.frame(treatment, outcome, counts)
+glm.qD93 <- glm(counts ~ outcome + treatment, family=quasipoisson())
+glm.qD93
+anova(glm.qD93, test="F")
+summary(glm.qD93)
+## for Poisson results use
+anova(glm.qD93, dispersion = 1, test="Chisq")
+summary(glm.qD93, dispersion = 1)
+
 
 ## tests of quasi
 x <- rnorm(100)

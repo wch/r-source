@@ -152,6 +152,48 @@ poisson <- function (link = "log")
 	      class = "family")
 }
 
+quasipoisson <- function (link = "log")
+{
+    linktemp <- substitute(link)
+    ## this is a function used in  glm().
+    ## It holds everything personal to the family,
+    ## converts link into character string
+    if (!is.character(linktemp)) {
+	linktemp <- deparse(linktemp)
+	if (linktemp == "link")
+	    linktemp <- eval(link)
+    }
+    if (any(linktemp == c("log", "identity", "sqrt")))
+	stats <- make.link(linktemp)
+    else stop(paste(linktemp, "link not available for poisson",
+		    "family; available links are",
+		    '"identity", "log" and "sqrt"'))
+    variance <- function(mu) mu
+    validmu <- function(mu) all(mu>0)
+    dev.resids <- function(y, mu, wt)
+	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+    aic <- function(y, n, mu, wt, dev) NA
+    initialize <- expression({
+	if (any(y < 0))
+	    stop(paste("Negative values not allowed for",
+		       "the quasiPoisson family"))
+	n <- rep(1, nobs)
+	mustart <- y + 0.1
+    })
+    structure(list(family = "quasipoisson",
+		   link = linktemp,
+		   linkfun = stats$linkfun,
+		   linkinv = stats$linkinv,
+		   variance = variance,
+		   dev.resids = dev.resids,
+		   aic = aic,
+		   mu.eta = stats$mu.eta,
+		   initialize = initialize,
+		   validmu = validmu,
+		   valideta = stats$valideta),
+	      class = "family")
+}
+
 gaussian <- function (link = "identity")
 {
     linktemp <- substitute(link)
@@ -216,19 +258,75 @@ binomial <- function (link = "logit")
 	    n <- rep(1, nobs)
 	    if (any(y < 0 | y > 1))
 		stop("y values must be 0 <= y <= 1")
+            mustart <- (weights * y + 0.5)/(weights + 1)
 	}
 	else if (NCOL(y) == 2) {
 	    n <- y[, 1] + y[, 2]
 	    y <- ifelse(n == 0, 0, y[, 1]/n)
 	    weights <- weights * n
+            mustart <- (n * y + 0.5)/(n + 1)
 	}
 	else stop(paste("For the binomial family, y must be",
 			"a vector of 0 and 1\'s or a 2 column",
 			"matrix where col 1 is no. successes",
 			"and col 2 is no. failures"))
-	mustart <- (n * y + 0.5)/(n + 1)
     })
     structure(list(family = "binomial",
+		   link = linktemp,
+		   linkfun = stats$linkfun,
+		   linkinv = stats$linkinv,
+		   variance = variance,
+		   dev.resids = dev.resids,
+		   aic = aic,
+		   mu.eta = stats$mu.eta,
+		   initialize = initialize,
+		   validmu = validmu,
+		   valideta = stats$valideta),
+	      class = "family")
+}
+
+quasibinomial <- function (link = "logit")
+{
+    linktemp <- substitute(link)
+    ## this is a function used in  glm();
+    ## it holds everything personal to the family
+    ## converts link into character string
+    if (!is.character(linktemp)) {
+	linktemp <- deparse(linktemp)
+	if (linktemp == "link")
+	    linktemp <- eval(link)
+    }
+    if (any(linktemp == c("logit", "probit", "cloglog", "log")))
+	stats <- make.link(linktemp)
+    else stop(paste(linktemp, "link not available for quasibinomial",
+		    "family, available links are \"logit\", ",
+		    "\"probit\" and \"cloglog\""))
+    variance <- function(mu) mu * (1 - mu)
+    validmu <- function(mu) all(mu>0) && all(mu<1)
+    dev.resids <- function(y, mu, wt)
+	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
+		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+    aic <- function(y, n, mu, wt, dev) NA
+    initialize <- expression({
+	if (NCOL(y) == 1) {
+	    if (is.factor(y)) y <- y != levels(y)[1]
+	    n <- rep(1, nobs)
+	    if (any(y < 0 | y > 1))
+		stop("y values must be 0 <= y <= 1")
+            mustart <- (weights * y + 0.5)/(weights + 1)
+	}
+	else if (NCOL(y) == 2) {
+	    n <- y[, 1] + y[, 2]
+	    y <- ifelse(n == 0, 0, y[, 1]/n)
+	    weights <- weights * n
+            mustart <- (n * y + 0.5)/(n + 1)
+	}
+	else stop(paste("For the quasibinomial family, y must be",
+			"a vector of 0 and 1\'s or a 2 column",
+			"matrix where col 1 is no. successes",
+			"and col 2 is no. failures"))
+    })
+    structure(list(family = "quasibinomial",
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,

@@ -9,15 +9,15 @@ add1.default(object, scope, scale = 0, test = c("none", "Chisq"),
              k = 2, trace = FALSE, \dots)
 add1.lm(object, scope, scale = 0, test = c("none", "Chisq", "F"),
         x = NULL, k = 2, \dots)
-add1.glm(object, scope, scale = 0, x = NULL, test = c("none", "Chisq"),
-         k = 2, \dots)
+add1.glm(object, scope, dispersion = 0, x = NULL,
+         test = c("none", "Chisq", "F"), k = 2, \dots)
 
 drop1(object, scope, \dots)
 drop1.default(object, scope, scale = 0, test = c("none", "Chisq"),
               k = 2, trace = FALSE, \dots)
 drop1.lm(object, scope, scale = 0, all.cols = TRUE,
          test=c("none", "Chisq", "F"),k = 2, \dots)
-drop1.glm(object, scope, scale = 0, test = c("none", "Chisq"),
+drop1.glm(object, scope, dispersion = 0, test = c("none", "Chisq", "F"),
           k = 2, \dots)
 }
 \alias{add1}
@@ -31,33 +31,35 @@ drop1.glm(object, scope, scale = 0, test = c("none", "Chisq"),
 \alias{drop1.glm}
 \alias{drop1.mlm}
 \arguments{
- \item{object}{a fitted models object.}
- \item{scope}{a formula giving the terms to be considered for adding or
-   dropping.}
- \item{scale}{an estimate of the residual mean square to be used in
-   computing \eqn{C_p}{Cp}. Ignored if \code{0} or \code{NULL}.}
- \item{test}{should the results include a test statistic relative to the
-   original model?  The F test is only appropriate for \code{\link{lm}} and
-   \code{\link{aov}} models. The \eqn{\chi^2}{Chisq} test can be an exact test
-   (\code{lm} models with known scale) or a likelihood-ratio test depending
-   on the method.}
- \item{k}{the penalty constant in AIC / \eqn{C_p}{Cp}.}
- \item{trace}{if \code{TRUE}, print out progress reports.}
- \item{x}{a model matrix containing columns for the fitted model and all
-   terms in the upper scope.  Useful if \code{add1} is to be called
-   repeatedly.}
- \item{all.cols}{(Provided for compatibility with S.) Logical to specify
-   whether all columns of the design matrix should be used. If
-   \code{FALSE} then non-estimable columns are dropped, but the result
-   is not usually statistically meaningful.}
+  \item{object}{a fitted model object.}
+  \item{scope}{a formula giving the terms to be considered for adding or
+    dropping.}
+  \item{scale, dispersion}{an estimate of the residual mean square to be
+    used in computing \eqn{C_p}{Cp}. Ignored if \code{0} or \code{NULL}.}
+  \item{test}{should the results include a test statistic relative to the
+    original model?  The F test is only appropriate for \code{\link{lm}} and
+    \code{\link{aov}} models or perhaps for \code{\link{glm}} fits with
+    estimated dispersion.
+    The \eqn{\chi^2}{Chisq} test can be an exact test
+    (\code{lm} models with known scale) or a likelihood-ratio test or a
+    test of the reduction in scaled deviance depending on the method.}
+  \item{k}{the penalty constant in AIC / \eqn{C_p}{Cp}.}
+  \item{trace}{if \code{TRUE}, print out progress reports.}
+  \item{x}{a model matrix containing columns for the fitted model and all
+    terms in the upper scope.  Useful if \code{add1} is to be called
+    repeatedly.}
+  \item{all.cols}{(Provided for compatibility with S.) Logical to specify
+    whether all columns of the design matrix should be used. If
+    \code{FALSE} then non-estimable columns are dropped, but the result
+    is not usually statistically meaningful.}
 }
 \description{
- Compute all the single terms in the \code{scope} argument that can be
- added to or dropped from the model, fit those models and compute a
- table of the changes in fit.
+  Compute all the single terms in the \code{scope} argument that can be
+  added to or dropped from the model, fit those models and compute a
+  table of the changes in fit.
 }
 \details{
-  For \code{drop} methods, a missing \code{scope} is taken to be all
+  For \code{drop1} methods, a missing \code{scope} is taken to be all
   terms in the model. The hierarchy is respected when considering terms
   to be added or dropped: all main effects contained in a second-order
   interaction must remain, and so on.
@@ -90,13 +92,18 @@ drop1.glm(object, scope, scale = 0, test = c("none", "Chisq"),
 \section{Warning}{
   The model fitting must apply the models to the same dataset. This
   may be a problem if there are missing values and \R's default of
-  \code{na.action = na.omit} is used, although it is not for methods for
+  \code{na.action = na.omit} is used, although it is not for the methods for
   \code{"lm"} and \code{"glm"}.
 }
 \seealso{\code{\link{step}}, \code{\link{aov}}, \code{\link{lm}},
     \code{\link{extractAIC}}.}
 \examples{
 example(step)#-> swiss
-(alm1 <- add1(lm1, ~ I(Education^2) + .^2))
+add1(lm1, ~ I(Education^2) + .^2)
+drop1(lm1, test="F")
+
+example(glm)
+drop1(glm.D93, test="Chisq")
+drop1(glm.D93, test="F")
 }
 \keyword{models}

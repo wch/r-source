@@ -28,7 +28,7 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	dev <- dev[1] - dev; dev[1] <- NA
 	nas <- !is.na(dev)
 	P <- dev
-	P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
+	P[nas] <- pchisq(dev[nas], dfs[nas], lower.tail=FALSE)
 	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
     head <- c("Single term additions", "\nModel:",
@@ -50,7 +50,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	Fs[df < .Machine$double.eps] <- NA
 	P <- Fs
 	nnas <- !is.na(Fs)
-	P[nnas] <- 1 - pf(Fs[nnas], df[nnas], rdf - df[nnas])
+	P[nnas] <- pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
 	list(Fs=Fs, P=P)
     }
 
@@ -103,10 +103,16 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     if(scale > 0) names(aod) <- c("Df", "Sum of Sq", "RSS", "Cp")
     test <- match.arg(test)
     if(test == "Chisq") {
-	dev <- aod$"Sum of Sq"
-	nas <- !is.na(dev)
-	dev[nas] <- 1 - pchisq(dev[nas]/scale, aod$Df[nas])
-	aod[, "Pr(Chi)"] <- dev
+        dev <- aod$"Sum of Sq"
+        if(scale == 0) {
+            dev <- n * log(RSS/n)
+            dev <- dev[1] - dev
+            dev[1] <- NA
+        } else dev <- dev/scale
+        df <- aod$Df
+        nas <- !is.na(df)
+        dev[nas] <- pchisq(dev[nas], df[nas], lower.tail=FALSE)
+        aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
 	rdf <- object$df.resid
 	aod[, c("F value", "Pr(F)")] <- Fstat(aod, aod$RSS[1], rdf)
@@ -119,9 +125,20 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     aod
 }
 
-add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
+add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		     x = NULL, k = 2, ...)
 {
+    Fstat <- function(table, rdf) {
+	dev <- table$Deviance
+	df <- table$Df
+	diff <- pmax(0, (dev[1] - dev)/df)
+	Fs <- (diff/df)/(dev/(rdf-df))
+	Fs[df < .Machine$double.eps] <- NA
+	P <- Fs
+	nnas <- !is.na(Fs)
+	P[nnas] <- pf(Fs[nnas], df[nnas], rdf - df[nnas], lower.tail=FALSE)
+	list(Fs=Fs, P=P)
+    }
     if(!is.character(scope))
 	scope <- add.scope(object, update.formula(object, scope))
     if(!length(scope))
@@ -162,26 +179,35 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 	dfs[tt] <- z$rank
 	dev[tt] <- z$deviance
     }
-    if (is.null(scale) || scale == 0)
+    if (scale == 0)
 	dispersion <- summary(object, dispersion = NULL)$dispersion
     else dispersion <- scale
-    if(object$family$family == "gaussian") {
+    fam <- object$family$family
+    if(fam == "gaussian") {
 	if(scale > 0) loglik <- dev/scale - n
 	else loglik <- n * log(dev/n)
     } else loglik <- dev/dispersion
     aic <- loglik + k * dfs
+    aic <- aic + (extractAIC(object)[2] - aic[1])
     dfs <- dfs - dfs[1]
     dfs[1] <- NA
     aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
 		      row.names = names(dfs), check.names = FALSE)
+    if(all(is.na(aic))) aod <- aod[, -3]
     test <- match.arg(test)
     if(test == "Chisq") {
-	dev <- loglik[1] - loglik
-	dev[1] <- NA
-	aod[, "LRT"] <- dev
-	nas <- !is.na(dev)
-	dev[nas] <- 1 - pchisq(dev[nas]/dispersion, aod$Df[nas])
-	aod[, "Pr(Chi)"] <- dev
+        dev <- pmax(0, loglik[1] - loglik)
+        dev[1] <- NA
+        LRT <- if(dispersion == 1) "LRT" else "scaled dev."
+        aod[, LRT] <- dev
+        nas <- !is.na(dev)
+        dev[nas] <- pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
+        aod[, "Pr(Chi)"] <- dev
+    } else if(test == "F") {
+        if(fam == "binomial" || fam == "poisson")
+            warning(paste("F test assumes quasi", fam, " family", sep=""))
+	rdf <- object$df.residual
+	aod[, c("F value", "Pr(F)")] <- Fstat(aod, rdf)
     }
     head <- c("Single term additions", "\nModel:",
 	      deparse(as.vector(formula(object))),
@@ -220,13 +246,14 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     dfs <- ans[1,1] - ans[,1]
     dfs[1] <- NA
     aod <- data.frame(Df = dfs, AIC = ans[,2])
+    test <- match.arg(test)
     if(test == "Chisq") {
-	dev <- ans[, 2] - k*ans[, 1]
-	dev <- dev - dev[1] ; dev[1] <- NA
-	nas <- !is.na(dev)
-	P <- dev
-	P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
-	aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
+        dev <- ans[, 2] - k*ans[, 1]
+        dev <- dev - dev[1] ; dev[1] <- NA
+        nas <- !is.na(dev)
+        P <- dev
+        P[nas] <- 1 - pchisq(dev[nas], dfs[nas])
+        aod[, c("LRT", "Pr(Chi)")] <- list(dev, P)
     }
     head <- c("Single term deletions", "\nModel:",
 	      deparse(as.vector(formula(object))),
@@ -281,10 +308,16 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
     if(scale > 0) names(aod) <- c("Df", "Sum of Sq", "RSS", "Cp")
     test <- match.arg(test)
     if(test == "Chisq") {
-	dev <- aod$"Sum of Sq"
-	nas <- !is.na(dev)
-	dev[nas] <- 1 - pchisq(dev[nas]/scale, aod$Df[nas])
-	aod[, "Pr(Chi)"] <- dev
+        dev <- aod$"Sum of Sq"
+        if(scale == 0) {
+            dev <- n * log(RSS/n)
+            dev <- dev - dev[1]
+            dev[1] <- NA
+        } else dev <- dev/scale
+        df <- aod$Df
+        nas <- !is.na(df)
+        dev[nas] <- pchisq(dev[nas], df[nas], lower.tail=FALSE)
+        aod[, "Pr(Chi)"] <- dev
     } else if(test == "F") {
 	dev <- aod$"Sum of Sq"
 	dfs <- aod$Df
@@ -294,7 +327,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	Fs[dfs < 1e-4] <- NA
 	P <- Fs
 	nas <- !is.na(Fs)
-	P[nas] <- 1 - pf(Fs[nas], dfs[nas], rdf)
+	P[nas] <- pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
 	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:",
@@ -308,7 +341,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 drop1.mlm <- function(object, ...)
     stop("drop1 not implemented for mlm models")
 
-drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
+drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 		      k = 2, ...)
 {
     x <- model.matrix(object)
@@ -349,27 +382,45 @@ drop1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq"),
     if (is.null(scale) || scale == 0)
 	dispersion <- summary(object, dispersion = NULL)$dispersion
     else dispersion <- scale
-    if(object$family$family == "gaussian") {
+    fam <- object$family$family
+    if(fam == "gaussian") {
 	if(scale > 0) loglik <- dev/scale - n
 	else loglik <- n * log(dev/n)
     } else loglik <- dev/dispersion
     aic <- loglik + k * dfs
     dfs <- dfs[1] - dfs
     dfs[1] <- NA
+    aic <- aic + (extractAIC(object)[2] - aic[1])
     aod <- data.frame(Df = dfs, Deviance = dev, AIC = aic,
 		      row.names = scope, check.names = FALSE)
+    if(all(is.na(aic))) aod <- aod[, -3]
     test <- match.arg(test)
     if(test == "Chisq") {
-	dev <- loglik - loglik[1]
-	dev[1] <- NA
-	nas <- !is.na(dev)
-	aod[, "LRT"] <- dev
-	dev[nas] <- 1 - pchisq(dev[nas]/dispersion, aod$Df[nas])
-	aod[, "Pr(Chi)"] <- dev
+        dev <- pmax(0, loglik - loglik[1])
+        dev[1] <- NA
+        nas <- !is.na(dev)
+        LRT <- if(dispersion == 1) "LRT" else "scaled dev."
+        aod[, LRT] <- dev
+        dev[nas] <- pchisq(dev[nas], aod$Df[nas], lower.tail=FALSE)
+        aod[, "Pr(Chi)"] <- dev
+    } else if(test == "F") {
+        if(fam == "binomial" || fam == "poisson")
+            warning(paste("F test assumes quasi", fam, " family", sep=""))
+	dev <- aod$Deviance
+	rms <- dev[1]/rdf
+        dev <- pmax(0, dev - dev[1])
+	dfs <- aod$Df
+	rdf <- object$df.residual
+	Fs <- (dev/dfs)/rms
+	Fs[dfs < 1e-4] <- NA
+	P <- Fs
+	nas <- !is.na(Fs)
+	P[nas] <- pf(Fs[nas], dfs[nas], rdf, lower.tail=FALSE)
+	aod[, c("F value", "Pr(F)")] <- list(Fs, P)
     }
     head <- c("Single term deletions", "\nModel:",
 	      deparse(as.vector(formula(object))),
-	      if(scale > 0) paste("\nscale: ", format(scale), "\n"))
+	      if(!is.null(scale) && scale > 0)  paste("\nscale: ", format(scale), "\n"))
     class(aod) <- c("anova", "data.frame")
     attr(aod, "heading") <- head
     aod
@@ -534,6 +585,8 @@ step <- function(object, scope, scale = 0,
     bAIC <- extractAIC(fit, scale, k = k, ...)
     edf <- bAIC[1]
     bAIC <- bAIC[2]
+    if(is.na(bAIC))
+        stop("AIC is not defined for this model, so step cannot proceed")
     nm <- 1
     Terms <- fit$terms
     if(trace)
@@ -631,10 +684,8 @@ extractAIC.glm <- function(fit, scale = 0, k = 2, ...)
 {
     n <- length(fit$residuals)
     edf <- n  - fit$df.residual
-    dev <- fit$deviance
-    if(scale > 0) dev <- dev/scale
-    if(scale == 0 && fit$family$family == "Gaussian") dev <- n * log(dev/n)
-    c(edf, dev + k * edf)
+    aic <- fit$aic
+    c(edf, aic + (k-2) * edf)
 }
 
 extractAIC.lm <- function(fit, scale = 0, k = 2, ...)
