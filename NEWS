@@ -103,6 +103,8 @@ NEW FEATURES
 
     o   text() now accepts vector "col", "cex" and "font" arguments.
 
+    o   "default" is now a valid argument to RNGkind().
+
 
 BUG FIXES
 

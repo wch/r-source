@@ -24,9 +24,11 @@ set.seed(seed, kind = NULL)
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
     string, set \R's RNG to the kind desired. If it is \code{NULL},
-    return the currently used RNG.}
+    return the currently used RNG. Use \code{"default"} to return to the
+    \R default.}
   \item{normal.kind}{character string or \code{NULL}.  If it is a character
-    string, set the method of Normal generation.}
+    string, set the method of Normal generation. Use \code{"default"}
+    to return to the \R default.}
   \item{seed}{a single value, interpreted as an integer.}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1, n2, \dots}{integers. See the details for how many are required

@@ -27,6 +27,7 @@
 #include "Random.h"
 
 #define RNG_DEFAULT MARSAGLIA_MULTICARRY
+#define N01_DEFAULT KINDERMAN_RAMAGE
 
 /* platform-specific, from dynload.c */
 DL_FUNC R_FindSymbol(char const *, char const *);
@@ -322,6 +323,7 @@ static void RNGkind(RNGtype newkind)
 /* Choose a new kind of RNG.
  * Initialize its seed by calling the old RNG's unif_rand()
  */
+    if (newkind == -1) newkind = RNG_DEFAULT;
     switch(newkind) {
     case WICHMANN_HILL:
     case MARSAGLIA_MULTICARRY:
@@ -344,6 +346,7 @@ static void RNGkind(RNGtype newkind)
 SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, rng, norm;
+    N01type newN01;
 
     checkArity(op,args);
     PROTECT(ans = allocVector(INTSXP, 2));
@@ -351,11 +354,15 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(ans)[1] = N01_kind;
     rng = CAR(args);
     norm = CADR(args);
+    if(!isNull(norm)) { /* set a new normal kind */
+	newN01 = asInteger(norm);
+	if (newN01 == -1) newN01 = N01_DEFAULT;
+	if (newN01 < 0 || newN01 > BOX_MULLER)
+	    errorcall(call, "invalid Normal type");
+	N01_kind = newN01;
+    }
     if(!isNull(rng)) { /* set a new RNG kind */
 	RNGkind(asInteger(rng));
-    }
-    if(!isNull(norm)) { /* set a new normal kind */
-	N01_kind = asInteger(norm);
     }
     UNPROTECT(1);
     return ans;
