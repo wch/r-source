@@ -1,6 +1,5 @@
-
-
-pairwise.t.test <- function(x, g, p.adjust.method=p.adjust.methods, pool.sd = TRUE, ...)
+pairwise.t.test <-
+function(x, g, p.adjust.method = p.adjust.methods, pool.sd = TRUE, ...)
 {
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
     g <- as.factor(g)
@@ -36,7 +35,8 @@ pairwise.t.test <- function(x, g, p.adjust.method=p.adjust.methods, pool.sd = TR
 }
 
 
-pairwise.wilcox.test <- function(x, g, p.adjust.method=p.adjust.methods, ...)
+pairwise.wilcox.test <-
+function(x, g, p.adjust.method = p.adjust.methods, ...)
 {
     p.adjust.method <- match.arg(p.adjust.method)
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(g)))
@@ -54,7 +54,8 @@ pairwise.wilcox.test <- function(x, g, p.adjust.method=p.adjust.methods, ...)
     ans
 }
 
-pairwise.prop.test <- function (x, n, p.adjust.method=p.adjust.methods, ...)
+pairwise.prop.test <-
+function (x, n, p.adjust.method = p.adjust.methods, ...)
 {
     p.adjust.method <- match.arg(p.adjust.method)
     METHOD <- "Pairwise comparison of proportions"
@@ -88,7 +89,8 @@ pairwise.prop.test <- function (x, n, p.adjust.method=p.adjust.methods, ...)
     ans
 }
 
-pairwise.table <- function(compare.levels, level.names, p.adjust.method)
+pairwise.table <-
+function(compare.levels, level.names, p.adjust.method)
 {
     ix <- seq(along=level.names)
     names(ix) <- level.names
@@ -103,7 +105,9 @@ pairwise.table <- function(compare.levels, level.names, p.adjust.method)
     pp
 }
 
-print.pairwise.htest <- function(x) {
+print.pairwise.htest <-
+function(x, ...)
+{
     cat("\n\tPairwise comparisons using", x$method, "\n\n")
     cat("data: ", x$data.name, "\n\n")
     pp <- format.pval(x$p.value, 2)
@@ -111,10 +115,3 @@ print.pairwise.htest <- function(x) {
     print(pp, quote=FALSE, na.print="-")
     cat("\nP value adjustment method:", x$p.adjust.method, "\n")
 }
-
-
-
-
-
-
-

@@ -5,11 +5,12 @@
 Display results of pairwise comparison procedures
 }
 \usage{
-print.pairwise.htest(x)
+\method{print}{pairwise.htest}(x, \dots)
 }
 %- maybe also `usage' for other objects documented here.
 \arguments{
- \item{x}{ Object of class \code{"pairwise.htest"} }
+  \item{x}{ Object of class \code{"pairwise.htest"} }
+  \item{\dots}{further arguments to be passed to or from methods.}  
 }
 
 \value{

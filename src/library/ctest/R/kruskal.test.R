@@ -1,6 +1,7 @@
 kruskal.test <- function(x, ...) UseMethod("kruskal.test")
 
-kruskal.test.default <- function(x, g)
+kruskal.test.default <-
+function(x, g, ...)
 {
     if (is.list(x)) {
         if (length(x) < 2)
@@ -52,7 +53,8 @@ kruskal.test.default <- function(x, g)
     return(RVAL)
 }
 
-kruskal.test.formula <- function(formula, data, subset, na.action)
+kruskal.test.formula <-
+function(formula, data, subset, na.action, ...)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")

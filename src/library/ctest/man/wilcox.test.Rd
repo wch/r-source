@@ -9,7 +9,7 @@
 \usage{
 \method{wilcox.test}{default}(x, y = NULL, alternative = c("two.sided", "less", "greater"),
             mu = 0, paired = FALSE, exact = NULL, correct = TRUE, 
-            conf.int = FALSE, conf.level = 0.95)
+            conf.int = FALSE, conf.level = 0.95, \dots)
 \method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
@@ -38,7 +38,7 @@
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to the default method.}
+  \item{\dots}{further arguments to be passed to or from methods.}  
 }
 \details{
   The formula interface is only applicable for the 2-sample tests.

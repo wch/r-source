@@ -7,8 +7,8 @@
   Performs a Quade test with unreplicated blocked data.
 }
 \usage{
-\method{quade.test}{default}(y, groups, blocks)
-\method{quade.test}{formula}(formula, data, subset, na.action)
+\method{quade.test}{default}(y, groups, blocks, \dots)
+\method{quade.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{y}{either a numeric vector of data values, or a data matrix.}
@@ -27,7 +27,8 @@
     to be used.}
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
-    \code{getOption("na.action")}.}  
+    \code{getOption("na.action")}.}
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   \code{quade.test} can be used for analyzing unreplicated complete

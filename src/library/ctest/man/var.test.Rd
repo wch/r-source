@@ -9,7 +9,7 @@
 }
 \usage{
 \method{var.test}{default}(x, y, ratio = 1, alternative = c("two.sided", "less", "greater"),
-         conf.level = 0.95)
+         conf.level = 0.95, \dots)
 \method{var.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
@@ -33,7 +33,7 @@
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to the default method.}
+  \item{\dots}{further arguments to be passed to or from methods.}  
 }
 \details{
   The null hypothesis is that the ratio of the variances of the

@@ -8,7 +8,7 @@
   Functions to get or set the names of an object.
 }
 \usage{
-names(x, \dots)
+names(x)
 names(x) <- value
 }
 \arguments{

@@ -3,7 +3,7 @@ var.test <- function(x, ...) UseMethod("var.test")
 var.test.default <-
 function(x, y, ratio = 1,
          alternative = c("two.sided", "less", "greater"),
-         conf.level = 0.95)
+         conf.level = 0.95, ...)
 {
     if (!((length(ratio) == 1) && is.finite(ratio) && (ratio > 0)))
         stop("ratio must be a single positive number")

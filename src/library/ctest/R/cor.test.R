@@ -2,7 +2,8 @@ cor.test <- function(x, ...) UseMethod("cor.test")
 
 cor.test.default <-
 function(x, y, alternative = c("two.sided", "less", "greater"),
-         method = c("pearson", "kendall", "spearman"), exact = NULL)
+         method = c("pearson", "kendall", "spearman"), exact = NULL,
+         ...)
 {
     alternative <- match.arg(alternative)
     method <- match.arg(method)

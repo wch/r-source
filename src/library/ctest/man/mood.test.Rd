@@ -7,7 +7,7 @@
   Performs Mood's two-sample test for a difference in scale parameters.
 }
 \usage{
-\method{mood.test}{default}(x, y, alternative = c("two.sided", "less", "greater"))
+\method{mood.test}{default}(x, y, alternative = c("two.sided", "less", "greater"), \dots)
 \method{mood.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
@@ -25,7 +25,7 @@
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
-  \item{\dots}{further arguments to be passed to the default method.}
+  \item{\dots}{further arguments to be passed to or from methods.}  
 }
 \details{
   The underlying model is that the two samples are drawn from

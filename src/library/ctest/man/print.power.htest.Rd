@@ -5,10 +5,11 @@
   Print object of class \code{"power.htest"} in nice layout.
 }
 \usage{
-print.power.htest(x)
+\method{print}{power.htest}(x, \dots)
 }
 \arguments{
   \item{x}{Object of class \code{"power.htest"}.}
+  \item{\dots}{further arguments to be passed to or from methods.}  
 }
 \details{
   A \code{power.htest} object is just a named list of numbers and

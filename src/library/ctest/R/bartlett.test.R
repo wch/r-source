@@ -1,6 +1,7 @@
 bartlett.test <- function(x, ...) UseMethod("bartlett.test")
 
-bartlett.test.default <- function(x, g)
+bartlett.test.default <-
+function(x, g, ...)
 {
     LM <- FALSE
     if (is.list(x)) {
@@ -55,7 +56,8 @@ bartlett.test.default <- function(x, g)
     return(RVAL)
 }
 
-bartlett.test.formula <- function(formula, data, subset, na.action)
+bartlett.test.formula <-
+function(formula, data, subset, na.action, ...)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")

@@ -1,6 +1,7 @@
-quade.test <- function(x, ...) UseMethod("quade.test")
+quade.test <- function(y, ...) UseMethod("quade.test")
 
-quade.test.default <- function(y, groups, blocks)
+quade.test.default <-
+function(y, groups, blocks, ...)
 {
     DNAME <- deparse(substitute(y))
     if(is.matrix(y)) {
@@ -55,7 +56,8 @@ quade.test.default <- function(y, groups, blocks)
               class = "htest")
 }
 
-quade.test.formula <- function(formula, data, subset, na.action)
+quade.test.formula <-
+function(formula, data, subset, na.action, ...)
 {
     if(missing(formula))
         stop("formula missing")

@@ -8,8 +8,8 @@
   groups (samples) are the same.
 }
 \usage{
-\method{bartlett.test}{default}(x, g)
-\method{bartlett.test}{formula}(formula, data, subset, na.action)
+\method{bartlett.test}{default}(x, g, \dots)
+\method{bartlett.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
   \item{x}{a numeric vector of data values, or a list of numeric data
@@ -27,6 +27,7 @@
   \item{na.action}{a function which indicates what should happen when
     the data contain \code{NA}s.  Defaults to
     \code{getOption("na.action")}.}
+  \item{\dots}{further arguments to be passed to or from methods.}
 }
 \details{
   If \code{x} is a list, its elements are taken as the samples or fitted

@@ -2,7 +2,7 @@ ansari.test <- function(x, ...) UseMethod("ansari.test")
 
 ansari.test.default <-
 function(x, y, alternative = c("two.sided", "less", "greater"),
-         exact = NULL, conf.int = FALSE, conf.level = 0.95) 
+         exact = NULL, conf.int = FALSE, conf.level = 0.95, ...) 
 {
     alternative <- match.arg(alternative)
     if(conf.int) {

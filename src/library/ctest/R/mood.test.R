@@ -1,7 +1,7 @@
 mood.test <- function(x, ...) UseMethod("mood.test")
 
 mood.test.default <-
-function(x, y, alternative = c("two.sided", "less", "greater"))
+function(x, y, alternative = c("two.sided", "less", "greater"), ...)
 {
     alternative <- match.arg(alternative)
     DNAME <- paste(deparse(substitute(x)), "and", deparse(substitute(y)))
