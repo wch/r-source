@@ -38,6 +38,7 @@ iconvlist()
   Elements which cannot be converted (perhaps because they are invalid
   or because they cannot be represented in the target encoding)
   will be returned as \code{NA}.
+}
 \value{
   A character vector of the same length and the same attributes as \code{x}.
 }
@@ -49,6 +50,9 @@ iconvlist()
   The support DLL for these functions is not included in the miniR
   distribution.
 #endif
+}
+\seealso{
+  \code{\link{localeToCharset}}, \code{\link{file}}.
 }
 \examples{\dontrun{
 iconvlist()
