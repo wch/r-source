@@ -31,3 +31,5 @@ make IS
 make ISclean
 
 
+miniR.* is made in the same way, replacing `make IS' by `make miniR.exe'.
+This is a minimal installation that fits on four floppy discs.

@@ -10,8 +10,6 @@ rw1030
 New menu `Packages' with items to load packages, and to install
 packages from CRAN or from local zip files.
 
-New function select.list().
-
 help.start() now lists all packages in all libraries, but the
 functions list and search index are still confined to the system library.
 
@@ -43,7 +41,7 @@ The windows() device no longer rounds width and height to the nearest inch.
 File `extract-usage' needed for codoc was missing from rw1022sp.zip.
 
 The default memory limit (as reset by --max-mem-size) is set to at
-least 16Mb, to allow R to start on machines wiht 8Mb of RAM.
+least 16Mb, to allow R to start on machines with 8Mb of RAM.
 
 link.html.help() has been re-written using connections and so is
 several times faster.
