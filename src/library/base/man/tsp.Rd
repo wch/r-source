@@ -2,9 +2,11 @@
 \title{Tsp Attribute of Time-Series-like Objects}
 \alias{tsp}
 \alias{tsp<-}
+\alias{hasTsp}
 \usage{
 tsp(x)
 tsp(x) <- value
+hasTsp(x)
 }
 \arguments{
     \item{x}{a vector or matrix or univariate or multivariate time-series.}
@@ -13,7 +15,8 @@ tsp(x) <- value
 \description{
     \code{tsp} returns the \code{tsp} attribute (or \code{NULL}).
     It is included for compatibility with S version 2. \code{tsp<-}
-    sets the \code{tsp} attribute.
+    sets the \code{tsp} attribute. \code{hasTsp} ensures \code{x} has a
+    \code{tsp} attribute, by adding one if needed.
 }
 \details{
     The \code{tsp} attribute was previously described here as
