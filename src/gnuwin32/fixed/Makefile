@@ -23,8 +23,8 @@ SED3='s/F77_SUBROUTINE(\(.*\))/	{ "\1_",	\1_},/'
 SED4='s/C_FUNCTION(\(.*\))/{ "\1",	\1 },/'
 
 fixh: h/Rconfig.h ../../../date-stamp ../../appl/ROUTINES
-	$(CP) -p ./h/Rconfig.h ../../include/Rconfig.h
-	cp ../../include/Rversion.h.in ../../include/Rversion.h
+	$(CP) -p ./h/Rconfig.h ./h/psignal.h ../../include
+	$(CP) -p  ../../include/Rversion.h.in ../../include/Rversion.h
 	gawk -F/ '{ \
 	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
 	    printf "#define R_MONTH\t\"%s\"\n", $$2; \

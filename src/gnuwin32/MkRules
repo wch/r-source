@@ -2,7 +2,7 @@
 
 # Alternatives CYGWIN (-B20.1), MINGW32 (-1.1.x-mingw32), CROSS (my Linux Box)
 
-BUILD=EGCS
+BUILD=MINGW32
 
 ifeq ($(strip $(BUILD)),CYGWIN)
 BINPREF=

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "Rversion.h"
 #define PSIGNAL
-#include "../psignal.h"
+#include "psignal.h"
 
 #define CharacterMode (*__imp_CharacterMode)
 #define UserBreak     (*__imp_UserBreak)
