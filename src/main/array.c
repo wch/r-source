@@ -312,10 +312,15 @@ static void matprod(double *x, int nrx, int ncx,
 {
 #ifdef IEEE_754
     char *transa = "N", *transb = "N";
+    int i;
     double one = 1.0, zero = 0.0;
     if (nrx > 0 && ncx > 0 && nry > 0 && ncy > 0) {
         F77_CALL(dgemm)(transa, transb, &nrx, &ncy, &ncx, &one,
 		    x, &nrx, y, &nry, &zero, z, &nrx);
+    }
+    else { /* zero-extent operations should return zeroes */
+	for(i=0;i<nrx*ncy;i++) 
+	    z[i]=0;
     }
 #else
 
