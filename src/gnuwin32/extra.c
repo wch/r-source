@@ -152,8 +152,8 @@ static int R_unlink(char *names, int recursive)
 			failures += R_unlink_one(dir, find_data.cFileName, 1);
 		    FindClose(fh);
 		}
-	    } 
-	    if(rmdir(dir)) failures++;
+		if(rmdir(dir)) failures++;
+	    } else failures++; /* don't try to delete dirs */
 	} else {/* Regular file (or several) */
 	    strcpy(dir, tmp);
 	    if ((p = strrchr(dir, '\\'))) *(++p) = '\0'; else *dir = '\0';

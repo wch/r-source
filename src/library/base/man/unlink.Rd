@@ -1,6 +1,6 @@
 \name{unlink}
 \title{Delete Files and Directories}
-\usage{unlink(x, recusive = FALSE)}
+\usage{unlink(x, recursive = FALSE)}
 \alias{unlink}
 \arguments{
   \item{x}{a character vector with the names of the file(s) or
@@ -13,9 +13,8 @@
   \code{unlink} deletes the file(s) or directories specified by \code{x}.
 }
 \details{
-  Whether \code{unlink} will delete empty directories with
-  \code{recusive = FALSE} is system-specific.  Currently Unix does
-  not and Windows does.
+  If 
+  \code{recusive = FALSE} directories are not deleted, not even empty ones.
 }
 \value{
 #ifdef unix
@@ -28,7 +27,8 @@
   Not deleting a non-existent file is not a failure.
 }
 \note{
-  Prior to \R version 1.2.0 the default on Unix was \code{recursive = TRUE}.
+  Prior to \R version 1.2.0 the default on Unix was \code{recursive =
+    TRUE}, and on Windows wmpty directories could be deleted.
 }
 \seealso{\code{\link{tempfile}} for file creation.}
 %Examples: tempfile has an 'unlink' example
