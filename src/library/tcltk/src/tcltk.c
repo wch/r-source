@@ -155,7 +155,7 @@ static int R_call_lang(ClientData clientData,
 }
 
 
-Tcl_Obj * tk_eval(char *cmd)
+static Tcl_Obj * tk_eval(char *cmd)
 {
     if (Tcl_Eval(RTcl_interp, cmd) == TCL_ERROR)
     {
@@ -636,7 +636,8 @@ extern FILE * R_Outputfile;
 
 /* Fill a text buffer with user typed console input. */
 
-int RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
+static int 
+RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
 		  int addtohistory)
 {
     Tcl_Obj *cmd[3];
@@ -666,7 +667,7 @@ int RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
 
 /* Write a text buffer to the console. */
 /* All system output is filtered through this routine. */
-void
+static void
 RTcl_WriteConsole (char *buf, int len)
 {
     Tcl_Obj *cmd[2];
@@ -685,20 +686,20 @@ RTcl_WriteConsole (char *buf, int len)
 }
 
 /* Indicate that input is coming from the console */
-void
+static void
 RTcl_ResetConsole ()
 {
 }
 
 /* Stdio support to ensure the console file buffer is flushed */
-void
+static void
 RTcl_FlushConsole ()
 {
 }
 
 
 /* Reset stdin if the user types EOF on the console. */
-void
+static void
 RTcl_ClearerrConsole ()
 {
 }
