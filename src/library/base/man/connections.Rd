@@ -235,7 +235,7 @@ if(capabilities("fifo")) {
 readLines(pipe("ls -1"))
 
 # remove trailing commas. Suppose
-% cat data2
+\% cat data2
 450, 390, 467, 654,  30, 542, 334, 432, 421,
 357, 497, 493, 550, 549, 467, 575, 578, 342,
 446, 547, 534, 495, 979, 479
