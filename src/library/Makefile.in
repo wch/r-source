@@ -22,6 +22,7 @@ SUBDIRS = profile $(R_PKGS_BASE) $(R_PKGS_STUBS) Recommended
 ## See e.g. @file{src/gnuwin32/help/Makefile}.
 R_CMD_BUILD_HELP = $(top_builddir)/bin/R CMD perl $(top_srcdir)/share/perl/build-help.pl
 ## </NOTE>
+R_CMD_BUILD_HELP_OPTS =
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
@@ -54,14 +55,14 @@ docs:
 	@$(MAKE) indices
 	@touch stamp-docs
 help:
-	@OPTS="--txt" $(MAKE) DOCS
+	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--txt"
 html:
-	@OPTS="--html" $(MAKE) DOCS
+	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--html"
 	@$(MAKE) indices
 latex:
-	@OPTS="--latex" $(MAKE) DOCS
+	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--latex"
 examples:
-	@OPTS="--example" $(MAKE) DOCS
+	@$(MAKE) DOCS R_CMD_BUILD_HELP_OPTS="--example"
 
 indices:
 	@$(R_CMD_BUILD_HELP) --htmllists
@@ -72,7 +73,7 @@ DOCS:
 	  exit 1; \
 	fi
 	@for pkg in $(R_PKGS_BASE); do \
-	  $(R_CMD_BUILD_HELP) $${OPTS} $(srcdir)/$${pkg}; \
+	  $(R_CMD_BUILD_HELP) $(R_CMD_BUILD_HELP_OPTS) $(srcdir)/$${pkg}; \
 	  ( echo ".installPackageIndices(\"$(srcdir)/$${pkg}\","; \
 	    echo " \"$(top_builddir)/library/$${pkg}\")") | \
 	      R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null; \
