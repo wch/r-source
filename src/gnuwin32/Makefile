@@ -85,7 +85,7 @@ R.a: $(OBJS)
 
 
 # R.dll exports all global symbols BUT import library (libR.a)
-# only (all functions) + (global vars listed  in exported-vars))
+# only (all functions) + (global vars listed in exported-vars))
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
@@ -219,7 +219,7 @@ bindist:
 	$(RM) anindex.zip
 	zip -rm9X $(RPREFIX)w.zip $(RPREFIX)/doc/html $(RPREFIX)/library/*/html
 	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml  $(RPREFIX)/bin/Rchtml.dll
-	$(RM)  $(RPREFIX)/library/*/winhlp/*.GID
+	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
 	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/doc/manual
 	$(RM) -r $(RPREFIX)/doc
@@ -250,23 +250,27 @@ srcdist:
 #taken from ../include/Makefile.in
 SRC_HEADERS = R.h S.h Rdefines.h Rinternals.h S_compat.h
 OBJ_HEADERS = Rconfig.h Rversion.h
-GW32_HEADERS = globalvar.h psignal.h
+GW32_HEADERS = globalvar.h # psignal.h
 
 packagedist:
 	$(RM) -r $(RPREFIX)sp.zip $(RPREFIX)
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/etc $(RPREFIX)/src \
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
-	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll $(RPREFIX)/src/gnuwin32
+	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
+	  $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
-	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c
+	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c \
+	  $(RPREFIX)/src/gnuwin32/help/MkChmDll
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
-	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS),../include/$i) $(RPREFIX)/src/include
+	$(CP) -p $(foreach i,$(SRC_HEADERS) $(OBJ_HEADERS) $(GW32_HEADERS), \
+	  ../include/$i) $(RPREFIX)/src/include
 	$(CP) -pr ../include/R_ext $(RPREFIX)/src/include
 	$(CP) readme.packages $(RPREFIX)
-	$(CP) ../../etc/Rdconvlib.pl ../../etc/html-layout.pl $(RPREFIX)/etc
+	$(CP) ../../etc/Rdconvlib.pl ../../etc/buildlib.pl \
+	   ../../etc/html-layout.pl $(RPREFIX)/etc
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
@@ -299,10 +303,12 @@ bundle-%:
 docs manuals:
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win clean
 	@$(MAKE) -C $(RHOME)/doc/manual -f Makefile.win R_PKGS="$(PACKAGES)"
-	$(RM) $(RHOME)/library/base/latex/*.tex
+#	$(RM) $(RHOME)/library/base/latex/*.tex
+	@$(MAKE) ziponly-base
 
 docsdist:
 	$(RM) -rf $(RPREFIX)
+	$(RM) -f $(RPREFIX)d1.zip $(RPREFIX)d2.zip
 	$(MKDIR) $(RPREFIX) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr $(RHOME)/doc/manual/*.pdf $(RPREFIX)/doc/manual
 	zip -rm9X $(RPREFIX)d2.zip $(RPREFIX)/doc/manual/refman.pdf

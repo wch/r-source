@@ -112,6 +112,6 @@ clean:
 	  *.out *.pg *.pgs *.tmp *.tp *.vr *.vrs \
 	  version.tex version.texi refman.tex *-pkg.tex 
 distclean: clean
-	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf
+	@-rm -f pkg2tex.pl Rdnewer.pl *.pdf *.info*
 maintainer-clean: distclean
 
