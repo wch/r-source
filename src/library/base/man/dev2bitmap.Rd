@@ -16,7 +16,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \item{res}{Resolution, in dots per inch.}
   \item{pointsize}{The pointsize to be used for text: defaults to
     something reasonable given the width and height}
-  \item{\dots}{Other parameters passes to \code{\link{postscript}}.}
+  \item{\dots}{Other parameters passed to \code{\link{postscript}}.}
 }
 \description{
   \code{bitmap} generates a bitmap graphics file.
@@ -46,16 +46,14 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{"bitrgb"}, \code{"bitcmyk"}, \code{"pngmono"}, \code{"pnggray"},
   \code{"png16"}, \code{"png256"}, \code{"png16m"}, \code{"jpeg"},
   \code{"jpeggray"}, \code{"pdfwrite"}.
+
+  Note: despite the name of the functions they can produce PDF via
+  \code{type = "pdfwrite"}, and the PDF produced is not bitmapped.
 }
 \value{
   None.
 }
 \author{B. D. Ripley}
-
-\section{Warning}{
-  This is experimental and may be withdrawn in favour of
-  an equivalent device in a later version.
-}
 
 #ifdef windows
 \note{
@@ -66,6 +64,9 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 }
 #endif
 
-\seealso{\code{\link{postscript}}}
+\seealso{
+  \code{\link{postscript}}, \code{\link{png}} and
+  \code{\link{jpeg}} and on Windows \code{\link{bmp}}.
+}
 
 \keyword{utilities}
