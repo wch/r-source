@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-2001   Lyndon Drake
+ *  Copyright (C) 1998-2004   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -38,17 +38,12 @@
 #include <gtk/gtktext.h>
 #include <gtk/gtksignal.h>
 
-#ifdef __cplusplus
-extern "C"
+enum
 {
-#endif /* __cplusplus */
-
-  enum
-  {
     CONSOLE_BUF_NONE,
     CONSOLE_BUF_LINE,
     CONSOLE_BUF_BLOCK
-  };
+};
 
 #define CONSOLE_MAX_BUF 1024
 
@@ -131,8 +126,5 @@ GTK_CHECK_CLASS_CAST (klass, gtk_console_get_type (), GtkConsoleClass)
   gboolean gtk_console_get_line_available (GtkConsole * object);
   gboolean gtk_console_get_input_enabled (GtkConsole * object);
 
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
 
 #endif /* __GTK_CONSOLE_H__ */

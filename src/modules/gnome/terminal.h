@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-1999   Lyndon Drake
+ *  Copyright (C) 1998-2004   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -22,9 +22,6 @@
 #define __GNOME_TERMINAL_H__
 
 #include <gnome.h>
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
 
 #include "gtkconsole.h"
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-2001   Lyndon Drake
+ *  Copyright (C) 1998-2004   Lyndon Drake
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h> /* for HAVE_STRING_H / HAVE_STRINGS_H */
 #endif
 
 /* Avoid braced-groups warning from -Wall */
