@@ -1209,9 +1209,6 @@ R_IEEE_754
 ## defines HAVE_LANGINFO_CODESET if it's there
 AM_LANGINFO_CODESET
 
-## check if X11 typedefs KeySym
-R_HAVE_KEYSYM
-
 ## Used to build src/include/Rmath.h.
 ## <NOTE>
 ## we don't use AC_CONFIG_HEADERS on Rmath.h.in because
@@ -1284,6 +1281,8 @@ if test "${use_X11}" = yes; then
 else
   R_MODULES=
 fi
+## check if X11 typedefs KeySym
+R_TYPE_KEYSYM
 
 ## Aqua
 R_AQUA
