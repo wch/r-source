@@ -17,7 +17,7 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
   \item{output}{Name of output file, default is to remove extension
     \file{.nw}, \file{.Rnw} or \file{.Snw} and to add extension
     \file{.tex}. Any 
-    directory names in \code{file} are also remogved such that the output
+    directory names in \code{file} are also removed such that the output
     is created in the current working directory.}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
   \item{debug}{If \code{TRUE}, input and output of all code
@@ -43,10 +43,10 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
     \item{eval:} logical (\code{TRUE}). If \code{FALSE}, the code chunk is not
     evaluated, and hence no text or graphical output produced.
     \item{results:} character string (\code{verbatim}).
-    If \code{results=verbatim}, the output of S commands is
+    If \code{verbatim}, the output of S commands is
     included in the verbatim-like Soutput environment. If
-    \code{results=tex}, the output is taken to be already proper latex markup
-    and included as is. If \code{results=hide} then all output is
+    \code{tex}, the output is taken to be already proper latex markup
+    and included as is. If \code{hide} then all output is
     completely suppressed (but the code executed during the weave).
     \item{print:} logical (\code{FALSE}).
     If \code{TRUE}, each expression in the
@@ -65,7 +65,7 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
     \item{prefix:} logical (\code{TRUE}). If \code{TRUE} generated filenames of
     figures and output have a common prefix.
     \item{prefix.string:} a character string, default is the name of the
-    \code{.Snw} source file.
+    \file{.Snw} source file.
     \item{include:} logical (\code{TRUE}), indicating whether input
     statements for text output and includegraphics statements
     for figures should be auto-generated. Use \code{include=FALSE} if
@@ -79,8 +79,8 @@ RweaveLatexSetup(file, output=NULL, quiet=FALSE, debug=FALSE,
     generated. Ignored if \code{fig=FALSE}. 
     \item{pdf:} logical (\code{TRUE}), indicating whether PDF figures shall be
     generated. Ignored if \code{fig=FALSE}.
-    \item{width:} numeric (6), width of figures.
-    \item{height:} numeric (6), height of figures.
+    \item{width:} numeric (6), width of figures in inch.
+    \item{height:} numeric (6), height of figures in inch.
   }
 }
 \section{Hook Functions}{

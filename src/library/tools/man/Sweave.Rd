@@ -5,7 +5,7 @@
 \description{
   \code{Sweave} provides a flexible framework for mixing text and S code
   for automatic report generation. The basic idea is to replace the S
-  code with it's output, such that the final document only contains the
+  code with its output, such that the final document only contains the
   text and the output of the statistical anlysis. 
 }
 \usage{
@@ -19,7 +19,7 @@ Stangle(file, driver=RTangle(), ...)
 }
 \details{
   Automatic generation of reports by mixing word processing markup (like
-  latex) and S code. The S code gets replaced by it's output (text or
+  latex) and S code. The S code gets replaced by its output (text or
   graphs) in the final markup file. This allows to re-generate a report
   if the input data change and documents the code to reproduce the
   analysis in the same file that also produces the report.

@@ -14,13 +14,13 @@ RtangleSetup(file, output=NULL, annotate=TRUE, split=FALSE,
   \item{file}{Name of Sweave source file.}
   \item{output}{Name of output file, default is to remove extension \file{.nw},
     \file{.Rnw} or \file{.Snw} and to add extension \file{.R}. Any
-    directory names in \code{file} are also remogved such that the output
+    directory names in \code{file} are also removed such that the output
     is created in the current working directory.}
   \item{annotate}{By default, code chunks are seperated by comment
     lines specifying the names and numbers of the code chunks. If
     \code{FALSE}, only the code chunks without any decorating comments
     are extracted.}
-  \item{split}{Split outout in single files per code chunk?}
+  \item{split}{Split output in single files per code chunk?}
   \item{prefix}{If \code{split=TRUE}, prefix the chunk labels by the
     basename of the input file to get output file names?}
   \item{quiet}{If \code{TRUE} all progress messages are suppressed.}
