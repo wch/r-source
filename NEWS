@@ -178,6 +178,7 @@ BUG FIXES
 
     o	rpois(*, lambda) now works when lambda > .Machine$integer.max
 
+    o	M <- 2 ; print(ppr(.., nterms = M))  now works.
 
 		CHANGES IN R VERSION 1.0.1
 

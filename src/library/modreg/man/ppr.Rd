@@ -1,5 +1,6 @@
 % file modreg/man/ppr.Rd
 % copyright (C) 1995-8 B. D. Ripley
+% copyright (C) 2000   The R Core Development Team
 %
 \name{ppr}
 \alias{ppr}
@@ -9,18 +10,19 @@
 \alias{print.ppr}
 \alias{summary.ppr}
 \alias{print.summary.ppr}
-\title{
-Projection Pursuit Regression
+\title{Projection Pursuit Regression}
+\description{
+  Fit a projection pursuit regression model.
 }
 \usage{
 ppr(formula, data = sys.parent(), weights,
     subset, na.action, contrasts = NULL,
-    ww = rep(1,q), nterms, max.terms=nterms, optlevel = 2, 
+    ww = rep(1,q), nterms, max.terms=nterms, optlevel = 2,
     sm.method = c("supsmu", "spline", "gcvspline"),
     bass = 0, span = 0, df = 5, gcvpen = 1)
 
 ppr(x, y, weights = rep(1,n),
-    ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2, 
+    ww = rep(1,q), nterms, max.terms = nterms, optlevel = 2,
     sm.method = c("supsmu", "spline", "gcvspline"),
     bass = 0, span = 0, df = 5, gcvpen = 1)
 }
@@ -31,7 +33,7 @@ ppr(x, y, weights = rep(1,n),
   }
   \item{x}{
     matrix of explanatory variables.  Rows represent observations, and
-    columns represent variables.  Missing values are not accepted. 
+    columns represent variables.  Missing values are not accepted.
   }
   \item{nterms}{number of terms to include in the final model.}
   \item{data}{
@@ -95,65 +97,32 @@ ppr(x, y, weights = rep(1,n),
 A list with the following components, many of which are for use by the
 method functions.
 
-\item{call}{
-the matched call
-}
-\item{p}{
-the number of explanatory variables (after any coding)
-}
-\item{q}{
-the number of response variables
-}
-\item{ml}{
-the argument \code{max.terms}
-}
-\item{gof}{
-the overall residual (weighted) sum of squares for the selected model
-}
-\item{gofn}{
-the overall residual (weighted) sum of squares against the number of
-terms, up to \code{max.terms}.  Will be invalid (and zero) for less than
-\code{nterms}.
-}
-\item{df}{
-the argument \code{df}
-}
-\item{edf}{
-if \code{sm.method} is \code{"spline"} or \code{"gcvspline"} the equivalent number of
-degrees of freedom for each ridge term used.
-}
-\item{xnames}{
-the names of the explanatory variables
-}
-\item{ynames}{
-the names of the response variables
-}
-\item{alpha}{
-a matrix of the projection directions, with a column for each ridge term
-}
-\item{beta}{
-a matrix of the coefficients applied for each response to the ridge
-terms: the rows are the responses and the columns the ridge terms
-}
-\item{yb}{
-the weighted means of each response
-}
-\item{ys}{
-the overall scale factor used: internally the responses are divided by
-\code{ys} to have unit total weighted sum of squares.
-}
-\item{fitted.values}{
-the fitted values, as a matrix if \code{q > 1}
-}
-\item{residuals}{
-the residuals, as a matrix if \code{q > 1}
-}
-\item{smod}{
-internal work array, which includes the ridge functions evaluated at
-the training set points.
-}}
-\description{
-  Fit a projection pursuit regression model.
+\item{call}{the matched call}
+\item{p}{the number of explanatory variables (after any coding)}
+\item{q}{the number of response variables}
+\item{mu}{the argument \code{nterms}}
+\item{ml}{the argument \code{max.terms}}
+\item{gof}{the overall residual (weighted) sum of squares for the
+  selected model}
+\item{gofn}{the overall residual (weighted) sum of squares against the
+  number of terms, up to \code{max.terms}.  Will be invalid (and zero)
+  for less than \code{nterms}.}
+\item{df}{the argument \code{df}}
+\item{edf}{if \code{sm.method} is \code{"spline"} or \code{"gcvspline"}
+  the equivalent number of degrees of freedom for each ridge term used.}
+\item{xnames}{the names of the explanatory variables}
+\item{ynames}{the names of the response variables}
+\item{alpha}{a matrix of the projection directions, with a column for
+  each ridge term}
+\item{beta}{a matrix of the coefficients applied for each response to
+  the ridge terms: the rows are the responses and the columns the ridge terms}
+\item{yb}{the weighted means of each response}
+\item{ys}{the overall scale factor used: internally the responses are
+  divided by \code{ys} to have unit total weighted sum of squares.}
+\item{fitted.values}{the fitted values, as a matrix if \code{q > 1}}
+\item{residuals}{the residuals, as a matrix if \code{q > 1}}
+\item{smod}{internal work array, which includes the ridge functions
+  evaluated at the training set points.}
 }
 \details{
   The basic method is given by Friedman (1984), and is essentially the
@@ -178,7 +147,7 @@ the training set points.
 }
 \references{
   Friedman, J. H. and Stuetzle, W. (1981)
-  Projection pursuit regression. 
+  Projection pursuit regression.
   \emph{Journal of the American Statistical Association},
   \bold{76}, 817--823.
 
@@ -199,11 +168,11 @@ rock.ppr <- ppr(log(perm) ~ area1 + peri1 + shape,
                 data = rock, nterms = 2, max.terms = 5)
 rock.ppr
 # Call:
-# ppr.formula(formula = log(perm) ~ area1 + peri1 + shape, data = rock, 
+# ppr.formula(formula = log(perm) ~ area1 + peri1 + shape, data = rock,
 #     nterms = 2, max.terms = 5)
 #
 # Goodness of fit:
-#  2 terms  3 terms  4 terms  5 terms 
+#  2 terms  3 terms  4 terms  5 terms
 # 8.737806 5.289517 4.745799 4.490378
 
 summary(rock.ppr)
@@ -211,14 +180,14 @@ summary(rock.ppr)
 # .....
 #
 # Projection direction vectors:
-#       term 1      term 2     
+#       term 1      term 2
 # area1  0.34357179  0.37071027
 # peri1 -0.93781471 -0.61923542
 # shape  0.04961846  0.69218595
 #
 # Coefficients of ridge terms:
-#    term 1    term 2 
-# 1.6079271 0.5460971 
+#    term 1    term 2
+# 1.6079271 0.5460971
 
 par(mfrow=c(3,2))# maybe: , pty="s")
 plot(rock.ppr, main="ppr(log(perm)~ ., nterms=2, max.terms=5)")
