@@ -1,4 +1,4 @@
-                CHANGES IN VERSION R VERSION 0.62
+                CHANGES IN R VERSION 0.62
 
 NEW FEATURES
 
@@ -13,13 +13,19 @@ NEW FEATURES
     o	new is.R() function.
 
 
-		CHANGES IN VERSION R VERSION 0.61.1
+		CHANGES IN R VERSION 0.61.1
 
 NEW FEATURES
 
     o   None (by definition, x.y.z releases are bugfix releases now)
 
 BUG FIXES
+
+    o   Return statements of the form return(x,y) will now return
+        a list with named components.
+
+    o   Parsing of nested "if" statments was broken.  This is fixed now.
+	(Reported by Paul Gilbert).
 
     o   Wrong declaration of ConsoleBufCnt in src/main/scan.c caused crash
 	in Irix (George White <gwhite@bodnext.bio.dfo.ca>)
@@ -44,7 +50,33 @@ BUG FIXES
     o   autoload() caused infinite loop if function  wasn't found in
 	library on loading
 
-		CHANGES IN VERSION R VERSION 0.61
+    o   The pager ate the rest of stdin in batch mode, now fixed. Also,
+	stdout was not flushed before call to system(). "make tests"
+	should work now.
+
+    o   Empty directories now created by configure (so that it doesn't
+        matter that "CVS export" doesn't do it)
+
+    o   as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
+
+    o   3 problems with glm, 2 in glm.fit and a one in print.glm fixed
+	[Jim Lindsey]
+
+    o   binomial (family) now works when 'n=0'. [J.Lindsey]
+
+    o	split() now also works in split(1:10,1:2)
+
+    o	strsplit() now also works for strsplit(c,NULL)
+
+    o   A LANG='..' environment variable no longer affects  scan()ing of
+	numbers.
+
+    o   seq(.) doesn't segfault anymore in  gl(2,3):gl(1,6)
+
+    o   contour(.) now also works with integer arguments
+
+
+		CHANGES IN R VERSION 0.61
 
 We try to make development more flexible by creating a "CVS branch". This
 should make it easier to produce patches for obvious bugs in the releases,
@@ -80,7 +112,7 @@ BUG_FIXES
     o   format(.) is now generic;  the default method has a `digits' argument.
 
 
-		CHANGES IN VERSION R VERSION 0.60.1
+		CHANGES IN R VERSION 0.60.1
 
 NEW FEATURES
 
@@ -103,7 +135,7 @@ BUG FIXES
 
 
 
-		CHANGES IN VERSION R VERSION 0.60
+		CHANGES IN R VERSION 0.60
 
 R is about to become an official part of the GNU project.
 To quote RMS (Richard Stallman)
@@ -242,7 +274,7 @@ BUG FIXES
 
 
 
-		  CHANGES IN VERSION R VERSION 0.50
+		  CHANGES IN R VERSION 0.50
 
 WARNING!!!
 

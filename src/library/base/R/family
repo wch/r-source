@@ -6,7 +6,7 @@ UseMethod("family")
 function(x, ...)
 {
 	cat("\nFamily:", x$family, "\n")
-	cat("Link function:", x$link, "\n\n") 
+	cat("Link function:", x$link, "\n\n")
 }
 "power" <-
 function(lambda = 1)
@@ -26,7 +26,7 @@ function(lambda = 1)
 ## is in the domain of linkinv
 
 "make.link" <-
-function (link) 
+function (link)
 {
 	recognise <- FALSE
 	if (link == "logit") {
@@ -93,7 +93,7 @@ function (link)
 		valideta <- function(eta) all(eta>0)
 		recognise <- TRUE
 	}
-	if (!recognise) 
+	if (!recognise)
 		stop(paste(link, "link not recognised"))
 	return(list(linkfun = linkfun,
 		linkinv = linkinv,
@@ -102,7 +102,7 @@ function (link)
 }
 
 "poisson" <-
-function (link = "log") 
+function (link = "log")
 {
 	linktemp <- substitute(link)
 	#this is a function used in the glm function
@@ -110,10 +110,10 @@ function (link = "log")
 	#converts link into character string
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
-		if (linktemp == "link") 
+		if (linktemp == "link")
 			linktemp <- eval(link)
 	}
-	if (any(linktemp == c("log", "identity", "sqrt"))) 
+	if (any(linktemp == c("log", "identity", "sqrt")))
 		stats <- make.link(linktemp)
 	else stop(paste(linktemp, "link not available for poisson",
 			"family, available links are \"identity\", ",
@@ -123,7 +123,7 @@ function (link = "log")
 	dev.resids <- function(y, mu, wt)
 		2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
 	initialize <- expression({
-		if (any(y < 0)) 
+		if (any(y < 0))
 			stop(paste("Negative values not allowed for",
 				"the Poisson family"))
 		n <- rep(1, nobs)
@@ -144,7 +144,7 @@ function (link = "log")
 }
 
 "gaussian" <-
-function () 
+function ()
 {
 	stats <- make.link("identity")
 	# this is a function used in the glm function
@@ -171,7 +171,7 @@ function ()
 }
 
 "binomial" <-
-function (link = "logit") 
+function (link = "logit")
 {
 	linktemp <- substitute(link)
 	# this is a function used in the glm function
@@ -179,10 +179,10 @@ function (link = "logit")
 	# converts link into character string
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
-		if (linktemp == "link") 
+		if (linktemp == "link")
 			linktemp <- eval(link)
 	}
-	if (any(linktemp == c("logit", "probit", "cloglog"))) 
+	if (any(linktemp == c("logit", "probit", "cloglog")))
 		stats <- make.link(linktemp)
 	else stop(paste(linktemp, "link not available for binomial",
 		"family, available links are \"logit\", ",
@@ -195,12 +195,12 @@ function (link = "logit")
 	initialize <- expression({
 		if (NCOL(y) == 1) {
 			n <- rep(1, nobs)
-			if (any(y < 0 | y > 1)) 
+			if (any(y < 0 | y > 1))
 				stop("y values must be 0 <= y <= 1")
 		}
 		else if (NCOL(y) == 2) {
 			n <- y[, 1] + y[, 2]
-			y <- y[, 1]/n
+			y <- ifelse(n == 0, 0, y[, 1]/n)
 			weights <- weights * n
 		}
 		else stop(paste("For the binomial family, y must be",
@@ -224,7 +224,7 @@ function (link = "logit")
 }
 
 "Gamma" <-
-function (link = "inverse") 
+function (link = "inverse")
 {
 	linktemp <- substitute(link)
 	#this is a function used in the glm function
@@ -232,20 +232,20 @@ function (link = "inverse")
 	#converts link into character string
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
-		if (linktemp == "link") 
+		if (linktemp == "link")
 			linktemp <- eval(link)
 	}
-	if (any(linktemp == c("inverse", "log", "identity"))) 
+	if (any(linktemp == c("inverse", "log", "identity")))
 		stats <- make.link(linktemp)
 	else stop(paste(linktemp, "link not available for gamma",
 		"family, available links are \"inverse\", ",
 		"\"log\" and \"identity\""))
 	variance <- function(mu) mu^2
-	validmu <- function(mu) all(mu>0) 
+	validmu <- function(mu) all(mu>0)
 	dev.resids <- function(y, mu, wt)
 		-2 * wt * (log(ifelse(y == 0, 1, y/mu)) - (y - mu)/mu)
 	initialize <- expression({
-		if (any(y < 0)) 
+		if (any(y < 0))
 			stop(paste("Negative values not",
 				"allowed for the gamma family"))
 		n <- rep(1, nobs)
@@ -295,17 +295,17 @@ function()
 }
 
 "quasi" <-
-function (link = "identity", variance = "constant") 
+function (link = "identity", variance = "constant")
 {
 	linktemp <- substitute(link)
 	#this is a function used in the glm function
 	#it holds everything personal to the family
 	#converts link into character string
-	if (is.expression(linktemp)) 
+	if (is.expression(linktemp))
 		linktemp <- eval(linktemp)
 	if (!is.character(linktemp)) {
 		linktemp <- deparse(linktemp)
-		if (linktemp == "link") 
+		if (linktemp == "link")
 			linktemp <- eval(link)
 	}
 	stats <- make.link(linktemp)
@@ -313,11 +313,11 @@ function (link = "identity", variance = "constant")
 	variancetemp <- substitute(variance)
 	if (!is.character(variancetemp)) {
 		variancetemp <- deparse(variancetemp)
-		if (linktemp == "variance") 
+		if (linktemp == "variance")
 			variancetemp <- eval(variance)
 	}
 	if (!any(variancetemp == c("mu(1-mu)",
-		"mu", "mu^2", "mu^3", "constant"))) 
+		"mu", "mu^2", "mu^3", "constant")))
 		stop(paste(variancetemp, "not recognised, possible variances",
 			"are \"mu(1-mu)\", \"mu\", \"mu^2\", \"mu^3\" and",
 			"\"constant\""))
