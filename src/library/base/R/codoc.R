@@ -1,7 +1,9 @@
-codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
-                  ignore.generic.functions = FALSE,
-                  keep.tempfiles = FALSE,
-                  verbose = getOption("verbose")) {
+codoc <-
+function(dir, use.values = FALSE, use.positions = TRUE,
+         ignore.generic.functions = FALSE,
+         keep.tempfiles = FALSE,
+         verbose = getOption("verbose"))
+{
     fQuote <- function(s) paste("`", s, "'", sep = "")
     listFilesWithExts <- function(dir, exts, path = TRUE) {
         ## Return the paths or names of the files in `dir' with
@@ -60,10 +62,9 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         files <- c(files, listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
     unlinkOnExitFiles <- c(unlinkOnExitFiles, docsList)
-    cat(files, sep = "\n", file = docsList)
+    writeLines(files, docsList)
     .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
 
-    .ArgsEnv <- new.env()
     .DocsEnv <- new.env()
     if(verbose)
         cat("Reading docs from", fQuote(docsFile), "\n")
@@ -71,45 +72,19 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     ind <- grep("^# usages in file", txt)
     ## Use a text connection for reading the blocks determined by ind.
     ## Alternatively, we could split txt into a list of the blocks.
-    numOfUsageCodeLines <- diff(c(ind, length(txt) + 1)) - 2
+    numOfUsageCodeLines <- diff(c(ind, length(txt) + 1)) - 1
     txtConn <- textConnection(paste(txt, collapse = "\n"))
     on.exit(close(txtConn), add = TRUE)
     for(n in numOfUsageCodeLines) {
         whereAmI <- readLines(txtConn, 1)
-        argList <- readLines(txtConn, 1)
         exprs <- try(parse(n = -1, text = readLines(txtConn, n)))
         if(inherits(exprs, "try-error"))
             stop(paste("cannot source", gsub("^# ", "", whereAmI)))
         for(i in exprs) {
-            yy <- try(eval(i, env = .ArgsEnv))
+            yy <- try(eval(i, env = .DocsEnv))
             if(inherits(yy, "try-error"))
                 stop(paste("cannot eval", gsub("^# ", "", whereAmI)))
         }
-
-        lsArgs <- ls(envir = .ArgsEnv, all.names = TRUE)
-        
-        if(argList != "# arglist: *internal*") {
-            argsInArgList <-
-                unlist(strsplit(gsub("# arglist:", "", argList), " "))
-            argsInUsage <-
-                unlist(lapply(lsArgs,
-                              function(f)
-                              names(formals(get(f, envir = .ArgsEnv)))))
-            argsInUsageMissingInArgList <-
-                argsInUsage[!argsInUsage %in% argsInArgList]
-            if(length(argsInUsageMissingInArgList) > 0) {
-                writeLines(paste("Undocumented arguments",
-                                 gsub("^# usages", "", whereAmI),
-                                 ":", sep = ""))
-                print(unique(argsInUsageMissingInArgList))
-            }
-        }
-        
-        ## Copy from .ArgsEnv to .DocsEnv
-        for(f in lsArgs)
-            assign(f, get(f, envir = .ArgsEnv), envir = .DocsEnv)
-        ## Clean up .ArgsEnv
-        rm(list = lsArgs, envir = .ArgsEnv)
     }
     lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
 
