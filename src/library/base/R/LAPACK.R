@@ -70,9 +70,9 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p))
         u[] <- as.complex(u)
         v[] <- as.complex(v)
         res <- .Call("La_svd_cmplx", jobu, jobv, x, double(min(n,p)), u, v,
-                     package="base")
+                     PACKAGE="base")
     } else
         res <- .Call("La_svd", jobu, jobv, x, double(min(n,p)), u, v,
-                     package="base")
+                     PACKAGE="base")
     res[c("d", if(nu) "u", if(nv) "vt")]
 }
