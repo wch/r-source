@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-46, @value{FAQ-YEAR}-03-02
+@set FAQ-VERSION 1.8-47, @value{FAQ-YEAR}-03-03
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2550,6 +2550,9 @@ Tensor product of arrays.
 Simple mechanism for placing R graphics in a Tk widget.
 @item tree
 Classification and regression trees.
+@item treeglia
+Stem analysis functions for volume increment and carbon uptake
+assessment from tree-rings.
 @item tripack
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
