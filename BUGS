@@ -594,10 +594,6 @@ Date: Thu, 27 Jun 2002 10:30:51 +0200 (MET DST)
 Subject: Handling of upper/lowercase in package names
 From: "Philippe Grosjean" <phgrosjean@sciviews.org>
 Date: Tue, 22 Apr 2003 14:33:04 +0200
-* PR# 2817 *
-Subject: Weird Windows startup menu display problem in 1.7.0
-From: "Gunter, Bert" <bert_gunter@merck.com>
-Date: Tue, 22 Apr 2003 11:23:01 -0400
 
 Directory:  incoming
 
@@ -631,26 +627,10 @@ Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
 Subject: Problems with RMySQL in R 1.7.0 for Windows
 From: "Jonas Ranstam" <jonas@ranstam.dk>
 Date: Fri, 18 Apr 2003 09:13:56 +0200
-* PR# 2795 *
-Subject: Work from Home -
-From: "Stuart Baker" <offerpl@aol.com>
-Date: Fri, 18 Apr 2003 17:44:32 +-0600
-* PR# 2796 *
-Subject: (광고) 강한 남성은 어떻게 만들어 지는가?   @
-From: strong man <big@wonderlife.co.kr>
-Date: Sun, 20 Apr 2003 03:59:30 +0900
-* PR# 2797 *
-Subject: Enlarge your p-e-n-i-s 2 inches GUARANTEED fq l
-From: "Lindsey Crow" <8b71karkvy3o@mindspring.com>
-Date: Sat, 19 Apr 03 22:01:26 GMT
 * PR# 2798 *
 Subject: Re: [R] Keyboard problem using RWin 1.7.0
 From: DJNordlund@aol.com
 Date: Sat, 19 Apr 2003 18:56:25 EDT
-* PR# 2799 *
-Subject: You and your COLON                                             Ujcfjy
-From: <lgvix@yahoo.com>
-Date: Sun, 20 Apr 2003 04:34:56 -0200
 * PR# 2801 *
 Subject: Rgui crashes after setting par(ask=TRUE) and using lattice
 From: smcnary@charm.net
@@ -683,19 +663,23 @@ Date: Tue, 22 Apr 2003 20:15:19 +0200
 Subject: coplot panels malrendered / 1653
 From: dmaszle@mendelbio.com
 Date: Wed, 23 Apr 2003 02:19:53 +0200 (MET DST)
-* PR# 2825 *
-Subject: $2.50 per 50 mg For V*I*A*G*R*A sx oywfp gce
-From: "Your Friend" <lah9427@yahoo.com>
-Date: Wed, 23 Apr 03 08:36:06 GMT
-* PR# 2826 *
-Subject: URGENT AND PROFITABLE TRANSACTION
-From: "MR MATHEW LAPPEMAN." <akumembeki@netscape.net>
-Date: Wed, 23 Apr 2003 13:39:34
-* PR# 2827 *
-Subject: Bug in versioned install (was: (fwd) R-1.7.0 : Problem with Downloading "dse")
-From: Duncan Murdoch <dmurdoch@pair.com>
-Date: Wed, 23 Apr 2003 08:17:25 -0400
-* PR# 2828 *
-Subject: changing dir. to network drive crash Rgui on NT4
-From: "Liaw, Andy" <andy_liaw@merck.com>
-Date: Wed, 23 Apr 2003 12:27:05 -0400
+* PR# 2835 *
+Subject: Italian-crafted Rolex - only $65 - $140!! Free SHIPPING!!
+From: james@hello.com
+Date: Fri, 25 Apr 2003 01:06:14 +0800
+* PR# 2836 *
+Subject: R-1.7.0: build feedback: OpenBSD 3.2
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:40:35 -0600 (MDT)
+* PR# 2837 *
+Subject: R-1.7.0 build feedback: NetBSD 1.6
+From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
+Date: Thu, 24 Apr 2003 11:45:20 -0600 (MDT)
+* PR# 2838 *
+Subject: ATTN:  re^fina-nce and earn some money iiwm gmhpg
+From: "Barney Bermudez" <oj1m0fxvsny6@dellmail.com>
+Date: Thu, 24 Apr 03 16:44:49 GMT
+* PR# 2839 *
+Subject: KIND REQUEST FOR FAVOUR.
+From: "DR. GILBERT GUEI" <gilguie@netscpe.net>
+Date: Thu, 24 Apr 2003 23:04:08 +0200
