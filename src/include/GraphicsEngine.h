@@ -162,7 +162,7 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
 
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
-void GENewPage(int fill, GEDevDesc *dd);
+void GENewPage(int fill, double gamma, GEDevDesc *dd);
 void GELine(double x1, double y1, double x2, double y2, 
 	    int col, double gamma, int lty, double lwd,
 	    GEDevDesc *dd);

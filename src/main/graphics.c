@@ -1813,7 +1813,7 @@ DevDesc *GNewPlot(Rboolean recording)
 		GEinitDisplayList((GEDevDesc*) dd);
 	    }
 	    if (dd->newDevStruct)
-		GENewPage(dpptr(dd)->bg, (GEDevDesc*) dd);
+		GENewPage(dpptr(dd)->bg, dpptr(dd)->gamma, (GEDevDesc*) dd);
 	    else
 		dpptr(dd)->newPage(dd);
 #ifdef PLOTHISTORY

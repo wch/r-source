@@ -1820,9 +1820,9 @@ double GEStrHeight(char *str, int font, double cex, double ps, GEDevDesc *dd)
  ****************************************************************
  */
 
-void GENewPage(int fill, GEDevDesc *dd)
+void GENewPage(int fill, double gamma, GEDevDesc *dd)
 {
-    dd->dev->newPage(fill, dd->dev);
+    dd->dev->newPage(fill, gamma, dd->dev);
 }
 
 /****************************************************************
