@@ -3042,6 +3042,8 @@ static void XFconvert(double *x, double *y, XFigDesc *pd)
 static int XF_SetLty(int lty)
 {
     switch(lty) {
+    case LTY_BLANK:
+	return -1;
     case LTY_SOLID:
 	return 0;
     case LTY_DASHED:
@@ -3051,7 +3053,7 @@ static int XF_SetLty(int lty)
     case LTY_DOTDASH:
 	return 3;
     default:
-	warning("unimplemented line texture %u: using Dash-double-dotted",
+	warning("unimplemented line texture %08x: using Dash-double-dotted",
 		lty);
 	return 4;
     }
@@ -3101,6 +3103,14 @@ static Rboolean XFig_Open(NewDevDesc*, XFigDesc*);
 
 static const int XFig_basenums[] = {4, 8, 12, 16, 20, 24, 28, 0};
 
+
+static void XF_resetColors(XFigDesc *pd)
+{
+    int i;
+    for(i = 0; i < 32; i++) pd->XFigColors[i] = 0;
+    pd->XFigColors[7] = 0xffffff; /* white */
+    pd->nXFigColors = 32;  
+}
 
 /* Driver Support Routines */
 
@@ -3281,8 +3291,7 @@ XFigDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     dd->canHAdj = 1; /* 0, 0.5, 1 */
     dd->canChangeGamma = FALSE;
 
-    pd->XFigColors[7] = 0xffffff;
-    pd->nXFigColors = 32;
+    XF_resetColors(pd);
 
     /*	Start the driver */
 
@@ -3393,8 +3402,7 @@ static void XFig_NewPage(R_GE_gcontext *gc,
 	pd->psfp = R_fopen(R_ExpandFileName(buf), "w");
 	pd->tmpfp = R_fopen(pd->tmpname, "w");
 	XF_FileHeader(pd->psfp, pd->papername, pd->landscape, pd->onefile);
-	pd->XFigColors[7] = 0xffffff;
-	pd->nXFigColors = 32;
+	XF_resetColors(pd);
     }
     if(R_OPAQUE(gc->fill)) {
 	FILE *fp = pd->tmpfp;
@@ -3454,6 +3462,8 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
 	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
+    if(lty < 0) return;
+
     cpen = (R_OPAQUE(gc->col))? cfg: -1;
     dofill = (R_OPAQUE(gc->fill))? 20: -1;
 
@@ -3483,6 +3493,8 @@ static void XFig_Circle(double x, double y, double r,
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
 	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
+    if(lty < 0) return;
+
     cpen = (R_OPAQUE(gc->col))? cfg: -1;
     dofill = (R_OPAQUE(gc->fill))? 20: -1;
 
@@ -3505,6 +3517,8 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
     XFigDesc *pd = (XFigDesc *) dd->deviceSpecific;
     FILE *fp = pd->tmpfp;
     int lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+
+    if(lty < 0) return;
 
     XFconvert(&x1, &y1, pd);
     XFconvert(&x2, &y2, pd);
@@ -3530,6 +3544,8 @@ static void XFig_Polygon(int n, double *x, double *y,
     int i;
     int cbg = XF_SetColor(gc->fill, pd), cfg = XF_SetColor(gc->col, pd), cpen,
 	dofill, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
+
+    if(lty < 0) return;
 
     cpen = (R_OPAQUE(gc->col))? cfg: -1;
     dofill = (R_OPAQUE(gc->fill))? 20: -1;
@@ -3558,7 +3574,7 @@ static void XFig_Polyline(int n, double *x, double *y,
     double xx, yy;
     int i, lty = XF_SetLty(gc->lty), lwd = gc->lwd*0.833 + 0.5;
 
-    if(R_OPAQUE(gc->col)) {
+    if(R_OPAQUE(gc->col) && lty >= 0) {
 	fprintf(fp, "2 1 "); /* Polyline */
 	fprintf(fp, "%d %d ", lty, lwd>0?lwd:1); /* style, thickness */
 	fprintf(fp, "%d %d ", XF_SetColor(gc->col, pd), 7); /* pen colour fill colour */
