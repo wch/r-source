@@ -1,8 +1,8 @@
 help.start <- function(gui = "irrelevant", browser = "irrelevant")
 {
-    a <- system.file("index.html", pkg="doc/html", lib=R.home())
+    a <- system.file("rwin.html", pkg="doc/html", lib=R.home())
     if (a == "")
-        a <- system.file("index.htm", pkg="doc/html", lib=R.home())
+        a <- system.file("rwin.htm", pkg="doc/html", lib=R.home())
     if (a == "")
         stop("I can't find the html help\n")
     else {
