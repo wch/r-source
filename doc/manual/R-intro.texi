@@ -1131,7 +1131,10 @@ By the @emph{mode} of an object we mean the basic type of its
 fundamental constituents.  This is a special case of a ``property''
 of an object.  Another property of every object is its @emph{length}.  The
 functions @code{mode(@var{object})} and @code{length(@var{object})} can be
-used to find out the mode and length of any defined structure.
+used to find out the mode and length of any defined structure
+@footnote{Note however that @code{length(@var{object})} does not always
+contain intrinsic useful information, e.g., when @code{@var{object}} is a
+function.}.
 
 Further properties of an object are usually provided by
 @code{attributes(@var{object})}, see @ref{Getting and setting attributes}.
