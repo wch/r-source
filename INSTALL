@@ -8,12 +8,13 @@ This document concerns building and installing R from sources.  Pre-made
 binaries are made available for some systems with varying regularity and
 can be obtained from CRAN (see the RESOURCES file).
 
-R will configure and build under a number of common Unix-like platforms
-(including i386-freebsd, i386-linux, ppc-linux, mips-sgi-irix,
-alpha-linux, alpha-dec-osf4, rs6000-ibm-aix, hppa-hp-hpux, sparc-linux,
-and sparc-sun-solaris) and on Windows 9x/NT (see `src/gnuwin32/INSTALL').
-In general it is relatively easy to adapt R to new platforms.  See the
-section on new platforms for details.
+R will configure and build under a number of common Unix-like
+platforms (including i386-freebsd, i386-linux, ppc-linux,
+mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
+hppa-hp-hpux, sparc-linux, and sparc-sun-solaris) and on Windows
+9x/NT/2000 (see `src/gnuwin32/INSTALL').  In general it is relatively
+easy to adapt R to new platforms.  See the section on new platforms
+for details.
 
 
 GETTING AND UNPACKING THE SOURCES
@@ -57,6 +58,8 @@ src, doc, and several more.  Issue the following commands:
 
 	./configure
 	make
+
+(See USING MAKE below if your make is not called `make'.)
 
 If these commands execute successfully, the R binary will be copied to
 the `${R_HOME}/bin' directory.  In addition, a shell script front-end
@@ -106,14 +109,14 @@ information on CRAN.
 
 Use `make dvi' to create dvi versions of the R manuals, such as
 `refman.dvi' (an R object reference index) and `R-exts.dvi', the "R
-Extension Writers Guide", in the `doc/manual' subdirectory.  These files
-can be previewed and printed using standard programs such as `xdvi' and
-`dvips'.  You can also use `make pdf' to build PDF (Portable Document
-Format) version of the manuals, and view these using Acrobat.  Manuals
-written in the GNU Texinfo system can also be converted to info files
-suitable for reading online with Emacs or standalone GNU Info; use `make
-info' to create these versions (note that this requires `makeinfo'
-version 4).
+Extension Writers Guide", in the `doc/manual' subdirectory.  These
+files can be previewed and printed using standard programs such as
+`xdvi' and `dvips'.  You can also use `make pdf' to build PDF
+(Portable Document Format) version of the manuals, and view these
+using Acrobat Reader.  Manuals written in the GNU Texinfo system can
+also be converted to info files suitable for reading online with Emacs
+or standalone GNU Info; use `make info' to create these versions (note
+that this requires `makeinfo' version 4).
 
 Now rehash if necessary, type `R', and read the R manuals and the R FAQ
 (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
@@ -163,6 +166,13 @@ make.
 
 To build in a separate directory you need a make that uses the VPATH
 variable, for example GNU make.
+
+If you want to use a make by another name, for example if your GNU make
+is called `gmake', you need to set MAKE at configure time, for example
+
+MAKE=gmake ./configure      (sh, bash)
+env MAKE=gmake ./configure  (csh)
+
 
 
 USING FORTRAN
