@@ -33,8 +33,6 @@ SEXP do_browser(SEXP, SEXP, SEXP, SEXP);
 
 #ifdef Macintosh
 
-/* This code places a limit on the depth to which eval can recurse. */
-
 /* Now R correctly handles user breaks
    This is the fastest way to do handle user breaks
    and performance are no rather good. 
@@ -50,7 +48,9 @@ void isintrpt()
    if(CheckEventQueueForUserCancel()){  
 	Rprintf("\n");
 	error("user break");
+#ifndef __MRC__
 	raise(SIGINT);
+#endif
 	return;
     }
 
