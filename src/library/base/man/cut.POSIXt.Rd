@@ -25,9 +25,6 @@
   \item{start.on.monday}{logical. If \code{breaks = "weeks"}, should the
     week start on Mondays or Sundays?}
 }
-\details{
-  ~~ If necessary, more details than the __description__  above ~~
-}
 \value{
      A factor is returned, unless \code{labels = FALSE} which returns
      the integer level codes.
@@ -41,4 +38,3 @@ cut(ISOdate(2001, 1, 1) + 70*86400*runif(100), "weeks")
 }
 \keyword{manip}
 \keyword{chron}
-
