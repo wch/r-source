@@ -206,6 +206,10 @@ void InitMemory()
     R_PreciousList =  R_NilValue;
 
 #endif
+
+    /* unmark all nodes to preserver the invariant */
+    /* not really needed as long as allocSExp unmarks on allocation */
+    unmarkPhase();
 }
 
 
@@ -413,27 +417,20 @@ SEXP allocList(int n)
 
 void R_gc(void)
 {
-#ifdef HAVE_SIGLONGJMP
-    sigset_t mask, omask;
-#endif
     int vcells;
     double vfrac;
 
     gc_count++;
     if (gc_reporting)
 	REprintf("Garbage collection [nr. %d]...", gc_count);
-#ifdef HAVE_SIGLONGJMP
-    sigemptyset(&mask);
-    sigaddset(&mask,SIGINT);
-    sigprocmask(SIG_BLOCK, &mask, &omask);
-#endif
-    /* unmarkPhase(); */ 
-    markPhase();
-    compactPhase();
-    scanPhase();
-#ifdef HAVE_SIGLONGJMP
-    sigprocmask(SIG_SETMASK, &omask, &mask);
-#endif
+
+    BEGIN_SUSPEND_INTERRUPTS {
+      /* unmarkPhase(); */ 
+      markPhase();
+      compactPhase();
+      scanPhase();
+    } END_SUSPEND_INTERRUPTS;
+
     if (gc_reporting) {
 	REprintf("\n%ld cons cells free (%ld%%)\n",
 		 R_Collected, (100 * R_Collected / R_NSize));
@@ -449,7 +446,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, nms;
     int i;
-    markPhase();
+
     PROTECT(ans = allocVector(INTSXP, 21));
     PROTECT(nms = allocVector(STRSXP, 21));
     for (i = 0; i < 21; i++) {
@@ -475,11 +472,15 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     STRING(nms)[ANYSXP]     = mkChar("ANYSXP");
     STRING(nms)[VECSXP]     = mkChar("VECSXP");
     STRING(nms)[EXPRSXP]    = mkChar("EXPRSXP");
+    setAttrib(ans, R_NamesSymbol, nms);
+
+    BEGIN_SUSPEND_INTERRUPTS {
+    markPhase();
     for (i = 0; i < R_NSize; i++)
 	if(MARK(&R_NHeap[i]))
             INTEGER(ans)[TYPEOF(&R_NHeap[i])] += 1;
     unmarkPhase(); /* could be done smarter */
-    setAttrib(ans, R_NamesSymbol, nms);
+    } END_SUSPEND_INTERRUPTS;
     UNPROTECT(2);
     return ans;
 }
