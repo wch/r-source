@@ -1,4 +1,4 @@
-axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=0, pos=NA,
+axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=NA, pos=NA,
                  outer=FALSE, font=NA, vfont=NULL,
                  lty = "solid", lwd = 1, col=NULL, ...) {
     if (!is.null(vfont))
