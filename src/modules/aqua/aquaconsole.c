@@ -583,9 +583,9 @@ OSStatus SetUpGUI(void){
         if (cocoaSetupMenu) cocoaSetupMenu(0);
     }
 
-    if ((cocoaFeatures&cocoa_menu)==0) { /* if Cocoa bundle doesn't provide the menu, we create it */
-        if( (err = CreateMenuFromNib(nibRef, CFSTR("MyHelpMenu"), &myHelpMenu)) != noErr) goto guifailure;
-    }
+if ((cocoaFeatures&cocoa_menu)==0) { /* if Cocoa bundle doesn't provide the menu, we create it */
+if( (err = CreateMenuFromNib(nibRef, CFSTR("MyHelpMenu"), &myHelpMenu)) != noErr) goto guifailure;
+}
 
 if (WeHaveCocoa && cocoaSelectWindow) cocoaSelectWindow(0);
 
@@ -846,9 +846,9 @@ void ShowWorkingDir(void){
 }
 
 /*  This sets the initial working directory according to the
-	Preferences settings. If the selected directory does not
-	exists, the startup working dir is set to the the user's
-	home.
+Preferences settings. If the selected directory does not
+exists, the startup working dir is set to the the user's
+home.
 */	
 void ChangeStartupDir(void){
 	
@@ -875,7 +875,7 @@ OSStatus InstallAppHandlers(void){
 	
  	err = AEInstallEventHandler(kCoreEventClass, kAEOpenDocuments, 
 								NewAEEventHandlerUPP( HandleOpenDocument ), 0, false );
-
+	
 	err = AEInstallEventHandler(kCoreEventClass, kAEQuitApplication, 
 								NewAEEventHandlerUPP((AEEventHandlerProcPtr)QuitAppleEventHandler), 
 								0, false);
@@ -3194,12 +3194,7 @@ fail:
 }
 
 
-OSStatus
-FSPathMakeFSSpec(
-				 const UInt8 *path,
-				 FSSpec *spec,
-				 Boolean *isDirectory)	/* can be NULL */
-				 {
+OSStatus FSPathMakeFSSpec(const UInt8 *path, FSSpec *spec, Boolean *isDirectory)	{
 	OSStatus	result;
 	FSRef		ref;
 	
@@ -3216,545 +3211,545 @@ FSPathMakeFSSpec(
 	result = FSGetCatalogInfo(&ref, kFSCatInfoNone, NULL, NULL, spec, NULL);
 	
 	return ( result );
-				 }
-				 
-				 OSStatus
-				 FSMakePath(
-							SInt16 volRefNum,
-							SInt32 dirID,
-							ConstStr255Param name,
-							UInt8 *path,
-							UInt32 maxPathSize)
-				 {
-					 OSStatus	result;
-					 FSRef		ref;
-					 
-					 /* check parameters */
-					 if(path == NULL) 
-						 return(paramErr);
-					 
-					 /* convert the inputs to an FSRef */
-					 if( (result = FSMakeFSRef(volRefNum, dirID, name, &ref)) != noErr)
-						 return(result);
-					 
-					 /* and then convert the FSRef to a path */
-					 result = FSRefMakePath(&ref, path, maxPathSize);
-					 
-					 return ( result );
-				 }
-				 
-				 OSErr
-				 FSMakeFSRef(
-							 FSVolumeRefNum volRefNum,
-							 SInt32 dirID,
-							 ConstStr255Param name,
-							 FSRef *ref)
-				 {
-					 OSErr		result;
-					 FSRefParam	pb;
-					 
-					 /* check parameters */
-					 if(ref == NULL)
-						 return(paramErr);
-					 
-					 pb.ioVRefNum = volRefNum;
-					 pb.ioDirID = dirID;
-					 pb.ioNamePtr = (StringPtr)name;
-					 pb.newRef = ref;
-					 result = PBMakeFSRefSync(&pb);
-					 
-					 return ( result );
-				 }
-				 
-				 
-				 OSStatus SelectFile(FSSpec *outFSSpec,  char *Title, Boolean saveit, Boolean HaveFName)
-				 {
-					 NavDialogOptions    dialogOptions;
-					 NavEventUPP         eventProc = nil; 
-					 NavObjectFilterUPP  filterProc = nil;
-					 OSErr               anErr = noErr;
-					 char 		fname[300], outname[300];
-					 Boolean		ItExists = false;
-					 
-					 /*  Specify default options for dialog box */
-					 anErr = NavGetDefaultDialogOptions(&dialogOptions);
-					 
-					 CopyCStringToPascal(Title,dialogOptions.message);
-					 
-					 
-					 if( HaveFName ){
-						 CopyPascalStringToC(outFSSpec->name, fname);
-						 CopyCStringToPascal(fname,dialogOptions.savedFileName);
-					 }
-					 
-					 if (anErr == noErr)
-					 {
-						 /*  Adjust the options to fit our needs
-						 Set default location option
-						 */   
-						 dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
-						 dialogOptions.dialogOptionFlags |= kNavAllowInvisibleFiles;
-						 dialogOptions.dialogOptionFlags |= kNavAllFilesInPopup;
-						 
-						 if (anErr == noErr)
-						 {
-							 /* Get 'open' resource. A nil handle being returned is OK, */
-							 /* this simply means no automatic file filtering. */
-							 NavReplyRecord reply;
-							 NavTypeListHandle deftypeList = nil; /* we apply no filter for the moment */
-							 
-							 /* Call NavGetFile() with specified options and
-								 declare our app-defined functions and type list
-								 */
-							 if(saveit)
-								 anErr = NavPutFile(nil, &reply, &dialogOptions, nil, 
-													nil, 'ttxt', nil);
-							 else
-								 anErr = NavGetFile(nil, &reply, &dialogOptions, nil, nil,
-													nil, deftypeList, nil);     
-							 
-							 if (anErr == noErr && reply.validRecord)
-							 {
-								 /*  Deal with multiple file selection */
-								 long    count;
-								 
-								 anErr = AECountItems(&(reply.selection), &count);
-								 
-								 count = 1L; /* we only select one file */
-								 /* Set up index for file list */
-								 if (anErr == noErr)
-								 {
-									 long index;
-									 
-									 for (index = 1; index <= count; index++)
-									 {
-										 AEKeyword   theKeyword;
-										 DescType    actualType;
-										 Size        actualSize;
-										 
-										 /* Get a pointer to selected file */
-										 anErr = AEGetNthPtr(&(reply.selection), index,
-															 typeFSS, &theKeyword,
-															 &actualType,outFSSpec,
-															 sizeof(FSSpec),
-															 &actualSize);
-										 
-										 
-									 }
-								 }
-								 /*  Dispose of NavReplyRecord, resources, descriptors */
-								 NavDisposeReply(&reply);
-							 }
-							 
-						 }
-					 }
-					 
-					 
-					 if( FSMakePath(outFSSpec->vRefNum, outFSSpec->parID, outFSSpec->name, outname, 300) != noErr)
-						 ItExists = false;
-					 else
-						 ItExists = true;
-					 
-					 if(saveit && !ItExists){
-						 SInt16	dataForkRefNum = -1 ;
-						 FSpCreateResFile(outFSSpec, 'ttxt', 'TEXT', smSystemScript);
-						 if( (anErr = ResError()) != noErr) 
-							 goto cleanup;
-						 if( (anErr = FSpOpenDF(outFSSpec, fsRdWrPerm, &dataForkRefNum)) != noErr)
-							 goto cleanup;
-						 if ( dataForkRefNum != -1 )
-							 FSClose ( dataForkRefNum ) ;
-					 }
+}
+
+OSStatus
+FSMakePath(
+		   SInt16 volRefNum,
+		   SInt32 dirID,
+		   ConstStr255Param name,
+		   UInt8 *path,
+		   UInt32 maxPathSize)
+{
+	OSStatus	result;
+	FSRef		ref;
+	
+	/* check parameters */
+	if(path == NULL) 
+		return(paramErr);
+	
+	/* convert the inputs to an FSRef */
+	if( (result = FSMakeFSRef(volRefNum, dirID, name, &ref)) != noErr)
+		return(result);
+	
+	/* and then convert the FSRef to a path */
+	result = FSRefMakePath(&ref, path, maxPathSize);
+	
+	return ( result );
+}
+
+OSErr
+FSMakeFSRef(
+			FSVolumeRefNum volRefNum,
+			SInt32 dirID,
+			ConstStr255Param name,
+			FSRef *ref)
+{
+	OSErr		result;
+	FSRefParam	pb;
+	
+	/* check parameters */
+	if(ref == NULL)
+		return(paramErr);
+	
+	pb.ioVRefNum = volRefNum;
+	pb.ioDirID = dirID;
+	pb.ioNamePtr = (StringPtr)name;
+	pb.newRef = ref;
+	result = PBMakeFSRefSync(&pb);
+	
+	return ( result );
+}
+
+
+OSStatus SelectFile(FSSpec *outFSSpec,  char *Title, Boolean saveit, Boolean HaveFName)
+{
+	NavDialogOptions    dialogOptions;
+	NavEventUPP         eventProc = nil; 
+	NavObjectFilterUPP  filterProc = nil;
+	OSErr               anErr = noErr;
+	char 		fname[300], outname[300];
+	Boolean		ItExists = false;
+	
+	/*  Specify default options for dialog box */
+	anErr = NavGetDefaultDialogOptions(&dialogOptions);
+	
+	CopyCStringToPascal(Title,dialogOptions.message);
+	
+	
+	if( HaveFName ){
+		CopyPascalStringToC(outFSSpec->name, fname);
+		CopyCStringToPascal(fname,dialogOptions.savedFileName);
+	}
+	
+	if (anErr == noErr)
+	{
+		/*  Adjust the options to fit our needs
+		Set default location option
+		*/   
+		dialogOptions.dialogOptionFlags |= kNavSelectDefaultLocation;
+		dialogOptions.dialogOptionFlags |= kNavAllowInvisibleFiles;
+		dialogOptions.dialogOptionFlags |= kNavAllFilesInPopup;
+		
+		if (anErr == noErr)
+		{
+			/* Get 'open' resource. A nil handle being returned is OK, */
+			/* this simply means no automatic file filtering. */
+			NavReplyRecord reply;
+			NavTypeListHandle deftypeList = nil; /* we apply no filter for the moment */
+			
+			/* Call NavGetFile() with specified options and
+				declare our app-defined functions and type list
+				*/
+			if(saveit)
+				anErr = NavPutFile(nil, &reply, &dialogOptions, nil, 
+								   nil, 'ttxt', nil);
+			else
+				anErr = NavGetFile(nil, &reply, &dialogOptions, nil, nil,
+								   nil, deftypeList, nil);     
+			
+			if (anErr == noErr && reply.validRecord)
+			{
+				/*  Deal with multiple file selection */
+				long    count;
+				
+				anErr = AECountItems(&(reply.selection), &count);
+				
+				count = 1L; /* we only select one file */
+				/* Set up index for file list */
+				if (anErr == noErr)
+				{
+					long index;
+					
+					for (index = 1; index <= count; index++)
+					{
+						AEKeyword   theKeyword;
+						DescType    actualType;
+						Size        actualSize;
+						
+						/* Get a pointer to selected file */
+						anErr = AEGetNthPtr(&(reply.selection), index,
+											typeFSS, &theKeyword,
+											&actualType,outFSSpec,
+											sizeof(FSSpec),
+											&actualSize);
+						
+						
+					}
+				}
+				/*  Dispose of NavReplyRecord, resources, descriptors */
+				NavDisposeReply(&reply);
+			}
+			
+		}
+	}
+	
+	
+	if( FSMakePath(outFSSpec->vRefNum, outFSSpec->parID, outFSSpec->name, outname, 300) != noErr)
+		ItExists = false;
+	else
+		ItExists = true;
+	
+	if(saveit && !ItExists){
+		SInt16	dataForkRefNum = -1 ;
+		FSpCreateResFile(outFSSpec, 'ttxt', 'TEXT', smSystemScript);
+		if( (anErr = ResError()) != noErr) 
+			goto cleanup;
+		if( (anErr = FSpOpenDF(outFSSpec, fsRdWrPerm, &dataForkRefNum)) != noErr)
+			goto cleanup;
+		if ( dataForkRefNum != -1 )
+			FSClose ( dataForkRefNum ) ;
+	}
 cleanup:  
-						 return anErr;
-				 }
-				 
+		return anErr;
+}
+
 #define maxhist 500
-				 char                                      *Cmd_Hist[maxhist];
-				 int                                       g_cur_Cmd, g_start_Cmd, g_end_Cmd;
-				 Boolean                                   g_Stop = false;
-				 Boolean                                   g_down = true;
-				 Boolean                                   g_not_first = false;
-				 
-				 /* do_Down_Array
-				 This procedure used to maintain the reponse when you click the down array key. (about display
-																								 previous command in console window)                                            */
-				 void HistBack(void)
-				 {
-					 SInt32 textLength;
-					 char mybuf[40];
-					 
-					 if (g_start_Cmd != g_end_Cmd) {
-						 if (!g_down){
-							 g_cur_Cmd--;
-						 }
-						 g_not_first = true;
-						 g_down = true;
-						 if (g_start_Cmd == 0){
-							 if (g_cur_Cmd < g_start_Cmd){
-								 SysBeep(10);
-							 }else{
-								 textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
-								 Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
-								 g_cur_Cmd--;
-							 }
-						 }else{
-							 if (g_cur_Cmd == g_end_Cmd){
-								 SysBeep(10);
-							 }else{
-								 if(g_cur_Cmd == -1) g_cur_Cmd = maxhist - 1;
-								 textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
-								 Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
-								 g_cur_Cmd--;
-								 if(g_cur_Cmd == -1) g_cur_Cmd = maxhist - 1;
-							 }
-						 }
-					 }
-				 }
-				 
-				 void HistFwd(void)
-				 {
-					 SInt32 textLength;
-					 
-					 if (g_start_Cmd != g_end_Cmd) {
-						 if ((g_down) && (g_not_first)){
-							 g_cur_Cmd++;
-							 g_down = false;
-						 }
-						 if (g_start_Cmd == 0){
-							 if (g_cur_Cmd == (g_end_Cmd-1))
-								 SysBeep(10);
-							 else{
-								 g_cur_Cmd ++;
-								 textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
-								 Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
-							 }
-						 }else{
-							 if ((g_cur_Cmd == (maxhist -1)) && (g_end_Cmd ==0)){
-								 SysBeep(10);
-							 }else
-								 if ((g_cur_Cmd == g_end_Cmd) || (g_cur_Cmd == (g_end_Cmd -1))){
-									 SysBeep(10);
-								 }else{
-									 g_cur_Cmd ++;
-									 if (g_cur_Cmd == maxhist) g_cur_Cmd = 0;
-									 textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
-									 Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
-								 }
-						 }
-					 }
-				 }
-				 
-				 
-				 void maintain_cmd_History(char *buf)
-				 {
-					 char *temp;
-					 int numberOfChar;
-					 
-					 g_Stop = false;
-					 numberOfChar = strlen(buf);
-					 temp = malloc((numberOfChar + 1) * sizeof(char));
-					 strcpy(temp, (const char *)buf);
-					 Cmd_Hist[g_end_Cmd] = temp;
-					 g_not_first = false;
-					 g_cur_Cmd = g_end_Cmd;
-					 g_end_Cmd++;
-					 if (g_end_Cmd <= g_start_Cmd){
-						 g_start_Cmd++;
-					 }
-					 if (g_start_Cmd == maxhist){
-						 g_start_Cmd = 0;
-					 }
-					 if (g_end_Cmd == maxhist){
-						 g_end_Cmd = 0;
-						 g_start_Cmd = 1;
-					 }
-					 
-				 }
-				 
-				 
-				 
-				 SEXP Raqua_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
-				 {
-					 SEXP sfile;
-					 
-					 checkArity(op, args);
-					 sfile = CAR(args);
-					 if (!isString(sfile) || LENGTH(sfile) < 1)
-						 errorcall(call, "invalid file argument");
-					 Raqua_write_history(CHAR(STRING_ELT(sfile, 0)));
-					 return R_NilValue;
-				 }
-				 
-				 SEXP Raqua_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
-				 {
-					 SEXP sfile;
-					 
-					 checkArity(op, args);
-					 sfile = CAR(args);
-					 if (!isString(sfile) || LENGTH(sfile) < 1)
-						 errorcall(call, "invalid file argument");
-					 Raqua_read_history(CHAR(STRING_ELT(sfile, 0)));
-					 return R_NilValue;
-				 }
-				 
-				 void Raqua_write_history(char *file)
-				 {
-					 FILE *fp;
-					 int i;
-					 char hist_buff[1000];
-					 
-					 if (!file || !g_end_Cmd) return;
-					 
-					 fp = R_fopen(file, "w");
-					 if (!fp) {
-						 char msg[256];
-						 sprintf(msg, "Unable to open history file \"%s\" for writing", file);
-						 warning(msg);
-						 return;
-					 }
-					 
-					 if (g_start_Cmd < g_end_Cmd)
-						 for(i = g_start_Cmd ; i < g_end_Cmd ; i++){
-							 fprintf(fp, "%s\n", Cmd_Hist[i]);
-						 }
-							 else
-								 for(i = 0; i < maxhist; i++)
-									 fprintf(fp, "%s\n", Cmd_Hist[i]);
-					 fclose(fp);
-				 }
-				 
-				 /**********************************************
-				 Raqua_read_history: load history command from a
-				 specified file. Adapted from gl_loadhistory
-				 for Windows. It can read history files of
-				 Windowds porting.
-				 **********************************************/
-				 void Raqua_read_history(char *file)
-				 {
-					 FILE *fp;
-					 int i,buflen,j;
-					 char buf[1002];
-					 
-					 if (!file || *file==NULL) return;
-					 fp = R_fopen(file, "r");
-					 if (!fp) 
-						 return;
-					 
-					 
-					 for(i = 0;; i++) {
-						 if(!fgets(buf, 1000, fp))
-							 break;
-						 if( (buflen = strlen(buf)) > 1) {
-							 if(buf[buflen-1]==0x0A) {
-								 if(buf[buflen-2]==0x0D)
-									 buf[buflen-1]='\0';
-								 else {
-									 buf[buflen]='\0';
-									 buf[buflen-1]=0x0D;
-								 }
-							 }
-							 maintain_cmd_History(buf);
-						 }
-					 }
-					 fclose(fp);
-				 }
-				 
-				 
-				 
-				 void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos){
-					 
-					 if( CurrentPrefs.OverrideRDefaults == 0)
-						 return; /* we don't touch user's parameters */
-					 
-					 *width = CurrentPrefs.DeviceWidth;
-					 *height = CurrentPrefs.DeviceHeight;
-					 *ps = (double)CurrentPrefs.DevicePointSize;
-					 strcpy(family, CurrentPrefs.DeviceFontName);
-					 *antialias = CurrentPrefs.AntiAlias;
-					 *autorefresh = CurrentPrefs.AutoRefresh;   
-					 *quartzpos = CurrentPrefs.QuartzPos; 
-				 }
-				 
-				 
-				 void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
-				 {
-					 unsigned char buf[1024];
-					 char * tmpdir;
-					 if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
-						 saveact = SaveAction;
-					 
-					 if(saveact == SA_SAVEASK) {
-						 if(R_Interactive) {
-							 switch (WantToSave(ConsoleWindow,"Closing R Session","Save workspace image?")) {
-								 case kAlertStdAlertOKButton:
-									 saveact = SA_SAVE;
-									 break;
-								 case kAlertStdAlertOtherButton:
-									 saveact = SA_NOSAVE;
-									 break;
-								 case kAlertStdAlertCancelButton:
-									 jump_to_toplevel();
-									 break;
-									 
-							 }
-						 } else saveact = SaveAction;
-					 }
-					 
-					 switch (saveact) {
-						 case SA_SAVE:
-							 if(runLast) R_dot_Last();
-							 if(R_DirtyImage) R_SaveGlobalEnv();
-								 Raqua_write_history(R_HistoryFile);
-							 break;
-						 case SA_NOSAVE:
-							 if(runLast) R_dot_Last();
-							 break;
-						 case SA_SUICIDE:
-						 default:
-							 break;
-					 }
-					 R_RunExitFinalizers();
-					 
-					 CloseAllHelpWindows();
-					 CloseAllEditWindows();
-					 KillAllDevices();
-					 
-					 PrintWarnings();
-					 CloseRAquaConsole();
-					 if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
-						 snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
-						 R_system((char *)buf);
-					 }
-					 exit(status);
-				 }
-				 
-				 void DestroyHelpWindow(WindowRef window){
-					 TXNObject tmpObj;
-					 
-					 if(window == NULL) return;
-					 
-					 if( GetWindowProperty(window, 'RHLP', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
-						 TXNDeleteObject(tmpObj);
-					 DisposeWindow(window);
-				 }
-				 
-				 void DestroyEditWindow(WindowRef window){
-					 TXNObject tmpObj;
-					 
-					 if(window == NULL) return;
-					 
-					 if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
-						 TXNDeleteObject(tmpObj);
-					 DisposeWindow(window);
-				 }
-				 
-				 void CloseAllHelpWindows(void){
-					 int i;
-					 
-					 for(i=0; i<NumOfHelpWindows; i++){
-						 if(HelpWindowsList[i] != NULL)
-							 DestroyHelpWindow(HelpWindowsList[i]);
-						 HelpWindowsList[i] = NULL;
-					 }
-					 NumOfHelpWindows = 0;     
-				 }
-				 
-				 void CloseAllEditWindows(void){
-					 int 		i;
-					 TXNObject  		tmpObj;
-					 ItemCount		changes, newchanges;
-					 NavUserAction	userAction;
-					 char 		msg[1024], winname[255];
-					 Str255		wintitle;
-					 
-					 for(i=0; i<NumOfEditWindows; i++){
-						 if(EditWindowsList[i] != NULL){
-							 if( GetWindowProperty(EditWindowsList[i], 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
-								 GetWindowProperty(EditWindowsList[i], 'REDT', 'chgs', sizeof(ItemCount), NULL, &changes);
-								 TXNGetActionChangeCount(tmpObj,kTXNAllCountMask,&newchanges);
-								 if( changes != newchanges ){
-									 ShowWindow( EditWindowsList[i] );
-									 GetWTitle( EditWindowsList[i], wintitle );
-									 CopyPascalStringToC(wintitle, winname);
-									 sprintf(msg, "Do you want to save changes for \"%s\"?",winname);
-									 userAction = YesOrNot(NULL, msg,"Save","Don't Save");
-									 if(userAction == kAlertStdAlertOKButton)
-										 SaveWindow(EditWindowsList[i],false);
-								 }
-							 }
-							 DestroyEditWindow(EditWindowsList[i]);
-						 }
-						 EditWindowsList[i] = NULL;
-					 }
-					 NumOfEditWindows = 0;     
-					 
-					 
-				 }
-				 
-				 
-				 void Raqua_ShowMessage(char *msg)
-				 {
-					 AlertStdAlertParamRec	alertParamRec;
-					 short itemHit=0;
-					 Str255	title;
-					 
-					 alertParamRec.movable = false;				/* Make alert movable modal */
-					 alertParamRec.helpButton = false;			/* Is there a help button? */
-					 alertParamRec.filterProc = NULL;			/* event filter */
-					 alertParamRec.defaultText = NULL;			/* Text for button in OK position */
-					 alertParamRec.cancelText = NULL;			/* Text for button in cancel position */
-					 alertParamRec.otherText = NULL;				/* Text for button in left position */
-					 alertParamRec.defaultButton = 1;			/* Which button behaves as the default */
-					 alertParamRec.cancelButton = 0;				/* Which one behaves as cancel (can be 0) */
-					 alertParamRec.position = kWindowAlertPositionParentWindow;	
-					 
-					 SysBeep( 5 );
-					 CopyCStringToPascal(msg,title);
-					 StandardAlert( kAlertStopAlert, title, NULL, &alertParamRec, &itemHit );
-				 }
-				 
-				 
-				 
-				 
-				 void Raqua_Suicide(char *s)
-				 {
-					 char  pp[1024];
-					 
-					 snprintf(pp, 1024, "Fatal error: %s\n", s);
-					 Raqua_ShowMessage(pp);
-					 Raqua_CleanUp(SA_SUICIDE, 2, 0);
-				 }
-				 
-				 
-				 pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon)
-				 {
-					 OSErr		err = 0;
-					 DescType	returnedType;
-					 Size		actualSize;
-					 
-					 
-					 if ((err = AEGetParamPtr(theAppleEvent, keyDirectObject, typeChar, &returnedType,
-											  CMDString, CMDLineSize, &actualSize)) != noErr)
-						 return err;
-					 
-					 /* check for missing parameters   */
-					 
-					 if(actualSize <= CMDLineSize)
-						 CMDString[actualSize] = '\0';	
-					 else
-						 CMDString[CMDLineSize] = '\0';    	/* Terminate the C string    */
-					 
-					 consolecmd(CMDString);
-					 
-					 return noErr;
-				 }
-				 
+char		*Cmd_Hist[maxhist];
+int			g_cur_Cmd, g_start_Cmd, g_end_Cmd;
+Boolean		g_Stop = false;
+Boolean		g_down = true;
+Boolean		g_not_first = false;
+
+/*
+	do_Down_Array:
+	This procedure used to maintain the reponse when you click the down array key. 
+	(about display previous command in console window)                                            
+ */
+void HistBack(void){
+	SInt32 textLength;
+	
+	if (g_start_Cmd != g_end_Cmd) {
+		if (!g_down){
+			g_cur_Cmd--;
+		}
+		g_not_first = true;
+		g_down = true;
+		if (g_start_Cmd == 0){
+			if (g_cur_Cmd < g_start_Cmd){
+				SysBeep(10);
+			}else{
+				textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
+				Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
+				g_cur_Cmd--;
+			}
+		}else{
+			if (g_cur_Cmd == g_end_Cmd){
+				SysBeep(10);
+			}else{
+				if(g_cur_Cmd == -1) g_cur_Cmd = maxhist - 1;
+				textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
+				Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
+				g_cur_Cmd--;
+				if(g_cur_Cmd == -1) g_cur_Cmd = maxhist - 1;
+			}
+		}
+	}
+}
+
+void HistFwd(void)
+{
+	SInt32 textLength;
+	
+	if (g_start_Cmd != g_end_Cmd) {
+		if ((g_down) && (g_not_first)){
+			g_cur_Cmd++;
+			g_down = false;
+		}
+		if (g_start_Cmd == 0){
+			if (g_cur_Cmd == (g_end_Cmd-1))
+				SysBeep(10);
+			else{
+				g_cur_Cmd ++;
+				textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
+				Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
+			}
+		}else{
+			if ((g_cur_Cmd == (maxhist -1)) && (g_end_Cmd ==0)){
+				SysBeep(10);
+			}else
+				if ((g_cur_Cmd == g_end_Cmd) || (g_cur_Cmd == (g_end_Cmd -1))){
+					SysBeep(10);
+				}else{
+					g_cur_Cmd ++;
+					if (g_cur_Cmd == maxhist) g_cur_Cmd = 0;
+					textLength = strlen(Cmd_Hist[g_cur_Cmd]) - 1;
+					Aqua_RnWrite(Cmd_Hist[g_cur_Cmd] , textLength);
+				}
+		}
+	}
+}
+
+
+void maintain_cmd_History(char *buf)
+{
+	char *temp;
+	int numberOfChar;
+	
+	g_Stop = false;
+	numberOfChar = strlen(buf);
+	temp = malloc((numberOfChar + 1) * sizeof(char));
+	strcpy(temp, (const char *)buf);
+	Cmd_Hist[g_end_Cmd] = temp;
+	g_not_first = false;
+	g_cur_Cmd = g_end_Cmd;
+	g_end_Cmd++;
+	if (g_end_Cmd <= g_start_Cmd){
+		g_start_Cmd++;
+	}
+	if (g_start_Cmd == maxhist){
+		g_start_Cmd = 0;
+	}
+	if (g_end_Cmd == maxhist){
+		g_end_Cmd = 0;
+		g_start_Cmd = 1;
+	}
+	
+}
+
+
+
+SEXP Raqua_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+	SEXP sfile;
+	
+	checkArity(op, args);
+	sfile = CAR(args);
+	if (!isString(sfile) || LENGTH(sfile) < 1)
+		errorcall(call, "invalid file argument");
+	Raqua_write_history(CHAR(STRING_ELT(sfile, 0)));
+	return R_NilValue;
+}
+
+SEXP Raqua_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+	SEXP sfile;
+	
+	checkArity(op, args);
+	sfile = CAR(args);
+	if (!isString(sfile) || LENGTH(sfile) < 1)
+		errorcall(call, "invalid file argument");
+	Raqua_read_history(CHAR(STRING_ELT(sfile, 0)));
+	return R_NilValue;
+}
+
+void Raqua_write_history(char *file)
+{
+	FILE *fp;
+	int i;
+	char hist_buff[1000];
+	
+	if (!file || !g_end_Cmd) return;
+	
+	fp = R_fopen(file, "w");
+	if (!fp) {
+		char msg[256];
+		sprintf(msg, "Unable to open history file \"%s\" for writing", file);
+		warning(msg);
+		return;
+	}
+	
+	if (g_start_Cmd < g_end_Cmd)
+		for(i = g_start_Cmd ; i < g_end_Cmd ; i++){
+			fprintf(fp, "%s\n", Cmd_Hist[i]);
+		}
+			else
+				for(i = 0; i < maxhist; i++)
+					fprintf(fp, "%s\n", Cmd_Hist[i]);
+	fclose(fp);
+}
+
+/**********************************************
+Raqua_read_history: load history command from a
+specified file. Adapted from gl_loadhistory
+for Windows. It can read history files of
+Windowds porting.
+**********************************************/
+void Raqua_read_history(char *file)
+{
+	FILE *fp;
+	int i,buflen,j;
+	char buf[1002];
+	
+	if (!file || *file==NULL) return;
+	fp = R_fopen(file, "r");
+	if (!fp) 
+		return;
+	
+	
+	for(i = 0;; i++) {
+		if(!fgets(buf, 1000, fp))
+			break;
+		if( (buflen = strlen(buf)) > 1) {
+			if(buf[buflen-1]==0x0A) {
+				if(buf[buflen-2]==0x0D)
+					buf[buflen-1]='\0';
+				else {
+					buf[buflen]='\0';
+					buf[buflen-1]=0x0D;
+				}
+			}
+			maintain_cmd_History(buf);
+		}
+	}
+	fclose(fp);
+}
+
+
+
+void Raqua_GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh, int *quartzpos){
+	
+	if( CurrentPrefs.OverrideRDefaults == 0)
+		return; /* we don't touch user's parameters */
+	
+	*width = CurrentPrefs.DeviceWidth;
+	*height = CurrentPrefs.DeviceHeight;
+	*ps = (double)CurrentPrefs.DevicePointSize;
+	strcpy(family, CurrentPrefs.DeviceFontName);
+	*antialias = CurrentPrefs.AntiAlias;
+	*autorefresh = CurrentPrefs.AutoRefresh;   
+	*quartzpos = CurrentPrefs.QuartzPos; 
+}
+
+
+void Raqua_CleanUp(SA_TYPE saveact, int status, int runLast)
+{
+	unsigned char buf[1024];
+	char * tmpdir;
+	if(saveact == SA_DEFAULT) /* The normal case apart from R_Suicide */
+		saveact = SaveAction;
+	
+	if(saveact == SA_SAVEASK) {
+		if(R_Interactive) {
+			switch (WantToSave(ConsoleWindow,"Closing R Session","Save workspace image?")) {
+				case kAlertStdAlertOKButton:
+					saveact = SA_SAVE;
+					break;
+				case kAlertStdAlertOtherButton:
+					saveact = SA_NOSAVE;
+					break;
+				case kAlertStdAlertCancelButton:
+					jump_to_toplevel();
+					break;
+					
+			}
+		} else saveact = SaveAction;
+	}
+	
+	switch (saveact) {
+		case SA_SAVE:
+			if(runLast) R_dot_Last();
+			if(R_DirtyImage) R_SaveGlobalEnv();
+				Raqua_write_history(R_HistoryFile);
+			break;
+		case SA_NOSAVE:
+			if(runLast) R_dot_Last();
+			break;
+		case SA_SUICIDE:
+		default:
+			break;
+	}
+	R_RunExitFinalizers();
+	
+	CloseAllHelpWindows();
+	CloseAllEditWindows();
+	KillAllDevices();
+	
+	PrintWarnings();
+	CloseRAquaConsole();
+	if((tmpdir = getenv("R_SESSION_TMPDIR"))) {
+		snprintf((char *)buf, 1024, "rm -rf %s", tmpdir);
+		R_system((char *)buf);
+	}
+	exit(status);
+}
+
+void DestroyHelpWindow(WindowRef window){
+	TXNObject tmpObj;
+	
+	if(window == NULL) return;
+	
+	if( GetWindowProperty(window, 'RHLP', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+		TXNDeleteObject(tmpObj);
+	DisposeWindow(window);
+}
+
+void DestroyEditWindow(WindowRef window){
+	TXNObject tmpObj;
+	
+	if(window == NULL) return;
+	
+	if( GetWindowProperty(window, 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr)
+		TXNDeleteObject(tmpObj);
+	DisposeWindow(window);
+}
+
+void CloseAllHelpWindows(void){
+	int i;
+	
+	for(i=0; i<NumOfHelpWindows; i++){
+		if(HelpWindowsList[i] != NULL)
+			DestroyHelpWindow(HelpWindowsList[i]);
+		HelpWindowsList[i] = NULL;
+	}
+	NumOfHelpWindows = 0;     
+}
+
+void CloseAllEditWindows(void){
+	int 		i;
+	TXNObject  		tmpObj;
+	ItemCount		changes, newchanges;
+	NavUserAction	userAction;
+	char 		msg[1024], winname[255];
+	Str255		wintitle;
+	
+	for(i=0; i<NumOfEditWindows; i++){
+		if(EditWindowsList[i] != NULL){
+			if( GetWindowProperty(EditWindowsList[i], 'REDT', 'robj', sizeof(TXNObject), NULL, &tmpObj) == noErr){
+				GetWindowProperty(EditWindowsList[i], 'REDT', 'chgs', sizeof(ItemCount), NULL, &changes);
+				TXNGetActionChangeCount(tmpObj,kTXNAllCountMask,&newchanges);
+				if( changes != newchanges ){
+					ShowWindow( EditWindowsList[i] );
+					GetWTitle( EditWindowsList[i], wintitle );
+					CopyPascalStringToC(wintitle, winname);
+					sprintf(msg, "Do you want to save changes for \"%s\"?",winname);
+					userAction = YesOrNot(NULL, msg,"Save","Don't Save");
+					if(userAction == kAlertStdAlertOKButton)
+						SaveWindow(EditWindowsList[i],false);
+				}
+			}
+			DestroyEditWindow(EditWindowsList[i]);
+		}
+		EditWindowsList[i] = NULL;
+	}
+	NumOfEditWindows = 0;     
+	
+	
+}
+
+
+void Raqua_ShowMessage(char *msg)
+{
+	AlertStdAlertParamRec	alertParamRec;
+	short itemHit=0;
+	Str255	title;
+	
+	alertParamRec.movable = false;				/* Make alert movable modal */
+	alertParamRec.helpButton = false;			/* Is there a help button? */
+	alertParamRec.filterProc = NULL;			/* event filter */
+	alertParamRec.defaultText = NULL;			/* Text for button in OK position */
+	alertParamRec.cancelText = NULL;			/* Text for button in cancel position */
+	alertParamRec.otherText = NULL;				/* Text for button in left position */
+	alertParamRec.defaultButton = 1;			/* Which button behaves as the default */
+	alertParamRec.cancelButton = 0;				/* Which one behaves as cancel (can be 0) */
+	alertParamRec.position = kWindowAlertPositionParentWindow;	
+	
+	SysBeep( 5 );
+	CopyCStringToPascal(msg,title);
+	StandardAlert( kAlertStopAlert, title, NULL, &alertParamRec, &itemHit );
+}
+
+
+
+
+void Raqua_Suicide(char *s)
+{
+	char  pp[1024];
+	
+	snprintf(pp, 1024, "Fatal error: %s\n", s);
+	Raqua_ShowMessage(pp);
+	Raqua_CleanUp(SA_SUICIDE, 2, 0);
+}
+
+
+pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply, long handlerRefCon)
+{
+	OSErr		err = 0;
+	DescType	returnedType;
+	Size		actualSize;
+	
+	
+	if ((err = AEGetParamPtr(theAppleEvent, keyDirectObject, typeChar, &returnedType,
+							 CMDString, CMDLineSize, &actualSize)) != noErr)
+		return err;
+	
+	/* check for missing parameters   */
+	
+	if(actualSize <= CMDLineSize)
+		CMDString[actualSize] = '\0';	
+	else
+		CMDString[CMDLineSize] = '\0';    	/* Terminate the C string    */
+	
+	consolecmd(CMDString);
+	
+	return noErr;
+}
+
 OSErr GotRequiredParams( const AppleEvent *ae );
 
 /*  isImageData:
-	returns -1 on error, 0 if the file is RDX2 or RDX1, 
-	1 otherwise.
+returns -1 on error, 0 if the file is RDX2 or RDX1, 
+1 otherwise.
 */	
 int isImageData(char *fname);
 int isImageData(char *fname){
@@ -3763,28 +3758,28 @@ int isImageData(char *fname){
 	
 	char buf[5];
 	if( (fp = R_fopen(R_ExpandFileName(fname), "r")) ){
-			fseek(fp, 0L, SEEK_END);
-			flen = ftell(fp);
-			rewind(fp);
-			if(flen<4) 
-				return(1);
-			fread(buf, 1, 4, fp);
-			buf[4] = '\0';
-			if( (strcmp(buf,"RDX2")==0) || ((strcmp(buf,"RDX1")==0))) return(0);
-			else return(1);
+		fseek(fp, 0L, SEEK_END);
+		flen = ftell(fp);
+		rewind(fp);
+		if(flen<4) 
+			return(1);
+		fread(buf, 1, 4, fp);
+		buf[4] = '\0';
+		if( (strcmp(buf,"RDX2")==0) || ((strcmp(buf,"RDX1")==0))) return(0);
+		else return(1);
 	} else
 		return(-1);
 }
-				 
+
 /* HandleOpenDocument routine :
-   Description :
-   This Event will be generated when you click on a R file icon.
-   This event can only be depatched by the ProcessEvent routine.
-   Thus, even you click on the file icon of R to start R, this event
-   will not be catch until the R_readConsole start.
+Description :
+This Event will be generated when you click on a R file icon.
+This event can only be depatched by the ProcessEvent routine.
+Thus, even you click on the file icon of R to start R, this event
+will not be catch until the R_readConsole start.
 */
 pascal OSErr HandleOpenDocument( const AppleEvent *ae,
-					AppleEvent *reply, SInt32 refCon )
+								 AppleEvent *reply, SInt32 refCon )
 {
 #pragma unused ( reply, refCon )
     AEDescList		docList;
@@ -3806,20 +3801,20 @@ pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 	/* extracts direct parameter from the Apple event */
 	
     if ( ( err = AEGetParamDesc( ae, keyDirectObject, typeAEList, &docList ) ) != noErr )
-	goto cleanup;
-
+		goto cleanup;
+	
     /* perform the recommended check for additional required parameters */
-
+	
     if ( ( err = GotRequiredParams( ae ) ) != noErr )
-	goto cleanup;
-
+		goto cleanup;
+	
     if ( ( err = AEGetNthPtr( &docList, 1, typeFSS, &keyword, &actualType,
-			      &fileSpec, sizeof( fileSpec ), &actualSize ) ) != noErr )
-	goto cleanup;
-
+							  &fileSpec, sizeof( fileSpec ), &actualSize ) ) != noErr )
+		goto cleanup;
+	
     err = FSpGetFInfo(&fileSpec, &fileInfo);
     if (err != noErr) goto cleanup;
-
+	
 	err = FSMakePath(fileSpec.vRefNum, fileSpec.parID, fileSpec.name, buf, 300);  
 	if(isImageData(buf)==0){
 		sprintf(cmd,"load(\"%s\")",buf);
@@ -3830,8 +3825,8 @@ pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 	}
     
 cleanup:
-    return err;
-
+		return err;
+	
 }
 
 OSErr GotRequiredParams( const AppleEvent *ae )
@@ -3841,193 +3836,192 @@ OSErr GotRequiredParams( const AppleEvent *ae )
     OSErr err;
     
     err = AEGetAttributePtr( ae, keyMissedKeywordAttr, typeWildCard, &actualType, nil, 0, &actualSize );
-
+	
     return	( err == errAEDescNotFound ) ? noErr :
-	( err == noErr ) ? errAEParamMissed : err;
-
+		( err == noErr ) ? errAEParamMissed : err;
+	
 }
 
 
-				 void DoNothing(void){
-					 return;
-				 }
-				 void	Raqua_ProcessEvents(void)
-				 {
-					 EventRef theEvent;
-					 EventRecord	outEvent;
-					 EventTargetRef theTarget = GetEventDispatcherTarget();
-					 bool	conv = false;
-					 
-					 /*    if(WeHaveConsole)
-						 if(otherPolledEventHandler)
-						 otherPolledEventHandler();
-					 */
-					 
-					 
-					 
-					 if(CheckEventQueueForUserCancel())
-						 onintr();
-					 
-					 if (cocoaProcessEvents) cocoaProcessEvents(0);
-					 
-					 if(ReceiveNextEvent(0, NULL, kEventDurationForever  ,true,&theEvent)== noErr){
-						 conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
-						 
-						 if(conv && (outEvent.what == kHighLevelEvent))
-							 AEProcessAppleEvent(&outEvent);
-						 
-						 SendEventToEventTarget (theEvent, theTarget);
-						 ReleaseEvent(theEvent);
-						 
-					 } 
-				 }
-				 
-				 static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData )
-				 {
-					 int len;
-					 char *tmpbuf;
-					 
-					 if(CurrentPrefs.GrabStdout){
-						 if( RAquaStdoutBack != NULL){
-							 fseek(RAquaStdoutBack, 0L, SEEK_END);
-							 len = ftell(RAquaStdoutBack);
-							 if(len>1){
-								 rewind(RAquaStdoutBack);
-								 if( (tmpbuf = malloc(len+2)) != NULL){
-									 fread(tmpbuf+1, 1, len, RAquaStdoutBack);
-									 tmpbuf[0] = '\n';
-									 tmpbuf[len+1] = '\0';
-									 Raqua_WriteConsole(tmpbuf,len+1);
-									 Aqua_FlushBuffer();
-									 free(tmpbuf);
-									 CloseStdoutPipe();
-									 OpenStdoutPipe();
-									 SendReturnKey();
-								 }
-							 }
-						 }
-					 }
-					 
-					 if(CurrentPrefs.GrabStderr){
-						 if( RAquaStderrBack != NULL){
-							 fseek(RAquaStderrBack, 0L, SEEK_END);
-							 len = ftell(RAquaStderrBack);
-							 if(len>1){
-								 rewind(RAquaStderrBack);
-								 if( (tmpbuf = malloc(len+2)) != NULL){
-									 fread(tmpbuf+1, 1, len, RAquaStderrBack);
-									 tmpbuf[0] = '\n';
-									 tmpbuf[len+1] = '\0';
-									 Raqua_WriteConsole(tmpbuf,len+1);
-									 Aqua_FlushBuffer();
-									 free(tmpbuf);
-									 CloseStderrPipe();
-									 OpenStderrPipe();
-									 SendReturnKey();
-								 }
-							 }
-						 }
-					 }
-				 }   
-				 
-				 
-				 /* Code for accessing external cocoa bundle */
-				 
-				 enum
-				 {
-					 kOpenCocoaWindow = 'COCO'
-				 };
-				 
-				 static int userInput(const char *text) {
-					 strncpy(inputBuffer,text,inputBufferSize-2);
-					 InputFinished=true;
-					 return 0;
-				 }
-				 
-				 static void
-				 loadPrivateFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr) 
-				 {
-					 CFURLRef baseURL = NULL;
-					 CFURLRef CocoabundleURL = NULL;
-					 OSStatus (*funcPtr)(void *);
-					 
-					 baseURL = CFBundleCopyPrivateFrameworksURL(RBundle);
-					 
-					 if (baseURL == NULL){
-						 fprintf(stderr,"\n CantCopyURL");
-						 goto CantCopyURL;
-					 }
-					 
-					 CocoabundleURL = CFURLCreateCopyAppendingPathComponent(kCFAllocatorSystemDefault, baseURL, CFSTR("RCocoaBundle.bundle"), false);
-					 if(CocoabundleURL == NULL){
-						 fprintf(stderr,"\n CantCreateCocoaBundleURL");
-						 goto CantCreateBundleURL;
-					 }
-					 *bundlePtr = CFBundleCreate(NULL, CocoabundleURL);
-					 if (*bundlePtr) {
-						 /* set pointers to all known Cocoa functions. unsupported functions will be 0 */
-						 cocoaInitializeBundle = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("initializeBundle"));
-						 cocoaSelectWindow = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("selectWindow"));
-						 cocoaWriteConsole = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeConsole"));
-						 cocoaWritePrompt = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writePrompt"));
-						 cocoaWriteUserInput = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeUserInput"));
-						 cocoaRisBusy = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("RisBusy"));
-						 cocoaSetupMenu = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("setupMenu"));
-						 cocoaProcessEvents = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("processEvents"));
-						 
-						 if (!cocoaInitializeBundle)
-							 fprintf(stderr, "Cocoa bundle found, but initializeBundle function is not present. The bundle won't be used.\n");
-						 else
-							 cocoaFeatures=(*cocoaInitializeBundle)(userInput);
-						 
-						 /* we perform sanity checks for each feature set to prevent segfaults due to undefined functions */
-						 if (((cocoaFeatures&cocoa_basic)>0) && ((!cocoaWriteConsole)||(!cocoaWritePrompt))) {
-							 fprintf(stderr, "Cocoa bundle advertizes basic features, but at least one feature was not found! Disabling bundle.\n");
-							 cocoaFeatures=0;
-						 }
-						 if (((cocoaFeatures&cocoa_loop)>0) && ((!cocoaProcessEvents))) {
-							 fprintf(stderr, "Cocoa bundle advertizes event loop features, but at least one feature was not found! Disabling bundle.\n");
-							 cocoaFeatures=0;
-						 }
-					 }
-					 
-					 if(CocoabundleURL){
-						 CFRelease(CocoabundleURL);
-						 CocoabundleURL = NULL;
-					 }
+void DoNothing(void){
+	return;
+}
+void	Raqua_ProcessEvents(void)
+{
+	EventRef theEvent;
+	EventRecord	outEvent;
+	EventTargetRef theTarget = GetEventDispatcherTarget();
+	bool	conv = false;
+	
+	/*    if(WeHaveConsole)
+		if(otherPolledEventHandler)
+		otherPolledEventHandler();
+	*/
+	
+	
+	
+	if(CheckEventQueueForUserCancel())
+		onintr();
+	
+	if (cocoaProcessEvents) cocoaProcessEvents(0);
+	
+	if(ReceiveNextEvent(0, NULL, kEventDurationForever  ,true,&theEvent)== noErr){
+		conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
+		
+		if(conv && (outEvent.what == kHighLevelEvent))
+			AEProcessAppleEvent(&outEvent);
+		
+		SendEventToEventTarget (theEvent, theTarget);
+		ReleaseEvent(theEvent);
+		
+	} 
+}
+
+static	pascal	void	ReadStdoutTimer( EventLoopTimerRef inTimer, void *inUserData )
+{
+	int len;
+	char *tmpbuf;
+	
+	if(CurrentPrefs.GrabStdout){
+		if( RAquaStdoutBack != NULL){
+			fseek(RAquaStdoutBack, 0L, SEEK_END);
+			len = ftell(RAquaStdoutBack);
+			if(len>1){
+				rewind(RAquaStdoutBack);
+				if( (tmpbuf = malloc(len+2)) != NULL){
+					fread(tmpbuf+1, 1, len, RAquaStdoutBack);
+					tmpbuf[0] = '\n';
+					tmpbuf[len+1] = '\0';
+					Raqua_WriteConsole(tmpbuf,len+1);
+					Aqua_FlushBuffer();
+					free(tmpbuf);
+					CloseStdoutPipe();
+					OpenStdoutPipe();
+					SendReturnKey();
+				}
+			}
+		}
+	}
+	
+	if(CurrentPrefs.GrabStderr){
+		if( RAquaStderrBack != NULL){
+			fseek(RAquaStderrBack, 0L, SEEK_END);
+			len = ftell(RAquaStderrBack);
+			if(len>1){
+				rewind(RAquaStderrBack);
+				if( (tmpbuf = malloc(len+2)) != NULL){
+					fread(tmpbuf+1, 1, len, RAquaStderrBack);
+					tmpbuf[0] = '\n';
+					tmpbuf[len+1] = '\0';
+					Raqua_WriteConsole(tmpbuf,len+1);
+					Aqua_FlushBuffer();
+					free(tmpbuf);
+					CloseStderrPipe();
+					OpenStderrPipe();
+					SendReturnKey();
+				}
+			}
+		}
+	}
+}   
+
+
+/* Code for accessing external cocoa bundle */
+
+enum
+{
+	kOpenCocoaWindow = 'COCO'
+};
+
+static int userInput(const char *text) {
+	strncpy(inputBuffer,text,inputBufferSize-2);
+	InputFinished=true;
+	return 0;
+}
+
+static void
+loadPrivateFrameworkBundle(CFStringRef framework, CFBundleRef *bundlePtr) 
+{
+	CFURLRef baseURL = NULL;
+	CFURLRef CocoabundleURL = NULL;
+	OSStatus (*funcPtr)(void *);
+	
+	baseURL = CFBundleCopyPrivateFrameworksURL(RBundle);
+	
+	if (baseURL == NULL){
+		fprintf(stderr,"\n CantCopyURL");
+		goto CantCopyURL;
+	}
+	
+	CocoabundleURL = CFURLCreateCopyAppendingPathComponent(kCFAllocatorSystemDefault, baseURL, CFSTR("RCocoaBundle.bundle"), false);
+	if(CocoabundleURL == NULL){
+		fprintf(stderr,"\n CantCreateCocoaBundleURL");
+		goto CantCreateBundleURL;
+	}
+	*bundlePtr = CFBundleCreate(NULL, CocoabundleURL);
+	if (*bundlePtr) {
+		/* set pointers to all known Cocoa functions. unsupported functions will be 0 */
+		cocoaInitializeBundle = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("initializeBundle"));
+		cocoaSelectWindow = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("selectWindow"));
+		cocoaWriteConsole = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeConsole"));
+		cocoaWritePrompt = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writePrompt"));
+		cocoaWriteUserInput = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("writeUserInput"));
+		cocoaRisBusy = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("RisBusy"));
+		cocoaSetupMenu = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("setupMenu"));
+		cocoaProcessEvents = CFBundleGetFunctionPointerForName(*bundlePtr, CFSTR("processEvents"));
+		
+		if (!cocoaInitializeBundle)
+			fprintf(stderr, "Cocoa bundle found, but initializeBundle function is not present. The bundle won't be used.\n");
+		else
+			cocoaFeatures=(*cocoaInitializeBundle)(userInput);
+		
+		/* we perform sanity checks for each feature set to prevent segfaults due to undefined functions */
+		if (((cocoaFeatures&cocoa_basic)>0) && ((!cocoaWriteConsole)||(!cocoaWritePrompt))) {
+			fprintf(stderr, "Cocoa bundle advertizes basic features, but at least one feature was not found! Disabling bundle.\n");
+			cocoaFeatures=0;
+		}
+		if (((cocoaFeatures&cocoa_loop)>0) && ((!cocoaProcessEvents))) {
+			fprintf(stderr, "Cocoa bundle advertizes event loop features, but at least one feature was not found! Disabling bundle.\n");
+			cocoaFeatures=0;
+		}
+	}
+	
+	if(CocoabundleURL){
+		CFRelease(CocoabundleURL);
+		CocoabundleURL = NULL;
+	}
 CantCreateBundleURL:
-						 if(baseURL){
-							 CFRelease(baseURL);
-							 baseURL = NULL;
-						 }
+		if(baseURL){
+			CFRelease(baseURL);
+			baseURL = NULL;
+		}
 CantCopyURL:
 CantFindMainBundle:
-						 return;
-				 }
-				 
-				 
-				 static OSStatus
-				 appCommandHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* userData) {
-					 HICommand command;
-					 OSStatus err = eventNotHandledErr;
-					 
-					 if (GetEventKind(inEvent) == kEventCommandProcess) {
-						 GetEventParameter( inEvent, kEventParamDirectObject, typeHICommand, NULL, sizeof(HICommand), NULL, &command );
-						 switch ( command.commandID ) {
-							 case kOpenCocoaWindow:
-								 fprintf(stderr, "appcommandHandler: kOpenCocoaWindow received\n");
-								 err = noErr;
-								 break;
-							 default:
-								 break;
-						 }
-					 }
-					 return err;
-				 }
-				 
-				 
-				 
+		return;
+}
+
+
+static OSStatus
+appCommandHandler(EventHandlerCallRef inCallRef, EventRef inEvent, void* userData) {
+	HICommand command;
+	OSStatus err = eventNotHandledErr;
+	
+	if (GetEventKind(inEvent) == kEventCommandProcess) {
+		GetEventParameter( inEvent, kEventParamDirectObject, typeHICommand, NULL, sizeof(HICommand), NULL, &command );
+		switch ( command.commandID ) {
+			case kOpenCocoaWindow:
+				fprintf(stderr, "appcommandHandler: kOpenCocoaWindow received\n");
+				err = noErr;
+				break;
+			default:
+				break;
+		}
+	}
+	return err;
+}
+
+
+
 #endif /* HAVE_AQUA */
-				 
+
 #endif /* __AQUA_CONSOLE__ */
-				 

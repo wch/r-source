@@ -686,6 +686,7 @@ static Rboolean	Quartz_Open(NewDevDesc *dd, QuartzDesc *xd, char *dsp,
 	
 	err = CreateNewWindow( kDocumentWindowClass, kWindowStandardHandlerAttribute|kWindowVerticalZoomAttribute | kWindowCollapseBoxAttribute|kWindowResizableAttribute | kWindowCloseBoxAttribute ,
 		& devBounds, & devWindow);
+	SetWindowBounds(devWindow,  kWindowContentRgn, &devBounds); 
 	mainRect = (*GetMainDevice()) -> gdRect;
     switch(xd->QuartzPos){
 		case kQuartzTopRight: /* Top Right */
