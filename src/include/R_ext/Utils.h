@@ -27,7 +27,6 @@
 #include <R_ext/Boolean.h>
 #include <R_ext/Complex.h>
 
-#ifndef R_NO_REMAP
 #define revsort       Rf_revsort
 #define iPsort        Rf_iPsort
 #define rPsort        Rf_rPsort
@@ -39,7 +38,6 @@
 #define StringTrue    Rf_StringTrue
 #define isBlankString Rf_isBlankString
 #define hsv2rgb       Rf_hsv2rgb
-#endif
 
 #ifdef  __cplusplus
 extern "C" {

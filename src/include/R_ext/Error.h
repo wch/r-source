@@ -21,22 +21,23 @@
 #ifndef _R_ERROR_H_
 #define _R_ERROR_H_
 
-#ifndef R_NO_REMAP
-#define error Rf_error
-#define warning Rf_warning
-#endif
-
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
-void	error(const char *, ...);
-void	warning(const char *, ...);
+void	Rf_error(const char *, ...);
+void	Rf_warning(const char *, ...);
 void	WrongArgCount(const char *);
 void	UNIMPLEMENTED(const char *);
 
 #ifdef  __cplusplus
 }
 #endif
+
+#ifndef R_NO_REMAP
+#define error Rf_error
+#define warning Rf_warning
+#endif
+
 
 #endif /* _R_ERROR_H_ */

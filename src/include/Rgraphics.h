@@ -151,7 +151,6 @@ int dummy;
 } DevDesc;
 #endif /* R_GRAPHICS_INTERNAL */
 
-#ifndef R_NO_REMAP
 #define CreateAtVector		Rf_CreateAtVector
 #define curDevice		Rf_curDevice
 #define CurrentDevice		Rf_CurrentDevice
@@ -230,7 +229,6 @@ int dummy;
 #define yDevtoNPC		Rf_yDevtoNPC
 #define yDevtoUsr		Rf_yDevtoUsr
 #define yNPCtoUsr		Rf_yNPCtoUsr
-#endif
 
 
 		/* User Callable Functions */

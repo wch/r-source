@@ -25,6 +25,7 @@
 #define M_PI 3.141592653589793238462643383279502884197169399375
 #endif
 
+#ifndef STRICT_R_HEADERS
 #define PI             M_PI
 #define SINGLE_EPS     FLT_EPSILON
 #define SINGLE_BASE    FLT_RADIX
@@ -34,5 +35,6 @@
 #define DOUBLE_EPS     DBL_EPSILON
 #define DOUBLE_XMAX    DBL_MAX
 #define DOUBLE_XMIN    DBL_MIN
-
 #endif
+
+#endif /* R_EXT_CONSTANTS_H_ */

@@ -324,8 +324,11 @@ C-LEVEL FACILITIES
 	generate FFTab.h and FFDecl.h are no longer used.
 
     o	Entry point Rf_append is no longer in the installed headers
-	(but is still available).
+	(but is still available).  It is apparently unused.
 
+    o	Many conflicts between other headers and R's can be avoided by
+	defining STRICT_R_HEADERS and/or R_NO_REMAP -- see `Writing R
+	Extensions' for details.
 
 BUG FIXES
 
@@ -373,6 +376,10 @@ BUG FIXES
 
     o   Subsetting arrays to a result with 0 dimension(s) failed if
 	the array had dimnames. (PR#2507)
+
+    o   If the call to data.frame() included 0-row arguments, it
+	tried to replicate them to maximum number of rows, and failed
+	if this was 1 or more.
 
 
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999-2002   The R Development Core Team.
+ *  Copyright (C) 1999-2003   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -422,330 +422,171 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
-#ifndef R_NO_REMAP
-#define allocArray		Rf_allocArray
-#define allocList		Rf_allocList
-#define allocMatrix		Rf_allocMatrix
-#define allocSExp		Rf_allocSExp
-#define allocString		Rf_allocString
-#define allocVector		Rf_allocVector
-#define applyClosure		Rf_applyClosure
-#define arraySubscript		Rf_arraySubscript
-#define asChar			Rf_asChar
-#define asComplex		Rf_asComplex
-#define asInteger		Rf_asInteger
-#define asLogical		Rf_asLogical
-#define asReal			Rf_asReal
-#define classgets		Rf_classgets
-#define coerceList		Rf_coerceList
-#define coerceVector		Rf_coerceVector
-#define CoercionWarning		Rf_CoercionWarning
-#define ComplexFromInteger	Rf_ComplexFromInteger
-#define ComplexFromLogical	Rf_ComplexFromLogical
-#define ComplexFromReal		Rf_ComplexFromReal
-#define ComplexFromString	Rf_ComplexFromString
-#define conformable		Rf_conformable
-#define cons			Rf_cons
-#define copyListMatrix		Rf_copyListMatrix
-#define copyMatrix		Rf_copyMatrix
-#define copyMostAttrib		Rf_copyMostAttrib
-#define copyVector		Rf_copyVector
-#define CreateTag		Rf_CreateTag
-#define CustomPrintValue	Rf_CustomPrintValue
-#define defineVar		Rf_defineVar
-#define dimgets			Rf_dimgets
-#define dimnamesgets		Rf_dimnamesgets
-#define DropDims                Rf_DropDims
-#define duplicate		Rf_duplicate
-#define elt			Rf_elt
-#define emptyEnv		Rf_emptyEnv
-#define EnsureString		Rf_EnsureString
-#define eval			Rf_eval
-#define EvalArgs		Rf_EvalArgs
-#define evalList		Rf_evalList
-#define evalListKeepMissing	Rf_evalListKeepMissing
-#define findFun			Rf_findFun
-#define findVar			Rf_findVar
-#define findVarInFrame		Rf_findVarInFrame
-#define findVarInFrame3		Rf_findVarInFrame3
-#define GetArrayDimnames	Rf_GetArrayDimnames
-#define getAttrib		Rf_getAttrib
-#define GetColNames		Rf_GetColNames
-#define GetMatrixDimnames	Rf_GetMatrixDimnames
-#define GetOption		Rf_GetOption
-#define GetOptionDigits		Rf_GetOptionDigits
-#define GetOptionWidth		Rf_GetOptionWidth
-#define GetPar			Rf_GetPar
-#define GetRowNames		Rf_GetRowNames
-#define gsetVar			Rf_gsetVar
-#define inherits		Rf_inherits
-#define install			Rf_install
-#define IntegerFromComplex	Rf_IntegerFromComplex
-#define IntegerFromLogical	Rf_IntegerFromLogical
-#define IntegerFromReal		Rf_IntegerFromReal
-#define IntegerFromString	Rf_IntegerFromString
-#define isArray			Rf_isArray
-#define isComplex		Rf_isComplex
-#define isEnvironment		Rf_isEnvironment
-#define isExpression		Rf_isExpression
-#define isExpressionObject	Rf_isExpressionObject
-#define isFactor		Rf_isFactor
-#define isFrame			Rf_isFrame
-#define isFree			Rf_isFree
-#define isFunction		Rf_isFunction
-#define isInteger		Rf_isInteger
-#define isLanguage		Rf_isLanguage
-#define isList			Rf_isList
-#define isLogical		Rf_isLogical
-#define isMatrix		Rf_isMatrix
-#define isNewList		Rf_isNewList
-#define isNull			Rf_isNull
-#define isNumeric		Rf_isNumeric
-#define isObject		Rf_isObject
-#define isOrdered		Rf_isOrdered
-#define isPairList		Rf_isPairList
-#define isPrimitive		Rf_isPrimitive
-#define isReal			Rf_isReal
-#define isString		Rf_isString
-#define isSymbol		Rf_isSymbol
-#define isTs			Rf_isTs
-#define isUnordered		Rf_isUnordered
-#define isUnsorted		Rf_isUnsorted
-#define isUserBinop		Rf_isUserBinop
-#define isValidString		Rf_isValidString
-#define isValidStringF		Rf_isValidStringF
-#define isVector		Rf_isVector
-#define isVectorAtomic		Rf_isVectorAtomic
-#define isVectorizable		Rf_isVectorizable
-#define isVectorList		Rf_isVectorList
-#define ItemName		Rf_ItemName
-#define lang1			Rf_lang1
-#define lang2			Rf_lang2
-#define lang3			Rf_lang3
-#define lang4			Rf_lang4
-#define lastElt			Rf_lastElt
-#define lcons			Rf_lcons
-#define length(x)		Rf_length(x)
-#define lengthgets		Rf_lengthgets
-#define list1			Rf_list1
-#define list2			Rf_list2
-#define list3			Rf_list3
-#define list4			Rf_list4
-#define listAppend		Rf_listAppend
-#define LogicalFromComplex	Rf_LogicalFromComplex
-#define LogicalFromInteger	Rf_LogicalFromInteger
-#define LogicalFromReal		Rf_LogicalFromReal
-#define LogicalFromString	Rf_LogicalFromString
-#define makeSubscript		Rf_makeSubscript
-#define matchArg		Rf_matchArg
-#define matchArgs		Rf_matchArgs
-#define matchPar		Rf_matchPar
-#define mkChar			Rf_mkChar
-#define mkString		Rf_mkString
-#define namesgets		Rf_namesgets
-#define ncols			Rf_ncols
-#define nlevels			Rf_nlevels
-#define NonNullStringMatch	Rf_NonNullStringMatch
-#define nrows			Rf_nrows
-#define nthcdr			Rf_nthcdr
-#define PairToVectorList	Rf_PairToVectorList
-#define pmatch			Rf_pmatch
-#define psmatch			Rf_psmatch
-#define PrintDefaults		Rf_PrintDefaults
-#define PrintValue		Rf_PrintValue
-#define PrintValueEnv		Rf_PrintValueEnv
-#define PrintValueRec		Rf_PrintValueRec
-#define protect			Rf_protect
-#define RealFromComplex		Rf_RealFromComplex
-#define RealFromInteger		Rf_RealFromInteger
-#define RealFromLogical		Rf_RealFromLogical
-#define RealFromString		Rf_RealFromString
-#define rownamesgets		Rf_rownamesgets
-#define ScalarComplex		Rf_ScalarComplex
-#define ScalarInteger		Rf_ScalarInteger
-#define ScalarLogical		Rf_ScalarLogical
-#define ScalarReal		Rf_ScalarReal
-#define ScalarString		Rf_ScalarString
-#define setAttrib		Rf_setAttrib
-#define setSVector		Rf_setSVector
-#define setVar			Rf_setVar
-#define StringBlank		Rf_StringBlank
-#define StringFromComplex	Rf_StringFromComplex
-#define StringFromInteger	Rf_StringFromInteger
-#define StringFromLogical	Rf_StringFromLogical
-#define StringFromReal		Rf_StringFromReal
-#define substitute		Rf_substitute
-#define unprotect		Rf_unprotect
-#define unprotect_ptr		Rf_unprotect_ptr
-#define VectorToPairList	Rf_VectorToPairList
-#define vectorSubscript         Rf_vectorSubscript
-#endif
-
 /* Type Coercions of all kinds */
 
-SEXP coerceVector(SEXP, SEXPTYPE);
-SEXP coerceList(SEXP, SEXPTYPE);
-void CoercionWarning(int);/* warning code */
-SEXP PairToVectorList(SEXP x);
-SEXP VectorToPairList(SEXP x);
+SEXP Rf_coerceVector(SEXP, SEXPTYPE);
+SEXP Rf_coerceList(SEXP, SEXPTYPE);
+void Rf_CoercionWarning(int);/* warning code */
+SEXP Rf_PairToVectorList(SEXP x);
+SEXP Rf_VectorToPairList(SEXP x);
 
-int LogicalFromInteger(int, int*);
-int LogicalFromReal(double, int*);
-int LogicalFromComplex(Rcomplex, int*);
-int LogicalFromString(SEXP, int*);
-int IntegerFromLogical(int, int*);
-int IntegerFromReal(double, int*);
-int IntegerFromComplex(Rcomplex, int*);
-int IntegerFromString(SEXP, int*);
-double RealFromLogical(int, int*);
-double RealFromInteger(int, int*);
-double RealFromComplex(Rcomplex, int*);
-double RealFromString(SEXP, int*);
-Rcomplex ComplexFromLogical(int, int*);
-Rcomplex ComplexFromInteger(int, int*);
-Rcomplex ComplexFromReal(double, int*);
-Rcomplex ComplexFromString(SEXP, int*);
-SEXP StringFromLogical(int, int*);
-SEXP StringFromInteger(int, int*);
-SEXP StringFromReal(double, int*);
-SEXP StringFromComplex(Rcomplex, int*);
-SEXP EnsureString(SEXP);
+int Rf_LogicalFromInteger(int, int*);
+int Rf_LogicalFromReal(double, int*);
+int Rf_LogicalFromComplex(Rcomplex, int*);
+int Rf_LogicalFromString(SEXP, int*);
+int Rf_IntegerFromLogical(int, int*);
+int Rf_IntegerFromReal(double, int*);
+int Rf_IntegerFromComplex(Rcomplex, int*);
+int Rf_IntegerFromString(SEXP, int*);
+double Rf_RealFromLogical(int, int*);
+double Rf_RealFromInteger(int, int*);
+double Rf_RealFromComplex(Rcomplex, int*);
+double Rf_RealFromString(SEXP, int*);
+Rcomplex Rf_ComplexFromLogical(int, int*);
+Rcomplex Rf_ComplexFromInteger(int, int*);
+Rcomplex Rf_ComplexFromReal(double, int*);
+Rcomplex Rf_ComplexFromString(SEXP, int*);
+SEXP Rf_StringFromLogical(int, int*);
+SEXP Rf_StringFromInteger(int, int*);
+SEXP Rf_StringFromReal(double, int*);
+SEXP Rf_StringFromComplex(Rcomplex, int*);
+SEXP Rf_EnsureString(SEXP);
 
 
 /* Other Internally Used Functions */
 
-SEXP allocArray(SEXPTYPE, SEXP);
-SEXP allocMatrix(SEXPTYPE, int, int);
-SEXP allocSExp(SEXPTYPE);
-SEXP allocString(int);
-SEXP allocVector(SEXPTYPE, int);
-SEXP allocList(int);
-SEXP applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
-SEXP asChar(SEXP);
-Rcomplex asComplex(SEXP);
-int asInteger(SEXP);
-int asLogical(SEXP);
-double asReal(SEXP);
-SEXP arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP), SEXP);
-SEXP classgets(SEXP, SEXP);
-Rboolean conformable(SEXP, SEXP);
-SEXP cons(SEXP, SEXP);
-void copyListMatrix(SEXP, SEXP, Rboolean);
-void copyMatrix(SEXP, SEXP, Rboolean);
-void copyMostAttrib(SEXP, SEXP);
-void copyVector(SEXP, SEXP);
-SEXP CreateTag(SEXP);
-void CustomPrintValue(SEXP,SEXP);
-void defineVar(SEXP, SEXP, SEXP);
-SEXP dimgets(SEXP, SEXP);
-SEXP dimnamesgets(SEXP, SEXP);
-SEXP DropDims(SEXP);
-SEXP duplicate(SEXP);
-SEXP elt(SEXP, int);
-SEXP emptyEnv(void);
-SEXP eval(SEXP, SEXP);
+SEXP Rf_allocArray(SEXPTYPE, SEXP);
+SEXP Rf_allocMatrix(SEXPTYPE, int, int);
+SEXP Rf_allocSExp(SEXPTYPE);
+SEXP Rf_allocString(int);
+SEXP Rf_allocVector(SEXPTYPE, int);
+SEXP Rf_allocList(int);
+SEXP Rf_applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
+SEXP Rf_asChar(SEXP);
+Rcomplex Rf_asComplex(SEXP);
+int Rf_asInteger(SEXP);
+int Rf_asLogical(SEXP);
+double Rf_asReal(SEXP);
+SEXP Rf_arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP), SEXP);
+SEXP Rf_classgets(SEXP, SEXP);
+Rboolean Rf_conformable(SEXP, SEXP);
+SEXP Rf_cons(SEXP, SEXP);
+void Rf_copyListMatrix(SEXP, SEXP, Rboolean);
+void Rf_copyMatrix(SEXP, SEXP, Rboolean);
+void Rf_copyMostAttrib(SEXP, SEXP);
+void Rf_copyVector(SEXP, SEXP);
+SEXP Rf_CreateTag(SEXP);
+void Rf_CustomPrintValue(SEXP,SEXP);
+void Rf_defineVar(SEXP, SEXP, SEXP);
+SEXP Rf_dimgets(SEXP, SEXP);
+SEXP Rf_dimnamesgets(SEXP, SEXP);
+SEXP Rf_DropDims(SEXP);
+SEXP Rf_duplicate(SEXP);
+SEXP Rf_elt(SEXP, int);
+SEXP Rf_emptyEnv(void);
+SEXP Rf_eval(SEXP, SEXP);
 SEXP R_tryEval(SEXP e, SEXP env, int *ErrorOccurred);
-SEXP EvalArgs(SEXP, SEXP, int);
-SEXP evalList(SEXP, SEXP);
-SEXP evalListKeepMissing(SEXP, SEXP);
+SEXP Rf_EvalArgs(SEXP, SEXP, int);
+SEXP Rf_evalList(SEXP, SEXP);
+SEXP Rf_evalListKeepMissing(SEXP, SEXP);
 /* SEXP extendEnv(SEXP, SEXP, SEXP); */
-SEXP findVar(SEXP, SEXP);
-SEXP findVarInFrame(SEXP, SEXP);
-SEXP findVarInFrame3(SEXP, SEXP, Rboolean);
-SEXP findFun(SEXP, SEXP);
-SEXP getAttrib(SEXP, SEXP);
-void GetMatrixDimnames(SEXP, SEXP*, SEXP*, char**, char**);
-SEXP GetArrayDimnames(SEXP);
-SEXP GetColNames(SEXP);
-SEXP GetOption(SEXP, SEXP);
-int GetOptionDigits(SEXP);
-int GetOptionWidth(SEXP);
-SEXP GetPar(char*, SEXP);
-SEXP GetRowNames(SEXP);
-void gsetVar(SEXP, SEXP, SEXP);
-Rboolean inherits(SEXP, char*);
-SEXP install(char const *);
-Rboolean isArray(SEXP);
-Rboolean isComplex(SEXP);
-Rboolean isEnvironment(SEXP);
-Rboolean isExpression(SEXP);
-Rboolean isExpressionObject(SEXP);
-Rboolean isFactor(SEXP);
-Rboolean isFrame(SEXP);
-Rboolean isFree(SEXP);
-Rboolean isFunction(SEXP);
-Rboolean isInteger(SEXP);
-Rboolean isLanguage(SEXP);
-Rboolean isList(SEXP);
-Rboolean isLogical(SEXP);
-Rboolean isMatrix(SEXP);
-Rboolean isNewList(SEXP);
-Rboolean isNull(SEXP);
-Rboolean isNumeric(SEXP);
-Rboolean isObject(SEXP);
-Rboolean isOrdered(SEXP);
-Rboolean isPairList(SEXP);
-Rboolean isPrimitive(SEXP);
-Rboolean isReal(SEXP);
-Rboolean isString(SEXP);
-Rboolean isSymbol(SEXP);
-Rboolean isTs(SEXP);
-Rboolean isUnordered(SEXP);
-Rboolean isUnsorted(SEXP);
-Rboolean isUserBinop(SEXP);
-Rboolean isValidString(SEXP);
-Rboolean isValidStringF(SEXP);
-Rboolean isVector(SEXP);
-Rboolean isVectorizable(SEXP);
-Rboolean isVectorAtomic(SEXP);
-Rboolean isVectorList(SEXP);
-SEXP ItemName(SEXP, int);
-SEXP lang1(SEXP);
-SEXP lang2(SEXP, SEXP);
-SEXP lang3(SEXP, SEXP, SEXP);
-SEXP lang4(SEXP, SEXP, SEXP, SEXP);
-SEXP lastElt(SEXP);
-SEXP lcons(SEXP, SEXP);
-int length(SEXP);
-SEXP lengthgets(SEXP, int);
-SEXP list1(SEXP);
-SEXP list2(SEXP, SEXP);
-SEXP list3(SEXP, SEXP, SEXP);
-SEXP list4(SEXP, SEXP, SEXP, SEXP);
-SEXP listAppend(SEXP, SEXP);
-SEXP makeSubscript(SEXP, SEXP, int *);
-SEXP matchArg(SEXP, SEXP*);
-SEXP matchArgs(SEXP, SEXP);
-SEXP matchPar(char*, SEXP*);
-SEXP mkChar(const char*);
-SEXP mkString(const char*);
-SEXP namesgets(SEXP, SEXP);
-int ncols(SEXP);
-int nrows(SEXP);
-int nlevels(SEXP);
-Rboolean NonNullStringMatch(SEXP, SEXP);
-SEXP nthcdr(SEXP, int);
-Rboolean psmatch(char *, char *, Rboolean);
-Rboolean pmatch(SEXP, SEXP, Rboolean);
-void PrintDefaults(SEXP);
-void PrintValue(SEXP);
-void PrintValueEnv(SEXP, SEXP);
-void PrintValueRec(SEXP, SEXP);
-SEXP protect(SEXP);
-SEXP rownamesgets(SEXP,SEXP);
-SEXP ScalarLogical(int);
-SEXP ScalarInteger(int);
-SEXP ScalarReal(double);
-SEXP ScalarComplex(Rcomplex);
-SEXP ScalarString(SEXP);
-SEXP setAttrib(SEXP, SEXP, SEXP);
-void setSVector(SEXP*, int, SEXP);
-void setVar(SEXP, SEXP, SEXP);
-Rboolean StringBlank(SEXP);
-SEXP substitute(SEXP,SEXP);
-void unprotect(int);
-void unprotect_ptr(SEXP);
-SEXP vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP), SEXP);
+SEXP Rf_findVar(SEXP, SEXP);
+SEXP Rf_findVarInFrame(SEXP, SEXP);
+SEXP Rf_findVarInFrame3(SEXP, SEXP, Rboolean);
+SEXP Rf_findFun(SEXP, SEXP);
+SEXP Rf_getAttrib(SEXP, SEXP);
+void Rf_GetMatrixDimnames(SEXP, SEXP*, SEXP*, char**, char**);
+SEXP Rf_GetArrayDimnames(SEXP);
+SEXP Rf_GetColNames(SEXP);
+SEXP Rf_GetOption(SEXP, SEXP);
+int Rf_GetOptionDigits(SEXP);
+int Rf_GetOptionWidth(SEXP);
+SEXP Rf_GetPar(char*, SEXP);
+SEXP Rf_GetRowNames(SEXP);
+void Rf_gsetVar(SEXP, SEXP, SEXP);
+Rboolean Rf_inherits(SEXP, char*);
+SEXP Rf_install(char const *);
+Rboolean Rf_isArray(SEXP);
+Rboolean Rf_isComplex(SEXP);
+Rboolean Rf_isEnvironment(SEXP);
+Rboolean Rf_isExpression(SEXP);
+Rboolean Rf_isExpressionObject(SEXP);
+Rboolean Rf_isFactor(SEXP);
+Rboolean Rf_isFrame(SEXP);
+Rboolean Rf_isFree(SEXP);
+Rboolean Rf_isFunction(SEXP);
+Rboolean Rf_isInteger(SEXP);
+Rboolean Rf_isLanguage(SEXP);
+Rboolean Rf_isList(SEXP);
+Rboolean Rf_isLogical(SEXP);
+Rboolean Rf_isMatrix(SEXP);
+Rboolean Rf_isNewList(SEXP);
+Rboolean Rf_isNull(SEXP);
+Rboolean Rf_isNumeric(SEXP);
+Rboolean Rf_isObject(SEXP);
+Rboolean Rf_isOrdered(SEXP);
+Rboolean Rf_isPairList(SEXP);
+Rboolean Rf_isPrimitive(SEXP);
+Rboolean Rf_isReal(SEXP);
+Rboolean Rf_isString(SEXP);
+Rboolean Rf_isSymbol(SEXP);
+Rboolean Rf_isTs(SEXP);
+Rboolean Rf_isUnordered(SEXP);
+Rboolean Rf_isUnsorted(SEXP);
+Rboolean Rf_isUserBinop(SEXP);
+Rboolean Rf_isValidString(SEXP);
+Rboolean Rf_isValidStringF(SEXP);
+Rboolean Rf_isVector(SEXP);
+Rboolean Rf_isVectorizable(SEXP);
+Rboolean Rf_isVectorAtomic(SEXP);
+Rboolean Rf_isVectorList(SEXP);
+SEXP Rf_ItemName(SEXP, int);
+SEXP Rf_lang1(SEXP);
+SEXP Rf_lang2(SEXP, SEXP);
+SEXP Rf_lang3(SEXP, SEXP, SEXP);
+SEXP Rf_lang4(SEXP, SEXP, SEXP, SEXP);
+SEXP Rf_lastElt(SEXP);
+SEXP Rf_lcons(SEXP, SEXP);
+int Rf_length(SEXP);
+SEXP Rf_lengthgets(SEXP, int);
+SEXP Rf_list1(SEXP);
+SEXP Rf_list2(SEXP, SEXP);
+SEXP Rf_list3(SEXP, SEXP, SEXP);
+SEXP Rf_list4(SEXP, SEXP, SEXP, SEXP);
+SEXP Rf_listAppend(SEXP, SEXP);
+SEXP Rf_makeSubscript(SEXP, SEXP, int *);
+SEXP Rf_matchArg(SEXP, SEXP*);
+SEXP Rf_matchArgs(SEXP, SEXP);
+SEXP Rf_matchPar(char*, SEXP*);
+SEXP Rf_mkChar(const char*);
+SEXP Rf_mkString(const char*);
+SEXP Rf_namesgets(SEXP, SEXP);
+int Rf_ncols(SEXP);
+int Rf_nrows(SEXP);
+int Rf_nlevels(SEXP);
+Rboolean Rf_NonNullStringMatch(SEXP, SEXP);
+SEXP Rf_nthcdr(SEXP, int);
+Rboolean Rf_psmatch(char *, char *, Rboolean);
+Rboolean Rf_pmatch(SEXP, SEXP, Rboolean);
+void Rf_PrintDefaults(SEXP);
+void Rf_PrintValue(SEXP);
+void Rf_PrintValueEnv(SEXP, SEXP);
+void Rf_PrintValueRec(SEXP, SEXP);
+SEXP Rf_protect(SEXP);
+SEXP Rf_rownamesgets(SEXP,SEXP);
+SEXP Rf_ScalarLogical(int);
+SEXP Rf_ScalarInteger(int);
+SEXP Rf_ScalarReal(double);
+SEXP Rf_ScalarComplex(Rcomplex);
+SEXP Rf_ScalarString(SEXP);
+SEXP Rf_setAttrib(SEXP, SEXP, SEXP);
+void Rf_setSVector(SEXP*, int, SEXP);
+void Rf_setVar(SEXP, SEXP, SEXP);
+Rboolean Rf_StringBlank(SEXP);
+SEXP Rf_substitute(SEXP,SEXP);
+void Rf_unprotect(int);
+void Rf_unprotect_ptr(SEXP);
+SEXP Rf_vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP), SEXP);
 
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
@@ -753,8 +594,8 @@ SEXP R_subassign3_dflt(SEXP, SEXP, SEXP, SEXP);
 SEXP R_subset3_dflt(SEXP, SEXP);
 
 				/* return(.) NOT reached : for -Wall */
-#define error_return(msg)	{ error(msg);		return R_NilValue; }
-#define errorcall_return(cl,msg){ errorcall(cl, msg);	return R_NilValue; }
+#define error_return(msg)	{ Rf_error(msg);	   return R_NilValue; }
+#define errorcall_return(cl,msg){ Rf_errorcall(cl, msg);   return R_NilValue; }
 
 #ifdef __MAIN__
 #undef extern
@@ -1006,5 +847,164 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value);
 /* class definition, new objects */
 SEXP R_do_MAKE_CLASS(char *what);
 SEXP R_do_new_object(SEXP class_def);
+
+#ifndef R_NO_REMAP
+#define allocArray		Rf_allocArray
+#define allocList		Rf_allocList
+#define allocMatrix		Rf_allocMatrix
+#define allocSExp		Rf_allocSExp
+#define allocString		Rf_allocString
+#define allocVector		Rf_allocVector
+#define applyClosure		Rf_applyClosure
+#define arraySubscript		Rf_arraySubscript
+#define asChar			Rf_asChar
+#define asComplex		Rf_asComplex
+#define asInteger		Rf_asInteger
+#define asLogical		Rf_asLogical
+#define asReal			Rf_asReal
+#define classgets		Rf_classgets
+#define coerceList		Rf_coerceList
+#define coerceVector		Rf_coerceVector
+#define CoercionWarning		Rf_CoercionWarning
+#define ComplexFromInteger	Rf_ComplexFromInteger
+#define ComplexFromLogical	Rf_ComplexFromLogical
+#define ComplexFromReal		Rf_ComplexFromReal
+#define ComplexFromString	Rf_ComplexFromString
+#define conformable		Rf_conformable
+#define cons			Rf_cons
+#define copyListMatrix		Rf_copyListMatrix
+#define copyMatrix		Rf_copyMatrix
+#define copyMostAttrib		Rf_copyMostAttrib
+#define copyVector		Rf_copyVector
+#define CreateTag		Rf_CreateTag
+#define CustomPrintValue	Rf_CustomPrintValue
+#define defineVar		Rf_defineVar
+#define dimgets			Rf_dimgets
+#define dimnamesgets		Rf_dimnamesgets
+#define DropDims                Rf_DropDims
+#define duplicate		Rf_duplicate
+#define elt			Rf_elt
+#define emptyEnv		Rf_emptyEnv
+#define EnsureString		Rf_EnsureString
+#define eval			Rf_eval
+#define EvalArgs		Rf_EvalArgs
+#define evalList		Rf_evalList
+#define evalListKeepMissing	Rf_evalListKeepMissing
+#define findFun			Rf_findFun
+#define findVar			Rf_findVar
+#define findVarInFrame		Rf_findVarInFrame
+#define findVarInFrame3		Rf_findVarInFrame3
+#define GetArrayDimnames	Rf_GetArrayDimnames
+#define getAttrib		Rf_getAttrib
+#define GetColNames		Rf_GetColNames
+#define GetMatrixDimnames	Rf_GetMatrixDimnames
+#define GetOption		Rf_GetOption
+#define GetOptionDigits		Rf_GetOptionDigits
+#define GetOptionWidth		Rf_GetOptionWidth
+#define GetPar			Rf_GetPar
+#define GetRowNames		Rf_GetRowNames
+#define gsetVar			Rf_gsetVar
+#define inherits		Rf_inherits
+#define install			Rf_install
+#define IntegerFromComplex	Rf_IntegerFromComplex
+#define IntegerFromLogical	Rf_IntegerFromLogical
+#define IntegerFromReal		Rf_IntegerFromReal
+#define IntegerFromString	Rf_IntegerFromString
+#define isArray			Rf_isArray
+#define isComplex		Rf_isComplex
+#define isEnvironment		Rf_isEnvironment
+#define isExpression		Rf_isExpression
+#define isExpressionObject	Rf_isExpressionObject
+#define isFactor		Rf_isFactor
+#define isFrame			Rf_isFrame
+#define isFree			Rf_isFree
+#define isFunction		Rf_isFunction
+#define isInteger		Rf_isInteger
+#define isLanguage		Rf_isLanguage
+#define isList			Rf_isList
+#define isLogical		Rf_isLogical
+#define isMatrix		Rf_isMatrix
+#define isNewList		Rf_isNewList
+#define isNull			Rf_isNull
+#define isNumeric		Rf_isNumeric
+#define isObject		Rf_isObject
+#define isOrdered		Rf_isOrdered
+#define isPairList		Rf_isPairList
+#define isPrimitive		Rf_isPrimitive
+#define isReal			Rf_isReal
+#define isString		Rf_isString
+#define isSymbol		Rf_isSymbol
+#define isTs			Rf_isTs
+#define isUnordered		Rf_isUnordered
+#define isUnsorted		Rf_isUnsorted
+#define isUserBinop		Rf_isUserBinop
+#define isValidString		Rf_isValidString
+#define isValidStringF		Rf_isValidStringF
+#define isVector		Rf_isVector
+#define isVectorAtomic		Rf_isVectorAtomic
+#define isVectorizable		Rf_isVectorizable
+#define isVectorList		Rf_isVectorList
+#define ItemName		Rf_ItemName
+#define lang1			Rf_lang1
+#define lang2			Rf_lang2
+#define lang3			Rf_lang3
+#define lang4			Rf_lang4
+#define lastElt			Rf_lastElt
+#define lcons			Rf_lcons
+#define length(x)		Rf_length(x)
+#define lengthgets		Rf_lengthgets
+#define list1			Rf_list1
+#define list2			Rf_list2
+#define list3			Rf_list3
+#define list4			Rf_list4
+#define listAppend		Rf_listAppend
+#define LogicalFromComplex	Rf_LogicalFromComplex
+#define LogicalFromInteger	Rf_LogicalFromInteger
+#define LogicalFromReal		Rf_LogicalFromReal
+#define LogicalFromString	Rf_LogicalFromString
+#define makeSubscript		Rf_makeSubscript
+#define matchArg		Rf_matchArg
+#define matchArgs		Rf_matchArgs
+#define matchPar		Rf_matchPar
+#define mkChar			Rf_mkChar
+#define mkString		Rf_mkString
+#define namesgets		Rf_namesgets
+#define ncols			Rf_ncols
+#define nlevels			Rf_nlevels
+#define NonNullStringMatch	Rf_NonNullStringMatch
+#define nrows			Rf_nrows
+#define nthcdr			Rf_nthcdr
+#define PairToVectorList	Rf_PairToVectorList
+#define pmatch			Rf_pmatch
+#define psmatch			Rf_psmatch
+#define PrintDefaults		Rf_PrintDefaults
+#define PrintValue		Rf_PrintValue
+#define PrintValueEnv		Rf_PrintValueEnv
+#define PrintValueRec		Rf_PrintValueRec
+#define protect			Rf_protect
+#define RealFromComplex		Rf_RealFromComplex
+#define RealFromInteger		Rf_RealFromInteger
+#define RealFromLogical		Rf_RealFromLogical
+#define RealFromString		Rf_RealFromString
+#define rownamesgets		Rf_rownamesgets
+#define ScalarComplex		Rf_ScalarComplex
+#define ScalarInteger		Rf_ScalarInteger
+#define ScalarLogical		Rf_ScalarLogical
+#define ScalarReal		Rf_ScalarReal
+#define ScalarString		Rf_ScalarString
+#define setAttrib		Rf_setAttrib
+#define setSVector		Rf_setSVector
+#define setVar			Rf_setVar
+#define StringBlank		Rf_StringBlank
+#define StringFromComplex	Rf_StringFromComplex
+#define StringFromInteger	Rf_StringFromInteger
+#define StringFromLogical	Rf_StringFromLogical
+#define StringFromReal		Rf_StringFromReal
+#define substitute		Rf_substitute
+#define unprotect		Rf_unprotect
+#define unprotect_ptr		Rf_unprotect_ptr
+#define VectorToPairList	Rf_VectorToPairList
+#define vectorSubscript         Rf_vectorSubscript
+#endif
 
 #endif /* _R_INTERNALS_H_ */

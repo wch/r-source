@@ -29,7 +29,6 @@
 #include <R_ext/Complex.h>
 #include <R_ext/Print.h>
 
-#ifndef R_NO_REMAP
 #define formatLogical      Rf_formatLogical
 #define formatInteger      Rf_formatInteger
 #define formatReal         Rf_formatReal
@@ -43,7 +42,6 @@
 #define printIntegerVector Rf_printIntegerVector
 #define printRealVector    Rf_printRealVector
 #define printComplexVector Rf_printComplexVector
-#endif
 
 #define Rprt_adj_right 1
 #define Rprt_adj_left  0

@@ -24,7 +24,6 @@
 #include <R_ext/PrtUtil.h>
 #include "Defn.h"
 
-#ifndef R_NO_REMAP
 #define formatFactor        Rf_formatFactor
 #define formatString        Rf_formatString
 #define EncodeFactor        Rf_EncodeFactor
@@ -33,7 +32,6 @@
 #define printMatrix         Rf_printMatrix
 #define printNamedVector    Rf_printNamedVector
 #define printVector         Rf_printVector
-#endif
 
 typedef struct {
     int width;

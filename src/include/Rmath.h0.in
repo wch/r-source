@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998-2001  The R Development Core Team
+ *  Copyright (C) 1998-2003  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,10 +29,6 @@
 
 /*-- Mathlib as part of R --  define this for standalone : */
 /* #undef MATHLIB_STANDALONE */
-
-#ifdef MATHLIB_STANDALONE
-# define R_NO_REMAP 1
-#endif
 
 #ifndef Macintosh
 #ifndef HAVE_LOG1P
@@ -183,7 +179,7 @@
 
 
 
-#ifndef R_NO_REMAP
+#ifndef MATHLIB_STANDALONE
 #define bessel_i	Rf_bessel_i
 #define bessel_j	Rf_bessel_j
 #define bessel_k	Rf_bessel_k

@@ -540,7 +540,6 @@ extern Rboolean R_LoadDotFirst		INI_as(TRUE);
 
 /*--- FUNCTIONS ------------------------------------------------------ */
 
-#ifndef R_NO_REMAP
 # define begincontext		Rf_begincontext
 # define checkArity		Rf_checkArity
 # define CheckFormals		Rf_CheckFormals
@@ -626,7 +625,6 @@ extern Rboolean R_LoadDotFirst		INI_as(TRUE);
 # define yyparse		Rf_yyparse
 # define yyprompt		Rf_yyprompt
 # define yywrap			Rf_yywrap
-#endif /* not R_NO_REMAP */
 
 /* Platform Dependent Gui Hooks */
 

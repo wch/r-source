@@ -31,6 +31,8 @@ extern "C" {
 
 #include <R_ext/Error.h>	/* for error and warning */
 
+#ifndef STRICT_R_HEADERS
+
 #define R_PROBLEM_BUFSIZE	4096
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
 #define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];sprintf(R_problem_buf,
@@ -41,6 +43,8 @@ extern "C" {
 #define NULL_ENTRY		/**/
 #define WARN			WARNING(NULL)
 
+#endif
+
 /* S Like Memory Management */
 
 extern void *R_chk_calloc(size_t, size_t);
@@ -50,7 +54,10 @@ extern void R_chk_free(void *);
 #define Calloc(n, t)   (t *) R_chk_calloc( (size_t) (n), sizeof(t) )
 #define Realloc(p,n,t) (t *) R_chk_realloc( (void *)(p), (size_t)((n) * sizeof(t)) )
 /* S-PLUS 3.x but not 5.x NULLs the pointer in the following */
+#ifndef STRICT_R_HEADERS
 #define Free(p)        (R_chk_free( (void *)(p) ), (p) = NULL)
+#endif
+#define R_Free(p)      (R_chk_free( (void *)(p) ), (p) = NULL)
 
 #define Memcpy(p,q,n)  memcpy( p, q, (size_t)( (n) * sizeof(*p) ) )
 
