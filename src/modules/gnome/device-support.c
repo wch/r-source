@@ -91,10 +91,11 @@ void SaveAsPostscript(NewDevDesc *dd, char *fn)
 		     fn, paper, family, afmpaths, encoding, bg, fg,
 		     fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd), 
 				     GE_INCHES, gdd),
-		     fromDeviceHeight(toDeviceHeight(1.0, GE_NDC, gdd), 
+		     fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd), 
 				      GE_INCHES, gdd),
 		     (double)0, ((gnomeDesc*) dd->deviceSpecific)->fontsize,
 		     0, 1, 0, command))
     /* horizontal=F, onefile=F, pagecentre=T, print.it=F */
     PrivateCopyDevice(dd, ndev, "postscript");
 }
+
