@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-14
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-16
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -505,9 +505,12 @@ Mandrake 9.1/9.2/10.0 i386 packages by Michele Alzetta, Red Hat
 8.x/9/Fedora1/Fedora2 i386 and Fedora1 x86_64 packages by Martyn Plummer
 and James Henstridge, respectively, SuSE 7.3/8.0/8.1/8.2 i386 and
 9.0/9.1 i586 packages by Detlef Steuer, and VineLinux 2.6 i386 packages
-by Susunu Tanimura.  Debian packages, maintained by Dirk Eddelbuettel,
-have long been part of the Debian distribution, and can be accessed
-through APT, the Debian package maintenance tool.
+by Susunu Tanimura.
+
+Debian packages, maintained by Dirk Eddelbuettel, have long been part of
+the Debian distribution, and can be accessed through APT, the Debian
+package maintenance tool.  Use e.g.@:  @command{apt-get} to install the
+packages @code{r-base-dev} and @code{r-recommended}.
 
 @c Simply add the line
 
@@ -2413,6 +2416,8 @@ hierarchical clustering and classification and regression trees.
 @item mathgraph
 Tools for constructing and manipulating objects from a class of directed
 and undirected graphs.
+@item matlab
+Emulate MATLAB code using R.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
@@ -2724,6 +2729,9 @@ regression with high breakdown point.
 @item rsprng
 Provides interface to SPRNG (Scalable Parallel Random Number Generators)
 APIs, and examples and documentation for its use.
+@item rwt
+Rice Wavelet Toolbox wrapper, providing a set of functions for
+performing digital signal processing.
 @item sampfling
 Implements a modified version of the Sampford sampling algorithm.  Given
 a quantity assigned to each unit in the population, samples are drawn
