@@ -302,14 +302,32 @@ local({
     eval(substitute(function() {out}, list(out=out)), envir=NULL)
 })
 
-### ** .is_ascii
+### ** .is_ASCII
 
-.is_ascii <-
+.is_ASCII <-
 function(x)
 {
     ## Determine whether the strings in a character vector are ASCII or
     ## not.
-    sapply(x, function(txt) all(charToRaw(txt) <= as.raw("0x7f")))
+    as.logical(sapply(as.character(x),
+                      function(txt)
+                      all(charToRaw(txt) <= as.raw("0x7f"))))
+}
+
+### ** .is_ISO_8859
+
+.is_ISO_8859 <-
+function(x)
+{
+    ## Determine whether the strings in a character vector could be in
+    ## some ISO 8859 character set or not.
+    raw_ub <- charToRaw("\x7f")
+    raw_lb <- charToRaw("\xa0")
+    as.logical(sapply(as.character(x),
+                      function(txt) {
+                          raw <- charToRaw(txt)
+                          all(raw <= raw_ub | raw >= raw_lb)
+                      }))
 }
 
 ### ** .is_primitive
