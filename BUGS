@@ -175,26 +175,34 @@ none
 
 Directory:  incoming
 
-* PR# 508 *
-Subject: cbind.ts(),ts.union()
-From: koller2@fgr.wu-wien.ac.at
-Date: Mon, 3 Apr 2000 20:08:11 +0200 (MET DST)
+* PR# 509 *
+Subject: write.table with rows and cols
+From: edd@debian.org
+Date: Tue, 4 Apr 2000 01:23:32 +0200 (MET DST)
+* PR# 488 *
+Subject: Error in lme?
+From: simon.frost@ed.ac.uk
+Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
+--No example to reproduce this.
 * PR# 463 *
 Subject: Bug in read.table
 From: "E. S. Venkatraman" <venkat@biosta.mskcc.org>
 Date: Tue, 29 Feb 2000 17:47:54 -0500 (EST)
 --looks like quote arguments to read.table/count.fields needs to be set
+* PR# 505 *
+Subject: interrupted save 
+From: Thomas Lumley <thomas@biostat.washington.edu>
+Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 * PR# 498 *
 Subject: Use of Rd2txt on .Rd files from rw-1.0.0
 Subject: Use of Rd2txt on .Rd files from rw-1.0.0
 From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Wed, 22 Mar 2000 09:15:20 +1100 (EST)
 --No response from author, but does look like using CRLF files on Unix.
-* PR# 488 *
-Subject: Error in lme?
-From: simon.frost@ed.ac.uk
-Date: Tue, 14 Mar 2000 14:15:52 +0100 (MET)
---No example to reproduce this.
+* PR# 508 *
+Subject: cbind.ts(),ts.union()
+From: koller2@fgr.wu-wien.ac.at
+Date: Mon, 3 Apr 2000 20:08:11 +0200 (MET DST)
 * PR# 507 *
 Subject: another save/load problem, only(?) affecting ascii = TRUE
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -203,7 +211,3 @@ Date: Mon, 3 Apr 2000 14:37:50 +0200 (CEST)
 Subject: matlines, matpoints don't follow prototype
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Sun, 26 Mar 2000 12:51:24 -0800
-* PR# 505 *
-Subject: interrupted save 
-From: Thomas Lumley <thomas@biostat.washington.edu>
-Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
