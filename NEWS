@@ -51,6 +51,14 @@ NEW FEATURES
 
     o	hist has an "nclass" argument purely for S compatibility.
 
+    o	Character strings can now, with most compilers, be passed
+	on and from Fortran. See ?Foreign for details.
+
+    o	Functions as.single and single now have the effect with
+	.C and .Fortran of passing a numeric argument as float/REAL
+	rather than as double/DOUBLE PRECISION, by setting the
+	attribute "Csingle".
+
 
 BUG FIXES
 
@@ -102,6 +110,8 @@ BUG FIXES
 
     o	dynamically-loaded libraries are searched last-loaded first, as
 	documented (under Unix it used to be first-loaded first).
+
+    o	rowsum failed with a matrix and a single group (drop=FALSE needed).
 
 
 		CHANGES IN R VERSION 0.65.0
