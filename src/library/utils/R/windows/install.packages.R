@@ -111,7 +111,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
     tmpd <- destdir
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(is.null(destdir) && nonlocalcran) {
-        tmpd <- tempfile("Rinstdir")
+        tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!dir.create(tmpd))
             stop('Unable to create temp directory ', tmpd)
     }
@@ -171,16 +171,9 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
                               installWithVers)
             }
         }
-        cat("\n")
-        if(!is.null(tmpd) && is.null(destdir)) {
-            answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
-            if(answer == "y" | answer == "Y") {
-                for(file in foundpkgs[, 2]) unlink(file)
-                unlink(tmpd, TRUE)
-            } else
-                cat("The packages are in", tmpd)
-            cat("\n")
-        }
+        if(!is.null(tmpd) && is.null(destdir))
+            ## tends to be a long path on Windows
+            cat("\nThe downloaded packages are in\n    ", tmpd, "\n", sep = "")
         link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 

@@ -131,12 +131,11 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
 #endif
 
   For \code{install.packages} and \code{update.packages}, \code{destdir}
-  is the directory to which packages will be downloaded. If it is
-  \code{NULL} (the default) a temporary directory is used, and the user
-  will be given the option of deleting the temporary files once the
-  packages are installed.  (They will always be deleted at the end of
-  the \R session.)
-
+  is the directory to which packages will be downloaded.  If it is
+  \code{NULL} (the default) a directory \code{downloaded_packages} of
+  the session temporary directory will be used (and the files will be
+  deleted at the end of the session).
+  
   If \code{CRAN} or \code{contriburl} is a vector of length greater than
   one, the newest version of the package is fetched from the first
   repository on the list within which it is found.
