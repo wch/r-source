@@ -124,6 +124,8 @@ NEW FEATURES
 
     o	The "keep.source" option now defaults to interactive() instead of TRUE.
 
+    o	by() works when embedded in a function.
+
 
 BUG FIXES
 
