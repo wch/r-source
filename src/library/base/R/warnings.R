@@ -1,23 +1,15 @@
-warnings<-function(...)
+warnings <- function(...)
 {
-        n<-length(last.warning)
-        names<-names(last.warning)
-        if( n == 1 )
-                cat("Warning message:\n")
-        else
-                cat("Warning messages:\n")
-        for(i in 1:n) {
-                if( n == 1 )
-                        out<-names[i]
-                else
-                        out<-paste(i,": ",names[i],sep="")
-                if(length(last.warning[[i]])) {
-                        temp<-deparse(last.warning[[i]])
-                        if(length(temp)>1)
-                                out<-paste(out, "in:", temp[1]," ...")
-                        else
-                                out<-paste(out, "in:", temp[1])
-                }
-                cat(out, ..., fill = T)
-        }
+    if(!(n <- length(last.warning)))
+	return()
+    names <- names(last.warning)
+    cat("Warning message", if(n > 1)"s", ":\n", sep="")
+    for(i in 1:n) {
+	out <- if(n == 1) names[i] else paste(i,": ", names[i], sep="")
+	if(length(last.warning[[i]])) {
+	    temp <- deparse(last.warning[[i]])
+	    out <- paste(out, "in:", temp[1], if(length(temp) > 1) " ...")
+	}
+	cat(out, ..., fill = TRUE)
+    }
 }
