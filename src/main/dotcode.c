@@ -965,6 +965,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     return retval;
 }
 
+/* .C() {op=0}  or  .Fortran() {op=1} */
 SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     void **cargs;
@@ -979,8 +980,8 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     which = PRIMVAL(op);
     op = CAR(args);
-    if (!isString(op))
-	errorcall(call, "function name must be a string\n");
+    if (!isString(op) || LENGTH(op) != 1)
+	errorcall(call, "function name must be a string (of length 1)\n");
 
     /* The following code modifies the argument list */
     /* We know this is ok because do_dotcode is entered */
