@@ -175,8 +175,8 @@ structure for a new package: see its help page for details.
 
 @menu
 * The DESCRIPTION file::        
-* The INDEX file::     
-* The install.R and R_PROFILE.R files::
+* The INDEX file::              
+* The install.R and R_PROFILE.R files::  
 * Package subdirectories::      
 * Package bundles::             
 @end menu
@@ -3141,6 +3141,7 @@ force the variant object to the right type.
 * Classes::                     
 * Handling lists::              
 * Finding and setting variables::  
+* Named objects and copying::   
 @end menu
 
 @node Garbage Collection, Allocating storage, Handling R objects in C, Handling R objects in C
@@ -3217,8 +3218,8 @@ and then those in @file{Rinternals.h}:
 @end smallexample
 
 Now, the reader may ask how the @R{} object could possibly get removed
-during those manipulations, as it is just our C code that is running. As
-it happens, we can do without the protection in this example, but in
+during those manipulations, as it is just our C code that is running.
+As it happens, we can do without the protection in this example, but in
 general we do not know (nor want to know) what is hiding behind the @R{}
 macros and functions we use, and any of them might cause memory to be
 allocated, hence garbage collection and hence our object @code{ab} to be
@@ -3226,9 +3227,9 @@ removed. It is usually wise to err on the side of caution and assume
 that any of the @R{} macros and functions might remove the object.
 
 In some cases it is necessary to keep better track of whether protection
-is really needed. Be particularly aware of situations where a large
-number of objects are generated. The pointer protection stack has a
-fixed size (default 10,000) and can become full. It is not a good idea
+is really needed.  Be particularly aware of situations where a large
+number of objects are generated.  The pointer protection stack has a
+fixed size (default 10,000) and can become full.  It is not a good idea
 then to just @code{PROTECT} everything in sight and @code{UNPROTECT}
 several thousand objects at the end. It will almost invariably be
 possible to either assign the objects as part of another object (which
@@ -3244,8 +3245,8 @@ the parser (the R sources have one example, in
 @file{src/main/plot3d.c}).
 @findex UNPROTECT_PTR
 
-Sometimes an object is changed (for example coerced or grown) yet the
-current value needs to be protected. For these cases
+Sometimes an object is changed (for example duplicated, coerced or
+grown) yet the current value needs to be protected.  For these cases
 @code{PROTECT_WITH_INDEX} saves an index of the protection location that
 can be used to replace the protected value using @code{REPROTECT}.
 @findex PROTECT_WITH_INDEX
@@ -3584,7 +3585,7 @@ and enables us to say
 @end group
 @end smallexample
 
-@node Finding and setting variables,  , Handling lists, Handling R objects in C
+@node Finding and setting variables, Named objects and copying, Handling lists, Handling R objects in C
 @subsection Finding and setting variables
 @cindex Finding variables
 @cindex Setting variables
@@ -3643,6 +3644,87 @@ If a binding is found, its value is changed to @code{value}.  Otherwise,
 a new binding with the specified value is created in the global
 environment.  This corresponds to @code{assign(symbol, value, envir =
 rho, inherits = TRUE)}.
+
+@node Named objects and copying,  , Finding and setting variables, Handling R objects in C
+@subsection Named objects and copying
+@findex duplicate
+@cindex Copying objects
+
+When assignments are done in @R{} such as
+
+@smallexample
+x <- 1:10
+y <- x
+@end smallexample
+
+@noindent
+the named object is not necessarily copied, so after those two
+assignments @code{y} and @code{x} are bound to the same @code{SEXPREC}
+(the structure a @code{SEXP} points to).  This means that any code which
+alters one of them has to make a copy before modifying the copy if the
+usual @R{} semantics are to apply.  Note that whereas @code{.C} and
+@code{.Fortran} do copy their arguments (unless the dangerous @code{dup
+= FALSE} is used), @code{.Call} and @code{.External} do not.  So
+@code{duplicate} is commonly called on arguments to @code{.Call} before
+modifying them.
+
+However, at least some of this copying is unneeded.  In the first
+assignment shown, @code{x <- 1:10}, @R{} first creates an object with
+value @code{1:10} and then assigns it to @code{x} but if @code{x} is
+modified no copy is necessary as the temporary object with value
+@code{1:10} cannot be referred to again.  @R{} distinguishes between
+named and unnamed objects @emph{via} a field in a @code{SEXPREC} that
+can be accessed via the macros @code{NAMED} and @code{SET_NAMED}.  This
+can take values
+
+@table @code
+@item 0
+The object is not bound to any symbol
+@item 1
+The object has been bound to exactly one symbol
+@item 2
+The object has potentially been bound to two or more symbols, and one
+should act as if another variable is currently bound to this value.
+@end table
+
+@noindent
+Note the past tenses: @R{} does not do full reference counting and there
+may currently be fewer bindings.
+
+It is safe to modify the value of any @code{SEXP} for which
+@code{NAMED(foo)} is zero, and if @code{NAMED(foo)} is two, the value
+should be duplicated (via a call to @code{duplicate}) before any
+modification.  Note that it is the responsibility of the author of the
+code making the modification to do the duplication, even if it is
+@code{x} whose value is being modified after @code{y <- x}.
+
+The case @code{NAMED(foo) == 1} allows some optimization, but it can be
+ignored (and duplication done whenever @code{NAMED(foo) > 0}).  This
+optimization is unlikely to be worthwhile in user code.  It is intended
+for use within assignment functions.  Suppose we used
+@smallexample
+x <- 1:10
+foo(x) <- 3
+@end smallexample
+
+@noindent
+which is computed as
+@smallexample
+x <- 1:10
+x <- "foo<-"(x)
+@end smallexample
+
+@noindent
+Then inside @code{"foo<-"} the object pointing to the current value of
+@code{x} will have @code{NAMED(foo)} as one, and it would be safe to
+modify it as the only symbol bound to it is @code{x} and that will be
+rebound immediately.  (Provided the remaining code in @code{"foo<-"}
+make no reference to @code{x}, and no one is going to attempt a direct
+call such as @code{y <- "foo<-"(x)}.)
+
+Another possible example of optimizing @code{NAMED(foo) == 1} is inside
+@code{.Call} code which alters an argument and the calling @R{} code is
+written to be aware that the argument will be altered.
 
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
@@ -4375,7 +4457,7 @@ is only guaranteed to show the current interface: it is liable to
 change.}.
 
 An example of the usage can be found in the (example) Windows package
-@pkg{windlgs} included in the @R{} source tres.  The essential part is
+@pkg{windlgs} included in the @R{} source tree.  The essential part is
 
 @smallexample
 @group
