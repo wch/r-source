@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-15, 2002-02-11
+@set FAQ-VERSION 1.4-16, 2002-02-13
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1660,6 +1660,8 @@ approach to GLMs for dependent data.
 @item geoR
 Functions to perform geostatistical data analysis including model-based
 methods.
+@item geoRglm
+Functions for inference in generalised linear spatial models.
 @item gld
 Basic functions for the generalised (Tukey) lambda distribution.
 @item gregmisc
@@ -1825,9 +1827,6 @@ structural equivalence detection, p* modeling, and network
 visualization.
 @c @item snns
 @c An R interface to the Stuttgart Neural Networks Simulator (SNNS).
-@item spsarlm
-Functions for estimating spatial simultaneous autoregressive (SAR)
-models, including sparse matrix methods for computing the Jacobian.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
@@ -1837,6 +1836,9 @@ Data analysis and modelling of two-dimensional point patterns, including
 multitype points and spatial covariates.
 @item splancs
 Spatial and space-time point pattern analysis functions.
+@item spsarlm
+Functions for estimating spatial simultaneous autoregressive (SAR)
+models, including sparse matrix methods for computing the Jacobian.
 @item sptests
 A collection of tests for spatial autocorrelation, including global
 Moran's I and Geary's C.

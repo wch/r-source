@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.4-15, 2002-02-11
+Version 1.4-16, 2002-02-13
 Kurt Hornik
 
 
@@ -1432,6 +1432,9 @@ works, was published in the Journal of Statistical Software
      Functions to perform geostatistical data analysis including model-based
      methods.
 
+*geoRglm*
+     Functions for inference in generalised linear spatial models.
+
 *gld*
      Basic functions for the generalised (Tukey) lambda distribution.
 
@@ -1648,10 +1651,6 @@ works, was published in the Journal of Statistical Software
      structural equivalence detection, p* modeling, and network
      visualization.
 
-*spsarlm*
-     Functions for estimating spatial simultaneous autoregressive (SAR)
-     models, including sparse matrix methods for computing the Jacobian.
-
 *spatial*
      Functions for kriging and point pattern analysis from "Modern Applied
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
@@ -1663,6 +1662,10 @@ works, was published in the Journal of Statistical Software
 
 *splancs*
      Spatial and space-time point pattern analysis functions.
+
+*spsarlm*
+     Functions for estimating spatial simultaneous autoregressive (SAR)
+     models, including sparse matrix methods for computing the Jacobian.
 
 *sptests*
      A collection of tests for spatial autocorrelation, including global
