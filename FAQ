@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-04
+Version 2.0.2004-12-07
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1852,6 +1852,9 @@ distributions of R.)
 *eha*
      A package for survival and event history analysis.
 
+*elasticnet*
+     Elastic net regularization and variable selection.
+
 *ellipse*
      Package for drawing ellipses and ellipse-like confidence regions.
 
@@ -2338,6 +2341,9 @@ distributions of R.)
 *mlbench*
      A collection of artificial and real-world machine learning benchmark
      problems, including the Boston housing data.
+
+*mlica*
+     Independent Component Analysis using Maximum Likelihood.
 
 *mmlcr*
      Mixed-mode latent class regression (also known as mixed-mode mixture

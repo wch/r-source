@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-04
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-07
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2121,6 +2121,8 @@ Graphical and tabular effect displays, e.g., of interactions, for linear
 and generalised linear models.
 @item eha
 A package for survival and event history analysis.
+@item elasticnet
+Elastic net regularization and variable selection.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
 @item emme2
@@ -2497,6 +2499,8 @@ Functions to fit mixtures of regressions.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item mlica
+Independent Component Analysis using Maximum Likelihood.
 @item mmlcr
 Mixed-mode latent class regression (also known as mixed-mode mixture
 model regression or mixed-mode mixture regression models) which can
