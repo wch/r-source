@@ -17,17 +17,20 @@ pkg = tcltk
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
+RSRC = `LC_COLLATE=C ls $(srcdir)/R/*.R $(srcdir)/R/$(R_OSTYPE)/*.R`
+
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  if test @use_tcltk@ = yes; then \
-	    cat `LC_COLLATE=C ls $(srcdir)/R/*.R` $(srcdir)/R/unix/zzz.R > $${f}; \
+	    cat $(RSRC) > $${f}; \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R ; \
 	  else \
-	    cp $(srcdir)/R/unix/zzz.Rstub $${f}; \
-	  fi; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+	    $(SHELL) $(top_srcdir)/tools/copy-if-change \
+	      $(srcdir)/R/unix/zzz.Rstub \
+	      $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
+	  fi)
 	@if test @use_tcltk@ = yes; then \
 	  $(INSTALL_DATA) $(srcdir)/NAMESPACE \
 	    $(top_builddir)/library/$(pkg); \
@@ -68,6 +71,13 @@ all: Makefile DESCRIPTION
 	@if test -d src -a @use_tcltk@ = yes; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
+	@if test @use_tcltk@ = yes; then \
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg) ; \
+	  echo "preparing package '$(pkg)' for lazy loading" ; \
+	  echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null ; \
+	fi
+
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -77,6 +87,7 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R 
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION

@@ -22,8 +22,7 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` > $${f}; \
-	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
-	    $(top_builddir)/library/$(pkg)/R/$(pkg))
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} all.R)
 	@rm -f $(top_builddir)/library/$(pkg)/Meta/nsInfo.rds
 	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
@@ -48,6 +47,11 @@ all: Makefile DESCRIPTION
 	@if test -d src; then \
 	  (cd src && $(MAKE)) || exit 1; \
 	fi
+	  $(INSTALL_DATA) all.R $(top_builddir)/library/$(pkg)/R/$(pkg)
+	  echo "preparing package '$(pkg)' for lazy loading"
+	  echo "tools:::makeLazyLoading(\"$(pkg)\")" | \
+	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --slave > /dev/null
+
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
@@ -57,6 +61,7 @@ DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
+	-@rm -f all.R
 distclean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
 	-@rm -f Makefile DESCRIPTION
