@@ -1,4 +1,4 @@
-### $Id: profile.R,v 1.2 1999/11/14 19:43:24 ripley Exp $
+### $Id: profile.R,v 1.3 1999/11/15 18:26:52 bates Exp $
 ###
 ### Profiling nonlinear least squares for R
 ###
@@ -24,10 +24,6 @@
 profiler <-
   function(fitted, ...)
   UseMethod("profiler")
-
-profile <-
-  function(fitted, ...)
-  UseMethod("profile")
 
 profiler.nls <-
   function(fitted, ...)
@@ -241,7 +237,6 @@ plot.profile.nls <- function(x, levels, conf = c(99, 95, 90, 80, 50)/100,
       lines(predict(sp), col = 4)
       abline(h = 0, col = 3, lty = 2 )
       for( lev in  levels ) {
-#        lines(predict( bsp, c(-lev, lev) ), type = "h", col = 6, lty = 2 )
          pred <- predict( bsp, c(-lev, lev) )$y
          lines( pred, c(-lev, lev), type = "h", col = 6, lty = 2 )
       }
