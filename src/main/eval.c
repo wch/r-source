@@ -653,10 +653,14 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_function(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    if (length(args) < 2)
+    SEXP rval;
+
+    if (length(args) < 3)
 	WrongArgCount("lambda");
     CheckFormals(CAR(args));
-    return mkCLOSXP(CAR(args), CADR(args), rho);
+    rval = mkCLOSXP(CAR(args), CADR(args), rho);
+    setAttrib(rval, R_SourceSymbol, CADDR(args));
+    return rval;
 }
 
 
