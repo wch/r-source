@@ -32,6 +32,9 @@ NEW FEATURES
 	environment variables set in R_HOME/etc/Renviron in a similar
 	way to most shells.
 
+    o	scan() allows unlimited (by R) lengths of input lines, instead
+	of a limit of 8190 chars.
+
 
 
 BUG FIXES

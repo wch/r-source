@@ -164,6 +164,14 @@ close(zz)
 unlink("t1.gz")
 stopifnot(sz < 2000)
 
+## The length of lines read by scan() was limited before 1.4.0
+xx <- paste(rep(0:9, 2000), collapse="")
+zz <- file("foo.txt", "w")
+writeLines(xx, zz)
+close(zz)
+xxx <- scan("foo.txt", "", sep="\n")
+stopifnot(identical(xx, xxx))
+unlink("foo.txt")
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
