@@ -4,7 +4,7 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.6 1998/09/29 08:39:21 maechler Exp $
+    ## $Id: str.R,v 1.7 1998/10/05 08:32:21 maechler Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -19,7 +19,7 @@ str.data.frame <- function(object, ...)
 	length(object), "variables:\n")
 
     ## calling next method, usually  str.default:
-    if(!is.null(list(...)) && any("give.length" == names(list(...))))
+    if(length(l <- list(...)) && any("give.length" == names(l)))
 	invisible(NextMethod("str", ...))
     else invisible(NextMethod("str", give.length=FALSE,...))
 }
@@ -41,7 +41,7 @@ str.default <- function(object, max.level = 0, vec.len = 4, digits.d = 3,
     ## Author: Martin Maechler <maechler@stat.math.ethz.ch>	1990--1997
     ## ------ Please send Bug-reports, -fixes and improvements !
     ## -------------------------------------------------------------------------
-    ## $Id: str.R,v 1.6 1998/09/29 08:39:21 maechler Exp $
+    ## $Id: str.R,v 1.7 1998/10/05 08:32:21 maechler Exp $
 
     oo <- options(digits = digits.d)
     ##was .Options $ digits <- digits.d # only in this function frame !
