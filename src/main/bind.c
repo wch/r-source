@@ -567,10 +567,9 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     usenames = 1;
     recurse = 0;
-    if (length(args) > 1)
-	PROTECT(args = ExtractOptionals(args, &recurse, &usenames));
-    else
-	PROTECT(args);
+    /* this was only done for length(args) > 1 prior to 1.5.0,
+       _but_ `recursive' might be the only argument */
+    PROTECT(args = ExtractOptionals(args, &recurse, &usenames));
 
     /* Determine the type of the returned value. */
     /* The strategy here is appropriate because the */
