@@ -32,6 +32,23 @@ else
 fi
 ])# R_ARG_USE
 
+## R_SH_VAR_ADD(VARIABLE, VALUE, [SEPARATOR = " "])
+## ---------------------------------------------------
+## Set sh variable VARIABLE to VALUE if empty (or undefined), or append
+## VALUE to the value of VARIABLE, separated by SEPARATOR.
+## Currently, safe only if all arguments are literals.
+## Useful mostly when we do not know whether VARIABLE is empty or not.
+## Should maybe also have a fourth argument to control whether adding
+## happens by appending (default) or prepending ...
+AC_DEFUN([R_SH_VAR_ADD],
+[separator="$3"
+test -z "${separator}" && separator=" "
+if test -z "${[$1]}"; then
+  $1="$2"
+else
+  $1="${[$1]}${separator}$2"
+fi])# R_SH_VAR_ADD
+
 ### * Programs
 
 ## R_PROG_AR
@@ -220,8 +237,8 @@ AC_SUBST(R_BROWSER)
 ## If we wanted to, we should change
 ##     : ${CPPFLAGS="-I/usr/local/include"}
 ## in 'configure.ac' by something like
-##     : ${CPPFLAGS=${R_default_CPPFLAGS="-I/usr/local/include"}}
-## and test whether R_default_CPPFLAGS is non-empty.
+##     : ${CPPFLAGS=${r_default_CPPFLAGS="-I/usr/local/include"}}
+## and test whether r_default_CPPFLAGS is non-empty.
 ## </NOTE>
 AC_DEFUN([R_PROG_CPP_CPPFLAGS],
 [AC_REQUIRE([AC_PROG_CC])
@@ -280,40 +297,40 @@ rm -rf conftest* TMP])
 ## Generate a Make fragment with suffix rules for the C compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_CC_MAKEFRAG],
-[cc_rules_frag=Makefrag.cc
+[r_cc_rules_frag=Makefrag.cc
 AC_REQUIRE([R_PROG_CC_M])
 AC_REQUIRE([R_PROG_CC_C_O_LO])
-cat << \EOF > ${cc_rules_frag}
+cat << \EOF > ${r_cc_rules_frag}
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $[@]
 EOF
 if test "${r_cv_prog_cc_m}" = yes; then
-  cat << \EOF >> ${cc_rules_frag}
+  cat << \EOF >> ${r_cc_rules_frag}
 .c.d:
 	@echo "making $[@] from $<"
 	@$(CC) -M $(ALL_CPPFLAGS) $< | \
 	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
 EOF
 else
-  cat << \EOF >> ${cc_rules_frag}
+  cat << \EOF >> ${r_cc_rules_frag}
 .c.d:
 	@echo > $[@]
 EOF
 fi
 if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF >> ${cc_rules_frag}
+  cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $[@]
 EOF
 else
-  cat << \EOF >> ${cc_rules_frag}
+  cat << \EOF >> ${r_cc_rules_frag}
 .c.lo:
 	@test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-AC_SUBST_FILE(cc_rules_frag)
+AC_SUBST_FILE(r_cc_rules_frag)
 ])# R_PROG_CC_MAKEFRAG
 
 ## R_PROG_CC_FLAG(FLAG, [ACTION-IF-TRUE])
@@ -323,7 +340,7 @@ AC_SUBST_FILE(cc_rules_frag)
 ## SFLAG is a shell-safe transliteration of FLAG).
 ## In addition, execute ACTION-IF-TRUE in case of success.
 AC_DEFUN([R_PROG_CC_FLAG],
-[ac_safe=`echo "$1" | sed 'y%./+-:=%__p___%'`
+[ac_safe=AS_TR_SH($1)
 AC_MSG_CHECKING([whether ${CC} accepts $1])
 AC_CACHE_VAL([r_cv_prog_cc_flag_${ac_safe}],
 [AC_LANG_PUSH(C)
@@ -356,7 +373,7 @@ AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
   yes
 #endif
 ],
-              [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES"])
+              [R_SH_VAR_ADD(R_XTRA_CFLAGS, [-D__NO_MATH_INLINES])])
 ])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
 
 ## R_C_OPTIEEE
@@ -379,7 +396,7 @@ int main () {
 	   [r_cv_c_optieee=no],
 	   [r_cv_c_optieee=no]))
 if test "${r_cv_c_optieee}" = yes; then
-  R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -OPT:IEEE_NaN_inf=ON"
+  R_SH_VAR_ADD(R_XTRA_CFLAGS, [-OPT:IEEE_NaN_inf=ON])
 fi
 ])# R_C_OPTIEEE
 
@@ -432,10 +449,10 @@ rm -rf conftest* TMP])
 ## Generate a Make fragment with suffix rules for the C++ compiler.
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_CXX_MAKEFRAG],
-[cxx_rules_frag=Makefrag.cxx
+[r_cxx_rules_frag=Makefrag.cxx
 AC_REQUIRE([R_PROG_CXX_M])
 AC_REQUIRE([R_PROG_CXX_C_O_LO])
-cat << \EOF > ${cxx_rules_frag}
+cat << \EOF > ${r_cxx_rules_frag}
 .cc.o:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
 .cpp.o:
@@ -444,7 +461,7 @@ cat << \EOF > ${cxx_rules_frag}
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
 EOF
 if test "${r_cv_prog_cxx_m}" = yes; then
-  cat << \EOF >> ${cxx_rules_frag}
+  cat << \EOF >> ${r_cxx_rules_frag}
 .cc.d:
 	@echo "making $[@] from $<"
 	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
@@ -459,7 +476,7 @@ if test "${r_cv_prog_cxx_m}" = yes; then
 	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
 EOF
 else
-  cat << \EOF >> ${cxx_rules_frag}
+  cat << \EOF >> ${r_cxx_rules_frag}
 .cc.d:
 	@echo > $[@]
 .cpp.d:
@@ -469,7 +486,7 @@ else
 EOF
 fi
 if test "${r_cv_prog_cxx_c_o_lo}" = yes; then
-  cat << \EOF >> ${cxx_rules_frag}
+  cat << \EOF >> ${r_cxx_rules_frag}
 .cc.lo:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
 .cpp.lo:
@@ -478,7 +495,7 @@ if test "${r_cv_prog_cxx_c_o_lo}" = yes; then
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
 EOF
 else
-  cat << \EOF >> ${cxx_rules_frag}
+  cat << \EOF >> ${r_cxx_rules_frag}
 .cc.lo:
 	@test -d .libs || mkdir .libs
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$[*].o
@@ -493,7 +510,7 @@ else
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-AC_SUBST_FILE(cxx_rules_frag)
+AC_SUBST_FILE(r_cxx_rules_frag)
 ])# R_PROG_CXX_MAKEFRAG
 
 ## R_PROG_CXX_FLAG
@@ -503,7 +520,7 @@ AC_SUBST_FILE(cxx_rules_frag)
 ## SFLAG is a shell-safe transliteration of FLAG).
 ## In addition, execute ACTION-IF-TRUE in case of success.
 AC_DEFUN([R_PROG_CXX_FLAG],
-[ac_safe=`echo "$1" | sed 'y%./+-:=%__p___%'`
+[ac_safe=AS_TR_SH($1)
 AC_MSG_CHECKING([whether ${CXX-c++} accepts $1])
 AC_CACHE_VAL([r_cv_prog_cxx_flag_${ac_safe}],
 [AC_LANG_PUSH(C++)
@@ -885,26 +902,26 @@ rm -rf conftest* TMP])
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_F77_MAKEFRAG],
 [AC_REQUIRE([R_PROG_F77_C_O_LO])
-f77_rules_frag=Makefrag.f77
-cat << \EOF > ${f77_rules_frag}
+r_f77_rules_frag=Makefrag.f77
+cat << \EOF > ${r_f77_rules_frag}
 .f.c:
 .f.o:
 	$(F77) $(ALL_FFLAGS) -c $< -o $[@]
 EOF
 if test "${r_cv_prog_f77_c_o_lo}" = yes; then
-  cat << \EOF >> ${f77_rules_frag}
+  cat << \EOF >> ${r_f77_rules_frag}
 .f.lo:
 	$(F77) $(ALL_FFLAGS_LO) -c $< -o $[@]
 EOF
 else
-  cat << \EOF >> ${f77_rules_frag}
+  cat << \EOF >> ${r_f77_rules_frag}
 .f.lo:
 	@test -d .libs || mkdir .libs
 	$(F77) $(ALL_FFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-AC_SUBST_FILE(f77_rules_frag)
+AC_SUBST_FILE(r_f77_rules_frag)
 ])# R_PROG_F77_MAKEFRAG
 
 ## R_PROG_F77_FLAG(FLAG, [ACTION-IF-TRUE])
@@ -914,7 +931,7 @@ AC_SUBST_FILE(f77_rules_frag)
 ## (where SFLAG is a shell-safe transliteration of FLAG).
 ## In addition, execute ACTION-IF-TRUE in case of success.
 AC_DEFUN([R_PROG_F77_FLAG],
-[ac_safe=`echo "$1" | sed 'y%./+-:=%__p___%'`
+[ac_safe=AS_TR_SH($1)
 AC_MSG_CHECKING([whether ${F77} accepts $1])
 AC_CACHE_VAL([r_cv_prog_f77_flag_${ac_safe}],
 [AC_LANG_PUSH(Fortran 77)
@@ -985,8 +1002,8 @@ fi
 ## Used for both building R (Makeconf) and add-ons (etc/Makeconf).
 AC_DEFUN([R_PROG_F2C_MAKEFRAG],
 [AC_REQUIRE([R_PROG_CC_C_O_LO])
-f77_rules_frag=Makefrag.f77
-cat << \EOF > ${f77_rules_frag}
+r_f77_rules_frag=Makefrag.f77
+cat << \EOF > ${r_f77_rules_frag}
 .f.o:
 	$(F2C) $(F2CFLAGS) < $< > $[*].c
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $[*].c -o $[@]
@@ -995,20 +1012,20 @@ cat << \EOF > ${f77_rules_frag}
 	$(F2C) $(F2CFLAGS) < $< > $[*].c
 EOF
 if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF >> ${f77_rules_frag}
+  cat << \EOF >> ${r_f77_rules_frag}
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o $[@]
 EOF
 else
-  cat << \EOF >> ${f77_rules_frag}
+  cat << \EOF >> ${r_f77_rules_frag}
 	@test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $[*].c -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-cat << \EOF >> ${f77_rules_frag}
+cat << \EOF >> ${r_f77_rules_frag}
 	@rm -f $[*].c
 EOF
-AC_SUBST_FILE(f77_rules_frag)
+AC_SUBST_FILE(r_f77_rules_frag)
 ])# R_PROG_F2C_MAKEFRAG
 
 ### * Library functions
