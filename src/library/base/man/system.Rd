@@ -21,9 +21,8 @@ the ability to invoke system commands on whatever platform they
 are using.
 }
 \examples{
-# list all files in the current directory
-# using the -F flag
-system("ls -F")
+# list all files in the current directory using the -F flag
+\dontrun{system("ls -F")}
 
 # t1 contains a vector of strings, each one
 # representing a separate line of output from who
