@@ -139,12 +139,14 @@ par(\dots, no.readonly = FALSE)
   }
   \item{lty}{The line type.
     Line types can either be specified as an integer (1=solid, 2=dashed,
-    3=dotted 4=dotdashed) or as one of the character strings
-    \code{"solid"}, \code{"dashed"}, \code{"dotted"} or
-    \code{"dotdashed"}.
-    Alternatively, a string of up to 8 characters may be given, giving
-    the length (in points) of line segments which are alternatively
-    drawn and skipped.  For example, \code{"44"} is dashed and
+    3=dotted, 4=dotdashed, 5=longdashed, 6=twodashed) or as one of the
+    character strings
+    \code{"solid"}, \code{"dashed"}, \code{"dotted"}
+    \code{"dotdashed"}, \code{"longdashed"} or \code{"twodashed"}.
+    Alternatively, a string of up to 8 characters
+    (from code{c(0:9, "A":"F")}) may be given, giving
+    the length (typically in points/pixels) of line segments which are
+    alternatively drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}
   \item{lwd}{The line width, a \emph{positive} numerical, defaulting to
       \code{1}.}
