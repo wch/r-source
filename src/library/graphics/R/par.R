@@ -1,6 +1,7 @@
 ##-- These are the ones used in ../../../main/par.c  Query(..) :
 ##-- Documentation in		../../../include/Graphics.h
 .Pars <- c(
+           "xlog", "ylog", ## must be before xaxp, yaxp
 	   "adj", "ann", "ask", "bg", "bty",
 	   "cex", "cex.axis", "cex.lab", "cex.main", "cex.sub", "cin",
 	   "col", "col.axis", "col.lab", "col.main", "col.sub",
@@ -12,8 +13,8 @@
            "mai", "mar", "mex", "mfcol", "mfg", "mfrow", "mgp", "mkh",
 	   "new", "oma", "omd", "omi", "pch", "pin", "plt", "ps", "pty",
 	   "smo", "srt", "tck", "tcl", "tmag", "type", "usr",
-	   "xaxp", "xaxs", "xaxt", "xlog", "xpd",
-	   "yaxp", "yaxs", "yaxt", "ylog"
+	   "xaxp", "xaxs", "xaxt",  "xpd",
+	   "yaxp", "yaxs", "yaxt"
 	   )
 # Replaced with function to evaluate readonly pars because "gamma"
 # is readonly on a per-device basis
