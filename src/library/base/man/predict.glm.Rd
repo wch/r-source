@@ -3,7 +3,8 @@
 \usage{
 \method{predict}{glm}(object, newdata = NULL,
             type = c("link", "response", "terms"),
-            se.fit = FALSE, dispersion = NULL, terms = NULL, \dots)
+            se.fit = FALSE, dispersion = NULL, terms = NULL,
+            na.action = na.pass, \dots)
 }
 \alias{predict.glm}
 \arguments{
@@ -27,6 +28,8 @@
     \code{summary} applied to the object is used.}
   \item{terms}{with \code{type="terms"} by default all terms are returned.
     A character vector specifies which terms are to be returned}
+  \item{na.action}{function determining what should be done with missing
+    values in \code{newdata}.  The default is to predict \code{NA}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{

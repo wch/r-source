@@ -576,11 +576,10 @@ anovalist.lm <- function (object, ..., test = NULL)
 
 ## code originally from John Maindonald 26Jul2000
 predict.lm <-
-    function(object, newdata,
-	     se.fit = FALSE, scale = NULL, df = Inf,
+    function(object, newdata, se.fit = FALSE, scale = NULL, df = Inf,
 	     interval = c("none", "confidence", "prediction"),
 	     level = .95,  type = c("response", "terms"),
-	     terms = NULL, ...)
+	     terms = NULL, na.action = na.pass, ...)
 {
     tt <- terms(object)
     if(missing(newdata) || is.null(newdata)) {
@@ -589,9 +588,10 @@ predict.lm <-
 	offset <- object$offset
     }
     else {
-	X <- model.matrix(delete.response(tt), newdata,
-			  contrasts = object$contrasts,
-			  xlev = object$xlevels)
+        Terms <- delete.response(tt)
+        m <- model.frame(Terms, newdata, na.action = na.action,
+                         xlev = object$xlevels)
+        X <- model.matrix(Terms, m, contrasts = object$contrasts)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))
@@ -706,7 +706,7 @@ predict.lm <-
 	    upr <- predictor - hwid
 	}
     }
-    if(se.fit) se<-sqrt(ip)
+    if(se.fit) se <- sqrt(ip)
     if(missing(newdata) && !is.null(na.act <- object$na.action)) {
 	predictor <- napredict(na.act, predictor)
 	if(se.fit) se <- napredict(na.act, se)
@@ -752,7 +752,8 @@ model.matrix.lm <- function(object, ...)
 }
 
 ##---> SEE ./mlm.R  for more methods, etc. !!
-predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
+predict.mlm <-
+    function(object, newdata, se.fit = FALSE, na.action = na.pass, ...)
 {
     if(missing(newdata)) return(object$fitted)
     if(se.fit)
@@ -763,9 +764,10 @@ predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
     }
     else {
         tt <- terms(object)
-        X <- model.matrix(delete.response(tt), newdata,
-			  contrasts = object$contrasts,
-                          xlev = object$xlevels)
+        Terms <- delete.response(tt)
+        m <- model.frame(Terms, newdata, na.action = na.action,
+                         xlev = object$xlevels)
+        X <- model.matrix(Terms, m, contrasts = object$contrasts)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))

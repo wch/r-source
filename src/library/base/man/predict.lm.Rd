@@ -9,7 +9,7 @@
 \method{predict}{lm}(object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
         interval = c("none", "confidence", "prediction"),
         level = 0.95, type = c("response", "terms"),
-        terms = NULL, \dots)
+        terms = NULL, na.action = na.pass, \dots)
 }
 \arguments{
   \item{object}{Object of class inheriting from \code{"lm"}}
@@ -21,6 +21,8 @@
   \item{level}{Tolerance/confidence level}
   \item{type}{Type of prediction (response or model term)}
   \item{terms}{If \code{type="terms"}, which terms (default is all terms)}
+  \item{na.action}{function determining what should be done with missing
+    values in \code{newdata}.  The default is to predict \code{NA}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
 \details{
