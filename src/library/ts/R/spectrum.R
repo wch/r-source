@@ -37,8 +37,8 @@ spec.ar <- function(x, n.freq, order = NULL, plot = TRUE,
     ## can be called with a ts or a result of an AR fit.
     if(!is.list(x)) {
         series <- deparse(substitute(x))
+        x <- na.action(as.ts(x))
         xfreq <- frequency(x)
-        x <- na.action(x)
         n <- NROW(x)
         nser <- NCOL(x)
         x <- ar(x, is.null(order), order, na.action=na.action)
@@ -82,8 +82,8 @@ spec.pgram <-
 {
     ## Estimate spectral density from (smoothed) periodogram.
     series <- deparse(substitute(x))
+    x <- na.action(as.ts(x))
     xfreq <- frequency(x)
-    x <- na.action(x)
     x <- as.matrix(x)
     N <- nrow(x)
     nser <- ncol(x)
@@ -243,9 +243,9 @@ plot.spec <-
                 lines(rep(conf.x, 2), conf.y + conf.lim, col=ci.col)
                 lines(conf.x + c(-0.5, 0.5) * x$bandwidth, rep(conf.y, 2),
                       col=ci.col)
-                ci.text <- paste(",  95% C.I. is (",
+                ci.text <- paste(", ", round(100*ci, 2),  "% C.I. is (",
                                  paste(format(conf.lim, digits = 3),
-                                       collapse = ","), ")dB")
+                                       collapse = ","), ")dB", sep="")
             } else {
                 ci.text <- ""
                 conf.y <- max(x$spec) / conf.lim[2]

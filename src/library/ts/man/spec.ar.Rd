@@ -2,7 +2,8 @@
 \alias{spec.ar}
 \title{Estimate Spectral Density of a Time Series from AR Fit}
 \usage{
-spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action, ...)
+spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action,
+        method="yule-walker", ...)
 }
 \arguments{
  \item{x}{A univariate (not yet:or multivariate) time series or the
@@ -12,6 +13,7 @@ spec.ar(x, n.freq, order=NULL, plot=TRUE, na.action, ...)
      order is chosen by AIC.}
  \item{plot}{Plot the periodogram?}
  \item{na.action}{NA action function.}
+ \item{method}{\code{method} for \code{ar} fit.}
  \item{\dots}{Graphical arguments passed to \code{\link{plot.spec}}.}
 }
 \description{
@@ -44,5 +46,6 @@ data(lh)
 spec.ar(lh)
 data(deaths)
 spec.ar(deaths)
+spec.ar(deaths, method="burg")
 }
 \keyword{ts}

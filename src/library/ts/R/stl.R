@@ -7,8 +7,7 @@ stl <- function(x, s.window = NULL, s.degree = 0, t.window = NULL,
         as.integer(x)
     }
 
-    x <- as.ts(x)
-    x <- na.action(x)
+    x <- na.action(as.ts(x))
     if(is.matrix(x)) stop("only univariate series are allowed")
     n <- length(x)
     period <- frequency(x)

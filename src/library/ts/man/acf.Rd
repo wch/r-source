@@ -11,9 +11,9 @@ acf(x, lag.max = NULL, plot = TRUE,
     type = c("correlation", "covariance", "partial"),
     na.action, ...)
 pacf(x, lag.max = NULL, plot = TRUE, na.action, ...)
-plot.acf(acf.obj, ci=0.95, ...)
 ccf(x, y, lag.max = NULL, plot = TRUE,
-    type = c("correlation", "covariance", na.action, ...)
+    type = c("correlation", "covariance"), na.action, ...)
+plot.acf(acf.obj, ci=0.95, ...)
 }
 \arguments{
  \item{x, y}{a univariate or multivariate (not \code{ccf}) time series
@@ -37,11 +37,12 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
  \item{\dots}{graphical parameters.}
 }
 \description{
-    The function \code{acf} computes estimates of the autocovariance /
-    autocorrelation function. Function \code{pacf} is the functions used
+    The function \code{acf} computes (and by default plots)
+    estimates of the autocovariance /
+    autocorrelation function. Function \code{pacf} is the function used
     for the partial autocorrelations.
 
-    Function \code{ccf} computes and (by default) plots the
+    Function \code{ccf} computes the
     cross-correlation or cross-covariance of two univariate series.
 
     The generic function \code{plot} has a method for acf objects.
@@ -64,7 +65,7 @@ ccf(x, y, lag.max = NULL, plot = TRUE,
   \item{type}{The type of correlation (same as the \code{type} argument).}
   \item{n.used}{The number of observations in the time series.}
   \item{series}{The name of the series \code{x}.}
-  \item{snames}{The series names for multivariate time series.}
+  \item{snames}{The series names for a multivariate time series.}
 
   The result is returned invisibly if \code{plot} is true.
 }

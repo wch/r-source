@@ -18,7 +18,7 @@ PP.test (x, lshort = TRUE)
   equation which incorporates a constant and a linear trend is used and
   the corrected t-statistic for a first order autoregressive coefficient
   equals one is computed. To estimate \code{sigma^2} the Newey-West
-  estimator is used. If \code{shortl} is \code{TRUE}, then the
+  estimator is used. If \code{lshort} is \code{TRUE}, then the
   truncation lag parameter is set to \code{trunc(4*(n/100)^0.25)},
   otherwise \code{trunc(12*(n/100)^0.25)} is used. The p-values are
   interpolated from Table 4.2, p. 103 of Banerjee \emph{et al.} (1993).

@@ -9,7 +9,7 @@ ts.union(..., dframe=FALSE)
 cbind.ts(..., dframe=FALSE, union=TRUE)
 }
 \arguments{
- \item{\dots}{Two or more univariate or multvariate time series.}
+ \item{\dots}{Two or more univariate or multivariate time series.}
  \item{dframe}{If \code{TRUE} return the result as a data frame.}
  \item{union}{Act as \code{ts.union} or \code{ts.intersect}.}
 }

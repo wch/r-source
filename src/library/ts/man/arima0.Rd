@@ -29,7 +29,7 @@ predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
  \item{newxreg}{New values of \code{xreg} to be used for
      prediction. Must have at least \code{n.ahead} rows.}
  \item{n.ahead}{The number of steps ahead for which prediction is required.}
- \item{se.fit}{Logical: should standard errors of prediciTton be returned?}
+ \item{se.fit}{Logical: should standard errors of prediction be returned?}
 }
 \description{
     Fit an ARIMA model to a univariate time series by exact maximum
@@ -37,14 +37,14 @@ predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
 }
 \details{
     The exact likelihood is computed via a state-space representation of
-    the ARMA process, and the innovations and their varaince found by a
+    the ARMA process, and the innovations and their variance found by a
     Kalman filter using the Fortran code of Gardener \emph{et al.}
     (1980).  This has the option to switch to `fast recursions' (assume
     an effectively infinite past) if the innovations variance is close
     enough to its asymptotic bound. The argument \code{delta} sets the
     tolerance: at its default value the approximation is normally
     negligible and the speed-up considerable. Exact computations can be
-    ensure by setting \code{delta} to  negative value.
+    ensured by setting \code{delta} to  negative value.
 
     The variance matrix of the estimates is found from the Hessian of
     the log-likelihood, and so may only be a rough guide, especially for
@@ -63,7 +63,7 @@ predict(arima0.obj, n.ahead=1, newxreg, se.fit = TRUE)
   \item{sigma2}{the MLE of the innovations variance.}
   \item{var.coef}{the estimated variance matrix of the coefficients
       \code{coef}.}
-  \item{loglik}{the maximixed log-likelihood (of the differenced data).}
+  \item{loglik}{the maximized log-likelihood (of the differenced data).}
   \item{aic}{the AIC value corresponding to that log-likelihood.}
   \item{call}{the matched call.}
   \item{arma}{A compact form of the specification, as a vector giving

@@ -58,7 +58,7 @@ stl(time.series, s.window=NULL, s.degree=0, t.degree=1,
     S-PLUS.}
 
 \seealso{\code{\link{loess}} in package \code{modreg} (which is not
-    actually used in \code{stl}.}
+    actually used in \code{stl}).}
 
 \examples{
 data(nottem)

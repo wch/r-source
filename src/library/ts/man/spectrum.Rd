@@ -45,7 +45,7 @@ time series. This is a wrapper function which calls the methods
 \code{\link{spec.pgram}} and \code{\link{spec.ar}}.
 
 The generic function \code{plot} has a method for \code{spec} objects:
-for mutivariate time series it plots the marginal spectra of the series and
+for multivariate time series it plots the marginal spectra of the series and
 \code{plot.spec.coherency} and \code{plot.spec.phase} give pairs plots
 of coherency and phase of the cross-spectra.
 }
@@ -72,7 +72,7 @@ of coherency and phase of the cross-spectra.
   The result is returned invisibly if \code{plot} is true.
 }
 \details{
-    The spectrum here is defined with scaling 1/frequency(x),
+    The spectrum here is defined with scaling \code{1/frequency(x)},
     following S-PLUS. This makes the spectral density a density over the
     range \code{(-frequency(x)/2, +frequency(x)/2]}, whereas a more
     common scaling is \eqn{2*\pi} and range (-0.5, 0.5]
@@ -116,6 +116,7 @@ spectrum(deaths)
 spectrum(deaths, spans=c(3,3))
 spectrum(deaths, spans=c(3,5))
 spectrum(deaths, spans=c(5,7))
+spectrum(deaths, spans=c(5,7), log="dB", ci=0.8)
 
 ## spec.ar
 spectrum(lh, method="ar")

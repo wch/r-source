@@ -9,7 +9,7 @@ filter(x, filter, method="convolution", sides=2,
     \item{x}{a univariate or multivariate time series.}
 
     \item{filter}{a vector of filter coefficients in reverse time order
-	(as for AR or MA coefficients.}
+	(as for AR or MA coefficients).}
 
     \item{method}{Either \code{"convolution"} or \code{"recursive"} (and
 	can be abbreviated). If
@@ -22,7 +22,7 @@ filter(x, filter, method="convolution", sides=2,
 	filter should be odd, but if it is even, more of the filter
         is forward in time than backward.}
 
-    \item{circular}{for convolution filters only.  If TRUE, wrap the
+    \item{circular}{for convolution filters only.  If \code{TRUE}, wrap the
        filter  around  the  ends of the series, otherwise assume
        `external values are missing (\code{NA}).}
 
@@ -48,7 +48,7 @@ filter(x, filter, method="convolution", sides=2,
     the output may diverge if it is not.
 }
 \note{
-    \code{\link{convolve}(, type="filter"} uses the FFT for computations
+    \code{\link{convolve}(, type="filter")} uses the FFT for computations
     and so \emph{may} be faster for long filters on univariate series,
     but it does not return a time series (and so the  time alignment is
     unclear), nor does it handle missing values.  \code{filter} is

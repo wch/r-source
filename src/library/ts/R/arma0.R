@@ -5,7 +5,7 @@ arima0 <- function(x, order=c(0,0,0),
     series <- deparse(substitute(x))
     if(is.matrix(ts))
         stop("only implemented for univariate time series")
-    x <- na.action(x)
+    x <- na.action(as.ts(x))
     if(is.null(seasonal$period) || is.na(seasonal$period)
        || seasonal$period == 0) seasonal$period <- frequency(x)
     arma <- c(order[-2], seasonal$order[-2], seasonal$period)
@@ -48,9 +48,9 @@ arima0 <- function(x, order=c(0,0,0),
     aic <- value + 2*length(coef)
     data <- x
     if(ncxreg) data <- data - xreg %*% coef[-(1:sum(arma[1:4]))]
-    res <- list(coef=coef, sigma2 = sigma2, var.coef=var, loglik=-0.5*value,
-                aic = aic, arma=arma,
-                call = match.call(), series=series, data = data)
+    res <- list(coef = coef, sigma2 = sigma2, var.coef = var,
+                loglik = -0.5*value, aic = aic, arma = arma,
+                call = match.call(), series = series, data = data)
     class(res) <- "arima0"
     res
 }

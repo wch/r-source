@@ -1,6 +1,7 @@
 acf <-
-function (x, lag.max = NULL, plot = TRUE, type = c("correlation",
-    "covariance", "partial"), na.action = na.fail, ...)
+    function (x, lag.max = NULL, plot = TRUE,
+              type = c("correlation", "covariance", "partial"),
+              na.action = na.fail, ...)
 {
     type <- match.arg(type)
     if(type == "partial") {
@@ -10,8 +11,8 @@ function (x, lag.max = NULL, plot = TRUE, type = c("correlation",
         return(eval(m, sys.frame(sys.parent())))
     }
     series <- deparse(substitute(x))
-    x.freq <- frequency(as.ts(x))
-    x <- na.action(x)
+    x <- na.action(as.ts(x))
+    x.freq <- frequency(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
     sampleT <- nrow(x)
@@ -55,8 +56,8 @@ pacf <- function(x, lag.max, plot, na.action, ...) UseMethod("pacf")
 pacf.ts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
 {
     series <- deparse(substitute(x))
-    x.freq <- frequency(as.ts(x))
-    x <- na.action(x)
+    x <- na.action(as.ts(x))
+    x.freq <- frequency(x)
     if(any(is.na(x))) stop("NAs in x")
     if(is.matrix(x))
         if(ncol(x) > 1) stop("univariate ts method")
@@ -85,8 +86,8 @@ pacf.ts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
 pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
 {
     series <- deparse(substitute(x))
-    x.freq <- frequency(as.ts(x))
-    x <- na.action(x)
+    x <- na.action(as.ts(x))
+    x.freq <- frequency(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
     sampleT <- nrow(x)

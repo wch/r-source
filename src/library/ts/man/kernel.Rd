@@ -51,7 +51,7 @@ apply.kernel (k1, k2)
   vectors, matrices, or time series objects. Furthermore, they are used
   for the \code{\link{spectrum}} estimation and related routines.
   The \code{"kernel"} class also provides common \code{\link{plot}},
-  \code{\link{print}}, and extract \code{\link{methods}}.
+  \code{\link{print}}, and extract methods.
 }
 \details{
     \code{kernel}, \code{daniell.kernel},
