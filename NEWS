@@ -255,6 +255,11 @@ NEW FEATURES
 	10000) and gives a more informative message is out of range
 	(as it does now for digits and expressions).
 
+    o	Function path.expand() to do tilde-expansion on file paths.
+	This provides an interface to R_ExpandFileName, which is now
+	a documented entry point.
+
+
 
 BUG FIXES
 

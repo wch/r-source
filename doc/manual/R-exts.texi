@@ -3755,6 +3755,16 @@ column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
 @end deftypefun
 
+There is also the internal function use to expand file names in
+several @R{} functions, and called directly by @code{path.expand}.
+
+@deftypefun char * R_ExpandFileName(char* @var{fn})
+Expand a path name @var{fn} by replacing a leading tilde by the
+user's home directory (if defined).  The precise meaning is
+platform-specific; it will usually be taken from the environment
+variable @code{HOME} if this is defined.
+@end deftypefun
+
 
 @node Platform and version information, Standalone Mathlib, Utility functions, The R API
 @section Platform and version information

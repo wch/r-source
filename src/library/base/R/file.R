@@ -126,3 +126,5 @@ Sys.info <- function()
 Sys.sleep <- function(time)
     invisible(.Internal(Sys.sleep(time)))
 
+path.expand <- function(path)
+    .Internal(path.expand(path))

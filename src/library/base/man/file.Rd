@@ -10,6 +10,7 @@ file.copy(from, to, overwrite = FALSE)
 dir.create(path)
 basename(path)
 dirname(path)
+path.expand(path)
 }
 \alias{file.append}
 \alias{file.copy}
@@ -19,8 +20,9 @@ dirname(path)
 \alias{dir.create}
 \alias{basename}
 \alias{dirname}
+\alias{path.expand}
 \arguments{
-  \item{\dots, file1, file2, from, to path}{character vectors,
+  \item{\dots, file1, file2, from, to, path}{character vectors,
     containing file names.}
   \item{overwrite}{logical; should the destination files be overwritten?}
 }
@@ -68,6 +70,9 @@ dirname(path)
   In both \code{basename} and \code{dirname} trailing file separators
   are removed before dissecting the path, and for \code{dirname} any
   trailing file separators are removed from the result.
+
+  \code{path.expand} expands path(s) by replacing a leading tilde by the
+  user's home directory (if defined on that platform).
 }
 \author{
   Ross Ihaka, Brian Ripley
@@ -89,5 +94,7 @@ file.remove("A", "B", "C")
 
 basename(file.path("","p1","p2","p3","filename"))
 dirname(file.path("","p1","p2","p3","filename"))
+
+path.expand("~/foo")
 }
 \keyword{file}

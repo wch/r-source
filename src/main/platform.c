@@ -783,3 +783,22 @@ SEXP do_localeconv(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 #endif
 }
+
+/* .Internal function for path.expand */
+SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP fn, ans;
+    int i, n;
+    
+    checkArity(op, args);
+    fn = CAR(args);
+    if (!isString(fn))
+        errorcall(fn, "invalid path argument");
+    n = length(ans);
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++)
+	SET_STRING_ELT(ans, i, 
+		       mkChar(R_ExpandFileName(CHAR(STRING_ELT(fn, i)))));
+    UNPROTECT(1);
+    return ans;
+}
