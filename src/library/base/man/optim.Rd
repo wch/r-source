@@ -48,7 +48,7 @@ optim(par, fn, gr = NULL,
   matrix they may be successful in much larger optimization problems.
   
   The fourth method is that of Byrd \emph{et. al.} (1994) which allows
-  \emph{box constrainsts}, that is each variable can be given a lower
+  \emph{box constraints}, that is each variable can be given a lower
   and/or upper bound. The initial value must satisfy the constraints.
   This uses a limited-memory modification of the BFGS quasi-Newton
   method. If non-trivial bounds are supplied, this method will be
@@ -74,7 +74,7 @@ optim(par, fn, gr = NULL,
 	Optimization is performed on \code{par/parscale} and these should be
 	comparable in the sense that a unit change in any element produces
 	about a unit change in the scaled value.}
-    \item{\code{ndeps}}{A vector of stepsizes for the finite-difference
+    \item{\code{ndeps}}{A vector of step sizes for the finite-difference
       approximation to the gradient, on \code{par/parscale}
       scale. Defaults to \code{1e-3}.}
     \item{\code{maxit}}{The maximum number of iterations. Defaults to
