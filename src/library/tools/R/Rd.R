@@ -183,7 +183,8 @@ function(RdFiles)
                Name = I(unlist(contents[ , "Name"])),
                Type = I(unlist(contents[ , "Type"])),
                Title = I(title),
-               contents[, c("Aliases", "Keywords")])
+               Aliases = I(contents[ , "Aliases"]),
+               Keywords = I(contents[ , "Keywords"]))
 }
 
 ### * .writeContentsRDS
