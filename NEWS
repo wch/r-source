@@ -294,9 +294,11 @@ INSTALLATION CHANGES
 	  See the variable output section of 'configure --help' for a
 	  list of all these variables.
 
-    o	Configure option '--with-g77' and configure variable 'FC' are
-	deprecated.  Use configure variable 'F77' to specify the FORTRAN
-	77 compiler.
+    o   Configure variable 'FC' is deprecated, and options '--with-g77',
+	'--with-f77' and '--with-f2c' are defunct.  Use configure
+	variable 'F77' to specify the FORTRAN 77 compiler, and 'F2C' to
+	specify the FORTRAN-to-C compiler and/or that it should be used
+	even if a FORTRAN 77 compiler is available.
 
     o	Non-standard directories containing libraries are specified
 	using configure variable 'LDFLAGS' (not 'LIBS').

@@ -844,9 +844,12 @@ order)@footnote{On HPUX @command{fort77} is the @acronym{POSIX}
 compliant FORTRAN compiler, and comes second in the search list.}, and
 then for @command{f2c}, and use whichever is found first; if none is
 found, @R{} cannot be compiled.  The search mechanism can be changed
-using the @option{--with-f77} and @option{--with-f2c} command line
-options to @command{configure}.  If your FORTRAN compiler is in a
-non-standard location, you should set the environment variable
+using the configure variables @code{F77} and @code{F2C} which specify
+the commands that run the FORTRAN 77 compiler and FORTRAN-to-C
+converter, respectively.  If @code{F77} is given, it is used to compile
+FORTRAN; otherwise, if @code{F2C} is given, f2c is used even if a
+FORTRAN compiler would be be available.  If your FORTRAN compiler is in
+a non-standard location, you should set the environment variable
 @env{PATH} accordingly before running @command{configure}, or use the
 configure variable @code{F77} to specify its full path.
 
