@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-08)
+Version 1.7.0 Under development (unstable) (2003-02-26)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -16,6 +16,7 @@ Type `q()' to quit R.
 > ### Regression tests for which the printed output is the issue
 > 
 > postscript("reg-tests-2.ps")
+> RNGversion("1.6.2")
 > 
 > ### moved from various .Rd files
 > ## abbreviate
@@ -1625,6 +1626,7 @@ Eye:Sex   3    23.08 201.83
 > runif(4)
 [1] 0.04062130 0.06511825 0.99290488 0.95540467
 > set.seed(123, "default")
+> set.seed(123, "Marsaglia-Multicarry") ## Careful, not the default anymore
 > runif(4)
 [1] 0.1200427 0.1991600 0.7292821 0.8115922
 > ## last set.seed failed < 1.5.0.

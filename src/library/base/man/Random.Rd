@@ -45,7 +45,7 @@ set.seed(seed, kind = NULL)
   %% source and more detailed references:  ../../../main/RNG.c
   The currently available RNG kinds are given below.  \code{kind} is
   partially matched to this list.  The default is
-  \code{"Marsaglia-Multicarry"}.
+  \code{"Mersenne-Twister"}.
   \describe{
     \item{\code{"Wichmann-Hill"}}{
     The seed, \code{.Random.seed[-1] == r[1:3]} is an integer vector of
@@ -108,8 +108,9 @@ set.seed(seed, kind = NULL)
     }
   }
 
-  \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default),
-  \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} or
+  \code{normal.kind} can be \code{"Kinderman-Ramage"},
+  \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} (the
+  default), or
   \code{"user-supplied"}.  (For inversion, see the reference in
   \code{\link{qnorm}}.)
 

@@ -1,6 +1,7 @@
 ### Regression tests for which the printed output is the issue
 
 postscript("reg-tests-2.ps")
+RNGversion("1.6.2")
 
 ### moved from various .Rd files
 ## abbreviate
@@ -613,6 +614,7 @@ rnorm(4)
 set.seed(123)
 runif(4)
 set.seed(123, "default")
+set.seed(123, "Marsaglia-Multicarry") ## Careful, not the default anymore
 runif(4)
 ## last set.seed failed < 1.5.0.
 
