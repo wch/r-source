@@ -15,11 +15,15 @@ NEW FEATURES
 	and long double C types (or 0 if they do not exist).
 
      o	postscript() allows user-specified encoding, with encoding
-	files supplied for Windows, Mac, Unicode and various others.
+	files supplied for Windows, Mac, Unicode and various others,
+	and with an appropriate platform-specific default.
 
-     o	pdf() graphics driver (not yet operational).
+     o	pdf() graphics driver (not yet as fast as it will be).
 
      o	eigen() tests for symmetry with a numerical tolerance.
+
+     o	file and pipe connections can be read with a user-specified
+	encoding.
 
 
 BUG FIXES
