@@ -146,14 +146,14 @@ close.screen <- function(n, all.screens=FALSE)
            "sp.valid.screens"), dev.cur(), sep=":"), envir=.SSenv)
 	invisible()
     } else {
-	.SSassign("sp.valid.screens",
-                  valid.screens[-sort(match(n, valid.screens))])
+        valid.screens <- valid.screens[-sort(match(n, valid.screens))]
+	.SSassign("sp.valid.screens", valid.screens)
 	temp <- .SSget("sp.cur.screen")
 	if (temp %in% n) {
             poss <- valid.screens[valid.screens>temp]
 	    temp <- if(length(poss)) min(poss) else min(valid.screens)
         }
 	screen(temp, new=FALSE)
-	.SSget("sp.valid.screens")
+	valid.screens
     }
 }
