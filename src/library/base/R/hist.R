@@ -111,10 +111,10 @@ hist.default <-
 
 plot.histogram <-
     function (x, freq = equidist, density = NULL, angle = 45,
-              col = NULL, border = par("fg"),lty = NULL,
-              main = paste("Histogram of", x$xname),
-              xlim = range(x$breaks), ylim = NULL,
+              col = NULL, border = par("fg"), lty = NULL,
+              main = paste("Histogram of", x$xname), sub = NULL,
               xlab = x$xname, ylab,
+              xlim = range(x$breaks), ylim = NULL,
               axes = TRUE, labels = FALSE, add = FALSE, ...)
 {
     equidist <-
@@ -134,7 +134,7 @@ plot.histogram <-
             ylab <- if (!freq) "Density" else "Frequency"
         plot.new()
         plot.window(xlim, ylim, "")     #-> ylim's default from 'y'
-        title(main = main, xlab = xlab, ylab = ylab, ...)
+        title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
         if(axes) {
             axis(1, ...)
             axis(2, ...)

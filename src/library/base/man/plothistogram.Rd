@@ -8,11 +8,10 @@
 }
 \usage{
 \method{plot}{histogram}(x, freq = equidist, density = NULL, angle = 45,
-               col = NULL, border = par("fg"),
-               lty = NULL, main = paste("Histogram of", x$xname),
-               xlim = range(x$breaks), ylim = range(y, 0),
-               xlab = x$xname, ylab, axes = TRUE, labels = FALSE,
-               add = FALSE, \dots)
+               col = NULL, border = par("fg"), lty = NULL,
+               main = paste("Histogram of", x$xname), sub = NULL,
+               xlab = x$xname, ylab, xlim = range(x$breaks), ylim = NULL,
+               axes = TRUE, labels = FALSE, add = FALSE, \dots)
 
 \method{lines}{histogram}(x, \dots)
 }
@@ -31,9 +30,9 @@
   \item{angle, density}{select shading of bars by lines:
     see \code{\link{rect}}.}
   \item{lty}{the line type used for the bars, see also \code{\link{lines}}.}
-  \item{xlim, ylim}{the range of x and y values with sensible defaults.}
-  \item{main, xlab, ylab}{these arguments to \code{title} have useful
+  \item{main, sub, xlab, ylab}{these arguments to \code{title} have useful
     defaults here.}
+  \item{xlim, ylim}{the range of x and y values with sensible defaults.}
   \item{axes}{logical, indicating if axes should be drawn.}
   \item{labels}{logical or character.  Additionally draw labels on top of bars,
     if not \code{FALSE}; if \code{TRUE}, draw the counts or rounded
