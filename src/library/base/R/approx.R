@@ -17,6 +17,9 @@ approx <- function (x, y=NULL, xout, method = "linear", n = 50,
     ok <- !(is.na(x) | is.na(y))
     x <- x[ok]
     y <- y[ok]
+    nx <-length(x)
+    if (nx < 2)
+	stop("approx requires at least two non-missing values to interpolate")
     o <- order(x)
     x <- x[o]
     y <- y[o]
