@@ -72,7 +72,7 @@ NEW FEATURES
         end of the successful evaluation of each top-level expression,
         for example to perform auto-saves, update dipslays, etc. See
         addTaskCallback() and taskCallbackManager(). See 
-	http://developer.r-project.org/TaskHandlers.pdf
+	http://developer.r-project.org/TaskHandlers.pdf.
 
     o	length() is now generic.
 
