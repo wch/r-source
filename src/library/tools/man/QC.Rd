@@ -48,9 +48,14 @@ checkMethods(package, dir, lib.loc = NULL)
   \code{checkMethods} checks whether all methods defined in the package
   R code have all arguments of the corresponding generic, with
   positional arguments of the generics in the same positions for the
-  method.  The generics are sought first in the given package and then
-  in the base package.  The rules when \code{\dots} is involved are
-  subtle: see the source code.
+  method.  As an exception, the first argument of a formula method
+  \emph{may} be called \code{formula} even if this is not the name used
+  by the generic.  Currently, only functions the body of which starts
+  with a call to \code{UseMethod} are recognized as (S3) generics;
+  internal method dispatch (see section ``Simple Dispatching'' in
+  \link[base]{zMethods}) are not taken into account.  The generics are
+  sought first in the given package and then in the base package.  The
+  rules when \code{\dots} is involved are subtle: see the source code.
 
   If using an installed package, the checks needing access to all R
   objects of the package will load the package (unless it is the base
