@@ -122,6 +122,8 @@ NEW FEATURES
 	for reading and writing under Windows.)  The secondary
 	selection can also be read: see ?file.
 
+	file() now allows mode "w+b" as well as "w+".
+
     o	file.append() has been tuned, including for the case of
 	appending many files to a single file.
 

@@ -131,8 +131,9 @@ isIncomplete(con)
   write/append (where implemented).
 
   If for a \code{file} connection the description is \code{""}, the file
-  is immediately opened in \code{"w+"} mode and unlinked from the file
-  system.  This provides a temporary file to write to and then read from.
+  is immediately opened (in \code{"w+"} mode unless \code{open="w+b"} is
+  specified) and unlinked from the file system.  This provides a
+  temporary file to write to and then read from.
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},

@@ -3348,7 +3348,13 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
     } else {
 	if(PRIMVAL(op)) { /* call to file() */
-	    if(strlen(url) == 0) open ="w+";
+	    if(strlen(url) == 0) {
+		if(!strlen(open)) open ="w+";
+		if(strcmp(open, "w+") != 0 && strcmp(open, "w+b") != 0) {
+		    open ="w+";
+		    warning(_("file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"));
+		}
+	    }
 	    if(strcmp(url, "clipboard") == 0 ||
 #ifdef Win32
 	       strncmp(url, "clipboard-", 10) == 0
