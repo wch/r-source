@@ -50,7 +50,7 @@ $(OBJS): $(top_srcdir)/src/include/Defn.h
 #	mv y.tab.c $@
 
 gram.c: $(srcdir)/gram.y
-	$(YACC) $<
+	$(YACC) $(srcdir)/gram.y
 	mv y.tab.c $@
 
 mostlyclean: clean
