@@ -665,9 +665,9 @@ void Raqua_StartConsole(Rboolean OpenConsole)
 	Raqua_read_history(R_HistoryFile);
     }   
         
-    InstallEventLoopTimer(GetCurrentEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
-    InstallEventLoopTimer(GetCurrentEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, NULL);
-    InstallEventLoopTimer(GetCurrentEventLoop(), 0, kEventDurationSecond *5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, NULL);
+    InstallEventLoopTimer(GetMainEventLoop(), 0, 1, NewEventLoopTimerUPP(OtherEventLoops), NULL, NULL);
+    InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond /5, NewEventLoopTimerUPP(ReadStdoutTimer), NULL, NULL);
+    InstallEventLoopTimer(GetMainEventLoop(), 0, kEventDurationSecond *5, NewEventLoopTimerUPP(FlushConsoleTimer), NULL, NULL);
 
     RAqua2Front();
 
@@ -3372,7 +3372,7 @@ pascal OSErr  HandleDoCommandLine (AppleEvent *theAppleEvent, AppleEvent* reply,
        onintr();
 
     
-    if(ReceiveNextEvent(0, NULL,kEventDurationNoWait,true,&theEvent)== noErr){
+    if(ReceiveNextEvent(0, NULL,  1/5 /*kEventDurationForever kEventDurationNoWait*/  ,true,&theEvent)== noErr){
         conv = ConvertEventRefToEventRecord(theEvent, &outEvent);
     
         if(conv && (outEvent.what == kHighLevelEvent))
