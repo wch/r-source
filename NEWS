@@ -9,6 +9,13 @@
 		CHANGES IN R VERSION 1.9.0
 
 
+UTILITIES
+
+    o	R CMD check  now runs the (Rd) examples with default RNGkind
+	(uniform & normal) and set.seed(1).  example() will get an argument
+	to do the same.
+
+
 DEPRECATED & DEFUNCT
 
     o	print.coefmat() is defunct, replaced by printCoefmat().

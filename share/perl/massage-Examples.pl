@@ -1,6 +1,7 @@
 #-*- perl -*-
 
-## Copyright (C) 2001-2002 R Development Core Team
+## Copyright (C) 2001--2002 R Development Core Team
+## Copyright (C) 2003       The R Foundation
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -66,8 +67,8 @@ assign("plot.new",
 assign("cleanEx",
        function(env = .GlobalEnv) {
 	   rm(list = ls(envir = env, all.names = TRUE), envir = env)
-           RNGkind("Wichmann-Hill", "default")
-	   assign(".Random.seed", c(0, rep(7654, 3)), pos = 1)
+           RNGkind("default", "default")
+	   set.seed(1)
 _EOF_
 if(!defined($ENV{'R_CHECK_WITH_T_N_F_AS_NULL'})
    || $ENV{'R_CHECK_WITH_T_N_F_AS_NULL'} ne "") {
