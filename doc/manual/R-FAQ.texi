@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-27, 2003-01-16
+@set FAQ-VERSION 1.6-28, 2003-01-23
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -2070,6 +2070,10 @@ Various tests on structural change in linear regression models.
 A collection of functions which assess the quality of variable subsets
 as surrogates for a full data set, and search for subsets which are
 optimal under various criteria.
+@item survey
+Summary statistics, generalized linear models, and general maximum
+likelihood estimation for stratified, cluster-sampled, unequally
+weighted survey samples.
 @c @item survival4
 @c Functions for survival analysis, version 4 (requires
 @c @strong{splines}).

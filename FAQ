@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-27, 2003-01-16
+Version 1.6-28, 2003-01-23
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1898,6 +1898,11 @@ distributions of R.)
      A collection of functions which assess the quality of variable subsets
      as surrogates for a full data set, and search for subsets which are
      optimal under various criteria.
+
+*survey*
+     Summary statistics, generalized linear models, and general maximum
+     likelihood estimation for stratified, cluster-sampled, unequally
+     weighted survey samples.
 
 *survival*
      Functions for survival analysis, including penalised likelihood.
