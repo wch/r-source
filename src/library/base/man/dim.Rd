@@ -14,11 +14,12 @@ dim(x) <- values
   The functions \code{dim} and \code{dim<-} are generic.
 
   For an array (and hence in particular, for a matrix) they retrieve or
-  set the \code{dim} attribute of the object.
+  set the \code{dim} attribute of the object.  It is always
+  \code{\link{integer}} or \code{\link{NULL}}.
 
-  \code{dim} has a method for data frames, which returns the length of
-  the \code{row.names} attribute of \code{x} and the length of \code{x}
-  (the numbers of ``rows'' and ``columns'').
+  \code{dim} has a method for \code{\link{data.frame}}s, which returns
+  the length of the \code{row.names} attribute of \code{x} and the
+  length of \code{x} (the numbers of ``rows'' and ``columns'').
 }
 \seealso{
   \code{\link{ncol}}, \code{\link{nrow}} and \code{\link{dimnames}}.

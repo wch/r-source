@@ -15,14 +15,15 @@ NROW(x)
 }
 \description{
   \code{nrow} and \code{ncol} return the number of rows or columns
-  present in \code{x}. 
-  \code{NCOL} and \code{NROW} do the same, but treat a vector as
+  present in \code{x}.
+  \code{NCOL} and \code{NROW} do the same treating a vector as
   1-column matrix.
 }
 \seealso{
   \code{\link{dim}} which returns \emph{all} dimensions;
   \code{\link{array}}, \code{\link{matrix}}.
 }
+\value{an \code{\link{integer}} of length 1 or \code{\link{NULL}}.}
 \examples{
 ma <- matrix(1:12, 3, 4)
 nrow(ma)   # 3

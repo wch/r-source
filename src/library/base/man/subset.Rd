@@ -19,8 +19,8 @@ subset.data.frame(x, subset, select)
     data frame}
 }
 \details{
-  For ordinary vectors, the result is simply 
-  \code{x[subset & !is.na(subset)]}. 
+  For ordinary vectors, the result is simply
+  \code{x[subset & !is.na(subset)]}.
 
   For dataframes, the \code{subset} argument works similarly on the
   rows.  Note that \code{subset} will be evaluated in the dataframe.
@@ -37,7 +37,7 @@ subset.data.frame(x, subset, select)
 }
 \author{Peter Dalgaard}
 \seealso{
-  \code{\link{[}},
+  \code{\link{[}}, % = ./Extract.Rd
   \code{\link{transform}}
 }
 \examples{

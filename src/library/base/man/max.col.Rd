@@ -1,5 +1,6 @@
 % Originally file MASS/max.col.d
 % copyright (C) 1999 W. N. Venables and B. D. Ripley
+% copyright (C) 2000 The R Core Development Team
 \name{max.col}
 \alias{max.col}
 \title{Find Maximum Position in Matrix}
@@ -19,8 +20,15 @@ max.col(m)
   Ties are broken at random.  The determination of ``tie'' assumes that
   the entries are probabilities.
 }
+\author{W. N. Venables and B. D. Ripley}
+\references{
+  Venables, W. N. and Ripley, B. D. (1999)
+  \emph{Modern Applied Statistics with S-PLUS.}
+  New York: Springer (3nd ed).
+}
 \examples{
 data(swiss)
 table(mc <- max.col(swiss))# mostly "1" and "5", 5 x "2" and once "4"
+swiss[unique(print(mr <- max.col(t(swiss)))) , ] # 3 33 45 45 33 6
 }
 \keyword{utilities}

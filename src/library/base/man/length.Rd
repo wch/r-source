@@ -14,11 +14,11 @@ length(x) <- n
   Get or set the length of vectors (including lists).
 }
 \value{
-  If \code{x} is (or can be coerced to) a vector or list, \code{length}
-  returns the length of \code{x}.
-  Otherwise, \code{length} returns \code{NA}.
+  The length of \code{x} as an \code{\link{integer}} of length 1,
+  if \code{x} is (or can be coerced to) a vector or list.  Otherwise,
+  \code{length} returns \code{NA}.
 }
-\details{ 
+\details{
   The replacement form can be used to reset
   the length of a vector.
   If a vector is shortened, extra values are discarded

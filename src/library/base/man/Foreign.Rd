@@ -17,10 +17,10 @@
   \item{name}{a character string giving the name of a C function or
     Fortran subroutine.}
   \item{\dots}{arguments to be passed to the foreign function.}
-  \item{NAOK}{if \code{TRUE} then any \code{NA} or \code{NaN} or
-    \code{Inf} values in the arguments are passed on to the foreign
-    function.  If \code{FALSE}, the presence of \code{NA}  or \code{NaN}
-    or \code{Inf} values is regarded as an error.}
+  \item{NAOK}{if \code{TRUE} then any \code{\link{NA}} or
+    \code{\link{NaN}} or \code{\link{Inf}} values in the arguments are
+    passed on to the foreign function.  If \code{FALSE}, the presence of
+    \code{NA} or \code{NaN} or \code{Inf} values is regarded as an error.}
   \item{DUP}{if \code{TRUE} then arguments are ``duplicated'' before
     their address is passed to C or Fortran.}
   \item{PACKAGE}{if supplied, confine the search for the \code{name} to
@@ -28,7 +28,7 @@
     \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure that no other package can
     override their external symbols by using this argument.  Use
-    \code{PACKAGE="base"} for symbols linked in to \R.} 
+    \code{PACKAGE="base"} for symbols linked in to \R.}
 }
 \value{
   The functions \code{.C} and \code{.Fortran} return a list similar to
@@ -45,7 +45,7 @@
   to C and Fortran code.
 
   \code{.External} can be used to call compiled code that uses \R
-  objects in the same way as internal \R functions. 
+  objects in the same way as internal \R functions.
 
   \code{.Call} can be used call compiled code which makes use of
   internal \R objects.  The arguments are passed to the C code as a
@@ -94,12 +94,12 @@
   The first character string of a character vector is passed as a C
   character array to Fortran: that string may be usable as
   \code{character*255} if its true length is passed separately.  Only up
-  to 255 characters of the string are passed back. 
+  to 255 characters of the string are passed back.
 
   Functions, expressions, environments and other language elements are
   passed as the internal \R pointer type \code{SEXP}.  This type is
   defined in \file{Rinternals.h} or the arguments can be declared as
-  generic pointers, \code{void *}.  Lists are passed as C arrays of 
+  generic pointers, \code{void *}.  Lists are passed as C arrays of
   \code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
 
   \R functions can be invoked using \code{call_S} or \code{call_R} and
@@ -107,7 +107,7 @@
 }
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}
-    
+
 There are three important dangers with \code{DUP=FALSE}. The first is that
 garbage collection may move the object, resulting in the pointers
 pointing nowhere useful and causing hard-to-reproduce bugs.
@@ -146,6 +146,6 @@ safe.
     as other header files are not installed and are even more
     likely to be changed.
 }
-    
+
 \seealso{\code{\link{dyn.load}}.}
 \keyword{programming}
