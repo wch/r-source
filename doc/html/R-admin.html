@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2004-01-09).
+   <p>The current version of this document is 1.9.0 (2004-01-16).
 
    ISBN 3-900051-02-X
 
@@ -1056,7 +1056,9 @@ practice this seems to give little problem for 32-bit builds.
    <p>For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets <code>LDFLAGS</code> to <code>-L/usr/local/lib</code>,
 you may need to set it to avoid finding 32-bit addons (as in the
-<code>gcc -m64</code> example above).
+<code>gcc -m64</code> example above).  It is possible to build Tcl/Tk as
+64-bit libraries with the configure option <code>--enable-64bit</code>, but
+only with the Forte compiler (and not with <code>gcc</code>) as of Tcl/Tk 8.4.5.
 
 <a name="HP-UX"></a>
 

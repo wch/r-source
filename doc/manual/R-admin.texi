@@ -1277,7 +1277,9 @@ practice this seems to give little problem for 32-bit builds.
 For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets @code{LDFLAGS} to @samp{-L/usr/local/lib},
 you may need to set it to avoid finding 32-bit addons (as in the
-@command{gcc -m64} example above).
+@command{gcc -m64} example above).  It is possible to build Tcl/Tk as 
+64-bit libraries with the configure option @command{--enable-64bit}, but
+only with the Forte compiler (and not with @command{gcc}) as of Tcl/Tk 8.4.5.
 
 
 @node HP-UX, IRIX, Solaris, Platform notes
