@@ -395,8 +395,8 @@ void R_CleanUp(SA_TYPE saveact, int status, int runLast)
     R_RunExitFinalizers();
     CleanEd();
     closeAllHlpFiles();
-    KillAllDevices();
-    AllDevicesKilled = TRUE;
+    /* KillAllDevices();
+       AllDevicesKilled = TRUE; */
     if (R_Interactive && CharacterMode == RTerm) 
 	SetConsoleTitle(oldtitle);
     UnLoad_Unzip_Dll();
