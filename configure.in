@@ -478,9 +478,7 @@ case "${host}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     R_PROG_CC_FLAG(-mno-fp-in-toc,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
-    if test "${GCC}" = yes; then
-      R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
-    fi
+    R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
     ;;
   alpha*osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
