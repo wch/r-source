@@ -16,39 +16,69 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ *
+ *
+ *  IMPLEMENTATION NOTES:
+ *
+ *  Deparsing, has 3 layers.  The user interface, do_deparse, should
+ *  not be called from an internal function, the actual deparsing needs
+ *  to be done twice, once to count things up and a second time to put
+ *  them into the string vector for return.  Printing this to a file
+ *  is handled by the calling routine.
+ *
+ *
+ *  INDENTATION:
+ *
+ *  Indentation is carried out in the routine printtab2buff at the
+ *  botton of this file.  It seems like this should be settable via
+ *  options.
+ *
+ *
+ *  GLOBAL VARIABLES:
+ *
+ *  linenumber:  counts the number of lines that have been written,
+ *               this is used to setup storage for deparsing.
+ *
+ *  len:         counts the length of the current line, it will be
+ *               used to determine when to break lines.
+ *
+ *  incurly:     keeps track of whether we are inside a curly or not,
+ *               this affects the printing of if-then-else.
+ *
+ *  inlist:      keeps track of whether we are inside a list or not,
+ *               this affects the printing of if-then-else.
+ *
+ *  startline:   indicator 0=start of a line (so we can tab out to
+ *               the correct place).
+ *
+ *  indent:      how many tabs should be written at the start of
+ *               a line.
+ *
+ *  buff:        contains the current string, we attempt to break
+ *               lines at cutoff, but can handle up to BUFSIZE
+ *               characters.
+ *
+ *  lbreak:      often used to indicate whether a line has been
+ *               broken, this makes sure that that indenting behaves
+ *               itself.
  */
+
+
+/* FIXME : The code below saves and restores the value of the global */
+/* variable "cutoff".  This could create a problem if a user interrupts */
+/* the deparse before there is a chance to restore the value.  One */
+/* possible fix is to restructure the code with another function which */
+/* takes a cutoff value as a parameter.  Then "do_deparse" and "deparse1" */
+/* could each call this deeper function with the appropriate argument. */
+/* I wonder why I didn't just do this? -- it would have been quicker than */
+/* writing this note.  I guess it needs a bit more thought ... */
+
 
 #include "Defn.h"
 #include "Print.h"
 #include "names.h"
 #include "Fileio.h"
 
-/*
- *	Global Variables:
- *
- *	linenumber: counts the number of lines that have been written,
- *	this is used to setup storage for deparsing.
- *
- *	len: counts the length of the current line, it will be used to
- *	determine when to break lines.
- *
- *	incurly: keeps track of whether we are inside a curly or not,
- *	this affects the printing of if-then-else.
- *
- *	inlist: keeps track of whether we are inside a list or not,
- *	this affects the printing of if-then-else.
- *
- *	startline: indicator 0=start of a line (so we can tab out to
- *	the correct place).
- *
- *	indent: how many tabs should be written at the start of a line.
- *
- *	buff: contains the current string, we attempt to break lines at
- *	cutoff, but can handle up to BUFSIZE characters.
- *
- *	lbreak: often used to indicate whether a line has been broken,
- *	this makes sure that that indenting behaves itself.
- */
 #define BUFSIZE 512
 
 #define MIN_Cutoff 20
@@ -73,34 +103,12 @@ static void print2buff(char *);
 static void printtab2buff(int);
 static void scalar2buff(SEXP);
 static void writeline(void);
-#ifdef NotUsed
-static void factor2buff(SEXP, int);
-#endif
 static void vector2buff(SEXP);
 static void vec2buff(SEXP);
 static void linebreak();
 void deparse2(SEXP, SEXP);
 
 
-	/* Deparsing, has 3 layers.  The user interface, do_deparse, */
-	/* should not be called from an internal function, the actual */
-	/* deparsing needs to be done twice, once to count things up */
-	/* and a second time to put them into the string vector for return. */
-	/* Printing this to a file is handled by the calling routine. */
-
-/* DEBUG_ME
-	The code below saves and restores the value of the global
-	variable "cutoff".  This could create a problem if a user
-	interrupts the deparse before there is a chance to restore
-	the value.  One possible fix is to restructure the code
-	with another function which takes a cutoff value as a
-	parameter.  Then "do_deparse" and "deparse1" could each
-	call this deeper function with the appropriate argument.
-
-	I wonder why I didn't just do this? -- it would have been
-	quicker than writing this note.	 I guess it needs a bit
-	more thought ...
-*/
 
 
 SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -125,10 +133,10 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ca1;
 }
 
-	/* The function deparse1 gets a second argument; abbrev. */
-	/* If abbrev is 1 then the returned value is a STRSXP of */
-	/* length 1 with at most 10 characters.	 This is use for */
-	/* plot labelling etc. */
+/* The function deparse1 gets a second argument; abbrev. */
+/* If abbrev is 1 then the returned value is a STRSXP of */
+/* length 1 with at most 10 characters.	 This is use for */
+/* plot labelling etc. */
 
 SEXP deparse1(SEXP call, int abbrev)
 {
@@ -261,9 +269,9 @@ void deparse2(SEXP what, SEXP svec)
 }
 
 
-	/* curlyahead looks at s to see if it is a list with */
-	/* the first op being a curly. You need this kind of */
-	/* lookahead info to print if statements correctly.  */
+/* curlyahead looks at s to see if it is a list with */
+/* the first op being a curly. You need this kind of */
+/* lookahead info to print if statements correctly.  */
 
 static int curlyahead(SEXP s)
 {
@@ -372,9 +380,11 @@ static void deparse2buff(SEXP s)
     case VECSXP:
 	if(length(s) <= 0) print2buff("NULL");
 	else {
+	    attr1(s);
 	    print2buff("list(");
 	    vec2buff(s);
 	    print2buff(")");
+	    attr2(s);
 	}
 	break;
     case EXPRSXP:
@@ -629,10 +639,9 @@ static void deparse2buff(SEXP s)
     }
 }
 
-/*
-   if there is a string array active point to that, and
-   otherwise we are counting lines so don't do anything
- */
+
+/* If there is a string array active point to that, and */
+/* otherwise we are counting lines so don't do anything. */
 
 static void writeline()
 {
@@ -767,9 +776,9 @@ static void args2buff(SEXP arglist, int lineb, int formals)
 	indent--;
 }
 
-/*
-   following the S style, print 4 tabs and then start printing spaces only
- */
+/* This code controls indentation.  Used to follow the S style, */
+/* (print 4 tabs and then start printing spaces only) but I */
+/* modified it to be closer to emacs style (RI). */
 
 static void printtab2buff(int ntab)
 {
