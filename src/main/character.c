@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -162,37 +162,59 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     len = LENGTH(x);
     tlen = LENGTH(tok);
     PROTECT(s = allocVector(VECSXP, len));
-    for (i = 0; i < len; i++) {
-	/* find out how many splits there will be */
+    for(i = 0; i < len; i++) {
 	AllocBuffer(strlen(CHAR(STRING(x)[i])));
 	strcpy(buff, CHAR(STRING(x)[i]));
-	if (tlen > 0) {
+	if(tlen > 0) {
+	    /* find out how many splits there will be */
 	    split = CHAR(STRING(tok)[i % tlen]);
 	    ntok = 0;
+	    /* Careful: need to distinguish empty (rm_eo == 0) from
+	       non-empty (rm_eo > 0) matches.  In the former case, the
+	       token extracted is the next character.  Otherwise, it is
+	       everything before the start of the match, which may be
+	       the empty string (not a ``token'' in the strict sense).
+	       */
 	    if(regcomp(&reg, split, 0))
 		errorcall(call, "invalid split pattern");
 	    while(regexec(&reg, buff, 1, regmatch, 0) == 0) {
+		/* Empty matches get the next char, so move by one. */
 		buff += MAX(regmatch[0].rm_eo, 1);
 		ntok++;
+		if (*buff == '\0')
+		    break;
 	    }
-	}
-	else ntok = strlen(buff);
-	PROTECT(t = allocVector(STRSXP, ntok + 1));
-	if (tlen > 0) {
+	    if(*buff == '\0')
+		PROTECT(t = allocVector(STRSXP, ntok));
+	    else
+		PROTECT(t = allocVector(STRSXP, ntok + 1));
+	    /* and fill with the splits */
 	    strcpy(buff, CHAR(STRING(x)[i]));
 	    pt = (char *) realloc(pt, (strlen(buff)+1)*sizeof(char));
 	    for(j = 0; j < ntok; j++) {
 		regexec(&reg, buff, 1, regmatch, 0);
-		if(regmatch[0].rm_so > 0)
-		    strncpy(pt, buff, regmatch[0].rm_so);
-		pt[regmatch[0].rm_so] = '\0';
+		if(regmatch[0].rm_eo > 0) {
+		    /* Match was non-empty. */
+		    if(regmatch[0].rm_so > 0)
+			strncpy(pt, buff, regmatch[0].rm_so);
+		    pt[regmatch[0].rm_so] = '\0';
+		    buff += regmatch[0].rm_eo;
+		}
+		else {
+		    /* Match was empty. */
+		    pt[0] = *buff;
+		    pt[1] = '\0';
+		    buff++;
+		}
 		STRING(t)[j] = mkChar(pt);
-		buff += MAX(regmatch[0].rm_eo, 1);
 	    }
-	    STRING(t)[ntok] = mkChar(buff);
+	    if(*buff != '\0')
+		STRING(t)[ntok] = mkChar(buff);
 	}
 	else {
 	    char bf[2];
+	    ntok = strlen(buff);
+	    PROTECT(t = allocVector(STRSXP, ntok));
 	    bf[1]='\0';
 	    for (j = 0; j < ntok; j++) {
 		bf[0]=buff[j];
