@@ -21,6 +21,6 @@ local({
 
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n",
-        file.path(system.file(), "tcltk", "demo", "tkfaq.R"),
+        file.path(system.file(package = "tcltk"), "demo", "tkfaq.R"),
         "\n******************************************************\n")
 })

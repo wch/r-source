@@ -63,7 +63,7 @@ local({
 
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n",
-        file.path(system.file(), "tcltk", "demo", "tkttest.R"),
+        file.path(system.file(package = "tcltk"), "demo", "tkttest.R"),
         "\n******************************************************\n")
     
     data(airquality)

@@ -137,7 +137,7 @@ local({
     
     cat("******************************************************\n",
         "The source for this demo can be found in the file:\n",
-        file.path(system.file(), "tcltk", "demo", "tkcanvas.R"),
+        file.path(system.file(package = "tcltk"), "demo", "tkcanvas.R"),
         "\n******************************************************\n")
     
 })
