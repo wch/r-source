@@ -115,11 +115,6 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 
 Directory:  Low-level
 
-* PR# 550 *
-Subject:  Inconsistencies 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Mon, 22 May 2000 10:39:40 +0800
---Is there a bug here?
 * PR# 505 *
 Subject: interrupted save 
 From: Thomas Lumley <thomas@biostat.washington.edu>
@@ -181,14 +176,6 @@ none
 
 Directory:  incoming
 
-* PR# 559 *
-Subject: problem loading packages
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Thu, 1 Jun 2000 20:07:55 -0400 (EDT)
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
 * PR# 551 *
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
@@ -197,11 +184,7 @@ Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
 Subject: Segmentation Fault of unknown cause
 From: kjetikj@astro.uio.no
 Date: Mon, 15 May 2000 16:29:29 +0200 (MET DST)
-* PR# 558 *
-Subject: Documentatio: typo in Writing R Extensions
-From: stephen@anc.ed.ac.uk
-Date: Tue, 30 May 2000 11:39:16 +0200 (MET DST)
-* PR# 557 *
-Subject: Documentatio: typo in Writing R Extensions
-From: stephen@anc.ed.ac.uk
-Date: Tue, 30 May 2000 11:39:10 +0200 (MET DST)
+* PR# 536 *
+Subject: Problem with match.arg()
+From: kjetikj@astro.uio.no
+Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
