@@ -110,21 +110,21 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	    ## stats = +/- Inf:	 polygon & segments should handle
 	    wid <- wid/2
             if (horizontal) {
-          
+
                 if (notch) {
-                    xx <- x + wid * c(-1, 1, 1, notch.frac, 1, 1, 
+                    xx <- x + wid * c(-1, 1, 1, notch.frac, 1, 1,
                                       -1, -1, -notch.frac, -1)
-                    yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2], 
+                    yy <- c(stats[c(2, 2)], conf[1], stats[3], conf[2],
                             stats[c(4, 4)], conf[2], stats[3], conf[1])
                     polygon(yy, xx, col = col, border = border)
-                    segments(stats[3], x - wid/2, stats[3], x + wid/2, 
+                    segments(stats[3], x - wid/2, stats[3], x + wid/2,
                              col = border)
                 }
                 else {
                     xx <- x + wid * c(-1, 1, 1, -1)
                     yy <- stats[c(2, 2, 4, 4)]
                     polygon(yy, xx, col = col, border = border)
-                    segments(stats[3], x - wid, stats[3], x + wid, 
+                    segments(stats[3], x - wid, stats[3], x + wid,
                              col = border)
                 }
                 segments(stats[c(1, 5)], rep(x, 2), stats[c(2, 4)], rep(x, 2),
@@ -216,9 +216,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     axes <- is.null(pars$axes)
     if(!axes) { axes <- pars$axes; pars$axes <- NULL }
     if(axes) {
-	if(n > 1)
-            axis(1+horizontal, at=1:n, labels=z$names, xaxt = pars$xaxt)
-	axis(2-horizontal, yaxt = pars$yaxt)
+        if (n > 1)
+            do.call("axis", c(list(side = 1 + horizontal, at = 1:n, labels
+                 = z$names), pars[names(pars) %in% c("xaxt", "yaxt", "las")]))
+        do.call("axis", c(list(side = 2 - horizontal),
+                          pars[names(pars) %in% c("xaxt", "yaxt", "las")]))
     }
     do.call("title", pars)
     if(frame.plot)
