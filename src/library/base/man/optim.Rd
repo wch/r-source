@@ -19,10 +19,7 @@ optim(par, fn, gr = NULL,
    place. It should return a scalar result.}
  \item{gr}{A function to return the gradient. Not needed for the
    \code{"Nelder-Mead"} and \code{"SANN"} method. If it is \code{NULL}
-   and it is needed, a
-   finite-difference approximation will be used. It is guaranteed that
-   \code{gr} will be called immediately after a call to \code{fn} at
-   the same parameter values.}
+   and it is needed, a finite-difference approximation will be used.}
  \item{method}{The method to be used. See \bold{Details}.}
  \item{lower, upper}{Bounds on the variables for the \code{"L-BFGS-B"} method.}
  \item{control}{A list of control parameters. See \bold{Details}.}
