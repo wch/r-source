@@ -329,10 +329,10 @@ f2xact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
     const double amiss = -12345.;
 
     /* TOL is chosen as the square root of the smallest relative spacing. */
-    static double tol = 3.45254e-7;
+    const static double tol = 3.45254e-7;
 
     /* EMX is a large positive value used in comparing expected values. */
-    static double emx = 1e30;
+    const static double emx = 1e30;
 
     /* Local variables {{any really need to be static ???}} */
     static Sint kval, kmax, jkey, last, ipsh, itmp, itop, jstp, ntot,

@@ -9,8 +9,6 @@
 
 #include "ctest.h"
 
-static double **w;
-
 static void
 errmsg(char *s) {
     PROBLEM "%s", s RECOVER(NULL_ENTRY);
@@ -35,7 +33,7 @@ kendall_tau(Sint *n, double *x, double *y, double *tau) {
 }
 
 static double
-ckendall(int k, int n) {
+ckendall(int k, int n, double **w) {
     int i, u;
     double s;
 
@@ -43,9 +41,8 @@ ckendall(int k, int n) {
     if ((k < 0) || (k > u))
 	return(0);
     if (w[n] == 0) {
-	w[n] = Calloc(u + 1, double);
-	if (!w[n])
-	    errmsg("allocation error in ckendall()");
+	w[n] = (double *) R_alloc(u + 1, sizeof(double));
+	memset(w[n], '\0', sizeof(double)*(u+1));
 	for (i = 0; i <= u; i++)
 	    w[n][i] = -1;
     }
@@ -55,18 +52,20 @@ ckendall(int k, int n) {
 	else {
 	    s = 0;
 	    for (i = 0; i < n; i++)
-		s += ckendall(k - i, n - 1);
+		s += ckendall(k - i, n - 1, w);
 	    w[n][k] = s;
 	}
     }
     return(w[n][k]);
 }
 
+#if 0
 void
 dkendall(Sint *len, double *x, Sint *n) {
     Sint i;
+    double **w;
 
-    w = Calloc(*n + 1, double *);
+    w = R_alloc(*n + 1, sizeof(double *));
     if (!w)
 	errmsg("allocation error in dkendall()");
 
@@ -74,18 +73,19 @@ dkendall(Sint *len, double *x, Sint *n) {
 	if (fabs(x[i] - floor(x[i] + 0.5)) > 1e-7) {
 	    x[i] = 0;
 	} else {
-	    x[i] = ckendall((Sint)x[i], (Sint)*n) / gammafn(*n + 1);
+	    x[i] = ckendall((Sint)x[i], (Sint)*n) / gammafn(*n + 1, w);
 	}
 }
+#endif
 
 void
 pkendall(Sint *len, double *x, Sint *n) {
     Sint i, j;
     double p, q;
+    double **w;
 
-    w = Calloc(*n + 1, double *);
-    if (!w)
-	errmsg("allocation error in pkendall()");
+    w = (double **) R_alloc(*n + 1, sizeof(double *));
+    memset(w, '\0', sizeof(double*)*(*n+1));
 
     for (i = 0; i < *len; i++) {
 	q = floor(x[i] + 1e-7);
@@ -96,7 +96,7 @@ pkendall(Sint *len, double *x, Sint *n) {
 	else {
 	    p = 0;
 	    for (j = 0; j <= q; j++) {
-		p += ckendall((Sint)j, (Sint)*n);
+		p += ckendall((Sint)j, (Sint)*n, w);
 	    }
 	    x[i] = p / gammafn(*n + 1);
 	}

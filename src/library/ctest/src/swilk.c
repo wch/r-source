@@ -9,7 +9,7 @@
 # define min(a, b)		((a) > (b) ? (b) : (a))
 #endif
 
-static double poly(float *, int, float);
+static double poly(const float *, int, float);
 
 void
 swilk(int *init,/* logical: is a[] already initialized ? */
@@ -43,17 +43,17 @@ swilk(int *init,/* logical: is a[] already initialized ? */
     const static float stqr = 1.047198f;
 
     /* polynomial coefficients */
-    static float g[2] = { -2.273f,.459f };
-    static float
+    const static float g[2] = { -2.273f,.459f };
+    const static float
       c1[6] = { 0.f,.221157f,-.147981f,-2.07119f, 4.434685f, -2.706056f },
       c2[6] = { 0.f,.042981f,-.293762f,-1.752461f,5.682633f, -3.582633f };
-    static float c3[4] = { .544f,-.39978f,.025054f,-6.714e-4f };
-    static float c4[4] = { 1.3822f,-.77857f,.062767f,-.0020322f };
-    static float c5[4] = { -1.5861f,-.31082f,-.083751f,.0038915f };
-    static float c6[3] = { -.4803f,-.082676f,.0030302f };
-    static float c7[2] = { .164f,.533f };
-    static float c8[2] = { .1736f,.315f };
-    static float c9[2] = { .256f,-.00635f };
+    const static float c3[4] = { .544f,-.39978f,.025054f,-6.714e-4f };
+    const static float c4[4] = { 1.3822f,-.77857f,.062767f,-.0020322f };
+    const static float c5[4] = { -1.5861f,-.31082f,-.083751f,.0038915f };
+    const static float c6[3] = { -.4803f,-.082676f,.0030302f };
+    const static float c7[2] = { .164f,.533f };
+    const static float c8[2] = { .1736f,.315f };
+    const static float c9[2] = { .256f,-.00635f };
 
     /* System generated locals */
     float r__1;
@@ -251,7 +251,7 @@ L70:
     return;
 } /* swilk */
 
-static double poly(float *cc, int nord, float x)
+static double poly(const float *cc, int nord, float x)
 {
 /* Algorithm AS 181.2	Appl. Statist.	(1982) Vol. 31, No. 2
 
