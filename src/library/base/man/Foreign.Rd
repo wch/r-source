@@ -52,14 +52,17 @@ These calls are typically made in conjunction with
 \    R \tab     C \tab     Fortran\cr
 integer \tab int * \tab integer\cr
 real \tab double * \tab double precision\cr
-complex \tab complex * \tab double precision\cr
+complex \tab complex * \tab double complex\cr
 logical \tab int * \tab integer \cr
 character \tab char ** \tab [compiler dependent]\cr
 list \tab void * (SEXP *)\tab \cr
 other \tab void * (SEXP)\tab \cr
 }
     The C type \code{complex} is defined in \file{Complex.h} as a
-    \code{typedef struct {double r; double i;}}.
+    \code{typedef struct {double r; double i;}}. Fortran type
+    \code{double complex} is an extension to the Fortran standard, and
+    the availibility of a mapping of \code{complex} to Fortran may be
+    compiler dependent.
 
     \emph{Note:} The C types corresponding to \code{integer} and
     \code{logical} are \code{int}, not \code{long} as in S.

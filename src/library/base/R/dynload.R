@@ -12,3 +12,6 @@
 ##}
 dyn.load <- function(x)
     .Internal(dyn.load(x))
+
+dyn.unload <- function(x)
+    .Internal(dyn.unload(x))
