@@ -61,9 +61,9 @@ static int R_mkdir(char *path)
 
 #define BUF_SIZE 4096
 static int
-extract_one(unzFile uf, char *dest, char *filename)
+extract_one(unzFile uf, char *dest, char *filename, SEXP names, int *nnames)
 {
-    int err = UNZ_OK;
+    int err = UNZ_OK, nameslen = LENGTH(names);
     FILE *fout;
     char  outname[PATH_MAX], dirs[PATH_MAX], buf[BUF_SIZE], *p, *pp;
     
@@ -108,10 +108,10 @@ extract_one(unzFile uf, char *dest, char *filename)
 	    pp = p + 1;
 	}
 #ifdef Macintosh
-    if(strncmp("::", outname, 2) == 0)
-	strcpy(outname, &outname[1]);
+	if(strncmp("::", outname, 2) == 0)
+	    strcpy(outname, &outname[1]);
 #endif	
-	 /* Rprintf("extracting %s\n", outname); */
+	/* Rprintf("extracting %s\n", outname); */
 	fout = R_fopen(outname, "wb");
 	if (!fout) {
 	    unzCloseCurrentFile(uf);
@@ -126,6 +126,14 @@ extract_one(unzFile uf, char *dest, char *filename)
 	    if (err < BUF_SIZE) { err = 0; break; }
 	}
 	fclose(fout);
+	if(*nnames >= nameslen) {
+	    SEXP onames = names;
+	    names = allocVector(STRSXP, 2*nameslen);
+	    UNPROTECT(1);
+	    PROTECT(names);
+	    copyVector(names, onames);
+	}
+	SET_STRING_ELT(names, (*nnames)++, mkChar(outname));
     }
     unzCloseCurrentFile(uf);
     return err;
@@ -133,7 +141,8 @@ extract_one(unzFile uf, char *dest, char *filename)
 
 
 static int 
-do_unzip(char *zipname, char *dest, int nfiles, char **files)
+do_unzip(char *zipname, char *dest, int nfiles, char **files, 
+	 SEXP names, int *nnames)
 {
     int   i, err = UNZ_OK;
     unzFile uf;
@@ -146,12 +155,12 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files)
 	for (i = 0; i < gi.number_entry; i++) {
 	    if (i > 0) 
 		if((err = unzGoToNextFile(uf)) != UNZ_OK) break;
-	    if ((err = extract_one(uf, dest, NULL)) != UNZ_OK) break;	    
+	    if ((err = extract_one(uf, dest, NULL, names, nnames)) != UNZ_OK) break;	    
 	}
     } else {
 	for (i = 0; i < nfiles; i++) {
 	    if ((err = unzLocateFile(uf, files[i], 0)) != UNZ_OK) break;
-	    if ((err = extract_one(uf, dest, files[i])) != UNZ_OK) break;
+	    if ((err = extract_one(uf, dest, files[i], names, nnames)) != UNZ_OK) break;
 	}
     }
     unzClose(uf);
@@ -161,9 +170,9 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files)
 SEXP 
 do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  fn, ans;
+    SEXP  fn, ans, names = R_NilValue;
     char  zipname[PATH_MAX], *topics[500], dest[PATH_MAX], *p;
-    int   i, ntopics, rc;
+    int   i, ntopics, rc, nnames = 0;
 
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, "invalid zip name argument");
@@ -190,7 +199,11 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!R_FileExists(dest))
 	errorcall(call, "destination does not exist");
     
-    rc = do_unzip(zipname, dest, ntopics, topics);
+    if(ntopics > 0)
+	PROTECT(names = allocVector(STRSXP, ntopics));
+    else
+	PROTECT(names = allocVector(STRSXP, 500));
+    rc = do_unzip(zipname, dest, ntopics, topics, names, &nnames);
     if(rc != UNZ_OK)
 	switch(rc) {
 	case UNZ_END_OF_LIST_OF_FILE:
@@ -214,7 +227,9 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = rc;
-    UNPROTECT(1);
+    PROTECT(names = lengthgets(names, nnames));
+    setAttrib(ans, install("extracted"), names);
+    UNPROTECT(3);
     return ans;
 }
 

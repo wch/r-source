@@ -28,7 +28,16 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
     }
     if(is.null(CRAN) & missing(contriburl)) {
         for(i in seq(along=pkgs)) {
-            zip.unpack(pkgs[i], lib)
+            res <- zip.unpack(pkgs[i], lib)
+            if(length(ext <- attr(res, "extracted"))) {
+                first <- sub(paste("^", chartr("\\", "/", lib), "/", sep=""),
+                             "", ext[1])
+                first <- sub("/.*", "", first)
+                if(first != pkgnames[i]) {
+                    warning("zip file ", pkgs[i], " contains package ", first)
+                    pkgnames[i] <- first
+                }
+            }
             require(tools)
             checkMD5sums(pkgnames[i])
         }

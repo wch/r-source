@@ -26,6 +26,7 @@ zip.unpack(zipname, dest)
   \code{zip.unpack} unpacks the zip file \code{zipname} in directory
   \code{dest}: it is an internal version of \code{unzip zipfile -d dest}
   (but will use an external \code{unzip} if one is set in
-  \code{options("unzip")}).
+  \code{options("unzip")}).  The result is an error code, with an
+  attribute \code{"extracted"} listing the full paths to the extracted files.
 }
 \keyword{utilities}
