@@ -13,7 +13,10 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 	## family
 	if(is.character(family)) family <- get(family)
 	if(is.function(family)) family <- family()
-	if(is.null(family$family)) stop("'family' not recognised")
+	if(is.null(family$family)) {
+		print(family)
+		stop("'family' not recognised")
+	}
 
 	## extract x, y, etc from the model formula and frame
 	mt <- terms(formula, data=data)
