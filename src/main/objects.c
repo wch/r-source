@@ -745,6 +745,16 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_unclass(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
+    switch(TYPEOF(CAR(args))) {
+    case ENVSXP:
+	errorcall(call, "cannot unclass an environment");
+	break;
+    case EXTPTRSXP:
+	errorcall(call, "cannot unclass an external pointer");
+	break;
+    default:
+	break;
+    }
     if (isObject(CAR(args))) {
 	SETCAR(args, duplicate(CAR(args)));
 	setAttrib(CAR(args), R_ClassSymbol, R_NilValue);

@@ -91,6 +91,10 @@ NEW FEATURES
 
     o	is.all.equal() convenience function to be used for programming.
 
+    o	unclass() is no longer allowed for environments and external
+	pointers (since these cannot be copied and so unclass() was
+	destructive of its argument).
+
 
 UTILITIES
 
@@ -184,6 +188,8 @@ BUG FIXES
 
 	- Fixed bug in grid.text() when "rot" argument has length 0.
           (reported by Emmanuel Paradis)
+
+    o	str() removed any class from environment objects.
 
 
 

@@ -50,7 +50,8 @@ oldClass(x) <- value
   classes an object inherits from.
 
   \code{unclass} returns (a copy of) its argument with its class
-  attribute removed.
+  attribute removed.  (It is not allowed for objects which cannot be
+  copied, namely environments and external pointers.)
 
   \code{inherits} indicates whether its first argument inherits from any
   of the classes specified in the \code{what} argument.  If \code{which}
