@@ -1100,9 +1100,10 @@ env CC=cc ./configure --with-f77=fort77
 @node IRIX, Alpha/OSF1, HPUX, Platform notes
 @subsection IRIX
 
-@R{} has been built successfully on IRIX64 6.5 using both the GNU compilers
-and the native compilers for 32-bit executables and the native compilers
-for a 64-bit executable.  The command
+@R{} has been built successfully on IRIX64 6.5 using
+@command{gcc}/@command{f77} or @command{cc}/@command{f77} for 32-bit
+executables and the native compilers for a 64-bit executable.  The
+command
 @smallexample
 env CC="cc -64" ./configure --with-f77="f77 -64" --with-tcltk=no
 @end smallexample
@@ -1110,6 +1111,10 @@ env CC="cc -64" ./configure --with-f77="f77 -64" --with-tcltk=no
 was used to create the 64-bit executable.  It was necessary to
 explicitly omit Tcl/Tk because @command{configure} would find the 32-bit
 version but not detect that is was incompatible with a 64-bit build.
+
+A 32-bit build using @command{gcc}/@command{g77} passed @command{make
+check} but failed @command{make test-all-extras} in the complex LAPACK
+tests.
 
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
