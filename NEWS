@@ -416,6 +416,11 @@ C-LEVEL FACILITIES
     o	The type used for vector lengths is now R_len_t rather than
 	int, to allow for a future change.
 
+    o	The internal header nmath/dpq.h has slightly improved macros
+	R_DT_val() and R_DT_Cval(), a new R_D_LExp() and improved
+	R_DT_log() and R_DT_Clog();  this improves accuracy in several
+	[dpq]-functions {for "extreme" arguments}.
+
 
 DEPRECATED & DEFUNCT
 
@@ -664,6 +669,11 @@ BUG FIXES
     o	spec.pgram(x, ..., pad, fast, ...) computed the periodogram with
 	a bias (downward) whenever 'pad > 0' (non-default) or 'fast =
 	TRUE' (default) and nextn(n) > n where n = length(x).
+
+    o	dgamma(0, a) now gives Inf for a < 1 (instead of NaN), and
+	so does dchisq(0, 2*a, ncp).
+
+    o	pcauchy() is now correct in the extreme tails.
 
 
 

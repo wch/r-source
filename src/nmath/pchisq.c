@@ -28,5 +28,5 @@
 
 double pchisq(double x, double df, int lower_tail, int log_p)
 {
-    return pgamma(x, df / 2.0, 2.0, lower_tail, log_p);
+    return pgamma(x, df/2., 2., lower_tail, log_p);
 }

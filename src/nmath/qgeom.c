@@ -1,7 +1,8 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 1998 	   Ross Ihaka
+ *  Copyright (C) 2000 	   The R Development Core Team
+ *  Copyright (C) 2004     The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,5 +41,5 @@ double qgeom(double p, double prob, int lower_tail, int log_p)
     if (p == R_DT_0) return 0;
 
 /* add a fuzz to ensure left continuity */
-    return ceil(R_DT_Clog(p) / log(1. - prob) - 1 - 1e-7);
+    return ceil(R_DT_Clog(p) / log1p(- prob) - 1 - 1e-7);
 }

@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000-1 The R Development Core Team
+ *  Copyright (C) 2004   The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,8 +44,8 @@ double dnchisq(double x, double df, double lambda, int give_log)
 	ML_ERR_return_NAN;
 
     if(x < 0) return R_D__0;
-
-
+    if(x == 0 && df < 2.)
+	return ML_POSINF;
     if(lambda == 0)
 	return dchisq(x, df, give_log);
 

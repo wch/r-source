@@ -16,9 +16,18 @@
 #define R_D_qIv(p)	(log_p	? exp(p) : (p))		/*  p  in qF(p,..) */
 #define R_D_exp(x)	(log_p	?  (x)	 : exp(x))	/* exp(x) */
 #define R_D_log(p)	(log_p	?  (p)	 : log(p))	/* log(p) */
+#define R_D_Clog(p)	(log_p	? log1p(-(p)) : (1 - (p)))/* [log](1-p) */
 
-#define R_DT_val(x)	R_D_val(R_D_Lval(x))		/*  x  in pF */
-#define R_DT_Cval(x)	R_D_val(R_D_Cval(x))		/*  1 - x */
+/* log(1-exp(x)):  R_D_LExp(x) == (log1p(- R_D_qIv(x))) but even more stable:*/
+#define R_D_LExp(x)     (log_p ? \
+                           ((x) > -M_LN2 ? log(-expm1(x)) : log1p(-exp(x))) : \
+			 log1p(-x))
+/*till 1.8.x:
+ * #define R_DT_val(x)	R_D_val(R_D_Lval(x))
+ * #define R_DT_Cval(x)	R_D_val(R_D_Cval(x)) */
+#define R_DT_val(x)	(lower_tail ? R_D_val(x)  : R_D_Clog(x))
+#define R_DT_Cval(x)	(lower_tail ? R_D_Clog(x) : R_D_val(x))
+
 /*#define R_DT_qIv(p)	R_D_Lval(R_D_qIv(p))		 *  p  in qF ! */
 #define R_DT_qIv(p)	(log_p ? (lower_tail ? exp(p) : - expm1(p)) \
 			       : R_D_Lval(p))
@@ -27,16 +36,11 @@
 #define R_DT_CIv(p)	(log_p ? (lower_tail ? -expm1(p) : exp(p)) \
 			       : R_D_Cval(p))
 
-
 #define R_DT_exp(x)	R_D_exp(R_D_Lval(x))		/* exp(x) */
 #define R_DT_Cexp(x)	R_D_exp(R_D_Cval(x))		/* exp(1 - x) */
 
-#define R_DT_log(p)	(lower_tail ? R_D_log(p) :		\
-			 log1p(- (log_p ? exp(p) : p)))/* log(p)	in qF */
-
-#define R_DT_Clog(p)	(lower_tail ?				\
-			 log1p(- (log_p ? exp(p) : p)) :	\
-			 R_D_log(p))			/* log(1 - p)	in qF */
+#define R_DT_log(p)	(lower_tail? R_D_log(p) : R_D_LExp(p))/* log(p) in qF */
+#define R_DT_Clog(p)	(lower_tail? R_D_LExp(p): R_D_log(p))/* log(1-p) in qF*/
 
 #define R_Q_P01_check(p)			\
     if ((log_p	&& p > 0) ||			\
