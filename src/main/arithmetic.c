@@ -925,15 +925,15 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 6: return math2(op, CAR(args), CADR(args), dchisq);
     case 7: return math2(op, CAR(args), CADR(args), pchisq);
     case 8: return math2(op, CAR(args), CADR(args), qchisq);
-
+	
     case 9: return math2(op, CAR(args), CADR(args), dexp);
     case 10: return math2(op, CAR(args), CADR(args), pexp);
     case 11: return math2(op, CAR(args), CADR(args), qexp);
-
+	
     case 12: return math2(op, CAR(args), CADR(args), dgeom);
     case 13: return math2(op, CAR(args), CADR(args), pgeom);
     case 14: return math2(op, CAR(args), CADR(args), qgeom);
-
+	
     case 15: return math2(op, CAR(args), CADR(args), dpois);
     case 16: return math2(op, CAR(args), CADR(args), ppois);
     case 17: return math2(op, CAR(args), CADR(args), qpois);
@@ -941,6 +941,10 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 18: return math2(op, CAR(args), CADR(args), dt);
     case 19: return math2(op, CAR(args), CADR(args), pt);
     case 20: return math2(op, CAR(args), CADR(args), qt);
+
+    case 21: return math2(op, CAR(args), CADR(args), dsignrank);
+    case 22: return math2(op, CAR(args), CADR(args), psignrank);
+    case 23: return math2(op, CAR(args), CADR(args), qsignrank);
 
     default:
 	errorcall(call, "unimplemented real function\n");
