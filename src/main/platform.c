@@ -1259,7 +1259,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strcmp(R_GUIType, "GNOME") == 0) {  /* always interactive */
 	LOGICAL(ans)[i] = TRUE;  /* also AQUA ? */
     } else {
-#ifdef HAVE_LIBREADLINE
+#if defined(HAVE_LIBREADLINE) && defined(HAVE_READLINE_HISTORY_H)
 	extern Rboolean UsingReadline;
 	if(R_Interactive && UsingReadline) LOGICAL(ans)[i] = TRUE;
 #endif
