@@ -141,12 +141,11 @@ boxplot(len ~ dose, data = ToothGrowth,
         subset= supp == "VC", col="yellow",
         main="Guinea Pigs' Tooth Growth",
         xlab="Vitamin C dose mg",
-        ylab="Guinea pig tooth length", ylim=c(0,35))
-abline(h=seq(0,35,5), lty=3, col="light grey")
+        ylab="tooth length", ylim=c(0,35))
 boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         boxwex = 0.25, at = 1:3 + 0.2,
         subset= supp == "OJ", col="orange")
-legend(2, 9, c("Ascorbic acid","Orange juice"),
-       fill = c("yellow","orange"))
+legend(2, 9, c("Ascorbic acid", "Orange juice"),
+       fill = c("yellow", "orange"))
 }
 \keyword{hplot}
