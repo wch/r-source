@@ -996,6 +996,7 @@ AC_OUTPUT(Makeconf
   share/Makefile
   src/Makefile
   src/appl/Makefile
+  src/extra/Makefile
   src/extra/libxml/Makefile
   src/include/Makefile
   src/library/Makefile
