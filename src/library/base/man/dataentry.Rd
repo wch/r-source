@@ -77,14 +77,9 @@ de(\dots, Modes = NULL, Names = NULL)
   (keypad) Enter and LineFeed all move down. Tab moves right and
   Shift-Tab move left.  Home moves to the top left.
 
-#ifdef unix
-  Control-F moves down a page, and Control-B up by a page.
-#endif
-#ifdef windows
   PageDown or Control-F moves down a page, and PageUp or
-  Control-B up by a page.  END will show the last used column and the
+  Control-B up by a page.  End will show the last used column and the
   last few rows used (in any column).
-#endif
 
   Using any other key starts an editing process on the currently
   selected cell: moving away from that cell enters the edited value
