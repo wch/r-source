@@ -1,7 +1,7 @@
 by <- function(data, INDICES, FUN, ...) UseMethod("by")
 
-by.default <- function(x, INDICES, FUN, ...)
-    by(as.data.frame(x), INDICES, FUN, ...)
+by.default <- function(data, INDICES, FUN, ...)
+    by(as.data.frame(data), INDICES, FUN, ...)
 
 by.data.frame <- function(data, INDICES, FUN, ...)
 {
