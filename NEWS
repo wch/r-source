@@ -251,6 +251,9 @@ BUG FIXES
 	significant figures wrong due to underflow: for example 4e-308
 	might print as 4.00000e-307.  (Seen on some Windows builds.)
 
+    o	wilcox.test() could give integer overflow warnings on very long 
+	vectors.  Also added tests for numeric inputs, as per the help
+	page.  (PR#2453)
 
 
 	**************************************************
