@@ -40,7 +40,7 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
 		      data = mf)
     if(se)
 	if(is.list(n)) {
-	    cat("Design is unbalanced - use se.contrasts for se's\n")
+	    cat("Design is unbalanced - use se.contrast() for se's\n")
 	    se <- FALSE
 	} else se.tables <- se.aov(x, n, type = type)
     if(type == "means") {
