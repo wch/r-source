@@ -59,7 +59,7 @@ int ConsoleAcceptCmd;
 void closeAllHlpFiles();
 void UnLoad_Unzip_Dll();
 void UnLoad_Rbitmap_Dll();
-void set_workspace_name(char *fn);
+void set_workspace_name(char *fn); /* ../unix/sys-common.c */
 
 /* used to avoid some flashing during cleaning up */
 Rboolean AllDevicesKilled = FALSE;
@@ -331,8 +331,8 @@ void R_ClearerrConsole()
 
 void GuiBusy(int which)
 {
-	if (which == 1) gsetcursor(RConsole, WatchCursor);
-	if (which == 0) gsetcursor(RConsole, ArrowCursor);
+    if (which == 1) gsetcursor(RConsole, WatchCursor);
+    if (which == 0) gsetcursor(RConsole, ArrowCursor);
 }
 
 void CharBusy(int which)
@@ -865,6 +865,7 @@ int cmdlineoptions(int ac, char **av)
 		snprintf(s, 1024, "ARGUMENT '%s' __ignored__\n", *av);
 		R_ShowMessage(s);
 	    }
+	    if(res != INVALID_HANDLE_VALUE) FindClose(res);
 	}
     }
     Rp->rhome = R_Home;
