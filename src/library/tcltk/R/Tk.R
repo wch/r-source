@@ -63,7 +63,15 @@
         num.subwin<-num.subwin+1
         paste(ID, num.subwin, sep=".")
     }, parent)
-    .Tk.newwin(ID)
+    win<-.Tk.newwin(ID)
+    assign(ID, win, envir=parent)
+    assign("parent", parent, envir=win)
+    win
+}
+
+tkdestroy  <- function(win) {
+    tkcmd("destroy", win)
+    rm(list=.Tk.ID(win), envir=get("parent", envir=win))
 }
 
 is.tkwin <- function(x) inherits(x, "tkwin")
@@ -122,7 +130,6 @@ tktitle <- function(x) tkcmd("wm", "title", x)
 tkbell     <- function(...) tkcmd("bell", ...)
 tkbind     <- function(...) tkcmd("bind", ...)
 tkbindtags <- function(...) tkcmd("bindtags", ...)
-tkdestroy  <- function(...) tkcmd("destroy", ...)
 tkfocus    <- function(...) tkcmd("focus", ...)
 tklower    <- function(...) tkcmd("lower", ...)
 tkraise    <- function(...) tkcmd("raise", ...)
@@ -226,7 +233,7 @@ tkplace.slaves    <- function(...) tkcmd("place", "slaves", ...)
 
 
 
-### Widgets commands -- man, this is getting boring!
+### Widgets commands 
 
 tkactivate  <- function(widget, ...) tkcmd(widget, "activate", ...)
 tkadd       <- function(widget, ...) tkcmd(widget, "add", ...)
