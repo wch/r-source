@@ -779,6 +779,7 @@ static void SymbolShortcuts()
     R_TspSymbol = install("tsp");
     R_CommentSymbol = install("comment");
     R_SourceSymbol = install("source");
+    R_DotEnvSymbol = install(".Environment");
 }
 
 extern SEXP framenames; /* from model.c */

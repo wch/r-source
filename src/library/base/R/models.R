@@ -30,7 +30,12 @@ formula.data.frame<- function (x, ...)
     eval(ff)
 }
 
-print.formula <- function(x, ...) print.default(unclass(x), ...)
+print.formula <- function(x, ...) {
+    attr(x, ".Environment") <- NULL
+    print.default(unclass(x), ...)
+}
+
+formula.environment <- function(x) attr(x,".Environment")
 
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")

@@ -1375,6 +1375,7 @@ SEXP do_tilde(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(class = allocVector(STRSXP, 1));
     STRING(class)[0] = mkChar("formula");
     setAttrib(call, R_ClassSymbol, class);
+    setAttrib(call, R_DotEnvSymbol, rho);
     UNPROTECT(2);
     return call;
 }
