@@ -1996,6 +1996,7 @@ static classType classTable[] = {
     { "logical",	LGLSXP,	   TRUE },
     { "integer",	INTSXP,	   TRUE },
     { "double",		REALSXP,   TRUE },
+    { "raw",		RAWSXP,    TRUE },
     { "complex",	CPLXSXP,   TRUE },
     { "character",	STRSXP,	   TRUE },
     { "expression",	EXPRSXP,   TRUE },
