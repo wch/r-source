@@ -446,6 +446,7 @@ void C_free(char *);
 		/* Special NaN */
 
 int R_IsNA(double);
+int R_IsNaN(double);
 
 		/* Internally Used Functions */
 
