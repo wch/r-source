@@ -23,7 +23,7 @@ cat(\dots , file = "", sep = " ", fill = FALSE, labels = NULL,
   \code{cat} is useful for producing output in user defined functions.
 }
 \examples{
-iter <- rpois(10)
+\testonly{iter <- rpois(1, lambda=10)}
 ## print an informative message
 cat("iteration = ", iter <- iter + 1, "\n")
 }
