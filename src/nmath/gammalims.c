@@ -43,8 +43,6 @@ void gammalims(double *xmin, double *xmax)
     double alnbig, alnsml, xln, xold;
     int i;
 
-find_xmin:
-
     alnsml = log(d1mach(1));
     *xmin = -alnsml;
     for (i=1; i<=10; ++i) {
