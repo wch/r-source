@@ -1075,6 +1075,20 @@ stopifnot(is.na(names(mm)[1]))
 ## 1.6.1 had "NA"
 
 
+## PR 2357
+a <- matrix(c(1,2,3,-1,-2,3),2,3,dimnames=list(c("A","B"),NULL))
+(z <- pmax(a, 0))
+stopifnot(identical(dimnames(z), dimnames(a)))
+# further checks
+a <- matrix(c(1,2,3,-1,-2,3),2,3,dimnames=list(c("A","B"),1:3))
+(z <- pmax(a, 0))
+stopifnot(identical(dimnames(z), dimnames(a)))
+a <- matrix(c(1,2,3,-1,-2,3),2,3,dimnames=list(NULL, letters[1:3]))
+(z <- pmax(a, 0))
+stopifnot(identical(dimnames(z), dimnames(a)))
+## 1.6.1 only transferred dimnames if both components were non-null
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
