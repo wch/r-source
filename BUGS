@@ -207,6 +207,10 @@ Subject: postscript problem
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
 Date: Fri, 26 Oct 2001 15:23:45 -0400
 --This seems to be a problem with screen/layout rather than postscript.
+* PR# 1157 *
+Subject: identify(...plot=F)
+From: Rolf Turner <rolf@maths.uwa.edu.au>
+Date: Fri, 2 Nov 2001 09:43:49 +0800 (WST)
 
 Directory:  In-Out
 
@@ -339,6 +343,11 @@ Subject: What is an error bu21?
 From: Patrick Lindsey <patrick.lindsey@luc.ac.be>
 Date: Mon, 1 Oct 2001 15:43:36 +0200 (MET DST)
 --Looks like an SGI make bug
+* PR# 1140 *
+Subject: Possible bug, Rprof() and scan(pipe())
+From: Don MacQueen <macq@llnl.gov>
+Date: Tue, 23 Oct 2001 13:50:26 -0700
+--Doesn't happen on Solaris or Linux
 * PR# 1145 *
 Subject: Problem testing R version 1.3.1 on SGI Irix
 From: Gordon Lack <gml4410@ggr.co.uk>
@@ -373,19 +382,7 @@ Date: Mon, 22 Oct 2001 18:08:50 -0400 (EDT)
 Subject: round() doesn't
 From: David Brahm  <a215020@agate.fmr.com>
 Date: Mon, 22 Oct 2001 19:15:13 -0400 (EDT)
-* PR# 1140 *
-Subject: Possible bug, Rprof() and scan(pipe())
-From: Don MacQueen <macq@llnl.gov>
-Date: Tue, 23 Oct 2001 13:50:26 -0700
 * PR# 1141 *
 Subject: broken build with LDFLAGS
 From: dks@phy.hr
 Date: Wed, 24 Oct 2001 11:28:09 +0200 (MET DST)
-* PR# 1146 *
-Subject: promax rotation matrix
-From: pperkins@ucsd.edu
-Date: Fri, 26 Oct 2001 20:44:07 +0200 (MET DST)
-* PR# 1157 *
-Subject: identify(...plot=F)
-From: Rolf Turner <rolf@maths.uwa.edu.au>
-Date: Fri, 2 Nov 2001 09:43:49 +0800 (WST)
