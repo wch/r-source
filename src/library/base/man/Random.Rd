@@ -127,7 +127,7 @@ set.seed(seed, kind = NULL)
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
   element \emph{codes} the kind of RNG and normal generator. The lowest
-  two decimal digits are in in \code{0:(k-1)}
+  two decimal digits are in \code{0:(k-1)}
   where \code{k} is the number of available RNGs. The hundreds
   represent the type of normal generator (starting at \code{0}).
 
