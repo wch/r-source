@@ -67,6 +67,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
+#ifndef HAVE_AQUA
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     if(!initialized) X11_Init();
@@ -77,6 +78,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return R_NilValue;
     }
 }
+#endif
 
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
@@ -97,11 +99,13 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
+#ifndef HAVE_AQUA
 SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("X11 is not available");
     return R_NilValue;
 }
+#endif
 
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {

@@ -37,8 +37,9 @@ SEXP do_XFig(SEXP, SEXP, SEXP, SEXP);
 SEXP do_PDF(SEXP, SEXP, SEXP, SEXP);
 SEXP do_Quartz(SEXP, SEXP, SEXP, SEXP);
 
-#if defined(Unix) && defined(HAVE_AQUA)
+#if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 SEXP do_wsbrowser(SEXP, SEXP, SEXP, SEXP);
+SEXP do_browsepkgs(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 
