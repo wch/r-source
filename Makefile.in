@@ -131,6 +131,8 @@ distclean: clean
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status
 maintainer-clean: distclean
+	@echo "This command is intended for maintainers to use;  it"
+	@echo "deletes files that may need special rules to rebuild"
 
 dist: dist-unix
 dist-unix: distdir
