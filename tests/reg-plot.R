@@ -95,13 +95,14 @@ with(trees, symbols(Height, Volume, circles=Girth/24, inches=FALSE,
 ## in 1.5.0 ignored the lty.
 
 ## axis() and par(mgp < 0) {keep this example S+ compatible!}:
+lt <- if(is.R()) "31" else 2
 x <- seq(-2,3, len=1001)
 op <- par(tck= +0.02, mgp = -c(3,2,0))
 plot(x, x^2 - 1.2, xaxt = "n", xlab="", type ='l', col = 2,
      main = "mgp < 0: all ticks and labels inside `frame'")
 x <- -2:3
 lines(x, x^2 - 1.2, type ="h", col = 3, lwd=3)
-axis(1, pos = 0, at=-1:1, lty = 3, col=4) ## col & lty work only from 1.6 in R
+axis(1, pos = 0, at=-1:1, lty = lt, col=4)## col & lty work only from R 1.6
 par(op)
-axis(1, pos = 0, at=c(-2,2,3), lty = 3, col=4)
+axis(1, pos = 0, at=c(-2,2,3), lty = lt, col=4)
 mtext(side=1,"note the x-ticks on the other side of the bars")

@@ -6,7 +6,8 @@
 }
 \usage{
 axis(side, at = NULL, labels = TRUE, tick = TRUE, line = 0,
-     pos = NA, outer = FALSE, font = NA, vfont = NULL, \dots)
+     pos = NA, outer = FALSE, font = NA, vfont = NULL,
+     lty = "solid", lwd = 1, col = NULL, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
@@ -29,7 +30,10 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = 0,
     margin.}
   \item{font}{font for text.}
   \item{vfont}{vector font for text.}
-  \item{\dots}{graphical parameters may also be passed as arguments to
+  \item{lty, lwd}{line type, width for the axis line and the tick marks.}
+  \item{col}{color for the axis line and the tick marks.  The default
+    \code{NULL} means to use \code{par("fg")}.}
+  \item{\dots}{other graphical parameters may also be passed as arguments to
     this function.}
 }
 \value{
@@ -50,8 +54,12 @@ axis(1, 1:4, LETTERS[1:4])
 axis(2)
 box() #- to make it look "as usual"
 
-plot(1:7, rnorm(7), type = 's', xaxt='n', col = 'red')
-axis(1, 1:7, LETTERS[1:7], col.axis = 'blue')
+plot(1:7, rnorm(7), main = "axis() examples",
+     type = "s", xaxt="n", frame = FALSE, col = "red")
+axis(1, 1:7, LETTERS[1:7], col.axis = "blue")
+# unusual options:
+axis(4, col = "violet", col.axis="dark violet",lwd = 2)
+axis(3, col = "gold", lty = 2, lwd = 0.5)
 \testonly{ # test sorting of labels
 Y <- c(10.50, 4.0, 13.75, 7.25)
 plot(1:4, Y, xlim=c(0,5), ylim=c(0,15))

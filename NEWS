@@ -45,6 +45,9 @@ NEW FEATURES
 	consists of only alphanumeric characters, whitespace or a dash,
 	approximate matching is used.
 
+    o	axis() has three new optional arguments `col', `lty', and `lwd'
+	all for drawing the axis line and tick marks.
+
 
 DEPRECATED & DEFUNCT
 
@@ -70,7 +73,12 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
-    o   read.dcf() had a memory leak.
+    o	read.dcf() had a memory leak.
+
+    o	setting "tcl = a" in a highlevel graphic function worked almost
+	as if par(tcl = a) was called (i.e. was persistent).  Further,
+	after par(tcl= <.>), highlevel graphic setting of tcl didn't work
+	anymore.
 
 
 
