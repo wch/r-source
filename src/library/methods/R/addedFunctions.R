@@ -1,7 +1,13 @@
 
 functionBody <- get("body", mode = "function")
 
-"functionBody<-" <- get("body<-", mode = "function")
+.ff <- function(f, value, envir = environment(f)) f
+
+body(.ff, envir = .GlobalEnv) <- body(get("body<-"))
+
+"functionBody<-" <- .ff
+
+rm(.ff)
 
 allNames <-
   ## the character vector of names (unlike names(), never returns NULL)
