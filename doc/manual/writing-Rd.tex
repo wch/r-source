@@ -32,7 +32,7 @@ produce the file \file{do.this.Rd}.
 
 %%-- Not anymore! (yes ?)
 Note that each file should contain at least one
-\CMD{alias\LB{}\var{name}\RB{}} line.  
+\CMD{alias\LB{}\var{name}\RB{}} line.
 
 \begin{quote}
   \CMD{name}\LB{}\var{myfunction}\RB{}
@@ -41,7 +41,7 @@ Note that each file should contain at least one
   \COMMENT{2nd argument of old TITLE(. @@ .)}
 
   \CMD{usage}\LB{} \\
-  \var{myfunction}(\dots) 
+  \var{myfunction}(\dots)
   \EXPLAIN{One or more lines showing the synopsis of the function(s) and
     variables documented in the file.  These are set verbatim in
     typewriter font.}
@@ -52,7 +52,7 @@ Note that each file should contain at least one
   \COMMENT{Need one \CMD{alias\LB{}\RB{}} for each topic explained} \\
   \CMD{alias}\LB{}\var{more\_aliases\_2}\RB{}
   \COMMENT{in this help page in addition to \var{myfunction}.} \\
-  \strut\quad {etc.}  
+  \strut\quad {etc.}
 
   \CMD{arguments}\LB{} \\
   \strut\quad\var{Some optional text \emph{before} the optional list} \\
@@ -88,7 +88,7 @@ Note that each file should contain at least one
 
   \CMD{author}\LB{}\var{Whoever you are (if you are not one of R \& R)}\RB{}
 
-  \CMD{seealso}\LB{} 
+  \CMD{seealso}\LB{}
   \EXPLAIN{Pointers to related \R{} functions, using \CMD{link\LB{}.\RB{}},
     usually in the form of \CMD{code\LB{}\CMD{link}\LB{}.\RB{}\RB{}}.}
   \RB{}
@@ -153,7 +153,7 @@ specific kinds of text.
 The first two, \CMD{bold} and \CMD{emph}, should be used in plain text
 for emphasis.
 
-Fragments of R code, including the names of R objects, should be marked
+Fragments of \R\ code, including the names of \R\ objects, should be marked
 using \CMD{code}.  Only backslashes and percent signs need to be escaped
 inside \CMD{code}.
 
@@ -166,6 +166,7 @@ used, e.g., by \code{help.start()}.)
 
 \section{Miscellaneous}
 
+Use \CMD{R} for the \R{} system itself (you don't need extra `\{\}' or `\verb|\|').
 Use \CMD{dots} for the dots in function argument list ``\texttt{...}'',
 and \CMD{ldots} for $\ldots$ (ellipsis dots).
 
@@ -213,7 +214,7 @@ where, for the \HTML{} and the ``direct'' (man-like) on-line help
 becomes
 \begin{verbatim}
                    p(x) = lambda^x exp(-lambda)/x!
-        
+
              for x = 0, 1, 2, ....
 \end{verbatim}
 
@@ -222,8 +223,8 @@ For historic reasons mostly, the TeX/LaTeX commands \CMD{alpha},
 \CMD{mu}, \CMD{pi}, \CMD{sigma}, \CMD{left(} and \CMD{right)} exist.
 These can be used directly, without using the \CMD{eqn} diversion.
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "ABOUT"
 %%% TeX--master: "Man"
-%%% End: 
+%%% End:

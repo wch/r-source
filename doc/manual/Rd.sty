@@ -21,7 +21,7 @@
   {\begin{list}{}{\setlength{\leftmargin}{30pt}}\item}%
   {\end{list}}
 \newcommand{\HTML}{{\normalfont\textsc{html}}}
-\newcommand{\R}{{\normalfont\textsc{r}}}
+\newcommand{\R}{{\normalfont\textsf{R}}}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -48,7 +48,7 @@
   \ifdim\ldescriptionwidth>\labelwidth
     {\parbox[b]{\labelwidth}%
       {\makebox[0pt][l]{#1}\\[1pt]\makebox{}}}%
-  \else  
+  \else
     \makebox[\labelwidth][l]{{#1}}%
   \fi
   \hfil\relax}
@@ -76,7 +76,7 @@
 \newenvironment{Note}{%
   \begin{Rdsection}{Note}}{\end{Rdsection}}
 \newenvironment{References}{%
-  \begin{Rdsection}{References}}{\end{Rdsection}}  
+  \begin{Rdsection}{References}}{\end{Rdsection}}
 \newenvironment{SeeAlso}{%
   \begin{Rdsection}{See Also}\raggedright}{\end{Rdsection}}
 \newenvironment{Section}[1]{%
