@@ -22,7 +22,7 @@ pairs.default(x, labels, panel = points, \dots,
 \usage{
 pairs(x, \dots)
 
-\method{pairs}{formula}(formula, data = NULL, \dots, subset)
+\method{pairs}{formula}(formula, data = NULL, \dots, subset, na.action = na.pass)
 
 \method{pairs}{default}(x, labels, panel = points, \dots,
       lower.panel = panel, upper.panel = panel,
