@@ -1,4 +1,4 @@
-read.fwf <- function(file, widths, sep = " ", as.is = FALSE,
+read.fwf <- function(file, widths, sep = "", as.is = FALSE,
 		     skip = 0, row.names, col.names) {
   FILE <- tempfile("R.")
   on.exit(unlink(FILE))
