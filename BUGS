@@ -229,6 +229,14 @@ none
 
 Directory:  incoming
 
+* PR# 995 *
+Subject: Typo in R Data Import/Export 1.3.0
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Tue, 26 Jun 2001 17:30:26 -0400
+* PR# 994 *
+Subject: Dokumentation bug in src/include/Graphics.h (R-1.3.0)
+From: Thomas Hoffmann <thoffman@zappa.sax.de>
+Date: Tue, 26 Jun 2001 01:23:51 +0100
 * PR# 993 *
 Subject: ??????´?´?
 From: "?????µ" <ausqkf6@lycos.co.kr>
