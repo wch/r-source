@@ -124,7 +124,7 @@ smooth.spline <-
     lev <- fit$lev
     df <- sum(lev)
     if(is.na(df))
-	stop("smoothing parameter `spar' way too large!")
+	stop("NA lev[]; probably smoothing parameter `spar' way too large!")
     if(fit$ier > 0 ) {
         sml <- fit$spar < 0.5
 	wtxt <- paste("smoothing parameter value too",
