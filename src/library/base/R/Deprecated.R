@@ -21,7 +21,7 @@ qnchisq <- function(p, df, lambda) {
     .Deprecated("qchisq")
     .Internal(qnchisq(p, df, lambda))
 }
-rnchisq <- function(...) .NotYetImplemented()
+#rnchisq <- function(...) .NotYetImplemented()
 
 print.plot <- function() {
     .Deprecated("dev.print")
