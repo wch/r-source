@@ -2431,7 +2431,7 @@ fi
 fi
 
 for ac_func in acosh asinh atanh bcopy finite isnan matherr memcpy \
-  memmove regcomp rint strcoll strtod strtol times
+  memmove regcomp rint strcoll strtod strtol system times
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
 echo "configure:2438: checking for $ac_func" >&5
