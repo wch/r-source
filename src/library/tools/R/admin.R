@@ -380,7 +380,9 @@ function(dir, outDir)
 
     ## Write dummy HTML index if no vignettes are found and exit.
     if(!length(list_files_with_type(vignetteDir, "vignette"))) {
-        if(!hasHtmlIndex)
+        ## we don't want to write an index if the directory is in fact empty
+        files <- list.files(vignetteDir, all.files = TRUE) # includes . and ..
+        if((length(files) > 2) && !hasHtmlIndex)
             .writeVignetteHtmlIndex(packageName, htmlIndex)
         return(invisible())
     }

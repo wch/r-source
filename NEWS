@@ -263,6 +263,9 @@ BUG FIXES
 
     o	str() removed any class from environment objects.
 
+    o	.install_package_vignette_index() created an index even in an
+	empty 'doc' directory.
+
 
 
 
