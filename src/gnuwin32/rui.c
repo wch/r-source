@@ -447,22 +447,30 @@ static void readconsolecfg()
 		done = 1;
 	    }
 	    if (!strcmp(opt[0], "background")) {
-		consolebg = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    consolebg = myGetSysColor(COLOR_WINDOW);
+		else consolebg = nametorgb(opt[1]);
 		if (consolebg != Transparent)
 		    done = 1;
 	    }
 	    if (!strcmp(opt[0], "normaltext")) {
-		consolefg = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    consolefg = myGetSysColor(COLOR_WINDOWTEXT);
+		else consolefg = nametorgb(opt[1]);
 		if (consolefg != Transparent)
 		    done = 1;
 	    }
 	    if (!strcmp(opt[0], "usertext")) {
-		consoleuser = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    consoleuser = myGetSysColor(COLOR_ACTIVECAPTION);
+		else consoleuser = nametorgb(opt[1]);
 		if (consoleuser != Transparent)
 		    done = 1;
 	    }
 	    if (!strcmp(opt[0], "highlight")) {
-		highlight = nametorgb(opt[1]);
+		if (!strcmpi(opt[1], "Windows")) 
+		    highlight = myGetSysColor(COLOR_ACTIVECAPTION);
+		else highlight = nametorgb(opt[1]);
 		if (highlight != Transparent)
 		    done = 1;
 	    }

@@ -79,6 +79,7 @@ void    askchangedir();
 rgb     nametorgb(char *colourname);
 char *  rgbtoname(rgb in);
 int     rgbtonum(rgb in);
+rgb     myGetSysColor(int);
 
 /* clipboard.c */
 void    copytoclipboard(drawing src);
