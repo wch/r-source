@@ -34,7 +34,7 @@ $(DLLNAME).a: $(OBJS)
 $(DLLNAME).dll : $(DLLNAME).a grDevices_res.o
 
 clean:
-	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def
+	$(RM) $(DLLNAME).dll *.a $(OBJS) $(DLLNAME).def grDevices_res.rc
 
 makeMakedeps: $(DEPS)
 	@$(RM) Makedeps
