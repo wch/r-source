@@ -7,6 +7,16 @@ See the file NEWS for changes that affect all versions of R.
 rw1070
 ======
 
+Removed some calls to reset the size of the console, so it will 
+stay maximized through window operations.
+
+Added (temporarily?) a warning to the internal dyn.load() 
+whenever the loaded DLL changes the floating point control word.
+If changed, it will be changed back to the R default.  NB:  if 
+the warning says "DLL attempted to change FPU control word from 
+XXXXX to 8001f", that's a sign of an internal bug somewhere else:
+8001f is the R default value.
+
 The output from formatC uses e+/-0n not e+/-00n for compatibility with
 other platforms and with format.
 
