@@ -5,6 +5,7 @@
 \alias{qlogis}
 \alias{rlogis}
 \title{The Logistic Distribution}
+\concept{sigmoid}
 \description{
   Density, distribution function, quantile function and random
   generation for the logistic distribution with parameters
@@ -48,6 +49,11 @@ rlogis(n, location = 0, scale = 1)
 
   It is a long-tailed distribution with mean \eqn{\mu}{m} and variance
   \eqn{\pi^2/3 \sigma^2}{pi^2 /3 s^2}.
+}
+\note{
+  The distribution function is a rescaled hyperbolic tangent,
+  \code{plogis(x) == (1+ \link{tanh}(x/2))/2}, and it is called
+  \emph{sigmoid function} in contexts such as neural networks.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
