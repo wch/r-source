@@ -33,6 +33,10 @@ USER-VISIBLE CHANGES
 	String "NA" is still converted to missing by scan() and
 	read.table() unless `na.strings' is changed from the default.
 
+	A missing character string is now printed as `NA' (no quotes)
+	amongst quoted character strings, and `<NA>' if amongst
+	unquoted character strings.
+
 	text.default() omits missing string values (rather than
 	plotting "NA").
 

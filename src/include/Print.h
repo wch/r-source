@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997-2002   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,11 +38,13 @@
 typedef struct {
     int width;
     int na_width;
+    int na_width_noquote;
     int digits;
     int gap;
     int quote;
     int right;
     SEXP na_string;
+    SEXP na_string_noquote;
 } R_print_par_t;
 extern R_print_par_t R_print;
 

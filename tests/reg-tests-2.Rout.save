@@ -1,6 +1,6 @@
 
 R : Copyright 2002, The R Development Core Team
-Version 1.5.0 Under development (unstable) (2002-03-22)
+Version 1.5.0 Under development (unstable) (2002-03-27)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -870,4 +870,32 @@ Integer overflow in sum(.); use sum(as.numeric(.))
 [1] 2147483648
 > typeof(z)
 [1] "double"
+> 
+> 
+> ## NA levels in factors
+> (x <- factor(c("a", "NA", "b"), exclude=NULL))
+[1] a  NA b 
+Levels:  NA a b 
+> ## 1.4.1 had wrong order for levels
+> is.na(x)[3] <- TRUE
+> x
+[1] a    NA   <NA>
+Levels:  NA a b 
+> ## missing entry prints as <NA>
+> 
+> 
+> ## printing/formatting NA strings
+> (x <- c("a", "NA", NA, "b"))
+[1] "a"  "NA" NA   "b" 
+> print(x, quote = FALSE)
+[1] a    NA   <NA> b   
+> paste(x)
+[1] "a"  "NA" "NA" "b" 
+> format(x)
+[1] "a " "NA" "NA" "b "
+> format(x, justify = "right")
+[1] " a" "NA" "NA" " b"
+> format(x, justify = "none")
+[1] "a"  "NA" NA   "b" 
+> ## not ideal.
 > 

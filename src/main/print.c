@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000, 2001	The R Development Core Team.
+ *  Copyright (C) 2000-2002	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -70,7 +70,9 @@ static char tagbuf[TAGBUFLEN + 5];
 void PrintDefaults(SEXP rho)
 {
     R_print.na_string = NA_STRING;
+    R_print.na_string_noquote = mkChar("<NA>");
     R_print.na_width = strlen(CHAR(R_print.na_string));
+    R_print.na_width_noquote = strlen(CHAR(R_print.na_string_noquote));
     R_print.quote = 1;
     R_print.right = 0;
     R_print.digits = GetOptionDigits(rho);
@@ -183,8 +185,9 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho){
     if(!isNull(naprint))  {
 	if(!isString(naprint) || LENGTH(naprint) < 1)
 	    errorcall(call, "invalid na.print specification");
-	R_print.na_string = STRING_ELT(naprint, 0);
-	R_print.na_width = strlen(CHAR(R_print.na_string));
+	R_print.na_string = R_print.na_string_noquote = STRING_ELT(naprint, 0);
+	R_print.na_width = R_print.na_width_noquote = 
+	    strlen(CHAR(R_print.na_string));
     }
     args = CDR(args);
 

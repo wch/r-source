@@ -401,3 +401,21 @@ sum(x, x)    # did not warn in 1.4.1
 sum(c(x, x)) # did warn
 (z <- sum(x, x, 0.0)) # was NA in 1.4.1
 typeof(z)
+
+
+## NA levels in factors
+(x <- factor(c("a", "NA", "b"), exclude=NULL))
+## 1.4.1 had wrong order for levels
+is.na(x)[3] <- TRUE
+x
+## missing entry prints as <NA>
+
+
+## printing/formatting NA strings
+(x <- c("a", "NA", NA, "b"))
+print(x, quote = FALSE)
+paste(x)
+format(x)
+format(x, justify = "right")
+format(x, justify = "none")
+## not ideal.

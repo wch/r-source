@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997-2002   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,23 +46,16 @@
 
 void formatString(SEXP *x, int n, int *fieldwidth, int quote)
 {
-    int xmax = 0, naflag = 0;
+    int xmax = 0;
     int i, l;
 
     for (i = 0; i < n; i++) {
-	if (CHAR(x[i]) == NULL)
-	    naflag = 1;
-	else {
-	    l = Rstrlen(CHAR(x[i]), quote);
-	    if (l > xmax)
-		xmax = l;
-	}
+	if (x[i] == NA_STRING) {
+	    l = quote ? R_print.na_width : R_print.na_width_noquote;
+	} else l = Rstrlen(CHAR(x[i]), quote) + (quote ? 2 : 0);
+	if (l > xmax) xmax = l;
     }
     *fieldwidth = xmax;
-    if (quote)
-	*fieldwidth += 2;
-    if (naflag && *fieldwidth < R_print.na_width)
-	*fieldwidth = R_print.na_width;
 }
 
 void formatLogical(int *x, int n, int *fieldwidth)
@@ -69,7 +63,7 @@ void formatLogical(int *x, int n, int *fieldwidth)
     int i;
 
     *fieldwidth = 1;
-    for(i=0 ; i<n ; i++) {
+    for(i = 0 ; i < n; i++) {
 	if (x[i] == 1 && *fieldwidth < 4)
 	    *fieldwidth = 4;
 	if (x[i] == 0 && *fieldwidth < 5 ) {

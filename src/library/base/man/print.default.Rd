@@ -16,8 +16,7 @@ print.atomic(x, quote = TRUE, \dots)
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{na.print}{a character string which is used to indicate
-    \code{\link{NA}} values in printed output, or \code{NULL} meaning
-    \code{"NA"}.}
+    \code{\link{NA}} values in printed output, or \code{NULL} (see Details)}
   \item{print.gap}{an integer, giving the spacing between adjacent columns
     in printed matrices and arrays, or \code{NULL} meaning 1.}
   \item{right}{logical, indicating whether or not strings should be
@@ -30,6 +29,11 @@ print.atomic(x, quote = TRUE, \dots)
 
   \code{print.atomic} is almost the same and exists purely for
   compatibility reasons.
+}
+\details{
+  The default for printing \code{NA}s is to print \code{NA} (without
+  quotes) unless this is a character \code{NA} \emph{end}, \code{quote =
+    FALSE}, when \code{<NA>} is printed.
 }
 \seealso{The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.

@@ -282,6 +282,12 @@ char *EncodeString(char *s, int w, int quote, int right)
     int b, i ;
     char *p, *q;
 
+    if (s == CHAR(NA_STRING)) {
+	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
+	quote = 0;
+    } else 
+	p = s;
+
     i = Rstrlen(s, quote);
     AllocBuffer((i+2 >= w)?(i+2):w); /* +2 allows for quotes */
     q = Encodebuf;
@@ -290,9 +296,6 @@ char *EncodeString(char *s, int w, int quote, int right)
 	for(i=0 ; i<b ; i++) *q++ = ' ';
     }
     if(quote) *q++ = quote;
-    if (s == CHAR(NA_STRING) )
-	p = CHAR(R_print.na_string);
-    else	p = s;
     while(*p) {
 
 	/* ASCII */
