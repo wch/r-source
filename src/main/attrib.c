@@ -922,25 +922,71 @@ static void init_pseudo_NULL() {
     pseudo_NULL = install("\001NULL\001");
 }
 
+static SEXP s_dot_Data;
+static SEXP s_getDataPart;
+static SEXP s_setDataPart;
+
+static void init_slot_handling() {
+    s_dot_Data = install(".Data");
+    s_getDataPart = install("getDataPart");
+    s_setDataPart = install("setDataPart");
+}
+
+static SEXP data_part(SEXP obj) {
+    SEXP e, val;
+    if(!s_getDataPart)
+	init_slot_handling();
+    PROTECT(e = allocVector(LANGSXP, 2));
+    SETCAR(e, s_getDataPart);
+    val = CDR(e);
+    SETCAR(val, obj);
+    val = eval(e, R_GlobalEnv);
+    UNPROTECT(1);
+    return(val);
+}
+
+static SEXP set_data_part(SEXP obj, SEXP check, SEXP rhs) {
+    SEXP e, val;
+    if(!s_setDataPart)
+	init_slot_handling();
+    PROTECT(e = allocVector(LANGSXP, 4));
+    SETCAR(e, s_setDataPart);
+    val = CDR(e);
+    SETCAR(val, obj);
+    val = CDR(val);
+    SETCAR(val, check);
+    val = CDR(val);
+    SETCAR(val, rhs);
+    val = eval(e, R_GlobalEnv);
+    UNPROTECT(1);
+    return(val);
+}
+
 SEXP R_do_slot(SEXP obj, SEXP name) {
   /* Slots are stored as attributes to
      provide some back-compatibility
   */
     SEXP value = NULL; int nprotect = 0;
-    SEXP input = name;
-    if(isSymbol(name) ) {
-	input = PROTECT(allocVector(STRSXP, 1));  nprotect++;
-	SET_STRING_ELT(input, 0, PRINTNAME(name));
-    }
-    else if(!(isString(name) && LENGTH(name) == 1))
+    if(!(isSymbol(name) || (isString(name) && LENGTH(name) == 1)))
 	error("invalid type or length for slot name");
-    value = getAttrib(obj, input);
-    if(value == R_NilValue)
-	/* not there.  But since even NULL really does get stored, this
+    if(!s_dot_Data)
+	init_slot_handling();
+    if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
+    if(name == s_dot_Data)
+	return data_part(obj);
+    value = getAttrib(obj, name);
+    if(value == R_NilValue) {
+	SEXP input = name;
+	if(isSymbol(name) ) {
+	    input = PROTECT(allocVector(STRSXP, 1));  nprotect++;
+	SET_STRING_ELT(input, 0, PRINTNAME(name));
+	}
+ 	/* not there.  But since even NULL really does get stored, this
 	   implies that there is no slot of this name.  Or somebody
 	   screwed up by using atttr(..) <- NULL */
 	error("\"%s\" is not a valid slot for this object (or was mistakenly deleted)",
 	      CHAR(asChar(input)));
+    }
     else if(value == pseudo_NULL)
 	value = R_NilValue;
     UNPROTECT(nprotect);
@@ -949,23 +995,25 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
 
 SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP check, SEXP value) {
     SEXP input = name; int nprotect = 0;
-    Rboolean do_check = (R_has_methods(NULL) && 
-			 (check == R_NilValue || 
-			  LOGICAL_VALUE(check)));
-    if(do_check)
-	/* call the S language checker:  it will generate an error if
-	   the check fails, and return a possibly coerced value otherwise */
-	value = R_do_slot_check(obj, name, value);
+    Rboolean do_check;
     if(isSymbol(name) ) {
 	input = PROTECT(allocVector(STRSXP, 1)); nprotect++;
 	SET_STRING_ELT(input, 0, PRINTNAME(name));
     }
     else if(!(isString(name) && LENGTH(name) == 1))
 	error("invalid type or length for slot name");
+    if(!s_dot_Data)
+	init_slot_handling();
+    if(isString(name)) name = install(CHAR(STRING_ELT(name, 0)));
+    if(name == s_dot_Data)
+	return set_data_part(obj, check, value);
+    do_check = (R_has_methods(NULL) && 
+		(check == R_NilValue || 
+		 LOGICAL_VALUE(check)));
     if(do_check)
-	/* check that the slot is currently there. Will generate an
-	   error if the name is a non-slot. */
-	R_do_slot(obj, input);
+	/* call the S language checker:  it will generate an error if
+	   the check fails, and return a possibly coerced value otherwise */
+	value = R_do_slot_check(obj, name, value);
     if(value == R_NilValue) {
 	/* slots, but not attributes, can be NULL.  Store a special symbol
 	   instead. */
