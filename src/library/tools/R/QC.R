@@ -2647,8 +2647,8 @@ function(dfile)
         ## seemed to assume that when checking a package, package name
         ## and 'directory' (i.e., the base name of the directory with
         ## the DESCRIPTION metadata) need to be the same.
-        if(val != basename(dirname(dfile)))
-            tmp <- c(tmp, "Package name differs from dir name.")
+        ## if(val != basename(dirname(dfile)))
+        ##     tmp <- c(tmp, "Package name differs from dir name.")
         ## </FIXME>
         if(!is_base_package) {
             if(val %in% standard_package_names$base)
