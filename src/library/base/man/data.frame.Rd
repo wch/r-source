@@ -9,8 +9,8 @@ is.data.frame(x)
 
 row.names(data.frame.obj)
 row.names(data.frame.obj) <- names
-print(data.frame.obj)
-plot(data.frame.obj)
+print(data.frame.obj, \dots, digits = NULL, quote = FALSE, right = TRUE)
+plot (data.frame.obj, \dots)
 }
 \alias{data.frame}
 \alias{as.data.frame}
@@ -47,6 +47,8 @@ plot(data.frame.obj)
   \item{check.names}{if \code{TRUE} then the names of the variables
     in the data frame are checked to ensure that they are valid
     variable names.  If necessary they are adjusted so that they are.}
+  \item{data.frame.obj}{objects of class \code{data.frame}.}
+  \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
 }
 \value{
   For \code{data.frame(.)} a data frame.  Data frames are the
@@ -64,13 +66,22 @@ plot(data.frame.obj)
 
   \code{row.names} can be used to set and retrieve the row names of a
   data frame, similarly to \code{\link{rownames}} for arrays.
+
+  \code{plot.data.frame}, a method of the \code{\link{plot}} generic,
+  uses \code{\link{stripplot}} for \emph{one} variable,
+  \code{\link{plot.default}} (scatterplot) for \emph{two} variables, and
+  \code{\link{pairs}} (scatterplot matrix) otherwise.
+
+  For the \code{\link{print}} method (\code{print.data.frame}), see
+  \code{\link{print.matrix}}.
 }
 \seealso{
   \code{\link{read.table}}.
 }
 \examples{
-str(d <- data.frame(cbind(x=1, y=1:10), ch=sample(LETTERS[1:3], 10, repl=TRUE)))
-str(     data.frame(cbind(  1,   1:10),    sample(LETTERS[1:3], 10, repl=TRUE)))
+L3 <- LETTERS[1:3]
+str(d <- data.frame(cbind(x=1, y=1:10), ch=sample(L3, 10, repl=TRUE)))
+str(     data.frame(cbind(  1,   1:10),    sample(L3, 10, repl=TRUE)))
 is.data.frame(d)
 all(1:10 == row.names(d))# TRUE (coercion)
 }
