@@ -12,7 +12,7 @@
 }
 \usage{
 setClass(Class, representation, prototype, contains=character(),
-         validity, access, where=1, version=FALSE, sealed, package)
+         validity, access, where, version, sealed, package)
 
 removeClass(Class, where)
 
@@ -40,14 +40,15 @@ sealClass(Class, where)
     called \emph{superclasses} in some languages.)  When these classes
     have slots, all their slots will be contained in the new class as
     well. }
-  \item{where}{ For \code{setClass}, what environment to use to store or remove the
-    definition (as metadata).  Defaults to the top-level environment,
-    the global environment for ordinary computations, but the
-    environment or namespace of a package when loading that package.
+  \item{where}{ For \code{setClass} and \code{removeClass}, the
+    environment in which to store or remove the
+    definition.  Defaults to the top-level environment of the calling function
+    (the global environment for ordinary computations, but the
+    environment or namespace of a package when loading that package).
 
     For other functions, \code{where} defines where to do the search
-    for the class definition, and the default is to search the visible
-    environments or namespace.
+    for the class definition, and the default is to search from the top-level
+    environment or namespace of the caller to this function.
     }
   \item{unique}{if \code{findClass} expects a unique location for the
     class, \code{unique} is a character string explaining the purpose
@@ -60,8 +61,15 @@ sealClass(Class, where)
     environment only?  Defaults to \code{TRUE} if \code{where} is
     omitted, and to \code{FALSE} otherwise.
     }
-  \item{validity, access, version}{ Control arguments included for
-    compatibility with the S-Plus API, but not currently used.  }
+  \item{validity}{ if supplied, should be a validity-checking method
+  for objects from this class (a function that returns \code{TRUE} if
+  its argument is a valid object of this class and one or more strings
+  describing the failures otherwise).  See \code{\link{validObject}}
+  for details.  }
+\item{access}{Access list for the class.  Saved in the definition, but
+  not currently used.}
+\item{version}{A version indicator for this definition. Saved in the
+    definition, but not currently used.}
   \item{sealed}{ If \code{TRUE}, the class definition will be sealed,
     so that another call to \code{setClass} will fail on this class name.
     }
@@ -97,19 +105,16 @@ sealClass(Class, where)
     }
 
     \item{\code{removeClass}:}{ 
-      Remove the definition of this class.  Calling this \emph{always}
-      resets the version of the class cached for the session.  If
-      \code{where=0}, that's all it does.  Otherwise, it removes the
-      version from the specified environment or database (from the global
-      environment by default).
+      Remove the definition of this class, from the environment
+      \code{where} if this argument is supplied; if not,
+      \code{removeClass} will search for a definition, starting in the
+      top-level environment of the call to \code{removeClass}, and
+      remove the (first) definition found.
     }
   
     \item{\code{isClass}:}{ 
       Is this a the name of a formally defined class? (Argument
-      \code{formal} is for compatibility and is ignored.)  Argument
-      \code{where} is the environment from which to start the search
-      for the class definition.  By default, start at the global
-      environment and search through the search list.
+      \code{formal} is for compatibility and is ignored.)
     }
 
 
@@ -127,27 +132,18 @@ sealClass(Class, where)
         which a class definition of \code{Class} is found.  If
         \code{where} is supplied, this is an environment (or
         namespace) from which the search takes place; otherwise the
-        top-level environment is used.  If \code{unique} is supplied
+        top-level environment of the caller is used.  If \code{unique} is supplied
         as a character string, \code{findClass} returns a single
         environment or position.  By default, it always returns a
-        list.
-
-        In the second case, the calling function should select, say, the first element
+        list.  The calling function should select, say, the first element
         as a position or environment for functions such as
-        \code{\link{get}}. In the first case, \code{findClass} will
+        \code{\link{get}}.
+
+        If \code{unique} is supplied as a character string, \code{findClass} will
         warn if there is more than one definition visible (using the
-        string supplied as \code{unique} to identify the purpose of
+        string to identify the purpose of
         the call), and will generate an error if no definition can be found.
 
-    }
-
-    \item{\code{unclass}:}{
-      Returns the object containing the values of all the slots in this
-      object's class definition (specifically, if the returned object
-      has attributes corresponding to each slot), in the case that the
-      object's class is formally defined with slots.  For classes that
-      extend a single other class (e.g., a basic class such as
-      \code{"numeric"}) the result is an object of that class.
     }
     
     \item{\code{resetClass}:}{

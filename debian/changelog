@@ -1,6 +1,58 @@
-r-base (1.7.1.cvs.20030731-1) unstable; urgency=low
+r-base (1.7.1.cvs.20031004-1) unstable; urgency=low
 
-  * Upgraded to release candidate 2003-07-31 of R 1.7.2 (or 1.8.0)
+  * Upgraded to release candidate 1.8.0beta_2003-10-04 of R 1.8.0
+  * debian/control: Change Depends: to atlas2-base-dev | atlas2-dev 
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat,  4 Oct 2003 07:39:13 -0500
+
+r-base (1.7.1.cvs.20030927-1) unstable; urgency=low
+
+  * Upgraded to release candidate 1.8.0beta_2003-09-27 of R 1.8.0
+  * debian/control: Add Depends: on atlas2-dev for r-base-dev
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 27 Sep 2003 15:58:45 -0500
+
+r-base (1.7.1.cvs.20030920-1) unstable; urgency=low
+
+  * Upgraded to release candidate 1.8.0alpha_2003-09-20 of R 1.8.0
+  * debian/{r-base-core,r-gnome}.menu: Small beautifications
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 20 Sep 2003 08:02:54 -0500
+
+r-base (1.7.1.cvs.20030913-1) unstable; urgency=low
+
+  * Upgraded to release candidate 1.8.0alpha_2003-09-13 of R 1.8.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 13 Sep 2003 09:59:45 -0500
+
+r-base (1.7.1.cvs.20030906-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-09-06 of R 1.8.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat,  6 Sep 2003 15:21:02 -0500
+
+r-base (1.7.1.cvs.20030830-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-08-30 of R 1.8.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 30 Aug 2003 09:56:10 -0500
+
+r-base (1.7.1.cvs.20030822-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-08-22 of R 1.8.0
+  * debian/control: Standards-Version increased to 3.6.1.0
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri, 22 Aug 2003 20:25:52 -0500
+
+r-base (1.7.1.cvs.20030814-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-08-14 of R 1.7.2 (or 1.8.0)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 14 Aug 2003 20:39:05 -0500
+
+r-base (1.7.1.cvs.20030808-1) unstable; urgency=low
+
+  * Upgraded to release candidate 2003-08-08 of R 1.7.2 (or 1.8.0)
   * Upstream release candidate sources do not contain the source for the
     r-recommended package so tools/rsync-recommended was used to obtain
     these and a new, Debian-only, orig.tar.gz of both was created
@@ -8,7 +60,7 @@ r-base (1.7.1.cvs.20030731-1) unstable; urgency=low
     which requires equal version numbers between the two (Closes: #199295)
   * debian/control: Upgraded Standards-Version to 3.6.0
 
- -- Dirk Eddelbuettel <edd@debian.org>  Thu, 31 Jul 2003 20:35:49 -0500
+ -- Dirk Eddelbuettel <edd@debian.org>  Fri,  8 Aug 2003 20:08:49 -0500
 
 r-base (1.7.1-1) unstable; urgency=low
 

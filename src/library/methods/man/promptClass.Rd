@@ -7,7 +7,7 @@
 }
 \usage{
 promptClass(clName, filename = NULL, type = "class",
-            keywords = "classes", where = -1)
+            keywords = "classes", where = topenv(parent.frame()))
 }
 \arguments{
   \item{clName}{a character string naming the class to be documented.}
@@ -16,16 +16,16 @@ promptClass(clName, filename = NULL, type = "class",
     The default corresponds to a file whose name is the topic name for
     the class documentation, followed by \code{".Rd"}.  Can also be
     \code{NA} (see below).}
-  \item{type}{The documentation type to be declared in the output
-    file.}
-  \item{keywords}{The keywords to include in the shell of the
+  \item{type}{the documentation type to be declared in the output file.}
+  \item{keywords}{the keywords to include in the shell of the
     documentation.  The keyword \code{"classes"} should be one of
     them.}
-  \item{where}{ where to look for the definition of the class and of
-    methods that use it:  by default, anywhere in the current search
-    list.}
+  \item{where}{where to look for the definition of the class and of
+    methods that use it.
+    %%FIXME: By default, anywhere in the current search list.
+  }
 }
-\details{ 
+\details{
   The class definition is found on the search list.  Using that
   definition, information about classes extended and slots is
   determined.
@@ -110,7 +110,7 @@ promptClass("trackMultiCurve", stdout())
 promptClass("track", stdout())
 }
 \dontrun{> promptClass("track")
-A shell of class documentation has been written to the 
+A shell of class documentation has been written to the
 file "track-class.Rd".
 }}
 

@@ -11,7 +11,7 @@
 reshape(data, varying = NULL, v.names = NULL, timevar = "time",
 	idvar = "id", ids = 1:NROW(data),
 	times = seq(length = length(varying[[1]])),
-	drop = NULL, direction, new.row.names = TRUE,
+	drop = NULL, direction, new.row.names = NULL,
 	split = list(regexp="\\.", include=FALSE))
 }
 \arguments{
@@ -21,11 +21,11 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
     (\sQuote{time-varying}).  A list of vectors (or optionally a matrix
     for \code{direction="wide"}).  See below for more details and
     options.}
- \item{v.names}{names of variables in the long format that correspond
-   to multiple variables in the wide format.}
- \item{timevar}{the variable in long format that differentiates multiple
+  \item{v.names}{names of variables in the long format that correspond
+    to multiple variables in the wide format.}
+  \item{timevar}{the variable in long format that differentiates multiple
     records from the same group or individual.}
-   \item{idvar}{the variable in long format that identifies multiple
+  \item{idvar}{the variable in long format that identifies multiple
     records from the same group/individual.  This variable may also be
     present in wide format.}
   \item{ids}{the values to use for a newly created \code{idvar}
@@ -33,8 +33,8 @@ reshape(data, varying = NULL, v.names = NULL, timevar = "time",
   \item{times}{the values to use for a newly created \code{timevar}
     variable in long format.}
   \item{drop}{a vector of names of variables to drop before reshaping}
-  \item{direction}{\code{"wide"} to reshape to wide format,
-    \code{"long"} to reshape to long format.}
+  \item{direction}{character string, either \code{"wide"} to reshape to
+    wide format, or \code{"long"} to reshape to long format.}
   \item{new.row.names}{logical; if \code{TRUE} and \code{direction="wide"},
     create new row names in long format from the values of the id and
     time variables.}

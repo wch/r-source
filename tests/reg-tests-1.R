@@ -719,9 +719,12 @@ stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 ## end of moved from svd.Rd
 
+hasMethods <- .isMethodsDispatchOn() ## (for setting back)
+## was at end, as package `methods' once had persistent side effects
+stopifnot(require(methods))
+stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
 
-## trace
-hasMethods <- .isMethodsDispatchOn() ## trace requires methods
+## trace (requiring methods):
 f <- function(x, y) { c(x,y)}
 xy <- 0
 
@@ -2646,8 +2649,42 @@ stopifnot(identical(names(y1), names(x2)),
           identical(names(y3), names(x2)[-6]))
 ##
 
+## as.dist(x) only obeyed `diag=TRUE' or `upper=TRUE' when x was "dist" already
+m <- as.matrix(dist(matrix(rnorm(100), nrow=5)))
+stopifnot(identical(TRUE, attr(as.dist(m, diag=TRUE), "Diag")))
+## failed previous to 1.8.0
 
-## keep at end, as package `methods' has had persistent side effects
-library(methods)
-stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
-detach("package:methods")
+stopifnot(1:2 == ave(1:2,factor(2:3,levels=1:3)))
+## gave "2 NA" previous to 1.8.0, because unused levels weren't dropped
+
+## PR#4092: arrays with length(dim(.)) = 1
+z <- array(c(-2:1, 1.4),5)
+cz <- crossprod(as.vector(z))
+dimnames(z) <- list(letters[1:5])
+z0 <- z
+names(dimnames(z)) <- "D1"
+stopifnot(crossprod(z) == cz,# the first has NULL dimnames
+          identical(crossprod(z), crossprod(z0)),
+          identical(crossprod(z), crossprod(z,z0)))
+## crossprod(z) segfaulted (or gave silly error message) before 1.8.0
+
+## PR#4431
+stopifnot(!is.na(rmultinom(12,100, c(3, 4, 2, 0,0))))
+## 3rd line was all NA before 1.8.0
+
+## PR#4275: getAnywhere with extra "."
+g0 <- getAnywhere("predict.loess")
+g1 <- getAnywhere("as.dendrogram.hclust")
+g2 <- getAnywhere("predict.smooth.spline")
+g3 <- getAnywhere("print.data.frame")
+is.S3meth <- function(ga) any(substr(ga$where, 1,20) == "registered S3 method")
+stopifnot(is.S3meth(g0), is.S3meth(g1),
+          is.S3meth(g2), is.S3meth(g3))
+## all but g0 failed until 1.8.0 (Oct 6)
+
+## symnum(x) for length 0 and some logical arrays:
+sm <- symnum(m <- matrix(1:8 %% 3 == 0, 2))
+stopifnot(identical(symnum(FALSE[FALSE]), noquote(""[FALSE])),
+          identical(symnum(c(m)), c(symnum(m))),
+          dim(sm) == dim(m), class(sm) == "noquote")
+## symnum(<length 0>) gave noquote("()") before 1.8.1

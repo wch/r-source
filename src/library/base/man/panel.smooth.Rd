@@ -6,8 +6,8 @@
   argument in e.g., \code{\link{coplot}} or \code{\link{pairs}}.
 }
 \usage{
-panel.smooth(x, y, col, bg=NA, pch, cex = 1, col.smooth = "red",
-      span = 2/3, iter=3, \dots)
+panel.smooth(x, y, col = par("col"), bg = NA, pch = par("pch"), cex = 1,
+             col.smooth = "red", span = 2/3, iter=3, \dots)
 }
 \arguments{
   \item{x,y}{numeric vectors of the same length}
@@ -15,7 +15,7 @@ panel.smooth(x, y, col, bg=NA, pch, cex = 1, col.smooth = "red",
     point type and size of \code{\link{points}}; see also
     \code{\link{par}}.}
   \item{col.smooth}{color to be used by \code{lines} for drawing the
-    smooths.} 
+    smooths.}
   \item{span}{smoothing parameter \code{f} for \code{\link{lowess}}, see
     there.}
   \item{iter}{number of robustness iterations for \code{\link{lowess}}.}

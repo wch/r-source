@@ -684,6 +684,7 @@ LIBS="${r_save_LIBS}"
 ## not stripped by AC_F77_LIBRARY_LDFLAGS.  This in particular causes
 ## R_PROG_F77_CC_COMPAT to fail.  Hence, we make sure all -lcrt*.o are
 ## removed.
+##
 ## Native f90 on HPUX 11 comes up with '-l:libF90.a' causing trouble
 ## when using gcc for linking.  The '-l:' construction is similar to
 ## plain '-l' except that search order (archive/shared) given by '-a'
@@ -695,6 +696,14 @@ LIBS="${r_save_LIBS}"
 ## SHLIB_LD=ld for native C compilers (problem with non-PIC 'crt0.o',
 ## see 'Individual platform overrides' in section 'DLL stuff' in file
 ## 'configure.ac'.
+##
+## Using the Intel Fortran compiler (ifc) one typically gets incorrect
+## flags, as the output from _AC_PROG_F77_V_OUTPUT() contains double
+## quoted options, e.g. "-mGLOB_options_string=......", see also e.g.
+## http://www.octave.org/octave-lists/archive/octave-maintainers.2002/msg00038.html.
+## One possible solution is to change AC_F77_LIBRARY_LDFLAGS() to remove
+## double quotes for ifc, as it already does for the Cray cft90.  As we
+## prefer not to overload Autoconf code, we try to fix things here ...
 flibs=
 if test "${GCC}" = yes; then
   linker_option="-Wl,"
@@ -704,6 +713,8 @@ fi
 for arg in ${FLIBS}; do
   case "${arg}" in
     -lcrt*.o)
+      ;;
+    -[[a-zA-Z]]/*\" | -[[a-zA-Z]]*\\) # ifc
       ;;
     -l:*)
       flibs="${flibs} ${linker_option}${arg}"

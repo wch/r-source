@@ -136,8 +136,9 @@ setAs <-
   function(from, to, def, replace = NULL, where = topenv(parent.frame()))
   {
     ## where there is an "is" relation, modify it
-    if(extends(from, to, TRUE)) {
-      extds <- getClassDef(from)@contains
+      fromDef <- getClassDef(from, where)
+    if(extends(fromDef, to, TRUE)) {
+      extds <- fromDef@contains
       if(is.list(extds)) {
         test <- elNamed(extds, "test")
         if(missing(replace))

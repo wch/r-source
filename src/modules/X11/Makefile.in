@@ -58,7 +58,7 @@ $(R_X11_la): $(R_X11_la_OBJECTS) $(R_X11_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(R_X11_la) $(Rexecmodulesdir)/R_X11$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_X11_la) $(Rexecmodulesdir)/R_X11$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_X11_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)

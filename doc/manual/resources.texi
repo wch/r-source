@@ -119,6 +119,9 @@ Universidade Federal do Paraná, Brasil
 @item @uref{http://www.termix.ufv.br/CRAN/}
 Federal University of Vicosa, Brasil
 
+@item @uref{ http://probability.ca/cran/}
+University of Toronto, Canada
+
 @item @uref{http://cran.dk.r-project.org/}
 SunSITE, Denmark
 

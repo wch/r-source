@@ -50,6 +50,7 @@ static int inPrintWarnings = 0;
 
 static void try_jump_to_restart(void);
 static void jump_to_top_ex(Rboolean, Rboolean, Rboolean, Rboolean, Rboolean);
+static void signalInterrupt(void);
 
 /* Interface / Calling Hierarchy :
 
@@ -91,7 +92,9 @@ void onintr()
 	return;
     }
     else R_interrupts_pending = 0;
-	
+
+    signalInterrupt();
+
     REprintf("\n");
     /* Attempt to run user error option, save a traceback, show
        warnings, and reset console; also stop at restart (try/browser)
@@ -1090,7 +1093,7 @@ static SEXP findConditionHandler(SEXP cond)
 
 SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP list, cond, msg, ecall;
+    SEXP list, cond, msg, ecall, oldstack;
 
     checkArity(op, args);
 
@@ -1098,6 +1101,7 @@ SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
     msg = CADR(args);
     ecall = CADDR(args);
 
+    PROTECT(oldstack = R_HandlerStack);
     while ((list = findConditionHandler(cond)) != R_NilValue) {
 	SEXP entry = CAR(list);
 	R_HandlerStack = CDR(list);
@@ -1117,9 +1121,59 @@ SEXP do_signalCondition(SEXP call, SEXP op, SEXP args, SEXP rho)
 		UNPROTECT(1);
 	    }
 	}
-	else gotoExitingHandler(cond, call, entry);
+	else gotoExitingHandler(cond, ecall, entry);
+    }
+    R_HandlerStack = oldstack;
+    UNPROTECT(1);
+    return R_NilValue;
+}
+
+static SEXP findInterruptHandler()
+{
+    SEXP list;
+    for (list = R_HandlerStack; list != R_NilValue; list = CDR(list)) {
+	SEXP entry = CAR(list);
+	if (! strcmp(CHAR(ENTRY_CLASS(entry)), "interrupt") ||
+	    ! strcmp(CHAR(ENTRY_CLASS(entry)), "condition"))
+	    return list;
     }
     return R_NilValue;
+}
+
+static SEXP getInterruptCondition()
+{
+    /**** FIXME: should probably pre-allocate this */
+    SEXP cond, class;
+    PROTECT(cond = allocVector(VECSXP, 0));
+    PROTECT(class = allocVector(STRSXP, 2));
+    SET_STRING_ELT(class, 0, mkChar("interrupt"));
+    SET_STRING_ELT(class, 1, mkChar("condition"));
+    R_set_class(cond, class, R_NilValue);
+    UNPROTECT(2);
+    return cond;
+}
+
+static void signalInterrupt(void)
+{
+    SEXP list, cond, oldstack;
+
+    PROTECT(oldstack = R_HandlerStack);
+    while ((list = findInterruptHandler()) != R_NilValue) {
+	SEXP entry = CAR(list);
+	R_HandlerStack = CDR(list);
+	PROTECT(cond = getInterruptCondition());
+	if (IS_CALLING_ENTRY(entry)) {
+	    SEXP h = ENTRY_HANDLER(entry);
+	    SEXP hcall = LCONS(h, LCONS(cond, R_NilValue));
+	    PROTECT(hcall);
+	    eval(hcall, R_GlobalEnv);
+	    UNPROTECT(1);
+	}
+	else gotoExitingHandler(cond, R_NilValue, entry);
+	UNPROTECT(1);
+    }
+    R_HandlerStack = oldstack;
+    UNPROTECT(1);
 }
 
 void R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)

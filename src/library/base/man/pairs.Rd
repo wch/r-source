@@ -10,7 +10,7 @@
 \synopsis{
 pairs(x, \dots)
 pairs.formula(formula, data = NULL, \dots, subset)
-pairs.default(x, labels = colnames(x), panel = points, \dots,
+pairs.default(x, labels, panel = points, \dots,
               main = NULL, oma = NULL,
               font.main = par("font.main"), cex.main = par("cex.main"),
               lower.panel = panel, upper.panel = panel,
@@ -24,7 +24,7 @@ pairs(x, \dots)
 
 \method{pairs}{formula}(formula, data = NULL, \dots, subset)
 
-\method{pairs}{default}(x, labels = colnames(x), panel = points, \dots,
+\method{pairs}{default}(x, labels, panel = points, \dots,
       lower.panel = panel, upper.panel = panel,
       diag.panel = NULL, text.panel = textPanel,
       label.pos = 0.5 + has.diag/3,
@@ -86,7 +86,7 @@ pairs(x, \dots)
 }
 \examples{
 data(iris)
-pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species", 
+pairs(iris[1:4], main = "Anderson's Iris Data -- 3 species",
       pch = 21, bg = c("red", "green3", "blue")[unclass(iris$Species)])
 
 ## formula method

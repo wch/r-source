@@ -5,9 +5,10 @@
   This function draws line segments.
 }
 \usage{
-grid.segments(x0=0, y0=0, x1=1, y1=1,
-              default.units="npc", units.per.obs=FALSE,
-              gp=gpar(), draw=TRUE, vp=NULL)
+grid.segments(x0 = unit(0, "npc"), y0 = unit(0, "npc"),
+              x1 = unit(1, "npc"), y1 = unit(1, "npc"),
+              default.units = "npc", units.per.obs = FALSE,
+              gp = gpar(), draw = TRUE, vp = NULL)
 }
 \arguments{
   \item{x0}{ Numeric indicating the starting x-values of the line segments. }

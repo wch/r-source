@@ -33,10 +33,19 @@ x$name
   \item{i, j, \dots, name}{elements to extract or replace. \code{i, j} are
     \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.}
+    integer as by \code{\link{as.integer}}.
+    
+    For \code{[}-indexing only: \code{i, j, \dots} can be
+    logical vectors, indicating elements/slices to select. Such vectors
+    are recycled if necessary to match the corresponding extent. When
+    indexing arrays, \code{i} can be a (single) matrix with as many
+    columns as there are dimensions of \code{x}; the result is then a
+    vector with elements corresponding to the sets of indices in each
+    row of \code{i}.}
   \item{drop}{For matrices, and arrays.  If \code{TRUE} the
     result is coerced to the lowest possible dimension (see examples
-    below).}
+    below). This only works for extracting elements, not for the
+    replacement forms.}
 }
 \details{
   These operators are generic.  You can write methods to handle subsetting
@@ -84,7 +93,7 @@ x$name
   The functions \code{.subset} and \code{.subset2} are essentially
   equivalent to the \code{[} and \code{[[} operators, except that
   methods dispatch does not take place.  This is to avoid expensive
-  unclassing in order to apply the default method to an object.  They
+  unclassing when applying the default method to an object.  They
   should not normally be invoked by end users.
 }
 \references{
@@ -108,6 +117,8 @@ x <- 1:12; m <- matrix(1:6,nr=2); li <- list(pi=pi, e = exp(1))
 x[10]                 # the tenth element of x
 m[1,]                 # the first row of matrix m
 m[1, , drop = FALSE]  # is a 1-row matrix
+m[,c(TRUE,FALSE,TRUE)]# logical indexing
+m[cbind(c(1,2,1),3:1)]# matrix index
 li[[1]]               # the first element of list li
 y <- list(1,2,a=4,5)
 y[c(3,4)]             # a list containing elements 3 and 4 of y

@@ -221,7 +221,7 @@ getOption(x)
 
     \item{\code{unzip}:}{the command used for unzipping help files.
 #ifdef unix
-      Defaults to the value of \code{R\_UNZIPCMD}, which is set in
+      Defaults to the value of \env{R\_UNZIPCMD}, which is set in
       \file{etc/Renviron} if an \code{unzip} command was found during
       configuration.}
 #endif

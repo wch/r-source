@@ -476,13 +476,13 @@ void Rgui_configure()
     f_pcols = newfield(buf, rect(220, 210, 30, 20));
 
 /* Graphics window */
-    l_cx = newlabel("Graphics windows: initial left",
+    l_grx = newlabel("Graphics windows: initial left",
 		    rect(10, 250, 190, 20), AlignLeft);
     sprintf(buf, "%d", graphicsx);
-    f_cx = newfield(buf, rect(200, 250, 40, 20));
-    l_cy = newlabel("top", rect(270, 250, 30, 20), AlignLeft);
+    f_grx = newfield(buf, rect(200, 250, 40, 20));
+    l_gry = newlabel("top", rect(270, 250, 30, 20), AlignLeft);
     sprintf(buf, "%d", graphicsy);
-    f_cy = newfield(buf, rect(300, 250, 40, 20));
+    f_gry = newfield(buf, rect(300, 250, 40, 20));
 
 /* Font colours */
     l_cols = newlabel("Console and Pager Colours",

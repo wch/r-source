@@ -448,7 +448,7 @@ void *in_R_HTTPOpen(const char *url, int cacheOK)
 	int rc = RxmlNanoHTTPReturnCode(ctxt);
 	if(rc != 200) {
 	    RxmlNanoHTTPClose(ctxt);
-	    REprintf("cannot open: HTTP status was `%d %s'", rc,
+	    warning("cannot open: HTTP status was `%d %s'", rc,
 		  RxmlNanoHTTPStatusMsg(ctxt));
 	    return NULL;
 	} else {
@@ -874,8 +874,7 @@ void RxmlMessage(int level, const char *format, ...)
     va_end(ap);
     p = buf + strlen(buf) - 1;
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
-    REprintf(buf);
-    REprintf("\n");
+    warning(buf);
 }
 
 #include "sock.h"
@@ -911,5 +910,7 @@ void R_init_internet(DllInfo *info)
     tmp->sockclose = in_Rsockclose;
     tmp->sockread = in_Rsockread;
     tmp->sockwrite = in_Rsockwrite;
+
+    tmp->sockselect = in_Rsockselect;
     R_setInternetRoutines(tmp);
 }

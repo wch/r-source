@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-42, 2003-09-16
+Version 1.8-4, 2003-10-10
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -175,7 +175,7 @@ Feedback is of course most welcome.
 Features specific to the Windows and Mac OS ports of R are described in the
 "R for Windows FAQ" (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) and the
 "R for Macintosh FAQ/DOC"
-(http://cran.R-project.org/bin/macos/rmac-FAQ.html).  If you have
+(http://cran.r-project.org/bin/macosx/RAqua-FAQ.html).  If you have
 information on Mac or Windows systems that you think should be added to
 this document, please let me know.
 
@@ -245,7 +245,7 @@ hppa-hp-hpux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-The current released version is 1.7.1.  Based on this
+The current released version is 1.8.0.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, working towards the next patch (`r-patched') and minor or
 eventually major (`r-devel') releases of R, respectively.  Version
@@ -270,6 +270,9 @@ released version), `r-patched' (patched released version), and `r-devel'
 master CVS archive and are updated hourly.  The `-C' and in the `rsync'
 command is to cause it to skip the CVS directories.  Further information on
 `rsync' is available at `http://rsync.samba.org/rsync/'.
+
+   The sources of the development version are also available via anonymous
+CVS.  See `http://anoncvs.R-project.org' for more information.
 
 2.5 How can R be installed?
 ===========================
@@ -362,18 +365,25 @@ tool to use.
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
 
-The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
+The `bin/macosx' directory of a CRAN site contains a standard Apple
+installer package named `RAqua.pkg.sit' compressed in Aladdin Stuffit
+format.  Once downloaded, uncompressed and executed, the installer will
+install the current non-developer release of R.  RAqua is a native MacOSX
+Darwin version with Aqua GUI.
+
+   Inside `bin/macosx/X.Y' there are prebuilt binary version of packages
+ready to be used with RAqua corresponding to R major release "X.Y". The
+installation of these packages is available through the "Package" menu of
+the RAqua GUI.
+
+   This port of R for MacOSX is maintained by Stefano Iacus
+<Stefano.Iacus@R-project.org>.  The "R for Macintosh FAQ/DOC"
+(http://cran.r-project.org/bin/macosx/RAqua-FAQ.html) has more details.
+
+   The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
 stuffit (`sit') archives for a base distribution and a large number of
-add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.
-The Mac version of R and the Mac binaries are maintained by Stefano Iacus
-<Stefano.Iacus@R-project.org>.
-
-   The "R for Macintosh FAQ/DOC"
-(http://www.eco-dip.unimi.it/R/rmac-FAQ.html) has more details.
-
-   Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by Jan de Leeuw <deleeuw@stat.ucla.edu> in the `bin/macosx'
-directory of a CRAN site.
+add-on packages of R 1.7.1 to run under MacOS 8.6 to MacOS 9.2.2.  This
+port of R for Macintosh is no longer supported.
 
 2.6 Are there Unix binaries for R?
 ==================================
@@ -1265,13 +1275,6 @@ distributions of R.)
      Data sets and sample analyses from "Probability and Statistics for
      Engineering and the Sciences (6th ed)" by Jay L. Devore, 2003, Duxbury.
 
-*EMV*
-     Estimation of missing values in a matrix by a k-th nearest neighboors
-     algorithm.
-
-*GLMMGibbs*
-     Generalised Linear Mixed Models by Gibbs sampling.
-
 *GRASS*
      An interface between the GRASS geographical information system and R,
      based on starting R from within the GRASS environment and chosen
@@ -1281,9 +1284,6 @@ distributions of R.)
 *GenKern*
      Functions for generating and manipulating generalised binned kernel
      density estimates.
-
-*GeneSOM*
-     Clustering genes using Self-Organizing Maps (SOMs).
 
 *Hmisc*
      Functions useful for data analysis, high-level graphics, utility
@@ -1476,6 +1476,10 @@ distributions of R.)
 *aws*
      Functions to perform adaptive weights smoothing.
 
+*bim*
+     Bayesian interval mapping diagnostics:  functions to interpret QTLCart
+     and Bmapqtl samples.
+
 *bindata*
      Generation of correlated artificial binary data.
 
@@ -1509,6 +1513,9 @@ distributions of R.)
      emphasis on regression diagnostics, particularly graphical diagnostic
      methods.
 
+*cat*
+     Analysis of categorical-variable datasets with missing values.
+
 *cclust*
      Convex clustering methods, including k-means algorithm, on-line update
      algorithm (Hard Competitive Learning) and Neural Gas algorithm (Soft
@@ -1530,6 +1537,9 @@ distributions of R.)
 
 *clim.pact*
      Climate analysis and downscaling for monthly and daily data.
+
+*clines*
+     Calculates Contour Lines.
 
 *cluster*
      Functions for cluster analysis.  _Recommended_.
@@ -1733,10 +1743,8 @@ distributions of R.)
 *gregmisc*
      Miscellaneous functions written/maintained by Gregory R. Warnes.
 
-*grid*
-     The Grid graphics package, a rewrite of the graphics layout
-     capabilities, plus some support for interaction.  _Recommended_ (will
-     be integrated into the R distribution for version 1.8.0).
+*gridBase*
+     Integration of base and grid graphics.
 
 *gss*
      A comprehensive package for structural multivariate function estimation
@@ -1824,8 +1832,16 @@ distributions of R.)
 *lgtdl*
      A set of methods for longitudinal data objects.
 
+*linprog*
+     Solve linear programming/linear optimization problems by using the
+     simplex algorithm.
+
 *lme4*
      Fit linear and generalized linear mixed-effects models.
+
+*lmeSplines*
+     Fit smoothing spline terms in Gaussian linear and nonlinear
+     mixed-effects models.
 
 *lmtest*
      A collection of tests on the assumptions of linear regression models
@@ -1842,8 +1858,20 @@ distributions of R.)
      Kernel regression smoothing with adaptive local or global plug-in
      bandwidth selection.
 
+*lpSolve*
+     Functions that solve general linear/integer problems, assignment
+     problems, and transportation problems via interfacing Lp_solve.
+
 *lpridge*
      Local polynomial (ridge) regression.
+
+*mapdata*
+     Supplement to package *maps*, providing the larger and/or
+     higher-resolution databases.
+
+*maps*
+     Draw geographical maps.  Projection code and larger maps are in
+     separate packages.
 
 *maptools*
      Set of tools for manipulating and reading geographic data, in
@@ -1868,10 +1896,6 @@ distributions of R.)
      analysis (FDA), penalized discriminant analysis (PDA), multivariate
      additive regression splines (MARS), adaptive back-fitting splines
      (BRUTO), and penalized regression.
-
-*meanscore*
-     Mean Score method for missing covariate data in logistic regression
-     models.
 
 *merror*
      Accuracy and precision of measurements.
@@ -1917,6 +1941,9 @@ distributions of R.)
 
 *mvnmle*
      ML estimation for multivariate normal data with missing values.
+
+*mvnormtest*
+     Generalization of the Shapiro-Wilk test for multivariate variables.
 
 *mvtnorm*
      Multivariate normal and t distributions.
@@ -2106,11 +2133,18 @@ distributions of R.)
 *scatterplot3d*
      Plots a three dimensional (3D) point cloud perspectively.
 
+*seacarb*
+     Calculates parameters of the seawater carbonate system.
+
 *seao*
      Simple Evolutionary Algorithm Optimization.
 
 *seao.gui*
      Simple Evolutionary Algorithm Optimization: graphical user interface.
+
+*segmented*
+     Functions to estimate break-points of segmented relationships in
+     regression models (GLMs).
 
 *sem*
      Functions for fitting general linear Structural Equation Models (with
@@ -2135,6 +2169,9 @@ distributions of R.)
      shape difference, thin-plate spline transformation grids and edge
      superimposition methods.
 
+*simpleboot*
+     Simple bootstrap routines.
+
 *sm*
      Software linked to the book "Applied Smoothing Techniques for Data
      Analysis:  The Kernel Approach with S-PLUS Illustrations" by A. W.
@@ -2156,6 +2193,9 @@ distributions of R.)
 *snow*
      Simple Network of Workstations: support for simple parallel computing
      in R.
+
+*som*
+     Self-Organizing Maps (with application in gene clustering).
 
 *sound*
      A sound interface for R: Basic functions for dealing with `.wav' files
@@ -2229,9 +2269,8 @@ distributions of R.)
 *tseries*
      Package for time series analysis with emphasis on non-linear modelling.
 
-*twostage*
-     Functions for optimal design of two-stage-studies using the Mean Score
-     method.
+*udunits*
+     Interface to Unidata's routines to convert units.
 
 *vardiag*
      Interactive variogram diagnostics.
@@ -2269,6 +2308,13 @@ these a try, of course.  This area of CRAN currently contains
 *Dopt*
      Finding D-optimal experimental designs.
 
+*EMV*
+     Estimation of missing values in a matrix by a k-th nearest neighboors
+     algorithm.
+
+*GLMMGibbs*
+     Generalised Linear Mixed Models by Gibbs sampling.
+
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
 
@@ -2289,8 +2335,16 @@ these a try, of course.  This area of CRAN currently contains
      including some latent class models via EM and Fisher scoring
      approaches.
 
+*meanscore*
+     Mean Score method for missing covariate data in logistic regression
+     models.
+
 *runStat*
      Running median and mean.
+
+*twostage*
+     Functions for optimal design of two-stage-studies using the Mean Score
+     method.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
@@ -2762,8 +2816,8 @@ transcript files, manipulating and editing saved transcripts, and
 re-evaluating commands from transcript files).
 
    The latest stable version of ESS are available via CRAN or the ESS web
-page (http://software.biostat.washington.edu/statsoft/ess/).  The HTML
-version of the documentation can be found at `http://stat.ethz.ch/ESS/'.
+page (http://ESS.R-project.org/).  The HTML version of the documentation
+can be found at `http://stat.ethz.ch/ESS/'.
 
    ESS comes with detailed installation instructions.
 

@@ -4,17 +4,17 @@
 \alias{setIs}
 \title{Is an Object from a Class}
 \description{
-  \code{is}: 
+  \code{is}:
   With two arguments, tests whether \code{object} can be treated as from
   \code{class2}.
 
   With one argument, returns all the super-classes of this object's class.
 
-  \code{extends}: 
+  \code{extends}:
   Does the first class extend the second class?
   Returns \code{maybe} if the extension includes a test.
 
-  \code{setIs}: 
+  \code{setIs}:
   Defines \code{class1} to be an extension of \code{class2}.
 }
 \usage{
@@ -23,11 +23,11 @@ is(object, class2)
 extends(class1, class2, maybe=TRUE, fullInfo = FALSE)
 
 setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
-      by = NULL, where = 1, classDef, extensionObject, doComplete = TRUE)
-
+      by = character(), where = topenv(parent.frame()), classDef =,
+      extensionObject = NULL, doComplete = TRUE)
 }
 \arguments{
-  \item{object}{Any R object.}
+  \item{object}{any \R object.}
   \item{class1, class2}{
     the names of the classes between which \code{is} relations are to be
     defined.}
@@ -81,7 +81,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   element of which is an object describing the relationship;
   otherwise, and by default, the value returned is only the names of
   the classes.}
-  
+
   \item{\code{setIs}: }{
 
     This function establishes an inheritance relation between two
@@ -101,7 +101,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
 
   The \code{coerce}, \code{replace}, and \code{by} arguments behave as
   described for the \code{\link{setAs}} function.  It's unlikely you
-  would use the \code{by} argument directly, but it is used in defining 
+  would use the \code{by} argument directly, but it is used in defining
   cached information about classes.  The value returned (invisibly) by
   \code{setIs} is the extension information, as a list.
 
@@ -126,7 +126,7 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
   the \code{class1} object the slots corresponding to \code{class2},
   and return the modified object as its value.
 
-  
+
   The relationship can also be conditional, if a function is supplied as the
   \code{test} argument.  This should be a function of one argument
   that returns \code{TRUE} or \code{FALSE} according to whether the

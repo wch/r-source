@@ -56,7 +56,7 @@ $(internet_la): $(internet_la_OBJECTS) $(internet_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(internet_la) $(Rexecmodulesdir)/internet$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(internet_la) $(Rexecmodulesdir)/internet$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(internet_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)

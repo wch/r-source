@@ -1,10 +1,9 @@
 \name{glm}
+\title{Fitting Generalized Linear Models}
 \alias{glm}
 \alias{glm.fit}
 \alias{weights.glm}
 \alias{print.glm}
-
-\title{Fitting Generalized Linear Models}
 \description{
   \code{glm} is used to fit generalized linear models, specified by
   giving a symbolic description of the linear predictor and a
@@ -16,11 +15,10 @@ glm(formula, family = gaussian, data, weights = NULL, subset = NULL,
     offset = NULL, control = glm.control(\dots), model = TRUE,
     method = "glm.fit", x = FALSE, y = TRUE, contrasts = NULL, \dots)
 
-glm.fit(x, y, weights = rep(1, nrow(x)),
+glm.fit(x, y, weights = rep(1, nobs),
         start = NULL, etastart = NULL, mustart = NULL,
-        offset = rep(0, nrow(x)),
-        family = gaussian(), control = glm.control(),
-        intercept = TRUE)
+        offset = rep(0, nobs), family = gaussian(),
+        control = glm.control(), intercept = TRUE)
 
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
@@ -220,7 +218,7 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
   \emph{Generalized linear models.}
   Chapter 6 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
-  
+
   McCullagh P. and Nelder, J. A. (1989)
   \emph{Generalized Linear Models.}
   London: Chapman and Hall.

@@ -2,7 +2,7 @@
 \alias{prmatrix}
 \title{Print Matrices, Old-style}
 \usage{
-prmatrix(x, rowlab = character(0), collab = character(0),
+prmatrix(x, rowlab =, collab =,
          quote = TRUE, right = FALSE, na.print = NULL, \dots)
 }
 \arguments{

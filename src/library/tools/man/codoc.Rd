@@ -33,13 +33,19 @@ codocData(package, lib.loc = NULL)
     libraries currently known.  The specified library trees are used to
     to search for \code{package}.}
   \item{use.positions}{a logical indicating whether to use the positions
-    of function arguments when comparing.}
-  \item{use.values}{a logical indicating whether to use function default
-    values when comparing code and docs.}
-  \item{ignore.generic.functions}{if \code{TRUE}, functions the body of
-    which contains \code{"UseMethod"} are ignored.}
+    of function arguments when comparing.  \emph{Deprecated}.}
+  \item{use.values}{if \code{FALSE} (current default), do not use
+    function default values when comparing code and docs.  Otherwise,
+    compare \emph{all} default values if \code{TRUE}, and only the ones
+    documented in the usage otherwise.}
+  \item{ignore.generic.functions}{if \code{TRUE}, functions recognized
+    as S3 generics are ignored.  \emph{Deprecated}.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
+}
+\note{
+  The default for \code{use.values} is going to be changed from
+  \code{FALSE} to \code{NULL}, right after release of \R version 1.8.0.
 }
 \details{
   The purpose of \code{codoc} is to check whether the documented usage
@@ -64,7 +70,7 @@ codocData(package, lib.loc = NULL)
   basic \dQuote{structure} of classes and data sets (similar to the
   usage sections for function synopses).  Variable names for data frames
   in documentation objects obtained by suitably editing \dQuote{shells}
-  created by \code{\link{prompt}} are recognized by \code{codocData} and 
+  created by \code{\link{prompt}} are recognized by \code{codocData} and
   used provided that the documentation object is for a single data frame
   (i.e., only has one alias).  \code{codocClasses} analogously handles
   slot names for classes in documentation objects obtained by editing

@@ -3,7 +3,7 @@
 # Copyright 1997-2003 by Douglas Bates <bates@stat.wisc.edu> 
 #                    and Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.53 2003/08/09 20:46:37 bates Exp $
+# $Id: rules,v 1.53.4.1 2003/10/13 00:48:25 murrell Exp $
 
 corepackage	= r-base-core
 latexpackage	= r-base-latex
@@ -97,8 +97,9 @@ upstream:
 	links http://cran.us.r-project.org/src/base
 
 upstreamdevel:
-	links ftp://ftp.stat.math.ethz.ch/Software/R
-	#links http://cran.us.r-project.org/src/base
+        #links ftp://ftp.stat.math.ethz.ch/Software/R
+        #links http://cran.us.r-project.org/src/base
+	rsync -vaC rsync.r-project.org::r-devel .
 
 build: build-arch build-indep
 

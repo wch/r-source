@@ -5,6 +5,9 @@ print(x, \dots)
 
 \method{print}{factor}(x, quote = FALSE, max.levels = NULL,
      width = getOption("width"), \dots)
+
+\method{print}{table}(x, digits = getOption("digits"), quote = FALSE,
+          na.print = "", zero.print = "0", justify = "none", \dots)
 }
 \alias{print}
 \alias{print.factor}
@@ -28,6 +31,15 @@ print(x, \dots)
     printed.  The default, \code{NULL}, entails chosing \code{max.levels}
     such that the levels print on one line of width \code{width}.}
   \item{width}{only used when \code{max.levels} is NULL, see above.}
+  \item{digits}{minimal number of \emph{significant} digits, see
+    \code{\link{print.default}}.}
+  \item{na.print}{character string (or \code{NULL}) indicating
+    \code{\link{NA}} values in printed output, see
+    \code{\link{print.default}}.}
+  \item{zero.print}{character specifying how zeros (\code{0}) should be
+    printed; for sparse tables, using \code{"."} can produce stronger results.}
+  \item{justify}{character indicating if strings should left- or
+    right-justified or left alone, passed to \code{\link{format}}.}
 }
 \details{
   The default method, \code{\link{print.default}} has its own help page.
@@ -36,6 +48,9 @@ print(x, \dots)
 
   \code{print.factor} allows some customization and is used for printing
   \code{\link{ordered}} factors as well.
+
+  \code{print.table} for printing \code{\link{table}}s allows other
+  customization.
 
   See \code{\link{noquote}} as an example of a class whose main
   purpose is a specific \code{print} method.
@@ -64,5 +79,12 @@ attenu$station ## 117 levels -> `max.levels' depending on width
 data(esoph) ## ordered : levels  "l1 < l2 < .."
 esoph$agegp[1:12]
 esoph$alcgp[1:12]
+
+## Printing of sparse (contingency) tables
+set.seed(521)
+t1 <- round(abs(rt(200, df=1.8)))
+t2 <- round(abs(rt(200, df=1.4)))
+table(t1,t2) # simple
+print(table(t1,t2), zero.print = ".")# nicer to read
 }
 \keyword{print}

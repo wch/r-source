@@ -853,6 +853,10 @@ builder (@pxref{Checking and building packages}).  The
 @code{\VignetteIndexEntry} statement is best placed in La@TeX{} comment,
 such that no definition of the command is necessary.
 
+At install time an HTML index for all vignettes is automatically created
+from the @code{\VignetteIndexEntry} statements unless a file
+@file{index.html} exists in directory @file{inst/doc}. This index is
+linked into the HTML help system for each package.
 
 @node Submitting a package to CRAN, Package name spaces, Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
@@ -1945,7 +1949,7 @@ contains
 @noindent
 so that e.g.@: @kbd{help.search("Spearman")} will succeed in finding the
 help page for the test for association between paired samples using
-Spearman's @math{\rho}{rho}.
+Spearman's @eqn{\rho, rho}.
 
 (Note that @code{help.search()} only uses ``sections'' of documentation
 objects with no additional markup.)

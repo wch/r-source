@@ -376,8 +376,8 @@ double evaluateGrobWidthUnit(SEXP grob, char* vpfontfamily, int vpfont,
      */
     /* Special case for "null" units
      */
-    if (unitUnit(width, 0) == L_NULL) {
-	result = evaluateNullUnit(unitValue(width, 0));
+    if (pureNullUnit(width, 0)) {
+	result = evaluateNullUnit(pureNullUnitValue(width, 0));
     } else {
 	/* These are the current fontsize and lineheight.
 	 * They are adequate (both in the sense of being the correct 
@@ -475,8 +475,8 @@ double evaluateGrobHeightUnit(SEXP grob, char *vpfontfamily, int vpfont,
      */
     /* Special case for "null" units
      */
-    if (unitUnit(height, 0) == L_NULL) {
-	result = evaluateNullUnit(unitValue(height, 0));
+    if (pureNullUnit(height, 0)) {
+	result = evaluateNullUnit(pureNullUnitValue(height, 0));
     } else {
 	vpc.fontfamily = vpfontfamily;
 	vpc.font = vpfont;

@@ -8,19 +8,18 @@ The files are as follows.
   install-sh
   mdate-sh
   missing
-  mkinstalldirs
 	standard tools from GNU autoconf.  Taken from the autoconf CVS
 	(pserver:anoncvs@subversions.gnu.org:/cvsroot/autoconf, module 
-	`autoconf').
+	'autoconf').
 
   GETCONFIG
-	create API `Rconfig.h' from the configure information in
-	`config.h'.
+	create API 'Rconfig.h' from the configure information in
+	'config.h'.
   GETMAKEVAL
 	get the value of a Make variable from a Makefile [this needs to
 	be improved].
   GETVERSION
-	create API `Rversion.h' from `VERSION' and `date-stamp'.
+	create API 'Rversion.h' from 'VERSION' and 'date-stamp'.
   
   Rdnewer.pl
 	determine whether any Rd file in an Rd tree is newer than a
@@ -38,7 +37,7 @@ The files are as follows.
 	GNU/Linux stable distribution.
 
   keywords2html.pl
-	convert `KEYWORDS.db' to HTML.
+	convert 'KEYWORDS.db' to HTML.
 	
   ldAIX4
 	writes an export file, assembling the exported symbols by
@@ -60,7 +59,7 @@ The files are as follows.
 	move a file if changed; otherwise, remove.
 
   pkg2tex.pl
-	create a single `PKGNAME-pkg.tex' file from the package docs in
+	create a single 'PKGNAME-pkg.tex' file from the package docs in
 	LaTeX format.
 
   rsync-recommended

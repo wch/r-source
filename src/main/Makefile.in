@@ -142,7 +142,7 @@ R.bin: $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
 ## </FIXME>
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
-	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
+	@$(SHELL) $(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)
 
 $(RLIBS):
 	(cd $(@D); $(MAKE) $(@F))
@@ -168,7 +168,7 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 $(srcdir)/gram.c: @MAINTAINER_MODE_TRUE@ $(srcdir)/gram.y
 	@echo "re-making gram.c"
 	$(YACC) $(YFLAGS) $(srcdir)/gram.y
-	$(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
+	$(SHELL) $(top_srcdir)/tools/move-if-change y.tab.c $(srcdir)/gram.c
 
 install: installdirs
 	@$(MAKE) install-bin
@@ -177,9 +177,9 @@ installdirs:
 	@$(MKINSTALLDIRS) $(Rexecbindir)
 	@$(MKINSTALLDIRS) $(Rexeclibdir)
 install-bin:
-	@$(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change R.bin $(Rexecbindir)/R.bin
 install-lib:
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) $(Rexeclibdir)/$(libR_la)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) $(Rexeclibdir)
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install

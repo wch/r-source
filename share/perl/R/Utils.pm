@@ -165,25 +165,24 @@ sub R_tempfile {
 
 sub R_system
 {
-    my $cmd = $_[0];
+    my ($cmd, $Renv) = @_;
     my $tmpf = R_tempfile();
     if($R::Vars::OSTYPE eq "windows") {
 	open(tmpf, "> $tmpf")
 	  or die "Error: cannot write to '$tmpf'\n";
-	print tmpf "$cmd\n";
+	print tmpf "$cmd $Renv\n";
 	close tmpf;
 	$res = system("sh $tmpf");
 	unlink($tmpf);
 	return $res;
     } else {
-	return system($cmd);
+	return system("$Renv $cmd");
     }
 }
 
 sub R_runR
 {
-    my $cmd = $_[0];
-    my $Ropts = $_[1];
+    my ($cmd, $Ropts, $Renv) = @_;
     my $Rin = R_tempfile("Rin");
     my $Rout = R_tempfile("Rout");
 
@@ -191,7 +190,8 @@ sub R_runR
     open RIN, "> $Rin" or die "Error: cannot write to '$Rin'\n";
     print RIN "$cmd\n";
     close RIN;
-    R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout} 2>&1");
+    R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout} 2>&1",
+	     $Renv);
     my @out;
     open ROUT, "< $Rout";
     while(<ROUT>) {chomp; push(@out, $_);}

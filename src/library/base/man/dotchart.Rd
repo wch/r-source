@@ -31,7 +31,9 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
   \item{pch}{the plotting character or symbol to be used.}
   \item{gpch}{the plotting character or symbol to be used for group
     values.}
-  \item{bg}{the background color to be used.}
+  \item{bg}{the background color of plotting characters or symbols to be
+    used; use \code{\link{par}(bg= *)} to set the background color of
+    the whole plot.}
   \item{color}{the color(s) to be used for points an labels.}
   \item{gcolor}{the single color to be used for group labels and
     values.}

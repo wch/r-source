@@ -33,6 +33,12 @@
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
 
+static void listencleanup(void *data)
+{
+    int *psock = data;
+    R_SockClose(*psock);
+}
+
 static Rboolean sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
@@ -50,9 +56,20 @@ static Rboolean sock_open(Rconnection con)
 	    warning("port %d cannot be opened", this->port);
 	    return FALSE;
 	}
-	sock = R_SockListen(sock1, buf, 256);
+	{
+	    RCNTXT cntxt;
+
+	    /* set up a context which will close socket on jump. */
+	    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue,
+			 R_NilValue, R_NilValue, R_NilValue);
+	    cntxt.cend = &listencleanup;
+	    cntxt.cenddata = &sock1;
+	    sock = R_SockListen(sock1, buf, 256);
+	    endcontext(&cntxt);
+	}
 	if(sock < 0) {
 	    warning("problem in listening on this socket");
+	    R_SockClose(sock1);
 	    return FALSE;
 	}
 	free(con->description);

@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2003   The R Development Core Team.
+ *  Copyright (C) 1998-2001   The R Development Core Team
+ *  Copyright (C) 2002--2003  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -13,9 +14,10 @@
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *  A copy of the GNU General Public License is available via WWW at
+ *  http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+ *  writing to the Free Software Foundation, Inc., 59 Temple Place,
+ *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -26,21 +28,21 @@
 #include <Rmath.h>
 #include <R_ext/RS.h>
 #include <R_ext/Applic.h> /* for dgemm */
-/* "GetRowNames" and "GetColNames" are utility routines which */
-/* locate and return the row names and column names from the */
-/* dimnames attribute of a matrix.  They are useful because */
-/* old versions of R used pair-based lists for dimnames */
-/* whereas recent versions use vector based lists */
 
-/* FIXME : This is nonsense.  When the "dimnames" attribute is */
-/* grabbed off an array it is always adjusted to be a vector. */
+/* "GetRowNames" and "GetColNames" are utility routines which
+ * locate and return the row names and column names from the
+ * dimnames attribute of a matrix.  They are useful because
+ * old versions of R used pair-based lists for dimnames
+ * whereas recent versions use vector based lists.
 
+ * These are now very old, plus
+ * ``When the "dimnames" attribute is
+ *   grabbed off an array it is always adjusted to be a vector.''
+*/
 SEXP GetRowNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
 	return VECTOR_ELT(dimnames, 0);
-    else if (TYPEOF(dimnames) == LISTSXP)
-	return CAR(dimnames);
     else
 	return R_NilValue;
 }
@@ -49,8 +51,6 @@ SEXP GetColNames(SEXP dimnames)
 {
     if (TYPEOF(dimnames) == VECSXP)
 	return VECTOR_ELT(dimnames, 1);
-    else if (TYPEOF(dimnames) == LISTSXP)
-	return CADR(dimnames);
     else
 	return R_NilValue;
 }
@@ -356,7 +356,7 @@ static void matprod(double *x, int nrx, int ncx,
 #ifdef HAVE_DOUBLE_COMPLEX
 /* ZGEMM - perform one of the matrix-matrix operations    */
 /* C := alpha*op( A )*op( B ) + beta*C */
-extern void 
+extern void
 F77_NAME(zgemm)(const char *transa, const char *transb, const int *m,
 		const int *n, const int *k, const Rcomplex *alpha,
 		const Rcomplex *a, const int *lda,
@@ -415,7 +415,7 @@ static void symcrossprod(double *x, int nr, int nc, double *z)
     int i, j;
     if (nr > 0 && nc > 0) {
         F77_CALL(dsyrk)(uplo, trans, &nc, &nr, &one, x, &nr, &zero, z, &nc);
-	for (i = 1; i < nc; i++) 
+	for (i = 1; i < nc; i++)
 	    for (j = 0; j < i; j++) z[i + nc *j] = z[j + nc * i];
     }
 }
@@ -496,6 +496,7 @@ static void ccrossprod(Rcomplex *x, int nrx, int ncx,
 	}
 #endif
 }
+/* "%*%" (op = 0)  or  crossprod (op = 1) : */
 SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     int ldx, ldy, nrx, ncx, nry, ncy, mode;
@@ -518,7 +519,7 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     ldx = length(xdims);
     ldy = length(ydims);
 
-    if (ldx != 2 && ldy != 2) {
+    if (ldx != 2 && ldy != 2) {		/* x and y non-matrices */
 	if (PRIMVAL(op) == 0) {
 	    nrx = 1;
 	    ncx = LENGTH(x);
@@ -530,51 +531,51 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nry = LENGTH(y);
 	ncy = 1;
     }
-    else if (ldx != 2) {
+    else if (ldx != 2) {		/* x not a matrix */
 	nry = INTEGER(ydims)[0];
 	ncy = INTEGER(ydims)[1];
 	nrx = 0;
 	ncx = 0;
 	if (PRIMVAL(op) == 0) {
-	    if (LENGTH(x) == nry) { /* x as row vector */
+	    if (LENGTH(x) == nry) {	/* x as row vector */
 		nrx = 1;
 		ncx = LENGTH(x);
 	    }
-	    else if (nry == 1) { /* x as col vector */
+	    else if (nry == 1) {	/* x as col vector */
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
 	}
 	else {
-	    if (LENGTH(x) == nry) {
+	    if (LENGTH(x) == nry) {	/* x is a row vector */
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
 	}
     }
-    else if (ldy != 2) {
+    else if (ldy != 2) {		/* y not a matrix */
 	nrx = INTEGER(xdims)[0];
 	ncx = INTEGER(xdims)[1];
 	nry = 0;
 	ncy = 0;
 	if (PRIMVAL(op) == 0) {
-	    if (LENGTH(y) == ncx) { /* y as col vector */
+	    if (LENGTH(y) == ncx) {	/* y as col vector */
 		nry = LENGTH(y);
 		ncy = 1;
 	    }
-	    else if (ncx == 1){ /* y as row vector */
+	    else if (ncx == 1) {	/* y as row vector */
 		nry = 1;
 		ncy = LENGTH(y);
 	    }
 	}
 	else {
-	    if (LENGTH(y) == nrx) {
+	    if (LENGTH(y) == nrx) {	/* y is a row vector */
 		nry = LENGTH(y);
 		ncy = 1;
 	    }
 	}
     }
-    else {
+    else {				/* x and y matrices */
 	nrx = INTEGER(xdims)[0];
 	ncx = INTEGER(xdims)[1];
 	nry = INTEGER(ydims)[0];
@@ -597,7 +598,8 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
     SETCAR(args, coerceVector(CAR(args), mode));
     SETCADR(args, coerceVector(CADR(args), mode));
 
-    if (PRIMVAL(op) == 0) {
+    if (PRIMVAL(op) == 0) {		       	/* op == 0 : matprod() */
+
 	PROTECT(ans = allocMatrix(mode, nrx, ncy));
 	if (mode == CPLXSXP)
 	    cmatprod(COMPLEX(CAR(args)), nrx, ncx,
@@ -605,8 +607,10 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    matprod(REAL(CAR(args)), nrx, ncx,
 		    REAL(CADR(args)), nry, ncy, REAL(ans));
+
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
+
 	if (xdims != R_NilValue || ydims != R_NilValue) {
 	    SEXP dimnames, dimnamesnames, dn;
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
@@ -637,7 +641,9 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(2);
 	}
     }
-    else {
+
+    else {					/* op == 1: crossprod() */
+
 	PROTECT(ans = allocMatrix(mode, ncx, ncy));
 	if (mode == CPLXSXP)
 	    if(sym)
@@ -655,27 +661,48 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 		crossprod(REAL(CAR(args)), nrx, ncx,
 			  REAL(CADR(args)), nry, ncy, REAL(ans));
 	}
+
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
-	if(sym)
+	if (sym)
 	    PROTECT(ydims = xdims);
 	else
 	    PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
+
 	if (xdims != R_NilValue || ydims != R_NilValue) {
 	    SEXP dimnames, dimnamesnames, dnx=R_NilValue, dny=R_NilValue;
+
+	    /* allocate dimnames and dimnamesnames */
+
 	    PROTECT(dimnames = allocVector(VECSXP, 2));
 	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
+
+            /* There was a bug here.  The second element of a */
+            /* dimnames list was being accessed for a 1-d array. */
+            /* I have just excluded the use of dimnames in this */
+            /* case. - ihaka Sep 30, 2003. */
+
 	    if (xdims != R_NilValue) {
-		dnx = getAttrib(xdims, R_NamesSymbol);
-		SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
-		if(!isNull(dnx))
-		    SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 1));
+                if (ldx == 2) {
+		    dnx = getAttrib(xdims, R_NamesSymbol);
+		    SET_VECTOR_ELT(dimnames, 0, VECTOR_ELT(xdims, 1));
+		    if(!isNull(dnx))
+			SET_STRING_ELT(dimnamesnames, 0, STRING_ELT(dnx, 1));
+		}
 	    }
+
 	    if (ydims != R_NilValue) {
-		dny = getAttrib(ydims, R_NamesSymbol);
-		SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));
-		if(!isNull(dny))
-		    SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1));
+                if (ldy == 2) {
+		    dny = getAttrib(ydims, R_NamesSymbol);
+		    SET_VECTOR_ELT(dimnames, 1, VECTOR_ELT(ydims, 1));
+		    if(!isNull(dny))
+			SET_STRING_ELT(dimnamesnames, 1, STRING_ELT(dny, 1));
+		}
 	    }
+
+            /* We sometimes attach a dimnames attribute */
+            /* whose elements are all NULL ... */
+            /* Thus is ugly but causes no real damage. */
+	    
 	    if (!isNull(dnx) || !isNull(dny))
 		setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
 	    setAttrib(ans, R_DimNamesSymbol, dimnames);
@@ -1039,7 +1066,7 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (keepNA)
 		    for (i = 0; i < n; i++) *ra++ += *rx++;
 		else
-		    for (c = cnt, i = 0; i < n; i++, ra++, rx++, c++) 
+		    for (c = cnt, i = 0; i < n; i++, ra++, rx++, c++)
 			if (!ISNAN(*rx)) {
 			    *ra += *rx;
 			    if (OP == 3) (*c)++;
@@ -1047,10 +1074,10 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if (OP == 3) {
 		if (keepNA)
-		    for (ra = rans, i = 0; i < n; i++) 
+		    for (ra = rans, i = 0; i < n; i++)
 			*ra++ /= p;
 		else {
-		    for (ra = rans, c = cnt, i = 0; i < n; i++, c++) 
+		    for (ra = rans, c = cnt, i = 0; i < n; i++, c++)
 			if (*c > 0) *ra++ /= *c; else *ra++ = NA_REAL;
 		    Free(cnt);
 		}

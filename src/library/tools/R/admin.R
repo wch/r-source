@@ -51,7 +51,7 @@ function(dir, outDir)
 .installPackageCodeFiles <-
 function(dir, outDir)
 {
-    if(!tools::fileTest("-d", dir))
+    if(!fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
     dir <- filePathAsAbsolute(dir)
 
@@ -78,7 +78,7 @@ function(dir, outDir)
         stop(paste("package directory", sQuote(dir),
                    "has no valid DESCRIPTION file"))
     codeDir <- file.path(dir, "R")
-    if(!tools::fileTest("-d", codeDir)) return(invisible())
+    if(!fileTest("-d", codeDir)) return(invisible())
 
     codeFiles <- listFilesWithType(codeDir, "code", full.names = FALSE)
 
@@ -138,15 +138,16 @@ function(dir, outDir)
 
     codeFiles <- file.path(codeDir, codeFiles)
 
-    if(!tools::fileTest("-d", outDir)) dir.create(outDir)
+    if(!fileTest("-d", outDir)) dir.create(outDir)
     outCodeDir <- file.path(outDir, "R")
-    if(!tools::fileTest("-d", outCodeDir)) dir.create(outCodeDir)
+    if(!fileTest("-d", outCodeDir)) dir.create(outCodeDir)
     outFile <- file.path(outCodeDir, db["Package"])
     ## <NOTE>
     ## It may be safer to do
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
     file.create(outFile)
+    writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""), outFile)
     file.append(outFile, codeFiles)
     ## </NOTE>
 
@@ -240,13 +241,25 @@ function(dir, outDir)
 function(dir, outDir)
 {
     vignetteDir <- file.path(dir, "inst", "doc")
-    ## Create a vignette index only if the vignette dir exists and
-    ## really contains vignettes.
-    if(!fileTest("-d", vignetteDir)
-       || !length(listFilesWithType(vignetteDir, "vignette")))
+    ## Create a vignette index only if the vignette dir exists
+    if(!fileTest("-d", vignetteDir))
         return(invisible())
 
+    packageName <- basename(dir)    
+    htmlIndex <- file.path(outDir, "doc", "index.html")
+
+    ## write dummy HTML index if no vignettes are found and exit
+    if(!length(listFilesWithType(vignetteDir, "vignette"))){
+        if(!file.exists(htmlIndex)){
+            .writeVignetteHtmlIndex(packageName, htmlIndex)
+        }
+        return(invisible())
+    }
+
     vignetteIndex <- .buildVignetteIndex(vignetteDir)
+    if(!file.exists(htmlIndex)){
+        .writeVignetteHtmlIndex(packageName, htmlIndex, vignetteIndex)
+    }
 
     .saveRDS(vignetteIndex,
              file = file.path(outDir, "Meta", "vignette.rds"))

@@ -39,7 +39,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE) {
     e <- La.eigen(-x/2, symmetric = TRUE)
     ev <- e$values[1:k]
     if(any(ev < 0))
-        warning("some of the first", k, "eigenvalues are < 0")
+        warning("some of the first ", k, " eigenvalues are < 0")
     points <- e$vectors[, 1:k, drop = FALSE] %*% diag(sqrt(ev), k)
     rn <- if(is.matrix(d)) rownames(d) else names(d)
     dimnames(points) <- list(rn, NULL)

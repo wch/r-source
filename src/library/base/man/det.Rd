@@ -5,7 +5,7 @@
 \alias{determinant.matrix}
 \usage{
 det(x, \dots)
-determinant(x, logarithm, \dots)
+determinant(x, logarithm = TRUE, \dots)
 }
 \description{
   \code{det} calculates the determinant of a matrix. \code{determinant}
@@ -14,8 +14,8 @@ determinant(x, logarithm, \dots)
   }
 \arguments{
   \item{x}{numeric matrix.}
-  \item{logarithm}{logical; if \code{TRUE} return the logarithm of the
-    modulus of the determinant.  Default is \code{TRUE}.}
+  \item{logarithm}{logical; if \code{TRUE} (default) return the
+    logarithm of the modulus of the determinant.}
   \item{\dots}{Optional arguments.  At present none are used.  Previous
     versions of \code{det} allowed an optional \code{method} argument.
     This argument will be ignored but will not produce an error.}
@@ -23,7 +23,7 @@ determinant(x, logarithm, \dots)
 \value{
   For \code{det}, the determinant of \code{x}.  For \code{determinant}, a
   list with components
-  \item{modulus}{a numeric value. The modulus (absolute value) of the
+  \item{modulus}{a numeric value.  The modulus (absolute value) of the
     determinant if \code{logarithm} is \code{FALSE}; otherwise the
     logarithm of the modulus.}
   \item{sign}{integer; either \eqn{+1} or \eqn{-1} according to whether

@@ -1,30 +1,29 @@
 \name{trace}
+\title{Interactive Tracing and Debugging of Calls to a Function or Method}
 \alias{trace}
 \alias{untrace}
 \alias{tracingState}
 %% internal
 \alias{.primTrace}
 \alias{.primUntrace}
-\title{ Interactive Tracing and Debugging of Calls to a Function or
-  Method}
 \description{
   A call to \code{trace} allows you to insert debugging code (e.g., a
   call to \code{\link{browser}} or \code{\link{recover}}) at chosen
   places in any function.  A call to \code{untrace} cancels the tracing.
   Specified methods can be traced the same way, without tracing all
-  calls to the function.  Trace code can be any \R expression. Tracing
+  calls to the function.  Trace code can be any \R expression.  Tracing
   can be temporarily turned on or off globally by calling \code{tracingState}.
 }
 \usage{
-trace(what, tracer, exit, at, print = TRUE, signature = NULL, where)
-untrace(what, signature = NULL, where)
+trace(what, tracer, exit, at, print, signature, where = topenv(parent.frame()))
+untrace(what, signature = NULL, where = topenv(parent.frame()))
 
-tracingState(on)
+tracingState(on = NULL)
 }
-\arguments{ 
-  \item{what}{ The name (quoted or not) of a function to be traced or
+\arguments{
+  \item{what}{The name (quoted or not) of a function to be traced or
     untraced.  More than one name can be given in the quoted form, and
-    the same action will be applied to each one. }
+    the same action will be applied to each one.}
   \item{tracer}{Either a function or an unevaluated expression.  The
     function will be called or the expression will be evaluated either
     at the beginning of the call, or before those steps in the call
@@ -33,30 +32,29 @@ tracingState(on)
   \item{exit}{ Either a function or an unevaluated expression.  The
     function will be called or the expression will be evaluated on
     exiting the function.
-    See the details section. }
-  \item{at}{ An optional numeric vector.  If supplied, \code{tracer}
+    See the details section.}
+  \item{at}{optional numeric vector.  If supplied, \code{tracer}
     will be called just before the corresponding step in the body of the
     function.
     See the details section. }
-  \item{print}{ If \code{TRUE}, a descriptive line is printed before any
-    trace expression is evaluated.}
+  \item{print}{If \code{TRUE} (as per default), a descriptive line is
+    printed before any trace expression is evaluated.}
   \item{signature}{ If this argument is supplied, it should be a
     signature for a method for function \code{what}.  In this case, the
-    method, and \emph{not} the function itself, is traced. }
-
-\item{where}{the environment from which to look for the function to be
-  traced; by default, the top-level environment of the call to
-  \code{trace}.  If you put a call to \code{trace} into code in a
-  package, you may need to specify \code{where=.GlobalEnv} if
-  the package containing the call has a namespace, but the function
-  you want to trace is somewhere on the search list.
+    method, and \emph{not} the function itself, is traced.}
+  \item{where}{the environment from which to look for the function to be
+    traced; by default, the top-level environment of the call to
+    \code{trace}.  If you put a call to \code{trace} into code in a
+    package, you may need to specify \code{where=.GlobalEnv} if
+    the package containing the call has a namespace, but the function
+    you want to trace is somewhere on the search list.
   }
-  \item{on}{A call to \code{tracingState} returns \code{TRUE} if
-     tracing is globally turned on, \code{FALSE} otherwise.  An
-     argument of one or the other of those values sets the state.  If
-     the tracing state is \code{FALSE}, none of the trace actions will
-     actually occur (used, for example, by debugging functions to shut
-     off tracing during debugging).}
+  \item{on}{logical; a call to \code{tracingState} returns \code{TRUE}
+    if tracing is globally turned on, \code{FALSE} otherwise.  An
+    argument of one or the other of those values sets the state.  If the
+    tracing state is \code{FALSE}, none of the trace actions will
+    actually occur (used, for example, by debugging functions to shut
+    off tracing during debugging).}
 }
 \details{
   The \code{trace} function operates by constructing a revised version
@@ -91,7 +89,7 @@ tracingState(on)
   integers referring to the substeps of the body of the function (this
   only works if the body of the function is enclosed in \code{{ ...}}.  In
   this case \code{tracer} is \emph{not} called on entry, but instead
-  just before evauating each of the steps listed in \code{at}.  (Hint:
+  just before evaluating each of the steps listed in \code{at}.  (Hint:
   you don't want to try to count the steps in the printed version of a
   function; instead, look at \code{as.list(body(f))} to get the numbers
   associated with the steps in function \code{f}.)
@@ -139,15 +137,16 @@ tracingState(on)
   interactively, but the \R version does not.  (A future revision may
   include a \dQuote{destructive} browser for \R.)
 }
-\note{  The version of function tracing that includes any of the
-  arguments except for the function name requires the methods package
-  (because it uses special classes of objects to store and restore
-  versions of the traced functions).
+\note{
+  The version of function tracing that includes any of the arguments
+  except for the function name requires the methods package (because it
+  uses special classes of objects to store and restore versions of the
+  traced functions).
 
   If methods dispatch is not currently on, \code{trace} will load the
-  methods namespace, but will not put the methods package on the
-  search list.
-  }
+  methods namespace, but will not put the methods package on the search
+  list.
+}
 \value{
   The traced function(s) name(s).  The relevant consequence is the
   assignment that takes place.

@@ -1643,7 +1643,7 @@ SEXP do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
     if (version == NA_INTEGER || version <= 0)
 	error("bad version value");
     if (version < 2)
-	error("cannott save to connections in version %d format", version);
+	error("cannot save to connections in version %d format", version);
 
     fun = CAR(nthcdr(args,4));
     hook = fun != R_NilValue ? CallHook : NULL;
@@ -1863,17 +1863,13 @@ SEXP R_serialize(SEXP object, SEXP icon, SEXP ascii, SEXP fun)
 	cntxt.cenddata = &mbs;
 
 	InitMemOutPStream(&out, &mbs, type, 0, hook, fun);
-        /**** Need to make sure the buffer is released on error.  This
-	      will be easier to do once this code is included in base.
-	      But maybe having a oublic unwind-protect mechanism would
-	      be useful too. */
 	R_Serialize(object, &out);
 
 	val =  CloseMemOutPStream(&out);
 
 	/* end the context after anything that could raise an error but before
 	   calling OutTerm so it doesn't get called twice */
-    endcontext(&cntxt);
+	endcontext(&cntxt);
 
 	return val;
     }

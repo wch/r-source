@@ -43,3 +43,12 @@ getPackageName <- function(where = topenv(parent.frame())) {
 setPackageName <- function(pkg, env)
     assign(".packageName", pkg, env)
 
+##FIXME:  rather than an attribute, the className should have a formal class
+## (but there may be bootstrap problems)
+packageSlot <- function(object)
+    attr(object, "package")
+
+"packageSlot<-" <- function(object, value) {
+    attr(object, "package") <- value
+    object
+}

@@ -18,7 +18,7 @@
 }
 \details{
   Class \code{"octmode"} consists of integer vectors with that class
-  atttribute, used merely to ensure that they are printed in octal
+  attribute, used merely to ensure that they are printed in octal
   notation, specifically for Unix-like file permissions such as
   \code{755}.
 }

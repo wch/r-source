@@ -478,28 +478,20 @@ getGroup <-
 
 getMethodsMetaData <-
   ## get the methods meta-data for function f on database where
-  function(f, where = -1) {
-    if(identical(where, -1)) {
-        mname <- mlistMetaName(f)
-        if(exists(mname))
-            get(mname)
-        else
-            NULL
-    }
-    else {
+  function(f, where = topenv(parent.frame())) {
         mname <- mlistMetaName(f, where)
-        if(exists(mname, where = where, inherits = FALSE))
+        if(exists(mname, where = where, inherits = missing(where)))
             get(mname, where)
         else
             NULL
-    }
   }
 
 
 assignMethodsMetaData <-
   ## assign value to be the methods metadata for generic f on database where.
   function(f, value, fdef, where, deflt = finalDefaultMethod(value)) {
-    assign(mlistMetaName(fdef), value, where)
+    assign(mlistMetaName(fdef) # use generic function to get package correct
+           , value, where)
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
@@ -543,9 +535,9 @@ mlistMetaName <-
   }
 
 getGenerics <-
-  function(where = -1, searchForm = FALSE) {
-      if(identical(where, -1))
-          where <- .envSearch()
+  function(where, searchForm = FALSE) {
+      if(missing(where))
+          where <- .envSearch(topenv(parent.frame()))
       else if(is.environment(where)) where <- list(where)
     these <- character()
     for(i in where) {

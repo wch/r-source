@@ -22,7 +22,7 @@ x != y
   Comparison of strings in character vectors is lexicographic within the
   strings using the collating sequence of the locale in use: see
   \code{\link{locales}}.  The collating sequence of locales such as
-  \code{en_US} is normally different from \code{C} (which should use
+  \samp{en\_US} is normally different from \samp{C} (which should use
   ASCII) and can be surprising.
 }
 \value{

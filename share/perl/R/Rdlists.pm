@@ -403,9 +403,10 @@ sub build_index { # lib, dest
     }
 
     if(-d file_path($dest, "doc")){
-	print htmlfile "<a href=\"../doc\">Accompanying documentation</a> "
-	    . "is available in the subdirectory \"doc\" "
-	    . "of the installed package.<p>\n\n";
+	print htmlfile "<h2>User Guides and Package Vignettes</h2>\n"
+	    . "Read <a href=\"../doc/index.html\">overview</a> or "
+	    . "browse <a href=\"../doc\">directory</a>.\n\n"
+	    . "<h2>Help Pages</h2>\n\n";
     }
 	
     if($naliases>100){

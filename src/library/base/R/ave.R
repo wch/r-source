@@ -5,7 +5,7 @@ ave <- function (x, ..., FUN = mean)
         g <- 1
         nlv <- 1
         for (i in 1:n) {
-            l[[i]] <- li <- as.factor(l[[i]])
+            l[[i]] <- li <- factor(l[[i]])# maybe dropping levels
             g <- g + nlv * (as.numeric(li) - 1)
             nlv <- nlv * length(levels(li))
         }

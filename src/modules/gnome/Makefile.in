@@ -73,7 +73,7 @@ $(R_gnome_la): $(R_gnome_la_OBJECTS) $(R_gnome_la_DEPENDENCIES)
 ## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(R_gnome_la) $(Rexecmodulesdir)/R_gnome$(SHLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_gnome_la) $(Rexecmodulesdir)/R_gnome$(SHLIB_EXT)
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_gnome_la) $(Rexecmodulesdir)
 installdirs:
 	@$(MKINSTALLDIRS) $(Rexecmodulesdir)

@@ -1,9 +1,48 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.9 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.9.0
+
+
+DEPRECATED & DEFUNCT
+
+    o	print.coefmat() is defunct, replaced by printCoefmat().
+
+    o	codes() and codes<-() are defunct.
+
+    o	anovalist.lm (replaced in 1.2.0) is now defunct.
+
+    o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are defunct.
+
+    o	print.atomic() is defunct.
+
+
+
+
+	**************************************************
+	*						 *
 	*	       1.8 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 1.8.1
+
+
+BUG FIXES
+
+    o	symnum(x) now behaves as documented when length(x) == 0 and uses
+	lower.triangular = FALSE for logical arrays.
+
+    o	c() now has a method for "noquote" objects and hence works as expected.
+
+    o	split(1:10, c(1,2)) no longer gives a spurious warning.
+
 
 
 		CHANGES IN R VERSION 1.8.0
@@ -11,8 +50,8 @@
 
 MACOS CHANGES
 
-    o   As from this release there is only one R port for the
-	Macintosh, which runs only on MacOS X.  (The `Carbon' port has
+    o	As from this release there is only one R port for the
+	Macintosh, which runs only on MacOS X.	(The `Carbon' port has
 	been discontinued, and the `Darwin' port is part of the new
 	version.)   The current version can be run either as a
 	command-line application or as an `Aqua' console.  There is a
@@ -124,6 +163,8 @@ NEW FEATURES
     o	The "?" operator has new forms for querying documentation on
 	S4 methods.  See the online documentation.
 
+    o	New argument frame.plot = axes (== TRUE)  for filled.contour().
+
     o	New argument fixed = TRUE for grep() and regexpr() to avoid the
 	need to escape strings to match.
 
@@ -184,6 +225,9 @@ NEW FEATURES
 	same way as print.summary.lm(), and both show them as NAs in
 	the table of coefficients.
 
+    o	print.table() has a new argument `zero.print' and is now
+	documented.
+
     o	rank(x, na.last = "keep") now preserves NAs in `x', and the
 	argument `ties.method' allows to use non-averaging ranks in the
 	presence of ties.
@@ -199,6 +243,14 @@ NEW FEATURES
 	and collection of results, wrapping a common use of sapply()
 	for simulation purposes.
 
+    o	rev() is now a generic function, with default and dendrogram
+	methods.
+
+    o	serialize() and unserialize() functions are available for
+	low-level serialization to connections.
+
+    o	socketSelect() allows waiting on multiple sockets.
+
     o	sort(method = "quick", decreasing = TRUE) is now implemented.
 
     o	sort.list() has methods "quick" (a wrapper for sort(method =
@@ -211,6 +263,10 @@ NEW FEATURES
     o	strsplit(x, *) now preserves names() but won't work for
 	non-character `x' anymore {formerly used as.character(x),
 	destroying names(x)}.
+
+    o	textConnection() now has a local argument for use with output
+	connections.  local = TRUE means the variable containing the
+	output is assigned in the frame of the caller.
 
     o	Using UseMethod() with more than two arguments now gives a
 	warning (as R-lang.texi has long claimed it did).
@@ -295,22 +351,27 @@ NEW FEATURES
 	the garbage collector and reduce system calls on some
 	platforms.
 
+    o	textConnection() now has a local argument for use with output
+	connections. local = TRUE means the variable containing the output
+	is assigned in the frame of the caller.
+
 
 STANDARD PACKAGES
 
-    o   New package 'mle'. This is a simple package to find maximum
-        likelihood estimates, and perform likelihood profiling and
-        approximate confidence limits based upon it. A well-behaved
+    o	New package 'mle'. This is a simple package to find maximum
+	likelihood estimates, and perform likelihood profiling and
+	approximate confidence limits based upon it.  A well-behaved
 	likelihood function is assumed, and it is the responsibility
 	of the user to gauge the applicability of the asymptotic
-        theory. This package is based on S4 methods and classes.
+	theory.  This package is based on S4 methods and classes.
 
     o	Changes in package 'mva':
 
 	- factanal() now returns the test statistic and P-value formerly
 	  computed in the print method.
 
-	- heatmap() has more arguments, mostly thanks to Wolfgang Huber.
+	- heatmap() has many more arguments, partly thanks to Wolfgang
+	  Huber and Andy Liaw.
 
 	- Arguments `unit' and `hmin' of plclust() are now implemented.
 
@@ -318,7 +379,10 @@ STANDARD PACKAGES
 	  method for its output (in the real case).
 
 	- dendrograms are slightly better documented, methods working with
-	  "label", not "text" attribute.
+	  "label", not "text" attribute.  New rev() method for dendrograms.
+
+	- plot.dendrogram() has an explicit `frame.plot' argument
+	  defaulting to FALSE (instead of an implicit one defaulting to TRUE).
 
     o	Changes in package 'tcltk':
 
@@ -371,8 +435,8 @@ STANDARD PACKAGES
 	- decompose() has a new argument `filter'.
 
 	- HoltWinters() has new arguments `optim.start' and
-          `optim.control', and returns more components in the fitted
-          values.  The plot method allows `ylim' to be set.
+	  `optim.control', and returns more components in the fitted
+	  values.  The plot method allows `ylim' to be set.
 
 	- plot.ts() has a new argument `nc' controlling the number of
 	  columns (with default the old behaviour for plot.mts).
@@ -478,8 +542,8 @@ C-LEVEL FACILITIES
 	A compiler for producing byte compiled code will be made available
 	separately and should become part of a future R release.
 
-    o   On Unix-like systems calls to the popen() and system() C library
-	functions now go through R_popen and R_system.  On Mac OS X these
+    o	On Unix-like systems calls to the popen() and system() C library
+	functions now go through R_popen and R_system.	On Mac OS X these
 	suspend SIGALRM interrupts around the library call.  (Related to
 	PR#1140.)
 
@@ -564,12 +628,16 @@ BUG FIXES
     o	as.data.frame.list(optional = TRUE) was converting names, and
 	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
 
+    o	as.dist(m) {mva} now obeys `diag=TRUE' or `upper=TRUE' in all cases.
+
     o	as.double(list()) etc was regarded as an error, because of a
 	bug in isVectorizable.
 
     o	On some platforms the wday component of the result of
 	as.POSIXlt() was corrupted when trying to guess the DST offset
 	at dates the OS was unable to handle.
+
+    o	ave(x, g) didn't work when `g' had unused levels.
 
     o	biplot.default() allows xlim and ylim to be set.  (PR#3168)
 
@@ -583,6 +651,8 @@ BUG FIXES
     o	boxplot() was ignoring cex.axis.  (PR#2628)
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
+
+    o	crossprod() now works for 1d arrays with unnamed dimnames (PR#4092).
 
     o	data() sometimes failed with multiple files, as the paths
 	variable got corrupted.
@@ -599,6 +669,12 @@ BUG FIXES
 	average window.
 
     o	demo() was using `topic' as a regexp rather than an exact match.
+
+    o	dotchart() now does recycle the `color' argument and better
+	documents the `bg' one (PR#4343).
+
+    o	getAnywhere() didn't not correctly check for S3 methods, when
+	the generic or the class name contains a "." (PR#4275).
 
     o	file.copy() ignored the overwrite argument.  (PR#3529)
 
@@ -619,6 +695,8 @@ BUG FIXES
     o	HoltWinters() would segfault if only gamma was optimized, and
 	not converge if gamma=0 and seasonal="mult".
 
+    o	hyperref.cfg now contains definitions for colors it uses.
+
     o	identify.default() detects zero-length arguments.  (PR#4057)
 
     o	legend() allows shading without filling again.
@@ -632,7 +710,7 @@ BUG FIXES
 	appropriately.	It also ensures that hat values are not greater
 	than one, and rounds values within rounding error of one.
 
-    o	The `method' argument to loess() did not work.  (PR#3332)
+    o	The `method' argument to loess() did not work.	(PR#3332)
 
     o	lsfit() was returning incorrect residuals for 0-rank fits.
 
@@ -647,6 +725,8 @@ BUG FIXES
 
     o	Printing `nls' objects misbehaved when `data' was a composite
 	expression.
+
+    o	.NotYetImplemented() gave "Error in .NotYet...(): .."
 
     o	numericDeriv() was failing if the first argument was a name
 	rather than a call.  (PR#3746)
@@ -669,6 +749,9 @@ BUG FIXES
 	documented in the same way as S, and now behaves as
 	documented.  (PR#3504)
 
+    o	plclust() [and hence plot.hclust()] sometimes now uses correct `ylim's
+	also in unusual cases.	(PR#4197)
+
     o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
 
     o	The png(), jpeg(), png() and win.metafile() devices now
@@ -688,10 +771,15 @@ BUG FIXES
 
     o	readBin(what = "foo") didn't convert `what' to its type.  (PR#4043)
 
+    o	reorder.dendrogram() now properly resets the "midpoint" attributes
+	such that reorder()ed dendrograms now plot properly.
+
+    o	rmultinom(1,100, c(3, 4, 2, 0,0))[3] was NA. (PR#4431)
+
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames
 	anymore.
 
-    o	scan() now interprets quoting in fields to be skipped.  (PR#4128)
+    o	scan() now interprets quoting in fields to be skipped.	(PR#4128)
 
     o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
 	the length incorrectly.
@@ -700,15 +788,22 @@ BUG FIXES
 
     o	step() adds a fuzz for reduction in AIC for 0-df terms.	 (PR#3491)
 
-    o	str(x) gives better output when x is of mode "(".
+    o	str(x) gives better output when x is of mode "(".  Its "dendrogram"
+	method obeys the `give.attr' argument which now defaults to FALSE.
 
     o	strwidth(f) and strheight(f) could seg.fault when `f' was a
 	function.  The fix [to C-level coerceVector()] now gives an error
 	instead of passing through.  This may catch other potential
 	problems.
 
+    o	Sweave() reports the chunk number rather than the driver call when
+	a try error gets caught.
+
     o	trunc.POSIXt(x) for 0-length x does not return invalid structures
 	anymore.  (PR#3763).
+
+    o	warnings() now returns NULL instead of an error when no warnings
+	have occured yet.  (PR#4389)
 
     o	Using write.table() setting the `dec' argument and with no
 	numeric columns failed.	 (PR#3532)
@@ -748,6 +843,11 @@ BUG FIXES
 
     o	Internals for complex assignment did not check that function name
 	was a symbol, which could cause a segfault.
+
+    o	Fixed bug in S4 methods dispatch that made local variables in the
+	generic visible when executing the body of a method, thus violating
+	lexical scope.
+
 
 
 
@@ -1406,7 +1506,8 @@ INSTALLATION CHANGES
 	contents data base, are serialized as R objects in the 'Meta'
 	subdirectory of the top-level package directory, allowing for
 	faster and more reliable index-based computations (e.g., in
-	help.search()).
+	help.search()). For vignettes an HTML index is generated
+	and linked into the HTML help system.
 
     o	The Rd contents data base is now computed when installing source
 	packages using R code in package tools.	 The information is

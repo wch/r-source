@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.137 $'
+revision='$Revision: 1.137.2.1 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -55,15 +55,6 @@ Report bugs to <r-bugs@r-project.org>."
 ## for *source*, but not for *binary* installations.
 ## </NOTE>
 
-## <FIXME>
-## This uses
-##   mkdir -p
-##   basename
-## which are not portable.
-## We could fix this using suitable shell replacements, but we should
-## really redo as much as we can using R code.
-## </FIXME>
-
 ## <NOTE>
 ## We try to be defensive about possible white space in file names,
 ## hence all the strange quoting ...
@@ -73,7 +64,11 @@ umask 022
 
 R_VERSION='@VERSION@'
 GETWD='@GETWD@'
+## <FIXME>
+## Should already be set via Rcmd.
 MAKE=${MAKE-'@MAKE@'}
+TAR=${TAR='@TAR@'}
+## </FIXME>
 NO_PERL5=@NO_PERL5@
 NO_PERL5_MSG="\
 *** Formatting and installing R help pages needs Perl version 5, which
@@ -82,10 +77,17 @@ NO_PERL5_MSG="\
 *** get the PDF reference manual from the nearest CRAN server.
 *** The CRAN master site can be found at
 ***    http://cran.r-project.org/"
+
+if mkdir -p . 2>/dev/null; then
+  MKDIR_P="mkdir -p"
+else
+  MKDIR_P="${R_HOME}/bin/mkinstalldirs"
+fi
+
 startdir=`${GETWD}`
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
 if (test -d "${tmpdir}" && test -w "${tmpdir}") || \
-    mkdir -p "${tmpdir}" 2> /dev/null; then
+    ${MKDIR_P} "${tmpdir}" 2> /dev/null; then
   tmpdir=`cd "${tmpdir}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create temporary directory '${tmpdir}'"
@@ -126,8 +128,12 @@ get_packages () {
     for p in ${bundlepkg}; do
       pkgs="${pkgs} \"`cd "${1}/${p}" && ${GETWD}`\""
       if test -f "${1}/${p}/DESCRIPTION.in"; then
-        cat "${1}/${p}/DESCRIPTION.in"  > "${1}/${p}/DESCRIPTION"
-        grep -v "^Contains:" "${1}/DESCRIPTION" >> "${1}/${p}/DESCRIPTION"
+        ## Try being defensive about missing final newlines, or extra
+	## empty lines.
+        (cat "${1}/${p}/DESCRIPTION.in"
+	  echo
+          grep -v "^Contains:" "${1}/DESCRIPTION"
+	  echo) | sed '/^ *$/d' > "${1}/${p}/DESCRIPTION"
       fi
     done
   else 
@@ -226,7 +232,7 @@ while test -n "${1}"; do
 	## Otherwise, the build date for an older version may be newer
 	## than the modification date for the new sources as recorded in
 	## the tarball ...
-	gzip -dc "${1}" | (cd "${tmpdir}" && tar -mxf -)
+	gzip -dc "${1}" | (cd "${tmpdir}" && ${TAR} -mxf -)
 	if test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else
@@ -249,7 +255,7 @@ if test -z "${pkgs}"; then
 fi
 
 if (test -d "${lib}" && test -w "${lib}") || \
-    mkdir -p "${lib}" 2> /dev/null; then
+    ${MKDIR_P} "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create directory '${lib}'"
@@ -261,7 +267,7 @@ if test -d "${lockdir}" || test -f "${lockdir}"; then
   echo "Try removing '${lockdir}'"
   exit 3
 else
-  mkdir -p "${lockdir}"
+  ${MKDIR_P} "${lockdir}"
   if test ${?} -ne 0; then
     ## This should not really happen ...
     echo "ERROR: failed to lock directory '${lib}' for modifying"
@@ -314,10 +320,11 @@ do_install_binary () {
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
     mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
-    mkdir -p "${R_PACKAGE_DIR}"
+    ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
   
-  cp -r . "${R_PACKAGE_DIR}"
+  cp -r . "${R_PACKAGE_DIR}" || \
+    (${TAR} cf - . | (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
 
   if test ${?} -ne 0; then
     echo "ERROR: installing binary package failed"
@@ -354,14 +361,14 @@ do_install_source () {
   if test -f "${R_PACKAGE_DIR}/DESCRIPTION"; then
     ## Back up previous version.
     mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
-    mkdir -p "${R_PACKAGE_DIR}"
+    ${MKDIR_P} "${R_PACKAGE_DIR}"
     ## Preserve man pages to speed up installation?  Only makes sense
     ## if we install from a non-temporary directory.
     if test "`cd .. && ${GETWD}`" != \
             "`cd \"${tmpdir}\" && ${GETWD}`"; then
       (cd "${lockdir}/${R_PACKAGE_NAME}" \
-          && tar cf - R-ex help html latex) | \
-	(cd "${R_PACKAGE_DIR}" && tar xf -)
+          && ${TAR} cf - R-ex help html latex) | \
+	(cd "${R_PACKAGE_DIR}" && ${TAR} xf -)
     fi
   fi
 
@@ -374,7 +381,10 @@ do_install_source () {
   fi
 
   for f in COPYING NAMESPACE; do
-    if test -f "${f}"; then cp "${f}" "${R_PACKAGE_DIR}"; fi
+    if test -f "${f}"; then
+      cp "${f}" "${R_PACKAGE_DIR}"
+      chmod 644 "${R_PACKAGE_DIR}/${f}"
+    fi
   done
 
   ## Copy DESCRIPTION file, stamp with build information, and remove
@@ -392,7 +402,7 @@ do_install_source () {
   if test -d src && test "${fake}" != "true"; then
     message "libs"
     if ${debug}; then set -x; fi
-    mkdir -p "${R_PACKAGE_DIR}/libs"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
       cd src;
       makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
@@ -426,12 +436,13 @@ do_install_source () {
       echo "ERROR: compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
+    chmod 755 "${R_PACKAGE_DIR}/libs/"*
     if ${debug}; then set +x; fi
   fi
 
   if test -d R; then
     message "R"
-      mkdir -p "${R_PACKAGE_DIR}/R"
+      ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
       echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
         R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
@@ -453,7 +464,7 @@ do_install_source () {
 
   if test -d data; then
     message "data"
-    mkdir -p "${R_PACKAGE_DIR}/data"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/data"
     rm -f "${R_PACKAGE_DIR}/data/"*
     cp data/* "${R_PACKAGE_DIR}/data" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/data/"*
@@ -468,7 +479,7 @@ do_install_source () {
 
   if test -d demo && test "${fake}" != "true"; then
     message "demo"
-    mkdir -p "${R_PACKAGE_DIR}/demo"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/demo"
     rm -f "${R_PACKAGE_DIR}/demo/"*
     cp demo/* "${R_PACKAGE_DIR}/demo" 2>/dev/null
     chmod 644 "${R_PACKAGE_DIR}/demo/"*
@@ -476,7 +487,7 @@ do_install_source () {
 
   if test -d exec && test "${fake}" != "true"; then
     message "exec"
-    mkdir -p "${R_PACKAGE_DIR}/exec"
+    ${MKDIR_P} "${R_PACKAGE_DIR}/exec"
     rm -f "${R_PACKAGE_DIR}/exec/"*
     cp exec/* "${R_PACKAGE_DIR}/exec" 2>/dev/null
     chmod 755 "${R_PACKAGE_DIR}/exec/"*
@@ -484,7 +495,9 @@ do_install_source () {
 
   if test -d inst && test "${fake}" != "true"; then
     message "inst"
-    cp -r inst/* "${R_PACKAGE_DIR}"
+    cp -r inst/* "${R_PACKAGE_DIR}" || \
+      (cd inst && ${TAR} cf - . | \
+        (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
   fi
 
   case ${save} in
@@ -526,7 +539,7 @@ do_install_source () {
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
-      ${code_cmd}) | R_DEFAULT_PACKAGES=NULL ${R_SAVE_EXE} ${save_args}
+      ${code_cmd}) | R_DEFAULT_PACKAGES= ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
       echo "ERROR: execution of package source for '${pkg_name}' failed"
       do_exit_on_error
@@ -547,7 +560,7 @@ do_install_source () {
     ## Install man sources ...
     Rdfiles=`ls man/*.[Rr]d man/${R_OSTYPE}/*.[Rr]d 2>/dev/null`
     if test -n "${Rdfiles}"; then
-      mkdir -p "${R_PACKAGE_DIR}/man"
+      ${MKDIR_P} "${R_PACKAGE_DIR}/man"
       rm -f "${R_PACKAGE_DIR}/man/"*
       for f in ${Rdfiles}; do cat "${f}"; echo; echo '\eof'; done \
         > "${R_PACKAGE_DIR}/man/${pkg_name}.Rd"
@@ -623,11 +636,19 @@ do_install () {
   pkg_name=`get_dcf_field Package DESCRIPTION`
   ## (The basename of ${pkg_dir} might be different from ${pkg_name},
   ## e.g., when building Debian packages from R packages.)
+  if test -z "${pkg_name}"; then
+    echo "ERROR: no 'Package' field in 'DESCRIPTION'"
+    do_exit_on_error no
+  fi
 
   ## Set R_PACKAGE_DIR here at the top level.  If a version is being
   ## specified, tack that on.
   if ${with_package_versions}; then
     version=`get_dcf_field Version DESCRIPTION`
+    if test -z "${version}"; then
+      echo "ERROR: no 'Version' field in 'DESCRIPTION'"
+      do_exit_on_error no
+    fi
     R_PACKAGE_NAME="${pkg_name}_${version}"
     R_PACKAGE_DIR="${lib}/${pkg_name}_${version}"
   else
@@ -652,14 +673,14 @@ do_install () {
       if test ${dep_ok} -eq 0; then
         echo "ERROR: This R is version ${R_VERSION}"
         echo "       package '${pkg_name}' depends on R ${dep_version}"
-        do_exit_on_error;
+        do_exit_on_error
       fi
     else
       echo "WARNING: malformed 'Depends' field in 'DESCRIPTION'"
     fi
   fi
 
-  mkdir -p "${R_PACKAGE_DIR}" || do_exit_on_error no
+  ${MKDIR_P} "${R_PACKAGE_DIR}" || do_exit_on_error no
 
   ## Make sure we do not attempt installing to srcdir.
   if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
@@ -700,7 +721,7 @@ do_install () {
       "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
   fi
 
-  chmod -R a+r "${R_PACKAGE_DIR}"
+  find "${R_PACKAGE_DIR}" -exec chmod a+r \{\} \;
 
   message "DONE (${pkg_name})"
   is_first_package=no
@@ -711,11 +732,13 @@ do_install () {
 
 do_exit_on_error () {
   remove_R_package_dir=${1-yes}
-  if test "${remove_R_package_dir}" = yes; then
+  if test "${remove_R_package_dir}" = yes \
+      && test -n "${R_PACKAGE_DIR}"; then
     message "Removing '${R_PACKAGE_DIR}'"
     rm -rf "${R_PACKAGE_DIR}"
   fi
-  if test -d "${lockdir}/${R_PACKAGE_NAME}"; then
+  if test -n "${R_PACKAGE_NAME}" \
+      && test -d "${lockdir}/${R_PACKAGE_NAME}"; then
     message "Restoring previous '${R_PACKAGE_DIR}'"
     mv "${lockdir}/${R_PACKAGE_NAME}" "${R_PACKAGE_DIR}"
   fi
@@ -734,6 +757,7 @@ do_cleanup () {
     ## Only need to do this in case we successfully installed  at least
     ## *one* package ... 
     cp "${R_HOME}/doc/html/R.css" "${lib}"
+    chmod 644 "${lib}/R.css"
     if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
       cat "${R_HOME}"/library/*/CONTENTS \
         > "${R_HOME}"/doc/html/search/index.txt

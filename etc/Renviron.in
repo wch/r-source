@@ -32,6 +32,7 @@ EGREP=${EGREP-'@EGREP@'}
 MAKE=${MAKE-'@MAKE@'}
 PERL=${PERL-'@PERL@'}
 TAR=${TAR-'@TAR@'}
+LN_S='@LN_S@'
 
 ## Aqua subdirs
 R_USE_AQUA_SUBDIRS='@use_aqua@'

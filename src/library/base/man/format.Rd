@@ -7,7 +7,7 @@ format(x, \dots)
 
 \method{format}{data.frame}(x, \dots, justify = "none")
 
-\method{format}{default}(x, trim = FALSE, digits = getOption("digits"),
+\method{format}{default}(x, trim = FALSE, digits = NULL,
        nsmall = 0, justify = c("left", "right", "none"),
        big.mark = "",   big.interval = 3,
      small.mark = "", small.interval = 5,
@@ -38,7 +38,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{trim}{logical; if \code{TRUE}, leading blanks are trimmed off the
     strings.}
   \item{digits}{how many significant digits are to be used for
-    \code{\link{numeric} x}. This is a suggestion: enough decimal
+    \code{\link{numeric} x}.  The default, \code{NULL}, uses
+    \code{\link{options}()$digits}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits.}
   \item{nsmall}{number of digits which will always appear to the right of

@@ -9,7 +9,8 @@ function (x = seq(0, 1, len = nrow(z)),
           color.palette = cm.colors,
           col = color.palette(length(levels) - 1),
           plot.title, plot.axes, key.title, key.axes,
-          asp = NA, xaxs="i", yaxs="i", las = 1, axes = TRUE, ...)
+          asp = NA, xaxs="i", yaxs="i", las = 1, axes = TRUE,
+          frame.plot = axes, ...)
 {
     if (missing(z)) {
         if (!missing(x)) {
@@ -80,7 +81,7 @@ function (x = seq(0, 1, len = nrow(z)),
         }
     }
     else plot.axes
-    box()
+    if (frame.plot) box()
     if (missing(plot.title))
         title(...)
     else

@@ -111,7 +111,8 @@ typedef struct clpconn {
 } *Rclpconn;
 #endif
 
-#ifdef _ZLIB_H
+/* zlib wants to use ZLIB_H without leading underscore in 1.2.1 */
+#if defined(_ZLIB_H) || defined(ZLIB_H)
 typedef struct gzconn {
     Rconnection con;
     int cp; /* compression level */
@@ -140,6 +141,9 @@ Rconnection R_newsock(char *host, int port, int server, char *mode);
 Rconnection in_R_newsock(char *host, int port, int server, char *mode);
 Rconnection R_newunz(char *description, char *mode);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
+
+int Rsockselect(int nsock, int *insockfd, int *ready, int *write,
+		double timeout);
 
 #endif
 

@@ -280,6 +280,38 @@ function(x, ...)
     invisible(x)
 }
 
+
+### * .writeVignetteHTMLIndex
+
+.writeVignetteHtmlIndex <- function(pkg, con, vignetteIndex=NULL)
+{
+    html <- c(paste("<html><head><title>R:", pkg, "vignettes</title>"),
+              "<link rel=\"stylesheet\" type=\"text/css\" href=\"../../R.css\">",
+              "</head><body>",
+              paste("<h2>Vignettes of package", pkg,"</h2>"))
+
+    if(is.null(vignetteIndex) || nrow(vignetteIndex)==0){
+        html <- c(html, "Sorry, the package contains no vignette meta-information or index.",
+                  "Please browse the <a href=\".\">directory</a>.")
+    }
+    else{
+        html <- c(html, "<dl>")
+        for(k in seq(1, nrow(vignetteIndex))){
+            html <- c(html,
+                      paste("<dt><a href=\"", vignetteIndex[k, "PDF"], "\">",
+                            vignetteIndex[k, "PDF"], "</a>:", sep=""),
+                      paste("<dd>", vignetteIndex[k, "Title"]))
+        }
+        html <- c(html, "</dl>")
+    }
+    html <- c(html, "</body></html>")
+    writeLines(html, con=con)
+}
+                            
+                  
+              
+              
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

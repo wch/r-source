@@ -149,7 +149,8 @@
              where = envir); clList <- "traceable"
     ## create the traceable classes
     for(cl in c("function", "MethodDefinition", "MethodWithNext", "genericFunction",
-                "standardGeneric", "nonstandardGeneric", "groupGenericFunction")) {
+                "standardGeneric", "nonstandardGeneric", "groupGenericFunction",
+                "derivedDefaultMethod")) {
         setClass(.traceClassName(cl),
                  representation(cl, "traceable"), where = envir)
         clList <- c(clList, .traceClassName(cl))
@@ -166,7 +167,7 @@
                   .Object@.Data <- .makeTracedFunction(def, tracer, exit, at, print)
                   .Object
               }, where = envir)
-    if(!isGeneric("show"))
+    if(!isGeneric("show", envir))
         setGeneric("show", where = envir)
     setMethod("show", "traceable", function(object) {
         message("Object of class \"", class(object), "\"")
@@ -223,7 +224,7 @@ trySilent <- function(expr) {
 .setMethodOverBinding <- function(what, signature, method, where, warn = TRUE) {
     if(warn)
         warning("Setting a method over the binding of symbol \"", what,
-                "\" in environment/package \"", pname, "\"")
+                "\" in environment/package \"", getPackageName(where), "\"")
     if(exists(what, envir = where, inherits = FALSE)) {
         fdef <- get(what, envir = where)
         hasFunction <- is(fdef, "genericFunction")

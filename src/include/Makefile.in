@@ -60,9 +60,9 @@ $(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_sr
 	@cd $(top_srcdir) && $(AUTOHEADER)
 	@echo timestamp > $@ 2> /dev/null
 Rconfig.h: config.h
-	@$(top_srcdir)/tools/GETCONFIG > $@
+	@$(SHELL) $(top_srcdir)/tools/GETCONFIG > $@
 Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
-	@$(top_srcdir)/tools/GETVERSION > $@
+	@$(SHELL) $(top_srcdir)/tools/GETVERSION > $@
 
 ## <NOTE>
 ## we don't use AC_CONFIG_HEADERS on Rmath.h.in because
@@ -70,7 +70,7 @@ Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 ## b) Rmath.h should be a self-contained file for standalone Rmath use.
 ## </NOTE>
 Rmath.h: Rmath.h0
-	@$(top_srcdir)/tools/copy-if-change Rmath.h0 $@
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change Rmath.h0 $@
 Rmath.h0: $(srcdir)/Rmath.h0.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 

@@ -57,10 +57,10 @@ getGroup(fdef, recursive, where)
 
 getMethodsMetaData(f, where)
 assignMethodsMetaData (f, value, fdef, where, deflt)
-mlistMetaName (name, package) 
+mlistMetaName (name, package)
 
-makeGeneric(f, fdef, fdefault, group=character(),
-            valueClass=character(), package, signature, genericFunction)
+makeGeneric(f, fdef, fdefault, group=list(), valueClass=character(),
+            package, signature = NULL, genericFunction = NULL)
 
 makeStandardGeneric(f, fdef)
 
@@ -70,7 +70,7 @@ defaultDumpName(generic, signature)
 
 getAllMethods(f, fdef, where)
 
-doPrimitiveMethod(name, def, call=sys.call(-1), ev=sys.frame(-2))
+doPrimitiveMethod(name, def, call= sys.call(-1), ev= sys.frame(sys.parent(2)))
 
 conformMethod(signature, mnames, fnames, f)
 
@@ -104,10 +104,10 @@ asMethodDefinition(def, signature, sealed = FALSE)
 addNextMethod(method, f, mlist, optional, envir)
 }
 \section{Summary of Functions}{
- 
+
   \describe{
-   
-    \item{\code{getGeneric}:}{ 
+
+    \item{\code{getGeneric}:}{
       return the definition of the function named \code{f} as a generic.
 
       If no definition is found, throws an
@@ -123,7 +123,7 @@ addNextMethod(method, f, mlist, optional, envir)
       \code{getGeneric} returns \code{NULL} or throws an error.
     }
 
-    \item{\code{getGroup}:}{ 
+    \item{\code{getGroup}:}{
       return the groups to which this generic belongs, searching from
       environment \code{where} (the global environment normally by default).
 
@@ -132,7 +132,7 @@ addNextMethod(method, f, mlist, optional, envir)
 
     \item{\code{getMethodsMetaData},
       \code{assignMethodsMetaData},
-      \code{mlistMetaName}:}{ 
+      \code{mlistMetaName}:}{
       Utilities to get (\code{getMethodsMetaData}) and assign  (\code{assignMethodsMetaData}) the metadata object recording the
       methods defined in a particular package, or to return the
       mangled name for that object  (\code{mlistMetaName}).
@@ -152,7 +152,7 @@ addNextMethod(method, f, mlist, optional, envir)
       empty, the returned signature is a single \code{"ANY"} matching
       the first formal argument (so the returned value is always
       non-empty).
-  
+
       Generates an error if any of the supplied signature names are
       not legal; that is, not in the signature slot of the generic
       function.
@@ -169,15 +169,15 @@ addNextMethod(method, f, mlist, optional, envir)
       coerce is required to coerce from \code{thisClass} to
       \code{methodClass}.
     }
-    
+
     \item{\code{is.primitive}:}{
       Is this object a primitive function (either a builtin or special)?
     }
-    
+
     \item{\code{removeMethodsObject}:}{
       remove the metadata object containing methods for \code{f}.
     }
-    
+
     \item{\code{findUnique}:}{
       Return the list of environments (or equivalent) having an object named
       \code{what}, using environment \code{where} and its parent
@@ -185,7 +185,7 @@ addNextMethod(method, f, mlist, optional, envir)
       generated, using \code{message} to identify what was being
       searched for, unless \code{message} is the empty string.
     }
-  
+
     \item{\code{cacheMetaData},
       \code{cacheGenericsMetaData},
       \code{setPrimitiveMethods}:}{
@@ -236,7 +236,7 @@ addNextMethod(method, f, mlist, optional, envir)
       signature.  Usually not called directly: see
       \code{\link{selectMethod}}.
     }
-      
+
     \item{\code{.saveImage}:}{
       Flag, used in dynamically initializing the methods package from
       \code{.First.lib}
@@ -269,21 +269,21 @@ addNextMethod(method, f, mlist, optional, envir)
       calls to \code{\link{callNextMethod}}.
     }
   }
-    
-    \item{\code{makeGeneric}:}{ 
+
+    \item{\code{makeGeneric}:}{
       Makes a generic function object corresponding to the given
       function name, optional definition and optional default method.
       Other arguments supply optional elements for the slots of
       \code{\link{genericFunction-class}}.
     }
 
-    \item{\code{makeStandardGeneric}:}{ 
+    \item{\code{makeStandardGeneric}:}{
       a utility function that makes a valid function calling
       \code{standardGeneric} for name \code{f}.  Works (more or less)
       even if the actual definition, \code{fdef}, is not a proper
       function, that is, it's a primitive or internal.
     }
-    
+
     \item{\code{conformMethod}:}{
       If the formal arguments, \code{mnames}, are not identical to the
       formal arguments to the function, \code{fnames},
@@ -302,11 +302,11 @@ addNextMethod(method, f, mlist, optional, envir)
       signature.
     }
 
-    \item{\code{defaultDumpName}:}{ 
+    \item{\code{defaultDumpName}:}{
       the default name to be used for dumping a method.
     }
-    
-    \item{\code{getAllMethods}:}{ 
+
+    \item{\code{getAllMethods}:}{
       A generic function (with methods) representing the merge of all
       the methods defined for this generic starting from environment
       \code{where}, including all parent environments.  By default,
@@ -320,7 +320,7 @@ addNextMethod(method, f, mlist, optional, envir)
       If the generic \code{f} has a group generic, methods for this
       group generic (and further generations of group generics, if any)
       are also merged.
-  
+
       The merging rule is as follows: each generic is merged across
       packages, and the group generics are then merged, finally adding
       the directly defined methods of \code{f}.
@@ -340,8 +340,8 @@ addNextMethod(method, f, mlist, optional, envir)
       a copy of the methods slot; this is the slot where inherited
       methods are stored.
     }
-    
-    \item{\code{doPrimitiveMethod}:}{ 
+
+    \item{\code{doPrimitiveMethod}:}{
       do a primitive call to builtin function \code{name} the definition
       and call provided, and carried out in the environment \code{ev}.
 

@@ -703,7 +703,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 		  CHAR(PRINTNAME(symbol)));
 	missing = R_GetVarLocMISSING(loc);
 	val = R_GetVarLocValue(loc);
-	SET_FRAME(newrho, CONS(val, FRAME(rho)));
+	SET_FRAME(newrho, CONS(val, FRAME(newrho)));
 	SET_TAG(FRAME(newrho), symbol);
 	if (missing) {
 	    SET_MISSING(FRAME(newrho), missing);
@@ -3219,7 +3219,7 @@ SEXP R_bcEncode(SEXP bytes)
 	code = allocVector(INTSXP, m * 2);
 	pc = (BCODE *) CHAR(code);
 	pc[0].i = v;
-	pc[1].v = opinfo[RETURN_OP].addr;
+	pc[1].v = opinfo[BCMISMATCH_OP].addr;
 	return code;
     }
     else {

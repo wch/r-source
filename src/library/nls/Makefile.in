@@ -20,7 +20,7 @@ all: Makefile DESCRIPTION
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  cat `ls $(srcdir)/R/*.R` > $${f}; \
-	  $(top_srcdir)/tools/move-if-change $${f} \
+	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
 	  if test -f $(srcdir)/$${f}; then \
@@ -50,7 +50,7 @@ all: Makefile DESCRIPTION
 	    for rdfile in $(srcdir)/man/*.Rd; do \
 	      cat $${rdfile}; echo '\eof'; \
 	    done >> $${f}; \
-	    $(top_srcdir)/tools/move-if-change $${f} \
+	    $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	      $(top_builddir)/library/$(pkg)/man/$(pkg).Rd); \
 	fi
 	@if test -d src; then \

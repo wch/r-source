@@ -36,3 +36,26 @@ function(file, refhook = NULL)
     else stop("bad 'file' argument")
     .Internal(unserializeFromConn(con, refhook))
 }
+
+serialize <- function(object, connection, ascii = FALSE, refhook = NULL) {
+    if (! is.null(connection)) {
+        if (!inherits(connection, "connection")) 
+            stop("`connection' must be a connection")
+        if (missing(ascii))
+            if (summary(connection)$text == "text")
+                ascii <- TRUE
+            else
+                ascii <- FALSE
+    }
+    if (! ascii && inherits(connection, "sockconn"))
+        .Call("R_serializeb", object, connection, refhook, PACKAGE="base")
+    else
+        .Call("R_serialize", object, connection, ascii, refhook,
+              PACKAGE="base")
+}
+
+unserialize <- function(connection, refhook = NULL) {
+    if (! is.character(connection) && !inherits(connection, "connection")) 
+        stop("`connection' must be a connection")
+    .Call("R_unserialize", connection, refhook, PACKAGE="base")
+}

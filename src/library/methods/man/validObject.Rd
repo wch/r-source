@@ -17,7 +17,7 @@
 \usage{
 validObject(object, test)
 
-setValidity(Class, method, where = 1 )
+ setValidity(Class, method, where = topenv(parent.frame()) )
 }
 \arguments{
   \item{object}{ Any object, but not much will happen unless the
@@ -26,26 +26,25 @@ setValidity(Class, method, where = 1 )
     function returns a vector of strings describing the problems.  If
     \code{test} is \code{FALSE} (the default) validity failure generates
     an error.}
-  \item{Class}{The name or class definition of the class whose validity method is to be
-    set.}
-  \item{method}{A validity method;  that is, either \code{NULL} or a
+  \item{Class}{the name or class definition of the class whose validity
+    method is to be set.}
+  \item{method}{a validity method;  that is, either \code{NULL} or a
     function of one argument (the \code{object}).  Like
     \code{validObject}, the function should return \code{TRUE} if the
     object is valid, and one or more descriptive strings if any problems
     are found.  Unlike \code{validObject}, it should never generate an
     error.
    }
-  \item{where}{ The modified class definition will be stored in this
-  position on the search list.
-  }
+   \item{where}{the modified class definition will be stored in this
+     environment.}
 
-    Note that validity methods do not have to check validity of any
-    slots or superclasses:  the logic of \code{validObject} ensures
-    these tests are done once only.  As a consequence, if one validity
-    method wants to use another, it should extract and call the method
-    from the other definition of the other class by calling
-    \code{\link{getValidity}}:  it should \emph{not} call
-    \code{validObject}.
+   Note that validity methods do not have to check validity of any
+   slots or superclasses:  the logic of \code{validObject} ensures
+   these tests are done once only.  As a consequence, if one validity
+   method wants to use another, it should extract and call the method
+   from the other definition of the other class by calling
+   \code{\link{getValidity}}:  it should \emph{not} call
+   \code{validObject}.
 }
 \details{
   Validity testing takes place \dQuote{bottom up}:  first the validity
@@ -76,7 +75,7 @@ setValidity(Class, method, where = 1 )
   details in the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }

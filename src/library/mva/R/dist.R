@@ -57,27 +57,26 @@ as.matrix.dist <- function(x)
 }
 
 
-as.dist <- function(m, diag = FALSE, upper=FALSE)
+as.dist <- function(m, diag = FALSE, upper = FALSE)
 {
-    if (inherits(m,"dist")) {
-	if(is.null(attr(m,"Diag")) || !missing(diag))
-	    attr(m,"Diag") <- diag
-	if(is.null(attr(m,"Upper")) || !missing(upper))
-	    attr(m,"Upper") <- upper
-	m
+    if (inherits(m,"dist"))
+	ans <- m
+    else { ## matrix |-> dist
+	m <- as.matrix(m)
+	ans <- m[row(m) > col(m)]
+	attributes(ans) <- NULL
+	if(!is.null(rownames(m)))
+	    attr(ans,"Labels") <- rownames(m)
+	else if(!is.null(colnames(m)))
+	    attr(ans,"Labels") <- colnames(m)
+	attr(ans,"Size") <- nrow(m)
+	attr(ans, "call") <- match.call()
+	class(ans) <- "dist"
     }
-
-    ## else   matrix |-> dist
-    m <- as.matrix(m)
-    ans <- m[row(m) > col(m)]
-    attributes(ans) <- NULL
-    if(!is.null(rownames(m)))
-	attr(ans,"Labels") <- rownames(m)
-    else if(!is.null(colnames(m)))
-	attr(ans,"Labels") <- colnames(m)
-    attr(ans,"Size") <- nrow(m)
-    attr(ans, "call") <- match.call()
-    class(ans) <- "dist"
+    if(is.null(attr(ans,"Diag")) || !missing(diag))
+	attr(ans,"Diag") <- diag
+    if(is.null(attr(ans,"Upper")) || !missing(upper))
+	attr(ans,"Upper") <- upper
     ans
 }
 

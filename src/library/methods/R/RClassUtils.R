@@ -756,19 +756,12 @@ print.classRepresentation <-
   function(x, ...)
   showClass(x, propertiesAreCalled="Slots")
 
-## assign the empty definition of an environment to be used
-## to store session-scope metadata.
-##
-## Relies on the fact that modifications to objects in attached data, other
-## than the working data in position 1, are NOT saved in the image of the session.
+## bootstrap definition to be used before getClass() works
+possibleExtends <- function(class1, class2)
+    .identC(class1, class2) || .identC(class2, "ANY")
+ 
 
-## This mechanism needs changing to adapt to threads and/or namespaces
-## The class table, and the method table currently methods_dispatch.c, should both
-## be defined in the "top level environment" and should be cleared at startup (e.g., by
-## .First.lib in the methods package).
-
-
-possibleExtends <-
+.possibleExtends <-
   ## Find the information that says whether class1 extends class2,
   ## directly or indirectly.  This can be either a logical value or
   ## an object containing various functions to test and/or coerce the relationship.
@@ -1335,25 +1328,34 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
     topenv(parent.frame())
 
 ## real version of .requirePackage
-..requirePackage <- function(package) {
-    ## FIXME:  the following is needed when attaching methods with namespace
+..requirePackage <- function(package,useNamespace = FALSE) {
+    if(.identC(package, ".GlobalEnv"))
+        return(.GlobalEnv)
     if(.identC(package, "methods"))
         return(topenv(parent.frame())) # must have methods available if .requirePackage is called
-    value  <- trySilent(as.environment(package))
-    if(identical(value, topenv(parent.frame())))
-        return(topenv(parent.frame())) # .GlobalEnv, the package's environment set by sys.source, or a namespace
-    if(!is.environment(value))
-        value <- trySilent(loadNamespace(package))
+    value <- package
+    if(is.character(package))
+            value <- trySilent(loadNamespace(package))
     if(is.environment(value))
         return(value)
+    if(exists(".packageName", .GlobalEnv, inherits=TRUE) &&
+       .identC(package, get(".packageName", .GlobalEnv)))
+        return(.GlobalEnv) # kludge for running package code
     require(package, character.only = TRUE)
-    ##FIXME:  inefficient to require the paste() -- as.environment should include this
-    as.environment(paste("package:", package, sep=""))
+    .asEnvironmentPackage(package)
 }
 
 .classDefEnv <- function(classDef) {
-    .requirePackage(classDef@package)
+    .requirePackage(classDef@package, TRUE)
 }
 
     
-        
+.asEnvironmentPackage <- function(package) {
+    if(identical(package, ".GlobalEnv"))
+        .GlobalEnv
+    else {
+        ##FIXME:  the paste should not be needed
+        pkg <- paste("package", package, sep=":")
+        as.environment(pkg)
+    }
+}

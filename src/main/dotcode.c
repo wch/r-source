@@ -248,7 +248,7 @@ static SEXP CPtrToRObj(void *p, SEXP arg, int Fort, R_NativePrimitiveArgType typ
 	if(Fort) {
 	    /* only return one string: warned on the R -> Fortran step */
 	    strncpy(buf, (char*)p, 255);
-	    buf[256] = '\0';
+	    buf[255] = '\0';
 	    PROTECT(s = allocVector(type, 1));
 	    SET_STRING_ELT(s, 0, mkChar(buf));
 	    UNPROTECT(1);

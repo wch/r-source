@@ -99,9 +99,9 @@ function(package, dir, lib.loc = NULL)
                            envir = dataEnv))
             if(inherits(yy, "try-error"))
                 stop(paste("cannot load data set", sQuote(f)))
-                new <- ls(envir = dataEnv, all.names = TRUE)
-                dataObjs <- c(dataObjs, new)
-                rm(list = new, envir = dataEnv)
+            new <- ls(envir = dataEnv, all.names = TRUE)
+            dataObjs <- c(dataObjs, new)
+            rm(list = new, envir = dataEnv)
         }
     }
 
@@ -138,16 +138,16 @@ function(package, dir, lib.loc = NULL)
             codeObjs <-
                 codeObjs[sapply(codeObjs, function(f) {
                     fdef <- get(f, envir = codeEnv)
-                    if(is(fdef, "genericFunction")) {
+                    if(methods::is(fdef, "genericFunction")) {
                         fOther <-
-                            getFunction(f, generic = FALSE,
-                                        mustFind = FALSE,
-                                        where = topenv(environment(fdef)))
+                            methods::getFunction(f, generic = FALSE,
+                                                 mustFind = FALSE,
+                                                 where = topenv(environment(fdef)))
                         if(is.null(fOther))
                             TRUE
                         else 
-                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)),
-                                "derivedDefaultMethod")
+                            !methods::is(methods::finalDefaultMethod(methods::getMethodsMetaData(f, codeEnv)),
+                                         "derivedDefaultMethod")
                     }
                     else
                         TRUE
@@ -179,7 +179,13 @@ function(package, dir, lib.loc = NULL)
 
     if(.isMethodsDispatchOn()) {
         ## Undocumented S4 classes?
-        S4classes <- getClasses(codeEnv)
+        S4classes <- methods::getClasses(codeEnv)
+        ## <NOTE>
+        ## There is no point in worrying about exportClasses directives
+        ## in a NAMESPACE file when working on a package source dir, as
+        ## we only source the assignments, and hence do not get any
+        ## S4 classes or methods.
+        ## </NOTE>
         ## The bad ones:
         S4classes <-
             S4classes[!sapply(S4classes,
@@ -191,17 +197,24 @@ function(package, dir, lib.loc = NULL)
 
     if(.isMethodsDispatchOn()) {
         ## Undocumented S4 methods?
+        ## <NOTE>
+        ## There is no point in worrying about exportMethods directives
+        ## in a NAMESPACE file when working on a package source dir, as
+        ## we only source the assignments, and hence do not get any
+        ## S4 classes or methods.
+        ## </NOTE>
         methodsSignatures <- function(f) {
-            mlist <- getMethodsMetaData(f, codeEnv)
-            meths <- linearizeMlist(mlist, FALSE)
-            classes <- meths@classes
+            mlist <- methods::getMethodsMetaData(f, codeEnv)
+            meths <- methods::linearizeMlist(mlist, FALSE)
+            classes <- methods::slot(meths, "classes")
             default <-
                 as.logical(lapply(classes,
                                   function(x)
                                   identical(all(x == "ANY"), TRUE)))
             if(any(default)) {
                 ## Don't look for doc on a generated default method.
-                if(is(finalDefaultMethod(mlist), "derivedDefaultMethod"))
+                if(methods::is(methods::finalDefaultMethod(mlist),
+                               "derivedDefaultMethod"))
                     classes <- classes[!default]
             }
             sigs <- sapply(classes, paste, collapse = ",")
@@ -211,7 +224,7 @@ function(package, dir, lib.loc = NULL)
                 character()
         }
         S4methods <-
-            sapply(getGenerics(codeEnv), methodsSignatures)
+            sapply(methods::getGenerics(codeEnv), methodsSignatures)
         S4methods <- as.character(unlist(S4methods, use.names = FALSE))
         ## The bad ones:
         S4methods <-
@@ -261,6 +274,15 @@ function(package, dir, lib.loc = NULL,
     hasNamespace <- FALSE
 
     ## Argument handling.
+    ## <FIXME>
+    ## Remove these arguments for 2.0.
+    if(!missing(use.positions))
+        warning("argument", sQuote("use.positions"),
+                "is deprecated")
+    if(!missing(ignore.generic.functions))
+        warning("argument", sQuote("ignore.generic.functions"),
+                "is deprecated")
+    ## </FIXME>
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -268,18 +290,18 @@ function(package, dir, lib.loc = NULL,
         dir <- .find.package(package, lib.loc)
         ## Using package installed in @code{dir} ...
         codeDir <- file.path(dir, "R")
-        if(!tools::fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!tools::fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
 
         ## Load package into codeEnv.
         if(!isBase)
-            tools:::.loadPackageQuietly(package, lib.loc)
+            .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(paste("package", package, sep = ":"))
 
@@ -299,16 +321,16 @@ function(package, dir, lib.loc = NULL,
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!tools::fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!tools::fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!tools::fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -373,7 +395,7 @@ function(package, dir, lib.loc = NULL,
         objectsInCode <-
             c(objectsInCode,
               objectsInBase[sapply(objectsInBase,
-                                   tools:::.isPrimitive,
+                                   .isPrimitive,
                                    NULL)],
               c(".First.lib", ".Last.lib", ".Random.seed"))
         objectsInCodeOrNamespace <- objectsInCode
@@ -387,12 +409,21 @@ function(package, dir, lib.loc = NULL,
                function(f) formals(get(f, envir = codeEnv)))
     names(functionArgsInCode) <- functionsInCode
     if(.isMethodsDispatchOn()) {
-        lapply(getGenerics(codeEnv),
+        ## <NOTE>
+        ## There is no point in worrying about exportMethods directives
+        ## in a NAMESPACE file when working on a package source dir, as
+        ## we only source the assignments, and hence do not get any
+        ## S4 classes or methods.
+        ## </NOTE>
+        lapply(methods::getGenerics(codeEnv),
                function(f) {
-                   meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
-                   sigs <- sapply(meths@classes, paste, collapse = ",")
+                   meths <-
+                       methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
+                   sigs <- sapply(methods::slot(meths, "classes"),
+                                  paste, collapse = ",")
                    if(!length(sigs)) return()
-                   args <- lapply(meths @ methods, formals)
+                   args <- lapply(methods::slot(meths, "methods"),
+                                  formals)
                    names(args) <-
                        paste("\\S4method{", f, "}{", sigs, "}",
                              sep = "")
@@ -404,19 +435,32 @@ function(package, dir, lib.loc = NULL,
         ## Compare the formals of the function in the code named 'fName'
         ## and formals 'ffd' obtained from the documentation.
         ffc <- functionArgsInCode[[fName]]
-        if(!use.positions) {
+        if(identical(use.positions, FALSE)) {
             ffc <- ffc[sort(names(ffc))]
             ffd <- ffc[sort(names(ffd))]
         }
-        if(!use.values) {
+        if(identical(use.values, FALSE)) {
             ffc <- names(ffc)
             ffd <- names(ffd)
+            ok <- identical(ffc, ffd)
+        } else {
+            if(!identical(names(ffc), names(ffd)))
+                ok <- FALSE
+            else {
+                vffc <- as.character(ffc) # values
+                vffd <- as.character(ffd) # values
+                if(!identical(use.values, TRUE)) {
+                    ind <- nchar(as.character(ffd)) > 0
+                    vffc <- vffc[ind]
+                    vffd <- vffd[ind]
+                }
+                ok <- identical(vffc, vffd)
+            }
         }
-        if(identical(ffc, ffd))
+        if(ok)
             NULL
-        else {
+        else
             list(list(name = fName, code = ffc, docs = ffd))
-        }
     }
 
     db <- if(!missing(package))
@@ -425,15 +469,15 @@ function(package, dir, lib.loc = NULL,
         Rddb(dir = dir)
 
     db <- lapply(db,
-                 function(f) paste(tools:::Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, tools:::getRdSection, "name")
+                 function(f) paste(Rdpp(f), collapse = "\n"))
+    names(db) <- dbNames <- sapply(db, getRdSection, "name")
     if(isBase) {
         ind <- dbNames %in% c("Defunct", "Devices")
         db <- db[!ind]
         dbNames <- dbNames[!ind]
     }
-    dbUsageTexts <- lapply(db, tools:::getRdSection, "usage")
-    dbSynopses <- lapply(db, tools:::getRdSection, "synopsis")
+    dbUsageTexts <- lapply(db, getRdSection, "usage")
+    dbSynopses <- lapply(db, getRdSection, "synopsis")
     ind <- sapply(dbSynopses, length) > 0
     dbUsageTexts[ind] <- dbSynopses[ind]
     withSynopsis <- as.character(dbNames[ind])
@@ -720,7 +764,7 @@ function(package, lib.loc = NULL)
     if(!.isMethodsDispatchOn())
         return(badRdObjects)
 
-    S4classes <- getClasses(codeEnv)
+    S4classes <- methods::getClasses(codeEnv)
     if(!length(S4classes)) return(badRdObjects)
 
     ## Build Rd data base.
@@ -772,7 +816,7 @@ function(package, lib.loc = NULL)
         txt <- unlist(sapply(txt, getRdSection, "describe"))
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, tools:::getRdItems))
+        txt <- unlist(sapply(txt, getRdItems))
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
         txt <- gsub("\\\\code\{(.*)\}:?", "\\1", as.character(txt))
@@ -789,7 +833,9 @@ function(package, lib.loc = NULL)
             ## Add sanity checking later ...
             S4classesChecked <- c(S4classesChecked, cl)
             slotsInCode <-
-                sort(names(getClass(cl, where = codeEnv) @ slots))
+                sort(names(methods::slot(methods::getClass(cl, where =
+                                                           codeEnv),
+                                         "slots")))
             slotsInDocs <-
                 sort(.getSlotNamesFromSlotSectionText(RdSlots[[idx]]))
             if(!identical(slotsInCode, slotsInDocs)) {
@@ -904,7 +950,7 @@ function(package, lib.loc = NULL)
         txt <- getRdSection(txt, "describe")
         ## Suppose this worked ...
         ## Get the \items inside \describe
-        txt <- unlist(sapply(txt, tools:::getRdItems))
+        txt <- unlist(sapply(txt, getRdItems))
         if(!length(txt)) return(character())
         txt <- gsub("(.*):$", "\\1", as.character(txt))
         txt <- gsub("\\\\code\{(.*)\}:?", "\\1", txt)
@@ -932,7 +978,7 @@ function(package, lib.loc = NULL)
 
     dataEnv <- new.env()
     dataDir <- file.path(dir, "data")
-    hasData <- tools::fileTest("-d", dataDir)
+    hasData <- fileTest("-d", dataDir)
     dataExts <- .makeFileExts("data")
 
     ## Now go through the aliases.
@@ -1018,14 +1064,14 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!tools::fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- filePathAsAbsolute(dir)
     }
 
     docsDir <- file.path(dir, "man")
-    if(!tools::fileTest("-d", docsDir))
+    if(!fileTest("-d", docsDir))
         stop(paste("directory", sQuote(dir),
                    "does not contain Rd sources"))
     isBase <- basename(dir) == "base"
@@ -1061,7 +1107,7 @@ function(package, dir, lib.loc = NULL)
         dbAliases <- dbAliases[!ind]
     }
     names(db) <- names(dbAliases) <- dbNames
-    dbUsageTexts <- lapply(db, tools:::getRdSection, "usage")
+    dbUsageTexts <- lapply(db, getRdSection, "usage")
     dbUsages <-
         lapply(dbUsageTexts,
                function(txt) {
@@ -1258,18 +1304,18 @@ function(package, dir, lib.loc = NULL)
         dir <- .find.package(package, lib.loc)
         ## Using package installed in 'dir' ...
         codeDir <- file.path(dir, "R")
-        if(!tools::fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!tools::fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
 
         ## Load package into codeEnv.
         if(!isBase)
-            tools:::.loadPackageQuietly(package, lib.loc)
+            .loadPackageQuietly(package, lib.loc)
         codeEnv <-
             as.environment(paste("package", package, sep = ":"))
 
@@ -1292,16 +1338,16 @@ function(package, dir, lib.loc = NULL)
             stop(paste("you must specify", sQuote("package"),
                        "or", sQuote("dir")))
         ## Using sources from directory @code{dir} ...
-        if(!tools::fileTest("-d", dir))
+        if(!fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             dir <- filePathAsAbsolute(dir)
         codeDir <- file.path(dir, "R")
-        if(!tools::fileTest("-d", codeDir))
+        if(!fileTest("-d", codeDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain R code"))
         docsDir <- file.path(dir, "man")
-        if(!tools::fileTest("-d", docsDir))
+        if(!fileTest("-d", docsDir))
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         isBase <- basename(dir) == "base"
@@ -1366,20 +1412,20 @@ function(package, dir, lib.loc = NULL)
         allGenerics <-
             c(allGenerics,
               objectsInEnv[sapply(objectsInEnv,
-                                  tools:::.isS3Generic,
+                                  .isS3Generic,
                                   env)
                            == TRUE])
     }
     ## Add internal S3 generics and S3 group generics.
     allGenerics <-
         c(allGenerics,
-          tools:::.getInternalS3generics(),
+          .getInternalS3generics(),
           c("Math", "Ops", "Summary"))
 
     ## Find all methods in the given package for the generic functions
     ## determined above.  Store as a list indexed by the names of the
     ## generic functions.
-    methodsStopList <- tools:::.makeS3MethodsStopList(basename(dir))
+    methodsStopList <- .makeS3MethodsStopList(basename(dir))
     methodsInPackage <- sapply(allGenerics, function(g) {
         ## <FIXME>
         ## We should really determine the name g dispatches for, see
@@ -1407,10 +1453,10 @@ function(package, dir, lib.loc = NULL)
         Rddb(dir = dir)
 
     db <- lapply(db,
-                 function(f) paste(tools:::Rdpp(f), collapse = "\n"))
-    names(db) <- dbNames <- sapply(db, tools:::getRdSection, "name")
+                 function(f) paste(Rdpp(f), collapse = "\n"))
+    names(db) <- dbNames <- sapply(db, getRdSection, "name")
 
-    dbUsageTexts <- lapply(db, tools:::getRdSection, "usage")
+    dbUsageTexts <- lapply(db, getRdSection, "usage")
     dbUsages <-
         lapply(dbUsageTexts,
                function(txt) {
@@ -1591,7 +1637,7 @@ function(package, dir, file, lib.loc = NULL,
     if(useSaveImage) {
         if(verbose) writeLines("loading saved image ...")
         codeEnv <- new.env()
-        load(file, envir = codeEnv)
+        .tryQuietly(load(file, envir = codeEnv))
         exprs <- lapply(ls(envir = codeEnv, all.names = TRUE),
                         function(f) {
                             f <- get(f, envir = codeEnv)
@@ -1604,15 +1650,12 @@ function(package, dir, file, lib.loc = NULL,
             ## Also check the code in S4 methods.
             ## This may find things twice if a setMethod() with a bad FF
             ## call is from inside a function (e.g., InitMethods()).
-            for(f in getGenerics(codeEnv)) {
-                ## <FIXME>
-                ## The getGeneric(f) should not be necessary, but
-                ## without it, current versions of SparseM fail on
-                ## "%x%"().
-                f <- getGeneric(f, where = codeEnv)
-                meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
-                ## </FIXME>
-                exprs <- c(exprs, lapply(meths@methods, body))
+            for(f in methods::getGenerics(codeEnv)) {
+                meths <-
+                    methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
+                exprs <-
+                    c(exprs,
+                      lapply(methods::slot(meths, "methods"), body))
             }
         }
     }
@@ -2002,23 +2045,26 @@ function(package, dir, lib.loc = NULL)
             .checkLastFormalArg(f)
         }) == FALSE]
 
-    if(.isMethodsDispatchOn()) {
-        S4generics <- getGenerics(codeEnv)
+    if(.isMethodsDispatchOn()) { 
+        S4generics <- methods::getGenerics(codeEnv)
         ## Assume that the ones with names ending in '<-' are always
         ## replacement functions.
         S4generics <- grep("<-$", S4generics, value = TRUE)
         badS4ReplaceMethods <-
             sapply(S4generics,
                    function(f) {
-                       meths <- linearizeMlist(getMethodsMetaData(f, codeEnv))
-                       ind <- which(sapply(meths@methods,
+                       meths <- methods::linearizeMlist(methods::getMethodsMetaData(f, codeEnv))
+                       ind <- which(sapply(methods::slot(meths,
+                                                         "methods"),
                                            .checkLastFormalArg)
                                     == FALSE)
                        if(!length(ind))
                            character()
                        else {
-                           sigs <- sapply(meths@classes[ind], paste,
-                                          collapse = ",")
+                           sigs <-
+                               sapply(methods::slot(meths,
+                                                    "classes")[ind],
+                                      paste, collapse = ",")
                            paste("\\S4method{", f, "}{", sigs, "}",
                                  sep = "")
                        }

@@ -233,21 +233,13 @@ function(package, lib.loc)
     ## @code{lib.loc}, capturing all output and messages.  All QC
     ## functions use this for loading packages because R CMD check
     ## interprets all output as indicating a problem.
-    outConn <- file(open = "w")         # anonymous tempfile
-    sink(outConn, type = "output")
-    sink(outConn, type = "message")
-    yy <- try({
+    .tryQuietly({
         pos <- match(paste("package", package, sep = ":"), search())
         if(!is.na(pos))
             detach(pos = pos)
         library(package, lib.loc = lib.loc, character.only = TRUE,
                 verbose = FALSE)
     })
-    sink(type = "message")
-    sink(type = "output")
-    close(outConn)
-    if(inherits(yy, "try-error"))
-        stop(yy)
 }
 
 ### ** .makeFileExts
@@ -339,6 +331,25 @@ function(file, envir)
             eval(e, envir)
     }
     invisible()
+}
+
+### ** .tryQuietly
+
+.tryQuietly <-
+function(expr)
+{
+    ## Try to run an expression, suppressing all 'output'.  In case of
+    ## failure, stop with the error message.
+    outConn <- file(open = "w")         # anonymous tempfile
+    sink(outConn, type = "output")
+    sink(outConn, type = "message")
+    yy <- try(expr, silent = TRUE)
+    sink(type = "message")
+    sink(type = "output")
+    close(outConn)
+    if(inherits(yy, "try-error"))
+        stop(yy)
+    yy
 }
 
 ### Local variables: ***

@@ -115,7 +115,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   object of class \code{"libraryIQR"}.  The structure of this class may
   change in future versions.  In earlier versions of R, only the names
   of all available packages were returned; use \code{.packages(all =
-    TRUE)} for obtaining these.
+    TRUE)} for obtaining these.  Note that
+  \code{\link{installed.packages}()} returns even more information.
 
   \code{library(help = somename)} computes basic information about the
   package \code{somename}, and returns this in an object of class
@@ -189,7 +190,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 #endif
 #ifdef windows
   The library search path is initialized at startup from the environment
-  variable \code{R\_LIBS} (which should be a semicolon-separated list of
+  variable \env{R\_LIBS} (which should be a semicolon-separated list of
   directories at which \R library trees are rooted) by calling
   \code{.libPaths} with the directories specified in \env{R\_LIBS}.
 #endif
@@ -256,8 +257,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 \seealso{
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
-  \code{\link{library.dynam}},
-  \code{\link{data}}, \code{\link{install.packages}},
+  \code{\link{library.dynam}}, \code{\link{data}},
+  \code{\link{install.packages}} and \code{\link{installed.packages}};
   \code{\link{INSTALL}}, \code{\link{REMOVE}}.
 }
 \references{

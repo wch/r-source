@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.149 $ ';
+my $revision = ' $Revision: 1.149.2.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -83,6 +83,9 @@ if($opt_install eq "fake") {
     $opt_examples = $opt_tests = $opt_vignettes = 0;
 }
 $opt_install = 0 if($opt_install eq "no");
+
+## Use system default unless explicitly specified otherwise.
+$ENV{"R_DEFAULT_PACKAGES"} = "";
 
 my $startdir = cwd();
 $opt_outdir = $startdir unless $opt_outdir;
@@ -424,23 +427,24 @@ sub check_pkg {
     ## Check for sufficient file permissions (Unix only).
 
     ## This is a bit controversial, and hence there is a command line
-    ## option '--no-perms' to turn this off.  In fact, the code below
-    ## does a bit too much.
-    ## What would really be needed is the following:
-    ## * All dirs or files must be at least 555 or 444, respectively.
-    ## * Everything that gets installed must be writeable.  This
-    ##   includes
-    ##     DESCRIPTION COPYING INDEX NAMESPACE README
-    ##     data/* demo/* exec/* inst/*.
-    ## * All directories used for building 'objects' must be at least
-    ##   755.  This includes '.' and src.
-    ## Given time, the above could be implemented.
+    ## option '--no-perms' to turn this off.
+    ##
+    ## This used to be much more 'aggressive', requiring that dirs and
+    ## files have mode >= 00755 and 00644, respectively (with an error
+    ## if not), and that files know to be 'text' have mode 00644 (with a
+    ## warning if not).  We now only require that dirs and files have
+    ## mode >= 00700 and 00400, respectively, and try to fix
+    ## insufficient permission in the INSTALL code (Unix only).
+    ##
+    ## In addition, we check whether files 'configure' and 'cleanup'
+    ## exists in the top-level directory but are not executable, which
+    ## is most likely not what was intended.
 
     if($opt_perms && ($R::Vars::OSTYPE eq "unix")) {
 	$log->checking("for sufficient/correct file permissions");
 	my @bad_files = ();
 
-	## Phase A.  Directories at least 755, files at least 644.
+	## Phase A.  Directories at least 700, files at least 400.
 	sub find_wrong_perms_A {
 	    my $filename = $File::Find::name;
 	    $filename =~ s/^[^\/]*\///;
@@ -448,10 +452,10 @@ sub check_pkg {
 		## Unix only, so no special casing for Windows.
 		return 0 if($filename =~ /$p/);
 	    }
-	    if(-d $_ && (((stat $_)[2] & 00755) < oct("755"))) {
+	    if(-d $_ && (((stat $_)[2] & 00700) < oct("700"))) {
 		push(@bad_files, $filename);
 	    }
-	    if(-f $_ && (((stat $_)[2] & 00644) < oct("644"))) {
+	    if(-f $_ && (((stat $_)[2] & 00400) < oct("400"))) {
 		push(@bad_files, $filename);
 	    }
 	}
@@ -462,54 +466,15 @@ sub check_pkg {
 			"insufficient permissions:\n");
 	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    $log->print(wrap("", "",
-			     ("Permissions should be at least 755",
-			      "for directories and 644 for files.\n",
+			     ("Permissions should be at least 700",
+			      "for directories and 400 for files.\n",
 			      "Please fix permissions",
 			      "and try again.\n")));
 	    exit(1);
 	}
 
-	my $any = 0;
-	## Phase B.  Text files (as determined by their extensions)
-	## should really be mode 644.
-	@bad_files = ();
-	my @textfile_patterns =
-	  ("\\.[RSqrs]\$",	# R source code
-	   "\\.[Rr]d\$",	# Rd files
-	   "\\.([Ccfh]|cc|cpp)\$", # C/C++/FORTRAN sources and headers
-	   "\\.[RrSs](nw|tex)\$", # vignettes
-	   "^(DESCRIPTION|COPYING|INDEX|NAMESPACE|README)\$");
-	sub find_wrong_perms_B {
-	    my $filename = $File::Find::name;
-	    $filename =~ s/^[^\/]*\///;
-	    foreach my $p (@exclude_patterns) {
-		## Unix only, so no special casing for Windows.
-		return 0 if($filename =~ /$p/);
-	    }
-	    if(-f $_ && (((stat $_)[2] & 00777) != oct("644"))) {
-		foreach my $p (@textfile_patterns) {
-		    if($filename =~ /$p/) {
-			push(@bad_files, $filename);
-			last;
-		    }
-		}
-	    }
-	}
-	find(\&find_wrong_perms_B, ".");
-	if($#bad_files >= 0) {
-	    $any++;
-	    $log->warning();
-	    $log->print("Found the following text files with " .
-			"incorrect permissions:\n");
-	    $log->print("  " . join("\n  ", @bad_files) . "\n");
-	    $log->print(wrap("", "",
-			     ("Permissions for text files",
-			      "(including R, Rd, and C/C++/FORTRAN",
-			      "sources) should be exactly 644.\n",
-			      "Please fix permissions.\n")));
-	}
-	## Phase C.  Top-level scripts 'configure' and 'cleanup' should
-	## really be mode at least 555, or they will not be necessarily
+	## Phase B.  Top-level scripts 'configure' and 'cleanup' should
+	## really be mode at least 500, or they will not be necessarily
 	## be used (or should we rather change *that*?)
 	@bad_files = ();
 	foreach my $filename ("configure", "cleanup") {
@@ -523,21 +488,22 @@ sub check_pkg {
 	    }
 	    if(!$ignore
 	       && (-f $filename)
-	       && (((stat $filename)[2] & 00555) < oct("555"))) {
+	       && (((stat $filename)[2] & 00500) < oct("500"))) {
 		push(@bad_files, $filename);
 	    }
 	}
 	if($#bad_files >= 0) {
-	    $log->warning() unless($any);
-	    $any++;
+	    $log->warning();
 	    $log->print(wrap("", "",
 			     "The following files should most likely",
-			     "be executable (for everyone):\n"));
+			     "be executable (for the owner):\n"));
 	    $log->print("  " . join("\n  ", @bad_files) . "\n");
 	    $log->print(wrap("", "",
 			     "Please fix permissions.\n"));
 	}
-	$log->result("OK") unless($any);
+	else {
+	    $log->result("OK");
+	}
     }
 
     ## Check DESCRIPTION meta-information.
@@ -759,9 +725,9 @@ sub check_pkg {
 	}
 	else {
 	    my $dir = "demo";
-	    my $cmd = "library(tools)\n";
-	    $cmd .= ".checkDemoIndex(\"$dir\")\n";
-	    my @out = R_runR($cmd, "${R_opts} --quiet");
+	    my $cmd = ".checkDemoIndex(\"$dir\")\n";
+	    my @out = R_runR($cmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -774,9 +740,9 @@ sub check_pkg {
        && &list_files_with_type(&file_path("inst", "doc"),
 				"vignette")) {
 	my $dir = &file_path("inst", "doc");
-	my $cmd = "library(tools)\n";
-	$cmd .= ".checkVignetteIndex(\"$dir\")\n";
-	my @out = R_runR($cmd, "${R_opts} --quiet");
+	my $cmd = ".checkVignetteIndex(\"$dir\")\n";
+	my @out = R_runR($cmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning() unless($any);
@@ -930,7 +896,7 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("S3 generic/method consistency");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
 	}
@@ -938,7 +904,8 @@ sub check_pkg {
 	    $Rcmd .= "checkS3methods(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -955,7 +922,7 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("for replacement functions with final arg not " .
 		       "named 'value'");
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkReplaceFuns(package = \"${pkgname}\")\n";
 	}
@@ -963,7 +930,8 @@ sub check_pkg {
 	    $Rcmd .= "checkReplaceFuns(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
         @out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    ## <NOTE>
@@ -984,7 +952,7 @@ sub check_pkg {
     if((-d "R") && $ENV{'R_CHECK_FF_CALLS'}) {
 	$log->checking("foreign function calls");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
 	}
@@ -992,7 +960,8 @@ sub check_pkg {
 	    $Rcmd .= "checkFF(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -1207,7 +1176,7 @@ sub check_pkg {
     if(((-d "R") || (-d "data")) && (-d "man")) {
 	$log->checking("for missing documentation entries");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "undoc(package = \"${pkgname}\")\n";
 	}
@@ -1215,7 +1184,8 @@ sub check_pkg {
 	    $Rcmd .= "undoc(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+                         "R_DEFAULT_PACKAGES=tools");
 	my @err = grep(/^Error/, @out);
 	@out = grep(!/^\>/, @out);
 	if($#err < 0) {
@@ -1250,14 +1220,15 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in functions.
 	if(-d "R") {
-	    my $Rcmd = "library(tools)\n";
+	    my $Rcmd;
 	    if($opt_install) {
 		$Rcmd .= "codoc(package = \"${pkgname}\")\n";
 	    }
 	    else {
 		$Rcmd .= "codoc(dir = \"${pkgdir}\")\n";
 	    }
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 
 	    ## <FIXME>
 	    ## With the current heuristics codoc() may throw an error
@@ -1275,9 +1246,9 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in data sets.
 	if($opt_install) {
-	    my $Rcmd = "library(tools)\n";
-	    $Rcmd .= "codocData(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my $Rcmd = "codocData(package = \"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -1288,9 +1259,9 @@ sub check_pkg {
 
 	## Check for code/documentation mismatches in S4 classes.
 	if($opt_install && (-d "R")) {
-	    my $Rcmd = "library(tools)\n";
-	    $Rcmd .= "codocClasses(package = \"${pkgname}\")\n";
-	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    my $Rcmd = "codocClasses(package = \"${pkgname}\")\n";
+	    my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			     "R_DEFAULT_PACKAGES=tools");
 	    @out = grep(!/^\>/, @out);
 	    if($#out >= 0) {
 		$log->warning() unless($any);
@@ -1310,7 +1281,7 @@ sub check_pkg {
     if(-d "man") {
 	$log->checking("Rd \\usage sections");
 
-	my $Rcmd = "library(tools)\n";
+	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkDocFiles(package = \"${pkgname}\")\n";
 	}
@@ -1318,7 +1289,8 @@ sub check_pkg {
 	    $Rcmd .= "checkDocFiles(dir = \"${pkgdir}\")\n";
 	}
 
-        my @out = R_runR($Rcmd, "${R_opts} --quiet");
+        my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
 	if($#out >= 0) {
 	    $log->warning();
@@ -1527,6 +1499,9 @@ sub check_pkg {
 
 	## Can we run the code in the vignettes?
 	if($opt_vignettes) {
+	    ## <FIXME>
+	    ## Should checking the vignettes assume the system default
+	    ## packages, or just base?
 	    my $Rcmd = "library(tools)\n";
 	    if($opt_install) {
 		$Rcmd .= "checkVignettes(package=\"${pkgname}\", " .
@@ -1536,8 +1511,8 @@ sub check_pkg {
 	    else {
 		$Rcmd .= "checkVignettes(dir = \"${pkgdir}\")\n";
 	    }
-
 	    my @out = R_runR($Rcmd, "${R_opts} --quiet");
+	    ## </FIXME>
 	    ## Vignette could redefine the prompt, e.g. to 'R>' ...
 	    @out = grep(!/^[[:alnum:]]*\>/, @out);
 	    if($#out >= 0) {

@@ -19,7 +19,7 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifdef Win32
+#if defined Win32 && !defined _SSIZE_T_
 typedef int ssize_t;
 #endif
 
@@ -45,3 +45,5 @@ void in_Rsockconnect(int *port, char **host);
 void in_Rsockclose(int *sockp);
 void in_Rsockread (int *sockp, char **buf, int *maxlen);
 void in_Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len);
+int in_Rsockselect(int nsock, int *insockfd, int *ready, int *write,
+		   double timeout);

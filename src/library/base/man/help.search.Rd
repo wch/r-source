@@ -37,7 +37,7 @@ help.search(pattern, fields = c("alias", "concept", "title"),
     matching; if \code{FALSE}, pattern matching is case sensitive.}
   \item{package}{a character vector with the names of packages to
     search through, or \code{NULL} in which case \emph{all} available
-    packages in the specified library trees \code{lib.loc} are
+    packages in the library trees specified by \code{lib.loc} are
     searched.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value

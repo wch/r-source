@@ -43,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.62 $ ';
+my $revision = ' $Revision: 1.62.4.1 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -72,6 +72,9 @@ GetOptions(@known_options) or usage();
 
 R_version("R add-on package builder", $version) if $opt_version;
 usage() if $opt_help;
+
+## Use system default unless explicitly specified otherwise.
+$ENV{"R_DEFAULT_PACKAGES"} = "";
 
 my $startdir = cwd();
 
@@ -273,10 +276,45 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	system("$tar chXf $exclude $filepath $pkgname");
-	chdir($startdir);
-	system("gzip -9f $filename");
+	## <FIXME>
+	## Is option '-h' portable?
+	system("$tar chf $filepath $pkgname");
+	## </FIXME>
+	my $tmpdir = "${R::Vars::TMPDIR}/Rbuild.$$";
+	## (Same as $libdir for building a binary package.)
+	rmtree($tmpdir) if(-d $tmpdir);
+	mkdir("$tmpdir", 0755)
+	    or die "Cannot create directory '$tmpdir'\n";
+	chdir($tmpdir);
+	system("$tar xhf $filepath");
+	## Remove exclude files.
+	open(EXCLUDE, "< $exclude");
+	while(<EXCLUDE>) {
+	    rmtree(glob($_));
+	}
+	close(EXCLUDE);
 	unlink($exclude);
+	## Fix permissions.
+	sub fix_permissions {
+	    ## Note that when called via File::Find::find, $_ holds the
+	    ## file name within the current directory.
+	    if(-d $_) {
+		## Directories should really be mode 00755 if possible.
+		chmod(00755, $_);
+	    }
+	    elsif(-f $_) {
+		## Files should be readable by everyone, and writable
+		## only for user.  This leaves a bit of uncertainty
+		## about the execute bits.
+		chmod(((stat $_)[2] | 00644) & 00755, $_);
+	    }
+	}
+	find(\&fix_permissions, "${pkgname}") if(!$WINDOWS);
+	## Finalize.
+	system("$tar chf $filepath $pkgname");
+	chdir($startdir);
+	rmtree($tmpdir);
+	system("gzip -9f $filename");
     }
     $log->close();
     print("\n");
@@ -330,7 +368,8 @@ sub prepare_pkg {
 				"vignette")) {
 	if(!$opt_no_vignettes) {
 	    $log->creating("vignettes");
-	    my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
+	    my $Rcmd = "library(tools)\n";
+	    $Rcmd .= "buildVignettes(dir = '.')\n";
 	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
 	    my @err = grep(/^Error/, @out);
 	    if($#err >= 0) {
@@ -395,12 +434,11 @@ sub updateRdIndex {
 
     my $newindex = ".Rbuildindex.$$";
 
-    my $Rcmd = "library(tools)\n";
-    $Rcmd .= "Rdindex(\"${Rdfiles}\", \"${newindex}\")";
+    my $Rcmd = "Rdindex(\"${Rdfiles}\", \"${newindex}\")\n";
 
     ## <FIXME>
     ## What if this fails?
-    R_runR($Rcmd, "--vanilla --quiet");
+    R_runR($Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=tools");
     ## </FIXME>
 
     updateIndex($oldindex, $newindex, $log);

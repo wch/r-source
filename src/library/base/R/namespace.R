@@ -260,7 +260,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             else if(length(expMethods) > 0)
                 stop("Methods specified for export, but none defined: ",
                      paste(expMethods, collapse=", "))
-            exports <- c(exports, expClasses, expMethods)
+            exports <- unique(c(exports, expClasses, expMethods))
         }
         namespaceExport(ns, exports)
         sealNamespace(ns)
@@ -290,7 +290,8 @@ saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
     vars <- vars[vars != ".__NAMESPACE__."]
     save(list = vars, file = rdafile, envir = ns)
 }
-topenv <- function(envir = parent.frame(), matchThisEnv = options("topLevelEnvironment")[[1]]) {
+topenv <- function(envir = parent.frame(),
+                   matchThisEnv = getOption("topLevelEnvironment")) {
     while (! is.null(envir)) {
         if (! is.null(attr(envir, "name")) ||
             identical(envir, matchThisEnv) ||
@@ -540,6 +541,8 @@ importIntoEnv <- function(impenv, impnames, expenv, expnames) {
         get(name, env = exports, inherits = FALSE)
     }
     expnames <- unlist(lapply(expnames, getInternalExportName, expenv))
+    if (is.null(impnames)) impnames <- character(0)
+    if (is.null(expnames)) expnames <- character(0)
     .Internal(importIntoEnv(impenv, impnames, expenv, expnames))
 }
 namespaceExport <- function(ns, vars) {

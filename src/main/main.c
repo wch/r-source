@@ -285,7 +285,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     state.buf[0] = '\0';
-    state.buf[1025] = '\0'; /* stopgap measure if line > 1024 chars */
+    state.buf[1024] = '\0'; /* stopgap measure if line > 1024 chars */
     state.bufp = state.buf;
     if(R_Verbose)
 	REprintf(" >R_ReplConsole(): before \"for(;;)\" {main.c}\n");

@@ -235,3 +235,5 @@ function (object, parm, level = 0.95, ...)
     pr <- profile(object)
     confint(pr)
 })
+
+.onLoad <- function(lib, pkg) require(methods)
