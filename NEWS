@@ -72,17 +72,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o	Function getNativeSymbolInfo() returns details about a native
-        routine, potentially including its address, the library in which it is
-	located, the interface by which it can be called and the
-	number of parameters.
-
-    o	One can register R functions and C routines to be called at the
-        end of the successful evaluation of each top-level expression,
-        for example to perform auto-saves, update displays, etc. See
-        addTaskCallback() and taskCallbackManager(). See
-	http://developer.r-project.org/TaskHandlers.pdf.
-
     o	length() is now generic.
 
     o	new.env() is now internal and allows you to set hashing. Also,
@@ -426,6 +415,20 @@ NEW FEATURES
 
     o	New function with() for evaluating expressions in environments
 	constructed from data.
+
+    o	Function getNativeSymbolInfo() returns details about a native
+        routine, potentially including its address, the library in
+        which it is located, the interface by which it can be called
+        and the number of parameters.
+
+    o	One can register R functions and C routines to be called at the
+        end of the successful evaluation of each top-level expression,
+        for example to perform auto-saves, update displays, etc. See
+        addTaskCallback() and taskCallbackManager(). See
+	http://developer.r-project.org/TaskHandlers.pdf.
+
+    o	Shading by lines added to functions barplot(), hist(),
+	legend(), piechart(), polygon() and rect().
 
 
 DOCUMENTATION CHANGES
