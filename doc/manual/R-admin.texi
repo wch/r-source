@@ -1491,9 +1491,9 @@ and @code{"UTF-8"} and to recognize @code{""} as the current encoding --
 this is not true of most commercial Unixes.
 
 The ability to use translated messages makes use of @code{gettext} and
-most likely needs @acronym{GNU} @code{gettext}: you also need this to
-work with new translations, but that contained in the R sources will be
-used if no suitable external @code{gettext} is found.
+most likely needs @acronym{GNU} @code{gettext}: you do need this to
+work with new translations, but otherwise that contained in the R
+sources will be used if no suitable external @code{gettext} is found.
 
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the
 appropriate headers and libraries installed: @code{jpeg} (version 6b
@@ -1539,7 +1539,7 @@ or use the configure variables @code{TCLTK_LIBS} and
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.
 
-Versions of Tcl/Tk from 8.3 to 8.4.7 have been used successfully: 8.0 is
+Versions of Tcl/Tk from 8.3 to 8.4.9 have been used successfully: 8.0 is
 no longer supported.
 
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-4 The R Development Core Team.
+ *  Copyright (C) 2001-5 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,6 +23,7 @@
 #define R_X11_MODULE_H
 
 #include <Rinternals.h>
+#include <Rconnections.h>
 
 typedef SEXP (*R_do_X11)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef SEXP (*R_X11DataEntryRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
@@ -30,12 +31,15 @@ typedef Rboolean (*R_GetX11ImageRoutine)(int d, void *pximage,
 					 int *pwidth, int *pheight);
 typedef int (*R_X11_access)();
 
+typedef Rboolean (*R_X11clp)(Rclpconn);
+
 
 typedef struct {
     R_do_X11 X11;
     R_X11DataEntryRoutine de;
     R_GetX11ImageRoutine  image;
     R_X11_access access;
+    R_X11clp readclp;
 } R_X11Routines;
 
 R_X11Routines *R_setX11Routines(R_X11Routines *routines);

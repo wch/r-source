@@ -1249,13 +1249,15 @@ SEXP do_bzfile(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
 #include <windows.h>
 extern int clipboardhastext(); /* from ga.h */
+#endif
 
+#ifdef Unix
+Rboolean R_ReadClipboard(Rclpconn clpcon);
+#endif
 
 static Rboolean clp_open(Rconnection con)
 {
     Rclpconn this = con->private;
-    HGLOBAL hglb;
-    char *pc;
 
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
@@ -1263,6 +1265,9 @@ static Rboolean clp_open(Rconnection con)
     this->pos = 0;
     if(con->canread) {
 	/* copy the clipboard contents now */
+#ifdef Win32
+	HGLOBAL hglb;
+	char *pc;
 	if(clipboardhastext() &&
 	   OpenClipboard(NULL) &&
 	   (hglb = GetClipboardData(CF_TEXT)) &&
@@ -1277,13 +1282,19 @@ static Rboolean clp_open(Rconnection con)
 	    } else {
 		GlobalUnlock(hglb);
 		CloseClipboard();
+		this->buff = NULL; this->last = this->len = 0;
 		warning(_("memory allocation to copy clipboard failed"));
 		return FALSE;
 	    }
 	} else {
+	    this->buff = NULL; this->last = this->len = 0;
 	    warning(_("clipboard cannot be opened or contains no text"));
 	    return FALSE;
 	}
+#else
+	Rboolean res = R_ReadClipboard(this);
+	if(!res) return FALSE;
+#endif
     } else {
 	int len = (this->sizeKB)*1024;
 	this->buff = (char *) malloc(len + 1);
@@ -1304,6 +1315,7 @@ static Rboolean clp_open(Rconnection con)
 
 static void clp_writeout(Rconnection con)
 {
+#ifdef Win32
     Rclpconn this = con->private;
 
     HGLOBAL hglb;
@@ -1325,6 +1337,7 @@ static void clp_writeout(Rconnection con)
 	    CloseClipboard();
 	}
     }
+#endif
 }
 
 static void clp_close(Rconnection con)
@@ -1334,7 +1347,7 @@ static void clp_close(Rconnection con)
     con->isopen = FALSE;
     if(con->canwrite)
 	clp_writeout(con);
-    free(this->buff);
+    if(this-> buff) free(this->buff);
 }
 
 static int clp_fgetc_internal(Rconnection con)
@@ -1400,15 +1413,17 @@ static size_t clp_write(const void *ptr, size_t size, size_t nitems,
     if(!con->canwrite)
 	error(_("clipboard connection is open for reading only"));
 
-    /* clipboard requires CRLF termination */
     for(i = 0; i < len; i++) {
 	if(this->pos >= this->len) break;
 	c = *p++;
+#ifdef Win32
+    /* clipboard requires CRLF termination */
 	if(c == '\n') {
 	    *q++ = '\r';
 	    this->pos++;
 	    if(this->pos >= this->len) break;
 	}
+#endif
 	*q++ = c;
 	this->pos++;
 	used++;
@@ -1430,6 +1445,10 @@ static Rconnection newclp(char *url, char *mode)
     if(strlen(mode) != 1 ||
        (mode[0] != 'r' && mode[0] != 'w'))
 	error(_("'mode' for the clipboard must be 'r' or 'w'"));
+#ifdef Unix
+    if(mode[0] != 'r')
+       	error(_("'mode' for the clipboard must be 'r' on Unix"));
+#endif
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error(_("allocation of clipboard connection failed"));
     new->class = (char *) malloc(strlen(description) + 1);
@@ -1468,8 +1487,6 @@ static Rconnection newclp(char *url, char *mode)
     ((Rclpconn)new->private)->sizeKB = sizeKB;
     return new;
 }
-
-#endif /* Win32 */
 
 /* ------------------- terminal connections --------------------- */
 
@@ -3300,11 +3317,8 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 	warning(_("only first element of 'description' argument used"));
     url = CHAR(STRING_ELT(scmd, 0));
 #ifdef HAVE_INTERNET
-    if (strncmp(url, "http://", 7) == 0) {
-	type = HTTPsh;
-    } else if (strncmp(url, "ftp://", 6) == 0) {
-	type = FTPsh;
-    }
+    if (strncmp(url, "http://", 7) == 0) type = HTTPsh;
+    else if (strncmp(url, "ftp://", 6) == 0) type = FTPsh;
 #endif
 
     sopen = CADR(args);
@@ -3332,12 +3346,10 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     } else {
 	if(PRIMVAL(op)) { /* call to file() */
 	    if(strlen(url) == 0) open ="w+";
-#ifdef Win32
 	    if(strcmp(url, "clipboard") == 0 ||
 	       strncmp(url, "clipboard-", 10) == 0)
 		con = newclp(url, strlen(open) ? open : "r");
 	    else
-#endif
 		con = newfile(url, strlen(open) ? open : "r");
 	    class2 = "file";
 	} else {

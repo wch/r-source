@@ -22,6 +22,8 @@
 #endif
 
 #include <Defn.h>
+#include <Rconnections.h>
+
 #ifdef HAVE_X11
 
 #include <Rmodules/RX11.h>   /* typedefs for the module routine types */
@@ -30,8 +32,7 @@ static R_X11Routines routines, *ptr = &routines;
 
 static int initialized = 0;
 
-R_X11Routines *
-R_setX11Routines(R_X11Routines *routines)
+R_X11Routines * R_setX11Routines(R_X11Routines *routines)
 {
     R_X11Routines *tmp;
     tmp = ptr;
@@ -105,6 +106,17 @@ Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
     }
 }
 
+Rboolean R_ReadClipboard(Rclpconn clpcon)
+{
+    R_X11_Init();
+    if(initialized > 0)
+	return (*ptr->readclp)(clpcon);
+    else {
+	error(_("X11 module cannot be loaded"));
+	return FALSE;
+    }
+}
+
 #else /* No HAVE_X11 */
 
 Rboolean R_access_X11(void)
@@ -127,6 +139,12 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
+{
+    error(_("X11 is not available"));
+    return FALSE;
+}
+
+Rboolean R_ReadClipboard(Rclpconn con)
 {
     error(_("X11 is not available"));
     return FALSE;

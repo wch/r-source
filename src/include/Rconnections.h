@@ -120,13 +120,11 @@ typedef struct bzfileconn {
     void *bfp;
 } *Rbzfileconn;
 
-#ifdef Win32
 typedef struct clpconn {
     char *buff;
     int pos, len, last, sizeKB;
     Rboolean warned;
 } *Rclpconn;
-#endif
 
 /* zlib wants to use ZLIB_H without leading underscore in 1.2.1 */
 #if defined(_ZLIB_H) || defined(ZLIB_H)

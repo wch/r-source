@@ -2374,6 +2374,55 @@ static int in_R_X11_access(void)
     }
 }
 
+static Rboolean in_R_X11readclp(Rclpconn this)
+{
+    Window clpwin;
+    Atom sel = XA_PRIMARY, pty, pty_type;
+    unsigned char *buffer;
+    unsigned long pty_size, pty_items;
+    int pty_format;
+    Rboolean res = TRUE;
+  
+    if (!displayOpen) {
+	if ((display = XOpenDisplay(NULL)) == NULL) {
+	    warning(_("unable to contact X11 display"));
+	    return FALSE;
+	}
+    }
+    pty = XInternAtom(display, "RCLIP_READ", False);
+
+    clpwin = XCreateSimpleWindow(display, DefaultRootWindow(display), 
+				 0, 0, 1, 1, 0, 0, 0);
+    /* send a selection request */
+    XConvertSelection(display, sel, XA_STRING, pty, clpwin, CurrentTime);
+    /* find the size and format of the data in property */
+    XGetWindowProperty(display, clpwin, pty, 0, 0, False, AnyPropertyType, 
+		       &pty_type, &pty_format, &pty_items, &pty_size, &buffer);
+    XFree(buffer);
+    if (pty_format != 8) {
+	warning(_("clipboard cannot be opened or contains no text"));
+	res = FALSE;
+	this->buff = NULL;
+	this->last = this->len = 0;
+    } else { /* read the property */
+	XGetWindowProperty(display, clpwin, pty, 0, (long)pty_size, False,
+			   AnyPropertyType, &pty_type, &pty_format, 
+			   &pty_items, &pty_size, &buffer);
+	this->buff = (char *)malloc(pty_items + 1);
+	this->last = this->len = pty_items;
+	if(this->buff) {
+	    /* property always ends in zero byte */
+	    memcpy(this->buff, buffer, pty_items + 1);
+	} else {
+	    warning(_("memory allocation to copy clipboard failed"));
+	    res = FALSE;
+	}
+    }
+    XDeleteProperty(display, clpwin, pty);
+    XFree(buffer);
+    if (!displayOpen) XCloseDisplay(display);
+    return res;
+}
 
 void R_init_R_X11(DllInfo *info)
 {
@@ -2387,5 +2436,6 @@ void R_init_R_X11(DllInfo *info)
     tmp->de = RX11_dataentry;
     tmp->image = in_R_GetX11Image;
     tmp->access = in_R_X11_access;
-    R_setX11Routines(tmp);
+    tmp->readclp = in_R_X11readclp;
+     R_setX11Routines(tmp);
 }
