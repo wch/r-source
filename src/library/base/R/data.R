@@ -108,6 +108,7 @@ function(..., list = character(0),
 
     paths <- file.path(paths, "data")
     for(name in names) {
+	if (name == "CO2") name <- "zCO2"
         files <- NULL
         for(p in paths) {
             if(tools::fileTest("-f", file.path(p, "Rdata.zip"))) {

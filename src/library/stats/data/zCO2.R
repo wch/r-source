@@ -1,4 +1,4 @@
-### $Id: CO2.R,v 1.1 2003/12/11 07:16:04 ripley Exp $
+### $Id: zCO2.R,v 1.1 2003/12/11 22:05:29 ripley Exp $
 ### Data on carbon dioxide uptake by different species of grass plants
 ###  in different chilling conditions
 ### Potvin, Lechowicz and Tardif (1990), Ecology, 71, pp. 1389-1400
