@@ -122,7 +122,7 @@ static void Rgnome_CleanUp(SA_TYPE saveact, int status, int runLast)
 {
     GtkWidget *dialog;
     gint which; /* yes = 0, no = 1, cancel = 2 || -1 */
-    char *tmpdir, buf[1000];
+    char *tmpdir, buf[1024];
 
 /*
     GList *curfile = R_gtk_editfiles;
