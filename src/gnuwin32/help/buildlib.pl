@@ -261,8 +261,8 @@ sub build_index {
 #    open out, ">$dest/TITLE";
     $title = <title>;
 #    print out "$title";
-#    close title;
-    close out;
+    close title;
+#    close out;
     $title =~ s/^\S*\s*(.*)/$1/;
 
     mkdir "$dest/help", $dir_mod || die "Could not create $dest/help: $!\n";
