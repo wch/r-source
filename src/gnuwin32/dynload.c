@@ -315,7 +315,7 @@ SEXP do_dynload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if (!isString(CAR(args)) || length(CAR(args)) != 1)
 	errorcall(call, "character argument expected");
-    GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
+    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
     DeleteDLL(buf);
     if (!AddDLL(buf,LOGICAL(CADR(args))[0],LOGICAL(CADDR(args))[0]))
 	errorcall(call, "unable to load shared library \"%s\":\n  %s",
@@ -330,7 +330,7 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     if (!isString(CAR(args)) || length(CAR(args)) != 1)
 	errorcall(call, "character argument expected");
-    GetFullDLLPath(call, buf, CHAR(STRING(CAR(args))[0]));
+    GetFullDLLPath(call, buf, CHAR(STRING_ELT(CAR(args), 0)));
     if (!DeleteDLL(buf))
 	errorcall(call, "dynamic library \"%s\" was not loaded", buf);
     return R_NilValue;
