@@ -124,8 +124,7 @@ function(dir, outDir)
 {
     vignetteDir <- file.path(dir, "inst", "doc")
     if(!.fileTest("-d", vignetteDir)) return()
-    vignetteFiles <- .listFilesWithType(vignetteDir, "vignette")
-    vignetteIndex <- .buildVignetteIndex(vignetteFiles)
+    vignetteIndex <- .buildVignetteIndex(vignetteDir)
     outVignetteDir <- file.path(outDir, "doc")
     if(!.fileTest("-d", outVignetteDir)) dir.create(outVignetteDir)
     ## <FIXME>

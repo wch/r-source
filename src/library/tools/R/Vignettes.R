@@ -167,8 +167,11 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
 ### * .buildVignetteIndex
 
 .buildVignetteIndex <-
-function(vignetteFiles)
+function(vignetteDir)
 {
+    if(!.fileTest("-d", vignetteDir))
+        stop(paste("directory", sQuote(vignetteDir), "does not exist"))
+    vignetteFiles <- .listFilesWithType(vignetteDir, "vignette")
     vignetteIndexEntryRE <-
         "[[:space:]]*%+[[:space:]]*\\\\VignetteIndexEntry\{([^}]*)\}"
     vignetteTitles <-
@@ -181,7 +184,31 @@ function(vignetteFiles)
     vignetteFiles <-
         paste(basename(gsub("\\.[[:alpha:]]+$", "", vignetteFiles)),
               ".pdf", sep = "")
-    cbind(vignetteFiles, vignetteTitles)
+    vignetteIndex <- cbind(vignetteFiles, "")
+    ## <FIXME>
+    ## Replace this by
+    ##   vignetteIndex <- cbind(vignetteFiles, vignetteTitles)
+    ## for 1.8.
+    ## Compatibility code for transition from old-style to new-style
+    ## indexing.  If we have @file{00Index.dcf}, use it when computing
+    ## the vignette index, but let the index entries in the vignettes
+    ## override the ones from the index file.
+    if(.fileTest("-f",
+                 INDEX <- file.path(vignetteDir, "00Index.dcf"))) {
+        vignetteEntries <- try(read.dcf(INDEX))
+        if(inherits(vignetteEntries, "try-error"))
+            warning(paste("cannot read index information in file",
+                          sQuote(INDEX)))
+        else
+            vignetteEntries <-
+                cbind(colnames(vignetteEntries), c(vignetteEntries))
+        idx <- match(vignetteFiles, vignetteEntries[ , 1], 0)
+        vignetteIndex[which(idx != 0), 2] <- vignetteEntries[idx, 2]
+    }
+    idx <- which(vignetteTitles != "")
+    vignetteIndex[idx, 2] <- vignetteTitles[idx]
+    ## </FIXME>    
+    vignetteIndex
 }
 
 ### * .checkVignetteIndex
@@ -189,14 +216,9 @@ function(vignetteFiles)
 .checkVignetteIndex <-
 function(vignetteDir)
 {
-    ## <NOTE>
-    ## Currently, there is no check whether the PDF files listed in the
-    ## index actually exist ...
-    ## </NOTE>
     if(!.fileTest("-d", vignetteDir))
         stop(paste("directory", sQuote(vignetteDir), "does not exist"))
-    vignetteIndex <-
-        .buildVignetteIndex(.listFilesWithType(vignetteDir, "vignette"))
+    vignetteIndex <- .buildVignetteIndex(vignetteDir)
     badEntries <-
         vignetteIndex[grep("^[[:space:]]*$", vignetteIndex[, 2]), 1]
     class(badEntries) <- "checkVignetteIndex"

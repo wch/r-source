@@ -65,17 +65,17 @@ Rdindex(RdFiles, outFile = "", type = NULL,
 Rd2contents(dir, outFile = "")
 .writeContentsRDS(contents, outFile)
 .writeContentsDCF(contents, packageName, outFile)
-.buildRdIndex(contents, type = NULL)
-.buildVignetteIndex(vignetteFiles)
-.buildDemoIndex(demoDir)
 .buildDataIndex(dataDir, contents)
+.buildDemoIndex(demoDir)
+.buildRdIndex(contents, type = NULL)
+.buildVignetteIndex(vignetteDir)
 .installPackageDescription(dir, outDir)
 .installPackageIndices(dir, outDir)
 .installPackageRdIndices(dir, outDir)
 .installPackageVignetteIndex(dir, outDir)
 .installPackageDemoIndex(dir, outDir)
-.checkVignetteIndex(vignetteDir)
 .checkDemoIndex(demoDir)
+.checkVignetteIndex(vignetteDir)
 }
 \details{
   These are not to be called by the user.
