@@ -64,7 +64,7 @@ EXECFILES=$(filter-out $(SPKG)/exec/CVS, $(wildcard $(SPKG)/exec/*))
 # Others
 INSTFILES=$(filter-out $(SPKG)/inst/CVS, $(wildcard $(SPKG)/inst/*))
 
-all:  $(DPKG)/zzzz frontmatter nmspace Dynlib R $(DPKG)/demo \
+all:  $(DPKG)/zzzz R frontmatter nmspace Dynlib $(DPKG)/demo \
   $(DPKG)/exec $(DPKG)/inst $(DATA) mansrcs indices
 
 fake: zzzfirst frontmatter nmspacefake R Rfake $(DPKG)/demo \
