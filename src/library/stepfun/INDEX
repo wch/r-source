@@ -1,6 +1,0 @@
-stepfun		Step Function Class
-ecdf		Empirical Cumulative Distribution Function
-
-knots		Knots of a step function (incl. `ecdf')
-plot.stepfun	plot method for step functions
-plot.ecdf		and ecdf;  same for  `print' and `summary'
