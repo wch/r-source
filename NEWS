@@ -11,7 +11,10 @@
 
 NEW FEATURES
 
-    o	A new function filled.contour() has been added.  It produces a
+    o	coplot() now labels levels when conditioning variable is factor
+	(John Maindonald).
+
+    o	A new function filled.contour() has been added.	 It produces a
 	variant contour plots where the area between contours is filled
 	with a solid colour.  The function (currently) uses the layout()
 	function and so is restricted to a full page display.
@@ -21,25 +24,25 @@ NEW FEATURES
 	cm.colors() which implements a Cleveland-style cyan-magenta
 	palette has been added.
 
-    o   Primitive function .External() to call dynamically loaded
+    o	Primitive function .External() to call dynamically loaded
 	`internal'-style functions (code from Jean Meloche)
 
-    o   Function page() to view an R object in a pager.
+    o	Function page() to view an R object in a pager.
 
-    o   Support for handling embedded '\n's in text strings
+    o	Support for handling embedded '\n's in text strings
 	handed to low-level graphics functions has been added.
 	Some changes to the PostScript graphics driver were
 	needed to support this, so there may some minor change
 	in the appearance of plots produced in PostScript.
 
-    o   The LaTeX documentation is now split into 2 parts: the (currently
-        almost non-existent) manual and a reference index.
-        Manual: new section on loading C++ code.
+    o	The LaTeX documentation is now split into 2 parts: the (currently
+	almost non-existent) manual and a reference index.
+	Manual: new section on loading C++ code.
 
     o	Gnome support added
 
-    o   The X11 graphics driver no longer produces "color allocation"
-        error messages.  On pseudocolor displays, the driver allocates
+    o	The X11 graphics driver no longer produces "color allocation"
+	error messages.	 On pseudocolor displays, the driver allocates
 	the best color cube it can at startup and approximates the
 	user-specified colors as best it can from the cube.  On
 	truecolor displays, you get exactly the color you request.
@@ -49,10 +52,10 @@ NEW FEATURES
 	surface using a simple lighting model.
 
     o	Many functions providing an interface to the operating system
-	have been made "platform independent".  See the manual entry
+	have been made "platform independent".	See the manual entry
 	for "file"" "list.files" and "file.show" for details.
 
-    o   There is a new function "eval.with.vis" which behaves exactly
+    o	There is a new function "eval.with.vis" which behaves exactly
 	like "eval", but which returns both the result of the evaluation
 	an a logical value indicating whether the value is ``visible''.
 	This has been used to replace some ad-hoc tests for whether
@@ -64,10 +67,10 @@ BUG FIXES
 
     o	Resizing an inactive graphics window to an invalid size left
 	that window active and produced a spurious prompt and newline
-	in the console window.  This no longer happens.
+	in the console window.	This no longer happens.
 
 
- 	**************************************************
+	**************************************************
 	*						 *
 	*	       0.63 SERIES NEWS			 *
 	*    (This label is really only here to keep	 *
@@ -97,11 +100,11 @@ BUG FIXES
 
     o	pt() now works better for extreme `df'.
 
-    o   fixed some glitches with formatC() and its doc.
+    o	fixed some glitches with formatC() and its doc.
 
-    o   several fixes in *.c code to make -Wall happy
+    o	several fixes in *.c code to make -Wall happy
 
-    o   curve() [and plot.function()] now use proper `x' values with log="x"
+    o	curve() [and plot.function()] now use proper `x' values with log="x"
 
 
 		CHANGES IN R VERSION 0.63.3

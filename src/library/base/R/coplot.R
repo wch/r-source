@@ -4,8 +4,17 @@ co.intervals <- function (x, number = 6, overlap = 0.5)
     n <- length(x)
     ## "from the record"
     r <- n/(number * (1 - overlap) + overlap)
-    ii <- 0:(number - 1) * (1 - overlap) * r
-    cbind(x[round(1+ii)], x[round(r+ii)])
+    ii <- round(0:(number - 1) * (1 - overlap) * r)
+    x1 <- x[1 + ii]
+    xr <- x[r + ii]
+    ## Omit any range of values identical with the previous range;
+    ## happens e.g. when `number' is less than the number of distinct x values.
+    keep <- c(TRUE, diff(x1) > 0 | diff(xr) > 0)
+    ## Set eps > 0 to ensure that the endpoints of a range are never
+    ## identical, allowing display of a given.values bar
+    j.gt.0 <- 0 < (jump <- diff(x))
+    eps <- 0.5 * if(any(j.gt.0)) min(jump[j.gt.0]) else 0
+    cbind(x1[keep] - eps, xr[keep] + eps)
 }
 
 panel.smooth <- function(x, y, col = par("col"), pch = par("pch"),
@@ -15,11 +24,12 @@ panel.smooth <- function(x, y, col = par("col"), pch = par("pch"),
     lines(lowess(x, y, f=span, iter=iter), col = col.smooth, ...)
 }
 
-coplot <- function (formula, data, given.values, panel=points, rows, columns,
-		    show.given = TRUE, col = par("fg"), pch=par("pch"),
-                    xlab = paste("Given :", a.name),
-                    ylab = paste("Given :", b.name),
-                    number = 6, overlap = 0.5, ...)
+coplot <-
+    function(formula, data, given.values, panel=points, rows, columns,
+             show.given = TRUE, col = par("fg"), pch=par("pch"),
+             xlab = paste("Given :", a.name),
+             ylab = paste("Given :", b.name),
+             number = 6, overlap = 0.5, ...)
 {
     deparen <- function(expr) {
 	while (is.language(expr) && !is.name(expr) && deparse(expr[[1]])== "(")
@@ -64,7 +74,9 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
     a <- eval(a, data, sys.frame(sys.parent()))
     if(length(a) != nobs) bad.lengths()
     if(is.character(a)) a <- as.factor(a)
+    a.levels <- NULL
     if (have.b) {
+        b.levels <- NULL
 	b.name <- deparse(b)
 	b <- eval(b, data, sys.frame(sys.parent()))
 	if(length(b) != nobs) bad.lengths()
@@ -87,15 +99,17 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	a.intervals <-
             if(is.factor(a)) {
                 i <- 1:nlevels(a)
+                a.levels <- levels(a)
                 a <- as.numeric(a)
-                cbind(i,i)
+                cbind(i - 0.5, i + 0.5)
             } else co.intervals(a,number=number[1],overlap=overlap[1])
 	b.intervals <-
             if (have.b) {
                 if(is.factor(b)) {
                     i <- 1:nlevels(b)
+                    b.levels <- levels(b)
                     b <- as.numeric(b)
-                    cbind(i,i)
+                    cbind(i - 0.5, i + 0.5)
                 }
                 else {
                     if(length(number)==1) number  <- rep(number,2)
@@ -110,30 +124,30 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	    bad.givens()
 	a.intervals <- given.values[[1]]
 	if(is.factor(a)) {
-	    a.intervals <-
-                if(is.character(a.intervals))
-                    match(a.intervals, levels(a))
-                else cbind(a.intervals, a.intervals)
+            if (is.character(a.intervals)) 
+                a.intervals <- match(a.intervals, levels(a))
+            a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
+            a.levels <- levels(a)
 	    a <- as.numeric(a)
 	}
         else if(is.numeric(a)) {
 	    if(!is.numeric(a.intervals)) bad.givens()
 	    if(!is.matrix(a.intervals) || ncol(a.intervals) != 2)
-		a.intervals <- cbind(a.intervals, a.intervals)
+		a.intervals <- cbind(a.intervals - 0.5, a.intervals + 0.5)
 	}
 	if(have.b) {
 	    b.intervals <- given.values[[2]]
 	    if(is.factor(b)) {
-		b.intervals <-
-                    if(is.character(b.intervals))
-                        match(b.intervals, levels(b))
-                    else cbind(b.intervals, b.intervals)
+                if (is.character(b.intervals)) 
+                    b.intervals <- match(b.intervals, levels(b))
+                b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
+                b.levels <- levels(b)
 		b <- as.numeric(b)
 	    }
             else if(is.numeric(b)) {
 		if(!is.numeric(b.intervals)) bad.givens()
 		if(!is.matrix(b.intervals) || ncol(b.intervals) != 2)
-		    b.intervals <- cbind(b.intervals, b.intervals)
+                    b.intervals <- cbind(b.intervals - 0.5, b.intervals + 0.5)
 	    }
 	}
     }
@@ -245,9 +259,18 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	plot.new()
 	nint <- nrow(a.intervals)
 	plot.window(range(a.intervals[is.finite(a.intervals)]),
-                    .5+c(0, nint), log="")
-	rect(a.intervals[,1], 1:nint-0.3,
-	     a.intervals[,2], 1:nint+0.3, col=gray(0.9))
+                    0.5 + c(0, nint), log="")
+        bg <-
+            if (is.null(a.levels))
+                gray(0.9)
+            else {
+                mid <- apply(a.intervals, 1, mean)
+                text(mid, 1:nint, a.levels)
+                NULL
+            }
+        rect(a.intervals[, 1], 1:nint - 0.3,
+             a.intervals[, 2], 1:nint + 0.3, col = bg)
+
 	axis(3)
 	axis(1, labels=FALSE)
 	box()
@@ -262,10 +285,18 @@ coplot <- function (formula, data, given.values, panel=points, rows, columns,
 	    par(fig = c(f.col, 1, 0, f.row), mar = nmar, new=TRUE)
 	    plot.new()
 	    nint <- nrow(b.intervals)
-	    plot.window(.5+c(0, nint),
+	    plot.window(0.5+c(0, nint),
 			range(b.intervals, finite=TRUE), log="")
-	    rect(1:nint-0.3, b.intervals[,1],
-		 1:nint+0.3, b.intervals[,2], col=gray(0.9))
+            bg <-
+                if (is.null(b.levels)) 
+                    gray(0.9)
+                else {
+                    mid <- apply(b.intervals, 1, mean)
+                    text(1:nint, mid, b.levels, srt = 90)
+                    NULL
+                }
+            rect(1:nint - 0.3, b.intervals[, 1],
+                 1:nint + 0.3, b.intervals[, 2], col = bg)
 	    axis(4)
 	    axis(2, labels=FALSE)
 	    box()
