@@ -30,8 +30,8 @@ if test -f ${HOME}/.Rconf; then . ${HOME}/.Rconf; fi
 
 R_MAJOR="0"
 R_MINOR="64.2"
-R_STATUS=""
-#R_STATUS="Patched (unreleased snapshot)"
+#R_STATUS=""
+R_STATUS="Patched (unreleased snapshot)"
 R_STATUS_REV="0"
 
 AC_CONFIG_AUX_DIR(tools)
