@@ -313,7 +313,7 @@ static void browse_button(control c)
     ofn.Flags           = OFN_HIDEREADONLY;
     ofn.nFileOffset     = 0;
     ofn.nFileExtension  = 0;
-    ofn.lpstrDefExt     = "*";
+    ofn.lpstrDefExt     = "";
     ofn.lCustData       = 0L;
     ofn.lpfnHook        = NULL;
     ofn.lpTemplateName  = NULL;
