@@ -20,7 +20,7 @@ strsplit(x,split)
 \seealso{
     \code{\link{paste}} for the reverse,
     \code{\link{grep}} and \code{\link{sub}} for string search and
-    manipulation; further \code{\link{nchar}}, \code{\link{substr}.}
+    manipulation; further \code{\link{nchar}}, \code{\link{substr}}.
 }
 \examples{
 noquote(strsplit("A text I want to display with spaces", NULL)[[1]])
