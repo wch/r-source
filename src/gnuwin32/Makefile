@@ -185,6 +185,9 @@ ts-HELP = ziponly
 base-ZIPDATA = zip
 ts-ZIPDATA = zip
 
+MASS-HELP = ziponly
+MASS-ZIPDATA = zip
+
 bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
 

@@ -186,6 +186,18 @@ bitmap and Tcl/Tk support and the manuals, as well as the recommended
 packages in R-@RVER@-recommended.tgz.
 
 
+Recommended packages
+====================
+
+The recommended packages can in the main be built as any other package.
+boot, cluster, nlme, rpart and survival should be made with
+Rcmd INSTALL --use-zip
+
+KernSmooth, mgcv and VR can be made by Rcmd INSTALL.
+
+foreign needs more work: unpack it and rename src/*.h.in to remove .in
+from the name.  Then make the package.
+
 
 Cross-building on ix86 Linux
 ============================
