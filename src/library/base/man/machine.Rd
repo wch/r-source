@@ -18,7 +18,7 @@ machine()
 }
 \examples{
 machine()# to see yours
-tolower(machine()) == .Platform $OS.type ## --> TRUE except on Windows.
+tolower(machine()) == .Platform $OS.type ## --> TRUE only on Unix
 if (machine() == "Macintosh")
   cat("You are using a Macintosh computer\n")
 }
