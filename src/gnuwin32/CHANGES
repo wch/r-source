@@ -37,7 +37,7 @@ from R_LIBS if the latter is set.
 
 install.packages() can install source packages as well as binary ones.
 
-sQuote() now defaults to type="cmd" on Windows.
+shQuote() now defaults to type="cmd" on Windows.
 
 R can now be built with Unicode support on Win9x and WinME.  See
 src/gnuwin32/MkRules.
