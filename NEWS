@@ -230,14 +230,20 @@ BUG FIXES
 	Under some circumstances subsetting of a character matrix
 	inserted NA in the wrong place.
 
-   o    abs() was not being treated as member of the Math group
+    o   abs() was not being treated as member of the Math group
 	generic function, so e.g. its method for data frames was not
 	being used.
 
-   o    set.seed(123, "default") was not using the value 123 (only for
+    o   set.seed(123, "default") was not using the value 123 (only for
 	kind = "default").
 
     o	logLik.lm() now uses  "df = p + 1" again (`+ sigma'!).
+
+    o	Added strptime() workaround for those platforms (such as
+	Solaris) that returned missing components as 0.  Missing
+	months and days are now detected, but missing years will still
+	be interpreted as 1900 on such platforms.
+
 
 
 	**************************************************

@@ -674,6 +674,10 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 	    !strptime(CHAR(STRING_ELT(x, i%n)),
 		      CHAR(STRING_ELT(sformat, i%m)), &tm);
 	if(!invalid) {
+	    /* Solaris sets missing fields to 0: but that's a valid year */
+	    if(tm.tm_mday == 0) tm.tm_mday = NA_INTEGER;
+	    if(tm.tm_yday == 0) tm.tm_yday = NA_INTEGER;
+	    if(tm.tm_mon == 0) tm.tm_mon = NA_INTEGER;
 	    if(tm.tm_mon == NA_INTEGER || tm.tm_mday == NA_INTEGER
 	       || tm.tm_year == NA_INTEGER)
 		glibc_fix(&tm, &invalid);
