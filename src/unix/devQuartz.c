@@ -877,7 +877,52 @@ static void 	Quartz_Polygon(int n, double *x, double *y, int col, int fill,
 
 static Rboolean Quartz_Locator(double *x, double *y, NewDevDesc *dd)
 {
- return(1);
+    EventRecord event;
+    SInt16 key;
+    Boolean gotEvent;
+    Boolean mouseClick = false;
+    Point myPoint;
+    WindowPtr window;
+    SInt16 partCode;
+    GrafPtr savePort;
+    Cursor		arrow ;
+    QuartzDesc *xd = (QuartzDesc*)dd->deviceSpecific;
+
+    GetPort(&savePort);
+
+    SetPortWindowPort(xd->window);
+    SetCursor( GetQDGlobalsArrow ( & arrow ) ) ;
+
+
+    while(!mouseClick) {
+	
+    
+	gotEvent = WaitNextEvent( everyEvent, &event, 0, nil);
+
+   
+	if (event.what == mouseDown) {
+	    partCode = FindWindow(event.where, &window);
+	    if ((window == (xd->window)) && (partCode == inContent)) {
+		myPoint = event.where;
+		GlobalToLocal(&myPoint);
+		*x = (double)(myPoint.h);
+		*y = (double)(myPoint.v);
+		mouseClick = true;
+	    }
+
+	}
+
+	if (event.what == keyDown) {
+	    key = (event.message & charCodeMask);
+	    if (key == 0x0D){
+		SetPort(savePort);
+		return FALSE;
+	    }
+	}
+    }
+
+    SetPort(savePort);
+    return TRUE;
 }
 
 static void 	Quartz_Mode(int mode, NewDevDesc *dd)
