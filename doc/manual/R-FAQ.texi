@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-41, 2001-04-16
+@set FAQ-VERSION 1.2-42, 2001-04-18
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1427,6 +1427,8 @@ Linear or cubic spline interpolation for irregularly gridded data.
 David Scott's ASH routines for 1D and 2D density estimation.
 @item bindata
 Generation of correlated artificial binary data.
+@item blighty
+Function for drawing the coastline of the United Kingdom.
 @item boot
 Functions and datasets for bootstrapping from the book ``Bootstrap
 Methods and Their Applications'' by A. C. Davison and D. V. Hinkley,

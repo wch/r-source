@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-41, 2001-04-16
+Version 1.2-42, 2001-04-18
 Kurt Hornik
 
 
@@ -1163,6 +1163,9 @@ works, was published in the Journal of Statistical Software
 
 *bindata*
      Generation of correlated artificial binary data.
+
+*blighty*
+     Function for drawing the coastline of the United Kingdom.
 
 *boot*
      Functions and datasets for bootstrapping from the book "Bootstrap
