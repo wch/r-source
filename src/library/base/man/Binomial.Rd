@@ -31,14 +31,14 @@ rbinom(n, size, prob)
   \code{dbinom} gives the density, \code{pbinom} gives the distribution
   function, \code{qbinom} gives the quantile function and \code{rbinom}
   generates random deviates.
-  
+
   If \code{size} is not an integer, \code{NaN} is returned.
 }
 \details{
   The binomial distribution with \code{size} \eqn{= n} and
   \code{prob} \eqn{= p} has density
   \deqn{p(x) = {n \choose x} {p}^{x} {(1-p)}^{n-x}}{
-    p(x) = Choose(n,x) p^x (1-p)^(n-x)}
+    p(x) = choose(n,x) p^x (1-p)^(n-x)}
   for \eqn{x = 0, \ldots, n}.
 
   If an element of \code{x} is not integer, the result of \code{dbinom}
