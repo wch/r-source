@@ -11,7 +11,7 @@ $(DPKG)/R/$(PKG): $(RHOME)/share/R/firstlib.R
 $(DPKG)/R/all.rda: R/${PKG}
 	@echo "  dumping R code in package \`$(PKG)'"
 ifeq ($(strip $(BUILD)),CROSS)
-	@ R_DEFAULT_PACKAGES=NULL $(R_EXE) --vanilla --slave R_PACKAGE_NAME=methods < $<
+	@ R_DEFAULT_PACKAGES=NULL R_PACKAGE_NAME=methods $(R_EXE) --vanilla --slave < $<
 else
 	@$(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=NULL R_PACKAGE_NAME=methods < $<
 endif
