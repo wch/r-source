@@ -5,7 +5,6 @@
 \alias{loadNamespace}
 \alias{loadedNamespaces}
 \alias{unloadNamespace}
-\alias{unloadNamespace}
 \alias{.onLoad}
 \alias{.onUnload}
 \alias{.onAttach}
