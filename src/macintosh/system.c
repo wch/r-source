@@ -424,8 +424,6 @@ int Mac_initialize_R(int ac, char **av)
     else
 	R_Outputfile = NULL;	/* We send the output to the GUI console*/
 
-    R_Sinkfile = NULL;		/* We begin writing to the console. */
-
 /*
  *  Since users' expectations for save/no-save will differ, we decided
  *  that they should be forced to specify in the non-interactive case.

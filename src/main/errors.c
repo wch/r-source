@@ -394,10 +394,6 @@ void jump_to_toplevel()
 	REprintf("Execution halted\n");
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
-#ifdef OLD
-    if (R_Sinkfile) R_Outputfile = R_Sinkfile;
-    else R_Outputfile = R_Consolefile;
-#endif
     R_OutputCon = R_SinkCon;
 
     PROTECT(s = allocList(nback));

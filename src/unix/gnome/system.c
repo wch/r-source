@@ -297,7 +297,6 @@ void gnome_start(int ac, char **av, Rstart Rp)
     if(!Rp->NoRenviron) process_users_Renviron();
 
     R_Interactive = isatty(0);
-    R_Sinkfile = NULL;
     if((R_Home = R_HomeDir()) == NULL) {
 	R_Suicide("R home directory is not defined");
     }
