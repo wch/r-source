@@ -188,6 +188,9 @@ print.hclust <- function(x, ...)
 
 cophenetic <-
 function(x)
+    UseMethod("cophenetic")
+cophenetic.default <-
+function(x)
 {
     x <- as.hclust(x)
     nobs <- length(x$order)

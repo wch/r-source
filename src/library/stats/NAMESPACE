@@ -485,3 +485,8 @@ S3method(print, ecdf)
 S3method(print, stepfun)
 S3method(summary, ecdf)
 S3method(summary, stepfun)
+
+## Added after the merge
+
+S3method("as.dist", "default")
+S3method("cophenetic", "default")

@@ -59,7 +59,11 @@ as.matrix.dist <- function(x)
 }
 
 
-as.dist <- function(m, diag = FALSE, upper = FALSE)
+as.dist <-
+function(m, diag = FALSE, upper = FALSE)
+    UseMethod("as.dist")
+as.dist.default <-
+function(m, diag = FALSE, upper = FALSE)
 {
     if (inherits(m,"dist"))
 	ans <- m

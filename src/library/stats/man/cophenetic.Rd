@@ -1,15 +1,18 @@
 \name{cophenetic}
 \alias{cophenetic}
+\alias{cophenetic.default}
 \title{Cophenetic Distances for a Hierarchical Clustering}
 \description{
   Computes the cophenetic distances for a hierarchical clustering.
 }
 \usage{
 cophenetic(x)
+\method{cophenetic}{default}(x)
 }
 \arguments{
-  \item{x}{an object of class \code{\link{hclust}} or with a method
-    for \code{\link{as.hclust}()} such as \code{\link[cluster]{agnes}}.}
+  \item{x}{for the default method, an object of class
+    \code{\link{hclust}} or with a method for \code{\link{as.hclust}()}
+    such as \code{\link[cluster]{agnes}}.}
 }
 \details{
   The cophenetic distance between two observations that have been
@@ -21,20 +24,26 @@ cophenetic(x)
   data if the correlation between the original distances and the
   cophenetic distances is high.  Otherwise, it should simply be viewed as
   the description of the output of the clustering algorithm.
+
+  \code{cophenetic} is a generic function.  Support for classes which
+  represent hierarchical clusterings (total indexed hierarchies) can be
+  added by providing an \code{\link{as.hclust}()} or, more directly, a
+  \code{cophenetic()} method for such a class.
 }
 \value{
   An object of class \code{dist}.
 }
 \references{
-  Sneath, P.H.A. and Sokal, R.R (1973)
+  Sneath, P.H.A. and Sokal, R.R. (1973)
   \emph{Numerical Taxonomy: The Principles and Practice of Numerical
     Classification}, p. 278 ff;
   Freeman, San Francisco.
 }
 \author{Robert Gentleman}
-
-\seealso{\code{\link{dist}}, \code{\link{hclust}}}
-
+\seealso{
+  \code{\link{dist}},
+  \code{\link{hclust}}
+}
 \examples{
 d1 <- dist(USArrests)
 hc <- hclust(d1, "ave")
@@ -55,4 +64,3 @@ cor(d0, d.coph) # 0.9911
 }
 \keyword{cluster}
 \keyword{multivariate}
-

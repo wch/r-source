@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-07-20), ISBN 3-900051-00-3
+Version 2.1.0 Under development (unstable) (2004-11-27), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +8,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -309,8 +309,8 @@ IS: [1] TRUE
 > f <- try(as.dendrogram( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
 > f <- try(as.dist( x ), silent = TRUE)
-Warning message: 
-non-square matrix in: as.dist(x) 
+Warning message:
+non-square matrix in: as.dist.default(x) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 [1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
@@ -894,8 +894,8 @@ IS: [1] TRUE
 > f <- try(as.dendrogram( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
 > f <- try(as.dist( x ), silent = TRUE)
-Warning message: 
-non-square matrix in: as.dist(x) 
+Warning message:
+non-square matrix in: as.dist.default(x) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 [1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
@@ -1271,7 +1271,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
-Warning message: 
+Warning message:
 inaccurate integer conversion in coercion 
 > if(!inherits(res, 'try-error')) report(is.package_version(res))
 [1] TRUE
@@ -1387,7 +1387,7 @@ IS: [1] TRUE
 +    } else   !isall.equal(x, res)})
 [1] TRUE
 > res <- try(as.package_version( x ), silent = TRUE)
-Warning message: 
+Warning message:
 inaccurate integer conversion in coercion 
 > if(!inherits(res, 'try-error'))
 +    report({if(is.package_version(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -1492,7 +1492,7 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 [1] TRUE
 > f <- try(as.package_version( x ), silent = TRUE)
-Warning message: 
+Warning message:
 inaccurate integer conversion in coercion 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.package_version( f )))
 [1] TRUE
@@ -2423,8 +2423,8 @@ Error: x is not TRUE
 > f <- try(as.dendrogram( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dendrogram( f )))
 > f <- try(as.dist( x ), silent = TRUE)
-Warning message: 
-non-square matrix in: as.dist(x) 
+Warning message:
+non-square matrix in: as.dist.default(x) 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.dist( f )))
 [1] TRUE
 > f <- try(as.formula( x ), silent = TRUE)
@@ -2437,6 +2437,6 @@ non-square matrix in: as.dist(x)
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.55 0.01 0.56 0 0 
+Time elapsed:  0.35 0.01 0.45 0 0 
 > 
 > 

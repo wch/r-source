@@ -1,15 +1,4 @@
 \name{dist}
-\title{Distance Matrix Computation}
-\usage{
-dist(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
-
-as.dist(m, diag = FALSE, upper = FALSE)
-
-\method{print}{dist}(x, diag = NULL, upper = NULL,
-      digits = getOption("digits"), justify = "none", right = TRUE, \dots)
-
-\method{as.matrix}{dist}(x)
-}
 \alias{dist}
 \alias{print.dist}
 \alias{format.dist}
@@ -17,6 +6,24 @@ as.dist(m, diag = FALSE, upper = FALSE)
 \alias{names.dist}
 \alias{names<-.dist}
 \alias{as.dist}
+\alias{as.dist.default}
+\title{Distance Matrix Computation}
+\description{
+  This function computes and returns the distance matrix computed by
+  using the specified distance measure to compute the distances between
+  the rows of a data matrix.
+}
+\usage{
+dist(x, method = "euclidean", diag = FALSE, upper = FALSE, p = 2)
+
+as.dist(m, diag = FALSE, upper = FALSE)
+\method{as.dist}{default}(m, diag = FALSE, upper = FALSE)
+
+\method{print}{dist}(x, diag = NULL, upper = NULL,
+      digits = getOption("digits"), justify = "none", right = TRUE, \dots)
+
+\method{as.matrix}{dist}(x)
+}
 \arguments{
   \item{x}{a numeric matrix, data frame or \code{"dist"} object.}
   \item{method}{the distance measure to be used. This must be one of
@@ -28,17 +35,15 @@ as.dist(m, diag = FALSE, upper = FALSE)
   \item{upper}{logical value indicating whether the upper triangle of the
     distance matrix should be printed by \code{print.dist}.}
   \item{p}{The power of the Minikowski distance.}
-  \item{m}{A matrix of distances to be converted to a \code{"dist"}
-    object (only the lower triangle is used, the rest is ignored).}
+  \item{m}{An object with distance information to be converted to a
+    \code{"dist"} object.  For the default method, a \code{"dist"}
+    object, or a matrix (of distances) or an object which can be coerced
+    to such a matrix using \code{\link{as.matrix}()}.  (Only the lower
+    triangle of the matrix is used, the rest is ignored).} 
   \item{digits, justify}{passed to \code{\link{format}} inside of
     \code{print()}.}
   \item{right, \dots}{further arguments, passed to the (next)
     \code{print} method.}
-}
-\description{
-  This function computes and returns the distance matrix computed by
-  using the specified distance measure to compute the distances between
-  the rows of a data matrix.
 }
 \details{
   Available distance measures are (written for two vectors \eqn{x} and
@@ -82,9 +87,16 @@ as.dist(m, diag = FALSE, upper = FALSE)
   The \code{"dist"} method of \code{as.matrix()} and \code{as.dist()}
   can be used for conversion between objects of class \code{"dist"}
   and conventional distance matrices.
+
+  \code{as.dist()} is a generic function.  Its default method handles
+  objects inheriting from class \code{"dist"}, or coercible to matrices
+  using \code{\link{as.matrix}()}.  Support for classes representing
+  distances (also known as dissimilarities) can be added by providing an
+  \code{\link{as.matrix}()} or, more directly, an \code{as.dist} method
+  for such a class.
 }
 \value{
-  An object of class \code{"dist"}.
+  \code{dist} returns an object of class \code{"dist"}.
 
   The lower triangle of the distance matrix stored by columns in a
   vector, say \code{do}. If \code{n} is the number of
