@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.27.2.4 $ ';
+my $revision = ' $Revision: 1.27.2.5 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -57,15 +57,16 @@ $opt_latex = 0 if $opt_no_latex;
 
 my $startdir=getcwd();
 $opt_outdir=$startdir unless $opt_outdir;
-chdir($opt_outdir) || die "Cannot change to directory $opt_outdir\n";
+chdir($opt_outdir) ||
+    die "Error: cannot change to directory \`$opt_outdir'\n";
 my $outdir=getcwd();
 chdir($startdir);
 
 my $R_HOME = $ENV{'R_HOME'} ||
-    die "Error: Environment variable R_HOME not found\n";
+    die "Error: environment variable R_HOME not found\n";
 
 my $R_CMD = $ENV{'R_CMD'} ||
-    die "Error: Environment variable R_CMD not found\n";
+    die "Error: environment variable R_CMD not found\n";
 
 my $WINDOWS = R_getenv("R_UNDER_WINDOWS", 0);
 my $TMPDIR = R_getenv("TMPDIR", "/tmp");
@@ -101,7 +102,7 @@ if($opt_latex){
     my $log = new R::Logfile();
     $log->checking("for working latex");
     open(texfile, "> $TMPDIR/Rtextest$$.tex") ||
-	die "cannot write to Rtextest$$.tex\n";
+	die "Error: cannot write to Rtextest$$.tex\n";
     print texfile "\\documentclass\{article\}\\begin\{document\}" .
 	"test\\end\{document\}\n";
     close texfile;
@@ -122,20 +123,28 @@ if($opt_latex){
 
 ## this is the main loop over all packages to be checked
 my $pkg;
-$#ARGV >=0 || die "no packages were specified";
+$#ARGV >=0 || die "Error: no packages were specified";
 foreach $pkg (@ARGV){
     my $is_bundle=0;
+
+    ## $pkg should be the path to the package (bundle) root source
+    ## directory, either absolute or relative to $startdir.
+    ## $pkgdir is the corresponding absolute path.
+    ## $pkgname is the name of the package (bundle).
+    chdir($startdir);
     $pkg =~ s/\/$//;
-    my $pkgname = basename($pkg);
+    (-d $pkg) || die "Error: package dir \`$pkg' does not exist";
+    chdir($pkg) ||
+	die "Error: cannot change to directory \`$pkg'\n";
+    my $pkgdir = getcwd();
+    my $pkgname = basename($pkgdir);
     chdir($startdir);
 
-    (-d $pkg) || die "\`$pkg' is not a directory";
-    
     my $pkgoutdir="$outdir/$pkgname.Rcheck";
     rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
     if(! -d $pkgoutdir){
 	if(! mkdir($pkgoutdir, 0755)){
-	    die("could not create directory $pkgoutdir\n");
+	    die("Error: cannot create directory \`$pkgoutdir'\n");
 	    exit(1);
 	}
     }
@@ -154,33 +163,33 @@ foreach $pkg (@ARGV){
     }
     
     print "\n";
-    if(system("${R_CMD} INSTALL -l $library $pkg")){
+    if(system("${R_CMD} INSTALL -l $library $pkgdir")){
 	$log->error("installation failed");
 	exit(1);
     }
     print("\n");
     
     my $description;
-    $log->checking("for file \`$pkg/DESCRIPTION'");
-    if(-r "$pkg/DESCRIPTION"){
-	$description = new R::Dcf("$pkg/DESCRIPTION");
+    $log->checking("for file \`$pkgname/DESCRIPTION'");
+    if(-r "$pkgdir/DESCRIPTION"){
+	$description = new R::Dcf("$pkgdir/DESCRIPTION");
 	$log->result("OK");
     }
     else{
 	$log->result("NO");
 	exit(1);
     }
-    
+
     if($description->{"Contains"}){
-	$log->message("Looks like \`${pkg}' is a package bundle");
+	$log->message("Looks like \`${pkgname}' is a package bundle");
 	$is_bundle=1;
 	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	my $ppkg="";
 	foreach $ppkg (@bundlepkgs){
-	    $log->message("checking \`$ppkg' in bundle \`$pkg'");
+	    $log->message("checking \`$ppkg' in bundle \`$pkgname'");
 	    $log->setstars("**");
 	    chdir($startdir);
-	    check_pkg("$pkg/$ppkg", $pkgoutdir, $startdir, $library,
+	    check_pkg("$pkgdir/$ppkg", $pkgoutdir, $startdir, $library,
 		      $is_bundle, $description, $log);
 	    $log->setstars("*");
 	}
@@ -188,7 +197,7 @@ foreach $pkg (@ARGV){
     else{
 	$is_bundle=0;
 	chdir($startdir);
-	check_pkg("$pkg", $pkgoutdir, $startdir, $library,
+	check_pkg($pkgdir, $pkgoutdir, $startdir, $library,
 		  $is_bundle, $description, $log);
     }
     
@@ -206,20 +215,29 @@ sub check_pkg {
 
     my ($pkg, $pkgoutdir, $startdir, $library,
 	$in_bundle, $description, $log) = @_;
-
-    my $pkgname = basename($pkg);
-
+    my ($pkgdir, $pkgname);
+    
+    ## $pkg is the argument we received from the main loop.
+    ## $pkgdir is the corresponding absolute path,
+    ## $pkgname the name of the package.
+    ## Note that we need to do repeat the checking from the main loop in
+    ## the case of package bundles (and we could check for this).
     $log->checking("package directory");
-    my $dir;
-    if(-d $pkg){
-	chdir($pkg);
-	$dir = getcwd();
+    chdir($startdir);
+    $pkg =~ s/\/$//;
+    if(-d $pkg) {
+	chdir($pkg) ||
+	    die "Error: cannot change to directory \`$pkg'\n";
+	$pkgdir = getcwd();
+	$pkgname = basename($pkgdir);
     }
-    else{
-	$log->error("package dir \`${pkg}' does not exist");
+    else {
+	$log->error("Error: package dir \`$pkg' does not exist");
 	exit 1;
     }
     $log->result("OK");
+    
+    chdir($pkgdir);
     
     if($in_bundle){  # join DESCRIPTION and DESCRIPTION.in
 	if(-r "DESCRIPTION.in"){
@@ -249,7 +267,8 @@ sub check_pkg {
 	$log->error("no DESCRIPTION Package field found");
 	exit(1);
     }
-    if($description->{"Package"} ne basename($dir)){
+    my $tmp = $description->{"Package"};
+    if($description->{"Package"} ne $pkgname){
 	$log->error("DESCRIPTION Package field differs from dir name");
 	exit(1);
     }
@@ -384,7 +403,7 @@ sub check_pkg {
 	my $Rcmd = "$TMPDIR/Rcmd.$$";
 	my $Rout = "$TMPDIR/Rout.$$";
 	open Rcmd, "> $Rcmd" || die "Cannot write to \`$Rcmd'\n";
-        print Rcmd "undoc(dir = \"${dir}\")\n";
+        print Rcmd "undoc(dir = \"${pkgdir}\")\n";
         close Rcmd;
         system("${R_exe} ${R_opts} < ${Rcmd} > ${Rout}");
         my @out;
@@ -443,9 +462,9 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if($opt_tests && (-d "$startdir/$pkgname/tests")){
+    if($opt_tests && (-d "$pkgdir/tests")){
         $log->checking("tests");
-        my $testsrcdir="$startdir/$pkgname/tests";
+        my $testsrcdir="$pkgdir/tests";
         my $testdir="$pkgoutdir/tests";
         if(! -d $testdir){
             if(! mkdir($testdir, 0755)){
