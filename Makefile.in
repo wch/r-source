@@ -196,7 +196,8 @@ install-R-framework:
 	  cp -R * "$(R_FRAMEWORK_DIR)/Resources/bin/exec/")
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/bin" && \
 	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
-	  chmod 755 RAqua && \
+	  chmod 755 RAqua) 
+	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/bin/libR.dylib" libR.dylib)
 	@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' $(R_FRAMEWORK_DIR)/Resources/bin/RAqua > \
 	  $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua)
