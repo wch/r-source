@@ -424,9 +424,6 @@
 /* Define if you have the tk library (-ltk).  */
 #undef HAVE_LIBTK
 
-/* Define if you have the z library (-lz).  */
-#undef HAVE_LIBZ
-
 /* Name of package */
 #define PACKAGE "R"
 

@@ -54,7 +54,7 @@ typedef struct fifoconn {
     int fd;
 } *Rfifoconn;
 
-#ifdef HAVE_LIBZ
+#ifdef HAVE_ZLIB
 typedef struct gzfileconn {
     void *fp;
     int cp;

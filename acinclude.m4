@@ -1232,7 +1232,7 @@ AC_SUBST(BLAS_LIBS)
 ##
 AC_DEFUN([R_ZLIB], [
   have_zlib=no
-  AC_CHECK_LIB(z, main, [
+  AC_CHECK_LIB(z, gzopen, [
     AC_CHECK_HEADER(zlib.h, [
       AC_MSG_CHECKING([if zlib version >= 1.1.3])
       AC_TRY_RUN([
