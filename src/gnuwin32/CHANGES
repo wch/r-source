@@ -47,6 +47,8 @@ File src/nmath/dnt.c was not being built for the standalone Rmath library.
 
 packageStatus() now works under Windows.
 
+Fixed instability introduced with double buffering. (PR#5173)
+
 
 
 rw1080

@@ -600,6 +600,12 @@ This appendix gives details of programs you will need to build @R{} on
 Unix-like platforms, or which will be used by @R{} if found by
 @command{configure}.
 
+Remember that some package management systems (such as @acronym{RPM} and
+deb) make a distinction between the user version of a package and the
+development version.  The latter usually has the same name but with the
+extension @samp{-devel} or @samp{-dev}: you need both versions
+installed.
+
 @menu
 * Essential programs::          
 * Useful libraries and programs::  
@@ -610,6 +616,11 @@ Unix-like platforms, or which will be used by @R{} if found by
 
 You need a means of compiling C and FORTRAN 77 (see @ref{Using
 FORTRAN}).  Some add-on packages also need a C++ compiler.
+
+Unless you do not want to view graphs on-screen you need @samp{X11}
+installed, including its headers and client libraries.  (On RedHat Linux
+this means the @samp{XFree86-devel} and @samp{XFree86-libs} RPMs, for
+example.)
 
 You will need Perl version 5.004 or later, available via
 @uref{http://www.perl.com/CPAN/}, to build any of the on-line
@@ -643,12 +654,6 @@ if specified by @code{--with-zlib}, @code{--with-bzlib} or
 compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.
 
-Remember that some package management systems (such as @acronym{RPM} and
-deb) make a distinction between the user version of a package and the
-developer version.  The latter usually has the same name but with the
-extension @samp{-devel} or  @samp{-dev}: you need both versions
-installed.
-
 @menu
 * Tcl/Tk::                      
 * Linear algebra::              
@@ -676,7 +681,8 @@ or use the configure variables @code{TCLTK_LIBS} and
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.
 
-Versions of Tcl/TK from 8.0 to 8.4.1 have been used successfully.
+Versions of Tcl/TK from 8.3 to 8.4.4 have been used successfully: 8.0 is
+no longer supported.
 
 
 @node Linear algebra,  , Tcl/Tk, Useful libraries and programs
@@ -695,15 +701,13 @@ will be used.  You can specify a specific BLAS library by the
 configuration option @option{--with-blas} and not to use an external
 BLAS library by @option{--without-blas}.
 
-For systems with multiple processors it is in principle possible to use
-a multi-threaded version of ATLAS.  Prior to @R{} 1.8.0 this was not
+For systems with multiple processors it is possible to use a
+multi-threaded version of ATLAS.  (Prior to @R{} 1.8.0 this was not
 supported since @code{SIGINT} signals sent to the process and handled by
-the wrong thread could result in segfaults.  Changes in @code{SIGINT}
-handling introduced in @R{} 1.8.0 should make it safe to use a
-multi-threaded ATLAS.  A remaining issue is that @R{} profiling, which
-uses the @code{SIGPROF} signal, may cause problems.  You may want to
-disable profiling if you use a multi-threaded version of ATLAS.  You can
-use a multi-threaded ATLAS by specifying
+the wrong thread could result in segfaults.)  A remaining issue is that
+@R{} profiling, which uses the @code{SIGPROF} signal, may cause
+problems.  You may want to disable profiling if you use a multi-threaded
+version of ATLAS.  You can use a multi-threaded ATLAS by specifying
 @smallexample
 --with-blas="-lptf77blas -lpthread -latlas"
 @end smallexample
@@ -718,7 +722,7 @@ You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
 @cindex LAPACK library
-As from @R{} 1.7.0, provision is made for using an external LAPACK
+Provision is made for using an external LAPACK
 library, principally to cope with BLAS libraries which contain a copy of
 LAPACK (such as @code{libsunperf} on Solaris and @code{vecLib} on MacOS
 10.2.2).  However, the likely performance gains are thought to be small
