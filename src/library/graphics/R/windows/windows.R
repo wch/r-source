@@ -1,7 +1,8 @@
 windows <- function(width = 7, height = 7, pointsize = 12,
                     record = getOption("graphics.record"),
                     rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-                    canvas = "white", gamma = getOption("gamma"),
+                    bg = "transparent", canvas = "white",
+                    gamma = getOption("gamma"),
                     xpos = NA, ypos = NA,
                     buffered = getOption("windowsBuffered"))
 {
@@ -16,24 +17,24 @@ windows <- function(width = 7, height = 7, pointsize = 12,
     .Internal(devga("", width, height, pointsize, record, rescale,
                     xpinch, ypinch, canvas,
                     if(is.null(gamma)) 1 else gamma,
-                    as.integer(xpos), as.integer(ypos), buffered, .PSenv
+                    as.integer(xpos), as.integer(ypos), buffered, .PSenv, bg
                     ))
 }
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
     .Internal(devga("", width, height, pointsize, FALSE, 1, NA, NA, "white",
-                    1, as.integer(NA), as.integer(NA), TRUE, .PSenv))
+                    1, as.integer(NA), as.integer(NA), TRUE, .PSenv, NA))
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "")
     .Internal(devga(paste("win.print:", printer, sep=""),
                     width, height, pointsize, FALSE, 1,
                     NA, NA, "white", 1, as.integer(NA), as.integer(NA),
-                    FALSE, .PSenv))
+                    FALSE, .PSenv, NA))
 
 win.metafile <- function(filename = "", width = 7, height = 7, pointsize = 12)
     .Internal(devga(paste("win.metafile:", filename, sep=""),
                     width, height, pointsize, FALSE, 1, NA, NA, "white", 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv))
+                    as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
 
 png <- function(filename = "Rplot%03d.png", width = 480, height = 480,
                 pointsize = 12, bg = "white")
@@ -45,13 +46,13 @@ bmp <- function(filename = "Rplot%03d.bmp", width = 480, height = 480,
                 pointsize = 12, bg = "white")
     .Internal(devga(paste("bmp:", filename, sep=""),
                     width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv))
+                    as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
 
 jpeg <- function(filename = "Rplot%03d.jpg", width = 480, height = 480,
                  pointsize = 12, quality=75, bg = "white")
     .Internal(devga(paste("jpeg:", quality, ":",filename, sep=""),
                     width, height, pointsize, FALSE, 1, NA, NA, bg, 1,
-                    as.integer(NA), as.integer(NA), FALSE, .PSenv))
+                    as.integer(NA), as.integer(NA), FALSE, .PSenv, NA))
 
 bringToTop <- function(which = dev.cur(), stay = FALSE)
 {

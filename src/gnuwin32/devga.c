@@ -265,7 +265,7 @@ static void GA_Text(double x, double y, char *str,
 		    R_GE_gcontext *gc,
 		    NewDevDesc *dd);
 static Rboolean GA_Open(NewDevDesc*, gadesc*, char*, double, double,
-			Rboolean, int, int, double, int, int);
+			Rboolean, int, int, double, int, int, int);
 
 	/********************************************************/
 	/* end of list of required device driver actions 	*/
@@ -324,7 +324,7 @@ static void SaveAsWin(NewDevDesc *dd, char *display)
 		       fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 		       ((gadesc*) dd->deviceSpecific)->basefontsize,
-		       0, 1, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
+		       0, 1, White, White, 1, NA_INTEGER, NA_INTEGER, FALSE,
 		       R_GlobalEnv))
         PrivateCopyDevice(dd, ndd, display);
 }
@@ -1494,7 +1494,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
 static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 			double w, double h, Rboolean recording,
 			int resize, int canvascolor, double gamma,
-			int xpos, int ypos)
+			int xpos, int ypos, int bg)
 {
     rect  rr;
     char buf[600]; /* allow for pageno formats */
@@ -1503,7 +1503,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	RFontInit();
 
     /* Foreground and Background Colors */
-    xd->bg = dd->startfill = 0xffffffff; /* transparent */
+    xd->bg = dd->startfill = bg; /* 0xffffffff; transparent */
     xd->col = dd->startcol = R_RGB(0, 0, 0);
 
     xd->fgcolor = Black;
@@ -2310,7 +2310,7 @@ static void GA_Hold(NewDevDesc *dd)
 
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
-			Rboolean recording, int resize, int canvas,
+			Rboolean recording, int resize, int bg, int canvas,
 			double gamma, int xpos, int ypos, Rboolean buffered,
 			SEXP psenv)
 {
@@ -2346,7 +2346,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     /* Start the Device Driver and Hardcopy.  */
 
     if (!GA_Open(dd, xd, display, width, height, recording, resize, canvas,
-		 gamma, xpos, ypos)) {
+		 gamma, xpos, ypos, bg)) {
 	free(xd);
 	return FALSE;
     }

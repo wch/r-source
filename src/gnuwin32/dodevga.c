@@ -49,7 +49,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     GEDevDesc* dd;
     char *display, *vmax;
     double height, width, ps, xpinch, ypinch, gamma;
-    int recording = 0, resize = 1, canvas, xpos, ypos, buffered;
+    int recording = 0, resize = 1, bg, canvas, xpos, ypos, buffered;
     SEXP sc, psenv;
 
     checkArity(op, args);
@@ -93,6 +93,11 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid value of `buffered'");
     args = CDR(args);
     psenv = CAR(args);
+    args = CDR(args);
+    sc = CAR(args);
+    if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
+	errorcall(call, "invalid value of `bg'");
+    bg = RGBpar(sc, 0);
     
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -107,7 +112,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 	dev->savedSnapshot = R_NilValue;
 	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dev, display, width, height, ps, 
-			    (Rboolean)recording, resize, canvas, gamma,
+			    (Rboolean)recording, resize, bg, canvas, gamma,
 			    xpos, ypos, (Rboolean)buffered, psenv)) {
 	    free(dev);
 	    errorcall(call, "unable to start device devga");

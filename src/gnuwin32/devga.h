@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998-2003  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998-200  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 2004        The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +21,7 @@
 #include <Graphics.h>
 #include <R_ext/Boolean.h>
 Rboolean GADeviceDriver(NewDevDesc*, char*, double, double, double, 
-			Rboolean, int, int, double, int, int, Rboolean, SEXP);
+			Rboolean, int, int, int, double, int, int, 
+			Rboolean, SEXP);
 void GAsetunits(double, double);
 

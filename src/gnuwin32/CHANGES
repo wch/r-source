@@ -13,12 +13,15 @@ in window caption in edit() and fix().
 Changed preferences menu "Finish" to "OK".
 
 Changed search order for user home directory to use "My Documents" 
-directory.
+directory after HOME and before HOMEDRIVE/HOMEPATH.
 
 Added functions setWindowTitle(), getWindowTitle(), and 
 getIdentification().
 
 Added function getWindowsHandle().
+
+windows() device has new 'bg' argument to set the background colour
+(which still defaults to "transparent").
 
 
 

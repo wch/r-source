@@ -14,7 +14,7 @@
 windows(width = 7, height = 7, pointsize = 12,
         record = getOption("graphics.record"),
         rescale = c("R", "fit", "fixed"), xpinch, ypinch,
-        canvas = "white", gamma = getOption("gamma"),
+        bg = "transparent", canvas = "white", gamma = getOption("gamma"),
         xpos = NA, ypos = NA, buffered = getOption("windowsBuffered"))
 
 win.graph(width = 7, height = 7, pointsize = 12)
@@ -41,6 +41,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \item{rescale}{controls the action for resizing plots.}
   \item{xpinch, ypinch}{double.  Pixels per inch, horizontally and
     vertically.}
+  \item{bg}{color.  The default background color.}
   \item{canvas}{color.  The color of the canvas which is visible
     when the background color is transparent.}
   \item{gamma}{the gamma correction factor.  This value is used
@@ -60,7 +61,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \description{
-  A graphics device is opened. For \code{win.graph}, \code{windows},
+  A graphics device is opened. For \code{windows}, \code{win.graph},
   \code{x11} and \code{X11} this is a graphics window on the current
   Windows display: the multiple names are for compatibility with other
   systems. \code{win.metafile} prints to a file and \code{win.print} to
