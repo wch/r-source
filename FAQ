@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-45, 2001-04-23
+Version 1.2-46, 2001-04-24
 Kurt Hornik
 
 
@@ -223,7 +223,7 @@ hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current stable version is 1.2.2, the unstable one is 1.3.0.
+   The current stable version is 1.2.3, the unstable one is 1.3.0.
 Typically, new features are introduced in the development versions; updates
 of stable versions are for bug fixes mostly.
 
@@ -2034,7 +2034,7 @@ to get the numbers back.  More efficient, but harder to remember, is
 7.14 Are Trellis displays implemented in R?
 ===========================================
 
-   Not yet.  Meanwhile, you could look at `coplot()' and `dotplot()' which
+   Not yet.  Meanwhile, you could look at `coplot()' and `dotchart()' which
 might do at least some of what you want.  Note also that the R version of
 `pairs()' is fairly general and provides most of the functionality of
 `splom()', and that R's default plot method has an argument `asp' allowing

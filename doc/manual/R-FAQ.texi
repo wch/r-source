@@ -4,8 +4,8 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-45, 2001-04-23
-@set REL-VERSION 1.2.2
+@set FAQ-VERSION 1.2-46, 2001-04-24
+@set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
 
@@ -2411,9 +2411,8 @@ In any case, do not call @code{as.numeric()} or their likes directly.
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
-@c FIXME 1.2.3 dotplot => dotchart
 Not yet.  Meanwhile, you could look at @code{coplot()} and
-@code{dotplot()} which might do at least some of what you want.  Note
+@code{dotchart()} which might do at least some of what you want.  Note
 also that the R version of @code{pairs()} is fairly general and provides
 most of the functionality of @code{splom()}, and that R's default plot
 method has an argument @code{asp} allowing to specify (and fix against
