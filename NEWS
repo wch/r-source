@@ -122,6 +122,8 @@ NEW FEATURES
    o    deriv/deriv3 can now handle expressions involving pnorm and
 	dnorm (with a single argument), as in S.
 
+   o	rug() now has a "..." argument allowing to specify its location.
+
 
 DEPRECATED & DEFUNCT
 
@@ -203,7 +205,7 @@ BUG FIXES
 	documented.
 
     o	subsetting of matrices of mode list (or other non-atomic
-	modes) was not implemented and gave incorrect results without 
+	modes) was not implemented and gave incorrect results without
 	warning. (PR#1329)
 	Under some circumstances subsetting of a character matrix
 	inserted NA in the wrong place.
@@ -236,7 +238,7 @@ BUG FIXES
 	argument was ignored when replaying the display list. (PR#1157)
 
     o	The vertical alignment of mathematical annotations was wrong.
-	When a vertical adjustment was not given, it was bottom-adjusting 
+	When a vertical adjustment was not given, it was bottom-adjusting
 	i.e,. it was treating adj=0 as adj=c(0, 0).  It now treats
 	adj=0 as adj=c(0, 0.5) as for "normal" text. (PR#1302)
 
@@ -262,10 +264,10 @@ BUG FIXES
     o	plot.ts(x, log = "y") works again when x has 0s, also for matrix x.
 
     o	add1(), drop1(), step() work again on glm objects with
-	formulae with rhs's containing `.'.  (Broken by a `bug fix' 
+	formulae with rhs's containing `.'.  (Broken by a `bug fix'
 	(in reality an API change) in 1.2.1.)
 
-    o	optim(method="BFGS") was not reporting reaching `maxit' 
+    o	optim(method="BFGS") was not reporting reaching `maxit'
 	iterations in the convergence component of the return value.
 
     o	aov and model.tables were failing on multistrata models with

@@ -3,7 +3,7 @@
 \alias{rug}
 \usage{
 rug(x, ticksize=0.03, side=1, lwd=0.5, col,
-    quiet = getOption("warn") < 0)
+    quiet = getOption("warn") < 0, \dots)
 }
 \arguments{
  \item{x}{A numeric vector}
@@ -15,6 +15,8 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
  \item{col}{The colour the ticks are plotted in, default is black.}
  \item{quiet}{logical indicating if there should be a warning about
    clipped values.}
+ \item{\dots}{further arguments, passed to \code{\link{axis}(...)}, such
+   as \code{line} or \code{pos} for specifying the location of the rug.}
 }
 \description{
   Adds a \emph{rug} representation (1-d plot) of the data to the plot.
