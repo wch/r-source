@@ -37,6 +37,28 @@ changes made by the C or Fortran code.
 These calls are typically made in conjunction with
 \code{\link{dyn.load}} which links DLLs to \R.
 }
+%%-- This note based on BDR's understanding
+\section{Argument types}{
+    The mapping of the types of \R arguments to C or Fortran arguments
+    in \code{.C} or \code{.Fortran} is
+    \tabular{lll}{
+\    R \tab     C \tab     Fortran\cr
+integer \tab int * \tab integer\cr
+real \tab double * \tab double precision\cr
+complex \tab complex * \tab double precision\cr
+logical \tab int * \tab integer \cr
+character \tab char ** \tab [compiler dependent]\cr
+}
+    The C type \code{complex} is defined in \file{Complex.h} as a
+    \code{typedef struct {double r; double i;}}.
+
+    \emph{Note:} The C types corresponding to \code{integer} and
+    \code{logical} are \code{int}, not \code{long} as in S.
+
+    Character strings are passed as C arrays of character strings to
+    Fortran: the first string may be usable if its length is passed
+    separately.
+}
 %%-- This note by Thomas Lumley, (minimally edited by MM):
 \note{\emph{\code{DUP=FALSE} is dangerous.}
     
