@@ -29,11 +29,6 @@
 #include "names.h"
 #include "arithmetic.h"
 
-#ifdef MAPS
-SEXP do_map_bounds(SEXP, SEXP, SEXP, SEXP);
-SEXP do_map_draw(SEXP, SEXP, SEXP, SEXP);
-#endif
-
 /* Table of  .Internal(.) and .Primitive(.)  R functions
  * =====     =========	      ==========
  *
@@ -670,13 +665,6 @@ FUNTAB R_FunTab[] =
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL},
 {"persp",	do_persp,	0,	111,	4,	PP_FUNCALL},
 {"filledcontour",do_filledcontour,0,    111,    5,      PP_FUNCALL},
-
-#ifdef MAPS
-/* Mapping */
-
-{"map.bounds",	do_map_bounds,	0,	11,	2,	PP_FUNCALL},
-{"map.draw",	do_map_draw,	0,	111,    -1,	PP_FUNCALL},
-#endif
 
 /* Objects */
 
