@@ -1,7 +1,11 @@
 \name{ar}
 \alias{ar}
 \alias{ar.burg}
+\alias{ar.burg.ts}
+\alias{ar.burg.mts}
 \alias{ar.yw}
+\alias{ar.yw.ts}
+\alias{ar.yw.mts}
 \alias{ar.mle}
 \alias{print.ar}
 \alias{predict.ar}
