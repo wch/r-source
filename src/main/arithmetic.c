@@ -209,13 +209,18 @@ static double myfmod(double x1, double x2)
     return x1 - floor(q) * x2;
 }
 
-/*#ifdef Log_broken /-* only on some platforms: small performance loss: */
-#if 1==1/* always(for testing)*/
-double R_log(double x){ return(x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf); }
-#else /* be more efficient -- one function less on the stack */
-#define R_log	log
+
+#ifdef LOG_BROKEN
+double R_log(double x) { return(x > 0 ? log(x) : x < 0 ? R_NaN : R_NegInf); }
+#else
+# define R_log	log
 #endif
 
+#ifdef POW_DIRTY
+
+# define R_pow	pow
+
+#else
 double R_pow(double x, double y) /* = x ^ y */
 {
     if(x == 1. || y == 0.)
@@ -247,6 +252,7 @@ double R_pow(double x, double y) /* = x ^ y */
     }
     return(R_NaN);/* all other cases: (-Inf)^{+-Inf, non-int}; (neg)^{+-Inf} */
 }
+#endif
 
 /* Base 2 and General Base Logarithms */
 
