@@ -65,6 +65,11 @@ none
 
 Directory:  Graphics
 
+* PR# 635 *
+Subject: Multiple pages with postscript()
+From: "Patrick Connolly" <P.Connolly@hort.cri.nz>
+Date: Wed, 16 Aug 100 12:14:19 +1200 (NZST)
+--par(lwd) reverts to one at page changes under the postscript() device
 * PR# 625 *
 Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
@@ -135,22 +140,12 @@ none
 
 Directory:  Models
 
-* PR# 633 *
-Subject: Possible bug
-From: Agustin Alonso Rodriguez <agusalon@mcr.ucm.es>
-Date: Sun, 13 Aug 2000 20:59:56 +0200
---ordered factors behave different from Splus when used w/o intercept
 * PR# 628 *
 Subject: Re: [Rd] predict.lm is broken in 1.1.0-patched (2000-August-7)
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Mon, 7 Aug 2000 22:41:50 +0100 (BST)
 --We've fixed the predict() problem, but need to make coef.lm and coef.aov
 --consistent
-* PR# 621 *
-Subject: anova() on three or more objects behaves inconsistently
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 1 Aug 2000 10:02:18 +0100 (BST)
---BDR will fix as suggested for 1.2.0
 
 Directory:  Startup
 
@@ -210,7 +205,7 @@ none
 
 Directory:  incoming
 
-* PR# 634 *
-Subject: Defective pointer to tech report
-From: monty@sprintmail.com
-Date: Tue, 15 Aug 2000 15:39:59 +0200 (MET DST)
+* PR# 636 *
+Subject: state name abbreviations
+From: jackman@stanford.edu
+Date: Wed, 16 Aug 2000 19:16:55 +0200 (MET DST)
