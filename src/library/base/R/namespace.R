@@ -680,63 +680,71 @@ parseNamespaceFile <- function(package, package.lib, mustExist = TRUE) {
     dynlibs <- character(0)
     S3methods <- matrix(as.character(NA), 500, 3)
     nS3 <- 0
-    for (e in directives)
+    parseDirective <- function(e) {
         switch(as.character(e[[1]]),
+               "if" = if (eval(e[[2]], .GlobalEnv))
+                          parseDirective(e[[3]])
+                      else if (length(e) == 4)
+                          parseDirective(e[[4]]),
+               "{" =  for (ee in as.list(e[-1])) parseDirective(ee),
                export = {
                    exp <- e[-1]
                    exp <- structure(as.character(exp), names=names(exp))
-                   exports <- c(exports, exp)
+                   exports <<- c(exports, exp)
                },
                exportPattern = {
                    pat <- as.character(e[-1])
-                   exportPatterns <- c(pat, exportPatterns)
+                   exportPatterns <<- c(pat, exportPatterns)
                },
                exportClass = , exportClasses = {
-                   exportClasses <- c(as.character(e[-1]), exportClasses)
+                   exportClasses <<- c(as.character(e[-1]), exportClasses)
                },
                exportMethods = {
-                   exportMethods <- c(as.character(e[-1]), exportMethods)
+                   exportMethods <<- c(as.character(e[-1]), exportMethods)
                },
-               import = imports <- c(imports,as.list(as.character(e[-1]))),
+               import = imports <<- c(imports,as.list(as.character(e[-1]))),
                importFrom = {
                    imp <- e[-1]
                    ivars <- imp[-1]
                    inames <- names(ivars)
                    imp <- list(as.character(imp[1]),
                                structure(as.character(ivars), names=inames))
-                   imports <- c(imports, list(imp))
+                   imports <<- c(imports, list(imp))
                },
                importClassFrom = , importClassesFrom = {
                    imp <- as.character(e[-1])
                    pkg <- imp[[1]]
                    impClasses <- imp[-1]
                    imp <- list(as.character(pkg), as.character(impClasses))
-                   importClasses <- c(importClasses, list(imp))
+                   importClasses <<- c(importClasses, list(imp))
                },
                importMethodsFrom = {
                    imp <- as.character(e[-1])
                    pkg <- imp[[1]]
                    impMethods <- imp[-1]
                    imp <- list(as.character(pkg), as.character(impMethods))
-                   importMethods <- c(importMethods, list(imp))
+                   importMethods <<- c(importMethods, list(imp))
                },
                useDynLib = {
                    dyl <- e[-1]
-                   dynlibs <- c(dynlibs, as.character(dyl))
+                   dynlibs <<- c(dynlibs, as.character(dyl))
                },
                S3method = {
                    spec <- e[-1]
                    if (length(spec) != 2 && length(spec) != 3)
                        stop(paste("bad S3method directive:", deparse(e)),
                             call. = FALSE)
-                   nS3 <- nS3 + 1;
+                   nS3 <<- nS3 + 1;
                    if(nS3 > 500)
                        stop("too many S3method directives", call. = FALSE)
-                   S3methods[nS3, 1:length(spec)] <- as.character(spec)
+                   S3methods[nS3, 1:length(spec)] <<- as.character(spec)
                },
                stop(paste("unknown namespace directive:", deparse(e)),
                     call. = FALSE)
                )
+    }
+    for (e in directives)
+        parseDirective(e)
     list(imports=imports, exports=exports, exportPatterns = exportPatterns,
          importClasses=importClasses, importMethods=importMethods,
          exportClasses=exportClasses, exportMethods=exportMethods,

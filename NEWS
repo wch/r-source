@@ -179,6 +179,8 @@ NEW FEATURES
     o   Command-line Mac OS X doesn't attempt to guess whether you are
 	running an X server: the default graphical device is now pdf().
 
+    o   Added experimental support for conditionals in NAMESPACE files.
+
 
 UTILITIES
 
