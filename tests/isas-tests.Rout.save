@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.2.0 Under development (unstable) (2000-09-05)
+Version 1.2.0 Under development (unstable) (2000-10-11)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -294,6 +294,9 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 [1] TRUE
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+Error in as.matrix.data.frame(as.data.frame(unclass(x))) : 
+	length of dimnames[2] not equal to array extent
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -611,6 +614,8 @@ Error in as.function.default(l, envir) : argument must have length at least 1
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 Error in array(x, c(length(x), 1), if (!is.null(names(x))) list(names(x),  : 
 	attempt to set an attribute on NULL
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+Error in X[[j]] : subscript out of bounds
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -926,6 +931,8 @@ Error in as.logical.default(x) : (list) object cannot be coerced to vector type 
 Error in as.logical.default(x) : (list) object cannot be coerced to vector type 10
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 [1] TRUE
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+Error in X[[j]] : subscript out of bounds
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -1233,6 +1240,8 @@ Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  :
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 [1] TRUE
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+[1] TRUE
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -1537,6 +1546,8 @@ Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  :
 > f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
 [1] TRUE
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
@@ -1843,6 +1854,8 @@ Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  :
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 [1] TRUE
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+[1] TRUE
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -2145,6 +2158,8 @@ Error in switch(mode(x), "NULL" = structure(NULL, class = "formula"),  :
 > f <- as.logical.default( x );  all.equal(f, as.logical.default( f ), tol=0)
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
+[1] TRUE
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
 [1] TRUE
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in 1:p : NA/NaN argument
@@ -2449,6 +2464,9 @@ Error in unique(x) : unique() applies only to vectors
 [1] TRUE
 > f <- as.matrix( x );  all.equal(f, as.matrix( f ), tol=0)
 Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
+> f <- as.matrix.POSIXlt( x );  all.equal(f, as.matrix.POSIXlt( f ), tol=0)
+Error in as.matrix.data.frame(as.data.frame(unclass(x))) : 
+	length of dimnames[2] not equal to array extent
 > f <- as.matrix.data.frame( x );  all.equal(f, as.matrix.data.frame( f ), tol=0)
 Error in as.matrix.data.frame(x) : length of dimnames[2] not equal to array extent
 > f <- as.matrix.default( x );  all.equal(f, as.matrix.default( f ), tol=0)
@@ -2491,6 +2509,6 @@ Error in ts(x) : ts object must have one or more observations
 > f <- as.vector.factor( x );  all.equal(f, as.vector.factor( f ), tol=0)
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  6.73 1.48 8.26 0 0 
+Time elapsed:  1.77 0.08 1.85 0 0 
 > 
 > 
