@@ -1657,6 +1657,7 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 	/* create a promise to pass down to applyClosure  */
 	if(!argsevald) {
 	    argValue = promiseArgs(args, rho);
+	    SET_PRVALUE(CAR(argValue), x);
 	}
 	else
 	  argValue = args;
