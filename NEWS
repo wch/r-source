@@ -171,6 +171,9 @@ NEW FEATURES
     o	dump() has new argument append, argument "fileout" has been
 	renamed to "file" (for consistency with all other functions).
 
+    o	The set of valid R names is now described (at last) in
+	R-intro.
+
 
 BUG FIXES
 
