@@ -833,8 +833,8 @@ int setupui()
     MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
     if (!check_doc_file("doc\\html\\rw-faq.html")) disable(mrwFAQ);
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mhelp = newmenuitem("R language (standard)...", 0, menuhelp));
-    MCHECK(mhelpstart = newmenuitem("R language (&html)", 0, menuhelpstart));
+    MCHECK(mhelp = newmenuitem("R functions (text)...", 0, menuhelp));
+    MCHECK(mhelpstart = newmenuitem("Html help", 0, menuhelpstart));
     if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
     MCHECK(mman = newsubmenu(m, "Manuals"));
     MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, menumainman));
