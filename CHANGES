@@ -2,6 +2,8 @@
 
 NEW FEATURES
 
+    o   added dblepr, intpr
+
     o   do_modelmatrix(model.c): Set rownames from data argument.
 
     o   New generic function preplot().
