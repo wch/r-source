@@ -11,9 +11,13 @@
     process for building the help files can be controlled.}
 }
 \details{
-  To install packages into the default library tree (which is rooted at
-  \file{\$R\_HOME/library}), do \code{R CMD INSTALL pkgs}.  To install
-  into the library tree \code{lib} instead of the default one, use
+  If used as \code{R CMD INSTALL pkgs} without explicitly specifying
+  \code{lib}, packages are installed into the library tree rooted at the
+  first directory given in \code{\$R\_LIBS} if this is set and non-null,
+  and to the default library tree (which is rooted at
+  \file{\$R\_HOME/library}) otherwise.
+
+  To install into the library tree \code{lib}, use
   \code{R CMD INSTALL -l lib pkgs}.
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or

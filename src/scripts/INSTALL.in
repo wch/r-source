@@ -4,20 +4,23 @@
 
 # @configure_input@
 
-revision='$Revision: 1.59 $'
+revision='$Revision: 1.60 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000 The R Core Development Team.
+Copyright (C) 2000-2001 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
 usage="Usage: R CMD INSTALL [options] pkgs
 
-Install the add-on packages specified by pkgs into the default R library
-tree (${R_HOME}/library) or the tree specified via \`--library'.  The
-elements of pkgs can be relative or absolute paths to directories with
-the package (bundle) sources, or to gzipped package \`tar' archives.
+Install the add-on packages specified by pkgs.  The elements of pkgs can
+be relative or absolute paths to directories with the package (bundle)
+sources, or to gzipped package \`tar' archives.  The library tree to
+install to can be specified via \`--library'.  By default, packages are
+installed in the library tree rooted at the first directory given in the
+environment variable R_LIBS if this is set and non-null, and into the
+default R library tree (${R_HOME}/library) otherwise.
 
 Options:
   -h, --help		print short help message and exit
@@ -25,9 +28,10 @@ Options:
       --configure-args=ARGS
                         set args for package's configure script (if any)
   -c, --clean		remove all files created during installation
-  -s, --save            Save the package source as an image file, and arrange for
-                        this file to be loaded when the library is attached.
-  --no-save             Do not save the package source as an image file.
+  -s, --save            save the package source as an image file, and
+                        arrange for this file to be loaded when the
+                        package is attached
+      --no-save         do not save the package source as an image file
   -d, --debug		turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --no-configure    do not use the package's configure script
@@ -79,7 +83,7 @@ get_packages () {
   fi
 }
 
-lib=${R_HOME}/library
+lib=`echo ${R_LIBS:-"${R_HOME}/library"} | cut -f1 -d:`
 pkgs=
 clean=false
 debug=false
