@@ -106,7 +106,7 @@ endif
 #
 	find $(RPREFIX) -name CVS -prune -exec rm -rf \{\} \;
 	
-R.iss: JRins.pl imagedir
+R.iss Rsmall.iss: JRins.pl imagedir
 	rm -rf $(RPREFIX)/library/*/man
 	$(CAT) $(RPREFIX)/library/*/CONTENTS >  \
 	  $(RPREFIX)/doc/html/search/index.txt

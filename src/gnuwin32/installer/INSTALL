@@ -1,14 +1,12 @@
 You can make an install package (rw????.exe) in the current Windows
 style by using the installer kit Inno Setup 3.0.x, x >= 6 from
-jrsoftware.org.  (Inno Setup 2.0.x, x >= 17 will also work if MkRules
-is edited correctly.)
+jrsoftware.org. 
 
 You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).
 It's worthwhile testing it too!
 
-Go to the parent of this directory and edit ISDIR and IS_VERSION 
-in ../MkRules and run
+Go to the parent of this directory and edit ISDIR in ../MkRules and run
 
 make distribution
 make clean

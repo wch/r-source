@@ -21,7 +21,7 @@
 use Cwd;
 use File::Find;
 
-my $fn, $component, $path;
+my $fn, $component, $mini, $path;
 my $startdir=cwd();
 my $RVER;
 my $RW=$ARGV[0];
@@ -157,54 +157,81 @@ sub listFiles {
     $fn = $File::Find::name;
     $fn =~ s+^./++;
     if (!(-d $_)) {
-	$fn =~ s+/+\\+g;
-	$dir = $fn;
-	$dir =~ s/[^\\]+$//;
-	$dir = "\\".$dir;
-	$dir =~ s/\\$//;
-	$_ = $fn;
+		$fn =~ s+/+\\+g;
+		$dir = $fn;
+		$dir =~ s/[^\\]+$//;
+		$dir = "\\".$dir;
+		$dir =~ s/\\$//;
+		$_ = $fn;
 
-	if ($_ eq "bin\\Rchtml.dll" 
-	      || m/^library\\[^\\]*\\chtml/) {
-	    $component = "chtml";
-	} elsif ($_ eq "doc\\html\\logo.jpg") {
-	    $component = "html devel";
-	} elsif ($_ eq "doc\\html\\faq.html"
-	      || $_ eq "doc\\html\\rw-FAQ.html") {
-	    $component = "main";
-	} elsif (m/^doc\\html/
-	      || m/^doc\\manual\\[^\\]*\.html/
-	      || m/^library\\[^\\]*\\html/
-	      || $_ eq "library\\R.css") {
-	    $component = "html";
-	} elsif ($_ eq "doc\\manual\\refman.pdf") {
-	    $component = "refman";
-	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
-	    $component = "manuals";
-	} elsif (m/^library\\[^\\]*\\latex/
-	      || m/^share\\texmf/) {
-	    $component = "latex";
-	} elsif (m/^Tcl/) {
-	    $component = "tcl";
-	} elsif (exists($develfiles{$_})
-	      || m/^doc\\KEYWORDS/
-	      || m/^src\\gnuwin32/
-	      || m/^src\\include/
-	      || m/^src\\library\\windlgs/
-	      || m/^share\\make/
-	      || m/^share\\perl/
-	      || m/^share\\R/
-	      || m/^lib\\/) {
-	    $component = "devel";
-	} else {
-	    $component = "main";
-	}
-	
-	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component\n";
+		if ($_ eq "bin\\Rchtml.dll" 
+			  || m/^library\\[^\\]*\\chtml/) {
+			$component = "chtml";
+			if (m/^library\\tcltk/) {
+			  $mini = 0;
+			} else {
+			  $mini = 1;
+			}  
+		} elsif ($_ eq "doc\\html\\logo.jpg") {
+			$component = "html devel";
+			$mini = 0;
+		} elsif ($_ eq "doc\\html\\faq.html"
+			  || $_ eq "doc\\html\\rw-FAQ.html") {
+			$component = "main";
+			$mini = 1;
+		} elsif (m/^doc\\html/
+			  || m/^doc\\manual\\[^\\]*\.html/
+			  || m/^library\\[^\\]*\\html/
+			  || $_ eq "library\\R.css") {
+			$component = "html";
+			$mini = 0;
+		} elsif ($_ eq "doc\\manual\\refman.pdf") {
+			$component = "refman";
+			$mini = 0;
+		} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
+			$component = "manuals";
+			if (m/R-admin.pdf/
+			 || m/R-exts.pdf/
+			 || m/R-lang.pdf/) {
+				$mini = 0;
+			} else {
+				$mini = 1;
+			}  
+		} elsif (m/^library\\[^\\]*\\latex/
+			  || m/^share\\texmf/) {
+			$component = "latex";
+			$mini = 0;
+		} elsif (m/^Tcl/
+			  || m/^library\\tcltk/ ) {
+			$component = "tcl";
+			$mini = 0;
+		} elsif (exists($develfiles{$_})
+			  || m/^doc\\KEYWORDS/
+			  || m/^src\\gnuwin32/
+			  || m/^src\\include/
+			  || m/^src\\library\\windlgs/
+			  || m/^share\\make/
+			  || m/^share\\perl/
+			  || m/^share\\R/
+			  || m/^lib\\/) {
+			$component = "devel";
+			$mini = 0;
+		} else {
+			$component = "main";
+			if ( m/^library\\[^\\]*\\man/
+			  || m/^library\\grid\\doc/
+			  || $_ eq "library\\survival\\survival.ps.gz") {
+				$mini = 0;
+			} else {
+				$mini = 1;
+			}	
+		}
 
-	print insfile $lines;
-	if ($component =~ m/(main|chtml|manuals)/o) {
-	    print minifile $lines;
-	}
+		$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; Flags: ignoreversion; Components: $component\n";
+
+		print insfile $lines;
+		if ($mini) {
+			print minifile $lines;
+		}
     }
 }

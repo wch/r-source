@@ -102,10 +102,6 @@ Rcode: fixed/fixdesc
 rpackage: ../../library/R.css
 	@$(MAKE) --no-print-directory $(PKGS)
 
-rinstaller:
-	$(MAKE) --no-print-directory -C installer
-	@$(MAKE) --no-print-directory -C installer clean
-
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
 	$(MAKE) --no-print-directory -C ../main  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -443,18 +439,15 @@ recommended: unpack-recommended
 	  $(MAKE) --no-print-directory pkg-$$p; \
 	done
 
-dist-recommended:
-	@for p in $(REC_PKGS); do \
-	(cd ../..; zip -r9X src/gnuwin32/Recommended.zip library/$$p) ; \
-	done
-	
-distribution: all tcl bitmapdll docfiles docs recommended
-	$(MAKE) --no-print-directory -C installer 
-	$(MAKE) --no-print-directory -C installer clean	
+rinstaller: 
+	$(MAKE) -C installer
+	$(MAKE) -C installer clean
+
+crandir:
 	$(MKDIR) -p cran/mini
-	mv installer/rw*.exe cran
+	$(CP) installer/rw*.exe cran
 	(cd cran; md5sum rw*.exe >md5sum.txt)
-	mv installer/mini*.* cran/mini
+	$(CP) installer/mini*.* cran/mini
 	(cd cran/mini; md5sum mini* >md5sum.txt)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > cran/README.$(RPREFIX)
@@ -462,6 +455,19 @@ distribution: all tcl bitmapdll docfiles docs recommended
 	  -e s/@RVER@/$(RVER)/g cran/index.in > cran/index.html
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g cran/ReadMe.in > cran/ReadMe
+	
+distribution: 
+	$(MAKE) Rpwd.exe
+	$(MAKE) rbuild
+	$(MAKE) rpackage
+	$(MAKE) rdocs
+	$(MAKE) tcl
+	$(MAKE) bitmapdll
+	$(MAKE) docfiles
+	$(MAKE) docs
+	$(MAKE) recommended
+	$(MAKE) rinstaller
+	$(MAKE) crandir
 	  
 
 ## ============= End of maintainer targets ========================

@@ -243,7 +243,23 @@ Once everything is set up
 	make fullcheck
 
 will make all the pieces and the installers and put them in the 
-gnuwin32/cran subdirectory, then check the build.
+gnuwin32/cran subdirectory, then check the build.  This works by building
+all the parts in the sequence:  
+
+	Rpwd.exe (a utility needed in the build)
+	rbuild (the executables)
+	rpackage (the base packages) 
+	rdocs (the HTML documentation) 
+	tcl (the TCL/TK support files and package) 
+	bitmapdll (the bitmap support files)
+	docfiles (the FAQ docs etc.)
+	docs (the manuals)
+	recommended (the recommended packages)
+	rinstaller (the install program)
+	crandir (the CRAN distribution directory)
+
+The parts can be made individually if a full build is not needed.  The 
+first three targets are the default build if just "make" is run.
 
 
 Cross-building on ix86 Linux
