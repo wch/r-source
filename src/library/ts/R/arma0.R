@@ -276,12 +276,12 @@ predict.arima0 <-
     ## check invertibility of MA part(s)
     if(arma[2] > 0) {
         ma <- coefs[arma[1] + 1:arma[2]]
-        if(any(Mod(polyroot(c(1, ma)))) < 1)
+        if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("ma part of model is not invertible")
     }
     if(arma[4] > 0) {
         ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
-        if(any(Mod(polyroot(c(1, ma)))) < 1)
+        if(any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal ma part of model is not invertible")
     }
     storage.mode(data) <- "double"

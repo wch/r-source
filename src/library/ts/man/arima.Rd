@@ -59,7 +59,8 @@ arima(x, order = c(0, 0, 0),
   \item{optim.control}{List of control parameters for \code{\link{optim}}.}
 
   \item{kappa}{the prior variance (as a multiple of the innovations
-    variance) for the past observations in a differenced model.}
+    variance) for the past observations in a differenced model.  Do not
+    reduce this.}
 }
 \details{
   Different definitions of ARMA models have different signs for the
@@ -85,8 +86,13 @@ arima(x, order = c(0, 0, 0),
   Kalman filter.  The initialization of the differenced ARMA process uses
   stationarity and is based on Gardner \emph{et al.} (1980).  For a
   differenced process the non-stationary components are given a diffuse
-  prior (controlled by \code{kappa}).
-
+  prior (controlled by \code{kappa}).  Observations which are still
+  controlled by the diffuse prior (determined by having a Kalman gain of
+  at least \code{1e4}) are excluded from the likelihood calculations.
+  (This gives comparable results to \code{\link{arima0}} in the absence
+  of missing values, when the observations excluded are precisely those
+  dropped by the differencing.)
+  
   Missing values are allowed, and are handled exactly in method \code{"ML"}.
 
   If \code{transform.pars} is true, the optimization is done using an

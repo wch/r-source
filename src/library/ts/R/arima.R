@@ -37,8 +37,8 @@ arima <- function(x, order = c(0, 0, 0),
         ## next call changes objects a, P, Pn so beware!
         res <- .Call("ARIMA_Like", x, Z$phi, Z$theta, Z$Delta,
                      Z$a, Z$P, Z$Pn, as.integer(0), FALSE, PACKAGE = "ts")
-        s2 <- res[1]/n.used
-        0.5*(log(s2) + res[2]/n.used)
+        s2 <- res[1]/res[3]
+        0.5*(log(s2) + res[2]/res[3])
     }
 
     armaCSS <- function(p)
@@ -239,7 +239,7 @@ arima <- function(x, order = c(0, 0, 0),
         if(res$convergence > 0)
             warning(paste("possible convergence problem: optim gave code=",
                           res$convergence))
-        coef[mask] <- cf <- res$par
+        coef[mask] <- res$par
         if(transform.pars) {
             ## enforce invertibility
             if(arma[2] > 0) {
@@ -252,11 +252,12 @@ arima <- function(x, order = c(0, 0, 0),
                 if(all(mask[ind]))
                     coef[ind] <- maInvert(coef[ind])
             }
-            if(cf != res$par)  {  # need to re-fit
+            if(any(coef[mask] != res$par))  {  # need to re-fit
                 res <- optim(coef[mask], armafn, method = "BFGS",
                              hessian = TRUE,
                              control = list(maxit = 0,
-                             parscale = optim.control$parscale), trans = TRUE)
+                             parscale = optim.control$parscale),
+                             trans = TRUE)
                 coef[mask] <- res$par
             }
             ## do it this way to ensure hessian was computed inside
@@ -362,12 +363,12 @@ predict.Arima <-
     else xm <- 0
     if (arma[2] > 0) {
         ma <- coefs[arma[1] + 1:arma[2]]
-        if (any(Mod(polyroot(c(1, ma)))) < 1)
+        if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("ma part of model is not invertible")
     }
     if (arma[4] > 0) {
         ma <- coefs[sum(arma[1:3]) + 1:arma[4]]
-        if (any(Mod(polyroot(c(1, ma)))) < 1)
+        if (any(Mod(polyroot(c(1, ma))) < 1))
             warning("seasonal ma part of model is not invertible")
     }
     z <- KalmanForecast(n.ahead, object$mod)

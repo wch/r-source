@@ -351,7 +351,7 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
     double *phi = REAL(sPhi), *theta = REAL(sTheta), *delta = REAL(sDelta);
     double sumlog = 0.0, ssq = 0, resid, gain, tmp, vi, *anew, *mm = NULL,
 	*M;
-    int i, j, k, l;
+    int i, j, k, l, nu = 0;
     Rboolean useResid = asLogical(giveResid);
 
     anew = (double *) R_alloc(rd, sizeof(double));
@@ -445,8 +445,11 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
 
 	    gain = M[0];
 	    for (j = 0; j < d; j++) gain += delta[j] * M[r + j];
-	    ssq += resid * resid / gain;
-	    sumlog += log(gain);
+	    if(gain < 1e4) {
+		nu++;
+		ssq += resid * resid / gain;
+		sumlog += log(gain);
+	    }
 	    if (useResid) REAL(sResid)[l] = resid / sqrt(gain);
 	    for (i = 0; i < rd; i++)
 		a[i] = anew[i] + M[i] * resid / gain;
@@ -461,17 +464,19 @@ ARIMA_Like(SEXP sy, SEXP sPhi, SEXP sTheta, SEXP sDelta,
     }
 
     if (useResid) {
-	PROTECT(res = allocVector(VECSXP, 2));
-	SET_VECTOR_ELT(res, 0, nres = allocVector(REALSXP, 2));
+	PROTECT(res = allocVector(VECSXP, 3));
+	SET_VECTOR_ELT(res, 0, nres = allocVector(REALSXP, 3));
 	REAL(nres)[0] = ssq;
 	REAL(nres)[1] = sumlog;
+	REAL(nres)[2] = (double) nu;
 	SET_VECTOR_ELT(res, 1, sResid);
 	UNPROTECT(2);
 	return res;
     } else {
-	nres = allocVector(REALSXP, 2);
+	nres = allocVector(REALSXP, 3);
 	REAL(nres)[0] = ssq;
 	REAL(nres)[1] = sumlog;
+	REAL(nres)[2] = (double) nu;
 	return nres;
     }
 }

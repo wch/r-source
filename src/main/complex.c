@@ -764,13 +764,17 @@ SEXP do_polyroot(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid argument type");
     }
     n = length(z);
-    degree = n - 1;
+    degree = 0;
+    for(i = 0; i < n; i++) {
+	if(COMPLEX(z)[i].r!= 0.0 || COMPLEX(z)[i].i != 0.0) degree = i;
+    }
+    n = degree + 1; /* omit trailing zeroes */
     if(degree >= 1) {
 	if(n > 49) errorcall(call, "polynomial degree too high (49 max)");
 	/* <==>	 #define NMAX 50  in  ../appl/cpoly.c */
 
-	if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
-	    errorcall(call, "highest power has coefficient 0");
+	/* if(COMPLEX(z)[n-1].r == 0.0 && COMPLEX(z)[n-1].i == 0.0)
+	   errorcall(call, "highest power has coefficient 0");*/
 
 	PROTECT(rr = allocVector(REALSXP, n));
 	PROTECT(ri = allocVector(REALSXP, n));

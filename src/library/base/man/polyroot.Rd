@@ -5,8 +5,7 @@ polyroot(z)
 }
 \alias{polyroot}
 \arguments{
-  \item{z}{the vector of polynomial coefficients in increasing
-    order.  The last coefficient must be non-zero.}
+  \item{z}{the vector of polynomial coefficients in increasing order.}
 }
 \description{
   Find zeros of a real or complex polynomial.
@@ -19,10 +18,13 @@ polyroot(z)
   is given by its coefficient vector \code{z[1:n]}.
   \code{polyroot} returns the \eqn{n-1} complex zeros of \eqn{p(x)}
   using the Jenkins-Traub algorithm.
+
+  If the coefficient vector \code{z} has zeroes for the highest powers,
+  these are discarded.
 }
 \value{
-  A complex vector of length \eqn{n - 1}, where \eqn{n} is
-  \code{length(z)}.
+  A complex vector of length \eqn{n - 1}, where \eqn{n} is the position
+  of the largest non-zero element of \code{z}. 
 }
 \references{
   Jenkins and Traub (1972)
@@ -39,5 +41,6 @@ polyroot(z)
 polyroot(c(1, 2, 1))
 round(polyroot(choose(8, 0:8)), 11) # guess what!
 for (n1 in 1:4) print(polyroot(1:n1), digits = 4)
+polyroot(c(1, 2, 1, 0, 0)) # same as the first
 }
 \keyword{math}

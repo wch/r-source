@@ -109,20 +109,23 @@ NEW FEATURES
            version of UKDriverDeaths (as a multiple time series Seatbelts).
 
 	-  New generic function tsdiag() and methods for arima and arima0,
-	   to produce diagnostic plots.  Supersedes arima0.diag.
+	   to produce diagnostic plots.  Supersedes arima0.diag().
 
 	-  New functions ARMAacf() and ARMAtoMA() to compute
            theoretical quantities for an ARMA process.
 
-	-  New function acf2AR to compute the AR process with a given
+	-  New function acf2AR() to compute the AR process with a given
            autocorrelation function.
 
    o    Much improved printing of matrices and arrays of type "list".
 
-   o    deriv/deriv3 can now handle expressions involving pnorm and
+   o    deriv/deriv3() can now handle expressions involving pnorm and
 	dnorm (with a single argument), as in S.
 
-   o	rug() now has a "..." argument allowing to specify its location.
+   o	rug() now has a "..." argument allowing its location to be specified.
+
+   o	polyroot() now handles coefficient vectors with terminal
+	zeroes (as in S).
 
 
 DEPRECATED & DEFUNCT
@@ -155,7 +158,7 @@ UTILITIES
         like R_runR().
 
     o   If a directory inst/doc is present in the sources of a
-        package, the HTML index of the the installed package has a
+        package, the HTML index of the installed package has a
         link to the respective subdirectory.
 
 
@@ -198,13 +201,13 @@ BUG FIXES
     o	se.contrasts() works more reliably with multistratum models,
 	and its help page has an example.
 
-    o	summary.lm was not returning r.squared nor adj.r.squared for
-	intercept-only models, but summary.lm.null was returning
+    o	summary.lm() was not returning r.squared nor adj.r.squared for
+	intercept-only models, but summary.lm.null() was returning
 	r.squared but not adj.r.squared.  Now both are always
 	returned.  Neither returned f.statistic, and that is now
 	documented.
 
-    o	subsetting of matrices of mode list (or other non-atomic
+    o	Subsetting of matrices of mode list (or other non-atomic
 	modes) was not implemented and gave incorrect results without
 	warning. (PR#1329)
 	Under some circumstances subsetting of a character matrix
