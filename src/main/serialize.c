@@ -178,6 +178,22 @@ static int R_DefaultSerializeVersion = 2;
 #define R_assert(e) ((e) ? (void) 0 : error("assertion `%s' failed: file `%s', line %d\n", #e, __FILE__, __LINE__))
 #endif /* NDEBUG */
 
+/* Rsnprintf: like snprintf, but guaranteed to null-terminate. */
+static int Rsnprintf(char *buf, int size, const char *format, ...)
+{
+    int val;
+    va_list(ap);
+    va_start(ap, format);
+#ifdef HAVE_VSNPRINTF
+    val = vsnprintf(buf, size, format, ap);
+    buf[size-1] = '\0';
+#else
+    val = vsprintf(buf, format, ap);
+#endif
+    va_end(ap);
+    return val;
+}
+
 
 /*
  * Basic Output Routines
@@ -189,9 +205,9 @@ static void OutInteger(R_outpstream_t stream, int i)
     switch (stream->type) {
     case R_pstream_ascii_format:
 	if (i == NA_INTEGER)
-	    snprintf(buf, sizeof(buf), "NA\n");
+	    Rsnprintf(buf, sizeof(buf), "NA\n");
 	else
-	    snprintf(buf, sizeof(buf), "%d\n", i);
+	    Rsnprintf(buf, sizeof(buf), "%d\n", i);
 	stream->OutBytes(stream, buf, strlen(buf));
 	break;
     case R_pstream_binary_format:
@@ -213,15 +229,15 @@ static void OutReal(R_outpstream_t stream, double d)
     case R_pstream_ascii_format:
 	if (! R_FINITE(d)) {
 	    if (ISNAN(d))
-		snprintf(buf, sizeof(buf), "NA\n");
+		Rsnprintf(buf, sizeof(buf), "NA\n");
 	    else if (d < 0)
-		snprintf(buf, sizeof(buf), "-Inf\n");
+		Rsnprintf(buf, sizeof(buf), "-Inf\n");
 	    else
-		snprintf(buf, sizeof(buf), "Inf\n");
+		Rsnprintf(buf, sizeof(buf), "Inf\n");
 	}
 	else
 	    /* 16: full precision; 17 gives 999, 000 &c */
-	    snprintf(buf, sizeof(buf), "%.16g\n", d);
+	    Rsnprintf(buf, sizeof(buf), "%.16g\n", d);
 	stream->OutBytes(stream, buf, strlen(buf));
 	break;
     case R_pstream_binary_format:
