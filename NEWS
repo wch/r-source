@@ -140,6 +140,13 @@ BUG FIXES
 		CHANGES IN R VERSION 2.0.0 patched
 
 
+NEW FEATURES
+
+    o	Platform equivalence in library() is tested by a new function
+	testPlatformEquivalence which ignores the 'vendor' field and
+	can be customized by cognescenti.
+
+
 DEPRECATED & DEFUNCT
 
     o	The aqua module in MacOS X is deprecated.
@@ -295,7 +302,7 @@ BUG FIXES
 
     o	logLik() and hence AIC() failed or gave incorrect answers 
 	on "lm" fits with na.action = na.exclude (and perhaps other 
-	na.actions's except na.omit).
+	na.actions's except na.omit and na.fail).
 
     o	pmax() and pmin() sometimes used NAs in internal subassignments,
 	and sometimes these failed.
