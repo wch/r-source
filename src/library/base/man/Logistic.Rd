@@ -1,4 +1,5 @@
 \name{Logistic}
+\alias{Logistic}
 \alias{dlogis}
 \alias{plogis}
 \alias{qlogis}

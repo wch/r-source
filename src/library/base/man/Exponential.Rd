@@ -1,4 +1,5 @@
 \name{Exponential}
+\alias{Exponential}
 \alias{dexp}
 \alias{pexp}
 \alias{qexp}

@@ -1,4 +1,5 @@
 \name{Tukey}
+\alias{Tukey}
 \title{The Studentized Range Distribution}
 \usage{
 ptukey(q, nmeans, df, nranges = 1, lower.tail = TRUE, log.p = FALSE)

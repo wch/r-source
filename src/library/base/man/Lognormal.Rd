@@ -1,4 +1,5 @@
 \name{Lognormal}
+\alias{Lognormal}
 \alias{dlnorm}
 \alias{plnorm}
 \alias{qlnorm}

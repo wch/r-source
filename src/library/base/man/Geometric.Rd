@@ -1,4 +1,5 @@
 \name{Geometric}
+\alias{Geometric}
 \alias{dgeom}
 \alias{pgeom}
 \alias{qgeom}

@@ -1,4 +1,5 @@
 \name{Cauchy}
+\alias{Cauchy}
 \alias{dcauchy}
 \alias{pcauchy}
 \alias{qcauchy}

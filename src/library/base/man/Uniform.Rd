@@ -1,4 +1,5 @@
 \name{Uniform}
+\alias{Uniform}
 \title{The Uniform Distribution}
 \usage{
 dunif(x, min=0, max=1, log = FALSE)

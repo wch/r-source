@@ -1,4 +1,5 @@
 \name{Binomial}
+\alias{Binomial}
 \alias{dbinom}
 \alias{pbinom}
 \alias{qbinom}

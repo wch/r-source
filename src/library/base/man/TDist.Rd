@@ -1,4 +1,5 @@
 \name{TDist}
+\alias{TDist}
 \alias{dt}
 \alias{pt}
 \alias{qt}

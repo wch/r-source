@@ -1,4 +1,5 @@
 \name{Poisson}
+\alias{Poisson}
 \alias{dpois}
 \alias{ppois}
 \alias{qpois}

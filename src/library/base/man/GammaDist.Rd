@@ -1,4 +1,5 @@
 \name{GammaDist}
+\alias{GammaDist}
 \alias{dgamma}
 \alias{pgamma}
 \alias{qgamma}

@@ -1,4 +1,5 @@
 \name{NegBinomial}
+\alias{NegBinomial}
 \alias{dnbinom}
 \alias{pnbinom}
 \alias{qnbinom}

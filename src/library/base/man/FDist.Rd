@@ -1,4 +1,5 @@
 \name{FDist}
+\alias{FDist}
 \alias{df}
 \alias{pf}
 \alias{qf}

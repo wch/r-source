@@ -1,4 +1,5 @@
 \name{Weibull}
+\alias{Weibull}
 \alias{dweibull}
 \alias{pweibull}
 \alias{qweibull}

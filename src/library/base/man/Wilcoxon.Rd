@@ -1,4 +1,5 @@
 \name{Wilcoxon}
+\alias{Wilcoxon}
 \alias{dwilcox}
 \alias{pwilcox}
 \alias{qwilcox}

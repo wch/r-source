@@ -1,4 +1,5 @@
 \name{Hypergeometric}
+\alias{Hypergeometric}
 \alias{dhyper}
 \alias{phyper}
 \alias{qhyper}
