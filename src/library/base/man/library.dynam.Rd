@@ -1,7 +1,6 @@
 \name{library.dynam}
 \alias{library.dynam}
 \alias{.Dyn.libs}
-}
 \title{Loading Shared Libraries}
 \usage{
 library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
