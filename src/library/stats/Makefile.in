@@ -101,11 +101,6 @@ $(top_builddir)/library/$(pkg)/R/all.rda: all.R
 	  fi; \
 	fi
 
-metadata:
-	@if test -f $(srcdir)/NAMESPACE; then \
-          echo ".installPackageNamespaceInfo(\"$(srcdir)\", \"$(top_builddir)/library/$(pkg)\")" | R_DEFAULT_PACKAGES=tools $(R_EXE) --slave > /dev/null ; \
-        fi
-
 mostlyclean: clean
 clean:
 	@if test -d src; then (cd src && $(MAKE) $@); fi
