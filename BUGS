@@ -201,10 +201,6 @@ Date: Wed, 7 Nov 2001 18:07:22 +0800 (WST)
 Subject: boxplot labels incorrect when horizontal = TRUE
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 9 Dec 2001 21:46:32 -0500 (EST)
-* PR# 1230 *
-Subject: scale in stars() is not as documented
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Thu, 27 Dec 2001 11:28:19 +0000 (GMT)
 
 Directory:  In-Out
 
@@ -362,11 +358,4 @@ none
 
 Directory:  incoming
 
-* PR# 1226 *
-Subject: problem in predict.mlm
-From: Bob Gray <gray@jimmy.harvard.edu>
-Date: Sun, 23 Dec 2001 09:05:57 -0500
-* PR# 1232 *
-Subject: Slow 'read.table' in R 1.4.0
-From: james.holtman@convergys.com
-Date: Sat, 29 Dec 2001 15:28:55 -0500
+none
