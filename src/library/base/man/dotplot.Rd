@@ -28,7 +28,7 @@ dotplot(x, labels = NULL, groups = NULL, gdata = NULL,
     to a value smaller than one can be a useful way of avoiding label
     overlap.}
   \item{pch}{the plotting character or symbol to be used.}
-  \item{gpch}{the plotting character or symbol to be usea for group
+  \item{gpch}{the plotting character or symbol to be used for group
     values.}
   \item{bg}{the background color to be used.}
   \item{color}{the color(s) to be used for points an labels.}
