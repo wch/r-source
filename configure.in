@@ -440,6 +440,7 @@ if test "${cross_compiling}" = yes; then
   AC_MSG_WARN([assuming C longs are 4 byte on ${host}])
 fi
 AC_CHECK_SIZEOF(long, 4)
+R_C_IEEE_754
 
 case "${host}" in
   i[[3456789]]86-*-*)
