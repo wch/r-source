@@ -5,7 +5,7 @@
 ####
 ####	Functions for  ``d/p/q/r''
 
-source(paste(getenv("RHOME"),"tests/all.equal.R", sep="/"))
+source(paste(getenv("SRCDIR"),"all.equal.R", sep="/"))
 
 if(!interactive()) .Random.seed <- rep(7654, 3)
 
