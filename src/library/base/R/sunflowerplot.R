@@ -51,7 +51,7 @@ sunflowerplot <-
         xr <- size * abs(pusr[2] - pusr[1])/ppin[1]
         yr <- size * abs(pusr[4] - pusr[3])/ppin[2]
 
-        i.rep <- rep(i.multi, number[number > 1])
+        i.rep <- rep.int(i.multi, number[number > 1])
         z <- numeric()
         for(i in i.multi)
             z <- c(z, 1:number[i] + if(rotate) runif(1) else 0)

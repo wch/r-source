@@ -116,11 +116,11 @@ termplot <- function(model, data=NULL,envir=environment(formula(model)),
 	if (rug) {
             n <- length(xx)
             ## Fixme: Isn't this a kludge for segments() ?
-	    lines(rep(jitter(xx), rep(3,n)),
-                  rep(ylims[1] + c(0,0.05,NA)*diff(ylims), n))
+	    lines(rep.int(jitter(xx), rep.int(3,n)),
+                  rep.int(ylims[1] + c(0,0.05,NA)*diff(ylims), n))
 	    if (partial.resid)
-		lines(rep(xlims[1] + c(0,0.05,NA)*diff(xlims), n),
-                      rep(pres[,i],rep(3,n)))
+		lines(rep.int(xlims[1] + c(0,0.05,NA)*diff(xlims), n),
+                      rep.int(pres[,i], rep.int(3,n)))
 	}
     }
     invisible(n.tms)

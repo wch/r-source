@@ -27,13 +27,13 @@ abbreviate <-
 {
     ## we just ignore use.classes
     if(minlength <= 0)
-	return(rep("",length(names.arg)))
+	return(rep.int("", length(names.arg)))
     names.arg <- as.character(names.arg)
     dups <- duplicated(names.arg)
     old <- names.arg
     if(any(dups))
 	names.arg <- names.arg[!dups]
-    dup2 <- rep(TRUE, length(names.arg))
+    dup2 <- rep.int(TRUE, length(names.arg))
     x <- these <- names.arg
     repeat {
 	ans <- .Internal(abbreviate(these,minlength,use.classes))

@@ -13,8 +13,8 @@ rect <-
       if (n[1] == 0)
         stop("invalid rectangle specification")
       n <- n[2]
-      x <- rbind(rep(NA, n), xleft, xright, xright, xleft)[-1]
-      y <- rbind(rep(NA, n), ybottom, ybottom, ytop, ytop)[-1]
+      x <- rbind(rep.int(NA, n), xleft, xright, xright, xleft)[-1]
+      y <- rbind(rep.int(NA, n), ybottom, ybottom, ytop, ytop)[-1]
       polygon(x, y, col=col, border=border, lty=lty, lwd=lwd, xpd=xpd,
               density=density, angle=angle, ...)
     }

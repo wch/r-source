@@ -30,7 +30,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         p <- ncol(X) - 2
         if (dir[1] == "v") {            # split here on the X-axis.
             xdim <- maxdim[1]
-            XP <- rep(0, xdim)
+            XP <- rep.int(0, xdim)
             for (i in 1:xdim) {
                 XP[i] <- sum(X[X[,1]==i,p]) / sum(X[,p])
             }
@@ -47,8 +47,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             if (lablevx > 0) {
                 this.lab <-
                     if (is.null(label[[1]][1])) {
-                        paste(rep(as.character(currlev),
-                                  length(currlev)),
+                        paste(rep.int(as.character(currlev),
+                                      length(currlev)),
                               as.character(1:xdim), sep=".")
                     } else label[[1]]
                 text(x= x.l + (x.r - x.l) / 2,
@@ -65,8 +65,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                                lablevx-1, (i==1)*lablevy,
                                maxdim[-1], currlev+1, label[2:p])
                     } else {
-                        segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
-                                 rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
+                        segments(rep.int(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
+                                 rep.int(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
                     }
                 }
             } else { # ncol(X) <= 1 : final split polygon and segments.
@@ -77,14 +77,14 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                                 lty = if(extended) X[i, p+1] else 1,
                                 col = color[if(extended) X[i, p+2] else i])
                     } else {
-                        segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
-                                 rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
+                        segments(rep.int(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
+                                 rep.int(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
                     }
                 }
             }
         } else {                        # split here on the Y-axis.
             ydim <- maxdim[1]
-            YP <- rep(0, ydim)
+            YP <- rep.int(0, ydim)
             for (j in 1:ydim) {
                 YP[j] <- sum(X[X[,1]==j,p]) / sum(X[,p])
             }
@@ -101,8 +101,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             if (lablevy > 0) {
                 this.lab <-
                     if (is.null(label[[1]][1])) {
-                        paste(rep(as.character(currlev),
-                                  length(currlev)),
+                        paste(rep.int(as.character(currlev),
+                                      length(currlev)),
                               as.character(1:ydim), sep=".")
                     } else label[[1]]
                 text(x= 35 - 20 * (lablevy - 1),
@@ -119,8 +119,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                                (j==1)*lablevx, lablevy-1,
                                maxdim[-1], currlev+1, label[2:p])
                     } else {
-                        segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
-                                 x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
+                        segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j],3),
+                                 x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j],3))
                     }
                 }
             } else { # ncol(X) <= 1: final split polygon and segments.
@@ -131,8 +131,8 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
                                 lty = if(extended) X[j, p+1] else 1,
                                 col = color[if(extended) X[j, p+2] else j])
                     } else {
-                        segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
-                                 x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
+                        segments(x1+(x2-x1)*c(0,2,4)/5, rep.int(y.b[j],3),
+                                 x1+(x2-x1)*c(1,3,5)/5, rep.int(y.b[j],3))
                     }
                 }
             }
@@ -157,7 +157,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ##-- Set up `Ind' matrix : to contain indices and data
     Ind <- 1:dx[1]
     if(dimd > 1) {
-        Ind <- rep(Ind, prod(dx[2:dimd]))
+        Ind <- rep.int(Ind, prod(dx[2:dimd]))
         for (i in 2:dimd) {
             Ind <- cbind(Ind,
                          c(matrix(1:dx[i], byrow=TRUE,
@@ -240,7 +240,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
             if (is.logical(color) && color[1])
                 heat.colors(ncolors)
             else if (is.null(color) || (is.logical(color) && !color[1]))
-                rep(0, ncolors)
+                rep.int(0, ncolors)
             else ## recycle
                 rep(color, length = ncolors)
     }
@@ -284,7 +284,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         x.r <- 1000 * (1.05 + 0.7 * rtxtWidth)
         y.t <- 1000 * rev(seq(from = 0.95, by = - bh, length = 2 * len))
         y.b <- y.t - 1000 * 0.8 * bh
-        ltype <- c(rep(2, len), rep(1, len))
+        ltype <- c(rep.int(2, len), rep.int(1, len))
         for(i in 1 : (2 * len)) {
             polygon(c(x.l, x.r, x.r, x.l),
                     c(y.b[i], y.b[i], y.t[i], y.t[i]),

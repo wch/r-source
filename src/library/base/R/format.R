@@ -20,7 +20,7 @@ format.default <-
 	nc <- nchar(x)
         nc[is.na(nc)] <- 2
 	w <- max(nc)
-	sp <- substring(paste(rep(" ", w), collapse=""), 1, w-nc)
+	sp <- substring(paste(rep.int(" ", w), collapse=""), 1, w-nc)
 	res <-
 	    if(justify == "left") paste(x, sp, sep="") else paste(sp, x, sep="")
 	attributes(res) <- attributes(x) ## at least names, dim, dimnames
@@ -189,7 +189,7 @@ formatC <- function (x, digits = NULL, width = NULL,
 			     ifelse(flag!="",nchar(flag),0) + 1
 		     }
 	     } else # format == "g" or "e":
-	     rep(digits+8, n)
+	     rep.int(digits+8, n)
 	     )
     r <- .C("str_signif",
 	    x = x,
@@ -240,7 +240,7 @@ format.AsIs <- function(x, width = 12, ...)
 {
     if(is.character(x)) return(format.default(x, ...))
     n <- length(x)
-    rvec <- rep(as.character(NA), n)
+    rvec <- rep.int(as.character(NA), n)
     for(i in 1:n)
 	rvec[i] <- toString(x[[i]], width, ...)
 #    return(format.char(rvec, flag = "+"))

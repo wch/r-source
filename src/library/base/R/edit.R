@@ -38,7 +38,7 @@ edit.data.frame <-
         which(sapply(name, is.factor))
     else
         numeric(0)
-        
+
     logicals <- if (length(name) > 0)
     	which(sapply(name, is.logical))
     else
@@ -54,7 +54,7 @@ edit.data.frame <-
     maxlength <- max(lengths)
     if (edit.row.names) rn <- out[[1]]
     for (i in which(lengths != maxlength))
-         out[[i]] <- c(out[[i]], rep(NA, maxlength - lengths[i]))
+         out[[i]] <- c(out[[i]], rep.int(NA, maxlength - lengths[i]))
     if (edit.row.names) {
         out <- out[-1]
         if((ln <- length(rn)) < maxlength)
@@ -85,7 +85,7 @@ edit.data.frame <-
         out[[i]] <- o
     }
     for (i in logicals) out[[i]] <- as.logical(out[[i]])
-    
+
     out <- as.data.frame(out) # will convert cols switched to char into factors
     if (edit.row.names) {
         if(any(duplicated(rn)))
@@ -112,7 +112,7 @@ edit.matrix <-
     datalist <- split(name, col(name))
     if(!is.null(dn[[2]])) names(datalist) <- dn[[2]]
     else names(datalist) <- paste("col", 1:ncol(name), sep = "")
-    modes <- as.list(rep(mode(name), ncol(name)))
+    modes <- as.list(rep.int(mode(name), ncol(name)))
     if (edit.row.names) {
         datalist <- c(list(row.names=dn[[1]]), datalist)
         modes <- c(list(row.names="character"), modes)
@@ -122,7 +122,7 @@ edit.matrix <-
     maxlength <- max(lengths)
     if (edit.row.names) rn <- out[[1]]
     for (i in which(lengths != maxlength))
-         out[[i]] <- c(out[[i]], rep(NA, maxlength - lengths[i]))
+         out[[i]] <- c(out[[i]], rep.int(NA, maxlength - lengths[i]))
     if (edit.row.names) {
         out <- out[-1]
         if((ln <- length(rn)) < maxlength)

@@ -191,8 +191,8 @@ function(pattern, fields = c("alias", "title"),
 			dbAliases <-
 			    rbind(dbAliases,
 				  cbind(a,
-					rep(IDs,
-					    sapply(aliases, length)),
+					rep.int(IDs,
+                                                sapply(aliases, length)),
 					p))
 		    keywords <- contents[, "Keywords"]
                     ## And similarly if there are no keywords at all.
@@ -200,8 +200,8 @@ function(pattern, fields = c("alias", "title"),
                         dbKeywords <-
                             rbind(dbKeywords,
                                   cbind(k,
-                                        rep(IDs,
-                                            sapply(keywords, length)),
+                                        rep.int(IDs,
+                                                sapply(keywords, length)),
                                         p))
 		    nEntries <- nEntries + nr
 		} else {

@@ -111,9 +111,9 @@ glm.fit.null <-
     ## define weights and offset if needed
     ## get family functions
     if (is.null(weights))
-	weights <- rep(1, nobs)
+	weights <- rep.int(1, nobs)
     if (is.null(offset))
-	offset <- rep(0, nobs)
+	offset <- rep.int(0, nobs)
     variance <- family$variance
     dev.resids <- family$dev.resids
     linkinv <- family$linkinv
@@ -128,7 +128,7 @@ glm.fit.null <-
     eval(family$initialize)
     if (NCOL(y) > 1)
 	stop("y must be univariate unless binomial")
-    eta <- rep(0, nobs)
+    eta <- rep.int(0, nobs)
     if (!valideta(eta + offset))
 	stop("Invalid linear predictor values in empty model")
     mu <- linkinv(eta + offset)

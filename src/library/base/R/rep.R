@@ -1,4 +1,6 @@
-rep <- function(x, times, length.out, each)
+rep <- function(x, times, ...) UseMethod("rep")
+
+rep.default <- function(x, times, length.out, each, ...)
 {
     if (length(x) == 0) return(x)
     if (!missing(each)) {

@@ -41,7 +41,7 @@ make.link <- function (link)
                    }
                    mu.eta <- function(eta) {
                        thresh <- -log(.Machine$double.eps)
-                       res <- rep(.Machine$double.eps, length(eta))
+                       res <- rep.int(.Machine$double.eps, length(eta))
                        res[abs(eta) < thresh] <-
                            (exp(eta)/(1 + exp(eta))^2)[abs(eta) < thresh]
                        res
@@ -73,7 +73,7 @@ make.link <- function (link)
                "identity" = {
                    linkfun <- function(mu) mu
                    linkinv <- function(eta) eta
-                   mu.eta <- function(eta) rep(1, length(eta))
+                   mu.eta <- function(eta) rep.int(1, length(eta))
                    valideta <- function(eta) TRUE
                },
                "log" = {
@@ -136,7 +136,7 @@ poisson <- function (link = "log")
 	if (any(y < 0))
 	    stop(paste("Negative values not allowed for",
 		       "the Poisson family"))
-	n <- rep(1, nobs)
+	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
     })
     structure(list(family = "poisson",
@@ -178,7 +178,7 @@ quasipoisson <- function (link = "log")
 	if (any(y < 0))
 	    stop(paste("Negative values not allowed for",
 		       "the quasiPoisson family"))
-	n <- rep(1, nobs)
+	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
     })
     structure(list(family = "quasipoisson",
@@ -215,13 +215,13 @@ gaussian <- function (link = "identity")
 		   link = linktemp,
 		   linkfun = stats$linkfun,
 		   linkinv = stats$linkinv,
-		   variance = function(mu) rep(1, length(mu)),
+		   variance = function(mu) rep.int(1, length(mu)),
 		   dev.resids = function(y, mu, wt) wt * ((y - mu)^2),
 		   aic =	function(y, n, mu, wt, dev)
 		   sum(wt)*(log(dev/sum(wt)*2*pi)+1)+2,
 		   mu.eta = stats$mu.eta,
 		   initialize = expression({
-		       n <- rep(1, nobs)
+		       n <- rep.int(1, nobs)
 		       mustart <- y }),
 		   validmu = function(mu) TRUE
 		   ),
@@ -260,7 +260,7 @@ binomial <- function (link = "logit")
 	    ## allow factors as responses
 	    ## added BDR 29/5/98
 	    if (is.factor(y)) y <- y != levels(y)[1]
-	    n <- rep(1, nobs)
+	    n <- rep.int(1, nobs)
 	    if (any(y < 0 | y > 1))
 		stop("y values must be 0 <= y <= 1")
             mustart <- (weights * y + 0.5)/(weights + 1)
@@ -320,7 +320,7 @@ quasibinomial <- function (link = "logit")
     initialize <- expression({
 	if (NCOL(y) == 1) {
 	    if (is.factor(y)) y <- y != levels(y)[1]
-	    n <- rep(1, nobs)
+	    n <- rep.int(1, nobs)
 	    if (any(y < 0 | y > 1))
 		stop("y values must be 0 <= y <= 1")
             mustart <- (weights * y + 0.5)/(weights + 1)
@@ -381,7 +381,7 @@ Gamma <- function (link = "inverse")
 	if (any(y <= 0))
 	    stop(paste("Non-positive values not",
 		       "allowed for the gamma family"))
-	n <- rep(1, nobs)
+	n <- rep.int(1, nobs)
 	mustart <- y
     })
     structure(list(family = "Gamma",
@@ -423,7 +423,7 @@ inverse.gaussian <- function(link = "1/mu^2")
 	if(any(y <= 0))
 	    stop(paste("Positive values only allowed for",
 		       "the inverse.gaussian family"))
-	n <- rep(1, nobs)
+	n <- rep.int(1, nobs)
 	mustart <- y
     })
     validmu <- function(mu) TRUE
@@ -465,7 +465,7 @@ quasi <- function (link = "identity", variance = "constant")
     }
     switch(variancetemp,
 	   "constant" = {
-	       variance <- function(mu) rep(1, length(mu))
+	       variance <- function(mu) rep.int(1, length(mu))
 	       dev.resids <- function(y, mu, wt) wt * ((y - mu)^2)
 	       validmu <- function(mu) TRUE
 	   },
@@ -498,7 +498,7 @@ quasi <- function (link = "identity", variance = "constant")
 		      'are "mu(1-mu)", "mu", "mu^2", "mu^3" and "constant"'))
 	   )# end switch(.)
 # 0.1 fudge here matches poisson: S has 1/6.
-    initialize <- expression({ n <- rep(1, nobs); mustart <- y + 0.1 *(y == 0)})
+    initialize <- expression({ n <- rep.int(1, nobs); mustart <- y + 0.1 *(y == 0)})
     aic <- function(y, n, mu, wt, dev) NA
     structure(list(family = "quasi",
 		   link = linktemp,

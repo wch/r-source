@@ -11,7 +11,7 @@ apropos <- function (what, where = FALSE, mode = "any")
 		ll <- length(li <- li[sapply(li, function(x)
 					     exists(x, where = i,
 						    mode = mode, inherits=FALSE))])
-	    x <- c(x, if (where) structure(li, names = rep(i, ll)) else li)
+	    x <- c(x, if (where) structure(li, names = rep.int(i, ll)) else li)
 	}
     }
     x

@@ -29,7 +29,7 @@ layout <-
     ## pad widths/heights with 1's	and remove "cm" tags
     pad1.rm.cm <- function(v, cm.v, len) {
 	if ((ll <- length(v)) < len)
-	    v <- c(v, rep(1, len-ll))
+	    v <- c(v, rep.int(1, len-ll))
 	if (is.character(v)) {
 	    wcm <- v[cm.v]
 	    v[cm.v] <- substring(wcm, 1, nchar(wcm)-3)
@@ -61,10 +61,10 @@ layout.show <- function(n=1)
 {
     ## cheat to make sure that current plot is figure 1
     oma.saved <- par("oma")
-    par(oma=rep(0,4))
+    par(oma=rep.int(0,4))
     par(oma=oma.saved)
 
-    o.par <- par(mar=rep(0,4))
+    o.par <- par(mar=rep.int(0,4))
     on.exit(par(o.par))
     for (i in seq(length=n)) {
 	plot.new()

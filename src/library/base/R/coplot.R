@@ -115,8 +115,8 @@ coplot <-
 		    cbind(i - 0.5, i + 0.5)
 		}
 		else {
-		    if(length(number)==1) number  <- rep(number,2)
-		    if(length(overlap)==1)overlap <- rep(overlap,2)
+		    if(length(number)==1) number  <- rep.int(number,2)
+		    if(length(overlap)==1)overlap <- rep.int(overlap,2)
 		    co.intervals(b,number=number[2],overlap=overlap[2])
 		}
 	    }
@@ -163,7 +163,7 @@ coplot <-
 	rows	<- nrow(b.intervals)
 	columns <- nrow(a.intervals)
 	nplots <- rows * columns
-	if(length(show.given) < 2) show.given <- rep(show.given, 2)
+	if(length(show.given) < 2) show.given <- rep.int(show.given, 2)
     }
     else {
 	nplots <- nrow(a.intervals)
@@ -191,7 +191,7 @@ coplot <-
 	f.col <- columns/total.columns
     }
 
-    mar <- if(have.b) rep(0, 4) else c(0.5, 0, 0.5, 0)
+    mar <- if(have.b) rep.int(0, 4) else c(0.5, 0, 0.5, 0)
     oma <- c(5, 6, 5, 4)
     if(have.b) { oma[2] <- 5 ; if(!b.is.fac) oma[4] <- 5 }
     if(a.is.fac && show.given[1]) oma[3] <- oma[3] - 1

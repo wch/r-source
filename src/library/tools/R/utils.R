@@ -222,6 +222,7 @@ function(package)
 	   "format.char", "format.info", "format.pval",
 	   "influence.measures",
 	   "plot.new", "plot.window", "plot.xy",
+           "rep.int",
 	   "split.screen",
 	   "update.packages"),
 	   quadprog = c("solve.QP", "solve.QP.compact"),

@@ -19,8 +19,8 @@ convolve <- function(x, y, conj=TRUE, type=c("circular","open","filter")) {
     }
     else { ## "open" or "filter": Pad with zeros
         n1 <- ny - 1
-        x <- c(rep(0, n1), x)
-        n <- length(y <- c(y, rep(0, n - 1)))# n = nx+ny-1
+        x <- c(rep.int(0, n1), x)
+        n <- length(y <- c(y, rep.int(0, n - 1)))# n = nx+ny-1
     }
     x <- fft(fft(x)* (if(conj)Conj(fft(y)) else fft(y)), inv=TRUE)
     if(type == "filter")

@@ -2,10 +2,10 @@ fivenum <- function(x, na.rm=TRUE)
 {
     xna <- is.na(x)
     if(na.rm) x <- x[!xna]
-    else if(any(xna)) return(rep(NA,5))
+    else if(any(xna)) return(rep.int(NA,5))
     x <- sort(x)
     n <- length(x)
-    if(n == 0) rep(NA,5)
+    if(n == 0) rep.int(NA,5)
     else {
 	d <- c(1, 0.5*floor(0.5*(n+3)), 0.5*(n+1),
 	       n+1-0.5*floor(0.5*(n+3)), n)

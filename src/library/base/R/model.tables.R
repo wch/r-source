@@ -88,7 +88,7 @@ model.tables.aovlist <- function(x, type = "effects", se = FALSE, ...)
     factors <- lapply(prjs, attr, "factors")
     dn.proj <- unlist(lapply(factors, names), recursive = FALSE)
     m.factors <- unlist(factors, recursive = FALSE)
-    dn.strata <- rep(names(factors), unlist(lapply(factors, length)))
+    dn.strata <- rep.int(names(factors), unlist(lapply(factors, length)))
     names(dn.strata) <- names(m.factors) <- names(dn.proj) <- unlist(dn.proj)
     t.factor <- attr(prjs, "t.factor")
     efficiency <- FALSE
@@ -184,7 +184,7 @@ make.tables.aovproj <-
 	terms <- proj.cols[[i]]
 	data <-
 	    if(length(terms) == 1) prjs[, terms]
-	    else prjs[, terms] %*% as.matrix(rep(1, length(terms)))
+	    else prjs[, terms] %*% as.matrix(rep.int(1, length(terms)))
 	tables[[i]] <- tapply(data, mf[mf.cols[[i]]], get(fun))
 	class(tables[[i]]) <- "mtable"
 	if(prt) print(tables[i], ..., quote = FALSE)
@@ -203,7 +203,7 @@ make.tables.aovprojlist <-
 	for(i in seq(length(tables))) {
 	    terms <- proj.cols[[i]]
 	    if(all(is.na(eff.i <- match(terms, names(eff)))))
-		eff.i <- rep(1, length(terms))
+		eff.i <- rep.int(1, length(terms))
 	    if(length(terms) == 1)
 		data <- projections[[strata.cols[i]]][, terms]/ eff[eff.i]
 	    else {
@@ -230,14 +230,14 @@ make.tables.aovprojlist <-
 	else {
 	    if(length(strata <- unique(strata.cols[terms])) == 1)
 		data <- projections[[strata]][, terms] %*%
-		    as.matrix(rep(1, length(terms)))
+		    as.matrix(rep.int(1, length(terms)))
 	    else {
 		mat <- NULL
 		for(j in strata) {
 		    mat <- cbind(mat, projections[[j]][, terms[!is.na(match(terms,
 									    names(strata.cols)[strata.cols == j]))]])
 		}
-		data <- mat %*% as.matrix(rep(1, length(terms)))
+		data <- mat %*% as.matrix(rep.int(1, length(terms)))
 	    }
 	}
 	tables[[i]] <- tapply(data, model[model.cols[[i]]], get(fun))
@@ -344,10 +344,10 @@ print.tables.aov <- function(x, digits = 4, ...)
 		ctable <- aperm(ctable, c(1, d, 2:(d - 1)))
 		dim(ctable) <- c(dim.t[1] * dim.t[d], dim.t[-c(1, d)])
 		dimnames(ctable) <-
-		    c(list(format(c(rownames(table), rep("rep", dim.t[1])))),
+		    c(list(format(c(rownames(table), rep.int("rep", dim.t[1])))),
                       dimnames(table)[-1])
 		ctable <- eval(parse(text = paste(
-				     "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))", paste(rep(", ", d - 2), collapse = " "), "]")))
+				     "ctable[as.numeric(t(matrix(seq(nrow(ctable)),ncol=2)))", paste(rep.int(", ", d - 2), collapse = " "), "]")))
 		names(dimnames(ctable)) <- names(dimnames(table))
 		class(ctable) <- "mtable"
 		print.mtable(ctable, digits = digits, ...)
@@ -416,7 +416,7 @@ eff.aovlist <- function(aovlist)
 	ind <- rbind(ind, cbind(match(i, s.labs),
 				match(names(proj.len[[i]]), t.labs)))
     eff[ind] <- unlist(x.len)
-    x.len <- t(eff) %*% rep(1, length(s.labs))
+    x.len <- t(eff) %*% rep.int(1, length(s.labs))
     eff[ind] <- unlist(proj.len)
     eff <- sweep(eff, 2, x.len, "/")
     eff[, x.len != 0, drop = FALSE]

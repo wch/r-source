@@ -37,7 +37,7 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
         ng <- c(ng, i$n)
         if((lo <- length(i$out))) {
             out   <- c(out,i$out)
-            group <- c(group, rep(ct, lo))
+            group <- c(group, rep.int(ct, lo))
         }
         ct <- ct+1
     }
@@ -122,21 +122,21 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
                 polygon(yy, xx, col = col, border = border)
                 segments(stats[3], xP(x, -wntch),
                          stats[3], xP(x, +wntch), col = border)
-                segments(stats[c(1, 5)], rep(x, 2),
-                         stats[c(2, 4)], rep(x, 2), lty= "dashed", col= border)
-                segments(stats[c(1, 5)], rep(xP(x, -wid/2), 2),
-                         stats[c(1, 5)], rep(xP(x, +wid/2), 2), col = border)
-                do.call("points",c(list(out, rep(x, length(out))), pt.pars))
+                segments(stats[c(1, 5)], rep.int(x, 2),
+                         stats[c(2, 4)], rep.int(x, 2), lty= "dashed", col= border)
+                segments(stats[c(1, 5)], rep.int(xP(x, -wid/2), 2),
+                         stats[c(1, 5)], rep.int(xP(x, +wid/2), 2), col = border)
+                do.call("points",c(list(out, rep.int(x, length(out))), pt.pars))
             }
             else { ## vertical
                 polygon(xx, yy, col=col, border=border)
                 segments(xP(x, -wntch), stats[3],
                          xP(x, +wntch), stats[3], col=border)
-                segments(rep(x,2), stats[c(1,5)],
-                         rep(x,2), stats[c(2,4)], lty= "dashed",col= border)
-                segments(rep(xP(x, -wid/2), 2), stats[c(1,5)],
-                         rep(xP(x, +wid/2), 2), stats[c(1,5)], col=border)
-                do.call("points",c(list(rep(x,length(out)), out), pt.pars))
+                segments(rep.int(x,2), stats[c(1,5)],
+                         rep.int(x,2), stats[c(2,4)], lty= "dashed",col= border)
+                segments(rep.int(xP(x, -wid/2), 2), stats[c(1,5)],
+                         rep.int(xP(x, +wid/2), 2), stats[c(1,5)], col=border)
+                do.call("points",c(list(rep.int(x,length(out)), out), pt.pars))
             }
 	    if(any(inf <- !is.finite(out))) {
 		## FIXME: should MARK on plot !! (S-plus doesn't either)
@@ -198,7 +198,7 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	}
 	else if(varwidth) boxwex * sqrt(z$n/max(z$n))
 	else if(n == 1) 0.5 * boxwex
-	else rep(boxwex, n)
+	else rep.int(boxwex, n)
     for(i in 1:n)
 	bplt(at[i], wid=width[i],
 	     stats= z$stats[,i],

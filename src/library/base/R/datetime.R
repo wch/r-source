@@ -801,3 +801,16 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
      }
     invisible(res)
 }
+
+rep.POSIXct <- function(x, times, ...)
+{
+    y <- rep.int(unclass(x), times)
+    structure(y, class=c("POSIXt", "POSIXct"))
+}
+
+rep.POSIXlt <- function(x, times, ...)
+{
+    y <- lapply(x, rep.int, times=times)
+    attributes(y) <- attributes(x)
+    y
+}

@@ -27,7 +27,7 @@ chol <- function(x, pivot = FALSE, LINPACK = pivot)
                       n,
                       n,
                       double(n),
-                      piv = as.integer(rep(0, n)),
+                      piv = as.integer(rep.int(0, n)),
                       as.integer(pivot),
                       rank = integer(1),
                       DUP = FALSE, PACKAGE = "base")

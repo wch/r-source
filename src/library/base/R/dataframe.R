@@ -1032,7 +1032,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	} else {
 	    if(!rscalar)
 		e2 <- split(rep(as.vector(e2), length = prod(dim(e1))),
-			    rep(1:ncol(e1), rep(nrow(e1), ncol(e1))))
+			    rep.int(1:ncol(e1), rep.int(nrow(e1), ncol(e1))))
 	}
     } else {
 	## e1 is not a data frame, but e2 is.
@@ -1046,7 +1046,7 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	} else {
 	    if(!lscalar)
 		e1 <- split(rep(as.vector(e1), length = prod(dim(e2))),
-			    rep(1:ncol(e2), rep(nrow(e2), ncol(e2))))
+			    rep.int(1:ncol(e2), rep.int(nrow(e2), ncol(e2))))
 	}
     }
     for(j in seq(along=cn)) {

@@ -23,7 +23,7 @@ expand.grid <- function(...) {
 	## avoid sorting the levels of character variates
 	nx <- length(x)
 	orep <- orep/nx
-	x <- rep(rep(x, rep(rep.fac, nx)), orep)
+	x <- rep.int(rep.int(x, rep.int(rep.fac, nx)), orep)
 	## avoid sorting the levels of character variates
 	if(!is.factor(x) && is.character(x)) x <- factor(x, levels = unique(x))
 	cargs[[i]] <- x

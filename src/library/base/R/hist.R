@@ -67,10 +67,10 @@ hist.default <-
     diddle <- 1e-7 * max(abs(range(breaks)))
     fuzz <- if(right)
 	c(if(include.lowest) - diddle else diddle,
-	    rep(diddle, length(breaks) - 1))
+          rep.int(diddle, length(breaks) - 1))
     else
-	c(rep(-diddle, length(breaks) - 1),
-	    if(include.lowest) diddle else -diddle)
+	c(rep.int(-diddle, length(breaks) - 1),
+          if(include.lowest) diddle else -diddle)
 
     fuzzybreaks <- breaks + fuzz
     h <- diff(fuzzybreaks)

@@ -39,7 +39,7 @@ contrasts <-
 	    cm[,1:nc] <- value
 	    dimnames(cm) <- list(levels(x),NULL)
 	    if(!is.null(nmcol <- dimnames(value)[[2]]))
-		dimnames(cm)[[2]] <- c(nmcol, rep("", n1-nc))
+		dimnames(cm)[[2]] <- c(nmcol, rep.int("", n1-nc))
 	} else cm <- value[, 1:n1, drop=FALSE]
     }
     else if(is.character(value)) cm <- value

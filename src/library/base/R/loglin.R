@@ -80,7 +80,7 @@ loglin <- function(table, margin, start = rep(1, length(table)), fit =
         }
         y[-1]
     }
-    df <- rep(0, 2^nvar)
+    df <- rep.int(0, 2^nvar)
     for (k in seq(along = margin)) {
         terms <- subsets(margin[[k]])
         for (j in seq(along = terms))

@@ -115,7 +115,7 @@ polym <- function(..., degree = 1)
     n <- sapply(dots, length)
     if(any(n != n[1]))
         stop("arguments must have the same length")
-    z <- do.call("expand.grid", rep(list(0:degree), nd))
+    z <- do.call("expand.grid", rep.int(list(0:degree), nd))
     s <- rowSums(z)
     ind <- (s > 0) & (s <= degree)
     z <- z[ind, ]; s <- s[ind]

@@ -41,7 +41,7 @@ nlevels <- function(x) length(levels(x))
 {
     xlevs <- levels(x)
     if (is.list(value)) {
-        nlevs <- rep(names(value), lapply(value, length))
+        nlevs <- rep.int(names(value), lapply(value, length))
         value <- unlist(value)
         m <- match(value, xlevs, nomatch=0)
         xlevs[m] <- nlevs[m > 0]
@@ -67,7 +67,7 @@ codes.ordered <- as.integer
 "codes<-" <- function(x, value, ...)
 {
     if ( length(value) == 1 )
-	value <- rep(value, length(x))
+	value <- rep.int(value, length(x))
     else if ( length(x) != length(value) )
 	stop("Length mismatch in \"codes<-\"")
     ## S-plus again...
@@ -132,7 +132,7 @@ Ops.factor <- function(e1, e2)
     ok <- switch(.Generic, "=="=, "!="=TRUE, FALSE)
     if(!ok) {
 	warning('"',.Generic,'"', " not meaningful for factors")
-	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
+	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     nas <- is.na(e1) | is.na(e2)
     if (nchar(.Method[1])) {
@@ -195,7 +195,7 @@ function (e1, e2)
 		 FALSE)
     if(!ok) {
 	warning('"',.Generic,'"', " not meaningful for ordered factors")
-	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
+	return(rep.int(NA, max(length(e1), if(!missing(e2))length(e2))))
     }
     if (.Generic %in% c("==", "!="))
       return(NextMethod(.Generic))  ##not S-PLUS compatible, but saner

@@ -128,7 +128,7 @@ naresid.exclude <- function(omit, x, ...)
 
     if (is.matrix(x)) {
 	n <- nrow(x)
-	keep <- rep(NA, n+length(omit))
+	keep <- rep.int(NA, n+length(omit))
 	keep[-omit] <- 1:n
 	x <- x[keep, , drop=FALSE]
 	temp <- rownames(x)
@@ -138,7 +138,7 @@ naresid.exclude <- function(omit, x, ...)
         }
     } else {
 	n <- length(x)
-	keep <- rep(NA, n+length(omit))
+	keep <- rep.int(NA, n+length(omit))
 	keep[-omit] <- 1:n
 	x <- x[keep]
 	temp <- names(x)

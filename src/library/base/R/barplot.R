@@ -39,7 +39,7 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 
     if (beside) {
 	if (length(space) == 2)
-	    space <- rep(c(space[2], rep(space[1], NR - 1)), NC)
+	    space <- rep.int(c(space[2], rep.int(space[1], NR - 1)), NC)
 	width <- rep(width, length = NR * NC)
     } else {
 	width <- rep(width, length = NC)

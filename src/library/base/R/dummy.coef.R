@@ -13,7 +13,7 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     if(!length(xl)) {			# no factors in model
 	return(as.list(coef(object)))
     }
-    nxl <- rep(1, length(vars))
+    nxl <- rep.int(1, length(vars))
     names(nxl) <- vars
     tmp <- unlist(lapply(xl, length))
     nxl[names(tmp)] <- tmp
@@ -22,12 +22,12 @@ dummy.coef.lm <- function(object, use.na=FALSE, ...)
     args <- vector("list", length(vars))
     names(args) <- vars
     for(i in vars)
-	args[[i]] <- if(nxl[[i]] == 1) rep(1, nl)
-	else factor(rep(xl[[i]][1], nl), levels = xl[[i]])
+	args[[i]] <- if(nxl[[i]] == 1) rep.int(1, nl)
+	else factor(rep.int(xl[[i]][1], nl), levels = xl[[i]])
     dummy <- do.call("data.frame", args)
     pos <- 0
-    rn <- rep(tl, lterms)
-    rnn <- rep("", nl)
+    rn <- rep.int(tl, lterms)
+    rnn <- rep.int("", nl)
     for(j in tl) {
 	i <- vars[facs[, j] > 0]
 	ifac <- i[nxl[i] > 1]
@@ -83,7 +83,7 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
     if(!length(xl)) {			# no factors in model
 	return(as.list(coef(object)))
     }
-    nxl <- rep(1, length(vars))
+    nxl <- rep.int(1, length(vars))
     names(nxl) <- vars
     tmp <- unlist(lapply(xl, length))
     nxl[names(tmp)] <- tmp
@@ -92,12 +92,12 @@ dummy.coef.aovlist <- function(object, use.na = FALSE, ...)
     args <- vector("list", length(vars))
     names(args) <- vars
     for(i in vars)
-	args[[i]] <- if(nxl[[i]] == 1) rep(1, nl)
-	else factor(rep(xl[[i]][1], nl), levels = xl[[i]])
+	args[[i]] <- if(nxl[[i]] == 1) rep.int(1, nl)
+	else factor(rep.int(xl[[i]][1], nl), levels = xl[[i]])
     dummy <- do.call("data.frame", args)
     pos <- 0
-    rn <- rep(tl, lterms)
-    rnn <- rep("", nl)
+    rn <- rep.int(tl, lterms)
+    rnn <- rep.int("", nl)
     for(j in tl) {
 	i <- vars[facs[, j] > 0]
 	ifac <- i[nxl[i] > 1]
@@ -152,7 +152,7 @@ print.dummy.coef <- function(x, ..., title)
     n <- length(x)
     nm <- max(sapply(x, length))
     ans <- matrix("", 2*n, nm)
-    rn <- rep("", 2*n)
+    rn <- rep.int("", 2*n)
     line <- 0
     for (j in seq(n)) {
 	this <- x[[j]]
@@ -169,7 +169,7 @@ print.dummy.coef <- function(x, ..., title)
 	}
     }
     rownames(ans) <- rn
-    colnames(ans) <- rep("", nm)
+    colnames(ans) <- rep.int("", nm)
     cat(if(missing(title)) "Full coefficients are" else title, "\n")
     print(ans[1:line, , drop=FALSE], quote=FALSE, right=TRUE)
     invisible(x)

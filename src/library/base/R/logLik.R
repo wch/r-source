@@ -46,7 +46,7 @@ logLik.lm <- function(object, REML = FALSE, ...)
     p <- object$rank
     N <- length(res)
     if(is.null(w <- object$weights)) {
-        w <- rep(1, N)
+        w <- rep.int(1, N)
     } else {
         excl <- w == 0			# eliminating zero weights
         if (any(excl)) {

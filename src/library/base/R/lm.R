@@ -105,7 +105,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
     pivot <- z$pivot
     r1 <- 1:z$rank
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
-    nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+    nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     if (is.matrix(y)) {
 	coef[-r1, ] <- NA
 	coef[pivot, ] <- coef
@@ -183,7 +183,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
     pivot <- z$pivot
     r1 <- 1:z$rank
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
-    nmeffects <- c(dn[pivot[r1]], rep("", n - z$rank))
+    nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     if (is.matrix(y)) {
 	coef[-r1, ] <- NA
 	coef[pivot, ] <- coef
@@ -540,7 +540,7 @@ anovalist.lm <- function (object, ..., test = NULL)
     df <- c(NA, -diff(df.r))
     ss <- c(NA, -diff(ss.r))
     ms <- ss/df
-    f <- p <- rep(NA,nmodels)
+    f <- p <- rep.int(NA, nmodels)
     for(i in 2:nmodels) {
 	if(df[i] > 0) {
 	    f[i] <- ms[i]/(ss.r[i]/df.r[i])
@@ -621,7 +621,7 @@ predict.lm <-
 		Rinv <- qr.solve(qr.R(object$qr)[p1, p1])
 		XRinv <- X[, piv] %*% Rinv
 	    }
-	    ip <- drop(XRinv^2 %*% rep(res.var, p))
+	    ip <- drop(XRinv^2 %*% rep.int(res.var, p))
 	}
     }
 
@@ -653,7 +653,7 @@ predict.lm <-
 	}
 	if(hasintercept)
 	    X <- sweep(X, 2, avx)
-	unpiv <- rep(0, NCOL(X))
+	unpiv <- rep.int(0, NCOL(X))
 	unpiv[piv] <- p1
 	## Predicted values will be set to 0 for any term that
 	## corresponds to columns of the X-matrix that are
@@ -669,7 +669,7 @@ predict.lm <-
 		ip[, i] <-
 		    if(any(iipiv) > 0)
 			as.matrix(X[, iipiv, drop = FALSE] %*%
-				  Rinv[ii, , drop = FALSE])^2 %*% rep(res.var, p)
+				  Rinv[ii, , drop = FALSE])^2 %*% rep.int(res.var, p)
 		    else 0
 	}
 

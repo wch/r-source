@@ -21,10 +21,10 @@ split.screen <-
 	nc <- figs[2]
 	x <- seq(0, 1, len=nc+1)
 	y <- seq(1, 0, len=nr+1)
-	figs <- matrix(c(rep(x[-(nc+1)], nr), rep(x[-1], nr),
-			 rep(y[-1], rep(nc, nr)),
-			 rep(y[-(nr+1)], rep(nc, nr))),
-		       nc=4)
+	figs <- matrix(c(rep.int(x[-(nc+1)], nr), rep.int(x[-1], nr),
+			 rep.int(y[-1], rep.int(nc, nr)),
+			 rep.int(y[-(nr+1)], rep.int(nc, nr))),
+		       nc = 4)
     }
     num.screens <- nrow(figs)
     if (num.screens < 1)
@@ -43,7 +43,7 @@ split.screen <-
 	split.saved.pars <- par(split.par.list)
 	split.saved.pars$fig <- NULL
 	## NOTE: remove all margins when split screens
-	split.saved.pars$omi <- par(omi=rep(0,4))$omi
+	split.saved.pars$omi <- par(omi=rep.int(0,4))$omi
 	assign(".split.saved.pars", split.saved.pars, envir=.GlobalEnv)
 	## set up the screen information
 	split.screens <- vector(mode="list", length=num.screens)
@@ -65,9 +65,9 @@ split.screen <-
 	    total <- split.screens[[screen]]$fig
 	for (i in 1:num.screens)
 	    figs[i,] <- total[c(1,1,3,3)] +
-		figs[i,]*rep(c(total[2]-total[1],
-			       total[4]-total[3]),
-			     c(2,2))
+		figs[i,]*rep.int(c(total[2]-total[1],
+                                   total[4]-total[3]),
+                                 c(2,2))
 	new.screens <- (max.screen+1):new.max.screen
 	for (i in new.screens) {
 	    split.screens[[i]] <- par(.split.par.list)

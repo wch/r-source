@@ -13,8 +13,8 @@ optim <- function(par, fn, gr = NULL,
         method <- "L-BFGS-B"
     }
     ## Defaults :
-    con <- list(trace = 0, fnscale = 1, parscale = rep(1, length(par)),
-                ndeps = rep(1e-3, length(par)),
+    con <- list(trace = 0, fnscale = 1, parscale = rep.int(1, length(par)),
+                ndeps = rep.int(1e-3, length(par)),
                 maxit = 100, abstol = -Inf, reltol=sqrt(.Machine$double.eps),
                 alpha = 1.0, beta = 0.5, gamma = 2.0,
                 REPORT = 10,

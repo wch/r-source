@@ -43,8 +43,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     else {
         if (is.numeric(locations) && length(locations) == 2) {
             ## all stars around the same origin
-            locations <- cbind(rep(locations[1],n.loc),
-                               rep(locations[2],n.loc))
+            locations <- cbind(rep.int(locations[1],n.loc),
+                               rep.int(locations[2],n.loc))
             if(!missing(labels) && n.loc > 1)
                 warning("labels don't make sense for a single location")
             else labels <- NULL
@@ -100,8 +100,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
     if(!plot)
         return()
 
-    s.x <- xloc + x * rep(cos(angles), rep(n.loc,n.seg))
-    s.y <- yloc + x * rep(sin(angles), rep(n.loc,n.seg))
+    s.x <- xloc + x * rep.int(cos(angles), rep.int(n.loc,n.seg))
+    s.y <- yloc + x * rep.int(sin(angles), rep.int(n.loc,n.seg))
 
     if ( draw.segments ) {
         aangl <- c(angles, if(full)2*pi else pi)
@@ -120,8 +120,8 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	for (i in 1:n.loc) {
 	    polygon(s.x[i,], s.y[i,], lwd=lwd, lty=lty, col = col.stars[i])
 	    if (radius)
-		segments(rep(xloc[i],n.seg),
-			 rep(yloc[i],n.seg),
+		segments(rep.int(xloc[i],n.seg),
+			 rep.int(yloc[i],n.seg),
 			 s.x[i,], s.y[i,], lwd=lwd, lty=lty)
 	}
     }
@@ -154,7 +154,7 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	else { # draw unit star
 	    polygon(key.x, key.y, lwd=lwd, lty=lty)
 	    if (radius)
-		segments(rep(key.loc[1],n.seg), rep(key.loc[2],n.seg),
+		segments(rep.int(key.loc[1],n.seg), rep.int(key.loc[2],n.seg),
 			 key.x, key.y, lwd=lwd, lty=lty)
 	}
 

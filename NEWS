@@ -15,6 +15,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o	rep() is now a generic function, with default, POSIXct and
+	POSIXlt methods.  For efficiency, the base code uses rep.int()
+	rather than rep() where possible.
 
 
 DEPRECATED & DEFUNCT
@@ -23,7 +26,7 @@ DEPRECATED & DEFUNCT
 
     o	printNoClass() is defunct.
 
-    o	The classic MacOS port is not longer supported, and its files
+    o	The classic MacOS port is no longer supported, and its files
 	have been removed from the sources.
 
 

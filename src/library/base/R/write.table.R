@@ -82,7 +82,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	x[, i] <- paste('"', gsub('"', qstring, as.character(x[, i])),
                         '"', sep = "")
 
-    writeLines(paste(c(t(x)), c(rep(sep, ncol(x) - 1), eol),
+    writeLines(paste(c(t(x)), c(rep.int(sep, ncol(x) - 1), eol),
                      sep = "", collapse = ""),
                file, sep = "")
 }

@@ -115,7 +115,7 @@ lsfit <- function(x, y, wt=NULL, intercept=TRUE, tolerance=1e-07, yname=NULL)
     ## return weights if necessary
 
     if (!is.null(wt) ) {
-	weights <- rep(NA, dimy[1])
+	weights <- rep.int(NA, dimy[1])
 	weights[good] <- wt
 	output <- c(output, list(wt=weights))
     }
@@ -156,7 +156,7 @@ ls.diag <- function(ls.out)
 
     p <- ls.out$qr$rank
     n <- nrow(resids)
-    hatdiag <- rep(NA, n)
+    hatdiag <- rep.int(NA, n)
     stats <- array(NA, dim = dim(resids))
     colnames(stats) <- yname
     stdres <- studres <- dfits <- Cooks <- stats

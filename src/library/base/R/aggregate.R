@@ -26,8 +26,8 @@ aggregate.data.frame <- function(x, by, FUN, ...) {
     d <- dim(z)
     w <- NULL
     for (i in seq(along = d)) {
-        j <- rep(rep(seq(1 : d[i]),
-                     prod(d[seq(length = i - 1)]) * rep(1, d[i])),
+        j <- rep.int(rep.int(seq(1 : d[i]),
+                     prod(d[seq(length = i - 1)]) * rep.int(1, d[i])),
                  prod(d[seq(from = i + 1, length = length(d) - i)]))
         w <- cbind(w, dimnames(z)[[i]][j])
     }

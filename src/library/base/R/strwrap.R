@@ -3,8 +3,8 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
          prefix = "", simplify = TRUE) {
 
     ## Useful variables.
-    indentString <- paste(rep(" ", indent), collapse = "")
-    exdentString <- paste(rep(" ", exdent), collapse = "")
+    indentString <- paste(rep.int(" ", indent), collapse = "")
+    exdentString <- paste(rep.int(" ", exdent), collapse = "")
     y <- list()                         # return value
     z <- lapply(strsplit(x, "\n[ \t\n]*\n"), strsplit, "[ \t\n]")
     ## Now z[[i]][[j]] is a character vector of all ``words'' in
@@ -76,7 +76,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
 
             nBlocks <- length(upperBlockIndex)
             s <- paste(prefix,
-                       c(indentString, rep(exdentString, nBlocks - 1)),
+                       c(indentString, rep.int(exdentString, nBlocks - 1)),
                        sep = "")
             for(k in (1 : nBlocks))
                 s[k] <- paste(s[k], paste(words[lowerBlockIndex[k] :
@@ -123,7 +123,7 @@ function(x, y, style = c("table", "list"),
     if(indent > 0.5 * width)
         stop("incorrect values of indent and width")
 
-    indentString <- paste(rep(" ", indent), collapse = "")
+    indentString <- paste(rep.int(" ", indent), collapse = "")
 
     if(style == "table") {
         i <- (nchar(x) > indent - 3)

@@ -13,7 +13,7 @@ read.fwf <- function(file, widths, sep = "\t", as.is = FALSE,
     first <- st[-length(st)]
     last <- cumsum(widths)
     cat(file = FILE, sapply(raw, doone),
-        sep = c(rep(sep,,length(widths)-1), "\n"))
+        sep = c(rep(sep, length = length(widths)-1), "\n"))
     read.table(file = FILE, header = FALSE, sep = sep, as.is = as.is,
 	       skip = skip, row.names = row.names, col.names =
                col.names, quote="", ...)

@@ -96,7 +96,7 @@ merge.data.frame <-
             cnm <- nm.y %in% nm
             nm.y[cnm] <- paste(nm.y[cnm], suffixes[2], sep="")
         }
-        y <- y[c(m$yi, if(all.x) rep(1:1, nxx), if(all.y) m$y.alone),
+        y <- y[c(m$yi, if(all.x) rep.int(1:1, nxx), if(all.y) m$y.alone),
                -by.y, drop = FALSE]
         if(all.x)
             for(i in seq(along = y))

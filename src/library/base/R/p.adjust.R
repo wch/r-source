@@ -25,7 +25,7 @@ p.adjust <- function(p, method = p.adjust.methods, n = length(p)) {
                s <- sort(p, index = TRUE)
                p <- s$x
                ro <- order(s$ix)
-               q <- pa <- rep( min(n*p/(1:n)), n)
+               q <- pa <- rep.int( min(n*p/(1:n)), n)
                for (j in (n-1):2) {
                    q1 <- min(j*p[(n-j+2):n]/(2:j))
                    q[1:(n-j+1)] <- pmin( j*p[1:(n-j+1)], q1)

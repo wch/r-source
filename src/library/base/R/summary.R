@@ -104,7 +104,7 @@ summary.data.frame <-
     blanks <- paste(character(max(lw) + 2), collapse = " ")
     pad <- floor(lw-nchar(nm)/2)
     nm <- paste(substring(blanks, 1, pad), nm, sep = "")
-    dimnames(z) <- list(rep("", nr), nm)
+    dimnames(z) <- list(rep.int("", nr), nm)
     attr(z, "class") <- c("table") #, "matrix")
     z
 }

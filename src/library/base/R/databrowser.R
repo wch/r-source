@@ -39,15 +39,15 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 
     N <- 0
     M <- n
-    IDS <- rep(NA,n)
-    NAMES <- rep(NA,n)
-    TYPES <- rep(NA,n)
-    DIMS <- rep(NA,n)
+    IDS <- rep.int(NA,n)
+    NAMES <- rep.int(NA,n)
+    TYPES <- rep.int(NA,n)
+    DIMS <- rep.int(NA,n)
 
-    IsRoot <- rep(TRUE,n)
-    Container <- rep(FALSE,n)
-    ItemsPerContainer <- rep(0,n)
-    ParentID <- rep(-1,n)
+    IsRoot <- rep.int(TRUE,n)
+    Container <- rep.int(FALSE,n)
+    ItemsPerContainer <- rep.int(0,n)
+    ParentID <- rep.int(-1,n)
 
     for( objNam in objlist ){
 	N <- N+1
@@ -93,7 +93,7 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 		if(length(names(obj.nms)) >0)
 		    nm <- names(obj.nms)
 		else
-		    nm <- rep("",lg)
+		    nm <- rep.int("",lg)
 		Container[N] <- TRUE
 		ItemsPerContainer[N] <- lg
 		for(i in 1:lg){
@@ -143,9 +143,9 @@ browseEnv <- function(envir = .GlobalEnv, pattern,
 
     if(debugMe) cat(" __end {for}\n ")##; browser()
 
-    Container	      <- c(Container,	  rep(FALSE, M-N))
-    IsRoot	      <- c(IsRoot,	  rep(FALSE, M-N))
-    ItemsPerContainer <- c(ItemsPerContainer, rep(0, M-N))
+    Container	      <- c(Container,	  rep.int(FALSE, M-N))
+    IsRoot	      <- c(IsRoot,	  rep.int(FALSE, M-N))
+    ItemsPerContainer <- c(ItemsPerContainer, rep.int(0, M-N))
 
     if(is.null(main))
 	main <- paste("R objects in", deparse(substitute(envir)))

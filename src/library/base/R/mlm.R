@@ -40,7 +40,7 @@ deviance.mlm <- function(object, ...)
     res <-
 	if(is.null(w <- object$weights)) object$residuals^2
 	else w * object$residuals^2
-    drop(rep(1, nrow(res)) %*% res)
+    drop(rep.int(1, nrow(res)) %*% res)
 }
 
 plot.mlm <- function (x, ...) .NotYetImplemented()

@@ -119,9 +119,9 @@ glm.fit <-
     }
     ## define weights and offset if needed
     if (is.null(weights))
-	weights <- rep(1, nobs)
+	weights <- rep.int(1, nobs)
     if (is.null(offset))
-	offset <- rep(0, nobs)
+	offset <- rep.int(0, nobs)
     ## get family functions:
     variance <- family$variance
     dev.resids <- family$dev.resids
@@ -280,7 +280,7 @@ glm.fit <-
     ## than 0 for non-estimable parameters
     if (fit$rank < nvars) coef[fit$pivot][seq(fit$rank+1, nvars)] <- NA
     xxnames <- xnames[fit$pivot]
-    residuals <- rep(NA, nobs)
+    residuals <- rep.int(NA, nobs)
     residuals[good] <- z - (eta - offset)[good] # z does not have offset in.
     fit$qr <- as.matrix(fit$qr)
     nr <- min(sum(good), nvars)
@@ -298,13 +298,13 @@ glm.fit <-
     names(mu) <- ynames
     names(eta) <- ynames
     # for compatibility with lm, which has a full-length weights vector
-    wt <- rep(0, nobs)
+    wt <- rep.int(0, nobs)
     wt[good] <- w^2
     names(wt) <- ynames
     names(weights) <- ynames
     names(y) <- ynames
     names(fit$effects) <-
-	c(xxnames[seq(fit$rank)], rep("", sum(good) - fit$rank))
+	c(xxnames[seq(fit$rank)], rep.int("", sum(good) - fit$rank))
     ## calculate null deviance -- corrected in glm() if offset and intercept
     wtdmu <-
 	if (intercept) sum(weights * y)/sum(weights) else linkinv(offset)
@@ -354,7 +354,7 @@ anova.glm <- function(object, ..., dispersion=NULL, test=NULL)
     ## check for multiple objects
     dotargs <- list(...)
     named <- if (is.null(names(dotargs)))
-	rep(FALSE,length(dotargs)) else (names(dotargs) != "")
+	rep(FALSE, length(dotargs)) else (names(dotargs) != "")
     if(any(named))
 	warning("The following arguments to anova.glm(..) are invalid and dropped: ",
 		paste(deparse(dotargs[named]), collapse=", "))
@@ -659,7 +659,7 @@ residuals.glm <-
 		  deviance = if(object$df.res > 0) {
 		      d.res <- sqrt(pmax((object$family$dev.resids)(y, mu, wts), 0))
 		      ifelse(y > mu, d.res, -d.res)
-		  } else rep(0, length(mu)),
+		  } else rep.int(0, length(mu)),
 		  pearson = (y-mu)*sqrt(wts)/sqrt(object$family$variance(mu)),
 		  working = r,
 		  response = y - mu,

@@ -90,7 +90,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	    if(length(pch) > 1)
 		warning("Not using pch[2..] since pch[1] has multiple chars")
 	    np <- nchar(pch[1])
-	    pch <- substr(rep(pch[1], np), 1:np, 1:np)
+	    pch <- substr(rep.int(pch[1], np), 1:np, 1:np)
 	}
 	if(!merge) dx.pch <- x.intersp/2 * xchar
     }
@@ -135,8 +135,10 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	rect2(left, top, dx = w, dy = h, col = bg, angle = NULL)
     }
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text
-    xt <- left + xchar + (w0 * rep(0:(ncol-1), rep(n.legpercol,ncol)))[1:n.leg]
-    yt <- top - (rep(1:n.legpercol,ncol)[1:n.leg]-1) * ychar - 0.5 * yextra - ymax
+    xt <- left + xchar + (w0 * rep.int(0:(ncol-1),
+                                       rep.int(n.legpercol,ncol)))[1:n.leg]
+    yt <- top - (rep.int(1:n.legpercol,ncol)[1:n.leg]-1) * ychar -
+        0.5 * yextra - ymax
 
     if (!missing(fill)) {		#- draw filled boxes -------------
 	if(plot) {
@@ -147,7 +149,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 	xt <- xt + dx.fill
     }
     if(plot && (has.pch || do.lines))
-	col <- rep(col,length.out = n.leg)
+	col <- rep(col, length.out = n.leg)
 
     if (do.lines) {			#- draw lines ---------------------
 	seg.len <- 2 # length of drawn segment, in xchar units

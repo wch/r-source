@@ -159,8 +159,8 @@ as.ts <- function (x)
                           sers[[i]],
                           matrix(NA, round(freq * (en - tsps[2,i])), nsers[i]))
                 else
-                    c(rep(NA, round(freq * (tsps[1,i] - st))), sers[[i]],
-                      rep(NA, round(freq * (en - tsps[2,i]))))
+                    c(rep.int(NA, round(freq * (tsps[1,i] - st))), sers[[i]],
+                      rep.int(NA, round(freq * (en - tsps[2,i]))))
         } else {
             xx <- window(sers[[i]], st, en)
         }
@@ -357,8 +357,8 @@ print.ts <- function(x, calendar, ...)
                     start.pad <- start(x)[2] - 1
                     end.pad <- fr.x - end(x)[2]
                     dn1 <- start(x)[1]:end(x)[1]
-                    x <- matrix(c(rep("", start.pad), format(x, ...),
-                                  rep("", end.pad)), nc =  fr.x, byrow = TRUE,
+                    x <- matrix(c(rep.int("", start.pad), format(x, ...),
+                                  rep.int("", end.pad)), nc =  fr.x, byrow = TRUE,
                                 dimnames = list(dn1, dn2))
                 }
             } else { ## fr.x == 1
@@ -461,7 +461,7 @@ function (x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
     if(is.matrix(x)) {
         k <- ncol(x)
         tx <- time(x)
-        xy <- xy.coords(x = matrix(rep(tx, k), ncol = k),
+        xy <- xy.coords(x = matrix(rep.int(tx, k), ncol = k),
                         y = x, log=log)
         xy$x <- tx
     }
@@ -617,9 +617,9 @@ window.default <- function(x, start = NULL, end = NULL,
         enoff <- floor((end - xtsp[2]) * xfreq + ts.eps)
         yend <- xtsp[2] + enoff/xfreq
         nold <- round(xfreq*(xtsp[2] - xtsp[1])) + 1
-        i <- c(rep(nold+1, max(0, -stoff)),
+        i <- c(rep.int(nold+1, max(0, -stoff)),
                    (1+max(0, stoff)):(nold + min(0, enoff)),
-                   rep(nold+1, max(0, enoff)))
+                   rep.int(nold+1, max(0, enoff)))
         y <- if(is.matrix(x)) rbind(x, NA)[i, , drop = FALSE] else c(x, NA)[i]
         attr(y, "tsp") <- c(ystart, yend, xfreq)
         if(yfreq != xfreq) y <- Recall(y, frequency = yfreq)
