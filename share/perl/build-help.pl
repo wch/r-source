@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2002 R Development Core Team
+# Copyright (C) 1997-2003 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.10 $ ';
+my $revision = ' $Revision: 1.11 $ ';
 my $version;
 my $name;
 
@@ -175,6 +175,7 @@ foreach $manfile (@mandir) {
 	    my $targetfile = $filenm{$manfilebase};
 	    $destfile = file_path($dest, "R-ex", $targetfile.".R");
 	    if(fileolder($destfile, $manage)) {
+		if(-f $destfile) {unlink $destfile;}
 		Rdconv($manfile, "example", "", "$destfile");
 		if(-f $destfile) {$exampleflag = "example";}
 	    }

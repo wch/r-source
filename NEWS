@@ -226,7 +226,7 @@ NEW FEATURES
     o	New functions rmultinom() and dmultinom(), the first one with
 	C API.
 
-    o	New argument `silent' to  try().
+    o	New argument `silent' to try().
 
 
 INSTALLATION CHANGES
@@ -316,6 +316,9 @@ UTILITIES
 	skipped, checking is aborted if the package dependencies cannot
 	be resolved at run time.  Rd files are now also explicitly
 	checked for empty \name and \title entries.
+
+    o	The Perl code to build help now removes an existing example
+	file if there are no examples in the current help file.
 
 
 C-LEVEL FACILITIES
