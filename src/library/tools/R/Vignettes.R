@@ -290,7 +290,7 @@ function(x, ...)
               "</head><body>",
               paste("<h2>Vignettes of package", pkg,"</h2>"))
 
-    if(is.null(vignetteIndex)){
+    if(is.null(vignetteIndex) || nrow(vignetteIndex)==0){
         html <- c(html, "Sorry, the package contains no vignette meta-information or index.",
                   "Please browse the <a href=\".\">directory</a>.")
     }

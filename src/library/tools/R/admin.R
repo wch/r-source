@@ -245,12 +245,13 @@ function(dir, outDir)
 
     ## Create a vignette index only if the vignette dir exists and
     ## really contains vignettes.
-    if(!fileTest("-d", vignetteDir)
-       || !length(listFilesWithType(vignetteDir, "vignette"))){
+    if(!fileTest("-d", vignetteDir))
+        return(invisible())
+       
+    if(!length(listFilesWithType(vignetteDir, "vignette"))){
         if(!file.exists(htmlIndex)){
-            .writeVignetteHtmlIndex(pkg=pkgDesc[1,"Package"], con=htmlIndex)
+            .writeVignetteHtmlIndex(pkgDesc[1,"Package"], htmlIndex)
         }
-        
         return(invisible())
     }
 
