@@ -126,9 +126,10 @@ packages, such as @strong{eda}, @strong{mva}, and @strong{stepfun}.
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
 subdirectories @file{R}, @file{data}, @file{exec}, @file{inst},
-@file{man}, and @file{src} (some of which can be missing).
-
-@c FIXME Add something about configure and cleanup.
+@file{man}, and @file{src} (some of which can be missing). Optionally
+the package can also contain script files @file{configure} and
+@file{cleanup} which are executed before and after installation,
+@xref{Configure / cleanup}.
 
 The @file{DESCRIPTION} file contains basic information about the package
 in the following format:
@@ -136,6 +137,7 @@ in the following format:
 @smallexample
 Package: e1071
 Version: 0.7-3
+Date: 1999/06/07
 Author: Compiled by Fritz Leisch <Friedrich.Leisch@@ci.tuwien.ac.at>.
 Description: Miscellaneous functions used at the Department of
         Statistics at TU Wien (E1071). 
@@ -201,9 +203,10 @@ used by any Unix package, and still experimental.
 
 @menu
 * Package bundles::             
+* Configure / cleanup::         
 @end menu
 
-@node  Package bundles,  , Creating R packages, Creating R packages
+@node  Package bundles, Configure / cleanup, Creating R packages, Creating R packages
 @section Package bundles
 
 Sometimes it is convenient to distribute several packages as a
@@ -217,7 +220,8 @@ field, as in
 @smallexample
 Bundle: VR
 Contains: MASS class nnet spatial
-Version: 6.1-6 (1999/11/26)
+Version: 6.1-6
+Date: 1999/11/26
 Author: S original by Venables & Ripley.
   R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
   work by Kurt Hornik and Albrecht Gebhardt.
@@ -236,6 +240,50 @@ additional to the @file{DESCRIPTION} file of the bundle, for example
 Package: spatial
 Description: Functions for kriging and point pattern analysis.
 @end smallexample
+
+@node Configure / cleanup,  , Package bundles, Creating R packages
+@comment  node-name,  next,  previous,  up
+@section Configure / cleanup
+
+If your packge needs some system-dependent configuration before
+installation you can include a script @file{configure} in your package
+which is executed by @code{R INSTALL} before any other action is
+performed if present. This can be a script created by the autoconf
+mechanism, but may also be a script written by yourself. Use this to
+detect if any nonstandard libraries are present such that corresponding
+code in the package can be disabled at install time rather than giving
+error messages when the package is compiled or used. To summarize, the
+full power of autoconf is available for your extension package
+(including variable substitution, searching for libraries, etc.).
+
+The script @file{cleanup} as last thing by @code{R INSTALL} if present
+and can be used to clean up the package source tree, especially remove
+files created by @file{configure}.
+
+As an example consider we want to use functionality provided by
+@file{libfoo}. Then we can write a configure script using
+@code{autoconf} which replaces @code{@@HAVEFOO@@} with @code{TRUE} if
+the library is found and with @code{FALSE} if it not found. The
+definition of the respective R function in @file{foo.R.in} could be
+@smallexample
+foo <- function(x)@{
+
+    if(! @@HAVEFOO@@) stop("Sorry, no foo library available")
+
+    ...
+@end smallexample
+From this file @code{configure} creates the actual R source file
+@file{foo.R} looking like
+@smallexample
+foo <- function(x)@{
+
+    if(! FALSE) stop("Sorry, no foo library available")
+
+    ...
+@end smallexample
+if @file{libfoo} was not found such that the function is effectively
+disabled when library @file{libfoo} is not present on the target system.
+
 
 @node Writing R documentation, System and foreign language interfaces, Creating R packages, Top
 @chapter Writing R documentation
