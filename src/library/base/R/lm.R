@@ -272,7 +272,9 @@ print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
 	}
 	else if (rdf > 0) {
 		print(resid, digits = digits, ...)
-	}
+	} else { # rdf == 0 : perfect fit!
+          cat("ALL",df[1],"residuals are 0: no residual degrees of freedom!\n")
+        }
 	if (nsingular <- df[3] - df[1])
 		cat("\nCoefficients: (", nsingular,
 		    " not defined because of singularities)\n", sep = "")
