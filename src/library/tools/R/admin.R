@@ -147,6 +147,7 @@ function(dir, outDir)
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
     file.create(outFile)
+    writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""), outFile)
     file.append(outFile, codeFiles)
     ## </NOTE>
 
