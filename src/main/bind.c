@@ -1,5 +1,3 @@
-#define TRYIT
-/*	^^^^ new since 0.63.{2?} -- for do_bind() */
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -756,7 +754,6 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (ans_nnames && ans_length > 0) {
 	PROTECT(ans_names = allocVector(STRSXP, ans_length));
-#ifdef TRYIT
 	if (!recurse) {
 	    if (TYPEOF(args) == VECSXP) {
 		SEXP names = getAttrib(args, R_NamesSymbol);
@@ -782,15 +779,12 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
 	else {
-#endif
 	    ans_nnames = 0;
 	    seqno = 0;
 	    firstpos = 0;
 	    count = 0;
 	    NewExtractNames(args, R_NilValue, R_NilValue, recurse);
-#ifdef TRYIT
 	}
-#endif
 	setAttrib(ans, R_NamesSymbol, ans_names);
 	UNPROTECT(1);
     }
@@ -807,9 +801,25 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP a, t;
 
     /* First we check to see if any of the arguments are data frames.
-     * If there are, we need to a special dispatch	 -----------
+     * If there are, we need to do a special dispatch	 -----------
      * to the interpreted data.frame functions.
      */
+
+    /* This function has to change so that it receives its arguments
+     * unevaluated.  This is because we need to dispatch on the
+     * the classes of the objects, but we also need to pass the
+     * unevaluated arguments on to closures which will probably choose
+     * to deparse them to get row and column labels.
+     *
+     * Lazy evaluation and method dispatch based on argument types
+     * are fundamentally incompatible notions.  The results here
+     * are ghastly.
+     *
+     * Here we will have to march through the arguments building
+     * promises and forcing them because we need both evaluated
+     * and unevaluated in the code below.
+     */
+
     mode = 0;
     for (a = args; a != R_NilValue; a = CDR(a)) {
 	if (isFrame(CAR(a)))
