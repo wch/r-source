@@ -53,7 +53,7 @@ check.options <-
                  " in ", sQuote( deparse(sys.call(sys.parent()))) )
 ##-- This does not happen: ambiguities are plain "NA" here:
 ##-	else if(any(matches==0))
-##-	    stop(paste("ambiguous argument name(s) `",
+##-	    stop(paste("ambiguous argument name(s) '",
 ##-			   paste(newnames[matches == 0], collapse=", "),
 ##-			   "' in \"", deparse(sys.call(sys.parent())),"\"",sep=""))
 	else { #- match(es) found:  substitute if appropriate
@@ -64,15 +64,14 @@ check.options <-
 		if(any(ii <- sapply(prev, fn) != sapply(new, fn))) {
 		    doubt <- doubt | ii
 		    do.keep <- ii & !override.check
-		    warning(paste(paste(paste("`",fn,"(",names(prev[ii]),")'",
-					      sep=""),
+		    warning(paste(paste(sQuote(paste(fn,"(",names(prev[ii]),")",
+					      sep="")),
 					collapse=" and "),
 				  " differ", if(sum(ii)==1) "s",
-				  " between new and previous!",
+				  " between new and previous",
 				  if(any(do.keep))
 				  paste("\n\t ==> NOT changing ",
-					paste(paste("`",names(prev[do.keep]),
-						    "'", sep=""),
+					paste(sQuote(names(prev[do.keep])),
 					      collapse=" & "),
 					collapse = ""),
 				  sep=""))

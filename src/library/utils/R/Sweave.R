@@ -63,16 +63,15 @@ Sweave <- function(file, driver=RweaveLatex(),
             if(mode=="code" && any(grep(syntax$coderef, line))){
                 chunkref <- sub(syntax$coderef, "\\1", line)
                 if(!(chunkref %in% names(namedchunks)))
-                    warning(paste("Reference to unknown chunk",
-                                  chunkref))
+                    warning("reference to unknown chunk ", chunkref)
                 line <- namedchunks[[chunkref]]
             }
             else if(mode=="doc" && any(grep(syntax$syntaxname, line))){
                 sname <- sub(syntax$syntaxname, "\\1", line)
                 syntax <- get(sname, mode = "list")
                 if(class(syntax) != "SweaveSyntax")
-                    stop(paste("Object '", sname,
-                               "' does not have class \"SweaveSyntax\""))
+                    stop("object ", sQuote(sname),
+                         " does not have class \"SweaveSyntax\"")
                 drobj$syntax <- syntax
             }
             if(is.null(chunk))
@@ -187,7 +186,7 @@ SweaveParseOptions <- function(text, defaults=list(), check=NULL)
         return(defaults)
 
     if(any(sapply(x, length)!=2))
-        stop(paste("parse error or empty option in\n", text))
+        stop("parse error or empty option in\n", text)
 
     options <- defaults
 
@@ -260,9 +259,8 @@ RweaveLatexSetup <-
         if(.Platform$OS.type == "windows")
             styfile <- gsub("\\\\", "/", styfile)
         if(any(grep(" ", styfile)))
-            warning(paste("path '", styfile, "' contains spaces,\n",
-                          "this may cause problems when running latex.",
-                          sep=""))
+            warning("path to ", sQuote(styfile), " contains spaces,\n",
+                    "this may cause problems when running latex")
     }
     else
         styfile <- "Sweave"
@@ -481,8 +479,8 @@ RweaveLatexWritedoc <- function(object, chunk)
 RweaveLatexFinish <- function(object, error=FALSE)
 {
     if(!object$quiet && !error)
-        cat(paste("\nYou can now run LaTeX on",
-                  summary(object$output)$description), "\n")
+        cat("\n", gettext("You can now run LaTeX on"), " ",
+            summary(object$output)$description, "\n", sep = "")
     close(object$output)
     if(length(object$chunkout)>0){
         for(con in object$chunkout) close(con)
@@ -508,7 +506,7 @@ RweaveLatexOptions <- function(options)
                 options[[opt]] <- c2l(options[[opt]])
             }
             if(is.na(options[[opt]]))
-                stop(paste("invalid value for", opt, ":", oldval))
+                stop("invalid value for ", sQuote(opt), " : ", oldval)
         }
         else if(opt %in% NUMOPTS){
             options[[opt]] <- as.numeric(options[[opt]])

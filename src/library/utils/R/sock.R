@@ -10,9 +10,9 @@ print.socket <- function(x, ...)
 make.socket <- function(host = "localhost", port, fail = TRUE, server = FALSE)
 {
     if(length(port <- as.integer(port)) != 1)
-	stop("`port' must be integer of length 1")
+	stop("'port' must be integer of length 1")
     if(length(host <- as.character(host)) != 1)
-	stop("`host' must be character of length 1")
+	stop("'host' must be character of length 1")
     if (!server){
 	tmp2 <- .C("Rsockconnect",
                    port = port,
