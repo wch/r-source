@@ -628,12 +628,19 @@ You need to do two things:
 (b) Include the C++ libraries in the link to make the DLL. Suppose
 @file{X.cc} contains your C++ code, and @file{X_main.cc} is the wrapper,
 as in the example in `@emph{Writing R Extensions}'. Then build the DLL by
-(@code{gcc-2.95.x})
+(@code{gcc-2.95})
 
 @example
 g++ -c X.cc X_main.cc
 dlltool --export-all-symbols --output-def X.def X_main.o
 dllwrap -o X.dll --def X.def X.o X_main.o -lstdc++
+@end example
+@noindent
+or if you have @code{--shared} (@code{mingw32 gcc-2.95.1} or
+@code{cygwin 1.1})
+
+@example
+g++ -shared -o X.dll X.cc X_main.cc
 @end example
 @noindent
 or (VC++, which requires extension @code{.cpp})
@@ -655,6 +662,11 @@ destruction when the DLL is unloaded, usually when R terminates.
 
 Note that you may not see the messages from this example in the GUI
 console: see the next section.
+
+This example is in package @code{cxx_0.0-0.tar.gz} in the
+@file{src/contrib/Devel} section on CRAN, and that can be compiled as
+package in the usual way on Windows.
+
 
 @node  The output from my C code disappears., The output from my Fortran code disappears., How do I include C++ code?, Building from Source
 @section  The output from my C code disappears. Why?

@@ -51,9 +51,11 @@ CP=cp
 MKDIR=mkdir
 CAT=cat
 CC=$(BINPREF)gcc $(MINGW32CFLAG)
+CXX=$(BINPREF)g++ $(MINGW32CFLAG)
 F77=$(BINPREF)g77
 AS=$(BINPREF)as
-DLL=$(BINPREF)gcc $(MINGW32LDFLAG)
+DLL_LDMAIN=gcc
+DLL=$(BINPREF)$(DLL_LDMAIN) $(MINGW32LDFLAG)
 DLLTOOL=$(BINPREF)dlltool -k --as $(AS)
 LINKER=$(BINPREF)gcc $(MINGW32LDFLAG)
 AR=$(BINPREF)ar
@@ -67,6 +69,9 @@ RESCOMP=$(BINPREF)windres
 
 .f.o:
 	$(F77) $(FFLAGS) $($*-FFLAGS) -c $< -o $@
+
+.cc.o:
+	$(CXX)  $(CXXFLAGS) $($*-CXXFLAGS) -c $< -o $@
 
 %.exe:
 	$(LINKER)  $(LINKFLAGS) $($*-LINKFLAGS) -o $@ $^ $($*-LIBS) $(LIBS)

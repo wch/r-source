@@ -17,6 +17,7 @@ and is currently being mirrored at
 
     http://mirror.aarnet.edu.au/CRAN                  (Australia)
     http://cran.dk.r-project.org/		      (Denmark)
+    http://cran.hu.r-project.org/                     (Hungary)
     http://cran.it.r-project.org/		      (Italy)
     ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN/           (Japan)
     ftp://dola.snu.ac.kr/pub/R/CRAN/                  (South Korea)
@@ -25,6 +26,6 @@ and is currently being mirrored at
     http://lib.stat.cmu.edu/R/CRAN/                   (USA/Pennsylvania)
     http://cran.us.r-project.org/                     (USA/Wisconsin)
 
-
-In the interests of preserving international bandwidth please use a
-site near you if possible.
+Most of the HTTP sites are also available using FTP.  In the interests
+of preserving international bandwidth please use a site near you if
+possible.

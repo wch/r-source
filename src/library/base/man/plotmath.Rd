@@ -6,7 +6,8 @@
   (\code{\link{text}}, \code{\link{mtext}}, \code{\link{axis}}) in \R
   is an expression, the argument is interpreted as a mathematical
   expression and the output will be formatted according to TeX-like
-  rules.
+  rules.  Expressions can also be used for titles, subtitles and
+  x- and y-axis labels (but not for axis labels on \code{persp} plots).
 }
 \details{
   A mathematical expression must obey the normal rules of syntax for any

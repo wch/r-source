@@ -403,6 +403,9 @@ int main () {
 EOF
       changequote([, ])
       if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
+	## FIXME
+	## This should really use MAINLD, and hence come after this is
+	## determined.  Or maybe we can always use ${CC} eventually?
 	if ${CC-cc} ${LDFLAGS} ${MAINLDFLAGS} -o conftest conftest.o conftestf.o \
             ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
@@ -850,19 +853,22 @@ AC_DEFUN(R_BITMAPS, [
       AC_DEFINE(HAVE_JPEG)
     ], , ${LIBS})
   ])
-  AC_CHECK_HEADER(png.h, [
-    AC_CHECK_LIB(png, png_create_write_struct, [
-      ## FIXME: what if -lz was not found?
-      BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-      AC_DEFINE(HAVE_PNG)
-    ], , ${LIBS})
+  AC_CHECK_LIB(z, main, [
+    AC_CHECK_HEADER(png.h, [
+      AC_CHECK_LIB(png, png_create_write_struct, [
+        BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+	AC_DEFINE(HAVE_PNG)
+      ], , ${LIBS})
+    ])
   ])
   AC_SUBST(BITMAP_LIBS)])
 dnl
 dnl R_TCLTK
 dnl
 AC_DEFUN(R_TCLTK,
-  [ have_tcltk=no
+  [ AC_REQUIRE([AC_PATH_XTRA])
+    have_tcltk=no
+    TCLTK_CPPFLAGS=
     TCLTK_LIBS=
     if test "${want_tcltk}" = yes; then
       AC_CHECK_LIB(tcl, Tcl_CreateInterp, [ TCLTK_LIBS="-ltcl"])
@@ -905,9 +911,15 @@ AC_DEFUN(R_TCLTK,
     if test "${have_tcltk}" = yes; then
       AC_DEFINE(HAVE_TCLTK)
       use_tcltk=yes
+      if test -n "${TK_XINCLUDES}"; then
+	TCLTK_CPPFLAGS=${TK_XINCLUDES}
+      else
+	TCLTK_CPPFLAGS=${X_CFLAGS}
+      fi
     else
       use_tcltk=no
     fi
+    AC_SUBST(TCLTK_CPPFLAGS)
     AC_SUBST(TCLTK_LIBS)
     AC_SUBST(use_tcltk)
   ])

@@ -1,7 +1,7 @@
 Building from a source-code library under Windows
 =================================================
 
-If your package has neither C nor Fortran source, see `Simple ports' 
+If your package has no C nor Fortran nor C++ sources, see `Simple ports' 
 near the bottom of this file.
 
 First collect the tools that you need.
@@ -153,6 +153,11 @@ If you build a debug version of the DLL in the development
 environment, you can debug the DLL code there just by setting the
 executable to be debugged as the full path to the R front-end.
 
+Extra care is needed when referencing variables (rather than
+functions) exported from R.dll.  These must be declared
+__declspec(dllimport).  A list of the relevant variables is in the
+file `exported-vars'.
+
 
 Using Borland C++
 =================
@@ -170,15 +175,22 @@ using
 implib R.lib R.def
 
 and then add R.lib to the bcc32 command line, for example (from
-`S Programming')
+Venables & Ripley's `S Programming')
 
 bcc32 -u- -6 -O2 -WDE -I\R\rw1010\src\include VCrndR.c R.lib
+
+We presume further steps are needed to reference variables (as
+distinct from functions) exported from R.dll, but have not
+investigated.
 
 
 Using other compilers and languages
 ===================================
 
-To use C++ see the section in the R for Windows FAQ.
+To use C++ see the section in the R for Windows FAQ.  You can include
+C++ code in packages as from R 1.1.1, and the supplied Makefiles will
+compile with g++ and link the DLL using g++ (and hence link against
+libstc++.a).
 
 For other compilers you will need to arrange to produce a DLL with
 cdecl (also known as _cdecl or __cdecl) linkage.  The mingw32 port
@@ -201,8 +213,8 @@ even the mingw32 g77 Fortran uses null-terminated strings.
 Simple Ports
 ============
 
-If your package has neither C nor Fortran source, several steps can
-be omitted.
+If your package has no C nor Fortran not C++ sources, several steps
+can be omitted.
 
 You will need 
 

@@ -6706,13 +6706,16 @@ Set @code{Rterm} up for use by @code{R-inferior-mode} in ESS.
 When the GNU @strong{readline} library is available at the time @R{} is
 configured for compilation under UNIX, an inbuilt command line editor
 allowing recall, editing and re-submission of prior commands is used.
+Note: this appendix does @strong{not} apply to GNOME interface under
+UNIX, only to the standard command-line interface.
 
 It can be disabled (useful for usage with ESS@footnote{The `Emacs Speaks
 Statistics' package; see the URL @uref{http://ess.stat.wisc.edu/}})
 using the startup option @option{--no-readline}.
 
 Windows versions of @R{} have somewhat simpler command-line editing:
-see @samp{Console} under the @samp{Help} menu of the GUI.
+see @samp{Console} under the @samp{Help} menu of the GUI, and the file
+@file{README.Rterm} for command-line editing under @code{Rterm.exe}
 
 When using @R{} with @strong{readline} capabilities, the functions
 described below are available.

@@ -35,9 +35,9 @@ RDIFF = $(R_HOME)/bin/Rdiff
 	fi
 
 all:
-	@(out=`echo "$(test-out)" | sed 's/ //g'`; \
+	@(out=`echo "$(test-out)" | sed 's/ $$//g'`; \
 	  if test -n "$${out}"; then \
-	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests $(makevars) $(test-out); \
+	    $(MAKE) -f $(R_HOME)/etc/Makeconf-tests $${out}; \
 	  fi)
 
 clean:

@@ -80,6 +80,11 @@ NEW FEATURES
 	in their .lib.loc argument, the latter as pre-0.99.0.  See
 	their help pages for the precise details.
 
+    o	help() has a new argument `try.all.packages' set by the option
+	"help.try.all.packages". If help is not found in the normal
+	path and this is TRUE then a search is made of all packages 
+	for possible matches.
+
 
 BUG FIXES
 
@@ -104,9 +109,51 @@ BUG FIXES
 
     o   Making manuals without making R first now works.
 
-    o	princomp() now works when some eigenvalues are tiny negatives.
+    o	princomp() now works when some eigenvalues are tiny negative
+	values (which are treated as zero).
 
     o   SearchEngine.html was not installed when builddir != srcdir.
+
+    o	lm.{w}fit(x,y,..) now work when x has no column names.
+	These functions no longer add and subtract n zeros when there's no
+	offset.  They are now documented somewhat.
+
+    o   Some HTML files used src="R.css" instead of href="R.css"
+        causing some browsers to ignore the style sheet. R.css now
+	passes the w3c CSS validator and gives the intended results
+	with Internet Explorer.
+
+    o	The data editor no longer crashes when entries contain more than
+	45 characters, and works correctly if the field width is
+	larger than the window width.
+
+    o	Recording plots used to ignore graphics events before the last
+	replay.
+
+    o	plot(), points(), etc now give warnings and error for invalid
+	`type' arguments.
+
+    o	matplot() now allows the same `type's as plot().
+
+    o	dev.print() and dev.copy2eps() now work when called from a function.
+
+    o	anova.glmlist works correctly with decreasing models and
+	test="F" now gets the correct residual df.
+
+    o	Functions created (not just edited) with fix() now get
+	environment .GlobalEnv not the body of fix.
+
+    o	Rdconv was ignoring OS-specific parts of the files with some
+	Perl versions. (This did not affect installing packages.)
+
+    o	R CMD check  did not run more than one specific test.
+
+    o	keyword2html omitted items when changing up a level, so 
+	the HTML search engine keyword list was missing `data' and
+	`utilities', for example.
+
+    o	aov() with multiple strata was setting some spurious options.
+
 
 
 		CHANGES IN R VERSION 1.1.0

@@ -1,5 +1,5 @@
 #
-# ${R_HOME}/src/library/eda/Makefile
+# ${R_HOME}/src/library/tcltk/Makefile
 
 VPATH = @srcdir@
 srcdir = @srcdir@

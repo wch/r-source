@@ -14,7 +14,7 @@ is.R()
   In order for code to be runnable in both \R and S dialects, either
   your the code must define \code{is.R} or use it as
 
-  \code{if (exists(is.R) && is.function(is.R) && is.R()) \{}\cr
+  \code{if (exists("is.R") && is.function(is.R) && is.R()) \{}\cr
   \code{    }\emph{\#\# R-specific code}\cr
   \code{\} else \{}\cr
   \code{    }\emph{\#\# S-version of code}\cr
@@ -27,7 +27,7 @@ is.R()
 \seealso{\code{\link{R.version}}, \code{\link{system}}.}
 \examples{
 x <- runif(20); small <- x < 0.4
-# which only exists in R:
+# `which()' only exists in R:
 if(is.R()) which(small) else seq(along=small)[small]
 }
 \keyword{environment}

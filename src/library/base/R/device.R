@@ -141,7 +141,7 @@ dev.print <- function(device = postscript,  ...)
     }
     if(is.null(oc$width)) oc$width <- w
     if(is.null(oc$height)) oc$height <- h
-    dev.off(eval(oc))
+    dev.off(eval.parent(oc))
     dev.set(current.device)
 }
 
@@ -162,7 +162,7 @@ dev.copy2eps <- function(...)
     if(is.null(oc$width)) oc$width <- w
     if(is.null(oc$height)) oc$height <- h
     if(is.null(oc$file)) oc$file <- "Rplot.eps"
-    dev.off(eval(oc))
+    dev.off(eval.parent(oc))
     dev.set(current.device)
 }
 

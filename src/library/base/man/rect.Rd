@@ -14,7 +14,7 @@ rect(xleft, ybottom, xright, ytop,
   \item{border}{color for rectangle border(s).}
   \item{lty}{line type for borders; defaults to \code{"solid"}.}
   \item{lwd}{width for borders.}
-  \item{xpd}{logical (\emph{``expand''}); if \code{FLASE}, everything is
+  \item{xpd}{logical (\emph{``expand''}); if \code{FALSE}, everything is
     clipped to the plot region.}
 }
 \description{

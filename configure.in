@@ -564,12 +564,14 @@ if test -n "${XMKMF}"; then
   echo > Imakefile
   ${XMKMF} > /dev/null
   cc=`${srcdir}/tools/GETMAKEVAL CC`
+  cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
     shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fpicflags=${cpicflags}
   fi
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
+  cxx=`echo ${cxx} | sed "s/ .*//"`
   if test "`which ${cxx}`" = "`which ${CXX}`"; then
     cxxpicflags=`${srcdir}/tools/GETMAKEVAL CXXPICFLAGS`
   fi
@@ -592,27 +594,33 @@ AC_MSG_RESULT(done)
 case "${host}" in
   *aix4.[[2-9]]*)
     EXPORTFILE="\$(top_builddir)/etc/R.exp"
-    mainld=ld
-    mainldflags="-bdynamic -bE:${EXPORTFILE} -bM:SRE"
-    if test "${GCC}" = yes; then
-      mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
-    fi
-    shlibld=ld
-    shlibldflags="-bM:SRE -H512 -T512 -bnoentry -bexpall \
-      -bI:\$(R_HOME)/etc/R.exp"
-    ;;
-  alpha*osf*)
-    mainld="${FC} -g -nofor_main -fpe3 "
     cpicflags=
     cxxpicflags=
-    shlibld=${FC}
-    shlibldflags=-shared
+    fpicflags=
+    if test "${GCC}" = yes; then
+      wl="-Xlinker "
+    else
+      wl=
+    fi
+    mainldflags="${wl}-bdynamic ${wl}-bE:${EXPORTFILE} ${wl}-bM:SRE"
+    # FIXME: is this really necessary?
+    #     if test "${GCC}" = yes; then
+    #       mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
+    #     fi
+    shlibldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
+      ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
+    ;;
+  alpha*osf*)
+    cpicflags=
+    cxxpicflags=
+    fpicflags=
+    shlibldflags="-shared"
     ;;
   alpha*linux*)
-    mainldflags=-export-dynamic
+    mainldflags="-export-dynamic"
     ;;
   *freebsd[[3-4]].*)
-    mainldflags=-export-dynamic
+    mainldflags="-export-dynamic"
     shlibldflags="-shared"
     ;;
   *hpux*)
@@ -625,15 +633,18 @@ case "${host}" in
         fpicflags="+z" ;;
     esac
     mainldflags="-Wl,-E"
-    shlibld=ld
-    shlibldflags="-b"
+    if test "${GCC}" = yes; then
+      shlibldflags="-shared -fPIC"
+    else
+      shlibldflags="-b"
+    fi
     SHLIBEXT=sl
     ;;
   *linux*aout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   *linux*)
-    mainldflags=-export-dynamic
+    mainldflags="-export-dynamic"
     ;;
   *netbsd*)
     if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
@@ -677,17 +688,20 @@ case "${host}" in
     ;;
 esac
 
-: ${MAINLD=${mainld}}
-#: ${MAINLDFLAGS=${mainldflags}}
-if test -n "${MAINLDFLAGS}" ; then
-  MAINLDFLAGS="${MAINLDFLAGS} ${mainldflags}"
-else
-  MAINLDFLAGS=${mainldflags}
+if test -z "${MAINLD}"; then
+  MAINLD=${mainld}
+  if test -z "${MAINLDFLAGS}"; then
+    MAINLDFLAGS=${mainldflags}
+  else
+    MAINLDFLAGS="${MAINLDFLAGS} ${mainldflags}"
+  fi
 fi
 
 : ${CPICFLAGS=${cpicflags}}
 if test -z "${CPICFLAGS}"; then
   case "${host}" in
+    *aix4.[[2-9]]*)
+      ;;
     alpha*osf*)
       ;;
     *)
@@ -700,6 +714,8 @@ fi
 : ${CXXPICFLAGS=${cxxpicflags}}
 if test -z "${CXXPICFLAGS}"; then
   case "${host}" in
+    *aix4.[[2-9]]*)
+      ;;
     alpha*osf*)
       ;;
     *)
@@ -708,15 +724,15 @@ if test -z "${CXXPICFLAGS}"; then
       ;;
   esac
 fi
-: ${SHLIBLD=${shlibld}}
-#: ${SHLIBLDFLAGS=${SHLIBLDFLAGS} ${shlibldflags}}
 
-if test -n "${SHLIBLDFLAGS}" ; then
-  SHLIBLDFLAGS="${SHLIBLDFLAGS} ${shlibldflags}"
-else
-  SHLIBLDFLAGS=${shlibldflags}
+if test -z "${SHLIBLD}"; then
+  SHLIBLD=${shlibld}
+  if test -z "${SHLIBLDFLAGS}"; then
+    SHLIBLDFLAGS=${shlibldflags}
+  else
+    SHLIBLDFLAGS="${SHLIBLDFLAGS} ${shlibldflags}"
+  fi
 fi
-
 if test -z "${SHLIBLDFLAGS}"; then
   AC_MSG_WARN([Could not determine SHLIBLDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])
@@ -874,7 +890,6 @@ AC_OUTPUT(Makeconf
   src/scripts/REMOVE
   src/scripts/R.sh
   src/scripts/Rd2contents
-  src/scripts/Rd2txt
   src/scripts/Rdconv
   src/scripts/Rdindex
   src/scripts/Rprof

@@ -162,7 +162,14 @@ de(\dots, Modes = NULL, Names = NULL)
   of each column, with a default of 10 characters for empty columns.
   you can specify fixed column widths by setting option
   \code{de.cellwidth} to the required fixed width (in characters).
-  (set it to zero to return to variable widths).
+  (set it to zero to return to variable widths).  The displayed
+  width of any field is limited to
+#ifdef unix
+  600 pixels (and by the window width).
+#endif
+#ifdef windows
+  50 characters (and by the window width).
+#endif
 }
 \seealso{
   \code{\link{vi}}, \code{\link{edit}}: \code{edit} uses
