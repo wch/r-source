@@ -57,6 +57,9 @@ plot history variable.
 
 The console pop-up was checking the wrong item for `Buffered output'.
 
+Plot histories are saved in a different format: those from earlier
+versions of R cannot be played back and will be reported as corrupted.
+
 Installing a package now first removes the data and demo directories
 if they exist.
 
