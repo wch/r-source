@@ -309,23 +309,27 @@ endif
 
 lazyload:
 ifeq ($(strip $(BUILD)),CROSS)
-	@if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
-	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
-	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
-	  R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null ; \
-	  rm -f $(DPKG)/R/all.rda ; \
-	  if test -r install.R ; then \
-	    cat install.R >> $(DPKG)/R/$(PKG) ; \
+	@if test -d $(DPKG)/R ; then \
+	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
+	    $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
+	    $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\", lib.loc=\"$(RLIB)\")" | \
+	    R_CROSS_BUILD=yes R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(R_EXE) --vanilla --slave > /dev/null ; \
+	    rm -f $(DPKG)/R/all.rda ; \
+	    if test -r install.R ; then \
+	      cat install.R >> $(DPKG)/R/$(PKG) ; \
+	    fi ; \
 	  fi ; \
 	fi
 else
-	@if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
-	  $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
-	  $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\")" | \
-	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
-	  rm -f $(DPKG)/R/all.rda ; \
-	  if test -r install.R ; then \
-	    cat install.R >> $(DPKG)/R/$(PKG) ; \
+	@if test -d $(DPKG)/R ; then \
+	  if ! test -f $(DPKG)/R/$(PKG).rdb ; then \
+	    $(ECHO)  "preparing package $(PKG) for lazy loading" ; \
+	    $(ECHO) "tools:::makeLazyLoading(\"$(PKG)\")" | \
+	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	    rm -f $(DPKG)/R/all.rda ; \
+	    if test -r install.R ; then \
+	      cat install.R >> $(DPKG)/R/$(PKG) ; \
+	    fi ; \
 	  fi ; \
 	fi
 endif
