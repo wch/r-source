@@ -58,7 +58,6 @@ format.pval(pv, digits = max(1, getOption("digits") - 2),
 
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
-  The result is a data frame, so in most cases 
 }
 \note{
   Currently \code{format} drops trailing zeroes, so \code{format(6.001,
