@@ -2,6 +2,9 @@
 
 NEW FEATURES
 
+    o   etc/build-htmlpkglist has been integrated into etc/build-help
+        (option --htmllists) 
+
     o   family	gaussian(.) and inverse.gaussian(.) both accept several
 	link arguments [J.Lindsey].
 
