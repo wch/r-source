@@ -1321,6 +1321,10 @@ SEXP do_modelframe(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(na_action);
 	PROTECT(tmp = lang2(na_action, data));
 	ans = eval(tmp, rho);
+	if (!isNewList(ans) || length(ans) != length(data))
+	    errorcall(call, "invalid result from na.action\n");
+	for ( i = length(ans) ; i-- ; )
+	    ATTRIB(VECTOR(ans)[i]) = ATTRIB(VECTOR(data)[i]);
 	UNPROTECT(2);
     }
     else ans = data;
