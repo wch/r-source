@@ -77,7 +77,7 @@ SEXP do_device(SEXP call, SEXP op, SEXP args, SEXP env)
 	nnpars = LENGTH(s);
 
 	if( !strcmp(device,"X11") )
-		for(i=0 ; i<nnpars ; i++ ) 
+		for(i=0 ; i<nnpars ; i++ )
 			if(!FINITE(REAL(s)[i]) || REAL(s)[i] <= 0)
 				errorcall(call, "invalid device driver parameter\n");
 	npars = REAL(s);
@@ -281,7 +281,7 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	int ask, asksave;
 	checkArity(op, args);
-	ask = asLogical(CAR(args));	
+	ask = asLogical(CAR(args));
 	if(ask == NA_LOGICAL) ask = DP->ask;
 	asksave = GP->ask;
 	GP->ask = ask;
@@ -406,17 +406,17 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		/*  Initial checks  */
 
-	GCheckState(); 
+	GCheckState();
 	if(length(args) < 3)
 		errorcall(call, "too few arguments\n");
 
-		/*  Required arguments  */
+		/*  Required arguments	*/
 
 	which = asInteger(CAR(args));
 	if (which < 1 || which > 4)
 		errorcall(call, "invalid axis number\n");
 	args = CDR(args);
-	
+
 	internalTypeCheck(call, at = CAR(args), REALSXP);
 	args = CDR(args);
 
@@ -479,8 +479,10 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		GP->col = fg;
 		GStartPath();
+		/* axis line */
 		GMoveTo(XMAP(xt(REAL(at)[0])), y);
 		GLineTo(XMAP(xt(REAL(at)[n - 1])), y);
+		/* ticks */
 		for (i = 0; i < n; i++) {
 			x = XMAP(xt(REAL(at)[i]));
 			if (low <= x && x <= high) {
@@ -490,6 +492,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 		GEndPath();
 		GP->col = GP->colaxis;
+		/* labels */
 		tlast = -1.0;
 		gap = GStrWidth("m", 2);	/* FIXUP x/y distance */
 		for (i = 0; i < n; i++) {
@@ -500,7 +503,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 			else {
 				labw = GStrWidth(CHAR(STRING(lab)[i]), 2);
 				tnew = x - 0.5 * labw;
-				if (tnew - tlast >= gap) {
+				if (tnew - tlast >= gap) {/* there's room */
 					GMtext(CHAR(STRING(lab)[i]), which, GP->mgp[1], 0, xt(REAL(at)[i]), GP->las);
 					tlast = x + 0.5 *labw;
 				}
@@ -554,7 +557,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
-	/*  plot.xy(xy, type, pch, lty, col, cex, ...)  */
+	/*  plot.xy(xy, type, pch, lty, col, cex, ...)	*/
 	/*  plot points or lines of various types  */
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -565,7 +568,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		/* Basic Checks */
 
-	GCheckState(); 
+	GCheckState();
 	if(length(args) < 6)
 		errorcall(call, "too few arguments\n");
 
@@ -795,7 +798,7 @@ SEXP do_segments(SEXP call, SEXP op, SEXP args, SEXP env)
 	int nx0, nx1, ny0, ny1;
 	int i, n, ncol, nlty;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 4) errorcall(call, "too few arguments\n");
 
@@ -851,7 +854,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 	int i, n, nxl, nxr, nyb, nyt;
 	int ncol, nlty, nborder;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 4) errorcall(call, "too few arguments\n");
 	xypoints(call, args, &n);
@@ -906,7 +909,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	int code, i, n, nx0, nx1, ny0, ny1;
 	int ncol, nlty, xpd;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 4) errorcall(call, "too few arguments\n");
 	xypoints(call, args, &n);
@@ -977,7 +980,7 @@ SEXP do_polygon(SEXP call, SEXP op, SEXP args, SEXP env)
 	double *work;
 	char *vmax;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 2) errorcall(call, "too few arguments\n");
 
@@ -1030,7 +1033,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	double *x, *y;
 	double xx, yy;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 2) errorcall(call, "too few arguments\n");
 
@@ -1118,7 +1121,9 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
-	/* mtext(text, side, line, outer, at = NULL) */
+	/* mtext(text, side, line, outer, at = NULL, ...)
+	 *
+	 * where ... supports  adj, cex, col, font  */
 
 SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -1127,7 +1132,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	int i, side, outer;
 	int newsave;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 5) errorcall(call, "too few arguments\n");
 
@@ -1187,9 +1192,6 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	}
 
-
-	/*======= now you should MAKE USE of adjx, adjy !!! =======*/
-
 	PROTECT(cex = FixupCex(GetPar("cex", args)));
 	if(FINITE(REAL(cex)[0])) GP->cex = GP->cexbase * REAL(cex)[0];
 	else GP->cex = GP->cexbase;
@@ -1223,7 +1225,7 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP main, xlab, ylab, sub;
 	double x, y, adj;
 
-	GCheckState(); 
+	GCheckState();
 
 	if(length(args) < 4) errorcall(call, "too few arguments\n");
 
@@ -1305,7 +1307,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	int i, ncol, nlines, nlty;
 	double aa, bb;
 
-	GCheckState(); 
+	GCheckState();
 	if(length(args) < 4) errorcall(call, "too few arguments\n");
 
 	if((a = CAR(args)) != R_NilValue)
@@ -1334,7 +1336,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	GSavePars();
 	ProcessInlinePars(args);
-	
+
 	nlines = 0;
 
 	if (a != R_NilValue) {
@@ -1403,7 +1405,7 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	int which, col, fg;
-	GCheckState(); 
+	GCheckState();
 	GSavePars();
 	which = asInteger(CAR(args));
 	if(which < 1 || which > 4)
@@ -1429,8 +1431,8 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP x, y, nobs, ans;
 	int i, n;
-	
-	GCheckState(); 
+
+	GCheckState();
 
 	checkArity(op, args);
 	n = asInteger(CAR(args));
@@ -1440,7 +1442,7 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = allocVector(REALSXP, n));
 	PROTECT(nobs=allocVector(INTSXP,1));
 	i = 0;
-	
+
 	GMode(2);
 	while(i < n) {
 		if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), 1))
@@ -1477,7 +1479,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	double xi, yi, xp, yp, d, dmin, offset;
 	int i, imin, k, n;
 
-	GCheckState(); 
+	GCheckState();
 
 	checkArity(op, args);
 	x = CAR(args);
@@ -1561,36 +1563,36 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-        SEXP ans, str;
-        int i, n, units;
-        double cex, cexsave;
+	SEXP ans, str;
+	int i, n, units;
+	double cex, cexsave;
 
-        checkArity(op,args);
-        str = CAR(args);
-        if((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
-                errorcall(call, "character or expression first argument expected\n");
-        args = CDR(args);
+	checkArity(op,args);
+	str = CAR(args);
+	if((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
+		errorcall(call, "character or expression first argument expected\n");
+	args = CDR(args);
 
-        if((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
-                errorcall(call, "invalid units\n");
-        args = CDR(args);
+	if((units = asInteger(CAR(args))) == NA_INTEGER || units < 0)
+		errorcall(call, "invalid units\n");
+	args = CDR(args);
 
-        if(isNull(CAR(args)))
-                cex = GP->cex;
-        else if(!FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
-                errorcall(call, "invalid cex value\n");
+	if(isNull(CAR(args)))
+		cex = GP->cex;
+	else if(!FINITE(cex = asReal(CAR(args))) || cex <= 0.0)
+		errorcall(call, "invalid cex value\n");
 
-        n = LENGTH(str);
-        ans = allocVector(REALSXP, n);
-        cexsave = GP->cex;
-        GP->cex = cex * GP->cexbase;
-        for(i=0 ; i<n ; i++)
-                if (isExpression(str))
-                        REAL(ans)[i] = GExpressionHeight(VECTOR(str)[i], units);
-                else
-                        REAL(ans)[i] = GStrHeight(CHAR(STRING(str)[i]), units);
-        GP->cex = cexsave;
-        return ans;
+	n = LENGTH(str);
+	ans = allocVector(REALSXP, n);
+	cexsave = GP->cex;
+	GP->cex = cex * GP->cexbase;
+	for(i=0 ; i<n ; i++)
+		if (isExpression(str))
+			REAL(ans)[i] = GExpressionHeight(VECTOR(str)[i], units);
+		else
+			REAL(ans)[i] = GStrHeight(CHAR(STRING(str)[i]), units);
+	GP->cex = cexsave;
+	return ans;
 }
 
 SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1621,10 +1623,10 @@ SEXP do_strwidth(SEXP call, SEXP op, SEXP args, SEXP env)
 	cexsave = GP->cex;
 	GP->cex = cex * GP->cexbase;
 	for(i=0 ; i<n ; i++)
-                if (isExpression(str))
-                        REAL(ans)[i] = GExpressionWidth(VECTOR(str)[i], units);
-                else
-                        REAL(ans)[i] = GStrWidth(CHAR(STRING(str)[i]), units);
+		if (isExpression(str))
+			REAL(ans)[i] = GExpressionWidth(VECTOR(str)[i], units);
+		else
+			REAL(ans)[i] = GStrWidth(CHAR(STRING(str)[i]), units);
 	GP->cex = cexsave;
 	return ans;
 }
@@ -1677,7 +1679,7 @@ SEXP do_dend(SEXP call, SEXP op, SEXP args, SEXP env)
 
 	checkArity(op, args);
 
-	GCheckState(); 
+	GCheckState();
 
 	n = asInteger(CAR(args));
 	if(n == NA_INTEGER || n < 2)
@@ -1729,7 +1731,7 @@ SEXP do_saveplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	checkArity(op, args);
 
-	GCheckState(); 
+	GCheckState();
 
 	if(!isString(CAR(args)) || length(CAR(args)) < 1
 	  || *CHAR(STRING(CAR(args))[0]) == '\0')
@@ -1742,7 +1744,7 @@ SEXP do_printplot(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	checkArity(op, args);
 
-	GCheckState(); 
+	GCheckState();
 
 	GPrintPlot();
 	return R_NilValue;
