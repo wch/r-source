@@ -14,8 +14,10 @@
 
 .path.package(package, quiet = FALSE)
 
-.getRequiredPackages(file = "DESCRIPTION", quietly = FALSE)
-.getRequiredPackages2(pkgInfo, quietly = FALSE, lib.loc = NULL)
+.getRequiredPackages(file = "DESCRIPTION", quietly = FALSE,
+                     useImports = FALSE)
+.getRequiredPackages2(pkgInfo, quietly = FALSE, lib.loc = NULL,
+                      useImports = FALSE)
 }
 \arguments{
   \item{package}{the name of a package}
@@ -24,6 +26,7 @@
     of \code{NULL} corresponds to all libraries currently known.}
   \item{quiet}{logical.  Should this not give warnings or an error
     if the package(s) are not found?}
+  \item{useImports}{logical.  Should  the \code{Imports} field be processed?}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{file}{The full path to the \file{DESCRIPTION} file of a package.}

@@ -791,15 +791,17 @@ print.packageInfo <- function(x, ...)
 manglePackageName <- function(pkgName, pkgVersion)
     paste(pkgName, "_", pkgVersion, sep = "")
 
-.getRequiredPackages <- function(file="DESCRIPTION", quietly = FALSE)
+.getRequiredPackages <-
+    function(file="DESCRIPTION", quietly = FALSE, useImports = FALSE)
 {
     ## OK to call tools as only used during installation.
     pkgInfo <- tools:::.split_description(tools:::.read_description(file))
-    .getRequiredPackages2(pkgInfo, quietly)
+    .getRequiredPackages2(pkgInfo, quietly, , useImports)
     invisible()
 }
 
-.getRequiredPackages2 <- function(pkgInfo, quietly = FALSE, lib.loc = NULL)
+.getRequiredPackages2 <-
+    function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
     pkgs <- names(pkgInfo$Depends)
     if (length(pkgs)) {
@@ -842,5 +844,9 @@ manglePackageName <- function(pkgName, pkgVersion)
                 }
             }
         }
+    }
+    if(useImports) {
+        nss <- names(pkgInfo$Imports)
+        for(ns in nss) loadNamespace(ns, lib.loc)
     }
 }
