@@ -9,7 +9,7 @@
   Assign a value to a name in an environment.
 }
 \usage{
-assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
+assign(x, value, pos = -1, envir = pos.to.env(pos),
        inherits = FALSE, immediate = TRUE)
 x <- value
 x <<- value
@@ -36,7 +36,7 @@ value ->> x
   specified, then the assignment takes place in the currently active
   environment.
 
-  If \code{inherits} is \code{TRUE}, parents of the supplied
+  If \code{inherits} is \code{TRUE}, enclosing environments of the supplied
   environment are searched until the variable \code{x} is encountered.
   The value is then assigned in the environment in which the variable is
   encountered.  If the symbol is not encountered then assignment takes
