@@ -188,7 +188,9 @@ install-aqua:
 	@(rm -rf /Applications/R.app)
 	@(mkdir -p /Applications/R.app/Contents/Resources)
 	@(cd "$(srcdir)/src/modules/aqua/Contents" && \
-	cp Info.plist PkgInfo /Applications/R.app/Contents)
+	cp PkgInfo /Applications/R.app/Contents)
+	@(cd "$(top_builddir)/src/modules/aqua/Contents" && \
+	cp Info.plist  /Applications/R.app/Contents)
 	@(cd "$(srcdir)/src/modules/aqua/Contents/Resources" && \
 	cp -R * /Applications/R.app/Contents/Resources)
 	@(mkdir -p /Applications/R.app/Contents/MacOS)
