@@ -14,12 +14,12 @@ model.frame(formula, \dots)
 
 \method{model.frame}{aovlist}(formula, data = NULL, \dots)
 
-\method{model.frame}{glm}(formula, data, na.action, \dots)
+\method{model.frame}{glm}(formula, \dots)
 
-\method{model.frame}{lm}(formula, data, na.action, \dots)
+\method{model.frame}{lm}(formula, \dots)
 }
 \arguments{
-  \item{formula}{a model formula}
+  \item{formula}{a model formula or an \R object.}
 
   \item{data}{\code{data.frame}, list, \code{environment} or object
     coercible to \code{data.frame} containing the variables in
@@ -42,8 +42,9 @@ model.frame(formula, \dots)
   \item{xlev}{a named list of character vectors giving the full set of levels
     to be assumed for each factor.}
 
-  \item{\dots}{further arguments such as \code{subset}, \code{offset} and
-    \code{weights}. \code{NULL} arguments are treated as missing.}
+  \item{\dots}{further arguments such as \code{data}, \code{na.action},
+    \code{subset}, \code{offset} and \code{weights}.  \code{NULL}
+    arguments are treated as missing.}
 }
 \description{
   \code{model.frame} (a generic function) and its methods return a

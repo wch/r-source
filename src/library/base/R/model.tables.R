@@ -433,15 +433,22 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     rm(formula)
     indError <- attr(Terms, "specials")$Error
     errorterm <-  attr(Terms, "variables")[[1 + indError]]
-    form <- update.formula(Terms, paste(". ~ .-", deparse(errorterm, width=500, backtick = TRUE),
-					"+", deparse(errorterm[[2]], width=500, backtick = TRUE)))
+    form <- update.formula(Terms,
+                           paste(". ~ .-", deparse(errorterm, width=500,
+                                                   backtick = TRUE),
+                                 "+", deparse(errorterm[[2]], width=500,
+                                              backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)
     nargs <- nargs[match(c("data", "na.action", "subset"), names(nargs), 0)]
     args <- oargs[match(c("data", "na.action", "subset"), names(oargs), 0)]
     args[names(nargs)] <- nargs
     args$formula <- form
-    do.call("model.frame", args)
+    env <- environment(Terms)
+    if (is.null(env)) env <- parent.frame()
+    fcall <- c(list(as.name("model.frame")), args)
+#    do.call("model.frame", args)
+    eval(as.call(fcall), env)
 }
 
 print.mtable <-

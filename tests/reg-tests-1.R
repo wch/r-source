@@ -2792,3 +2792,24 @@ unlink(temp)
 # attributes get a different order here
 stopifnot(identical(data$a, data2$a))
 ## not allowed prior to 1.9.0
+
+
+## scoping problems with model.frame methods
+foo <- c(1,1,0,0,1,1)
+rep <- 1:6
+m <- lm(foo ~ rep, model=FALSE)
+model.matrix(m)
+n <- 1.6
+m <- lm(foo ~ n, model=FALSE)
+model.matrix(m)
+## failed in 1.8.0 because the wrong n or rep was found.
+rm(foo, rep)
+func <- function()
+{
+    foo <- c(1,1,0,0,1,1)
+    rep <- 1:6
+    m <- lm(foo ~ rep, model=FALSE)
+    model.matrix(m)
+}
+func()
+##

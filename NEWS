@@ -54,6 +54,10 @@ NEW FEATURES
     o   subset() now allows a `drop' argument to remove unused factor
         levels. The default is still to keep them. 
 
+    o	model.frame() methods, for example those for lm and glm, pass
+	relevant parts of ... onto the default method.  (This has
+	long been documented but not done.)
+
 
 UTILITIES
 
@@ -99,6 +103,9 @@ BUG FIXES
     o	contrasts() turns a logical variable into a factor.  This now
 	always has levels c("FALSE", "TRUE") even if only one (or
 	none) of these occur in the variable.
+
+    o	model.frame()'s lm and glm methods had 'data' and 'na.action'
+	arguments which they ignored and have been removed.
 
 
 

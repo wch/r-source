@@ -716,15 +716,18 @@ residuals.glm <-
 
 ## KH on 1998/06/22: update.default() is now used ...
 
-model.frame.glm <-
-    function (formula, data, na.action, ...)
+model.frame.glm <- function (formula, ...)
 {
-    if (is.null(formula$model)) {
+    dots <- list(...)
+    if (length(dots) || is.null(formula$model)) {
 	fcall <- formula$call
 	fcall$method <- "model.frame"
 	fcall[[1]] <- as.name("glm")
-	env<-environment(fcall$formula)
-	if (is.null(env)) env<-parent.frame()
+        nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
+        fcall[names(nargs)] <- nargs
+#	env <- environment(fcall$formula)  # always NULL
+        env <- environment(formula$terms)
+	if (is.null(env)) env <- parent.frame()
 	eval(fcall, env)
     }
     else formula$model

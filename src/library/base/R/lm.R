@@ -450,26 +450,31 @@ formula.lm <- function(x, ...)
 
 family.lm <- function(object, ...) { gaussian() }
 
-model.frame.lm <- function(formula, data, na.action, ...) {
-    if (is.null(formula$model)) {
+model.frame.lm <- function(formula, ...)
+{
+    dots <- list(...)
+    if (length(dots) || is.null(formula$model)) {
         fcall <- formula$call
         fcall$method <- "model.frame"
         fcall[[1]] <- as.name("lm")
-	env <- environment(fcall$formula)
+        nargs <- dots[match(c("data", "na.action", "subset"), names(dots), 0)]
+        fcall[names(nargs)] <- nargs
+#	env <- environment(fcall$formula)  # always NULL
+        env <- environment(formula$terms)
 	if (is.null(env)) env <- parent.frame()
         eval(fcall, env)
     }
     else formula$model
 }
 
-variable.names.lm <- function(object, full=FALSE, ...)
+variable.names.lm <- function(object, full = FALSE, ...)
 {
     if(full)	dimnames(object$qr$qr)[[2]]
     else if(object$rank) dimnames(object$qr$qr)[[2]][seq(len=object$rank)]
     else character(0)
 }
 
-case.names.lm <- function(object, full=FALSE, ...)
+case.names.lm <- function(object, full = FALSE, ...)
 {
     w <- weights(object)
     dn <- names(residuals(object))
@@ -743,17 +748,10 @@ effects.lm <- function(object, set.sign = FALSE, ...)
 
 model.matrix.lm <- function(object, ...)
 {
-    if(n <- match("x", names(object), 0)) object[[n]]
+    if(n_match <- match("x", names(object), 0)) object[[n_match]]
     else {
-#         if(length(object$coefficients) == 0) {
-#             rval <- matrix(ncol=0, nrow=length(object$residuals))
-#             attr(rval,"assign") <- integer(0)
-#             rval
-#         } else {
-            data <- model.frame(object, xlev = object$xlevels, ...)
-            NextMethod("model.matrix", data = data,
-                       contrasts = object$contrasts)
-#        }
+        data <- model.frame(object, xlev = object$xlevels, ...)
+        NextMethod("model.matrix", data = data, contrasts = object$contrasts)
     }
 }
 
