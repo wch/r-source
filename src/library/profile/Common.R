@@ -27,6 +27,7 @@ options(keep.source = interactive())    # was `TRUE' in 1.0.x
 options(warn = 0)
 options(help.try.all.packages = FALSE)
 options(CRAN = "http://cran.r-project.org")
+options(repositories=c(CRAN = "http://cran.r-project.org/src/contrib"))
 options(timeout = 60)
 options(internet.info = 2)
 options(encoding = native.enc)
