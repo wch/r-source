@@ -3035,3 +3035,50 @@ stopifnot(inherits(try(e == e), "try-error"))
 ## "nowhere" interpolation (PR#6809)
 approx(list(x=rep(NaN,9),y=1:9), xout=NaN)
 ## gave a seg.fault in 1.9.0
+
+
+## names in columns of data frames
+x <- 1:10
+names(x) <- letters[x]
+DF <- data.frame(x=x)
+(nm <- names(DF$x))
+stopifnot(is.null(nm))
+DF$y1 <- x
+DF["y2"] <- x
+DF[, "y3"] <- x
+DF[["y4"]] <- x
+stopifnot(is.null(names(DF$y1)), is.null(names(DF$y2)),
+          is.null(names(DF$y3)), is.null(names(DF$y4)))
+# names were preserved in 1.9.x
+# check factors
+xx <- as.factor(x)
+DF <- data.frame(x=xx)
+(nm <- names(DF$xx))
+stopifnot(is.null(nm))
+DF$y1 <- xx
+DF["y2"] <- xx
+DF[, "y3"] <- xx
+DF[["y4"]] <- xx
+stopifnot(is.null(names(DF$y1)), is.null(names(DF$y2)),
+          is.null(names(DF$y3)), is.null(names(DF$y4)))
+# how about AsIs?  This should preserve names
+DF <- data.frame(x=I(x))
+(nm <- names(DF$x))
+stopifnot(identical(nm, names(x)))
+DF2 <- rbind(DF, DF[7:8,, drop=FALSE])
+(nm <- names(DF2$x))
+stopifnot(identical(nm, c(names(x), names(x)[7:8])))
+# and matrices?  Ordinary matrices will be split into columns
+x <- 1:10
+dim(x) <- c(5,2)
+dimnames(x) <- list(letters[1:5], c("i", "ii"))
+DF <- data.frame(x=I(x))
+DF2 <- rbind(DF, DF)
+(rn <- rownames(DF2$x))
+stopifnot(identical(rn, c(rownames(x), rownames(x))))
+class(x) <- "model.matrix"
+DF <- data.frame(x=x)
+DF2 <- rbind(DF, DF)
+(rn <- rownames(DF2$x))
+stopifnot(identical(rn, c(rownames(x), rownames(x))))
+## names were always preserved in 1.9.x, but rbind dropped names and dimnames.

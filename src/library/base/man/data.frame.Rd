@@ -56,6 +56,8 @@ data.frame(\dots, row.names = NULL, check.rows = FALSE, check.names = TRUE)
   If row names are supplied of length one and the data frame has a
   single row, the \code{row.names} is taken to specify the row names and
   not a column (by name or number).
+
+  Names are removed from vector inputs not protected by \code{\link{I}}.
 }
 \note{
   In versions of \R prior to 1.4.0 logical columns were converted to

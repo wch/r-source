@@ -71,6 +71,7 @@ is.data.frame(x)
   If \code{row.names = NULL}, row names are constructed from the names
   or dimnames of \code{x}, otherwise are the integer sequence
   starting at one.  Few of the methods check for duplicated row names.
+  Names are removed from vector columns unless \code{\link{I}}.
 }
 \note{
   In versions of \R prior to 1.4.0 logical columns were converted to

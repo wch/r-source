@@ -113,6 +113,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
 as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 {
     nrows <- length(x)
+    nm <- deparse(substitute(x))
     if(is.null(row.names)) {
 	if (nrows == 0)
 	    row.names <- character(0)
@@ -121,8 +122,9 @@ as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 	else if(optional) row.names <- character(nrows)
 	else row.names <- as.character(1:nrows)
     }
+    names(x) <- NULL # remove names as from 2.0.0
     value <- list(x)
-    if(!optional) names(value) <- deparse(substitute(x))[[1]]
+    if(!optional) names(value) <- nm
     attr(value, "row.names") <- row.names
     class(value) <- "data.frame"
     value
@@ -229,8 +231,24 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
     ## why not remove class and NextMethod here?
     if(length(dim(x))==2)
 	as.data.frame.model.matrix(x, row.names, optional)
-    else
-	as.data.frame.vector(x, row.names, optional)
+    else { # as.data.frame.vector without removing names
+        nrows <- length(x)
+        nm <- deparse(substitute(x))
+        if(is.null(row.names)) {
+            if (nrows == 0)
+                row.names <- character(0)
+            else if(length(row.names <- names(x)) == nrows &&
+                    !any(duplicated(row.names))) {}
+            else if(optional) row.names <- character(nrows)
+            else row.names <- as.character(1:nrows)
+        }
+        value <- list(x)
+        if(!optional) names(value) <- nm
+        attr(value, "row.names") <- row.names
+        class(value) <- "data.frame"
+        value
+    }
+
 }
 
 ###  This is the real "data.frame".
@@ -468,6 +486,7 @@ data.frame <-
     }
     else if(nA == 3) {
         ## this collects both df[] and df[ind]
+        if(is.atomic(value)) names(value) <- NULL
         if(missing(i) && missing(j)) { # case df[]
             i <- j <- NULL
             has.i <- has.j <- FALSE
@@ -601,6 +620,7 @@ data.frame <-
                     value <- rep(value, length.out = n)
                 else
                     stop(paste("replacement has", N, "rows, data has", n))
+            names(value) <- NULL
             value <- list(value)
          } else {
             if(m < n*p && (n*p) %% m)
@@ -667,6 +687,7 @@ data.frame <-
     else if(p > 0) for(jjj in p:1) { # we might delete columns with NULL
 	jj <- jseq[jjj]
 	x[[jj]] <- value[[ jvseq[[jjj]] ]]
+        if(is.atomic(x[[jj]])) names(x[[jj]]) <- NULL
     }
     if(length(new.cols) > 0) {
         new.cols <- names(x) # we might delete columns with NULL
@@ -685,6 +706,7 @@ data.frame <-
     class(x) <- NULL
     rows <- attr(x, "row.names")
     nrows <- length(rows)
+    if(is.atomic(value)) names(value) <- NULL
     if(nargs() < 4) {
 	## really ambiguous, but follow common use as if list
         nc <- length(x)
@@ -778,6 +800,7 @@ data.frame <-
                 value <- rep(value, length.out = nrows)
             else
                 stop(paste("replacement has", N, "rows, data has", nrows))
+        if(is.atomic(value)) names(value) <- NULL
     }
     x[[i]] <- value
     class(x) <- cl
@@ -973,11 +996,17 @@ rbind.data.frame <- function(..., deparse.level = 1)
 	for(j in 1:nvar) {
 	    jj <- pi[j]
             xij <- xi[[j]]
-	    if(has.dim[jj])
+	    if(has.dim[jj]) {
 		value[[jj]][ri,	 ] <- xij
-            ## coerce factors to vectors, in case lhs is character or
-            ## level set has changed
-	    else value[[jj]][ri] <- if(is.factor(xij)) as.vector(xij) else xij
+                ## copy rownames
+                rownames(value[[jj]])[ri] <- rownames(xij)
+	    } else {
+                ## coerce factors to vectors, in case lhs is character or
+                ## level set has changed
+                value[[jj]][ri] <- if(is.factor(xij)) as.vector(xij) else xij
+                ## copy names if any
+                names(value[[jj]])[ri] <- names(xij)
+            }
 	}
     }
 #     for(j in 1:nvar) {

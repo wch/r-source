@@ -44,6 +44,13 @@ NEW FEATURES
 	When FALSE, the result is usually parseable to reproduce the 
 	object. dump() always produces the parseable format.
 
+    o	The screen devices x11(), windows() and quartz() have a new
+	argument 'bg' to set the default background colour.
+
+    o	data.frame() and its replacement methods remove the names from
+	vector columns.  Using I() will ensure that names are
+	preserved.
+
 
 UTILITIES
 
@@ -90,6 +97,9 @@ INSTALLATION CHANGES
 
 
 BUG FIXES
+
+    o	rbind.data.frame() dropped names/rownames from columns in all but
+	the first data frame.
 
 	
 
