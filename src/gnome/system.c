@@ -791,3 +791,51 @@ void R_Suicide(char *s)
 int MAIN_()  {return 0;}
 int MAIN__() {return 0;}
 int __main() {return 0;}
+
+
+
+/* New / Experimental API elements */
+
+/* Local Time and Date */
+
+/* If the time/ctime version fails */
+/* use the follwing */
+
+#ifdef FALLBACK
+static char datebuf[64];
+char *R_Date()
+{
+    FILE *fp;
+    char *p;
+    if ((fp = popen("date", "r")) == NULL)
+	error("unix pipe error in date function\n");
+    fgets(datebuf, 64, fp);
+    fclose(fp);
+    for (p = datebuf; *p ; p++)
+	if (*p == '\n') {
+	    *p = '\0';
+	    break;
+	}
+    return datebuf;
+}
+#else
+#include <time.h>
+
+char *R_Date()
+{
+    time_t t;
+    time(&t);
+    return ctime(&t);
+}
+#endif
+
+void R_ShowFile(char *file, char *title)
+{
+    FILE *fp;
+    int c;
+    if ((fp = fopen(file, "r")) == NULL)
+	error("unable to display file %s\n", file);
+    while ((c = getc(fp)) != EOF)
+      /* FIXME: do something here */;
+    fclose(fp);
+}

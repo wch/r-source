@@ -620,7 +620,7 @@ static void GNOME_Polygon(int n, double *x, double *y, int coords,
   gnome_canvas_points_free(points);
 }
 
-double deg2rad = 0.01745329251994329576;
+extern double deg2rad; /* in devGTK.c */
 
 static void GNOME_Text(double x, double y, int coords,
 		       char *str, double xc, double yc, double rot, DevDesc *dd)
@@ -661,7 +661,7 @@ static void GNOME_Hold(DevDesc *dd)
 
 
 // Device driver entry point
-int GNOMEDeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
+int GnomeDeviceDriver(DevDesc *dd, char *display, double width, double height, double pointsize)
 {
   int ps;
   gnomeDesc *gtkd;
