@@ -1,7 +1,8 @@
 \name{title}
 \title{Plot Annotation}
 \usage{
-title(main = "", sub = "", xlab = "", ylab = "", \dots)
+title(main = "", sub = "", xlab = "", ylab = "",
+      line = NA, outer = FALSE, \dots)
 }
 \alias{title}
 \arguments{
@@ -13,6 +14,11 @@ title(main = "", sub = "", xlab = "", ylab = "", \dots)
   \item{xlab}{X axis label using font and character expansion
     \code{par("font.axis")} and color \code{par("col.axis")}.}
   \item{ylab}{Y axis label, same font attributes as \code{xlab}.}
+  \item{line}{specifying a value for \code{line} overrides the
+    default placement of labels, and places them this many lines
+    from the plot.}
+  \item{outer}{a logical value.  If \code{TRUE}, the titles are
+    placed in the outer margins of the plot.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}).}
 }
 \description{
@@ -23,6 +29,12 @@ title(main = "", sub = "", xlab = "", ylab = "", \dots)
   mathematical notation is available such as sub- and superscripts,
   greek letters, fractions, etc.
 }
+\details{
+The labels passed to title can be simple strings or expressions,
+or they can be a list containing the string to be plotted, and
+a selection of the optional modifying graphical parameters
+\code{cex=}, \code{col=}, \code{font=}.
+}
 \seealso{
   \code{\link{mtext}}, \code{\link{text}};
   \code{\link{plotmath}} for details on mathematical annotation.
@@ -31,6 +43,10 @@ title(main = "", sub = "", xlab = "", ylab = "", \dots)
 \testonly{data(cars)}
 plot(cars, main = "")
 title(main = "Stopping Distance versus Speed")
+
+plot(cars, main = "")
+title(main = list("Stopping Distance versus Speed", cex=1.25,
+      col="red", font=3))
 
 x <- seq(-4, 4, len = 101)
 y <- cbind(sin(x), cos(x))

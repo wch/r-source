@@ -5,7 +5,8 @@
   specification of the side, position, labels, and other options.
 }
 \usage{
-axis(side, at, labels = TRUE, \dots)
+axis(side, at, labels = TRUE, tick = TRUE, line = 0,
+     pos = NA, outer = FALSE, \dots)
 }
 \arguments{
   \item{side}{an integer specifying which side of the plot the axis is
@@ -15,6 +16,17 @@ axis(side, at, labels = TRUE, \dots)
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a vector
     of character strings to be placed at the tickpoints.}
+  \item{tick}{a logical value specifying whether tickmarks should be
+    drawn}.
+  \item{line}{the number of lines into the margin which the axis will
+    be drawn.  This overrides the value of the graphical parameter
+    \code{mgp[3]}.  The relative placing of tickmarks and tick labels
+    is unchanged.}
+  \item{pos}{the coordinate at which the axis line is to be drawn.
+    this overrides the value of both \code{line} and \code{mgp[3]}.}
+  \item{outer}{a logical value indicating whether the axis should be
+    drawn in the outer plot margin, rather than the standard plot
+    margin.}
   \item{\dots}{graphical parameters may also be passed as arguments to
     this function.}
 }

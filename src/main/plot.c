@@ -806,38 +806,45 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 
 SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    /* axis(side, at, labels, ...) - draw an axis */
+    /* axis(side, at, labels, ticks, ...) - draw an axis */
     SEXP at, lab;
-    int dolabels, logflag=0;
-    int col, fg;
-    int i, n, nint=0, ntmp;
-    int side, xtckCoords, ytckCoords, *ind;
-    double x, y, tempx, tempy, tnew, tlast;
-    double tck;
+    int col, fg, dolabels, doticks, logflag = 0;
+    int i, n, nint = 0, ntmp, side, *ind, outer;
+    double x, y, temp, tnew, tlast;
     double axp[3], usr[2];
-    double gap, labw, low, high;
+    double gap, labw, low, high, line, pos;
+    double axis_base, axis_tick, axis_lab, axis_low, axis_high;
 
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
-    /* initial checks */
+    /* Arity Check */
+    /* This is a builtin function, so it should always have */
+    /* the correct arity, but it doesn't hurt to be defensive. */
 
-    if (length(args) < 3) errorcall(call, "too few arguments");
+    if (length(args) < 7) errorcall(call, "too few arguments");
     GCheckState(dd);
 
-    /* required argument "side" */
+    /* Required argument: "side" */
+    /* Which side of the plot the axis is to appear on. */
+    /* side = 1 | 2 | 3 | 4. */
 
     side = asInteger(CAR(args));
     if (side < 1 || side > 4)
 	errorcall(call, "invalid axis number");
-
     args = CDR(args);
 
-    /* tick-label locations;  these are coerced lower down */
+    /* Required argument: "at" */
+    /* This gives the tick-label locations. */
+    /* Note that these are coerced to the correct type below. */
 
     at = CAR(args); args = CDR(args);
 
-    /* labels */
+    /* Required argument: "labels" */
+    /* Labels can be a logical, indicating whether or not */
+    /* to label the axis; or it can be a vector of character */
+    /* strings or expressions which give the labels explicitly. */
+    /* The expressions are used to set mathematical labelling. */
 
     dolabels = 1;
     if (isLogical(CAR(args)) && length(CAR(args)) > 0) {
@@ -845,11 +852,51 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (i == 0 || i == NA_LOGICAL)
 	    dolabels = 0;
 	PROTECT(lab = R_NilValue);
-    } else if (isExpression(CAR(args))) {
+    }
+    else if (isExpression(CAR(args))) {
 	PROTECT(lab = CAR(args));
-    } else {
+    }
+    else {
 	PROTECT(lab = coerceVector(CAR(args), STRSXP));
     }
+    args = CDR(args);
+
+    /* Required argument: "ticks" */
+    /* This indicates whether or not ticks and the axis line */
+    /* should be plotted: TRUE => show, FALSE => don't show. */
+
+    doticks = asLogical(CAR(args));
+    if (doticks == NA_LOGICAL) doticks = 1;
+    args = CDR(args);
+
+    /* Optional argument: "line" */
+    /* Specifies an offset outward from the plot for the axis. */
+    /* The values in the par value "mgp" are interpreted */
+    /* relative to this value. */
+
+    line = asReal(CAR(args));
+    if (!R_FINITE(line)) line =  dd->gp.mgp[2];
+    args = CDR(args);
+
+    /* Optional argument: "pos" */
+    /* Specifies a user coordinate at which the axis should be drawn. */
+    /* This overrides the value of "line".  Again the "mgp" par values */
+    /* are interpreted relative to this value. */
+
+    pos = asReal(CAR(args));
+    if (!R_FINITE(pos)) pos = NA_REAL;
+    args = CDR(args);
+
+    /* Optional argument: "outer" */
+    /* Should the axis be drawn in the outer margin. */
+    /* This only affects the computation of axis_base. */
+
+    outer = asLogical(CAR(args));
+    if (outer == NA_LOGICAL || outer == 0)
+	outer = NPC;
+    else
+	outer = NIC;
+    
     args = CDR(args);
 
     /* Retrieve relevant "par" values. */
@@ -877,7 +924,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     }
 
-    /* Determine the tick mark positions.  Note that these may fall */
+    /* Determine the tickmark positions.  Note that these may fall */
     /* outside the plot window. We will clip them in the code below. */
 
     if (length(at) == 0) {
@@ -889,6 +936,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     n = length(at);
 
+    /* Check/setup the tick labels.  This can mean using user-specified */
+    /* labels, or encoding the "at" positions as strings. */
+
     if (dolabels) {
 	if (length(lab) == 0)
 	    lab = labelformat(at);
@@ -898,10 +948,14 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, "location and label lengths differ");
     }
     PROTECT(lab);
+
+    /* Check there are no NA, Inf or -Inf values for tick positions. */
+    /* The code here is long-winded.  Couldn't we just inline things */
+    /* below.  Hmmm - we need the min and max of the finite values ... */
+
     ind = (int *) R_alloc(n, sizeof(int));
     for(i = 0; i < n; i++) ind[i] = i;
     rsort_with_index(REAL(at), ind, n);
-    /* drop  NA, Inf and -Inf values */
     ntmp = 0;
     for(i = 0; i < n; i++) {
 	if(R_FINITE(REAL(at)[i])) ntmp = i+1;
@@ -910,19 +964,36 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     if (n == 0)
 	errorcall(call, "no locations are finite");
 
+    /* Ok, all systems are "GO".  Let's get to it. */
+    /* First we process all the inline par values. */
+
     GSavePars(dd);
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
+
+    /* At this point we know the value of "xaxt" and "yaxt" */
+    /* so we test to see whether the relevant one is "n". */
+    /* If it is, we just bail out at this point. */
+    
+    if (((side == 1 || side == 3) && dd->gp.xaxt == 'n') ||
+	((side == 2 || side == 4) && dd->gp.yaxt == 'n')) {
+	GRestorePars(dd);
+	UNPROTECT(3);
+	return R_NilValue;
+    }
+
+    /* I can't think of a good reason to allow axes */
+    /* with a non-solid line-type, so I override any */
+    /* value the user may have specified.  This may */
+    /* need to be revisited, but this should cover */
+    /* 99.99% of the cases. */
+
     dd->gp.lty = LTY_SOLID;
 
-    /* override par("xpd") and force clipping to figure region */
+    /* Override par("xpd") and force clipping to figure region */
     /* NOTE: don't override to _reduce_ clipping region */
-#ifdef OLD
-    if (dd->gp.xpd < 1)
-	dd->gp.xpd = 1;
-#else
+
     dd->gp.xpd = 2;
-#endif
 
     dd->gp.adj = 0.5;
     dd->gp.font = dd->gp.fontaxis;
@@ -930,108 +1001,86 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     col = dd->gp.col;
     fg = dd->gp.fg;
 
-    x = dd->gp.usr[0];
-    y = dd->gp.usr[2];
-    xtckCoords = MAR1;
-    ytckCoords = MAR2;
-
     /* Draw the axis */
     GMode(1, dd);
     switch (side) {
     case 1: /*--- x-axis -- horizontal --- */
     case 3:
-    /* Check the axis type parameter, if it is 'n', */
-    /* there is nothing to do */
-	if (dd->gp.xaxt == 'n') {
-	    GRestorePars(dd);
-	    UNPROTECT(3);
-	    return R_NilValue;
-	}
 	GetAxisLimits(dd->gp.usr[0], dd->gp.usr[1], &low, &high);
-	if (side == 3) {
-	    y = dd->gp.usr[3];
-	    xtckCoords = MAR3;
-	}
-	dd->gp.col = fg;
-	GLine(fmax2(low, REAL(at)[0]), y,
-	      fmin2(high, REAL(at)[n - 1]), y, USER, dd);
-	if (R_FINITE(dd->gp.tck)) {
-	    /* The S way of doing ticks */
-	    double y0, y1;
-	    if (dd->gp.tck > 0.5) {
-		if (side == 1) {
-		    y0 = dd->gp.usr[2];
-		    y1 = dd->gp.usr[2] + dd->gp.tck *
-			(dd->gp.usr[3] - dd->gp.usr[2]);
-		}
-		else {
-		    y0 = dd->gp.usr[3];
-		    y1 = dd->gp.usr[3] + dd->gp.tck *
-			(dd->gp.usr[2] - dd->gp.usr[3]);
-		}
-	    }
-	    else {
-		tck = dd->gp.tck * ((dd->gp.fin[0] < dd->gp.fin[1]) ?
-				    dd->gp.fin[0] : dd->gp.fin[1]);
-		if (side == 1) {
-		    y0 = dd->gp.usr[2];
-		    y1 = dd->gp.usr[2] + (tck / dd->gp.fin[1]) *
-			(dd->gp.usr[3] - dd->gp.usr[2]);
-		}
-		else {
-		    y0 = dd->gp.usr[3];
-		    y1 = dd->gp.usr[3] + (tck / dd->gp.fin[1]) *
-			(dd->gp.usr[2] - dd->gp.usr[3]);
-		}
-	    }
-	    for (i = 0; i < n; i++) {
-		x = REAL(at)[i];
-		if (low <= x && x <= high) {
-		    GLine(x, y0, x, y1, USER, dd);
-		}
-	    }
+	axis_low  = GConvertX(fmax2(low, REAL(at)[0]), USER, NFC, dd);
+	axis_high = GConvertX(fmin2(high, REAL(at)[n-1]), USER, NFC, dd);
+	if (side == 1) {
+	    if (R_FINITE(pos))
+		axis_base = GConvertY(pos, USER, NFC, dd);
+	    else
+		axis_base = GConvertY(0.0, outer, NFC, dd)
+		    - GConvertYUnits(line, LINES, NFC, dd);
+	    if (R_FINITE(dd->gp.tck))
+		axis_tick = axis_base + GConvertYUnits(dd->gp.tck, NPC, NFC, dd);
+	    else
+		axis_tick = axis_base + GConvertYUnits(dd->gp.tcl, LINES, NFC, dd);
 	}
 	else {
-	    /* The R(ight) way of doing ticks (using "tcl", not "tck") */
+	    if (R_FINITE(pos))
+		axis_base = GConvertY(pos, USER, NFC, dd);
+	    else
+		axis_base =  GConvertY(1.0, outer, NFC, dd)
+		    + GConvertYUnits(line, LINES, NFC, dd);
+	    if (R_FINITE(dd->gp.tck))
+		axis_tick = axis_base - GConvertYUnits(dd->gp.tck, NPC, NFC, dd);
+	    else
+		axis_tick = axis_base - GConvertYUnits(dd->gp.tcl, LINES, NFC, dd);
+	}
+	if (doticks) {
+	    dd->gp.col = fg;
+            GLine(axis_low, axis_base, axis_high, axis_base, NFC, dd);
 	    for (i = 0; i < n; i++) {
 		x = REAL(at)[i];
 		if (low <= x && x <= high) {
-		    GLine(x, 0, x, -dd->gp.tcl, xtckCoords, dd);
+		    x = GConvertX(x, USER, NFC, dd);
+		    GLine(x, axis_base, x, axis_tick, NFC, dd);
 		}
 	    }
 	}
+	/* Tickmark labels. */
 	dd->gp.col = dd->gp.colaxis;
-	/* labels */
 	gap = GStrWidth("m", NFC, dd);	/* FIXUP x/y distance */
 	tlast = -1.0;
 	if (dd->gp.las == 2 || dd->gp.las == 3) {
-	    if (side == 1) dd->gp.adj = 1;
-	    else dd->gp.adj = 0;
+	    dd->gp.adj = (side == 1) ? 1 : 0;
 	}
 	else dd->gp.adj = 0.5;
-
+	if (side == 1) {
+	    axis_lab = - axis_base
+		+ GConvertYUnits(dd->gp.mgp[1], LINES, NFC, dd)
+		+ GConvertY(0.0, NPC, NFC, dd);
+	}
+	else {
+	    axis_lab = axis_base
+		+ GConvertYUnits(dd->gp.mgp[1], LINES, NFC, dd)
+		- GConvertY(1.0, NPC, NFC, dd);
+	}
+	axis_lab = GConvertYUnits(axis_lab, NFC, LINES, dd);
 	for (i = 0; i < n; i++) {
 	    x = REAL(at)[i];
 	    if (!R_FINITE(x)) continue;
-	    tempx = x; tempy = y;
-	    GConvert(&tempx, &tempy, USER, NFC, dd);
+	    temp = GConvertX(x, USER, NFC, dd);
 	    if (dolabels) {
-		/* clip tick labels to user coordinates */
+		/* Clip tick labels to user coordinates. */
 		if (x > low && x < high) {
 		    if (isExpression(lab)) {
 			GMMathText(VECTOR(lab)[ind[i]], side,
-				   dd->gp.mgp[1], 0, x, dd->gp.las, dd);
+				   axis_lab, 0, x, dd->gp.las, dd);
 		    }
 		    else {
 			labw = GStrWidth(CHAR(STRING(lab)[ind[i]]), NFC, dd);
-			tnew = tempx - 0.5 * labw;
-			/* Check room for perpendicular labels: */
+			tnew = temp - 0.5 * labw;
+			/* Check room for perpendicular labels. */
 			if (dd->gp.las == 2 || dd->gp.las == 3 ||
 			    tnew - tlast >= gap) {
 			    GMtext(CHAR(STRING(lab)[ind[i]]), side,
-				   dd->gp.mgp[1], 0, x,
-				   dd->gp.las, dd);
-			    tlast = tempx + 0.5 *labw;
+				   axis_lab, 0, x, dd->gp.las, dd);
+			    tlast = temp + 0.5 *labw;
 			}
 		    }
 		}
@@ -1041,102 +1090,83 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
     case 2: /*--- y-axis -- vertical --- */
     case 4:
-    /* Check the axis type parameter, if it is 'n', */
-    /* there is nothing to do */
-	if (dd->gp.yaxt == 'n') {
-	    GRestorePars(dd);
-	    UNPROTECT(3);
-	    return R_NilValue;
-	}
 	GetAxisLimits(dd->gp.usr[2], dd->gp.usr[3], &low, &high);
-	if (side == 4) {
-	    x = dd->gp.usr[1];
-	    ytckCoords = MAR4;
-	}
-	dd->gp.col = fg;
-	/* clip axis major line to user coordinates */
-	GLine(x, fmax2(low, REAL(at)[0]), x,
-	      fmin2(high, REAL(at)[n - 1]), USER, dd);
-	if (R_FINITE(dd->gp.tck)) {
-	    /* The S way of doing ticks */
-	    double x0, x1;
-	    if (dd->gp.tck > 0.5) {
-		if (side == 2) {
-		    x0 = dd->gp.usr[0];
-		    x1 = dd->gp.usr[0] + dd->gp.tck *
-			(dd->gp.usr[1] - dd->gp.usr[0]);
-		}
-		else {
-		    x0 = dd->gp.usr[1];
-		    x1 = dd->gp.usr[1] + dd->gp.tck *
-			(dd->gp.usr[0] - dd->gp.usr[1]);
-		}
-	    }
-	    else {
-		tck = dd->gp.tck * ((dd->gp.fin[0] < dd->gp.fin[1]) ?
-				    dd->gp.fin[0] : dd->gp.fin[1]);
-		if (side == 2) {
-		    x0 = dd->gp.usr[0];
-		    x1 = dd->gp.usr[0] + (tck / dd->gp.fin[0]) *
-			(dd->gp.usr[1] - dd->gp.usr[0]);
-		}
-		else {
-		    x0 = dd->gp.usr[1];
-		    x1 = dd->gp.usr[1] + (tck / dd->gp.fin[0]) *
-			(dd->gp.usr[0] - dd->gp.usr[1]);
-		}
-	    }
-	    for (i = 0; i < n; i++) {
-		y = REAL(at)[i];
-		if (low <= y && y <= high) {
-		    GLine(x0, y, x1, y, USER, dd);
-		}
-	    }
+	axis_low = GConvertY(fmax2(low, REAL(at)[0]), USER, NFC, dd);
+	axis_high = GConvertY(fmin2(high, REAL(at)[n-1]), USER, NFC, dd);
+	if (side == 2) {
+	    if (R_FINITE(pos))
+		axis_base = GConvertX(pos, USER, NFC, dd);
+	    else
+		axis_base =  GConvertX(0.0, outer, NFC, dd)
+		    - GConvertXUnits(line, LINES, NFC, dd);
+	    if (R_FINITE(dd->gp.tck))
+		axis_tick = axis_base + GConvertXUnits(dd->gp.tck, NPC, NFC, dd);
+	    else
+		axis_tick = axis_base + GConvertXUnits(dd->gp.tcl, LINES, NFC, dd);
 	}
 	else {
-	    /* The R(ight) way of doing ticks (using "tcl", not "tck") */
+	    if (R_FINITE(pos))
+		axis_base = GConvertX(pos, USER, NFC, dd);
+	    else
+		axis_base =  GConvertX(1.0, outer, NFC, dd)
+		    + GConvertXUnits(line, LINES, NFC, dd);
+	    if (R_FINITE(dd->gp.tck))
+		axis_tick = axis_base - GConvertXUnits(dd->gp.tck, NPC, NFC, dd);
+	    else
+		axis_tick = axis_base - GConvertXUnits(dd->gp.tcl, LINES, NFC, dd);
+	}
+	if (doticks) {
+	    dd->gp.col = fg;
+            GLine(axis_base, axis_low, axis_base, axis_high, NFC, dd);
 	    for (i = 0; i < n; i++) {
 		y = REAL(at)[i];
 		if (low <= y && y <= high) {
-		    GLine(y, 0, y, -dd->gp.tcl, ytckCoords, dd);
+		    y = GConvertY(y, USER, NFC, dd);
+		    GLine(axis_base, y, axis_tick, y, NFC, dd);
 		}
 	    }
 	}
+	/* Tickmark labels. */
 	dd->gp.col = dd->gp.colaxis;
-	/* labels */
 	gap = GStrWidth("m", INCHES, dd);
 	gap = GConvertYUnits(gap, INCHES, NFC, dd);
 	tlast = -1.0;
 	if (dd->gp.las == 1 || dd->gp.las == 2) {
-	    if (side == 2) dd->gp.adj = 1;
-	    else dd->gp.adj = 0;
+	    dd->gp.adj = (side == 2) ? 1 : 0;
 	}
 	else dd->gp.adj = 0.5;
-
+	if (side == 2) {
+	    axis_lab = - axis_base
+		+ GConvertXUnits(dd->gp.mgp[1], LINES, NFC, dd)
+		+ GConvertX(0.0, NPC, NFC, dd);
+	}
+	else {
+	    axis_lab = axis_base
+		+ GConvertXUnits(dd->gp.mgp[1], LINES, NFC, dd)
+		- GConvertX(1.0, NPC, NFC, dd);
+	}
+	axis_lab = GConvertXUnits(axis_lab, NFC, LINES, dd);
 	for (i = 0; i < n; i++) {
 	    y = REAL(at)[i];
 	    if (!R_FINITE(y)) continue;
-	    tempx = x; tempy = y;
-	    GConvert(&tempx, &tempy, USER, NFC, dd);
+	    temp = GConvertY(y, USER, NFC, dd);
 	    if (dolabels) {
-		/* clip tick labels to user coordinates */
+		/* Clip tick labels to user coordinates. */
 		if (y > low && y < high) {
 		    if (isExpression(lab)) {
 			GMMathText(VECTOR(lab)[ind[i]], side,
-				   dd->gp.mgp[1], 0, y, dd->gp.las, dd);
+				   axis_lab, 0, y, dd->gp.las, dd);
 		    }
 		    else {
-			labw = GStrWidth(CHAR(STRING(lab)[ind[i]]),
-					 INCHES, dd);
+			labw = GStrWidth(CHAR(STRING(lab)[ind[i]]), INCHES, dd);
 			labw = GConvertYUnits(labw, INCHES, NFC, dd);
-			tnew = tempy - 0.5 * labw;
-			/* Check room for perpendicular labels: */
+			tnew = temp - 0.5 * labw;
+			/* Check room for perpendicular labels. */
 			if (dd->gp.las == 1 || dd->gp.las == 2 ||
 			    tnew - tlast >= gap) {
 			    GMtext(CHAR(STRING(lab)[ind[i]]), side,
-				   dd->gp.mgp[1], 0, y,
-				   dd->gp.las, dd);
-			    tlast = tempy + 0.5 *labw;
+				   axis_lab, 0, y, dd->gp.las, dd);
+			    tlast = temp + 0.5 *labw;
 			}
 		    }
 		}
@@ -2146,15 +2176,15 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP Main, xlab, ylab, sub;
-    double adj, cex, offset;
-    int col, font, vfont;
+    double adj, adjy, cex, offset, line, hpos, vpos, where;
+    int col, font, vfont, outer;
     int i, n;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
     GCheckState(dd);
 
-    if (length(args) < 4) errorcall(call, "too few arguments");
+    if (length(args) < 6) errorcall(call, "too few arguments");
 
     Main = sub = xlab = ylab = R_NilValue;
 
@@ -2174,6 +2204,13 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	ylab = CAR(args);
     args = CDR(args);
 
+    line = asReal(CAR(args));
+    args = CDR(args);
+
+    outer = asLogical(CAR(args));
+    if (outer == NA_LOGICAL) outer = 0;
+    args = CDR(args);    
+
     GSavePars(dd);
     RecordGraphicsCall(call);
     ProcessInlinePars(args, dd);
@@ -2182,7 +2219,8 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
     /* NOTE: don't override to _reduce_ clipping region */
     if (dd->gp.xpd < 1)
 	dd->gp.xpd = 1;
-
+    if (outer)
+	dd->gp.xpd = 2;
     adj = dd->gp.adj;
 
     GMode(1, dd);
@@ -2194,16 +2232,40 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.col = col;
 	dd->gp.cex = dd->gp.cexbase * cex;
 	dd->gp.font = font;
+	if (outer) {
+	    if (R_FINITE(line)) {
+		vpos = line;
+		adjy = 0;
+	    }
+	    else {
+		vpos = 0.5 * dd->gp.oma[2];
+		adjy = 0.5;
+	    }
+	    hpos = adj;
+	    where = OMA3;
+	}
+	else {
+	    if (R_FINITE(line)) {
+		vpos = line;
+		adjy = 0;
+	    }
+	    else {
+		vpos = 0.5 * dd->gp.mar[2];
+		adjy = 0.5;
+	    }
+	    hpos = GConvertX(adj, NPC, USER, dd);
+	    where = MAR3;
+	}
 	if (isExpression(Main)) {
-	    GMathText(xNPCtoUsr(adj, dd), 0.5*dd->gp.mar[2], MAR3,
-		      VECTOR(Main)[0], adj, 0.5, 0.0, dd);
+	    GMathText(hpos, vpos, where,
+		      VECTOR(Main)[0], adj, adjy, 0.0, dd);
 	}
 	else {
 	  n = length(Main);
-	  offset = 0.5 * (n - 1) + 0.5 * dd->gp.mar[2];
+	  offset = 0.5 * (n - 1) + vpos;
 	  for (i = 0; i < n; i++)
-	    GText(xNPCtoUsr(adj, dd), offset - i, MAR3,
-		  CHAR(STRING(Main)[i]), adj, 0.5, 0.0, dd);
+	      GText(hpos, offset - i, where,
+		    CHAR(STRING(Main)[i]), adj, adjy, 0.0, dd);
 	}
     }
     if (sub != R_NilValue) {
@@ -2214,14 +2276,26 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.col = col;
 	dd->gp.cex = dd->gp.cexbase * cex;
 	dd->gp.font = font;
+	if (R_FINITE(line))
+	    vpos = line;
+	else
+	    vpos = dd->gp.mgp[0] + 1;
+	if (outer) {
+	    hpos = adj;
+	    where = 1;
+	}
+	else {
+	    hpos = GConvertX(adj, NPC, USER, dd);
+	    where = 0;
+	}
 	if (isExpression(sub))
-	    GMMathText(VECTOR(sub)[0], 1, dd->gp.mgp[0] + 1.0, 0,
-		       xNPCtoUsr(adj, dd), 0, dd);
+	    GMMathText(VECTOR(sub)[0], 1, vpos, where,
+		       hpos, 0, dd);
 	else {
 	    n = length(sub);
 	    for (i = 0; i < n; i++)
-		GMtext(CHAR(STRING(sub)[i]), 1, dd->gp.mgp[0] + 1.0, 0,
-		   xNPCtoUsr(adj, dd), 0, dd);
+		GMtext(CHAR(STRING(sub)[i]), 1, vpos, where,
+		       hpos, 0, dd);
 	}
     }
     if (xlab != R_NilValue) {
@@ -2232,14 +2306,26 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.cex = dd->gp.cexbase * cex;
 	dd->gp.col = col;
 	dd->gp.font = font;
+	if (R_FINITE(line))
+	    vpos = line;
+	else
+	    vpos = dd->gp.mgp[0];
+	if (outer) {
+	    hpos = adj;
+	    where = 1;
+	}
+	else {
+	    hpos = GConvertX(adj, NPC, USER, dd);
+	    where = 0;
+	}
 	if (isExpression(xlab))
-	    GMMathText(VECTOR(xlab)[0], 1, dd->gp.mgp[0], 0,
-		       xNPCtoUsr(adj, dd), 0, dd);
+	    GMMathText(VECTOR(xlab)[0], 1, vpos + i, where,
+		       hpos, 0, dd);
 	else {
 	    n = length(xlab);
 	    for (i = 0; i < n; i++)
-		GMtext(CHAR(STRING(xlab)[i]), 1, dd->gp.mgp[0] + i, 0,
-		   xNPCtoUsr(adj, dd), 0, dd);
+		GMtext(CHAR(STRING(xlab)[i]), 1, vpos + i, where,
+		   hpos, 0, dd);
 	}
     }
     if (ylab != R_NilValue) {
@@ -2250,14 +2336,26 @@ SEXP do_title(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.cex = dd->gp.cexbase * cex;
 	dd->gp.col = col;
 	dd->gp.font = font;
+	if (R_FINITE(line))
+	    vpos = line;
+	else
+	    vpos = dd->gp.mgp[0];
+	if (outer) {
+	    hpos = adj;
+	    where = 1;
+	}
+	else {
+	    hpos = GConvertY(adj, NPC, USER, dd);
+	    where = 0;
+	}
 	if (isExpression(ylab))
-	    GMMathText(VECTOR(ylab)[0], 2, dd->gp.mgp[0], 0,
-		       yNPCtoUsr(adj, dd), 0, dd);
+	    GMMathText(VECTOR(ylab)[0], 2, vpos, where,
+		       hpos, 0, dd);
 	else {
 	    n = length(ylab);
 	    for (i = 0; i < n; i++)
-		GMtext(CHAR(STRING(ylab)[i]), 2, dd->gp.mgp[0] - i, 0,
-		       yNPCtoUsr(adj, dd), 0, dd);
+		GMtext(CHAR(STRING(ylab)[i]), 2, vpos - i, where,
+		       hpos, 0, dd);
 	}
     }
     GMode(0, dd);

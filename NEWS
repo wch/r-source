@@ -62,10 +62,17 @@ NEW FEATURES
 	lead to more accurate placing of centred or right-justified
 	strings.
 
-    o   Graphics parameters such as main can now be specified as a
-	list giving the font, cex, col and so on.
+    o	axis() now has additional arguments.  The argument "tick" turns
+	tick drawing on and off (on by default).  Additional arguments
+	line, pos, and outer; allow more flexible placement of axes.
 
+    o   The parameters to title() which specify the labels may now
+        be specified as a list containing the parameter together
+	with additional modifying par values (cex, col, font) which
+	affect just that label.
 
+	title() also has new line and outer arguments which provide
+	functionality which matches that in axis().
 
     o	$ and $<- are now generic functions.
 
