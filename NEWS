@@ -126,6 +126,8 @@ BUG FIXES
     o   package.dependencies printed unnecessary debugging messages
 	(version comparison), these have been removed.
 
+    o   backslashes in examples in help files are now converted 
+	correctly to latex.
 
 
 	**************************************************

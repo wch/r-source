@@ -20,7 +20,6 @@
 
 # Send any bug reports to R-bugs@lists.r-project.org
 
-# Bugs: still get ``\bsl{}'' in verbatim-like, see e.g. Examples of apropos.Rd
 
 require "$R_HOME/etc/html-layout.pl";
 
@@ -2025,7 +2024,7 @@ sub code2latex {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
-    $text =~ s/\\\\/\\bsl{}/go;
+#    $text =~ s/\\\\/\\bsl{}/go;
     if($hyper) {
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $text, "\\link")
@@ -2072,7 +2071,9 @@ sub latex_print_exampleblock {
     if(defined $blocks{$block}){
 	print latexout "\\begin\{$env\}\n";
 	print latexout "\\begin\{ExampleCode\}";
-	print latexout code2latex($blocks{$block},0);
+	my $out = code2latex($blocks{$block},0);
+	$out =~ s/\\\\/\\/go;
+	print latexout $out;
 	print latexout "\\end\{ExampleCode\}\n";
 	print latexout "\\end\{$env\}\n";
     }
@@ -2150,12 +2151,13 @@ sub latex_code_trans {
     my $BSL = '@BSL@';
 
     if($c =~ /[$LATEX_SPECIAL]/){
-      $c =~ s/\\\\/$BSL/go;
-      $c =~ s/[$LATEX_SPECIAL]/\\$&/go;	 #- escape them (not the "bsl" \)
-      $c =~ s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
-      $c =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
-      $c =~ s/$BSL/\\bsl{}/go;
-      }
+	$c =~ s/\\\\/$BSL/go;
+	$c =~ s/\\([$LATEX_SPECIAL])/$1/go; #- unescape them (should not be escaped)
+	$c =~ s/[$LATEX_SPECIAL]/\\$&/go; #- escape them
+	$c =~ s/\\\^/\$\\,\\hat{\\,}\$/go;# ^ is SPECIAL
+	$c =~ s/\\~/\$\\,\\tilde{\\,}\$/go;
+	$c =~ s/$BSL/\\bsl{}/go;
+    }
     ## avoid conversion to guillemots
     $c =~ s/<</<\{\}</;
     $c =~ s/>>/>\{\}>/;
