@@ -26,8 +26,31 @@ with other versions of R.
 There are some extra command-line editing commands: see the
 Help | Console information screen.
 
+Rterm in interactive use sets the title of the window it is running
+in, and unsets it when it terminates.
+
 make check no longer makes R, just runs the tests (as make test
 always has).
+
+The utilities Rd2dvi.sh Rdconv Rdindex Sd2Rd are no longer batch files
+but accessed through a new front-end Rcmd.exe, so if this is in your
+path you can use
+
+	Rcmd Rd2dvi.sh [options]
+	Rcmd Rdconv    [options]
+	Rcmd Rdindex   [options]
+	Rcmd Sd2Rd     [options]
+
+There is a new utility INSTALL which can be used to install a
+source package (if all the things in readme.packages are set up),
+and much closer versions of the Unix R utilities build and check.
+Invoke these by
+
+	Rcmd INSTALL [options] pkg(s)
+	Rcmd build [options] pkg(s)
+	Rcmd check [options] pkg(s)
+
+Use option --help with any of these for fuller details.
 
 
 rw1011
