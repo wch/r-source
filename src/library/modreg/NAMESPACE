@@ -1,9 +1,15 @@
 useDynLib(modreg)
 
-export(as.stepfun.isoreg, isoreg, ksmooth, loess, loess.control,
-       loess.smooth, plot.isoreg, plot.ppr, ppr, ppr.default, ppr.formula,
-       predict.loess, predict.smooth.spline, runmed, scatter.smooth,
+export(isoreg, ksmooth, loess, loess.control,
+       loess.smooth, ppr, runmed, scatter.smooth,
        smooth.spline, smoothEnds, supsmu)
+
+# methods which are documented and registered
+# export(as.stepfun.isoreg, plot.isoreg, plot.ppr,
+#        predict.loess, predict.smooth.spline)
+
+# match.call requires
+export(ppr.default, ppr.formula)
 
 S3method(anova, loess)
 importFrom(stepfun, as.stepfun)

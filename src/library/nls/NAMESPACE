@@ -3,10 +3,12 @@ useDynLib(nls)
 export(NLSstAsymptotic, NLSstClosestX, NLSstLfAsymptote,
        NLSstRtAsymptote, SSasymp, SSasympOff, SSasympOrig, SSbiexp,
        SSfol, SSfpl, SSgompertz, SSlogis, SSmicmen, SSweibull,
-       anovalist.nls, asOneSidedFormula, clearNames, formula.nls,
-       getInitial, nls, nls.control, nlsModel, numericDeriv,
-       plot.profile.nls, predict.nls, profile.nls, profiler,
-       profiler.nls, selfStart, setNames, sortedXyData)
+       anovalist.nls, asOneSidedFormula, clearNames,
+       getInitial, nls, nls.control, nlsModel, numericDeriv, profiler,
+       selfStart, setNames, sortedXyData)
+
+# documented but not exported
+# export(formula.nls, plot.profile.nls, predict.nls, profile.nls, profiler.nls)
 
 S3method(NLSstAsymptotic, sortedXyData)
 S3method(NLSstClosestX, sortedXyData)

@@ -1,10 +1,13 @@
 useDynLib(splines)
 
 export(as.polySpline, asVector, backSpline, bs, interpSpline, ns,
-       periodicSpline, polySpline, predict.bs, predict.bSpline,
-       predict.nbSpline, predict.npolySpline, predict.ns,
-       predict.pbSpline, predict.ppolySpline, spline.des,
-       splineDesign, splineKnots, splineOrder, xyVector)
+       periodicSpline, polySpline, spline.des, splineDesign,
+       splineKnots, splineOrder, xyVector)
+
+# documented but not exported
+# export(predict.bs, predict.bSpline, predict.nbSpline,
+#        predict.npolySpline, predict.ns, predict.pbSpline,
+#        predict.ppolySpline)
 
 S3method(as.data.frame, xyVector)
 S3method(asVector, xyVector)

@@ -1,15 +1,23 @@
 useDynLib(mva)
 
-export(as.dendrogram, as.dist, as.hclust, as.hclust.default,
-       as.hclust.twins, as.matrix.dist, biplot, biplot.default,
-       biplot.princomp, cancor, cmdscale, cophenetic, cut.dendrogram,
-       cutree, dist, factanal, format.dist, hclust, heatmap,
-       identify.hclust, kmeans, loadings, order.dendrogram, plclust,
-       plot.dendrogram, plot.hclust, prcomp, princomp,
-       princomp.default, princomp.formula, print.dist, print.factanal,
-       print.loadings, print.summary.princomp, promax, rect.hclust,
-       reorder, reorder.dendrogram, screeplot, str.dendrogram,
-       summary.princomp, varimax)
+export(as.dendrogram, as.dist, as.hclust, biplot, cancor, cmdscale,
+       cophenetic, cutree, dist, factanal, format.dist, hclust,
+       heatmap, kmeans, loadings, order.dendrogram, plclust, prcomp,
+       princomp, promax, rect.hclust, reorder, reorder.dendrogram,
+       screeplot, varimax)
+
+# methods which are documented but not exported
+# export(as.hclust.default, as.matrix.dist,
+#        biplot.default, biplot.princomp, cut.dendrogram,
+#        identify.hclust, plot.dendrogram, plot.hclust,
+#        print.dist, print.factanal,
+#        print.loadings, print.summary.princomp, str.dendrogram,
+#        summary.princomp)
+
+# cluster needs
+export(as.hclust.twins)
+# using match.call needs
+export(princomp.default, princomp.formula)
 
 S3method("[[", dendrogram)
 S3method(as.dendrogram, hclust)

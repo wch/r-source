@@ -1,7 +1,12 @@
 useDynLib(lqs)
 
-export(cov.mcd, cov.mve, cov.rob, lmsreg, lqs, lqs.default, lqs.formula,
-       ltsreg, predict.lqs)  
+export(cov.mcd, cov.mve, cov.rob, lmsreg, lqs, ltsreg)
+
+# documented but not exported
+export(lqs.formula, predict.lqs)
+
+# imported by MASS
+export(lqs.default)
 
 S3method(lqs, default)
 S3method(lqs, formula)
