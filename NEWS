@@ -117,6 +117,8 @@ NEW FEATURES
     o	reorder.dendrogram() now has a 'agglo.FUN' argument for
 	specification of a weights agglomeration function.
 
+    o	readChar() can now read strings with embedded nuls.
+
 
 UTILITIES
 
