@@ -78,7 +78,7 @@ getS3method <-  function(f, class, optional = FALSE)
         else .BaseNamespaceEnv
         S3Table <- get(".__S3MethodsTable__.", envir = defenv)
         S3reg <- ls(S3Table)
-        if(length(grep(sub("\\[", "\\\\[", method), S3reg)))
+        if(length(grep(gsub("\\[", "\\\\[", method), S3reg)))
             return(get(method, envir = S3Table))
     }
     if(optional) NULL
