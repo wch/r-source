@@ -4,7 +4,7 @@
 @settitle R for Mac OS X FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-1 @value{FAQ-YEAR}-03-22
+@set FAQ-VERSION 1.9-1 @value{FAQ-YEAR}-04-01
 @set REL-VERSION 1.9.0
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -420,16 +420,57 @@ in @R{}. This is a interface to the @R{} source command @command{source}.
 
 @node Edit Menu
 @subsection Tools Menu
+Apart for standard functionalities, the only relevant item in this menu is the @emph{Edito Object} which is an interface to
+the  @R{} @command{edit} function.
 
 @node Tools Menu
 @subsection Tools Menu
+With this menu you can load and save the history of commands tyoed in the @R{} Console or view what's currently inside.
+You can also change the current working directory, let @R{} show you the current working directory or set it back to the
+startup directory. From release 1.9.0 of @R{} the current working directory is also shown on the main window bar.
 
 @node Workspace Menu
 @subsection Workspace Menu
+Here you find self explanatory menu items for manage your workspace in @R{}. You can either load and save the workspace also
+by specifying file name. All of these are interfaces to the @command{load} and @command{save} @R{} commands.
+The only relevant item, which is specific to this GUI, is the @emph{Browse workspace}. This will open a window with a summary
+description of the objects in your workspace. Complex objects (like lists, data.frame etc) can be expanded (one level only though).
 
 @node Packages Menu
 @subsection Packages Menu
+Using this menu you can have access to the list of packages and datasets installed on your system and to the ones
+on @CRAN{} or on the Bioconductor site.
 
+With the first two menus you can load and detach packages and dataset from the workspace.
+Let's start with the @emph{Package Manager}. This opens a window with serval columns displayed. 
+For each package on your system you can see a check box, the current status of the package (loaded/not loaded), its name
+and the package description text. You use the check box to select/de-select the packages you want.
+On window closure, the checked packaged will be loaded and the uncheked ones (if loaded) will the detached (not completely as on Mac OS X you cannot
+unload completely dynamic libraries).
+
+The same applies to the @emph{Dataset Manager} menu but for datasets.
+
+You can than get or update packages @CRAN{} either in binary or source format. Daily build of @CRAN{} packages are available
+for Mac OS X. If you don't know how to buld @R{} itslef from source (@pxref{Building R from sources}), 
+you'll probably be unable to build packages from source on your own.
+In this case, you should always choose for the binary option. These binary packages work (for sure!) for the release version of @R{} for Mac OS X
+you find on @CRAN{} even though it is not excluded that they will work for other prebuilt versions of @R{}.
+
+
+When you attempt to install packages from @CRAN{}, @R{} first tries to get a connection to the Internet to download
+the list of available packages. Than a window will open similar to the one in the package manager with the only difference that
+for each package there is also the information concerning the version of the package installed on your system (if any) and
+the version of the prebuilt package available on @CRAN{}. Whe you close the window, the select packages will be downloaded.
+
+The same strategy applies to the Bioconductor menu item, with some more options typical of the Bioconductor way
+of managing packages.
+
+For some reason it could happen that you have the package you wnat to install (either in binary or source form) on one of your
+local disks, or even a directory containig a package source. You can use the last menu to do the task of installing the package.
+Having a package in a directory form usually applies to people that are developing packages themselves.
+
+
+For more information on this topic see also @ref{How to install packages}.
 
 @node The Help menu
 @subsection The Help menu
@@ -438,6 +479,10 @@ There are also interfaces to the R @emph{help} and @emph{help.search} functions 
 
 @node Preferences
 @section Preferences
+You can set several aspects of the @R{} GUI via preferences. You can access the Preferences window via the Application menu when the
+@R{} Console is open.
+Preferences are organized in Tabs, more or less grouped for content.
+
 @menu
 * Text Windows tab::
 * Quartz device tab::
@@ -447,16 +492,37 @@ There are also interfaces to the R @emph{help} and @emph{help.search} functions 
 
 @node Text Windows tab
 @subsection Text Windows tab
+You can change the font size, face and the tab size in all the windows including the Console.
+If you have help windows opened, the changed only apply to the Console window and to the window
+you'll open from now on. This is a misfeature more tha a bug.
+
+You can also change the foreground and background colors for the read-only windows (i.e. the @R{} Console
+output and the Help windows) and for read-and-write windows (i.e. the @R{} Console input and the Edit windows).
+At the moment you cannot chnage the color of the cursor which always stays black which ever  background you choose.
+So, for the time being, it's a bad idea to set the background of the @R{} Console to black.
+
+You have also the possibility to check two options. The first is for adapting the @R{} output when you resize the
+@R{} Console to the maximum character displayable, the second one is to let @R{} remember the position of the
+@R{} Console on exit.
 
 @node Quartz device tab
 @subsection Quartz device tab
+You can set all the parameters of the @command{quartz} device for this tab. Please note: your changes only take effect
+if you select the final checkbox, namely @emph{override the R quartz default settings}.
+
+This also apply to the @emph{Quartz window position} option even if it is not a @command{quartz} parameter itself.
+
 
 @node Packages tab
 @subsection Packages tab
+From this tab you can set the default repositories for the @CRAN{} and Bioconductor urls. This will affect the
+corresponding @R{} @command{options}.
 
 @node Misc tab
 @subsection Misc tab
-
+For this tab you can decide to redirect the stderr and stdout of @R{} and the tasks launched by @R{}, to the @R{} Console.
+This is useful, for example, during package installation. If you don't check these options, every otuptu will be sent to the @emph{Console}
+application which you can find on every Mac OS X installation inside the directory @file{/Applications/Utilities}.
 
 @node The near future of the Aqua GUI
 @section The near future of the Aqua GUI
@@ -741,6 +807,7 @@ in random order. Last but not least Apple for amazing OS and GUI.
 * How can I have a per session .Rprofile?::
 * What happens if I drag a file on the R icon?::
 * How can I interrupt lengthy operations or output?::
+* I don't see a thing when installing packages!::
 @end menu
 
 @node How can I have a per session .Rprofile?,What happens if I drag a file on the R icon?,,Sparse questions
@@ -753,11 +820,22 @@ session directory and change accordingly the startup working directory using the
 In this case @R{} will try to source this file or load the image data file (@pxref{Finder actions}). If @R{} is not
 yet running it will be launched.
 
-@node How can I interrupt lengthy operations or output?, ,What happens if I drag a file on the R icon?,Sparse questions
+@node How can I interrupt lengthy operations or output?, I don't see a thing when installing packages!,What happens if I drag a file on the R icon?,Sparse questions
 @section How can I interrupt lengthy operations or output?
 You can now use the standard Macintosh control break sequence, that is you should press
 "Cmd option" and "." (dot). This will interrupt any @R{} loops. The "Esc" key gives you the same result. 
 
+@node I don't see a thing when installing packages!,,How can I interrupt lengthy operations or output?, Sparse questions
+@section I don't see a thing when installing packages!
+Well, this is not a question but the answer is that you are not looking ain the right place.
+Every input and output which is not @R{} specific (i.e. the output of standard commands) is generally sent to
+the standard output (stdout) or standard error (stderr) depending on its nature. In particular every call to the
+@command{system} function, executes outside @R{} in a Mac OS X shell. The package installation is done via
+the @command{system} facilty. 
+You have to use the Preferences to redirect the stderr and/or the stdout to the @R{} Console (see @ref{Misc tab})
+or you can look at the @emph{Console} application inside @file{/Applications/Utilities} on your system.
+This applies to every GUI application on Mac OS X so, as a general rule, if an application behaves strangely or quits,
+please have a look to the @emph{Console} application.
 
 @bye
 

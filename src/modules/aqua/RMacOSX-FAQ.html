@@ -28,7 +28,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R for Mac OS X FAQ</h2>
 
 <h2>Frequently Asked Questions on R for Mac OS X</h2>
-<h2>Version 1.9-1 2004-03-22</h2>
+<h2>Version 1.9-1 2004-04-01</h2>
 <address>Stefano M. Iacus</address>
 <p><p><hr><p>
 
@@ -602,6 +602,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 
 <h3 class="subsection">Tools Menu</h4>
 
+<p>Apart for standard functionalities, the only relevant item in this menu is the <em>Edito Object</em> which is an interface to
+the  <small>R</small> <code>edit</code> function.
+
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Tools%20Menu">Tools Menu</a>,
@@ -612,6 +615,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 </div>
 
 <h3 class="subsection">Tools Menu</h4>
+
+<p>With this menu you can load and save the history of commands tyoed in the <small>R</small> Console or view what's currently inside. 
+You can also change the current working directory, let <small>R</small> show you the current working directory or set it back to the
+startup directory. From release 1.9.0 of <small>R</small> the current working directory is also shown on the main window bar.
 
 <div class="node">
 <p><hr>
@@ -624,6 +631,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 
 <h3 class="subsection">Workspace Menu</h4>
 
+<p>Here you find self explanatory menu items for manage your workspace in <small>R</small>. You can either load and save the workspace also
+by specifying file name. All of these are interfaces to the <code>load</code> and <code>save</code> <small>R</small> commands. 
+The only relevant item, which is specific to this GUI, is the <em>Browse workspace</em>. This will open a window with a summary
+description of the objects in your workspace. Complex objects (like lists, data.frame etc) can be expanded (one level only though).
+
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Packages%20Menu">Packages Menu</a>,
@@ -634,6 +646,38 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#The%20Menus">The Menus</a>
 </div>
 
 <h3 class="subsection">Packages Menu</h4>
+
+<p>Using this menu you can have access to the list of packages and datasets installed on your system and to the ones
+on <small>CRAN</small> or on the Bioconductor site.
+
+   <p>With the first two menus you can load and detach packages and dataset from the workspace. 
+Let's start with the <em>Package Manager</em>. This opens a window with serval columns displayed. 
+For each package on your system you can see a check box, the current status of the package (loaded/not loaded), its name
+and the package description text. You use the check box to select/de-select the packages you want. 
+On window closure, the checked packaged will be loaded and the uncheked ones (if loaded) will the detached (not completely as on Mac OS X you cannot
+unload completely dynamic libraries).
+
+   <p>The same applies to the <em>Dataset Manager</em> menu but for datasets.
+
+   <p>You can than get or update packages <small>CRAN</small> either in binary or source format. Daily build of <small>CRAN</small> packages are available
+for Mac OS X. If you don't know how to buld <small>R</small> itslef from source (see <a href="#Building%20R%20from%20sources">Building R from sources</a>),
+you'll probably be unable to build packages from source on your own. 
+In this case, you should always choose for the binary option. These binary packages work (for sure!) for the release version of <small>R</small> for Mac OS X
+you find on <small>CRAN</small> even though it is not excluded that they will work for other prebuilt versions of <small>R</small>.
+
+   <p>When you attempt to install packages from <small>CRAN</small>, <small>R</small> first tries to get a connection to the Internet to download
+the list of available packages. Than a window will open similar to the one in the package manager with the only difference that
+for each package there is also the information concerning the version of the package installed on your system (if any) and
+the version of the prebuilt package available on <small>CRAN</small>. Whe you close the window, the select packages will be downloaded.
+
+   <p>The same strategy applies to the Bioconductor menu item, with some more options typical of the Bioconductor way
+of managing packages.
+
+   <p>For some reason it could happen that you have the package you wnat to install (either in binary or source form) on one of your
+local disks, or even a directory containig a package source. You can use the last menu to do the task of installing the package. 
+Having a package in a directory form usually applies to people that are developing packages themselves.
+
+   <p>For more information on this topic see also <a href="#How%20to%20install%20packages">How to install packages</a>.
 
 <div class="node">
 <p><hr>
@@ -659,6 +703,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20with%20Aqua%20GUI">R with Aqua GUI
 
 <h3 class="section">Preferences</h3>
 
+<p>You can set several aspects of the <small>R</small> GUI via preferences. You can access the Preferences window via the Application menu when the
+<small>R</small> Console is open. 
+Preferences are organized in Tabs, more or less grouped for content.
+
 <ul class="menu">
 <li><a accesskey="1" href="#Text%20Windows%20tab">Text Windows tab</a>: 
 <li><a accesskey="2" href="#Quartz%20device%20tab">Quartz device tab</a>: 
@@ -676,6 +724,19 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
 
 <h3 class="subsection">Text Windows tab</h4>
 
+<p>You can change the font size, face and the tab size in all the windows including the Console. 
+If you have help windows opened, the changed only apply to the Console window and to the window
+you'll open from now on. This is a misfeature more tha a bug.
+
+   <p>You can also change the foreground and background colors for the read-only windows (i.e. the <small>R</small> Console
+output and the Help windows) and for read-and-write windows (i.e. the <small>R</small> Console input and the Edit windows). 
+At the moment you cannot chnage the color of the cursor which always stays black which ever  background you choose. 
+So, for the time being, it's a bad idea to set the background of the <small>R</small> Console to black.
+
+   <p>You have also the possibility to check two options. The first is for adapting the <small>R</small> output when you resize the
+<small>R</small> Console to the maximum character displayable, the second one is to let <small>R</small> remember the position of the
+<small>R</small> Console on exit.
+
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Quartz%20device%20tab">Quartz device tab</a>,
@@ -686,6 +747,11 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
 </div>
 
 <h3 class="subsection">Quartz device tab</h4>
+
+<p>You can set all the parameters of the <code>quartz</code> device for this tab. Please note: your changes only take effect
+if you select the final checkbox, namely <em>override the R quartz default settings</em>.
+
+   <p>This also apply to the <em>Quartz window position</em> option even if it is not a <code>quartz</code> parameter itself.
 
 <div class="node">
 <p><hr>
@@ -698,6 +764,9 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
 
 <h3 class="subsection">Packages tab</h4>
 
+<p>From this tab you can set the default repositories for the <small>CRAN</small> and Bioconductor urls. This will affect the
+corresponding <small>R</small> <code>options</code>.
+
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="Misc%20tab">Misc tab</a>,
@@ -707,6 +776,10 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Preferences">Preferences</a>
 </div>
 
 <h3 class="subsection">Misc tab</h4>
+
+<p>For this tab you can decide to redirect the stderr and stdout of <small>R</small> and the tasks launched by <small>R</small>, to the <small>R</small> Console. 
+This is useful, for example, during package installation. If you don't check these options, every otuptu will be sent to the <em>Console</em>
+application which you can find on every Mac OS X installation inside the directory <code>/Applications/Utilities</code>.
 
 <div class="node">
 <p><hr>
@@ -1151,6 +1224,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a accesskey="1" href="#How%20can%20I%20have%20a%20per%20session%20.Rprofile%3f">How can I have a per session .Rprofile?</a>: 
 <li><a accesskey="2" href="#What%20happens%20if%20I%20drag%20a%20file%20on%20the%20R%20icon%3f">What happens if I drag a file on the R icon?</a>: 
 <li><a accesskey="3" href="#How%20can%20I%20interrupt%20lengthy%20operations%20or%20output%3f">How can I interrupt lengthy operations or output?</a>: 
+<li><a accesskey="4" href="#I%20don't%20see%20a%20thing%20when%20installing%20packages!">I don't see a thing when installing packages!</a>: 
 </ul>
 
 <div class="node">
@@ -1183,6 +1257,7 @@ yet running it will be launched.
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="How%20can%20I%20interrupt%20lengthy%20operations%20or%20output%3f">How can I interrupt lengthy operations or output?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#I%20don't%20see%20a%20thing%20when%20installing%20packages!">I don't see a thing when installing packages!</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20happens%20if%20I%20drag%20a%20file%20on%20the%20R%20icon%3f">What happens if I drag a file on the R icon?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</a>
 <br>
@@ -1192,6 +1267,26 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</
 
 <p>You can now use the standard Macintosh control break sequence, that is you should press
 "Cmd option" and "." (dot). This will interrupt any <small>R</small> loops. The "Esc" key gives you the same result.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="I%20don't%20see%20a%20thing%20when%20installing%20packages!">I don't see a thing when installing packages!</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20interrupt%20lengthy%20operations%20or%20output%3f">How can I interrupt lengthy operations or output?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</a>
+<br>
+</div>
+
+<h3 class="section">I don't see a thing when installing packages!</h3>
+
+<p>Well, this is not a question but the answer is that you are not looking ain the right place. 
+Every input and output which is not <small>R</small> specific (i.e. the output of standard commands) is generally sent to
+the standard output (stdout) or standard error (stderr) depending on its nature. In particular every call to the
+<code>system</code> function, executes outside <small>R</small> in a Mac OS X shell. The package installation is done via
+the <code>system</code> facilty. 
+You have to use the Preferences to redirect the stderr and/or the stdout to the <small>R</small> Console (see <a href="#Misc%20tab">Misc tab</a>)
+or you can look at the <em>Console</em> application inside <code>/Applications/Utilities</code> on your system. 
+This applies to every GUI application on Mac OS X so, as a general rule, if an application behaves strangely or quits,
+please have a look to the <em>Console</em> application.
 
    </body></html>
 
