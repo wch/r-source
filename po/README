@@ -42,19 +42,22 @@ Windows RGui translations
 =========================
 
 These are contained in RGui.pot, created by running 'make RGui.pot-update'
-(called by make update-po).
+(called by 'make update-po').
 
-Translations should be called RGui-ll.po for language 'll'.
+Translations should be called RGui-ll.po for language 'll': such a file is
+compiled by
 
-To add a translation, add its .gmo file to the RGUI-CATALOGS macro in
-Makefile.win, and both the .po and .gmo files to the RGUI-CATALOGS
-macro in Makefile.in.in: it will then be automatically distributed and
-installed.
+	msgfmt -c --statistics -o RGui-ll.gmo RGui-ll.po
+
+To add a translation, add both the .po and .gmo files to the
+RGUI-CATALOGS macro in Makefile.in.in: it will then be automatically
+distributed.
 
 To test a translation on Windows, use
 
-	msgfmt -c --statistics -o RGui-ll.gmo RGui-ll.po
 	cp RGui-ll.gmo ../share/locale/ll/LC_MESSAGES/RGui.mo
 
-and then startup RGui.exe in an appropriate locale, or setting
-LANGUAGE=ll on the command line.
+and then startup RGui.exe in an appropriate locale, or set LANGUAGE=ll
+on the command line.  (All RGui-*.gmo files will installed to the
+right places when 'make -f Makefile.win' is run in this directory,
+which is part of the main 'make' process.)
