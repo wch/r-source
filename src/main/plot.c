@@ -1687,7 +1687,7 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
     sy1 = CAR(args); ny1 = length(sy1); args = CDR(args);
 
     hlength = asReal(CAR(args));
-    if (!R_FINITE(hlength) || hlength <= 0)
+    if (!R_FINITE(hlength) || hlength < 0)
 	errorcall(call, "invalid head length");
     args = CDR(args);
 

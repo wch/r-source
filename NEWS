@@ -177,6 +177,9 @@ NEW FEATURES
 
     o   is.xxx reached through do_is are now generic
 
+    o   arrows() now allows length = 0 (and draws no arrows).
+
+
 
 BUG FIXES
 
