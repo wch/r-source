@@ -1,0 +1,32 @@
+\name{mtcars}
+\alias{mtcars}
+\title{Motor Trend Road Tests}
+\usage{data(mtcars)}
+\description{
+    The data was extracted from 1974 Motor Trend magazine, and comprises
+    gasoline mileage in gallons per mile (GPM) and 10 aspects of
+    automobile design and performance for 32 automobiles (1973-74
+    models).
+}
+\format{
+    A data frame with 32 observations on 11 variables.
+    \tabular{rll}{
+	[, 1] \tab mpg  \tab Miles/gallon \cr
+	[, 2] \tab cyl  \tab Number of cylinders \cr
+	[, 3] \tab disp \tab Displacement (cu.in.) \cr
+	[, 4] \tab hp   \tab Gross horsepower \cr
+	[, 5] \tab drat \tab Rear axle ratio \cr
+	[, 6] \tab wt   \tab Weight (lb/1000) \cr
+	[, 7] \tab qsec \tab 1/4 mile time \cr
+	[, 8] \tab vs   \tab V/S \cr
+	[, 9] \tab am   \tab Transmission (0 = automatic, 1 = manual) \cr
+	[,10] \tab gear \tab Number of forward gears \cr
+	[,11] \tab carb \tab Number of carbureators
+    }
+}
+\source{
+    Henderson and Velleman (1981),
+    Building multiple regression models interactively.
+    \emph{Biometrics}, \bold{37}, 391--411.
+}
+\keyword{datasets}
