@@ -1,10 +1,11 @@
 \name{lm}
 \title{Fitting Linear Models}
 \usage{
-lm(formula, data, subset, weights, na.action=na.omit)
+lm(formula, data, subset, weights, na.action=na.omit,
+   method="qr", model=TRUE, singular.ok = TRUE)
 
-anova(lm.obj)
-summary(lm.obj)
+anova(lm.obj, \dots)
+summary(lm.obj, correlation = FALSE)
 
 coefficients(lm.obj)
 deviance(lm.obj)
@@ -14,8 +15,8 @@ fitted.values(lm.obj)
 residuals(lm.obj)
 weights(lm.obj)
 
-lm.fit(x, y)
-lm.w.fit(x, y, w)
+lm.fit(x, y, method = "qr", tol = 1e-7, \dots)
+lm.wfit(x, y, w, method = "qr", tol = 1e-7, \dots)
 }
 \alias{lm}
 \alias{anova.lm}
@@ -28,7 +29,7 @@ lm.w.fit(x, y, w)
 \alias{residuals.lm}
 \alias{weights.lm}
 \alias{lm.fit}
-\alias{lm.w.fit}
+\alias{lm.wfit}
 \alias{print.lm}
 \alias{print.summary.lm}
 \alias{print.anova.lm}
@@ -48,7 +49,14 @@ is to omit any incomplete observations.
 The alternative action \code{na.fail} causes \code{lm} to
 print an error message and terminate if there are any incomplete
 observations.}
+\item{model}{logical.  If \code{TRUE} (default), the model.frame is also
+  returned.}
+\item{singular.ok}{logical, defaulting to
+  \code{TRUE}. \emph{\code{FALSE} is not yet implemented}.}
 \item{lm.obj}{an object of class \code{lm}.}
+\item{method}{currently, only \code{method="qr"} is supported.}
+\item{tol}{tolerance for \code{\link{qr}} decomposition.  Default is 1e-7.}
+\item{\dots}{currently, disregarded.}
 }
 \description{
 \code{lm} is used to fit linear models.
