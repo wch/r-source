@@ -791,6 +791,9 @@ BUG FIXES
     o	The error message when evaluation depth was exceeded itself
 	caused an error in deparsing and so was not shown.
 
+    o	The 'datalist' file was not being used during installation
+	(2.0.1 only).
+
 
 
 		CHANGES IN R VERSION 2.0.1
