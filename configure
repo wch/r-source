@@ -1248,7 +1248,7 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-  fi    
+  fi
 fi
 
 if test -n "${F77}"; then
@@ -1445,7 +1445,7 @@ fi
 
 if test "${FC}" = g77; then
   FFLAGS=${FFLAGS-"-O2"}
-fi  
+fi
 
 
 
@@ -2440,13 +2440,8 @@ EOF
 
 fi
 
-<<<<<<< configure
-for ac_hdr in dl.h dlfcn.h elf.h fcntl.h limits.h locale.h \
-  readline/history.h rpc/xdr.h sys/times.h time.h ieeefp.h
-=======
 for ac_hdr in dl.h dlfcn.h elf.h locale.h readline/history.h \
   rpc/xdr.h sys/times.h time.h
->>>>>>> 1.39
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
