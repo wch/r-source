@@ -135,4 +135,3 @@ h9 \%*\% x              # = y
 }
 \keyword{algebra}
 \keyword{array}
-\keyword{regression}
