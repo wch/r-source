@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.45 $ ';
+my $revision = ' $Revision: 1.46 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -142,7 +142,7 @@ foreach my $pkg (@ARGV) {
 	    chdir($startdir);
 	} else {
 	    ## <FIXME>
-	    ## As R CMD INSTALL recursively copies all of `inst', we at
+	    ## As R CMD INSTALL recursively copies all of 'inst', we at
 	    ## least need to make sure that CVS subdirs are excluded.
 	    ## It is not clear whether more patterns should be excluded,
 	    ## and we also need to fix this under Windows.
@@ -198,6 +198,11 @@ foreach my $pkg (@ARGV) {
 	open(EXCLUDE, "> $exclude")
 	  or die "Cannot write to '$exclude'\n";
 	binmode EXCLUDE if $WINDOWS;
+	## <NOTE>
+	## For bundles, the .Rbuildignore mechanism is not consistent
+	## between build and check: the latter always works on a per
+	## package basis.  Maybe fix this once we know whether we want
+	## to keep bundles ...
 	if(-f "$pkg/.Rbuildignore") {
 	    open(RBUILDIGNORE, "$pkg/.Rbuildignore");
 	    while(<RBUILDIGNORE>) {
@@ -206,6 +211,7 @@ foreach my $pkg (@ARGV) {
 	    }
 	    close(RBUILDIGNORE);
 	}
+	## </NOTE>
 	sub findExcludeFiles {
 	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^check$/);
 	    print EXCLUDE "$File::Find::name\n" if(-d $_ && /^chm$/);
