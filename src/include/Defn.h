@@ -445,7 +445,7 @@ void	R_Busy(int);
 void	R_CleanUp(int);
 void	R_StartUp(void);
 int	R_ShowFile(char*, char*);
-int     R_ShowFiles(int, char **, char **, char *);
+int     R_ShowFiles(int, char **, char **, char *, int, char *);
 int	R_ChooseFile(int, char*, int);
 char*	R_HomeDir(void);
 int	R_HiddenFile(char*);

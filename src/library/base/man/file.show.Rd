@@ -14,22 +14,22 @@ file.show(\dots, header, title="R Information",
  \item{title}{an overall title for the display.  If a separate window
    is used for the display, \code{title} will be used as the
    window title.}
- \item{delete.file}{should the file be deleted after display? Used for
+ \item{delete.file}{should the files be deleted after display? Used for
    temporary files.}
  \item{pager}{the pager to be used.}
 }
 \description{
-This function provides the core of the R help system,
-but it can be used for other purposes as well.
+    This function provides the core of the R help system,
+    but it can be used for other purposes as well.
 }
-\note{(Comment by BDR.)
-  The last two arguments are hooks for future designs: at present
-  the Unix version uses the pager set by the \code{PAGER} environmental
-  variable, and files are deleted by \R when \code{file.show}
-  exits. However, a GUI model might be to put up a file in a separate
-  window and let the user leave it up while \R continues running. 
+\note{
+    How the pager is implemented is system dependent. At present
+    the Unix version concatentates files and displays them in the pager
+    set by the \code{pager} option setting. However, a GUI model might
+    be to put up a file in a separate
+    window and let the user leave it up while \R continues running. 
 }
-\author{Ross Ihaka.}
+\author{Ross Ihaka, Brian Ripley.}
 \seealso{
 \code{\link{file}},
 \code{\link{list.files}},

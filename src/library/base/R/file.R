@@ -10,14 +10,13 @@ function (..., header=rep("", nfiles), title="R Information",
 {
     file <- c(...)
     nfiles <- length(file)
-    if(delete.file) on.exit(file.remove(file))
-    .Internal(file.show(file, header, title))
+    .Internal(file.show(file, header, title, delete.file, pager))
 }
 
 file.append <- function(file1, file2)
 .Internal(file.append(file1, file2))
 
-file.remove <- function(...) 
+file.remove <- function(...)
 .Internal(file.remove(c(...)))
 
 
@@ -39,14 +38,14 @@ file.choose <- function(new=FALSE)
 .Internal(file.choose(new))
 
 
-system.file <- function (..., pkg = .packages(), lib = .lib.loc) 
+system.file <- function (..., pkg = .packages(), lib = .lib.loc)
 {
     flist <- list(...)
     if(length(flist) > 1 || (length(flist) == 1 && nchar(flist[[1]]) > 0)) {
-        FILES <- file.path(t(outer(lib, pkg, paste, sep = .Platform$file.sep)), 
+        FILES <- file.path(t(outer(lib, pkg, paste, sep = .Platform$file.sep)),
                            file.path(...))
     } else {
-        if(missing(pkg)) pkg <- "base" 
+        if(missing(pkg)) pkg <- "base"
         FILES <- outer(lib, pkg, paste, sep = .Platform$file.sep)
     }
     present <- file.exists(FILES)

@@ -115,9 +115,10 @@
  *  this is the case if the file name begins with a '.'.  On the Mac
  *  a file is hidden if the file name ends in '\r'.
  *
- *    int R_ShowFile(char *file, char *title)
+ *    int R_ShowFiles(int nfile, char **file, char **title, char *wtitle, 
+ *		      int del, char *pager)
  *
- *  This function is used to display the contents of a file.  On (raw)
+ *  This function is used to display the contents of files.  On (raw)
  *  Unix this means invoking a pager on the file.  On Gui-based platforms
  *  the file would probably be displayed in a window with the given
  *  title.
@@ -910,27 +911,38 @@ int R_ShowFile(char *file, char *title)
 /* This function can be used to display the named files with the */
 /* given titles and overall title.  On GUI platforms we could */
 /* use a read-only window to display the result.  Here we just */
-/* make up a temporary file and invoke a page on it. */
+/* make up a temporary file and invoke a pager on it. */
 
-int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
+/*
+ *     nfile   = number of files
+ *     file    = array of filenames
+ *     headers = the `headers' args of file.show. Printed before each file.
+ *     wtitle  = title for window: the `title' arg of file.show
+ *     del     = flag for whether files should be deleted after use
+ *     pager   = pager to be used.
+ */
+
+int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle, 
+		int del, char *pager)
 {
-    int c, i;
-    char *pager, *filename;
+    int c, i, res;
+    char *filename;
     FILE *fp, *tfp;
     char buf[1024];
+
     if (nfile > 0) {
-        pager = getenv("PAGER");
-        if (pager == NULL) pager = "more";
+        if (pager == NULL || strlen(pager) == 0) pager = "more";
 	filename = tmpnam(NULL);
         if ((tfp = fopen(filename, "w")) != NULL) {
 	    for(i = 0; i < nfile; i++) {
-		if (title[i] && *title[i])
-		    fprintf(tfp, "%s\n\n", title[i]);
+		if (headers[i] && *headers[i])
+		    fprintf(tfp, "%s\n\n", headers[i]);
 		if ((fp = fopen(file[i], "r")) != NULL) {
 		    while ((c = fgetc(fp)) != EOF)
 			fputc(c, tfp);
 		    fprintf(tfp, "\n");
 		    fclose(fp);
+		    if(del) unlink(file[i]);
 		}
 		else
 		    fprintf(tfp, "NO FILE %s\n\n", file[i]);
@@ -938,8 +950,9 @@ int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
 	    fclose(tfp);
 	}
 	sprintf(buf, "%s < %s", pager, filename);
-	if (system(buf) != 0) return 0;
-	else return 1;
+	res = system(buf);
+	unlink(filename);
+	return (res != 0);
     }
     return 1;
 }
@@ -949,12 +962,12 @@ int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
 
 char *R_HomeDir()
 {
-	return getenv("RHOME");
+    return getenv("RHOME");
 }
 
 /* Prompt the user for a file name.  Return the length of */
 /* the name typed.  On Gui platforms, this should bring up */
-/* a dialog box so a user can choos files that way. */
+/* a dialog box so a user can choose files that way. */
 
 int R_ChooseFile(int new, char *buf, int len)
 {
@@ -963,7 +976,7 @@ int R_ChooseFile(int new, char *buf, int len)
     R_ReadConsole("Enter file name: ", buf, len, 0);
     namelen = strlen(buf);
     bufp = &buf[namelen - 1];
-    while (bufp >= buf && isspace(*bufp))
+    while (bufp >= buf && isspace((int)*bufp))
 	*bufp-- = '\0';
     return strlen(buf);
 }

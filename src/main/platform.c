@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, The R Development Core Team
+ *  Copyright (C) 1998, 1999 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -102,21 +102,24 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
 SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP fn, tl, hd;
-    char **f, **h, *t, *vm;
-    int i, n;
+    SEXP fn, tl, hd, pg;
+    char **f, **h, *t, *vm, *pager;
+    int i, n, dl;
     checkArity(op, args);
     vm = vmaxget();
-    fn = CAR(args);
-    hd = CADR(args);
-    tl = CADDR(args);
-    n = length(fn);
-    if (!isString(fn) || n < 1)
+    fn = CAR(args); args = CDR(args);
+    hd = CAR(args); args = CDR(args);
+    tl = CAR(args); args = CDR(args);
+    dl = asLogical(CAR(args)); args = CDR(args);
+    pg = CAR(args);
+    if (!isString(fn) || (n = length(fn)) < 1)
 	errorcall(call, "invalid filename specification\n");
     if (!isString(hd) || length(hd) != n)
 	errorcall(call, "invalid headers\n");
     if (!isString(tl))
-	errorcall(call, "invalid filename\n");
+	errorcall(call, "invalid title\n");
+    if (!isString(pg))
+        errorcall(call, "invalid pager specification\n");
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -133,7 +136,11 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
 	t = CHAR(STRING(tl)[0]);
     else
 	t = CHAR(R_BlankString);
-    R_ShowFiles(n, f, h, t);
+    if (length(pg) >= 1 || !isNull(STRING(pg)[0]))
+	pager = CHAR(STRING(pg)[0]);
+    else
+	pager = CHAR(R_BlankString);
+    R_ShowFiles(n, f, h, t, dl, pager);
     vmaxset(vm);
     return R_NilValue;
 }
