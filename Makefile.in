@@ -87,7 +87,7 @@ install: installdirs
 	@for f in `ls bin/*.$(SHLIB_EXT) bin/*.la`; do \
 	  $(INSTALL_PROGRAM) $${f} $(Rexeclibdir); \
 	done
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=finish $(Rexeclibdir)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --quiet --mode=finish $(Rexeclibdir)
 	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
 	  $(MKINSTALLDIRS) $(rhome)/gnome; \
 	  for f in `ls gnome/*.$(SHLIB_EXT) gnome/*.la`; do \
@@ -102,7 +102,7 @@ install: installdirs
 	  $(INSTALL_DATA) $${f} $(rhome)/include/R_ext; \
 	done
 ## </FIXME>
-	@echo "installing library ..."
+	@echo "installing packages ..."
 	@cp -r library $(rhome) || \
 	  (cd library; \
 	    $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xof -))
