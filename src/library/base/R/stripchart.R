@@ -62,7 +62,8 @@ function(x, method="overplot", jitter=0.1, offset=1/3, vertical=FALSE,
 	    xg <- split(x, factor(x))
 	    xo <- lapply(xg, f)
 	    x <- unlist(xg, use.names=FALSE)
-	    y <- y + (unlist(xo, use.names=FALSE) - 1) * offset * csize
+	    y <- rep(i,length(x)) +
+                (unlist(xo, use.names=FALSE) - 1) * offset * csize
 	}
 	if(vertical) points(y, x, col=col[(i - 1)%%length(col) + 1],
 			    pch=pch[(i - 1)%%length(pch) + 1], cex=cex)
