@@ -67,9 +67,11 @@ lchoose(n, k)
 choose(5, 2)
 for (n in 0:10) print(choose(n, k = 0:n))
 
+## gamma has discontinuities are 0, -1, -2, ...
+\dontrun{## use plots of points to show this.
 curve(gamma(x),-3,4, n=1001, ylim=c(-10,100),
       col="red", lwd=2, main="gamma(x)")
-abline(h=0,v=0, lty=3, col="midnightblue")
+abline(h=0,v=0, lty=3, col="midnightblue")}
 
 x <- seq(.1, 4, length = 201); dx <- diff(x)[1]
 par(mfrow = c(2, 3))
@@ -82,6 +84,5 @@ for (ch in c("", "l","di","tri","tetra","penta")) {
   abline(h = 0, col = "lightgray")
   if (is.deriv) lines(x[-1], dy, col = "blue", lty = 2)
 }
-par(mfrow = c(2, 2))
 }
 \keyword{math}
