@@ -20,24 +20,28 @@ all:
 	@cat `ls $(srcdir)/R/*.R` \
 	  > $(top_builddir)/library/$(pkg)/R/$(pkg)
 	@if test -f $(srcdir)/INDEX; then \
-	  cp $(srcdir)/INDEX $(top_builddir)/library/$(pkg); \
+	  $(INSTALL_DATA) $(srcdir)/INDEX \
+	    $(top_builddir)/library/$(pkg); \
 	fi
 	@if test -f $(srcdir)/TITLE; then \
-	  cp $(srcdir)/TITLE $(top_builddir)/library/$(pkg); \
+	  $(INSTALL_DATA) $(srcdir)/TITLE\
+	     $(top_builddir)/library/$(pkg); \
 	fi
 	@if test -d $(srcdir)/data; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/data; \
-	  for f in $(srcdir)/data/[a-z]*; do \
+	  for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
 	    $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/data; \
 	  done; \
 	fi
-	@if test -d src; then cd src; $(MAKE); cd ..; fi
+	@if test -d src; then \
+	  (cd src && $(MAKE)) || exit 1; \
+	fi
 
 mostlyclean: clean
 clean:
-	@if test -d src; then cd src; $(MAKE) $@; cd ..; fi
+	@if test -d src; then (cd src && $(MAKE) $@); fi
 distclean:
-	@if test -d src; then cd src; $(MAKE) $@; cd ..; fi
+	@if test -d src; then (cd src && $(MAKE) $@); fi
 	@rm -f Makefile
 maintainer-clean: distclean
 

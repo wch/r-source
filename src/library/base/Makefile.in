@@ -16,18 +16,16 @@ DISTFILES = INDEX TITLE Makefile.in
 all:
 	@echo Building R base package
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
-	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
 	@cat `ls $(srcdir)/R/*.R | sed '/system.*/d'` \
 	     $(srcdir)/R/system.unix.R | \
 	 sed '/^[ 	]*$$/d'  > $(top_builddir)/library/base/R/base
 #		   ^^ = TAB + Space
-##-- do NOT delete all '#' lines -- this BREAKS strings containing '#' !!
-##-- Could still delete all  '/^[\t ]*#/ lines, but why not leave comments ?
-##	@cat $(FUNS) STARTUP |sed  '/^$$/d;/^[ 	]*#/d'  > ../../../library/base
-##					      ^^ = TAB + Space
-	@cp $(srcdir)/INDEX $(srcdir)/TITLE $(top_builddir)/library/base
-	@cp `ls $(srcdir)/data/[a-z]*` $(top_builddir)/library/base/data
-	@cp $(srcdir)/data/00Index $(top_builddir)/library/base/data
+	@$(INSTALL_DATA) $(srcdir)/INDEX $(top_builddir)/library/base
+	@$(INSTALL_DATA) $(srcdir)/TITLE $(top_builddir)/library/base
+	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
+	@for f in `ls -d $(srcdir)/data/* | sed '/CVS/d'`; do \
+	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/data; \
+	done
 
 mostlyclean: clean
 clean:
