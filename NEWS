@@ -788,9 +788,6 @@ BUG FIXES
 
     o   unlist on lists containing expressions now works (PR#5628)
 
-    o   z[1]<<-z[1]+1 and similar complex superassignments find the RHS 
-	locally and the LHS in the enclosing environment.
-
     o	D(), deriv() and deriv3() now also can deal with gamma and lgamma.
 
     o   The X11 module can now be built against XFree86 4.4.0 headers (still
