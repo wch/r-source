@@ -17,6 +17,10 @@ NEW FEATURES
 	This is bound to be modified for future versions, and suggestions
 	and volunteers are very welcome.
 
+    o	The API header files and export files R.exp  are released under
+	LGPL rather than GPL to allow dynamical loaded code to be
+	distributed under licences other than GPL.
+
 
 BUG FIXES
 
