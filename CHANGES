@@ -2,6 +2,14 @@
 
 NEW FEATURES
 
+    o   Command line options GNUified a bit further.
+	New command line option `--verbose' for printing more
+	information about progress.
+	Command line options `--vsize' and `--hsize' as replacements
+	for `-v' and `-n' which are now deprecated.
+	Added `--silent' as synonym for `--quiet'.
+	Short-style option `-V' obsolete.
+
     o   Added bug.report() to generate & send bug reports from
         within R. 
 
