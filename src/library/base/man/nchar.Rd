@@ -1,10 +1,10 @@
 \name{nchar}
-\title{Count the Number of Characters}
+\title{Count the Number of Characters (Bytes)}
 \usage{nchar(x)}
 \alias{nchar}
 \description{
   \code{nchar} takes a character vector as an argument and
-  returns a vector whose elements contain the number of characters in
+  returns a vector whose elements contain the number of bytes in
   the corresponding element of \code{x}.
 }
 \arguments{
@@ -13,12 +13,12 @@
 }
 \details{
   The internal equivalent of the default method of
-  \code{\link{as.character}} is performed on \code{x}.  If you want to operate
-  on non-vector objects passing them through \code{\link{deparse}} first
-  will be required.
+  \code{\link{as.character}} is performed on \code{x}.  If you want to
+  operate on non-vector objects passing them through
+  \code{\link{deparse}} first will be required.
 }
 \value{
-  An integer vector giving the number of characters in each string,
+  An integer vector giving the number of bytes in each string,
   \code{2} for missing values (for \code{NA}).
 }
 \note{
@@ -27,12 +27,17 @@
   2.0.1.  Use \code{\link{encodeString}} to find the characters used to
   print the string.
 
-  It is possible (but unsupported) that multichar sequences might be
-  displayed as a single character.
+  It is possible that multibyte sequences might be displayed as a single
+  character.
 
-  As from \R 2.1.0 embedded \code{nul} characters are included in the
+  As from \R 2.1.0 embedded \code{nul} bytes are included in the
   count (but not the final \code{nul}): previously the count stopped
   immediately before the first \code{nul}.
+}
+\section{Warning}{
+  Whether this should return the number of \emph{bytes} or the number of
+  \emph{characters} in a multibyte encoding (e.g. UTF-8) is currently
+  undecided.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

@@ -19,6 +19,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8>
+   regex code should be OK.
+   substitution code does ASCII comparisons only.
+*/
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

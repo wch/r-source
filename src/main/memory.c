@@ -27,6 +27,8 @@
  *	and reset the stack pointer.
  */
 
+/* <UTF8> char here is handled as a whole */
+
 #define USE_RINTERNALS
 
 #ifdef HAVE_CONFIG_H
@@ -1508,7 +1510,7 @@ char *vmaxget(void)
 
 void vmaxset(char *ovmax)
 {
-  R_VStack = (SEXP) ovmax;
+    R_VStack = (SEXP) ovmax;
 }
 
 char *R_alloc(long nelem, int eltsize)

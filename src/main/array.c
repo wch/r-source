@@ -20,6 +20,8 @@
  *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
+/* <UTF8> Only ASCII values */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

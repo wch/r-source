@@ -22,6 +22,8 @@
  *  by Duncan Murdoch
  */
  
+/* <UTF8> char here is either ASCII or handled as a whole */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

@@ -19,6 +19,8 @@
 /* l-bfgs-b.f -- translated by f2c (version 19991025).
 */
 
+/* <UTF8> all char uses here are ASCII */
+
 /* Exports setulb()
  *         ======
  * called from lbfgsb() in ../main/optim.c */

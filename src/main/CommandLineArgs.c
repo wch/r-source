@@ -19,6 +19,10 @@
   U.S.A.
  */
 
+/* <UTF8> char here is handled as a whole string,
+   or the strings are ASCII (as in sizes).
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

@@ -18,6 +18,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8-FIXME> Octal representation of strings needs fixing
+
+   char here is either ASCII or handled as a whole, apart from Rstrlen 
+   and EncodeString.
+*/
+
+
 /* =========
  * Printing:
  * =========
@@ -212,7 +219,7 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 }
 
 
-/* strlen() using escaped rather than literal form, 
+/* strlen() using escaped rather than literal form,
    and allows for embedded nuls */
 int Rstrlen(SEXP s, int quote)
 {
@@ -226,10 +233,11 @@ int Rstrlen(SEXP s, int quote)
 	    switch(*p) {
 	    case '\\':
 		 len += 2; break;
-	    case '\'': 
-	    case '"': 
+	    case '\'':
+	    case '"':
 		len += (quote == *p)? 2 : 1; break;
-	    default: len += 1; break;
+	    default: 
+		len++; break;
 	    }
 	} else switch(*p) {
 	case '\a':
@@ -241,7 +249,7 @@ int Rstrlen(SEXP s, int quote)
 	case '\v':
 	case '\0':
 	    len += 2; break;
-	default: 
+	default:
 #ifdef Win32
 	    len += ((unsigned int)*p < 32) ? 5 : 1;
 #else
@@ -287,8 +295,8 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	if(isprint((int)*p)) {
 	    switch(*p) {
 	    case '\\': *q++ = '\\'; *q++ = '\\'; break;
-	    case '\'': 
-	    case '"':  
+	    case '\'':
+	    case '"':
 		if(quote == *p)  *q++ = '\\'; *q++ = *p; break;
 	    default: *q++ = *p; break;
 	    }
@@ -306,7 +314,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	case '\v': *q++ = '\\'; *q++ = 'v'; break;
 	case '\0': *q++ = '\\'; *q++ = '0'; break;
 
-	default: 
+	default:
 #ifdef Win32 /* It seems Windows does not know what is printable! */
 	    if((unsigned int)*p < 32) {
 		/* print in octal */
@@ -430,15 +438,15 @@ void Rvprintf(const char *format, va_list arg)
 	R_CheckUserInterrupt();
 	printcount = 0 ;
     }
-    
+
     do{
       con = getConnection(con_num);
       con->vfprintf(con, format, arg);
       con->fflush(con);
       con_num = getActiveSink(i++);
     } while(con_num>0);
-    
-    
+
+
 }
 
 /*

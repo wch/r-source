@@ -21,6 +21,8 @@
  *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
+/* <UTF8> char here is handled as a whole string */
+
 /* Code to handle list / vector switch */
 
 #ifdef HAVE_CONFIG_H

@@ -82,6 +82,8 @@
  *
  * LT */
 
+/* <UTF8> char here is either ASCII or handled as a whole */
+
 /* This is needed for now for the write barrier test to work.  But
    since it disables testing of this file it should either be removed
    or at least limited to code that really needs it. LT */

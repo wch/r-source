@@ -20,6 +20,8 @@
  *      Interfaces to POSIX date and time functions.
  */
 
+/* <UTF8> char here is either ASCII or handled as a whole */
+
 /*
     These use POSIX functions that are not available on all platforms,
     and where they are they may be partially or incorrectly implemented.

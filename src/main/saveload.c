@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> byte-level access is only to compare with chars <= 0x7F */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

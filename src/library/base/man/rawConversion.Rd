@@ -45,6 +45,11 @@ packBits(x, type = c("raw", "integer"))
 \details{
   \code{packBits} accepts raw, integer or logical inputs, the last two
   without an NAs.
+#ifdef unix
+
+  Note that \sQuote{bytes} are not necessarily the same as characters,
+  e.g. in UTF-8 domains.
+#endif
 }
 \examples{
 x <- "A test string"

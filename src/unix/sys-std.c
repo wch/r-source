@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/* <UTF8> char here is mainly handled as a whole string.
+   Does need readline to support it.
+   Appending \n\0 is OK in UTF-8, not general MBCS.
+   Removal of \r is OK on UTF-8.
+   ? use of isspace OK?
+ */
+
 
 /* See system.txt for a description of functions */
 

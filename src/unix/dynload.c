@@ -18,6 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> char here is handled as a whole string */
+
 
 /* This provides a table of built-in C and Fortran functions.
    We include this table, even when we have dlopen and friends.

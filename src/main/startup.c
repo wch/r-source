@@ -20,6 +20,8 @@
   U.S.A.
  */
 
+/* <UTF8> char here is handled as a whole string */
+
 /*
   See ../unix/system.txt for a description of some of these functions
   Formally part of ../unix/sys-common.c

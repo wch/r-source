@@ -19,8 +19,10 @@
   U.S.A.
  */
 
+/* <UTF8> This does byte-level access, e.g. isspace, but is OK. */
+
 /* ------------------- process .Renviron files in C -----------------
- *  Formally part of ../unix/sys-common.c. 
+ *  Formerly part of ../unix/sys-common.c. 
  */
 
 #ifdef HAVE_CONFIG_H

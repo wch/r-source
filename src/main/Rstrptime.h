@@ -1,3 +1,5 @@
+/* <UTF8-FIXME> uses isspace and char-level manipulations */
+
 /* For inclusion by datetime.c if needed. A slightly modified version of
    code from the GNU C library with locale support removed. */
 

@@ -19,6 +19,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> char here is handled as a whole string */
+
 int Rf_initialize_R(int ac, char **av); /* in ../unix/system.c */
 void Rf_mainloop();                     /* in main.c */
 

@@ -62,6 +62,8 @@
  *	  New (Feb.98): if flag has more than one character, all are passed..
  */
 
+/* <UTF8> char here is either ASCII or handled as a whole */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

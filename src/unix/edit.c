@@ -18,6 +18,10 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> char here is handled as a whole string, but note that
+   fprintf is used */
+
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

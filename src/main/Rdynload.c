@@ -18,6 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> char here is handled as a whole string */
+
 /*
   This is an effort to merge the 3 different dynload.c files in the
   distribution from the unix/, macintosh/dll/ and gnuwin32/ directories.

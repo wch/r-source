@@ -86,6 +86,10 @@
 * writing this note.  I guess it needs a bit more thought ...
 */
 
+/* <UTF8> char here is either ASCII or handled as a whole.
+   E.g. backquotify should work.
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

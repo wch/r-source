@@ -34,8 +34,8 @@ writeChar(object, con, nchars = nchar(object), eos = "")
     target system for the file.  Using \code{"swap"} will force swapping
     endian-ness.}
   \item{object}{An \R object to be written to the connection.}
-  \item{nchars}{integer, giving the lengths of (unterminated) character
-    strings to be read or written.}
+  \item{nchars}{integer, giving the lengths in bytes of (unterminated)
+    character strings to be read or written.}
   \item{eos}{character. The terminator to be written after each string,
     followed by an ASCII \code{nul}; use \code{NULL} for no terminator
     at all.}
@@ -86,10 +86,10 @@ writeChar(object, con, nchars = nchar(object), eos = "")
   For \code{writeChar} if too many characters are requested the output
   is zero-padded, with a warning.
 
-  If \code{readBin(what=character())} is used incorrectly on a file which
-  does not contain C-style character strings, warnings (usually
-  many) are  given as from version 1.6.2.  The input will be broken into
-  pieces of length 10000 with any final part being discarded.
+  If \code{readBin(what=character())} is used incorrectly on a file
+  which does not contain C-style character strings, warnings (usually
+  many) are given.  The input will be broken into pieces of length 10000
+  with any final part being discarded.
 }
 
 \value{

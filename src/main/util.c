@@ -19,6 +19,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> 
+   char here is mainly either ASCII or handled as a whole.
+   isBlankString is probably OK, but maybe could be improved.
+*/
+
+
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

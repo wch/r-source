@@ -18,6 +18,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8> char here is handled as a whole string */
+
 /* The `` x:y ''  primitive calls do_seq(); do_seq() calls cross() if
    both arguments are factors and seq() otherwise.
    */

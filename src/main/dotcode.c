@@ -20,6 +20,11 @@
  *  Suite 330, Boston, MA  02111-1307  USA.
  */
 
+/* <UTF8-FIXME>
+   Need to convert character strings to and from 8-bit.
+   Check other uses.
+ */
+
 #ifdef HAVE_CONFIG_H
 # include <config.h>
 #endif

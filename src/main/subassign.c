@@ -1125,9 +1125,9 @@ static SEXP listRemove(SEXP x, SEXP s)
 {
     SEXP a, pa, px;
     int i, ii, *ind, ns, nx, stretch=0;
-    char *h;
+    char *vmax;
 
-    h = vmaxget();
+    vmax = vmaxget();
     nx = length(x);
     PROTECT(s = makeSubscript(x, s, &stretch));
     ns = length(s);
@@ -1157,7 +1157,7 @@ static SEXP listRemove(SEXP x, SEXP s)
     SET_OBJECT(CDR(a), OBJECT(x));
     SET_NAMED(CDR(a), NAMED(x));
     UNPROTECT(2);
-    vmaxset(h);
+    vmaxset(vmax);
     return CDR(a);
 }
 

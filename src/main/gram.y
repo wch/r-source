@@ -20,6 +20,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <UTF8-FIXME>
+   This uses byte-level access, which is generally OK as comparisons
+   are with ASCII chars.
+
+   isValidName is not OK.
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

@@ -29,6 +29,10 @@
 	    ~~~~~~~~~~~
  */
 
+/* <UTF8-FIXME>
+   Uses byte-level metric information on `chars'.
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,14 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+/* <UTF8-FIXME> 
+   char here is mainly handled as a whole string.
+   Does handle file names.
+   R_ExpandFileName_unix uses isalpha, which needs fixing.
+   Chopping final \n is OK in UTF-8.
+ */
+
 
 /* See system.txt for a description of functions */
 
@@ -80,6 +88,8 @@ char *R_ExpandFileName_readline(char *s, char *buff);  /* sys-std.c */
 static char newFileName[PATH_MAX];
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
+
+/* <UTF8-FIXME> */
 static char *R_ExpandFileName_unix(char *s, char *buff)
 {
     char *p;

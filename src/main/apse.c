@@ -23,11 +23,7 @@ Furthermore:
 
 */
 
-/*
-
-  $Id: apse.c,v 1.2 2002/06/08 10:20:32 hornik Exp $
-
-*/
+/* <UTF8-FIXME> byte-level ops. Not at all clear that this is fixable. */
 
 #include "apse.h"
 
