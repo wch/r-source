@@ -45,6 +45,8 @@ DL_FUNC ptr_do_wsbrowser, ptr_GetQuartzParameters,
 DL_FUNC ptr_R_ProcessEvents, ptr_CocoaInnerQuartzDevice, 
     ptr_CocoaGetQuartzParameters, ptr_CocoaSystem;
 
+int (*ptr_Raqua_CustomPrint)(char *, SEXP);
+
 Rboolean CocoaInnerQuartzDevice(NewDevDesc *dd,char *display,
 				double width,double height,
 				double pointsize,char *family,
@@ -112,6 +114,36 @@ SEXP do_packagemanger(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     return(ptr_do_flushconsole(call, op, args, env));
+}
+
+SEXP do_aqua_custom_print(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    char *vm;
+    char *ct;
+    int cpr;  
+    SEXP rv, objType, obj;
+
+    if (!ptr_Raqua_CustomPrint) return R_NilValue;
+
+    checkArity(op, args);
+  
+    vm = vmaxget();
+  
+    objType = CAR(args); args = CDR(args);
+    obj = CAR(args);
+
+    if (!isString(objType) || LENGTH(objType)<1)
+        errorcall(call, "invalid arguments");
+    ct=CHAR(STRING_ELT(objType,0));
+    cpr=ptr_Raqua_CustomPrint(ct, obj);
+
+    PROTECT(rv=allocVector(INTSXP, 1));
+    INTEGER(rv)[0]=cpr;
+
+    vmaxset(vm);
+    UNPROTECT(1);
+
+    return rv;
 }
 
 void R_ProcessEvents(void)
