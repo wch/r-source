@@ -67,6 +67,7 @@ plot.default <-
 function (x, y=NULL, type="p", main=NULL, col=par("fg"), bg=NA,
           pch=par("pch"), xlim=NULL, ylim=NULL, log="", axes=TRUE,
           frame.plot=axes, panel.first=NULL, panel.last=NULL,
+          sub=NULL, # 0.63 will reorder the args more logically..
           ann=par("ann"), xlab=NULL, ylab=NULL, cex=par("cex"),
           lty=par("lty"), lwd=par("lwd"), asp=NA, ...)
 {
