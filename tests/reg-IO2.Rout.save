@@ -72,7 +72,7 @@ header and 'col.names' are of different lengths in: read.table("foo3", header = 
 1    2
 3    4
 Warning message: 
-incomplete final line found by readTableHeader on `foo4' 
+incomplete final line found by readTableHeader on 'foo4' 
 > unlink("foo4")
 > 
 > # blank last line

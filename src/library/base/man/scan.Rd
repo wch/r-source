@@ -125,8 +125,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   columnar data.  If any of the types is \code{NULL}, the corresponding
   field is skipped (but a \code{NULL} component appears in the result).
 
-  The type of \code{what} or its components can be one of the five
+  The type of \code{what} or its components can be one of the six
   atomic types or \code{NULL},
+
+  \sQuote{White space} is defined for the purposes of this function as
+  one or more contiguous characters from the set space, horizontal tab,
+  carriage return and line feed.  It does not include form feed,
+  vertical tab or other non-ASCII space characters.
 
   Empty numeric fields are always regarded as missing values.
   Empty character fields are scanned as empty character vectors, unless

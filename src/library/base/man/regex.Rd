@@ -271,13 +271,15 @@
   and recursive patterns are not covered here.
 }
 \author{
-  This help page is based on the documentation of GNU grep 2.4.2, from
-  which the C code used by \R has been taken, the \code{pcre} man
+  This help page is based on the documentation of GNU grep 2.4.2 (from
+  which the C code used by \R used to be taken) the \code{pcre} man
   page from PCRE 3.9 and the \code{pcrepattern} man page from PCRE 4.4.
 }
 \seealso{
   \code{\link{grep}}, \code{\link{apropos}}, \code{\link{browseEnv}},
   \code{\link{help.search}}, \code{\link{list.files}},
   \code{\link{ls}} and \code{\link{strsplit}}.
+  
+  \url{http://www.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html}
 }
 \keyword{character}

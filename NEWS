@@ -286,6 +286,9 @@ INTERNATIONALIZATION
     o	Function l10n_info() reports on aspects of the locale/charset
 	currently in use.
 
+    o	scan() is now aware of double-byte locales such as Shift-JIS
+	in which ASCII characters can occur as the second ('trail') byte.
+
 
 UTILITIES
 
@@ -540,6 +543,9 @@ BUG FIXES
 
     o	Using pch="" gave a square (pch=0)!  Now it is regarded as the
 	same as NA, which was also undocumented but omits the point.
+
+    o	Base graphics now notices (ab)lines which have a zero
+	coordinate on log scale, and omits them.  (PR#7559)
 
 
 
