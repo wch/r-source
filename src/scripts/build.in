@@ -33,15 +33,15 @@ use R::Rd;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.28 $ ';
+my $revision = ' $Revision: 1.29 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$",
-		       "^.*/\.#[^/]*\$", "^.*/#[^/]*#\$");
+my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\\.swp\$",
+		       "^.*/\\.#[^/]*\$", "^.*/#[^/]*#\$");
 
 my $tmpdir = R_getenv("TMPDIR", "/tmp");
 my $R_exe = "${R_HOME}/bin/R";
