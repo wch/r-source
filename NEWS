@@ -28,6 +28,9 @@ NEW FEATURES
 
 BUG FIXES
 
+     o	Unused entry points in src/appl/fortran.c and Fortran.h
+	have been removed.
+
 
 
 	**************************************************
