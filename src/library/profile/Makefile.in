@@ -16,3 +16,9 @@ all: Common.R Rprofile.unix
 	@echo building system startup profile
 	@cat $(srcdir)/Common.R $(srcdir)/Rprofile.unix \
 		> $(top_builddir)/library/base/R/Rprofile
+
+mostlyclean: clean
+clean:
+distclean:
+	@rm -f Makefile
+maintainer-clean: distclean

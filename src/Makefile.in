@@ -12,8 +12,12 @@ include $(top_builddir)/Makeconf
 SUBDIRS = include appl nmath unix main scripts library
 
 TARGETS = all install install-strip uninstall mostlyclean clean \
-	distclean maintainer-clean TAGS info dvi dist check \
-	R docs
+	TAGS info dvi dist check R docs
 
 $(TARGETS)::
 	@for d in $(SUBDIRS); do cd $$d; $(MAKE) $@; cd ..; done
+
+distclean:
+	@for d in $(SUBDIRS); do cd $$d; $(MAKE) $@; cd ..; done
+	@rm -f Makefile
+maintainer-clean: distclean

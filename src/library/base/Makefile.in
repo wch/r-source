@@ -11,9 +11,8 @@ include $(top_builddir)/Makeconf
 
 all:
 	@echo Building R base package
-	$(top_srcdir)/aux/mkinstalldirs \
-		$(top_builddir)/library/base/R \
-		$(top_builddir)/library/base/data
+	@$(MKINSTALLDIRS) $(top_builddir)/library/base/R
+	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
 	@cat `ls $(srcdir)/R/*.R | sed '/system.*/d'` \
 	     $(srcdir)/R/system.unix.R | \
 	 sed '/^[ 	]*$$/d'  > $(top_builddir)/library/base/R/base
@@ -24,3 +23,9 @@ all:
 ##					      ^^ = TAB + Space
 	@cp $(srcdir)/INDEX $(srcdir)/TITLE $(top_builddir)/library/base
 	@cp `ls $(srcdir)/data/[a-z]*` $(top_builddir)/library/base/data
+
+mostlyclean: clean
+clean:
+distclean:
+	@rm -f Makefile
+maintainer-clean: distclean
