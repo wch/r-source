@@ -1617,7 +1617,7 @@ fi
 if test "${have_jpeg}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
 fi
-if test "${ac_cv_func_iconv}" = yes; then
+if test "${r_cv_iconv_latin1}" = yes; then
   R_SH_VAR_ADD(r_capabilities, [iconv], [, ])
 fi
 if test "${want_utf8_support}" = yes; then

@@ -34241,8 +34241,8 @@ cat >>confdefs.h <<\_ACEOF
 _ACEOF
 
 
-  echo "$as_me:$LINENO: checking whether iconv() accepts \"latin1\"" >&5
-echo $ECHO_N "checking whether iconv() accepts \"latin1\"... $ECHO_C" >&6
+  echo "$as_me:$LINENO: checking whether iconv() accepts \"UTF-8\" and \"latin1\"" >&5
+echo $ECHO_N "checking whether iconv() accepts \"UTF-8\" and \"latin1\"... $ECHO_C" >&6
 if test "${r_cv_iconv_latin1+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -34263,7 +34263,23 @@ cat >>conftest.$ac_ext <<_ACEOF
 #endif
 
 int main () {
-  iconv_t cd = iconv_open("latin1","UTF-8");
+  iconv_t cd;
+  cd = iconv_open("latin1","UTF-8");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("UTF-8","latin1");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("","latin1");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("","UTF-8");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("latin1", "");
+  if(cd == (iconv_t)(-1)) exit(1);
+  iconv_close(cd);
+  cd = iconv_open("UTF-8","");
   if(cd == (iconv_t)(-1)) exit(1);
   iconv_close(cd);
   exit(0);
@@ -34299,69 +34315,7 @@ echo "${ECHO_T}$r_cv_iconv_latin1" >&6
   if test "$r_cv_iconv_latin1" = yes; then
 
 cat >>confdefs.h <<\_ACEOF
-#define ICONV_LATIN1 latin1
-_ACEOF
-
-  else
-    echo "$as_me:$LINENO: checking whether iconv() accepts \"8859-1\"" >&5
-echo $ECHO_N "checking whether iconv() accepts \"8859-1\"... $ECHO_C" >&6
-if test "${r_cv_iconv_88591+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  if test "$cross_compiling" = yes; then
-  r_cv_iconv_88591=no
-else
-  cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
-
-#include "confdefs.h"
-#include <stdlib.h>
-#ifdef HAVE_ICONV_H
-#include <iconv.h>
-#endif
-
-int main () {
-  iconv_t cd = iconv_open("8859-1","UTF-8");
-  if(cd == (iconv_t)(-1)) exit(1);
-  iconv_close(cd);
-  exit(0);
-}
-
-_ACEOF
-rm -f conftest$ac_exeext
-if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
-  (eval $ac_link) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && { ac_try='./conftest$ac_exeext'
-  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
-  (eval $ac_try) 2>&5
-  ac_status=$?
-  echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); }; }; then
-  r_cv_iconv_88591=yes
-else
-  echo "$as_me: program exited with status $ac_status" >&5
-echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-( exit $ac_status )
-r_cv_iconv_88591=no
-fi
-rm -f core *.core gmon.out bb.out conftest$ac_exeext conftest.$ac_objext conftest.$ac_ext
-fi
-fi
-echo "$as_me:$LINENO: result: $r_cv_iconv_88591" >&5
-echo "${ECHO_T}$r_cv_iconv_88591" >&6
-  fi
-  if test "$r_cv_iconv_88591" = yes ; then
-
-cat >>confdefs.h <<\_ACEOF
-#define ICONV_LATIN1 8859-1
+#define ICONV_LATIN1 1
 _ACEOF
 
   fi
@@ -40821,7 +40775,7 @@ else
   r_capabilities="${r_capabilities}${separator}JPEG"
 fi
 fi
-if test "${ac_cv_func_iconv}" = yes; then
+if test "${r_cv_iconv_latin1}" = yes; then
   separator=", "
 test -z "${separator}" && separator=" "
 if test -z "${r_capabilities}"; then
