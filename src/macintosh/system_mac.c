@@ -124,25 +124,9 @@ char *mac_getenv(const char *name);
 
 void R_setStartTime(void);
 
-int R_ReadConsoleXX(char *prompt, unsigned char *buf, int len, 
-		    int addtohistory)
-{
-    /* Fill a text buffer with user typed console input. */
-
-    char buffo[1000];
-   
-    R_ReadConsole1(prompt, buf, len, addtohistory); 
-
-    buf[strlen(buf)-1] = '\n';
-    buf[strlen(buf)] = '\0';
-
-    return 1;
-}
 
 int R_ReadConsole(char *prompt, unsigned char *buf, int len,int addtohistory)
 {
-   // char buffo[1000];
-	 
     if(fileno(stdin) > 1) 
 		return( FileReadConsole(prompt, buf, len, addtohistory) ); 
     else 
@@ -365,9 +349,12 @@ int main(int ac, char **av)
 	
 /* *** */
     if(R_Interactive)
+     { 
      changeSize(Console_Window, gTextSize);
-     
+       DoActivate( true,Console_Window );
+     }
     /* Call the real R main program (in ../main/main.c) */
+			
     mainloop();
    
     return 0;
@@ -1121,8 +1108,8 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		       GetWindowWE(Edit_Windows[Edit_Window-1]));
     
     
-    if(err != noErr)
-	 REprintf("\n ReadTextFile error: %d\n",err);
+//    if(err != noErr)
+//	 REprintf("\n ReadTextFile error: %d\n",err);
    	
    	UniqueWinTitle();
 	if(Edit_Window>2)
@@ -1135,6 +1122,7 @@ SEXP do_edit(SEXP call, SEXP op, SEXP args, SEXP rho)
 		ProcessEvent ( );
 	}
 
+    DoActivate(true,Console_Window);
 
     if((fp = R_fopen(R_ExpandFileName(filename), "r")) == NULL)
 	errorcall(call, "unable to open file to read");
