@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1998--2000  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,7 +56,8 @@ static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
-    mmanext, mmanlang, mapropos, mhelpstart, mFAQ, mrwFAQ;
+    mmanext, mmanlang, mapropos, mhelpstart, mFAQ, mrwFAQ, 
+    mpkgl, mpkgi, mpkgil;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
 static char cmd[1024];
@@ -273,6 +274,37 @@ static void menusearch(control m)
     show(RConsole);
 }
 
+static void menupkgload(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, 
+	       "{pkg <- select.list(sort(.packages(all.available = TRUE)))\nif(nchar(pkg)) library(pkg, character.only=TRUE)}");
+    show(RConsole);
+}
+
+static void menupkginstallcran(control m)
+{
+    if (!ConsoleAcceptCmd) return;
+    consolecmd(RConsole, 
+	       "{a <- CRAN.packages()\ninstall.packages(select.list(a[,1]), .lib.loc[1], available=a)}");
+    show(RConsole);
+}
+
+static void menupkginstalllocal(control m)
+{
+    char *fn;
+
+    if (!ConsoleAcceptCmd) return;
+    setuserfilter("zip files (*.zip)\0*.zip\0\0All files (*.*)\0*.*\0\0");
+    fn = askfilename("Select zip file to install", "");
+    show(RConsole);
+    if (fn) {
+	fixslash(fn);
+	sprintf(cmd, "install.packages(\"%s\", .lib.loc[1], CRAN = NULL)", fn);
+	consolecmd(RConsole, cmd);
+    }
+}
+
 static void menuconsolehelp(control m)
 {
     consolehelp();
@@ -382,6 +414,9 @@ static void menuact(control m)
 	enable(msearch);
 	enable(mhelp);
 	enable(mapropos);
+	enable(mpkgl);
+	enable(mpkgi);
+	enable(mpkgil);
     }
     if (consolecancopy(RConsole)) {
 	enable(mcopy);
@@ -403,6 +438,9 @@ static void menuact(control m)
 	disable(msearch);
 	disable(mhelp);
 	disable(mapropos);
+	disable(mpkgl);
+	disable(mpkgi);
+	disable(mpkgil);
     }
     draw(RMenuBar);
 }
@@ -731,6 +769,13 @@ int setupui()
     MCHECK(mrm = newmenuitem("Remove all objects", 0, menurm));
     MCHECK(msearch = newmenuitem("List &search path", 0, menusearch));
 
+    MCHECK(newmenu("Packages"));
+    MCHECK(mpkgl = newmenuitem("Load package", 0, menupkgload));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mpkgi = newmenuitem("Install package from CRAN", 0, 
+			       menupkginstallcran));
+    MCHECK(mpkgil = newmenuitem("Install package from local zip file", 0, 
+				menupkginstalllocal));
 #ifdef USE_MDI
     newmdimenu();
 #endif
