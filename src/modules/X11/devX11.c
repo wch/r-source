@@ -54,6 +54,8 @@
 #define R_X11_DEVICE 1
 #include "devX11.h"
 
+#include "R_ext/RX11.h"
+
 	/********************************************************/
 	/* This device driver has been documented so that it be	*/
 	/* used as a template for new drivers			*/
@@ -2104,3 +2106,17 @@ Rf_allocX11DeviceDesc(double ps)
 }
 
 
+extern SEXP RX11_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+void
+R_init_X11(DllInfo *info)
+{
+      /* Ideally, we would not cast X11DeviceDriver here.
+         However, the declaration in R_ext/RX11.h doesn't have access
+         to the definition of X_COLORTYPE, at present. Thus we need 
+         to explicitly cast to avoid compiler warnings.
+       */
+    R_setX11Routines((R_X11DeviceDriverRoutine) X11DeviceDriver, 
+                      RX11_dataentry, 
+                      R_GetX11Image);
+}

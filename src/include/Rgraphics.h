@@ -330,6 +330,15 @@ void GEndPath(DevDesc*);
 void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, DevDesc*);
 
+
+typedef void (*GVTextRoutine)(double x, double y, int unit, char* s, int typeface, int fontindex,
+	                      double xadj, double yadj, double rot, DevDesc *dd);
+typedef double (*GVStrWidthRoutine)(const unsigned char *s, int typeface, int fontindex,
+		                    int unit, DevDesc *dd);
+typedef double (*GVStrHeightRoutine)(const unsigned char *s, int typeface, int fontindex,
+   	   	                     int unit, DevDesc *dd);
+void R_setVFontRoutines(GVStrWidthRoutine vwidth, GVStrHeightRoutine vheight, GVTextRoutine vtext);
+
 void GVText(double x, double y, int unit, char* s, int typeface, int fontindex,
 	    double xadj, double yadj, double rot, DevDesc *dd);
 double GVStrWidth(const unsigned char *s, int typeface, int fontindex,

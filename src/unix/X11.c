@@ -43,8 +43,14 @@
 #endif
 #endif
 
+
 #if defined(HAVE_X11) && defined(HAVE_DLFCN_H)
 
+#include "R_ext/RX11.h" /* typedefs for the module routine types */
+
+/*
+  This is now only used to find R_init_X11 in the module.
+ */
 static DL_FUNC Rdlsym(void *handle, char const *name)
 {
     char buf[MAXIDSIZE+1];
@@ -57,7 +63,9 @@ static DL_FUNC Rdlsym(void *handle, char const *name)
 }
 
 
-extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry, ptr_R_GetX11Image;
+R_X11DeviceDriverRoutine ptr_X11DeviceDriver;
+R_X11DataEntryRoutine    ptr_dataentry;
+R_GetX11ImageRoutine     ptr_R_GetX11Image;
 
 /* This is called too early to use moduleCdynload */
 void R_load_X11_shlib(void)
@@ -65,6 +73,7 @@ void R_load_X11_shlib(void)
     char X11_DLL[PATH_MAX], buf[1000], *p;
     void *handle;
     struct stat sb;
+    DL_FUNC f;
 
     p = getenv("R_HOME");
     if(!p) {
@@ -85,12 +94,12 @@ void R_load_X11_shlib(void)
 	sprintf(buf, "The X11 shared library could not be loaded.\n  The error was %s\n", dlerror());
 	R_Suicide(buf);
     }
-    ptr_X11DeviceDriver = Rdlsym(handle, "X11DeviceDriver");
-    if(!ptr_X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
-    ptr_dataentry = Rdlsym(handle, "RX11_dataentry");
-    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
-    ptr_R_GetX11Image = Rdlsym(handle, "R_GetX11Image");
-    if(!ptr_R_GetX11Image) R_Suicide("Cannot load R_GetX11Image");
+    f = Rdlsym(handle, "R_init_X11");
+    if(f)
+	f((DllInfo *) NULL);
+
+    /* Perhaps do error checking to see all the routines have been set and R_Suicide
+       if not, as in the semantics before switching to self-registering modules. */
 }
 
 #else
@@ -101,3 +110,13 @@ void R_load_X11_shlib()
 }
 
 #endif
+
+#include "R_ext/RX11.h"
+
+void
+R_setX11Routines(R_X11DeviceDriverRoutine dev, R_X11DataEntryRoutine dataEntry, R_GetX11ImageRoutine image)
+{
+    ptr_X11DeviceDriver = dev;
+    ptr_dataentry = dataEntry;
+    ptr_R_GetX11Image = image;
+}

@@ -24,10 +24,9 @@
 #include <Defn.h>
 #include "R_ext/Rdynpriv.h"
 
-typedef SEXP  (*sDL_FUNC)();
-static sDL_FUNC ptr_svd, ptr_rs, ptr_rg, ptr_zgesv, ptr_zgeqp3,
-    ptr_qr_coef_cmplx, ptr_qr_qy_cmplx, ptr_svd_cmplx, 
-    ptr_rs_cmplx, ptr_rg_cmplx;
+#include "R_ext/Rlapack.h"
+
+static R_LapackRoutines *ptr;
 
 /*
 SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
@@ -49,22 +48,6 @@ static void La_Init(void)
     int res = moduleCdynload("lapack", 1, 1);
     initialized = -1;
     if(!res) return;
-    
-    if(!(ptr_svd = (sDL_FUNC)R_FindSymbol("La_svd", "lapack", NULL))) return;
-    if(!(ptr_rs = (sDL_FUNC)R_FindSymbol("La_rs", "lapack", NULL))) return;
-    if(!(ptr_rg = (sDL_FUNC)R_FindSymbol("La_rg", "lapack", NULL))) return;
-    if(!(ptr_zgesv = (sDL_FUNC)R_FindSymbol("La_zgesv", "lapack", NULL))) return;
-    if(!(ptr_zgeqp3 = (sDL_FUNC)R_FindSymbol("La_zgeqp3", "lapack", NULL))) return;
-    if(!(ptr_qr_coef_cmplx = 
-	 (sDL_FUNC)R_FindSymbol("qr_coef_cmplx", "lapack", NULL))) return;
-    if(!(ptr_qr_qy_cmplx = 
-    (sDL_FUNC)R_FindSymbol("qr_qy_cmplx", "lapack", NULL))) return;
-    if(!(ptr_svd_cmplx =  
-	 (sDL_FUNC)R_FindSymbol("La_svd_cmplx", "lapack", NULL))) return;
-    if(!(ptr_rs_cmplx = 
-	 (sDL_FUNC)R_FindSymbol("La_rs_cmplx", "lapack", NULL))) return;
-    if(!(ptr_rg_cmplx = 
-	 (sDL_FUNC)R_FindSymbol("La_rg_cmplx", "lapack", NULL))) return;
 
     initialized = 1;    
     return;
@@ -74,7 +57,7 @@ SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_svd)(jobu, jobv, x, s, u, v);
+	return (*ptr->svd)(jobu, jobv, x, s, u, v);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -85,7 +68,7 @@ SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_svd_cmplx)(jobu, jobv, x, s, u, v);
+	return (*ptr->svd_cmplx)(jobu, jobv, x, s, u, v);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -96,7 +79,7 @@ SEXP La_rs(SEXP x, SEXP only_values)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_rs)(x, only_values);
+	return (*ptr->rs)(x, only_values);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -107,7 +90,7 @@ SEXP La_rs_cmplx(SEXP x, SEXP only_values)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_rs_cmplx)(x, only_values);
+	return (*ptr->rs_cmplx)(x, only_values);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -118,7 +101,7 @@ SEXP La_rg(SEXP x, SEXP only_values)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_rg)(x, only_values);
+	return (*ptr->rg)(x, only_values);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -129,7 +112,7 @@ SEXP La_rg_cmplx(SEXP x, SEXP only_values)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_rg_cmplx)(x, only_values);
+	return (*ptr->rg_cmplx)(x, only_values);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -140,7 +123,7 @@ SEXP La_zgesv(SEXP A, SEXP B)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_zgesv)(A, B);
+	return (*ptr->zgesv)(A, B);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -151,7 +134,7 @@ SEXP La_zgeqp3(SEXP A)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_zgeqp3)(A);
+	return (*ptr->zgeqp3)(A);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -162,7 +145,7 @@ SEXP qr_coef_cmplx(SEXP Q, SEXP B)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_qr_coef_cmplx)(Q, B);
+	return (*ptr->qr_coef_cmplx)(Q, B);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
@@ -173,9 +156,19 @@ SEXP qr_qy_cmplx(SEXP Q, SEXP B, SEXP trans)
 {
     if(!initialized) La_Init();
     if(initialized > 0)
-	return (*ptr_qr_qy_cmplx)(Q, B, trans);
+	return (*ptr->qr_qy_cmplx)(Q, B, trans);
     else {
 	error("lapack routines cannot be loaded");
 	return R_NilValue;
     }
+}
+
+
+R_LapackRoutines *
+R_setLapackRoutines(R_LapackRoutines *routines)
+{
+    R_LapackRoutines *tmp;
+    tmp = ptr;
+    ptr = routines;
+    return(tmp);
 }

@@ -25,9 +25,13 @@
 #include <Rgraphics.h>
 #include "R_ext/Rdynpriv.h"
 
-typedef double  (*dblDL_FUNC)();
-static dblDL_FUNC ptr_GVStrWidth, ptr_GVStrHeight;
-static DL_FUNC ptr_GVText;
+typedef struct {
+    GVTextRoutine GVText;
+    GVStrWidthRoutine GVStrWidth;
+    GVStrHeightRoutine GVStrHeight;
+} VfontRoutines;
+
+static VfontRoutines routines, *ptr = &routines;
 
 /*
 static double (*ptr_GVStrWidth)(const unsigned char *s, int typeface, 
@@ -44,17 +48,19 @@ static void (*ptr_GVText)(double x, double y, int unit, char *s,
 
 static int initialized = 0;
 
+void
+R_setVFontRoutines(GVStrWidthRoutine vwidth, GVStrHeightRoutine vheight, GVTextRoutine vtext)
+{
+    ptr->GVStrWidth = vwidth;
+    ptr->GVStrHeight = vheight;
+    ptr->GVText = vtext;
+}
+
 static void vfonts_Init(void)
 {
     int res = moduleCdynload("vfonts", 1, 1);
     initialized = -1;
     if(!res) return;
-    
-    if(!(ptr_GVStrWidth =  (dblDL_FUNC)R_FindSymbol("Rf_GVStrWidth", 
-						    "vfonts", NULL))) return;
-    if(!(ptr_GVStrHeight = (dblDL_FUNC)R_FindSymbol("Rf_GVStrHeight", 
-						    "vfonts", NULL))) return;
-    if(!(ptr_GVText = R_FindSymbol("Rf_GVText", "vfonts", NULL))) return;
     initialized = 1;    
     return;
 }
@@ -64,7 +70,7 @@ double GVStrWidth (const unsigned char *s, int typeface, int fontindex,
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
-	return (*ptr_GVStrWidth)(s, typeface, fontindex, unit, dd);
+	return (*ptr->GVStrWidth)(s, typeface, fontindex, unit, dd);
     else {
 	error("Hershey fonts cannot be loaded");
 	return 0.0;
@@ -76,7 +82,7 @@ double GVStrHeight (const unsigned char *s, int typeface, int fontindex,
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
-	return (*ptr_GVStrHeight)(s, typeface, fontindex, unit, dd);
+	return (*ptr->GVStrHeight)(s, typeface, fontindex, unit, dd);
     else {
 	error("Hershey fonts cannot be loaded");
 	return 0.0;
@@ -90,7 +96,7 @@ void GVText (double x, double y, int unit, char *s,
 {
     if(!initialized) vfonts_Init();
     if(initialized > 0)
-	(*ptr_GVText)(x, y, unit, s, typeface, fontindex, 
+	(*ptr->GVText)(x, y, unit, s, typeface, fontindex, 
 		      x_justify, y_justify, rotation, dd);
     else
 	error("Hershey fonts cannot be loaded");

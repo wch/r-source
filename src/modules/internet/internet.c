@@ -26,6 +26,8 @@
 #include <Rconnections.h>
 #include <R_ext/R-ftp-http.h>
 
+#include <R_ext/Rinternet.h>
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
 #endif
@@ -833,4 +835,36 @@ void RxmlMessage(int level, const char *format, ...)
     if(strlen(buf) > 0 && *p == '\n') *p = '\0';
     Rprintf(buf);
     Rprintf("\n");
+}
+
+#include "sock.h"
+
+void
+R_init_internet(DllInfo *info)
+{
+  R_InternetRoutines *tmp;
+  tmp = (R_InternetRoutines*) malloc(sizeof(R_InternetRoutines));
+  if(!tmp) {
+      error("Cannot allocate memory for InternetRoutines structure");
+      return;
+  }
+
+  tmp->download = do_download;
+  tmp->newurl =  R_newurl;
+  tmp->newsock = R_newsock;
+
+  tmp->HTTPOpen = R_HTTPOpen;
+  tmp->HTTPRead = R_HTTPRead;
+  tmp->HTTPClose = R_HTTPClose;
+
+  tmp->FTPOpen = R_FTPOpen;
+  tmp->FTPRead = R_FTPRead;
+  tmp->FTPClose = R_FTPClose;
+
+  tmp->sockopen = Rsockopen;
+  tmp->socklisten = Rsocklisten;
+  tmp->sockconnect = Rsockconnect;
+  tmp->sockclose = Rsockclose;
+  tmp->sockread = Rsockread;
+  tmp->sockwrite = Rsockwrite;
 }
