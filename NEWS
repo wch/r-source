@@ -274,19 +274,19 @@ NEW FEATURES
     o	A 'version' argument has been added to pdf() device.  If this is
 	set to "1.4", the device will support transparent colours.
 
-    o	plot.xy(), the workhorse function of points, lines and plot.default
-	now has 'lwd' as explicit argument instead of implicitly in "...",
-	and now recycles lwd where it makes sense, i.e. for line based plot
-	symbols.
+    o	plot.xy(), the workhorse function of points(), lines() and
+	plot.default() now has 'lwd' as explicit argument instead of
+	implicitly in '...', and now recycles lwd where it makes
+	sense, i.e. for line-based plot symbols.
 
     o	The png() and jpeg() devices (and the bmp() device under Windows)
 	now allow a nominal resolution to be recorded in the file.
 
-    o	New functions to control mapping from device-independent graphics
-	font family to device-specific family:	postscriptFont() and
-	postscriptFonts() (for postscript() and pdf());	 X11Font() and
-	X11Fonts();  windowsFont() and windowsFonts();	quartzFont() and
-	quartzFonts().
+    o   New functions to control mapping from device-independent
+	graphics font family to device-specific family:
+	postscriptFont() and postscriptFonts() (for both postscript()
+	and pdf()); X11Font() and X11Fonts(); windowsFont() and
+	windowsFonts(); quartzFont() and quartzFonts().
 
     o	power (x^y) has optimised code for y == 2.
 
@@ -346,7 +346,7 @@ NEW FEATURES
 
     o	seek() on connections now accepts and returns a double for the
 	file position.	This allows >2Gb files to be handled on a
-	64-bit platform.
+	64-bit platform (and some 32-bit platforms).
 
     o	source() with 'echo = TRUE' uses the function source attribute
 	when displaying commands as they are parsed.
@@ -400,7 +400,7 @@ NEW FEATURES
 
 
     o	Subassignments involving NAs and with a replacement value of
-	length > 0 are now disallowed.	(They were handled
+	length > 1 are now disallowed.	(They were handled
 	inconsistently in R < 2.0.0, see PR#7210.)  For data frames
 	they are disallowed altogether, even for logical matrix indices
 	(the only case which used to work).
@@ -438,7 +438,7 @@ NEW FEATURES
 	  Non-finite values for locations, sizes, and scales of
 	  viewports result in error messages.
 
-	  There is a new vignette("nonfinite") which describes this
+	  There is a new vignette ("nonfinite") which describes this
 	  new behaviour.
 
 	- Fixed (unreported) bug in drawing circles.  Now checks that
@@ -452,7 +452,7 @@ NEW FEATURES
 	    upViewport(depth)
 
 	- The "alpha" gpar() is now combined with the alpha channel of
-	  colours when creating a gcontext as follows:
+	  colours when creating a gcontext as follows: (internal C code)
 
 	    finalAlpha = gpar("alpha")*(R_ALPHA(col)/255)
 
@@ -608,6 +608,10 @@ C-LEVEL FACILITIES
     o	More of the header files, including Rinternals.h, Rdefines.h and
 	Rversion.h, are now suitable for calling directly from C++.
 
+    o   Configure looks to a suitable option for inlining C code which
+	made available as macro R_INLINE: see `Writing R Extensions'
+	for further details.
+
 
 DEPRECATED & DEFUNCT
 
@@ -681,8 +685,9 @@ INSTALLATION CHANGES
 	now compressed and the R CMD check routines can read the
 	compressed files.
 
-    o	There is a new configure option --enable-lfs that will build
-	R with support for > 2Gb files on suitable 32-bit Linux systems.
+    o   There is a new configure option --enable-linux-lfs that will
+	build R with support for > 2Gb files on suitably recent 32-bit
+	Linux systems.
 
 
 PACKAGE INSTALLATION CHANGES
@@ -748,7 +753,7 @@ BUG FIXES
 
     o	write.table() handles zero-row and zero-column inputs correctly.
 
-    o	debug() works on trivial functions instead of crashing (PR#6804)
+    o	debug() works on trivial functions instead of crashing. (PR#6804)
 
     o	eval() could alter a data.frame/list second argument, so
 	with(trees, Girth[1] <- NA) altered 'trees' (and any copy of
@@ -759,7 +764,7 @@ BUG FIXES
 
     o	inverse.gaussian() always printed 1/mu^2 as the link function.
 
-    o	constrOptim now passes ... arguments through optim to the
+    o	constrOptim() now passes ... arguments through optim to the
 	objective function.
 
     o	object.size() now has a better estimate for character vectors:
@@ -786,8 +791,9 @@ BUG FIXES
     o	packageStatus() reported partially-installed bundles as
 	installed.
 
-    o	apply() failed on an array of dimension >=3 when for each iteration
-	the function returns a named vector of length >=2 (PR#7205)
+    o	apply() failed on an array of dimension >=3 when for each
+	iteration the function returns a named vector of length >=2.
+	(PR#7205)
 
     o	The GNOME interface was in some circumstances failing if run
 	from a menu -- it needed to always specify that R be interactive.
@@ -809,17 +815,16 @@ BUG FIXES
     o	t.test() now detects nearly-constant input data.  (PR#7225)
 
     o	mle() had problems if ndeps or parscale was supplied in the
-	control arguments for optim(). Also, the profiler is now more
+	control arguments for optim().  Also, the profiler is now more
 	careful to reevaluate modified mle() calls in its parent
 	environment.
 
-    o	Fix to rendering of accented superscripts and subscripts
-	e.g., expression((b[dot(a)])).
-	(Patch from Uwe Ligges.)
+    o	Fix to rendering of accented superscripts and subscripts e.g.,
+	expression((b[dot(a)])).  (Patch from Uwe Ligges.)
 
     o	attach(*, pos=1) now gives a warning (and will give an error).
 
-    o	power.*test() now gives an error when sig.level is outside [0,1].
+    o	power.*test() now gives an error when 'sig.level' is outside [0,1].
 	(PR#7245)
 
 
