@@ -1,4 +1,6 @@
-mean <- function(x, trim = 0, na.rm = FALSE) {
+mean <- function(x, ...) UseMethod("mean")
+
+mean.default <- function(x, trim = 0, na.rm = FALSE) {
         if (na.rm)
                 x<-x[!is.na(x)]
         trim <- trim[1]
