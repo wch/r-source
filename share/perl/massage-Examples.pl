@@ -35,8 +35,8 @@ $PKG = shift @ARGV;
 print <<_EOF_;
 attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", pos.to.env(2), pos = length(search())) # base
-## This plot.new() patch has not yet in effect for
-## persp();   layout() & filled.contour() are neither ok
+## This plot.new() patch has no effect yes for persp();
+## layout() & filled.contour() are no ok
 assign("plot.new", function() { .Internal(plot.new())
 		       pp <- par(c("mfg","mfcol","oma","mar"))
 		       if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {

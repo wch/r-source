@@ -326,7 +326,7 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -p ../library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
-	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
+	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
            Sd2Rd Rprof)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
@@ -406,7 +406,7 @@ packagedist:
 	$(CP) -r ../../share/make ../../share/perl ../../share/texmf \
 	   $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
-	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
+	  ../../bin/build ../../bin/check ../../bin/massage-Examples \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
