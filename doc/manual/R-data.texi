@@ -805,7 +805,7 @@ matrix can be obtained from @code{odbcGetResults}.
 @end menu
 
 @node Package Rstreams, Binary Data Formats, Binary Files, Binary Files
-@section Package @pkg{Rstreams}
+@section Package Rstreams
 
 Package @pkg{Rstreams} on CRAN provides a low-level interface to read
 from and write to binary files.  It has been used to read in data from
