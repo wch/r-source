@@ -412,22 +412,50 @@ function(file, text = NULL)
         lines <- Rd_pp(.read_Rd_lines_quietly(file))
     }
 
+    ## <FIXME>
+    ## This (currently?) does not work, because without re-encoding it
+    ## seems that we do not pick up multibyte strings which are invalid
+    ## in the current locale.  Hence, start by re-encoding, which should
+    ## not transform non-ASCII entries to ASCII ones.
+    ##     ## Get meta data required to be ASCII first.
+    ##     meta <- list(aliases =
+    ##                  .get_Rd_metadata_from_Rd_lines(lines, "alias"),
+    ##                  doc_type =
+    ##                  .get_Rd_metadata_from_Rd_lines(lines, "docType"),
+    ##                  encoding =
+    ##                  .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
+    ##     ## Now iconv if necessary.
+    ##     lines <- .Rd_iconv_if_necessary(lines, check = TRUE)
+    ##     ## And get the remaining meta data.
+    ##     meta <- c(meta,
+    ##               list(concepts =
+    ##                    .get_Rd_metadata_from_Rd_lines(lines, "concept"),
+    ##                    keywords =
+    ##                    .get_Rd_metadata_from_Rd_lines(lines, "keyword")))
+    ## </FIXME>
+
     lines <- .Rd_iconv_if_necessary(lines, check = TRUE)
-    
+
     ## Get meta data (need to agree on what precisely these are), and
     ## remove the corresponding lines (assuming that these entries are
     ## all one-liners).  We mostly do this because \alias (see Paren.Rd)
     ## has non-standard syntax.
-    meta <-
-        list(aliases = .get_Rd_metadata_from_Rd_lines(lines, "alias"),
-             concepts = .get_Rd_metadata_from_Rd_lines(lines, "concept"),
-             keywords = .get_Rd_metadata_from_Rd_lines(lines, "keyword"),
-             doc_type = .get_Rd_metadata_from_Rd_lines(lines, "docType"),
-             encoding = .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
+
+    meta <- list(aliases =
+                 .get_Rd_metadata_from_Rd_lines(lines, "alias"),
+                 concepts =
+                 .get_Rd_metadata_from_Rd_lines(lines, "concept"),
+                 keywords =
+                 .get_Rd_metadata_from_Rd_lines(lines, "keyword"),
+                 doc_type =
+                 .get_Rd_metadata_from_Rd_lines(lines, "docType"),
+                 encoding =
+                 .get_Rd_metadata_from_Rd_lines(lines, "encoding"))
     ## Use NA encoding meta-data to indicate that we re-encoded a file
     ## not in ISO-8859 as Latin1.
     if(identical(attr(lines, "encoding"), NA))
         meta$encoding <- NA
+    ## Remove the meta data lines.
     ## (Use the same regexp as in .get_Rd_metadata_from_Rd_lines().)
     i <- grep(paste("^[[:space:]]*\\\\",
                     "(alias|concept|keyword|docType|encoding)",
@@ -745,19 +773,14 @@ function(lines, check = FALSE)
     if(length(encoding)) {
         if(Sys.getlocale("LC_CTYPE") != "C") {
             encoding <- encoding[1]     # Just making sure ...
-            lines <- utils::iconv(lines, encoding, "")
+            if(.is_ASCII(encoding))
+                lines <- utils::iconv(lines, encoding, "")
         }
     }
     else if(check) {
-        ## No \encoding meta-data.
+        ## No valid \encoding meta-data.
         ## Determine whether we can assume Latin1.
-        raw_ub <- charToRaw("\x7f")
-        raw_lb <- charToRaw("\xa0")
-        if(!all(sapply(lines,
-                       function(c) {
-                           raw <- charToRaw(c)
-                           all(raw <= raw_ub | raw >= raw_lb)
-                       })))
+        if(!all(.is_ISO_8859(lines)))
             encoding <- NA
     }
     if(any(is.na(nchar(lines, "c")))) {
