@@ -683,8 +683,15 @@ case "${host}" in
     cpicflags="-fno-common"
     cxxpicflags="-fno-common"
     fpicflags="-fno-common"
-    shlib_ldflags="-bundle -flat_namespace -undefined suppress"
-    shlib_cxxldflags="-bundle -flat_namespace -undefined suppress"
+    case "${host_os}" in
+      darwin1.[[012]])
+	shlib_ldflags="-bundle -undefined suppress" ;;
+      darwin1.3)
+        shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
+      *)
+	shlib_ldflags="-bundle -bundle_loader \$(R_HOME)/bin/R.bin" ;;
+    esac
+    shlib_cxxldflags="${shlib_ldflags}"
     ;;
   *freebsd[[3-4]].*)
     main_ldflags="-export-dynamic"
@@ -730,15 +737,11 @@ case "${host}" in
   *sgi*)
     shlib_ldflags="-shared"
     shlib_cxxldflags="-shared"
-    if test "${GCC}" != yes; then
-      cpicflags="-KPIC"
-    fi
-    if test "${G77}" != yes; then
-      fpicflags="-KPIC"
-    fi
-    if test "${GXX}" != yes; then
-      cxxpicflags="-KPIC"
-    fi
+    ## PIC is default on SGIs, says Balasubramanian Narasimhan
+    ## <naras@stat.Stanford.EDU>.
+    cpicflags=
+    cxxpicflags=
+    fpicflags=
     ;;
   *solaris*)
     shlib_ldflags="-G"
@@ -798,9 +801,7 @@ fi
 : ${CPICFLAGS=${cpicflags}}
 if test -z "${CPICFLAGS}"; then
   case "${host}" in
-    *aix4.[[2-9]]*)
-      ;;
-    alpha*osf*)
+    *aix4.[[2-9]]*|alpha*osf*|*sgi*)
       ;;
     *)
       AC_MSG_WARN([I could not determine CPICFLAGS.])
