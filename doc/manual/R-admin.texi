@@ -1471,9 +1471,10 @@ check} but failed @command{make test-all-extras} in the complex LAPACK
 tests.
 
 George N. White III reports that the @code{strptime} tests in 1.9.0 fail
-unless Arthur Olson's timezone data @uref{ftp://elsie.nci.nih.gov/pub/}
-(see also: @uref{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html})
-are installed and @code{-ltz} is added to the list of libraries (for
+on IRIX 6.5 systems prior to 6.5.22m (e.g. 6.5.19m and 6.5.21m) unless
+Arthur Olson's timezone data @uref{ftp://elsie.nci.nih.gov/pub/} (see
+also @uref{http://cspry.co.uk/computing/Indy_admin/TIMEZONE.html}) are
+installed and @code{-ltz} is added to the list of libraries (for
 example, in environment variable @env{LIBS}).
 
 
