@@ -64,6 +64,11 @@ NEW FEATURES
 	This is applied in the new function  demo(.) which runs all the
 	code in demos/ (but dynload).
 
+    o   strheight(.) is new, accompanying strwidth(.).
+	Both now work for mathematical expressions (Paul Murrell).
+
+    o   The LaTeX version of the Manual now has an Index.
+
 
 BUG FIXES
 
