@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.90-9, 2000/01/15
+Version 0.90-10, 2000/01/25
 Kurt Hornik
 
 
@@ -191,8 +191,7 @@ systems.
    The current version of R will configure and build under a number of
 common Unix platforms including i386-freebsd, i386-linux, ppc-linux,
 mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix, hppa-hp-hpux,
-sparc-linux, and sparc-sun-solaris, see the file `PLATFORMS' in the R
-distribution for more information.
+sparc-linux, and sparc-sun-solaris.
 
    If you know about other platforms, please drop us a note.
 

@@ -3,7 +3,7 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-VERSION 0.90-9, 2000/01/15
+@set FAQ-VERSION 0.90-10, 2000/01/25
 @set REL-VERSION 0.90.1
 @set DEV-VERSION 0.99.0
 @c %**end of header
@@ -224,8 +224,7 @@ systems.
 The current version of R will configure and build under a number of
 common Unix platforms including i386-freebsd, i386-linux, ppc-linux,
 mips-sgi-irix, alpha-linux, alpha-dec-osf4, rs6000-ibm-aix,
-hppa-hp-hpux, sparc-linux, and sparc-sun-solaris, see the file
-@file{PLATFORMS} in the R distribution for more information.
+hppa-hp-hpux, sparc-linux, and sparc-sun-solaris.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
