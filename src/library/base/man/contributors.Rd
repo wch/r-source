@@ -6,7 +6,7 @@
   piece of statistical software to the GNU suite of software.
 }
 \section{Contributors}{
-  The current \R is the result of a collaborative effort of several
+  The current \R is the result of a collaborative effort
   authors from all over the world.
   \R was initially written by Robert Gentleman and Ross Ihaka ---
   also known as ``\emph{R & R}'' ---
@@ -36,17 +36,24 @@
   Ben Bolker,
   Goran Brostrom,
   Paul Gilbert,
-  Philippe Lambert
-  Jim & Patrick Lindsey,
+  Philippe Lambert,
+  Patrick Lindsey,
+  Jim Lindsey,
   Guido Masarotto,
   Steve Oncley and Gordon Maclean,
+  Richard Okeefe,
   Hubert Palme,
   Martyn Plummer,
   Brian Ripley,
   Bill Simpson,
-  Bill Venables,
-  Andreas Weingessel,
-  \cr
-  plus all those that we forgot to mention here !
+  Bill Venables, and
+  Andreas Weingessel.
+
+  We have probably omitted some important names here because of
+  incomplete record keeping.  If we have overlooked you, please
+  let us know and we'll update the list.
+
+  A special debt is owed to John Chambers who has graciously
+  contributed advice and encouragement.
 }
 \keyword{misc}
