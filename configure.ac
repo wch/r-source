@@ -126,27 +126,13 @@ else
 fi],
 [want_R_profiling=yes])
 
-## Allow the user to specify building R shared libraries.
-AC_ARG_ENABLE([R-shlib],
-[AC_HELP_STRING([--enable-R-shlib],
-                [build R as a shared library @<:@no@:>@])],
-[want_R_shlib="${enableval}"],
-[want_R_shlib=no])
-AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
-if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/bin -lR"
-else
-  LIBR=
-fi
-AC_SUBST(LIBR)
-
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
 [AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
                 [build R framework (if possible), and specify its
                  installation dir @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
-[want_R_framework=no])
+[want_R_framework=yes])
 ## Can only build frameworks on Darwin.
 if test "${want_R_framework}" != no; then
   case "${host_os}" in
@@ -163,17 +149,27 @@ if test "${want_R_framework}" != no; then
       ;;
   esac
 fi
-## Building a framework implies building R shared libraries.
-if test "${want_R_framework}" = yes; then
-  ## <NOTE>
-  ## We might want to warn about the case where '--disable-R-shlib' was
-  ## given explicitly.
-  want_R_shlib=yes
-  ## </NOTE>
-  ## -framework R should be only set after installation
-  ## LIBR="-framework R"
-fi
 AC_SUBST(R_FRAMEWORK_DIR)
+
+## Allow the user to specify building R shared libraries.
+## <NOTE>
+## Building a framework implies building R shared libraries, hence the
+## strange default.
+## We might want to warn about the case where '--disable-R-shlib' was
+## given explicitly ...
+## </NOTE>
+AC_ARG_ENABLE([R-shlib],
+[AC_HELP_STRING([--enable-R-shlib],
+                [build R as a shared library @<:@no@:>@])],
+[want_R_shlib="${enableval}"],
+[want_R_shlib="${want_R_framework}"])
+AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
+if test "${want_R_shlib}" = yes; then
+  LIBR="-L\$(R_HOME)/bin -lR"
+else
+  LIBR=
+fi
+AC_SUBST(LIBR)
 
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE([maintainer-mode],
@@ -239,7 +235,7 @@ fi],
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AC_HELP_STRING([--with-aqua],
-                [use Aqua (if available) (experimental) @<:@no@:>@])],
+                [use Aqua (if available) @<:@no@:>@])],
 [want_aqua=yes])
 
 ## Tcl/Tk.
