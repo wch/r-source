@@ -9,6 +9,9 @@ function(lines)
         stop(paste("argument", sQuote(lines),
                    "must be a character vector"))
 
+    ## Strip Rd comments first.
+    lines <- .stripRdComments(lines)
+
     ppLineIndices <- grep("^#(endif|ifn?def[[:space:]]+[[:alnum:]]+)",
                           lines)
     ## <NOTE>
@@ -17,6 +20,7 @@ function(lines)
     ## </NOTE>
     nOfPpLines <- length(ppLineIndices)
     if(nOfPpLines == 0) return(lines)
+    
     OS <- .Platform$OS.type
     ppLines <- lines[ppLineIndices]
 
@@ -61,7 +65,7 @@ function(lines)
         }
     }
 
-    .stripRdComments(lines[-skipIndices])
+    lines[-skipIndices]
 }
 
 ### * .stripRdComments
