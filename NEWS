@@ -498,6 +498,12 @@ PACKAGE INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   par(omd) is now of the form c(x1, x2, y1, y2) to match the
+	documentation and for S-Plus compatibility.  
+
+	[Previously, par(omd) was of the form c(bottom, left, top, right)
+	 like par(oma) and par(omi)]
+
     o	Configuring for Tcl/Tk makes use of ${TK_LIB_SPEC} ${TK_LIBS}
 	not ${TK_LIB_SPEC} ${TK_XLIBSW}, which is correct for
 	recent versions of Tk, but conceivably not for old

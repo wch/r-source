@@ -1399,13 +1399,13 @@ static void updateOuterMargins(DevDesc *dd)
 	Rf_gpptr(dd)->omi[3] = Rf_dpptr(dd)->omi[3] =
 	    GConvertXUnits(Rf_gpptr(dd)->oma[3], LINES, INCHES, dd);
 	Rf_gpptr(dd)->omd[0] = Rf_dpptr(dd)->omd[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->oma[0], LINES, NDC, dd);
-	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
 	    GConvertXUnits(Rf_gpptr(dd)->oma[1], LINES, NDC, dd);
+	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
+	    1 - GConvertXUnits(Rf_gpptr(dd)->oma[3], LINES, NDC, dd);
 	Rf_gpptr(dd)->omd[2] = Rf_dpptr(dd)->omd[2] =
-	    GConvertYUnits(Rf_gpptr(dd)->oma[2], LINES, NDC, dd);
+	    GConvertYUnits(Rf_gpptr(dd)->oma[0], LINES, NDC, dd);
 	Rf_gpptr(dd)->omd[3] = Rf_dpptr(dd)->omd[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->oma[3], LINES, NDC, dd);
+	    1 - GConvertYUnits(Rf_gpptr(dd)->oma[2], LINES, NDC, dd);
 	break;
     case INCHES:
 	Rf_gpptr(dd)->oma[0] = Rf_dpptr(dd)->oma[0] =
@@ -1417,31 +1417,31 @@ static void updateOuterMargins(DevDesc *dd)
 	Rf_gpptr(dd)->oma[3] = Rf_dpptr(dd)->oma[3] =
 	    GConvertXUnits(Rf_gpptr(dd)->omi[3], INCHES, LINES, dd);
 	Rf_gpptr(dd)->omd[0] = Rf_dpptr(dd)->omd[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->omi[0], INCHES, NDC, dd);
-	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
 	    GConvertXUnits(Rf_gpptr(dd)->omi[1], INCHES, NDC, dd);
+	Rf_gpptr(dd)->omd[1] = Rf_dpptr(dd)->omd[1] =
+	    1 - GConvertXUnits(Rf_gpptr(dd)->omi[3], INCHES, NDC, dd);
 	Rf_gpptr(dd)->omd[2] = Rf_dpptr(dd)->omd[2] =
-	    GConvertYUnits(Rf_gpptr(dd)->omi[2], INCHES, NDC, dd);
+	    GConvertYUnits(Rf_gpptr(dd)->omi[0], INCHES, NDC, dd);
 	Rf_gpptr(dd)->omd[3] = Rf_dpptr(dd)->omd[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->omi[3], INCHES, NDC, dd);
+	    1 - GConvertYUnits(Rf_gpptr(dd)->omi[2], INCHES, NDC, dd);
 	break;
     case NDC:
 	Rf_gpptr(dd)->oma[0] = Rf_dpptr(dd)->oma[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->omd[0], NDC, LINES, dd);
-	Rf_gpptr(dd)->oma[1] = Rf_dpptr(dd)->oma[1] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[1], NDC, LINES, dd);
-	Rf_gpptr(dd)->oma[2] = Rf_dpptr(dd)->oma[2] =
 	    GConvertYUnits(Rf_gpptr(dd)->omd[2], NDC, LINES, dd);
+	Rf_gpptr(dd)->oma[1] = Rf_dpptr(dd)->oma[1] =
+	    GConvertXUnits(Rf_gpptr(dd)->omd[0], NDC, LINES, dd);
+	Rf_gpptr(dd)->oma[2] = Rf_dpptr(dd)->oma[2] =
+	    GConvertYUnits(1 - Rf_gpptr(dd)->omd[3], NDC, LINES, dd);
 	Rf_gpptr(dd)->oma[3] = Rf_dpptr(dd)->oma[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[3], NDC, LINES, dd);
+	    GConvertXUnits(1 - Rf_gpptr(dd)->omd[1], NDC, LINES, dd);
 	Rf_gpptr(dd)->omi[0] = Rf_dpptr(dd)->omi[0] =
-	    GConvertYUnits(Rf_gpptr(dd)->omd[0], NDC, INCHES, dd);
-	Rf_gpptr(dd)->omi[1] = Rf_dpptr(dd)->omi[1] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[1], NDC, INCHES, dd);
-	Rf_gpptr(dd)->omi[2] = Rf_dpptr(dd)->omi[2] =
 	    GConvertYUnits(Rf_gpptr(dd)->omd[2], NDC, INCHES, dd);
+	Rf_gpptr(dd)->omi[1] = Rf_dpptr(dd)->omi[1] =
+	    GConvertXUnits(Rf_gpptr(dd)->omd[0], NDC, INCHES, dd);
+	Rf_gpptr(dd)->omi[2] = Rf_dpptr(dd)->omi[2] =
+	    GConvertYUnits(1 - Rf_gpptr(dd)->omd[3], NDC, INCHES, dd);
 	Rf_gpptr(dd)->omi[3] = Rf_dpptr(dd)->omi[3] =
-	    GConvertXUnits(Rf_gpptr(dd)->omd[3], NDC, INCHES, dd);
+	    GConvertXUnits(1 - Rf_gpptr(dd)->omd[1], NDC, INCHES, dd);
 	break;
     default: break; /*nothing (-Wall) */
     }

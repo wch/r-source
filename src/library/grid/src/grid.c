@@ -648,14 +648,6 @@ SEXP L_unsetviewport(SEXP n)
 	    error(_("Cannot pop the top-level viewport (grid and graphics output mixed?)"));
     }
     /* 
-     * Remove the parent from the child
-     * This is not strictly necessary, but it is conceptually
-     * more complete and makes it more likely that we will
-     * detect incorrect code elsewhere (because it is likely to
-     * trigger a segfault if other code is incorrect)
-     */
-    SET_VECTOR_ELT(gvp, PVP_PARENT, R_NilValue);
-    /* 
      * Remove the child (gvp) from the parent's (newvp) "list" of
      * children
      */
@@ -716,6 +708,18 @@ SEXP L_unsetviewport(SEXP n)
      * list works 
      */
     setGridStateElement(dd, GSS_VP, newvp);
+    /* 
+     * Remove the parent from the child
+     * This is not strictly necessary, but it is conceptually
+     * more complete and makes it more likely that we will
+     * detect incorrect code elsewhere (because it is likely to
+     * trigger a segfault if other code is incorrect)
+     *
+     * NOTE: Do NOT do this any earlier or you will
+     * remove the PROTECTive benefit of newvp pointing
+     * to part of the (global) grid state
+     */
+    SET_VECTOR_ELT(gvp, PVP_PARENT, R_NilValue);
     return R_NilValue;
 }
 
