@@ -325,3 +325,11 @@ Date: Sun, 29 Aug 1999 19:38:13 +1000 (EST)
 Subject: interface w/ emacs
 From: gautier@lion-ag.de
 Date: Mon, 30 Aug 1999 13:28:52 +0200 (MET DST)
+* PR# 262 *
+Subject: Problems compiling R65.0
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 1 Sep 1999 11:52:29 +0200 (MET DST)
+* PR# 263 *
+Subject: Problems sourcing functions with R65.0
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
