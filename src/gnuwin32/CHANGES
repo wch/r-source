@@ -26,6 +26,9 @@ such front-ends.
 
 R CMD / Rcmd now set HOME if unset, e.g. for use in Rcmd check.
 
+The installer now offers the option of a `quick launch icon" for R
+(by default unchecked).
+
 
 
 R 2.0.1 patched

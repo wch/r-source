@@ -543,8 +543,8 @@ endif
 
 EXTRA_PKGS=
 rinstaller:
-	$(MAKE) -C installer EXTRA_PKGS='$(EXTRA_PKGS)'
-	$(MAKE) -C installer clean
+	@$(MAKE) -C installer EXTRA_PKGS='$(EXTRA_PKGS)'
+	@$(MAKE) -C installer clean
 
 crandir:
 	$(MKDIR) -p cran/mini
