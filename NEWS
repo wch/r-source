@@ -29,11 +29,11 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	C() didn't works (again?) for a single argument
+    o	C() works (again?) for a single argument
 
     o	is.na() didn't work properly for "list" arguments.
 
-    o	symnum() didn't always work with arrays of rank >= 3.
+    o	symnum() sometimes failed with arrays of rank >= 3.
 
     o	in some cases one could get nonblack color instead of
 	black on 2nd x11() window
