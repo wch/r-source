@@ -14,7 +14,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.5 $ ';
+my $revision = ' $Revision: 1.6 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -23,7 +23,7 @@ $version = $1;
 
 $make = "@MAKE@";
 
-my @knownoptions = ("help|h", "version|v", "binary", 
+my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
 		    "use-zip", "use-zip-help", "use-zip-data");
 
 GetOptions (@knownoptions) || usage();
@@ -42,6 +42,7 @@ my $INS_opts = "";
 $INS_opts .= " --use-zip" if $opt_use_zip;
 $INS_opts .= " --use-zip-data" if $opt_use_zip_data;
 $INS_opts .= " --use-zip-help" if $opt_use_zip_help;
+$INS_opts .= " --no-docs" if $opt_no_docs;
 
 if(!$opt_binary && $INS_opts ne "") {
     printf "** Options $INS_opts for --binary ignored\n";
@@ -83,7 +84,14 @@ foreach $pkg (@ARGV){
 	    "_${R_platform}.tar";
 	$log->message("building \`$filename.gz'");
 	
-	system("tar -c -h $pkg > $startdir/$filename");
+	my $pkgs = $pkg;
+	if($description->{"Contains"}){
+	    $log->message("Looks like \`${pkg}' is a package bundle");
+	    $is_bundle=1;
+	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	    $pkgs = join(" ", @bundlepkgs);
+	}	
+	system("tar -c -h $pkgs > $startdir/$filename");
 	chdir($startdir);
 	system("gzip -9f $filename");
 	rmtree($libdir);
@@ -196,6 +204,7 @@ Options:
   -v, --version		print version info and exit
 
   --binary              build pre-compiled binary packages, with options:
+  --no-docs             do not build and install documentation
   --use-zip-data        collect data files in zip archive
   --use-zip-help        collect help and examples into zip archives
   --use-zip             combine `--use-zip-data' and `--use-zip-help'
