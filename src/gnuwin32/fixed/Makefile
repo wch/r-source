@@ -38,15 +38,19 @@ fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
 ../../include/Rversion.h: ../../../date-stamp ../../../VERSION
 #	sh ./GETVERSION > ../../include/Rversion.h
 	sed -e 1d ../../../tools/GETVERSION > ../../../tools/GV
-	sh ../../../tools/GV > ../../include/Rversion.h
+	sh ../../../tools/GV > $@
 	rm ../../../tools/GV
 
+../../../bin/massage-Examples.sh: ../../scripts/massage-Examples
+	sed -e 1d $< > $@
 
-fixbin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
+fixbin: ../../../bin/massage-Examples.sh cp2bin
+	$(ECHO) done > fixbin
+
+cp2bin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
 	zip -q bins $^
 	unzip -oaq bins -d  ../../..
 	$(RM) bins.zip
-	$(ECHO) done > fixbin
 
 fixr: $(wildcard ./r/*.html) ../../../doc/html/search/SearchEngine.html
 	$(CP) -p ./r/*.html ../../../doc/html

@@ -262,7 +262,9 @@ bindist: docfiles
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
 	$(RM) $(RPREFIX)/demos/dynload/*.o $(RPREFIX)/demos/dynload/*.def
 	$(RM) $(RPREFIX)/*/Makefile.in
-	$(RM) $(RPREFIX)/bin/INSTALL $(RPREFIX)/bin/SHLIB $(RPREFIX)/bin/build(RPREFIX)/bin/check 
+	$(RM) $(RPREFIX)/bin/INSTALL $(RPREFIX)/bin/SHLIB \
+              $(RPREFIX)/bin/build $(RPREFIX)/bin/check \
+	      $(RPREFIX)/bin/massage-Examples.sh
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
@@ -341,7 +343,7 @@ packagedist:
 	$(CP) ../../etc/Rdconvlib.pl ../../etc/buildlib.pl \
 	   ../../etc/html-layout.pl $(RPREFIX)/etc
 	$(CP) ../../bin/INSTALL ../../bin/SHLIB ../../bin/build \
-	   ../../bin/check $(RPREFIX)/bin
+	   ../../bin/check ../../bin/massage-Examples.sh $(RPREFIX)/bin
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	zip -rX $(RPREFIX)sp.zip $(RPREFIX)
