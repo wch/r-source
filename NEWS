@@ -42,6 +42,8 @@ DEPRECATED & DEFUNCT
 
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are defunct.
 
+    o	Capability "IEEE754" is deprecated.
+
 
 INSTALLATION CHANGES
 

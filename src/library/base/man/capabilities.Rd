@@ -29,13 +29,14 @@ capabilities(what = NULL)
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
-      It will be true if \code{readline} supported has been compiled in
+      It will be true if \code{readline} support has been compiled in
       and \option{--no-readline} was \emph{not} invoked.
 #endif
       }
     \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
       that this is more correctly known by the international standard
-      IEC 60559, and will always be true from \R version 2.0.0.}
+      IEC 60559, and will always be true from \R version 2.0.0.  It is
+      now deprecated and will be removed in due course.}
 }
 \seealso{\code{\link{.Platform}}}
 
