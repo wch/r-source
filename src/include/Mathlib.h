@@ -3,11 +3,19 @@
 
 #include "Arith.h"
 
+#ifdef FORTRAN_H
+#error __MUST__include "Mathlib.h"  _before_  "Fortran.h"
+#endif
+
 #include <errno.h>
 #include <float.h>
 #include <limits.h>
 #include <math.h>
 #include <stdlib.h>
+
+/* TRUE and FALSE conflict with the Mac --- Fortran.h still defines them... */
+#define LTRUE	(1)
+#define LFALSE	(0)
 
 /* 30 Decimal-place constants computed with bc -l (scale=32; proper round) */
 
@@ -155,6 +163,7 @@ double	logrelerr(double);
 void	gammalims(double*, double*);
 double	lgammacor(double);
 double	gammafn(double);
+double	gamma_cody(double);
 double	lgammafn(double);
 void	dpsifn(double, int, int, int, double*, int*, int*);
 double	digamma(double);
@@ -166,6 +175,17 @@ double	choose(double, double);
 double	lchoose(double, double);
 double	fastchoose(double, double);
 double	lfastchoose(double, double);
+
+	/* Bessel Functions of All Kinds */
+
+double  bessel_i(double, double, double);
+double  bessel_j(double, double);
+double  bessel_k(double, double, double);
+double  bessel_y(double, double);
+void    I_bessel(double*, double*, long*, long*, double*, long*);
+void    J_bessel(double*, double*, long*,        double*, long*);
+void 	K_bessel(double*, double*, long*, long*, double*, long*);
+void	Y_bessel(double*, double*, long*,        double*, long*);
 
 	/* Beta and Related Functions */
 

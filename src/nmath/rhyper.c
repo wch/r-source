@@ -38,11 +38,6 @@
 #include "PrtUtil.h"
 #include "Mathlib.h"
 
-/* TRUE and FALSE conflict with the MAC */
-
-#define LTRUE	1
-#define LFALSE	0
-
 /* afc(i) :=  ln( i! )	[logarithm of the factorial i.
  *	   If (i > 7), use Stirling's approximation, otherwise use table lookup.
 */
