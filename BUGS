@@ -76,10 +76,7 @@ Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
 
 Directory:  Documentation
 
-* PR# 689 *
-Subject: Documentation problem for ecdf
-From: Kurt.Hornik@ci.tuwien.ac.at
-Date: Tue, 10 Oct 2000 18:32:46 +0200 (MET DST)
+none
 
 Directory:  Graphics
 
@@ -88,10 +85,6 @@ Subject:  Bug report
 From: "Amaratunga, Rohith" <Rohith.Amaratunga@dsto.defence.gov.au>
 Date: Thu, 12 Oct 2000 14:08:31 +1100
 --grid problem: note a report on 0.90.1 and nothing to reproduce this
-* PR# 662 *
-Subject: phantom(0) doesn't do what I expect it to [plotmath]
-From: M.B.Gillies@pharm.uu.nl
-Date: Mon, 18 Sep 2000 14:20:37 +0200 (MET DST)
 * PR# 660 *
 Subject: identify.default ignores any setting of cex.
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
@@ -193,10 +186,6 @@ Date: Sat, 25 Mar 2000 12:16:50 -0800 (PST)
 
 Directory:  Misc
 
-* PR# 666 *
-Subject: width in options()
-From: aprasad@fs.fed.us
-Date: Thu, 21 Sep 2000 17:46:25 +0200 (MET DST)
 * PR# 663 *
 Subject: bug.report("unused argument(s) crash R when options(error=quote
 From: zivan.karaman@limagrain.com
@@ -274,4 +263,11 @@ none
 
 Directory:  incoming
 
-none
+* PR# 714 *
+Subject: prop.test and x = 0
+From: charlie@stat.umn.edu
+Date: Sun, 29 Oct 2000 16:29:56 +0100 (MET)
+* PR# 713 *
+Subject: median(c(NA,NA),na.rm=T) fails
+From: gnw3@acm.org
+Date: Sun, 29 Oct 2000 14:48:09 +0100 (MET)
