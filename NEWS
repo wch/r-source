@@ -231,6 +231,9 @@ NEW FEATURES
 
     o	New argument `silent' to try().
 
+    o   new plot.design() function as in S.
+
+
 
 INSTALLATION CHANGES
 
