@@ -287,8 +287,9 @@ fi
 
 if test -n "${F77}"; then
   FC=${F77}
-  R_PROG_F77_FLIBS
-  R_PROG_F77_G77
+  R_PROG_F77_WORKS
+  R_PROG_F77_GNU
+  OCTAVE_FLIBS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
   f77_rules_frag=Makefrag.f77
@@ -440,6 +441,15 @@ case "${host}" in
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     R_PROG_CC_FLAG(-ieee_with_inexact,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -ieee_with_inexact")
+    ## <Albrecht.Gebhardt@uni-klu.ac.at>
+    if test -z "${GCC}"; then
+      R_PROG_CC_FLAG(-std1,
+        R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -std1")
+    fi
+    if test -z "${G77}"; then
+      R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -fpe3"
+    fi
+    ## </Albrecht.Gebhardt@uni-klu.ac.at>
     ;;
   alpha*linux)
     R_PROG_CC_FLAG(-mieee,
