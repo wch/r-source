@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-8, 2003-05-11
+Version 1.7-9, 2003-05-12
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1644,6 +1644,9 @@ distributions of R.)
 *hier.part*
      Hierarchical Partitioning: variance partition of a multivariate data
      set.
+
+*homals*
+     Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 
 *hwde*
      Models and tests for departure from Hardy-Weinberg equilibrium and
