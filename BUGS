@@ -403,3 +403,11 @@ Date: Sun, 2 Dec 2001 01:27:53 +0100 (MET)
 Subject: I have visited BUGS.R-PROJECT.ORG and noticed that ...
 From: "Vanessa Lintner" <reply@seekercenter.net>
 Date: Sun, 2 Dec 2001 15:56:41 +0800
+* PR# 1192 *
+Subject: Segfault in foreign:read.xport
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Mon, 3 Dec 2001 14:33:24 -0500 
+* PR# 1193 *
+Subject: Re: [R] appending similar data frames?
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Mon, 3 Dec 2001 13:46:35 -0800 (PST)
