@@ -18,7 +18,7 @@
  */
 
 
-/* based on libxml2-2.3.6:
+/* based on libxml2-2.4.10:
  * nanoftp.c: basic FTP client support
  *
  *  Reference: RFC 959
@@ -106,8 +106,6 @@ setSelectMask(InputHandler *handlers, fd_set *readMask)
 #define SOCKET int
 #endif
 
-static char hostname[100];
-
 #define FTP_COMMAND_OK		200
 #define FTP_SYNTAX_ERROR	500
 #define FTP_GET_PASSWD		331
@@ -169,8 +167,6 @@ RxmlNanoFTPInit(void) {
 	return;
 #endif
 
-    gethostname(hostname, sizeof(hostname));
-
     proxyPort = 21;
     env = getenv("no_proxy");
     if (env != NULL)
@@ -215,7 +211,6 @@ RxmlNanoFTPCleanup(void) {
 	xmlFree(proxyPasswd);
 	proxyPasswd = NULL;
     }
-    hostname[0] = 0;
 #ifdef _WINSOCKAPI_
     if (initialized)
 	WSACleanup();
@@ -717,9 +712,9 @@ RxmlNanoFTPSendPasswd(void *ctx) {
 
     if (ctxt->passwd == NULL)
 #ifdef HAVE_SNPRINTF
-	snprintf(buf, sizeof(buf), "PASS libxml@%s\r\n", hostname);
+	snprintf(buf, sizeof(buf), "PASS anonymous\r\n");
 #else
-	sprintf(buf, "PASS libxml@%s\r\n", hostname);
+	sprintf(buf, "PASS anonymous\r\n");
 #endif
     else
 #ifdef HAVE_SNPRINTF
@@ -904,10 +899,9 @@ RxmlNanoFTPConnect(void *ctx) {
 #endif
 		    else
 #ifdef HAVE_SNPRINTF
-			snprintf(buf, sizeof(buf), "PASS libxml@%s\r\n",
-			               hostname);
+			snprintf(buf, sizeof(buf), "PASS anonymous\r\n");
 #else
-			sprintf(buf, "PASS libxml@%s\r\n", hostname);
+			sprintf(buf, "PASS anonymous\r\n");
 #endif
                     buf[sizeof(buf) - 1] = 0;
                     len = strlen(buf);
@@ -975,10 +969,10 @@ RxmlNanoFTPConnect(void *ctx) {
 		/* USER user@host command */
 		if (ctxt->user == NULL)
 #ifdef HAVE_SNPRINTF
-		    snprintf(buf, sizeof(buf), "USER anonymous@%s\r\n",
+		    snprintf(buf, sizeof(buf), "USER anonymous%s\r\n",
 			           ctxt->hostname);
 #else
-		    sprintf(buf, "USER anonymous@%s\r\n", ctxt->hostname);
+		    sprintf(buf, "USER anonymous%s\r\n", ctxt->hostname);
 #endif
 		else
 #ifdef HAVE_SNPRINTF
@@ -1005,9 +999,9 @@ RxmlNanoFTPConnect(void *ctx) {
 		}
 		if (ctxt->passwd == NULL)
 #ifdef HAVE_SNPRINTF
-		    snprintf(buf, sizeof(buf), "PASS libxml@%s\r\n", hostname);
+		    snprintf(buf, sizeof(buf), "PASS anonymous\r\n");
 #else
-		    sprintf(buf, "PASS libxml@%s\r\n", hostname);
+		    sprintf(buf, "PASS anonymous\r\n");
 #endif
 		else
 #ifdef HAVE_SNPRINTF
