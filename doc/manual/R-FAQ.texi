@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.8-54 @value{FAQ-YEAR}-03-20
+@set FAQ-VERSION 1.8-55 @value{FAQ-YEAR}-03-22
 @set REL-VERSION 1.8.1
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
@@ -2395,6 +2395,9 @@ Quantile regression and related methods.
 @item qvcalc
 Functions to compute quasi-variances and associated measures of
 approximation error.
+@item race
+Implementation of some racing methods for the empirical selection of the
+best.
 @item randomForest
 Breiman's random forest classifier.
 @c @item ratetables
