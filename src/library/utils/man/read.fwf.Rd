@@ -34,7 +34,8 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
     to no limit.}
   \item{buffersize}{Maximum number of lines to read at one time}
   \item{\dots}{further arguments to be passed to
-    \code{\link{read.table}}.}
+    \code{\link{read.table}}.  Useful further arguments include
+    \code{na.strings} and \code{colClasses}.}
 }
 \value{
   A \code{\link{data.frame}} as produced by \code{\link{read.table}}
@@ -46,12 +47,12 @@ read.fwf(file, widths, header = FALSE, sep = "\t", as.is = FALSE,
   in \code{file} are replaced by \code{NA}.
   
   Negative-width fields are used to indicate columns to be skipped, eg
-  \code{-5} to skip 5 columns. These fields are not seen by
+  \code{-5} to skip 5 columns.  These fields are not seen by
   \code{read.table} and so should not be included in a \code{col.names}
   or \code{colClasses} argument.
   
-  Reducing the  \code{buffersize} argument may reduce memory use when
-  reading large files with long lines. Increasing \code{blocksize} may
+  Reducing the \code{buffersize} argument may reduce memory use when
+  reading large files with long lines.  Increasing \code{buffersize} may
   result in faster processing when enough memory is available.
 }
 \author{

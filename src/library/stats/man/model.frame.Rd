@@ -75,6 +75,10 @@ model.frame(formula, \dots)
   \code{keep.order} argument of \code{terms.formula}, pass a terms
   object rather than a formula.)
 
+  Row names for the model frame are taken from the \code{data} argument
+  if present, then from the names of the response in the formula (or
+  rownames if it is a matrix), if there is one.
+
   All the variables in \code{formula}, \code{subset} and in \code{\dots}
   are looked for first in \code{data} and then in the environment of
   \code{formula} (see the help for \code{\link{formula}()} for further
