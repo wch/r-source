@@ -1,20 +1,27 @@
-backsolve <- function(r, x, k=ncol(r))
+forwardsolve <- function(l, x, k=ncol(l)) backsolve(l,x,k, upper.tri = FALSE)
+
+backsolve <- function(r, x, k=ncol(r),
+                      upper.tri = TRUE, transpose = FALSE)
 {
     r <- as.matrix(r)# nr  x  k
+    storage.mode(r) <- "double"
     x <- as.matrix(x)#	k  x  nb
+    storage.mode(x) <- "double"
+    k <- as.integer(k)
     if(k <= 0 || nrow(x) != k) stop("invalid parameters in backsolve")
     nb <- ncol(x)
+    upper.tri <- as.logical(upper.tri)
+    transpose <- as.logical(transpose)
+    job <- as.integer((upper.tri) + 10*(transpose))
     z <- .C("bakslv",
-	    t  = as.double(r),
-	    ldt= nrow(r),
-	    n  = k,
-	    b  = as.double(x),
-	    ldb= k,
-	    nb = nb,
+	    t  = r, ldt= nrow(r), n  = k,
+	    b  = x, ldb= k,	  nb = nb,
 	    x  = matrix(0, k, nb),
-	    job= as.integer(1),
+	    job= job,
 	    info= integer(1),
-	    DUP= FALSE)
-    if(z$info != 0) stop("singular matrix in backsolve")
+	    DUP= FALSE)[c("x","info")]
+    if(z$info != 0)
+        stop(paste("singular matrix in backsolve. First zero in diagonal [",
+                   z$info,"].",sep=""))
     z$x
 }
