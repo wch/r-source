@@ -34,9 +34,22 @@ help <-
                 cat("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
                     ".Rd'\n", sep = "")
             if (!offline) {
-                if(htmlhelp) {
-                    if(file.exists(file)) {
-                        .Internal(show.help.item(file, 1, ""))
+                if (htmlhelp) {
+                  if (file.exists(file)) {
+                    browser <- getOption("browser")
+                    if (is.null(browser) ) 
+                      fname <- gsub(":", "/", .Internal(truepath(file)))
+                    else {
+                      if (browser == "netscape") 
+                       fname <- gsub(":", "/", file)
+                      else 
+                       fname <- gsub(":", "/", .Internal(truepath(file)))
+                     }
+                    ch <- strsplit(fname, "")[[1]][1]
+                    if (ch != "/") 
+                      fname <- paste("/", fname, sep = "")
+                    fname <- paste("file://", fname, sep = "")
+                    browseURL(url = fname, browser = browser)
                         cat("help() for `", topic, "' is shown in browser\n",
                             sep="")
                         return(invisible())
