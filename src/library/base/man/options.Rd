@@ -42,7 +42,7 @@ options(\dots)
 \item{ts.eps}{the relative tolerance for certain time series
   (\code{\link{ts}}) computations.}
 \item{warn}{sets the handling of warning messages. If \code{warn}
-is negative all warnings are ignored. If \code{warn} is zero (the defualt)
+is negative all warnings are ignored. If \code{warn} is zero (the default)
 warnings are stored until the  top--level function returns. If fewer than 10
 warnings were signalled they will be printed otherwise a message
 saying how many (max 50) were signalled. A top--level variable called
