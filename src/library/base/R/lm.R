@@ -469,7 +469,7 @@ print.anova.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 	invisible(x)
 }
 
-predict.lm <- function(object, newdata = model.frame(object), se = FALSE) {
+predict.lm <- function(object, newdata = model.frame(object), se.fit = FALSE) {
   X <- model.matrix(delete.response(terms(object)), newdata)
   n <- NROW(object$qr$qr)
   p <- object$rank
@@ -480,16 +480,20 @@ predict.lm <- function(object, newdata = model.frame(object), se = FALSE) {
   w <- weights(object)
   if (is.null(w)) rss <- sum(r^2)
   else rss <- sum(r^2 * w)
+  d.f. <- n - p
+  res.var <- rss/d.f.
   R <- chol2inv(object$qr$qr[p1, p1, drop = FALSE])
+  vcov <- res.var * R
   est <- object$coefficients[piv]
   predictor <- c(X[, piv, drop = F] %*% est)
-  if(se) {
+  if(se.fit) {
     ip <- real(NROW(X))
     for (i in (1:NROW(X))) {
       xi <- X[i, piv]
-      ip[i] <- xi %*% R %*% xi
+      ip[i] <- xi %*% vcov %*% xi
     }
-    list(fit = predictor, se = sqrt(ip))
+    list(fit = predictor, se.fit = sqrt(ip), 
+      df = d.f., residual.scale = sqrt(res.var))
   } else predictor
 }
 
