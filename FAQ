@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-23, 2003-12-03
+Version 1.8-24, 2003-12-04
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1592,6 +1592,9 @@ distributions of R.)
 *conf.design*
      A series of simple tools for constructing and manipulating confounded
      and fractional factorial designs.
+
+*covRobust*
+     Robust covariance estimation via nearest neighbor cleaning.
 
 *cramer*
      Routine for the multivariate nonparametric Cramer test.
