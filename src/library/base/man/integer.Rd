@@ -19,7 +19,9 @@ is.integer(x)
   which expects them.
 
   \code{as.integer} attempts to coerce its argument to be of integer
-  type.
+  type. The answer will be \code{NA} unless the coercion succeeds.
+  Real values larger in modulus than the largest integer are coerced to
+  \code{NA} (unlike S which gives the most extreme integer of the same sign).
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer type or not. 

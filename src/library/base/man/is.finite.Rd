@@ -139,11 +139,11 @@ all(is.nan(x) != is.finite(x) | is.infinite(x)) # FALSE: have 'real' NA
 
 ##--- Integer
 (ix <- structure(as.integer(x),names= names(x)))
-##-   100 -1e-13        Inf        -Inf NaN 3.14 NA
-##-   100      . 2147483647 -2147483648  NA    3 NA
+##-   100 -1e-13    Inf   -Inf    NaN   3.14     NA 
+##-   100      0     NA     NA     NA      3     NA 
 all(is.na(ix) != is.finite(ix) | is.infinite(ix)) # TRUE (still)
 
-ix[3] == (iI <- as.integer(Inf))#> warning: inaccurate integer conversion!
+ix[3] == (iI <- as.integer(Inf))#> warning: NAs introduced by coercion 
 ix[4] == (imI<- as.integer(-Inf))
 iI  == .Machine$integer.max # TRUE
 imI == -.Machine$integer.max # TRUE
