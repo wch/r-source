@@ -39,7 +39,8 @@ BUG FIXES
 
     o   Making manuals without making R first now works.
 
-    o	princomp() now works when some eigenvalues are tiny negatives.
+    o	princomp() now works when some eigenvalues are tiny negative
+	values (which are treated as zero).
 
     o   SearchEngine.html was not installed when builddir != srcdir.
 
@@ -56,6 +57,11 @@ BUG FIXES
 
     o	Recording plots used to ignore graphics events before the last
 	replay.
+
+    o	dev.print() and dev.copy2eps() now work when called from a function.
+
+    o	anova.glmlist works correctly with decreasing models and
+	test="F" now gets the correct residual df.
 
 
 
