@@ -1,5 +1,6 @@
 \name{hcl}
 \alias{hcl}
+\encoding{latin1}
 \title{HCL Color Specification}
 \description{
   Create a vector of colors from vectors specifying hue,
