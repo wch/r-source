@@ -5,7 +5,7 @@
 \alias{.userHooksEnv}
 \title{Functions to Get and Set Hooks for Load, Attach, Detach and Unload}
 \description{
-  These function allow users to set actions to be taken before packages
+  These functions allow users to set actions to be taken before packages
   are attached/detached and namespaces are (un)loaded.
 }
 \usage{
@@ -75,7 +75,7 @@ packageEvent(pkgname,
   \code{\link{persp}} already have them.
 }
 \examples{
-setHook(packageEvent("graphics", "onLoad"),
+setHook(packageEvent("grDevices", "onLoad"),
         function(...) grDevices::ps.options(horizontal=FALSE)) 
 }
 \keyword{utilities}
