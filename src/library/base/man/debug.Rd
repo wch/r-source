@@ -28,7 +28,8 @@ If you have variables with names that are identical to the controls
 \code{print(n)} to evaluate them.
 }
 \seealso{
-\code{\link{browser}}.
+  \code{\link{browser}}, \code{\link{traceback}} to see the stack after
+  an \code{Error: ...} message.
 }
 \keyword{programming}
 \keyword{environment}

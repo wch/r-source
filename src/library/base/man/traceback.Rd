@@ -4,10 +4,12 @@
 traceback()
 }
 \alias{traceback}
+\alias{.Traceback}
 \description{
-  \code{traceback} prints the call stack of the last error, i.e., the
+  \code{traceback()} prints the call stack of the last error, i.e., the
   sequence of calls that lead to the error.  This is useful when an
   error occurs with an unidentifiable error message.
+  Currently, this stack is given as a list in \code{.Traceback}.
 }
 \examples{
 foo <- function(x) { print(1); bar(2) }
