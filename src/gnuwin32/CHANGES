@@ -54,7 +54,6 @@ installation of Tcl/Tk (version 8.4.x unless you compile from sources)
 by setting the environment variables MY_TCLTK and TCL_LIBRARY and
 having tcl84.dll and tk84.dll in your path.
 
-
 HTML help changes
 -----------------
 
@@ -87,6 +86,15 @@ stay maximized throughout window operations.
 The internal pager will page down with space or CTRL-F and page up
 with minus or CTRL-B (key sequences which are widely used in Unix
 pagers).
+
+RTerm changes
+-------------
+
+Rterm is now only regarded as interactive if both stdin and stdout are
+a terminal: this overcomes a problem with getline.
+
+System error messages (those which would appear in a dialog box in
+Rgui) are written on stderr rather than stdin.
 
 Installing packages
 -------------------

@@ -528,7 +528,12 @@ void R_ShowMessage(char *s)
 static void char_message(char *s)
 {
     if (!s) return;
-    R_WriteConsole(s, strlen(s));
+    if (R_Consolefile) {
+	/* flush out standard output in case it uses R_Consolefile */
+	if (R_Outputfile) fflush(R_Outputfile);
+	fprintf(R_Consolefile, "%s\n", s);
+	fflush(R_Consolefile);
+    } else R_WriteConsole(s, strlen(s));
 }
 
 static int char_yesnocancel(char *s)
@@ -671,7 +676,7 @@ int cmdlineoptions(int ac, char **av)
     Rp->CallBack = R_DoNothing;
     InThreadReadConsole = NULL;
     if (CharacterMode == RTerm) {
-	if (isatty(0)) {
+	if (isatty(0) && isatty(1)) {
 	    Rp->R_Interactive = TRUE;
 	    Rp->ReadConsole = ThreadedReadConsole;
             InThreadReadConsole = CharReadConsole;
