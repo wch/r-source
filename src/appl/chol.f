@@ -2,6 +2,7 @@ c-----------------------------------------------------------------------
 c
 c  R : A Computer Langage for Statistical Data Analysis
 c  Copyright (C) 1996, 1997  Robert Gentleman and Ross Ihaka
+c  Copyright (C) 2001        The R Development Core Team
 c
 c  This program is free software; you can redistribute it and/or modify
 c  it under the terms of the GNU General Public License as published by
@@ -50,6 +51,8 @@ c     this version dated aug 25, 1996.
 c     ross ihaka, university of auckland.
 c
       subroutine chol(a, lda, n, v, info)
+c     implicit none
+      integer n, lda, info
       double precision a(lda, n), v(n,n)
       integer i, j
 c

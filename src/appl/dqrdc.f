@@ -85,7 +85,7 @@ c
 c
 c     internal variables
 c
-      integer j,jp,l,lp1,lup,maxj,pl,pu
+      integer j,jp,jj, l,lp1,lup,maxj,pl,pu
       double precision maxnrm,dnrm2,tt
       double precision ddot,nrmxl,t
       logical negj,swapj

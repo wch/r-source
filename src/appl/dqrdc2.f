@@ -83,7 +83,7 @@ c
 c
 c     internal variables
 c
-      integer i,j,l,lp1,lup
+      integer i,j,l,lp1,lup,k
       double precision dnrm2,tt,ttt
       double precision ddot,nrmxl,t
 c
