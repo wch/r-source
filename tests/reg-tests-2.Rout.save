@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Foundation for Statistical Computing
-Version 1.8.1 alpha (2003-11-05), ISBN 3-900051-00-3
+Version 1.8.1 alpha (2003-11-10), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3321,5 +3321,16 @@ $term.labels
 [1] "a"   "b"   "a:b"
 
 > ## errors prior to 1.8.1
+> 
+> 
+> ## 0-level factors gave nonsensical answers in model.matrix
+> try(model.matrix(~x, data.frame(x=NA), na.action=na.pass))
+Error in "contrasts<-"(`*tmp*`, value = "contr.treatment") : 
+	contrasts can be applied only to factors with 2 or more levels
+> lm.fit <- lm(y ~ x, data.frame(x=1:10, y=1:10))
+> try(predict(lm.fit, data.frame(x=NA)))
+Error in "contrasts<-"(`*tmp*`, value = "contr.treatment") : 
+	contrasts can be applied only to factors with 2 or more levels
+> ## wrong in 1.8.0
 > 
 > 

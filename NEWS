@@ -94,10 +94,11 @@ NEW FEATURES
     o   Function texi2dvi() in package tools can be used to compile
         latex files from within R.
 
-    o   Objects saved in pre-1.8 versions and loaded into the current
-        version have incompatible class attributes (no package
-        information).  A new function, fixPre1.8() in package methods
-        will fix the class attributes.  See the help for this function.
+    o	Objects with formal S4 classes saved in pre-1.8 versions and
+        loaded into the current version have incompatible class
+        attributes (no package information).  A new function,
+        fixPre1.8() in package methods, will fix the class attributes.
+        See the help for this function.
 
 
 BUG FIXES
@@ -156,7 +157,7 @@ BUG FIXES
 	repository, and contacts the correct paths in the repositories
 	under Windows.
 
-    o	.setOldIs (methods) contained a typo stopping POSIXct objects
+    o	.setOldIs (methods) contained a typo stopping POSIXct objects (etc)
 	being included in formal classes.
 
     o	terms() sometimes removed offset() terms incorrectly, since it
@@ -165,10 +166,10 @@ BUG FIXES
 	variables. (Related to PR#4941)
 
     o	buildVignettes() and pkgVignettes() in package tools are now
-	documented, the call to texi2dvi is wrapped in the new
+	documented.  The call to texi2dvi is wrapped in the new
 	function texi2dvi() which also works on Windows.
 
-    o   Build errors with Tcl version 8.0 has been corrected. (Notice that
+    o   Build errors with Tcl version 8.0 has been corrected.  (Note that
         some features are simply not implemented for this ancient version, 
         so upgrade if you can.)
 
@@ -179,6 +180,12 @@ BUG FIXES
 
     o   prompt() no longer insists files are in the current directory. 
 	(PR#4978)
+
+    o   filter() did not use init in reverse order as documented. (PR#5017)
+
+    o	contrasts<-() and model.matrix() now have sanity checks that
+	factors having at least 2 levels: model.matrix() gave
+	nonsensical results for 0-level factors.
 
 
 
