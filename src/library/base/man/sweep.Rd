@@ -10,7 +10,7 @@ sweep(x, MARGIN, STATS, FUN="-", \dots)
 }
 \arguments{
   \item{x}{an array.}
-  \item{MARGIN}{a vector of integers giving the extents of \code{x}
+  \item{MARGIN}{a vector of indices giving the extents of \code{x}
     which correspond to \code{STATS}.}
   \item{STATS}{the summary statistic which is to be swept out.}
   \item{FUN}{the function to be used to carry out the sweep.  In the
