@@ -1,10 +1,8 @@
-browse.wspace <- function(){
+browse.wspace <- function(html=FALSE,expanded=TRUE){
  objlist <- ls(sys.frame())
  n <- length(objlist)
- if(n==0){
-  warning("Empty workspace, nothing to do!")
-  return;
- }
+ if(n==0 | is.null(objlist))
+  stop("Empty workspace, nothing to do!")
 
  N <- 0
  M <- n
@@ -16,6 +14,7 @@ browse.wspace <- function(){
  IsRoot <- rep(TRUE,n)
  Container <- rep(FALSE,n)
  ItemsPerContainer <- rep(0,n)
+ ParentID <- rep(-1,n)
  
  for( object in objlist ){
   N <- N+1
@@ -51,6 +50,7 @@ browse.wspace <- function(){
    nm <- names(obj)
    for(i in 1:lg){
     M <- M+1
+    ParentID[M] <- N
     if(nm[i] == "") nm[i] = paste("[[",i,"]]",sep="") 
     md.l  <- mode(obj[[i]])
     objdim.l <- dim(obj[[i]])
@@ -90,6 +90,7 @@ browse.wspace <- function(){
     ItemsPerContainer[N] <- lg
     for(i in 1:lg){
      M <- M+1
+     ParentID[M] <- N
      if(nm[i] == "") nm[i] = paste("[[",i,"]]",sep="") 
      md.l  <- mode(obj.nms[[i]])
      objdim.l <- dim(obj.nms[[i]])
@@ -115,6 +116,7 @@ browse.wspace <- function(){
     ItemsPerContainer[N] <- lg
     for(i in 1:lg){
      M <- M +1
+     ParentID[M] <- N
      md.l  <- mode(obj[[i]])
      dim.field.l <- paste("length:",length(obj[[i]]))
 
@@ -139,6 +141,7 @@ browse.wspace <- function(){
     ItemsPerContainer[N] <- lg
     for(i in 1:lg){
      M <- M+1
+     ParentID[M] <- N
      md.l  <- mode(obj[[i]])
      dim.field.l <- paste("length:",dim(obj)[1])
      md.l <- "ts"
@@ -157,6 +160,7 @@ browse.wspace <- function(){
     ItemsPerContainer[N] <- lg
     for(i in 1:lg){
      M <- M+1
+     ParentID[M] <- N
      md.l  <- mode(obj[[i]])
      dim.field.l <- paste("length:",length(obj[[i]]))
 #     md.l <- "ts"
@@ -176,7 +180,63 @@ browse.wspace <- function(){
  Container <- c(Container, rep(FALSE,M-N))
  IsRoot <- c(IsRoot, rep(FALSE,M-N))
  ItemsPerContainer <- c(ItemsPerContainer, rep(0,M-N))
- .Internal(wsbrowser(as.integer(IDS),IsRoot,Container,as.integer(ItemsPerContainer),NAMES,TYPES,DIMS))
+ if(html)
+  html.wsbrowser(IDS,IsRoot,Container,ItemsPerContainer, ParentID, NAMES,TYPES,DIMS,expanded)
+ else
+  .Internal(wsbrowser(as.integer(IDS),IsRoot,Container,as.integer(ItemsPerContainer),as.integer(ParentID),NAMES,TYPES,DIMS))
 }
 
+
+html.wsbrowser  <- function(IDS, IsRoot, IsContainer, ItemsPerContainer, ParentID, NAMES, TYPES, DIMS, expanded=TRUE){
+
+
+n <- length(IDS)
+RootItems <- which(IsRoot)
+NumOfRoots <- length(RootItems)
+
+tmp.dir <- tempdir()
+tmp.html <- file.path(tmp.dir,"wsbrowser.html")
+zz <- file(tmp.html,"w")
+cat("<html>\n<title>R Workspace browser</title>\n<body>",file=zz)
+cat("<H1>R Workspace as of",date(),"</h1>\n",file=zz)
+if(expanded)
+ cat("<table border=1>\n<tr><td><b>Object</b></td><td></td><td><b>Type</b></td><td><b>Property</b></td></tr>\n",file=zz)
+else
+ cat("<table border=1>\n<tr><td><b>Object</b></td><td><b>Type</b></td><td><b>Property</b></td></tr>\n",file=zz)
+
+for(i in 1:NumOfRoots){
+  if(expanded)
+   cat("<tr><td>",NAMES[RootItems[i]],"</td><td></td><td><i>",TYPES[RootItems[i]],"</i></td><td>",DIMS[RootItems[i]],"</td></tr>\n",file=zz)
+  else
+    cat("<tr><td>",NAMES[RootItems[i]],"</td><td><i>",TYPES[RootItems[i]],"</i></td><td>",DIMS[RootItems[i]],"</td></tr>\n",file=zz)
+ if(IsContainer[i] & expanded){
+  items <- which(ParentID == i)
+  for(j in 1:ItemsPerContainer[i]){
+   cat("<tr><td></td><td>$",NAMES[IDS[items[j]]],"</td><td><i>",TYPES[IDS[items[j]]],"</i></td><td>",DIMS[IDS[items[j]]],"</td></tr>\n",file=zz)
+  
+  }
+ } 
+} 
+cat("</table>\n</body></html>",file=zz)
+close(zz)
+
+browser <- getOption("browser")
+if( is.null(browser) ) 
+ fname <- gsub(":", "/", .Internal(truepath(tmp.html)))
+  else {
+        if (browser == "netscape") 
+          fname <- gsub(":", "/", tmp.html)
+         else 
+          fname <- gsub(":", "/", .Internal(truepath(tmp.html)))
+  }
+  ch <- strsplit(fname, "")[[1]][1]
+  if (ch != "/") 
+   fname <- paste("/", fname, sep = "")
+  fname <- paste("file://", fname, sep = "")
+  browseURL(url = fname, browser = browser)
+  cat("R Workspace is shown in browser\n")
+  return(invisible())
+ 
+ 
+}
 
