@@ -53,7 +53,8 @@ codoc(package, dir, lib.loc = NULL,
 
   Currently, synopsis sections are used, but multiple usage examples
   (such as in \code{\link{abline}}) are not combined when building the
-  stubs.
+  stubs.  Occurences of synopsis sections are reported if \code{verbose}
+  is true.
 }
 \value{
   An object of class \code{"codoc"} which is a list the names of which
