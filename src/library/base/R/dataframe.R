@@ -29,7 +29,7 @@ row.names.default <- function(x) attr(x,"row.names")
 
 is.data.frame <- function(x) inherits(x, "data.frame")
 
-I <- function(x) { attr(x,"AsIs") <- TRUE; x }
+I <- function(x) { structure(x, class = unique(c("AsIs", class(x)))) }
 
 plot.data.frame <- function (x, ...)
 {
