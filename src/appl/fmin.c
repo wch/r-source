@@ -44,23 +44,20 @@
 
 #include <math.h>
 #include "Mathlib.h" /* for dimach */
+#include "Applic.h"
 
-
-double Brent_fmin(double ax, double bx, double (*f)(double, void *), 
+double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol)
 {
+    /*  c is the squared inverse of the golden ratio */
+    const double c = (3. - sqrt(5.)) * .5;
+
     /* Local variables */
-    double a, b, c, d, e, p, q, r, u, v, w, x;
+    double a, b, d, e, p, q, r, u, v, w, x;
     double t2, fu, fv, fw, fx, xm, eps, tol1, tol3;
-
-
-
-/*  c is the squared inverse of the golden ratio */
-    c = (3. - sqrt(5.)) * .5;
 
 /*  eps is approximately the square root of the relative machine
     precision. */
-
     eps = d1mach(4);
     tol1 = eps + 1.;
     eps = sqrt(eps);

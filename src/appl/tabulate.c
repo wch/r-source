@@ -25,6 +25,7 @@
 #endif
 
 #include "Arith.h"
+#include "Applic.h"
 
 void R_tabulate(int *x, int *n, int *nbin, int *ans)
 {

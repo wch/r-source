@@ -1,4 +1,4 @@
-/* Algorithm AS 51 Appl. Statist. (1972), vol. 21, p. 218 
+/* Algorithm AS 51 Appl. Statist. (1972), vol. 21, p. 218
    original (C) Royal Statistical Society 1972
 
    Performs an iterative proportional fit of the marginal totals of a
@@ -12,6 +12,8 @@
 #include <math.h>
 #include "R.h"
 
+#include "Applic.h"
+
 #undef max
 #undef min
 #undef abs
@@ -20,11 +22,10 @@
 #define	abs(x)			((x) >= 0 ? (x) : -(x))
 
 static void collap(int *nvar, double *x, double *y, int *locy,
-		   int *nx, int *ny, int *dim, int
-		   *config);
-static void adjust(int *nvar, double *x, double *y, double *z, int
-		  *locz, int *nx, int *ny, int *nz, int *dim, int
-		  *config, double *d);
+		   int *nx, int *ny, int *dim, int *config);
+static void adjust(int *nvar, double *x, double *y, double *z,
+		   int *locz, int *nx, int *ny, int *nz, int *dim,
+		   int *config, double *d);
 static int *lvector(int n);
 
 /* Table of constant values */
@@ -32,15 +33,15 @@ static int *lvector(int n);
 static int c__1 = 1;
 
 void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
-	    double *table, double *fit, int *locmar, int *nmar, double
-	    *marg, int *nu, double *u, double *maxdev, int *maxit,
+	    double *table, double *fit, int *locmar, int *nmar, double *marg,
+	    int *nu, double *u, double *maxdev, int *maxit,
 	    double *dev, int *nlast, int *ifault)
 {
     int i, j, k, n, point, size, *icon, *check;
     double x, y, xmax;
 
-    check = lvector(*nvar);    
-    icon = lvector(*nvar);    
+    check = lvector(*nvar);
+    icon = lvector(*nvar);
 
     /* Parameter adjustments */
     --dim;
@@ -146,7 +147,7 @@ L100:
 	    /* Get size */
 	    size *= dim[k];
 	}
-	
+
 	/* Since U is used to store fitted marginals, size must not
 	   exceed NU */
 L130:
@@ -220,14 +221,14 @@ L240:
 
     Free(icon);
     Free(check);
-    
+
     return;
 }
 
-/* Algorithm AS 51.1 Appl. Statist. (1972), vol. 21, p. 218 
+/* Algorithm AS 51.1 Appl. Statist. (1972), vol. 21, p. 218
 
-   Computes a marginal table from a complete table. 
-   All parameters are assumed valid without test. 
+   Computes a marginal table from a complete table.
+   All parameters are assumed valid without test.
 
    The larger table is X and the smaller one is Y.
    */
@@ -239,7 +240,7 @@ void collap(int *nvar, double *x, double *y, int *locy, int *nx, int
 
     size = lvector(*nvar + 1);
     coord = lvector(*nvar);
-    
+
     /* Parameter adjustments */
     --config;
     --dim;
@@ -300,22 +301,22 @@ L60:
 
     Free(coord);
     Free(size);
-    
+
     return;
 }
 
 
-/* Algorithm AS 51.2 Appl. Statist. (1972), vol. 21, p. 218 
+/* Algorithm AS 51.2 Appl. Statist. (1972), vol. 21, p. 218
 
-   Makes proportional adjustment corresponding to CONFIG. 
-   All parameters are assumed valid without test. 
+   Makes proportional adjustment corresponding to CONFIG.
+   All parameters are assumed valid without test.
    */
 
 void adjust(int *nvar, double *x, double *y, double *z, int *locz, int
 	   *nx, int *ny, int *nz, int *dim, int *config, double *d)
 {
     int i, j, k, l, n, *coord, *size;
-    double e;    
+    double e;
 
     size = lvector(*nvar + 1);
     coord = lvector(*nvar);

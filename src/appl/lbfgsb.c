@@ -29,6 +29,8 @@
 #include "Linpack.h"
 #include "PrtUtil.h" /* for Rprintf */
 
+#include "Applic.h"
+
 static void timer(double * ttime)
 {
     *ttime = 0.0;
@@ -119,16 +121,16 @@ static void subsm(int, int, int *, int *, double *, double *,
 		  double *, int *, int *, int *, double *,
 		  double *, int, int *);
 
-static void prn1lb(int n, int m, double *l, double *u, double *x, 
+static void prn1lb(int n, int m, double *l, double *u, double *x,
 		   int iprint, double epsmch);
-static void prn2lb(int n, double *x, double *f, double *g, int iprint, 
+static void prn2lb(int n, double *x, double *f, double *g, int iprint,
 		   int iter, int nfgv, int nact, double sbgnrm,
-		   int nint, char *word, int iword, int iback, 
+		   int nint, char *word, int iword, int iback,
 		   double stp, double xstep);
-static void prn3lb(int n, double *x, double *f, char *task, int iprint, 
-		   int info, int iter, int nfgv, int nintol, int nskip, 
-		   int nact, double sbgnrm, int nint, 
-		   char *word, int iback, double stp, double xstep, 
+static void prn3lb(int n, double *x, double *f, char *task, int iprint,
+		   int info, int iter, int nfgv, int nintol, int nskip,
+		   int nact, double sbgnrm, int nint,
+		   char *word, int iback, double stp, double xstep,
 		   int k);
 
 
@@ -386,7 +388,7 @@ static void mainlb(int n, int m, double *x,
 		   *g, double factr, double *pgtol, double *ws, double *
 		   wy, double *sy, double *ss, double *wt, double *wn,
 		   double *snd, double *z__, double *r__, double *d__,
-		   double *t, double *wa, int *index, int *iwhere,
+		   double *t, double *wa, int *indx, int *iwhere,
 		   int *indx2, char *task, int iprint, char *csave, int *
 		   lsave, int *isave, double *dsave)
 {
@@ -482,8 +484,8 @@ static void mainlb(int n, int m, double *x,
 	 the Newton point.
 
 
-       index is an integer working array of dimension n.
-	 In subroutine freev, index is used to store the free and fixed
+       indx is an integer working array of dimension n.
+	 In subroutine freev, indx is used to store the free and fixed
 	    variables at the Generalized Cauchy Point (GCP).
 
        iwhere is an integer working array of dimension n used to record
@@ -583,7 +585,7 @@ static void mainlb(int n, int m, double *x,
     int nfgv, ifun, iter, nint;
     char word[3];
     double time1, time2;
-    int i__, iback, k;
+    int i, iback, k;
     double gdold;
     int nfree;
     int boxed;
@@ -614,7 +616,7 @@ static void mainlb(int n, int m, double *x,
     /* Parameter adjustments */
     --indx2;
     --iwhere;
-    --index;
+    --indx;
     --t;
     --d__;
     --r__;
@@ -689,7 +691,7 @@ static void mainlb(int n, int m, double *x,
 	}
 
 	prn1lb(n, m, l+1, u+1, x+1, iprint, epsmch);
-	
+
 /*	  Initialize iwhere & project x onto the feasible set. */
 	active(n, &l[1], &u[1], &nbd[1], &x[1], &iwhere[1], iprint, &prjctd,
 		&cnstnd, &boxed);
@@ -816,7 +818,7 @@ L222:
     nintol += nint;
 /*     Count the entering and leaving variables for iter > 0; */
 /*     find the index set of free and active variables at the GCP. */
-    freev(n, &nfree, &index[1], &nenter, &ileave, &indx2[1], &iwhere[1], &
+    freev(n, &nfree, &indx[1], &nenter, &ileave, &indx2[1], &iwhere[1], &
 	    wrk, &updatd, &cnstnd, iprint, &iter);
     nact = n - nfree;
 L333:
@@ -837,7 +839,7 @@ L333:
 /*	 where	   E = [-I  0] */
 /*		       [ 0  I] */
     if (wrk) {
-	formk(n, &nfree, &index[1], &nenter, &ileave, &indx2[1], &iupdat, &
+	formk(n, &nfree, &indx[1], &nenter, &ileave, &indx2[1], &iupdat, &
 		updatd, &wn[wn_offset], &snd[snd_offset], m, &ws[ws_offset], &
 		wy[wy_offset], &sy[sy_offset], &theta, &col, &head, &info);
     }
@@ -861,13 +863,13 @@ L333:
 /*	  compute r=-Z'B(xcp-xk)-Z'g (using wa(2m+1)=W'(xcp-x) */
 /*						     from 'cauchy'). */
     cmprlb(n, m, &x[1], &g[1], &ws[ws_offset], &wy[wy_offset], &sy[sy_offset]
-	    , &wt[wt_offset], &z__[1], &r__[1], &wa[1], &index[1], &theta, &
+	    , &wt[wt_offset], &z__[1], &r__[1], &wa[1], &indx[1], &theta, &
 	    col, &head, &nfree, &cnstnd, &info);
     if (info != 0) {
 	goto L444;
     }
 /*	 call the direct method. */
-    subsm(n, m, &nfree, &index[1], &l[1], &u[1], &nbd[1], &z__[1], &r__[1], &
+    subsm(n, m, &nfree, &indx[1], &l[1], &u[1], &nbd[1], &z__[1], &r__[1], &
 	    ws[ws_offset], &wy[wy_offset], &theta, &col, &head, &iword, &wa[1]
 	    , &wn[wn_offset], iprint, &info);
 L444:
@@ -897,8 +899,8 @@ L555:
 /* ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc */
 /*     Generate the search direction d:=z-x. */
     i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	d__[i__] = z__[i__] - x[i__];
+    for (i = 1; i <= i__1; ++i) {
+	d__[i] = z__[i] - x[i];
 /* L40: */
     }
     timer(&cpu1);
@@ -977,8 +979,8 @@ L777:
     }
 /*     Compute d=newx-oldx, r=newg-oldg, rr=y'y and dr=y's. */
     i__1 = n;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	r__[i__] = g[i__] - r__[i__];
+    for (i = 1; i <= i__1; ++i) {
+	r__[i] = g[i] - r__[i];
 /* L42: */
     }
     rr = F77_CALL(ddot)(&n, &r__[1], &c__1, &r__[1], &c__1);
@@ -1320,10 +1322,10 @@ static void bmv(int m, double *sy, double *wt,
 
 static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 		   double *g, int *iorder, int * iwhere, double *t,
-		   double *d__, double *xcp, int m,
+		   double *d, double *xcp, int m,
 		   double *wy, double *ws, double *sy, double *wt,
 		   double *theta, int *col, int *head, double *p,
-		   double *c__, double *wbp, double *v, int *nint,
+		   double *c, double *wbp, double *v, int *nint,
 		   int iprint, double *sbgnrm, int *info, double * epsmch)
 {
 /*     ************
@@ -1506,7 +1508,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     double dibp;
     int iter;
     double zibp, tsum, dibp2;
-    int i__, j;
+    int i, j;
     int bnded;
     double neggi;
     int nfree;
@@ -1524,7 +1526,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 
     /* Parameter adjustments */
     --xcp;
-    --d__;
+    --d;
     --t;
     --iwhere;
     --iorder;
@@ -1535,7 +1537,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     --x;
     --v;
     --wbp;
-    --c__;
+    --c;
     --p;
     wt_dim1 = m;
     wt_offset = 1 + wt_dim1 * 1;
@@ -1573,71 +1575,71 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 	Rprintf("\n---------------- CAUCHY entered-------------------\n\n");
 
 /*     We set p to zero and build it up as we determine d. */
-    for (i__ = 1; i__ <= col2; ++i__)
-	p[i__] = 0.;
+    for (i = 1; i <= col2; ++i)
+	p[i] = 0.;
 
 /*     In the following loop we determine for each variable its bound */
 /*	  status and its breakpoint, and update p accordingly. */
 /*	  Smallest breakpoint is identified. */
 
-    for (i__ = 1; i__ <= n; ++i__) {
-	neggi = -g[i__];
-	if (iwhere[i__] != 3 && iwhere[i__] != -1) {
+    for (i = 1; i <= n; ++i) {
+	neggi = -g[i];
+	if (iwhere[i] != 3 && iwhere[i] != -1) {
 /*	       if x(i) is not a constant and has bounds, */
 /*	       compute the difference between x(i) and its bounds. */
-	    if (nbd[i__] <= 2) {
-		tl = x[i__] - l[i__];
+	    if (nbd[i] <= 2) {
+		tl = x[i] - l[i];
 	    }
-	    if (nbd[i__] >= 2) {
-		tu = u[i__] - x[i__];
+	    if (nbd[i] >= 2) {
+		tu = u[i] - x[i];
 	    }
 /*	     If a variable is close enough to a bound */
 /*	       we treat it as at bound. */
-	    xlower = nbd[i__] <= 2 && tl <= 0.;
-	    xupper = nbd[i__] >= 2 && tu <= 0.;
+	    xlower = nbd[i] <= 2 && tl <= 0.;
+	    xupper = nbd[i] >= 2 && tu <= 0.;
 /*		reset iwhere(i). */
-	    iwhere[i__] = 0;
+	    iwhere[i] = 0;
 	    if (xlower) {
 		if (neggi <= 0.) {
-		    iwhere[i__] = 1;
+		    iwhere[i] = 1;
 		}
 	    } else if (xupper) {
 		if (neggi >= 0.) {
-		    iwhere[i__] = 2;
+		    iwhere[i] = 2;
 		}
 	    } else {
 		if (fabs(neggi) <= 0.) {
-		    iwhere[i__] = -3;
+		    iwhere[i] = -3;
 		}
 	    }
 	}
 	pointr = *head;
-	if (iwhere[i__] != 0 && iwhere[i__] != -1) {
-	    d__[i__] = 0.;
+	if (iwhere[i] != 0 && iwhere[i] != -1) {
+	    d[i] = 0.;
 	} else {
-	    d__[i__] = neggi;
+	    d[i] = neggi;
 	    f1 -= neggi * neggi;
 /*	       calculate p := p - W'e_i* (g_i). */
 	    i__2 = *col;
 	    for (j = 1; j <= i__2; ++j) {
-		p[j] += wy[i__ + pointr * wy_dim1] * neggi;
-		p[*col + j] += ws[i__ + pointr * ws_dim1] * neggi;
+		p[j] += wy[i + pointr * wy_dim1] * neggi;
+		p[*col + j] += ws[i + pointr * ws_dim1] * neggi;
 		pointr = pointr % m + 1;
 /* L40: */
 	    }
-	    if (nbd[i__] <= 2 && nbd[i__] != 0 && neggi < 0.) {
+	    if (nbd[i] <= 2 && nbd[i] != 0 && neggi < 0.) {
 /*				   x(i) + d(i) is bounded; compute t(i). */
 		++nbreak;
-		iorder[nbreak] = i__;
+		iorder[nbreak] = i;
 		t[nbreak] = tl / (-neggi);
 		if (nbreak == 1 || t[nbreak] < bkmin) {
 		    bkmin = t[nbreak];
 		    ibkmin = nbreak;
 		}
-	    } else if (nbd[i__] >= 2 && neggi > 0.) {
+	    } else if (nbd[i] >= 2 && neggi > 0.) {
 /*				   x(i) + d(i) is bounded; compute t(i). */
 		++nbreak;
-		iorder[nbreak] = i__;
+		iorder[nbreak] = i;
 		t[nbreak] = tu / neggi;
 		if (nbreak == 1 || t[nbreak] < bkmin) {
 		    bkmin = t[nbreak];
@@ -1646,14 +1648,15 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
 	    } else {
 /*		  x(i) + d(i) is not bounded. */
 		--nfree;
-		iorder[nfree] = i__;
+		iorder[nfree] = i;
 		if (fabs(neggi) > 0.) {
 		    bnded = FALSE_;
 		}
 	    }
 	}
 /* L50: */
-    }
+    } /* for(i = 1:n) */
+
 /*     The indices of the nonzero components of d are now stored */
 /*	 in iorder(1),...,iorder(nbreak) and iorder(nfree),...,iorder(n). */
 /*	 The smallest of the nbreak breakpoints is in t(ibkmin)=bkmin. */
@@ -1666,7 +1669,6 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     if (nbreak == 0 && nfree == n + 1) {
 /*		    is a zero vector, return with the initial xcp as GCP. */
 	if (iprint > 100) {
-	    int i;
 	    Rprintf("Cauchy X =  ");
 	    for(i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
 	    Rprintf("\n");
@@ -1675,7 +1677,7 @@ static void cauchy(int n, double *x, double *l, double *u, int *nbd,
     }
 /*     Initialize c = W'(xcp - x) = 0. */
     for (j = 1; j <= col2; ++j)
-	c__[j] = 0.;
+	c[j] = 0.;
 
 /*     Initialize derivative f2. */
     f2 = -(*theta) * f1;
@@ -1745,8 +1747,8 @@ L777:
     tsum += dt;
     --nleft;
     ++iter;
-    dibp = d__[ibp];
-    d__[ibp] = 0.;
+    dibp = d[ibp];
+    d[ibp] = 0.;
     if (dibp > 0.) {
 	zibp = u[ibp] - x[ibp];
 	xcp[ibp] = u[ibp];
@@ -1772,7 +1774,7 @@ L777:
     f2 -= *theta * dibp2;
     if (*col > 0) {
 /*			    update c = c + dt*p. */
-	F77_CALL(daxpy)(&col2, &dt, &p[1], &c__1, &c__[1], &c__1);
+	F77_CALL(daxpy)(&col2, &dt, &p[1], &c__1, &c[1], &c__1);
 /*	     choose wbp, */
 /*	     the row of W corresponding to the breakpoint encountered. */
 	pointr = *head;
@@ -1786,7 +1788,7 @@ L777:
 	if (*info != 0) {
 	    return;
 	}
-	wmc = F77_CALL(ddot)(&col2, &c__[1], &c__1, &v[1], &c__1);
+	wmc = F77_CALL(ddot)(&col2, &c[1], &c__1, &v[1], &c__1);
 	wmp = F77_CALL(ddot)(&col2, &p[1], &c__1, &v[1], &c__1);
 	wmw = F77_CALL(ddot)(&col2, &wbp[1], &c__1, &v[1], &c__1);
 /*	     update p = p - dibp*wbp. */
@@ -1825,15 +1827,14 @@ L888:
     tsum += dtm;
 /*     Move free variables (i.e., the ones w/o breakpoints) and */
 /*	 the variables whose breakpoints haven't been reached. */
-    F77_CALL(daxpy)(&n, &tsum, &d__[1], &c__1, &xcp[1], &c__1);
+    F77_CALL(daxpy)(&n, &tsum, &d[1], &c__1, &xcp[1], &c__1);
 L999:
 /*     Update c = c + dtm*p = W'(x^c - x) */
 /*	 which will be used in computing r = Z'(B(x^c - x) + g). */
     if (*col > 0) {
-	F77_CALL(daxpy)(&col2, &dtm, &p[1], &c__1, &c__[1], &c__1);
+	F77_CALL(daxpy)(&col2, &dtm, &p[1], &c__1, &c[1], &c__1);
     }
     if (iprint >= 100) {
-	int i;
 	Rprintf("Cauchy X =  ");
 	for(i = 1; i <= n; i++) Rprintf("%g ", xcp[i]);
 	Rprintf("\n");
@@ -1848,7 +1849,7 @@ L999:
 static void cmprlb(int n, int m, double *x,
 		   double *g, double *ws, double *wy, double *sy,
 		   double *wt, double *z, double *r, double *wa,
-		   int *index, double *theta, int *col, int *head,
+		   int *indx, double *theta, int *col, int *head,
 		   int *nfree, int *cnstnd, int *info)
 {
 /*	************
@@ -1885,7 +1886,7 @@ static void cmprlb(int n, int m, double *x,
     int pointr;
 
     /* Parameter adjustments */
-    --index;
+    --indx;
     --r;
     --z;
     --g;
@@ -1913,7 +1914,7 @@ static void cmprlb(int n, int m, double *x,
     else {
 	n_f = *nfree;
 	for (i = 1; i <= n_f; ++i) {
-	    k = index[i];
+	    k = indx[i];
 	    r[i] = -(*theta) * (z[k] - x[k]) - g[k];
 	}
 	bmv(m, &sy[sy_offset], &wt[wt_offset], col,
@@ -1927,7 +1928,7 @@ static void cmprlb(int n, int m, double *x,
 	    a1 = wa[j];
 	    a2 = *theta * wa[Col + j];
 	    for (i = 1; i <= n_f; ++i) {
-		k = index[i];
+		k = indx[i];
 		r[i] += wy[k + pointr * wy_dim1] * a1 +
 			ws[k + pointr * ws_dim1] * a2;
 	    }
@@ -2132,7 +2133,7 @@ p
     int dend, pend;
     int upcl;
     double temp1, temp2, temp3, temp4;
-    int i__, k;
+    int i, k;
     int ipntr, jpntr, k1, m2, dbegin, is, js, iy, jy, pbegin, is1, js1,
 	    col2;
 
@@ -2222,8 +2223,8 @@ p
 	}
 	ipntr = *head;
 	i__1 = *col;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    is = m + i__;
+	for (i = 1; i <= i__1; ++i) {
+	    is = m + i;
 	    temp3 = 0.;
 /*	       compute element i of column 'col' of R_z */
 	    for (k = pbegin; k <= pend; ++k) {
@@ -2390,7 +2391,7 @@ static void formt(int m, double *wt, double *sy, double *ss,
 
     /* Local variables */
     double ddum;
-    int i__, j, k;
+    int i, j, k;
     int k1;
 
     /* Parameter adjustments */
@@ -2412,15 +2413,15 @@ static void formt(int m, double *wt, double *sy, double *ss,
     for (j = 1; j <= i__1; ++j) {
 	wt[j * wt_dim1 + 1] = *theta * ss[j * ss_dim1 + 1];
     }
-    for (i__ = 2; i__ <= i__1; ++i__) {
-	for (j = i__; j <= i__1; ++j) {
-	    k1 = min(i__,j) - 1;
+    for (i = 2; i <= i__1; ++i) {
+	for (j = i; j <= i__1; ++j) {
+	    k1 = min(i,j) - 1;
 	    ddum = 0.;
 	    for (k = 1; k <= k1; ++k) {
-		ddum += sy[i__ + k * sy_dim1] * sy[j + k * sy_dim1] / sy[k +
+		ddum += sy[i + k * sy_dim1] * sy[j + k * sy_dim1] / sy[k +
 			k * sy_dim1];
 	    }
-	    wt[i__ + j * wt_dim1] = ddum + *theta * ss[i__ + j * ss_dim1];
+	    wt[i + j * wt_dim1] = ddum + *theta * ss[i + j * ss_dim1];
 	}
 /* L55: */
     }
@@ -2434,7 +2435,7 @@ static void formt(int m, double *wt, double *sy, double *ss,
 } /* formt */
 /* ======================= The end of formt ============================== */
 
-static void freev(int n, int *nfree, int *index,
+static void freev(int n, int *nfree, int *indx,
 		  int *nenter, int *ileave, int *indx2, int *iwhere,
 		  int *wrk, int *updatd, int *cnstnd, int iprint,
 		  int *iter)
@@ -2449,10 +2450,10 @@ static void freev(int n, int *nfree, int *index,
 
 	cnstnd is a int variable indicating whether bounds are present
 
-	index is an int array of dimension n
-	  for i=1,...,nfree, index(i) are the indices of free variables
-	  for i=nfree+1,...,n, index(i) are the indices of bound variables
-	  On entry after the first iteration, index gives
+	indx is an int array of dimension n
+	  for i=1,...,nfree, indx(i) are the indices of free variables
+	  for i=nfree+1,...,n, indx(i) are the indices of bound variables
+	  On entry after the first iteration, indx gives
 	    the free variables at the previous iteration.
 	  On exit it gives the free variables based on the determination
 	    in cauchy using the array iwhere.
@@ -2481,20 +2482,20 @@ static void freev(int n, int *nfree, int *index,
     int i__1;
 
     /* Local variables */
-    int iact, i__, k;
+    int iact, i, k;
 
     /* Parameter adjustments */
     --iwhere;
     --indx2;
-    --index;
+    --indx;
 
     /* Function Body */
     *nenter = 0;
     *ileave = n + 1;
     if (*iter > 0 && *cnstnd) {/* count the entering and leaving variables. */
 	i__1 = *nfree;
-	for (i__ = 1; i__ <= i__1; ++i__) {
-	    k = index[i__];
+	for (i = 1; i <= i__1; ++i) {
+	    k = indx[i];
 	    if (iwhere[k] > 0) {
 		--(*ileave);
 		indx2[*ileave] = k;
@@ -2504,8 +2505,8 @@ static void freev(int n, int *nfree, int *index,
 	    }
 /* L20: */
 	}
-	for (i__ = *nfree + 1; i__ <= n; ++i__) {
-	    k = index[i__];
+	for (i = *nfree + 1; i <= n; ++i) {
+	    k = indx[i];
 	    if (iwhere[k] <= 0) {
 		++(*nenter);
 		indx2[*nenter] = k;
@@ -2523,13 +2524,13 @@ static void freev(int n, int *nfree, int *index,
 /*     Find the index set of free and active variables at the GCP. */
     *nfree = 0;
     iact = n + 1;
-    for (i__ = 1; i__ <= n; ++i__) {
-	if (iwhere[i__] <= 0) {
+    for (i = 1; i <= n; ++i) {
+	if (iwhere[i] <= 0) {
 	    ++(*nfree);
-	    index[*nfree] = i__;
+	    indx[*nfree] = i;
 	} else {
 	    --iact;
-	    index[iact] = i__;
+	    indx[iact] = i;
 	}
     }
     if (iprint >= 99)
@@ -2950,10 +2951,10 @@ static void projgr(int n, double *l, double *u,
     }
     return;
 } /* projgr */
-
 /* ======================= The end of projgr ============================= */
-static void subsm(int n, int m, int *nsub, int *
-		  ind, double *l, double *u, int *nbd, double *x,
+
+static void subsm(int n, int m, int *nsub, int *ind,
+		  double *l, double *u, int *nbd, double *x,
 		  double *d__, double *ws, double *wy, double *theta,
 		  int *col, int *head, int *iword, double *wv,
 		  double *wn, int iprint, int *info)
@@ -3112,7 +3113,7 @@ static void subsm(int n, int m, int *nsub, int *
 
     /* Local variables */
     double temp1, temp2;
-    int i__, j, k;
+    int i, j, k;
     double alpha;
     int m2;
     double dk;
@@ -3143,7 +3144,7 @@ static void subsm(int n, int m, int *nsub, int *
 /*     Compute wv = W'Zd. */
     pointr = *head;
     i__1 = *col;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    for (i = 1; i <= i__1; ++i) {
 	temp1 = 0.;
 	temp2 = 0.;
 	i__2 = *nsub;
@@ -3153,8 +3154,8 @@ static void subsm(int n, int m, int *nsub, int *
 	    temp2 += ws[k + pointr * ws_dim1] * d__[j];
 /* L10: */
 	}
-	wv[i__] = temp1;
-	wv[*col + i__] = *theta * temp2;
+	wv[i] = temp1;
+	wv[*col + i] = *theta * temp2;
 	pointr = pointr % m + 1;
 /* L20: */
     }
@@ -3166,8 +3167,8 @@ static void subsm(int n, int m, int *nsub, int *
 	return;
     }
     i__1 = *col;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	wv[i__] = -wv[i__];
+    for (i = 1; i <= i__1; ++i) {
+	wv[i] = -wv[i];
 /* L25: */
     }
     F77_CALL(dtrsl)(&wn[wn_offset], &m2, &col2, &wv[1], &c__1, info);
@@ -3180,9 +3181,9 @@ static void subsm(int n, int m, int *nsub, int *
     for (jy = 1; jy <= i__1; ++jy) {
 	js = *col + jy;
 	i__2 = *nsub;
-	for (i__ = 1; i__ <= i__2; ++i__) {
-	    k = ind[i__];
-	    d__[i__] = d__[i__] + wy[k + pointr * wy_dim1] * wv[jy] / *theta
+	for (i = 1; i <= i__2; ++i) {
+	    k = ind[i];
+	    d__[i] = d__[i] + wy[k + pointr * wy_dim1] * wv[jy] / *theta
 		    + ws[k + pointr * ws_dim1] * wv[js];
 /* L30: */
 	}
@@ -3190,17 +3191,17 @@ static void subsm(int n, int m, int *nsub, int *
 /* L40: */
     }
     i__1 = *nsub;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	d__[i__] /= *theta;
+    for (i = 1; i <= i__1; ++i) {
+	d__[i] /= *theta;
 /* L50: */
     }
 /*     Backtrack to the feasible region. */
     alpha = 1.;
     temp1 = alpha;
     i__1 = *nsub;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	k = ind[i__];
-	dk = d__[i__];
+    for (i = 1; i <= i__1; ++i) {
+	k = ind[i];
+	dk = d__[i];
 	if (nbd[k] != 0) {
 	    if (dk < 0. && nbd[k] <= 2) {
 		temp2 = l[k] - x[k];
@@ -3219,7 +3220,7 @@ static void subsm(int n, int m, int *nsub, int *
 	    }
 	    if (temp1 < alpha) {
 		alpha = temp1;
-		ibd = i__;
+		ibd = i;
 	    }
 	}
 /* L60: */
@@ -3236,9 +3237,9 @@ static void subsm(int n, int m, int *nsub, int *
 	}
     }
     i__1 = *nsub;
-    for (i__ = 1; i__ <= i__1; ++i__) {
-	k = ind[i__];
-	x[k] += alpha * d__[i__];
+    for (i = 1; i <= i__1; ++i) {
+	k = ind[i];
+	x[k] += alpha * d__[i];
 /* L70: */
     }
     if (alpha < 1.) {
@@ -3584,8 +3585,8 @@ L1000:
     dsave[13] = width1;
     return;
 } /* dcsrch */
-
 /* ====================== The end of dcsrch ============================== */
+
 static void dcstep(double *stx, double *fx, double *dx,
 		   double *sty, double *fy, double *dy, double *stp,
 		   double *fp, double *dp, int *brackt, double *stpmin,
@@ -3869,7 +3870,7 @@ static void pvector(char *title, double *x, int n)
 }
 
 
-static void prn1lb(int n, int m, double *l, double *u, double *x, 
+static void prn1lb(int n, int m, double *l, double *u, double *x,
 		   int iprint, double epsmch)
 {
     if (iprint >=  0) {
@@ -3883,9 +3884,9 @@ static void prn1lb(int n, int m, double *l, double *u, double *x,
 }
 
 
-static void prn2lb(int n, double *x, double *f, double *g, int iprint, 
+static void prn2lb(int n, double *x, double *f, double *g, int iprint,
 		   int iter, int nfgv, int nact, double sbgnrm,
-		   int nint, char *word, int iword, int iback, 
+		   int nint, char *word, int iword, int iback,
 		   double stp, double xstep)
 {
     if (iprint >=  99) {
@@ -3895,15 +3896,15 @@ static void prn2lb(int n, double *x, double *f, double *g, int iprint,
 	    pvector("G =", g, n);
 	}
     } else if (iprint > 0 && iter%iprint == 0) {
-	Rprintf("At iterate %5d  f = %12.5g  |proj g|=  %12.5g\n", 
+	Rprintf("At iterate %5d  f = %12.5g  |proj g|=  %12.5g\n",
 		iter, *f, sbgnrm);
     }
 }
 
-static void prn3lb(int n, double *x, double *f, char *task, int iprint, 
-		   int info, int iter, int nfgv, int nintol, int nskip, 
-		   int nact, double sbgnrm, int nint, 
-		   char *word, int iback, double stp, double xstep, 
+static void prn3lb(int n, double *x, double *f, char *task, int iprint,
+		   int info, int iter, int nfgv, int nintol, int nskip,
+		   int nact, double sbgnrm, int nint,
+		   char *word, int iback, double stp, double xstep,
 		   int k)
 {
     if(strncmp(task, "CONV", 4) == 0) {
@@ -3980,7 +3981,7 @@ static double dpmeps(void)
     double beta;
     int irnd;
     double temp, temp1, a, b;
-    int i__;
+    int i;
     double betah;
     int ibeta, negep;
     double tempa;
@@ -4033,7 +4034,7 @@ L30:
     betain = one / beta;
     a = one;
     i__1 = negep;
-    for (i__ = 1; i__ <= i__1; ++i__) {
+    for (i = 1; i <= i__1; ++i) {
 	a *= betain;
     }
 L50:

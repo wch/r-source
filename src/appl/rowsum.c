@@ -37,6 +37,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include "Applic.h"
 
 void R_rowsum(int *dim, double *na_x, double *x, double *group)
 {

@@ -67,19 +67,18 @@
 #endif
 
 static void calct(Rboolean *);
-static void fxshft(int, double *, double *, Rboolean *);
-static void vrshft(int, double *, double *, Rboolean *);
-static void nexth(Rboolean *);
+static Rboolean fxshft(int, double *, double *);
+static Rboolean vrshft(int, double *, double *);
+static void nexth(Rboolean);
 static void noshft(int);
-static void polyev(int *,
-		   double *, double *, double *, double *,
-		   double *, double *, double *, double *);
-static double errev(int *, double *, double *, double *,
-		    double *, double *, double *);
-static double cpoly_cauchy(int *, double *, double *);
-static void cpoly_scale(int *, double *, double *, double *,
-			double *, double *, double *);
-static void cdivid(double *, double *, double *, double *, double *, double *);
+
+/* Consider exporting these (via Applic.h): */
+static void polyev(int, double, double,
+		   double *, double *, double *, double *, double *, double *);
+static double errev(int, double *, double *, double, double, double, double);
+static double cpoly_cauchy(int, double *, double *);
+static double cpoly_scale(int, double *, double, double, double, double);
+static void cdivid(double, double, double, double, double *, double *);
 
 /* Global Variables (too many!) */
 
@@ -99,38 +98,31 @@ static double shi[NMAX];
 static double sr, si;
 static double tr, ti;
 static double pvr, pvi;
-static double are;
-static double mre;
-static double eta;
-static double infin;
+static const double eta = DBL_EPSILON;
+static const double are = /* eta = */DBL_EPSILON;
+static const double mre = 2. * M_SQRT2 * /* eta, i.e. */DBL_EPSILON;
+static const double infin = DBL_MAX;
 
-
-int R_cpoly(double *opr, double *opi, int *degree,
-	    double *zeror, double *zeroi, int *fail)
+void R_cpolyroot(double *opr, double *opi, int *degree,
+		 double *zeror, double *zeroi, Rboolean *fail)
 {
-    double d__1, d__2;
-    static double base = (double)FLT_RADIX;
-    static double cosr, sinr;
+    static const double smalno = DBL_MIN;
+    static const double base = (double)FLT_RADIX;
     static int d_n, i, i1, i2;
-    static double zi, zr, xx, yy, smalno;
+    static double zi, zr, xx, yy;
     static double bnd, xxx;
-    int d1;
     Rboolean conv;
-
-    eta = DBL_EPSILON;
-    infin = DBL_MAX;
-    smalno = DBL_MIN;
-
-    are = eta;
-    mre = 2. * M_SQRT2 * eta;
-
+    int d1;
+#ifdef Older
     /* We use the originals to get exact agreement with the original, but ... */
-    /*	cos 94 =   -0.06975647374412529990   */
-    /*	sin 94 =    0.99756405025982424767   */
-    /*	1/sqrt(2) = 0.70710678118654752440   */
-    cosr = (float)-.060756474;
-    sinr = (float).99756405;
+    static const double cosr = (float)-.060756474;/*instead of -.069... ! */
+    static const double sinr = (float).99756405;
     xx = (float).70710678;
+#else
+    static const double cosr =/* cos 94 */ -0.06975647374412529990;
+    static const double sinr =/* sin 94 */  0.99756405025982424767;
+    xx = M_SQRT1_2;/* 1/sqrt(2) = 0.707.... */
+#endif
 
     yy = -xx;
     *fail = FALSE;
@@ -140,37 +132,33 @@ int R_cpoly(double *opr, double *opi, int *degree,
 
     /* algorithm fails if the leading coefficient is zero. */
 
-    if (opr[0] == 0.0 && opi[0] == 0.0) {
+    if (opr[0] == 0. && opi[0] == 0.) {
 	*fail = TRUE;
-	return 0;
+	return;
     }
 
     /* remove the zeros at the origin if any. */
 
-    while (opr[nn] == 0.0 && opi[nn] == 0.0) {
+    while (opr[nn] == 0. && opi[nn] == 0.) {
 	d_n = d1-nn+1;
-	zeror[d_n] = 0.0;
-	zeroi[d_n] = 0.0;
+	zeror[d_n] = 0.;
+	zeroi[d_n] = 0.;
 	nn--;
     }
     nn++;
     /*-- Now, global var.  nn := #{coefficients} = (relevant degree)+1 */
 
     /* make a copy of the coefficients and shr[] = | p[] | */
-    for (i = 0; i<nn ; i++) {
+    for (i = 0; i < nn; i++) {
 	pr[i] = opr[i];
 	pi[i] = opi[i];
 	shr[i] = hypot(pr[i], pi[i]);
     }
 
     /* scale the polynomial with factor 'bnd'. */
-
-    cpoly_scale(&nn, shr,
-		&eta, &infin, &smalno, &base,
-		&bnd);
-
-    if (bnd != 1.0) {
-	for (i=0; i<nn; i++) {
+    bnd = cpoly_scale(nn, shr, eta, infin, smalno, base);
+    if (bnd != 1.) {
+	for (i=0; i < nn; i++) {
 	    pr[i] *= bnd;
 	    pi[i] *= bnd;
 	}
@@ -185,7 +173,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
 	for (i=0 ; i < nn ; i++)
 	    shr[i] = hypot(pr[i], pi[i]);
 
-	bnd = cpoly_cauchy(&nn, shr, shi);
+	bnd = cpoly_cauchy(nn, shr, shi);
 
 	/* outer loop to control 2 major passes */
 	/* with different sequences of shifts */
@@ -211,8 +199,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
 
 		/*  second stage calculation, fixed shift */
 
-		fxshft(i2 * 10, &zr, &zi, &conv);
-
+		conv = fxshft(i2 * 10, &zr, &zi);
 		if (conv)
 		    goto L10;
 	    }
@@ -222,7 +209,7 @@ int R_cpoly(double *opr, double *opi, int *degree,
 	/* return empty handed */
 
 	*fail = TRUE;
-	return 0;
+	return;
 
 	/* the second stage jumps directly to the third stage iteration.
 	 * if successful, the zero is stored and the polynomial deflated.
@@ -240,10 +227,8 @@ int R_cpoly(double *opr, double *opi, int *degree,
 
     /*	calculate the final zero and return */
 
-    d__1 = -pr[1];
-    d__2 = -pi[1];
-    cdivid(&d__1, &d__2, pr, pi, &zeror[d1], &zeroi[d1]);
-    return 0;
+    cdivid(-pr[1], -pi[1], pr[0], pi[0], &zeror[d1], &zeroi[d1]);
+    return;
 }
 
 
@@ -252,7 +237,6 @@ int R_cpoly(double *opr, double *opi, int *degree,
 
 static void noshft(int l1)
 {
-    double d__1, d__2;
     int i, j, jj, n = nn - 1, nm1 = n - 1;
 
     double t1, t2, xni;
@@ -280,9 +264,7 @@ static void noshft(int l1)
 	    hi[0] = 0.;
 	}
 	else {
-	    d__1 = -pr[nn-1];
-	    d__2 = -pi[nn-1];
-	    cdivid(&d__1, &d__2, &hr[n-1], &hi[n-1], &tr, &ti);
+	    cdivid(-pr[nn-1], -pi[nn-1], hr[n-1], hi[n-1], &tr, &ti);
 	    for (i = 1; i <= nm1; i++) {
 		j = nn - i;
 		t1 = hr[j-2];
@@ -300,13 +282,17 @@ static void noshft(int l1)
 /*  Computes l2 fixed-shift h polynomials and tests for convergence.
  *  initiates a variable-shift iteration and returns with the
  *  approximate zero if successful.
- *
- *  l2	  - limit of fixed shift steps
- *  zr,zi - approximate zero if conv is .true.
- *  conv  - int indicating convergence of stage 3 iteration  */
-
-static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
+ */
+static Rboolean fxshft(int l2, double *zr, double *zi)
 {
+/*  l2	  - limit of fixed shift steps
+ *  zr,zi - approximate zero if convergence (result TRUE)
+ *
+ * Return value indicates convergence of stage 3 iteration
+ *
+ * Uses global (sr,si), nn, pr[], pi[], .. (all args of polyev() !)
+*/
+
     Rboolean pasd, bool, test;
     static double svsi, svsr;
     static int i, j, n;
@@ -316,7 +302,7 @@ static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
 
     /* evaluate p at s. */
 
-    polyev(&nn, &sr, &si,
+    polyev(nn, sr, si,
 	   pr, pi, qpr, qpi, &pvr, &pvi);
 
     test = TRUE;
@@ -335,7 +321,7 @@ static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
 
 	/* compute next h polynomial and new t. */
 
-	nexth(&bool);
+	nexth(bool);
 	calct(&bool);
 	*zr = sr + tr;
 	*zi = si + ti;
@@ -363,9 +349,8 @@ static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
 		}
 		svsr = sr;
 		svsi = si;
-		vrshft(10, zr, zi, conv);
-		if (*conv) {
-		    return;
+		if (vrshft(10, zr, zi)) {
+		    return TRUE;
 		}
 
 		/* the iteration failed to converge. */
@@ -379,7 +364,7 @@ static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
 		}
 		sr = svsr;
 		si = svsi;
-		polyev(&nn, &sr, &si, pr, pi, qpr, qpi, &pvr, &pvi);
+		polyev(nn, sr, si, pr, pi, qpr, qpi, &pvr, &pvi);
 		calct(&bool);
 	    }
 	}
@@ -388,41 +373,43 @@ static void fxshft(int l2, double *zr, double *zi, Rboolean *conv)
     /* attempt an iteration with final h polynomial */
     /* from second stage. */
 
-    vrshft(10, zr, zi, conv);
+    return(vrshft(10, zr, zi));
 }
 
 
-/*  carries out the third stage iteration.
- *  l3	    - limit of steps in stage 3.
- *  zr,zi   - on entry contains the initial iterate, if the
- *	      iteration converges it contains the final iterate
- *	      on exit.
- *  conv    - .true. if iteration converges  */
-
-static void vrshft(int l3, double *zr, double *zi, Rboolean *conv)
+/* carries out the third stage iteration.
+ */
+static Rboolean vrshft(int l3, double *zr, double *zi)
 {
+/*  l3	    - limit of steps in stage 3.
+ *  zr,zi   - on entry contains the initial iterate;
+ *	      if the iteration converges it contains
+ *	      the final iterate on exit.
+ * Returns TRUE if iteration converges
+ *
+ * Assign and uses  GLOBAL sr, si
+*/
     Rboolean bool, b;
     static int i, j;
     static double r1, r2, mp, ms, tp, relstp;
     static double omp;
 
-    *conv = FALSE;
     b = FALSE;
     sr = *zr;
     si = *zi;
 
     /* main loop for stage three */
 
-    for (i=1; i<=l3 ; i++) {
+    for (i = 1; i <= l3; i++) {
 
 	/* evaluate p at s and test for convergence. */
 
-	polyev(&nn, &sr, &si,
+	polyev(nn, sr, si,
 	       pr, pi, qpr, qpi,
 	       &pvr, &pvi);
 	mp = hypot(pvr, pvi);
 	ms = hypot(sr, si);
-	if (mp <=  20. * errev(&nn, qpr, qpi, &ms, &mp, &are, &mre)) {
+	if (mp <=  20. * errev(nn, qpr, qpi, ms, mp, /*are=*/eta, mre)) {
 	    goto L_conv;
 	}
 
@@ -447,12 +434,12 @@ static void vrshft(int l3, double *zr, double *zi, Rboolean *conv)
 		r2 = sr * (r1 + 1.) - si * r1;
 		si = sr * r1 + si * (r1 + 1.);
 		sr = r2;
-		polyev(&nn, &sr, &si,
+		polyev(nn, sr, si,
 		       pr, pi, qpr, qpi,
 		       &pvr, &pvi);
 		for (j = 1; j <= 5; ++j) {
 		    calct(&bool);
-		    nexth(&bool);
+		    nexth(bool);
 		}
 		omp = infin;
 		goto L10;
@@ -463,7 +450,7 @@ static void vrshft(int l3, double *zr, double *zi, Rboolean *conv)
 		/* increases significantly. */
 
 		if (mp * .1 > omp)
-		    return;
+		    return FALSE;
 	    }
 	}
 	omp = mp;
@@ -472,7 +459,7 @@ static void vrshft(int l3, double *zr, double *zi, Rboolean *conv)
 
     L10:
 	calct(&bool);
-	nexth(&bool);
+	nexth(bool);
 	calct(&bool);
 	if (!bool) {
 	    relstp = hypot(tr, ti) / hypot(sr, si);
@@ -480,12 +467,12 @@ static void vrshft(int l3, double *zr, double *zi, Rboolean *conv)
 	    si += ti;
 	}
     }
-    return;
+    return FALSE;
 
 L_conv:
-    *conv = TRUE;
     *zr = sr;
     *zi = si;
+    return TRUE;
 }
 
 static void calct(Rboolean *bool)
@@ -493,21 +480,16 @@ static void calct(Rboolean *bool)
     /* computes	 t = -p(s)/h(s).
      * bool   - logical, set true if h(s) is essentially zero.	*/
 
-    double d__1, d__2;
-    static int n;
-    static double hvi, hvr;
-
-    n = nn - 1;
+    int n = nn - 1;
+    double hvi, hvr;
 
     /* evaluate h(s). */
-
-    polyev(&n, &sr, &si, hr, hi,
+    polyev(n, sr, si, hr, hi,
 	   qhr, qhi, &hvr, &hvi);
+
     *bool = hypot(hvr, hvi) <= are * 10. * hypot(hr[n-1], hi[n-1]);
     if (!*bool) {
-	d__1 = -pvr;
-	d__2 = -pvi;
-	cdivid(&d__1, &d__2, &hvr, &hvi, &tr, &ti);
+	cdivid(-pvr, -pvi, hvr, hvi, &tr, &ti);
     }
     else {
 	tr = 0.;
@@ -515,7 +497,7 @@ static void calct(Rboolean *bool)
     }
 }
 
-static void nexth(Rboolean *bool)
+static void nexth(Rboolean bool)
 {
     /* calculates the next shifted h polynomial.
      * bool :	if TRUE  h(s) is essentially zero
@@ -523,7 +505,7 @@ static void nexth(Rboolean *bool)
     int j, n = nn - 1;
     double t1, t2;
 
-    if (!*bool) {
+    if (!bool) {
 	for (j=1; j < n; j++) {
 	    t1 = qhr[j - 1];
 	    t2 = qhi[j - 1];
@@ -548,72 +530,71 @@ static void nexth(Rboolean *bool)
 /*--------------------- Independent Complex Polynomial Utilities ----------*/
 
 static
-void polyev(int *nn,
-	    double *sr, double *si,
-	    double *pr, double *pi,
-	    double *qr, double *qi,
-	    double *pvr, double *pvi)
+void polyev(int n,
+	    double s_r, double s_i,
+	    double *p_r, double *p_i,
+	    double *q_r, double *q_i,
+	    double *v_r, double *v_i)
 {
     /* evaluates a polynomial  p  at  s	 by the horner recurrence
-     * placing the partial sums in q and the computed value in pv.
+     * placing the partial sums in q and the computed value in v_.
      */
     int i;
     double t;
 
-    qr[0] = pr[0];
-    qi[0] = pi[0];
-    *pvr = qr[0];
-    *pvi = qi[0];
-    for (i=1; i < *nn; i++) {
-	t = *pvr * *sr - *pvi * *si + pr[i];
-	qi[i] = *pvi = *pvr * *si + *pvi * *sr + pi[i];
-	qr[i] = *pvr = t;
+    q_r[0] = p_r[0];
+    q_i[0] = p_i[0];
+    *v_r = q_r[0];
+    *v_i = q_i[0];
+    for (i = 1; i < n; i++) {
+	t = *v_r * s_r - *v_i * s_i + p_r[i];
+	q_i[i] = *v_i = *v_r * s_i + *v_i * s_r + p_i[i];
+	q_r[i] = *v_r = t;
     }
 }
 
 static
-double errev(int *nn, double *qr, double *qi, double *ms,
-	     double *mp, double *are, double *mre)
+double errev(int n, double *qr, double *qi,
+	     double ms, double mp, double a_re, double m_re)
 {
     /*	bounds the error in evaluating the polynomial by the horner
      *	recurrence.
      *
-     *	qr,qi	 - the partial sums
+     *	qr,qi	 - the partial sum vectors
      *	ms	 - modulus of the point
      *	mp	 - modulus of polynomial value
-     *	are, mre - error bounds on complex addition and multiplication
+     * a_re,m_re - error bounds on complex addition and multiplication
      */
     double e;
     int i;
 
-    e = hypot(qr[0], qi[0]) * *mre / (*are + *mre);
-    for (i=0 ; i < *nn ; i++) {
-	e *= (*ms + hypot(qr[i], qi[i]));
-    }
-    return e * (*are + *mre) - *mp * *mre;
+    e = hypot(qr[0], qi[0]) * m_re / (a_re + m_re);
+    for (i=0; i < n; i++)
+	e *= (ms + hypot(qr[i], qi[i]));
+
+    return e * (a_re + m_re) - mp * m_re;
 }
 
 
 static
-double cpoly_cauchy(int *nn, double *pt, double *q)
+double cpoly_cauchy(int n, double *pot, double *q)
 {
     /* Computes a lower bound on the moduli of the zeros of a polynomial
-     * pt[1:nn] is the modulus of the coefficients.
+     * pot[1:nn] is the modulus of the coefficients.
      */
-    double f, x, df, dx, xm;
-    int i, n;
+    double f, x, delf, dx, xm;
+    int i, n1 = n - 1;
 
-    n = *nn - 1;
-    pt[n] = -pt[n];
+    pot[n1] = -pot[n1];
 
     /* compute upper estimate of bound. */
 
-    x = exp((log(-pt[n]) - log(pt[0])) / (double) n);
+    x = exp((log(-pot[n1]) - log(pot[0])) / (double) n1);
 
     /* if newton step at the origin is better, use it. */
 
-    if (pt[n-1] != 0.) {
-	xm = -pt[n] / pt[n-1];
+    if (pot[n1-1] != 0.) {
+	xm = -pot[n1] / pot[n1-1];
 	if (xm < x)
 	    x = xm;
     }
@@ -622,9 +603,9 @@ double cpoly_cauchy(int *nn, double *pt, double *q)
 
     for(;;) {
 	xm = x * 0.1;
-	f = pt[0];
-	for (i=1 ; i < *nn ; i++)
-	    f = f * xm + pt[i];
+	f = pot[0];
+	for (i = 1; i < n; i++)
+	    f = f * xm + pot[i];
 	if (f <= 0.0) {
 	    break;
 	}
@@ -636,95 +617,90 @@ double cpoly_cauchy(int *nn, double *pt, double *q)
     /* do Newton iteration until x converges to two decimal places. */
 
     while (fabs(dx / x) > 0.005) {
-	q[0] = pt[0];
-	for (i=1 ; i < *nn; i++) {
-	    q[i] = q[i-1] * x + pt[i];
-	}
-	f = q[n];
-	df = q[0];
-	for (i=1 ; i<n ; i++) {
-	    df = df * x + q[i];
-	}
-	dx = f / df;
+	q[0] = pot[0];
+	for(i = 1; i < n; i++)
+	    q[i] = q[i-1] * x + pot[i];
+	f = q[n1];
+	delf = q[0];
+	for(i = 1; i < n1; i++)
+	    delf = delf * x + q[i];
+	dx = f / delf;
 	x -= dx;
     }
     return x;
 }
 
 static
-void cpoly_scale(int *nn, double *pt,
-		 double *eta, double *infin, double *smalno, double *base,
-		 double *fact)
+double cpoly_scale(int n, double *pot,
+		   double eps, double BIG, double small, double base)
 {
     /* Returns a scale factor to multiply the coefficients of the polynomial.
      * The scaling is done to avoid overflow and to avoid
      *	undetected underflow interfering with the convergence criterion.
      * The factor is a power of the base.
 
-     * pt [1:nn] : modulus of coefficients of p
-     * eta,infin,
-     * smalno,base - constants describing the floating point arithmetic.
-     * fact : scale factor
+     * pot[1:n] : modulus of coefficients of p
+     * eps,BIG,
+     * small,base - constants describing the floating point arithmetic.
      */
 
     int i, ell;
-    double x, hi, sc, lo, min_, max_;
+    double x, high, sc, lo, min_, max_;
 
     /* find largest and smallest moduli of coefficients. */
-    hi = sqrt(*infin);
-    lo = *smalno / *eta;
+    high = sqrt(BIG);
+    lo = small / eps;
     max_ = 0.;
-    min_ = *infin;
-    for (i=0 ; i < *nn ; i++) {
-	x = pt[i];
-	if (x > max_)
-	    max_ = x;
+    min_ = BIG;
+    for (i = 0; i < n; i++) {
+	x = pot[i];
+	if (x > max_) max_ = x;
 	if (x != 0. && x < min_)
 	    min_ = x;
     }
 
     /* scale only if there are very large or very small components. */
 
-    if (min_ < lo || max_ > hi) {
+    if (min_ < lo || max_ > high) {
 	x = lo / min_;
 	if (x <= 1.)
 	    sc = 1. / (sqrt(max_) * sqrt(min_));
 	else {
 	    sc = x;
-	    if (*infin / sc > max_)
+	    if (BIG / sc > max_)
 		sc = 1.0;
 	}
-	ell = (int) (log(sc) / log(*base) + 0.5);
-	*fact = R_pow_di(*base, ell);
+	ell = (int) (log(sc) / log(base) + 0.5);
+	return R_pow_di(base, ell);
     }
-    else *fact = 1.0;
+    else return 1.0;
 }
 
 
 static
-void cdivid(double *ar, double *ai, double *br, double *bi,
+void cdivid(double ar, double ai, double br, double bi,
 	    double *cr, double *ci)
 {
 /* complex division c = a/b, i.e., (cr +i*ci) = (ar +i*ai) / (br +i*bi),
    avoiding overflow. */
 
-    static double d, r;
+    double d, r;
 
-    if (*br == 0. && *bi == 0.) {
+    if (br == 0. && bi == 0.) {
 	/* division by zero, c = infinity. */
 	*cr = *ci = R_PosInf;
     }
-    else if (fabs(*br) >= fabs(*bi)) {
-	r = *bi / *br;
-	d = *br + r * *bi;
-	*cr = (*ar + *ai * r) / d;
-	*ci = (*ai - *ar * r) / d;
+    else if (fabs(br) >= fabs(bi)) {
+	r = bi / br;
+	d = br + r * bi;
+	*cr = (ar + ai * r) / d;
+	*ci = (ai - ar * r) / d;
     }
     else {
-	r = *br / *bi;
-	d = *bi + r * *br;
-	*cr = (*ar * r + *ai) / d;
-	*ci = (*ai * r - *ar) / d;
+	r = br / bi;
+	d = bi + r * br;
+	*cr = (ar * r + ai) / d;
+	*ci = (ai * r - ar) / d;
     }
 }
 

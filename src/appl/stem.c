@@ -27,6 +27,7 @@
 #include "PrtUtil.h" /* for Rprintf */
 #include "Utils.h" /* for R_rsort */
 
+#include "Applic.h"
 
 static void stem_print(int close, int dist, int ndigits)
 {
@@ -36,7 +37,8 @@ static void stem_print(int close, int dist, int ndigits)
 	Rprintf("  %*d | ", ndigits, close/10);
 }
 
-static int stem_leaf(double *x, int n, double scale, int width, double atom)
+static Rboolean
+stem_leaf(double *x, int n, double scale, int width, double atom)
 {
     double r, c;
     int mm, mu, k, i, j, hi, lo, xi;
@@ -44,7 +46,8 @@ static int stem_leaf(double *x, int n, double scale, int width, double atom)
 
     R_rsort(x,n);
 
-    if(n <= 1) return 0;
+    if(n <= 1)
+	return FALSE;
 
     Rprintf("\n");
     r = atom+(x[n-1]-x[0])/scale;
@@ -119,10 +122,10 @@ static int stem_leaf(double *x, int n, double scale, int width, double atom)
 	lo += mu;
     } while(1);
     Rprintf("\n");
-    return 1;
+    return TRUE;
 }
 
-int stemleaf(double *x, int *n, double *scale, int *width, double *atom)
+Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom)
 {
     return stem_leaf(x, *n, *scale, *width, *atom);
 }

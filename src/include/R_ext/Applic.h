@@ -43,9 +43,9 @@ void bincount(double *x, int *n, double *breaks, int *nb, int *count,
 void bincode2(double *, int *, double *, int *, int *, int *, int *);
 
 /* chisqsim.c: */
-void chisqsim(long *nrow, long *ncol, long *nrowt, long *ncolt, long *n,
-	      long *b, double *expected, long *observed, double *fact,
-	      long *jwork, double *results);
+void chisqsim(int *nrow, int *ncol, int *nrowt, int *ncolt, int *n,
+	      int *b, double *expected, int *observed, double *fact,
+	      int *jwork, double *results);
 
 /* chull.c -- comments in the source */
 void R_chull(int *n, double *x, int *m, int *in,
@@ -53,17 +53,17 @@ void R_chull(int *n, double *x, int *m, int *in,
 	   int *ih, int *nh, int *il);
 
 /* cpoly.c : */
-int R_cpoly(double *opr, double *opi, int *degree,
-	  double *zeror, double *zeroi, int *fail);
-/*void polyev(int *,
-	    double *, double *, double *, double *,
-	    double *, double *, double *, double *);
-double errev(int *, double *, double *, double *,
-	     double *, double *, double *);
-double cpoly_cauchy(int *, double *, double *);
-void cpoly_scale(int *, double *, double *, double *, double *, double *, double *);
-void cdivid(double *, double *,double *, double *, double *, double *);
-double cpoly_cmod(double *, double *);*/
+void R_cpolyroot(double *opr, double *opi, int *degree,
+		 double *zeror, double *zeroi, Rboolean *fail);
+/* More `Complex Polynomial Utilities' could be exported:
+
+   polyev(...)
+   errev(...)
+   cpoly_cauchy(...)
+   cpoly_scale(...)
+   cdivid(...)
+*/
+
 
 /* cumsum.c : */
 void R_cumsum(double *, int *, double *, double *);
@@ -115,9 +115,10 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep, int *negep,
 	double *epsneg, double *xmin, double *xmax);
 
 /* massdist.c */
-/* ...............*/
+void massdist(double *x, int *nx, double *xlow, double *xhigh,
+	      double *y, int *ny);
 
-void R_max_col(double *matrix, int *pnr, int *nc, int *maxes);
+void R_max_col(double *matrix, int *nr, int *nc, int *maxes);
 
 /* pretty.c */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
@@ -135,17 +136,24 @@ void spline_coef(int *method, int *n, double *x, double *y,
 void spline_eval(int *method, int *nu, double *u, double *v,
 		 int *n, double *x, double *y,
 		 double *b, double *c, double *d);
+void natural_spline(int n, double *x, double *y,
+		    double *b, double *c, double *d);
+void fmm_spline(int n, double *x, double *y, double *b, double *c, double *d);
+void periodic_spline(int n, double *x, double *y,
+		     double *b, double *c, double *d, double *e);
+
 
 /* stem.c */
-int stemleaf(double *x, int *n, double *scale, int *width, double *atom);
+Rboolean stemleaf(double *x, int *n, double *scale, int *width, double *atom);
 
 /* ...............*/
 
-/* strsignif.c	(??) */
-/* ...............*/
+/* strsignif.c */
+void str_signif(char *x, int *n, char **type, int *width, int *digits,
+		char **format, char **flag, char **result);
 
 /* tabulate.c */
-void R_tabulate(int *x, int *n, int *ans);
+void R_tabulate(int *x, int *n, int *nbin, int *ans);
 
 
 /* uncmin.c : */
@@ -247,5 +255,17 @@ int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 /* ../appl/zeroin.c */
 double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 		double *tol, int *maxit);
+
+/* ../appl/lbfgsb.c */
+void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
+	    double *f, double *g, double factr, double *pgtol,
+	    double *wa, int * iwa, char *task, int iprint,
+	    int *lsave, int *isave, double *dsave);
+
+/* ../appl/loglin.c */
+void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
+	    double *table, double *fit, int *locmar, int *nmar, double *marg,
+	    int *nu, double *u, double *maxdev, int *maxit,
+	    double *dev, int *nlast, int *ifault);
 
 #endif

@@ -5,11 +5,11 @@
  * Uses reservoir sampling to break ties at random.
  */
 
-#include <Arith.h>    /* NA handling */
-#include <R_ext/Mathlib.h> /* fmax2, fabs */
-#include <R_ext/Random.h> /* ..RNGstate */
-/*#include <R.h> */
-/*#include <R_ext/RS.h>*/
+#include "Arith.h" /* NA handling */
+#include "Mathlib.h" /* fmax2, fabs */
+#include "Random.h" /* ..RNGstate */
+
+#include "Applic.h" /* NA handling */
 
 #define RELTOL 1e-5
 

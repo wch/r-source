@@ -29,29 +29,29 @@ void massdist(double *x, int *nx, double *xlow, double *xhigh,
     ixmin = 0;
     ixmax = *ny - 2;
     xmass = 1.0 / *nx;
-    xdelta = (*xhigh - *xlow) / (*ny - 1.0);
+    xdelta = (*xhigh - *xlow) / (*ny - 1);
 
-    for(i=0 ; i<*ny ; i++)
+    for(i=0; i < *ny ; i++)
 	y[i] = 0;
 
-    for(i=0 ; i<*nx ; i++) {
+    for(i=0; i < *nx ; i++) {
       if(R_FINITE(x[i])) {
 	xpos = (x[i] - *xlow) / xdelta;
 	ix = floor(xpos);
 	fx = xpos - ix;
 	if(ixmin <= ix && ix <= ixmax) {
-	    y[ix] += (1.0 - fx);
+	    y[ix] += (1 - fx);
 	    y[ix + 1] += fx;
 	}
 	else if(ix == -1) {
 	    y[0] += fx;
 	}
 	else if(ix == ixmax + 1) {
-	    y[ixmax + 1] += (1.0 - fx);
+	    y[ix] += (1 - fx);
 	}
       }
     }
 
-    for(i=0 ; i<*ny ; i++)
+    for(i=0; i < *ny; i++)
 	y[i] *= xmass;
 }

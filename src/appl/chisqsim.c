@@ -6,10 +6,11 @@
 
 #include <math.h>
 #include "Random.h"
+#include "Applic.h"
 
 static void
 rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
-       double *fact, int *jwork, int *matrix) 
+       double *fact, int *jwork, int *matrix)
 {
     int nlmp, j, l, m, ia, ib, ic, jc, id, ie, ii, nrowtl, iap, idp,
 	igp, ihp, iip, nll, nlm, nrowm, ncolm, lsm, lsp;
@@ -24,7 +25,7 @@ rcont2(int *nrow, int *ncol, int *nrowt, int *ncolt, int *ntotal,
     ncolm = *ncol - 1;
 
     ib = 0;			/* -Wall */
-    
+
     /* Construct random matrix */
     for (j = 1; j <= ncolm; ++j) {
 	jwork[j] = ncolt[j];
@@ -66,7 +67,7 @@ L131:
 	    ihp = iap - nlm;
 	    nlmp = nlm + 1;
 	    iip = ii + nlmp;
-	    x = exp(fact[iap - 1] + fact[ib] + fact[ic] + 
+	    x = exp(fact[iap - 1] + fact[ib] + fact[ic] +
 		    fact[idp - 1] - fact[ie] - fact[nlmp - 1] -
 		    fact[igp - 1] - fact[ihp - 1] - fact[iip - 1]);
 	    if (x >= dummy) {
@@ -143,8 +144,8 @@ L190:
     return;
 }
 
-/* Driver routine to call RCONT2 from R, B times. 
-   Calculates the Pearson chi-squared for each generated table. 
+/* Driver routine to call RCONT2 from R, B times.
+   Calculates the Pearson chi-squared for each generated table.
    */
 
 void
