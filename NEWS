@@ -114,6 +114,8 @@ BUG FIXES
     o	Calling dev.control("inhibit") with no graphics device open
 	crashed R. (PR#1605)
 
+    o	read.dcf() was not checking memory allocation succeeded.
+
 
 
 		CHANGES IN R VERSION 1.5.0
