@@ -57,7 +57,7 @@ prcomp(x, \dots)
     essentially constant components.} 
 }
 \value{
-  \code{prcomp} returns an list with class \code{"prcomp"}
+  \code{prcomp} returns a list with class \code{"prcomp"}
   containing the following components:
   \item{sdev}{the standard deviations of the principal components
     (i.e., the square roots of the eigenvalues of the
