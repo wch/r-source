@@ -299,7 +299,7 @@ elif test -n "${F2C}"; then
   f77_rules_frag=Makefrag.f77
   cat << \EOF > ${f77_rules_frag}
 .f.o:
-	cat $< | $(F2C) $(F2CFLAGS) > $*.c
+	$(F2C) $(F2CFLAGS) < $< > $*.c
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $*.c -o $@
 	@rm -f $*.c
 EOF

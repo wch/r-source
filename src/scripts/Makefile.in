@@ -34,8 +34,8 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R: $(SCRIPTS_B) R.sh
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	@cat R.sh | \
-	  (cd $(top_builddir); sed "s@R_HOME_DIR*@`pwd`@" > bin/R)
+	@sed "s@R_HOME_DIR*@`cd $(top_builddir); pwd`@" < R.sh \
+	  > $(top_builddir)/bin/R
 	@chmod +x $(top_builddir)/bin/R
 	@for f in $(SCRIPTS_S); do \
 	  $(INSTALL) $(srcdir)/$$f $(top_builddir)/bin; \

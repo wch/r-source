@@ -4,12 +4,12 @@
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
 (cd ${TOOLS_DIR}/..
-  maj=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/'`
-  min=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/'`
-  rev=`cat VERSION | sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/'`
-  y=`cat date-stamp | cut -d/ -f1`
-  m=`cat date-stamp | cut -d/ -f2`
-  d=`cat date-stamp | cut -d/ -f3`
+  maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < VERSION`
+  min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < VERSION`
+  rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < VERSION`
+  y=`cut -d/ -f1 < date-stamp`
+  m=`cut -d/ -f2 < date-stamp`
+  d=`cut -d/ -f3 < date-stamp`
   echo "#define R_MAJOR  \"${maj}\""
   echo "#define R_MINOR  \"${min}\""
   echo "#define R_STATUS \"${rev}\""
