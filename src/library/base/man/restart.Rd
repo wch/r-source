@@ -1,5 +1,5 @@
 \name{restart}
-\title{Restart an expression}
+\title{Restart an Expression}
 \usage{
 restart(on = TRUE)
 }

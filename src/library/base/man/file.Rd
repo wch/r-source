@@ -1,6 +1,6 @@
 \name{file}
 \alias{file}
-\title{File manipulation}
+\title{File Manipulation}
 \usage{
 file.create(\dots)
 file.exists(\dots)

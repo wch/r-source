@@ -72,6 +72,7 @@ character \tab char ** \tab [see below]\cr
 list \tab SEXP *\tab not allowed\cr
 other \tab SEXP\tab not allowed\cr
 }
+
 Numeric vectors in \R will be passed as type \code{double *} to C
 (and as \code{double precision} to Fortran) unless (i) \code{.C} or
 \code{.Fortran} is used, (ii) \code{DUP} is false and (iii) the argument

@@ -1,5 +1,5 @@
 \name{prompt.data.frame}
-\title{Produce Prototype of an \R Documentation File}
+\title{Produce Prototype of an R Documentation File}
 \usage{
 prompt.data.frame(object, filename = paste(name, ".Rd", sep = ""))
 }

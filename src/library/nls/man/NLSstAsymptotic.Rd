@@ -1,6 +1,6 @@
-% $Id: NLSstAsymptotic.Rd,v 1.1 1999/11/15 23:20:07 bates Exp $
+% $Id: NLSstAsymptotic.Rd,v 1.1.2.1 1999/12/15 08:04:29 ripley Exp $
 \name{NLSstAsymptotic}
-\title{Fit the asymptotic regression model}
+\title{Fit the Asymptotic Regression Model}
 \alias{NLSstAsymptotic}
 \alias{NLSstAsymptotic.sortedXyData}
 \usage{

@@ -6,7 +6,7 @@
 \alias{download.packages}
 \alias{install.packages}
 \alias{contrib.url}
-\title{Download packages from CRAN}}
+\title{Download Packages from CRAN}}
 \usage{
 update.packages(lib.loc = .lib.loc, CRAN = options("CRAN"),
                 contriburl = contrib.url(CRAN),

@@ -1,5 +1,5 @@
 \name{trace}
-\title{Trace all calls to a function.}
+\title{Trace All Calls to a Function.}
 \usage{
 trace(fun)
 untrace(fun)

@@ -1,5 +1,5 @@
 \name{read.socket}
-\title{ Read from or write to a socket}
+\title{ Read from or Write to a Socket}
 \usage{
 read.socket(socket, maxlen=256, loop=FALSE)
 write.socket(socket, string)

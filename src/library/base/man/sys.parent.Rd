@@ -1,5 +1,5 @@
 \name{sys.parent}
-\title{Functions to access the function call stack.}
+\title{Functions to Access the Function Call Stack}
 \usage{
 sys.call(which=<<see below>>)
 sys.frame(which=<<see below>>)

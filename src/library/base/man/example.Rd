@@ -1,5 +1,5 @@
 \name{example}
-\title{Run an Examples section from the online help}
+\title{Run an Examples Section from the Online Help}
 \usage{
 example(topic, package= .packages(), lib=.lib.loc,
         echo=TRUE, verbose=.Options$verbose,

@@ -1,5 +1,5 @@
 \name{prompt}
-\title{Produce Prototype of an \R Documentation File}
+\title{Produce Prototype of an R Documentation File}
 \usage{
 prompt(object, ...)
 

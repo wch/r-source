@@ -1,5 +1,5 @@
 \name{search}
-\title{Give ``Search Path'' for \R Objects}
+\title{Give Search Path for R Objects}
 \usage{
 search()
 }

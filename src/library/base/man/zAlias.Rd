@@ -1,5 +1,5 @@
 \name{.Alias}
-\title{Create ``Alias'' (Pointer) to \R Object}
+\title{Create Alias (Pointer) to R Object}
 \usage{
 new <- .Alias(expr)
 }

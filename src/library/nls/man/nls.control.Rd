@@ -1,7 +1,6 @@
 \name{nls.control}
 \alias{nls.control}
-%- Also NEED an `\alias' for EACH other topic documented here.
-\title{Control the iterations in nls}
+\title{Control the Iterations in nls}
 \description{
     Allow the user to set some characteristics of the \code{nls}
     nonlinear least squares algorithm.

@@ -1,5 +1,5 @@
 \name{model.extract}
-\title{Extract components from a model frame}
+\title{Extract Components from a Model Frame}
 \usage{
 model.extract(frame, component)
 model.offset(frame)

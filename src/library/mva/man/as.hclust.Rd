@@ -1,7 +1,7 @@
 \name{as.hclust}
 \alias{as.hclust}
 \alias{as.hclust.twins}
-\title{Convert objects to class hclust}
+\title{Convert Objects to Class hclust}
 \usage{
 as.hclust(x, ...)
 as.hclust.twins(x)

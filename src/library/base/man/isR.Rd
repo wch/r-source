@@ -1,5 +1,5 @@
 \name{is.R}
-\title{Are we using \R, rather than S?}
+\title{Are we using R, rather than S?}
 \usage{
 is.R()
 }

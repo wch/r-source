@@ -1,7 +1,7 @@
 \name{mtext}
-\title{Write text into the margins of a plot}
+\title{Write Text into the Margins of a Plot}
 \usage{
-mtext(text, side=3, line=0, outer=FALSE, at=NULL, adj = NA, \dots)
+mtext(text, side = 3, line = 0, outer = FALSE, at = NULL, adj = NA, \dots)
 }
 \alias{mtext}
 \arguments{

@@ -1,6 +1,6 @@
 \name{diff.ts}
 \alias{diff.ts}
-\title{diff method for ts objects}
+\title{diff Method for ts Objects}
 \description{
  \code{diff} method for \code{ts} objects.
 }

@@ -4,7 +4,7 @@
 \alias{source.url}
 \alias{copy.url}
 \alias{url.show}
-\title{Read data and code from web server}
+\title{Read Data and Code from a Web Server}
 \usage{
 read.table.url(url, port = 80, check.MIME.type = TRUE, ...)
 scan.url(url, port = 80, check.MIME.type = TRUE, ...)

@@ -1,5 +1,5 @@
 \name{save}
-\title{Save \R Objects}
+\title{Save R Objects}
 \usage{
 save(\dots, list = character(0), file = "", ascii = FALSE)
 save.image()

@@ -2,7 +2,7 @@
 \alias{transform}
 \alias{transform.default}
 \alias{transform.data.frame}
-\title{Transform an object, e.g. a dataframe}
+\title{Transform an Object, e.g. a Data Frame}
 \usage{
 transform(x, ...)
 transform.default(x, ...)

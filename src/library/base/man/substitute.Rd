@@ -1,5 +1,5 @@
 \name{substitute}
-\title{Substituting and quoting expressions}
+\title{Substituting and Quoting Expressions}
 \usage{
 substitute(expr, env=<<see below>>)
 quote(expr)

@@ -3,8 +3,8 @@
 \alias{sunspot.month}
 \alias{sunspot.year}
 \title{
-  Yearly Sunspot Data, 1700-1988.
-  Monthly Sunspot Data, 1749-1997.
+  Yearly Sunspot Data, 1700--1988.
+  Monthly Sunspot Data, 1749--1997.
 }
 \usage{
 data(sunspot)

@@ -1,5 +1,5 @@
 \name{attach}
-\title{Attach Set of \R Objects to Search Path}
+\title{Attach Set of R Objects to Search Path}
 \usage{
 attach(what, pos = 2, name = deparse(substitute(what)))
 }

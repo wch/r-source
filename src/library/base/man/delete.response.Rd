@@ -1,5 +1,5 @@
 \name{delete.response}
-\title{Modify terms objects}
+\title{Modify Terms Objects}
 \usage{
 delete.response(termobj)
 reformulate(termlabels,response=NULL)

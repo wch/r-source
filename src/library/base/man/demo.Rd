@@ -1,5 +1,5 @@
 \name{demo}
-\title{Demonstrations of \R functions}
+\title{Demonstrations of R functions}
 \usage{demo(topic, device = .Options$device)}
 \alias{demo}
 \arguments{

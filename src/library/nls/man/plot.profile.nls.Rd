@@ -1,10 +1,9 @@
 \name{plot.profile.nls}
 \alias{plot.profile.nls}
-\title{Plot a profile.nls object}
+\title{Plot a profile.nls Object}
 \usage{
 plot.profile.nls(x, levels, conf, nseg, absVal, ...)
 }
-%- maybe also `usage' for other objects documented here.
 \arguments{
  \item{x}{an object of class \code{profile.nls} }
  \item{levels}{levels, on the scale of the absolute value of a t

@@ -1,5 +1,5 @@
 \name{str}
-\title{Compactly Display the Structure of an Arbitrary \R Object}
+\title{Compactly Display the Structure of an Arbitrary R Object}
 \usage{
 str(object, ...)
 str.data.frame(object, ...)

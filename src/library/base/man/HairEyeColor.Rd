@@ -1,6 +1,6 @@
 \name{HairEyeColor}
 \alias{HairEyeColor}
-\title{Hair and eye color of statistics students}
+\title{Hair and Eye Color of Statistics Students}
 \usage{data(HairEyeColor)}
 \description{
   Distribution of hair and eye color and sex in 592 statistics students.

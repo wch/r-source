@@ -1,7 +1,6 @@
 \name{asVector}
 \alias{asVector.xyVector}
-%- Also NEED an `\alias' for EACH other topic documented here.
-\title{Coerce an object to a vector}
+\title{Coerce an Object to a Vector}
 \description{
 This is a generic function.  Methods for this function coerce objects of
 given classes to vectors.
@@ -33,4 +32,4 @@ class(pred)
 str(pred)
 asVector(pred)
 }
-\keyword{models}%-- one or more ...
+\keyword{models}

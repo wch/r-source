@@ -2,7 +2,7 @@
 \alias{subset}
 \alias{subset.default}
 \alias{subset.data.frame}
-\title{Subsetting vectors and data frames}
+\title{Subsetting Vectors and Data Frames}
 \usage{
 subset(x, ...)
 subset.default(x, subset)

@@ -1,5 +1,5 @@
 \name{print.matrix}
-\title{Print matrices}
+\title{Print Matrices}
 \usage{
 print.matrix(x, rowlab=character(0), collab=character(0),
              quote=TRUE, right=FALSE)
