@@ -21,8 +21,6 @@
 
 double pt(double x, double n)
 {
-	double val;
-
-	val = 0.5 * pbeta(n / (n + x * x), n / 2.0, 0.5);
+	double val = 0.5 * pbeta(n / (n + x * x), n / 2.0, 0.5);
 	return (x > 0.0) ? 1 - val : val;
 }

@@ -21,7 +21,6 @@
 
 double dt(double x, double n)
 {
-	n = floor(n + 0.5);
 	if (n <= 0.0)
 		DOMAIN_ERROR;
 	return pow(1.0 + x * x / n, -0.5 * (n + 1.0))

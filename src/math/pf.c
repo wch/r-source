@@ -21,8 +21,6 @@
 
 double pf(double x, double n1, double n2)
 {
-	n1 = floor(n1 + 0.5);
-	n2 = floor(n2 + 0.5);
 	if (n1 <= 0.0 || n2 <= 0.0)
 		DOMAIN_ERROR;
 	if (x <= 0.0)

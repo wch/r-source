@@ -23,9 +23,8 @@ double qf(double x, double n1, double n2)
 {
 	if (n1 <= 0.0 || n2 <= 0.0)
 		DOMAIN_ERROR;
-
 	if (x <= 0.0)
 		return 0.0;
-
-	return MATH_CHECK((1.0 / qbeta(1.0 - x, n2 / 2.0, n1 / 2.0) - 1.0) * (n2 / n1));
+	return MATH_CHECK((1.0 / qbeta(1.0 - x, n2 / 2.0, n1 / 2.0) - 1.0)
+			* (n2 / n1));
 }
