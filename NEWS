@@ -62,10 +62,6 @@ CHANGES TO THE LANGUAGE
 
 NEW FEATURES
     
-    o   Users can specify the collation order for files in the R source 
-        directory of a package. The order is specified in the DESCRIPTION 
-        file.
-
     o	New function bquote() does partial substitution like LISP backquote.
 
     o	capture.output() takes arbitrary connections for `file' argument.
@@ -355,6 +351,10 @@ USING PACKAGES
 	default for argument `where'.  The topenv() function and
 	sys.source() have been changed correspondingly.	 See the
 	online help.
+
+    o	Users can specify the collation order for files in the R source
+        directory of a package. The order is specified in the
+        DESCRIPTION file.
 
 
 DOCUMENTATION CHANGES
