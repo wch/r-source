@@ -51,7 +51,7 @@ USER-VISIBLE CHANGES
 	separately but not via data(sunspot) (which is used by package
 	lattice to retrieve a dataset 'sunspot').
 
-    o	Packages must been re-installed for this version, and
+    o	Packages must have been re-installed for this version, and
 	library() will enforce this.
 
     o	Package names must now be given exactly in library() and
@@ -183,6 +183,9 @@ NEW FEATURES
 	idea of Jari Oksanen).
 
 	prcomp() now has a simple predict() method.
+
+    o	quantile() has the option of several methods described in
+	Hyndman & Fan (1996). (Contributed by Rob Hyndman.)
 
     o	rank() has two new 'ties.method's, "min" and "max".
 
