@@ -9577,7 +9577,7 @@ main ()
 }
 _ACEOF
   if ${CPP} ${CPPFLAGS} conftest.${ac_ext} 2>&1 1>/dev/null | \
-      grep -q 'warning:.*system directory.*/usr/local/include'; then
+      grep 'warning:.*system directory.*/usr/local/include' >/dev/null; then
     CPPFLAGS=`echo ${CPPFLAGS} | \
       sed 's|\(.*\)-I/usr/local/include *\(.*\)|\1\2|'`
   fi
@@ -16517,7 +16517,7 @@ case "${host_os}" in
     fpicflags=
     ;;
   netbsd*)
-    if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
+    if ${CPP} - -dM < /dev/null | grep __ELF__ >/dev/null ; then
       main_ldflags="-export-dynamic"
       shlib_ldflags="-shared"
     else

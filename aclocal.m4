@@ -161,7 +161,7 @@ if test "${GCC}" = yes; then
   AC_LANG_PUSH(C)
   AC_LANG_CONFTEST([AC_LANG_PROGRAM()])
   if ${CPP} ${CPPFLAGS} conftest.${ac_ext} 2>&1 1>/dev/null | \
-      grep -q 'warning:.*system directory.*/usr/local/include'; then
+      grep 'warning:.*system directory.*/usr/local/include' >/dev/null; then
     CPPFLAGS=`echo ${CPPFLAGS} | \
       sed 's|\(.*\)-I/usr/local/include *\(.*\)|\1\2|'`
   fi
