@@ -3,6 +3,7 @@
 
 use Cwd;
 use File::Basename;
+use File::Path;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
@@ -10,7 +11,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.9 $ ';
+my $revision = ' $Revision: 1.10 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -63,7 +64,7 @@ foreach $pkg (@ARGV){
     chdir($startdir);
 
     my $pkgoutdir="$outdir/$pkgname.Rcheck";
-    system("rm -rf $pkgoutdir") if ($opt_clean && (-d $pkgoutdir)) ;
+    rmtree($pkgoutdir) if ($opt_clean && (-d $pkgoutdir)) ;
     if(! -d $pkgoutdir){
 	if(! mkdir($pkgoutdir, 0755)){
 	    die("could not create directory $pkgoutdir\n");

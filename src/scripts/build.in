@@ -4,6 +4,7 @@
 use Cwd;
 use File::Basename;
 use File::Find;
+use File::Path;
 use Getopt::Long;
 use R::Dcf;
 use R::Utils;
@@ -13,7 +14,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -22,7 +23,8 @@ $version = $1;
 
 $make = "@MAKE@";
 
-my @knownoptions = ("help|h", "version|v", "binary");
+my @knownoptions = ("help|h", "version|v", "binary", 
+		    "use-zip", "use-zip-help", "use-zip-data");
 
 GetOptions (@knownoptions) || usage();
 
@@ -36,9 +38,14 @@ my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $R_HOME = $ENV{'R_HOME'} ||
     die "Error: Environment variable R_HOME not found\n";
 
-my $R_opts = "--vanilla";
-$R_opts .= " --nsize=$opt_nsize" if $opt_nsize;
-$R_opts .= " --vsize=$opt_vsize" if $opt_vsize;
+my $INS_opts = "";
+$INS_opts .= " --use-zip" if $opt_use_zip;
+$INS_opts .= " --use-zip-data" if $opt_use_zip_data;
+$INS_opts .= " --use-zip-help" if $opt_use_zip_help;
+
+if(!$opt_binary && $INS_opts ne "") {
+    printf "** Options $INS_opts for --binary ignored\n";
+}
 
 ## this is the main loop over all packages that shall be checked
 my $pkg;
@@ -67,7 +74,7 @@ foreach $pkg (@ARGV){
 	mkdir("$tmpdir/Rbuild.$$", 0755) ||
 	    die "Cannot create directory $tmpdir/Rbuild.$$\n";
 
-	if(system("${R_HOME}/bin/R INSTALL -l $libdir $pkg")){
+	if(system("${R_HOME}/bin/R INSTALL -l $libdir $INS_opts $pkg")){
 	    $log->error("installation failed");
 	}
 	print("\n");
@@ -76,12 +83,10 @@ foreach $pkg (@ARGV){
 	    "_${R_platform}.tar";
 	$log->message("building \`$filename.gz'");
 	
-	## use */ below such that LibIndex is ignored
-	system("tar -c -h */ > $startdir/$filename");
+	system("tar -c -h $pkg > $startdir/$filename");
 	chdir($startdir);
-	unlink("$filename.gz") if (-f "$filename.gz");	
-	system("gzip -9 $filename");
-	system("rm -rf $libdir");
+	system("gzip -9f $filename");
+	rmtree($libdir);
     }
     else{
 	if($description->{"Contains"}){
@@ -111,15 +116,14 @@ foreach $pkg (@ARGV){
 	
 	$exclude = "$tmpdir/Rbuild.$$";
 	open exclude, "> $exclude" ||
-	    die "Cannot write to \`$exlude'\n";
+	    die "Cannot write to \`$exclude'\n";
 	find(\&findExcludeFiles, $pkg);
 	close exclude;
 	
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
 	$log->message("building \`$filename.gz'");
 	system("tar -c -h -X $exclude -f $filename $pkg");
-	unlink("$filename.gz") if (-f "$filename.gz");
-	system("gzip -9 $filename");
+	system("gzip -9f $filename");
 	unlink($exclude);
     }
     $log->close();
@@ -191,7 +195,10 @@ Options:
   -h, --help		print short help message and exit
   -v, --version		print version info and exit
 
-  --binary              build pre-compiled binary packages
+  --binary              build pre-compiled binary packages, with options:
+  --use-zip-data        collect data files in zip archive
+  --use-zip-help        collect help and examples into zip archives
+  --use-zip             combine `--use-zip-data' and `--use-zip-help'
 
 Email bug reports to <r-bugs\@lists.r-project.org>.
 END
