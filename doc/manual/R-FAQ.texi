@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-13, 2000-09-24
+@set FAQ-VERSION 1.1-14, 2000-10-01
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -1372,6 +1372,13 @@ Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
 @samp{30Aug53}, @samp{30 August 1953}, @dots{}, @samp{August 30 53}, or
 any mixture of these.
+@item dse
+Dynamic System Estimation, a multivariate time series package.  Contains
+@strong{dse1} (DSE kernel plus ARMA and state space models),
+@strong{dse2} (DSE extensions), @strong{syskern} (functions for writing
+code that is operating system and R/S independent), and @strong{tframe}
+(functions for writing code that is independent of the representation of
+time).
 @item e1071
 Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
@@ -1536,8 +1543,9 @@ in competing risks.
 A small C++ test package.
 @item dopt
 Finding D-optimal experimental designs.
-@item dse
-Multivariate time series.
+@item dseplus
+Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
+time series package.  Contains PADI, juice and monitoring extensions.
 @item exactDistr
 Exact distributions for rank tests.
 @item foreign
