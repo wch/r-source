@@ -119,4 +119,11 @@ void spline_eval(int *method, int *nu, double *u, double *v,
 /* tabulate.c */
 void tabulate(int *x, int *n, int *ans);
 
+/* ../main/optimize.c */
+double F77_SYMBOL(fmin)();
+double F77_SYMBOL(zeroin)();
+int F77_SYMBOL(fdhess)();
+int F77_SYMBOL(optif9)();
+
+
 #endif
