@@ -25,24 +25,36 @@
 
 /* Code to handle lapply/apply */
 
-/* .Internal(lapply(i, FUN)) */
+/* .Internal(lapply(X, FUN)) */
 
 SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP R_fcall, ans, FUN, ind;
+    SEXP R_fcall, ans, X, FUN, ind, tmp;
     int i, n;
 
     checkArity(op, args);
-    n = asInteger(CAR(args));
+    X = CAR(args);
+    FUN = CADR(args);
+    if (!isSymbol(X) || !isSymbol(FUN))
+	errorcall(call, "arguments must be symbolic");
+    n = length(eval(X, rho));
     if (n == NA_INTEGER)
 	errorcall(call, "invalid length");
     args = CDR(args);
-    FUN = CAR(args);
-    if(!isFunction(FUN))
-	errorcall(call, "argument FUN is not a function");
-    PROTECT(R_fcall = LCONS(FUN, args));
-    PROTECT(ind = allocVector(INTSXP, 1));
-    CADR(R_fcall) = ind;
+
+    /* Build call: FUN(X[[<ind>]], ...) */
+
+    /* Notice that it is OK to have one arg to LCONS do memory
+       allocation and not PROTECT the result (LCONS does memory
+       protection of its args internally), but not both of them,
+       since the computation of one may destroy the other */
+
+
+    tmp = install("[["); 
+    ind = allocVector(INTSXP, 1);
+    PROTECT(tmp = LCONS(tmp, LCONS(X, LCONS(ind, R_NilValue))));
+    PROTECT(R_fcall = LCONS(FUN, LCONS(tmp, LCONS(R_DotsSymbol, R_NilValue))));
+
     PROTECT(ans = allocVector(VECSXP, n));
     for(i = 0; i < n; i++) {
 	INTEGER(ind)[0] = i + 1;
@@ -52,7 +64,7 @@ SEXP do_lapply(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* .Internal(lapply(X, FUN)) */
+/* .Internal(apply(X, FUN)) */
 /* X is a matrix, and the last dimension is the one we want to 
    loop over */
 

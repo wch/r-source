@@ -30,6 +30,7 @@ NEW FEATURES
     o	cor.test(*, meth="spearman") might give slightly better P values,
 	since it now relies on pnorm(.) {with proper tail} instead of alnorm.
 
+    o   internal cleanup of do_lapply
 
 BUG FIXES
 

@@ -583,7 +583,7 @@ FUNTAB R_FunTab[] =
 {"sink",	do_sink,	0,	111,	1,	PP_FUNCALL},
 {"lib.fixup",	do_libfixup,	0,	111,	2,	PP_FUNCALL},
 {"pos.to.env",	do_pos2env,	0,	1,	1,	PP_FUNCALL},
-{"lapply",	do_lapply,	0,	11,	2,	PP_FUNCALL},
+{"lapply",	do_lapply,	0,	10,	2,	PP_FUNCALL},
 {"apply",	do_apply,	0,	11,	3,	PP_FUNCALL},
 
 /* Functions To Interact with the Operating System */
