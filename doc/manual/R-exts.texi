@@ -20,7 +20,7 @@
 @ifinfo
 This is a guide to extending R.
 
-Copyright 1999 R Development Core Team
+Copyright 1999, 2000 R Development Core Team
 
 Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -88,7 +88,7 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 * Acknowledgments::             
 @end menu
 
-This document is @copyright{} 1999 by the R Development Core Team.
+This document is @copyright{} 1999, 2000 by the R Development Core Team.
 
 This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
@@ -741,6 +741,7 @@ documented are only relevant to one platform, platform-specific
 * Handling R objects in C::     
 * Interface Functions .Call and .External::  
 * Evaluating R Expressions from C::  
+* Debugging::                   
 @end menu
 
 @node  Operating system access, Interface functions .C and .Fortran, System and foreign language interfaces, System and foreign language interfaces
@@ -1791,7 +1792,7 @@ character strings can be tested by equality to the constants
 The constants @code{R_NaN}, @code{R_PosInf}, @code{R_NegInf} and
 @code{R_NaReal} can be used to set @code{double}s to the special values.
 
-@node Evaluating R Expressions from C,  , Interface Functions .Call and .External, System and foreign language interfaces
+@node Evaluating R Expressions from C, Debugging, Interface Functions .Call and .External, System and foreign language interfaces
 @section Evaluating R Expressions from C
 
 We noted that the @code{call_R} interface could be
@@ -2143,6 +2144,177 @@ is set as @code{theta}.  This list is then assigned as the attribute
 having the symbol @code{R_DimNamesSymbol}.  Finally we set the gradient
 matrix as the gradient attribute of @code{ans}, unprotect the remaining
 protected locations and return the answer @code{ans}.
+
+@node Debugging,  , Evaluating R Expressions from C, System and foreign language interfaces
+@section Debugging compiled code
+@cindex Debugging
+
+
+Sooner or later programmers will be faced with the need to debug
+compiled code loaded into @R{}.  Seom ``tricks'' are worth knowing.
+
+
+@menu
+* Finding entry points::        
+* Inspecting R objects::        
+@end menu
+
+@node Finding entry points, Inspecting R objects, Debugging, Debugging
+@subsection Finding entry points in dynamically loaded code
+
+Under most compilation environments, compiled code dynamically loaded
+into @R{} cannot have breakpoints set within it until it is loaded.
+To use a symbolic debugger on such dynamically loaded code under UNIX
+use
+
+@itemize @bullet
+@item
+Call the debugger on the R executable, for example by
+@kbd{R -d gdb}.
+@item
+Start @R{}.
+@item
+At the @R{} prompt, use @code{dyn.load} or @code{library} to load your library.
+@item
+Send an interrupt signal. This will put you back to the debugger prompt.
+@item
+Set the breakpoints in your code.
+@item
+Continue execution of R by typing @kbd{signal 0@key{RET}}.
+@end itemize
+
+Under Windows the @R{} engine is itself in a DLL, and the procedure is
+
+@itemize @bullet
+@item
+Start @R{} under the debugger after setting a breakpoint for
+@code{WinMain}.
+@example
+gdb .../bin/Rgui.exe
+(gdb) break WinMain
+(gdb) run
+[ stops with R.dll loaded ]
+(gdb) break R_ReadConsole
+(gdb) continue
+[ stops with console running ]
+(gdb) continue
+@end example
+
+@item
+At the @R{} prompt, use @code{dyn.load} or @code{library} to load your library.
+@item
+Set the breakpoints in your code.
+@item
+Use
+@example
+(gdb) clear R_ReadConsole
+(gdb) continue
+@end example
+@noindent
+to continue running with the breakpoints set.
+@end itemize
+@noindent
+Windows has little support for signals, so the usual idea of running a
+program under a debugger and sending it a signal to interrupt it and
+drop control back to the debugger only works with some debuggers.
+
+@node Inspecting R objects,  , Finding entry points, Debugging
+@subsection Inspecting R objects when debugging
+
+The key to inspecting @R{} objects from compiled code is the function
+@code{PrintValue(SEXP s)} which uses the normal @R{} printing mechanisms
+to print the @R{} object pointed to by @code{s}.
+
+One way to make use to @code{PrintValue} is to insert suitable calls into
+the code to be debugged.
+
+Another way is to call @code{PrintValue} from the symbolic debugger. For
+example, from @code{gdb} we can use
+@example
+(gdb) p PrintValue(ab)
+@end example
+@noindent
+using the object @code{ab} from the convolution example, if we have
+placed a suitable breakpoint in the convolution C code.
+
+To examine an arbitrary @R{} object we need to work a little harder.
+For example, let
+
+@smallexample
+R> DF <- data.frame(a = 1:3, b = 4:6)
+@end smallexample
+
+@noindent
+By setting a breakpoint at @code{do_get} and typing @kbd{get("DF")} at
+the R prompt, one can find out the address in memory of @code{DF}, e.g.
+
+@smallexample
+Value returned is $1 = (SEXPREC *) 0x40583e1c
+(gdb) p *$1
+$2 = @{
+  sxpinfo = @{type = 19, obj = 1, named = 1, gp = 0,
+    mark = 0, debug = 0, trace = 0, = 0@},
+  attrib = 0x40583e80,
+  u = @{
+    vecsxp = @{
+      length = 2, 
+      type = @{c = 0x40634700 "0>X@@D>X@@0>X@@", i = 0x40634700,
+        f = 0x40634700, z = 0x40634700, s = 0x40634700@},
+      truelength = 1075851272,
+    @},
+    primsxp = @{offset = 2@}, 
+    symsxp = @{pname = 0x2, value = 0x40634700, internal = 0x40203008@}, 
+    listsxp = @{carval = 0x2, cdrval = 0x40634700, tagval = 0x40203008@}, 
+    envsxp = @{frame = 0x2, enclos = 0x40634700@},
+    closxp = @{formals = 0x2, body = 0x40634700, env = 0x40203008@},
+    promsxp = @{value = 0x2, expr = 0x40634700, env = 0x40203008@}
+  @}
+@}
+@end smallexample
+
+@noindent
+(Debugger output reformatted for better legibility).
+
+Using @code{PrintValue()} one can ``inspect'' the values of the various
+elements of the SEXP, e.g.,
+
+@smallexample
+(gdb) p PrintValue($1->attrib)
+$names
+[1] "a" "b"
+
+$row.names
+[1] "1" "2" "3"
+
+$class
+[1] "data.frame"
+
+$3 = void
+@end smallexample
+
+@noindent
+(Make sure, however, to use @code{PrintValue()} on SEXPs with the `obj'
+bit turned on only.)
+@c FIXME
+@c Maybe we could have a safe PrintValue() which returns e.g. NULL when
+@c given a SEXP with the `obj' bit not turned on?
+
+To find out where exactly the corresponding information is stored, one
+needs to go ``deeper'':
+
+@smallexample
+(gdb) set $a = $1->attrib
+(gdb) p $a->u.listsxp.tagval->u.symsxp.pname->u.vecsxp.type.c
+$4 = 0x405d40e8 "names"
+(gdb) p $a->u.listsxp.carval->u.vecsxp.type.s[1]->u.vecsxp.type.c
+$5 = 0x40634378 "b"
+(gdb) p $1->u.vecsxp.type.s[0]->u.vecsxp.type.i[0]
+$6 = 1
+(gdb) p $1->u.vecsxp.type.s[1]->u.vecsxp.type.i[1]
+$7 = 5
+@end smallexample
+
+
 
 @node R (internal) programming miscellania, Function and variable index, System and foreign language interfaces, Top
 @appendix R (internal) programming miscellania
