@@ -482,3 +482,11 @@ Date: Mon, 11 Mar 2002 02:38:12 -0600 (CST)
 Subject: Underlying operating system
 From: catellie <catellie@stolaf.edu>
 Date: Mon, 11 Mar 2002 04:31:09 -0600 (CST)
+* PR# 1376 *
+Subject: Contents
+From: "Robert.Gentleman" <Robert.Gentleman@r-project.org>
+Date: Tue, 12 Mar 2002 00:21:31 -0600
+* PR# 1377 *
+Subject:  rbinom silently rounds size argument 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Tue, 12 Mar 2002 09:46:14 -0500
