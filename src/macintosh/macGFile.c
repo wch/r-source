@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1999  Ross Ihaka
+ *  Copyright (C) 1998-1999  Ross Ihaka
  *                2000-2001  Stefano M. Iacus and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
