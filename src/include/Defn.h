@@ -48,7 +48,7 @@
 /*	R_PPSSIZE  The pointer protection stack size  */
 /*	R_NSIZE	   The number of cons cells	 */
 /*	R_VSIZE	   The vector heap size in bytes */
-/*  These values are defaults and can be overriden in config.h
+/*  These values are defaults and can be overridden in config.h
     The maxima and minima are in ../unix/sys-common.c */
 
 #ifndef R_PPSSIZE
@@ -62,10 +62,6 @@
 #endif
 
 #include <math.h>
-#ifdef Macintosh
-#define PosixArith
-#define QUICKDRAW_GRAPHICS
-#endif
 
 /* all these are in Rinternals.h
 #include <errno.h>
@@ -508,9 +504,6 @@ void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
 SEXP classgets(SEXP, SEXP);
 void CleanEd(void);
-#ifdef Macintosh
-	void CleanUpMemory( void );
-#endif
 void compactPhase(void);
 void DataFrameClass(SEXP);
 SEXP ddfindVar(SEXP, SEXP);
