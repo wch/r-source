@@ -13,6 +13,7 @@ Sweave <- function(file, driver=RweaveLatex(),
         syntax <- get(syntax, mode="list")
     
     drobj <- driver$setup(file=file, syntax=syntax, ...)
+    on.exit(driver$finish(drobj, error=TRUE))
     
     text <- readLines(file)
     
@@ -82,7 +83,8 @@ Sweave <- function(file, driver=RweaveLatex(),
     }
     if(mode=="doc") driver$writedoc(drobj, chunk)
     else drobj <- driver$runcode(drobj, chunk, chunkopts)
-    
+
+    on.exit()
     driver$finish(drobj)
 }
 
@@ -390,9 +392,9 @@ RweaveLatexWritedoc <- function(object, chunk)
     return(object)
 }
 
-RweaveLatexFinish <- function(object)
+RweaveLatexFinish <- function(object, error=FALSE)
 {
-    if(!object$quiet)
+    if(!object$quiet && !error)
         cat(paste("\nYou can now run LaTeX on",
                   summary(object$output)$description), "\n")
     close(object$output)
@@ -566,7 +568,7 @@ RtangleWritedoc <- function(object, chunk)
 }
 
 
-RtangleFinish <- function(object)
+RtangleFinish <- function(object, error=FALSE)
 {
     if(!is.null(object$output))
         close(object$output)
