@@ -100,10 +100,9 @@ versions of the documentation (the three kinds can also be generated
 separately using make help, make html and make latex).	Note that you need
 Perl version 5, available via http://www.perl.com/CPAN/, to build the
 documentation.
-If this is not available on your system, you can obtain precompiled
-documentation files via the `doc/pre-formatted-help' directory of the
-Comprehensive R Archive Network (CRAN), see the file `RESOURCES' for
-information on CRAN.
+If this is not available on your system, you can obtain PDF versions
+of the documentation files via the Comprehensive R Archive Network
+(CRAN), see the file `RESOURCES' for information on CRAN.
 
 Now rehash if necessary, type `R' and reach for your S manuals ...
 And, read the R FAQ (http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html).
