@@ -83,6 +83,19 @@
 #define PVP_DEVWIDTHCM 27
 #define PVP_DEVHEIGHTCM 28
 
+/*
+ * Structure of a layout
+ */
+#define LAYOUT_NROW 0
+#define LAYOUT_NCOL 1
+#define LAYOUT_WIDTHS 2
+#define LAYOUT_HEIGHTS 3
+#define LAYOUT_RESPECT 4
+#define LAYOUT_VRESPECT 5
+#define LAYOUT_MRESPECT 6
+#define LAYOUT_JUST 7
+#define LAYOUT_VJUST 8
+
 #define GP_FILL 0
 #define GP_COL 1
 #define GP_GAMMA 2

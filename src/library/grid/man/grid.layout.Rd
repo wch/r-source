@@ -9,7 +9,8 @@
 grid.layout(nrow = 1, ncol = 1,
         widths = unit(rep(1, ncol), "null"),
         heights = unit(rep(1, nrow), "null"),
-        default.units = "null", respect = FALSE)
+        default.units = "null", respect = FALSE,
+        just="centre")
 }
 \arguments{
   \item{nrow}{An integer describing the number of rows in the layout.}
@@ -24,6 +25,16 @@ grid.layout(nrow = 1, ncol = 1,
     if \code{widths} or \code{heights} are only given as numeric vectors.}  
   \item{respect}{A logical value indicating whether
     row heights and column widths should respect each other.}
+  \item{just}{A string vector indicating how the layout should be
+    justified if it is not the same size as its parent viewport.
+    If there are two values, the first
+    value specifes horizontal justification and the second value specifies
+    vertical justification.  Possible values are: \code{"left"},
+    \code{"right"}, \code{"centre"}, \code{"center"}, \code{"bottom"},
+    and \code{"top"}.  NOTE that in this context,
+    \code{"left"}, for example, means align the left
+    edge of the left-most layout column with the left edge of the
+    parent viewport.}}
 }
 \details{
   The unit objects given for the \code{widths} and \code{heights}
@@ -60,5 +71,25 @@ grid.layout(nrow = 1, ncol = 1,
 \examples{
 ## A variety of layouts (some a bit mid-bending ...)
 layout.torture()
+## Demonstration of layout justification
+grid.newpage()
+testlay <- function(just="centre") {
+  pushViewport(viewport(layout=grid.layout(1, 1, widths=unit(1, "inches"),
+                          height=unit(0.25, "npc"),
+                          just=just)))
+  pushViewport(viewport(layout.pos.col=1, layout.pos.row=1))
+  grid.rect()
+  grid.text(paste(just, collapse="-"))
+  popViewport(2)
+}
+testlay()
+testlay(c("left", "top"))
+testlay(c("right", "top"))
+testlay(c("right", "bottom"))
+testlay(c("left", "bottom"))
+testlay(c("left"))
+testlay(c("right"))
+testlay(c("bottom"))
+testlay(c("top"))
 }
 \keyword{dplot}

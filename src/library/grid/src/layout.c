@@ -25,27 +25,35 @@
  */
 
 int layoutNRow(SEXP l) {
-    return INTEGER(getListElement(l, "nrow"))[0];
+    return INTEGER(VECTOR_ELT(l, LAYOUT_NROW))[0];
 }
 
 int layoutNCol(SEXP l) {
-    return INTEGER(getListElement(l, "ncol"))[0];
+    return INTEGER(VECTOR_ELT(l, LAYOUT_NCOL))[0];
 }
 
 SEXP layoutWidths(SEXP l) {
-    return getListElement(l, "widths");
+    return VECTOR_ELT(l, LAYOUT_WIDTHS);
 }
 
 SEXP layoutHeights(SEXP l) {
-    return getListElement(l, "heights");
+    return VECTOR_ELT(l, LAYOUT_HEIGHTS);
 }
 
 int layoutRespect(SEXP l) {
-    return INTEGER(getListElement(l, "valid.respect"))[0];
+    return INTEGER(VECTOR_ELT(l, LAYOUT_VRESPECT))[0];
 }
 
 int* layoutRespectMat(SEXP l) {
-    return INTEGER(getListElement(l, "respect.mat"));
+    return INTEGER(VECTOR_ELT(l, LAYOUT_MRESPECT));
+}
+
+int layoutHJust(SEXP l) {
+    return INTEGER(VECTOR_ELT(l, LAYOUT_VJUST))[0];
+}
+
+int layoutVJust(SEXP l) {
+    return INTEGER(VECTOR_ELT(l, LAYOUT_VJUST))[1];
 }
 
 Rboolean relativeUnit(SEXP unit, int index) {
@@ -383,11 +391,32 @@ static void subRegion(SEXP layout,
 {
     double totalWidth = sumDims(widths, 0, layoutNCol(layout) - 1);
     double totalHeight = sumDims(heights, 0, layoutNRow(layout) - 1);
-    *left = (0.5 - totalWidth/2) + sumDims(widths, 0, mincol - 1);
     *width = sumDims(widths, mincol, maxcol);
-    *bottom = (0.5 - totalHeight/2) + totalHeight
-	- sumDims(heights, 0, maxrow);
     *height = sumDims(heights, minrow, maxrow);
+    switch (layoutHJust(layout)) {
+    case L_LEFT:
+	*left = sumDims(widths, 0, mincol - 1);
+	break;
+    case L_RIGHT: 
+	*left = 1 - sumDims(widths, mincol, layoutNCol(layout) - 1);
+	break;
+    case L_CENTRE: 
+    case L_CENTER:
+	*left = (0.5 - totalWidth/2) + sumDims(widths, 0, mincol - 1);
+	break;
+    }
+    switch (layoutVJust(layout)) {
+    case L_BOTTOM:
+	*bottom = totalHeight - sumDims(heights, 0, maxrow);
+	break;
+    case L_TOP:
+	*bottom = 1 - sumDims(heights, 0, maxrow);
+	break;
+    case L_CENTRE: 
+    case L_CENTER:
+	*bottom = (0.5 - totalHeight/2) + totalHeight
+	    - sumDims(heights, 0, maxrow);
+    }
 }
 
 void calcViewportLayout(SEXP viewport,

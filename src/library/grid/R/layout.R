@@ -6,7 +6,7 @@ is.layout <- function(l) {
 # FIXME:  The internal C code now does a lot of recycling of
 # unit values, units, and data.  Can some/most/all of the
 # recycling stuff below be removed ?
-valid.layout <- function(nrow, ncol, widths, heights, respect) {
+valid.layout <- function(nrow, ncol, widths, heights, respect, just) {
   nrow <- as.integer(nrow)
   ncol <- as.integer(ncol)
   # make sure we're dealing with a unit object
@@ -24,10 +24,12 @@ valid.layout <- function(nrow, ncol, widths, heights, respect) {
   else {
     respect.mat <- matrix(as.integer(0), nrow, ncol)
   }
+  valid.just <- valid.just(just)
   l <- list(nrow = nrow, ncol = ncol,
             widths = widths, heights = heights,
             respect = respect, valid.respect=as.integer(respect),
-            respect.mat = respect.mat)
+            respect.mat = respect.mat,
+            just=just, valid.just=valid.just)
   class(l) <- "layout"
   l
 }
@@ -126,13 +128,14 @@ grid.layout <- function (nrow = 1, ncol = 1,
                          widths = unit(rep(1, ncol), "null"), 
                          heights = unit(rep(1, nrow), "null"),
                          default.units = "null",
-                         respect = FALSE)
+                         respect = FALSE,
+                         just="centre")
 {
   if (!is.unit(widths))
     widths <- unit(widths, default.units)
   if (!is.unit(heights))
     heights <- unit(heights, default.units) 
-  valid.layout(nrow, ncol, widths, heights, respect)
+  valid.layout(nrow, ncol, widths, heights, respect, just)
 }
 
 ####################
