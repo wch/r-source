@@ -493,18 +493,16 @@ FUNTAB R_FunTab[] =
 #else
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL},
 #endif
-#if defined(Win32) || defined(macintosh)
+#ifdef Win32
 {"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
 {"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
-{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
-{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
-#endif
-#ifdef Win32
 {"flush.console",do_flushconsole,0,	11,	0,	PP_FUNCALL},
+{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
 {"win.version", do_winver,	0,	11,	0,	PP_FUNCALL},
 {"saveDevga",	do_saveDevga,	0,	11,	3,	PP_FUNCALL},
 {"shell.exec",	do_shellexec,	0,	11,	1,	PP_FUNCALL},
+{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
 {"winDialog",	do_windialog,	0,	11,	2,	PP_FUNCALL},
 {"winDialogString", do_windialogstring, 0, 11,	2,	PP_FUNCALL},
 {"winMenuAdd",	do_winmenuadd,	0,	11,	3,	PP_FUNCALL},
@@ -512,6 +510,13 @@ FUNTAB R_FunTab[] =
 {"memory.size",	do_memsize,	0,	11,	1,	PP_FUNCALL},
 {"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
 {"bringToTop",	do_bringtotop,	0,	11,	1,	PP_FUNCALL},
+#endif
+#ifdef macintosh
+{"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},
+{"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},
+{"show.help.item",do_helpitem,	0,	11,	3,	PP_FUNCALL},
+{"int.unzip",	do_int_unzip,	0,	11,    -1,	PP_FUNCALL},
+{"dir.create",	do_dircreate,	0,	11,	1,	PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
