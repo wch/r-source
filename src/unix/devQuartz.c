@@ -47,6 +47,12 @@ extern  DL_FUNC ptr_GetQuartzParameters;
 
 void GetQuartzParameters(double *width, double *height, double *ps, char *family, Rboolean *antialias, Rboolean *autorefresh) {ptr_GetQuartzParameters(width, height, ps, family, antialias, autorefresh);}
 
+#define kOnScreen 	0
+#define kOnFilePDF 	1
+#define kOnFilePICT	2
+#define kOnClipboard 	3
+#define kOnPrinter	4
+
 
    /***************************************************************************/
    /* Each driver can have its own device-specic graphical                    */
@@ -70,17 +76,19 @@ typedef struct {
     int fontface;           /* Typeface */
     int fontsize;           /* Size in points */
     int usefixed;
-	int color;		        /* color */
-	int fill;	        	/* fill color */
+    int color;		        /* color */
+    int fill;	        	/* fill color */
     WindowPtr window;
     int	lineType;
     int lineWidth;
     Boolean Antialias;		/* Use Antialiasing */
     Boolean Autorefresh;
     char	*family;
-    CGContextRef context;  /* This is the Contetx used by Quartz */
+    CGContextRef context;     /* This is the context used by Quartz for OnScreen drawings */
+    CGContextRef auxcontext;  /* Additional context used for: cliboard, printer, file     */
     double	xscale;
     double	yscale;
+    int		where;
 }
 QuartzDesc;
 
@@ -324,6 +332,7 @@ Rboolean innerQuartzDeviceDriver(NewDevDesc *dd, char *display,
     else
      xd->family = NULL;
 
+    xd->where  = kOnScreen;
     err = SetCGContext(xd);
 
 /* This scale factor is needed in MetricInfo */

@@ -129,6 +129,12 @@ extern SA_TYPE RestoreAction;
 #define	kRDlogProc 1002
 #define	kRDlogCanc 1003
 
+#define kRGUI	'RGUI'
+#define kRGUIBusy  1000
+#define kRGUISep   1001
+#define kRGUIText   1002
+
+
 OSStatus 	InitMLTE(void);
 TXNObject	RConsoleOutObject = NULL;
 TXNObject	RConsoleInObject = NULL;
@@ -468,7 +474,7 @@ OSStatus SetUPConsole(void){
     
                  
     GetWindowPortBounds (ConsoleWindow,&WinFrame);
-    SetRect(&OutFrame,0,0,WinFrame.right,WinFrame.bottom-110);
+    SetRect(&OutFrame,0,26,WinFrame.right,WinFrame.bottom-110);
     SetRect(&InFrame,0,WinFrame.bottom-100,WinFrame.right,WinFrame.bottom);
                 
     frameOptions = kTXNShowWindowMask|kTXNDoNotInstallDragProcsMask|kTXNMonostyledTextMask; 
@@ -1777,13 +1783,54 @@ nomem:
 
 }
 
+ControlID	RGUISep = {kRGUI, kRGUISep};
+ControlID	RGUIBusy = {kRGUI, kRGUIBusy};
+ControlID	RGUIText = {kRGUI, kRGUIText};
+
+void Raqua_showarrow(void);
+void Raqua_showarrow(void){
+  ControlRef	RGUIControl;
+
+  GetControlByID(ConsoleWindow, &RGUIBusy, &RGUIControl);
+  ShowControl(RGUIControl);
+  GetControlByID(ConsoleWindow, &RGUIText, &RGUIControl);
+  ShowControl(RGUIControl);
+}
+
+void Raqua_hidearrow(void);
+void Raqua_hidearrow(void){
+  ControlRef	RGUIControl;
+
+  GetControlByID(ConsoleWindow, &RGUIBusy, &RGUIControl);
+  HideControl(RGUIControl);
+  GetControlByID(ConsoleWindow, &RGUIText, &RGUIControl);
+  HideControl(RGUIControl);
+}
+   
+void Raqua_Busy(int which);
+
+void Raqua_Busy(int which)
+{
+    if(which == 1) 
+     Raqua_showarrow();
+    else 
+     Raqua_hidearrow();
+}
    
 void RescaleInOut(double prop)
 {  
   Rect 	WinBounds, InRect, OutRect;
+  ControlRef	RGUIControl;
 
   GetWindowPortBounds(ConsoleWindow, &WinBounds);
-  SetRect(&OutRect,0,0,WinBounds.right,(int)( WinBounds.bottom*prop ));
+  GetControlByID(ConsoleWindow, &RGUIBusy, &RGUIControl);
+  MoveControl (RGUIControl, WinBounds.right - 20, 4);
+  GetControlByID(ConsoleWindow, &RGUISep, &RGUIControl);
+  SizeControl(RGUIControl, WinBounds.right, 4);
+  GetControlByID(ConsoleWindow, &RGUIText, &RGUIControl);
+  SizeControl(RGUIControl, WinBounds.right-40, 16);
+        
+  SetRect(&OutRect,0,26,WinBounds.right,(int)( WinBounds.bottom*prop ));
   SetRect(&InRect, 0, (int)( WinBounds.bottom*prop+1 ),WinBounds.right,WinBounds.bottom);           
   TXNSetFrameBounds (RConsoleInObject, InRect.top, InRect.left,  InRect.bottom, InRect.right, InframeID);
   TXNSetFrameBounds (RConsoleOutObject, OutRect.top, OutRect.left, OutRect.bottom, OutRect.right, OutframeID);
