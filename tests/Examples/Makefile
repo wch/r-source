@@ -50,14 +50,14 @@ show-Ex:
 All-Ex.R: $(R_src)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
-	@echo "massaging single Examples into $@ ..."
+	@echo "Massaging single Examples into $@ ..."
 	@-./massage-Examples $(R_src) > $@
 
 All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo 'Running all help() EXAMPLES ..'
-	$(R) -v 6 < All-Ex.R > $@
+	$(R) --vsize 6 < All-Ex.R > $@
 
 clean:
 	@rm -f *.Rd* *.ps *.tex *.dat* data foo*
