@@ -1072,9 +1072,9 @@ static Rboolean has_class_definition(SEXP class_name)
 {
     /* In case we're called before initialization, try to find the
      * class metadata environment but don't insist on it. */
-    if(class_meta_data_env || make_class_meta_data_env())
+/*    if(class_meta_data_env || make_class_meta_data_env())
 	return (findVarInFrame3(class_meta_data_env, class_name, FALSE) != R_UnboundValue);
-    else
+	else */
 	return FALSE;
 }
 
