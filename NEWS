@@ -370,7 +370,7 @@ C-LEVEL FACILITIES
 
     o	New entry point R_GetX11Image and formerly undocumented
 	ptr_R_GetX11Image are in new header R_ext/GetX11Image.	These
-	are used by package trkplot.
+	are used by package tkrplot.
 
 
 BUG FIXES
