@@ -11,23 +11,23 @@
 
 NEW FEATURES
 
-    o   length() is now generic.
+    o	length() is now generic.
 
-    o   arraySubscript and vectorSubscript are now available to package
-        users.  All "array-like" packages can use a standard method for
-        calculating subscripts.
+    o	arraySubscript and vectorSubscript are now available to package
+	users.	All "array-like" packages can use a standard method for
+	calculating subscripts.
 
     o	new.env() is now internal and allows you to set hashing. Also,
-        parent.env() and parent.env<-() are included to provide direct
-        access to setting and retrieving environments.
+	parent.env() and parent.env<-() are included to provide direct
+	access to setting and retrieving environments.
 
     o	Function identical(), a fast and reliable way to test for exact
 	equality of two objects.
 
-    o   bxp() has a show.names argument allowing labels on a single
+    o	bxp() has a show.names argument allowing labels on a single
 	boxplot
 
-    o   Function nsl() to look up IP addresses of hosts: intended as
+    o	Function nsl() to look up IP addresses of hosts: intended as
 	a way to test for internet connectivity.
 
     o	R CMD Rd2dvi has more convenient defaults for its output file.
@@ -57,12 +57,12 @@ NEW FEATURES
     o	Ops(), cbind(), diff() and na.omit() methods for time series
 	objects moved from package ts to package base.
 
-    o   Started work on new package management system: package.status()
+    o	Started work on new package management system: package.status()
 	and friends.
 
-    o   A package `methods' has been added, containing formal classes
-        and methods ("S4" methods).  In support of this, the "@"
-        operator has been added to the grammar.
+    o	A package `methods' has been added, containing formal classes
+	and methods ("S4" methods).  In support of this, the "@"
+	operator has been added to the grammar.
 
     o	New argument `cacheOK' to download.file() to request cache
 	flushing.
@@ -82,26 +82,26 @@ NEW FEATURES
 
     o	warning() allows multiple arguments, following S4's style.
 
-    o   The C routine type2symbol, similar to type2str, returns a symbol
-        corresponding to the type supplied as an argument.
+    o	The C routine type2symbol, similar to type2str, returns a symbol
+	corresponding to the type supplied as an argument.
 
-    o   data.frame() no longer converts logical arguments to factors
+    o	data.frame() no longer converts logical arguments to factors
 	(following S4 rather than S3).
 
-    o   model.matrix() treats logical variables as a factors with
+    o	model.matrix() treats logical variables as a factors with
 	levels c(FALSE, TRUE) (rather than 0-1 valued numerical
 	variables).  This makes R compatible with all S versions.
 
     o	Modified `save' internals to improve performance when saving
 	large collections of code.
 
-    o   As an experiment only, "=" is now allowed as an assignment
-        operator in the grammar.  This is not a commitment that it
-        will be supported in future non-development versions.
+    o	As an experiment only, "=" is now allowed as an assignment
+	operator in the grammar.  This is not a commitment that it
+	will be supported in future non-development versions.
 
-    o   order() and sort.list() now implement na.last = FALSE, NA.
+    o	order() and sort.list() now implement na.last = FALSE, NA.
 
-    o   Previously deprecated functions read.table.url(), scan.url(),
+    o	Previously deprecated functions read.table.url(), scan.url(),
 	source.url(), httpclient() and parse.dcf() are defunct.
 	Method "socket" for download.file no longer exists.
 
@@ -128,56 +128,56 @@ NEW FEATURES
 	labels can be scaled separately.  Also, graphics parameters
 	intended for axis() such as `las' can now be used.
 
-    o   Three new primitive functions have been added to base:
-        dataClass(), objWithClass(), and as.environment().  The first two
-        are support routines for class() and class<-() in package
-        methods.  The third replaces pos.to.env() in the functions get(),
-        exists(), and friends.
+    o	Three new primitive functions have been added to base:
+	dataClass(), objWithClass(), and as.environment().  The first two
+	are support routines for class() and class<-() in package
+	methods.  The third replaces pos.to.env() in the functions get(),
+	exists(), and friends.
 
-    o   read.table() has new arguments `nrows' and `colClasses'.  If the
+    o	read.table() has new arguments `nrows' and `colClasses'.  If the
 	latter is NA (the default), conversion is attempted to
 	logical, integer, numeric or complex, not just to numeric.
 
-    o   An enhanced function type.convert() is now a documented
+    o	An enhanced function type.convert() is now a documented
 	function, rather than just internal to read.table().
 
-    o   df.residual() now has a default method, used for classes
+    o	df.residual() now has a default method, used for classes
 	"lm" and "glm".
 
     o	cor.test() in package ctest now also gives an asymptotic
 	confidence interval for the Pearson product moment correlation
 	coefficient.
 
-    o   The "?" operator is now an actual function.  It can be used
-        (as always) as a unary operator (?plot) and the grammar now
-        allows it as a binary operator, planned to allow
-        differentiating documentation on the same name but different
-        type (class?matrix, for example).  So far, no such
-        documentation exists.
+    o	The "?" operator is now an actual function.  It can be used
+	(as always) as a unary operator (?plot) and the grammar now
+	allows it as a binary operator, planned to allow
+	differentiating documentation on the same name but different
+	type (class?matrix, for example).  So far, no such
+	documentation exists.
 
-    o   All methods for download.file() do tilde-expansion on the path
+    o	All methods for download.file() do tilde-expansion on the path
 	name.
 
-    o   Finalizers can be registered to be run on system exit for both
+    o	Finalizers can be registered to be run on system exit for both
 	reachable and unreachable objects.
 
-    o   Methods dispatch for formal methods (the standardGeneric
-        function), is now a primitive.  Aside from efficiency issues,
-        this allows S3-style generics to also have formal methods (not
-        really recommended in the long run, but it should at least work).
+    o	Methods dispatch for formal methods (the standardGeneric
+	function), is now a primitive.	Aside from efficiency issues,
+	this allows S3-style generics to also have formal methods (not
+	really recommended in the long run, but it should at least work).
 
-    o   readline() allows up to 256 chars for the prompt.
+    o	readline() allows up to 256 chars for the prompt.
 
-    o   [dpqr]gamma now has third argument `rate' for S-compatibility
+    o	[dpqr]gamma now has third argument `rate' for S-compatibility
 	(and for compatibility with exponentials).  Calls which use
 	positional matching may need to be altered.
 
-    o   readChar() now returns what is available if fewer characters
+    o	readChar() now returns what is available if fewer characters
 	than requested are on the file.
 
-    o   is.xxx reached through do_is are now generic
+    o	is.xxx reached through do_is are now generic
 
-    o   arrows() now allows length = 0 (and draws no arrowheads).
+    o	arrows() now allows length = 0 (and draws no arrowheads).
 
     o	The formula interface to mosaicplot() now allows a contingency
 	table as data argument.
@@ -192,33 +192,39 @@ NEW FEATURES
 	`comment.char', default `#', that can be used to start
 	comments on a line.
 
-    o   integer addition, subtraction, and multiplication now return NA's
+    o	integer addition, subtraction, and multiplication now return NA's
 	on overflow and issue a warning.
 
     o	new AIC.default() and logLik.glm(), also fixing AIC(<glm obj>)
 
-    o   smooth.spline() has a new argument `tol.spar' argument and returns
-        `lambda' besides `spar'.  The range of `spar'/`lambda' now allow
+    o	smooth.spline() has a new `control.spar' argument and returns
+	`lambda' besides `spar'.  spar <= 0 is now valid and allows
 	to go more closely towards interpolation (lambda -> 0) than before.
+	This also fixes smooth.spline() behavior for "df ~= n - 2". Better
+	error messages in several situations.
 
-    o   page() has a new `method' argument allowing `method = print'.
+	Note that spar = 0 is no longer the default and no longer entails
+	crossvalidation.
 
-    o   mean() has `data frame' method applying mean column-by-column.
+
+    o	page() has a new `method' argument allowing `method = print'.
+
+    o	mean() has `data frame' method applying mean column-by-column.
 	When applied to non-numeric data mean() now returns NA rather
 	than a confusing error message (for compatibility with S4).
 
-    o   axis.POSIXct() allows the label date/times to be specified
+    o	axis.POSIXct() allows the label date/times to be specified
 	via the new `at' argument.
 
-    o   princomp() now has a formula interface.
+    o	princomp() now has a formula interface.
 
-    o   factanal() and princomp() use napredict() on their scores, so
+    o	factanal() and princomp() use napredict() on their scores, so
 	na.action = na.exclude is supported.
 
-    o   loess(), lqs(), nls() and ppr() use the standard na-handling
+    o	loess(), lqs(), nls() and ppr() use the standard na-handling
 	and so support na.action = na.exclude.
 
-    o   predict.ppr() now predicts on `newdata' containing NAs.
+    o	predict.ppr() now predicts on `newdata' containing NAs.
 
 
 
@@ -238,25 +244,27 @@ BUG FIXES
     o	file.append() was opening all files in text mode: mattered
 	on Windows and classic Macintosh. (PR#1085)
 
-    o   f[] <- g  now works for factor f.
+    o	f[] <- g  now works for factor f.
 
-    o   substr<- was misbehaving if the replacement was too short.
+    o	substr<- was misbehaving if the replacement was too short.
 
-    o   The version of `packages.html' generated when building R or
+    o	The version of `packages.html' generated when building R or
 	installing packages had an incorrect link to the style sheet.
 	The version used by help.start() was correct. (PR#1090)
 
-    o   rowsum() now gives character (not factor codes) as rownames.
+    o	rowsum() now gives character (not factor codes) as rownames.
 	(PR#1092)
 
-    o   plot.POSIX[cl]t now respect the `xaxt' parameter.
+    o	plot.POSIX[cl]t now respect the `xaxt' parameter.
 
-    o   It is now possible to predict from an intercept-only model:
+    o	It is now possible to predict from an intercept-only model:
 	previously model.matrix.default() objected to a 0-column
 	model frame.
 
-    o   c.POSIXct was not setting the right classes in 1.3.x.
+    o	c.POSIXct was not setting the right classes in 1.3.x.
 
+    o	cor(*, use = "all.obs") <= 1 is now guaranteed which ensures
+	that sqrt(1 - r^2) is always ok in cor.test(). (PR#1099)
 
 
 	**************************************************

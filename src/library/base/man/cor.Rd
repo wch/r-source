@@ -27,6 +27,9 @@ cov(x, y = NULL, use = "all.obs")
     or \code{"pairwise.complete.obs"}.}
   \item{na.rm}{logical. Should missing values be removed?}
 }
+\value{For \code{r <- cor(*, use = "all.obs")}, it is now guaranteed that
+  \code{all(r <= 1)}.
+}
 \details{
   For \code{cov} and \code{cor} one must \emph{either} give a matrix or data
   frame for \code{x} \emph{or} give both \code{x} and \code{y}.
@@ -65,7 +68,12 @@ var(1:5,1:5)# 2.5
 cor(1:10,2:11)# == 1
 
 \testonly{
- stopifnot(is.na(var(1)) && !is.nan(var(1)))
+ stopifnot(  is.na(var(1)),
+           !is.nan(var(1)))
+
+ zz <- c(-1.30167, -0.4957, -1.46749, 0.46927)
+ r <- cor(zz,zz); r - 1
+ stopifnot(r <= 1) # fails in R <= 1.3.x, for versions of Linux and Solaris
 }
 ## Correlation Matrix of Multivariate sample:
 data(longley)
