@@ -3,7 +3,7 @@
 # Copyright 1997-2001 by Douglas Bates <bates@stat.wisc.edu>, <edd@debian.org>
 # Copyright 2001      by Dirk Eddelbuettel <edd@debian.org>
 
-# $Id: rules,v 1.35 2001/11/28 19:44:31 bates Exp $
+# $Id: rules,v 1.36 2001/12/11 20:56:11 bates Exp $
 
 package		= r-base
 pdfpackage	= r-doc-pdf
@@ -44,11 +44,11 @@ compiler	= gcc
 cxxcompiler	= g++
 
 # edd 04 Sep 2001  default compiler flags, lowered for m68k
-compilerflags	= "-O2"
+compilerflags	= -O2
 # m68k barks when using g77, and when gcc use -O2
 ifeq ($(arch),m68k-linux)
 fortran		= --with-f2c
-compilerflags	= "-O"
+compilerflags	= -O
 endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
@@ -56,15 +56,21 @@ ifeq ($(arch),ia64-linux)
 fortran 	= --with-g77=/usr/bin/g77-3.0
 compiler	= gcc-3.0
 cxxcompiler	= g++-3.0
-compilerflags	= "-O2"
+compilerflags	= -O2
 endif
+
+## lamont@debian.org 06 Dec 2001  hppa needs -ffunction-sections  
+ifeq ($(arch),hppa-linux)
+compilerflags   = -O2 -ffunction-sections
+endif
+
 
 ## try gcc-3.0 on i386 -- appears to work
 #ifeq ($(arch),i386-linux)
 #fortran 	= --with-g77=/usr/bin/g77-3.0
 #compiler	= gcc-3.0
 #cxxcompiler	= g++-3.0
-#compilerflags	= "-O2"
+#compilerflags	= -O2
 #endif
 
 get-orig-source: upstream
@@ -112,9 +118,9 @@ configure-stamp:
 
 make-arch: configure make-arch-stamp 
 make-arch-stamp: 
-	make		CFLAGS=$(compilerflags)			\
-			CXXFLAGS=$(compilerflags)		\
-			FFLAGS=$(compilerflags)			\
+	make		CFLAGS="$(compilerflags)"		\
+			CXXFLAGS="$(compilerflags)"		\
+			FFLAGS="$(compilerflags)"		\
 			CC=${compiler} 				\
 			CXX=${cxxcompiler}
 	(cd src/nmath/standalone; 				\

@@ -1,9 +1,9 @@
 Source: r-base
 Section: math
-Priority: extra
+Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Standards-Version: 3.5.0
-Build-depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !hppa !ia64], g77-3.0 [hppa ia64], f2c [m68k], gcc [!hppa !ia64], gcc-3.0 [hppa ia64], g++ [!hppa !ia64], g++-3.0 [hppa ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0)
+Build-Depends: blas-dev (>= 1.0-9), libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.3-dev, tk8.3-dev, libglade-gnome0-dev, bison, g77 [!m68k !ia64], g77-3.0 [ia64], f2c [m68k], gcc-3.0 [ia64], g++-3.0 [ia64], groff-base, libncurses5-dev, libreadline4-dev, tetex-bin, tetex-extra, debhelper (>= 3.0.0)
 
 Package: r-base
 Architecture: any
@@ -57,7 +57,7 @@ Architecture: all
 Section: doc
 Suggests: r-base, mozilla | konqueror | links | lynx | www-browser
 Replaces: r-base
-Description: `GNU S' documentation in pdf format
+Description: `GNU S' documentation in html format
  R is described by its authors as "not unlike" S, which is a language
  developed at Bell Laboratories for statistical computing and graphics.
  It provides support for a variety of statistical and graphical analyses.
