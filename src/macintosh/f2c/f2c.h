@@ -1,5 +1,5 @@
 /* f2c.h  --  Standard Fortran to C header file */
- 
+
 /**  barf  [ba:rf]  2.  "He suggested using FORTRAN, and everybody barfed."
 
 	- From The Shogakukan DICTIONARY OF NEW ENGLISH (Second edition) */
@@ -7,24 +7,24 @@
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
 
-/* I have redefined "long int" definitions to "int" */
-/* This is to fix wordsize problem on 64 bit machines */
-/* like the DEC alpha. - Ross Ihaka */
-
-typedef int integer;
+typedef long int integer;
+typedef unsigned long int uinteger;
 typedef char *address;
 typedef short int shortint;
 typedef float real;
 typedef double doublereal;
 typedef struct { real r, i; } complex;
 typedef struct { doublereal r, i; } doublecomplex;
-typedef int logical;
+typedef long int logical;
 typedef short int shortlogical;
 typedef char logical1;
 typedef char integer1;
-/* typedef long long longint; */ /* system-dependent */
-
-
+#ifdef INTEGER_STAR_8	/* Adjust for integer*8. */
+typedef long long longint;		/* system-dependent */
+typedef unsigned long long ulongint;	/* system-dependent */
+#define qbit_clear(a,b)	((a) & ~((ulongint)1 << (b)))
+#define qbit_set(a,b)	((a) |  ((ulongint)1 << (b)))
+#endif
 
 #define TRUE_ (1)
 #define FALSE_ (0)
@@ -42,9 +42,9 @@ typedef short flag;
 typedef short ftnlen;
 typedef short ftnint;
 #else
-typedef long flag;
-typedef long ftnlen;
-typedef long ftnint;
+typedef long int flag;
+typedef long int ftnlen;
+typedef long int ftnint;
 #endif
 
 /*external read, write*/
@@ -137,7 +137,7 @@ union Multitype {	/* for multiple entry points */
 
 typedef union Multitype Multitype;
 
-typedef long Long;	/* No longer used; formerly in Namelist */
+/*typedef long int Long;*/	/* No longer used; formerly in Namelist */
 
 struct Vardesc {	/* for Namelist */
 	char *name;
@@ -154,20 +154,15 @@ struct Namelist {
 	};
 typedef struct Namelist Namelist;
 
-/* a whole bunch of stuff to keep watcom's C compiler happy */
-#ifdef min
-#undef min
-#endif
-#ifdef max
-#undef max
-#endif
-
 #define abs(x) ((x) >= 0 ? (x) : -(x))
 #define dabs(x) (doublereal)abs(x)
 #define min(a,b) ((a) <= (b) ? (a) : (b))
 #define max(a,b) ((a) >= (b) ? (a) : (b))
 #define dmin(a,b) (doublereal)min(a,b)
 #define dmax(a,b) (doublereal)max(a,b)
+#define bit_test(a,b)	((a) >> (b) & 1)
+#define bit_clear(a,b)	((a) & ~((uinteger)1 << (b)))
+#define bit_set(a,b)	((a) |  ((uinteger)1 << (b)))
 
 /* procedure parameter types for -A and -C++ */
 
