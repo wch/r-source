@@ -1,0 +1,216 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-05 17:39\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "'bias' must be positive"
+msgstr ""
+
+msgid "rgb matrix must be numeric"
+msgstr ""
+
+msgid "rgb matrix must have 3 rows"
+msgstr ""
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr ""
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr ""
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr ""
+
+msgid "'from' must be a colorConverter or string"
+msgstr ""
+
+msgid "'to' must be a colorConverter or string"
+msgstr ""
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr ""
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr ""
+
+msgid "color spaces use different reference whites."
+msgstr ""
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr ""
+
+msgid "cannot supply which and device at the same time"
+msgstr ""
+
+msgid "cannot copy the null device"
+msgstr ""
+
+msgid "cannot copy to the null device"
+msgstr ""
+
+msgid "cannot copy device to itself"
+msgstr ""
+
+msgid "'device' should be a function"
+msgstr ""
+
+msgid "no device to print from"
+msgstr ""
+
+msgid "can only print from screen device"
+msgstr ""
+
+msgid "dev.control() called without an open graphics device"
+msgstr ""
+
+msgid "argument is missing with no default"
+msgstr ""
+
+msgid "invalid arguments in"
+msgstr ""
+
+msgid "(need named args)"
+msgstr ""
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr ""
+
+msgid "Cannot reset non-existing"
+msgstr ""
+
+msgid "invalid options in"
+msgstr ""
+
+msgid "invalid argument name(s)"
+msgstr ""
+
+msgid "in"
+msgstr ""
+
+msgid "and"
+msgstr ""
+
+msgid "differ"
+msgstr ""
+
+msgid "s"
+msgstr ""
+
+msgid "between new and previous"
+msgstr ""
+
+msgid "==> NOT changing"
+msgstr ""
+
+msgid "invalid family argument"
+msgstr ""
+
+msgid "invalid PDF version"
+msgstr ""
+
+msgid "invalid"
+msgstr ""
+
+msgid "in PostScript font specification"
+msgstr ""
+
+msgid "font"
+msgstr ""
+
+msgid "already in use"
+msgstr ""
+
+msgid "invalid arguments in postscriptFonts (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in postscriptFonts (need named args)"
+msgstr ""
+
+msgid "no current device to record from"
+msgstr ""
+
+msgid "argument is not of class \"recordedplot\""
+msgstr ""
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr ""
+
+msgid "loading snapshot from different R version ("
+msgstr ""
+
+msgid "x log scale:  xinch() is non-sense"
+msgstr ""
+
+msgid "y log scale:  yinch() is non-sense"
+msgstr ""
+
+msgid "log scale:  xyinch() is non-sense"
+msgstr ""
+
+msgid "'file' is missing with no default"
+msgstr ""
+
+msgid "'file' is must be a non-empty character string"
+msgstr ""
+
+msgid "sorry, gs cannot be found"
+msgstr ""
+
+msgid "device"
+msgstr ""
+
+msgid "is not available"
+msgstr ""
+
+msgid "Available devices are"
+msgstr ""
+
+msgid "quartz() device interactivity reduced without an event loop manager"
+msgstr ""
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr ""
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr ""
+
+msgid "invalid X11 font specification:"
+msgstr ""
+
+msgid "invalid arguments in X11Fonts (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in X11Fonts (need named args)"
+msgstr ""
+
+msgid "can only bring windows devices to the front"
+msgstr ""
+
+msgid "no such device"
+msgstr ""
+
+msgid "can only copy from 'windows' devices"
+msgstr ""
+
+msgid "subscript out of range"
+msgstr ""
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr ""
+
+msgid "invalid arguments in windowsFonts (must be font names)"
+msgstr ""
+
+msgid "invalid arguments in windowsFonts (need named args)"
+msgstr ""

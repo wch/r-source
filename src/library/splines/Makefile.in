@@ -37,9 +37,9 @@ all: Makefile DESCRIPTION
 	@if test -d $(srcdir)/inst/po; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
 	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
+	    -exec rm -rf \{\} \; 2>/dev/null; \
 	fi
-	@find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
-	  -exec rm -rf \{\} \; 2>/dev/null
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \
 	  (f=$${TMPDIR:-/tmp}/R$$$$; \

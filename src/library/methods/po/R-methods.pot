@@ -1,0 +1,1041 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-05 17:34\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "Replacement value is not a matrix"
+msgstr ""
+
+msgid "Methods may not be defined for primitive function \""
+msgstr ""
+
+msgid "\" in this version of R"
+msgstr ""
+
+msgid "\" is not one of the basic functions"
+msgstr ""
+
+msgid "No replace method was defined for as(x, \""
+msgstr ""
+
+msgid "\") <- value for class \""
+msgstr ""
+
+msgid "The `coerce' argument to setIs should be a function of one argument, got an object of class \""
+msgstr ""
+
+msgid "The computation: as(object,\""
+msgstr ""
+
+msgid "\") <- value is valid when object has class"
+msgstr ""
+
+msgid "\" only if is(value, \""
+msgstr ""
+
+msgid "\") is TRUE ( class(value) was \""
+msgstr ""
+
+msgid "\")"
+msgstr ""
+
+msgid "There is no automatic definition for as(object, \""
+msgstr ""
+
+msgid "\") <- value when object has class \""
+msgstr ""
+
+msgid "\" and no replace= argument was supplied; replacement will be an error"
+msgstr ""
+
+msgid "the replace= argument to setIs() should be a function of 2 or 3 arguments, got an object of class \""
+msgstr ""
+
+msgid "The member classes must be defined: not true of"
+msgstr ""
+
+msgid "character"
+msgstr ""
+
+msgid "Unable to create union class:  could not set members"
+msgstr ""
+
+msgid "If the `def' argument is supplied, it must be a function that calls standardGeneric(\""
+msgstr ""
+
+msgid "\") to dispatch methods."
+msgstr ""
+
+msgid "Must supply a function skeleton, explicitly or via an existing function"
+msgstr ""
+
+msgid "Function \""
+msgstr ""
+
+msgid "\" appears to be a Generic function, but with generic name \""
+msgstr ""
+
+msgid "Generic function \""
+msgstr ""
+
+msgid "\" not found for removal"
+msgstr ""
+
+msgid "Invalid argument \"f\", expected function or its name, got an object of class \""
+msgstr ""
+
+msgid "Internal error: did not get a valid generic function object for function \""
+msgstr ""
+
+msgid "The environment \""
+msgstr ""
+
+msgid "\" is locked; cannot assign methods for function \""
+msgstr ""
+
+msgid "The `where' environment ("
+msgstr ""
+
+msgid ") is a locked namespace; can't assign methods there"
+msgstr ""
+
+msgid "No existing definition for function \""
+msgstr ""
+
+msgid "Apparent internal error: a generic function was found for \""
+msgstr ""
+
+msgid "\", but no corresponding object was found searching from \""
+msgstr ""
+
+msgid "The method for function \""
+msgstr ""
+
+msgid "\" and signature"
+msgstr ""
+
+msgid "is sealed and cannot be re-defined"
+msgstr ""
+
+msgid "Primitive functions cannot be methods; they must be enclosed in a regular function"
+msgstr ""
+
+msgid "Invalid method definition: expected a function, got an object of class \""
+msgstr ""
+
+msgid "No generic function \""
+msgstr ""
+
+msgid "\" found"
+msgstr ""
+
+msgid "No method found for function \""
+msgstr ""
+
+msgid "Apparent inconsistency in the methods for function \""
+msgstr ""
+
+msgid "\"; argument \""
+msgstr ""
+
+msgid "\" in the signature corresponds to \""
+msgstr ""
+
+msgid "\" in the methods list object."
+msgstr ""
+
+msgid "No S4 method for function \""
+msgstr ""
+
+msgid "\"; consider getS3method() if you wanted the S3 method."
+msgstr ""
+
+msgid "No method defined for function \""
+msgstr ""
+
+msgid "signature must be a vector of classes or an environment"
+msgstr ""
+
+msgid "\" has no methods defined"
+msgstr ""
+
+msgid "No unique method corresponding to this signature"
+msgstr ""
+
+msgid "Unable to match signature to methods"
+msgstr ""
+
+msgid "Bad class specified for element"
+msgstr ""
+
+msgid "(should be a single character string)"
+msgstr ""
+
+msgid "First argument should be the name(s) of generic functions"
+msgstr ""
+
+msgid "(got object of class \""
+msgstr ""
+
+msgid "The environment/package \""
+msgstr ""
+
+msgid "\" is locked; can't remove methods data for \""
+msgstr ""
+
+msgid "\" is not a generic function in \""
+msgstr ""
+
+msgid "\"; methods not removed"
+msgstr ""
+
+msgid "Cannot restore previous version of \""
+msgstr ""
+
+msgid "\" in locked environment/package \""
+msgstr ""
+
+msgid "Can't reset \""
+msgstr ""
+
+msgid "\", the definition is not a generic function object"
+msgstr ""
+
+msgid "Error in updating generic function \""
+msgstr ""
+
+msgid "\"; the function definition is not a generic function (class \""
+msgstr ""
+
+msgid "callGeneric with a primitive needs explict arguments (no formal args defined)"
+msgstr ""
+
+msgid "callGeneric must be called from a generic function or method"
+msgstr ""
+
+msgid "Invalid first argument: should be the name of the first argument in the dispatch"
+msgstr ""
+
+msgid "duplicate element names in MethodsList at level"
+msgstr ""
+
+msgid "Element"
+msgstr ""
+
+msgid "at level"
+msgstr ""
+
+msgid "(class \""
+msgstr ""
+
+msgid "\") can't be interpreted as a function or named list"
+msgstr ""
+
+msgid "arguments \"names\" and \"signature\" must have the same length"
+msgstr ""
+
+msgid "inserting method with invalid signature matching argument \"...\" to class \""
+msgstr ""
+
+msgid "inserting method corresponding to empty signature"
+msgstr ""
+
+msgid "inserting method into non-methods-list object (class \""
+msgstr ""
+
+msgid "Invalid method sublist"
+msgstr ""
+
+msgid "\" is not a valid generic function: methods list was an object of class \""
+msgstr ""
+
+msgid "useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \""
+msgstr ""
+
+msgid "Trying to match a method signature to an object (of class \""
+msgstr ""
+
+msgid "\") that is not a generic function."
+msgstr ""
+
+msgid "Trying to match a method signature of class \""
+msgstr ""
+
+msgid "\"; expects a list or a character vector."
+msgstr ""
+
+msgid "In the method signature for function \""
+msgstr ""
+
+msgid "\", no definition for class(es):"
+msgstr ""
+
+msgid "Object to use as a method signature for function \""
+msgstr ""
+
+msgid "\" doesn't look like a legitimate signature (a vector of single class names): there were"
+msgstr ""
+
+msgid "class names, but"
+msgstr ""
+
+msgid "elements in the signature object."
+msgstr ""
+
+msgid "\", invalid argument names in the signature:"
+msgstr ""
+
+msgid "No methods found for generic"
+msgstr ""
+
+msgid "Skipping methods list element"
+msgstr ""
+
+msgid "of unexpected class \""
+msgstr ""
+
+msgid "Invalid object for formal method defintion: type \""
+msgstr ""
+
+msgid "Missing package slot ("
+msgstr ""
+
+msgid ") in object of class \""
+msgstr ""
+
+msgid "\" (package info added)"
+msgstr ""
+
+msgid "Initialize method returned an object of class \""
+msgstr ""
+
+msgid "\" instead of the required class \""
+msgstr ""
+
+msgid "The names in signature for method ("
+msgstr ""
+
+msgid ") don't match function's arguments ("
+msgstr ""
+
+msgid ")"
+msgstr ""
+
+msgid "NextMethod not defined because the the current method is not a MethodDefinition object"
+msgstr ""
+
+msgid "expected a list of signature objects, got \""
+msgstr ""
+
+msgid "A call to callNextMethod() appears in a call to \""
+msgstr ""
+
+msgid "\", but the call doesn't seem to come from either a generic function or another callNextMethod."
+msgstr ""
+
+msgid "call to callNextMethod doesn't appear to be in a method or callNextMethod context"
+msgstr ""
+
+msgid "Bad object found as method (class \""
+msgstr ""
+
+msgid "In constructing the prototype for class \""
+msgstr ""
+
+msgid "\":"
+msgstr ""
+
+msgid "Prototype has class \""
+msgstr ""
+
+msgid "\", but the data part specifies class \""
+msgstr ""
+
+msgid "\","
+msgstr ""
+
+msgid "Slots in prototype and not in class:"
+msgstr ""
+
+msgid "In making the prototype for class \""
+msgstr ""
+
+msgid "\" elements of the prototype failed to match the corresponding slot class:"
+msgstr ""
+
+msgid "Potential cycle in class inheritance: \""
+msgstr ""
+
+msgid "\" has duplicates in superclasses and subclasses ("
+msgstr ""
+
+msgid "Undefined slot classes in definition of \""
+msgstr ""
+
+msgid "In definition of class \""
+msgstr ""
+
+msgid "\"  information for superclass \""
+msgstr ""
+
+msgid "\" is of class \""
+msgstr ""
+
+msgid "\" (expected \"SClassExtension\""
+msgstr ""
+
+msgid "class \""
+msgstr ""
+
+msgid "\" extends an undefined class,\""
+msgstr ""
+
+msgid "Trying to assign an object of class \""
+msgstr ""
+
+msgid "\" as the definition of class \""
+msgstr ""
+
+msgid "\": must supply a \"classRepresentation\" object."
+msgstr ""
+
+msgid "Assigning as \""
+msgstr ""
+
+msgid "\" a class representation with internal name"
+msgstr ""
+
+msgid "externalptr objects cannot be initialized from new()"
+msgstr ""
+
+msgid "In defining class \""
+msgstr ""
+
+msgid "\", the supplied data part class, \""
+msgstr ""
+
+msgid "\" is not valid (must be a basic class or a virtual class combining basic classes)"
+msgstr ""
+
+msgid "Class \""
+msgstr ""
+
+msgid "\" cannot be used as the data part of another class"
+msgstr ""
+
+msgid "More than one possible class for the data part:  using \""
+msgstr ""
+
+msgid "\" rather than \""
+msgstr ""
+
+msgid "Conflicting definition of data part: .Data = \""
+msgstr ""
+
+msgid ".Data"
+msgstr ""
+
+msgid "\", super class implies \""
+msgstr ""
+
+msgid "A prototype object was supplied with object slot of class \""
+msgstr ""
+
+msgid "\", but the class definition requires an object that is class \""
+msgstr ""
+
+msgid "A prototype was supplied of class \""
+msgstr ""
+
+msgid "Slot \""
+msgstr ""
+
+msgid "\" in class \""
+msgstr ""
+
+msgid "\" currently defined (or inherited) as \""
+msgstr ""
+
+msgid "\", conflicts with an inherited definition in class \""
+msgstr ""
+
+msgid "\" extends an undefined class (\""
+msgstr ""
+
+msgid "\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots"
+msgstr ""
+
+msgid "prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble."
+msgstr ""
+
+msgid "The"
+msgstr ""
+
+msgid "superClass"
+msgstr ""
+
+msgid "subClass"
+msgstr ""
+
+msgid "list for class, \""
+msgstr ""
+
+msgid "\", includes an undefined class, \""
+msgstr ""
+
+msgid "\" may not"
+msgstr ""
+
+msgid ": it"
+msgstr ""
+
+msgid "\", with a circular relation back to \""
+msgstr ""
+
+msgid ".Method"
+msgstr ""
+
+msgid "\"class\" is a reserved slot name and cannot be redefined"
+msgstr ""
+
+msgid "No .Data slot defined for class \""
+msgstr ""
+
+msgid "\" does not have a data part (a .Data slot) defined"
+msgstr ""
+
+msgid "Old-style (``S3'') class \""
+msgstr ""
+
+msgid "\" supplied as a superclass of \""
+msgstr ""
+
+msgid "\", but no automatic conversion will be peformed for S3 classes"
+msgstr ""
+
+msgid "Trying to change the argument list of a function with"
+msgstr ""
+
+msgid "arguments to have arguments ("
+msgstr ""
+
+msgid "Get rid of variables in definition ("
+msgstr ""
+
+msgid "); they conflict with the needed change to argument names ("
+msgstr ""
+
+msgid "A validity method must be a function of one argument, got an object of class \""
+msgstr ""
+
+msgid "Unable to find required package \""
+msgstr ""
+
+msgid "Unable to find an environment containing class \""
+msgstr ""
+
+msgid "The function being used as"
+msgstr ""
+
+msgid "in making a generic function for \""
+msgstr ""
+
+msgid "\" is currently traced; the function used will have tracing removed"
+msgstr ""
+
+msgid "The `genericFunction' argument must be NULL or a generic function object; got an object of class \""
+msgstr ""
+
+msgid "Non-arguments found in the signature:"
+msgstr ""
+
+msgid "No suitable arguments to dispatch methods in this function"
+msgstr ""
+
+msgid "The formal arguments of the generic function for \""
+msgstr ""
+
+msgid "\" ("
+msgstr ""
+
+msgid ") differ from those of the non-generic to be used as the default, ("
+msgstr ""
+
+msgid "Special function \""
+msgstr ""
+
+msgid "\" is not permitted to have methods"
+msgstr ""
+
+msgid "\" has no known argument list; will assume \"(x, ...)\""
+msgstr ""
+
+msgid "\" is not a function visible from \""
+msgstr ""
+
+msgid "\" from \""
+msgstr ""
+
+msgid "\" is a nongeneric function; no methods available"
+msgstr ""
+
+msgid "Invalid \"fdef\" for \""
+msgstr ""
+
+msgid "\" in getAllMethods; expected either a genericFunction object or a primitive function, got an object of class \""
+msgstr ""
+
+msgid "Formal arguments in method and function don't appear in the same order"
+msgstr ""
+
+msgid "Formal arguments omitted in the method definition cannot be in the signature ("
+msgstr ""
+
+msgid "= \""
+msgstr ""
+
+msgid "Methods can add arguments to the generic only if \"...\" is an argument to the generic"
+msgstr ""
+
+msgid "Arguments after \"...\" in the generic ("
+msgstr ""
+
+msgid ") must appear in the method, in the same place at the end of the argument list"
+msgstr ""
+
+msgid "Methods cannot be defined for the primitive function \""
+msgstr ""
+
+msgid "No generic function found for \""
+msgstr ""
+
+msgid "The methods object name for \""
+msgstr ""
+
+msgid "\" must include the name of the package that contains the generic function, but there is no generic function of this name"
+msgstr ""
+
+msgid "No way to associate a generic function with an object of class \""
+msgstr ""
+
+msgid "No methods found for \""
+msgstr ""
+
+msgid "\"; cacheGenericsMetaData will have no effect"
+msgstr ""
+
+msgid "internal error: bad code for setPrimitiveMethods:"
+msgstr ""
+
+msgid "found on:"
+msgstr ""
+
+msgid "; using the first one."
+msgstr ""
+
+msgid "Invalid value from generic function \""
+msgstr ""
+
+msgid "\", class \""
+msgstr ""
+
+msgid "\", expected"
+msgstr ""
+
+msgid "or"
+msgstr ""
+
+msgid "The body of the generic function for \""
+msgstr ""
+
+msgid "\" calls standardGeneric to dispatch on a different name (\""
+msgstr ""
+
+msgid "\\n"
+msgstr ""
+
+msgid "\")!"
+msgstr ""
+
+msgid "The supplied generic function definition does not seem to call standardGeneric; no methods will be dispatched!"
+msgstr ""
+
+msgid "Internal error: Bad methods list object in fixing methods for prmitive function \""
+msgstr ""
+
+msgid "Trying to change the formal arguments in"
+msgstr ""
+
+msgid ", in an object of class \""
+msgstr ""
+
+msgid "\"; expected a function definition"
+msgstr ""
+
+msgid ", but getting the new formals from an object of class \""
+msgstr ""
+
+msgid ", but the number of existing arguments is less than the number of new arguments: ("
+msgstr ""
+
+msgid ") vs ("
+msgstr ""
+
+msgid ", but the number of existing arguments is greater than the number of new arguments (the extra arguments won't be used): ("
+msgstr ""
+
+msgid "In changing formal argumentsin"
+msgstr ""
+
+msgid ", some of the old names are not in fact arguments:"
+msgstr ""
+
+msgid "Botched namespace: Failed to find base namespace in its parents"
+msgstr ""
+
+msgid "Got a negative maximum number of frames to look at"
+msgstr ""
+
+msgid "\" is not a generic function (or not visible here)"
+msgstr ""
+
+msgid "Invalid element in the groupMembers slot (class \""
+msgstr ""
+
+msgid "\" has a sealed class definition and cannot be redefined"
+msgstr ""
+
+msgid "Only arguments Class and where can be supplied when argument \"representation\" is a classRepresentation object"
+msgstr ""
+
+msgid "Error in contained classes ("
+msgstr ""
+
+msgid ") for class \""
+msgstr ""
+
+msgid "\" and unable to remove definition from \""
+msgstr ""
+
+msgid "\"; class definition removed from \""
+msgstr ""
+
+msgid "\" and unable to restore previous definition from \""
+msgstr ""
+
+msgid "\"; previous definition restored to \""
+msgstr ""
+
+msgid "of the representation was not a single character string"
+msgstr ""
+
+msgid "Duplicate class names among superclasses:"
+msgstr ""
+
+msgid "Duplicated slot names:"
+msgstr ""
+
+msgid "only one data object (unnamed argument to prototype) allowed"
+msgstr ""
+
+msgid "\" is not a defined class"
+msgstr ""
+
+msgid "\" is not a slot in class \""
+msgstr ""
+
+msgid "Assignment of an object of class \""
+msgstr ""
+
+msgid "\" is not valid for slot \""
+msgstr ""
+
+msgid "\" in an object of class \""
+msgstr ""
+
+msgid "\"; is(value, \""
+msgstr ""
+
+msgid "\") is not TRUE"
+msgstr ""
+
+msgid "\" is not a class (no action taken)"
+msgstr ""
+
+msgid "\" has multiple definitions visible; only the first removed"
+msgstr ""
+
+msgid "Trying to use new() on a virtual class"
+msgstr ""
+
+msgid "Invalid \""
+msgstr ""
+
+msgid "\" object:"
+msgstr ""
+
+msgid "validity method must be NULL or a function of one argument"
+msgstr ""
+
+msgid "Class"
+msgstr ""
+
+msgid "\" not found on"
+msgstr ""
+
+msgid "; resetClass will have no effect"
+msgstr ""
+
+msgid "Argument classDef must be a string or a class representation; got an object of class \""
+msgstr ""
+
+msgid "\" is sealed; resetClass will have no effect"
+msgstr ""
+
+msgid "Can't use object of class \""
+msgstr ""
+
+msgid "\" in new():  Class \""
+msgstr ""
+
+msgid "\" does not extend that class"
+msgstr ""
+
+msgid "Invalid names for slots of class"
+msgstr ""
+
+msgid "No definition of \""
+msgstr ""
+
+msgid "\" to use for"
+msgstr ""
+
+msgid "Multiple definitions of class \""
+msgstr ""
+
+msgid "\" visible; using the definition on package \""
+msgstr ""
+
+msgid "\" for"
+msgstr ""
+
+msgid "\"traceOn\" is deprecated:  use the function \"trace\" in the methods package instead"
+msgstr ""
+
+msgid "\"traceOff\" is deprecated:  use the function \"untrace\" in the methods package instead"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "non-generic"
+msgstr ""
+
+msgid "function \""
+msgstr ""
+
+msgid "\" is not one of the element names"
+msgstr ""
+
+msgid "Internal problem in as():  \""
+msgstr ""
+
+msgid "\" is(object, \""
+msgstr ""
+
+msgid ") is TRUE, but the metadata asserts that the is relation is FALSE"
+msgstr ""
+
+msgid "No method or default for coercing \""
+msgstr ""
+
+msgid "\" to \""
+msgstr ""
+
+msgid "No method or default for as() replacement of \""
+msgstr ""
+
+msgid "\" with Class=\""
+msgstr ""
+
+msgid "Trying to set an as relation from \""
+msgstr ""
+
+msgid "\" to itself"
+msgstr ""
+
+msgid "\" is not defined in this environment"
+msgstr ""
+
+msgid "\" is a class union: coerce relations to a class union are not meaningful"
+msgstr ""
+
+msgid "as method must have one or two arguments, plus optional `strict'; got ("
+msgstr ""
+
+msgid "a replace method definition in setAs must be a function of two arguments, got"
+msgstr ""
+
+msgid "Argument names in replace changed to agree with \"coerce<-\" generic:"
+msgstr ""
+
+msgid "ambiguous object (length!=1) to coerce to \"name\""
+msgstr ""
+
+msgid "Undefined coerce method"
+msgstr ""
+
+msgid "Methods currently exist for coercing from \""
+msgstr ""
+
+msgid "\"; they will be replaced."
+msgstr ""
+
+msgid "Object \""
+msgstr ""
+
+msgid "\" not found"
+msgstr ""
+
+msgid "\" not changed (it is not consistent with the current definition of class \""
+msgstr ""
+
+msgid "No definition for the class of \""
+msgstr ""
+
+msgid "\" (class \""
+msgstr ""
+
+msgid "\") found"
+msgstr ""
+
+msgid "\" not changed (it does not appear to be from a version of R earlier than 1.8)"
+msgstr ""
+
+msgid "class1 must be the name of a class or a class definition"
+msgstr ""
+
+msgid "class2 must be the name of a class or a class definition"
+msgstr ""
+
+msgid "\" has no visible definition from package or environment \""
+msgstr ""
+
+msgid "Cannot create a setIs relation when neither of the classes (\""
+msgstr ""
+
+msgid "\" and \""
+msgstr ""
+
+msgid "\") is local and modifiable in this package"
+msgstr ""
+
+msgid "\" is sealed; new superclasses can not be defined, except by setClassUnion"
+msgstr ""
+
+msgid "Both classes must be defined."
+msgstr ""
+
+msgid "\" is missing slots from class \""
+msgstr ""
+
+msgid "), and no coerce method was supplied"
+msgstr ""
+
+msgid "Slots in class \""
+msgstr ""
+
+msgid "\" must extend corresponding slots in class \""
+msgstr ""
+
+msgid "\": fails for"
+msgstr ""
+
+msgid "Invalid index for function argument"
+msgstr ""
+
+msgid "inconsistent old-style class information for \""
+msgstr ""
+
+msgid "\" (maybe mixing old and new classes?)"
+msgstr ""
+
+msgid "Explicit coercion of old-style class ("
+msgstr ""
+
+msgid ") is not defined"
+msgstr ""
+
+msgid "Explicit replacement not defined for as(x, \""
+msgstr ""
+
+msgid "\") <- value for old-style class \""
+msgstr ""
+
+msgid "Argument Classes must be a vector of two classes; got an argument of length"
+msgstr ""
+
+msgid "No definition of class \""
+msgstr ""
+
+msgid "Multiple definitions of \""
+msgstr ""
+
+msgid "\" found; using the one on"
+msgstr ""
+
+msgid "\" in the specified position,"
+msgstr ""
+
+msgid "; definition(s) on :"
+msgstr ""
+
+msgid "invalid call to classLabel: expected a name or a class definition, got an object of class"
+msgstr ""
+
+msgid "Argument what should be the name of a function"
+msgstr ""
+
+msgid "No function definition for \""
+msgstr ""
+
+msgid "The method for \""
+msgstr ""
+
+msgid "\" for this signature was not being traced"
+msgstr ""
+
+msgid "making a traced version of a primitive; arguments will be treated as \"...\""
+msgstr ""
+
+msgid "The editing in trace() can only change the body of the function; got an object of class"
+msgstr ""
+
+msgid "The editing in trace() can only change the body of the function, not the arguments or defaults"
+msgstr ""
+
+msgid "can't use \"at\" argument without a trace expression"
+msgstr ""
+
+msgid "can't use \"at\" argument unless the function body has the form { ... }"
+msgstr ""
+
+msgid "Setting a method over the binding of symbol \""
+msgstr ""
+
+msgid "\" in environment/package \""
+msgstr ""
+
+msgid "Not a package name:"
+msgstr ""
+
+msgid "Looks like the methods library was not installed correctly; check the make results!"
+msgstr ""

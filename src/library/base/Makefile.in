@@ -49,6 +49,12 @@ all: Makefile DESCRIPTION
 	@for f in `ls -d $(srcdir)/demo/* | sed -e '/CVS/d' -e '/00Index/d'`; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/$(pkg)/demo; \
 	done
+	@if test -d $(srcdir)/inst/po; then \
+	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
+	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
+	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
+	   -exec rm -rf \{\} \; 2>/dev/null; \
+	fi
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
 	  for rdfile in $(RdSRC); do \

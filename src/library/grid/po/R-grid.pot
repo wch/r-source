@@ -1,0 +1,408 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-05 17:35\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "Invalid edit information"
+msgstr ""
+
+msgid "gEditList can only contain gEdit objects"
+msgstr ""
+
+msgid "Invalid frame"
+msgstr ""
+
+msgid "Invalid grob"
+msgstr ""
+
+msgid "Invalid row and/or col (no such cell in frame layout)"
+msgstr ""
+
+msgid "`col' can only be a range of existing columns"
+msgstr ""
+
+msgid "Invalid column specification"
+msgstr ""
+
+msgid "`row' can only be a range of existing rows"
+msgstr ""
+
+msgid "Invalid row specification"
+msgstr ""
+
+msgid "Cannot specify more than one of side=[\"left\", \"right\"], col, col.before, or col.after"
+msgstr ""
+
+msgid "Must specify exactly one of side=[\"top\", \"bottom\"], row, row.before, or row.after"
+msgstr ""
+
+msgid "gpar element"
+msgstr ""
+
+msgid "must not be length 0"
+msgstr ""
+
+msgid "gamma gpar is deprecated"
+msgstr ""
+
+msgid "Invalid linemitre value"
+msgstr ""
+
+msgid "Invalid alpha value"
+msgstr ""
+
+msgid "Must specify only one of font and fontface"
+msgstr ""
+
+msgid "Invalid font face"
+msgstr ""
+
+msgid "Argument must be a 'gpar' object"
+msgstr ""
+
+msgid "Must specify only valid gpar names"
+msgstr ""
+
+msgid "(grab"
+msgstr ""
+
+msgid "WILL"
+msgstr ""
+
+msgid "MAY"
+msgstr ""
+
+msgid "not be faithful"
+msgstr ""
+
+msgid "; try wrap=TRUE)"
+msgstr ""
+
+msgid "Invalid display list element"
+msgstr ""
+
+msgid "Only valid to push viewports"
+msgstr ""
+
+msgid "Must specify at least one viewport"
+msgstr ""
+
+msgid "Viewport"
+msgstr ""
+
+msgid "was not found"
+msgstr ""
+
+msgid "Must pop at least one viewport"
+msgstr ""
+
+msgid "Must navigate up at least one viewport"
+msgstr ""
+
+msgid "The vp argument is deprecated"
+msgstr ""
+
+msgid "Invalid ask value"
+msgstr ""
+
+msgid "Invalid object inserted on the display list"
+msgstr ""
+
+msgid "Invalid vp slot"
+msgstr ""
+
+msgid "Invalid gp slot"
+msgstr ""
+
+msgid "Invalid grob class"
+msgstr ""
+
+msgid "grid.grob() is deprecated; please use grob() instead"
+msgstr ""
+
+msgid "A grob path must contain at least one grob name"
+msgstr ""
+
+msgid "Invalid grob name(s)"
+msgstr ""
+
+msgid "Only grobs allowed in gList"
+msgstr ""
+
+msgid "Invalid element to add to gList"
+msgstr ""
+
+msgid "Can only set children for a gTree"
+msgstr ""
+
+msgid "Children must be a gList"
+msgstr ""
+
+msgid "It is only valid to get children from a gTree"
+msgstr ""
+
+msgid "Invalid gTree class"
+msgstr ""
+
+msgid "allDevices not yet implemented"
+msgstr ""
+
+msgid "Invalid path"
+msgstr ""
+
+msgid "Invalid grep value"
+msgstr ""
+
+msgid "It is only valid to get a child from a gTree"
+msgstr ""
+
+msgid "gPath does not specify a valid child"
+msgstr ""
+
+msgid "It is only valid to set a child of a gTree"
+msgstr ""
+
+msgid "It is only valid to set a grob as child of a gTree"
+msgstr ""
+
+msgid "New grob name ("
+msgstr ""
+
+msgid ") does not match gPath ("
+msgstr ""
+
+msgid "It is only valid to add a grob to a gTree"
+msgstr ""
+
+msgid "It is only valid to add a child to a gTree"
+msgstr ""
+
+msgid "It is only valid to remove a child from a gTree"
+msgstr ""
+
+msgid "It is only valid to edit a child of a gTree"
+msgstr ""
+
+msgid "It is invalid to directly edit the children or childrenOrder slot"
+msgstr ""
+
+msgid "Invalid result"
+msgstr ""
+
+msgid "The new grob must have the same name as the old grob"
+msgstr ""
+
+msgid "Slot"
+msgstr ""
+
+msgid "not found"
+msgstr ""
+
+msgid "gPath ("
+msgstr ""
+
+msgid ") not found"
+msgstr ""
+
+msgid "Grob"
+msgstr ""
+
+msgid "Invalid element in the display list"
+msgstr ""
+
+msgid "This function is redundant and will disappear in future versions."
+msgstr ""
+
+msgid "l must be a layout"
+msgstr ""
+
+msgid "pch and labels not the same length"
+msgstr ""
+
+msgid "hgap must be single unit"
+msgstr ""
+
+msgid "vgap must be single unit"
+msgstr ""
+
+msgid "Invalid justification"
+msgstr ""
+
+msgid "Invalid horizontal justification"
+msgstr ""
+
+msgid "Invalid vertical justification"
+msgstr ""
+
+msgid "'respect' must be logical or an 'nrow' by 'ncol' matrix"
+msgstr ""
+
+msgid "Invalid origin"
+msgstr ""
+
+msgid "x and y must be units"
+msgstr ""
+
+msgid "x and y must have length 1"
+msgstr ""
+
+msgid "x0, y0, x1, and y1 must be units"
+msgstr ""
+
+msgid "x and y must be units or NULL"
+msgstr ""
+
+msgid "Length must be a unit object"
+msgstr ""
+
+msgid "Invalid ends or type argument"
+msgstr ""
+
+msgid "Corrupt arrows object"
+msgstr ""
+
+msgid "The grob argument must be a line.to, lines, or segments grob"
+msgstr ""
+
+msgid "It is invalid to specify both id and id.lenths"
+msgstr ""
+
+msgid "x and y must be same length"
+msgstr ""
+
+msgid "x and y and id must all be same length"
+msgstr ""
+
+msgid "x and y and id.lengths must specify same overall length"
+msgstr ""
+
+msgid "x, y, and r must be units"
+msgstr ""
+
+msgid "x, y, width, and height must be units"
+msgstr ""
+
+msgid "Invalid rot value"
+msgstr ""
+
+msgid "zero-length pch"
+msgstr ""
+
+msgid "x, y and size must be units"
+msgstr ""
+
+msgid "x and y must be unit objects and have the same length"
+msgstr ""
+
+msgid "x must be numeric"
+msgstr ""
+
+msgid "x and units must have length > 0"
+msgstr ""
+
+msgid "`x' argument must be a unit object"
+msgstr ""
+
+msgid "Invalid axis or type"
+msgstr ""
+
+msgid "No string supplied for `strwidth' unit"
+msgstr ""
+
+msgid "No string supplied for `strheight' unit"
+msgstr ""
+
+msgid "No grob supplied for `grobwidth' unit"
+msgstr ""
+
+msgid "gPath must have depth 1 in grobwidth/height units"
+msgstr ""
+
+msgid "No grob supplied for `grobheight' unit"
+msgstr ""
+
+msgid "Operator"
+msgstr ""
+
+msgid "not meaningful for units"
+msgstr ""
+
+msgid "Only one operand may be a unit"
+msgstr ""
+
+msgid "Non-unit operand must be numeric"
+msgstr ""
+
+msgid "Both operands must be units"
+msgstr ""
+
+msgid "Summary function"
+msgstr ""
+
+msgid "Zero arguments where at least one expected"
+msgstr ""
+
+msgid "Index out of bounds (unit subsetting)"
+msgstr ""
+
+msgid "Index out of bounds (unit arithmetic subsetting)"
+msgstr ""
+
+msgid "Index out of bounds (unit list subsetting)"
+msgstr ""
+
+msgid "It is invalid to combine unit objects with other types"
+msgstr ""
+
+msgid "range must be numeric"
+msgstr ""
+
+msgid "`x', `y', `width', and `height' must all be units of length 1"
+msgstr ""
+
+msgid "Invalid graphics parameters"
+msgstr ""
+
+msgid "Invalid clip value"
+msgstr ""
+
+msgid "Invalid xscale in viewport"
+msgstr ""
+
+msgid "Invalid yscale in viewport"
+msgstr ""
+
+msgid "Invalid angle in viewport"
+msgstr ""
+
+msgid "Invalid layout in viewport"
+msgstr ""
+
+msgid "Only viewports allowed in vpList"
+msgstr ""
+
+msgid "Only viewports allowed in vpStack"
+msgstr ""
+
+msgid "Parent must be viewport and children must be vpList in vpTree"
+msgstr ""
+
+msgid "A viewport path must contain at least one viewport name"
+msgstr ""
+
+msgid "Invalid viewport name(s)"
+msgstr ""
+
+msgid "Must specify at least one of x or xscale"
+msgstr ""
+
+msgid "Must specify at least one of y or yscale"
+msgstr ""

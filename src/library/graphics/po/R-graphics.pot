@@ -1,0 +1,360 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-05 17:26\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+msgid "x must be a 2-d contingency table"
+msgstr ""
+
+msgid "all entries of x must be nonnegative and finite"
+msgstr ""
+
+msgid "at least one entry of x must be positive"
+msgstr ""
+
+msgid "incorrect color specification"
+msgstr ""
+
+msgid "'side' must be in {1:4}"
+msgstr ""
+
+msgid "invalid 'axp'"
+msgstr ""
+
+msgid "invalid 'log'"
+msgstr ""
+
+msgid "invalid positive axp[3]"
+msgstr ""
+
+msgid "invalid 'usr'"
+msgstr ""
+
+msgid "'height' must be a vector or a matrix"
+msgstr ""
+
+msgid "incorrect number of names"
+msgstr ""
+
+msgid "invalid first argument"
+msgstr ""
+
+msgid "formula missing or incorrect"
+msgstr ""
+
+msgid "'coef' must not be negative"
+msgstr ""
+
+msgid "Outlier ("
+msgstr ""
+
+msgid ") in"
+msgstr ""
+
+msgid "boxplot are NOT drawn"
+msgstr ""
+
+msgid "'at' must have same length as 'z$n', i.e."
+msgstr ""
+
+msgid "invalid boxplot widths"
+msgstr ""
+
+msgid "no 'z' matrix specified"
+msgstr ""
+
+msgid "increasing x and y values expected"
+msgstr ""
+
+msgid "no proper 'z' matrix specified"
+msgstr ""
+
+msgid "invalid conditioning formula"
+msgstr ""
+
+msgid "incompatible variable lengths"
+msgstr ""
+
+msgid "number must be integer >= 1"
+msgstr ""
+
+msgid "overlap must be < 1 (and typically >= 0)."
+msgstr ""
+
+msgid "invalid given.values"
+msgstr ""
+
+msgid "rows * columns too small"
+msgstr ""
+
+msgid "'expr' must be a function or an expression containing 'x'"
+msgstr ""
+
+msgid "'from' & 'to' must be > 0\t with  log=\"x\""
+msgstr ""
+
+msgid "wrong method"
+msgstr ""
+
+msgid "invalid specification of 'breaks'"
+msgstr ""
+
+msgid "x must be an array"
+msgstr ""
+
+msgid "x must be 2- or 3-dimensional"
+msgstr ""
+
+msgid "table for each stratum must be 2 by 2"
+msgstr ""
+
+msgid "conf.level must be a single number between 0 and 1"
+msgstr ""
+
+msgid "incorrect margin specification"
+msgstr ""
+
+msgid "incorrect geometry specification"
+msgstr ""
+
+msgid "'x' must be numeric"
+msgstr ""
+
+msgid "'nclass' not used when 'breaks' is specified"
+msgstr ""
+
+msgid "'include.lowest' ignored as 'breaks' is not a vector"
+msgstr ""
+
+msgid "unknown breaks algorithm"
+msgstr ""
+
+msgid "invalid number of breaks"
+msgstr ""
+
+msgid "hist.default: pretty() error, breaks="
+msgstr ""
+
+msgid "'breaks' are not strictly increasing"
+msgstr ""
+
+msgid "'probability' is an alias for '!freq', however they differ."
+msgstr ""
+
+msgid "negative 'counts'. Internal Error in C-code for \"bincount\""
+msgstr ""
+
+msgid "some 'x' not counted; maybe 'breaks' do not span range of 'x'"
+msgstr ""
+
+msgid "the AREAS in the plot are wrong -- rather use freq=FALSE"
+msgstr ""
+
+msgid "'x' is wrongly structured"
+msgstr ""
+
+msgid "argument must be matrix alike"
+msgstr ""
+
+msgid "'z' must be a matrix"
+msgstr ""
+
+msgid "dimensions of z are not length(x)(+1) times length(y)(+1)"
+msgstr ""
+
+msgid "invalid z limits"
+msgstr ""
+
+msgid "must have one more break than colour"
+msgstr ""
+
+msgid "breaks must all be finite"
+msgstr ""
+
+msgid "'respect' must be logical or matrix with same dimension as 'mat'"
+msgstr ""
+
+msgid "layout matrix must contain at least one reference\nto each of the values {1..n}; here  n ="
+msgstr ""
+
+msgid "invalid title"
+msgstr ""
+
+msgid "invalid coordinate lengths"
+msgstr ""
+
+msgid "text.width must be numeric, >= 0"
+msgstr ""
+
+msgid "horizontal specification overrides: Number of columns :="
+msgstr ""
+
+msgid "not using pch[2..] since pch[1] has multiple chars"
+msgstr ""
+
+msgid "Must specify at least one of 'x' and 'y'"
+msgstr ""
+
+msgid "'x' and 'y' must have same number of rows"
+msgstr ""
+
+msgid "'x' and 'y' must have only 1 or the same number of columns"
+msgstr ""
+
+msgid "missing values in contingency table"
+msgstr ""
+
+msgid "'x' must not have 0 dimensionality"
+msgstr ""
+
+msgid "extra argument(s)"
+msgstr ""
+
+msgid "will be disregarded"
+msgstr ""
+
+msgid "invalid shade specification"
+msgstr ""
+
+msgid "length(sort) does not conform to dim(x)"
+msgstr ""
+
+msgid "non-numeric argument to pairs"
+msgstr ""
+
+msgid "only one column in the argument to pairs"
+msgstr ""
+
+msgid "The panel function made a new plot"
+msgstr ""
+
+msgid "'x' values must be positive."
+msgstr ""
+
+msgid "x and y lengths differ"
+msgstr ""
+
+msgid "x value"
+msgstr ""
+
+msgid "s"
+msgstr ""
+
+msgid "<= 0 omitted from logarithmic plot"
+msgstr ""
+
+msgid "y value"
+msgstr ""
+
+msgid "invalid table 'x'"
+msgstr ""
+
+msgid "cannot handle more than one x coordinate"
+msgstr ""
+
+msgid "must have a response variable"
+msgstr ""
+
+msgid "plot.data.frame applied to non data frame"
+msgstr ""
+
+msgid "'y' must be a numeric vector"
+msgstr ""
+
+msgid "'x' must be a data frame"
+msgstr ""
+
+msgid "all columns/components of 'x' must be factors"
+msgstr ""
+
+msgid "some levels of the factors are empty"
+msgstr ""
+
+msgid "x must be a dataframe or a formula"
+msgstr ""
+
+msgid "a variable in y is not numeric"
+msgstr ""
+
+msgid "there must be at least one numeric variable!"
+msgstr ""
+
+msgid "cannot hatch with logarithmic scale active"
+msgstr ""
+
+msgid "invalid rectangle specification"
+msgstr ""
+
+msgid "some values will be clipped"
+msgstr ""
+
+msgid "invalid screen number"
+msgstr ""
+
+msgid "figs must be a vector or a matrix with 4 columns"
+msgstr ""
+
+msgid "figs must specify at least one screen"
+msgstr ""
+
+msgid "x must be a matrix or a data frame"
+msgstr ""
+
+msgid "data in x must be numeric"
+msgstr ""
+
+msgid "nrow * ncol <  number of observations"
+msgstr ""
+
+msgid "labels do not make sense for a single location"
+msgstr ""
+
+msgid "locations must be a 2-column matrix."
+msgstr ""
+
+msgid "number of rows of locations and x must be equal."
+msgstr ""
+
+msgid "length(angles) must be the same as ncol(x)"
+msgstr ""
+
+msgid "x must be numeric"
+msgstr ""
+
+msgid "no non-missing values"
+msgstr ""
+
+msgid "scale must be positive"
+msgstr ""
+
+msgid "invalid plotting method"
+msgstr ""
+
+msgid "'at' must have length = no{groups}, i.e."
+msgstr ""
+
+msgid "number must have same length as x and y"
+msgstr ""
+
+msgid "exactly one symbol type must be specified"
+msgstr ""
+
+msgid "invalid first argument [bad language object]"
+msgstr ""
+
+msgid "at least 2 columns needed"
+msgstr ""
+
+msgid "x, y and z lengths differ"
+msgstr ""
+
+msgid "z value"
+msgstr ""
