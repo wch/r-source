@@ -5932,7 +5932,8 @@ The FORTRAN interface routines for sorting double precision vectors are
 @end deftypefun
 
 @deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
-Given the @var{nr} by @var{nc} matrix @code{matrix} in row (``FORTRAN'')
+Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
+(``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
