@@ -5,5 +5,5 @@ Title: Regression Spline Functions and Classes
 Author: Douglas M. Bates <bates@stat.wisc.edu> and
  William N. Venables <Bill.Venables@cmis.csiro.au>
 Maintainer: R Core Team <R-core@r-project.org>
-Description: Regression Spline Functions and Classes
+Description: Regression spline functions and classes
 License: GPL Version 2 or later.

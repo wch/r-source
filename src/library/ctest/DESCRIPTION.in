@@ -8,5 +8,5 @@ Author: Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>, with major
 Maintainer: R Core Team <R-core@r-project.org>
 Description: A collection of classical tests, including the
   Ansari-Bradley, Bartlett, chi-squared, Fisher, Kruskal-Wallis,
-  Kolmogorov-Smirnov, t, and Wilcoxon tests.
+  Kolmogorov-Smirnov, t, and Wilcoxon tests
 License: GPL
