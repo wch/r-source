@@ -35,15 +35,20 @@ $PKG = shift @ARGV;
 print <<_EOF_;
 attach(NULL, name = "CheckExEnv")
 assign(".CheckExEnv", as.environment(2), pos = length(search())) # base
-## This plot.new() patch has no effect yes for persp();
-## layout() & filled.contour() are no ok
+## This plot.new() patch has no effect yet for persp();
+## layout() & filled.contour() are now ok
 assign("plot.new", function() { .Internal(plot.new())
 		       pp <- par(c("mfg","mfcol","oma","mar"))
 		       if(all(pp\$mfg[1:2] == c(1, pp\$mfcol[2]))) {
-		         outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
+			 outer <- (oma4 <- pp\$oma[4]) > 0; mar4 <- pp\$mar[4]
 			 mtext(paste("help(",..nameEx,")"), side = 4,
 			       line = if(outer)max(1, oma4 - 1) else min(1, mar4 - 1),
 			       outer = outer, adj=1, cex= .8, col="orchid")} },
+       env = .CheckExEnv)
+assign("cleanEx", function(env = .GlobalEnv) {
+	rm(list = ls(envir = env, all.names = TRUE), envir = env)
+	RNGkind("Wichmann-Hill", "default"); .Random.seed <- c(0,rep(7654,3))
+       },
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) #-- for now
 assign("ptime", proc.time(), env = .CheckExEnv)
@@ -71,24 +76,23 @@ foreach $file  (@ARGV) {
     }
     close FILE;
     if ($have_examples) {
-	print "rm(list = ls(all = TRUE)); .Random.seed <- c(0,rep(7654,3))\n";
 	$nm = $bf;
 	$nm =~ s/[^- .a-zA-Z0-9]/./g;
-	print "..nameEx <- \"$nm\"\n";
+	print "cleanEx(); ..nameEx <- \"$nm\"\n";
     }
 
     open FILE, "< $file" or die "file $file cannot be opened";
     while (<FILE>) { print $_; }
     close FILE;
-   
+
     if($have_par) {
 	## if there were 'par(..)' calls, now reset them:
 	print "par(get(\"par.postscript\", env = .CheckExEnv))\n";
-    } 
+    }
     if($have_contrasts) {
 	## if contrasts were set, now reset them:
 	print "options(contrasts = c(unordered = \"contr.treatment\", ordered = \"contr.poly\"))\n";
-    } 
+    }
 
 }
 
