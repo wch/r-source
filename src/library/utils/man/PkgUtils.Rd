@@ -45,8 +45,8 @@ R CMD check [options] pkgdirs
 }
 #endif
 \seealso{
-  The chapter \dQuote{Processing Rd format} in \dQuote{Writing \R
-    Extensions}
+  The sections on \dQuote{Checking and building packages} and
+  \dQuote{Processing Rd format} in \dQuote{Writing \R Extensions}
 #ifdef unix
   (see the \file{doc/manual} subdirectory of the \R source tree).
 #endif
