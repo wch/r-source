@@ -244,6 +244,9 @@ BUG FIXES
     o	aggregate(.data.frame) failed if the answer would have had one
         row.
 
+    o	recordPlot() and replayPlot() failed to duplicate the display
+	list, so further plotting altered the saved or replayed object.
+
 
 
 		CHANGES IN R VERSION 1.9.0

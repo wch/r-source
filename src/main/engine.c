@@ -2174,7 +2174,7 @@ SEXP GEcreateSnapshot(GEDevDesc *dd)
     PROTECT(snapshot = allocVector(VECSXP, 1 + numGraphicsSystems));
     /* The first element of the snapshot is the display list.
      */
-    SET_VECTOR_ELT(snapshot, 0, dd->dev->displayList);
+    SET_VECTOR_ELT(snapshot, 0, duplicate(dd->dev->displayList));
     /* For each registered system, obtain state information,
      * and store that in the snapshot.
      */
@@ -2213,7 +2213,7 @@ void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd)
 				    VECTOR_ELT(snapshot, i + 1));
     /* Replay the display list
      */
-    dd->dev->displayList = VECTOR_ELT(snapshot, 0);
+    dd->dev->displayList = duplicate(VECTOR_ELT(snapshot, 0));
     GEplayDisplayList(dd);
     if (!dd->dev->displayListOn)
 	GEinitDisplayList(dd);
