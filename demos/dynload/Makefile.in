@@ -23,9 +23,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) rhome=$(top_builddir) install; \
+	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
-	$(MAKE) zero.$(SHLIBEXT)
+	@$(MAKE) zero.$(SHLIBEXT)
 zero.$(SHLIBEXT): $(srcdir)/zero.c
 	@if [ "$(srcdir)" != "." ]; then \
 	  $(INSTALL_DATA) $(srcdir)/zero.c zero.c; \
@@ -35,13 +35,16 @@ zero.$(SHLIBEXT): $(srcdir)/zero.c
 
 docs:
 
-install: installdirs
-	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/demos/dynload; \
-	done
+install: installdirs install-sources install-objects
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
 	@$(MKINSTALLDIRS) $(rhome)/demos/dynload
+install-objects:
+	@$(INSTALL) zero.$(SHLIBEXT) $(rhome)/demos/dynload
+install-sources:
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/demos/dynload; \
+	done
 install-strip: install
 uninstall:
 

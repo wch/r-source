@@ -11,7 +11,7 @@ subdir = afm
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = Makefile.in \
+INSTFILES = \
 	agd_____.lt1 agdo____.lt1 agw_____.lt1 agwo____.lt1 bkd_____.lt1 \
 	bkdi____.lt1 bkl_____.lt1 bkli____.lt1 cob_____.lt1 cobo____.lt1 \
 	com_____.lt1 coo_____.lt1 hv______.lt1 hvb_____.lt1 hvbo____.lt1 \
@@ -20,6 +20,7 @@ DISTFILES = Makefile.in \
 	pobi____.lt1 poi_____.lt1 por_____.lt1 tib_____.lt1 tibi____.lt1 \
 	tii_____.lt1 tir_____.lt1 \
 	sy______.afm
+DISTFILES = Makefile.in $(INSTFILES)
 
 all: Makefile R
 
@@ -30,16 +31,18 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R:
 	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) rhome=$(top_builddir) install; \
+	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
 
-install: installdirs
-	@echo "installing afm ..."
-	@for f in `ls $(srcdir)/*.afm $(srcdir)/*.lt1`; \
-	  do $(INSTALL_DATA) $${f} $(rhome)/afm; \
-	done
+install: install-message installdirs install-sources
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/afm
+install-message:
+	@echo "installing afm ..."
+install-sources:
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/afm; \
+	done
 install-strip: install
 uninstall:
 	@echo "uninstalling afm ..."

@@ -12,7 +12,9 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
-SUBDIRS = dynload graphics language models nlm
+SUBDIRS_JUST_SOURCES = graphics language models nlm
+SUBDIRS_ALSO_OBJECTS = dynload
+SUBDIRS = $(SUBDIRS_JUST_SOURCES) $(SUBDIRS_ALSO_OBJECTS)
 
 all: Makefile R
 
@@ -22,20 +24,18 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R:
-	@(cd dynload && $(MAKE) $@)
+	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  $(MAKE) rhome=`cd $(top_builddir); pwd` install; \
+	  $(MAKE) rhome=$(top_builddir) install-sources; \
 	fi
 
 docs:
 
-install: installdirs
-	@echo "installing demos ..."
-	@(cd dynload && $(MAKE) rhome=$(rhome) $@)
-	@for d in graphics language models nlm; do \
-	  for f in $(srcdir)/$${d}/*.R; do \
-	    $(INSTALL_DATA) $${f} $(rhome)/demos/$${d}; \
-	  done; \
+install: install-message installdirs install-sources
+	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
+	  (cd $${d} && $(MAKE) $@); \
 	done
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos
@@ -43,6 +43,14 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/demos/language 
 	@$(MKINSTALLDIRS) $(rhome)/demos/models 
 	@$(MKINSTALLDIRS) $(rhome)/demos/nlm
+install-message:
+	@echo "installing demos ..."
+install-sources: installdirs
+	@for d in $(SUBDIRS_JUST_SOURCES); do \
+	  for f in $(srcdir)/$${d}/*.R; do \
+	    $(INSTALL_DATA) $${f} $(rhome)/demos/$${d}; \
+	  done; \
+	done
 install-strip: install
 uninstall:
 	@echo "uninstalling demos ..."
@@ -50,11 +58,16 @@ uninstall:
 
 mostlyclean:
 clean:
-	@(cd dynload && $(MAKE) $@)
+	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
 	@if [ "$(srcdir)" != "." ]; then \
-	  rm -rf [g-z]*; \
+	  rm -rf $(SUBDIRS_JUST_SOURCES); \
 	fi
 distclean:
+	@for d in $(SUBDIRS_ALSO_OBJECTS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
 	@rm -f Makefile
 maintainer-clean: distclean
 

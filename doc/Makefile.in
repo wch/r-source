@@ -36,7 +36,7 @@ R:
 	  (cd manual && $(MAKE) $@); \
 	fi
 
-install: installdirs install-html install-man
+install: install-message installdirs install-html install-man
 	@for f in KEYWORDS KEYWORDS.db; do \
 	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/doc; \
 	done
@@ -46,7 +46,6 @@ installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/doc/manual
 	@$(MKINSTALLDIRS) $(rhome)/doc/html/search
 install-html:
-	@echo "installing doc ..."
 	@for f in $(srcdir)/html/*.html \
 	          $(srcdir)/html/*.jpg \
 	          $(srcdir)/html/*.css; do \
@@ -61,9 +60,10 @@ install-html:
 	  $(INSTALL_DATA) $(top_builddir)/doc/html/search/index.txt \
 	                  $(rhome)/doc/html/search; \
 	fi
-
 install-man:
 	@$(INSTALL_DATA) $(srcdir)/R.1 $(mandir)/man1
+install-message:
+	@echo "installing doc ..."
 install-strip: install
 uninstall:
 	@echo "uninstalling doc ..."
