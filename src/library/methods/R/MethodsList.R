@@ -350,7 +350,7 @@ inheritedSubMethodLists <-
     ## which methods exist.
     if(isClass(thisClass)) {
       ## for consistency, order the available methods by
-      ## the (depth first) order of the superclasses of thisClass
+      ## the ordering of the superclasses of thisClass
       superClasses <- names(getExtends(getClass(thisClass)))
       classes <- superClasses[!is.na(match(superClasses, classes))]
       for(which in seq(along=classes)) {
