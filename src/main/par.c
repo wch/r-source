@@ -226,9 +226,9 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	else if (streql(what, "fig")) {
 		value = coerceVector(value, REALSXP);
 		lengthCheck(what, value, 4);
-		if (0.0 <= REAL(value)[0] && REAL(value)[0] < REAL(value)[1] && 
+		if (0.0 <= REAL(value)[0] && REAL(value)[0] < REAL(value)[1] &&
 		    REAL(value)[1] <= 1.0 &&
-		    0.0 <= REAL(value)[2] && REAL(value)[2] < REAL(value)[3] && 
+		    0.0 <= REAL(value)[2] && REAL(value)[2] < REAL(value)[3] &&
 		    REAL(value)[3] <= 1.0) {
 			dd->gp.defaultFigure = dd->dp.defaultFigure = 0;
 			dd->gp.fUnits = dd->dp.fUnits = NIC;
@@ -454,7 +454,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		dd->dp.currentFigure = (col-1)*nrow + row - 1;
 		if (dd->dp.currentFigure == 0)
 			dd->dp.currentFigure = dd->dp.lastFigure;
-		dd->gp.currentFigure = dd->dp.currentFigure; 
+		dd->gp.currentFigure = dd->dp.currentFigure;
 		dd->gp.defaultFigure = dd->dp.defaultFigure = 1;
 		dd->gp.layout = dd->dp.layout = 0;
 		dd->gp.new = dd->dp.new = 1;
@@ -657,9 +657,9 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		else {
 			dd->gp.usr[0] = dd->dp.usr[0] = REAL(value)[0];
 			dd->gp.usr[1] = dd->dp.usr[1] = REAL(value)[1];
-			dd->gp.logusr[0] = dd->dp.logusr[0] = 
+			dd->gp.logusr[0] = dd->dp.logusr[0] =
 				Log10(REAL(value)[0]);
-			dd->gp.logusr[1] = dd->dp.logusr[1] = 
+			dd->gp.logusr[1] = dd->dp.logusr[1] =
 				Log10(REAL(value)[1]);
 		}
 		if (dd->gp.ylog) {
@@ -671,9 +671,9 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 		else {
 			dd->gp.usr[2] = dd->dp.usr[2] = REAL(value)[2];
 			dd->gp.usr[3] = dd->dp.usr[3] = REAL(value)[3];
-			dd->gp.logusr[2] = dd->dp.logusr[2] = 
+			dd->gp.logusr[2] = dd->dp.logusr[2] =
 				Log10(REAL(value)[2]);
-			dd->gp.logusr[3] = dd->dp.logusr[3] = 
+			dd->gp.logusr[3] = dd->dp.logusr[3] =
 				Log10(REAL(value)[3]);
 		}
 		/* Reset Mapping and Axis Parameters */
@@ -757,9 +757,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	/* else errorcall(gcall, "parameter \"%s\" is not setable\n", what); */
 }
 
-/* Specify2 -- parameters as arguments from higher-level */
-/*             graphics functions, incl.  par2(..) */
-
+/* Specify2 -- parameters as arguments from higher-level graphics functions */
 void Specify2(char *what, SEXP value, DevDesc *dd)
 {
 	double x;
@@ -1528,10 +1526,10 @@ SEXP do_layout(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (j=0; j<ncol; j++)
 		dd->dp.cmWidths[j] = dd->gp.cmWidths[j] = 0;
 	for (j=0; j<ncmcol; j++)
-		dd->dp.cmWidths[INTEGER(CAR(args))[j]-1] = 
+		dd->dp.cmWidths[INTEGER(CAR(args))[j]-1] =
                 dd->gp.cmWidths[INTEGER(CAR(args))[j]-1] = 1;
 	args = CDR(args);
-	
+
 	ncmrow = length(CAR(args));
 	for (i=0; i<nrow; i++)
 		dd->dp.cmHeights[i] = dd->gp.cmHeights[i] = 0;
