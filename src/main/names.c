@@ -172,7 +172,8 @@ FUNTAB R_FunTab[] =
 {"dim<-",	do_dimgets,	0,	0,	2,	PP_FUNCALL,	0},
 {"attributes",	do_attributes,	0,	1,	1,	PP_FUNCALL,	0},
 {"attributes<-",do_attributesgets,0,	1,	1,	PP_FUNCALL,	0},
-{"attr",	do_attr,	0,	1,	2,	PP_FUNCALL,	0},
+ /*KH {"attr",	do_attr,	0,	1,	2,	PP_FUNCALL,     0},
+  */
 {"attr<-",	do_attrgets,	0,	0,	3,	PP_FUNCALL,	0},
 {"comment",	do_comment,	0,	11,	1,	PP_FUNCALL,	0},
 {"comment<-",	do_commentgets,	0,	11,	2,	PP_FUNCALL,	0},
