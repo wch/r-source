@@ -57,8 +57,8 @@ rnbinom(n, size, prob, mu)
   
   The alternative parametrization (often used in ecology) is by the
   \emph{mean} \code{mu}, and \code{size}, the \emph{dispersion parameter},
-  where \code{prob} = {size/(size+mu)}.  In this parametrization the
-  variance is \code{mu + mu^2/k}.
+  where \code{prob} = \code{size/(size+mu)}.  In this parametrization the
+  variance is \code{mu + mu^2/size}.
 
   If an element of \code{x} is not integer, the result of \code{dnbinom}
   is zero, with a warning.
