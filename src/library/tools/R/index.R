@@ -16,7 +16,7 @@ function(dataDir, contents)
 {
     ## Build an index with information about all available data sets.
     ## See .buildDemoIndex() for an explanation of what we do here.
-    
+
     ## <NOTE>
     ## We could also have an interface like
     ##   .buildDataIndex(dir, contents = NULL)
@@ -24,12 +24,13 @@ function(dataDir, contents)
     ## contents is Rdcontents(.listFilesWithType(file.path(dir, "man"),
     ## "docs")).
     ## </NOTE>
-    
+
     if(!.fileTest("-d", dataDir))
         stop(paste("directory", sQuote(dataDir), "does not exist"))
     dataFiles <- .listFilesWithType(dataDir, "data")
     dataTopics <-
         unique(basename(gsub("\\.[[:alpha:]]+$", "", dataFiles)))
+    if(!length(dataTopics)) return(matrix("", 0, 2))
     dataIndex <- cbind(dataTopics, "")
     ## <FIXME>
     ## Remove this for 1.8.
@@ -45,11 +46,14 @@ function(dataDir, contents)
         dataIndex[which(idx != 0), 2] <- dataEntries[idx, 2]
     }
     ## </FIXME>
-    aliasIndices <-
-        rep(1 : NROW(contents), sapply(contents$Aliases, length))
-    idx <- match(dataTopics, unlist(contents$Aliases), 0)
-    dataIndex[which(idx != 0), 2] <-
-        contents[aliasIndices[idx], "Title"]
+    ## NROW(contents) might be 0
+    if (NROW(contents)) {
+        aliasIndices <-
+            rep(1 : NROW(contents), sapply(contents$Aliases, length))
+        idx <- match(dataTopics, unlist(contents$Aliases), 0)
+        dataIndex[which(idx != 0), 2] <-
+            contents[aliasIndices[idx], "Title"]
+    }
     dataIndex
 }
 
@@ -59,7 +63,7 @@ function(dataDir, contents)
 function(demoDir)
 {
     ## Build an index with information about all available demos.
-    
+
     ## <NOTE>
     ## We use both the contents of @file{00Index} (if possible) and the
     ## information which demos are actually available to build the real
@@ -69,7 +73,7 @@ function(demoDir)
     ## Use .checkDemoIndex() to check whether available demo code and
     ## docs are in sync.
     ## </NOTE>
-    
+
     if(!.fileTest("-d", demoDir))
         stop(paste("directory", sQuote(demoDir), "does not exist"))
     demoFiles <- .listFilesWithType(demoDir, "demo")
