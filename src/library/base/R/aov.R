@@ -164,7 +164,7 @@ function(object, complete = TRUE, partial = FALSE, ...)
 {
   pattern <- function(x, ...) {
     x[abs(x) < 1e-6] <- 0
-    fractions(x)
+    if(exists("fractions", mode="function")) fractions(x) else x
   }
   Model <- object$terms
   attributes(Model) <- NULL
