@@ -269,7 +269,7 @@ arima <- function(x, order = c(0, 0, 0),
         } else var <- solve(res$hessian * n.used)
         trarma <- .Call("ARIMA_transPars", coef, arma, FALSE,
                         PACKAGE = "ts")
-        mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta)
+        mod <- makeARIMA(trarma[[1]], trarma[[2]], Delta, kappa)
         val <- if(ncxreg > 0)
             arimaSS(x - xreg %*% coef[narma + (1:ncxreg)], mod)
         else arimaSS(x, mod)
