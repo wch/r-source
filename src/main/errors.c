@@ -649,7 +649,7 @@ static void jump_to_top_ex(Rboolean traceback,
 	R_CleanUp(SA_NOSAVE, 1, 0); /* quit, no save, no .Last, status=1 */
     }
 
-    if (traceback) {
+    if (traceback && ! oldInError) {
 	PROTECT(s = R_GetTraceback(0));
 	setVar(install(".Traceback"), s, R_GlobalEnv);
 	UNPROTECT(1);
@@ -1040,7 +1040,7 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 {
     SEXP list, oldstack;
 
-    PROTECT(oldstack = R_HandlerStack);
+    oldstack = R_HandlerStack;
     while ((list = findSimpleErrorHandler()) != R_NilValue) {
 	char *buf = errbuf;
 	SEXP entry = CAR(list);
@@ -1048,12 +1048,14 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 	Rvsnprintf(buf, BUFSIZE - 1, format, ap);
 	buf[BUFSIZE - 1] = 0;
 	if (IS_CALLING_ENTRY(entry)) {
-	    if (ENTRY_HANDLER(entry) == R_RestartToken) {
-		UNPROTECT(1);
+	    if (ENTRY_HANDLER(entry) == R_RestartToken)
 		return; /* go to default error handling; do not reset stack */
-	    }
 	    else {
 		SEXP hooksym, quotesym, hcall, qcall;
+		/* protect oldstack here, not outside loop, so handler
+		   stack gets unwound in case error is protect stack
+		   overflow */
+		PROTECT(oldstack);
 		hooksym = install(".handleSimpleError");
 		quotesym = install("quote");
 		PROTECT(qcall = LCONS(quotesym, LCONS(call, R_NilValue)));
@@ -1062,13 +1064,12 @@ static void vsignalError(SEXP call, const char *format, va_list ap)
 		hcall = LCONS(ENTRY_HANDLER(entry), hcall);
 		PROTECT(hcall = LCONS(hooksym, hcall));
 		eval(hcall, R_GlobalEnv);
-		UNPROTECT(3);
+		UNPROTECT(4);
 	    }
 	}
 	else gotoExitingHandler(R_NilValue, call, entry);
     }
     R_HandlerStack = oldstack;
-    UNPROTECT(1);
 }
 
 static SEXP findConditionHandler(SEXP cond)
