@@ -1168,8 +1168,11 @@ used to automatically create these indices when building a package.
 
 @findex R CMD Sd2Rd
 Finally, @code{R CMD Sd2Rd} converts @Sl{} version 3 documentation files
-(which use an extended Nroff format) to Rd format.  This is useful when
-porting a package originally written for the @Sl{} system to @R{}.
+(which use an extended Nroff format) and @Sl{} version 4 documentation
+(which uses SGML markup) to Rd format.  This is useful when porting a
+package originally written for the @Sl{} system to @R{}.  @Sl{} version
+3 files usually have extension @file{.d}, whereas version 4 ones have
+extension @file{.sgml} or @file{.sgm}.
 
 The exact usage and a detailed list of available options for each of the
 above commands can be obtained by running @code{R CMD @var{command}

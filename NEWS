@@ -21,7 +21,7 @@ NEW FEATURES
 	length > 1, with a warning.
 
     o	library(help = PKG) now displays the contents of the package's
-	DESCRIPRION file in addition to its INDEX.
+	DESCRIPTION file in addition to its INDEX.
 
     o	All text-mode connections now accept input with LF, CR or CRLF
 	line endings.  This means that readLines() can be used on DOS
@@ -36,6 +36,9 @@ NEW FEATURES
 
     o	New functions readBin() and writeBin() to transfer binary data
 	to and from connections.
+
+    o	Sd2Rd can handle S4-style documentation too: see `Writing R
+	Extensions'.
 
 
 BUG FIXES
