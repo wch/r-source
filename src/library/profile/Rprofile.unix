@@ -15,6 +15,6 @@ options(na.action = "na.omit")
 options(printcmd = getenv("R_PRINTCMD"))
 options(papersize = getenv("R_PAPERSIZE"))
 
-.First <- function() {
-  if (interactive() && getenv("DISPLAY") != "") x11()
-}
+# .First <- function() {
+#   if (interactive() && getenv("DISPLAY") != "") x11()
+# }
