@@ -153,7 +153,7 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
     i = DDVAL(symbol);
     vl = findVarInFrame(FRAME(rho), R_DotsSymbol);
     if( vl != R_UnboundValue ) {
-	if (length(vl) > i ) {
+	if (length(vl) >= i ) {
 		vl = nthcdr(vl, i-1);
 		return(CAR(vl));
 	}

@@ -264,9 +264,11 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
+    SEXP a, b;
     RCNTXT *cptr;
     int i,j;
     SEXP group,realgroup;
+    char tbuf[10];
 
     cptr = R_GlobalContext;
 
@@ -288,31 +290,57 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     s = findFun(CAR(cptr->call), cptr->sysparent);
     if (TYPEOF(s) != CLOSXP)
 	errorcall(cptr->call, "function is not a closure\n");
+
+    /* get formals and actuals; attach the names of the formals to
+       the actuals, expanding any ... that occurs */
     formals = FORMALS(s);
-    actuals = matchArgs(formals, cptr->promargs);
+    PROTECT(actuals = matchArgs(formals, cptr->promargs));
+
+    i=0;
+    for(s=formals, t=actuals; s!=R_NilValue; s=CDR(s), t=CDR(t) ) {
+	TAG(t)=TAG(s);
+	if(TAG(t)==R_DotsSymbol) i=length(CAR(t));
+    }
+    if(i) {   /* we need to expand out the dots */
+        PROTECT(t = allocList(i+length(actuals)-1));
+        for( s=actuals, m=t; s!=R_NilValue; s=CDR(s),m=CDR(m) ) {
+           if(TYPEOF(CAR(s)) == DOTSXP) {
+                i=1;
+                for(a=CAR(s); a!=R_NilValue; a=CDR(a), i++, m=CDR(m) ) {
+                   sprintf(tbuf,"..%d",i);
+                   TAG(m)= mkSYMSXP(mkChar(tbuf), R_UnboundValue);
+                   CAR(m)=CAR(a);
+                }
+           }
+           else {
+                TAG(m)=TAG(s);
+                CAR(m)=CAR(s);
+           }
+       }
+       actuals=t;
+       UNPROTECT(1);
+    }
 
     /* we can't duplicate because it would force the promises */
     /* so we do our own duplication of the promargs */
+
     PROTECT(matchedarg = allocList(length(cptr->promargs)));
     for (t = matchedarg, s = cptr->promargs; t != R_NilValue;
-	 t = CDR(t), s = CDR(s)) {
-	CAR(t) = CAR(s);
-	TAG(t) = TAG(s);
+	  s = CDR(s), t=CDR(t)) {
+		CAR(t) = CAR(s);
+		TAG(t) = TAG(s);
     }
-    for (s = formals; s != R_NilValue; s = CDR(s))
-	ARGUSED(s) = 0;
     for (t = matchedarg; t != R_NilValue; t = CDR(t)) {
-	for (m = actuals, s = formals; m != R_NilValue; m = CDR(m), s = CDR(s))
-	    if ((CAR(m) == CAR(t)) && !ARGUSED(s)) {
-		ARGUSED(s) = 1;
+	for (m = actuals; m != R_NilValue; m = CDR(m))
+	    if (CAR(m) == CAR(t))  {
 		if (CAR(m) == R_MissingArg) {
-		    tmp = findVarInFrame(FRAME(cptr->cloenv), TAG(s));
+		    tmp = findVarInFrame(FRAME(cptr->cloenv), TAG(m));
 		    if (tmp == R_MissingArg)
 			break;
 		}
-		CAR(t) = mkPROMISE(TAG(s), cptr->cloenv);
+		CAR(t) = mkPROMISE(TAG(m), cptr->cloenv);
 		break;
-	    }
+           }
     }
     /*
       Now see if there were any other arguments passed in
@@ -431,7 +459,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     CAR(newcall) = method;
     ans = applyMethod(newcall, nextfun, matchedarg, env, m);
-    UNPROTECT(7);
+    UNPROTECT(8);
     UNPROTECT(1);
     return(ans);
 }
