@@ -34,7 +34,7 @@ selectMethod(f, signature, optional=FALSE, useInherited,
              mlist=getMethods(f), fdef = getGeneric(f))
 
 MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
-                  useInherited, fdef)
+                  useInherited, fdef, resetAllowed)
 
 }
 \arguments{
@@ -68,10 +68,11 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function
     explicitly for debugging purposes.}
-  \item{fEnv, finalDefault, evalArgs, useInherited}{ Internal-use
+  \item{fEnv, finalDefault, evalArgs, useInherited, resetAllowed}{ Internal-use
     arguments for the function's environment, the method to use as
-    the overall default, whether to evaluate arguments, and which
-    arguments should use inheritance.}
+    the overall default, whether to evaluate arguments, which
+    arguments should use inheritance, and whether the cached methods
+    are allowed to be reset.}
 }
 \details{
   The \code{signature} argument specifies classes, in an extended

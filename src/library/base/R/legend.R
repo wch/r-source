@@ -131,7 +131,7 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 
     if (plot && bty != "n") { ## The legend box :
 	if(trace)
-	    catn("  rect2(",left,",",top,", w=",w,", h=",h,"...)",sep="")
+	    catn("  rect2(",left,",",top,", w=",w,", h=",h,", ...)",sep="")
 	rect2(left, top, dx = w, dy = h, col = bg, angle = NULL)
     }
     ## (xt[],yt[]) := `current' vectors of (x/y) legend text

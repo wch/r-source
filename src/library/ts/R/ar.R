@@ -179,9 +179,9 @@ print.ar <- function(x, digits = max(3, getOption("digits") - 3), ...)
 predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
 {
     if(missing(newdata)) {
-        newdata <- eval(parse(text=object$series))
+        newdata <- eval.parent(parse(text=object$series))
         if (!is.null(nas <- object$call$na.action))
-            newdata <- eval(call(nas, newdata))
+            newdata <- eval.parent(call(nas, newdata))
     }
     nser <- NCOL(newdata)
     ar <- object$ar

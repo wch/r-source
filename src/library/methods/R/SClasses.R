@@ -336,10 +336,10 @@ validObject <- function(object, test = FALSE) {
     classi <- slotTypes[[i]]
     sloti <- slot(object, slotNames[[i]])
     if(!is(sloti, classi))
-      errors <- c(errors, paste("Invalid object for slot \"", slotName,
-                               "\" in class\"", Class,
-                               "\": got class \"", class(slotVal), 
-                               "\", should be or extend class \"", slotClass, "\"", sep = ""))
+      errors <- c(errors, paste("Invalid object for slot \"", slotNames[[i]],
+                               "\" in class \"", Class,
+                               "\": got class \"", class(sloti), 
+                               "\", should be or extend class \"", classi, "\"", sep = ""))
   }
   extendType <- rev(classDef@contains)
   extends <- names(extendType); i <- 1

@@ -167,15 +167,21 @@ MethodsListSelect <-
   ## a method specifically linked to class `"missing"'.  Once a function is found, it
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
-             mlist = .getMethodsForDispatch(f, fdef),
+             mlist = NULL,
              fEnv = if(is(fdef, "genericFunction")) environment(fdef) else NULL,
              finalDefault = finalDefaultMethod(mlist, f),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
-             fdef = getGeneric(f) # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
+             fdef = getGeneric(f), # MUST BE SAFE FROM RECUSIVE METHOD SELECTION
+             resetAllowed = TRUE # FALSE when called from selectMethod, .findNextMethod
  )
 {
-    if(.setIfBase(f, fdef, mlist)) { # quickly protect against recursion -- see Methods.R
+    if(!resetAllowed) # ensure we restore the real methods for this function
+        resetMlist <- .getMethodsForDispatch(f, fdef)
+    if(is.null(mlist))
+        mlist <- .getMethodsForDispatch(f, fdef)
+    resetNeeded <- .setIfBase(f, fdef, mlist) # quickly protect against recursion -- see Methods.R
+    if(resetNeeded) {
         on.exit(.setMethodsForDispatch(f, fdef, mlist))
     }
     if(is.null(mlist)) {
@@ -197,13 +203,15 @@ MethodsListSelect <-
         stop("useInherited must be TRUE, FALSE, or a named logical vector of those values; got an object of class \"",
              class(useInherited), "\"")
     if(identical(mlist, getMethodsForDispatch(f, fdef))) {
+        resetNeeded <- TRUE
         ## On the initial call:
         ## turn off any further method dispatch on this function, to avoid recursive
         ## loops if f is a function used in MethodsListSelect.
         ## TODO: Using name spaces in the methods package would eliminate the need for this
         .setMethodsForDispatch(f, fdef, finalDefault)
-        if(is(mlist, "MethodsList"))
+        if(is(mlist, "MethodsList")) {
             on.exit(.setMethodsForDispatch(f, fdef, mlist))
+        }
     }
     argName <- slot(mlist, "argument")
     arg <- NULL ## => don't use instance-specific inheritance
@@ -241,7 +249,8 @@ MethodsListSelect <-
             value <- mlist ## no change
         else {
             method <- Recall(NULL, env, selection, finalDefault = finalDefault,
-                   evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef)
+                   evalArgs = evalArgs, useInherited = nextUseInherited, fdef = fdef,
+                             )
             if(is(method, "EmptyMethodsList"))
                 value <- method
             else {
@@ -291,6 +300,16 @@ MethodsListSelect <-
         ## top level
         if(is(value, "EmptyMethodsList")) ## selection failed
             value <- NULL
+        if(resetNeeded) {
+            on.exit() # cancel the restore of the original mlist
+            if(resetAllowed) {
+                if(is.null(value)) resetMlist <- mlist else resetMlist <- value
+            }
+            .setMethodsForDispatch(f, fdef, resetMlist)
+            if(is.primitive(finalDefault))
+                setPrimitiveMethods(f, finalDefault, "set", fdef, resetMlist)
+        }
+            
     }
     value
 }

@@ -146,13 +146,21 @@ makePrototypeFromClassDef <-
     check <- rep(FALSE, length(pnames))
     for(what in pnames) {
         pwhat <- slot(prototype, what)
-        if(!is.null(pwhat) && !is(pwhat, slotDefs[[what]]))
-            check[match(what, pnames)] <- TRUE
+        if(!is(pwhat, slotDefs[[what]])) {
+            if(is.null(pwhat)) {
+#                 warning("In class \"", className,
+#                         "\", the prototype for slot \"", what, "\" (slot class \"",
+#                         slotDefs[[what]],
+#                         "\") is NULL; new() will fail for this class unless this slot is supplied in the call")
+            }
+            else
+                check[match(what, pnames)] <- TRUE
+        }
     }
     if(any(check))
         stop("In making the prototype for class \"", className,
              "\" elements of the prototype failed to match the corresponding slot class: ",
-             paste(pnames[check], "(\"", slotDefs[match(pnames[check], slotNames)], "\")", collapse = ", "))
+             paste(pnames[check], "(class \"", slotDefs[match(pnames[check], slotNames)], "\")", collapse = ", "))
     prototype
 }
 

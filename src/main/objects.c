@@ -1042,7 +1042,7 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 SEXP R_primitive_methods(SEXP op)
 {
     int offset = PRIMOFFSET(op);
-    if(offset < 0 || offset >= curMaxOffset)
+    if(offset < 0 || offset > curMaxOffset)
 	return R_NilValue;
     else {
 	SEXP value = prim_mlist[offset];
