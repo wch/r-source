@@ -40,8 +40,8 @@ chull(x, y=NULL)
 
 \examples{
 X <- matrix(rnorm(2000), ncol=2)
-points(X, cex=0.5)
 plot(X, type="n")
+points(X, cex=0.5)
 hpts <- chull(X)
 hpts <- c(hpts, hpts[1])
 lines(X[hpts, ])
