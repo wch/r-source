@@ -350,7 +350,8 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
 	    for (j = 0 ; j < i ; j++)
 		if (NonNullStringMatch(STRING(s)[i], STRING(s)[j])) {
 		    sub = INTEGER(index)[j];
-		    STRING(indexnames)[i] = STRING(indexnames)[sub - 1];
+/*		    STRING(indexnames)[i] = STRING(indexnames)[sub - 1];*/
+		    STRING(indexnames)[i] = STRING(s)[j];
 		    break;
 		}
 	}
@@ -367,7 +368,7 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
 	*stretch = extra;
 	ATTRIB(index) = indexnames;
     }
-    UNPROTECT(4);
+    UNPROTECT(4);    
     return index;
 }
 
