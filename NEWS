@@ -69,11 +69,13 @@ DEPRECATED & DEFUNCT
     o	restart() is defunct.  Use try(), as has long been recommended.
 
 
-BUG FIXES
+UTILITIES
 
-    o   The code underlying polygon drawing contained a memory leak.
-	This showed up in persp, but did not affect other graphics
-	functions.  It is now possible to draw big DEMs.
+    o	Rdconv now creates direct HTML hyperlinks when linking to
+	documentation in the same package.
+
+
+BUG FIXES
 
 
 

@@ -594,8 +594,14 @@ sub text2html {
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
 		}
 	    } else {
-		$text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		if ($htmlfile =~ s+^$pkgname/html/++) {
+		    # in the same html file
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
+		} else {
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
+		}
 	    }
 	}
 	else {
@@ -606,7 +612,6 @@ sub text2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic$HTML";
 		    $htmlfile = mklink($opt, $topic . $HTML);
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
@@ -714,24 +719,23 @@ sub code2html {
 		    $tmp = $htmlfile;
 		    ($base, $topic) = ($tmp =~ m+(.*)/(.*)+);
 		    $base =~ s+/html$++;
-#		    $htmlfile = "ms-its:../../$base/chtml/$base.chm::/$topic";
 		    $htmlfile = mklink($base, $topic);
-#		    print "$htmlfile\n";
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		}
 	    } else {
-	     if($R::Vars::OSTYPE eq "mac") {
-#	     if($main::OSdir eq "mac"){
-	     my $uxfile = $htmlfile;
-		 $uxfile =~ s|:|\/|g;
-		 $text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$uxfile\">$arg<\/a>/s;
-		    }
-		 else{
-		 	$text =~
-		    s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$htmlfile\">$arg<\/a>/s;
-		 }
+		my $uxfile = $htmlfile;
+		if($R::Vars::OSTYPE eq "mac") {
+		    $uxfile =~ s|:|\/|g;
+		}
+		if ($uxfile =~ s+^$pkgname/html/++) {
+		    # in the same html file
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"$uxfile\">$arg<\/a>/s;
+		} else {
+		    $text =~
+			s/\\link(\[.*\])?$id.*$id/<a href=\"..\/..\/$uxfile\">$arg<\/a>/s;
+		}
 	    }
 	}
 	else{
@@ -742,9 +746,7 @@ sub code2html {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
 		    $opt =~ s/:.*$//o;
-#		    $htmlfile = "ms-its:../../$opt/chtml/$opt.chm::/$topic$HTML";
 		    $htmlfile = mklink($opt, $topic . $HTML);
-#		    print "$htmlfile\n";
        		    $text =~ s/\\link(\[.*\])?$id.*$id/<a $htmlfile>$arg<\/a>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/$arg/s;
