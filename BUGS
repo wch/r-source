@@ -288,6 +288,10 @@ Subject: lattice install
 From: robert.king@newcastle.edu.au
 Date: Mon, 2 Sep 2002 04:55:41 +0200 (MET DST)
 --Perhaps lattice should require(grid) and print a clearer message?
+* PR# 2069 *
+Subject: split.screen problem
+From: cbodily@att.net
+Date: Thu, 26 Sep 2002 19:37:40 +0200 (MET DST)
 
 Directory:  In-Out
 
@@ -551,6 +555,10 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
+* PR# 2048 *
+Subject: Install with 64-bit GCC 3.2
+From: Kev Buckley <k.buckley@lancaster.ac.uk>
+Date: Fri, 20 Sep 2002 17:33:33 +0100 (BST)
 
 Directory:  TooMuchAtOnce
 
@@ -613,46 +621,7 @@ Date: Thu, 19 Sep 2002 14:53:25 +1000
 Subject: install.packages() together with pixmap package
 From: w.huber@dkfz.de
 Date: Thu, 19 Sep 2002 18:26:55 +0200 (MET DST)
-* PR# 2048 *
-Subject: Install with 64-bit GCC 3.2
-From: Kev Buckley <k.buckley@lancaster.ac.uk>
-Date: Fri, 20 Sep 2002 17:33:33 +0100 (BST)
 * PR# 2067 *
 Subject: R crashes when given graphic command
 From: anson@bgumail.bgu.ac.il
 Date: Wed, 25 Sep 2002 17:56:18 +0200 (MET DST)
-* PR# 2069 *
-Subject: split.screen problem
-From: cbodily@att.net
-Date: Thu, 26 Sep 2002 19:37:40 +0200 (MET DST)
-* PR# 2079 *
-Subject: Never visit another adult site again (1kgoR)
-From: "Mancha Kreiss" <ManchaKreiss@earthlink.net>
-Date: Fri, 27 Sep 2002 19:9:12 -0400
-* PR# 2080 *
-Subject: This is it (0dR1i32)
-From: "Chafins Strawn" <ChafinsStrawn@ananzi.co.za>
-Date: Fri, 27 Sep 2002 20:9:14 -0400
-* PR# 2081 *
-Subject: RE: pics 
-From: "Kobe Adam" <rz6uimgm@prodigy.net>
-Date: Sat, 28 Sep 2002 13:50:21 +0200 (MET DST)
-Date: Sat Sep 28 09:05:59 2002
-* PR# 2082 *
-Subject: Japanese girl VS playboy
-From: anytime <anytime@ticketsukltd.com>
-Date: Sat, 28 Sep 2002 19:15:08 +0100
-* PR# 2083 *
-Subject: InterScan NT Alert
-From: admin@teleserver.es
-From:  	<r-bugs@r-project.org>
-Date: Sat, 28 Sep 2002 20:13:01 +0200 (Romance Daylight Time)
-Date:  	Sat, 28 Sep 2002 20:13:01 +0200 (Romance Daylight Time)
-* PR# 2084 *
-Subject: Tones of galleriez inside! (gq78MFL76m)
-From: "Mohl Jetter" <MohlJetter@activatormail.com>
-Date: Sat, 28 Sep 2002 21:9:31 -0400
-* PR# 2085 *
-Subject: This is what you have been looking for (hXcsFv3H)
-From: Maturi Echoles <MaturiEcholes@address.com>
-Date: Sat, 28 Sep 2002 22:09:35 -0400
