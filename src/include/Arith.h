@@ -72,7 +72,10 @@ extern int _finite(double);
 #define ISNAN(x)		_isnan(x)  /* -> True, *both* for NA | NaN */
 #else
 #define FINITE(x)		finite(x)
-#define ISNAN(x)		isnan(x)  /* -> True, *both* for NA | NaN */
+#define ISNAN(x)		(isnan(x)!=0)  /* -> True, *both* for NA | NaN */
+						/* NOTE: some systems do
+						 * not return 1 for
+						 * TRUE!*/
 #endif
 #define ISNA(x)			R_IsNA(x) /* from ../main/arithmetic.c */
 
