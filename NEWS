@@ -320,6 +320,7 @@ BUG FIXES
 
     o	options(list('digits', 'scipen')) no longer seg.faults (PR#7078).
 
+    o	summary.Date() now has a sensible default for 'digits'.
 
 
 
