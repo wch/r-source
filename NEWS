@@ -62,17 +62,7 @@ NEW FEATURES
 	lead to more accurate placing of centred or right-justified
 	strings.
 
-    o	axis() now has additional arguments.  The argument "tick" turns
-	tick drawing on and off (on by default).  Additional arguments
-	line, pos, and outer; allow more flexible placement of axes.
 
-    o   The parameters to title() which specify the labels may now
-        be specified as a list containing the parameter together
-	with additional modifying par values (cex, col, font) which
-	affect just that label.
-
-	title() also has new line and outer arguments which provide
-	functionality which matches that in axis().
 
     o	$ and $<- are now generic functions.
 
@@ -87,6 +77,10 @@ NEW FEATURES
 	before, they were equivalent by implementation.
 
     o	attach() now works for R data files.
+
+    o	axis() now has additional arguments.  The argument "tick" turns
+	tick drawing on and off (on by default).  Additional arguments
+	line, pos, and outer; allow more flexible placement of axes.
 
     o	New device bitmap(), like dev2bitmap() but a stand-alone device.
 
@@ -216,6 +210,14 @@ NEW FEATURES
 
     o	New function termplot() with similar functionality to
 	plot.gam() in S.
+
+    o   The parameters to title() which specify the labels may now
+        be specified as a list containing the parameter together
+	with additional modifying par values (cex, col, font) which
+	affect just that label.
+
+	title() also has new line and outer arguments which provide
+	functionality which matches that in axis().
 
     o	New functions which.min() amd which.max().
 
