@@ -485,7 +485,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case INTSXP:
 	case STRSXP:
 		for (i = 0; i < length(x); i++)
-			LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);
+			LOGICAL(ans)[i] = 0;
 		break;
 	case REALSXP:
 		for (i = 0; i < length(x); i++)
@@ -566,6 +566,7 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
       names = getAttrib(x, R_NamesSymbol);
   }
+  else dims = names = R_NilValue;
   switch (TYPEOF(x)) {
   case LGLSXP:
   case INTSXP:
@@ -584,17 +585,21 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     for(i=0 ; i<n ; i++)
       INTEGER(ans)[i] = 0;
   }
-  setAttrib(ans, R_DimSymbol, dims);
-  if (isArray(x))
-    setAttrib(ans, R_DimNamesSymbol, names);
-  else
-    setAttrib(ans, R_NamesSymbol, names);
+  if (dims != R_NilValue)
+    setAttrib(ans, R_DimSymbol, dims);
+  if (names != R_NilValue) {
+    if (isArray(x))
+      setAttrib(ans, R_DimNamesSymbol, names);
+    else
+      setAttrib(ans, R_NamesSymbol, names);
+  }
   return ans;
 }
 
 SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
   SEXP ans, x, names, dims;
+  double xr, xi;
   int i, n;
   checkArity(op, args);
   if (!isList(CAR(args)) && !isVector(CAR(args)))
@@ -609,17 +614,27 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
       names = getAttrib(x, R_NamesSymbol);
   }
+  else dims = names = R_NilValue;
 #ifdef IEEE_754
   switch (TYPEOF(x)) {
   case REALSXP:
-    for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = !(FINITE(REAL(x)[i]) || R_IsNA(REAL(x)[i]));
+    for(i=0 ; i<n ; i++) {
+      xr = REAL(x)[i];
+      if (xr != xr || FINITE(xr))
+	INTEGER(ans)[i] = 0;
+      else
+        INTEGER(ans)[i] = 1;
+    }
     break;
   case CPLXSXP:
-    for(i=0 ; i<n ; i++)
-      INTEGER(ans)[i] = !(FINITE(COMPLEX(x)[i].r) ||
-			  (R_IsNA(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i)) ||
-			  R_IsNA(COMPLEX(x)[i].i));
+    for(i=0 ; i<n ; i++) {
+      xr = COMPLEX(x)[i].r;
+      xr = COMPLEX(x)[i].i;
+      if ((xr != xr || FINITE(xr)) && (xi != xi || FINITE(xi)))
+	INTEGER(ans)[i] = 0;
+      else
+        INTEGER(ans)[i] = 1;
+    }
     break;
   default:
     for(i=0 ; i<n ; i++)
@@ -629,11 +644,14 @@ SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
   for(i=0 ; i<n ; i++)
     INTEGER(ans)[i] = 0;
 #endif
-  setAttrib(ans, R_DimSymbol, dims);
-  if (isArray(x))
-    setAttrib(ans, R_DimNamesSymbol, names);
-  else
-    setAttrib(ans, R_NamesSymbol, names);
+  if (!isNull(dims))
+    setAttrib(ans, R_DimSymbol, dims);
+  if (!isNull(names)) {
+    if (isArray(x))
+      setAttrib(ans, R_DimNamesSymbol, names);
+    else
+      setAttrib(ans, R_NamesSymbol, names);
+  }
   return ans;
 }
 
