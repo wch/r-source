@@ -73,7 +73,7 @@ LibFiles-PPC    =  ¶
 	{PPCC} {depDir}{default}.c -o {targDir}{default}.o {PPCCOptions}
 
 
-### Build Rules ###
+### Build Rules ###          
 
  
 {DLib}Lib  ÄÄ  {ObjFiles-PPC} {LibFiles-PPC} {¥MondoBuild¥} 
