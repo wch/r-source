@@ -8,3 +8,7 @@ warnings(\dots)
 \code{warnings} prints the top--level variable \code{last.warning}
 in a pleasing form.
 }
+\seealso{\code{\link{warning}}.}
+\examples{
+warnings()
+}
