@@ -320,6 +320,8 @@ kind enough to provide a pre-compiled version for Windows as a
 
 You can install pre-compiled packages either from CRAN or from a local
 @code{.zip} file by using @code{install.packages}: see its help page.
+There are menu items on the @code{Packages} menu to provide a
+point-and-click interface to package installation.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @url{http://cran.r-project.org/bin/windows/contrib/ReadMe}
