@@ -653,12 +653,12 @@ int F77_NAME(dblep0) (char *label, int *nchar, double *data, int *ndata)
     if(nc > 255) {
 	warning("invalid character length in dblepr");
 	nc = 0;
+    } else if(nc > 0) {
+	for (k = 0; k < nc; k++)
+	    Rprintf("%c", label[k]);
+	Rprintf("\n");
     }
-    for (k = 0; k < nc; k++) {
-	Rprintf("%c", label[k]);
-    }
-    Rprintf("\n");
-    printRealVector(data, *ndata, 1);
+    if(*ndata > 0) printRealVector(data, *ndata, 1);
     return(0);
 }
 
@@ -670,12 +670,12 @@ int F77_NAME(intpr0) (char *label, int *nchar, int *data, int *ndata)
     if(nc > 255) {
 	warning("invalid character length in intpr");
 	nc = 0;
+    } else if(nc > 0) {
+	for (k = 0; k < nc; k++)
+	    Rprintf("%c", label[k]);
+	Rprintf("\n");
     }
-    for (k = 0; k < nc; k++) {
-	Rprintf("%c", label[k]);
-    }
-    Rprintf("\n");
-    printIntegerVector(data, *ndata, 1);
+    if(*ndata > 0) printIntegerVector(data, *ndata, 1);
     return(0);
 }
 
@@ -689,15 +689,18 @@ int F77_NAME(realp0) (char *label, int *nchar, float *data, int *ndata)
 	warning("invalid character length in realpr");
 	nc = 0;
     }
-    ddata = malloc(nd*sizeof(double));
-    if(!ddata) error("memory allocation error in realpr");
-    for (k = 0; k < nd; k++) ddata[k] = (double) data[k];
-    for (k = 0; k < nc; k++) {
-	Rprintf("%c", label[k]);
+    else if(nc > 0) {
+	for (k = 0; k < nc; k++)
+	    Rprintf("%c", label[k]);
+	Rprintf("\n");
     }
-    Rprintf("\n");
-    printRealVector(ddata, nd, 1);
-    free(ddata);
+    if(nd > 0) {
+	ddata = malloc(nd*sizeof(double));
+	if(!ddata) error("memory allocation error in realpr");
+	for (k = 0; k < nd; k++) ddata[k] = (double) data[k];
+	printRealVector(ddata, nd, 1);
+	free(ddata);
+    }
     return(0);
 }
 
