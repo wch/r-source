@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-02-01)
+Version 1.7.0 Under development (unstable) (2003-03-11)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -24,14 +24,14 @@ Type `q()' to quit R.
 > bpos <- match("package:base",search())
 > nn <- ls(pos=bpos)
 > length(nn) # 844 [R 0.62.0, March 25, 1998;  1067 R 0.64.0 March 1999]
-[1] 1599
+[1] 1612
 > 
 > is.primitive <- function (obj) is.function(obj) && is.null(args(obj))
 > is.special <- function(obj) typeof(obj) == "special"
 > 
 > Primf <- nn[sapply(nn, function(N) is.primitive(get(N, pos=bpos)))]
 > length(Primf) ## 195  R 0.62.0, March 25, 1998
-[1] 154
+[1] 153
 > ## 132	R 0.62.2+
 > Real.primitives <-
 +     list(
@@ -39,7 +39,7 @@ Type `q()' to quit R.
 + 	 "return", "function", "quote",
 + 	 "on.exit" ## on.exit(expression, add=F) has two arguments in S-plus !
 + 	 ),
-+ 	 language = c("$", "$<-", "@", "@<-", "<-", "=", "<<-", "[", "[<-", "[[", "[[<-"),
++ 	 language = c("$", "$<-", "@", "<-", "=", "<<-", "[", "[<-", "[[", "[[<-"),
 + 	 arith = c("%%", "%*%", "%/%","*", "+", "-", "/", "^"),
 + 	 logic = c("!",	 "&", "&&",  "|", "||",
 + 	 "<", "<=", "==", ">", ">=", "!="),
@@ -114,17 +114,16 @@ Type `q()' to quit R.
 > 
 > Specf <- Primf[iPsp <- sapply(Primf, function(N) is.special(get(N, pos=bpos)))]
 > length(Specf) ## 36 [ R 0.63 ]
-[1] 41
+[1] 40
 > Specf
  [1] "$"            "$<-"          "&&"           ".Internal"    "<-"          
- [6] "<<-"          "="            "@"            "@<-"          "UseMethod"   
-[11] "["            "[<-"          "[["           "[[<-"         "as.character"
-[16] "attr<-"       "break"        "browser"      "c"            "call"        
-[21] "dim"          "dim<-"        "dimnames"     "dimnames<-"   "expression"  
-[26] "for"          "function"     "if"           "interactive"  "missing"     
-[31] "nargs"        "next"         "on.exit"      "quote"        "repeat"      
-[36] "return"       "substitute"   "while"        "{"            "||"          
-[41] "~"           
+ [6] "<<-"          "="            "@"            "UseMethod"    "["           
+[11] "[<-"          "[["           "[[<-"         "as.character" "attr<-"      
+[16] "break"        "browser"      "c"            "call"         "dim"         
+[21] "dim<-"        "dimnames"     "dimnames<-"   "expression"   "for"         
+[26] "function"     "if"           "interactive"  "missing"      "nargs"       
+[31] "next"         "on.exit"      "quote"        "repeat"       "return"      
+[36] "substitute"   "while"        "{"            "||"           "~"           
 > ## the non-"special" ones:
 > all("builtin" == sapply(Primf[!iPsp], function(N) typeof(get(N, pos=bpos))))
 [1] TRUE

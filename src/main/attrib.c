@@ -1053,6 +1053,7 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+/* Was a .Primitive implementation for @<-; no longer needed? */
 SEXP do_AT_assign(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP nlist, object, ans, value;

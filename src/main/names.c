@@ -111,7 +111,6 @@ FUNTAB R_FunTab[] =
 {"[<-",		do_subassign,	0,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
 {"[[<-",	do_subassign2,	1,	100,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
 {"$<-",		do_subassign3,	1,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
-{"@<-",		do_AT_assign,	0,	0,	3,	{PP_SUBASS,  PREC_LEFT,	  1}},
 {"switch",	do_switch,	0,	10,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"browser",	do_browser,	0,	100,	0,	{PP_FUNCALL, PREC_FN,	  0}},
 {"debug",	do_debug,	0,	101,	1,	{PP_FUNCALL, PREC_FN,	  0}},
