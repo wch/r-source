@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-0, 2004-04-10
+Version 1.7-1, 2004-04-11
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1373,6 +1373,9 @@ distributions of R.)
 
 *amap*
      Another Multidimensional Analysis Package.
+
+*anm*
+     Analog model for statistical/empirical downscaling.
 
 *ape*
      Analyses of Phylogenetics and Evolution, providing functions for
