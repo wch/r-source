@@ -36,6 +36,9 @@ BUG FIXES
 
     o	prompt(ff) now gives proper \usage{..} for
 	f <- function(x, g = function(u) { x <- u^2 ; sin(x)/x }) { g(x) }
+	
+    o	package.skeleton() now uses the supplied name in the DESCRIPTION
+    	file.
 
 
 

@@ -28,6 +28,15 @@ package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
   preceeded by \code{zz}, and finally the converted names are made
   unique by \code{\link{make.unique}(sep = "_")}.  This can be done for
   code and help files but not data files (which are looked for by name).
+  
+  By default, the new package is created as a source package
+  in a subdirectory of the current directory.  It will normally need to
+  be installed (using \code{R CMD INSTALL ...}) before being
+  available for use.
+#ifdef windows
+  Windows users will need to install various development tools to do this.
+  Instructions are given in \file{readme.packages}.
+#endif
 }
 
 \references{Read the \emph{Writing R Extensions} manual for more details }
@@ -41,6 +50,9 @@ package.skeleton(name = "anRpackage", list, environment = .GlobalEnv,
     g <- function(x,y) x-y
     d <- data.frame(a=1,b=2)
     e <- rnorm(1000)
+#ifdef windows    
+    setwd(Sys.getenv("R_USER"))
+#endif
     package.skeleton(list=c("f","g","d","e"), name="AnExample")
 }
 }
