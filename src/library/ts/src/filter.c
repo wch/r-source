@@ -98,7 +98,7 @@ acf(double *x, int *n, int *nser, int *nlag, int *correlation, double *acf)
 	    for(lag = 0; lag <= nl; lag++) {
 		sum = 0.0;
 		for(i = 0; i < nn-lag; i++)
-		    sum += x[i + nn*u] * x[i + lag + nn*v];
+		    sum += x[i + lag + nn*u] * x[i + nn*v];
 		acf[lag + d1*u + d2*v] = sum/nn;
 	    }
     if(*correlation) {

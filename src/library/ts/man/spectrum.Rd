@@ -64,6 +64,8 @@ of coherency and phase of the cross-spectra.
   \item{series}{The name of the time series.}
   \item{snames}{For multivariate input, the names of the component series.}
   \item{method}{The method used to calculate the spectrum.}
+
+  The result is returned invisibly if \code{plot} is true.
 }
 \details{
     The spectrum here is defined with scaling 1/frequency(x),
