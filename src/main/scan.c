@@ -511,10 +511,12 @@ static SEXP scanVector(SEXPTYPE type, int maxitems, int maxlines,
 
     if (n == 0) {
 	UNPROTECT(1);
+	R_FreeStringBuffer(&strBuf);
 	return allocVector(type,0);
     }
     if (n == maxitems) {
 	UNPROTECT(1);
+	R_FreeStringBuffer(&strBuf);
 	return ans;
     }
 

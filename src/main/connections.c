@@ -1512,7 +1512,8 @@ static void text_destroy(Rconnection con)
     Rtextconn this = (Rtextconn)con->private;
 
     free(this->data);
-    this->cur = this->nchars = 0;
+    /* this->cur = this->nchars = 0; */
+    free(this);
 }
 
 static int text_fgetc(Rconnection con)
@@ -1586,7 +1587,7 @@ static void outtext_close(Rconnection con)
 static void outtext_destroy(Rconnection con)
 {
     Routtextconn this = (Routtextconn)con->private;
-    free(this->lastline);
+    free(this->lastline); free(this);
 }
 
 #define LAST_LINE_LEN 256

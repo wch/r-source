@@ -226,6 +226,16 @@ BUG FIXES
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.9.2
+
+
+BUG FIXES
+
+    o	Various memory leaks have been plugged and uses of strcpy()
+	with overlapping src and dest corrected.
+
+
+
 		CHANGES IN R VERSION 1.9.1
 
 

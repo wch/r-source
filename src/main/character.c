@@ -309,7 +309,6 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		tables = pcre_maketables();
 		re_pcre = pcre_compile(split, options, 
 				       &errorptr, &erroffset, tables);
-		pcre_free((void *)tables);
 		if (!re_pcre) errorcall(call, "invalid regular expression");
 		re_pe = pcre_study(re_pcre, 0, &errorptr);
 		bufp = buf;
@@ -418,13 +417,18 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	UNPROTECT(1);
 	SET_VECTOR_ELT(s, i, t);
+	if(usedRegex) {
+	    regfree(&reg);
+	    usedRegex = FALSE;
+	}
+	if(usedPCRE) {
+	    pcre_free(re_pe);
+	    pcre_free(re_pcre);
+	    pcre_free((void *)tables);
+	    usedPCRE = FALSE;
+	}
     }
 
-    if(usedRegex) regfree(&reg);
-    if(usedPCRE) {
-	(pcre_free)(re_pe);
-	(pcre_free)(re_pcre);
-    }
     if (getAttrib(x, R_NamesSymbol) != R_NilValue)
 	namesgets(s, getAttrib(x, R_NamesSymbol));
     UNPROTECT(1);
