@@ -28,9 +28,6 @@ void baseCallback(GEevent task, GEDevDesc *dd) {
 	ddp->ipr[1] = dev->ipr[1];
 	ddp->cra[0] = dev->cra[0];
 	ddp->cra[1] = dev->cra[1];
-	ddp->ps = dev->startps;
-	ddp->col = ddp->fg = dev->startcol;
-	ddp->bg = dev->startfill;
 	ddp->asp = dev->asp;
 	ddp->left = dev->left;
 	ddp->right = dev->right;
@@ -45,7 +42,15 @@ void baseCallback(GEevent task, GEDevDesc *dd) {
 	ddp->canResizeText = dev->canResizeText;
 	ddp->canClip = dev->canClip;
 	ddp->canHAdj = dev->canHAdj;
-	ddp->gamma = dev->gamma;
+	/* For some things, the device sets the starting value at least.
+	 */
+	ddp->ps = dev->startps;
+	ddp->col = ddp->fg = dev->startcol;
+	ddp->bg = dev->startfill;
+	ddp->lty = dev->startlty;
+	/* Initialise the gp settings too.
+	 */
+	copyGPar(ddp, &(((baseSystemState*) sd->systemSpecific)->gp));
 	break;
     case GE_Redraw:
 	playDisplayList((DevDesc*) dd);

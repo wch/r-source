@@ -2783,14 +2783,24 @@ void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 /* Read the current "pen" position. */
 Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 {
-    if(!dpptr(dd)->locator)
-	error("no locator capability in device driver");
-    if(dpptr(dd)->locator(x, y, dd)) {
-	GConvert(x, y, DEVICE, coords, dd);
-	return TRUE;
+    if (dd->newDevStruct) {
+	if(!((GEDevDesc*) dd)->dev->locator)
+	    error("no locator capability in device driver");
+	if(((GEDevDesc*) dd)->dev->locator(x, y, ((GEDevDesc*) dd)->dev)) {
+	    return TRUE;
+	}
+	else
+	    return FALSE;
+    } else {
+	if(!dpptr(dd)->locator)
+	    error("no locator capability in device driver");
+	if(dpptr(dd)->locator(x, y, dd)) {
+	    GConvert(x, y, DEVICE, coords, dd);
+	    return TRUE;
+	}
+	else
+	    return FALSE;
     }
-    else
-	return FALSE;
 }
 
 /* Access character font metric information.  */
@@ -2798,7 +2808,7 @@ void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
     if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->metricinfo(c & 0xFF, gpptr(dd)->font,
+	((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, gpptr(dd)->font,
 					   gpptr(dd)->cex, 
 					   (double) gpptr(dd)->ps,
 					   ascent, descent, width, 
@@ -5271,13 +5281,13 @@ unsigned int RGBpar(SEXP x, int i)
     else if(isInteger(x) || isLogical(x)) {
 	if(INTEGER(x)[i] == NA_INTEGER) return NA_INTEGER;
 	indx = INTEGER(x)[i] - 1;
-	if(indx < 0) return CurrentDevice()->dp.bg;
+	if(indx < 0) return dpptr(CurrentDevice())->bg;
 	else return R_ColorTable[indx % R_ColorTableSize];
     }
     else if(isReal(x)) {
 	if(!R_FINITE(REAL(x)[i])) return NA_INTEGER;
 	indx = REAL(x)[i] - 1;
-	if(indx < 0) return CurrentDevice()->dp.bg;
+	if(indx < 0) return dpptr(CurrentDevice())->bg;
 	else return R_ColorTable[indx % R_ColorTableSize];
     }
     return 0;		/* should not occur */
