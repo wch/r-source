@@ -313,9 +313,8 @@ it <- findInterval(tt, X)
 ## See that this is N * Fn(.) :
 tt <- c(tt,X)
 eps <- 100 * .Machine$double.eps
-require(stepfun)
 stopifnot(it[c(1,203)] == c(0, 100),
-	  all.equal(N * ecdf(X)(tt),
+	  all.equal(N * stepfun::ecdf(X)(tt),
 		    findInterval(tt, X),  tol = eps),
 	  findInterval(tt,X) ==	 apply( outer(tt, X, ">="), 1, sum)
 	  )
@@ -1435,12 +1434,11 @@ stopifnot(all.equal(d1, d3, tol=1e-3))
 
 
 ## PR#1422 glm start/offset bugs
-if(require(MASS)) {
-data(ships, package = MASS)
+res <- try(data(ships, package = MASS))
+if(!inherits(res, "try-error")) {
 ships.glm <- glm(incidents ~ type + year + period + offset(log(service)),
 		 family = poisson, data = ships, subset = (service != 0))
 update(ships.glm, start = coef(ships.glm))
-detach("package:MASS")
 }
 ## failed in 1.4.1.
 
