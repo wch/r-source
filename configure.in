@@ -289,14 +289,17 @@ EOF
     fi
   fi
   rm -rf conftest conftest.* conftestf.*
-  f77_rules_frag=Makefrag.f77
-  cat << \EOF > ${f77_rules_frag}
-
+  f77_rules_frag_top=Makefrag.top
+  cat << \EOF > ${f77_rules_frag_top}
 .f.c:
-
 .f.o:
 	$(FC) $(FFLAGS) -c $< -o $@
-
+EOF
+  f77_rules_frag_etc=Makefrag.etc
+  cat << \EOF > ${f77_rules_frag_etc}
+.f.c:
+.f.o:
+	$(FC) $(FFLAGS) $(FPICFLAGS) -c $< -o $@
 EOF
 elif test -n "${F2C}"; then
 ### -- I cannibalized most of the following out of octave 2.0.5,
@@ -339,16 +342,18 @@ EOF
   if test -z "${FLIBS}"; then
     AC_MSG_WARN([I found f2c but not libf2c, or libF77 and libI77])
   fi
-  f77_rules_frag=Makefrag.f77
+  f77_rules_frag_top=Makefrag.top
   ### for some reason these can't be .f.c/.f.o, at least in GNU make
   ### this probably makes *other* makes useless... (-pd)
-  cat << \EOF > ${f77_rules_frag}
-
+  cat << \EOF > ${f77_rules_frag_top}
 %.c : %.f
 	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
-
 %.o : %.f
-
+EOF
+  cat << \EOF > ${f77_rules_frag_etc}
+%.c : %.f
+	cat $< | $(F2C) $(F2CFLAGS) > $(@F)
+%.o : %.f
 EOF
 else
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
@@ -360,7 +365,8 @@ fi
 
 AC_SUBST(FC)
 AC_SUBST(F2C)
-AC_SUBST_FILE(f77_rules_frag)
+AC_SUBST_FILE(f77_rules_frag_top)
+AC_SUBST_FILE(f77_rules_frag_etc)
 
 ### Libraries.
 
