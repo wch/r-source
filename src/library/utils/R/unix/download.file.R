@@ -25,10 +25,10 @@ download.file <- function(url, destfile, method,
     else if(method == "wget") {
         extra <- if(quiet) " --quiet" else ""
         if(!cacheOK) extra <- paste(extra, "--cache=off")
-        status <- system(paste("wget", extra, " '", url,
-                               "' -O", path.expand(destfile), sep=""))
+        status <- system(paste("wget", extra, " ", shQuote(url),
+                               " -O ", path.expand(destfile), sep=""))
     } else if(method == "lynx")
-        status <- system(paste("lynx -dump '", url, "' >",
+        status <- system(paste("lynx -dump ", shQuote(url), " > ",
                                path.expand(destfile), sep=""))
 
     if(status > 0)

@@ -1,4 +1,5 @@
-packageStatus <- function(lib.loc = NULL, repositories = NULL, method)
+packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
+                          type = getOption("pkgType"))
 {
     newestVersion <- function(x)
     {
@@ -11,7 +12,7 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method)
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
     if(is.null(repositories))
-        repositories <- contrib.url(getOption("repos"))
+        repositories <- contrib.url(getOption("repos"), type = type)
 
     ## convert character matrices to dataframes
     char2df <- function(x)

@@ -143,8 +143,6 @@ repositoriesWidget <- function(a)
         res <- as.integer(tkcurselection(box))
         repos <- a[["URL"]]
         names(repos) <- row.names(a)
-        CRAN <- getOption("repos")["CRAN"]
-        if(!is.na(CRAN)) repos["CRAN"] <- CRAN
         options(repos=repos[res])
         tkdestroy(tt)
     }

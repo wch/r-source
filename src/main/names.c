@@ -568,6 +568,7 @@ FUNTAB R_FunTab[] =
 {"getWindowHandle", do_getWindowHandle,0,11,	1,	{PP_FUNCALL, PREC_FN, 	0}},
 {"getWindowTitle",do_getWindowTitle,0,	11,	0,	{PP_FUNCALL, PREC_FN, 	0}},
 {"setWindowTitle",do_setTitle,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"normalizePath",do_normalizepath,0,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #if defined(__APPLE_CC__) && defined(HAVE_AQUA)
 {"wsbrowser",	do_wsbrowser,	0,	11,	8,	{PP_FUNCALL, PREC_FN,	0}},

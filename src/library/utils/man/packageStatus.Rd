@@ -12,7 +12,8 @@
   packages.
 }
 \usage{
-packageStatus(lib.loc = NULL, repositories = NULL, method)
+packageStatus(lib.loc = NULL, repositories = NULL, method,
+              type = getOption("pkgType"))
 
 \method{summary}{packageStatus}(object, \dots)
 
@@ -28,6 +29,8 @@ packageStatus(lib.loc = NULL, repositories = NULL, method)
   \item{repositories}{a character vector of URLs describing the location of \R
     package repositories on the Internet or on the local machine.}
   \item{method}{Download method, see \code{\link{download.file}}.}
+  \item{type}{type of package distribution:
+    see \code{\link{install.packages}}.}
   \item{object}{an object of class \code{"packageStatus"} as returned by
     \code{packageStatus}.}
   \item{ask}{if \code{TRUE}, the user is prompted which packages should

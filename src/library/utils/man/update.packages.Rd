@@ -19,7 +19,8 @@ update.packages(lib.loc = NULL, repos = CRAN,
                 CRAN = getOption("repos"),
                 method, instlib = NULL,
                 ask = TRUE, available = NULL, destdir = NULL,
-		installWithVers = FALSE, checkBuilt = FALSE, type)
+		installWithVers = FALSE, checkBuilt = FALSE,
+                type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos")), method)
 
@@ -39,13 +40,15 @@ new.packages(lib.loc = NULL, repos = CRAN,
 download.packages(pkgs, destdir, available = NULL,
                   repos = CRAN,
                   contriburl = contrib.url(repos, type),
-                  CRAN = getOption("repos"), method, type)
+                  CRAN = getOption("repos"), method,
+                  type = getOption("pkgType"))
 
 install.packages(pkgs, lib, repos = CRAN,
                  contriburl = contrib.url(repos, type),
                  CRAN = getOption("repos"),
                  method, available = NULL, destdir = NULL,
-		 installWithVers = FALSE, dependencies = FALSE, type)
+		 installWithVers = FALSE, dependencies = FALSE,
+                 type = getOption("pkgType"))
 }
 \arguments{
   \item{lib.loc}{character vector describing the location of R
@@ -54,6 +57,9 @@ install.packages(pkgs, lib, repos = CRAN,
     to use, i.e., the URL of a CRAN root such as
     \code{"http://cran.r-project.org"} or its Statlib mirror,
     \code{"http://lib.stat.cmu.edu/R/CRAN"}.
+#ifdef unix
+    Can be \code{NULL} to install from local \code{.tar.gz} files.
+#endif
 #ifdef windows
     Can be \code{NULL} to install from local \code{.zip} files.
 #endif
@@ -62,6 +68,9 @@ install.packages(pkgs, lib, repos = CRAN,
     Use this argument only if your CRAN mirror is incomplete, e.g.,
     because you burned
     only the contrib section on a CD.  Overrides argument \code{repos}.
+#ifdef unix
+    Can be \code{NULL} to install from local \code{.tar.gz} files.
+#endif
 #ifdef windows
     Can also be \code{NULL} to install from local \code{.zip} files.
 #endif
@@ -75,7 +84,8 @@ install.packages(pkgs, lib, repos = CRAN,
     \code{.zip} files.
 #endif
 #ifdef unix
-    \code{.tar.gz} files.
+    \code{.tar.gz} files.  These can be source archives or binary
+    package/bundle archive files (as created by \code{R CMD build --binary}).
 #endif
   }
   \item{destdir}{directory where downloaded packages are stored.}
@@ -83,8 +93,8 @@ install.packages(pkgs, lib, repos = CRAN,
     as returned by \code{CRAN.packages}.}
   \item{lib}{character vector giving the library directories where to
     install the packages.  Recycled as needed.}
-  \item{ask}{logical indicating to ask user before packages are actually
-    downloaded and installed.}
+  \item{ask}{logical indicating whether to ask user before packages
+    are actually downloaded and installed.}
   \item{installWithVers}{If \code{TRUE}, will invoke the install of the
     package such that it can be referenced by package version.}
   \item{checkBuilt}{If \code{TRUE}, a package built under an earlier
@@ -98,11 +108,15 @@ install.packages(pkgs, lib, repos = CRAN,
   \item{type}{character, indicating the type of package to download and
     install.
 #ifdef unix
-    (Not currently used under Unix-alikes: defaults to \code{"source"}.)
+    Possible values are \code{"source"} (the default except under the
+    AQUA GUI), \code{"mac.binary"} and \code{"win.binary"} (which can be
+    downloaded but not installed).
 #endif
 #ifdef windows
-    Valid values are \code{"binary"} (the default) and \code{"source"},
+    Possible values are \code{"win.binary"} (the default) and \code{"source"},
     for which suitable tools need to be installed: see the \sQuote{rw-FAQ}.
+    Value \code{"mac.binary"} can be used to explore and download MacOS
+    X binaries.
 #endif
   }
 }

@@ -183,9 +183,9 @@ getOption(x)
       \code{warn}.}
 #ifdef windows
 
-	\item{\code{warn.FPU}:}{logical, by default undefined.  If true,
-	  a \link{warning} is produced whenever \link{dyn.load} repairs the
-	  control word damaged by a buggy DLL.}
+    \item{\code{warn.FPU}:}{logical, by default undefined.  If true,
+      a \link{warning} is produced whenever \link{dyn.load} repairs the
+      control word damaged by a buggy DLL.}
 #endif
 
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
@@ -217,6 +217,18 @@ getOption(x)
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
       prompt for a CRAN mirror.  To avoid this, use something like
       \code{options(repos=c(CRAN="http://my.local.cran/R"))}.
+    }
+
+    \item{\code{pkgType}:}{The default type of packages to be downloaded
+      and installed -- see \code{\link{install.packages}}.
+#ifdef windows
+      Possible values are \code{"win.binary"} (the default) and
+      \code{"source"}.
+#endif
+#ifdef unix
+      Possible values are \code{"source"} (the default except under the
+      AQUA GUI) and \code{"mac.binary"}.
+#endif
     }
 
     \item{\code{download.file.method}:}{Method to be used for

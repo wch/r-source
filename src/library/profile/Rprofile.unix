@@ -26,6 +26,7 @@ options(X11colortype = "true")
 options(X11fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
 	"-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"))
 options(mailer = "mailx")
+options(pkgType = "source")
 
 
 ## non standard settings for the Aqua GUI of the Darwin port
@@ -47,4 +48,5 @@ if(.Platform$GUI == "AQUA") {
     if( !file.exists("~/Library/R/library") )
 	dir.create(path.expand("~/Library/R/library"))
     .libPaths(path.expand("~/Library/R/library"))
+    options(pkgType = "mac.binary")
 }## end "Aqua"

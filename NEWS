@@ -267,8 +267,10 @@ NEW FEATURES
 
     o	New function message() for generating "simple" diagnostic
 	messages.
-	
 
+    o	New function normalizePath() to find canonical paths
+	(currently only on Windows).
+	
 
 INTERNATIONALIZATION
 
@@ -499,6 +501,13 @@ INSTALLATION CHANGES
 
 
 PACKAGE INSTALLATION CHANGES
+
+    o	There is now support of installing from within R both source
+	and binary packages on MacOS X and Windows (at least).  Most
+	of the R functions now have a 'type' argument defaulting to
+	getOption("type") and with possible values "source",
+	"win.binary" and "mac.binary".  The default is "source" except
+	under Windows and the CRAN GUI build for MacOS X.
 
     o	install.packages() and friends now accept a vector of URLs for
 	'repos' or 'contriburl' and get the newest available version of

@@ -53,6 +53,7 @@ SEXP do_getWindowTitle(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpstart(SEXP, SEXP, SEXP, SEXP);
 SEXP do_helpitem(SEXP, SEXP, SEXP, SEXP);
 SEXP do_memsize(SEXP, SEXP, SEXP, SEXP);
+SEXP do_normalizepath(SEXP, SEXP, SEXP, SEXP);
 SEXP do_readClipboard(SEXP, SEXP, SEXP, SEXP);
 SEXP do_selectlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setTitle(SEXP, SEXP, SEXP, SEXP);

@@ -8,13 +8,14 @@
 chooseCRANmirror(graphics = TRUE)
 }
 \arguments{
+  \item{graphics}{Logical.
 #ifdef windows
-  \item{graphics}{Logical.  Ignored on Windows.}
+    If true use a list box,
 #endif
 #ifdef unix
-  \item{graphics}{Logical.  If true and \pkg{tcltk} is available, use a
-    Tk widget, otherwise use \code{\link{menu}}.}
+    If true and \pkg{tcltk} and an X server are available, use a Tk widget,
 #endif
+    otherwise use \code{\link{menu}}.}
 }
 \details{
   The list of mirrors is stored in file \file{R\_HOME/doc/CRAN\_mirrors.csv}.

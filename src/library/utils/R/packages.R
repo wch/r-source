@@ -70,11 +70,8 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
 			    installWithVers = FALSE,
-                            checkBuilt = FALSE, type)
+                            checkBuilt = FALSE, type = getOption("pkgType"))
 {
-    ## passing missingness sometimes fails.
-    if(missing(type))
-        type <- if(.Platform$OS.type == "windows") "binary" else "source"
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
 
@@ -313,6 +310,168 @@ remove.packages <- function(pkgs, lib, version) {
         for(lib in unique(dirname(paths))) updateIndices(lib)
     }
     invisible()
+}
+
+download.packages <- function(pkgs, destdir, available = NULL,
+                              repos = CRAN,
+                              contriburl = contrib.url(repos, type),
+                              CRAN = getOption("repos"),
+                              method, type = getOption("pkgType"))
+{
+    dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
+
+    nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
+    if(nonlocalcran && !dirTest(destdir))
+        stop("destdir is not a directory")
+    if(is.null(available))
+        available <- available.packages(contriburl=contriburl, method=method)
+
+    retval <- NULL
+    for(p in unique(pkgs))
+    {
+        ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
+        ok <- ok & !is.na(ok)
+        if(!any(ok))
+            warning("No package ", sQuote(p), " at the repositories")
+        else {
+            if(sum(ok) > 1) { # have multiple copies
+                vers <- package_version(available[ok, "Version"])
+                keep <- vers == max(vers)
+                keep[duplicated(keep)] <- FALSE
+                ok[ok][!keep] <- FALSE
+            }
+            fn <- paste(p, "_", available[ok, "Version"],
+                        switch(type,
+                               "source" = ".tar.gz",
+                               "mac.binary" = ".tgz",
+                               "win.binary" = ".zip"),
+                        sep="")
+            repos <- available[ok, "Repository"]
+            if(length(grep("^file:", repos)) > 0) { # local repository
+                fn <- paste(substring(repos, 6), fn, sep = "/")
+                retval <- rbind(retval, c(p, fn))
+            } else {
+                url <- paste(repos, fn, sep="/")
+                destfile <- file.path(destdir, fn)
+
+                if(download.file(url, destfile, method, mode="wb") == 0)
+                    retval <- rbind(retval, c(p, destfile))
+                else
+                    warning("download of package", sQuote(p), "failed")
+            }
+        }
+    }
+
+    retval
+}
+
+contrib.url <- function(repos, type = getOption("pkgType"))
+{
+    if(is.null(repos)) return(NULL)
+    if("@CRAN@" %in% repos && interactive()) {
+        cat(gettext("--- Please select a CRAN mirror for use in this session ---\n"))
+        flush.console()
+        chooseCRANmirror()
+        m <- match("@CRAN@", repos)
+        nm <- names(repos)
+        repos[m] <- getOption("repos")["CRAN"]
+        if(is.null(nm)) nm <- rep("", length(repos))
+        nm[m] <- "CRAN"
+        names(repos) <- nm
+    }
+    if("@CRAN@" %in% repos) stop("trying to use CRAN without setting a mirror")
+
+    ver <- paste(R.version$major, substring(R.version$minor, 1, 1), sep = ".")
+    res <-
+        switch(type,
+               "source" = paste(gsub("/$", "", repos), "src", "contrib", sep="/"),
+               "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", ver, sep = "/"),
+               "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
+               )
+    names(res) <- names(repos)
+    res
+}
+
+
+chooseCRANmirror <- function(graphics = TRUE)
+{
+    m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
+    if(graphics) {
+        ## return a character vector of URLs
+        if(.Platform$OS.type == "unix"
+           && capabilities("tcltk") && capabilities("X11")) {
+            tcltk:::CRANmirrorWidget(m)
+            return(invisible())
+        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+            URL <- m[m[,1] == select.list(m[,1],, FALSE, "CRAN mirror"), "URL"]
+    } else {
+        ## text-mode fallback
+        res <- menu(m[,1], , "CRAN mirror")
+        URL <- m[res, "URL"]
+    }
+    if(length(URL)) {
+        repos <- getOption("repos")
+        repos["CRAN"] <- gsub("/$", "", URL[1])
+        options(repos = repos)
+    }
+    invisible()
+}
+
+setRepositories <- function(graphics=TRUE)
+{
+    p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
+    if(!file.exists(p))
+        p <- file.path(R.home(), "etc",
+                       if(.Platform$OS.type == "windows") "repositories.win"
+                       else "repositories")
+    a <- read.delim(p, header=TRUE,
+                    colClasses=c(rep("character", 3), "logical"))
+    repos <- getOption("repos")
+    ## Now look for CRAN and any others in getOptions("repos")
+    if("CRAN" %in% row.names(a) && !is.na(CRAN <- repos["CRAN"]))
+        a["CRAN", "URL"] <- CRAN
+    ## Set as default any already in the option.
+    a[(a[["URL"]] %in% repos), "default"] <- TRUE
+    new <- !(repos %in% a[["URL"]])
+    if(any(new)) {
+        aa <- names(repos[new])
+        if(is.null(aa)) aa <- rep("", length(repos[new]))
+        aa[aa == ""] <- repos[new][aa == ""]
+        newa <- data.frame(menu_name=aa, URL=repos[new], default=TRUE)
+        row.names(newa) <- aa
+        a <- rbind(a, newa)
+    }
+
+    default <- a[["default"]]
+
+    if(graphics) {
+        ## return a list of row numbers.
+        if(.Platform$OS.type == "unix" &&
+                  capabilities("tcltk") && capabilities("X11")) {
+            tcltk:::repositoriesWidget(a)
+            return(invisible())
+        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
+            res <- match(select.list(a[,1], a[default,1], multiple = TRUE,
+                                     "Repositories"),
+                         a[,1])
+    } else {
+        ## text-mode fallback
+        cat(gettext("--- Please select repositories for use in this session ---\n"))
+        nc <- length(default)
+        cat("\n", paste(seq(len=nc), ": ",
+                        ifelse(res, "+", " "), " ", a[, 1],
+                        sep=""),
+            "\n", sep="\n")
+        cat(gettext("Enter one or more numbers\n"))
+        res <- scan("", what=0, quiet=TRUE, nlines=1)
+        if(!length(res) || (length(res) == 1 && !res[1])) return(invisible())
+        res <- res[1 <= res && res <= nc]
+    }
+    if(length(res)) {
+        repos <- a[["URL"]]
+        names(repos) <- row.names(a)
+        options(repos=repos[res])
+    }
 }
 
 ## used in some BioC packages and their support in tools.
