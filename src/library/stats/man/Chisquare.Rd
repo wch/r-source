@@ -36,7 +36,7 @@ rchisq(n, df, ncp=0)
   generates random deviates.
 }
 \details{
-  The chi-squared distribution with \code{df}\eqn{= n} degrees of
+  The chi-squared distribution with \code{df}\eqn{= n > 0} degrees of
   freedom has density
   \deqn{f_n(x) = \frac{1}{{2}^{n/2} \Gamma (n/2)} {x}^{n/2-1} {e}^{-x/2}}{%
     f_n(x) = 1 / (2^(n/2) Gamma(n/2))  x^(n/2-1) e^(-x/2)}
@@ -59,7 +59,7 @@ rchisq(n, df, ncp=0)
 
   Note that the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
-  see the reference, chapter 29.
+  see Johnson, Kotz and Balakrishnan (1995, chapter 29).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
