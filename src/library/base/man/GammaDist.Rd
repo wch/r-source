@@ -42,7 +42,7 @@ for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{b > 0}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
-  is \code{-pgamma(t, r, lower = FALSE, log = TRUE)}.
+  is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 }
 \seealso{
   \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
