@@ -47,6 +47,11 @@
 # endif
 #endif
 
+/* For compatibility with pre-readline4.2 systems: */
+#if !defined (_RL_FUNCTION_TYPEDEF)
+typedef void rl_vcpfunc_t (char *);
+#endif /* _RL_FUNCTION_TYPEDEF */
+
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>		/* for unlink */
 #endif
