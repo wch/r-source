@@ -1,62 +1,62 @@
-    browse.pkgs <- function(where = c("CRAN","BIOC"),
-                            type = c("binary","source"), 
-			    contriburl = NULL, global = FALSE)
-   {
-     if (.Platform$GUI!="AQUA")
-       stop("This function is intended to work with the Aqua GUI")
-     where <- match.arg(where)
-     type <- match.arg(type)
-     installed.packages() -> x
-     x[,1] -> i.pkgs
-     x[,3] -> i.vers
-     if (is.null(contriburl)){
-       if (type=="binary")
-         contriburl<-contrib.url(getOption(where),type="mac.binary")
-       else
-         contriburl<-contrib.url(getOption(where),type="source")
-       label <- switch(where, CRAN = paste("CRAN (",type,") @",getOption(where)),
-                       BIOC = paste("BioC (",type,") @",getOption(where)))
-     } else label<-paste("(",type,") @",contriburl)
-     if (type=="binary")
-       CRAN.binaries(contriburl=contriburl) -> y
-     else 
-       CRAN.packages(contriburl=contriburl) -> y
-     y[,1] -> c.pkgs
-     y[,2] -> c.vers
-
-       match(i.pkgs, c.pkgs) -> idx
-       vers2 <- character(length(c.pkgs))
-       vers2[idx] <- i.vers
-       i.vers <- vers2
-       ##inst.idx <- which(.Internal(pkgbrowser(c.pkgs,c.vers,i.vers,where)))
-       want.update <- rep(FALSE, length(i.vers))
-      inst <- .Internal(pkgbrowser(c.pkgs,c.vers,i.vers,label, want.update))
-
-       ui.pkgs <- c.pkgs[inst]
-       idx2 <- which(c.vers[inst] == i.vers[inst])
-       if(length(idx2) > 0) {
-           cat( paste(ui.pkgs[idx2],collapse = ""),
-               " already up to date, not reinstalled\n")
-           ui.pkgs <- ui.pkgs[-idx2]
-       }
-       if (global)
-           locn <- file.path(R.home(),"library")
-       else
-           locn <- .libPaths()[1]
-    if (length(ui.pkgs) > 0) {
-     if(missing(contriburl)){
-            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), 
-            lib = .libPaths()[1]), binary = install.binaries(ui.pkgs, 
-            CRAN = getOption(where), lib = .libPaths()[1]))
-      } else {
-            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), 
-            contriburl = contriburl, lib = .libPaths()[1]), binary = install.binaries(ui.pkgs, 
-            CRAN = getOption(where), contriburl = contriburl, 
-            lib = .libPaths()[1]))      
-      }
+browse.pkgs <- function (where = c("CRAN", "BIOC"), type = c("binary", "source"), 
+    contriburl = NULL, global = FALSE) 
+{
+    if (.Platform$GUI != "AQUA") 
+        stop("This function is intended to work with the Aqua GUI")
+    where <- match.arg(where)
+    type <- match.arg(type)
+    x <- installed.packages()
+    i.pkgs <- as.character(x[, 1])
+    i.vers <- as.character(x[, 3])
+        if (is.null(contriburl)) {
+        if (type == "binary") 
+            contriburl <- contrib.url(getOption(where), type = "mac.binary")
+        else contriburl <- contrib.url(getOption(where), type = "source")
+        label <- switch(where, CRAN = paste("CRAN (", type, ") @", 
+            getOption(where)), BIOC = paste("BioC (", type, ") @", 
+            getOption(where)))
     }
-   }
+    else label <- paste("(", type, ") @", contriburl)
+    if (type == "binary") 
+        y <- CRAN.binaries(contriburl = contriburl)
+    else y <- CRAN.packages(contriburl = contriburl)
+    c.pkgs <- as.character(y[, 1])
+    c.vers <- as.character(y[, 2])
 
+    idx <- match(i.pkgs, c.pkgs)
+    vers2 <- character(length(c.pkgs))
+    xx <- idx[which(!is.na(idx))]    
+    vers2[xx] <- i.vers[which(!is.na(idx))]
+    i.vers <- vers2
+    
+    want.update <- rep(FALSE, length(i.vers))
+    inst <- .Internal(pkgbrowser(c.pkgs, c.vers, i.vers, label, 
+        want.update))
+    ui.pkgs <- c.pkgs[inst]
+    idx2 <- which(c.vers[inst] == i.vers[inst])
+    if (length(idx2) > 0) {
+        cat(paste(ui.pkgs[idx2], collapse = ""), " already up to date, not reinstalled\n")
+        ui.pkgs <- ui.pkgs[-idx2]
+    }
+    if (global) 
+        locn <- file.path(R.home(), "library")
+    else locn <- .libPaths()[1]
+    if (length(ui.pkgs) > 0) {
+        if (missing(contriburl)) {
+            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), 
+                lib = .libPaths()[1]), binary = install.binaries(ui.pkgs, 
+                CRAN = getOption(where), lib = .libPaths()[1]))
+        }
+        else {
+            switch(type, source = install.packages(ui.pkgs, CRAN = getOption(where), 
+                contriburl = contriburl, lib = .libPaths()[1]), 
+                binary = install.binaries(ui.pkgs, CRAN = getOption(where), 
+                  contriburl = contriburl, lib = .libPaths()[1]))
+        }
+    }
+}
+ 
+	
     browse.update.pkgs <- function(where = c("CRAN", "BIOC"),
                                    type = c("binary", "source"),
                                    in.place = TRUE)
