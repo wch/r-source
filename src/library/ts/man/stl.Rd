@@ -53,10 +53,10 @@ stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
      STL:  A  Seasonal-Trend  Decomposition  Procedure Based on Loess.
      \emph{Journal of Official Statistics}, \bold{6}, 3-73.
 }
-\author{B.D. Ripley; Fortran code by Cleveland et al. (1990) from
+\author{B.D. Ripley; Fortran code by Cleveland \emph{et al.} (1990) from
     \file{netlib}.}
 
-\note{This is similar to but noy identical to the \code{stl} function in
+\note{This is similar to but not identical to the \code{stl} function in
     S-PLUS.}
 
 \seealso{\code{\link{loess}} in package \code{modreg} (which is not
