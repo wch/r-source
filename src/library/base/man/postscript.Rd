@@ -43,7 +43,7 @@ ps.options(paper, horizontal, width, height, family, encoding,
 #endif
 
     For use with \code{onefile=FALSE} give a \code{printf} format such
-    as \code{"Rplot\%d.ps"} (the default in that case).
+    as \code{"Rplot\%03d.ps"} (the default in that case).
   }
   \item{\dots}{further options for \code{postscript()}.}
   \item{paper}{the size of paper in the printer.  The choices are
