@@ -579,6 +579,11 @@ case "${host_os}" in
     fi
     R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
     ;;
+  darwin*)
+    ## Need '-no-cpp-precomp' say J de Leeuw <deleeuw@stat.ucla.edu> and
+    ## http://fink.sourceforge.net/doc/porting/basics.php.
+    R_XTRA_CPPFLAGS="${R_XTRA_CFLAGS} -no-cpp-precomp"
+    ;;
   hpux*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
     AC_DEFINE(USE_BUILTIN_RINT)
