@@ -16,40 +16,9 @@ approxfun <- function (x, y, method = "linear", rule = 1, f = 0)
 	o <- order(x)
 	x <- x[o]
 	y <- y[o]
-	rm(o,ok) # clean up the environment
-	switch(method,
-	{ #-- 1 ---
-		if (rule == 1) {
-			low <- y[1]
-			high <- y[n]
-			na.ok<-FALSE
-		} else if (rule == 2) {
-			low <- as.double(NA)
-			high <- low
-			na.ok<-TRUE
-		} else stop("invalid extrapolation rule in approxfun")
-		rm(method, rule, f)
-		function(v) .C("approx", as.double(x), as.double(y),
-			       n, xout = as.double(v), length(v),
-			       low, high, NAOK=na.ok)$xout
-	},
-	{ #-- 2 -- step function approximation
-	 if (rule==1) {
-		 rm(method,rule)
-		 function(v) {
-			 yleft	<- sapply(v,function(xi) y[max((1:n)[xi >= x])])
-			 yright <- sapply(v,function(xi) y[min((1:n)[xi <= x])])
-			 yleft[is.na(yleft)] <- y[1]
-			 yright[is.na(yright)] <- y[n]
-			 yleft * f + yright * (1 - f)
-		 }
-	 } else if (rule==2) {
-		 rm(method,rule)
-		 function(v) {
-			 yleft	<- sapply(v,function(xi) y[max((1:n)[xi >= x])])
-			 yright <- sapply(v,function(xi) y[min((1:n)[xi <= x])])
-			 yleft * f + yright * (1 - f)
-		 }
-	 }
-	})
+	rm(o, ok)
+	function(v) .C("approx", as.double(x), as.double(y),
+			n, xout = as.double(v), length(v),
+			as.integer(rule), as.integer(method),
+			as.double(f))$xout
 }
