@@ -322,6 +322,8 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -pr ../../bin ../../modules ../../afm ../../unzip $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
+# morley.tab is needed for R-intro Appendix A
+	$(CP) -p ../library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
 	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
@@ -363,7 +365,7 @@ endif
 	  $(RPREFIX)/library/*/html $(RPREFIX)/library/R.css
 	-zip -rm9X $(RPREFIX)ch.zip $(RPREFIX)/library/*/chtml \
 	  $(RPREFIX)/bin/Rchtml.dll
-	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
+#	$(RM) $(RPREFIX)/library/*/winhlp/*.GID
 #	-zip -rm9X $(RPREFIX)wh.zip $(RPREFIX)/library/*/winhlp
 	zip -rm9X $(RPREFIX)l.zip $(RPREFIX)/library/*/latex $(RPREFIX)/share/texmf
 	$(RM) -r $(RPREFIX)/doc
