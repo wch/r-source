@@ -296,3 +296,7 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 Subject: Segmentation fault in recursion, 0.90.1
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Tue, 1 Feb 2000 12:12:41 +0000 (GMT)
+* PR# 410 *
+Subject: Bugs and comments.
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 2 Feb 2000 13:41:50 +0100 (MET)
