@@ -6710,6 +6710,12 @@ locations.  This defaults to 10000, but can be increased to allow
 large and complicated calculations to be done.  Currently the maximum
 value accepted is 100000.
 
+@item --max-mem-size=@var{N}
+(Windows only) Specify a limit for the amount of memory to be used both
+for @R{} objects and working areas.  This is set by default to the
+smaller of 1024Mb and the amount of physical RAM in the machine, and
+must be at least 16Mb.
+
 @item --quiet
 @itemx --silent
 @itemx -q
@@ -6788,6 +6794,8 @@ La@TeX{}, plain text, and S documentation format.
 Convert Rd format to text.
 @item Sd2Rd
 Convert S documentation to Rd format.
+@item config
+(UNIX only) Obtain configuration information.
 @end table
 
 The first five tools (i.e., @code{BATCH}, @code{COMPILE}, @code{SHLIB},
@@ -6809,25 +6817,24 @@ to obtain usage information for each of the tools accessible via the
 @appendixsec Invoking R under Windows
 
 There are two ways to run @R{} under Windows.  Within a terminal window
-(e.g. @code{cmd.exe} or @code{command.com} or a more capable shell),
-the methods described in the previous section may be used.  These are 
-principally intended for batch use.  For interactive use, 
-there is a console-based GUI (@code{Rgui.exe}). 
+(e.g. @code{cmd.exe} or @code{command.com} or a more capable shell), the
+methods described in the previous section may be used, invoking by
+@code{R.exe} or more directly by @code{Rterm.exe}.  (These are
+principally intended for batch use.)  For interactive use, there is a
+console-based GUI (@code{Rgui.exe}).
 
-The startup procedure under 
-Windows is very similar to that under UNIX,
-but references to the
-`home directory' need to be clarified, as this is not always defined on
-Windows.  If the environment variable @env{R_USER} is defined, that
-gives the home directory. Next, if the environment variable @env{HOME}
-is defined, that gives the home directory. If not, and environment
-variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined (and they
-normally are under Windows NT/2000/XP) these define the home
-directory. Failing all those, the home directory is taken to be the
+The startup procedure under Windows is very similar to that under UNIX,
+but references to the `home directory' need to be clarified, as this is
+not always defined on Windows.  If the environment variable @env{R_USER}
+is defined, that gives the home directory.  Next, if the environment
+variable @env{HOME} is defined, that gives the home directory. If not,
+and environment variables @env{HOMEDRIVE} and @env{HOMEPATH} are defined
+(and they normally are under Windows NT/2000/XP) these define the home
+directory.  Failing all those, the home directory is taken to be the
 starting directory.
 
-Environment variables can be supplied as 
-@samp{@var{name}=@var{value}} pairs at the end of  the command line.
+Environment variables can be supplied as @samp{@var{name}=@var{value}}
+pairs at the end of the command line.
 
 The following additional command-line options are available when 
 invoking @code{RGui.exe}.
@@ -6845,12 +6852,12 @@ Enable the ``Break to debugger'' menu item in @code{Rgui}, and trigger
 a break to the debugger during command line processing.
 @end table
 
-In Windows with @code{R CMD} you may also specify your own @code{*.bat} or @code{*.exe} 
-file instead of one of the built-in
-commands.  It will be run with the following environment variables set appropriately:
-@code{R_HOME}, @code{R_VERSION}, @code{R_CMD}, @code{R_OSTYPE}, @code{PATH},
-@code{PERL5LIB}, and @code{TEXINPUTS}.  For example, if you already have @code{latex.exe} 
-on your path, then 
+In Windows with @code{R CMD} you may also specify your own @code{*.bat}
+or @code{*.exe} file instead of one of the built-in commands.  It will
+be run with the following environment variables set appropriately:
+@code{R_HOME}, @code{R_VERSION}, @code{R_CMD}, @code{R_OSTYPE},
+@code{PATH}, @code{PERL5LIB}, and @code{TEXINPUTS}.  For example, if you
+already have @code{latex.exe} on your path, then
 
 @example
 R CMD latex.exe mydoc
