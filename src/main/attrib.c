@@ -684,7 +684,7 @@ SEXP do_attrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 
     obj = eval(CAR(args), env);
     if (NAMED(obj) == 2)
-	PROTECT(duplicate(obj));
+	PROTECT(obj = duplicate(obj));
     else
 	PROTECT(obj);
 
