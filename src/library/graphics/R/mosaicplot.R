@@ -224,7 +224,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         off <- rep.int(10, dimd)
     }
     if (is.null(dir) || length(dir) != dimd) {# Initialize directions
-        dir <- rep(c("v","h"), length=dimd)
+        dir <- rep(c("v","h"), length.out = dimd)
     }
     if (!is.null(sort)) {
         if(length(sort) != dimd)
