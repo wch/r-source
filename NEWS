@@ -284,12 +284,12 @@ STANDARD PACKAGES
 	- factanal() now returns the test statistic and P-value formerly
 	  computed in the print method.
 
+	- heatmap() has more arguments, partly thanks to Wolfgang Huber.
+
 	- Arguments `unit' and `hmin' of plclust() are now implemented.
 
 	- prcomp() now accepts complex matrices, and there is biplot()
 	  method for its output (in the real case).
-
-	- heatmap() has grown more arguments, partly thanks to Wolfgang Huber.
 
     o	Changes in package 'tcltk':
 
@@ -343,7 +343,7 @@ STANDARD PACKAGES
 
 	- HoltWinters() has new arguments `optim.start' and
           `optim.control', and returns more components in the fitted
-          values.  The plot method allows `ylim' to be set. 
+          values.  The plot method allows `ylim' to be set.
 
 	- plot.ts() has a new argument `nc' controlling the number of
 	  columns (with default the old behaviour for plot.mts).
@@ -373,9 +373,8 @@ USING PACKAGES
 	sys.source() have been changed correspondingly.	 See the
 	online help.
 
-    o	Users can specify the collation order for files in the R source
-	directory of a package. The order is specified in the
-	DESCRIPTION file.
+    o	Users can specify in the DESCRIPTION file the collation order
+	for files in the R source directory of a package.
 
 
 DOCUMENTATION CHANGES
@@ -520,177 +519,116 @@ DEPRECATED & DEFUNCT
 
 BUG FIXES
 
-    o	numericDeriv() was failing if the first argument was a name
-	rather than a call.  (PR#3746)
-
-    o	bgroup with a null (.) delimiter was setting font to Greek.
-	(PR#3099)
-
-    o	identify.default() detects zero-length arguments (PR#4057)
-
-    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
-
-    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
-	the length incorrectly.
-
-    o	On some machines the internal rounding used in postscript() was
-	imperfect, causing unnecessarily verbose output (-0.00 instead of
-	0) and problems with make check.
-
-    o	pacf() was failing if called on a one-column matrix.
-
-    o	$<- did not duplicate when it needed to.
-
-    o	methods("$") and methods("$<-") were failing to find methods.
-
-    o	Recursive indexing of lists had too little error-checking.
-	(related to PR#3324)
-
-    o	get() and exists() were ignoring the `mode' argument for
-	variables in base.  The error message for get() now mentions
-	the mode requested if not "any".  A bug in setting the NAMED
-	field in do_get was fixed.
-
-    o	Removed warning about names in persistent strings when a
-	namespace is saved.
-
-    o	The apparently never used `method' argument to loess() did not
-	work.  (PR#3332)
-
-    o	Fixed some malformed error messages in methods package.
-
-    o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
-
-    o	lsfit() was returning incorrect residuals for 0-rank fits.
-
-    o	pipes were not opening properly when profiling on a Mac (PR#1140)
-
-    o	sort() and unique.default() were failing on 0-level factors.
-
-    o	sapply() for matrix result does not return list(NULL,NULL) dimnames
-	anymore.
-
-    o	lm.influence() called on a 0-rank fit either crashed or produced
-	incorrect output.
-
-    o	str(x) gives better output when x is of mode "(".
-
-    o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
-	corrected.
-
-    o	format(*, nsmall = m) with m > 0 now returns exponential format
-	less often.
-
-    o	file.copy() ignored the overwrite argument. (PR#3529)
-
-    o	The length of a string specification of lty is now checked: it
-	should be 2, 4, 6 or 8.
-
-    o	Rd conversion was limiting a file to 1000 pairs of braces,
-	without any warning.  Now the limit is 10000, with a warning.
-	(PR#3400)
-
-    o	data() sometimes failed with multiple files, as the paths
-	variable got corrupted.
-
-    o	pnorm(x, 1, 0) does not give NaN anymore;
-	also, pnorm(x, m, s=Inf) == lim{s -> Inf} pnorm(x,m,s).
-	Similar changes for dnorm(), cf PR#1218.
-
-    o	data.matrix() was documented to replace factors by their
-	codes, but in fact re-coded into the alphabetical ordering of
-	the levels.
-
-    o	methods() and getS3method() find methods if the generic
-	dispatches on a name other than its own.  (The cases of
-	coefficients() and fitted.values() were fixed in 1.7.1.)
-
-    o	body() and formals() were looking for named functions in
-	different places: they now both look starting at the
-	environment in which they are called.  Several documentation
-	errors for these functions have been corrected.
-
-    o	as.double(list()) etc was regarded as an error, because of a
-	bug in isVectorizable.
-
-    o	biplot.default() allows xlim and ylim to be set. (PR#3168)
-
-    o	data.frame() failed with a nonsensical error message if it
-	grabbed row names from an argument that was subsequently
-	recycled.  Now they are discarded, with a warning.
-
-    o	as.data.frame.matrix() ignored the `row.names' argument.
-
-    o	paste() applied to 0-length vectors gave "" not a 0-length vector.
-
-    o	as.data.frame.list(optional = TRUE) was converting names, and
-	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
+    o	ARMAacf() sometimes gave too many results or failed if `lag.max'
+	was used.
 
     o	Functions anova.glm(), contrasts(), getS3method(), glm() and
 	make.tables() were applying get() without asking for a
 	function and/or not starting the search in the environment of
 	the caller.
 
-    o	Corrected many problems with 0-rank (but not necessarily empty
-	model) lm() and glm() fits.
+    o	as.data.frame.matrix() ignored the `row.names' argument.
 
-    o	model.matrix.default() was throwing an error on 0-term models,
-	but now handles them correctly.
+    o	as.data.frame.list(optional = TRUE) was converting names, and
+	hence data.frame(list(...), check.names = FALSE) was.  (PR#3280)
 
-    o	lm.influence() now handles 0-rank models, and names its output
-	appropriately.	It also ensures that hat values are not greater
-	than one, and rounds values within rounding error of one.
-
-    o	ARMAacf() sometimes gave too many results or failed if `lag.max'
-	was used.
-
-    o	filter(method="recursive") was unnecessarily requiring the
-	time series to be longer than the filter.
-
-    o	In the tcltk package, the tkimage.*() commands were defined
-	nonsensically as widget commands. They have been redefined to be
-	more useful now.
-
-    o	Printing `nls' objects misbehaved when `data' was a composite
-	expression.
-
-    o	getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
-	not exist.
-
-    o	The png(), jpeg(), png() and win.metafile() devices now
-	enforce the length limit on the filename.  (PR#3466)
-
-    o	step() adds a fuzz for reduction in AIC for 0-df terms.	 (PR#3491)
-
-    o	Using write.table() setting the dec argument and with no
-	numeric columns failed.	 (PR#3532)
-
-    o	Registered group generics were not being used. (PR#3536)
-
-    o	Subsetting data frames did not always correctly detect that
-	non-existent columns were specified.
-
-    o	legend() allows shading without filling again.
-
-    o	There are many more checks for over-running internal buffers,
-	almost always reporting errors.
-
-    o	demo() was using `topic' as a regexp rather than an exact match.
-
-    o	Added some buffer overflow checking in gram.y.
-
-    o	qqnorm()'s result now keeps NAs from its input. (PR#3750)
-
-    o	trunc.POSIXt(x) for 0-length x does not return invalid structures
-	anymore.  (PR#3763).
+    o	as.double(list()) etc was regarded as an error, because of a
+	bug in isVectorizable.
 
     o	On some platforms the wday component of the result of
 	as.POSIXlt() was corrupted when trying to guess the DST offset
 	at dates the OS was unable to handle.
 
-    o	legend(x, y, leg) doesn't triple `leg' anymore when it is a call.
+    o	biplot.default() allows xlim and ylim to be set.  (PR#3168)
+
+    o	bgroup with a null (.) delimiter was setting font to Greek.  (PR#3099)
+
+    o	body() and formals() were looking for named functions in
+	different places: they now both look starting at the
+	environment in which they are called.  Several documentation
+	errors for these functions have been corrected.
 
     o	boxplot() was ignoring cex.axis.  (PR#2628)
+
+    o	cut.POSIXt() now passes on ... to cut.default(), as documented.
+
+    o	data() sometimes failed with multiple files, as the paths
+	variable got corrupted.
+
+    o	data.frame() failed with a nonsensical error message if it
+	grabbed row names from an argument that was subsequently
+	recycled.  Now they are discarded, with a warning.
+
+    o	data.matrix() was documented to replace factors by their
+	codes, but in fact re-coded into the alphabetical ordering of
+	the levels.
+
+    o	decompose() with even frequency used an asymmetric moving
+	average window.
+
+    o	demo() was using `topic' as a regexp rather than an exact match.
+
+    o	file.copy() ignored the overwrite argument.  (PR#3529)
+
+    o	filter(method="recursive") was unnecessarily requiring the
+	time series to be longer than the filter.
+
+    o	format(*, nsmall = m) with m > 0 now returns exponential format
+	less often.
+
+    o	get() and exists() were ignoring the `mode' argument for
+	variables in base.  The error message for get() now mentions
+	the mode requested if not "any".  A bug in setting the NAMED
+	field in do_get was fixed.
+
+    o	getS3method(f, cl, optional=TRUE) now returns NULL if `f' does
+	not exist.
+
+    o	HoltWinters() would segfault if only gamma was optimized, and
+	not converge if gamma=0 and seasonal="mult".
+
+    o	identify.default() detects zero-length arguments.  (PR#4057)
+
+    o	legend() allows shading without filling again.
+
+    o	legend(x, y, leg) doesn't triple `leg' anymore when it is a call.
+
+    o	Corrected many problems with 0-rank (but not necessarily empty
+	model) lm() and glm() fits.
+
+    o	lm.influence() now handles 0-rank models, and names its output
+	appropriately.	It also ensures that hat values are not greater
+	than one, and rounds values within rounding error of one.
+
+    o	The `method' argument to loess() did not work.  (PR#3332)
+
+    o	lsfit() was returning incorrect residuals for 0-rank fits.
+
+    o	methods("$") and methods("$<-") were failing to find methods.
+
+    o	methods() and getS3method() find methods if the generic
+	dispatches on a name other than its own.  (The cases of
+	coefficients() and fitted.values() were fixed in 1.7.1.)
+
+    o	model.matrix.default() was throwing an error on 0-term models,
+	but now handles them correctly.
+
+    o	Printing `nls' objects misbehaved when `data' was a composite
+	expression.
+
+    o	numericDeriv() was failing if the first argument was a name
+	rather than a call.  (PR#3746)
+
+    o	pacf() was failing if called on a one-column matrix.
+
+    o	paste() applied to 0-length vectors gave "" not a 0-length vector.
+
+    o	The length of a string specification of par(lty=) is now checked: it
+	should be 2, 4, 6 or 8.
+
+    o	Using lty=as.integer(NA) and as.double(NA) was being accepted
+	but giving nonsensical results.	 Those are not documented
+	valid values for lty.  (PR#3217)
 
     o	Erroneously calling par(new=TRUE) with no plot was not caught
 	and so could result in invalid graphics files.	(PR#4037)
@@ -699,26 +637,81 @@ BUG FIXES
 	documented in the same way as S, and now behaves as
 	documented.  (PR#3504)
 
-    o	readBin(what = "foo") didn't convert `what' to its type.
-	(PR#4043)
+     o	plot.POSIX[cl]t no longer passes col, lty, lwd to axis.POSIXt.
 
-    o	Using lty=as.integer(NA) and as.double(NA) was being accepted
-	but giving nonsensical results.	 Those are not documented
-	valid values for lty. (PR#3217)
+    o	The png(), jpeg(), png() and win.metafile() devices now
+	enforce the length limit on the filename.  (PR#3466)
 
-    o	Internals for complex assignment did not check that function name
-	was a symbol, which could cause a segfault.
+    o	pnorm(x, 1, 0) does not give NaN anymore;
+	also, pnorm(x, m, s=Inf) == lim{s -> Inf} pnorm(x,m,s).
+	Similar changes for dnorm(), cf PR#1218.
+
+    o	On some machines the internal rounding used in postscript() was
+	imperfect, causing unnecessarily verbose output (-0.00 instead of
+	0) and problems with make check.
+
+    o	qqnorm()'s result now keeps NAs from its input. (PR#3750)
+
+    o	readBin(what = "foo") didn't convert `what' to its type.  (PR#4043)
+
+    o	sapply() for matrix result does not return list(NULL,NULL) dimnames
+	anymore.
+
+    o	seq.POSIXt(from, to, by="DSTday") was failing or calculating
+	the length incorrectly.
+
+    o	sort() and unique.default() were failing on 0-level factors.
+
+    o	step() adds a fuzz for reduction in AIC for 0-df terms.	 (PR#3491)
+
+    o	str(x) gives better output when x is of mode "(".
 
     o	strwidth(f) and strheight(f) could seg.fault when `f' was a
 	function.  The fix [to C-level coerceVector()] now gives an error
 	instead of passing through. This may catch other potential
 	problems.
 
-    o	HoltWinters() would segfault if only gamma was optimized, and
-	not converge if gamma=0 and seasonal="mult".
+    o	trunc.POSIXt(x) for 0-length x does not return invalid structures
+	anymore.  (PR#3763).
 
-    o	decompose() with even frequency used an asymmetric moving
-	average window. 
+    o	Using write.table() setting the dec argument and with no
+	numeric columns failed.	 (PR#3532)
+
+    o	$<- did not duplicate when it needed to.
+
+    o	Recursive indexing of lists had too little error-checking.
+	(related to PR#3324)
+
+    o	Removed warning about names in persistent strings when a
+	namespace is saved.
+
+    o	Fixed some malformed error messages in methods package.
+
+    o	pipes were not opening properly when profiling on a Mac. (PR#1140)
+
+    o	Lapack error messages (PR#3494) and call to DGEQP3 (PR#2867) are
+	corrected.
+
+    o	Rd conversion was limiting a file to 1000 pairs of braces,
+	without any warning.  Now the limit is 10000, with a warning.
+	(PR#3400)
+
+    o	In the tcltk package, the tkimage.*() commands were defined
+	nonsensically as widget commands. They have been redefined to be
+	more useful now.
+
+    o	Registered group generics were not being used. (PR#3536)
+
+    o	Subsetting data frames did not always correctly detect that
+	non-existent columns were specified.
+
+    o	There are many more checks for over-running internal buffers,
+	almost always reporting errors.
+
+    o	Added some buffer overflow checking in gram.y.
+
+    o	Internals for complex assignment did not check that function name
+	was a symbol, which could cause a segfault.
 
 
 
