@@ -17,13 +17,17 @@ interaction(\dots, drop = FALSE)
 }
 \value{
   A factor which represents the interaction of the given factors.
+  The levels are labelled as the levels of the individual factors joined
+  by \code{.}.
 }
 \references{
   Chambers, J. M. and Hastie, T. J. (1992)
   \emph{Statistical Models in S}.
   Wadsworth \& Brooks/Cole.
 }
-\seealso{\code{\link{factor}}.}%% even more ":" for factors!
+\seealso{
+  \code{\link{factor}}, \code{\link{:}}
+}
 
 \examples{
 a <- gl(2, 2, 8)
