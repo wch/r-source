@@ -4,6 +4,16 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1080
+======
+
+The scrollbars on the data editor work better for very large matrices,
+and correctly for more than 65535 columns.
+
+The data editor no longer take close to all the CPU cycles when running.
+
+
+
 rw1071
 ======
 

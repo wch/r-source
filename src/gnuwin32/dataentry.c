@@ -21,7 +21,6 @@
 
 /* TODO
    - spreadsheet copy and paste?
-   <FIXME>scale scrollbars for use in > 65535 rows/cols</FIXME>
  */
 
 #ifdef HAVE_CONFIG_H
@@ -137,11 +136,17 @@ static int newcol;
 static int xmaxused, ymaxused;
 static int oldWIDTH=0, oldHEIGHT=0;
 static int nboxchars=0;
+static int xScrollbarScale=1, yScrollbarScale=1;
 
+#include <windows.h> /* for Sleep */
 
 static void eventloop()
 {
-    while (R_de_up) R_ProcessEvents();
+    while (R_de_up) {
+	/* avoid consuming 100% CPU time here */
+	Sleep(10);
+	R_ProcessEvents();
+    }
 }
 
 static void de_closewin_cend(void *data)
@@ -225,6 +230,9 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, "invalid parameter(s) ");
     }
 
+    /* scale scrollbars as needed */
+    if (xmaxused > 10000) xScrollbarScale = xmaxused/1000;
+    if (ymaxused > 10000) yScrollbarScale = ymaxused/1000;
 
     /* start up the window, more initializing in here */
     if (initwin())
@@ -317,8 +325,12 @@ static void drawwindow()
     clearwindow();
     deredraw();
     /* row/col 1 = pos 0 */
-    gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
-    gchangescrollbar(de, HWINSB, colmin-1, xmaxused, nwide, 0);
+    gchangescrollbar(de, VWINSB, (rowmin-1)/yScrollbarScale,
+		     ymaxused/yScrollbarScale, 
+		     max(nhigh/yScrollbarScale, 1), 0);
+    gchangescrollbar(de, HWINSB, (colmin-1)/xScrollbarScale,
+		     xmaxused/xScrollbarScale, 
+		     max(nwide/xScrollbarScale, 1), 0);
 }
 
 static void doHscroll(int oldcol)
@@ -345,7 +357,9 @@ static void doHscroll(int oldcol)
 	cleararea(dw, hwidth, WIDTH-dw, HEIGHT, p->bg);
 	drawcol(colmin);
     }
-    gchangescrollbar(de, HWINSB, colmin-1, xmaxused, nwide, 0);
+    gchangescrollbar(de, HWINSB, (colmin-1)/xScrollbarScale,
+		     xmaxused/xScrollbarScale, 
+		     max(nwide/xScrollbarScale, 1), 0);
     highlightrect();
 }
 
@@ -603,7 +617,9 @@ static void jumppage(int dir)
 	rowmax--;
 	copyarea(0, hwidth + box_h, 0, hwidth + 2 * box_h);
 	drawrow(rowmin);
-	gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
+	gchangescrollbar(de, VWINSB, (rowmin-1)/yScrollbarScale, 
+			 ymaxused/yScrollbarScale, 
+			 max(nhigh/yScrollbarScale, 1), 0);
 	break;
     case DOWN:
 	if (rowmax >= 65535) return;
@@ -611,7 +627,9 @@ static void jumppage(int dir)
 	rowmax++;
 	copyarea(0, hwidth + 2 * box_h, 0, hwidth + box_h);
 	drawrow(rowmax);
-	gchangescrollbar(de, VWINSB, rowmin-1, ymaxused, nhigh, 0);
+	gchangescrollbar(de, VWINSB, (rowmin-1)/yScrollbarScale, 
+			 ymaxused/yScrollbarScale, 
+			 max(nhigh/yScrollbarScale, 1), 0);
 	break;
     case LEFT:
 	colmin--;
@@ -1292,9 +1310,11 @@ static int  initwin()
     /* drawwindow(); done as repaint but
        decide if we need scrollbars here to avoid flashing*/
     nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
-    gchangescrollbar(de, VWINSB, 0, ymaxused, nhigh, 0);
+    gchangescrollbar(de, VWINSB, 0, ymaxused/yScrollbarScale, 
+		     max(nhigh/yScrollbarScale, 1), 0);
     setcellwidths();
-    gchangescrollbar(de, HWINSB, 0, xmaxused, nwide, 0);    
+    gchangescrollbar(de, HWINSB, 0, xmaxused/xScrollbarScale,
+		     max(nwide/xScrollbarScale, 1), 0);    
     show(de);
     show(de); /* a precaution, as PD reports transparent windows */
     BringToTop(de);
@@ -1418,9 +1438,9 @@ static void de_autosize(control c)
 static void de_sbf(control c, int pos)
 {
     if (pos < 0) { /* horizontal */
-	colmin = 1 + (-pos - 1);
+	colmin = 1 + (-pos*xScrollbarScale - 1);
     } else {
-	rowmin = 1 + pos;
+	rowmin = 1 + pos*yScrollbarScale;
 	if(rowmin > ymaxused - nhigh + 2) rowmin = ymaxused - nhigh + 2;
     }
     drawwindow();
