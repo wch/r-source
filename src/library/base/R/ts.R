@@ -16,7 +16,7 @@ ts <- function(data = NA, start = 1, end = numeric(0), frequency = 1,
                )
 {
     if(is.data.frame(data)) data <- data.matrix(data)
-    if(!is.numeric(data)) stop("`data'  must be a numeric matrix")
+#   if(!is.numeric(data)) stop("`data'  must be a numeric vector or matrix")
     if(is.matrix(data)) {
 	nseries <- ncol(data)
 	ndata <- nrow(data)
