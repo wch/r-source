@@ -29,6 +29,9 @@
 #ifndef max
 #define max(a,b) ((a < b)?(b):(a))
 #endif
+#ifndef min
+#define min(a,b) ((a > b)?(b):(a))
+#endif
 
 
 /* Internal */
@@ -203,7 +206,7 @@ SEXP arma0fa(SEXP pG, SEXP inparams)
 	    tmp = G->w[i];
 	    for(j = 0; j < p; j++)
 		tmp -= G->phi[j] * G->w[i - j - 1];
-	    for(j = 0; j < q; j++)
+	    for(j = 0; j < min(i, q); j++)
 		tmp -= G->theta[j] * G->resid[i - j - 1];
 	    G->resid[i] = tmp;
 	    if(!ISNAN(tmp)) {

@@ -9,7 +9,7 @@ arima0(x, order = c(0, 0, 0),
        seasonal = list(order = c(0, 0, 0), period = NA),
        xreg = NULL, include.mean = TRUE,
        delta = 0.01, transform.pars = 2, fixed = NULL,
-       method = c("ML", "CSS"), n.cond)
+       method = c("CSS-ML", "ML", "CSS"), n.cond)
 
 \method{predict}{arima0}(object, n.ahead = 1, newxreg, se.fit = TRUE, ...)
 
@@ -46,7 +46,10 @@ arima0.diag(fit, gof.lag = 10)
     \code{fixed} will be varied.}
 
   \item{method}{Fitting method: maximum likelihood or minimize
-    conditional sum-of-squares.}
+    conditional sum-of-squares.  The default, \code{"CSS-ML"}
+    is to use CSS to find initial values (provided there are
+    no missing values in the data) for the likelihood maximization.
+  }
 
   \item{n.cond}{Only used if fitting by conditional-sum-of-squares: the
     number of initial observations to ignore.  It will be ignored if

@@ -2,7 +2,7 @@ arima0 <- function(x, order = c(0, 0, 0),
                    seasonal = list(order = c(0, 0, 0), period = NA),
                    xreg = NULL, include.mean = TRUE, delta = 0.01,
                    transform.pars = 2, fixed = NULL,
-                   method = c("ML", "CSS"), n.cond)
+                   method = c("CSS-ML", "ML", "CSS"), n.cond)
 {
     arma0f <- function(p)
     {
@@ -16,7 +16,6 @@ arima0 <- function(x, order = c(0, 0, 0),
         stop("only implemented for univariate time series")
     method <- match.arg(method)
     x <- as.ts(x)
-    if(any(is.na(x))) delta <- -1 # only exact recursions handle NAs
     dim(x) <- NULL
     n <- length(x)
     if(is.null(seasonal$period) || is.na(seasonal$period)
@@ -54,6 +53,11 @@ arima0 <- function(x, order = c(0, 0, 0),
         xreg <- as.matrix(xreg)
         if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("xreg is collinear")
     }
+    if(any(is.na(x)) || (ncxreg && any(is.na(xreg)))) {
+        ## only exact recursions handle NAs
+        delta <- -1
+        if(method == "CSS-ML") method <- "ML"
+    }
     storage.mode(x) <- storage.mode(xreg) <- "double"
     G <- .Call("setup_starma", as.integer(arma), x, n.used, xreg,
                ncxreg, delta, transform.pars > 0, PACKAGE = "ts")
@@ -65,8 +69,20 @@ arima0 <- function(x, order = c(0, 0, 0),
     if (is.null(fixed)) fixed <- rep(NA, length(init))
     mask <- is.na(fixed)
     if(!any(mask)) stop("all parameters were fixed")
-    res <- optim(init[mask], arma0f, method = "BFGS",
-                 hessian = transform.pars < 2)
+    if(method == "CSS-ML") {
+        .Call("Starma_method", G, 1, PACKAGE = "ts") # CSS to start
+        res <- optim(init[mask], arma0f, method = "BFGS", hessian = FALSE)
+        .Call("Starma_method", G, 0, PACKAGE = "ts")
+        coef <- res$par
+        if(transform.pars)
+            coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
+        res <- optim(coef, arma0f, method = "BFGS",
+                     hessian = transform.pars < 2)
+   } else {
+        .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
+        res <- optim(init[mask], arma0f, method = "BFGS",
+                     hessian = transform.pars < 2)
+    }
     if(res$convergence > 0)
         warning(paste("possible convergence problem: optim gave code=",
                       res$convergence))
@@ -76,7 +92,8 @@ arima0 <- function(x, order = c(0, 0, 0),
         coef <- .Call("Dotrans", G, as.double(coef), PACKAGE = "ts")
     if(transform.pars == 2) {
         .Call("set_trans", G, 0, PACKAGE = "ts")
-        res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE)
+        res <- optim(coef, arma0f, method = "BFGS", hessian = TRUE,
+                     control = list(reltol = 100*.Machine$double.eps))
         coef <- res$par
     }
     sigma2 <- .Call("get_s2", G, PACKAGE = "ts")
@@ -103,7 +120,7 @@ arima0 <- function(x, order = c(0, 0, 0),
         } else var <- matrix(NA, 0, 0)
     }
     value <- 2 * n.used * res$value + n.used + n.used*log(2*pi)
-    aic <- if(method == "ML") value + 2*length(coef) else NA
+    aic <- if(method != "CSS") value + 2*length(coef) else NA
     res <- list(coef = fixed, sigma2 = sigma2, var.coef = var, mask = mask,
                 loglik = -0.5*value, aic = aic, arma = arma,
                 residuals = resid,
@@ -127,7 +144,7 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
         print.default(ses, print.gap = 2)
     }
     cm <- x$call$method
-    if(is.null(cm) || cm == "ML")
+    if(is.null(cm) || cm != "CSS")
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
             ":  log likelihood = ", format(round(x$loglik,2)),
