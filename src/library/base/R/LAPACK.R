@@ -44,7 +44,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         method <- "dgesvd"
     }
     x <- as.matrix(x)
-    storage.mode(x) <- "double"
+    if (is.numeric(x)) storage.mode(x) <- "double"
     n <- nrow(x)
     p <- ncol(x)
     if(!n || !p) stop("0 extent dimensions")
