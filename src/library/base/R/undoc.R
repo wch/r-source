@@ -36,25 +36,22 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         files <- listFilesWithExts(docsDir, docsExts)
         if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
             files <- c(files, listFilesWithExts(docsOSDir, docsExts))
-        files <- paste(files, collapse = " ")
-        shQuote <- function(s) {
-            if(.Platform$OS.type == "unix")
-                paste("'", s, "'", sep = "")
-            else
-                s
+        fname <- falias <- character(0)
+        for(f in files) {
+            allDocs <- readLines(f)
+            fname  <-
+                c(fname, grep("^\\\\name", allDocs, value = TRUE))
+            falias <-
+                c(falias, grep("^\\\\alias", allDocs, value = TRUE))
         }
-        fname  <- system(paste("grep -h", shQuote("^\\\\name"), files),
-                         intern = TRUE)
-        falias <- system(paste("grep -h", shQuote("^\\\\alias"), files),
-                         intern = TRUE)
-        objsdocs <- c(gsub("\\\\name{(.*)}.*",  "\\1", fname),
+        objsdocs <- c(gsub("\\\\name{(.*)}.*", "\\1", fname), 
                       gsub("\\\\alias{(.*)}.*", "\\1", falias))
         objsdocs <- gsub("\\\\%", "%", objsdocs)
         objsdocs <- gsub(" ", "", objsdocs)
         objsdocs <- sort(unique(objsdocs))
 
         if(file.exists(codeDir <- file.path(dir, "R"))) {
-            codeFile <- tempfile("Rbuild")
+            codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
             codeExts <- c("R", "r", "S", "s", "q")
             files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
