@@ -88,7 +88,7 @@ install.packages <-
             if(system(cmd) > 0)
                 warning(gettextf(
                  "installation of package '%s' had non-zero exit status",
-                                sQuote(update[i, 1])), domain = NA)
+                                update[i, 1]), domain = NA)
         }
         return(invisible())
     }
@@ -179,7 +179,7 @@ install.packages <-
             if(status > 0)
                 warning(gettextf(
                  "installation of package '%s' had non-zero exit status",
-                                sQuote(update[i, 1])), domain = NA)
+                                 update[i, 1]), domain = NA)
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettextf("The downloaded packages are in\n\t%s",
