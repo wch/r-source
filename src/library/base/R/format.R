@@ -37,7 +37,7 @@ format.default <- function(x, trim = FALSE, digits = NULL,
 	   ##else: numeric, complex, ??? :
 	   structure(.Internal(format(x, trim = trim)), names=names(x)))
 }
-## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R 
+## NOTE: Currently need non-default format.dist() -> ../../mva/R/dist.R
 
 
 ## MM: This should also happen in C(.) :
@@ -200,10 +200,15 @@ format.data.frame <- function(x, ..., justify = "none")
     for(i in 1:nc)
 	rval[[i]] <- format(x[[i]], ..., justify = justify)
     dn <- dimnames(x)
-    names(rval) <- dn[[2]]
+    cn <- dn[[2]]
+    m <- match(c("row.names", "check.rows", "check.names"), cn, 0)
+    if(any(m > 0)) cn[m] <- paste(".", m[m>0], sep="")
+    names(rval) <- cn
     rval$check.names <- FALSE
     rval$row.names <- dn[[1]]
-    do.call("data.frame", rval)
+    x <- do.call("data.frame", rval)
+    if(any(m > 0)) names(x) <- dn[[2]]
+    x
 }
 
 format.AsIs <- function(x, width = 12, ...)

@@ -228,6 +228,9 @@ BUG FIXES
     o   hist.default() was ignoring its `probability' argument for
 	equi-spaced breaks.
 
+    o   Printing a dataframe with a column called "row.names" or
+	"check.names" omitted the column.
+
 
 
 	**************************************************
