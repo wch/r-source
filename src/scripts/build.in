@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.39 $ ';
+my $revision = ' $Revision: 1.40 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -280,7 +280,18 @@ sub prepare_pkg {
 
     updateRdIndex("INDEX", "man", 0, $log);
     updateRdIndex("data/00Index", "man", 1, $log) if(-d "data");
-    if(glob("inst/doc/*.[rRsS]nw")) {
+    if(glob("inst/doc/*.[rRsS]nw inst/doc/*.[rRsS]tex")) {
+	$log->creating("vignettes");
+	my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
+	my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
+	@out = grep(!/^\>/, @out);
+	if($#out>=0) {
+	    $log->error();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}	
 	updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
     }
 
@@ -357,7 +368,7 @@ sub buildVignetteIndex {
     my $delimcurly = new Text::DelimMatch("\\{", "\\}");
     $delimcurly->escape("\\");
     my @entries = ();
-    my @Snwfiles = glob("$dir/*.[rRsS]nw");
+    my @Snwfiles = glob("$dir/*.[rRsS]nw $dir/*.[rRsS]tex");
 
     foreach my $file (@Snwfiles) {
 	open(SNWFILE, "< $file")

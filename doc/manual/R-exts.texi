@@ -63,7 +63,7 @@ The current version of this document is @value{VERSION}.
 @menu
 * Acknowledgements::
 * Creating R packages::
-* Writing R documentation::
+* Writing R help files::
 * Tidying and profiling R code::
 * System and foreign language interfaces::
 * The R API::
@@ -82,7 +82,7 @@ The contributions of Saikat DebRoy (who wrote the first draft of a guide
 to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
 provided information on the C++ interface) are gratefully acknowledged.
 
-@node Creating R packages, Writing R documentation, Acknowledgements, Top
+@node Creating R packages, Writing R help files, Acknowledgements, Top
 @chapter Creating R packages
 @cindex Packages
 @cindex Creating packages
@@ -108,6 +108,7 @@ before reading on.
 * Package structure::
 * Configure and cleanup::
 * Checking and building packages::
+* Writing package vignettes::
 * Submitting a package to CRAN::
 @end menu
 
@@ -235,7 +236,7 @@ The @file{man} subdirectory should contain documentation files for the
 objects in the package in @dfn{R documentation} (Rd) format.  The
 documentation files to be installed must also start with a (lower or
 upper case) letter and have the extension @file{.Rd} (the default) or
-@file{.rd}.  @xref{Writing R documentation}, for more information.  Note
+@file{.rd}.  @xref{Writing R help files}, for more information.  Note
 that all user-level objects in a package should be documented; if a
 package @var{pkg} contains user-level objects which are for ``internal''
 use only, it should provide a file @file{@var{pkg}-internal.Rd} which
@@ -525,7 +526,7 @@ routines.
 
 
 
-@node Checking and building packages, Submitting a package to CRAN, Configure and cleanup, Creating R packages
+@node Checking and building packages, Writing package vignettes, Configure and cleanup, Creating R packages
 @section Checking and building packages
 @cindex Building packages
 @cindex Checking packages
@@ -581,7 +582,7 @@ endings.
 
 @item
 The examples provided by the package's documentation are run.
-(@pxref{Writing R documentation}, for information on using
+(@pxref{Writing R help files}, for information on using
 @code{\examples} to create executable example code.)
 
 Of course, released packages should be able to run at least their own
@@ -592,6 +593,10 @@ If the package sources contain a @file{tests} directory then the tests
 specified in that directory are run.  (Typically they will consist of a
 set of @file{.R} source files and target output files
 @file{.Rout.save}.)
+
+@item
+The code in package vignettes (@pxref{Writing package vignettes}) is
+executed. 
 
 @item
 If a working @command{latex} program is available, the @file{.dvi}
@@ -646,7 +651,52 @@ work well under Windows NT4/2000 but may not work correctly on Windows
 OSes.  Experiences vary.
 @end quotation
 
-@node Submitting a package to CRAN,  , Checking and building packages, Creating R packages
+
+@node Writing package vignettes, Submitting a package to CRAN, Checking and building packages, Creating R packages
+@section Writing package vignettes
+@cindex vignettes
+@cindex Sweave
+
+In addition to the help files in Rd format, @R{} packages allow the
+inclusion of documents in arbitrary other formats. The standard location
+for these is subdirectory @file{inst/doc} of a source package, the
+contents will be copied to subdirectory @file{doc} when the package is
+installed. Pointers from package help indices to the installed documents
+are automatically created.  Documents in @file{inst/doc} can be in
+arbitrary format, however we strongly recommend to provide them in PDF
+format, such that users on all platforms can easily read them.
+
+A special case are documents in Sweave format, which we call
+@emph{package vignettes}. Sweave allows to integrate LaTeX documents and
+@R{} code and is contained in package @code{tools} which is part of the
+base @R{} distribution, see the @code{Sweave} help page for details on
+the document format. Package vignettes found in directory
+@file{inst/doc} are tested by @code{R CMD check} by executing all @R{}
+code they contain to ensure consistency between code and
+documentation.
+
+@code{R CMD build} will automatically create PDF versions
+of the vignettes for distribution with the package sources. By
+including the PDF version in the package sources it is not necessary
+that the vignettes can be compiled at install time, i.e., the package
+author can use private LaTeX extensions which are only available on his
+machine. Only the @R{} code inside the vignettes is part of the checking
+procedure, typesetting manuals is not part of the package QA.
+
+By default @code{R CMD build} will run @code{Sweave} and @code{texi2dvi
+--pdf} on all vignettes. However, if a @file{Makefile} is found, then
+@code{R CMD build} will try to run
+@quotation
+@code{make pdf; make clean}
+@end quotation
+such that PDF manuals can be created from arbitrary source formats
+(plain LaTeX files, @dots{}). Every @file{Makefile} in @file{inst/doc}
+must contain these two targets, otherwise @code{R CMD build} will give
+an error.
+
+
+
+@node Submitting a package to CRAN,  , Writing package vignettes, Creating R packages
 @section Submitting a package to @acronym{CRAN}
 @cindex CRAN
 @cindex CRAN submission
@@ -728,8 +778,9 @@ respected.  E.g., @code{R CMD INSTALL} will not work on
 @file{@var{package}.tgz} files.  Of course, @code{R CMD build}
 automatically creates valid file names.
 
-@node Writing R documentation, Tidying and profiling R code, Creating R packages, Top
-@chapter Writing R documentation
+
+@node Writing R help files, Tidying and profiling R code, Creating R packages, Top
+@chapter Writing R help files
 @cindex Documentation, writing
 
 @menu
@@ -744,7 +795,7 @@ automatically creates valid file names.
 * Processing Rd format::
 @end menu
 
-@node Rd format, Sectioning, Writing R documentation, Writing R documentation
+@node Rd format, Sectioning, Writing R help files, Writing R help files
 @section Rd format
 
 @R{} objects are documented in files written in ``@R{} documentation''
@@ -1101,7 +1152,7 @@ The @code{\keyword} entry is always @samp{datasets}.
 If @code{bar} is a data frame, documenting it as a data set can again be
 initiated via @kbd{prompt(bar)}.
 
-@node Sectioning, Marking text, Rd format, Writing R documentation
+@node Sectioning, Marking text, Rd format, Writing R help files
 @section Sectioning
 
 To begin a new paragraph or leave a blank line in an example, just
@@ -1128,7 +1179,7 @@ Note that the additional named sections are always inserted at fixed
 positions in the output (before @code{\note}, @code{\seealso} and the
 examples), no matter where they appear in the input.
 
-@node Marking text, Lists and tables, Sectioning, Writing R documentation
+@node Marking text, Lists and tables, Sectioning, Writing R help files
 @section Marking text
 @cindex Marking text in documentation
 
@@ -1165,7 +1216,7 @@ Fragments of @R{} code, including the names of @R{} objects, should be
 marked using @code{\code}.  Only backslashes and percent signs need to
 be escaped (by a backslash) inside @code{\code}.
 
-@node Lists and tables, Cross-references, Marking text, Writing R documentation
+@node Lists and tables, Cross-references, Marking text, Writing R help files
 @section Lists and tables
 @cindex Lists and tables in documentation
 
@@ -1212,7 +1263,7 @@ There must be the same number of fields on each line as there are
 alignments in the first argument, and they must be non-empty (but can
 contain only spaces).
 
-@node Cross-references, Mathematics, Lists and tables, Writing R documentation
+@node Cross-references, Mathematics, Lists and tables, Writing R help files
 @section Cross-references
 @cindex Cross-references in documentation
 
@@ -1229,7 +1280,7 @@ There are optional arguments specified as
 @code{\link[@var{pkg:bar}]@{@var{foo}@}} to link to the package
 @var{pkg} with topic (file?) @var{foo} and @var{bar} respectively.
 
-@node Mathematics, Insertions, Cross-references, Writing R documentation
+@node Mathematics, Insertions, Cross-references, Writing R help files
 @section Mathematics
 @cindex Mathematics in documentation
 @findex \eqn
@@ -1301,7 +1352,7 @@ for x = 0, 1, 2, ....
 @c  @findex \left(
 @c  @findex \right)
 
-@node Insertions, Platform-specific sections, Mathematics, Writing R documentation
+@node Insertions, Platform-specific sections, Mathematics, Writing R help files
 @section Insertions
 
 @findex \R
@@ -1339,7 +1390,7 @@ as @code{\eqn@{\mbox@{\textasciicircum@}@}@{^@}}, and @samp{~} by
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
-@node  Platform-specific sections, Processing Rd format, Insertions, Writing R documentation
+@node  Platform-specific sections, Processing Rd format, Insertions, Writing R help files
 @section Platform-specific documentation
 @cindex Platform-specific documentation
 
@@ -1373,7 +1424,7 @@ If the differences between platforms are extensive or the @R{} objects
 documented are only relevant to one platform, platform-specific Rd files
 can be put in a @file{unix}, @file{windows} or @file{mac} subdirectory.
 
-@node Processing Rd format,  , Platform-specific sections, Writing R documentation
+@node Processing Rd format,  , Platform-specific sections, Writing R help files
 @section Processing Rd format
 @cindex Processing Rd format
 
@@ -1427,8 +1478,7 @@ CMD} by @samp{Rcmd}, with the exception that it is @code{Rcmd Rd2dvi.sh}
 installed).  (You will need the files in the @R{} binary Windows
 distribution for installing source packages to be installed.)
 
-
-@node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation, Top
+@node Tidying and profiling R code, System and foreign language interfaces, Writing R help files, Top
 @chapter Tidying and profiling R code
 
 @menu
