@@ -2,6 +2,7 @@
 #
 # ${R_HOME}/etc/Makeconf
 
+BLAS_LIBS = @BLAS_LIBS@
 CC = @CC@
 CFLAGS = @CFLAGS@
 CPICFLAGS = @CPICFLAGS@
