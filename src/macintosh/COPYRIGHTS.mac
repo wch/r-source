@@ -19,6 +19,15 @@ dir/FullPath.[ch]
 	we require that you make it clear in the source that the code was
 	descended from Apple Sample Code, but that you've made changes.
 
+dll/dlfcn.[ch]
+dll/macutils.[ch]
+
+	Based on files used for XLispStat at
+	http://www.stat.umn.edu/~luke/xls/projects/dlbasics/newdl.sit.hqx
+
+	Copyright (C) 1996-2000  Luke Tierney, Bob Stine, and Steve Majewski
+	Copyright (C) 2001  Stefano Iacus and the R core team
+
 
 extra/RFLaunch.[ch]
 extra/TFLaunch.[ch]
@@ -95,6 +104,7 @@ gui/SmartScroll.[ch]
 	Marc Menschenfreund, Alessandro Levi Montalcini and Mark Shirley
 
 gui/RFiles.c
+dll/macutils.c
 	Based in part on code in the Apple MoreFiles collection:
 	Copyright © 1992-1994 Apple Computer, Inc.
 	All rights reserved.
