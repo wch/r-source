@@ -87,5 +87,6 @@ minimization and \code{\link{uniroot}} for root finding.
 f <- function(x) sum((x-1:length(x))^2)
 nlm(f, c(10,10))
 nlm(f, c(10,10), print.level = 2)
+str(nlm(f, c(5), hessian = TRUE))
 }
 \keyword{nonlinear}
