@@ -1306,8 +1306,8 @@ recommended for the source code of @R{} itself.
 As from @R{} version 1.2.0 it is possible to profile @R{} code on most
 Unix-like versions of @R{}.  @R{} has to be built to enable this, by
 supplying the option @option{--enable-R-profiling}, profiling being
-enabled in a default build.  Unfortunately, the way profiling is
-currently implemented relies on OS facilities not available on Windows.
+enabled in a default build.  Unfortunately, this is not yet available on
+Windows, but will be from version 1.3.0.
 
 The command @code{Rprof} is used to control profiling, and its help page
 can be consulted for full details.  Profiling works by recording at
@@ -1334,7 +1334,7 @@ storm.bf <- function(rs, i) @{
 rs <- scale(resid(storm.fm), scale = FALSE) # remove the mean
 Rprof("boot.out")
 storm.boot <- boot(rs, storm.bf, R = 4999) # pretty slow
-Rprof()
+Rprof(NULL)
 @end example
 
 @noindent
