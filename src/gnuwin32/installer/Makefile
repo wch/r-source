@@ -9,9 +9,6 @@ distclean: ISdistclean
 
 # section for JR software installer.
 
-RECOMMENDED=KernSmooth VR boot cluster foreign mgcv nlme rpart survival grid lattice
-EXTRA=
-
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
 ../$(RPREFIX)l.zip ../$(RPREFIX)sp.zip ../$(RPREFIX)w.zip
@@ -23,8 +20,8 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	unzip -qo ../$(RPREFIX)l -d $(RPREFIX)l
 	unzip -qo ../$(RPREFIX)sp -d $(RPREFIX)sp
 	unzip -qo ../$(RPREFIX)w -d $(RPREFIX)w
-	for p in $(RECOMMENDED) $(EXTRA); do \
-	  unzip -qo $(PKGS)/$${p} -d $(RPREFIX)/library; \
+	for p in $(REC_PKGS); do \
+	  cp -pr ../../../library/$${p} -d $(RPREFIX)/library; \
 	done
 	zip -rmq foo.zip $(RPREFIX)/library/*/html
 	unzip -qo foo -d $(RPREFIX)w
@@ -58,8 +55,8 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	rm $(RPREFIX)d1/$(RPREFIX)/doc/manual/R-admin.pdf
 	rm $(RPREFIX)d1/$(RPREFIX)/doc/manual/R-exts.pdf
 	rm $(RPREFIX)d1/$(RPREFIX)/doc/manual/R-lang.pdf
-	for p in $(RECOMMENDED); do \
-	  unzip -qo $(PKGS)/$${p} -d $(RPREFIX)/library; \
+	for p in $(REC_PKGS); do \
+	  cp -pr ../../../library/$${p} -d $(RPREFIX)/library; \
 	done
 	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex \
 	  $(RPREFIX)/library/*/man

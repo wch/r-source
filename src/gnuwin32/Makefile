@@ -227,6 +227,20 @@ ts-ZIPDATA = zip
 
 MASS-HELP = ziponly
 MASS-ZIPDATA = zip
+boot-HELP = ziponly
+boot-ZIPDATA = zip
+cluster-HELP = ziponly
+cluster-ZIPDATA = zip
+grid-HELP = ziponly
+grid-ZIPDATA = zip
+lattice-HELP = ziponly
+lattice-ZIPDATA = zip
+nlme-HELP = ziponly
+nlme-ZIPDATA = zip
+rpart-HELP = ziponly
+rpart-ZIPDATA = zip
+survival-HELP = ziponly
+survival-ZIPDATA = zip
 
 bundle-%:
 	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIB)
@@ -481,6 +495,13 @@ docsdist: docs
 install:
 	cp *.zip /pub/bdr/RWin/Rpre
 
+REC_TGZ = $(wildcard ../../Recommended/*)
+
+recommended:
+	@echo "Making recommended packages"
+	for p in $(REC_TGZ); do \
+	  ../../bin/Rcmd INSTALL $${p}; \
+	done
 
 
 ## ============= End of maintainer targets ========================

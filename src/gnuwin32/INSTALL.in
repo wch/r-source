@@ -218,12 +218,13 @@ Building the installers
 
 See installer/INSTALL.  You need a complete R build first, including 
 bitmap and Tcl/Tk support and the manuals, as well as the recommended
-packages in R-@RVER@-recommended.tgz.
+packages.
 
 Once everything is set up
 
 	make
 	make distribution
+	make recommended
 	make rinstaller
 
 will make all the pieces and then make the installers.
@@ -232,15 +233,12 @@ will make all the pieces and then make the installers.
 Recommended packages
 ====================
 
-The recommended packages can in the main be built as any other package.
-boot, cluster, grid, lattice, nlme, rpart and survival should be made with
-Rcmd INSTALL --use-zip
+The recommended packages can in the main be built by
 
-KernSmooth, foreign, mgcv and VR can be made by Rcmd INSTALL.  
-Package spatial (in VR) will not work if its data directory is zipped.
+	make recommended
 
-You cannot currently use Rcmd CHECK to install and check a package
-with --use-zip.
+If you are using a cvs/rsync version of the sources, you need to
+put the .tar.gz files for the recommended packages in ../../Recommended.
 
 
 Cross-building on ix86 Linux

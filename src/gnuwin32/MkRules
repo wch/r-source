@@ -18,7 +18,7 @@ LEA_MALLOC=YES
 
 # Set to YES and specify the path if you want to use the ATLAS BLAS.
 USE_ATLAS=NO
-ATLAS_PATH=/R/ATLAS/lib/WinNT_PII
+ATLAS_PATH=/R/ATLAS/lib/WinNT_P4SSE2
 
 # Where does 'HTML Help Workshop' live? (unused if compiled HTML help is
 # not requested. Spaces allowed.)
@@ -45,6 +45,10 @@ HEADER=/users/ripley/R/cross-tools/mingw32/include
 endif
 
 ## =============== end of user-customizable parts  ===================
+
+REC_BUNDLES=KernSmooth boot cluster foreign grid lattice mgcv nlme rpart survival
+RECOMMENDED=VR $(REC_BUNDLES)
+REC_PKGS=$(REC_BUNDLES) MASS class nnet spatial
 
 ifeq ($(strip $(BUILD)),MINGW)
 BINPREF=
