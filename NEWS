@@ -75,6 +75,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   split.default() now uses subscripting for x with a non-null
+	class, this preserves, e.g., the class of factors
+
     o	is.recursive(list(.)) is now TRUE [PR#221].
 
     o	help([<-.factor) (etc) work again.
