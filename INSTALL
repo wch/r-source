@@ -64,6 +64,13 @@ src, doc, and several more.  Issue the following commands:
 
 (See USING MAKE below if your make is not called `make'.)
 
+Then check the built system worked correctly, by
+
+	make check
+
+Failures are not necessarily problems as they might be caused by missing
+functionality, but you should look carefully at any reported discrepancies.
+
 If these commands execute successfully, the R binary will be copied to
 the `${R_HOME}/bin' directory.  In addition, a shell script front-end
 called "R" will be created and copied to the same directory.  You can
@@ -158,6 +165,7 @@ After
 
 	./configure
 	make
+	make check
 
 have been completed successfully, you can install the complete R tree
 to your system by typing
@@ -183,8 +191,11 @@ install into another directory by using
 
 	make prefix=/path/to/here install
 
-To install DVI, info and PDF versions of the manuals, use `make
-install-dvi', `make install-info' and `make install-pdf', respectively.
+To install DVI, info and PDF versions of the manuals, use one or more of
+
+	make install-dvi
+	make install-info
+	make install-pdf
 
 To ensure that the installed tree is usable by the right group of
 users, set umask appropriately (perhaps to 022) before unpacking the
@@ -267,9 +278,7 @@ from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs are in RedHat
 6.1 and later.
 
 libglade needs libxml 1.4 or later, the source for which is available
-from the GNOME ftp site (ftp.gnome.org and mirrors).  RPMs of libxml-1.4
-and libxml-devel-1.4 are available from updates.redhat.com and mirrors,
-or ftp.gurulabs.com/pub/gnome/updates.
+from the GNOME ftp site (ftp.gnome.org and mirrors).
 
 
 COMPILE AND LOAD FLAGS
