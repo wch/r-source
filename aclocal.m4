@@ -314,7 +314,7 @@ dnl
 dnl R_FUNC_LOG
 dnl
 AC_DEFUN(R_FUNC_LOG,
-  AC_MSG_CHECKING(whether log is broken)
+  AC_MSG_CHECKING([whether log is broken])
   AC_TRY_RUN(
     changequote(<<, >>)dnl
     <<
@@ -336,6 +336,32 @@ AC_DEFUN(R_FUNC_LOG,
   )
 )
 dnl
+dnl R_FUNC___SETFPUCW
+dnl
+AC_DEFUN(R_FUNC___SETFPUCW,
+  AC_CHECK_FUNC(__setfpucw,
+    [ AC_MSG_CHECKING([whether __setfpucw is needed])
+      AC_TRY_RUN(
+	changequote(<<, >>)dnl
+	<<
+	int main () {
+	#include <fpu_control.h>
+	#if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
+	  return(_FPU_DEFAULT != _FPU_IEEE);
+	#endif
+	return(0);
+	}
+	>>,
+	changequote([, ])dnl
+	AC_MSG_RESULT(no),
+	AC_MSG_RESULT(yes)
+	AC_DEFINE(NEED___SETFPUCW),
+	AC_MSG_WARN(cannot determine when cross-compiling))
+    ])
+)
+dnl
+dnl R_C_OPTIEEE
+dnl
 AC_DEFUN(R_C_OPTIEEE,
   AC_MSG_CHECKING(whether compilers need -OPT:IEEE_NaN_inf=ON)
   AC_TRY_RUN(
@@ -356,7 +382,6 @@ AC_DEFUN(R_C_OPTIEEE,
     AC_MSG_WARN(cannot determine when cross-compiling)
   )
 )
-
 dnl
 dnl GNOME_INIT_HOOK (script-if-gnome-enabled, failflag)
 dnl

@@ -398,8 +398,9 @@ AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(acosh asinh atanh bcopy finite getcwd isfinite isnan \
   matherr memcpy memmove regcomp rint siglongjmp sigsetjmp strcoll  \
-  strtod strtol system times __setfpucw)
+  strtod strtol system times)
 R_FUNC_LOG
+R_FUNC___SETFPUCW
 
 ### Header files
 
