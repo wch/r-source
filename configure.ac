@@ -972,10 +972,13 @@ AC_SUBST(LIBR_LDFLAGS)
 ### * Checks for library functions.
 
 AC_FUNC_ALLOCA
-AC_CHECK_FUNCS(access bcopy bzero chdir expm1 fcntl finite ftruncate getcwd \
-  getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy \
-  memmove mempcpy mkfifo popen putenv rint setenv strcoll stat \
-  strptime system times unsetenv)
+AC_CHECK_FUNCS(access chdir expm1 fcntl finite ftruncate getcwd \
+  getgrgid getpwuid getuid hypot isascii isnan log1p matherr mkfifo \
+  popen putenv rint setenv strcoll stat strptime system times unsetenv)
+## <NOTE>
+## No need checking for bcopy bzero memcpy mempcpy even though ifnames
+## might stop corresponding HAVE_FOO conditionals.
+## </NOTE>
 
 ## Used to build src/include/Rmath.h.
 if test "${ac_cv_func_expm1}" = yes; then
