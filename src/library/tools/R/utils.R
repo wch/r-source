@@ -80,10 +80,10 @@ listFilesWithType <-
 function(dir, type, all.files = FALSE, full.names = TRUE)
 {
     ## Return a character vector with the paths of the files in
-    ## @code{dir} of type @code{type} (as in .makeFileExts()).
+    ## @code{dir} of type @code{type} (as in .make_file_exts()).
     ## When listing R code and documentation files, files in OS-specific
     ## subdirectories are included if present.
-    exts <- .makeFileExts(type)
+    exts <- .make_file_exts(type)
     files <-
         listFilesWithExts(dir, exts, all.files = all.files,
                           full.names = full.names)
@@ -157,9 +157,9 @@ function()
     if(nchar(OS)) OS else .Platform$OS.type
 }
 
-### ** .getInternalS3generics
+### ** .get_internal_S3_generics
 
-.getInternalS3generics <-
+.get_internal_S3_generics <-
 function()
 {
     ## Get the list of R internal S3 generics (via DispatchOrEval(),
@@ -196,22 +196,22 @@ function(dir)
     unique(sort(as.character(depends)))
 }
 
-### ** .get_namespace_S3_methods_list
+### ** .get_namespace_S3_methods_db
 
-.get_namespace_S3_methods_list <-
+.get_namespace_S3_methods_db <-
 function(nsInfo)
 {
-    ## Get the list of the registered S3 methods for an 'nsInfo' object
-    ## returned by parseNamespaceFile().  Each element of the list is a
-    ## character vector of length 3 with the names of the generic, class
-    ## and method (as a function).
-    lapply(nsInfo$S3methods,
-           function(spec) {
-               if(length(spec) == 2)
-                   spec <-
-                       c(spec, paste(spec, collapse = "."))
-               spec
-           })
+    ## Get the registered S3 methods for an 'nsInfo' object returned by
+    ## parseNamespaceFile(), as a 3-column character matrix with the
+    ## names of the generic, class and method (as a function).
+    S3_methods_list <- nsInfo$S3methods
+    if(!length(S3_methods_list)) return(matrix(character(), nc = 3))
+    idx <- is.na(S3_methods_list[, 3])
+    S3_methods_list[idx, 3] <-
+        paste(S3_methods_list[idx, 1],
+              S3_methods_list[idx, 2],
+              sep = ".")
+    S3_methods_list    
 }
 
 ### ** .get_S3_group_generics
@@ -306,9 +306,9 @@ function(package, lib.loc)
     })
 }
 
-### ** .makeFileExts
+### ** .make_file_exts
 
-.makeFileExts <-
+.make_file_exts <-
 function(type = c("code", "data", "demo", "docs", "vignette"))
 {
     ## Return a character vector with the possible/recognized file
@@ -325,9 +325,9 @@ function(type = c("code", "data", "demo", "docs", "vignette"))
                               paste, sep = "")))
 }
 
-### ** .makeS3MethodsStopList
+### ** .make_S3_methods_stop_list
 
-.makeS3MethodsStopList <-
+.make_S3_methods_stop_list <-
 function(package)
 {
     ## Return a character vector with the names of the functions in
