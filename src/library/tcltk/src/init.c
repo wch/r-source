@@ -24,9 +24,15 @@
 
 static const R_CMethodDef CEntries[] = {
     {"tcltk_init", (DL_FUNC) &tcltk_init, 0},
+#ifdef Win32
+    {"tcltk_start", (DL_FUNC) &tcltk_start, 0},
+    {"tcltk_end", (DL_FUNC) &tcltk_end, 0},
+#else
     {"delTcl", (DL_FUNC) &delTcl, 0},
+#ifndef TCL80
     {"RTcl_ActivateConsole", (DL_FUNC) &RTcl_ActivateConsole, 0},
-    {"RTcl_ReadConsole", (DL_FUNC) &RTcl_ActivateConsole, 0},
+#endif
+#endif
     {NULL, NULL, 0}
 };
 

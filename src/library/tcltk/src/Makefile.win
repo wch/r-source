@@ -21,7 +21,7 @@ tk$(TCL_VERSION).def: tk.def
 	$(SED) -e 's/@VER@/$(TCL_VERSION)/' $< > $@
 
 
-OBJS = tcltk.o tcltk_win.o
+OBJS = init.o tcltk.o tcltk_win.o
 CFLAGS = -I$(RHOME)/src/include $(DEBUGFLAG) -O2 -I "$(TCL_HOME)"/include -DWin32
 
 DLLLIBS = -L$(RHOME)/src/gnuwin32 -lR -L. -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)

@@ -9,6 +9,9 @@ SEXP dotTclcallback(SEXP args);
 void TclHandler(void);
 void addTcl(void);
 void delTcl(void);
+#else
+void tcltk_start(void);
+void tcltk_end(void);
 #endif
 
 /* Used by .C */
