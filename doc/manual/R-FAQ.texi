@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-09
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-10
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1783,6 +1783,9 @@ Sons.
 @item NISTnls
 A set of test nonlinear least squares examples from @acronym{NIST}, the
 U.S. National Institute for Standards and Technology.
+@item NORMT3
+Evaluates complex erf, erfc and density of sum of Gaussian and Student's 
+@math{t}.
 @item Oarray
 Arrays with arbitrary offsets.
 @item PBSmapping

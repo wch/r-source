@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-09
+Version 2.0.2005-01-10
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1424,6 +1424,10 @@ distributions of R.)
 *NISTnls*
      A set of test nonlinear least squares examples from NIST, the U.S.
      National Institute for Standards and Technology.
+
+*NORMT3*
+     Evaluates complex erf, erfc and density of sum of Gaussian and
+     Student's t.
 
 *Oarray*
      Arrays with arbitrary offsets.
