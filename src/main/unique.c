@@ -346,6 +346,9 @@ SEXP duplicated(SEXP x)
     int i, n;
     HashData data;
 
+    if (!isVector(x)) 
+	error(_("duplicatd applies only to vectors"));
+
     n = LENGTH(x);
     HashTableSetup(x, &data);
     PROTECT(data.HashTable);
@@ -496,6 +499,7 @@ SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
      * Note that R's match() does only coerce factors (to character).
      * Hence, coerce to character or to `higher' type
      * (given that we have "Vector" or NULL) */
+#ifdef NOTMOVED
     if(TYPEOF(CAR(args))  >= STRSXP || TYPEOF(CADR(args)) >= STRSXP)
 	type = STRSXP;
     else type = TYPEOF(CAR(args)) < TYPEOF(CADR(args)) ?
@@ -504,20 +508,40 @@ SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
     table = SETCADR(args, coerceVector(CADR(args), type));
     nomatch = asInteger(CAR(CDDR(args)));
     return match(table, x, nomatch);
+#else
+    nomatch = asInteger(CAR(CDDR(args)));
+    return match(CADR(args), CAR(args), nomatch);
+#endif
 }
 
-SEXP match(SEXP table, SEXP x, int nmatch)
+SEXP match(SEXP itable, SEXP ix, int nmatch)
 {
-    SEXP ans;
+    SEXP ans, x, table;
+    SEXPTYPE type;
     HashData data;
-    int i, n = length(x);
+    int i, n = length(ix);
+
+    /* Coerce to a common type; type == NILSXP is ok here.
+     * Note that R's match() does only coerce factors (to character).
+     * Hence, coerce to character or to `higher' type
+     * (given that we have "Vector" or NULL) */
+    if(TYPEOF(ix)  >= STRSXP || TYPEOF(itable) >= STRSXP)
+        type = STRSXP;
+    else type = TYPEOF(ix) < TYPEOF(itable) ?
+             TYPEOF(itable) : TYPEOF(ix);
+    PROTECT(x = coerceVector(ix, type));
+    PROTECT(table = coerceVector(itable, type));
 
     /* handle zero length arguments */
-    if (n == 0) return allocVector(INTSXP, 0);
+    if (n == 0) {
+	UNPROTECT(2);
+	return allocVector(INTSXP, 0);
+    }
     if (length(table) == 0) {
 	ans = allocVector(INTSXP, n);
 	for (i = 0; i < n; i++)
 	    INTEGER(ans)[i] = nmatch;
+	UNPROTECT(2);
 	return ans;
     }
     data.nomatch = nmatch;
@@ -525,7 +549,7 @@ SEXP match(SEXP table, SEXP x, int nmatch)
     PROTECT(data.HashTable);
     DoHashing(table, &data);
     ans = HashLookup(table, x, &data);
-    UNPROTECT(1);
+    UNPROTECT(3);
     return ans;
 }
 

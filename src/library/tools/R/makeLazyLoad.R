@@ -104,38 +104,43 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
              domain = NA)
     dataDir <- file.path(pkgpath, "data")
     if(tools:::file_test("-d", dataDir)) {
-        if(file.exists(file.path(dataDir, "Rdata.rds")))
+        if(file.exists(file.path(dataDir, "Rdata.rds")) &&
+	    file.exists(file.path(dataDir, paste(package, "rdx", sep="."))) &&
+	    file.exists(file.path(dataDir, paste(package, "rdb", sep="."))) ){
             warning("package seems to be using lazy loading for data already")
-        dataEnv <- new.env(hash=TRUE)
-        tmpEnv <- new.env()
-        f0 <- files <- tools:::list_files_with_type(dataDir, "data")
-        files <- unique(basename(tools:::file_path_sans_ext(files)))
-        dlist <- vector("list", length(files))
-        names(dlist) <- files
-        loaded <- character(0)
-        for(f in files) {
-            utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = dataEnv)
-            utils::data(list = f, package = package, lib.loc = lib.loc,
-                        envir = tmpEnv)
-            tmp <- ls(envir = tmpEnv, all.names = TRUE)
-            rm(list = tmp, envir = tmpEnv)
-            dlist[[f]] <- tmp
-            loaded <- c(loaded, tmp)
         }
-        dup<- duplicated(loaded)
-        if(any(dup))
-            warning("object(s) ", paste(sQuote(loaded[dup]), collapse=", "),
+	else {
+            dataEnv <- new.env(hash=TRUE)
+            tmpEnv <- new.env()
+            f0 <- files <- tools:::list_files_with_type(dataDir, "data")
+            files <- unique(basename(tools:::file_path_sans_ext(files)))
+            dlist <- vector("list", length(files))
+            names(dlist) <- files
+            loaded <- character(0)
+            for(f in files) {
+                utils::data(list = f, package = package, lib.loc = lib.loc,
+                        envir = dataEnv)
+                utils::data(list = f, package = package, lib.loc = lib.loc,
+                        envir = tmpEnv)
+                tmp <- ls(envir = tmpEnv, all.names = TRUE)
+                rm(list = tmp, envir = tmpEnv)
+                dlist[[f]] <- tmp
+                loaded <- c(loaded, tmp)
+            }
+            dup<- duplicated(loaded)
+            if(any(dup))
+                warning("object(s) ", paste(sQuote(loaded[dup]), collapse=", "),
                     " are created by more than one data call")
 
-        if(length(loaded)) {
-            dbbase <- file.path(dataDir, "Rdata")
-            makeLazyLoadDB(dataEnv, dbbase, compress = compress)
-            .saveRDS(dlist, file.path(dataDir, "Rdata.rds"))
-            print(f0)
-            unlink(f0)
-            if(file.exists(file.path(dataDir, "filelist")))
-                unlink(file.path(dataDir, c("filelist", "Rdata.zip")))
+            if(length(loaded)) {
+                dbbase <- file.path(dataDir, "Rdata")
+                makeLazyLoadDB(dataEnv, dbbase, compress = compress)
+                .saveRDS(dlist, file.path(dataDir, "Rdata.rds"))
+                print(f0)
+                unlink(f0)
+                if(file.exists(file.path(dataDir, "filelist")))
+                    unlink(file.path(dataDir, c("filelist", "Rdata.zip")))
+            }
         }
     }
 }
