@@ -1,5 +1,6 @@
 \name{RClassUtils}
-%% FIXME the following are undocumented utilities (Sep 23/02)
+%% NOTE: This is {internal} for a good reason
+%% FIXME the following are undocumented utilities (Sep 23, 2002)
 \alias{completeSubclasses}
 \alias{newClassRepresentation}
 \alias{print.classRepresentation}
@@ -50,6 +51,9 @@
   These are various functions to support the definition and use of
   formal classes.  Most of them are rarely suitable to be called
   directly.
+
+  Others are somewhat experimental and/or partially implemented only. Do
+  refer to \code{\link{setClass}} for normal code development.
 }
 
 \usage{
@@ -118,7 +122,7 @@ setDataPart(object, value)
       Test for a Virtual Class.
       Figures out, as well as possible, whether the class with these
       properties, extension, and prototype is a virtual class.
-      Can be forced to be virtual by extending "VIRTUAL".
+      Can be forced to be virtual by extending \code{"VIRTUAL"}.
 
       Otherwise, a class is virtual only if it has no slots, extends no
       non-virtual classes, and has a \code{NULL} Prototype.
@@ -128,22 +132,24 @@ setDataPart(object, value)
       Makes the prototype implied by the class definition.
 
       The following three rules are applied in this order.
+      \enumerate{
+	\item If the class has slots, then the prototype for each slot
+	  is used by default, but a corresponding element in the
+	  explicitly supplied prototype in \code{ClassDef}, if there is
+	  one, is used instead (but it must be coercible to the class of
+	  the slot). This includes the data part (\code{".Data"} slot) if
+	  there is one.
 
-      If the class has slots, then the prototype for each slot is used
-      by default, but a corresponding element in the explicitly supplied
-      prototype in \code{ClassDef}, if there is one, is used instead (but it must be
-      coercible to the class of the slot). This includes the data part
-      (\code{".Data"} slot) if there is one.
+	\item If there are no slots but a non-null prototype was
+	  specified, this is returned.
 
-      If there are no slots but a non-null prototype was specified, this
-      is returned.
-
-      If there is a non-virtual superclass (a class in the
-      extends list), then its prototype is used.  The data part is
-      extracted if needed (it is allowed to have two superclasses
-      with a data part; the first is used and a warning issued on any others).
-
-      If all three of the above fail, the prototype is \code{NULL}.
+	\item If there is a non-virtual superclass (a class in the
+	  extends list), then its prototype is used.  The data part is
+	  extracted if needed (it is allowed to have two superclasses
+	  with a data part; the first is used and a warning issued on
+	  any others).
+	}
+	If all three of the above fail, the prototype is \code{NULL}.
     }
 
     \item{\code{newEmptyObject}:}{
@@ -169,10 +175,7 @@ setDataPart(object, value)
       Extracts one of the intrinsically defined class definition
       properties (".Properties", etc.)  Strictly a utility function.
     }
-
-
-
-
+%%
     \item{\code{getSlots}:}{
       Returns a named character vector.  The names are the names of the
       slots, the values are the classes of the corresponding slots.
@@ -206,9 +209,7 @@ setDataPart(object, value)
       A class is virtual if explicitly declared to be, and also if the
       class is not formally defined.
     }
-
-
-
+%%
     \item{\code{assignClassDef}:}{
       assign the definition of the class to the specially named object
     }
@@ -354,9 +355,10 @@ setDataPart(object, value)
       case there is an error.  (As of writing, \code{"class"} is the
       only reserved slot name.)
     }
-  \item{\code{getDataPart}, \code{setDataPart}:}{ Utilities called from the base C code
-      to implement \code{object@.Data}.
-      }
+    \item{\code{getDataPart}, \code{setDataPart}:}{
+      Utilities called from the base C code to implement
+      \code{object@.Data}.
+    }
 
   }
 }

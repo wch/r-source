@@ -1,0 +1,13 @@
+###-*- R -*-
+
+.Library <- file.path(getenv("R_HOME"), "library")
+.lib.loc <- unique(c(unlist(strsplit(c(getenv("R_LIBS"),
+                                       getenv("RLIBS")), ";")), .Library))
+options(papersize="a4")
+options(device="windows")
+options(editor="notepad")
+if(any(grep("--ess", commandArgs()))) options(pager="console") else options(pager="internal")
+#options(pager="internal")
+options(unzip="internal")
+options(mailer = "none")
+options(width=80)

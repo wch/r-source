@@ -1,0 +1,89 @@
+###-*- Makefile -*- for R ---  is NOT made by configure; called by Makefile ---
+
+include Makeconf
+
+all: R docs
+
+R: config.status
+	@echo "Building R"
+	cd src; $(MAKE) R
+	@echo; echo "You should"; echo "	make docs"
+	@echo "now, or at least"; echo "	make help"; echo
+
+docs: build-docs
+help: build-help
+html: build-html
+latex: build-latex
+dvi: build-dvi
+
+build-docs build-help build-latex build-html build-dvi::
+	-@cd etc; MANSRC=`echo ../src/library/*/man/*.Rd` $(MAKE) $@
+
+test-All test-Examples::
+	-@cd tests; $(MAKE) $@
+
+patches:
+	@echo "Patches? Patches?  We don't need no stinking patches!"
+
+clean:
+	@echo "Cleaning at top level"
+	@cd demos/dynload; $(MAKE) $@
+	@echo "Cleaning ./etc/"; cd etc; $(MAKE) $@
+	@echo "Cleaning the source tree"; cd src; $(MAKE) $@
+
+acclean:
+	@echo "Cleaning configure files"
+	@rm -f config.cache config.log config.status Makeconf
+
+moreclean: clean acclean
+	@echo "Cleaning ./etc/ a bit more"; cd etc; $(MAKE) $@
+
+distclean: realclean
+
+realclean:
+	@echo "Cleaning at top level (+ bin/, library/, cmd/, doc/)"
+	@-rm -f bin/R*
+	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
+	@-rm -f Makefrag.f77
+	@-rm -f cmd/fwf2table
+	@-rm -f doc/keyword-test
+	@-rm -f doc/manual/lib2tex
+	@-rm -f doc/manual/pkg-*
+	@-rm -f doc/html/packages* doc/html/function*
+	@cd tests; $(MAKE) $@
+	@cd demos/dynload; if [ -f Makefile ] ; then $(MAKE) $@ ; fi
+	@echo "Really cleaning ./etc/"; cd etc; $(MAKE) $@
+	@echo "Really cleaning the source tree"; cd src; $(MAKE) $@
+	$(MAKE) acclean
+
+install: all
+	$(INSTALL_DIR) $(bindir)
+	$(INSTALL_DIR) $(mandir)/man1
+	$(INSTALL_DIR) $(rhome)/bin
+	$(INSTALL_DIR) $(rhome)/cmd
+	$(INSTALL_DIR) $(rhome)/etc
+	$(INSTALL_DIR) $(rhome)/include
+	$(INSTALL_DIR) $(rhome)/library
+	$(INSTALL_DATA) R.1 $(mandir)/man1
+	$(INSTALL_DATA) Rdconv.1 $(mandir)/man1
+	(cd $(mandir)/man1; \
+		for f in Rd2txt.1 Rdindex.1 Sd2Rd.1; \
+			do rm -f $$f; $(LN_S) Rdconv.1 $$f; \
+		done)
+	for f in COPYING COPYRIGHTS MIRROR-SITES RESOURCES; \
+		do $(INSTALL_DATA) $$f $(rhome); done
+	cd afm; $(MAKE) $@
+	$(INSTALL_PROGRAM) bin/R.binary $(rhome)/bin
+	cat bin/R | sed "s@RHOME=.*@RHOME=$(rhome)@" > $(bindir)/R
+	chmod 755 $(bindir)/R
+	for f in `ls cmd/[a-z]* | grep -v '.*\.in'`; \
+		do $(INSTALL_PROGRAM) $$f $(rhome)/cmd; done
+	cd demos; $(MAKE) $@
+	cd doc; $(MAKE) $@
+	cd etc; $(MAKE) $@
+	for f in include/*.h; \
+		do $(INSTALL_DATA) $$f $(rhome)/include; done
+	@echo "Installing library ..."
+	cd library; tar cf - [a-z]* | (cd $(rhome)/library; tar xf -)
+	$(INSTALL_DATA) library/LibIndex $(rhome)/library
+

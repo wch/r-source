@@ -107,7 +107,7 @@ Rcode: fixed/fixdesc
 
 rpackage: ../../library/R.css
 	@for pkg in $(PKGS); do \
-	  $(MAKE) --no-print-directory $${pkg}; \
+	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
 	@$(MAKE) --no-print-directory vignettes
 
@@ -362,6 +362,8 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.d ../library/*/src/Makedeps
 	$(RM) ../library/*/src/*.dll
+	$(RM) ../library/grid/tests/Rplots.ps
+	$(RM) ../library/grid/tests/*.Rout
 	$(RM) -r ../library/*/check
 	$(RM) ../library/tcltk/src/tcl$(TCL_VERSION).def \
 	../library/tcltk//src/tk$(TCL_VERSION).def
@@ -442,10 +444,13 @@ else
 	  fi; \
 	done
 endif
+	@rm -rf .vignettes # force cleanup
 
 ## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
+RVER-PAT = $(shell if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then echo "-patched"; else echo ""; fi)
+
 
 docfiles:
 	$(MAKE) -f Makefile.docfiles
@@ -453,7 +458,7 @@ docfiles:
 bitmapdll:
 	$(MAKE) -C bitmap
 
-CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
+CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
 
 rsync-recommended:
 	@(cd ../library; \
@@ -509,6 +514,7 @@ crandir:
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e 's/@DATE@/$(DATE)/g' cran/rpatched.in > cran/rpatched.html	  
+	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
 
 distribution:
 	$(MAKE) Rpwd.exe

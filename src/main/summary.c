@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002   Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997-2004   Robert Gentleman, Ross Ihaka and the
  *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -82,7 +82,7 @@ static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
 	    s += x[i];
 #else
 	    *value = NA_REAL;
-	    return;
+	    return(updated);
 #endif
 	}
     }
@@ -112,7 +112,7 @@ static Rboolean csum(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 	else if (!narm) {
 	    if(!updated) updated=1;
 	    value->r = value->i = NA_REAL;
-	    return;
+	    return(updated);
 #endif
 	}
     }
@@ -179,7 +179,7 @@ static Rboolean  rmin(double *x, int n, double *value, Rboolean narm)
 	else if (!narm) {
 	    if(!updated) updated = 1;
 	    *value = NA_REAL;
-	    return;
+	    return(updated);
 	}
     }
     *value = s;
@@ -241,7 +241,7 @@ static Rboolean rmax(double *x, int n, double *value, Rboolean narm)
 	else if (!narm) {
 	    if(!updated) updated = 1;
 	    *value = NA_REAL;
-	    return;
+	    return(updated);
 	}
     }
     *value = s;
@@ -293,7 +293,7 @@ static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
 	    s *= x[i];/* Na(N) */
 #else
 	    *value = NA_REAL;
-	    return;
+	    return(updated);
 #endif
 	}
     }
@@ -325,11 +325,11 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 	else if (!narm) {
 	    if(!updated) updated = 1;
 	    value->r = value->i = NA_REAL;
-	    return;
+	    return(updated);
 	}
 	if(ISNAN(s.r) || ISNAN(s.i)) {
 	    value->r = value->i = NA_REAL;
-	    return;
+	    return(updated);
 	}
 #endif
     }
@@ -659,7 +659,7 @@ SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #define End_do_first							\
     i = (indx != NA_INTEGER);						\
-    ans = allocVector(INTSXP, i ? 1 : 0);				\
+    PROTECT(ans = allocVector(INTSXP, i ? 1 : 0));			\
     if (i) {								\
 	INTEGER(ans)[0] = indx + 1;					\
 	if (getAttrib(sx, R_NamesSymbol) != R_NilValue) { /* keep name */\
@@ -671,7 +671,7 @@ SEXP do_first_min(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    UNPROTECT(1);						\
 	}								\
     }									\
-    UNPROTECT(1);							\
+    UNPROTECT(2);							\
     return ans;
 
     End_do_first

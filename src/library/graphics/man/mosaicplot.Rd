@@ -95,6 +95,9 @@ mosaicplot(x, \dots)
 
   See Emerson (1998) for more information and a case study with
   television viewer data from Nielsen Media Research.
+
+  Missing values are not supported unless \code{data} contains variables
+  to be cross-tabulated, when rows containing missing values are omitted.
 }
 \author{
   S-PLUS original by John Emerson \email{emerson@stat.yale.edu}.

@@ -2007,6 +2007,7 @@ void GSetupAxis(int axis, DevDesc *dd)
 void GInit(GPar *dp)
 {
     dp->state = 0;
+    dp->valid = FALSE;
 
     dp->ann = TRUE;
     dp->ask = FALSE;
@@ -3037,7 +3038,7 @@ void GLPretty(double *ul, double *uh, int *n)
 	GPretty(ul, uh, n);
 	*n = -*n;
     }
-    else { /* extra tickmarks --> CreateAtVector(.) in	../plot.c */
+    else { /* extra tickmarks --> CreateAtVector() in ./plot.c */
 	*ul = pow(10., (double)p1);
 	*uh = pow(10., (double)p2);
 	if (p2 - p1 <= LPR_SMALL)

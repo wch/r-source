@@ -27,7 +27,7 @@ coefficients(object, \dots)
 \details{
   All object classes which are returned by model fitting functions
   should provide a \code{coef} method or use the default one.
-  (Note that the method is \code{coef} and not \code{coefficients}.)
+  (Note that the method is for \code{coef} and not \code{coefficients}.)
 
   Class \code{"aov"} has a \code{coef} method that does not report
   aliased coefficients (see \code{\link{alias}}).

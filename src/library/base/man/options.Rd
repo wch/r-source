@@ -15,10 +15,9 @@ getOption(x)
 %%-- NOTE : Keep the list up-to-date,
 %%-- ====   Consider also the leading comments in ../../../main/options.c
 \arguments{
-  \item{\dots}{any options can be defined, using \code{name = value}.
-
-    However, only the ones below are used in \dQuote{base \R}.
-
+  \item{\dots}{any options can be defined, using \code{name = value} or
+    by passing a list of such tagged values.  However, only the ones
+    below are used in \dQuote{base \R}.
     Further, \code{options('name') == options()['name']}, see the example.
   }
   \item{x}{a character string holding an option name.}
@@ -218,10 +217,10 @@ getOption(x)
       named vector of URLs which can be used to specify the set and
       order of any online repositories the user would like used in
       functions such as \code{\link[tools]{packageDepends}}.  The default
-      return value for the function is a vector with two components, one the 
+      return value for the function is a vector with two components, one the
       value of \code{contrib.url(getOption("CRAN"))} and the second
       \code{contrib.url(getOption("BIOC"))}.}
-    
+
     \item{\code{download.file.method}:}{Method to be used for
       \code{download.file}.  Currently download methods
       \code{"internal"}, \code{"wget"} and \code{"lynx"} are available.

@@ -54,6 +54,10 @@ Subject: Accuracy Bug 1228
 From: "David Heiser" <daheiser@gvn.net>
 Date: Mon, 5 Apr 2004 19:23:35 -0700
 ..This is really bug PR#1228 (in category 'Accuracy')
+* PR# 6772 *
+Subject: phyper accuracy and efficiency
+From: terra@gnome.org
+Date: Thu, 15 Apr 2004 18:06:08 +0200 (CEST)
 
 Directory:  Add-ons
 
@@ -187,13 +191,6 @@ Date: Wed, 1 Oct 2003 22:48:23 +0200 (MET DST)
 Subject: misprint  in Leaps $size
 From: paulluo@cs.cmu.edu
 Date: Fri, 3 Oct 2003 22:17:24 +0200 (MET DST)
-* PR# 4525 *
-Subject: Problem in 'methods' package
-From: feferraz@linux.ime.usp.br
-Date: Sat, 11 Oct 2003 08:20:46 +0200 (MET DST)
-..DBI is trying to call an unexported function from methods. Maintainer needs to
-..fix or argue that the function 
-..should be exported.
 * PR# 4688 *
 Subject: bug in fisher test---p-value cannot be Inf
 From: kjetil@entelnet.bo
@@ -202,10 +199,7 @@ Date: Mon, 20 Oct 2003 14:17:42 -0400
 Subject: Core dump when calling tclvalue
 From: mckay@gmr.com
 Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
-* PR# 5049 *
-Subject: Segfault in foreign
-From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
-Date: 12 Nov 2003 17:31:24 +0100
+..it would seem that we're just not failing gracefully
 * PR# 5315 *
 Subject: O2 optimization produces wrong code
 From: jean.coursol@math.u-psud.fr
@@ -220,17 +214,39 @@ Date: Wed,  3 Dec 2003 06:01:57 +0100 (CET)
 Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
-..Dot documented to work, but intended to.
-* PR# 6597 *
-Subject: summary.rpart() in rpart package
-From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
-Date: Tue, 17 Feb 2004 17:07:02 -0600
-..Unreadable, and no response to follow-up.
+..Not documented to work, but intended to.
 * PR# 6701 *
 Subject: lookup.xport in foreign ignoring some datasets
 From: Svetlana Eden <svetlana.eden@vanderbilt.edu>
 Date: Fri, 26 Mar 2004 15:45:18 -0600
 ..SAS version*5* is probably not supported.
+* PR# 6819 *
+Subject: package fdim slopeopt error
+From: phddas@yahoo.com
+Date: Sun, 25 Apr 2004 00:23:42 +0200 (CEST)
+..`Fred J.' claims that the maintainer's email address does not work.
+* PR# 6895 *
+Subject: foreign package:  reading epiinfo
+From: giles.crane@doh.state.nj.us
+Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
+..request for example file met no response
+* PR# 6904 *
+Subject: Failure to preserve package attribute when coercing S4 objects
+From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
+Date: Fri, 21 May 2004 15:04:10 +0100
+* PR# 6978 *
+Subject: inheritance problem in multcomp package
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sun, 13 Jun 2004 21:35:50 -0400
+* PR# 6989 *
+Subject: read.epiinfo makes field char part of variable name
+From: giles.crane@doh.state.nj.us
+Date: Thu, 17 Jun 2004 17:52:32 +0200 (CEST)
+..part of foreign
+* PR# 7007 *
+Subject: lme4 fails to install on R-1.9/FreeBSD-5.2
+From: wb@arb-phys.uni-dortmund.de
+Date: Tue, 22 Jun 2004 20:53:01 +0200 (CEST)
 
 Directory:  Analyses
 
@@ -260,10 +276,22 @@ From: "Francis Hsuan" <francis.hsuan@temple.edu> Add To Address Book
 Date: Tue, 2 Dec 2003 01:20:08 -0500 (EST)
 Date: Mon, 1 Dec 2003 21:53:06 -0500
 ..model.frame() fails on character input: should it coerce to factor?
-* PR# 6720 *
-Subject: optim-Bug
-From: kestler@neuro.informatik.uni-ulm.de
-Date: Tue, 30 Mar 2004 19:21:11 +0200 (CEST)
+* PR# 6750 *
+Subject: Incorrect handling of NA's in cor()
+From: msa@biostat.mgh.harvard.edu
+Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
+..matter of debate
+* PR# 6986 *
+Subject: Bug in FEXACT: gave negative key
+From: Francis Clark <fc@maths.uq.edu.au>
+Date: Thu, 17 Jun 2004 20:00:31 +1000 (EST)
+..From fisher.test!
+..Probably just a poor error message
+* PR# 7037 *
+Subject: R crashes
+From: cornulier@cebc.cnrs.fr
+Date: Wed, 30 Jun 2004 22:06:27 +0200 (CEST)
+..crash in cor, reproducible on Linux
 
 Directory:  Documentation
 
@@ -417,6 +445,18 @@ Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 Subject: persp - incorrect shading of triangular facets
 From: ihaka@stat.auckland.ac.nz
 Date: Thu, 23 Oct 2003 02:19:26 +0200 (MET DST)
+* PR# 6758 *
+Subject: axis annotation issue
+From: dgrove@fhcrc.org
+Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
+* PR# 6763 *
+Subject: postscript image problem
+From: jonathan_lees@unc.edu
+Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
+* PR# 7031 *
+Subject: vfont and title()
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Tue, 29 Jun 2004 10:23:47 -0400
 
 Directory:  In-Out
 
@@ -498,6 +538,22 @@ Subject: Installation
 From: a0108661@unet.univie.ac.at
 Date: Tue, 27 Jan 2004 18:51:04 +0100 (CET)
 ..Mandrake RPM installation problem.
+* PR# 6797 *
+Subject: R.spec
+From: joachim.geiger@ipp.mpg.de
+Date: Tue, 20 Apr 2004 11:51:40 +0200 (CEST)
+..About the source RPM for 1.9.0 under RedHat 8.0.
+* PR# 6862 *
+Subject: Fortran compiler dependency missing in gentoo ebuild script 
+From: mc@austrian-mint.at
+Date: Fri,  7 May 2004 16:45:01 +0200 (CEST)
+..Gentoo Linux-specific problem
+* PR# 6896 *
+Subject: R with shared library support: 'make check' fails with unresolved symbol
+From: garvin@cs.rice.edu
+Date: Wed, 19 May 2004 23:38:53 +0200 (CEST)
+..OSF1 Alpha, not detials of how install was done.
+..Was R-admin actually read?
 
 Directory:  Language
 
@@ -584,10 +640,41 @@ Date: Fri, 27 Feb 2004 11:27:18 +0000
 ..Incorrect result confirmed on RH8.0 and segfault on Windows (BDR)
 ..The segfault is under a call to regexec: PCRE is not used.
 ..If perl=TRUE is included, this works, fast.
+* PR# 7022 *
+Subject: Bug in parse(text = <long polynom>)
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 25 Jun 2004 09:19:32 +0200
+* PR# 7027 *
+Subject: Problem with hasArg and the ... argument
+From: j.j.goeman@lumc.nl
+Date: Mon, 28 Jun 2004 11:12:27 +0200 (CEST)
+..Problem is if sys.function() should be changed or its docs.  See further 
+..discussion on R-devel.
 
 Directory:  Macintosh
 
-none
+* PR# 6903 *
+Subject: Memory Leak in OS X versions?
+From: dvanbrunt@well-wired.com
+Date: Fri, 21 May 2004 15:24:05 +0200 (CEST)
+* PR# 6940 *
+Subject: Crash in OSX
+From: murray.pung@studentmail.newcastle.edu.au
+Date: Sat,  5 Jun 2004 04:36:52 +0200 (CEST)
+* PR# 7030 *
+Subject: input file and console command size limit
+From: jerome.mutterer@ibmp-ulp.u-strasbg.fr
+Date: Tue, 29 Jun 2004 09:00:36 +0200 (CEST)
+..On R Aqua on MacOS X
+* PR# 7036 *
+Subject: Installation of R 1.9 on Mac OS X 10.3
+From: deejemon@eudoramail.com
+Date: Wed, 30 Jun 2004 03:26:05 +0200 (CEST)
+* PR# 7047 *
+Subject: DSTEIN error
+From: weigand.stephen@charter.net
+Date: Sat,  3 Jul 2004 05:09:36 +0200 (CEST)
+..Mac OS X BLAS problem
 
 Directory:  Misc
 
@@ -636,6 +723,12 @@ Date: Wed, 01 Oct 2003 07:45:41 +1200
 ..probably need to be enclosed in quote().
 ..
 ..S does exactly the same though
+* PR# 6799 *
+Subject: Re: [R] Unexpected behaviour of identical
+From: Peter Dalgaard <p.dalgaard@biostat.ku.dk>
+Date: 20 Apr 2004 13:38:49 +0200
+..This case is fixed for 1.9.1.
+..Whether identical should be so fussy is under consideration.
 
 Directory:  Models
 
@@ -769,10 +862,18 @@ Subject: R fails to build on AFS
 From: Atro.Tossavainen+rproject@helsinki.fi
 Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
 ..insufficent information: what was the error message?
+* PR# 7062 *
+Subject: fedora core 2 + bitmap() + ghostscript
+From: Piers Dunstan <Piers.Dunstan@csiro.au>
+Date: Wed, 07 Jul 2004 10:01:42 +1000
 
 Directory:  TooMuchAtOnce
 
-none
+* PR# 7008 *
+Subject: dates
+From: gilescrane@doh.state.nj.us
+Date: Tue, 22 Jun 2004 22:18:41 +0200 (CEST)
+..Nothing to reproduce here
 
 Directory:  Windows
 
@@ -799,7 +900,7 @@ Date: Mon, 28 Jul 2003 14:30:03 -0400 (EDT)
 Subject: File in use error
 From: oakeley@fmi.ch
 Date: Tue, 2 Sep 2003 11:06:16 +0200 (MET DST)
-..Windows / R(D)COM
+..Windows / R(D)COM / Bioconductor, probably the last.
 * PR# 4246 *
 Subject: creates directory that can't be deleted
 From: xiaobao_wang@yahoo.com
@@ -809,6 +910,12 @@ Date: Mon, 22 Sep 2003 02:26:31 +0200 (MET DST)
 Subject: save image as postscript side-effect
 From: martin.noellenburg@stud.uni-karlsruhe.de
 Date: Mon,  5 Apr 2004 17:51:13 +0200 (CEST)
+..This is saving from the windows() device menu.
+..Not reproducible
+* PR# 6955 *
+Subject: strange apparently data-dependent crash with large data
+From: Tony Plate <tplate@blackmesacapital.com>
+Date: Mon, 07 Jun 2004 10:57:26 -0600
 
 Directory:  incoming
 
@@ -817,19 +924,43 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6747 *
-Subject: Results of your commands
-From: SYMPA <sympa@ens.fr>
-Date: Wed, 7 Apr 2004 12:34:31 +0200 (CEST)
-* PR# 6748 *
-Subject: Mailman results for Cottage
-From: cottage-request@eg.e-cell.org
-Date: Thu, 08 Apr 2004 12:00:02 +0900
-* PR# 6749 *
-Subject: Macintosh -- changing working directory forces computer to restart
-From: paolillo@indiana.edu
-Date: Thu,  8 Apr 2004 21:24:56 +0200 (CEST)
-* PR# 6750 *
-Subject: Incorrect handling of NA's in cor()
-From: msa@biostat.mgh.harvard.edu
-Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
+* PR# 6804 *
+Subject: Re: [R] Error message during debug
+From: Duncan Murdoch <dmurdoch@pair.com>
+Date: Tue, 20 Apr 2004 14:15:05 -0400
+* PR# 7039 *
+Subject: segfault in apply with "==" and double
+From: chabrier@toulouse.inra.fr
+Date: Thu,  1 Jul 2004 12:26:26 +0200 (CEST)
+* PR# 7052 *
+Subject: Rd2txt bug
+From: "Dorer, David" <DDORER@PARTNERS.ORG>
+Date: Mon, 5 Jul 2004 11:39:18 -0400 
+* PR# 7055 *
+Subject: Wrong object type produced - LANGSXP should be LISTSXP
+From: bauerda@ieee.org
+Date: Tue,  6 Jul 2004 20:25:04 +0200 (CEST)
+* PR# 7068 *
+Subject: Bug in Make or configure: spaces in path
+From: williams.elliot@bls.gov
+Date: Thu,  8 Jul 2004 01:50:10 +0200 (CEST)
+* PR# 7072 *
+Subject: Reproducible Rterm crash.
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Fri, 9 Jul 2004 15:27:56 -0400
+* PR# 7073 *
+Subject: i miss you
+From: "Lashawn Annamaria" <ibt8mdlqi@netsol.net>
+Date: Sat, 10 Jul 2004 19:36:21 +0300
+* PR# 7074 *
+Subject: Charge your Mobile Phone Anywhere, Anytime
+From: "Marne Denning" <Barnett_Lubach@achildscry.org>
+Date: Sun, 11 Jul 2004 01:14:23 +0400
+* PR# 7075 *
+Subject: read.table, read.fwf, and na.strings
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sat, 10 Jul 2004 17:21:01 -0400
+* PR# 7076 *
+Subject: bug in xyplot xlab, etc
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sat, 10 Jul 2004 17:28:03 -0400

@@ -1,0 +1,8 @@
+help.start <- function(gui = "irrelevant", browser="netscape")
+{
+ file <- "$RHOME/html/index.html"
+ cat("If",browser," is already running,	it is *not* restarted,\n",
+	"and you must switch to its window.\nOtherwise, be patient..\n")
+ system(paste(browser, " -remote \"openURL(", file,
+	")\" 2>/dev/null || ", browser, " ", file, " &", sep = ""))
+}

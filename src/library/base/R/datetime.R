@@ -425,17 +425,34 @@ Math.difftime <- function (x, ...)
     stop(paste(.Generic, "not defined for difftime objects"))
 }
 
-Summary.difftime <- function (x, ...)
+mean.difftime <- function (x, ..., na.rm = FALSE)
 {
     coerceTimeUnit <- function(x)
     {
-        switch(attr(x,"units"),
+        as.vector(switch(attr(x,"units"),
                secs = x, mins = 60*x, hours = 60*60*x,
-               days = 60*60*24*x, weeks = 60*60*24*7*x)
+               days = 60*60*24*x, weeks = 60*60*24*7*x))
+    }
+    if(length(list(...))) {
+        args <- c(lapply(list(x, ...), coerceTimeUnit), na.rm = na.rm)
+        structure(do.call("mean", args), units="secs", class="difftime")
+    } else {
+        structure(mean(as.vector(x), na.rm = na.rm),
+                  units=attr(x, "units"), class="difftime")
+    }
+}
+
+Summary.difftime <- function (x, ..., na.rm = FALSE)
+{
+    coerceTimeUnit <- function(x)
+    {
+        as.vector(switch(attr(x,"units"),
+                         secs = x, mins = 60*x, hours = 60*60*x,
+                         days = 60*60*24*x, weeks = 60*60*24*7*x))
     }
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(paste(.Generic, "not defined for difftime objects"))
-    args <- lapply(list(x, ...), coerceTimeUnit)
+    args <- c(lapply(list(x, ...), coerceTimeUnit), na.rm = na.rm)
     structure(do.call(.Generic, args), units="secs", class="difftime")
 }
 

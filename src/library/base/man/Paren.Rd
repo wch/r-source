@@ -30,7 +30,7 @@
 \examples{
 f <- get("(")
 e <- expression(3 + 2 * 4)
-f(e) == e           # TRUE
+identical(f(e), e)
 
 do <- get("\{")
 do(x <- 3, y <- 2*x-3, 6-x-y); x; y

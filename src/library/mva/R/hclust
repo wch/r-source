@@ -1,0 +1,103 @@
+# Hierarchical clustering, on raw input data; we will use Euclidean
+# distance.  A range of criteria are supported; also there is a
+# storage-economic option.
+#
+# We use the general routine, `hc', which caters for 7 criteria,
+# using a half dissimilarity matrix; (BTW, this uses the very efficient
+# nearest neighbor chain algorithm, which makes this algorithm of
+# O(n^2) computational time, and differentiates it from the less
+# efficient -- i.e. O(n^3) -- implementations in all commercial
+# statistical packages -- as far as I am aware -- except Clustan.)
+#
+# Clustering Methods:
+#
+# 1. Ward's minimum variance or error sum of squares method.
+# 2. single linkage or nearest neighbor method.
+# 3. complete linkage or diameter.
+# 4. average linkage, group average, or UPGMA method.
+# 5. McQuitty's or WPGMA method.
+# 6. median, Gower's or WPGMC method.
+# 7. centroid or UPGMC method (7).
+#
+# Original author: F. Murtagh, May 1992
+# R Modifications: Ross Ihaka, Dec 1996
+
+hclust <-
+function(d, method="complete")
+{
+        method <-  pmatch(method, c("ward", "single",
+			"complete", "average", "mcquitty",
+			"median", "centroid"))
+        if(is.na(method))
+                stop("invalid clustering method")
+        if(method == -1)
+                stop("ambiguous clustering method")
+
+	n <- attr(d, "Size")
+	if(is.null(n))
+		stop("invalid dissimilarities")
+	labels <- attr(d, "Labels")
+
+	len <- n*(n-1)/2
+	hcl <- .Fortran("hclust",
+		n = as.integer(n),
+		len = as.integer(len),
+		method = as.integer(method),
+		ia = integer(n),
+		ib = integer(n),
+		crit = double(n),
+		membr = double(n),
+		nn = integer(n),
+		disnn = double(n),
+		flag = logical(n),
+		diss = as.double(d))
+
+	# 2nd step: interpret the information that we now have
+	# as merge, height, and order lists.
+
+	hcass <- .Fortran("hcass2",
+		n = as.integer(n),
+		ia = as.integer(hcl$ia),
+		ib = as.integer(hcl$ib),
+		order = integer(n),
+		iia = integer(n),
+		iib = integer(n))
+
+	tree <- list(
+		merge=cbind(hcass$iia[1:(n-1)], hcass$iib[1:(n-1)]),
+		height=hcl$crit[1:(n-1)],
+		order=hcass$order,
+		labels=attr(d, "Labels"))
+	class(tree) <- "hclust"
+	tree
+}
+
+plot.hclust <-
+function(tree, hang=0.1, ...)
+{
+	merge <- tree$merge
+	if(!is.matrix(merge) || ncol(merge) != 2)
+		stop("invalid dendrogram")
+	n <- nrow(merge)
+	height <- as.double(tree$height)
+	order <- as.double(order(tree$order))
+	labels <- tree$labels
+	if(is.null(labels)) labels <- 1:n
+	labels <- as.character(labels)
+
+	if(hang < 0) ylim <- range(height, 0)
+	else {
+		ylim <- range(height)
+		hang <- hang * diff(ylim)
+		ylim <- ylim - c(hang, 0)
+	}
+
+	plot.new()
+	par2(...)
+	plot.window(c(1, n+1), ylim, log="")
+
+	.Internal(dend(n, merge, height, order, hang, labels))
+
+	axis(2)
+	invisible()
+}

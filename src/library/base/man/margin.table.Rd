@@ -23,7 +23,7 @@ margin.table(x, margin=NULL)
 }
 \author{Peter Dalgaard}
 \examples{
-m<-matrix(1:4,2)
+m <- matrix(1:4,2)
 margin.table(m,1)
 margin.table(m,2)
 }

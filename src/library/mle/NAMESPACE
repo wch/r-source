@@ -1,0 +1,3 @@
+export("mle")
+exportClasses("mle", "profile.mle", "summary.mle")
+exportMethods("confint", "plot", "profile", "summary", "show")

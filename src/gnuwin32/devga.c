@@ -40,6 +40,7 @@
 #include "windows.h"
 
 extern console RConsole;
+extern window RFrame;
 extern Rboolean AllDevicesKilled;
 
 int graphicsx = -25, graphicsy = 0;
@@ -1062,6 +1063,8 @@ static void menuprev(control m)
 	if (xd->recording && xd->needsave && (dd->displayList != R_NilValue)) {
 	    AddtoPlotHistory(GEcreateSnapshot(gdd), 0);
 	    xd->needsave = FALSE;
+	    vDL = findVar(install(".SavedPlots"), R_GlobalEnv);
+	    /* may have changed vDL pointer */
 	}
 	pMOVE((xd->needsave) ? 0 : -1);
     }
@@ -1302,7 +1305,7 @@ setupScreenDevice(NewDevDesc *dd, gadesc *xd, double w, double h,
     else
 	dh = (int) (h / pixelHeight(NULL));
 
-    if (ismdi()) {
+    if (ismdi() && !isiconic(RFrame)) {
 	cw = RgetMDIwidth();
 	ch = RgetMDIheight();
     } else {

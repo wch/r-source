@@ -1,0 +1,8 @@
+pretty <- function(x, n=5) {
+	if(!is.numeric(x))
+		stop("x must be numeric")
+	if(is.na(n[1]) || n[1] < 1)
+		stop("invalid n value")
+	z <- .C("pretty",l=min(x),u=max(x),n=as.integer(n))
+	seq(z$l,z$u,length=z$n+1)
+}

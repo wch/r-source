@@ -1,4 +1,4 @@
-### $Id: nls.R,v 1.2 2004/01/22 23:14:12 ripley Exp $
+### $Id: nls.R,v 1.2.4.1 2004/06/10 15:27:16 ripley Exp $
 ###
 ###            Nonlinear least squares for R
 ###
@@ -38,7 +38,7 @@ numericDeriv <- function(expr, theta, rho = parent.frame()) {
 
 nlsModel.plinear <- function( form, data, start ) {
     thisEnv <- environment()
-    env <- new.env()
+    env <- new.env(parent=environment(form))
     for( i in names( data ) ) {
         assign( i, data[[i]], envir = env )
     }
@@ -226,7 +226,7 @@ nlsModel.plinear <- function( form, data, start ) {
 
 nlsModel <- function( form, data, start ) {
     thisEnv <- environment()
-    env <- new.env()
+    env <- new.env(parent=environment(form))
     for( i in names( data ) ) {
         assign( i, data[[i]], envir = env )
     }
@@ -418,7 +418,8 @@ nls <-
                        }, data, length(eval(formula[[2]], data)))
 
     mf$formula <-                         # replace RHS by linear model formula
-      parse( text = paste("~", paste( varNames[varIndex], collapse = "+")))[[1]]
+        as.formula(paste("~", paste( varNames[varIndex], collapse = "+")),
+                   env = environment(formula))
 
     mf$start <- mf$control <- mf$algorithm <- mf$trace <- NULL
     mf[[1]] <- as.name("model.frame")

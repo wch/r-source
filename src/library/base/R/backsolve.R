@@ -9,7 +9,7 @@ backsolve <- function(r, x, k=ncol(r), upper.tri = TRUE, transpose = FALSE)
     if(!x.mat) x <- as.matrix(x)# k  x	nb
     storage.mode(x) <- "double"
     k <- as.integer(k)
-    if(k <= 0 || nrow(x) != k) stop("invalid parameters in backsolve")
+    if(k <= 0 || nrow(x) < k) stop("invalid parameters in backsolve")
     nb <- ncol(x)
     upper.tri <- as.logical(upper.tri)
     transpose <- as.logical(transpose)

@@ -94,8 +94,9 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     (only returned if the distance object has a \code{"method"}
     attribute).}
 
-  There is a \code{\link{print}} and a \code{\link{plot}} method for
-  \code{hclust} objects.
+  There are \code{\link{print}}, \code{\link{plot}} and \code{identify}
+  (see \code{\link{identify.hclust}}) methods and the
+  \code{\link{rect.hclust}()} function for \code{hclust} objects.
   The \code{plclust()} function is basically the same as the plot method,
   \code{plot.hclust}, primarily for back compatibility with S-plus. Its
   extra arguments are not yet implemented.
@@ -183,6 +184,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
   contributed to STATLIB by F. Murtagh.
 }
 \seealso{
+  \code{\link{identify.hclust}}, \code{\link{rect.hclust}},
   \code{\link{cutree}}, \code{\link{dendrogram}}, \code{\link{kmeans}}.
 }
 \examples{

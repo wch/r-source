@@ -35,6 +35,7 @@ ACLOCAL_DEPENDENCIES = \
 	acinclude.m4
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
+	m4/codeset.m4 \
 	m4/gnome-gnorba-check.m4 \
 	m4/gnome-orbit-check.m4 \
 	m4/gnome.m4 \
@@ -91,7 +92,7 @@ install: installdirs
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
 @WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
 @WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
-
+@WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
 
 
 installdirs:

@@ -116,7 +116,6 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
   Harvey, A. C. (1993) \emph{Time Series Models}.
   2nd Edition, Harvester Wheatsheaf.
 }
-x
 \note{
   Optimization of structural models is a lot harder than many of the
   references admit. For example, the \code{\link{AirPassengers}} data
@@ -127,7 +126,7 @@ x
 }
 
 \seealso{
-  \code{\link{KalmanLike}}, \code{\link{tsSmooth}}
+  \code{\link{KalmanLike}}, \code{\link{tsSmooth}}.
 }
 
 \examples{

@@ -1,0 +1,149 @@
+#!/bin/sh
+
+# ${R_HOME}/bin/check for checking installed add-on packages
+
+revision='$Revision: 1.14.2.1 $'
+version=`set - ${revision}; echo ${2}`
+version="R package checker ${version}
+
+Copyright (C) 2000 R Development Core Team.
+There is NO warranty.  You may redistribute this software under the
+terms of the GNU General Public License.
+For more information about these matters, see the files named COPYING."
+
+usage="Usage: R CMD check [options] pkgs
+
+Check installed R packages specified by pkgs.
+Currently, the only check performed is whether the examples provided by
+the packages' documentation can be run successfully.
+Other means for regression testing will be added in the future.
+
+If an element of pkgs is a relative or absolute path to the sources of a
+package, it is attempted to re-build the examples from the Rd sources
+(unless \`--no-rebuild' is given).
+
+If necessary for passing the checks, use the \`--vsize' and \`--nsize'
+options to increase R's memory (\`--vanilla' is used by default).
+
+Options:
+  -c, --clean		remove created files
+  -d, --debug		turn on shell debugging (set -x)
+  -h, --help		print short help message and exit
+  -l, --library=LIB	use packages in library tree LIB
+  --vsize=N		set R's vector heap size to N bytes
+  --nsize=N		set R's number of cons cells to N
+  --no-rebuild		do not rebuild examples
+  -v, --version		print version info and exit
+
+Email bug reports to <r-bugs@lists.r-project.org>."
+
+opts=
+pkgs=
+clean=false
+debug=false
+rebuild=true
+lib=${R_HOME}/library
+
+while test -n "${1}"; do
+  case ${1} in
+    -h|--help)
+      echo "${usage}"; exit 0 ;;
+    -v|--version)
+      echo "${version}"; exit 0 ;;
+    -c|--clean)
+      clean=true ;;
+    -d|--debug)
+      debug=true
+      opts="${opts} --debug"
+      ;;
+    --no-rebuild)
+      rebuild=false ;;
+    -l)
+      lib=${2}; shift ;;
+    --library=*)
+      lib=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
+    --nsize=*)
+      R_opts="${R_opts} ${1}" ;;
+    --vsize=*)
+      R_opts="${R_opts} ${1}" ;;
+    *)
+      pkgs="${pkgs} ${1}" ;;
+  esac
+  shift
+done
+
+if test -z "${pkgs}"; then
+  echo "ERROR: no packages specified"
+  exit 1
+fi
+if test -d ${lib}; then
+  lib=`cd ${lib}; pwd`
+else
+  echo "ERROR: library directory \`${lib}' does not exist"
+  exit 2
+fi
+R_LIBS="${lib}:${R_LIBS:-${RLIBS}}"
+
+start_dir=`pwd`
+
+## The work horse
+checkpkg () {
+  echo "Checking package \`${1}' ..."
+  pkg=${1}
+
+  cd ${start_dir}
+  use_man=false
+
+  if ${rebuild}; then
+    if test -d ${pkg}/man -a -w ${lib}/`basename ${pkg}`; then
+      use_man=true
+      cd ${pkg}
+      pkg=`basename ${pkg}`
+      rm -rf ${lib}/${pkg}/R-ex
+    fi
+  fi
+
+  if test \! -d ${lib}/${pkg}; then
+    echo "WARNING: package \`${pkg}' not installed ... skipping"
+    break
+  fi
+
+  if ${use_man}; then
+    ${R_HOME}/bin/build-help ${opts} --example ../${pkg} ${lib}
+    check_dir=check
+  else
+    check_dir=check-${pkg}
+  fi
+
+  test -d ${check_dir} || mkdir ${check_dir}
+  cd ${check_dir}
+
+  echo " Massaging examples into \`${pkg}-Ex.R' ..."
+  ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
+    > ${pkg}-Ex.R
+  echo " Running examples in package \`${pkg}' ..."
+  R_LIBS=${R_LIBS} ${R_HOME}/bin/R --vanilla ${R_opts} < ${pkg}-Ex.R \
+    > ${pkg}-Ex.Rout
+  if test ${?} -eq 0; then
+    echo " OK"
+  else
+    echo " ERROR" && exit 1
+  fi
+  if ${clean}; then
+    cd .. && rm -rf ${check_dir}
+  else
+    echo " Results of \`check' are available in directory ${check_dir}"
+  fi
+}
+  
+## The main loop
+if ${debug}; then set -x; fi
+for p in ${pkgs}; do
+  checkpkg ${p}
+  echo
+done
+
+### Local Variables: ***
+### mode: sh ***
+### sh-indentation: 2 ***
+### End: ***

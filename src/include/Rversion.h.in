@@ -1,0 +1,4 @@
+#define R_MAJOR		"0"
+#define R_MINOR		"65.0"
+#define R_STATUS	""
+#define R_STATUS_REV	"0"

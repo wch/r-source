@@ -1,0 +1,82 @@
+static int mask[] = {0x0F0F, 0x5555, 0x008F};
+static int wrap[] = {16, 16, 12};
+static int patternCount;
+static int patternWrap;
+static int pattern;
+
+static void pixel(int x, int y)
+{
+	if(pattern & 1<<patternCount) {
+		MoveTo(x, y);
+		LineTo(x, y);
+	}
+	patternCount = (patternCount + 1) % patternWrap;
+}
+
+
+static int Breshenham(int x0, int y0, int x1, int y1)
+{
+	int dx, dy, d, incNE, incE, x, y, xincr, yincr;
+
+	dx = abs(x1 - x0);
+	dy = abs(y1 - y0);
+	if(x1 >= x0) xincr = 1; else xincr = -1;
+	if(y1 >= y0) yincr = 1; else yincr = -1;
+	x = x0;
+	y = y0;
+	pixel(x, y);
+	if(dx > dy) {
+		incE = 2 * dy;
+		incNE = 2 * (dy - dx);
+		d = 2 * dy - dx;
+		while(x != x1) {
+			if(d < 0) {
+				d = d + incE;
+				x = x + xincr;
+			}
+			else {
+				d = d + incNE;
+				x = x + xincr;
+				y = y + yincr;
+			}
+			pixel(x, y);
+		}
+	}
+	else {
+		incE = 2 * dx;
+		incNE = 2 * (dx - dy);
+		d = 2 * dx - dy;
+		while(y != y1) {
+			if(d < 0) {
+				d = d + incE;
+				y = y + yincr;
+			}
+			else {
+				d = d + incNE;
+				y = y + yincr;
+				x = x + xincr;
+			}
+			pixel(x, y);
+		}
+	}
+}
+
+static void Mac_LineTo(int x, int y)
+{
+	active = 1;
+	switch(GP->lty) {
+		case 2:
+		case 3:
+		case 4:
+			pattern = mask[GP->lty-2];
+			patternWrap = wrap[GP->lty-2];
+			patternCount = 0;
+			Breshenham(xlast, ylast, x, y);
+			MoveTo(x,y);
+			break;
+		default:
+			LineTo(x, y);
+	}
+	xlast = x;
+	ylast = y;
+}

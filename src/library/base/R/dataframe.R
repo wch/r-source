@@ -99,7 +99,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
         names(x) <- cn
     }
     x <- eval(as.call(c(expression(data.frame), x, check.names = !optional)))
-    if(any(m > 0)) names(x) <- sub("^..adfl.", "", names(x))
+    if(any(m > 0)) names(x) <- sub("^\\.\\.adfl\\.", "", names(x))
     if(!is.null(row.names)) {
 	row.names <- as.character(row.names)
 	if(length(row.names) != dim(x)[[1]]) stop(paste(
@@ -612,6 +612,7 @@ data.frame <-
     } else { # a list
         ## careful, as.data.frame turns things into factors.
 	## value <- as.data.frame(value)
+        value <- unclass(value) # to avoid data frame indexing
         lens <- sapply(value, NROW)
         for(k in seq(along=lens)) {
             N <- lens[k]

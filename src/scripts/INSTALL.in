@@ -4,11 +4,11 @@
 
 # @configure_input@
 
-revision='$Revision: 1.147 $'
+revision='$Revision: 1.147.2.5 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
-Copyright (C) 2000-2003 The R Core Development Team.
+Copyright (C) 2000-2004 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty."
 
@@ -131,7 +131,7 @@ get_packages () {
 	  echo) | sed '/^ *$/d' > "${1}/${p}/DESCRIPTION"
       fi
     done
-  else 
+  else
     pkgs="${pkgs} \"`cd "${1}" && ${GETWD}`\""
   fi
 }
@@ -148,7 +148,6 @@ fi
 pkgs=
 clean=false
 debug=false
-error=false
 build_text=true
 build_html=true
 build_latex=true
@@ -233,7 +232,7 @@ while test -n "${1}"; do
 	else
 	  error "cannot extract package from '${1}'"
 	  exit 1
-	fi    
+	fi
       elif test -f "${1}/DESCRIPTION"; then
         get_packages "${1}"
       else
@@ -299,7 +298,7 @@ fi
 is_first_package=yes
 
 ### 
-### Install a *binary* package from the current directory. 
+### Install a *binary* package from the current directory.
 
 do_install_binary () {
   pkg="${1}"
@@ -317,7 +316,7 @@ do_install_binary () {
     mv "${R_PACKAGE_DIR}" "${lockdir}/${R_PACKAGE_NAME}"
     ${MKDIR_P} "${R_PACKAGE_DIR}"
   fi
-  
+
   cp -r . "${R_PACKAGE_DIR}" || \
     (${TAR} cf - . | (cd "${R_PACKAGE_DIR}" && ${TAR} xf -))
 
@@ -388,7 +387,7 @@ do_install_source () {
   ## As from 1.7.0, packages without compiled code are not marked
   ## as being from any platform.
   echo ".installPackageDescription(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package DESCRIPTION failed"
     do_exit_on_error
@@ -396,6 +395,7 @@ do_install_source () {
 
   if test -d src && test "${fake}" != "true"; then
     message "libs"
+    has_error=false
     if ${debug}; then set -x; fi
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
@@ -406,10 +406,7 @@ do_install_source () {
       fi
       eval ${MAKE} ${makefiles} \
 	&& cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
-        || error=true; \
-      if ${clean}; then
-	${MAKE} clean
-      fi
+        || has_error=true; \
       cd ..
     else
       cd src;
@@ -417,17 +414,13 @@ do_install_source () {
       if test -n "${srcs}"; then
 	sh "${R_HOME}/bin/SHLIB" -o "${pkg_name}@SHLIB_EXT@" ${srcs} \
           && cp *@SHLIB_EXT@ "${R_PACKAGE_DIR}/libs" \
-	  || error=true; \
-	if ${clean}; then
-	  rm -rf .libs _libs
-	  rm -f *.o *@SHLIB_EXT@
-	fi
+	  || has_error=true; \
       else
 	warning "no source files found"
       fi
       cd ..
     fi
-    if ${error}; then
+    if ${has_error}; then
       error "compilation failed for package '${pkg_name}'"
       do_exit_on_error
     fi
@@ -440,7 +433,7 @@ do_install_source () {
       ${MKDIR_P} "${R_PACKAGE_DIR}/R"
       rm -f "${R_PACKAGE_DIR}/R/"*
       echo ".installPackageCodeFiles(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
       if test ${?} -ne 0; then
         error "unable to collate files for package '${pkg_name}'"
         do_exit_on_error
@@ -534,7 +527,7 @@ do_install_source () {
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
-      ${code_cmd}) | R_DEFAULT_PACKAGES= ${R_SAVE_EXE} ${save_args}
+      ${code_cmd}) | R_DEFAULT_PACKAGES= LANG=C ${R_SAVE_EXE} ${save_args}
     if test ${?} -ne 0; then
       error "execution of package source for '${pkg_name}' failed"
       do_exit_on_error
@@ -569,7 +562,7 @@ do_install_source () {
 	echo "${NO_PERL5_MSG}"
       else
 	if ${debug}; then
-	  echo "DEBUG: build-help ${BUILD_HELP_OPTS} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
+	  echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
 	fi
 	${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" \
 	  ${build_help_opts} \
@@ -586,10 +579,13 @@ do_install_source () {
 	  if test -d R-ex; then
 	    (cd R-ex; ${R_ZIPCMD} -m Rex *.R)
 	  fi
+	  ## <FIXME>
+	  ## Eventually need to decide whether we want this ...
           ## NOT YET:
           ## if test -d latex; then
           ##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
           ## fi
+	  ## </FIXME>
 	  if test -d help; then
 	    (cd help; ${R_ZIPCMD} -m Rhelp * -x AnIndex);
 	  fi)
@@ -600,7 +596,7 @@ do_install_source () {
   fi
 
   echo ".installPackageIndices(\".\", \"${R_PACKAGE_DIR}\")" | \
-    R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+    R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
   if test ${?} -ne 0; then
     error "installing package indices failed"
     do_exit_on_error
@@ -609,7 +605,7 @@ do_install_source () {
   ## Install a dump of the parsed NAMESPACE file
   if test -f NAMESPACE && test "${fake}" != "true"; then
       echo ".installPackageNamespaceInfo(\".\", \"${R_PACKAGE_DIR}\")" | \
-        R_DEFAULT_PACKAGES=tools ${R_EXE} --vanilla >/dev/null
+        R_DEFAULT_PACKAGES=tools LANG=C ${R_EXE} --vanilla >/dev/null
     if test ${?} -ne 0; then
       error "installing namespace metadata failed"
       do_exit_on_error
@@ -629,6 +625,16 @@ do_install_source () {
   ## </FIXME>
 
   if ${clean}; then
+    if test -d src; then
+      cd src
+      if test -f Makefile; then
+        ${MAKE} clean
+      else
+        rm -rf .libs _libs
+        rm -f *.o *@SHLIB_EXT@
+      fi
+      cd ..
+    fi
     if test -x ./cleanup ; then
       ./cleanup
     fi
@@ -696,7 +702,7 @@ do_install () {
   if test "`cd \"${R_PACKAGE_DIR}\" && ${GETWD}`" = "`${GETWD}`"; then
     error "cannot install to srcdir"
     do_exit_on_error no
-  fi  
+  fi
 
   ## Figure out whether this is a source or binary package.
   ## <NOTE>
@@ -725,7 +731,7 @@ do_install () {
     ## This is a source package ... hopefully.
     do_install_source \
       "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}" "${pkg_dir}"
-  else  
+  else
     ## This is a binary package ... hopefully.
     do_install_binary \
       "${pkg_name}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
@@ -765,7 +771,7 @@ do_cleanup () {
 
   if test "${is_first_package}" = no; then
     ## Only need to do this in case we successfully installed  at least
-    ## *one* package ... 
+    ## *one* package ...
     cp "${R_HOME}/doc/html/R.css" "${lib}"
     chmod 644 "${lib}/R.css"
     if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then

@@ -81,23 +81,31 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
 	}
     }
     else {
-	/*___ FIXME ___:  This takes forever (or ends wrongly)
+	/* MM: __ FIXME __ : This takes forever (or ends wrongly)
 	  when (one or) both p & q  are huge
+
+	  ./pf.c  now has a cheap fix -- can use that here, but better
+	  "get it right"  (PD to R-core on 20 Feb 2000)a
 	*/
 
 	/* evaluate the infinite sum first.  term will equal */
 	/* y^p / beta(ps, p) * (1 - ps)-sub-i * y^i / fac(i) */
 
+	/* Ly := log(y) */
+	double Ly = swap_tail ? log1p(-x) : log(y);
+
 	ps = q - floor(q);
+	xb = p * Ly;
 	if (ps == 0)
-	    ps = 1;
-	xb = p * log(y) - lbeta(ps, p) - log(p);
+	    ps = 1; /*==> lbeta(ps,p)= log Beta(1,p) = log(1/p) = -log(p) */
+	else
+	    xb -= (lbeta(ps, p) + log(p));
 	ans = 0;
 	if (xb >= lnsml) {
 	    ans = exp(xb);
 	    term = ans * p;
 	    if (ps != 1) {
-		n = fmax2(lneps/log(y), 4.0);
+		n = fmax2(lneps/Ly, 4.0);
 		for(i=1 ; i <= n ; i++) {
 		    xi = i;
 		    term *= (xi - ps) * y / xi;
@@ -109,17 +117,30 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
 	/* now evaluate the finite sum, maybe. */
 
 	if (q > 1) {
-	    xb = p * log(y) + q * log1p(-y) - lbeta(p, q) - log(q);
+
+	    double liy;/* == log(1-y) */
+	    if(swap_tail) {
+		c = 1./x;/* == 1/(1 - y) */
+		liy = log(x);
+	    }
+	    else {
+		c = 1./(1. - y);
+		liy = log1p(-y);
+	    }
+	    xb = p * Ly + q * liy - lbeta(p, q) - log(q);
 	    ib = fmax2(xb / lnsml, 0.0);
 	    term = exp(xb - ib * lnsml);
-	    c = 1 / (1 - y);
 	    p1 = q * c / (p + q - 1);
 
 	    finsum = 0;
 	    n = q;
 	    if (q == n)
 		n--;
-	    for(i=1 ; i<=n ; i++) {
+	    for(i= 1; i <= n; i++) {
+#ifndef MATHLIB_STANDALONE
+		/* for now, at least allow this:*/
+		R_CheckUserInterrupt();
+#endif
 		if (p1 <= 1 && term / eps <= finsum)
 		    break;
 		xi = i;

@@ -701,8 +701,7 @@ extractAIC.coxph <- function(fit, scale, k = 2, ...)
 
 extractAIC.survreg <- function(fit, scale, k = 2, ...)
 {
-    n <- length(fit$residuals)
-    edf <- n  - fit$df.residual
+    edf <- sum(fit$df)
     c(edf, -2 * fit$loglik[2] + k * edf)
 }
 

@@ -22,14 +22,16 @@ mapply(FUN, \dots, MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE)
   A list, vector, or matrix.
 }
 
-\seealso{\code{\link{sapply}}}, \code{\link{outer}} }
-\examples{
- mapply(rep, 1:4, 4:1)
-
- mapply(rep, times=1:4, x=4:1)
-
- mapply(rep, times=1:4, MoreArgs=list(x=42))
-
+\seealso{
+  \code{\link{sapply}},
+  \code{\link{outer}}
 }
-\keyword{manip }
+\examples{
+mapply(rep, 1:4, 4:1)
+
+mapply(rep, times=1:4, x=4:1)
+
+mapply(rep, times=1:4, MoreArgs=list(x=42))
+}
+\keyword{manip}
 \keyword{utilities}

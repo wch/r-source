@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177 $ ';
+my $revision = ' $Revision: 1.177.2.7 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -160,7 +160,7 @@ while(<MAKEVARS>) {
     @R_pkgs_recommended =
 	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
     @R_pkgs_stubs =
-	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
+	split(/ +/, $2) if(/^(R_PKGS_STUBS *=)(.*)/);
 }
 
 ## <FIXME>
@@ -206,6 +206,9 @@ foreach my $pkg (@ARGV) {
     if(!$opt_library) {
 	$library = $pkgoutdir;
 	$ENV{'R_LIBS'} = env_path($library, $R_LIBS);
+    }
+    if($WINDOWS) { ## need to avoid spaces in $library
+	$library = Win32::GetShortPathName($library) if $library =~ / /;
     }
 
     my $description;
@@ -275,9 +278,10 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
 		     !(-t STDIN && -t STDOUT));
-		my $cmd = "${R::Vars::R_CMD} INSTALL -l ${library}";
+		my $cmd = "${R::Vars::R_CMD} INSTALL -l";
+		$cmd .= " " . &shell_quote_file_path($library);
 		$cmd .= " --fake" if($opt_install eq "fake");
-		$cmd .= " ${pkgdir}";
+		$cmd .= " " . &shell_quote_file_path($pkgdir);
 		if(!$use_install_log) {
 		    ## Case A: No redirection of stdout/stderr from
 		    ## installation.
@@ -305,7 +309,9 @@ foreach my $pkg (@ARGV) {
 			    ($lines[$#lines] !~ /^\* DONE/);
 		    }
 		    else {
-			$cmd .= " > $out 2>&1";
+			$cmd .= " >" .
+			    &shell_quote_file_path($out) .
+			    " 2>&1";
 			$install_error = &R_system($cmd);
 		    }
 		    if($install_error) {
@@ -327,6 +333,13 @@ foreach my $pkg (@ARGV) {
 					 ": warning: .*ISO C",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
+		    ## Package writers cannot really do anything about
+		    ## non ISO C code in *system* headers.  Hence, try
+		    ## to ignore these by default, but make it possible
+		    ## to get all ISO C warnings via an environment
+		    ## variable.
+		    @lines = grep(!/^ *\/.*: warning: .*ISO C/, @lines)
+			if(!$ENV{"R_CHECK_ALL_NON_ISO_C"});
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
@@ -763,7 +776,7 @@ sub check_pkg {
     ## Also, if --install=skip, bundles never get DESCRIPTION files
     ## made in the source dir which is what we are checking here.
     ## </NOTE>
-    if(!$is_base_pkg && $opt_install && ($opt_install ne "skip")) {
+    if($opt_install) {
 	$log->checking("package dependencies");
 	## According to FL, everything listed in Depends or Suggests
 	## should be available for successfully running R CMD check.
@@ -772,7 +785,7 @@ sub check_pkg {
 	## package vignette must require its own package, which otoh is
 	## not required in the package DESCRIPTION file.
 	## Namespace imports must really be in Depends.
-	my $Rcmd = "tools:::.checkPackageDepends(dir = \"${pkgdir}\")\n";
+	my $Rcmd = "tools:::.checkPackageDepends(\"${pkgname}\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -903,8 +916,9 @@ sub check_pkg {
 	## Do subdirectories of 'inst' interfere with R package system
 	## subdirectories?
 	if((-d "inst")) {
-	    my @R_system_subdirs = ("Meta", "R", "data", "demo", "exec",
-				    "man", "help", "html", "latex", "R-ex");
+	    my @R_system_subdirs =
+		("Meta", "R", "data", "demo", "exec", "man", "help",
+		 "html", "latex", "R-ex");
 	    my @bad_dirs = ();
 	    foreach my $dir (@R_system_subdirs) {
 		push(@bad_dirs, $dir)
@@ -1009,6 +1023,10 @@ sub check_pkg {
     if(-d "R") {
 	$log->checking("S3 generic/method consistency");
 
+	my @msg_S3_methods =
+	  ("See section 'Generic functions and methods'",
+	   "of the 'Writing R Extensions' manual.\n");
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkS3methods(package = \"${pkgname}\")\n";
@@ -1023,6 +1041,7 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_S3_methods));
 	}
 	else {
 	    $log->result("OK");
@@ -1065,6 +1084,10 @@ sub check_pkg {
     if($opt_ff_calls && (-d "R")) {
 	$log->checking("foreign function calls");
 
+	my @msg_ff_calls =
+	  ("See section 'System and foreign language interfaces'",
+	   "of the 'Writing R Extensions' manual.\n");
+
 	my $Rcmd;
 	if($opt_install) {
 	    $Rcmd .= "checkFF(package = \"${pkgname}\")\n";
@@ -1079,6 +1102,7 @@ sub check_pkg {
 	if(scalar(@out) > 0) {
 	    $log->warning();
 	    $log->print(join("\n", @out) . "\n");
+	    $log->print(wrap("", "", @msg_ff_calls));
 	}
 	else {
 	    $log->result("OK");
@@ -1456,16 +1480,19 @@ sub check_pkg {
     if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {
 	$log->creating("${pkgname}-Ex.R");
 	my $Rexdir = &file_path($library, $pkgname, "R-ex");
+        ## $Rexdir might contain spaces (not on Windows)
         my $iszipped = 0;
 	my $cmd;
 
         if(-e &file_path($Rexdir, "Rex.zip")) {
             $iszipped = 1;
 	    my $UNZIP = &R_getenv("R_UNZIPCMD", "unzip -q");
+            my $Rexfile = &file_path($Rexdir, "Rex.zip");
 	    $cmd = join(" ",
 			("$UNZIP",
-			 &file_path($Rexdir, "Rex.zip"),
-			 " -d $Rexdir"));
+			 &shell_quote_file_path($Rexfile),
+			 "-d",
+			 &shell_quote_file_path($Rexdir)));
 	    if(R_system($cmd)) {
 		$log->error();
 		$log->print("Cannot extract examples from ZIP archive.\n");
@@ -1474,15 +1501,18 @@ sub check_pkg {
         }
         if($WINDOWS) {
             ## avoid Rcmd as line may be too long after expansion.
+            ## We've forced R_HOME and Rexdir to have no spaces already.
             $cmd = "perl ${R::Vars::R_HOME}/bin/massage-Examples ".
-  		     "${pkgname} ${library}/${pkgname}/R-ex ".
+  		     "${pkgname} ${Rexdir} ".
   		     "> ${pkgname}-Ex.R";
         } else {
 	    $cmd = join(" ",
 			("${R::Vars::R_CMD} perl",
 			 &file_path(${R::Vars::R_HOME}, "share", "perl",
 				    "massage-Examples.pl"),
-			 "${pkgname} ${Rexdir} > ${pkgname}-Ex.R"));
+			 "${pkgname}",
+			 &shell_quote_file_path(${Rexdir}),
+			 "> ${pkgname}-Ex.R"));
         }
 
  	if(R_system($cmd)) {
@@ -1701,10 +1731,7 @@ sub check_pkg {
 		     "for writing\n");
 	    print MANUAL "\\documentclass\{article\}\n" .
 	      "\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
-	    my @tex_files =
-	      &list_files_with_exts(&file_path($library, $pkgname,
-					       "latex"),
-				    "tex");
+	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
 		  or die("Error: cannot open file '$file' for reading\n");

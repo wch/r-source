@@ -38,7 +38,7 @@
  *  SEE ALSO
  *
  *    Loader(1999)'s stirlerr() {in ./stirlerr.c} is *very* similar in spirit,
- *    is faster and cleaner, but is only defined for half integers.
+ *    is faster and cleaner, but is only defined "fast" for half integers.
  */
 
 #include "nmath.h"

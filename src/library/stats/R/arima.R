@@ -437,7 +437,7 @@ makeARIMA <- function(phi, theta, Delta, kappa = 1e6)
     a <- rep(0, rd)
     Pn <- P <- matrix(0, rd, rd)
     if(r > 1) Pn[1:r, 1:r] <- .Call("getQ0", phi, theta, PACKAGE = "stats")
-    else Pn[1, 1] <- 1/(1 - phi^2)
+    else Pn[1, 1] <- if(p > 0) 1/(1 - phi^2) else 1
     if(d > 0) Pn[cbind(r+1:d, r+1:d)] <- kappa
     return(list(phi=phi, theta=theta, Delta=Delta, Z=Z, a=a, P=P, T=T, V=V,
                 h=h, Pn=Pn))

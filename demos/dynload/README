@@ -1,0 +1,8 @@
+Run-Time Linking and Call_S
+
+Here is a small example which shows how to use the dyn.load interface
+and call_S.  It is a modified version of the program given in the first
+S book on pages 205-211.
+
+Run-time linking of object code is one of the least portable aspects
+of R.  It is set up in a completely ad-hoc way by autoconfigure.

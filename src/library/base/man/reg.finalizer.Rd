@@ -10,7 +10,7 @@
 }
 \arguments{
   \item{e}{Object to finalize. Must be environment or external pointer.}
-  \item{f}{Function to call on finalization. Must accept a single argument, 
+  \item{f}{Function to call on finalization. Must accept a single argument,
     which will be the object to finalize.}
 }
 \value{
@@ -23,10 +23,15 @@
   for objects that are never copied on assignment, hence the restriction
   to environments and external pointers.
 }
+\seealso{
+  \code{\link{gc}} and \code{\link{Memory}} for garbage collection and
+  memory management.
+}
 \examples{
 f <- function(e) print("cleaning....")
-g <- function(x){e<-environment(); reg.finalizer(e,f)}
-g() 
+g <- function(x){ e <- environment(); reg.finalizer(e,f) }
+g()
 invisible(gc()) # trigger cleanup
 }
 \keyword{programming}
+\keyword{environment}

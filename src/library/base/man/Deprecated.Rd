@@ -10,7 +10,7 @@
 %------ PLEASE: put \alias{.} here for EACH !
 \description{
   These functions are provided for compatibility with older versions of
-  \R only, and may be defunct as soon as of the next release.
+  \R only, and may be defunct as soon as the next release.
 }
 \usage{
 .Deprecated(new, package=NULL)
@@ -21,6 +21,15 @@ tetragamma(x)
 pentagamma(x)
 package.description(pkg, lib.loc = NULL, fields = NULL)
 % </Deprecated 1.9.0>
+}
+\arguments{
+  \item{new}{
+    character string: A suggestion for a replacement function.
+  }
+  \item{package}{
+    character string: The package to be used when suggesting where the
+    deprecated function might be listed.
+  }
 }
 \details{
   \code{.Deprecated("<new name>")} is called from deprecated

@@ -34,7 +34,7 @@ grid.layout(nrow = 1, ncol = 1,
     and \code{"top"}.  NOTE that in this context,
     \code{"left"}, for example, means align the left
     edge of the left-most layout column with the left edge of the
-    parent viewport.}}
+    parent viewport.}
 }
 \details{
   The unit objects given for the \code{widths} and \code{heights}

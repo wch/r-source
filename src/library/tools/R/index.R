@@ -148,18 +148,17 @@ function(contents, packageName, libDir)
             ## non-standard (and hence contain white space ...).
         }
         else {
-            base <-
-                as.matrix(contents[, c("Name", "Title")])
+            base <- as.matrix(contents[, c("Name", "Title")])
             aliases <- contents[, "Aliases"]
         }
         keywords <- contents[, "Keywords"]
-        ## We create 3 character matrices (cannot use data frames for
+        ## We create 4 character matrices (cannot use data frames for
         ## efficiency reasons): 'dbBase' holds all character string
-        ## data, and 'dbAliases' and 'dbKeywords' hold character vector
-        ## data in a 3-column character matrix format with entry, ID of
-        ## the Rd object the entry comes from, and the package the
-        ## object comes from.  The latter is useful when subscripting
-        ## the help.search db according to package.
+        ## data; 'dbAliases', 'dbConcepts' and 'dbKeywords' hold
+        ## character vector data in a 3-column character matrix format
+        ## with entry, ID of the Rd object the entry comes from, and the
+        ## package the object comes from.  The latter is useful when
+        ## subscripting the help.search db according to package.
         dbBase <- cbind(packageName, libDir, IDs, base,
                         topic = sapply(aliases, "[", 1))
         ## If there are no aliases at all, cbind() below would give

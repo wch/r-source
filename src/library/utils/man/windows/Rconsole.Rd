@@ -37,7 +37,8 @@
   If the environment variable \env{R\_USER} is not set, the \R system
   sets it to \env{HOME} if that is set (stripping any trailing slash),
   otherwise to \code{{HOMEDRIVE}{HOMEPATH}} if \code{HOMEDRIVE} is set
-  otherwise to the working directory.
+  otherwise to the working directory.  This is as described in the file
+  \file{rw-FAQ}.
 }
 \note{
   The \code{GUI preferences} item on the \code{Edit} menu brings up an
@@ -46,5 +47,21 @@
 }
 \author{Guido Masarotto}
 \seealso{\code{\link[graphics]{windows}}}
+\examples{
+ruser <- Sys.getenv("R_USER")
+cat("\n\nLocation for personal configuration files is\n   R_USER = ",
+    ruser, "\n\n", sep="")
+## see if there are personal configuration files
+sapply(c("Rconsole", "Rdevga"), function(x) file.exists(file.path(ruser, x)))
 
+## show the configuration files used
+showConfig <- function(file)
+{
+    ruser <- Sys.getenv("R_USER")
+    path <- file.path(ruser, file)
+    if(!file.exists(path)) path <- file.path(R.home(), "etc", file)
+    file.show(path, header=path)
+}
+showConfig("Rconsole")
+}
 \keyword{utilities}

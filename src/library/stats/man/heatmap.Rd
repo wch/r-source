@@ -16,7 +16,7 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 	margins = c(5, 5), ColSideColors, RowSideColors,
 	cexRow = 0.2 + 1/log10(nr), cexCol = 0.2 + 1/log10(nc),
 	labRow = NULL, labCol = NULL, main = NULL, xlab = NULL, ylab = NULL,
-        verbose = getOption("verbose"), \dots)
+        keep.dendro = FALSE, verbose = getOption("verbose"), \dots)
 }
 \arguments{
   \item{x}{numeric matrix of the values to be plotted. }
@@ -61,6 +61,9 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
     use; these default to \code{rownames(x)} or \code{colnames(x)},
     respectively.}
   \item{main, xlab, ylab}{main, x- and y-axis titles; defaults to none.}
+  \item{keep.dendro}{logical indicating if the dendrogram(s) should be
+    kept as part of the result (when \code{Rowv} and/or \code{Colv} are
+    not NA).}
   \item{verbose}{logical indicating if information should be printed.}
   \item{\dots}{additional arguments passed on to \code{\link{image}},
     e.g., \code{col} specifying the colors.} %
@@ -109,6 +112,10 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
   \item{rowInd}{\bold{r}ow index permutation vector as returned by
     \code{\link{order.dendrogram}}.}
   \item{colInd}{\bold{c}olumn index permutation vector.}
+  \item{Rowv}{the row dendrogram; only if input \code{Rowv} was not NA
+    and \code{keep.dendro} is true.}
+  \item{Colv}{the column dendrogram; only if input \code{Colv} was not NA
+    and \code{keep.dendro} is true.}
 }
 \author{Andy Liaw, original; R. Gentleman, M. Maechler, W. Huber, revisions.}
 
@@ -153,8 +160,10 @@ data(USJudgeRatings)
 symnum( cU <- cor(USJudgeRatings) )
 
 hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
-	     distfun = function(c) as.dist(1 - c))
+	     distfun = function(c) as.dist(1 - c), keep.dendro = TRUE)
 ## The Correlation matrix with same reordering:
 round(100 * cU[hU[[1]], hU[[2]]])
+## The column dendrogram:
+str(hU$Colv)
 }
 \keyword{hplot}

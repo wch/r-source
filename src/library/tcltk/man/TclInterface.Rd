@@ -248,7 +248,7 @@ tclRequire(package, warn = TRUE)
   \code{\link{TkCommands}},
   \code{\link{TkWidgetcmds}}.
 
-  \code{\link{capabilities}("tcltk")}} to see if Tcl/Tk support was
+  \code{\link{capabilities}("tcltk")} to see if Tcl/Tk support was
   compiled into this build of \R.
 #ifdef windows
   (It is possible to build with Tcl/Tk support but not be able to run it,

@@ -19,7 +19,7 @@ all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat `ls $(srcdir)/R/*.R` > $${f}; \
+	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \
@@ -88,7 +88,7 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for d in R data demo exec inst man src; do \
+	@for d in R data demo exec inst man src tests; do \
 	  if test -d $(srcdir)/$${d}; then \
 	    ((cd $(srcdir); \
 	          $(TAR) -c -f - $(DISTDIR_TAR_EXCLUDE) $${d}) \

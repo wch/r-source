@@ -1,0 +1,10 @@
+#! /bin/sh
+# Step Two: Extract all documented functions + Help file names
+
+DIR=$1
+if [ -z "$DIR" ]; then DIR=../man; fi
+
+( 
+  ls ${DIR} | sed '/~/d'
+  grep ALIAS ${DIR}/* | sed 's/.*:ALIAS(//; s/)$//' 
+) | sed 's/^[ 	]*//' | sort -d -f | uniq

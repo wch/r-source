@@ -173,6 +173,8 @@ double  Rlog1p(double);
 #endif
 
 #ifdef MATHLIB_STANDALONE
+ #undef FALSE
+ #undef TRUE
  typedef enum { FALSE = 0, TRUE } Rboolean;
 #else
 # include <R_ext/Boolean.h>
@@ -590,12 +592,8 @@ int R_finite(double);
 #endif /* not MATHLIB_PRIVATE_H */
 #endif /* MATHLIB_STANDALONE */
 
-#ifdef MATHLIB_STANDALONE
-# define REprintf fprintf(stderr,
-#else
-# ifndef PRTUTIL_H_
+#ifndef R_EXT_PRINT_H_
 void REprintf(char*, ...);
-# endif
 #endif
 
 #ifdef  __cplusplus

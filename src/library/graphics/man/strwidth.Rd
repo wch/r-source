@@ -14,8 +14,9 @@ strheight(s, units = "user", cex = NULL)
   \item{units}{character indicating in which units \code{s} is measured;
     should be one of \code{"user"}, \code{"inches"}, \code{"figure"};
     partial matching is performed.}
-  \item{cex}{character expansion to which is applies.  By default, the
-    current \code{par("cex")} is used.}
+  \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
+    by \code{\link{par}("cex")} yields the final character size; the
+    default \code{NULL} is equivalent to \code{1}.}
 }
 \description{
   These functions compute the width or height, respectively, of the

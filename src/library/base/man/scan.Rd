@@ -41,8 +41,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   \item{nmax}{the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
-    omitted (and \code{nlines} is not set to a positive value),
-    \code{scan} will read to the end of \code{file}.}
+    omitted or not positive (and \code{nlines} is not set to a
+    positive value), \code{scan} will read to the end of \code{file}.}
 
   \item{n}{the maximum number of data values to be read, defaulting to
     no limit.}
@@ -60,7 +60,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{skip}{the number of  lines of the input file to skip before
     beginning to read data values.}
 
-  \item{nlines}{the maximum number of lines of data to be read.}
+  \item{nlines}{if positive, the maximum number of lines of data to be read.}
 
   \item{na.strings}{character vector.  Elements of this vector are to be
     interpreted as missing (\code{\link{NA}}) values.}

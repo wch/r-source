@@ -9,6 +9,7 @@
 \alias{Math.difftime}
 \alias{Summary.difftime}
 \alias{[.difftime}
+\alias{mean.difftime}
 \title{Time Intervals}
 \description{
   Create, print and round time intervals.

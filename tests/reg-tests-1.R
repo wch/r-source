@@ -2033,6 +2033,7 @@ open(con)
 line <- readLines(con, 1)
 pushBack(line, con)
 (y <- readLines(con))
+close(con)
 unlink(tmp)
 stopifnot(identical(x, y))
 ## pushback problems in 1.6.2 only
@@ -2576,8 +2577,11 @@ library(stats)
 data(eurodist)
 cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)
 cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
-stopifnot(identical(cm1$x,  cmdsE$x),
-          identical(cm1$ac, cmdsE$ac))
+# FAILED on Debian testing just prior to 1.9.0!
+#stopifnot(identical(cm1$x,  cmdsE$x),
+#          identical(cm1$ac, cmdsE$ac))
+stopifnot(all.equal(cm1$x,  cmdsE$x),
+          all.equal(cm1$ac, cmdsE$ac))
 ## end of moved from cmdscale.Rd
 
 
@@ -2845,7 +2849,9 @@ func()
 
 
 ## broken strptime in glibc (and code used on Windows)
-stopifnot(!is.na(strptime("2003-02-30", format="%Y-%m-%d")))
+# the spec says %d is allowed in 1-31, but it seems HP-UX thinks
+# the date is invalid.
+# stopifnot(!is.na(strptime("2003-02-30", format="%Y-%m-%d")))
 stopifnot(is.na(strptime("2003-02-35", format="%Y-%m-%d")))
 # this one is still wrong in glibc
 stopifnot(is.na(strptime("2003-02-40", format="%Y-%m-%d")))
@@ -2993,3 +2999,88 @@ stopifnot(6 == length(print(s1 <- summary(t1))),
           s1== summary(as.POSIXct(t1)),
           6 == length(print(format(as.Date(s1)))) )
 ## gave bizarre "NA's" entry in R 1.8.1 and 1.9.0alpha
+
+
+## as.Date on a factor
+as.Date(factor("2000-01-02"))
+## failed in 1.9.0
+
+
+## as.data.frame.list (PR#6782)
+xx <- list(row.names=1:2,foxglove=3:4,toadflax=5:6)
+foo <- as.data.frame(xx)
+stopifnot(identical(names(xx), names(foo)))
+## 1.9.0 changed the last name to "x".
+
+
+## type.convert quirk (PR#6781)
+res1 <- type.convert( c("abc","-"), as.is=TRUE, na.strings="-" )
+stopifnot(identical(mode(res1), "character"), is.na(res1[2]))
+## res1[2] was "-" <= 1.9.0.
+
+
+## subsetting factor swaps order of attributes (PR#6799)
+af <- factor(c('A','B'))
+stopifnot(identical(af, af[1:2]))
+## failed in 1.9.0 as the attributes were class, level for af[1:2]
+
+
+## Comparison between lists and expressions
+stopifnot(inherits(try(list(1) <= list(2)), "try-error"))
+e <- expression(3 + 2 * 4)
+stopifnot(inherits(try(e == e), "try-error"))
+## both were allowed but nonsense in 1.9.0
+
+
+## "nowhere" interpolation (PR#6809)
+approx(list(x=rep(NaN, 9), y=1:9), xout=NaN)
+## gave a seg.fault in 1.9.0
+
+
+## aggregate.data.frame failed if result would have one row
+## Philippe Hupé, R-help, 2004-05-14
+dat <- data.frame(a=rep(2,10),b=rep("a",10))
+aggregate(dat$a, by=list(a1=dat$a, b1=dat$b), NROW)
+## failed due to missing drop = FALSE
+
+
+## [<-.data.frame with a data-frame value
+x <- data.frame(a=1:3, b=4:6, c=7:9)
+info <- x[1:2]
+x[, names(info)] <-  info[1,]
+##
+
+
+## invalid 'lib.loc'
+stopifnot(length(installed.packages("mgcv")) == 0)
+## gave a low-level error message
+
+
+## as.dendrogram.hclust()
+data(eurodist)
+d <- as.dendrogram(hEU <- hclust(eurodist, "ave"))
+stopifnot(order.dendrogram(d) == hEU$order)# not new
+##N require(gclus); hE1 <- reorder.hclust(hEU, dis)
+## reconstruct without gclus (for R's testing)
+hE2 <- hEU; ii <- c(5,9:11, 13, 15:18); hE2$merge[ii,] <- hEU$merge[ii, 2:1]
+hE2$order <- as.integer(c(1,19,9,12,14,2,15,8,13,16,17,21,6,3,11,4,18,5,10,7,20))
+##N stopifnot(identical(hE1, hE2))
+d1 <- as.dendrogram(hE2)
+stopifnot(order.dendrogram(d1) == hE2$order,
+          identical(d1, rev(rev(d1))))
+## not true in 1.9.0
+
+## trunc on a Date
+trunc(xx <- Sys.Date()) # failed in 1.9.1
+x <- xx + 0.9
+stopifnot(identical(trunc(x), xx)) # gave next day in 1.9.1
+xx <- as.Date("1960-02-02")
+x <- xx + 0.2
+stopifnot(identical(trunc(x), xx)) # must not truncate towards 0.
+##
+
+### end of tests added in 1.9.1 ###
+
+## options(list('..', '..'))
+try(options(list('digits', 'width')))# give an error
+## gave a segfault in 1.9.1

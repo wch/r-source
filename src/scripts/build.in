@@ -38,7 +38,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.77 $ ';
+my $revision = ' $Revision: 1.77.2.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -118,8 +118,10 @@ foreach my $pkg (@ARGV) {
 	mkdir("$libdir", 0755)
 	    or die "Error: cannot create directory '$libdir'\n";
 
-	if(R_system("${R::Vars::R_CMD} INSTALL -l '$libdir' " .
-		    "$INSTALL_opts '$pkg'")) {
+	if(R_system(join(" ",
+			 ("${R::Vars::R_CMD} INSTALL -l",
+			  &shell_quote_file_path($libdir),
+			  "$INSTALL_opts '$pkg'")))) {
 	    $log->error("installation failed");
 	}
 	print("\n");
@@ -184,11 +186,19 @@ foreach my $pkg (@ARGV) {
 
 	my $filepath = &file_path($startdir, $filename);
 	if($WINDOWS) {
-	    R_system("zip -r9X $filepath.zip $pkgs $topLevelFiles");
+	    R_system(join(" ",
+			  ("zip -r9X",
+			   &shell_quote_file_path($filepath.".zip"),
+			   "$pkgs $topLevelFiles")));
 	}
 	else {
-	    R_system("$tar chf $filepath $pkgs $topLevelFiles");
-	    R_system("gzip -9f $filepath");
+	    R_system(join(" ",
+			  ("$tar chf ",
+			   &shell_quote_file_path($filepath),
+			   "$pkgs $topLevelFiles")));
+	    R_system(join(" ",
+			  ("gzip -9f ",
+			   &shell_quote_file_path($filepath))));
 	}
 
 	chdir($startdir);
@@ -289,14 +299,19 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	R_system("$tar chf $filepath $pkgname");
+	R_system(join(" ",
+		      ("$tar chf",
+		       &shell_quote_file_path($filepath),
+		       "$pkgname")));
 	my $tmpdir = "${R::Vars::TMPDIR}/Rbuild.$$";
 	## (Same as $libdir for building a binary package.)
 	rmtree($tmpdir) if(-d $tmpdir);
 	mkdir("$tmpdir", 0755)
 	    or die "Error: cannot create directory '$tmpdir'\n";
 	chdir($tmpdir);
-	R_system("$tar xhf $filepath");
+	R_system(join(" ",
+		      ("$tar xhf",
+		       &shell_quote_file_path($filepath))));
 	## Remove exclude files.
 	open(EXCLUDE, "< $exclude");
 	while(<EXCLUDE>) {
@@ -324,8 +339,13 @@ foreach my $pkg (@ARGV) {
 	&add_build_stamp_to_description_file(&file_path($pkgname,
 							"DESCRIPTION"));
 	## Finalize.
-	R_system("$tar chf $filepath $pkgname");
-	R_system("gzip -9f $origfilepath");
+	R_system(join(" ",
+		      ("$tar chf",
+		       &shell_quote_file_path($filepath),
+		       "$pkgname")));
+	R_system(join(" ",
+		      ("gzip -9f",
+		       &shell_quote_file_path($origfilepath))));
 	
 	chdir($startdir);
 	rmtree($tmpdir);
@@ -357,7 +377,6 @@ sub add_build_stamp_to_description_file {
 	       $user_name, "\n");
     $fh->close();
 }
-    
 
 
 sub prepare_pkg {

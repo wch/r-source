@@ -1,0 +1,23 @@
+mode <- function(x) {
+	if(is.expression(x)) return("expression")
+	if(is.call(x)) return("call")
+	if(is.name(x)) return("name")
+	tx <- typeof(x)
+	if (tx == "real" || tx == "integer") return("numeric")
+	if (tx == "closure" || tx == "builtin" || tx == "special") return("function")
+	tx
+}
+"mode<-" <- function(x, value) 
+{
+	mde <- paste("as.",value,sep="")
+	atr <- attributes(x)
+	x <- eval(call(mde,x), sys.frame(sys.parent()))
+	attributes(x) <- atr
+	x
+}
+storage.mode <- function(x) {
+	x <- typeof(x)
+	if (x == "closure" || x == "builtin" || x == "special") return("function")
+	x
+}
+"storage.mode<-" <- get("mode<-", envir=NULL)

@@ -585,7 +585,8 @@ function(f, filename = NULL, methods)
     }
     text <- paste0("\n\\item{", labels, "}{ ~~describe this method here }")
     text <- c("\\section{Methods}{\n\\describe{", text, "}}")
-    aliasText <- c(paste0("\\alias{", fullName, "}"), aliases)
+    aliasText <- c(paste0("\\alias{", fullName, "}"),
+                   gsub("%", "\\\\\%", aliases))
     if(identical(filename, FALSE))
         return(c(aliasText, text))
 

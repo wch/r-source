@@ -15,13 +15,11 @@ DISTFILES = DESCRIPTION.in Makefile.in NAMESPACE
 
 pkg = tools
 
-R_EXE = $(top_builddir)/bin/R --vanilla
-
 all: Makefile DESCRIPTION
 	@echo "building package '$(pkg)'"
 	@$(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/R
 	@(f=$${TMPDIR:-/tmp}/R$$$$; \
-	  cat `ls $(srcdir)/R/*.R` > $${f}; \
+	  cat `LC_COLLATE=C ls $(srcdir)/R/*.R` > $${f}; \
 	  $(SHELL) $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/$(pkg)/R/$(pkg))
 	@for f in COPYRIGHTS INDEX NAMESPACE SOURCES; do \

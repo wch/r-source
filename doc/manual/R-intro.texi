@@ -136,9 +136,9 @@ and David M. Smith (Insightful Corporation).  We have made a number of
 small changes to reflect differences between the @R{} and @Sl{}
 programs, and expanded some of the material.
 
-We would like to extend warm thanks to Bill Venables for granting
-permission to distribute this modified version of the notes in this way,
-and for being a supporter of @R{} from way back.
+We would like to extend warm thanks to Bill Venables (and David Smith)
+for granting permission to distribute this modified version of the notes
+in this way, and for being a supporter of @R{} from way back.
 
 Comments and corrections are always welcome.  Please address email
 correspondence to @email{R-core@@r-project.org}.
@@ -2138,7 +2138,9 @@ observations and @code{X} is the design matrix.  See the help facility
 for more details, and also for the follow-up function @code{ls.diag()}
 for, among other things, regression diagnostics.  Note that a grand mean
 term is automatically included and need not be included explicitly as a
-column of @code{X}.
+column of @code{X}.  Further note that you almost always will prefer
+using @code{lm(.)} (@pxref{Linear models}) to @code{lsfit()} for
+regression modelling.
 
 @findex qr
 Another closely related function is @code{qr()} and its allies.
@@ -2476,7 +2478,7 @@ of a data frame may be used to form one using the function
 @findex data.frame
 
 @example
-> accountants <- data.frame(home=statef, loot=income, shot=incomef)
+> accountants <- data.frame(home=statef, loot=incomes, shot=incomef)
 @end example
 
 A list whose components conform to the restrictions of a data frame may
@@ -2788,7 +2790,7 @@ If you wish to access the variables separately they may either be
 re-assigned to variables in the working frame:
 
 @example
-> label <- in$id; x <- in$x; y <- in$y
+> label <- inp$id; x <- inp$x; y <- inp$y
 @end example
 
 @noindent
@@ -3706,7 +3708,7 @@ levels) and @code{varieties} (@code{v} levels).  If @math{R} and
 efficiency factors are defined as the eigenvalues of the matrix
 @ifnottex
 E = I_v - R^@{-1/2@}N'K^@{-1@}NR^@{-1/2@} = I_v - A'A, where
-A = K^@{-1/2@}NR^@{-1/2@}
+A = K^@{-1/2@}NR^@{-1/2@}.
 @end ifnottex
 @tex
 $$E = I_v - R^{-1/2}N'K^{-1}NR^{-1/2} = I_v - A'A,$$
@@ -3748,7 +3750,7 @@ empty strings.  For example to print a matrix, @code{X}
 
 @example
 > temp <- X
-> dimnames(temp) <- list(rep("", nrow(X)), rep("", ncol(X))
+> dimnames(temp) <- list(rep("", nrow(X)), rep("", ncol(X)))
 > temp; rm(temp)
 @end example
 
@@ -4098,25 +4100,32 @@ extractor functions.
 
 The template for a statistical model is a linear regression model with
 independent, homoscedastic errors
+
 @ifnottex
 @display
-y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{} n,
+y_i = sum_@{j=0@}^p beta_j x_@{ij@} + e_i, @ @ @ @ i = 1, @dots{}, n,
 @end display
-where the e_i are NID(0, sigma^2)
+@noindent
+where the e_i are NID(0, sigma^2).
 @end ifnottex
 @tex
 $$ y_i = \sum_{j=0}^p \beta_j x_{ij} + e_i,
    \qquad e_i \sim {\rm NID}(0,\sigma^2),
-   \qquad i = 1, @dots{} ,n
+   \qquad i = 1, @dots{}, n
 $$
 @end tex
 In matrix terms this would be written
+
 @ifnottex
-    y = X @ beta + e @*
+@display
+y = X @ beta + e
+@end display
 @end ifnottex
 @tex
- $$ y = X \beta + e $$
+$$ y = X \beta + e $$
 @end tex
+
+@noindent
 where the @math{y} is the response vector, @math{X} is the @emph{model
 matrix} or @emph{design matrix} and has columns
 @math{x_0, x_1, @dots{}, x_p},
@@ -5131,7 +5140,7 @@ regression.  Such regressions are useful for highlighting a trend in
 messy data or for data reduction to give some insight into a large data
 set.
 
-Function @code{loess} is the standard package @pkg{stats}, together
+Function @code{loess} is in the standard package @pkg{stats}, together
 with code for projection pursuit regression.
 @findex loess
 
@@ -5212,7 +5221,7 @@ most cases, interactive use is more productive.  Interactive use is also
 easy because at startup time @R{} initiates a graphics @emph{device
 driver} which opens a special @emph{graphics window} for the display of
 interactive graphics.  Although this is done automatically, it is useful
-to know that the command used is @code{X11()} under UNIX and 
+to know that the command used is @code{X11()} under UNIX and
 @code{windows()} under Windows.
 
 Once the device driver is running, @R{} plotting commands can be used to
@@ -5236,6 +5245,12 @@ pointing device such as a mouse.
 
 In addition, @R{} maintains a list of @emph{graphical parameters} which
 can be manipulated to customize your plots.
+
+This manual only describes what are known as `base' graphics.  A
+separate graphics sub-system in package @pkg{grid} coexists with base --
+it is more powerful but harder to use.  There is a recommended package
+@pkg{lattice} which builds on @pkg{grid} and provides ways to produce
+multi-panel plots akin to those in the @emph{Trellis} system in @Sl{}.
 
 @menu
 * High-level plotting commands::
@@ -6004,6 +6019,12 @@ The layout in the Figure could have been created by setting
 @code{mfrow=c(3,2)}; the figure shows the page after four plots have
 been drawn.
 
+Setting either of these can reduce the base size of symbols and text
+(controlled by @code{par("cex")} and the pointsize of the device).  In a
+layout with exactly two rows and columns the base size is reduced by a
+factor of 0.83: if there are three or more of either rows or columns,
+the reduction factor is 0.66.
+
 @item mfg=c(2, 2, 3, 2)
 Position of current figure in a multiple figure environment.  The first
 two numbers are the row and column of the current figure; the last two
@@ -6063,14 +6084,27 @@ PostScript format.  Some commonly-used device drivers are:
 @table @code
 @item X11()
 @findex X11
-For use with the X11 window system
+For use with the X11 window system on Unix-alikes
+@item windows()
+@findex windows
+For use on Windows
+@item quartz()
+@findex quartz
+For use on MacOS X
 @item postscript()
 @findex postscript
 For printing on PostScript printers, or creating PostScript graphics
 files.
-@item pictex()
-@findex pictex
-Produces a La@TeX{} file
+@item pdf()
+@findex pdf
+Produces a PDF file, which can also be included into PDF files.
+@item png()
+@findex png
+Produces a bitmap PNG file. (Not always available: see its help page.)
+@item jpeg()
+@findex jpeg
+Produces a bitmap JPEG file, best used for @code{image} plots. 
+(Not always available: see its help page.)
 @end table
 
 When you have finished with a device, be sure to terminate the device
@@ -6142,8 +6176,10 @@ meanings are as follows:
 [UNIX]
 @item windows()
 [Windows]
+@item quartz()
+[MacOS X]
 @item postscript()
-@itemx pictex()
+@itemx pdf()
 @itemx @dots{}
 Each new call to a device driver function opens a new graphics device,
 thus extending by one the device list.  This device becomes the current
@@ -6223,7 +6259,7 @@ To see which packages are installed at your site, issue the command
 
 @example
 > library()
-@end example 
+@end example
 
 @noindent
 with no arguments.  To load a particular package (e.g., the @pkg{boot}
@@ -6260,8 +6296,8 @@ to start the @HTML{} help system, and then navigate to the package
 listing in the @code{Reference} section.
 
 @menu
-* Standard packages::       
-* Contributed packages and CRAN::    
+* Standard packages::
+* Contributed packages and CRAN::
 * Namespaces::
 @end menu
 
@@ -6277,7 +6313,7 @@ R-FAQ, R FAQ}, for a complete list.
 
 @node Contributed packages and CRAN, Namespaces, Standard packages, Packages
 @section Contributed packages and @acronym{CRAN}
-@cindex CRAN 
+@cindex CRAN
 
 There are hundreds of contributed packages for @R{}, written by many
 different authors.  Some of these packages implement specialized
@@ -6316,8 +6352,8 @@ as @code{base::t}, because it is defined in the @code{base} package.
 Only functions that are exported from the package can be retrieved in
 this way.
 
-The triple-colon operator @code{:::} may be seen in a few places in R 
-code: it acts like the double-colon operator but also allows access to 
+The triple-colon operator @code{:::} may be seen in a few places in R
+code: it acts like the double-colon operator but also allows access to
 hidden objects.  Users are more likely to use the @code{getAnywhere()}
 function, which searches multiple packages.
 
@@ -6564,15 +6600,15 @@ want to save it.
 @appendix Invoking R
 
 @menu
-* Invoking R from the command line::       
-* Invoking R under Windows::    
-* Invoking R under Mac OS X::    
+* Invoking R from the command line::
+* Invoking R under Windows::
+* Invoking R under Mac OS X::
 @end menu
 
 @node Invoking R from the command line, Invoking R under Windows, Invoking R, Invoking R
 @appendixsec Invoking R from the command line
 
-When working in UNIX or at a command line in Windows, 
+When working in UNIX or at a command line in Windows,
 the command @samp{R} can be used both for starting the main @R{} program
 in the form
 
@@ -6712,7 +6748,7 @@ usually 56 bytes on a 64-bit machine.
 
 @item --max-ppsize=@var{N}
 Specify the maximum size of the pointer protection stack as @var{N}
-locations.  This defaults to 10000, but can be increased to allow 
+locations.  This defaults to 10000, but can be increased to allow
 large and complicated calculations to be done.  Currently the maximum
 value accepted is 100000.
 
@@ -6842,7 +6878,7 @@ starting directory.
 Environment variables can be supplied as @samp{@var{name}=@var{value}}
 pairs at the end of the command line.
 
-The following additional command-line options are available when 
+The following additional command-line options are available when
 invoking @code{RGui.exe}.
 
 @table @option
@@ -6869,7 +6905,7 @@ already have @code{latex.exe} on your path, then
 R CMD latex.exe mydoc
 @end example
 @noindent
-will run LaTeX on mydoc.tex, with the path to @R{}'s @code{share/texmf} macros 
+will run LaTeX on mydoc.tex, with the path to @R{}'s @code{share/texmf} macros
 added to @code{TEXINPUTS}.
 
 @node Invoking R under Mac OS X,  , Invoking R under Windows, Invoking R
@@ -6885,7 +6921,7 @@ The startup procedure under Mac OS X is very similar to that under UNIX.
 The `home directory' is the one inside the R.framework. But the startup
 and current working directory is set as the user's home directory unless
 a different startup directory is given in the Preferences window accessible
-from within the GUI. 
+from within the GUI.
 
 @node The command line editor, Function and variable index, Invoking R, Top
 @appendix The command line editor
@@ -7033,7 +7069,7 @@ John M.@: Chambers and Trevor J.@: Hastie eds. (1992),
 This is also called the ``@emph{White Book}''.
 
 A.@: C.@: Davison and D.@: V.@: Hinkley (1997), @emph{Bootstrap Methods
-and Their Applications}, Cambridge University Press. 
+and Their Applications}, Cambridge University Press.
 
 Annette J.@: Dobson (1990), @emph{An Introduction to Generalized Linear
 Models}, Chapman and Hall, London.

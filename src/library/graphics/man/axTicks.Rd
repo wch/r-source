@@ -2,7 +2,7 @@
 \alias{axTicks}
 \title{Compute Axis Tickmark Locations}
 \description{
-  Compute tickmark locations, the same way as \R does internally.
+  Compute pretty tickmark locations, the same way as \R does internally.
   This is only non-trivial when \bold{log} coordinates are active.
   By default, gives the \code{at} values which
   \code{\link{axis}(side)} would use.
@@ -24,8 +24,9 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
 }
 \details{
   The \code{axp}, \code{usr}, and \code{log} arguments must be consistent
-  as their default values (the \code{par(..)} results) are.
-  Note that the meaning of \code{axp} alters very much when \code{log}
+  as their default values (the \code{par(..)} results) are.  If you
+  specify all three (as non-NULL), the graphics environment is not used
+  at all.  Note that the meaning of \code{axp} alters very much when \code{log}
   is \code{TRUE}, see the documentation on \code{\link{par}(xaxp=.)}.
 
   \code{axTicks()} can be regarded as an \R implementation  of the
@@ -40,8 +41,9 @@ axTicks(side, axp = NULL, usr = NULL, log = NULL)
   \code{\link{axis}(side)} would use or has used.
 }
 \seealso{\code{\link{axis}}, \code{\link{par}}.  \code{\link{pretty}}
-  uses the same algorithm but is independent of the graphics
-  environment and has more options.
+  uses the same algorithm (but independently of the graphics
+  environment) and has more options.  However it is not available for
+  \code{log = TRUE.}
 }
 \examples{
  plot(1:7, 10*21:27)

@@ -1,0 +1,51 @@
+axis <- function (which, at, labels = TRUE, ...)
+{
+ if (which%%2 == 1) {
+	axp <- par("xaxp")
+	usr <- par("usr")[1:2]
+	log <- par("xlog")
+ } else {
+	axp <- par("yaxp")
+	usr <- par("usr")[3:4]
+	log <- par("ylog")
+ }
+ ind <- if (missing(at)) {
+	at <- if (log) {
+		if (usr[2] < usr[1] + 1) {
+			seq(axp[1], axp[2], length = axp[3] + 1)
+		} else {
+			p1 <- ceiling(min(usr))
+			p2 <- floor(max(usr))
+			if (p2 - p1 < 2) {
+				at <- c(1,2,5) * 10^rep(p1:p2, rep(3, p2-p1+1))
+				at[10^usr[1] <= at & at < 10^usr[2]]
+			}
+			else 10^seq(p1, p2, by = 1)
+		}
+	}
+	else seq(axp[1], axp[2], length = axp[3] + 1)
+	rep(TRUE, length(at))
+ } else {
+	at <- sort(at)
+	if (log) (10^usr[1] <= at & at <= 10^usr[2])
+	else (usr[1] <= at & at <= usr[2])
+ }
+ if(any(ind)) {
+	op <- options(digits=7); on.exit(options(op))
+	labels <-
+	  if (is.logical(labels)) {
+		if (labels) {
+			if (!log)
+				at[abs(at/(max(at) - min(at))) < 0.001] <- 0
+			format(at, trim = T)
+		}
+		else rep("", length(at))
+	  } else if(is.expression(labels))
+		labels
+	  else
+		format(labels, trim = T)
+	.Internal(axis(which, as.double(at[ind]), as.char.or.expr(labels[ind]),
+		       ...))
+ }
+ else warning("axis: Couldn't draw anything; maybe 'at' out of range.")
+}

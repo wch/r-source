@@ -1,6 +1,6 @@
 
 R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 beta (2004-03-27), ISBN 3-900051-00-3
+Version 1.9.0 Patched (2004-04-19), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -911,7 +911,9 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
 [1] TRUE
-> All.eq(1, pcauchy(-1e20) / 3.183098861837907e-21)
+> All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
+[1] TRUE
+> All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
 [1] TRUE
 > for(x in 10^c(15,25,50,100,200))
 +     print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
@@ -921,6 +923,14 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 [1] TRUE
 > 
+> pr <- 1e-23 ## PR#6757
+> stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
++                     tol= 1e-12, scale= 1e-270))
+> ## pbinom(.) gave 0 in R 1.9.0
+> pp <- 1e-17 ## PR#6792
+> stopifnot(all.equal(2*pp, pgeom(1, pp), scale= 1e-20))
+> ## pgeom(.) gave 0 in R 1.9.0
+> 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  6.63 0.09 6.73 0 0 
+Time elapsed:  7.83 0.04 16.1 0 0 
 > 

@@ -1,0 +1,80 @@
+symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
+		   symbols =	 c(" ", ".", ",", "+", "*", "B"),
+		   na = "?", eps = 1e-5,
+		   corr = TRUE, show.max = if(corr) "1", show.min = NULL,
+		   lower.triangular = corr & is.matrix(x))
+{
+  ## Martin Maechler, 21 Jan 94;  Dedicated to  Benjamin Schaad,  born that day
+
+  ##--------------- Argument checking -----------------------------
+  cutpoints <- sort(cutpoints)
+  if(corr) cutpoints <- c(0, cutpoints, 1)
+  if(any(duplicated(cutpoints)) ||
+     (corr && (any(cutpoints > 1) || any(cutpoints < 0)) ))
+    stop(paste("'cutpoints' must be unique",
+	       if(corr)"in 0 < cuts < 1", ", but are =",
+	       paste(format(cutpoints), collapse="|")))
+  nc <- length(cutpoints)
+  minc <- cutpoints[1]
+  maxc <- cutpoints[nc]
+  range.msg <- paste("'x' must be between",
+		     if(corr) "-1" else format(minc),
+		     " and", if(corr) "1" else format(maxc)," !")
+  has.na <- any(nax <- is.na(x))
+  if(corr) x <- abs(x)
+  else
+    if(any(x < minc - eps, na.rm=TRUE)) stop(range.msg)
+  if(  any(x >	      maxc  + eps, na.rm=TRUE)) stop(range.msg)
+  symbols <- as.character(symbols)
+  if(any(duplicated(symbols)))
+    stop(paste("'symbols' must be unique, but are =",
+	       paste(symbols, collapse="|")))
+  ns <- length(symbols)
+  if(nc != ns+1)
+    stop(paste("number of cutpoints must be  ONE",
+	       if(corr)"LESS" else "MORE", "than number of symbols"))
+
+  ##: Scor <- as.character(cut(x, breaks= cutpoints, labels= symbols))
+  ##:-- more efficiently, using the function from within  cut :
+  iS <-
+    .C("bincode2", x= as.double(x), length(x),
+       as.double(cutpoints), as.integer(ns+1),
+       code= integer(length(x)), NAOK = TRUE)$code
+  if(any(ii <- is.na(iS))) {
+	  ##-- can get 0, if x[i]== minc  --- only case ?
+	  iS[which(ii)[abs(x[ii] - minc) < eps]] <- 1 #-> symbol[1]
+  }
+  if(has.na) {
+    Scor <- character(length(iS))
+    Scor[nax] <- na
+    Scor[!nax] <- symbols[iS[!nax]]
+  } else Scor <- symbols[iS]
+
+  if(lower.triangular && is.matrix(x))
+    Scor[!lower.tri(x)] <- ""
+  if(!is.null(show.max)) Scor[x >= maxc - eps] <-
+    if(is.character(show.max)) show.max else format(maxc, dig=1)
+  if(!is.null(show.min)) Scor[x <= minc + eps] <-
+    if(is.character(show.min)) show.min else format(minc, dig=1)
+  attributes(Scor) <- attributes(x)
+  if(is.array(Scor)){
+    coln <- if(is.null(dimnames(Scor))) {
+      dimnames(Scor) <- list(NULL,NULL); NULL } else dimnames(Scor)[[2]]
+    dimnames(Scor)[[2]] <-
+      if(length(coln)) {
+	      ch <- abbreviate(coln, minlength=1)
+	      if(sum(1+nchar(ch)) + max(nchar(coln)) + 1 > .Options[["width"]])
+					#-- would not fit on one line
+		abbreviate(ch, minlength=2, use.classes=F)
+	      else ch
+      }
+      else rep("", dim(Scor)[2])
+  }
+  formatI <- function(x) { #- format individually
+    n<-length(x); r<-character(n); for(i in 1:n) r[i]<-format(x[i]); r
+  }
+  legend <- c(rbind(formatI(cutpoints), c(paste("`",symbols,"'",sep=""),"")),
+	      if(has.na) paste(" ## NA: `",na,"'",sep=""))
+  attr(Scor,"legend") <- paste(legend[-2*(ns+1)], collapse="  ")
+  noquote(Scor)
+}

@@ -10,7 +10,7 @@ mostattributes(obj) <- value
 \alias{mostattributes<-}
 \description{
   These functions access an object's attribute list.
-  The first form above returns the an object's attribute list.
+  The first form above returns the object's attribute list.
   The assignment forms make the list on the right-hand
   side of the assignment the object's attribute list (if appropriate).
 }

@@ -14,11 +14,10 @@ as.Date.POSIXct <- function(x, ...) {
     structure(z, class="Date")
 }
 
-as.Date.factor <- function(x, ...)
-{
-    x <- as.character(x)
-    NextMethod()
-}
+as.Date.POSIXlt <- function(x, ...) .Internal(POSIXlt2Date(x))
+
+as.Date.factor <- function(x, ...) as.Date(as.character(x))
+
 
 as.Date.character <- function(x, format="", ...)
 {
@@ -84,9 +83,9 @@ print.Date <- function(x, ...)
     invisible(x)
 }
 
-summary.Date <- function(object, ...)
+summary.Date <- function(object, digits = 12, ...)
 {
-    x <- summary.default(unclass(object), ...)[1:6]# not NA's
+    x <- summary.default(unclass(object), digits = digits, ...)[1:6]# not NA's
     class(x) <- oldClass(object)
     x
 }
@@ -336,7 +335,9 @@ round.Date <- function(x, ...)
     class(val) <- cl
     val
 }
-trunc.Date <- function(x) round.Date(x)
+
+## must avoid truncating dates prior to 1970-01-01 forwards.
+trunc.Date <- function(x) round(x - 0.4999999)
 
 rep.Date <- function(x, times, ...)
 {

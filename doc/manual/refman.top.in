@@ -1,0 +1,42 @@
+\documentclass[@R_PAPERSIZE@paper]{book}
+\usepackage{Rd}
+\usepackage{makeidx}
+\pagestyle{headings}
+
+\makeindex
+\sloppy{}
+
+\begin{document}
+\pagenumbering{Roman}
+
+\begin{titlepage}
+  \strut\vfill
+
+  \begin{center}
+    \textbf{\Huge The \R\ Reference Index}
+    \par\vspace*{6\medskipamount}
+    {\LARGE The \R\ Core Team}
+    \par\vspace*{3\medskipamount}
+    {\large Version \input{version}}
+  \end{center}
+
+  \vfill
+  \vfill
+  \noindent
+  Copyright ({\copyright}) 1999 R Development Core Team.
+  \par\bigskip\noindent
+  R is free software and comes with ABSOLUTELY NO WARRANTY.  You are
+  welcome to redistribute it under the terms of the GNU General Public
+  License.  For more information about these matters, see
+  \textsf{http://www.gnu.org/copyleft/gpl.html}.
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+%%% Local variables: ***
+%%% mode: LaTeX ***
+%%% End: ***

@@ -82,7 +82,6 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
     \code{\link{box}()} if \code{frame.plot} is true.}
   \item{add}{logical, if \code{TRUE} \emph{add} stars to current plot.}
   \item{plot}{logical, if \code{FALSE}, nothing is plotted.}
-  }
 }
 \details{
   Missing values are treated as 0.

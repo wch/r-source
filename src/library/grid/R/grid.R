@@ -403,8 +403,14 @@ grid.Call.graphics <- function(fnname, ...) {
       # NOTE: we MUST record the fact that we are already recording
       # otherwise when we replay the engine display list, we will
       # not know that at this point we were recording (my brain hurts)
-      .Call.graphics("L_setEngineRecording", TRUE, PACKAGE="grid")
+      # NOTE that it is ok to .Call.graphics("L_gridDirty")
+      # before .Call.graphics("L_setEngineRecording") because we
+      # know that .Call.graphics("L_gridDirty") does not make
+      # a further .Call.graphics() call itself
+      # It is also appropriate that the first grid operation on
+      # the graphics engine display list is a gridDirty call.
       .Call.graphics("L_gridDirty", PACKAGE="grid")
+      .Call.graphics("L_setEngineRecording", TRUE, PACKAGE="grid")
       result <- .Call.graphics(fnname, ..., PACKAGE="grid")
       .Call.graphics("L_setEngineRecording", FALSE, PACKAGE="grid")
     }

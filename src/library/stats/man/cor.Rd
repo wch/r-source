@@ -75,12 +75,15 @@ cov2cor(V)
   For \code{cor()}, if \code{method} is \code{"kendall"} or
   \code{"spearman"}, Kendall's \eqn{\tau}{tau} or Spearman's
   \eqn{\rho}{rho} statistic is used to estimate a rank-based measure of
-  association.  These are more robust and have be recommended if the
+  association.  These are more robust and have been recommended if the
   data do not necessarily come from a bivariate normal distribution.\cr
   For \code{cov()}, a non-Pearson method is unusual but available for
   the sake of completeness.  Note that \code{"spearman"} basically
   computes \code{cor(R(x), R(y))} (or \code{cov(.,.)}) where
-  \code{R(u) := rank(u, na.last="keep")}.
+  \code{R(u) := rank(u, na.last="keep")}. Notice also that the ranking
+  is (currently) done removing only cases that are missing on the
+  variable itself, which may not be what you expect if you let
+  \code{use} be \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
 
   Scaling a covariance matrix into a correlation one can be achieved in
   many ways, mathematically most appealing by multiplication with a
@@ -95,8 +98,7 @@ cov2cor(V)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{cor.test}} (package \pkg{ctest}) for confidence
-  intervals (and tests).
+  \code{\link{cor.test}} for confidence intervals (and tests).
   
   \code{\link{cov.wt}} for \emph{weighted} covariance computation.
 

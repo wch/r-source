@@ -62,6 +62,10 @@ is available in the <a href="rdevel.html">r-devel release</a>.</p>
 information about R and the <a href="../rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
 including upgrade advice.</p>
 
+<p> Note to webmasters:  A stable link which will redirect to the current Windows binary release
+is <br>
+<a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows/base/release.htm</a>.</p>
+
 <hr>
 
 <p>Last change: @DATE@, by Duncan Murdoch</p>

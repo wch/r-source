@@ -31,10 +31,10 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     making the boxes narrower.}
   \item{notch.frac}{numeric in (0,1). When \code{notch=TRUE}, the
     fraction of the box width that the notches should use.}
-  \item{border}{character, the color of the box borders.  Is recycled for
-    multiple boxes.}
-  \item{col}{character; the color within the box.  Is recycled for
-    multiple boxes}
+  \item{border}{character or numeric (vector), the color of the box
+    borders.  Is recycled for multiple boxes.}
+  \item{col}{character or numeric; the color within the box.  Is
+    recycled for multiple boxes}
   \item{log}{character, indicating if any axis should be drawn in
     logarithmic scale, as in \code{\link{plot.default}}.}
   \item{frame.plot}{logical, indicating if a \dQuote{frame}
@@ -74,18 +74,18 @@ set.seed(753)
 (bx.p <- boxplot(split(rt(100, 4), gl(5,20))))
 op <- par(mfrow= c(2,2))
 bxp(bx.p, xaxt = "n")
-bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4)
+bxp(bx.p, notch = TRUE, axes = FALSE, pch = 4, col=1:5)
 bxp(bx.p, notch = TRUE, col= "lightblue", frame= FALSE, outl= FALSE,
     main = "bxp(*, frame= FALSE, outl= FALSE)")
-bxp(bx.p, notch = TRUE, col= "lightblue", border="red", ylim = c(-4,4),
+bxp(bx.p, notch = TRUE, col= "lightblue", border= 2:6, ylim = c(-4,4),
     pch = 22, bg = "green", log = "x", main = "... log='x', ylim=*")
 par(op)
 op <- par(mfrow= c(1,2))
 data(PlantGrowth)
 ## single group -- no label
-boxplot(weight~group,data=PlantGrowth,subset=group=="ctrl")
-bx<-boxplot(weight~group,data=PlantGrowth,subset=group=="ctrl",plot=FALSE)
+boxplot (weight~group, data=PlantGrowth, subset=group=="ctrl")
 ## with label
+bx<-boxplot(weight~group, data=PlantGrowth, subset=group=="ctrl",plot=FALSE)
 bxp(bx,show.names=TRUE)
 par(op)
 }

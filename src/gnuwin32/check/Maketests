@@ -1,0 +1,83 @@
+#-*- Makefile -*-
+#
+# ${RHOME}/src/gnuwin32/check/Maketests
+
+srcdir = .
+
+R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C
+RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
+RVAL_IF_DIFF=0
+
+test-src-strict-1 = \
+	arith-true.R \
+	arith.R \
+	d-p-q-r-tests.R \
+	eval-etc.R \
+	is-things.R \
+	lm-tests.R \
+	primitive-funs.R \
+	method-dispatch.R \
+	simple-true.R
+test-src-strict-auto = \
+	isas-tests.R
+test-src-sloppy-1 = \
+	print-tests.R
+test-src-sloppy-auto = \
+	no-segfault.R
+
+test-src-strict = $(test-src-strict-1) $(test-src-strict-auto)
+test-src-sloppy = $(test-src-sloppy-1) #$(test-src-sloppy-auto)
+test-src-auto = $(test-src-strict-auto) $(test-src-sloppy-auto)
+test-src = $(test-src-strict) $(test-src-sloppy)
+
+test-out-strict = $(test-src-strict:.R=.Rout)
+test-out-sloppy = $(test-src-sloppy:.R=.Rout)
+
+test-src-reg-1 = \
+	reg-tests-1.R reg-tests-2.R reg-IO.R  reg-plot.R
+test-src-reg-auto =
+test-src-reg = $(test-src-reg-1) $(test-src-reg-auto)
+test-out-reg = $(test-src-reg:.R=.Rout)
+
+.SUFFIXES:
+.SUFFIXES: .R .Rin .Rout
+
+
+.Rin.R:
+	@echo "creating \`$@'"
+	@$(R) < $< > /dev/null
+
+.R.Rout:
+	@rm -f $@ $@.fail
+	@echo "running \`$<'"
+	@$(R) < $< > $@
+	@if [ -f $(srcdir)/$@.save ] ; then \
+	  mv $@ $@.fail; \
+	  echo -n \
+	    "Comparing \`$@' to \`$(srcdir)/$@.save' ..."; \
+	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+
+all: test-Specific
+test-Specific-strict: $(test-out-strict)
+test-Specific-sloppy: $(test-out-sloppy)
+test-Specific:
+	@echo "running strict specific tests"
+	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
+	  test-Specific-strict RVAL_IF_DIFF=1
+	@echo "running sloppy specific tests"
+	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
+	  test-Specific-sloppy RVAL_IF_DIFF=0
+
+test-Reg:
+	@echo "running regression tests"
+	@$(MAKE) -f $(RHOME)/src/gnuwin32/check/Maketests \
+	  test-Reg-run RVAL_IF_DIFF=0
+
+test-Reg-run: $(test-out-reg)
+
+
+clean:
+	@rm -f *.Rout *.Rout.fail $(test-src-auto)

@@ -1,0 +1,47 @@
+#!/bin/sh
+##--- NEW: ----------
+##
+## Given a list of files of the form    .../.../<name>.R,
+##
+## Produce one large file, i.e. write to  stdout
+##  'cat'ting the files together with
+##  1) Putting   a HEADER in front
+##  2) EDITing   a few of the files
+##  3) appending a FOOTER ...
+
+## Should work WHEREVER this is called from :
+(cd `dirname $0`/..
+ RHOME=`pwd`; export RHOME
+)
+RHOME=`cd ${RHOME}; pwd`	# absolute
+
+FILES="$@"
+
+#Dbg> echo "RHOME=$RHOME"; echo
+#Dbg> echo "FILES=$FILES"; echo ; echo; exit
+
+## 1) ---- Header ----
+echo "postscript('All-Examples.ps'); iter <- 0; eigenval <- 1e-12; .Random.seed <- 1:3"
+## 2) ---- edit a few of these files:
+for file in $FILES
+do
+ bf=`basename $file .R`
+ #Dbg: echo $bf >&2
+ if   [ $bf = 'on.exit' ];	then sed -e '$s/$/par(opar)/' $file
+ elif [ $bf = 'match.arg' ];	then sed -e '/^cent.*Error/s/^/##Test: /' $file
+ elif [ $bf = 'menu'  ];	then sed -e '6,$s/^/##INTERACTIVE> /' $file
+ elif [ $bf = 'na.fail' ];	then sed -e '/^na\.fail/s/^/##Test: /' $file
+ elif [ $bf = 'pictex' ];	then sed -e '6,$s/^/##LaTex /' $file
+ elif [ $bf = 'postscript' ];	then sed -e '/^postscript(/s/^/## /' $file
+ elif [ $bf = 'Random' ];	then sed -e '$s/$/.Random.seed <- 9:7/' $file
+ elif [ $bf = 'solve'  ];	then sed -e '/error:.*singular/s/^/## /' $file
+ elif [ $bf = 'traceback' ];	then sed -e '/^[a-z]*(/s/^/##Test: /' $file
+ elif [ $bf = 'dataentry' ];	then 
+    sed -e '/^data/s/^/##INTERACTIVE> /' $file
+ elif [ $bf = 'edit'   ];	then 
+    sed -e '/edit(/s/^/##INTERACTIVE> /; /^vi(/s/^/##INTERACTIVE> /' $file
+ else cat $file
+ fi
+done
+## 3) ---- Footer ----
+echo "dev.off(); quit('no')" 

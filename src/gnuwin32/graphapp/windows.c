@@ -598,6 +598,7 @@ PROTECTED
 void show_window(object obj)
 {
 	HWND hwnd = obj->handle;
+	int incremented_aw = 0;
 
 	if (! mainloop_started) {
 		mainloop_started = 1;
@@ -610,8 +611,10 @@ void show_window(object obj)
 		/* Disable windows behind a modal window. */
 		disablewindows(obj);
 		/* Remember how many real windows active. */
-		if (is_top_level_window(obj))
+		if (is_top_level_window(obj)) {
+		    	incremented_aw = 1;
 			active_windows ++ ;
+		}
 	}
 	obj->state |= Visible;
         if (hwndClient && (hwnd==hwndFrame) && (MDIFrameFirstTime)) {
@@ -620,6 +623,10 @@ void show_window(object obj)
         }
         else
 	    ShowWindow(hwnd, SW_SHOWNORMAL);
+
+	/* workaround for Show bug */
+	if (incremented_aw && !IsWindowVisible(hwnd) ) active_windows -- ;
+
         if (obj->menubar) {
           if (hwndClient) {
             menu mdi = (obj->menubar)->menubar;
@@ -670,6 +677,10 @@ void hide_window(object obj)
 
 int ismdi() {
  return (hwndClient!=NULL);
+}
+
+int isiconic(window w) {
+    return IsIconic(w->handle);
 }
 
 PROTECTED

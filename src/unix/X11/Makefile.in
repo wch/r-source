@@ -1,0 +1,95 @@
+#
+# ${R_HOME}/src/unix/X11/Makefile
+
+VPATH = @srcdir@
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+
+top_builddir = ../../..
+subdir = src/unix/X11
+R_HOME = $(top_builddir)
+
+include $(top_builddir)/Makeconf
+
+ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
+## FIXME:
+## Make this ALL_CFLAGS_LO when using libtool for shlibs.
+ALL_CFLAGS = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
+## </FIXME>
+ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS)
+
+SOURCES = dataentry.c devX11.c rotated.c rbitmap.c
+DEPENDS = $(SOURCES:.c=.d)
+OBJECTS = $(SOURCES:.c=.o)
+HEADERS = devX11.h rotated.h
+
+distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
+DISTFILES = \
+	Makefile.in $(SOURCES) $(HEADERS)
+
+## FIXME:
+## Change to `R_X11.la' when using libtool for shlibs.
+## Remove when using automake ... also fix install then.
+R_X11_la = R_X11.$(SHLIB_EXT)
+## </FIXME>
+## FIXME:
+## Currently, R_load_X11_shlib() in `../dynload.c' assumes that we install
+## to `R_HOME/bin'.
+Rexeclibdir_LTLIBRARIES = $(R_X11_la)
+## </FIXME>
+R_X11_la_SOURCES = $(SOURCES)
+R_X11_la_OBJECTS = $(OBJECTS)
+@USE_LIBTOOL_TRUE@R_X11_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir) -module
+## FIXME:
+## This used to have `-lm' hard-wired, but note that we test for it at
+## configure time.  The default automake rule would add $(LIBS) anyway,
+## so hopefully we can remove the `-lm' ...
+R_X11_la_LIBADD = $(ALL_X_LIBS) $(LIBPATHS) $(BITMAP_LIBS)
+## </FIXME>
+
+all: Makefile Makedeps R
+
+Makefile: $(srcdir)/Makefile.in \
+  $(top_builddir)/config.status \
+  $(SOURCES)
+	@cd $(top_builddir) && \
+	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
+	  $(SHELL) ./config.status
+
+Makedeps: Makefile $(DEPENDS)
+	@cat $(DEPENDS) >> Makefile
+	@touch $@
+
+R DLLs: Makefile
+	@$(MAKE) Makedeps
+	@$(MAKE) $(Rexeclibdir_LTLIBRARIES)
+
+$(R_X11_la): $(R_X11_la_OBJECTS) $(R_X11_la_DEPENDENCIES)
+	$(SHLIB_LINK) -o $@ $(R_X11_la_LDFLAGS) $(R_X11_la_OBJECTS) $(R_X11_la_LIBADD) $(LIBS)
+## FIXME: Not sure of we want to do this ...
+	@$(MAKE) rhome=`cd $(top_builddir); pwd` install
+## </FIXME>
+
+install: installdirs
+@USE_LIBTOOL_FALSE@	@$(top_srcdir)/tools/copy-if-change $(R_X11_la) $(Rexeclibdir)/R_X11.$(SHLIB_EXT)
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_X11_la) $(Rexeclibdir)
+installdirs:
+	@$(MKINSTALLDIRS) $(Rexeclibdir)
+
+mostlyclean: clean
+clean:
+	@-rm -rf .libs _libs
+	@-rm -f Makedeps *.d *.o *.a *.lo *.la *.$(SHLIB_EXT)
+distclean: clean
+	@-rm -f Makefile
+maintainer-clean: distclean
+
+distdir: $(DISTFILES)
+	@for f in $(DISTFILES); do \
+	  test -f $(distdir)/$${f} \
+	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
+	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
+	done
+
+## Automagically generated dependencies:
+
