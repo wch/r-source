@@ -41,7 +41,7 @@ file.info(...)
 
 Entries for non-existent or non-readable files will be \code{NA}.
 #ifdef unix
-The \code{uid}}, \code{gid}, \code{uname} and \code{grname} columns
+The \code{uid}, \code{gid}, \code{uname} and \code{grname} columns
 may not be supplied on a non-POSIX Unix system.
 #endif
 }
