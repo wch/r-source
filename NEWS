@@ -28,6 +28,11 @@ BUG FIXES
 
     o   str(.) doesn't give extraneous "..." in rare cases anymore.
 
+    o   Added documentation for group methods ("Math", "Ops","Summary").
+
+    o   R_PAPERSIZE is used for Rd2dvi and at configure time for the 
+	'make dvi' parts.
+
 
 		CHANGES IN R VERSION 0.63.1
 
