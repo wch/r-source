@@ -56,6 +56,9 @@ BUG FIXES
     o   When using the header Rmath.h in standalone mode, the case where
         TRUE, FALSE are already defined is now handled correctly.
 
+    o	Package utils now exports several functions that are needed for
+        writing Sweave drivers.
+
 
 		CHANGES IN R VERSION 1.9.0
 
