@@ -4769,7 +4769,7 @@ Compute the @emph{signum} function, where sign(@var{x}) is 1, 0, or
 
 @deftypefun double fsign (double @var{x}, double @var{y})
 Performs ``transfer of sign'' and is defined as @eqn{|x| *
-\hbox{sign}(y), |x| * sign(x)}.
+\hbox{sign}(y), |x| * sign(y)}.
 @end deftypefun
 
 @deftypefun double fprec (double @var{x}, double @var{digits})

@@ -13,10 +13,8 @@
 \alias{[[.data.frame}
 \alias{[<-.data.frame}
 \alias{[[<-.data.frame}
-\alias{[.factor}
 \alias{[.formula}
 \alias{[.ts}
-\alias{[<-.factor}
 \alias{[.noquote}
 \alias{.subset}
 \alias{.subset2}
@@ -96,6 +94,7 @@ x$name
 }
 \seealso{
   \code{\link{list}}, \code{\link{array}}, \code{\link{matrix}}.
+  \code{\link{factor}} for the behaviour of \code{[} applied to factors.
 
   \code{\link{Syntax}} for operator precedence, and the
   \emph{R Language} reference manual about indexing details.
