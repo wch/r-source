@@ -20,11 +20,11 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
     bg = "white")
 }
 \arguments{
-  \item{filename}{the name of the output file, up to 511 characters.
+  \item{filename}{the name of the output file.
     The page number is substituted if an integer format is included
-    in the character string. (The result must be less than 600
-    characters long.)  Tilde expansion is performed where supported by
-    the platform.}
+    in the character string. (The result must be less than \code{PATH_MAX}
+    characters long, and may be truncated if not.)
+    Tilde expansion is performed where supported by the platform.}
   \item{width}{the width of the device in pixels.}
   \item{height}{the height of the device in pixels.}
   \item{pointsize}{the default pointsize of plotted text.}

@@ -100,7 +100,7 @@ typedef struct {
     X_GTYPE type;			/* Window or pixmap? */
     int npages;				/* counter for a pixmap */
     FILE *fp;				/* file for a bitmap device */
-    char filename[512];			/* filename for a bitmap device */
+    char filename[PATH_MAX];		/* filename for a bitmap device */
     int quality;			/* JPEG quality */
 
     Rboolean handleOwnEvents;           /* Flag indicating whether events will be handled externally from R (TRUE),
