@@ -292,8 +292,8 @@ NEW FEATURES
     o	do.call() now takes a function or a character string as its
         first argument.  The supplied arguments can optionally be quoted.
 
-    o	For readline-based history, the saved file size is re-read from
-	R_HISTSIZE immediately before saving.
+    o	For Windows and readline-based history, the saved file size is
+	re-read from R_HISTSIZE immediately before saving.
 
 
 INTERNATIONALIZATION

@@ -60,6 +60,12 @@ compiling R itself have been moved to the R Installation and
 Administration manual; the PDF copy of that manual has been added
 to the Rgui Help | Manuals menu list.
 
+The way the command history works has been changed to be more like
+readline.  All the commands used in a session are kept, but only the
+last R_HISTSIZE (default 512) lines are saved.  The environment variable
+R_HISTSIZE can be changed during the session (by Sys.setenv) as the
+current value is used.
+
 
 
 R 2.0.1 patched
