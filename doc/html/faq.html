@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-21, 2000-11-04</h2>
+<h2>Version 1.1-22, 2000-11-05</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1413,7 +1413,9 @@ U.S. National Institute for Standards and Technology.
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS. 
 <br><dt><strong>RODBC</strong>
-<dd>ODBC support and a back end database. 
+<dd>An ODBC database interface. 
+<br><dt><strong>RPgSQL</strong>
+<dd>Provides methods for accessing data stored in PostgreSQL tables. 
 <br><dt><strong>RmSQL</strong>
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>Rstreams</strong>
@@ -1423,13 +1425,13 @@ analyses using GLS.
 examples in "SAS System for Mixed Models" by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute. 
 <br><dt><strong>acepack</strong>
-<dd>ace (Alternating Conditional Expectations) and avas (Additivity and
-VAriance Stabilization for regression) for selecting regression
+<dd>ACE (Alternating Conditional Expectations) and AVAS (Additivity and
+VAriance Stabilization for regression) methods for selecting regression
 transformations. 
 <br><dt><strong>akima</strong>
 <dd>Linear or cubic spline interpolation for irregularly gridded data. 
 <br><dt><strong>ash</strong>
-<dd>Programs for 1D and 2D density estimation. 
+<dd>David Scott's ASH routines for 1D and 2D density estimation. 
 <br><dt><strong>bindata</strong>
 <dd>Generation of correlated artificial binary data. 
 <br><dt><strong>boot</strong>
@@ -1526,9 +1528,8 @@ analysis (FDA), penalized discriminant analysis (PDA), multivariate
 additive regression splines (MARS), adaptive back-fitting splines
 (BRUTO), and penalized regression. 
 <br><dt><strong>mgcv</strong>
-<dd>Routines for multiple smoothing parameter selection by GCV or UBRE for
-generalized ridge regression problems (e.g., GAMs) with multiple
-smoothing parameters. 
+<dd>Routines for GAMs and other genralized ridge regression problems with
+multiple smoothing parameter selection by GCV or UBRE. 
 <br><dt><strong>mlbench</strong>
 <dd>A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data. 
@@ -1563,12 +1564,12 @@ manipulations.
 <br><dt><strong>quadprog</strong>
 <dd>For solving quadratic programming problems. 
 <br><dt><strong>quantreg</strong>
-<dd>Compute regression quantiles and some related rank statistics. 
+<dd>Quantile  regression and related methods. 
 <br><dt><strong>rmeta</strong>
 <dd>Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes. 
 <br><dt><strong>rpart</strong>
-<dd>Recursive Partitioning. 
+<dd>Recursive PARTitioning and regression trees. 
 <br><dt><strong>sgeostat</strong>
 <dd>An object-oriented framework for geostatistical modeling. 
 <br><dt><strong>sm</strong>
@@ -1585,16 +1586,18 @@ the <code>VR</code> bundle.
 <br><dt><strong>splancs</strong>
 <dd>Spatial and space-time point pattern analysis functions. 
 <br><dt><strong>stataread</strong>
-<dd>Read and write Stata v6 <code>.dta</code> files. 
+<dd>Read and write Stata v5 and v6 <code>.dta</code> files. 
 <br><dt><strong>survival5</strong>
 <dd>Functions for survival analysis, version 5 (suggests <strong>date</strong>), the
 main new feature being penalized (partial) likelihood. 
+<br><dt><strong>tensor</strong>
+<dd>Tensor product of arrays. 
 <br><dt><strong>tree</strong>
 <dd>Classification and regression trees. 
 <br><dt><strong>tripack</strong>
 <dd>A constrained two-dimensional Delaunay triangulation package. 
 <br><dt><strong>tseries</strong>
-<dd>Additional code for time series analysis. 
+<dd>Package for time series analysis with emphasis on non-linear modelling. 
 <br><dt><strong>wavethresh</strong>
 <dd>Software to perform 1-d and 2-d wavelet statistics and transforms. 
 <br><dt><strong>wle</strong>
@@ -1621,8 +1624,6 @@ contains
 methods. 
 <br><dt><strong>RMySQL</strong>
 <dd>An interface between R and the MySQL database system. 
-<br><dt><strong>RPgSQL</strong>
-<dd>An interface between R and the PostgreSQL database system. 
 <br><dt><strong>cmprsk</strong>
 <dd>Estimation, testing and regression modeling of subdistribution functions
 in competing risks. 
@@ -1634,7 +1635,8 @@ in competing risks.
 <dd>Extensions to <strong>dse</strong>, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>exactDistr</strong>
-<dd>Exact distributions for rank tests. 
+<dd>Exact distributions for rank tests, using an implementation of the
+Streitberg/Roehmel shift algorithm. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading data stored by statistical software like Minitab,
 SAS, SPSS, etc. 
@@ -1650,8 +1652,6 @@ statistics.
 <dd>Read data from netCDF files. 
 <br><dt><strong>syskern</strong>
 <dd>Functions for writing code that is OS and R/S independent. 
-<br><dt><strong>tensor</strong>
-<dd>Tensor product of arrays. 
 <br><dt><strong>tframe</strong>
 <dd>Functions for writing code that is independent of the representation of
 time. 
