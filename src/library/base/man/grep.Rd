@@ -37,7 +37,7 @@ regexpr(pattern, text,  extended = TRUE, perl = FALSE)
     indices of the matches determined by \code{grep} is returned, and if
     \code{TRUE}, a vector containing the matching elements themselves is
     returned.}
-  \code{fixed}{logical. If \code{TRUE}, \code{pattern} is a string to be
+  \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
     matched as is.  Overrides all other arguments.} 
   \item{replacement}{a replacement for matched pattern in \code{sub} and
     \code{gsub}.}
