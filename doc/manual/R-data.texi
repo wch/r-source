@@ -732,25 +732,33 @@ in the data, and create the contingency table from this using
 
 In this chapter we consider the problem of reading a binary data file
 written by another statistical system.  This is often best avoided, but
-may be unavoidable if the originating system is not available.
+may be unavoidable if the originating system is not available. 
 
 @menu
-* Minitab SAS S-PLUS SPSS Stata::  
+* EpiInfo Minitab SAS S-PLUS SPSS Stata::  
 * Octave::                      
 @end menu
 
-@node Minitab SAS S-PLUS SPSS Stata, Octave, Importing from other statistical systems, Importing from other statistical systems
-@section Minitab, S-PLUS, SAS, SPSS, Stata
+@node EpiInfo Minitab SAS S-PLUS SPSS Stata, Octave, Importing from other statistical systems, Importing from other statistical systems
+@section EpiInfo, Minitab, S-PLUS, SAS, SPSS, Stata
 
 The recommended package @pkg{foreign} provides import facilities for
-files produced by these statistical systems, and for export to Stata.
+files produced by these statistical systems, and for export to Stata. In some cases
+ these function may require substantially less memory than would @code{read.table}.
 
 @cindex Stata
 @findex read.dta
 @findex write.dta
-Stata @file{.dta} files are a binary file format. Files from
-versions 5.0, 6.0 and 7.0 of Stata can be read and written by functions
-@code{read.dta} and @code{write.dta}.
+Stata @file{.dta} files are a binary file format. Files from versions
+5.0, 6.0 and 7.0 of Stata can be read and written by functions
+@code{read.dta} and @code{write.dta}. Stata variables with value labels
+are optionally converted to (and from) @R{} factor.
+
+@cindex EpiInfo
+@findex read.epiinfo
+EpiInfo versions 5 and 6 stored data in a  self-describing fixed-width
+text format. @code{read.epiinfo} will read these @code{.REC} files into
+an @R{} data frame.
 
 @cindex Minitab
 @findex read.mtp
@@ -759,14 +767,19 @@ returns the components of the worksheet as an @R{} list.
 
 @cindex SAS
 @findex read.xport
-Function @code{read.xport} reads a file in SAS Transport (XPORT) format and
-return a list of data frames.
+Function @code{read.xport} reads a file in SAS Transport (XPORT) format
+and return a list of data frames.  If SAS is available on your system,
+function @code{read.ssd} can be used to create and run a SAS script that
+saves a SAS permanent dataset (@code{.ssd} or @code{.sas7bdat}) in
+Transport format. It then calls @code{read.xport} to read the resulting
+file.
 
 @cindex SPSS
 @findex read.spss
 Function @code{read.spss} can read files created by the `save' and
 `export' commands in @acronym{SPSS}.  It returns a list with one
-component for each variable in the saved data set.
+component for each variable in the saved data set. @acronym{SPSS}
+variables with value labels are optionally converted to @R{} factors.
 
 
 @cindex S-PLUS
@@ -784,7 +797,7 @@ Function @code{data.restore} to read S-PLUS data dumps (created by
 Alpha platform can also be read).  It should be possible to read data
 dumps from S-PLUS 5.x and 6.x written with @code{data.dump(oldStyle=T)}.
 
-@node Octave,  , Minitab SAS S-PLUS SPSS Stata, Importing from other statistical systems
+@node Octave,  , EpiInfo Minitab SAS S-PLUS SPSS Stata, Importing from other statistical systems
 @section Octave
 @cindex Octave
 @findex read.octave
