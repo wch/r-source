@@ -67,6 +67,9 @@ BUG FIXES
 	also, pnorm(x,m, s=Inf) == lim{s -> Inf} pnorm(x,m,s).
 	Similar changes for dnorm(), cf PR#1218.
 
+    o	data.matrix() was documented to replace factors by their
+	codes, but in fact re-coded into the alphabetical ordering of
+	the levels.
 
 
 	**************************************************

@@ -12,12 +12,10 @@ data.matrix <- function(frame)
 	    stop("non-numeric data type in frame")
     }
     x <- matrix(nr=d[1], nc=d[2], dimnames=dimnames(frame))
-    for(i in seq(len= d[2])) {
+    for(i in seq(len=d[2])) {
 	xi <- frame[[i]]
 	x[,i] <-
-	    if(is.logical(xi)) as.numeric(xi)
-	    else if(is.numeric(xi)) xi
-	    else codes(xi)
+	    if(is.logical(xi) || is.factor(xi)) as.numeric(xi) else xi
     }
     x
 }
