@@ -35,15 +35,6 @@
 # include <unistd.h>
 #endif
 
-#ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_READLINE_H
-#  include <readline/readline.h>
-# endif
-# ifdef HAVE_READLINE_HISTORY_H
-#  include <readline/history.h>
-# endif
-#endif
-
 extern Rboolean LoadInitFile;
 
 /*
@@ -87,6 +78,12 @@ FILE *R_OpenInitFile(void)
 
 static char newFileName[PATH_MAX];
 #ifdef HAVE_LIBREADLINE
+# ifdef HAVE_READLINE_READLINE_H
+#  include <readline/readline.h>
+# else
+extern char *tilde_expand (const char *);
+# endif
+
 /* tilde_expand (in libreadline) mallocs storage for its return value.
    The R entry point does not require that storage to be freed, so we
    copy the value to a static buffer, to void a memory leak in R<=1.6.0.

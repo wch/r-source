@@ -36,20 +36,6 @@
 #include "Runix.h"
 #include "Startup.h"
 
-#ifdef HAVE_LIBREADLINE
-# ifdef HAVE_READLINE_READLINE_H
-#  include <readline/readline.h>
-# endif
-# ifdef HAVE_READLINE_HISTORY_H
-#  include <readline/history.h>
-# endif
-#endif
-
-/* For compatibility with pre-readline4.2 systems: */
-#if !defined (_RL_FUNCTION_TYPEDEF)
-typedef void rl_vcpfunc_t (char *);
-#endif /* _RL_FUNCTION_TYPEDEF */
-
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>		/* for unlink */
 #endif
@@ -390,6 +376,25 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 
 
 #ifdef HAVE_LIBREADLINE
+
+# ifdef HAVE_READLINE_READLINE_H
+#  include <readline/readline.h>
+/* For compatibility with pre-readline4.2 systems: */
+#  if !defined (_RL_FUNCTION_TYPEDEF)
+typedef void rl_vcpfunc_t (char *);
+#  endif /* _RL_FUNCTION_TYPEDEF */
+# else
+typedef void rl_vcpfunc_t (char *);
+extern void rl_callback_handler_install(const char *, rl_vcpfunc_t *);
+extern void rl_callback_handler_remove(void);
+extern void rl_callback_read_char(void);
+# endif
+
+# ifdef HAVE_READLINE_HISTORY_H
+#  include <readline/history.h>
+# endif
+
+
 /* callback for rl_callback_read_char */
 
 
