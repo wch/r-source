@@ -27,6 +27,10 @@ NEW FEATURES
 	is a matrix when the previous default of na.omit() would omit
 	entire rows.  (Related to PR#6846.)
 
+    o   The 'formula' method for pairs() has a 'na.action' argument,
+	defaulting to na.pass(), rather than the previous unchangeable
+	value, getOption("na.omit").
+
 
 UTILITIES
 
@@ -43,7 +47,7 @@ DEPRECATED & DEFUNCT
     o	La.eigen(), tetragamma(), pentagamma(), package.contents() and
 	package.description() are defunct.
 
-    o	The undocumented function newestVersion is no longer exported
+    o	The undocumented function newestVersion() is no longer exported
 	from package utils.  (Mainly because it was not completely general.)
 
 

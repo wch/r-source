@@ -9,7 +9,7 @@
 }
 \synopsis{
 pairs(x, \dots)
-pairs.formula(formula, data = NULL, \dots, subset)
+pairs.formula(formula, data = NULL, \dots, subset, na.action = na.pass)
 pairs.default(x, labels, panel = points, \dots,
               main = NULL, oma = NULL,
               font.main = par("font.main"), cex.main = par("cex.main"),
@@ -41,6 +41,11 @@ pairs(x, \dots)
     \code{formula} should be taken.}
   \item{subset}{an optional vector specifying a subset of observations
     to be used for plotting.}
+  \item{na.action}{a function which indicates what should happen
+    when the data contain \code{NA}s.  The default is to pass missing
+    values on to the panel functions, but \code{na.action = na.omit}
+    will cause cases with missing values in any of the variables to be
+    omitted entirely.}
   \item{labels}{the names of the variables.}
   \item{panel}{\code{function(x,y,\dots)} which is used to plot
     the contents of each panel of the display.}
@@ -78,12 +83,11 @@ pairs(x, \dots)
   within a given coordinate system: thus \code{plot} and \code{boxplot}
   are not panel functions.
 
-  For the default method, missing values are passed to the panel
-  functions and will often be ignored within a panel.  However, for the
-  formula method and the default value of \code{\link{na.action}}, all
-  cases which contain a missing values for any of the variables are
-  omitted completely (including when the scales are selected).  [The
-  behaviour of the formula method will be changed in R 2.0.0.]
+  By default, missing values are passed to the panel functions and will
+  often be ignored within a panel.  However, for the formula method and
+  \code{na.action = na.omit}, all cases which contain a missing values for
+  any of the variables are omitted completely (including when the scales
+  are selected).  (The latter was the default behaviour prior to \R 2.0.0.)
 }
 \author{
   Enhancements for \R 1.0.0 contributed by Dr. Jens
