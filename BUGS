@@ -287,3 +287,11 @@ Date: Sun, 26 Dec 1999 18:14:10 -0500 (EST)
 Subject: axis for small ranges
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Tue, 28 Dec 1999 13:28:01 +0100
+* PR# 391 *
+Subject: Segfault in dataentry()
+From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
+Date: 29 Dec 1999 11:59:50 +0100
+* PR# 392 *
+Subject: dataframes in glm
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Wed, 29 Dec 1999 14:22:17 +0100 (MET)
