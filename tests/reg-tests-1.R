@@ -432,6 +432,11 @@ res <- type.convert("12345689012")
 stopifnot(typeof(res) == "double")
 ##  Comments: was integer in 1.4.0
 
+## La.eigen() segfault
+e1 <- La.eigen(m <- matrix(1:9,3))
+stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
+
+
 ## This example last ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
