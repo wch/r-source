@@ -1036,6 +1036,8 @@ static void menuR(control m)
     uncheck(xd->mfix);
     uncheck(xd->mfit);
     xd->resizing = 1;
+    xd->resize = TRUE;
+    HelpExpose(m, getrect(xd->gawin));
 }
 
 static void menufit(control m)
@@ -1047,6 +1049,8 @@ static void menufit(control m)
     check(xd->mfit);
     uncheck(xd->mfix);
     xd->resizing = 2;
+    xd->resize = TRUE;
+    HelpExpose(m, getrect(xd->gawin));
 }
 
 static void menufix(control m)
@@ -1058,9 +1062,11 @@ static void menufix(control m)
     uncheck(xd->mfit);
     check(xd->mfix);
     xd->resizing = 3;
+    xd->resize = TRUE;
+    HelpExpose(m, getrect(xd->gawin));
 }
 
-static void CHelpKeyIn(control w,int key)
+static void CHelpKeyIn(control w, int key)
 {
 #ifdef PLOTHISTORY
     NewDevDesc *dd = (NewDevDesc *) getdata(w);
@@ -1614,6 +1620,9 @@ static void GA_Resize(NewDevDesc *dd)
 	iw = xd->windowWidth;
 	ih = xd->windowHeight;
 	if(xd->resizing == 1) {
+	    /* last mode might have been 3, so remove scrollbars */
+	    gchangescrollbar(xd->gawin, VWINSB, 0, ih/SF-1, ih/SF, 0);
+	    gchangescrollbar(xd->gawin, HWINSB, 0, iw/SF-1, iw/SF, 0);
 	    dd->left = 0.0;
 	    dd->top = 0.0;
 	    dd->right = iw;
@@ -1621,6 +1630,9 @@ static void GA_Resize(NewDevDesc *dd)
 	    xd->showWidth = iw;
 	    xd->showHeight =  ih;
 	} else if (xd->resizing == 2) {
+	    /* last mode might have been 3, so remove scrollbars */
+	    gchangescrollbar(xd->gawin, VWINSB, 0, ih/SF-1, ih/SF, 0);
+	    gchangescrollbar(xd->gawin, HWINSB, 0, iw/SF-1, iw/SF, 0);
 	    fw = (iw + 0.5)/(iw0 + 0.5);
 	    fh = (ih + 0.5)/(ih0 + 0.5);
 	    rf = min(fw, fh);

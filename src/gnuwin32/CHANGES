@@ -22,6 +22,9 @@ versions would display them.
 
 Transparency in png() is now supported on `High Color' (16-bit) screens.
 
+Changing plot resize type via the menu now works better for the current
+plot (which is immediately redrawn).
+
 BLAS support is now in a separate DLL, Rblas.dll.  This means that any
 packages using BLAS (KernSmooth, Matrix, bqtl, fracdiff, gss,
 odesolve, quadprog, quantreg and subselect amongst those on CRAN) need
