@@ -43,11 +43,15 @@ NextMethod(generic = NULL, object = NULL, \dots)
   comments will be slightly different than those in Appendix A of the
   White S Book. \code{UseMethod} creates a ``new'' function call with
   arguments matched as they came in to the generic.  Any local variables
-  defined before the call to \code{UseMethod} are retained (!?).  Any
+  defined before the call to \code{UseMethod} are retained (unlike S).  Any
   statements after the call to \code{UseMethod} will not be evaluated as
   \code{UseMethod} does not return.  \code{UseMethod} can be called with
   more than two arguments: a warning will be given and additional
-  arguments ignored. (They are not completely ignored in S.)
+  arguments ignored. (They are not completely ignored in S.)  If it is
+  called with just one argument, the class of the first argument of the
+  enclosing function is used as \code{object}: unlike S this is the
+  actual argument passed and not the current value of the object of that
+  name.
 
   \code{NextMethod} invokes the next method (determined by the
   class).  It does this by creating a special call frame for that
@@ -68,10 +72,8 @@ NextMethod(generic = NULL, object = NULL, \dots)
 \note{
   This scheme is called \emph{S3} (S version 3).  For new projects,
   it is recommended to use the more flexible and robust \emph{S4} scheme
-  provided in the \code{methods} package.  Functions can have both S3
-  and S4 methods, and function \code{\link[methods]{showMethods}} will
-  list the S4 methods (possibly none).
-  \cr
+  provided in the \code{methods} package. 
+
   The function \code{.isMethodsDispatchOn()} returns \code{TRUE} if the
   new S4 methods are available but is meant for \R internal use only.
 }

@@ -36,6 +36,12 @@ methods(generic.function, class)
   methods.)
 }
 \note{
+  This scheme is called \emph{S3} (S version 3).  For new projects,
+  it is recommended to use the more flexible and robust \emph{S4} scheme
+  provided in the \code{methods} package.  Functions can have both S3
+  and S4 methods, and function \code{\link[methods]{showMethods}} will
+  list the S4 methods (possibly none).
+
   The original \code{methods} function was written by Martin Maechler.
 }
 \seealso{
