@@ -121,6 +121,11 @@ BUG FIXES
 
     o   fixes in predict.lm (John Maindonald)
 
+    o   NCOL got confused by 1D arrays, which it now reports have 1
+	column rather than NA.
+
+
+
 		CHANGES IN R VERSION 1.1.0
 
 
