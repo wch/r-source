@@ -244,6 +244,7 @@ clean: cleanwin $(PKGCLEAN)
 	-$(MAKE) -C ../nmath/standalone -f Makefile.win distclean
 	-$(MAKE) -C ../modules -f Makefile.win clean
 	-$(MAKE) -C ../../tests -f Makefile.win clean
+	$(RM) -f ../library/methods/R/methods
 
 distclean veryclean: clean
 	$(RM) COPYRIGHTS R.exp Rm.exp 
@@ -356,9 +357,9 @@ bindist: tcl bitmapdll docfiles
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
 	$(CP) -p CHANGES README.Rterm $(RPREFIX)
+	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
 # convert docs and batch files to CRLF: might already be on Windows, though.
 ifeq ($(strip $(BUILD)),CROSS)
-	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
 	zip -l dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
 	unzip -ao dosfiles.zip
 else
@@ -429,9 +430,7 @@ packagedist:
 	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
-ifeq ($(strip $(BUILD)),CROSS)
 	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;
-endif
 	zip -r9X $(RPREFIX)sp.zip $(RPREFIX)
 	$(RM) -r $(RPREFIX)
 
