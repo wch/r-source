@@ -453,37 +453,15 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1378 *
-Subject: rpart error with 0-frequency factor levels (with partial fix)
-From: "Wiener, Matthew" <matthew_wiener@merck.com>
-Date: Wed, 13 Mar 2002 12:03:23 -0500
-* PR# 1384 *
-Subject: KDE frontend
-From: egonw@sci.kun.nl
-Date: Thu, 14 Mar 2002 15:21:03 +0100 (MET)
-* PR# 1385 *
-Subject: "evaluating expression 0" bug in R-1.4.1
-From: eneafse@lumc.edu
-Date: Thu, 14 Mar 2002 21:05:42 +0100 (MET)
-* PR# 1386 *
-Subject: Returned mail--"don't drink too much"
-Subject: don't drink too much<br>
-From: "postmaster" <postmaster@stat.math.ethz.ch>
-From: r-bugs@lists.r-project.org<br>
-Date: 15 Mar 2002 18:57:32 +0100
-* PR# 1387 *
-Subject: X11(colortype="true") does not give a truecolor visual
-From: Edwin@balpol.tudelft.nl
-Date: Sat, 16 Mar 2002 15:40:32 +0100 (MET)
-* PR# 1388 *
-Subject: Re: [Rd] X11(colortype="true") does not give a truecolor visual
-From: ripley@stats.ox.ac.uk
-Date: Sat, 16 Mar 2002 18:08:08 +0000 (GMT)
-* PR# 1389 *
-Subject: promax
-From: conor@psy.uva.nl
-Date: Sat, 16 Mar 2002 21:08:29 +0100 (MET)
-* PR# 1390 *
-Subject: Re: [Rd] X11(colortype="true") does not give a truecolor visual
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Sat, 16 Mar 2002 13:06:09 -0800 (PST)
+* PR# 1391 *
+Subject: Sos!
+From: Kouichirou <Kouichirou@eto.com>
+Date: Sun, 17 Mar 2002 12:57:12 -0600
+* PR# 1392 *
+Subject: Thank you
+From: "" <ronald-chase@broadcast.net>
+Date: Sun, 17 Mar 2002 20:32:01 +0100
+* PR# 1393 *
+Subject: Thank you
+From: "" <greta-martin@runbox.com>
+Date: Sun, 17 Mar 2002 20:27:07 +0100 (MET)
