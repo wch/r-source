@@ -1,5 +1,7 @@
 ### Regression tests for which the printed output is the issue
 
+postscript("reg-tests-2.ps")
+
 ### moved from various .Rd files
 ## abbreviate
 data(state)

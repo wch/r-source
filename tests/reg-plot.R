@@ -61,8 +61,8 @@ plot(c(-1,16), c(-1,16), type="n", xlab="", ylab="", xaxs="i", yaxs="i")
 title("Centred chars in default char set (ISO Latin1)")
 grid(17, 17, lty=1)
 known <- if(.Platform$OS.type == "windows") {
-c(32:126, 144:152, 154, 155, 157:255)
-} else c(32:126, 145:152, 154, 155, 158:255)
+c(32:126, 145:152, 154, 155, 158:255)
+} else c(32:126, 144:152, 154, 155, 157:255)
 
 for(i in known) {
     x <- i %% 16
