@@ -33,6 +33,7 @@
 #include "Random.h"
 
 #define repeat for(;;)
+static double BM_norm_keep = 0.0;
 
 N01type N01_kind = KINDERMAN_RAMAGE;
 
@@ -114,7 +115,7 @@ static double A =  2.216035867166471;
 
 double norm_rand(void)
 {
-    double s, u1, w, y, u2, u3, aa, tt;
+    double s, u1, w, y, u2, u3, aa, tt, theta, R;
     int i;
     
     switch(N01_kind) {
@@ -232,6 +233,17 @@ double norm_rand(void)
 	    tt = 0.479727404222441-0.595507138015940*fmin2(u2,u3);
 	    if(fmax2(u2,u3) <= 0.805577924423817)
 		return (u2<u3) ? tt : -tt;
+	}
+    case BOX_MULLER:
+	if(BM_norm_keep != 0.0) { /* An exact test is intentional */
+	    s = BM_norm_keep;
+	    BM_norm_keep = 0.0;
+	    return s;
+	} else {
+	    theta = 2 * M_PI * unif_rand();
+	    R = sqrt(-2 * log(unif_rand())) + 10*DBL_MIN; /* ensure non-zero */
+	    BM_norm_keep = R * sin(theta);
+	    return R * cos(theta);
 	}
     default:
 	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind);

@@ -4,7 +4,7 @@
 .Random.seed <- c(rng.kind, n1, n2, \dots)
 save.seed <- .Random.seed
 
-RNGkind(kind = NULL)
+RNGkind(kind = NULL, normal.kind = NULL)
 set.seed(seed, kind = NULL)
 }
 \alias{.Random.seed}
@@ -24,13 +24,15 @@ set.seed(seed, kind = NULL)
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
     string, set \R's RNG to the kind desired. If it is \code{NULL},
     return the currently used RNG.}
+  \item{normal.kind}{character string or \code{NULL}.  If is a character
+    string, set the method of Normal generation.}
   \item{seed}{a single value, interpreted as an integer.}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
-  \item{n1,n2,\dots}{integers. See the details for how many are required
+  \item{n1, n2, \dots}{integers. See the details for how many are required
     (which depends on \code{rng.kind}).}
 }
 \details{
-  The currently available RNG kinds are givne below. \code{kind} is
+  The currently available RNG kinds are given below. \code{kind} is
   partially matched to this list.
   \itemize{
     \item \code{"Wichmann-Hill"}: \code{.Random.seed[1] == 0} 
@@ -89,6 +91,9 @@ set.seed(seed, kind = NULL)
  \code{0}, it will be substituted with \code{1} in the next call to a
  random number generator, such as \code{\link{runif}}.
 
+ \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default) or
+ \code{"Ahrens-Dieter"} or \code{"Box-Muller"}.
+ 
  \code{set.seed} uses its single integer argument to set as many seeds
  as are required. It is intended as a simple way to get quite different
  seeds by specifying small integer arguments.
@@ -102,8 +107,8 @@ set.seed(seed, kind = NULL)
     long} (32 bits at least); in \R \code{.Random.seed[i]} can therefore
   be negative for \eqn{i > 1}.
   
-  \code{RNGkind} returns the RNG in use \emph{before} the call,
-  invisibly if \code{kind} is not \code{NULL}.
+  \code{RNGkind} returns the RNG and normal kinds in use \emph{before}
+  the call, invisibly if either is not \code{NULL}.
 
   \code{set.seed} returns \code{NULL}, invisibly.
 }
@@ -160,7 +165,7 @@ RNGkind()
 .Random.seed # new, corresponding to  Super-Duper
 
 ## Reset:
-RNGkind(ok)
+RNGkind(ok[1])
 }
 \keyword{distribution}
 \keyword{sysdata}

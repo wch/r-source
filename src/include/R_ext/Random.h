@@ -29,10 +29,11 @@ typedef enum {
     MERSENNE_TWISTER
 } RNGtype;
 
-/* Different kind of "N(0,1)" generators :*/
+/* Different kinds of "N(0,1)" generators :*/
 typedef enum {
     AHRENS_DIETER,
-    KINDERMAN_RAMAGE
+    KINDERMAN_RAMAGE,
+    BOX_MULLER
 } N01type;
 
 

@@ -92,6 +92,9 @@ RNGtype RNG_kind = WICHMANN_HILL;
 #define I3 RNG_Table[RNG_kind].i3_seed
 #define ISd RNG_Table[RNG_kind].i_seed
 
+
+extern N01type N01_kind; /* from .../nmath/snorm.c */
+
 double unif_rand(void)
 {
     double value;
@@ -323,19 +326,22 @@ static void RNGkind(RNGtype newkind)
 
 SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP r;
-    RNGtype kind, oldkind;
+    SEXP ans, rng, norm;
 
     checkArity(op,args);
-    oldkind = RNG_kind;
-    r = CAR(args);
-    if(length(r)) { /* set a new RNG kind */
-      kind = asInteger(r);
-      RNGkind(kind);
+    PROTECT(ans = allocVector(INTSXP, 2));
+    INTEGER(ans)[0] = RNG_kind;
+    INTEGER(ans)[1] = N01_kind;
+    rng = CAR(args);
+    norm = CADR(args);
+    if(!isNull(rng)) { /* set a new RNG kind */
+      RNGkind(asInteger(rng));
     }
-    r = allocVector(INTSXP, 1);
-    INTEGER(r)[0] = oldkind;
-    return r;
+    if(!isNull(norm)) { /* set a new normal kind */
+      N01_kind = asInteger(norm);
+    }
+    UNPROTECT(1);
+    return ans;
 }
 
 

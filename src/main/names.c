@@ -394,7 +394,7 @@ FUNTAB R_FunTab[] =
 
 {"sample",	do_sample,	0,	11,	4,	PP_FUNCALL},
 
-{"RNGkind",	do_RNGkind,	0,	11,	1,	PP_FUNCALL},
+{"RNGkind",	do_RNGkind,	0,	11,	2,	PP_FUNCALL},
 {"set.seed",	do_setseed,	0,	11,	2,	PP_FUNCALL},
 
 /* Data Summaries */
