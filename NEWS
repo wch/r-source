@@ -34,6 +34,12 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	The behaviour of polygon() with NA coordinate values is now
+	documented.
+
+    o	polygon() now correctly recycles the values of border and lty.
+	Thanks to Denis White.
+
     o	readBin() and writeBin() were not always making good use of
 	long types (such as long double) when available.
 
