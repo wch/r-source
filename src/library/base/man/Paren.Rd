@@ -1,0 +1,31 @@
+\name{Paren}
+\title{Parentheses and Braces}
+\usage{
+( \dots )
+
+{ \dots }
+}
+\alias{(}
+\alias{{}
+\description{
+    Open parenthesis, \code{(}, and open brace, \code{\{}, are
+    \code{\link{.Primitive}} functions in \R.
+
+    Effectively, \code{(} is semantically equivalent to the identity
+    \code{function(x) x}, whereas \code{\{} is slightly more interesting,
+    see examples.
+}
+\seealso{
+\code{\link{if}}, \code{\link{return}}, etc for other objects used in
+the \R language itself.
+}
+\examples{
+f <- get("(")
+e <- expression(3 + 2 * 4)
+f(e) == e           # TRUE
+
+do <- get("{")
+do(x_ 3, y_ 2*x-3, 6-x-y); x; y
+}
+\keyword{programming}
+
