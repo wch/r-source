@@ -196,10 +196,15 @@ none
 
 Directory:  incoming
 
-* PR# 578 *
-Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 22 Jun 2000 17:07:05 +0200
+* PR# 581 *
+Subject: help screens: typos, suggestions
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 15:59:57 -0400 (EDT)
+* PR# 536 *
+Subject: Problem with match.arg()
+From: kjetikj@astro.uio.no
+Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
+--1.0.0 bug fixed for 1.0.1 ??
 * PR# 577 *
 Subject: de on w95b crash rterm with long strings
 From: p.malewski@tu-bs.de
@@ -208,8 +213,15 @@ Date: Thu, 22 Jun 2000 16:43:16 +0200 (MET DST)
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
 Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
-* PR# 536 *
-Subject: Problem with match.arg()
-From: kjetikj@astro.uio.no
-Date: Sun, 7 May 2000 13:58:21 +0200 (MET DST)
---1.0.0 bug fixed for 1.0.1 ??
+* PR# 580 *
+Subject: dotplot() colors reversed
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 15:36:00 -0400 (EDT)
+* PR# 579 *
+Subject: possible bug, anova.glm(), family="gaussian"
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 25 Jun 2000 12:31:22 -0400 (EDT)
+* PR# 578 *
+Subject: Re: [R] R 1.1 congrat; undocumented behaviour of recordPlot
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 22 Jun 2000 17:07:05 +0200
