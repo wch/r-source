@@ -51,7 +51,7 @@ uninstall:
 mostlyclean:
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f zero.$(SHLIB_EXT)
+	@-rm -f zerofind.$(SHLIB_EXT)
 	@if [ "$(srcdir)" != "." ]; then \
 	  rm -f $(INSTFILES); \
 	fi
