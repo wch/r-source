@@ -26,12 +26,15 @@ CFLAGS = -I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h $(DEBU
 
 DLLLIBS = -L$(RHOME)/src/gnuwin32 -lR -L. -ltcl$(TCL_VERSION) -ltk$(TCL_VERSION)
 
+RESFLAGS=--include-dir $(RHOME)/src/include
+tcltk_res.o: tcltk_res.rc $(RHOME)/src/include/Rversion.h
+
 $(DLLNAME).a: $(OBJS) #
 	$(RM) -f $@
 	$(AR) cr $@ *.o
 	$(RANLIB) $@
 
-$(DLLNAME).dll : $(DLLNAME).a
+$(DLLNAME).dll : $(DLLNAME).a tcltk_res.o
 $(RHOME)/library/tcltk/libs/tcltk.dll: $(RHOME)/library/tcltk/libs $(DLLNAME).dll
 	$(CP) $(DLLNAME).dll $@
 

@@ -63,7 +63,7 @@ include $(RHOME)/src//gnuwin32/MkRules
 
 clean:
 ifeq ($(strip $(SRCMAKE)),)
-	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def
+	$(RM) $(SSPKG)/$(DLLNAME).dll $(LOBJS)  $(SSPKG)/$(DLLNAME).a  $(SSPKG)/$(DLLNAME).def $(SSPKG)/$(DLLNAME)_res.*
 else
 	$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win clean
 endif

@@ -1,6 +1,8 @@
 #-*- Makefile -*-
 all:  $(DLLNAME).dll
 
+RCNAME=${DLLNAME}_res
+
 SOURCES=$(wildcard -f *.c *.f)
 CXXSOURCES=$(wildcard -f *.cc *.cpp *.C)
 OBJSA=$(foreach i,$(SOURCES) $(CXXSOURCES),$(basename $i).o)
@@ -43,9 +45,15 @@ else
 -include Makevars
 endif
 
-$(DLLNAME).a: $(OBJS) #
+$(DLLNAME)_res.rc:
+	PERL5LIB=$(RHOME)/share/perl perl $(RHOME)/src/gnuwin32/makeDllRes.pl $(DLLNAME) > $@
+
+RESFLAGS=--include-dir $(RHOME)/src/include
+$(DLLNAME)_res.o: $(DLLNAME)_res.rc $(RHOME)/src/include/Rversion.h
+
+$(DLLNAME).a: $(OBJS)
 	$(RM) -f $@
 	$(AR) cr $@ *.o
 	$(RANLIB) $@
 
-$(DLLNAME).dll : $(DLLNAME).a
+$(DLLNAME).dll : $(DLLNAME).a $(RCNAME).o
