@@ -9,7 +9,8 @@
 
 NEW FEATURES
 
-    o   Files BUGS and FAQ are now included with distribution
+    o   Files BUGS and FAQ are now included with distribution and
+	various "front matter" files have been cleaned up.
 
     o	readline has now an argument  prompt = ""
 
