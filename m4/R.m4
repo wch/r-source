@@ -52,32 +52,6 @@ AC_DEFUN([R_PROG_AR],
 AC_SUBST(ARFLAGS)
 ])# R_PROG_AR
 
-## R_PROG_INSTALL
-## --------------
-AC_DEFUN([R_PROG_INSTALL],
-[AC_REQUIRE([AC_PROG_INSTALL])
-warn_install="redefining INSTALL to be `pwd`/tools/install-sh -c"
-case "${INSTALL}" in
-  [[!/]]*install-sh*)
-    ## Fix a bug in older versions of autoconf---the path of the
-    ## install shell script is not cached.  Could also use an absolute
-    ## path in AC_CONFIG_AUX_DIR().
-    ## <FIXME>
-    ## Is this still needed?
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
-    AC_MSG_WARN([${warn_install}])
-    ## </FIXME>
-    ;;
-esac
-case "${host_os}" in
-  aix*|hpux*)
-    ## installbsd on AIX does not seem to work?
-    INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
-    AC_MSG_WARN([${warn_install}])
-    ;;
-esac
-])# R_PROG_INSTALL
-
 ## R_PROG_PAGER
 ## ------------
 AC_DEFUN([R_PROG_PAGER],
@@ -197,9 +171,8 @@ fi])
 ## -----------
 ## Check whether the C compiler accepts -M for generating dependencies
 AC_DEFUN([R_PROG_CC_M],
-[depend_rules_frag=Makefrag.dep
-AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
-               r_cv_prog_cc_m,
+[AC_CACHE_CHECK([whether ${CC} accepts -M for generating dependencies],
+                r_cv_prog_cc_m,
 [echo "#include <math.h>" > conftest.c
 ## No real point in using AC_LANG_* and ${ac_ext}, as we need to
 ## create hard-wired suffix rules.
@@ -208,29 +181,14 @@ if test -n "`${CC} -M conftest.c 2>/dev/null | grep conftest`"; then
 else
   r_cv_prog_cc_m=no
 fi])
-if test "${r_cv_prog_cc_m}" = yes; then
-  cat << \EOF > ${depend_rules_frag}
-.c.d:
-	@echo "making $[@] from $<"
-	@$(CC) -M $(ALL_CPPFLAGS) $< | \
-	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
-EOF
-else
-      cat << \EOF > ${depend_rules_frag}
-.c.d:
-	@touch $[@]
-EOF
-fi
-AC_SUBST_FILE(depend_rules_frag)
 ])# R_PROG_CC_M
 
 ## R_PROG_CC_C_O_LO
 ## ----------------
 ## Check whether the C compiler supports -c -o FILE.lo
 AC_DEFUN([R_PROG_CC_C_O_LO],
-[cc_o_lo_rules_frag=Makefrag.cc
-AC_CACHE_CHECK([whether ${CC} supports -c -o FILE.lo],
-               r_cv_prog_cc_c_o_lo,
+[AC_CACHE_CHECK([whether ${CC} supports -c -o FILE.lo],
+                r_cv_prog_cc_c_o_lo,
 [test -d TMP || mkdir TMP
 echo "int some_variable = 0;" > conftest.c
 ## No real point in using AC_LANG_* and ${ac_ext}, as we need to create
@@ -243,23 +201,47 @@ if AC_TRY_EVAL(ac_try) \
 else
   r_cv_prog_cc_c_o_lo=no
 fi
-rm -rf conftest* TMP
-])
+rm -rf conftest* TMP])
+])# R_PROG_CC_C_O_LO
+
+## R_PROG_CC_MAKEFRAG
+## ------------------
+AC_DEFUN([R_PROG_CC_MAKEFRAG],
+[cc_rules_frag=Makefrag.cc
+AC_REQUIRE([R_PROG_CC_M])
+AC_REQUIRE([R_PROG_CC_C_O_LO])
+cat << \EOF > ${cc_rules_frag}
+.c.o:
+	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $[@]
+EOF
+if test "${r_cv_prog_cc_m}" = yes; then
+  cat << \EOF >> ${cc_rules_frag}
+.c.d:
+	@echo "making $[@] from $<"
+	@$(CC) -M $(ALL_CPPFLAGS) $< | \
+	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+EOF
+else
+  cat << \EOF >> ${cc_rules_frag}
+.c.d:
+	@echo > $[@]
+EOF
+fi
 if test "${r_cv_prog_cc_c_o_lo}" = yes; then
-  cat << \EOF > ${cc_o_lo_rules_frag}
+  cat << \EOF >> ${cc_rules_frag}
 .c.lo:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $[@]
 EOF
 else
-  cat << \EOF > ${cc_o_lo_rules_frag}
+  cat << \EOF >> ${cc_rules_frag}
 .c.lo:
 	@test -d .libs || mkdir .libs
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o .libs/$[*].o
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-AC_SUBST_FILE(cc_o_lo_rules_frag)
-])# R_PROG_CC_C_O_LO
+AC_SUBST_FILE(cc_rules_frag)
+])# R_PROG_CC_MAKEFRAG
 
 ## R_PROG_CC_FLAG
 ## --------------
@@ -269,12 +251,12 @@ AC_DEFUN([R_PROG_CC_FLAG],
 AC_MSG_CHECKING([whether ${CC-cc} accepts $1])
 AC_CACHE_VAL(r_cv_prog_cc_flag_${ac_safe},
 [AC_LANG_PUSH(C)
-XCFLAGS="${CFLAGS}"
+r_save_CFLAGS="${CFLAGS}"
 CFLAGS="${CFLAGS} $1"
 AC_TRY_LINK([], [],
             [eval "r_cv_prog_cc_flag_${ac_safe}=yes"],
             [eval "r_cv_prog_cc_flag_${ac_safe}=no"])
-CFLAGS="${XCFLAGS}"
+CFLAGS="${r_save_CFLAGS}"
 AC_LANG_POP(C)
 ])
 if eval "test \"`echo '$r_cv_prog_cc_flag_'$ac_safe`\" = yes"; then
@@ -284,6 +266,22 @@ else
   AC_MSG_RESULT([no])
 fi
 ])# R_PROG_CC_FLAG
+
+## R_PROG_CC_FLAG_D__NO_MATH_INLINES
+## ---------------------------
+## In current glibc, inline version [x86] of exp is broken.
+## We fix this by adding '-D__NO_MATH_INLINES' to R_XTRA_CFLAGS rather
+## than AC_DEFINE(__NO_MATH_INLINES) as the former also takes care of
+## compiling C code for add-on packages.
+AC_DEFUN([R_PROG_CC_FLAG_D__NO_MATH_INLINES],
+[AC_EGREP_CPP([yes],
+[#include <math.h>
+#if defined(__GLIBC__)
+  yes
+#endif
+],
+              [R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D__NO_MATH_INLINES"])
+])# R_PROG_CC_FLAG_D__NO_MATH_INLINES
 
 ## R_PROG_CXX_M
 ## ------------
@@ -300,33 +298,7 @@ if test -n "`${CXX} -M conftest.cc 2>/dev/null | grep conftest`"; then
   r_cv_prog_cxx_m=yes
 else
   r_cv_prog_cxx_m=no
-fi
-])
-if test "${r_cv_prog_cxx_m}" = yes; then
-  cat << \EOF >> ${depend_rules_frag}
-.cc.d:
-	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
-.cpp.d:
-	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
-.C.d:
-	@echo "making $[@] from $<"
-	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
-	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
-EOF
-else
-  cat << \EOF >> ${depend_rules_frag}
-.cc.d:
-	@touch $[@]
-.cpp.d:
-	@touch $[@]
-.C.d:
-	@touch $[@]
-EOF
-fi
+fi])
 ])# R_PROG_CXX_M
 
 ## R_PROG_CXX_C_O_LO
@@ -349,10 +321,50 @@ if AC_TRY_EVAL(ac_try) \
 else
   r_cv_prog_cxx_c_o_lo=no
 fi
-rm -rf conftest* TMP
-])
+rm -rf conftest* TMP])
+])# R_PROG_CXX_C_O_LO
+
+## R_PROG_CXX_MAKEFRAG
+## ------------------
+AC_DEFUN([R_PROG_CXX_MAKEFRAG],
+[cxx_rules_frag=Makefrag.cxx
+AC_REQUIRE([R_PROG_CXX_M])
+AC_REQUIRE([R_PROG_CXX_C_O_LO])
+cat << \EOF > ${cxx_rules_frag}
+.cc.o:
+	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
+.cpp.o:
+	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
+.C.o:
+	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $[@]
+EOF
+if test "${r_cv_prog_cxx_m}" = yes; then
+  cat << \EOF >> ${cxx_rules_frag}
+.cc.d:
+	@echo "making $[@] from $<"
+	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
+	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+.cpp.d:
+	@echo "making $[@] from $<"
+	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
+	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+.C.d:
+	@echo "making $[@] from $<"
+	@$(CXX) -M $(ALL_CPPFLAGS) $< | \
+	  sed -e 's/^\([[^:]]*\)\.o\([[ 	]]\)*:/\1.o \1.lo\2:/' > $[@]
+EOF
+else
+  cat << \EOF >> ${cxx_rules_frag}
+.cc.d:
+	@echo > $[@]
+.cpp.d:
+	@echo > $[@]
+.C.d:
+	@echo > $[@]
+EOF
+fi
 if test "${r_cv_prog_cxx_c_o_lo}" = yes; then
-  cat << \EOF > ${cxx_o_lo_rules_frag}
+  cat << \EOF >> ${cxx_rules_frag}
 .cc.lo:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
 .cpp.lo:
@@ -361,7 +373,7 @@ if test "${r_cv_prog_cxx_c_o_lo}" = yes; then
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o $[@]
 EOF
 else
-  cat << \EOF > ${cxx_o_lo_rules_frag}
+  cat << \EOF >> ${cxx_rules_frag}
 .cc.lo:
 	@test -d .libs || mkdir .libs
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS_LO) -c $< -o .libs/$[*].o
@@ -376,8 +388,8 @@ else
 	mv .libs/$[*].o $[*].lo
 EOF
 fi
-AC_SUBST_FILE(cxx_o_lo_rules_frag)
-])# R_PROG_CXX_C_O_LO
+AC_SUBST_FILE(cxx_rules_frag)
+])# R_PROG_CXX_MAKEFRAG
 
 ## R_PROG_CXX_FLAG
 ## ---------------
@@ -387,12 +399,12 @@ AC_DEFUN([R_PROG_CXX_FLAG],
 AC_MSG_CHECKING([whether ${CXX-c++} accepts $1])
 AC_CACHE_VAL(r_cv_prog_cxx_flag_${ac_safe},
 [AC_LANG_PUSH(C++)
-XCXXFLAGS="${CXXFLAGS}"
+r_save_CXXFLAGS="${CXXFLAGS}"
 CXXFLAGS="${CXXFLAGS} $1"
 AC_TRY_LINK([], [],
 	    [eval "r_cv_prog_cxx_flag_${ac_safe}=yes"],
 	    [eval "r_cv_prog_cxx_flag_${ac_safe}=no"])
-CXXFLAGS="${XCXXFLAGS}"
+CXXFLAGS="${r_save_CXXFLAGS}"
 AC_LANG_POP(C++)
 ])
 if eval "test \"`echo '$r_cv_prog_cxx_flag_'$ac_safe`\" = yes"; then
@@ -478,6 +490,13 @@ else
     AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
 fi
+if test -n "${F77}"; then
+  ## If the above 'found' a FORTRAN 77 compiler, we run AC_PROG_F77 as
+  ## this does additional testing.
+  AC_PROG_F77
+elif test -z "${F2C}"; then
+  AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
+fi
 ])# R_PROG_F77_OR_F2C
 
 ## R_PROG_F77_FLIBS
@@ -518,37 +537,44 @@ fi
 
 ## R_PROG_F77_APPEND_UNDERSCORE
 ## ----------------------------
-## See if the Fortran compiler appends underscores.
+## See if the Fortran 77 compiler appends underscores.
+## What we really should do is determine how to properly mangle the 
+## names of C/C++ identifiers (potentially containing underscores) so
+## that they match the name-mangling scheme used by the Fortran 77
+## compiler.  Autoconf 2.50 or better has macros F77_FUNC(name, NAME)
+## and F77_FUNC_(name, NAME) for this.  However, the F77_* macros in
+## the R API have one argument only and therefore cannot deal with 
+## Fortran 77 compilers which convert to upper case or add an extra
+## underscore for identifiers containing underscores.  We give an error
+## and a warning, respectively, in these cases.
 AC_DEFUN([R_PROG_F77_APPEND_UNDERSCORE],
-[AC_CACHE_CHECK([whether ${F77-f77} appends underscores],
-                r_cv_prog_f77_append_underscore,
-[cat > conftestf.f <<EOF
-      subroutine try
-      end
-EOF
-${F77} -c ${FFLAGS} conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
-cat > conftest.c <<EOF
-main() { try_(); }
-EOF
-${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest${ac_exeext} \
-  conftest.c conftestf.${ac_objext} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
-if test ${?} = 0; then
-  r_cv_prog_f77_append_underscore=yes
-else
-  cat > conftest.c <<EOF
-main() { try(); }
-EOF
-  ${CC} ${CFLAGS} ${CPPFLAGS} ${LDFLAGS} -o conftest${ac_exeext} \
-    conftest.c conftestf.${ac_objext} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
-  if test ${?} = 0; then
+[AC_REQUIRE([AC_F77_WRAPPERS])
+## DANGER!  We really needs the results of _AC_F77_NAME_MANGLING as
+## stored in the cache var ac_cv_f77_mangling which is not documented
+## and hence may change ...
+case ${ac_cv_f77_mangling} in
+  "upper "*)
+    AC_MSG_WARN([FORTRAN compiler uses uppercase external names])
+    AC_MSG_ERROR([cannot use FORTRAN])
+    ;;
+  *", extra "*)
+    warn_f77_mangling="cannot deal with underscores in FORTRAN"
+    warn_f77_mangling="${warn_f77_mangling} external names"
+    AC_MSG_WARN([${warn_f77_mangling}])
+    ;;
+esac
+AC_CACHE_VAL(r_cv_prog_f77_append_underscore,
+[case ${ac_cv_f77_mangling} in
+  *", underscore, "*)
+    r_cv_prog_f77_append_underscore=yes
+    ;;
+  *", no underscore, "*)
     r_cv_prog_f77_append_underscore=no
-  fi
-fi
-rm -rf conftest conftest.* conftestf.*
+    ;;
+esac])
 if test -z "${r_cv_prog_f77_append_underscore}"; then
-  AC_MSG_ERROR([Nothing worked - cannot use FORTRAN])
+  AC_MSG_ERROR([cannot use FORTRAN])
 fi
-])
 if test "${r_cv_prog_f77_append_underscore}" = yes; then
   AC_DEFINE(HAVE_F77_UNDERSCORE, 1,
             [Define if your Fortran compiler appends an underscore to
@@ -576,6 +602,7 @@ AC_CACHE_VAL(r_cv_prog_f77_cc_compat,
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+dnl Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
 #include "confdefs.h"
@@ -605,7 +632,7 @@ int main () {
   for(i = 0; i < 3; i++)
     if(fabs(z[i]/zres[i] - 1) > eps) res++;
   printf("number of errors %d\n", res);
-  return(res);
+  exit(res);
 }
 EOF]
 if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
@@ -639,7 +666,7 @@ fi
 AC_DEFUN([R_PROG_F77_CC_COMPAT_COMPLEX],
 [AC_REQUIRE([AC_CHECK_LIBM])
 AC_MSG_CHECKING([whether ${F77-f77} and ${CC-cc} agree on double complex])
-AC_CACHE_VAL(r_cv_prog_complex_compat,
+AC_CACHE_VAL(r_cv_prog_f77_cc_compat_complex,
 [cat > conftestf.f <<EOF
       subroutine cftest(x)
       complex*16 x(3)
@@ -651,6 +678,7 @@ c a few tests of constructs that are sometimes missing
       end
 EOF
 ${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+dnl Yes we need to double quote this ...
 [cat > conftest.c <<EOF
 #include <math.h>
 #include "confdefs.h"
@@ -679,8 +707,8 @@ int main () {
     F77_SYMBOL(cftest)(z);
     printf("%f %f\n", z[0].r, z[0].i);
     if(fabs(z[0].r - 123.456) < 1e-4 && fabs(z[0].i - 14.71065) < 1e-4)
-	return 0;
-    else return 1;
+	exit(0);
+    else exit(1);
 }
 EOF]
 if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
@@ -694,13 +722,13 @@ if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; t
   then
     output=`./conftest${ac_exeext} 2>&1`
     if test ${?} = 0; then
-      r_cv_prog_complex_compat=yes
+      r_cv_prog_f77_cc_compat_complex=yes
     fi
   fi
 fi
 ])
 rm -rf conftest conftest.* conftestf.* core
-if test -n "${r_cv_prog_complex_compat}"; then
+if test -n "${r_cv_prog_f77_cc_compat_complex}"; then
   AC_MSG_RESULT([yes])
   AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1,
             [Define if C's Rcomplex and Fortran's COMPLEX*16 can be
@@ -730,8 +758,7 @@ if AC_TRY_EVAL(ac_try) \
 else
   r_cv_prog_f77_c_o_lo=no
 fi
-rm -rf conftest* TMP
-])
+rm -rf conftest* TMP])
 ])# R_PROG_F77_C_O_LO
 
 ## R_PROG_F77_MAKEFRAG
@@ -769,8 +796,8 @@ AC_CACHE_VAL(r_cv_f2c_flibs,
 [## This seems to be necessary on some Linux system. -- you bet! -pd
 AC_LANG_PUSH(C)
 cat > conftest.${ac_ext} << EOF
-int MAIN_ () { return 0; }
-int MAIN__ () { return 0; }
+int MAIN_ () { exit(0); }
+int MAIN__ () { exit(0); }
 EOF
 if AC_TRY_EVAL(ac_compile); then
   ${AR} ${ARFLAGS} libconftest.a conftest.${ac_objext} 1>&AS_MESSAGE_LOG_FD
@@ -837,9 +864,9 @@ AC_TRY_RUN(
 [int main () {
 #include <fpu_control.h>
 #if defined(_FPU_DEFAULT) && defined(_FPU_IEEE)
-  return(_FPU_DEFAULT != _FPU_IEEE);
+  exit(_FPU_DEFAULT != _FPU_IEEE);
 #endif
-  return(0);
+  exit(0);
 }],
 	   [r_cv_func___setfpucw_needed=no],
 	   [r_cv_func___setfpucw_needed=yes],
@@ -864,7 +891,7 @@ AC_DEFUN([R_FUNC_CALLOC],
 [#include <stdlib.h>
 int main () {
   int *p = calloc(0, sizeof(int));
-  return(p == 0);
+  exit(p == 0);
 }],
 	    [r_cv_func_calloc_works=yes],
 	    [r_cv_func_calloc_works=no],
@@ -884,9 +911,9 @@ AC_DEFUN([R_FUNC_FINITE],
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_FINITE
-  return(finite(1./0.) | finite(0./0.) | finite(-1./0.));
+  exit(finite(1./0.) | finite(0./0.) | finite(-1./0.));
 #else
-  return(1);
+  exit(1);
 #endif
 }],
 	    [r_cv_func_finite_works=yes],
@@ -907,9 +934,9 @@ AC_DEFUN([R_FUNC_LOG],
 #include "confdefs.h"
 int main () {
 #ifdef HAVE_ISNAN
-  return(!(log(0.) == -1. / 0. && isnan(log(-1.))));
+  exit(!(log(0.) == -1. / 0. && isnan(log(-1.))));
 #else
-  return(log(0.) != -1. / 0);
+  exit(log(0.) != -1. / 0);
 #endif
 }],
 	    [r_cv_func_log_works=yes],
@@ -933,9 +960,9 @@ int main () {
   char *p;
 
   p = strptime("1960-01-01", "%Y-%m-%d", &tm);
-  return(p == 0);
+  exit(p == 0);
 #else
-  return(1);
+  exit(1);
 #endif
 }],
 	    [r_cv_func_strptime_works=yes],
@@ -1029,7 +1056,7 @@ AC_TRY_RUN(
 #include <ieeefp.h>
 int main () {
   double x = 0;
-  fpsetmask(0); x = x / x; return (x != x);
+  fpsetmask(0); x = x / x; exit (x != x);
 }],
 	   [r_cv_c_optieee=yes],
 	   [r_cv_c_optieee=no],
@@ -1122,55 +1149,84 @@ fi
 ## The png code will do a run-time check of the consistency of
 ## libpng versions.
 ##
-AC_DEFUN([R_BITMAPS], [
-  BITMAP_LIBS=
-  AC_CHECK_HEADER(jpeglib.h, [
-    AC_MSG_CHECKING([if jpeglib version >= 6b])
-    AC_EGREP_CPP([yes], [
-#include "confdefs.h"
-#include <jpeglib.h>
+AC_DEFUN([R_BITMAPS],
+[BITMAP_LIBS=
+_R_HEADER_JPEGLIB
+have_jpeg=${r_cv_header_jpeglib}
+if test "${have_jpeg}" = yes; then
+  AC_CHECK_LIB(jpeg, jpeg_destroy_compress, 
+               [have_jpeg=yes],
+               [have_jpeg=no],
+               [${LIBS}])
+fi
+if test "${have_jpeg}" = yes; then
+  BITMAP_LIBS="-ljpeg"
+  AC_DEFINE(HAVE_JPEG, 1,
+            [Define if you have the JPEG headers and libraries.])
+fi
+AC_CHECK_LIB(z, main, [have_png=yes], [have_png=no])
+if test "${have_png}" = yes; then
+  _R_HEADER_PNG
+  have_png=${r_cv_header_png}
+fi
+if test "${have_png}" = yes; then
+  AC_CHECK_LIB(png, png_create_write_struct,
+               [have_png=yes],
+               [have_png=no],
+               [-lz ${LIBS}])
+fi
+if test "${have_png}" = yes; then
+  BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+  AC_DEFINE(HAVE_PNG, 1,
+            [Define if you have the PNG headers and libraries.])
+fi
+AC_SUBST(BITMAP_LIBS)
+])# R_BITMAPS
+
+## _R_HEADER_JPEGLIB
+## -----------------
+## Set shell variable r_cv_header_jpeglib to 'yes' if a recent enough
+## jpeglib.h is found, and to 'no' otherwise.
+AC_DEFUN([_R_HEADER_JPEGLIB],
+[AC_CACHE_CHECK([if jpeglib version >= 6b],
+                r_cv_header_jpeglib,
+AC_EGREP_CPP([yes],
+[#include <jpeglib.h>
 #if (JPEG_LIB_VERSION >= 62)
   yes
-#endif], [
-      AC_MSG_RESULT([yes])
-      AC_CHECK_LIB(jpeg, jpeg_destroy_compress, [
-        BITMAP_LIBS=-ljpeg
-        AC_DEFINE(HAVE_JPEG, 1,
-	          [Define if you have the JPEG headers and libraries.])
-      ], , ${LIBS})
-    ], AC_MSG_RESULT([no]))
-  ])
-  AC_CHECK_LIB(z, main, [
-    AC_CHECK_HEADER(png.h, [
-      AC_MSG_CHECKING([if libpng version >= 1.0.5])
-      AC_EGREP_CPP([yes], [
-#include "confdefs.h"
-#include <png.h>
+#endif
+],
+             [r_cv_header_jpeglib=yes],
+             [r_cv_header_jpeglib=no]))
+])# _R_HEADER_JPEGLIB
+
+## _R_HEADER_PNG
+## -------------
+## Set shell variable r_cv_header_png to 'yes' if a recent enough
+## 'png.h' is found, and to 'no' otherwise.
+AC_DEFUN([_R_HEADER_PNG],
+[AC_CACHE_CHECK([if libpng version >= 1.0.5], 
+                r_cv_header_png,
+AC_EGREP_CPP([yes],
+[#include <png.h>
 #if (PNG_LIBPNG_VER >= 10005)
   yes
-#endif], [
-        AC_MSG_RESULT([yes])
-        AC_CHECK_LIB(png, png_create_write_struct, [
-          BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-	  AC_DEFINE(HAVE_PNG, 1,
-	            [Define if you have the PNG headers and libraries.])
-        ], , [${LIBS} -lz])
-      ], AC_MSG_RESULT([no]))
-    ])
-  ])
-  AC_SUBST(BITMAP_LIBS)
-])# R_BITMAPS
+#endif
+],
+             [r_cv_header_png=yes],
+             [r_cv_header_png=no]))
+])# _R_HEADER_PNG
 
 ## _R_TCLTK_CONFIG
 ## ---------------
 ## Try finding {tcl,tk}Config.sh
 AC_DEFUN([_R_TCLTK_CONFIG],
-[libpath="${tcltk_prefix}${PATH_SEPARATOR}${LD_LIBRARY_PATH}"
+[r_xtra_path="${tcltk_prefix}${PATH_SEPARATOR}${LD_LIBRARY_PATH}"
 for dir in /opt/lib /usr/local/lib /usr/lib /lib; do
-  libpath="${libpath}${PATH_SEPARATOR}${dir}"
+  r_xtra_path="${r_xtra_path}${PATH_SEPARATOR}${dir}"
 done
-AC_PATH_PROGS(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${libpath})
-AC_PATH_PROGS(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${libpath})
+AC_PATH_PROGS(TCL_CONFIG, [${TCL_CONFIG} tclConfig.sh], , ${r_xtra_path})
+AC_PATH_PROGS(TK_CONFIG, [${TK_CONFIG} tkConfig.sh], , ${r_xtra_path})
 if test -z "${TCLTK_CPPFLAGS}" \
     || test -z "${TCLTK_LIBS}"; then
   ## Check whether the versions found via the *Config.sh files are at
@@ -1251,7 +1307,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
       ## As the AC_CHECK_HEADER test tries including the header file and
       ## tk.h includes tcl.h and X11/Xlib.h, we need to change CPPFLAGS
       ## for the check.
-      save_CPPFLAGS="${CPPFLAGS}"
+      r_save_CPPFLAGS="${CPPFLAGS}"
       CPPFLAGS="${CPPFLAGS} ${TK_XINCLUDES} ${TCLTK_CPPFLAGS}"
       AC_CHECK_HEADER(${TK_PREFIX}/include/tk${TK_VERSION}/tk.h,
         [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include/tk${TK_VERSION}"
@@ -1261,7 +1317,7 @@ if test -z "${TCLTK_CPPFLAGS}"; then
           [TCLTK_CPPFLAGS="${TCLTK_CPPFLAGS} -I${TK_PREFIX}/include"
             found_tk_h=yes])
       fi
-      CPPFLAGS="${save_CPPFLAGS}"
+      CPPFLAGS="${r_save_CPPFLAGS}"
     fi
     if test "${found_tk_h}" = no; then
       AC_MSG_CHECKING([for tk.h])
@@ -1292,8 +1348,8 @@ if test -z "${TCLTK_LIBS}"; then
       TCLTK_LIBS="${TCL_LIB_SPEC}"
     else
       AC_CHECK_LIB(tcl, Tcl_CreateInterp,
-        TCLTK_LIBS=-ltcl,
-        have_tcltk=no)
+                   [TCLTK_LIBS=-ltcl],
+                   [have_tcltk=no])
     fi
   fi
   if test "${have_tcltk}" = yes; then
@@ -1302,15 +1358,19 @@ if test -z "${TCLTK_LIBS}"; then
       . ${TK_CONFIG}
       TCLTK_LIBS="${TCLTK_LIBS} ${TK_LIB_SPEC} ${TK_LIBS}"
     else
-      AC_CHECK_LIB(tk, Tk_Init, , , ${TCLTK_LIBS})
+      AC_CHECK_LIB(tk, Tk_Init, , , [${TCLTK_LIBS}])
       if test "${ac_cv_lib_tk_Tk_Init}" = no; then
 	## Grr, simple -ltk does not work.
 	## But maybe we simply need to add X11 libs.
-	unset ac_cv_lib_tk_Tk_Init
-	AC_CHECK_LIB(tk, Tk_Init,
-          [TCLTK_LIBS="${TCLTK_LIBS} -ltk ${X_LIBS}"],
-	  have_tcltk=no,
-          [${TCLTK_LIBS} ${X_LIBS}])
+        ## Note that we cannot simply repeat the above test with extra
+        ## libs, because AC_CHECK_LIB uses the corresponding cache var
+        ## (ac_cv_lib_tk_Tk_Init in our case) if set.  As using unset
+        ## is not portable shell programming according to the Autoconf
+        ## docs, we use Tk_SafeInit in the test with X11 libs added.
+	AC_CHECK_LIB(tk, Tk_SafeInit,
+                     [TCLTK_LIBS="${TCLTK_LIBS} -ltk ${X_LIBS}"],
+	             [have_tcltk=no],
+                     [${TCLTK_LIBS} ${X_LIBS}])
       fi
     fi
   fi
@@ -1390,7 +1450,7 @@ if test "$with_blas" = "no"; then
 elif test "$with_blas" != "yes"; then
   ## user specified a BLAS library to try on the command line
   ## Safeguard against users giving the location of the lib.
-  blas_lib_dir=`dirname ${with_blas}`
+  blas_lib_dir=`AS_DIRNAME(["${with_blas}"])`
   if test "x${blas_lib_dir}" = x; then
     AC_CHECK_LIB($with_blas, $dgemm_func, 
                  BLAS_LIBS="-l$with_blas", , $FLIBS)
@@ -1478,7 +1538,7 @@ if test "${r_cv_xdr}" = yes; then
   AC_DEFINE(HAVE_XDR, 1,
             [Define if you have the XDR headers and library routines.])
 fi
-AM_CONDITIONAL(BUILD_XDR, test "${r_cv_xdr}" = no)
+AM_CONDITIONAL(BUILD_XDR, test "x${r_cv_xdr}" = xno)
 ])# R_XDR
 
 ## R_ZLIB
@@ -1487,50 +1547,67 @@ AM_CONDITIONAL(BUILD_XDR, test "${r_cv_xdr}" = no)
 ## We check that both are installed, and that the header >= 1.1.3
 ## and that gzopen is in the library (which suggests the library
 ## is also recent enough).
-AC_DEFUN([R_ZLIB], [
-  AS_MESSAGE([checking if suitable zlib is installed or needs to be compiled...])
-  have_zlib=no
-  AC_CHECK_LIB(z, gzopen, [
-    AC_CHECK_HEADER(zlib.h, [
-      AC_MSG_CHECKING([if zlib version >= 1.1.3])
-      AC_TRY_RUN([
-#include "confdefs.h"
-#include <string.h>
+AC_DEFUN([R_ZLIB],
+[AC_CHECK_LIB(z, gzopen, [have_zlib=yes], [have_zlib=no])
+if test "${have_zlib}" = yes; then
+  AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
+fi
+if test "${have_zlib}" = yes; then
+  _R_HEADER_ZLIB
+  have_zlib=${r_cv_header_zlib}
+fi
+AC_MSG_CHECKING([whether zlib support needs to be compiled])
+if test "${have_zlib}" = yes; then
+  AC_MSG_RESULT([no])
+  AC_DEFINE(HAVE_ZLIB, 1,
+            [Define if you have the zlib headers and libraries.])
+  LIBS="-lz ${LIBS}"
+else
+  AC_MSG_RESULT([yes])
+  _R_ZLIB_MMAP
+fi
+AM_CONDITIONAL(BUILD_ZLIB, test "x${have_zlib}" = xno)
+])# R_ZLIB
+
+## _R_HEADER_ZLIB
+## --------------
+## Set shell variable r_cv_header_zlib to 'yes' if a recent enough
+## zlib.h is found, and to 'no' otherwise.
+AC_DEFUN([_R_HEADER_ZLIB],
+[AC_CACHE_CHECK([if zlib version >= 1.1.3],
+                r_cv_header_zlib,
+AC_TRY_RUN(
+[#include <string.h>
 #include <zlib.h>
 int main() {
 #ifdef ZLIB_VERSION
-  return(strcmp(ZLIB_VERSION, "1.1.3") < 0);
+  exit(strcmp(ZLIB_VERSION, "1.1.3") < 0);
 #else
-  return(1);
+  exit(1);
 #endif
-}],     [AC_MSG_RESULT([yes])
-          have_zlib=yes],
-        AC_MSG_RESULT([no]),
-        AC_MSG_RESULT([no]))
-    ])
-  ])
-  if test "${have_zlib}" = yes; then
-    AC_DEFINE(HAVE_ZLIB, 1,
-              [Define if you have the zlib headers and libraries.])
-    LIBS="-lz ${LIBS}"
-    echo "using installed zlib"
-  else
-    echo "we will build zlib for you"
-    AC_CACHE_CHECK([mmap support for zlib], r_cv_zlib_mmap,
-      AC_TRY_RUN([
-#include <sys/types.h>
+}],
+           [r_cv_header_zlib=yes],
+           [r_cv_header_zlib=no],
+           [r_cv_header_zlib=no]))
+])# _R_HEADER_ZLIB
+
+## _R_ZLIB_MMAP
+## ------------
+AC_DEFUN([_R_ZLIB_MMAP],
+[AC_CACHE_CHECK([mmap support for zlib],
+                r_cv_zlib_mmap,
+AC_TRY_RUN(
+[#include <sys/types.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 caddr_t hello() {
-  return mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0); 
+  exit(mmap((caddr_t)0, (off_t)0, PROT_READ, MAP_SHARED, 0, (off_t)0)); 
 }],
 	       [r_cv_zlib_mmap=no],
 	       [r_cv_zlib_mmap=yes],
 	       [r_cv_zlib_mmap=yes]))
-    AM_CONDITIONAL(USE_MMAP_ZLIB, test "${r_cv_zlib_mmap}" = yes)
-  fi
-  AM_CONDITIONAL(BUILD_ZLIB, test "${have_zlib}" = no)
-])# R_ZLIB
+AM_CONDITIONAL(USE_MMAP_ZLIB, test "x${r_cv_zlib_mmap}" = xyes)
+])# _R_ZLIB_MMAP
 
 ## R_SYS_POSIX_LEAPSECONDS
 ## -----------------------
