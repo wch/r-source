@@ -138,10 +138,10 @@ endif
 	    echo "makeLazyLoading(\"tools\", lib.loc=\"$(RLIB)\")") | \
 	    R_DEFAULT_PACKAGES=NULL LC_COLLATE=C $(R_EXE) --vanilla --slave > /dev/null ; \
 	fi
-	@for pkg in $(LAZY_PKGS); do \
+	for pkg in $(LAZY_PKGS); do \
 	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) \
 	  BUILD=$(BUILD) RLIB=$(RLIB) R_START_PACKAGES=NULL\
-	  -f $(RHOME)/src/gnuwin32/MakePkg lazyload ; \
+	  -C ../library/$${pkg} -f $(RHOME)/src/gnuwin32/MakePkg lazyload; \
 	done
 	@$(MAKE) --no-print-directory PKG=datasets RHOME=$(RHOME) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg BUILD=$(BUILD) RLIB=$(RLIB) lazydata
@@ -356,7 +356,8 @@ pkgcheck-%:
 	fi
 
 lazyload-%:
-	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg -C $(PKGD)/$* lazyload
+	echo (PKGD)/$*
+	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg lazyload
 
 lazydata-%:
 	@$(MAKE) --no-print-directory PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) BUILD=$(BUILD) -f $(RHOME)/src/gnuwin32/MakePkg lazydata
