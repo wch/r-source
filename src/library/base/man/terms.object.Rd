@@ -6,13 +6,12 @@
   model.  Usually the model was specified in terms of a
   \code{\link{formula}} and that formula was used to determine the terms
   object.
-
-  The object itself is simply the formula supplied to the call of
-  \code{\link{terms.formula}}.  The object has a number of attributes
-  and they are used to construct the model frame.
 }
 \value{
-  An object with the following attributes:
+  The object itself is simply the formula supplied to the call of
+  \code{\link{terms.formula}}.  The object has a number of attributes
+  and they are used to construct the model frame:
+
   \item{factors}{A matrix of variables by terms showing which variables
     appear in which terms. The entries are 0 if the variable does not
     occur in the term, 1 if it does occur and should be coded by
@@ -22,7 +21,7 @@
   \item{term.labels}{A character vector containing the labels for each
     of the terms in the model.  Non-syntactic names will be quoted by
     backticks.}
-  \item{variables}{A list of the variables in the model}
+  \item{variables}{A call to \code{list} of the variables in the model.}
   \item{intercept}{Either 0, indicating no intercept is to be fit, or 1
     indicating that an intercept is to be fit.}
   \item{order}{A vector of the same length as \code{term.labels}
@@ -43,13 +42,11 @@
   there is no \code{formula} attribute, instead the object is itself a
   formula.  Thus, the mode of a terms object is different as well. 
 
-  An example of the \code{specials} argument can be seen in the
-  \code{\link{aov}} function.
+  Examples of the \code{specials} argument can be seen in the
+  \code{\link{aov}} and \code{\link[survival]{coxph}} functions.
 }
 \seealso{
-  \code{\link{terms}},
-  \code{\link{terms.default}},
-  \code{\link{formula}}.
+  \code{\link{terms}}, \code{\link{formula}}.
 }
 %%--- MM: I would really like instructive examples here...
 \keyword{models}

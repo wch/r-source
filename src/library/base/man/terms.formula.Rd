@@ -40,7 +40,6 @@
   is the order in which the variables occur in the formula.
 }
 \seealso{
-  \code{\link{terms.object}},
-  \code{\link{terms.default}}
+  \code{\link{terms}}, \code{\link{terms.object}}
 }
 \keyword{models}
