@@ -12,13 +12,16 @@ see the comments in .../etc/Rconsole.  The initial position of the
 console window and graphics windows can be set in Rconsole and in the
 GUI Preferences editor.
 
-The windows() graphics device has now arguments xpos, ypos to set the
-initial position, overriding the settings in Rconsole.
+The windows() graphics device now has arguments xpos and ypos to set
+the initial position, overriding the settings in Rconsole.
 
 The windows() device has a form of double-buffering: the visible plot
 is updated only when there has been no plotting for 0.1sec or if the
 plot has not been updated for 0.5sec.  This is optional (but on by
 default) and the timings can be changed: see ?windows.
+
+The bmp/png/jpeg devices are around 10x faster when used on a 32-bit
+(`truecolor') display (but use more memory than before).
 
 Rterm reverts to sending warning/error messages to stdout on Windows
 95/98/ME.

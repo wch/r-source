@@ -2500,24 +2500,52 @@ static unsigned long privategetpixel(void *d,int i, int j)
     return ggetpixel((bitmap)d,pt(j,i));
 }
 
+static int png_rows = 0;
+
+static unsigned long privategetpixel2(void *d,int i, int j)
+{
+    rgb c;
+    c = ((rgb *)d)[i*png_rows + j];
+    return c;
+}
+
 /* This is the device version */
 static void SaveAsBitmap(NewDevDesc *dd)
 {
-    rect r;
+    rect r, r2;
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    unsigned char *data;
+    
     r = ggetcliprect(xd->gawin);
-    gsetcliprect(xd->gawin, getrect(xd->gawin));
+    gsetcliprect(xd->gawin, r2 = getrect(xd->gawin));
     if(xd->fp) {
-	if (xd->kind==PNG)
-	    R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,
-			privategetpixel, 0, xd->fp,
-			R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
-	else if (xd->kind==JPEG)
-	    R_SaveAsJpeg(xd->gawin, xd->windowWidth, xd->windowHeight,
-			 privategetpixel, 0, xd->quality, xd->fp) ;
-	else
-	    R_SaveAsBmp(xd->gawin, xd->windowWidth, xd->windowHeight,
-			privategetpixel, 0, xd->fp);
+	if (getdepth(xd->gawin) == 32) {
+	    data = (unsigned char *) malloc(r2.width * r2.height * sizeof(rgb));
+	    getbitmapdata(xd->gawin, data);
+	    png_rows = r2.width;
+	    if (xd->kind == PNG)
+		R_SaveAsPng(data, xd->windowWidth, xd->windowHeight,
+			    privategetpixel2, 0, xd->fp,
+			    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
+	    else if (xd->kind == JPEG)
+		R_SaveAsJpeg(data, xd->windowWidth, xd->windowHeight,
+			     privategetpixel2, 0, xd->quality, xd->fp) ;
+	    else
+		R_SaveAsBmp(data, xd->windowWidth, xd->windowHeight,
+			    privategetpixel2, 0, xd->fp);
+	    free(data);
+	} else {
+	    if (xd->kind == PNG)
+		R_SaveAsPng(xd->gawin, xd->windowWidth, xd->windowHeight,
+			    privategetpixel, 0, xd->fp,
+			    R_OPAQUE(xd->bg) ? 0 : xd->pngtrans) ;
+	    else if (xd->kind == JPEG)
+		R_SaveAsJpeg(xd->gawin, xd->windowWidth, xd->windowHeight,
+			     privategetpixel, 0, xd->quality, xd->fp) ;
+	    else
+		R_SaveAsBmp(xd->gawin, xd->windowWidth, xd->windowHeight,
+			    privategetpixel, 0, xd->fp);
+	}
 	fclose(xd->fp);
     }
     gsetcliprect(xd->gawin, r);
