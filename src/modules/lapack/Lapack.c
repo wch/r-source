@@ -40,7 +40,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 			 REAL(v), INTEGER(getAttrib(v, R_DimSymbol)),
 			 &tmp, &lwork, &info);
 	lwork = (int) tmp;
-    
+
 	work = (double *) R_alloc(lwork, sizeof(double));
 	F77_CALL(dgesvd)(CHAR(STRING_ELT(jobu, 0)), CHAR(STRING_ELT(jobv, 0)),
 			 &n, &p, xvals, &n, REAL(s),
@@ -53,10 +53,10 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	int ldu = INTEGER(getAttrib(u, R_DimSymbol))[0],
 	    ldvt = INTEGER(getAttrib(v, R_DimSymbol))[0];
 	int *iwork= (int *) R_alloc(8*(n<p ? n : p), sizeof(int));
-	
+
 	/* ask for optimal size of work array */
 	lwork = -1;
-	
+
 	F77_CALL(dgesdd)(CHAR(STRING_ELT(jobu, 0)),
 			 &n, &p, xvals, &n, REAL(s),
 			 REAL(u), &ldu,
@@ -73,7 +73,7 @@ static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v,
 	if (info != 0)
 	    error("error code %d from Lapack routine dgesdd", info);
     }
-    
+
     val = PROTECT(allocVector(VECSXP, 3));
     nm = PROTECT(allocVector(STRSXP, 3));
     SET_STRING_ELT(nm, 0, mkChar("d"));
@@ -131,22 +131,22 @@ static SEXP modLa_rs(SEXP xin, SEXP only_values, SEXP method)
 	int liwork, *iwork, itmp, m;
 	double vl, vu, abstol = 0.0;
 	int il, iu, *isuppz;
-	
+
 	range[0] = 'A';
 	if (!ov) PROTECT(z = allocMatrix(REALSXP, n, n));
 	isuppz = (int *) R_alloc(2*n, sizeof(int));
 	/* ask for optimal size of work arrays */
 	lwork = -1; liwork = -1;
-	F77_CALL(rsyevr)(jobv, range, uplo, &n, rx, &n, 
+	F77_CALL(rsyevr)(jobv, range, uplo, &n, rx, &n,
 			 &vl, &vu, &il, &iu, &abstol, &m, rvalues,
 			 REAL(z), &n, isuppz,
 			 &tmp, &lwork, &itmp, &liwork, &info);
 	lwork = (int) tmp;
 	liwork = itmp;
-	
+
 	work = (double *) R_alloc(lwork, sizeof(double));
 	iwork = (int *) R_alloc(liwork, sizeof(int));
-	F77_CALL(rsyevr)(jobv, range, uplo, &n, rx, &n, 
+	F77_CALL(rsyevr)(jobv, range, uplo, &n, rx, &n,
 			 &vl, &vu, &il, &iu, &abstol, &m, rvalues,
 			 REAL(z), &n, isuppz,
 			 work, &lwork, iwork, &liwork, &info);
@@ -201,7 +201,8 @@ static SEXP unscramble(const double* imaginary, int n,
 
 static SEXP modLa_rg(SEXP x, SEXP only_values)
 {
-    int i, n, lwork, info, vectors, complexValues, *xdims, ov;
+    Rboolean vectors, complexValues;
+    int i, n, lwork, info, *xdims, ov;
     double *work, *wR, *wI, *left, *right, *xvals, tmp;
     char jobVL[1], jobVR[1];
     SEXP ret, nm, val;
@@ -211,18 +212,17 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     if (n != xdims[1])
 	error("x must be a square numeric matrix");
 
-    xvals = (double *) R_alloc(n * n, sizeof(double)); 
+    xvals = (double *) R_alloc(n * n, sizeof(double));
     /* work on a copy of x */
     Memcpy(xvals, REAL(x), (size_t) (n * n));
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error("invalid `only.values'");
+    vectors = !ov;
     jobVL[0] = jobVR[0] = 'N';
     left = right = (double *) 0;
-    vectors = 0;
-    if (!ov) {
+    if (vectors) {
 	jobVR[0] = 'V';
 	right = (double *) R_alloc(n * n, sizeof(double));
-	vectors = 1;
     }
     wR = (double *) R_alloc(n, sizeof(double));
     wI = (double *) R_alloc(n, sizeof(double));
@@ -237,9 +237,9 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
     if (info != 0)
 	error("error code %d from Lapack routine dgeev", info);
 
-    complexValues = 0;
+    complexValues = FALSE;
     for (i = 0; i < n; i++)
-	if (wI[i] != 0.0) complexValues = 1;
+	if (wI[i] != 0.0) { complexValues = TRUE; break; }
     ret = PROTECT(allocVector(VECSXP, 2));
     nm = PROTECT(allocVector(STRSXP, 2));
     SET_STRING_ELT(nm, 0, mkChar("values"));
@@ -261,10 +261,12 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
 	for (i = 0; i < n; i++)
 	    REAL(val)[i] = wR[i];
 	SET_VECTOR_ELT(ret, 0, val);
-	val = allocMatrix(REALSXP, n, n);
-	for (i = 0; i < (n * n); i++)
-	    REAL(val)[i] = right[i];
-	SET_VECTOR_ELT(ret, 1, val);
+	if(vectors) {
+	    val = allocMatrix(REALSXP, n, n);
+	    for (i = 0; i < (n * n); i++)
+		REAL(val)[i] = right[i];
+	    SET_VECTOR_ELT(ret, 1, val);
+	}
     }
     UNPROTECT(2);
     return ret;
@@ -292,7 +294,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP B)
 	error("B (%d x %d) must be square", Bdims[0], p);
     ipiv = (int *) R_alloc(n, sizeof(int));
 
-    avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex)); 
+    avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
     Memcpy(avals, COMPLEX(A), (size_t) (n * n));
     F77_CALL(zgesv)(&n, &p, avals, &n, ipiv, COMPLEX(B), &n, &info);
@@ -537,7 +539,7 @@ static SEXP modLa_rs_cmplx(SEXP xin, SEXP only_values)
 static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
-    int  n, lwork, info, vectors, *xdims, ov;
+    int  n, lwork, info, *xdims, ov;
     Rcomplex *work, *left, *right, *xvals, tmp;
     double *rwork;
     char jobVL[1], jobVR[1];
@@ -548,19 +550,17 @@ static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
     if (n != xdims[1])
 	error("x must be a square numeric matrix");
 
-    xvals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex)); 
+    xvals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
     /* work on a copy of x */
     Memcpy(xvals, COMPLEX(x), (size_t) (n * n));
     ov = asLogical(only_values);
     if (ov == NA_LOGICAL) error("invalid `only.values'");
     jobVL[0] = jobVR[0] = 'N';
     left = right = (Rcomplex *) 0;
-    vectors = 0;
     if (!ov) {
 	jobVR[0] = 'V';
 	PROTECT(val = allocMatrix(CPLXSXP, n, n));
 	right = COMPLEX(val);
-	vectors = 1;
     }
     PROTECT(values = allocVector(CPLXSXP, n));
     rwork = (double *) R_alloc(2*n, sizeof(double));
@@ -603,7 +603,7 @@ R_init_lapack(DllInfo *info)
 {
     R_LapackRoutines *tmp;
     tmp = (R_LapackRoutines*) malloc(sizeof(R_LapackRoutines));
-   
+
     tmp->svd = modLa_svd;
     tmp->rs = modLa_rs;
     tmp->rg = modLa_rg;

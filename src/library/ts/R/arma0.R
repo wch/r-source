@@ -3,6 +3,7 @@ arima0 <- function(x, order=c(0,0,0),
                    include.mean=TRUE, na.action=na.fail, delta=0.01,
                    transform.pars=2)
 {
+    on.exit(.C("free_starma", PACKAGE = "ts"))
     series <- deparse(substitute(x))
     if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
@@ -41,11 +42,11 @@ arima0 <- function(x, order=c(0,0,0),
     .C("setup_starma",
        as.integer(arma), as.double(x), as.integer(n.used),
        as.double(xreg), as.integer(ncxreg), as.double(delta),
-       as.integer(transform.pars > 0), PACKAGE="ts")
+       as.integer(transform.pars > 0), PACKAGE = "ts")
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
-    res <- optim(init, arma0f, method="BFGS", hessian=transform.pars < 2)
+    res <- optim(init, arma0f, method = "BFGS", hessian = transform.pars < 2)
     if(res$convergence > 0)
         warning(paste("possible convergence problem: optim gave code=",
                       res$convergence))
@@ -53,8 +54,8 @@ arima0 <- function(x, order=c(0,0,0),
 
     if(transform.pars)
         coef <- .C("Dotrans", coef, new=coef, PACKAGE="ts")$new
-    .C("free_starma", PACKAGE="ts")
     if(transform.pars == 2) {
+        .C("free_starma", PACKAGE="ts")
         .C("setup_starma",
            as.integer(arma), as.double(x), as.integer(n.used),
            as.double(xreg), as.integer(ncxreg), as.double(delta),

@@ -201,7 +201,7 @@ usage.  The limit can be raised by calling @code{memory.limit} from a
 running R session.
 
 We have found that starting R with too large a value of
-@code{--max-mem-size} may fail: the limit seemed to be about 1.7Mb on
+@code{--max-mem-size} may fail: the limit seemed to be about 1.7Gb on
 Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be better
@@ -456,7 +456,8 @@ package, run at the R prompt.
 @end example
 
 This is done automatically when installing from the Packages menu or
-by @code{install.packages()}.
+by @code{install.packages()}, and when @code{help.start} is run,
+provided you have write permission in @file{@RWVER@\library}.
 
 
 @node My functions are not found by the HTML help search system., Loading a package fails., The packages I installed do not appear in the HTML help system, Packages
@@ -963,14 +964,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 December 7 by Professor B. D. Ripley
+Last edited 2002 January 17 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 December 7 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2002 January 17 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

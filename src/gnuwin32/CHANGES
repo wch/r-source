@@ -4,6 +4,24 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1041
+======
+
+Updating HTML indices, e.g. in help.start(), is done within a 
+try() construct.
+
+help.start() has a new argument `update'.
+
+Making packages now warns if there is a configure script.
+
+ga.h was needed for building package `windlgs', but was omitted from the
+`source package' code for rw1040.  It is now included.
+
+Rcmd check was failing on Windows 9X, because additions in 1.4.0 were
+not using Rsystem().
+
+
+
 rw1040
 ======
 
@@ -16,7 +34,7 @@ limit of about 1700M, at least under Windows 2000.
 memory.limit() can now increase the memory limit of the current session.
 This will not work if the limit is currently reached!
 
-internet2.dll (see changes for rw1030) can be selected by the
+internet2.dll (see changes for rw1030) must be selected by the
 --internet2 flag.
 
 The miniR* distribution has grown to seven floppies, and no attempt is

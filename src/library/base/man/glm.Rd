@@ -20,6 +20,11 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
         offset = rep(0, nrow(x)),
         family = gaussian(), control = glm.control(),
         intercept = TRUE)
+glm.fit.null(x, y, weights = rep(1, nrow(x)),
+        start = NULL, etastart  =  NULL, mustart = NULL,
+        offset = rep(0, nrow(x)),
+        family = gaussian(), control = glm.control(),
+        intercept = FALSE)
 \method{weights}{glm}(object, type = c("prior", "working"), \dots)
 }
 \arguments{
@@ -58,7 +63,8 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
     during fitting.}
 
   \item{control}{a list of parameters for controlling the fitting
-    process.  See the documentation for \code{\link{glm.control}} for details.}
+    process.  See the documentation for \code{\link{glm.control}}
+    for details.}
 
   \item{model}{a logical value indicating whether \emph{model frame}
     should be included as a component of the returned value.}
@@ -104,6 +110,9 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
   The specification \code{first*second} indicates the \emph{cross}
   of \code{first} and \code{second}.
   This is the same as \code{first + second + first:second}.
+
+  \code{glm.fit} and \code{glm.fit.null} are the workhorse functions:
+  the former calls the latter for a null model (with no intercept).
 }
 \value{
   \code{glm} returns an object of class \code{glm}
@@ -191,11 +200,6 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
   \code{\link{esoph}}, \code{\link{infert}} and
   \code{\link{predict.glm}} have examples of fitting binomial glms.
 }
-\note{
-  Offsets specified by \code{offset} will not be included in predictions
-  by \code{\link{predict.glm}}, whereas those specified by an offset term
-  in the formula will be.
-}
 \references{
   McCullagh P. and Nelder, J. A. (1989)
   \emph{Generalized Linear Models.}
@@ -206,7 +210,7 @@ glm.fit(x, y, weights = rep(1, nrow(x)),
   London: Chapman and Hall.
 
   Venables, W. N. and Ripley, B. D. (1999)
-  \emph{Modern Applied Statistics withe S-PLUS.}
+  \emph{Modern Applied Statistics with S-PLUS.}
   New York: Springer.
 }
 

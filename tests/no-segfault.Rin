@@ -42,6 +42,7 @@ stop.list[["base"]] <-
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
 stop.list[["methods"]] <- c("browseAll", "recover")
+stop.list[["ts"]] <- "arma0f"
 
 sink("no-segfault.R")
 

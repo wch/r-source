@@ -7,7 +7,8 @@ cmdscale(d, k = 2, eig = FALSE)
 \arguments{
   \item{d}{a distance structure such as that returned by \code{dist}
     or a full symmetric matrix containing the dissimilarities.}
-  \item{k}{the dimension of the space which the data are to be represented in.}
+  \item{k}{the dimension of the space which the data are to be
+    represented in; must be in \eqn{\{1,2, .., n-1\}}.}
   \item{eig}{indicates whether eigenvalues should be returned.}
 }
 \description{
@@ -31,6 +32,13 @@ cmdscale(d, k = 2, eig = FALSE)
   \item{eig}{the eigenvalues computed during the scaling process.}
 }
 \references{
+  Cox, F.C. and Cox, M.A.A. (1994)
+  \emph{Multidimensional Scaling}.
+  Chapman and Hall.
+
+  Mardia, K. V., J. T. Kent and J. M. Bibby (1979).  Chapter 14 of
+  \emph{Multivariate Analysis}, London: Academic Press.
+
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.
   New York: Wiley.
@@ -41,8 +49,8 @@ cmdscale(d, k = 2, eig = FALSE)
 }
 \note{
   The S version of this function provides for computing an additional
-  ``fiddle'' factor suggested by Torgerson.  \R does not provide this
-  option.
+  ``fiddle'' factor suggested by Torgerson.  \R will provide this
+  option from version 1.5.0 on.
 }
 \seealso{
   \code{\link{dist}}. Also
@@ -54,7 +62,12 @@ data(eurodist)
 loc <- cmdscale(eurodist)
 x <- loc[,1]
 y <- -loc[,2]
-plot(x, y, type="n", xlab="", ylab="")
-text(x, y, names(eurodist), cex=0.5)
+plot(x, y, type="n", xlab="", ylab="", main="cmdscale(eurodist)")
+text(x, y, names(eurodist), cex=0.8)
+
+\testonly{
+## failed in versions <= 1.4.0 :
+cmdscale(eurodist, k = 1)
+}
 }
 \keyword{multivariate}

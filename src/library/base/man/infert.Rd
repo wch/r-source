@@ -41,12 +41,12 @@ summary(model2 <- glm(case ~ age+parity+education+spontaneous+induced,
                 data=infert,family=binomial()))
 ## Really should be analysed by conditional logistic regression
 ## which is equivalent to a Cox model :
-if(require(survival5)){
+if(require(survival)){
   faketime <- rep(42,nrow(infert))
   model3 <- coxph(Surv(faketime,case)~spontaneous+induced+strata(stratum),
                 data=infert,method="exact")
   summary(model3)
-  detach()# survival5 (conflicts)
+  detach()# survival (conflicts)
 }
 }
 \keyword{datasets}

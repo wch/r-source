@@ -3,9 +3,9 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2001
-@set FAQ-VERSION 1.4-0, 2001-12-17
-@set REL-VERSION 1.4.0
+@set FAQ-YEAR 2002
+@set FAQ-VERSION 1.4-11, 2002-01-30
+@set REL-VERSION 1.4.1
 @c %**end of header
 
 @dircategory Programming
@@ -376,7 +376,7 @@ respectively.
 
 The @file{bin/windows} directory of a @acronym{CRAN} site contains
 binaries for a base distribution and a large number of add-on packages
-from @acronym{CRAN} to run on Windows 95, 98, NT4, 2000 and ME (at
+from @acronym{CRAN} to run on Windows 95, 98, ME, NT4, 2000, and XP (at
 least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
 and maintained by @email{Guido.Masarotto@@r-project.org, Guido
@@ -415,16 +415,16 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-12-08:
+@c Linux binaries as of 2001-12-23:
 @c
 @c debian   2.2 i386  1.3.1  Dirk Eddelbuettel <edd@debian.org>
-@c          2.3 i386  1.3.1  Dirk Eddelbuettel <edd@debian.org>
-@c linuxppc 5.0 ppc   1.3.1  Alex Buerkle <buerkla@uwec.edu>
+@c          3.0 i386  1.4.0  Dirk Eddelbuettel <edd@debian.org>
+@c linuxppc 5.0 ppc   1.4.0  Alex Buerkle <buerkla@uwec.edu>
 @c mandrake 7.x i386  1.3.0  Maximino Ameneiro Gomez <maximino.ameneiro@metropoli2000.com>
-@c          8.1 i386  1.3.1  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x i386  1.3.1  Stephen Eglen <stephen@gnu.org>
-@c          7.x alpha 1.3.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.3.1  Martyn Plummer <plummer@iarc.fr>
+@c          8.1 i386  1.4.0  Michele Alzetta <mikalzet@libero.it>
+@c redhat   6.x i386  1.4.0  Stephen Eglen <stephen@gnu.org>
+@c          7.x alpha 1.4.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.4.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
@@ -443,7 +443,7 @@ deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
 @end smallexample
 
 @noindent
-(where @var{distribution} is either @samp{stable} or @samp{unstable};
+(where @var{distribution} is either @samp{stable} or @samp{testing};
 feel free to use a @acronym{CRAN} mirror instead of the master) to the
 file @file{/etc/apt/sources.list}.  Once you have added that line the
 programs @command{apt-get}, @command{apt-cache}, and @command{dselect}
@@ -681,6 +681,8 @@ and is currently being mirrored daily at
 @tab (TU Wien, Austria)
 @item @uref{http://cran.au.r-project.org/}
 @tab (PlanetMirror, Australia)
+@item @uref{http://cran.br.r-project.org/}
+@tab (Universidade Federal de Paran@'a, Brazil)
 @item @uref{http://cran.ch.r-project.org/}
 @tab (ETH Z@"urich, Switzerland)
 @item @uref{http://cran.de.r-project.org/}
@@ -713,7 +715,7 @@ on R, existing mailing lists and the R Bug Tracking system.
 
 To ``submit'' to @acronym{CRAN}, simply upload to
 @uref{ftp://cran.r-project.org/incoming/} and send an email to
-@email{wwwadmin@@cran.r-project.org}.
+@email{cran@@r-project.org}.
 
 @quotation
 @strong{Note:}  It is very important that you indicate the copyright
@@ -1444,6 +1446,8 @@ The following packages are available from the @acronym{CRAN}
 @item AnalyzeFMRI
 Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
+@item Bhat
+Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item CoCoAn
 Constrained Correspondence Analysis.
 @item Devore5
@@ -1529,6 +1533,8 @@ VAriance Stabilization for regression) methods for selecting regression
 transformations.
 @item adapt
 Adaptive quadrature in up to 20 dimensions.
+@item agce
+Analysis of growth curve experiments.
 @item akima
 Linear or cubic spline interpolation for irregularly gridded data.
 @item ash
@@ -1587,6 +1593,9 @@ any mixture of these.
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
 or sampling grids.
+@item dr
+Functions, methods, and datasets for fitting dimension reduction
+regression, including pHd and inverse regression methods SIR and SAVE.
 @item dse
 Dynamic System Estimation, a multivariate time series package.  Contains
 @strong{dse1} (DSE kernel plus ARMA and state space models),
@@ -1648,6 +1657,8 @@ capabilities, plus some support for interaction.
 @item gss
 A comprehensive package for structural multivariate function estimation
 using smoothing splines.
+@item hdf5
+Interface to the @acronym{NCSA} HDF5 library.
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
@@ -1733,6 +1744,8 @@ Fits a principal curve to a numeric multivariate dataset in arbitrary
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
 other distance matrices and performs multi-dimensional scaling and
 principal component analyses.
+@item pear
+Periodic Autoregression Analysis.
 @item permax
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
@@ -1797,6 +1810,9 @@ visualization.
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with @SPLUS{}'' by W. Venables and B. Ripley.  Contained in
 the @file{VR} bundle.
+@item spatstat
+Data analysis and modelling of two-dimensional point patterns, including
+multitype points and spatial covariates.
 @item splancs
 Spatial and space-time point pattern analysis functions.
 @item sptests
@@ -1844,8 +1860,6 @@ Robust statistical inference via a weighted likelihood approach.
 Interface to the XGobi and XGvis programs for graphical data analysis.
 @item xtable
 Export data to La@TeX{} and @HTML{} tables.
-@item zmatrix
-Matrices with numeric indices starting at zero rather than one.
 @end table
 
 @noindent
@@ -1879,6 +1893,8 @@ Functions for exporting R objects & graphics in an @HTML{} document.
 @c  Provides methods for accessing data stored in PostgreSQL tables.
 @item StatDataML
 Read and write StatDataML.
+@item colSums
+Matrix summary functions in C.
 @item cxx
 A small C++ test package.
 @item dopt
@@ -1888,8 +1904,6 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
-@item hdf5
-Interface to the @acronym{NCSA} HDF5 library.
 @item hpower
 A suite of functions to compute power and sample size for tests of the
 general linear hypothesis.

@@ -1,7 +1,7 @@
-R 1.4.0 for Windows
+R 1.4.1 for Windows
 ====================
 
-This distribution contains the sources to build a port of R-1.4.0 to
+This distribution contains the sources to build a port of R-1.4.1 to
 run on Windows 95, 98, ME, NT4, 2000 and XP on Intel/clone chips. See the
 file `readme' for fuller details, including how to install the binary
 versions.
@@ -20,11 +20,13 @@ Collect the tools
 -----------------
 
 You will need suitable versions of at least make, sh, cat, cp, cut,
-diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch;
-we use those from the cygwin distribution
+diff, echo, egrep, expr, grep, ls, mkdir, mv, rm, sed, touch; we use
+those from the cygwin distribution
 (http://www.cygwin.com/mirrors.html) or (gzip, makeinfo, texindex)
 compiled from the sources.  We have packaged a set at
-http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.
+http://www.stats.ox.ac.uk/pub/Rtools/tools.zip.  You may need to copy
+sh.exe to c:\bin\sh.exe; the exact circumstances are mysterious, but
+the error message will be `make[1]: /bin/sh.exe: Command not found'.
 
 BEWARE: `Native' ports of make are _not_ suitable (including that at
 the mingw site).  There were also problems with several earlier
@@ -73,11 +75,11 @@ appropriate environment variables set.
 Building
 --------
 
-You also need the R source (R-1.4.0.tgz).
+You also need the R source (R-1.4.1.tgz).
 
-Then: untar R-1.4.0.tgz somewhere (with no spaces in the path names),
+Then: untar R-1.4.1.tgz somewhere (with no spaces in the path names),
 
-	cd /somewhere/R-1.4.0/src/gnuwin32
+	cd /somewhere/R-1.4.1/src/gnuwin32
 
 IMPORTANT: edit MkRules to set the appropriate paths as needed.
 
@@ -88,11 +90,11 @@ and run
 	make
 
 
-Note 1: the file rw1040\unzip\unzip32.dll is not in the source
+Note 1: the file rw1041\unzip\unzip32.dll is not in the source
 distribution. It can be found in file unz542dN.zip at any Info-ZIP
 mirror, or you can copy it from a binary distribution.
 
-The file rw1040\bin\Rchtml.dll is only built if CHM help is specified
+The file rw1041\bin\Rchtml.dll is only built if CHM help is specified
 in the main Makefile. Its source is the help directory, and you need
 the HTML Help Workshop files to build it. It contains instructions
 to build it under VC++6, and it is preferable to use that as the 
@@ -123,7 +125,7 @@ temporary directory: the default is c:\TEMP.
 Building bitmap device support
 ------------------------------
 
-The file rw1040\bin\Rbitmap.dll is not built automatically:
+The file rw1041\bin\Rbitmap.dll is not built automatically:
 instructions on how to build it are in the file bitmap\INSTALL.
 
 
@@ -183,7 +185,7 @@ Building the installers
 
 See installer/INSTALL.  You need a complete R build first, including 
 bitmap and Tcl/Tk support and the manuals, as well as the recommended
-packages in R-1.4.0-recommended.tgz.
+packages in R-1.4.1-recommended.tgz.
 
 
 Recommended packages
@@ -231,11 +233,11 @@ cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 
-You also need the R source (R-1.4.0.tgz).
+You also need the R source (R-1.4.1.tgz).
 
-Then: untar R-1.4.0.tgz somewhere, and
+Then: untar R-1.4.1.tgz somewhere, and
 
-	cd /somewhere/R-1.4.0/src/gnuwin32
+	cd /somewhere/R-1.4.1/src/gnuwin32
 
 Edit MkRules to set BUILD=CROSS and the appropriate paths (including
 HEADER) as needed.

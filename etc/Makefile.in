@@ -72,7 +72,7 @@ clean:
 	  rm -f *.pl $(CLEANFILES); \
 	fi
 ## </FIXME>
-	@rm -f $(EXPORTFILE)
+	@-test -z "$(EXPORTFILE)" || rm -f $(EXPORTFILE)
 distclean: clean
 	@rm -f $(OBJECTS) Makefile
 maintainer-clean: distclean

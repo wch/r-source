@@ -53,11 +53,15 @@ function(..., list = character(0),
             ## <NOTE>
             ## Earlier versions also used to check for `index.doc'.
             ## </NOTE>
-            if(file.exists(INDEX))
-                db <- rbind(db,
-                            cbind(basename(path),
-                                  dirname(path),
-                                  read.00Index(INDEX)))
+            if(file.exists(INDEX)) {
+                entries <- read.00Index(INDEX)
+                if(NROW(entries) > 0) {
+                    db <- rbind(db,
+                                cbind(basename(path),
+                                      dirname(path),
+                                      entries))
+                }
+            }
             else {
                 ## no index: check for datasets---won't work if zipped
                 if(length(list.files(file.path(path, "data"))) > 0)

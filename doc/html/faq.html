@@ -16,7 +16,7 @@ Next:<a rel=next href="#Introduction">Introduction</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.4-0, 2001-12-17</h2>
+<h2>Version 1.4-11, 2002-01-30</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -117,7 +117,7 @@ Up:<a rel=up href="#Introduction">Introduction</a>
 <h2>1.3 Citing this document</h2>
 
 <p>In publications, please refer to this <small>FAQ</small> as Hornik
-(2001), "The R <small>FAQ</small>" and give the above,
+(2002), "The R <small>FAQ</small>" and give the above,
 <em>official</em> <small>URL</small>.
 
 <p><hr>
@@ -251,7 +251,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current released version is 1.4.0.  Conforming to this
+<p>The current released version is 1.4.1.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -393,7 +393,7 @@ Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</
 
 <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains
 binaries for a base distribution and a large number of add-on packages
-from <small>CRAN</small> to run on Windows 95, 98, NT4, 2000 and ME (at
+from <small>CRAN</small> to run on Windows 95, 98, ME, NT4, 2000, and XP (at
 least) on Intel and clones (but not on other platforms).  The Windows
 version of R was created by Robert Gentleman, and is now being developed
 and maintained by <a href="mailto:Guido.Masarotto@r-project.org">Guido Masarotto</a> and <a href="mailto:Brian.Ripley@r-project.org">Brian D. Ripley</a>.
@@ -447,7 +447,7 @@ maintenance tool.  Simply add the line
 <pre>deb http://cran.r-project.org/bin/linux/debian <var>distribution</var> main
 </pre>
 
-<p>(where <var>distribution</var> is either <code>stable</code> or <code>unstable</code>;
+<p>(where <var>distribution</var> is either <code>stable</code> or <code>testing</code>;
 feel free to use a <small>CRAN</small> mirror instead of the master) to the
 file <code>/etc/apt/sources.list</code>.  Once you have added that line the
 programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code>
@@ -688,6 +688,8 @@ binaries.
 </td><td valign="top">(TU Wien, Austria)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.au.r-project.org/">http://cran.au.r-project.org/</a>
 </td><td valign="top">(PlanetMirror, Australia)
+<br></td></tr><tr align="left"><td valign="top"><a href="http://cran.br.r-project.org/">http://cran.br.r-project.org/</a>
+</td><td valign="top">(Universidade Federal de Paran&aacute;, Brazil)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.ch.r-project.org/">http://cran.ch.r-project.org/</a>
 </td><td valign="top">(ETH Z&uuml;rich, Switzerland)
 <br></td></tr><tr align="left"><td valign="top"><a href="http://cran.de.r-project.org/">http://cran.de.r-project.org/</a>
@@ -717,7 +719,7 @@ on R, existing mailing lists and the R Bug Tracking system.
 
 <p>To "submit" to <small>CRAN</small>, simply upload to
 <a href="ftp://cran.r-project.org/incoming/">ftp://cran.r-project.org/incoming/</a> and send an email to
-<a href="mailto:wwwadmin@cran.r-project.org">wwwadmin@cran.r-project.org</a>.
+<a href="mailto:cran@r-project.org">cran@r-project.org</a>.
 
 <blockquote>
 <strong>Note:</strong>  It is very important that you indicate the copyright
@@ -1411,6 +1413,8 @@ distribution functions.
 <dt><strong>AnalyzeFMRI</strong>
 <dd>Functions for I/O, visualisation and analysis of functional Magnetic
 Resonance Imaging (fMRI) datasets stored in the ANALYZE format. 
+<br><dt><strong>Bhat</strong>
+<dd>Functions for general likelihood exploration (MLE, MCMC, CIs). 
 <br><dt><strong>CoCoAn</strong>
 <dd>Constrained Correspondence Analysis. 
 <br><dt><strong>Devore5</strong>
@@ -1489,6 +1493,8 @@ VAriance Stabilization for regression) methods for selecting regression
 transformations. 
 <br><dt><strong>adapt</strong>
 <dd>Adaptive quadrature in up to 20 dimensions. 
+<br><dt><strong>agce</strong>
+<dd>Analysis of growth curve experiments. 
 <br><dt><strong>akima</strong>
 <dd>Linear or cubic spline interpolation for irregularly gridded data. 
 <br><dt><strong>ash</strong>
@@ -1547,6 +1553,9 @@ any mixture of these.
 <dd>Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
 or sampling grids. 
+<br><dt><strong>dr</strong>
+<dd>Functions, methods, and datasets for fitting dimension reduction
+regression, including pHd and inverse regression methods SIR and SAVE. 
 <br><dt><strong>dse</strong>
 <dd>Dynamic System Estimation, a multivariate time series package.  Contains
 <strong>dse1</strong> (DSE kernel plus ARMA and state space models),
@@ -1608,6 +1617,8 @@ capabilities, plus some support for interaction.
 <br><dt><strong>gss</strong>
 <dd>A comprehensive package for structural multivariate function estimation
 using smoothing splines. 
+<br><dt><strong>hdf5</strong>
+<dd>Interface to the <small>NCSA</small> HDF5 library. 
 <br><dt><strong>ineq</strong>
 <dd>Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic). 
@@ -1691,6 +1702,8 @@ ODEs are expressed as R functions.
 dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
 other distance matrices and performs multi-dimensional scaling and
 principal component analyses. 
+<br><dt><strong>pear</strong>
+<dd>Periodic Autoregression Analysis. 
 <br><dt><strong>permax</strong>
 <dd>Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
@@ -1750,6 +1763,9 @@ visualization.
 <dd>Functions for kriging and point pattern analysis from "Modern Applied
 Statistics with <small>S-PLUS</small>" by W. Venables and B. Ripley.  Contained in
 the <code>VR</code> bundle. 
+<br><dt><strong>spatstat</strong>
+<dd>Data analysis and modelling of two-dimensional point patterns, including
+multitype points and spatial covariates. 
 <br><dt><strong>splancs</strong>
 <dd>Spatial and space-time point pattern analysis functions. 
 <br><dt><strong>sptests</strong>
@@ -1788,8 +1804,6 @@ ecologists.
 <dd>Interface to the XGobi and XGvis programs for graphical data analysis. 
 <br><dt><strong>xtable</strong>
 <dd>Export data to LaTeX and <small>HTML</small> tables. 
-<br><dt><strong>zmatrix</strong>
-<dd>Matrices with numeric indices starting at zero rather than one. 
 </dl>
 
 <p>See <small>CRAN</small> <code>src/contrib/PACKAGES</code> for more information.
@@ -1818,6 +1832,8 @@ functions to match the interface metadata structures.
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
 <br><dt><strong>StatDataML</strong>
 <dd>Read and write StatDataML. 
+<br><dt><strong>colSums</strong>
+<dd>Matrix summary functions in C. 
 <br><dt><strong>cxx</strong>
 <dd>A small C++ test package. 
 <br><dt><strong>dopt</strong>
@@ -1827,8 +1843,6 @@ functions to match the interface metadata structures.
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>ensemble</strong>
 <dd>Ensembles of tree classifiers. 
-<br><dt><strong>hdf5</strong>
-<dd>Interface to the <small>NCSA</small> HDF5 library. 
 <br><dt><strong>hpower</strong>
 <dd>A suite of functions to compute power and sample size for tests of the
 general linear hypothesis. 

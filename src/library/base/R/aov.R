@@ -158,8 +158,12 @@ function(x, intercept = FALSE, tol = .Machine$double.eps^0.5, ...)
         if(rdf > 0) {
             ss <- apply(as.matrix(x$residuals)^2,2,sum)
             ssp <- sapply(ss, format)
+            if(!is.matrix(ssp)) ssp <- t(ssp)
             tmp <- as.matrix(c(ssp, format(rdf)))
-            rn <- if(length(ss) > 1) colnames(x$fitted) else "Sum of Squares"
+            if(length(ss) > 1) {
+                rn <- colnames(x$fitted)
+                if(is.null(rn)) rn <- paste("resp", 1:length(ss))
+            } else rn <- "Sum of Squares"
             dimnames(tmp) <- list(c(rn, "Deg. of Freedom"), "Residuals")
             print.matrix(tmp, quote = FALSE, right = TRUE)
             cat("\n")

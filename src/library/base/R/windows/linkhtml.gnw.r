@@ -10,12 +10,14 @@ link.html.help <- function(verbose=FALSE, lib.loc=.Library)
     make.search.html(lib.loc)
 }
 
-
 make.packages.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home(), "doc/html/packages.html")
     f.hd <- file.path(R.home(), "doc/html/packages-head.html")
-    file.create(f.tg)
+    if(!file.create(f.tg)) {
+        warning("cannot update HTML package index")
+        return()
+    }
     file.append(f.tg, f.hd)
     out <- file(f.tg, open="a")
     cat('<table align="center" summary="R Package list">\n', file=out)
@@ -47,14 +49,15 @@ make.packages.html <- function(lib.loc=.libPaths())
     invisible(pg)
 }
 
-
-
 make.search.html <- function(lib.loc=.Library)
 {
     f.tg <- file.path(R.home(), "doc/html/search/index.txt")
-    if(file.exists(f.tg)) unlink(f.tg)
-    out <- file(f.tg, open="w")
-    for (i in  .packages(all.available=TRUE, lib.loc=lib.loc)) {
+    out <- file(f.tg, open = "w")
+    if(class(out) == "try-error") {
+        warning("cannot update HTML search index")
+        return()
+    }
+    for (i in  .packages(all.available = TRUE, lib.loc = lib.loc)) {
         cfile <- system.file("CONTENTS", package = i)
         if(nchar(cfile)) writeLines(readLines(cfile), out)
     }

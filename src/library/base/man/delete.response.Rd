@@ -2,8 +2,8 @@
 \title{Modify Terms Objects}
 \usage{
 delete.response(termobj)
-reformulate(termlabels,response=NULL)
-drop.terms(termobj, dropx = NULL, keep.response = FALSE) 
+reformulate(termlabels, response = NULL)
+drop.terms(termobj, dropx = NULL, keep.response = FALSE)
 }
 \alias{reformulate}
 \alias{drop.terms}
@@ -12,7 +12,7 @@ drop.terms(termobj, dropx = NULL, keep.response = FALSE)
   \item{termobj}{A \code{terms} object}
   \item{termlabels}{character vector giving the right-hand side of a
     model formula.}
-  \item{response}{character string giving the left-hand side of
+  \item{response}{character string, symbol or call giving the left-hand side of
     a model formula.}
   \item{dropx}{vector of positions of variables to drop from the
     right-hand side of the model.}
@@ -42,5 +42,15 @@ tt
 delete.response(tt)
 drop.terms(tt, 2:3, keep.response = TRUE)
 reformulate(attr(tt, "term.labels"))
+
+## keep LHS :
+reformulate("x*w", ff[[2]])
+fS <- surv(ft, case) ~ a + b
+reformulate(c("a", "b*f"), fS[[2]])
+
+stopifnot(identical(      ~ var, reformulate("var")),
+          identical(~ a + b + c, reformulate(letters[1:3])),
+          identical(  y ~ a + b, reformulate(letters[1:2], "y"))
+         )
 }
 \keyword{programming}

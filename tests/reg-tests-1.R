@@ -425,6 +425,88 @@ glm(y ~ 0, family = binomial)
 ##  Comments:  1.3.1 gave  Error in any(n > 1) : Object "n" not found
 
 
+## Integer overflow in type.convert
+res <- type.convert("12345689")
+stopifnot(typeof(res) == "integer")
+res <- type.convert("12345689012")
+stopifnot(typeof(res) == "double")
+##  Comments: was integer in 1.4.0
+
+
+## La.eigen() segfault
+e1 <- La.eigen(m <- matrix(1:9,3))
+stopifnot(e1$values == La.eigen(m, only.values = TRUE)$values)
+
+
+## Patrick Connelly 2001-01-22, prediction with offsets failed
+## a simpler example
+counts <- c(18, 17, 15, 20, 10, 20, 25, 13, 12)
+outcome <- gl(3, 1, 9)
+treatment <- gl(3, 3)
+DF <- data.frame(counts = c(18, 17, 15, 20, 10, 20, 25, 13, 12),
+                 outcome = gl(3, 1, 9), treatment = gl(3, 3),
+                 exposure = c(1.17, 1.78, 1.00, 2.36, 2.58, 0.80, 2.51,
+                 1.16, 1.77))
+fit <- glm(counts ~ outcome + treatment + offset(log(exposure)),
+           family = poisson, data = DF)
+p1 <- predict(fit)
+p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
+p3 <- predict(fit, newdata = DF)
+p4 <- predict(fit, newdata = DF, se = TRUE)
+stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
+fit <- glm(counts ~ outcome + treatment, offset = log(exposure),
+           family = poisson, data = DF)
+p1 <- predict(fit)
+p2 <- predict(fit, se = TRUE)  ## failed < 1.4.1
+p3 <- predict(fit, newdata = DF)
+p4 <- predict(fit, newdata = DF, se = TRUE)
+stopifnot(all.equal(p1, p2$fit), all.equal(p1, p3), all.equal(p2, p4))
+
+
+## PR 1271  detach("package:base") crashes R.
+try(detach("package:base"))
+
+## reported by PD 2002-01-24
+Y <- matrix(rnorm(20), , 2)
+fit <- manova(Y ~ 1)
+fit # failed
+print(fit, intercept = TRUE)
+summary(fit) # failed
+summary(fit, intercept = TRUE)
+
+## Several  qr.*() functions lose (dim)names.
+## reported by MM 2002-01-26
+
+## the following should work both in R and S+ :
+q4 <- qr(X4 <- cbind(a = 1:9, b = c(1:6,3:1), c = 2:10, d = rep(1,9)))
+##q2 <- qr(X4[,1:2])
+y04 <- y4 <- cbind(A=1:9,B=2:10,C=3:11,D=4:12)
+dimnames(y4)[[1]] <- paste("c",1:9,sep=".")
+y1 <- y4[,2]
+y40 <- y4 ; dimnames(y40) <- list(dimnames(y4)[[1]], NULL)
+
+c1 <- qr.coef( q4, y4) # row- AND col-names
+c2 <- qr.coef( q4, y04)# ditto
+c3 <- qr.coef( q4, y40)# row--names
+dn3 <- dimnames(c3)
+stopifnot(identical(dimnames(c1), dimnames(c2)),
+          identical(dimnames(c1), list(letters[1:4], LETTERS[1:4])),
+          identical(dn3[[1]], letters[1:4]),  length(dn3[[2]]) == 0,
+          identical(names(qr.coef(q4,y1)),   letters[1:4]),
+          identical(dimnames(qr.R(q4))[[2]], letters[1:4]),
+
+          identical(dimnames(qr.qty(q4,y4)), dimnames(y4)),
+          identical(dimnames(qr.qty(q4,y40)), dimnames(y40)),
+          identical(dimnames(qr.qy (q4,y04)), dimnames(y04)),
+
+          all.equal(y1,  qr.fitted(q4, y1 ), tol = 1e-12),
+          all.equal(y4,  qr.fitted(q4, y4 ), tol = 1e-12),
+          all.equal(y40, qr.fitted(q4, y40), tol = 1e-12),
+          all.equal(y04, qr.fitted(q4, y04), tol = 1e-12),
+
+          all.equal(X4, qr.X(q4), tol = 1e-12)
+)
+
 
 ## This example last ##
 

@@ -118,7 +118,6 @@ R.a: $(OBJS)
 
 # R.dll exports all global symbols BUT import library (libR.a)
 # only (all functions) + (global vars listed in exported-vars))
-# Only used in the cross-compilation case.
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
@@ -134,8 +133,6 @@ R.exp1: R.a $(MAINLIBS) $(EXTRALIBS) exported-vars
 	$(RM) RDefs
 
 # A version needed for the modules that uses R.dll's malloc/.../free
-# Used in all cases.
-# Also used for front-ends, as import from R.dll seems to fail
 
 libRm.a:  Rm.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def Rm.exp --output-lib libRm.a
@@ -254,7 +251,7 @@ distclean veryclean: clean
 	$(RM) ../library/*/src/*.o ../library/*/src/*.a
 	$(RM) ../library/*/src/*.dll
 	$(RM) -r ../library/*/check
-	$(RM) ../../doc/html/search/index.txt \
+	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
 	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
@@ -427,7 +424,7 @@ packagedist:
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \
           $(RPREFIX)/bin
 	$(CP) ../../share/make/tests.mk $(RPREFIX)/share/make
-	$(CP) -p graphapp/graphapp.h $(RPREFIX)/src/include
+	$(CP) -p graphapp/graphapp.h graphapp/ga.h $(RPREFIX)/src/include
 	$(MAKE) PKGDIR=. pkgclean-windlgs
 	$(CP) -pr windlgs $(RPREFIX)/src/library
 	-find $(RPREFIX) -name CVS -exec rm -rf \{\} \;

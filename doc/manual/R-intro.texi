@@ -3057,7 +3057,7 @@ qqnorm(long); qqline(long)
 @end example
 
 @noindent
-which shows a reasonable fit but a shorter right tail that one would
+which shows a reasonable fit but a shorter right tail than one would
 expect from a normal distribution.  Let us compare this with some
 simulated data from a @math{t} distribution
 
@@ -6123,7 +6123,7 @@ meanings are as follows:
 @item windows()
 [Windows]
 @item Macintosh()
-[MaxOS 8/9]
+[MacOS 8/9]
 @item postscript()
 @itemx pictex()
 @itemx @dots{}
@@ -6593,7 +6593,7 @@ support is available, and @samp{none}.
 Note that input and output can be redirected in the usual way (using
 @samp{<} and @samp{>}).
 
-The command @code{R CMD} allows the invokation of various tools which
+The command @code{R CMD} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
 ``directly''.  The general form is
 
@@ -6801,7 +6801,7 @@ control the printing of diagnostic messages.
 Set @code{Rterm} up for use by @code{R-inferior-mode} in @acronym{ESS}.
 @end table
 
-The command @code{Rcmd} allows the invokation of various tools which
+The command @code{Rcmd} allows the invocation of various tools which
 are useful in conjunction with @R{}, but not intended to be called
 ``directly''.  The general form is
 

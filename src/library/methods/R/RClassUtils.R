@@ -503,7 +503,9 @@ reconcilePropertiesAndPrototype <-
       ## A rule is needed to decide whether the environment should be hashed.
       ## decide on a prototype, if one was not provided
       if(is.null(prototype) && is.na(match("VIRTUAL", superClasses))) {
-          basicSuperClasses <- .BasicClasses[!is.na(match(superClasses, .BasicClasses))]
+          bWhich <- match(superClasses, .BasicClasses)
+          bWhich <- bWhich[!is.na(bWhich)]
+          basicSuperClasses <- .BasicClasses[bWhich]
           if(length(basicSuperClasses) > 0) {
               if(length(basicSuperClasses) > 1) {
                   warning("Class \"",name,"\" extends more than one basic class (",
@@ -742,7 +744,7 @@ extendsCoerce <-
         by <- (if(is.character(ext)) ext else ext$by)
         if(formFunction) {
             f <- eval(substitute(function(from)
-                            as(as(from, BY), CLASS),
+                            as(as(from, BY, FALSE), CLASS),
                             list(BY = by, CLASS=Class)))
         }
         else
@@ -800,7 +802,7 @@ extendsReplace <-
     if(is.list(ext)) {
         repl <- ext$replace
         if(is.function(repl)) {
-            f <- function(from, value) NULL
+            f <- function(from, to, value) NULL
             body(f, envir = .GlobalEnv) <- substituteDirect(body(repl),
                                         list(object = quote(from), from = quote(.from)))
         }
@@ -808,7 +810,7 @@ extendsReplace <-
     else if(is.character(ext)) {
         by <- ext
         if(length(by) > 0) {
-          f <- eval(substitute(function(from, value)
+          f <- eval(substitute(function(from, to, value)
                           as(as(from, BY), CLASS) <- value,
                           list(BY = by, CLASS=Class)))
           environment(f) <- .GlobalEnv
@@ -832,8 +834,8 @@ extendsReplace <-
                           || (length(fromSlots) == length(toSlots) &&
                               !any(is.na(match(fromSlots, toSlots)))))
             if(sameSlots)
-                f <- substitute(function(object, value){as(value, CLASS)},
-                                list(CLASS = Class))
+                f <- substitute(function(from, to, value){value <- as(value, CLASS); class(value) <- FROMCLASS; value},
+                                list(CLASS = Class, FROMCLASS=fromClass))
             else
                 f <- substitute(function(from, to, value) {
                      for(what in TOSLOTS)

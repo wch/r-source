@@ -69,6 +69,8 @@ Testing R build under Windows
       cross-links between help files in different packages under HTML
       and CHTML.
 
+    o Try Rcmd INSTALL on windlgs.
+
 
 - Test Rprof and Rcmd Rprof.
 

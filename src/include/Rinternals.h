@@ -52,7 +52,7 @@
  *			--> TypeTable[] in ../main/util.c for  typeof()
  */
 
-/*  These exaxt numeric values are seldom used, but they are, e.g., in
+/*  These exact numeric values are seldom used, but they are, e.g., in
  *  ../main/subassign.c
 */
 #ifndef enum_SEXPTYPE
@@ -625,11 +625,7 @@ Rcomplex asComplex(SEXP);
 int asInteger(SEXP);
 int asLogical(SEXP);
 double asReal(SEXP);
-#ifdef __MWERKS__
-SEXP arraySubscript(int, SEXP, SEXP, SEXP(SEXP,SEXP), SEXP);
-#else
-SEXP arraySubscript(int, SEXP, SEXP, SEXP(), SEXP);
-#endif
+SEXP arraySubscript(int, SEXP, SEXP, SEXP (*)(SEXP,SEXP), SEXP);
 SEXP classgets(SEXP, SEXP);
 Rboolean conformable(SEXP, SEXP);
 SEXP cons(SEXP, SEXP);
@@ -748,11 +744,7 @@ Rboolean StringBlank(SEXP);
 SEXP substitute(SEXP,SEXP);
 void unprotect(int);
 void unprotect_ptr(SEXP);
-#ifdef __MWERKS__
-SEXP vectorSubscript(int, SEXP, int*, SEXP(SEXP,SEXP), SEXP);
-#else
-SEXP vectorSubscript(int, SEXP, int*, SEXP(), SEXP);
-#endif
+SEXP vectorSubscript(int, SEXP, int*, SEXP (*)(SEXP,SEXP), SEXP);
 
 void R_ProtectWithIndex(SEXP, PROTECT_INDEX *);
 void R_Reprotect(SEXP, PROTECT_INDEX);
@@ -988,7 +980,7 @@ void R_InitFileOutPStream(R_outpstream_t stream, FILE *fp,
 			  SEXP (*phook)(SEXP, SEXP), SEXP pdata);
 
 #ifdef NEED_CONNECTION_PSTREAMS
-/* The connection interface is not yet availabel to packages.  To
+/* The connection interface is not yet available to packages.  To
    allow limited use of connection pointers this defines the opaque
    pointer type. */
 #ifndef HAVE_RCONNECTION_TYPEDEF

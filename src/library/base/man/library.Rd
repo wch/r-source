@@ -199,6 +199,13 @@ library(help = eda)         # documentation on package `eda'
 library(eda)                # load package `eda'
 require(eda)                # the same
 (.packages())		    # "eda", too
+detach("package:eda")
+
+# if the package name is in a character vector, use
+pkg <- "eda"
+library(pkg, character.only = TRUE)
+detach(pos = match(paste("package", pkg, sep=":"), search()))
+
 .path.package()
 .Autoloaded                 # maybe "ctest"
 
@@ -210,6 +217,5 @@ require(nonexistent)        # FALSE
 .First.lib <- function(lib, pkg) {
   library.dynam("foo", pkg, lib)
 }}
-\testonly{detach("package:eda")}
 }
 \keyword{data}

@@ -103,6 +103,9 @@ nlm(f, p, hessian = FALSE, typsize=rep(1, length(p)), fscale=1,
   \code{\link{optim}}.  \code{\link{optimize}} for one-dimensional
   minimization and \code{\link{uniroot}} for root finding.
   \code{\link{deriv}} to calculate analytical derivatives.
+
+  For nonlinear regression, \code{\link[nls]{nls}} (in package
+  \code{nls}), may be of better use.
 }
 \examples{
 f <- function(x) sum((x-1:length(x))^2)

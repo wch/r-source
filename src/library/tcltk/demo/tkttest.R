@@ -61,7 +61,7 @@ local({
         cat("### Command executed via Tk ###\n")
         cat(deparse(build()),sep="\n")
         cat("### -----\n")
-        eval(cmd)
+        eval.parent(cmd)
     }
 
     cat("******************************************************\n",
@@ -70,9 +70,7 @@ local({
         "\n******************************************************\n")
 
     data(airquality)
-    attach(airquality)
     xvar <- tclVar("Ozone[Month==5]")
     yvar <- tclVar("Ozone[Month==8]")
-    dialog.t.test()
-    detach("airquality")
+    with(airquality, dialog.t.test())
 })

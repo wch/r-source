@@ -239,7 +239,13 @@ conformMethod <-
     if(any(is.na(match(mnames, fnames))))
         stop(paste("Method has formal arguments not in generic function:",
                    paste(mnames[is.na(match(mnames, fnames))], collapse = ", ")))
+    ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
+    ## until then, allow an omitted "..." w/o checking
+    if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
+        fnames <- fnames[-match("...", fnames)]
     omitted <- is.na(match(fnames, mnames))
+    if(!any(omitted))
+        return(signature)
     if(!all(diff(seq(along=fnames)[!omitted]) > 0))
         stop("Formal arguments in method and function don't appear in the same order")
     specified <- omitted[seq(length=length(signature))]
@@ -247,10 +253,6 @@ conformMethod <-
        any(is.na(match(signature[specified], c("ANY", "missing")))))
         stop(paste("Formal arguments omitted in the method definition cannot be in the signature:",
                    paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", ")))
-    ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
-    ## until then, allow an omitted "..." w/o checking
-    if(!is.na(match("...", fnames[omitted])))
-        omitted[match("...", fnames)] <- FALSE
     message("Expanding the signature to include omitted arguments in definition: ",
             paste(fnames[omitted], "= \"missing\"",collapse = ", "))
     signature[omitted] <- "missing"

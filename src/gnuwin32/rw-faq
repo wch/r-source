@@ -1,6 +1,6 @@
 R for Windows FAQ
 Frequently Asked Questions on R for Windows
-Version for rw1040
+Version for rw1041
 Brian Ripley
 
 
@@ -18,7 +18,7 @@ Table of Contents
   2.5 How can I keep workspaces for different projects in different directories?
   2.6 How do I print from R?
   2.7 Can I use `R BATCH'?
-  2.8 Can I use rw1040 with ESS and emacs?
+  2.8 Can I use rw1041 with ESS and emacs?
   2.9 What are HOME and working directories?
   2.10 R can't find my file, but I know it is there!
   2.11 Does R use the Registry?
@@ -27,7 +27,7 @@ Table of Contents
 
 3 Packages
   3.1 Can I install packages (libraries) in this version?
-  3.2 I don't have permission to write to the `rw1040\library' directory.
+  3.2 I don't have permission to write to the `rw1041\library' directory.
   3.3 The packages I installed do not appear in the HTML help system.
   3.4 My functions are not found by the HTML help search system.
   3.5 Loading a package fails.
@@ -74,7 +74,7 @@ that version.  The main R FAQ can be found at
 
 The information here applies only to recent versions of R for Windows,
 (`1.4.0' or later); the current version is often called something like
-`rw1040' (although not officially).
+`rw1041' (although not officially).
 
 
 2 Installation and Usage
@@ -94,12 +94,12 @@ files you need.  There are three versions of the distribution.
 floppy and the remaining `miniR-?.bin' on a floppy each.
 
 3) Via zip files in directory `zip'.  You will need at least the files
-           rw1040b.zip
-           rw1040h.zip (text help) or rw1040ch.zip (Compiled HTML help)
+           rw1041b.zip
+           rw1041h.zip (text help) or rw1041ch.zip (Compiled HTML help)
 
-and you may want `rw1040w.zip' (the HTML format help files),
-`rw1040l.zip' (the LaTeX format help files, used for offline printing),
-or `rw1040d?.zip' (the draft manuals, in PDF).
+and you may want `rw1041w.zip' (the HTML format help files),
+`rw1041l.zip' (the LaTeX format help files, used for offline printing),
+or `rw1041d?.zip' (the draft manuals, in PDF).
 
 2.2 How do I install R for Windows?
 ===================================
@@ -119,11 +119,11 @@ R this way you can uninstall it from the Control Panel or Start Menu
 For a manual installation, choose a location and unzip the zip files
 (with a tool that preserves long file names and the directory structure:
 we recommend the INFO-ZIP project's `unzip').  All the files will
-unpack into a directory `rw1040'.
+unpack into a directory `rw1041'.
 
 Choose a working directory for R.  Unless you used `SetupR.exe' or
 `miniR.exe' (which did this for you by default), make a shortcut to
-`rw1040\bin\Rgui.exe' on your desktop or somewhere on the Start menu
+`rw1041\bin\Rgui.exe' on your desktop or somewhere on the Start menu
 file tree.  Right-click the shortcut, select Properties... and change
 the `Start in' field to your working directory.
 
@@ -159,7 +159,7 @@ The limit can be raised by calling `memory.limit' from a running R
 session.
 
 We have found that starting R with too large a value of
-`--max-mem-size' may fail: the limit seemed to be about 1.7Mb on
+`--max-mem-size' may fail: the limit seemed to be about 1.7Gb on
 Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be
@@ -201,7 +201,7 @@ It depends what you want to print.
 ========================
 
 Yes, if you have Perl and the files for making source packages (from
-`SetupR.exe' or `rw1040sp.zip') installed.  The Windows analogue is
+`SetupR.exe' or `rw1041sp.zip') installed.  The Windows analogue is
 `Rcmd BATCH': use `Rcmd BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'.  A sample
@@ -209,7 +209,7 @@ batch file might contain (as one line)
 
      path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out
 
-2.8 Can I use rw1040 with ESS and emacs?
+2.8 Can I use rw1041 with ESS and emacs?
 ========================================
 
 Yes.  The latest versions of ESS (e.g. 5.1.19) come with support for
@@ -243,7 +243,7 @@ You can find this from R code by `Sys.getenv("R_USER")'.
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-`"d:\\rw1040\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
+`"d:\\rw1041\\library\\xgobi\\scripts\\xgobi.bat"'.  Make life easier
 for yourself by using forward slashes as path separators: they do work
 under Windows.
 
@@ -278,7 +278,7 @@ This seems to happen occasionally, and all the occurrences we have
 solved have been traced to faulty versions of `msvcrt.dll'.  Try
 extracting the one to be found in the self-extracting archive
 `ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe' and put it in the
-`rw1040\bin' directory.  Removing `msvcrt.dll' from that directory
+`rw1041\bin' directory.  Removing `msvcrt.dll' from that directory
 reverts to the standard behaviour.
 
 This fix has solved other problems too, for example incorrect results in
@@ -319,10 +319,10 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 `http://cran.r-project.org/bin/windows/contrib/ReadMe'.
 
 If there is not a pre-compiled version or that is not up-to-date or you
-prefer compiling from source, get `rw1040sp.zip' from the distribution
+prefer compiling from source, get `rw1041sp.zip' from the distribution
 (*note Where can I find the latest version?::; you may already have
 installed this from `SetupR.exe') and unpack it in the parent of
-`rw1040'.  Then read the file `readme.packages'.  You will need to
+`rw1041'.  Then read the file `readme.packages'.  You will need to
 collect and install several tools to use this: you can download them
 via the portal at `http://www.stats.ox.ac.uk/pub/Rtools/'.  Once you
 have done so, just run `Rcmd INSTALL pkgname'.  To check the package
@@ -333,7 +333,7 @@ Extensions'_ manual.
 Note that most of the last paragraph will only work if both the path to
 R and the path to the package are space-free.
 
-3.2 I don't have permission to write to the `rw1040\library' directory.
+3.2 I don't have permission to write to the `rw1041\library' directory.
 =======================================================================
 
 You can install packages anywhere and use the environment variable
@@ -368,7 +368,7 @@ then `.Renviron' then the inherited environment.
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
 
-The HTML search only works for packages installed in `rw1040\library'.
+The HTML search only works for packages installed in `rw1041\library'.
 
 To update the HTML indices after you have installed a pre-compiled
 package, run at the R prompt.
@@ -376,7 +376,8 @@ package, run at the R prompt.
      > link.html.help()
 
 This is done automatically when installing from the Packages menu or by
-`install.packages()'.
+`install.packages()', and when `help.start' is run, provided you have
+write permission in `rw1041\library'.
 
 3.4 My functions are not found by the HTML help search system.
 ==============================================================
@@ -384,7 +385,7 @@ This is done automatically when installing from the Packages menu or by
 The following conditions need to hold for functions in a package you
 installed.
 
-   * the package is installed in `rw1040\library'.
+   * the package is installed in `rw1041\library'.
 
    * the package contains a `CONTENTS' file in its top-level directory.
 
@@ -603,11 +604,11 @@ scrollbar or the <CTRL + left/right arrow> keys to scroll horizontally.
 7.1 How can I compile R from source?
 ====================================
 
-Get the R sources.  Suppose you want to compile R-1.4.0.  Start in a
+Get the R sources.  Suppose you want to compile R-1.4.1.  Start in a
 directory whose path does not contain spaces, and run
 
-     tar zxvf R-1.4.0.tgz
-     cd R-1.4.0
+     tar zxvf R-1.4.1.tgz
+     cd R-1.4.1
      cd src\gnuwin32
 
 Now read the `INSTALL' file and set up all the tools needed.  Then you
@@ -649,7 +650,7 @@ by separating the functionality into a separate DLL.
 We strongly encourage you to do this _via_ building an R package: see
 the _`Writing R Extensions'_ manual.  In any event you should install
 the parts of the R system for building R packages (in `SetupR.exe' or
-`rw1040sp.zip'), and get and install the tools (including Perl) and
+`rw1041sp.zip'), and get and install the tools (including Perl) and
 compilers mentioned in the file `readme.packages' contained therein.
 Then you can use
      ...\bin\Rcmd SHLIB foo.c bar.c
@@ -679,13 +680,13 @@ and make a debug version of your package by
 
 Then you can debug by
 
-     gdb /path/to/rw1040/bin/Rgui.exe
+     gdb /path/to/rw1041/bin/Rgui.exe
 
 However, note
 
    * gdb will only be able to find the source code if we run in the
-     location where the source was compiled (`rw1040/src/gnuwin32' for
-     the main system, `rw1040/src/library/mypkg/src' for a package),
+     location where the source was compiled (`rw1041/src/gnuwin32' for
+     the main system, `rw1041/src/library/mypkg/src' for a package),
      unless told otherwise by the `directory' command.  It is most
      convenient to set a list of code locations via `directory'
      commands in the file `.gdbinit' in the directory from which `gdb'
@@ -786,6 +787,6 @@ then `R_ProcessEvents()'.
 
 
 
-Last edited 2001 December 7 by Professor B. D. Ripley
+Last edited 2002 January 17 by Professor B. D. Ripley
 <ripley@stats.ox.ac.uk>
 

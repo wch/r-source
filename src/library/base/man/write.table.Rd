@@ -45,12 +45,21 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
   Normally there is no column name for a column of row names.  If
   \code{col.names=NA} a blank column name is added.  This can be used to
   write CSV files for input to spreadsheets.
+
+  \code{write.table} can be slow for data frames with large numbers
+  (hundreds or more) of columns: this is inevitable as each column could
+  be of a different class and so must be handled separately.
+  Function \code{\link[MASS]{write.matrix}} in package \code{MASS}
+  may be much more efficient if \code{x} is a matrix or can be
+  represented in a numeric matrix.
 }
 
 \seealso{
   The `R Data Import/Export' manual.
   
   \code{\link{read.table}}, \code{\link{write}}.
+
+  \code{\link[MASS]{write.matrix}}.
 }
 
 \examples{

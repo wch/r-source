@@ -410,8 +410,8 @@ model.frame.lm <- function(formula, data, na.action, ...) {
         fcall <- formula$call
         fcall$method <- "model.frame"
         fcall[[1]] <- as.name("lm")
-	env<-environment(fcall$formula)
-	if (is.null(env)) env<-parent.frame()
+	env <- environment(fcall$formula)
+	if (is.null(env)) env <- parent.frame()
         eval(fcall, env)
     }
     else formula$model
@@ -589,13 +589,14 @@ predict.lm <-
       split(order(aa), aaa)
     }
     tt <- terms(object)
-    if(missing(newdata)) {
+    if(missing(newdata) || is.null(newdata)) {
         X <- model.matrix(object)
         offset <- object$offset
     }
     else {
         X <- model.matrix(delete.response(tt), newdata,
-			  contrasts = object$contrasts, xlev = object$xlevels)
+			  contrasts = object$contrasts,
+                          xlev = object$xlevels)
 	offset <- if (!is.null(off.num <- attr(tt, "offset")))
 	    eval(attr(tt, "variables")[[off.num+1]], newdata)
 	else if (!is.null(object$offset))
@@ -745,8 +746,22 @@ predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
     if(missing(newdata)) return(object$fitted)
     if(se.fit)
 	stop("The 'se.fit' argument is not yet implemented for mlm objects")
-    X <- model.matrix(object, newdata) # will use model.matrix.lm
+    if(missing(newdata)) {
+        X <- model.matrix(object)
+        offset <- object$offset
+    }
+    else {
+        tt <- terms(object)
+        X <- model.matrix(delete.response(tt), newdata,
+			  contrasts = object$contrasts,
+                          xlev = object$xlevels)
+	offset <- if (!is.null(off.num <- attr(tt, "offset")))
+	    eval(attr(tt, "variables")[[off.num+1]], newdata)
+	else if (!is.null(object$offset))
+	    eval(object$call$offset, newdata)
+    }
     piv <- object$qr$pivot[1:object$rank]
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
+    if ( !is.null(offset) ) pred <- pred + offset
     if(inherits(object, "mlm")) pred else pred[, 1]
 }

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-0, 2001-12-17
+Version 1.4-11, 2002-01-30
 Kurt Hornik
 
 
@@ -140,7 +140,7 @@ site (*note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-   In publications, please refer to this FAQ as Hornik (2001), "The R FAQ"
+   In publications, please refer to this FAQ as Hornik (2002), "The R FAQ"
 and give the above, _official_ URL.
 
 1.4 Notation
@@ -226,7 +226,7 @@ sparc-linux-gnu, and sparc-sun-solaris.
 2.3 What is the current version of R?
 =====================================
 
-   The current released version is 1.4.0.  Conforming to this
+   The current released version is 1.4.1.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -330,8 +330,8 @@ install-dvi', `make install-info' and `make install-pdf', respectively.
 
    The `bin/windows' directory of a CRAN site contains binaries for a base
 distribution and a large number of add-on packages from CRAN to run on
-Windows 95, 98, NT4, 2000 and ME (at least) on Intel and clones (but not on
-other platforms).  The Windows version of R was created by Robert
+Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and clones (but
+not on other platforms).  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Guido Masarotto
 <Guido.Masarotto@r-project.org> and Brian D. Ripley
 <Brian.Ripley@r-project.org>.
@@ -374,7 +374,7 @@ maintenance tool.  Simply add the line
 
      deb http://cran.r-project.org/bin/linux/debian DISTRIBUTION main
 
-(where DISTRIBUTION is either `stable' or `unstable'; feel free to use a
+(where DISTRIBUTION is either `stable' or `testing'; feel free to use a
 CRAN mirror instead of the master) to the file `/etc/apt/sources.list'.
 Once you have added that line the programs `apt-get', `apt-cache', and
 `dselect' (using the apt access method) will automatically detect and
@@ -563,6 +563,8 @@ and is currently being mirrored daily at
 
      `http://cran.at.r-project.org/'(TU Wien, Austria)
      `http://cran.au.r-project.org/'(PlanetMirror, Australia)
+     `http://cran.br.r-project.org/'(Universidade Federal de
+                                  Parana', Brazil)
      `http://cran.ch.r-project.org/'(ETH Zu"rich, Switzerland)
      `http://cran.de.r-project.org/'(APP, Germany)
      `http://cran.dk.r-project.org/'(SunSITE, Denmark)
@@ -583,7 +585,7 @@ mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
 `ftp://cran.r-project.org/incoming/' and send an email to
-<wwwadmin@cran.r-project.org>.
+<cran@r-project.org>.
 
      *Note:*  It is very important that you indicate the copyright
      (license) information (GPL, BSD, Artistic, ...)  in your submission.
@@ -1154,6 +1156,9 @@ works, was published in the Journal of Statistical Software
      Functions for I/O, visualisation and analysis of functional Magnetic
      Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 
+*Bhat*
+     Functions for general likelihood exploration (MLE, MCMC, CIs).
+
 *CoCoAn*
      Constrained Correspondence Analysis.
 
@@ -1259,6 +1264,9 @@ works, was published in the Journal of Statistical Software
 *adapt*
      Adaptive quadrature in up to 20 dimensions.
 
+*agce*
+     Analysis of growth curve experiments.
+
 *akima*
      Linear or cubic spline interpolation for irregularly gridded data.
 
@@ -1334,6 +1342,10 @@ works, was published in the Journal of Statistical Software
      Functions for illustrating aperture-4 diamond partitions in the plane,
      or on the surface of an octahedron or icosahedron, for use as analysis
      or sampling grids.
+
+*dr*
+     Functions, methods, and datasets for fitting dimension reduction
+     regression, including pHd and inverse regression methods SIR and SAVE.
 
 *dse*
      Dynamic System Estimation, a multivariate time series package.
@@ -1413,6 +1425,9 @@ works, was published in the Journal of Statistical Software
 *gss*
      A comprehensive package for structural multivariate function estimation
      using smoothing splines.
+
+*hdf5*
+     Interface to the NCSA HDF5 library.
 
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
@@ -1527,6 +1542,9 @@ works, was published in the Journal of Statistical Software
      and other distance matrices and performs multi-dimensional scaling and
      principal component analyses.
 
+*pear*
+     Periodic Autoregression Analysis.
+
 *permax*
      Functions intended to facilitate certain basic analyses of DNA array
      data, especially with regard to comparing expression levels between two
@@ -1607,6 +1625,10 @@ works, was published in the Journal of Statistical Software
      Statistics with S-PLUS" by W. Venables and B. Ripley.  Contained in
      the `VR' bundle.
 
+*spatstat*
+     Data analysis and modelling of two-dimensional point patterns,
+     including multitype points and spatial covariates.
+
 *splancs*
      Spatial and space-time point pattern analysis functions.
 
@@ -1661,9 +1683,6 @@ works, was published in the Journal of Statistical Software
 *xtable*
      Export data to LaTeX and HTML tables.
 
-*zmatrix*
-     Matrices with numeric indices starting at zero rather than one.
-
 See CRAN `src/contrib/PACKAGES' for more information.
 
    There is also a CRAN `src/contrib/Devel' directory which contains
@@ -1694,6 +1713,9 @@ these a try, of course.  This area of CRAN currently contains
 *StatDataML*
      Read and write StatDataML.
 
+*colSums*
+     Matrix summary functions in C.
+
 *cxx*
      A small C++ test package.
 
@@ -1706,9 +1728,6 @@ these a try, of course.  This area of CRAN currently contains
 
 *ensemble*
      Ensembles of tree classifiers.
-
-*hdf5*
-     Interface to the NCSA HDF5 library.
 
 *hpower*
      A suite of functions to compute power and sample size for tests of the

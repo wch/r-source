@@ -87,7 +87,7 @@ principal authors of the packages mentioned are
 @item @pkg{CORBA} @tab Duncan Temple Lang
 @item @pkg{e1071} @tab Friedrich Leisch
 @item @pkg{foreign} @tab Thomas Lumley, Saikat DebRoy, Douglas Bates and Duncan Murdoch
-@c @item @pkg{hdf5} @tab Marcus Daniels
+@item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{Java} @tab John Chambers and Duncan Temple Lang
 @item @pkg{netCDF} @tab Thomas Lumley
 @item @pkg{RmSQL} @tab  Torsten Hothorn
@@ -126,7 +126,7 @@ better than @R{} at this, and part of the thrust of this manual is to
 suggest that rather than duplicating functionality in @R{} we can make
 the other system do the work!  (For example Therneau & Grambsch (2000)
 comment that they prefer to do data manipulation in SAS and then use
-@pkg{survival5} in @Sl{} for the analysis.)  Several recent packages
+@pkg{survival} in @Sl{} for the analysis.)  Several recent packages
 allow functionality developed in languages such as @code{Java},
 @code{perl} and @code{python} to be directly integrated with @R{} code,
 making the use of facilities in these languages even more
@@ -291,6 +291,13 @@ a
 The second is the form of escape commonly used by spreadsheets.
 @end enumerate
 
+@findex write.matrix
+Note that @code{write.table} is often not the best way to write out
+very large matrices, for which it can use excessively large amounts of
+memory. Function @code{write.matrix} in package @pkg{MASS} provides a
+specialized interface for writing matrices, with the option of writing
+them in blocks and thereby reducing memory usage.
+
 @findex sink
 It is possible to use @code{sink} to divert the standard @R{} output to
 a file, and thereby capture the output of (possibly implicit)
@@ -359,6 +366,9 @@ The function @code{read.table} is the most convenient way to read in a
 rectangular grid of data.  Because of the many possibilities, there are
 several other functions that call @code{read.table} but change a group
 of default arguments.
+
+Beware that @code{read.table} is an inefficient way to read in
+very large numerical matrices: see @code{scan} below.
 
 Some of the issues to consider are:
 
@@ -470,6 +480,15 @@ Note that @code{colClasses} and @code{as.is} are specified @emph{per}
 column, not @emph{per} variable, and so include the column of row names
 (if any).
 
+@item @strong{Comments}
+
+By default, @code{read.table} uses @samp{#} as a comment character,
+and if this is encountered (except in quoted strings) the rest of the
+line is ignored. Lines containing only white space and a comment are
+treated as blank lines.
+
+If it is known that there will be no comments in the data file, it is
+safer (and may be faster) to use @code{comment.char = ""}.
 @end enumerate
 
 @findex read.csv
@@ -557,6 +576,24 @@ the file.
 There is a function @code{readLines} which will be more convenient if
 all you want is to read whole lines into @R{} for further processing.
 
+One common use of @code{scan} is to read in a large numeric matrix.
+Suppose file @file{matrix.dat} just contains the numbers for a 200 x
+2000 matrix. Then we can use
+
+@smallexample
+A <- matrix(scan("matrix.dat", n = 200*2000), 200, 2000, byrow = TRUE)
+@end smallexample
+
+@noindent
+On one test this took 2 seconds whereas
+
+@smallexample
+A <- as.matrix(read.table("matrix.dat"))
+@end smallexample
+
+@noindent
+took 32 seconds (and a lot more memory).  (Using @code{comment.char =
+""} saved 3 seconds.)
 
 @node Re-shaping data, Flat contingency tables, Using scan directly, Spreadsheet-like data
 @section Re-shaping data
@@ -1455,33 +1492,26 @@ handle binary files.
 
 @node Binary data formats,  , Binary files, Binary files
 @section Binary data formats
-@c @findex hdf5
-@c @cindex Hierarchical Data Format
+@findex hdf5
+@cindex Hierarchical Data Format
 
 @findex netCDF
 @cindex network Common Data Form
 
-@c  Packages @pkg{hdf5} (in the Devel area, and not currently updated for
-@c  current @R{} versions) and @pkg{netCDF} on @acronym{CRAN} provide
-@c  experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data
-@c  Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF
-@c  data files (network Common Data Form, see
-@c  @uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
+Packages @pkg{hdf5} and @pkg{netCDF} on @acronym{CRAN} provide
+experimental interfaces to @acronym{NASA}'s HDF5 (Hierarchical Data
+Format, see @uref{http://hdf.ncsa.uiuc.edu/HDF5/}) and to UCAR's netCDF
+data files (network Common Data Form, see
+@uref{http://www.unidata.ucar.edu/packages/netcdf/}), respectively.
 
-@c  Both of these are systems to store scientific data in array-oriented
-@c  way, including descriptions, labels, formats, units, @dots{}.  HDF5 also
-@c  allows @emph{groups} of arrays, and the @R{} interface writes maps lists
-@c  to HDF5 groups, and can write numeric and character vectors and
-@c  matrices.
+Both of these are systems to store scientific data in array-oriented
+way, including descriptions, labels, formats, units, @dots{}.  HDF5 also
+allows @emph{groups} of arrays, and the @R{} interface writes maps lists
+to HDF5 groups, and can write numeric and character vectors and
+matrices.
 
-@c  The @R{} interface can only read netCDF, not write it (yet).
+The @R{} interface can only read netCDF, not write it (yet).
 
-Package @pkg{netCDF} on @acronym{CRAN} provides an experimental
-interface to UCAR's netCDF data files (network Common Data Form, see
-@uref{http://www.unidata.ucar.edu/packages/netcdf/}).  This is a system
-to store scientific data in array-oriented way, including descriptions,
-labels, formats, units, @dots{}.  The @R{} interface can only read
-netCDF, not write it (yet).
 
 @node Connections, Network interfaces, Binary files, Top
 @chapter Connections

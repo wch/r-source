@@ -330,8 +330,8 @@ static long file_seek(Rconnection con, int where, int origin, int rw)
     if(where == NA_INTEGER) return pos;
 
     switch(origin) {
-    case 2: whence = SEEK_CUR;
-    case 3: whence = SEEK_END;
+    case 2: whence = SEEK_CUR; break;
+    case 3: whence = SEEK_END; break;
     default: whence = SEEK_SET;
     }
     fseek(fp, where, whence);

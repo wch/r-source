@@ -594,6 +594,7 @@ FUNTAB R_FunTab[] =
 {"nargs",	do_nargs,	1,	0,	0,	PP_FUNCALL},
 {"scan",	do_scan,	0,	11,	16,	PP_FUNCALL},
 {"count.fields",do_countfields,	0,	11,	6,	PP_FUNCALL},
+{"readTableHead",do_readtablehead,0,	11,	4,	PP_FUNCALL},
 {"t.default",	do_transpose,	0,	11,	1,	PP_FUNCALL},
 {"aperm",	do_aperm,	0,	11,	3,	PP_FUNCALL},
 {"builtins",	do_builtins,	0,	11,	1,	PP_FUNCALL},

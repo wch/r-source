@@ -726,7 +726,8 @@ function(package, dir, lib.loc = NULL)
     ## generic functions.
     methodStopList <-
         ## Explicitly deal with functions which `look' like S3 methods,
-        ## but are not.
+        ## but are not.  Should be a package internal variable, as it is
+        ## used in both checkDocArgs() and checkMethods().
         switch(basename(dir),
                base = c("boxplot.stats",
                "close.screen", "close.socket",
@@ -734,7 +735,9 @@ function(package, dir, lib.loc = NULL)
                "plot.new", "plot.window", "plot.xy",
                "split.screen",
                "update.packages"),
+               quadprog = c("solve.QP", "solve.QP.compact"),
                ts = "lag.plot",
+               sm = "print.graph",
                character(0))
     methodsInPackage <- sapply(allGenerics, function(g) {
         name <- paste("^", g, ".", sep = "")
@@ -1007,7 +1010,8 @@ function(package, dir, lib.loc = NULL)
 
     methodStopList <-
         ## Explicitly deal with functions which `look' like S3 methods,
-        ## but are not.
+        ## but are not.  Should be a package internal variable, as it is
+        ## used in both checkDocArgs() and checkMethods().
         switch(basename(dir),
                base = c("boxplot.stats",
                "close.screen", "close.socket",
@@ -1015,8 +1019,9 @@ function(package, dir, lib.loc = NULL)
                "plot.new", "plot.window", "plot.xy",
                "split.screen",
                "update.packages"),
-               ts = "lag.plot",
+               quadprog = c("solve.QP", "solve.QP.compact"),
                sm = "print.graph",
+               ts = "lag.plot",
                character(0))
 
     checkArgs <- function(g, m, env) {

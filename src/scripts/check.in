@@ -38,7 +38,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.78 $ ';
+my $revision = ' $Revision: 1.78.2.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -111,7 +111,7 @@ if($WINDOWS) {
     $LATEX = "latex";
     $MAKE = "make";
 }
-my $cfile = "$TMPDIR/Rcmd.$$";
+my $cfile = "$TMPDIR/Rcheck.$$";
 
 my $R_LIBS = $ENV{'R_LIBS'};
 my $library;
@@ -481,7 +481,7 @@ sub check_pkg {
 	print RCMD "for(f in Rfiles)\n";
 	print RCMD "if(inherits(try(parse(f)), \"try-error\")) stop(f)\n";
         close RCMD;
-        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
         open ROUT, "< $Rout";
         while(<ROUT>) {chomp; push(@out, $_);}
@@ -559,7 +559,7 @@ sub check_pkg {
 	    print RCMD "checkMethods(dir = \"${pkgdir}\")\n";
 	}
         close RCMD;
-        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
         open ROUT, "< $Rout";
         while(<ROUT>) {chomp; push(@out, $_);}
@@ -594,7 +594,7 @@ sub check_pkg {
 	    print RCMD "checkAssignFuns(dir = \"${pkgdir}\")\n";
 	}
         close RCMD;
-        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
         open ROUT, "< $Rout";
         while(<ROUT>) {chomp; push(@out, $_);}
@@ -769,7 +769,7 @@ sub check_pkg {
 	    print RCMD "undoc(dir = \"${pkgdir}\")\n";
 	}
         close RCMD;
-        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
         open ROUT, "< $Rout";
         while(<ROUT>) {chomp; push(@out, $_);}
@@ -810,7 +810,7 @@ sub check_pkg {
 	    print RCMD "codoc(dir = \"${pkgdir}\")\n";
 	}
         close RCMD;
-        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
         open ROUT, "< $Rout";
         while(<ROUT>) {chomp; push(@out, $_);}
@@ -850,7 +850,7 @@ sub check_pkg {
 	    print RCMD "checkDocArgs(dir = \"${pkgdir}\")\n";
 	}
         close RCMD;
-        system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
+        Rsystem("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
         open ROUT, "< $Rout";
         while(<ROUT>) {chomp; push(@out, $_);}
@@ -966,6 +966,7 @@ sub check_pkg {
             copy($_, basename($_));
         }
         my $makefiles = "-f ${R_HOME}/share/make/tests.mk";
+        if($WINDOWS) {$makefiles = "-f ${R_HOME}/share/make/wintests.mk";}
         my $makevars = "";
         if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
             $makefiles .= " -f $testsrcdir/Makefile.win";

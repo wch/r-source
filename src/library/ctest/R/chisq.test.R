@@ -12,13 +12,17 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
     if (!is.matrix(x) && !is.null(y)) {
 	if (length(x) != length(y))
 	    stop("x and y must have the same length")
-	DNAME <- paste(DNAME, "and", deparse(substitute(y)))
+        DNAME <- c(DNAME, deparse(substitute(y)))
 	OK <- complete.cases(x, y)
 	x <- factor(x[OK])
 	y <- factor(y[OK])
 	if ((nlevels(x) < 2) || (nlevels(y) < 2))
 	    stop("x and y must have at least 2 levels")
+        ## Could also call table() with 'deparse.level = 2', but we need
+        ## to deparse ourselves for DNAME anyway ...
 	x <- table(x, y)
+        names(dimnames(x)) <- DNAME
+        DNAME <- paste(DNAME, collapse = " and ")
     }
 
     if (any(x < 0) || any(is.na(x)))

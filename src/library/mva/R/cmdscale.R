@@ -11,11 +11,13 @@ cmdscale <- function (d, k = 2, eig = FALSE) {
 	x[row(x) > col(x)] <- d^2
 	x <- x + t(x)
     }
+    if((k <- as.integer(k)) > n - 1 || k < 1)
+        stop("`k' must be in {1, 2, ..  n - 1}")
     storage.mode(x) <- "double"
     Tmat <- -0.5 * .C("dblcen", x, as.integer(n), PACKAGE="mva")[[1]]
     e <- La.eigen(Tmat, symmetric = TRUE)
     ev <- e$values[1:k]
-    points <- e$vectors[, 1:k] %*% diag(sqrt(ev))
+    points <- e$vectors[, 1:k, drop = FALSE] %*% diag(sqrt(ev), k)
     dimnames(points) <- list(dimnames(d)[[1]], NULL)
     if (eig) list(points = points, eig = ev)
     else points

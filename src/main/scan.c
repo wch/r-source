@@ -77,6 +77,22 @@ static int ConsoleGetchar()
     return *ConsoleBufp++;
 }
 
+/* Like strtol, but for ints not longs and returns NA_INTEGER on overflow */
+static int Strtoi(const char *nptr, int base)
+{
+    long res;
+    char *endp;
+    
+    errno = 0;
+    res = strtol(nptr, &endp, base);
+    if (*endp != '\0') res = NA_INTEGER;
+    /* next can happen on a 64-bit platform */
+    if (res > INT_MAX || res < INT_MIN) res = NA_INTEGER;
+    if (errno == ERANGE) res = NA_INTEGER;
+    return(res);
+}
+
+
 static double Strtod (const char *nptr, char **endptr) 
 {
     if (decchar == '.')
@@ -340,8 +356,8 @@ static void extractItem(char *buffer, SEXP ans, int i)
 	if (isNAstring(buffer, 0))
 	    INTEGER(ans)[i] = NA_INTEGER;
 	else {
-	    INTEGER(ans)[i] = strtol(buffer, &endp, 10);
-	    if (*endp != '\0')
+	    INTEGER(ans)[i] = Strtoi(buffer, 10);
+	    if (INTEGER(ans)[i] == NA_INTEGER)
 		expected("an integer", buffer);
 	}
 	break;
@@ -529,11 +545,10 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		    n++;
 		    ii = 0;
 		    colsread = 0;
-		} else if (!badline)
+		} else if (!badline && !multiline)
 		    badline = linesread;
-/* Proposed change for 1.5.0 re PR# 1210
 		if(badline && !multiline)
-		error("line %d did not have %d elements", badline, nc); */
+		error("line %d did not have %d elements", badline, nc);
 	    }
 	    if (maxitems > 0 && n >= maxitems)
 		goto done;
@@ -581,13 +596,6 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     }
 
  done:
-    if (badline) {
-	if(multiline)
-	    warning("line %d did not have %d elements", badline, nc);
-	else
-	    error("line %d did not have %d elements", badline, nc);
-    }
-
     if (colsread != 0) {
 	if (!fill) 
 	    warning("number of items read is not a multiple of the number of columns");
@@ -905,7 +913,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP cvec, a, dup, levs, dims, names, dec;
     SEXP rval = R_NilValue; /* -Wall */
-    int i, j, len, numeric, asIs;
+    int i, j, len, numeric, asIs, res;
     Rboolean islogical = TRUE, isinteger = TRUE, isreal = TRUE, 
 	iscomplex = TRUE, done = FALSE;
     char *endp, *tmp;
@@ -955,7 +963,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    && strcmp(tmp, "T") != 0 && strcmp(tmp, "TRUE") != 0)
 	    islogical = FALSE;
 
-	strtol(tmp, &endp, 10); if (*endp != '\0') isinteger = FALSE;
+	res = Strtoi(tmp, 10); if (res == NA_INTEGER) isinteger = FALSE;
 	Strtod(tmp, &endp); if (!isBlankString(endp)) isreal = FALSE;
 	strtoc(tmp, &endp); if (!isBlankString(endp)) iscomplex = FALSE;
     }
@@ -987,8 +995,8 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (strlen(tmp) == 0 || isNAstring(tmp, 1) || isBlankString(tmp))
 		INTEGER(rval)[i] = NA_INTEGER;
 	    else {
-		INTEGER(rval)[i] = strtol(tmp, &endp, 10);
-		if (*endp != '\0') {
+		INTEGER(rval)[i] = Strtoi(tmp, 10);
+		if (INTEGER(rval)[i] == NA_INTEGER) {
 		    isinteger = FALSE;
 		    break;
 		}
@@ -1033,7 +1041,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
     
     if (!done) {
 	if (asIs) {
-	    rval = cvec;
+	    PROTECT(rval = cvec); /* just to balance */
 	}
 	else {
 	    PROTECT(rval = allocVector(INTSXP, len));
@@ -1152,4 +1160,91 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     ans = allocVector(INTSXP, 1);
     INTEGER(ans)[0] = first;
     return ans;
+}
+
+/* readTableHead(file, nlines, comment.char, blank.lines.skip) */
+/* simplified version of readLines, with skip of blank lines and
+   comment-only lines */
+#define BUF_SIZE 1000
+SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP file, comstr, ans = R_NilValue, ans2;
+    int nlines, i, c, nread, nbuf, buf_size = BUF_SIZE;
+    char *p, *buf;
+    Rboolean empty, skip;
+    
+    checkArity(op, args);
+
+    file = CAR(args);		   args = CDR(args);
+    nlines = asInteger(CAR(args)); args = CDR(args);
+    comstr = CAR(args);
+    if (nlines <= 0 || nlines == NA_INTEGER)
+	errorcall(call, "invalid nlines value");
+    if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
+	errorcall(call, "invalid comment.char value");
+    p = CHAR(STRING_ELT(comstr, 0));
+    comchar = NO_COMCHAR; /*  here for -Wall */
+    if (strlen(p) > 1) errorcall(call, "invalid comment.char value");
+    else if (strlen(p) == 1) comchar = (int)*p;
+
+    i = asInteger(file);
+    con = getConnection(i);
+    ttyflag = 0;
+    wasopen = con->isopen; 
+    if(!wasopen) {
+	strcpy(con->mode, "r");
+	con->open(con);
+    } else { /* for a non-blocking connection, more input may
+		have become available, so re-position */
+	if(con->canseek && !con->blocking)
+	    con->seek(con, con->seek(con, -1, 1, 1), 1, 1);
+    }
+
+    buf = (char *) malloc(buf_size);
+    if(!buf)
+	error("cannot allocate buffer in readTableHead");
+
+    PROTECT(ans = allocVector(STRSXP, nlines));
+    for(nread = 0; nread < nlines; ) {
+	nbuf = 0; empty = TRUE, skip = FALSE;
+	while((c = Rconn_fgetc(con)) != R_EOF) {
+	    if(nbuf == buf_size) {
+		buf_size *= 2;
+		buf = (char *) realloc(buf, buf_size);
+		if(!buf)
+		    error("cannot allocate buffer in readTableHead");
+	    }
+	    if(empty && !skip)
+		if(c != ' ' && c != '\t' && c != comchar) empty = FALSE;
+	    if(!skip && c == comchar) skip = TRUE;
+	    if(c != '\n') buf[nbuf++] = c; else break;
+	}
+	buf[nbuf] = '\0';
+	if(!empty) {
+	    SET_STRING_ELT(ans, nread, mkChar(buf));
+	    nread++;   
+	}
+	if(c == R_EOF) goto no_more_lines;
+    }
+    UNPROTECT(1);
+    free(buf);
+    if(!wasopen) con->close(con);
+    return ans;
+
+no_more_lines:
+    if(!wasopen) con->close(con);
+    if(nbuf > 0) { /* incomplete last line */
+	if(con->text && con->blocking) {
+	    warning("incomplete final line found by readTableHeader on `%s'",
+		    con->description);
+	} else
+	    error("incomplete final line found by readTableHeader on `%s'",
+		  con->description);
+    }
+    free(buf);
+    PROTECT(ans2 = allocVector(STRSXP, nread));
+    for(i = 0; i < nread; i++)
+	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
+    UNPROTECT(2);
+    return ans2;
 }

@@ -76,12 +76,13 @@ function(x, full = TRUE, scale = TRUE, radius = TRUE,
 	stop("length(angles) must be the same as ncol(x)")
 
     ## Missing values are treated as 0
-    x[is.na(x)] <- 0
     if (scale) {
-	x <- sweep(x,2,apply(x,2,max), FUN="/")
-	## Columns of 0s will put NAs in x, next line gets rid of them
-	x[is.na(x)] <- 0
+        x <- apply(x, 2, function(x)
+                   (x - min(x, na.rm = TRUE))/diff(range(x, na.rm = TRUE)))
+#	x <- sweep(x,2,apply(x,2,max), FUN="/")
     }
+    ## Missing values are treated as 0
+    x[is.na(x)] <- 0
     mx <- max(x <- x * len)
 
     if(is.null(xlim)) xlim <- range(xloc) + c(-mx, mx)

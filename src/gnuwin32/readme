@@ -274,9 +274,6 @@ Differences from Unix versions of R
   under readline-based input on Unix.  For Rgui.exe, see the menu item
   `Help | Console', for Rterm.exe the file README.Rterm.
 
-- The HTML function and package lists and search database are not
-  re-generated automatically by help.start().  Use link.html.help().
-
 - Paths to files can be specified with "/" or "\\".
 
 - Using help.start() does not automatically send help requests to the
@@ -311,7 +308,7 @@ on Windows.
 Building From Source
 ====================
 
-See the file @RVER@\src\gnuwin32\INSTALL in the source distribution
+See the file @RWVER@\src\gnuwin32\INSTALL in the source distribution
 and the rw-FAQ.
 
 

@@ -1,19 +1,20 @@
-r-base (1.4.0-0) unstable; urgency=low
+r-base (1.4.0.cvs20020124-1) unstable; urgency=low
+ 
+  * Upgraded to the R-patched_2002-01-24 release candidate for 1.4.1
+ 
+ -- Dirk Eddelbuettel <edd@debian.org>  Thu, 24 Jan 2002 19:38:34 -0600
 
-  * Test builds for the R-1.4.0 release on 2001-12-19
+r-base (1.4.0-1) unstable; urgency=low
 
- -- Douglas Bates <bates@stat.wisc.edu>  Tue, 11 Dec 2001 14:55:01 -0600
-
-r-base (1.3.1-7) unstable; urgency=low
-
-  * (unreleased)
+  * Upgraded to new upstream release 1.4.0
   * debian/control: Add lib{zvt,gtkxmhtml}-dev to Build-Depends [thanks, Doug]
   * debian/control: Fixed hppa Build-Depends [thanks, Matthew Wilcox]
   * debian/rules: Minor cleanup regarding configuration options
   * debian/control: Changed Priority: from extra to optional
   * debian/control: Corrected r-doc-html Description [thanks, Doug Bates]
+  * debian/control: Spelling corrections (Closes: #125300)
   
- -- Dirk Eddelbuettel <edd@debian.org>  Tue, 11 Dec 2001 12:46:58 -0600
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 19 Dec 2001 18:47:46 -0600
 
 r-base (1.3.1-6) unstable; urgency=low
 
