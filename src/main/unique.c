@@ -162,10 +162,14 @@ static int cequal(SEXP x, int i, SEXP y, int j)
 
 static int sequal(SEXP x, int i, SEXP y, int j)
 {
-    if (STRING_ELT(x, i) != NA_STRING && STRING_ELT(y, j) != NA_STRING)
-	return !strcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, j)));
-    else
-	return STRING_ELT(x, i) == STRING_ELT(y, j);
+    /* Two strings which have the same address must be the same, 
+       so avoid looking at the contents */
+    if (STRING_ELT(x, i) == STRING_ELT(y, j)) return 1;
+    /* Then if either is NA the other cannot be */
+    if (STRING_ELT(x, i) == NA_STRING || STRING_ELT(y, j) == NA_STRING) 
+	return 0;
+    /* Finally look at the contents if necessary */
+    return !strcmp(CHAR(STRING_ELT(x, i)), CHAR(STRING_ELT(y, j)));
 }
 
 static int rawhash(SEXP x, int indx, HashData *d)
