@@ -1312,10 +1312,13 @@ A discussion of which Linux systems support large files can be found at
 @uref{http://www.suse.de/~aj/linux_lfs.html}: it has been available
 since about 2001.
 
-R used to include the compiler flag @option{-mieee-fp}, but it seems
+@R{} used to include the compiler flag @option{-mieee-fp}, but it seems
 this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.
+
+Experiments with using @code{gfortran} are currently (Nov 2004)
+unsuccessful.
 
 
 @node Mac OS X, Solaris, Linux, Platform notes
@@ -1692,7 +1695,7 @@ We understand that @option{--enable-R-shlib} does not work under AIX.
 
 
 @node Building the GNOME console, Enabling search in HTML help, Configuration on Unix, Top
-@chapter Building the @acronym{GNOME} console
+@appendix Building the @acronym{GNOME} console
 
 This interface is experimental and incomplete.  The console offers a
 basic command line editing and history mechanism, along with tool and
@@ -1772,7 +1775,7 @@ specify location of @command{libglade-config}
 @end table
 
 @node Enabling search in HTML help, New platforms, Building the GNOME console, Top
-@chapter Enabling search in HTML help
+@appendix Enabling search in HTML help
 
 There is a search engine available from the front page of the
 @acronym{HTML} help system, the page that is displayed by
