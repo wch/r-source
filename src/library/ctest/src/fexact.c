@@ -8,9 +8,11 @@
 
 #include "ctest.h"
 
+#undef min
+#undef max
 #define	max(a, b) 		((a) < (b) ? (b) : (a))
 #define	min(a, b) 		((a) > (b) ? (b) : (a))
-#define	abs(x)			((x) >= 0 ? (x) : -(x))
+/*#define	abs(x)			((x) >= 0 ? (x) : -(x))*/
 
 static int f2xact(Sint *nrow, Sint *ncol, double *table, Sint *ldtabl,
 		  double *expect, double *percnt, double *emin, double
