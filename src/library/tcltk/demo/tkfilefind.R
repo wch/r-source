@@ -1,6 +1,6 @@
 require(tcltk) || stop("tcltk support is absent")
 local({
-    
+
     tkfilefind<-function(path=getwd(), all.names=FALSE, multiple=FALSE){
         tclRequire("::Utility")
         tclRequire("Hierarchy")
@@ -29,7 +29,7 @@ local({
             for (i in seq(along=fnamelist)){
                                 fnamelist[i] <-
                                     paste(strsplit(fnamelist[i]," ")[[1]],
-                                          collapse=Platform()$file.sep)
+                                          collapse=.Platform$file.sep)
             }
             .tclfilename <<- fnamelist
         }
