@@ -1,7 +1,6 @@
 \name{connection}
 \alias{file}
 \alias{pipe}
-\alias{textConnection}
 \alias{open}
 \alias{open.connection}
 \alias{isOpen}
@@ -20,7 +19,6 @@
 \usage{
 file(description, open = "", blocking = TRUE)
 pipe(description, open = "")
-textConnection(description, open =  "")
 
 open(con, open = "rt", blocking = TRUE)
 close(con, type = "rw")
@@ -43,7 +41,7 @@ isSeekable(con)
   \item{rw}{character.  Currently ignored.}
 }
 \details{
-  The first three functions create connections.  By default the connection
+  The first two functions create connections.  By default the connection
   is not opened, but may be opened by setting a non-empty value of
   argument \code{open}.
 
@@ -62,11 +60,6 @@ isSeekable(con)
   specified position. \code{isSeekable} returns whether the connection
   in principle supports \code{seek}: currently only file connections do.
 
-  Text connections \emph{are} opened and the character vector is copied at the
-  time the connection object is created, and \code{close} destroys the copy.
-  You cannot \code{seek} on a text connection, and \code{seek} will
-  always return zero as the position.
-
   Possible values for the mode \code{open} to open a connection are
   \describe{
     \item{\code{"r"}}{or \code{"rt"}. Open for reading in text mode.}
@@ -84,9 +77,8 @@ isSeekable(con)
   connections open for reading in text mode.
 }
 \value{
-  \code{file}, \code{pipe} and  \code{textConnection} 
-  return a connection object which inherits from class
-  \code{"connection"}.
+  \code{file} and \code{pipe} return a connection object which inherits
+  from class \code{"connection"}.
 
   \code{seek} returns the current position, as a byte offset, if
   relevant.
@@ -95,14 +87,16 @@ isSeekable(con)
   currently open.
 
   \code{isIncomplete} returns a logical value, whether last read attempt
-  was blocked (currently always false).
+  was blocked (currently always false), ot for an output text connection
+  whether there is unflushed output.
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998), but the implementation is currently incomplete.  In particular:
   \itemize{
-    \item Pipes are only implemented on Unix. Fifos are not yet
-    implemented. We also envisage having connections to sockets.
+    \item Pipes are only implemented on Unix and \code{Rterm} on
+    Windows. Fifos are not yet implemented. We also envisage
+    having connections to sockets.
 
     \item Svr4 has separate read and write positions for files: \R does
     not.
@@ -117,17 +111,17 @@ isSeekable(con)
 }
 
 \seealso{
-  \code{\link{readLines}}, \code{\link{showConnections}},
-  \code{\link{pushBack}}
+  \code{\link{textConnection}}, \code{\link{readLines}},
+  \code{\link{showConnections}}, \code{\link{pushBack}}
 }
 
 \examples{
-zz <- textConnection(LETTERS)
-readLines(zz, 2)
-scan(zz, "", 4)
-pushBack(c("aa", "bb"), zz)
-scan(zz, "", 4)
+zz <- file("ex.data", "w")  # open an output file connection
+cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
+cat("One more line\n", file = zz)
 close(zz)
+readLines("ex.data")
+unlink("ex.data")
 
 \dontrun{## Unix examples of use of pipes
 
@@ -137,7 +131,8 @@ readLines(pipe("ls -1"))
 # convert decimal point to comma in output 
 zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
-close(zz)}
+close(zz)
+file.show("outfile", delete.file=TRUE)}
 }
 \keyword{file}
 \keyword{connection}

@@ -51,6 +51,14 @@ typedef struct textconn {
     char save; /* pushback */
 } *Rtextconn;
 
+#define LAST_LINE_LEN 256
+typedef struct outtextconn {
+    int len;  /* number of lines */
+    SEXP namesymbol;
+    SEXP data;
+    char lastline[LAST_LINE_LEN];
+} *Routtextconn;
+
 int Rconn_fgetc(Rconnection con);
 int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);

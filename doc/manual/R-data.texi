@@ -67,7 +67,8 @@ Copyright @copyright{} 2000 R Development Core Team
 @unnumbered Acknowledgements
 
 The relational databases part of this manual is based in part on an
-earlier manual by Douglas Bates and Saikat DebRoy.
+earlier manual by Douglas Bates and Saikat DebRoy.  The principal author
+of this manual was Brian Ripley.
 
 Many volunteers have contributed to the packages used here.  The
 principal authors of the packages mentioned are
@@ -99,7 +100,7 @@ though most readers will find the latter far more appealing.
 This manual describes the import and export facilities available either
 in @R{} itself or via packages which are available from @acronym{CRAN}.
 Some of the packages described are still under development (and hence in
-the Devel section on @acronym{CRAN}) but they already provide useful
+the Devel area on @acronym{CRAN}) but they already provide useful
 functionality.
 
 Unless otherwise stated, everything described in this manual is
@@ -611,7 +612,7 @@ the package name) written by functions @code{read.dta} and
 @section Minitab
 @findex read.mtp
 
-Package @pkg{foreign} in the Devel section on @acronym{CRAN} provides a
+Package @pkg{foreign} in the Devel area on @acronym{CRAN} provides a
 function @code{read.mtp} to read a `Minitab Portable Worksheet'.  This
 returns the components of the worksheet as an @R{} list.
 
@@ -620,7 +621,7 @@ returns the components of the worksheet as an @R{} list.
 @cindex SAS
 @findex read.xport
 
-Package @pkg{foreign} in the Devel section on @acronym{CRAN} provides a
+Package @pkg{foreign} in the Devel area on @acronym{CRAN} provides a
 function @code{read.xport} to read a file in SAS Transport (XPORT)
 format and return a list of data frames.
 
@@ -1122,7 +1123,7 @@ Alaska           10.0     263       48 44.5
 @subsection Package RMySQL
 @cindex MySQL database system
 
-Package @pkg{RMySQL} in the Devel section on @acronym{CRAN} provides an
+Package @pkg{RMySQL} in the Devel area on @acronym{CRAN} provides an
 interface to the MySQL database system (see @uref{http://www.mysql.com}
 and Dubois, 2000.).  This is part of a project to provide a common
 @acronym{API} for access from @R{} to relational DBMSs using
@@ -1360,7 +1361,7 @@ The @R{} interface can only read netCDF, not write it (yet).
 set of functions to replace the use of file names by a flexible
 interface to file-like objects.  Connections were introduced to @R{} in
 version 1.2.0, and the details are still experimental and subject to
-change.  Their power is not yet fully implemented.
+change.  Their potential is not yet fully realised.
 
 
 @menu
@@ -1373,6 +1374,7 @@ change.  Their power is not yet fully implemented.
 
 @node Types of connections, Output to connections, Connections, Connections
 @section Types of connections
+@cindex Connections
 
 @findex file
 @cindex File connections
@@ -1419,23 +1421,34 @@ file.  A text connection is created and opened by a call to
 @code{textConnection}, which copies the current contents of the
 character vector to an internal buffer at the time of creation.
 
+Text connections can also be used to capture @R{} output to a character
+vector.  @code{textConnection} can be asked to create a new character
+object or append to an existing one, in both cases in the user's
+workspace.  The connection is opened by the call to
+@code{textConnection}, and at all times the complete lines output to the
+connection are available in the @R{} object.  Closing the connection
+writes any remaining output to a final element of the character vector.
+
 @cindex Pipe connections
 @findex pipe
 @emph{Pipes} are a special form of file that connects to another
 process, and pipe connections are created by the function @code{pipe}
-(currently implemented on UNIX only).  Opening a pipe connection for
-writing (it makes not sense to append to a pipe) runs an OS command, and
-connects its standard input to whatever @R{} then writes to that
-connection.  Conversely, opening a pipe connection for input runs an OS
-command and makes its standard output available for @R{} input from that
-connection.
+(currently implemented on Unix and @code{Rterm} only).  Opening a pipe
+connection for writing (it makes no sense to append to a pipe) runs an
+OS command, and connects its standard input to whatever @R{} then writes
+to that connection.  Conversely, opening a pipe connection for input
+runs an OS command and makes its standard output available for @R{}
+input from that connection.
 
-More types of connections are planned, including output text connections
-and reading from and writing to sockets.
+More types of connections are planned, including reading from and
+writing to sockets and URLs.  It is also planned to support binary file
+reading and writing on connections along the lines of package
+@pkg{Rstreams}.
 
 
 @node Output to connections, Input from connections, Types of connections, Connections
 @section Output to connections
+@cindex Connections
 
 @findex cat
 @findex write
@@ -1460,6 +1473,31 @@ used).
 There is a function @code{writeLines} to write complete text lines
 to a connection.
 
+Some simple examples are
+@smallexample
+zz <- file("ex.data", "w")  # open an output file connection
+cat("TITLE extra line", "2 3 5 7", "", "11 13 17", 
+    file = zz, sep = "\n")
+cat("One more line\n", file = zz)
+close(zz)
+
+# convert decimal point to comma in output, using a pipe (Unix)
+zz <- pipe(paste("sed s/\\./,/ >", "outfile"), "w")
+cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
+close(zz)
+# now look at the output file:
+file.show(outfile), delete.file=TRUE
+
+# capture R output: use examples from help(lm)
+zz <- textConnection("ex.lm.out", "w")
+sink(zz)
+example(lm, prompt.echo="> ")
+sink()
+close(zz)
+# now `ex.lm.out' contains the output for futher processing.
+# Look at it by, e.g.,
+cat(ex.lm.out, sep = "\n")
+@end smallexample
 
 @node Input from connections, Listing and manipulating connections, Output to connections, Connections
 @section Input from connections
@@ -1477,7 +1515,17 @@ Other functions that call @code{scan} can also make use of connections.
 In particular @code{read.table} can use connections, but as it needs to
 read the data twice it is inefficient on a non-seekable connection.
 (It reads the datafile into an @R{} character vector and operates on
-that via a text connections.)
+that via a text connection.)
+
+Some simple examples are
+@smallexample
+# read in file created in last examples
+readLines("ex.data")
+unlink("ex.data")
+
+# read listing of current directory (Unix)
+readLines(pipe("ls -1"))
+@end smallexample
 
 @menu
 * Pushback::                    
@@ -1486,7 +1534,8 @@ that via a text connections.)
 @node Pushback,  , Input from connections, Input from connections
 @subsection Pushback
 
-@cindex pushBack.
+@findex pushBack.
+@cindex Pushback on a connection
 C programmers may be familiar with the @code{ungetc} function to push
 back a character onto a text input stream.  @R{} connections have the
 same idea in a more powerful way, in that an (essentially) arbitrary
@@ -1501,10 +1550,26 @@ pending lines pushed back can be found via a call to
 @code{pushBackLength}.
 @findex pushBackLength
 
+A simple example will show the idea.
+@example
+> zz <- textConnection(LETTERS)
+> readLines(zz, 2)
+[1] "A" "B"
+> scan(zz, "", 4)
+Read 4 items
+[1] "C" "D" "E" "F"
+> pushBack(c("aa", "bb"), zz)
+> scan(zz, "", 4)
+Read 4 items
+[1] "aa" "bb" "G"  "H" 
+> close(zz)
+@end example
+
 Pushback is only available for connections opened for input in text mode.
 
 @node Listing and manipulating connections,  , Input from connections, Connections
 @section Listing and manipulating connections
+@cindex Connections
 
 @findex showConnections
 A summary of all the connections currently opened by the user can be

@@ -26,6 +26,14 @@
 #include <Rconnections.h>
 /* #include <fcntl.h> not yet */
 
+/* Win32 does have popen, but it does not work in GUI applications,
+   so test that later */
+#ifdef Win32
+# define HAVE_POPEN
+# include <Startup.h>
+  extern UImode  CharacterMode;
+#endif
+
 #define NCONNECTIONS 50
 
 static Rconnection Connections[NCONNECTIONS];
@@ -266,6 +274,7 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 
 /* ------------------- pipe connections --------------------- */
 
+#ifdef HAVE_POPEN
 static void pipe_open(Rconnection con)
 {
     FILE *fp;
@@ -331,6 +340,7 @@ static Rconnection newpipe(char *description, char *mode)
     }
     return new;
 }
+#endif
 
 SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -343,12 +353,19 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     scmd = CAR(args);
     if(!isString(scmd) || length(scmd) != 1)
-	error("invalid `description' argument");
+	errorcall(call, "invalid `description' argument");
     file = CHAR(STRING_ELT(scmd, 0));
     sopen = CADR(args);
     if(!isString(sopen) || length(sopen) != 1)
-	error("invalid `open' argument");
+	errorcall(call, "invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
+#ifdef Win32
+    if(CharacterMode != RTerm) {
+	error("pipe connections are not available under RGui");
+	return R_NilValue; /* -Wall */
+    }
+#endif
+
     ncon = NextConnection();
     con = Connections[ncon] = newpipe(file, strlen(open) ? open : "r");
 
@@ -365,7 +382,7 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 #else
-    error("pipes are not available on this system");
+    error("pipe connections are not available on this system");
     return R_NilValue; /* -Wall */
 #endif
 }
@@ -651,6 +668,162 @@ static Rconnection newtext(char *description, SEXP text)
     return new;
 }
 
+static void outtext_close(Rconnection con)
+{
+    Routtextconn this = (Routtextconn)con->private;
+    SEXP tmp;
+
+    if(strlen(this->lastline) > 0) {
+	PROTECT(tmp = lengthgets(this->data, ++this->len));
+	SET_STRING_ELT(tmp, this->len - 1, mkChar(this->lastline));
+	defineVar(this->namesymbol, tmp, R_GlobalEnv);
+	this->data = tmp;
+	UNPROTECT(1);
+    }
+}
+
+static void outtext_destroy(Rconnection con)
+{
+}
+
+#define BUFSIZE 1000
+static int text_vfprintf(Rconnection con, const char *format, va_list ap)
+{
+    Routtextconn this = (Routtextconn)con->private;
+    char buf[BUFSIZE], *b = buf, *p, *q, *vmax = vmaxget();
+    int res = 0, usedRalloc = FALSE, buffree, 
+	already = strlen(this->lastline);
+    SEXP tmp;
+
+    strcpy(b, this->lastline);
+    p = b + already;
+    buffree = BUFSIZE - already;
+
+#ifdef HAVE_VSNPRINTF
+    res = vsnprintf(p, buffree, format, ap);
+    if(res >= buffree) { /* res is the desired output length */
+	usedRalloc = TRUE;
+	b = R_alloc(res + already + 1, sizeof(char));
+	strcpy(b, this->lastline);
+	p = b + already;
+	vsprintf(p, format, ap);
+    } else if(res < 0) { /* just a failure indication */
+	usedRalloc = TRUE;
+	b = R_alloc(10*BUFSIZE, sizeof(char));
+	strcpy(b, this->lastline);
+	p = b + already;
+	res = vsnprintf(p, 10*BUFSIZE - already, format, ap);
+	if (res < 0) {
+	    *(b + 10*BUFSIZE) = '\0';
+	    warning("printing of extremely long output is truncated");
+	}
+    }
+#else
+    /* allocate a large buffer and hope */
+    b = R_alloc(10*BUFSIZE, sizeof(char));
+    strcpy(b, this->lastline);
+    p = b + already;
+    res = vsprintf(p, format, ap);
+#endif
+
+    /* copy buf line-by-line to object */
+    for(p = buf; ; p = q+1) {
+	q = strchr(p, '\n');
+	if(q) {
+	    *q = '\0';
+	    PROTECT(tmp = lengthgets(this->data, ++this->len));
+	    SET_STRING_ELT(tmp, this->len - 1, mkChar(p));
+	    defineVar(this->namesymbol, tmp, R_GlobalEnv);
+	    this->data = tmp;
+	    UNPROTECT(1);
+	} else {
+	    /* retain the last line */
+	    if(strlen(this->lastline) < LAST_LINE_LEN) {
+		strcpy(this->lastline, p);
+	    } else {
+		strncpy(this->lastline, p, LAST_LINE_LEN - 1);
+		this->lastline[LAST_LINE_LEN - 1] = '\0';
+		warning("line truncated in output text connection");
+	    }
+	    con->incomplete = strlen(this->lastline) > 0;
+	    break;
+	}
+    }
+    if(usedRalloc) vmaxset(vmax);
+    return res;
+}
+
+static void outtext_init(Rconnection con, char *mode)
+{
+    Routtextconn this = (Routtextconn)con->private;
+    SEXP val;
+
+    this->namesymbol = install(con->description);
+    if(strcmp(mode, "w") == 0) {
+	/* create variable pointed to by con->description */
+	PROTECT(val = allocVector(STRSXP, 0));
+	defineVar(this->namesymbol, val, R_GlobalEnv);
+	UNPROTECT(1);
+    } else {
+	/* take over existing variable */
+	val = findVar1(this->namesymbol, R_GlobalEnv, STRSXP, FALSE);
+	if(val == R_UnboundValue) {
+	    warning("text connection: appending to a non-existent char vector");
+	    PROTECT(val = allocVector(STRSXP, 0));
+	    defineVar(this->namesymbol, val, R_GlobalEnv);
+	    UNPROTECT(1);
+	}
+    }
+    this->len = LENGTH(val);
+    this->data = val;
+    this->lastline[0] = '\0';
+}
+
+
+static Rconnection newouttext(char *description, SEXP sfile, char *mode)
+{
+    Rconnection new;
+    new = (Rconnection) malloc(sizeof(struct Rconn));
+    if(!new) error("allocation of text connection failed");
+    new->class = (char *) malloc(strlen("textConnection") + 1);
+    if(!new->class) {
+	free(new);
+	error("allocation of text connection failed");
+    }
+    strcpy(new->class, "textConnection");
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) {
+	free(new->class); free(new);
+	error("allocation of text connection failed");
+    }
+    /* Remove quotes around name */
+    strcpy(new->description, description + 1);
+    new->description[strlen(description) - 2] = '\0';
+    strcpy(new->mode, mode); /* must be "w" or "a" at this point */
+    new->isopen = new->text = TRUE;
+    new->incomplete = FALSE;
+    new->canread = FALSE; new->canwrite = TRUE;
+    new->canseek = FALSE;
+    new->open = &text_open;
+    new->close = &outtext_close;
+    new->destroy = &outtext_destroy;
+    new->vfprintf = &text_vfprintf;
+    new->fgetc = &null_fgetc;
+    new->ungetc = &null_ungetc;
+    new->seek = &text_seek;
+    new->fflush = &null_fflush;
+    new->read = &null_read;
+    new->write = &null_write;
+    new->nPushBack = 0;
+    new->private = (void*) malloc(sizeof(struct outtextconn));
+    if(!new->private) {
+	free(new->description); free(new->class); free(new);
+	error("allocation of text connection failed");
+    }
+    outtext_init(new, mode);
+    return new;
+}
+
 SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile, stext, sopen, ans, class;
@@ -671,9 +844,13 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `open' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
-    con = Connections[ncon] = newtext(desc, stext);
-    /* open it if desired */
-    if(strlen(open)) con->open(con);
+    if(!strlen(open) || strncmp(open, "r", 1) == 0) 
+	con = Connections[ncon] = newtext(desc, stext);
+    else if (strncmp(open, "w", 1) == 0 || strncmp(open, "a", 1) == 0)
+	con = Connections[ncon] = newouttext(desc, sfile, open);
+    else
+	errorcall(call, "unsupported mode");
+    /* already opened */
 
     PROTECT(ans = allocVector(INTSXP, 1));
     INTEGER(ans)[0] = ncon;

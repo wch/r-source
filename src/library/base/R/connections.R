@@ -57,7 +57,7 @@ file <- function(description, open = "", blocking = TRUE)
 pipe <- function(description, open = "")
     .Internal(pipe(description, open))
 
-textConnection <- function(object, open = "")
+textConnection <- function(object, open = "r")
     .Internal(textConnection(deparse(substitute(object)), object, open))
 
 seek <- function(con, ...)
