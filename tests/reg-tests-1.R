@@ -760,6 +760,12 @@ detach("package:stepfun")
 all.equal(c("A", "B"), c("A", NA))
 ## failed in 1.5.1
 
+## failed {gave length 3 list} since at least version 0.90:
+stopifnot(is.character(a12 <- all.equal(1,1:2)),
+          length(a12) == 2,
+          a12[2] == "Numeric: lengths (1, 2) differ")
+
+
 ## keep at end, as package `methods' has persistent side effects
 
 library(methods)

@@ -41,8 +41,11 @@ BUG FIXES
     o	pie() now has a `border' (and 'lty') argument which allows empty
 	slice borders and makes pie() useable for hundreds of slices.
 
-    o	all.equal.character() now works correctly also when NAs dont'
+    o	all.equal.character() now works correctly also when NAs don't
 	match (PR#1767).
+
+    o	all.equal.numeric() now gives character {instead of list} when
+	lenghts don't match.
 
 
 		CHANGES IN R VERSION 1.5.1
