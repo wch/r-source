@@ -499,6 +499,8 @@ BUG FIXES
 
    o	as.hclust(x) now also works (as identity) for "hclust" objects.
 
+   o    NextMethod didn't work right in Ops.
+
    o	dotchart() now obeys `xlim ='.
 
 

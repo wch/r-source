@@ -931,6 +931,29 @@ q2 <- expression(c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19))
 stopifnot(nchar(q3) == 68)
 ## was 61 in 1.5.1
 
+##Ops wasn't using NextMethod correctly
+
+a<-ordered(c("a","b","c"))
+stopifnot(  (a=="a") == c(TRUE,FALSE,FALSE))
+stopifnot( all(a==a))
+
+Ops.foo<-function(e1, e2){
+   NextMethod()
+}
+
+Ops.baz<-function(e1, e2){
+   NextMethod()
+}
+
+a<-1
+class(a)<-c("foo","bar","baz")
+a==1
+
+b<-1
+class(b)<-c("foo","baz")
+b==a
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))

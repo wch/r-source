@@ -197,6 +197,8 @@ function (e1, e2)
 	warning('"',.Generic,'"', " not meaningful for ordered factors")
 	return(rep(NA, max(length(e1),if(!missing(e2))length(e2))))
     }
+    if (.Generic %in% c("==", "!="))
+      return(NextMethod(.Generic))  ##not S-PLUS compatible, but saner
     nas <- is.na(e1) | is.na(e2)
     ord1 <- FALSE
     ord2 <- FALSE

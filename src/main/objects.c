@@ -454,7 +454,7 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[128], b[512], tbuf[10];
+    char buf[128], b[512], bb[512], tbuf[10];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
     SEXP a, group, basename;
@@ -632,6 +632,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	  if( strlen(b) )
 	    break;
 	}
+	/* for binary operators check that the second argument's method 
+	   is the same or absent */
+	for(j=i;j<length(method); j++){
+	  sprintf(bb,"%s",CHAR(STRING_ELT(method, j)));
+	  if (strlen(bb) && strcmp(b,bb))
+	      warning("Incompatible methods ignored");
+	}
     }
     else {
       sprintf(b,"%s", CHAR(PRINTNAME(CAR(cptr->call))));	
@@ -662,10 +669,6 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 #endif
 
-    /* we need the value of i on exit from the for loop to figure out
-       how many classes to drop
-    */
-
     for (j = 0; j < length(class); j++) {
       sprintf(buf,"%s.%s", CHAR(STRING_ELT(basename, 0)),
 	CHAR(STRING_ELT(class, j)));
@@ -678,11 +681,23 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     else
       j = 0;  /*no match so start with the first element of .Class */
 
+    /* we need the value of i on exit from the for loop to figure out
+	   how many classes to drop. */
     for (i = j ; i < length(class); i++) {
-	sprintf(buf, "%s.%s", CHAR(STRING_ELT(generic, 0)),
+	    sprintf(buf, "%s.%s", CHAR(STRING_ELT(generic, 0)),  
 		CHAR(STRING_ELT(class, i)));
 #ifdef EXPERIMENTAL_NAMESPACES
 	nextfun = R_LookupMethod(install(buf), env, callenv, defenv);
+	if (isFunction(nextfun))
+	    break;
+	if (group !=R_UnboundValue){
+	    /* if not Generic.foo, look for Group.foo */
+	    sprintf(buf, "%s.%s", CHAR(STRING_ELT(basename, 0)),  
+		CHAR(STRING_ELT(class, i)));
+            nextfun = R_LookupMethod(install(buf), env, callenv, defenv);
+            if(isFunction(nextfun))
+	        break;
+	}
 #else
 	nextfun = findVar(install(buf),env);
 #endif
@@ -716,7 +731,12 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	SET_STRING_ELT(s, j, duplicate(STRING_ELT(class, i++)));
     setAttrib(s, install("previous"), class);
     defineVar(install(".Class"), s, m);
-    PROTECT(method = mkString(buf));
+    /* for Ops we need `method' to be a vector */
+    PROTECT(method = duplicate(method));
+    for(j = 0; j < length(method); j++){
+       if (strlen(CHAR(STRING_ELT(method,j))))
+	   SET_STRING_ELT(method,j,  mkChar(buf));
+    }
     defineVar(install(".Method"), method, m);
 #ifdef EXPERIMENTAL_NAMESPACES
     if (R_UseNamespaceDispatch) {
