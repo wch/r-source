@@ -1,5 +1,5 @@
 % file lqs/man/lqs.Rd
-% copyright (C) 1998-9 B. D. Ripley
+% copyright (C) 1998-9 B. D. Ripley    (C) 2001 R Core Development Team
 %
 \name{lqs}
 \alias{lqs}
@@ -12,7 +12,7 @@
 Resistant Regression
 }
 \description{
-  Fit a regression to the \code{good} points in the dataset, thereby
+  Fit a regression to the \emph{good} points in the dataset, thereby
   achieving a regression estimator with a high breakdown point.
   \code{lmsreg} and \code{ltsreg} are compatibility wrappers.
 }
@@ -39,59 +39,43 @@ lmsreg(\ldots)
 ltsreg(\ldots)
 }
 \arguments{
-\item{formula}{
-  a formula of the form \code{y ~ x1 + x2 + \dots}.
+  \item{formula}{a formula of the form \code{y ~ x1 + x2 + \dots}.}
+  \item{data}{data frame from which variables specified in
+    \code{formula} are preferentially to be taken.}
+  \item{subset}{an index vector specifying the cases to be used in
+    fitting. (NOTE: If given, this argument must be named exactly.)}
+  \item{na.action}{function to specify the action to be taken if
+    \code{NA}s are found.  The default action is for the procedure to
+    fail.  An alternative is \code{na.omit}, which leads to omission of
+    cases with missing values on any required variable.  (NOTE: If
+    given, this argument must be named exactly.)
+  }
+  \item{model}{logical. If \code{TRUE} the model frame is returned.}
+  \item{contrasts}{an optional list.  See the \code{contrasts.arg}
+    of \code{\link{model.matrix.default}}.}
+  \item{x}{a matrix or data frame containing the explanatory variables.}
+  \item{y}{the response: a vector of length the number of rows of \code{x}.}
+  \item{intercept}{should the model include an intercept?}
+  \item{method}{
+    the method to be used. \code{model.frame} returns the model frame: for the
+    others see the \code{Details} section. Using \code{lmsreg} or
+    \code{ltsreg} forces \code{"lms"} and \code{"lts"} respectively.
+  }
+  \item{quantile}{
+    the quantile to be used: see \code{Details}. This is over-ridden if
+    \code{method = "lms"}.
+  }
+  \item{control}{additional control items: see \code{Details}.}
+  \item{k0}{the cutoff / tuning constant used for \eqn{\chi()}{chi()}
+    and \eqn{\psi()}{psi()} functions when \code{method = "S"}, currently
+    corresponding to Tukey's ``biweight''.}
+  \item{seed}{
+    the seed to be used for random sampling: see \code{.Random.seed}. The
+    current value of \code{.Random.seed} will be preserved if it is set..
+  }
+  \item{\dots}{arguments to be passed to \code{lqs.default} or
+    \code{lqs.control}.}
 }
-\item{data}{
-  data frame from which variables specified in \code{formula} are
-  preferentially to be taken.
-}
-\item{subset}{
-  An index vector specifying the cases to be used in fitting. (NOTE: If
-  given, this argument must be named exactly.)
-}
-\item{na.action}{
-  A function to specify the action to be taken if \code{NA}s are found. The
-  default action is for the procedure to fail. An alternative is
-  \code{na.omit}, which leads to omission of cases with missing values on any
-  required variable.  (NOTE: If given, this argument must be named
-  exactly.)
-}
-\item{model}{logical. If \code{TRUE} the model frame is returned.
-}
-\item{contrasts}{
-  an optional list. See the \code{contrasts.arg}
-  of \code{model.matrix.default}.
-}
-\item{x}{
-  a matrix or data frame containing the explanatory variables.
-}
-\item{y}{
-  the response: a vector of length the number of rows of \code{x}.
-}
-\item{intercept}{
-  should the model include an intercept?
-}
-\item{method}{
-  the method to be used. \code{model.frame} returns the model frame: for the
-  others see the \code{Details} section. Using \code{lmsreg} or
-  \code{ltsreg} forces \code{"lms"} and \code{"lts"} respectively.
-}
-\item{quantile}{
-  the quantile to be used: see \code{Details}. This is over-ridden if
-  \code{method = "lms"}.
-}
-\item{control}{
-  additional control items: see \code{Details}.
-}
-\item{seed}{
-  the seed to be used for random sampling: see \code{.Random.seed}. The
-  current value of \code{.Random.seed} will be preserved if it is set..
-}
-
-\item{\dots}{
-  arguments to be passed to \code{lqs.default} or \code{lqs.control}.
-}}
 \value{
   An object of class \code{"lqs"}.
 }
@@ -111,28 +95,24 @@ ltsreg(\ldots)
   such that the average of a function chi of the residuals divided
   by \code{s} is equal to a given constant.
 
-The \code{control} argument is a list with components:
-
-\code{psamp}:
-  the size of each sample. Defaults to \code{p}.
-
-\code{nsamp}:
-  the number of samples or \code{"best"} or \code{"exact"} or
-  \code{"sample"}. If \code{"sample"} the number chosen is
-  \code{min(5*p, 3000)}, taken from Rousseeuw and Hubert (1997).
-  If \code{"best"} exhaustive enumeration is done up to 5000 samples:
-  if \code{"exact"} exhaustive enumeration will be attempted however
-  many samples are needed.
-
-\code{adjust}:
-  should the intercept be optimized for each sample?
+  The \code{control} argument is a list with components
+  \describe{
+    \item{\code{psamp}:}{the size of each sample. Defaults to \code{p}.}
+    \item{\code{nsamp}:}{the number of samples or \code{"best"} or
+      \code{"exact"} or \code{"sample"}.  If \code{"sample"} the number
+      chosen is \code{min(5*p, 3000)}, taken from Rousseeuw and Hubert (1997).
+      If \code{"best"} exhaustive enumeration is done up to 5000 samples:
+      if \code{"exact"} exhaustive enumeration will be attempted however
+      many samples are needed.}
+    \item{\code{adjust}:}{should the intercept be optimized for each
+      sample?}
+    }
 }
 \note{
   There seems no reason other than historical to use the \code{lms} and
-  \code{lqs}
-  options.  LMS estimation is of low efficiency (converging at rate
-  \eqn{n^{-1/3}}) whereas LTS has the same asymptotic efficiency as an
-  M estimator with trimming at the quartiles (Marazzi, 1993, p.201).
+  \code{lqs} options.  LMS estimation is of low efficiency (converging
+  at rate \eqn{n^{-1/3}}) whereas LTS has the same asymptotic efficiency
+  as an M estimator with trimming at the quartiles (Marazzi, 1993, p.201).
   LQS and LTS have the same maximal breakdown value of
   \code{(floor((n-p)/2) + 1)/n} attained if
   \code{floor((n+p)/2) <= quantile <= floor((n+p+1)/2)}.
@@ -144,7 +124,7 @@ The \code{control} argument is a list with components:
   be sorted, and may be significant extra computation if \code{n} is large
   and \code{p} small.
 
-  Opinions differ over the choice of \code{psamp}. Rousseeuw and Hubert
+  Opinions differ over the choice of \code{psamp}.  Rousseeuw and Hubert
   (1997) only consider p; Marazzi (1993) recommends p+1 and suggests
   that more samples are better than adjustment for a given computational
   limit.
