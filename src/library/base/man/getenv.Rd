@@ -17,8 +17,9 @@ getenv(x)
   environment variable named by the corresponding component of \code{x}
   (or \code{""} if no environment variable with that name was found).
 }
+\seealso{\code{\link{getwd}} for the working directory.}
 \examples{
-getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD"))
+getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 }
 \keyword{environment}
 \keyword{utilities}
