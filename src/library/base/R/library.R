@@ -1,5 +1,5 @@
 library <-
-function(package, help, lib.loc = NULL, character.only = FALSE,
+function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          logical.return = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"), version)
@@ -198,7 +198,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		if (packageHasNamespace(package, which.lib.loc)) {
 		    tt <- try({
 			ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-			env <- attachNamespace(ns)
+			env <- attachNamespace(ns, pos = pos)
 		    })
 		    if (inherits(tt, "try-error"))
 			if (logical.return)
@@ -228,7 +228,7 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
 		    warning(paste("Package ", sQuote(package),
 				  "contains no R code"))
 		## now transfer contents of loadenv to an attached frame
-		env <- attach(NULL, name = pkgname)
+		env <- attach(NULL, pos = pos, name = pkgname)
 		## detach does not allow character vector args
 		on.exit(do.call("detach", list(name = pkgname)))
 		attr(env, "path") <- file.path(which.lib.loc, package)

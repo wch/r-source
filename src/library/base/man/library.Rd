@@ -15,17 +15,17 @@
 \alias{print.libraryIQR}
 \alias{print.packageInfo}
 \description{
-  \code{library} and \code{require} load add-on packages.
-  \code{.First.lib} is called when a package is loaded;
-  \code{.Last.lib} is called when a package is detached.
-  \code{.packages} returns information about package availability.
+  \code{library} and \code{require} load add-on packages.\cr
+  \code{.First.lib} is called when a package is loaded;\cr
+  \code{.Last.lib} is called when a package is detached.\cr
+  \code{.packages} returns information about package availability.\cr
   \code{.path.package} returns information about where a package was
-  loaded from.
+  loaded from.\cr
   \code{.find.package} returns the directory paths of installed
   packages.
 }
 \usage{
-library(package, help, lib.loc = NULL, character.only = FALSE,
+library(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         logical.return = FALSE, warn.conflicts = TRUE,
         keep.source = getOption("keep.source.pkgs"),
         verbose = getOption("verbose"), version)
@@ -48,6 +48,10 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 \arguments{
   \item{package, help}{\link{name} or character string giving the name
     of a package.}
+  \item{pos}{the position on the search list at which to attach the
+    loaded package. Note that \code{.First.lib} may attach other
+    packages, and \code{pos} is computed \emph{after} \code{.First.lib}
+    has been run.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}

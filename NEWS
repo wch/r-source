@@ -66,6 +66,9 @@ NEW FEATURES
     o   methods() has a print method which asterisks functions which
 	are not user-visible.
 
+    o   library() has a pos argument, controlling where the package is
+	attached (defaulting to pos=2 as before).
+
 
 DEPRECATED & DEFUNCT
 
