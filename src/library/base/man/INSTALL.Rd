@@ -19,11 +19,16 @@
 
   To install into the library tree \code{lib} instead of the default
   one, use \code{R INSTALL -l lib pkgs}.
-
+}
+\details{
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
   relative path names. \code{pkgs} can also contain name of package
   archive files of the form \file{pkg\_version.tar.gz} as obtained from
-  CRAN, these are then extracted in a temporary directory.}
+  CRAN, these are then extracted in a temporary directory.
+
+  For checking (via the examples in the help files \file{man/*.Rd},
+  use \code{R CMD check [-l lib] <pkg>}, use \code{R CMD check --help}
+  for more information.
 }
 \seealso{
   \code{\link{REMOVE}}, and \code{\link{library}} for information on
