@@ -44,6 +44,10 @@ USER-VISIBLE CHANGES
     o	There has been a concerted effort to speed up the startup of
 	an R session: it now takes about 2/3rds of the time of 1.8.1.
 
+    o	A warning is issued at startup in a UTF-8 locale, as currently R
+	only supports single-byte encodings. [This may change before
+	release.]
+
 
 NEW FEATURES
 

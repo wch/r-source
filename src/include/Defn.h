@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2003  The R Development Core Team.
+ *  Copyright (C) 1998--2004  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -526,6 +526,9 @@ extern int	R_ShowErrorMessages INI_as(1);	/* show error messages? */
 extern SEXP	R_HandlerStack;	/* Condition handler stack */
 extern SEXP	R_RestartStack;	/* Stack of available restarts */
 #endif
+
+Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
+
 
 /* GUI type */
 

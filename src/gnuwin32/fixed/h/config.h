@@ -179,8 +179,15 @@
 /* Define if you have the JPEG headers and libraries. */
 #define HAVE_JPEG 1
 
+
+/* Define to 1 if you have the <langinfo.h> header file. */
+/* #undef HAVE_LANGINFO_H */
+
 /* Define if external LAPACK is available. */
 /* #undef HAVE_LAPACK */
+
+/* Define to 1 if you have the `cc_dynamic' library (-lcc_dynamic). */
+/* #undef HAVE_LIBCC_DYNAMIC */
 
 /* Define to 1 if you have the `dl' library (-ldl). */
 /* #undef HAVE_LIBDL */
@@ -226,6 +233,9 @@
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
 /* #undef HAVE_NETINET_IN_H */
+
+/* Define to 1 if you have the `nl_langinfo' function. */
+/* #undef HAVE_NL_LANGINFO */
 
 /* Define if module-loading does not need an underscore to be prepended to
    external names. */
@@ -363,6 +373,9 @@
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
+
+/* Define to 1 if you have the <wchar.h> header file. */
+#define HAVE_WCHAR_H 1
 
 /* Define if calloc(0) returns a null pointer. */
 #define HAVE_WORKING_CALLOC 1

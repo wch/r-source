@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1998-2001   The R Development Core Team
- *  Copyright (C) 2002--2003  The R Foundation
+ *  Copyright (C) 2002--2004  The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,10 @@
 
 #ifdef HAVE_LOCALE_H
 # include <locale.h>
+#endif
+
+#ifdef HAVE_LANGINFO_H
+# include <langinfo.h>
 #endif
 
 #ifdef HAVE_AQUA
@@ -452,6 +456,9 @@ void setup_Rmainloop(void)
      if (strcmp(R_GUIType, "AQUA") == 0) 
        InitAquaIO(); /* must be after InitTempDir() */
 #endif
+#ifdef HAVE_NL_LANGINFO
+     utf8locale = strcmp(nl_langinfo(CODESET), "UTF-8") == 0;
+#endif
     /* gc_inhibit_torture = 0; */
 
     /* Initialize the global context for error handling. */
@@ -535,6 +542,7 @@ void setup_Rmainloop(void)
 
     if(!R_Quiet)
 	PrintGreeting();
+    if(utf8locale) Rprintf("\tUTF-8 locales are not currently supported\n\n");
 
     R_LoadProfile(R_OpenSiteFile(), baseEnv);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
