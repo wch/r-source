@@ -809,12 +809,16 @@ static void SortNodes(void)
 
 static SEXP R_fin_registered = NULL;
 
+#define SET_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp = 1)
+#define CLEAR_READY_TO_FINALIZE(s) ((s)->sxpinfo.gp = 0)
+#define IS_READY_TO_FINALIZE(s) (s)->sxpinfo.gp
+
 static void CheckFinalizers(void)
 {
     SEXP s;
     for (s = R_fin_registered; s != R_NilValue; s = CDR(s))
-	if (! NODE_IS_MARKED(CAR(s)) && s->sxpinfo.gp == 0)
-	    s->sxpinfo.gp = 1;
+	if (! NODE_IS_MARKED(CAR(s)) && ! IS_READY_TO_FINALIZE(s))
+	    SET_READY_TO_FINALIZE(s);
 }
 
 /* C finalizers are stored in a CHARSXP.  It would be nice if we could
@@ -853,7 +857,7 @@ static Rboolean RunFinalizers(void)
 
     for (s = R_fin_registered, last = R_NilValue; s != R_NilValue;) {
 	SEXP next = CDR(s);
-	if (s->sxpinfo.gp != 0) {
+	if (IS_READY_TO_FINALIZE(s)) {
 	    RCNTXT thiscontext;
 	    RCNTXT * volatile saveToplevelContext;
 	    volatile int savestack;
@@ -928,7 +932,7 @@ void R_RegisterFinalizer(SEXP s, SEXP fun)
 
     R_fin_registered = CONS(s, R_fin_registered);
     SET_TAG(R_fin_registered, fun);
-    R_fin_registered->sxpinfo.gp = 0;
+    CLEAR_READY_TO_FINALIZE(R_fin_registered);
 }
 
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
@@ -947,7 +951,7 @@ void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
     PROTECT(s);
     R_fin_registered = CONS(s, R_fin_registered);
     SET_TAG(R_fin_registered, MakeCFinalizer(fun));
-    R_fin_registered->sxpinfo.gp = 0;
+    CLEAR_READY_TO_FINALIZE(R_fin_registered);
     UNPROTECT(1);
 }
 
