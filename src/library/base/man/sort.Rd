@@ -18,14 +18,9 @@ is.unsorted(x, na.rm = FALSE)
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
   \item{decreasing}{logical. Should the sort be increasing or decreasing?}
-  \item{method}{character specifying the algorithm used.
-    It defaults to \code{"quick"} in ``standard'' cases, see below.}
+  \item{method}{character specifying the algorithm used.}
   \item{index.return}{logical indicating if the ordering index vector should
-    be returned as well.  If \code{index.return} is true, the result is
-    a list with components named \code{x} and \code{ix} containing the
-    sorted numbers and the ordering index vector (which is the same as
-    \code{\link{order}(x)} only if there are no ties in \code{x} or
-    \code{method == "shell"}!).}
+    be returned as well, for method \code{"quick"} only.}
   \item{na.rm}{logical. Should missing values be removed?}
 }
 \details{
@@ -44,19 +39,33 @@ is.unsorted(x, na.rm = FALSE)
   increasingly, i.e. \code{is.unsorted(x)} is true if \code{any(x !=
     sort(x))} (and there are no \code{NA}s).
 
-  \code{method = "shell"} uses Shellsort and has been the only method
+  \code{method = "shell"} uses Shellsort and was the only method
   before \R version 1.5.x (although improved there to an
   \eqn{O(n^{-4/3})} variant of Sedgewick (1996)).
-  The new \code{"quick"} method uses
-  Singleton's Quicksort implementation and is currently only used when
-  \code{partial} is \code{NULL} and \code{x} has no \code{\link{names}}
-  and is \code{numeric}.  Further note that "quick" \emph{not stable},
-  i.e., if \code{x} contains ties they may be reversed in the result.
+
+  Method \code{"quick"} uses Singleton's Quicksort implementation and is
+  only available when \code{x} is numeric (and not integer), the sort is
+  increasing, \code{partial} is \code{NULL} and \code{x} has no
+  \code{\link{names}}.  It is normally somewhat faster than Shellsort
+  (perhaps twice as fast on vectors of length a million) but has poor
+  worst-case behaviour.
+}
+\value{
+  For \code{sort} the sorted vector unless\code{method == "quick"} and
+  \code{index.return} is true, when the result is
+  a list with components named \code{x} and \code{ix} containing the
+  sorted numbers and the ordering index vector.  In the latter case,
+  ties may be reversed in the ordering, unlike \code{sort.list}, as
+  quicksort is not stable.
 }
 \references{
   Sedgewick, R. (1986)
   A new upper bound for Shell sort.
   \emph{J. Algorithms} \bold{7}, 159--173.
+
+  Singleton, R. C. (1969) An efficient algorithm for sorting with
+  minimal storage: Algorithm 347.
+  \emph{Communications of the ACM} \bold{12}, 185--187.
 }
 \seealso{
   \code{\link{order}}, \code{\link{rank}}.
@@ -77,8 +86,8 @@ stopifnot(!is.unsorted(sort(x)),
     for(x in list(z, round(z,1))) { ## 2nd one has ties
        qxi <- sort(x,  method = "quick",  index.return = TRUE)
        stopifnot(qxi$x == sort(x, method = "shell"),
-		 any(duplicated(x)) || qxi$i == order(x),
-		 x[qxi$i] == qxi$x)
+		 any(duplicated(x)) || qxi$ix == order(x),
+		 x[qxi$ix] == qxi$x)
     }
  }
 }
