@@ -321,7 +321,7 @@ as.character.path <- function(x, ...) {
 }
 
 print.path <- function(x, ...) {
-  print(as.character(x))
+  cat(as.character(x), "\n")
 }
 
 #############

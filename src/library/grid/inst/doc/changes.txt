@@ -20,6 +20,22 @@ Changes from grid_1.9.0 to grid_2.0.0:
 4.  Fixed (unreported) bug in drawing circles.  Now checks that
     radius is non-negative.
 
+5.  downViewport() now reports the depth it went down to find a 
+    viewport.  Handy for "going back" to where you started, e.g., ...
+
+      depth <- downViewport("vpname")
+      <draw stuff>
+      upViewport(depth)
+
+6.  The "alpha" gpar() is now combined with the alpha channel of
+    colours when creating a gcontext as follows:
+
+      finalAlpha = 1 - (1 - gpar("alpha"))*(1 - R_ALPHA(col))
+
+    This means that gpar(alpha=) settings now affect internal
+    colours so grid alpha transparency settings now are sent to
+    graphics devices.
+
 
 Changes from grid_1.9.0 to grid_1.9.1:
 ------------------------------------

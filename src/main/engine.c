@@ -922,8 +922,9 @@ static void clipPolygon(int n, double *x, double *y,
 {
     double *xc = NULL, *yc = NULL;
     /* if bg not specified then draw as polyline rather than polygon
-     * to avoid drawing line along border of clipping region */
-    if (gc->fill == NA_INTEGER) {
+     * to avoid drawing line along border of clipping region 
+     * If bg was NA then it has been converted to fully transparent */
+    if (R_TRANSPARENT(gc->fill)) {
 	int i;
 	xc = (double*) R_alloc(n + 1, sizeof(double));
 	yc = (double*) R_alloc(n + 1, sizeof(double));
@@ -963,7 +964,7 @@ void GEPolygon(int n, double *x, double *y,
     char *vmaxsave = vmaxget();
     if (gc->lty == LTY_BLANK)
 	/* "transparent" border */
-	gc->col = NA_INTEGER;
+	gc->col = R_RGBA(255, 255, 255, 255);
     if (dd->dev->canClip) {
 	/* 
 	 * If the device can clip, then we just clip to the device
@@ -1117,7 +1118,7 @@ void GECircle(double x, double y, double radius,
 	    xc = (double*)R_alloc(result+1, sizeof(double));
 	    yc = (double*)R_alloc(result+1, sizeof(double));
 	    convertCircle(x, y, radius, result, xc, yc);
-	    if (gc->fill == NA_INTEGER) {
+	    if (R_TRANSPARENT(gc->fill)) {
 		GEPolyline(result+1, xc, yc, gc, dd);
 	    }
 	    else {
@@ -1175,7 +1176,7 @@ static int clipRectCode(double x0, double y0, double x1, double y1,
  ****************************************************************
  */
 /* Filled with color fill and outlined with color col  */
-/* These may both be NA_INTEGER	 */
+/* These may both be fully transparent */
 void GERect(double x0, double y0, double x1, double y1,
 	    R_GE_gcontext *gc,
 	    GEDevDesc *dd)
@@ -1206,7 +1207,7 @@ void GERect(double x0, double y0, double x1, double y1,
 	    xc[2] = x1; yc[2] = y1;
 	    xc[3] = x1; yc[3] = y0;
 	    xc[4] = x0; yc[4] = y0;
-	    if (gc->fill == NA_INTEGER) {
+	    if (R_TRANSPARENT(gc->fill)) {
 		GEPolyline(5, xc, yc, gc, dd);
 	    }
 	    else { /* filled rectangle */
@@ -1590,7 +1591,7 @@ void GESymbol(double x, double y, int pch, double size,
 	     * not using the current fill colour)
 	     */
 	    gc->fill = gc->col;
-	    gc->col = NA_INTEGER;
+	    gc->col = R_RGBA(255, 255, 255, 255);
 	    GERect(x-.5, y-.5, x+.5, y+.5, gc, dd);
 	} else {
 	    str[0] = pch;
@@ -1606,13 +1607,13 @@ void GESymbol(double x, double y, int pch, double size,
 	case 0: /* S square */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    break;
 
 	case 1: /* S octahedron ( circle) */
 	    xc = RADIUS * size;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GECircle(x, y, xc, gc, dd);
 	    break;
 
@@ -1624,7 +1625,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
@@ -1649,7 +1650,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
 	    xx[3] = x; yy[3] = y-yc;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
@@ -1661,14 +1662,14 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
 	case 7:	/* S square and times superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    GELine(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    GELine(x-xc, y+yc, x+xc, y-yc, gc, dd);
@@ -1694,14 +1695,14 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x; yy[1] = y+yc;
 	    xx[2] = x+xc; yy[2] = y;
 	    xx[3] = x; yy[3] = y-yc;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
 	case 10: /* S hexagon (circle) and plus superimposed */
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GECircle(x, y, xc, gc, dd);
 	    GELine(x-xc, y, x+xc, y, gc, dd);
 	    GELine(x, y-yc, x, y+yc, gc, dd);
@@ -1716,7 +1717,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y-r;
 	    xx[1] = x+xc; yy[1] = y+yc;
 	    xx[2] = x-xc; yy[2] = y+yc;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(3, xx, yy, gc, dd);
 	    xx[0] = x; yy[0] = y+r;
 	    xx[1] = x+xc; yy[1] = y-yc;
@@ -1729,13 +1730,13 @@ void GESymbol(double x, double y, int pch, double size,
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
 	    GELine(x-xc, y, x+xc, y, gc, dd);
 	    GELine(x, y-yc, x, y+yc, gc, dd);
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	    break;
 
 	case 13: /* S octagon (circle) and times superimposed */
 	    xc = RADIUS * size;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GECircle(x, y, xc, gc, dd);
 	    xc = toDeviceWidth(RADIUS * GSTR_0, GE_INCHES, dd);
 	    yc = toDeviceHeight(RADIUS * GSTR_0, GE_INCHES, dd);
@@ -1748,7 +1749,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[0] = x; yy[0] = y+xc;
 	    xx[1] = x+xc; yy[1] = y-xc;
 	    xx[2] = x-xc; yy[2] = y-xc;
-	    gc->fill = NA_INTEGER;
+	    gc->fill = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(3, xx, yy, gc, dd);
 	    GERect(x-xc, y-xc, x+xc, y+xc, gc, dd);
 	    break;
@@ -1761,7 +1762,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[2] = x+xc; yy[2] = y+yc;
 	    xx[3] = x-xc; yy[3] = y+yc;
 	    gc->fill = gc->col;
-	    gc->col = NA_INTEGER;
+	    gc->col = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
@@ -1780,7 +1781,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[1] = x+xc; yy[1] = y-yc;
 	    xx[2] = x-xc; yy[2] = y-yc;
 	    gc->fill = gc->col;
-	    gc->col = NA_INTEGER;
+	    gc->col = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(3, xx, yy, gc, dd);
 	    break;
 
@@ -1792,7 +1793,7 @@ void GESymbol(double x, double y, int pch, double size,
 	    xx[2] = x+xc; yy[2] = y;
 	    xx[3] = x; yy[3] = y-yc;
 	    gc->fill = gc->col;
-	    gc->col = NA_INTEGER;
+	    gc->col = R_RGBA(255, 255, 255, 255);
 	    GEPolygon(4, xx, yy, gc, dd);
 	    break;
 
@@ -1931,7 +1932,20 @@ void GEMetricInfo(int c,
 		  double *ascent, double *descent, double *width,
 		  GEDevDesc *dd)
 {
-    dd->dev->metricInfo(c & 0xFF, gc, ascent, descent, width, dd->dev);
+    /* 
+     * If the fontfamily is a Hershey font family, call R_GE_VText
+     */
+    int vfontcode = VFontFamilyCode(gc->fontfamily);
+    if (vfontcode >= 0) {
+	/*
+	 * It should be straightforward to figure this out, but
+	 * just haven't got around to it yet
+	 */
+	*ascent= 0;
+	*descent = 0;
+	*width = 0;
+    } else 
+	dd->dev->metricInfo(c & 0xFF, gc, ascent, descent, width, dd->dev);
 }
 
 /****************************************************************

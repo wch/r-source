@@ -50,6 +50,11 @@ extern "C" {
 void InitGraphics(void);
 /* Kill all active devices (used at shutdown). */
 void KillAllDevices(void);
+/*
+ * Free the font and encoding structures used by
+ * PostScript, Xfig, and PDF devices
+ */
+void freeType1Fonts(void);
 
 /* Drivers from ../main/devices.c , 
  * description there;   platform-specific drivers in platform directories! */
@@ -68,7 +73,7 @@ XFigDeviceDriver(DevDesc*, char*, char*, char*,
 Rboolean
 PDFDeviceDriver(DevDesc* dd, char *, char *, char *, 
 		char *, char *, double, double, double,
-		int, char*);
+		int, char*, SEXP, int, int);
 
 
 

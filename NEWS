@@ -51,7 +51,7 @@ NEW FEATURES
 
     o	The 'formula' method for pairs() has a 'na.action' argument,
 	defaulting to na.pass(), rather than the value of
-	getOption("na.omit").
+	getOption("na.action").
 
     o	The 'formula' method for mosaicplot() has a 'na.action' argument
 	defaulting to na.omit.
@@ -255,6 +255,11 @@ BUG FIXES
 
     o   gzcon() connections would sometimes read the crc bytes from
 	the wrong place, possibly uninitialized memory.
+
+    o   Rd.sty contained a length \middle that was not needed after a
+	revision in July 2000.  It causes problems with LaTeX systems
+	based on e-TeX which are starting to appear.
+
 
 
 

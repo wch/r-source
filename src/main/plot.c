@@ -132,6 +132,31 @@ void ProcessInlinePars(SEXP s, DevDesc *dd, SEXP call)
     }
 }
 
+/* 
+ * Extract specified par from list of inline pars
+ */
+SEXP getInlinePar(SEXP s, char *name)
+{
+    SEXP result = R_NilValue;
+    int found = 0;
+    if (isList(s) && !found) {
+	while (s != R_NilValue) {
+	    if (isList(CAR(s))) {
+		result = getInlinePar(CAR(s), name);
+		if (result)
+		    found = 1;
+	    } else 
+		if (TAG(s) != R_NilValue)
+		    if (!strcmp(CHAR(PRINTNAME(TAG(s))), name)) {
+			result = CAR(s);
+			found = 1;
+		    }
+	    s = CDR(s);
+	}
+    }    
+    return result;
+}
+
 SEXP FixupPch(SEXP pch, int dflt)
 {
     int i, n;
@@ -373,7 +398,7 @@ static void
 GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 	   int *pcol, double *pcex, int *pfont, SEXP *pvfont)
 {
-    int i, n, col, font;
+    int i, n, col, font, colspecd;
     double cex;
     SEXP txt, vfont, nms;
 
@@ -381,6 +406,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
     vfont = R_NilValue;
     cex	  = NA_REAL;
     col	  = NA_INTEGER;
+    colspecd = 0;
     font  = NA_INTEGER;
     PROTECT(txt);
 
@@ -413,7 +439,11 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
 		    cex = asReal(VECTOR_ELT(spec, i));
 		}
 		else if (!strcmp(CHAR(STRING_ELT(nms, i)), "col")) {
-		    col = asInteger(FixupCol(VECTOR_ELT(spec, i), NA_INTEGER));
+		    SEXP colsxp = VECTOR_ELT(spec, i);
+		    if (!isNAcol(colsxp, 0, LENGTH(colsxp))) {
+			col = asInteger(FixupCol(colsxp, NA_INTEGER));
+			colspecd = 1;
+		    }
 		}
 		else if (!strcmp(CHAR(STRING_ELT(nms, i)), "font")) {
 		    font = asInteger(FixupFont(VECTOR_ELT(spec, i), NA_INTEGER));
@@ -449,7 +479,7 @@ GetTextArg(SEXP call, SEXP spec, SEXP *ptxt,
     if (txt != R_NilValue) {
 	*ptxt = txt;
 	if (R_FINITE(cex))	 *pcex	 = cex;
-	if (col != NA_INTEGER)	 *pcol	 = col;
+	if (colspecd)	         *pcol	 = col;
 	if (font != NA_INTEGER)	 *pfont	 = font;
 	if (vfont != R_NilValue) *pvfont = vfont;
     }
@@ -1527,7 +1557,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    yy = y[i];
 	    GConvert(&xx, &yy, USER, DEVICE, dd);
 	    if (R_FINITE(xx) && R_FINITE(yy)
-		&& (thiscol = INTEGER(col)[i % ncol]) != NA_INTEGER) {
+		&& !R_TRANSPARENT(thiscol = INTEGER(col)[i % ncol])) {
 		Rf_gpptr(dd)->col = thiscol;
 		GLine(xx, yold, xx, yy, DEVICE, dd);
 	    }
@@ -1551,7 +1581,7 @@ SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (R_FINITE(xx) && R_FINITE(yy)) {
 		if (R_FINITE(thiscex = REAL(cex)[i % ncex])
 		    && (thispch = INTEGER(pch)[i % npch]) != NA_INTEGER
-		    && (thiscol = INTEGER(col)[i % ncol]) != NA_INTEGER)
+		    && !R_TRANSPARENT(thiscol = INTEGER(col)[i % ncol]))
 		{
 		    Rf_gpptr(dd)->cex = thiscex * Rf_gpptr(dd)->cexbase;
 		    Rf_gpptr(dd)->col = thiscol;
@@ -1756,7 +1786,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     /* arrows(x0, y0, x1, y1, length, angle, code, col, lty, lwd, xpd) */
-    SEXP sx0, sx1, sy0, sy1, sxpd, col, lty, lwd;
+    SEXP sx0, sx1, sy0, sy1, sxpd, col, rawcol, lty, lwd;
     double *x0, *x1, *y0, *y1;
     double xx0, yy0, xx1, yy1;
     double hlength, angle;
@@ -1790,7 +1820,12 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "invalid arrow head specification");
     args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    /*
+     * Need raw colours to be able to check for NAs
+     * FixupCol converts NAs to fully transparent
+     */
+    rawcol = CAR(args);
+    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
     ncol = LENGTH(col);
     args = CDR(args);
 
@@ -1832,9 +1867,10 @@ SEXP do_arrows(SEXP call, SEXP op, SEXP args, SEXP env)
 	GConvert(&xx0, &yy0, USER, DEVICE, dd);
 	GConvert(&xx1, &yy1, USER, DEVICE, dd);
 	if (R_FINITE(xx0) && R_FINITE(yy0) && R_FINITE(xx1) && R_FINITE(yy1)) {
-	  Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
-	    if (Rf_gpptr(dd)->col == NA_INTEGER)
+	    if (isNAcol(rawcol, i, ncol))
 		Rf_gpptr(dd)->col = Rf_dpptr(dd)->col;
+	    else 
+		Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	    if (nlty == 0 || INTEGER(lty)[i % nlty] == NA_INTEGER)
 		Rf_gpptr(dd)->lty = Rf_dpptr(dd)->lty;
 	    else
@@ -1958,7 +1994,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 /* text(xy, labels, adj, pos, offset,
  *	vfont, cex, col, font, xpd, ...)
  */
-    SEXP sx, sy, sxy, sxpd, txt, adj, pos, cex, col, font, vfont;
+    SEXP sx, sy, sxy, sxpd, txt, adj, pos, cex, col, rawcol, font, vfont;
     int i, n, npos, ncex, ncol, nfont, ntxt, xpd;
     double adjx = 0, adjy = 0, offset = 0.5;
     double *x, *y;
@@ -2031,7 +2067,8 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
     ncex = LENGTH(cex);
     args = CDR(args);
 
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    rawcol = CAR(args);
+    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
     ncol = LENGTH(col);
     args = CDR(args);
 
@@ -2062,7 +2099,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	yy = y[i % n];
 	GConvert(&xx, &yy, USER, INCHES, dd);
 	if (R_FINITE(xx) && R_FINITE(yy)) {
-	    if (ncol && INTEGER(col)[i % ncol] != NA_INTEGER)
+	    if (ncol && !isNAcol(rawcol, i, ncol))
 		Rf_gpptr(dd)->col = INTEGER(col)[i % ncol];
 	    else
 		Rf_gpptr(dd)->col = Rf_dpptr(dd)->col;
@@ -2243,6 +2280,7 @@ static double ComputeAtValue(double at, double adj,
 SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP text, side, line, outer, at, adj, cex, col, font, vfont, string;
+    SEXP rawcol;
     int ntext, nside, nline, nouter, nat, nadj, ncex, ncol, nfont;
     Rboolean dirtyplot = FALSE, gpnewsave = FALSE, dpnewsave = FALSE;
     Rboolean vectorFonts = FALSE;
@@ -2312,7 +2350,8 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
 
     /* Arg8 : col */
-    PROTECT(col = FixupCol(CAR(args), NA_INTEGER));
+    rawcol = CAR(args);
+    PROTECT(col = FixupCol(rawcol, NA_INTEGER));
     ncol = length(col);
     if (ncol <= 0) errorcall(call, "zero length \"col\" specified");
     if (n < ncol) n = ncol;
@@ -2374,7 +2413,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (R_FINITE(cexval)) Rf_gpptr(dd)->cex = cexval;
 	else cexval = cexsave;
 	Rf_gpptr(dd)->font = (fontval == NA_INTEGER) ? fontsave : fontval;
-	Rf_gpptr(dd)->col = (colval == NA_INTEGER) ? colsave : colval;
+	if (isNAcol(rawcol, i, ncol))
+	    Rf_gpptr(dd)->col = colsave;
+	else 
+	    Rf_gpptr(dd)->col = colval;
 	Rf_gpptr(dd)->adj = ComputeAdjValue(adjval, sideval, Rf_gpptr(dd)->las);
 	atval = ComputeAtValue(atval, Rf_gpptr(dd)->adj, sideval, Rf_gpptr(dd)->las,
 			       outerval, dd);
@@ -2855,6 +2897,7 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
        --- which is coded, 1 = plot, 2 = figure, 3 = inner, 4 = outer.
 */
     int which, col;
+    SEXP colsxp, fgsxp;
     SEXP originalArgs = args;
     DevDesc *dd = CurrentDevice();
 
@@ -2863,15 +2906,23 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
     which = asInteger(CAR(args)); args = CDR(args);
     if (which < 1 || which > 4)
 	errorcall(call, "invalid \"which\" specification");
-    col= Rf_gpptr(dd)->col;	Rf_gpptr(dd)->col= NA_INTEGER;
-    Rf_gpptr(dd)->fg = NA_INTEGER;
+    /*
+     * If specified non-NA col then use that, else ...
+     * 
+     * if specified non-NA fg then use that, else ...
+     *
+     * else use par("col")
+     */
+    col= Rf_gpptr(dd)->col;	
     ProcessInlinePars(args, dd, call);
-    if (Rf_gpptr(dd)->col == NA_INTEGER) {/* col := 'fg' or original 'col' */
-	if (Rf_gpptr(dd)->fg == NA_INTEGER)
+    colsxp = getInlinePar(args, "col");
+    if (isNAcol(colsxp, 0, 1)) {
+	fgsxp = getInlinePar(args, "fg");
+	if (isNAcol(fgsxp, 0, 1))
 	    Rf_gpptr(dd)->col = col;
 	else
-	    Rf_gpptr(dd)->col = Rf_gpptr(dd)->fg;
-    }
+	    Rf_gpptr(dd)->col = Rf_gpptr(dd)->fg;	    
+    } 
     /* override par("xpd") and force clipping to device region */
     Rf_gpptr(dd)->xpd = 2;
     GMode(1, dd);
