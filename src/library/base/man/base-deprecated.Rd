@@ -32,9 +32,8 @@ delay(x, env = .GlobalEnv)
   the comments on that help page: Windows users will need to use
   \code{mode="wb"}.
   
-  \code{delay} has been superseded by \code{\link{delayedAssign}}. 
-  As of the next release of R, promises should never be visible 
-  unevaluated.
+  \code{delay} has been replaced by \code{\link{delayedAssign}}. 
+  As from \R 2.1.0 promises should never be visible unevaluated.
 }
 \seealso{
   \code{\link{Deprecated}}

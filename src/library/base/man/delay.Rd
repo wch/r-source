@@ -28,6 +28,9 @@ delay(x, env = .GlobalEnv)
   environment specified by \code{env} (who contents may have changed in
   the meantime).
 }
+\note{
+  \code{delay} was deprecated in \R 2.1.0 and will be removed in 2.2.0.
+}
 \examples{
 x <- delay({
     for(i in 1:7)
