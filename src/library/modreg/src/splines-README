@@ -1,0 +1,28 @@
+smooth.spline()	 [R]
+ |
+ \--> qsbart()				./qsbart.f
+      \--> sbart()			./sbart.f
+	   |--> sgram()			./sgram.f  [was ratfor !]
+	   |    |--> interv()		./bvalue.f [was ratfor !]
+	   |    \--> bsplvd()		./bsplvd.f [was ratfor !]
+	   |	     \--> bsplvb()	    "
+	   |--> stxwx()			./stxwx.f  [was ratfor !]
+	   |    |--> interv()		  (see above)
+	   |    \--> bsplvd()		    "
+	   |	     \--> bsplvb()	    "
+	   \--> sslvrg()		./sslvrg.f [was ratfor !]
+	        |--> sinerp()		./sinerp.f [was ratfor !]
+	        |--> bvalue()		./bvalue.f   (above)
+	        |    \--> interv()	  (see above)
+	        |--> interv()		    "
+	        |--> bsplvd()		    "
+	   	|    \--> bsplvb()	    "
+	        |--> dpbfa()		../../../appl/dpbfa.f  {Linpack}
+	        \--> dpbsl()		../../../appl/dpbsl.f 
+
+
+predict.smooth.spline()	 [R]
+ |
+ \--> bvalus()				./bvalus.f
+       \--> bvalue()			(see above)
+             \--> interv()	          "
