@@ -116,6 +116,9 @@ NEW FEATURES
 	  (with a warning).  Previously using `drop' inhibited list-like 
 	  subscripting.
 
+	- adf$name <- value now checks for the correct length of
+          `value', replicating a whole number of times if needed.
+
 	- adf[j] <- value and adf[[j]] <- value did not convert
 	  character vectors to factors, but adf[,j] <- value did.
 	  Now none do,
