@@ -52,7 +52,7 @@ $(OBJECTS): $(top_builddir)/config.status
 # purpose of the Timestamp... The -c (checksum first) is also necessary
 # because otherwise all the files get the mtime changed. Sigh.
 rsync-update: Timestamp
-	rsync -rcIz --delete --exclude=Makefile \
+	rsync -rcIzC --delete --exclude=Makefile \
                --exclude=Makefile.in --exclude=Timestamp $(CRANREC) .
 
 install: installdirs
