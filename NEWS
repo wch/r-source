@@ -69,7 +69,7 @@ BUG FIXES
 
     o	predict.lm() failed with single-column model matrix (PR#1018).
 
-    o	legend() now also works with 100s of entries (thanks to 
+    o	legend() now also works with 100s of entries (thanks to
 	M. Schlather).
 
     o	A long-standing bug leading to inaccuracy in polyroot() has been
@@ -81,7 +81,8 @@ BUG FIXES
 	eval() now checks that a numeric `envir' has length one to prevent
 	accidental passing of matrices instead of data frames.
 
-    o	nlm(f, *) now also works correctly after f(x) returned +Inf.
+    o	The C code underlying nlm(f, *) now also works correctly when f(x)
+        returns +Inf {nlm() itself *did* work!}.
 
     o	pdfcolor.tex is now included in doc/manual, as pdftex seems no
 	longer to include it.
