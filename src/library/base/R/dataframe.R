@@ -277,7 +277,7 @@ data.frame <-
             }
         }## ncols[i] <= 1
 	nrows[i] <- length(rowsi)
-	if(missing(row.names) && (nrows[i] > 0) && (rowsi[[1]] != ""))
+	if(missing(row.names) && (nrows[i] > 0) && !(rowsi[[1]] %in% ""))
 	    row.names <- data.row.names(row.names, rowsi, i)
 	vlist[[i]] <- xi
     }
