@@ -48,7 +48,6 @@ if($^O =~ /^(MS)?Win32$/i){
 }
 elsif($^O =~ /^MacOS$/i){
     $OSTYPE = "mac";
-##    use Mac::Files;
 }
 else{
     $OSTYPE = "unix";
@@ -72,7 +71,7 @@ if($OSTYPE eq "windows"){
 }
 elsif($OSTYPE eq "mac"){
     require Mac::Files;
-    $TMPDIR = FindFolder(kOnSystemDisk, kTemporaryFolderType);
+    $TMPDIR = Mac::Files::FindFolder(kOnSystemDisk, kTemporaryFolderType);
 }
 else{
     if($R_HOME){
