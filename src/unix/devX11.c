@@ -1144,6 +1144,9 @@ static double X11_StrWidth(char *str, DevDesc *dd)
 	/* width information for the given character in DEVICE	*/
 	/* units (GMetricInfo does the necessary conversions)	*/
 	/* This is used for formatting mathematical expressions	*/
+        /* and for exact centering of text (see GText)          */
+        /* If the device cannot provide metric information then */
+        /* it MUST return 0.0 for ascent, descent, and width    */
 	/********************************************************/
 
 	/* Character Metric Information */
@@ -1593,6 +1596,7 @@ static void X11_Text(double x, double y, int coords,
     SetColor(dd->gp.col, dd);
     len = strlen(str);
     GConvert(&x, &y, coords, DEVICE, dd);
+#ifdef BUG61
     if(xc != 0.0 || yc != 0) {
 	rot1 = DEG2RAD * rot;
 	xl = X11_StrWidth(str, dd);
@@ -1601,6 +1605,7 @@ static void X11_Text(double x, double y, int coords,
 	x += -xc * xl * cos(rot1) + yc * yl * sin(rot1);
 	y -= -xc * xl * sin(rot1) - yc * yl * cos(rot1);
     }
+#endif
     XRotDrawString(display, xd->font, rot, xd->window, xd->wgc,
 		   (int)x, (int)y, str);
 #ifdef XSYNC
