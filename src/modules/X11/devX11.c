@@ -2391,7 +2391,6 @@ static Rboolean in_R_X11readclp(Rclpconn this, char *type)
 	}
     }
     if(strcmp(type, "X11_secondary") == 0) sel = XA_SECONDARY;
-    Rprintf("type = %s\n", type);
 
     pty = XInternAtom(display, "RCLIP_READ", False);
 
