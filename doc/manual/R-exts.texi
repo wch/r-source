@@ -258,23 +258,22 @@ parentheses.  (List package names even if they are part of a bundle.)
 You can also use the special package name @samp{R} if your package
 depends on a certain version of R.  E.g., if the package works only with
 R version 1.8.0 or newer, include @samp{R (>= 1.8.0)} in the
-@samp{Depends} field.  The R package checking facilities use this
-field, hence it is an error to use improper syntax 
-or misuse the @samp{Depends} field for comments on other software that
-might be needed.  Other dependencies (external to the @R{} system)
-should be listed in the @samp{SystemRequirements} field or a separate
-@samp{README} file.  The @R{} @command{INSTALL} facilities already check
-if the version of R used is recent enough for the package being
-installed.
+@samp{Depends} field.  The R package checking facilities use this field,
+hence it is an error to use improper syntax or misuse the @samp{Depends}
+field for comments on other software that might be needed.  Other
+dependencies (external to the @R{} system) should be listed in the
+@samp{SystemRequirements} field or a separate @file{README} file.  The
+@R{} @command{INSTALL} facilities already check if the version of R used
+is recent enough for the package being installed.
 
 The optional @samp{Suggests} field uses the same syntax as
-@samp{Depends} and lists packages that are not neccessarily
-needed. This includes packages used only in examples or vignettes, and
-packages loaded in the body of functions. E.g., consider an example
-from package @samp{foo} uses a dataset from package @samp{bar}. Then
-it is not necessary to have @samp{bar} for routine use of @samp{foo},
-unless one wants to execute the examples: it is nice to have
-@samp{bar}, but not necessary.  The general rules are
+@samp{Depends} and lists packages that are not necessarily needed.  This
+includes packages used only in examples or vignettes, and packages
+loaded in the body of functions.  E.g., consider an example from package
+@pkg{foo} uses a dataset from package @pkg{bar}. Then it is not
+necessary to have @pkg{bar} for routine use of @pkg{foo}, unless one
+wants to execute the examples: it is nice to have @pkg{bar}, but not
+necessary.  The general rules are
 
 @itemize @bullet
 @item Packages that are necessary to successfully load the package
@@ -350,10 +349,10 @@ normally an empty file.
 
 The optional file @file{R_PROFILE.R} is executed before the code in the
 @file{R} subdirectory and should be used to set up an environment needed
-only to evaluate the code (which is run with the @code{--vanilla}
+only to evaluate the code (which is run with the @option{--vanilla}
 command-line flag).  Very few packages will need such code.  Indeed,
-both @file{install.R} and @file{R_PROFILE.R} should be viewed as 
-experimental; the mechanism to execute code before attaching or 
+both @file{install.R} and @file{R_PROFILE.R} should be viewed as
+experimental; the mechanism to execute code before attaching or
 installing the package may change in the near future.
 
 
