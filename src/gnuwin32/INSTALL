@@ -43,8 +43,8 @@ under Win9x and crtdll.dll has many memory leaks.)
 It may also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin -mwin32 flags; the current versions use
 mscrt.dll.  (You will need the cygwin, gcc, mingw32, w32api and
-binutils bundles. gcc-2.95.2-7, the latest we looked at, had
-several mistakes in its spec file.)
+binutils bundles. gcc-2.95.2-8, the latest we looked at, had fatal
+mistakes in its spec file, as did -7.)
 
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/

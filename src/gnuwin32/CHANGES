@@ -9,6 +9,7 @@ rw1023
 
 The windows() device no longer rounds width and height to the nearest inch.
 
+File extract-usage needed for codoc was missing from the binary distribution.
 
 
 rw1022
