@@ -1,0 +1,6 @@
+Package: splines
+Version: @VERSION@
+Author: Douglas M. Bates <bates@stat.wisc.edu> and
+	William N. Venables <Bill.Venables@cmis.csiro.au>
+Description: Regression Spline Functions and Classes
+License: GPL Version 2 or later.

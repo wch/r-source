@@ -1,0 +1,5 @@
+Package: mva
+Version: @VERSION@
+Author: R Development Core Team
+Description: Multivariate analysis
+License: GPL Version 2 or later.

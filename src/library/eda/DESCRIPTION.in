@@ -1,0 +1,5 @@
+Package: eda
+Version: @VERSION@
+Author: R Development Core Team
+Description: Exploratory Data Analysis, in the Tukey sense
+License: GPL Version 2 or later.

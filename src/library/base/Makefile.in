@@ -20,8 +20,12 @@ all: Makefile
 	  cat $(srcdir)/R/*.R $(srcdir)/R/unix/*.R >> $${f}; \
           $(top_srcdir)/tools/move-if-change $${f} \
 	    $(top_builddir)/library/base/R/base)
-	@$(INSTALL_DATA) $(srcdir)/INDEX $(top_builddir)/library/base
-	@$(INSTALL_DATA) $(srcdir)/TITLE $(top_builddir)/library/base
+	@for f in DESCRIPTION INDEX TITLE; do \
+	if test -f $(srcdir)/$${f}; then \
+	  $(INSTALL_DATA) $(srcdir)/$${f} \
+	    $(top_builddir)/library/base; \
+	fi; \
+	done
 	@$(MKINSTALLDIRS) $(top_builddir)/library/base/data
 	@for f in `ls -d $(srcdir)/data/* | sed '/data\/CVS/d'`; do \
 	  $(INSTALL_DATA) $${f} $(top_builddir)/library/base/data; \

@@ -1,0 +1,5 @@
+Package: base
+Version: @VERSION@
+Author: R Development Core Team and contributors worldwide
+Description: Base R functions and datasets
+License: GPL Version 2 or later.

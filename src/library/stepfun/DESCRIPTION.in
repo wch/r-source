@@ -1,0 +1,5 @@
+Package: stepfun
+Version: @VERSION@
+Author: R Development Core Team
+Description: Step Functions, including empirical distributions
+License: GPL Version 2 or later.
