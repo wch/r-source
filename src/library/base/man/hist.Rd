@@ -62,6 +62,7 @@ but not their left one, with the exception of the first cell when
   depend on the values of the arguments \code{freq} (or \code{probability})
   or \code{plot}.  This is intentionally different from S.
 }
+\seealso{\code{\link{stem}}, \code{\link{density}}.}
 \examples{
 data(islands)
 op <- par(mfrow=c(2,2))
