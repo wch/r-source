@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.37 $'
+revision='$Revision: 1.38 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -27,7 +27,8 @@ equals the basename of argument 'files' if this specifies a package
 
 Options:
   -h, --help		print short help message and exit
-  -v, --version		print version info and exit  
+  -v, --version		print version info and exit
+      --batch		no interaction
       --debug		turn on shell debugging (set -x)
       --no-clean	do not remove created temporary files
       --no-preview	do not preview generated output file
@@ -45,6 +46,7 @@ export TEXINPUTS
 
 start_dir=`pwd`
 
+batch=false
 clean=true
 debug=false
 out_ext="dvi"
@@ -63,6 +65,8 @@ while test -n "${1}"; do
       ${echo} "${usage}"; exit 0 ;;
     -v|--version)
       ${echo} "${version}"; exit 0 ;;
+    --batch)
+      batch=true ;;
     --debug)
       debug=true ;;
     --no-clean)
@@ -215,7 +219,15 @@ fi
 mkdir ${build_dir}
 
 ## Rd2.tex part 1: header
-cat > ${build_dir}/Rd2.tex <<EOF
+if test ${batch}; then
+  cat > ${build_dir}/Rd2.tex <<EOF
+\\nonstopmode{}
+EOF
+else
+  cat > ${build_dir}/Rd2.tex <<EOF
+EOF
+fi
+cat >> ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
@@ -290,9 +302,14 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\end{document}
 EOF
 
+## <FIXME>
+## Need to do something smarter about the exit status in batch mode.
+status=0
+## <FIXME>
+
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD-latex} Rd2
+${R_LATEXCMD-latex} Rd2 || status=1
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
 if test "${out_ext}" = pdf; then
@@ -309,7 +326,7 @@ else
   ${echo} "You may want to clean up by 'rm -rf ${build_dir}'"
 fi
 ${preview} ${output}
-exit 0
+exit ${status}
 
 ### Local Variables: ***
 ### mode: sh ***
