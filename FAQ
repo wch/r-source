@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-22, 2002-12-17
+Version 1.6-23, 2002-12-31
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -113,7 +113,7 @@ questions about R.
 1.1 Legalese
 ============
 
-   This document is copyright (C) 1998-2002 by Kurt Hornik.
+   This document is copyright (C) 1998-2003 by Kurt Hornik.
 
    This document is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the Free
@@ -150,7 +150,7 @@ site (*note What is CRAN?::).
 1.3 Citing this document
 ========================
 
-   In publications, please refer to this FAQ as Hornik (2002), "The R FAQ",
+   In publications, please refer to this FAQ as Hornik (2003), "The R FAQ",
 and give the above, _official_ URL and the ISBN 3-901167-51-X.
 
 1.4 Notation

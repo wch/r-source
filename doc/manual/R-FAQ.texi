@@ -3,8 +3,8 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2002
-@set FAQ-VERSION 1.6-22, 2002-12-17
+@set FAQ-YEAR 2003
+@set FAQ-VERSION 1.6-23, 2002-12-31
 @set REL-VERSION 1.6.1
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
