@@ -58,6 +58,8 @@ AC_DEFUN(R_PROG_PERL,
 	    r_cv_prog_perl_v5=no
 	  fi
 	])
+    else
+      PERL=false
     fi
     if test "${r_cv_prog_perl_v5}" = yes; then
       NO_PERL5=false
@@ -76,6 +78,13 @@ AC_DEFUN(R_PROG_TEXMF,
   AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
   AC_PATH_PROG(PDFLATEX, [${PDFLATEX} pdflatex], false)
   AC_PATH_PROG(MAKEINFO, [${MAKEINFO} makeinfo], false)
+  makeinfo_version=`${MAKEINFO} --version | grep "^makeinfo" | \
+    sed 's/[[^)]]*) \(.\).*/\1/'`	
+  if test -z "${makeinfo_version}"; then
+    MAKEINFO=false
+  elif test ${makeinfo_version} -lt 4; then
+    MAKEINFO=false
+  fi
   if test -n "${PERL}"; then
     INSTALL_INFO="\$(top_builddir)/tools/install-info"
     AC_SUBST(INSTALL_INFO)
