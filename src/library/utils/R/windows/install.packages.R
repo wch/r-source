@@ -208,7 +208,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         if(!any(ok))
             warning(paste("No package \"", p, "\" on CRAN.", sep=""))
         else{
-            fn <- paste(p, "_", available[ok, "Version"], ".zip", sep="")
+            fn <- paste(p, "_", available[ok, "Version"], ".zip", sep="")[1]
             if(localcran){
                 fn <- paste(substring(contriburl, 6), fn, sep="/")
                 retval <- rbind(retval, c(p, fn))
