@@ -1,5 +1,9 @@
 \name{scan}
 \title{Read Data Values}
+\alias{scan}
+\description{
+  Read data into a vector or list from the console or file.
+}
 \usage{
 scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      quote = if (sep=="\n") "" else "'\"", dec = ".",
@@ -7,7 +11,6 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      flush = FALSE, fill = FALSE, strip.white = FALSE, quiet = FALSE,
      blank.lines.skip = TRUE)
 }
-\alias{scan}
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
     specified file is \code{""}, then input is taken from the keyboard
@@ -16,7 +19,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     Otherwise, the file name is interpreted \emph{relative} to the
     current working directory (given by \code{\link{getwd}()}),
     unless it specifies an \emph{absolute} path.
-    Tilde-expansion is performed where supported.}
+    Tilde-expansion is performed where supported.
 
     Alternatively, \code{file} can be a \code{\link{connection}}, which
     will be opened if necessary, and if so closed at the end of the
@@ -35,22 +38,22 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     no limit.}
 
   \item{sep}{by default, scan expects to read white-space delimited
-      input fields.  Alternatively, \code{sep} can be used to specify a
-      character which delimits fields.  A field is always delimited by a
-      newline unless it is quoted.} 
+    input fields.  Alternatively, \code{sep} can be used to specify a
+    character which delimits fields.  A field is always delimited by a
+    newline unless it is quoted.} 
 
-  \item{quote}{the set of quoting characters as a single character string.}
+  \item{quote}{the set of quoting characters as a single character
+    string.}
 
   \item{dec}{decimal point character.}
 
   \item{skip}{the number of  lines of the input file to skip before
-     beginning to read data values.}
+    beginning to read data values.}
 
-   \item{nlines}{the maximum number of lines of data to be read.}
+  \item{nlines}{the maximum number of lines of data to be read.}
 
-   \item{na.strings}{character vector. Elements of this vector are
-     to be interpeted as  missing (\code{\link{NA}})
-     values.}
+  \item{na.strings}{character vector.  Elements of this vector are to be
+    interpeted as missing (\code{\link{NA}}) values.}
 
   \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.
@@ -58,7 +61,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     putting more that one record on a line.}
   
   \item{fill}{logical: if \code{TRUE}, \code{scan} will implicitly add
-    empty fields to any lines with fewer fields than implied by \code{what}.}
+    empty fields to any lines with fewer fields than implied by
+    \code{what}.}
   
   \item{strip.white}{vector of logical value(s) corresponding to items
     in the \code{what} argument. It is used only when \code{sep} has
@@ -78,28 +82,25 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{blank.lines.skip}{logical: if \code{TRUE} blank lines in the
     input are ignored.}
 }
-\description{
-  Read data into a vector or list from the console or file.
-}
 \details{
   The value of \code{what} can be a list of types, in which case
   \code{scan} returns a list of vectors with the types given by the
   types of the elements in \code{what}.  This provides a way of reading
   columnar data.
 
-  Empty  numeric fields are always regarded as missing values.
+  Empty numeric fields are always regarded as missing values.
   Empty character fields are scanned as empty character vectors, unless
   \code{na.strings} contains \code{""} when they are regarded as missing
   values.
   
-  If \code{sep} is the default (\code{""}), the character \code{\}
+  If \code{sep} is the default (\code{""}), the character \code{\\}
   in a quoted string escapes the following character, so quotes may
   included in the string by escaping them.
   
   If \code{sep} is non-default, the fields may be quoted in the style of
-  \code{.csv} files where separators inside quotes (\code{''} or
+  \file{.csv} files where separators inside quotes (\code{''} or 
   \code{""}) are ignored and quotes may be put inside strings by
-  doubling them. However, if \code{sep = "\n"} it is assumed
+  doubling them.  However, if \code{sep = "\n"} it is assumed
   by default that one wants to read entire lines verbatim.
 
   Note that since \code{sep} is a separator and not a terminator,
