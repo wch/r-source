@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.0-12, 2000/05/25
+Version 1.0-13, 2000/06/04
 Kurt Hornik
 
 
@@ -1211,6 +1211,9 @@ works, was published in the Journal of Statistical Software
 
 *wavethresh*
      Software to perform 1-d and 2-d wavelet statistics and transforms.
+
+*wle*
+     Robust statistical inference via a weighted likelihood approach.
 
 *xgobi*
      Interface to the XGobi and XGvis programs for graphical data analysis.
