@@ -1,6 +1,6 @@
 include ../MkRules
 
-MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd x11.Rd
+MANOBJS= BATCH.Rd COMPILE.Rd INSTALL.Rd REMOVE.Rd RHOME.Rd SHLIB.Rd gnome.Rd update.packages.Rd x11.Rd
 
 all: profiles fixh fixr fixRd fixbin fixmake
 

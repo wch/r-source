@@ -238,6 +238,10 @@ groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 
 zip and unzip from the INFO-ZIP project.
 
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, available for download at 
+http://msdn.microsoft.com/workshop/author/htmlhelp.
+
 All of these need to be installed and in your path, and the
 appropriate environment variables set.
 
@@ -261,6 +265,11 @@ distribution, nor are the sources (it is the standard Info-Zip unzip
 5.40, built with MSVC++4.2). You will need to copy it from a binary
 distribution.
 
+The file rw0650\bin\Rchtml.zip is not built automatically. Its source
+is the help directory, and you need the HTML Help Workshop files and
+Visual C++ to build it. We suggest you copy it from the binary
+distribution.
+
 Note 2: we are aware that because of limitations in line length or in
 the shell used that the Makefiles do not work unchanged on all the
 possible combinations of tools, compilers and OSes.  We have tested
@@ -273,6 +282,7 @@ minutes. Using a network file system is likely to take longer.
 
 You can test a build by `make check': expect some differences in the tests
 of print routines.
+
 
 
 Cross-building on i386 Linux

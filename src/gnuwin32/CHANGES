@@ -3,11 +3,18 @@ rw0651
 
 New function savePlot() to save plots to wmf, gif or ps.
 
+There is now support for help via compiled HTML files (as used by
+current Microsoft products): set options(chmhelp=TRUE) to use this.
+You will probably need IE4 or later installed to use this.
+
 Rotated text on a windows/win.* device is placed more accurately.
 
 A windows() device reports itself as `windows' not `X11'.
 
 getenv() now returns all the environmental variables.
+
+The complex LINPACK routines which were not included in the Unix
+versions of R are now omitted here.
 
 
 rw0650

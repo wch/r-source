@@ -104,6 +104,7 @@ pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) -C ../library/$* PKG=$* -f ../../gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help $($*-HELP)help-$*
+	$(MAKE) -C ./help chm-$*
 	$(MAKE) -C ./help contents-$*
 endif
 

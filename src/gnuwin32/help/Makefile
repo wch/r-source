@@ -11,6 +11,13 @@ indices:
 help-%: 
 	$(PERL) build.help ${DOS} -nroff -html -example -latex $*
 
+chm-%: 
+	$(PERL) build.help ${DOS} -chm $*
+	cp ../../../doc/html/logo.jpg ../../library/$*/chm
+	-(cd ../../library/$*/chm; hhc $*.hhp)
+	mkdir -p ../../../library/$*/winhlp
+	cp ../../library/$*/chm/$*.chm ../../../library/$*/winhlp
+
 contents-%:
 	$(PERL) Rd2contents ../../library/$* ../../../library/$*/CONTENTS
 	$(CAT) ../../../library/*/CONTENTS > ../../../doc/html/search/index.txt

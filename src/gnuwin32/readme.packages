@@ -24,6 +24,10 @@ perl5, available via http://www.perl.com/CPAN/ports.
 
 groff, available at http://www.itribe.net/virtunix/groff-1.10nt.zip.
 
+If you want to make compiled html (.chm) files you will need the
+Microsoft HTML Help Workshop, available for download at 
+http://msdn.microsoft.com/workshop/author/htmlhelp.
+
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  Edit MkRules to set target and
 the appropriate paths as needed. Then
@@ -91,7 +95,7 @@ Then you can compile the objects and build the DLL by
 	cl /MT /Ox /D "WIN32"  /c *.c
 	link /dll /out:mypkg.dll *.obj Rdll.lib
 
-(at least under VC++ 4.2).  If the C sources use R header files you
+(at least under VC++ 4.2 and 6.0).  If the C sources use R header files you
 will need to arrange for these to be searched, perhaps by
 
 	/I ..\..\..\include

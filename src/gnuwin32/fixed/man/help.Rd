@@ -3,6 +3,7 @@
 \usage{
 help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
      lib.loc = .lib.loc, verbose = .Options$verbose,
+     chmhelp = .Options$chmhelp,
      htmlhelp = .Options$htmlhelp, winhelp = .Options$winhelp)
 ?topic
 }
@@ -20,8 +21,9 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     \item{lib.loc}{A character vector of directory names of \R libraries.
 	Defaults to all libraries currently known.}
     \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
-    \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
-	default after \code{\link{help.start}} has been called), the HTML
+    \item{chmhelp}{logical (or \code{NULL}).  If \code{TRUE} the
+	Compiled HTML version of the help will be shown in a help viewer.}
+    \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
 	version of the help will be shown in a browser.}
     \item{winhelp}{logical (or \code{NULL}).  If \code{TRUE}, a Windows
 	\code{.hlp} file will be used if one is available.}

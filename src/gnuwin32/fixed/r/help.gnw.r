@@ -4,9 +4,10 @@ index.search <- function(topic, path, file="AnIndex", type="help")
 help <-
     function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
              lib.loc = .lib.loc, verbose = .Options$verbose,
-             htmlhelp = .Options$htmlhelp,
+             chmhelp = .Options$chmhelp, htmlhelp = .Options$htmlhelp,
              winhelp = .Options$winhelp)
 {
+    chmhelp <- is.logical(chmhelp) && chmhelp
     htmlhelp <- is.logical(htmlhelp) && htmlhelp
     winhelp <- is.logical(winhelp) && winhelp
     if (!missing(package))
@@ -45,6 +46,27 @@ help <-
                 cat("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
                     ".Rd'\n", sep = "")
             if (!offline) {
+                if(chmhelp) {
+                    if(!is.loaded(symbol.C("Rchtml")))
+                        dyn.load(file.path(R.home(), "bin", "Rchtml.dll"))
+                    wfile <- sub("/help/([^/]*)$", "", file)
+                    thispkg <- sub(".*/([^/]*)$", "\\1", wfile)
+                    hlpfile <- paste(wfile, "/winhlp/", thispkg, ".chm",
+                                     sep = "")
+#                   hlpfile <- gsub("/", "\\\\", hlpfile)
+                    if(verbose) print(hlpfile)
+                    if(file.exists(hlpfile)) {
+                        err <- .C("Rchtml", hlpfile, topic, err=integer(1))$err
+                        if(verbose)
+                            cat("help() for `", topic,
+                                "' is shown in Compiled HTML\n",
+                                sep="")
+                        return(invisible())
+                    } else {
+                       if(verbose)
+                           cat("No `", thispkg, ".chm' is available\n", sep="")
+                    }
+                }
                 if(htmlhelp) {
                     file <- gsub("/", "\\\\", file)
                     if(file.exists(file)) {
