@@ -57,10 +57,17 @@ From: arto.luoma@uta.fi
 Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
 --Seems specific to one locale on one system.
 --The bug is unlikely to be in R.
+* PR# 1124 *
+Subject: Wrong df in bartlett.test when subsetting data
+From: jens.lund@nordea.com
+Date: Wed, 10 Oct 2001 17:43:42 +0200 (MET DST)
 
 Directory:  Analyses
 
-none
+* PR# 1121 *
+Subject: Problems merging with POSIXct objects and all = TRUE
+From: "David Kane  <David Kane" <a296180@mica.fmr.com>
+Date: Tue, 9 Oct 2001 08:52:52 -0400
 
 Directory:  Documentation
 
@@ -72,6 +79,10 @@ Date: Mon, 18 Jun 2001 13:57:10 -0500
 Subject: R-intro suggestions part II
 From: "Paul E. Johnson" <pauljohn@ukans.edu>
 Date: Tue, 03 Jul 2001 15:50:06 -0500
+* PR# 1113 *
+Subject: bug.report() & docs should mention r-devel
+From: murdoch@stats.uwo.ca
+Date: Thu, 4 Oct 2001 01:23:27 +0200 (MET DST)
 
 Directory:  Graphics
 
@@ -248,11 +259,17 @@ none
 
 Directory:  Misc
 
-none
+* PR# 1126 *
+Subject: R-bug report www page whishlist
+From: jens.lund@nordea.com
+Date: Wed, 10 Oct 2001 18:24:29 +0200 (MET DST)
 
 Directory:  Models
 
-none
+* PR# 1123 *
+Subject: Pearson residuals
+From: carmen@mcs.st-and.ac.uk
+Date: Wed, 10 Oct 2001 12:05:29 +0200 (MET DST)
 
 Directory:  Startup
 
@@ -312,14 +329,6 @@ Directory:  incoming
 Subject: Several R vs S-Plus issues
 From: David Brahm  <a215020@agate.fmr.com>
 Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
-* PR# 1113 *
-Subject: bug.report() & docs should mention r-devel
-From: murdoch@stats.uwo.ca
-Date: Thu, 4 Oct 2001 01:23:27 +0200 (MET DST)
-* PR# 1114 *
-Subject: PS & box(col=0)
-From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
-Date: Wed, 03 Oct 2001 21:21:52 -0400
 * PR# 1119 *
 Subject: Bug in Deriv?
 From: "Dieter Menne" <dieter.menne@menne-biomed.de>
@@ -328,11 +337,3 @@ Date: Sun, 7 Oct 2001 12:25:47 +0200
 Subject: bug in write.table?
 From: Ott Toomet <siim@obs.ee>
 Date: Sun, 7 Oct 2001 18:24:34 +0200 (CEST)
-* PR# 1121 *
-Subject: Problems merging with POSIXct objects and all = TRUE
-From: "David Kane  <David Kane" <a296180@mica.fmr.com>
-Date: Tue, 9 Oct 2001 08:52:52 -0400
-* PR# 1122 *
-Subject: dimnames(X)[[2]] <- foo fails
-From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 9 Oct 2001 16:09:23 +0100 (BST)
