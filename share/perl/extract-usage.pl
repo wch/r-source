@@ -26,7 +26,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Rd;
 
-my $revision = ' $Revision: 1.1 $ ';
+my $revision = ' $Revision: 1.2 $ ';
 my $version;
 my $name;
 
@@ -52,7 +52,7 @@ END
   exit 0;
 }
 
-my $OSdir = "unix";
+my $OSdir = R_getenv("R_OSTYPE", "unix");
 
 my @knownoptions = ("h|help", "v|version", "os|OS:s");
 GetOptions (@knownoptions) || &usage();
