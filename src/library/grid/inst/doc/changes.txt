@@ -43,6 +43,31 @@ Changes from grid_2.0.1 to grid_2.1.0:
                     },
                     list())
 
+8.  grobWidth and grobHeight ("grobwidth" and "grobheight" units)
+    for primitives (text, rects, etc, ...) are now
+    calculated based on a bounding box for the relevant grob.
+
+    These used to be calculated assuming a grob was scalar
+    rather than vector.  For example, the following now behaves
+    much more sensibly ...
+
+        txt <- textGrob(c("This is a repeat", "This is a repeat"),
+	                y=1:2/3, rot=45)
+        grid.draw(txt)
+        grid.rect(width=grobWidth(txt), height=grobHeight(txt))
+
+    NOTE: this has changed the calculation of the size of a scalar
+    rect (or circle or lines) so that, for example, something like ...
+
+        grid.pack(frame, rectGrob())
+
+    ... needs to become ...
+
+        grid.pack(frame, rectGrob(), 
+                  width=unit(1, "null"), height=unit(1, "null"))
+
+    ... if you just want a rectangle that fills the space available.
+
 9.  New arguments "warn" and "wrap" for function grid.grab()
     
     If warn>0 will warn if know (or, if warn>1,  if even suspect) 

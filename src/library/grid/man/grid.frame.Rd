@@ -42,7 +42,7 @@ frameGrob(layout=NULL, name=NULL, gp=gpar(), vp=NULL)
 \examples{
 grid.newpage()
 grid.frame(name="gf", draw=TRUE)
-grid.pack("gf", rectGrob(gp=gpar(fill="grey")))
+grid.pack("gf", rectGrob(gp=gpar(fill="grey")), width=unit(1, "null"))
 grid.pack("gf", textGrob("hi there"), side="right")
 }
 \keyword{dplot}

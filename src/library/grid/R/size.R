@@ -3,7 +3,7 @@
 # They are usually called from within the C code
 # (specifically, from within unit.c)
 # It should be noted that they only give the width/height
-# of the grob in the grob's drawing context
+# of the grob in the current drawing context
 # (i.e., evaluating the width/height in another context
 #  will not necessarily give the same result)
 

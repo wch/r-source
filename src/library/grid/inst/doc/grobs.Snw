@@ -235,7 +235,7 @@ fg <- placeGrob(fg, rectGrob())
 drawIt(1, 1)
 fg <- packGrob(fg, textGrob("Hello again"), side="right")
 drawIt(1, 2)
-fg <- packGrob(fg, rectGrob(), side="right")
+fg <- packGrob(fg, rectGrob(), side="right", width=unit(1, "null"))
 drawIt(2, 2)
 
 @ 
@@ -256,7 +256,7 @@ fg <- packGrob(fg, textGrob("Hi there"))
 fg <- placeGrob(fg, rectGrob())
 fg <- packGrob(fg, textGrob("Hello again", name="midtext"), 
                side="right", dynamic=TRUE)
-fg <- packGrob(fg, rectGrob(), side="right")
+fg <- packGrob(fg, rectGrob(), side="right", width=unit(1, "null"))
 grid.draw(fg)
 grid.edit("midtext", label="something much longer")
 
@@ -477,7 +477,7 @@ grid.frame(name="frame2")
 grid.pack("frame2", textGrob("Hi there"))
 grid.place("frame2", rectGrob())
 grid.pack("frame2", textGrob("Hello again"), side="right")
-grid.pack("frame2", rectGrob(), side="right")
+grid.pack("frame2", rectGrob(), side="right", width=unit(1, "null"))
 
 @
 % Start a new page
