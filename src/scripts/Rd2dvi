@@ -7,7 +7,7 @@
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.27 $'
+revision='$Revision: 1.28 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
@@ -48,7 +48,6 @@ preview=xdvi
 verbose=false
 OSdir=unix
 
-${verbose} "Parsing arguments ..."
 while test -n "${1}"; do
   case ${1} in
     -h|--help)
@@ -65,7 +64,7 @@ while test -n "${1}"; do
       out_ext="pdf";
       preview=false;
       R_RD4DVI=${R_RD4PDF-"ae,hyper"};
-      R_LATEXCMD=${PDFLATEX-pdflatex};;
+      R_LATEXCMD=${PDFLATEX-pdflatex} ;;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -o)
@@ -94,13 +93,7 @@ fi
 
 if ${debug}; then set -x; fi
 
-get_dcf_field () {
-  ## Get one field including all continuation lines from a DCF file.
-  ws="[         ]"              # space and tab
-  sed -n "/^${1}:/,/^[^ ]/{p;}" ${2} | \
-    sed -n "/^${1}:/{s/^${1}:${ws}*//;p;}
-            /^${ws}/{s/^${ws}*//;p;}"
-}
+. ${R_HOME}/share/sh/dcf.sh	# get_dcf_field()
 
 Rdconv_dir_or_files_to_LaTeX () {
   ## Convert Rd files in a dir or a list of Rd files to LaTeX, appending
@@ -187,38 +180,54 @@ cat > ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
-\\makeindex
+\\makeindex{}
 \\begin{document}
+EOF
+if test ${is_bundle} = no; then
+  cat >> ${build_dir}/Rd2.tex <<EOF
 \\chapter*{}
 \\begin{center}
 {\\textbf{\\huge ${title}}}
 \\par\\bigskip{\\large \\today}
 \\end{center}
 EOF
-
+else
+  cat >> ${build_dir}/Rd2.tex <<EOF
+\\pagenumbering{Roman}
+\\begin{titlepage}
+\\strut\\vfill
+\\begin{center}
+{\\textbf{\\Huge ${title}}}
+\\par\\bigskip{\\large \\today}
+\\end{center}
+\\vfill\\vfill
+\\end{titlepage}
+EOF
+fi
+  
 ## Rd2.tex part 2: body
 if test ${is_bundle} = no; then
   echo ${toc} >> ${build_dir}/Rd2.tex
   Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${dir-${@}}
 else
-  ## <FIXME>
-  ## echo "\\tableofcontents{}" >> ${build_dir}/Rd2.tex
-  echo ${toc} >> ${build_dir}/Rd2.tex
-  ## </FIXME>
+  cat >> ${build_dir}/Rd2.tex <<EOF
+\\pagenumbering{roman}
+\\tableofcontents{}
+\\cleardoublepage{}
+\\pagenumbering{arabic}
+EOF
   for p in ${bundle_pkgs}; do
     echo "Bundle package: \`${p}'"
-    (echo "\\chapter*{Package \`${p}'}"
-      ## <FIXME>
-      ## echo ${toc}
-      ## </FIXME>
-      ) >> ${build_dir}/Rd2.tex
+    echo "\\chapter{Package \`${p}'}" >> ${build_dir}/Rd2.tex
     Rdconv_dir_or_files_to_LaTeX ${build_dir}/Rd2.tex ${1}/${p}/man
+    echo "\\clearpage{}" >> ${build_dir}/Rd2.tex
   done
+  echo "\\cleardoublepage{}" >> ${build_dir}/Rd2.tex
 fi
 
 ## Rd2.tex part 3: footer
 cat >> ${build_dir}/Rd2.tex <<EOF
-\\printindex
+\\printindex{}
 \\end{document}
 EOF
 
@@ -227,6 +236,9 @@ cd ${build_dir}
 ${R_LATEXCMD-latex} Rd2
 ${R_MAKEINDEXCMD-makeindex} Rd2
 ${R_LATEXCMD-latex} Rd2
+if test ${out_ext} = pdf; then
+  ${R_LATEXCMD-latex} Rd2
+fi
 cd ${start_dir}
 cp ${build_dir}/Rd2.${out_ext} ${output}
 echo "Done"
