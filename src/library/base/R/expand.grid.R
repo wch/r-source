@@ -1,4 +1,7 @@
-expand.grid <- function(x) {
+expand.grid <- function(x, y) {
+  if (!is.list(x) && !missing(y)) {
+    x <- list(x = x, y = y)
+  }
   if (length(x) == 1)
     return(x[[1]])
   n1 <- length(x[[1]])

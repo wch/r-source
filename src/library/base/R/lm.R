@@ -359,14 +359,14 @@ formula.lm <- function(x) formula(x$terms)
 family.lm <- function(x) { gaussian() }
 
 model.frame.lm <-
-function(formula, data, na.action, ...)
-{
-	if(is.null(formula$model)) {
-		fcall <- formula$call
-		fcall$method <- "model.frame"
-		eval(fcall, sys.frame(sys.parent()))
-	}
-	else formula$model
+function(formula, data, na.action, ...) {
+  if (is.null(formula$model)) {
+    fcall <- formula$call
+    fcall$method <- "model.frame"
+    fcall[[1]] <- as.name("lm")
+    eval(fcall, sys.frame(sys.parent()))
+  }
+  else formula$model
 }
 
 variable.names.lm <-
