@@ -417,9 +417,9 @@ which these options are listed, that is the command line then
 
 How did you specify it?  Backslashes have to be doubled in R character
 strings, so for example one needs
-@code{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.
-Make life easier for yourself by using forward slashes as path
-separators: they do work under Windows.
+@code{"d:\\@RWVER@\\library\\xgobi\\scripts\\xgobi.bat"}.  You can make
+life easier for yourself by using forward slashes as path separators:
+they do work under Windows.
 
 Another possible source of grief is spaces in folder names.  We have
 tried to make R work on paths with spaces in, but lots of people writing
@@ -459,7 +459,7 @@ There is a (D)COM server written by Thomas Baier available on CRAN
 transfer of data to and from R and remote execution of R commands, as
 well as embedding of an R graphics window.  An R-Excel interface making
 use of the DCOM server is included in the distribution.  @strong{NOTE:}
-You should ensure that the @code{RWVERSION/bin} directory is in your
+You should ensure that the @code{@RWVER@/bin} directory is in your
 path when using this software, so that the R library DLLs are found.
 
 Another (D)COM server is available from @uref{http://www.omegahat.org/},
@@ -1155,14 +1155,14 @@ If you want output to be updated on the console, call
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2003 September 1 by Professor B. D. Ripley
+Last edited 2003 December 19 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2003 September 1 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2003 December 19 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
