@@ -1109,12 +1109,12 @@ to provide higher-performance versions of the BLAS and LAPACK routines.
 @subsection Solaris on Sparc
 @cindex Solaris
 
-@R{} has been built successfully on Solaris 2.7 aka Solaris 7 aka SunOS
-5.7 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
-Forte 6) compilers and the Sun ONE Compiler Suite (aka Forte 7), and
-less regularly on Solaris 2.5.1, 2.6, 8 and 9.  GNU @command{make} is
-needed prior to 2.7 for building other than in the source tree, and
-perhaps even then.
+@R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
+5.8 using @command{gcc}/@command{g77} and the SunPro @w{WorkShop 6} (aka
+Forte 6) compilers and the `Sun ONE Studio 7 Compiler Suite' (aka Forte
+7), and less regularly on Solaris 2.5.1, 2.6, 2.7 and 9.  GNU
+@command{make} is needed prior to 2.7 for building other than in the
+source tree, and perhaps even then.
 
 @command{gcc} 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
 builds with optimization, but versions 3.1 and 3.2 work correctly.  At
@@ -1141,10 +1141,10 @@ fail.  The maximal set of optimization options known to work is
 
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
-compiler: the @command{gcc}/@command{f77} combination works well.
-To use C++ code Forte 7 requires @code{-lCstd}, which the configure
-script will add to @code{SHLIB_CXXLDFLAGS} if it identifies the
-compiler correctly.
+compiler: the @command{gcc}/@command{f77} combination works well.  For
+many C++ applications (e.g. package @pkg{Matrix}) Forte 7 requires
+@code{-lCstd}, which the configure script will add to
+@code{SHLIB_CXXLDFLAGS} if it identifies the compiler correctly.
 
 
 To compile for a 64-bit target on Solaris (which needs an UltraSparc
@@ -1182,7 +1182,7 @@ performance library @code{libsunperf} to be selected: it will not work
 with @command{f77}, nor with @command{g77}.  @code{libsunperf}
 contains both BLAS and LAPACK code, and @option{--with-lapack} is 
 recommended for 32-bit builds using @command{f95}, but not for
-64-bit builds where on our test system it failed in both Forte 6.2 and
+64-bit builds where on our test system it failed in both Forte 6U1 and
 7, albeit in different ways.  
 
 Some care is needed to ensure that libraries found by
