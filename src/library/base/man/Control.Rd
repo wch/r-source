@@ -18,16 +18,35 @@ break
 next
 }
 \description{
-These are the basic control-flow constructs of the \R language.
-They function in much the same way as control statements
-in any algol-like language.
+  These are the basic control-flow constructs of the \R language.  They
+  function in much the same way as control statements in any algol-like
+  language.
+}
+\details{
+  Note that \code{expr} and \code{cons.expr}, etc, in the Usage section
+  above means an \emph{expression} in a formal sense.  This is either a
+  simple expression or a so called \emph{compound expression}, usually
+  of the form \code{\{ expr1 ; expr2 \}}.
+
+  Note that it is a common mistake to forget putting braces (\code{\{ .. \}})
+  around your statements, e.g. after \code{if(..)} or \code{for(....)}.
+  For that reason, one (somewhat extreme) attitude of defensive programming
+  uses braces always, e.g. for \code{if} clauses.
 }
 \seealso{
-\code{\link{ifelse}},
-\code{\link{switch}}.
+  \code{\link{Syntax}} for the basis \R syntax and operators,
+  \code{\link{Paren}} for parentheses and braces; further,
+  \code{\link{ifelse}}, \code{\link{switch}}.
 }
 \examples{
 for(i in 1:5) print(1:i)
+\testonly{% after feature freeze for 1.5.0, i.e. testing only for 1.6.0:
+ if(as.numeric(R.version$major)*10 + as.numeric(R.version$minor) >= 16)
+}
+for(n in c(2,5,10,20,50)) {
+   x <- rnorm(n)
+   cat(n,":", sum(x^2),"\n")
+}
 }
 \keyword{programming}
 \keyword{iteration}
