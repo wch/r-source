@@ -2007,6 +2007,7 @@ void GSetupAxis(int axis, DevDesc *dd)
 void GInit(GPar *dp)
 {
     dp->state = 0;
+    dp->valid = FALSE;
 
     dp->ann = TRUE;
     dp->ask = FALSE;
