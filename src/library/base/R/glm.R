@@ -293,7 +293,8 @@ function (x, y, weights = rep(1, nobs), start = NULL,
 }
 
 
-print.glm <- function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
+print.glm <-
+function (x, digits= max(3, .Options$digits - 3), na.print="", ...)
 {
 	cat("\nCall: ", deparse(x$call), "\n\n")
 	cat("Coefficients")
@@ -561,8 +562,9 @@ summary.glm <- function(object, dispersion = NULL,
 }
 
 print.summary.glm <- function (x, digits = max(3, .Options$digits - 3),
-	formatfun = format,
-	na.print="", symbolic.cor = p > 4, signif.stars= TRUE, ...)
+	formatfun = format, na.print = "",
+        symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
+        ...)
 {
 	lformat <- function(ll) format(unlist(ll), digits = digits)
 	cat("\nCall:\n")

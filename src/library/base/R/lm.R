@@ -1,16 +1,16 @@
 lm <-
 function(formula, data = list(), subset, weights, na.action,
-         method = "qr", model = TRUE, x = FALSE, y = FALSE,
-         qr = TRUE, singular.ok = TRUE, ...)
+	 method = "qr", model = TRUE, x = FALSE, y = FALSE,
+	 qr = TRUE, singular.ok = TRUE, ...)
 {
-        ret.x <- x
-        ret.y <- y
-        mt <- terms(formula, data = data)
+	ret.x <- x
+	ret.y <- y
+	mt <- terms(formula, data = data)
 	mf <- match.call()
 	mf$singular.ok <- NULL
 	mf$model <- NULL
 	mf$method <- NULL
-        mf$x <- mf$y <- mf$qr <- NULL
+	mf$x <- mf$y <- mf$qr <- NULL
 	mf[[1]] <- as.name("model.frame")
 	mf <- eval(mf, sys.frame(sys.parent()))
 	if (method == "model.frame")
@@ -28,7 +28,7 @@ function(formula, data = list(), subset, weights, na.action,
 	y <- model.response(mf, "numeric")
 	w <- model.weights(mf)
 	if (is.empty.model(mt)) {
-                x <- NULL
+		x <- NULL
 		z <- list(coefficients = numeric(0), residuals = y,
 			fitted.values = 0 * y, weights = w, rank = 0,
 			df.residual = length(y))
@@ -46,10 +46,10 @@ function(formula, data = list(), subset, weights, na.action,
 	z$terms <- mt
 	if (model)
 		z$model <- mf
-        if (ret.x)
-          z$x <- x
-        if (ret.y)
-          z$y <- y
+	if (ret.x)
+	  z$x <- x
+	if (ret.y)
+	  z$y <- y
 	z
 }
 
@@ -194,10 +194,10 @@ print.lm <- function(x, digits = max(3, .Options$digits - 3), ...)
 summary.lm <- function (object, correlation = FALSE)
 {
 	z <- .Alias(object)
-        Qr <- .Alias(object$qr)
+	Qr <- .Alias(object$qr)
 	n <- NROW(Qr$qr)
 	p <- z$rank
-        rdf <- n - p
+	rdf <- n - p
 	p1 <- 1:p
 	r <- resid(z)
 	f <- fitted(z)
@@ -236,7 +236,7 @@ summary.lm <- function (object, correlation = FALSE)
 		ans$adj.r.squared <- 1 - (1 - ans$r.squared) *
 			((n - df.int)/rdf)
 		ans$fstatistic <- c(value = (mss/(p - df.int))/resvar,
-                                    numdf = p - df.int, dendf = rdf)
+				    numdf = p - df.int, dendf = rdf)
 	}
 	ans$cov.unscaled <- R
 	dimnames(ans$cov.unscaled) <- dimnames(ans$coefficients)[c(1,1)]
@@ -249,7 +249,8 @@ summary.lm <- function (object, correlation = FALSE)
 }
 
 print.summary.lm <- function (x, digits = max(3, .Options$digits - 3),
-			      symbolic.cor = p > 4, signif.stars= TRUE, ...)
+	symbolic.cor = p > 4, signif.stars= .Options$show.signif.stars,
+	...)
 {
 	cat("\nCall:\n")#S: ' ' instead of '\n'
 	cat(paste(deparse(x$call), sep="\n", collapse = "\n"), "\n\n", sep="")
@@ -401,7 +402,7 @@ anova.lm <- function(object, ...)
 	table <- cbind(df,ss,ms,f,p)
 	table[length(p),4:5] <- NA
 	dimnames(table) <- list(c(attr(object$terms,"term.labels"), "Residual"),
-                                c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
+				c("Df","Sum Sq", "Mean Sq", "F", "Pr(>F)"))
 	result <- list(table=table,
 		       title=paste("Analysis of Variance Table\nResponse:",
 			 formula(object)[[2]]))
@@ -531,6 +532,6 @@ plot.lm <- function(x,...) {
   plot(yh,r, xlab="Fitted values", ylab="Residuals",
        main = paste("Tukey-Anscombe plot of", deparse(x$call)))
   abline(h=0, lty=3, col = "gray")
-  
+
   qqnorm(r/sqrt(1-hii), ylab = "Standardized Residuals")
 }
