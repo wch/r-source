@@ -3,11 +3,15 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	 legend.text = NULL, beside = FALSE, horiz = FALSE,
 	 col = heat.colors(NR), border = par("fg"), main = NULL,
 	 xlab = NULL, ylab = NULL, xlim = NULL, ylim = NULL,
-	 axes = TRUE, ...)
+	 axes = TRUE, inside = TRUE, ...)
 {
+ if (!missing(inside))
+   .NotYetUsed("inside")
+  
  opar <- if (horiz)	par(xaxs = "i", xpd = TRUE)
 		else	par(yaxs = "i", xpd = TRUE)
  on.exit(par(opar))
+
 
  if (missing(space))
 	space <- if (is.matrix(height) && beside) c(0, 1) else 0.2
