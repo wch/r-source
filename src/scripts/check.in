@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.142 $ ';
+my $revision = ' $Revision: 1.143 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -118,17 +118,31 @@ if($opt_latex) {
     chdir($startdir);
     $log->close();
 }
-## get the valid keywords for later ...
+
+## Get the valid keywords for later.
 my %standard_keywords = ();
 open(KEYWORDS,
      "< " . &file_path(${R::Vars::R_HOME}, "doc", "KEYWORDS.db"))
-  or die "Error: cannot open 'KEYWORDS.db'";
+  or die "Error: cannot open 'doc/KEYWORDS.db'";
 while(<KEYWORDS>) {
     if(/^.*\|([^:]*):.*/) {
 	$standard_keywords{$1} = 1;
     }
 }
 close(KEYWORDS);
+
+## Get the names of base and recommended packages for later.
+my @R_pkgs_base = ();
+my @R_pkgs_recommended = ();
+open(MAKEVARS,
+     "< " . &file_path(${R::Vars::R_HOME}, "share", "make", "vars.mk"))
+  or die "Error: cannot open 'share/make/vars.mk'";
+while(<MAKEVARS>) {
+    @R_pkgs_base =
+	split(/ +/, $2) if(/^(R_PKGS_BASE *=)(.*)/);
+    @R_pkgs_recommended =
+	split(/ +/, $2) if(/^(R_PKGS_RECOMMENDED *=)(.*)/);
+}
 
 ## <FIXME>
 ## We now always redefine T/F when running the examples, but warn about
@@ -447,8 +461,8 @@ sub check_pkg {
 	my @textfile_patterns =
 	  ("\\.[RSdqr]\$",	# R source code
 	   "\\.[Rr]d\$",	# Rd files
-	   "\\.([Ccfh]|cc|cpp)\$",
-				# C/C++/FORTRAN sources and headers
+	   "\\.([Ccfh]|cc|cpp)\$", # C/C++/FORTRAN sources and headers
+	   "\\.[RrSs](nw|tex)\$", # vignettes
 	   "^(DESCRIPTION|COPYING|INDEX|NAMESPACE|README)\$");
 	sub find_wrong_perms_B {
 	    my $filename = $File::Find::name;
@@ -585,7 +599,7 @@ sub check_pkg {
     }
 
     ## Optional entries in DESCRIPTION:
-    ##   Depends, Namespace.
+    ##   Depends, Namespace, Priority.
     ## These must be correct if present.
 
     if($description->{"Depends"}) {
@@ -643,6 +657,30 @@ sub check_pkg {
 	    $log->print("Namespace and Package fields differ.\n");
 	    $log->print(wrap("", "", @msg_DESCRIPTION));
 	    exit(1);
+	}
+    }
+
+    if($description->{"Priority"}) {
+	if($description->{"Priority"} =~ /^(base|recommended)/i) {
+	    ## Simplify matters by treating high priority packages
+	    ## together.
+	    my $found = 0;
+	    foreach my $p (@R_pkgs_base, @R_pkgs_recommended) {
+		if($description->{"Package"} eq $p) {
+		    $found = 1;
+		    break;
+		}
+	    }
+	    if(!$found) {
+		$log->error();
+		$log->print("Invalid Priority field.\n");
+		$log->print(wrap("", "",
+				 ("Packages with priorities 'base' or",
+				  "'recommended' must already be known",
+				  "to R.\n")));
+		$log->print(wrap("", "", @msg_DESCRIPTION));
+		exit(1);
+	    }
 	}
     }
 
@@ -1147,10 +1185,10 @@ sub check_pkg {
 	$log->result("OK") unless $any;
     }
 
-    ## Check for undocumented objects.
+    ## Check for missing documentation entries.
 
     if(((-d "R") || (-d "data")) && (-d "man")) {
-	$log->checking("for undocumented objects");
+	$log->checking("for missing documentation entries");
 
 	my $Rcmd = "library(tools)\n";
 	if($opt_install) {

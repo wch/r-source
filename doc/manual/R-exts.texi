@@ -256,6 +256,12 @@ author or a page where additional material describing the software can
 be found.  These @acronym{URL}s are converted to active hyperlinks on
 @acronym{CRAN}.
 
+Base and recommended packages (i.e., packages contained in the @R{}
+source distribution or available from @acronym{CRAN} and recommended to
+be included in every binary distribution of @R{}) have a @samp{Priority}
+field with value @samp{base} or @samp{recommended}, respectively.  These
+priorities must not be used by ``other'' packages.
+
 @node The INDEX file, Package subdirectories, The DESCRIPTION file, Package structure
 @subsection The @file{INDEX} file
 
@@ -678,7 +684,8 @@ title are checked for being non-empty, and the keywords found are
 compared to the standard ones.
 
 @item
-A check is made for undocumented user-level objects in the package.
+A check is made for missing documentation entries, such as undocumented
+user-level objects in the package
 
 @item
 The functions and their documentation are compared, and any differences
