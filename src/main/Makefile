@@ -88,7 +88,7 @@ gram.c:		gram.y
 		mv y.tab.c gram.c
 
 clean:
-		@echo cleaning in src/main
+		@echo Cleaning in src/main
 		@-rm -f R.binary R-Image *core *.o
 
 realclean:	clean
