@@ -7,9 +7,11 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < VERSION`
   min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < VERSION`
   rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < VERSION`
+  ver=`echo "${maj}${min}" | sed 's/\.//g'`
   y=`cut -d/ -f1 < date-stamp`
   m=`cut -d/ -f2 < date-stamp`
   d=`cut -d/ -f3 < date-stamp`
+  echo "#define R_VERSION ${ver}"
   echo "#define R_MAJOR  \"${maj}\""
   echo "#define R_MINOR  \"${min}\""
   echo "#define R_STATUS \"${rev}\""
