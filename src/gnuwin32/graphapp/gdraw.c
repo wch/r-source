@@ -64,13 +64,17 @@ void gbitblt(drawing db, drawing sb, point p, rect r)
 }
 
 
+
+/* dp gives the amount to scroll; r the full rectangle to scroll */
 void gscroll(drawing d, point dp, rect r)
 {
-    rect cliprect = getrect(d);
     HDC dc = GETHDC(d);
-
-    ScrollDC(dc, dp.x - r.x, dp.y - r.y,
-	     (RECT *)&r, (RECT *) &cliprect, 0, NULL);
+    RECT rr ;
+    rr.left = r.x;
+    rr.top = r.y;
+    rr.right = r.x + r.width;
+    rr.bottom = r.y + r.height;
+    ScrollDC(dc, dp.x , dp.y , &rr, &rr, 0, NULL);
 }
 
 void ginvert(drawing d, rect r)
@@ -445,11 +449,11 @@ void gcharmetric(drawing d, font f, int c, int *ascent, int *descent,
     *descent = tm.tmDescent;
     if(c == 0)
 	*width = tm.tmMaxCharWidth;
-    else if(first <= c && c <= last) {
+    else if((first <= c) && (c <= last)) {
 	char xx[2];
 	xx[0]=c;
 	xx[1]='\0';
-	*width = strwidth(f,xx);
+	*width = gstrwidth(d,f,xx);
     }
     else {
 	*ascent = 0;
