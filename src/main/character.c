@@ -46,7 +46,7 @@
 
 SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP d, s, x;
+    SEXP d, s, x, ch;
     int i, len;
 
     checkArity(op, args);
@@ -55,8 +55,10 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, "nchar() requires a character vector");
     len = LENGTH(x);
     PROTECT(s = allocVector(INTSXP, len));
-    for (i = 0; i < len; i++)
-	INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
+    for (i = 0; i < len; i++) {
+	ch = STRING_ELT(x, i);
+	INTEGER(s)[i] = (ch == NA_STRING) ? NA_INTEGER : strlen(CHAR(ch));
+    }
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
     if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
