@@ -15,6 +15,9 @@ matplot <- function(x, y, type="p",
 		    ..., add= FALSE, verbose = getOption("verbose"))
 {
     paste.ch <- function(chv) paste('"',chv,'"', sep="", collapse=" ")
+    str2vec <- function(string) {
+	if(nchar(string)[1] > 1) strsplit(string[1], NULL)[[1]] else string
+    }
     ## These from plot.default :
     xlabel <- if (!missing(x)) deparse(substitute(x))  else NULL
     ylabel <- if (!missing(y)) deparse(substitute(y))  else NULL
@@ -36,11 +39,13 @@ matplot <- function(x, y, type="p",
     if(kx == 1) x <- matrix(x, nrow = n, ncol = ky)
     if(ky == 1) y <- matrix(y, nrow = n, ncol = kx)
     k <- max(kx,ky)## k == kx == ky
-    type <- strsplit(type[1], NULL)[[1]]
+
+    type <- str2vec(type)
     if(is.null(pch))
         pch <- c(paste(c(1:9,0)),letters)[1:k]
     else if(is.character(pch))
-        pch <- strsplit(pch[1], NULL)[[1]]
+        pch <- str2vec(pch)
+    ## else pch is numeric supposedly
     if(verbose)
 	cat("matplot: doing ", k, " plots with ",
 	    paste(" col= (", paste.ch(col), ")", sep=''),
