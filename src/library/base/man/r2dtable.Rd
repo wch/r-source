@@ -11,10 +11,10 @@ r2dtable(n, r, c)
 \arguments{
   \item{n}{a non-negative numeric giving the number of tables to be
     drawn.}
-  \item{r}{a non-negative vector of positive length giving the row
+  \item{r}{a non-negative vector of length at least 2 giving the row
     totals, to be coerced to \code{integer}.  Must sum to the same as
     \code{c}.}
-  \item{c}{a non-negative vector of positive length giving the column
+  \item{c}{a non-negative vector of length at least 2 giving the column
     totals, to be coerced to \code{integer}.}
 }
 \value{
