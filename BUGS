@@ -281,3 +281,54 @@ Date: Fri, 28 Jan 2000 11:17:36 +0100 (MET)
 Subject: anomalies with call objects
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 06 Feb 2000 01:18:50 +0100
+* PR# 413 *
+Subject: Segmentation fault, devPS.c, 0.99.0
+From: Roger.Bivand@nhh.no
+Date: Mon, 7 Feb 2000 22:04:16 +0100 (MET)
+* PR# 414 *
+Subject:  graphics bugs: steep slopes and large values beyond ylim 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Mon, 7 Feb 2000 18:28:04 -0500
+* PR# 415 *
+Subject: fix() changes character to factor
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Tue, 8 Feb 2000 10:48:24 +0100
+* PR# 416 *
+Subject: DEC cc doesn't like c++ comments
+From: albrecht.gbehardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 10:56:55 +0100 (MET)
+* PR# 417 *
+Subject: Re: [R] Alpha Linux compile failure with 0.99
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 8 Feb 2000 10:03:44 +0000 (GMT)
+* PR# 418 *
+Subject: Compilation problems on Digital Unix 4.0c with gcc
+From: PETER_HOPFGARTNER@memc.it
+Date: Tue, 8 Feb 2000 11:07:22 +0100
+* PR# 419 *
+Subject: configure doesn't accept f77 on alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 11:08:23 +0100 (MET)
+* PR# 420 *
+Subject: extra flags for cc and f77 on alpha
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 11:21:36 +0100 (MET)
+* PR# 421 *
+Subject: problem with va_list type (alpha)
+From: albrecht.gebhardt@uni-klu.ac.at
+Date: Tue, 8 Feb 2000 11:29:27 +0100 (MET)
+* PR# 422 *
+Subject: printutils bug on Linux/Alpha
+Subject: Re: RPMs for R and contributed packages
+From: Martyn Plummer <plummer@iarc.fr>
+From: Tim Powers <timp@redhat.com>
+Date: Tue, 08 Feb 2000 11:07:58 +0100 (CET)
+Date: Mon, 7 Feb 2000 17:21:20 -0500
+* PR# 423 *
+Subject: installing online help
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 8 Feb 2000 12:29:29 +0100 (MET)
+* PR# 424 *
+Subject: strsplit
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Tue, 8 Feb 2000 12:58:09 +0100 (MET)
