@@ -1,5 +1,6 @@
 \name{warning}
 \alias{warning}
+\alias{suppressWarnings}
 \title{Warning Messages}
 \description{
   Generates a warning message that corresponds to its argument(s) and
@@ -7,12 +8,14 @@
 }
 \usage{
 warning(\dots, call. = TRUE)
+suppressWarnings(expr)
 }
 \arguments{
   \item{\dots}{character vectors (which are pasted together with no
     separator), a condition object, or \code{NULL}.}
   \item{call.}{logical, indicating if the call should become part of the
     warning message.}
+  \item{expr}{expression to evaluate.}
 }
 \details{
   The result \emph{depends} on the value of
@@ -38,6 +41,9 @@ warning(\dots, call. = TRUE)
   While the warning is being processed, a \code{muffleWarning} restart
   is available.  If this restart is invoked with \code{invokeRestart},
   then \code{warning} returns immediately.
+
+   \code{suppressWarnings} evaluates its expression in a context that
+   ignores all warnings.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -55,6 +61,7 @@ testit <- function() warning("testit")
 testit() ## shows call
 testit <- function() warning("problem in testit", call. = FALSE)
 testit() ## no call
+suppressWarnings(warning("testit"))
 \testonly{eigenval <- 10 ^ -rnorm(1, m=6)
 if(eigenval < 1.e-7) warning("system near singular")
 options(oldopt)}
