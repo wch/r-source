@@ -46,7 +46,8 @@ Any change in the GUI preferences via the dialog box changed font
 mode with toolbars (PR#7277), where real font changes are not working
 properly.
 
-Control keys in Tcl/Tk windows were not handled properly.
+Control keys in Tcl/Tk windows were not handled properly; Tcl/Tk
+interacted badly with Rgui in other ways as well.
 
 R CMD SHLIB gave spurious error messages for inputs like all.f and all.c.
 

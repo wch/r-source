@@ -31,6 +31,7 @@
 
     sort out resize (confused screen and client coords)
     add printer and metafile handling
+    Remove assumption of current->dest being non-NULL
 
  */
 
@@ -165,8 +166,10 @@ void clear(control obj)
 	old = currentrgb();
 	setrgb(obj->bg);
 	fillrect(getrect(obj));
-	setrgb(old);
-	drawto(prev);
+	if (prev) {
+		setrgb(old);
+		drawto(prev);
+    	}
 }
 
 void draw(control obj)
@@ -189,11 +192,13 @@ void draw(control obj)
 		return;
 	prev = current->dest;
 	drawto(obj);
-	old = copydrawstate();
+	if (prev) old = copydrawstate();
 	moveto(pt(0,0));
 	obj->call->redraw(obj, getrect(obj));
-	restoredrawstate(old);
-	drawto(prev);
+	if (prev) {
+		restoredrawstate(old);
+		drawto(prev);
+    	}
 }
 
 void redraw(control obj)
