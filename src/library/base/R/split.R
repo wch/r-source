@@ -4,7 +4,23 @@ split <-
 
 split.default <-
     function( x, f )
-    .Internal( split( x, as.factor( f ) ) )
+{
+    f <- as.factor(f)
+    if(is.null(class(x)))
+    {
+        retval <- .Internal(split(x, f))
+    }
+    else
+    {
+        lf <- levels(f)
+        retval <- list()
+        for(k in lf){
+            retval[[k]] <- x[f==k]
+        }
+    }
+    retval
+}
+
 
 split.data.frame <-
     function( x, f )
