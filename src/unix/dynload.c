@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1996 Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-1999 The R Development Core Team
+ *  Copyright (C) 1997-2000 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -279,9 +279,6 @@ computeDLOpenFlag(int asLocal, int now)
  int openFlag = 0; /* Default value so no-ops for undefined flags should do nothing
                       in the resulting dlopen(). */
 
-
-#undef RTLD_LOCAL
-
 if(asLocal != 0) {
 #ifndef RTLD_LOCAL
   DL_WARN(0)
@@ -433,7 +430,37 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+extern DL_FUNC X11ConnectionNumber, pR_ProcessEvents, X11DeviceDriver, ptr_dataentry;
+
+void R_load_X11_shlib()
+{
+    char X11_DLL[PATH_MAX];
+    void *handle;
+    strcpy(X11_DLL, getenv("R_HOME"));
+    strcat(X11_DLL, "/bin/R_X11.");
+    strcat(X11_DLL, SHLIBEXT); /* from config.h */
+/* cannot use computeDLOpenFlag as warnings will crash R at this stage */
+#ifdef RTLD_NOW
+    handle = dlopen(X11_DLL, RTLD_NOW);
 #else
+    handle = dlopen(X11_DLL, 0);
+#endif
+    if(handle == NULL) {
+	printf("error was %s\n", dlerror());fflush(stdout);
+	R_Suicide("Cannot load the X11 shared library");
+    }
+    X11ConnectionNumber = (DL_FUNC) dlsym(handle, "X11ConnectionNumber");
+    if(!X11ConnectionNumber) R_Suicide("Cannot load X11ConnectionNumber");
+    pR_ProcessEvents = (DL_FUNC) dlsym(handle, "R_ProcessEvents");
+    if(!pR_ProcessEvents) R_Suicide("Cannot load R_ProcessEvents");
+    X11DeviceDriver = (DL_FUNC) dlsym(handle, "X11DeviceDriver");
+    if(!X11DeviceDriver) R_Suicide("Cannot load X11DeviceDriver");
+    ptr_dataentry = (DL_FUNC) dlsym(handle, "RX11_dataentry");
+    if(!ptr_dataentry) R_Suicide("Cannot load do_dataentry");
+}
+
+
+#else /* no dyn.load support */
 
 void InitFunctionHashing()
 {
@@ -462,4 +489,8 @@ SEXP do_dynunload(SEXP call, SEXP op, SEXP args, SEXP env)
     error("no dyn.load support in this R version");
 }
 
+void R_load_X11_shlib()
+{
+    R_Suicide("no support to load X11 shared library in this R version");
+}
 #endif

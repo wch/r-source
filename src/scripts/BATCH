@@ -2,7 +2,7 @@
 #
 # ${R_HOME}/bin/BATCH
 
-revision='$Revision: 1.7 $'
+revision='$Revision: 1.8 $'
 version=`set - ${revision}; echo ${2}`
 version="R batch front end ${version}"
 
@@ -24,7 +24,7 @@ by default is started with \`--restore --save --no-readline'.
 
 Report bugs to <R-bugs@lists.r-project.org>."
 
-opts="--restore --save --no-readline"
+opts="--restore --save --no-readline --gui=none"
 
 while test -n "${1}"; do
   case ${1} in

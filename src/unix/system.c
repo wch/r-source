@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-1999   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -190,7 +190,7 @@ int R_ReadConsole(char *prompt, unsigned char *buf, int len, int addtohistory)
 	    int what = waitForActivity();
 	    switch (what) {
 	    case XActivity:
-		R_ProcessEvents();
+		pR_ProcessEvents();
 		break;
 	    case StdinActivity:
 #ifdef HAVE_LIBREADLINE
@@ -414,10 +414,12 @@ void R_ShowMessage(char *s)
 }
 
 void R_setStartTime(); /* in sys-unix.c */
+void R_load_X11_shlib(); /* in dynload.c */
+
 
 int main(int ac, char **av)
 {
-    int value, ierr;
+    int value, ierr, useX11 = 1;
     char *p, msg[1024];
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -439,6 +441,24 @@ int main(int ac, char **av)
 	if (**++av == '-') {
 	    if(!strcmp(*av, "--no-readline")) {
 		UsingReadline = 0;
+	    } else if(!strncmp(*av, "--gui", 5)) {
+		if(strlen(*av) < 7) {
+		    sprintf(msg, "WARNING: --gui with no value ignored\n");
+		    R_ShowMessage(msg);
+		} else {
+		    p = &(*av)[6];
+		    if(!strcmp(p, "none")) {
+			useX11 = 0;
+		    } else {
+#ifdef HAVE_X11
+			sprintf(msg, "WARNING: unknown gui %s, using X11\n", p);
+#else
+			sprintf(msg, "WARNING: unknown gui %s, using none\n", p);
+#endif
+			R_ShowMessage(msg);
+		    }
+		}
+		break;
 	    } else {
 		sprintf(msg, "WARNING: unknown option %s\n", *av);
 		R_ShowMessage(msg);
@@ -487,6 +507,15 @@ int main(int ac, char **av)
 #endif
     fpu_setup(1);
 
+    X11ConnectionNumber = stub_X11ConnectionNumber;
+    pR_ProcessEvents = stub_R_ProcessEvents;
+    X11DeviceDriver = stub_X11DeviceDriver;
+    ptr_dataentry = stub_dataentry;
+#ifdef HAVE_X11
+    if(useX11)
+	R_load_X11_shlib();
+#endif
+    
     mainloop();
     /*++++++  in ../main/main.c */
     return 0;

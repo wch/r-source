@@ -720,7 +720,12 @@ AC_SUBST(EXPORTFILE)
 AC_PATH_XTRA
 if test -z "${no_x}"; then
   X_LIBS="${X_LIBS} -lX11"
+  NO_X=""
+  AC_DEFINE(HAVE_X11, 1)
+else
+  NO_X="#"
 fi
+AC_SUBST(NO_X)
 
 ### Miscellaneous.
 

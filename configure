@@ -780,7 +780,7 @@ fi
 
 ### Programs.
 
-for ac_prog in mawk gawk nawk awk
+for ac_prog in gawk mawk nawk awk
 do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
@@ -7383,7 +7383,15 @@ fi
 
 if test -z "${no_x}"; then
   X_LIBS="${X_LIBS} -lX11"
+  NO_X=""
+  cat >> confdefs.h <<\EOF
+#define HAVE_X11 1
+EOF
+
+else
+  NO_X="#"
 fi
+
 
 ### Miscellaneous.
 
@@ -7398,7 +7406,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:7402: checking for $ac_word" >&5
+echo "configure:7410: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_prog_R_PRINTCMD'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -7436,7 +7444,7 @@ EOF
 # Extract the first word of "paperconf", so it can be a program name with args.
 set dummy paperconf; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:7440: checking for $ac_word" >&5
+echo "configure:7448: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_PAPERCONF'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -7780,6 +7788,7 @@ s%@X_CFLAGS@%$X_CFLAGS%g
 s%@X_PRE_LIBS@%$X_PRE_LIBS%g
 s%@X_LIBS@%$X_LIBS%g
 s%@X_EXTRA_LIBS@%$X_EXTRA_LIBS%g
+s%@NO_X@%$NO_X%g
 s%@R_PRINTCMD@%$R_PRINTCMD%g
 s%@PAPERCONF@%$PAPERCONF%g
 s%@R_PAPERSIZE@%$R_PAPERSIZE%g

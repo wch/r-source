@@ -72,7 +72,7 @@ Options:
   --verbose             Print more information about progress
   -d, --debugger=NAME   Run R through debugger NAME
   -g, --gui=TYPE	Use TYPE as GUI; possible values are \`X11'
-			(default) and \`GNOME'
+			(default), \`none' and \`GNOME'
 
 Commands:
   BATCH			Run R in batch mode
@@ -156,8 +156,7 @@ fi
 if test -x ${R_HOME}/bin/R.${gui}; then
   R_binary="R.${gui}"
 else
-  echo "GUI \`${gui}' is not supported"
-  exit 1
+  R_binary="R.X11 --gui=${gui}"
 fi
 
 # Startup

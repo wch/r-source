@@ -67,6 +67,13 @@ NEW FEATURES
 
     o	write.table() can now write CSV files in the format Excel expects.
 
+    o	The X11 support code is now in a separate shared library, and
+	flag --gui=none will run R without X11 support (and so x11()
+	and data.entry() will not be available).  R BATCH sets --gui=none.
+
+    o	Configuring without X (e.g. --without-x) does work (at last).
+	If R has been built without X11 the default GUI is "none".
+
 
 BUG FIXES
 
