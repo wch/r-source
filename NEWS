@@ -640,6 +640,8 @@ BUG FIXES
     o	HoltWinters() would segfault if only gamma was optimized, and
 	not converge if gamma=0 and seasonal="mult".
 
+    o   hyperref.cfg now contains definitions for colors it uses.
+
     o	identify.default() detects zero-length arguments.  (PR#4057)
 
     o	legend() allows shading without filling again.
