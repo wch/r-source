@@ -1,4 +1,4 @@
-/*
+r/*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *
@@ -25,7 +25,9 @@
  *
  *    Compute the log gamma correction factor for x >= 10 so that
  *
- *    log(gamma(x)) = log(sqrt(2*pi))+(x-.5)*log(x)-x+lgammacor(x)
+ *    log(gamma(x)) = .5*log(2*pi) + (x-.5)*log(x) -x + lgammacor(x)
+ *
+ *    [ lgammacor(x) is called	Del(x)	in other contexts (e.g. dcdflib)]
  *
  *  NOTES
  *
@@ -37,7 +39,7 @@
 
 double lgammacor(double x)
 {
-    static double algmcs[15] = { 
+    static double algmcs[15] = {
 	+.1666389480451863247205729650822e+0,
 	-.1384948176067563840732986059135e-4,
 	+.9810825646924729426157171547487e-8,
@@ -66,16 +68,16 @@ double lgammacor(double x)
     }
 
     if (x < 10) {
-        ML_ERROR(ME_DOMAIN);
-        return ML_NAN;
+	ML_ERROR(ME_DOMAIN);
+	return ML_NAN;
     }
     else if (x >= xmax) {
-        ML_ERROR(ME_UNDERFLOW);
-        return ML_UNDERFLOW;
+	ML_ERROR(ME_UNDERFLOW);
+	return ML_UNDERFLOW;
     }
     else if (x < xbig) {
-        tmp = 10 / x;
-        return chebyshev_eval(tmp * tmp * 2 - 1, algmcs, nalgm) / x;
+	tmp = 10 / x;
+	return chebyshev_eval(tmp * tmp * 2 - 1, algmcs, nalgm) / x;
     }
     else return 1 / (x * 12);
 }
