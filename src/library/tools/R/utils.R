@@ -115,7 +115,8 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     files
 }
 
-### **  extract_Rd_file
+### ** extract_Rd_file
+
 extract_Rd_file <-
 function(file, topic)
 {
@@ -300,6 +301,16 @@ local({
         tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
     eval(substitute(function() {out}, list(out=out)), envir=NULL)
 })
+
+### ** .is_ascii
+
+.is_ascii <-
+function(x)
+{
+    ## Determine whether the strings in a character vector are ASCII or
+    ## not.
+    sapply(x, function(txt) all(charToRaw(txt) <= as.raw("0x7f")))
+}    
 
 ### ** .is_primitive
 
