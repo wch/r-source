@@ -662,15 +662,11 @@ static void deparse2buff(SEXP s)
 	    args2buff(CDR(s), 0, 0);
 	    print2buff(")");
 	}
-	else {
+	else { /* we have a lambda expression */
 	    deparse2buff(CAR(s));
-	    if( CDR(s) != R_NilValue ) {
-				/* we have a lambda expression and need
-				   to print the args */
-		print2buff("(");
-		args2buff(CDR(s), 0, 0);
-		print2buff(")");
-	    }
+	    print2buff("(");
+	    args2buff(CDR(s), 0, 0);
+	    print2buff(")");
 	}
 	break;
     case STRSXP:

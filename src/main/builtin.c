@@ -231,11 +231,14 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if (isString(s))
 		p = CHAR(STRING(s)[0]);
-	    else {
+            else if (isSymbol(s))
+                p = CHAR(PRINTNAME(s));
+	    else if (isVector(s)) {
 		p = EncodeElement(s, 0, 0);
 		strcpy(buf,p);
 		p=buf;
 	    }
+            else errorcall(call, "argument %d not handled by cat\n", iobj);
 	    w = strlen(p);
 	    cat_sepwidth(sepr, &sepw, ntot);
 	    if ((iobj > 0) && (width + w + sepw > pwidth)) {
