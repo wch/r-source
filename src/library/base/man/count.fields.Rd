@@ -6,7 +6,9 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
 }
 \alias{count.fields}
 \arguments{
-  \item{file}{a character string naming an ASCII data file}
+  \item{file}{a character string naming an ASCII data file, or a
+    \code{\link{connection}}, which will be opened if necessary,
+    and if so closed at the end of the function call.}
 
   \item{sep}{the field separator character.  Values on each line of the
     file are separated by this character.  By default, arbitrary amounts
@@ -22,8 +24,11 @@ count.fields(file, sep = "", quote = "\"'", skip = 0,
 }
 \description{
   \code{count.fields} counts the number of fields, as separated by
-  \code{sep}, in each of the lines of \code{file} read.  It is used by
-  \code{\link{read.table}};  a user will typically have no need for it.
+  \code{sep}, in each of the lines of \code{file} read.
+}
+\details{
+  This used to be used by \code{\link{read.table}} and can still be
+  useful in discovering problems in reading a file by that function.
 }
 \value{
   A vector with the numbers of fields found.

@@ -207,6 +207,9 @@ NEW FEATURES
 
     o	prompt() improved for data sets, particularly non-dataframes.
 
+    o	read.table() now uses a single pass through the dataset.
+
+
 
 BUG FIXES
 

@@ -28,80 +28,74 @@ read.table <-
     if(!inherits(file, "connection"))
         stop("argument `file' must be a character string or connection")
 
-    if(isSeekable(file)) {
-        if(skip > 0) readLines(file, skip)
-        row.lens <- count.fields(file, sep, quote, 0, blank.lines.skip)
-        seek(file, 0)
-        if(skip > 0) readLines(file, skip)
-        tfile <- file
-    } else {
-        warning("readLines on a non-seekable connection can be resource-intensive")
-        if(skip > 0) readLines(file, skip)
-        whole <- readLines(file)
-        tfile <- textConnection(whole)
-        row.lens <- count.fields(tfile, sep, quote, 0, blank.lines.skip)
-        close(tfile)
-        tfile <- textConnection(whole)
-        on.exit(close(tfile), add = TRUE)
+    if(skip > 0) readLines(file, skip)
+    ## read a few lines to determine header, no of cols.
+    lines <- readLines(file, 5)
+    nlines <- length(lines)
+    if(!nlines) {
+        if(missing(col.names))
+            stop("no lines available in input")
+        else {
+            tmp <- vector("list", length(col.names))
+            names(tmp) <- col.names
+            class(tmp) <- "data.frame"
+            return(tmp)
+        }
     }
+    if(all(nchar(lines) == 0)) stop("empty beginning of file")
+    pushBack(c(lines, lines), file)
+    first <- scan(file, what = "", sep = sep, quote = quote,
+                  nlines = 1, quiet = TRUE, skip = 0,
+                  strip.white = TRUE)
+    col1 <- if(missing(col.names)) length(first) else length(col.names)
+    col <- numeric(nlines - 1)
+    for (i in seq(along=col))
+        col[i] <- length(scan(file, what = "", sep = sep,
+                              quote = quote,
+                              nlines = 1, quiet = TRUE, skip = 0,
+                              strip.white = strip.white))
+    cols <- max(col1, col)
 
     ##	basic column counting and header determination;
     ##	rlabp (logical) := it looks like we have column names
 
-    nlines <- length(row.lens)
-    rlabp <- nlines > 1 && (max(row.lens[-1]) - row.lens[1]) == 1
+    rlabp <- (cols - col1) == 1
     if(rlabp && missing(header))
 	header <- TRUE
+    if(!header) rlabp <- FALSE
 
-    if (header) { # read in the header
-        colnm <- scan(tfile, what = "", sep = sep, quote = quote, nlines = 1,
-                      quiet = TRUE, skip = 0, strip.white = TRUE)
-	row.lens <- row.lens[-1]
-	nlines <- nlines - 1
-        if(missing(col.names)) col.names <- colnm
+    if (header) {
+        readLines(file, 1) # skip over header
+        if(missing(col.names)) col.names <- first
+        else if(length(first) != length(col.names))
+            warning("header and `col.names' are of different lengths")
+
     } else if (missing(col.names))
-	col.names <- paste("V", 1:max(row.lens), sep = "")
+	col.names <- paste("V", 1:cols, sep = "")
+    if(length(col.names) + rlabp < cols)
+        stop("more columns than column names")
+    if(fill && length(col.names) > cols)
+        cols <- length(col.names)
+    if(!fill && cols > 0 && length(col.names) > cols)
+        stop("more column names than columns")
+    if(cols == 0) stop("first five rows are empty: giving up")
+
 
     if(check.names) col.names <- make.names(col.names)
-
-    ##	check that all rows have equal lengths unless fill == TRUE
-
-    if ( !fill ) {
-        cols <- unique(row.lens)
-        if (length(cols) != 1) {
-            cat("\nrow.lens=\n"); print(row.lens)
-            stop("all rows must have the same length.")
-        }
-    } else {
-        cols <- max(row.lens)
-        if (header) {
-            if (cols > length(col.names) + rlabp) {
-                cat("\nrow.lens=\n"); print(row.lens)
-                stop("Some rows have more fields than header implies")
-            }
-            cols <- length(col.names) + rlabp
-        }
-    }
-
+    if (rlabp) col.names <- c("row.names", col.names)
 
     ##	set up for the scan of the file.
     ##	we read all values as character strings and convert later.
 
     what <- rep(list(""), cols)
-    if (rlabp)
-	col.names <- c("row.names", col.names)
     names(what) <- col.names
-    data <- scan(file = tfile, what = what, sep = sep, quote = quote, skip = 0,
+    data <- scan(file = file, what = what, sep = sep, quote = quote, skip = 0,
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
-                 strip.white = strip.white, nmax = nlines,
-                 blank.lines.skip = blank.lines.skip)
+                 strip.white = strip.white,
+                 blank.lines.skip = blank.lines.skip, multi.line = FALSE)
 
-    if(!blank.lines.skip && row.lens[nlines] == 0) {
-        ## we had a blank last line
-        for (i in 1:cols)
-            data[[i]] <- data[[i]][-nlines]
-        nlines <- nlines - 1
-    }
+    nlines <- length(data[[1]])
+
     ##	now we have the data;
     ##	convert to numeric or factor variables
     ##	(depending on the specifies value of "as.is").
@@ -133,9 +127,9 @@ read.table <-
 	    row.names <- data[[1]]
 	    data <- data[-1]
 	}
-	else row.names <- as.character(1:nlines)
+	else row.names <- as.character(seq(len=nlines))
     } else if (is.null(row.names)) {
-	row.names <- as.character(1:nlines)
+	row.names <- as.character(seq(len=nlines))
     } else if (is.character(row.names)) {
 	if (length(row.names) == 1) {
 	    rowvar <- (1:cols)[match(col.names, row.names, 0) == 1]
