@@ -316,14 +316,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 962 *
-Subject: documentation for image(): zlim update
-From: eglen@pcg.wustl.edu
-Date: Thu, 31 May 2001 22:07:43 +0200 (MET DST)
-* PR# 955 *
-Subject: argument names in generic print functions
-From: Richard Beare <Richard.Beare@cmis.csiro.au>
-Date: Tue, 29 May 2001 09:49:06 +1000
+* PR# 965 *
+Subject: Documentation bug in bug.report
+From: thoffman@zappa.sax.de
+Date: Fri, 1 Jun 2001 19:50:58 +0200 (MET DST)
 * PR# 953 *
 Subject: bugs in deriv(*, *, function.arg = ) 
 Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
@@ -340,6 +336,14 @@ Date: Wed, 30 May 2001 12:41:43 -0400
 Subject: unbelievable parser bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Tue, 29 May 2001 14:25:00 +0200
+* PR# 955 *
+Subject: argument names in generic print functions
+From: Richard Beare <Richard.Beare@cmis.csiro.au>
+Date: Tue, 29 May 2001 09:49:06 +1000
+* PR# 960 *
+Subject: format() of a character matrix converts to vector
+From: John.Peters@tip.csiro.au (John Peters)
+Date: Thu, 31 May 2001 17:27:45 +1000 (EST)
 * PR# 959 *
 Subject: Re: R-WinEdt
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
@@ -348,11 +352,19 @@ Date: Thu, 31 May 2001 09:21:14 +0200
 Subject: zero-extent matrices
 From: Thomas Lumley <tlumley@u.washington.edu>
 Date: Wed, 30 May 2001 11:59:59 -0700 (PDT)
+* PR# 962 *
+Subject: documentation for image(): zlim update
+From: eglen@pcg.wustl.edu
+Date: Thu, 31 May 2001 22:07:43 +0200 (MET DST)
 * PR# 961 *
 Subject: R-1.2.3: a small suggestion
 From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
 Date: Thu, 31 May 2001 09:19:26 -0600 (MDT)
-* PR# 960 *
-Subject: format() of a character matrix converts to vector
-From: John.Peters@tip.csiro.au (John Peters)
-Date: Thu, 31 May 2001 17:27:45 +1000 (EST)
+* PR# 964 *
+Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
+From: paul@gromit.dlib.vt.edu
+Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
+* PR# 963 *
+Subject: v matrix of svd(X) loses dimensions if nrow(X)==1
+From: Marcel Wolbers <wolbers@stat.math.ethz.ch>
+Date: Fri, 1 Jun 2001 13:47:01 +0200
