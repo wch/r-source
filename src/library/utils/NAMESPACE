@@ -12,15 +12,15 @@ export("?", CRAN.packages, Rprof, RSiteSearch, apropos,
        help.search, help.start, history, iconv, iconvlist,
        index.search, install.packages, installed.packages,
        limitedLabels, loadhistory, localeToCharset, ls.str, lsf.str,
-       make.packages.html, make.socket, menu, methods, mirror2html,
-       new.packages, object.size, old.packages, package.contents,
-       package.skeleton, packageDescription, packageStatus, page,
-       person, personList, pico, prompt, promptData, readCitationFile,
-       read.fwf, read.fortran, read.socket, recover, remove.packages,
-       savehistory, str, sessionInfo, summaryRprof, tail, topicName,
-       toBibtex, toLatex, update.packageStatus, update.packages,
-       upgrade, url.show, vi, vignette, write.socket, wsbrowser,
-       xedit, xemacs)
+       l10n_info, make.packages.html, make.socket, menu, methods,
+       mirror2html, new.packages, object.size, old.packages,
+       package.contents, package.skeleton, packageDescription,
+       packageStatus, page, person, personList, pico, prompt,
+       promptData, readCitationFile, read.fwf, read.fortran,
+       read.socket, recover, remove.packages, savehistory, str,
+       sessionInfo, summaryRprof, tail, topicName, toBibtex, toLatex,
+       update.packageStatus, update.packages, upgrade, url.show, vi,
+       vignette, write.socket, wsbrowser, xedit, xemacs)
 
 S3method("[", getAnywhere)
 S3method(as.character, person)

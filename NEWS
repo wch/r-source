@@ -277,6 +277,13 @@ INTERNATIONALIZATION
     o	Phrases in .Rd files can be marked by \enc{}{} to show a
 	transliteration to ASCII for use in e.g. text help.
 
+    o	The use of pch in points() now allows for multi-byte character
+	sets: in such a locale a glyph can either be specified as a
+	multi-byte single character or as a number, the Unicode point.
+
+    o	Function l10n_info() reports on aspects of the locale/charset
+	currently in use.
+
 
 UTILITIES
 
@@ -524,7 +531,7 @@ BUG FIXES
     o	X11() font selection was looking for any symbol font, and
 	sometimes got e.g. bold italic if the server has such a font.
 
-    o	dpois(*, lambda=Inf) now return 0 (or -Inf for log).
+    o	dpois(*, lambda=Inf) now returns 0 (or -Inf for log).
 
 
 

@@ -15,6 +15,8 @@ iconvlist <- function()
     sort(unlist(strsplit(ext, "[[:space:]]")))
 }
 
+l10n_info <- function() .Internal(l10n_info())
+
 ## If you were wondering what these language codes stand for, see
 ## ftp://ftp.ilog.fr/pub/Users/haible/utf8/ISO_639
 ## PUTTY suggests rather mapping Windows code pages as

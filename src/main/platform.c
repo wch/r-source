@@ -1420,3 +1420,22 @@ end:
     return (ans);
 }
 #endif
+
+SEXP do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP  ans, names, s;
+    checkArity(op, args);
+    PROTECT(ans = allocVector(VECSXP, 2));
+    PROTECT(names = allocVector(STRSXP, 2));
+    SET_STRING_ELT(names, 0, mkChar("MBCS"));
+    SET_STRING_ELT(names, 1, mkChar("UTF-8"));
+    SET_VECTOR_ELT(ans, 0, s = allocVector(LGLSXP, 1));
+    LOGICAL(s)[0] = mbcslocale;
+    SET_VECTOR_ELT(ans, 1, s = allocVector(LGLSXP, 1));
+    LOGICAL(s)[0] = utf8locale;
+    setAttrib(ans, R_NamesSymbol, names);
+    UNPROTECT(2);
+    return ans;
+}
+
+
