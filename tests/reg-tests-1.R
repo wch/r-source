@@ -2654,14 +2654,16 @@ stopifnot(identical(TRUE, attr(as.dist(m, diag=TRUE), "Diag")))
 stopifnot(1:2 == ave(1:2,factor(2:3,levels=1:3)))
 ## gave "2 NA" previous to 1.8.0, because unused levels weren't dropped
 
-## arrays with  length(dim(.)) = 1
+## PR#4092: arrays with length(dim(.)) = 1
 z <- array(c(-2:1, 1.4),5)
+cz <- crossprod(as.vector(z))
 dimnames(z) <- list(letters[1:5])
-z
-if(FALSE)## NOT YET
-    crossprod(z)
-## segfaulted (or gave silly error message) before 1.8.0
-
+z0 <- z
+names(dimnames(z)) <- "D1"
+stopifnot(crossprod(z) == cz,# the first has NULL dimnames
+          identical(crossprod(z), crossprod(z0)),
+          identical(crossprod(z), crossprod(z,z0)))
+## crossprod(z) segfaulted (or gave silly error message) before 1.8.0
 
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)

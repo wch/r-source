@@ -336,8 +336,10 @@ STANDARD PACKAGES
 	  method for its output (in the real case).
 
 	- dendrograms are slightly better documented, methods working with
-	  "label", not "text" attribute.
-	  New rev() method for dendrograms.
+	  "label", not "text" attribute.  New rev() method for dendrograms.
+
+	- plot.dendrogram() has an explicit `frame.plot' argument
+	  defaulting to FALSE (instead of an implicit one defaulting to TRUE).
 
     o	Changes in package 'tcltk':
 
@@ -607,6 +609,8 @@ BUG FIXES
 
     o	cut.POSIXt() now passes on ... to cut.default(), as documented.
 
+    o	crossprod() now works for 1d arrays with unnamed dimnames (PR#4092).
+
     o	data() sometimes failed with multiple files, as the paths
 	variable got corrupted.
 
@@ -727,7 +731,8 @@ BUG FIXES
 
     o	step() adds a fuzz for reduction in AIC for 0-df terms.	 (PR#3491)
 
-    o	str(x) gives better output when x is of mode "(".
+    o	str(x) gives better output when x is of mode "(".  Its "dendrogram"
+	method obeys the `give.attr' argument which now defaults to FALSE.
 
     o	strwidth(f) and strheight(f) could seg.fault when `f' was a
 	function.  The fix [to C-level coerceVector()] now gives an error
