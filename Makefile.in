@@ -115,7 +115,7 @@ distclean: clean
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@rm -rf bin/* include/* library/*
+	@rm -rf bin include library
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status
 maintainer-clean: distclean
