@@ -109,7 +109,7 @@ rpackage: ../../library/R.css
 	@for pkg in $(PKGS); do \
 	  $(MAKE) --no-print-directory $${pkg}; \
 	done
-	$(MAKE) --no-print-directory vignettes
+	@$(MAKE) --no-print-directory vignettes
 
 rlibs:
 	$(MAKE) --no-print-directory -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
