@@ -110,7 +110,8 @@ pacf.mts <- function(x, lag.max = NULL, plot = TRUE, na.action = na.fail, ...)
 plot.acf <-
     function (x, ci = 0.95, type = "h", xlab = "Lag", ylab = NULL,
               ylim = NULL, main = NULL, ci.col="blue",
-              ci.type = c("white", "ma"), max.mfrow = 5,
+              ci.type = c("white", "ma"),
+              max.mfrow = 5,
               mar = if(nser > 2) c(3,3,2,1.2) else par("mar"),
               mgp = if(nser > 2) c(1.5,0.6,0) else par("mgp"),
               cex.main = if(nser > 2) 1 else par("cex.main"),
@@ -132,12 +133,19 @@ plot.acf <-
 
     if(nser > 1) { # at most m x m (m := max.mfrow  (= 5 by default): 
         sn.abbr <- if(nser > 2) abbreviate(snames) else .Alias(snames)
+
+### FIXME: Current behavior
+###    is really not useful:  When we need more than one page,
+###    the plots should be layout such that we can manually paste the
+###    paper pages and get a nice square layout with diagonal !  
+### NB: The same applies to pairs() where we'd want to allow several pages
+
         nr <- min(nser, max.mfrow)
         opar <- par(mfrow = rep(nr, 2), mar = mar, mgp = mgp,
                     cex.main = cex.main)
         on.exit(par(opar))
-        cat("par(*) : ");str(par("mfrow","cex",
-                                 "cex.main","cex.axis","cex.lab","cex.sub"))
+        ## cat("par(*) : ")
+        ## str(par("mfrow","cex", "cex.main","cex.axis","cex.lab","cex.sub"))
     }
     for (i in 1:nser) for (j in 1:nser) {
         clim <- if (with.ci.ma && i == j)
