@@ -15,7 +15,7 @@ TESTout = $(TESTsrc:.R=.Rout)
 
 %.Rout: %.R stamp-Rexe
 	$(R) < $< > $@
-	-@wc $@
+	Rdiff $@ $@.save
 
 test-All: test-Examples $(TESTout)
 

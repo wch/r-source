@@ -2,6 +2,8 @@
 # Diff  ``without R version''
 f1=$1
 f2=$2
-grep -v '^Version' $f1 > /tmp/${f1}-d
-grep -v '^Version' $f2 > /tmp/${f2}-d
-diff -bw /tmp/${f1}-d /tmp/${f2}-d
+#$perlne="'print if /^Version|^Number of.*:/'"
+#perl -ne "$perlne" $f1 ....
+egrepv='(^Version|^Number of.*:)'
+egrep -v "$egrepv" $f1 > /tmp/${f1}-d
+egrep -v "$egrepv" $f2 | diff -bw /tmp/${f1}-d -
