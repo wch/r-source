@@ -24,16 +24,16 @@ DISTFILES = Makefile.in README $(SOURCES) \
 ## </FIXME>
 
 noinst_LIBRARIES = libxml.a
-libxml_a_SOURCES = $(SOURCES)
-libxml_a_OBJECTS = $(OBJECTS)
+@USE_LIBXML_TRUE@libxml_a_SOURCES = $(SOURCES)
+@USE_LIBXML_TRUE@libxml_a_OBJECTS = $(OBJECTS)
 
 ## FIXME:
 ## We most likely will not want a seperate shared library.
 ## If we have a final decision, remove libxml.la target.
 ## </FIXME>
 noinst_LTLIBRARIES = libxml.la
-libxml_la_SOURCES = $(SOURCES)
-libxml_la_OBJECTS = $(OBJECTS:.o=.lo)
+@USE_LIBXML_TRUE@libxml_la_SOURCES = $(SOURCES)
+@USE_LIBXML_TRUE@libxml_la_OBJECTS = $(OBJECTS:.o=.lo)
 @USE_LIBTOOL_TRUE@libxml_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
 
 all: Makefile Makedeps R

@@ -778,6 +778,29 @@ AC_DEFUN([R_GNOME], [
   AC_SUBST(HAVE_GNOME)
   AC_SUBST(GNOME_IF_FILES)])
 ##
+## R_BSD_NETWORKING
+##
+AC_DEFUN([R_BSD_NETWORKING], [
+AC_CACHE_CHECK([for BSD networking],
+  r_cv_bsd_networking,
+  [ if test "${ac_cv_header_netdb_h}" = yes \
+        && test "${ac_cv_header_netinet_in_h}" = yes \
+        && test "${ac_cv_header_netinet_tcp_h}" = yes \
+        && test "${ac_cv_header_sys_socket_h}" = yes \
+        && (test "${ac_cv_func_connect}" = yes \
+          || test "${ac_cv_lib_socket_connect}" = yes) \
+        && (test "${ac_cv_func_gethostbyname}" = yes \
+          || test "${ac_cv_lib_nsl_gethostbyname}" = yes); then
+      r_cv_bsd_networking=yes
+    else
+      r_cv_bsd_networking=no
+    fi])
+if test "${r_cv_bsd_networking}" = yes; then
+  AC_DEFINE(HAVE_BSD_NETWORKING)
+fi
+AM_CONDITIONAL(USE_LIBXML, test "${r_cv_bsd_networking}" = yes)
+])
+##
 ## R_BITMAPS
 ##
 AC_DEFUN([R_BITMAPS], [
