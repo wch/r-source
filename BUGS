@@ -829,3 +829,11 @@ Date: Fri,  9 Jan 2004 18:00:58 +0100 (CET)
 Subject: Re: [Rd] strange behaviour when converting from char to POSIX
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
 Date: Fri, 9 Jan 2004 17:48:54 +0000 (GMT Standard Time)
+* PR# 6424 *
+Subject: return() undocumented
+From: Scot@Wilcoxon.Org
+Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
+* PR# 6425 *
+Subject: biplot() does work for prcomp objects
+From: litwilljeff@yahoo.com
+Date: Sat, 10 Jan 2004 23:07:26 +0100 (CET)
