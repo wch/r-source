@@ -1010,8 +1010,10 @@ static int bzfile_fgetc(Rconnection con)
     int bzerror, size, p;
 
     size = BZ2_bzRead(&bzerror, bfp, buf, 1);
-    if(bzerror == BZ_STREAM_END) return R_EOF;
-    if(bzerror != BZ_OK || size < 1) return R_EOF;
+    /* Some versions seem to signal end a char or two early, so play safe
+       if(bzerror == BZ_STREAM_END) return R_EOF;
+       if(bzerror != BZ_OK || size < 1) return R_EOF; */
+    if(size < 1) return R_EOF;
     p = buf[0] % 256;
     return con->encoding[p];
 }
