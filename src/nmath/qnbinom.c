@@ -60,24 +60,36 @@ double qnbinom(double p, double n, double pr, int lower_tail, int log_p)
     sigma = sqrt(n * P * Q);
     gamma = (Q + P)/sigma;
 
-    z = qnorm(p, 0., 1., lower_tail, log_p);
+    /* FIXME: This is far from optimal :
+       -- "same" code in qpois.c, qbinom.c, qnbinom.c */
+    if(!lower_tail || log_p)
+	p = R_DT_qIv(p);
+
+    z = qnorm(p, 0., 1., /*lower_tail*/LTRUE, /*log_p*/LFALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
 
-    z = pnbinom(y, n, pr, lower_tail, log_p);
+    z = pnbinom(y, n, pr, /*lower_tail*/LTRUE, /*log_p*/LFALSE);
 
-    if(z >= p) {	/* search to the left */
-
+    /* fuzz to ensure left continuity: */
+    p *= 1 - 64*DBL_EPSILON;
+#ifdef maybe_future
+    if((lower_tail && z >= p) || (!lower_tail && z <= p)) {
+#else
+    if(z >= p) {
+#endif
+			/* search to the left */
 	for(;;) {
-	    if((z = pnbinom(y - 1, n, pr, lower_tail, log_p)) < p)
+	    if(y == 0 ||
+	       (z = pnbinom(y - 1, n, pr, /*l._t.*/LTRUE, /*log_p*/LFALSE)) < p)
 		return y;
 	    y = y - 1;
 	}
     }
-    else { 		/* search to the right */
+    else {		/* search to the right */
 
 	for(;;) {
 	    y = y + 1;
-	    if((z = pnbinom(y, n, pr, lower_tail, log_p)) >= p)
+	    if((z = pnbinom(y, n, pr, /*l._t.*/LTRUE, /*log_p*/LFALSE)) >= p)
 		return y;
 	}
     }
