@@ -481,6 +481,7 @@ int IndexWidth(int n)
 
 void VectorIndex(int i, int w)
 {
+/* print index label "[`i']" , using total width `w' (left filling blanks) */
     Rprintf("%*s[%ld]", w-IndexWidth(i)-2, "", i);
 }
 
