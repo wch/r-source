@@ -41,6 +41,8 @@ stamp-docs: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 	@rm -f $@ stamp-help stamp-html stamp-latex stamp-examples
 	@echo "Building ALL documentation (help, HTML, LaTeX, R-Examples)"
 	@$(MAKE) DOCS
+	@RHOME=`cd $(top_builddir); pwd`; export RHOME; \
+	$${RHOME}/bin/build-help --htmllists
 	@touch $@ stamp-help stamp-html stamp-latex stamp-examples
 stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 	@rm -f $@
@@ -48,7 +50,9 @@ stamp-help: $(srcdir)/*/man/*.Rd $(top_builddir)/library/LibIndex
 	@touch $@
 stamp-html: $(srcdir)/*/man/*.Rd
 	@rm -f $@
+	@RHOME=`cd $(top_builddir); pwd`; export RHOME 
 	@OPTS="--html"  $(MAKE) DOCS
+	$${RHOME}/bin/build-help --htmllists
 	@touch $@
 stamp-latex: $(srcdir)/*/man/*.Rd
 	@rm -f $@

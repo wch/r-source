@@ -348,7 +348,7 @@ sub build_index {
     close htmlfile;
     close anindex;
 
-    build_htmlpkglist($lib);
+#    build_htmlpkglist($lib);
 }
 
 

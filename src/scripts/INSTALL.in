@@ -170,6 +170,9 @@ for pkg in ${PKGS}; do
 	  echo "  ${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}"
 	fi
 	${RHOME}/bin/build-help ${BUILD_HELP_OPTS} ../${pkg} ${lib}
+	if test ${lib} = ${RHOME}/library; then 
+	  ${RHOME}/bin/build-help --htmllists
+	fi	
       fi
     fi
   else

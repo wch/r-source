@@ -56,4 +56,6 @@ if ${NO_PERL5}; then
   exit 2
 fi
 
-${RHOME}/bin/build-help --htmllists
+if test ${lib} = ${RHOME}/library; then
+  ${RHOME}/bin/build-help --htmllists
+fi
