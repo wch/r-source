@@ -12,7 +12,7 @@ SEXP type2str(SEXPTYPE);
 SEXP type2symbol(SEXPTYPE);
 #define findVarInFrame		Rf_findVarInFrame
 #define setVarInFrame		Rf_setVarInFrame
-SEXP findVarInFrame(SEXP, SEXP);
+SEXP findVarInFrame(SEXP, SEXP, Rboolean);
 SEXP setVarInFrame(SEXP, SEXP, SEXP);
 #define streql(s, t)	(!strcmp((s), (t)))
 void R_PreserveObject(SEXP);
@@ -350,7 +350,7 @@ static SEXP R_get_function_env(SEXP obj, SEXP fname)
 static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
 {
     SEXP obj;
-    obj = findVarInFrame(env, what);
+    obj = findVarInFrame(env, what, TRUE);
     if(obj == R_UnboundValue)
 	error("No \"%s\" object in environment of function \"%s\"",
 	      CHAR_STAR(what), CHAR_STAR(fname));
@@ -359,9 +359,9 @@ static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
 
 #define IS_NON_GENERIC(vl) (TYPEOF(vl) == BUILTINSXP ||TYPEOF(vl) == SPECIALSXP || \
             (TYPEOF(vl) == CLOSXP && findVarInFrame(CLOENV(vl),\
-						    s_dot_Methods) == R_UnboundValue))
+						    s_dot_Methods, TRUE) == R_UnboundValue))
 #define IS_GENERIC(vl) (TYPEOF(vl) == CLOSXP && findVarInFrame(CLOENV(vl),\
-						    s_dot_Methods) != R_UnboundValue)
+						    s_dot_Methods, TRUE) != R_UnboundValue)
 
 static SEXP get_generic(SEXP symbol)
 {
@@ -370,7 +370,7 @@ static SEXP get_generic(SEXP symbol)
     if(!isSymbol(symbol))
 	symbol = install(CHAR_STAR(symbol));
     while (rho != R_NilValue) {
-	vl = findVarInFrame(rho, symbol);
+	vl = findVarInFrame(rho, symbol, TRUE);
 	if (vl != R_UnboundValue) {
 	    if (TYPEOF(vl) == PROMSXP) {
 		PROTECT(vl);
@@ -422,7 +422,7 @@ static SEXP get_skeleton(SEXP symbol, SEXP generic)
     /* get the skeleton call stored in the environment, to use in case
        a call to this generic occurs in the S language code to merge
        methods and for the arguments to .Primitive methods */
-    vl = findVarInFrame(CLOENV(generic), s_dot_Arguments);
+    vl = findVarInFrame(CLOENV(generic), s_dot_Arguments, TRUE);
     if(vl == R_UnboundValue)
 	error("Invalid generic function for \"%s\": no .Arguments defined",
 	      CHAR_STAR(symbol));
@@ -638,7 +638,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 Rboolean is_missing_arg(SEXP arg, SEXP symbol, SEXP ev)
 {
     if(arg == NULL) {
-	arg = findVarInFrame(ev, symbol);
+	arg = findVarInFrame(ev, symbol, TRUE);
 	if(arg == R_NilValue)
 	    error("Couldn't find variable needed for dispatch: \"%s\"",
 		  CHAR_STAR(symbol));
@@ -685,7 +685,7 @@ static SEXP do_dispatch(SEXP fname, SEXP ev, SEXP mlist, int firstTry,
     }
     /* find the symbol in the frame, but don't use eval, yet, because
        missing arguments are ok & don't require defaults */
-    arg = findVarInFrame(ev, arg_sym);
+    arg = findVarInFrame(ev, arg_sym, TRUE);
     if(evalArgs) {
       SEXP class_obj;
       if(arg == R_UnboundValue) {

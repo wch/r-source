@@ -184,11 +184,11 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	if (isFunction(val))
 	    return val;
 	else {
-	    SEXP table = findVarInFrame(defrho, install(".MethodsTable"));
+	    SEXP table = findVarInFrame(defrho, install(".MethodsTable"), TRUE);
 	    if (TYPEOF(table) == PROMSXP)
 		table = eval(table, R_NilValue);
 	    if (TYPEOF(table) == ENVSXP) {
-		val = findVarInFrame(table, method);
+		val = findVarInFrame(table, method, TRUE);
 		if (val != R_UnboundValue)
 		    return val;
 	    }
@@ -536,7 +536,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (CAR(m) == R_MissingArg) {
 		  
 		  /*#ifdef USE_HASHTABLE */
-		    tmp = findVarInFrame(cptr->cloenv, TAG(m));
+		    tmp = findVarInFrame(cptr->cloenv, TAG(m), TRUE);
 
 		    /* Old */
 		    /* tmp = findVarInFrame(FRAME(cptr->cloenv), TAG(m)); */
@@ -559,7 +559,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     s = CADDR(args); /* this is ... and we need to see if it's bound */
     if (s == R_DotsSymbol) {
-	t = findVarInFrame(env, s);
+	t = findVarInFrame(env, s, TRUE);
 	if (t != R_NilValue && t != R_MissingArg) {
 	    SET_TYPEOF(t, LISTSXP); /* a safe mutation */
 	    s = matchmethargs(matchedarg,t);
@@ -577,7 +577,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
       the second argument to NextMethod is another option but
       isn't currently used).
     */
-    class = findVarInFrame( R_GlobalContext->sysparent, install(".Class"));
+    class = findVarInFrame( R_GlobalContext->sysparent, install(".Class"), TRUE);
 
     if (class == R_UnboundValue) {
 	s = GetObject(cptr);
@@ -587,7 +587,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* the generic comes from either the sysparent or it's named */
-    generic = findVarInFrame(R_GlobalContext->sysparent, install(".Generic"));
+    generic = findVarInFrame(R_GlobalContext->sysparent, install(".Generic"), TRUE);
     if (generic == R_UnboundValue)
 	generic = eval(CAR(args), env);
     if( generic == R_NilValue )
@@ -602,7 +602,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* determine whether we are in a Group dispatch */
 
-    group = findVarInFrame(R_GlobalContext->sysparent,install(".Group") );
+    group = findVarInFrame(R_GlobalContext->sysparent,install(".Group"), TRUE);
     if (group == R_UnboundValue){
 	PROTECT(group = mkString(""));
     }
@@ -624,7 +624,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* find the method currently being invoked and jump over the current call */
     /* if t is R_UnboundValue then we called the current method directly */
 
-    method = findVarInFrame(R_GlobalContext->sysparent,install(".Method") );
+    method = findVarInFrame(R_GlobalContext->sysparent,install(".Method"), TRUE);
     if( method != R_UnboundValue) {
 	if( !isString(method) ) 
 	    error("Wrong value for .Method");
@@ -645,13 +645,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
        then chose reasonable defaults. */
     if (R_UseNamespaceDispatch) {
 	callenv = findVarInFrame(R_GlobalContext->sysparent,
-				 install(".GenericCallEnv") );
+				 install(".GenericCallEnv"), TRUE);
 	if (TYPEOF(callenv) == PROMSXP)
 	    callenv = eval(callenv, R_NilValue);
 	else if (callenv == R_UnboundValue)
 	    callenv = env;
 	defenv = findVarInFrame(R_GlobalContext->sysparent,
-				install(".GenericDefEnv") );
+				install(".GenericDefEnv"), TRUE);
 	if (TYPEOF(defenv) == PROMSXP)
 	    defenv = eval(defenv, R_NilValue);
 	else if (defenv == R_UnboundValue)
@@ -870,12 +870,12 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env)
     dot_Generic = install(".Generic");
     for(rho = ENCLOS(env); rho != R_NilValue && isEnvironment(rho);
 	rho = ENCLOS(rho)) {
-	fun = findVarInFrame(rho, symbol);
+	fun = findVarInFrame(rho, symbol, TRUE);
 	if(fun == R_UnboundValue) continue;
 	switch(TYPEOF(fun)) {
 	case BUILTINSXP:  case SPECIALSXP: break;
 	case CLOSXP:
-	    value = findVarInFrame(CLOENV(fun), dot_Generic);
+	    value = findVarInFrame(CLOENV(fun), dot_Generic, TRUE);
 	    if(value == R_UnboundValue) break;
 	    /*in all other cases, go on to the parent environment */
 	}

@@ -172,6 +172,9 @@ void freeCConverter(R_toCConverter *el)
  of the class whose name is stored in as a string in the userData field of the
  converter element (`el'). Called as
   R_addToCConverter(R_converterMatchClass, converter, reverse, "class-name", "description...")
+
+ This could use the R_isInstanceOf() in envir.c
+ or more appropriately inherits() in util.c
 */
 Rboolean
 R_converterMatchClass(SEXP obj, R_CConvertInfo *inf, R_toCConverter *el)

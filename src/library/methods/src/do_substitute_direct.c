@@ -5,6 +5,7 @@
 #define NewEnvironment		Rf_NewEnvironment
 #define substitute		Rf_substitute
 
+extern SEXP findVarInFrame(SEXP rho, SEXP symbol, Rboolean isGet);
 extern SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho);
 
 /* substitute in an _evaluated_ object, with an explicit list as
@@ -27,3 +28,4 @@ SEXP do_substitute_direct(SEXP f, SEXP env)
     UNPROTECT(2);
     return(s);
 }
+

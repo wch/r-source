@@ -652,7 +652,7 @@ SEXP evalList(SEXP, SEXP);
 SEXP evalListKeepMissing(SEXP, SEXP);
 /* SEXP extendEnv(SEXP, SEXP, SEXP); */
 SEXP findVar(SEXP, SEXP);
-SEXP findVarInFrame(SEXP, SEXP);
+SEXP findVarInFrame(SEXP, SEXP, Rboolean);
 SEXP findFun(SEXP, SEXP);
 SEXP getAttrib(SEXP, SEXP);
 void GetMatrixDimnames(SEXP, SEXP*, SEXP*, char**, char**);

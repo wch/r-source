@@ -17,7 +17,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 R_EXT_HEADERS = \
   Applic.h Arith.h Boolean.h Complex.h Constants.h Error.h Linpack.h \
   Mathlib.h Memory.h Print.h PrtUtil.h R-ftp-http.h RS.h Random.h \
-  RConverters.h Rdynload.h Utils.h eventloop.h libextern.h
+  RConverters.h Rdynload.h Utils.h eventloop.h libextern.h Callbacks.h
 DISTFILES = Makefile.in $(R_EXT_HEADERS) \
   RX11.h Rinternet.h Rlapack.h
 
