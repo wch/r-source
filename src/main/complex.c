@@ -603,8 +603,8 @@ SEXP complex_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 35: cmath1(z_atanh, COMPLEX(x), COMPLEX(y), n); break;
 
 #ifdef NOTYET
-	MATH1(40, lgamma);
-	MATH1(41, gamma);
+	MATH1(40, lgammafn);
+	MATH1(41, gammafn);
 #endif
 
     default:

@@ -826,8 +826,8 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     case 34: return math1(op, CAR(args), asinh);
     case 35: return math1(op, CAR(args), atanh);
 
-    case 40: return math1(op, CAR(args), lgamma);
-    case 41: return math1(op, CAR(args), gamma);
+    case 40: return math1(op, CAR(args), lgammafn);
+    case 41: return math1(op, CAR(args), gammafn);
 
     case 42: return math1(op, CAR(args), digamma);
     case 43: return math1(op, CAR(args), trigamma);
@@ -925,15 +925,15 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     case 6: return math2(op, CAR(args), CADR(args), dchisq);
     case 7: return math2(op, CAR(args), CADR(args), pchisq);
     case 8: return math2(op, CAR(args), CADR(args), qchisq);
-	
+
     case 9: return math2(op, CAR(args), CADR(args), dexp);
     case 10: return math2(op, CAR(args), CADR(args), pexp);
     case 11: return math2(op, CAR(args), CADR(args), qexp);
-	
+
     case 12: return math2(op, CAR(args), CADR(args), dgeom);
     case 13: return math2(op, CAR(args), CADR(args), pgeom);
     case 14: return math2(op, CAR(args), CADR(args), qgeom);
-	
+
     case 15: return math2(op, CAR(args), CADR(args), dpois);
     case 16: return math2(op, CAR(args), CADR(args), ppois);
     case 17: return math2(op, CAR(args), CADR(args), qpois);
