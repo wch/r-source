@@ -2013,9 +2013,11 @@ if test "${r_cv_prog_f77_append_underscore}" = yes \
   || test -n "${F2C}"; then
   dgemm=dgemm_
   sgemm=sgemm_
+  xerbla=xerbla_
 else
   dgemm=dgemm
   sgemm=sgemm
+  xerbla=xerbla
 fi
 
 acx_blas_save_LIBS="${LIBS}"
@@ -2026,7 +2028,8 @@ if test "${acx_blas_ok}" = no; then
   if test "x${BLAS_LIBS}" != x; then
     r_save_LIBS="${LIBS}"; LIBS="${BLAS_LIBS} ${LIBS}"
     AC_MSG_CHECKING([for ${sgemm} in ${BLAS_LIBS}])
-    AC_TRY_LINK_FUNC(${sgemm}, [acx_blas_ok=yes], [BLAS_LIBS=""])
+    AC_TRY_LINK([void ${xerbla}(char *srname, int *info){}], ${sgemm}(),
+      [acx_blas_ok=yes], [BLAS_LIBS=""])
     AC_MSG_RESULT([${acx_blas_ok}])
     LIBS="${r_save_LIBS}"
   fi

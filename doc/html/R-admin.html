@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 1.9.0 (2003-11-09).
+   <p>The current version of this document is 1.9.0 (2003-11-27).
 
    ISBN 3-900051-02-X
 
@@ -453,11 +453,22 @@ in the bundle have to removed individually.
 Unix-like platforms, or which will be used by R if found by
 <code>configure</code>.
 
+   <p>Remember that some package management systems (such as <small>RPM</small> and
+deb) make a distinction between the user version of a package and the
+development version.  The latter usually has the same name but with the
+extension <code>-devel</code> or <code>-dev</code>: you need both versions
+installed.
+
 <a name="Essential%20programs"></a>
 
 <h3 class="section">A.1 Essential programs</h3>
 
 <p>You need a means of compiling C and FORTRAN 77 (see <a href="#Using%20FORTRAN">Using FORTRAN</a>).  Some add-on packages also need a C++ compiler.
+
+   <p>Unless you do not want to view graphs on-screen you need <code>X11</code>
+installed, including its headers and client libraries.  (On RedHat Linux
+this means the <code>XFree86-devel</code> and <code>XFree86-libs</code> RPMs, for
+example.)
 
    <p>You will need Perl version 5.004 or later, available via
 <a href="http://www.perl.com/CPAN/">http://www.perl.com/CPAN/</a>, to build any of the on-line
@@ -513,7 +524,8 @@ of the Tcl/Tk files you may need the configuration options
 the Tcl and Tk libraries and for finding the <code>tcl.h</code> and
 <code>tk.h</code> headers, respectively.
 
-   <p>Versions of Tcl/TK from 8.0 to 8.4.1 have been used successfully.
+   <p>Versions of Tcl/TK from 8.3 to 8.4.4 have been used successfully: 8.0 is
+no longer supported.
 
 <a name="Linear%20algebra"></a>
 
@@ -530,15 +542,13 @@ will be used.  You can specify a specific BLAS library by the
 configuration option <code>--with-blas</code> and not to use an external
 BLAS library by <code>--without-blas</code>.
 
-   <p>For systems with multiple processors it is in principle possible to use
-a multi-threaded version of ATLAS.  Prior to R 1.8.0 this was not
+   <p>For systems with multiple processors it is possible to use a
+multi-threaded version of ATLAS.  (Prior to R 1.8.0 this was not
 supported since <code>SIGINT</code> signals sent to the process and handled by
-the wrong thread could result in segfaults.  Changes in <code>SIGINT</code>
-handling introduced in R 1.8.0 should make it safe to use a
-multi-threaded ATLAS.  A remaining issue is that R profiling, which
-uses the <code>SIGPROF</code> signal, may cause problems.  You may want to
-disable profiling if you use a multi-threaded version of ATLAS.  You can
-use a multi-threaded ATLAS by specifying
+the wrong thread could result in segfaults.)  A remaining issue is that
+R profiling, which uses the <code>SIGPROF</code> signal, may cause
+problems.  You may want to disable profiling if you use a multi-threaded
+version of ATLAS.  You can use a multi-threaded ATLAS by specifying
 <pre class="smallexample">     --with-blas="-lptf77blas -lpthread -latlas"
      </pre>
 
@@ -546,23 +556,23 @@ use a multi-threaded ATLAS by specifying
 well as for R itself.  This means that it is better to use a shared
 BLAS library, as most of a static library will be compiled into the R
 executable and each BLAS-using package.  In any case, the BLAS library
-must be usable with dynamically-loadable code.
+must be usable with dynamically-loadable code: this can be a problem
+with ATLAS that is not by default built with position-independent code.
 
    <p>You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
-   <p>As from R 1.7.0, provision is made for using an external LAPACK
-library, principally to cope with BLAS libraries which contain a copy of
-LAPACK (such as <code>libsunperf</code> on Solaris and <code>vecLib</code> on MacOS
-10.2.2).  However, the likely performance gains are thought to be small
-(and may be negative), and the default is not to search for a suitable
-LAPACK library.  You can specify a specific LAPACK library or a search
-for a generic library by the configuration option
-<code>--with-lapack</code>.  The default for <code>--with-lapack</code> is to
-check the BLAS library and then look for an external library
-<code>-llapack</code>.  Sites searching for the fastest possible linear
-algebra may want to build a LAPACK library using the ATLAS-optimized
-subset of LAPACK.  To do so specify something like
+   <p>Provision is made for using an external LAPACK library, principally to
+cope with BLAS libraries which contain a copy of LAPACK (such as
+<code>libsunperf</code> on Solaris and <code>vecLib</code> on MacOS 10.2.2). 
+However, the likely performance gains are thought to be small (and may
+be negative), and the default is not to search for a suitable LAPACK
+library.  You can specify a specific LAPACK library or a search for a
+generic library by the configuration option <code>--with-lapack</code>.  The
+default for <code>--with-lapack</code> is to check the BLAS library and then
+look for an external library <code>-llapack</code>.  Sites searching for the
+fastest possible linear algebra may want to build a LAPACK library using
+the ATLAS-optimized subset of LAPACK.  To do so specify something like
 <pre class="smallexample">     --with-lapack="-L/path/to/libs -llapack -lcblas"
      </pre>
 
@@ -875,9 +885,38 @@ Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
 
+<a name="Linux"></a>
+
+<h3 class="subsection">B.7.1 Linux</h4>
+
+<p>Linux is the main development platform for R, so compilation from the
+sources is normally straightforward.
+
+   <p>Remember that some package management systems (such as <small>RPM</small> and
+deb) make a distinction between the user version of a package and the
+developer version.  The latter usually has the same name but with the
+extension <code>-devel</code> or  <code>-dev</code>: you need both versions
+installed.  So please check the <code>configure</code> output to see if the
+expected features are detected: if for example <code>readline</code> is
+missing add the package containing its headers.
+
+   <p>When R has been installed from a binary distribution there are
+sometimes problems with missing components such as the Fortran
+compiler.  Searching the <code>R-help</code> archives will normally reveal
+what is needed.
+
+   <p>It seems that the <code>gcc</code> compilers normally produce PIC code on
+<code>ix86</code> Linux but do not necessarily do so on 64-bit versions such
+as that for AMD Opteron.  So care can be needed with BLAS libraries and
+when building R as a shared library to ensure that
+position-independent code is used in any static libraries (such as the
+Tcl/Tk libraries, <code>libpng</code>, <code>libjpeg</code> and <code>zlib</code>) which
+might be linked against.  Fortunately these are normally built as shared
+libraries with the exception of the ATLAS BLAS libraries.
+
 <a name="MacOS%20X"></a>
 
-<h3 class="subsection">B.7.1 MacOS X</h4>
+<h3 class="subsection">B.7.2 MacOS X</h4>
 
 <p>You can build R as a Unix application on MacOS X.  You will need the
 DevTools, <code>f2c</code> or <code>g77</code>, and the <code>dlcompat</code>
@@ -907,7 +946,7 @@ versions of <code>gcc 3.3</code>.)
 
 <a name="Solaris"></a>
 
-<h3 class="subsection">B.7.2 Solaris on Sparc</h4>
+<h3 class="subsection">B.7.3 Solaris on Sparc</h4>
 
 <p>R has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
 5.8 using <code>gcc</code>/<code>g77</code> and the SunPro WorkShop&nbsp;6 (aka
@@ -922,7 +961,7 @@ the source tree, and perhaps even then.
 path.
 
    <p><code>gcc</code> 3.2.1 and 3.2.2 generate incorrect code on 32-bit Solaris
-builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3 work
+builds with optimization, but versions 3.1, 3.2, 3.2.3  and 3.3.x work
 correctly.  At least files <code>src/main/engine.c</code>,
 <code>src/main/graphics.c</code> and <code>src/modules/devX11.c</code> are affected.
 
@@ -964,7 +1003,7 @@ compilers we used
 
 <p>in <code>config.site</code>.
 
-   <p>For 64-bit compilation with <code>gcc</code> 3.2.x we used
+   <p>For 64-bit compilation with <code>gcc</code> 3.2.x and 3.3.x we used
 
 <pre class="smallexample">     CC="gcc -m64"
      FFLAGS="-m64 -g -O2"
@@ -972,25 +1011,28 @@ compilers we used
      LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
      </pre>
 
-   <p>Note that using <code>f95</code> allows the Sun
-performance library <code>libsunperf</code> to be selected: it will not work
-with <code>f77</code>, nor with <code>g77</code>.  <code>libsunperf</code>
-contains both BLAS and LAPACK code, and <code>--with-lapack</code> is
-recommended for 32-bit builds using <code>f95</code>, but not for
-64-bit builds where on our test system it failed in both Forte 6U1 and
-7, albeit in different ways.  Our experience has been that ATLAS's BLAS
-is faster than <code>libsunperf</code>, especially for complex numbers.
+   <p>Note that <code>/usr/local/lib/sparcv9</code> will need to be in the
+<code>LD_LIBRARY_PATH</code> during configuration.
+
+   <p>Note that using <code>f95</code> allows the Sun performance library
+<code>libsunperf</code> to be selected: it will not work with <code>f77</code>,
+nor with <code>g77</code>.  <code>libsunperf</code> contains both BLAS and LAPACK
+code, and <code>--with-lapack</code> is recommended for 32-bit builds using
+<code>f95</code>, but not for 64-bit builds where on our test system it
+failed in both Forte 6U1 and 7, albeit in different ways.  Our
+experience has been that ATLAS's BLAS is faster than <code>libsunperf</code>,
+especially for complex numbers.
 
    <p>Some care is needed to ensure that libraries found by
 <code>configure</code> are compatible with the R executable and modules, as
 the testing process will not detect many of the possible problems.  For
 32-bit builds under <code>cc</code> the flag <code>-dalign</code> is needed for
 some of the Sun libraries: fortunately the equivalent flag for
-<code>gcc</code>, <code>-mno-unaligned-doubles</code>, is the default.  In theory,
-libraries such as <code>libpng</code>, <code>libjpeg</code>, <code>zlib</code> and the
-ATLAS libraries need to be built with a <code>pic</code> or <code>PIC</code> flag,
-which could be a problem if static libraries are used.  In practice this
-seems to give little problem for 32-bit builds.
+<code>gcc</code>, <code>-mno-unaligned-doubles</code>, is the default.  In
+theory, libraries such as <code>libpng</code>, <code>libjpeg</code>, <code>zlib</code> and
+the ATLAS libraries need to be built with a <code>pic</code> or <code>PIC</code>
+flag, which could be a problem if static libraries are used.  In
+practice this seems to give little problem for 32-bit builds.
 
    <p>For a 64-bit build, 64-bit libraries must be used.  As the configuration
 process by default sets <code>LDFLAGS</code> to <code>-L/usr/local/lib</code>,
@@ -999,7 +1041,7 @@ you may need to set it to avoid finding 32-bit addons (as in the
 
 <a name="HP-UX"></a>
 
-<h3 class="subsection">B.7.3 HP-UX</h4>
+<h3 class="subsection">B.7.4 HP-UX</h4>
 
 <p>R has been built successfully on HP-UX 10.2 and HP-UX 11.0 using both
 native compilers and <code>gcc</code>.  However, 10.2 has not been tested
@@ -1087,7 +1129,7 @@ LDFLAGS=/opt/fortran90/lib</code>).
 
 <a name="IRIX"></a>
 
-<h3 class="subsection">B.7.4 IRIX</h4>
+<h3 class="subsection">B.7.5 IRIX</h4>
 
 <p>R has been built successfully on IRIX64 6.5 using
 <code>gcc</code>/<code>f77</code> or <code>cc</code>/<code>f77</code> for 32-bit
@@ -1107,7 +1149,7 @@ tests.
 
 <a name="Alpha%2fOSF1"></a>
 
-<h3 class="subsection">B.7.5 Alpha/OSF1</h4>
+<h3 class="subsection">B.7.6 Alpha/OSF1</h4>
 
 <p>R has been built successfully on an Alpha running OSF1 V4.0 using
 <code>gcc</code>/<code>g77</code> and <code>cc</code>/<code>f77</code>.  Mixing
@@ -1120,7 +1162,7 @@ these are fatal.
 
 <a name="Alpha%2fFreeBSD"></a>
 
-<h3 class="subsection">B.7.6 Alpha/FreeBSD</h4>
+<h3 class="subsection">B.7.7 Alpha/FreeBSD</h4>
 
 <p>Attempts to build R on an Alpha with FreeBSD 4.3 have been only
 partly successful.  Configuring with <code>-mieee</code> added to both
@@ -1131,7 +1173,7 @@ port would be greatly appreciated.
 
 <a name="AIX"></a>
 
-<h3 class="subsection">B.7.7 AIX</h4>
+<h3 class="subsection">B.7.8 AIX</h4>
 
 <p>On AIX 4.3.3 and AIX 5.1, it was found that the use of "run time
 linking" (as opposed to normal AIX style linking) was required.  For
@@ -1238,7 +1280,7 @@ of practice at porting R to new platforms <small class="enddots">....</small>
 <li>Installing under Windows: <a href="#Installing%20R%20under%20Windows">Installing R under Windows</a>
 <li>IRIS: <a href="#IRIX">IRIX</a>
 <li>LAPACK library: <a href="#Solaris">Solaris</a>, <a href="#MacOS%20X">MacOS X</a>, <a href="#Linear%20algebra">Linear algebra</a>
-<li>Linux: <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
+<li>Linux: <a href="#Linux">Linux</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>MacOS X: <a href="#MacOS%20X">MacOS X</a>, <a href="#Installing%20R%20under%20Unix">Installing R under Unix</a>
 <li>Manuals: <a href="#Making%20the%20manuals">Making the manuals</a>
 <li>Manuals, installing: <a href="#Installation">Installation</a>

@@ -124,6 +124,8 @@ INSTALLATION CHANGES
     o	configure no longer lists bzip2 and PCRE as `additional
 	capabilities' as all builds of R have had them since 1.7.0.
 
+    o	--with-blas=goto to use K. Goto's optimized BLAS will now work.
+
 
 BUG FIXES
 
