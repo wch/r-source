@@ -19,15 +19,18 @@ NEW FEATURES
 
     o	alias() for displaying ``aliased'' factor levels in (>=2)way anova.
 
-    o	biplot(), the well known ``enhanced plot of PC (principal components)''.
+    o	mva: Now has  biplot and biplot.princomp [B.Ripley]
 
-    o	................ several other additions from BDR.................
-	..................................................................
-	..... These should get help pages !! ....
+    o	rug() plot.
 
     o	new  src/library/profile/Common.R   for	 OS-independent intialization.
 
 BUG FIXES
+
+    o	density() default 'bw' now 0.9*(...) instead of 1.06*(...)
+				[=Silverman's rule of thumb].
+
+    o   update.glm and predict.glm  more consistent now [BDR, PD].
 
     o	detach(2) now works.
 
@@ -42,26 +45,26 @@ BUG FIXES
     o	backsolve() now working;  bakslv.c not depending on
 	Fortran_underscores.
 
-    o   Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
+    o	Tick marks acting up on log axes in postscript (fix from Martyn Plummer)
 
-    o   The Rd format has a new section \details{} (needed for proper
-        Sd2Rd translation). \R was not understood for nroff
+    o	The Rd format has a new section \details{} (needed for proper
+	Sd2Rd translation). \R was not understood for nroff
 	conversions, longer dashes (-- and --- in latex syntax) are
 	now converted properly.
 
-    o   prompt.default() now carries "\details{}".
+    o	prompt.default() now carries "\details{}".
 
-    o   R [ SHLIB | COMPILE ] were broken on some Solaris systems
-        due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
-        now use a MAKE environment variable if present.
-        R INSTALL only rebuilds man pages if they are not already
-        up to date.
+    o	R [ SHLIB | COMPILE ] were broken on some Solaris systems
+	due to use of bash syntax. R [ INSTALL | COMPILE | SHLIB ]
+	now use a MAKE environment variable if present.
+	R INSTALL only rebuilds man pages if they are not already
+	up to date.
 
 		CHANGES IN R VERSION 0.62.1
 
 BUG FIXES
 
-    o   Accidentally shipped R-0.62 without the tests and  etc/Rdoc
+    o	Accidentally shipped R-0.62 without the tests and  etc/Rdoc
 	directories.
 
 
@@ -69,13 +72,13 @@ BUG FIXES
 
 NEW FEATURES
 
-    o   Many more help(.) pages.
+    o	Many more help(.) pages.
 
-    o   The top level Makefile now supports the usual
+    o	The top level Makefile now supports the usual
 	   ./configure; make; make install
 	procedure (new make targets `all' and `install').
 
-    o   The HTML help pages can now be searched for keywords.
+    o	The HTML help pages can now be searched for keywords.
 
     o	Conversion of functions to and from lists. formals<- and body<-.
 	The alist() function makes it easier to construct argument lists,
@@ -153,7 +156,7 @@ NEW FEATURES
     o	Usage of R SHLIB now is R SHLIB [-o libname] files, where the
 	file names can be that of source or object files.
 
-    o   A new R CMD interface allows invokation of executables in
+    o	A new R CMD interface allows invokation of executables in
 	$RHOME/{etc,cmd} without installing them or setting paths.
 
     o	Data files are now also documented using the Rd format, all
@@ -285,9 +288,9 @@ BUG FIXES (many of which resulted from the added features...)
 
     o	atanh(.) now works
 
-    o   summary(glm) and summary(lm) now use compatible names.
+    o	summary(glm) and summary(lm) now use compatible names.
 
-    o   [pq]tukey(.) now working.
+    o	[pq]tukey(.) now working.
 
     o	title() now handles main=, sub=, xlab=, ylab= with embedded
 	newlines correctly.  This is partly a change in title and
@@ -346,7 +349,7 @@ BUG FIXES (many of which resulted from the added features...)
 
     o	rhyper works with vectorisation, degenerate cases.
 
-    o   printing of objects in lists now dispatches methods correctly
+    o	printing of objects in lists now dispatches methods correctly
 
 		CHANGES IN R VERSION 0.61.2
 
