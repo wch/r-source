@@ -166,7 +166,9 @@ path.
 
 BUILDING THE GNOME INTERFACE
 
-This interface is experimental and currently incomplete.
+This interface is experimental and currently incomplete.  For more
+information on the GNOME interface and upcoming features, see
+http://stat.auckland.ac.nz/~lyndon/roadmap.html.
 
 The GNOME interface for R will only be built if you specify it by
 running configure with the --with-gnome option.  For example, you
@@ -194,9 +196,7 @@ You need the following RPMs and their dependencies installed:
 	glib-devel
 
 You will need also libglade 0.3.  For more information on libglade and
-to download the source, see
-
-    http://www.daa.com.au/~james/gnome/
+to download the source, see http://www.daa.com.au/~james/gnome/.
 
 libglade needs libxml 1.4, the source for which is available from the
 GNOME ftp site (ftp.gnome.org and mirrors).  RPMs of libxml-1.4 and
