@@ -27,7 +27,7 @@ data <- function(..., list = character(0), package = .packages(),
  }
  else
   for (name in names) {
-	file <- system.file(paste("data", name, sep = "/"), package, lib.loc)
+	file <- system.file(paste("data/", name, ".R",sep=""), package, lib.loc)
 	if (file == "")
 		stop(paste("No data set called `", name, "'", sep = ""))
 	else
