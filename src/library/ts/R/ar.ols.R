@@ -122,7 +122,7 @@ ar.ols <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         E <- E * rep(sc, rep(NROW(E), nser))
         sem <- sem*sc
         if(m > 0)
-            for(i in 1:m) ses[i,,] <- ses[i,,]*outer(sc, sc)
+            for(i in 1:m) ses[i,,] <- ses[i,,]*aa
     }
     res <- list(order = m, ar = ar, var.pred = var.pred,
                 x.mean = xm, x.intercept = xint, aic = aic,

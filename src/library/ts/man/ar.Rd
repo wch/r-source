@@ -8,7 +8,8 @@
 \title{Fit Autoregressive Models to Time Series}
 \usage{
 ar(x, aic = TRUE, order.max = NULL,
-   method=c("yule-walker", "burg", "ols", "mle", "yw"), na.action, series)
+   method=c("yule-walker", "burg", "ols", "mle", "yw"), na.action,
+   series, ...)
 ar.burg(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series,
         var.method = 1)
 ar.yw(x, aic = TRUE, order.max = NULL, na.action, demean = TRUE, series)
@@ -43,6 +44,8 @@ predict(ar.obj, newdata, n.ahead = 1, se.fit = TRUE)
 
     \item{var.method}{the method to estimate the innovations variance
 	(see Details).}
+
+    \item{...}{additional arguments for specific methods.}
 
     \item{ar.obj}{a fit from \code{ar}.}
 
