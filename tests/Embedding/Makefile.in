@@ -89,7 +89,7 @@ clean:
 	@-rm -rf .libs _libs
 	@-rm -f *.o $(PROGRAMS) Rplots.ps
 distclean: clean
-	@-rm -f Makefile config.*
+	@-rm -f Makefile
 maintainer-clean: distclean
 
 distdir: $(DISTFILES)

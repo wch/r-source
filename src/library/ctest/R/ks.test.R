@@ -13,15 +13,15 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
     if(is.numeric(y)) {
         DNAME <- paste(DNAME, "and", deparse(substitute(y)))
         y <- y[!is.na(y)]
-        n.x <- n
+        n.x <- as.double(n)             # to avoid integer overflow
         n.y <- length(y)
         if(n.y < 1)
             stop("Not enough y data")
         if(is.null(exact))
-            exact <- (as.double(n.x) * n.y < 10000) ## avoid integer overflow
+            exact <- (n.x * n.y < 10000)
         METHOD <- "Two-sample Kolmogorov-Smirnov test"
         TIES <- FALSE
-        n <- as.double(n.x) * n.y / (n.x + n.y)
+        n <- n.x * n.y / (n.x + n.y)
         w <- c(x, y)
         z <- cumsum(ifelse(order(w) <= n.x, 1 / n.x, - 1 / n.y))
         if(length(unique(w)) < (n.x + n.y)) {

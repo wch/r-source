@@ -68,7 +68,7 @@ DISTFILES = Makefile.in Makefile.win README \
 	$(test-src-ts) \
 	gct-foot.R \
 	nanbug.rda
-SUBDIRS = Embedding Examples
+SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) $(top_builddir)/bin/R --vanilla
 RDIFF = $(top_builddir)/bin/Rdiff
@@ -298,14 +298,16 @@ stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
 
 mostlyclean: clean
 clean:
-	-@(cd Examples; $(MAKE) $@)
-	-@(cd Embedding; $(MAKE) $@)
+	-@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
 	-@rm -f stamp-R Makedeps Rplot* Rprof.out *.Rd data dumpdata.R \
 	  reg-plot.ps
 	-@rm -rf anRpackage
 distclean: clean
-	-@(cd Examples; $(MAKE) $@)
-	-@(cd Embedding; $(MAKE) $@)
+	-@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@); \
+	done
 	-@rm -f Makefile $(test-out) $(test-src-auto) .RData
 	-@rm -rf *.Rcheck
 maintainer-clean: distclean
