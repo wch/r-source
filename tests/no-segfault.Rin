@@ -63,7 +63,7 @@ for (pkg in core.pkgs) {
       this.pos <- length(search())
   }
   else {
-      library(pkg, character = TRUE)
+      library(pkg, character = TRUE, warn.conflicts = FALSE)
       cat("library(",pkg,")\n")
       this.pos <- 2
   }
