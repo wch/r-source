@@ -704,3 +704,24 @@ detach("package:modreg")
 
 ## pweibull(large, log=T):
 stopifnot(all(pweibull(seq(1,50,len=1001), 2,3, log = TRUE) < 0))
+
+## selfStart.default() w/ no parameters:
+## --> make this into example(selfStart) {with data and nls()!}
+require(nls)
+logist <- deriv( ~Asym/(1+exp(-(x-xmid)/scal)), c("Asym", "xmid", "scal"),
+                function(x, Asym, xmid, scal){} )
+logistInit <- function(mCall, LHS, data) {
+    xy <- sortedXyData(mCall[["x"]], LHS, data)
+    if(nrow(xy) < 3) stop("Too few distinct input values to fit a logistic")
+    Asym <- max(abs(xy[,"y"]))
+    if (Asym != max(xy[,"y"])) Asym <- -Asym  # negative asymptote
+    xmid <- NLSstClosestX(xy, 0.5 * Asym)
+    scal <- NLSstClosestX(xy, 0.75 * Asym) - xmid
+    value <- c(Asym, xmid, scal)
+    names(value) <- mCall[c("Asym", "xmid", "scal")]
+    value
+}
+logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
+str(logist)
+detach("package:nls")
+

@@ -70,15 +70,17 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
         ybox <- yc * 0.5
         dx.fill <- xbox ## + x.intersp*xchar
     }
-    do.lines <- (!missing(lty) && any(lty > 0)) || !missing(lwd)
+    do.lines <- (!missing(lty) && (is.character(lty) || any(lty > 0))
+                 ) || !missing(lwd)
     n.leg <- length(legend)
 
     ## legends per column:
     n.legpercol <-
         if(horiz) {
             if(ncol != 1)
-                warning(paste(
-             "horizontal specification overrides: Number of columns :=",n.leg))
+                warning(
+                    "horizontal specification overrides: Number of columns := ",
+                        n.leg)
             ncol <- n.leg
             1
         } else ceiling(n.leg / ncol)
@@ -147,7 +149,8 @@ function(x, y, legend, fill, col = "black", lty, lwd, pch,
 
     if (do.lines) {                     #- draw lines ---------------------
         seg.len <- 2 # length of drawn segment, in xchar units
-	ok.l <- if(missing(lty)) { lty <- 1; TRUE } else lty > 0
+        if(missing(lty)) lty <- 1
+	ok.l <- is.character(lty) | lty > 0
 	if(missing(lwd)) lwd <- par("lwd")
 	lty <- rep(lty, length.out = n.leg)
 	lwd <- rep(lwd, length.out = n.leg)

@@ -3,6 +3,9 @@
 #include <tcl.h>
 #include <tk.h>
 
+#if (TCL_MAJOR_VERSION==8 && TCL_MINOR_VERSION==0)
+#define TCL80
+#endif
 
 /*
 #ifdef HAVE_CONFIG_H
@@ -168,10 +171,21 @@ SEXP RTcl_ObjFromVar(SEXP args)
 {
     Tcl_Obj *tclobj;
 
+#ifndef TCL80
     tclobj = Tcl_GetVar2Ex(RTcl_interp, 
-			   CHAR(STRING_ELT(CADR(args), 0)),
-			   NULL,
-			   0);
+                           CHAR(STRING_ELT(CADR(args), 0)),
+                           NULL,
+                           0);
+#else
+    Tcl_Obj *tclname;
+
+    tclname = Tcl_NewStringObj(CHAR(STRING_ELT(CADR(args), 0)), -1);
+    tclobj = Tcl_ObjGetVar2(RTcl_interp, 
+                           tclname,
+                           NULL,
+                           0);
+    Tcl_DecrRefCount(tclname);
+#endif
     return makeRTclObject(tclobj);
 }
 
@@ -179,11 +193,24 @@ SEXP RTcl_AssignObjToVar(SEXP args)
 {
     Tcl_Obj *tclobj;
 
+#ifndef TCL80
     tclobj = Tcl_SetVar2Ex(RTcl_interp, 
-			   CHAR(STRING_ELT(CADR(args), 0)),
-			   NULL,
-			   (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
-			   0);
+                           CHAR(STRING_ELT(CADR(args), 0)),
+                           NULL,
+                           (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
+                           0);
+#else
+    Tcl_Obj *tclname;
+
+    tclname = Tcl_NewStringObj(CHAR(STRING_ELT(CADR(args), 0)), -1);
+    tclobj = Tcl_ObjSetVar2(RTcl_interp, 
+                           tclname,
+                           NULL,
+                           (Tcl_Obj *) R_ExternalPtrAddr(CADDR(args)),
+                           0);
+    Tcl_DecrRefCount(tclname);
+#endif
+
     return R_NilValue;
 }
 
@@ -192,7 +219,8 @@ SEXP RTcl_StringFromObj(SEXP args)
 {
     char *str;
 
-    str = Tcl_GetString((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)));
+    str = Tcl_GetStringFromObj((Tcl_Obj *) R_ExternalPtrAddr(CADR(args)),
+			       NULL);
     return mkString(str);
 }
 

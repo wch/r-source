@@ -10,16 +10,16 @@
 se.contrast(object, \dots)
 \method{se.contrast}{aov}(object, contrast.obj,
   coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots) 
-\method{se.contrast}{aovlist}(object, contrast.obj,
-  coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots)
 }
 \arguments{
  \item{object}{A suitable fit, usually from \code{aov}.}
  \item{contrast.obj}{The contrasts for which standard errors are
    requested. This can be specified via a list or via a matrix. A single
    contrast can be specified by a list of logical vectors giving the
-   cells to be contrasted. Multiple contrasts should be specified by a
-   matrix as returned by \code{contrasts}.}
+   cells to be contrasted.  Multiple contrasts should be specified by a
+   matrix, each column of which is a numerical contrast vector (summing
+   to zero).
+   }
  \item{coef}{Used when \code{{contrast.obj}} is a list; it should be a
    vector of the same length as the list with zero sum. The default
    value is the first Helmert contrast, which contrasts the first and
@@ -39,8 +39,11 @@ se.contrast(object, \dots)
   In multistratum models, the contrasts can appear in more than one
   stratum; the contrast and standard error are computed in the lowest
   stratum and adjusted for efficiencies and comparisons between strata.
+
+  Suitable matrices for use with \code{coef} can be found by
+  calling \code{\link{contrasts}} and indexing the columns by a factor.
 }
-\value{
+ \value{
   A vector giving the standard errors for each contrast.
 }
 \author{B. D. Ripley}
@@ -61,6 +64,9 @@ npk <- data.frame(block = gl(6,4), N = factor(N), P = factor(P),
 options(contrasts=c("contr.treatment", "contr.poly"))
 npk.aov1 <- aov(yield ~ block + N + K, npk)
 se.contrast(npk.aov1, list(N=="0", N=="1"), data=npk)
+# or via a matrix
+cont <- matrix(c(-1,1), 2, 1, dimnames=list(NULL, "N"))
+se.contrast(npk.aov1, cont[N, , drop=FALSE]/12, data=npk)
 
 ## test a multi-stratum model
 npk.aov2 <- aov(yield ~ N + K + Error(block/(N + K)), npk)

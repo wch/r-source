@@ -6,12 +6,15 @@ ARMAacf <- function(ar = numeric(0), ma = numeric(0), lag.max = r,
     if(!p && !q) stop("empty model supplied")
     r <- max(p, q + 1)
     if(p > 0) {
-        if(p > 1) {
-            x <- c(1, -ar)
+        if(r > 1) {
+            if(r > p) { ## pad with zeros so p >= q+1
+                ar <- c(ar, rep(0, r - p))
+                p <- r
+            }
             A <- matrix(0, p + 1, 2 * p + 1)
             ind <- as.matrix(expand.grid(1:(p + 1), 1:(p+1)))[, 2:1]
             ind[, 2] <- ind[, 1] + ind[, 2] - 1
-            A[ind] <- x
+            A[ind] <- c(1, -ar)
             A[,  1:p] <- A[, 1:p] + A[, (2 * p + 1):(p + 2)]
             rhs <- c(1, rep(0,p))
             if(q > 0) {
