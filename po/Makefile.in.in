@@ -45,7 +45,7 @@ UPDATEPOFILES = @UPDATEPOFILES@
 DUMMYPOFILES = @DUMMYPOFILES@
 DISTFILES.common = README RGui.pot THANKS Makefile.in.in Makefile.win remove-potcdate.sin \
 $(DISTFILES.common.extra1) $(DISTFILES.common.extra2) $(DISTFILES.common.extra3)
-DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot stamp-po \
+DISTFILES = $(DISTFILES.common) Makevars POTFILES.in $(DOMAIN).pot \
 $(POFILES) $(GMOFILES) $(RGUI_CATALOGS) \
 $(DISTFILES.extra1) $(DISTFILES.extra2) $(DISTFILES.extra3)
 
@@ -72,10 +72,11 @@ CATALOGS = @CATALOGS@
 	sed -e '/^#/d' $< > t-$@
 	mv t-$@ $@
 
+all: all-@USE_NLS@
+
+
 R: 
 	@$(MAKE) install Rsharedir=${top_builddir}/share
-
-all: all-@USE_NLS@
 
 all-yes: stamp-po
 all-no:
@@ -293,7 +294,7 @@ dist distdir:
 #	$(MAKE) update-po
 	@$(MAKE) dist2
 # This is a separate target because 'update-po' must be executed before.
-dist2: $(DISTFILES)
+dist2: # $(DISTFILES)
 	@dists="$(DISTFILES)"; \
 	if test -f $(srcdir)/LINGUAS; then dists="$$dists LINGUAS"; fi; \
 	for file in $$dists; do \
