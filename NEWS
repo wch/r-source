@@ -429,9 +429,6 @@ BUG FIXES
 
     o	asInteger was ignoring integer overflow (PR#929 and others).
 
-    o   read.dcf() had a bug which caused it to sometimes use fields
-	from other records. 
-
 
 
 	**************************************************
