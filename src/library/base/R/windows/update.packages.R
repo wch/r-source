@@ -3,41 +3,40 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
                              method, available=NULL, destdir=NULL,
                              installWithVers=FALSE)
 {
-    unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE) {
+    unpackPkg <- function(pkg, pkgname, lib, installWithVers=FALSE)
+    {
+        ## the `spammy' (his phrase) comments are from Gentry
+        ## However, at least some of his errors have been removed
+
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
-        tmpDir <- tempfile(,lib)
+        tmpDir <- tempfile(, lib)
         dir.create(tmpDir)
         cDir <- getwd()
-        on.exit(setwd(cDir), add=TRUE)
+        on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
         setwd(tmpDir)
+        tools::checkMD5sums(pkgname)
 
-        ## From original install.packages
-        require(tools)
-        checkMD5sums(pkgname)
-
-        ## back to changes
-        ## Get the real package name, and if watned, the real version
+        ## Get the real package name, and if wanted, the real version
         ## num, and use this to install the package
-        desc <- read.dcf(file.path(pkgname,"DESCRIPTION"),
-                         c("Package","Version"))
+        desc <- read.dcf(file.path(pkgname, "DESCRIPTION"),
+                         c("Package", "Version"))
         if (installWithVers) {
-            instPath <- file.path(lib,paste(desc[1,1],desc[1,2],sep="_"))
+            instPath <- file.path(lib, paste(desc[1,1], desc[1,2], sep="_"))
         }
         else instPath <- file.path(lib, desc[1,1])
 
         ## If the package is already installed w/ this
         ## instName, remove it.  If it isn't there, the unlink call will
         ## still return success.
-        ret <- unlink(instPath,recursive=TRUE)
+        ret <- unlink(instPath, recursive=TRUE)
         if (ret == 0) {
             ## Move the new package to the install lib and
             ## remove our temp dir
-            file.rename(pkgname, instPath)
-        }
-        else {
+            file.rename(file.path(tmpDir, pkgname), instPath)
+        } else {
             ## Would prefer to make sure it is a "clean" install, but
             ## if the directory could not be removed for some reason,
             ## default to old behaviour where it would just copy all
@@ -71,6 +70,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             warning("packages ", paste(pkgnames[inuse], collapse=", "),
                     " are in use and will not be installed", call. = FALSE)
         pkgs <- pkgs[!inuse]
+        pkgnames <- pkgnames[!inuse]
     }
     if(is.null(CRAN) & missing(contriburl)) {
         for(i in seq(along=pkgs)) {
@@ -101,13 +101,9 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
             for(p in update[oklib, "Package"])
             {
                 okp <- p == foundpkgs[, 1]
-                if(length(okp) > 0){
-                    fpkgs <- foundpkgs[okp, 2]
-                    fpkgnames <- pkgnames
-                    for(i in 1:length(fpkgs)) {
-                        unpackPkg(fpkgs[i], fpkgnames[i], lib, installWithVers)
-                    }
-                }
+                if(length(okp) > 0)
+                    unpackPkg(foundpkgs[okp, 2], pkgnames[okp], lib,
+                              installWithVers)
             }
         }
         cat("\n")
@@ -146,7 +142,7 @@ download.packages <- function(pkgs, destdir, available=NULL,
         if(!any(ok))
             warning(paste("No package \"", p, "\" on CRAN.", sep=""))
         else{
-            fn <- paste(p, ".zip", sep="")
+            fn <- paste(p, "_", available[ok, "Version"], ".zip", sep="")
             if(localcran){
                 fn <- paste(substring(contriburl, 6), fn, sep="/")
                 retval <- rbind(retval, c(p, fn))
