@@ -1,6 +1,9 @@
 stop <- function(..., call. = TRUE)
 {
-    message <- if(nargs() > 0) paste(..., sep="")
+    args <- list(...)
+    if (length(args) > 0)
+        message <- paste(..., sep="")
+    else message <- ""
     .Internal(stop(as.logical(call.),message))
 }
 
@@ -17,7 +20,10 @@ stopifnot <- function(...)
 
 warning <- function(..., call. = TRUE)
 {
-    message <- if(nargs() > 0) paste(..., sep="")
+    args <- list(...)
+    if (length(args) > 0)
+        message <- paste(..., sep="")
+    else message <- ""
     .Internal(warning(as.logical(call.), message))
 }
 
