@@ -14,7 +14,7 @@
 \description{
   \code{library} and \code{require} load add-on packages.
   \code{.First.lib} is called when a package is loaded;
-  \code{.Last.lib} is called when a package is loaded.
+  \code{.Last.lib} is called when a package is detached.
   \code{.packages} returns information about package availability.
   \code{.path.package} returns information about where a package was
   loaded from.
