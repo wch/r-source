@@ -21,6 +21,9 @@
 #include <config.h>
 #endif
 
+#ifdef Win32
+#define USE_MDI 1
+#endif
 /* R user interface based on GraphApp */
 #include "Defn.h"
 #undef append /* defined by graphapp/internal.h */
@@ -28,7 +31,9 @@
 /* the user menu code looks at the internal structure */
 #include "graphapp/internal.h"
 #include "graphapp/ga.h"
+#ifdef USE_MDI
 #include "graphapp/stdimg.h"
+#endif
 #include "console.h"
 #include "rui.h"
 #include "opt.h"
@@ -39,9 +44,11 @@
 extern int UserBreak;
 
 console RConsole = NULL;
+#ifdef USE_MDI
 int   RguiMDI = RW_MDI | RW_TOOLBAR | RW_STATUSBAR;
 int   MDIset = 0;
 static window RFrame;
+#endif
 extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, msavehistory, mpaste, mcopy, 
@@ -354,7 +361,7 @@ static void menuact(control m)
 
 #define MCHECK(m) {if(!(m)) {del(RConsole); return 0;}}
 
-static void readconsolecfg()
+void readconsolecfg()
 {
     int   consoler, consolec, pagerrow, pagercol, multiplewin, widthonresize;
     rgb   consolebg, consolefg, consoleuser, highlight ;
@@ -362,7 +369,7 @@ static void readconsolecfg()
     char  fn[128] = "FixedFont";
     int   sty = Plain;
     int   pointsize = 12;
-    char  optf[MAX_PATH];
+    char  optf[PATH_MAX];
     char *opt[2];
 
     consoler = 32;
@@ -375,11 +382,12 @@ static void readconsolecfg()
     pagercol = 80;
     multiplewin = 0;
     widthonresize = 1;
+#ifdef USE_MDI
     if (MDIset == 1)
 	RguiMDI = RguiMDI |= RW_MDI;
     if (MDIset == -1)
 	RguiMDI = RguiMDI &= ~RW_MDI;
-
+#endif
     sprintf(optf, "%s/RConsole", getenv("R_USER"));
     if (!optopenfile(optf)) {
 	sprintf(optf, "%s/etc/RConsole", getenv("R_HOME"));
@@ -439,6 +447,7 @@ static void readconsolecfg()
 		    multiplewin = 1;
 		done = 1;
 	    }
+#ifdef USE_MDI
 	    if (!strcmp(opt[0], "MDI")) {
 		if (!MDIset && !strcmp(opt[1], "yes"))
 		    RguiMDI = RguiMDI |= RW_MDI;
@@ -460,6 +469,7 @@ static void readconsolecfg()
 		    RguiMDI = RguiMDI &= ~RW_STATUSBAR;
 		done = 1;
 	    }
+#endif
 	    if (!strcmp(opt[0], "background")) {
 		if (!strcmpi(opt[1], "Windows")) 
 		    consolebg = myGetSysColor(COLOR_WINDOW);
@@ -561,6 +571,7 @@ int setupui()
 {
     initapp(0, 0);
     readconsolecfg();
+#ifdef USE_MDI
     if (RguiMDI & RW_MDI) {
 	TRACERUI("Rgui");
 	RFrame = newwindow("RGui", rect(0, 0, 0, 0),
@@ -569,11 +580,13 @@ int setupui()
 	show(RFrame);
 	TRACERUI("Rgui done");
     }
+#endif
     TRACERUI("Console");
     if (!(RConsole = newconsole("R Console",
 				StandardWindow | Document | Menubar)))
 	return 0;
     TRACERUI("Console done");
+#ifdef USE_MDI
     if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
           int btsize = 24;
           rect r = rect(2, 2, btsize, btsize);
@@ -624,6 +637,7 @@ int setupui()
 	setstatus(s);
 	TRACERUI("status bar done");
     }
+#endif
     addto(RConsole);
     setclose(RConsole, closeconsole);
     MCHECK(gpopup(popupact, ConsolePopup));
@@ -660,7 +674,9 @@ int setupui()
     MCHECK(mrm = newmenuitem("Remove all objects", 0, menurm));
     MCHECK(msearch = newmenuitem("List &search path", 0, menusearch));
 
+#ifdef USE_MDI
     newmdimenu();
+#endif
     MCHECK(m = newmenu("Help"));
     MCHECK(newmenuitem("Console", 0, menuconsolehelp));
     MCHECK(mhelp = newmenuitem("R language (standard)", 0, menuhelp));
@@ -689,13 +705,14 @@ int setupui()
     return 1;
 }
 
+#ifdef USE_MDI
 static RECT RframeRect; /* for use by pagercreate */
 RECT *RgetMDIsize()
 {
     GetClientRect(hwndClient, &RframeRect);
     return &RframeRect;
 }
-
+#endif
 
 extern int  CharacterMode;
 int DialogSelectFile(char *buf, int len)

@@ -22,29 +22,25 @@
 #include <config.h>
 #endif
 
-#include "Error.h"
+#ifdef Win32
+#define USE_MDI 1
+#endif
+
 #include <windows.h>
 #include <string.h>
 #include <ctype.h>
 #include "graphapp/ga.h"
+#ifdef USE_MDI
 #include "graphapp/stdimg.h"
+#endif
 #include "console.h"
 #include "consolestructs.h"
 #include "rui.h"
 
 
-#define DIMLBUF 64*1024         /* console buffer size in chars */
-#define MLBUF   8*1024          /* console buffer size in lines */
-#define SLBUF   512             /* console buffer shift in lines */
-#define DIMHIST 16*1024         /* history buffer size in chars */
-#define MHIST   512             /* history buffer size in lines */
-#define SHIST   128             /* history buffer shift in lines */
-#define NKEYS   512		/* 8Kb paste buffer */
-#define TABSIZE 8
-
 /* xbuf */
 
-static xbuf newxbuf(xlong dim, xint ms, xint shift)
+xbuf newxbuf(xlong dim, xint ms, xint shift)
 {
     xbuf  p;
 
@@ -81,7 +77,8 @@ static xbuf newxbuf(xlong dim, xint ms, xint shift)
     return p;
 }
 
-static void xbufdel(xbuf p) {
+void xbufdel(xbuf p) 
+{
    if (!p) return;
    winfree(p->s);
    winfree(p->b);
@@ -127,7 +124,7 @@ static int xbufmakeroom(xbuf p, xlong size)
 
 #define XPUTC(c) {xbufmakeroom(p,1); *p->free++=c;}
 
-static void xbufaddc(xbuf p, char c)
+void xbufaddc(xbuf p, char c)
 {
     int   i;
 
@@ -183,67 +180,13 @@ static void xbuffixl(xbuf p)
     p->av = p->dim - (p->free - p->b);
 }
 
-/*
-   To be fixed: during creation, memory is allocated two times
-   (faster for small files but a big waste otherwise)
-*/
-static xbuf file2xbuf(char *name, int del)
-{
-    HANDLE f;
-    DWORD rr, vv;
-    char *q, *p, buf[MAX_PATH + 25];
-    xlong dim;
-    xint  ms;
-    xbuf  xb;
-
-    f = CreateFile(name, GENERIC_READ, FILE_SHARE_WRITE,
-		   NULL, OPEN_EXISTING, 0, NULL);
-    if (f == INVALID_HANDLE_VALUE) {
-	sprintf(buf, "File %s could not be opened by internal pager\n", name);
-	warning(buf);
-	return NULL;
-    }
-    vv = GetFileSize(f, NULL);
-    p = (char *) winmalloc((size_t) vv + 1);
-    if (!p) {
-	CloseHandle(f);
-	sprintf(buf,
-		"Insufficient memory to display %s in internal pager\n",
-		name);
-	warning(buf);
-	return NULL;
-    }
-    ReadFile(f, p, vv, &rr, NULL);
-    CloseHandle(f);
-    if (del) DeleteFile(name);
-    p[rr] = '\0';
-    for (q = p, ms = 1, dim = rr; *q; q++) {
-	if (*q == '\t')
-	    dim += TABSIZE;
-	else if (*q == '\n') {
-            dim++;
-	    ms++;
-        }
-    }
-    if ((xb = newxbuf(dim + 1, ms, 1)))
-	for (q = p, ms = 0; *q; q++) {
-	    if (*q == '\n') {
-		ms++;
-		xbufaddc(xb, *q);
-		/* next line interprets underlining in help files */
-		if (q[1] == '_' && q[2] == '\b') xb->user[ms] = -2;
-	    } else xbufaddc(xb, *q);
-	}
-    winfree(p);
-    return xb;
-}
 
 /* console */
 
-static rgb consolebg = White, consolefg = Black, consoleuser = Red,
+rgb consolebg = White, consolefg = Black, consoleuser = Red,
     pagerhighlight = Red;
 
-static ConsoleData
+ConsoleData
 newconsoledata(font f, int rows, int cols,
 	       rgb fg, rgb ufg, rgb bg, int kind)
 {
@@ -398,7 +341,7 @@ static int writeline(ConsoleData p, int i, int j)
     return len;
 }
 
-static void drawconsole(control c, rect r)
+void drawconsole(control c, rect r)
 FBEGIN
 PBEGIN
     int i, ll, wd, maxwd = 0;
@@ -422,7 +365,7 @@ PBEGIN
 PEND
 FVOIDEND
 
-static void setfirstvisible(control c, int fv)
+void setfirstvisible(control c, int fv)
 FBEGIN
     int  ds, rw, ww;
 
@@ -467,7 +410,7 @@ FBEGIN
     gchangescrollbar(c, VWINSB, fv, NUMLINES - 1 , ROWS, p->kind == CONSOLE);
 FVOIDEND
 
-static void setfirstcol(control c, int newcol)
+void setfirstcol(control c, int newcol)
 FBEGIN
     int i, ml, li, ll;
 
@@ -486,7 +429,7 @@ FBEGIN
     REDRAW;
 FVOIDEND
 
-static void mousedrag(control c, int button, point pt)
+void console_mousedrag(control c, int button, point pt)
 FBEGIN
     pt.x -= BORDERX;
     pt.y -= BORDERY;
@@ -509,12 +452,12 @@ FBEGIN
     }
 FVOIDEND
 
-static void mouserep(control c, int button, point pt)
+void console_mouserep(control c, int button, point pt)
 FBEGIN
-    if ((button & LeftButton) && (p->sel)) mousedrag(c, button,pt);
+    if ((button & LeftButton) && (p->sel)) console_mousedrag(c, button,pt);
 FVOIDEND
 
-static void mousedown(control c, int button, point pt)
+void console_mousedown(control c, int button, point pt)
 FBEGIN
     pt.x -= BORDERX;
     pt.y -= BORDERY;
@@ -624,11 +567,6 @@ FBEGIN
     CloseClipboard();
 FVOIDEND
 
-int consolecanpaste(control c)
-FBEGIN
-   return IsClipboardFormatAvailable(CF_TEXT);
-FVOIDEND
-
 static void consoletoclipboardHelper(control c, int x0, int y0, int x1, int y1)
 FBEGIN
     HGLOBAL hglb;
@@ -680,6 +618,12 @@ FVOIDEND
 
 /* end of system dependent part */
 
+int consolecanpaste(control c)
+{
+    return clipboardhastext();
+}
+
+
 int consolecancopy(control c)
 FBEGIN
 FEND(p->sel)
@@ -727,7 +671,7 @@ FBEGIN
     }
 FVOIDEND
 
-static void normalkeyin(control c,int k)
+void console_normalkeyin(control c, int k)
 FBEGIN
     int st;
 
@@ -794,7 +738,7 @@ FBEGIN
     storekey(c,k);
 FVOIDEND
 
-static void ctrlkeyin(control c, int key)
+void console_ctrlkeyin(control c, int key)
 FBEGIN
     int st;
 
@@ -882,7 +826,7 @@ FBEGIN
     }
 FEND(0)
 
-static void freeConsoleData(ConsoleData p)
+void freeConsoleData(ConsoleData p)
 {
     if (!p) return;
     if (p->bm) del(p->bm);
@@ -1140,7 +1084,7 @@ FBEGIN
     fclose(fp);
 FVOIDEND
 
-static void sbf(control c, int pos)
+void console_sbf(control c, int pos)
 FBEGIN
     if (pos < 0) {
 	pos = -pos - 1 ;
@@ -1159,7 +1103,7 @@ int consolecols(console c)
     return p->cols;
 }
 
-static void consoleresize(console c, rect r)
+void consoleresize(console c, rect r)
 FBEGIN
     int rr, pcols = COLS;
 
@@ -1209,12 +1153,12 @@ FBEGIN
     p->fbrk = fn;
 FVOIDEND
 
-static font consolefn = NULL;
-static char fontname[LF_FACESIZE+1];
-static int fontsty, pointsize;
-static int consoler = 25, consolec = 80;
-static int pagerrow = 25, pagercol = 80;
-static int pagerMultiple = 1, haveusedapager = 0;
+font consolefn = NULL;
+char fontname[LF_FACESIZE+1];
+int fontsty, pointsize;
+int consoler = 25, consolec = 80;
+int pagerrow = 25, pagercol = 80;
+int pagerMultiple = 1, haveusedapager = 0;
 
 void
 setconsoleoptions(char *fnname,int fnsty, int fnpoints,
@@ -1356,15 +1300,15 @@ console newconsole(char *name, int flags)
 	return NULL;
     }
     setdata(c, p);
-    sethit(c, sbf);
+    sethit(c, console_sbf);
     setresize(c, consoleresize);
     setredraw(c, drawconsole);
     setdel(c, delconsole);
-    setkeyaction(c, ctrlkeyin);
-    setkeydown(c, normalkeyin);
-    setmousedrag(c, mousedrag);
-    setmouserepeat(c, mouserep);
-    setmousedown(c, mousedown);
+    setkeyaction(c, console_ctrlkeyin);
+    setkeydown(c, console_normalkeyin);
+    setmousedrag(c, console_mousedrag);
+    setmouserepeat(c, console_mouserep);
+    setmousedown(c, console_mousedown);
     return(c);
 }
 
@@ -1400,922 +1344,3 @@ void  consolehelp()
     askok(s);
 }
 
-#define PAGERMAXKEPT 12
-#define PAGERMAXTITLE 128
-static int pagerActualKept = 0, pagerActualShown;
-static pager pagerInstance = NULL;
-static menubar pagerBar = NULL;
-static xbuf pagerXbuf[PAGERMAXKEPT];
-static char pagerTitles[PAGERMAXKEPT][PAGERMAXTITLE+8];
-static menuitem pagerMenus[PAGERMAXKEPT];
-static int pagerRow[PAGERMAXKEPT];
-static void pagerupdateview();
-
-static void delpager(control m)
-{
-    int i;
-
-    ConsoleData p = getdata(m);
-    if (!pagerMultiple) {
-	for (i = 0; i < pagerActualKept; i++) {
-	    xbufdel(pagerXbuf[i]);
-	}
-	pagerActualKept = 0;
-    }
-    else
-	xbufdel(p->lbuf);
-    freeConsoleData(getdata(m));
-}
-
-static void pagerbclose(control m)
-{
-    show(RConsole);
-    if (!pagerMultiple) {
-        hide(pagerInstance);
-	del(pagerInstance);
-	pagerInstance = pagerBar = NULL;
-    }
-    else {
-        hide(m);
-	del(m);
-    }
-}
-
-static void pagerclose(control m)
-{
-    pagerbclose(getdata(m));
-}
-
-static void pagerprint(control m)
-{
-    consoleprint(getdata(m));
-}
-
-static void pagercopy(control m)
-{
-    control c = getdata(m);
-
-    if (consolecancopy(c)) consolecopy(c);
-    else R_ShowMessage("No selection");
-}
-
-static void pagerpaste(control m)
-{
-    control c = getdata(m);
-
-    if (!consolecancopy(c)) {
-        R_ShowMessage("No selection");
-        return;
-    } else {
-        consolecopy(c);
-    }
-    if (consolecanpaste(RConsole)) {
-	consolepaste(RConsole);
-	show(RConsole);
-    }
-}
-
-static void pagerselectall(control m)
-{
-    control c = getdata(m);
-
-    consoleselectall(c);
-}
-
-static void pagerconsole(control m)
-{
-    show(RConsole);
-}
-
-static void pagerchangeview(control m)
-{
-    ConsoleData p = getdata(pagerInstance);
-    int i = getvalue(m);
-
-    if (i >= pagerActualKept) return;
-    uncheck(pagerMenus[pagerActualShown]);
-    /* save position of middle line of pager display */
-    pagerRow[pagerActualShown] = FV + ROWS/2;
-    pagerActualShown = i;
-    check(pagerMenus[i]);
-    pagerupdateview();
-}
-
-static void pagerupdateview()
-{
-    control c = pagerInstance;
-    ConsoleData p = getdata(c);
-
-    settext(pagerInstance, &pagerTitles[pagerActualShown][4]);
-    p->lbuf = pagerXbuf[pagerActualShown];
-    setfirstvisible(c, pagerRow[pagerActualShown] - ROWS/2);
-    setfirstcol(c, 0);
-    show(c);
-}
-
-static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
-{
-    ConsoleData p = getdata(pagerInstance);
-    int i;
-    xbuf nxbuf = file2xbuf(filename, deleteonexit);
-
-    if (!nxbuf) {
-/*	R_ShowMessage("File not found or memory insufficient"); */
-	return 0;
-    }
-    if (pagerActualKept == PAGERMAXKEPT) {
-        pagerActualKept -= 1;
-        xbufdel(pagerXbuf[pagerActualKept]);
-    }
-    if(pagerActualKept > 0)
-	pagerRow[0] = FV;
-    for (i = pagerActualKept; i > 0; i--) {
-	pagerXbuf[i] = pagerXbuf[i - 1];
-	pagerRow[i] = pagerRow[i - 1];
-	strcpy(&pagerTitles[i][4], &pagerTitles[i - 1][4]);
-    }
-    pagerXbuf[0] = nxbuf;
-    pagerRow[0] = 0;
-    strcpy(&pagerTitles[0][4], wtitle);
-    pagerActualKept += 1;
-    for (i = 0; i < pagerActualKept; i++) {
-	enable(pagerMenus[i]);
-	settext(pagerMenus[i], pagerTitles[i]);
-    }
-    for (i = pagerActualKept; i < PAGERMAXKEPT; i++)
-	disable(pagerMenus[i]);
-    uncheck(pagerMenus[pagerActualShown]);
-    pagerActualShown = 0;
-    check(pagerMenus[pagerActualShown]);
-    return 1;
-}
-
-static MenuItem PagerPopup[] = {
-    {"Copy", pagercopy, 0},
-    {"Paste to console", pagerpaste, 0},
-    {"Select all", pagerselectall, 0},
-     {"-", 0, 0},
-    {"Close", pagerclose, 0},
-    LASTMENUITEM
-};
-
-static void pagermenuact(control m)
-{
-    control c = getdata(m);
-    ConsoleData p = getdata(c);
-    if (consolecancopy(c)) {
-        enable(p->mcopy);
-        enable(p->mpopcopy);
-        enable(p->mpaste);
-        enable(p->mpoppaste);
-    } else {
-        disable(p->mcopy);
-        disable(p->mpopcopy);
-        disable(p->mpaste);
-        disable(p->mpoppaste);
-    }
-}
-
-RECT *RgetMDIsize(); /* in rui.c */
-#define MCHECK(a) if (!(a)) {freeConsoleData(p);del(c);return NULL;}
-static pager pagercreate()
-{
-    ConsoleData p;
-    int w, h, i, x, y, w0, h0;
-    pager c;
-    menuitem m;
-
-    p = newconsoledata((consolefn) ? consolefn : FixedFont,
-		       pagerrow, pagercol,
-		       consolefg, consoleuser, consolebg,
-		       PAGER);
-    if (!p) return NULL;
-
-/*    if (ismdi()) {
-	x = y = w = h = 0;
-    }
-    else {
-	w = WIDTH ;
-	h = HEIGHT;
-	x = (devicewidth(NULL) - w) / 2;
-	y = (deviceheight(NULL) - h) / 2 ;
-	} */
-    w = WIDTH ;
-    h = HEIGHT;
-    /* centre a single pager, randomly place each of multiple pagers */
-    if(ismdi()) {
-	RECT *pR = RgetMDIsize();
-	w0 = pR->right;
-	h0 = pR->bottom;
-    } else {
-	w0 = devicewidth(NULL);
-	h0 = deviceheight(NULL);
-    }
-    x = (w0 - w) / 2; x = x > 20 ? x:20;
-    y = (h0 - h) / 2; y = y > 20 ? y:20;
-    if(pagerMultiple) {
-	DWORD rand = GetTickCount();
-	int w0 = 0.4*x, h0 = 0.4*y;
-	w0 = w0 > 20 ? w0 : 20;
-	h0 = h0 > 20 ? h0 : 20;
-	x += (rand % w0) - w0/2;
-	y += ((rand/w0) % h0) - h0/2;
-    }
-    c = (pager) newwindow("PAGER", rect(x, y, w, h),
-			  Document | StandardWindow | Menubar |
-			  VScrollbar | HScrollbar | TrackMouse);
-    if (!c) {
-         freeConsoleData(p);
-         return NULL;
-    }
-    setdata(c, p);
-    if(h == 0) HEIGHT = getheight(c);
-    if(w == 0) WIDTH  = getwidth(c);
-    COLS = WIDTH / FW - 1;
-    ROWS = HEIGHT / FH - 1;
-    BORDERX = (WIDTH - COLS*FW) / 2;
-    BORDERY = (HEIGHT - ROWS*FH) / 2;
-    gsetcursor(c, ArrowCursor);
-    gchangescrollbar(c, VWINSB, 0, 0, ROWS, 0);
-    gchangescrollbar(c, HWINSB, 0, COLS-1, COLS, 1);
-    setbackground(c, consolebg);
-    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
-        int btsize = 24;
-        rect r = rect(2, 2, btsize, btsize);
-        control tb, bt;
-        addto(c);
-        MCHECK(tb = newtoolbar(btsize + 4));
-	gsetcursor(tb, ArrowCursor);
-        addto(tb);
-        MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
-        MCHECK(addtooltip(bt, "Paste to console"));
-	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
-        r.x += (btsize + 6) ;
-        MCHECK(bt = newtoolbutton(print_image, r, pagerprint));
-        MCHECK(addtooltip(bt, "Print"));
-	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
-        r.x += (btsize + 6) ;
-        MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
-        MCHECK(addtooltip(bt, "Return focus to Console"));
-	gsetcursor(bt, ArrowCursor);
-    }
-    addto(c);
-    MCHECK(m = gpopup(pagermenuact, PagerPopup));
-    setdata(m, c);
-    setdata(p->mpopcopy = PagerPopup[0].m, c);
-    setdata(p->mpoppaste = PagerPopup[1].m, c);
-    setdata(PagerPopup[2].m, c);
-    setdata(PagerPopup[4].m, c);
-    MCHECK(m = newmenubar(pagermenuact));
-    setdata(m, c);
-    MCHECK(newmenu("File"));
-    MCHECK(m = newmenuitem("Print", 0, pagerprint));
-    setdata(m, c);
-    MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Close", 0, pagerclose));
-    setdata(m, c);
-    MCHECK(newmenu("Edit"));
-    MCHECK(p->mcopy = newmenuitem("Copy          \tCTRL+C", 0, pagercopy));
-    setdata(p->mcopy, c);
-    MCHECK(p->mpaste = newmenuitem("Paste to console\tCTRL+V", 0, pagerpaste));
-    setdata(p->mpaste, c);
-    MCHECK(m = newmenuitem("Select all", 0, pagerselectall));
-    setdata(m, c);
-    if (!pagerMultiple) {
-	MCHECK(newmenu("View"));
-	for (i = 0; i < PAGERMAXKEPT; i++) {
-	    sprintf(pagerTitles[i], "&%c.  ", 'A' + i);
-	    MCHECK(pagerMenus[i] = newmenuitem(&pagerTitles[i][1], 0,
-					       pagerchangeview));
-	    setvalue(pagerMenus[i], i);
-	}
-    }
-    if (ismdi()) newmdimenu();
-    MCHECK(BM = newbitmap(WIDTH, HEIGHT, 2));
-    setdata(c, p);
-    sethit(c, sbf);
-    setresize(c, consoleresize);
-    setredraw(c, drawconsole);
-    setdel(c, delpager);
-    setclose(c, pagerbclose);
-    setkeyaction(c, ctrlkeyin);
-    setkeydown(c, normalkeyin);
-    setmousedrag(c, mousedrag);
-    setmouserepeat(c, mouserep);
-    setmousedown(c, mousedown);
-    return(c);
-}
-
-pager newpager1win(char *wtitle, char *filename, int deleteonexit)
-{
-    if (!pagerInstance && !(pagerInstance = pagercreate())) {
-        R_ShowMessage("Unable to create pager windows");
-        return NULL;
-    }
-    if (!pageraddfile(wtitle, filename, deleteonexit)) return NULL;
-    pagerupdateview();
-    return pagerInstance;
-}
-
-pager newpagerNwin(char *wtitle, char *filename, int deleteonexit)
-{
-    pager c = pagercreate();
-    ConsoleData p;
-
-    if (!c) return NULL;
-    settext(c, wtitle);
-    p = getdata(c);
-    if (!(p->lbuf = file2xbuf(filename, deleteonexit))) {
-	del(c);
-	return NULL;
-    }
-    if (c) {
-	gchangescrollbar(c, VWINSB, 0, NUMLINES - 1 , ROWS, 0);
-	show(c);
-    }
-    return c;
-}
-
-pager newpager(char *title, char *filename, char *header, int deleteonexit)
-{
-    char wtitle[PAGERMAXTITLE+1];
-    pager c;
-
-    /*    if (ismdi()) pagerMultiple = 1;*/
-    strncpy(wtitle, title, PAGERMAXTITLE);
-    wtitle[PAGERMAXTITLE] = '\0';
-    if(strlen(header) &&
-       ((strlen(header) + strlen(wtitle) + 4) < PAGERMAXTITLE))
-    {
-	if(strlen(wtitle)) strcat(wtitle, " - ");
-	strcat(wtitle, header);
-    }
-    if (!pagerMultiple)
-        c = newpager1win(wtitle, filename, deleteonexit);
-    else
-        c = newpagerNwin(wtitle, filename, deleteonexit);
-    haveusedapager++;
-    return c;
-}
-
-/*                configuration editor                        */
-
-#include <string.h>
-#include <ctype.h>
-
-/* current state */
-
-struct structGUI 
-{
-    int MDI;
-    int toolbar;
-    int statusbar;
-    int pagerMultiple;
-    char font[50];
-    int tt_font;
-    int pointsize;
-    char style[20];
-    int crows, ccols, setWidthOnResize, prows, pcols;
-    rgb bg, fg, user, hlt;
-};
-typedef struct structGUI *Gui;
-static struct structGUI curGUI, newGUI;
-
-
-
-
-extern char *ColorName[]; /* from graphapp/rgb.c */
-
-static int cmatch(char *col, char **list)
-{
-    int i=0;
-    char **pos = list;
-    while(*pos != NULL) {
-	if(strcmpi(*pos, col) == 0) return(i);
-	i++; pos++;
-    }
-    return(-1);
-}
-
-
-static char *StyleList[] = {"normal", "bold", "italic", NULL};
-static char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", NULL};
-static char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", NULL};
-
-
-static window wconfig;
-static button bApply, bSave, bFinish, bCancel;
-static label l_mdi, l_mwin, l_font, l_point, l_style, l_crows, l_ccols,
-    l_prows, l_pcols,
-    l_cols, l_bgcol, l_fgcol, l_usercol, l_highlightcol;
-static radiobutton rb_mdi, rb_sdi, rb_mwin, rb_swin;
-static listbox f_font, f_style, d_point, bgcol, fgcol, usercol, highlightcol;
-static checkbox toolbar, statusbar, tt_font, c_resize;
-static field f_crows, f_ccols, f_prows, f_pcols;
-
-
-static void getGUIstate(Gui p)
-{
-    p->MDI = ischecked(rb_mdi);
-    p->toolbar = ischecked(toolbar);
-    p->statusbar = ischecked(statusbar);
-    p->pagerMultiple = ischecked(rb_mwin);
-    strcpy(p->font, gettext(f_font));
-    p->tt_font = ischecked(tt_font);
-    p->pointsize = atoi(gettext(d_point));
-    strcpy(p->style, gettext(f_style));
-    p->crows = atoi(gettext(f_crows));
-    p->ccols = atoi(gettext(f_ccols));
-    p->setWidthOnResize = ischecked(c_resize);
-    p->prows = atoi(gettext(f_prows));
-    p->pcols = atoi(gettext(f_pcols));
-    p->bg = nametorgb(gettext(bgcol));
-    p->fg = nametorgb(gettext(fgcol));
-    p->user = nametorgb(gettext(usercol));
-    p->hlt = nametorgb(gettext(highlightcol));
-}
-
-
-static int has_changed()
-{
-    Gui a=&curGUI, b=&newGUI;
-    return a->MDI != b->MDI ||
-	a->toolbar != b->toolbar ||
-	a->statusbar != b->statusbar ||
-	a->pagerMultiple != b->pagerMultiple ||
-	strcmp(a->font, b->font) ||
-	a->tt_font != b->tt_font ||
-	a->pointsize != b->pointsize ||
-	strcmp(a->style, b->style) ||
-	a->crows != b->crows ||
-	a->ccols != b->ccols ||
-	a->setWidthOnResize != b->setWidthOnResize ||
-	a->prows != b->prows ||
-	a->pcols != b->pcols ||
-	a->bg != b->bg ||
-	a->fg != b->fg ||
-	a->user != b->user ||
-	a->hlt != b->hlt;
-}
-
-
-static void cleanup()
-{
-    hide(wconfig);
-    delobj(l_mdi); delobj(rb_mdi); delobj(rb_sdi); 
-    delobj(toolbar); delobj(statusbar); 
-    delobj(l_mwin); delobj(rb_mwin); delobj(rb_swin); 
-    delobj(l_font); delobj(f_font); delobj(tt_font); 
-    delobj(l_point); delobj(d_point);
-    delobj(l_style); delobj(f_style);
-    delobj(l_crows); delobj(f_crows); delobj(l_ccols); delobj(f_ccols);
-    delobj(c_resize);
-    delobj(l_prows); delobj(f_prows); delobj(l_pcols); delobj(f_pcols);
-    delobj(l_cols);
-    delobj(l_bgcol); delobj(bgcol);
-    delobj(l_fgcol); delobj(fgcol);
-    delobj(l_usercol); delobj(usercol);
-    delobj(l_highlightcol); delobj(highlightcol);
-    delobj(bApply); delobj(bSave); delobj(bFinish); delobj(bCancel);
-    delobj(wconfig);
-}
-
-
-static void apply(button b)
-{
-    rect r = getrect(RConsole);
-    ConsoleData p = (ConsoleData) getdata(RConsole);
-    int havenewfont = 0;
-
-    getGUIstate(&newGUI);
-    if(!has_changed()) return;
-
-    if(newGUI.MDI != curGUI.MDI || newGUI.toolbar != curGUI.toolbar ||
-       newGUI.statusbar != curGUI.statusbar)
-	askok("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n");
-
-    
-/*  Set a new font? */
-    if(strcmp(newGUI.font, curGUI.font) || 
-       newGUI.pointsize != curGUI.pointsize ||
-       newGUI.style != curGUI.style)
-    {
-	char msg[LF_FACESIZE + 128]; 
-	int sty = Plain;
-	
-	if(newGUI.tt_font) strcpy(fontname, "TT "); else strcpy(fontname, "");
-	strcat(fontname,  newGUI.font);
-	if (!strcmp(newGUI.style, "bold")) sty = Bold;
-	if (!strcmp(newGUI.style, "italic")) sty = Italic;
-	pointsize = newGUI.pointsize;
-	fontsty = sty;
-	/* Don't delete font: open pagers may be using it */
-	if (strcmp(fontname, "FixedFont"))
-	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0);
-	else consolefn = FixedFont;
-	if (!consolefn) {
-	    sprintf(msg,
-		    "Font %s-%d-%d  not found.\nUsing system fixed font.",
-		    fontname, fontsty | FixedWidth, pointsize);
-	    R_ShowMessage(msg);
-	    consolefn = FixedFont;
-	}
-	if (!ghasfixedwidth(consolefn)) {
-	    sprintf(msg,
-		    "Font %s-%d-%d has variable width.\nUsing system fixed font.",
-		    fontname, fontsty, pointsize);
-	    R_ShowMessage(msg);
-	    consolefn = FixedFont;
-	}
-	p->f = consolefn;
-	FH = fontheight(p->f);
-	FW = fontwidth(p->f);
-	havenewfont = 1;
-    }
-
-/* resize console, possibly with new font */
-    if (consoler != newGUI.crows || consolec != newGUI.ccols || havenewfont) {
-	char buf[20];
-	consoler = newGUI.crows;
-	consolec = newGUI.ccols;
-	r.width = (consolec + 1) * FW;
-	r.height = (consoler + 1) * FH;
-	resize(RConsole, r);
-	sprintf(buf, "%d", ROWS); settext(f_crows, buf);
-	sprintf(buf, "%d", COLS); settext(f_ccols, buf);
-    }
-    
-/* Set colours and redraw */
-    p->fg = consolefg = newGUI.fg;
-    p->ufg = consoleuser = newGUI.user;
-    p->bg = consolebg = newGUI.bg;
-    drawconsole(RConsole, r);
-    pagerhighlight = newGUI.hlt;
-
-    if(haveusedapager && 
-       (newGUI.prows != curGUI.prows || newGUI.pcols != curGUI.pcols))
-	askok("Changes in pager size will not apply to any open pagers");
-    pagerrow = newGUI.prows;
-    pagercol = newGUI.pcols;
-
-    if(newGUI.pagerMultiple != pagerMultiple) {
-	if(!haveusedapager || 
-	   askokcancel("Do not change pager type if any pager is open\nProceed?") 
-	   == YES)  
-	    pagerMultiple = newGUI.pagerMultiple;
-	if(pagerMultiple) {
-	    check(rb_mwin); uncheck(rb_swin);
-	} else {check(rb_swin); uncheck(rb_mwin);}
-    }
-    
-    setWidthOnResize = newGUI.setWidthOnResize;
-    getGUIstate(&curGUI);
-}
-
-static void save(button b)
-{
-    char *file, buf[256], *p;
-    FILE *fp;
-
-    setuserfilter("All files (*.*)\0*.*\0\0");
-    strcpy(buf, getenv("R_USER"));
-    file = askfilesavewithdir("Select directory for Rconsole", 
-			      "Rconsole", buf);
-    if(!file) return;
-    strcpy(buf, file);
-    p = buf + strlen(buf) - 2;
-    if(!strncmp(p, ".*", 2)) *p = '\0';
-    
-    fp = fopen(buf, "w");
-    if(fp == NULL) {
-	MessageBox(0, "Cannot open file to fp", 
-		   "Configuration Save Error",
-		   MB_TASKMODAL | MB_ICONSTOP | MB_OK);
-	return;
-    }
-
-    fprintf(fp, "%s\n%s\n%s\n\n%s\n%s\n",
-	    "# Optional parameters for the console and the pager",
-	    "# The system-wide copy is in rwxxxx/etc.",
-	    "# A user copy can be installed in `R_USER'.",
-	    "## Style",
-	    "# This can be `yes' (for MDI) or `no' (for SDI).");
-    fprintf(fp, "MDI = %s\n",  ischecked(rb_mdi)?"yes":"no");
-    fprintf(fp, "%s\n%s%s\n%s%s\n\n",
-	    "# the next two are only relevant for MDI",
-	    "toolbar = ", ischecked(toolbar)?"yes":"no",
-	    "statusbar = ", ischecked(statusbar)?"yes":"no");
-
-    fprintf(fp, "%s\n%s\n%s\n%s\n%s\n",
-	    "## Font.",
-	    "# Please use only fixed width font.",
-	    "# If font=FixedFont the system fixed font is used; in this case",
-	    "# points and style are ignored. If font begins with \"TT \", only",
-	    "# True Type fonts are searched for.");
-    fprintf(fp, "font = %s%s\npoints = %s\nstyle = %s # Style can be normal, bold, italic\n\n\n", 
-	    ischecked(tt_font)?"TT ":"", 
-	    gettext(f_font),
-	    gettext(d_point), 
-	    gettext(f_style));
-    fprintf(fp, "# Dimensions (in characters) of the console.\n");
-    fprintf(fp, "rows = %s\ncolumns = %s\n", gettext(f_crows), gettext(f_ccols));
-    fprintf(fp, "# Dimensions (in characters) of the internal pager.\n");
-    fprintf(fp, "pgrows = %s\npgcolumns = %s\n", gettext(f_prows), gettext(f_pcols));
-    fprintf(fp, "# should options(width=) be set to the console width?\n");
-    fprintf(fp, "setwidthonresize = %s\n\n",
-	    ischecked(c_resize) ? "yes" : "no");
-    fprintf(fp, "%s\n%s\n%s\npagerstyle = %s\n\n\n",
-	    "# The internal pager can displays help in a single window",
-	    "# or in multiple windows (one for each topic)",
-	    "# pagerstyle can be set to `singlewindow' or `multiplewindows'",
-	    ischecked(rb_mwin) ? "multiplewindows" : "singlewindow");
-
-    fprintf(fp, "## Colours for console and pager(s)\n# (see rwxxxx/etc/rgb.txt for the known colours).\n");
-    fprintf(fp, "background = %s\n", gettext(bgcol));
-    fprintf(fp, "normaltext = %s\n", gettext(fgcol));
-    fprintf(fp, "usertext = %s\n", gettext(usercol));
-    fprintf(fp, "highlight = %s\n", gettext(highlightcol));
-    fclose(fp);
-}
-
-static void cancel(button b)
-{
-    cleanup();
-    show(RConsole);
-}
-
-static void finish(button b)
-{
-    getGUIstate(&newGUI);
-    if(has_changed()) {
-	if(askokcancel("Changes have been made and not applied\nProceed?") 
-	   == CANCEL) return;
-    }
-    cleanup();
-    show(RConsole);
-}
-
-static void cMDI(button b)
-{
-    enable(toolbar);
-    enable(statusbar);
-}
-
-static void cSDI(button b)
-{
-    disable(toolbar);
-    disable(statusbar);
-}
-
-
-void Rgui_configure()
-{
-    char buf[100], *style;
-    ConsoleData p = (ConsoleData) getdata(RConsole);
-
-    wconfig = newwindow("Rgui Configuration Editor", rect(0, 0, 550, 400),
-			Titlebar | Centered | Modal);
-    setbackground(wconfig, LightGrey);
-    l_mdi = newlabel("Single or multiple windows",
-		      rect(10, 10, 150, 20), AlignLeft);
-    rb_mdi = newradiobutton("MDI", rect(150, 10 , 40, 20), cMDI);
-    rb_sdi = newradiobutton("SDI", rect(200, 10 , 40, 20), cSDI);
-    
-
-    toolbar = newcheckbox("MDI toolbar", rect(300, 10, 100, 20), NULL);
-    if(RguiMDI & RW_TOOLBAR) check(toolbar);
-    statusbar = newcheckbox("MDI statusbar", rect(420, 10, 100, 20), NULL);
-    if(RguiMDI & RW_STATUSBAR) check(statusbar);
-    if(RguiMDI & RW_MDI) {
-	check(rb_mdi); cMDI(rb_mdi);
-    } else {
-	check(rb_sdi); cSDI(rb_sdi);
-    }
-
-    l_mwin = newlabel("Pager style", rect(10, 50, 90, 20), AlignLeft);
-    newradiogroup();
-    rb_mwin = newradiobutton("multiple windows", rect(100, 50, 100, 20), NULL);
-    rb_swin = newradiobutton("single window", rect(220, 50 , 100, 20), NULL);
-    if(pagerMultiple) check(rb_mwin); else check(rb_swin);
-
-/* Font, pointsize, style */
-
-    l_font = newlabel("Font", rect(10, 100, 40, 20), AlignLeft);
-    
-    f_font = newdropfield(FontsList, rect(60, 100, 120, 20), NULL);
-    tt_font = newcheckbox("TrueType only", rect(190, 100, 100, 20), NULL);
-    {
-	char *pf;
-	if ((strlen(fontname) > 1) && 
-	    (fontname[0] == 'T') && (fontname[1] == 'T')) {
-	    check(tt_font);
-	    for (pf = fontname+2; isspace(*pf) ; pf++);
-	} else pf = fontname;
-	setlistitem(f_font, cmatch(pf, FontsList));
-    }
-
-    l_point = newlabel("size", rect(300, 100, 30, 20), AlignLeft);
-    d_point = newdropfield(PointsList, rect(335, 100, 50, 20), NULL);
-    sprintf(buf, "%d", pointsize);
-    setlistitem(d_point, cmatch(buf, PointsList));
-    l_style = newlabel("style", rect(410, 100, 40, 20), AlignLeft);
-    f_style = newdropfield(StyleList, rect(450, 100, 80, 20), NULL);
-    style = "normal";
-    if (fontsty & Italic) style = "italic";
-    if (fontsty & Bold) style = "Bold";
-    setlistitem(f_style, cmatch(style, StyleList));
-
-/* Console size, set widthonresize */
-    l_crows = newlabel("Console   rows", rect(10, 150, 70, 20), AlignLeft);
-    sprintf(buf, "%d", ROWS);
-    f_crows = newfield(buf, rect(100, 150, 30, 20));
-    l_ccols = newlabel("columns", rect(150, 150, 60, 20), AlignLeft);
-    sprintf(buf, "%d", COLS);
-    f_ccols = newfield(buf, rect(220, 150, 30, 20));
-    c_resize = newcheckbox("set options(width) on resize?", 
-			   rect(300, 150, 200, 20), NULL);
-    if(setWidthOnResize) check(c_resize);
-
-/* Pager size */
-    l_prows = newlabel("Pager   rows", rect(10, 200, 70, 20), AlignLeft);
-    sprintf(buf, "%d", pagerrow);
-    f_prows = newfield(buf, rect(100, 200, 30, 20));
-    l_pcols = newlabel("columns", rect(150, 200, 60, 20), AlignLeft);
-    sprintf(buf, "%d", pagercol);
-    f_pcols = newfield(buf, rect(220, 200, 30, 20));
-
-/* Font colours */
-    l_cols = newlabel("Console and Pager Colours", 
-		      rect(10, 250, 520, 20), AlignCenter);
-    l_bgcol = newlabel("Background", rect(10, 280, 100, 20), AlignCenter);
-    bgcol = newlistbox(ColorName, rect(10, 300, 100, 50), NULL);
-    l_fgcol = newlabel("Output text", rect(150, 280, 100, 20), AlignCenter);
-    fgcol = newlistbox(ColorName, rect(150, 300, 100, 50), NULL);
-    l_usercol = newlabel("User input", rect(290, 280, 100, 20), AlignCenter);
-    usercol = newlistbox(ColorName, rect(290, 300, 100, 50), NULL);
-    l_highlightcol = newlabel("Titles in pager", rect(430, 280, 100, 20), 
-			      AlignCenter);
-    highlightcol = newlistbox(ColorName, rect(430, 300, 100, 50), NULL);
-    setlistitem(bgcol, rgbtonum(consolebg));
-    setlistitem(fgcol, rgbtonum(consolefg));
-    setlistitem(usercol, rgbtonum(consoleuser));
-    setlistitem(highlightcol, rgbtonum(pagerhighlight));
-    
-    bApply = newbutton("Apply", rect(50, 360, 70, 25), apply);
-    bSave = newbutton("Save", rect(130, 360, 70, 25), save);
-    bFinish = newbutton("Finish", rect(350, 360, 70, 25), finish);
-    bCancel = newbutton("Cancel", rect(430, 360, 70, 25), cancel); 
-    show(wconfig);
-    getGUIstate(&curGUI);
-}
-
-/* data editor support */
-
-int R_de_up;
-
-extern void de_redraw(control c, rect r);
-extern void de_normalkeyin(control c, int k);
-extern void de_ctrlkeyin(control c, int k);
-extern void de_mousedown(control c, int buttons, point xy);
-extern void de_mouseup(control c, int buttons, point xy);
-extern void de_closewin();
-extern void de_copy(control c);
-extern void de_paste(control c);
-extern void de_delete(control c);
-extern void de_autosize(control c);
-extern void de_sbf(control c, int pos);
-
-
-static void deldataeditor(control m)
-{
-    ConsoleData p = getdata(m);
-    xbufdel(p->lbuf);
-    freeConsoleData(getdata(m));
-}
-
-static void declose(control m)
-{
-    de_closewin();
-    show(RConsole);
-    R_de_up =0;
-}
-
-static void deresize(console c, rect r)
-FBEGIN
-    if (((WIDTH  == r.width) &&
-	 (HEIGHT == r.height)) ||
-	(r.width == 0) || (r.height == 0) ) /* minimize */
-        FVOIDRETURN;
-    WIDTH = r.width;
-    HEIGHT = r.height;
-    clear(c);
-FVOIDEND
-
-static void menudehelp(control m)
-{
-    char s[] = "Navigation.\n  Keyboard: cursor keys move selection\n\tTab move right, Shift+Tab moves left\n\tPgDn or Ctrl+F: move down one screenful\n\tPgUp or Ctrl+B: move up one screenful\n\tHome: move to (1,1) cell\n\tEnd: show last rows of last column.\n   Mouse: left-click in a cell, use the scrollbar(s).\n\nEditing.\n  Type in the currently hightlighted cell\n  Double-click in a cell for an editable field\n\nMisc.\n  Ctrl-L redraws the screen, auto-resizing the columns\n  Ctrl-C copies selected cell\n  Ctrl-V pastes to selected cell\n  Right-click menu for copy, paste, autosize currently selected column\n\n";
-    askok(s);
-}
-
-
-static MenuItem DePopup[28] = {
-    {"Help", menudehelp, 0},
-    {"-", 0, 0},
-    {"Copy selected cell", de_copy, 0},
-    {"Paste selected cell", de_paste, 0},
-    {"Autosize column", de_autosize, 0},
-    {"-", 0, 0},
-    {"Close", declose, 0},
-    LASTMENUITEM
-};
-
-static void demenuact(control m)
-{
-    /* use this to customize the menu */
-}
-
-static void depopupact(control m)
-{
-    /* use this to customize the menu */
-}
-
-menuitem de_mvw;
-extern void menudecellwidth(control m);
-
-
-dataeditor newdataeditor()
-{
-    ConsoleData p;
-    int w, h, x, y;
-    dataeditor c;
-    menuitem m;
-    
-    p = newconsoledata((consolefn) ? consolefn : FixedFont,
-		       pagerrow, pagercol,
-		       consolefg, consoleuser, consolebg,
-		       DATAEDITOR);
-    if (!p) return NULL;
-
-    w = WIDTH ;
-    h = HEIGHT;
-    if (ismdi()) {
-	RECT *pR = RgetMDIsize();
-	x = (pR->right - w) / 3; x = x > 20 ? x:20;
-	y = (pR->bottom - h) / 3; y = y > 20 ? y:20;
-    } else {
-	x = (devicewidth(NULL) - w) / 3;
-	y = (deviceheight(NULL) - h) / 3 ;
-    }
-    c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
-			       Document | StandardWindow | TrackMouse |
-			       VScrollbar | HScrollbar | Modal);
-    if (!c) {
-         freeConsoleData(p);
-         return NULL;
-    }
-    setdata(c, p);
-    if(h == 0) HEIGHT = getheight(c);
-    if(w == 0) WIDTH  = getwidth(c);
-    COLS = WIDTH / FW - 1;
-    ROWS = HEIGHT / FH - 1;
-    BORDERX = (WIDTH - COLS*FW) / 2;
-    BORDERY = (HEIGHT - ROWS*FH) / 2;
-    gsetcursor(c, ArrowCursor);
-    setbackground(c, consolebg);
-    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
-	/* blank toolbar to stop windows jumping around */
-        int btsize = 24;
-        control tb;
-        addto(c);
-        MCHECK(tb = newtoolbar(btsize + 4));
-	gsetcursor(tb, ArrowCursor);
-    }
-    MCHECK(gpopup(depopupact, DePopup));
-    MCHECK(m = newmenubar(demenuact));
-    MCHECK(newmenu("File"));
-/*    MCHECK(m = newmenuitem("-", 0, NULL));*/
-    MCHECK(m = newmenuitem("Close", 0, declose));
-    newmdimenu();
-    MCHECK(newmenu("Edit"));
-    MCHECK(m = newmenuitem("Copy  \tCTRL+C", 0, de_copy));
-    MCHECK(m = newmenuitem("Paste \tCTRL+V", 0, de_paste));
-    MCHECK(m = newmenuitem("Delete\tDEL", 0, de_delete));
-    MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(de_mvw = newmenuitem("Cell widths ...", 0, menudecellwidth));
-    MCHECK(m = newmenu("Help"));
-    MCHECK(newmenuitem("Data editor", 0, menudehelp));
- 
-    setdata(c, p);
-    setresize(c, deresize);
-    setredraw(c, de_redraw);
-    setdel(c, deldataeditor);
-    setclose(c, declose);
-    sethit(c, de_sbf);
-    setkeyaction(c, de_ctrlkeyin);
-    setkeydown(c, de_normalkeyin);
-    setmousedown(c, de_mousedown);
-    setmouseup(c, de_mouseup);
-    return(c);
-}

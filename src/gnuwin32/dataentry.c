@@ -38,7 +38,7 @@
 static dataeditor de;
 static ConsoleData p;
 
-extern int R_de_up;
+static int R_de_up;
 
 #ifndef max
 #define max(a, b) (((a)>(b))?(a):(b))
@@ -58,7 +58,7 @@ static void cleararea(int, int, int, int, rgb);
 static void clearrect();
 static void closerect();
 static void clearwindow();
-void de_closewin();
+static void de_closewin();
 static void copyarea(int, int, int, int);
 static void copyH(int, int, int);
 static void deredraw();
@@ -81,10 +81,13 @@ static void printlabs();
 static void printrect(int, int);
 static void printstring(char*, int, int, int, int);
 static void printelt(SEXP, int, int, int);
-void de_copy(control c);
-void de_paste(control c);
-void de_delete(control c);
-extern menuitem de_mvw;
+static void setcellwidths();
+
+static dataeditor newdataeditor();
+static void de_copy(control c);
+static void de_paste(control c);
+static void de_delete(control c);
+static menuitem de_mvw;
 
 static SEXP inputlist;  /* each element is a vector for that row */
 static SEXP ssNA_STRING;
@@ -135,9 +138,6 @@ static int oldWIDTH=0, oldHEIGHT=0;
 static int nboxchars=0;
 
 
-char *demenuitems[20];
-
-
 void R_ProcessEvents(); /* in system.c */
 
 static void eventloop()
@@ -176,7 +176,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
     REAL(tvec)[0] = ssNA_REAL;
     PROTECT(ssNA_STRING = coerceVector(tvec, STRSXP)); nprotect++;
     bwidth = 0;
-    hwidth = 0;
+    hwidth = 5;
 
     /* setup inputlist  */
 
@@ -279,12 +279,10 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static rgb bbg;
 
-
-void drawwindow()
+static void setcellwidths()
 {
     int i, w, dw;
 
-    /* might have resized */
     windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
     nwide = 2;
     for (i = 2; i < 100; i++) { /* 100 on-screen columns cannot occur */
@@ -295,8 +293,17 @@ void drawwindow()
 	    break;
 	}
     }
+}
+
+
+static void drawwindow()
+{
+    int i;
+
+    /* might have resized */
+    setcellwidths();
     nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
-    windowHeight = nhigh * box_h + 2 * bwidth;
+    windowHeight = nhigh * box_h + 2 * bwidth + hwidth;
     oldWIDTH = WIDTH;
     oldHEIGHT = HEIGHT;
     
@@ -319,22 +326,13 @@ void drawwindow()
     highlightrect();
 }
 
-void doHscroll(int oldcol)
+static void doHscroll(int oldcol)
 {
-    int i, w, dw;
+    int i, dw;
     int oldnwide = nwide, oldwindowWidth = windowWidth;
 
     /* horizontal re-position */
-    windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
-    nwide = 2;
-    for (i = 2; i < 100; i++) {
-	dw = BOXW(i + colmin - 1);
-	if((w += dw) > WIDTH) {
-	    nwide = i;
-	    windowWidth = w - dw;
-	    break;
-	}
-    }
+    setcellwidths();
     colmax = colmin + (nwide - 2);
     if (oldcol < colmin) { /* drop oldcol...colmin-1 */
 	dw = boxw[0];
@@ -359,7 +357,7 @@ void doHscroll(int oldcol)
 /* find_coords finds the coordinates of the upper left corner of the
    given cell on the screen: row and col are on-screen coords */
 
-void find_coords(int row, int col, int *xcoord, int *ycoord)
+static void find_coords(int row, int col, int *xcoord, int *ycoord)
 {
     int i, w;
     w = bwidth;
@@ -371,7 +369,7 @@ void find_coords(int row, int col, int *xcoord, int *ycoord)
 
 /* draw the window with the top left box at column wcol and row wrow */
 
-void jumpwin(int wcol, int wrow)
+static void jumpwin(int wcol, int wrow)
 {
     if (wcol < 0 || wrow < 0) {
 	bell();
@@ -385,7 +383,7 @@ void jumpwin(int wcol, int wrow)
     } else highlightrect();
 }
 
-void advancerect(int which)
+static void advancerect(int which)
 {
 
     /* if we are in the header, changing a name then only down is
@@ -493,7 +491,7 @@ static CellType get_col_type(int col)
 
 
 /* whichcol is absolute col no, col is position on screen */
-void drawcol(int whichcol)
+static void drawcol(int whichcol)
 {
     int i, src_x, src_y, len, col = whichcol - colmin + 1, bw = BOXW(whichcol);
     char *clab;
@@ -521,7 +519,7 @@ void drawcol(int whichcol)
 
 
 /* whichrow is absolute row no */
-void drawrow(int whichrow)
+static void drawrow(int whichrow)
 {
     int i, src_x, src_y, lenip, row = whichrow - rowmin + 1, w;
     char rlab[15];
@@ -557,7 +555,7 @@ void drawrow(int whichrow)
 /* WARNING: This has no check that you're not beyond the end of the
    vector. Caller must check. */
 
-void printelt(SEXP invec, int vrow, int ssrow, int sscol)
+static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
 {
     char *strp;
     PrintDefaults(R_NilValue);
@@ -598,7 +596,7 @@ static void drawelt(int whichrow, int whichcol)
     }
 }
 
-void jumppage(int dir)
+static void jumppage(int dir)
 {
     int i, w, oldcol, wcol;
 
@@ -640,7 +638,7 @@ void jumppage(int dir)
 }
 /* draw a rectangle, used to highlight/downlight the current box */
 
-void printrect(int lwd, int fore)
+static void printrect(int lwd, int fore)
 {
     int x, y;
     find_coords(crow, ccol, &x, &y);
@@ -649,13 +647,13 @@ void printrect(int lwd, int fore)
 		  box_h - lwd + 1, lwd, fore);
 }
 
-void downlightrect()
+static void downlightrect()
 {
     printrect(2, 0);
     printrect(1, 1);
 }
 
-void highlightrect()
+static void highlightrect()
 {
     printrect(2, 1);
 }
@@ -711,7 +709,7 @@ static SEXP getccol()
 
 extern double R_strtod(char *c, char **end); /* in coerce.c */
 
-void closerect()
+static void closerect()
 {
     SEXP cvec, c0vec, tvec;
     int wcol = ccol + colmin - 1, wrow = rowmin + crow - 1, wrow0;
@@ -776,14 +774,14 @@ void closerect()
    the print area and print it, left adjusted if necessary; clear the
    area of previous text; */
 
-void printstring(char *ibuf, int buflen, int row, int col, int left)
+static void printstring(char *ibuf, int buflen, int row, int col, int left)
 {
     int x_pos, y_pos, bw, fw;
     char buf[45], *pc = buf;
 
     find_coords(row, col, &x_pos, &y_pos);
     if (col == 0) bw = boxw[0]; else bw = BOXW(col+colmin-1);
-    cleararea(x_pos + 2, y_pos + 2, bw - 3, box_h - 3,
+    cleararea(x_pos + 1, y_pos + 1, bw - 1, box_h - 1,
 	      (row==0 || col==0) ? bbg:p->bg);
     strncpy(buf, ibuf, buflen);
     buf[buflen] = '\0';
@@ -800,7 +798,7 @@ void printstring(char *ibuf, int buflen, int row, int col, int left)
     de_drawtext(x_pos + text_xoffset, y_pos - text_yoffset, pc);
 }
 
-void clearrect()
+static void clearrect()
 {
     int x_pos, y_pos;
     find_coords(crow, ccol, &x_pos, &y_pos);
@@ -813,7 +811,7 @@ void clearrect()
 
 /* --- Not true! E.g. ESC ends up in here... */
 
-void handlechar(char *text)
+static void handlechar(char *text)
 {
     int c = text[0];
 
@@ -883,7 +881,7 @@ void handlechar(char *text)
     bell();
 }
 
-void printlabs()
+static void printlabs()
 {
     char clab[10], *p;
     int i;
@@ -898,7 +896,7 @@ void printlabs()
     }
 }
 
-              /* ================ Windows-specific ================ */
+              /* ================ GraphApp-specific ================ */
 
 static void bell()
 {
@@ -936,7 +934,7 @@ static void de_drawtext(int xpos, int ypos, char *text)
 
 /* Keypress callbacks */
 
-void de_normalkeyin(control c, int k)
+static void de_normalkeyin(control c, int k)
 {
     int i, st;
     char text[1];
@@ -1003,7 +1001,7 @@ void de_normalkeyin(control c, int k)
 
 }
 
-void de_ctrlkeyin(control c, int key)
+static void de_ctrlkeyin(control c, int key)
 {
     int st, i;
 
@@ -1089,7 +1087,7 @@ static char *get_cell_text()
 
 static int online, clickline;
 
-void de_mousedown(control c, int buttons, point xy)
+static void de_mousedown(control c, int buttons, point xy)
 {
     int xw, yw, wcol=0, wrow, i, w;
 
@@ -1178,7 +1176,7 @@ void de_mousedown(control c, int buttons, point xy)
     }
 }
 
-void de_mouseup(control c, int buttons, point xy)
+static void de_mouseup(control c, int buttons, point xy)
 {
     int xw, bw, i, w;
 
@@ -1195,29 +1193,20 @@ void de_mouseup(control c, int buttons, point xy)
     }
 }
 
-void de_redraw(control c, rect r)
+static void de_redraw(control c, rect r)
 {
     deredraw();
 }
 
 static void deredraw()
 {
-    int i, w, dw;
+    int i;
 
     if (WIDTH != oldWIDTH || HEIGHT != oldHEIGHT) {
 	drawwindow();
 	return;
     }
-    windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
-    nwide = 2;
-    for (i = 2; i < 100; i++) { /* 100 on-screen columns cannot occur */
-	dw = BOXW(i + colmin - 1);
-	if((w += dw) > WIDTH) {
-	    nwide = i;
-	    windowWidth = w - dw;
-	    break;
-	}
-    }
+    setcellwidths();
 
     gfillrect(de, bbg, rect(0, 0, windowWidth, box_h));
     gfillrect(de, bbg, rect(0, 0, boxw[0], windowHeight));
@@ -1233,38 +1222,33 @@ static void deredraw()
     highlightrect();
 }
 
-void de_closewin()
+static void de_closewin()
 {
     closerect();
     hide(de);
     del(de);
 }
 
-#include <windows.h>
-extern HDC get_context(dataeditor);
-
 static void copyarea(int src_x, int src_y, int dest_x, int dest_y)
 {
     int mx = max(src_x, dest_x), my = max(src_y, dest_y);
-    HDC dc = get_context(de);
-    BitBlt(dc, dest_x, dest_y,
-	   windowWidth - mx, windowHeight - my,
-	   dc, src_x, src_y, SRCCOPY);
+    copyrect(de, pt(dest_x, dest_y),
+	     rect(src_x, src_y, windowWidth - mx, windowHeight - my));
 }
 
 static void copyH(int src_x, int dest_x, int width)
 {
-    HDC dc = get_context(de);
-    BitBlt(dc, dest_x, hwidth, width, windowHeight - hwidth,
-	   dc, src_x, hwidth, SRCCOPY);
+    copyrect(de, pt(dest_x, hwidth), 
+	     rect(src_x, hwidth, width, windowHeight - hwidth));
 }
+
+#include <windows.h> /* for COLOR_BTNFACE */
 
 static int  initwin()
 {
-    int i, w, dw;
+    int i;
     rect r;
 
-    demenuitems[0] = "";
     de = newdataeditor();
     if(!de) return 1;
     p = getdata(de);
@@ -1278,17 +1262,9 @@ static int  initwin()
     box_h = FH + 4;
     text_xoffset = 5;
     text_yoffset = -3;
-    windowWidth = w = 2*bwidth + boxw[0] + boxw[1];
-    nwide = 2;
-    for (i = 2; i < 100; i++) {
-	if((w += boxw[i]) > WIDTH) {
-	    nwide = i;
-	    windowWidth = w - boxw[i];
-	    break;
-	}
-    }
+    setcellwidths();
     nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
-    windowHeight = nhigh * box_h + 2 * bwidth - hwidth;
+    windowHeight = nhigh * box_h + 2 * bwidth + hwidth;
     r = getrect(de);
     r.width = windowWidth + 3;
     r.height = windowHeight + 3;
@@ -1303,16 +1279,7 @@ static int  initwin()
        decide if we need scrollbars here to avoid flashing*/
     nhigh = (HEIGHT - 2 * bwidth - hwidth) / box_h;
     gchangescrollbar(de, VWINSB, 0, ymaxused, nhigh, 0);
-    windowWidth = w = 2*bwidth + boxw[0] + BOXW(colmin);
-    nwide = 2;
-    for (i = 2; i < 100; i++) {
-	dw = BOXW(i + colmin - 1);
-	if((w += dw) > WIDTH) {
-	    nwide = i;
-	    windowWidth = w - dw;
-	    break;
-	}
-    }
+    setcellwidths();
     gchangescrollbar(de, HWINSB, 0, xmaxused, nwide, 0);    
     show(de);
     R_de_up = 1;
@@ -1359,10 +1326,9 @@ static void popupclose(control c)
     TAG(tvec) = install(buf);
     hide(wconf);
     del(wconf);
-//    addto(de);
 }
 
-void getscreenrect(control, rect *);
+extern void getscreenrect(control, rect *);
 
 static void nm_hit_key(window w, int key)
 {
@@ -1381,7 +1347,7 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
 		      rect(x_pos + r.x-150, y_pos + r.y-50, 300, 100),
 		      Titlebar | Closebox);
     setclose(wconf, popupclose);
-    setbackground(wconf, LightGrey);
+    setbackground(wconf, bbg);
     lwhat = newlabel("variable name", rect(10, 20, 90, 20), AlignLeft);
     varname = newfield(blah, rect(100, 20, 120, 20));
     lrb = newlabel("type", rect(50, 60, 50, 20), AlignLeft);
@@ -1393,48 +1359,20 @@ static void de_popupmenu(int x_pos, int y_pos, int col)
     show(wconf);
 }
 
-void de_copy(control c)
+static void de_copy(control c)
 {
-    HGLOBAL hglb;
-    char *s, *cell;
-    int ll;
-
-    cell = get_cell_text();
-    ll = strlen(cell) + 1;
-    if (!(hglb = GlobalAlloc(GHND, ll))){
-        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
-	return;
-    }
-    if (!(s = (char *)GlobalLock(hglb))){
-        R_ShowMessage("Insufficient memory: cell not copied to the clipboard");
-	return;
-    }
-    strcpy(s, cell);
-    GlobalUnlock(hglb);
-    if (!OpenClipboard(NULL) || !EmptyClipboard()) {
-        R_ShowMessage("Unable to open the clipboard");
-        GlobalFree(hglb);
-        return;
-    }
-    SetClipboardData(CF_TEXT, hglb);
-    CloseClipboard();
+    copystringtoclipboard(get_cell_text());
 }
 
-void de_paste(control c)
+static void de_paste(control c)
 {
-    HGLOBAL hglb;
-    char *p, *pc;
+    char *p;
 
     closerect();
-    if ( OpenClipboard(NULL) &&
-         (hglb = GetClipboardData(CF_TEXT)) &&
-         (pc = (char *)GlobalLock(hglb))) {
-	/* set current cell to first line of pc */
+    if ( clipboardhastext() &&
+	 !getstringfromclipboard(buf, 29) ) {
+	/* set current cell to first line of clipboard */
 	CellModified = 1;
-	strncpy(buf, pc, 29);
-        GlobalUnlock(hglb);
-	CloseClipboard();
-	buf[30] = '\0';
 	if ((p = strchr(buf, '\n'))) *p = '\0';
 	clength = strlen(buf);
 	bufp = buf + clength;
@@ -1443,7 +1381,7 @@ void de_paste(control c)
     highlightrect();
 }
 
-void de_delete(control c)
+static void de_delete(control c)
 {
     CellModified = 1;
     buf[0] = '\0';
@@ -1453,7 +1391,7 @@ void de_delete(control c)
     highlightrect();
 }
 
-void de_autosize(control c)
+static void de_autosize(control c)
 {
     int col = ccol + colmin - 1;
     if(col < 100) {
@@ -1462,7 +1400,7 @@ void de_autosize(control c)
     }
 }
 
-void de_sbf(control c, int pos)
+static void de_sbf(control c, int pos)
 {
     if (pos < 0) { /* horizontal */
 	colmin = 1 + (-pos - 1);
@@ -1473,7 +1411,6 @@ void de_sbf(control c, int pos)
     drawwindow();
 }
 
-extern menuitem de_mvw;
 static checkbox varwidths;
 
 static void vw_close(control c)
@@ -1510,7 +1447,7 @@ static void de_popup_vw()
 		      rect(0, 0, 250, 60),
 		      Titlebar | Centered | Closebox);
     setclose(devw, vw_close);
-    setbackground(devw, LightGrey);
+    setbackground(devw, bbg);
     lwhat = newlabel("Cell width", rect(10, 20, 70, 20), AlignLeft);
     sprintf(blah, "%d", nboxchars);
     varname = newfield(blah, rect(80, 20, 40, 20));
@@ -1523,7 +1460,141 @@ static void de_popup_vw()
     show(devw);
 }
 
-void menudecellwidth(control m)
+static void menudecellwidth(control m)
 {
     de_popup_vw();
+}
+
+static void deldataeditor(control m)
+{
+    freeConsoleData(getdata(m));
+}
+
+static void declose(control m)
+{
+    de_closewin();
+    show(RConsole);
+    R_de_up =0;
+}
+
+static void deresize(console c, rect r)
+FBEGIN
+    if (((WIDTH  == r.width) &&
+	 (HEIGHT == r.height)) ||
+	(r.width == 0) || (r.height == 0) ) /* minimize */
+        FVOIDRETURN;
+    WIDTH = r.width;
+    HEIGHT = r.height;
+FVOIDEND
+
+static void menudehelp(control m)
+{
+    char s[] = "Navigation.\n  Keyboard: cursor keys move selection\n\tTab move right, Shift+Tab moves left\n\tPgDn or Ctrl+F: move down one screenful\n\tPgUp or Ctrl+B: move up one screenful\n\tHome: move to (1,1) cell\n\tEnd: show last rows of last column.\n   Mouse: left-click in a cell, use the scrollbar(s).\n\nEditing.\n  Type in the currently hightlighted cell\n  Double-click in a cell for an editable field\n\nMisc.\n  Ctrl-L redraws the screen, auto-resizing the columns\n  Ctrl-C copies selected cell\n  Ctrl-V pastes to selected cell\n  Right-click menu for copy, paste, autosize currently selected column\n\n";
+    askok(s);
+}
+
+
+static MenuItem DePopup[28] = {
+    {"Help", menudehelp, 0},
+    {"-", 0, 0},
+    {"Copy selected cell", de_copy, 0},
+    {"Paste selected cell", de_paste, 0},
+    {"Autosize column", de_autosize, 0},
+    {"-", 0, 0},
+    {"Close", declose, 0},
+    LASTMENUITEM
+};
+
+static void demenuact(control m)
+{
+    /* use this to customize the menu */
+}
+
+static void depopupact(control m)
+{
+    /* use this to customize the menu */
+}
+
+
+#define MCHECK(a) if (!(a)) {del(c);return NULL;}
+
+static dataeditor newdataeditor()
+{
+    ConsoleData p;
+    int w, h, x, y;
+    dataeditor c;
+    menuitem m;
+    
+    p = newconsoledata((consolefn) ? consolefn : FixedFont,
+		       pagerrow, pagercol,
+		       consolefg, consoleuser, consolebg,
+		       DATAEDITOR);
+    if (!p) return NULL;
+
+    w = WIDTH ;
+    h = HEIGHT;
+#ifdef USE_MDI
+    if (ismdi()) {
+	RECT *pR = RgetMDIsize();
+	x = (pR->right - w) / 3; x = x > 20 ? x:20;
+	y = (pR->bottom - h) / 3; y = y > 20 ? y:20;
+    } else {
+#endif
+	x = (devicewidth(NULL) - w) / 3;
+	y = (deviceheight(NULL) - h) / 3 ;
+#ifdef USE_MDI
+    }
+#endif
+    c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
+			       Document | StandardWindow | TrackMouse |
+			       VScrollbar | HScrollbar | Modal);
+    if (!c) {
+         freeConsoleData(p);
+         return NULL;
+    }
+    setdata(c, p);
+    if(h == 0) HEIGHT = getheight(c);
+    if(w == 0) WIDTH  = getwidth(c);
+    COLS = WIDTH / FW - 1;
+    ROWS = HEIGHT / FH - 1;
+    BORDERX = (WIDTH - COLS*FW) / 2;
+    BORDERY = (HEIGHT - ROWS*FH) / 2;
+    gsetcursor(c, ArrowCursor);
+    setbackground(c, consolebg);
+    if (ismdi() && (RguiMDI & RW_TOOLBAR)) {
+	/* blank toolbar to stop windows jumping around */
+        int btsize = 24;
+        control tb;
+        addto(c);
+        MCHECK(tb = newtoolbar(btsize + 4));
+	gsetcursor(tb, ArrowCursor);
+    }
+    MCHECK(gpopup(depopupact, DePopup));
+    MCHECK(m = newmenubar(demenuact));
+    MCHECK(newmenu("File"));
+/*    MCHECK(m = newmenuitem("-", 0, NULL));*/
+    MCHECK(m = newmenuitem("Close", 0, declose));
+#ifdef USE_MDI
+    newmdimenu();
+#endif
+    MCHECK(newmenu("Edit"));
+    MCHECK(m = newmenuitem("Copy  \tCTRL+C", 0, de_copy));
+    MCHECK(m = newmenuitem("Paste \tCTRL+V", 0, de_paste));
+    MCHECK(m = newmenuitem("Delete\tDEL", 0, de_delete));
+    MCHECK(m = newmenuitem("-", 0, NULL));
+    MCHECK(de_mvw = newmenuitem("Cell widths ...", 0, menudecellwidth));
+    MCHECK(m = newmenu("Help"));
+    MCHECK(newmenuitem("Data editor", 0, menudehelp));
+ 
+    setdata(c, p);
+    setresize(c, deresize);
+    setredraw(c, de_redraw);
+    setdel(c, deldataeditor);
+    setclose(c, declose);
+    sethit(c, de_sbf);
+    setkeyaction(c, de_ctrlkeyin);
+    setkeydown(c, de_normalkeyin);
+    setmousedown(c, de_mousedown);
+    setmouseup(c, de_mouseup);
+    return(c);
 }
