@@ -2819,3 +2819,15 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     return ans;
 }
+
+/* This function allows C code to call the write method of a
+   connection.  It is mainly intended as a means for C code to do a
+   buffered write to sockets, but could be the start of a more
+   extensive C-level connection API.  LT */
+size_t R_WriteConnection(Rconnection con, void *buf, size_t n)
+{
+    if(!con->isopen) error("connection is not open");
+    if(!con->canwrite) error("cannot write to this connection");
+
+    return con->write(buf, 1, n, con);
+}
