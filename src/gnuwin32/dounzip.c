@@ -18,9 +18,11 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include "Defn.h"
-/* From system.c */
-void (*my_message)(char *s);
 
 static int unzip_is_loaded = 0;
 static int Load_Unzip_DLL();

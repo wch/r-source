@@ -20,6 +20,11 @@
 
 
 /* extra commands for R */
+
+#ifdef HAVE_CONFIG_H
+#include <Rconfig.h>
+#endif
+
 #include <stdio.h>
 #include "Defn.h"
 #include "Fileio.h"
