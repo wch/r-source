@@ -793,6 +793,10 @@ BUG FIXES
 
     o	D(), deriv() and deriv3() now also can deal with gamma and lgamma.
 
+    o   The X11 module can now be built against XFree86 4.4.0 headers (still
+	with some warnings).
+ 
+
 
 
 	**************************************************
