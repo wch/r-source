@@ -108,6 +108,31 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (LENGTH(this) < 1)
 		    errorcall(call, _("zero-length argument"));
 
+		/* Now let us see if some minimal coercion would be sensible.
+		   Do not need to PROTECT as no R allocation takes place.
+		 */
+		switch(tolower(fmt[strlen(fmt) - 1])) {
+		case 'd':
+		case 'i':
+		    if(TYPEOF(this) == REALSXP) {
+			double r = REAL(this)[0];
+			if((double)((int) r) == r)
+			    this = coerceVector(this, INTSXP);
+		    }
+		    break;
+		case 'e':
+		case 'f':
+		case 'g':
+		    if(TYPEOF(this) == INTSXP || TYPEOF(this) == LGLSXP)
+			this = coerceVector(this, REALSXP);
+		    break;
+		case 's':
+		    this = coerceVector(this, STRSXP);
+		    break;
+		default:
+		    break;
+		}
+
 		switch(TYPEOF(this)) {
 		case LGLSXP:
 		{
@@ -116,7 +141,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			error("%s", 
 			      _("use format %d or %i for logical objects"));
 		    if (x == NA_LOGICAL) {
-			fmt[chunk-1] = 's';
+			fmt[strlen(fmt)-1] = 's';
 			sprintf(bit, fmt, "NA");
 		    } else
 			sprintf(bit, fmt, x);
@@ -129,7 +154,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			error("%s",
 			      _("use format %d, %i or %x for integer objects"));
 		    if (x == NA_INTEGER) {
-			fmt[chunk-1] = 's';
+			fmt[strlen(fmt)-1] = 's';
 			sprintf(bit, fmt, "NA");
 		    } else
 			sprintf(bit, fmt, x);
@@ -148,7 +173,7 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (p) {
 			    *p++ = 's'; *p ='\0';
 			} else
-			    fmt[chunk-1] = 's';
+			    fmt[strlen(fmt)-1] = 's';
 			if (ISNA(x)) {
 			    if (strcspn(fmt, " ") < strlen(fmt))
 				sprintf(bit, fmt, " NA");

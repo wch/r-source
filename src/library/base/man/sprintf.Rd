@@ -26,11 +26,11 @@ sprintf(fmt, \dots)
   string \code{fmt} contains normal characters, which are passed through
   to the output string, and also special characters that operate on the
   arguments provided through \code{\dots}.  Special characters start
-  with a \code{\%} and terminate with one of the letters in the set
+  with a \code{\%} and end with one of the letters in the set
   \code{difeEgGsx\%}.  These letters denote the following types:
 
   \describe{
-    \item{\code{d,i,x}}{Integer value, \code{x} being hexadecimal.}
+    \item{\code{d, i, x}}{Integer value, \code{x} being hexadecimal.}
 
     \item{\code{f}}{Double precision value, in decimal notation of the
       form "[-]mmm.ddd".  The number of decimal places is specified by
@@ -38,11 +38,11 @@ sprintf(fmt, \dots)
       decimal point.
     }
     
-    \item{\code{e,E}}{Double precision value, in decimal notation of the
+    \item{\code{e, E}}{Double precision value, in decimal notation of the
       form \code{[-]m.ddde[+-]xx} or \code{[-]m.dddE[+-]xx}.
     }
 
-    \item{\code{g,G}}{Double precision value, in \code{\%e} or
+    \item{\code{g, G}}{Double precision value, in \code{\%e} or
       \code{\%E} format if the exponent is less than -4 or greater than or
       equal to the precision, and \code{\%f} format otherwise.
     }
@@ -52,7 +52,11 @@ sprintf(fmt, \dots)
     \item{\code{\%}}{Literal \code{\%} (none of the formatting
       characters given below are permitted in this case).}
   }
-
+  Integer and logical variables will be coerced to numeric for use with
+  \code{f, e, E, g, G}, numeric values that are exactly integer will be
+  coerced for use with \code{d, i, x}, and the internal equivalent of
+  \code{\link{as.character}} is used with \code{s}.
+  
   In addition, between the initial \code{\%} and the terminating
   conversion character there may be, in any order:
 

@@ -228,6 +228,8 @@ NEW FEATURES
     o	sprintf() has enhanced to allow the POSIX/XSI specifiers like
 	"%2$6d".
 
+	sprintf() now does limited coercion of its arguments.
+
 
 INTERNATIONALIZATION
 
