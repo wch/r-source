@@ -1,18 +1,18 @@
 \name{sys.parent}
 \title{Functions to Access the Function Call Stack}
 \usage{
-sys.call(which=<<see below>>)
-sys.frame(which=<<see below>>)
+sys.call(which = 0)
+sys.frame(which = 0)
 sys.nframe()
-sys.function(n=<<see below>>)
-sys.parent(n=1)
+sys.function(n = 0)
+sys.parent(n = 1)
 
 sys.calls()
 sys.frames()
 sys.parents()
 sys.on.exit()
 sys.status()
-parent.frame(n=1)
+parent.frame(n = 1)
 }
 \alias{sys.parent}
 \alias{sys.call}
@@ -26,7 +26,8 @@ parent.frame(n=1)
 \alias{sys.status}
 \alias{parent.frame}
 \arguments{
-\item{which}{the frame number.}
+\item{which}{the frame number if non-negative, the number of generations
+  to go back if negative. (See the Details section.)}
 \item{n}{the number of frame generations to go back.}
 }
 \description{
@@ -44,14 +45,22 @@ parent.frame(n=1)
   number of the current evaluation, nor the environment from which it is
   called.  \code{sys.parent} returns the number of the parent frame if
   \code{n} is 1 (the default), the grandparent if \code{n} is 2, and so
-  forth. \code{sys.frame} returns the environment associated with a given
+  on. \code{sys.frame} returns the environment associated with a given
   frame number.
 
-  \code{sys.call} and \code{sys.frame} both accept either positive or
-  negative values for the argument \code{which}.  Positive values of
+  \code{sys.call} and \code{sys.frame} both accept integer values
+  for the argument \code{which}.  Non-negative values of
   \code{which} are normal frame numbers whereas negative values are counted
   back from the frame number of the current evaluation.
 
+  \code{sys.nframe} returns the number of the current frame in that
+  list. \code{sys.function} gives the definition of the function
+  curently being evaluated in the frame \code{n} generations back.
+  
+  \code{sys.frames} gives a list of all the active frames and
+  \code{sys.parents} gives the indices of the parent frames of each
+  of the frames.
+  
   Notice that even though the \code{sys.}\emph{xxx} functions are
   interpreted, their contexts are not counted nor are they reported.
   There is no access to them.
@@ -65,7 +74,7 @@ parent.frame(n=1)
   for the current frame and its parents.)
 
   \code{parent.frame(n)} is a convenient shorthand for
-  \code{sys.frame(sys.parent(n))} (implemented more efficiently).
+  \code{sys.frame(sys.parent(n))} (implemented slightly more efficiently).
 }
 \seealso{
   \code{\link{eval}} for the usage of \code{sys.frame} and \code{parent.frame}.
@@ -74,6 +83,17 @@ parent.frame(n=1)
 ff <- function(x) gg(x)
 gg <- function(y) sys.status()
 str(ff(1))
+
+gg <- function(y) {
+    ggg <- function() {
+        cat("current frame is", sys.nframe(), "\n")
+        cat("parents are", sys.parents(), "\n")
+        print(sys.function(0)) # ggg
+        print(sys.function(2)) # gg
+    }
+    if(y > 0) gg(y-1) else ggg()
+}
+gg(3)
 
 t1 <- function() {
   aa <- "here"

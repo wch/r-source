@@ -1,14 +1,14 @@
-sys.call <-function(which=0)
+sys.call <-function(which = 0)
     .Internal(sys.call(which))
 
 sys.calls <-function()
     .Internal(sys.calls())
 
-sys.frame <-function(which=0)
+sys.frame <-function(which = 0)
     .Internal(sys.frame(which))
 
-sys.function <-function(which=0)
-    .Internal(sys.function(which))
+sys.function <-function(n = 0)
+    .Internal(sys.function(n))
 
 sys.frames <-function()
     .Internal(sys.frames())
