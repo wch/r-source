@@ -2911,11 +2911,11 @@ stopifnot(inherits(try(graphics::log), "try-error"))
 setHook(pkgEvent("stats4", "onLoad"),
         function(pkgname, ...) cat("onLoad", sQuote(pkgname), "\n"))
 setHook(pkgEvent("stats4", "attach"),
-        function(pkgname, ...) cat("attach", sQuote(pkgname), "\n"))
+        function(pkgname, ...) cat("attach", sQuote(pkgname) "\n"))
 setHook(pkgEvent("stats4", "detach"),
-        function(pkgname, ...) cat("detach", sQuote(pkgname, "\n"))
+        function(pkgname, ...) cat("detach", sQuote(pkgname), "\n"))
 setHook(pkgEvent("stats4", "onUnload"),
-        function(pkgname, ...) cat("onUnload", sQuote(pkgname, "\n"))
+        function(pkgname, ...) cat("onUnload", sQuote(pkgname), "\n"))
 loadNamespace("stats4")
 library("stats4")
 detach("package:stats4")
