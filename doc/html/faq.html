@@ -16,7 +16,7 @@ Next:<a rel=next href="#Introduction">Introduction</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-36, 2001-12-14</h2>
+<h2>Version 1.4-0, 2001-12-17</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -251,7 +251,7 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.3 What is the current version of R?</h2>
 
-<p>The current released version is 1.3.1.  Conforming to this
+<p>The current released version is 1.4.0.  Conforming to this
 `major.minor.patchlevel' numbering scheme, there are three development
 versions of R, working towards the next patch (`r-patched'), minor
 (`r-devel'), and major (`r-ng') releases of R, respectively.  Version
@@ -434,11 +434,11 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 <h2>2.6 Are there Unix binaries for R?</h2>
 
 <p>The <code>bin/linux</code> directory of a <small>CRAN</small> site contains Debian
-2.2/2.3 packages for the i386 platform (now part of the Debian
+potato/woody packages for the i386 platform (now part of the Debian
 distribution and maintained by Dirk Eddelbuettel), Red Hat 6.x i386, 7.x
 i386 and 7.x alpha packages (maintained by Stephen Eglen, Martyn Plummer
 and Naoki Takebayashi, respectively), SuSE 7.2 i386 packages by Albrecht
-Gebhardt, Mandrake 8.0 and 7.2 i386 packages by Michele Alzetta and
+Gebhardt, Mandrake 8.1 and 7.2 i386 packages by Michele Alzetta and
 Maximino Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
 
 <p>The Debian packages can be accessed through APT, the Debian package
@@ -736,10 +736,9 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 
 <h2>2.11 Can I use R for commercial purposes?</h2>
 
-<p>R is released under the GNU General Public License (GPL).  If you have
-any questions regarding the legality of using R in any particular
-situation you should bring it up with your legal counsel.  We are in no
-position to offer legal advice.
+<p>R is released under the <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License (GPL)</a>.  If you have any questions regarding the
+legality of using R in any particular situation you should bring it up
+with your legal counsel.  We are in no position to offer legal advice.
 
 <p>It is the opinion of the R Core Team that one can use R for commercial
 purposes (e.g., in business or in consulting).  The GPL, like all Open
@@ -1154,15 +1153,14 @@ startup file <code><code>$R_HOME</code>/library/base/R/Rprofile</code>.  Then, i
 searches for a site-wide startup profile unless the command line option
 <code>--no-site-file</code> was given.  The name of this file is taken from
 the value of the <code>R_PROFILE</code> environment variable.  If that variable
-is unset, the default is <code><code>$R_HOME</code>/etc/Rprofile</code>
-(<code><code>$R_HOME</code>/etc/Rprofile.site</code> in R 1.4.0). 
- &lt;/FIXME&gt;
-This code is loaded in package <strong>base</strong>.  Then, unless
+is unset, the default is <code><code>$R_HOME</code>/etc/Rprofile.site</code>
+(<code><code>$R_HOME</code>/etc/Rprofile</code> in versions prior to 1.4.0).  This
+code is loaded in package <strong>base</strong>.  Then, unless
 <code>--no-init-file</code> was given, R searches for a file called
 <code>.Rprofile</code> in the current directory or in the user's home
 directory (in that order) and sources it into the user workspace.  It
-then loads a saved image of the user workspace from <code>.RData</code>
- in case there is one (unless <code>--no-restore</code> was specified).  If
+then loads a saved image of the user workspace from <code>.RData</code> in
+case there is one (unless <code>--no-restore</code> was specified).  If
 needed, the functions <code>.First()</code> and <code>.Last()</code> should be
 defined in the appropriate startup profiles.
 
@@ -1385,7 +1383,6 @@ line fitting, and median polish and smoothing.
 <br><dt><strong>methods</strong>
 <dd>Formally defined methods and classes for R objects, plus other
 programming tools, as described in the Green Book. 
-(Available in R 1.4.0 or higher.) 
 <br><dt><strong>modreg</strong>
 <dd>MODern REGression: smoothing and local methods. 
 <br><dt><strong>mva</strong>
@@ -1403,7 +1400,6 @@ distribution functions.
 <dd>Interface and language bindings to Tcl/Tk <small>GUI</small> elements. 
 <br><dt><strong>tools</strong>
 <dd>Tools for package development and administration. 
-(Available in R 1.4.0 or higher.) 
 <br><dt><strong>ts</strong>
 <dd>Time Series. 
 </dl>
@@ -1454,8 +1450,6 @@ generalisation of SVD also supporting non-identity metrics and
 penalisations.  Also includes some other multiway methods. 
 <br><dt><strong>RArcInfo</strong>
 <dd>Functions to import Arc/Info V7.x coverages and data. 
-<br><dt><strong>RandomFields</strong>
-<dd>Creating random fields using various methods. 
 <br><dt><strong>RMySQL</strong>
 <dd>An interface between R and the MySQL database system. 
 <br><dt><strong>RODBC</strong>
@@ -1467,6 +1461,8 @@ penalisations.  Also includes some other multiway methods.
 <br><dt><strong>RSQLite</strong>
 <dd>Database Interface R driver for SQLite.  Embeds the SQLite database
 engine in R. 
+<br><dt><strong>RandomFields</strong>
+<dd>Creating random fields using various methods. 
 <br><dt><strong>RmSQL</strong>
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>Rwave</strong>
@@ -1800,17 +1796,21 @@ invited to give these a try, of course.  This area of <small>CRAN</small>
 currently contains
 
 <dl>
-<dt><strong>GRASS</strong>
+<dt><strong>DBI</strong>
+<dd>A common database interface (DBI) class and method definitions.  All
+classes in this package are virtual and need to be extended by the
+various DBMS implementations. 
+<br><dt><strong>DBI.RODBC</strong>
+<dd>A simple DBI front-end to the RODBC package. 
+<br><dt><strong>DBI.RPgSQL</strong>
+<dd>A simple DBI front-end to the RPgSQL package. 
+<br><dt><strong>GRASS</strong>
 <dd>Interface between the GRASS geographical information system and R, based
 on starting R from within the GRASS environment and chosen LOCATION and
 MAPSET.  Wrapper and helper functions are provided for a range of R
 functions to match the interface metadata structures. 
 <br><dt><strong>R2HTML</strong>
 <dd>Functions for exporting R objects &amp; graphics in an <small>HTML</small> document. 
-<br><dt><strong>Rdbi</strong>
-<dd>Generic framework for database access in R. 
-<br><dt><strong>Rdbi.PgSQL</strong>
-<dd>Provides methods for accessing data stored in PostgreSQL tables. 
 <br><dt><strong>StatDataML</strong>
 <dd>Read and write StatDataML. 
 <br><dt><strong>cxx</strong>
