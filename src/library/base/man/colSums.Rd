@@ -16,8 +16,8 @@ rowMeans(x, na.rm = FALSE, dims = 1)
 \arguments{
   \item{x}{an array or two or more dimensions, containing numeric,
     complex, integer or logical values.}
-  \item{na.rm}{logical. Should missing values be omitted from the
-    calculations?}
+  \item{na.rm}{logical. Should missing values (including \code{NaN})
+    be omitted from the calculations?}
   \item{dims}{Which dimensions are regarded as ``rows'' or ``columns''
     to sum over.  For \code{col*}, the sum or mean is over dimensions
     \code{dims+1, \dots}; for \code{row*} it is over dimensions
@@ -26,14 +26,23 @@ rowMeans(x, na.rm = FALSE, dims = 1)
 \details{
   These functions are equivalent to use of \code{\link{apply}} with
   \code{FUN = mean} or \code{FUN = sum} with appropriate margins, but
-  are a lot faster.
+  are a lot faster.  As they are written for speed, they blur over some
+  of the subtleties of \code{NaN} and \code{NA}.  If \code{na.rm =
+    FALSE} and either \code{NaN} or \code{NA} appears in a sum, the
+  result will be one of \code{NaN} or \code{NA}, but which might be
+  platform-dependent.
 }
 \value{
   A numeric or complex array of suitable size, or a vector if the result is
   one-dimensional.  The \code{dimnames} (or \code{names} for a vector
   result) are taken from the original array.
+
+  If there are no non-missing values is a range to be summed over, the
+  component of the output is set to \code{NA}.
 }
-\seealso{\code{\link{apply}}}
+\seealso{
+  \code{\link{apply}}, \code{\link{rowsum}}
+}
 \examples{
 ## Compute row and column sums for a matrix:
 x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
