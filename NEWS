@@ -295,6 +295,9 @@ NEW FEATURES
           e.g. Alt-x without having the key combination also insert an
           "x" in a text widget.)
 
+        - A bunch of file handling and dialog functions (previously
+          only available via tkcmd) have been added
+
     o   step() is now closer to stepAIC() and so handles a wider range
 	of objects (but stepAIC [in MASS] is still more powerful).
 

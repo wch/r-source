@@ -13,7 +13,7 @@
             paste("-",x,sep="")
         else ""
 
-    isCallback <- function(x) 
+    isCallback <- function(x)
 	is.function(x) || is.call(x) || is.expression(x)
 
     makeAtomicCallback <- function(x, e) {
@@ -22,7 +22,7 @@
 	if (is.call(x)){
 	    if(identical(x[[1]], as.name("break")))
 		return("break")
-	    if(identical(x[[1]], as.name("function"))) 
+	    if(identical(x[[1]], as.name("function")))
                 x <- eval(x, e)
         }
 	.Tcl.callback(x, e)
@@ -34,7 +34,7 @@
 	else
 	    makeAtomicCallback(x, e)
     }
-	
+
     ## Convert arguments. Callbacks and windows require special treatment
     ## everything else is converted to strings
     val2string <- function(x) {
@@ -44,7 +44,7 @@
 	    # Jump through some hoops to protect from GC...
 	    e <- parent.frame()
 	    ref <- local({value<-x; envir<-e; environment()})
-            callback <- makeCallback(get("value",envir=ref), 
+            callback <- makeCallback(get("value",envir=ref),
 		                     get("envir",envir=ref))
 	    callback <- paste("{", callback, "}")
             assign(callback, ref, envir=current.win$env)
@@ -136,11 +136,11 @@ tclvalue <- function(x) UseMethod("tclvalue")
 "tclvalue<-" <- function(x, value) UseMethod("tclvalue<-")
 
 tclvalue.tclVar <- function(x) tkcmd("set",ls(x$env))
-"tclvalue<-.tclVar" <- function(x, value) {tkcmd("set",ls(x$env), value); x} 
+"tclvalue<-.tclVar" <- function(x, value) {tkcmd("set",ls(x$env), value); x}
 
 tclvalue.default <- function(x) tkcmd("set", as.character(x))
-"tclvalue<-.default" <- function(x, value) 
-   {tkcmd("set", as.character(x), value); x} 
+"tclvalue<-.default" <- function(x, value)
+   {tkcmd("set", as.character(x), value); x}
 
 as.character.tclVar <- function(x) ls(x$env)
 # Actually makes .default and .tclVar methods equivalent, the latter
@@ -244,6 +244,20 @@ tkXselection.own    <- function(...) tkcmd("selection", "own", ...)
 tkwait.variable  <- function(...) tkcmd("tkwait", "variable", ...)
 tkwait.visibility<- function(...) tkcmd("tkwait", "visibility", ...)
 tkwait.window    <- function(...) tkcmd("tkwait", "window", ...)
+
+## Standard dialogs
+tkgetOpenFile    <- function(...) tkcmd("tk_getOpenFile", ...)
+tkgetSaveFile    <- function(...) tkcmd("tk_getSaveFile", ...)
+tkmessageBox     <- function(...) tkcmd("tk_messageBox", ...)
+
+
+## File handling functions
+
+tkfile.tail      <- function(...) tkcmd("file", "tail", ...)
+tkfile.dir       <- function(...) tkcmd("file", "dir", ...)
+tkopen           <- function(...) tkcmd("open", ...)
+tkclose          <- function(...) tkcmd("close", ...)
+tkputs           <- function(...) tkcmd("puts", ...)
 
 ## Tkwinfo actually has a bazillion subcommands, but it's rarely
 ## used, so let's be lazy
@@ -419,6 +433,9 @@ tkyposition     <- function(widget, ...) tkcmd(widget, "ypositions", ...)
 tkyview         <- function(widget, ...) tkcmd(widget, "yview", ...)
 tkyview.moveto  <- function(widget, ...)tkcmd(widget, "yview", "moveto", ...)
 tkyview.scroll  <- function(widget, ...)tkcmd(widget, "yview", "scroll", ...)
+
+
+
 
 tkpager <- function(file, header, title, delete.file)
 {
