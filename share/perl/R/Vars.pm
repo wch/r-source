@@ -60,8 +60,12 @@ if($OSTYPE eq "windows"){
     $R_EXE = "Rterm.exe";
     $R_CMD = "Rcmd.exe";
     getenv("TMPDIR", "TMPDIR", "C:/TEMP");
-    $TMPDIR = "" unless (-d $TMPDIR);
-    $TMPDIR =~ s+\\+/+g;  ## ensure forward slashes only
+    if (-d $TMPDIR) {
+	$TMPDIR = Win32::GetShortPathName($TMPDIR) if $TMPDIR =~ / /;
+	$TMPDIR =~ s+\\+/+g;  ## ensure forward slashes only
+    } else {
+	$TMPDIR = "" 
+    }
 }
 else{
     if($R_HOME){
