@@ -691,7 +691,8 @@ SEXP do_subset2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     if(isPairList(x)) {
 	ans = CAR(nthcdr(x, offset));
-	SET_NAMED(ans, NAMED(x));
+	if (NAMED(x) > NAMED(ans))
+	    SET_NAMED(ans, NAMED(x));
     }
     else if(isVectorList(x)) {
 	ans = duplicate(VECTOR_ELT(x, offset));
@@ -818,7 +819,8 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 	    switch(pstrmatch(TAG(y), input, slen)) {
 	    case EXACT_MATCH:
 		y = CAR(y);
-		SET_NAMED(y, NAMED(x));
+		if (NAMED(x) > NAMED(y))
+		    SET_NAMED(y, NAMED(x));
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
@@ -830,7 +832,8 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 	}
 	if (havematch == 1) {
 	    y = CAR(xmatch);
-	    SET_NAMED(y, NAMED(x));
+	    if (NAMED(x) > NAMED(y))
+		SET_NAMED(y, NAMED(x));
 	    return y;
 	}
 	return R_NilValue;
@@ -845,7 +848,8 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 	    switch(pstrmatch(STRING_ELT(nlist, i), input, slen)) {
 	    case EXACT_MATCH:
 		y = VECTOR_ELT(x, i);
-		SET_NAMED(y, NAMED(x));
+		if (NAMED(x) > NAMED(y))
+		    SET_NAMED(y, NAMED(x));
 		return y;
 	    case PARTIAL_MATCH:
 		havematch++;
@@ -857,7 +861,8 @@ SEXP R_subset3_dflt(SEXP x, SEXP input)
 	}
 	if(havematch ==1) {
 	    y = VECTOR_ELT(x, imatch);
-	    SET_NAMED(y, NAMED(x));
+	    if (NAMED(x) > NAMED(y))
+		SET_NAMED(y, NAMED(x));
 	    return y;
 	}
 	return R_NilValue;

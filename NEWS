@@ -602,6 +602,8 @@ BUG FIXES
     o   The c() function sometimes inserted garbage in the name vector
         for some types of objects, e.g.  names(c(ls,a=1)).
 
+    o   Fixed bug in `$' that could cause mutations on assignment (PR#1450).
+
 
 	**************************************************
 	*						 *
