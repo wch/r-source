@@ -235,6 +235,8 @@ NEW FEATURES
     o	Coercion from real to integer now gives NA for out-of-range
 	values, rather than the most extreme integer of the same sign.
 
+    o	lm() now passes `...' to the low level functions for regression
+	fitting.
 
 
 BUG FIXES
