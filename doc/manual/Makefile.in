@@ -12,15 +12,15 @@ include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 SOURCES_TEXI = R-FAQ.texi R-data.texi R-exts.texi R-intro.texi R-lang.texi
+INSTFILES = Rd.sty hyperref.cfg omsaer.fd omsaett.fd omscmtt.fd
 DISTFILES = \
+	$(INSTFILES) \
 	README \
 	Makefile.in Makefile.win \
 	R-defs.texi dir texinfo.tex \
 	$(SOURCES_TEXI) \
 	resources.texi \
 	R-exts.R R-exts.c R-intro.R \
-	Rd.sty hyperref.cfg \
-	omsaer.fd omsaett.fd omscmtt.fd \
 	refman.top refman.bot
 SUBDIRS = images
 
@@ -238,8 +238,8 @@ install-pdf: pdf installdirs
 	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir); \
 	done
 install-tex:
-	@for f in $(srcdir)/Rd.sty; do \
-	  $(INSTALL_DATA) $${f} $(rhome)/$(subdir) ; \
+	@for f in $(INSTFILES); do \
+	  $(INSTALL_DATA) $(srcdir)/$${f} $(rhome)/$(subdir) ; \
 	done
 
 $(infodir)/dir:
@@ -273,7 +273,7 @@ uninstall-pdf:
 mostlyclean: clean
 clean:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  rm -rf Rd.sty images; \
+	  rm -rf $(INSTFILES) images; \
 	fi
 	@-rm -f *.aux *.cp *.cps *.dvi *.fn *.fns *.html *.info* \
 	  *.ky *.kys *.log *.out *.pdf *.pg *.pgs *.ps *.ps-2 *.tmp \
