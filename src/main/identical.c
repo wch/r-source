@@ -174,6 +174,7 @@ static Rboolean compute_identical(SEXP x, SEXP y)
   case ENVSXP:
   case SYMSXP:
   case EXTPTRSXP:
+  case WEAKREFSXP:
     return(x == y ? TRUE : FALSE);
     /*  case PROMSXP: */
     /* test for equality of the substituted expression -- or should

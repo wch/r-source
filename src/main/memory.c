@@ -356,6 +356,7 @@ static int R_NodesInUse = 0;
   case INTSXP: \
   case REALSXP: \
   case CPLXSXP: \
+  case WEAKREFSXP: \
     break; \
   case STRSXP: \
   case EXPRSXP: \
@@ -821,42 +822,81 @@ static SEXP R_weak_refs = NULL;
 #define CLEAR_FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp &= ~FINALIZE_ON_EXIT_MASK)
 #define FINALIZE_ON_EXIT(s) ((s)->sxpinfo.gp & FINALIZE_ON_EXIT_MASK)
 
-#define WEAKREF_NEXT(s) CDR(s)
-#define WEAKREF_VALUE(s) R_NilValue
-#define WEAKREF_KEY(s) CAR(s)
-#define WEAKREF_FINALIZER(s) TAG(s)
+#define WEAKREF_SIZE 4
+#define WEAKREF_KEY(w) VECTOR_ELT(w, 0)
+#define SET_WEAKREF_KEY(w, k) SET_VECTOR_ELT(w, 0, k)
+#define WEAKREF_VALUE(w) VECTOR_ELT(w, 1)
+#define SET_WEAKREF_VALUE(w, v) SET_VECTOR_ELT(w, 1, v)
+#define WEAKREF_FINALIZER(w) VECTOR_ELT(w, 2)
+#define SET_WEAKREF_FINALIZER(w, f) SET_VECTOR_ELT(w, 2, f)
+#define WEAKREF_NEXT(w) VECTOR_ELT(w, 3)
+#define SET_WEAKREF_NEXT(w, n) SET_VECTOR_ELT(w, 3, n)
+
+static SEXP MakeCFinalizer(R_CFinalizer_t cfun);
 
 static SEXP NewWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit)
 {
     SEXP w;
 
     switch (TYPEOF(key)) {
+    case NILSXP:
     case ENVSXP:
     case EXTPTRSXP:
 	break;
     default: error("can only weakly reference/finalize reference objects");
     }
 	
-    PROTECT(val);
+    PROTECT(key);
+    PROTECT(val = NAMED(val) ? duplicate(val) : val);
     PROTECT(fin);
-    w  = CONS(key, R_weak_refs);
-    SET_TAG(w, fin);
-    CLEAR_READY_TO_FINALIZE(w);
-    if (onexit)
-	SET_FINALIZE_ON_EXIT(w);
-    else
-	CLEAR_FINALIZE_ON_EXIT(w);
-    R_weak_refs = w;
-    UNPROTECT(2);
+    w = allocVector(VECSXP, WEAKREF_SIZE);
+    SET_TYPEOF(w, WEAKREFSXP);
+    if (key != R_NilValue) {
+	/* If the key is R_NilValue we don't register the weak reference.
+	   This is used in loading saved images. */
+        SET_WEAKREF_KEY(w, key);
+	SET_WEAKREF_VALUE(w, val);
+	SET_WEAKREF_FINALIZER(w, fin);
+	SET_WEAKREF_NEXT(w, R_weak_refs);
+	CLEAR_READY_TO_FINALIZE(w);
+	if (onexit)
+	    SET_FINALIZE_ON_EXIT(w);
+	else
+	    CLEAR_FINALIZE_ON_EXIT(w);
+	R_weak_refs = w;
+    }
+    UNPROTECT(3);
     return w;
 }
 
+SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit)
+{
+    switch (TYPEOF(fin)) {
+    case NILSXP:
+    case CLOSXP:
+    case BUILTINSXP:
+    case SPECIALSXP:
+	break;
+    default: error("finalizer must be a function or NULL");
+    }
+    return NewWeakRef(key, val, fin, onexit);
+}
+
+SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit)
+{
+    SEXP w;
+    PROTECT(key);
+    PROTECT(val);
+    w = NewWeakRef(key, val, MakeCFinalizer(fin), onexit);
+    UNPROTECT(2);
+    return w;
+}
 
 static void CheckFinalizers(void)
 {
     SEXP s;
     for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s))
-	if (! NODE_IS_MARKED(CAR(s)) && ! IS_READY_TO_FINALIZE(s))
+	if (! NODE_IS_MARKED(WEAKREF_KEY(s)) && ! IS_READY_TO_FINALIZE(s))
 	    SET_READY_TO_FINALIZE(s);
 }
 
@@ -889,6 +929,52 @@ static R_CFinalizer_t GetCFinalizer(SEXP fun)
     /*return (R_CFinalizer_t) R_ExternalPtrAddr(fun);*/
 }
 
+SEXP R_WeakRefKey(SEXP w)
+{
+    if (TYPEOF(w) != WEAKREFSXP)
+	error("not a weak reference");
+    return WEAKREF_KEY(w);
+}
+
+SEXP R_WeakRefValue(SEXP w)
+{
+    SEXP v;
+    if (TYPEOF(w) != WEAKREFSXP)
+	error("not a weak reference");
+    v = WEAKREF_VALUE(w);
+    if (v != R_NilValue && NAMED(v) != 2)
+	SET_NAMED(v, 2);
+    return v;
+}
+
+void R_RunWeakRefFinalizer(SEXP w)
+{
+    SEXP key, fun, e;
+    if (TYPEOF(w) != WEAKREFSXP)
+	error("not a weak reference");
+    key = WEAKREF_KEY(w);
+    fun = WEAKREF_FINALIZER(w);
+    SET_WEAKREF_KEY(w, R_NilValue);
+    SET_WEAKREF_VALUE(w, R_NilValue);
+    SET_WEAKREF_FINALIZER(w, R_NilValue);
+    if (! IS_READY_TO_FINALIZE(w))
+	SET_READY_TO_FINALIZE(w); /* insures removal from list on next gc */
+    PROTECT(key);
+    PROTECT(fun);
+    if (isCFinalizer(fun)) {
+	/* Must be a C finalizer. */
+	R_CFinalizer_t cfun = GetCFinalizer(fun);
+	cfun(key);
+    }
+    else if (fun != R_NilValue) {
+	/* An R finalizer. */
+	PROTECT(e = LCONS(fun, LCONS(key, R_NilValue)));
+	eval(e, R_GlobalEnv);
+	UNPROTECT(1);
+    }
+    UNPROTECT(2);
+}
+
 static Rboolean RunFinalizers(void)
 {
     volatile SEXP s, last;
@@ -913,32 +999,17 @@ static Rboolean RunFinalizers(void)
 	    PROTECT(topExp = R_CurrentExpr);
 	    savestack = R_PPStackTop;
 	    if (! SETJMP(thiscontext.cjmpbuf)) {
-		SEXP key, fun, e;
 		R_GlobalContext = R_ToplevelContext = &thiscontext;
 
-		/* The entry in the finalization list is removed
+		/* The entry in the weak reference list is removed
 		   before running the finalizer.  This insures that a
 		   finalizer is run only once, even if running it
 		   raises an error. */
 		if (last == R_NilValue)
 		    R_weak_refs = next;
 		else
-		    SETCDR(last, next);
-		PROTECT(s);
-		key = WEAKREF_KEY(s);
-		fun = WEAKREF_FINALIZER(s);
-		if (isCFinalizer(fun)) {
-		    /* Must be a C finalizer. */
-		    R_CFinalizer_t cfun = GetCFinalizer(fun);
-		    cfun(key);
-		}
-		else {
-		    /* An R finalizer. */
-		    PROTECT(e = LCONS(fun, LCONS(key, R_NilValue)));
-		    eval(e, R_GlobalEnv);
-		    UNPROTECT(1);
-		}
-		UNPROTECT(1);
+		    SET_WEAKREF_NEXT(last, next);
+		R_RunWeakRefFinalizer(s);
 	    }
 	    endcontext(&thiscontext);
 	    R_ToplevelContext = saveToplevelContext;
@@ -964,15 +1035,7 @@ void R_RunExitFinalizers(void)
 
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit)
 {
-    switch (TYPEOF(fun)) {
-    case CLOSXP:
-    case BUILTINSXP:
-    case SPECIALSXP:
-	break;
-    default: error("finalizer must be a function");
-    }
-
-    NewWeakRef(s, R_NilValue, fun, onexit);
+    R_MakeWeakRef(s, R_NilValue, fun, onexit);
 }
 
 void R_RegisterFinalizer(SEXP s, SEXP fun)
@@ -982,13 +1045,7 @@ void R_RegisterFinalizer(SEXP s, SEXP fun)
 
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit)
 {
-    /* We need to protect s since otherwise when MakeCFinalizer is
-       called, its only link visible to the garbage collector might be
-       the one in the finalization chain, resulting in it being
-       registered as elligible for finalization. */
-    PROTECT(s);
-    NewWeakRef(s, R_NilValue, MakeCFinalizer(fun), onexit);
-    UNPROTECT(1);
+    R_MakeWeakRefC(s, R_NilValue, fun, onexit);
 }
 
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun)
@@ -1123,8 +1180,9 @@ static void RunGenCollect(int size_needed)
 
     /* identify weakly reachable nodes */
     {
-	Rboolean recheck_weak_refs = FALSE;
+	Rboolean recheck_weak_refs;
 	do {
+	    recheck_weak_refs = FALSE;
 	    for (s = R_weak_refs; s != R_NilValue; s = WEAKREF_NEXT(s)) {
 		if (NODE_IS_MARKED(WEAKREF_KEY(s))) {
 		    if (! NODE_IS_MARKED(WEAKREF_VALUE(s))) {
@@ -1800,9 +1858,9 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, nms;
     int i;
 
-    PROTECT(ans = allocVector(INTSXP, 23));
-    PROTECT(nms = allocVector(STRSXP, 23));
-    for (i = 0; i < 23; i++) {
+    PROTECT(ans = allocVector(INTSXP, 24));
+    PROTECT(nms = allocVector(STRSXP, 24));
+    for (i = 0; i < 24; i++) {
         INTEGER(ans)[i] = 0;
         SET_STRING_ELT(nms, i, R_BlankString);
     }
@@ -1826,6 +1884,7 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_STRING_ELT(nms, VECSXP, mkChar("VECSXP"));
     SET_STRING_ELT(nms, EXPRSXP, mkChar("EXPRSXP"));
     SET_STRING_ELT(nms, EXTPTRSXP, mkChar("EXTPTRSXP"));
+    SET_STRING_ELT(nms, WEAKREFSXP, mkChar("WEAKREFSXP"));
     setAttrib(ans, R_NamesSymbol, nms);
 
     BEGIN_SUSPEND_INTERRUPTS {

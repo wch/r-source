@@ -87,6 +87,7 @@ typedef unsigned int SEXPTYPE;
 #define EXPRSXP	    20	  /* expressions vectors */
 #define BCODESXP    21    /* byte code */
 #define EXTPTRSXP   22    /* external pointer */
+#define WEAKREFSXP  23    /* weak reference */
 
 #define FUNSXP      99    /* Closure or Builtin */
 
@@ -114,6 +115,7 @@ typedef enum {
     EXPRSXP	= 20,	/* expressions vectors */
     BCODESXP    = 21,   /* byte code */
     EXTPTRSXP   = 22,   /* external pointer */
+    WEAKREFSXP  = 23,   /* weak reference */
 
     FUNSXP	= 99	/* Closure or Builtin */
 } SEXPTYPE;
@@ -851,6 +853,13 @@ void R_RegisterFinalizer(SEXP s, SEXP fun);
 void R_RegisterCFinalizer(SEXP s, R_CFinalizer_t fun);
 void R_RegisterFinalizerEx(SEXP s, SEXP fun, Rboolean onexit);
 void R_RegisterCFinalizerEx(SEXP s, R_CFinalizer_t fun, Rboolean onexit);
+
+/* Weak reference interface */
+SEXP R_MakeWeakRef(SEXP key, SEXP val, SEXP fin, Rboolean onexit);
+SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit);
+SEXP R_WeakRefKey(SEXP w);
+SEXP R_WeakRefValue(SEXP w);
+void R_RunWeakRefFinalizer(SEXP w);
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);

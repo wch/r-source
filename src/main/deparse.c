@@ -750,6 +750,10 @@ static void deparse2buff(SEXP s)
 	sprintf(tpb, "<pointer: %p>\n", R_ExternalPtrAddr(s));
 	print2buff(tpb);
 	break;
+    case WEAKREFSXP:
+	sprintf(tpb, "<weak reference>\n");
+	print2buff(tpb);
+	break;
     default:
 	UNIMPLEMENTED("deparse2buff");
     }

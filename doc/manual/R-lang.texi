@@ -188,6 +188,7 @@ arguments
 @c @item BCODESXP @tab byte code
 @c </FIXME>
 @item @code{externalptr} @tab an external pointer object
+@item @code{weakref} @tab a weak reference object
 @end multitable
 @end quotation
 

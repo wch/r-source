@@ -993,6 +993,9 @@ static void NewWriteItem (SEXP s, SEXP sym_list, SEXP env_list, FILE *fp)
 	    NewWriteItem(EXTPTR_PROT(s), sym_list, env_list, fp);
 	    NewWriteItem(EXTPTR_TAG(s), sym_list, env_list, fp);
 	    break;
+	case WEAKREFSXP:
+	    /* Weak references */
+	    break;
 	case SPECIALSXP:
 	case BUILTINSXP:
 	    /* Builtin functions */

@@ -224,6 +224,7 @@ static int SubassignTypeFix(SEXP *x, SEXP *y, int stretch, int level)
     case 1916:  /* vector     <- character  */
     case 1920:  /* vector     <- expression  */
     case 1922:  /* vector     <- eternal pointer */
+    case 1923:  /* vector     <- weak reference */
     case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	if (level == 1) {
@@ -1447,6 +1448,7 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	case 1916:  /* vector     <- character  */
 	case 1920:  /* vector     <- expression */
 	case 1922:  /* vector     <- external pointer */
+	case 1923:  /* vector     <- weak reference */
 	case 1903: case 1907: case 1908: case 1999: /* functions */
 
 	    SET_VECTOR_ELT(x, offset, VECTOR_ELT(y, 0));
