@@ -513,8 +513,7 @@ SHLIBLD=ld
 SHLIBEXT=so
 
 #  We create a fake Imakefile and then run xmkmf so that we can
-#  determine PICFLAGS and SHLIBLDFLAGS.  The only platform I know
-#  of which uses DLLFLAGS is linux-elf which requires -rdynamic.
+#  determine PICFLAGS and SHLIBLDFLAGS.
 #
 #  DLLFLAGS     - flags for loading the main
 #  CPICFLAGS    - flags for compiling C library code
@@ -568,6 +567,14 @@ case "${host}" in
     ;;
   *linux)
     DLLFLAGS=-export-dynamic
+    ;;
+  *netbsd*)
+    if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
+      DLLFLAGS="-export-dynamic"
+      SHLIBLDFLAGS="-shared"
+    else
+      SHLIBLDFLAGS="-Bshareable"
+    fi
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
@@ -650,7 +657,8 @@ AC_SUBST(F2CFLAGS)
 AC_OUTPUT(Makeconf Makefile
   afm/Makefile
   demos/Makefile
-  doc/Makefile doc/keyword-test doc/manual/Makefile doc/manual/lib2tex
+  doc/Makefile doc/keyword-test doc/manual/Makefile
+  doc/manual/ABOUT.tex doc/manual/Man.tex doc/manual/lib2tex
   etc/Makefile etc/Makeconf
   src/Makefile src/appl/Makefile src/include/Makefile
   src/library/Makefile src/main/Makefile src/nmath/Makefile
