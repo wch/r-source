@@ -32,12 +32,12 @@ void PrintGreeting(void)
 	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n"
 	    "You are welcome to redistribute it under certain conditions.\n"
-	    "Type `license()' or `licence()' for distribution details.\n\n");
+	    "Type 'license()' or 'licence()' for distribution details.\n\n");
     Rprintf("R is a collaborative project with many contributors.\n"
-	    "Type `contributors()' for more information.\n\n");
-    Rprintf("Type `demo()' for some demos, `help()' for on-line help, or\n"
-            "`help.start()' for a HTML browser interface to help.\n"
-	    "Type `q()' to quit R.\n\n");
+	    "Type 'contributors()' for more information.\n\n");
+    Rprintf("Type 'demo()' for some demos, 'help()' for on-line help, or\n"
+            "'help.start()' for a HTML browser interface to help.\n"
+	    "Type 'q()' to quit R.\n\n");
 }
 
 SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
