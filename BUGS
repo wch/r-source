@@ -292,4 +292,15 @@ none
 
 Directory:  incoming
 
-none
+* PR# 291 *
+Subject: floor(NaN) problem fixed in massdist.c
+From: ntakebay@bio.indiana.edu
+Date: Fri, 8 Oct 1999 04:57:42 +0200 (MET DST)
+* PR# 292 *
+Subject: Check script
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Fri, 08 Oct 1999 09:59:04 +0200 (CEST)
+* PR# 293 *
+Subject: dimnames and subscripting
+From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
+Date: Fri, 8 Oct 1999 09:43:51 +0100 (BST)
