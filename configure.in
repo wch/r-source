@@ -368,7 +368,7 @@ AC_PATH_PROG(PERL, perl)
 if test -n "$PERL"
 then
     AC_MSG_CHECKING(whether perl is perl 5)
-    PERL_VERSION_NUMBER=`perl -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
+    PERL_VERSION_NUMBER=`$PERL -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
     if test $PERL_VERSION_NUMBER -ge 5
     then
         NO_PERL5=""

@@ -3472,7 +3472,7 @@ if test -n "$PERL"
 then
     echo $ac_n "checking whether perl is perl 5""... $ac_c" 1>&6
 echo "configure:3475: checking whether perl is perl 5" >&5
-    PERL_VERSION_NUMBER=`perl -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
+    PERL_VERSION_NUMBER=`$PERL -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
     if test $PERL_VERSION_NUMBER -ge 5
     then
         NO_PERL5=""
