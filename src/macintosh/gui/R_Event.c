@@ -241,7 +241,7 @@ void DoMouseDown ( const EventRecord * event )
 	WindowRef	we;
 	WindowPtr	window ;
 	SInt16		partCode ;
-
+    SInt32 		selStart, selEnd;
 	// find out where this click when down in
 
 	partCode = FindWindow ( event -> where, & window ) ;   
@@ -252,26 +252,22 @@ void DoMouseDown ( const EventRecord * event )
 	switch ( partCode )
 	{
 		case inMenuBar :
-		{
 			PrepareMenus ( ) ;
 			DoMenuChoice ( MenuSelect ( event -> where ), event -> modifiers , window) ;
-			break;
-		}
+		break;
 
 		case inContent :
-		{
-			if ( DoContent ( event -> where, event, window ) )
-			{
-				SelectWindow ( window ) ;
-				we = GetWindowWE(window);
-				if(window == Console_Window){
-				 WESetSelection(WEGetTextLength(we), 
-				  WEGetTextLength(we), we);
-				 }
+			DoContent ( event -> where, event, window );
+			SelectWindow ( window ) ;
+			we = GetWindowWE(window);
+				
+			if(window == Console_Window){
+				WEGetSelection ( & selStart, & selEnd, we );
+				if(selStart == selEnd)
+				  	WESetSelection(WEGetTextLength(we), WEGetTextLength(we), we);
 			}
-			break;
-		}
-
+		break;
+		
 		case inDrag :
 		{
 			if ( window != FrontWindow ( ) )
