@@ -26,8 +26,17 @@ BUG FIXES
 
     o   redefining a class is now safer if the new definition
         generates an error (previously some invalid metadata could be
-        left behind);  more errors are now caught by setClass(); e.g.,
-        class definition now correctly prohibits recursive inheritance.
+        left behind).
+
+    o   A number of errors are now caught in setClass() that
+        previously either went unchecked or waited until new() to
+        appear:
+        - classes may not contain themselves, directly or indirectly;
+        - classes appearing either as slots or as superclasses must
+          themselves be defined;
+	- slot names (direct or inherited) must be unique.
+	In related changes, prototype() now works as documented, and is the
+        recommended way to provide prototype objects.
 
 
 
