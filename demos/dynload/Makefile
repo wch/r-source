@@ -5,7 +5,7 @@ R = ../../bin/R
 all: zero.so
 
 zero.so: zero.c
-	$(R) SHLIB -o $@ $<
+	$(R) SHLIB -o $@ zero.c
 
 clean:
 	@rm -f *.o *.so
