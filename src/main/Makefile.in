@@ -48,6 +48,7 @@ OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 HEADERS = \
 	RBufferUtils.h Rregex.h Rstrptime.h \
 	arithmetic.h apse.h \
+	basedecl.h \
 	par-common.c \
 	qsort-body.c \
 	unzip.h
