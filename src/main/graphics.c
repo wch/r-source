@@ -1351,23 +1351,16 @@ static void mapNDC2Dev(DevDesc *dd)
     /* For new devices, have to check the device's idea of its size
      * in case there has been a resize.
      */
-    if (dd->newDevStruct) {
-	Rf_gpptr(dd)->ndc2dev.bx = Rf_dpptr(dd)->ndc2dev.bx =
-	    (((GEDevDesc*) dd)->dev->right - ((GEDevDesc*) dd)->dev->left);
-	Rf_gpptr(dd)->ndc2dev.ax = Rf_dpptr(dd)->ndc2dev.ax =
-	    ((GEDevDesc*) dd)->dev->left;
-	Rf_gpptr(dd)->ndc2dev.by = Rf_dpptr(dd)->ndc2dev.by =
-	    (((GEDevDesc*) dd)->dev->top - ((GEDevDesc*) dd)->dev->bottom);
-	Rf_gpptr(dd)->ndc2dev.ay = Rf_dpptr(dd)->ndc2dev.ay =
-	    ((GEDevDesc*) dd)->dev->bottom;
-    } else {
-	Rf_gpptr(dd)->ndc2dev.bx = Rf_dpptr(dd)->ndc2dev.bx = (Rf_gpptr(dd)->right - Rf_gpptr(dd)->left);
-	Rf_gpptr(dd)->ndc2dev.ax = Rf_dpptr(dd)->ndc2dev.ax = Rf_gpptr(dd)->left;
-	Rf_gpptr(dd)->ndc2dev.by = Rf_dpptr(dd)->ndc2dev.by = (Rf_gpptr(dd)->top - Rf_gpptr(dd)->bottom);
-	Rf_gpptr(dd)->ndc2dev.ay = Rf_dpptr(dd)->ndc2dev.ay = Rf_gpptr(dd)->bottom;
-    }
+    Rf_gpptr(dd)->ndc2dev.bx = Rf_dpptr(dd)->ndc2dev.bx =
+	(((GEDevDesc*) dd)->dev->right - ((GEDevDesc*) dd)->dev->left);
+    Rf_gpptr(dd)->ndc2dev.ax = Rf_dpptr(dd)->ndc2dev.ax =
+	((GEDevDesc*) dd)->dev->left;
+    Rf_gpptr(dd)->ndc2dev.by = Rf_dpptr(dd)->ndc2dev.by =
+	(((GEDevDesc*) dd)->dev->top - ((GEDevDesc*) dd)->dev->bottom);
+    Rf_gpptr(dd)->ndc2dev.ay = Rf_dpptr(dd)->ndc2dev.ay =
+	((GEDevDesc*) dd)->dev->bottom;
     /* Units Conversion */
-
+    
     Rf_gpptr(dd)->xNDCPerInch = Rf_dpptr(dd)->xNDCPerInch =
 	1.0/fabs(Rf_gpptr(dd)->ndc2dev.bx * Rf_gpptr(dd)->ipr[0]);
     Rf_gpptr(dd)->yNDCPerInch = Rf_dpptr(dd)->yNDCPerInch =
@@ -1795,10 +1788,7 @@ DevDesc *GNewPlot(Rboolean recording)
 		}
 		GEinitDisplayList((GEDevDesc*) dd);
 	    }
-	    if (dd->newDevStruct)
-		GENewPage(Rf_dpptr(dd)->bg, Rf_dpptr(dd)->gamma, (GEDevDesc*) dd);
-	    else
-		Rf_dpptr(dd)->newPage(dd);
+	    GENewPage(Rf_dpptr(dd)->bg, Rf_dpptr(dd)->gamma, (GEDevDesc*) dd);
 	    Rf_dpptr(dd)->currentFigure = Rf_gpptr(dd)->currentFigure = 1;
 	}
 
@@ -2426,389 +2416,50 @@ void GForceClip(DevDesc *dd)
     GESetClip(x1, y1, x2, y2, (GEDevDesc*) dd);
 }
 
-
-/* Draw Line Segments, Clipping to the Viewport */
-/* Cohen-Sutherland Algorithm */
-/* Unneeded if the device can do the clipping */
-
-
-#define	CS_BOTTOM	001
-#define	CS_LEFT		002
-#define	CS_TOP		004
-#define	CS_RIGHT	010
-
-typedef struct {
-    double xl;
-    double xr;
-    double yb;
-    double yt;
-} cliprect;
-
-
-static int clipcode(double x, double y, cliprect *cr)
-{
-    int c = 0;
-    if(x < cr->xl)
-	c |= CS_LEFT;
-    else if(x > cr->xr)
-	c |= CS_RIGHT;
-    if(y < cr->yb)
-	c |= CS_BOTTOM;
-    else if(y > cr->yt)
-	c |= CS_TOP;
-    return c;
-}
-
-static Rboolean
-CSclipline(double *x1, double *y1, double *x2, double *y2, cliprect *cr,
-	   int *clipped1, int *clipped2, int coords, DevDesc *dd)
-{
-    int c, c1, c2;
-    double x, y, xl, xr, yb, yt;
-    cliprect cr2;
-
-    *clipped1 = 0;
-    *clipped2 = 0;
-    c1 = clipcode(*x1, *y1, cr);
-    c2 = clipcode(*x2, *y2, cr);
-    if ( !c1 && !c2 )
-	return TRUE;
-
-    xl = cr->xl;
-    xr = cr->xr;
-    yb = cr->yb;
-    yt = cr->yt;
-    if (Rf_gpptr(dd)->xlog || Rf_gpptr(dd)->ylog) {
-	double temp;
-
-	GConvert(x1, y1, coords, NDC, dd);
-	GConvert(x2, y2, coords, NDC, dd);
-	GConvert(&xl, &yb, coords, NDC, dd);
-	GConvert(&xr, &yt, coords, NDC, dd);
-
-	cr2.xl = xl;
-	cr2.xr = xr;
-	cr2.yb = yb;
-	cr2.yt = yt;
-
-        if (cr2.xr < cr2.xl) {
-            temp = cr2.xl;
-            cr2.xl = cr2.xr;
-            cr2.xr = temp;
-        }
-        if (cr2.yt < cr2.yb) {
-            temp = cr2.yb;
-            cr2.yb = cr2.yt;
-            cr2.yt = temp;
-        }
-
-	x = xl;		/* keep -Wall happy */
-	y = yb;		/* keep -Wall happy */
-	while( c1 || c2 ) {
-	    if(c1 & c2)
-		return FALSE;
-	    if( c1 )
-		c = c1;
-	    else
-		c = c2;
-	    if( c & CS_LEFT ) {
-		y = *y1 + (*y2 - *y1) * (xl - *x1) / (*x2 - *x1);
-		x = xl;
-	    }
-	    else if( c & CS_RIGHT ) {
-		y = *y1 + (*y2 - *y1) * (xr - *x1) / (*x2 -  *x1);
-		x = xr;
-	    }
-	    else if( c & CS_BOTTOM ) {
-		x = *x1 + (*x2 - *x1) * (yb - *y1) / (*y2 - *y1);
-		y = yb;
-	    }
-	    else if( c & CS_TOP ) {
-		x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
-		y = yt;
-	    }
-
-	    if( c==c1 ) {
-		*x1 = x;
-		*y1 = y;
-		*clipped1 = 1;
-		c1 = clipcode(x, y, &cr2);
-	    }
-	    else {
-		*x2 = x;
-		*y2 = y;
-		*clipped2 = 1;
-		c2 = clipcode(x, y, &cr2);
-	    }
-	}
-
-	GConvert(x1, y1, NDC, coords, dd);
-	GConvert(x2, y2, NDC, coords, dd);
-
-    } else {
-	x = xl;		/* keep -Wall happy */
-	y = yb;		/* keep -Wall happy */
-	while( c1 || c2 ) {
-	    if(c1 & c2)
-		return FALSE;
-	    if( c1 )
-		c = c1;
-	    else
-		c = c2;
-	    if( c & CS_LEFT ) {
-		y = *y1 + (*y2 - *y1) * (xl - *x1) / (*x2 - *x1);
-		x = xl;
-	    }
-	    else if( c & CS_RIGHT ) {
-		y = *y1 + (*y2 - *y1) * (xr - *x1) / (*x2 -  *x1);
-		x = xr;
-	    }
-	    else if( c & CS_BOTTOM ) {
-		x = *x1 + (*x2 - *x1) * (yb - *y1) / (*y2 - *y1);
-		y = yb;
-	    }
-	    else if( c & CS_TOP ) {
-		x = *x1 + (*x2 - *x1) * (yt - *y1)/(*y2 - *y1);
-		y = yt;
-	    }
-
-	    if( c==c1 ) {
-		*x1 = x;
-		*y1 = y;
-		*clipped1 = 1;
-		c1 = clipcode(x, y, cr);
-	    }
-	    else {
-		*x2 = x;
-		*y2 = y;
-		*clipped2 = 1;
-		c2 = clipcode(x, y, cr);
-	    }
-	}
-    }
-    return TRUE;
-}
-
-
-static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
-{
-    int ind1, ind2;
-    /*int firstPoint = 1;*/
-    int count = 0;
-    int i = 0;
-    double *xx, *yy, temp;
-    double x1, y1, x2, y2;
-    cliprect cr;
-    char *vmax = vmaxget();
-
-    /* Work in device coordinates because then it is much easier
-     * to cope with both old and new devices.
-     */
-    setClipRect(&cr.xl, &cr.yb, &cr.xr, &cr.yt, DEVICE, dd);
-    if (cr.xr < cr.xl) {
-	temp = cr.xl;
-	cr.xl = cr.xr;
-	cr.xr = temp;
-    }
-    if (cr.yt < cr.yb) {
-	temp = cr.yb;
-	cr.yb = cr.yt;
-	cr.yt = temp;
-    }
-
-    xx = (double *) R_alloc(n, sizeof(double));
-    yy = (double *) R_alloc(n, sizeof(double));
-    if (xx == NULL || yy == NULL)
-	error("out of memory while clipping polyline");
-
-    x1 = x[0];
-    y1 = y[0];
-    GConvert(&x1, &y1, coords, DEVICE, dd);
-    xx[0] = x1;
-    yy[0] = y1;
-    count = 1;
-
-    for (i = 1; i < n; i++) {
-	x2 = x[i];
-	y2 = y[i];
-	GConvert(&x2, &y2, coords, DEVICE, dd);
-	if (CSclipline(&x1, &y1, &x2, &y2, &cr, &ind1, &ind2, DEVICE, dd)) {
-	    if (ind1 && ind2) {
-		xx[0] = x1;
-		yy[0] = y1;
-		xx[1] = x2;
-		yy[1] = y2;
-		if (dd->newDevStruct)
-		    ((GEDevDesc*) dd)->dev->polyline(2, xx, yy,
-						     Rf_gpptr(dd)->col,
-						     Rf_gpptr(dd)->gamma,
-						     Rf_gpptr(dd)->lty,
-						     Rf_gpptr(dd)->lwd,
-						     ((GEDevDesc*) dd)->dev);
-		else
-		    Rf_dpptr(dd)->polyline(2, xx, yy, DEVICE, dd);
-	    }
-	    else if (ind1) {
-		xx[0] = x1;
-		yy[0] = y1;
-		xx[1] = x2;
-		yy[1] = y2;
-		count = 2;
-		if (i == n - 1) {
-		    if (dd->newDevStruct)
-			((GEDevDesc*) dd)->dev->polyline(count, xx, yy,
-							 Rf_gpptr(dd)->col,
-							 Rf_gpptr(dd)->gamma,
-							 Rf_gpptr(dd)->lty,
-							 Rf_gpptr(dd)->lwd,
-							 ((GEDevDesc*) dd)->dev);
-		    else
-			Rf_dpptr(dd)->polyline(count, xx, yy, DEVICE, dd);
-		}
-	    }
-	    else if (ind2) {
-		xx[count] = x2;
-		yy[count] = y2;
-		count++;
-		if (count > 1) {
-		    if (dd->newDevStruct)
-			((GEDevDesc*) dd)->dev->polyline(count, xx, yy,
-							 Rf_gpptr(dd)->col,
-							 Rf_gpptr(dd)->gamma,
-							 Rf_gpptr(dd)->lty,
-							 Rf_gpptr(dd)->lwd,
-							 ((GEDevDesc*) dd)->dev);
-		    else
-			Rf_dpptr(dd)->polyline(count, xx, yy, DEVICE, dd);
-		}
-	    }
-	    else {
-		xx[count] = x2;
-		yy[count] = y2;
-		count++;
-		if (i == n - 1 && count > 1) {
-		    if (dd->newDevStruct)
-			((GEDevDesc*) dd)->dev->polyline(count, xx, yy,
-							 Rf_gpptr(dd)->col,
-							 Rf_gpptr(dd)->gamma,
-							 Rf_gpptr(dd)->lty,
-							 Rf_gpptr(dd)->lwd,
-							 ((GEDevDesc*) dd)->dev);
-		    else
-			Rf_dpptr(dd)->polyline(count, xx, yy, DEVICE, dd);
-		}
-	    }
-	}
-	x1 = x[i];
-	y1 = y[i];
-	GConvert(&x1, &y1, coords, DEVICE, dd);
-    }
-
-    vmaxset(vmax);
-}
-
-/* Clip the line
-   If toDevice = 1, clip to the device extent (i.e., temporarily ignore
-   Rf_gpptr(dd)->xpd) */
-static Rboolean
-clipLine(double *x1, double *y1, double *x2, double *y2,
-	 int coords, int toDevice, DevDesc *dd)
-{
-    double temp;
-    int dummy1, dummy2;
-    int xpdsaved = 0; /* -Wall */
-    Rboolean result;
-    cliprect cr;
-
-    if (toDevice) {
-	xpdsaved = Rf_gpptr(dd)->xpd;
-	Rf_gpptr(dd)->xpd = 2;
-    }
-
-    setClipRect(&cr.xl, &cr.yb, &cr.xr, &cr.yt, coords, dd);
-    if (cr.xr < cr.xl) {
-	temp = cr.xl;
-	cr.xl = cr.xr;
-	cr.xr = temp;
-    }
-    if (cr.yt < cr.yb) {
-	temp = cr.yb;
-	cr.yb = cr.yt;
-	cr.yt = temp;
-    }
-
-    result = CSclipline(x1, y1, x2, y2, &cr, &dummy1, &dummy2, coords, dd);
-
-    if (toDevice)
-	Rf_gpptr(dd)->xpd = xpdsaved;
-    return result;
-}
-
 /* Draw a line. */
 /* If the device canClip, R clips line to device extent and
    device does all other clipping. */
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
-    Rboolean clip_ok;
     if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
-    if (Rf_dpptr(dd)->canClip) {
-	GClip(dd);
-	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 1, dd);
-    }
-    else {
-	clip_ok = clipLine(&x1, &y1, &x2, &y2, coords, 0, dd);
-    }
-    if (clip_ok) {
-	if (dd->newDevStruct) {
-	    GConvert(&x1, &y1, coords, DEVICE, dd);
-	    GConvert(&x2, &y2, coords, DEVICE, dd);
-	    ((GEDevDesc*) dd)->dev->line(x1, y1, x2, y2,
-					 Rf_gpptr(dd)->col,
-					 Rf_gpptr(dd)->gamma,
-					 Rf_gpptr(dd)->lty,
-					 Rf_gpptr(dd)->lwd,
-					 ((GEDevDesc*) dd)->dev);
-	} else
-	    Rf_dpptr(dd)->line(x1, y1, x2, y2, coords, dd);
-    }
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x1, &y1, coords, DEVICE, dd);
+    GConvert(&x2, &y2, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GELine(x1, y1, x2, y2, 
+	   Rf_gpptr(dd)->col, 
+	   Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd, 
+	   (GEDevDesc*) dd);
 }
 
 /* Read the current "pen" position. */
 Rboolean GLocator(double *x, double *y, int coords, DevDesc *dd)
 {
-    if (dd->newDevStruct) {
-	if(!((GEDevDesc*) dd)->dev->locator)
-	    error("no locator capability in device driver");
-	if(((GEDevDesc*) dd)->dev->locator(x, y, ((GEDevDesc*) dd)->dev)) {
-	    GConvert(x, y, DEVICE, coords, dd);
-	    return TRUE;
-	}
-	else
-	    return FALSE;
-    } else {
-	if(!Rf_dpptr(dd)->locator)
-	    error("no locator capability in device driver");
-	if(Rf_dpptr(dd)->locator(x, y, dd)) {
-	    GConvert(x, y, DEVICE, coords, dd);
-	    return TRUE;
-	}
-	else
-	    return FALSE;
+    if(!((GEDevDesc*) dd)->dev->locator)
+	error("no locator capability in device driver");
+    if(((GEDevDesc*) dd)->dev->locator(x, y, ((GEDevDesc*) dd)->dev)) {
+	GConvert(x, y, DEVICE, coords, dd);
+	return TRUE;
     }
+    else
+	return FALSE;
 }
 
 /* Access character font metric information.  */
 void GMetricInfo(int c, double *ascent, double *descent, double *width,
 		 GUnit units, DevDesc *dd)
 {
-    if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, Rf_gpptr(dd)->font,
-					   Rf_gpptr(dd)->cex,
-					   (double) Rf_gpptr(dd)->ps,
-					   ascent, descent, width,
-					   ((GEDevDesc*) dd)->dev);
-    else
-	Rf_dpptr(dd)->metricInfo(c & 0xFF, ascent, descent, width, dd);
+    ((GEDevDesc*) dd)->dev->metricInfo(c & 0xFF, Rf_gpptr(dd)->font,
+				       Rf_gpptr(dd)->cex,
+				       (double) Rf_gpptr(dd)->ps,
+				       ascent, descent, width,
+				       ((GEDevDesc*) dd)->dev);
     if (units != DEVICE) {
 	*ascent = GConvertYUnits(*ascent, DEVICE, units, dd);
 	*descent = GConvertYUnits(*descent, DEVICE, units, dd);
@@ -2828,20 +2479,30 @@ void GMode(int mode, DevDesc *dd)
     if (NoDevices())
 	error("No graphics device is active");
     if(mode != Rf_gpptr(dd)->devmode) {
-	if (dd->newDevStruct)
-	    ((GEDevDesc*) dd)->dev->mode(mode, ((GEDevDesc*) dd)->dev);
-	else
-	    Rf_dpptr(dd)->mode(mode, dd);
+	((GEDevDesc*) dd)->dev->mode(mode, ((GEDevDesc*) dd)->dev);
     }
     Rf_gpptr(dd)->new = Rf_dpptr(dd)->new = FALSE;
     Rf_gpptr(dd)->devmode = Rf_dpptr(dd)->devmode = mode;
 }
 
 
-/* GPolygon -- Draw a polygon
- *	Filled with color bg and outlined with color fg
- *	These may both be NA_INTEGER
+/*
+***********************************
+* START GClipPolygon code
+* 
+* Everything up to END GClipPolygon code
+* is just here to support GClipPolygon
+* which only exists to satisfy the
+* Rgraphics.h API (which should be
+* superceded by the API provided by
+* GraphicsDevice.h and GraphicsEngine.h)
+***********************************
+*/
+/*
  * If device can't clip we should use something like Sutherland-Hodgman here
+ *
+ * NOTE:  most of this code (up to GPolygon) is only now used by
+ * GClipPolygon -- GPolygon runs the new GEPolygon in engine.c
  */
 typedef enum {
     Left = 0,
@@ -3021,74 +2682,23 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
     closeClip (xout, yout, &cnt, store, &clip, cs);
     return (cnt);
 }
+/*
+***********************************
+* END GClipPolygon code
+***********************************
+*/
 
-static void clipPolygon(int n, double *x, double *y, int coords,
-                        int bg, int fg, int mode, DevDesc *dd)
-{
-/* If mode = 0, clip according to Rf_gpptr(dd)->xpd
-   If mode = 1, clip to the device extent */
-#ifdef MALLOC_AWAY
-    static double *xc = NULL, *yc = NULL;
-#endif
-    double *xc, *yc;
-#ifdef MALLOC_AWAY
-    double *tmp;
-    if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
-    if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
-#endif
-    /* if bg not specified then draw as polyline rather than polygon
-     * to avoid drawing line along border of clipping region */
-    if (bg == NA_INTEGER) {
-	int i;
-#ifdef MALLOC_AWAY
-	xc = (double*)malloc((n + 1) * sizeof(double));
-	yc = (double*)malloc((n + 1) * sizeof(double));
-#endif
-	xc = (double*) R_alloc(n + 1, sizeof(double));
-	yc = (double*) R_alloc(n + 1, sizeof(double));
-	for (i=0; i<n; i++) {
-	    xc[i] = x[i];
-	    yc[i] = y[i];
-	}
-	xc[n] = x[0];
-	yc[n] = y[0];
-	Rf_gpptr(dd)->col = fg;
-	GPolyline(n+1, xc, yc, coords, dd);
-    }
-    else {
-	int npts;
-	int xpdsaved = 0; /* -Wall */
-	if (mode == 1) {
-	    xpdsaved = Rf_gpptr(dd)->xpd;
-	    Rf_gpptr(dd)->xpd = 2;
-	}
-	xc = yc = 0;		/* -Wall */
-	npts = GClipPolygon(x, y, n, coords, 0, xc, yc, dd);
-	if (npts > 1) {
-#ifdef MALLOC_AWAY
-	    xc = (double*)malloc(npts * sizeof(double));
-	    yc = (double*)malloc(npts * sizeof(double));
-#endif
-	    xc = (double*) R_alloc(npts, sizeof(double));
-	    yc = (double*) R_alloc(npts, sizeof(double));
-	    npts = GClipPolygon(x, y, n, coords, 1, xc, yc, dd);
-	    if (dd->newDevStruct)
-		((GEDevDesc*) dd)->dev->polygon(npts, xc, yc,
-						fg, bg, Rf_gpptr(dd)->gamma,
-						Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-						((GEDevDesc*) dd)->dev);
-	    else
-		Rf_dpptr(dd)->polygon(npts, xc, yc, coords, bg, fg, dd);
-	}
-	if (mode == 1)
-	    Rf_gpptr(dd)->xpd = xpdsaved;
-    }
-#ifdef MALLOC_AWAY
-    if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
-    if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
-#endif
-}
-
+/* 
+ * This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h) 
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code (in plot.c) still calls this.
+ */
+/* GPolygon -- Draw a polygon
+ *	Filled with color bg and outlined with color fg
+ *	These may both be NA_INTEGER
+ */
 void GPolygon(int n, double *x, double *y, int coords,
 	      int bg, int fg, DevDesc *dd)
 {
@@ -3100,269 +2710,94 @@ void GPolygon(int n, double *x, double *y, int coords,
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
-    /* Work in device coordinates because then it is easier to
-     * work with both old and new devices.
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
      */
     xx = (double*) R_alloc(n, sizeof(double));
     yy = (double*) R_alloc(n, sizeof(double));
     if (!xx || !yy)
-	error("unable to allocate memory (in GPolyline)");
+	error("unable to allocate memory (in GPolygon)");
     for (i=0; i<n; i++) {
 	xx[i] = x[i];
 	yy[i] = y[i];
 	GConvert(&(xx[i]), &(yy[i]), coords, DEVICE, dd);
     }
-    if (Rf_dpptr(dd)->canClip) {
-	GClip(dd);
-	clipPolygon(n, xx, yy, DEVICE, bg, fg, 1, dd);
-    }
-    else
-	clipPolygon(n, xx, yy, DEVICE, bg, fg, 0, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GEPolygon(n, xx, yy, fg, bg, 
+	      Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd, 
+	      (GEDevDesc*) dd);
     vmaxset(vmaxsave);
 }
 
 #include <stdio.h>
-
-/* Clip and draw the polyline.
-   If clipToDevice = 0, clip according to Rf_gpptr(dd)->xpd
-   If clipToDevice = 1, clip to the device extent */
-static void clipPolyline(int n, double *x, double *y, int coords,
-			 int clipToDevice, DevDesc *dd)
-{
-    int xpdsaved = 0; /* -Wall */
-    if (clipToDevice) {
-	xpdsaved = Rf_gpptr(dd)->xpd;
-	Rf_gpptr(dd)->xpd = 2;
-    }
-    CScliplines(n, x, y, coords, dd);
-    if (clipToDevice)
-	Rf_gpptr(dd)->xpd = xpdsaved;
-}
 
 /* Draw a series of line segments. */
 /* If the device canClip, R clips to the device extent and the device
    does all other clipping */
 void GPolyline(int n, double *x, double *y, int coords, DevDesc *dd)
 {
-    if (Rf_gpptr(dd)->lty == LTY_BLANK) return;
-    if (Rf_dpptr(dd)->canClip) {
-	GClip(dd); /* sets up the device clipping */
-	clipPolyline(n, x, y, coords, 1, dd);  /* clips to device extent
-						  then draws */
-    }
-    else
-	clipPolyline(n, x, y, coords, 0, dd);
-}
-
-/* Convert a circle into a polygon with specified number of vertices */
-/* NOTE!!!: Coordinates and circle radius are in device units here. */
-static void convertCircle(double x, double y, double r,
-			  int numVertices, double *xc, double *yc,
-			  DevDesc *dd)
-{
     int i;
-    double theta = 2*M_PI/numVertices;
-    for (i=0; i<numVertices; i++) {
-	xc[i] = x + r*sin(theta*i);
-	yc[i] = y + r*cos(theta*i);
+    double *xx;
+    double *yy;
+    char *vmaxsave = vmaxget();
+
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    xx = (double*) R_alloc(n, sizeof(double));
+    yy = (double*) R_alloc(n, sizeof(double));
+    if (!xx || !yy)
+	error("unable to allocate memory (in GPolygon)");
+    for (i=0; i<n; i++) {
+	xx[i] = x[i];
+	yy[i] = y[i];
+	GConvert(&(xx[i]), &(yy[i]), coords, DEVICE, dd);
     }
-    xc[numVertices] = x;
-    yc[numVertices] = y+r;
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GEPolyline(n, xx, yy, Rf_gpptr(dd)->col,
+	       Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd, 
+	       (GEDevDesc*) dd);
+    vmaxset(vmaxsave);
 }
 
-/* Takes a specification of a circle as input and returns a code indicating
-   how the circle should be clipped.
-   The return value will be -1 if the circle is to
-   be totally clipped out of existence, -2 if the circle is to be
-   totally left alone, 0 and above if the circle has been converted
-   into a polygon (in which case, the return value indicates the
-   number of vertices of the polygon and the function convertCircle()
-   should be called to obtain the vertices of the polygon). */
-static int clipCircleCode(double x, double y, int coords, double r,
-			  DevDesc *dd)
-{
-    int result;
-    /* determine clipping region */
-    double xmin, xmax, ymin, ymax;
-    setClipRect(&xmin, &ymin, &xmax, &ymax, DEVICE, dd);
 
-    if (xmax < xmin) {
-	double swap = xmax;
-	xmax = xmin;
-	xmin = swap;
-    }
-    if (ymax < ymin) {
-	double swap = ymax;
-	ymax = ymin;
-	ymin = swap;
-    }
-    /* convert x & y to DEVICE (radius already DEVICE) */
-    GConvert(&x, &y, coords, DEVICE, dd);
-    /* if circle is all within clipping rect */
-    if (x-r > xmin && x+r < xmax && y-r > ymin && y+r < ymax) {
-	result = -2;
-    }
-    /* if circle is all outside clipping rect */
-    else {
-	double distance = r*r;
-	if (x-r > xmax || x+r < xmin || y-r > ymax || y+r < ymin ||
-            (x < xmin && y < ymin &&
-             ((x-xmin)*(x-xmin)+(y-ymin)*(y-ymin) > distance)) ||
-	    (x > xmax && y < ymin &&
-             ((x-xmax)*(x-xmax)+(y-ymin)*(y-ymin) > distance)) ||
-	    (x < xmin && y > ymax &&
-	     ((x-xmin)*(x-xmin)+(y-ymax)*(y-ymax) > distance)) ||
-	    (x > xmax && y > ymax &&
-	     ((x-xmax)*(x-xmax)+(y-ymax)*(y-ymax) > distance))) {
-	    result = -1;
-	}
-        /* otherwise, convert circle to polygon */
-	else {
-	    /* Replace circle with polygon.
-
-	       Heuristic for number of vertices is to use theta so
-	       that cos(theta)*r ~ r - 1 in device units. This is
-	       roughly const * sqrt(r) so there'd be little point in
-	       enforcing an upper limit. */
-
-	    result = (r <= 6) ? 10 : 2 * M_PI/acos(1 - 1/r) ;
-	}
-    }
-    return result;
-}
-
-/* static void clipCircle(double x, double y, int coords,
-   double r, int bg, int fg, int clipToDevice, DevDesc *dd) */
-
+/* 
+ * This is just here to satisfy the Rgraphics.h API.
+ * This allows new graphics API (GraphicsDevice.h, GraphicsEngine.h) 
+ * to be developed alongside.
+ * Could be removed if Rgraphics.h ever gets REPLACED by new API
+ * NOTE that base graphics code (in plot.c) still calls this.
+ */
 void GCircle(double x, double y, int coords,
 	     double radius, int bg, int fg, DevDesc *dd)
 {
     double ir;
-    char *vmax;
-    double *xc, *yc;
-    int result, result2;
-    int xpdsaved = Rf_gpptr(dd)->xpd;
     ir = radius/Rf_gpptr(dd)->ipr[0];
     ir = (ir > 0) ? ir : 1;
 
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
-    /* Work in device coordinates because then it is easier to
-     * work with both old and new devices.
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
      */
     GConvert(&x, &y, coords, DEVICE, dd);
-    result = clipCircleCode(x, y, DEVICE, ir, dd);
-
-    switch (result) {
-    case -2: /* No clipping;  draw all of circle */
-	if (Rf_dpptr(dd)->canClip)
-	    GClip(dd);
-	if (dd->newDevStruct)
-	    ((GEDevDesc*) dd)->dev->circle(x, y, ir, fg, bg, Rf_gpptr(dd)->gamma,
-					   Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-					   ((GEDevDesc*) dd)->dev);
-	else
-	    Rf_dpptr(dd)->circle(x, y, DEVICE, ir, bg, fg, dd);
-	break;
-    case -1: /* Total clipping; draw nothing */
-	break;
-    default: /* At this point we have figured out that the circle
-	      * has intersected with the current clipping region.
-	      */
-	Rf_gpptr(dd)->xpd = 2;
-	result2 = clipCircleCode(x, y, DEVICE, ir, dd);
-	Rf_gpptr(dd)->xpd = xpdsaved;
-	/* If we are still within the confines of the device,
-	 * and the device can clip, then we can still draw a circle.
-	 */
-	if (Rf_dpptr(dd)->canClip && result2 == -2) {
-	    GClip(dd);
-	    if (dd->newDevStruct)
-		((GEDevDesc*) dd)->dev->circle(x, y, ir, fg, bg,
-					       Rf_gpptr(dd)->gamma,
-					       Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-					       ((GEDevDesc*) dd)->dev);
-	    else
-		Rf_dpptr(dd)->circle(x, y, DEVICE, ir, bg, fg, dd);
-	}
-	/* Otherwise, we have to fake a circle using a polyline or
-	 * polygon.
-	 */
-	else {
-	    vmax = vmaxget();
-	    xc = (double*)R_alloc(result+1, sizeof(double));
-	    yc = (double*)R_alloc(result+1, sizeof(double));
-	    convertCircle(x, y, ir, result, xc, yc, dd);
-	    if (bg == NA_INTEGER) {
-		Rf_gpptr(dd)->col = fg;
-		GPolyline(result+1, xc, yc, DEVICE, dd);
-	    }
-	    else {
-		int npts;
-		double *xcc, *ycc;
-		xcc = ycc = 0;	/* -Wall */
-		if (Rf_dpptr(dd)->canClip)
-		    GClip(dd);
-		npts = GClipPolygon(xc, yc, result, DEVICE,
-				    0, xcc, ycc, dd);
-		if (npts > 1) {
-		    xcc = (double*)R_alloc(npts, sizeof(double));
-		    ycc = (double*)R_alloc(npts, sizeof(double));
-		    npts = GClipPolygon(xc, yc, result, DEVICE, 1,
-					xcc, ycc, dd);
-		    if (dd->newDevStruct)
-			((GEDevDesc*) dd)->dev->polygon(npts, xcc, ycc,
-							fg, bg,
-							Rf_gpptr(dd)->gamma,
-							Rf_gpptr(dd)->lty,
-							Rf_gpptr(dd)->lwd,
-							((GEDevDesc*)dd)->dev);
-		    else
-			Rf_dpptr(dd)->polygon(npts, xcc, ycc, DEVICE, bg, fg, dd);
-		}
-	    }
-	    vmaxset(vmax);
-	}
-    }
-}
-
-/* Return a code indicating how the rectangle should be clipped.
-   0 means the rectangle is totally outside the clip region
-   1 means the rectangle is totally inside the clip region
-   2 means the rectangle intersects the clip region */
-static int clipRectCode(double x0, double y0, double x1, double y1, int coords,
-		     DevDesc *dd)
-{
-    int result;
-    /* determine clipping region */
-    double xmin, xmax, ymin, ymax;
-    setClipRect(&xmin, &ymin, &xmax, &ymax, DEVICE, dd);
-
-    if (xmax < xmin) {
-	double swap = xmax;
-	xmax = xmin;
-	xmin = swap;
-    }
-    if (ymax < ymin) {
-	double swap = ymax;
-	ymax = ymin;
-	ymin = swap;
-    }
-    /* convert x & y to DEVICE (radius already DEVICE) */
-    GConvert(&x0, &y0, coords, DEVICE, dd);
-    GConvert(&x1, &y1, coords, DEVICE, dd);
-
-    if ((x0 < xmin && x1 < xmin) || (x0 > xmax && x1 > xmax) ||
-	(y0 < ymin && y1 < ymin) || (y0 > ymax && y1 > ymax))
-	result = 0;
-    else if ((x0 > xmin && x0 < xmax) && (x1 > xmin && x1 < xmax) &&
-	     (y0 > ymin && y0 < ymax) && (y1 > ymin && y1 < ymax))
-	result = 1;
-    else
-	result = 2;
-
-    return result;
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GECircle(x, y, ir, fg, bg, 
+	     Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
+	     (GEDevDesc*) dd);
 }
 
 /* Draw a rectangle	*/
@@ -3371,142 +2806,37 @@ static int clipRectCode(double x0, double y0, double x1, double y1, int coords,
 void GRect(double x0, double y0, double x1, double y1, int coords,
 	   int bg, int fg, DevDesc *dd)
 {
-    char *vmax;
-    double *xc, *yc;
-    int result;
-    int xpdsaved = Rf_gpptr(dd)->xpd; /* -Wall */
-
     if (Rf_gpptr(dd)->lty == LTY_BLANK)
 	fg = NA_INTEGER; /* transparent for the border */
 
-    /* Work in device coordinates because then it is easier to
-     * work with both old and new devices.
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
      */
     GConvert(&x0, &y0, coords, DEVICE, dd);
     GConvert(&x1, &y1, coords, DEVICE, dd);
-    result = clipRectCode(x0, y0, x1, y1, DEVICE, dd);
-    switch (result) {
-    case 0:  /* rectangle totally clipped; draw nothing */
-	break;
-    case 1:  /* rectangle totally inside;  draw all */
-	/* NOTE must clip in case clipping region has been made _bigger_
-	 */
-	if (Rf_dpptr(dd)->canClip)
-	    GClip(dd);
-	if (dd->newDevStruct)
-	    ((GEDevDesc*) dd)->dev->rect(x0, y0, x1, y1, fg, bg,
-					 Rf_gpptr(dd)->gamma,
-					 Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-					 ((GEDevDesc*) dd)->dev);
-	else
-	    Rf_dpptr(dd)->rect(x0, y0, x1, y1, DEVICE, bg, fg, dd);
-	break;
-    case 2:  /* rectangle intersects clip region;  use polygon clipping */
-	/* If the rect is still within the device, and the device can
-	 * clip, then we can still draw a rectangle.
-	 */
-	Rf_gpptr(dd)->xpd = 2;
-	result = clipRectCode(x0, y0, x1, y1, DEVICE, dd);
-	Rf_gpptr(dd)->xpd = xpdsaved;
-	if (Rf_dpptr(dd)->canClip && result == 1) {
-	    GClip(dd);
-	    if (dd->newDevStruct)
-		((GEDevDesc*) dd)->dev->rect(x0, y0, x1, y1, fg, bg,
-					     Rf_gpptr(dd)->gamma,
-					     Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
-					     ((GEDevDesc*) dd)->dev);
-	    else
-		Rf_dpptr(dd)->rect(x0, y0, x1, y1, DEVICE, bg, fg, dd);
-	}
-	/* Otherwise fake the rectangle with a polyline or polygon.
-	 */
-	else {
-	    vmax = vmaxget();
-	    xc = (double*)R_alloc(5, sizeof(double));
-	    yc = (double*)R_alloc(5, sizeof(double));
-	    xc[0] = x0; yc[0] = y0;
-	    xc[1] = x0; yc[1] = y1;
-	    xc[2] = x1; yc[2] = y1;
-	    xc[3] = x1; yc[3] = y0;
-	    xc[4] = x0; yc[4] = y0;
-	    if (bg == NA_INTEGER) {
-		Rf_gpptr(dd)->col = fg;
-		GPolyline(5, xc, yc, DEVICE, dd);
-	    }
-	    else { /* filled rectangle */
-		int npts;
-		double *xcc, *ycc;
-		xcc = ycc = 0;		/* -Wall */
-		npts = GClipPolygon(xc, yc, 4, DEVICE, 0, xcc, ycc, dd);
-		if (npts > 1) {
-		    xcc = (double*)R_alloc(npts, sizeof(double));
-		    ycc = (double*)R_alloc(npts, sizeof(double));
-		    npts = GClipPolygon(xc, yc, 4, DEVICE,
-					1, xcc, ycc, dd);
-		    if (dd->newDevStruct)
-			((GEDevDesc*) dd)->dev->polygon(npts, xcc, ycc,
-							fg, bg,
-							Rf_gpptr(dd)->gamma,
-							Rf_gpptr(dd)->lty,
-							Rf_gpptr(dd)->lwd,
-							((GEDevDesc*)dd)->dev);
-		    else
-			Rf_dpptr(dd)->polygon(npts, xcc, ycc, DEVICE, bg, fg, dd);
-		}
-	    }
-	    vmaxset(vmax);
-	}
-    }
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GERect(x0, y0, x1, y1, fg, bg, 
+	     Rf_gpptr(dd)->gamma, Rf_gpptr(dd)->lty, Rf_gpptr(dd)->lwd,
+	     (GEDevDesc*) dd);
 }
 
 /* Compute string width. */
 double GStrWidth(char *str, GUnit units, DevDesc *dd)
 {
     double w;
-    static char *sbuf = NULL;
-
-    if (dd->newDevStruct) {
-	/*
-	 * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
-	 * use these instead of "" and 1 below
-	 */
-	w = GEStrWidth(str, "", Rf_gpptr(dd)->font, 1, Rf_gpptr(dd)->cex,
-		       (double) Rf_gpptr(dd)->ps,
-		       (GEDevDesc*) dd);
-	if (units != DEVICE)
-	    w = GConvertXUnits(w, DEVICE, units, dd);
-    } else {
-	if (sbuf) {
-	    free(sbuf);
-	    sbuf = NULL;
-	    warning("freeing previous text buffer in GStrWidth");
-	}
-	w = 0;
-	if(str && *str) {
-	    char *s, *sb;
-	    double wdash;
-	    sbuf = (char*)malloc(strlen(str) + 1);
-	    if (sbuf == NULL)
-		error("unable to allocate memory (in GStrWidth)");
-	    sb = sbuf;
-	    for(s = str; ; s++) {
-		if (*s == '\n' || *s == '\0') {
-		    *sb = '\0';
-		    wdash = Rf_dpptr(dd)->strWidth(sbuf, dd);
-		    if (wdash > w) w = wdash;
-		    sb = sbuf;
-		}
-		else *sb++ = *s;
-		if (!*s) break;
-	    }
-	    if (units != DEVICE)
-		w = GConvertXUnits(w, DEVICE, units, dd);
-	}
-	if (sbuf) {
-	    free(sbuf);
-	    sbuf = NULL;
-	}
-    }
+    /*
+     * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
+     * use these instead of "" and 1 below
+     */
+    w = GEStrWidth(str, "", Rf_gpptr(dd)->font, 1, Rf_gpptr(dd)->cex,
+		   (double) Rf_gpptr(dd)->ps,
+		   (GEDevDesc*) dd);
+    if (units != DEVICE)
+	w = GConvertXUnits(w, DEVICE, units, dd);
     return w;
 }
 
@@ -3516,113 +2846,16 @@ double GStrWidth(char *str, GUnit units, DevDesc *dd)
 double GStrHeight(char *str, GUnit units, DevDesc *dd)
 {
     double h;
-    char *s;
-    double asc, dsc, wid;
-    int n;
-    /* Count the lines of text minus one */
-    n = 0;
-    for(s = str; *s ; s++)
-	if (*s == '\n')
-	    n++;
-    h = n * GConvertYUnits(1, CHARS, DEVICE, dd);
-    /* Add in the ascent of the font, if available */
-    GMetricInfo('M', &asc, &dsc, &wid, DEVICE, dd);
-    if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0))
-	asc = GConvertYUnits(1, CHARS, DEVICE, dd);
-    h += asc;
+    /*
+     * FIXME:  If/When GStrHeight gets passed fontfamily and lineheight
+     * use these instead of "" and 1 below
+     */
+    h = GEStrHeight(str, "", Rf_gpptr(dd)->font, 1, Rf_gpptr(dd)->cex,
+		   (double) Rf_gpptr(dd)->ps,
+		   (GEDevDesc*) dd);
     if (units != DEVICE)
 	h = GConvertYUnits(h, DEVICE, units, dd);
-
     return h;
-}
-
-/* Return a code indicating how the text should be clipped
-   NOTE that x, y indicate the bottom-left of the text
-   NOTE also that x and y are in INCHES
-   NOTE also also that this is a bit crude because it actually uses
-   a bounding box for the entire text to determine the clipping code.
-   This will mean that in certain (very rare ?) cases, a piece of
-   text will be characterised as intersecting with the clipping region
-   when in fact it lies totally outside the clipping region.  But
-   this is not a problem because the final output will still be correct.
-   0 means totally outside clip region
-   1 means totally inside clip region
-   2 means intersects clip region */
-static int clipTextCode(double x, double y, char *str,
-		     double rot, double hadj, DevDesc *dd)
-{
-    double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
-    double angle = DEG2RAD * rot;
-    double theta1 = M_PI/2 - angle;
-    double width = GStrWidth(str, INCHES, dd);
-    double height = GStrHeight(str, INCHES, dd);
-#ifdef HAVE_HYPOT
-    double length = hypot(width, height);
-#else
-    double length = pythag(width, height);
-#endif
-    double theta2 = angle + atan2(height, width);
-    x -= hadj*width*cos(angle);
-    y -= hadj*width*sin(angle);
-    x0 = x + height*cos(theta1);
-    x1 = x;
-    x2 = x + length*cos(theta2);
-    x3 = x + width*cos(angle);
-    y0 = y + height*sin(theta1);
-    y1 = y;
-    y2 = y + length*sin(theta2);
-    y3 = y + width*sin(angle);
-    left = fmin2(fmin2(x0, x1), fmin2(x2, x3));
-    right = fmax2(fmax2(x0, x1), fmax2(x2, x3));
-    bottom = fmin2(fmin2(y0, y1), fmin2(y2, y3));
-    top = fmax2(fmax2(y0, y1), fmax2(y2, y3));
-    return clipRectCode(left, bottom, right, top, INCHES, dd);
-}
-
-static void clipText(double x, double y, char *str, double rot,
-		     int clipToDevice, double hadj, DevDesc *dd)
-{
-    int result = clipTextCode(x, y, str, rot, hadj, dd);
-    int xpdsaved = 0; /* -Wall */
-    if (clipToDevice) {
-	xpdsaved = Rf_gpptr(dd)->xpd;
-	Rf_gpptr(dd)->xpd = 2;
-    }
-    switch (result) {
-    case 0:  /* text totally clipped; draw nothing */
-	break;
-    case 1:  /* text totally inside;  draw all */
-	if (dd->newDevStruct) {
-	    GConvert(&x, &y, INCHES, DEVICE, dd);
-	    ((GEDevDesc*) dd)->dev->text(x, y, str, rot, hadj,
-					 Rf_gpptr(dd)->col,
-					 Rf_gpptr(dd)->gamma,
-					 Rf_gpptr(dd)->font,
-					 Rf_gpptr(dd)->cex,
-					 (double) Rf_gpptr(dd)->ps,
-					 ((GEDevDesc*) dd)->dev);
-	} else
-	    Rf_dpptr(dd)->text(x, y, INCHES, str, rot, hadj, dd);
-	break;
-    case 2:  /* text intersects clip region
-		act according to value of clipToDevice */
-	if (clipToDevice) /* Device will do clipping */
-	    if (dd->newDevStruct) {
-		GConvert(&x, &y, INCHES, DEVICE, dd);
-		((GEDevDesc*) dd)->dev->text(x, y, str, rot, hadj,
-					     Rf_gpptr(dd)->col,
-					     Rf_gpptr(dd)->gamma,
-					     Rf_gpptr(dd)->font,
-					     Rf_gpptr(dd)->cex,
-					     (double) Rf_gpptr(dd)->ps,
-					     ((GEDevDesc*) dd)->dev);
-	    } else
-		Rf_dpptr(dd)->text(x, y, INCHES, str, rot, hadj, dd);
-	else /* don't draw anything; this could be made less crude :) */
-	    ;
-    }
-    if (clipToDevice)
-	Rf_gpptr(dd)->xpd = xpdsaved;
 }
 
 /* Draw text in a plot. */
@@ -3631,126 +2864,24 @@ static void clipText(double x, double y, char *str, double rot,
 void GText(double x, double y, int coords, char *str,
 	   double xc, double yc, double rot, DevDesc *dd)
 {
-    /* Deallocate any prior string buffer */
-    static char *sbuf = NULL;
-
-    if (sbuf) {
-	free(sbuf);
-	sbuf = NULL;
-	warning("freeing previous text buffer in GText");
-    }
-    if(str && *str) {
-	char *s, *sb;
-	int i, n;
-	double xoff, yoff, hadj;
-	double sin_rot, cos_rot;/* sin() & cos() of rot{ation} in radians */
-	double xleft, ybottom;
-	/* We work in INCHES */
-	GConvert(&x, &y, coords, INCHES, dd);
-	/* Count the lines of text */
-	n = 1;
-	for(s = str; *s ; s++)
-	    if (*s == '\n')
-		n += 1;
-	/* Allocate a temporary buffer */
-	sbuf = (char*)malloc(strlen(str) + 1);
-	sb = sbuf;
-	i = 0;
-	sin_rot = DEG2RAD * rot;
-	cos_rot = cos(sin_rot);
-	sin_rot = sin(sin_rot);
-	for(s = str; ; s++) {
-	    if (*s == '\n' || *s == '\0') {
-		*sb = '\0';
-		if (n > 1) {
-		    /* first determine location of THIS line */
-		    if (!R_FINITE(xc))
-			xc = 0.5;
-		    if (!R_FINITE(yc))
-			yc = 0.5;
-		    yoff = (1 - yc)*(n - 1) - i;
-		    yoff = GConvertYUnits(yoff, CHARS, INCHES, dd);
-		    xoff = - yoff*sin_rot;
-		    yoff = yoff*cos_rot;
-		    xoff = x + xoff;
-		    yoff = y + yoff;
-		} else {
-		    xoff = x;
-		    yoff = y;
-		}
-		/* now determine bottom-left for THIS line */
-		if(xc != 0.0 || yc != 0) {
-		    double width, height;
-		    width = GStrWidth(sbuf, INCHES, dd);
-		    if (!R_FINITE(xc))
-			xc = 0.5;
-		    if (!R_FINITE(yc)) {
-				/* "exact" vertical centering */
-				/* If font metric info is available AND */
-				/* there is only one line, use GMetricInfo & yc=0.5 */
-				/* Otherwise use GStrHeight and fiddle yc */
-			double h, d, w;
-			GMetricInfo(0, &h, &d, &w, INCHES, dd);
-			if (n>1 || (h==0 && d==0 && w==0)) {
-			    height = GStrHeight(sbuf, INCHES, dd);
-			    yc = Rf_dpptr(dd)->yCharOffset;
-			} else {
-			    double maxHeight = 0.0;
-			    double maxDepth = 0.0;
-			    char *ss;
-			    int charNum = 0;
-			    for (ss=sbuf; *ss; ss++) {
-				GMetricInfo((unsigned char) *ss, &h, &d, &w,
-					    INCHES, dd);
-				/* Set maxHeight and maxDepth from height
-				   and depth of first char.
-				   Must NOT set to 0 in case there is
-				   only 1 char and it has negative
-				   height or depth
-				*/
-				if (charNum++ == 0) {
-				    maxHeight = h;
-				    maxDepth = d;
-				} else {
-				    if (h > maxHeight) maxHeight = h;
-				    if (d > maxDepth) maxDepth = d;
-				}
-			    }
-			    height = maxHeight - maxDepth;
-			    yc = 0.5;
-			}
-		    } else {
-			height = GStrHeight(sbuf, INCHES, dd);
-		    }
-		    if (Rf_dpptr(dd)->canHAdj == 2) hadj = xc;
-		    else if (Rf_dpptr(dd)->canHAdj == 1) {
-			hadj = 0.5 * floor(2*xc + 0.5);
-				/* limit to 0, 0.5, 1 */
-			hadj = (hadj > 1.0) ? 1.0 :((hadj < 0.0) ? 0.0 : hadj);
-		    } else hadj = 0.0;
-		    xleft = xoff - (xc-hadj)*width*cos_rot + yc*height*sin_rot;
-		    ybottom= yoff - (xc-hadj)*width*sin_rot - yc*height*cos_rot;
-		} else { /* xc = yc = 0.0 */
-		    xleft = xoff;
-		    ybottom = yoff;
-		    hadj = 0.0;
-		}
-		if(Rf_dpptr(dd)->canClip) {
-		    GClip(dd);
-		    clipText(xleft, ybottom, sbuf, rot, 1, hadj, dd);
-		} else
-		    clipText(xleft, ybottom, sbuf, rot, 0, hadj, dd);
-		sb = sbuf;
-		i += 1;
-	    }
-	    else *sb++ = *s;
-	    if (!*s) break;
-	}
-	if (sbuf) {
-	    free(sbuf);
-	    sbuf = NULL;
-	}
-    }
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x, &y, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);
+    GEText(x, y, str, xc, yc, rot, 
+	   Rf_gpptr(dd)->col, Rf_gpptr(dd)->gamma, 
+	   /*
+	    * FIXME:  If/When GStrWidth gets passed fontfamily and lineheight
+	    * use these instead of "" and 1 below
+	    */
+	   "", Rf_gpptr(dd)->font, 1,
+	   Rf_gpptr(dd)->cex, (double) Rf_gpptr(dd)->ps,
+	   (GEDevDesc*) dd);
 }
 
 /*-------------------------------------------------------------------
@@ -3922,65 +3053,7 @@ void GLPretty(double *ul, double *uh, int *n)
 
 void GPretty(double *lo, double *up, int *ndiv)
 {
-/*	Set scale and ticks for linear scales.
- *	Called from GScale() and GSetupAxis().
- *
- *	Pre:	    x1 == lo < up == x2      ;  ndiv >= 1
- *	Post: x1 <= y1 := lo < up =: y2 <= x2;	ndiv >= 1
- */
-    double unit, ns, nu;
-    double high_u_fact[2] = { .8, 1.7 };
-#ifdef DEBUG_PLOT
-    double x1,x2;
-#endif
-
-    if(*ndiv <= 0)
-	error("invalid axis extents [GPretty(.,.,n=%d)", *ndiv);
-    if(*lo == R_PosInf || *up == R_PosInf ||
-       *lo == R_NegInf || *up == R_NegInf ||
-       !R_FINITE(*up - *lo)) {
-	error("Infinite axis extents [GPretty(%g,%g,%d)]", *lo, *up, *ndiv);
-	return;/*-Wall*/
-    }
-
-    ns = *lo; nu = *up;
-#ifdef DEBUG_PLOT
-    x1 = ns; x2 = nu;
-#endif
-    unit = R_pretty0(&ns, &nu, ndiv, /* min_n = */ 1,
-		     /* shrink_sml = */ 0.25,
-		     high_u_fact,
-		     2, /* do eps_correction in any case */
-		     0 /* return (ns,nu) in  (lo,up) */);
-    /* ==> ../appl/pretty.c */
-
-    /* The following is ugly since it kind of happens already in Rpretty0(..):
-     */
-#define rounding_eps 1e-7
-    if(nu >= ns + 1) {
-	if(               ns * unit < *lo - rounding_eps*unit)
-	    ns++;
-	if(nu > ns + 1 && nu * unit > *up + rounding_eps*unit)
-	    nu--;
-	*ndiv = nu - ns;
-    }
-    *lo = ns * unit;
-    *up = nu * unit;
-#ifdef non_working_ALTERNATIVE
-    if(ns * unit > *lo)
-	*lo = ns * unit;
-    if(nu * unit < *up)
-	*up = nu * unit;
-    if(nu - ns >= 1)
-	*ndiv = nu - ns;
-#endif
-
-#ifdef DEBUG_PLOT
-    if(*lo < x1)
-	warning(" .. GPretty(.): new *lo = %g < %g = x1", *lo, x1);
-    if(*up > x2)
-	warning(" .. GPretty(.): new *up = %g > %g = x2", *up, x2);
-#endif
+    GEPretty(lo, up, ndiv);
 }
 
 
@@ -3998,274 +3071,21 @@ void GPretty(double *lo, double *up, int *ndiv)
 /* Draw one of the R special symbols. */
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
-    double r, xc, yc;
-    double xx[4], yy[4];
-    char str[2];
-    int ltyOld;
-
-    if(' ' <= pch && pch <= 255) {
-	if (pch == '.') {
-	    GConvert(&x, &y, coords, DEVICE, dd);
-	    GRect(x-.5, y-.5, x+.5, y+.5, DEVICE, Rf_gpptr(dd)->col, NA_INTEGER, dd);
-	} else {
-	    str[0] = pch;
-	    str[1] = '\0';
-	    GText(x, y, coords, str, NA_REAL, NA_REAL, 0., dd);
-	}
-    }
-    else {
-	ltyOld = Rf_gpptr(dd)->lty;
-	Rf_gpptr(dd)->lty = LTY_SOLID;
-
-	switch(pch) {
-
-	case 0: /* S square */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GRect(x-xc, y-xc, x+xc, y+xc, INCHES, NA_INTEGER,
-		  Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 1: /* S octahedron ( circle) */
-	    xc = CMAG * RADIUS * GSTR_0;
-	    GCircle(x, y, coords, xc, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 2:	/* S triangle - point up */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    r = TRC0 * xc;
-	    yc = TRC2 * xc;
-	    xc = TRC1 * xc;
-	    xx[0] = x; yy[0] = y+r;
-	    xx[1] = x+xc; yy[1] = y-yc;
-	    xx[2] = x-xc; yy[2] = y-yc;
-	    GPolygon(3, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 3: /* S plus */
-	    xc = M_SQRT2*RADIUS*GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y, x+xc, y, INCHES, dd);
-	    GLine(x, y-xc, x, y+xc, INCHES, dd);
-	    break;
-
-	case 4: /* S times */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
-	    GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
-	    break;
-
-	case 5: /* S diamond */
-	    xc = M_SQRT2 * RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    xx[0] = x-xc; yy[0] = y;
-	    xx[1] = x; yy[1] = y+xc;
-	    xx[2] = x+xc; yy[2] = y;
-	    xx[3] = x; yy[3] = y-xc;
-	    GPolygon(4, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 6: /* S triangle - point down */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    r = TRC0 * xc;
-	    yc = TRC2 * xc;
-	    xc = TRC1 * xc;
-	    xx[0] = x; yy[0] = y-r;
-	    xx[1] = x+xc; yy[1] = y+yc;
-	    xx[2] = x-xc; yy[2] = y+yc;
-	    GPolygon(3, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 7:	/* S square and times superimposed */
-	    xc =  RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
-	    GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
-	    GRect(x-xc, y-xc, x+xc, y+xc, INCHES, NA_INTEGER,
-		  Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 8: /* S plus and times superimposed */
-	    xc =  RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
-	    GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
-	    xc = M_SQRT2 * xc;
-	    GLine(x-xc, y, x+xc, y, INCHES, dd);
-	    GLine(x, y-xc, x, y+xc, INCHES, dd);
-	    break;
-
-	case 9: /* S diamond and plus superimposed */
-	    xc = M_SQRT2 * RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    xx[0] = x-xc; yy[0] = y;
-	    xx[1] = x; yy[1] = y+xc;
-	    xx[2] = x+xc; yy[2] = y;
-	    xx[3] = x; yy[3] = y-xc;
-	    GPolygon(4, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    GLine(x-xc, y, x+xc, y, INCHES, dd);
-	    GLine(x, y-xc, x, y+xc, INCHES, dd);
-	    break;
-
-	case 10: /* S hexagon (circle) and plus superimposed */
-	    xc = CMAG * RADIUS * GSTR_0;
-	    GCircle(x, y, coords, xc, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y, x+xc, y, INCHES, dd);
-	    GLine(x, y-xc, x, y+xc, INCHES, dd);
-	    break;
-
-	case 11: /* S superimposed triangles */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    r = TRC0 * xc;
-	    yc = TRC2 * xc;
-	    yc = 0.5 * (yc + r);
-	    xc = TRC1 * xc;
-	    xx[0] = x; yy[0] = y+r;
-	    xx[1] = x+xc; yy[1] = y-yc;
-	    xx[2] = x-xc; yy[2] = y-yc;
-	    GPolygon(3, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    xx[0] = x; yy[0] = y-r;
-	    xx[1] = x+xc; yy[1] = y+yc;
-	    xx[2] = x-xc; yy[2] = y+yc;
-	    GPolygon(3, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 12: /* S square and plus superimposed */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y, x+xc, y, INCHES, dd);
-	    GLine(x, y-xc, x, y+xc, INCHES, dd);
-	    GRect(x-xc, y-xc, x+xc, y+xc, INCHES,
-		  NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 13: /* S octagon (circle) and times superimposed */
-	    xc = CMAG * RADIUS * GSTR_0;
-	    GCircle(x, y, coords, xc, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
-	    GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
-	    break;
-
-	case 14: /* S square and point-up triangle superimposed */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    xx[0] = x; yy[0] = y+xc;
-	    xx[1] = x+xc; yy[1] = y-xc;
-	    xx[2] = x-xc; yy[2] = y-xc;
-	    GPolygon(3, xx, yy, INCHES, NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    GRect(x-xc, y-xc, x+xc, y+xc, INCHES,
-		  NA_INTEGER, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 15: /* S filled square */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    xx[0] = x-xc; yy[0] = y-xc;
-	    xx[1] = x+xc; yy[1] = y-xc;
-	    xx[2] = x+xc; yy[2] = y+xc;
-	    xx[3] = x-xc; yy[3] = y+xc;
-	    GPolygon(4, xx, yy, INCHES, Rf_gpptr(dd)->col,
-		     NA_INTEGER, dd);
-	    break;
-
-	case 16: /* S filled octagon (circle) */
-	    xc = RADIUS * GSTR_0;
-	    GCircle(x, y, coords, xc, Rf_gpptr(dd)->col, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 17: /* S filled point-up triangle */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    r = TRC0 * xc;
-	    yc = TRC2 * xc;
-	    xc = TRC1 * xc;
-	    xx[0] = x;	  yy[0] = y+r;
-	    xx[1] = x+xc; yy[1] = y-yc;
-	    xx[2] = x-xc; yy[2] = y-yc;
-	    GPolygon(3, xx, yy, INCHES, Rf_gpptr(dd)->col,
-		     NA_INTEGER, dd);
-	    break;
-
-	case 18: /* S filled diamond */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    xx[0] = x;	  yy[0] = y-xc;
-	    xx[1] = x+xc; yy[1] = y;
-	    xx[2] = x;	  yy[2] = y+xc;
-	    xx[3] = x-xc; yy[3] = y;
-	    GPolygon(4, xx, yy, INCHES, Rf_gpptr(dd)->col,
-		     NA_INTEGER, dd);
-	    break;
-
-	case 19: /* R filled circle */
-	    xc = RADIUS * GSTR_0;
-	    GCircle(x, y, coords, xc, Rf_gpptr(dd)->col, Rf_gpptr(dd)->col, dd);
-	    break;
-
-
-	case 20: /* R `Dot' (small circle) */
-	    xc = SMALL * GSTR_0;
-	    GCircle(x, y, coords, xc, Rf_gpptr(dd)->col, Rf_gpptr(dd)->col, dd);
-	    break;
-
-
-	case 21: /* circles */
-	    xc = RADIUS * CMAG * GSTR_0;
-	    GCircle(x, y, coords, xc, Rf_gpptr(dd)->bg, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case  22: /* squares */
-	    xc = RADIUS * SQRC * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    GRect(x-xc, y-xc, x+xc, y+xc, INCHES,
-		  Rf_gpptr(dd)->bg, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 23: /* diamonds */
-	    xc = RADIUS * DMDC * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    xx[0] = x	  ; yy[0] = y-xc;
-	    xx[1] = x+xc; yy[1] = y;
-	    xx[2] = x	  ; yy[2] = y+xc;
-	    xx[3] = x-xc; yy[3] = y;
-	    GPolygon(4, xx, yy, INCHES,
-		     Rf_gpptr(dd)->bg, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 24: /* triangle (point up) */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    r = TRC0 * xc;
-	    yc = TRC2 * xc;
-	    xc = TRC1 * xc;
-	    xx[0] = x;	  yy[0] = y+r;
-	    xx[1] = x+xc; yy[1] = y-yc;
-	    xx[2] = x-xc; yy[2] = y-yc;
-	    GPolygon(3, xx, yy, INCHES,
-		     Rf_gpptr(dd)->bg, Rf_gpptr(dd)->col, dd);
-	    break;
-
-	case 25: /* triangle (point down) */
-	    xc = RADIUS * GSTR_0;
-	    GConvert(&x, &y, coords, INCHES, dd);
-	    r = TRC0 * xc;
-	    yc = TRC2 * xc;
-	    xc = TRC1 * xc;
-	    xx[0] = x;	  yy[0] = y-r;
-	    xx[1] = x+xc; yy[1] = y+yc;
-	    xx[2] = x-xc; yy[2] = y+yc;
-	    GPolygon(3, xx, yy, INCHES,
-		     Rf_gpptr(dd)->bg, Rf_gpptr(dd)->col, dd);
-	    break;
-	}
-	Rf_gpptr(dd)->lty = ltyOld;
-    }
+    double size = GConvertYUnits(GSTR_0, INCHES, DEVICE, dd);
+    /* 
+     * Work in device coordinates because that is what the
+     * graphics engine needs.
+     */
+    GConvert(&x, &y, coords, DEVICE, dd);
+    /*
+     * Ensure that the base clipping region is set on the device
+     */
+    GClip(dd);    
+    GESymbol(x, y, pch, size, 
+	     Rf_gpptr(dd)->col, Rf_gpptr(dd)->bg, Rf_gpptr(dd)->gamma,
+	     LTY_SOLID, Rf_gpptr(dd)->lwd, Rf_gpptr(dd)->font,
+	     Rf_gpptr(dd)->cex, Rf_gpptr(dd)->ps,
+	     ((GEDevDesc*) dd));
 }
 
 
@@ -5625,10 +4445,7 @@ void addDevice(DevDesc *dd)
 
     if (!NoDevices())  {
 	oldd = CurrentDevice();
-	if (oldd->newDevStruct)
-	    ((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc*) oldd)->dev);
-	else
-	    oldd->dp.deactivate(oldd);
+	((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc*) oldd)->dev);
     }
 
     /* find empty slot for new descriptor */
@@ -5650,12 +4467,8 @@ void addDevice(DevDesc *dd)
     R_NumDevices += 1;
     R_Devices[i] = dd;
 
-    if (dd->newDevStruct) {
-	GEregisterWithDevice((GEDevDesc*) dd);
-	((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-    }
-    else
-	Rf_dpptr(dd)->activate(dd);
+    GEregisterWithDevice((GEDevDesc*) dd);
+    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
 
     /* maintain .Devices (.Device has already been set) */
     PROTECT(t = mkString(CHAR(STRING_ELT(getSymbolValue(".Device"), 0))));
@@ -5700,7 +4513,6 @@ int devNumber(DevDesc *dd)
     int i;
     for (i = 1; i < R_MaxDevices; i++)
 	if (R_Devices[i] != NULL &&
-	    R_Devices[i]->newDevStruct &&
 	    ((GEDevDesc*) R_Devices[i])->dev == (NewDevDesc*) dd)
 	    return i;
     return 0;
@@ -5716,10 +4528,7 @@ int selectDevice(int devNum)
 
 	if (!NoDevices()) {
 	    oldd = CurrentDevice();
-	    if (oldd->newDevStruct)
-		((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc *) oldd)->dev);
-	    else
-		oldd->dp.deactivate(oldd);
+	    ((GEDevDesc*) oldd)->dev->deactivate(((GEDevDesc *) oldd)->dev);
 	}
 
 	R_CurrentDevice = devNum;
@@ -5731,16 +4540,7 @@ int selectDevice(int devNum)
 
 	dd = CurrentDevice();
 	if (!NoDevices()) {
-	    if (dd->newDevStruct)
-		((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-	    else
-		Rf_dpptr(dd)->activate(dd);
-	}
-	if (dd->newDevStruct)
-	    ;
-	else {
-	    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-	    GReset(dd);
+	    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
 	}
 	return devNum;
     }
@@ -5757,10 +4557,8 @@ void removeDevice(int devNum)
 	int i;
 	SEXP s;
 
-	if (R_Devices[devNum]->newDevStruct)
-	    GEdestroyDevDesc((GEDevDesc*) R_Devices[devNum]);
-	else
-	    free(R_Devices[devNum]);
+	GEdestroyDevDesc((GEDevDesc*) R_Devices[devNum]);
+
 	R_Devices[devNum] = NULL;
 	R_NumDevices -= 1;
 
@@ -5783,15 +4581,12 @@ void removeDevice(int devNum)
 			R_CurrentDevice),
 		    R_NilValue);
 
-	    dd = CurrentDevice();
 	    if (!NoDevices()) {
-		if (dd->newDevStruct)
-		    ((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
-		else
-		    Rf_dpptr(dd)->activate(dd);
+		dd = CurrentDevice();
+		((GEDevDesc*) dd)->dev->activate(((GEDevDesc*) dd)->dev);
+		copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
+		GReset(dd);
 	    }
-	    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-	    GReset(dd);
 	}
     }
 }
@@ -5800,10 +4595,7 @@ void removeDevice(int devNum)
 
 void KillDevice(DevDesc *dd)
 {
-    if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
-    else
-	Rf_dpptr(dd)->close(dd);
+    ((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
     removeDevice(deviceNumber(dd));
 }
 
@@ -5815,10 +4607,7 @@ void killDevice(int devNum)
 	(devNum < R_MaxDevices)) {
 	DevDesc *dd = R_Devices[devNum];
 	if (dd != NULL) {
-	    if (dd->newDevStruct)
-		((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
-	    else
-		Rf_dpptr(dd)->close(dd);
+	    ((GEDevDesc*) dd)->dev->close(((GEDevDesc*) dd)->dev);
 	    removeDevice(devNum);
 	}
     }
@@ -5843,36 +4632,20 @@ void initDisplayList(DevDesc *dd)
 {
     /* init saveParams */
     copyGPar(Rf_dpptr(dd), Rf_dpSavedptr(dd));
-    if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->displayList = R_NilValue;
-    else {
-	dd->displayList = R_NilValue;
-    }
+    ((GEDevDesc*) dd)->dev->displayList = R_NilValue;
 }
 
 
 void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 {
-    if (dd->newDevStruct) {
-	SEXP lastOperation = lastElt(((GEDevDesc*) dd)->dev->displayList);
-	if (((GEDevDesc*) dd)->dev->displayListOn) {
-	    SEXP newOperation = CONS(op, args);
-	    if (lastOperation == R_NilValue)
-		((GEDevDesc*) dd)->dev->displayList = CONS(newOperation,
+    SEXP lastOperation = lastElt(((GEDevDesc*) dd)->dev->displayList);
+    if (((GEDevDesc*) dd)->dev->displayListOn) {
+	SEXP newOperation = CONS(op, args);
+	if (lastOperation == R_NilValue)
+	    ((GEDevDesc*) dd)->dev->displayList = CONS(newOperation,
 						       R_NilValue);
-	    else
-		SETCDR(lastOperation, CONS(newOperation, R_NilValue));
-	}
-    }
-    else {
-	SEXP lastOperation = lastElt(dd->displayList);
-	if (dd->displayListOn) {
-	    SEXP newOperation = CONS(op, args);
-	    if (lastOperation == R_NilValue)
-		dd->displayList = CONS(newOperation, R_NilValue);
-	    else
-		SETCDR(lastOperation, CONS(newOperation, R_NilValue));
-	}
+	else
+	    SETCDR(lastOperation, CONS(newOperation, R_NilValue));
     }
 }
 
@@ -6035,49 +4808,25 @@ void playDisplayList(DevDesc *dd)
     int savedDevice;
     Rboolean asksave;
     SEXP theList;
-    if (dd->newDevStruct) {
-	theList = Rf_displayList(dd);
-	if (theList != R_NilValue) {
-	    asksave = Rf_gpptr(dd)->ask;
-	    Rf_gpptr(dd)->ask = TRUE;
-	    restoredpSaved(dd);
-	    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-	    GReset(dd);
-	    savedDevice = curDevice();
-	    selectDevice(deviceNumber(dd));
-	    while (theList != R_NilValue) {
-		SEXP theOperation = CAR(theList);
-		SEXP op = CAR(theOperation);
-		SEXP args = CDR(theOperation);
-		PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
-		if (!Rf_gpptr(dd)->valid) break;
-		theList = CDR(theList);
-	    }
-	    Rf_gpptr(dd)->ask = asksave;
-	    selectDevice(savedDevice);
+    theList = Rf_displayList(dd);
+    if (theList != R_NilValue) {
+	asksave = Rf_gpptr(dd)->ask;
+	Rf_gpptr(dd)->ask = TRUE;
+	restoredpSaved(dd);
+	copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
+	GReset(dd);
+	savedDevice = curDevice();
+	selectDevice(deviceNumber(dd));
+	while (theList != R_NilValue) {
+	    SEXP theOperation = CAR(theList);
+	    SEXP op = CAR(theOperation);
+	    SEXP args = CDR(theOperation);
+	    PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
+	    if (!Rf_gpptr(dd)->valid) break;
+	    theList = CDR(theList);
 	}
-    }
-    else {
-	theList = dd->displayList;
-	if (theList != R_NilValue) {
-	    asksave = Rf_gpptr(dd)->ask;
-	    Rf_gpptr(dd)->ask = TRUE;
-	    restoredpSaved(dd);
-	    copyGPar(Rf_dpptr(dd), Rf_gpptr(dd));
-	    GReset(dd);
-	    savedDevice = curDevice();
-	    selectDevice(deviceNumber(dd));
-	    while (theList != R_NilValue) {
-		SEXP theOperation = CAR(theList);
-		SEXP op = CAR(theOperation);
-		SEXP args = CDR(theOperation);
-		PRIMFUN(op) (R_NilValue, op, args, R_NilValue);
-		if (!Rf_gpptr(dd)->valid) break;
-		theList = CDR(theList);
-	    }
-	    Rf_gpptr(dd)->ask = asksave;
-	    selectDevice(savedDevice);
-	}
+	Rf_gpptr(dd)->ask = asksave;
+	selectDevice(savedDevice);
     }
 }
 
@@ -6092,46 +4841,24 @@ void playDisplayList(DevDesc *dd)
 void copyDisplayList(int fromDevice)
 {
     DevDesc *dd = CurrentDevice();
-    if (dd->newDevStruct) {
-	((GEDevDesc*) dd)->dev->displayList =
-	    Rf_displayList(R_Devices[fromDevice]);
-	copyGPar(Rf_dpSavedptr(R_Devices[fromDevice]),
-		 Rf_dpSavedptr(dd));
-	playDisplayList(dd);
-	if (!((GEDevDesc*) dd)->dev->displayListOn)
-	    initDisplayList(dd);
-    } else {
-	dd->displayList = R_Devices[fromDevice]->displayList;
-	/* Used to be a shallow copy -- most uses just close
-	 * the device copied to.
-	 *
-	 * dd->dpSaved = R_Devices[fromDevice]->dpSaved;
-	 *
-	 * NOTE that the display list is still only shallow-copied.
-	 */
-	copyGPar(Rf_dpSavedptr(R_Devices[fromDevice]),
-		 Rf_dpSavedptr(dd));
-	playDisplayList(dd);
-	if (!dd->displayListOn)
-	    initDisplayList(dd);
-    }
+    ((GEDevDesc*) dd)->dev->displayList =
+	Rf_displayList(R_Devices[fromDevice]);
+    copyGPar(Rf_dpSavedptr(R_Devices[fromDevice]),
+	     Rf_dpSavedptr(dd));
+    playDisplayList(dd);
+    if (!((GEDevDesc*) dd)->dev->displayListOn)
+	initDisplayList(dd);
 }
 
 
 void inhibitDisplayList(DevDesc *dd)
 {
     GEinitDisplayList((GEDevDesc*) dd);
-    if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->displayListOn = FALSE;
-    else
-	dd->displayListOn = FALSE;
+    ((GEDevDesc*) dd)->dev->displayListOn = FALSE;
 }
 
 void enableDisplayList(DevDesc *dd)
 {
     GEinitDisplayList((GEDevDesc*) dd);
-    if (dd->newDevStruct)
-	((GEDevDesc*) dd)->dev->displayListOn = TRUE;
-    else
-	dd->displayListOn = TRUE;
+    ((GEDevDesc*) dd)->dev->displayListOn = TRUE;
 }
