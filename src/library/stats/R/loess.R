@@ -237,7 +237,7 @@ predict.loess <- function(object, newdata = NULL, se = FALSE, ...)
     if(!is.null(out.attrs <- attr(newdata, "out.attrs"))) { # expand.grid used
         if(se) {
             res$fit <- array(res$fit, out.attrs$dim, out.attrs$dimnames)
-            res$se <- array(res$se, out.attrs$dim, out.attrs$dimnames)
+            res$se.fit <- array(res$se.fit, out.attrs$dim, out.attrs$dimnames)
         } else res <- array(res, out.attrs$dim, out.attrs$dimnames)
     }
     if(se)
