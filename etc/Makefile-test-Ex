@@ -1,14 +1,14 @@
 ###-*- Makefile -*- for 'test-Examples', also see ${RHOME}/etc/Makefile
 
 CleanMe = Makefile
-## The following must be an ABSOLUTE path 
+## The following must be an ABSOLUTE path
 ## or RELATIVE to 'Ex_Tests' (RHOME/test/Examples/ :
 rRHOME= ../..
 #
-RETC    = $(rRHOME)/etc
+RETC	= $(rRHOME)/etc
 R	= $(rRHOME)/bin/R
 Rbinary = $(rRHOME)/bin/R.binary
-Rbase   = $(rRHOME)/library/base
+Rbase	= $(rRHOME)/library/base
 
 MANSRC = $(rRHOME)/src/library/*/man/*.Rd
 MANbaseDIR = $(rRHOME)/src/library/base/man
@@ -23,7 +23,7 @@ Rd_files := $(shell $(rRHOME)/etc/Rd.files)
 #________in future_______  (for ALL 'make' versions)
 # FAILS: has directory/. _AND_ is not expanded
 #Rd_files = $(MANbaseDIR)/*.Rd
-# 
+#
 R_src = $(Rd_files:%.Rd=%.R)
 #________in future_______: (FAILS!)
 #R_src = $(Rd_files:$(MANbaseDIR)/%.Rd=%.R)
@@ -44,7 +44,7 @@ show-Ex:
 
 
 %.R: $(MANbaseDIR)/%.Rd
-	@(RHOME=`cd $(rRHOME);pwd`;export RHOME;$(RETC)/Rdconv -t example $<>$@)
+	@$(RETC)/Rdconv -t example $< > $@
 	@-echo $@
 
 All-Ex.R: $(R_src)
@@ -61,8 +61,8 @@ All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	$(R) -v 4 < All-Ex.R > $@
 
 clean:
-	rm -f *.R 
-	rm -f *.Rd* *.ps *.tex *.dat* foo*
+	rm -f *.R
+	rm -f *.Rd* *.ps *.tex *.dat* data foo*
 
 realclean: clean
 	@rm -fr $(CleanMe)
