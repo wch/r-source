@@ -785,3 +785,53 @@ SEXP do_rank(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
     return rank;
 }
+
+SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP x, ans;
+    Rboolean nalast, decreasing;
+    unsigned int cnts[1002];
+    int i, n, tmp, xmax = 0, off, napos;
+
+    checkArity(op, args);
+
+    x = CAR(args);
+    nalast = asLogical(CADR(args));
+    if(nalast == NA_LOGICAL)
+	error("`na.last' is invalid");
+    decreasing = asLogical(CADDR(args));
+    if(decreasing == NA_LOGICAL)
+	error("`decreasing' must be TRUE or FALSE");
+    off = nalast^decreasing ? 0 : 1;
+    n = LENGTH(x);
+    PROTECT(ans = allocVector(INTSXP, n));
+    for(i = 0; i < n; i++) {
+	tmp = INTEGER(x)[i];
+	if(tmp == NA_INTEGER) continue;
+	if(tmp < 0) errorcall(call, "negative value in x");
+	if(tmp > xmax) xmax = tmp;
+    }
+    if(xmax > 1000) errorcall(call, "too large values in x");
+    napos = off ? 0 : xmax+1;
+
+    for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
+    for(i = 0; i < n; i++) {
+	if(INTEGER(x)[i] == NA_INTEGER) cnts[napos]++;
+	else cnts[off+INTEGER(x)[i]]++;
+    }
+    
+    for(i = 1; i <= xmax+1; i++) cnts[i] += cnts[i-1];
+    if(decreasing)
+	for(i = 0; i < n; i++){
+	    tmp = INTEGER(x)[i];
+	    INTEGER(ans)[n-(cnts[(tmp==NA_INTEGER)?napos:off+tmp]--)] = i+1;
+	}
+    else
+	for(i = n-1; i >= 0; i--) {
+	    tmp = INTEGER(x)[i];
+	    INTEGER(ans)[--cnts[(tmp==NA_INTEGER)?napos:off+tmp]] = i+1;
+	}
+    
+    UNPROTECT(1);
+    return ans;
+}

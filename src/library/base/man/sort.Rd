@@ -45,7 +45,7 @@ is.unsorted(x, na.rm = FALSE)
   so ties are not reordered.  (This only matters if names are present.)
 
   Method \code{"quick"} uses Singleton's Quicksort implementation and is
-  only available when \code{x} is numeric, the sort is increasing and
+  only available when \code{x} is numeric (double or integer) and
   \code{partial} is \code{NULL}.  It is normally somewhat faster than
   Shellsort (perhaps twice as fast on vectors of length a million) but
   has poor performance in the rare worst case.
