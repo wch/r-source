@@ -56,9 +56,13 @@ upViewport(n, recording=TRUE)
   If a viewport is pushed and it has the same \code{name} as a
   viewport at the same level in the tree, then it replaces the
   existing viewport in the tree.
-  }
+}
 \value{
-  None.
+  \code{downViewport} returns the number of viewports it went down.
+
+  This can be useful for returning to your starting point by doing
+  something like \code{depth <- downViewport()} then
+  \code{upViewport(depth)}.
 }
 \author{Paul Murrell}
 \seealso{
