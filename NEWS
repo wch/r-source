@@ -152,6 +152,9 @@ BUG FIXES
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
 
+    o	hist() uses a more robust choice of its 'diddle' factor, used
+	to detect if an observation is on a bin boundary.  (PR#6931)
+
 
 
 		CHANGES IN R VERSION 1.9.0
