@@ -368,9 +368,10 @@ static SEXP stringSubscript(SEXP s, int ns, int nx, SEXP names, int *stretch)
     /* Ghastly hack!  We attach the new names to the attribute */
     /* slot on the returned subscript vector. */
     if (extra != nnames) {
-	*stretch = extra;
 	ATTRIB(index) = indexnames;
     }
+    if (canstretch)
+	*stretch = extra;
     UNPROTECT(4);    
     return index;
 }
@@ -447,7 +448,7 @@ SEXP makeSubscript(SEXP x, SEXP s, int *stretch)
 	    UNPROTECT(1);
 	    break;
 	case STRSXP:
-	    *stretch = 0;
+	    /* *stretch = 0; */
 	    ans = stringSubscript(s, ns, nx, names, stretch);
 	    break;
 	case SYMSXP:

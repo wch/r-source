@@ -880,7 +880,7 @@ void pagepkg1()
 	    p = de->d_name;
 	    p1 = p + strlen(p) - 4;
 	    if(!strcmp(p, "rw")) continue;
-	    if(strcmp(p1, ".zip")) continue;
+	    if(strcmp(p1, ".zip") && strcmp(p1, ".ZIP")) continue;
 	    pkglist[npkgs] =
 		(char *)malloc((strlen(p)+1) * sizeof(char));
 	    strcpy(pkglist[npkgs], p);

@@ -463,15 +463,11 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nrx = 0;
 	ncx = 0;
 	if (PRIMVAL(op) == 0) {
-	    if (LENGTH(x) == nry) {
+	    if (LENGTH(x) == nry) { /* x as row vector */
 		nrx = 1;
 		ncx = LENGTH(x);
 	    }
-	    else if (LENGTH(x) == ncy) {
-		ncx=1;
-		nrx=LENGTH(x);
-	    }
-	    if (nry * ncy == 1) {
+	    else if (nry == 1) { /* x as col vector */
 		nrx = LENGTH(x);
 		ncx = 1;
 	    }
@@ -489,17 +485,13 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nry = 0;
 	ncy = 0;
 	if (PRIMVAL(op) == 0) {
-	    if (LENGTH(y) == ncx) {
+	    if (LENGTH(y) == ncx) { /* y as col vector */
 		nry = LENGTH(y);
 		ncy = 1;
 	    }
-	    else if (LENGTH(y) == nrx){
-		ncy = LENGTH(y);
+	    else if (ncx == 1){ /* y as row vector */
 		nry = 1;
-	    }
-	    if (nrx * ncx == 1) {
 		ncy = LENGTH(y);
-		nry = 1;
 	    }
 	}
 	else {

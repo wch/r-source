@@ -358,16 +358,19 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     INTEGER(ans)[1] = N01_kind;
     rng = CAR(args);
     norm = CADR(args);
+    if(!isNull(rng)) { /* set a new RNG kind */
+	RNGkind(asInteger(rng));
+    }
     if(!isNull(norm)) { /* set a new normal kind */
 	newN01 = asInteger(norm);
 	if (newN01 == -1) newN01 = N01_DEFAULT;
 	if (newN01 < 0 || newN01 > BOX_MULLER)
 	    errorcall(call, "invalid Normal type");
+	GetRNGstate(); /* might not be initialized */
 	N01_kind = newN01;
-	BM_norm_keep = 0.0; /* zap Box-Muller history */
-    }
-    if(!isNull(rng)) { /* set a new RNG kind */
-	RNGkind(asInteger(rng));
+	if (N01_kind == BOX_MULLER)
+	    BM_norm_keep = 0.0; /* zap Box-Muller history */
+	PutRNGstate();
     }
     UNPROTECT(1);
     return ans;

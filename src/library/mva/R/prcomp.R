@@ -3,7 +3,8 @@ plot.prcomp <- function(x, ...) { screeplot(x, ...) }
 prcomp <- function(x, retx = TRUE, center = TRUE, scale. = FALSE,
                    tol = NULL) {
     x <- as.matrix(x)
-    s <- svd(scale(x, center = center, scale = scale.), nu = 0)
+    x <- scale(x, center = center, scale = scale.)
+    s <- svd(x, nu = 0)
     if (!is.null(tol)) {
         rank <- sum(s$d > (s$d[1]*tol))
         if (rank < ncol(x))

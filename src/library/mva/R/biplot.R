@@ -66,7 +66,7 @@ biplot.princomp <- function(x, choices = 1:2, scale = 1, pc.biplot=FALSE, ...)
     if(is.null(n <- x$n.obs)) n <- 1
     lam <- lam * sqrt(n)
     if(scale < 0 || scale > 1) warning("scale is outside [0, 1]")
-    if(scale != 0) lam <- lam^scale
+    if(scale != 0) lam <- lam^scale else lam <- 1
     if(pc.biplot) lam <- lam / sqrt(n)
     biplot.default(t(t(scores[, choices]) / lam),
 		   t(t(x$loadings[, choices]) * lam), ...)

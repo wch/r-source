@@ -587,7 +587,7 @@ sub text2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = $pkg."/".$topic.".html";
+		    $htmlfile = $pkg."/html/".$topic.".html";
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;
@@ -701,7 +701,7 @@ sub code2html {
 		if($opt ne "") {
 		    my ($pkg, $topic) = split(/:/, $opt);
 		    $topic = $arg if $topic eq "";
-		    $htmlfile = $pkg."/".$topic.".html";
+		    $htmlfile = $pkg."/html/".$topic.".html";
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/$htmlfile\">$arg<\/A>/s;
 		} else {
 		    $text =~ s/\\link(\[.*\])?$id.*$id/<A HREF=\"..\/..\/..\/doc\/html\/search\/SearchObject.html?$argkey\">$arg<\/A>/s;

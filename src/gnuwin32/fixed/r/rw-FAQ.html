@@ -13,7 +13,7 @@
 
 <body>
 <h1 align="center">R for Windows FAQ</h1>
-<h2>Version for <tt>rw1000</tt></h2>
+<h2>Version for <tt>rw1001</tt></h2>
 <address>B. D. Ripley</address>
 <p><p><hr><p>
 
@@ -85,7 +85,7 @@ that version. The main R FAQ can be found at
 
 <p>There have been two versions of R for Windows, but only is under active
 development, that described here. It is often called something like
-<code>rw1000</code> (although not officially). The information here applies
+<code>rw1001</code> (although not officially). The information here applies
 only to recent versions (<code>rw0901</code> or later).
 
 <p>There is also information on the use of R for Windows in the Venables
@@ -605,7 +605,8 @@ unloaded, usually when R terminates.
 <p>The <code>Rgui.exe</code> console is a Windows application: writing to
 <code>stdout</code> or <code>stderr</code> will not produce output in the
 console. (This will work with <code>Rterm.exe</code>.)  Use <code>Rprintf</code> or
-<code>REprintf</code> instead.
+<code>REprintf</code> instead. These are declared in header file
+<code>R_ext/PrtUtil.h</code>.
 
 <a name="The%20output%20from%20my%20Fortran%20code%20disappears."></a>
 
