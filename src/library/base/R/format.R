@@ -87,15 +87,14 @@ format.pval <- function(pv, digits = max(1, .Options$digits-2),
 	r
 }
 
+## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998
 formatC <- function (x, digits = NULL, width = NULL,
 		     format = NULL, flag = "", mode = NULL)
 {
-	## Martin Maechler <maechler@stat.math.ethz.ch> , 1994-1998
         blank.chars <- function(no)
         	sapply(no+1, function(n) paste(character(n), collapse=" "))
 
-	if (is.null(x)) return("")
-	n <- length(x)
+        if (!(n <- length(x))) return("")
 	if (missing(mode))    mode <- storage.mode(x)
 	else if (any(mode == c("double", "real", "integer")))
           storage.mode(x) <- if(mode=="real")"double" else mode
