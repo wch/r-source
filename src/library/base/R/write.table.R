@@ -3,7 +3,7 @@ function(x, file = "", append = FALSE, quote = TRUE, sep = " ", eol = "\n",
 	 na = NA, row.names = TRUE, col.names = TRUE)
 {
   if (!is.data.frame(x))
-    x <- data.frame(x, as.is = TRUE)
+    x <- data.frame(x)
   else if (is.logical(quote) && quote)
     quote <- which(unlist(lapply(x, is.character)))
   x <- as.matrix(x)
