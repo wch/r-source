@@ -30,11 +30,16 @@ r/rw-FAQ.html: ../rw-FAQ.texi
 ../rw-faq: ../rw-FAQ.texi
 	makeinfo --no-headers --number-sections -o $@ $<
 
-fixh: h/config.h ../../../date-stamp ../../include/FFDecl.h ../../include/FFTab.h ../../../VERSION
+fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
+  ../../include/Rconfig.h ../../include/Rversion.h
 	$(CP) -p ./h/config.h ./h/psignal.h ../../include
-	sh ./GETVERSION > ../../include/Rversion.h
-	sh ./GETCONFIG > ../../include/Rconfig.h
 	$(ECHO) done > fixh
+
+../../include/Rconfig.h: h/config.h
+	sh ./GETCONFIG > ../../include/Rconfig.h
+
+../../include/Rversion.h: ../../../date-stamp ../../../VERSION
+	sh ./GETVERSION > ../../include/Rversion.h
 
 fixbin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
 	$(CP) -p  $^ ../../../bin

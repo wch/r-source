@@ -62,7 +62,7 @@ refman.tex: refman.top $(srcdir)/refman.bot
 	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
 	  cat $(srcdir)/refman.bot) > $@
 
-version.tex: ../../bin/rterm.exe $(top_srcdir)/VERSION
+version.tex: ../../bin/Rterm.exe $(top_srcdir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
