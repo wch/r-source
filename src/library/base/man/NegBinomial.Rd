@@ -60,7 +60,7 @@ dnbinom(x, size = 1, prob = 1/2) * 2^(1 + x) # == 1
 summary(1 - cumsum(dnbinom(x, size = 2, prob = 1/2)) /
 	          pnbinom(x, size  = 2, prob = 1/2))
 
-x <- seq(0,6, len=21)
+x <- 0:15
 size <- (1:20)/4
 persp(x,size, dnb <- outer(x,size,function(x,s)dnbinom(x,s, pr= 0.4)))
 title(tit <- "negative binomial density(x,s, pr = 0.4)  vs.  x & s")
