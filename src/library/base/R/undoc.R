@@ -14,6 +14,7 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         files
     }
 
+    useSaveImage <- FALSE
     if(!missing(package)) {
         packageDir <- .find.package(package, lib.loc)
         isBase <- package == "base"
@@ -21,7 +22,11 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
                               "AnIndex"),
                               what = list("", ""),
                               quiet = TRUE, sep="\t")[[1]])
-        codeFile <- file.path(packageDir, "R", package)
+        codeFile <- file.path(packageDir, "R", "all.rda")
+        if(file.exists(codeFile))
+            useSaveImage <- TRUE
+        else
+            codeFile <- file.path(packageDir, "R", package)
         dataDir <- file.path(packageDir, "data")
     }
     else {
@@ -68,9 +73,17 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         allObjs <- ls("package:base", all.names = TRUE)
     else if(file.exists(codeFile)) {
         codeEnv <- new.env()
-        yy <- try(sys.source(codeFile, envir = codeEnv))
-        if(inherits(yy, "try-error")) {
-            stop("cannot source package code")
+        if(useSaveImage) {
+            yy <- try(load(codeFile, envir = codeEnv))
+            if(inherits(yy, "try-error")) {
+                stop("cannot load package image")
+            }
+        }
+        else {
+            yy <- try(sys.source(codeFile, envir = codeEnv))
+            if(inherits(yy, "try-error")) {
+                stop("cannot source package code")
+            }
         }
         allObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
@@ -97,7 +110,7 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         }
         if(any(i <- grep("\\.\(RData\|rdata\|rda\)$", files))) {
             for (f in file.path(dataDir, files[i])) {
-                yy <- load(f, envir = dataEnv)
+                yy <- try(load(f, envir = dataEnv))
                 if(inherits(yy, "try-error"))
                     stop(paste("cannot load data file", fQuote(f)))
                 new <- ls(envir = dataEnv, all.names = TRUE)
