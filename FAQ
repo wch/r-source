@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-33, 2003-02-18
+Version 1.6-34, 2003-02-21
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1241,6 +1241,10 @@ distributions of R.)
      "Modern Applied Statistics with S".  Contained in the `VR' bundle.
      _Recommended_.
 
+*MCMCpack*
+     Markov chain Monte Carlo (MCMC) package: functions for posterior
+     simulation for a number of statistical models.
+
 *MPV*
      Data sets from the book "Introduction to Linear Regression Analysis"
      by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
@@ -1550,6 +1554,13 @@ distributions of R.)
 
 *gafit*
      Genetic algorithm for curve fitting.
+
+*gbm*
+     Generalized Boosted Regression Models: implements extensions to Freund
+     and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
+     machine.  Includes regression methods for least squares, absolute loss,
+     logistic, Poisson, Cox proportional hazards partial likelihood, and
+     AdaBoost exponential loss.
 
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation

@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.6-33, 2003-02-18
+@set FAQ-VERSION 1.6-34, 2003-02-21
 @set REL-VERSION 1.6.2
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -1526,6 +1526,9 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 Functions and datasets from the main package of Venables and Ripley,
 ``Modern Applied Statistics with S''.  Contained in the @file{VR}
 bundle.  @emph{Recommended}.
+@item MCMCpack
+Markov chain Monte Carlo (MCMC) package: functions for posterior
+simulation for a number of statistical models.
 @item MPV
 Data sets from the book ``Introduction to Linear Regression Analysis''
 by D. C. Montgomery, E. A. Peck, and C. G. Vining, 2001, John Wiley and
@@ -1768,6 +1771,12 @@ Statistics, 1989).
 Create and maintain delayed-data packages (DDP's).
 @item gafit
 Genetic algorithm for curve fitting.
+@item gbm
+Generalized Boosted Regression Models: implements extensions to Freund
+and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
+machine.  Includes regression methods for least squares, absolute loss,
+logistic, Poisson, Cox proportional hazards partial likelihood, and
+AdaBoost exponential loss.
 @item gee
 An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data.
