@@ -82,8 +82,7 @@ ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 @depend_rules_frag@
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
-.c.lo:
-	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS_LO) -c $< -o $@
+@cc_o_lo_rules_frag@
 @f77_rules_frag@
 
 prefix = @prefix@

@@ -45,6 +45,7 @@ ALL_LIBS = $(LIBPATHS) $(PKG_LIBS) $(FLIBS)
 
 .c.o:
 	$(CC) $(ALL_CPPFLAGS) $(ALL_CFLAGS) -c $< -o $@
+@cc_o_lo_rules_frag@
 .cc.o:
 	$(CXX) $(ALL_CPPFLAGS) $(ALL_CXXFLAGS) -c $< -o $@
 .cpp.o:
