@@ -142,9 +142,6 @@
     setGeneric("body<-", where = envir)
     setMethod("body<-", "MethodDefinition", function (fun, envir, value) {
         ff <- as(fun, "function")
-    setGeneric("body<-", where = envir)
-    setMethod("body<-", "MethodDefinition", function (f, envir, value) {
-        ff <- as(f, "function")
         body(ff, envir = envir) <- value
         fun@.Data <- ff
         fun
