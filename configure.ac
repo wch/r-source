@@ -324,19 +324,7 @@ case "${host_os}" in
 esac
 
 AC_PROG_CC_STDC
-case "${host_os}" in
-  hpux*)
-    ## <FIXME>
-    ## Do we still to defined _HPUX_SOURCE on HPUX 11 with gcc so that
-    ## we get the ISO C99 fp classification macros?
-    ## AC_DEFINE(_HPUX_SOURCE, 1,
-    ##           [Define on HPUX if not using GCC.])
-    ## </FIXME>
-    ;;
-esac
-
 AC_PROG_GCC_TRADITIONAL
-
 R_PROG_CC_M
 R_PROG_CC_C_O_LO
 
@@ -635,11 +623,6 @@ case "${host_os}" in
     AC_DEFINE(USE_BUILTIN_RINT, 1,
               [Define if your rint() is broken on your system.
                Apparently needed on HPUX.])
-    ## <FIXME>
-    ## Do we still need -D_HPUX_SOURCE to get the ISO C99 fp
-    ## classification macros (also with gcc)?
-    ## R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
-    ## </FIXME>
     case "${CC}" in
       cc|c89)
 	## Luke Tierney says we also need '-Wp,-H16000' which tells the
@@ -728,6 +711,7 @@ shlib_ld=${CC}
 shlib_cxxld=${CXX}
 SHLIB_EXT=".so"
 SHLIB_LIBADD=
+use_exportfile=no
 
 ## Step 1.  Ask imake.
 ## <FIXME>
@@ -773,13 +757,13 @@ fi
 ## Step 3.  Individual platform overrides.
 case "${host_os}" in
   aix*)
-    EXPORTFILE="R.exp"
+    use_exportfile=yes
     ## All AIX code is PIC.
     cpicflags=
     cxxpicflags=
     fpicflags=
     wl="-Wl,"
-    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/${EXPORTFILE} ${wl}-bM:SRE"
+    main_ldflags="${wl}-bdynamic ${wl}-bE:\$(top_builddir)/etc/R.exp ${wl}-bM:SRE"
     shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
       ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     SHLIB_LIBADD="\$(LIBM)"
@@ -999,7 +983,7 @@ AC_SUBST(SHLIB_EXT)
 AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}",
 [Define this to be the extension used for shared libraries on your
 system.])
-AC_SUBST(EXPORTFILE)
+AM_CONDITIONAL(USE_EXPORTFILE, [test "x${use_exportfile}" = xyes])
 AC_SUBST(LIBR_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 
