@@ -420,8 +420,10 @@ UTILITIES
     o	Option 'repositories' to list URLs for package repositories
 	added.
 
-    o   package.description() has been replaced by
-        packageDescription(), package.contents() has been deprecated.
+    o   package.description() has been replaced by packageDescription().
+
+    o   R CMD INSTALL/build now skip Subversion's .svn directories as
+	well as CVS directories.
 
 
 C-LEVEL FACILITIES
@@ -475,6 +477,8 @@ DEPRECATED & DEFUNCT
 
     o	LTRUE/LFALSE in Rmath.h have been removed: they were
 	deprecated in 1.2.0.
+
+    o	pacakge.contents() has been deprecated.
 
 
 INSTALLATION CHANGES
