@@ -246,6 +246,10 @@ BUG FIXES
 	revision in July 2000.  It causes problems with LaTeX systems
 	based on e-TeX which are starting to appear.
 
+    o   save() to a connection did not check that the connection was
+	open for writing, nor that non-ascii saves cannot be made to a
+	text-mode connection.
+
 
 
 
