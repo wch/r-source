@@ -2,9 +2,8 @@ menu <- function(x, graphics = FALSE, title = "")
 {
   xlen <- length(x)
   cat(title, "\n")
-  for (i in 1:xlen) 
+  for(i in seq(length=xlen))
     cat(i, ":", x[i]," \n", sep = "")
-  done <- 0
   repeat {
     cat("Selection: ")
     ind <- .Internal(menu(as.character(x)))
