@@ -59,6 +59,8 @@ extern int wcswidth(const wchar_t *s, size_t n);
 
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #ifdef USE_SYSTEM_REGEX
+/* for 2.1.0, this option is not functional */
+#error USE_SYSTEM_REGEX is no longer supported
 # include <regex.h>
 #else
 # include "Rregex.h"
@@ -1111,13 +1113,15 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		strcat(u, s);
 	    }
 	} else {
+	    /* Looks like REG_NOTBOL is no longer needed in this version,
+	       but leave in as a precaution */
 	    eflags = 0; last_end = -1;
-	    /* This is not correct, as it cannot know if say \b is
-	       matching the beginning of the string.  It needs to use
-	       re_search, with considerable changes */
-	    while (regexec(&reg, &s[offset], 10, regmatch, eflags) == 0) {
+	    /* We need to use private version of regexec here, as
+	       head-chopping the string does not work with e.g. \b.
+	     */
+	    while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
 		nmatch += 1;
-		offset += regmatch[0].rm_eo;
+		offset = regmatch[0].rm_eo;
 		/* Do not repeat a 0-length match after a match, so
 		   gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
 		if(offset > last_end) {
@@ -1143,16 +1147,15 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		u = CHAR(STRING_ELT(ans, i));
 		ns = strlen(s);
 		eflags = 0; last_end = -1;
-		while (regexec(&reg, &s[offset], 10, regmatch, eflags) == 0) {
+		while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
 		    /* printf("%s, %d %d\n", &s[offset],
 		       regmatch[0].rm_so, regmatch[0].rm_eo); */
-		    for (j = 0; j < regmatch[0].rm_so ; j++)
-			*u++ = s[offset+j];
-		    if(offset+regmatch[0].rm_eo > last_end) {
-			u = string_adj(u, &s[offset], t, regmatch);
-			last_end = offset+regmatch[0].rm_eo;
+		    for (j = offset; j < regmatch[0].rm_so ; j++) *u++ = s[j];
+		    if(regmatch[0].rm_eo > last_end) {
+			u = string_adj(u, s, t, regmatch);
+			last_end = regmatch[0].rm_eo;
 		    }
-		    offset += regmatch[0].rm_eo;
+		    offset = regmatch[0].rm_eo;
 		    if (s[offset] == '\0' || !global) break;
 		    /* <MBCS FIXME> advance by a char */
 		    if (regmatch[0].rm_eo == regmatch[0].rm_so) 

@@ -824,9 +824,7 @@ BUG FIXES
         original algorithm.  (PR#7314)
 
     o	gsub() was sometimes incorrectly matching ^ inside a string,
-	e.g.  gsub("^12", "x", "1212") was "xx".  [The non-perl
-	version still mismatches "\\b", e.g. gsub("\\b12", "x",
-	"1212") is also "xx".]
+	e.g.  gsub("^12", "x", "1212") was "xx".
 
     o	[g]sub(perl = TRUE) was giving random results for a 0-length
 	initial match.  (PR#7742)

@@ -580,6 +580,10 @@ extern size_t regerror(int __errcode, const regex_t *__preg,
 extern void regfree(regex_t *__preg);
 
 
+extern int
+Rregexec (const regex_t *__restrict preg, const char *__restrict string, 
+	  size_t nmatch, regmatch_t pmatch[], int eflags, int offset);
+
 #ifdef __cplusplus
 }
 #endif	/* C++ */

@@ -316,8 +316,10 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    nmatch += 1;
 	    /* Do not repeat a 0-length match after a match, so
 	       gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
-	    if(ovector[1] > last_end) 
+	    if(ovector[1] > last_end) {
 		ns += length_adj(t, ovector, re_nsub);
+		last_end = ovector[1];
+	    }
 	    offset = ovector[1];
 	    if (s[offset] == '\0' || !global) break;
 	    /* If we have a 0-length match, move on a char */
@@ -338,7 +340,6 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    offset++;
 	    }
 	    eflag = PCRE_NOTBOL;
-	    last_end = ovector[1];
 	}
 	if (nmatch == 0)
 	    SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
@@ -354,8 +355,10 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* printf("%s, %d, %d %d\n", s, offset,
 		   ovector[0], ovector[1]); */
 		for (j = offset; j < ovector[0]; j++) *u++ = s[j];
-		if(ovector[1] > last_end) 
+		if(ovector[1] > last_end) {
 		    u = string_adj(u, s, t, ovector);
+		    last_end = ovector[1];
+		}
 		offset = ovector[1];
 		if (s[offset] == '\0' || !global) break;
 		if(ovector[1] == ovector[0]) { 
@@ -378,7 +381,6 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 
 		eflag = PCRE_NOTBOL;
-		last_end = ovector[1];
 	    }
 	    for (j = offset ; s[j] ; j++)
 		*u++ = s[j];

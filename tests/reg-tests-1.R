@@ -3566,8 +3566,12 @@ stopifnot(identical(paste('v_', x, sep=""), sub('^','v_', x)))
 (x <- gsub("\\b", "|", "The quick brown fox", perl = TRUE))
 stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
 ## checked against sed: 2.0.1 infinite-looped.
-## perl = FALSE still gives the wrong answer.
+(x <- gsub("\\b", "|", "The quick brown fox"))
+stopifnot(identical(x, "|The| |quick| |brown| |fox|"))
+## 2.0.1 gave wrong answer
 ## Another boundary case,
+(x <- gsub("\\b", "|", " The quick "))
+stopifnot(identical(x, " |The| |quick| "))
 (x <- gsub("\\b", "|", " The quick ", perl = TRUE))
 stopifnot(identical(x, " |The| |quick| "))
 ## and some from a comment in the GNU sed code
