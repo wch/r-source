@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-17, 2002-02-15
+@set FAQ-VERSION 1.4-18, 2002-02-19
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -1676,6 +1676,8 @@ A comprehensive package for structural multivariate function estimation
 using smoothing splines.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item ifs
+Iterated Function Systems distribution function estimator.
 @item ineq
 Inequality, concentration and poverty measures, and Lorenz curves
 (empirical and theoretic).
