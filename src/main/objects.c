@@ -333,22 +333,23 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if(i) {   /* we need to expand out the dots */
 	PROTECT(t = allocList(i+length(actuals)-1));
 	for( s=actuals, m=t; s!=R_NilValue; s=CDR(s),m=CDR(m) ) {
-	   if(TYPEOF(CAR(s)) == DOTSXP) {
+	    if(TYPEOF(CAR(s)) == DOTSXP) {
 		i=1;
 		for(a=CAR(s); a!=R_NilValue; a=CDR(a), i++, m=CDR(m) ) {
-		   sprintf(tbuf,"..%d",i);
-		   TAG(m)= mkSYMSXP(PROTECT(mkChar(tbuf)), R_UnboundValue);
-		   UNPROTECT(1);
-		   CAR(m)=CAR(a);
+		    sprintf(tbuf,"..%d",i);
+		    TAG(m)= mkSYMSXP(mkChar(tbuf), R_UnboundValue);
+		    CAR(m)=CAR(a);
 		}
-	   }
-	   else {
+	    }
+	    else {
 		TAG(m)=TAG(s);
 		CAR(m)=CAR(s);
-	   }
-       }
-       actuals=t;
+	    }
+        }
+	UNPROTECT(1);
+	actuals=t;
     }
+    PROTECT(actuals);
 
 
     /* we can't duplicate because it would force the promises */
