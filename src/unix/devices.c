@@ -292,6 +292,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	if (!(dev = (NewDevDesc*)calloc(1, sizeof(NewDevDesc))))
 	    return 0;
 	/* Do this for early redraw attempts */
+	dev->newDevStruct = 1;
 	dev->displayList = R_NilValue;
 	/* Took out the GInit because MOST of it is setting up
 	 * R base graphics parameters.  
