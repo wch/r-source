@@ -7,7 +7,7 @@ libs:
 	@sh LIBSETUP
 
 clean:
-	@echo Cleaning in library..
+	@echo Cleaning in src/library
 	@sh LIBCLEAN
+
 realclean: clean
-	@rm LIBCLEAN
