@@ -44,10 +44,11 @@
      arguments are used.}
 }
 \value{
-  \code{predict.nls} produces a vector of predictions or a matrix of
+  \code{predict.nls} produces a vector of predictions.
+  When implemented, \code{interval} will produce a matrix of
   predictions and bounds with column names \code{fit}, \code{lwr}, and
-  \code{upr} if \code{interval} is set.  If \code{se.fit} is
-  \code{TRUE}, a list with the following components is returned:
+  \code{upr}.  When implemented, if \code{se.fit} is
+  \code{TRUE}, a list with the following components will be returned:
 
   \item{fit}{vector or matrix as above}
   \item{se.fit}{standard error of predictions}
