@@ -30,7 +30,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.19 $ ';
+my $revision = ' $Revision: 1.20 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -549,11 +549,11 @@ Usage: $name [options] pkgdirs
 
 Check R packages from package sources in the directories specified by
 pkgdirs.  A variety of diagnostic checks on directory structure, index
-and control files are performed.  All examples provided by the
-packages\' documentation are tested if they run succesfully.  Finally,
-the package is installed into the log directory (which includes the
-translation of all Rd files into several formats), and the Rd files are
-tested by LaTeX (if available).
+and control files are performed.  The package is installed into the
+log directory (which includes the translation of all Rd files into
+several formats), and the Rd files are tested by LaTeX (if
+available). All examples and tests provided by the package are tested
+if they run succesfully.
 
 If necessary for passing the checks, use the \`--vsize\' and \`--nsize\'
 options to increase R\'s memory (\`--vanilla\' is used by default).
