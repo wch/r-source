@@ -253,51 +253,59 @@ none
 
 Directory:  incoming
 
-* PR# 896 *
-Subject: Optimize: difference between R for Linux and Windows
-From: "Marketa Kylouskova" <Marketa.Kylouskova@euromise.cz>
-Date: 5 Apr 2001 12:30:29 +0100
-* PR# 877 *
-Subject: segmentation fault of unknown cause
-From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
-Date: Wed, 14 Mar 2001 17:45:25 +0100
-* PR# 884 *
+* PR# 897 *
+Subject:  bug in contour() ? 
+From: kuensch@stat.math.ethz.ch
+Date: Fri, 6 Apr 2001 16:21:24 +0200
 * PR# 883 *
 Subject: cor(x,y) when is.null(y)
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Fri, 23 Mar 2001 11:38:05 -0800 (PST)
-* PR# 886 *
-Subject: Error (?) in documentation of 'swiss' data in R base package
-From: k.j.mcconway@open.ac.uk
-Date: Wed, 28 Mar 2001 16:46:49 +0200 (MET DST)
+* PR# 877 *
+Subject: segmentation fault of unknown cause
+From: Martin Schlather <Martin.Schlather@uni-bayreuth.de>
+Date: Wed, 14 Mar 2001 17:45:25 +0100
 * PR# 885 *
 Subject: Problems with R CMD COMPILE within Makefile
 From: Peter Holzer <holzer@stat.math.ethz.ch>
 Date: Mon, 26 Mar 2001 15:32:00 +0200
-* PR# 888 *
-Subject: User defined assignment function ignores argument names
-From: jhallman@frb.gov
-Date: Fri, 30 Mar 2001 23:03:08 +0200 (MET DST)
+* PR# 884 *
 * PR# 887 *
 Subject: axis(adj=anything) has no effect
 From: jhallman@frb.gov
 Date: Wed, 28 Mar 2001 20:51:05 +0200 (MET DST)
-* PR# 890 *
-Subject: aclocal.m4: R_PROG_F77_CC_COMPAT assumes executables w/o extension
-From: hoffmann@ehmgs2.et.tu-dresden.de
-Date: Mon, 2 Apr 2001 09:22:28 +0200 (MET DST)
+* PR# 886 *
+Subject: Error (?) in documentation of 'swiss' data in R base package
+From: k.j.mcconway@open.ac.uk
+Date: Wed, 28 Mar 2001 16:46:49 +0200 (MET DST)
 * PR# 889 *
 Subject: na.omit()
 From: devoilp@dpi.qld.gov.au
 Date: Mon, 2 Apr 2001 03:17:20 +0200 (MET DST)
-* PR# 892 *
-Subject: rle() fails with NA's
+* PR# 888 *
+Subject: User defined assignment function ignores argument names
 From: jhallman@frb.gov
-Date: Tue, 3 Apr 2001 21:52:44 +0200 (MET DST)
+Date: Fri, 30 Mar 2001 23:03:08 +0200 (MET DST)
 * PR# 891 *
 Subject: Importing from Splus
 From: ernesto@ipimar.pt
 Date: Tue, 3 Apr 2001 17:03:06 +0200 (MET DST)
+* PR# 890 *
+Subject: aclocal.m4: R_PROG_F77_CC_COMPAT assumes executables w/o extension
+From: hoffmann@ehmgs2.et.tu-dresden.de
+Date: Mon, 2 Apr 2001 09:22:28 +0200 (MET DST)
+* PR# 893 *
+Subject: ghhfh
+From: gfhjgq@yahoo.com
+Date: Wed, 4 Apr 2001 12:12:02 +0200 (MET DST)
+* PR# 892 *
+Subject: rle() fails with NA's
+From: jhallman@frb.gov
+Date: Tue, 3 Apr 2001 21:52:44 +0200 (MET DST)
+* PR# 896 *
+Subject: Optimize: difference between R for Linux and Windows
+From: "Marketa Kylouskova" <Marketa.Kylouskova@euromise.cz>
+Date: 5 Apr 2001 12:30:29 +0100
 * PR# 895 *
 Subject: CI for wilcoxon test
 From: kylouskova@euromise.cz
@@ -306,7 +314,3 @@ Date: Thu, 5 Apr 2001 11:02:47 +0200 (MET DST)
 Subject: ghhfh
 From: gfhjgq@yahoo.com
 Date: Wed, 4 Apr 2001 12:12:12 +0200 (MET DST)
-* PR# 893 *
-Subject: ghhfh
-From: gfhjgq@yahoo.com
-Date: Wed, 4 Apr 2001 12:12:02 +0200 (MET DST)
