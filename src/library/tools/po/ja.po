@@ -1,0 +1,29 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-02-06 11:26+0000\n"
+"PO-Revision-Date: 2005-03-31 08:00+0009\n"
+"Last-Translator: Nobuo Funao\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Rmd5.c:34
+msgid "argument 'files' must be character"
+msgstr "引数 'files' は文字型でなければなりません"
+
+#: Rmd5.c:48
+#, c-format
+msgid "md5 failed on file '%s'"
+msgstr "md5 はファイル '%s' で失敗しました"
+
+#: text.c:47
+msgid "invalid argument type"
+msgstr "不正な引数の型です"

@@ -1,0 +1,1324 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-03-14 07:40\n"
+"PO-Revision-Date: 2005-03-26 13:36+0900\n"
+"Last-Translator: Shigeru Mase\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'%s' is defunct."
+msgstr "'%s' は廃止されました"
+
+msgid "Use '%s' instead."
+msgstr "'%s' を代わりに使って下さい"
+
+msgid "See help(\"Defunct\") and help(\"%s-defunct\")."
+msgstr "help(\"Defunct\") と help(\"%s-defunct\") を見て下さい"
+
+msgid "See help(\"Defunct\")"
+msgstr "help(\"Defunct\") を見て下さい"
+
+msgid "'%s' is deprecated."
+msgstr "'%s' は廃止予定です"
+
+msgid "See help(\"Deprecated\") and help(\"%s-deprecated\")."
+msgstr "help(\"Deprecated\") と help(\"%s-deprecated\") を見て下さい"
+
+msgid "See help(\"Deprecated\")"
+msgstr "help(\"Deprecated\") を見て下さい"
+
+msgid "argument to 'La.svd' must be numeric or complex"
+msgstr "'La.svd' への引数は数値か複素数でなければなりません"
+
+msgid "infinite or missing values in 'x'"
+msgstr "'x' のに無限値か欠測値があります"
+
+msgid "0 extent dimensions"
+msgstr "範囲が 0 の次元です"
+
+msgid "'nu' must be 0, nrow(x) or ncol(x)"
+msgstr "'nu' は 0 , nrow(x) または ncol(x) でなければなりません"
+
+msgid "'nv' must be 0, nrow(x) or ncol(x)"
+msgstr "'nv' は 0 , nrow(x) または ncol(x) でなければなりません"
+
+msgid "all can not be used with other deparse options"
+msgstr "deparse オプションでは、すべてを使用することはできません"
+
+msgid "second argument must be a list"
+msgstr "第二引数はリストでなければなりません"
+
+msgid "'kind' must be a character string of length 1 (RNG to be used)."
+msgstr "'kind' は長さ 1 の文字列(使用されるべき RNG 名) でなければなりません"
+
+msgid "'%s' is not a valid abbreviation of an RNG"
+msgstr "'%s' は RNG の有効な省略名ではありません"
+
+msgid "'normal.kind' must be a character string of length 1."
+msgstr "'normal.kind' は長さ 1 の文字列でなければなりません"
+
+msgid "Buggy version of Kinderman-Ramage generator used."
+msgstr "Kinderman-Ramage の疑似乱数発生法のバギー版を使います"
+
+msgid "'%s' is not a valid choice"
+msgstr "'%s' は有効な選択ではありません"
+
+msgid "malformed version string"
+msgstr "正しい書式のバージョン文字列ではありません"
+
+msgid "dim(X) must have a positive length"
+msgstr "dim(X) は正の長さを持たねばなりません"
+
+msgid "'dim' specifies too large an array"
+msgstr "'dim' は余りに大きな配列を指定しています"
+
+msgid "incorrect value for 'MARGIN'"
+msgstr "'MARGIN' に対する不正確な値です"
+
+msgid "you cannot be serious"
+msgstr "本気ですか？"
+
+msgid "*** 'pos=1' is not possible; setting 'pos=2' for now."
+msgstr "*** 'pos=1' は不可能です。今は 'pos=2' と設定します"
+
+msgid "*** Note that 'pos=1' will give an error in the future"
+msgstr "*** 'pos=1' はいずれエラーを与えることを注意して下さい"
+
+msgid "file '%s' not found"
+msgstr "ファイル '%s' が見付かりません"
+
+msgid "invalid name"
+msgstr "不当な名前です"
+
+msgid "is required by"
+msgstr "が以下により要求されました："
+
+msgid "(still attached)"
+msgstr "(まだアタッチされています)"
+
+msgid "replaced regular expression pattern '[' by  '\\\\['"
+msgstr "正規表現パターン '[' を  '\\\\[' で置き換えました"
+
+msgid "replaced '[<-' by '\\\\[<-' in regular expression pattern"
+msgstr "正規表現パターン '[<-' を '\\\\[<-' で置き換えました"
+
+msgid "RHS must be list"
+msgstr "右辺はリストでなければなりません"
+
+msgid "an object with that name already exists"
+msgstr "その名前のオブジェクトは既に存在します"
+
+msgid "autoloader did not find '%s' in '%s'"
+msgstr "自動ローダーは '%s' を '%s' 中に見つけられませんでした"
+
+msgid "invalid argument values in 'backsolve'"
+msgstr "'backsolve' に無効な引数値が与えられました"
+
+msgid "singular matrix in 'backsolve'. First zero in diagonal [%d]"
+msgstr "'backsolve' に特異行列。対角線 [%d] の最初の要素がゼロです"
+
+msgid "complex matrices not permitted at present"
+msgstr "複素行列は現在許可されていません"
+
+msgid "non-numeric argument to 'chol'"
+msgstr "'chol' へ数値でない引数"
+
+msgid "non-square matrix in 'chol'"
+msgstr "'chol' 中に非正方行列"
+
+msgid "non-matrix argument to 'chol'"
+msgstr "'chol' へ行列でない引数"
+
+msgid "matrix not positive definite"
+msgstr "行列は正定値符号ではありません"
+
+msgid "non-positive definite matrix in 'chol'"
+msgstr "'chol' に非負定値符号行列"
+
+msgid "non-numeric argument to 'chol2inv'"
+msgstr "'chol2inv' へ数値でない引数"
+
+msgid "invalid 'size' argument in 'chol2inv'"
+msgstr "'chol2inv' 中に無効な 'size' 引数"
+
+msgid "singular matrix in 'chol2inv'"
+msgstr "'chol2inv' 中に特異行列"
+
+msgid "'x' must be an array of at least two dimensions"
+msgstr "'x' は少なくとも二次元の配列でなければなりません"
+
+msgid "invalid 'dims'"
+msgstr "無効な 'dims' です"
+
+msgid "bad handler specification"
+msgstr "誤ったハンドラーの指定です"
+
+msgid "no 'restart' '%s' found"
+msgstr "'restart' '%s' が見付かりません"
+
+msgid "not an interactive session"
+msgstr "対話的なセッションではありません"
+
+msgid "not a valid restart specification"
+msgstr "有効な再スタート指定ではありません"
+
+msgid "argument where of length 0"
+msgstr "長さ 0 の引数"
+
+msgid "'origin' must be one of 'start', 'current' or 'end'"
+msgstr ""
+"'origin' は 'start', 'current' または 'end' のいずれかでなければなりません"
+
+msgid "can only truncate an open connection"
+msgstr "開かれたコネクションしか切り詰められません"
+
+msgid "can only write vector objects"
+msgstr "ベクトルオブジェクトしか書き込めません"
+
+msgid "can only write character objects"
+msgstr "文字オブジェクトしか書き込めません"
+
+msgid "supplied timeout must be NULL or a non-negative number"
+msgstr "タイムアウトは NULL か非負の数値でなければなりません"
+
+msgid "'x' must be numeric"
+msgstr "'x' は数値でなければなりません"
+
+msgid "invalid number of intervals"
+msgstr "誤った区間数です"
+
+msgid "'breaks' are not unique"
+msgstr "'breaks' が一意的ではありません"
+
+msgid "labels/breaks length conflict"
+msgstr "ラベルまたは分割点の長さが矛盾しています"
+
+msgid "non-numeric data type in frame"
+msgstr "フレーム中に数値でないデータタイプがあります"
+
+msgid "class information lost from one or more columns"
+msgstr "クラス情報が一つ以上の列から失われました"
+
+msgid "invalid 'row.names' length"
+msgstr "無効な 'row.names'長です"
+
+msgid "duplicate 'row.names' are not allowed"
+msgstr "重複した 'row.names' は許されません"
+
+msgid "missing 'row.names' are not allowed"
+msgstr "'row.names' が欠けていてはなりません"
+
+msgid "invalid 'dimnames' given for data frame"
+msgstr "データフレームに無効な 'dimnames' が与えられました"
+
+msgid "cannot coerce class \"%s\" into a data.frame"
+msgstr "クラス \"%s\" はデータフレームに強制変換できません"
+
+msgid "invalid 'row.names', length %d for a data frame with %d rows"
+msgstr ""
+"無効な 'row.names' です。長さが %d ですが、データフレームの行数は %d です"
+
+msgid "supplied %d row names for %d rows"
+msgstr "%d 個の行名が %d 個の行に提供されました"
+
+msgid "mismatch of row names in arguments of 'data.frame', item %d"
+msgstr "'data.frame' の引数中の行名(項目 %d)が不適当です"
+
+msgid "some row.names duplicated:"
+msgstr "row.names が重複しています："
+
+msgid ","
+msgstr ","
+
+msgid "--> row.names NOT used"
+msgstr "--> row.names は使われません"
+
+msgid "arguments imply differing number of rows:"
+msgstr "引数は異なった列数を意味します:"
+
+msgid "row.names should specify one of the variables"
+msgstr "row.names は変数の一つを指定するべきです"
+
+msgid "row names supplied are of the wrong length"
+msgstr "与えられた列名は誤った長さです"
+
+msgid "row names were found from a short variable and have been discarded"
+msgstr "列名は短い変数から見つけられ、捨て去られました"
+
+msgid "row names contain missing values"
+msgstr "列名は欠測値を含んでいます"
+
+msgid "duplicate row.names:"
+msgstr "row.names が重複しています："
+
+msgid "drop argument will be ignored"
+msgstr "drop 引数は無視されます"
+
+msgid "undefined columns selected"
+msgstr "未定義の列が選ばれました"
+
+msgid "rhs is the wrong length for indexing by a logical matrix"
+msgstr "右辺は論理値行列によって添字操作するには間違った長さです"
+
+msgid "only logical matrix subscripts are allowed in replacement"
+msgstr "置き換えでは、論理値の行列の添字だけが許されます"
+
+msgid "need 0, 1, or 2 subscripts"
+msgstr "0, 1 または 2 つの添字が必要です"
+
+msgid ""
+"missing values are not allowed in subscripted assignments of data frames"
+msgstr "データフレームの添字による代入では、欠損値は許されません"
+
+msgid "non-existent rows not allowed"
+msgstr "存在しない行は許されません"
+
+msgid "new columns would leave holes after existing columns"
+msgstr "新しい列は既存の列に穴を開けるかも知れません"
+
+msgid "duplicate subscripts for columns"
+msgstr "列に対する重複した添字です"
+
+msgid "replacement has %d rows, data has %d"
+msgstr "置き換えは %d 列ですが、データは %d 列です"
+
+msgid "replacement has %d items, need %d"
+msgstr "置き換えは %d 個の項目を持ちますが、%d 個必要です"
+
+msgid "replacement element %d is a matrix/data frame of %d rows, need %d"
+msgstr ""
+"置き換え要素 %d は %d 行の行列またはデータフレームですが、%d 行必要です"
+
+msgid "replacement element %d has %d rows, need %d"
+msgstr "置き換え要素 %d は %d 行を持ちますが、%d 行必要です"
+
+msgid "replacement element %d has %d rows to replace %d rows"
+msgstr ""
+"置き換え要素 %d は %d 行を持ちますが、%d 個の行を置き換えようとしています"
+
+msgid "%d rows in value to replace %d rows"
+msgstr "value 中の %d 行で %d 行を置き換えようとしています"
+
+msgid "replacement data has %d rows to replace %d rows"
+msgstr ""
+"置き換えデータは %d 行を持ちますが、%d 個の行を置き換えようとしています"
+
+msgid "provided %d variables to replace %d variables"
+msgstr "%d 個の変数を与えて、%d 個の変数を置き換えようとしています"
+
+msgid "only valid calls are x[[j]] <- value or x[[i,j]] <- value"
+msgstr "有効な呼出しは x[[j]] <- value か x[[i,j]] <- value だけです"
+
+msgid "replacing element in non-existent column:"
+msgstr "以下の存在しない列中の要素の置き換えです："
+
+msgid "only a single element should be replaced"
+msgstr "ただ一つの要素しか置き換えられるべきではありません"
+
+msgid "names don't match previous names:"
+msgstr "名前が以下のような以前の名前と一致しません："
+
+msgid "invalid list argument: all variables should have the same length"
+msgstr "無効なリストの引数です。全ての変数は同じ長さを持つべきです"
+
+msgid "non-numeric variable in data frame:"
+msgstr "以下のデータフレーム中に数値でない変数があります："
+
+msgid "only defined for equally-sized data frames"
+msgstr "は等しいサイズのデータフレームに対してだけ定義されます"
+
+msgid "list of length %d not meaningful"
+msgstr "長さ %d のリストは意味がありません"
+
+msgid "only defined on a data frame with all numeric or complex variables"
+msgstr "すべて数値または複素数値の変数のデータフレームに対してだけ定義されます"
+
+msgid "character string is not in a standard unambiguous format"
+msgstr "文字列は標準的な曖昧さのない書式にはなっていません"
+
+msgid "do not know how to convert '%s' to class \"Date\""
+msgstr "'%s' をクラス \"Date\" へ変換する仕方が分かりません"
+
+msgid "'%s' is not a \"date\" object"
+msgstr "'%s' は \"date\" オブジェクトではありません"
+
+msgid "'%s' is not a \"dates\" object"
+msgstr "'%s' は \"dates\" オブジェクトではありません"
+
+msgid "binary + is not defined for Date objects"
+msgstr "Dtate オブジェクトに対しては二項演算 + は定義されていません"
+
+msgid "Can only subtract from Date objects"
+msgstr "Date オブジェクトからしか引くことはできません"
+
+msgid "unary - is not defined for Date objects"
+msgstr "単項演算 - は Date オブジェクトに対しては定義されていません"
+
+msgid "can only subtract numbers from Date objects"
+msgstr "Date オブジェクトからは数値しか引けません"
+
+msgid "unary"
+msgstr "単項演算"
+
+msgid "not defined for Date objects"
+msgstr "は Date オブジェクトに対しては定義されていません"
+
+msgid "'from' must be specified"
+msgstr "'from' を指定しなければなりません"
+
+msgid "'from' must be a Date object"
+msgstr "'from' は Date オブジェクトでなければなりません"
+
+msgid "'from' must be of length 1"
+msgstr "'from' は長さ 1 でなければなりません"
+
+msgid "'to' must be a Date object"
+msgstr "'to' は Date オブジェクトでなければなりません"
+
+msgid "'to' must be of length 1"
+msgstr "'to' は長さ 1 でなければなりません"
+
+msgid "'length.out' must be of length 1"
+msgstr "'length.out' は長さ 1 でなければなりません"
+
+msgid ""
+"exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified"
+msgstr ""
+"'to', 'by'、そして 'length.out' かまたは 'along.with'、の内丁度二つを指定しな"
+"ければなりません"
+
+msgid "'by' must be of length 1"
+msgstr "'by' は長さ 1 でなければなりません"
+
+msgid "invalid 'by' string"
+msgstr "無効な文字列 'by' です"
+
+msgid "invalid string for 'by'"
+msgstr "'by' に対する無効な文字列です"
+
+msgid "invalid mode for 'by'"
+msgstr "'by' に対する無効なモードです"
+
+msgid "'by' is NA"
+msgstr "'by' が NA です"
+
+msgid "'x' must be a date-time object"
+msgstr "'x' は date-time オブジェクトでなければなりません"
+
+msgid "invalid specification of 'breaks'"
+msgstr "'breaks' の無効な指定です"
+
+msgid "'origin' must be of length one"
+msgstr "'origin' は長さ 1 でなければなりません"
+
+msgid "'lag' and 'differences' must be integers >= 1"
+msgstr "'lag' そして 'differences' は 1 以上の整数でなければなりません"
+
+msgid "do not know how to convert '%s' to class \"POSIXlt\""
+msgstr "'%s' をクラス \"POSIXlt\" へ変換する方法が分かりません"
+
+msgid "wrong class"
+msgstr "間違ったクラスです"
+
+msgid "binary + is not defined for \"POSIXt\" objects"
+msgstr "\"POSIXt\" オブジェクトには二項演算 + は定義されていません"
+
+msgid "Can only subtract from POSIXt objects"
+msgstr "POSIXt オブジェクトからしか引けません"
+
+msgid "unary - is not defined for \"POSIXt\" objects"
+msgstr "単項演算 - は \"POSIXt\" オブジェクトに対しては定義されていません"
+
+msgid "can only subtract numbers from POSIXt objects"
+msgstr "POSIXt オブジェクトからしか引けません"
+
+msgid "not defined for \"POSIXt\" objects"
+msgstr "\"POSIXt\" オブジェクトに対しては定義されていません"
+
+msgid "not defined for POSIXt objects"
+msgstr "POSIXt オブジェクトに対しては定義されていません"
+
+msgid "not defined for \"POSIXct\" objects"
+msgstr "\"POSIXct\" オブジェクトに対しては定義されていません"
+
+msgid "not defined for \"POSIXlt\" objects"
+msgstr "\"POSIXlt\" オブジェクトに対しては定義されていません"
+
+msgid "not defined for \"difftime\" objects"
+msgstr "\"difftime\" オブジェクトに対しては定義されていません"
+
+msgid "both arguments of * cannot be \"difftime\" objects"
+msgstr ""
+"掛け算 * の引数は両方とも \"difftime\" オブジェクトであることができません"
+
+msgid "second argument of / cannot be a \"difftime\" object"
+msgstr "割り算 / の第二引数は \"difftime\" オブジェクトであることができません"
+
+msgid "'from' must be a POSIXt object"
+msgstr "'from' は POSIXt オブジェクトでなければなりません"
+
+msgid "'to' must be a POSIXt object"
+msgstr "'to' POSIXt のオブジェクトでなければなりません"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' は文字列かコネクションでなければなりません"
+
+msgid "'x' must be a square matrix"
+msgstr "'x' 正方行列でなければなりません"
+
+msgid "determinant not currently defined for complex matrices"
+msgstr "行列式は現在複素行列には定義されていません"
+
+msgid "first argument is array, but not matrix."
+msgstr "第一引数は配列ですが、行列ではありません"
+
+msgid "only matrix diagonals can be replaced"
+msgstr "行列の対角成分だけが置き換えられます"
+
+msgid "replacement diagonal has wrong length"
+msgstr "置き換え対角成分の長さが間違っています"
+
+msgid "MARGIN ="
+msgstr "MARGIN="
+
+msgid "is invalid for dim ="
+msgstr "は以下の次元には無効です："
+
+msgid "must pass a package name, DLLInfo or DllInfoReference object"
+msgstr ""
+"パッケージ名、DLLInfo または DllInfoReference オブジェクトを渡さなければなり"
+"ません"
+
+msgid "No DLL currently loaded with name or path"
+msgstr "名前かパスを持つ Dll は現在何もロードされていません"
+
+msgid "multiple DLLs match '%s'. Using '%s'"
+msgstr "'%s' にマッチする複数の DLL があります。'%s' を使用します"
+
+msgid "must specify DLL via a DLLInfo object. See getLoadedDLLs()"
+msgstr ""
+"DLLInfo オブジェクトによって DLL を指定しなければなりません。GetLoadedDLLs() "
+"を見て下さい"
+
+msgid "function is not in a namespace, so cannot locate associated DLL"
+msgstr "関数は名前空間に無いため、関連する DLL を特定できません"
+
+msgid ""
+"looking for DLL for native routine call, but no DLLs in namespace of call"
+msgstr ""
+"ネイティブなルーティン呼び出しのための DLL を探しましたが、呼び出し用の名前空"
+"間には DLL が何もありません"
+
+msgid "0 x 0 matrix"
+msgstr "0 x 0 行列です"
+
+msgid "non-square matrix in 'eigen'"
+msgstr "'eigen' に非正方行列が与えられました"
+
+msgid "numeric or complex values required in 'eigen'"
+msgstr "'eigen' には数値か複素数値が必要です"
+
+msgid "'ch' returned code %d in 'eigen'"
+msgstr "'eigen' で 'ch' がコード %d を返しました"
+
+msgid "'rs' returned code %d in 'eigen'"
+msgstr "'eigen' で 'rs' がコード %d を返しました"
+
+msgid "'cg' returned code %d in 'eigen'"
+msgstr "'eigen' で 'cg' がコード %d を返しました"
+
+msgid "'rg' returned code %d in 'eigen'"
+msgstr "'eigen' で 'rg' がコード %d を返しました"
+
+msgid "invalid labels; length %d should be 1 or %d"
+msgstr "無効なラベルです。長さ %d は 1 または %d であるべきです"
+
+msgid "number of levels differs"
+msgstr "水準の数が異なります"
+
+msgid "not meaningful for factors"
+msgstr "因子に対しては無意味です"
+
+msgid "level sets of factors are different"
+msgstr "因子の水準セットが異なっています"
+
+msgid "invalid factor level, NAs generated"
+msgstr "無効な因子水準です。NA が発生しました"
+
+msgid "'%s' is not meaningful for ordered factors"
+msgstr "'%s' は順序因子に対しては無意味です"
+
+msgid "no files to copy from"
+msgstr "コピーすべきファイルがありません"
+
+msgid "no files to copy to"
+msgstr "そこへコピーすべきファイルがありません"
+
+msgid "more 'from' files than 'to' files"
+msgstr "コピー先ファイルよりも多くのコピー元ファイルがあります"
+
+msgid "file can not be copied both 'from' and 'to'"
+msgstr "同じファイルにコピーすることはできません"
+
+msgid "no files to link from"
+msgstr "リンクすべきファイルがありません"
+
+msgid "no files/directory to link to"
+msgstr "リンクすべきファイルもしくはディレクトリがありません"
+
+msgid "calling wrong method"
+msgstr "間違ったメソッドの呼出しです"
+
+msgid "'package' must be of length 1"
+msgstr "'package' は長さ 1 でなければなりません"
+
+msgid "'vec' contains NAs"
+msgstr "'vec' は NA 値を含んでいます"
+
+msgid "'vec' must be sorted non-decreasingly"
+msgstr "'vec' は非減少順にソートされていなければいけません"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: 'x' を強 'character' へ強制変換します"
+
+msgid "'mode' must be \"double\" (\"real\") or \"integer\""
+msgstr ""
+"'mode' は \"double\" (\"real\") または \"integer\" でなければなりません"
+
+msgid "coercing argument to \"character\" for format=\"s\""
+msgstr "引数を \"format=\"s\" に対する \"character\" へ強制変換します"
+
+msgid "'format' must be one of {\"f\",\"e\",\"E\",\"g\",\"G\", \"fg\", \"s\"}"
+msgstr ""
+"'format' は {\"f\",\"e\",\"E\",\"g\",\"G\",\"fg\",\"s\" } のいずれかでなけれ"
+"ばなりません"
+
+msgid "'flag' can contain only '0+- #'"
+msgstr "'flag' は '0+- #' だけを含めます"
+
+msgid "corrupt data frame: columns will be truncated or padded with NAs"
+msgstr ""
+"壊れたデータフレームです。列は切り詰められるか、または NA 値で埋められます"
+
+msgid "'subset' must evaluate to logical"
+msgstr "'subset' は論理値として評価されなければなりません"
+
+msgid "'subset' must be logical"
+msgstr "'subset' は論理値でなければなりません"
+
+msgid "'form' must be a two-sided formula"
+msgstr "'form' は左右の辺を持つモデル式でなければなりません"
+
+msgid "value for '"
+msgstr "以下に対する値："
+
+msgid "' not found"
+msgstr "が見つけられません"
+
+msgid "'pattern' must be a non-empty character string"
+msgstr "'pattern' は空でない文字列でなければなりません"
+
+msgid "'max.distance' must be non-negative"
+msgstr "'max.distance' は非負でなければなりません"
+
+msgid "unknown match distance components ignored"
+msgstr "未知の一致距離成分は無視されました"
+
+msgid "'max.distance' components must be non-negative"
+msgstr "'max.distance' 成分は非負でなければなりません"
+
+msgid "matrix should be square"
+msgstr "正方行列であるべきです"
+
+msgid "This is R %s, package '%s' needs %s %s"
+msgstr "これは R %s です。パッケージ '%s' は %s %s を必要とします"
+
+msgid "package '%s' was built before R 2.0.0: please re-install it"
+msgstr ""
+"パッケージ '%s' は R 2.0.0 以前に造らました。それを再びインストールして下さい"
+
+msgid "package '%s' was built under R version %s"
+msgstr "パッケージ '%s' はバージョン %s の R の下で造られました"
+
+msgid "package '%s' was built for %s"
+msgstr "パッケージ '%s' は %s に対して造られました"
+
+msgid "package '%s' has not been installed properly"
+msgstr "パッケージ '%s' は正しくインストールされませんでした"
+
+msgid "See the Note in ?library"
+msgstr "ライブラリ ?library のノートを見て下さい"
+
+msgid "Attaching package: '%s'"
+msgstr "次のパッケージを付け加えます: '%s'"
+
+msgid "package '%s' has been merged into '%s'"
+msgstr "パッケージ '%s' は '%s' に併合されました"
+
+msgid "package 'lqs' has been moved back to package 'MASS'"
+msgstr "パッケージ 'lqs' はパッケージ 'MASS' へ戻さました"
+
+msgid "package 'MASS' has now been loaded"
+msgstr "パッケージ 'MASS' はロードされました"
+
+msgid "package 'MASS' seems to be missing from this R installation"
+msgstr "パッケージ 'MASS' はこの R のインストールでは存在しないようです"
+
+msgid "there is no package called '%s', version %s"
+msgstr "'%s' と名前のパッケージ(%s 版)がありません"
+
+msgid "there is no package called '%s'"
+msgstr "'%s' という名前のパッケージはありません"
+
+msgid "'%s' is not a valid package -- installed < 2.0.0?"
+msgstr ""
+"'%s' は有効なパッケージではありません。バージョン < 2.0.0 でインストールされ"
+"たかも知れません"
+
+msgid "'%s' not found on search path, using pos = 2"
+msgstr "'%s' は検索パス上には見つかりませんでした。位置 = 2 を使用します"
+
+msgid "package/namespace load failed for '%s'"
+msgstr "'%s' に対するパッケージもしくは名前空間のロードが失敗しました"
+
+msgid "unable to load R code in package '%s'"
+msgstr "パッケージ '%s' 中の R コードをロードできません"
+
+msgid "package '%s' contains no R code"
+msgstr "パッケージ '%s' は R コードを含んでいません"
+
+msgid ".First.lib failed for '%s'"
+msgstr "First.lib は '%s' に対して失敗しました"
+
+msgid "package '%s' already present in search()"
+msgstr "パッケージ '%s' は既に search() 中に存在します"
+
+msgid "%sPackages in library '%s':"
+msgstr "ライブラリ '%2%s' 中の %1%s パッケージ："
+
+msgid "no packages found"
+msgstr "いかなるパッケージも見付かりませんでした"
+
+msgid "R packages available"
+msgstr "利用可能な R パッケージ"
+
+msgid "shared library '%s' not found"
+msgstr "共用ライブラリ '%s' が見付かりません"
+
+msgid "shared library '%s' already loaded"
+msgstr "共用ライブラリ '%s' は既にロードされています"
+
+msgid "now dyn.load(\"%s\") ..."
+msgstr "dyn.load(\"%s\") 中です ..."
+
+msgid "no shared library was specified"
+msgstr "共用ライブラリが何も指定されませんでした"
+
+msgid "shared library '%s' was not loaded"
+msgstr "共用ライブラリ '%s' はロードされませんでした"
+
+msgid "now dyn.unload(\"%s\") ..."
+msgstr "dyn.unload(\"%s\") 中です ..."
+
+msgid "Loading required package: %s"
+msgstr "要求されたパッケージ %s をロード中です"
+
+msgid "none of the packages are loaded"
+msgstr "どのパッケージもロードされません"
+
+msgid ""
+"package '%s' found more than once,\n"
+"using the one found in '%s'"
+msgstr ""
+"パッケージ '%s' が複数見つかりました。\n"
+" '%s' 中に見つかったものを使います"
+
+msgid "none of the packages were found"
+msgstr "どのパッケージも見つかりませんでした"
+
+msgid ""
+"Further information is available in the following vignettes in directory '%"
+"s':"
+msgstr ""
+"これ以上の情報はディレクトリ '%s' にある以下の vignettes 中にあります："
+
+msgid "doc"
+msgstr "doc"
+
+msgid "Description:"
+msgstr "記述："
+
+msgid "Index:"
+msgstr "索引："
+
+msgid "Information on package '%s'"
+msgstr "パッケージ '%s' の情報"
+
+msgid "Documentation for package '%s'"
+msgstr "パッケージ '%s' のためのドキュメント"
+
+msgid "package '%s' required by '%s' could not be found"
+msgstr "'%2%s' が要求したパッケージ '%1%s' は見つけられませんでした"
+
+msgid "package '%s' %s was found, but %s %s is required by '%s'"
+msgstr ""
+"パッケージ '%s' %s はありましたが、%s %s が '%s' によって要求されています"
+
+msgid "package '%s' could not be loaded"
+msgstr "パッケージ '%s' をロードできませんでした"
+
+msgid "package '%s' %s is loaded, but %s %s is required by '%s'"
+msgstr ""
+"パッケージ '%s' %s はロードされましたが、%s %s が '%s' によって要求されていま"
+"す"
+
+msgid "bad file argument"
+msgstr "誤ったファイル引数です"
+
+msgid "no input is available"
+msgstr "いかなる入力も利用できません"
+
+msgid "input has been corrupted, with LF replaced by CR"
+msgstr "入力は混乱しています。LF が CR で置き換えられています"
+
+msgid ""
+"the input does not start with a magic number compatible with loading from a "
+"connection"
+msgstr ""
+"入力はコネクションからのロードと互換性があるマジックナンバーで始まっていませ"
+"ん"
+
+msgid "'file' must be specified"
+msgstr "'file' が指定されなければなりません"
+
+msgid "'file' must be non-empty string"
+msgstr "'file' は空でない文字列でなければなりません"
+
+msgid "can only save to a binary connection"
+msgstr "バイナリコネクションへしかセーブできません"
+
+msgid "`file' must be non-empty string"
+msgstr "` file' は空でない文字列でなければなりません"
+
+msgid "image could not be renamed and is left in"
+msgstr "イメージは改名できませんので、以下に残されます："
+
+msgid "[Previously saved workspace restored]"
+msgstr "[以前にセーブされたワークスペースを復帰します]"
+
+msgid "invalid 'category' argument"
+msgstr "無効な 'category' 引数です"
+
+msgid "'arg' should be one of"
+msgstr "'arg' は以下の一つでなければなりません："
+
+msgid "there is more than one match in 'match.arg'"
+msgstr "'match.arg' に複数のマッチがあります"
+
+msgid "no match"
+msgstr "マッチしません"
+
+msgid "'input' must have length 1"
+msgstr "'input' は長さ 1 でなければなりません"
+
+msgid "'input' and 'target' must be character vectors"
+msgstr "'input' そして 'target' は文字ベクトルでなければなりません"
+
+msgid "'%s' is not a function, character or symbol"
+msgstr "'%s' は関数、文字、またはシンボルではありません"
+
+msgid "found non-function '%s'"
+msgstr "関数でない '%s' が見付かりました"
+
+msgid "attempt to set rownames on object with no dimensions"
+msgstr "次元無しのオブジェクトに行名を設定しようとしました"
+
+msgid "attempt to set colnames on object with less than two dimensions"
+msgstr "次元が 2 未満のオブジェクトに列名を設定しようとしました"
+
+msgid "argument is not numeric or logical: returning NA"
+msgstr "引数は数値でも論理値でもありません。NA 値を返します"
+
+msgid "trimmed means are not defined for complex data"
+msgstr "複素数データに対しては刈込み平均は定義されません"
+
+msgid "'by' must match numbers of columns"
+msgstr "'by' は列数に一致しなければなりません"
+
+msgid "'by' must match number of columns"
+msgstr "'by' は列数に一致しなければなりません"
+
+msgid "'by' must specify column(s)"
+msgstr "'by' は column(s) を指定しなければなりません"
+
+msgid "'by' must specify valid column(s)"
+msgstr "'by' は有効な column(s) を指定しなければなりません"
+
+msgid "no rows to match"
+msgstr "マッチすべき行がありません"
+
+msgid "'by.x' and 'by.y' specify different numbers of columns"
+msgstr "'by.x' そして 'by.y' は異なった列数を指定しています"
+
+msgid ""
+"Tracing functions requires the methods package, but unable to load methods "
+"namespace"
+msgstr ""
+"トレース関数はメソッドパッケージを必要としていますが、メソッドの名前空間を"
+"ロードできません"
+
+msgid "'%s' is not an exported object from 'namespace:%s'"
+msgstr ""
+"'%s' は 'namespace:%s' からエクスポートされたオブジェクトではありません"
+
+msgid "%s failed in 'attachNamespace'"
+msgstr "%s は 'attachNamespace' で失敗しました"
+
+msgid "name space is already attached"
+msgstr "名前空間は既に付加されています"
+
+msgid "%s not found"
+msgstr "%s を見付けることができません"
+
+msgid "cyclic name space dependencies are not supported"
+msgstr "サイクリックな名前空間の従属性はサポートされていません"
+
+msgid "%s failed in 'loadNamespace' for '%s'"
+msgstr "%s は '%s' のための 'loadNamespace' に失敗しました"
+
+msgid "namespace '%s' is already sealed in loadNamespace"
+msgstr "名前空間 '%s' は既に loadNamespace 中に密封さ れる"
+
+msgid "package '%s' does not have a name space"
+msgstr "パッケージ '%s' は名前空間を持っていません"
+
+msgid "in '%s' classes for export not defined: %s"
+msgstr "'%s' 中にはエクスポートのためのクラスは見付かりません： %s"
+
+msgid "in '%s' methods for export not found: %s"
+msgstr "'%s' 中にはエクスポートのためのメソッドは見付かりません： %s"
+
+msgid "in '%s' methods specified for export, but none defined: %s"
+msgstr ""
+"'%s' 中にエクスポートのためのメソッドが指定されていますが、定義されていませ"
+"ん： %s"
+
+msgid "not found"
+msgstr "見つかりません"
+
+msgid "not loading a name space"
+msgstr "名前空間をロードしません"
+
+msgid "name space '%s' is loaded"
+msgstr "名前 '%s' がロードされました"
+
+msgid "%s failed in unloadNamespace(%s)"
+msgstr "%s は unloadNamespace(%s) に失敗しました"
+
+msgid "name space '%s' is still used by:"
+msgstr "名前 '%s' まだ以下により使用されています："
+
+msgid "imperative name space directives are disabled"
+msgstr "命令的な名前空間の指令は使用不可能です"
+
+msgid "all objects in base name space are currently exported."
+msgstr "ベース名前空間中の全てのオブジェクトは現在エクスポートされています"
+
+msgid "can only export from a name space"
+msgstr "名前空間からだけエクスポートできます"
+
+msgid "not a name space"
+msgstr "名前空間ではありません"
+
+msgid "operation not allowed on base name space"
+msgstr "ベース名前空間では許可されない操作です"
+
+msgid "duplicate import names"
+msgstr "重複したインポート名です"
+
+msgid "cannot import into a sealed name space"
+msgstr "密閉された名前ネーム空間にはインポートできません"
+
+msgid "invalid import target"
+msgstr "無効なインポート対象です"
+
+msgid "requested 'methods' objects not found in environment/package '%s': %s"
+msgstr ""
+"要求された 'methods' オブジェクトは環境もしくはパッケージ '%s' に見付かりませ"
+"ん： %s"
+
+msgid "cannot add to exports of a sealed name space"
+msgstr "密閉された名前空間のエクスポートへ加えることができません"
+
+msgid "undefined exports :"
+msgstr "未定義のエクスポートです："
+
+msgid "package '%s' has no NAMESPACE file"
+msgstr "パッケージ '%s' は名前空間ファイルを持っていません"
+
+msgid "bad 'S3method' directive: %s"
+msgstr "誤った 'S3method' 指令です：%s"
+
+msgid "too many 'S3method' directives"
+msgstr "余りにも多くの 'S3method' 指令です"
+
+msgid "unknown namespace directive: %s"
+msgstr "未知の名前空間指令です： %s"
+
+msgid "S3 method '%s' was declared in NAMESPACE but not found"
+msgstr "S3 メソッド '%s' が名前空間中で宣言されましたが、見付かりません"
+
+msgid "bad method"
+msgstr "誤ったメソッドです"
+
+msgid "object '%s' not found whilst loading namespace '%s'"
+msgstr ""
+"名前空間 '%2%s' をロードする際に、オブジェクト '%1%s' を見つけることができま"
+"せんでした"
+
+msgid "found an S4 version of '%s' so it has not been imported correctly"
+msgstr ""
+"'%s' の S4 版が見付かりました。したがってそれは正しくインポートされていません"
+
+msgid "'%s' is not implemented yet"
+msgstr "'%s' はまだ実装されていません"
+
+msgid "argument '%s' is not used (yet)"
+msgstr "引数 '%s' は(まだ)使用されていません"
+
+msgid "invalid version specification"
+msgstr "無効なバージョンの指定です"
+
+msgid "wrong argument"
+msgstr "間違った引数です"
+
+msgid "not defined for package_version objects"
+msgstr "は package_version オブジェクトに対しては定義されていません"
+
+msgid "invalid 'n' value"
+msgstr "無効な 'n' 値です"
+
+msgid "'shrink.sml' must be numeric > 0"
+msgstr "'shrink.sml' は正の数値でなければなりません"
+
+msgid "'min.n' must be non-negative integer <= n"
+msgstr "'min.n' は非負整数 < = n でなければなりません"
+
+msgid "'high.u.bias' must be non-negative numeric"
+msgstr "'high.u.bias' は非負の数値でなければなりません"
+
+msgid "'u5.bias' must be non-negative numeric"
+msgstr "'u5.bias' は非負の数値でなければなりません"
+
+msgid "'eps.correct' must be 0, 1, or 2"
+msgstr "'eps.correct' は 0, 1 または 2 でなければなりません"
+
+msgid "first argument must be a QR decomposition"
+msgstr "最初の引数は QR 分解でなければなりません"
+
+msgid "'qr' and 'y' must have the same number of rows"
+msgstr "'qr' そして 'y' は同じ行数を持たなければなりません"
+
+msgid "exact singularity in 'qr.coef'"
+msgstr "'qr.coef' は正確に特異です"
+
+msgid "argument is not a QR decomposition"
+msgstr "引数は QR 分解ではありません"
+
+msgid "not implemented for complex 'qr'"
+msgstr "複素数の 'qr' に対しては実装されていません"
+
+msgid "not supported for LAPACK QR"
+msgstr "LAPACK QR に対しては実装されていません"
+
+msgid "'k' is too large"
+msgstr "'k' は大きすぎます"
+
+msgid "need larger value of 'ncol' as pivoting occurred"
+msgstr "ピボット操作が起きるように大きな 'ncol' の値が必要です"
+
+msgid "no lines available in input"
+msgstr "入力に利用可能な行がありません"
+
+msgid "empty beginning of file"
+msgstr "ファイルの開始部分が空です"
+
+msgid "header and 'col.names' are of different lengths"
+msgstr "ヘッダーと 'col.names' が異なった長さです"
+
+msgid "more columns than column names"
+msgstr "列名よりも多くの列があります"
+
+msgid "more column names than columns"
+msgstr "列数よりも多くの列名があります"
+
+msgid "first five rows are empty: giving up"
+msgstr "最初の 5 行が空です。お手上げです"
+
+msgid "not all columns named in 'colClasses' exist"
+msgstr "'colClasses' に名前があげられた列の中に存在しないものがあります"
+
+msgid "invalid numeric 'as.is' expression"
+msgstr "無効な数値 'as.is' 表現式"
+
+msgid "not all columns named in 'as.is' exist"
+msgstr "'as.is' に名前があげられた列の中に存在しないものがあります"
+
+msgid "'as.is' has the wrong length %d  != cols = %d"
+msgstr "'as.is' は間違った長さ %d != cols = %d を持ちます"
+
+msgid "invalid 'row.names' specification"
+msgstr "無効な 'row.names' の指定です"
+
+msgid "'x' must be a vector"
+msgstr "'x' はベクトルでなければなりません"
+
+msgid "invalid 'rle' structure"
+msgstr "無効な 'rle' 構造です"
+
+msgid "incorrect length for 'group'"
+msgstr "'group' に対する不正確な長さです"
+
+msgid "missing values for 'group'"
+msgstr "'group' のための値がありません"
+
+msgid "not a data frame"
+msgstr "データフレームではありません"
+
+msgid "length of 'center' must equal the number of columns of 'x'"
+msgstr "'center' の長さは 'x' の列数に等しくなければなりません;"
+
+msgid "length of 'scale' must equal the number of columns of 'x'"
+msgstr "'scale' の長さは 'x' の列数に等しくなければなりません;"
+
+msgid "either specify 'nmax' or 'n', but not both."
+msgstr "'nmax' か 'n' を指定して下さい。しかし両方はだめです"
+
+msgid "invalid (to - from)/by in seq(.)"
+msgstr "seq(.) 中の (to - from)/by が不正です"
+
+msgid "wrong sign in 'by' argument"
+msgstr "'by' 引数中に誤った符号があります"
+
+msgid "'by' argument is much too small"
+msgstr "'by' 引数小さすぎます"
+
+msgid "length must be non-negative number"
+msgstr "長さは非負の数値でなければなりません"
+
+msgid "too many arguments"
+msgstr "引数の数が多すぎます"
+
+msgid "bad 'file' argument"
+msgstr "誤った 'file' 引数です"
+
+msgid "'connection' must be a connection"
+msgstr "'connection' はコネクションでなければなりません"
+
+msgid "'file' must be NULL or an already open connection"
+msgstr "'file' は NULL  か既に開かれたコネクションでなければなりません"
+
+msgid "cannot split the message connection"
+msgstr "メッセージコネクションを分割できません"
+
+msgid "'file' must be NULL, a connection or a character string"
+msgstr "'file' は NULL、コネクション、または文字列でなければなりません"
+
+msgid "this is the \"qr\" method for the generic function solve()"
+msgstr "これは総称的関数 solve() のための \"qr\" メソッドです"
+
+msgid "singular matrix 'a' in 'solve'"
+msgstr "'solve' 中に特異行列 'a' があります'"
+
+msgid "only square matrices can be inverted"
+msgstr "逆行列は正方行列だけにしか定義できません"
+
+msgid "solve.default called with a \"qr\" object: use 'qr.solve'"
+msgstr ""
+"solve.default が \"qr\" オブジェクトに対して呼び出されました。'qr.solve' を"
+"使って下さい"
+
+msgid "singular matrix 'a' in solve"
+msgstr "solve 中に特異行列 'a' がありました"
+
+msgid "'index.return' only for non-factors"
+msgstr "'index.return' は非因子専用です"
+
+msgid "'x' must be atomic"
+msgstr "'x' はアトムでなければなりません"
+
+msgid "'index.return' only for 'na.last = NA'"
+msgstr "'index.return' は 'na.last = NA' 専用です"
+
+msgid "unsupported options for partial sorting"
+msgstr "部分的ソートに対するサポートされていないオプションです"
+
+msgid "non-finite 'partial'"
+msgstr "有限でない 'partial' です"
+
+msgid "argument lengths differ"
+msgstr "引数の長さが異なります"
+
+msgid "method=\"quick\" is only for numeric 'x'"
+msgstr "method=\"quick は数値の 'x' 専用です"
+
+msgid "method=\"radix\" is only for integer 'x'"
+msgstr "method=\"radix\" は整数値の 'x'  専用です"
+
+msgid "'echo' must be logical"
+msgstr "'echo' は論理値でなければなりません"
+
+msgid "'verbose' is TRUE, 'echo' not; ... coercing 'echo <- TRUE'"
+msgstr ""
+"'verbose' が TRUE で 'echo' はそうではありません。'echo < - TRUE' とします"
+
+msgid "unable to find a plausible encoding"
+msgstr "もっともらしいエンコーディングを見つけられません"
+
+msgid "'%s' is not an existing file"
+msgstr "'%s' は既存のファイルではありません"
+
+msgid "is not TRUE"
+msgstr "は TRUE ではありません"
+
+msgid "incorrect value for 'x'"
+msgstr "'x' に対する不正確な値です"
+
+msgid "'x' and 'y' must have the same length"
+msgstr "'x' と 'y' は同じ長さを持たなければなりません"
+
+msgid "incorrect values of 'indent' and 'width'"
+msgstr "'indent' と 'width' に対する不正確な値です"
+
+msgid "argument to 'svd' must be numeric"
+msgstr "'svd' への引数は数値でなければなりません"
+
+msgid "'nv' must be 0 or ncol(x)"
+msgstr "'nv' は 0 か ncol(x) でなければなりません"
+
+msgid "error %d in 'dsvdc'"
+msgstr "'dsvdc' 中にエラー %d があります"
+
+msgid "nothing to tabulate"
+msgstr "表にするものが何もありません"
+
+msgid "all arguments must have the same length"
+msgstr "全ての引数は同じ長さでなければなりません"
+
+msgid "'object' must inherit from class \"table\""
+msgstr "'object' はクラス \"table\" を継承しなければなりません"
+
+msgid "'x' must inherit from class \"summary.table\""
+msgstr "'x' はクラス \"summary.table\" を継承しなければなりません"
+
+msgid "cannot coerce into a table"
+msgstr "テーブルに強制変換できません"
+
+msgid "'x' is not an array"
+msgstr "'x' は配列ではありません"
+
+msgid "invalid argument 'n'"
+msgstr "無効な引数 'n' です"
+
+msgid "invalid argument 'r'"
+msgstr "無効な引数 'r' です"
+
+msgid "invalid argument 'c'"
+msgstr "無効な引数 'c' です"
+
+msgid "arguments 'r' and 'c' must have the same sums"
+msgstr "引数 'r' と 'c' は同じ総和を持たなければなりません"
+
+msgid "'bin' must be numeric or a factor"
+msgstr "'bin' は数値または因子でなければなりません"
+
+msgid "arguments must have same length"
+msgstr "引数は同じ長さでなければなりません"
+
+msgid "handler must be a function"
+msgstr "ハンドラーは関数でなければなりません"
+
+msgid "no such element '%s'"
+msgstr "そのような要素 '%s' はありません"
+
+msgid "Removing"
+msgstr "以下を取除きます："
+
+msgid "Registering evaluate as low-level callback"
+msgstr "登録(Registering)は低レベルのコールバックとして評価されます"
+
+msgid "'width' must be positive"
+msgstr "'width' は正でなければなりません"
+
+msgid "No traceback available"
+msgstr "利用できる traceback がありません"
+
+msgid "argument to 'which' is not logical"
+msgstr "'which' への引数は論理値ではありません"
+
+msgid "invalid numbers in 'quote'"
+msgstr "'quote' 中にの無効な数値があります"
+
+msgid "invalid 'quote' specification"
+msgstr "無効な 'quote' 指定です"
+
+msgid "invalid 'col.names' specification"
+msgstr "無効な 'col.names' 指定です"
+
+msgid "appending column names to file"
+msgstr "ファイルへの列名を加えます"
+
+msgid "invalid 'digits'"
+msgstr "無効な 'digits' です"
+
+msgid "argument must be character"
+msgstr "引数は文字でなければなりません"
+
+msgid "'cmd' could not be run"
+msgstr "'cmd' を実行できませんでした"
+
+msgid "'cmd' execution failed with error code %d"
+msgstr "'cmd' の実行はエラーコード %d で失敗しました"
+
+msgid "deparse option %s is not recognized"
+msgid_plural "deparse options %s are not recognized"
+msgstr[0] "deparse オプション %s は認識できません"
+msgstr[1] "deparse オプション(複数) %s は認識できません"
+
+msgid "library %s contains no packages"
+msgid_plural "libraries %s contain no packages"
+msgstr[0] "ライブラリ %s はパッケージを含んでいません"
+msgstr[1] "ライブラリ(複数) %s はパッケージを含んでいません"
+
+msgid "package %s is not loaded"
+msgid_plural "packages %s are not loaded"
+msgstr[0] "パッケージ %s はロードされません"
+msgstr[1] "パッケージ(複数) %s はロードされません"
+
+msgid "object %s is not exported by 'namespace:%s'"
+msgid_plural "objects %s are not exported by 'namespace:%s'"
+msgstr[0] "オブジェクト %s は 'namespace:%s' によってエクスポートされません"
+msgstr[1] ""
+"オブジェクト(複数) %s は 'namespace:%s' によってエクスポートされません"
+
+msgid "previous export %s is being replaced"
+msgid_plural "previous exports %s are being replaced"
+msgstr[0] "以前のエクスポート %s は置き換えられています"
+msgstr[1] "以前のエクスポート(複数) %s は置き換えられています"
+
+msgid "S3 method %s was declared in NAMESPACE but not found"
+msgid_plural "S3 methods %s were declared in NAMESPACE but not found"
+msgstr[0] ""
+"S3 メソッド %s は NAMESPACE で宣言されましたが、見つかりませんでした"
+msgstr[1] ""
+"S3 メソッド(複数) %s は NAMESPACE で宣言されましたが、見つかりませんでした"
+
+msgid "Warning message:\n"
+msgid_plural "Warning messages:\n"
+msgstr[0] "警告メッセージ：\n"
+msgstr[1] "警告メッセージ(複数)：\n"

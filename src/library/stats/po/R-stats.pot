@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-24 11:40\n"
+"POT-Creation-Date: 2005-04-01 10:56\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1485,6 +1485,15 @@ msgid "PCA applies only to numerical variables"
 msgstr ""
 
 msgid "no scores are available: refit with 'retx=TRUE'"
+msgstr ""
+
+msgid "'newdata' must be a matrix or data frame"
+msgstr ""
+
+msgid "'newdata' does not have named columns matching one or more of the original columns"
+msgstr ""
+
+msgid "'newdata' does not have the correct number of columns"
 msgstr ""
 
 msgid "wrong number of predictors"

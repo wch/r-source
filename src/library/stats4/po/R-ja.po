@@ -1,0 +1,38 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-05 17:29\n"
+"PO-Revision-Date: 2005-03-31 08:00+0009\n"
+"Last-Translator: Nobuo Funao\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid ""
+"some named arguments in 'fixed' are not arguments to the supplied log-"
+"likelihood"
+msgstr ""
+"'fixed' 中の名前付き引数は，与えられた対数尤度に対する引数ではありません"
+
+msgid "'start' must be a named list"
+msgstr "'start' は名前付きリストでなければなりません"
+
+msgid ""
+"some named arguments in 'start' are not arguments to the supplied log-"
+"likelihood"
+msgstr ""
+"'start' 中の名前のある引数は，与えられた対数尤度に対する引数ではありません"
+
+msgid ""
+"profiling has found a better solution, so original fit had not converged"
+msgstr ""
+"プロファイリング(profiling)がより適した解を見つけましたので，最初の fit は収"
+"束していなかったことになります"
+
+msgid "levels truncated to positive values only"
+msgstr "水準(levels)は正の値のみに切りつめられました"
+
+msgid "extra arguments discarded"
+msgstr "余分な引数が破棄されました"

@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:34+0000\n"
-"PO-Revision-Date: 2005-02-16 08:34+0000\n"
+"POT-Creation-Date: 2005-04-01 10:55+0100\n"
+"PO-Revision-Date: 2005-04-01 10:55+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -46,11 +46,15 @@ msgstr "Cannot clip to rotated viewport"
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 
-#: grid.c:1211
+#: grid.c:941
+msgid "attempt to plot on null device"
+msgstr "attempt to plot on null device"
+
+#: grid.c:1221
 msgid "There is no layout defined"
 msgstr "There is no layout defined"
 
-#: grid.c:1788
+#: grid.c:1798
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Invalid circle radius (must be non-negative)"
 

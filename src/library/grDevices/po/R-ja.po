@@ -1,0 +1,206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-03-03 12:50\n"
+"PO-Revision-Date: 2005-03-31 08:00+0009\n"
+"Last-Translator: Nobuo Funao\n"
+"Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'bias' must be positive"
+msgstr "'bias' は正の値でなければなりません"
+
+msgid "rgb matrix must be numeric"
+msgstr "rgb 行列は数値でなければなりません"
+
+msgid "rgb matrix must have 3 rows"
+msgstr "rgb 行列の行数は 3 行でなければなりません"
+
+msgid "rgb values must be in [0, maxColorValue]"
+msgstr "rgb 値の範囲は [0, maxColorValue] でなければなりません"
+
+msgid "'start' and 'end' must be distinct and in [0, 1]."
+msgstr ""
+"'start' と 'end' の値は異なり，どちらも範囲 [0, 1] 内になければなりません"
+
+msgid "'gamma' must be a scalar or 'sRGB'"
+msgstr "'gamma' はスカラーまたは 'sRGB' でなければなりません"
+
+msgid "Color space converter:"
+msgstr "Color スペース変換器:"
+
+msgid "Reference white:"
+msgstr "基準白色:"
+
+msgid "display gamma"
+msgstr "ガンマ補正"
+
+msgid "'from' must be a colorConverter or string"
+msgstr "'from' は colorConverter または string でなければなりません"
+
+msgid "'to' must be a colorConverter or string"
+msgstr "'to' は colorConverter または string でなければなりません"
+
+msgid "'from.ref.white' disagrees with definition of"
+msgstr "'from.ref.white' が以下の定義と一致します: "
+
+msgid "'to.ref.white' disagrees with definition of"
+msgstr "'to.ref.white' が以下の定義と一致しません："
+
+msgid "color spaces use different reference whites."
+msgstr "カラースペース(color spaces)は異なった基準白色が使われています"
+
+msgid "cannot shut down device 1 (the null device)"
+msgstr "デバイス 1 をシャットダウンすることが出来ません（NULL デバイスです）"
+
+msgid "cannot supply which and device at the same time"
+msgstr "同時に which と device を与えることは出来ません"
+
+msgid "cannot copy the null device"
+msgstr "NULL デバイスをコピーすることは出来ません"
+
+msgid "cannot copy to the null device"
+msgstr "NULL デバイスにコピーすることは出来ません"
+
+msgid "cannot copy device to itself"
+msgstr "デバイスを同じデバイスにコピーすることは出来ません"
+
+msgid "'device' should be a function"
+msgstr "'device' は関数でなければなりません"
+
+msgid "no device to print from"
+msgstr "以下からプリントするためのデバイスがありません: "
+
+msgid "can only print from screen device"
+msgstr "スクリーンデバイスからしかプリントすることが出来ません"
+
+msgid "dev.control() called without an open graphics device"
+msgstr ""
+"dev.control() は，グラフィックスデバイスが何も開いていないのに呼び出されまし"
+"た"
+
+msgid "argument is missing with no default"
+msgstr "引数はデフォルトなしで欠損となっています"
+
+msgid "invalid arguments in '%s'  (need named args)"
+msgstr "'%s' 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "'name.opt' must be character, name of an existing list"
+msgstr "'name.opt' は既存のリストの名前である文字列でなければなりません"
+
+msgid "cannot reset non-existent '%s'"
+msgstr "存在しない '%s' をリセットすることは出来ません"
+
+msgid "invalid options in"
+msgstr "以下は不正なオプションです: "
+
+msgid "NOT changing"
+msgstr "変更しません"
+
+msgid "invalid 'family' argument"
+msgstr "不正な 'family' 引数です"
+
+msgid "invalid PDF version"
+msgstr "不正な PDF のバージョンです"
+
+msgid "invalid"
+msgstr "不正な"
+
+msgid "in PostScript font specification"
+msgstr "が PostScript フォントの指定中にありました"
+
+msgid "font"
+msgstr "フォント"
+
+msgid "already in use"
+msgstr "は既に使われています"
+
+msgid "invalid arguments in postscriptFonts (must be font names)"
+msgstr "postscriptFonts 中の不正な引数です（フォント名が必要です）"
+
+msgid "invalid arguments in postscriptFonts (need named args)"
+msgstr "postscriptFonts 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "no current device to record from"
+msgstr "現在，以下のものから記録することが出来るデバイスはありません: "
+
+msgid "argument is not of class \"recordedplot\""
+msgstr "引数はクラス \"recordedplot\" ではありません"
+
+msgid "loading snapshot from pre-2.0.0 R version"
+msgstr "pre-2.0.0 R バージョンからのスナップショットが読み込まれています"
+
+msgid "loading snapshot from different R version"
+msgstr "異なった R バージョンからのスナップショットが読み込まれています"
+
+msgid "'file' is missing with no default"
+msgstr "'file' はデフォルトなしで欠損となっています"
+
+msgid "'file' is must be a non-empty character string"
+msgstr "'file' は空でない文字列でなければなりません"
+
+msgid "sorry, 'gs' cannot be found"
+msgstr "すみません，'gs' が見つかりません"
+
+msgid "device '%s' is not available"
+msgstr "デバイス '%s' は有効ではありません"
+
+msgid "Available devices are %s"
+msgstr "利用可能なデバイスは %s です"
+
+msgid "quartz() device interactivity reduced without an event loop manager"
+msgstr "quartz() デバイスは event loop manager なしに対話的に減らされました"
+
+msgid "invalid Quartz font:  must be 4 strings"
+msgstr "不正な Quartz font です: 4 つの文字列でなければなりません"
+
+msgid "invalid arguments in quartzFonts (must be font names)"
+msgstr "quartzFonts 中の不正な引数です（フォント名が必要です）"
+
+msgid "invalid arguments in quartzFonts (need named args)"
+msgstr "quartzFonts 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "invalid X11 font specification:"
+msgstr "不正な X11 フォントの指定方法です"
+
+msgid "invalid arguments in X11Fonts (must be font names)"
+msgstr "X11Fonts 中の不正な引数です（フォント名が必要です）"
+
+msgid "invalid arguments in X11Fonts (need named args)"
+msgstr "X11Fonts 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "can only bring windows devices to the front"
+msgstr "windows デバイスしか正面にもってくることが出来ません"
+
+msgid "no such device"
+msgstr "そのようなデバイスはありません"
+
+msgid "can only copy from 'windows' devices"
+msgstr "'windows' デバイスからしかコピーできません"
+
+msgid "subscript out of range"
+msgstr "添え字が範囲外です"
+
+msgid "invalid Windows font:  must be a single font family name"
+msgstr ""
+"不正な Windows フォントです: 単一のフォントファミリー名でなければなりません"
+
+msgid "invalid arguments in 'windowsFonts' (must be font names)"
+msgstr "'windowsFonts' 中の引数が不正です（フォント名が必要です）"
+
+msgid "invalid arguments in 'windowsFonts' (need named args)"
+msgstr "'windowsFonts' 中の不正な引数です（名前がついた引数が必要です）"
+
+msgid "invalid argument name %s in '%s'"
+msgid_plural "invalid argument names %s in '%s'"
+msgstr[0] "%2$s 中の %1$s は不正な引数名です"
+msgstr[1] "%2$s 中の %1$s は不正な引数名です"
+
+msgid "differs between new and previous"
+msgid_plural "differ between new and previous"
+msgstr[0] "が新しいものと古いもので異なります"
+msgstr[1] "が新しいものと古いもので異なります"
