@@ -504,16 +504,16 @@ sub html_pagehead
         "<div align=\"center\">\n";
 
     $retval .= "<a href=\"$prev\"><img src=\"$top/left.jpg\"\n" .
-	"alt=\"[$prevtext]\" class=\"arrow\"></a>\n"
-	if $prev;
+	"alt=\"[$prevtext]\" width=\"30\" height=\"30\" border=\"0\"></a>\n"
+	    if $prev;
 
     $retval .=
 	"<a href=\"$up\"><img src=\"$top/up.jpg\"\n" .
-        "alt=\"[$uptext]\" class=\"arrow\"></a>\n"
-	if $up;
+        "alt=\"[$uptext]\" width=\"30\" height=\"30\" border=\"0\"></a>\n"
+	    if $up;
 
     $retval .= "<a href=\"$next\"><img src=\"$top/right.jpg\"\n" .
-	"alt=\"[$nextext]\" class=\"arrow\"></a>\n"
+	"alt=\"[$nextext]\" width=\"30\" height=\"30\" border=\"0\"></a>\n"
 	if $next;  # always so in current usage
 
     $retval .= "</div>\n\n";
