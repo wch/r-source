@@ -182,26 +182,24 @@ AC_PROG_YACC
 AC_CHECK_PROG(AR, [${AR} ar], ar)
 : ${ARFLAGS="rc"}
 AC_SUBST(ARFLAGS)
-## LaTeX && friends
-AC_PATH_PROG(LATEX, [${LATEX} latex], false)
-AC_PATH_PROG(DVIPS, [${DVIPS} dvips], false)
-AC_PATH_PROG(MAKEINDEX, [${MAKEINDEX} makeindex], false)
-## Nroff && friends
-AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
-AC_PATH_PROG(TBL, [${TBL} tbl], false)
-## Unzip && zip
-AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
-AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 ## Echo.
 R_PROG_ECHO_N
 ## Make.
 : ${MAKE=make}
 AC_SUBST(MAKE)
+## Nroff && friends
+AC_PATH_PROG(NROFF, [${NROFF} nroff], false)
+AC_PATH_PROG(TBL, [${TBL} tbl], false)
 ## Perl.
 R_PROG_PERL
 ## Tar.
 : ${TAR=tar}
 AC_SUBST(TAR)
+## TeXMF stuff
+R_PROG_TEXMF
+## Unzip && zip
+AC_PATH_PROG(R_UNZIPCMD, [${UNZIP} unzip], "")
+AC_PATH_PROG(R_ZIPCMD, [${ZIP} zip], "")
 
 ## C compiler.
 
@@ -715,10 +713,12 @@ AC_OUTPUT(Makeconf
   src/unix/Makefile
   tests/Makefile
   tests/Examples/Makefile
+  tools/Makefile
+  tools/install-info
 )
 
 AC_OUTPUT_COMMANDS(
-  chmod +x doc/keyword-test doc/manual/lib2tex
+  chmod +x doc/keyword-test doc/manual/lib2tex tools/install-info
 )
 
 if test -z "${F77}"; then
