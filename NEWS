@@ -22,8 +22,8 @@ NEW FEATURES
 	them needs to take care to preserve it or set an appropriate
 	environment.
 
-    o	terms() creates objects which no inherit from class "formula",
-	so as.formula(terms.object) needs to replaced by 
+    o	terms() creates objects which now inherit from class "formula",
+	so for example as.formula(terms.object) needs to replaced by 
 	formula(terms.object).
 
     o	hclust() takes new argument `members' allowing dissimilarity
