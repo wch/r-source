@@ -29,13 +29,13 @@ print.libraryIQR <-
 function(x, ...)
 {
     db <- x$results
-    outFile <- tempfile("RlibraryIQR")
-    outConn <- file(outFile, open = "w")
-    first <- TRUE
     ## Split according to LibPath.
     out <- lapply(split(1 : nrow(db), db[, "LibPath"]),
                   function(ind) db[ind, c("Package", "Title"),
                                    drop = FALSE])
+    outFile <- tempfile("RlibraryIQR")
+    outConn <- file(outFile, open = "w")
+    first <- TRUE
     for(lib in names(out)) {
         writeLines(paste(ifelse(first, "", "\n"),
                          "Packages in library `", lib, "':\n",
@@ -62,13 +62,13 @@ print.packageIQR <-
 function(x, ...)
 {
     db <- x$results
-    outFile <- tempfile("RpackageIQR.")
-    outConn <- file(outFile, open = "w")
-    first <- TRUE
     ## Split according to Package.
     out <- lapply(split(1 : nrow(db), db[, "Package"]),
                   function(ind) db[ind, c("Item", "Title"),
                                    drop = FALSE])
+    outFile <- tempfile("RpackageIQR")
+    outConn <- file(outFile, open = "w")
+    first <- TRUE
     for(pkg in names(out)) {
         writeLines(paste(ifelse(first, "", "\n"),
                          switch(x$type,
