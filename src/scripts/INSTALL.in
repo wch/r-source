@@ -50,6 +50,7 @@ Options:
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine '--use-zip-data' and '--use-zip-help'
       --fake		do minimal install for testing purposes
+      --unsafe		install on top of any existing installation
 
 Report bugs to <r-bugs@r-project.org>."
 

@@ -427,6 +427,7 @@ Options:
   --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
   --auto-zip	        select whether to zip automatically
   --build		zip-up the installation. Implies --auto-zip
+  --unsafe		install on top of any existing installation
 
 TYPE can be "none" or "normal" or "chm" (the default) or "all"
 
