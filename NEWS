@@ -104,6 +104,8 @@ NEW FEATURES
 	accordance with the general binomial theorem.  choose(*,k) is more
 	accurate (and faster) for small k.
 
+    o	as.dist() and cophenetic() are now generic.
+
 
 UTILITIES
 
