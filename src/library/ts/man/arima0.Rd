@@ -134,8 +134,8 @@ arima0(lh, order=c(3,0,0))
 arima0(lh, order=c(1,0,1))
 predict(arima0(lh, order=c(3,0,0)), n.ahead=12)
 
-data(accdeaths)
-fit <- arima0(accdeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)))
+data(USAccDeaths)
+fit <- arima0(USAccDeaths, order=c(0,1,1), seasonal=list(order=c(0,1,1)))
 fit
 predict(fit, n.ahead=6)
 
