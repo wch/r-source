@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2002
-@set FAQ-VERSION 1.4-12, 2002-01-31
+@set FAQ-VERSION 1.4-13, 2002-02-01
 @set REL-VERSION 1.4.1
 @c %**end of header
 
@@ -418,13 +418,13 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 @c Linux binaries as of 2001-12-23:
 @c
 @c debian   2.2 i386  1.3.1  Dirk Eddelbuettel <edd@debian.org>
-@c          3.0 i386  1.4.0  Dirk Eddelbuettel <edd@debian.org>
+@c          3.0 i386  1.4.1  Dirk Eddelbuettel <edd@debian.org>
 @c linuxppc 5.0 ppc   1.4.0  Alex Buerkle <buerkla@uwec.edu>
 @c mandrake 7.x i386  1.3.0  Maximino Ameneiro Gomez <maximino.ameneiro@metropoli2000.com>
 @c          8.1 i386  1.4.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x i386  1.4.0  Stephen Eglen <stephen@gnu.org>
 @c          7.x alpha 1.4.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.4.0  Martyn Plummer <plummer@iarc.fr>
+@c              i386  1.4.1  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
@@ -1579,6 +1579,8 @@ in competing risks.
 @item coda
 Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
 simulations.
+@item combinat
+Combinatorics utilities.
 @item conf.design
 A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
@@ -1614,6 +1616,12 @@ Package for drawing ellipses and ellipse-like confidence regions.
 @item emplik
 Empirical likelihood ratio for means/quantiles/hazards from possibly
 right censored data.
+@item evd
+Functions for extreme value distributions.  Extends simulation,
+distribution, quantile and density functions to univariate, bivariate
+and (for simulation) multivariate parametric extreme value
+distributions, and provides fitting functions which calculate maximum
+likelihood estimates for univariate and bivariate models.
 @item event.chart
 Package for creating event charts.
 @item exactRankTests
