@@ -27,6 +27,7 @@
 ###  Refer to http://www.merzwaren.com/waste
 ###
 ###  Jago Nov 11 2001, Stefano M. Iacus
+###  Last update: March 23 2001
 ###  (`iacus-ng' recently released, so it can't be bug free)
 ###   
 ###  bug report or optimization hints can be sent to
@@ -45,6 +46,9 @@ set fileList  "`WhereIs -x -s ::: Makefile.mac ¶
 if "{fileList}"
  for f in {fileList}
   SetFile -c 'ttxt' -t 'TEXT' "{f}"
+  Duplicate  -y "{f}" "{f}.tmp"
+  translate ¶0x0a ¶0x0d <"{f}.tmp" >"{f}"
+  delete -y "{f}.tmp"
  end
 end
 
@@ -65,10 +69,14 @@ echo "Start creating MakeR"
 date
 echo " "
 
-if `Exists ::main:alloca.c`
+if 'Exists ::main:alloca.c'
  Rename "::main:alloca.c" "::main:alloca_c" 
 end
 
+
+if 'Exists ::main:qsort-body.c'
+ Rename "::main:qsort-body.c" "::main:qsort-body_c" 
+end
 
 echo "Setting variables and file list..."
 echo " "
@@ -80,10 +88,6 @@ begin
  {Stuffit} -wait :res:R.rsrc.hqx
  duplicate -y :script :::
  {Stuffit} -wait :::script:Å.hqx
-# {Stuffit} -wait :::script:demo.hqx
-# {Stuffit} -wait :::script:execute_cmd.hqx
-# {Stuffit} -wait :::script:source_file.hqx
-# {Stuffit} -wait :::script:zip.expand.hqx
   delete -y :::script:Å.hqx
 end
 end
@@ -397,6 +401,10 @@ for f in {FortList}
   echo `echo {f} | sed "s/\.f/.c/g" ¶
    | sed "s/[^/]*:/:obj:\1/"` "Ä" '"'{f}'"' >>MakeR
  end
+end
+
+if 'Exists ::main:qsort-body_c'
+ Rename "::main:qsort-body_c" "::main:qsort-body.c" 
 end
 echo " "
 echo "Done !"
