@@ -1466,7 +1466,7 @@ respectively.
 @code{R CMD check} provides a basic set of checks, but often further
 problems emerge when people try to install and use packages submitted to
 @acronym{CRAN} -- many of these involve compiled code.  Here are some
-further checks that you can do to make sure your package is portable.
+further checks that you can do to make your package more portable.
 
 @itemize
 
@@ -1490,12 +1490,12 @@ Do be very careful with passing arguments between @R{}, C and
 @acronym{FORTRAN} code.  In particular, @code{long} in C will be 32-bit
 on most @R{} platforms (including those used by the @acronym{CRAN}
 maintainers), but 64-bit on many modern Unix and Linux platforms.  It is
-rather unlikely that use @code{long} in C code has been thought through:
-if you need a longer type than @code{int} you should use a configure
-test for @code{long long} and define your own typedef to be @code{long}
-or @code{long long}, or use a suitable type (such as @code{size_t}).
-Note that @code{integer} in @acronym{FORTRAN} corresponds to @code{int}
-in C on all @R{} platforms.
+rather unlikely that the use of @code{long} in C code has been thought
+through: if you need a longer type than @code{int} you should use a
+configure test for @code{long long} and typedef your own type to be
+@code{long} or @code{long long}, or use a suitable type (such as
+@code{size_t}).  Note that @code{integer} in @acronym{FORTRAN}
+corresponds to @code{int} in C on all @R{} platforms.
 
 @item
 Errors in memory allocation and reading/writing outside arrays are very
@@ -1518,7 +1518,7 @@ know there will be some small memory leaks from @code{readline} and
 end of the @R{} session.  Expect this to run around 20x slower than
 without @code{valgrind}, and in some cases even slower than that.
 @code{valgrind} is not happy with many optimized BLASes that use
-cpu-specific instructions (3D nox, SSE2 and similar) so you may need to
+cpu-specific instructions (3D now, SSE2 and similar) so you may need to
 build a version of @R{} specifically to use with @code{valgrind}.
 
 
@@ -1531,6 +1531,8 @@ It is possible to run all the examples, tests and vignettes covered by
 --tool=memcheck
 --memcheck:leak-check=yes
 @end smallexample
+@noindent
+or setting the environment variable @env{VALGRIND_OPTS}.
 
 
 @item
