@@ -88,19 +88,37 @@ static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 {
     Rsockconn this = (Rsockconn)con->private;
     int res;
+    int nread = 0, n;
 
-    if(this->pstart == this->pend){
-	this->pstart = this->pend = this->inbuf;
-	res = R_SockRead(this->fd, this->inbuf, 4096, con->blocking);
-	/* Rprintf("socket read %d\n", res); */
-	con->incomplete = (-res == EAGAIN);
-	if(res <= 0) return res;
-	this->pend = this->inbuf + res;
-    } else res = this->pend - this->pstart;
-    if(size < res) res = size;
-    memcpy(ptr, this->pstart, res);
-    this->pstart += res;
-    return res;
+    do {
+	/* read data into the buffer if it's empty and size > 0 */
+	if (size > 0 && this->pstart == this->pend) {
+	    this->pstart = this->pend = this->inbuf;
+	    do
+		res = R_SockRead(this->fd, this->inbuf, 4096, con->blocking);
+	    while (-res == EINTR);
+	    if (! con->blocking && -res == EAGAIN) {
+		con->incomplete = TRUE;
+		return nread > 0 ? nread : res;
+	    }
+	    else if (res < 0) return res;
+	    else this->pend = this->inbuf + res;
+	}
+
+	/* copy data from buffer to ptr */
+	if (this->pstart + size <= this->pend)
+	    n = size;
+	else
+	    n = this->pend - this->pstart;
+	memcpy(ptr, this->pstart, n);
+	ptr += n;
+	this->pstart += n;
+	size -= n;
+	nread += n;
+    } while (size > 0);
+
+    con->incomplete = FALSE;
+    return nread;
 }
 
 

@@ -468,6 +468,8 @@ BUG FIXES
 	but return NaN (as dbinom() does). (PR#1377)
 
     o	Fixed socket writing code to block until all data is written.
+	Fixed socket reading code to properly handle long reads and reads
+	with part of the data in the connection buffer.
 
     o	levels<-.factor() was using incorrectly list values longer than
 	the number of levels (PR#1394), and incorrectly documented
