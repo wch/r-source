@@ -13,6 +13,7 @@ seq.default(from = 1, to = 1, by = ((to - from)/(length.out - 1)),
 }
 \usage{
 from:to
+   a:b
 seq(from, to)
 seq(from, to, by=)
 seq(from, to, length=)
@@ -24,15 +25,23 @@ seq(along)
   \item{by}{increment of the sequence.}
   \item{length}{desired length of the sequence.}
   \item{along}{take the length from the length of this argument.}
+  \item{a,b}{\code{\link{factor}}s of same length.}
 }
 \details{
+  The binary operator \code{:} has two meanings: for factors \code{a:b} is
+  equivalent to \code{\link{interaction}(a, b)} (except for labelling by
+  \code{la:lb} not \code{la.lb}).  For numeric arguments \code{a:b} is
+  equivalent to \code{seq(from=a, to=b)}.
+
   The interpretation of the unnamed arguments of \code{seq} is
-  \emph{not} standard, and it is recommended to always name the
+  \emph{not} standard, and it is recommended always to name the
   arguments when programming.
- 
+
+  Function \code{seq} is generic, and only the default method is
+  described here.
+
   The operator \code{:} and the first \code{seq(.)} form generate the
   sequence \code{from, from+1}, \ldots, \code{to}.
-  \code{seq} is a generic function.
 
   The second form generates \code{from, from+by}, \ldots, \code{to}.
 
@@ -59,10 +68,14 @@ seq(along)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
+  The method \code{\link{seq.POSIXt}}.
+
   \code{\link{rep}},
   \code{\link{sequence}},
   \code{\link{row}},
   \code{\link{col}}.
+
+  As an alternative to using \code{:} for factors, \code{\link{interaction}}.
 }
 \examples{
 1:4
