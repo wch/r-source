@@ -110,8 +110,19 @@ fi
 
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
-: ${CPPFLAGS="-I/usr/local/include"}
-: ${LDFLAGS="-L/usr/local/lib"}
+## <FIXME>
+## On Darwin we assume that fink is used ...
+## Is there a better way?  Also need to document this ...
+case "${host_os}" in
+  darwin*)
+    : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
+    : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
+    ;;
+  *)
+    : ${CPPFLAGS="-I/usr/local/include"}
+    : ${LDFLAGS="-L/usr/local/lib"}
+    ;;
+esac
 
 ### ** Handle arguments to configure.
 
