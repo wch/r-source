@@ -1,4 +1,4 @@
-## $Id: Rdoc.pm,v 1.1 1998/04/08 17:58:09 bates Exp $
+## $Id: Rdoc.pm,v 1.2 1998/04/08 18:21:50 bates Exp $
 
 ## R documentation objects created from a file.
 
@@ -32,9 +32,12 @@ package Rdoc;
   use Rdoc;
   $rd = Rdoc->new( "foo.Rd" );
 
-  $title = $rd->title();
-  @aliases = @{ $rd->alias() };
-  %sections = %{ $rd->section() };
+  @keys = keys( %{ $rd } );     # returns an array of the sections in the file
+  @ordered = @{ $rd->{ '.order' } }; # sections in order seen
+  $title = $rd->{ 'title' };         # returns the title section
+  @aliases = @{ $rd->{ 'alias' } };  # aliases are an array
+  @keywords = @{ $rd->{'keyword'}};  # as are keywords
+  %sections = %{ $rd->{'section'}};  # sections are a hash
 
 =head1 DESCRIPTION
 
@@ -60,7 +63,7 @@ sub new {
     $self->{ 'section' } = {};
     $self->{ 'alias' } = [];
     my $seenalias = 0;
-    $self->{'keyword'} = [];
+    $self->{ 'keyword' } = [];
     my $seenkeyword = 0;
     my $escapedNewline = 0;
     my $lastEscNL = 0;
@@ -97,10 +100,10 @@ sub new {
 	$match =~ s/^\{\s*//o;
 	($self->{ 'section' })->{ $secname } = $match;
 	push( @{ $self->{'.order'} }, 'section:' . $secname );
-      } elsif ($key =~ /alias/i) { # add to the alias array
+      } elsif ($key =~ /alias/io) { # add to the alias array
 	push( @{ $self->{'alias'} }, $match );
 	push( @{ $self->{'.order'} }, 'alias' ) unless $seenalias++;
-      } elsif ($key =~ /keyword/i) { # add to the keyword array
+      } elsif ($key =~ /keyword/io) { # add to the keyword array
 	push( @{ $self->{'keyword'} }, $match );
 	push( @{ $self->{'.order'} }, 'keyword' ) unless $seenkeyword++;
       } else {
@@ -123,58 +126,101 @@ sub arguments {
     while ( $match ) {
 	croak "Malformed R documentation file.\n"
 	    unless ($prefix =~ /\s*\\item\s*$/o);
-	$match =~ s/(^\{\s*)|(\s*\}$)//og; # strip leading and trailing white space
+			      # strip leading and trailing white space
+	$match =~ s/(^\{\s*)|(\s*\}$)//og;
 	push @args, $match;
 	($prefix, $match) = $mc->match();
 	$match =~ s/(^\{\s*)|(\s*\}$)//og; 
 	push @args, $match;
+	($prefix, $match) = $mc->match();
     }
     return( \@args );
 }
 
-sub value {
-    my $self = shift;
-    
-}
-
-sub link2null {			# transform \link{str} to str
-  my $str = shift;
-  return $str unless $str =~ /[^\\]\{/;
-  my $out;
-  my $mc = new Text::DelimMatch "\\{", "\\}", '', "\\", '';
-  my ( $prefix, $match, $remainder ) = $mc->match( $str );
-  while ( $prefix || $match ) {
-    $match =~ s/(^\{)|(\}$)//og;
-    if ( $prefix =~ s/\\link\s*$//o ) {
-      $out .= $prefix . $match;
-    } else {
-      $out .= $prefix . "{" . &link2null($match) . "}";
-    }
-    last unless $remainder =~ /[^\\]\{/;
-    ( $prefix, $match, $remainder ) = $mc->match( );
-  }
-  $out .= $remainder if $remainder;
-  return $out;
-}
-
-sub code2quote {		# transform \code{str} to `str'
+sub transform {		# transform internal tags to output forms
   my $str = shift;
   return $str unless $str =~ /[^\\]\{/o;
+  my $trTpt = shift;
   my $out;
   my $mc = new Text::DelimMatch "\\{", "\\}", '', "\\", '';
   my ( $prefix, $match, $remainder ) = $mc->match( $str );
   while ( $prefix || $match ) {
     $match =~ s/(^\{)|(\}$)//og;
-    if ( $prefix =~ s/\\code\s*$//o ) {
-      $out .= $prefix . "`" . $match . "'";
+    if ( $prefix =~ s/\\(\w+)\s*$//o ) {
+      if ( $trTpt->{ $1 } ) {
+	my @subs = @{ $trTpt->{ $1 } };
+	$out .= $prefix . $subs[0] . &transform( $match, $trTpt ) . $subs[1];
+      } else {
+	carp "unknown tag $1 seen\n";
+	$out .= $prefix . &transform( $match, $trTpt );
+      }
     } else {
-      $out .= $prefix . "{" . &code2quote( $match ) . "}";
+      $out .= $prefix . "{" . &transform( $match, $trTpt ) . "}";
     }
     last unless $remainder =~ /[^\\]\{/o;
     ( $prefix, $match, $remainder ) = $mc->match( );
   }
   $out .= $remainder if $remainder;
   return $out;
+}
+
+sub SdPrint {			# print in S-PLUS .d format
+  my $SdSectRef = {		# table for mapping sections
+		   "name"        => [ ".FN  ", "\n" ],
+		   "title"       => [ ".TL  ", "\n" ],
+		   "usage"       => [ ".CS\n", "\n" ],
+		   "alias"       => [ ], # do nothing
+		   "arguments"   => [ ], # should cause an error
+		   "description" => [ ".DT\n", "\n" ],
+		   "value"       => [ ".RT\n", "\n" ],
+		   "references"  => [ ".SH REFERENCES\n", "\n" ],
+		   "note"        => [ ".SH NOTE\n", "\n" ],
+		   "author"      => [ ],
+		   "seealso"     => [ ".SA\n", "\n" ],
+		   "examples"    => [ ".EX\n", "\n" ],
+		   "keyword"     => [ ]
+		  };
+
+  my $SdInternal = {		# Table for mapping internal tags
+		  "link" => [  "",  "" ], # "\link{foo}" becomes "foo"
+		  "code" => [ "`", "'" ], # "\code{foo}" becomes "`foo'"
+		  "eqn"  => [  "",  "" ], # "\eqn{x}" becomes "x"
+		 };
+  my $self = shift;
+  my $file = $self->{ '.basename' } . ".d";
+  my $fh = new FileHandle "> $file" or croak "open($file): $!\n";
+  
+  for ( "name", "title", "keyword" ) { # check for required sections
+    croak "File $file does not have a \\$_ section" unless $self->{$_};
+  }
+  my @args;
+  for ( @{ $self->{ '.order' } } ) {
+    next if /alias/o;
+    next if /author/o;
+    if ( /arguments/o ) {
+      @args = @{ $self->arguments() };
+      while ( $#args >= 0 ) {
+	print $fh ".AG ", shift( @args ), "\n";
+	print $fh &transform( shift( @args ), $SdInternal ), "\n";
+      }
+      next;
+    }
+    if ( /keyword/o ) {
+      @args = @{ $self->{'keyword'} };
+      while ( $#args >= 0 ) {
+	print $fh ".KW ", shift( @args ), "\n";
+      }
+      next;
+    }
+    if ( $SdSectRef->{$_} ) {
+      print $fh $SdSectRef->{$_}[0],
+      &transform( $self->{$_}, $SdInternal ) , $SdSectRef->{$_}[1];
+    } else {
+      print "unknown section name $_\n";
+    }
+  }
+  print $fh ".WR\n";
+  $fh->close;
 }
 
 1;

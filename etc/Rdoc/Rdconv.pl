@@ -1,5 +1,5 @@
 #! /usr/bin/perl -w
-### $Id: Rdconv.pl,v 1.1 1998/04/08 17:58:09 bates Exp $
+### $Id: Rdconv.pl,v 1.2 1998/04/08 18:21:49 bates Exp $
 
 ##          Convert R documentation files to other formats.
 ## Copyright (C) 1998 Douglas M. Bates <bates@stat.wisc.edu>
@@ -26,7 +26,8 @@ use Rdoc;
 use FileHandle;
 use Getopt::Long;
 
-my $dir, $debug, $type, $help;
+my ($dir, $debug, $type, $help);
+my $VERSION = 0.62.0;
 
 GetOptions( "debug|d" => \$debug,
 	    "dir=s" => \$dir,
@@ -50,44 +51,18 @@ if ( $#ARGV >= 0 ) {
 
 sub doFile {
   my $file = shift;
+  print "   ", $file, "\n";
   my $rd = Rdoc->new( $file );
   $rd->SdPrint( $file );
-  for ( @{ $rd->{ '.order' } } ) {
-    &printSections( $_, $rd->{ 'section' } ), next if /^section:/io;
-    &printArray( $_, $rd->{ $_ } ), next if /^(alias|keyword)$/io;
-    print $_, ":\n";
-    &printIndent( $rd->{$_} );
-  }
 }
 
-
-sub printIndent {
-  my $lines = shift;
-  for ( split( "\n", $lines ) ) {
-    print "  ", $_, "\n";
-  }
-}
-    
-sub printArray {
-  my $name = shift;
-  my $arry = shift;
-  print $name, ":\n";
-  print "  ", join( ', ', @{ $arry } ), "\n";
-}
-
-sub printSections {
-  my $secname = shift;
-  $secname =~ s/^section://io;
-  my $sechash = shift;
-  print "section - ", $secname, ":\n";
-  printIndent( $sechash->{ $secname } );
-}
 
 sub usage {
 
     print "Rdconv version $VERSION\n";
     print "Usage: Rdconv [--debug/-d] [--help/-h]";
-    print " [--type/-t html|nroff|Sd|latex|examp] [--dir=directory] <file>\n\n";
+    print
+	" [--type/-t html|nroff|Sd|latex|examp] [--dir=directory] <file>\n\n";
 
     exit 0;
 }

@@ -22,15 +22,27 @@ if ( $#ARGV >= 0 ) {
   }
 }
 
+				# table for mapping internal tags
 sub doFile {
+  my $SdInternal = {
+		    "link" => [  "",  "" ], # "\link{foo}" becomes "foo"
+		    "code" => [ "`", "'" ], # "\code{foo}" becomes "`foo'"
+		    "eqn"  => [  "",  "" ], # "\eqn{x}" becomes "x"
+		   };
   my $file = shift;
   print "==================\nFile:\t$file\n=====================\n";
   my $rd = Rdoc->new( $file );
+#   print scalar( @{ $SdInternal->{'code'} } ), "\n";
+#   print $SdInternal->{'code'}[0], "\n";
+#   print scalar( @{ $SdInternal->{'link'} } ), "\n";
+#   print $SdInternal->{'link'}[0], "\n";
+#  print scalar( @{ $SdInternal->{'foo'} } ), "\n";
+#  exit 0;
   for ( @{ $rd->{ '.order' } } ) {
     &printSections( $_, $rd->{ 'section' } ), next if /^section:/io;
     &printArray( $_, $rd->{ $_ } ), next if /^(alias|keyword)$/io;
     print $_, ":\n";
-    &printIndent( Rdoc::link2null( Rdoc::code2quote( $rd->{$_} ) ) );
+    &printIndent( Rdoc::transform( $rd->{$_}, $SdInternal ) );
   }
 }
 
