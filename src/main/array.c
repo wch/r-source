@@ -447,8 +447,8 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	y = CADR(args);
 	xdims = getAttrib(x, R_DimSymbol);
 	ydims = getAttrib(y, R_DimSymbol);
-	ldx = LENGTH(xdims);
-	ldy = LENGTH(ydims);
+	ldx = length(xdims);
+	ldy = length(ydims);
 
 	if (ldx != 2 && ldy != 2) {
 		if(PRIMVAL(op) == 0) {
@@ -472,6 +472,10 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 				nrx = 1;
 				ncx = LENGTH(x);
 			}
+			if( nry*ncy == 1 ) {
+				nrx = LENGTH(x);
+				ncx = 1;
+			}
 		}
 		else {
 			if(LENGTH(x) == nry) {
@@ -489,6 +493,10 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 			if (LENGTH(y) == ncx) {
 				nry = LENGTH(y);
 				ncy = 1;
+			}
+			if ( nrx*ncx == 1 ) {
+				ncy = LENGTH(y);
+				nry = 1;
 			}
 		}
 		else {

@@ -297,6 +297,21 @@ static SEXP binary(SEXP op, SEXP args)
     yarray = isArray(y);
     xts = isTs(x);
     yts = isTs(y);
+
+    /*if either x or y is a matrix with length 1 and the other
+      is a vector we want to coerce the matrix to be a vector
+      */
+    if( xarray || yarray && !(xarray*yarray) ) {
+        if(xarray && length(x)==1) {
+	    x = CAR(args)=duplicate(x);
+	    setAttrib(x,R_DimSymbol,R_NilValue);
+        }
+        if(yarray && length(y)==1) {
+	    y = CADR(args) = duplicate(y);
+   	    setAttrib(y, R_DimSymbol, R_NilValue);
+	}
+    }
+
     if (xarray || yarray) {
 	if (xarray && yarray) {
 	    if (!conformable(x, y))
@@ -305,6 +320,59 @@ static SEXP binary(SEXP op, SEXP args)
 	}
 	else if (xarray) {
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
+
+#if 0
+<<<<<<< arithmetic.c
+    mismatch = 0;
+    xarray = isArray(x);
+    yarray = isArray(y);
+    xts = isTs(x);
+    yts = isTs(y);
+    if (xarray || yarray) {
+	if (xarray && yarray) {
+	    if (!conformable(x, y))
+		errorcall(lcall, "non-conformable arrays\n");
+	    PROTECT(dims = getAttrib(x, R_DimSymbol));
+	}
+	else if (xarray) {
+	    PROTECT(dims = getAttrib(x, R_DimSymbol));
+=======
+	mismatch = 0;
+	xarray = isArray(x);
+	yarray = isArray(y);
+
+	/*if either x or y is a matrix with length 1 and the other
+	  is a vector we want to coerce the matrix to be a vector
+	*/
+	if( xarray || yarray && !(xarray*yarray) ) {
+		if(xarray && length(x)==1) {
+			x = CAR(args)=duplicate(x);
+			setAttrib(x,R_DimSymbol,R_NilValue);
+		}
+		if(yarray && length(y)==1) {
+			y = CADR(args) = duplicate(y);
+			setAttrib(y, R_DimSymbol, R_NilValue);
+		}
+	}
+
+	xts = isTs(x);
+	yts = isTs(y);
+	if (xarray || yarray) {
+		if (xarray && yarray) {
+			if (!conformable(x, y))
+				errorcall(lcall, "non-conformable arrays\n");
+			PROTECT(dims = getAttrib(x, R_DimSymbol));
+		}
+		else if (xarray) {
+			PROTECT(dims = getAttrib(x, R_DimSymbol));
+		}
+		else if (yarray) {
+			PROTECT(dims = getAttrib(y, R_DimSymbol));
+		}
+		PROTECT(xnames = getAttrib(x, R_DimNamesSymbol));
+		PROTECT(ynames = getAttrib(y, R_DimNamesSymbol));
+>>>>>>> 1.3.4.1
+#endif
 	}
 	else if (yarray) {
 	    PROTECT(dims = getAttrib(y, R_DimSymbol));

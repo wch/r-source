@@ -697,36 +697,11 @@ static SEXP coerceToLogical(SEXP v)
 	switch (TYPEOF(v)) {
 	case FACTSXP:
 	case ORDSXP:
-		if((levs = getAttrib(v, R_LevelsSymbol)) == R_NilValue) {
-			for (i = 0; i < n; i++) {
-				if(INTEGER(v)[i] == NA_INTEGER)
-					LOGICAL(ans)[i] = NA_LOGICAL;
-				else 
-					LOGICAL(ans)[i] = (INTEGER(v)[i] != 0);
-			}
-		}
-		else {
-			int vi;
-			int nlevs = LEVELS(v);
-			SEXP llevs;
-			PROTECT(levs);
-			PROTECT(llevs = allocVector(LGLSXP, nlevs));
-			for(i=0 ; i<length(levs) ; i++) {
-				if (StringTrue(CHAR(STRING(levs)[i])))
-					LOGICAL(llevs)[i] = 1;
-				else if (StringFalse(CHAR(STRING(levs)[i])))
-					LOGICAL(llevs)[i] = 0;
-				else
-					LOGICAL(llevs)[i] = NA_LOGICAL;
-			}
-			for (i = 0; i < n; i++) {
-				vi = INTEGER(v)[i];
-				if(vi < 1 || vi > nlevs)
-					LOGICAL(ans)[i] = NA_LOGICAL;
-				else 
-					LOGICAL(ans)[i] = LOGICAL(llevs)[vi-1];
-			}
-			UNPROTECT(2);
+		for (i = 0; i < n; i++) {
+			if(INTEGER(v)[i] == NA_INTEGER)
+				LOGICAL(ans)[i] = NA_LOGICAL;
+			else 
+				LOGICAL(ans)[i] = (INTEGER(v)[i] != 0);
 		}
 		break;
 	case INTSXP:
@@ -870,11 +845,10 @@ static SEXP coerceToInteger(SEXP v)
 		break;
 	case FACTSXP:
 	case ORDSXP:
-		lv = coerceVector(getAttrib(v, R_LevelsSymbol), INTSXP);
 		for (i = 0; i < n ; i++) {
 			li = FACTOR(v)[i];
 			INTEGER(ans)[i] = (li == NA_FACTOR) ?
-				NA_INTEGER : INTEGER(lv)[li-1];
+				NA_INTEGER : li;
 		}
 		break;
 	case REALSXP:
@@ -954,11 +928,10 @@ static SEXP coerceToReal(SEXP v)
 		break;
 	case FACTSXP:
 	case ORDSXP:
-		lv = coerceVector(getAttrib(v, R_LevelsSymbol), REALSXP);
 		for (i = 0; i < n ; i++) {
 			li = FACTOR(v)[i];
 			REAL(ans)[i] = (li == NA_FACTOR) ?
-				NA_REAL : REAL(lv)[li-1];
+				NA_REAL : li;
 		}
 		break;
 	case INTSXP:
@@ -1018,7 +991,6 @@ static SEXP coerceToComplex(SEXP v)
 		break;
 	case FACTSXP:
 	case ORDSXP:
-		lv = coerceVector(getAttrib(v, R_LevelsSymbol), CPLXSXP);
 		for (i = 0; i < n ; i++) {
 			li = FACTOR(v)[i];
 			if(li == NA_FACTOR) {
@@ -1026,8 +998,8 @@ static SEXP coerceToComplex(SEXP v)
 				COMPLEX(ans)[i].i = NA_REAL;
 			}
 			else {
-				COMPLEX(ans)[i].r = COMPLEX(lv)[li-1].r;
-				COMPLEX(ans)[i].i = COMPLEX(lv)[li-1].i;
+				COMPLEX(ans)[i].r = li;
+				COMPLEX(ans)[i].i = 0;
 			}
 		}
 		break;
