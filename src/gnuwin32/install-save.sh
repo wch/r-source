@@ -11,7 +11,9 @@ export R_SAVE_IMAGE
 
 if ${R_SAVE_IMAGE}; then
     echo "  save image"
-    (if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
+    save_image_defaults="list(compress=TRUE, safe=FALSE)"
+    (echo "options(save.image.defaults=${save_image_defaults})"; \
+      if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
       echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
       cat ${lib}/${pkg}/R/${pkg}) | \
       ${R_HOME}/bin/Rterm --slave --save --no-site-file --no-init-file \
