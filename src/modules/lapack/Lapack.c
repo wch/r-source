@@ -6,7 +6,7 @@
 
 #include "Lapack.h"
 
-static SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+static SEXP modLa_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
     int *xdims, n, p, lwork, info;
     double *work, tmp;
@@ -48,7 +48,7 @@ static SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
     return val;
 }
 
-static SEXP La_rs(SEXP x, SEXP only_values)
+static SEXP modLa_rs(SEXP x, SEXP only_values)
 {
     int *xdims, n, lwork, info, ov;
     char jobv[1], uplo[1];
@@ -116,7 +116,7 @@ static SEXP unscramble(const double* imaginary, int n,
     return s;
 }
 
-static SEXP La_rg(SEXP x, SEXP only_values)
+static SEXP modLa_rg(SEXP x, SEXP only_values)
 {
     int i, n, lwork, info, vectors, complexValues, *xdims, ov;
     double *work, *wR, *wI, *left, *right, *xvals, tmp;
@@ -187,7 +187,7 @@ static SEXP La_rg(SEXP x, SEXP only_values)
     return ret;
 }
 
-static SEXP La_zgesv(SEXP A, SEXP B)
+static SEXP modLa_zgesv(SEXP A, SEXP B)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
@@ -218,7 +218,7 @@ static SEXP La_zgesv(SEXP A, SEXP B)
 #endif
 }
 
-static SEXP La_zgeqp3(SEXP Ain)
+static SEXP modLa_zgeqp3(SEXP Ain)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int m, n, *Adims, info, lwork;
@@ -266,7 +266,7 @@ static SEXP La_zgeqp3(SEXP Ain)
 #endif
 }
 
-static SEXP qr_coef_cmplx(SEXP Q, SEXP Bin)
+static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims;
@@ -307,7 +307,7 @@ static SEXP qr_coef_cmplx(SEXP Q, SEXP Bin)
 #endif
 }
 
-static SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
+static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims, tr;
@@ -346,7 +346,7 @@ static SEXP qr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 #endif
 }
 
-static SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
+static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int *xdims, n, p, lwork, info;
@@ -392,7 +392,7 @@ static SEXP La_svd_cmplx(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
 #endif
 }
 
-static SEXP La_rs_cmplx(SEXP x, SEXP only_values)
+static SEXP modLa_rs_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int *xdims, n, lwork, info, ov;
@@ -444,7 +444,7 @@ static SEXP La_rs_cmplx(SEXP x, SEXP only_values)
 #endif
 }
 
-static SEXP La_rg_cmplx(SEXP x, SEXP only_values)
+static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 {
 #ifdef HAVE_DOUBLE_COMPLEX
     int  n, lwork, info, vectors, *xdims, ov;
@@ -514,16 +514,16 @@ R_init_lapack(DllInfo *info)
     R_LapackRoutines *tmp;
     tmp = (R_LapackRoutines*) malloc(sizeof(R_LapackRoutines));
    
-    tmp->svd = La_svd;
-    tmp->rs = La_rs;
-    tmp->rg = La_rg;
-    tmp->zgesv = La_zgesv;
-    tmp->zgeqp3 = La_zgeqp3;
-    tmp->qr_coef_cmplx = qr_coef_cmplx;
-    tmp->qr_qy_cmplx = qr_qy_cmplx;
-    tmp->svd_cmplx = La_svd_cmplx;
-    tmp->rs_cmplx = La_rs_cmplx;
-    tmp->rg_cmplx = La_rg_cmplx;
+    tmp->svd = modLa_svd;
+    tmp->rs = modLa_rs;
+    tmp->rg = modLa_rg;
+    tmp->zgesv = modLa_zgesv;
+    tmp->zgeqp3 = modLa_zgeqp3;
+    tmp->qr_coef_cmplx = modqr_coef_cmplx;
+    tmp->qr_qy_cmplx = modqr_qy_cmplx;
+    tmp->svd_cmplx = modLa_svd_cmplx;
+    tmp->rs_cmplx = modLa_rs_cmplx;
+    tmp->rg_cmplx = modLa_rg_cmplx;
 
     R_setLapackRoutines(tmp);
 }
