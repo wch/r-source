@@ -2022,14 +2022,14 @@ else
 fi
 
 
-echo $ac_n "checking for main in -lhdf5""... $ac_c" 1>&6
-echo "configure:2027: checking for main in -lhdf5" >&5
-ac_lib_var=`echo hdf5'_'main | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for main in -lz""... $ac_c" 1>&6
+echo "configure:2027: checking for main in -lz" >&5
+ac_lib_var=`echo z'_'main | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   ac_save_LIBS="$LIBS"
-LIBS="-lhdf5  $LIBS"
+LIBS="-lz  $LIBS"
 cat > conftest.$ac_ext <<EOF
 #line 2035 "configure"
 #include "confdefs.h"
@@ -2053,26 +2053,26 @@ LIBS="$ac_save_LIBS"
 fi
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-    ac_tr_lib=HAVE_LIB`echo hdf5 | sed -e 's/[^a-zA-Z0-9_]/_/g' \
+    ac_tr_lib=HAVE_LIB`echo z | sed -e 's/[^a-zA-Z0-9_]/_/g' \
     -e 'y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'`
   cat >> confdefs.h <<EOF
 #define $ac_tr_lib 1
 EOF
 
-  LIBS="-lhdf5 $LIBS"
+  LIBS="-lz $LIBS"
 
 else
   echo "$ac_t""no" 1>&6
 fi
 
-echo $ac_n "checking for main in -lz""... $ac_c" 1>&6
-echo "configure:2070: checking for main in -lz" >&5
-ac_lib_var=`echo z'_'main | sed 'y%./+-%__p_%'`
+echo $ac_n "checking for main in -lhdf5""... $ac_c" 1>&6
+echo "configure:2070: checking for main in -lhdf5" >&5
+ac_lib_var=`echo hdf5'_'main | sed 'y%./+-%__p_%'`
 if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   ac_save_LIBS="$LIBS"
-LIBS="-lz  $LIBS"
+LIBS="-lhdf5  $LIBS"
 cat > conftest.$ac_ext <<EOF
 #line 2078 "configure"
 #include "confdefs.h"
@@ -2096,13 +2096,13 @@ LIBS="$ac_save_LIBS"
 fi
 if eval "test \"`echo '$ac_cv_lib_'$ac_lib_var`\" = yes"; then
   echo "$ac_t""yes" 1>&6
-    ac_tr_lib=HAVE_LIB`echo z | sed -e 's/[^a-zA-Z0-9_]/_/g' \
+    ac_tr_lib=HAVE_LIB`echo hdf5 | sed -e 's/[^a-zA-Z0-9_]/_/g' \
     -e 'y/abcdefghijklmnopqrstuvwxyz/ABCDEFGHIJKLMNOPQRSTUVWXYZ/'`
   cat >> confdefs.h <<EOF
 #define $ac_tr_lib 1
 EOF
 
-  LIBS="-lz $LIBS"
+  LIBS="-lhdf5 $LIBS"
 
 else
   echo "$ac_t""no" 1>&6
