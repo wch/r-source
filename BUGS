@@ -49,11 +49,7 @@ From: John Maindonald <john.maindonald@anu.edu.au>
 Date: Sat, 9 Jun 2001 11:08:51 +1000 (EST)
 ..The warning is standard S and R behaviour.
 ..Probably xyplot needs to avoid it (by unclassing?)
-..Still there in lattice 0.3-0.
-* PR# 1044 *
-Subject: Polymarsall.c
-From: pleu@hotmail.com
-Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
+..Still there in lattice 0.3-0, 0.6-8
 * PR# 1178 *
 Subject: segfault using svm from e1071
 From: Jan Rychter <jan@rychter.com>
@@ -92,6 +88,11 @@ Subject: svm seg faults
 From: stefan.boehringer+science@uni-bochum.de
 Date: Tue, 13 Aug 2002 14:12:17 +0200 (MET DST)
 ..Seem to be due to gcc `2.96' from RH7.3
+* PR# 1972 *
+Subject: lattice install
+From: robert.king@newcastle.edu.au
+Date: Mon, 2 Sep 2002 04:55:41 +0200 (MET DST)
+..Perhaps lattice should require(grid) and print a clearer message?
 * PR# 1974 *
 Subject: Rwave installation problem
 From: ld-temp-qt3i@pobox.com
@@ -101,16 +102,6 @@ Date: Mon, 2 Sep 2002 09:27:36 +0200 (MET DST)
 Subject: xlim in plot.survfit() [with a discussion on "..."]
 From: jerome@hivnet.ubc.ca
 Date: Wed, 16 Oct 2002 18:46:11 +0200 (MET DST)
-* PR# 2252 *
-Subject: Ansari-Bradley test
-From: wex00002@uconn.edu
-Date: Sun, 3 Nov 2002 23:38:20 +0100 (MET)
-* PR# 2302 *
-Subject: Package tseries: crash for Windows version
-From: Fan <xiao.gang.fan1@libertysurf.fr>
-Date: Sun, 17 Nov 2002 15:28:14 +0100
-..Actually, there is a mismatch between the R call and the 
-..C code in pred_garch, so this is not Windows-specific.
 * PR# 2320 *
 Subject: Segmentation fault using "survival" package
 From: jerome@hivnet.ubc.ca
@@ -120,11 +111,6 @@ Subject: simplex
 From: george@lecompte.org
 Date: Sat, 23 Nov 2002 17:30:37 +0100 (MET)
 ..report on boot, I think (not mentioned, though)
-* PR# 2349 *
-Subject: [R] NA in first panel of xyplot causes error
-From: Wolfram Fischer <wolfram@fischer-zim.ch>
-Date: Thu, 5 Dec 2002 15:32:32 +0100
-..Lattice
 * PR# 2352 *
 Subject: avas: segmentation fault on empty args
 From: vograno@arbitrade.com
@@ -303,11 +289,6 @@ Subject: dev2eps() prints ticks with wrong length!
 From: Timur Elzhov <Timur.Elzhov@jinr.ru>
 Date: Fri, 23 Aug 2002 17:22:15 +0400
 ..dev.copy problem
-* PR# 1972 *
-Subject: lattice install
-From: robert.king@newcastle.edu.au
-Date: Mon, 2 Sep 2002 04:55:41 +0200 (MET DST)
-..Perhaps lattice should require(grid) and print a clearer message?
 * PR# 2069 *
 Subject: split.screen problem
 From: cbodily@att.net
@@ -342,18 +323,6 @@ Subject: Installation problem : SunOS
 From: brendan_mcmahon@prusec.com
 Date: Thu, 31 Jan 2002 18:00:55 +0100 (MET)
 ..looks like gcc compiled under different OS version.
-* PR# 1415 *
-Subject: int 32 bit error on SPARC 64bit
-From: kss28@mail.cba.nau.edu
-Date: Mon, 25 Mar 2002 21:18:58 +0100 (MET)
-..Was gcc 2.95.2 in private followup.
-..Probably unappropriate flags
-* PR# 1428 *
-Subject: R compile on Solaris 8 fails
-From: brower@bst.rochester.edu
-Date: Mon, 1 Apr 2002 22:19:07 +0200 (MET DST)
-..problems with g++ not finding -lstdc++
-..Not a problem with R per se
 * PR# 1500 *
 Subject: configure script fails on comment in tkConfig.sh
 From: Peter Kleiweg <kleiweg@let.rug.nl>
@@ -361,11 +330,6 @@ Date: Tue, 30 Apr 2002 16:41:51 +0200 (CEST)
 ..Looks like a conspiracy between a shell problem and an oddity in Tk 8.0 rather
 ..than an R problem. Good to know for the workaround though. The comment in
 ..TK_XINCLUDES has since disappeared, at least in Tk 8.3.3.
-* PR# 1501 *
-Subject: configure error: Maybe change CFLAGS or FFLAGS?
-From: ale@ini.phys.ethz.ch
-Date: Wed, 1 May 2002 15:23:14 +0200 (MET DST)
-..Tried to use fort77 on RedHat, should likely try g77 instead.
 * PR# 1658 *
 Subject: make install fails - index.html not found
 From: dhouston@bio.ri.ccf.org
@@ -386,20 +350,6 @@ Subject: R config failure on solaris
 From: "Siva Ginjupalli" <gsivrao@hotmail.com>
 Date: Wed, 24 Jul 2002 20:08:49 +0000
 ..Missing info on R version and compilers.
-* PR# 1937 *
-Subject:  Inconsistent use of Perl? 
-From: Berwin Turlach <berwin@maths.uwa.edu.au>
-Date: Sat, 24 Aug 2002 18:41:09 +0800
-..Some packages require Perl v 5.005
-* PR# 1995 *
-Subject:  2002-09-08 1.6.0 build fails in Recommended 
-From: <stvjc@channing.harvard.edu>
-Date: Sun, 8 Sep 2002 23:57:39 -0400 (EDT)
-..I think this got cleared up...
-* PR# 1996 *
-Subject:  config checks for --with-gnome need update 
-From: <stvjc@channing.harvard.edu>
-Date: Mon, 9 Sep 2002 00:08:59 -0400 (EDT)
 
 Directory:  Language
 
@@ -555,12 +505,6 @@ Subject: Possible bug, Rprof() and scan(pipe())
 From: Don MacQueen <macq@llnl.gov>
 Date: Tue, 23 Oct 2001 13:50:26 -0700
 ..MacOS X: Doesn't happen on Solaris or Linux
-* PR# 1145 *
-Subject: Problem testing R version 1.3.1 on SGI Irix
-From: Gordon Lack <gml4410@ggr.co.uk>
-Date: Fri, 26 Oct 2001 19:04:04 +0100
-..error from using SGI libblas (not reported on other systems?)
-..use --without-blas
 * PR# 1261 *
 Subject: R_140 AND RHL_72 AND Packages
 From: Patrick Gonin <gonin@genethon.fr>
@@ -592,11 +536,6 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
-* PR# 2144 *
-Subject: Save() with ascii=TRUE may corrupt numeric values
-From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
-Date: Thu, 10 Oct 2002 14:09:21 -0700
-..Only on systems without vsnprintf
 
 Directory:  TooMuchAtOnce
 
@@ -621,43 +560,15 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2366 *
-Subject: R -g gnome has graphics bugs
-From: chris-public@math.uu.se
-Date: Thu, 12 Dec 2002 14:19:43 +0100 (MET)
-* PR# 2421 *
-Subject: [惜堅] 檠橫 幗萼 ч犒擊 瓊嬴憮... 
-From: 滓憮蝶<bigscale@bigscale.com>
-Date: Mon, 6 Jan 2003 01:35:53 +0900
-* PR# 2422 *
-Subject: STOCK MARKET ALERT - TBIN REPORTS RECORD REVENUES.99737
-From: Bloomfield & Goldman99488 <Bloomfield_Goldman_99541@444.net>
-Date: Mon, 6 Jan 2003 12:46:05 -0600
-* PR# 2423 *
-Subject: C:\share\TBIN\SubjectLine.txt
-From: INVESTMENT ALERT - 99622 <INVESTMENT_ALERT---99662@erols.com>
-Date: Mon, 6 Jan 2003 17:18:05 -0600
-* PR# 2424 *
-Subject: STOCK MARKET ALERT - TBIN REPORTS RECORD REVENUES.99995
-From: INVESTMENT ALERT - 99648 <INVESTMENT_ALERT---99680@sprintmail.com>
-Date: Mon, 6 Jan 2003 20:18:41 -0600
-* PR# 2425 *
-Subject: {病毒?} Known to GrapphApp (
-From: Amy_Lin <Amy_Lin@mail.trans-tec.com.tw>
-Date: Tue, 7 Jan 2003 09:21:04 +0800
-* PR# 2426 *
-Subject: KENNETH!!!
-From: Eloho kenneth <kenneth.eloho@caramail.com>
-Date: Tue, 07 Jan 2003 04:20:44 GMT+1
-* PR# 2427 *
-Subject: C:\share\TBIN\SubjectLine.txt
-From: INVESTMENT ALERT - 99324 <INVESTMENT_ALERT---99400@pacbell.net>
-Date: Mon, 6 Jan 2003 21:38:42 -0600
-* PR# 2428 *
-Subject: plot.ts don't accept ylab
-From: maeder@iac.umnw.ethz.ch
-Date: Tue, 7 Jan 2003 10:30:23 +0100 (MET)
-* PR# 2429 *
-Subject:  - - Special Report - - help 4 health newsletter rrbh
-From: tcpftrenton <hqphoenix@hotmail.com>
-Date: Mon, 6 Jan 2003 17:11:25 -0800
+* PR# 2430 *
+Subject: Undocumented bahavior of as.integer()
+From: "Philippe Grosjean" <phgrosjean@sciviews.org>
+Date: Wed, 8 Jan 2003 11:22:37 +0100
+* PR# 2432 *
+Subject: Determining the break points by hist() leads to errors
+From: Volker Franz <volker.franz@tuebingen.mpg.de>
+Date: Wed, 8 Jan 2003 19:11:13 +0100
+* PR# 2433 *
+Subject: 最新國際行銷email名單  三千七百五十萬筆
+From: 521g5e1v110c@detemobil.de
+Date: 09 Jan 2003 02:10:27 +0800
