@@ -11,10 +11,11 @@ library <-
                            c("Package", "Depends", "Built"))
         ## depends on R version?
         if(!package.dependencies(fields, check = TRUE)) {
-            dep <- package.dependencies(fields)[[1]][1,]
+            dep <- package.dependencies(fields)[[1]]
+            o <- match("R", dep[, 1])
             stop(paste("This is R ", current, ", package ",
                        fields[1, "Package"],
-                       " needs ", dep[2], " ", dep[3], sep=""),
+                       " needs ", dep[o, 2], " ", dep[o, 3], sep=""),
                  call. = FALSE)
         }
         ## which version was this package built under?
