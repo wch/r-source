@@ -127,31 +127,31 @@ provide(package)
   \code{.Library}.
 }
 \value{
-    \code{library} returns the list of loaded (or available) packages
-    (or \code{TRUE} if \code{logical.return} is \code{TRUE}).
-    \code{require} returns a logical indicating whether the required
-    package is available.
+  \code{library} returns the list of loaded (or available) packages
+  (or \code{TRUE} if \code{logical.return} is \code{TRUE}).
+  \code{require} returns a logical indicating whether the required
+  package is available.
 }
 \author{R core;  Guido Masarotto for the \code{all.available=TRUE}
-    part of \code{.packages}.}
+  part of \code{.packages}.}
 \seealso{
-    \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
-    \code{\link{objects}}, \code{\link{autoload}},
-    \code{\link{library.dynam}},
-    \code{\link{data}}, \code{\link{install.packages}}.
+  \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
+  \code{\link{objects}}, \code{\link{autoload}},
+  \code{\link{library.dynam}},
+  \code{\link{data}}, \code{\link{install.packages}}.
 #ifdef unix
-    \code{\link{INSTALL}}, \code{\link{REMOVE}}
+  \code{\link{INSTALL}}, \code{\link{REMOVE}}
 #endif
 }
 \examples{
-.packages()                 # maybe just "base"
+(.packages())		    # maybe just "base"
 .packages(all = TRUE)       # return all available as char.vector
 library()                   # list all available packages
 library(lib = .Library)     # list all packages in the default library
 library(help = eda)         # documentation on package "eda"
 library(eda)                # load package "eda"
 require(eda)                # the same
-.packages()                 # "eda", too
+(.packages())		    # "eda", too
 require(nonexistent)        # FALSE
 \dontrun{## Suppose a package needs to call a shared library named "foo.EXT",
 ## where "EXT" is the system-specific extension.  Then you should use
