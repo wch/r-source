@@ -23,8 +23,8 @@ DEPRECATED & DEFUNCT
 
     o	The (unimplemented) argument 'white' of parse() is deprecated.
 
-    o   The tkfilefind demo in the tcltk library is deprecated, since
-        it never worked well, and apparently not at all with Tcl/Tk 8.4.
+    o	The tkfilefind demo in the tcltk library is deprecated, since
+	it never worked well, and apparently not at all with Tcl/Tk 8.4.
 
 
 BUG FIXES
@@ -204,6 +204,9 @@ BUG FIXES
 
     o	[[<-.data.frame checked if a replacment was too short, but not
 	if it was too long.  (related to PR#3229)
+
+    o	qt(x, df) was quite inaccurate for df=1+epsilon; it is now much more
+	accurate for df in (1,2) and more precise for other df. (PR#2991)
 
 
 
