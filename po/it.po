@@ -1,20 +1,20 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR The R Foundation
+# translation of R.po to Italian
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Copyright (C) YEAR The R Foundation.
+# Daniele Medri <daniele.medri@libero.it>, 2005.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-02-08 09:04+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2005-02-05 13:45+0100\n"
+"Last-Translator: Daniele Medri <daniele.medri@libero.it>\n"
+"Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: src/appl/approx.c:110
 msgid "approx(): invalid f value"
@@ -93,7 +93,7 @@ msgstr ""
 #: src/gnuwin32/extra.c:160 src/gnuwin32/extra.c:207 src/gnuwin32/extra.c:391
 #: src/gnuwin32/extra.c:414
 msgid "R_HOME not set"
-msgstr ""
+msgstr "R_HOME non impostata"
 
 #: src/gnuwin32/extra.c:167
 #, c-format
@@ -172,7 +172,7 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:589
 msgid "menu does not exist"
-msgstr ""
+msgstr "il menu non esiste"
 
 #: src/gnuwin32/extra.c:596
 #, c-format
@@ -221,7 +221,7 @@ msgstr ""
 
 #: src/gnuwin32/extra.c:1062 src/main/connections.c:1324
 msgid "Unable to open the clipboard"
-msgstr ""
+msgstr "Non è possibile aprire gli appunti"
 
 #: src/gnuwin32/extra.c:1067 src/main/connections.c:1328
 msgid "Unable to write to the clipboard"
@@ -262,7 +262,7 @@ msgstr ""
 #: src/gnuwin32/extra.c:1307 src/gnuwin32/extra.c:1309
 #: src/gnuwin32/extra.c:1349
 msgid "invalid device"
-msgstr ""
+msgstr "dispositivo non valido"
 
 #: src/gnuwin32/extra.c:1310
 msgid "requires SDI mode"
@@ -407,7 +407,7 @@ msgstr ""
 #: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3662
 #: src/main/scan.c:1464
 msgid "invalid argument"
-msgstr ""
+msgstr "argomento non valido"
 
 #: src/include/Errormsg.h:37
 msgid "first argument must be a character string"
@@ -2953,7 +2953,7 @@ msgstr ""
 #: src/main/errors.c:457 src/main/errors.c:460
 #, c-format
 msgid "Error: "
-msgstr ""
+msgstr "Errore: "
 
 #: src/main/errors.c:469 src/main/errors.c:1030
 msgid "In addition: "
@@ -3630,7 +3630,7 @@ msgstr ""
 
 #: src/main/main.c:275 src/main/main.c:369
 msgid "syntax error"
-msgstr ""
+msgstr "errore di sintassi"
 
 #: src/main/main.c:536
 msgid "unable to open the base package\n"
@@ -5213,11 +5213,11 @@ msgstr ""
 
 #: src/main/regex.c:2536
 msgid "Success"
-msgstr ""
+msgstr "Successo"
 
 #: src/main/regex.c:2539
 msgid "No match"
-msgstr ""
+msgstr "Nessuna corrispondenza"
 
 #: src/main/regex.c:2542
 msgid "Invalid regular expression"
@@ -5466,7 +5466,7 @@ msgstr ""
 #: src/main/saveload.c:1952 src/main/saveload.c:2234 src/main/serialize.c:2135
 #, c-format
 msgid "Object '%s' not found"
-msgstr ""
+msgstr "Oggetto '%s' non trovato"
 
 #: src/main/saveload.c:1980
 msgid "not a valid named list"
@@ -5478,7 +5478,7 @@ msgstr ""
 
 #: src/main/saveload.c:2021
 msgid "first argument must be a file name"
-msgstr ""
+msgstr "il primo argomento deve essere un nome file"
 
 #: src/main/saveload.c:2028 src/main/saveload.c:2261
 msgid "invalid envir argument"
@@ -5486,11 +5486,11 @@ msgstr ""
 
 #: src/main/saveload.c:2065 src/main/saveload.c:2091
 msgid "XDR write failed"
-msgstr ""
+msgstr "scrittura XDR non avvenuta"
 
 #: src/main/saveload.c:2078 src/main/saveload.c:2103
 msgid "XDR read failed"
-msgstr ""
+msgstr "lettura XDR non avvenuta"
 
 #: src/main/saveload.c:2113
 #, c-format
@@ -5504,17 +5504,18 @@ msgstr ""
 
 #: src/main/saveload.c:2203
 msgid "connection not open for writing"
-msgstr ""
+msgstr "connessione non aperta in scrittura"
 
 #: src/main/saveload.c:2211
 msgid "cannot save XDR format to a text-mode connection"
 msgstr ""
+"non è possibile salvare un formato XDR su una connessione in modalità testo"
 
 #: src/main/saveload.c:2221 src/main/serialize.c:1624
 #: src/main/serialize.c:1638 src/main/serialize.c:1757
 #: src/main/serialize.c:1779
 msgid "error writing to connection"
-msgstr ""
+msgstr "errore durante la scrittura sulla connessione"
 
 #: src/main/scan.c:541
 #, c-format
@@ -5540,15 +5541,15 @@ msgstr ""
 
 #: src/main/scan.c:932
 msgid "invalid strip.white value"
-msgstr ""
+msgstr "valore strip.white non valida"
 
 #: src/main/scan.c:934
 msgid "invalid strip.white length"
-msgstr ""
+msgstr "lunghezza strip.white non valida"
 
 #: src/main/scan.c:936 src/main/scan.c:1240
 msgid "invalid na.strings value"
-msgstr ""
+msgstr "valore na.strings non valido"
 
 #: src/main/scan.c:938 src/main/scan.c:984 src/main/scan.c:1064
 #: src/main/scan.c:1067 src/main/scan.c:1538 src/main/scan.c:1541
@@ -5557,23 +5558,23 @@ msgstr ""
 
 #: src/main/scan.c:945
 msgid "invalid sep value: must be one byte"
-msgstr ""
+msgstr "valore sep non valido: deve essere un byte"
 
 #: src/main/scan.c:949 src/main/scan.c:1077
 msgid "invalid sep value"
-msgstr ""
+msgstr "valore sep non valido"
 
 #: src/main/scan.c:958
 msgid "invalid decimal separator: must be one byte"
-msgstr ""
+msgstr "separatore decimali non valido: deve essere un byte"
 
 #: src/main/scan.c:963
 msgid "invalid decimal separator"
-msgstr ""
+msgstr "separatore decimali non valido"
 
 #: src/main/scan.c:974 src/main/scan.c:1086 src/main/scan.c:1529
 msgid "out of memory"
-msgstr ""
+msgstr "fuori memoria"
 
 #: src/main/scan.c:980 src/main/scan.c:1092 src/main/scan.c:1535
 msgid "invalid quote symbol set"
@@ -5598,11 +5599,11 @@ msgstr ""
 #: src/main/scan.c:1466
 #, c-format
 msgid "Selection: "
-msgstr ""
+msgstr "Selezione: "
 
 #: src/main/scan.c:1518
 msgid "invalid nlines value"
-msgstr ""
+msgstr "valore non valido di nlines"
 
 #: src/main/scan.c:1559 src/main/scan.c:1571
 msgid "cannot allocate buffer in readTableHead"
@@ -5615,43 +5616,43 @@ msgstr ""
 
 #: src/main/scan.c:1711
 msgid "'file' is not a connection"
-msgstr ""
+msgstr "'file' non è una connessione"
 
 #: src/main/scan.c:1730
 msgid "invalid value for 'nr'"
-msgstr ""
+msgstr "valore non valido per 'nr'"
 
 #: src/main/scan.c:1731
 msgid "invalid value for 'nc'"
-msgstr ""
+msgstr "valore non valido per 'nc'"
 
 #: src/main/scan.c:1733
 msgid "invalid value for 'rnames'"
-msgstr ""
+msgstr "valore non valido per 'rnames'"
 
 #: src/main/scan.c:1734
 msgid "invalid value for 'sep'"
-msgstr ""
+msgstr "valore non valido per 'sep'"
 
 #: src/main/scan.c:1735
 msgid "invalid value for 'eol'"
-msgstr ""
+msgstr "valore non valido per 'eol'"
 
 #: src/main/scan.c:1736 src/main/util.c:1113
 msgid "invalid value for 'na'"
-msgstr ""
+msgstr "valore non valido per 'na'"
 
 #: src/main/scan.c:1737
 msgid "invalid value for 'dec'"
-msgstr ""
+msgstr "valore non valido per 'dec'"
 
 #: src/main/scan.c:1738
 msgid "invalid value for 'qmethod'"
-msgstr ""
+msgstr "valore non valido per 'qmethod'"
 
 #: src/main/scan.c:1743
 msgid "'dec' must be a single character"
-msgstr ""
+msgstr "'dec' deve essere un singolo carattere"
 
 #: src/main/scan.c:1764
 #, c-format
@@ -5665,11 +5666,11 @@ msgstr ""
 #: src/main/seq.c:88 src/main/seq.c:91
 #, c-format
 msgid "Numerical expression has %d elements: only the first used"
-msgstr ""
+msgstr "L'espressione numerica ha %d elementi: solo il primo è utilizzato"
 
 #: src/main/seq.c:95
 msgid "NA/NaN argument"
-msgstr ""
+msgstr "argomento NA/NaN"
 
 #: src/main/seq.c:102
 msgid "result would be too long a vector"
@@ -5677,11 +5678,11 @@ msgstr ""
 
 #: src/main/seq.c:126
 msgid "unequal factor lengths"
-msgstr ""
+msgstr "lunghezza del fattore non equa"
 
 #: src/main/seq.c:145 src/main/seq.c:237 src/main/seq.c:240
 msgid "invalid number of copies in rep()"
-msgstr ""
+msgstr "numero di copie non valido in rep()"
 
 #: src/main/seq.c:228
 msgid "rep() incorrect type for second argument"
@@ -5693,16 +5694,16 @@ msgstr ""
 
 #: src/main/serialize.c:222 src/main/serialize.c:252 src/main/serialize.c:275
 msgid "unknown or inappropriate output format"
-msgstr ""
+msgstr "risultato in formato sconosciuto o inappropriato"
 
 #: src/main/serialize.c:328 src/main/serialize.c:335 src/main/serialize.c:1848
 #: src/main/serialize.c:1856
 msgid "read error"
-msgstr ""
+msgstr "errore di lettura"
 
 #: src/main/serialize.c:511
 msgid "binary format is deprecated; using xdr instead"
-msgstr ""
+msgstr "il formato binario è stato deprecato; utilizza xdr piuttosto"
 
 #: src/main/serialize.c:519
 msgid "must specify ascii, binary, or xdr format"
