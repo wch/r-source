@@ -2252,7 +2252,7 @@ static Rboolean XFig_Open(NewDevDesc *dd, XFigDesc *pd)
     }
     if (!pd->psfp) return FALSE;
     /* assume tmpname is less than PATH_MAX */
-    strcpy(pd->tmpname, R_tmpnam("Rxfig"));
+    strcpy(pd->tmpname, R_tmpnam("Rxfig", R_TempDir));
     pd->tmpfp = R_fopen(pd->tmpname, "w");
     if (!pd->tmpfp) {
 	fclose(pd->psfp);

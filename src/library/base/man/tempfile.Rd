@@ -4,15 +4,16 @@
 \title{Create Names for Temporary Files}
 \description{
   \code{tempfile} returns a vector of character strings which can be used as
-  names for temporary files in the directory given by \code{tempdir}.
+  names for temporary files.
 }
 \usage{
-tempfile(pattern = "file")
+tempfile(pattern = "file", tmpdir = tempdir())
 tempdir()
 }
 \arguments{
   \item{pattern}{a non-empty character vector giving the initial part
     of the name.}
+  \item{tmpdir}{a non-empty character vector giving the directory name}  
 }
 \value{
   For \code{tempfile} a character vector giving the names of possible
@@ -32,12 +33,12 @@ tempdir()
 
 #ifdef unix
   The file name is made of the pattern, the process number in hex and a
-  random suffix in hex. The filenames will be in the directory given by
-  \code{tempdir()}.  This will be a subdirectory of the directory given
+  random suffix in hex. By default, the filenames will be in the directory 
+  given by \code{tempdir()}.  This will be a subdirectory of the directory given
   \code{TMPDIR} if set, otherwise \code{"/tmp"}.
 #endif
 #ifdef windows
-  The directory will be a subdirectory of the first found of
+  By default, \code{tempdir()} gives a subdirectory of the first found of
   the environment variables \code{TMP}, \code{TEMP} and \code{R\_USER}
   (see \code{\link{Rconsole}}). If the path to the directory contains
   a space in any of the components, the path returned will use the
@@ -45,9 +46,7 @@ tempdir()
 #endif
 }
 \seealso{\code{\link{unlink}} for deleting files.}
-#ifdef unix
 \examples{
 tempfile(c("ab", "a b c"))   # give file name with spaces in!
 }
-#endif
 \keyword{file}

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -91,7 +91,7 @@ static char newFileName[PATH_MAX];
    The R entry point does not require that storage to be freed, so we
    copy the value to a static buffer, to void a memory leak in R<=1.6.0.
 
-   This is not thread-safe, but as R_ExpandFileName is a public entry 
+   This is not thread-safe, but as R_ExpandFileName is a public entry
    point (in R-exts.texi) it will need to deprecated and replaced by a
    version which takes a buffer as an argument.
 
@@ -113,7 +113,7 @@ static char UserHOME[PATH_MAX];
 char *R_ExpandFileName(char *s)
 {
     char *p;
-    
+
     if(s[0] != '~') return s;
     if(isalpha(s[1])) return s;
     if(HaveHOME < 0) {
@@ -270,7 +270,7 @@ void InitTempDir()
 	    /* no free here: storage remains in use */
 	}
     }
-    
+
     len = strlen(tmp) + 1;
     p = (char *) malloc(len);
     if(!p) R_Suicide("Can't allocate R_TempDir");
@@ -280,13 +280,13 @@ void InitTempDir()
     }
 }
 
-char * R_tmpnam(const char * prefix)
+char * R_tmpnam(const char * prefix, const char * tempdir)
 {
     char tm[PATH_MAX], tmp1[PATH_MAX], *res;
     unsigned int n, done = 0;
 
     if(!prefix) prefix = "";	/* NULL */
-    strcpy(tmp1, R_TempDir);
+    strcpy(tmp1, tempdir);
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
 	sprintf(tm, "%s/%s%x", tmp1, prefix, rand());

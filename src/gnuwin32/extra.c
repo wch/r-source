@@ -35,7 +35,7 @@
 #include "graphapp/ga.h"
 #include "rui.h"
 
-char * R_tmpnam(const char * prefix)
+char * R_tmpnam(const char * prefix, const char * tempdir)
 {
     char tm[MAX_PATH], tmp1[MAX_PATH], *res;
     unsigned int n, done = 0;
@@ -43,7 +43,7 @@ char * R_tmpnam(const char * prefix)
     HANDLE h;
 
     if(!prefix) prefix = "";	/* NULL */
-    strcpy(tmp1, R_TempDir);
+    strcpy(tmp1, tempdir);
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
         sprintf(tm, "%s\\%s%d", tmp1, prefix, rand());

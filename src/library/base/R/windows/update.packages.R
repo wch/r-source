@@ -7,7 +7,7 @@ install.packages <- function(pkgs, lib, CRAN=getOption("CRAN"),
         ## Create a temporary directory and unpack the zip to it
         ## then get the real package & version name, copying the
         ## dir over to the appropriate install dir.
-        tmpDir <- tempfile()
+        tmpDir <- tempfile(,lib)
         dir.create(tmpDir)
         cDir <- getwd()
         on.exit(setwd(cDir), add=TRUE)

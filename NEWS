@@ -56,6 +56,9 @@ USER-VISIBLE CHANGES
 	as well as the recommended packages `KernSmooth', `MASS',
 	`boot', `class', `nnet', `rpart' and `spatial'.
 
+    o	The tempfile() function now takes an optional second argument
+	giving the directory name.
+
 
 NEW FEATURES
 

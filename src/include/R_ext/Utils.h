@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001    Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1998-2003    Robert Gentleman, Ross Ihaka
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -72,7 +72,7 @@ Rboolean StringTrue(char*);
 Rboolean isBlankString(char *);
 
 double 	R_strtod(const char *c, char **end);
-char *  R_tmpnam(const char *prefix);
+char *  R_tmpnam(const char *prefix, const char *tempdir);
 
 void	hsv2rgb(double *h, double *s, double *v,/* in */
 		double *r, double *g, double *b);/* out */

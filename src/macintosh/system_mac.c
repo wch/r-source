@@ -883,17 +883,17 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
    
 
 
-char *R_tmpnam(const char * prefix)
+char *R_tmpnam(const char * prefix, const char * tempdir)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
     unsigned int n, done = 0;
-    
+
     if(!prefix) prefix = "";	/* NULL */
-    strcpy(tmp1, R_TempDir);
- 
+    strcpy(tmp1, tempdir);
+
     for (n = 0; n < 100; n++) {
 	/* try a random number at the end */
-        sprintf(tm, "%s:%s%d", tmp1,prefix, rand());      
+        sprintf(tm, "%s:%s%d", tmp1,prefix, rand());
         if (!R_FileExists(tm)) { done = 1; break; }
     }
     
@@ -908,27 +908,37 @@ char *R_tmpnam(const char * prefix)
 
 
 /*
-   do_tempfile it is just as under unix. No changes other then
-   Rmac_tmpnam() instead of the Unix Runix_tmpnam();
+   do_tempfile it is just as under unix. No changes
    (Stefano M. Iacus) Jago Nov-00, implemented pre-alpha 3
+   (Changed by DJM Mar-03)
 */
 
 
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP  ans;
-    char *tn, *tm;
-    int i, slen=0 /* -Wall */;
+    SEXP  ans, pattern, tempdir;
+    char *tn, *td, *tm;
+    int i, n1, n2, slen;
 
     checkArity(op, args);
-    if (!isString(CAR(args)) || (slen = LENGTH(CAR(args))) < 1)
-	errorcall(call, "invalid file name argument");
+    pattern = CAR(args); n1 = length(pattern);
+    tempdir = CADR(args); n2 = length(tempdir);
+    if (!isString(pattern))
+        errorcall(call, "invalid filename pattern");
+    if (!isString(tempdir))
+        errorcall(call, "invalid tempdir");
+    if (n1 < 1)
+	errorcall(call, "no patterns");
+    if (n2 < 1)
+	errorcall(call, "no tempdir");
+    slen = (n1 > n2) ? n1 : n2;
     PROTECT(ans = allocVector(STRSXP, slen));
     for(i = 0; i < slen; i++) {
-	tn = CHAR( STRING_ELT( CAR(args) ,i ) );
+	tn = CHAR( STRING_ELT( pattern , i%n1 ) );
+	td = CHAR( STRING_ELT( tempdir , i%n2 ) );
 	/* try to get a new file name */
-	tm = R_tmpnam(tn);
-	SET_STRING_ELT(ans, i, mkChar(tm));	
+	tm = R_tmpnam(tn, td);
+	SET_STRING_ELT(ans, i, mkChar(tm));
 	if(tm) free(tm);
     }
     UNPROTECT(1);
@@ -1019,7 +1029,7 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 
 void InitEd(){
- DefaultFileName = R_tmpnam("REdit");
+    DefaultFileName = R_tmpnam("REdit", R_TempDir);
 }
 
 void CleanEd()

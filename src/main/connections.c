@@ -230,7 +230,7 @@ static Rboolean file_open(Rconnection con)
 
     if(strlen(con->description) == 0) {
 	temp = TRUE;
-	name = R_tmpnam("Rf");
+	name = R_tmpnam("Rf", R_TempDir);
     } else name = R_ExpandFileName(con->description);
     fp = R_fopen(name, con->mode);
     if(!fp) {
