@@ -84,6 +84,7 @@ typedef union
    a song and dance in a threaded application (e.g pthread_once(), 
    etc.).
  */
+#ifndef _AIX
 #  ifdef WORDS_BIGENDIAN
 static const int hw = 0;
 static const int  lw = 1;
@@ -91,7 +92,16 @@ static const int  lw = 1;
 static const int hw = 1;
 static const int lw = 0;
 #  endif /* WORDS_BIGENDIAN */
-
+#else
+/* gcc on AIX messes up symbol table with static const */
+#  ifdef WORDS_BIGENDIAN
+static int hw = 0;  
+static int  lw = 1;
+#  else  /* WORDS_BIGENDIAN */
+static int hw = 1;
+static int lw = 0;
+#  endif /* WORDS_BIGENDIAN */
+#endif
 
 
 static double R_ValueOfNA(void)
