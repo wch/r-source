@@ -1,6 +1,8 @@
 print.htest <- function(x, digits = 4, quote = TRUE, prefix = "", ...)
 {
-    cat("\n\t", x$method, "\n\n")
+    cat("\n")
+    writeLines(strwrap(x$method, prefix="\t"))
+    cat("\n")
     cat("data: ", x$data.name, "\n")
     if(!is.null(x$statistic))
 	cat(names(x$statistic), " = ", format(round(x$statistic, 4)),

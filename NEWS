@@ -265,6 +265,10 @@ NEW FEATURES
 	set on the data frame (needed to distiguish the response,
 	 for example).
 
+    o   print.htest() can now handle test names that are longer than
+        one line 
+
+
 
 BUG FIXES
 
@@ -286,7 +290,6 @@ BUG FIXES
 
     o	The documentation and parts of the parse/deparse mechanism
 	indicated that there was an operator `%'. Corrected (PR#925).
-
     o	Fixed some cases where the deparser gave code that threw a
 	syntax error when parsed.
 
