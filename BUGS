@@ -159,6 +159,10 @@ none
 
 Directory:  Models
 
+* PR# 621 *
+Subject: anova() on three or more objects behaves inconsistently
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Tue, 1 Aug 2000 10:02:18 +0100 (BST)
 * PR# 600 *
 Subject: Faulty handling of aliasing in predict.lm; wrong constant
 From: John Maindonald <john.maindonald@anu.edu.au>
@@ -231,27 +235,18 @@ none
 
 Directory:  incoming
 
-* PR# 621 *
-Subject: anova() on three or more objects behaves inconsistently
+* PR# 625 *
+Subject: Re: [Rd] Re: [R] problem clipping R postscript plots within latex
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Tue, 1 Aug 2000 10:02:18 +0100 (BST)
-* PR# 614 *
-Subject: scoping problems
-From: halvorsen <kjetilh@umsanet.edu.bo>
-Date: Mon, 24 Jul 2000 17:48:49 -0400
-* PR# 613 *
-Subject: maketitle garbles the title in package nnet
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sat, 22 Jul 2000 06:39:32 +0100 (BST)
-Date: 2000/07/11
-* PR# 616 *
-Subject: wishlist
-From: halvorsen <kjetilh@umsanet.edu.bo>
-Date: Tue, 25 Jul 2000 17:50:56 -0400
+Date: Wed, 2 Aug 2000 21:38:31 +0100 (GMT Daylight Time)
 * PR# 615 *
 Subject: binomial()
 From: halvorsen <kjetilh@umsanet.edu.bo>
 Date: Mon, 24 Jul 2000 18:11:17 -0400
+* PR# 614 *
+Subject: scoping problems
+From: halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 24 Jul 2000 17:48:49 -0400
 * PR# 618 *
 Subject: min(c()) = inf ???
 From: Peter Malewski <y0004379@tu-bs.de>
@@ -260,11 +255,19 @@ Date: Wed, 26 Jul 2000 13:57:32 +0200 (METDST)
 Subject: Bug in stem?
 From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
 Date: Wed, 26 Jul 2000 11:28:04 +0200
-* PR# 620 *
-Subject: crash with winDialogString("ABC", 1)
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Fri, 28 Jul 2000 20:38:30 +0200
+* PR# 622 *
+Subject:  data editor freeze on empty data frame 
+From: Peter Dalgaard BSA <pd@blueberry.kubism.ku.dk>
+Date: Wed, 2 Aug 2000 11:17:04 +0200
 * PR# 619 *
 Subject: Re: [R] gremlin in rep()
 From: Thomas Lumley <thomas@biostat.washington.edu>
 Date: Fri, 28 Jul 2000 08:20:21 -0700 (PDT)
+* PR# 624 *
+Subject: text( * , xpd = vv )  doesn't work and help(text.default) is wrong
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Wed, 2 Aug 2000 18:40:54 +0200 (CEST)
+* PR# 623 *
+Subject: Re: [R] problem clipping R postscript plots within latex
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 02 Aug 2000 15:01:52 +0200
