@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 
-SHLIB = $(pkg).@SHLIBEXT@
+SHLIB = $(pkg).@SHLIB_EXT@
 OBJS = ansari.o fexact.o kendall.o ks.o prho.o swilk.o
 
 all: Makefile $(SHLIB)
@@ -29,7 +29,7 @@ include $(top_builddir)/etc/Makeconf
 
 mostlyclean: clean
 clean:
-	@rm -f *.o *.$(SHLIBEXT)
+	@rm -f *.o *.$(SHLIB_EXT)
 distclean: clean
 	@rm -f Makefile
 maintainer-clean: distclean

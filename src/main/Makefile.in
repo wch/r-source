@@ -141,7 +141,7 @@ R: Makefile
 
 $(top_builddir)/bin/R.bin: $(OBJECTS) $(RLIBS) @EXPORTFILE@
 	@$(MKINSTALLDIRS) $(top_builddir)/bin
-	$(MAINLD) $(MAINLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
+	$(MAIN_LD) $(MAIN_LDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(ALL_LIBS)
 
 $(top_builddir)/etc/R.exp: $(OBJECTS) $(RLIBS)
 	@$(top_srcdir)/tools/ldAIX4 -o $@ $(OBJECTS) $(RLIBS)

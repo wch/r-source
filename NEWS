@@ -65,7 +65,11 @@ NEW FEATURES
     o	New command-line option --no-restore-history implied by --vanilla.
 
     o	The `mode' argument of exists() and get() is interpreted
-	as mode(x) rather than typeof(x), following S. 
+	as mode(x) rather than typeof(x), following S.
+
+    o	Configure/build variables MAINLD and MAINLDFLAGS are renamed to
+	MAIN_LD and MAIN_LDFLAGS for consistency with other MAIN_* vars,
+	simlarly for SHLIBLD and SHLIBLDFLAGS.
 
 
 

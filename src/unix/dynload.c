@@ -459,7 +459,7 @@ void R_load_X11_shlib()
     }
     strcpy(X11_DLL, p);
     strcat(X11_DLL, "/bin/R_X11.");
-    strcat(X11_DLL, SHLIBEXT); /* from config.h */
+    strcat(X11_DLL, SHLIB_EXT); /* from config.h */
     if(stat(X11_DLL, &sb))
 	R_Suicide("Probably no X11 support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */
@@ -498,7 +498,7 @@ void R_load_gnome_shlib()
     }
     strcpy(gnome_DLL, p);
     strcat(gnome_DLL, "/gnome/R_gnome.");
-    strcat(gnome_DLL, SHLIBEXT); /* from config.h */
+    strcat(gnome_DLL, SHLIB_EXT); /* from config.h */
     if(stat(gnome_DLL, &sb))
 	R_Suicide("Probably no GNOME support: the shared library was not found");
 /* cannot use computeDLOpenFlag as warnings will crash R at this stage */

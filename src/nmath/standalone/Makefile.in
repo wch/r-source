@@ -51,7 +51,7 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in test.c sunif.c
 
 LIB = libRmath.a
-SHLIB = libRmath.$(SHLIBEXT)
+SHLIB = libRmath.$(SHLIB_EXT)
 
 DEFS = -DHAVE_CONFIG_H -DMATHLIB_STANDALONE
 ALL_CFLAGS = $(R_XTRA_CFLAGS) $(SH_CFLAGS) $(CFLAGS)
@@ -86,7 +86,7 @@ $(LIB): $(OBJECTS)
 	$(RANLIB) $(LIB)
 
 $(SHLIB): $(OBJECTS)
-	$(SHLIBLD) $(SHLIBLDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
+	$(SHLIB_LD) $(SHLIB_LDFLAGS) $(LDFLAGS) -o $@ $(OBJECTS)
 
 test: $(srcdir)/test.c
 	$(CC) -o $@ $(ALL_CPPFLAGS) $(ALL_CFLAGS) $< -L. -lRmath -lm

@@ -473,6 +473,7 @@ AC_SUBST(CFLAGS)
 AC_SUBST(MAIN_CFLAGS)
 AC_SUBST(SHLIB_CFLAGS)
 AC_SUBST(CXXFLAGS)
+AC_SUBST(SHLIB_CXXFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(MAIN_FFLAGS)
 AC_SUBST(SHLIB_FFLAGS)
@@ -486,12 +487,12 @@ AC_SUBST(R_XTRA_LIBS)
 
 ## We need to determine the following:
 ##
-## MAINLD, MAINLDFLAGS
+## MAIN_LD, MAINLD_FLAGS
 ##   command and flags for loading the main binary so that it will load
 ##   shared libraries (DLLs) at runtime, also for profiling.
 ## CPICFLAGS, CXXPICFLAGS, FPICFLAGS
 ##   flags for compiling C, C++, and Fortran library code
-## SHLIBLD, SHLIBLDFLAGS
+## SHLIB_LD, SHLIB_LDFLAGS
 ##   command and flags for creating DLLs
 ##
 ## The following procedure is as follows.
@@ -501,9 +502,9 @@ AC_SUBST(R_XTRA_LIBS)
 ## *) As a final safeguard, values from the environment (as specified in
 ##    one of the configuration files) override anything we figure out.
 
-mainld=${CC}
-shlibld=${CC}
-SHLIBEXT=so
+main_ld=${CC}
+shlib_ld=${CC}
+SHLIB_EXT=so
 
 AC_PATH_PROG(XMKMF, xmkmf, ,
   ${PATH}:/usr/bin/X11:/usr/X11R6/bin:/usr/openwin/bin)
@@ -514,7 +515,7 @@ if test -n "${XMKMF}"; then
   cc=`${srcdir}/tools/GETMAKEVAL CC`
   cc=`echo ${cc} | sed "s/ .*//"`
   if test "`which ${cc}`" = "`which ${CC}`"; then
-    shlibldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
+    shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
     fpicflags=${cpicflags}
   fi
@@ -527,7 +528,7 @@ if test -n "${XMKMF}"; then
 fi
 if test "${GCC}" = yes; then
   cpicflags=-fPIC
-  shlibldflags=-shared
+  shlib_ldflags=-shared
 fi
 if test "${GXX}" = yes; then
   cxxpicflags=-fPIC
@@ -550,26 +551,26 @@ case "${host}" in
     else
       wl=
     fi
-    mainldflags="${wl}-bdynamic ${wl}-bE:${EXPORTFILE} ${wl}-bM:SRE"
+    main_ldflags="${wl}-bdynamic ${wl}-bE:${EXPORTFILE} ${wl}-bM:SRE"
     # FIXME: is this really necessary?
     #     if test "${GCC}" = yes; then
-    #       mainldflags="${mainldflags} `${CC} -print-libgcc-file-name`"
+    #       main_ldflags="${main_ldflags} `${CC} -print-libgcc-file-name`"
     #     fi
-    shlibldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
+    shlib_ldflags="${wl}-bM:SRE ${wl}-H512 ${wl}-T512 ${wl}-bnoentry \
       ${wl}-bexpall ${wl}-bI:\$(R_HOME)/etc/R.exp"
     ;;
   alpha*osf*)
     cpicflags=
     cxxpicflags=
     fpicflags=
-    shlibldflags="-shared"
+    shlib_ldflags="-shared"
     ;;
   alpha*linux*)
-    mainldflags="-export-dynamic"
+    main_ldflags="-export-dynamic"
     ;;
   *freebsd[[3-4]].*)
-    mainldflags="-export-dynamic"
-    shlibldflags="-shared"
+    main_ldflags="-export-dynamic"
+    shlib_ldflags="-shared"
     ;;
   *hpux*)
     case "${CC}" in
@@ -580,26 +581,26 @@ case "${host}" in
       f77|fort77|f90)
         fpicflags="+z" ;;
     esac
-    mainldflags="-Wl,-E"
+    main_ldflags="-Wl,-E"
     if test "${GCC}" = yes; then
-      shlibldflags="-shared -fPIC"
+      shlib_ldflags="-shared -fPIC"
     else
-      shlibldflags="-b"
+      shlib_ldflags="-b"
     fi
-    SHLIBEXT=sl
+    SHLIB_EXT=sl
     ;;
   *linux*aout)
     sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
     ;;
   *linux*)
-    mainldflags="-export-dynamic"
+    main_ldflags="-export-dynamic"
     ;;
   *netbsd*)
     if ${CPP} - -dM < /dev/null | grep -q __ELF__; then
-      mainldflags="-export-dynamic"
-      shlibldflags="-shared"
+      main_ldflags="-export-dynamic"
+      shlib_ldflags="-shared"
     else
-      shlibldflags="-Bshareable"
+      shlib_ldflags="-Bshareable"
     fi
     ;;
   *sgi*)
@@ -613,17 +614,17 @@ case "${host}" in
     else
       fpicflags=-KPIC
     fi
-    shlibldflags="-shared"
+    shlib_ldflags="-shared"
     ;;
   *solaris*)
-    shlibldflags="-G"
+    shlib_ldflags="-G"
     if test "${GCC}" = yes; then
       cpicflags=-fPIC
       ld=`${CC} -print-prog-name=ld`
       ldoutput=`${ld} -v 2>&1 | grep GNU`
       if test -n "${ldoutput}"; then
-	mainldflags="-Wl,-export-dynamic"
-	shlibldflags="-shared"
+	main_ldflags="-Wl,-export-dynamic"
+	shlib_ldflags="-shared"
       fi
     else
       cpicflags=-KPIC
@@ -636,12 +637,12 @@ case "${host}" in
     ;;
 esac
 
-if test -z "${MAINLD}"; then
-  MAINLD=${mainld}
-  if test -z "${MAINLDFLAGS}"; then
-    MAINLDFLAGS=${mainldflags}
+if test -z "${MAIN_LD-${MAINLD}}"; then
+  MAIN_LD=${main_ld}
+  if test -z "${MAIN_LDFLAGS-${MAINLDFLAGS}}"; then
+    MAIN_LDFLAGS=${main_ldflags}
   else
-    MAINLDFLAGS="${MAINLDFLAGS} ${mainldflags}"
+    MAIN_LDFLAGS="${MAIN_LDFLAGS-${MAINLDFLAGS}} ${main_ldflags}"
   fi
 fi
 
@@ -673,28 +674,28 @@ if test -z "${CXXPICFLAGS}"; then
   esac
 fi
 
-if test -z "${SHLIBLD}"; then
-  SHLIBLD=${shlibld}
-  if test -z "${SHLIBLDFLAGS}"; then
-    SHLIBLDFLAGS=${shlibldflags}
+if test -z "${SHLIB_LD-${SHLIBLD}}"; then
+  SHLIB_LD=${shlib_ld}
+  if test -z "${SHLIB_LDFLAGS-${SHLIBLDFLAGS}}"; then
+    SHLIB_LDFLAGS=${shlib_ldflags}
   else
-    SHLIBLDFLAGS="${SHLIBLDFLAGS} ${shlibldflags}"
+    SHLIB_LDFLAGS="${SHLIB_LDFLAGS-${SHLIBLDFLAGS}} ${shlib_ldflags}"
   fi
 fi
-if test -z "${SHLIBLDFLAGS}"; then
-  AC_MSG_WARN([Could not determine SHLIBLDFLAGS.])
+if test -z "${SHLIB_LDFLAGS}"; then
+  AC_MSG_WARN([Could not determine SHLIB_LDFLAGS.])
   AC_MSG_ERROR([See the file INSTALL for more information.])
 fi
 
-AC_SUBST(MAINLD)
-AC_SUBST(MAINLDFLAGS)
+AC_SUBST(MAIN_LD)
+AC_SUBST(MAIN_LDFLAGS)
 AC_SUBST(CPICFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(CXXPICFLAGS)
-AC_SUBST(SHLIBLDFLAGS)
-AC_SUBST(SHLIBEXT)
-AC_SUBST(SHLIBLD)
-AC_DEFINE_UNQUOTED(SHLIBEXT, "${SHLIBEXT}")
+AC_SUBST(SHLIB_LDFLAGS)
+AC_SUBST(SHLIB_EXT)
+AC_SUBST(SHLIB_LD)
+AC_DEFINE_UNQUOTED(SHLIB_EXT, "${SHLIB_EXT}")
 AC_SUBST(EXPORTFILE)
 
 ### System services.

@@ -210,8 +210,8 @@ double atanh(double);
 #ifdef Unix
 #define OSTYPE      "unix"
 #define FILESEP     "/"
-#define SHLIBEXT    ""
-#define DYNLOADEXT  "." ## SHLIBEXT
+#define SHLIB_EXT    ""
+#define DYNLOADEXT  "." ## SHLIB_EXT
 #endif
 
 #ifdef Macintosh

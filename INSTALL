@@ -273,15 +273,15 @@ and others include
 	FFLAGS		debugging and optimization flags, Fortran
 	MAIN_FFLAGS	ditto, for compiling the main program
 	SHLIB_FFLAGS	  or shared libraries
-	MAINLDFLAGS	additional flags for the main link
-	SHLIBLDFLAGS	additional flags for the linking shared libraries
+	MAIN_LDFLAGS	additional flags for the main link
+	SHLIB_LDFLAGS	additional flags for the linking shared libraries
 
 Library paths specified as -L/lib/path in LIBS are collected together
 and prepended to LD_LIBRARY_PATH, so there should be no need for
 -R or -rpath flags.
 
 To compile a profiling version of R, one might for example want to use
-MAIN_CFLAGS=-pg, MAIN_FFLAGS=-pg, MAINLDFLAGS=-pg on platforms where
+MAIN_CFLAGS=-pg, MAIN_FFLAGS=-pg, MAIN_LDFLAGS=-pg on platforms where
 -pg cannot be used with position-independent code.
 
 

@@ -404,9 +404,9 @@ EOF
       changequote([, ])
       if ${CC-cc} ${CFLAGS} -c conftest.c 1>&AC_FD_CC 2>&AC_FD_CC; then
 	## FIXME
-	## This should really use MAINLD, and hence come after this is
+	## This should really use MAIN_LD, and hence come after this is
 	## determined.  Or maybe we can always use ${CC} eventually?
-	if ${CC-cc} ${LDFLAGS} ${MAINLDFLAGS} -o conftest conftest.o conftestf.o \
+	if ${CC-cc} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest conftest.o conftestf.o \
             ${FLIBS} -lm 1>&AC_FD_CC 2>&AC_FD_CC; then
           output=`./conftest 2>&1`
 	  if test ${?} = 0; then

@@ -81,14 +81,14 @@
 # The command to be used to load the main R binary.
 # This is usually the FORTRAN or C compiler, but the automatic choice
 # can be overriden by means of this variable.
-# MAINLD=
+# MAIN_LD=
 
 # The flags which are necessary for loading main program which will load
 # DLLs at runtime.  HP-UX and Linux-elf are examples of platforms which
 # use this.  These platforms are already taken care of by configure,
-# and anything set here will be in addition unless MAINLD is given.
+# and anything set here will be in addition unless MAIN_LD is given.
 # For example, one can set flags for profiling here.
-# MAINLDFLAGS=
+# MAIN_LDFLAGS=
 
 # Any special flags which must be used when compiling C code to be
 # turned into a shared library.  This is typically something like -fpic
@@ -104,13 +104,13 @@
 # The command to be used to load shared libraries.
 # This is usually the C compiler or `ld', but the automatic choice can
 # be overridden by means of this variable.
-# SHLIBLD=
+# SHLIB_LD=
 
 # Any special flags which are required by the linker when creating
 # shared libraries.  This is usually automatically detected by
 # configure, and anything set here will be in addition unless SHLIB is
 # given.
-# SHLIBLDFLAGS=
+# SHLIB_LDFLAGS=
 
 # For `-l' and `-L' options to pass to the linker.
 # `-L' options set here will be prepended to LD_LIBRARY_PATH at run time

@@ -63,11 +63,11 @@ install: installdirs
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(rhome)/bin/R
 	@sed "s@R_HOME=.*@R_HOME=$(rhome)\}@" < bin/R > $(bindir)/R
 	@chmod 755 $(bindir)/R $(rhome)/bin/R
-	@for f in `ls bin/*.$(SHLIBEXT)`; do \
+	@for f in `ls bin/*.$(SHLIB_EXT)`; do \
 	  $(INSTALL_PROGRAM) $${f} $(rhome)/bin; \
 	done
-	@if test -f gnome/R_gnome.$(SHLIBEXT); then \
-	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIBEXT) $(rhome)/gnome; \
+	@if test -f gnome/R_gnome.$(SHLIB_EXT); then \
+	  $(INSTALL_PROGRAM) gnome/R_gnome.$(SHLIB_EXT) $(rhome)/gnome; \
 	fi
 	@for f in `find bin -type f -print \
 	             | grep -v '^bin/R$$' \
