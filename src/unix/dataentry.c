@@ -147,8 +147,14 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 			tvec2 = CDR(tvec2);
 		}
 	}
+        else if (colmodes == R_NilValue ) {
+                PROTECT(inputlist = allocList(1)); nprotect++;
+                CAR(inputlist) = ssNewVector(REALSXP, 100);
+                TAG(inputlist) = install("var1");
+                LEVELS(CAR(inputlist)) = 0;
+        }
 	else {
-		errorcall(call, "invalid parameter \n");
+		errorcall(call, "invalid parameter(s) \n");
 	}
 
 
