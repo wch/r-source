@@ -204,11 +204,6 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 	return val;
     }
 }
-
-void R_SetUseNamespaceDispatch(Rboolean val)
-{
-    R_UseNamespaceDispatch = val;
-}
 #endif
 
 #ifdef EXPERIMENTAL_NAMESPACES
