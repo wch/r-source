@@ -411,14 +411,17 @@ function(package, dir, lib.loc = NULL,
 
     }
     
-    ## Determine function objects in the code without a \usage entry.
+    ## Determine (function) objects in the code without a \usage entry.
     ## Of course, these could still be 'documented' via \alias.
     ## </NOTE>
     ## Older versions only printed this information without returning it
     ## (in case 'verbose' was true).  We now add this as an attribute to
     ## the badDocObjs returned.
     ## </NOTE>
-    codeNotInUsages <- lsCode[!lsCode %in% lsDocs]
+    codeNotInUsages <- lsCode[! lsCode %in% lsDocs]
+    funsNotInUsages <- funs[funs %in% codeNotInUsages]
+    ## (Note that 'funs' does not necessarily contain all (exported)
+    ## functions in the package.)
 
     attr(badDocObjs, "codeNotInUsages") <- codeNotInUsages
     attr(badDocObjs, "usagesNotInCode") <- usagesNotInCode
