@@ -73,7 +73,8 @@ ftable2table(x)
   to one in standard array form.
 }
 \seealso{
-  \code{\link{ftable.formula}} for the formula interface;
+  \code{\link{ftable.formula}} for the formula interface (which allows a
+  \code{data = .} argument);
   \code{\link{table}} for ``ordinary'' cross-tabulation.
 }
 \examples{
