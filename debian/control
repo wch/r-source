@@ -2,7 +2,7 @@ Source: r-base
 Section: math
 Priority: optional
 Maintainer: Douglas Bates <bates@stat.wisc.edu>
-Standards-Version: 2.4.0.0
+Standards-Version: 3.0.1
 
 Package: r-base
 Architecture: any
