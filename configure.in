@@ -66,7 +66,7 @@ if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 config_opts=${ac_configure_args}
 AC_SUBST(config_opts)
 
-## Allow the user to specify support for R-profiling.
+## Allow the user to specify support for R profiling.
 AC_ARG_ENABLE(R-profiling,
   [  --enable-R-profiling    attempt to compile support for Rprof() [yes]],
   [ if test "${enableval}" = no; then
@@ -198,7 +198,7 @@ AC_ARG_WITH(tk-config,
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
-## fully supports at least Fortran and C++.
+## fully supports Fortran and C++.
 ## AC_ARG_WITH(libtool,
 ##   [  --with-libtool          use libtool for building shared libraries [yes]],
 ##   use_libtool=${withval},
@@ -456,7 +456,7 @@ AC_FUNC_ALLOCA
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
-  getcwd getgrgid getpwuid getuid hypot isascii isfinite isnan matherr memcpy \
+  getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv snprintf strcoll \
   stat strptime system times unsetenv vsnprintf)
 AC_REPLACE_FUNCS(strdup)
@@ -468,7 +468,6 @@ R_FUNC_CALLOC
 R_FUNC_FINITE
 R_FUNC_LOG
 R_FUNC_STRPTIME
-R_IEEE_754
 
 ### Header files.
 
@@ -493,6 +492,8 @@ case "${host_os}" in
 esac
 R_HEADER_SETJMP
 R_HEADER_GLIBC2
+R_HEADER_MATH_ISFINITE
+R_HEADER_MATH_ISNAN
 
 ### Typedefs.
 
@@ -507,14 +508,16 @@ R_TYPE_SOCKLEN
 AC_C_BIGENDIAN
 AC_C_CONST
 if test "${cross_compiling}" = yes; then
-  AC_MSG_WARN([assuming C ints are 4 byte on ${host}])
+  warn_xcompile_sizeof_int="assuming C ints are 4 byte on ${host}"
+  AC_MSG_WARN([${warn_xcompile_sizeof_int}])
 fi
 AC_CHECK_SIZEOF(int, 4)
 if test "${ac_cv_sizeof_int}" = 4; then
   AC_DEFINE(INT_32_BITS)
 fi
 if test "${cross_compiling}" = yes; then
-  AC_MSG_WARN([assuming C longs are 4 byte on ${host}])
+  warn_xcompile_sizeof_long="assuming C longs are 4 byte on ${host}"
+  AC_MSG_WARN([${warn_xcompile_sizeof_long}])
 fi
 AC_CHECK_SIZEOF(long, 4)
 AC_CHECK_SIZEOF(long long, 0)
@@ -670,7 +673,10 @@ if test -n "${XMKMF}"; then
   if test "`which ${cc}`" = "`which ${CC}`"; then
     shlib_ldflags=`${srcdir}/tools/GETMAKEVAL SHLIBLDFLAGS`
     cpicflags=`${srcdir}/tools/GETMAKEVAL PICFLAGS`
+    ## <FIXME>
+    ## This is really stupid.
     fpicflags=${cpicflags}
+    ## </FIXME>
   fi
   cxx=`${srcdir}/tools/GETMAKEVAL CXX`
   cxx=`echo ${cxx} | sed "s/ .*//"`
@@ -951,6 +957,9 @@ AC_SUBST(R_GUIS)
 ## Tcl/Tk.
 R_TCLTK
 
+## IEEE 754.
+R_IEEE_754
+
 ## BSD networking.
 R_BSD_NETWORKING
 
@@ -1166,6 +1175,15 @@ if test -n "${warn_g77_and_f2c}"; then
 fi
 if test -n "${warn_f2c_flibs}"; then
   AC_MSG_WARN(${warn_f2c_flibs})
+fi
+if test -n "${warn_xcompile_sizeof_int}"; then
+  AC_MSG_WARN(${warn_xcompile_sizeof_int})
+fi
+if test -n "${warn_xcompile_sizeof_long}"; then
+  AC_MSG_WARN(${warn_xcompile_sizeof_long})
+fi
+if test -n "${warn_type_socklen}"; then
+  AC_MSG_WARN(${warn_type_socklen})
 fi
 if test -n "${warn_cxxpicflags}"; then
   AC_MSG_WARN(${warn_cxxpicflags})
