@@ -1504,7 +1504,7 @@ test -n "$F2C" && break
 done
 
   else
-    f77_output=`${F77} -v 2>&1 | grep "GNU F77\|egcs\|g77"`
+    f77_output=`${F77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
     if test -n "${f77_output}"; then
       f77_is_g77=true
     fi

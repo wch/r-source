@@ -280,7 +280,7 @@ else
   if test -z "${F77}"; then
     AC_CHECK_PROGS(F2C, f2c)
   else
-    f77_output=`${F77} -v 2>&1 | grep "GNU F77\|egcs\|g77"`
+    f77_output=`${F77} -v 2>&1 | egrep "GNU F77|egcs|g77"`
     if test -n "${f77_output}"; then
       f77_is_g77=true
     fi
