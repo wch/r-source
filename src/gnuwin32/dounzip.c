@@ -70,7 +70,7 @@ SEXP do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
 #include "graphapp/graphapp.h"
 #include "unzip/structs.h"
 
-#define UNZ_DLL_NAME "unzip32static.dll\0"
+#define UNZ_DLL_NAME "unzip32.dll\0"
 typedef int (WINAPI * _DLL_UNZIP)(int, char **, int, char **,
                                   LPDCL, LPUSERFUNCTIONS);
 _DLL_UNZIP Wiz_SingleEntryUnzip;
