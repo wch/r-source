@@ -11,7 +11,7 @@ Give row sums of a matrix or data frame, based on a grouping variable
   frames.
 }
 \usage{
-rowsum(x, group, reorder = TRUE)
+rowsum(x, group, reorder = TRUE,...)
 }
 \arguments{
   \item{x}{a matrix, data frame or vector of numeric data.  Missing
@@ -22,10 +22,11 @@ rowsum(x, group, reorder = TRUE)
   \item{reorder}{if \code{TRUE}, then the result will be in order of
     \code{sort(unique(group))}, if \code{FALSE}, it will be in the order
     that rows were encountered. }
+  \item{\dots}{other arguments for future methods}
 }
 \value{
-  a matrix containing the sums.  There will be one row per unique value
-  of \code{group}.
+  a matrix or data frame containing the sums.  There will be one row per
+  unique value  of \code{group}.
 }
 
 \details{
