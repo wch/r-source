@@ -4,6 +4,14 @@
 : ${R_HOME=R_HOME_DIR}
 export R_HOME
 
+: ${R_LD_LIBRARY_PATH=@R_LD_LIBRARY_PATH@}
+if test -z "${LD_LIBRARY_PATH}"; then
+  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}"
+else
+  LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}:${LD_LIBRARY_PATH}"
+fi
+export LD_LIBRARY_PATH
+
 R_binary="R.bin"
 
 # Default printer paper size
