@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-51 2004-03-14
+Version 1.8-52 2004-03-16
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1896,6 +1896,10 @@ distributions of R.)
      Score tests for association of traits with haplotypes when linkage
      phase is ambiguous.
 
+*haplo.stats*
+     Statistical analysis of haplotypes with traits and covariates when
+     linkage phase is ambiguous.
+
 *hdf5*
      Interface to the NCSA HDF5 library.
 
@@ -2531,6 +2535,9 @@ distributions of R.)
 
 *udunits*
      Interface to Unidata's routines to convert units.
+
+*urca*
+     Unit root and cointegration tests for time series data.
 
 *vardiag*
      Interactive variogram diagnostics.
