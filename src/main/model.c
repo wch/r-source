@@ -105,7 +105,8 @@ static int MatchVar(SEXP var1, SEXP var2)
 	return (asReal(var1) == asReal(var2));
     /* Literal Strings */
     if (isString(var1) && isString(var2))
-	return (strcmp(CHAR(STRING_ELT(var1, 0)),CHAR(STRING_ELT(var2, 0))) == 0);
+	return (strcmp(CHAR(STRING_ELT(var1, 0)),
+		       CHAR(STRING_ELT(var2, 0))) == 0);
     /* Nothing else matches */
     return 0;
 }
@@ -147,12 +148,12 @@ static void CheckRHS(SEXP v)
 	v = CDR(v);
     }
     if (isSymbol(v)) {
-	for (i=0; i< length(framenames); i++) {
-	    s=install(CHAR(STRING_ELT(framenames, i)));
+	for (i = 0; i < length(framenames); i++) {
+	    s = install(CHAR(STRING_ELT(framenames, i)));
 	    if (v == s) {
 		t=allocVector(STRSXP, length(framenames)-1);
-		for (j=0; j< length(t); j++) {
-		    if (j<i)
+		for (j = 0; j < length(t); j++) {
+		    if (j < i)
 			SET_STRING_ELT(t, j, STRING_ELT(framenames, j));
 		    else
 			SET_STRING_ELT(t, j, STRING_ELT(framenames, j+1));
@@ -762,11 +763,11 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	keepOrder = 0;
 
     if (specials == R_NilValue) {
-	a = allocList(7);
+	a = allocList(8);
 	SET_ATTRIB(ans, a);
     }
     else {
-	a = allocList(8);
+	a = allocList(9);
 	SET_ATTRIB(ans, a);
     }
 
@@ -788,6 +789,16 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nvar = length(varlist) - 1;
     nwords = (nvar - 1) / WORDSIZE + 1;
+
+    /* Step 1b: Compute variable names */
+
+    PROTECT(varnames = allocVector(STRSXP, nvar));
+    for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v)) {
+	if (isSymbol(CAR(v)))
+	    SET_STRING_ELT(varnames, i++, PRINTNAME(CAR(v)));
+	else
+	    SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
+    }
     
     /* Step 2: Recode the model terms in binary form */
     /* and at the same time, expand the model formula. */
@@ -799,14 +810,33 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* only enter additively so this should also be */
     /* checked and abort forced if not. */
 
+    /* BDR 2002-01-29: S does include specials, so code may rely on this */
+
     /* FIXME: this is also the point where nesting */
     /* needs to be taken care of. */
 
     PROTECT(formula = EncodeVars(CAR(args)));
-    nterm = length(formula);
 
     nvar = length(varlist) - 1; /* need to recompute, in case
                                    EncodeVars stretched it */
+
+    /* Step 2b: Remove any offset(s) */
+
+    for (l = response, k = 0; l < nvar; l++)
+	if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) k++;
+    SETCAR(a, v = allocVector(INTSXP, k));
+    if (k > 0) {
+	call = formula; /* call is to be the previous value */
+	for (l = response, k = 0; l < nvar; l++)
+	    if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) {
+		INTEGER(v)[k++] = l+1;
+		if (l == response) call = formula = CDR(formula);
+		else SETCDR(call, CDR(CDR(call)));
+	    } else if (l > response) call = CDR(call);
+	SET_TAG(a, install("offset"));
+	a = CDR(a);
+    }
+    nterm = length(formula);
 
     /* Step 3: Reorder the model terms by BitCount, otherwise
        preserving their order. */
@@ -865,16 +895,8 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	a = CDR(a);
     }
 
-    /* Step 5: Compute variable and term labels */
-    /* These are glued immediately to the pattern matrix */
+    /* Step 5: Compute term labels */
 
-    PROTECT(varnames = allocVector(STRSXP, nvar));
-    for (v = CDR(varlist), i = 0; v != R_NilValue; v = CDR(v)) {
-	if (isSymbol(CAR(v)))
-	    SET_STRING_ELT(varnames, i++, PRINTNAME(CAR(v)));
-	else
-	    SET_STRING_ELT(varnames, i++, STRING_ELT(deparse1line(CAR(v), 0), 0));
-    }
     PROTECT(termlabs = allocVector(STRSXP, nterm));
     n = 0;
     for (call = formula; call != R_NilValue; call = CDR(call)) {
@@ -893,7 +915,8 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if (GetBit(CAR(call), i)) {
 		if (l > 0)
 		    strcat(CHAR(STRING_ELT(termlabs, n)), ":");
-		strcat(CHAR(STRING_ELT(termlabs, n)), CHAR(STRING_ELT(varnames, i - 1)));
+		strcat(CHAR(STRING_ELT(termlabs, n)), 
+		       CHAR(STRING_ELT(varnames, i - 1)));
 		l++;
 	    }
 	}
@@ -948,6 +971,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     /* Step 6: Fix up the formula by substituting for dot, which should be 
        the framenames joined by + */
+
     if (haveDot && LENGTH(framenames)) {
 	PROTECT(rhs = install(CHAR(STRING_ELT(framenames, 0))));
 	for (i = 1; i < LENGTH(framenames); i++) {
@@ -981,6 +1005,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SETCAR(a, mkString("terms"));
     SET_TAG(a, install("class"));
+    SETCDR(a, R_NilValue);  /* truncate if necessary */
     SET_OBJECT(ans, 1);
 
     UNPROTECT(2);

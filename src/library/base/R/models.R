@@ -64,19 +64,7 @@ terms.default <- function(x, ...) {
 terms.terms <- function(x, ...) x
 print.terms <- function(x, ...) print.default(unclass(x))
 
-### do this `by hand' as prone to re-ordering.
-# delete.response <- function (termobj)
-# {
-#     f <- formula(termobj)
-#     if (length(f) == 3) f[[2]] <- NULL
-#     tt <- terms(f, specials = names(attr(termobj, "specials")),
-#                 keep.order = TRUE)
-#     attr(tt, "intercept") <- attr(termobj, "intercept")
-#     if (length(formula(termobj)) == 3)
-#         attr(tt, "predvars") <- attr(termobj, "predvars")[-2]
-#     tt
-# }
-
+### do this `by hand' as previous approach was vulnerable to re-ordering.
 delete.response <- function (termobj)
 {
     a <- attributes(termobj)
@@ -138,31 +126,17 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
 	formula(paste(lhs, "~", rhs))
     }
+
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data)
-    new.specials <- unique(c(specials, "offset"))
-    terms <- .Internal(terms.formula(x, new.specials, data, keep.order))
+    terms <- .Internal(terms.formula(x, specials, data, keep.order))
     if (simplify) {
         a <- attributes(terms)
         terms <- fixFormulaObject(terms)
         attributes(terms) <- a
     }
     environment(terms) <- environment(x)
-    if (!is.null(offsets <- attr(terms, "specials")$offset)) {
-        dn <- dimnames(attr(terms, "factors"))
-	names <- dn[[1]][offsets]
-	offsets <- match(names, dn[[2]])
-	offsets <- offsets[!is.na(offsets)]
-	if (length(offsets) > 0) {
-	    attr(terms, "factors") <-
-                attr(terms, "factors")[, -offsets, drop = FALSE]
-	    attr(terms, "term.labels") <- attr(terms, "term.labels")[-offsets]
-	    attr(terms, "order") <- attr(terms, "order")[-offsets]
-	    attr(terms, "offset") <- attr(terms, "specials")$offset
-	}
-    }
-    attr(terms, "specials")$offset <- NULL
-    if( !inherits(terms, "formula") )
+    if(!inherits(terms, "formula"))
         class(terms) <- c(class(terms), "formula")
     terms
 }
