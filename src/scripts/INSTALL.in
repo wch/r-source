@@ -280,7 +280,18 @@ while test -n "${1}"; do
 	## than the modification date for the new sources as recorded in
 	## the tarball ...
 	gzip -dc "${1}" | (cd "${tmpdir}" && ${TAR} -mxf -)
-	if test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
+	## If we have a binary bundle distribution, the DESCRIPTION file
+	## is at top level.
+	if test -f "${tmpdir}/DESCRIPTION"; then
+	  if grep "^Contains:" "${tmpdir}/DESCRIPTION" >/dev/null; then
+	     message "Looks like a binary bundle"
+	     get_packages "${tmpdir}"
+	  else
+	    error "unknown package layout"
+	    do_cleanup_tmpdir;
+	    exit 1
+	  fi
+	elif test -f "${tmpdir}/${pkgname}/DESCRIPTION"; then
 	  get_packages "${tmpdir}/${pkgname}"
 	else
 	  error "cannot extract package from '${1}'"

@@ -692,19 +692,24 @@ Unless the library is specified (argument @code{lib}) the first library
 in the library search path is used.
 
 What this does is different on Unix and Windows.  On Unix it consults
-the list of available source packages on @acronym{CRAN}, downloads the
-latest version of the @pkg{foo} sources, and installs it (via @code{R
-CMD INSTALL}).  On Windows it looks at the list of @emph{binary}
-versions of packages and downloads the latest version (if any).
+the list of available source packages on @acronym{CRAN} (or other
+repository/ies), downloads the latest version of the @pkg{foo} sources,
+and installs it (via @code{R CMD INSTALL}).  On Windows it looks at the
+list of @emph{binary} versions of packages available for your version of
+@R{} and downloads the latest version (if any).
+
+On Unix @code{install.packages} can also install a source package
+from a local @file{,tar,gz} file by setting argument @code{repos} to
+@code{NULL}.
 
 On Windows @code{install.packages} can also install a binary package
-from a local @file{zip} file by setting argument @code{CRAN} to
+from a local @file{zip} file by setting argument @code{repos} to
 @code{NULL}.   @code{RGui.exe} has a menu @code{Packages} with a GUI
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
 @findex install.binaries
-On Mac OS X @code{install.packages} works as it does on other Unix
+On Mac OS X @code{install.packages} works as it does on other Unix-like
 systems, but there is an additional function @code{install.binaries}
 that will download and install binary packages from @acronym{CRAN}.
 These Macintosh binary package files have the extension @samp{tgz}.  The

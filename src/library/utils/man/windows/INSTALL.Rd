@@ -3,7 +3,7 @@
 \alias{INSTALL}
 \usage{R CMD INSTALL [options] [-l lib] pkgs}
 \arguments{
-  \item{pkgs}{A list with the path names of the sources of the
+  \item{pkgs}{A space-separated list with the path names of the sources of the
     packages to be installed.}
   \item{lib}{the path name of the \R library tree to install to.}
   \item{options}{a space-separated list of options through which in
@@ -24,10 +24,10 @@
   be installed.
   
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
-  relative path names. \code{pkgs} can also contain name of package
-  archive files of the form \file{pkg\_version.tar.gz} as obtained from
-  CRAN (these are then extracted in a temporary directory
-  \file{R.INSTALL} of the current directory).
+  relative path names of directories.  \code{pkgs} may also contain
+  names of package archive files of the form \file{pkg\_version.tar.gz}
+  as obtained from CRAN (these are then extracted in a temporary
+  directory \file{R.INSTALL} of the current directory).
 
   If the option \option{--save} is used, the installation procedure
   creates a binary image of the package code, which is then loaded when
@@ -46,7 +46,7 @@
   are made available for lazy loading.  (These options are overridden by
   any values set in the DESCRIPTION file.)  The default is
   \option{--no-lazy --no-lazy-data} except that lazy-loading is used for
-  package with more than 50kB of \R code and no saved image.
+  package with more than 25kB of \R code and no saved image.
 
   Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)

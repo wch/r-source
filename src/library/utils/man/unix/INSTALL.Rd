@@ -4,7 +4,7 @@
 \description{Utility for installing add-on packages.}
 \usage{R CMD INSTALL [options] [-l lib] pkgs}
 \arguments{
-  \item{pkgs}{A list with the path names of the packages to be
+  \item{pkgs}{A space-separated list with the path names of the packages to be
     installed.}
   \item{lib}{the path name of the \R library tree to install to.}
   \item{options}{a space-separated list of options through which in
@@ -24,9 +24,11 @@
   \code{R CMD INSTALL -l lib pkgs}.
 
   Both \code{lib} and the elements of \code{pkgs} may be absolute or
-  relative path names. \code{pkgs} can also contain name of package
-  archive files of the form \file{pkg\_version.tar.gz} as obtained from
-  CRAN, these are then extracted in a temporary directory.
+  relative path names of directories.  \code{pkgs} may also contain
+  names of package/bundle archive files of the form
+  \file{pkg\_version.tar.gz} as obtained from CRAN: these are then
+  extracted in a temporary directory.  Finally, binary package/bundle
+  archive files (as created by \code{R CMD build --binary} can be supplied.
   
   Some package sources contain a \file{configure} script that can be
   passed arguments or variables via the option \option{--configure-args}
