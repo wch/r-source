@@ -53,13 +53,13 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
             if (p > 2) {          # recursive call.
                 for (i in 1:xdim) {
                     if (XP[i] > 0) {
-                        mosaic.cell(as.matrix(X[X[,1]==i, 2:(p+2)]),
-                                    x.l[i], y1, x.r[i], y2,
-                                    off[2:length(off)],
-                                    dir[2:length(dir)],
-                                    color, lablevx-1, (i==1)*lablevy,
-                                    maxdim[2:length(maxdim)],
-                                    currlev+1, label[2:p])
+                        Recall(as.matrix(X[X[,1]==i, 2:(p+2)]),
+                               x.l[i], y1, x.r[i], y2,
+                               off[2:length(off)],
+                               dir[2:length(dir)],
+                               color, lablevx-1, (i==1)*lablevy,
+                               maxdim[2:length(maxdim)],
+                               currlev+1, label[2:p])
                     } else {
                         segments(rep(x.l[i],3), y1+(y2-y1)*c(0,2,4)/5,
                                  rep(x.l[i],3), y1+(y2-y1)*c(1,3,5)/5)
@@ -117,13 +117,13 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
             if (p > 2) {          # recursive call.
                 for (j in 1:ydim) {
                     if (YP[j] > 0) {
-                        mosaic.cell(as.matrix(X[X[,1]==j,2:(p+2)]),
-                                    x1, y.b[j], x2, y.t[j],
-                                    off[2:length(off)],
-                                    dir[2:length(dir)], color,
-                                    (j==1)*lablevx, lablevy-1,
-                                    maxdim[2:length(maxdim)],
-                                    currlev+1, label[2:p])
+                        Recall(as.matrix(X[X[,1]==j,2:(p+2)]),
+                               x1, y.b[j], x2, y.t[j],
+                               off[2:length(off)],
+                               dir[2:length(dir)], color,
+                               (j==1)*lablevx, lablevy-1,
+                               maxdim[2:length(maxdim)],
+                               currlev+1, label[2:p])
                     } else {
                         segments(x1+(x2-x1)*c(0,2,4)/5, rep(y.b[j],3),
                                  x1+(x2-x1)*c(1,3,5)/5, rep(y.b[j],3))
@@ -239,7 +239,7 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
         dir <- dir[sort]
         label <- label[sort]
     }
-    
+
     ncolors <- length(tabulate(Ind[,dimd]))
     if(!shade && ((is.null(color) || length(color) != ncolors))) {
         color <- if (is.null(color) || !color[1])
@@ -272,7 +272,7 @@ function(x, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off =
         ## We put the legend to the right of the third axis.
         opar <- par(usr = c(1, 1000 * (1.1 + rtxtWidth), 1, 1000),
                     mgp = c(1, 1, 0))
-        on.exit(par(opar))        
+        on.exit(par(opar))
         rtxtHeight <-
             strwidth(rtxt, units = "i", cex = rtxtCex) / pin[2]
         text(1000 * (1.05 + 0.5 * rtxtWidth), 0, labels = rtxt,
