@@ -1,14 +1,18 @@
 \name{cmdscale}
 \title{Classical (Metric) Multidimensional Scaling}
 \usage{
-cmdscale(d, k = 2, eig = FALSE, x.ret = FALSE)
+cmdscale(d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 }
 \alias{cmdscale}
 \arguments{
   \item{d}{a distance structure such as that returned by \code{dist}
     or a full symmetric matrix containing the dissimilarities.}
-  \item{k}{the dimension of the space which the data are to be represented in.}
+  \item{k}{the dimension of the space which the data are to be
+    represented in; must be in \eqn{\{1,2, .., n-1\}}.}
   \item{eig}{indicates whether eigenvalues should be returned.}
+  \item{add}{logical indicating if an additive constant \eqn{c*} should
+    be computed, and added to the non-diagonal dissimilarites such that
+    all \eqn{n-1} eigenvalues are non-negative.}
   \item{x.ret}{indicates whether the doubly centered symmetric distance
     matrix should be returned.}
 }
@@ -31,11 +35,27 @@ cmdscale(d, k = 2, eig = FALSE, x.ret = FALSE)
   Otherwise, a list containing the following components.
   \item{points}{a matrix with \code{k} columns whose rows give the
     coordinates of the points chosen to represent the dissimilarities.}
-  \item{eig}{the eigenvalues computed during the scaling process if
+  \item{eig}{the \eqn{n-1} eigenvalues computed during the scaling process if
     \code{eig} is true.}
   \item{x}{the doubly centered distance matrix if \code{x.ret} is true.}
+  \item{GOF}{a numeric vector of length 2, equal to say
+    \eqn{(g_1,g_2)}{(g.1,g.2)}, where
+    \eqn{g_i = (\sum_{j=1}^k \lambda_j)/ (\sum_{j=1}^n T_i(\lambda_j))}{%
+         g.i = (sum{j=1..k} lambda[j]) / (sum{j=1..n} T.i(lambda[j]))}, where
+       \eqn{\lambda_j}{lambda[j]} are the eigenvalues (sorted
+       decreasingly),
+       \eqn{T_1(v) = \left| v \right|}{T.1(v) = abs(v)}, and
+       \eqn{T_2(v) = max( v, 0 )}{T.2(v) = max(v, 0)}.
+     }
 }
 \references{
+  Cox, F.C. and Cox, M.A.A. (1994)
+  \emph{Multidimensional Scaling}.
+  Chapman and Hall.
+
+  Mardia, K. V., J. T. Kent and J. M. Bibby (1979).  Chapter 14 of
+  \emph{Multivariate Analysis}, London: Academic Press.
+
   Seber, G. A. F. (1984).
   \emph{Multivariate Observations}.
   New York: Wiley.
@@ -43,11 +63,19 @@ cmdscale(d, k = 2, eig = FALSE, x.ret = FALSE)
   Torgerson, W. S. (1958).
   \emph{Theory and Methods of Scaling}.
   New York: Wiley.
+
+  Cailliez, F. (1983)
+  The analytical solution of the additive constant problem.
+  \emph{Psychometrika} \bold{48}, 343--349.
 }
-\note{
-  The S version of this function provides for computing an additional
-  ``fiddle'' factor suggested by Torgerson.  \R does not provide this
-  option.
+\details{
+  When \code{add = TRUE}, an additive constant \eqn{c*} is computed, and
+  the dissimilarities \eqn{d_{ij} + c*}{d[i,j] + c*} are used instead of
+  the original \eqn{d_{ij}}{d[i,j]}'s.
+
+  Whereas S-plus computes this constant using an approximation suggested by
+  Torgerson, \R uses the exact analytical solution of Cailliez (1983),
+  see also Cox and Cox (1994).
 }
 \seealso{
   \code{\link{dist}}. Also
@@ -59,11 +87,18 @@ data(eurodist)
 loc <- cmdscale(eurodist)
 x <- loc[,1]
 y <- -loc[,2]
-plot(x, y, type="n", xlab="", ylab="")
-text(x, y, names(eurodist), cex=0.5)
+plot(x, y, type="n", xlab="", ylab="", main="cmdscale(eurodist)")
+text(x, y, names(eurodist), cex=0.8)
 
-str(cmdscale(eurodist, k=3,           , x.ret = TRUE))
-str(cmdscale(eurodist, k=3, eig = TRUE, x.ret = TRUE))
-str(cmdscale(eurodist, k=3, eig = TRUE              ))
+cmdsE <- cmdscale(eurodist, k=20, add = TRUE, eig = TRUE, x.ret = TRUE)
+str(cmdsE)
+\testonly{
+## failed in versions <= 1.4.0 :
+cbind(sort(cmdscale(eurodist, k = 1)))
+cm1 <- cmdscale(eurodist, k=1, add=TRUE, x.ret = TRUE)
+stopifnot(identical(cm1 $ x,  cmdsE $ x),
+          identical(cm1 $ ac, cmdsE $ ac))
+}
+
 }
 \keyword{multivariate}

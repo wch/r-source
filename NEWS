@@ -20,7 +20,7 @@ USER-VISIBLE CHANGES
 NEW FEATURES
 
     o	cmdscale() now takes rownames from a dist object `d' as well
-	as from a matrix; it has a new argument `x.ret'.
+	as from a matrix; it has new arguments `add' (as S) and `x.ret'.
 
     o	New functions rowSums(), colSums(), rowMeans() and colMeans():
 	versions of apply() optimized for these cases.
@@ -86,7 +86,7 @@ C-LEVEL FACILITIES
     o	The DUP and NAOK arguments in a .C() call are not passed on
 	to the native routine being invoked.  Any code that relied on
 	the old behaviour will need to be modified.
-	
+
     o	log1p is only provided in Rmath.h if it is not provided by the
 	platform, in which case its name is not remapped.
 	Applications using libRmath may need to be re-compiled.
@@ -128,7 +128,8 @@ BUG FIXES
     o	stars(scale = TRUE) (the default) now works as documented (and
 	as S does).  Previously it only scaled the maximum to 1. (PR#1230)
 
-    o	data.matrix(data.frame(a=0[0])) now works.
+    o	d0 <- data.frame(a=0); data.matrix(d0[0,0]) and data.matrix(d0[,0])
+	now work.
 
     o	plot(multiple time series, plot.type = "single") was computing
 	`ylim' from the first series only.
@@ -162,7 +163,12 @@ BUG FIXES
     o	La.eigen(*, only.values=TRUE) does not segfault anymore in one
 	branch (PR#1262).
 
+    o	cut() now produces correct default labels even when
+	include.lowest=TRUE (PR#1263).
 
+    o	reformulate() properly works with a response.
+
+    o	cmdscale(*, k = 1) now works properly.
 
 		CHANGES IN R VERSION 1.4.0
 
