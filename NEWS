@@ -31,6 +31,9 @@ NEW FEATURES
 
     o	New methods ([[, print, str) for "dendrogram" class.
 
+    o   sprintf() now checks the agreement between formats and object
+	types, and handles special values (NA, Inf, ...) correctly.
+
 
 DEPRECATED & DEFUNCT
 

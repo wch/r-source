@@ -26,9 +26,8 @@
 
 #define MAXLINE MAXELTSIZE
 
-/* Simple wrapper for C sprintf function: does very little checking to
-   see that the format conversion character and the argument are
-   compatible.  This is the user's responsibility!
+/* Simple wrapper for C sprintf function: now (1.6.0) checks the
+   types and handles the R specials.
 */
 SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -75,15 +74,72 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    args = CDR(args);
 		else errorcall(call, "not enough arguments");
 
+		if (LENGTH(CAR(args)) < 1)
+		    error("zero-length argument");
 		switch(TYPEOF(CAR(args))) {
 		case LGLSXP:
+		{
+		    int x = LOGICAL(CAR(args))[0];
+		    if (strcspn(fmt, "di") >= strlen(fmt))
+			error("%s", "use format %d or %i for logical objects");
+		    if (x == NA_LOGICAL) {
+			fmt[chunk-1] = 's';
+			sprintf(bit, fmt, "NA");
+		    } else
+			sprintf(bit, fmt, x);
+		    break;
+		}
 		case INTSXP:
-		    sprintf(bit, fmt, INTEGER(CAR(args))[0]);
+		{
+		    int x = INTEGER(CAR(args))[0];
+		    if (strcspn(fmt, "di") >= strlen(fmt))
+			error("%s", "use format %d or %i for integer objects");
+		    if (x == NA_INTEGER) {
+			fmt[chunk-1] = 's';
+			sprintf(bit, fmt, "NA");
+		    } else
+		    sprintf(bit, fmt, x);
 		    break;
+		}
 		case REALSXP:
-		    sprintf(bit, fmt, REAL(CAR(args))[0]);
+		{
+		    double x = REAL(CAR(args))[0];
+		    if (strcspn(fmt, "feEgG") >= strlen(fmt))
+			error("%s", "use format %f, %e or %g for numeric objects");
+		    if (R_FINITE(x)) {
+			sprintf(bit, fmt, x);
+		    } else {
+			char *p = strchr(fmt, '.');
+			if (p) {
+			    *p++ = 's'; *p ='\0';
+			} else
+			    fmt[chunk-1] = 's';
+			if (ISNA(x)) {
+			    if (strcspn(fmt, " ") < strlen(fmt))
+				sprintf(bit, fmt, " NA");
+			    else
+				sprintf(bit, fmt, "NA");
+			} else if (ISNAN(x)) {
+			    if (strcspn(fmt, " ") < strlen(fmt))
+				sprintf(bit, fmt, " NaN");
+			    else
+				sprintf(bit, fmt, "NaN");
+			} else if (x == R_PosInf) {
+			    if (strcspn(fmt, "+") < strlen(fmt))
+				sprintf(bit, fmt, "+Inf");
+			    else if (strcspn(fmt, " ") < strlen(fmt))
+				sprintf(bit, fmt, " Inf");
+			    else
+				sprintf(bit, fmt, "Inf");
+			} else if (x == R_NegInf)
+			    sprintf(bit, fmt, "-Inf");
+		    }
 		    break;
+		}
 		case STRSXP:
+		    /* NA_STRING will be printed as `NA' */
+		    if (strcspn(fmt, "s") >= strlen(fmt))
+			error("%s", "use format %s for character objects");
 		    sprintf(bit, fmt, CHAR(STRING_ELT(CAR(args), 0)));
 		    break;
 		default:
