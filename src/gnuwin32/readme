@@ -13,15 +13,30 @@ See CHANGES for the new features of this version.
 Installation
 ============
 
-The simplest way is to run the installer (double-click on the icon for
-rwinst.exe and navigate its wizard-like pages).
+The distribution consists of several zip files:
+
+rw0990b1.zip and rw0990b2.zip		the base system
+rw0990h.zip				text help
+rw0990ch.zip				compiled HTML help
+rw0990w.zip				HTML help files
+rw0990l.zip				latex help for offline help
+rw0990d.zip				PDF manuals
+rw0990sp.zip				files to install source packages
+
+and optionally the installer rwinst.exe.
+
+The simplest way to install is to run the installer (double-click on
+the icon for rwinst.exe and navigate its wizard-like pages).
 
 To install manually, unpack rw0990b1.zip and rw0990b2.zip anywhere you
-like. It will unpack to a directory tree under rw0990. The help, HTML
-and latex help files are in separate files rw0990h.zip, rw0990w.zip
-and rw0990l.zip which should be unpacked in the same directory you
-unpacked rw0990b.zip.  File rw0990d.zip contains PDF versions of the
-(draft) manuals for R, which unpack into rw0990/doc/manual.
+like. It will unpack to a directory tree under rw0990. The help,
+compiled HTML, HTML and latex help files are in separate files
+rw0990h.zip, rw0990ch.zip rw0990w.zip and rw0990l.zip which should be
+unpacked in the same directory you unpacked rw0990b1.zip.  File
+rw0990d.zip contains PDF versions of the (draft) manuals for R, which
+unpack into rw0990/doc/manual.
+
+You should install either the text or compiled HTML help.
 
 
 Usage
@@ -80,7 +95,7 @@ to run batch jobs.
 
 
 Use with ESS: You can use Rterm.exe to provide inferior R-mode in
-ESS under NTEmacs, for example ess-5.1.9.  The pager is automatically
+ESS under NTEmacs, for example ess-5.1.11.  The pager is automatically
 set to "console" so help will be displayed in emacs buffers.
 
 
@@ -233,7 +248,7 @@ Differences from Unix
 - Graphics save and replay only here.
 
 - system() is enhanced here and does not automatically use a shell.
-  See its help page and that of shell.
+  See its help page and that of shell().
 
 - graphics devices png(), jpeg() and bmp() are available in this version.
 

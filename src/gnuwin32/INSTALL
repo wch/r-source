@@ -41,7 +41,7 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/cygwin32. The basic
 distribution does not comtain a Fortran compiler, and that is needed
 to build R.)
 
-perl5, available via http://www.perl.com/CPAN/ports.
+perl5, available via http://www.perl.com/CPAN/ports/.
 
 zip and unzip from the Info-ZIP project
 (ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
@@ -116,7 +116,7 @@ available from
 
     http://www.devolution.com/~slouken/SDL/Xmingw32/
 
-Unfortunately these do not include a Fortran compiler, but may suffice for
+Unfortunately these did not include a Fortran compiler, but may suffice for
 building some packages.
 
 Instructions for building a cross-compiler are given at

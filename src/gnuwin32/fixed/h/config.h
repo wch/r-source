@@ -22,6 +22,7 @@
 #define STDC_HEADERS 1
 
 /* (Long) Integers */
+#define SIZEOF_LONG 4
 
 /* Byte order */
 #undef WORDS_BIGENDIAN
@@ -44,6 +45,7 @@ extern int _finite(double);
 #define isnan(a) _isnan((a))
 #define finite(a) _finite((a))
 
+#define vsnprintf  _vsnprintf
 
 /* Signal Handler Type */
 #define RETSIGTYPE int
@@ -173,6 +175,9 @@ double atanh(double);
 
 /* Maximal length of an entire file name */
 #undef HAVE_SYS_PARAM_H
+
+/* Used for buffer-overflow in printutils.c if available */
+#define HAVE_VSNPRINTF 1
 
 /* for platform.c to put in .Platform */
 #ifdef Unix

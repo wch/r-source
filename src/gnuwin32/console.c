@@ -122,7 +122,7 @@ static void xbufshift(xbuf p)
     p->av += mshift;
 }
 
-static int xbufmakeroom(xbuf p,xlong size)
+static int xbufmakeroom(xbuf p, xlong size)
 {
     if (size > p->dim) return 0;
     while ((p->av < size) || (p->ns == p->ms))
@@ -141,12 +141,12 @@ static void xbufaddc(xbuf p, char c)
       case '\a':
 	gabeep();
 	break;
-/*      case '\b':
+      case '\b':
 	if (strlen(p->s[p->ns - 1])) {
 	    p->free -= 1;
 	    p->av += 1;
 	}
-	break; */
+	break;
       case '\r':
 	break;
       case '\t':
@@ -167,7 +167,7 @@ static void xbufaddc(xbuf p, char c)
     *p->free = '\0';
 }
 
-static void xbufadds(xbuf p,char *s,int user)
+static void xbufadds(xbuf p, char *s, int user)
 {
     char *ps;
     int   l;
@@ -233,8 +233,14 @@ static xbuf file2xbuf(char *name, int del)
         }
     }
     if ((xb = newxbuf(dim + 1, ms, 1)))
-	for (q = p; *q; q++)
-	    xbufaddc(xb, *q);
+	for (q = p, ms = 0; *q; q++) {
+	    if (*q == '\n') {
+		ms++;
+		xbufaddc(xb, *q);
+		/* next line interprets underlining in help files */
+		if (q[1] == '_' && q[2] == '\b') xb->user[ms] = -2;
+	    } else xbufaddc(xb, *q);
+	}
     winfree(p);
     return xb;
 }
@@ -387,41 +393,36 @@ static void writelineHelper(ConsoleData p, int fch, int lch,
 			    rgb fgr, rgb bgr, int j, int len, char *s)
 {
     rect  r;
-    char  chf, chl, ch, buf[1000], *s1, *s2;
+    char  chf, chl, ch;
     int   last;
 
     r = rect(BORDERX + fch * FW, BORDERY + j * FH, (lch - fch + 1) * FW, FH);
     gfillrect(p->bm, bgr, r);
-    if (s[0] == '_' && s[1] == '\b') fgr = DarkRed;
-    for (s1 = s, s2 = buf; *s1 != '\0' && s1 < s + 1000; s1++)
-	if (*s1 != '_' || *(s1 + 1) != '\b') *s2++ = *s1; else s1++;
-    *s2 = '\0';
-    len = strlen(buf);
 
     if (len > fch) {
 	if (FC && (fch == 0)) {
-	    chf = buf[0];
-	    buf[0] = '$';
+	    chf = s[0];
+	    s[0] = '$';
 	} else
 	    chf = '\0';
 	if ((len > COLS) && (lch == COLS - 1)) {
-	    chl = buf[lch];
-	    buf[lch] = '$';
+	    chl = s[lch];
+	    s[lch] = '$';
 	} else
 	    chl = '\0';
 	last = lch + 1;
 	if (len > last) {
-	    ch = buf[last];
-	    buf[last] = '\0';
+	    ch = s[last];
+	    s[last] = '\0';
 	} else
 	    ch = '\0';
-	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &buf[fch]);
+	gdrawstr(p->bm, p->f, fgr, pt(r.x, r.y), &s[fch]);
 	if (ch)
-	    buf[last] = ch;
+	    s[last] = ch;
 	if (chl)
-	    buf[lch] = chl;
+	    s[lch] = chl;
 	if (chf)
-	    buf[fch] = chf;
+	    s[fch] = chf;
     }
 }
 
@@ -451,6 +452,8 @@ static int writeline(ConsoleData p, int i, int j)
 	    WLHELPER(0, d - 1, p->fg, p->bg);
 	    WLHELPER(d, col1, p->ufg, p->bg);
 	}
+    } else if (USER(i) == -2) {
+	WLHELPER(0, col1, DarkRed, p->bg);
     } else
 	WLHELPER(0, col1, p->fg, p->bg);
     if ((p->r >= 0) && (p->c >= FC) && (p->c < FC + COLS) &&
@@ -1456,7 +1459,7 @@ void  consolehelp()
 
     strcpy(s,"Scrolling.\n");
     strcat(s,"  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n");
-    strcat(s,"  Mouse: use the scrollbar.\n\n");
+    strcat(s,"  Mouse: use the scrollbar(s).\n\n");
     strcat(s,"Editing.\n");
     strcat(s,"  Moving the cursor: \n");
     strcat(s,"     Left arrow or Ctrl+B: move backward one character;\n");

@@ -14,8 +14,8 @@ else
   echo "#define F77_SYMBOL(x)	x"
 fi
 echo
-ieeea=`sed -n /HAVE_ISNAN/p config.h | sed -n 1p | sed -e s/\ HAVE_ISNAN.\*//`
-ieeeb=`sed -n /HAVE_FINITE/p config.h | sed -n 1p | sed -e s/\ HAVE_FINITE.\*//`
+ieeea=`sed -n /HAVE_ISNAN/p h/config.h | sed -n 1p | sed -e s/\ HAVE_ISNAN.\*//`
+ieeeb=`sed -n /HAVE_FINITE/p h/config.h | sed -n 1p | sed -e s/\ HAVE_FINITE.\*//`
 if [ "${ieeea}" = "#define" -a "${ieeeb}" = "#define" ] ; then
   echo "#define IEEE_754 1"
 else

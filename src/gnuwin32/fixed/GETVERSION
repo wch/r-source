@@ -2,17 +2,14 @@
   maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < VERSION`
   min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < VERSION`
   rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < VERSION`
-  min0=`echo ${min} | sed 's/\..*$//'`
-  if [ ${min0} -lt 10 ] ; then 
-  ver=`echo "${maj}0${min}"`
-  else
-  ver=`echo "${maj}${min}"`
-  fi
-  ver=`echo ${ver} | sed 's/\.//g' | sed 's/^0//'`
+  pl=`echo ${min} | sed 's/\..*//'`
+  sl=`echo ${min} | sed 's/.*\.//'`
+  ver=`expr ${maj} \\* 65536 + ${pl} \\* 256 + ${sl}`
   y=`cut -d/ -f1 < date-stamp`
   m=`cut -d/ -f2 < date-stamp`
   d=`cut -d/ -f3 < date-stamp`
   echo "#define R_VERSION ${ver}"
+  echo "#define R_Version(v,p,s) (((v) * 65536) + ((p) * 256) + (s))"
   echo "#define R_MAJOR  \"${maj}\""
   echo "#define R_MINOR  \"${min}\""
   echo "#define R_STATUS \"${rev}\""

@@ -96,7 +96,7 @@ rwinst.exe and navigate its wizard-like pages).  Alternatively, choose
 a location and unzip the zip files (with a tool that preserves long
 file names and the directory structure: we recommend the INFO-ZIP
 project's unzip). All the files will unpack into a directory called
-rwXxxx, for some `xxx'.
+rwXxxx, for some `Xxxx'.
 
 Choose a working directory for R. Make a shortcut to
 rwXxxx\bin\Rgui.exe on your desktop or somewhere on the Start menu
@@ -184,7 +184,7 @@ Yes, of course. The easy way is to see if a pre-compiled binary version of
 the package is available: look on CRAN at bin/windows/windows-NT/contrib. If
 there is, download the zip file and unpack it in the rwXxxx\library
 directory, using unzip or similar, or using the installer rwinst.exe.
-Perhaps even easier is to use the R function install.packages: check
+Perhaps even easier is to use the R function install.packages(): check
 out its help page.
 
 If there is not a binary version or that is not up-to-date or you prefer
@@ -232,8 +232,8 @@ or your home directory, for example
 The order of precedence is the command line (flags before variables)
 then .Renviron then the inherited environment.
 
-You can also build packages anywhere, but that is much trickier: it is
-simpler to install a private copy of R to do the building.
+You can also build packages anywhere, but it is simpler to install a
+private copy of R to do the building.
 
 
 2.3) The packages I installed do not appear in the HTML help system.
@@ -295,7 +295,7 @@ version of R?
 
 You have read the README? There are file menus on the R console, pager
 and graphics windows. You can source and save from those menus, and
-copy the graphics to gif, postscript or metafile. There are
+copy the graphics to png, jpeg, bmp, postscript or metafile. There are
 right-click menus giving shortcuts to menu items, and optionally
 toolbars with buttons giving shortcuts to frequent operations.
 
