@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.0-11, 2000/05/19
+@set FAQ-VERSION 1.0-12, 2000/05/25
 @set REL-VERSION 1.0.1
 @set DEV-VERSION 1.1.0
 @c %**end of header
@@ -1263,6 +1263,8 @@ bundle.
 @item NISTnls
 A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology.
+@item RODBC
+ODBC support and a back end database.
 @item RmSQL
 An interface between R and the mSQL database system.
 @c @item Rnotes
@@ -1504,10 +1506,6 @@ analysis of DNA sequences.  Jim's packages can be obtained from
 @c package for additive hazards regression, which can be obtained from
 @c @uref{http://www.med.uio.no/imb/stat/addreg/}.
 
-@email{mlapsley@@ndirect.co.uk, Michael Lapsley} has written
-@strong{RODBC}, a package which provides an R ODBC interface; see
-@uref{http://www.ndirect.co.uk/~mlapsley/} for more information.
-
 More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
 
@@ -1657,10 +1655,6 @@ This manual is included in the R distribution, @pxref{What documentation
 exists for R?}, and gives information on package structure, the
 configure and cleanup mechanisms, and on automated package checking and
 building.
-
-The web page @uref{http://www.biostat.washington.edu/~thomas/Rlib.html}
-maintained by Thomas Lumley provides information on porting S packages
-to R.
 
 @xref{What is CRAN?}, for information on uploading a package to CRAN.
 
@@ -1828,6 +1822,7 @@ dir /opt/R/src/unix
 * Is R Y2K-compliant?::         
 * How do I convert factors to numeric?::  
 * Are Trellis displays implemented in R?::  
+* What are the enclosing and parent environments?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellania, R Miscellania
@@ -2125,7 +2120,7 @@ as.numeric(levels(f))[as.integer(f)]
 
 In any case, do not call @code{as.numeric} or their likes directly.
 
-@node Are Trellis displays implemented in R?,  , How do I convert factors to numeric?, R Miscellania
+@node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellania
 @section Are Trellis displays implemented in R?
 
 Not yet.  Meanwhile, you could look at @code{coplot()} and
@@ -2137,6 +2132,54 @@ device resizing) the aspect ratio of the plot.
 
 (By the way, ``Trellis'' is a trademark which cannot be used in R;
 instead, the term ``lattice'' has been proposed for the R equivalent.)
+
+@node What are the enclosing and parent environments?,  , Are Trellis displays implemented in R?, R Miscellania
+@section What are the enclosing and parent environments?
+
+Inside a function you may want to access variables in two additional
+environments: the one that the function was defined in (``enclosing''),
+and the one it was invoked in (``parent'')
+
+If you create a function at the command line or load it in a package its
+enclosing environment is the global workspace.  If you define a function
+@code{f()} inside another function @code{g()} its enclosing environment
+is the environment inside @code{g()}.  The enclosing environment for a
+function is fixed when the function is created.  You can find out the
+enclosing environment for a function @code{f()} using
+@code{environment(f)}.
+
+The ``parent'' environment, on the other hand, is defined when you
+invoke a function.  If you invoke @code{lm()} at the command line its
+parent environment is the global workspace, if you invoke it inside a
+function @code{f()} then its parent environment is the environment
+inside @code{f()}.  You can find out the parent environment for an
+invocation of a function by using @code{parent.frame()} or
+@code{sys.frame(sys.parent())}.
+
+So for most user-visible functions the enclosing environment will be the
+global workspace, since that is where most functions are defined.  The
+parent environment will be wherever the function happens to be called
+from.  If a function @code{f()} is defined inside another function
+@code{g()} it will probably be used inside @code{g()} as well, so its
+parent environment and enclosing environment will probably be the same.
+
+Parent environments are important because things like model formulas
+need to be evaluated in the environment the function was called from,
+since that's where all the variables will be available.  This relies on
+the parent environment being potentially different with each invocation.
+
+Enclosing environments are important because a function can use
+variables in the enclosing environment to share information with other
+functions or with other invocations of itself (see the section on
+lexical scoping).  This relies on the enclosing environment being the
+same each time the function is invoked.
+
+Scoping @emph{is} hard.  Looking at examples helps.  It is particularly
+instructive to look at examples that work differently in R and S and try
+to see why they differ.  One way to describe the scoping differences
+between R and S is to say that in S the enclosing environment is
+@emph{always} the global workspace, but in R the enclosing environment
+is wherever the function was created.
 
 @node R Programming, R Bugs, R Miscellania, Top
 @chapter R Programming

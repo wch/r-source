@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.0-11, 2000/05/19</h2>
+<h2>Version 1.0-12, 2000/05/25</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -91,6 +91,7 @@
 <li><a href="#Is%20R%20Y2K-compliant%3f">7.12 Is R Y2K-compliant?</a>
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">7.13 How do I convert factors to numeric?</a>
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">7.14 Are Trellis displays implemented in R?</a>
+<li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">7.15 What are the enclosing and parent environments?</a>
 </ul>
 <li><a href="#R%20Programming">8 R Programming</a>
 <ul>
@@ -1327,6 +1328,8 @@ bundle.
 <br><dt><strong>NISTnls</strong>
 <dd>A set of test nonlinear least squares examples from NIST, the
 U.S. National Institute for Standards and Technology. 
+<br><dt><strong>RODBC</strong>
+<dd>ODBC support and a back end database. 
 <br><dt><strong>RmSQL</strong>
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>SASmixed</strong>
@@ -1549,10 +1552,6 @@ Jim has also started <strong>dna</strong>, a package with procedures for the
 analysis of DNA sequences.  Jim's packages can be obtained from
 <a href="http://www.luc.ac.be/~jlindsey/rcode.html">http://www.luc.ac.be/~jlindsey/rcode.html</a>.
 
-<a href="mailto:mlapsley@ndirect.co.uk">Michael Lapsley</a> has written
-<strong>RODBC</strong>, a package which provides an R ODBC interface; see
-<a href="http://www.ndirect.co.uk/~mlapsley/">http://www.ndirect.co.uk/~mlapsley/</a> for more information.
-
 <p>More code has been posted to the r-help mailing list, and can be
 obtained from the mailing list archive.
 
@@ -1703,10 +1702,6 @@ details.
 This manual is included in the R distribution, see <a href="#What%20documentation%20exists%20for%20R%3f">What documentation exists for R?</a>, and gives information on package structure, the
 configure and cleanup mechanisms, and on automated package checking and
 building.
-
-<p>The web page <a href="http://www.biostat.washington.edu/~thomas/Rlib.html">http://www.biostat.washington.edu/~thomas/Rlib.html</a>
-maintained by Thomas Lumley provides information on porting S packages
-to R.
 
 <p>See <a href="#What%20is%20CRAN%3f">What is CRAN?</a>, for information on uploading a package to CRAN.
 
@@ -1906,6 +1901,7 @@ Up:<a rel=up href="#Top">Top</a>
 <li><a href="#Is%20R%20Y2K-compliant%3f">Is R Y2K-compliant?</a>: 
 <li><a href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>: 
 <li><a href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>: 
+<li><a href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>: 
 </ul>
 
 <p><hr>
@@ -2263,6 +2259,7 @@ factor object, you can use
 
 <p><hr>
 Node:<a name="Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
+Next:<a rel=next href="#What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
 Previous:<a rel=previous href="#How%20do%20I%20convert%20factors%20to%20numeric%3f">How do I convert factors to numeric?</a>,
 Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
 <br>
@@ -2278,6 +2275,59 @@ device resizing) the aspect ratio of the plot.
 
 <p>(By the way, "Trellis" is a trademark which cannot be used in R;
 instead, the term "lattice" has been proposed for the R equivalent.)
+
+<p><hr>
+Node:<a name="What%20are%20the%20enclosing%20and%20parent%20environments%3f">What are the enclosing and parent environments?</a>,
+Previous:<a rel=previous href="#Are%20Trellis%20displays%20implemented%20in%20R%3f">Are Trellis displays implemented in R?</a>,
+Up:<a rel=up href="#R%20Miscellania">R Miscellania</a>
+<br>
+
+<h2>7.15 What are the enclosing and parent environments?</h2>
+
+<p>Inside a function you may want to access variables in two additional
+environments: the one that the function was defined in ("enclosing"),
+and the one it was invoked in ("parent")
+
+<p>If you create a function at the command line or load it in a package its
+enclosing environment is the global workspace.  If you define a function
+<code>f()</code> inside another function <code>g()</code> its enclosing environment
+is the environment inside <code>g()</code>.  The enclosing environment for a
+function is fixed when the function is created.  You can find out the
+enclosing environment for a function <code>f()</code> using
+<code>environment(f)</code>.
+
+<p>The "parent" environment, on the other hand, is defined when you
+invoke a function.  If you invoke <code>lm()</code> at the command line its
+parent environment is the global workspace, if you invoke it inside a
+function <code>f()</code> then its parent environment is the environment
+inside <code>f()</code>.  You can find out the parent environment for an
+invocation of a function by using <code>parent.frame()</code> or
+<code>sys.frame(sys.parent())</code>.
+
+<p>So for most user-visible functions the enclosing environment will be the
+global workspace, since that is where most functions are defined.  The
+parent environment will be wherever the function happens to be called
+from.  If a function <code>f()</code> is defined inside another function
+<code>g()</code> it will probably be used inside <code>g()</code> as well, so its
+parent environment and enclosing environment will probably be the same.
+
+<p>Parent environments are important because things like model formulas
+need to be evaluated in the environment the function was called from,
+since that's where all the variables will be available.  This relies on
+the parent environment being potentially different with each invocation.
+
+<p>Enclosing environments are important because a function can use
+variables in the enclosing environment to share information with other
+functions or with other invocations of itself (see the section on
+lexical scoping).  This relies on the enclosing environment being the
+same each time the function is invoked.
+
+<p>Scoping <em>is</em> hard.  Looking at examples helps.  It is particularly
+instructive to look at examples that work differently in R and S and try
+to see why they differ.  One way to describe the scoping differences
+between R and S is to say that in S the enclosing environment is
+<em>always</em> the global workspace, but in R the enclosing environment
+is wherever the function was created.
 
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
