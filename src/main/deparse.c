@@ -49,7 +49,7 @@
  *  inlist:	 keeps track of whether we are inside a list or not,
  *		 this affects the printing of if-then-else.
  *
- *  startline:	 indicator 0=start of a line (so we can tab out to
+ *  startline:	 indicator TRUE=start of a line (so we can tab out to
  *		 the correct place).
  *
  *  indent:	 how many tabs should be written at the start of
@@ -97,7 +97,7 @@ static int linenumber;
 static int len;
 static int incurly = 0;
 static int inlist = 0;
-static int startline = 0;
+static Rboolean startline = TRUE;
 static int indent = 0;
 static SEXP strvec;
 
@@ -147,7 +147,7 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(CAR(args))) {
 	cut0 = asInteger(CAR(args));
 	if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff)
-	    warning("invalid 'cutoff' for deparse, used default");
+	    warning("invalid `cutoff' for deparse, using default");
 	else
 	    cutoff = cut0;
     }
@@ -156,10 +156,10 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ca1;
 }
 
-SEXP deparse1(SEXP call, int abbrev)
+SEXP deparse1(SEXP call, Rboolean abbrev)
 {
-/* Argument  abbrev ("logical"):
-	If abbrev is 1(TRUE), then the returned value
+/* Arg. abbrev:
+	If abbrev is TRUE, then the returned value
 	is a STRSXP of length 1 with at most 10 characters.
 	This is used for plot labelling etc.
 */
@@ -175,7 +175,7 @@ SEXP deparse1(SEXP call, int abbrev)
     PROTECT(svec = allocVector(STRSXP, linenumber));
     deparse2(call, svec);
     UNPROTECT(1);
-    if (abbrev == 1) {
+    if (abbrev) {
 	AllocBuffer(0);
 	buff[0] = '\0';
 	strncat(buff, CHAR(STRING_ELT(svec, 0)), 10);
@@ -191,7 +191,7 @@ SEXP deparse1(SEXP call, int abbrev)
 /* This is needed in terms.formula, where we must be able */
 /* to deparse a term label into a single line of text so */
 /* that it can be reparsed correctly */
-SEXP deparse1line(SEXP call, int abbrev)
+SEXP deparse1line(SEXP call, Rboolean abbrev)
 {
    int savecutoff;
    SEXP temp;
@@ -272,7 +272,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strlen(CHAR(STRING_ELT(file, 0))) == 0) {
 	for (i = 0; i < nobjs; i++) {
 	    Rprintf("\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if (TYPEOF(CAR(o)) != CLOSXP || 
+	    if (TYPEOF(CAR(o)) != CLOSXP ||
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
@@ -286,7 +286,7 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, "unable to open file");
 	for (i = 0; i < nobjs; i++) {
 	    fprintf(fp, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if (TYPEOF(CAR(o)) != CLOSXP || 
+	    if (TYPEOF(CAR(o)) != CLOSXP ||
 		isNull(tval = getAttrib(CAR(o), R_SourceSymbol)))
 	    tval = deparse1(CAR(o), 0);
 	    for (j = 0; j<LENGTH(tval); j++) {
@@ -302,11 +302,11 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
     return names;
 }
 
-static void linebreak(int *lbreak)
+static void linebreak(Rboolean *lbreak)
 {
     if (len > cutoff) {
 	if (!*lbreak) {
-	    *lbreak = 1;
+	    *lbreak = TRUE;
 	    indent++;
 	}
 	writeline();
@@ -323,16 +323,16 @@ static void deparse2(SEXP what, SEXP svec)
 }
 
 
-/* curlyahead looks at s to see if it is a list with */
-/* the first op being a curly. You need this kind of */
-/* lookahead info to print if statements correctly.  */
-
-static int curlyahead(SEXP s)
+/* curlyahead looks at s to see if it is a list with
+   the first op being a curly.  You need this kind of
+   lookahead info to print if statements correctly.  */
+static Rboolean
+curlyahead(SEXP s)
 {
     if (isList(s) || isLanguage(s))
 	if (TYPEOF(CAR(s)) == SYMSXP && CAR(s) == install("{"))
-	    return 1;
-    return 0;
+	    return TRUE;
+    return FALSE;
 }
 
 static void attr1(SEXP s)
@@ -399,7 +399,8 @@ static void printcomment(SEXP s)
 
 static void deparse2buff(SEXP s)
 {
-    int fop, lookahead = 0, lbreak = 0;
+    int fop;
+    RBoolean lookahead = FALSE, lbreak = FALSE;
     SEXP op, t;
     char tpb[120];
 
@@ -657,7 +658,7 @@ static void deparse2buff(SEXP s)
 		    deparse2buff(CADR(s));
 		    if (lbreak) {
 			indent--;
-			lbreak = 0;
+			lbreak = FALSE;
 		    }
 		    break;
 		case PP_BINARY2:	/* no space between op and args */
@@ -698,7 +699,7 @@ static void deparse2buff(SEXP s)
 		    deparse2buff(CADR(s));
 		    if (lbreak) {
 			indent--;
-			lbreak = 0;
+			lbreak = FALSE;
 		    }
 		    break;
 		}
@@ -750,15 +751,15 @@ static void writeline()
     /* reset */
     len = 0;
     buff[0] = '\0';
-    startline = 0;
+    startline = TRUE;
 }
 
 static void print2buff(char *strng)
 {
     int tlen, bufflen;
 
-    if (startline == 0) {
-	startline = 1;
+    if (startline) {
+	startline = FALSE;
 	printtab2buff(indent);	/*if at the start of a line tab over */
     }
     tlen = strlen(strng);
@@ -824,9 +825,9 @@ static void vector2buff(SEXP vector)
 static void vec2buff(SEXP v)
 {
     SEXP nv;
-    int i, lbreak, n;
+    int i, n;
+    Rboolean lbreak = FALSE;
 
-    lbreak = 0;
     n = length(v);
     nv = getAttrib(v, R_NamesSymbol);
     if (length(nv) == 0) nv = R_NilValue;
@@ -854,7 +855,7 @@ static void vec2buff(SEXP v)
 
 static void args2buff(SEXP arglist, int lineb, int formals)
 {
-    int lbreak = 0;
+    Rboolean lbreak = FALSE;
 
     while (arglist != R_NilValue) {
 	if (TAG(arglist) != R_NilValue) {
