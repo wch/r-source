@@ -76,13 +76,15 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	## Trivial (R 0.62 case): Only 1 $type at a time ==> one filename is ok.
 	## filename = 0	  <==>	STDOUT
 	## filename = -1  <==>	do NOT open and close files!
-	$htmlfile= $nrofffile= $Sdfile= $latexfile= $Exfile = $chmfile = $_[3];
+	$htmlfile= $nrofffile= $txtfile= $Sdfile= $latexfile= 
+	    $Exfile = $chmfile = $_[3];
     } else { # have "," in $type: Multiple types with multiple output files
 	$dirname = $_[3]; # The super-directory , such as  <Rlib>/library/<pkg>
 	die "Rdconv(): '$dirname' is NOT a valid directory:$!\n"
 	  unless -d $dirname;
 	$htmlfile = $dirname ."/html/" .$Rdname.".html" if $type =~ /html/i;
 	$nrofffile= $dirname ."/help/" . $Rdname	if $type =~ /nroff/i;
+	$txtfile= $dirname ."/help/" . $Rdname	        if $type =~ /txt/i;
 	die "Rdconv(): type 'Sd' must not be used with other types (',')\n"
 	  if $type =~ /Sd/i;
 	$latexfile= $dirname ."/latex/". $Rdname.".tex"	if $type =~ /tex/i;
@@ -141,8 +143,8 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 	@keywords= get_multi($complete_text,"keyword");
 
 	get_blocks($complete_text);
-
-	if($type =~ /html/i || $type =~ /nroff/i ||
+ 
+	if($type =~ /html/i || $type =~ /nroff/i || $type =~ /txt/i ||
 	   $type =~ /Sd/    || $type =~ /tex/i || $type =~ /chm/i ) {
 
 	    get_sections($complete_text);
@@ -155,6 +157,7 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
 	rdoc2html($htmlfile)	if $type =~ /html/i;
 	rdoc2nroff($nrofffile)	if $type =~ /nroff/i;
+	rdoc2txt($textfile)	if $type =~ /txt/i;
 	rdoc2Sd($Sdfile)	if $type =~ /Sd/i;
 	rdoc2latex($latexfile)	if $type =~ /tex/i;
 	rdoc2ex($Exfile)	if $type =~ /example/i;
@@ -1175,6 +1178,428 @@ sub nroff_tables {
 	    $table .= "$cols[$#cols]\n";
 	}
 	$table .= ".TE\n";
+
+	$text =~ s/\\tabular.*$id/$table/s;
+    }
+
+    $text;
+}
+#==************************** txt ******************************
+
+use Text::Wrap;
+
+sub rdoc2txt { # (filename); 0 for STDOUT
+
+    if($_[0]!= -1) {
+      if($_[0]) { open txtout, "> $_[0]"; } else { open txtout, "| cat"; }
+    }
+
+    $Text::Wrap::columns=65;
+    $INDENT = 5;
+
+    if ($pkgname) {
+	print txtout  $blocks{"name"}, "'package:",
+	    $pkgname, "'R Documentation'\n\n";
+    }
+    print txtout txt_header(striptitle($blocks{"title"})), "\n";
+    txt_print_block("description", "Description");
+    txt_print_codeblock("usage", "Usage");
+    txt_print_argblock("arguments", "Arguments");
+    txt_print_block("format", "Format");
+    txt_print_block("details", "Details");
+    txt_print_argblock("value", "Value");
+
+    txt_print_sections();
+
+    txt_print_block("note", "Note");
+    txt_print_block("author", "Author(s)");
+    txt_print_block("source", "Source");
+    txt_print_block("references", "References");
+    txt_print_block("seealso", "See Also");
+    txt_print_codeblock("examples", "Examples");
+
+    print txtout "\n";
+    close txtout;
+}
+
+
+sub txt_header {
+
+    my $header = $_[0];
+    '_' . join '_', split //, $header;
+}
+
+### Convert a Rdoc text string to txt
+###   $_[0]: text to be converted
+###   $_[1]: (optional) indentation of paragraphs. default = $INDENT
+
+sub text2txt {
+
+    my $text = $_[0];
+    if($_[1]){
+	my $indent = $_[1];
+    }
+    else{
+	my $indent = $INDENT;
+    }
+
+    $text =~ s/^\.|([\n\(])\./$1\\\&./g;
+
+    ## TABs are just whitespace
+    $text =~ s/\t/ /g;
+
+    $text = txt_tables($text);
+#    $text =~ s/\\cr\n?/\n.br\n/sgo;
+
+    $text =~ s/\n\s*\n/\n\n/sgo;
+    $text =~ s/\\dots/\\&.../go;
+    $text =~ s/\\ldots/\\&.../go;
+    $text =~ s/\\le/<=/go;
+    $text =~ s/\\ge/>=/go;
+    $text =~ s/\\%/%/sgo;
+    $text =~ s/\\\$/\$/sgo;
+
+
+    $text =~ s/\\Gamma/Gamma/go;
+    $text =~ s/\\alpha/alpha/go;
+    $text =~ s/\\Alpha/Alpha/go;
+    $text =~ s/\\pi/pi/go;
+    $text =~ s/\\mu/mu/go;
+    $text =~ s/\\sigma/sigma/go;
+    $text =~ s/\\Sigma/Sigma/go;
+    $text =~ s/\\lambda/lambda/go;
+    $text =~ s/\\beta/beta/go;
+    $text =~ s/\\epsilon/epsilon/go;
+    $text =~ s/\\left\(/\(/go;
+    $text =~ s/\\right\)/\)/go;
+    $text =~ s/\\R/R/go;
+    $text =~ s/---/--/go;
+    $text =~ s/--/-/go;
+    $text =~ s/$EOB/\{/go;
+    $text =~ s/$ECB/\}/go;
+
+    $text = undefine_command($text, "link");
+    $text = undefine_command($text, "emph");
+    $text = undefine_command($text, "bold");
+    $text = undefine_command($text, "textbf");
+    $text = undefine_command($text, "mathbf");
+    $text = undefine_command($text, "email");
+    $text = replace_command($text, "file", "`", "'");
+    $text = replace_command($text, "url", "<URL: ", ">");
+
+
+    # handle equations:
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\eqn")
+	  &&  $text =~ /\\eqn/){
+	my ($id, $eqn, $ascii) = get_arguments("eqn", $text, 2);
+	$eqn = $ascii if $ascii;
+	$eqn =~ s/\\([^&])/$1/go;
+	$text =~ s/\\eqn(.*)$id/$eqn/s;
+    }
+
+    $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\deqn") &&  $text =~ /\\deqn/){
+	my ($id, $eqn, $ascii) = get_arguments("deqn", $text, 2);
+	$eqn = $ascii if $ascii;
+	$eqn =~ s/\\([^&])/$1/go;
+	$eqn =~ s/\n*$//o;
+	$text =~ s/\\deqn(.*)$id/\n.DS B\n$eqn\n.DE\n/s;
+    }
+
+    $list_depth=0;
+
+    $text = replace_command($text,
+			    "itemize",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+
+    $text = replace_command($text,
+			    "enumerate",
+			    "\n.in +$INDENT\n",
+			    "\n.in -$INDENT\n");
+
+    $text =~ s/\\item\s+/\n.ti * \n/go;
+
+    $text = txt_unescape_codes($text);
+    unmark_brackets($text);
+}
+
+sub txt_parse_lists {
+
+    my $text = $_[0];
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\itemize|\\enumerate") &&
+	  $text =~ /\\itemize|\\enumerate/){
+	my ($id, $innertext) = get_arguments("deqn", $text, 1);
+	if($innertext =~ /\\itemize/){
+	    my $tmptext = html_parse_lists($innertext);
+	    $text = s/\\itemize$id(.*)$id/\\itemize$id$tmptext$id/s;
+	}
+	elsif($innertext =~ /\\enumerate/){
+	    my $tmptext = html_parse_lists($innertext);
+	    $text = s/\\enumerate$id(.*)$id/\\enumerate$id$tmptext$id/s;
+	}
+	else{
+	    if($text =~ /\\itemize|\\enumerate/){
+		$text = replace_command($text, "itemize", "<UL>", "</UL>");
+		$text = replace_command($text, "enumerate", "<OL>", "</OL>");
+		$text =~ s/\\item\s+/<li>/go;
+	    }
+	}
+    }
+
+    $text;
+}
+
+sub code2txt {
+
+    my $text = $_[0];
+
+    $text =~ s/^\.|([\n\(])\./$1\\&./g;
+    $text =~ s/\\%/%/go;
+    $text =~ s/\\ldots/.../go;
+    $text =~ s/\\dots/.../go;
+    $text =~ s/\\n/\\\\n/g;
+
+    $text = undefine_command($text, "link");
+    $text = undefine_command($text, "dontrun");
+    $text = drop_full_command($text, "testonly");
+
+    unmark_brackets($text);
+}
+
+
+# Print text indent and filled: will put out a leading blank line.
+sub txt_fill { # file, "text to be formatted"
+    my ($text) = @_;
+    my $INDENT = 5;
+    my $indent =" " x $INDENT;
+
+# first split by paragraphs
+
+    $text =~ s/\\&//go;
+    $text =~ s/\\ / /go;
+    my @paras = split /\n\n/, $text;
+    $indent1 = $indent2 = $indent;
+    foreach $para (@paras) {
+	# check for a item in itemize etc
+	if ($para =~ s/^[\n]*\.ti //) {
+	    $indent1 = $indent;
+	    $indent2 = $indent1. (" " x 3);
+	}
+        # check for .in command
+	if ($para =~ s/^[\n]*\.in (.*)/\1/) {
+	    $INDENT = $INDENT + $para;
+	    $indent = " " x $INDENT;
+        # check for a \deqn block
+	} elsif ($para =~ s/^\.DS B\n(.*)\n.DE/\1/) {
+	    print txtout "\n", wrap(" " x 10, " " x 10, $para), "\n";
+	# check for a \tabular block
+	} elsif ($para =~ s/^\.TS\n//) {
+	    my @blocks = split /\n/, $para;
+	    print txtout "\n";
+	    foreach $text (@blocks) {
+		print txtout $indent, $text, "\n";
+	    }
+	} else {
+	    $para =~ s/\n/ /go;
+	    print txtout "\n";
+	    # Now split by \cr blocks
+	    my @blocks = split /\\cr/, $para;
+	    foreach $text (@blocks) {
+		print txtout wrap($indent1, $indent2, $text), "\n";
+		$indent1 = $indent2;
+	    }
+	}
+    }
+}
+
+# Print a standard block
+sub txt_print_block {
+
+    my ($block,$title) = @_;
+    my $next;
+
+    if(defined $blocks{$block}){
+	print txtout "\n";
+	print txtout txt_header($title), ":\n";
+	$ntext = text2txt($blocks{$block});
+	txt_fill($ntext);
+    }
+}
+
+# Print a code block (preformatted)
+sub txt_print_codeblock {
+
+    my ($block,$title) = @_;
+    my $ntext;
+    my $indent = " " x 5;
+
+    if(defined $blocks{$block}){
+	print txtout "\n";
+	print txtout txt_header($title), ":\n" if $title;
+	$ntext = code2txt($blocks{$block});
+	$ntext =~ s/\\&\././go;
+	foreach $line (split /\n/, $ntext) {
+	    print txtout $indent, $line, "\n";
+	}
+    }
+}
+
+
+# Print the value or arguments block
+sub txt_print_argblock {
+
+    my ($block,$title) = @_;
+    my $indent = " " x 10;
+
+    if(defined $blocks{$block}){
+
+	print txtout "\n";
+	print txtout txt_header($title), ":\n" if $title;
+
+	my $text = $blocks{$block};
+
+	if($text =~ /\\item/s){
+	    $text =~ /^(.*)(\\item.*)*/s;
+	    my ($begin, $rest) = split(/\\item/, $text, 2);
+	    if($begin){
+		txt_fill(text2txt($begin));
+		$text =~ s/^$begin//s;
+	    }
+	    my $loopcount = 0;
+	    while(checkloop($loopcount++, $text, "\\item") &&
+		  $text =~ /\\item/s){
+		my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
+		$arg = text2txt($arg);
+		$arg =~ s/\\&//go;
+		$desc = text2txt($desc);
+		$arg0 = $arg.": ";
+		$short = length($indent) - length($arg0);
+		$arg0 = " " x $short. $arg0 if $short > 0;
+		$desc =~ s/\n/ /go;
+		print txtout "\n", wrap($arg0, $indent, $desc), "\n";
+		$text =~ s/.*$id//s;
+	    }
+	    txt_fill(text2txt($text));
+	}
+	else{
+	    txt_fill(text2txt($text));
+	}
+    }
+}
+
+# Print sections
+sub txt_print_sections {
+
+    my $section;
+
+    for($section=0; $section<$max_section; $section++){
+	print txtout "\n";
+	print txtout txt_header($section_title[$section]), ":\n";
+	txt_fill(text2txt($section_body[$section]));
+    }
+}
+
+
+sub txt_unescape_codes {
+
+    my $text = $_[0];
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "escaped code")
+	  && $text =~ /$ECODE($ID)/){
+	my $id = $1;
+	my $ec = code2txt($ecodes{$id});
+	$text =~ s/$ECODE$id/\`$ec\'/;
+    }
+    $text;
+}
+
+
+sub txt_tables {
+
+    my $text = $_[0];
+
+    my $loopcount = 0;
+    while(checkloop($loopcount++, $text, "\\tabular")
+	  &&  $text =~ /\\tabular/){
+
+	my ($id, $format, $arg)	 =
+	    get_arguments("tabular", $text, 2);
+
+	$arg =~ s/\n/ /sgo;
+
+	# remove trailing \cr (otherwise we get an empty last line)
+	$arg =~ s/\\cr\s*$//go;
+
+	# parse the format of the tabular environment
+	my $ncols = length($format);
+	my @colformat = ();
+	for($k=0; $k<$ncols; $k++){
+	    my $cf = substr($format, $k, 1);
+
+	    if($cf =~ /l/o){
+		$colformat[$k] = "l";
+	    }
+	    elsif($cf =~ /r/o){
+		$colformat[$k] = "r";
+	    }
+	    elsif($cf =~ /c/o){
+		$colformat[$k] = "c";
+	    }
+	    else{
+		die("Error: unknown identifier \{$cf\} in" .
+		    " tabular format \{$format\}\n");
+	    }
+	}
+
+	my @colwidths, $colwidth, $left, $right;
+	my $table = "\n\n.TS\n";
+	for($l = 0; $l < $#colformat; $l++){
+	    $colwidths[$l] = 0;
+	}
+
+
+	# now do the real work: split into lines and columns
+	# first scan them and get the field widths.
+	my @rows = split(/\\cr/, $arg);
+	for($k = 0; $k <= $#rows; $k++){
+	    my @cols = split(/\\tab/, $rows[$k]);
+	    die("Error:\n  $rows[$k]\\cr\n" .
+		"does not fit tabular format \{$format\}\n")
+		if ($#cols != $#colformat);
+	    for($l = 0; $l <= $#cols; $l++){
+		$cols[$l] =~ s/^\s*//;
+		$cols[$l] =~ s/\s*$//;
+		$colwidth = length($cols[$l]);
+		if ($colwidth > $colwidths[$l]) {
+		    $colwidths[$l] = $colwidth;
+		}
+	    }
+	}
+	for($k = 0; $k <= $#rows; $k++){
+	    my @cols = split(/\\tab/, $rows[$k]);
+	    for($l = 0; $l <= $#cols; $l++){
+		$cols[$l] =~ s/^\s*//;
+		$cols[$l] =~ s/\s*$//;
+		$colwidth = length($cols[$l]);
+		if ($colformat[$l] eq "r") {
+		    $left = $colwidths[$l] - $colwidth
+		} elsif ($colformat[$l] eq "c") {
+		    $left = int (($colwidths[$l] - $colwidth)/2);
+		} else {
+		    $left = 0;
+		}
+		# 2 is the column gap
+		$right = $colwidths[$l] - $colwidth + 2 - $left;
+		$table .= " " x $left . $cols[$l]. " " x $right;
+	    }
+	    $table .= "\n";
+	}
+	$table .= "\n";
 
 	$text =~ s/\\tabular.*$id/$table/s;
     }

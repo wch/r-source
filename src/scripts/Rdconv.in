@@ -52,6 +52,9 @@ if($opt_type =~ /html/i){
 elsif($opt_type =~ /nroff/i){
     Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
 }
+elsif($opt_type =~ /txt/i){
+    Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
+}
 elsif($opt_type =~ /Sd/i){
     Rdconv($ARGV[0],$opt_type,$opt_debug, 0);
 }
@@ -69,6 +72,6 @@ sub usage {
 
     print "Rdconv\n";
     print "Usage: Rdconv [--debug/-d] [--help/-h]";
-    print " [--type/-t html|nroff|Sd|latex|example] file\n\n";
+    print " [--type/-t html|nroff|txt|Sd|latex|example] file\n\n";
     exit 0;
 }
