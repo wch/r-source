@@ -133,6 +133,8 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
 	    if ((err = extract_one(uf, dest, NULL, names, nnames)) != UNZ_OK) break;
 #ifdef Win32
 	    R_ProcessEvents();
+#else
+	    R_CheckUserInterrupt();
 #endif
 	}
     } else {
@@ -141,6 +143,8 @@ do_unzip(char *zipname, char *dest, int nfiles, char **files,
 	    if ((err = extract_one(uf, dest, files[i], names, nnames)) != UNZ_OK) break;
 #ifdef Win32
 	    R_ProcessEvents();
+#else
+	    R_CheckUserInterrupt();
 #endif
 	}
     }
