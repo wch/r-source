@@ -361,6 +361,8 @@ BUG FIXES
 	require when sourcing package code are now visible in the remaining
 	source evaluations.
 
+    o	names(d) <- v  now works (again) for "dist" objects d (PR#1129).
+
 
 	**************************************************
 	*						 *

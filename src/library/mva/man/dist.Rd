@@ -18,7 +18,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
   \item{x}{A matrix or (data frame).  Distances between the rows of
     \code{x} will be computed.}
   \item{method}{The distance measure to be used. This must be one of
-    \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"}, 
+    \code{"euclidean"}, \code{"maximum"}, \code{"manhattan"},
     \code{"canberra"} or \code{"binary"}.
     Any unambiguous substring can be given.}
   \item{diag}{A logical value indicating whether the diagonal of the
@@ -36,7 +36,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
 }
 \details{
   Available distance measures are (written for two vectors \eqn{x} and
-  \eqn{y}): 
+  \eqn{y}):
   \describe{
     \item{\code{euclidean}:}{Usual square distance between the two
       vectors (2 norm).}
@@ -52,7 +52,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
       denominator are omitted from the sum and treated as if the values
       were missing.
     }
-    
+
     \item{\code{binary}:}{(aka \emph{asymmetric binary}): The vectors
       are regarded as binary bits, so non-zero elements are `on' and zero
       elements are `off'.  The distance is the \emph{proportion} of
@@ -64,15 +64,15 @@ as.dist(m, diag = FALSE, upper = FALSE)
   excluded in calculating a Euclidean, Manhattan or Canberra distance,
   the sum is scaled up proportionally to the number of columns used.
   If all pairs are excluded when calculating a particular distance,
-  the value is \code{NA}. 
-  
+  the value is \code{NA}.
+
   The functions \code{as.matrix.dist()} and \code{as.dist()} can be used
   for conversion between objects of class \code{"dist"} and conventional
   distance matrices and vice versa.
 }
 \value{
   An object of class \code{"dist"}.
-  
+
   The lower triangle of the distance matrix stored by columns in a
   single vector.  The vector has the attributes \code{"Size"},
   \code{"Diag"}, \code{"Upper"}, \code{"Labels"} and \code{"class"} equal
@@ -92,6 +92,8 @@ dist(x, diag = TRUE)
 dist(x, upper = TRUE)
 m <- as.matrix(dist(x))
 d <- as.dist(m)
+stopifnot(d == dist(x))
+names(d) <- LETTERS[1:5]
 print(d, digits = 3)
 
 ## example of binary and canberra distances.

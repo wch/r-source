@@ -35,7 +35,7 @@ names.dist <- function(x) attr(x, "Labels")
 
 "names<-.dist" <- function(x, value)
 {
-    if(length(n) != attr(x, "Size"))
+    if(length(value) != attr(x, "Size"))
 	stop("invalid names for dist object")
     attr(x, "Labels") <- value
     x
