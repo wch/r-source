@@ -732,11 +732,10 @@ who maintain an active position in the development of R.
 
 <p class="noindent">Convenient access to information on these lists, subscription, and
 archives is provided by the web interface at
-<a href="http://www.stat.math.ethz.ch/mailman/listinfo/">http://www.stat.math.ethz.ch/mailman/listinfo/</a>.  One can also
-subscribe (or unsubscribe) via email, e.g. to R-help by sending
-<span class="samp">subscribe</span> (or <span class="samp">unsubscribe</span>) in the <em>body</em> of the
-message (not in the subject!) to
-<a href="mailto:R-help-request@lists.R-project.org">R-help-request@lists.R-project.org</a>.
+<a href="http://stat.ethz.ch/mailman/listinfo/">http://stat.ethz.ch/mailman/listinfo/</a>.  One can also subscribe
+(or unsubscribe) via email, e.g. to R-help by sending <span class="samp">subscribe</span>
+(or <span class="samp">unsubscribe</span>) in the <em>body</em> of the message (not in the
+subject!) to <a href="mailto:R-help-request@lists.R-project.org">R-help-request@lists.R-project.org</a>.
 
    <p>Send email to <a href="mailto:R-help@lists.R-project.org">R-help@lists.R-project.org</a> to send a message to
 everyone on the R-help mailing list.  Subscription and posting to the
@@ -3085,7 +3084,7 @@ of the documentation can be found at <a href="http://stat.ethz.ch/ESS/">http://s
 <a href="mailto:ESS-help@stat.ethz.ch">ESS-help@stat.ethz.ch</a>.
 
    <p>Please send bug reports and suggestions on <acronym>ESS</acronym> to
-<a href="mailto:ESS-bugs@stat.math.ethz.ch">ESS-bugs@stat.math.ethz.ch</a>.  The easiest way to do this from is
+<a href="mailto:ESS-bugs@stat.ethz.ch">ESS-bugs@stat.ethz.ch</a>.  The easiest way to do this from is
 within Emacs by typing <kbd>M-x ess-submit-bug-report</kbd> or using the
 [ESS] or [iESS] pulldown menus.
 
@@ -3203,6 +3202,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <li><a href="#Why-do-lattice_002ftrellis-graphics-not-work_003f">Why do lattice/trellis graphics not work?</a>
 <li><a href="#How-can-I-sort-the-rows-of-a-data-frame_003f">How can I sort the rows of a data frame?</a>
 <li><a href="#Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f">Why does the help.start() search engine not work?</a>
+<li><a href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>
 </ul>
 
 <div class="node">
@@ -3975,7 +3975,8 @@ or more of the columns, simply use <code>order()</code>.
 
 <div class="node">
 <p><hr>
-<a name="Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-sort-the-rows-of-a-data-frame_003f">How can I sort the rows of a data frame?</a>,
+<a name="Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f">Why did my .Rprofile stop working when I updated R?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#How-can-I-sort-the-rows-of-a-data-frame_003f">How can I sort the rows of a data frame?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <br>
 </div>
@@ -3995,6 +3996,27 @@ included in the R distribution, see <a href="#What-documentation-exists-for-R_00
 search page.
 
 <div class="node">
+<p><hr>
+<a name="Why-did-my-_002eRprofile-stop-working-when-I-updated-R_003f"></a>Previous:&nbsp;<a rel="previous" accesskey="p" href="#Why-does-the-help_002estart_0028_0029-search-engine-not-work_003f">Why does the help.start() search engine not work?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
+<br>
+</div>
+
+<h3 class="section">7.27 Why did my .Rprofile stop working when I updated R?</h3>
+
+<p>Did you read the <span class="file">NEWS</span> file?  For functions that are not in the
+<strong>base</strong> package you need to specify the correct package namespace,
+since the code will be run <em>before</em> the packages are loaded.  E.g.,
+
+<pre class="example">     ps.options(horizontal = FALSE)
+     help.start()
+</pre>
+   <p class="noindent">needs to be
+
+<pre class="example">     graphics::ps.options(horizontal = FALSE)
+     utils::help.start()
+</pre>
+   <div class="node">
 <p><hr>
 <a name="R-Programming"></a>Next:&nbsp;<a rel="next" accesskey="n" href="#R-Bugs">R Bugs</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#R-Miscellanea">R Miscellanea</a>,
