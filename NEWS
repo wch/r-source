@@ -151,6 +151,9 @@ NEW FEATURES
 
     o	Dataset swiss now has row names.
 
+    o	The Bartlett, Fligner-Killeen, Friedman, Kruskal-Wallis, and
+	Quade tests in package ctest now have formula interfaces.
+
 
 
 BUG FIXES

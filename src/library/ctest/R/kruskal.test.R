@@ -1,4 +1,6 @@
-kruskal.test <- function(x, g) {
+kruskal.test <- function(x, ...) UseMethod("kruskal.test")
+
+kruskal.test.default <- function(x, g) {
     if (is.list(x)) {
         if (length(x) < 2)
             stop("x must be a list with at least 2 elements")
@@ -46,4 +48,21 @@ kruskal.test <- function(x, g) {
                  data.name = DNAME)
     class(RVAL) <- "htest"
     return(RVAL)
+}
+
+kruskal.test.formula <- function(formula, data, subset, na.action) {
+    if(missing(formula) || (length(formula) != 3))
+        stop("formula missing or incorrect")
+    if(missing(na.action))
+        na.action <- getOption("na.action")
+    m <- match.call(expand.dots = FALSE)
+    if(is.matrix(eval(m$data, parent.frame())))
+        m$data <- as.data.frame(data)
+    m[[1]] <- as.name("model.frame")
+    mf <- eval(m, parent.frame())
+    DNAME <- paste(names(mf), collapse = " and ")
+    names(mf) <- NULL
+    y <- do.call("kruskal.test", as.list(mf))
+    y$data.name <- DNAME
+    y
 }

@@ -1,12 +1,15 @@
 \name{bartlett.test}
 \alias{bartlett.test}
+\alias{bartlett.test.default}
+\alias{bartlett.test.formula}
 \title{Bartlett Test for Homogeneity of Variances}
 \description{
   Performs Bartlett's test of the null that the variances in each of the
   groups (samples) are the same.
 }
 \usage{
-bartlett.test(x, g)
+\method{bartlett.test}{default}(x, g)
+\method{bartlett.test}{formula}(formula, data, subset, na.action)
 }
 \arguments{
   \item{x}{a numeric vector of data values, or a list of numeric data
@@ -15,6 +18,15 @@ bartlett.test(x, g)
   \item{g}{a vector or factor object giving the group for the
     corresponding elements of \code{x}.
     Ignored if \code{x} is a list.}
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    gives the data values and \code{rhs} the corresponding groups.}
+  \item{data}{an optional data frame containing the variables in the
+    model formula.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
 }
 \details{
   If \code{x} is a list, its elements are taken as the samples or fitted
@@ -57,5 +69,6 @@ bartlett.test(x, g)
 data(InsectSprays)
 plot(InsectSprays$count ~ InsectSprays$spray)
 bartlett.test(InsectSprays$count, InsectSprays$spray)
+bartlett.test(count ~ spray, data = InsectSprays)
 }
 \keyword{htest}

@@ -1,11 +1,14 @@
 \name{kruskal.test}
 \alias{kruskal.test}
+\alias{kruskal.test.default}
+\alias{kruskal.test.formula}
 \title{Kruskal-Wallis Rank Sum Test}
 \description{
   Performs a Kruskal-Wallis rank sum test.
 }
 \usage{
-kruskal.test(x, g)
+\method{kruskal.test}{default}(x, g)
+\method{kruskal.test}{formula}(formula, data, subset, na.action)
 }
 \arguments{
   \item{x}{a numeric vector of data values, or a list of numeric data
@@ -13,6 +16,15 @@ kruskal.test(x, g)
   \item{g}{a vector or factor object giving the group for the
     corresponding elements of \code{x}.  Ignored if \code{x} is a
     list.}
+  \item{formula}{a formula of the form \code{lhs ~ rhs} where \code{lhs}
+    gives the data values and \code{rhs} the corresponding groups.}
+  \item{data}{an optional data frame containing the variables in the
+    model formula.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used.}
+  \item{na.action}{a function which indicates what should happen when
+    the data contain \code{NA}s.  Defaults to
+    \code{getOption("na.action")}.}
 }
 \details{
   \code{kruskal.test} performs a Kruskal-Wallis rank sum test of the
