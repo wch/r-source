@@ -798,13 +798,15 @@ case "${host_os}" in
     case "${host_os}" in
       ## According to Jan de Leeuw, OS X 10.1 is darwin 5, OS X 10.2 is
       ## darwin 6, and the real difference is between darwin < and >= 5.
-      ## The Darwin 1.[012] special casing is from libtool ...
+      ## It would be nice to use R.bin (or libR.dylib) as bundle_loader
+      ## together with '-undefined suppress' for darwin 5 or better, but
+      ## the paths to these change when installing.
+      ## The Darwin 1.[012] special casing is from libtool and could be
+      ## eliminated ('-flat_namespace' is the default if available).
       darwin1.[[012]]*)
         shlib_ldflags="-bundle -undefined suppress" ;;
-      darwin[[1234]].*)
-	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
       *)
-        shlib_ldflags="-bundle -bundle_loader \$(Rexecbindir)/R.bin -undefined error" ;;
+	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
     ;;
@@ -1180,8 +1182,9 @@ AC_DEFINE_UNQUOTED(R_PRINTCMD, "${R_PRINTCMD}",
 
 ## Default paper size.
 AC_PATH_PROG(PAPERCONF, paperconf, false)
+: ${PAPERSIZE=a4}
 papersize=`${PAPERCONF}`
-test -z "${papersize}" && papersize=a4
+test -z "${papersize}" && papersize="${PAPERSIZE}"
 : ${R_PAPERSIZE="${papersize}"}
 AC_SUBST(R_PAPERSIZE)
 
