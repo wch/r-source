@@ -313,7 +313,9 @@ NEW FEATURES
     	deprecated.
 
     o   New functions for multivariate linear models: anova.mlm,
-        SSD, estVar, mauchley.test (for sphericity)
+        SSD, estVar, mauchley.test (for sphericity). Also vcov() 
+	does something more sensible for "mlm" class objects
+	now.
 
 
 INTERNATIONALIZATION

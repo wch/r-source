@@ -33,7 +33,8 @@ vcov(object, \dots)
   Functions with names beginning in \code{vcov.} will be
   methods for this function.
   Classes with methods for this function include:
-  \code{lm}, \code{glm}, \code{nls}, \code{lme}, \code{gls}, \code{coxph}
+  \code{lm}, \code{mlm}, \code{glm}, \code{nls}, \code{lme}, 
+  \code{gls}, \code{coxph}
   and \code{survreg} (the last two in package \pkg{survival}).
 }
 \keyword{models}
