@@ -30,6 +30,7 @@
 #include "Rdevices.h"
 #include "devGNOME.h"
 #include "terminal.h"
+#include "terminal-functions.h"
 
 #define CURSOR		GDK_CROSSHAIR		/* Default cursor */
 #define MM_PER_INCH	25.4			/* mm -> inch conversion */

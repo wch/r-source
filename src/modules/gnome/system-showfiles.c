@@ -256,6 +256,8 @@ void pager_set_style()
   */
 }
 
+#define BUFSIZE  2048
+
 int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
 		     Rboolean del, char *pager) 
 {
@@ -267,8 +269,7 @@ int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
   GdkFont *titlefont, *emfont;
   GdkColor textcolor, bgcolor;
 
-  const gint bufsize = 2048;
-  gchar buf[bufsize];
+  gchar buf[BUFSIZE];
   gint i;
   gint fd, readlen;
   gchar *j, *k;
@@ -327,7 +328,7 @@ int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
 
   for(i = 0; i < nfile; i++) {
     if((title[i] != NULL) && (*title[i] != '\0')) {
-      g_snprintf(buf, bufsize, "%s\n\n", title[i]);
+      g_snprintf(buf, BUFSIZE, "%s\n\n", title[i]);
       gtk_text_insert(GTK_TEXT(pager_data->text), 
 		      titlefont,
 		      &textcolor, 
@@ -336,7 +337,7 @@ int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
     }
     if((fd = open(file[i], O_RDONLY, "")) != -1) {
       do {
-	readlen = read(fd, buf, bufsize);
+	readlen = read(fd, buf, BUFSIZE);
 
 	emmode = FALSE;
 	modestart = buf;
@@ -370,10 +371,10 @@ int Rgnome_ShowFiles(int nfile, char **file, char **title, char *wtitle,
 
 	gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
 			modestart, k - modestart);
-      } while(readlen == bufsize);
+      } while(readlen == BUFSIZE);
     }
     else {
-      g_snprintf(buf, bufsize, "NO FILE %s\n\n", file[i]);
+      g_snprintf(buf, BUFSIZE, "NO FILE %s\n\n", file[i]);
       gtk_text_insert(GTK_TEXT(pager_data->text), NULL, NULL, NULL,
 		      buf, strlen(buf));
     }

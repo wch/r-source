@@ -199,11 +199,12 @@ static void help_about_cb(GtkWidget *widget,
     g_assert(copyright != NULL);
 
     about_box = gnome_about_new("R", version, copyright, authors,
-				"`GNU S' - A language and environment for statistical computing and graphics. R is similar to S, which was developed at Bell Laboratories by John Chambers et al. It provides a wide variety of statistical and graphical techniques (linear and nonlinear modelling, statistical tests, time series analysis, classification, clustering, ...).\n \nR is designed as a true computer language with control-flow constructions for iteration and alternation, and it allows users to add additional functionality by defining new functions. For computationally intensive tasks, C and Fortran code can be linked and called at run time.", "R-logo-sm.xpm");
+				"`GNU S' - A language and environment for statistical computing and graphics. R is similar to S, which was developed at Bell Laboratories by John Chambers et al. It provides a wide variety of statistical and graphical techniques (linear and nonlinear modelling, statistical tests, time series analysis, classification, clustering, ...).", "R-logo-sm.xpm");
 
     hbox = gtk_hbox_new(TRUE, 0);
     home_href = gnome_href_new("http://www.r-project.org/", "R home page");
-    FAQ_href = gnome_href_new("http://www.ci.tuwien.ac.at/~hornik/R/R-FAQ.html", "R FAQ");
+    FAQ_href = gnome_href_new("http://cran.r-project.org/doc/FAQ/R-FAQ.html",
+			      "R FAQ");
     gtk_box_pack_start(GTK_BOX(hbox), home_href, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), FAQ_href, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(GNOME_DIALOG(about_box)->vbox),
