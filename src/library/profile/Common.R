@@ -9,3 +9,4 @@ version <- structure(Version(), class = "simple.list")
 
 options(na.action = "na.omit")
 options(show.signif.stars = TRUE)
+options(show.coef.Pvalues = TRUE)
