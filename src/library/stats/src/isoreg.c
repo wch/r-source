@@ -36,7 +36,7 @@ SEXP R_isoreg(SEXP y)
     SET_VECTOR_ELT(ans, 0, y = y);
     SET_VECTOR_ELT(ans, 1, yc = allocVector(REALSXP, n+1));
     SET_VECTOR_ELT(ans, 2, yf = allocVector(REALSXP, n));
-    SET_VECTOR_ELT(ans, 3, iKnots= allocVector(INTSXP, n-1));
+    SET_VECTOR_ELT(ans, 3, iKnots= allocVector(INTSXP, n));
 
     PROTECT(anames = allocVector(STRSXP, 4));
     SET_STRING_ELT(anames, 0, mkChar("y"));
