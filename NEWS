@@ -295,15 +295,19 @@ BUG FIXES
 
     o	methods("$") and methods("$<-") were failing to find methods.
 
-    o	Recursive indexing of lists had too little error-checking.
+    o	Recursive indexing of lists had too little error-checking. 
+	(related to PR#3324)
 
     o	get() and exists() were ignoring the `mode' argument for
 	variables in base.  The error message for get() now mentions
 	the mode requested if not "any".  A bug in setting the NAMED
 	field in do_get was fixed.
 
-    o	Removed warning about names in persistent strings when aname space
-	is saved.
+    o	Removed warning about names in persistent strings when a 
+	namespace is saved.
+
+    o	The apparently never used `method' argument to loess() did not
+	work.  (PR#3332)
 
 
 

@@ -48,6 +48,10 @@ The BioConductor people had stolen the menu item for "Install
 package(s) from CRAN..." so it was not being enabled/disabled
 properly.
 
+A package's DLL would only be built if standard source files were 
+seen; now the presence of Makefile.win will trigger a build, allowing
+nonstandard languages to be used.
+
 
 
 rw1071
