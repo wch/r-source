@@ -1,6 +1,7 @@
 \name{tools-internal}
 \title{Internal tools functions}
 \alias{.convertFilePathToAbsolute}
+\alias{.isS3Generic}
 \alias{.listFilesWithExts}
 \alias{.loadPackageQuietly}
 \alias{.makeS3MethodsStopList}
@@ -26,6 +27,7 @@
 \usage{
 sQuote(s)
 .convertFilePathToAbsolute(path)
+.isS3Generic(fname, envir)
 .listFilesWithExts(dir, exts, path = TRUE)
 .loadPackageQuietly(package, lib.loc)
 .makeS3MethodsStopList(package)
