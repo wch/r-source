@@ -331,9 +331,11 @@
       <string name="title">About RAqua</string>
       <object name="rootControl" class="IBCarbonRootControl" id="191">
         <string name="bounds">0 0 238 377 </string>
+        <string name="viewFrame">0 0 377 238 </string>
         <array count="4" name="subviews">
           <object class="IBCarbonStaticText" id="194">
             <string name="bounds">109 20 142 357 </string>
+            <string name="viewFrame">20 109 337 33 </string>
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">133</int>
             <boolean name="small">TRUE</boolean>
@@ -343,6 +345,7 @@
           </object>
           <object class="IBCarbonStaticText" id="196">
             <string name="bounds">192 20 218 357 </string>
+            <string name="viewFrame">20 192 337 26 </string>
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">135</int>
             <boolean name="small">TRUE</boolean>
@@ -352,6 +355,7 @@
           </object>
           <object class="IBCarbonStaticText" id="322">
             <string name="bounds">20 20 36 357 </string>
+            <string name="viewFrame">20 20 337 16 </string>
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">132</int>
             <boolean name="small">TRUE</boolean>
@@ -361,6 +365,7 @@
           </object>
           <object class="IBCarbonStaticText" id="323">
             <string name="bounds">157 20 184 357 </string>
+            <string name="viewFrame">20 157 337 27 </string>
             <ostype name="controlSignature">0FFF</ostype>
             <int name="controlID">134</int>
             <boolean name="small">TRUE</boolean>
@@ -374,6 +379,7 @@
       <boolean name="hasHorizontalZoom">FALSE</boolean>
       <boolean name="isResizable">FALSE</boolean>
       <boolean name="hasVerticalZoom">FALSE</boolean>
+      <boolean name="compositing">TRUE</boolean>
       <int name="themeBrush">1</int>
       <int name="windowPosition">1</int>
     </object>
@@ -734,42 +740,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">13 25546 311 25986 </string>
+      <string name="bounds">-24675 -27914 -24377 -27474 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">1161 9782 1163 9834 </string>
+          <string name="bounds">15002 30742 15004 30774 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">1161 28593 1163 28671 </string>
+          <string name="bounds">15002 -15983 15004 -15925 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">1047 28308 1063 28701 </string>
+          <string name="bounds">15102 -16278 15118 -15885 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">1087 28362 1107 28366 </string>
+          <string name="bounds">15062 -16226 15082 -16218 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">1094 28605 1092 28604 </string>
+          <string name="bounds">15074 -15979 15070 -15984 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">1085 28475 1101 28551 </string>
+          <string name="bounds">15064 -16111 15080 -16035 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">965 28377 963 28371 </string>
+          <string name="bounds">15203 -16212 15199 -16212 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">957 28304 973 28351 </string>
+          <string name="bounds">15192 -16282 15208 -16235 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">957 28444 973 28491 </string>
+          <string name="bounds">15192 -16142 15208 -16095 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -939,5 +945,5 @@
     <string>PrefsWindow</string>
     <reference idRef="247"/>
   </dictionary>
-  <unsigned_int name="nextObjectID">324</unsigned_int>
+  <unsigned_int name="nextObjectID">326</unsigned_int>
 </object>
