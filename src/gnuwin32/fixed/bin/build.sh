@@ -1,7 +1,7 @@
 #
 # ${R_HOME}/bin/build
 
-revision='$Revision: 1.2 $'
+revision='$Revision: 1.3 $'
 version=`set - ${revision}; echo ${2}`
 version="R package builder ${version}
 
@@ -261,7 +261,7 @@ checkpkg () {
     all_file=${TEMP:-/tmp}/Rall${$}
     tag_file=${TEMP:-/tmp}/Rtag${$}
     rm -f ${all_file} 2>/dev/null
-    find man -name "*.[Rr]d" -print | sort > ${all_file}
+    LC_ALL=C find man -name "*.[Rr]d" -print | sort > ${all_file}
     Rdfiles=`cat ${all_file}`
     if test -n "${Rdfiles}"; then
       badfiles=`grep "<" ${all_file}`
@@ -315,6 +315,8 @@ checkpkg () {
     fi
     rm -f ${all_file} ${tag_file} 2>/dev/null
   fi
+
+  Rdfiles=`echo "${Rdfiles}" | sed -e '/unix\//d'`
 
   ## Check for `INDEX'
   checking "for \`INDEX'"

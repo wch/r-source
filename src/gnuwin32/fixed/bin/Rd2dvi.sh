@@ -8,7 +8,7 @@
 
 R_PAPERSIZE=${R_PAPERSIZE:-a4}
 
-revision='$Revision: 1.3 $'
+revision='$Revision: 1.4 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}" 
 
@@ -87,7 +87,8 @@ if [ ${#} -eq 1 -a -d ${1} ]; then
     dir=${1}
   fi
   ${verbose} "Rd2dvi: \`Rdconv -t latex' ${dir}/ Rd files ..."
-  files=`find ${dir} -name "*.[Rr]d" -print | sort`
+  files=`LC_ALL=C find ${dir} -name "*.[Rr]d" -print | \
+    sed -e '/unix\//d' | sort`
   subj="all in \\file{`echo ${dir} | sed ${file_sed}`}"
   ${verbose} "files = ${files}"
 else

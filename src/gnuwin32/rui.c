@@ -51,8 +51,8 @@ static window RFrame;
 #endif
 extern int ConsoleAcceptCmd;
 static menubar RMenuBar;
-static menuitem msource, mdisplay, mload, msave, msavehistory, mpaste, mcopy, 
-    mcopypaste, mlazy, mconfig,
+static menuitem msource, mdisplay, mload, msave, mloadhistory,
+    msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, 
     mmanext, mapropos, mhelpstart, mFAQ, mrwFAQ;
 static int lmanintro, lmanref, lmanext;
@@ -137,6 +137,20 @@ static void menusaveimage(control m)
 	fixslash(fn);
 	sprintf(cmd, "save.image(\"%s\")", fn);
 	consolecmd(RConsole, cmd);
+    }
+}
+
+static void menuloadhistory(control m)
+{
+    char *fn;
+
+    if (!ConsoleAcceptCmd) return;
+    setuserfilter("All files (*.*)\0*.*\0\0");
+    fn = askfilename("Load history from", ".Rhistory");
+    show(RConsole);
+    if (fn) {
+	fixslash(fn);
+	readhistory(RConsole, fn);
     }
 }
 
@@ -648,8 +662,10 @@ int setupui()
     MCHECK(msource = newmenuitem("Source R code", 0, menusource));
     MCHECK(mdisplay = newmenuitem("Display file", 0, menudisplay));
     MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mload = newmenuitem("Load Image", 0, menuloadimage));
-    MCHECK(msave = newmenuitem("Save Image", 0, menusaveimage));
+    MCHECK(mload = newmenuitem("Load Workspace", 0, menuloadimage));
+    MCHECK(msave = newmenuitem("Save Workspace", 0, menusaveimage));
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mloadhistory = newmenuitem("Load History", 0, menuloadhistory));
     MCHECK(msavehistory = newmenuitem("Save History", 0, menusavehistory));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("Change dir", 0, menuchangedir));

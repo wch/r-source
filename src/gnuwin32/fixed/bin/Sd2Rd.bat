@@ -1,8 +1,16 @@
-@rem = '
+@rem = '--*-Perl-*--
 @echo off
-perl.exe %R_HOME%\bin\Sd2Rd.bat %1 %2 %3 %4 %5 %6 %7 %8 %9
+if "%OS%" == "Windows_NT" goto WinNT
+perl -x %R_HOME%\bin\Sd2Rd.bat %1 %2 %3 %4 %5 %6 %7 %8 %9
+goto endofperl
+:WinNT
+perl -x %R_HOME%\bin\Sd2Rd.bat %*
+if NOT "%COMSPEC%" == "%SystemRoot%\system32\cmd.exe" goto endofperl
+if %errorlevel% == 9009 echo You do not have Perl in your PATH.
+if errorlevel 1 goto script_failed_so_exit_with_non_zero_val 2>nul
 goto endofperl
 @rem ';
+#!perl
 #
 # ${R_HOME}/bin/Sd2Rd for converting S documentation to Rd format
 
@@ -25,7 +33,7 @@ goto endofperl
 
 use Getopt::Long;
 
-my $revision = ' $Revision: 1.2 $ ';
+my $revision = ' $Revision: 1.3 $ ';
 my $version;
 my $name;
 

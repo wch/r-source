@@ -1035,10 +1035,8 @@ FBEGIN
 		    strcpy(buf, cur_line);
 		    p->r = -1;
 		    cur_line[max_pos] = '\0';
-		    if(max_pos && addtohistory &&
-		       (!NHISTORY || (strcmp(cur_line, HISTORY(0)))))
-		    {
-			if(p->history->b[0]) xbufadds(p->history, "\n", 0);
+		    if (max_pos && addtohistory) {
+			xbufadds(p->history, "\n", 0);
 			xbufadds(p->history, cur_line, 0);
 		    }
 		    xbuffixl(p->lbuf);

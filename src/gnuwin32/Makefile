@@ -204,8 +204,7 @@ cleanwin:
 
 
 # tests
-check: all test
-test: test-Specific pkgtests
+check test: test-Specific pkgtests
 
 test-Specific:
 	-@$(MAKE) -C $(RHOME)/tests -f $(RHOME)/src/gnuwin32/check/Maketests clean
@@ -277,9 +276,9 @@ bindist: docfiles
 	  -e s/@RVER@/$(RVER)/g readme > $(RPREFIX)/README
 	$(CP) -p rw-faq $(RPREFIX)/rw-FAQ
 	$(CP) -p CHANGES $(RPREFIX)/CHANGES
-	zip docs.zip $(RPREFIX)/*
-	unzip -a -o docs.zip
-	$(RM) docs.zip
+	zip dosfiles.zip $(RPREFIX)/* $(RPREFIX)/bin/*.bat
+	unzip -ao dosfiles.zip
+	$(RM) dosfiles.zip
 	$(RM) -f $(RPREFIX)b1.zip $(RPREFIX)b2.zip $(RPREFIX)h.zip \
 	   $(RPREFIX)w.zip $(RPREFIX)l.zip $(RPREFIX)ch.zip
 	$(RM) anindex.zip

@@ -4,6 +4,17 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+rw1020
+======
+
+There is a new menu item `Load History' on the File menu of the console.
+
+The menu items Load/Save Image are noe called Load/Save Workspace.
+
+make check no longer makes R, just runs the tests (as make test
+always has).
+
+
 rw1011
 ======
 
@@ -13,9 +24,16 @@ There is a new script R_HOME/bin/build.sh, a version of R CMD build.
 You will need R_HOME set as an environment variable to use it, and
 you will need the full set of tools from tools.zip in your path.
 
+The batch wrappers to Perl files Rdconv.bat Rdindex.bat Rd2txt.bat
+Sd2Rd.bat have been revised to work on more Perl/OS versions.
+
 Other versions of Tcl/Tk may be used by setting TCL_VERSION in 
 MkRules (but only 8.31 has been tested).
 
+Setting cell widths from the menu in the data editor now works reliably.
+
+Having an empty line at the beginning of .Rhistory no longer breaks the
+history-recall mechanism in Rgui.
 
 
 rw1010

@@ -36,7 +36,9 @@ fixh: h/config.h ../../include/FFDecl.h ../../include/FFTab.h \
 	sh ./GETVERSION > ../../include/Rversion.h
 
 fixbin: $(filter-out ./bin/CVS, $(wildcard ./bin/*))
-	$(CP) -p  $^ ../../../bin
+	zip -q bins $^
+	unzip -oaq bins -d  ../../..
+	$(RM) bins.zip
 	$(ECHO) done > fixbin
 
 fixr: $(wildcard ./r/*.html) ../../../doc/html/search/SearchEngine.html
