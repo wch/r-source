@@ -2017,7 +2017,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	txt = coerceVector(txt, STRSXP);
     PROTECT(txt);
     if (length(txt) <= 0)
-	errorcall(call, "zero length \"text\" specified");
+	errorcall(call, "zero length 'labels'");
     args = CDR(args);
 
     PROTECT(adj = CAR(args));
