@@ -12,10 +12,15 @@ barplot <-
     else	par(yaxs = "i", xpd = TRUE)
     on.exit(par(opar))
 
-
     if (missing(space))
 	space <- if (is.matrix(height) && beside) c(0, 1) else 0.2
     space <- space * mean(width)
+
+    if (missing(names.arg))
+	names.arg <- if(is.matrix(height))
+            colnames(height)
+        else
+            names(height)
 
     if (is.vector(height)) {
 	height <- cbind(height)
@@ -28,8 +33,7 @@ barplot <-
 
     NR <- nrow(height)
     NC <- ncol(height)
-    if (missing(names.arg))
-	names.arg <- if(is.matrix(height)) colnames(height) else names(height)
+
     if (beside) {
 	if (length(space) == 2)
 	    space <- rep(c(space[2], rep(space[1], NR - 1)), NC)
