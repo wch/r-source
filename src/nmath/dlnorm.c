@@ -41,7 +41,7 @@ double dlnorm(double x, double logmean, double logsd)
         ML_ERROR(ME_DOMAIN);
         return ML_NAN;
     }
-
+    if(x == 0) return 0;
     y = (log(x) - logmean) / logsd;
     return M_1_SQRT_2PI * exp(-0.5 * y * y) / (x * logsd);
 }
