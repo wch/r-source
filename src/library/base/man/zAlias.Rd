@@ -1,5 +1,5 @@
-\name{.Alias}
-\alias{.Alias}
+\name{.Alias-deprecated}
+\alias{.Alias-deprecated}
 \title{Create Alias (Pointer) to R Object}
 \description{
   \code{.Alias} creates an \bold{alias} to another (part of) an \R
