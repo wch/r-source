@@ -496,7 +496,7 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 #endif
 	    wx = metrics->CharInfo[*p].WX;
 	if(wx == NA_SHORT)
-	    warning("font width unknown for character `%c'");
+	    warning("font width unknown for character %d", *p);
 	else sum += wx;
 	
 	/* check for kerning adjustment */
@@ -528,7 +528,7 @@ PostScriptMetricInfo(int c, double *ascent, double *descent,
 	*descent = -0.001 * metrics->CharInfo[c].BBox[1];
 	wx = metrics->CharInfo[c].WX;
 	if(wx == NA_SHORT) {
-	    warning("font metrics unknown for character `%c'", c);
+	    warning("font metrics unknown for character %d", c);
 	    wx = 0;
 	}
 	*width = 0.001 * wx;
@@ -1526,13 +1526,6 @@ typedef struct {
     FontMetricInfo metrics[5];	/* font metrics */
 
 } XFigDesc;
-
-/* TODO
-
-   line styles
-   more accurate text positioning. Ross suggests using XFig justification
-     if appropriate.
- */
 
 static void
 XF_FileHeader(FILE *fp, char *papername, Rboolean landscape, Rboolean onefile)
