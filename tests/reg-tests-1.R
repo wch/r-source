@@ -727,15 +727,18 @@ logist <- selfStart( logist, initial = logistInit ) ##-> Error in R 1.5.0
 str(logist)
 detach("package:nls")
 
+
 ## part of PR 1662: fisher.test with total one
 fisher.test(cbind(0, c(0,0,0,1)))
 ## crashed in R <= 1.5.0
 
 stopifnot(all(Mod(vector("complex", 7)) == 0))# contained garbage in 1.5.0
 
+
 ## hist.POSIXt with numeric `breaks'
 hist(.leap.seconds, breaks = 5)
 ## error in 1.5.1
+
 
 ##Jonathan Rougier 2002-06-18
 x <- matrix(runif(30), 10, 3)
@@ -753,11 +756,6 @@ stopifnot(all(!is.na(res)))
 ## outer values were NA in 1.5.1
 
 
-library(methods)
-stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
-detach("package:methods")
-
-
 ## related to PR 1577/1608, conversions to character
 DF <- data.frame(b = LETTERS[1:3])
 sapply(DF, class)
@@ -766,7 +764,6 @@ stopifnot(is.character(DF$b)) ## was factor < 1.6.0
 DF <- data.frame(b = LETTERS[1:3])
 DF$b <- LETTERS[1:3]
 stopifnot(is.character(DF$b)) ## always was character.
-
 
 x <- data.frame(var = LETTERS[1:3]); x$var <- as.character(x$var)
 x[[1]][2] <- "3"
@@ -797,13 +794,21 @@ sapply(z, data.class)
 stopifnot(is.character(z$b))
 ## end of `related to PR 1577/1608'
 
+
 ## logicals became factors < 1.6.0
 stopifnot(sapply(as.data.frame(matrix((1:12)%% 4 == 1, 3,4)),
                  is.logical))
+
 
 ## recycling of factors in data.frame (wish from PR#1713)
 data.frame(x=c("A","B"), y="C")      # failed to recycle in 1.5.1
 X <- data.frame(x=c("A","B"), y=I("C")) # also failed
 XX <- data.frame(x=c("A","B"), y=I(rep("C", 2))) # fine
-stopifnot(identical(sapply(X, class), sapply(XX, class)))
+stopifnot(identical(X, XX))
 ## Last is false in some S variants.
+
+
+## keep at end, as package `methods' has persistent side effects
+library(methods)
+stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
+detach("package:methods")

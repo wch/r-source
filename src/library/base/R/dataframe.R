@@ -298,7 +298,8 @@ function(..., row.names = NULL, check.rows = FALSE, check.names = TRUE) {
             }
             if(is.character(xi1) && class(xi1) == "AsIs") {
                 ## simple char vectors only
-                vlist[[i]] <- list(structure(rep(xi1, length=nr), class="AsIs"))
+                cl <- class(xi1) # `methods' adds a class
+                vlist[[i]] <- list(structure(rep(xi1, length=nr), class=cl))
                 next
             }
         }
