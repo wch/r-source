@@ -28,7 +28,7 @@ case "${ARG}" in
 	  echo "*** Further command line arguments ('$args') disregarded, while using debugger $deb"
 	  echo "*** (maybe use 'run $args'  from *inside* $deb" ; echo ''
 	fi
-	exec $deb ${RHOME}/bin/R.binary;;
+	exec $deb ${RHOME}/bin/${RBINARY};;
     -h|--help|-\?)
 	cat <<_EOF_
 
