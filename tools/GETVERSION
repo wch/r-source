@@ -7,7 +7,8 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
   maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < VERSION`
   min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < VERSION`
   rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < VERSION`
-  if [ ${min} -lt 10 ] ; then 
+  min0=`echo ${min} | sed 's/\..*$//'`
+  if [ ${min0} -lt 10 ] ; then 
   ver=`echo "${maj}0${min}"`
   else
   ver=`echo "${maj}${min}"`
