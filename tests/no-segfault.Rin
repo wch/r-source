@@ -18,11 +18,13 @@ names(stop.list) <- core.pkgs
 edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
               "edit.default", "vi",
               "emacs", "pico", "xemacs", "xedit")
+
 ## warning: readLines will work, but read all the rest of the script
 ## warning: trace will load methods.
 ## warning: rm and remove zaps c0, l0, m0, df0
 misc.int <- c("browser", "bug.report", "menu", "repeat", "readLines",
               "package.skeleton", "trace", "recover", "rm", "remove")
+
 stop.list[["base"]] <-
     if(nchar(Sys.getenv("R_TESTLOTS"))) {## SEVERE TESTING, try almost ALL
 	c(edit.int, misc.int)
@@ -40,6 +42,10 @@ stop.list[["base"]] <-
 		    "gctorture", "q", "quit", "restart", "try",
                     "read.fwf", "source",## << MM thinks "FIXME"
 		    "data.entry", "dataentry", "de", apropos("^de\."))
+        if(.Platform$OS.type == "windows")
+            misc.2 <- c(misc.2, "bmp" "windows", "win.graph", "win.print",
+                        "win.metafile", "x11", "X11","file.choose",
+                        "choose.files")
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
 stop.list[["methods"]] <- c("browseAll", "recover")
@@ -47,7 +53,9 @@ stop.list[["ts"]] <- c("arma0f", "KalmanLike")
 
 sink("no-segfault.R")
 
-cat('options(pager = "cat", error=expression(NULL))',
+if(.Platform$OS.type == "unix") cat('options(pager = "cat")\n')
+if(.Platform$OS.type == "windows") cat('options(pager = "console")\n')
+cat('options(error=expression(NULL))',
     "# don't stop on error in batch\n##~~~~~~~~~~~~~~\n")
 
 cat(".proctime00 <- proc.time()\n",

@@ -62,6 +62,7 @@ test-out-postscript = $(test-src-postscript:.R=.Rout)
 test-out-random = $(test-src-random:.R=.Rout)
 test-out-reg = $(test-src-reg:.R=.Rout)
 test-out-ts = $(test-src-ts:.R=.Rout)
+test-out-segfault = $(test-src-sloppy-auto:.R=.Rout)
 
 ## This macro is used only for dependencies
 test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
@@ -76,12 +77,12 @@ all: test-Specific test-Reg test-Demo
 
 .Rin.R:
 	@echo "creating \`$@'"
-	@$(R) < $< > /dev/null
+	@$(R) --slave < $< > /dev/null
 
 .R.Rout:
 	@rm -f $@ $@.fail
 	@echo -n "running \`$<' ..."
-	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@$(R) < $<  > $@  || (mv $@ $@.fail && exit 1)
 	@echo "OK"
 	@if test -f $(srcdir)/$@.save  ; then \
 	  mv $@ $@.fail; \
@@ -151,6 +152,11 @@ test-Random:
 test-Reg:
 	@echo "running regression tests"
 	@$(MAKE) -f Makefile.win $(test-out-reg) RVAL_IF_DIFF=0
+
+test-Segfault:
+	@echo "running tests of mis-calling functions"
+	@$(MAKE) -f Makefile.win $(test-out-segfault) RVAL_IF_DIFF=0
+	@$(RM) data F.Rd c0.Rd df0.Rd l0.Rd m0.Rd Rprof.out Rplots.*
 
 test-Ts:
 	@echo "running tests of package ts functions"
