@@ -19,7 +19,7 @@ undoc(pkg, dir)
 }
 \details{
   This function is useful for package maintainers mostly.  In principle,
-  \emph{all} user level R objects should be documented; note however
+  \emph{all} user level \R objects should be documented; note however
   that the precise rules for documenting methods of generic functions
   are still under discussion.
 }
