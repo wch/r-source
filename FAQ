@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.4-13, 2002-02-01
+Version 1.4-14, 2002-02-08
 Kurt Hornik
 
 
@@ -1228,6 +1228,11 @@ works, was published in the Journal of Statistical Software
      Database Interface R driver for SQLite.  Embeds the SQLite database
      engine in R.
 
+*RadioSonde*
+     A collection of programs for reading and plotting SKEW-T,log p diagrams
+     and wind profiles for data collected by radiosondes (the typical
+     weather balloon-borne instrument).
+
 *RandomFields*
      Creating random fields using various methods.
 
@@ -1442,6 +1447,11 @@ works, was published in the Journal of Statistical Software
 *ineq*
      Inequality, concentration and poverty measures, and Lorenz curves
      (empirical and theoretic).
+
+*lasso2*
+     Routines and documentation for solving regression problems while
+     imposing an L1 constraint on the estimates, based on the algorithm of
+     Osborne et al. (1998)
 
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
