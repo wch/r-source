@@ -27,6 +27,10 @@ sort.list(x, partial = NULL, na.last = TRUE, decreasing = FALSE)
   to break the ties.  If the values are still tied, values in the later
   arguments are used to break the tie (see the first example).
 
+  When the ordering of ties does not matter in the one argument case
+  (e.g., in \code{sort.list}), \code{\link{sort}(x, method="quick",
+  index.return=TRUE)$ix} may be much faster for long \code{x} vectors.
+
   \code{partial} is supplied for compatibility with other
   implementations of S, but no other values are accepted and ordering is
   always complete.
