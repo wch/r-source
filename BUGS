@@ -316,10 +316,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 956 *
-Subject: unbelievable parser bug
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 29 May 2001 14:25:00 +0200
+* PR# 958 *
+Subject: zero-extent matrices
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Wed, 30 May 2001 11:59:59 -0700 (PDT)
 * PR# 955 *
 Subject: argument names in generic print functions
 From: Richard Beare <Richard.Beare@cmis.csiro.au>
@@ -332,3 +332,11 @@ From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Mon, 28 May 2001 10:44:59 +0200
 Date: Mon, 16 Apr 2001 21:02:10 +0200
 --The second bug is a missing PROTECT. 
+* PR# 957 *
+Subject: Rcmd REMOVE does not allow --library argument
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Wed, 30 May 2001 12:41:43 -0400
+* PR# 956 *
+Subject: unbelievable parser bug
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 29 May 2001 14:25:00 +0200
