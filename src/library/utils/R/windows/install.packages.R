@@ -228,9 +228,10 @@ download.packages <- function(pkgs, destdir, available=NULL,
     retval
 }
 
-contrib.url <- function(CRAN) {
+contrib.url <- function(CRAN)
+{
     ver <- paste(R.version$major, substring(R.version$minor,1,1), sep=".")
-    file.path(CRAN, "bin", "windows", "contrib", ver)
+    file.path(gsub("/$", "", CRAN), "bin", "windows", "contrib", ver)
 }
 
 
