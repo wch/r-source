@@ -86,6 +86,7 @@ void R_ProcessEvents(void);
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 
+/* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
 typedef unsigned long R_size_t;
 #define R_SIZE_T_MAX ULONG_MAX
 

@@ -42,7 +42,7 @@
 #include <R_ext/libextern.h>
 
 /* type for length of vectors etc */
-typedef int R_len_t; /* will be long later */
+typedef int R_len_t; /* will be long later, LONG64 or ssize_t on Win64 */
 #define R_LEN_T_MAX INT_MAX
 
 /* Fundamental Data Types:  These are largely Lisp
