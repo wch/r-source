@@ -1,13 +1,13 @@
 \name{par}
+\alias{par}
+\alias{.Pars}
+\alias{.Pars.readonly}
 \title{Set or Query Graphical Parameters}
 \usage{
 par(\dots, no.readonly = FALSE)
 
-<highlevel plot> (\dots\dots, <tag> = <value>)
+<highlevel plot> (\dots, <tag> = <value>)
 }
-\alias{par}
-\alias{.Pars}
-\alias{.Pars.readonly}
 \description{
   % \code{par} is an abomination before man and god.
   \code{par} can be used to set or query graphical parameters.

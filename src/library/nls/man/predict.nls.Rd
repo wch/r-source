@@ -2,22 +2,22 @@
 \title{Predicting from Nonlinear Least Squares Fits}
 \alias{predict.nls}
 \usage{
-predict[.nls](object, newdata , se.fit = FALSE,  
-              scale = NULL, df = Inf, 
-              interval = c("none", "confidence", "prediction"), level = 0.95)
+predict[.nls](object, newdata , se.fit = FALSE, scale = NULL, df = Inf, 
+              interval = c("none", "confidence", "prediction"),
+              level = 0.95, ...)
 }
 \description{
-\code{predict.nls} produces predicted values, obtained by evaluating
-the regression function in the frame \code{newdata}.  If the logical
-\code{se.fit} is \code{TRUE}, standard errors of the predictions are
-calculated.  If the numeric argument \code{scale} is set (with optional
-\code{df}), it is used as the residual standard deviation in the
-computation of the standard errors, otherwise this is extracted from
-the model fit.  Setting \code{intervals} specifies computation of
-confidence or prediction (tolerance) intervals at the specified
-\code{level}.
+  \code{predict.nls} produces predicted values, obtained by evaluating
+  the regression function in the frame \code{newdata}.  If the logical
+  \code{se.fit} is \code{TRUE}, standard errors of the predictions are
+  calculated.  If the numeric argument \code{scale} is set (with
+  optional \code{df}), it is used as the residual standard deviation in
+  the computation of the standard errors, otherwise this is extracted
+  from the model fit.  Setting \code{intervals} specifies computation of
+  confidence or prediction (tolerance) intervals at the specified
+  \code{level}.
 
-At present \code{se.fit} and \code{interval} are ignored.
+  At present \code{se.fit} and \code{interval} are ignored.
 }
 \arguments{
  \item{object}{An object that inherits from class \code{nls}.}

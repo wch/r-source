@@ -1,4 +1,4 @@
-% $Id: SSfol.Rd,v 1.1 1999/11/12 13:34:35 bates Exp $
+% $Id: SSfol.Rd,v 1.1.2.1 1999/12/13 07:15:35 hornik Exp $
 \name{SSfol}
 \title{First-order Compartment Model}
 \usage{
@@ -22,10 +22,11 @@ SSfol(Dose, input, lKe, lKa, lCl)
   and \code{lCl}.
 }
 \value{
-  a numeric vector of the same length as \code{input}.  It is the value of
-  the expression \code{Dose*exp(lKe+lKa-lCl)*(exp(-exp(lKe)*input) -
-    exp(-exp(lKa)*input))/(exp(lKa) - exp(lKe))}.  If all of
-  the arguments \code{lKe}, \code{lKa}, and \code{lCl} are
+  a numeric vector of the same length as \code{input}, which is the
+  value of the expression
+  \code{Dose * exp(lKe+lKa-lCl) * (exp(-exp(lKe)*input)-exp(-exp(lKa)*input)) / (exp(lKa)-exp(lKe))}.
+
+  If all of the arguments \code{lKe}, \code{lKa}, and \code{lCl} are
   names of objects, the gradient matrix with respect to these names is
   attached as an attribute named \code{gradient}.
 }

@@ -24,8 +24,9 @@ prompt.default(object,
   to \file{\$R\_HOME/src/library/base/man/}.
 }
 \seealso{
-  \code{\link{help}} and the tutorial about writing \R documentation,
-  currently in the file \file{\$R\_HOME/doc/manual/writing-Rd.tex}.
+  \code{\link{help}} and the chapter on ``Writing \R documentation'' in
+  the ``R Extension Writer's Manual'' (see the \file{doc/manual}
+  subdirectory of the \R\ source tree).
 }
 \examples{
 prompt(plot.default)

@@ -4,7 +4,7 @@
 \alias{simpleLoess}
 \alias{pointwise}
 \description{
- Internal modreg functions
+  Internal modreg functions.
 }
 \usage{
 predLoess(y, x, newx, s, weights, robust, span, degree, normalize, 
@@ -12,10 +12,11 @@ predLoess(y, x, newx, s, weights, robust, span, degree, normalize,
     se = F)
 simpleLoess(y, x, weights, span = 0.75, degree = 2, parametric = FALSE, 
     drop.square = FALSE, normalize = TRUE, statistics = "approximate", 
-    surface = "interpolate", cell = 0.2, iterations = 1, trace.hat = "exact") 
+    surface = "interpolate", cell = 0.2, iterations = 1,
+    trace.hat = "exact") 
 pointwise(results, coverage)
 }
 \details{
-    These are not to be called by the user.
+  These are not to be called by the user.
 }
 \keyword{utilities}

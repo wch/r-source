@@ -19,8 +19,9 @@ prompt.data.frame(object, filename = paste(name, ".Rd", sep = ""))
 }
 \author{Douglas Bates \email{bates@stat.wisc.edu}}
 \seealso{
-  \code{\link{help}} and the tutorial about writing \R documentation,
-  currently in the file \file{\$R\_HOME/doc/manual/writing-Rd.tex}.
+  \code{\link{help}} and he chapter on ``Writing \R documentation'' in
+  the ``R Extension Writer's Manual'' (see the \file{doc/manual}
+  subdirectory of the \R\ source tree).
 }
 \note{
   The documentation file produced by \code{prompt.data.frame} does not
