@@ -81,8 +81,8 @@ sed 's/markright{#1}/markboth{#1}{#1}/' \
   ${R_HOME}/doc/manual/Rd.sty > ${BUILD_DIR}/Rd2.sty
 
 cat > ${BUILD_DIR}/Rd2.tex <<EOF
-\\documentclass[${R_PAPERSIZE}]{book}
-\\usepackage{Rd2}
+\\documentclass[${R_PAPERSIZE}paper]{book}
+\\usepackage[${R_RD4DVI:-ae}]{Rd2}
 \\usepackage{makeidx}
 \\makeindex
 \\begin{document}
