@@ -52,7 +52,7 @@ of Unix versions of R.
     Windows it no longer deletes empty directories, but has a new
     argument recursive=TRUE to delete directories (empty or not).
 
--   The startup code looks for .Renviron, a file pointed tp by
+-   The startup code looks for .Renviron, a file pointed to by
     environment variable R_ENVIRON and then .Renviron in the home
     directory.  This file can contain lines line NAME=value but also
     NAME=${NAME1-value} to take the value of NAME1 if set (and not
@@ -168,7 +168,8 @@ initial state of the recording flag, and this defaults to the setting
 of the option "graphics.record" (and that defaults to FALSE).
 
 The windows() graphics device has new options for what happens when it
-is resized, both from the command line and the menu.
+is resized, both from the command line and the menu.  See ?windows
+for details.
 
 New function bringToTop() to bring a graphics window to the top of the
 windows stack (useful from menu actions, ...).
