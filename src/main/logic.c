@@ -104,7 +104,7 @@ static SEXP lbinary(SEXP call, SEXP op, SEXP args)
 	}
     }
     if(mismatch)
-	warningcall(call, "longer object length\n\tis not a multiple of shorter object length\n");
+	warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
 
     x = CAR(args) = coerceVector(x, LGLSXP);
     y = CADR(args) = coerceVector(y, LGLSXP);

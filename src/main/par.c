@@ -769,7 +769,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	    par_error(what);
 	dd->dp.ylog = dd->gp.ylog = (ix != 0);
     }
-    else warningcall(gcall, "parameter \"%s\" can't be set\n", what);
+    else warningcall(gcall, "parameter \"%s\" can't be set", what);
     return 0;/* never used; to keep -Wall happy */
 }
 
@@ -1068,7 +1068,7 @@ void Specify2(char *what, SEXP value, DevDesc *dd)
 	    dd->gp.yaxt = ix;
 	else par_error(what);
     }
-    else warning("parameter \"%s\" couldn't be set in high-level plot() function\n", what);
+    else warning("parameter \"%s\" couldn't be set in high-level plot() function", what);
 }
 
 

@@ -177,7 +177,7 @@ static int R_AppendFile(char *file1, char *file2)
     status = 1;
  append_error:
     if (status == 0)
-	warning("write error during file append!\n");
+	warning("write error during file append!");
     fclose(fp1);
     fclose(fp2);
     return status;
@@ -306,7 +306,7 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (pattern && regcomp(&reg, CHAR(STRING(p)[0]), REG_EXTENDED))
         errorcall(call, "invalid pattern regular expression\n");
 #else
-	warning("pattern specification is not available in \"list.files\"\n");
+	warning("pattern specification is not available in \"list.files\"");
 #endif
     count = 0;
     for (i = 0; i < ndir ; i++) {

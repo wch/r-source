@@ -50,11 +50,11 @@ static char *falsenames[] = {
 void CoercionWarning(int warn)
 {
     if (warn & WARN_NA)
-	warning("NAs introduced by coercion\n");
+	warning("NAs introduced by coercion");
     if (warn & WARN_INACC)
-	warning("inaccurate integer conversion in coercion\n");
+	warning("inaccurate integer conversion in coercion");
     if (warn & WARN_IMAG)
-	warning("imaginary parts discarded in coercion\n");
+	warning("imaginary parts discarded in coercion");
 }
 
 int LogicalFromInteger(int x, int *warn)
@@ -1311,7 +1311,7 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	warningcall(call, "is.na() applied to non-(list or vector)\n");
+	warningcall(call, "is.na() applied to non-(list or vector)");
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }
@@ -1342,7 +1342,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef stringent_is
     if (!isList(CAR(args)) && !isVector(CAR(args)))
-	errorcall(call, "is.nan applies only to lists and vectors\n");
+	errorcall(call, "is.nan applies only to lists and vectors");
 #endif
     PROTECT(ans = allocVector(LGLSXP, length(CAR(args))));
     x = CAR(args);
@@ -1411,7 +1411,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	break;
     default:
-	warningcall(call, "is.nan() applied to non-(list or vector)\n");
+	warningcall(call, "is.nan() applied to non-(list or vector)");
 	for (i = 0; i < n; i++)
 	    LOGICAL(ans)[i] = 0;
     }

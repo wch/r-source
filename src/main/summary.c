@@ -56,7 +56,7 @@ static void isum(int *x, int n, int *value)
 	}
     }
     if(s > INT_MAX || s < R_INT_MIN){
-	warning("Integer overflow in sum(.); use sum(as.numeric(.))\n");
+	warning("Integer overflow in sum(.); use sum(as.numeric(.))");
 	*value = NA_INTEGER;
     }
     else *value = s;
@@ -526,7 +526,7 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /*-------------------------------------------------------*/
     if(empty && (iop == 2 || iop == 3))
-	warningcall(call,"no finite arguments to min/max; returning extreme.\n");
+	warningcall(call,"no finite arguments to min/max; returning extreme.");
 
     ans = allocVector(ans_type, 1);
     switch(ans_type) {

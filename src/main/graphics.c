@@ -1848,7 +1848,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
 
     if(!FINITE(min) || !FINITE(max)) {
-	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]\n",
+	warning("Nonfinite axis limits [GScale(%g,%g,%d, .); log=%d]",
 		min, max, axis, log);
 	if(!FINITE(min)) min = - .45 * DBL_MAX;
 	if(!FINITE(max)) max = + .45 * DBL_MAX;
@@ -2831,7 +2831,7 @@ double GStrWidth(char *str, int units, DevDesc *dd)
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
-        warning("freeing previous text buffer in GStrWidth\n");
+        warning("freeing previous text buffer in GStrWidth");
     }
     w = 0;
     if(str && *str) {
@@ -2891,7 +2891,7 @@ void GText(double x, double y, int coords, char *str,
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
-        warning("freeing previous text buffer in GText\n");
+        warning("freeing previous text buffer in GText");
     }
     if(str && *str) {
         char *s, *sbuf, *sb;
@@ -3179,7 +3179,7 @@ void GPretty(double *lo, double *up, int *ndiv)
     else {
 	warning("Imprecision in axis setup.\t GPretty(%g,%g,%d):\n"
 		"cell=%g, ndiv= %d <=0; (ns,nu)=(%d,%d); "
-		"dx=%g, unit=%g, ismall=%d.\n",
+		"dx=%g, unit=%g, ismall=%d.",
 		*lo,*up, *ndiv, cell, nd0, ns, nu, dx, unit, (int)i_small);
 	if(nd0 == 0)
 	    nu = ns + 1;
@@ -3225,9 +3225,9 @@ void GPretty(double *lo, double *up, int *ndiv)
 
 #ifdef DEBUG_PLOT
     if(*lo < x1)
-	warning(" .. GPretty(.): new *lo = %g < %g = x1\n", *lo, x1);
+	warning(" .. GPretty(.): new *lo = %g < %g = x1", *lo, x1);
     if(*up > x2)
-	warning(" .. GPretty(.): new *up = %g > %g = x2\n", *up, x2);
+	warning(" .. GPretty(.): new *up = %g > %g = x2", *up, x2);
 #endif
 }
 

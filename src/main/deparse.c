@@ -125,7 +125,7 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(!isNull(CAR(args))) {
 	cut0 = asInteger(CAR(args));
 	if(cut0 == NA_INTEGER|| cut0 < MIN_Cutoff || cut0 > MAX_Cutoff)
-	    warning("invalid 'cutoff' for deparse, used default\n");
+	    warning("invalid 'cutoff' for deparse, used default");
 	else
 	    cutoff = cut0;
     }

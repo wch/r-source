@@ -236,7 +236,7 @@ SEXP do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (strcmp(cname, "true") == 0)
 	colormodel = 4;
     else {
-	warning("unknown X11 color/colour model -- using monochrome\n");
+	warningcall(call, "unknown X11 color/colour model -- using monochrome");
 	colormodel = 0;
     }
     args = CDR(args);

@@ -106,7 +106,7 @@ int GetOptionWidth(SEXP rho)
     int w;
     w = asInteger(GetOption(install("width"), rho));
     if (w < MIN_WIDTH || w > MAX_WIDTH) {
-	warning("invalid printing width, used 80\n");
+	warning("invalid printing width, used 80");
 	return 80;
     }
     return w;
@@ -117,7 +117,7 @@ int GetOptionDigits(SEXP rho)
     int d;
     d = asInteger(GetOption(install("digits"), rho));
     if (d < MIN_DIGITS || d > MAX_DIGITS) {
-	warning("invalid printing digits, used 7\n");
+	warning("invalid printing digits, used 7");
 	return 7;
     }
     return d;

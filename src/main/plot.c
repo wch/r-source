@@ -557,10 +557,10 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	/* Debugging: When does the following happen... ? */
 	if(umin > umax)
 	    warning("CreateAtVector \"log\"(from axis()): "
-		    "usr[0] = %g > %g = usr[1] !\n", umin, umax);
+		    "usr[0] = %g > %g = usr[1] !", umin, umax);
 	dn = axp[0];
 	if(dn < 1e-300)
-	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !\n", dn);
+	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !", dn);
 
 	/* You get the 3 cases below by
 	 *  for(y in 1e-5*c(1,2,8))  plot(y, log = "y")

@@ -78,7 +78,7 @@ static SEXP EnlargeVector(SEXP x, int newlen)
 
     /* Sanity Checks */
     if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
-	warning("assignment outside vector/list limits\n");
+	warning("assignment outside vector/list limits");
     if (!isVector(x))
 	error("attempt to enlarge non-vector\n");
 
@@ -338,7 +338,7 @@ static SEXP VectorAssign(SEXP call, SEXP x, SEXP s, SEXP y)
 	if (n > 0 && ny == 0)
 	    errorcall(call, "nothing to replace with\n");
 	if (n > 0 && n % ny)
-	    warning("number of items to replace is not a multiple of replacement length\n");
+	    warning("number of items to replace is not a multiple of replacement length");
     }
 
     PROTECT(x);
@@ -1602,7 +1602,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 	SEXP names;
 
 	if (!(isNewList(x) || isExpression(x))) {
-	    warning("Coercing LHS to a list\n");
+	    warning("Coercing LHS to a list");
 	    x = coerceVector(x, VECSXP);
 	}
 	names = getAttrib(x, R_NamesSymbol);

@@ -36,7 +36,7 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
     n2 = length(s1);
     if(n1 > 1 || n2 > 1) {
 	n = (n1 > n2) ? n1 : n2;
-	warningcall(call, "Numerical expression has %d elements: only the first used\n", n);
+	warningcall(call, "Numerical expression has %d elements: only the first used", n);
     }
     n1 = asReal(s1);
     n2 = asReal(s2);

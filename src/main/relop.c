@@ -114,7 +114,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(class = getAttrib(y, R_ClassSymbol));
 	}
     }
-    if (mismatch) warningcall(call, "longer object length\n\tis not a multiple of shorter object length\n");
+    if (mismatch) warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
 
     if (isString(x) || isString(y)) {
 	x = CAR(args) = coerceVector(x, STRSXP);

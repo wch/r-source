@@ -86,7 +86,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		stop = slen;
 	    if (stop > MAXELTSIZE) {
 		stop = MAXELTSIZE;
-		warningcall(call, "a string was truncated in substr()\n");
+		warningcall(call, "a string was truncated in substr()");
 	    }
 	    substr(buff, CHAR(STRING(x)[i]), start, stop);
 	    STRING(s)[i] = mkChar(buff);
