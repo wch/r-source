@@ -153,7 +153,7 @@ OSDynSymbol Rf_osDynSymbol;
 OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
 void R_init_base(DllInfo *); /* In Registration.c */
-static DL_FUNC R_dlsym(DllInfo *dll, char const *name, R_RegisteredNativeSymbol *symbol);
+DL_FUNC R_dlsym(DllInfo *dll, char const *name, R_RegisteredNativeSymbol *symbol);
 
 void
 InitDynload()
@@ -724,7 +724,7 @@ DL_FUNC R_getDLLRegisteredSymbol(DllInfo *info, const char *name,
     return((DL_FUNC) NULL);
 }
 
-static DL_FUNC R_dlsym(DllInfo *info, char const *name, 
+DL_FUNC R_dlsym(DllInfo *info, char const *name, 
 		       R_RegisteredNativeSymbol *symbol)
 {
     char buf[MAXIDSIZE+1];
@@ -889,7 +889,7 @@ Rf_MakeNativeSymbolRef(DL_FUNC f)
 {
   SEXP ref, klass;
 
-  PROTECT(ref = R_MakeExternalPtr((void*) f, Rf_install("native symbol"), NULL));
+  PROTECT(ref = R_MakeExternalPtr((void*) f, Rf_install("native symbol"), R_NilValue));
 
   PROTECT(klass = allocVector(STRSXP, 1));
   SET_STRING_ELT(klass, 0, mkChar("NativeSymbol"));

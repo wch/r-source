@@ -32,7 +32,7 @@ symbol.For(name)
   \item{now}{a logical controlling whether all symbols are resolved (and
     relocated) immediately the library is loaded or deferred until they
     are used.  This control is useful for developers testing whether a
-    library is complete and has all the necessary symbols and for users
+    library is complete and has all the necessary symbols, and for users
     to ignore missing symbols. Whether this has any effect is system-dependent.
 #ifdef windows
     It is ignored on Windows.
@@ -129,9 +129,11 @@ symbol.For(name)
 \value{
   The function \code{dyn.load} is used for its side effect which links
   the specified shared library to the executing \R image.  Calls to
-  \code{.C}, \code{.Fortran} and \code{.External} can then be used to
-  execute compiled C functions or Fortran subroutines contained in the
-  library. 
+  \code{.C}, \cpde{.Call}, \code{.Fortran} and \code{.External} can
+  then be used to execute compiled C functions or Fortran subroutines
+  contained in the library. The return value of \code{dyn.load} is
+  an object of class \code{DLLInfo}. See \code{\link{getLoadedDLLs}}
+  for information about this class.
 
   The function \code{dyn.unload} unlinks the shared library.
 

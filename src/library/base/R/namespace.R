@@ -266,7 +266,7 @@ loadNamespace <- function (package, lib.loc = NULL,
             setNamespaceInfo(env, "DLLs", dlls)            
         }
         addNamespaceDynLibs(env, nsInfo$dynlibs)        
-#XX        addNamespaceDynLibs(env, nsInfo$dynlibs)
+
 
         # run the load hook
         runHook(".onLoad", env, package.lib, package)

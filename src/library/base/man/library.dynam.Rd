@@ -61,10 +61,17 @@ library.dynam.unload(chname, libpath,
   storing this information: this variable is now defunct.
 }
 \value{
-  \code{library.dynam} returns a character vector with the names of
-  packages which have used it in the current \R session to load shared
-  libraries.  This vector is returned as \code{\link{invisible}}, unless
-  the \code{chname} argument is missing.
+  If \code{chname} is not specified, \code{library.dynam} returns a
+  character vector with the names of packages which have used it in the
+  current \R session to load shared libraries. This vector is returned
+  as \code{\link{invisible}}, unless  the \code{chname} argument is
+  missing.
+
+  If \code{chname} is specifed, the return value is an object
+  of class \code{DLLInfo} that identifies the DLL and can be used
+  in future calls.  For packages that have namespaces, a list
+  of these objects is stored in the namespace's environment for
+  use at run-time.
 
   \code{library.dynam.unload} returns the updated character vector, invisibly.
 }

@@ -19,15 +19,23 @@ dyn.unload <- function(x)
 getNativeSymbolInfo <- function(name, PACKAGE)
 {
     if(missing(PACKAGE)) PACKAGE <- ""
-    if(!is.character(PACKAGE) && !inherits(PACKAGE, "DLLInfoReference"))
-      stop("must pass a package name or DllInfoReference object")
+
+    if(is.character(PACKAGE))
+      pkgName <- PACKAGE
+    else if(inherits(PACKAGE, "DLLInfo")) {
+      pkgName <- PACKAGE$path
+      PACKAGE <- PACKAGE$info
+    } else if(inherits(PACKAGE, "DLLInfoReference")) {
+      pkgName <- character()
+    } else
+      stop("must pass a package name, DLLInfo or DllInfoReference object")
     
-    v <- .Call("R_getSymbolInfo", as.character(name), PACKAGE,
-               PACKAGE = "base")
+    v <- .Call("R_getSymbolInfo", as.character(name), PACKAGE, PACKAGE = "base")
+
     if(is.null(v)) {
         msg <- paste("no such symbol", name)
-        if(length(PACKAGE) && nchar(PACKAGE[1]))
-            msg <- paste(msg, "in package", PACKAGE[1])
+        if(length(pkgName) && nchar(pkkName))
+            msg <- paste(msg, "in package", pkgName)
         stop(msg)
     }
     names(v) <- c("name", "address", "package", "numParameters")[1:length(v)]
@@ -60,5 +68,19 @@ function(dll)
                     })
 
  els
+}
+
+
+
+getCallingDLL =
+function(f = sys.function(1))  
+{
+  e = environment(f)
+  
+  if(!isNamespace(e))
+      stop("function is not in a namespace, so can't locate associated DLL")
+
+   # Please feel free to replace with a more encapsulated way to do this.
+  e$".__NAMESPACE__."$DLLs[[1]]
 }
 
