@@ -517,8 +517,7 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     args = CDR(args);
 
-    asp = asReal(CAR(args));
-    if (logscale) asp = NA_REAL;
+    asp = (logscale) ? NA_REAL : asReal(CAR(args));;
     args = CDR(args);
 
     GSavePars(dd);
@@ -2529,7 +2528,6 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (R_FINITE(dd->gp.lwd)) {
 	    if (LOGICAL(untf)[0] == 1 && (dd->gp.xlog || dd->gp.ylog)) {
 		double xx[101], yy[101];
-		int i;
 		double xstep = (x[1] - x[0])/100;
 		for (i = 0; i < 100; i++) {
 		    xx[i] = x[0] + i*xstep;
@@ -2544,7 +2542,6 @@ SEXP do_abline(SEXP call, SEXP op, SEXP args, SEXP env)
 
 		x0 = ( dd->gp.xlog ) ?  log10(x[0]) : x[0];
 		x1 = ( dd->gp.xlog ) ?  log10(x[1]) : x[1];
-
 
 		y[0] = aa + x0 * bb;
 		y[1] = aa + x1 * bb;
