@@ -231,6 +231,14 @@ none
 
 Directory:  incoming
 
+* PR# 615 *
+Subject: binomial()
+From: halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 24 Jul 2000 18:11:17 -0400
+* PR# 614 *
+Subject: scoping problems
+From: halvorsen <kjetilh@umsanet.edu.bo>
+Date: Mon, 24 Jul 2000 17:48:49 -0400
 * PR# 613 *
 Subject: maketitle garbles the title in package nnet
 From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
