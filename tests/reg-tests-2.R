@@ -382,3 +382,8 @@ runif(4)
 set.seed(123, "default")
 runif(4)
 ## last set.seed failed < 1.5.0.
+
+## merging, ggrothendieck@yifan.net, 2002-03-16
+d.df <- data.frame(x = 1:3, y = c("A","D","E"), z = c(6,9,10))
+merge(d.df[1,], d.df)
+## 1.4.1 got confused by inconsistencies in as.character

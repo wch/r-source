@@ -59,7 +59,7 @@ merge.data.frame(x, y, by = intersect(names(x), names(y)),
 \value{
   A data frame.  The rows are by default lexicographically sorted on the
   common columns, but are otherwise in the order in which they occurred
-  in \code{x}.  The columns are the common columns followed by the
+  in \code{y}.  The columns are the common columns followed by the
   remaining columns in \code{x} and then those in \code{y}.  If the
   matching involved row names, an extra column \code{Row.names} is added
   at the left, and in all cases the result has no special row names.

@@ -371,6 +371,10 @@ BUG FIXES
     o   In X11, locator() would sound the bell even if "xset b off"
         had been set.
 
+    o	merge() could be confused by inconsistent use of as.character()
+	giving leading spaces.
+
+
 
 	**************************************************
 	*						 *

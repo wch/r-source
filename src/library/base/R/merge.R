@@ -54,14 +54,10 @@ merge.data.frame <-
             bx <- x[, by.x]; if(is.factor(bx)) bx <- as.character(bx)
             by <- y[, by.y]; if(is.factor(by)) by <- as.character(by)
         } else {
-            bx <- matrix(as.character(as.matrix.data.frame(x[, by.x,
-                                                             drop=FALSE])), nx)
-            by <- matrix(as.character(as.matrix.data.frame(y[, by.y,
-                                                             drop=FALSE])), ny)
-#            bx <- do.call("paste", c(bx, sep="\r"))
-#            by <- do.call("paste", c(by, sep="\r"))
-            bx <- drop(apply(bx, 1, function(x) paste(x, collapse="\r")))
-            by <- drop(apply(by, 1, function(x) paste(x, collapse="\r")))
+            ## Do these together for consistency in as.character.
+            bz <- do.call("paste", c(rbind(x[, by.x], y[, by.y]), sep = "\r"))
+            bx <- bz[1:nx]
+            by <- bz[nx + (1:ny)]
         }
         comm <- match(bx, by, 0)
         bxy <- bx[comm > 0]             # the keys which are in both
