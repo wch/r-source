@@ -183,7 +183,6 @@ static void printStringVector(SEXP * x, int n, int quote, int index)
 
 void printVector(SEXP x, int index, int quote)
 {
-    SEXP l;
     int n;
 
     if ((n = LENGTH(x)) != 0)
@@ -372,7 +371,6 @@ static void printNamedStringVector(SEXP * x, int n, int quote, SEXP * names)
 
 void printNamedVector(SEXP x, SEXP names, int quote)
 {
-    SEXP l;
     int n;
 
     if ((n = LENGTH(x)) != 0)
