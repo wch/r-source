@@ -57,7 +57,6 @@
 
 static int gc_reporting = 0;
 static int gc_count = 0;
-int gc_inhibit_torture = 1; /* gets set to zero after initialisations */
 
 #define GC_TORTURE
 /*
