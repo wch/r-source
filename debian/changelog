@@ -1,12 +1,12 @@
-r-base (0.99.0-0) unstable; urgency=low
+r-base (0.99.0-1) unstable; urgency=low
 
-  * Test builds in preparation for the 0.99.0 release
+  * New upstream release
   * Added creation and installation of info documentation
   * Created the PDF documentation and added it to the doc directory
   * Added dependence on the atlas2 package and used the atlas blas
   * Added /usr/bin/X11 to the path before configuring so imake is found
 
- -- Douglas Bates <bates@stat.wisc.edu>  Mon, 10 Jan 2000 10:38:28 -0600
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon,  7 Feb 2000 10:36:44 -0600
 
 r-base (0.90.1-1) unstable; urgency=low
 
