@@ -52,6 +52,8 @@ BUG FIXES
     o	barplot now works okay when length(col) < length(legend.txt),
 	thanks to Ben Bolker, PR#494.
 
+    o	kernel("dirichlet", m=10, r=1) in package ts now works.
+
 
 		CHANGES IN R VERSION 1.0.0
 
