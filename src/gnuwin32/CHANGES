@@ -14,7 +14,7 @@ give small speed increases and generally more accurate results.
 This release has a number of changes to bring its behaviour closer to that 
 of Unix versions of R.
 
--   The history is only saved when the workspace is  (to be compatible with
+-   The history is only saved when the workspace is (to be compatible with
     Unix versions of R) and whether it is restored is controlled by
     option --no-restore-history (implied by --no-restore and --vanilla).
 
@@ -23,11 +23,13 @@ of Unix versions of R.
     and its maximum size (in lines, default 512).
 
 -   More locale support is now enabled where supported by the version of
-    Windows in use (probably only NT and 2000).  It means that sorting
-    and comparison of character strings will be locale-specific.  You
-    may not want this (the sort order in English is aAbB..., for
-    example) and setting Sys.setlocale("LC_COLLATE", "C") should give
-    the previous behaviour.
+    Windows in use.  It means that sorting and comparison of character
+    strings will be locale-specific.  You may not want this (the sort
+    order in `English_United Kingdom' is aAbB..., for example) and
+    setting Sys.setlocale("LC_COLLATE", "C") should give the previous
+    behaviour.  Further, users of Windows 9x machines should be able
+    to use their native character set for the names of R objects (as
+    NT users always have: this is related to the change to msvcrt.dll).
 
 -   make check no longer makes R, just runs the tests (as make test
     always has).
@@ -35,6 +37,10 @@ of Unix versions of R.
 -   It is possible to make DVI versions of the manuals: see file INSTALL.
 
 -   New utility Rcmd.exe to emulate R CMD : see below.
+
+-   unlink() now works the same way on Windows and Unix. Thus it no
+    longer deletes empty directories, but has a new argument
+    recursive=TRUE to delete directories (empty or not).
 
 
 Gui changes
@@ -53,8 +59,9 @@ Gui changes
     number of lines and the total size).  The mechanism has been altered
     so that Rterm records repeated lines (as Rgui always did).
 
--   There are some extra command-line editing commands: see the
-    Help | Console information screen.
+-   There are some additional command-line editing commands: see the
+    Help | Console information screen.  (There is also one addition,
+    ^W, in Rterm: see README.rterm.)
 
 
 New utilities
@@ -62,7 +69,7 @@ New utilities
 
     The utilities Rd2dvi.sh Rd2txt Rdconv Rdindex Sd2Rd are no longer
     batch files but accessed through a new front-end Rcmd.exe, so if this
-    is in your path you can use
+    is in your path (otherwise use ...\rw1020\bin\Rcmd) you can use
 
 	Rcmd Rd2dvi.sh [options] files
 	Rcmd Rd2txt              file
@@ -79,7 +86,8 @@ New utilities
 	Rcmd REMOVE  [options] pkg(s)
 	Rcmd SHLIB   [options] file(s)
 	Rcmd build   [options] pkgdir(s)
-	Rcmd check   [options] pkgdir(s)	Rcmd BATCH   [options] infile [outfile]
+	Rcmd check   [options] pkgdir(s)
+	Rcmd BATCH   [options] infile [outfile]
 
     Use option --help with any of these for fuller details.
 
@@ -87,21 +95,20 @@ New utilities
 Rterm in interactive use sets the title of the window it is running
 in, and unsets it when it terminates.
 
-Note that unlink() no longer deletes empty directories, but has
-a new argument recursive=TRUE to delete directories (empty or not).
-
 New functions memory.size and DLL.version.  The Windows memory manager
-proved to be (far) too slow to work with the generational garbage
+proved to be (far) too slow to work with the new generational garbage
 collector, so it was replaced.  The current memory manager rarely
 releases memory back to Windows (but reuses memory very efficiently)
 so memory usage will usually grow slowly over the course of a session.
-Memory used by large objects will normally be returned at garbage
-collection.
+Memory used for transient large objects will normally be returned at
+garbage collection.
 
 DLLs for packages (including standard packages supplied with R)
 automatically gain version information when compiled under this version.
 (Use the Version tab on the Properties dialog box to see it.)
 
+Windows help files now have hyperlinks to other objects within the same
+package.
 
 
 rw1011
