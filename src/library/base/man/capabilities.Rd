@@ -33,7 +33,8 @@ capabilities(what = NULL)
       It will be true if \code{readline} supported has been compiled in
       and \code{--no-readline} was \emph{not} invoked.
 #endif
-    \item{IEEE754}{Does this platform have IEEE 754 arithmetic.  Note
+      }
+    \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
       that this is more correctly known by the international standard
       IEC 60059.}
     }
