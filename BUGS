@@ -58,6 +58,10 @@ Date: Mon, 5 Apr 2004 19:23:35 -0700
 Subject: pcauchy precision
 From: terra@gnome.org
 Date: Sun, 11 Apr 2004 19:03:31 +0200 (CEST)
+* PR# 6772 *
+Subject: phyper accuracy and efficiency
+From: terra@gnome.org
+Date: Thu, 15 Apr 2004 18:06:08 +0200 (CEST)
 
 Directory:  Add-ons
 
@@ -421,6 +425,14 @@ Date: Wed, 12 Mar 2003 23:35:59 +0100 (MET)
 Subject: persp - incorrect shading of triangular facets
 From: ihaka@stat.auckland.ac.nz
 Date: Thu, 23 Oct 2003 02:19:26 +0200 (MET DST)
+* PR# 6758 *
+Subject: axis annotation issue
+From: dgrove@fhcrc.org
+Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
+* PR# 6763 *
+Subject: postscript image problem
+From: jonathan_lees@unc.edu
+Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
 
 Directory:  In-Out
 
@@ -828,46 +840,6 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Incorrect handling of NA's in cor()
 From: msa@biostat.mgh.harvard.edu
 Date: Fri,  9 Apr 2004 18:45:40 +0200 (CEST)
-* PR# 6758 *
-Subject: axis annotation issue
-From: dgrove@fhcrc.org
-Date: Tue, 13 Apr 2004 01:45:28 +0200 (CEST)
-* PR# 6760 *
-Subject: Overnight shipping - Soma and hundreds more
-From: "Marissa Sewell" <TQBEIGGRMOHOS@comcast.net>
-Date: Tue, 13 Apr 2004 13:10:26 +0400
-* PR# 6761 *
-Subject: Soliciting For Business Venture and Partnership.
-From: petercole45 <petercole45@telstra.com>
-From: Peter Cole Telephone: 0031-630353886 
-Date: Tue, 13 Apr 2004 15:55:02 +0200
-* PR# 6762 *
-Subject: Wishlist  - Windows Gui keyboard select
-From: rbaer@atsu.edu
-Date: Tue, 13 Apr 2004 18:27:07 +0200 (CEST)
-* PR# 6763 *
-Subject: postscript image problem
-From: jonathan_lees@unc.edu
-Date: Tue, 13 Apr 2004 23:38:56 +0200 (CEST)
-* PR# 6764 *
-Subject: Undelivered Mail Returned to Sender
-Subject: Re: Message
-From: MAILER-DAEMON@gye4.ecua.net.ec (Mail Delivery System)
-From: r-bugs@biostat.ku.dk
-Date: Tue, 13 Apr 2004 18:49:06 -0500 (ECT)
-Date: Tue, 13 Apr 2004 18:46:35 -0500
-* PR# 6765 *
-Subject: Why pay so much for medications? Buy online NOW.
-From: "Kimberly Sylvester" <HTLGGGJRLNC@swissonline.ch>
-Date: Wed, 14 Apr 2004 07:28:02 -0200
-* PR# 6766 *
-Subject: Fantastic News 3680
-From: "Your Only Site" <BHX@alloymail.com>
-Date: Wed, 14 Apr 2004 04:35:30 -0500
-* PR# 6767 *
-Subject: R, cheapest meds around
-From: "Crudit I. Obese" <fangs@sloaney.com>
-Date: Wed, 14 Apr 2004 06:57:25 -0700
 * PR# 6768 *
 Subject: R CMD check on Win fails to detect failed installations
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
@@ -876,15 +848,21 @@ Date: Thu, 15 Apr 2004 11:18:57 +0200
 Subject: R INSTALL resumes on Win in case of errors
 From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
 Date: Thu, 15 Apr 2004 11:37:43 +0200
-* PR# 6770 *
-Subject: dont waste money on bu.ying software, come subduable swifter
-From: "Kasie Shavonne" <lysjd9um@pacificnet.net>
-Date: Thu, 15 Apr 2004 12:46:44 -0200
-* PR# 6771 *
-Subject: 
-From: "Alfreda Sylvester" <stagecoachjacobsen@attbi.com>
-Date: Thu, 15 Apr 2004 09:43:03 -0200
-* PR# 6772 *
-Subject: phyper accuracy and efficiency
-From: terra@gnome.org
-Date: Thu, 15 Apr 2004 18:06:08 +0200 (CEST)
+* PR# 6776 *
+Subject: barplot() does not draw bars correctly in R 1.9.0
+From: "Philippe Grosjean" <phgrosjean@sciviews.org>
+Date: Fri, 16 Apr 2004 11:40:00 +0200
+* PR# 6777 *
+Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
+From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
+Date: Fri, 16 Apr 2004 15:44:52 +0200
+..part of 6776
+* PR# 6778 *
+Subject: Re: [Rd] barplot() does not draw bars correctly in R 1.9.0
+From: Achim Zeileis <Achim.Zeileis@wu-wien.ac.at>
+Date: Fri, 16 Apr 2004 16:53:03 +0200
+..part of 6776
+* PR# 6781 *
+Subject: type.convert
+From: hosking@watson.ibm.com
+Date: Fri, 16 Apr 2004 18:31:03 +0200 (CEST)
