@@ -315,6 +315,7 @@ NEW FEATURES
 	for S compatibility.
 
 
+
 BUG FIXES
 
     o   sign of pearson residuals was wrong for reciprocal link (PR#862)
@@ -383,11 +384,12 @@ BUG FIXES
 
     o	svd(x)$v was not a matrix when x had only 1 row (PR#963).
 
-    o	boxplot.stats() no returns the correct `n' component in the case of
+    o	boxplot.stats() now returns the correct `n' component in the case of
 	NAs. This also affects `conf', the notch length (PR#967).
 
     o   tapply() had "..." argument after simplify=, which made it
 	incompatible with S when passing additional unnamed arguments to FUN.
+
 
 
 	**************************************************
@@ -526,6 +528,7 @@ BUG FIXES
     o	segmentation fault with tmp[[1,]] (PR#904)
 
     o	incorrect "..." handling in plot.factor (PR#830)
+
 
 
 		CHANGES IN R VERSION 1.2.2
