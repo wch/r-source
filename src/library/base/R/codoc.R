@@ -55,7 +55,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     docsExts <- c("Rd", "rd")
     files <- listFilesWithExts(docsDir, docsExts, path = FALSE)
     if(isBase) {
-        baseStopList <- c("Devices.Rd") # add more if needed
+        baseStopList <- c("Defunct.Rd", "Devices.Rd")
         files <- files[!files %in% baseStopList]
     }
     files <- file.path(docsDir, files)
@@ -85,19 +85,37 @@ function(dir, use.values = FALSE, use.positions = TRUE,
         cat("Reading code from", fQuote(codeFile), "\n")        
     lib.source(codeFile, env = .CodeEnv)
     lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
-    ## Find the functions objects to work on.
+    
+    ## Find the function objects to work on.
     funs <- lsCode[sapply(lsCode, function(f) {
         f <- get(f, envir = .CodeEnv)
         is.function(f) && (length(formals(f)) > 0)
     })]
     if(ignore.generic.functions) {
-        isGeneric <- function(f) {
-            any(grep("UseMethod",
-                     deparse(body(get(f, envir = .CodeEnv)))))
+        isS3Generic <- function(f) {
+            any(grep("^UseMethod",
+                     deparse(body(get(f, envir = .CodeEnv)))[1]))
         }
-        funs <- funs[sapply(funs, isGeneric) == FALSE]
+        funs <- funs[sapply(funs, isS3Generic) == FALSE]
     }
-    
+    ## <FIXME>
+    ## Sourcing all R code files in the package is a problem for base,
+    ## where this misses the .Primitive functions.  Hence, when checking
+    ## base for objects shown in \usage but missing from the code, we
+    ## get the primitive functions from the version of R we are using.
+    ## Maybe one we will have R code for the primitives as well ...
+    if(isBase) {
+        baseObjs <- ls(envir = NULL, all.names = TRUE)
+        isPrimitive <- function(fname, envir) {
+            f <- get(fname, envir = envir)
+            is.function(f) && any(grep("^\\.Primitive", deparse(f)))
+        }
+        lsCode <-
+            c(lsCode, baseObjs[sapply(baseObjs, isPrimitive, NULL)],
+              c(".First.lib", ".Last.lib", ".Random.seed"))
+    }
+    ## </FIXME>
+
     .DocsEnv <- new.env()
     checkCoDoc <- function(f) {
         ffc <- formals(get(f, envir = .CodeEnv))
@@ -147,17 +165,17 @@ function(dir, use.values = FALSE, use.positions = TRUE,
             badUsagesInFile <- c(badUsagesInFile, checkCoDoc(f))
         if(length(badUsagesInFile) > 0)
             badUsages[[file]] <- badUsagesInFile
-        
+
+        usagesNotInCode <- usages[! usages %in% lsCode]
+        if(length(usagesNotInCode) > 0) {
+            writeLines(paste("Objects with usage in file `", file,
+                             "' but missing from code:", sep = ""))
+            print(unique(usagesNotInCode))
+            writeLines("")
+        }
+
         lsDocs <- c(lsDocs, usages)
         rm(list = usages, envir = .DocsEnv)
-    }
-
-    ## Objects documented but missing from the code?
-    overdocObjs <- lsDocs[!lsDocs %in% lsCode]
-    if((length(overdocObjs) > 0) && !isBase) {
-        writeLines("\nObjects documented but missing from the code:")
-        print(unique(overdocObjs))
-        writeLines("")
     }
 
     ## Objects without usage information.
