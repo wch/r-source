@@ -735,8 +735,14 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z,
 	    xxx[ns] = s->x1;
 	    yyy[ns++] = s->y1;
 #ifdef DEBUG_contour
-	    Rprintf("  [%2d,%2d]: (x,y)[1:%d] = (%g,%g),..,(%g,%g)\n", 
-		    i,j, ns, xxx[0],yyy[0], xxx[ns-1],yyy[ns-1]);
+	    Rprintf("  [%2d,%2d]: (x,y)[1:%d] = ", i,j, ns);
+	    if(ns >= 5)
+		Rprintf(" (%g,%g), (%g,%g), ..., (%g,%g)\n", 
+			xxx[0],yyy[0], xxx[1],yyy[1], xxx[ns-1],yyy[ns-1]);
+	    else
+		for(iii = 0; iii < ns; iii++)
+		    Rprintf(" (%g,%g)%s", xxx[iii],yyy[iii],
+			    (iii < ns-1) ? "," : "\n");
 #endif	    
 
 	    GMode(1, dd);
