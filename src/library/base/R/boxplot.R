@@ -108,7 +108,8 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
     else if (n == 1) 0.4
     else rep(0.8, n)
 
-    ylim <- if(is.null(pars$ylim)) limits else pars$ylim
+    if(is.null(pars$ylim)) ylim <- limits
+    else { ylim <- pars$ylim; pars$ylim <- NULL }
     if(missing(border) || length(border)==0)
 	border <- par("fg")
 
@@ -124,7 +125,9 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE,
 	     border=border[(i-1)%%length(border)+1],
 	     col=if(is.null(col)) col else col[(i-1)%%length(col)+1])
 
-    if(is.null(pars$axes) || pars$axes) {
+    axes <- is.null(pars$axes)
+    if(!axes) { axes <- pars$axes; pars$axes <- NULL }
+    if(axes) {
 	if(n > 1) axis(1, at=1:n, labels=names(z))
 	axis(2)
     }
