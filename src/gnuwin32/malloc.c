@@ -7,16 +7,11 @@
   public domain.  Send questions/comments/complaints/performance data
   to dl@cs.oswego.edu
 
-* VERSION 2.6.5  Wed Jun 17 15:55:16 1998  Doug Lea  (dl at gee)
+* VERSION 2.6.6  Sun Mar  5 19:10:03 2000  Doug Lea  (dl at gee)
 
    Note: There may be an updated version of this malloc obtainable at
            ftp://g.oswego.edu/pub/misc/malloc.c
          Check before installing!
-
-   Note: This version differs from 2.6.4 only by correcting a
-         statement ordering error that could cause failures only
-         when calls to this malloc are interposed with calls to
-         other memory allocators.
 
 * Why use this malloc?
 
@@ -112,8 +107,8 @@
        that `size_t' may be defined on a system as either a signed or
        an unsigned type. To be conservative, values that would appear
        as negative numbers are avoided.
-       Requests for sizes with a negative sign bit will return a
-       minimum-sized chunk.
+       Requests for sizes with a negative sign bit when the request
+       size is treaded as a long will return null.
 
   Maximum overhead wastage per allocated chunk: normally 15 bytes
 
@@ -196,8 +191,10 @@
      affect anything.
   WIN32                     (default: undefined)
      Define this on MS win (95, nt) platforms to compile in sbrk emulation.
-  LACKS_UNISTD_H            (default: undefined)
+  LACKS_UNISTD_H            (default: undefined if not WIN32)
      Define this if your system does not have a <unistd.h>.
+  LACKS_SYS_PARAM_H         (default: undefined if not WIN32)
+     Define this if your system does not have a <sys/param.h>.
   MORECORE                  (default: sbrk)
      The name of the routine to call to obtain more memory from the system.
   MORECORE_FAILURE          (default: -1)
@@ -214,6 +211,10 @@
      These values may also be changed dynamically via mallopt(). The
      preset defaults are those that give best performance for typical
      programs/systems.
+  USE_DL_PREFIX             (default: undefined)
+     Prefix all public routines with the string 'dl'.  Useful to
+     quickly avoid procedure declaration conflicts and linker symbol
+     conflicts with existing memory allocation routines.
 
 
 */
@@ -236,7 +237,7 @@
 #endif /*__STD_C*/
 
 #ifndef Void_t
-#if __STD_C
+#if (__STD_C || defined(WIN32))
 #define Void_t      void
 #else
 #define Void_t      char
@@ -325,6 +326,20 @@ extern "C" {
 #ifdef WIN32
 #define MORECORE wsbrk
 #define HAVE_MMAP 0
+
+#define LACKS_UNISTD_H
+#define LACKS_SYS_PARAM_H
+
+/*
+  Include 'windows.h' to get the necessary declarations for the
+  Microsoft Visual C++ data structures and routines used in the 'sbrk'
+  emulation.
+
+  Define WIN32_LEAN_AND_MEAN so that only the essential Microsoft
+  Visual C++ header files are included.
+*/
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #endif
 
 
@@ -357,8 +372,13 @@ extern "C" {
 void* memset(void*, int, size_t);
 void* memcpy(void*, const void*, size_t);
 #else
+#ifdef WIN32
+// On Win32 platforms, 'memset()' and 'memcpy()' are already declared in
+// 'windows.h'
+#else
 Void_t* memset();
 Void_t* memcpy();
+#endif
 #endif
 #endif
 
@@ -506,24 +526,30 @@ do {                                                                          \
        extern size_t getpagesize();
 #      define malloc_getpagesize getpagesize()
 #    else
-/*#      include <sys/param.h>*/
-#      ifdef EXEC_PAGESIZE
-#        define malloc_getpagesize EXEC_PAGESIZE
+#      ifdef WIN32
+#        define malloc_getpagesize (4096) /* TBD: Use 'GetSystemInfo' instead */
 #      else
-#        ifdef NBPG
-#          ifndef CLSIZE
-#            define malloc_getpagesize NBPG
-#          else
-#            define malloc_getpagesize (NBPG * CLSIZE)
-#          endif
+#        ifndef LACKS_SYS_PARAM_H
+#          include <sys/param.h>
+#        endif
+#        ifdef EXEC_PAGESIZE
+#          define malloc_getpagesize EXEC_PAGESIZE
 #        else
-#          ifdef NBPC
-#            define malloc_getpagesize NBPC
-#          else
-#            ifdef PAGESIZE
-#              define malloc_getpagesize PAGESIZE
+#          ifdef NBPG
+#            ifndef CLSIZE
+#              define malloc_getpagesize NBPG
 #            else
-#              define malloc_getpagesize (4096) /* just guess */
+#              define malloc_getpagesize (NBPG * CLSIZE)
+#            endif
+#          else
+#            ifdef NBPC
+#              define malloc_getpagesize NBPC
+#            else
+#              ifdef PAGESIZE
+#                define malloc_getpagesize PAGESIZE
+#              else
+#                define malloc_getpagesize (4096) /* just guess */
+#              endif
 #            endif
 #          endif
 #        endif
@@ -760,6 +786,18 @@ struct mallinfo {
 
 
 /*
+    USE_DL_PREFIX will prefix all public routines with the string 'dl'.
+      Useful to quickly avoid procedure declaration conflicts and linker
+      symbol conflicts with existing memory allocation routines.
+
+*/
+
+/* #define USE_DL_PREFIX */
+
+
+
+
+/*
 
   Special defines for linux libc
 
@@ -840,7 +878,17 @@ extern Void_t*     sbrk();
 
 #else
 
-
+#ifdef USE_DL_PREFIX
+#define cALLOc		dlcalloc
+#define fREe		dlfree
+#define mALLOc		dlmalloc
+#define mEMALIGn	dlmemalign
+#define rEALLOc		dlrealloc
+#define vALLOc		dlvalloc
+#define pvALLOc		dlpvalloc
+#define mALLINFo	dlmallinfo
+#define mALLOPt		dlmallopt
+#else /* USE_DL_PREFIX */
 #define cALLOc		calloc
 #define fREe		free
 #define mALLOc		malloc
@@ -850,6 +898,7 @@ extern Void_t*     sbrk();
 #define pvALLOc		pvalloc
 #define mALLINFo	mallinfo
 #define mALLOPt		mallopt
+#endif /* USE_DL_PREFIX */
 
 #endif
 
@@ -897,6 +946,8 @@ struct mallinfo mALLINFo();
 /*
   Emulation of sbrk for WIN32
   All code within the ifdef WIN32 is untested by me.
+
+  Thanks to Martin Fong and others for supplying this.
 */
 
 /*
@@ -914,6 +965,7 @@ extern void R_Suicide(char *);
 static int PageSize=0;
 
 #define AlignPage(add) (((add) + (PageSize-1)) & ~(PageSize-1))
+#define AlignPage64K(add) (((add) + (0x10000 - 1)) & ~(0x10000 - 1))
 
 /* reserve 64MB to ensure large contiguous space */
 #define RESERVED_SIZE (64*1024*1024)
@@ -945,8 +997,28 @@ void *findRegion (void *start_address, unsigned long size)
 	    start_address = (char*)info.BaseAddress + info.RegionSize;
 	else if (info.RegionSize >= size)
 	    return start_address;
-	else
+	else {
+/*	    Requested region is not available so see if the
+	    next region is available.  Set 'start_address'
+	    to the next region and call 'VirtualQuery()' again. */
+
 	    start_address = (char*)info.BaseAddress + info.RegionSize;
+	    
+/*	    Make sure we start looking for the next region
+	    on the *next* 64K boundary.  Otherwise, even if
+	    the new region is free according to
+	    'VirtualQuery()', the subsequent call to
+	    'VirtualAlloc()' (which follows the call to
+	    this routine in 'wsbrk()') will round *down*
+	    the requested address to a 64K boundary which
+	    we already know is an address in the
+	    unavailable region.  Thus, the subsequent call
+	    to 'VirtualAlloc()' will fail and bring us back
+	    here, causing us to go into an infinite loop. */
+
+	    start_address = 
+		(void *) AlignPage64K((unsigned long) start_address);
+	}
     }
     return NULL;
 }
@@ -1894,7 +1966,9 @@ static void malloc_extend_top(nb) INTERNAL_SIZE_T nb;
       correction = 0;
 
     /* Guarantee the next brk will be at a page boundary */
-    correction += pagesz - ((unsigned long)(brk + sbrk_size) & (pagesz - 1));
+
+    correction += ((((unsigned long)(brk + sbrk_size))+(pagesz-1)) &
+                   ~(pagesz - 1)) - ((unsigned long)(brk + sbrk_size));
 
     /* Allocate correction */
     new_brk = (char*)(MORECORE (correction));
@@ -2025,7 +2099,11 @@ Void_t* mALLOc(bytes) size_t bytes;
   mchunkptr bck;                     /* misc temp for linking */
   mbinptr q;                         /* misc temp */
 
-  INTERNAL_SIZE_T nb  = request2size(bytes);  /* padded request size; */
+  INTERNAL_SIZE_T nb;
+
+  if ((long)bytes < 0) return 0;
+
+  nb = request2size(bytes);  /* padded request size; */
 
   /* Check for exact match in a bin */
 
@@ -2307,7 +2385,7 @@ void fREe(mem) Void_t* mem;
     if (!(hd & PREV_INUSE))                    /* consolidate backward */
     {
       prevsz = p->prev_size;
-      p = chunk_at_offset(p, -prevsz);
+      p = chunk_at_offset(p, -((long) prevsz));
       sz += prevsz;
       unlink(p, bck, fwd);
     }
@@ -2326,7 +2404,7 @@ void fREe(mem) Void_t* mem;
   if (!(hd & PREV_INUSE))                    /* consolidate backward */
   {
     prevsz = p->prev_size;
-    p = chunk_at_offset(p, -prevsz);
+    p = chunk_at_offset(p, -((long) prevsz));
     sz += prevsz;
 
     if (p->fd == last_remainder)             /* keep as last_remainder */
@@ -2426,6 +2504,7 @@ Void_t* rEALLOc(oldmem, bytes) Void_t* oldmem; size_t bytes;
   if (bytes == 0) { fREe(oldmem); return 0; }
 #endif
 
+  if ((long)bytes < 0) return 0;
 
   /* realloc of null is supposed to be same as malloc */
   if (oldmem == 0) return mALLOc(bytes);
@@ -2629,6 +2708,8 @@ Void_t* mEMALIGn(alignment, bytes) size_t alignment; size_t bytes;
   mchunkptr remainder;        /* spare room at end to split off */
   long      remainder_size;   /* its size */
 
+  if ((long)bytes < 0) return 0;
+
   /* If need less alignment than we give anyway, just relay to malloc */
 
   if (alignment <= MALLOC_ALIGNMENT) return mALLOc(bytes);
@@ -2664,7 +2745,7 @@ Void_t* mEMALIGn(alignment, bytes) size_t alignment; size_t bytes;
       this is always possible.
     */
 
-    brk = (char*)mem2chunk(((unsigned long)(m + alignment - 1)) & -alignment);
+    brk = (char*)mem2chunk(((unsigned long)(m + alignment - 1)) & -((signed) alignment));
     if ((long)(brk - (char*)(p)) < MINSIZE) brk = brk + alignment;
 
     newp = (mchunkptr)brk;
@@ -2759,12 +2840,15 @@ Void_t* cALLOc(n, elem_size) size_t n; size_t elem_size;
 
   INTERNAL_SIZE_T sz = n * elem_size;
 
+
   /* check if expand_top called, in which case don't need to clear */
 #if MORECORE_CLEARS
   mchunkptr oldtop = top;
   INTERNAL_SIZE_T oldtopsize = chunksize(top);
 #endif
   Void_t* mem = mALLOc (sz);
+
+  if ((long)n < 0) return 0;
 
   if (mem == 0)
     return 0;
@@ -2808,7 +2892,7 @@ void cfree(Void_t *mem)
 void cfree(mem) Void_t *mem;
 #endif
 {
-  free(mem);
+  fREe(mem);
 }
 #endif
 
@@ -3058,6 +3142,22 @@ int mALLOPt(param_number, value) int param_number; int value;
 /*
 
 History:
+
+    V2.6.6 Sun Dec  5 07:42:19 1999  Doug Lea  (dl at gee)
+      * return null for negative arguments
+      * Added Several WIN32 cleanups from Martin C. Fong <mcfong@yahoo.com>
+         * Add 'LACKS_SYS_PARAM_H' for those systems without 'sys/param.h'
+          (e.g. WIN32 platforms)
+         * Cleanup up header file inclusion for WIN32 platforms
+         * Cleanup code to avoid Microsoft Visual C++ compiler complaints
+         * Add 'USE_DL_PREFIX' to quickly allow co-existence with existing
+           memory allocation routines
+         * Set 'malloc_getpagesize' for WIN32 platforms (needs more work)
+         * Use 'assert' rather than 'ASSERT' in WIN32 code to conform to
+	   usage of 'assert' in non-WIN32 code
+         * Improve WIN32 'sbrk()' emulation's 'findRegion()' routine to
+           avoid infinite loop
+      * Always call 'fREe()' rather than 'free()'
 
     V2.6.5 Wed Jun 17 15:57:31 1998  Doug Lea  (dl at gee)
       * Fixed ordering problem with boundary-stamping
