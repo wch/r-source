@@ -1362,3 +1362,74 @@ void R_InitConnInPStream(R_inpstream_t stream,  Rconnection con,
     R_InitInPStream(stream, (R_pstream_data_t) con, type,
 		    InCharConn, InBytesConn, phook, pdata);
 }
+
+/* ought to quote the argument, but it should only be an ENVSXP or STRSXP */
+static SEXP CallHook(SEXP x, SEXP fun)
+{
+    SEXP val, call;
+    PROTECT(call = LCONS(fun, LCONS(x, R_NilValue)));
+    val = eval(call, R_GlobalEnv);
+    UNPROTECT(1);
+    return val;
+}
+
+SEXP do_serializeToConn(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* serializeToConn(object, conn, ascii, version, hook) */
+
+    SEXP object, fun;
+    Rboolean ascii;
+    int version;
+    Rconnection con;
+    struct R_outpstream_st out;
+    R_pstream_format_t type;
+    SEXP (*hook)(SEXP, SEXP);
+
+    checkArity(op, args);
+
+    object = CAR(args);
+    con = getConnection(asInteger(CADR(args)));
+
+    if (TYPEOF(CADDR(args)) != LGLSXP)
+	errorcall(call, "`ascii' must be logical");
+    ascii = INTEGER(CADDR(args))[0];
+    if (ascii) type = R_pstream_ascii_format;
+    else type = R_pstream_xdr_format;
+
+    if (CADDDR(args) == R_NilValue)
+	version = R_DefaultSerializeVersion;
+    else
+	version = asInteger(CADDDR(args));
+    if (version == NA_INTEGER || version <= 0)
+	error("bad version value");
+    if (version < 2)
+	error("cannott save to connections in version %d format", version);
+
+    fun = CAR(nthcdr(args,4));
+    hook = fun != R_NilValue ? CallHook : NULL;
+
+    R_InitConnOutPStream(&out, con, type, version, hook, fun);
+    R_Serialize(object, &out);
+    return R_NilValue;
+}
+
+SEXP do_unserializeFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    /* unserializeFromConn(conn, hook) */
+
+    struct R_inpstream_st in;
+    Rconnection con;
+    SEXP fun;
+    SEXP (*hook)(SEXP, SEXP);
+
+    checkArity(op, args);
+
+    con = getConnection(asInteger(CAR(args)));
+
+    fun = CADR(args);
+    hook = fun != R_NilValue ? CallHook : NULL;
+
+    R_InitConnInPStream(&in, con, R_pstream_any_format, hook, fun);
+    return R_Unserialize(&in);
+}
+
