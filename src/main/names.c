@@ -775,6 +775,8 @@ void InitNames()
 
     for (i = 0; R_FunTab[i].name; i++)
 	installFunTab(i);
+
+    R_PreciousList = R_NilValue;
 }
 
 /* install - probe the symbol table */

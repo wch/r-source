@@ -51,7 +51,6 @@
 #include "Defn.h"
 #include "Graphics.h"
 
-
 static int gc_reporting = 0;
 static int gc_count = 0;
 int gc_inhibit_torture = 1; /* gets set to zero after initialisations */
@@ -163,47 +162,17 @@ void InitMemory()
     int i;
 
     gc_reporting = R_Verbose;
-#ifdef OLD_Macintosh
-    OSErr   result;
-
-    gStackH = TempNewHandle( R_PPStackSize * sizeof(SEXP), &result );
-    if( (gStackH == NULL) || (result != noErr) )
-	R_Suicide( "couldn't allocate system memory for pointer stack" );
-    TempHLock( gStackH, &result );
-    R_PPStack = (SEXP*)*gStackH;
-#else
     if (!(R_PPStack = (SEXP *) malloc(R_PPStackSize * sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for pointer stack");
-#endif
-
     R_PPStackTop = 0;
 
-#ifdef OLD_Macintosh
-    gNHeapH = TempNewHandle( R_NSize * sizeof(SEXPREC), &result );
-    if( (gNHeapH == NULL) || (result != noErr) )
-	R_Suicide( "couldn't allocate system memory for node heap" );
-    TempHLock( gNHeapH, &result );
-    R_NHeap = (SEXPREC *)*gNHeapH;
-#else
     if (!(R_NHeap = (SEXPREC *) malloc(R_NSize * sizeof(SEXPREC))))
 	R_Suicide("couldn't allocate memory for node heap");
-#endif
 
     R_VSize = (((R_VSize + 1)/ sizeof(VECREC)));
 
-#ifdef OLD_Macintosh
-    gVHeapH = TempNewHandle( R_VSize * sizeof(VECREC), &result );
-    if( (gVHeapH == NULL) || (result != noErr) )
-	R_Suicide( "couldn't allocate system memory for vector heap" );
-    TempHLock( gVHeapH, &result );
-    R_VHeap = (VECREC *)*gVHeapH;
-#else
-#ifdef DEBUGGING
-    printf("R_VSize = %d malloc-ed\n", R_VSize * sizeof(VECREC));
-#endif
     if (!(R_VHeap = (VECREC *) malloc(R_VSize * sizeof(VECREC))))
 	R_Suicide("couldn't allocate memory for vector heap");
-#endif
 
     R_VTop = &R_VHeap[0];
     R_VMax = &R_VHeap[R_VSize - 1];
@@ -218,6 +187,11 @@ void InitMemory()
        garbage collection... -pd */
 
     framenames = R_NilValue;
+
+    /* This will ensure that state variables needed by R CorbaServers
+       will persist across garbage collects... -ihaka */
+
+    R_PreciousList =  R_NilValue;
 }
 
 
@@ -538,6 +512,8 @@ void markPhase(void)
     markSExp(framenames); 		   /* used for interprocedure
 					    communication in model.c */
 
+    markSExp(R_PreciousList);
+
     for (i = 0; i < R_PPStackTop; i++)	   /* Protected pointers */
 	markSExp(R_PPStack[i]);
 }
@@ -786,4 +762,30 @@ void R_chk_free(void *ptr)
 {
     if(!ptr) warning("attempt to free NULL pointer by Free");
     free(ptr);
+}
+
+/* This code keeps a list of objects which are not assigned to variables
+   but which are required to persist across garbage collections.  The
+   objects are registered with R_PreserveObject and Deregistered with
+   R_UnpreserveObject. - ihaka */
+
+void R_PreserveObject(SEXP object)
+{
+    R_PreciousList = CONS(object, R_PreciousList);
+}
+
+static SEXP RecursiveRelease(SEXP object, SEXP list)
+{
+    if (!isNull(list)) {
+        if (object == CAR(list))
+            return CDR(list);
+        else
+            CDR(list) = RecursiveRelease(object, CDR(list));
+    }
+    return list;
+}
+
+void R_ReleaseObject(SEXP object)
+{
+    R_PreciousList =  RecursiveRelease(object, R_PreciousList);
 }

@@ -235,6 +235,7 @@ extern VECREC*	R_VHeap;	    /* Base of the vector heap */
 extern VECREC*	R_VTop;		    /* Current top of the vector heap */
 extern VECREC*	R_VMax;		    /* bottom of R_alloc'ed heap */
 extern long	R_Collected;	    /* Number of free cons cells (after gc) */
+extern SEXP	R_PreciousList;     /* List of Persistent Objects */
 
 /* The Pointer Protection Stack */
 extern int	R_PPStackSize	INI_as(R_PPSSIZE); /* The stack size (elements) */
@@ -381,6 +382,8 @@ void PrintWarnings(void);
 SEXP promiseArgs(SEXP, SEXP);
 SEXP R_LoadFromFile(FILE*);
 FILE* R_OpenLibraryFile(char *);
+void R_PreserveObject(SEXP);
+void R_ReleaseObject(SEXP);
 void R_RestoreGlobalEnv(void);
 void R_SaveGlobalEnv(void);
 void R_SaveToFile(SEXP, FILE*, int);
