@@ -219,7 +219,7 @@ loadNamespace <- function (package, lib.loc = NULL,
         if (partial) return(ns)
 
         # register any S3 methods
-        registerS3methods(nsInfo$S3methods, env)
+        registerS3methods(nsInfo$S3methods, package, env)
 
         # load any dynamic libraries
         for (lib in nsInfo$dynlibs)
@@ -798,7 +798,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 #         eval(substitute(expr), ns)
 # }
 
-registerS3methods <- function(info, env)
+registerS3methods <- function(info, package, env)
 {
     wrap <- function(method, home) {
         method <- method            # force evaluation
@@ -808,9 +808,14 @@ registerS3methods <- function(info, env)
     .registerS3method <- function(genname, class, method, nm, envir)
     {
         defenv <- if(any(genname == groupGenerics)) .BaseNamespaceEnv
-        else {genfun <- get(genname, envir = envir)
-              if (typeof(genfun) == "closure") environment(genfun)
-              else .BaseNamespaceEnv}
+        else {
+            if(!exists(genname, envir = envir))
+                stop("object ", sQuote(genname),
+                     " not found whilst loading namespace ",
+                     sQuote(package), call. = FALSE)
+            genfun <- get(genname, envir = envir)
+            if (typeof(genfun) == "closure") environment(genfun)
+            else .BaseNamespaceEnv}
         if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
             assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
                    envir = defenv)
