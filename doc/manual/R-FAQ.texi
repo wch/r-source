@@ -6,6 +6,7 @@
 @set FAQ-YEAR 2002
 @set FAQ-VERSION 1.5-20, 2002-08-31
 @set REL-VERSION 1.5.1
+@set RW-VERSION rw1060
 @set FAQ-ISBN 3-901167-51-X
 @c %**end of header
 
@@ -394,7 +395,7 @@ and maintained by @email{murdoch@@stats.uwo.ca, Duncan Murdoch} and
 @c aware that some decompression programs do not preserve long file names
 @c properly.
 
-For most installations the installer @command{SetupR.exe} will be the
+For most installations the installer @command{@value{RW-VERSION}.exe} will be the
 easiest tool to use.
 
 See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, ``R for

@@ -87,7 +87,7 @@ been modified (e.g., by building in their directories).
 subdirectory <code>R</code> of the current directory, where <var>module</var>
 specifies one of the four existing flavors of the R sources, and can be
 one of <code>r-release</code> (current released version), <code>r-patched</code>
-(patched released version), and <code>r-devel</code> (development version). 
+(patched released version), and <code>r-devel</code> (development version).
 The rsync trees are created directly from the master CVS archive and are
 updated hourly.  The <code>-C</code> option in the <code>rsync</code> command
 is to cause it to skip the CVS directories.  Further information on
@@ -152,7 +152,7 @@ directory.  You can copy this script to a place where users can invoke
 it, for example to <code>/usr/local/bin/R</code>.  You could also copy the man
 page <code>R.1</code> to a place where your <code>man</code> reader finds it,
 such as <code>/usr/local/man/man1</code>.  If you want to install the complete
-R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>. 
+R tree to, e.g., <code>/usr/local/lib/R</code>, see <a href="#Installation">Installation</a>.
 Note: you do not <em>need</em> to install R: you can run it from where
 it was built.
 
@@ -190,19 +190,19 @@ the latest version).
 
 <dl>
 <dt><code>refman</code>
-<dd>Printed versions of all the help pages. 
+<dd>Printed versions of all the help pages.
 <br><dt><code>R-FAQ</code>
-<dd>R <small>FAQ</small> (which is already built for you). 
+<dd>R <small>FAQ</small> (which is already built for you).
 <br><dt><code>R-intro</code>
-<dd>"An Introduction to R". 
+<dd>"An Introduction to R".
 <br><dt><code>R-data</code>
-<dd>"R Data Import/Export". 
+<dd>"R Data Import/Export".
 <br><dt><code>R-admin</code>
-<dd>"R Installation and Administration", this manual. 
+<dd>"R Installation and Administration", this manual.
 <br><dt><code>R-exts</code>
-<dd>"Writing R Extensions". 
+<dd>"Writing R Extensions".
 <br><dt><code>R-lang</code>
-<dd>"The R Language Definition". 
+<dd>"The R Language Definition".
 </dl>
 
 <p>To make these, use
@@ -292,7 +292,7 @@ work.
 <p>Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-<p>The simplest way is to use <code>SetupR.exe</code> or <code>miniR.exe</code>.  Just
+<p>The simplest way is to use <code>rw1060.exe</code> or <code>miniR.exe</code>.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you suppressed making a group for R).
@@ -511,7 +511,7 @@ it.
 <p><code>bzfile</code> connections make use of <code>libbz2</code>, part of
 <code>bzip2</code> (<a href="http://sources.redhat.com/bzip2">http://sources.redhat.com/bzip2</a>).
 
-<p><code>grep</code> and related functions will make use of PCRE if installed. 
+<p><code>grep</code> and related functions will make use of PCRE if installed.
 The sources are at
 <a href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/">ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/</a>; the
 Debian package is <code>libpcre3-dev</code> and the RPM something like
@@ -557,7 +557,7 @@ can specify a specific BLAS library by the configuration option
 <code>--without-blas</code>.
 
 <p>For systems with multiple processors it is in principle possible to use
-a multi-threaded version of ATLAS.  This is currently not supported. 
+a multi-threaded version of ATLAS.  This is currently not supported.
 The problem is that <code>SIGINT</code> signals will not be handled properly
 when sent during a multi-threaded ATLAS computation, and this may result
 in a segmentation fault.  Changes in the R internals are needed to
@@ -586,7 +586,7 @@ is needed so <code>libsunperf</code> can be used.
 source, and <a href="http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html">R Windows <small>FAQ</small></a> for adding pre-compiled support to binary versions.
 
 <p>Note that under Unix (but not under Windows) if R is compiled
-against a non-default BLAS, then all BLAS-using packages must also be. 
+against a non-default BLAS, then all BLAS-using packages must also be.
 So if R is re-built after ATLAS is installed, then packages such as
 <strong>quantreg</strong> will need to be re-installed.
 
@@ -674,7 +674,7 @@ front end shell script which does the re-ordering).
 
 <p>If you find you need to alter configure variables, it is worth noting
 that some settings may be cached in the file <code>config.cache</code>, and it
-is a good idea to remove that file (if it exists) before re-configuring. 
+is a good idea to remove that file (if it exists) before re-configuring.
 Note that caching is turned <em>off</em> by default; use the command line
 option <code>--config-cache</code> (or <code>-C</code>) to enable caching.
 
@@ -865,7 +865,7 @@ packages in order to compile the R-GNOME interface.
 
 <p>This section provides some notes on building R on different Unix-like
 platforms.  These notes are based on tests run on one or two systems in
-each case with particular sets of compilers and support libraries. 
+each case with particular sets of compilers and support libraries.
 Success in building R depends on the proper installation and functioning
 of support software; your results may differ if you have other versions
 of compilers and support libraries.
@@ -1013,7 +1013,7 @@ been replaced by <code>isfinite</code>.  A <code>gcc</code> configured for HPUX
 10.2 run on 11.0 will not find <code>isfinite</code>, and as a result
 <code>configure</code> does not recognize the machine as fully supporting
 <small>IEEE</small> arithmetic and does not define <code>IEEE_754</code> when
-compiling C code.  This results in a failure in <code>make check</code>. 
+compiling C code.  This results in a failure in <code>make check</code>.
 The best solution is to install a properly configured <code>gcc</code>.  An
 alternative work-around is to add <code>-DIEEE_754</code> to the
 <code>CFLAGS</code> variable.
@@ -1120,7 +1120,7 @@ many compilers these reduce the degree of compliance to the
 SunPro compilers causes R's <code>NaN</code> to be set incorrectly.
 
 <p><strong>Shared Libraries</strong>: There seems to be very little agreement
-across platforms on what needs to be done to build shared libraries. 
+across platforms on what needs to be done to build shared libraries.
 there are many different combinations of flags for the compilers and
 loaders.  GNU libtool cannot be used (yet), as it currently does not
 fully support FORTRAN (and will most likely never support <code>f2c</code>:

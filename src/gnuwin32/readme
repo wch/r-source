@@ -23,7 +23,7 @@ Installation
 
 The distribution can be obtained in two versions:
 
-1) A 19Mb file SetupR.exe.  Just run this for a Windows-2000 style
+1) A 19Mb file @RWVER@.exe.  Just run this for a Windows-2000 style
 installer.  It contains all the R components, and you can select what
 want installed.
 
@@ -50,7 +50,7 @@ arguments; these are most easily set by making a shortcut to
 ...\@RWVER@\bin\Rgui.exe and adding the arguments in the Target field.
 Set the `Start in' field of the shortcut to the directory you want to use
 as the working directory (where workspaces and files are saved and
-loaded from).  The SetupR.exe and miniR.exe installers create a
+loaded from).  The @RWVER@.exe and miniR.exe installers create a
 shortcut on the desktop for you (by default).
 
 You have a choice of interface: SDI (separate windows) or MDI
@@ -233,7 +233,7 @@ add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution installed from SetupR.exe (but not the R sources).  This
+distribution installed from @RWVER@.exe (but not the R sources).  This
 contains detailed instructions in file `README.packages'.
 
 

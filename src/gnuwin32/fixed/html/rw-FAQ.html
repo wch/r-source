@@ -25,7 +25,7 @@
 Introduction</a></li>
 
 <li><a name="toc_Installation%20and%20Usage"></a> <a href=
-"#Installation%20and%20Usage">2 Installation and Usage</a> 
+"#Installation%20and%20Usage">2 Installation and Usage</a>
 <ul>
 <li><a href=
 "#Where%20can%20I%20find%20the%20latest%20version%3f">2.1 Where can
@@ -81,7 +81,7 @@ The internet download functions fail.</a></li>
 </ul>
 </li>
 
-<li><a name="toc_Packages"></a> <a href="#Packages">3 Packages</a> 
+<li><a name="toc_Packages"></a> <a href="#Packages">3 Packages</a>
 <ul>
 <li><a href=
 "#Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
@@ -118,7 +118,7 @@ Hyperlinks in Compiled HTML sometimes do not work.</a></li>
 </li>
 
 <li><a name="toc_Windows%20Features"></a> <a href=
-"#Windows%20Features">4 Windows Features</a> 
+"#Windows%20Features">4 Windows Features</a>
 <ul>
 <li><a href=
 "#What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
@@ -139,7 +139,7 @@ console?</a></li>
 </li>
 
 <li><a name="toc_Workspaces"></a> <a href="#Workspaces">5
-Workspaces</a> 
+Workspaces</a>
 <ul>
 <li><a href=
 "#My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
@@ -157,7 +157,7 @@ this?</a></li>
 </li>
 
 <li><a name="toc_The%20R%20Console%20and%20Fonts"></a> <a href=
-"#The%20R%20Console%20and%20Fonts">6 The R Console and Fonts</a> 
+"#The%20R%20Console%20and%20Fonts">6 The R Console and Fonts</a>
 <ul>
 <li><a href=
 "#I%20would%20like%20to%20be%20able%20to%20use%20Japanese%20fonts">6.1
@@ -179,7 +179,7 @@ lines in the console or pager are truncated.</a></li>
 </li>
 
 <li><a name="toc_Building%20from%20Source"></a> <a href=
-"#Building%20from%20Source">7 Building from Source</a> 
+"#Building%20from%20Source">7 Building from Source</a>
 <ul>
 <li><a href="#How%20can%20I%20compile%20R%20from%20source%3f">7.1
 How can I compile R from source?</a></li>
@@ -213,9 +213,9 @@ output from my Fortran code disappears. Why?</a></li>
 </li>
 </ul>
 
-<a name="Top"></a>  
+<a name="Top"></a>
 <hr>
-<a name="Introduction"></a> 
+<a name="Introduction"></a>
 <h2>1 Introduction</h2>
 
 <p>This FAQ is for the Windows port of R: it describes features
@@ -233,10 +233,10 @@ often called something like <code>rw1060</code> (although not
 officially).</p>
 
 <hr>
-<a name="Installation%20and%20Usage"></a> 
+<a name="Installation%20and%20Usage"></a>
 <h2>2 Installation and Usage</h2>
 
-<a name="Where%20can%20I%20find%20the%20latest%20version%3f"></a> 
+<a name="Where%20can%20I%20find%20the%20latest%20version%3f"></a>
 <h3>2.1 Where can I find the latest version?</h3>
 
 <p>Go to any CRAN site (see <a href=
@@ -245,7 +245,7 @@ for a list), navigate to the <code>bin/windows/base</code>
 directory and collect the files you need. There are two versions of
 the distribution.</p>
 
-<p>1) <code>SetupR.exe</code> is about 19Mb and gives a complete
+<p>1) <code>rw1060.exe</code> is about 19Mb and gives a complete
 installation.</p>
 
 <p>2) Directory <code>miniR</code> contains <code>miniR.exe</code>
@@ -265,7 +265,7 @@ systems).</p>
 you choose an installation path not containing spaces. (Using a
 path with spaces in will probably work, but is little-tested.)</p>
 
-<p>The simplest way is to use <code>SetupR.exe</code> or
+<p>The simplest way is to use <code>rw1060.exe</code> or
 <code>miniR.exe</code>. Just double-click on the icon and follow
 the instructions. If you installed R this way you can uninstall it
 from the Control Panel or Start Menu (unless you supressed making a
@@ -397,11 +397,11 @@ have LaTeX installed you can print help files by
 <code>help(fn_name, offline=TRUE)</code>.</li>
 </ul>
 
-<a name="Can%20I%20use%20R%20BATCH%3f"></a> 
+<a name="Can%20I%20use%20R%20BATCH%3f"></a>
 <h3>2.9 Can I use <code>R BATCH</code>?</h3>
 
 <p>Yes, if you have Perl and the files for making source packages
-(from <code>SetupR.exe</code>) installed. The Windows analogue is
+(from <code>rw1060.exe</code>) installed. The Windows analogue is
 <code>Rcmd BATCH</code>: use <code>Rcmd BATCH --help</code> for
 full details.</p>
 
@@ -415,7 +415,7 @@ path_to_R\bin\Rterm.exe --no-restore --no-save &lt; %1 &gt; %1.out
 </pre>
 
 <a name=
-"Can%20I%20use%20rw1060%20with%20ESS%20and%20(X)emacs%3f"></a> 
+"Can%20I%20use%20rw1060%20with%20ESS%20and%20(X)emacs%3f"></a>
 <h3>2.10 Can I use rw1060 with ESS and (X)emacs?</h3>
 
 <p>Yes. Recent versions of ESS (e.g. 5.1.20) come with support for
@@ -528,12 +528,12 @@ so needs Internet Explorer 4 or later installed).</p>
 <code>?download.file</code>.</p>
 
 <hr>
-<a name="Packages"></a> 
+<a name="Packages"></a>
 <h2>3 Packages</h2>
 
 <a name=
 "Can%20I%20install%20packages%20(libraries)%20in%20this%20version%3f">
-</a> 
+</a>
 <h3>3.1 Can I install packages (libraries) in this version?</h3>
 
 <p>Yes, but you will need a lot of tools to do so, unless the
@@ -553,7 +553,7 @@ point-and-click interface to package installation.</p>
 
 <p>If there is not a pre-compiled version or that is not up-to-date
 or you prefer compiling from source, make sure you installed the
-necessary files from <code>SetupR.exe</code>. Then read the file
+necessary files from <code>rw1060.exe</code>. Then read the file
 <code>README.packages</code>. You will need to collect and install
 several tools to use this: you can download them via the portal at
 <a href=
@@ -733,12 +733,12 @@ session.</p>
 <code>foo</code>.</p>
 
 <hr>
-<a name="Windows%20Features"></a> 
+<a name="Windows%20Features"></a>
 <h2>4 Windows Features</h2>
 
 <a name=
 "What%20should%20I%20expect%20to%20behave%20differently%20from%20the%20Unix%20version">
-</a> 
+</a>
 <h3>4.1 What should I expect to behave differently from the Unix
 version of R?</h3>
 
@@ -767,7 +767,7 @@ with either "/" or "\\".</li>
 and that of <code>shell()</code>.</li>
 </ul>
 
-<a name="I%20hear%20about%20some%20nifty%20features."></a> 
+<a name="I%20hear%20about%20some%20nifty%20features."></a>
 <h3>4.2 I hear about some nifty features: please tell me about
 them!</h3>
 
@@ -791,7 +791,7 @@ plots have been recorded they can be reviewed by &lt;PgUp&gt; and
 automatically (the Recording item on the list) or individual plots
 can be added (Add or the &lt;INS&gt; key). The whole plot history
 can be saved to or retrieved from an R variable in the global
-environment. 
+environment.
 <p>There is only one graphics history shared by all the windows
 devices.'</p>
 </blockquote>
@@ -839,12 +839,12 @@ can be used for graphics windows from <code>Rterm.exe</code>
 (although Windows may not always act on it).</p>
 
 <hr>
-<a name="Workspaces"></a> 
+<a name="Workspaces"></a>
 <h2>5 Workspaces</h2>
 
 <a name=
 "My%20workspace%20gets%20saved%20in%20a%20strange%20place.%20How%20do%20I%20stop%20this%3f">
-</a> 
+</a>
 <h3>5.1 My workspace gets saved in a strange place: how do I stop
 this?</h3>
 
@@ -872,7 +872,7 @@ are interchangeable (for the same 1.x.? version of R, at
 least).</p>
 
 <hr>
-<a name="The%20R%20Console%20and%20Fonts"></a> 
+<a name="The%20R%20Console%20and%20Fonts"></a>
 <h2>6 The R Console and Fonts</h2>
 
 <a name=
@@ -932,10 +932,10 @@ line. Use the horizontal scrollbar or the &lt;CTRL + left/right
 arrow&gt; keys to scroll horizontally.</p>
 
 <hr>
-<a name="Building%20from%20Source"></a> 
+<a name="Building%20from%20Source"></a>
 <h2>7 Building from Source</h2>
 
-<a name="How%20can%20I%20compile%20R%20from%20source%3f"></a> 
+<a name="How%20can%20I%20compile%20R%20from%20source%3f"></a>
 <h3>7.1 How can I compile R from source?</h3>
 
 <p>Get the R sources. Suppose you want to compile R-1.6.0. Start in
@@ -992,7 +992,7 @@ we have seen are compiled for the correct compiler. <a name=
 <p>We strongly encourage you to do this <em>via</em> building an R
 package: see the <em>`Writing R Extensions'</em> manual. In any
 event you should install the parts of the R system for building R
-packages (in <code>SetupR.exe</code>), and get and install the
+packages (in <code>rw1060.exe</code>), and get and install the
 tools (including Perl) and compilers mentioned in the file
 <code>readme.packages</code> contained therein. Then you can
 use<br>
@@ -1088,7 +1088,7 @@ with a <code>mingw</code> version of <code>gdb</code>. It does
 often work with the <code>cygwin</code> version.</li>
 </ul>
 
-<a name="How%20do%20I%20include%20C++%20code%3f"></a> 
+<a name="How%20do%20I%20include%20C++%20code%3f"></a>
 <h3>7.5 How do I include C++ code?</h3>
 
 <p>You need to do two things:</p>

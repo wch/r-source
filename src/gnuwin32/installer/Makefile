@@ -3,7 +3,7 @@
 include ../MkRules
 include ../RWVERSION
 
-all: SetupR.exe miniR.exe
+all: $(RPREFIX).exe miniR.exe
 
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
@@ -39,12 +39,12 @@ R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 	perl JRins.pl $(RPREFIX)
 
 
-SetupR.exe: R.iss
-	"$(ISDIR)/iscc" R.iss > setupR.log
+$(RPREFIX).exe: R.iss
+	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log
 
 Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
   ../$(RPREFIX)h.zip ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip
-	rm -rf $(RPREFIX)*
+	rm -rf $(RPREFIX) $(RPREFIX)? $(RPREFIX)??
 	unzip -qo ../$(RPREFIX)b
 	unzip -qo ../$(RPREFIX)h
 	unzip -qo ../$(RPREFIX)ch -d $(RPREFIX)ch
@@ -66,10 +66,10 @@ miniR.exe: Rsmall.iss
 	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 clean:
-	rm -rf R.iss Rsmall.iss *.log $(RPREFIX)*
+	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) $(RPREFIX)? $(RPREFIX)??
 
 distclean: clean
-	rm -f SetupR.exe miniR*
+	rm -f $(RPREFIX).exe miniR*
 
 # for historical reasons
 ISclean: clean

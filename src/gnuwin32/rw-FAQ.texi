@@ -114,7 +114,7 @@ for a list), navigate to the @code{bin/windows/base}
 directory and collect the files you need.  There are two versions of
 the distribution.
 
-1) @code{SetupR.exe} is about 19Mb and gives a complete installation.
+1) @code{@RWVER@.exe} is about 19Mb and gives a complete installation.
 
 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
 @code{miniR-?.bin}.  You can put  @code{miniR.exe} and @code{miniR-1.bin}
@@ -132,7 +132,7 @@ If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-The simplest way is to use @code{SetupR.exe} or @code{miniR.exe}.  Just
+The simplest way is to use @code{@RWVER@.exe} or @code{miniR.exe}.  Just
 double-click on the icon and follow the instructions.  If you installed
 R this way you can uninstall it from the Control Panel or Start Menu
 (unless you supressed making a group for R).
@@ -259,7 +259,7 @@ LaTeX installed you can print help files by @code{help(fn_name, offline=TRUE)}.
 @section Can I use @code{R BATCH}?
 
 Yes, if you have Perl and the files for making source packages (from
-@code{SetupR.exe}) installed.  The Windows analogue is @code{Rcmd
+@code{@RWVER@.exe}) installed.  The Windows analogue is @code{Rcmd
 BATCH}: use @code{Rcmd BATCH --help} for full details.
 
 Otherwise you can set up a batch file using @code{Rterm.exe}.  A sample
@@ -407,7 +407,7 @@ Note that the pre-compiled versions on CRAN are unsupported: see
 
 If there is not a pre-compiled version or that is not up-to-date or
 you prefer compiling from source, make sure you installed the
-necessary files from @code{SetupR.exe}.  Then read the file
+necessary files from @code{@RWVER@.exe}.  Then read the file
 @file{README.packages}.  You will need to collect and install several
 tools to use this: you can download them via the portal at
 @uref{http://www.stats.ox.ac.uk/pub/Rtools/}.  Once you have done so,
@@ -831,7 +831,7 @@ compiler.
 We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
 install the parts of the R system for building R packages (in
-@code{SetupR.exe}), and get and install the tools (including Perl) and
+@code{@RWVER@.exe}), and get and install the tools (including Perl) and
 compilers mentioned in the file @file{readme.packages} contained
 therein.  Then you can use
 @example

@@ -12,7 +12,7 @@ Testing R build under Windows
     make distribution
     (cd installer; make; make clean)
 
-- Test the SetupR.exe and miniR.exe installers and un-installing.
+- Test the rw1060.exe and miniR.exe installers and un-installing.
 
 - cd to ../../tests and run
 
