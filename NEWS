@@ -94,7 +94,7 @@ BUG FIXES
 
     o   Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
 
-    o   real conversions in type.convert were always treating "NA" as
+    o   Conversions to numeric in type.convert were always treating "NA" as
 	missing whatever the setting of na.strings. (PR#1568)
 
     o	R CMD check now deals correctly with package names containing a
@@ -171,9 +171,11 @@ BUG FIXES
         interval for tables with large entries, due to numerical
         overflow.
 
-    o	using lty = "1" (or "10") does no longer produce invalid
+    o	Using lty = "1" (or "10") does no longer produce invalid
 	postscript or pdf.  Using "0" in a character lty is currently not
-	really device-independently implemented and needs more fixing.
+	implemented device-independently and needs more fixing.
+
+    o	ccf(plot = FALSE) was returning a spurious extra 0 at lag 0.
 
 
 
