@@ -41,6 +41,7 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
 }
 
 setMethod("coef", "mle", function(object) object@fullcoef )
+setMethod("coef", "summary.mle", function(object) object@coef )
 
 setMethod("show", "mle", function(object){
     cat("\nCall:\n")

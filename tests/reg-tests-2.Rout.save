@@ -3924,3 +3924,22 @@ longer object length
 	is not a multiple of shorter object length in: x1 < as.matrix(y1) 
 > ##
 > 
+> library(stats4)
+onLoad 'stats4' A 
+onLoad 'stats4' B 
+attach 'stats4' A 
+attach 'stats4' B 
+> N <- c(rep(3:6, 3), 7,7, rep(8,6), 9,9, 10,12)# sample from Pois(lam = 7)
+> summary(mle(function(Lam = 1) -sum(dpois(N,Lam))))
+Maximum likelihood estimation
+
+Call:
+mle(minuslogl = function(Lam = 1) -sum(dpois(N, Lam)))
+
+Coefficients:
+    Estimate Std. Error
+Lam 6.063755   2.307546
+
+-2 log L: -5.437059 
+> ## "Coefficients" was "NULL" in 1.9.0's "devel"
+> 

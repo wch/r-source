@@ -1238,3 +1238,8 @@ z1 & as.matrix(z2) # no warning in 1.8.1
 x1 < y1            # no warning in 1.8.1
 x1 < as.matrix(y1) # ditto
 ##
+
+library(stats4)
+N <- c(rep(3:6, 3), 7,7, rep(8,6), 9,9, 10,12)# sample from Pois(lam = 7)
+summary(mle(function(Lam = 1) -sum(dpois(N,Lam))))
+## "Coefficients" was "NULL" in 1.9.0's "devel"
