@@ -8,6 +8,12 @@
 
 		CHANGES IN R VERSION 2.1.0
 
+USER-VISIBLE CHANGES
+
+    o	box plots {by boxplot() or bxp()} now have the median line three
+	times the normal line width in order to distinguish it from the
+	quartile ones.
+
 
 NEW FEATURES
 

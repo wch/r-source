@@ -63,7 +63,10 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     \code{\link{title}}.
 
     The following arguments (or \code{pars} components) allow further
-    customization of the boxplot graphics:
+    customization of the boxplot graphics.  Their defaults are typically
+    determined from the non-prefixed version (e.g., \code{boxlty} from
+    \code{lty}), either from the specified argument or \code{pars}
+    component or the corresponding \code{\link{par}} one.
     \describe{
       \item{boxwex:}{a scale factor to be applied to all boxes.  When there
 	are only a few groups, the appearance of the plot can be improved by
@@ -75,7 +78,9 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
       \item{medlty, medlwd, medpch, medcex, medcol, medbg:}{median line type,
 	line width, point character, point size expansion, color, and
 	background color.  The default \code{medpch= NA} suppresses the
-	point, and \code{medlty="blank"} does so for the line.}
+	point, and \code{medlty="blank"} does so for the line.
+	Note that (since R 2.1.0) \code{medlwd} defaults to
+      \eqn{3\times}{3 *} the \dQuote{default} \code{lwd}.}
       \item{whisklty, whisklwd, whiskco:l}{whisker line type, width, and
 	color.}
       \item{staplelty, staplelwd, staplecol:}{staple (= end of whisker) line
