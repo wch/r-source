@@ -41,7 +41,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.104 $ ';
+my $revision = ' $Revision: 1.105 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -537,6 +537,32 @@ sub check_pkg {
     }
     else {
 	$log->result("OK");
+    }
+
+    ## Check contents of directory 'inst'.
+    if(-d "inst") {
+	$log->checking("contents of directory 'inst'");
+	my @R_system_subdirs = ("R", "data", "demo", "exec", "man",
+				"help", "html", "latex", "R-ex");
+	my @bad_dirs = ();
+	foreach my $dir (@R_system_subdirs) {
+	    push(@bad_dirs, $dir)
+	      if(-d &file_path("inst", $dir)
+		 && &list_files(file_path("inst", $dir)));
+	}
+	if($#bad_dirs >= 0) {
+	    $log->warning();
+	    $log->print(wrap("", "",
+			     ("Found the following non-empty",
+			      "subdirectories also used by R:\n")));
+	    $log->print("  " . join(" ", @bad_dirs) . "\n");
+	    $log->print(wrap("", "",
+			     ("It is recommended not to interfere with",
+			      "package subdirectories used by R.\n")));
+	}
+	else {
+	    $log->result("OK");
+	}
     }
 
     ## Check R code for syntax errors.

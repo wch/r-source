@@ -298,7 +298,10 @@ file, see above.  (Note that it is currently not possible to generate
 this index file automatically.)
 
 The contents of the @file{inst} subdirectory will be copied recursively
-to the installation directory.
+to the installation directory.  Subdirectories of @file{inst} should not
+interfere with those used by R (currently, @file{R}, @file{data},
+@file{demo}, @file{exec}, @file{man}, @file{help}, @file{html},
+@file{latex}, and @file{R-ex}).
 
 Subdirectory @file{tests} is for additional package-specific test code,
 similar to the specific tests that come with the @R{} distribution.
