@@ -114,7 +114,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
                           "trend" = c("level", "slope", "epsilon"),
                           "BSM" = c("level", "slope", "seas", "epsilon")
                           )
-    res <- list(coef = coef, loglik = res$value, data = y,
+    loglik <- -length(y) * res$value + length(y) * log(2 * pi)
+    res <- list(coef = coef, loglik = loglik, data = y,
                 residuals = resid, fitted = states,
                 call = match.call(), series = series,
                 code = res$convergence, model = Z, model0 = Z0, xtsp = xtsp)
@@ -156,7 +157,7 @@ tsdiag.StructTS <- function(object, gof.lag = 10, ...)
         na.action = na.pass)
     nlag <- gof.lag
     pval <- numeric(nlag)
-    for(i in 1:nlag) pval[i] <- Box.test(rs, i, type="Ljung-Box")$p.value
+    for(i in 1:nlag) pval[i] <- Box.test(rs, i, type = "Ljung-Box")$p.value
     plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0,1),
          main = "p values for Ljung-Box statistic")
     abline(h = 0.05, lty = 2, col = "blue")

@@ -82,8 +82,11 @@ StructTS(x, type = c("level", "trend", "BSM"), init = NULL,
 \value{
   A list of class \code{"StructTS"} with components:
 
-  \item{coef}{the estimated variances of the components,}
-  \item{loglik}{the maximized log-likelihood.}
+  \item{coef}{the estimated variances of the components.}
+  \item{loglik}{the maximized log-likelihood.  Note that as all these
+    models are non-stationary this includes a diffuse prior for some
+    observations and hence is not comparable with \code{\link{arima}}
+    nor different types of structural models.}
   \item{data}{the time series \code{x}.}
   \item{residuals}{the standardized residuals.}
   \item{fitted}{a multiple time series with one component for the level,
