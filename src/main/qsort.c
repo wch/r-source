@@ -22,8 +22,8 @@ SEXP do_qsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, sx;
     int indx_ret, n;
-    double *vx;
-    int *ivx;
+    double *vx = NULL;
+    int *ivx = NULL;
     Rboolean x_real, x_int;
 
     checkArity(op, args);
