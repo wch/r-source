@@ -5,7 +5,7 @@ CAT=cat
 CP=cp
 RM=rm
 
-RHOME=$(shell cd ../../..; pwd)# must be absolute path
+RHOME=$(shell cd ../../..; perl src/gnuwin32/pwd.pl)# must be absolute path
 PKGDIR=../../library
 RLIB=$(RHOME)/library
 
@@ -71,7 +71,7 @@ logo.bmp: $(RHOME)/src/gnuwin32/help/logo.bmp
 
 # following are designed to be run from the library/pkg directory:
 
-zipit: help/Rhelp.zip
+zipit: help/Rhelp.zip zipup
 unzipit:
 	-@$(MAKE) -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
 
@@ -82,9 +82,11 @@ help/Rhelp.zip: $(wildcard ../../src/library/$(PKG)/man/*.Rd \
 	-@$(MAKE) -C latex -f $(RHOME)/src/gnuwin32/help/Makefile uz-Rhelp
 	-$(MAKE) -C $(RHOME)/src/gnuwin32/help help-$(PKG)
 	@$(RM) -f help/Rhelp.zip latex/Rhelp.zip R-ex/Rex.zip
-	zip -${ZIPFLAGS} help/Rhelp help/* -x help/00Titles help/AnIndex
-	zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R
-	zip -${ZIPFLAGS} latex/Rhelp latex/*.tex
+
+zipup:
+	-zip -${ZIPFLAGS} help/Rhelp help/* -x help/00Titles help/AnIndex
+	-zip -${ZIPFLAGS} R-ex/Rex R-ex/*.R
+	-zip -${ZIPFLAGS} latex/Rhelp latex/*.tex
 
 uz-%:
 	@unzip -qou $*

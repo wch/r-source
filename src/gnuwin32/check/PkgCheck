@@ -1,14 +1,59 @@
-# to be run from RHOME/src/library/$(PKG)/check
+#-*- Makefile -*-
+#
+# ${RHOME}/src/gnuwin32/check/PkgCheck
+
+# to be run from RHOME/src/library/$(PKG)/check or tests
+
 include $(RHOME)/src/gnuwin32/MkRules
+
+all: run
+
+R = $(RHOME)/bin/Rterm --vanilla
+RDIFF = $(RHOME)/src/scripts/Rdiff
 
 run: $(PKG)-Ex.R
 	@$(ECHO) "Running examples in '$(PKG)-Ex.R' ..."
-	$(RHOME)/bin/rterm --vanilla R_LIBS="$(RLIB);$(R_LIBS)" < $(PKG)-Ex.R > $(PKG)-Ex.Rout
+	$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $(PKG)-Ex.R > $(PKG)-Ex.Rout
 
 
 $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*.R
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
 	@$(SED) -e s/@PKG@/$(PKG)/ -e s+@RLIB@+$(RLIB)+ \
 	  $(RHOME)/src/gnuwin32/check/makeRex.R > MakeRex.R
-	@$(RHOME)/bin/Rterm  --quiet --vanilla < makeRex.R > nul
+	@$(R) --quiet < makeRex.R > nul
 	@$(RM) makeRex.R
+
+
+test-src-1=$(shell ls *.R 2> nul)
+test-src-auto=$(shell ls *.Rin 2> nul | sed 's/Rin$$/R/')
+test-src = $(test-src-1) $(test-src-auto)
+test-out = $(test-src:.R=.Rout)
+
+.SUFFIXES:
+.SUFFIXES: .R .Rin .Rout
+
+.Rin.R:
+	@echo "Creating \`$@'"
+	@$(R) < $< > nul
+
+.R.Rout:
+	@rm -f $@ $@.fail
+	@echo "  Running \`$<'"
+	@$(R) R_LIBS="$(RLIB);$(R_LIBS)" < $< > $@
+	@if test -f $@.save ; then \
+	  mv $@ $@.fail; \
+	  echo -n "  Comparing \`$@' to \`$@.save' ..."; \
+	  $(RDIFF) $@.fail $@.save 0 || exit 1; \
+	  mv $@.fail $@; \
+	  echo "OK"; \
+	fi
+
+tests:
+	@(out=$(shell echo \"$(test-out)\" | sed 's/ //g');\
+	  if test -n "$${out}"; then \
+	    echo "Running specific tests"; \
+	    $(MAKE) -f $(R_HOME)/src/gnuwin32/check/PkgCheck "$${out}"; \
+	  fi)
+
+clean:
+	@rm -f $(test-out) $(test-src-auto) *.fail

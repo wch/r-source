@@ -24,6 +24,12 @@ ftp.franken.de:/pub/win32/develop/gnuwin32/cygwin/porters/Humblet_Pierre_A/B20
 as  xfig-3.2.2-cygwin-b20.1-bin.tar.gz
 
 
+rw1002
+======
+
+Makefile target zipdata-% to zip up data directories in packages.
+
+
 rw1001
 ======
 

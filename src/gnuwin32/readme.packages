@@ -13,10 +13,12 @@ need suitable versions of make, sh, rm, sed, (g)awk, mkdir, echo, cp
 and cat; we have packaged a set at
 CRAN/bin/windows/windows-NT/base/etc/tools.zip extracted from the
 cygwin distribution (http://sourceware.cygnus.com/cygwin and several
-mirrors).  BEWARE: the mingw32 port of make is _not_ a suitable one,
-and the 18 Jan 2000 cygwin port crashes when building packages.
+mirrors) or (make) compiled from the GNU sources ourselves.  BEWARE:
+`Native' ports of make are _not_ suitable, and the 18 Jan 2000 cygwin
+port crashes when building packages.
 
-It is also possible to use the compilers from the cygwin-1.1.x release
+
+It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
 binutils* bundles.)  We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system (under gcc-2.95.x but not
@@ -35,9 +37,8 @@ Windows compiler installation (this has been available for download at
 ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe), or hcp505.exe.
 
 For large packages it is helpful to make zipped help files: for that
-you need zip from the Info-ZIP project
-(ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors) or our
-tools.zip.
+you need zip and unzip from the Info-ZIP project (www.info-zip.org and
+mirrors).
 
 All of these need to be installed and in your path, and the
 appropriate environment variables set.  Edit MkRules to set BUILD and

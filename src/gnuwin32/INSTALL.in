@@ -22,20 +22,22 @@ ftp://ftp.xraylith.wisc.edu/pub/khan/gnu-win32/mingw32. You will also
 need suitable versions of at least make, sh, cat, cp, cut, diff, echo,
 egrep, expr, g(awk), grep, ls, mkdir, mv, rm, sed; we use those from
 the cygwin distribution (http://sourceware.cygnus.com/cygwin and
-several mirrors) and have packaged a set at
-CRAN/bin/windows/windows-NT/base/etc/tools.zip.  (The April 2000
-version of make in the cygwin distribution crashes building packages.)
+several mirrors) or (make) compiled from the GNU sources ourselves.
+We have packaged a set at
+CRAN/bin/windows/windows-NT/base/etc/tools.zip.  BEWARE: `Native'
+ports of make are not suitable (including that at the mingw32 site),
+nor is the make dated 18-Jan-2000 in the Cygwin 1.1.0 net release.
 
-It is also possible to use the compilers from the cygwin-1.1.x release
+It is also possible to use the compilers from the cygwin 1.1 release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
 binutils* bundles.)  We have also successfully used the variant of
 mingw32 that uses the MSVCRT run-time system.  Be aware that many
-Windows 95 machines do have MSVCRT.DLL installed.
+Windows 95 machines do not have MSVCRT.DLL installed.
 
 perl5, available via http://www.perl.com/CPAN/ports/.
 
-zip and unzip from the Info-ZIP project
-(ftp://ftp.cdrom.com/pub/infozip/Info-ZIP.html and mirrors).
+zip and unzip from the Info-ZIP project (http://www.info-zip.org and
+mirrors).
 
 If you want to make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, available for download at 
