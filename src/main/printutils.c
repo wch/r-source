@@ -149,23 +149,26 @@ char *EncodeReal(double x, int w, int d, int e)
 	}
 #else
 	/* Win32 libraries always use e+xxx format so avoid them */
-	double xx = prec(x, (double)(d+1)); /* might have 9.99997e-7 */
+	double X= x, xx = prec(x, (double)(d+1)); /* might have 9.99997e-7 */
 	int kp = (xx == 0.0) ? 0 : floor(log10(fabs(xx))+1e-12), ee = 1;
 	if(kp > 0) {
 	    x = x / pow(10.0, (double)kp);
 	} else if (kp < 0) {
 	    x = x * pow(10.0, (double)(-kp));
 	}
-	if(abs(kp) >= 100) ee = 2;
-	if(d)
-	    sprintf(fmt, "%%#%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
-	else
-	    sprintf(fmt, "%%%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
-	sprintf(Encodebuf, fmt, x, kp);
+	if(abs(kp) >= 100) {
+	    if(d) sprintf(fmt,"%%#%d.%de", w, d);
+	    else sprintf(fmt,"%%%d.%de", w, d);
+	    sprintf(Encodebuf, fmt, X);
+	} else {
+	    if(d) sprintf(fmt, "%%#%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
+	    else sprintf(fmt, "%%%d.%dfe%%+0%dd", w-ee-3, d, ee+2);
+	    sprintf(Encodebuf, fmt, x, kp);
+	}
 #endif
     }
     else {
-	sprintf(fmt,"%%%d.%df",w,d);
+	sprintf(fmt,"%%%d.%df", w, d);
 	sprintf(Encodebuf, fmt, x);
     }
     return Encodebuf;
