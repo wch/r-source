@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-24, 2001-10-19
+@set FAQ-VERSION 1.3-25, 2001-10-28
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -1388,6 +1388,11 @@ Code for dealing with STEP FUNctions, including empirical cumulative
 distribution functions.
 @item tcltk
 Interface and language bindings to Tcl/Tk @acronym{GUI} elements.
+@item tools
+Tools for package development and administration.
+@c <FIXME>
+(Available in R 1.4.0 or higher.)
+@c </FIXME>
 @item ts
 Time Series.
 @end table
