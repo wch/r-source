@@ -108,7 +108,7 @@ NEW FEATURES
 	methods.
 
     o	The standard methods for add1() and drop1() now attempt to cope
-	with missing values by using a subset of the data  that is 
+	with missing values by using a subset of the data  that is
 	`cleaned' by na.action for the maximal model under consideration.
 
     o	New method as.data.frame.table() for converting the array-based
@@ -140,6 +140,8 @@ BUG FIXES
     o   old.packages() now sorts version strings correctly by
 	splitting at "." and "-".
 
+    o   data(state)'s  state.abb  has been corrected to use official
+        2-letter abbrevations.
 
 
 	**************************************************
@@ -179,7 +181,7 @@ NEW FEATURES
 
     o   Symbols can now be coerced to expressions, making
 	as.expression(quote(a)) work
-        
+
 
 BUG FIXES
 
