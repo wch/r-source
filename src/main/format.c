@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  *
  *
- *  Object Formatting
+ * Object Formatting
  *
  *  See ./paste.c for do_paste() , do_format() and  do_formatinfo()
  *  See ./printutils.c for general remarks on Printing and the Encode.. utils.

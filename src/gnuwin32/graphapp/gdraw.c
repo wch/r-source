@@ -593,3 +593,25 @@ int devicepixelsy(drawing dev) MEASUREDEV(LOGPIXELSY)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

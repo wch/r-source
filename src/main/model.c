@@ -1434,7 +1434,7 @@ static void addvar(double *x, int nrx, int ncx, double *c, int nrc, int ncc)
     }
 }
 
-#define BUFSIZE 128
+#define BUFSIZE 4096
 
 static char *AppendString(char *buf, char *str)
 {

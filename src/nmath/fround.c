@@ -42,22 +42,22 @@
 
 static double private_rint(double x)
 {
-	static double biggest = BIGGEST;
-	double tmp;
+    static double biggest = BIGGEST;
+    double tmp;
 
-	if (x != x) return x;			/* NaN */
+    if (x != x) return x;			/* NaN */
 
-	if (fabs(x) >= biggest)			/* Already integer */
-		return x;
+    if (fabs(x) >= biggest)			/* Already integer */
+	return x;
 
-	if(x >= 0) {
-		tmp = x + biggest;
-		return tmp - biggest;
-	}
-	else {
-		tmp = x - biggest;
-		return tmp + biggest;
-	}
+    if(x >= 0) {
+	tmp = x + biggest;
+	return tmp - biggest;
+    }
+    else {
+	tmp = x - biggest;
+	return tmp + biggest;
+    }
 }
 
 #else
@@ -66,29 +66,37 @@ static double private_rint(double x)
 
 double fround(double x, double digits)
 {
-	double pow10, sgn, intx;
-	static double maxdigits = DBL_DIG - 1;
+    double pow10, sgn, intx;
+    static double maxdigits = DBL_DIG - 1;
+    /* FIXME: Hmm, have quite a host of these:
+       
+       1) ./fprec.c   uses  MAXPLACES = DLB_DIG  ``instead''
+       2) ../main/coerce.c   & ../main/deparse.c have  DBL_DIG  directly
+       3) ../main/options.c has   #define MAX_DIGITS 22  for options(digits)
 
+       Really should decide on a (Platform.h dependent ?) global MAX_DIGITS.
+       --MM--
+     */
 #ifdef IEEE_754
-	if (ISNAN(x) || ISNAN(digits))
-		return x + digits;
-	if(!finite(x)) return x;
+    if (ISNAN(x) || ISNAN(digits))
+	return x + digits;
+    if(!finite(x)) return x;
 #endif
 
-	digits = floor(digits + 0.5);
-	if (digits > maxdigits)
-		digits = maxdigits;
-	pow10 = pow(10.0, digits);
-	sgn = 1.0;
-	if(x < 0.0) {
-		sgn = -sgn;
-		x = -x;
-	}
-	if (digits > 0.0) {
-		intx = floor(x);
-		x = x - intx;
-	} else {
-		intx = 0.0;
-	}
-	return sgn * (intx + R_rint(x * pow10) / pow10);
+    digits = floor(digits + 0.5);
+    if (digits > maxdigits)
+	digits = maxdigits;
+    pow10 = pow(10.0, digits);
+    sgn = 1.0;
+    if(x < 0.0) {
+	sgn = -sgn;
+	x = -x;
+    }
+    if (digits > 0.0) {
+	intx = floor(x);
+	x = x - intx;
+    } else {
+	intx = 0.0;
+    }
+    return sgn * (intx + R_rint(x * pow10) / pow10);
 }

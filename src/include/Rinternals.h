@@ -1,7 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,6 +16,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
 #ifndef _R_INTERNALS_H_
 #define _R_INTERNALS_H_
 
@@ -138,6 +138,13 @@ typedef struct SEXPREC {
 	} promsxp;
     } u;
 } SEXPREC, *SEXP;
+
+/* General Cons Cell Attributes */
+#define ATTRIB(x)	((x)->attrib)
+#define OBJECT(x)	((x)->sxpinfo.obj)
+#define MARK(x)		((x)->sxpinfo.mark)
+#define TYPEOF(x)	((x)->sxpinfo.type)
+#define NAMED(x)	((x)->sxpinfo.named)
 
 
 /* Vector Access Macros */

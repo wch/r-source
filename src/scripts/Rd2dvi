@@ -1,5 +1,5 @@
 #!/bin/sh
-#  Rd2dvi -- 'check' man pages (help files) by  'LaTeX'..
+#  Rd2dvi -- check man pages (*.Rd help files) by LaTeX..
 #
 # Example (in $R_HOME):
 #    bin/Rd2dvi src/library/base/man/Normal
@@ -18,14 +18,32 @@ then
     echo " -------- "
     mv Rd2.tex Rd2.tex.Older
 fi
-$D2L $@ > Rd2.tex
-echo "MANTEXDIR= '$MANTEXDIR'"
-if [ ! -f Rd2dvi.tex ]
+touch Rd2.tex
+if [ $# -eq 1  -a  -d $1 ]
 then
- ##ln -s ${MANTEXDIR}/Rd2dvi.tex . 
- R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep '"'|sed 's/ *//g;s/"//g'`
- sed "s/a4paper/${R_P}paper/" ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
+    dir=$1
+    test -d $dir/man && dir=$dir/man
+    echo "Rd2dvi : \`Rdconv -t latex' $dir/ files..."
+    files="${dir}/*.Rd"
+    subj="of all in $dir"
+    # DBG: echo "files = $files"
+    toc_sed='; s/\\input{Rd/\\Rdcontents{\\R\\ objects documented:} &/'
+else
+    files="$@"
+    subj="of $1"
+    toc_sed=''
+    if [ $# -gt 1 ]; then subj="$subj ...etc "; fi
+    echo "Rd2dvi : Collecting files and \`Rdconv -t latex' them ..."
 fi
+for f in $files
+do 
+    echo $f
+    $D2L $f >> Rd2.tex
+done
+echo "MANTEXDIR='$MANTEXDIR'"
+R_P=`echo 'getenv("R_PAPERSIZE")'| R --vanilla --quiet|grep -v getenv|grep '"'|sed 's/ *//g;s/"//g'`
+sed "s/a4paper/${R_P}paper/; s| documentation |& ${subj} |; ${toc_sed}" \
+  ${MANTEXDIR}/Rd2dvi.tex > Rd2dvi.tex
 if [ ! -f Rd.sty ]; then
  sed 's/markright{#1}/markboth{#1}{#1}/' ${MANTEXDIR}/Rd.sty > Rd2.sty
 fi

@@ -1,18 +1,24 @@
 \name{Version}
 \title{Version Information}
 \usage{
-Version()
-version
+R.Version()
+R.version
+R.version.string
 }
-\alias{Version}
+\alias{R.Version}
+\alias{R.version}
 \alias{version}
+\alias{R.version.string}
 \description{
-  \code{Version()} provides detailed information about the version of R running.
-
-  \code{version} is a variable holding this information.
+    \code{R.Version()} provides detailed information about the version of
+    \R running. \cr
+    \code{R.version} is a variable (a \code{\link{list}}) holding this
+    information (and \code{version} is an \code{\link{.Alias}} to it for
+    S compatibility), whereas \code{R.version.string} is simple
+    \code{\link{character}} string, useful for plotting, etc.
 }
 \value{
- \code{Version} returns a list with components
+ \code{R.Version} returns a list with components
   \item{platform}{the platform for which \R was built.  Under Unix, a
     triplet of the form CPU-VENDOR-OS, as determined by the configure
     script.  E.g, \code{"i586-unknown-linux"}.}
@@ -32,7 +38,9 @@ version
 \code{\link{machine}}.
 }
 \examples{
-version$os # to check how lucky you are ...
+R.version$os # to check how lucky you are ...
+plot(0) # any plot
+mtext(R.version.string, side=1,line=4,adj=1)# a useful bottom-right note
 }
 \keyword{environment}
 \keyword{sysdata}

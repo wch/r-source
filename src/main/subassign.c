@@ -1321,9 +1321,6 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
 
-#if 0
-<<<<<<< subassign.c
-#endif
     /* Handle NULL left-hand sides.  If the right-hand side */
     /* is NULL, just return the left-hand size otherwise, */
     /* convert to a zero length list (VECSXP). */
@@ -1335,21 +1332,6 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
         }
         UNPROTECT(1);
         PROTECT(x = allocVector(TYPEOF(y), 0));
-#if 0
-=======
-    if (length(x) == 0) {
-	if (length(y) > 1)
-	    x = coerceVector(x, VECSXP);
-	else if (length(y) == 1) {
-	    if (TYPEOF(x) != VECSXP)
-		x = coerceVector(x, TYPEOF(y));
-	}
-	else {
-	    UNPROTECT(1);
-	    return(x);
-	}
->>>>>>> 1.28.2.5
-#endif
     }
 
     /* Ensure that the LHS is a local variable. */
