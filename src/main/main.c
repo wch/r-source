@@ -173,7 +173,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 		    R_IoBufferWriteReset(&R_ConsoleIob);
 		    break;
 		}
-	    }		    
+	    }
 	    R_Visible = 0;
 	    R_EvalDepth = 0;
 	    PROTECT(R_CurrentExpr);
@@ -342,9 +342,12 @@ void setup_Rmainloop(void)
 	char *p, Rlocale[1000]; /* Windows' locales can be very long */
 	p = getenv("LC_ALL");
 	if(p) strcpy(Rlocale, p); else strcpy(Rlocale, "");
-	setlocale(LC_CTYPE, Rlocale);
-	setlocale(LC_COLLATE, Rlocale);
-	setlocale(LC_TIME, Rlocale);
+	if((p = getenv("LC_CTYPE"))) setlocale(LC_CTYPE, p);
+	else setlocale(LC_CTYPE, Rlocale);
+	if((p = getenv("LC_COLLATE"))) setlocale(LC_COLLATE, p);
+	else setlocale(LC_COLLATE, Rlocale);
+	if((p = getenv("LC_TIME"))) setlocale(LC_TIME, p);
+	else setlocale(LC_TIME, Rlocale);
     }
 #else
     setlocale(LC_CTYPE, "");/*- make ISO-latin1 etc. work for LOCALE users */
@@ -432,7 +435,7 @@ void setup_Rmainloop(void)
        drop through to further processing. */
 
     R_LoadProfile(R_OpenSysInitFile(), R_NilValue);
-    R_LoadProfile(R_OpenSiteFile(), R_NilValue); 
+    R_LoadProfile(R_OpenSiteFile(), R_NilValue);
     R_LoadProfile(R_OpenInitFile(), R_GlobalEnv);
 
     /* Initial Loading is done.  At this point */
@@ -498,7 +501,7 @@ static void printwhere(void)
   int lct = 1;
 
   for (cptr = R_GlobalContext; cptr; cptr = cptr->nextcontext) {
-    if ((cptr->callflag & CTXT_FUNCTION) && 
+    if ((cptr->callflag & CTXT_FUNCTION) &&
 	(TYPEOF(cptr->call) == LANGSXP)) {
 	Rprintf("where %d: ",lct++);
 	PrintValue(cptr->call);
