@@ -56,7 +56,9 @@ undoc <- function(pkg, dir)
             on.exit(unlink(codeFile))
             codeExts <- c("R", "r", "S", "s", "q")
             files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
-            files <- file.path(codeDir, files[-grep("^zzz\\.", files)])
+            if(any(i <- grep("^zzz\\.", files)))
+               files <- files[-i]
+            files <- file.path(codeDir, files)
             if(file.exists(codeOSDir <- file.path(codeDir,
                                                   .Platform$OS)))
                 files <- c(files,
