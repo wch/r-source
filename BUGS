@@ -559,3 +559,7 @@ Date: Wed, 7 Aug 2002 20:31:28 +0200 (MET DST)
 Subject: PR #1833 Clarification
 From: "Mike Prager" <Mike.Prager@noaa.gov>
 Date: Thu, 08 Aug 2002 11:19:55 -0400
+* PR# 1891 *
+Subject: summary.data.frame with compound elements problem
+From: b.rowlingson@lancaster.ac.uk
+Date: Fri, 9 Aug 2002 10:35:43 +0200 (MET DST)
