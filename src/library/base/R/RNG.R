@@ -5,7 +5,7 @@
 RNGkind <- function(kind = NULL) 
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
-               "Mersenne-Twister",
+               ## NOT yet: "Mersenne-Twister",
                "Rand")
     do.set <- length(kind) > 0
     if(do.set) {

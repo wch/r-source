@@ -41,12 +41,33 @@ Available RNG kinds:
      Applied Statistics (1984) vol.33 which corrects the original article.
     
     \item "Marsaglia-Multicarry"
-    \item "Super-Duper"
-    \item "Mersenne-Twister"
-    \item "Rand"
- }
 
- \emph{Note}: If any of \code{.Random.seed[i]} is set to \code{0}, it
+    A \emph{multiply-with-carry} RNG is used, as recommended by
+    George Marsaglia in his post to the mailing list
+    \file{sci.stat.math} on September 29, 1997.  It has a period of
+    \eqn{> 2^60} and has passed all tests (according to Marsaglia).
+
+    \item "Super-Duper"
+    Marsaglia's famous Super-Duper from the 70's.  This is the original
+    version which does \emph{not} pass the MTUPLE test of the Diehard
+    battery.
+    The two seeds are the Tausworthe and Congruence long integers,
+    respectively.
+    A one-to-one mapping to S's \code{.Random.seed[1:12]} is possible
+    but hasn't been done yet.
+    
+    % NOT YET:
+    % \item "Mersenne-Twister"
+
+    \item "Rand"
+
+    This is the cheap Unix built-in generator which is not at all
+    recommended for simulation.  Further, you can only set, but never
+    retrieve the internal seed used.  Therefore, the value of
+    \code{.Random.seed} is of no relevance (but you can set it!).
+}
+
+\emph{Note}: If any of \code{.Random.seed[i]} is set to \code{0}, it
   will be substituted with \code{1}, in the next call to a random number
   generator, such as \code{\link{runif}}.
 
@@ -71,7 +92,13 @@ Available RNG kinds:
 
   A. De Matteis and S. Pagnutti (1993).
   \emph{Long-range Correlation Analysis of the Wichmann-Hill Random
-    Number Generator}, Statist. Comput., \bold{3}, 67-70.
+      Number Generator}, Statist. Comput., \bold{3}, 67-70.
+  
+  Marsaglia, G. (1997). \emph{A random number generator for C}. Discussion 
+  paper, posting on usenet newsgroup \code{sci.stat.math}.
+  
+  Marsaglia, G. and Zaman, A. (1994). \emph{Some portable very-long-period 
+  random number generators}. Computers in Physics, \bold{8}, 117-121. 
 }
 \note{
   Initially, there is no seed;  a new one is created, using
@@ -94,7 +121,7 @@ next.WHseed <- function(i.seed = .Random.seed[-1]) (a.WH * i.seed) \%\% p.WH
 my.runif1 <- function(i.seed = .Random.seed)
   { ns <- next.WHseed(i.seed[-1]); sum(ns / p.WH) \%\% 1 }
 
-## This shows how `runif(.)'  for Wichmann-Hill, using only R functions:
+## This shows how `runif(.)' works for Wichmann-Hill, using only R functions:
 rs <- .Random.seed
 (WHs <- next.WHseed(rs[-1]))
 u <- runif(1)
