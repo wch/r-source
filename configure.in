@@ -201,6 +201,7 @@ dnl Yes, we already need this at configure time ...
 case "${host}" in
   *aix*)
     AC_AIX
+    LIBS="${LIBS} -lc"
     ;;
   *hpux*)
     case "${CC}" in
@@ -334,7 +335,12 @@ if ${use_dxml}; then
   AC_CHECK_LIB(dxml, main, FLIBS="-ldxml ${FLIBS}" BLAS="")
 fi
 if test -n "${BLAS}" && ${use_blas}; then
-  AC_CHECK_LIB(blas, main,
+  if test "${r_cv_prog_f77_append_underscore}" = yes; then
+    fun=daxpy_
+  else
+    fun=daxpy
+  fi
+  AC_CHECK_LIB(blas, ${fun},
     [ FLIBS="-lblas ${FLIBS}" BLAS=""
       if ${use_blas_risc}; then
         AC_CHECK_LIB(blas_risc, main,
@@ -421,7 +427,7 @@ case "${host}" in
       R_PROG_CC_FLAG(-mno-fp-in-toc,
         R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
     fi
-    R_XTRA_LIBS="${R_XTRA_LIBS} -lc /lib/crt0.o"
+    R_XTRA_LIBS="${R_XTRA_LIBS} /lib/crt0.o"
     ;;
   alpha*osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
