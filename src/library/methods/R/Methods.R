@@ -96,7 +96,7 @@ removeGeneric <-
             where <- character()
     }
     if(length(where) > 0)
-        remove(name, pos = where)
+        rm(list = name, pos = where)
     else
         warning(paste("Function \"", name, "\" not found for removal", sep=""))
 }
