@@ -1,7 +1,6 @@
 \name{pie}
 \title{Pie Charts}
 \alias{pie}
-\alias{old-piechart}
 \description{
   Draw a pie chart.
 }

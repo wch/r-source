@@ -28,6 +28,7 @@
 \alias{.Alias}
 \alias{reshapeLong}
 \alias{reshapeWide}
+\alias{piechart}
 %
 \description{
   The functions listed here are no longer part of \R as they are not
@@ -74,6 +75,10 @@ reshapeLong(x,jvars,  ilev = row.names(x),
             jlev = names(x)[jvars], iname = "reshape.i",
             jname = "reshape.j", vname = "reshape.v")
 % </Removed 1.5.0>
+% Removed in 1.6.0
+piechart(x, labels = names(x), edges = 200, radius = 0.8,
+         density = NULL, angle = 45, col = NULL, main = NULL, ...)
+% </Removed 1.6.0>
 }
 \details{
   \code{.Defunct} is the function to which defunct functions are set.
@@ -115,6 +120,9 @@ reshapeLong(x,jvars,  ilev = row.names(x),
   \code{reshape*}, which were experimental, are replaced by
   \code{\link{reshape}}. This has a different syntax and allows multiple
   time-varying variables.
+
+  \code{piechart} is the old name for \code{pie}, but clashed with usage
+  in Trellis.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}

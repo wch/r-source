@@ -32,6 +32,16 @@ NEW FEATURES
     o	New methods ([[, print, str) for "dendrogram" class.
 
 
+DEPRECATED & DEFUNCT
+
+    o	The assignment operator `_' is deprecated: a warning is
+	given once per R session.
+
+    o	arima0.diag() (package ts) is defunct.
+
+    o	piechart() is defunct.
+
+
 C-LEVEL FACILITIES
 
     o	Rversion.h is no longer automatically included by R.h.

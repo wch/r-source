@@ -39,3 +39,9 @@ parse.dcf <- function(...) .Defunct()
 reshapeLong <- function(...) .Defunct()
 reshapeWide <- function(...) .Defunct()
 ## </entry>
+## <entry>
+
+## Deprecated in 1.5.0
+## Defunct in 1.6.0
+piechart <- function(...) .Defunct()
+## </entry>
