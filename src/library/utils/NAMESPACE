@@ -19,7 +19,6 @@ export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
        xedit, xemacs)
 
 S3method("[", getAnywhere)
-S3method(close, socket)
 S3method(edit, data.frame)
 S3method(edit, default)
 S3method(edit, matrix)
