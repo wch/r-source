@@ -115,17 +115,17 @@ static SEXP logicalSubscript(SEXP s, int ns, int nx)
 	int count, i;
 	SEXP index;
 
-	if (ns != nx)
-		error("invalid subscript type\n");
+	if (ns > nx)
+		error("subscript (\%d) out of bounds, should be at most %d\n",ns,nx);
 	count = 0;
 	for (i = 0; i < nx; i++)
-		if (LOGICAL(s)[i])
+		if (LOGICAL(s)[i%ns])
 			count++;
 	index = allocVector(INTSXP, count);
 	count = 0;
 	for (i = 0; i < nx; i++)
-		if (LOGICAL(s)[i]) {
-			if (LOGICAL(s)[i] == NA_LOGICAL)
+		if (LOGICAL(s)[i%ns]) {
+			if (LOGICAL(s)[i%ns] == NA_LOGICAL)
 				INTEGER(index)[count++] = NA_INTEGER;
 			else
 				INTEGER(index)[count++] = i + 1;
