@@ -58,8 +58,6 @@ function(formula, data, subset, na.action, ...)
 {
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")
-    if(missing(na.action))
-        na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

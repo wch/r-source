@@ -4,8 +4,6 @@ function(formula, data, subset, na.action, var.equal = FALSE) {
         stop("formula missing or incorrect")
     DNAME <- paste(deparse(substitute(formula)[[2]]), "and",
                    deparse(substitute(formula)[[3]]))
-    if(missing(na.action))
-        na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)

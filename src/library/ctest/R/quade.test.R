@@ -70,8 +70,6 @@ function(formula, data, subset, na.action, ...)
         stop("incorrect specification for `formula'")
     formula[[3]][[1]] <- as.name("+")
     ## </FIXME>
-    if(missing(na.action))
-        na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
     m$formula <- formula
     if(is.matrix(eval(m$data, parent.frame())))
