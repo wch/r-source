@@ -619,7 +619,6 @@ SEXP do_image(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;/* never used; to keep -Wall happy */
 }
 
-#ifdef PERSP
 	/*  P e r s p e c t i v e   S u r f a c e   P l o t s  */
 
 
@@ -979,4 +978,3 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
         recordGraphicOperation(op, originalArgs, dd);
     return x;
 }
-#endif

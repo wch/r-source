@@ -585,9 +585,7 @@ FUNTAB R_FunTab[] =
 {"replay",	do_replay,	0,	111,	0,	PP_FUNCALL,	0},
 {"erase",	do_erase,	0,	111,	1,	PP_FUNCALL,	0},
 {"dotplot",	do_dotplot,	0,	111,	1,	PP_FUNCALL,	0},
-#ifdef PERSP
 {"persp",       do_persp,       0,      111,    4,      PP_FUNCALL,	0},
-#endif
 
 /* Objects */
 {"UseMethod",	do_usemethod,	0,	 0,	-1,	PP_FUNCALL,	0},
