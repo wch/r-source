@@ -10,6 +10,7 @@ provide(package)
 .First.lib(libname, pkgname)
 
 .packages(all.available = FALSE, lib.loc = .lib.loc)
+.path.package(package = .packages())
 .lib.loc
 .Library
 .Provided
@@ -24,6 +25,7 @@ provide(package)
 \alias{.Library}
 \alias{.Provided}
 \alias{.packages}
+\alias{.path.package}
 \alias{.lib.loc}
 \arguments{
   \item{package, help}{\code{\link{name}} or character string giving the
@@ -48,8 +50,10 @@ provide(package)
 \description{
   \code{library} and \code{require} load add-on packages; \code{provide}
   allows code to register services that packages provide.
-  \code{.First.lib()} is called when a package is loaded;
-  \code{.packages()} returns information about package availability.
+  \code{.First.lib} is called when a package is loaded;
+  \code{.packages} returns information about package availability.
+  \code{.path.package} returns information about where a package was
+  loaded from.
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -93,6 +97,10 @@ provide(package)
   packages \emph{invisibly} whereas
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
+
+  \code{.path.package} returns the paths from which the named packages were
+  loaded, or if none were named, for all currently loaded packages. It
+  will warn if the packages named are not loaded.
 
   \code{.Autoloaded} contains the ``base names'' of the packages for
   which autoloading has been promised.

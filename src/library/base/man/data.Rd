@@ -7,7 +7,7 @@
   the available data sets.
 }
 \usage{
-data(\dots, list = character(0), package = c(.packages(),.Autoloaded),
+data(\dots, list = character(0), package = .packages()),
      lib.loc = .lib.loc)
 show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
 }
@@ -54,7 +54,12 @@ show.data(package = c(.packages(),.Autoloaded), lib.loc = .lib.loc)
   deprecated convention of \file{index.doc}) in a \file{data}
   directory of each specified package, and uses these files to prepare
   a listing. If there is a \file{data} area but no index a warning is
-  given: such packages are incomplete. 
+  given: such packages are incomplete.
+
+  If \code{lib.loc} is not specified, the packages are searched for
+  amongst those already loaded. If \code{lib.loc} is specified,
+  they are searched for in the specified libraries, even if they are
+  already loaded from another library.
 }
 
 \seealso{

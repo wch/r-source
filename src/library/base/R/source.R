@@ -151,7 +151,9 @@ function (topic, package = .packages(), lib.loc = .lib.loc, echo = TRUE,
     topic <- substitute(topic)
     if (!is.character(topic))
 	topic <- deparse(topic)[1]
-    INDICES <- system.file(pkg = package, lib = lib.loc)
+    INDICES <-
+            if(missing(lib.loc)) .path.package(package)
+            else system.file(pkg = package, lib = lib.loc)
     file <- index.search(topic, INDICES, "AnIndex", "R-ex")
     if (file == "") {
 	warning(paste("No help file found for `", topic, "'", sep = ""))

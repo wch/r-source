@@ -29,6 +29,11 @@ BUG FIXES
     o   The internal code for strsplit no longer destroys other
 	internal structures, e.g. postscript file output on Linux.
 
+    o	The search semantics of data() and example() have changed
+	(see the help pages). In particular, they will normally
+	look in the package which was loaded, even if it is not in
+	one of the libraries given in .lib.loc.
+
 
 	**************************************************
 	*						 *

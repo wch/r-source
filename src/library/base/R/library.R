@@ -40,6 +40,9 @@ library <-
 	    }
 	    # create environment
 	    env <- attach(NULL, name = pkgname)
+            lastbit<- file.path("", "R", package)
+            path <- gsub(lastbit , "", file)
+            attr(env, "path") <- path
 	    # "source" file into env
 	    if (file == "")
 		warning(paste("Package `", package, "' contains no R code",
@@ -199,4 +202,19 @@ provide <- function(package) {
     } ## else
     s <- search()
     return(invisible(substring(s[substr(s, 1, 8) == "package:"], 9)))
+}
+
+.path.package <- function(package = .packages())
+{
+    s <- search()
+    searchpaths <- lapply(1:length(s), function(i) attr(pos.to.env(i), "path"))
+    searchpaths[[length(s)]] <- system.file()
+    package <- paste("package", package, sep=":")
+    pos <- match(package, s)
+    if(any(is.na(pos))) {
+        miss <- paste(substr(package[is.na(pos)], 9, 100), collapse=", ")
+        warning(paste("package(s)", miss, "are not loaded"))
+        pos <- pos[!is.na(pos)]
+    }
+    unlist(searchpaths[pos], use.names=FALSE)
 }

@@ -2,7 +2,8 @@
 ## .Platform$show.data() idea.
 data <-
 function (..., list = character(0),
-          package = c(.packages(), .Autoloaded),
+#          package = c(.packages(), .Autoloaded),
+          package = .packages(),
           lib.loc = .lib.loc, verbose = getOption("verbose"))
 {
     names <- c(as.character(substitute(list(...))[-1]), list)
@@ -18,8 +19,13 @@ function (..., list = character(0),
             show.data(lib.loc = lib.loc)
     } else for (name in names) {
         ## don't make this a single call: list.files() sorts all the
-        ## entries. 
-        paths <- system.file("data", pkg = package, lib = lib.loc)
+        ## entries.
+        paths <-
+            if(missing(lib.loc)) {
+                paths <- file.path(.path.package(package), "data")
+                paths[file.exists(paths)]
+            } else
+                system.file("data", pkg = package, lib = lib.loc)
         files <- unlist(lapply(paths, FUN = list.files, full = TRUE))
         files <- files[grep(name, files)]
         found <- FALSE
