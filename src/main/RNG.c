@@ -116,7 +116,7 @@ double unif_rand(void)
     case KNUTH_TAOCP:
 	return KT_next() * KT;
 
-    case USER:
+    case USER_UNIF:
 	return *((double *) User_unif_fun());
 
     default:/* can never happen (enum type)*/ return -1.;
@@ -177,7 +177,7 @@ static void FixupSeeds(RNGtype kind, int initial)
 	    }
 	if(!notallzero) Randomize(kind);	
 	break;
-    case USER:
+    case USER_UNIF:
 	break;
     }
 }
@@ -207,7 +207,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     case KNUTH_TAOCP:
 	RNG_Init_KT(seed);
 	break;
-    case USER:
+    case USER_UNIF:
 	User_unif_fun = R_FindSymbol("user_unif_rand", "");
 	if (!User_unif_fun) error("`user_unif_rand' not in load table");
 	User_unif_init = R_FindSymbol("user_unif_init", "");
@@ -263,7 +263,7 @@ void GetRNGstate()
 	    error(".Random.seed[1] is not a valid integer");
 	newRNG = tmp % 100;
 	newN01 = tmp / 100;
-	/*if (RNG_kind > USER || RNG_kind < 0) {
+	/*if (RNG_kind > USER_UNIF || RNG_kind < 0) {
 	    warning(".Random.seed was invalid: re-initializing");
 	    RNG_kind = RNG_DEFAULT;
 	    }*/
@@ -276,7 +276,7 @@ void GetRNGstate()
  	case MERSENNE_TWISTER:
  	case KNUTH_TAOCP:
 	    break;
- 	case USER:
+ 	case USER_UNIF:
 	    if(!User_unif_fun)
 		error(".Random.seed[1] = 5 but no user-supplied generator");
 	    break;
@@ -307,7 +307,7 @@ void PutRNGstate()
     int len_seed, j;
     SEXP seeds;
     
-    if (RNG_kind < 0 || RNG_kind > USER ||
+    if (RNG_kind < 0 || RNG_kind > USER_UNIF ||
 	N01_kind < 0 || N01_kind > USER_NORM) {
 	warning("Internal .Random.seed is corrupt: not saving");
 	return;
@@ -337,7 +337,7 @@ static void RNGkind(RNGtype newkind)
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
     case KNUTH_TAOCP:
-    case USER:
+    case USER_UNIF:
 	break;
     default:
 	error("RNGkind: unimplemented RNG kind %d", newkind);
