@@ -26,7 +26,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Rd;
 
-my $revision = ' $Revision: 1.4 $ ';
+my $revision = ' $Revision: 1.5 $ ';
 my $version;
 my $name;
 
@@ -53,7 +53,10 @@ END
   exit 0;
 }
 
-my $OSdir = R_getenv("R_OSTYPE", "unix");
+## <FIXME>
+## Currently, R_OSTYPE is always set on Unix/Windows.
+my $OSdir = R_getenv("R_OSTYPE", "mac");
+## </FIXME>
 my $opt_mode = "codoc";
 my $opt_v;
 

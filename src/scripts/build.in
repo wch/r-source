@@ -33,24 +33,27 @@ use R::Rd;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.27 $ ';
+my $revision = ' $Revision: 1.28 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-my $MAKE = '@MAKE@';
-
 my @excludepatterns = ("^.Rbuildignore\$", "\~\$", "\.swp\$",
 		       "^.*/\.#[^/]*\$", "^.*/#[^/]*#\$");
 
+my $tmpdir = R_getenv("TMPDIR", "/tmp");
+my $R_exe = "${R_HOME}/bin/R";
+my $MAKE = '@MAKE@';
 my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
 		    "use-zip", "use-zip-help", "use-zip-data", "force");
 
-my $WINDOWS = (R_getenv("R_OSTYPE", "") eq "windows");
-my $tmpdir = R_getenv("TMPDIR", "/tmp");
-my $R_exe = "${R_HOME}/bin/R";
+## <FIXME>
+## Currently, R_OSTYPE is always set on Unix/Windows.
+my $OS = R_getenv("R_OSTYPE", "mac");
+## </FIXME>
+my $WINDOWS = ($OS eq "windows");
 
 if($WINDOWS) {
     $tmpdir = R_getenv("TMPDIR", "/TEMP");
@@ -92,8 +95,7 @@ if(!$opt_binary && $INSTALL_opts ne "") {
 }
 
 ## This is the main loop over all packages to be checked.
-my $pkg;
-foreach $pkg (@ARGV) {
+foreach my $pkg (@ARGV) {
     my $is_bundle = 0;
     $pkg =~ s/\/$//;
     my $pkgname = basename($pkg);
@@ -152,8 +154,7 @@ foreach $pkg (@ARGV) {
 	    $log->message("Looks like \`${pkg}' is a package bundle");
 	    $is_bundle = 1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	    my $ppkg = "";
-	    foreach $ppkg (@bundlepkgs) {
+	    foreach my $ppkg (@bundlepkgs) {
 		$log->message("preparing \`$ppkg' in bundle \`$pkg':");
 		$log->setstars("**");
 		chdir($startdir);
@@ -221,7 +222,7 @@ sub findExcludeFiles {
     print exclude "$File::Find::name\n" if /^CVS$/;
     my $filename = $File::Find::name;
     $filename =~ s/^[^\/]*\///;
-    foreach $p (@excludepatterns) {
+    foreach my $p (@excludepatterns) {
 	print exclude "$File::Find::name\n" if($filename =~ /$p/);
     }
 }
