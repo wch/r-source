@@ -155,18 +155,25 @@ AC_ARG_WITH(gnome,
 
 ### Programs.
 
+AC_PROG_AWK
+
 AC_PROG_INSTALL
-## Fix a bug in older versions of autoconf---the path of the install
-## shell script is not cached.  Could also use an absolute path in
-## AC_CONFIG_AUX_DIR().
+warn_install="redefining INSTALL to be ${srcdir}/tools/install-sh -c"
 case "${INSTALL}" in
   [[!/]]*install-sh*)
+    ## Fix a bug in older versions of autoconf---the path of the install
+    ## shell script is not cached.  Could also use an absolute path in
+    ## AC_CONFIG_AUX_DIR().
     INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+    AC_MSG_WARN([${warn_install}])
     ;;
   *installbsd*)
+    ## installbsd on AIX does not seem to work?
     case "${host}" in
       *aix*)
-	INSTALL="\$\(top_srcdir\)/tools/install-sh -c" ;;
+	INSTALL="\$\(top_srcdir\)/tools/install-sh -c"
+	AC_MSG_WARN([${warn_install}])
+	;;
     esac
     ;;
 esac
@@ -200,17 +207,22 @@ AC_SUBST(TAR)
 ## C compiler.
 
 AC_PROG_CC
-AC_SUBST(CFLAGS)
-AC_SUBST(CPPFLAGS)
+AC_PROG_CPP
+AC_PROG_GCC_TRADITIONAL
 
 dnl Yes, we already need this at configure time ...
 case "${host}" in
+  *aix*)
+    AC_AIX
+    ;;
   *hpux*)
     LIBS="-L/lib/pa1.1 ${LIBS}"
-    case ${CC} in
+    case "${CC}" in
       c89)
-        CPPFLAGS="-D_HPUX_SOURCE ${CPPFLAGS}" ;;
+	AC_DEFINE(_HPUX_SOURCE)
+	;;
     esac
+    ;;
 esac
 
 AC_MSG_CHECKING([whether ${CC} accepts -M for generating dependencies])
@@ -454,7 +466,6 @@ fi
 case "${host}" in
   *aix4.[[2-9]]*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
-    R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_ALL_SOURCE"
     R_PROG_CC_FLAG(-mno-fp-in-toc,
       R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -mno-fp-in-toc")
     ;;
@@ -470,9 +481,10 @@ case "${host}" in
     ;;
   *hpux*)
     AC_DEFINE(USE_BUILTIN_RINT)
-    case ${CC} in
+    case "${CC}" in
       c89)
-        R_XTRA_CPPFLAGS="${R_XTRA_CPPFLAGS} -D_HPUX_SOURCE" ;;
+	R_XTRA_CFLAGS="${R_XTRA_CFLAGS} -D_HPUX_SOURCE"
+	;;
     esac
     AC_CHECK_LIB(dld, shl_load, R_XTRA_LIBS="${R_XTRA_LIBS} -ldld")
     ;;
@@ -481,6 +493,7 @@ case "${host}" in
     ;;
 esac
 
+AC_SUBST(CFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(F2CFLAGS)
 AC_SUBST(R_XTRA_CFLAGS)
