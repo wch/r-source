@@ -22,8 +22,6 @@
 #include "Mathlib.h"
 #include "Print.h"
 
-SEXP mkChar(char *);
-
 SEXP ScalarLogical(int x)
 {
     SEXP ans = allocVector(LGLSXP, 1);
@@ -249,8 +247,8 @@ int isNull(SEXP s)
 
 int isFunction(SEXP s)
 {
-    return (TYPEOF(s) == CLOSXP || 
-	    TYPEOF(s) == BUILTINSXP || 
+    return (TYPEOF(s) == CLOSXP ||
+	    TYPEOF(s) == BUILTINSXP ||
 	    TYPEOF(s) == SPECIALSXP);
 }
 
@@ -433,7 +431,7 @@ int isVectorizable(SEXP s)
 	    mode = (mode >= TYPEOF(VECTOR(s)[i])) ?
 		mode : TYPEOF(VECTOR(s)[i]);
 	}
-	return mode;	
+	return mode;
     }
     else if (isList(s)) {
 	for ( ; s != R_NilValue; s = CDR(s)) {
@@ -744,7 +742,7 @@ static int isMissing(SEXP symbol, SEXP rho)
 	}
         if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
            return 1;
-        if (TYPEOF(CAR(vl)) == PROMSXP && 
+        if (TYPEOF(CAR(vl)) == PROMSXP &&
               TYPEOF(PREXPR(CAR(vl))) == SYMSXP)
               return isMissing(PREXPR(CAR(vl)), PRENV(CAR(vl)));
         else
@@ -784,7 +782,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
             return rval;
         }
         else goto havebinding;
-    } 
+    }
     else  /* it wasn't an argument to the function */
 	error("\"missing\" illegal use of missing\n");
 

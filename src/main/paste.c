@@ -26,8 +26,6 @@
 #include "Defn.h"
 #include "Print.h"
 
-SEXP mkChar(char *);
-
 /*  .Internal(paste(args, sep, collapse))
  *
  * do_paste uses two passes to paste the arguments (in CAR(args)) together.
