@@ -222,8 +222,10 @@ static int fillBuffer(char *buffer, SEXPTYPE type, int strip)
 			filled=c;
 			goto donefill;
 		    }
-		    else
+		    else {
 			unscanchar(c);
+			continue;
+		    }
 		}
 		if (bufp >= &buffer[MAXELTSIZE - 2])
 		    continue;

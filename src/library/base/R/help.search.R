@@ -72,7 +72,7 @@ help.search <- function(topic, fields = c("name", "title"),
                 cfile <- system.file("CONTENTS", pkg = p, lib = lib)
                 if(cfile != "") {
                     ctext <- scan("", file = cfile, sep = "\n",
-                                  quiet = TRUE)
+                                  quote="", quiet = TRUE)
                     if(length(ctext) > 0) {
                         ctext <- parse.dcf(ctext,
                                            fields = c("Entry", "Aliases",

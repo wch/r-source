@@ -2127,7 +2127,7 @@ add-on packages should either use conditionals of the form
 @end smallexample
 
 @noindent
-or, maybe preferably order to avoid unnecessarily duplicating code, use
+or, maybe preferably in order to avoid unnecessarily duplicating code, use
 the new-style interface along with a @strong{private} header file
 containing the following code:
 
@@ -2140,6 +2140,8 @@ containing the following code:
 #endif
 @end smallexample
 
+More extensive changes may be needed in code which manipulates language
+objects.
 
 @node Interface functions .Call and .External, Evaluating R expressions from C, Handling R objects in C, System and foreign language interfaces
 @section Interface functions @code{.Call} and @code{.External}

@@ -148,9 +148,17 @@ Instructions for building a cross-compiler are given at
 
     http://www.nanotech.wisc.edu/~khan/software/gnu-win32/mingw-cross-howto.txt
 
-At the time of writing these were somewhat outdated.  Apart from the
-compiler, you need the mingw32 runtime system and a cross-built
-version of binutils 2.9.4.
+At the time of writing these were somewhat outdated.  There is another set
+at
+
+    http://www.devolution.com/%7Eslouken/SDL/Xmingw32/
+
+(There is also a cross-compiler there, but omitting g77 which you
+will need.  Cross-building g77 and the Fortran libraries is the trickiest
+part.)
+
+Apart from the compiler, you need the mingw32 runtime system and a
+cross-built version of binutils 2.9.4.
 
 You will need Perl, zip and unzip installed.
 

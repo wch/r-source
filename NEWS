@@ -129,6 +129,8 @@ BUG FIXES
 	graphics in some documents.
 
 
+    o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
+
 
 	**************************************************
 	*						 *
@@ -251,7 +253,13 @@ BUG FIXES
     o	summary(.matrix | .data.frame) now respects a `digits' argument.
 
     o   scan() recognises quoted strings by default again. The default
-	for the quote= argument got set wrongly when it was introduced.
+	for the quote= argument got set wrongly when it was
+	introduced. They are, however, turned off when using sep="\n",
+	since you probably want unprocessed lines of text in that
+	case.
+
+    o   fixed buglet where scan() would double a character following a
+        terminating quote symbol.
 
     o	kmeans was failing on vector inputs (although not documented
 	to accept such).
@@ -301,8 +309,9 @@ BUG FIXES
     o	Better rendering of ^ and ~ in latex in \code{} (and they should
 	not appear outside code and verbatim sections).
 
-    o	Help aliases "(" and "{" now work, apart from as PDF hyperlinks.
+    o   Fixed unterminated string problem with lty (PR 584)
 
+    o   Fixed scoping problem with quasi() family (PR 614)
 
 
 		CHANGES IN R VERSION 1.1.0
