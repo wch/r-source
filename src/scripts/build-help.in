@@ -18,18 +18,18 @@ GetOptions (@knownoptions) || usage();
 $cwd=getcwd();
 if($opt_rhome){
     $RHOME=$opt_rhome;
-    print STDERR "RHOME from --rhome: '$RHOME'\n" if $opt_debug;
+    print STDERR "RHOME from --rhome: `$RHOME'\n" if $opt_debug;
 }
 elsif($ENV{"RHOME"}){
     $RHOME=$ENV{"RHOME"};
-    print STDERR "RHOME from ENV: '$RHOME'\n" if $opt_debug;
+    print STDERR "RHOME from ENV: `$RHOME'\n" if $opt_debug;
 }
 else{
     chdir(dirname($0) . "/..");
     $RHOME=getcwd();
 }
 chdir($cwd);
-print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
+print STDERR "Current directory (cwd): `$cwd'\n" if $opt_debug;
 
 
 require "$RHOME/etc/Rdconvlib.pl";
@@ -59,25 +59,20 @@ if(!$opt_html && !$opt_nroff && !$opt_latex && !$opt_example){
 
 ($pkg, $lib, @mandir) = buildinit();
 $dest = "$lib/$pkg";
-print STDERR "Destination 'dest'= '$dest'\n" if $opt_debug;
+print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
-# if building help or html pages we have to create the corresponding
-# directories and build some indices
-
-if($opt_html || $opt_nroff){
-    build_index();
+build_index();
+if ($opt_latex) {
+    $latex_d="$dest/latex";
+    mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
 }
-if($opt_latex){
-  $latex_d="$dest/latex";
-  mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
-}
-if($opt_example){
-  $Rex_d="$dest/R-ex";
-  mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
+if ($opt_example) {
+    $Rex_d="$dest/R-ex";
+    mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
 }
 
-print ">>> Building/Updating help pages for package `$pkg'\n";
-print "    Formats: ";
+print " >>> Building/Updating help pages for package `$pkg'\n";
+print "     Formats: ";
 print "text " if $opt_nroff;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
