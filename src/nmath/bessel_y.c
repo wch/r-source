@@ -24,7 +24,7 @@ double bessel_y(double x, double alpha)
 		    x, ncalc, nb, alpha," Arg. out of range?");
 	else /* ncalc >= 0 */
 	    warning("bessel_y(%g,nu=%g): precision lost in result\n",
-		    x, nb+alpha);
+		    x, alpha+nb-1);
     }
     x = by[nb-1];
     free(by);
@@ -69,16 +69,16 @@ void Y_bessel(double *x, double *alpha, long *nb,
   calculated to the desired accuracy.
 
   NCALC < -1:  An argument is out of range. For example,
-       NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >=
-       XMAX.  In this case, BY[0] = 0.0, the remainder of the
-       BY-vector is not calculated, and NCALC is set to
-       MIN0(NB,0)-2  so that NCALC != NB.
+	NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >=
+	XMAX.  In this case, BY[0] = 0.0, the remainder of the
+	BY-vector is not calculated, and NCALC is set to
+	MIN0(NB,0)-2  so that NCALC != NB.
   NCALC = -1:  Y(ALPHA,X) >= XINF.  The requested function
-       values are set to 0.0.
+	values are set to 0.0.
   1 < NCALC < NB: Not all requested function values could
-       be calculated accurately.  BY(I) contains correct function
-       values for I <= NCALC, and and the remaining NB-NCALC
-       array elements contain 0.0.
+	be calculated accurately.  BY(I) contains correct function
+	values for I <= NCALC, and and the remaining NB-NCALC
+	array elements contain 0.0.
 
 
  Intrinsic functions required are:
@@ -88,14 +88,14 @@ void Y_bessel(double *x, double *alpha, long *nb,
 
  Acknowledgement
 
-  This program draws heavily on Temme's Algol program for Y(a,x)
-  and Y(a+1,x) and on Campbell's programs for Y_nu(x).	Temme's
-  scheme is used for  x < THRESH, and Campbell's scheme is used
-  in the asymptotic region.  Segments of code from both sources
-  have been translated into Fortran 77, merged, and heavily modified.
-  Modifications include parameterization of machine dependencies,
-  use of a new approximation for ln(gamma(x)), and built-in
-  protection against over/underflow.
+	This program draws heavily on Temme's Algol program for Y(a,x)
+	and Y(a+1,x) and on Campbell's programs for Y_nu(x).	Temme's
+	scheme is used for  x < THRESH, and Campbell's scheme is used
+	in the asymptotic region.  Segments of code from both sources
+	have been translated into Fortran 77, merged, and heavily modified.
+	Modifications include parameterization of machine dependencies,
+	use of a new approximation for ln(gamma(x)), and built-in
+	protection against over/underflow.
 
  References: "Bessel functions J_nu(x) and Y_nu(x) of float
 	      order and float argument," Campbell, J. B.,

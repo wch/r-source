@@ -26,7 +26,7 @@ double bessel_j(double x, double alpha)
 		x, ncalc, nb, alpha," Arg. out of range?");
       else
 	warning("bessel_j(%g,nu=%g): precision lost in result\n",
-		x, nb+alpha);
+		x, alpha+nb-1);
     }
     x = bj[nb-1];
     free(bj);

@@ -25,7 +25,7 @@ double bessel_k(double x, double alpha, double expo)
 		x, ncalc, nb, alpha," Arg. out of range?");
       else
 	warning("bessel_k(%g,nu=%g): precision lost in result\n",
-		x, nb+alpha);
+		x, alpha+nb-1);
     }
     x = bk[nb-1];
     free(bk);
@@ -79,18 +79,18 @@ void K_bessel(double *x, double *alpha, long *nb,
   calculated to the desired accuracy.
 
   NCALC < -1:  An argument is out of range. For example,
-       NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >= XMAX.
-       In this case, the B-vector is not calculated,
-       and NCALC is set to MIN0(NB,0)-2	 so that NCALC != NB.
+	NB <= 0, IZE is not 1 or 2, or IZE=1 and ABS(X) >= XMAX.
+	In this case, the B-vector is not calculated,
+	and NCALC is set to MIN0(NB,0)-2	 so that NCALC != NB.
   NCALC = -1:  Either  K(ALPHA,X) >= XINF  or
-       K(ALPHA+NB-1,X)/K(ALPHA+NB-2,X) >= XINF.	 In this case,
-       the B-vector is not calculated.	Note that again
-       NCALC != NB.
+	K(ALPHA+NB-1,X)/K(ALPHA+NB-2,X) >= XINF.	 In this case,
+	the B-vector is not calculated.	Note that again
+	NCALC != NB.
 
   0 < NCALC < NB: Not all requested function values could
-       be calculated accurately.  BK(I) contains correct function
-       values for I <= NCALC, and contains the ratios
-       K(ALPHA+I-1,X)/K(ALPHA+I-2,X) for the rest of the array.
+	be calculated accurately.  BK(I) contains correct function
+	values for I <= NCALC, and contains the ratios
+	K(ALPHA+I-1,X)/K(ALPHA+I-2,X) for the rest of the array.
 
 
  Intrinsic functions required are:
@@ -100,12 +100,12 @@ void K_bessel(double *x, double *alpha, long *nb,
 
  Acknowledgement
 
-  This program is based on a program written by J. B. Campbell
-  (2) that computes values of the Bessel functions K of float
-  argument and float order.  Modifications include the addition
-  of non-scaled functions, parameterization of machine
-  dependencies, and the use of more accurate approximations
-  for SINH and SIN.
+	This program is based on a program written by J. B. Campbell
+	(2) that computes values of the Bessel functions K of float
+	argument and float order.  Modifications include the addition
+	of non-scaled functions, parameterization of machine
+	dependencies, and the use of more accurate approximations
+	for SINH and SIN.
 
  References: "On Temme's Algorithm for the Modified Bessel
 	      Functions of the Third Kind," Campbell, J. B.,
@@ -218,7 +218,7 @@ void K_bessel(double *x, double *alpha, long *nb,
     static double estf[7] = { 41.8341,7.1075,6.4306,42.511,1.35633,84.5096,20.};
 
     /* Local variables */
-    long iend, i, j, k, m, itemp, mplus1;
+    long iend, i, j, k, m, ii, mplus1;
     double x2by4, twox, c, blpha, ratio, wminf;
     double d1, d2, d3, f0, f1, f2, p0, q0, t1, t2, twonu;
     double dm, ex, bk1, bk2, nu;
@@ -488,14 +488,14 @@ void K_bessel(double *x, double *alpha, long *nb,
 		    break;
 	    }
 	    bk2 = twonu / ex * bk1 + t1;
-	    itemp = i;
+	    ii = i;
 	    ++j;
 	    if (j >= 0) {
 		bk[j] = bk2;
 	    }
 	}
 
-	m = itemp;
+	m = ii;
 	if (m == iend) {
 	    return;
 	}
