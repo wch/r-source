@@ -110,10 +110,15 @@
   or even if it works at all, depends on the C and Fortran compilers
   and the platform.)
 
+  Missing (\code{NA}) string values are passed to \code{.C} as the string
+  "NA". As the C \code{char} type can represent all possible bit patterns
+  there appears to be no way to distinguish missing strings from the
+  string \code{"NA"}. If this distinction is important use \code{.Call}.
+
   Functions, expressions, environments and other language elements are
   passed as the internal \R pointer type \code{SEXP}.  This type is
   defined in \file{Rinternals.h} or the arguments can be declared as
-  generic pointers, \code{void *}.  Lists are passed as C arrays of
+  generic pointers, \code{void *}. Lists are passed as C arrays of
   \code{SEXP} and can be declared as \code{void *} or \code{SEXP *}.
 
   \R functions can be invoked using \code{call_S} or \code{call_R} and
