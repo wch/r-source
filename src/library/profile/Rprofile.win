@@ -1,7 +1,9 @@
 ###-*- R -*- MS-Windows Specific ----
 
 .Library <- paste(R.home(), "library", sep = .Platform$file.sep)
-.lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
+.lib.loc <- unique(c(unlist(strsplit(c(getenv("R_LIBS"),
+                                       getenv("RLIBS")), ":")),
+                     .Library))
 options(papersize = "a4")
 options(device = "windows")
 options(mailer = "none")

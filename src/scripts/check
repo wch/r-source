@@ -1,9 +1,9 @@
 #!/bin/sh
 
-# ${RHOME}/bin/check for checking installed add-on packages
+# ${R_HOME}/bin/check for checking installed add-on packages
 
 USAGE_MSG="Usage: R CMD check [options] [-l lib] pkg_1 ... pkg_n"
-VERSION="0.2-0"
+VERSION="0.2-1"
 
 OPTS=
 PKGS=
@@ -11,7 +11,7 @@ CLEAN=false
 DEBUG=false
 REBUILD=true
 START_DIR=`pwd`
-lib=${RHOME}/library
+lib=${R_HOME}/library
 
 while test -n "${1}"; do
   case ${1} in
@@ -27,7 +27,7 @@ while test -n "${1}"; do
       REBUILD=false ;;
     -l)
       lib=${2}; shift;
-      RLIBS="${lib}:${RLIBS}";
+      R_LIBS="${lib}:${R_LIBS:-${RLIBS}}";
       ;;
     *)
       PKGS="${PKGS} ${1}" ;;
@@ -70,7 +70,7 @@ for pkg in ${PKGS}; do
   fi
 
   if ${USE_MAN}; then
-    ${RHOME}/bin/build-help ${OPTS} --example ../${pkg} ${lib}
+    ${R_HOME}/bin/build-help ${OPTS} --example ../${pkg} ${lib}
     CHECK_DIR=check
   else
     CHECK_DIR=check-${pkg}
@@ -80,10 +80,10 @@ for pkg in ${PKGS}; do
   cd ${CHECK_DIR}
     
   echo " Massaging examples into \`${pkg}-Ex.R' ..."
-  ${RHOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
+  ${R_HOME}/bin/massage-Examples ${pkg} ${lib}/${pkg}/R-ex/*.R \
     > ${pkg}-Ex.R
   echo " Running examples in package \`${pkg}' ..."
-  RLIBS=${RLIBS} ${RHOME}/bin/R --vanilla < ${pkg}-Ex.R \
+  R_LIBS=${R_LIBS} ${R_HOME}/bin/R --vanilla < ${pkg}-Ex.R \
     > ${pkg}-Ex.Rout
   if test ${?} -eq 0; then
     echo " OK"
