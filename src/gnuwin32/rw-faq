@@ -94,7 +94,7 @@ rwinst.exe and navigate its wizard-like pages).  Alternatively, choose
 a location and unzip the zip files (with a tool that preserves long
 file names and the directory structure: we recommend the INFO-ZIP
 project's unzip). All the files will unpack into a directory called
-rw0xxx, for some `xx'.
+rw0xxx, for some `xxx'.
 
 Choose a working directory for R. Make a shortcut to
 rw0xxx\bin\Rgui.exe on your desktop or somewhere on the Start menu
