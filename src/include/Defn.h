@@ -90,6 +90,7 @@ typedef unsigned long R_size_t;
 #define R_SIZE_T_MAX ULONG_MAX
 
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
+#define Giga 1073741824. /* 1 Giga Byte := 2^30 Bytes */
 
 /*	R_PPSSIZE  The pointer protection stack size  */
 /*	R_NSIZE	   The number of cons cells	 */

@@ -1574,13 +1574,10 @@ void R_DefParams(Rstart Rp)
     Rp->NoRenviron = FALSE;
 }
 
-#define Max_Nsize 50000000	/* must be < R_SIZE_T_MAX,
-				   On a 32-bit machine that is 2^32 - 1 = 4.3e9
-				   whils current limit gives
-                                   nearly 2Gb of cons cells */
-#define Max_Vsize (4000*Mega)	/* 4000*Mega must be < R_SIZE_T_MAX */
+#define Max_Nsize 50000000	/* about 1.4Gb 32-bit, 2.8Gb 64-bit */
+#define Max_Vsize R_SIZE_T_MAX	/* unlimited */
 
-#define Min_Nsize 160000
+#define Min_Nsize 220000
 #define Min_Vsize (1*Mega)
 
 void R_SizeFromEnv(Rstart Rp)

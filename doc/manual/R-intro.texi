@@ -6566,9 +6566,9 @@ information.
 @itemx --max-vsize=@var{N}
 Specify the minimum or maximum amount of memory used for variable size
 objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
-@var{N} must either be an integer or an integer ending with @samp{M},
-@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
-or regular `kilo' (1000).
+@var{N} must either be an integer or an integer ending with @samp{G},
+@samp{M}, @samp{K}, or @samp{k}, meaning `Giga' (2^30), `Mega' (2^20),
+(computer) `Kilo' (2^10), or regular `kilo' (1000).
 
 @item --min-nsize=@var{N}
 @itemx --max-nsize=@var{N}
@@ -6783,9 +6783,9 @@ Combine @option{--no-save}, @option{--no-restore},
 @itemx --max-vsize=@var{N}
 Specify the minimum or maximum amount of memory used for variable size
 objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
-@var{N} must either be an integer or an integer ending with @samp{M},
-@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
-or regular `kilo' (1000).
+@var{N} must either be an integer or an integer ending with @samp{G},
+@samp{M}, @samp{K}, or @samp{k}, meaning `Giga' (2^30), `Mega' (2^20),
+(computer) `Kilo' (2^10), or regular `kilo' (1000).
 
 @item --min-nsize=@var{N}
 @itemx --max-nsize=@var{N}
@@ -6970,9 +6970,9 @@ Combine @option{--no-save}, @option{--no-environ},
 @itemx --max-vsize=@var{N}
 Specify the minimum or maximum amount of memory used for variable size
 objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
-@var{N} must either be an integer or an integer ending with @samp{M},
-@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
-or regular `kilo' (1000).
+@var{N} must either be an integer or an integer ending with @samp{G},
+@samp{M}, @samp{K}, or @samp{k}, meaning `Giga' (2^30), `Mega' (2^20),
+(computer) `Kilo' (2^10), or regular `kilo' (1000).
 
 @item --min-nsize=@var{N}
 @itemx --max-nsize=@var{N}

@@ -64,6 +64,10 @@ NEW FEATURES
 	objects created in the range 2-4Gb on 32-bit platforms, and
 	allows 64-bit platforms to use much larger amounts of memory.
 
+    o	Command-line flags to set memory can now use the suffix `G'
+	for gigabytes.  The setting of maximum vsize is now only
+	limited by the platform's address space.
+
 
 DEPRECATED & DEFUNCT
 
