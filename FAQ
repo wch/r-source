@@ -2412,6 +2412,10 @@ distributions of R.)
 *lpridge*
      Local polynomial (ridge) regression.
 
+*ltm*
+     Analysis of multivariate Bernoulli data using latent trait models
+     (including the Rasch model) under the Item Response Theory approach.
+
 *mAr*
      Estimation of multivariate AR models through a computationally
      efficient stepwise least-squares algorithm.
