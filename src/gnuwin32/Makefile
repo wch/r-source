@@ -446,9 +446,13 @@ rinstaller:
 crandir:
 	$(MKDIR) -p cran/mini
 	$(CP) installer/rw*.exe cran
-	(cd cran; md5sum rw*.exe >md5sum.txt)
+	(cd cran;\
+	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX).exe")' \
+         | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt) 
 	$(CP) installer/mini*.* cran/mini
-	(cd cran/mini; md5sum mini* >md5sum.txt)
+	(cd cran/mini;\
+	 $(ECHO) 'fn <- dir(pattern="mini*"); cat(paste(md5sum(fn)," *",fn,sep=""),sep="\n")' \
+	 | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g readme > cran/README.$(RPREFIX)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
