@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-15, 2003-11-12
+Version 1.8-16, 2003-11-13
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2062,6 +2062,9 @@ distributions of R.)
 
 *pamr*
      Pam: Prediction Analysis for Microarrays.
+
+*pan*
+     Multiple imputation for multivariate panel or clustered data.
 
 *panel*
      Functions and datasets for fitting models to Panel data.
