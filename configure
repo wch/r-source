@@ -1137,6 +1137,11 @@ Optional Packages:
                           specify location of tclConfig.sh []
   --with-tk-config=TK_CONFIG
                           specify location of tkConfig.sh []
+  --with-libpng           use libpng library (if available) [yes]
+  --with-jpeglib          use jpeglib library (if available) [yes]
+  --with-zlib             use zlib library (if available) [yes]
+  --with-bzlib            use bzlib library (if available) [yes]
+  --with-pcre             use PCRE library (if available) [yes]
   --with-recommended-packages
                           use/install recommended R packages (if available)
                           [yes]
@@ -2210,6 +2215,74 @@ if test "${with_tk_config+set}" = set; then
 else
   TK_CONFIG=""
 fi;
+
+## other libraries
+
+# Check whether --with-libpng or --without-libpng was given.
+if test "${with_libpng+set}" = set; then
+  withval="$with_libpng"
+  if test "${withval}" = no; then
+  use_libpng=no
+else
+  use_libpng=yes
+fi
+
+else
+  use_libpng=yes
+fi;
+
+# Check whether --with-jpeglib or --without-jpeglib was given.
+if test "${with_jpeglib+set}" = set; then
+  withval="$with_jpeglib"
+  if test "${withval}" = no; then
+  use_jpeglib=no
+else
+  use_jpeglib=yes
+fi
+
+else
+  use_jpeglib=yes
+fi;
+
+# Check whether --with-zlib or --without-zlib was given.
+if test "${with_zlib+set}" = set; then
+  withval="$with_zlib"
+  if test "${withval}" = no; then
+  use_zlib=no
+else
+  use_zlib=yes
+fi
+
+else
+  use_zlib=yes
+fi;
+
+# Check whether --with-bzlib or --without-bzlib was given.
+if test "${with_bzlib+set}" = set; then
+  withval="$with_bzlib"
+  if test "${withval}" = no; then
+  use_bzlib=no
+else
+  use_bzlib=yes
+fi
+
+else
+  use_bzlib=yes
+fi;
+
+# Check whether --with-pcre or --without-pcre was given.
+if test "${with_pcre+set}" = set; then
+  withval="$with_pcre"
+  if test "${withval}" = no; then
+  use_pcre=no
+else
+  use_pcre=yes
+fi
+
+else
+  use_pcre=yes
+fi;
+
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
@@ -5607,7 +5680,7 @@ test "x$enable_libtool_lock" != xno && enable_libtool_lock=yes
 case $host in
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 5610 "configure"' > conftest.$ac_ext
+  echo '#line 5683 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -6121,7 +6194,7 @@ chmod -w .
 save_CFLAGS="$CFLAGS"
 CFLAGS="$CFLAGS -o out/conftest2.$ac_objext"
 compiler_c_o=no
-if { (eval echo configure:6124: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>out/conftest.err; } && test -s out/conftest2.$ac_objext; then
+if { (eval echo configure:6197: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>out/conftest.err; } && test -s out/conftest2.$ac_objext; then
   # The compiler can only warn and ignore the option if not recognized
   # So say no if there are warnings
   if test -s out/conftest.err; then
@@ -7887,7 +7960,7 @@ else
     lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 7890 "configure"
+#line 7963 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -7985,7 +8058,7 @@ else
     lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 7988 "configure"
+#line 8061 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -9950,7 +10023,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:9953:" \
+echo "$as_me:10026:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -13987,7 +14060,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:13990: \"$ac_link\") >&5
+(eval echo $as_me:14063: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -14066,7 +14139,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:14069: \"$ac_link\") >&5
+(eval echo $as_me:14142: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -22397,7 +22470,8 @@ fi
 
 ## Bitmap headers and libraries.
 BITMAP_LIBS=
-echo "$as_me:$LINENO: checking if jpeglib version >= 6b" >&5
+if test "${use_jpeglib}" = yes; then
+  echo "$as_me:$LINENO: checking if jpeglib version >= 6b" >&5
 echo $ECHO_N "checking if jpeglib version >= 6b... $ECHO_C" >&6
 if test "${r_cv_header_jpeglib_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22423,9 +22497,9 @@ fi
 echo "$as_me:$LINENO: result: $r_cv_header_jpeglib_h" >&5
 echo "${ECHO_T}$r_cv_header_jpeglib_h" >&6
 
-have_jpeg=${r_cv_header_jpeglib_h}
-if test "${have_jpeg}" = yes; then
-  echo "$as_me:$LINENO: checking for jpeg_destroy_compress in -ljpeg" >&5
+  have_jpeg=${r_cv_header_jpeglib_h}
+  if test "${have_jpeg}" = yes; then
+    echo "$as_me:$LINENO: checking for jpeg_destroy_compress in -ljpeg" >&5
 echo $ECHO_N "checking for jpeg_destroy_compress in -ljpeg... $ECHO_C" >&6
 if test "${ac_cv_lib_jpeg_jpeg_destroy_compress+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22486,16 +22560,18 @@ else
   have_jpeg=no
 fi
 
-fi
-if test "${have_jpeg}" = yes; then
-  BITMAP_LIBS="-ljpeg"
+  fi
+  if test "${have_jpeg}" = yes; then
+    BITMAP_LIBS="-ljpeg"
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_JPEG 1
 _ACEOF
 
+  fi
 fi
-echo "$as_me:$LINENO: checking for main in -lz" >&5
+if test "${use_libpng}" = yes; then
+  echo "$as_me:$LINENO: checking for main in -lz" >&5
 echo $ECHO_N "checking for main in -lz... $ECHO_C" >&6
 if test "${ac_cv_lib_z_main+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22550,8 +22626,8 @@ else
   have_png=no
 fi
 
-if test "${have_png}" = yes; then
-  echo "$as_me:$LINENO: checking if libpng version >= 1.0.5" >&5
+  if test "${have_png}" = yes; then
+    echo "$as_me:$LINENO: checking if libpng version >= 1.0.5" >&5
 echo $ECHO_N "checking if libpng version >= 1.0.5... $ECHO_C" >&6
 if test "${r_cv_header_png_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22577,10 +22653,10 @@ fi
 echo "$as_me:$LINENO: result: $r_cv_header_png_h" >&5
 echo "${ECHO_T}$r_cv_header_png_h" >&6
 
-  have_png=${r_cv_header_png_h}
-fi
-if test "${have_png}" = yes; then
-  echo "$as_me:$LINENO: checking for png_create_write_struct in -lpng" >&5
+    have_png=${r_cv_header_png_h}
+  fi
+  if test "${have_png}" = yes; then
+    echo "$as_me:$LINENO: checking for png_create_write_struct in -lpng" >&5
 echo $ECHO_N "checking for png_create_write_struct in -lpng... $ECHO_C" >&6
 if test "${ac_cv_lib_png_png_create_write_struct+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22641,14 +22717,15 @@ else
   have_png=no
 fi
 
-fi
-if test "${have_png}" = yes; then
-  BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+  fi
+  if test "${have_png}" = yes; then
+    BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
 
 cat >>confdefs.h <<\_ACEOF
 #define HAVE_PNG 1
 _ACEOF
 
+  fi
 fi
 
 
@@ -22823,7 +22900,8 @@ fi
 
 
 ## zlib headers and libraries.
-echo "$as_me:$LINENO: checking for gzeof in -lz" >&5
+if test "x${use_zlib}" = xyes; then
+  echo "$as_me:$LINENO: checking for gzeof in -lz" >&5
 echo $ECHO_N "checking for gzeof in -lz... $ECHO_C" >&6
 if test "${ac_cv_lib_z_gzeof+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22884,8 +22962,8 @@ else
   have_zlib=no
 fi
 
-if test "${have_zlib}" = yes; then
-  if test "${ac_cv_header_zlib_h+set}" = set; then
+  if test "${have_zlib}" = yes; then
+    if test "${ac_cv_header_zlib_h+set}" = set; then
   echo "$as_me:$LINENO: checking for zlib.h" >&5
 echo $ECHO_N "checking for zlib.h... $ECHO_C" >&6
 if test "${ac_cv_header_zlib_h+set}" = set; then
@@ -22993,9 +23071,9 @@ else
 fi
 
 
-fi
-if test "${have_zlib}" = yes; then
-  echo "$as_me:$LINENO: checking if zlib version >= 1.1.3" >&5
+  fi
+  if test "${have_zlib}" = yes; then
+    echo "$as_me:$LINENO: checking if zlib version >= 1.1.3" >&5
 echo $ECHO_N "checking if zlib version >= 1.1.3... $ECHO_C" >&6
 if test "${r_cv_header_zlib_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -23041,7 +23119,10 @@ fi
 echo "$as_me:$LINENO: result: $r_cv_header_zlib_h" >&5
 echo "${ECHO_T}$r_cv_header_zlib_h" >&6
 
-  have_zlib=${r_cv_header_zlib_h}
+    have_zlib=${r_cv_header_zlib_h}
+  fi
+else
+  have_zlib="no"
 fi
 echo "$as_me:$LINENO: checking whether zlib support needs to be compiled" >&5
 echo $ECHO_N "checking whether zlib support needs to be compiled... $ECHO_C" >&6
@@ -23122,7 +23203,8 @@ fi
 
 
 ## bzlib headers and libraries.
-echo "$as_me:$LINENO: checking for BZ2_bzlibVersion in -lbz2" >&5
+if test "x${use_bzlib}" = xyes; then
+  echo "$as_me:$LINENO: checking for BZ2_bzlibVersion in -lbz2" >&5
 echo $ECHO_N "checking for BZ2_bzlibVersion in -lbz2... $ECHO_C" >&6
 if test "${ac_cv_lib_bz2_BZ2_bzlibVersion+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -23183,8 +23265,8 @@ else
   have_bzlib=no
 fi
 
-if test "${have_bzlib}" = yes; then
-  if test "${ac_cv_header_bzlib_h+set}" = set; then
+  if test "${have_bzlib}" = yes; then
+    if test "${ac_cv_header_bzlib_h+set}" = set; then
   echo "$as_me:$LINENO: checking for bzlib.h" >&5
 echo $ECHO_N "checking for bzlib.h... $ECHO_C" >&6
 if test "${ac_cv_header_bzlib_h+set}" = set; then
@@ -23292,6 +23374,9 @@ else
 fi
 
 
+  fi
+else
+  have_bzlib=no
 fi
 echo "$as_me:$LINENO: checking whether bzip2 support needs to be compiled" >&5
 echo $ECHO_N "checking whether bzip2 support needs to be compiled... $ECHO_C" >&6
@@ -23315,7 +23400,8 @@ fi
 
 
 ## PCRE headers and libraries.
-echo "$as_me:$LINENO: checking for pcre_fullinfo in -lpcre" >&5
+if test "x${use_pcre}" = xyes; then
+  echo "$as_me:$LINENO: checking for pcre_fullinfo in -lpcre" >&5
 echo $ECHO_N "checking for pcre_fullinfo in -lpcre... $ECHO_C" >&6
 if test "${ac_cv_lib_pcre_pcre_fullinfo+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -23376,7 +23462,7 @@ else
   have_pcre=no
 fi
 
-if test "${have_pcre}" = yes; then
+  if test "${have_pcre}" = yes; then
 
 
 for ac_header in pcre.h pcre/pcre.h
@@ -23492,10 +23578,13 @@ fi
 
 done
 
-  if test "${ac_cv_header_pcre_h}" = no \
-      && test "${ac_cv_header_pcre_pcre_h}" = no; then
-    have_pcre=no
+    if test "${ac_cv_header_pcre_h}" = no \
+	&& test "${ac_cv_header_pcre_pcre_h}" = no; then
+      have_pcre=no
+    fi
   fi
+else
+  have_pcre=no
 fi
 if test "${have_pcre}" = yes; then
 

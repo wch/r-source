@@ -1125,34 +1125,38 @@ fi
 
 AC_DEFUN([R_BITMAPS],
 [BITMAP_LIBS=
-_R_HEADER_JPEGLIB
-have_jpeg=${r_cv_header_jpeglib_h}
-if test "${have_jpeg}" = yes; then
-  AC_CHECK_LIB(jpeg, jpeg_destroy_compress, 
-               [have_jpeg=yes],
-               [have_jpeg=no],
-               [${LIBS}])
+if test "${use_jpeglib}" = yes; then
+  _R_HEADER_JPEGLIB
+  have_jpeg=${r_cv_header_jpeglib_h}
+  if test "${have_jpeg}" = yes; then
+    AC_CHECK_LIB(jpeg, jpeg_destroy_compress, 
+		 [have_jpeg=yes],
+		 [have_jpeg=no],
+		 [${LIBS}])
+  fi
+  if test "${have_jpeg}" = yes; then
+    BITMAP_LIBS="-ljpeg"
+    AC_DEFINE(HAVE_JPEG, 1,
+	      [Define if you have the JPEG headers and libraries.])
+  fi
 fi
-if test "${have_jpeg}" = yes; then
-  BITMAP_LIBS="-ljpeg"
-  AC_DEFINE(HAVE_JPEG, 1,
-            [Define if you have the JPEG headers and libraries.])
-fi
-AC_CHECK_LIB(z, main, [have_png=yes], [have_png=no])
-if test "${have_png}" = yes; then
-  _R_HEADER_PNG
-  have_png=${r_cv_header_png_h}
-fi
-if test "${have_png}" = yes; then
-  AC_CHECK_LIB(png, png_create_write_struct,
-               [have_png=yes],
-               [have_png=no],
-               [-lz ${LIBS}])
-fi
-if test "${have_png}" = yes; then
-  BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
-  AC_DEFINE(HAVE_PNG, 1,
-            [Define if you have the PNG headers and libraries.])
+if test "${use_libpng}" = yes; then
+  AC_CHECK_LIB(z, main, [have_png=yes], [have_png=no])
+  if test "${have_png}" = yes; then
+    _R_HEADER_PNG
+    have_png=${r_cv_header_png_h}
+  fi
+  if test "${have_png}" = yes; then
+    AC_CHECK_LIB(png, png_create_write_struct,
+		 [have_png=yes],
+		 [have_png=no],
+		 [-lz ${LIBS}])
+  fi
+  if test "${have_png}" = yes; then
+    BITMAP_LIBS="${BITMAP_LIBS} -lpng -lz"
+    AC_DEFINE(HAVE_PNG, 1,
+	      [Define if you have the PNG headers and libraries.])
+  fi
 fi
 AC_SUBST(BITMAP_LIBS)
 ])# R_BITMAPS
@@ -1641,19 +1645,23 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ])# R_XDR
 
 AC_DEFUN([R_ZLIB],
-[AC_CHECK_LIB(z, gzeof, [have_zlib=yes], [have_zlib=no])
-if test "${have_zlib}" = yes; then
-  AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
-fi
-if test "${have_zlib}" = yes; then
-  _R_HEADER_ZLIB
-  have_zlib=${r_cv_header_zlib_h}
+[if test "x${use_zlib}" = xyes; then
+  AC_CHECK_LIB(z, gzeof, [have_zlib=yes], [have_zlib=no])
+  if test "${have_zlib}" = yes; then
+    AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
+  fi
+  if test "${have_zlib}" = yes; then
+    _R_HEADER_ZLIB
+    have_zlib=${r_cv_header_zlib_h}
+  fi
+else
+  have_zlib="no"
 fi
 AC_MSG_CHECKING([whether zlib support needs to be compiled])
 if test "${have_zlib}" = yes; then
   AC_MSG_RESULT([no])
   AC_DEFINE(HAVE_ZLIB, 1,
-            [Define if you have the zlib headers and libraries.])
+	    [Define if you have the zlib headers and libraries.])
   LIBS="-lz ${LIBS}"
 else
   AC_MSG_RESULT([yes])
@@ -1698,13 +1706,17 @@ caddr_t hello() {
 ])# _R_ZLIB_MMAP
 
 AC_DEFUN([R_PCRE],
-[AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
-if test "${have_pcre}" = yes; then
-  AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
-  if test "${ac_cv_header_pcre_h}" = no \
-      && test "${ac_cv_header_pcre_pcre_h}" = no; then
-    have_pcre=no
+[if test "x${use_pcre}" = xyes; then
+  AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
+  if test "${have_pcre}" = yes; then
+    AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
+    if test "${ac_cv_header_pcre_h}" = no \
+	&& test "${ac_cv_header_pcre_pcre_h}" = no; then
+      have_pcre=no
+    fi
   fi
+else
+  have_pcre=no
 fi
 if test "${have_pcre}" = yes; then
   AC_DEFINE(HAVE_PCRE, 1,
@@ -1721,9 +1733,13 @@ AM_CONDITIONAL(BUILD_PCRE, [test "x${have_pcre}" = xno])
 ])# R_PCRE
 
 AC_DEFUN([R_BZLIB],
-[AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
-if test "${have_bzlib}" = yes; then
-  AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
+[if test "x${use_bzlib}" = xyes; then
+  AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
+  if test "${have_bzlib}" = yes; then
+    AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])
+  fi
+else
+  have_bzlib=no
 fi
 AC_MSG_CHECKING([whether bzip2 support needs to be compiled])
 if test "x${have_bzlib}" = xyes; then

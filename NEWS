@@ -91,6 +91,10 @@ INSTALLATION CHANGES
 	LAPACK libraries to be used: a generic LAPACK library will be
 	used if found.  This option is not the default.
 
+    o   New configure options --with-libpng, --with-jpeglib, --with-zlib,
+        --with-bzlib and --with-pcre, principally to allow these
+	libraries to be avoided if they are unsuitable.
+
 
 DEPRECATED & DEFUNCT
 

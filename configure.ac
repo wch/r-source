@@ -246,6 +246,34 @@ AC_ARG_WITH([tk-config],
 [TK_CONFIG="${withval}"],
 [TK_CONFIG=""])
 
+## other libraries
+AC_ARG_WITH([libpng],
+[AC_HELP_STRING([--with-libpng],
+                [use libpng library (if available) @<:@yes@:>@])],
+[R_ARG_USE(libpng)],
+[use_libpng=yes])
+AC_ARG_WITH([jpeglib],
+[AC_HELP_STRING([--with-jpeglib],
+                [use jpeglib library (if available) @<:@yes@:>@])],
+[R_ARG_USE(jpeglib)],
+[use_jpeglib=yes])
+AC_ARG_WITH([zlib],
+[AC_HELP_STRING([--with-zlib],
+                [use zlib library (if available) @<:@yes@:>@])],
+[R_ARG_USE(zlib)],
+[use_zlib=yes])
+AC_ARG_WITH([bzlib],
+[AC_HELP_STRING([--with-bzlib],
+                [use bzlib library (if available) @<:@yes@:>@])],
+[R_ARG_USE(bzlib)],
+[use_bzlib=yes])
+AC_ARG_WITH([pcre],
+[AC_HELP_STRING([--with-pcre],
+                [use PCRE library (if available) @<:@yes@:>@])],
+[R_ARG_USE(pcre)],
+[use_pcre=yes])
+
+
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool
 ## fully supports Fortran and C++.
