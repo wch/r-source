@@ -1309,6 +1309,7 @@ SEXP allocVector(SEXPTYPE type, int length)
     int alloc_size;
 #ifdef USE_GENERATIONAL_GC
     int node_class;
+    int old_R_VSize;
 #endif
 
     if (length < 0 )
@@ -1382,6 +1383,11 @@ SEXP allocVector(SEXPTYPE type, int length)
     alloc_size = size;
 #endif
 
+#ifdef USE_GENERATIONAL_GC
+    /* save current R_VSize to roll back adjustment if malloc fails */
+    old_R_VSize = R_VSize;
+#endif
+
     /* we need to do the gc here so allocSExp doesn't! */
     if (FORCE_GC || NO_FREE_NODES() || alloc_size > VHEAP_FREE()) {
 	R_gc_internal(alloc_size);
@@ -1401,9 +1407,14 @@ SEXP allocVector(SEXPTYPE type, int length)
 	R_SmallVallocSize += alloc_size;
       }
       else {
-	s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC));
-	if (s == NULL)
-	  mem_err_heap(size);
+	if (size >= (LONG_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN) ||
+	    (s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC)))
+	    == NULL) {
+	  /* reset the vector heap limit */
+	  R_VSize = old_R_VSize;
+	  errorcall(R_NilValue, "cannot allocate vector of size %ld Kb",
+		    (size * sizeof(VECREC))/1024);
+	}
 	s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	SET_NODE_CLASS(s, LARGE_NODE_CLASS);
 	R_LargeVallocSize += alloc_size;
