@@ -9,6 +9,10 @@ case $1 in
 esac
 export R_SAVE_IMAGE
 
+## This is apparently needed, but no one told the Windows maintainers.
+R_PACKAGE_NAME=${pkg}
+export R_PACKAGE_NAME
+
 if ${R_SAVE_IMAGE}; then
     echo "  save image"
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
