@@ -135,6 +135,9 @@ BUG FIXES
     o	ksmooth (in package modreg) was using points to the left
 	of the kernel under some circumstances (PR#1050).
 
+    o	attr(x, "class") <- character(0) was segfaulting.  Similar problem
+	with "comment" attribute also fixed.
+
 
 
 		CHANGES IN R VERSION 1.3.0
