@@ -19,10 +19,6 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
-    o   There is a new function contourLines() to produce contour 
-	lines (but not draw anything).  This makes the CRAN package
-	clines (with its clines() function) redundant.
-
     o	The perl=TRUE argument to grep/regexpr/(g)sub() now uses
 	character tables prepared for the locale currently in use each
 	time it is used, rather than those of the C locale.
@@ -63,8 +59,8 @@ NEW FEATURES
 	long been documented but not done.)  The default method is now
 	able to cope with model classes such as "lqs" and "ppr".
 
-    o	ppr() has a `model' argument to allow the model frame to be
-	returned as part of the fitted object.
+    o	nls() and ppr() have a `model' argument to allow the model frame
+	to be returned as part of the fitted object.
 
     o	glm() arguments `etastart' and `mustart' are now evaluated via
 	the model frame in the same way as `subset' and `weights'.
@@ -80,7 +76,10 @@ NEW FEATURES
 	extra code to do so.  However, this cannot correct scanning
 	errors in the OS's strptime (although we have been able to
 
-    o	nls() and ppr() now have model= arguments to save the model frame.
+    o   There is a new function contourLines() to produce contour 
+	lines (but not draw anything).  This makes the CRAN package
+	clines (with its clines() function) redundant.
+	work around these on Windows).
 
 
 UTILITIES
