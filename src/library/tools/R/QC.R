@@ -60,8 +60,9 @@ function(package, dir, lib.loc = NULL)
             ## Collect code in codeFile.
             codeFile <- tempfile("Rcode")
             on.exit(unlink(codeFile))
-            file.create(codeFile)
-            file.append(codeFile, listFilesWithType(codeDir, "code"))
+            if(!file.create(codeFile)) stop("unable to create ", codeFile)
+            if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+                stop("unable to write code files")
             ## Read code from codeFile into codeEnv.
             yy <- try(.sourceAssignments(codeFile, env = codeEnv))
             if(inherits(yy, "try-error")) {
@@ -368,8 +369,9 @@ function(package, dir, lib.loc = NULL,
         ## Collect code in codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        file.create(codeFile)
-        file.append(codeFile, listFilesWithType(codeDir, "code"))
+        if(!file.create(codeFile)) stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+            stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -1398,8 +1400,9 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        file.create(codeFile)
-        file.append(codeFile, listFilesWithType(codeDir, "code"))
+        if(!file.create(codeFile)) stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+           stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -1628,8 +1631,9 @@ function(package, dir, file, lib.loc = NULL,
                        "does not contain R code"))
         file <- tempfile()
         on.exit(unlink(file))
-        file.create(file)
-        file.append(file, listFilesWithType(codeDir, "code"))
+        if(!file.create(file)) stop("unable to create ", file)
+        if(!all(file.append(file, listFilesWithType(codeDir, "code"))))
+            stop("unable to write code files")
     }
     else if(missing(file)) {
         stop(paste("you must specify ", sQuote("package"), ", ",
@@ -1791,8 +1795,9 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        file.create(codeFile)
-        file.append(codeFile, listFilesWithType(codeDir, "code"))
+        if(!file.create(codeFile)) stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+            stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()
@@ -2076,8 +2081,9 @@ function(package, dir, lib.loc = NULL)
         ## Collect code into codeFile.
         codeFile <- tempfile("Rcode")
         on.exit(unlink(codeFile))
-        file.create(codeFile)
-        file.append(codeFile, listFilesWithType(codeDir, "code"))
+        if(!file.create(codeFile)) stop("unable to create ", codeFile)
+        if(!all(file.append(codeFile, listFilesWithType(codeDir, "code"))))
+            stop("unable to write code files")
 
         ## Read code from codeFile into codeEnv.
         codeEnv <- new.env()

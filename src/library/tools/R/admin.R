@@ -146,10 +146,11 @@ function(dir, outDir)
     ## It may be safer to do
     ##   writeLines(sapply(codeFiles, readLines), outFile)
     ## instead, but this would be much slower ...
-    file.create(outFile)
+    if(!file.create(outFile)) stop("unable to create ", outFile)
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
-    file.append(outFile, codeFiles)
+    if(!all(file.append(outFile, codeFiles)))
+        stop("unable to write code files")
     ## </NOTE>
 
     invisible()
@@ -163,16 +164,16 @@ function(dir, outDir)
 {
     if(!fileTest("-d", dir))
         stop(paste("directory", sQuote(dir), "does not exist"))
-    ## <FIXME>
-    ## Should we do any checking on @code{outDir}?
-    ## </FIXME>
+    if(!fileTest("-d", outDir))
+        stop(paste("directory", sQuote(outDir), "does not exist"))
 
     ## If there is an @file{INDEX} file in the package sources, we
     ## install this, and do not build it.
     if(fileTest("-f", file.path(dir, "INDEX")))
-        file.copy(file.path(dir, "INDEX"),
-                  file.path(outDir, "INDEX"),
-                  overwrite = TRUE)
+        if(!file.copy(file.path(dir, "INDEX"),
+                      file.path(outDir, "INDEX"),
+                      overwrite = TRUE))
+            stop("unable to copy INDEX to ", file.path(outDir, "INDEX"))
 
     outMetaDir <- file.path(outDir, "Meta")
     if(!fileTest("-d", outMetaDir)) dir.create(outMetaDir)

@@ -62,9 +62,9 @@ file.copy <- function(from, to, overwrite=FALSE)
     else okay <- rep.int(TRUE, length(to))
     if (any(from[okay] %in% to[okay]))
         stop("file can't be copied both from and to")
-    if (any(okay)) {
-    	file.create(to[okay])
-    	okay[okay] <- file.append(to[okay], from[okay])
+    if (any(okay)) { ## care: create could fail but append work.
+    	okay[okay] <- file.create(to[okay])
+    	if(any(okay)) okay[okay] <- file.append(to[okay], from[okay])
     }
     okay
 }

@@ -675,6 +675,11 @@ BUG FIXES
 
     o	pcauchy() is now correct in the extreme tails.
 
+    o	file.copy() did not check that any existing `from' file had
+	been truncated before appending the new contents.
+
+    o	The QC files now check that their file operations succeeded.
+
 
 
 
