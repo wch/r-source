@@ -846,14 +846,14 @@ a modern operating system!
 @html
 <p><hr WIDTH="100%">
 <address>
-Last edited 2001 April 29 by Professor B. D. Ripley
+Last edited 2001 May 18 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2001 April 29 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2001 May 18 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
