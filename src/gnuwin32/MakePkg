@@ -138,9 +138,9 @@ else
 	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
 	@if test -f ${SPKG}/DESCRIPTION; then \
-	  $(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
 	  echo "  adding build stamp to DESCRIPTION" ; \
-	  echo "Built: R" $(RVER)\;  Win32\;  `date` >> ${DPKG}/DESCRIPTION; \
+	  (cat DESCRIPTION; echo; echo "Built: R" $(RVER)\;  Win32\;  `date`) \
+	  | $(SED) '/^\s*$$/d' > ${DPKG}/DESCRIPTION; \
 	fi
 
 $(DATA): $(DSOURCES)
