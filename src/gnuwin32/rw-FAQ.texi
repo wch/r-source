@@ -251,7 +251,7 @@ wish.
 Indeed there is.  It is set by the command-line flag
 @option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
-1Gb.  It can be set to any amount over 10M. (R will not run in less.)
+1Gb.  It can be set to any amount over 16M. (R will not run in less.)
 Be aware though that Windows has (in most versions) a maximum amount of
 user virtual memory of 2Gb, and parts of this can be reserved by
 processes but not used.  The version of the memory manager used from R
@@ -1175,14 +1175,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 February 21 by Professor B. D. Ripley
+Last edited 2004 February 25 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 February 21 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 February 25 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

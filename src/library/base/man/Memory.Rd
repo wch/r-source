@@ -36,10 +36,10 @@ mem.limits(nsize = NA, vsize = NA)
 
 #ifdef windows
   (On Windows the \option{--max-mem-size} option sets the maximum memory
-  allocation: it has a minimum allowed value of 10M.  This is intended
+  allocation: it has a minimum allowed value of 16M.  This is intended
   to catch attempts to allocate excessive amounts of memory which may
   cause other processes to run out of resources.  The default is the
-  smaller of the amount of physical RAM in the machine and 256Mb.
+  smaller of the amount of physical RAM in the machine and 1024Mb.
   See also \code{\link[utils]{memory.limit}}.)
 #endif
 
