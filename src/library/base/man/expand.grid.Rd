@@ -25,3 +25,4 @@ expand.grid(height = seq(60, 80, 5), weight = seq(100, 300, 50),
             sex = c("Male","Female"))
 }
 \keyword{models}
+\keyword{array}
