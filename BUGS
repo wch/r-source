@@ -174,10 +174,10 @@ none
 
 Directory:  incoming
 
-* PR# 567 *
-Subject: ctest not works
-From: George Diniz <george@cpqam.fiocruz.br>
-Date: Sun, 12 Mar 2000 12:03:45 -0200
+* PR# 568 *
+Subject: problem with aperm?
+From: Jim Lemon <jim.lemon@uts.edu.au>
+Date: Tue, 13 Jun 2000 13:20:10 +1000
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
@@ -191,6 +191,10 @@ Date: Wed, 7 Jun 2000 23:06:54 +0200 (MET DST)
 Subject: Bus Error crash
 From: kjetikj@astro.uio.no
 Date: Mon, 22 May 2000 13:06:48 +0200 (MET DST)
+* PR# 567 *
+Subject: ctest not works
+From: George Diniz <george@cpqam.fiocruz.br>
+Date: Sun, 12 Mar 2000 12:03:45 -0200
 * PR# 565 *
 Subject: Postscript device ignores title if it is too long.
 From: Stephen Eglen <stephen@anc.ed.ac.uk>
