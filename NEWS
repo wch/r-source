@@ -17,7 +17,7 @@ NEW FEATURES
     o	The Unix front-end shell script now ignores a value for R_HOME
         found in the environment.
 
-    o	Connections functions such as file() accept a description of
+    o	Connections functions such as file() now accept a description of
 	length > 1, with a warning.
 
 
@@ -25,6 +25,9 @@ BUG FIXES
     
     o	as.POSIXlt (and *ct) operating on a character string
 	only extracted the date (and not the time) in some cases.
+
+    o	Explicitly close files opened by sink() for OSes (such as
+	Windows) that benefit from it.
 
 
 

@@ -936,15 +936,12 @@ SEXP do_isseekable(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
+void con_close(int i)
 {
-    int i, j;
+    int j;
     Rconnection con=NULL;
-    
-    checkArity(op, args);
-    i = asInteger(CAR(args));
+
     con = getConnection(i);
-    if(i < 3) error("cannot close standard connections");
     if(con->isopen) con->close(con);
     con->destroy(con);
     free(con->class);
@@ -957,6 +954,17 @@ SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     free(Connections[i]);
     Connections[i] = NULL;
+}
+
+
+SEXP do_close(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    int i;
+    
+    checkArity(op, args);
+    i = asInteger(CAR(args));
+    if(i < 3) error("cannot close standard connections");
+    con_close(i);
     return R_NilValue;
 }
 

@@ -64,6 +64,8 @@ int Rconn_printf(Rconnection con, const char *format, ...);
 Rconnection getConnection(int n);
 void switch_stdout(int icon);
 SEXP R_ParseConn(Rconnection con, int n, int *status);
+void con_close(int i);
+
 
 
 
