@@ -78,7 +78,7 @@
 
 /* Define according to your operating system type. */
 #undef Unix
-#undef Windows
+#undef Win32
 #undef Macintosh
 
 /* Define if calloc(0) does not return a null pointer. */

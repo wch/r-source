@@ -47,7 +47,7 @@ case "${host_os}" in
   macos*)
     AC_DEFINE(Macintosh) ;;
   cygwin*|mingw*|windows*|winnt)
-    AC_DEFINE(Windows) ;;
+    AC_DEFINE(Win32) ;;
   *)
     AC_DEFINE(Unix) ;;
 esac
