@@ -29,8 +29,9 @@ capabilities(what = NULL)
     \item{cledit}{Is command-line editing available in the current \R
       session?  This is false in non-interactive sessions.
 #ifdef unix
-      It will be true if \code{readline} support has been compiled in
-      and \option{--no-readline} was \emph{not} invoked.
+      It will be true for the command-line interface if \code{readline}
+      support has been compiled in and \option{--no-readline} was
+      \emph{not} invoked.
 #endif
       }
     \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
