@@ -2261,6 +2261,16 @@ as.character(list())
 ## all but the last failed in 1.7.x
 
 
+## help on reserved words
+## if else repeat while function for in next break  will fail
+if(.Platform$OS.type == "windows") options(pager="console")
+for(topic in c("TRUE", "FALSE",  "NULL", "NA", "Inf", "NaN")) {
+    eval(parse(text=paste("?", topic, sep="")))
+    eval(parse(text=paste("help(", topic, ")", sep="")))
+}
+## ?NULL and all the help calls fail in 1.7.x
+
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
