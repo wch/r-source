@@ -6,11 +6,11 @@
 ##  Rcmd Rd2dvi.sh `grep -l "\\keyword{distr" \
 ##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
 
-R_PAPERSIZE=${R_PAPERSIZE:-a4}
+R_PAPERSIZE=${R_PAPERSIZE-a4}
 
-revision='$Revision: 1.9 $'
+revision='$Revision: 1.10 $'
 version=`set - ${revision}; echo ${2}`
-version="Rd2dvi.sh ${version}" 
+version="Rd2dvi.sh ${version}
 
 Copyright (C) 2000 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
@@ -41,7 +41,7 @@ clean=true
 debug=false
 out_ext="dvi"
 output=""
-preview=${xdvi:-xdvi.bat}
+preview=${xdvi-xdvi.bat}
 verbose=false
 
 TEXINPUTS=.:${R_HOME}/doc/manual:${TEXINPUTS}
@@ -63,8 +63,8 @@ while test -n "${1}"; do
     --pdf)
       out_ext="pdf";
       preview=false;
-      R_RD4DVI=${R_RD4PDF:-"ae,hyper"};
-      R_LATEXCMD=${PDFLATEX:-pdflatex};;
+      R_RD4DVI=${R_RD4PDF-"ae,hyper"};
+      R_LATEXCMD=${PDFLATEX-pdflatex};;
     --title=*)
       title=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     -o)
@@ -133,11 +133,11 @@ mkdir ${build_dir}
 sed 's/markright{#1}/markboth{#1}{#1}/' \
   ${R_HOME}/doc/manual/Rd.sty > ${build_dir}/Rd.sty
 
-title=${title:-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
+title=${title-"\\R{} documentation}} \\par\\bigskip{{\\Large of ${subj}"}
 
 cat > ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
-\\usepackage[${R_RD4DVI:-ae}]{Rd}
+\\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
 \\makeindex
 \\begin{document}
@@ -162,9 +162,9 @@ EOF
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD:-latex} Rd2
-${R_MAKEINDEXCMD:-makeindex} Rd2
-${R_LATEXCMD:-latex} Rd2
+${R_LATEXCMD-latex} Rd2
+${R_MAKEINDEXCMD-makeindex} Rd2
+${R_LATEXCMD-latex} Rd2
 cd ${start_dir}
 cp ${build_dir}/Rd2.${out_ext} ${output}
 if ${clean}; then
