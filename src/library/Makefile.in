@@ -26,6 +26,8 @@ R_CMD_BUILD_HELP_OPTS =
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 
+PDFLATEX = @PDFLATEX@
+
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
@@ -82,14 +84,19 @@ DOCS:
 	  > $(top_builddir)/doc/html/search/index.txt
 
 vignettes:
-	@for pkg in $(R_PKGS_BASE); do \
-	  if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
-	    echo "building/updating vignettes for package '$${pkg}' ..."; \
-	    (echo "tools:::.installPackageVignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
-	        R_DEFAULT_PACKAGES="utils,tools" \
-		  $(R_EXE) --slave > /dev/null; \
-	  fi; \
-	done
+	@if test "$(PDFLATEX)" = false; then \
+          echo "WARNING: cannot build/update package vignettes."; \
+	  echo "'pdflatex' needed but missing on your system."; \
+	else \
+	  for pkg in $(R_PKGS_BASE); do \
+	    if test -d "$(srcdir)/$${pkg}/inst/doc"; then \
+	      echo "building/updating vignettes for package '$${pkg}' ..."; \
+	      (echo "tools:::.installPackageVignettes(\"$(srcdir)/$${pkg}\", \"$(top_builddir)/library/$${pkg}\")") | \
+	          R_DEFAULT_PACKAGES="utils,tools" \
+	            $(R_EXE) --slave > /dev/null; \
+	    fi; \
+	  done; \
+	fi
 
 install: installdirs
 	@echo "installing packages ..."
