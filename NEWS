@@ -98,6 +98,8 @@ C-LEVEL FACILITIES
     o	Rversion.h is no longer automatically included by R.h.
 	Include it explicitly if you need it.
 
+    o	New entry point R_tmpnam in Utils.h.
+
 
 INSTALLATION CHANGES
 

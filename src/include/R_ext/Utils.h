@@ -74,6 +74,7 @@ Rboolean StringTrue(char*);
 Rboolean isBlankString(char *);
 
 double 	R_strtod(const char *c, char **end);
+char *  R_tmpnam(const char *prefix);
 
 void	hsv2rgb(double *h, double *s, double *v,/* in */
 		double *r, double *g, double *b);/* out */

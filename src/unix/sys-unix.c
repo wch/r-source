@@ -224,7 +224,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
     }
 }
 
-char * Runix_tmpnam(char * prefix)
+char * R_tmpnam(const char * prefix)
 {
     char *tmp, tm[PATH_MAX], tmp1[PATH_MAX], *res;
     unsigned int n, done = 0, pid;
@@ -260,7 +260,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < slen; i++) {
 	tn = CHAR(STRING_ELT(CAR(args), i));
 	/* try to get a new file name */
-	tm = Runix_tmpnam(tn);
+	tm = R_tmpnam(tn);
 	SET_STRING_ELT(ans, i, mkChar(tm));
 	free(tm);
     }

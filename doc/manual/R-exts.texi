@@ -4517,6 +4517,15 @@ There is also an @code{F77_CALL(interv)()} version of
 @code{findInterval()} with the same arguments, but all pointers.
 @end deftypefun
 
+A system-independent interface to produce the name of a temporary
+file is provided as
+
+@deftypefun {char *} R_tmpnam (const char* @var{prefix})
+Return a pathname for a temporary file with name beginning with
+@var{prefix}.  A @code{NULL} prefix is replaced by @code{""}.
+@end deftypefun
+
+
 There is also the internal function use to expand file names in several
 @R{} functions, and called directly by @code{path.expand}.
 

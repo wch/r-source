@@ -35,7 +35,7 @@
 #include "graphapp/ga.h"
 #include "rui.h"
 
-char * Rwin32_tmpnam(char * prefix)
+char * R_tmpnam(const char * prefix)
 {
     char *tmp, tm[MAX_PATH], tmp1[MAX_PATH], *p, *res;
     int hasspace = 0;
@@ -43,6 +43,7 @@ char * Rwin32_tmpnam(char * prefix)
     WIN32_FIND_DATA fd;
     HANDLE h;
 
+    if(!prefix) prefix = "";	/* NULL */
     tmp = getenv("TMP");
     if (!tmp) tmp = getenv("TEMP");
     if (!tmp) tmp = getenv("R_USER"); /* this one will succeed */
@@ -84,7 +85,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     for(i = 0; i < slen; i++) {
 	tn = CHAR(STRING_ELT(CAR(args), i));
 	/* try to get a new file name */
-	tm = Rwin32_tmpnam(tn);
+	tm = R_tmpnam(tn);
 	SET_STRING_ELT(ans, i, mkChar(tm));
 	free(tm);
     }

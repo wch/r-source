@@ -218,15 +218,6 @@ void init_con(Rconnection new, char *description, char *mode)
 }
 
 /* ------------------- file connections --------------------- */
-#ifdef Unix
-char * Runix_tmpnam(char * prefix);
-#endif
-#ifdef Win32
-char * Rwin32_tmpnam(char * prefix);
-#endif
-#ifdef Macintosh
-char * Rmac_tmpnam(char * prefix);
-#endif
 
 static Rboolean file_open(Rconnection con)
 {
@@ -241,15 +232,7 @@ static Rboolean file_open(Rconnection con)
 
     if(strlen(con->description) == 0) {
 	temp = TRUE;
-#ifdef Unix
-	name = Runix_tmpnam("Rf");
-#endif
-#ifdef Win32
-	name = Rwin32_tmpnam("Rf");
-#endif
-#ifdef Macintosh
-	name = Rmac_tmpnam("Rf");
-#endif
+	name = R_tmpnam("Rf");
     } else name = R_ExpandFileName(con->description);
     fp = R_fopen(name, con->mode);
     if(!fp) {

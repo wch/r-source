@@ -21,8 +21,6 @@ int  Rstd_ChooseFile(int new, char *buf, int len);
 void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env);
 void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env);
 
-char *Runix_tmpnam(char * prefix);
-
 void Rgnome_Suicide(char *s);
 void Rgnome_ShowMessage(char *s);
 int  Rgnome_ReadConsole(char *prompt, unsigned char *buf, int len, 

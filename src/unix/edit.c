@@ -62,10 +62,9 @@ static int  EdFileUsed = 0;
 void InitEd()
 {
 #ifdef Win32
-    char * Rwin32_tmpnam(char *);
-    DefaultFileName = Rwin32_tmpnam("Redit");
+    DefaultFileName = R_tmpnam("Redit");
 #else
-    DefaultFileName = Runix_tmpnam(NULL);
+    DefaultFileName = R_tmpnam(NULL);
 #endif
 }
 
