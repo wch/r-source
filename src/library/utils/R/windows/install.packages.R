@@ -252,7 +252,7 @@ menuInstallBioc <- function()
 chooseCRANmirror <- function()
 {
     m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
-    URL <- m[m[, 1] == select.list(m[,1],,FALSE), 'URL']
+    URL <- m[m[, 1] == select.list(m[,1],,FALSE, "CRAN mirror"), 'URL']
     if(!is.na(URL)) options(CRAN=gsub("/$", "", URL))
 }
 

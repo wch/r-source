@@ -5,7 +5,7 @@
   Select item(s) from a character vector.
 }
 \usage{
-select.list(list, preselect = NULL, multiple = FALSE)
+select.list(list, preselect = NULL, multiple = FALSE, title = NULL)
 }
 \arguments{
   \item{list}{character. A list of items.}
@@ -13,6 +13,7 @@ select.list(list, preselect = NULL, multiple = FALSE)
     non-null and if the string appears in the list, the item is selected
     initially.}
   \item{multiple}{logical: can more than one item be selected?}
+  \item{title}{optional character string for window title.}
 }
 \details{
   This brings up a modal dialog box with a (scrollable) list of items,

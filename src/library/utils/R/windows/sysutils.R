@@ -4,8 +4,8 @@ memory.limit <- function(size = NA) .Internal(memory.size(size))
 
 DLL.version <- function(path) .Internal(DLL.version(path))
 
-select.list <- function(list, preselect=NULL, multiple=FALSE)
-    .Internal(select.list(list, preselect, multiple))
+select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
+    .Internal(select.list(list, preselect, multiple, title))
 
 flush.console <- function() .Internal(flush.console())
 
@@ -18,13 +18,13 @@ writeClipboard <- function(str)
 
 getIdentification <- function()
     .Internal(getIdentification())
-    
+
 setWindowTitle <- function(suffix, title = paste(getIdentification(), suffix))
     .Internal(setWindowTitle(title))
 
 getWindowTitle <- function()
     .Internal(getWindowTitle())
-    
+
 getWindowsHandle <- function(which = "Console") {
     if (is.numeric(which)) {
 	which <- as.integer(which)

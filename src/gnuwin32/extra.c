@@ -859,6 +859,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     char **clist, *cps;
     int i, j = -1, n, mw = 0, multiple, nsel = 0;
     int xmax = 550, ymax  = 400, ylist;
+    Rboolean haveTitle;
 
     checkArity(op, args);
     list = CAR(args);
@@ -871,6 +872,7 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     else cps = "";
     multiple = asLogical(CADDR(args));
     if(multiple == NA_LOGICAL) multiple = 0;
+    haveTitle = isString(CADDDR(args));
 
     n = LENGTH(list);
     clist = (char **) R_alloc(n + 1, sizeof(char *));
@@ -884,7 +886,8 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
     xmax = max(170, 8*mw+60);
     ylist = min(20*n, 300);
     ymax = ylist + 60;
-    wselect = newwindow(multiple ? "Select" : "Select one",
+    wselect = newwindow(haveTitle ? CHAR(STRING_ELT(CADDDR(args), 0)):
+			(multiple ? "Select" : "Select one"),
 			rect(0, 0, xmax, ymax),
 			Titlebar | Centered | Modal);
     setbackground(wselect, dialog_bg());
