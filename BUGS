@@ -168,10 +168,10 @@ none
 
 Directory:  incoming
 
-* PR# 537 *
-Subject: eigen broken on AIX with R-devel?
-From: Thomas J Vogels <tov@ece.cmu.edu>
-Date: 08 May 2000 12:01:04 -0400
+* PR# 538 *
+Subject: no $method from as.hclust
+From: Denis White <denis@mercury.cor.epa.gov>
+Date: Wed, 10 May 2000 15:00:05 -0700 (PDT)
 * PR# 522 *
 Subject: na.omit fails for matrices
 From: Sergei Zuyev <sergei@stams.strath.ac.uk>
@@ -209,6 +209,10 @@ Date: Thu, 4 May 2000 19:20:35 +0200 (MET DST)
 Subject: acepack, akima and tripack will not load 
 From: mallen@tntech.edu
 Date: Thu, 4 May 2000 19:18:59 +0200 (MET DST)
+* PR# 537 *
+Subject: eigen broken on AIX with R-devel?
+From: Thomas J Vogels <tov@ece.cmu.edu>
+Date: 08 May 2000 12:01:04 -0400
 * PR# 536 *
 Subject: Problem with match.arg()
 From: kjetikj@astro.uio.no
