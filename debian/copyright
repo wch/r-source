@@ -1,0 +1,31 @@
+This package was debianized by Douglas Bates bates@stat.wisc.edu on
+Wed, 10 Dec 1997 14:17:31 -0600.
+
+It was downloaded from ftp://franz.stat.wisc.edu/pub/R/src/base/
+
+Copyright:
+
+The bulk of this code is copyright by Robert Gentleman and Ross Ihaka with
+the GNU Public License, version 2.
+
+Some of the code contain different copyright statements.  It is used
+here in accordance with the copyright conditions in that code.
+
+src/regex/*
+
+	Copyright 1992, 1993, 1994 Henry Spencer.
+	Copyright (c) 1994 The Regents of the University of California.
+
+
+src/unix/rotated.[ch]
+
+	Copyright (c) 1993 Alan Richardson
+
+src/math/pbeta.c
+
+	Copyright 1984, 1995 by Stephen L. Moshier
+
+lib/afm/*
+
+	Copyright (c) 1984 Adobe Systems Incorporated.
+

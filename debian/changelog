@@ -1,0 +1,59 @@
+r-base (0.62.0-0) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 18 Feb 1998 09:34:57 -0600
+
+r-base (0.61.1-4) unstable; urgency=low
+
+  * Removed unnecessary call to dh_makeshlibs in build rules
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 16 Feb 1998 13:49:44 -0600
+
+r-base (0.61.1-3) unstable; urgency=low
+
+  * Re-compiled to add readline support.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sat, 17 Jan 1998 17:06:52 -0600
+
+r-base (0.61.1-2) unstable; urgency=low
+
+  * Ensured that libraries for the modules are dynamically linked.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Wed, 14 Jan 1998 08:31:53 -0600
+
+r-base (0.61.1-1) unstable; urgency=low
+
+  * New upstream release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Mon, 12 Jan 1998 09:30:04 -0600
+
+r-base (0.61.0-3) unstable; urgency=low
+
+  * Went through all the warnings reported by -Wall to produce a patch
+    file for the developers.
+  * Applied Thomas Lumley's patch for problem with c() applied to ordered.
+  * Changed debian/rules to delete the .in files for autoconf from the
+    package
+  
+  * Changed priority to "optional"
+  * Modified to use pristine original sources.
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Sun,  4 Jan 1998 14:54:04 -0600
+
+r-base (0.61.0-2) unstable; urgency=low
+
+  * Modified the format of the orig.tar.gz file
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Tue, 23 Dec 1997 12:02:09 -0600
+
+r-base (0.61.0-1) unstable; urgency=low
+
+  * Initial release
+
+ -- Douglas Bates <bates@stat.wisc.edu>  Tue, 23 Dec 1997 10:01:21 -0600
+
+Local variables:
+mode: debian-changelog
+add-log-mailing-address: "bates@stat.wisc.edu"
+End:
