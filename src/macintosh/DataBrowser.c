@@ -598,7 +598,7 @@ static pascal Boolean MyItemComparison(
 			compareResult = strcmp(Names[itemOneID-1],Names[itemTwoID-1]);
 			if (compareResult < 0) return true;
 			else if (compareResult > 0) return false;
-			else return Compare(itemOneID, itemTwoID, '????');
+			else return Compare(itemOneID, itemTwoID, kDontKnow);
 		}	break;
 		
 		default:
