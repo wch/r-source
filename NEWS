@@ -1,3 +1,4 @@
+                                Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
 	*	       0.90 SERIES NEWS			 *
@@ -120,6 +121,9 @@ BUG FIXES
     o	apply should now work for all un-dimnamed arrays (PR#318).
 
     o	ar(..., demean=F) works more consistently across methods.
+
+    o   barplot() had lower limits set at -0.01, causing trouble with
+        small heights. Switch to relative scale. (Thanks to Matt Wiener)  
 
     o	density() should work better with NAs and infinite values. See
 	?density for the current definitions of how these are handled.
