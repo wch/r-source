@@ -680,6 +680,9 @@ case "${host}" in
     shlib_ldflags="-shared"
     ;;
   *-*-darwin*)
+    cpicflags="-fno-common"
+    cxxpicflags="-fno-common"
+    fpicflags="-fno-common"
     shlib_ldflags="-bundle -undefined suppress"
     shlib_cxxldflags="-bundle -undefined suppress"
     ;;
