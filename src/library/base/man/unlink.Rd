@@ -28,7 +28,7 @@
   Not deleting a non-existent file is not a failure.
 }
 \note{
-  Prior to \R version 1.2.0 the default on Unix was \code{recusive = TRUE}.
+  Prior to \R version 1.2.0 the default on Unix was \code{recursive = TRUE}.
 }
 \seealso{\code{\link{tempfile}} for file creation.}
 %Examples: tempfile has an 'unlink' example
