@@ -56,7 +56,7 @@ Rpwd:
 
 Rpwd.exe: rpwd.o rcico.o
 
-rgui.o rterm.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
+rcmd.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 
 clean:
 	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib
