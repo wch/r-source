@@ -105,6 +105,6 @@ SEXP do_dataentry(SEXP call, SEXP op, SEXP args, SEXP rho)
 Rboolean R_GetX11Image(int d, void *pximage, int *pwidth, int *pheight)
 {
     error("X11 is not available");
-    return R_NilValue;
+    return FALSE;
 }
 #endif
