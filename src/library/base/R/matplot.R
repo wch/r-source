@@ -1,15 +1,15 @@
 ## Author: Martin Maechler, Date: 27 Jun 97
 
 matpoints <-
-    function(x, y,  type = 'p', lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
+    function(x, y,  type = "p", lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
     matplot(x=x, y=y, type = type, lty=lty, lwd=lwd, pch=pch, col=col,
 	    add=TRUE, ...)
 matlines  <-
-    function(x, y, type = 'l', lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
+    function(x, y, type = "l", lty=1:5, lwd = 1, pch=NULL, col=1:6, ...)
     matplot(x=x, y=y, type = type, lty=lty, lwd=lwd, pch=pch, col=col,
 	    add=TRUE, ...)
 
-matplot <- function(x, y, type="p",
+matplot <- function(x, y, type = "p",
 		    lty = 1:5, lwd = 1, pch=NULL, col=1:6, cex=NULL,
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
 		    ..., add= FALSE, verbose = getOption("verbose"))
@@ -19,11 +19,11 @@ matplot <- function(x, y, type="p",
 	if(nchar(string)[1] > 1) strsplit(string[1], NULL)[[1]] else string
     }
     ## These from plot.default :
-    xlabel <- if (!missing(x)) deparse(substitute(x))  else NULL
-    ylabel <- if (!missing(y)) deparse(substitute(y))  else NULL
+    xlabel <- if (!missing(x)) deparse(substitute(x))# else NULL
+    ylabel <- if (!missing(y)) deparse(substitute(y))
     ##
     if(missing(x)) {
-	if(missing(y)) stop("Must specify at least one of  'x' and 'y'")
+	if(missing(y)) stop("Must specify at least one of `x' and `y'")
 	else x <- 1:NROW(y)
     } else if(missing(y)) {
 	y <- x;		ylabel <- xlabel
@@ -32,27 +32,27 @@ matplot <- function(x, y, type="p",
     kx <- ncol(x <- as.matrix(x))
     ky <- ncol(y <- as.matrix(y))
     n <- nrow(x)
-    if(n != nrow(y)) stop("'x' and 'y' must have same number of rows")
+    if(n != nrow(y)) stop("`x' and `y' must have same number of rows")
 
     if(kx > 1 && ky > 1 && kx != ky)
-	stop("'x' and 'y' must have only 1 or the same number of columns")
+	stop("`x' and `y' must have only 1 or the same number of columns")
     if(kx == 1) x <- matrix(x, nrow = n, ncol = ky)
     if(ky == 1) y <- matrix(y, nrow = n, ncol = kx)
     k <- max(kx,ky)## k == kx == ky
 
     type <- str2vec(type)
     if(is.null(pch))
-        pch <- c(paste(c(1:9,0)),letters)[1:k]
+	pch <- c(paste(c(1:9,0)),letters)[1:k]
     else if(is.character(pch))
-        pch <- str2vec(pch)
+	pch <- str2vec(pch)
     ## else pch is numeric supposedly
     if(verbose)
 	cat("matplot: doing ", k, " plots with ",
 	    paste(" col= (", paste.ch(col), ")", sep=''),
-            paste(" pch= (", paste.ch(pch), ")", sep=''),
-            " ...\n\n")
+	    paste(" pch= (", paste.ch(pch), ")", sep=''),
+	    " ...\n\n")
     ii <- match("log", names(xargs <- list(...)), nomatch = 0)
-    log <- if (ii == 0) NULL else xargs[[ii]]
+    log <- if (ii != 0) xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)
     xlab <- if (is.null(xlab)) xy$xlab else xlab
     ylab <- if (is.null(ylab)) xy$ylab else ylab
@@ -72,7 +72,7 @@ matplot <- function(x, y, type="p",
 	     lty=lty[1], lwd=lwd[1], pch=pch[1], col=col[1], cex=cex[1], ...)
     }
     for (i in ii) {
-        lines(x[,i], y[,i], type=type[i], lty=lty[i],
-              lwd=lwd[i], pch=pch[i], col=col[i], cex=cex[i])
+	lines(x[,i], y[,i], type=type[i], lty=lty[i],
+	      lwd=lwd[i], pch=pch[i], col=col[i], cex=cex[i])
     }
 }
