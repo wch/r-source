@@ -3,7 +3,6 @@ arima0 <- function(x, order=c(0,0,0),
                    include.mean=TRUE, na.action=na.fail, delta=0.01,
                    transform.pars=2)
 {
-    on.exit(.C("free_starma", PACKAGE = "ts"))
     series <- deparse(substitute(x))
     if(NCOL(x) > 1)
         stop("only implemented for univariate time series")
@@ -43,6 +42,7 @@ arima0 <- function(x, order=c(0,0,0),
        as.integer(arma), as.double(x), as.integer(n.used),
        as.double(xreg), as.integer(ncxreg), as.double(delta),
        as.integer(transform.pars > 0), PACKAGE = "ts")
+    on.exit(.C("free_starma", PACKAGE = "ts"))
     init <- rep(0, sum(arma[1:4]))
     if(ncxreg > 0)
         init <- c(init, coef(lm(x ~ xreg+0)))
@@ -166,7 +166,7 @@ predict.arima0 <- function(object, n.ahead=1, newxreg=NULL, se.fit=TRUE, ...)
     z <- .C("arma0_kfore", as.integer(arma[6]), as.integer(arma[7]),
             as.integer(n.ahead), x=double(n.ahead), var=double(n.ahead),
             PACKAGE="ts")
-    .C("free_starma", PACKAGE="ts")
+    on.exit(.C("free_starma", PACKAGE = "ts"))
     pred <- ts(z$x + xm, start = xtsp[2] + deltat(data), frequency=xtsp[3])
     if(se.fit) {
         se <- ts(sqrt(z$var),
