@@ -1,4 +1,6 @@
 ## Hmm, MM thinks diag(.) needs checking { diag(vec) when length(vec)==1 !}
+## However, MM does not understand that factor analysis
+##   is a *multi*variate technique!
 factanal <-
     function (x, factors, data = NULL, covmat = NULL, n.obs = NA,
               subset, na.action, start = NULL,
@@ -39,6 +41,8 @@ factanal <-
         if(missing(x)) stop("neither x nor covmat supplied")
         have.x <- TRUE
         if(inherits(x, "formula")) {
+            ## this is not a `standard' model-fitting function,
+            ## so no need to consider contrasts or levels
             mt <- terms(x, data = data)
             if(attr(mt, "response") > 0)
                 stop("response not allowed in formula")
@@ -48,11 +52,15 @@ factanal <-
             mf$factors <- mf$covmat <- mf$scores <- mf$start <-
                 mf$rotation <- mf$control <- mf$... <- NULL
             mf[[1]] <- as.name("model.frame")
-            mf <- eval(mf, parent.frame())
+            mf <- eval.parent(mf)
             na.act <- attr(mf, "na.action")
+            if(any(sapply(mf, function(x) is.factor(x) || !is.numeric(x))))
+                stop("factor analysis applies only to numerical variables")
             z <- model.matrix(mt, mf)
         } else {
             z <- as.matrix(x)
+            if(!is.numeric(z))
+                stop("factor analysis applies only to numerical variables")
             if(!missing(subset)) z <- z[subset, , drop = FALSE]
         }
         covmat <- cov.wt(z)
@@ -63,12 +71,13 @@ factanal <-
     scores <- match.arg(scores)
     if(scores != "none" && !have.x)
         stop("requested scores without an x matrix")
-    sds <- sqrt(diag(cv))
-    cv <- cv/(sds %o% sds)
     p <- ncol(cv)
+    if(p < 3) stop("factor analysis requires at least three variables")
     dof <- 0.5 * ((p - factors)^2 - p - factors)
     if(dof < 0)
         stop(paste(factors, "factors is too many for", p, "variables"))
+    sds <- sqrt(diag(cv))
+    cv <- cv/(sds %o% sds)
 
     cn <- list(nstart = 1, trace = FALSE, lower = 0.005)
     cn[names(control)] <- control
@@ -105,7 +114,7 @@ factanal <-
     }
     fit$loadings <- sortLoadings(load)
     class(fit$loadings) <- "loadings"
-    fit$na.action <- na.act
+    fit$na.action <- na.act # not used currently
     if(have.x && scores != "none") {
         Lambda <- fit$loadings
         zz <- scale(z, TRUE, TRUE)
