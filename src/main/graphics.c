@@ -2792,13 +2792,14 @@ int GClipPolygon(double *x, double *y, int n, int coords, int store,
 static void clipPolygon(int n, double *x, double *y, int coords,
                         int bg, int fg, DevDesc *dd)
 {
-    char *vmax;
-    double *xc, *yc;
+    static double *xc = NULL, *yc = NULL;
+    double *tmp;
+    if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
+    if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
     if (bg == NA_INTEGER) {
 	int i;
-	vmax = vmaxget();
-	xc = (double*)R_alloc(n+1, sizeof(double));
-	yc = (double*)R_alloc(n+1, sizeof(double));
+	xc = (double*)malloc((n + 1) * sizeof(double));
+	yc = (double*)malloc((n + 1) * sizeof(double));
 	for (i=0; i<n; i++) {
 	    xc[i] = x[i];
 	    yc[i] = y[i];
@@ -2807,21 +2808,19 @@ static void clipPolygon(int n, double *x, double *y, int coords,
 	yc[n] = y[0];
 	dd->gp.col = fg;
 	GPolyline(n+1, xc, yc, coords, dd);
-        vmaxset(vmax);
     }
     else {
 	int npts;
-	xc = yc = 0;		/* -Wall */
 	npts = GClipPolygon(x, y, n, coords, 0, xc, yc, dd);
 	if (npts > 1) {
-	    vmax = vmaxget();
-	    xc = (double*)R_alloc(npts, sizeof(double));
-	    yc = (double*)R_alloc(npts, sizeof(double));
+	    xc = (double*)malloc(npts * sizeof(double));
+	    yc = (double*)malloc(npts * sizeof(double));
 	    npts = GClipPolygon(x, y, n, coords, 1, xc, yc, dd);
 	    dd->dp.polygon(npts, xc, yc, coords, bg, fg, dd);
-	    vmaxset(vmax);
 	}
     }
+    if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
+    if (yc != NULL) {tmp = yc; yc = NULL; free(tmp);}
 }
 
 void GPolygon(int n, double *x, double *y, int coords,
