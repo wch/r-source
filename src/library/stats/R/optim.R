@@ -33,7 +33,7 @@ optim <- function(par, fn, gr = NULL,
         warning(paste("Method L-BFGS-B uses", sQuote("factr"),
                       paste("(& ", sQuote("pgtol"), ")", sep = ""),
                       "instead of", sQuote("reltol"),
-                      "and", sQuote("abstol"))
+                      "and", sQuote("abstol")))
     npar <- length(par)
     if(npar == 1 && method == "Nelder-Mead")
         warning("one-diml optimization by Nelder-Mead is unreliable: use optimize")
