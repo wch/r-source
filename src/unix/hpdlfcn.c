@@ -28,11 +28,7 @@
 
 #define RTLD_LAZY (BIND_DEFERRED | BIND_NONFATAL)
 
-void *dlopen(const char *, int);
-void *dlsym(void *, const char *);
-int dlclose(void *);
-char *dlerror(void);
-
+#include "hpdlfcn.h"
 
 /*
  * This is a minimal implementation of the ELF dlopen, dlclose, dlsym

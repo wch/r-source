@@ -38,7 +38,7 @@
 # include <dlfcn.h>
 #else
 # ifdef HAVE_DL_H
-#  include "hpdlfcn.c"
+#  include "hpdlfcn.h"
 # define HAVE_DLFCN_H
 # endif
 #endif
