@@ -686,11 +686,12 @@ static int process_Renviron(char *filename)
 }
 
 
+/* read R_HOME/etc/Renviron:  Unix only */
 void process_global_Renviron()
 {
     char buf[1024];
     
-    strcpy(buf, getenv("R_HOME"));
+    strcpy(buf, R_Home);
     strcat(buf, "/etc/Renviron");
     if(!process_Renviron(buf)) R_ShowMessage("cannot find system Renviron");
 }
