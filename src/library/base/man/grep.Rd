@@ -79,9 +79,12 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE)
 }
 \section{Warning}{
   The standard regular-expression code has been reported to be very slow
-  or give errors when applied to extremely long character strings
+  when applied to extremely long character strings
   (tens of thousands of characters or more): the code used when
-  \code{perl=TRUE} seems faster and more reliable for such usages.
+  \code{perl=TRUE} seems much faster and more reliable for such usages.
+
+  The \code{perl = TRUE} option is only implemented for singlebyte and
+  UTF-8 encodings, and will warn if used in a non-UTF-8 multibyte locale.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

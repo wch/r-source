@@ -329,11 +329,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     pcre *re_pcre = NULL;
     pcre_extra *re_pe = NULL;
     const unsigned char *tables = NULL;
-#ifdef SUPPORT_UTF8
-    int options = PCRE_UTF8;
-#else
     int options = 0;
-#endif
     int erroffset, ovector[30];
     const char *errorptr;
     Rboolean usedRegex = FALSE, usedPCRE = FALSE;
@@ -344,6 +340,12 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     extended_opt = asLogical(CADDR(args));
     fixed = asLogical(CADDDR(args));
     perl = asLogical(CAD4R(args));
+
+#ifdef SUPPORT_UTF8
+    if(utf8locale) options = PCRE_UTF8;
+    else if(mbcslocale)
+	warning("perl = TRUE is only fully implemented in UTF-8 locales");
+#endif
 
     if(!isString(x) || !isString(tok))
 	errorcall_return(call, "non-character argument in strsplit()");

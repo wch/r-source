@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -58,6 +58,8 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
     if(utf8locale) options = PCRE_UTF8;
+    else if(mbcslocale)
+	warning("perl = TRUE is only fully implemented in UTF-8 locales");
 #endif
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
@@ -223,6 +225,8 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
 #ifdef SUPPORT_UTF8
     if(utf8locale) options = PCRE_UTF8;
+    else if(mbcslocale)
+	warning("perl = TRUE is only fully implemented in UTF-8 locales");
 #endif
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(rep) || length(rep) < 1 ||
@@ -311,11 +315,7 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchlen;
     int i, n, st, erroffset;
-#ifdef SUPPORT_UTF8
-    int options = PCRE_UTF8;
-#else
     int options = 0;
-#endif
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
@@ -327,6 +327,12 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(text) || length(text) < 1 )
 	errorcall(call, R_MSG_IA);
+
+#ifdef SUPPORT_UTF8
+    if(utf8locale) options = PCRE_UTF8;
+    else if(mbcslocale)
+	warning("perl = TRUE is only fully implemented in UTF-8 locales");
+#endif
 
     tables = pcre_maketables();
     re_pcre = pcre_compile(CHAR(STRING_ELT(pat, 0)), options, 
