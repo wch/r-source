@@ -269,12 +269,11 @@ typedef struct {
 #define PRIMPRINT(x)	(((R_FunTab[(x)->u.primsxp.offset].eval)/100)%10)
 
 /* Promise Access Macros */
-#define PREXPR(x)	((x)->u.promsxp.expr)
+#define PRCODE(x)	((x)->u.promsxp.expr)
 #define PRENV(x)	((x)->u.promsxp.env)
 #define PRVALUE(x)	((x)->u.promsxp.value)
 #define PRSEEN(x)	((x)->sxpinfo.gp)
 #ifndef USE_WRITE_BARRIER
-# define SET_PREXPR(x,v)  (((x)->u.promsxp.expr)=(v))
 # define SET_PRENV(x,v)	  (((x)->u.promsxp.env)=(v))
 # define SET_PRVALUE(x,v) (((x)->u.promsxp.value)=(v))
 #endif

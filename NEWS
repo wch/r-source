@@ -420,6 +420,10 @@ C-LEVEL FACILITIES
     o   The header R_ext/Mathlib.h has been removed.  It was replaced by
 	Rmath.h in R 1.2.0.
 
+    o   PREXPR has been replaced by two macros, PREXPR for obteining the
+	expression and PRCODE for obtaining the code for use in eval.  This
+	is to support byte compiled promises.
+
 
 UTILITIES
 

@@ -673,11 +673,10 @@ void (SET_HASHTAB)(SEXP x, SEXP v);
 void (SET_ENVFLAGS)(SEXP x, int v);
 
 /* Promise Access Macros */
-SEXP (PREXPR)(SEXP x);
+SEXP (PRCODE)(SEXP x);
 SEXP (PRENV)(SEXP x);
 SEXP (PRVALUE)(SEXP x);
 int (PRSEEN)(SEXP x);
-void (SET_PREXPR)(SEXP x, SEXP v);
 void (SET_PRENV)(SEXP x, SEXP v);
 void (SET_PRVALUE)(SEXP x, SEXP v);
 void (SET_PRSEEN)(SEXP x, int v);
@@ -711,6 +710,16 @@ SEXP R_MakeWeakRefC(SEXP key, SEXP val, R_CFinalizer_t fin, Rboolean onexit);
 SEXP R_WeakRefKey(SEXP w);
 SEXP R_WeakRefValue(SEXP w);
 void R_RunWeakRefFinalizer(SEXP w);
+
+#ifdef BYTECODE
+SEXP R_PromiseExpr(SEXP);
+void R_initialize_bcode(void);
+SEXP R_bcEncode(SEXP);
+SEXP R_bcDecode(SEXP);
+#define PREXPR(e) R_PromiseExpr(e)
+#else
+#define PREXPR(e) PRCODE(e)
+#endif
 
 /* Protected evaluation */
 Rboolean R_ToplevelExec(void (*fun)(void *), void *data);
