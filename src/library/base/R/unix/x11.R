@@ -13,5 +13,5 @@ gnome <- function(display = "", width = 7, height = 7, pointsize = 12)
 GNOME <- gnome
 
 gtk <- function(display = "", width = 7, height = 7, pointsize = 12)
-    .Internal(GTK(display, width, height, pointsize))
+    stop("The gtk device is now available via a separate package - gtkDevice - available from CRAN.")
 GTK <- gtk

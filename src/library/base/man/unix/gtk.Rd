@@ -3,7 +3,12 @@
 \alias{GTK}
 \title{GTK+ Graphics Device}
 \description{
-  A variant of the X11 graphics device for use with the GNOME GUI.
+  This is a graphics device similar to the X11 device
+  but using the Gtk widgets. This is now available via a separate
+  package - gtkDevice - and can be used independently of the GNOME GUI
+  for R. This package also allows a device to embedded within a
+  Gtk-based GUI developed using the RGtk package.
+  The gtkDevice package is available from CRAN.
 }
 \usage{
 gtk(display="", width=7, height=7, pointsize=12)
@@ -17,14 +22,10 @@ GTK(display="", width=7, height=7, pointsize=12)
   \item{height}{the height of the plotting window in inches.}
   \item{pointsize}{the default pointsize to be used.}
 }
-\details{
-  The GTK device is only available when running under UNIX with
-  \code{--gui=gnome}.  Under that circumstance it is the default
-  (auto-launched) device, but \code{\link{x11}} can also be used.
-
-  The device has a toolbar in the GNOME style.
+\author{Original version by Lyndon Drake
+  \email{lyndon@stat.auckland.ac.nz}.
+  Reorganization by Martyn Plummer and Duncan Temple Lang.
 }
-\author{Lyndon Drake \email{lyndon@stat.auckland.ac.nz}}
 \references{
   \url{http://www.gtk.org} for the \code{GTK+} (GIMP Tool Kit) libraries.
 }
