@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-2, 2004-04-14
+Version 1.7-3, 2004-04-16
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1880,6 +1880,10 @@ distributions of R.)
 
 *rgenoud*
      R version of GENetic Optimization Using Derivatives.
+
+*rimage*
+     Functions for image processing, including Sobel filter, rank filters,
+     fft, histogram equalization, and reading JPEG files.
 
 *rmeta*
      Functions for simple fixed and random effects meta-analysis for
