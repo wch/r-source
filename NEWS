@@ -259,6 +259,8 @@ NEW FEATURES
 	This provides an interface to R_ExpandFileName, which is now
 	a documented entry point.
 
+    o	mad() has new (logical) arguments "low" and "high" (the first giving
+        S compatibility).
 
 
 BUG FIXES
