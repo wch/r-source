@@ -227,9 +227,8 @@ It depends what you want to print.
 2.9 Can I use `R BATCH'?
 ========================
 
-Yes, if you have Perl and the files for making source packages (from
-`rw1070.exe') installed.  The Windows analogue is `Rcmd BATCH': use
-`Rcmd BATCH --help' for full details.
+Yes, if you have Perl.  The Windows analogue is `Rcmd BATCH': use `Rcmd
+BATCH --help' for full details.
 
 Otherwise you can set up a batch file using `Rterm.exe'.  A sample
 batch file might contain (as one line)
