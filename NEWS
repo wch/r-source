@@ -352,6 +352,8 @@ BUG FIXES
 
     o	seq(length= <n>) now always returns "integer" storage.
 
+    o	labels.lm was broken. (PR#7417)
+
 
 
 		CHANGES IN R VERSION 2.0.1

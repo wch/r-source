@@ -3375,6 +3375,7 @@ loc <- list(5, 6)
 try(text(loc, labels = "a"))
 ## segfaulted in 2.0.1
 
+
 ## automatic row.names can be number-like, MM, 2004-11-26
 d0 <- data.frame(x=1:3, y=pi*2:0)
 row.names(d0)[3] <- c("01.00")
@@ -3384,6 +3385,7 @@ d <- read.table(tf)
 stopifnot(all.equal(d,d0))
 unlink(tf)
 
+
 ## seq() should be more consistent in returning "integer"
 stopifnot(typeof(seq(length=0)) == "integer",
           identical(seq(length=0), seq(along=0[0])),
@@ -3391,3 +3393,12 @@ stopifnot(typeof(seq(length=0)) == "integer",
           identical(seq(length=3), seq(along=1:3)))
 
 
+## labels.lm was broken (PR#7417)
+# part of example(lm)
+ctl <- c(4.17,5.58,5.18,6.11,4.50,4.61,5.17,4.53,5.33,5.14)
+trt <- c(4.81,4.17,4.41,3.59,5.87,3.83,6.03,4.89,4.32,4.69)
+group <- gl(2,10,20, labels=c("Ctl","Trt"))
+weight <- c(ctl, trt)
+lm.D9 <- lm(weight ~ group)
+stopifnot(labels(lm.D9) == "group")
+## failed in 2.0.1, giving length 0
