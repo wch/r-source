@@ -17,6 +17,10 @@ NEW FEATURES
 	   accept URL specifications, as will all the functions which
 	   use it.
 
+	-  file connections can now be opened for both reading and writing.
+
+	-  Anonymous file connections (via file()) are now supported.
+
 	-  New function gzfile() to read from / write to compressed files.
 
 	-  Text input from file, pipe, gzfile and url connections can be

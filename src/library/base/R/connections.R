@@ -33,6 +33,7 @@ open.connection <- function(con, open = "r", blocking = TRUE)
 isOpen <- function(con, rw = "")
 {
     if(!inherits(con, "connection")) stop("argument is not a connection")
+    rw <- pmatch(rw, c("read", "write"), 0)
     .Internal(isOpen(con, rw))
 }
 
@@ -51,7 +52,7 @@ close.connection <- function (con, type = "rw")
     invisible(.Internal(close(con, type)))
 }
 
-file <- function(description, open = "", blocking = TRUE,
+file <- function(description = "", open = "", blocking = TRUE,
                  encoding = getOption("encoding"))
     .Internal(file(description, open, blocking, encoding))
 
@@ -67,7 +68,7 @@ gzfile <- function(description, open = "",
     .Internal(gzfile(description, open, encoding, compression))
 
 socketConnection <- function(host= "localhost", port, server = FALSE,
-                             blocking = FALSE, open = "r",
+                             blocking = FALSE, open = "a+",
                              encoding = getOption("encoding"))
     .Internal(socketConnection(host, port, server, blocking, open, encoding))
 
@@ -77,12 +78,13 @@ textConnection <- function(object, open = "r")
 seek <- function(con, ...)
     UseMethod("seek")
 
-seek.connection <- function(con, where = NA, origin = "start", ...)
+seek.connection <- function(con, where = NA, origin = "start", rw = "", ...)
 {
     origin <- pmatch(origin, c("start", "current", "end"))
+    rw <- pmatch(rw, c("read", "write"), 0)
     if(is.na(origin))
         stop("`origin' must be one of `start', `current` or `end'")
-    .Internal(seek(con, as.integer(where), origin))
+    .Internal(seek(con, as.integer(where), origin, rw))
 }
 
 truncate <- function(con, ...)

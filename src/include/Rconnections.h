@@ -31,7 +31,7 @@ typedef struct Rconn
     int (*vfprintf)(struct Rconn *, const char *, va_list);
     int (*fgetc)(struct Rconn *);
 /*    int (*ungetc)(int c, struct Rconn *); */
-    long (*seek)(struct Rconn *, int, int);
+    long (*seek)(struct Rconn *, int, int, int);
     void (*truncate)(struct Rconn *);
     int (*fflush)(struct Rconn *);
     size_t (*read)(void *, size_t, size_t, struct Rconn *);
@@ -46,6 +46,8 @@ typedef struct Rconn
 
 typedef struct fileconn {
     FILE *fp;
+    long rpos, wpos;
+    Rboolean last_was_write;
 } *Rfileconn;
 
 #ifdef HAVE_LIBZ

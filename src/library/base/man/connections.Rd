@@ -9,13 +9,8 @@
 \alias{open.connection}
 \alias{isOpen}
 \alias{isIncomplete}
-\alias{isSeekable}
 \alias{close}
 \alias{close.connection}
-\alias{seek}
-\alias{seek.connection}
-\alias{truncate}
-\alias{truncate.connection}
 \alias{print.connection}
 \alias{summary.connection}
 \alias{ISOLatin1}
@@ -24,33 +19,34 @@
 \alias{native.enc}
 \title{Functions to Manipulate Connections}
 \description{
-  Functions to create, open, close and position connections.
+  Functions to create, open and close connections.
 }
 \usage{
-file(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
+file(description, open = "", blocking = TRUE,
+     encoding = getOption("encoding"))
 pipe(description, open = "", encoding = getOption("encoding"))
 gzfile(description, open = "", encoding = getOption("encoding"),
        compression = 6)
-url(description, open = "", blocking = TRUE, encoding = getOption("encoding"))
-socketConnection(host = "localhost", port, server = FALSE, blocking = FALSE,
-                 open = "r", encoding = getOption("encoding"))
+url(description, open = "", blocking = TRUE,
+    encoding = getOption("encoding"))
+socketConnection(host = "localhost", port, server = FALSE,
+                 blocking = FALSE, open = "a+",
+                 encoding = getOption("encoding"))
 
 \method{open}{connection}(con, open = "r", blocking = TRUE)
 \method{close}{connection}(con, type = "rw")
-\method{seek}{connection}(con, where = NA, origin = "start", \dots)
-\method{truncate}{connection}(con, \dots)
 
 isOpen(con, rw = "")
 isIncomplete(con)
-isSeekable(con)
 }
 \arguments{
   \item{description}{character. A description of the connection. For
     \code{file} and \code{pipe} this is a path to the file to be opened.
     For \code{url} it is a complete URL, including schemes
-    (\code{http://}, \code{ftp://} or \code{file://}).  \code{file} alos
+    (\code{http://}, \code{ftp://} or \code{file://}).  \code{file} also
     accepts complete URLs.
   }
+  \item{con}{a connection.}
   \item{host}{character.  Host name for port.}
   \item{port}{integer.  The TCP port number.}
   \item{server}{logical.  Should the socket be a client or a server?}
@@ -64,9 +60,8 @@ isSeekable(con)
   \item{type}{character. Currently ignored.}
   \item{where}{integer.  A file position (relative to the origin
     specified by \code{origin}), or \code{NA}.}
-  \item{rw}{character.  Currently ignored.}
-  \item{origin}{character.  One of \code{"start"}, \code{"current"},
-    \code{"end"}.}
+  \item{rw}{character.  Empty or \code{"read"} or \code{"write"},
+    partial matches allowed.}
 }
 \details{
   The first five functions create connections.  By default the connection
@@ -77,29 +72,15 @@ isSeekable(con)
 
   Proxies can be specified for \code{url} connections: see
   \code{\link{download.file}}.
-  
+
   \code{open}, \code{close} and \code{seek} are generic functions: the
   following applies to the methods relevant to connections.
-  
+
   \code{open} opens a connection.  In general functions using
   connections will open them if they are not open, but then close them
   again, so to leave a connection open call \code{open} explicitly.
 
   \code{close} closes and destroys a connection.
-
-  \code{seek} with \code{where = NA} returns the current byte offset
-  of a connection (from the beginning), and with a positive \code{where}
-  argument the connection is re-positioned (if possible) to the
-  specified position. \code{isSeekable} returns whether the connection
-  in principle supports \code{seek}: currently only file connections do.
-#ifdef windows
-  The value returned by \code{seek(where=NA)} appears to be unreliable
-  on Windows systems, at least for text files.
-#endif
-
-  \code{truncate} truncates a file opened for writing at its current
-  position.  It works only for \code{file} connections, and is not
-  implemented on all platforms.
 
   Possible values for the mode \code{open} to open a connection are
   \describe{
@@ -109,13 +90,24 @@ isSeekable(con)
     \item{\code{"rb"}}{Open for reading in binary mode.}
     \item{\code{"wb"}}{Open for writing in binary mode.}
     \item{\code{"ab"}}{Open for appending in binary mode.}
+    \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing.}
+    \item{\code{"w+"}, \code{"w+b"}}{Open for reading and writing.}
+    \item{\code{"r+"}, \code{"r+b"}}{Open for reading and writing,
+      truncating file initially.}
+    \item{\code{"a+"}, \code{"a+b"}}{Open for reading and appending.}
   }
-  \emph{These are liable to change.}  URLs can only be opened for reading.
-  For many connections there is little or no difference between text and binary
-  modes, but there is for file-like connections on Windows, and
-  \code{\link{pushBack}} is text-oriented and is only allowed on
-  connections open for reading in text mode.
+  Not all modes are applicable to all connections: for example URLs can
+  only be opened for reading.  Only file and socket connections can be
+  opened for reading and writing/appending.
+  For many connections there is little or no
+  difference between text and binary modes, but there is for file-like
+  connections on Windows, and \code{\link{pushBack}} is text-oriented and
+  is only allowed on connections open for reading in text mode.
 
+  If for a \code{file} connection the description is \code{""}, the file
+  is immediately opened in \code{"w+"} mode and unlinked from the file
+  system.  This procides a temporary file to write to and then read from.
+  
   The encoding vector is used to map the input from a file or pipe to
   the platform's native character set.  Supplied examples are
   \code{native.enc} as well as \code{MacRoman}, \code{WinAnsi} and
@@ -123,11 +115,10 @@ isSeekable(con)
   characters are mapped to a space in these encodings.
 }
 \value{
-  \code{file}, \code{pipe} and \code{url} return a connection object
-  which inherits from class \code{"connection"}.
-
-  \code{seek} returns the current position, as a byte offset, if
-  relevant, or \code{0} if not.
+  \code{file}, \code{pipe}, \code{url}, \code{gzfile} and
+  \code{socketConnection} return a connection object
+  which inherits from class \code{"connection"} and has a first more
+  specific class.
 
   \code{isOpen} returns a logical value, whether the connection is
   currently open.
@@ -158,17 +149,17 @@ isSeekable(con)
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
-  1998), but the implementation is currently incomplete.  In particular:
-  \itemize{
-    \item Pipes are only implemented on Unix and \code{Rterm} on
-    Windows. Fifos are not yet implemented.
+  1998), but the implementation is currently incomplete.  In particular,
+  pipes are only implemented on Unix and \code{Rterm} on
+  Windows, and fifos are not yet implemented.
 
-    \item Svr4 has separate read and write positions for files: \R does
-    not.
+  However \R also goes well beyond the Svr4 model, for example in output
+  text connections and URL and socket connections.
 
-    \item Svr4 allow an empty description to \code{file} to indicate an
-    anonymous (temporary) file.
-  }
+  The default mode in \R is \code{"r"} except for socket
+  connections. This differs from Svr4, where it is the equivalent of
+  \code{"r+"}, knoes as \code{"*"}.
+
 }
 \references{
   Chambers, J. M. (1998)
@@ -176,7 +167,7 @@ isSeekable(con)
 }
 
 \seealso{
-  \code{\link{textConnection}}, \code{\link{readLines}},
+  \code{\link{textConnection}}, \code{\link{seek}}, \code{\link{readLines}},
   \code{\link{showConnections}}, \code{\link{pushBack}}.
 
   \code{\link{capabilities}} to see if \code{gzfile} and \code{url} are
@@ -199,6 +190,24 @@ if(capabilities("libz")) {
   unlink("ex.gz")
 }
 
+## An example of a file open for reading and writing
+Tfile <- file("test1", "w+")
+c(isOpen(Tfile, "r"), isOpen(Tfile, "w")) # both TRUE
+cat("abc\ndef\n", file=Tfile)
+readLines(Tfile)
+seek(Tfile, 0, rw="r") # reset to beginning
+readLines(Tfile)
+cat("ghi\n", file=Tfile)
+readLines(Tfile)
+close(Tfile)
+unlink("test1")
+
+## We can do the same thing with an anonymous file.
+Tfile <- file()
+cat("abc\ndef\n", file=Tfile)
+readLines(Tfile)
+close(Tfile)
+
 \dontrun{## Unix examples of use of pipes
 
 # read listing of current directory
@@ -212,7 +221,7 @@ readLines(pipe("ls -1"))
 # Then read this by
 scan(pipe("sed -e s/,$// data2"), sep=",")
 
-# convert decimal point to comma in output 
+# convert decimal point to comma in output
 zz <- pipe(paste("sed s/\\\\./,/ >", "outfile"), "w")
 cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)

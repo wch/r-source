@@ -758,7 +758,7 @@ FUNTAB R_FunTab[] =
 {"pipe", 	do_pipe,	0,      11,     3,      PP_FUNCALL},
 {"url", 	do_url,		0,      11,     4,      PP_FUNCALL},
 {"gzfile", 	do_gzfile,	0,      11,     4,      PP_FUNCALL},
-{"seek", 	do_seek,	0,      11,     3,      PP_FUNCALL},
+{"seek", 	do_seek,	0,      11,     4,      PP_FUNCALL},
 {"truncate", 	do_truncate,	0,      11,     1,      PP_FUNCALL},
 {"pushBack", 	do_pushback,	0,      11,     3,      PP_FUNCALL},
 {"pushBackLength",do_pushbacklength,0,  11,     1,      PP_FUNCALL},
