@@ -32,7 +32,7 @@ Rboolean stub_X11DeviceDriver(DevDesc *dd,
 		    double pointsize,
 		    double gamma,
 		    X_COLORTYPE colormodel,
-                    int maxcube)
+                    int maxcube, int canvascolor)
 {
     error("the x11 device has not been loaded");
     return FALSE;

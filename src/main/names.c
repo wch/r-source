@@ -656,7 +656,7 @@ FUNTAB R_FunTab[] =
 {"devga",	do_devga,	0,	111,	6,	PP_FUNCALL},
 #endif
 #ifdef Unix
-{"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
+{"X11",		do_X11,		0,	111,	8,	PP_FUNCALL},
 {"gnome",	do_Gnome,	0,	111,	4,	PP_FUNCALL},
 {"GTK",		do_GTK,		0,	111,	4,	PP_FUNCALL},
 #endif

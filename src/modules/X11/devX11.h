@@ -39,7 +39,7 @@ typedef enum {
 
 
 Rboolean X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
-			 X_COLORTYPE, int);
+			 X_COLORTYPE, int, int);
 
 
 	/********************************************************/
@@ -67,6 +67,7 @@ typedef struct {
     int col;				/* Color */
     int fg;				/* Foreground */
     int bg;				/* Background */
+    int canvas;				/* Canvas */
     int fontface;			/* Typeface */
     int fontsize;			/* Size in points */
     int basefontface;			/* Typeface */
@@ -105,7 +106,9 @@ typedef struct {
 x11Desc *Rf_allocX11DeviceDesc(double ps);
 int      Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel, int maxcube, Rboolean setHandlers);
 int      Rf_setX11DeviceData(DevDesc *dd, x11Desc *xd);
-Rboolean X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h, double gamma_fac, X_COLORTYPE colormodel, int maxcube);
+Rboolean X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h, 
+		  double gamma_fac, X_COLORTYPE colormodel, 
+		  int maxcube, int canvascolor);
 Display* Rf_getX11Display();
 
 #endif /* R_X11_DEVICE */

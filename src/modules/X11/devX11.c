@@ -132,7 +132,8 @@ static void   X11_Line(double, double, double, double, int, DevDesc*);
 static Rboolean X11_Locator(double*, double*, DevDesc*);
 static void   X11_Mode(int, DevDesc*);
 static void   X11_NewPage(DevDesc*);
-Rboolean X11_Open(DevDesc*, x11Desc*, char*, double, double, double, X_COLORTYPE, int);
+Rboolean X11_Open(DevDesc*, x11Desc*, char*, double, double, double,
+		  X_COLORTYPE, int, int);
 static void   X11_Polygon(int, double*, double*, int, int, int, DevDesc*);
 static void   X11_Polyline(int, double*, double*, int, DevDesc*);
 static void   X11_Rect(double, double, double, double, int, int, int, DevDesc*);
@@ -1034,7 +1035,8 @@ static int R_X11IOErr(Display *dsp)
 
 Rboolean 
 X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h, 
-	 double gamma_fac, X_COLORTYPE colormodel, int maxcube)
+	 double gamma_fac, X_COLORTYPE colormodel, int maxcube, 
+	 int canvascolor)
 {
     /* if we have to bail out with "error", then must free(dd) and free(xd) */
 
@@ -1096,7 +1098,9 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 	  addInputHandler(R_InputHandlers, ConnectionNumber(display),
 			  R_ProcessEvents, XActivity);
     }
-    whitepixel = GetX11Pixel(255, 255, 255);
+    /* whitepixel = GetX11Pixel(255, 255, 255); */
+    whitepixel = GetX11Pixel(R_RED(canvascolor), R_GREEN(canvascolor), 
+			     R_BLUE(canvascolor));
     blackpixel = GetX11Pixel(0, 0, 0);
 
     if (!SetBaseFont(xd)) {
@@ -1109,6 +1113,7 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
     xd->bg =  dd->dp.bg	 = 0xffffffff; /* R_RGB(255, 255, 255); */
     xd->fg =  dd->dp.fg	 = R_RGB(0, 0, 0);
     xd->col = dd->dp.col = xd->fg;
+    xd->canvas = canvascolor;
 
     /* Try to create a simple window. */
     /* We want to know about exposures */
@@ -1123,33 +1128,34 @@ X11_Open(DevDesc *dd, x11Desc *xd, char *dsp, double w, double h,
 
 
     if (type == WINDOW) {
-     int alreadyCreated = (xd->window != (Window)NULL);
-     if(alreadyCreated == 0) {
-	xd->windowWidth = iw = w/pixelWidth();
-	xd->windowHeight = ih = h/pixelHeight();
-	if ((xd->window = XCreateWindow(
-	    display, rootwin,
-	    DisplayWidth(display, screen) - iw - 10, 10, iw, ih, 1,
-	    DefaultDepth(display, screen),
-	    InputOutput,
-	    DefaultVisual(display, screen),
-	    CWEventMask | CWBackPixel | CWBorderPixel | CWBackingStore,
-	    &attributes)) == 0)
-	    return FALSE;
+	int alreadyCreated = (xd->window != (Window)NULL);
+	if(alreadyCreated == 0) {
+	    xd->windowWidth = iw = w/pixelWidth();
+	    xd->windowHeight = ih = h/pixelHeight();
+	    if ((xd->window = XCreateWindow(
+		display, rootwin,
+		DisplayWidth(display, screen) - iw - 10, 10, iw, ih, 1,
+		DefaultDepth(display, screen),
+		InputOutput,
+		DefaultVisual(display, screen),
+		CWEventMask | CWBackPixel | CWBorderPixel | CWBackingStore,
+		&attributes)) == 0)
+		return FALSE;
 
-	XChangeProperty( display, xd->window, XA_WM_NAME, XA_STRING,
-			 8, PropModeReplace, (unsigned char*)"R Graphics", 13);
+	    XChangeProperty(display, xd->window, XA_WM_NAME, XA_STRING,
+			    8, PropModeReplace, 
+			    (unsigned char*)"R Graphics", 13);
 
-	xd->gcursor = XCreateFontCursor(display, CURSOR);
-	XDefineCursor(display, xd->window, xd->gcursor);
+	    xd->gcursor = XCreateFontCursor(display, CURSOR);
+	    XDefineCursor(display, xd->window, xd->gcursor);
 
-	/* set up protocols so that window manager sends */
-	/* me an event when user "destroys" window */
-	_XA_WM_PROTOCOLS = XInternAtom(display, "WM_PROTOCOLS", 0);
-	protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
+	    /* set up protocols so that window manager sends */
+	    /* me an event when user "destroys" window */
+	    _XA_WM_PROTOCOLS = XInternAtom(display, "WM_PROTOCOLS", 0);
+	    protocol = XInternAtom(display, "WM_DELETE_WINDOW", 0);
 	XSetWMProtocols(display, xd->window, &protocol, 1);
-
-     }
+	
+	}
 	/* Save the devDesc* with the window for event dispatching */
 	XSaveContext(display, xd->window, devPtrContext, (caddr_t) dd);
 
@@ -1329,7 +1335,7 @@ static void X11_NewPage(DevDesc *dd)
     if (xd->type > WINDOW) {
 	if (xd->npages++)
 	    error("attempt to draw second page on pixmap device");
-	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : 0xffffff;
+	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : xd->canvas;
 	SetColor(xd->bg, dd);
 	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
 		       xd->windowWidth, xd->windowHeight);
@@ -1338,7 +1344,7 @@ static void X11_NewPage(DevDesc *dd)
 
     FreeX11Colors();
     if ( (model == PSEUDOCOLOR2) || (xd->bg != dd->dp.bg)) {
-	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : 0xffffff;
+	xd->bg = R_OPAQUE(dd->dp.bg) ? dd->dp.bg : xd->canvas;
 	whitepixel = GetX11Pixel(R_RED(xd->bg),R_GREEN(xd->bg),R_BLUE(xd->bg));
 	XSetWindowBackground(display, xd->window, whitepixel);
     }
@@ -1431,7 +1437,7 @@ static void X11_Close(DevDesc *dd)
 	    if (xd->type == PNG) 
 		R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight, 
 			    bitgp, 0, xd->fp, 
-			    R_OPAQUE(dd->dp.bg) ? 0 : 0xffffff);
+			    R_OPAQUE(dd->dp.bg) ? 0 : xd->canvas);
 	    else if (xd->type == JPEG)
 		R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight, 
 			     bitgp, 0, xd->quality, xd->fp);
@@ -1904,7 +1910,7 @@ X11DeviceDriver(DevDesc *dd,
 		double pointsize,
 		double gamma_fac,
 		X_COLORTYPE colormodel,
-		int maxcube)
+		int maxcube, int canvascolor)
 {
     x11Desc *xd;
 
@@ -1915,7 +1921,7 @@ X11DeviceDriver(DevDesc *dd,
     /*	Start the Device Driver and Hardcopy.  */
 
     if (!X11_Open(dd, xd, disp_name, width, height, 
-		  gamma_fac, colormodel, maxcube)) {
+		  gamma_fac, colormodel, maxcube, canvascolor)) {
 	free(xd);
 	return FALSE;
     }

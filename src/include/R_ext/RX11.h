@@ -44,7 +44,8 @@ typedef Rboolean (*R_X11DeviceDriverRoutine)(DevDesc *dd,
 					     double pointsize,
 					     double gamma_fac,
 					     int colormodel, /* really enum of X_COLORTYPE */
-					     int maxcube);
+					     int maxcube, 
+					     int canvascolor);
 
 typedef SEXP (*R_X11DataEntryRoutine)(SEXP call, SEXP op, SEXP args, SEXP rho);
 typedef Rboolean (*R_GetX11ImageRoutine)(int d, XImage **pximage, int *pwidth, int *pheight);

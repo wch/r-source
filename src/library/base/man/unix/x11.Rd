@@ -10,7 +10,7 @@
 \usage{
 X11(display = "", width = 7, height = 7, pointsize = 12,
     gamma = 1, colortype = getOption("X11colortype"),
-    maxcubesize = 256)
+    maxcubesize = 256, canvas = "white")
 }
 \arguments{
   \item{display}{the display on which the graphics window will appear.
@@ -30,6 +30,8 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     already open.}
   \item{maxcubesize}{can be used to limit the size of color
     cube allocated for pseudocolor devices.}
+  \item{canvas}{color.  The color of the canvas, which is visible only
+    when the background color is transparent.}
 }
 \details{
   By default, an X11 device will use the best color rendering

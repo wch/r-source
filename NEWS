@@ -111,7 +111,11 @@ NEW FEATURES
 	that previously treated bg = "white" as transparent now have
 	"transparent" as the default and will actually print "white".
 	(NB: you may have bg="white" saved in .Postscript.options in
-	your workspace.)  [Not yet finished.]
+	your workspace.)
+
+    o	Unix x11() devices can now have a canvas color set, which can
+	help to distinguish plotting "white" from plotting 
+	"transparent".
 
 
 

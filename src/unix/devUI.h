@@ -10,8 +10,8 @@
 #include "Startup.h" /* for SA_TYPE */
 
 typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
-  				            double, double, double, double,
-				             X_COLORTYPE, int);
+					   double, double, double, double,
+					   X_COLORTYPE, int, int);
 
 X11DeviceDriverRoutine ptr_X11DeviceDriver;
 
@@ -37,14 +37,18 @@ extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
 
 
-extern DevDesc* Rf_addX11Device(char *display, double height, double width, double ps, double gamma, int colormodel, int maxcubesize, char *devname, X11DeviceDriverRoutine deviceDriverRoutine);
+extern DevDesc* 
+Rf_addX11Device(char *display, double height, double width, double ps, 
+		double gamma, int colormodel, int maxcubesize, 
+		int canvascolor, char *devname, 
+		X11DeviceDriverRoutine deviceDriverRoutine);
 
 #ifdef __SYSTEM__
 #undef extern
 #endif
 
 Rboolean stub_X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
-			      X_COLORTYPE, int);
+			      X_COLORTYPE, int, int);
 Rboolean stub_R_GetX11Image(int, void *, int *, int *);
 Rboolean stub_GnomeDeviceDriver(DevDesc*, char*, double, double, double);
 
