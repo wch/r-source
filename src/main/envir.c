@@ -616,6 +616,14 @@ void InitGlobalEnv()
     R_GlobalCachePreserve = CONS(R_GlobalCache, R_NilValue);
     R_PreserveObject(R_GlobalCachePreserve);
 #endif
+#ifdef EXPERIMENTAL_NAMESPACES
+    R_BaseNamespace = NewEnvironment(R_NilValue, R_NilValue, R_GlobalEnv);
+    R_PreserveObject(R_BaseNamespace);
+    SET_SYMVALUE(install(".BaseNamespaceEnv"), R_BaseNamespace);
+    /**** need to properly initialize the name space */
+    /**** need to create namespace registry */
+    /**** need to enter base namespace in registry */
+#endif
 }
 
 #ifdef USE_GLOBAL_CACHE
@@ -733,6 +741,10 @@ void unbindVar(SEXP symbol, SEXP rho)
 {
     int hashcode;
     SEXP c;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho == R_BaseNamespace)
+	error("can't unbind in the base environment");
+#endif
 #ifdef ENVIRONMENT_LOCKING
     if (rho == R_NilValue)
 	error("can't unbind in the NULL environment");
@@ -779,6 +791,12 @@ static SEXP findVarLocInFrame(SEXP rho, SEXP symbol)
 {
     int hashcode;
     SEXP frame, c;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho == R_NilValue)
+        error("can't get binding from NULL environment");
+    if (rho == R_BaseNamespace)
+        error("can't get binding from base namespace");
+#endif
     if (HASHTAB(rho) == R_NilValue) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue && TAG(frame) != symbol)
@@ -850,6 +868,14 @@ SEXP findVarInFrame(SEXP rho, SEXP symbol)
 {
     int hashcode;
     SEXP frame, c;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho == R_BaseNamespace)
+#ifdef FANCY_BINDINGS
+	return SYMBOL_BINDING_VALUE(symbol);
+#else
+        return SYMVALUE(symbol);
+#endif
+#endif
     if (HASHTAB(rho) == R_NilValue) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
@@ -1220,7 +1246,11 @@ void defineVar(SEXP symbol, SEXP value, SEXP rho)
     int hashcode;
     SEXP frame, c;
     R_DirtyImage = 1;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho != R_BaseNamespace && rho != R_NilValue) {
+#else
     if (rho != R_NilValue) {
+#endif
 #ifdef USE_GLOBAL_CACHE
 	if (IS_GLOBAL_FRAME(rho))
 	    R_FlushGlobalCache(symbol);
@@ -1289,6 +1319,19 @@ SEXP setVarInFrame(SEXP rho, SEXP symbol, SEXP value)
 {
     int hashcode;
     SEXP frame, c;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho == R_BaseNamespace) {
+#ifdef USE_GLOBAL_CACHE
+	R_FlushGlobalCache(symbol);
+#endif
+#ifdef FANCY_BINDINGS
+	SET_SYMBOL_BINDING_VALUE(symbol, value);
+#else
+	SET_SYMVALUE(symbol, value);
+#endif
+    }
+    else
+#endif
     if (HASHTAB(rho) == R_NilValue) {
 	frame = FRAME(rho);
 	while (frame != R_NilValue) {
@@ -1427,6 +1470,10 @@ static int RemoveVariable(SEXP name, int hashcode, SEXP env)
 {
     int found;
     SEXP list;
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (env == R_BaseNamespace)
+	error("can't remove variables from base namespace");
+#endif
 #ifdef ENVIRONMENT_LOCKING
     if (FRAME_IS_LOCKED(env))
 	error("can't remove bindings from a locked environment");
@@ -1951,6 +1998,10 @@ SEXP do_ls(SEXP call, SEXP op, SEXP args, SEXP rho)
     int all, i, k, n;
     checkArity(op, args);
     envp = CAR(args);
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (envp == R_BaseNamespace)
+	envp = R_NilValue;
+#endif
     if (isNull(envp) || !isNewList(envp)) {
 	PROTECT(env = allocVector(VECSXP, 1));
 	SET_VECTOR_ELT(env, 0, envp);
@@ -2179,7 +2230,11 @@ void R_LockBinding(SEXP sym, SEXP env)
 	error("not a symbol");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (env == R_NilValue || env == R_BaseNamespace)
+#else
     if (env == R_NilValue)
+#endif
 	LOCK_BINDING(sym);
     else {
 	SEXP binding = findVarLocInFrame(env, sym);
@@ -2190,6 +2245,7 @@ void R_LockBinding(SEXP sym, SEXP env)
 	LOCK_BINDING(binding);
     }
 }
+
 void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 {
     if (TYPEOF(sym) != SYMSXP)
@@ -2198,7 +2254,11 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
 	error("not a function");
     if (env != R_NilValue && TYPEOF(env) != ENVSXP)
 	error("not an environment");
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (env == R_NilValue || env == R_BaseNamespace) {
+#else
     if (env == R_NilValue) {
+#endif
 	if (SYMVALUE(sym) != R_UnboundValue && ! IS_ACTIVE_BINDING(sym))
 	    error("symbol already has a regular binding");
 	SET_SYMVALUE(sym, fun);

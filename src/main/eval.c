@@ -1030,6 +1030,10 @@ static SEXP applydefine(SEXP call, SEXP op, SEXP args, SEXP rho)
 	in the computation.  For efficiency reasons we record the
 	location where this variable is stored.  */
 
+#ifdef EXPERIMENTAL_NAMESPACES
+    if (rho == R_BaseNamespace)
+	errorcall(call, "cannot do complex assignments in base namespace");
+#endif
     if (rho == R_NilValue)
 	errorcall(call, "cannot do complex assignments in NULL environment");
     defineVar(R_TmpvalSymbol, R_NilValue, rho);

@@ -375,6 +375,11 @@ typedef int PROTECT_INDEX;
 
 /* Evaluation Environment */
 LibExtern SEXP	R_GlobalEnv;	    /* The "global" environment */
+#define EXPERIMENTAL_NAMESPACES
+#ifdef EXPERIMENTAL_NAMESPACES
+LibExtern SEXP	R_BaseNamespace;    /* The (fake) name space for base */
+LibExtern SEXP	R_NamespaceRegistry;/* Registry for registerd name spaces */
+#endif
 
 /* Special Values */
 LibExtern SEXP	R_NilValue;	    /* The nil object */
