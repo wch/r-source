@@ -63,7 +63,7 @@ R:
 .R.Rout:
 	@if test -f $@; then \
 	  if test -f $@.prev ; then mv $@.prev $@.bakk ; fi ; \
-	  cp -p $@ $@.prev ; \
+	  mv $@ $@.prev ; \
 	fi
 	@echo $(ECHO_N) "running code in '$<' ...$(ECHO_C)"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
