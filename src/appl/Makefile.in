@@ -12,8 +12,8 @@ include $(top_builddir)/Makeconf
 
 ## <NOTE>
 ## All functions/subroutines to be called via .C() or .Fortran() must
-## also have an entry in @file{./ROUTINES} in order to be 'pre-dyn.loaded';
-## see @file{../unix/dynload.c}.
+## also have an entry in the appropriate table/array in @file{../main/registration.c} 
+## in order to be registered with the symbol lookup mechanism, i.e. 'pre-dyn.loaded';
 ## </NOTE>
 
 SOURCES_C = \

@@ -44,7 +44,7 @@
  *
  *  1. The dlopen interface is available.
  *
- *  In this case all symbol location is done using the dlopen routines.
+ *  In this case all symbol location in packages is done using the dlopen routines.
  *  We maintain a list of currently loaded shared libraries in an array
  *  called "LoadedDLL" with the number of currenly loaded libraries
  *  being "CountDLL".  To locate a symbol, we probe the loaded libraries
@@ -62,12 +62,21 @@
  *  libraries are found first.
  *
  *
- *  2. The dlopen interface is not available.
+ *  Accessing native routines in base (the R executable).
  *
- *  In this case we use the table "CFunTabEntry" to locate functions
- *  in the executable.	We do this by straight linear search through
- *  the table.	Note that the content of the table is created at
- *  system build time from the list in ../appl/ROUTINES.
+ *  In this case, we use the registration mechanism and the DllInfo array 
+ *  in ../main/Rdynload.c to locate functions in the executable. We do this
+ *  by straight linear search through the table.
+ *  Note that the base routines registered are listed in 
+ *               ../main/registration.c
+ *  and are registered during the initialization of the R engine.
+ *  (This replaces the previous mechanism that built a table from ../appl/ROUTINES
+ *  using Perl/sed).
+ *
+ *
+ *  If speed is ever an issue in the lookup of registered symbols, we can 
+ *  store the registered routines in a hashtable or binary tree as they
+ *  are being registered.
  */
 
 #ifdef HAVE_CONFIG_H

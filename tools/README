@@ -19,8 +19,6 @@ The files are as follows.
   GETMAKEVAL
 	get the value of a Make variable from a Makefile [this needs to
 	be improved].
-  GETSYMBOLS
-	create `FFDecl.h' and `FFTab.h' from `src/appl/ROUTINES'.
   GETVERSION
 	create API `Rversion.h' from `VERSION' and `date-stamp'.
   

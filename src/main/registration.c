@@ -1,3 +1,20 @@
+/**
+ *  This file replaces the previously used ROUTINES file and is used to explicitly
+ *  register native routines that are located in the R executable (e.g. R.bin, Rgui.exe)
+ *  but which are intended to be accessible to S code via .C(), .Fortran(), .Call(), .External()
+ *  The approach we use here is the regular registration mechanism that packages can use
+ *  to explicitly list the symbols to be exported.  For .C() and .Call() routines, we give 
+ *  the number of arguments expected.  For .C() routines, we also specify the types of the arguments.
+ *  For .Fortran() and .External() routines, we specify only the name and symbol.
+
+ *  To add an entry, first determine by which interface the routine will be accessed:
+ *   .C, .Call, .External or .Fortran
+ *  Then add an entry to 
+ *    cmethods, callMethods, externalMethods, or fortranMethods
+ *  respectively
+ *
+ *  DTL 14-Dec-2002
+ */
 #include "R.h"
 #include "Rdefines.h"
 #include "R_ext/Rdynload.h"
@@ -13,6 +30,13 @@ fft_factor
 fft_work
 fdhess
 optif9
+
+ These can still be called directly in native code in a package.
+ They are just not exported here for access via the .C(), .Call(), 
+ .Fortran() or .External() interfaces.
+
+ If these omitted routines are not visible to package DLLs/shared libraries on some platforms, 
+ the package should be linked against Rdll.lib or libR.so or the equivalent on that platform.
 */
 
 R_NativePrimitiveArgType R_approx_t[] = {REALSXP, REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, REALSXP, REALSXP, REALSXP};
@@ -168,7 +192,6 @@ static R_CallMethodDef callMethods [] = {
 #define EXTDEF(name)  {#name, (DL_FUNC) &name}
 
 static R_ExternalMethodDef externalMethods [] = {
-/* integrate */
     EXTDEF(call_dqags),
     EXTDEF(call_dqagi),
     {NULL, NULL, 0}
