@@ -42,11 +42,11 @@ crtdll.dll, non-existent under Win9x.)
 
 It may also be possible to use the compilers from the cygwin 1.1 net
 release with the -mno-cygwin flag.  (You will need the cygwin, gcc,
-mingw32, w32api and binutils bundles. You will need to ensure that
-you have only one version of cygwin1.dll in your path, and there is
+mingw32, w32api and binutils bundles.  You will need to ensure that
+you have just one version of cygwin1.dll in your path, and there is
 one in our tools distribution.)  You can no longer use earlier
-versions (e.g. b20) of cygwin.  (It is not possible to compile R to use
-msvcrt.dll with the cygwin suite.)
+versions (e.g. b20) of cygwin.  (It is not possible to compile R to
+use msvcrt.dll with the cygwin suite.)
 
 
 perl5, available via http://www.activestate.com/Products/ActivePerl/
@@ -107,6 +107,11 @@ mingw32.
 Note 3: we have had a report that a version of Norton Anti-Virus
 locks up the machine when windres is run.
 
+Note 4: By default Doug Lea's malloc in the file src/gnuwin32/malloc.c is
+used.  You can opt out of this by commenting the line LEA_MALLOC=YES
+in the Makefile, in which case the Windows malloc is used.  The one
+in crtdll.dll is unlikely to be satisfactory, but the one in msvcrt.dll
+does work but imposes a considerable performance penalty.
 
 You can test a build by `make check': expect some differences in the
 tests of the print routines.

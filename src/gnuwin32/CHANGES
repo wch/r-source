@@ -18,9 +18,9 @@ malloc directly need to be recompiled on this one.)
 This release has a number of changes to bring its behaviour closer to that 
 of Unix versions of R.
 
--   The default font for graphics (windows(), win.printer(), win.metafile())
-    is now Arial: the font numbers for the Times New Roman and Arial
-    families have been interchanged.
+-   The default font for graphics on windows(), win.printer() and
+    win.metafile() devices is now Arial: the font numbers for the
+    Times New Roman and Arial families have been interchanged.
 
 -   The history is only saved when the workspace is (to be compatible with
     Unix versions of R) and whether it is restored is controlled by
@@ -54,8 +54,8 @@ of Unix versions of R.
 
 -   The startup code looks for .Renviron, a file pointed to by
     environment variable R_ENVIRON and then .Renviron in the home
-    directory.  This file can contain lines line NAME=value but also
-    NAME=${NAME1-value} to take the value of NAME1 if set (and not
+    directory.  This file can contain lines of the forms NAME=value
+    and NAME=${NAME1-value} to take the value of NAME1 if set (and not
     empty), otherwise `value'.
 
 -   make check no longer makes R, just runs the tests (as make test
@@ -96,6 +96,9 @@ Gui changes
 
 -   The size of the console scroll buffer can be set in file Rconsole,
     and resized (upwards) via the GUI preferences editor.
+
+-   The GUI console copes much better with receiving output (e.g. from
+    tcltk interactive functions) during input.
 
 
 
@@ -144,7 +147,8 @@ slowly over the course of a session.  Memory used for transient large
 objects will normally be returned at garbage collection.  (Once memory
 usage has gone over the 256Mb of address space that is initially
 reserved, it is unlikely to be reduced much, but the allocated memory
-will be reused.)
+will be reused.)  You can compile R to use the Windows memory manager
+if you need to.
 
 New function memory.size() showing the amount of memory currently in
 use or the maximum that has been used.
@@ -168,8 +172,8 @@ initial state of the recording flag, and this defaults to the setting
 of the option "graphics.record" (and that defaults to FALSE).
 
 The windows() graphics device has new options for what happens when it
-is resized, both from the command line and the menu.  See ?windows
-for details.
+is resized, which can be set from the command line of from the menu.
+See ?windows for details.
 
 New function bringToTop() to bring a graphics window to the top of the
 windows stack (useful from menu actions, ...).
@@ -191,9 +195,6 @@ on the windows/win.print device.
 The installer rwinst.exe when first asked to install a package tries
 to find a current installation of R, first from R_HOME if set in the
 environment, then from the PATH (it looks for ...\rw1020\bin).
-
-The GUI console copes much better with receiving output (e.g. from
-tcltk interactive functions) during input.
 
 make pkgcheck-foo will unzip zipped example files if needed.
 
