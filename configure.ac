@@ -167,13 +167,14 @@ AM_CONDITIONAL(MAINTAINER_MODE, [test "x${use_maintainer_mode}" = xyes])
 AC_ARG_ENABLE([strict-barrier],
 [AC_HELP_STRING([--enable-strict-barrier],
                 [provoke compile error on write barrier violation
-                 @<:@no@:>@])], 
-[if test "${enableval}" = yes; then
+                 @<:@no@:>@])],
+[use_strict_barrier="${enableval}"],
+[use_strict_barrier=no])
+if test x"${use_strict_barrier}" = xyes; then
   AC_DEFINE(TESTING_WRITE_BARRIER, 1,
             [Define to enable provoking compile errors on write barrier
              violation.])
-fi],
-[])
+fi
 
 ### ** Optional packages.
 
@@ -1274,6 +1275,54 @@ if test -z "${F2C}"; then
 else
   r_f77_compiler="${F2C} ${F2CFLAGS}"
 fi
+r_interfaces=
+for item in X11 gnome aqua tcltk; do
+  if eval "test \${use_${item}} = yes"; then
+    R_SH_VAR_ADD(r_interfaces, [${item}], [, ])
+  fi
+done
+r_external_libs=
+if test "${use_readline}" = yes; then
+  r_external_libs=readline
+fi
+if test -n "${BLAS_LIBS}"; then
+  ## Try to figure out which BLAS was used.
+  case "${BLAS_LIBS}" in
+    *-latlas*) r_blas=ATLAS ;;
+    *-lsgemm*) r_blas=PhiPack ;;
+    *sunperf*) r_blas=SunPerf ;;
+    *-lessl*)  r_blas=ESSL ;;
+    *)         r_blas=generic ;;
+  esac
+  R_SH_VAR_ADD(r_external_libs, [BLAS(${r_blas})], [, ])
+fi
+r_capabilities=
+if test "${have_png}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [PNG], [, ])
+fi
+if test "${have_jpeg}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [JPEG], [, ])
+fi
+if test "${have_bzlib}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [bzip2], [, ])
+fi
+if test "${have_pcre}" = yes; then
+  R_SH_VAR_ADD(r_capabilities, [PCRE], [, ])
+fi
+r_options=
+if test "${want_R_shlib}" = yes; then
+  R_SH_VAR_ADD(r_options, [shared library], [, ])
+fi
+if test "${want_R_profiling}" = yes; then
+  R_SH_VAR_ADD(r_options, [R profiling], [, ])
+fi
+if test "${use_maintainer_mode}" = yes; then
+  R_SH_VAR_ADD(r_options, [maintainer mode], [, ])
+fi
+if test "${use_strict_barrier}" = yes; then
+  R_SH_VAR_ADD(r_options, [strict barrier], [, ])
+fi
+
 AC_MSG_RESULT(
 [
 R is now configured for ${host}
@@ -1285,18 +1334,10 @@ R is now configured for ${host}
   C++ compiler:              ${r_cxx_compiler}
   Fortran compiler:          ${r_f77_compiler}
 
-  X11 support:               ${use_X11}
-  Gnome support:             ${use_gnome}
-  Tcl/Tk support:            ${use_tcltk}
-  Readline support:          ${use_readline}
-
-  PNG support:               ${have_png}
-  JPEG support:              ${have_jpeg}
-  bzip2 support:             ${have_bzlib}
-  PCRE support:              ${have_pcre}
-
-  R profiling support:       ${want_R_profiling}
-  R as a shared library:     ${want_R_shlib}
+  Interfaces supported:      ${r_interfaces}
+  External libraries:        ${r_external_libs}
+  Additional capabilities:   ${r_capabilities}
+  Options enabled:           ${r_options}
 
   Recommended packages:      ${use_recommended_packages} 
 ])
