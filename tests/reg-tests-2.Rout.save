@@ -2609,3 +2609,22 @@ drop argument will be ignored in: "[.data.frame"(women, "height", drop = TRUE)
 3  3           6           9
 > ## wrong printed names in 1.7.1
 > 
+> ## assigning to NULL
+> a <- NULL
+> a[["a"]] <- 1
+> a
+a 
+1 
+> a <- NULL
+> a[["a"]] <- "something"
+> a
+          a 
+"something" 
+> a <- NULL
+> a[["a"]] <- 1:3
+> a
+$a
+[1] 1 2 3
+
+> ## Last was an error in 1.7.1
+> 

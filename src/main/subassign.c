@@ -1341,7 +1341,10 @@ SEXP do_subassign2_dflt(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return x;
         }
         UNPROTECT(1);
-        PROTECT(x = allocVector(TYPEOF(y), 0));
+	if (length(y) <= 1)
+	    PROTECT(x = allocVector(TYPEOF(y), 0));
+	else
+	    PROTECT(x = allocVector(VECSXP, 0));
     }
 
     /* Ensure that the LHS is a local variable. */
@@ -1610,7 +1613,7 @@ SEXP do_subassign3(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
 
-    /* Note the RHS has alreaty been evaluated at this point */
+    /* Note the RHS has already been evaluated at this point */
 
     input = allocVector(STRSXP, 1);
 

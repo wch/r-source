@@ -968,3 +968,15 @@ colnames(A) <- letters[1:2]
 aa[["row.names"]] <- A
 aa
 ## wrong printed names in 1.7.1
+
+## assigning to NULL
+a <- NULL
+a[["a"]] <- 1
+a
+a <- NULL
+a[["a"]] <- "something"
+a
+a <- NULL
+a[["a"]] <- 1:3
+a
+## Last was an error in 1.7.1

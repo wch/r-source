@@ -171,10 +171,13 @@ NEW FEATURES
         and collection of results, wrapping a common use of sapply()
         for simulation purposes.
 
-    o   read.table's as.is argument can be character, naming columns
+    o   read.table's `as.is' argument can be character, naming columns
 	not to be converted.
 
     o   Packages with name spaces can now be installed using --save.
+
+    o   Adding to NULL with [[ ]] generates a list if more than one
+	element is added (as S does).
  
 
 DEPRECATED & DEFUNCT
