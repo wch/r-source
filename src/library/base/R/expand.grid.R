@@ -8,7 +8,11 @@ expand.grid <- function(...) {
     a1 <- args[[1]]
     if(length(args) == 1 && is.list(a1)) args <- a1
     nargs <- length(args)
-    if(nargs == 1) return (args[[1]])
+    if (nargs == 1)
+        return(
+               if (is.null(args[[1]])) as.data.frame(list())
+               else data.frame(args)
+               )
     cargs <- args
     nmc <- paste("Var", 1:nargs, sep="")
     nm <- names(args)
