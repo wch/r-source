@@ -18,7 +18,7 @@
 ###
 ### You should have received a copy of the GNU General Public License
 ### along with R; if not, you can obtain it via the World Wide Web at
-### `http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
+### 'http://www.gnu.org/copyleft/gpl.html', or by writing to the Free
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
@@ -76,12 +76,21 @@ esac
 
 ### ** Defaults.
 
-f="${srcdir}/config.site"
-if test -r ${f}; then echo "loading site script ${f}"; . ${f}; fi
-f="${HOME}/.Rconf"
-if test -r ${f}; then echo "loading user script ${f}"; . ${f} ; fi
-f="./config.site"
-if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
+cfile="${srcdir}/config.site"
+if test -r ${cfile}; then
+  echo "loading site script ${cfile}"
+  . ${cfile}
+fi
+cfile="${HOME}/.Rconf"
+if test -r ${cfile}; then
+  echo "loading user script ${cfile}"
+  . ${cfile}
+fi
+cfile="./config.site"
+if test -r ${cfile}; then
+  echo "loading build specific script ${cfile}"
+  . ${cfile}
+fi
 
 ## <FIXME>
 ## We provide these defaults so that headers and libraries in '/usr/local'
@@ -95,7 +104,7 @@ if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 
 ### ** Handle arguments to configure.
 
-config_opts=${ac_configure_args}
+config_opts="${ac_configure_args}"
 AC_SUBST(config_opts)
 
 ### ** Optional features.
@@ -135,7 +144,7 @@ AC_ARG_ENABLE([maintainer-mode],
 [AC_HELP_STRING([--enable-maintainer-mode],
                 [enable make rules and dependencies not useful (and
                  maybe confusing) to the casual installer @<:@no@:>@])],
-[use_maintainer_mode=${enableval}],
+[use_maintainer_mode="${enableval}"],
 [use_maintainer_mode=no])
 AM_CONDITIONAL(MAINTAINER_MODE, [test "x${use_maintainer_mode}" = xyes])
 
@@ -193,7 +202,7 @@ use_f2c=false
 ## BLAS.
 AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
-                [use specified BLAS library])],
+                [use BLAS library, or specify it @<:@yes@:>@])],
 [R_ARG_USE(blas)],
 [use_blas=true])
 
@@ -216,7 +225,7 @@ else
   want_gnome=yes
   LIBS="${LIBS} -L${withval}/lib"
   CPPFLAGS="${CPPFLAGS} -I${withval}/include"
-  gnome_prefix=${withval}/lib
+  gnome_prefix="${withval}/lib"
 fi],
 [want_gnome=no])
 
@@ -231,18 +240,18 @@ elif test "${withval}" = yes; then
 else
   want_tcltk=yes
   LIBS="${LIBS} -L${withval}"
-  tcltk_prefix=${withval}
+  tcltk_prefix="${withval}"
 fi],
 [want_tcltk=yes])
 AC_ARG_WITH([tcl-config],
 [AC_HELP_STRING([--with-tcl-config=TCL_CONFIG],
                 [specify location of tclConfig.sh @<:@@:>@])],
-[TCL_CONFIG=${withval}],
+[TCL_CONFIG="${withval}"],
 [TCL_CONFIG=""])
 AC_ARG_WITH([tk-config],
 [AC_HELP_STRING([--with-tk-config=TK_CONFIG],
                 [specify location of tkConfig.sh @<:@@:>@])],
-[TK_CONFIG=${withval}],
+[TK_CONFIG="${withval}"],
 [TK_CONFIG=""])
 
 ## <FIXME>
@@ -251,7 +260,7 @@ AC_ARG_WITH([tk-config],
 ## AC_ARG_WITH([libtool],
 ## [AC_HELP_STRING([--with-libtool],
 ##                 [use libtool for building shared libraries @<:@yes@:>@])],
-## [use_libtool=${withval}],
+## [use_libtool="${withval}"],
 ## [use_libtool=yes])
 ## </FIXME>
 AM_CONDITIONAL(USE_LIBTOOL, [test "x${use_libtool}" = xyes])
@@ -369,10 +378,10 @@ AC_PROG_CXXCPP
 ## <FIXME>
 ## What is this doing *HERE*?
 ## Should be needed for tests using AC_TRY_RUN()?
-## Make sure that non-standard directories specified via `-L' are really
+## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
 for arg in ${LIBS}; do
-  case ${arg} in
+  case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
       if test -z "${R_LD_LIBRARY_PATH}"; then
@@ -386,7 +395,7 @@ done
 ## </FIXME>
 
 ## Record name of environment variable which tells the dynamic linker
-## where to find shlibs (typically, `LD_LIBRARY_PATH').
+## where to find shlibs (typically, 'LD_LIBRARY_PATH').
 ltout=`./libtool --config | grep '^shlibpath_var='`
 eval "${ltout}"
 AC_SUBST(shlibpath_var)
@@ -413,8 +422,8 @@ AC_SUBST(LIBM)
 ## AC_CHECK_LIBM computes LIBM but does not add to LIBS, hence we do
 ## the following as well.
 AC_CHECK_LIB(m, sin)
-AC_CHECK_LIB(ncurses, main, ,
-             AC_CHECK_LIB(termcap, main, ,
+AC_CHECK_LIB(ncurses, main, [],
+             AC_CHECK_LIB(termcap, main, [],
                           AC_CHECK_LIB(termlib, main)))
 AC_CHECK_LIB(dl, dlopen)
 
@@ -423,7 +432,7 @@ AC_CHECK_LIB(dl, dlopen)
 ## Get rid of R_ARG_USE eventually ...
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
-  use_readline=${ac_cv_lib_readline_rl_callback_read_char}
+  use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
 else
   use_readline=no
 fi
@@ -495,7 +504,7 @@ R_PROG_CC_MAKEFRAG
 ### *** FORTRAN 77 compiler.
 
 if test -n "${F77}"; then
-  FC=${F77}
+  FC="${F77}"
   R_PROG_F77_FLIBS
   R_PROG_F77_APPEND_UNDERSCORE
   R_PROG_F77_CC_COMPAT
@@ -597,12 +606,17 @@ case "${host_os}" in
     ;;
   irix*)
     R_C_OPTIEEE
+    ## <NOTE>
+    ## We really should test explictly whether the FORTRAN and C++
+    ## compilers need '-OPT:IEEE_NaN_inf=ON'.  Currently, all we do is
+    ## assume that non-GNU tools are native and hence need the flag.
     if test "${G77}" != yes; then
       R_XTRA_FFLAGS="${R_XTRA_FFLAGS} -OPT:IEEE_NaN_inf=ON"
     fi
     if test "${GXX}" != yes; then
       R_XTRA_CXXFLAGS="${R_XTRA_CXXFLAGS} -OPT:IEEE_NaN_inf=ON"
     fi
+    ## </NOTE>
     ;;
   osf*)
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
@@ -663,9 +677,9 @@ AC_SUBST(R_XTRA_LIBS)
 ## symbols at link time.  For such systems, we link against -lm (in case
 ## it exists) when building a shlib module via SHLIB_LIBADD.
 
-main_ld=${CC}
-shlib_ld=${CC}
-shlib_cxxld=${CXX}
+main_ld="${CC}"
+shlib_ld="${CC}"
+shlib_cxxld="${CXX}"
 SHLIB_EXT=".so"
 SHLIB_LIBADD=
 use_exportfile=no
@@ -675,7 +689,7 @@ use_exportfile=no
 ## Earlier versions had fpicflags=${cpicflags}.  As this really amounts
 ## to hoping rather than knowing, we no longer do this.
 ## </NOTE>
-r_xtra_path=${PATH}
+r_xtra_path="${PATH}"
 for dir in /usr/bin/X11 /usr/X11R6/bin /usr/openwin/bin; do
   r_xtra_path="${r_xtra_path}${PATH_SEPARATOR}${dir}"
 done
@@ -751,17 +765,22 @@ case "${host_os}" in
     SHLIB_EXT=".sl"
     case "${CC}" in
       cc|c89)
-        cpicflags="+Z" ;;
+        cpicflags="+Z"
+        ;;
     esac
     case "${FC}" in
       f77|fort77|f90)
-        fpicflags="+Z" ;;
+        fpicflags="+Z"
+        ;;
     esac
     main_ldflags="-Wl,-E"
     if test "${GCC}" = yes; then
       shlib_ldflags="-shared -fPIC"
     else
+      ## <FIXME>
+      ## Why do we *explictly* need 'ld' here?
       shlib_ld=ld
+      ## </FIXME>
       shlib_ldflags="-b"
     fi
     if test "${GXX}" = yes; then
@@ -843,9 +862,9 @@ esac
 
 ## Step 5.  Overrides from the environment and error checking.
 if test -z "${MAIN_LD}"; then
-  MAIN_LD=${main_ld}
+  MAIN_LD="${main_ld}"
   if test -z "${MAIN_LDFLAGS}"; then
-    MAIN_LDFLAGS=${main_ldflags}
+    MAIN_LDFLAGS="${main_ldflags}"
   else
     MAIN_LDFLAGS="${MAIN_LDFLAGS} ${main_ldflags}"
   fi
@@ -889,9 +908,9 @@ if test -z "${CXXPICFLAGS}"; then
 fi
 
 if test -z "${SHLIB_LD}"; then
-  SHLIB_LD=${shlib_ld}
+  SHLIB_LD="${shlib_ld}"
   if test -z "${SHLIB_LDFLAGS}"; then
-    SHLIB_LDFLAGS=${shlib_ldflags}
+    SHLIB_LDFLAGS="${shlib_ldflags}"
   else
     SHLIB_LDFLAGS="${SHLIB_LDFLAGS} ${shlib_ldflags}"
   fi
@@ -902,9 +921,9 @@ if test -z "${SHLIB_LDFLAGS}"; then
 fi
 
 if test -z "${SHLIB_CXXLD}"; then
-  SHLIB_CXXLD=${shlib_cxxld}
+  SHLIB_CXXLD="${shlib_cxxld}"
   if test -z "${SHLIB_CXXLDFLAGS}"; then
-    SHLIB_CXXLDFLAGS=${shlib_cxxldflags}
+    SHLIB_CXXLDFLAGS="${shlib_cxxldflags}"
   else
     SHLIB_CXXLDFLAGS="${SHLIB_CXXLDFLAGS} ${shlib_cxxldflags}"
   fi
@@ -980,6 +999,7 @@ R_FUNC_STRPTIME
 if ${use_blas}; then
   R_BLAS_LIBS
 fi
+## </NOTE>
 if test -n "${BLAS_LIBS}"; then
   BLAS=
 else
@@ -1047,7 +1067,7 @@ AC_SUBST(R_PROFILING)
 ### * Miscellaneous.
 
 ## Printing.
-## We look to see whether we have `lpr' or `lp'.  Some platforms
+## We look to see whether we have 'lpr' or 'lp'.  Some platforms
 ## provide both (SunOS and HPUX), and in those cases we choose lpr.
 if test -z "${R_PRINTCMD}"; then
   AC_CHECK_PROGS(R_PRINTCMD, [lpr lp])
@@ -1068,19 +1088,17 @@ AC_SUBST(R_BATCHSAVE)
 LIBS1=""
 LIBS2=""
 for arg in ${LIBS}; do
-  case ${arg} in
+  case "${arg}" in
     -L*)
-    LIBS1="${LIBS1} ${arg}"
+      LIBS1="${LIBS1} ${arg}"
       ;;
     *)
-    LIBS2="${LIBS2} ${arg}"
+      LIBS2="${LIBS2} ${arg}"
       ;;
   esac
 done
 LIBS="${LIBS1} ${LIBS2}"
-if test -n "${LIBS1}"; then
-  LIBPATHS="${LIBS1}"
-fi
+LIBPATHS="${LIBS1}"
 AC_SUBST(LIBPATHS)
 
 ## R_LD_LIBRARY_PATH.
@@ -1088,7 +1106,7 @@ AC_SUBST(LIBPATHS)
 ## This should not be necessary when using libtool for linking.
 ## In any case, is this really good enough?
 for arg in ${X_LIBS} ${TCLTK_LIBS} ${GNOME_LIBS} ${FLIBS} ${BLAS_LIBS}; do
-  case ${arg} in
+  case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
       if test -z "${R_LD_LIBRARY_PATH}"; then
