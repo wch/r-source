@@ -86,7 +86,7 @@ function(dir, type, all.files = FALSE, full.names = TRUE)
     exts <- .make_file_exts(type)
     files <-
         list_files_with_exts(dir, exts, all.files = all.files,
-                          full.names = full.names)
+                             full.names = full.names)
 
     if(type %in% c("code", "docs")) {
         OSdir <- file.path(dir, .OStype())
@@ -111,9 +111,9 @@ delimMatch <-
 function(x, delim = c("\{", "\}"), syntax = "Rd")
 {
     if(!is.character(x))
-        stop("argument x must be a character vector")
+        stop(.wrong_args("x", "must be a character vector"))
     if((length(delim) != 2) || any(nchar(delim) != 1))
-        stop("incorrect value for delim")
+        stop(.wrong_args("delim", "must specify two single characters"))
     if(syntax != "Rd")
         stop("only Rd syntax is currently supported")
 
@@ -240,6 +240,19 @@ function()
     lines
 }
 
+### ** .get_standard_package_names
+
+.get_standard_package_names <-
+function()
+{
+    lines <- readLines(file.path(R.home(), "share", "make", "vars.mk"))
+    lines <- grep("^R_PKGS_[[:upper:]]+ *=", lines, value = TRUE)
+    out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
+    names(out) <-
+        tolower(sub("^R_PKGS_([[:upper:]]+) *=.*", "\\1", lines))
+    out
+}
+    
 ### ** .is_primitive
 
 .is_primitive <-
@@ -465,6 +478,26 @@ function(expr)
         stop(yy)
     yy
 }
+
+### ** .wrong_args
+
+.wrong_args <-
+function(args, msg)
+{
+    len <- length(args)
+    if(len == 0)
+        character()
+    else if(len == 1)
+        paste("argument", sQuote(args), msg)
+    else
+        paste("arguments",
+              paste(c(rep.int("", len - 1), "and "),
+                    sQuote(args),
+                    c(rep.int(", ", len - 1), ""),
+                    sep = "", collapse = ""),
+              msg)
+}
+
 
 ### Local variables: ***
 ### mode: outline-minor ***
