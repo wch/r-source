@@ -3,11 +3,14 @@
 \usage{
 autoload(name, package, reset = FALSE, \dots)
 autoloader(name, package, \dots)
+
 .AutoloadEnv
+.Autoloaded
 }
 \alias{autoload}
 \alias{autoloader}
 \alias{.AutoloadEnv}
+\alias{.Autoloaded}
 \arguments{
   \item{name}{string giving the name of an object.}
   \item{package}{string giving the name of a package containing the object.}
@@ -21,6 +24,9 @@ autoloader(name, package, \dots)
   the package is loaded and \code{name} is re-evaluated in the new
   package's environment.  The result is that \R behaves as if
   \code{file} was loaded but it does not occupy memory.
+
+  \code{.Autoloaded} contains the \dQuote{base names} of the packages for
+  which autoloading has been promised.
 }
 \value{
   This function is invoked for its side-effect.  It has no return value as
@@ -34,6 +40,7 @@ require(stats)
 autoload("interpSpline", "splines")
 search()
 ls("Autoloads")
+.Autoloaded
 
 x <- sort(rnorm(12))
 y <- x^2

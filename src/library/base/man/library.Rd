@@ -3,14 +3,8 @@
 \alias{library}
 \alias{require}
 \alias{R_LIBS}
-\alias{.Autoloaded}
 \alias{.First.lib}
 \alias{.Last.lib}
-\alias{.Library}
-\alias{.find.package}
-\alias{.packages}
-\alias{.path.package}
-\alias{.libPaths}
 \alias{.noGenerics}
 \alias{print.libraryIQR}
 \alias{print.packageInfo}
@@ -19,14 +13,6 @@
 
   \code{.First.lib} is called when a package is loaded;
   \code{.Last.lib} is called when a package is detached.
-
-  \code{.packages} returns information about package availability.
-
-  \code{.path.package} returns information about where a package was
-  loaded from.
-
-  \code{.find.package} returns the directory paths of installed
-  packages.
 }
 \usage{
 library(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
@@ -39,15 +25,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 
 .First.lib(libname, pkgname)
 .Last.lib(libpath)
-
-.packages(all.available = FALSE, lib.loc = NULL)
-.path.package(package, quiet = FALSE)
-.find.package(package, lib.loc = NULL, quiet = FALSE,
-              verbose = getOption("verbose"))
-.libPaths(new)
-
-.Library
-.Autoloaded
 }
 \arguments{
   \item{package, help}{the name of a package, given as a \link{name} or
@@ -91,14 +68,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     \code{--with-package-versions}.}
   \item{libpath}{a character string giving the complete path to the
     package.}
-  \item{all.available}{logical; if \code{TRUE} return a character vector
-    of all available packages in \code{lib.loc}.}
-  \item{quiet}{logical.
-    For \code{.path.package}, should this not give warnings or an error
-    if the package(s) are not loaded?
-    For \code{.find.package}, should this not give warnings or an error
-    if the package(s) are not found?}
-  \item{new}{a character vector with the locations of \R library trees.}
 }
 \details{
   \code{library(package)} and \code{require(package)} both load the
@@ -151,53 +120,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   that it might be called if \code{.First.lib} has failed, so it
   should be written defensively. (It is called within \code{\link{try}},
   so errors will not stop the package being detached.)
-
-  \code{.packages()} returns the \dQuote{base names} of the currently
-  attached packages \emph{invisibly} whereas
-  \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
-  packages available in the library location path \code{lib.loc}.
-
-  \code{.path.package} returns the paths from which the named packages
-  were loaded, or if none were named, for all currently loaded packages.
-  Unless \code{quiet = TRUE} it will warn if some of the packages named
-  are not loaded, and given an error if none are.  This function is not
-  meant to be called by users, and its interface might change in future
-  versions.
-
-  \code{.find.package} returns the paths to the locations where the
-  given packages can be found.  If \code{lib.loc} is \code{NULL}, then
-  then attached packages are searched before the libraries.  If a
-  package is found more than once, the first match is used.  Unless
-  \code{quiet = TRUE} a warning will be given about the named packages
-  which are not found, and an error if none are.  If \code{verbose} is
-  true, warnings about packages found more than once are given.  This
-  function is not meant to be called by users, and its interface might
-  change in future versions.
-
-  \code{.Autoloaded} contains the \dQuote{base names} of the packages for
-  which autoloading has been promised.
-
-  \code{.Library} is a character string giving the location of the
-  default library, the \file{library} subdirectory of \env{R\_HOME}.
-  \code{.libPaths} is used for getting or setting the library trees that
-  \R knows about (and hence uses when looking for packages).  If called
-  with argument \code{new}, the library search path is set to
-  the existing files in \code{unique(new, .Library)} and this is
-  returned.  If given no argument, a character vector with the currently
-  known library trees is returned.
-
-#ifdef unix
-  The library search path is initialized at startup from the environment
-  variable \env{R\_LIBS} (which should be a colon-separated list of
-  directories at which \R library trees are rooted) by calling
-  \code{.libPaths} with the directories specified in \env{R\_LIBS}.
-#endif
-#ifdef windows
-  The library search path is initialized at startup from the environment
-  variable \env{R\_LIBS} (which should be a semicolon-separated list of
-  directories at which \R library trees are rooted) by calling
-  \code{.libPaths} with the directories specified in \env{R\_LIBS}.
-#endif
 }
 \value{
   \code{library} returns the list of loaded (or available) packages
@@ -205,7 +127,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{require} returns a logical indicating whether the required
   package is available.
 }
-\section{Packages that require other packages}{The source code for a
+\section{Packages that require other packages}{
+  The source code for a
   package that requires one or more other packages should have a call
   to \code{require}, preferably near the beginning of the source, and
   of course before any code that uses functions, classes or methods
@@ -215,7 +138,10 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{\link{detach}} when a package is detached to warn if other
   packages still require the detached package.  Also, if a package is
   installed with saved image (see \link{INSTALL}), the saved package
-  names are used to require these packages when the new package is attached.}
+  names are used to require these packages when the new package is
+  attached.
+}
+
 \section{Formal methods}{
   \code{library} takes some further actions when package \pkg{methods}
   is attached (as it is by default).  Packages may define formal generic
@@ -231,9 +157,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
 \note{
   \code{library} and \code{require} can only load an \emph{installed}
   package, and this is detected by having a \file{DESCRIPTION} file
-  containing a \code{Built:} field.  Packages
-  installed prior to 1.2.0 (released in December 2000) will need to be
-  re-installed.
+  containing a \code{Built:} field.
 
   Under Unix-alikes, the code checks that the package was installed
   under a similar operating system as given by \code{R.version$platform}
@@ -248,12 +172,9 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \code{DESCRIPTION} file exactly, even on case-insensitive file systems
   such as MS Windows.
 }
-\author{
-  R core;
-  Guido Masarotto for the \code{all.available=TRUE} part of
-  \code{.packages}.
-}
 \seealso{
+  \code{\link{.libPaths}}, \code{\link{.packages}}.
+
   \code{\link{attach}}, \code{\link{detach}}, \code{\link{search}},
   \code{\link{objects}}, \code{\link{autoload}},
   \code{\link{library.dynam}}, \code{\link{data}},
@@ -267,14 +188,12 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   Wadsworth \& Brooks/Cole.
 }
 \examples{
-(.packages())               # maybe just "base"
-.packages(all = TRUE)       # return all available as character vector
 library()                   # list all available packages
 library(lib = .Library)     # list all packages in the default library
 library(help = splines)     # documentation on package 'splines'
 library(splines)            # load package 'splines'
 require(splines)            # the same
-(.packages())               # "splines", too
+search()                    # "splines", too
 detach("package:splines")
 
 # if the package name is in a character vector, use
@@ -284,11 +203,6 @@ detach(pos = match(paste("package", pkg, sep=":"), search()))
 
 require(pkg, character.only = TRUE)
 detach(pos = match(paste("package", pkg, sep=":"), search()))
-
-.path.package()
-.Autoloaded                 # maybe "ctest"
-
-.libPaths()                 # all library trees R knows about
 
 require(nonexistent)        # FALSE
 \dontrun{
