@@ -144,12 +144,14 @@ function(..., list = character(0),
         found <- FALSE
         if (length(files) > 1) {
             ## more than one candidate
-            ## use the order given in data.Rd
+            ## use the order given in data.Rd within path
             good <- c("RData", "rdata", "rda", "R", "r",
                       "tab", "txt", "TXT", "csv", "CSV")
             exts <- sub(".*\\.", "", files)
             o <- match(exts, good, nomatch = 100)
-            files <- files[sort.list(o)]
+            paths <- dirname(files)
+            paths <- factor(paths, levels=paths)
+            files <- files[order(paths, o)]
         }
         if (length(files) > 0) {
             subpre <- paste(".*", fsep, sep = "")
