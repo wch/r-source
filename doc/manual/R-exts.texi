@@ -1675,6 +1675,39 @@ and there are others we cannot reproduce in ISO-8859-1, for example
 bidirectional single quotes in Taiwanese Chinese and bidirectional
 double quotes in Japanese.
 
+@item
+Occasionally messages need to be singular or plural (and in other
+languages there may be no such concept or several plural forms --
+Slovenian has four).  So avoid constructions such as was once used in
+@code{library}
+@example
+if((length(nopkgs) > 0) && !missing(lib.loc)) @{
+    if(length(nopkgs) > 1)
+        warning("libraries ",
+                paste(sQuote(nopkgs), collapse = ", "),
+                " contain no packages")
+    else
+        warning("library ", paste(sQuote(nopkgs)),
+                " contains no package")
+@}
+@end example
+@noindent
+and was replaced by
+@example
+if((length(nopkgs) > 0) && !missing(lib.loc)) @{
+    pkglist <- paste(sQuote(nopkgs), collapse = ", ")
+    msg <- sprintf(ngettext(length(nopkgs),
+                     "library %s contains no packages",
+                     "libraries %s contain no packages"),
+                   pkglist)
+    warning(msg, domain=NA)
+@}
+@end example
+@noindent
+Note that it is much better to have complete clauses as here, since
+in another language one might need to say `There is no package in library
+%s' or `There are no packages in libraries %s'.
+
 @end itemize
 
 @node Localization,  , Error and warning messages, Creating R packages
