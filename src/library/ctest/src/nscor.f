@@ -4,8 +4,12 @@ c        Algorithm AS 177   Appl. Statist. (1982) Vol. 31, No. 2
 c
 c        Exact calculation of Normal Scores
 c
+      implicit none
+      integer n, n2, ifault
       double precision s(n2), work(4,721)
+
       double precision zero, c, scor, ai1, ani, an, h
+      integer nstep, i, j, i1, ni
       data zero/0.0d0/, h/0.025d0/, nstep/721/
 c
       ifault=3
@@ -27,8 +31,8 @@ c
         ani=ni
         scor=zero
         do 10 j=1,nstep
-   10   scor=scor+exp(work(2,j) + ai1 * work(3,j) + ani * work(4,j)
-     *        + c) * work(1,j)
+   10      scor=scor+exp(work(2,j) + ai1 * work(3,j) + ani * work(4,j)
+     *          + c) * work(1,j)
         s(i)=scor * h
         c=c+log(ani/dble(i))
    20 continue
@@ -40,8 +44,13 @@ c
 c
 c        Algorithm AS 177.1   Appl. Statist. (1982) Vol. 31, No. 2
 c
+      implicit none
       double precision work(4,721)
-      double precision xstart, h, pi2, half, xx, alnorm
+c     calls EXTERNAL alnorm { = Appl.Stat. AS 66 }   = {1 - } pnorm(.)
+      double precision alnorm
+c
+      double precision xstart, h, pi2, half, xx
+      integer nstep, i
       data xstart/-9.0d0/, h/0.025d0/, pi2/-0.918938533d0/,
      *     half/0.5d0/,  nstep/721/
       xx=xstart
@@ -82,7 +91,7 @@ c                   = 3 if n2 > n/2 (n.b. this differs from the
 c                          published algorithm which returns an error
 c                          if n2 is not equal to n/2.)
 c
-c     calls ppnd = applied statistics algorithm 111.
+c     calls ppnd = applied statistics algorithm 111. =^= qnorm() in R
 c     An alternative is ppnd7 in algorithm AS 241.
 c
       real s(n2), eps(4), dl1(4), dl2(4), gam(4), lam(4),
@@ -130,8 +139,8 @@ c
 c
 c     convert tail areas to normal deviates.
 c
-   20 do 30 i = 1,n2
-   30 s(i) = -real(ppnd(dble(s(i)),ier))
+ 20   do 30 i = 1,n2
+   30   s(i) = -real(ppnd(dble(s(i)),ier))
       return
       end
 c
@@ -159,6 +168,7 @@ c
       correc = (c1(i) + an*(c2(i) + an*c3(i)))*mic
       return
       end
+C--- alnfac() is NOT called from anything above! --- ?? ---
 c
 c
       double precision function alnfac(j)
