@@ -1,5 +1,11 @@
+R:		build
+		@cd main; make install
+		@cd library; make
+		@cd library; make libs
+		@cd front; make
+
 build:
-		@echo extracting foreign function symbols
+		@echo "Extracting foreign function symbols"
 		@sh GETSYMBOLS
 		cd graphics; make
 		cd nmath; make
@@ -8,11 +14,8 @@ build:
 		cd main; make
 		cd include; make
 
-install:	build
-		@cd main; make install
-		@cd library; make
-		@cd library; make libs
-		@cd front; make
+install:
+		@echo "Sorry, this hasn't been implemented yet"
 
 clean:
 		@cd graphics; make $@
