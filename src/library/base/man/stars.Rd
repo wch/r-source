@@ -17,7 +17,7 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
       cex = 0.8, lwd = 0.25, lty = par("lty"), xpd = FALSE,
       mar = pmin(par("mar"),
                  1.1+ c(2*axes+ (xlab != ""), 2*axes+ (ylab != ""), 1,0)),
-      \dots)
+      add=FALSE, plot=TRUE, \dots)
 }
 \arguments{
   \item{x}{matrix or data frame of data.
@@ -80,6 +80,8 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
   \item{\dots}{further arguments, passed to the first call of
     \code{plot()}, see \code{\link{plot.default}} and to
     \code{\link{box}()} if \code{frame.plot} is true.}
+  \item{add}{logical, if \code{TRUE} \emph{add} stars to current plot.}
+  \item{plot}{logical, if \code{FALSE}, nothing is plotted.}
   }
 }
 \details{
