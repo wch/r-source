@@ -147,7 +147,7 @@ package.description <- function(pkg, lib=.lib.loc, fields=NULL)
             retval <- retval[1,]
     }
 
-    if((file == "") | (length(retval) == 0)){
+    if((file == "") || (length(retval) == 0)){
         warning(paste("DESCRIPTION file of package", pkg,
                       "missing or broken"))
         if(!is.null(fields)){
