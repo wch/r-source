@@ -60,6 +60,10 @@ NEW FEATURES
 	normally faster and gives more accurate solutions.  Perhaps
 	more importantly, it fails to converge much less often.
 
+    o   Enhanced pairs() function allowing separate upper, lower and 
+	diagonal panel functions and control of diagonal labels.
+	(Much of this was contributed by Jens Oehlschlaegel-Akiyoshi.)
+
 
 BUG FIXES
 
