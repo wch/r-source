@@ -75,20 +75,19 @@ sub Rdconv {
     rdoc2nroff() if $type =~ /nroff/i;
     rdoc2latex() if $type =~ /tex/i;
     rdoc2ex()    if $type =~ /example/i;
+}    
+
+
+# Mark each matching opening and closing bracket with a unique id.
+# Idea and original code from latex2html
+sub mark_brackets {
+	
+    $complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
+    $complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
     
-
-
-    # Mark each matching opening and closing bracket with a unique id.
-    # Idea and original code from latex2html
-    sub mark_brackets {
-	
-	$complete_text =~ s/^\\{|([^\\])\\{/$1$EOB/gso;
-	$complete_text =~ s/^\\}|([^\\])\\}/$1$ECB/gso;
-	
-	while($complete_text =~ /{([^{}]*)}/s){
-	    my $id = $NB . ++$max_bracket . $BN;
-	    $complete_text =~ s/{([^{}]*)}/$id$1$id/s;
-	}
+    while($complete_text =~ /{([^{}]*)}/s){
+	my $id = $NB . ++$max_bracket . $BN;
+	$complete_text =~ s/{([^{}]*)}/$id$1$id/s;
     }
 }
 
