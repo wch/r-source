@@ -79,43 +79,45 @@ BUG FIXES
     o	The pdf() device now initialises graphical parameters
 	properly.  (PR#2281)
 
-    o   Checks in the C code prevent possible memory faults when
-        standardGeneric is called invalidly.
+    o	Checks in the C code prevent possible memory faults when
+	standardGeneric is called invalidly.
 
-    o   Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
-        the .Call interface to generate arbitrary objects.
+    o	Macros NEW_OBJECT (aka NEW) and MAKE_CLASS added; required by
+	the .Call interface to generate arbitrary objects.
 
     o	Problem that prevented package tcltk from working with Tcl/Tk
-        8.4 (crash on initialization) resolved.  (Notice that binaries
-        may still require an older Tcl/Tk, for example on Windows).
+	8.4 (crash on initialization) resolved.	 (Notice that binaries
+	may still require an older Tcl/Tk, for example on Windows).
 
-    o   type.convert() was not getting the levels right if passed a
+    o	type.convert() was not getting the levels right if passed a
 	character vector containing <NA>s, and `na.strings' did not
 	contain "NA".  This affected read.table().
 
-    o   Internal match function did not check for nor handle 0-length
-	vectors.  (The R function match() did.)  This could cause
+    o	Internal match function did not check for nor handle 0-length
+	vectors.  (The R function match() did.)	 This could cause
 	type.convert() to segfault.
 
-    o   The line length limit in output text connections has been
+    o	The line length limit in output text connections has been
 	raised to 8095 chars.
 
-    o   Sweave now uses anonymous file rather than text connections
+    o	Sweave now uses anonymous file rather than text connections
 	to avoid the limits of the latter (see previous item).
 
-    o   parsing did not work on connections when pushback was used (as
-	it had never been implemented).  (PR#2396)
+    o	parsing did not work on connections when pushback was used (as
+	it had never been implemented).	 (PR#2396)
 
-    o   max.col() only found NAs in the first column (typo).
+    o	max.col() only found NAs in the first column (typo).
 
-    o   Added a workaround for recent versions of glibc (e.g. RedHat 8.0)
-        with inconsistent mktime/localtime functions which caused
-        conversion to/from POSIXct times prior to 1970-01-01 to be
-        inconsistent.  On such platforms this is a run-time test to
-        allow e.g. R compiled on RH7.2 to run on RH8.0.
+    o	Added a workaround for recent versions of glibc (e.g. RedHat 8.0)
+	with inconsistent mktime/localtime functions which caused
+	conversion to/from POSIXct times prior to 1970-01-01 to be
+	inconsistent.  On such platforms this is a run-time test to
+	allow e.g. R compiled on RH7.2 to run on RH8.0.
 
-    o   Clipping was not being reset properly between plots on the gtk()
-        device (the default under the GNOME interface). (PR#2366)
+    o	Clipping was not being reset properly between plots on the gtk()
+	device (the default under the GNOME interface). (PR#2366)
+
+    o	axis(*, fg= cc) now works (again) the same as axis(*, col = cc).
 
 
 

@@ -4,6 +4,10 @@ axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=NA, pos=NA,
     if (!is.null(vfont))
 	vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
 		   fontindex= pmatch(vfont[2], Hershey$fontindex))
+    if(is.null(col) && length(list(...)) && !is.null(fg <- list(...)$fg)) {
+        ## help(par) `fg' says this should work
+        col <- fg
+    }
     .Internal(axis(side, at, labels, tick, line, pos, outer, font, vfont,
                    lty, lwd, col, ...))
 }
