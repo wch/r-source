@@ -57,10 +57,11 @@ NEW FEATURES
    o	gzfile() is guaranteed to be available, and hence the
 	`compress' option to save() and save.image().
 
-   o	Beginnings of an extensible approach to safe prediction for
-	models with e.g.  poly(), bs() or ns() terms, using the new
-	generic function makepredictcall().  Currently used by lm()
-	and glm().
+   o	An extensible approach to safe prediction for models with e.g.
+	poly(), bs() or ns() terms, using the new generic function
+	makepredictcall().  Used by most model-fitting functions
+	including lm() and glm().  See ?poly, ?cars and ?ns for
+	examples.
 
 
 DEPRECATED & DEFUNCT
@@ -93,7 +94,8 @@ C-LEVEL FACILITIES
 	the old behaviour will need to be modified.
 
     o	log1p is only provided in Rmath.h if it is not provided by the
-	platform, in which case its name is not remapped.
+	platform, in which case its name is not remapped, but a
+	back-compatibility entry point Rf_log1p is provided.
 	Applications using libRmath may need to be re-compiled.
 
 

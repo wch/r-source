@@ -39,6 +39,14 @@
 #endif
 #include "nmath.h"
 
+#ifndef MATHLIB_STANDALONE
+/* back-compatibility entry point */
+double Rf_log1p(double x)
+{
+    log1p(x);
+}
+#endif
+
 #ifndef HAVE_LOG1P
 double log1p(double x)
 {
