@@ -52,7 +52,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     line = (char *) malloc(MAXELTSIZE);
     buflen = 100;
     buf = (char *) malloc(buflen);
-    
+
     nret = 20;
     /* it is easier if we first have a record per column */
     PROTECT (retval = allocMatrixNA(STRSXP, LENGTH(what), nret));
@@ -61,7 +61,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     regcomp(&trailblank, "[[:blank:]]+$", REG_EXTENDED);
     regcomp(&contline, "^[[:blank:]]+", REG_EXTENDED);
     regcomp(&regline, "^[^:]+:[[:blank:]]*", REG_EXTENDED);
-    
+
     k=0;
     lastm=-1;
     skip=1;
@@ -85,7 +85,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(regexec(&trailblank, line, 1, regmatch, 0)==0){
 		line[regmatch[0].rm_so] = '\0';
 	    }
-	    
+
 	    if(lastm>=0 && regexec(&contline, line, 1, regmatch,
 				   0)==0){
 		need = strlen(line+regmatch[0].rm_eo) +
@@ -160,11 +160,15 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!wasopen) con->close(con);
     free(line);
     free(buf);
+    regfree(&blankline);
+    regfree(&contline);
+    regfree(&trailblank);
+    regfree(&regline);
 
     if(skip==0) k++;
 
     /* and now transpose the whole matrix */
-    PROTECT(retval2 = allocMatrixNA(STRSXP, k, LENGTH(what))); 
+    PROTECT(retval2 = allocMatrixNA(STRSXP, k, LENGTH(what)));
     copyMatrix(retval2, retval, 1);
 
     PROTECT(dimnames = allocVector(VECSXP, 2));
