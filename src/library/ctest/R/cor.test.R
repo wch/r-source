@@ -49,67 +49,84 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 			   tau = as.double(0),
 			   PACKAGE = "ctest")$tau
 	    names(ESTIMATE) <- "tau"
-	    if(is.null(exact))
-		exact <- (n < 50)
-	    if(exact && !TIES) {
-		q <- as.integer((ESTIMATE + 1) * n * (n - 1) / 4)
-		pkendall <- function(q, n) {
-		    .C("pkendall",
-		       as.integer(length(q)),
-		       p = as.double(q),
-		       as.integer(n),
-		       PACKAGE = "ctest")$p
-		}
-		PVAL <- switch(alternative,
-			       "two.sided" = {
-				   if(q > n * (n - 1) / 4)
-				       p <- 1 - pkendall(q - 1, n)
-				   else
-				       p <- pkendall(q, n)
-				   min(2 * p, 1)
-			       },
-			       "greater" = 1 - pkendall(q - 1, n),
-			       "less" = pkendall(q, n))
-		STATISTIC <- c(T = q)
-	    } else {
-		STATISTIC <- c(z = ESTIMATE /
-			       sqrt((4 * n + 10) / (9 * n * (n-1))))
-		p <- pnorm(STATISTIC)
-		if(exact && TIES)
-		    warning("Cannot compute exact p-value with ties")
-	    }
+            if(!is.finite(ESTIMATE)) {  # all x or all y the same
+                ESTIMATE[] <- NA
+                STATISTIC <- c(T = NA)
+                PVAL <- NA
+            }
+            else {
+                if(is.null(exact))
+                    exact <- (n < 50)
+                if(exact && !TIES) {
+                    q <- as.integer((ESTIMATE + 1) * n * (n - 1) / 4)
+                    pkendall <- function(q, n) {
+                        .C("pkendall",
+                           as.integer(length(q)),
+                           p = as.double(q),
+                           as.integer(n),
+                           PACKAGE = "ctest")$p
+                    }
+                    PVAL <-
+                        switch(alternative,
+                               "two.sided" = {
+                                   if(q > n * (n - 1) / 4)
+                                       p <- 1 - pkendall(q - 1, n)
+                                   else
+                                       p <- pkendall(q, n)
+                                   min(2 * p, 1)
+                               },
+                               "greater" = 1 - pkendall(q - 1, n),
+                               "less" = pkendall(q, n))
+                    STATISTIC <- c(T = q)
+                } else {
+                    STATISTIC <- c(z = ESTIMATE /
+                                   sqrt((4 * n + 10) / (9 * n * (n-1))))
+                    p <- pnorm(STATISTIC)
+                    if(exact && TIES)
+                        warning("Cannot compute exact p-value with ties")
+                }
+            }
 	} else {
 	    method <- "Spearman's rank correlation rho"
 	    names(NVAL) <- "rho"
 	    ESTIMATE <- c(rho = cor(rank(x), rank(y)))
-	    ## Use the test statistic S = sum(rank(x) - rank(y))^2 and
-	    ## AS 89 for obtaining better p-values than via the normal
-	    ## approximation of S by N((n^3-n)/6, 1/sqrt(n-1)).
-	    ## In the case of no ties, S = (1-rho) * (n^3-n)/6.
-	    pspearman <- function(q, n, lower.tail = TRUE) {
-		.C("prho",
-		   as.integer(n),
-		   as.integer(q + 1),
-		   p = double(1),
-		   integer(1),
-		   as.logical(lower.tail),
-		   PACKAGE = "ctest")$p
-	    }
-	    q <- as.integer((n^3 - n) * (1 - ESTIMATE) / 6)
-	    STATISTIC <- c(S = q)
-	    PVAL <- switch(alternative,
-			   "two.sided" = {
-			       p <- if(q > (n^3 - n) / 6)
-				   pspearman(q - 1, n, lower.tail = FALSE)
-			       else
+            if(!is.finite(ESTIMATE)) {  # all x or all y the same
+                ESTIMATE[] <- NA
+                STATISTIC <- c(S = NA)
+                PVAL <- NA
+            }
+            else {
+                ## Use the test statistic S = sum(rank(x) - rank(y))^2
+                ## and AS 89 for obtaining better p-values than via the
+                ## simple normal approximation of S by N((n^3-n)/6,
+                ## 1/sqrt(n-1)).  In the case of no ties, S = (1-rho) *
+                ## (n^3-n)/6.
+                pspearman <- function(q, n, lower.tail = TRUE) {
+                    .C("prho",
+                       as.integer(n),
+                       as.integer(q + 1),
+                       p = double(1),
+                       integer(1),
+                       as.logical(lower.tail),
+                       PACKAGE = "ctest")$p
+                }
+                q <- as.integer((n^3 - n) * (1 - ESTIMATE) / 6)
+                STATISTIC <- c(S = q)
+                PVAL <-
+                    switch(alternative,
+                           "two.sided" = {
+                               p <- if(q > (n^3 - n) / 6)
+                                   pspearman(q - 1, n, lower.tail = FALSE)
+                               else
 				   pspearman(q, n, lower.tail = TRUE)
 			       min(2 * p, 1)
 			   },
 			   "greater" = pspearman(q, n, lower.tail = TRUE),
 			   "less" = pspearman(q - 1, n, lower.tail = FALSE))
-	    if(TIES)
-		warning("p-values may be incorrect due to ties")
-	}
+                if(TIES)
+                    warning("p-values may be incorrect due to ties")
+            }
+        }
     }
 
     if(is.null(PVAL))                   # for "pearson" (and when else ??)
@@ -127,4 +144,28 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 		   method = method,
 		   data.name = DNAME),
 	      class = "htest")
+}
+
+cor.test.formula <-
+function(formula, data, subset, na.action, ...)
+{
+    if(missing(formula)
+       || !inherits(formula, "formula")
+       || length(formula) != 2)
+        stop("formula missing or invalid")
+    if(missing(na.action))
+        na.action <- getOption("na.action")
+    m <- match.call(expand.dots = FALSE)
+    if(is.matrix(eval(m$data, parent.frame())))
+        m$data <- as.data.frame(data)
+    m[[1]] <- as.name("model.frame")
+    m$... <- NULL
+    mf <- eval(m, environment(formula))
+    if(length(mf) != 2)
+        stop("invalid formula")
+    DNAME <- paste(names(mf), collapse = " and ")
+    names(mf) <- c("x", "y")
+    y <- do.call("cor.test", c(mf, list(...)))
+    y$data.name <- DNAME
+    y
 }

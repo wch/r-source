@@ -38,9 +38,11 @@
     taken from the \code{names} attribute of \code{height} if this
     is a vector, or the column names if it is a matrix.}
   \item{legend.text}{a vector of text used to construct a legend for
-    the plot.  This is only useful when \code{height} is a matrix.
-    In that case the legend labels should correspond to the rows of
-    \code{height}.}
+    the plot, or a logical indicating whether a legend should be
+    included.  This is only useful when \code{height} is a matrix.
+    In that case given legend labels should correspond to the rows of
+    \code{height}; if \code{legend.text} is true, the row names of
+    \code{height} will be used as labels if they are non-null.}
   \item{beside}{a logical value.  If \code{FALSE}, the columns of
     \code{height} are portrayed as stacked bars, and if \code{TRUE}
     the columns are portrayed as juxtaposed bars.}

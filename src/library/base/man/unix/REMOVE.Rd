@@ -1,6 +1,6 @@
 \name{REMOVE}
-\title{Remove Add-on Packages}
 \alias{REMOVE}
+\title{Remove Add-on Packages}
 \description{Utility for removing add-on packages.}
 \usage{R CMD REMOVE [options] [-l lib] pkgs}
 \arguments{
@@ -9,7 +9,7 @@
     be absolute or relative.}
   \item{options}{further options.}
 }
-\description{
+\details{
   If used as \code{R CMD REMOVE pkgs} without explicitly specifying
   \code{lib}, packages are removed from the library tree rooted at the
   first directory given in \code{\$R\_LIBS} if this is set and non-null,

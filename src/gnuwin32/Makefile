@@ -1,4 +1,5 @@
 include MkRules
+include RWVERSION
 
 all: rbuild rpackage rdocs
 
@@ -62,7 +63,7 @@ rpackage: fixed/fixdesc ../../library/R.css
 	$(MAKE) STAMP=NO $(PKGS)
 
 rinstaller:
-	$(MAKE) -C installer PREFIX=$(RPREFIX)
+	$(MAKE) -C installer RPREFIX=$(RPREFIX)
 
 rlibs:
 	$(MAKE) -C ../appl  OPTFLAGS='$(OPTFLAGS)' -f Makefile.win
@@ -296,18 +297,18 @@ RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 docfiles: INSTALL FAQs
 SEDVER = -e s/@RVER@/$(RVER)/g -e s/@RWVER@/$(RPREFIX)/g
 
-INSTALL: INSTALL.in ../../VERSION
+INSTALL: INSTALL.in ../../VERSION RWVERSION
 	$(SED) $(SEDVER) INSTALL.in > INSTALL
 
 FAQs: rw-faq fixed/html/rw-FAQ.html
 
-fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
+fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION RWVERSION
 	@$(SED) $(SEDVER) $< > tmp.texi
 	makeinfo --html --no-headers --number-sections -o tmp.html tmp.texi
-	-tidy tmp.html > $@ 2> nul
+	-tidy tmp.html > $@ 2> /dev/null
 	@$(RM) tmp.texi tmp.html
 
-rw-faq: rw-FAQ.texi ../../VERSION
+rw-faq: rw-FAQ.texi ../../VERSION RWVERSION
 	$(SED) $(SEDVER) $< | \
 	  makeinfo --no-headers --number-sections -o $@
 
@@ -326,7 +327,7 @@ bindist: tcl bitmapdll docfiles
 	$(CP) -p ../library/base/data/morley.tab $(RPREFIX)/library/base/data
 	$(RM) $(RPREFIX)/*/Makefile.in
 	(cd $(RPREFIX)/bin; $(RM) Rcmd.exe INSTALL REMOVE SHLIB build check \
-	   massage-Examples.sh Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
+	   massage-Examples Rd2dvi.sh Rd2txt Rdconv Rdiff.sh Rdindex \
            Sd2Rd Rprof)
 	$(MKDIR) $(RPREFIX)/etc
 	$(CP) -p ../../etc/Rprofile $(RPREFIX)/etc/Rprofile
@@ -406,7 +407,7 @@ packagedist:
 	$(CP) -r ../../share/make ../../share/perl ../../share/texmf \
 	   $(RPREFIX)/share
 	$(CP) ../../bin/INSTALL ../../bin/REMOVE ../../bin/SHLIB \
-	  ../../bin/build ../../bin/check ../../bin/massage-Examples.sh \
+	  ../../bin/build ../../bin/check ../../bin/massage-Examples \
 	  ../../bin/Rd2dvi.sh ../../bin/Rd2txt ../../bin/Rdconv \
 	  ../../bin/Rdindex ../../bin/Rdiff.sh \
 	  ../../bin/Sd2Rd ../../bin/Rprof ../../bin/Rcmd.exe \

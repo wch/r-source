@@ -16,7 +16,7 @@ Up:<a rel=up href="#(dir)">(dir)</a>
 <h1>R FAQ</h1>
 
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.3-5, 2001-06-27</h2>
+<h2>Version 1.3-13, 2001-07-31</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -407,17 +407,17 @@ Up:<a rel=up href="#How%20can%20R%20be%20installed%3f">How can R be installed?</
 <h3>2.5.3 How can R be installed (Macintosh)</h3>
 
 <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
-bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) self-extracting binaries
-for a base distribution and a large number of add-on packages to run
-under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
-Mac version of R and the Mac binaries are maintained by
+bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base
+distribution and a large number of add-on packages to run under MacOS
+8.6 to MacOS 9.1 or MacOS X natively.  The Mac version of R and the Mac
+binaries are maintained by
 <a href="mailto:Stefano.Iacus@r-project.org">Stefano Iacus</a>.
 
 <p>The <a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a> has more details.
 
 <p>Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by <a href="mailto:deleeuw@stat.ucla.edu">Jan de Leeuw</a> at
-<a href="http://www.stat.ucla.edu/~deleeuw/R/">http://www.stat.ucla.edu/~deleeuw/R/</a>.
+available by <a href="mailto:deleeuw@stat.ucla.edu">Jan de Leeuw</a> in the
+<code>bin/macosx</code> directory of a <small>CRAN</small> site.
 
 <p><hr>
 Node:<a name="Are%20there%20Unix%20binaries%20for%20R%3f">Are there Unix binaries for R?</a>,
@@ -433,8 +433,8 @@ Up:<a rel=up href="#R%20Basics">R Basics</a>
 distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
 the alpha and i386 platforms (maintained by Naoki Takebayashi and Martyn
 Plummer, respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt,
-Mandrake 8.0 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by
-Alex Buerkle.
+Mandrake 8.0 and 7.2 i386 packages by Michele Alzetta and Maximino
+Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
 
 <p>The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1396,6 +1396,12 @@ penalisations.  Also includes some other multiway methods.
 <dd>An interface between R and the mSQL database system. 
 <br><dt><strong>Rstreams</strong>
 <dd>Binary file stream support functions. 
+<br><dt><strong>Rwave</strong>
+<dd>An environment for the time-frequency analysis of 1-D signals (and
+especially for the wavelet and Gabor transforms of noisy signals), based
+on the book "Practical Time-Frequency Analysis: Gabor and Wavelet
+Transforms with an Implementation in S" by Rene Carmona, Wen L. Hwang
+and Bruno Torresani, 1998, Academic Press. 
 <br><dt><strong>SASmixed</strong>
 <dd>Data sets and sample linear mixed effects analyses corresponding to the
 examples in "SAS System for Mixed Models" by R. C. Littell,
@@ -1463,6 +1469,10 @@ and fractional factorial designs.
 vector of input dates in any of the forms <code>8/30/53</code>,
 <code>30Aug53</code>, <code>30 August 1953</code>, <small>...</small>, <code>August 30 53</code>, or
 any mixture of these. 
+<br><dt><strong>diamonds</strong>
+<dd>Functions for illustrating aperture-4 diamond partitions in the plane,
+or on the surface of an octahedron or icosahedron, for use as analysis
+or sampling grids. 
 <br><dt><strong>dse</strong>
 <dd>Dynamic System Estimation, a multivariate time series package.  Contains
 <strong>dse1</strong> (DSE kernel plus ARMA and state space models),
@@ -1485,6 +1495,12 @@ vector machines, and fuzzy clustering.
 the Streitberg/Roehmel shift algorithm. 
 <br><dt><strong>fdim</strong>
 <dd>Functions for calculating fractal dimension. 
+<br><dt><strong>fields</strong>
+<dd>A collection of programs for curve and function fitting with an emphasis
+on spatial data.  The major methods implemented include cubic and thin
+plate splines, universal Kriging and Kriging for large data sets.  The
+main feature is that any covariance function implemented in R can be
+used for spatial prediction. 
 <br><dt><strong>foreign</strong>
 <dd>Functions for reading and writing data stored by statistical software
 like Minitab, SAS, SPSS, Stata, etc. 
@@ -1580,6 +1596,11 @@ ODEs are expressed as R functions.
 <dd>Functions for plotting Australia's coastline and state boundaries. 
 <br><dt><strong>panel</strong>
 <dd>Functions and datasets for fitting models to Panel data. 
+<br><dt><strong>pcurve</strong>
+<dd>Fits a principal curve to a numeric multivariate dataset in arbitrary
+dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
+other distance matrices and performs multi-dimensional scaling and
+principal component analyses. 
 <br><dt><strong>permax</strong>
 <dd>Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
@@ -1690,9 +1711,6 @@ methods.
 time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>ensemble</strong>
 <dd>Ensembles of tree classifiers. 
-<br><dt><strong>funfits</strong>
-<dd>An integrated set of functions for fitting curves and surfaces including
-thin plate splines, kriging and neural networks. 
 <br><dt><strong>grid</strong>
 <dd>The Grid graphics package, a rewrite of the graphics layout
 capabilities, plus some support for interaction. 
@@ -1741,6 +1759,9 @@ per-record, aggregate and trigger functions.
 <br><dt><strong>RGnumeric</strong>
 <dd>A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc. 
+<br><dt><strong>RJavaDevice</strong>
+<dd>A graphics device for R that uses Java components and graphics
+<small>API</small>s. 
 <br><dt><strong>RSMethods</strong>
 <dd>An implementation of S version 4 methods and classes for R, consistent
 with the basic material in "Programming with data" by John
@@ -2705,6 +2726,29 @@ containing every possible combination of elements of <code>x</code> and
 <code>y</code> and then passes this to <code>FUN</code> all at once.  Your function
 probably cannot handle two large vectors as parameters.
 
+<p>If you have a function that cannot handle two vectors but can handle two
+scalars, then you can still use <code>outer()</code> but you will need to wrap
+your function up first, to simulate vectorized behavior.  Suppose your
+function is
+
+<pre>foo &lt;- function(x, y, happy) {
+  stopifnot(length(x) == 1, length(y) == 1) # scalars only!
+  (x + y) * happy
+}
+</pre>
+
+<p>If you define the general function
+
+<pre>wrapper &lt;- function(x, y, my.fun, ...) {
+  sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+}
+</pre>
+
+<p>then you can use <code>outer()</code> by writing, e.g.,
+
+<pre>outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+</pre>
+
 <p><hr>
 Node:<a name="R%20Programming">R Programming</a>,
 Next:<a rel=next href="#R%20Bugs">R Bugs</a>,
@@ -2928,10 +2972,10 @@ Up:<a rel=up href="#Top">Top</a>
 <p>Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-<p>Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Fritz
-Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D. Ripley,
-Anthony Rossini, and Andreas Weingessel for their comments which helped
-me improve this <small>FAQ</small>.
+<p>Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
+Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian
+D. Ripley, Anthony Rossini, and Andreas Weingessel for their comments
+which helped me improve this <small>FAQ</small>.
 
 <p>More to some soon <small>...</small>
 

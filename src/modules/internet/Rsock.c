@@ -136,7 +136,6 @@ void Rsockwrite(int *sockp, char **buf, int *start, int *end, int *len)
 #  include <netdb.h>
 #  include <sys/socket.h>
 #  include <netinet/in.h>
-#  include <netinet/tcp.h>
 #endif
 
 #ifdef HAVE_FCNTL_H

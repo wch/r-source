@@ -54,7 +54,7 @@ typedef struct fifoconn {
     int fd;
 } *Rfifoconn;
 
-#ifdef HAVE_LIBZ
+#ifdef HAVE_ZLIB
 typedef struct gzfileconn {
     void *fp;
     int cp;
@@ -104,6 +104,3 @@ void init_con(Rconnection new, char *description, char *mode);
 Rconnection R_newurl(char *description, char *mode);
 Rconnection R_newsock(char *host, int port, int server, char *mode);
 int dummy_vfprintf(Rconnection con, const char *format, va_list ap);
-
-
-int R_OutputCon;

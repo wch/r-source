@@ -245,7 +245,7 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
         color <- if (is.null(color) || !color[1])
             rep(0, ncolors)
         else
-            2:(ncolors+1)
+            heat.colors(ncolors)
     }
 
     ##-- Plotting
@@ -317,14 +317,17 @@ function(X, main = NULL, xlab = NULL, ylab = NULL, sort = NULL, off = NULL,
 
 }
 
-mosaicplot.formula <- function(formula, data = NULL, subset, na.action,
-                               ...) {
-    if (missing(na.action))
-        na.action <- getOption("na.action")
+mosaicplot.formula <-
+function(formula, data = NULL, ..., subset, na.action) {
+    ## <FIXME>
+    ## Remove `na.action' in 1.4.
+    if(!missing(na.action))
+        warning("argument `na.action' is deprecated")
     m <- match.call(expand.dots = FALSE)
-    if (is.matrix(eval(m$data, parent.frame())))
+    if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
-    m$... <- NULL
+    m$... <- m$na.action <- NULL
+    ## </FIXME>
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     mosaicplot(table(mf), ...)

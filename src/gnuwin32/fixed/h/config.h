@@ -74,6 +74,9 @@
 /* Define if finite() is wrong for -Inf/NaN/Inf. */
 #undef FINITE_BROKEN
 
+/* Define if strptime() does not exist or fails pre-1970. */
+#define STRPTIME_BROKEN 1
+
 /* Define if you have BSD networking headers and libraries. */
 #undef HAVE_BSD_NETWORKING
 
@@ -119,6 +122,9 @@
 /* Define if you have the X11 headers and libraries, and want the X11
    GUI to be built. */
 #undef HAVE_X11
+
+/* Define if you have the XDR headers and library routines. */
+#define HAVE_XDR 1
 
 /* Define if you have the zlib headers and libraries. */
 #define HAVE_ZLIB 1
@@ -330,9 +336,6 @@
 /* Define if you have the <netinet/in.h> header file.  */
 #undef HAVE_NETINET_IN_H
 
-/* Define if you have the <netinet/tcp.h> header file.  */
-#undef HAVE_NETINET_TCP_H
-
 /* Define if you have the <pwd.h> header file.  */
 #undef HAVE_PWD_H
 
@@ -380,12 +383,6 @@
 
 /* Define if you have the <unistd.h> header file.  */
 #define HAVE_UNISTD_H 1
-
-/* Define if you have the <zlib.h> header file.  */
-#define HAVE_ZLIB_H 1
-
-/* Define if you have the z library (-lz).  */
-#define HAVE_LIBZ 1
 
 /* Name of package */
 #define PACKAGE "R"

@@ -156,6 +156,15 @@ m <- matrix(1, 0, 0)  # 1 to force numeric not logical
 try(eigen(m))
 ## segfaults on 1.2.2
 
+## 1.3.0 had poor compression on gzfile() with lots of small pieces.
+zz <- gzfile("t1.gz", "w")
+write(1:1000, zz)
+close(zz)
+(sz <- file.info("t1.gz")$size)
+unlink("t1.gz")
+stopifnot(sz < 2000)
+
+
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
 provoke.bug <- function(n=9000) {
    warnmsg <- paste(LETTERS[sample(1:26,n,replace=TRUE)],collapse="")
@@ -165,3 +174,4 @@ provoke.bug()
 ## segfaulted in 1.2.2, will also on machines without vsnprintf.
 ##                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ## and hence keep the above line at the end of this file
+

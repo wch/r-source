@@ -1,6 +1,6 @@
-#if defined(__MRC__)
-#include <Carbon.h>
-#else
+#ifdef __MRC__  /* Apple' C/C++ Compiler */
+ #include <Carbon.h>
+#else /* CodeWarrior */
 #include <MacHeadersCarbon.h>
 #endif
 
@@ -14,6 +14,6 @@
 #define CW_F2C_MAC 1
 #endif
 
-#ifndef __MRC__
 #include "config.h"
-#endif
+
+#endif /* __MRC__ */

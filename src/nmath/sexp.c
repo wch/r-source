@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 the R Development Core Team
+ *  Copyright (C) 2000-2001 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
  *
  *  DESCRIPTION
  *
- *    Random variates from the standard normal distribution.
+ *    Random variates from the standard exponential distribution.
  *
  *  REFERENCE
  *
@@ -38,7 +38,7 @@
 
 double exp_rand(void)
 {
-    /* q[k-1] = sum(alog(2.0)**k/k!) k=1,..,n, */
+    /* q[k-1] = sum(log(2)^k / k!)  k=1,..,n, */
     /* The highest n (here 8) is determined by q[n-1] = 1.0 */
     /* within standard precision */
     const double q[] =
@@ -62,7 +62,7 @@ double exp_rand(void)
     };
     double a, u, ustar, umin;
     int i;
-    
+
     a = 0.;
     u = unif_rand();
     for (;;) {
@@ -72,10 +72,10 @@ double exp_rand(void)
 	a += q[0];
     }
     u -= 1.;
-    
+
     if (u <= q[0])
 	return a + u;
-    
+
     i = 0;
     ustar = unif_rand();
     umin = ustar;

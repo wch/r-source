@@ -1,15 +1,9 @@
 \name{pairs}
-\title{Scatterplot Matrices}
 \alias{pairs}
 \alias{pairs.default}
-\usage{
-pairs(x, \dots)
-pairs.default(x, labels = colnames(x), panel = points, \dots,
-              lower.panel = panel, upper.panel = panel,
-              diag.panel = NULL, text.panel = textPanel,
-              label.pos = 0.5 + has.diag/3,
-              cex.labels = NULL, font.labels = 1,
-              row1attop = TRUE)
+\title{Scatterplot Matrices}
+\description{
+  A matrix of scatterplots is produced.
 }
 \synopsis{
 pairs(x, \dots)
@@ -20,8 +14,16 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
               diag.panel = NULL, text.panel = textPanel,
               label.pos = 0.5 + has.diag/3,
               cex.labels = NULL, font.labels = 1,
-              row1attop = TRUE)
+              row1attop = TRUE, gap=1)
 }
+\usage{
+pairs(x, \dots)
+pairs.default(x, labels = colnames(x), panel = points, \dots,
+              lower.panel = panel, upper.panel = panel,
+              diag.panel = NULL, text.panel = textPanel,
+              label.pos = 0.5 + has.diag/3,
+              cex.labels = NULL, font.labels = 1,
+              row1attop = TRUE, gap=1)
 }
 \arguments{
   \item{x}{the coordinates of points given as columns of a matrix.}
@@ -40,9 +42,7 @@ pairs.default(x, labels = colnames(x), panel = points, \dots,
   \item{cex.labels, font.labels}{graphics parameters for the text panel.}
   \item{row1attop}{logical. Should the layout be matrix-like with row 1
     at the top, or graph-like with row 1 at the bottom?}
-}
-\description{
-  A matrix of scatterplots is produced.
+  \item{gap}{Distance between subplots, in margin lines.}
 }
 \details{
   The \eqn{ij}th scatterplot contains \code{x[,i]} plotted against

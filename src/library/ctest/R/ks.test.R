@@ -34,11 +34,11 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                             "greater" = max(z),
                             "less" = - min(z))
         if(exact && alternative == "two.sided" && !TIES)
-            PVAL <- .C("psmirnov2x",
-                       p = as.double(STATISTIC),
-                       as.integer(n.x),
-                       as.integer(n.y),
-                       PACKAGE = "ctest")$p
+            PVAL <- 1 - .C("psmirnov2x",
+                           p = as.double(STATISTIC),
+                           as.integer(n.x),
+                           as.integer(n.y),
+                           PACKAGE = "ctest")$p
     }
     else {
         if(is.character(y))
@@ -46,7 +46,8 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         if(mode(y) != "function")
             stop("y must be numeric or a string naming a valid function")
         METHOD <- "One-sample Kolmogorov-Smirnov test"
-        n <- length(x)
+        if(length(unique(x)) < n)
+            warning("cannot compute correct p-values with ties")
         x <- y(sort(x), ...) - (0 : (n-1)) / n
         STATISTIC <- switch(alternative,
                             "two.sided" = max(c(x, 1/n - x)),

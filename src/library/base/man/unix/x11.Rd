@@ -1,12 +1,17 @@
 \name{x11}
+\alias{x11}
+\alias{X11}
 \title{X Window System Graphics}
+\description{
+  \code{X11} starts a graphics device driver for the X Window System
+  (version 11).  This can only be done on machines that run X.
+  \code{x11} is recognized as a synonym for \code{X11}.
+}
 \usage{
 X11(display = "", width = 7, height = 7, pointsize = 12,
     gamma = 1, colortype = getOption("X11colortype"),
     maxcubesize = 256)
 }
-\alias{x11}
-\alias{X11}
 \arguments{
   \item{display}{the display on which the graphics window will appear.
     The default is to use the value in the user's environment variable
@@ -25,11 +30,6 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
     already open.}
   \item{maxcubesize}{can be used to limit the size of color
     cube allocated for pseudocolor devices.}
-}
-\description{
-  \code{X11} starts a graphics device driver for the X Window System
-  (version 11).  This can only be done on machines that run X.
-  \code{x11} is recognized as a synonym for \code{X11}.
 }
 \details{
   By default, an X11 device will use the best color rendering

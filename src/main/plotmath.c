@@ -2967,10 +2967,13 @@ void GMMathText(SEXP str, int side, double line, int outer,
     }
     /* Note: I changed dd->gp.yLineBias to 0.3 here. */
     /* Purely visual tuning. RI */
+    /* Note: I removed the 0.3 fiddle here because mathematical 
+     * annotation stuff can do "exact" centering.
+     * i.e., 0.3 fiddle is effectively replaced by yadj=0.5
+     */
     switch(side) {
     case 1:
 	if(las == 2 || las == 3) {
-	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
 	    angle = 90;
 	    yadj = 0.5;
 	}
@@ -2982,7 +2985,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	break;
     case 2:
 	if(las == 1 || las == 2) {
-	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
 	    angle = 0;
 	    yadj = 0.5;
 	}
@@ -2994,7 +2996,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	break;
     case 3:
 	if(las == 2 || las == 3) {
-	    at = at + GConvertXUnits(0.3, LINES, subcoords, dd);
 	    angle = 90;
 	    yadj = 0.5;
 	}
@@ -3006,7 +3007,6 @@ void GMMathText(SEXP str, int side, double line, int outer,
 	break;
     case 4:
 	if(las == 1 || las == 2) {
-	    at = at - GConvertYUnits(0.3, LINES, subcoords, dd);
 	    angle = 0;
 	    yadj = 0.5;
 	}

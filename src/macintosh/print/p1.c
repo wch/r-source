@@ -771,7 +771,7 @@ OSStatus DoTextPrint ( WindowRef inWindow )
 		}
 
 		//	get the graphics port associated with the print context
-		if ( ( err = PMSessionGetGraphicsContext ( printSession, nil, & printPort ) ) != noErr )
+		if ( ( err = PMSessionGetGraphicsContext ( printSession, nil, (void **)&printPort ) ) != noErr )
 		{
 			goto cleanup ;
 		}

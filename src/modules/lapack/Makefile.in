@@ -19,13 +19,13 @@ SOURCES_BLAS_DOUBLE_COMPLEX = cmplxblas.f
 SOURCES_BLAS = blas2.f @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplxblas.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
-OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o) \
-  @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.o)
+OBJECTS = $(SOURCES_C:.c=.lo) $(SOURCES_F:.f=.lo) \
+  @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS:.f=.lo)
 HEADERS = Lapack.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	README Makefile.in Makefile.win \
+	README Makefile.in Makefile.mac Makefile.win \
 	dllversion.rc $(HEADERS) $(SOURCES_C) \
 	double.f cmplx.f blas2.f cmplxblas.f lapack.mcp.hqx
 

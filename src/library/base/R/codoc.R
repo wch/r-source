@@ -30,12 +30,12 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         stop(paste("directory", fQuote(dir),
                    "does not contain Rd sources"))
 
-    FILES <- NULL
+    unlinkOnExitFiles <- NULL
     if(!keep.tempfiles)
-        on.exit(unlink(FILES))
+        on.exit(unlink(unlinkOnExitFiles))
 
     codeFile <- tempfile("Rcode")
-    FILES <- c(FILES, codeFile)
+    unlinkOnExitFiles <- c(unlinkOnExitFiles, codeFile)
     codeExts <- c("R", "r", "S", "s", "q")
     files <- listFilesWithExts(codeDir, codeExts, path = FALSE)
     if(any(i <- grep("^zzz\\.", files)))
@@ -47,7 +47,7 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     file.append(codeFile, files)
 
     docsFile <- tempfile("Rdocs")
-    FILES <- c(FILES, docsFile)
+    unlinkOnExitFiles <- c(unlinkOnExitFiles, docsFile)
     docsExts <- c("Rd", "rd")
     files <- listFilesWithExts(docsDir, docsExts, path = FALSE)
     if(basename(dir) == "base") {
@@ -58,9 +58,32 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
     if(file.exists(docsOSDir <- file.path(docsDir, .Platform$OS)))
         files <- c(files, listFilesWithExts(docsOSDir, docsExts))
     docsList <- tempfile("Rdocs")
-    FILES <- c(FILES, docsList)
+    unlinkOnExitFiles <- c(unlinkOnExitFiles, docsList)
     cat(files, sep = "\n", file = docsList)
     .Script("perl", "extract-usage.pl", paste(docsList, docsFile))
+
+    .DocsEnv <- new.env()
+    if(verbose)
+        cat("Reading docs from", fQuote(docsFile), "\n")
+    txt <- readLines(docsFile)
+    ind <- grep("^# usages in file", txt)
+    ## Use a text connection for reading the blocks determined by ind.
+    ## Alternatively, we could split txt into a list of the blocks.
+    numOfUsageCodeLines <- diff(c(ind, length(txt) + 1)) - 1
+    txtConn <- textConnection(paste(txt, collapse = "\n"))
+    on.exit(close(txtConn), add = TRUE)
+    for(n in numOfUsageCodeLines) {
+        whereAmI <- readLines(txtConn, 1)
+        exprs <- try(parse(n = -1, text = readLines(txtConn, n)))
+        if(inherits(exprs, "try-error"))
+            stop(paste("cannot source", gsub("^# ", "", whereAmI)))
+        for(i in exprs) {
+            yy <- try(eval(i, env = .DocsEnv))
+            if(inherits(yy, "try-error"))
+                stop(paste("cannot eval", gsub("^# ", "", whereAmI)))
+        }
+    }
+    lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
 
     lib.source <- function(file, env) {
         oop <- options(keep.source = FALSE)
@@ -71,14 +94,9 @@ codoc <- function(dir, use.values = FALSE, use.positions = TRUE,
         for(i in exprs) yy <- eval(i, env)
         invisible()
     }
-    .DocsEnv <- new.env()
-    if(verbose)
-        cat("Docs: `lib.source(\"", docsFile, "\", *)'\n", sep="")
-    lib.source(docsFile, env = .DocsEnv)
-    lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
     .CodeEnv <- new.env()
     if(verbose)
-        cat("Code: `lib.source(\"", codeFile, "\", *)'\n", sep="")
+        cat("Reading code from", fQuote(codeFile), "\n")        
     lib.source(codeFile, env = .CodeEnv)
     lsCode <- ls(envir = .CodeEnv, all.names = TRUE)
 

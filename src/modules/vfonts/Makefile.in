@@ -13,12 +13,12 @@ include $(top_builddir)/Makeconf
 
 SOURCES = g_alab_her.c g_cntrlify.c g_fontdb.c g_her_glyph.c
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.c=.lo)
 HEADERS = g_cntrlify.h g_control.h g_extern.h g_her_metr.h g_jis.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
-	Makefile.in Makefile.win $(SOURCES) $(HEADERS) \
+	Makefile.in Makefile.mac Makefile.win $(SOURCES) $(HEADERS) \
 	dllversion.rc vfonts.mcp.hqx
 
 ## FIXME:

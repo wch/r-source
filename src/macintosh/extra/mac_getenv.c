@@ -89,7 +89,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unix.h>
+//#include <unix.h>
 #include <Files.h>
 #include <Folders.h>
 
@@ -167,6 +167,25 @@ OSErr FSpFindFolder_Name(short vRefNum, OSType folderType,
 /* Other prototypes */
 
 FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode);
+
+FILE * FSp_fopen(ConstFSSpecPtr spec, const char * open_mode){
+
+    FILE *fp;
+    SInt16 				pathLen;
+    Handle 				pathName=NULL;
+    char				filetoopen[FILENAME_MAX];
+    
+    FSpGetFullPath(spec, &pathLen, &pathName);
+    HLock((Handle) pathName);
+	strncpy(filetoopen, *pathName, pathLen);
+	filetoopen[pathLen] = '\0';
+	HUnlock((Handle) pathName);
+
+	fp = fopen(filetoopen,"r");
+
+    return(fp);
+}
+
 char *mac_getenv(const char *name);
 
 char err_str[] = "\0";
@@ -207,6 +226,7 @@ char *mac_getenv(const char *name)
 	    &spec,
 	    "\p.Renviron");
 	fp = FSp_fopen(&spec,"r");
+
 	if (fp == NULL)
         {
 	    return err_str;//NULL; /* there is no enviroment-file */
@@ -231,7 +251,7 @@ char *mac_getenv(const char *name)
     }
     fclose(fp);
 
-    return err_str; NULL;
+    return err_str; 
 }
 
 

@@ -6,11 +6,6 @@
   Create a contingency table from cross-classifying factors, usually
   contained in a data frame, using a formula interface.
 }
-\synopsis{
-xtabs(formula = ~., data = parent.frame(), subset, na.action,
-      exclude = c(NA, NaN), drop.unused.levels = FALSE)
-print.xtabs(x, \dots)
-}
 \usage{
 xtabs(formula = ~., data, subset, na.action, exclude = c(NA, NaN),
       drop.unused.levels = FALSE)

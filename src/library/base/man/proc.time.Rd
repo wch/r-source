@@ -1,12 +1,12 @@
 \name{proc.time}
-\title{Running Time of R}
-\usage{
-proc.time()
-}
 \alias{proc.time}
+\title{Running Time of R}
 \description{
   \code{proc.time} determines how much time (in seconds) the currently
   running \R process already consumed.
+}
+\usage{
+proc.time()
 }
 \value{
   A numeric vector of length 5, containing the user, system, and total
@@ -20,17 +20,17 @@ proc.time()
   It is most useful for ``timing'' the evaluation of \R expressions,
   which can be done conveniently with \code{\link{system.time}}.
 }
-#ifdef unix
+#ifndef mac
 \note{
+#ifdef unix
   It is possible to compile \R without support for \code{proc.time},
   when the function will not exist.
-}
 #endif
 #ifdef windows
-\note{
   CPU times will be returned as \code{NA} on Windows 9x/ME systems, but
   are genuine times on NT4 and 2000 systems. Times of child processes are
   not available and will always be given as \code{NA}.
+#endif
 }
 #endif
 \seealso{

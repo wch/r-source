@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-5, 2001-06-27
+@set FAQ-VERSION 1.3-13, 2001-07-31
 @set REL-VERSION 1.3.0
 @set DEV-VERSION 1.4.0
 @c %**end of header
@@ -393,10 +393,10 @@ Windows @acronym{FAQ}''} for more details.
 @subsection How can R be installed (Macintosh)
 
 The @file{bin/macos} directory of a @acronym{CRAN} site contains
-bin-hexed (@file{hqx}) and stuffit (@file{sit}) self-extracting binaries
-for a base distribution and a large number of add-on packages to run
-under MacOS 8.6 to MacOS 9.1 or MacOS X under Classic Environment.  The
-Mac version of R and the Mac binaries are maintained by
+bin-hexed (@file{hqx}) and stuffit (@file{sit}) archives for a base
+distribution and a large number of add-on packages to run under MacOS
+8.6 to MacOS 9.1 or MacOS X natively.  The Mac version of R and the Mac
+binaries are maintained by
 @c @email{stefano.iacus@@unimi.it, Stefano Iacus}.
 @email{Stefano.Iacus@@r-project.org, Stefano Iacus}.
 
@@ -404,21 +404,23 @@ The @uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 @acronym{FAQ}/DOC''} has more details.
 
 Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} at
-@uref{http://www.stat.ucla.edu/~deleeuw/R/}.
+available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
+@file{bin/macosx} directory of a @acronym{CRAN} site.
+@c @uref{http://www.stat.ucla.edu/~deleeuw/R/}.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2001-06-26:
+@c Linux binaries as of 2001-07-11:
 @c
-@c debian   2.2 i386  1.2.3  Doug Bates <bates@stat.wisc.edu>
-@c          2.3 i386  1.2.3  Doug Bates <bates@stat.wisc.edu>
-@c linuxppc 5.0 ppc   1.2.3  Alex Buerkle <buerkle@hawaii.edu>
-@c mandrake 8.0 i386  1.3.0  Michele Alzetta <mikalzet@libero.it>
+@c debian   2.2 i386  1.3.0  Doug Bates <bates@stat.wisc.edu>
+@c          2.3 i386  1.3.0  Doug Bates <bates@stat.wisc.edu>
+@c linuxppc 5.0 ppc   1.3.0  Alex Buerkle <buerkle@hawaii.edu>
+@c mandrake 7.x i386  1.3.0  Maximino Ameneiro Gomez <maximino.ameneiro@metropoli2000.com>
+@c          8.0 i386  1.3.0  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.2.2  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.2.3  Martyn Plummer <plummer@iarc.fr>
-@c          7.x alpha 1.2.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c          7.x alpha 1.3.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.3.0  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
@@ -427,8 +429,8 @@ The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
 the alpha and i386 platforms (maintained by Naoki Takebayashi and Martyn
 Plummer, respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt,
-Mandrake 8.0 i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by
-Alex Buerkle.
+Mandrake 8.0 and 7.2 i386 packages by Michele Alzetta and Maximino
+Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1435,6 +1437,12 @@ An interface between R and the mSQL database system.
 @c (@pxref{What documentation exists for R?}).
 @item Rstreams
 Binary file stream support functions.
+@item Rwave
+An environment for the time-frequency analysis of 1-D signals (and
+especially for the wavelet and Gabor transforms of noisy signals), based
+on the book ``Practical Time-Frequency Analysis: Gabor and Wavelet
+Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
+and Bruno Torresani, 1998, Academic Press.
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
@@ -1502,6 +1510,10 @@ Functions for dealing with dates.  The most useful of them accepts a
 vector of input dates in any of the forms @samp{8/30/53},
 @samp{30Aug53}, @samp{30 August 1953}, @dots{}, @samp{August 30 53}, or
 any mixture of these.
+@item diamonds
+Functions for illustrating aperture-4 diamond partitions in the plane,
+or on the surface of an octahedron or icosahedron, for use as analysis
+or sampling grids.
 @item dse
 Dynamic System Estimation, a multivariate time series package.  Contains
 @strong{dse1} (DSE kernel plus ARMA and state space models),
@@ -1524,6 +1536,12 @@ Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
 @item fdim
 Functions for calculating fractal dimension.
+@item fields
+A collection of programs for curve and function fitting with an emphasis
+on spatial data.  The major methods implemented include cubic and thin
+plate splines, universal Kriging and Kriging for large data sets.  The
+main feature is that any covariance function implemented in R can be
+used for spatial prediction.
 @item foreign
 Functions for reading and writing data stored by statistical software
 like Minitab, SAS, SPSS, Stata, etc.
@@ -1621,6 +1639,11 @@ ODEs are expressed as R functions.
 Functions for plotting Australia's coastline and state boundaries.
 @item panel
 Functions and datasets for fitting models to Panel data.
+@item pcurve
+Fits a principal curve to a numeric multivariate dataset in arbitrary
+dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis and
+other distance matrices and performs multi-dimensional scaling and
+principal component analyses.
 @item permax
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
@@ -1746,9 +1769,6 @@ Extensions to @strong{dse}, the Dynamic Systems Estimation multivariate
 time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
-@item funfits
-An integrated set of functions for fitting curves and surfaces including
-thin plate splines, kriging and neural networks.
 @item grid
 The Grid graphics package, a rewrite of the graphics layout
 capabilities, plus some support for interaction.
@@ -1798,6 +1818,9 @@ per-record, aggregate and trigger functions.
 @item RGnumeric
 A plugin for the Gnumeric spreadsheet that allows R functions to be
 called from cells within the sheet, automatic recalculation, etc.
+@item RJavaDevice
+A graphics device for R that uses Java components and graphics
+@acronym{API}s.
 @item RSMethods
 An implementation of S version 4 methods and classes for R, consistent
 with the basic material in ``Programming with data'' by John
@@ -2721,6 +2744,35 @@ containing every possible combination of elements of @code{x} and
 @code{y} and then passes this to @code{FUN} all at once.  Your function
 probably cannot handle two large vectors as parameters.
 
+If you have a function that cannot handle two vectors but can handle two
+scalars, then you can still use @code{outer()} but you will need to wrap
+your function up first, to simulate vectorized behavior.  Suppose your
+function is
+
+@smallexample
+foo <- function(x, y, happy) @{
+  stopifnot(length(x) == 1, length(y) == 1) # scalars only!
+  (x + y) * happy
+@}
+@end smallexample
+
+@noindent
+If you define the general function
+
+@smallexample
+wrapper <- function(x, y, my.fun, ...) @{
+  sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+@}
+@end smallexample
+
+@noindent
+then you can use @code{outer()} by writing, e.g.,
+
+@smallexample
+outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+@end smallexample
+
+
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
 
@@ -2909,10 +2961,10 @@ package maintainer rather than to r-bugs.
 Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Fritz
-Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D. Ripley,
-Anthony Rossini, and Andreas Weingessel for their comments which helped
-me improve this @acronym{FAQ}.
+Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
+Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian
+D. Ripley, Anthony Rossini, and Andreas Weingessel for their comments
+which helped me improve this @acronym{FAQ}.
 
 More to some soon @dots{}
 

@@ -3155,7 +3155,7 @@ which indicates that the first group tends to give higher results than
 the second.
 
 @iftex
-@image{images/ice, 7cm}
+@image{images/ice,7cm}
 @end iftex
 
 To test for the equality of the means of the two examples, we can use
@@ -5930,7 +5930,7 @@ labels, titles, etc.) and (usually) bounded by the axes themselves.
 @iftex
 A typical figure is
 
-@image{images/fig11, 7cm}
+@image{images/fig11,7cm}
 @end iftex
 
 Graphics parameters controlling figure layout include:

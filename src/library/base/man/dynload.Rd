@@ -18,9 +18,11 @@ symbol.C(name)
 symbol.For(name)
 }
 \arguments{
-  \item{x}{a character string giving the pathname to a DLL.}
+  \item{x}{a character string giving the pathname to a shared library or
+    DLL.}
   \item{local}{a logical value controlling whether the symbols in the
-    DLL are stored in their own local table and not shared across DLLs,
+    shared library are stored in their own local table and not shared
+    across shared libraries,
     or added to the global symbol table.  Whether this has any effect is
     system-dependent.
 #ifdef windows
@@ -42,14 +44,23 @@ symbol.For(name)
     \code{.so}, \code{.sl}, \code{.dll}, \dots).  This is intended to
     add safety for packages, which can ensure by using this argument
     that no other package can override their external symbols.  Use
-    \code{PACKAGE="base"} for symbols linked in to \R. This is used in the
-    same way as in \code{\link{.C}}, \code{\link{.Call}}, \code{\link{.Fortran}}
-    and \code{\link{.External}} functions}
+    \code{PACKAGE="base"} for symbols linked in to \R.  This is used in the
+    same way as in \code{\link{.C}}, \code{\link{.Call}},
+    \code{\link{.Fortran}} and \code{\link{.External}} functions}
   \item{name}{a character string giving either the name of a C function
     or Fortran subroutine.  Fortran names probably need to be given
     entirely in lower case (but this may be system-dependent).}
 }
 \details{
+  See `See Also' and the \emph{Writing R Extensions} manual for how to
+  create a suitable shared library.  Note that unlike some versions of
+  S-PLUS, \code{dyn.load} does not load an object (\code{.o}) file but a
+  shared library or DLL.
+
+  Unfortunately a very few platforms (Compaq Tru64) do not handle the
+  \code{PACKAGE} argument correctly, and may incorrectly find symbols
+  linked into \R.
+  
   The additional arguments to \code{dyn.load} mirror the different
   aspects of the mode argument to the dlopen() routine on UNIX
   systems. They are available so that users can exercise greater control
@@ -127,6 +138,13 @@ symbol.For(name)
   \code{\link{library.dynam}} to be used inside a package's
   \code{\link{.First.lib}} initialization.
 
+#ifdef unix
+  \code{\link{SHLIB}} for how to create suitable shared libraries.
+#endif
+#ifdef windows
+  \code{\link{SHLIB}} for how to create suitable DLLs.
+#endif
+  
   \code{\link{.C}},
   \code{\link{.Fortran}},
   \code{\link{.External}},

@@ -1,9 +1,11 @@
-help.search <- function(pattern, fields = c("alias", "title"),
-                        apropos, keyword, whatis, ignore.case = TRUE,
-                        package = NULL, lib.loc = .lib.loc,
-                        help.db = getOption("help.db"),
-                        verbose = getOption("verbose"),
-                        rebuild = FALSE) {
+help.search <-
+function(pattern, fields = c("alias", "title"),
+         apropos, keyword, whatis, ignore.case = TRUE,
+         package = NULL, lib.loc = .lib.loc,
+         help.db = getOption("help.db"),
+         verbose = getOption("verbose"),
+         rebuild = FALSE)
+{
     TABLE <- c("name", "alias", "title", "keyword")
     if (!missing(pattern)) {
         if (!is.character(pattern) || (length(pattern) > 1))
@@ -104,8 +106,10 @@ help.search <- function(pattern, fields = c("alias", "title"),
         outFile <- tempfile()
         outConn <- file(outFile, open = "w")
         writeLines(paste("Help files with ", fields, " matching `",
-                         pattern, "':\n", "Type `?FOO' to inspect ",
-                         "entry `FOO(PKG) TITLE'.\n\n", sep = ""),
+                         pattern, "',\n",
+                         "type `help(FOO, package = PKG)' to inspect ",
+                         "entry `FOO(PKG) TITLE':",
+                         "\n", sep = ""),
                    outConn)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
         dbtit <- paste(db[ , "title"], sep = "")

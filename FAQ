@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.3-5, 2001-06-27
+Version 1.3-13, 2001-07-31
 Kurt Hornik
 
 
@@ -341,17 +341,17 @@ tool to use.
 ----------------------------------------
 
    The `bin/macos' directory of a CRAN site contains bin-hexed (`hqx') and
-stuffit (`sit') self-extracting binaries for a base distribution and a
-large number of add-on packages to run under MacOS 8.6 to MacOS 9.1 or
-MacOS X under Classic Environment.  The Mac version of R and the Mac
-binaries are maintained by Stefano Iacus <Stefano.Iacus@r-project.org>.
+stuffit (`sit') archives for a base distribution and a large number of
+add-on packages to run under MacOS 8.6 to MacOS 9.1 or MacOS X natively.
+The Mac version of R and the Mac binaries are maintained by Stefano Iacus
+<Stefano.Iacus@r-project.org>.
 
    The "R for Macintosh FAQ/DOC"
 (http://www.eco-dip.unimi.it/R/rmac-FAQ.html) has more details.
 
    Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by Jan de Leeuw <deleeuw@stat.ucla.edu> at
-`http://www.stat.ucla.edu/~deleeuw/R/'.
+available by Jan de Leeuw <deleeuw@stat.ucla.edu> in the `bin/macosx'
+directory of a CRAN site.
 
 2.6 Are there Unix binaries for R?
 ==================================
@@ -361,7 +361,8 @@ packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x/7.x packages for the alpha and i386
 platforms (maintained by Naoki Takebayashi and Martyn Plummer,
 respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt, Mandrake 8.0
-i386 packages by Michele Alzetta, and LinuxPPC 5.0 RPMs by Alex Buerkle.
+and 7.2 i386 packages by Michele Alzetta and Maximino Ameneiro Gomez, and
+LinuxPPC 5.0 RPMs by Alex Buerkle.
 
    The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1165,6 +1166,13 @@ works, was published in the Journal of Statistical Software
 *Rstreams*
      Binary file stream support functions.
 
+*Rwave*
+     An environment for the time-frequency analysis of 1-D signals (and
+     especially for the wavelet and Gabor transforms of noisy signals),
+     based on the book "Practical Time-Frequency Analysis: Gabor and Wavelet
+     Transforms with an Implementation in S" by Rene Carmona, Wen L. Hwang
+     and Bruno Torresani, 1998, Academic Press.
+
 *SASmixed*
      Data sets and sample linear mixed effects analyses corresponding to the
      examples in "SAS System for Mixed Models" by R. C. Littell, G. A.
@@ -1253,6 +1261,11 @@ works, was published in the Journal of Statistical Software
      vector of input dates in any of the forms `8/30/53', `30Aug53', `30
      August 1953', ..., `August 30 53', or any mixture of these.
 
+*diamonds*
+     Functions for illustrating aperture-4 diamond partitions in the plane,
+     or on the surface of an octahedron or icosahedron, for use as analysis
+     or sampling grids.
+
 *dse*
      Dynamic System Estimation, a multivariate time series package.
      Contains *dse1* (DSE kernel plus ARMA and state space models), *dse2*
@@ -1279,6 +1292,13 @@ works, was published in the Journal of Statistical Software
 
 *fdim*
      Functions for calculating fractal dimension.
+
+*fields*
+     A collection of programs for curve and function fitting with an
+     emphasis on spatial data.  The major methods implemented include cubic
+     and thin plate splines, universal Kriging and Kriging for large data
+     sets.  The main feature is that any covariance function implemented in
+     R can be used for spatial prediction.
 
 *foreign*
      Functions for reading and writing data stored by statistical software
@@ -1409,6 +1429,12 @@ works, was published in the Journal of Statistical Software
 
 *panel*
      Functions and datasets for fitting models to Panel data.
+
+*pcurve*
+     Fits a principal curve to a numeric multivariate dataset in arbitrary
+     dimensions.  Produces diagnostic plots.  Also calculates Bray-Curtis
+     and other distance matrices and performs multi-dimensional scaling and
+     principal component analyses.
 
 *permax*
      Functions intended to facilitate certain basic analyses of DNA array
@@ -1555,10 +1581,6 @@ these a try, of course.  This area of CRAN currently contains
 *ensemble*
      Ensembles of tree classifiers.
 
-*funfits*
-     An integrated set of functions for fitting curves and surfaces
-     including thin plate splines, kriging and neural networks.
-
 *grid*
      The Grid graphics package, a rewrite of the graphics layout
      capabilities, plus some support for interaction.
@@ -1617,6 +1639,9 @@ Currently, there are
 *RGnumeric*
      A plugin for the Gnumeric spreadsheet that allows R functions to be
      called from cells within the sheet, automatic recalculation, etc.
+
+*RJavaDevice*
+     A graphics device for R that uses Java components and graphics APIs.
 
 *RSMethods*
      An implementation of S version 4 methods and classes for R, consistent
@@ -2322,6 +2347,26 @@ possible combination of elements of `x' and `y' and then passes this to
 `FUN' all at once.  Your function probably cannot handle two large vectors
 as parameters.
 
+   If you have a function that cannot handle two vectors but can handle two
+scalars, then you can still use `outer()' but you will need to wrap your
+function up first, to simulate vectorized behavior.  Suppose your function
+is
+
+     foo <- function(x, y, happy) {
+       stopifnot(length(x) == 1, length(y) == 1) # scalars only!
+       (x + y) * happy
+     }
+
+If you define the general function
+
+     wrapper <- function(x, y, my.fun, ...) {
+       sapply(seq(along=x), FUN = function(i) my.fun(x[i], y[i], ...))
+     }
+
+then you can use `outer()' by writing, e.g.,
+
+     outer(1:4, 1:2, FUN = wrapper, my.fun = foo, happy = 10)
+
 8 R Programming
 ***************
 
@@ -2474,10 +2519,10 @@ package maintainer rather than to r-bugs.
    Of course, many many thanks to Robert and Ross for the R system, and to
 the package writers and porters for adding to it.
 
-   Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Fritz
-Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D. Ripley,
-Anthony Rossini, and Andreas Weingessel for their comments which helped me
-improve this FAQ.
+   Special thanks go to Doug Bates, Peter Dalgaard, Paul Gilbert, Stefano
+Iacus, Fritz Leisch, Jim Lindsey, Thomas Lumley, Martin Maechler, Brian D.
+Ripley, Anthony Rossini, and Andreas Weingessel for their comments which
+helped me improve this FAQ.
 
    More to some soon ...
 

@@ -10,7 +10,7 @@ mosaicplot(x, \dots)
                    sort = NULL, off = NULL, dir = NULL,
                    color = FALSE, shade = FALSE, margin = NULL,
                    type = c("pearson", "deviance", "FT"))
-\method{mosaicplot}{formula}(formula, data = NULL, subset, na.action, \dots)
+\method{mosaicplot}{formula}(formula, data = NULL, \dots, subset, na.action)
 }
 \arguments{
   \item{x}{an \R object.}
@@ -53,11 +53,13 @@ mosaicplot(x, \dots)
   \item{formula}{a formula, such as \code{y ~ x}.}
   \item{data}{a data.frame (or list) from which the variables in
     \code{formula} should be taken.}
-  \item{subset}{an optional vector specifying a subset of observations
-    to be used in the fitting process.}
-  \item{na.action}{a function which indicates what should happen when
-    the data contain \code{NA}s.}
   \item{\dots}{further arguments to the default mosaicplot method.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used for plotting.}
+  %% <FIXME>
+  %% Remove in 1.4.0.
+  \item{na.action}{deprecated.}
+  %% </FIXME>
 }
 \details{
   This is a generic function.  It currently has a default method

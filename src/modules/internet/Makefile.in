@@ -14,7 +14,7 @@ include $(top_builddir)/Makeconf
 SOURCES = Rsock.c internet.c nanoftp.c nanohttp.c sock.c sockconn.c
 HEADERS = sock.h win32config.h 
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \
@@ -30,7 +30,7 @@ Rexecmodulesdir_LTLIBRARIES = $(internet_la)
 internet_la_SOURCES = $(SOURCES)
 internet_la_OBJECTS = $(OBJECTS)
 @USE_LIBTOOL_TRUE@internet_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
-internet_la_LIBADD = 
+internet_la_LIBADD = $(LIBR)
 
 all: Makefile Makedeps R
 

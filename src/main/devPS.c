@@ -1,5 +1,3 @@
-
-
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
@@ -424,7 +422,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 #ifdef DEBUG_PS
     Rprintf("afmpath is %s\n", buf);
 #endif
-    
+
     if (!(fp = R_fopen(R_ExpandFileName(buf), "r"))) return 0;
 
     mode = 0;
@@ -482,7 +480,7 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
 	    p = SkipToNextItem(buf);
 	    sscanf(p, "%s", fontname);
 	    break;
-	    
+
 	case Empty:
 	default:
 	    break;
@@ -493,7 +491,6 @@ PostScriptLoadFontMetrics(char *fontpath, FontMetricInfo *metrics,
     /* Make an index for kern-pair searches: relies on having contiguous
        blocks by first char for efficiency, but works in all cases. */
     {
-	int j;
 	short ind, tmp;
 	for (j = 0; j < 256; j++) {
 	    metrics->KPstart[j] = i;
@@ -529,7 +526,7 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics)
 	if(wx == NA_SHORT)
 	    warning("font width unknown for character %d", *p);
 	else sum += wx;
-	
+
 	/* check for kerning adjustment */
 	p1 = p[0]; p2 = p[1];
 	for (i =  metrics->KPstart[p1]; i < metrics->KPend[p1]; i++)
@@ -776,7 +773,7 @@ typedef struct {
     int paperheight;	/* paper height in big points */
     Rboolean landscape;	/* landscape mode */
     int pageno;		/* page number */
-			
+
     int fontfamily;	/* font family */
     char encpath[PATH_MAX]; /* font encoding file */
     char encname[100]; /* font encoding */
@@ -1147,13 +1144,13 @@ static Rboolean PS_Open(DevDesc *dd, PostScriptDesc *pd)
 	else p = Family[pd->fontfamily].afmfile[i];
 	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]),
 				      familyname[i], 1)) {
-	    warning("cannot read afm file %s", buf);
+	    warning("cannot read afm file %s", p);
 	    return FALSE;
 	}
     }
     if(!PostScriptLoadFontMetrics("sy______.afm", &(pd->metrics[4]),
 				  familyname[4], 0)) {
-	warning("cannot read afm file %s", buf);
+	warning("cannot read afm file sy______.afm");
 	return FALSE;
     }
 
@@ -1894,13 +1891,14 @@ static Rboolean XFig_Open(DevDesc *dd, XFigDesc *pd)
     for(i = 0; i < 4 ; i++) {
 	if(!PostScriptLoadFontMetrics(Family[pd->fontfamily].afmfile[i],
 				      &(pd->metrics[i]), name, 1)) {
-	    warning("cannot read afm file %s", buf);
+	    warning("cannot read afm file %s",
+		    Family[pd->fontfamily].afmfile[i]);
 	    return FALSE;
 	}
     }
-    if(!PostScriptLoadFontMetrics("sy______.afm", 
+    if(!PostScriptLoadFontMetrics("sy______.afm",
 				  &(pd->metrics[4]), name, 0)) {
-	warning("cannot read afm file %s", buf);
+	warning("cannot read afm file sy______.afm");
 	return FALSE;
     }
 
@@ -2223,7 +2221,7 @@ typedef struct {
     char filename[PATH_MAX];
 
     int pageno;		/* page number */
-			
+
     int fontfamily;	/* font family */
     char encpath[PATH_MAX]; /* font encoding */
     char encname[100]; 
@@ -2610,13 +2608,13 @@ static Rboolean PDF_Open(DevDesc *dd, PDFDesc *pd)
 	p = Family[pd->fontfamily].afmfile[i];
 	if(!PostScriptLoadFontMetrics(p, &(pd->metrics[i]),
 				      familyname[i], 1)) {
-	    warning("cannot read afm file %s", buf);
+	    warning("cannot read afm file %s", p);
 	    return FALSE;
 	}
     }
     if(!PostScriptLoadFontMetrics("sy______.afm", &(pd->metrics[4]),
 				  familyname[4], 0)) {
-	warning("cannot read afm file %s", buf);
+	warning("cannot read afm file sy______.afm");
 	return FALSE;
     }
 

@@ -1,6 +1,7 @@
 fligner.test <- function(x, ...) UseMethod("fligner.test")
 
-fligner.test.default <- function(x, g) {
+fligner.test.default <- function(x, g)
+{
     ## FIXME: This is the same code as in kruskal.test(), and could also
     ## rewrite bartlett.test() accordingly ...
     if (is.list(x)) {
@@ -54,7 +55,8 @@ fligner.test.default <- function(x, g) {
     return(RVAL)
 }
 
-fligner.test.formula <- function(formula, data, subset, na.action) {
+fligner.test.formula <- function(formula, data, subset, na.action)
+{
     if(missing(formula) || (length(formula) != 3))
         stop("formula missing or incorrect")
     if(missing(na.action))
@@ -64,7 +66,7 @@ fligner.test.formula <- function(formula, data, subset, na.action) {
         m$data <- as.data.frame(data)
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
-    DNAME <- paste(names(mf), collapse = " and ")
+    DNAME <- paste(names(mf), collapse = " by ")
     names(mf) <- NULL
     y <- do.call("fligner.test", as.list(mf))
     y$data.name <- DNAME

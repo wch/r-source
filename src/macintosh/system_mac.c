@@ -31,7 +31,7 @@
 #include "Graphics.h"
 #include "RIntf.h"
 #include "RFLaunch.h"
-#include "TFLaunch.h"
+//#include "TFLaunch.h"
 #include <Rdevices.h>
 #include <CFBundle.h>
 #include <Folders.h>
@@ -132,8 +132,8 @@ int R_ReadConsole(char *prompt, unsigned char *buf, int len,int addtohistory)
     else 
 		R_ReadConsole1(prompt, buf, len, addtohistory); 
 
-    buf[strlen(buf)-1] = '\n';
-    buf[strlen(buf)] = '\0';
+    buf[strlen((char *)buf)-1] ='\n';
+    buf[strlen((char *)buf)] = '\0';
 
     return 1;
 
@@ -908,7 +908,7 @@ SEXP do_helpstart(SEXP call, SEXP op, SEXP args, SEXP env)
 #if ! TARGET_API_MAC_CARBON
     CtoPstr((char *) HelpFileName);
 #else    
-    CopyCStringToPascal(HelpFileName,HelpFileName);
+    CopyCStringToPascal((char*)HelpFileName,HelpFileName);
 #endif
     err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);
     if (err != noErr) {
@@ -1011,7 +1011,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 
 //	CtoPstr((char *) HelpFileName);
 	
-    CopyCStringToPascal(HelpFileName,HelpFileName);
+    CopyCStringToPascal((char *)HelpFileName,HelpFileName);
 //    CopyCStringToPascal(HelpFileName,tempname);
 
 	err = FSMakeFSSpecFromPath((ConstStr255Param) HelpFileName, &fileSpec);

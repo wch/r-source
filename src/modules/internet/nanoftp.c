@@ -17,7 +17,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 /* based on libxml2-2.3.6:
  * nanoftp.c: basic FTP client support
@@ -28,6 +27,8 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+
+#if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 #ifdef Win32
 #define INCLUDE_WINSOCK
@@ -50,7 +51,6 @@
 #  include <netdb.h>
 #  include <sys/socket.h>
 #  include <netinet/in.h>
-#  include <netinet/tcp.h>
 #endif
 
 #ifdef HAVE_FCNTL_H
