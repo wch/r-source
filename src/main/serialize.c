@@ -843,8 +843,17 @@ static void WriteItem (SEXP s, SEXP ref_table, R_outpstream_t stream)
 	}
     }
     else {
-	int flags = PackFlags(TYPEOF(s), LEVELS(s), OBJECT(s),
-			      ATTRIB(s) != R_NilValue, TAG(s) != R_NilValue);
+	int flags, hastag;
+	switch(TYPEOF(s)) {
+	case LISTSXP:
+	case LANGSXP:
+	case CLOSXP:
+	case PROMSXP:
+	case DOTSXP: hastag = TAG(s) != R_NilValue; break;
+	default: hastag = FALSE;
+	}
+	flags = PackFlags(TYPEOF(s), LEVELS(s), OBJECT(s),
+                             ATTRIB(s) != R_NilValue, hastag);
 	OutInteger(stream, flags);
 	switch (TYPEOF(s)) {
 	case LISTSXP:

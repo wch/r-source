@@ -121,7 +121,7 @@ SEXP do_readDCF(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(regexec(&regline, line, 1, regmatch, 0)==0){
 		    for(m=0; m<nwhat; m++){
 			whatlen = strlen(CHAR(STRING_ELT(what, m)));
-			if(line[whatlen]==':' &&
+			   if(strlen(line) > whatlen && line[whatlen]==':' &&
 			   strncmp(CHAR(STRING_ELT(what, m)),
 				   line, whatlen) == 0){
 			    SET_STRING_ELT(retval, m+nwhat*k,
