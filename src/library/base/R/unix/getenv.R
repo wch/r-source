@@ -11,3 +11,12 @@ getenv <- function(x) {
 	structure(.Internal(getenv(x)), names = x)
     }
 }
+
+putenv <- function(...)
+{
+    x <- list(...)
+    nm <- names(x)
+    val <- as.character(unlist(x))
+    x <- paste(nm,val, sep="=")
+    invisible(.Internal(putenv(x)))
+}

@@ -20,7 +20,10 @@ getenv(x)
   On some platforms \code{getenv()} will return a named vector giving
   the values of all the environment variables.
 }
-\seealso{\code{\link{getwd}} for the working directory.}
+\seealso{
+  \code{\linl{putenv}},
+  \code{\link{getwd}} for the working directory.
+}
 \examples{
 getenv(c("R_HOME", "R_PAPERSIZE", "R_PRINTCMD", "HOST"))
 }

@@ -133,6 +133,10 @@
 #undef HAVE_STAT
 #undef HAVE_ACCESS
 #undef HAVE_SYS_UTSNAME_H
+#undef HAVE_GETUID
+#undef HAVE_GETPWUID
+#undef HAVE_GETGRGID
+#undef HAVE_PUTENV
 
 
 /* Define this to use the system regex rather than GNU regex included in R.

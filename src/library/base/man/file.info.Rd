@@ -37,7 +37,11 @@ file.info(...)
   Unknown user and group names will be \code{NA}.
 #endif
   
-  Entries for non-existent or non-readable files will be \code{NA}.
+Entries for non-existent or non-readable files will be \code{NA}.
+#ifdef unix
+The \code{uid}}, \code{gid}, \code{uname} and \code{grname} columns
+may not be supplied on a non-POSIX Unix system.
+#endif
 }
 
 \author{B. D. Ripley}

@@ -20,15 +20,26 @@ Sys.info()
   \item{nodename}{A name by which the machine is known on the network (if
     any).}
   \item{machine}{A concise description of the hardware.}
-  \item{login}{The user name.}
+  \item{login}{The user's login name, or \code{"unknown"} if it cannot be
+    ascertained.}
+  \item{user}{The name of the real user ID, or \code{"unknown"} if it
+    cannot be ascertained.}
 #ifdef unix
 The first five fields come from the \code{uname(2)} system call. The
-login name comes from \code{getlogin}.
+login name comes from \code{getlogin(2)}, and the user name from
+\code{getpwuid(getuid())}
 #endif
 #ifdef unix
 The information is obtained from Windows system calls. It is likely to
 be most complete on Windows NT systems.
 #endif
+}
+\note{
+  The meaning of OS ``release'' and ``version'' is highly
+  system-dependent and there is no guarantee that the node or
+  login or user names will be what you might reasonably expect.
+  (In particular on some Linux distributions the login name is unknown
+  from sessions with re-directed inputs.)
 }
 \author{B. D. Ripley}
 
@@ -36,5 +47,7 @@ be most complete on Windows NT systems.
 
 \examples{
 Sys.info()
+## An alternative (and probably better) way to get the login name on Unix
+getenv("LOGNAME")
 }
 \keyword{utilities}

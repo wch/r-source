@@ -510,7 +510,8 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H)
+#if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
+  && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
 #include <pwd.h>
 #include <grp.h>
 #define UNIX_EXTRAS 1

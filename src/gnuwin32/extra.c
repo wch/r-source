@@ -495,7 +495,7 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     DWORD namelen = MAX_COMPUTERNAME_LENGTH + 1, userlen = UNLEN+1;
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 6));
+    PROTECT(ans = allocVector(STRSXP, 7));
     verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
     GetVersionEx(&verinfo);
     switch(verinfo.dwPlatformId) {
@@ -524,18 +524,17 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     STRING(ans)[3] = mkChar(name);
     STRING(ans)[4] = mkChar("x86");
     GetUserName(user, &userlen);
-    STRING(ans)[5] = mkChar(user);
-    PROTECT(ansnames = allocVector(STRSXP, 6));
+    STRING(ans)[6] = STRING(ans)[5] = mkChar(user);
+    PROTECT(ansnames = allocVector(STRSXP, 7));
     STRING(ansnames)[0] = mkChar("sysname");
     STRING(ansnames)[1] = mkChar("release");
     STRING(ansnames)[2] = mkChar("version");
     STRING(ansnames)[3] = mkChar("nodename");
     STRING(ansnames)[4] = mkChar("machine");
     STRING(ansnames)[5] = mkChar("login");
+    STRING(ansnames)[6] = mkChar("user");
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;
-    warning("Sys,info is not implemented on this system");
-    return R_NilValue; /* -Wall */
 }
 

@@ -256,14 +256,18 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 #include <unistd.h>
 #endif
 
+#ifdef HAVE_PWD_H
+#include <pwd.h>
+#endif
+
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP ans, ansnames;
     struct utsname name;
-    char *user;
+    char *login;
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(STRSXP, 6));
+    PROTECT(ans = allocVector(STRSXP, 7));
     if(uname(&name) == -1) {
 	UNPROTECT(1);
 	return R_NilValue;
@@ -273,16 +277,25 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     STRING(ans)[2] = mkChar(name.version);
     STRING(ans)[3] = mkChar(name.nodename);
     STRING(ans)[4] = mkChar(name.machine);
-    user = getlogin();
-    if(user) STRING(ans)[5] = mkChar(user);
-    else STRING(ans)[5] = mkChar("unknown");
-    PROTECT(ansnames = allocVector(STRSXP, 6));
+    login = getlogin();
+    STRING(ans)[5] = login ? mkChar(login) : mkChar("unknown");
+#if defined(HAVE_PWD_H) && defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+    {
+	struct passwd *stpwd;
+	stpwd = getpwuid(getuid());
+	STRING(ans)[6] = stpwd ? mkChar(stpwd->pw_name) : mkChar("unknown");
+    }
+#else
+    STRING(ans)[6] = mkChar("unknown");
+#endif
+    PROTECT(ansnames = allocVector(STRSXP, 7));
     STRING(ansnames)[0] = mkChar("sysname");
     STRING(ansnames)[1] = mkChar("release");
     STRING(ansnames)[2] = mkChar("version");
     STRING(ansnames)[3] = mkChar("nodename");
     STRING(ansnames)[4] = mkChar("machine");
     STRING(ansnames)[5] = mkChar("login");
+    STRING(ansnames)[6] = mkChar("user");
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;

@@ -257,6 +257,32 @@ SEXP do_getenv(SEXP call, SEXP op, SEXP args, SEXP env)
     return (ans);
 }
 
+SEXP do_putenv(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+#ifdef HAVE_PUTENV
+    int i, n;
+    SEXP ans, vars;
+
+    checkArity(op, args);
+
+    if (!isString(vars =CAR(args)))
+	errorcall(call, "wrong type for argument");
+
+    n = LENGTH(vars);
+    PROTECT(ans = allocVector(LGLSXP, n));
+    for (i = 0; i < n; i++) {
+	LOGICAL(ans)[i] = putenv(CHAR(STRING(vars)[i])) == 0;
+    }
+    UNPROTECT(1);
+    return ans;
+#else
+    error("`putenv' is not available on this system");
+    return R_NilValue; /* -Wall */
+#endif
+}
+
+
+
 SEXP do_interactive(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP rval;
