@@ -125,7 +125,7 @@
   The first is that if you pass a local variable to
   \code{.C}/\code{.Fortran} with \code{DUP=FALSE}, your compiled code
   can alter the local variable and not just the copy in the return list.
-  Worse, if you pss a local variable that is a formal parameter of
+  Worse, if you pass a local variable that is a formal parameter of
   the calling function, you may be able to change not only the local
   variable but the variable one level up.  This will be very hard to trace.
 
