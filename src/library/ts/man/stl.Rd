@@ -1,29 +1,57 @@
 \name{stl}
 \alias{stl}
 \alias{print.stl}
+\alias{summary.stl}
 \alias{plot.stl}
 \title{Seasonal Decomposition of Time Series by Loess}
 \usage{
-stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
-    robust = FALSE, na.action = na.fail)
+stl(x, s.window, s.degree = 0,
+    t.window = NULL, t.degree = 1,
+    l.window = nextodd(period), l.degree = t.degree, 
+    s.jump = ceiling(s.window/10),
+    t.jump = ceiling(t.window/10),
+    l.jump = ceiling(l.window/10),
+    robust = FALSE,
+    inner = if(robust)  1 else 2,
+    outer = if(robust) 15 else 0,
+    na.action = na.fail)
+    
+plot.stl(x, labels = colnames(X),
+         set.pars = list(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0),
+                         tck = -0.01, mfrow = c(nplot, 1)),
+         main = NULL, \dots)
 }
 \arguments{
-  \item{x}{A univariate time series to be decomposed.
+  \item{x}{univariate time series to be decomposed.
     This should be an object of class \code{"ts"} with a frequency
     greater than one.}
-  \item{s.window}{Either the character string \code{"periodic"} or the span (in
+  \item{s.window}{either the character string \code{"periodic"} or the span (in
     lags) of the loess window for seasonal extraction, which should
     be odd.  This has no default.}
-  \item{s.degree}{Degree of locally-fitted polynomial in seasonal
+  \item{s.degree}{degree of locally-fitted polynomial in seasonal
     extraction.  Should be zero or one.} 
-  \item{t.window}{The span (in lags) of the loess window for trend
-    extraction, which should be odd.  There is a reasonable
-    default.}
-  \item{t.degree}{Degree of locally-fitted polynomial in trend
+  \item{t.window}{the span (in lags) of the loess window for trend
+    extraction, which should be odd.  If \code{NULL}, the default,
+    \code{nextodd(ceiling((1.5*period) / (1-(1.5/s.window))))}, is taken.}
+  \item{t.degree}{degree of locally-fitted polynomial in trend
     extraction.  Should be zero or one.}
-  \item{robust}{Should robust fitting be used in the \code{loess}
-    procedure?}
-  \item{na.action}{Action on missing values.}
+  \item{l.window}{the span (in lags) of the loess window of the low-pass
+    filter used for each subseries.  Defaults to the smallest odd
+    integer greater than or equal to \code{frequency(x)} which is
+    recommended since it prevents competition between the trend and
+    seasonal components.  If not an odd integer its given value is
+    increased to the next odd one.}
+  \item{l.degree}{degree of locally-fitted polynomial for the subseries
+    low-pass filter.  Must be 0 or 1.}
+  \item{s.jump, t.jump, l.jump}{integers at least one to increase speed of
+    the respective smoother.  Linear interpolation happens between every
+  \code{*.jump}th value.}
+  \item{robust}{logical indicating if robust fitting be used in the \code{loess}
+    procedure.}
+  \item{inner}{integer; the number of `inner' (backfitting) iterations;
+    usually very few (2) iterations suffice.}
+  \item{outer}{integer; the number of `outer' robustness iterations.}
+  \item{na.action}{action on missing values.}
 }
 \description{
   Decompose a time series into seasonal, trend and irregular
@@ -40,16 +68,23 @@ stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
   residuals from the seasonal plus trend fit.
 }
 \value{
-  An object of class \code{"stl"} with components
+  \code{stl} returns an object of class \code{"stl"} with components
   \item{time.series}{a multiple time series with columns
     \code{seasonal}, \code{trend} and \code{remainder}.}
   \item{weights}{the final robust weights (all one if fitting is not
     done robustly).}
   \item{call}{the matched call.}
+  \item{win}{integer (length 3 vector) with the spans used for the \code{"s"},
+    \code{"t"}, and \code{"l"} smoothers.}
+  \item{deg}{integer (length 3) vector with the polynomial degrees for
+    these smoothers.}
+  \item{jump}{integer (length 3) vector with the ``jumps'' (skips) used
+    for these smoothers.}
+  \item{ni}{number of \bold{i}nner iterations}
+  \item{no}{number of \bold{o}uter robustness iterations}
 }
 \references{
-  R. B. Cleveland, W. S. Cleveland, J.E.  McRae, and I. Terpenning
-  (1990).
+  R. B. Cleveland, W. S. Cleveland, J.E.  McRae, and I. Terpenning (1990)
   STL:  A  Seasonal-Trend  Decomposition  Procedure Based on Loess.
   \emph{Journal of Official Statistics}, \bold{6}, 3--73.
 }
@@ -66,9 +101,26 @@ stl(x, s.window = NULL, s.degree = 0, t.window = NULL, t.degree = 1,
 \examples{
 data(nottem)
 plot(stl(nottem, "per"))
+plot(stl(nottem, s.win = 4, t.win = 50, t.jump = 1))
+    
 data(co2)
-plot(stl(log(co2), s.window=21))
+plot(stllc <- stl(log(co2), s.window=21))
+summary(stllc)
 ## linear trend, strict period.
 plot(stl(log(co2), s.window="per", t.window=1000))
+
+## Two STL plotted side by side :    
+data(UKLungDeaths)
+        stmd <- stl(mdeaths, s.w = "per") # un-robust
+summary(stmR <- stl(mdeaths, s.w = "per", robust = TRUE))
+op <- par(mar = c(0, 4, 0, 3), oma = c(5, 0, 4, 0), mfcol = c(4, 2))
+plot(stmd, set.pars=NULL, labels = NULL,
+     main = "stl(mdeaths, s.w = \"per\",  robust = FALSE / TRUE )")
+plot(stmR, set.pars=NULL)
+# mark the `outliers' :    
+(iO <- which(stmR $ weights  < 1e-8)) # 10 were considered outliers
+sts <- .Alias(stmR$time.series)
+points(time(sts)[iO], .8* sts[,"remainder"][iO], pch = 4, col = "red")
+par(op)# reset    
 }
 \keyword{ts}

@@ -11,39 +11,41 @@
 
 NEW FEATURES
 
-     o	New components in .Machine give the sizes of long, long long
+    o	New components in .Machine give the sizes of long, long long
 	and long double C types (or 0 if they do not exist).
 
-     o	postscript() allows user-specified encoding, with encoding
+    o	postscript() allows user-specified encoding, with encoding
 	files supplied for Windows, Mac, Unicode and various others,
 	and with an appropriate platform-specific default.
 
-     o	pdf() graphics driver.
+    o	pdf() graphics driver.
 
-     o	eigen() tests for symmetry with a numerical tolerance.
+    o	eigen() tests for symmetry with a numerical tolerance.
 
-     o	file and pipe connections can be read with a user-specified
+    o	file and pipe connections can be read with a user-specified
 	encoding.
 
-     o	New function checkFF() for checking foreign function calls.
+    o	New function checkFF() for checking foreign function calls.
 
-     o  package.skeleton() helps with creating new packages.
+    o	package.skeleton() helps with creating new packages.
 
-     o  Generalised "birthday paradox" functions [pq]birthday.
+    o	Generalised "birthday paradox" functions [pq]birthday.
 
-     o  dist() can now handle missing values.
+    o	dist() can now handle missing values.
 
-     o  New function difftime() and corresponding class for date/time 
+    o	New function difftime() and corresponding class for date/time 
 	differences.
 
+    o	stl() has more optional arguments for fine tuning,
+	a summary() and an improved plot() method.
 
 
 BUG FIXES
 
-     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
+    o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
 	have been removed.
 
-     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
+    o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
 
@@ -190,6 +192,7 @@ BUG FIXES
 
     o	which.min() and which.max() now properly work for 0-length and
 	NA-only arguments.
+
 
 
 		CHANGES IN R VERSION 1.2.1

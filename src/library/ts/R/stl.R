@@ -1,83 +1,115 @@
-stl <- function(x, s.window = NULL, s.degree = 0, t.window = NULL,
-                t.degree = 1, robust = FALSE, na.action = na.fail)
+stl <- function(x, s.window,
+		s.degree = 0,
+		t.window = NULL, t.degree = 1,
+		l.window = nextodd(period), l.degree = t.degree, 
+		s.jump = ceiling(s.window/10),
+		t.jump = ceiling(t.window/10),
+		l.jump = ceiling(l.window/10),
+		robust = FALSE,
+		inner = if(robust)  1 else 2,
+		outer = if(robust) 15 else 0,
+		na.action = na.fail)
 {
     nextodd <- function(x){
-        x <- round(x)
-        if(x%%2==0) x <- x+1
-        as.integer(x)
+	x <- round(x)
+	if(x%%2==0) x <- x+1
+	as.integer(x)
     }
-
+    deg.check <- function(deg) {
+	degname <- deparse(substitute(deg))
+	deg <- as.integer(deg)
+	if(deg < 0 || deg > 1) stop(paste(degname, "must be 0 or 1"))
+	deg
+    }
     x <- na.action(as.ts(x))
     if(is.matrix(x)) stop("only univariate series are allowed")
     n <- length(x)
     period <- frequency(x)
-    if(is.null(s.window)) stop("s.window is missing with no default")
     if(period < 2 || n <= 2 * period)
-        stop("series is not periodic or has less than two periods")
+	stop("series is not periodic or has less than two periods")
     periodic <- FALSE
-    if(is.character(s.window))
-        if(is.na(pmatch(s.window, "periodic")))
-            stop("unknown value for s.window")
-        else {
-            periodic <- TRUE
-            s.window <- 10 * n + 1
-            s.degree <- 0
-        }
-    s.degree <- as.integer(s.degree)
-    if(s.degree < 0 || s.degree > 1) stop("s.degree must be 0 or 1")
-    t.degree <- as.integer(t.degree)
-    if(t.degree < 0 || t.degree > 1) stop("t.degree must be 0 or 1")
-    if(robust) {
-        ni <- 1
-        niter <- 15
-    } else {
-        ni <- 2
-        niter <- 0
+    if(is.character(s.window)) {
+	if(is.na(pmatch(s.window, "periodic")))
+	    stop("unknown string value for s.window")
+	else {
+	    periodic <- TRUE
+	    s.window <- 10 * n + 1
+	    s.degree <- 0
+	}
     }
-    l.degree <- t.degree
+    s.degree <- deg.check(s.degree)
+    t.degree <- deg.check(t.degree)
+    l.degree <- deg.check(l.degree)
     if(is.null(t.window))
-        t.window <- nextodd(ceiling((1.5*period) / (1-(1.5/s.window))))
-    l.window <- nextodd(period)
+	t.window <- nextodd(ceiling( 1.5 * period / (1- 1.5/s.window)))
     z <- .Fortran("stl",
-                  as.double(x),
-                  as.integer(n),
-                  as.integer(period),
-                  as.integer(s.window),
-                  as.integer(t.window),
-                  as.integer(l.window),
-                  s.degree, t.degree, l.degree,
-                  nsjump = as.integer(ceiling(s.window/10)),
-                  ntjump = as.integer(ceiling(t.window/10)),
-                  nljump = as.integer(ceiling(l.window/10)),
-                  as.integer(ni),
-                  niter = as.integer(niter), weights = double(n),
-                  seasonal = double(n),
-                  trend = double(n),
-                  double((n+2*period)*5), PACKAGE="ts")
+		  as.double(x),
+		  as.integer(n),
+		  as.integer(period),
+		  as.integer(s.window),
+		  as.integer(t.window),
+		  as.integer(l.window),
+		  s.degree, t.degree, l.degree,
+		  nsjump = as.integer(s.jump),
+		  ntjump = as.integer(t.jump),
+		  nljump = as.integer(l.jump),
+		  ni = as.integer(inner),
+		  no = as.integer(outer),
+		  weights = double(n),
+		  seasonal = double(n),
+		  trend = double(n),
+		  double((n+2*period)*5),
+		  PACKAGE="ts")
     if(periodic) {
-        ## make seasonal part exactly periodic
-        which.cycle <- cycle(x)
-        z$seasonal <- tapply(z$seasonal, which.cycle, mean)[which.cycle]
+	## make seasonal part exactly periodic
+	which.cycle <- cycle(x)
+	z$seasonal <- tapply(z$seasonal, which.cycle, mean)[which.cycle]
     }
     remainder <- as.vector(x) - z$seasonal - z$trend
     y <- cbind(seasonal=z$seasonal, trend=z$trend, remainder=remainder)
     res <- list(time.series = ts(y, start=start(x), frequency = period),
-                weights=z$weights, call=match.call())
+		weights=z$weights, call=match.call(),
+		win = c(s = s.window, t = t.window, l = l.window),
+		deg = c(s = s.degree, t = t.degree, l = l.degree),
+		jump= c(s = s.jump,   t = t.jump,   l = l.jump),
+		inner = z$ni, outer = z$no)
     class(res) <- "stl"
     res
 }
 
 print.stl <- function(x, ...)
 {
-    cat(" Call:\n")
-    cat(" ")
+    cat(" Call:\n ")
     dput(x$call)
     cat("\nComponents\n")
     print(x$time.series, ...)
     invisible(x)
 }
 
-plot.stl <- function(x, labels = colnames(X), ...)
+summary.stl <- function(x, digits = getOption("digits"), ...)
+{
+    cat(" Call:\n ")
+    dput(x$call)
+    cat("\n Time.series components:\n")
+    print(summary(x$time.series, digits = digits, ...))
+    cat(" IQR:\n")
+    iqr <- apply(cbind(STL = x$time.series, data = x$time.series %*% rep(1,3)),
+		 2, IQR)
+    print(rbind(format(iqr, digits = max(2, digits - 3)),
+		"   %"= format(round(100 * iqr / iqr["data"], 1))),
+	  quote = FALSE)
+    cat("\n Weights:")
+    if(all(x$weights == 1)) cat(" all == 1\n")
+    else { cat("\n"); print(summary(x$weights, digits = digits, ...)) }
+    cat("\n Other components: ")
+    str(x[-(1:3)], give.attr = FALSE)
+    invisible(x)
+}
+
+plot.stl <- function(x, labels = colnames(X),
+		     set.pars = list(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0),
+				     tck = -0.01, mfrow = c(nplot, 1)),
+		     main = NULL, range.bars = TRUE, ...)
 {
     sers <- x$time.series
     ncomp <- ncol(sers)
@@ -85,22 +117,32 @@ plot.stl <- function(x, labels = colnames(X), ...)
     X <- cbind(data, sers)
     colnames(X) <- c("data", colnames(sers))
     nplot <- ncomp + 1
-    oldpar <- par("mar", "oma", "mfrow", "tck")
-    on.exit(par(oldpar))
-    par(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0), tck = -0.01)
-    par(mfrow = c(nplot, 1))
-    for(i in 1:nplot) {
-        plot(X[, i], type = if(i < nplot) "l" else "h",
-             xlab = "", ylab = "", axes = FALSE, ...)
-        if(i == nplot) abline(h=0)
-        box()
-        right <- i %% 2 == 0
-        axis(2, labels = !right)
-        axis(4, labels = right)
-        mtext(labels[i], 2, 3)
+    if(range.bars)
+	mx <- min(apply(rx <- apply(X,2, range), 2, diff))
+    if(length(set.pars)) {
+	oldpar <- do.call("par", as.list(names(set.pars)))
+	on.exit(par(oldpar))
+	do.call("par", set.pars)
     }
-    axis(1, labels = TRUE)
-    axis(3, labels = FALSE)
-    mtext("time", 1, 3)
+    for(i in 1:nplot) {
+	plot(X[, i], type = if(i < nplot) "l" else "h",
+	     xlab = "", ylab = "", axes = FALSE, ...)
+	if(range.bars) {
+	    dx <- 1/64 * diff(ux <- par("usr")[1:2])
+	    y <- mean(rx[,i])
+	    rect(ux[2] - dx, y + mx/2, ux[2] - 0.4*dx, y - mx/2,
+		 col = "light gray", xpd = TRUE)
+	}
+	if(i == 1 && !is.null(main))
+	    title(main, line = 2, outer = par("oma")[3] > 0)
+	if(i == nplot) abline(h=0)
+	box()
+	right <- i %% 2 == 0
+	axis(2, labels = !right)
+	axis(4, labels = right)
+	axis(1, labels = i == nplot)
+	mtext(labels[i], side = 2, 3)
+    }
+    mtext("time", side = 1, line = 3)
     invisible()
 }
