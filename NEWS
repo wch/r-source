@@ -241,6 +241,9 @@ NEW FEATURES
     o	Logical matrix replacement indexing of data frames is now
 	implemented (interpreted as if the lhs was a matrix).
 
+    o	The postscript output makes use of relative moves, and so is
+	somewhat more compact.
+
 
 INSTALLATION CHANGES
 
