@@ -289,9 +289,15 @@ SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
  *
  *  Given two file names as arguments and arranges for
  *  the second file to be appended to the second.
+ *  op = 2 is codeFiles.append.
  */
 
-#define APPENDBUFSIZE 512
+#if defined(BUFSIZ) && (APPENDBUFSIZE > 512)
+/* OS's buffer size in stdio.h, probably */
+# define APPENDBUFSIZE BUFSIZ
+#else
+# define APPENDBUFSIZE 512
+#endif
 
 static int R_AppendFile(char *file1, char *file2)
 {
@@ -334,18 +340,50 @@ SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
         errorcall(call, "invalid second filename");
     if (n1 < 1)
 	errorcall(call, "nothing to append to");
+    if (PRIMVAL(op) > 0 && n1 > 1)
+	errorcall(call, "outFile' must be a single file");
     if (n2 < 1)
 	return allocVector(LGLSXP, 0);
     n = (n1 > n2) ? n1 : n2;
-    PROTECT(ans = allocVector(LGLSXP, n));
-    for(i = 0; i < n; i++) {
-        if (STRING_ELT(f1, i%n1) == R_NilValue || STRING_ELT(f2, i%n2) == R_NilValue)
-            LOGICAL(ans)[i] = 0;
-        else
-            LOGICAL(ans)[i] =
-		R_AppendFile(CHAR(STRING_ELT(f1, i%n1)),
-			     CHAR(STRING_ELT(f2, i%n2)));
+    PROTECT(ans = allocVector(LGLSXP, n)); /* all FALSE */
+    if (n1 == 1) { /* common case */
+	FILE *fp1, *fp2;
+	char buf[APPENDBUFSIZE];
+	int nchar, status = 0;
+	if(!(fp1 = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(f1, 0))), "ab")))
+	   goto done;
+	for(i = 0; i < n; i++) {
+	    status = 0;
+	    if(!(fp2 = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(f2, i))),
+			       "rb"))) continue;
+	    while((nchar = fread(buf, 1, APPENDBUFSIZE, fp2)) == APPENDBUFSIZE)
+		if(fwrite(buf, 1, APPENDBUFSIZE, fp1) != APPENDBUFSIZE)
+		    goto append_error;
+	    if(fwrite(buf, 1, nchar, fp1) != nchar) goto append_error;
+	    if(PRIMVAL(op) == 1 && buf[nchar - 1] != '\n') {
+		if(fwrite("\n", 1, 1, fp1) != 1) goto append_error;
+	    }
+	    
+	    status = 1;
+	append_error:
+	    if (status == 0)
+		warning("write error during file append!");
+	    LOGICAL(ans)[i] = status;
+	    fclose(fp2);
+	}
+	fclose(fp1);
+    } else {
+	for(i = 0; i < n; i++) {
+	    if (STRING_ELT(f1, i%n1) == R_NilValue ||
+		STRING_ELT(f2, i%n2) == R_NilValue)
+		LOGICAL(ans)[i] = 0;
+	    else
+		LOGICAL(ans)[i] =
+		    R_AppendFile(CHAR(STRING_ELT(f1, i%n1)),
+				 CHAR(STRING_ELT(f2, i%n2)));
+	}
     }
+done:
     UNPROTECT(1);
     return ans;
 }
@@ -1108,13 +1146,13 @@ static Rboolean R_can_use_X11()
 	    /* At this point we have permission to use the module, so try it */
 	    var_R_can_use_X11 = R_access_X11();
 	} else {
-	    var_R_can_use_X11 = 0;	    
+	    var_R_can_use_X11 = 0;
 	}
 #else
 	var_R_can_use_X11 = 0;
-#endif	
+#endif
     }
-    
+
     return var_R_can_use_X11 > 0;
 }
 #endif
@@ -1201,7 +1239,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     /* This one is complex.  Set it to be true only in interactive use,
-       with the Windows and GNOME GUIs (but not Tk GUI) or under Unix 
+       with the Windows and GNOME GUIs (but not Tk GUI) or under Unix
        if readline is available and in use. */
     SET_STRING_ELT(ansnames, i, mkChar("cledit"));
     LOGICAL(ans)[i] = FALSE;
@@ -1310,7 +1348,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(res && errno != EEXIST) goto end;
 	    *p = '/';
 	}
-    }    
+    }
      res = mkdir(dir, 0777);
     if(show && res && errno == EEXIST)
 	warning("'%s' already exists", dir);
@@ -1348,7 +1386,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(res && errno != EEXIST) goto end;
 	    *p = '\\';
 	}
-    }    
+    }
     res = mkdir(dir);
     if(show && res && errno == EEXIST)
 	warning("'%s' already exists", dir);

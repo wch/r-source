@@ -63,12 +63,19 @@ NEW FEATURES
     o   New argument 'immediate.' to warning() to send an immediate
 	warning.
 
+    o   file.append() has been tuned, including for the case of
+	appending many files to a single file.
+
 
 UTILITIES
 
     o   New functions mirror2html() and checkCRAN().
 
     o   R CMD check has a new option '--use-valgrind'.
+
+    o	tools:::.install_package_code_files() (used to collate R files
+	when installing packages) ensures files are separated by a
+	line feed.
     
 
 DOCUMENTATION

@@ -231,7 +231,8 @@ function(dir, outDir)
         stop(paste("unable to create", outFile))
     writeLines(paste(".packageName <- \"", db["Package"], "\"", sep=""),
                outFile)
-    if(!all(file.append(outFile, codeFiles)))
+    # use fast version of file.append that ensure LF between files
+    if(!all(.Internal(codeFiles.append(outFile, codeFiles))))
         stop("unable to write code files")
     ## </NOTE>
 
