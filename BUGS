@@ -139,10 +139,6 @@ Date: Fri, 20 Dec 2002 12:47:58 -0500
 Subject: ace and avas in acepack
 From: Frank E Harrell Jr <fharrell@virginia.edu>
 Date: Fri, 20 Dec 2002 12:59:07 -0500
-* PR# 2458 *
-Subject: chron package: delimiter for dates
-From: jerome@hivnet.ubc.ca
-Date: Wed, 15 Jan 2003 19:46:37 +0100 (MET)
 
 Directory:  Analyses
 
@@ -567,11 +563,11 @@ Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
 Subject: file.choose
 From: "Gunter, Bert" <bert_gunter@merck.com>
 Date: Thu, 16 Jan 2003 08:50:21 -0500
-* PR# 2466 *
-Subject: -TYPISTS AND SUPERVISORS WANTED!
-From: "-Typists Wanted" <lleb111509@hotmail.com>
-Date: Thu, 16 Jan 2003 09:43:40 -0600
 * PR# 2467 *
 Subject: Wrong constants in sj function (sm library)
 From: jechacon@unex.es
 Date: Thu, 16 Jan 2003 18:04:04 +0100 (MET)
+* PR# 2469 *
+Subject: read.table bug in Mac OS X
+From: gwgilc@wm.edu
+Date: Fri, 17 Jan 2003 16:23:16 +0100 (MET)
