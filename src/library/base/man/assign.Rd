@@ -32,10 +32,12 @@ assign(x, value, pos = -1, envir = sys.frame(sys.parent()),
 }
 \seealso{\code{\link{get}}, \code{\link{environment}}.}
 \examples{
-for(in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
+for(i in 1:6) { #-- Create objects  'r1', 'r2', ... 'r6' --
  nam <- paste("r",i, sep=".")
  assign(nam, 1:i)
 }
+ls(pat="^r..$")
+
 ##-- Global assignment within a function:
 myf <- function(x) {
  innerf <- function(x) assign("Global.res", x^2, env = .GlobalEnv)
