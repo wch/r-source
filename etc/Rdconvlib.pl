@@ -798,6 +798,7 @@ sub text2nroff {
     }
 
     $text =~ s/^\.|([\n\(])\./$1\\\&./g;
+    $text =~ s/\s/ /g;
 
     ## tables are pre-processed by the tbl(1) command, so this has to
     ## be done first
