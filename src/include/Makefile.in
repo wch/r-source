@@ -44,7 +44,7 @@ Rconfig.h: $(top_srcdir)/configure $(srcdir)/Rconfig.h.in
 
 Rversion.h: $(srcdir)/Rversion.h.in $(top_srcdir)/date-stamp
 	@cp $(srcdir)/Rversion.h.in $@
-	@awk -F/ '{ \
+	@$(AWK) -F/ '{ \
 	    printf "#define R_DAY\t\"%s\"\n",   $$3; \
 	    printf "#define R_MONTH\t\"%s\"\n", $$2; \
 	    printf "#define R_YEAR\t\"%s\"\n",  $$1 }' \
