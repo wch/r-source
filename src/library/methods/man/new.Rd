@@ -65,9 +65,9 @@ initialize(.Object, ...)
 
 \testonly{
 setClass("track",
-            representation(x="numeric", y="numeric"))
+         representation(x="numeric", y="numeric"))
 setClass("trackCurve",
-            representation("track", smooth = "numeric"))
+         representation("track", smooth = "numeric"))
 
 ydata <- rnorm(10); ysmooth <- 1:10}
 
@@ -80,15 +80,17 @@ t2 <- new("trackCurve", t1, smooth = ysmooth)
 ### define a method for initialize, to ensure that new objects have
 ### equal-length x and y slots.
 
-setMethod("initialize", "track", function(.Object, x = numeric(0), y = numeric(0)) {
-    if(nargs() > 1) {
-      if(length(x) != length(y))
-        stop("specified x and y of different lengths")
-      .Object@x <- x
-      .Object@y <- y
-    }
-    .Object
-  })
+setMethod("initialize",
+          "track",
+          function(.Object, x = numeric(0), y = numeric(0)) {
+            if(nargs() > 1) {
+              if(length(x) != length(y))
+                stop("specified x and y of different lengths")
+              .Object@x <- x
+              .Object@y <- y
+            }
+            .Object
+          })
 
 ### the next example will cause an error (x will be numeric(0)),
 ### because we didn't build in defaults for x,

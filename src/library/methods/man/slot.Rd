@@ -9,7 +9,6 @@
   in an object.
 }
 \usage{
-
 object@name
 object@name <- value
 
@@ -22,7 +21,7 @@ slotNames(x)
   \item{object}{ An object from a formally defined class.}
   \item{name}{ The character-string name of the slot. The name must be a
     valid slot name:  see Details below.}
-  \item{value} { A new value for the named slot.  The value must be
+  \item{value}{ A new value for the named slot.  The value must be
     valid for this slot in this object's class.}
   \item{x}{Either the name of a class or an object from that class.
     Print \code{\link{getClass}(class)} to see the full description of
@@ -62,9 +61,11 @@ slotNames(x)
   John Chambers
 }
 \seealso{
-  \code{\link{@}}, \code{\link{Classes}}, \code{\link{Methods}},
-  \code{\link{getClass}} }
-
+  \code{\link{@}},
+  \code{\link{Classes}},
+  \code{\link{Methods}},
+  \code{\link{getClass}}
+}
 \examples{
 \dontrun{
 slot(myTrack, "x")

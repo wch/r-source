@@ -17,10 +17,10 @@
 \alias{VIRTUAL-class}
 \alias{missing-class}
 \title{Classes Corresponding to Basic Data Types }
-\description{  Formal classes exist corresponding to the basic R data
-  types, allowing these types to be used in method signatures, as slots
-  in class definitions, and to be
-  extended by new classes. }
+\description{
+  Formal classes exist corresponding to the basic R data types, allowing
+  these types to be used in method signatures, as slots in class
+  definitions, and to be extended by new classes.}
 \usage{
 ### The following are all basic vector classes.
 ### They can appear as class names in method signatures,
@@ -47,25 +47,19 @@
 "ANY"  # virtual classes used by the methods package itself
 "VIRTUAL"
 "missing"
-
-
-
 }
 \section{Objects from the Classes}{
-  
-Objects can be created by calls of the form \code{new(Class, ...)},
-where \code{Class} is the quoted class name, and the remaining arguments
-if any are objects to be interpreted as vectors of this class.  Multiple
-arguments will be concatenated.
+  Objects can be created by calls of the form \code{new(Class, ...)},
+  where \code{Class} is the quoted class name, and the remaining
+  arguments if any are objects to be interpreted as vectors of this
+  class.  Multiple arguments will be concatenated.
 
-The class \code{"expression"} is slightly odd, in that the \dots
-arguments will \emph{not} be evaluated; therefore, don't enclose them in
-a call to \code{quote()}.
-
+  The class \code{"expression"} is slightly odd, in that the \dots
+  arguments will \emph{not} be evaluated; therefore, don't enclose them
+  in a call to \code{quote()}.
 }
-
 \section{Extends}{
-Class \code{"vector"}, directly.
+  Class \code{"vector"}, directly.
 }
 \section{Methods}{
   \describe{

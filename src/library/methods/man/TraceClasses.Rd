@@ -17,9 +17,9 @@
   including browser calls, etc., and also to \code{\link{untrace}} the
   same objects.}
 \section{Objects from the Class}{
-Objects will be created from these classes by calls to \code{trace}.
-(There is an \code{\link{initialize}} method for class
-\code{"traceable"}, but you are unlikely to need it directly.)
+  Objects will be created from these classes by calls to \code{trace}.
+  (There is an \code{\link{initialize}} method for class
+  \code{"traceable"}, but you are unlikely to need it directly.)
 }
 \usage{
 ### Objects from the following classes are generated
@@ -40,22 +40,22 @@ Objects will be created from these classes by calls to \code{trace}.
 \section{Slots}{
   \describe{
     \item{\code{.Data}:}{The data part, which will be \code{"function"}
-      for class \code{"functionWithTrace"}, and similarly for the other classes.  }
+      for class \code{"functionWithTrace"}, and similarly for the other
+      classes.}
     \item{\code{original}:}{Object of the original class; e.g.,
       \code{"function"} for class \code{"functionWithTrace"}. }
   }
 }
 \section{Extends}{
-Each of the classes extends the corresponding untraced class, from the data part; e.g.,
-\code{"functionWithTrace"} extends \code{"function"}.
-Each of the specific classes extends \code{"traceable"}, directly,
-and class \code{"VIRTUAL"}, by class "traceable".
+  Each of the classes extends the corresponding untraced class, from the
+  data part; e.g., \code{"functionWithTrace"} extends \code{"function"}.
+  Each of the specific classes extends \code{"traceable"}, directly,
+  and class \code{"VIRTUAL"}, by class \code{"traceable"}.
 }
 \section{Methods}{
-The point of the specific classes is that objects generated from them,
-by function \code{trace()}, remain callable or dispatchable, in addition
-to their new trace information.
+  The point of the specific classes is that objects generated from them,
+  by function \code{trace()}, remain callable or dispatchable, in
+  addition to their new trace information.
 }
 \seealso{ function \code{\link{trace}} }
-
 \keyword{classes}

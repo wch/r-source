@@ -14,8 +14,8 @@
   of a class.
 }
 \usage{
-setClass(Class, representation, prototype, contains=character(), validity, 
-         access, where=1, version=FALSE, sealed, package)
+setClass(Class, representation, prototype, contains=character(),
+         validity, access, where=1, version=FALSE, sealed, package)
 
 removeClass(Class, where=-1, removeSubclassLinks = TRUE)
 
@@ -179,17 +179,16 @@ resetClass(Class, resetSubclasses = TRUE)
 
 \references{
   The R package \code{methods} implements, with a few exceptions, the
-  programming interface for classes
-  and methods in the book \emph{Programming with Data} (John
-  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
-  and chapters 7 and 8.
+  programming interface for classes and methods in the book
+  \emph{Programming with Data} (John M. Chambers, Springer, 1998), in
+  particular sections 1.6, 2.7, 2.8, and chapters 7 and 8.
 
-  While the programming interface for the methods package follows the reference,
-  the R software is an original implementation, so details in
+  While the programming interface for the methods package follows the
+  reference, the R software is an original implementation, so details in
   the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
@@ -204,28 +203,35 @@ if(isClass("track"))
 }
 ## A simple class with two slots
 setClass("track",
-            representation(x="numeric", y="numeric"))
+         representation(x="numeric", y="numeric"))
 ## A class extending the previous, adding one more slot
 setClass("trackCurve",
-            representation("track", smooth = "numeric"))
+         representation("track", smooth = "numeric"))
 ## A class similar to "trackCurve", but with different structure
 ## allowing matrices for the "y" and "smooth" slots
-setClass("trackMultiCurve", representation(x="numeric", y="matrix", smooth="matrix"),
-          prototype = list(x=numeric(), y=matrix(0,0,0), smooth= matrix(0,0,0)))
+setClass("trackMultiCurve",
+         representation(x="numeric", y="matrix", smooth="matrix"),
+         prototype = list(x=numeric(), y=matrix(0,0,0),
+                          smooth= matrix(0,0,0)))
 ##
-## Suppose we want  trackMultiCurve to be like trackCurve when there's only
-## one column
+## Suppose we want trackMultiCurve to be like trackCurve when there's
+## only one column.
 ## First, the wrong way. 
 try(setIs("trackMultiCurve", "trackCurve",
   test = function(obj) {ncol(slot(obj, "y")) == 1}))
 
-## why didn't that work?  You can only override the slots "x", "y", and "smooth"
-## if you provide an explicit coerce function to correct any inconsistencies:
+## Why didn't that work?  You can only override the slots "x", "y",
+## and "smooth" if you provide an explicit coerce function to correct
+## any inconsistencies:
 
 setIs("trackMultiCurve", "trackCurve",
   test = function(obj) {ncol(slot(obj, "y")) == 1},
-  coerce = function(obj) { new("trackCurve", x = slot(obj, "x"),
-        y = as.numeric(slot(obj,"y")), smooth = as.numeric(slot(obj, "smooth")))})
+  coerce = function(obj) {
+     new("trackCurve",
+         x = slot(obj, "x"),
+         y = as.numeric(slot(obj,"y")),
+         smooth = as.numeric(slot(obj, "smooth")))
+  })
 \testonly{
 tMC <- new("trackMultiCurve")
 is.matrix(slot(tMC, "y"))
@@ -250,9 +256,10 @@ setClass("withId", representation("maybeNumber", id = "character"))
 ttt <- 1:10 ## relevant that this is class integer, to test indirect extensions
 www <- new("withId", ttt, id = "test 1")
 
-## the following test is less trivial than it looks.
-## It depends on the assignment of the data part NOT performing
-## a strict coerce to "numeric" on the way to satisfying is(ttt, "maybeNumber").
+## The following test is less trivial than it looks.
+## It depends on the assignment of the data part NOT performing a
+## strict coerce to "numeric" on the way to satisfying
+## is(ttt, "maybeNumber").
 stopifnot(identical(www@.Data, ttt))
 
 ### tests of the C macros MAKE_CLASS and NEW
@@ -277,17 +284,14 @@ removeClass("myMatrix")
 resetClass("integer")
 resetClass("numeric")
 resetClass("logical")
-  removeClass("trackMultiCurve")
-  removeClass("trackCurve")
-  removeClass("track")
-
-
+removeClass("trackMultiCurve")
+removeClass("trackCurve")
+removeClass("track")
 }
-
-
 }
-
-\seealso{\code{\link{Methods}}, \code{\link{makeClassRepresentation}}}
+\seealso{
+  \code{\link{Methods}},
+  \code{\link{makeClassRepresentation}}}
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}

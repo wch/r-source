@@ -20,19 +20,18 @@
 "structure" ## VIRTUAL
 }
 \section{Objects from the Classes}{
-Objects can be created by calls of the form \code{new(Class, ...)},
-where \code{Class} is the quoted name of the specific class (e.g.,
-\code{"matrix"}), and the other arguments, if any, are interpreted as
-arguments to the corresponding function, e.g., to function
-\code{matrix()}.  There is no particular advantage over calling those
-functions directly, unless you are writing software designed to work for
-multiple classes, perhaps with the class name and the arguments passed in.
-
+  Objects can be created by calls of the form \code{new(Class, ...)},
+  where \code{Class} is the quoted name of the specific class (e.g.,
+  \code{"matrix"}), and the other arguments, if any, are interpreted as
+  arguments to the corresponding function, e.g., to function
+  \code{matrix()}.  There is no particular advantage over calling those
+  functions directly, unless you are writing software designed to work
+  for multiple classes, perhaps with the class name and the arguments
+  passed in.
 }
-
 \section{Extends}{
-The specific classes all extend class \code{"structure"}, directly, and
-class \code{"vector"}, by class "structure".
+  The specific classes all extend class \code{"structure"}, directly, and
+  class \code{"vector"}, by class \code{"structure"}.
 }
 \section{Methods}{
   \describe{
