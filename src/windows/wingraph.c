@@ -20,7 +20,7 @@
 #include <string.h>
 #include <math.h>
 #include "WINcons.h"
-#include "Graphics.h"
+#include "c:/april/include/Graphics.h"
 #include "wingdi.h"
 #include "winuser.h"
 
@@ -69,7 +69,7 @@ HMENU RMenuGraph, RMenuGraphWin;
 static POINTS MousePoint;
 static int LocatorDone;
 
-LRESULT CALLBACK _export GraphWndProc(HWND,UINT,WPARAM,LPARAM);
+LRESULT CALLBACK GraphWndProc(HWND,UINT,WPARAM,LPARAM);
 
 /* Basic Win Objects */
 RECT                    graphicsRect;

@@ -19,10 +19,13 @@
 
 #include <windows.h>
 #include <windowsx.h>
-#include <env.h>
+/*#include <env.h>*/
 
-#include "Defn.h"
+#include "c:\april\include\Defn.h"
 
+#define DllExport __declspec(dllexport)
+
+DllExport void rsort(double*, int);
 
 /* Globals */
 
@@ -36,7 +39,6 @@ extern char RDEClass[];
 
 extern char REdfilename[MAX_PATH];
 
-extern int R_VSmb;
 extern float R_WinVersion;
 
 extern HMENU RMenuEdit, RMenuDE, RMenuGraph, RMenuConsole, RMenuInit;
@@ -65,7 +67,7 @@ BOOL             InitInstance(HINSTANCE,int);
 
 extern int EventLoop(void);
 extern void SysBeep(void);
-extern int Win_ROpenDlg(HWND, char*);
+extern int Win_ROpenDlg(HWND, int);
 extern int Win_RSaveDlg(HWND);
 extern void R_SetMemory(int, int);
 

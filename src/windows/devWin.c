@@ -25,6 +25,8 @@
 #include "wingdi.h"
 #include "winuser.h"
 
+extern void doGraphicsMenu(HWND, WPARAM, LPARAM);
+
 
         /********************************************************/
         /* This device driver has been documented so that it be */
@@ -79,6 +81,7 @@ typedef struct {
         int tcol;                               /* Text color */
         int fontindex;                          /* Which font */
         int usefixed;
+        HDC     Dhdc;
 } winDesc;
 
         /********************************************************/
@@ -110,6 +113,7 @@ HMENU RMenuGraph, RMenuGraphWin;
         /* Device Driver Entry Point */
 
 int WinDeviceDriver(DevDesc*,  double, double, double);
+extern void playDisplayList(DevDesc*);
 
         /********************************************************/
         /* There are a number of actions that every device      */
@@ -156,7 +160,7 @@ static void SetLineType(int, double, DevDesc*);
 
 static int fontindex = 2;
 static char *Rfontname[] = {"Courier New", "Times New", "Arial"};
-static char *Rfacename[] = {"","Bold","Italic","Bold Italic"};
+static char *Rfacename[] = {"","Bold","Italic","Bold Italic","Symbol"};
 static LOGFONT RGraphLF;
 
 #define SMALLEST 8
@@ -175,14 +179,14 @@ static LOGFONT RGraphLF;
 static void Win_RGSetFont(int face, int size, double rot, DevDesc *dd)
 {
         HDC     Ghdc;
-        HANDLE  cFont, sFont;
+        HANDLE  cFont;
         char    fname[30];
         double  trot;
         winDesc *wd = (winDesc *) dd->deviceSpecific;
 
 
         face--;
-        if( face < 0 || face > 3 ) face = 0;
+        if( face < 0 || face > 4 ) face = 0;
         size = 2* size/2;
         if(size < SMALLEST) size = SMALLEST;
         if(size > LARGEST) size = LARGEST;
@@ -191,13 +195,20 @@ static void Win_RGSetFont(int face, int size, double rot, DevDesc *dd)
         if(size != wd->fontsize || face != wd->fontface || rot != trot) { 
                 if( rot >= 0 )
                         RGraphLF.lfEscapement= (LONG) rot*10;
-
-                Ghdc=GetDC(wd->window);
-                if( face )
-                        sprintf(fname,"%s %s",Rfontname[fontindex],Rfacename[face]);
+                if( wd->Dhdc == NULL )
+                        Ghdc=GetDC(wd->window);
                 else
+                        Ghdc = wd->Dhdc;
+                switch( face) {
+                    case 0:
                         sprintf(fname,"%s", Rfontname[fontindex]);
-
+                        break;
+                    case 4:
+                        sprintf(fname,"%s", Rfacename[face]);
+                        break;
+                    default:
+                        sprintf(fname,"%s %s",Rfontname[fontindex],Rfacename[face]);
+                }
                 RGraphLF.lfHeight= -size*GetDeviceCaps(Ghdc,LOGPIXELSY)/72;
                 strcpy(RGraphLF.lfFaceName, fname);
                 cFont= CreateFontIndirect(&RGraphLF);
@@ -205,7 +216,8 @@ static void Win_RGSetFont(int face, int size, double rot, DevDesc *dd)
                 if( cFont == NULL )
                         warning("could not select the requested font");
                 DeleteObject(SelectObject(Ghdc, cFont));
-                ReleaseDC(wd->window, Ghdc);
+                if( wd->Dhdc == NULL )
+                        ReleaseDC(wd->window, Ghdc);
                 wd->fontsize = size;
                 wd->fontface = face+1;
         }
@@ -218,9 +230,12 @@ static void SetColor(unsigned col, int object, DevDesc *dd)
         COLORREF fcol, fixColor();
         winDesc *wd = (winDesc *) dd->deviceSpecific;
 
-        fcol = RGB(R_RED(col),R_GREEN(col), R_BLUE(col));   
-        Ghdc = GetDC(wd->window);
-
+        fcol = RGB(R_RED(col),R_GREEN(col), R_BLUE(col));
+        if( wd->Dhdc == NULL )  
+                Ghdc = GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
+                
         switch(object) {
                 case 1:         /*pen */
                         if(fcol != wd->pcol) {
@@ -229,23 +244,24 @@ static void SetColor(unsigned col, int object, DevDesc *dd)
                         wd->pcol = fcol;
                         }
                         break;
-        case 2:         /*brush */
-                if(fcol != wd->bcol ) {
-                        wd->cbrush = CreateSolidBrush(fcol);
-                        DeleteObject( SelectObject(Ghdc, wd->cbrush ));
-                        wd->bcol = fcol;
-                }
+                case 2:         /*brush */
+                        if(fcol != wd->bcol ) {
+                                wd->cbrush = CreateSolidBrush(fcol);
+                                DeleteObject( SelectObject(Ghdc, wd->cbrush ));
+                                wd->bcol = fcol;
+                        }
+                        break;
+                case 3:         /* text */
+                        if( fcol != wd->tcol ) {
+                        SetTextColor(Ghdc, fcol);
+                        wd->tcol = fcol;
+                        }
                 break;
-        case 3:         /* text */
-              if( fcol != wd->tcol ) {
-                SetTextColor(Ghdc, fcol);
-                wd->tcol = fcol;
-              }
-              break;
-        default:
-                error("SetColor invalid object specified\n");
+                default:
+                        error("SetColor invalid object specified\n");
     }
-    ReleaseDC(wd->window, Ghdc);
+    if ( wd->Dhdc == NULL )
+        ReleaseDC(wd->window, Ghdc);
 }
 
 /*
@@ -302,9 +318,14 @@ static void SetLineType(int newlty, double nlwd, DevDesc *dd)
         else {
                 wd->lty = newlty;
                 wd->lwd = nlwd;
-                Ghdc = GetDC(wd->window);
+                if ( wd->Dhdc == NULL )
+                        Ghdc = GetDC(wd->window);
+                else
+                        Ghdc = wd->Dhdc;
+                        
                 DeleteObject( SelectObject(Ghdc, wd->cpen) );
-                ReleaseDC(wd->window, Ghdc);
+                if ( wd->Dhdc == NULL )
+                        ReleaseDC(wd->window, Ghdc);
           }
       }
 }
@@ -342,10 +363,15 @@ static int Win_Open(DevDesc *dd, winDesc *wd, double width, double height)
 
         GetClientRect(RClient, (LPRECT) &r);
         
-        Chdc = GetDC(RClient);
+        if (wd->Dhdc == NULL )
+                Chdc = GetDC(RClient);
+        else
+                Chdc = wd->Dhdc;
         iw = ((int)width)*GetDeviceCaps(Chdc, LOGPIXELSX);
         ih = ((int) height) * GetDeviceCaps(Chdc, LOGPIXELSY);
-        ReleaseDC(RClient, Chdc);
+
+        if ( wd->Dhdc == NULL )
+                ReleaseDC(RClient, Chdc);
 
         if( iw > (r.right-r.left) || ih > (r.bottom-r.top) )
                 iw = ih = min(r.right-r.left,r.bottom-r.top);
@@ -406,12 +432,17 @@ static double Win_StrWidth(char *str, DevDesc *dd)
 
         size = dd->gp.cex * dd->gp.ps +0.5;
         Win_RGSetFont(dd->gp.font, size, -1, dd);
-        Ghdc=GetDC(wd->window);
+        if ( wd->Dhdc == NULL )
+                Ghdc=GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
         if( R_WinVersion >= 4.0 )
                 GetTextExtentPoint32(Ghdc, str, strlen(str), &ext);
         else
                 GetTextExtentPoint(Ghdc, str, strlen(str), &ext);
-        ReleaseDC(wd->window, Ghdc);
+
+        if ( wd->Dhdc == NULL )
+                ReleaseDC(wd->window, Ghdc);
         return (double) ext.cx;
 }
 
@@ -432,28 +463,37 @@ static void Win_MetricInfo(int c, double* ascent, double* descent,
         int first, last;
         int size = dd->gp.cex * dd->gp.ps + 0.5;
         winDesc *wd = (winDesc *) dd->deviceSpecific;
+        TEXTMETRIC Itm;
+        HDC Ghdc;
+        SIZE sz;
+        char xx[1];
 
         Win_RGSetFont(dd->gp.font, size, -1, dd);
-#ifdef old
-        first = wd->font->min_char_or_byte2;
-        last = wd->font->max_char_or_byte2;
 
-        if(c == 0) {
-                *ascent = wd->font->ascent;
-                *descent = wd->font->descent;
-                *width = wd->font->max_bounds.width;
-        }
+        if( wd->Dhdc == NULL )
+                Ghdc = GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
+
+        GetTextMetrics(Ghdc, &Itm);
+        
+        first = Itm.tmFirstChar;
+        last = Itm.tmLastChar;
+        *ascent = Itm.tmAscent;
+        *descent = Itm.tmDescent;
+
+        if(c == 0) 
+                *width = Itm.tmMaxCharWidth;
         else if(first <= c && c <= last) {
-                *ascent = wd->font->per_char[c-first].ascent;
-                *descent = wd->font->per_char[c-first].descent;
-                *width = wd->font->per_char[c-first].width;
+                xx[0]=c;
+                GetTextExtentPoint32(Ghdc, xx, 1, &sz);
+                *width = sz.cx-Itm.tmOverhang;
         }
         else {
                 *ascent = 0;
                 *descent = 0;
                 *width = 0;
         }
-#endif
 }
 
         /********************************************************/
@@ -485,13 +525,17 @@ static void Win_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
                 wd->clip.top = (int) y0;
         }
 
-        Ghdc = GetDC(wd->window);
-
+        if( wd->Dhdc == NULL )
+                Ghdc = GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
+                
         SelectClipRgn(Ghdc, NULL);
         IntersectClipRect(Ghdc, wd->clip.left, wd->clip.top, wd->clip.right,
                 wd->clip.bottom);
-
-        ReleaseDC(wd->window,Ghdc);
+                
+        if ( wd->Dhdc == NULL )
+                ReleaseDC(wd->window,Ghdc);
 }
 
         
@@ -508,7 +552,6 @@ static void Win_Clip(double x0, double x1, double y0, double y1, DevDesc *dd)
 
 static void Win_Resize(DevDesc *dd)
 {
-        int i;
         HDC Ghdc;
         winDesc *wd = (winDesc *) dd->deviceSpecific;
 
@@ -547,10 +590,16 @@ static void Win_NewPage(DevDesc *dd)
                 wd->bgcolor.blue  = R_BLUE(wd->bg)  * 257;
 */
         }
-        Ghdc = GetDC(wd->window);
+        if (wd->Dhdc == NULL )
+                Ghdc = GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
+                
         SelectClipRgn(Ghdc, NULL);
         FillRect(Ghdc, &(wd->graph), GetStockObject(WHITE_BRUSH));
-        ReleaseDC(wd->window, Ghdc);
+
+        if( wd->Dhdc == NULL )
+                ReleaseDC(wd->window, Ghdc);
 }
 
         /********************************************************/
@@ -685,9 +734,14 @@ static void Win_Rect(double x0, double y0, double x1, double y1,
         if( fg != NA_INTEGER )
                 SetColor(fg, 1, dd);
 
-        Ghdc = GetDC(wd->window);
+        if( wd->Dhdc == NULL )
+                Ghdc = GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
+                
         Recthelper(Ghdc, (int) x0, (int) y0, (int) x1, (int) y1, bg, fg);
-        ReleaseDC(wd->window, Ghdc);
+        if( wd->Dhdc == NULL )
+                ReleaseDC(wd->window, Ghdc);
 
 }
 
@@ -748,9 +802,13 @@ static void Win_Circle(double x, double y, int coords,
                 SetColor(border, 1, dd);
     }
 
-    Ghdc=GetDC(wd->window);
-    RCirclehelper(Ghdc, ix, iy, ir, wd->bg, wd->fg);
-    ReleaseDC(wd->window, Ghdc);
+    if( wd->Dhdc == NULL ) {
+        Ghdc=GetDC(wd->window);        
+        RCirclehelper(Ghdc, ix, iy, ir, wd->bg, wd->fg);
+        ReleaseDC(wd->window, Ghdc);
+    }
+    else
+        RCirclehelper(wd->Dhdc, ix, iy, ir, wd->bg, wd->fg);
 
 }
 
@@ -778,7 +836,10 @@ static void Win_Line(double x1, double y1, double x2, double y2,
         xx2 = (int) x2;
         yy2 = (int) y2;
 
-        Ghdc=GetDC(wd->window);
+        if( wd->Dhdc == NULL )
+                Ghdc=GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
 
         MoveToEx(Ghdc, xx1, yy1, &lp);
 
@@ -786,7 +847,8 @@ static void Win_Line(double x1, double y1, double x2, double y2,
         SetLineType(dd->gp.lty, dd->gp.lwd, dd);
 
         LineTo(Ghdc, xx2, yy2);
-        ReleaseDC(wd->window, Ghdc);
+        if (wd->Dhdc == NULL )
+                ReleaseDC(wd->window, Ghdc);
 }
 
         /********************************************************/
@@ -809,7 +871,10 @@ static void Win_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
         SetColor(dd->gp.col, 1, dd);
         SetLineType(dd->gp.lty, dd->gp.lwd, dd);
 
-        Ghdc = GetDC( wd->window);
+        if( wd->Dhdc == NULL )
+                Ghdc = GetDC( wd->window);
+        else
+                Ghdc = wd->Dhdc;
 
         devx = x[0];  devy = y[0];
         GConvert(&devx, &devy, coords, DEVICE, dd);
@@ -821,7 +886,8 @@ static void Win_Polyline(int n, double *x, double *y, int coords, DevDesc *dd)
                 LineTo(Ghdc, (int) devx, (int) devy);
                 MoveToEx(Ghdc, (int) devx, (int) devy, &lp);
         }
-        ReleaseDC(wd->window, Ghdc);
+        if ( wd->Dhdc == NULL )
+                ReleaseDC(wd->window, Ghdc);
 }
 
         /********************************************************/
@@ -878,9 +944,13 @@ static void Win_Polygon(int n, double *x, double *y, int coords, int bg, int fg,
                         SetColor(bg, 1, dd);
         }
 
-        Ghdc = GetDC(wd->window);
-        RPolyhelper(Ghdc, pt, n, bg, fg);
-        ReleaseDC(wd->window, Ghdc);
+        if( wd->Dhdc == NULL ) {
+                Ghdc = GetDC(wd->window);
+                RPolyhelper(Ghdc, pt, n, bg, fg);
+                ReleaseDC(wd->window, Ghdc);
+        }
+        else
+                RPolyhelper(wd->Dhdc, pt, n, bg, fg);
         
         C_free((char *) pt);
 }
@@ -929,7 +999,11 @@ static void Win_Text(double x, double y, int coords, char *str,
 
         GConvert(&x, &y, coords, DEVICE, dd);
 
-        Ghdc=GetDC(wd->window);
+        if( wd->Dhdc == NULL )
+                Ghdc=GetDC(wd->window);
+        else
+                Ghdc = wd->Dhdc;
+                
         if( xc != 0 || yc != 1 ) {
                 if( R_WinVersion >= 4.0 )
                         GetTextExtentPoint32(Ghdc,str,nstr,&lpSize);
@@ -943,7 +1017,8 @@ static void Win_Text(double x, double y, int coords, char *str,
 
         }
         TextOut(Ghdc,(int) x,(int) y,str, nstr);
-        ReleaseDC(wd->window, Ghdc);
+        if( wd->Dhdc == NULL )
+                ReleaseDC(wd->window, Ghdc);
 }
 
 
@@ -999,6 +1074,80 @@ static void Win_Hold(DevDesc *dd)
 {
 }
 
+static HDC Win_SetMetaDC(HDC Ihdc, RECT graphicsRect)
+{
+        RECT rr;
+        float iMMPerPelX, iMMPerPelY;
+        float i,j,k,l;
+
+        i = (float) GetDeviceCaps(Ihdc, HORZSIZE);
+        j = (float) GetDeviceCaps(Ihdc, HORZRES);
+        k = (float) GetDeviceCaps(Ihdc, VERTSIZE);
+        l = (float) GetDeviceCaps(Ihdc, VERTRES);
+        iMMPerPelX=(i*100.0)/j; 
+        iMMPerPelY=(k*100.0)/l; 
+        rr.left= floor(graphicsRect.left* iMMPerPelX);
+        rr.top = floor(graphicsRect.top* iMMPerPelY);
+        rr.right = floor(graphicsRect.right* iMMPerPelX);
+        rr.bottom = floor(graphicsRect.bottom* iMMPerPelY);
+        return( CreateEnhMetaFile(Ihdc, NULL, &rr, "R metafile"));
+}
+
+
+static void CopyGraphToScrap(DevDesc *dd)
+{
+        HDC Ghdc, hdcMem, metaHdc;
+        HBITMAP tbm=NULL;
+        HANDLE ehmf;
+        winDesc *wd = (winDesc *) dd->deviceSpecific;
+
+        Ghdc=GetDC(wd->window);
+
+        tbm=CreateCompatibleBitmap(Ghdc, wd->graph.right,wd->graph.bottom);
+        if ( tbm == NULL ) {
+            MessageBox( RFrame, "Cannot create bitmap","R Application",
+                MB_ICONEXCLAMATION | MB_OK);
+            ReleaseDC(wd->window, Ghdc);                
+            return;
+        }                          
+        hdcMem = CreateCompatibleDC(Ghdc);
+        SelectObject(hdcMem, wd->cpen);
+        SelectObject(hdcMem, wd->cbrush);
+        SetTextColor(hdcMem, wd->tcol);
+        
+        ReleaseDC(wd->window, Ghdc);        
+        SelectObject(hdcMem, tbm);
+        wd->Dhdc = hdcMem;
+        playDisplayList(dd);
+
+        if ( R_WinVersion >= 4.0 ) {
+                metaHdc = Win_SetMetaDC(Ghdc, wd->graph);
+                SelectObject(metaHdc, wd->cpen);
+                SelectObject(metaHdc, wd->cbrush);
+                SetTextColor(metaHdc, wd->tcol);
+                wd->Dhdc = metaHdc;
+                playDisplayList(dd);
+                ehmf = CloseEnhMetaFile(metaHdc);
+        }
+ 
+        if( OpenClipboard(RFrame) ) {
+            EmptyClipboard();
+            if( tbm != NULL )
+                SetClipboardData(CF_BITMAP, tbm);
+            if( ehmf != NULL ) {
+                SetClipboardData(CF_ENHMETAFILE, CopyEnhMetaFile(ehmf, NULL));
+                DeleteEnhMetaFile(ehmf);
+            }
+            CloseClipboard();
+        }
+        else
+            MessageBox( RFrame, "Cannot open the clipboard","R Application",
+                MB_ICONEXCLAMATION | MB_OK);
+                
+        wd->Dhdc = NULL;        
+        DeleteDC(hdcMem);
+}
+
         /********************************************************/
         /* the device-driver entry point is given a device      */
         /* description structure that it must set up.  this     */
@@ -1019,7 +1168,7 @@ static void Win_Hold(DevDesc *dd)
         /* have already been initialised by GInit (although you */
         /* should know what you are doing if you do this)       */
         /* (5) it must attach the device-specific parameters    */
-        /* structure to the device description structure        *
+        /* structure to the device description structure        */
         /* e.g., dd->deviceSpecfic = (void *) xd;               */
         /* (6) it must FREE the overall device description if   */
         /* it wants to bail out to the top-level                */
@@ -1044,13 +1193,14 @@ int WinDeviceDriver(DevDesc *dd,double width, double height, double pointsize)
         if (!(wd = (winDesc *) malloc(sizeof(winDesc)))) 
                 return 0;
 
+
         /* from here on, if need to bail out with "error", must also */
         /* free(wd) */
 
         /*  Font will load at first use  */
 
         ps = pointsize;
-        if(ps < 6 || ps > 24) ps = 12;
+        if(ps < 6 || ps > 24) ps = 10;
         ps = 2*(ps/2);
 
         wd->fontface = -1;
@@ -1058,6 +1208,7 @@ int WinDeviceDriver(DevDesc *dd,double width, double height, double pointsize)
         wd->pcol = 0;
         wd->bcol = R_RGB(255,255,255);
         wd->tcol = 0;
+		wd->Dhdc = NULL;
 
         dd->dp.font = 1;
         dd->dp.ps = ps;
@@ -1137,6 +1288,8 @@ int WinDeviceDriver(DevDesc *dd,double width, double height, double pointsize)
         wd->srt = 0.0;
         wd->lty = 0;
         wd->resize = 0;
+        
+        wd->Dhdc = NULL;
 
         dd->displayListOn = 1;
 
@@ -1162,7 +1315,6 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
         LPARAM lParam)
 {
         PAINTSTRUCT ps;
-        HDC thdc;
         DevDesc *dd;
         winDesc *wd;
 
@@ -1180,7 +1332,6 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                                          wd->graph.bottom = HIWORD(lParam);
                                          wd->graph.right  = LOWORD(lParam);
                                          wd->resize = 1;
-                                         /*Win_Resize(dd);*/
                                 }
                          }
                  }
@@ -1209,14 +1360,6 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
                    BeginPaint(hWnd, &ps);
                    SelectClipRgn(ps.hdc, NULL);
                    EndPaint(hWnd, &ps);
-#ifdef PRINTING
-                   if ( RGBhdc != NULL ) {
-                       thdc = GetDC(RGraphWnd);
-                       BitBlt(thdc, 0, 0, graphicsRect.right,
-                        graphicsRect.bottom, RGBhdc, 0, 0, SRCCOPY);
-                       ReleaseDC(RGraphWnd, thdc);
-                   }
-#endif
                    return 0;
               case WM_SETFOCUS:
                    SetFocus(hWnd);
@@ -1243,81 +1386,99 @@ LRESULT FAR PASCAL GraphWndProc(HWND hWnd, UINT message, WPARAM wParam,
 
 void doGraphicsMenu(HWND GWnd, WPARAM wParam, LPARAM lParam)
 {
-        HDC hdc;
-
+        DevDesc *dd;
+        HBITMAP tbm=NULL;
+        HANDLE ehmf;
+        winDesc *wd;
+        HDC Ghdc, metaHdc, hdcMem;
+        BITMAPINFOHEADER bi, *lpbi;
+        BITMAP bmp;
+        HANDLE hDIB;
+        int i;
+        WORD cClrBits;
+        LPBYTE lpBits;
+               
+        dd = (DevDesc *) GetWindowLong(GWnd, GWL_USERDATA);
+        wd = (winDesc *) dd->deviceSpecific;
         switch (wParam) {
                 case RRR_SETUP:
                         SysBeep();
                         break;
                 case RRR_PRINT:
-#ifdef PRINTING
-                        if ( RGMhdc != NULL ) {
-                                if( RGMhmf != NULL )
-                                        if( R_WinVersion >= 4.0 )
-                                                DeleteEnhMetaFile(RGMhmf);
-                                        else
-                                                DeleteMetaFile(RGMhmf);
-                                RGMhmf=CloseEnhMetaFile(RGMhdc);
-                        }
-                        if( RGMhmf != NULL && R_WinVersion >= 4.0 ) {
-                                RPrintGraph(RConsoleFrame, CopyEnhMetaFile(RGMhmf,NULL));
-                                hdc = GetDC(RGraphWnd);
-                                Win_SetMetaDC(hdc);
-                                ReleaseDC(RGraphWnd, hdc);
-                                PlayEnhMetaFile(RGMhdc, RGMhmf, &graphicsRect);
-                                DeleteEnhMetaFile(RGMhmf);
-                                RGMhmf=NULL;
+                        Ghdc=GetDC(wd->window);
+                        if( R_WinVersion >= 4.0 ) {
+                             metaHdc = Win_SetMetaDC(Ghdc, wd->graph);
+                             SelectObject(metaHdc, wd->cpen);
+                             SelectObject(metaHdc, wd->cbrush);
+                             SetTextColor(metaHdc, wd->tcol);
+                             wd->Dhdc = metaHdc;
+                             playDisplayList(dd);
+                             ehmf = CloseEnhMetaFile(metaHdc);
+                             wd->Dhdc = NULL;
+                             RPrintGraph(RConsoleFrame, CopyEnhMetaFile(ehmf,NULL));
+                             DeleteEnhMetaFile(ehmf);
                         }
                         else {  /* one of the reasons I really hate Windows */
-                            GetObject(RGBitMap, sizeof(BITMAP), &bmp);
-                            bi.biSize = sizeof(BITMAPINFOHEADER);
-                            bi.biWidth = bmp.bmWidth;
-                            bi.biHeight = bmp.bmHeight;
-                            bi.biPlanes = bmp.bmPlanes;
-                            bi.biBitCount = bmp.bmBitsPixel;
-                            bi.biCompression = BI_RGB;
-                            bi.biClrUsed = 0;
-                            bi.biXPelsPerMeter = 0;
-                            bi.biYPelsPerMeter = 0;
-                            bi.biClrImportant = 0;
+                             tbm=CreateCompatibleBitmap(Ghdc, wd->graph.right,wd->graph.bottom);
+                             if ( tbm == NULL ) {
+                                     MessageBox( RFrame, "Cannot create bitmap","R Application",
+                                             MB_ICONEXCLAMATION | MB_OK);
+                                     ReleaseDC(wd->window, Ghdc);                
+                                     return;
+                             }                          
+                             hdcMem = CreateCompatibleDC(Ghdc);
+                             SelectObject(hdcMem, wd->cpen);
+                             SelectObject(hdcMem, wd->cbrush);
+                             SetTextColor(hdcMem, wd->tcol);        
+                             ReleaseDC(wd->window, Ghdc);        
+                             SelectObject(hdcMem, tbm);
+                             wd->Dhdc = hdcMem;
+                             playDisplayList(dd);
+                             GetObject(tbm, sizeof(BITMAP), &bmp);
+                             bi.biSize = sizeof(BITMAPINFOHEADER);
+                             bi.biWidth = bmp.bmWidth;
+                             bi.biHeight = bmp.bmHeight;
+                             bi.biPlanes = bmp.bmPlanes;
+                             bi.biBitCount = bmp.bmBitsPixel;
+                             bi.biCompression = BI_RGB;
+                             bi.biClrUsed = 0;
+                             bi.biXPelsPerMeter = 0;
+                             bi.biYPelsPerMeter = 0;
+                             bi.biClrImportant = 0;
 
-                            cClrBits = (WORD) (bmp.bmPlanes * bmp.bmBitsPixel);
-                            if( cClrBits == 1)
+                             cClrBits = (WORD) (bmp.bmPlanes * bmp.bmBitsPixel);
+                             if( cClrBits == 1)
                                 cClrBits = 1;
-                            else if( cClrBits <= 4)
+                             else if( cClrBits <= 4)
                                 cClrBits = 4;
-                            else if( cClrBits <= 8)
+                             else if( cClrBits <= 8)
                                 cClrBits = 8;
-                            else if( cClrBits <=16)
+                             else if( cClrBits <=16)
                                 cClrBits = 16;
-                            else if (cClrBits <= 24)
+                             else if (cClrBits <= 24)
                                 cClrBits = 24;
-                            else
+                             else
                                 cClrBits = 32;
 
-                            bi.biSizeImage = (bmp.bmWidth +7)/8 * bmp.bmHeight * cClrBits;
-                            lpBits = (LPBYTE) GlobalAlloc(GMEM_FIXED, bi.biSizeImage);
+                             bi.biSizeImage = (bmp.bmWidth +7)/8 * bmp.bmHeight * cClrBits;
+                             lpBits = (LPBYTE) GlobalAlloc(GMEM_FIXED, bi.biSizeImage);
 
-                            hDIB = GlobalAlloc(GHND, sizeof(BITMAPINFOHEADER)+
+                             hDIB = GlobalAlloc(GHND, sizeof(BITMAPINFOHEADER)+
                                         16*sizeof(RGBQUAD));
-                            lpbi =(BITMAPINFOHEADER *) GlobalLock(hDIB);
-                            *lpbi = bi;
-                            hdc = GetDC(RGraphWnd);
-                            i = GetDIBits(hdc, RGBitMap, 0, bmp.bmHeight, lpBits
-,
+                             lpbi =(BITMAPINFOHEADER *) GlobalLock(hDIB);
+                             *lpbi = bi;
+                             Ghdc = GetDC(wd->window);
+                             i = GetDIBits(Ghdc, tbm, 0, bmp.bmHeight, lpBits,
                                     (LPBITMAPINFO) lpbi, DIB_RGB_COLORS);
-                            ReleaseDC(RGraphWnd, hdc);
+                             ReleaseDC(wd->window, Ghdc);
 
-                            RPrintBitMap((LPBITMAPINFO) lpbi, (LPBYTE) lpBits);
-                            GlobalFree(hDIB);
-                            GlobalFree(lpBits);
+                             RPrintBitMap((LPBITMAPINFO) lpbi, (LPBYTE) lpBits);
+                             GlobalFree(hDIB);
+                             GlobalFree(lpBits);
                         }
-#endif
                         break;
                 case RRR_COPY:
-#ifdef PRINTING 
-                        CopyGraphToScrap();
-#endif
+                        CopyGraphToScrap(dd);
                         break;
                 }
 }

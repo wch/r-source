@@ -3,19 +3,21 @@ follow the following instructions:
 
 	o make distclean in the R directory.
 
+	o edit R/src/windows/Platform.h to indicate the version number 
+
 	o run configure.win.
 
 	o copy to the Windows machine the R/src directories: 
 		- include
 		- appl
 		- graphics
-		- lib
 		- main
 		- math
 		- regex
 		- windows
 
 	o copy the R directories:
+		- afm 
 		- demos
 		- html
 		- library

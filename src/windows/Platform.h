@@ -4,6 +4,11 @@
 #define Win32 
 #define Windows
 
+/* uncomment one of the compilers */
+/* #define VisC */
+/* #define WatcomC */
+
+
 /* Floating Point Arithmetic */
 #define HAVE_MATHERR		/* System V */
 
@@ -58,12 +63,12 @@
 #define R_CPU		"x86"
 #define R_VENDOR	"IBM"
 #define R_OS		"Windows95"
-#define R_MAJOR		"50"
-#define R_MINOR		"0"
+#define R_MAJOR		"0"
+#define R_MINOR		"62"
 #define R_STATUS	"Beta"
 #define R_STATUS_REV	"0"
-#define R_DAY		"1"
-#define R_MONTH		"Sept"
-#define R_YEAR		"1997"
+#define R_DAY		"30"
+#define R_MONTH		"May"
+#define R_YEAR		"1998"
 
 #endif

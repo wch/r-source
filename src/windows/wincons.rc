@@ -1,181 +1,355 @@
- /*  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995  Robert Gentleman and Ross Ihaka
- *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
- */
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
 
-#include <windows.h>
-#include "WINcons.h"
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+#include "wincons.h"
 
-PAbortDlg DIALOG 40,40,120, 40
-STYLE WS_POPUP | WS_CAPTION | WS_VISIBLE
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+PABORTDLG DIALOG DISCARDABLE  40, 40, 120, 40
+STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION
 BEGIN
-        CTEXT "Cancel Printing", -1, 4, 6, 120, 12
-        DEFPUSHBUTTON "Cancel", IDCANCEL, 44, 22, 32, 14, WS_GROUP
+    CTEXT           "Cancel Printing",-1,4,6,120,12
+    DEFPUSHBUTTON   "Cancel",IDCANCEL,44,22,32,14,WS_GROUP
 END
 
-AboutBox DIALOG 22, 17, 144, 75
+ABOUTBOX DIALOG DISCARDABLE  22, 17, 144, 75
 STYLE DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
 CAPTION "About R"
+FONT 8, "MS Sans Serif"
 BEGIN
-        CTEXT "R - A Language and Environment"  -1, 0, 5, 144,8
-        CTEXT "Copyright 1993, 1994"    -1, 0,14,144,8
-        CTEXT "by Robert Gentleman and Ross Ihaka"      -1,0,34,144,8
-        DEFPUSHBUTTON "OK"      IDOK,53,59,32,14,WS_GROUP
+    CTEXT           "R - A Language and Environment",-1,0,5,144,8
+    CTEXT           "Copyright 1993, 1994, 1998",-1,0,14,144,8
+    CTEXT           "by Robert Gentleman and Ross Ihaka",-1,0,34,144,8
+    DEFPUSHBUTTON   "OK",IDOK,53,59,32,14,WS_GROUP
 END
 
-SaveBox DIALOG 22, 17, 144, 80
+SAVEBOX DIALOG DISCARDABLE  22, 17, 144, 80
 STYLE DS_MODALFRAME | WS_CAPTION
 CAPTION "SAVE"
 BEGIN
-        CTEXT "Save Workspace?", -1, 0, 5, 144, 8
-        PUSHBUTTON  "Yes", IDOK, 10, 20, 40, 14, WS_GROUP
-        PUSHBUTTON  "No",  RDD_NO, 10, 60, 40, 14, WS_GROUP
-        PUSHBUTTON "Cancel", IDCANCEL, 70, 20, 40, 14, WS_GROUP
+    CTEXT           "Save Workspace?",-1,0,5,144,8
+    PUSHBUTTON      "Yes",IDOK,10,20,40,14,WS_GROUP
+    PUSHBUTTON      "No",RDD_NO,10,60,40,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,70,20,40,14,WS_GROUP
 END
 
-DEVarBox DIALOG  31, 21, 150, 100
+DEVARBOX DIALOG DISCARDABLE  31, 21, 150, 100
 STYLE DS_MODALFRAME | WS_CAPTION
 CAPTION "R DataEntry"
-{
- CTEXT "Data Type", -1, 0, 5, 150, 8
- RADIOBUTTON "Numeric", RDD_NUM, 10, 30, 75, 8, WS_TABSTOP | WS_GROUP
- RADIOBUTTON "Character", RDD_CHAR, 10, 43, 75, 8
- DEFPUSHBUTTON "OK", IDOK, 94, 20, 40, 14, WS_GROUP
- PUSHBUTTON "Cancel", IDCANCEL, 94, 39, 40, 14, WS_GROUP
- CTEXT "Variable Name", -1, 6, 66, 110, 8
- EDITTEXT RDD_NAME, 4, 79, 110, 14, WS_GROUP
-} 
+BEGIN
+    CTEXT           "Data Type",-1,0,5,150,8
+    RADIOBUTTON     "Numeric",RDD_NUM,10,30,75,8,WS_GROUP | WS_TABSTOP
+    RADIOBUTTON     "Character",RDD_CHAR,10,43,75,8
+    DEFPUSHBUTTON   "OK",IDOK,94,20,40,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,94,39,40,14,WS_GROUP
+    CTEXT           "Variable Name",-1,6,66,110,8
+    EDITTEXT        RDD_NAME,4,79,110,14,WS_GROUP
+END
 
-RMenuInit MENU 
-{
- POPUP "&About"
- {
-  MENUITEM "&About", RRR_ABOUT
- }
+SYSDATFILE DIALOG DISCARDABLE  0, 0, 293, 110
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Read System Data"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,236,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,236,24,50,14
+    LISTBOX         200,23,48,85,55,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LISTBOX         201,127,48,90,55,LBS_SORT | LBS_NOINTEGRALHEIGHT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Choose a Data File",IDC_STATIC,28,16,73,11
+    LTEXT           "Choose a System Data Directory",IDC_STATIC,125,16,85,22
+END
 
- POPUP "&File"
- {
-  MENUITEM "&Open", RRR_OPEN
-  MENUITEM "&Quit", RRR_QUIT
- }
+RMEMORY DIALOG DISCARDABLE  0, 0, 199, 167
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "R Memory Settings"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,22,146,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,115,146,50,14
+    LTEXT           "Values cannot be set smaller than those displayed.",
+                    IDC_STATIC,7,7,158,22
+    LTEXT           "Changes take effect on restart.",IDC_STATIC,7,31,185,11
+    LTEXT           "Size of the vector heap (in Mb). Must be an integer in (1,1000).",
+                    IDC_STATIC,7,62,107,23
+    LTEXT           "Size of the Language heap.    Must be an integer in (1,1000000)",
+                    IDC_STATIC,7,105,101,28
+    EDITTEXT        102,123,63,40,14,ES_AUTOHSCROLL
+    EDITTEXT        103,123,106,40,14,ES_AUTOHSCROLL
+END
 
- POPUP "&Window"
- {
-  MENUITEM "&Tile", RRR_TILE
-  MENUITEM "&Cascade", RRR_CASC
-  MENUITEM "Arrange &Icons", RRR_ARRA
- }
+RRTAB DIALOG DISCARDABLE  0, 0, 278, 95
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "R read.table"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,161,74,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,221,74,50,14
+    PUSHBUTTON      "Browse",201,221,35,50,14
+    PUSHBUTTON      "Set Args",123,89,73,50,14
+    LTEXT           "Choose File Name",101,7,14,137,16
+    EDITTEXT        200,7,35,194,14,ES_AUTOHSCROLL
+END
 
-}
+USERDATFILE DIALOG DISCARDABLE  0, 0, 248, 173
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "read.table (settings)"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,191,72,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,191,103,50,14
+    LTEXT           "file",200,7,17,188,8
+    LTEXT           "header",IDC_STATIC,7,44,31,8
+    CONTROL         "FALSE",204,"Button",BS_AUTORADIOBUTTON | WS_GROUP,7,60,
+                    38,10
+    CONTROL         "TRUE",205,"Button",BS_AUTORADIOBUTTON | WS_GROUP,7,73,
+                    36,10
+    LTEXT           "as.is",IDC_STATIC,7,106,15,8
+    CONTROL         "FALSE",202,"Button",BS_AUTORADIOBUTTON,7,118,38,10
+    CONTROL         "TRUE",203,"Button",BS_AUTORADIOBUTTON,7,132,36,10
+    LTEXT           "sep",IDC_STATIC,81,45,12,8
+    EDITTEXT        206,87,59,40,14,ES_AUTOHSCROLL
+    LTEXT           "skip",IDC_STATIC,79,92,14,8
+    EDITTEXT        208,90,104,40,14,ES_AUTOHSCROLL
+    LTEXT           "na.strings",IDC_STATIC,80,128,31,8
+    EDITTEXT        207,90,142,40,14,ES_AUTOHSCROLL
+END
 
-RMenuConsole MENU 
-{
- POPUP "&File"
- {
-  MENUITEM "&About", RRR_ABOUT
-  MENUITEM "&Open", RRR_OPEN
-  MENUITEM "&Save", RRR_SAVE
-  MENUITEM "&Load", RRR_LOAD
-  MENUITEM "&Print", RRR_PRINT
-  MENUITEM "&Quit", RRR_QUIT
- }
 
- POPUP "&Edit"
- {
-  MENUITEM "Cu&t\tCtrl+X", RRR_CUT
-  MENUITEM "&Copy\tCtrl+C", RRR_COPY
-  MENUITEM "&Paste\tCtrl+V", RRR_PASTE
-  MENUITEM "De&lete", RRR_DEL
-  MENUITEM "Copy/Paste\tAlt+x", RRR_CPASTE
-  MENUITEM "Quit Browser\tCtrl+D", RRR_QBROW
- }
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
 
- POPUP "&Window"
- {
-  MENUITEM "&Tile", RRR_TILE
-  MENUITEM "&Cascade", RRR_CASC
-  MENUITEM "Arrange &Icons", RRR_ARRA
- }
+RMENUINIT MENU DISCARDABLE 
+BEGIN
+    POPUP "&About"
+    BEGIN
+        MENUITEM "&About",                      RRR_ABOUT
+    END
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Open",                       RRR_OPEN
+        MENUITEM "&Quit",                       RRR_QUIT
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Tile",                       RRR_TILE
+        MENUITEM "&Cascade",                    RRR_CASC
+        MENUITEM "Arrange &Icons",              RRR_ARRA
+    END
+END
 
-}
-        /*
-        POPUP "&Help"
-                BEGIN
-                        MENUITEM "&Help...", RRR_HELP
-                END
-  END
-                          */
-RMenuGraph MENU 
-{
- POPUP "&Plot"
- {
-  MENUITEM "&Print", RRR_PRINT
-  MENUITEM "&Copy", RRR_COPY
- }
+RMENUCONSOLE MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Source File",                118
+        MENUITEM "&Read System Data",           RRR_SYSDATA
+        MENUITEM "Read &Data",                  RRR_DATA
+        MENUITEM SEPARATOR
+        MENUITEM "&Print",                      113
+        MENUITEM "&Quit",                       103
+    END
+    POPUP "&Workspace"
+    BEGIN
+        MENUITEM "&New",                        101
+        MENUITEM "&Open",                       RRR_OPEN
+        MENUITEM "&Save",                       RRR_SAVE
+        MENUITEM "&Change Memory",              125
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "Cu&t\tCtrl+X",                RRR_CUT
+        MENUITEM "&Copy\tCtrl+C",               RRR_COPY
+        MENUITEM "&Paste\tCtrl+V",              RRR_PASTE
+        MENUITEM "De&lete",                     RRR_DEL
+        MENUITEM "Copy/Paste\tAlt+x",           RRR_CPASTE
+        MENUITEM "Quit Browser\tCtrl+D",        RRR_QBROW
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Tile",                       RRR_TILE
+        MENUITEM "&Cascade",                    RRR_CASC
+        MENUITEM "Arrange &Icons",              RRR_ARRA
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help",                       126
+        MENUITEM "&About",                      RRR_ABOUT
+    END
+END
 
- POPUP "&Window"
- {
-  MENUITEM "&Tile", RRR_TILE
-  MENUITEM "&Cascade", RRR_CASC
-  MENUITEM "Arrange &Icons", RRR_ARRA
- }
+RMENUGRAPH MENU DISCARDABLE 
+BEGIN
+    POPUP "&Plot"
+    BEGIN
+        MENUITEM "&Print",                      RRR_PRINT
+        MENUITEM "&Copy",                       RRR_COPY
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Tile",                       RRR_TILE
+        MENUITEM "&Cascade",                    RRR_CASC
+        MENUITEM "Arrange &Icons",              RRR_ARRA
+    END
+END
 
-}
+RMENUTED MENU DISCARDABLE 
+BEGIN
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Clear",                      RRR_CLEAR
+        MENUITEM "&Refresh",                    RRR_REFRESH
+        MENUITEM "&Quit",                       RRR_QUIT
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Tile",                       RRR_TILE
+        MENUITEM "&Cascade",                    RRR_CASC
+        MENUITEM "Arrange &Icons",              RRR_ARRA
+    END
+END
 
-RMenuTEd MENU 
-{
- POPUP "&Edit"
- {
-  MENUITEM "&Clear", RRR_CLEAR
-  MENUITEM "&Refresh", RRR_REFRESH
-  MENUITEM "&Quit", RRR_QUIT
- }
+RMENUDE MENU DISCARDABLE 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Quit",                       RRR_QUIT
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "&Tile",                       RRR_TILE
+        MENUITEM "&Cascade",                    RRR_CASC
+        MENUITEM "Arrange &Icons",              RRR_ARRA
+    END
+END
 
- POPUP "&Window"
- {
-  MENUITEM "&Tile", RRR_TILE
-  MENUITEM "&Cascade", RRR_CASC
-  MENUITEM "Arrange &Icons", RRR_ARRA
- }
 
-}
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
 
-RMenuDE MENU 
-{
- POPUP "&File"
- {
-  MENUITEM "&Quit", RRR_QUIT
- }
+MDIACCEL ACCELERATORS MOVEABLE PURE 
+BEGIN
+    "^Z",           RRR_UNDO,               ASCII   
+    "^X",           RRR_CUT,                ASCII   
+    "^C",           RRR_COPY,               ASCII   
+    "^V",           RRR_PASTE,              ASCII   
+    "x",            RRR_CPASTE,             ASCII,  ALT
+    "^D",           RRR_QBROW,              ASCII   
+END
 
- POPUP "&Window"
- {
-  MENUITEM "&Tile", RRR_TILE
-  MENUITEM "&Cascade", RRR_CASC
-  MENUITEM "Arrange &Icons", RRR_ARRA
- }
 
-}
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
 
-MdiAccel ACCELERATORS 
-{
- "^Z", RRR_UNDO, ASCII
- "^X", RRR_CUT, ASCII
- "^C", RRR_COPY, ASCII
- "^V", RRR_PASTE, ASCII
- "x", RRR_CPASTE, ALT
- "^D", RRR_QBROW, ASCII
-}
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""wincons.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    "SYSDATFILE", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 286
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+
+    "RMEMORY", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 192
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 160
+    END
+
+    "RRTAB", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 271
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 88
+    END
+
+    "USERDATFILE", DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 241
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 166
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
 
