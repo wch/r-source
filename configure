@@ -3693,7 +3693,7 @@ ac_given_INSTALL="$INSTALL"
 
 trap 'rm -fr `echo "Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
   etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
-  etc/Sd2Rd etc/build-help etc/build-htmlpkglist etc/help.pretty
+  etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
  src/include/Platform.h" | sed "s/:[^ ]*//g"` conftest*; exit 1' 1 2 15
 EOF
@@ -3800,7 +3800,7 @@ cat >> $CONFIG_STATUS <<EOF
 
 CONFIG_FILES=\${CONFIG_FILES-"Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
   etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
-  etc/Sd2Rd etc/build-help etc/build-htmlpkglist etc/help.pretty
+  etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
 "}
 EOF
