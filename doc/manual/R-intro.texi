@@ -387,6 +387,8 @@ An alternative is
 
 For a feature specified by special characters, the argument must be
 enclosed in double or single quotes, making it a ``character string'':
+This is also necessary for a few words with syntactic meaning including
+@code{if}, @code{for} and @code{function}.
 
 @example
 > help("[[")

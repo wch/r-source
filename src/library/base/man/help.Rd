@@ -72,7 +72,8 @@ type?topic
 }
 \details{
   In the case of unary and binary operators and control-flow special
-  forms, the name may need to be quoted.
+  forms (including \code{if}, \code{for} and \code{function}), the name
+  may need to be quoted.
 
 #ifdef unix
   If \code{offline} is \code{TRUE}, hardcopy of the documentation is
