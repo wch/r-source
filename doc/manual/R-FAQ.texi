@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-37, 2001-03-28
+@set FAQ-VERSION 1.2-38, 2001-04-09
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1402,6 +1402,12 @@ Binary file stream support functions.
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
 G. A. Milliken, W. W. Stroup and R. D. Wolfinger, 1996, SAS Institute.
+@item SuppDists
+Ten distributions supplementing those built into R (Inverse Gauss,
+Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
+maximum F ratio, the Pearson product moment correlation coefficiant,
+Johnson distributions, normal scores and generalized hypergeometric
+distributions).
 @item XML
 Facilities for reading @acronym{XML} documents and DTDs.
 @item acepack
@@ -2380,6 +2386,7 @@ In any case, do not call @code{as.numeric()} or their likes directly.
 @node Are Trellis displays implemented in R?, What are the enclosing and parent environments?, How do I convert factors to numeric?, R Miscellanea
 @section Are Trellis displays implemented in R?
 
+@c FIXME 1.2.3 dotplot => dotchart
 Not yet.  Meanwhile, you could look at @code{coplot()} and
 @code{dotplot()} which might do at least some of what you want.  Note
 also that the R version of @code{pairs()} is fairly general and provides
