@@ -17,14 +17,13 @@
 \usage{
 \method{plot}{dendrogram}(x, type=c("rectangle", "triangle"),
                 center=FALSE, xlab="", ylab="", ...)
-as.dendrogram.hclust(object, ...)
 \method{cut}{dendrogram}(x, h, ...)
 
 plotNode(x1, x2, subtree, type, center)
 plotNodeLimit(x1, x2, subtree, center)
 }
 \arguments{
-  \item{x, object}{Object of class \code{"dendrogram"}.}
+  \item{x}{Object of class \code{"dendrogram"}.}
   \item{type}{Type of plot.}
   \item{center}{If \code{TRUE}, nodes are plotted centered with respect to
     the leaves in the branch. Default is to plot them in the middle of all
@@ -56,6 +55,9 @@ plotNodeLimit(x1, x2, subtree, center)
   \code{cut.dendrogram()} returns a list with components \code{$upper} and
   \code{$lower}, the first is a truncated version of the original tree,
   the latter a list with the branches obtained from cutting the tree.
+
+  Objects of class \code{"hclust"} can be converted to class
+  \code{"dendrogram"} using method \code{as.dendrogram}.
 
   \code{plotNode()} and \code{plotNodeLimit()} are helper functions.
 }
