@@ -209,6 +209,11 @@ Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
 ..Dot documented to work, but intended to.
+* PR# 6597 *
+Subject: summary.rpart() in rpart package
+From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
+Date: Tue, 17 Feb 2004 17:07:02 -0600
+..Unreadable, and no response to follow-up.
 
 Directory:  Analyses
 
@@ -402,6 +407,11 @@ Subject: Maybe a problem in binary read/write
 From: accot@free.fr
 Date: Tue, 18 Jun 2002 22:51:17 +0200 (MET DST)
 ..I don't think file() is said to work with devices!
+* PR# 6605 *
+Subject: Segmentation fault with fix()
+From: f.gherardini@pigrecodata.net
+Date: Mon, 23 Feb 2004 01:27:05 +0100 (CET)
+..actually with the data editor on UNIX
 
 Directory:  Installation
 
@@ -812,93 +822,24 @@ Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 Subject: Bug
 From: huan.huang@bnpparibas.com
 Date: Fri,  6 Feb 2004 18:40:05 +0100 (CET)
-* PR# 6588 *
-Subject: limitation
-From: Ming Lo <fnlo@ust.hk>
-Date: Mon, 16 Feb 2004 20:24:54 +0800 (HKT)
-* PR# 6591 *
-Subject: R-bugs I found your addie ano
-From: "Lee Law" <NEWVWD@wsdc3sx.com>
-Date: Tue, 17 Feb 2004 15:56:21 -0400
-* PR# 6592 *
-Subject: Youre not gonna believe this man!
-From: "Natalie ." <dygmhnsdvvdhk@apexmail.com>
-Date: Mon, 16 Feb 2004 22:52:41 -0600
-* PR# 6594 *
-Subject: typo in help(names)?
-From: weigand@mayo.edu
-Date: Tue, 17 Feb 2004 16:24:08 +0100 (CET)
-* PR# 6595 *
-Subject: Your message to R-announce awaits moderator approval
-From: r-announce-bounces@stat.math.ethz.ch
-Date: Tue, 17 Feb 2004 16:12:30 +0100
-* PR# 6596 *
-Subject: "Out of memory" while building R with perl 5.8.2
-From: vangyzen@stat.duke.edu
-Date: Tue, 17 Feb 2004 20:32:01 +0100 (CET)
-* PR# 6597 *
-Subject: summary.rpart() in rpart package
-From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
-Date: Tue, 17 Feb 2004 17:07:02 -0600
-* PR# 6598 *
-Subject: src/scripts/Makefile bug
-From: Atro Tossavainen <atossava@cc.helsinki.fi>
-Date: Wed, 18 Feb 2004 14:45:24 +0200 (EET)
-* PR# 6599 *
-Subject: warning
-From: bw@bwdigitronik.ch
-Date: Wed, 18 Feb 2004 16:53:58 +0100
-* PR# 6600 *
-Subject: R would not quit (bug?)
-From: Michael Herron <Michael.C.Herron@Dartmouth.EDU>
-Date: Wed, 18 Feb 2004 14:27:07 -0500
 * PR# 6601 *
 Subject: Process R segmentation with strsplit()
 From: "wolski" <wolski@molgen.mpg.de>
 Date: Thu, 19 Feb 2004 19:05:49 +0100
-* PR# 6602 *
-Subject: This new cologne gets girls horny as hell uzBr 1S
-From: "Daniel Vinson " <Dan2@excite.com>
-Date: Sat, 21 Feb 2004 02:49:32 -0100
-* PR# 6603 *
-Subject: "cannot allocate vector" error message
-From: alog53@aol.com
-Date: Sat, 21 Feb 2004 21:49:49 +0100 (CET)
-* PR# 6604 *
-Subject: The secret to attracting girls is in the pheromones BweG R%RND
-From: "Robert Watts " <Mike6@excite.com>
-Date: Sun, 22 Feb 2004 18:31:06 -0500
-* PR# 6605 *
-Subject: Segmentation fault with fix()
-From: f.gherardini@pigrecodata.net
-Date: Mon, 23 Feb 2004 01:27:05 +0100 (CET)
-* PR# 6606 *
-Subject: Accident
-From: abarrett@autrytech.com
-Date: Mon, 23 Feb 2004 15:22:53 -0600
-* PR# 6607 *
-Subject: Read it immediately
-From: teigecahill@edinarealty.com
-Date: Mon, 23 Feb 2004 15:31:25 -0600
-* PR# 6608 *
-Subject: failure notice
-Subject: Hello
-From: MAILER-DAEMON@mpls-mailin-06.inet.qwest.net
-From: r-bugs@biostat.ku.dk
-Date: 23 Feb 2004 23:32:23 -0000
-Date: Mon, 23 Feb 2004 17:34:15 -0600
-* PR# 6609 *
-Subject: Delivery Failure:  Ziqxzb
-Subject: Ziqxzb
-From: scc@spaar.com
-From: r-bugs@biostat.ku.dk
-Date: Mon, 23 Feb 2004 21:29:47 -0600
-Date: Mon, 23 Feb 2004 21:31:07 -0600
-* PR# 6610 *
-Subject: R: SearchEngine
-From: tone.zgonc@rzs-hm.si
-Date: Tue, 24 Feb 2004 11:05:47 +0100 (CET)
-* PR# 6611 *
-Subject: bug in ifelse
-From: Svetlana Eden <svetlana.eden@vanderbilt.edu>
-Date: Tue, 24 Feb 2004 14:20:19 -0600
+..mangled input supplied.
+* PR# 6612 *
+Subject: suggestions
+From: ivo.welch@yale.edu
+Date: Wed, 25 Feb 2004 16:07:27 +0100 (CET)
+* PR# 6613 *
+Subject: summary()
+From: ivo.welch@yale.edu
+Date: Wed, 25 Feb 2004 16:10:57 +0100 (CET)
+* PR# 6614 *
+Subject: aliases
+From: ivo.welch@yale.edu
+Date: Wed, 25 Feb 2004 16:13:38 +0100 (CET)
+* PR# 6615 *
+Subject: re: getting that raise
+From: "Colin" <DVNMLD@hotmail.com>
+Date: Wed, 25 Feb 2004 21:35:10 +0400
