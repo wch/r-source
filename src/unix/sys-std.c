@@ -852,8 +852,9 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     start = times(&timeinfo);
     for (;;) {
+	fd_set *what;	
         Timeout = R_wait_usec ? MIN(tm, R_wait_usec) : tm;
-	fd_set *what = R_checkActivity(Timeout, 1);
+	what = R_checkActivity(Timeout, 1);
 
 	/* Time up? */
 	elapsed = (times(&timeinfo) - start) / (double)CLK_TCK;
