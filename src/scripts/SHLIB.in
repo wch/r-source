@@ -38,7 +38,7 @@ done
 if ${DEBUG};then echo "$0 -- DEBUG: Before Linking '${lib}'.."; set -x
 fi
 
-@SHLIBLD@ @SHLIBLDFLAGS@ @FLIBS@ -o ${lib} ${OBJS}
+@SHLIBLD@ @SHLIBLDFLAGS@ -o ${lib} ${OBJS} @FLIBS@
 
 ### Local Variables: ***
 ### mode: sh ***
