@@ -1,8 +1,7 @@
-nlm <-
-    function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
-	     fscale=1, print.level=0, ndigit=12, gradtol=1e-6,
-	     stepmax=max(1000 * sqrt(sum((p/typsize)^2)), 1000),
-	     steptol=1e-6, iterlim=100)
+nlm <- function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
+                fscale=1, print.level=0, ndigit=12, gradtol=1e-6,
+                stepmax=max(1000 * sqrt(sum((p/typsize)^2)), 1000),
+                steptol=1e-6, iterlim=100)
 {
 
     print.level <- as.integer(print.level)
@@ -21,17 +20,19 @@ optimize <- function(f, interval, lower=min(interval), upper=max(interval),
 	list(maximum=val, objective= f(val, ...))
     } else {
 	val <- .Internal(fmin(function(arg) f(arg, ...), lower, upper, tol))
-	list(minimum=val, objective=f(val, ...))
+	list(minimum=val, objective= f(val, ...))
     }
 }
 
 ##nice to the English
-optimise <- optimize
+optimise <- .Alias(optimize)
 
 uniroot <- function(f, interval, lower=min(interval), upper=max(interval),
 		    tol=.Machine$double.eps^0.25, ...)
 {
-    if(f(interval[1], ...)*f(interval[2], ...) >= 0)
+    if(!is.numeric(lower) || !is.numeric(upper) || lower >= upper)
+                   stop("lower < upper  is not ok")
+    if(f(lower, ...)*f(upper, ...) >= 0)
 	stop("signs at end points not of opposite sign")
     val <- .Internal(zeroin(function(arg) f(arg, ...), lower, upper, tol))
     list(root=val, f.root=f(val, ...))
