@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-55 2004-03-22
+Version 1.8-56 2004-03-26
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1348,6 +1348,11 @@ distributions of R.)
 *HI*
      Simulation from distributions supported by nested hyperplanes.
 
+*HighProbability*
+     Estimation of the alternative hypotheses having frequentist or Bayesian
+     probabilities at least as great as a specified threshold, given a list
+     of p-values.
+
 *Hmisc*
      Functions useful for data analysis, high-level graphics, utility
      operations, functions for computing sample size and power, importing
@@ -1485,6 +1490,9 @@ distributions of R.)
 *SoPhy*
      Soil Physics Tools: simulation of water flux and solute transport in
      soil.
+
+*SparseLogReg*
+     Sparse logistic regression.
 
 *SparseM*
      Basic linear algebra for sparse matrices.
@@ -2064,6 +2072,10 @@ distributions of R.)
      Functions with example data for graphing and mapping models from
      hierarchical clustering and classification and regression trees.
 
+*mathgraph*
+     Tools for constructing and manipulating objects from a class of
+     directed and undirected graphs.
+
 *maxstat*
      Maximally selected rank and Gauss statistics with several p-value
      approximations.
@@ -2407,6 +2419,9 @@ distributions of R.)
 *session*
      Functions for interacting with, saving and restoring R sessions.
 
+*setRNG*
+     Set (normal) random number generator and seed.
+
 *sfsmisc*
      Utilities from Seminar fuer Statistik ETH Zurich.
 
@@ -2479,6 +2494,9 @@ distributions of R.)
      approximations for global and local Moran's I; and functions for
      estimating spatial simultaneous autoregressive (SAR) models.  (Was
      formerly the three packages: *spweights*, *sptests*, and *spsarlm*.)
+
+*spe*
+     Stochastic Proximity Embedding.
 
 *splancs*
      Spatial and space-time point pattern analysis functions.
