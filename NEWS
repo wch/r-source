@@ -32,7 +32,7 @@ NEW FEATURES
 	getOption("na.omit").
 
     o	The 'formula' method for mosaicplot() has a 'na.action' argument
-	defaulting to na.omit().
+	defaulting to na.omit.
 
 
 UTILITIES
@@ -69,7 +69,10 @@ INSTALLATION CHANGES
 
     o	When --enable-R-shlib is specified, the main R binary R.bin is
 	a small executable linked against libR.  See the R-admin
-	manual for further discussion.
+	manual for further discussion.  The 'extra' libraries bzip2,
+	pcre, xdr and zlib are now only compiled in a way that allows
+	the code to be included in a shared library if this option is
+	specified, which might improve performance when it is not.
 
 
 BUG FIXES
