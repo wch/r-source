@@ -4,8 +4,9 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-1 @value{FAQ-YEAR}-04-13
+@set FAQ-VERSION 1.9-2 @value{FAQ-YEAR}-04-14
 @set REL-VERSION 1.9.0
+@set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
 @documentlanguage en
 @documentencoding ISO-8859-1
@@ -646,7 +647,7 @@ To cite R in publications, use
   author       = @{@{R Development Core Team@}@},
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
-  year         = 2003,
+  year         = @value{REL-YEAR},
   note         = @{ISBN 3-900051-00-3@},
   url          = @{http://www.R-project.org@}
 @}
@@ -661,8 +662,8 @@ are four mailing lists devoted to R.
 
 @table @code
 @item R-announce
-A moderated list for announcements about the development of R and the
-availability of new code.
+A moderated list for major announcements about the development of R and
+the availability of new code.
 @item R-packages
 A moderated list for announcements on the availability of new or
 enhanced contributed packages.
@@ -674,31 +675,27 @@ enhancements and patches to the source code and documentation of R,
 comparison and compatibility with S and @SPLUS{}, and for the posting of
 nice examples and benchmarks.
 @item R-devel
-This list is for discussions about the future of R and pre-testing of
-new versions.  It is meant for those who maintain an active position in
-the development of R.
+This list is for discussions about the future of R, proposals of new
+functionality, and pre-testing of new versions.  It is meant for those
+who maintain an active position in the development of R.
 @end table
 
 @noindent
+Convenient access to information on these lists, subscription, and
+archives is provided by the web interface at
+@uref{http://www.stat.math.ethz.ch/mailman/listinfo/}.  One can also
+subscribe (or unsubscribe) via email, e.g.@: to R-help by sending
+@samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
+message (not in the subject!) to
+@email{R-help-request@@lists.r-project.org}.
+
+Send email to @email{R-help@@lists.R-project.org} to send a message to
+everyone on the R-help mailing list.  Subscription and posting to the
+other lists is done analogously, with @samp{R-help} replaced by
+@samp{R-announce}, @samp{R-packages}, and @samp{R-devel}, respectively.
 Note that the R-announce and R-packages lists are gatewayed into R-help.
 Hence, you should subscribe to either of them only in case you are not
 subscribed to R-help.
-
-Send email to @email{R-help@@lists.R-project.org} to reach everyone on
-the R-help mailing list.  To subscribe (or unsubscribe) to this list
-send @samp{subscribe} (or @samp{unsubscribe}) in the @emph{body} of the
-message (not in the subject!) to
-@email{R-help-request@@lists.R-project.org}.  Information about the list
-can be obtained by sending an email with @samp{info} as its contents to
-@email{R-help-request@@lists.R-project.org}.
-
-Subscription and posting to the other lists is done analogously, with
-@samp{R-help} replaced by @samp{R-announce}, @samp{R-packages}, and
-@samp{R-devel}, respectively.
-
-Subscriptions to the R-help and R-devel mailing lists are also available
-in digest (plain or MIME) format, see the @file{doc/html/mail.html} file
-in @CRAN{} for more information.
 
 It is recommended that you send mail to R-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This
@@ -713,10 +710,8 @@ include information on the system and version of R being used.  See
 Please read the @uref{http://www.r-project.org/posting-guide.html,
 posting guide} @emph{before} sending anything to any mailing list.
 
-Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the @file{doc/html/mail.html} file in @CRAN{}.
-Searchable archives of the lists are available via
-@uref{http://maths.newcastle.edu.au/~rking/R/}.
+See @uref{http://www.r-project.org/mail.html} for more information on
+the R mailing lists.
 
 The R Core Team can be reached at @email{R-core@@lists.R-project.org}
 for comments and reports.
@@ -742,7 +737,7 @@ The @CRAN{} master site at TU Wien, Austria, can be found at the
 
 @noindent
 @c (which is the same as @uref{http://cran.at.R-project.org/})
-and is currently being mirrored daily at
+Daily mirrors are available at @acronym{URL}s including
 
 @quotation
 @multitable @columnfractions .45 .40
@@ -754,16 +749,14 @@ and is currently being mirrored daily at
 @tab (Universidade Federal de Paran@'a, Brazil)
 @item @uref{http://cran.ch.R-project.org/}
 @tab (ETH Z@"urich, Switzerland)
-@item @uref{http://cran.de.R-project.org/}
-@tab (APP, Germany)
 @item @uref{http://cran.dk.R-project.org/}
 @tab (SunSITE, Denmark)
 @item @uref{http://cran.es.R-project.org/}
 @tab (Spanish National Research Network, Madrid, Spain)
+@item @uref{http://cran.fr.R-project.org/}
+@tab (INRA, Toulouse, France)
 @item @uref{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
-@c @item @uref{http://cran.it.R-project.org/}
-@c @tab (Italy)
 @item @uref{http://cran.uk.R-project.org/}
 @tab (U of Bristol, United Kingdom)
 @item @uref{http://cran.us.R-project.org/}
@@ -774,7 +767,9 @@ and is currently being mirrored daily at
 @end quotation
 
 @noindent
-Please use the @CRAN{} site closest to you to reduce network load.
+See @uref{http://cran.r-project.org/mirrors.html} for a complete list of
+mirrors.  Please use the @CRAN{} site closest to you to reduce network
+load.
 
 From @CRAN{}, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
