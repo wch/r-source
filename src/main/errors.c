@@ -103,15 +103,15 @@ void onsigusr1()
 void onsigusr2()
 {
     inError = 1;
-    
+
     if( R_CollectWarnings ) {
 	inError = 2;
 	REprintf("In addition: ");
 	PrintWarnings();
 	inError = 1;
     }
-    
-    
+
+
     if (R_Inputfile != NULL)
 	fclose(R_Inputfile);
     R_ResetConsole();
@@ -267,17 +267,17 @@ void errorcall(SEXP call, char *format,...)
 
     va_list(ap);
 
-    if ( inError ) {
-	if( inError == 3 )
+    if (inError) {
+	if(inError == 3)
 	    REprintf("Error during wrapup \n");
 	jump_now();
     }
 
-    if(call != R_NilValue ) {
+    if(call != R_NilValue) {
 	inError = 1;
 	dcall = CHAR(STRING(deparse1(call, 0))[0]);
 	sprintf(errbuf, "Error in %s : ", dcall);
-	if (strlen(dcall) > LONGCALL) strcat(errbuf, "\n	");
+	if (strlen(dcall) > LONGCALL) strcat(errbuf, "\n	");/* <- TAB */
     }
     else
 	sprintf(errbuf, "Error: ");
@@ -299,7 +299,7 @@ SEXP do_geterrmessage(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(res = allocVector(STRSXP, 1));
     STRING(res)[0] = mkChar(errbuf);
-    UNPROTECT(1);    
+    UNPROTECT(1);
     return res;
 }
 
@@ -437,20 +437,27 @@ void isintrpt()
 void do_stop(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     RCNTXT *cptr;
+    SEXP c_call;
 
-    cptr = R_GlobalContext->nextcontext;
-    while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
-	cptr = cptr->nextcontext;
-
-    if (CAR(args) != R_NilValue) {
-      CAR(args) = coerceVector(CAR(args), STRSXP);
-      if(!isValidString(CAR(args)))
-	  errorcall(cptr->call, " [invalid string in stop(.)]");
-      errorcall(cptr->call, "%s", CHAR(STRING(CAR(args))[0]));
+    if(asLogical(CAR(args))) {/* find context -> "Error in ..:" */
+	cptr = R_GlobalContext->nextcontext;
+	while ( !(cptr->callflag & CTXT_FUNCTION) && cptr->nextcontext != NULL)
+	    cptr = cptr->nextcontext;
+	c_call = cptr->call;
     }
     else
-      errorcall(cptr->call, "");
-    /*NOTREACHED*/
+	c_call = R_NilValue;
+
+    args = CDR(args);
+
+    if (CAR(args) != R_NilValue) { /* message */
+      CAR(args) = coerceVector(CAR(args), STRSXP);
+      if(!isValidString(CAR(args)))
+	  errorcall(c_call, " [invalid string in stop(.)]");
+      errorcall(c_call, "%s", CHAR(STRING(CAR(args))[0]));
+    }
+    else
+      errorcall(c_call, "");
 }
 
 SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)

@@ -94,6 +94,11 @@ NEW FEATURES
 
     o	New xyz.coords() utility to be used for 3d highlevel plots.
 
+    o	quantile(x, probs) now propagates NA/NaN in probs.
+
+    o	New "call. = TRUE" argument for stop(), and
+	new function  stopifnot(.) -- to be used in "make check".
+
 
 BUG FIXES
 
@@ -124,7 +129,7 @@ BUG FIXES
 	unintentionally removed along with nroff-based conversion to text).
 
 
-    o   strheight("X") with no active device would segfault
+    o	strheight("X") with no active device would segfault
 
 
 		CHANGES IN R VERSION 1.0.1
@@ -225,8 +230,8 @@ BUG FIXES
 
     o	quantile(x) now works when x contains several +/- Inf's.
 
-    o   guard against segfault in dataentry(0,0) (or, more
-        realistically, when mistyping data.entry(x,y) as
+    o	guard against segfault in dataentry(0,0) (or, more
+	realistically, when mistyping data.entry(x,y) as
 	dataentry(x,y))
 
 

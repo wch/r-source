@@ -1,6 +1,5 @@
 ##vector <- function(mode = "logical", length = 0).Internal(vector(mode,length))
 
-stop <- function(message = NULL).Internal(stop(message))
 warning <- function(message = NULL).Internal(warning(message))
 restart <- function(on = TRUE).Internal(restart(on))
 geterrmessage <- function() .Internal(geterrmessage())
