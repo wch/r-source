@@ -637,7 +637,7 @@ anovalist.lm <- function (object, ..., test = NULL)
 	ii <- unpiv[iipiv]  # Corresponding rows of Rinv
         iipiv[ii==0] <- 0
 	if(any(iipiv)>0)
-	        predictor[, i] <- X[, iipiv, drop=F]%*%(beta[iipiv])
+	        predictor[, i] <- X[, iipiv, drop=FALSE]%*%(beta[iipiv])
 		else predictor[, i] <- rep(0, NROW(predictor))
         if (se.fit||interval!="none"){
 	  if(any(iipiv)>0)
