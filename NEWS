@@ -88,6 +88,7 @@ BUG FIXES
 	values, and
     o	smooth.spline(x,*, all.knots = TRUE) used much too much memory
 	when length(x) was largish.
+    o   smooth.spline(*, .... trace = TRUE ..) is a bit more self-explaining.
 
 
 		CHANGES IN R VERSION 1.5.0
