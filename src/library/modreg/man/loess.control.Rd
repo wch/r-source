@@ -21,7 +21,7 @@ loess.control(surface=c("interpolate", "direct"),
  \item{cell}{if interpolation is used this controls the accuracy of the
    approximation via the maximum number of points in a  cell in the kd
    tree. Cells with more than \code{floor(n*span*cell)} points are subdivided.}
- \item{iterations}{the number if iterations used in robust fitting.}
+ \item{iterations}{the number of iterations used in robust fitting.}
 }
 \description{
   Set control parameters for \code{loess} fits.

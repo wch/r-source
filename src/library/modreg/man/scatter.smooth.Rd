@@ -31,9 +31,10 @@ loess.smooth(x, y, span = 2/3, degree = 1,
  \item{\ldots}{graphical parameters.}
 }
 \description{
-  Plot (\code{scatter.smooth}) and add a smooth curve computed by
-  \code{loess} to a scatter plot. \code{loess.smooth} is an auxiliary
-  function used by the other two.
+  Plot and add a smooth curve computed by \code{loess} to a scatter plot.
+}
+\details{
+  \code{loess.smooth} is an auxiliary function.
 }
 \value{
   None.

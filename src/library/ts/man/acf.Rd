@@ -28,7 +28,8 @@ plot.acf(acf.obj, ci=0.95, ci.col="blue", ci.type=c("white", "ma"), ...)
     \item{plot}{logical. If \code{TRUE} the acf is plotted.}
 
     \item{type}{character string giving type of acf.  Allowed values are
- 	"correlation" (the default), "covariance" or "partial".}
+ 	\code{"correlation"} (the default), \code{"covariance"} or
+	\code{"partial"}.}
 
     \item{na.action}{function to be called to handle missing values.}
 

@@ -20,7 +20,7 @@ predict.loess(object, newdata = NULL, se = FALSE)
   The standard errors calculation is slower than prediction.
 
   When the fit was made using \code{surface="interpolate"} (the
-  default), \code{predict.loess} will not extrapolate< so points outside
+  default), \code{predict.loess} will not extrapolate -- so points outside
   an axis-aligned hypercube enclosing the original data will have
   missing (\code{NA}) predictions and standard errors.
 }

@@ -69,7 +69,7 @@ loess(formula, data, weights, subset, na.action, model=FALSE,
 
   For the default family, fitting is by (weighted) least squares. For
   \code{family="symmetric"} a few iterations of an M-estimation
-  procedure with Tukey' biweight are used. Be aware that as the initial
+  procedure with Tukey's biweight are used. Be aware that as the initial
   value is the least-squares fit, this need not be a very resistant fit.
   
   It can be important to tune the control list to achieve acceptable
