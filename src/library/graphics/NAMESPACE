@@ -1,0 +1,4 @@
+exportPattern("^[^\\.]")
+export(.PostScript.Options, .ps.prolog)
+
+S3method(barplot, default)

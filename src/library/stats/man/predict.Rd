@@ -1,0 +1,65 @@
+\name{predict}
+\title{Model Predictions}
+\usage{
+predict (object, \dots)
+}
+\alias{predict}
+\arguments{
+  \item{object}{a model object for which prediction is desired.}
+  \item{\dots}{additional arguments affecting the predictions produced.}
+}
+\description{
+  \code{predict} is a generic function for predictions from the results of
+  various model fitting functions.  The function invokes particular
+  \emph{methods} which depend on the \code{\link[base]{class}} of
+  the first argument.
+}
+\details{
+  Most prediction methods which similar to fitting linear models have an
+  argument \code{newdata} specifiying the explanatory variables to be
+  used for prediction.  Some considerable attempts are made to match up
+  the columns in \code{newdata} to those used for fitting, for example
+  that they are of comparable types and that any factors have the same
+  level set in the same order (or can be transformed to be so).
+
+  Time series prediction methods have an argument \code{n.ahead}
+  specifying how many time steps ahead to predict.
+
+  Many methods have a logical argument \code{se.fit} saying if standard
+  errors are to returned.
+}
+ \value{
+  The form of the value returned by \code{predict} depends on the
+  class of its argument.  See the documentation of the
+  particular methods for details of what is produced by that method.
+}
+\seealso{
+  \code{\link{predict.glm}},
+  \code{\link{predict.lm}},
+  \code{\link[modreg]{predict.loess}},
+  \code{\link[nls]{predict.nls}},
+  \code{\link{predict.poly}},
+  \code{\link[modreg:ppr]{predict.ppr}},
+  \code{\link[mva:princomp]{predict.princomp}},
+  \code{\link[modreg]{predict.smooth.spline}}.
+
+  For time-series prediction,
+  \code{\link[ts:ar]{predict.ar}},
+  \code{\link[ts]{predict.Arima}},
+  \code{\link[ts:arima0]{predict.arima0}},
+  \code{\link[ts]{predict.HoltWinters}},
+  \code{\link[ts:StructTS]{predict.StructTS}}.
+}
+\references{
+  Chambers, J. M. and Hastie, T. J. (1992)
+  \emph{Statistical Models in S}.
+  Wadsworth \& Brooks/Cole.
+}
+\examples{
+## All the "predict" methods found
+## NB most of the methods in the standard packages are hidden.
+for(fn in methods("predict"))
+   try(cat(fn,":\n\t",deparse(args(getAnywhere(fn)$objs[[1]])),"\n"),
+       silent = TRUE)
+}
+\keyword{methods}

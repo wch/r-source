@@ -1,0 +1,5 @@
+exportPattern("^[^\\.]")
+export(.helpForCall, .tryHelp)
+
+# S3method(str, data.frame)
+S3method(str, default)
