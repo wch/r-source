@@ -6,23 +6,23 @@
 \usage{
 se.contrast(object, \dots)
 \method{se.contrast}{aov}(object, contrast.obj,
-  coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots) 
+  coef = contr.helmert(ncol(contrast))[, 1], data = NULL, \dots)
 }
 \arguments{
  \item{object}{A suitable fit, usually from \code{aov}.}
  \item{contrast.obj}{The contrasts for which standard errors are
-   requested. This can be specified via a list or via a matrix. A single
-   contrast can be specified by a list of logical vectors giving the
-   cells to be contrasted.  Multiple contrasts should be specified by a
-   matrix, each column of which is a numerical contrast vector (summing
-   to zero).
+   requested.  This can be specified via a list or via a matrix.  A
+   single contrast can be specified by a list of logical vectors giving
+   the cells to be contrasted.  Multiple contrasts should be specified
+   by a matrix, each column of which is a numerical contrast vector
+   (summing to zero).
    }
- \item{coef}{Used when \code{{contrast.obj}} is a list; it should be a
-   vector of the same length as the list with zero sum. The default
+ \item{coef}{used when \code{contrast.obj} is a list; it should be a
+   vector of the same length as the list with zero sum.  The default
    value is the first Helmert contrast, which contrasts the first and
    second cell means specified by the list.}
  \item{data}{The data frame used to evaluate \code{contrast.obj}.}
-  \item{\dots}{further arguments passed to or from other methods.}
+ \item{\dots}{further arguments passed to or from other methods.}
 }
 \description{
   Returns the standard errors for one or more contrasts in an \code{aov}
