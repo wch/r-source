@@ -91,7 +91,11 @@ BUG FIXES
 
     o	na.omit.ts and na.contiguous now preserve time-series attributes.
 
+    o	more automatic testing ("make check") using options(error.halt=FALSE)
+	lead to the elimination of half a dozen of seg.fault possibilities.
+
     o	family quasi handles zero observations with var=mu^2 more correctly.
+
 
 
 		CHANGES IN R VERSION 0.65.0
