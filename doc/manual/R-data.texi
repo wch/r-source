@@ -663,7 +663,7 @@ restrictions.
 @section SPSS
 @cindex SPSS
 
-Package @code{foreign} on @acronym{CRAN} will shortly be able to read
+Package @code{foreign} on @acronym{CRAN} provides functions to read
 files created by the `save' and `export' commands in @acronym{SPSS}.
 
 @node Octave,  , SPSS, Importing from other statistical systems
