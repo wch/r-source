@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-14
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-15
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1848,6 +1848,8 @@ Creating random fields using various methods.
 @item Rcmdr
 A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
+@item Rlab
+Functions and data sets for the NCSU ST370 class.
 @c <COMMENT>
 @c Moved to the Archive on 2004-08-11.
 @c @item RmSQL
