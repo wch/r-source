@@ -2,6 +2,7 @@
 RLIB=../../../library
 DPKG=$(RLIB)/$(PKG)
 SPKG=.
+SAVE=CHECK
 
 ifeq ($(strip $(DLLNM)),)
   DLLNAME=$(PKG)
@@ -49,7 +50,7 @@ PKGDEMOS=$(filter-out $(SPKG)/demo/CVS, $(PKGDEMOS0))
 
 # Others
 OFILES0=$(wildcard $(SPKG)/*)
-OFILES1= DESCRIPTION INDEX TITLE
+OFILES1= INDEX TITLE
 OFILES-NO= R r chm data man src src-c demo Makefile.in inst check orig tests \
 	DESCRIPTION DESCRIPTION.in INDEX TITLE index title \
 	configure configure.in cleanup CVS cvs
@@ -74,7 +75,7 @@ else
 endif
 	$(RM) -rf $(SPKG)/chm $(SPKG)/check
 
-SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
+#SEDP='/^[	 ]*$$/d;s/$(DLLNAME).so/$(DLLNAME).dll/'
 
 $(DPKG)/R/$(PKG): $(PKGRFILES)
 ifneq ($(strip $(PKGRFILES)),)
@@ -82,6 +83,7 @@ ifneq ($(strip $(PKGRFILES)),)
 	@$(MKDIR) -p $(DPKG)/R
 #	$(CAT) $(PKGRFILES) | $(SED) $(SEDP)  > $@
 	@$(CAT) $(PKGRFILES)   > $@
+	@sh $(RHOME)/src/gnuwin32/install-save.sh $(SAVE) $(RLIB) $(PKG) $(RHOME)
 else
 	@$(ECHO) "  no R files in this package"
 endif
@@ -109,6 +111,9 @@ ifeq ($(strip $(INSTFILES)),)
 else
 	-$(CP) -r $(OFILES3) inst/* $(DPKG)/
 endif
+	@if test -f ${SPKG}/DESCRIPTION; then \
+	$(SED) '/^\s*$$/d' ${SPKG}/DESCRIPTION  > ${DPKG}/DESCRIPTION; \
+	fi
 ifeq ($(strip $(STAMP)),YES)
 	@echo "  adding build stamp to DESCRIPTION"
 	@echo  "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave >> ${DPKG}/DESCRIPTION

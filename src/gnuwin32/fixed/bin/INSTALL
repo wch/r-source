@@ -26,7 +26,7 @@ use R::Dcf;
 use R::Utils;
 
 
-my $revision = ' $Revision: 1.15 $ ';
+my $revision = ' $Revision: 1.16 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -35,7 +35,7 @@ $version = $1;
 
 
 my @knownoptions = ("help|h", "version|v", "debug|d", "library|l:s",
-		    "clean|c", "docs:s",
+		    "clean|c", "docs:s", "save|s", "no-save",
 		    "use-zip", "use-zip-data", "use-zip-help");
 			
 GetOptions (@knownoptions) || usage();
@@ -133,7 +133,10 @@ foreach $pkg (@ARGV){
 	}
     }
 
-    if(system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $helpflags $makecmd-$pkgname")){
+    my $save = "CHECK";
+    $save = "false" if $opt_no_save;
+    $save = "true" if $opt_save;
+    if(system("make -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $helpflags $makecmd-$pkgname")){
 	printf "*** Installation of $pkgname failed ***\n";
     } else {
 	if($opt_use_zip || $opt_use_zip_data) {
@@ -186,15 +189,18 @@ elements of pkgs can be relative or absolute paths to directories with
 the package (bundle) sources, or to gzipped package \`tar' archives.
 
 Options:
-  -c, --clean		remove all files created during installation
-  -d, --debug		[x] turn on shell and build-help debugging
   -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+  -c, --clean		remove all files created during installation
+  -s, --save            Save the package source as an image file, and arrange for
+                        this file to be loaded when the library is attached.
+  --no-save             Do not save the package source as an image file.
+  -d, --debug		[x] turn on shell and build-help debugging
   -l, --library=LIB	install packages to library tree LIB
       --docs=TYPE	type(s) of documentation to build and install
       --use-zip-data	collect data files in zip archive
       --use-zip-help	collect help and examples into zip archives
       --use-zip		combine \`--use-zip-data\' and \`--use-zip-help\'
-  -v, --version		print version info and exit
 
 TYPE can be "none" or "normal" or "chm" (the default) or "winhlp" or "all"
 
