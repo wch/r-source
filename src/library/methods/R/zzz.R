@@ -95,7 +95,7 @@
 
 
 .onAttach <- function(libname, pkgName) {
-    ..First.lib(libname, pkgName)
+#    ..First.lib(libname, pkgName)
     env <- environment(sys.function())
     ## unlock some bindings that must be modifiable to set methods
     unlockBinding(".BasicFunsList", env)
