@@ -701,7 +701,8 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (igcase_opt) eflags = eflags | REG_ICASE;
 
 	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	    errorcall(call, "invalid regular expression");
+	    errorcall(call, "invalid regular expression '%s'", 
+		      CHAR(STRING_ELT(pat, 0)));
 
 	for (i = 0 ; i < n ; i++) {
 	    LOGICAL(ind)[i] = 0;
@@ -836,7 +837,8 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (igcase_opt) eflags = eflags | REG_ICASE;
 
     if (regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	errorcall(call, "invalid regular expression");
+	errorcall(call, "invalid regular expression '%s'",
+		  CHAR(STRING_ELT(pat, 0)));
 
     n = length(vec);
     PROTECT(ans = allocVector(STRSXP, n));
@@ -939,7 +941,8 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     eflags = extended_opt ? REG_EXTENDED : 0;
 
     if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
-	errorcall(call, "invalid regular expression");
+	errorcall(call, "invalid regular expression '%s'", 
+		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
     n = length(text);
     PROTECT(ans = allocVector(INTSXP, n));
