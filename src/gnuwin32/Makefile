@@ -289,6 +289,7 @@ bindist: docfiles
 	$(CP) -p ../../etc/Rconsole $(RPREFIX)/etc/Rconsole
 	$(CP) -p ../../etc/Rdevga $(RPREFIX)/etc/Rdevga
 	$(CP) -p ../../etc/rgb.txt $(RPREFIX)/etc/rgb.txt
+	$(CP) -pr ../../share $(RPREFIX)
 	$(MKDIR) $(RPREFIX)/doc $(RPREFIX)/doc/manual
 	$(CP) -pr ../../doc/html $(RPREFIX)/doc
 	$(CP) -p ../../doc/manual/Rd.sty $(RPREFIX)/doc/manual
@@ -348,7 +349,7 @@ packagedist:
 	  $(RPREFIX)/src/include $(RPREFIX)/src/library \
 	  $(RPREFIX)/src/gnuwin32 $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll \
-	  maketitle pwd.pl $(RPREFIX)/src/gnuwin32
+	  maketitle pwd.pl makeDllRes.pl $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
 	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
