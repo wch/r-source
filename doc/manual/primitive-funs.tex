@@ -1,6 +1,3 @@
-\renewcommand{\^}{\code{\char'136}}
-\renewcommand{\~}{\code{\char'176}}
-
 \newcommand{\primfun}{{\normalfont\slshape\scshape$\langle$primitive$\rangle$}}
 
 \section{``Which \R\ functions should stay \primfun\ ?''}
@@ -14,6 +11,7 @@
 \item ``Special functions'' which really are \emph{language} elements,
   however exist as \primfun s in \R:
   \begin{center}\ttfamily
+\renewcommand{\{}{\code{\char'173}}
     \begin{tabular}{*{9}{c}}
       \{ & ( & if & for & while & repeat & break & next \\
       return & function & on.exit
@@ -26,6 +24,7 @@
   for subsetting, assignment, arithmetic and logic. These are the following
   1--, 2--, and $N$--argument functions
   \begin{center}\ttfamily
+    \renewcommand{\^}{\code{\char'136}}
     \begin{tabular}{*{8}{p{2em}}}
          &     & [   & [[   & \$   \\
       <- & <<- & [<- & [[<- & \$<- \\ \hline
@@ -118,6 +117,7 @@
   \primfun, for efficiency reasons.
   Care is taken in order to treat named arguments properly:
   \begin{center}\ttfamily
+    \renewcommand{\~}{\code{\char'176}}
     \begin{tabular}{*{8}{l}}
       :    & \~ & c & list & unlist \\
       call & as.call & expression & substitute \\
