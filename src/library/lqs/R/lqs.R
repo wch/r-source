@@ -118,6 +118,8 @@ lqs.default <-
 	     coefficients=double(p), as.double(k0), as.double(beta),
 	     PACKAGE="lqs"
 	     )[c("crit", "sing", "coefficients", "bestone")]
+    if(z$sing == nsamp)
+        stop("lqs failed: all the samples were singular", call.=FALSE)
     z$sing <- paste(z$sing, "singular samples of size", ps, "out of", nsamp)
     z$bestone <- sort(z$bestone)
     names(z$coefficients) <- nm

@@ -103,7 +103,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
                   PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
-    r1 <- 1:z$rank
+    r1 <- seq(len=z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     if (is.matrix(y)) {
@@ -181,7 +181,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
                   PACKAGE="base")
     coef <- z$coefficients
     pivot <- z$pivot
-    r1 <- 1:z$rank
+    r1 <- seq(len=z$rank)
     dn <- colnames(x); if(is.null(dn)) dn <- paste("x", 1:p, sep="")
     nmeffects <- c(dn[pivot[r1]], rep.int("", n - z$rank))
     if (is.matrix(y)) {
