@@ -38,7 +38,7 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
 
     Alternatively, \code{file} can be a \code{\link{connection}}, which
     will be opened if necessary, and if so closed at the end of the
-    function call.
+    function call.  (But not \code{stdin()} if this is a terminal/console.)
 
     \code{file} can also be a complete URL.
   }
