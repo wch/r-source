@@ -10,8 +10,11 @@ subdir = etc
 
 include $(top_builddir)/Makeconf
 
+## <NOTE>
+## Need target rules for all elements of SOURCES/OBJECTS.
 SOURCES = Makeconf.in Renviron.in
 OBJECTS = $(SOURCES:.in=)
+## </NOTE>
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES)
 
@@ -22,20 +25,20 @@ DISTCLEANFILES = $(OBJECTS) Makefile
 
 all: Makefile R
 
-.SUFFIXES:
-.SUFFIXES: .in
-
-%:%.in
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-	@(for f in $(OBJECTS); do \
-	    echo "$${f}: $(srcdir)/$${f}.in"; \
-	  done) >> $@
+
+## <NOTE>
+## Seems we need target rules for creating FOO from FOO.in: pattern
+## rules ('%:%.in') are not portable, and some versions of Make do not
+## allow separated dependencies for single suffix rules.
+Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Renviron: $(srcdir)/Renviron.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+## </NOTE>
 
 R: $(OBJECTS)
-$(OBJECTS): $(top_builddir)/config.status
 
 install: installdirs
 	@echo "installing $(subdir) ..."
@@ -70,6 +73,3 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-
-## Automagically generated dependencies:
-

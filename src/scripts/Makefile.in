@@ -11,32 +11,65 @@ subdir = src/scripts
 include $(top_builddir)/Makeconf
 
 SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt config pager texi2dvi
+## <NOTE>
+## Need target rules for all elements of SCRIPTS_B_IN/SCRIPTS_B.
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rdconv.in Rdindex.in \
 	Rprof.in SHLIB.in Sd2Rd.in build.in check.in f77.in
 SCRIPTS_B = $(SCRIPTS_B_IN:.in=)
+## </NOTE>
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SCRIPTS_S) $(SCRIPTS_B_IN) R.sh.in
 
-.SUFFIXES:
-.SUFFIXES: .in
-
-%:%.in
-	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+CLEANFILES =
+DISTCLEANFILES = Makefile R.fe R.sh $(SCRIPTS_B)
 
 all: Makefile R
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-	@(for f in $(SCRIPTS_B); do \
-	    echo "$${f}: $(srcdir)/$${f}.in"; \
-	  done) >> $@
 
 R: $(SCRIPTS_B) R.fe
 	@$(MAKE) rhome=$(top_builddir) install-cmds
 	@$(INSTALL_SCRIPT) R.fe $(top_builddir)/bin/R
 
-$(SCRIPTS_B): $(top_builddir)/config.status
+## <NOTE>
+## Seems we need target rules for creating FOO from FOO.in: pattern
+## rules ('%:%.in') are not portable, and some versions of Make do not
+## allow separated dependencies for single suffix rules.
+COMPILE: $(srcdir)/COMPILE.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+INSTALL: $(srcdir)/INSTALL.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+REMOVE: $(srcdir)/REMOVE.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Rdconv: $(srcdir)/Rdconv.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Rdindex: $(srcdir)/Rdindex.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Rprof: $(srcdir)/Rprof.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+SHLIB: $(srcdir)/SHLIB.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+Sd2Rd: $(srcdir)/Sd2Rd.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+build: $(srcdir)/build.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+check: $(srcdir)/check.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+f77: $(srcdir)/f77.in $(top_builddir)/config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+## The following target helps in automatically generating the above
+## target rules (provided that echo understands backslash escapes).
+Makerules:
+	@(dep="\$$(top_builddir)/config.status"; \
+	  cmd="@cd \$$(top_builddir)"; \
+	  cmd="$${cmd} && \$$(SHELL) ./config.status \$$(subdir)/\$$@"; \
+	  for f in $(SCRIPTS_B); do \
+	    echo "$${f}: \$$(srcdir)/$${f}.in $${dep}"; \
+	    echo "	$${cmd}"; \
+	  done)
+## </NOTE>
 
 ## <NOTE>
 ## The front-end shell script now (2000-08-02) also contains the version
@@ -90,8 +123,9 @@ uninstall:
 
 mostlyclean: clean
 clean:
-distclean:
-	-@rm -f Makefile R.fe R.sh $(SCRIPTS_B)
+	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
+distclean: clean
+	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 maintainer-clean: distclean
 
 TAGS info dvi check:
@@ -102,6 +136,3 @@ distdir: $(DISTFILES)
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-
-## Automagically generated dependencies:
-
