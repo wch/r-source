@@ -2,10 +2,10 @@
 \title{Generate Index from Rd Files}
 \alias{Rdindex}
 \description{
-  Print a 2-column index table with names and titles from given R
-  documentation files to a given output file or connection.  The titles
-  are nicely formatted between two column positions (typically 25 and
-  72, respectively).
+  Print a 2-column index table with \dQuote{names} and titles from given
+  R documentation files to a given output file or connection.  The
+  titles are nicely formatted between two column positions (typically 25
+  and 72, respectively).
 }
 \usage{
 Rdindex(RdFiles, outFile = "", type = NULL,
@@ -29,10 +29,13 @@ Rdindex(RdFiles, outFile = "", type = NULL,
     second column.  Must not be greater than \code{width/2}, and
     defaults to \code{width/3}.}
 }
+\details{
+  If a name is not a valid alias, the first alias (or the empty string
+  if there is none) is used instead.
+}
 %% Currently no \example: at run time we do not have direct access to Rd
 %% files.  What we could do is take an installed Rd archive, and extract
 %% by splitting on the new-style \eof file separator, but we really want
 %% a simple example, right?
 \keyword{documentation}
 \keyword{utilities}
-
