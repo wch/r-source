@@ -1,12 +1,12 @@
 \name{args}
 \title{Argument List of a Function}
 \usage{
-args(fun)
+args(name)
 }
 \alias{args}
 \arguments{
-\item{fun}{an interpreted function.
-If \code{fun} is a character string then the function
+\item{name}{an interpreted function.
+If \code{name} is a character string then the function
 with that name is found and used.}
 }
 \value{
@@ -18,7 +18,7 @@ For programming, use \code{\link{formals}} instead.
 \code{\link{formals}}, \code{\link{help}}.
 }
 \examples{
-args(args) #-> NULL (args is a 'primitive' function).
+args(c) #-> NULL (c is a 'primitive' function).
 args(plot.default)
 }
 \keyword{documentation}
