@@ -745,6 +745,9 @@ BUG FIXES
 
     o   summary.lm() now behaves more sensibly for empty models.
 
+    o   plot.window() was using the wrong sign when adjusting
+	xlim/ylim for positive 'asp' and a reversed axis.
+
 
 
 
