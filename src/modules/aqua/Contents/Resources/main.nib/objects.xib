@@ -629,7 +629,7 @@
                 <string name="bounds">49 20 396 478 </string>
                 <array count="4" name="subviews">
                   <object class="IBCarbonCheckBox" id="408">
-                    <string name="bounds">165 55 179 458 </string>
+                    <string name="bounds">179 55 193 458 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">6000</int>
                     <string name="title">Show system console output (stdout) in the R console</string>
@@ -637,7 +637,7 @@
                     <int name="initialState">1</int>
                   </object>
                   <object class="IBCarbonCheckBox" id="409">
-                    <string name="bounds">195 55 209 412 </string>
+                    <string name="bounds">209 55 223 412 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">6001</int>
                     <string name="title">Show system error output (stderr) in the R console</string>
@@ -645,10 +645,10 @@
                     <int name="initialState">1</int>
                   </object>
                   <object class="IBCarbonGroupBox" id="471">
-                    <string name="bounds">250 130 293 438 </string>
+                    <string name="bounds">264 130 307 438 </string>
                     <array count="1" name="subviews">
                       <object class="IBCarbonStaticText" id="470">
-                        <string name="bounds">270 146 286 422 </string>
+                        <string name="bounds">284 146 300 422 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">6009</int>
                         <string name="title">~/</string>
@@ -660,7 +660,7 @@
                     <string name="title">Initial Working Directory</string>
                   </object>
                   <object class="IBCarbonButton" id="472">
-                    <string name="bounds">268 40 288 110 </string>
+                    <string name="bounds">282 40 302 110 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">6010</int>
                     <string name="title">Change</string>
@@ -675,10 +675,10 @@
                 <string name="bounds">49 20 396 478 </string>
                 <array count="3" name="subviews">
                   <object class="IBCarbonGroupBox" id="254">
-                    <string name="bounds">83 48 180 448 </string>
+                    <string name="bounds">97 48 194 448 </string>
                     <array count="3" name="subviews">
                       <object class="IBCarbonPopupButton" id="422">
-                        <string name="bounds">149 64 169 206 </string>
+                        <string name="bounds">163 64 183 206 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1005</int>
                         <string name="title">Tab size : </string>
@@ -751,7 +751,7 @@
                         </object>
                       </object>
                       <object class="IBCarbonPopupButton" id="440">
-                        <string name="bounds">112 64 132 275 </string>
+                        <string name="bounds">126 64 146 275 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1002</int>
                         <string name="title">Font name : </string>
@@ -784,7 +784,7 @@
                         </object>
                       </object>
                       <object class="IBCarbonPopupButton" id="447">
-                        <string name="bounds">113 289 133 438 </string>
+                        <string name="bounds">127 289 147 438 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1003</int>
                         <string name="title">Font size : </string>
@@ -851,45 +851,45 @@
                     <string name="title">Fonts and Tabs</string>
                   </object>
                   <object class="IBCarbonGroupBox" id="255">
-                    <string name="bounds">196 48 291 448 </string>
+                    <string name="bounds">210 48 305 448 </string>
                     <array count="6" name="subviews">
                       <object class="IBCarbonStaticText" id="256">
-                        <string name="bounds">224 64 240 150 </string>
+                        <string name="bounds">238 64 254 150 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1007</int>
                         <string name="title">Read Only</string>
                         <string name="helpTagText">This option applies to all read-only windows like R Console Out and any other read-only windows like R Help, etc.</string>
                       </object>
                       <object class="IBCarbonButton" id="257">
-                        <string name="bounds">224 158 244 274 </string>
+                        <string name="bounds">238 158 258 274 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1009</int>
                         <string name="title">Choose Color</string>
                         <string name="helpTagText">Sets foreground color</string>
                       </object>
                       <object class="IBCarbonStaticText" id="258">
-                        <string name="bounds">259 64 275 150 </string>
+                        <string name="bounds">273 64 289 150 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1008</int>
                         <string name="title">Read &amp; Write</string>
                         <string name="helpTagText">This option applies to all read-write windows like R Console In and any other read-write windows like R Edit, etc.</string>
                       </object>
                       <object class="IBCarbonButton" id="259">
-                        <string name="bounds">256 158 276 274 </string>
+                        <string name="bounds">270 158 290 274 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1010</int>
                         <string name="title">Choose Color</string>
                         <string name="helpTagText">Sets foreground color</string>
                       </object>
                       <object class="IBCarbonButton" id="260">
-                        <string name="bounds">224 286 244 440 </string>
+                        <string name="bounds">238 286 258 440 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1011</int>
                         <string name="title">Choose Background</string>
                         <string name="helpTagText">Sets background color</string>
                       </object>
                       <object class="IBCarbonButton" id="261">
-                        <string name="bounds">256 286 276 440 </string>
+                        <string name="bounds">270 286 290 440 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1012</int>
                         <string name="title">Choose Background</string>
@@ -901,17 +901,17 @@
                     <string name="title">Text Colors</string>
                   </object>
                   <object class="IBCarbonGroupBox" id="464">
-                    <string name="bounds">309 48 395 448 </string>
+                    <string name="bounds">323 48 409 448 </string>
                     <array count="2" name="subviews">
                       <object class="IBCarbonCheckBox" id="462">
-                        <string name="bounds">339 64 353 401 </string>
+                        <string name="bounds">353 64 367 401 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1063</int>
                         <string name="title">Set R Console width on window resize</string>
                         <string name="helpTagText">If selected, when the user resizes the R Console, the width option in R is set to display the maximum number of characters for the selected font size</string>
                       </object>
                       <object class="IBCarbonCheckBox" id="463">
-                        <string name="bounds">365 64 379 421 </string>
+                        <string name="bounds">379 64 393 421 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">1062</int>
                         <string name="title">Save R Console window position and size on exit</string>
@@ -930,47 +930,47 @@
                 <string name="bounds">49 20 396 478 </string>
                 <array count="6" name="subviews">
                   <object class="IBCarbonButton" id="304">
-                    <string name="bounds">137 60 157 165 </string>
+                    <string name="bounds">151 60 171 165 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">3001</int>
                     <string name="title">Device Font</string>
                     <string name="helpTagText">Select Font size and family for the quartz. Style is ignored.</string>
                   </object>
                   <object class="IBCarbonGroupBox" id="309">
-                    <string name="bounds">177 50 273 450 </string>
+                    <string name="bounds">191 50 287 450 </string>
                     <array count="6" name="subviews">
                       <object class="IBCarbonStaticText" id="307">
-                        <string name="bounds">211 66 227 142 </string>
+                        <string name="bounds">225 66 241 142 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3005</int>
                         <string name="title">Width</string>
                       </object>
                       <object class="IBCarbonStaticText" id="308">
-                        <string name="bounds">241 66 257 142 </string>
+                        <string name="bounds">255 66 271 142 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3006</int>
                         <string name="title">Height</string>
                       </object>
                       <object class="IBCarbonEditText" id="311">
-                        <string name="bounds">212 170 228 247 </string>
+                        <string name="bounds">226 170 242 247 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3008</int>
                         <string name="title">5</string>
                       </object>
                       <object class="IBCarbonEditText" id="312">
-                        <string name="bounds">242 170 258 247 </string>
+                        <string name="bounds">256 170 272 247 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3009</int>
                         <string name="title">6</string>
                       </object>
                       <object class="IBCarbonStaticText" id="316">
-                        <string name="bounds">211 304 227 380 </string>
+                        <string name="bounds">225 304 241 380 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3011</int>
                         <string name="title">inches</string>
                       </object>
                       <object class="IBCarbonStaticText" id="317">
-                        <string name="bounds">241 304 257 380 </string>
+                        <string name="bounds">255 304 271 380 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3012</int>
                         <string name="title">inches</string>
@@ -981,10 +981,10 @@
                     <string name="title">Device Dimensions</string>
                   </object>
                   <object class="IBCarbonGroupBox" id="315">
-                    <string name="bounds">291 50 349 450 </string>
+                    <string name="bounds">305 50 363 450 </string>
                     <array count="2" name="subviews">
                       <object class="IBCarbonCheckBox" id="313">
-                        <string name="bounds">319 62 333 164 </string>
+                        <string name="bounds">333 62 347 164 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3013</int>
                         <string name="title">Antialiasing</string>
@@ -992,7 +992,7 @@
                         <int name="initialState">1</int>
                       </object>
                       <object class="IBCarbonCheckBox" id="314">
-                        <string name="bounds">319 329 333 434 </string>
+                        <string name="bounds">333 329 347 434 </string>
                         <ostype name="controlSignature">PREF</ostype>
                         <int name="controlID">3014</int>
                         <string name="title">Auto Refresh</string>
@@ -1005,7 +1005,7 @@
                     <string name="title">Quartz Features</string>
                   </object>
                   <object class="IBCarbonEditText" id="320">
-                    <string name="bounds">139 208 155 447 </string>
+                    <string name="bounds">153 208 169 447 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">3002</int>
                     <boolean name="enabled">FALSE</boolean>
@@ -1013,14 +1013,14 @@
                     <string name="helpTagText">Should be a Postscript Font Name</string>
                   </object>
                   <object class="IBCarbonCheckBox" id="321">
-                    <string name="bounds">365 50 379 450 </string>
+                    <string name="bounds">379 50 393 450 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">3007</int>
                     <string name="title">Override R quartz() device defaults</string>
                     <string name="helpTagText">The above quartz device settings take place only when this option is checked, otherwise R default options for the quartz device are considered.</string>
                   </object>
                   <object class="IBCarbonPopupButton" id="414">
-                    <string name="bounds">97 60 117 362 </string>
+                    <string name="bounds">111 60 131 362 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">3015</int>
                     <string name="title">Quartz window position : </string>
@@ -1061,21 +1061,21 @@
                 <string name="bounds">49 20 396 478 </string>
                 <array count="5" name="subviews">
                   <object class="IBCarbonGroupBox" id="385">
-                    <string name="bounds">129 40 306 458 </string>
+                    <string name="bounds">143 40 320 458 </string>
                     <string name="title">Internet package archives</string>
                   </object>
                   <object class="IBCarbonStaticText" id="378">
-                    <string name="bounds">177 72 193 148 </string>
+                    <string name="bounds">191 72 207 148 </string>
                     <string name="title">CRAN</string>
                     <int name="justification">-1</int>
                   </object>
                   <object class="IBCarbonStaticText" id="379">
-                    <string name="bounds">241 50 257 148 </string>
+                    <string name="bounds">255 50 271 148 </string>
                     <string name="title">Bioconductor</string>
                     <int name="justification">-1</int>
                   </object>
                   <object class="IBCarbonEditText" id="381">
-                    <string name="bounds">242 159 258 415 </string>
+                    <string name="bounds">256 159 272 415 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">4502</int>
                     <string name="title">http://www.bioconductor.org</string>
@@ -1083,7 +1083,7 @@
                     <boolean name="useInlineInput">TRUE</boolean>
                   </object>
                   <object class="IBCarbonEditText" id="380">
-                    <string name="bounds">178 159 194 415 </string>
+                    <string name="bounds">192 159 208 415 </string>
                     <ostype name="controlSignature">PREF</ostype>
                     <int name="controlID">4501</int>
                     <string name="title">http://cran.r-project.org</string>
@@ -1171,42 +1171,42 @@
     <reference idRef="278"/>
     <reference idRef="279"/>
     <object class="IBCarbonUserPane" id="280">
-      <string name="bounds">-14090 -20519 -13792 -20079 </string>
+      <string name="bounds">-14090 7164 -13792 7604 </string>
       <array count="9" name="subviews">
         <object class="IBCarbonCheckBox" id="281">
-          <string name="bounds">-26391 25239 -26389 25243 </string>
+          <string name="bounds">-29722 7147 -29720 7151 </string>
           <string name="title">AntiAliasing</string>
         </object>
         <object class="IBCarbonCheckBox" id="282">
-          <string name="bounds">-26391 -25449 -26389 -25447 </string>
+          <string name="bounds">-29722 -8563 -29720 -8561 </string>
           <string name="title">Auto Refresh</string>
         </object>
         <object class="IBCarbonStaticText" id="284">
-          <string name="bounds">-26505 -23696 -26489 -23303 </string>
+          <string name="bounds">-29836 -6810 -29820 -6417 </string>
           <string name="title">Font Name</string>
         </object>
         <object class="IBCarbonButton" id="283">
-          <string name="bounds">-26465 -21576 -26445 -21572 </string>
+          <string name="bounds">-29796 -4690 -29776 -4686 </string>
           <string name="title">Choose Font</string>
         </object>
         <object class="IBCarbonEditText" id="285">
-          <string name="bounds">22693 -19288 22691 -19289 </string>
+          <string name="bounds">19362 -2402 19360 -2403 </string>
           <string name="title">12</string>
         </object>
         <object class="IBCarbonStaticText" id="286">
-          <string name="bounds">-26467 -17454 -26451 -17378 </string>
+          <string name="bounds">-29798 -568 -29782 -492 </string>
           <string name="title">Point Size</string>
         </object>
         <object class="IBCarbonEditText" id="287">
-          <string name="bounds">-26587 -15476 -26589 -15482 </string>
+          <string name="bounds">-29918 1410 -29920 1404 </string>
           <string name="title">5</string>
         </object>
         <object class="IBCarbonStaticText" id="288">
-          <string name="bounds">-26595 -13596 -26579 -13549 </string>
+          <string name="bounds">-29926 3290 -29910 3337 </string>
           <string name="title">Width:</string>
         </object>
         <object class="IBCarbonStaticText" id="290">
-          <string name="bounds">-26595 -11424 -26579 -11377 </string>
+          <string name="bounds">-29926 5462 -29910 5509 </string>
           <string name="title">Height:</string>
         </object>
       </array>
@@ -1399,7 +1399,7 @@
     <reference idRef="440"/>
     <reference idRef="441"/>
     <object class="IBCarbonButton" id="442">
-      <string name="bounds">-23611 -29189 -23591 -29178 </string>
+      <string name="bounds">-23611 21439 -23591 21450 </string>
       <ostype name="controlSignature">PREF</ostype>
       <int name="controlID">1002</int>
       <string name="title">Choose Font</string>

@@ -816,11 +816,15 @@ noconsole:
     CloseRAquaConsole();
 }
 
+ControlID	RGUISep = {kRGUI, kRGUISep};
+ControlID	RGUIBusy = {kRGUI, kRGUIBusy};
+ControlID	RGUIText = {kRGUI, kRGUIText};
+ControlID   WorkingDirID = {kRGUI, kRWorkingDirText};
+
 void ShowWorkingDir(void);
 void ShowWorkingDir(void){
     CFStringRef		text;
     char			buf[301];
-	ControlID		WorkingDirID = {kRGUI, kRWorkingDirText};
     ControlRef		WorkingDirControl;
 	ControlFontStyleRec	controlStyle;
 
@@ -2416,9 +2420,6 @@ void GraphicCopy(WindowPtr window)
 }
 
 
-ControlID	RGUISep = {kRGUI, kRGUISep};
-ControlID	RGUIBusy = {kRGUI, kRGUIBusy};
-ControlID	RGUIText = {kRGUI, kRGUIText};
 
 void Raqua_showarrow(void);
 void Raqua_showarrow(void){
@@ -2428,6 +2429,8 @@ void Raqua_showarrow(void){
   ShowControl(RGUIControl);
   GetControlByID(ConsoleWindow, &RGUIText, &RGUIControl);
   ShowControl(RGUIControl);
+  GetControlByID(ConsoleWindow, &WorkingDirID, &RGUIControl);
+  HideControl(RGUIControl);
 }
 
 void Raqua_hidearrow(void);
@@ -2438,6 +2441,9 @@ void Raqua_hidearrow(void){
   HideControl(RGUIControl);
   GetControlByID(ConsoleWindow, &RGUIText, &RGUIControl);
   HideControl(RGUIControl);
+  GetControlByID(ConsoleWindow, &WorkingDirID, &RGUIControl);
+  ShowControl(RGUIControl);
+
 }
    
 void Raqua_Busy(int which);
@@ -2467,6 +2473,7 @@ void RescaleInOut(double prop)
   GetControlByID(ConsoleWindow, &RGUISep, &RGUIControl);
   SizeControl(RGUIControl, WinBounds.right, 4);
   GetControlByID(ConsoleWindow, &RGUIText, &RGUIControl);
+  MoveControl(RGUIControl, 0 /*WinBounds.right - 100*/, 4);
   SizeControl(RGUIControl, WinBounds.right-40, 16);
         
   SetRect(&OutRect,0,26,WinBounds.right,(int)( WinBounds.bottom*prop ));
