@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-54, 2001-05-15
+Version 1.2-55, 2001-05-16
 Kurt Hornik
 
 
@@ -154,11 +154,11 @@ and a `$' for the shell prompt (where applicable).
    Feedback is of course most welcome.
 
    In particular, note that I do not have access to Windows or Mac systems.
-Features specific to the Windows port of R are described in the "Frequently
-Asked Questions for R for Windows"
-(http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html).  If you have information on
-Windows or Mac systems that you think should be added to this document,
-please let me know.
+Features specific to the Windows and Mac OS ports of R are described in the
+"R for Windows FAQ" (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) and "R
+for Macintosh FAQ/DOC" (http://www.eco-dip.unimi.it/R/rmac-FAQ.html).  If
+you have information on Windows or Mac systems that you think should be
+added to this document, please let me know.
 
 2 R Basics
 **********
@@ -332,8 +332,8 @@ Gentleman, and is now being developed and maintained by Guido Masarotto
    For most installations the installer `rwinst.exe' will be the easiest
 tool to use.
 
-   See the R Windows FAQ (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html) for
-more details.
+   See the R for Windows FAQ (http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html)
+for more details.
 
 2.5.3 How can R be installed (Macintosh)
 ----------------------------------------
@@ -343,6 +343,9 @@ stuffit (`sit') self-extracting binaries for a base distribution and a
 large number of add-on packages to run under MacOS 8.6 to MacOS 9.1 or
 MacOS X under Classic Environment.  The Mac version of R and the Mac
 binaries are maintained by Stefano Iacus <stefano.iacus@unimi.it>.
+
+   See the R for Macintosh FAQ/DOC
+(http://www.eco-dip.unimi.it/R/rmac-FAQ.html) for more details.
 
    Binaries of base distributions for MacOS X (Darwin) with X11 are made
 available by Jan de Leeuw <deleeuw@stat.ucla.edu> at
@@ -407,6 +410,9 @@ available for web browsing at `http://stat.ethz.ch/R/manual/'.
    * "The R Language Definition" (`R-lang'), a first version of the
      "Kernighan & Ritchie of R", explains evaluation, parsing, object
      oriented programming, computing on the language, and so forth.
+
+   R 1.3.0 will also contain "R Installation and Administration"
+(`R-admin').
 
    In addition to material written specifically for R, documentation for
 S/S-PLUS (see *Note R and S::) can be used in combination with this FAQ
@@ -1358,6 +1364,9 @@ works, was published in the Journal of Statistical Software
 
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
+
+*nlrq*
+     Nonlinear quantile regression.
 
 *nnet*
      Software for single hidden layer perceptrons ("feed-forward neural
