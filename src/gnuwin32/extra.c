@@ -669,7 +669,8 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
-{    DWORD mtime;
+{    
+    DWORD mtime;
     int ntime;
     double time;
     
@@ -777,3 +778,98 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
+static window wselect;
+static button bFinish, bCancel;
+static listbox f_list;
+static char selected[100];
+static int done;
+
+static void cleanup()
+{
+    hide(wselect);
+    delobj(f_list); delobj(bFinish); delobj(bCancel);
+    delobj(wselect);
+}
+
+
+static void cancel(button b)
+{
+    strcpy(selected, "");
+    done = 1;
+}
+
+static void finish(button b)
+{
+    strncpy(selected, gettext(f_list), 100);
+    done = 1;
+}
+
+static void key1(control c, int ch)
+{
+    if(ch == '\n') finish(NULL);
+    if(ch == ESC)  cancel(NULL);
+}
+
+
+SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+    SEXP list, preselect, ans = R_NilValue;
+    char **clist, *cps;
+    int i, j = -1, n, mw = 0, multiple, nsel = 0;
+    int xmax = 550, ymax  = 400, ylist;
+
+    checkArity(op, args);
+    list = CAR(args);
+    if(!isString(list)) error("invalid `list' argument");
+    preselect = CADR(args);
+    if(!isNull(preselect) &&
+       (!isString(preselect) || length(preselect) != 1))
+	error("invalid `preselect' argument");
+    if(isNull(preselect)) cps = CHAR(STRING_ELT(preselect, 0));
+    else cps = "";
+    multiple = asLogical(CADDR(args));
+    if(multiple == NA_LOGICAL) multiple = 0;
+
+    n = LENGTH(list);
+    clist = (char **) R_alloc(n + 1, sizeof(char *));
+    for(i = 0; i < n; i++) {
+	clist[i] = CHAR(STRING_ELT(list, i));
+	if(strcmp(clist[i], cps) == 0) j = i;
+	mw = max(mw, strlen(clist[i]));
+    }
+    clist[n] = NULL;
+    mw = min(mw, 25);
+    xmax = max(170, 8*mw+60);
+    ylist = min(20*n, 300);
+    ymax = ylist + 60;
+    wselect = newwindow(multiple ? "Select" : "Select one", 
+			rect(0, 0, xmax, ymax),
+			Titlebar | Centered | Modal);
+    setbackground(wselect, LightGrey);
+    if(multiple)
+	f_list = newmultilist(clist, rect(10, 10, 35+8*mw, ylist), NULL);
+    else
+	f_list = newlistbox(clist, rect(10, 10, 35+8*mw, ylist), NULL);
+    setlistitem(f_list, j);
+    bFinish = newbutton("OK", rect(xmax-160, ymax-40, 70, 25), finish);
+    bCancel = newbutton("Cancel", rect(xmax-80, ymax-40, 70, 25), cancel);
+    setkeydown(wselect, key1);
+    show(wselect);
+    done = 0;
+    while(!done) R_ProcessEvents();
+
+    if(multiple) {
+	for(i = 0; i < n; i++)  if(isselected(f_list, i)) nsel++;
+	PROTECT(ans = allocVector(STRSXP, nsel));
+	for(i = 0, j = 0; i < n; i++)
+	    if(isselected(f_list, i))
+		SET_STRING_ELT(ans, j++, mkChar(clist[i]));
+    } else {
+	PROTECT(ans = allocVector(STRSXP, 1));
+	SET_STRING_ELT(ans, 0, mkChar(selected));	
+    }
+    cleanup();
+    show(RConsole);
+    UNPROTECT(1);
+    return ans;
+}

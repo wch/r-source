@@ -510,6 +510,7 @@ FUNTAB R_FunTab[] =
 {"memory.size",	do_memsize,	0,	11,	1,	PP_FUNCALL},
 {"DLL.version",	do_dllversion,	0,	11,	1,	PP_FUNCALL},
 {"bringToTop",	do_bringtotop,	0,	11,	1,	PP_FUNCALL},
+{"select.list",	do_selectlist,	0,	11,	3,	PP_FUNCALL},
 #endif
 #ifdef Macintosh
 {"unlink",	do_unlink,	0,	11,	2,	PP_FUNCALL},

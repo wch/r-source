@@ -74,3 +74,6 @@ Sys.timezone <- function()
     z <- as.POSIXlt(Sys.time())
     attr(z, "tzone")[2 + z$isdst]
 }
+
+select.list <- function(list, preselect=NULL, multiple=FALSE)
+    .Internal(select.list(list, preselect, multiple))
