@@ -210,10 +210,13 @@ SEXP do_as(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* as.name */
 	case 102:
-		if (!isString(CAR(args)) || LENGTH(CAR(args)) < 0 ||
-			streql(CHAR(STRING(CAR(args))[0]), ""))
-				errorcall(call, "character argument required\n");
-		return install(CHAR(STRING(CAR(args))[0]));
+                u = CAR(args);
+                if (TYPEOF(u) == SYMSXP)
+                        return u;
+                if (!isString(u) || LENGTH(u) < 0 ||
+                        streql(CHAR(STRING(u)[0]), ""))
+                                errorcall(call, "character argument required\n");
+                return install(CHAR(STRING(u)[0]));
 	default:
 		errorcall(call, "unimplemented coersion\n");
 	}

@@ -44,6 +44,8 @@ BUG FIXES
     o   Empty directories now created by configure (so that it doesn't
         matter that "CVS export" doesn't do it)
 
+    o   as.name() made idempotent (i.e. if is.name(x) then as.name(x)==x)
+
     o   3 problems with glm, 2 in glm.fit and a one in print.glm fixed
 	[Jim Lindsey]
 
