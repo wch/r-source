@@ -81,9 +81,9 @@ hist.default <-
     ## arguments are really irrelevant
     counts <- .C("bincount",
 		 x,
-		 n,
+		 as.integer(n),
 		 fuzzybreaks,
-		 nB,
+		 as.intger(nB),
 		 counts = integer(nB - 1),
 		 right = as.logical(right),
 		 include= as.logical(include.lowest), naok = FALSE,

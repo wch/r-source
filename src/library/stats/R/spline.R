@@ -25,7 +25,7 @@ spline <-
     }
     z <- .C("spline_coef",
 	    method=as.integer(method),
-	    n=nx,
+	    n=as.integer(nx),
 	    x=x,
 	    y=y,
 	    b=double(nx),
@@ -40,7 +40,7 @@ spline <-
 
     .C("spline_eval",
        z$method,
-       nu=length(u),
+       nu=as.integer(length(u)),
        x =u,
        y =double(n),
        z$n,
