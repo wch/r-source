@@ -5,11 +5,12 @@ R is now an official part of the GNU project.  To quote RMS
 
 	``I hereby dub R GNU software!''
 
-And a golden glow descended on the R core, and all their sins
-were washed away ...
-
 
 NEW FEATURES
+
+    o	Heiner Schwarte has modified the memory management system
+	so that the vector heap will grow when free space is
+	exhausted.
 
     o	There has been a major change in directory structure
 	masterminded by Kurt Hornik.
