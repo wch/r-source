@@ -26,9 +26,6 @@
 /*
 #define OLD
 */
-#ifndef OLD
-#define DEBUG_X11
-#endif
 
 #include <stdio.h>
 #include <X11/X.h>

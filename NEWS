@@ -6,6 +6,21 @@
 
 NEW FEATURES
 
+    o   The scaling of symbols is now linear in cex=, rather than being
+	tied to the available font's size. The fonts also scale
+	linearly with cex= inso far as your X server can do it. On
+	systems with the scalable URW PostScript fonts installed, this
+	looks particularly nice. Note that the scaling is linear in
+	the *diameter*, but quadratic in area.
+
+    o   The cex= argument to plot() etc. can be a vector, like pch=.
+
+    o   abline(a,b) now (again) refers to transformed coordinates on
+        plots with log-axes, so that abline(lm(log10(y)~log10(x)))
+        (say) draws a best-fitting line on a log-log plot. The earlier
+        convention (to draw a curve representing a line in original
+        coordinates) is available using a new untf= argument.
+
     o	new function sunflowerplot().
 
     o	zero.R tries to find the zero DLL is a system-independent way.
@@ -26,6 +41,8 @@ NEW FEATURES
 
 
 BUG FIXES
+
+    o   Text clipping now works in the X11 driver
 
     o   str() is quite bit nicer with factors
 
