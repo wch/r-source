@@ -352,7 +352,9 @@ par(\dots, no.readonly = FALSE)
     \item{\code{omi}}{A vector of the form \code{c(bottom, left, top,
 	right)} giving the size of the outer margins in inches.}
     \item{\code{pch}}{Either an integer specifying a symbol or a single
-      character to be used as the default in plotting points. }
+      character to be used as the default in plotting points.  See
+      \code{\link{points}} for possible values and their interpretation.
+    }
     \item{\code{pin}}{The current plot dimensions, \code{(width,height)},
       in inches.}
     \item{\code{plt}}{A vector of the form \code{c(x1, x2, y1, y2)}
@@ -367,7 +369,7 @@ par(\dots, no.readonly = FALSE)
     \item{\code{srt}}{The string rotation in degrees.  See the comment
       about \code{crt}.
       %% NOT true for R (but for S): Causes \code{srt} to be set to the
-      %% same value.
+      %% same value. ?? Is `crt' meant here ??
     }
     \item{\code{tck}}{The length of tick marks as a fraction of the
       smaller of the width or height of the plotting region.
