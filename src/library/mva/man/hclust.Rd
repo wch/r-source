@@ -32,7 +32,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
 
   \item{members}{\code{NULL} or a vector with length size of \code{d}.}
 
-  \item{x}{an object of the type produced by \code{hclust}.}
+  \item{x,tree}{an object of the type produced by \code{hclust}.}
 
   \item{hang}{The fraction of the plot height by which labels should hang
     below the rest of the plot.
@@ -48,7 +48,7 @@ plclust(tree, hang = 0.1, unit = FALSE, level = FALSE, hmin = 0,
     default when there's a \code{tree$call}.}
   \item{\dots}{Further graphical arguments.}
 
-  \item{unit, level, hmin, square}{as yet unimplemented arguments of
+  \item{unit, level, hmin, square, plot.}{as yet unimplemented arguments of
     \code{plclust} for S-plus compatibility.}
 }
 \value{
