@@ -18,8 +18,9 @@ packageEvent(pkgname,
 \arguments{
   \item{hookName}{character string: the hook name}
   \item{pkgname}{character string: the package/namespace name.
-    If versioned install has been used, \code{pkgname} should the unversioned
-    name of the package and any version information will be stripped.}
+    If versioned install has been used, \code{pkgname} should be
+    the unversioned name of the package (but any version information
+    will be stripped).}
   \item{event}{character string: an event for the package}
   \item{value}{A function, or for \code{action="replace"}, \code{NULL}.}
   \item{action}{The action to be taken.  The names can be appreviated.}
