@@ -66,6 +66,8 @@ BUG FIXES
 
     o	as.POSIXct() on character objects was ignoring `tz'.
 
+    o	codoc(ignore.generic.functions = TRUE) works again.
+
     o	Explicitly close files opened by sink() for OSes (such as
 	Windows) that benefit from it.
 
@@ -124,11 +126,12 @@ BUG FIXES
 
 	Avoid NaN values where n = 0 occurs.
 
-    o	Using non-integer numbers of successes in a binomial glm
-	(as formerly in demo(lm.glm)) now gives a warning, as the
-	theory and in particular the AIC value is not applicable.
+    o	Using non-integer numbers of successes in a binomial glm (as
+	formerly in demo(lm.glm)) now gives a warning, as the theory and
+	in particular the AIC value is not applicable.
 
-    o	demo(is.things) works again {is.ALL() doesn't call methods anymore}.
+    o	demo(is.things) works again {is.ALL() doesn't call methods
+	anymore}. 
 
     o	persp(*, nticks = nn) now works (better) for too small nn.
 	persp(*, main = t1, sub= t2) now work (as always documented).
@@ -392,7 +395,7 @@ NEW FEATURES
 
     o	smooth() in package eda has a better default (3RS3R instead of
 	3RSR) and more arguments, e.g. `twiceit' for some S
-	compatibility and kind = "3R" for running medians of 3.
+	compatibility and `kind = "3R"' for running medians of 3.
 
     o	strsplit() has a new argument `extended' controlling whether to
 	use extended (the default) or basic regular expressions for
@@ -438,7 +441,7 @@ NEW FEATURES
     o	termplot() now has an `ask' argument.
 
     o	terms() creates objects which now inherit from class "formula",
-	so for example as.formula(terms.object) needs to replaced by 
+	so for example as.formula(terms.object) needs to be replaced by
 	formula(terms.object).
 
     o	traceback() is now printed un-quoted and labelled by the
@@ -827,10 +830,10 @@ BUG FIXES
 	These functions no longer add and subtract n zeros when there's no
 	offset.	 They are now documented somewhat.
 
-    o	Some HTML files used src="R.css" instead of href="R.css"
-	causing some browsers to ignore the style sheet. R.css now
-	passes the w3c CSS validator and gives the intended results
-	with Internet Explorer. R.css is copied to all library directories.
+    o	Some HTML files used src="R.css" instead of href="R.css" causing
+	some browsers to ignore the style sheet.  `R.css' now passes the
+	w3c CSS validator and gives the intended results with Internet
+	Explorer.  `R.css' is copied to all library directories.
 
     o	The data editor no longer crashes when entries contain more than
 	45 characters, and works correctly if the field width is
