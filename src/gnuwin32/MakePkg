@@ -118,6 +118,7 @@ ifneq ($(strip $(PKG)),base)
 ifneq ($(strip $(PKGRFILES)),)
 	@$(ECHO) "  installing R files"
 	@$(MKDIR) -p $(DPKG)/R
+	@rm -f $(DPKG)/R/$(PKG).rdb $(DPKG)/R/$(PKG).rdx $(DPKG)/R/all.rda
 	@$(ECHO) "tools:::.install_package_code_files('"$(SPKG)"', '"$(DPKG)"')" \
 	  | R_DEFAULT_PACKAGES=NULL R_OSTYPE=windows LC_COLLATE=C $(REXE) > /dev/null
 	@rm -f $(DPKG)/R/$(PKG).rdb  $(DPKG)/R/$(PKG).rdx
