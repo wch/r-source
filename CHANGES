@@ -1,5 +1,26 @@
 
+<<<<<<< CHANGES
+		CHANGES IN VERSION R VERSION 0.60.2
+=======
 		CHANGES IN VERSION R VERSION 0.60.1++
+>>>>>>> 1.20
+
+NEW FEATURES
+
+    o	New functions "all.vars" and "all.names" added.
+
+    o	There has been a small change in the include file structure.
+	All include files now live in RHOME/src/include and are
+	copied to RHOME/include when needed.
+
+BUG_FIXES
+
+    o	A nasty bug which showed when attempt was made to create
+	a zero length call has been fixed.
+
+
+
+		CHANGES IN VERSION R VERSION 0.60.1
 
 NEW FEATURES
 
