@@ -82,8 +82,7 @@ boxplot(x, \dots)
 }
 \details{
   The generic function \code{boxplot} currently has a default method
-  (\code{boxplot.default}) and a formula interface
-  (\code{\link{boxplot.formula}}).
+  (\code{boxplot.default}) and a formula interface (\code{boxplot.formula}).
 
   Missing values are ignored when forming boxplots.
 }
