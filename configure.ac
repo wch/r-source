@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2002 R Core Team
+### Copyright (C) 1998-2003 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -1136,6 +1136,7 @@ R_FUNC___SETFPUCW
 R_FUNC_CALLOC
 R_FUNC_FINITE
 R_FUNC_LOG
+R_FUNC_LOG1P
 R_FUNC_STRPTIME
 
 ## BLAS.
