@@ -268,8 +268,7 @@ NEW FEATURES
     o	New function message() for generating "simple" diagnostic
 	messages.
 
-    o	New function normalizePath() to find canonical paths
-	(currently only on Windows).
+    o	New function normalizePath() to find canonical paths.
 	
 
 INTERNATIONALIZATION

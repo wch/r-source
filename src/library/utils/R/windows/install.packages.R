@@ -211,8 +211,6 @@ menuInstallBioc <- function()
                      dependencies = TRUE)
 }
 
-normalizePath <- function(path) .Internal(normalizePath(path))
-
 ### the following function supports .install.winbinaries()
 
 zip.unpack <- function(zipname, dest)

@@ -1439,4 +1439,41 @@ SEXP do_l10n_info(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+#ifndef Win32 /* in src/gnuwin32/extra.c */
+SEXP do_normalizepath(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+#if defined(HAVE_GETCWD) && defined(HAVE_REALPATH)
+    SEXP ans, paths = CAR(args);
+    int i, n = LENGTH(paths);
+    char *path, tmp[PATH_MAX+1], abspath[PATH_MAX+1], *res = NULL;
+    Rboolean OK;
 
+    checkArity(op, args);
+    PROTECT(ans = allocVector(STRSXP, n));
+    for (i = 0; i < n; i++) {
+	path = CHAR(STRING_ELT(paths, i));
+	OK = strlen(path) <= PATH_MAX;
+	if(OK) {
+	    if(path[0] == '/') strncpy(abspath, path, PATH_MAX);
+	    else {
+		OK = getcwd(abspath, PATH_MAX) != NULL;
+		OK = OK && (strlen(path) + strlen(abspath) + 1 <= PATH_MAX);
+		if(OK) {
+		    strcat(abspath, "/");
+		    strcat(abspath, path);
+		}
+	    }
+	}
+	if(OK) res = realpath(abspath, tmp);
+	if (OK && res) SET_STRING_ELT(ans, i, mkChar(tmp));
+	else SET_STRING_ELT(ans, i, STRING_ELT(paths, i));
+    }
+    UNPROTECT(1);
+    return ans;
+#else
+    checkArity(op, args);
+    warningcall(call, "insufficient OS support on this platform");
+    return CAR(args);
+#endif
+}
+#endif
