@@ -2742,8 +2742,8 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 		rot= atan2(yc, xc);
 		x[0] = xfromInch + length * cos(rot+angle*DEG2RAD);
 		y[0] = yfromInch + length * sin(rot+angle*DEG2RAD);
-		x[1] = xfrom; 
-		y[1] = yfrom;
+		x[1] = xfromInch; 
+		y[1] = yfromInch;
 		x[2] = xfromInch + length * cos(rot-angle*DEG2RAD);
 		y[2] = yfromInch + length * sin(rot-angle*DEG2RAD);
 		GPolyline(3, x, y, INCHES, dd);
@@ -2752,12 +2752,12 @@ void GArrow(double xfrom, double yfrom, double xto, double yto, int coords,
 		xc = xfromInch - xtoInch;
 		yc = yfromInch - ytoInch;
 		rot= atan2(yc, xc);
-		x[0] = xfromInch + length * cos(rot+angle*DEG2RAD);
-		y[0] = yfromInch + length * sin(rot+angle*DEG2RAD);
-		x[1] = xto;
-		y[1] = yto;
-		x[2] = xfromInch + length * cos(rot-angle*DEG2RAD);
-		y[2] = yfromInch + length * sin(rot-angle*DEG2RAD);
+		x[0] = xtoInch + length * cos(rot+angle*DEG2RAD);
+		y[0] = ytoInch + length * sin(rot+angle*DEG2RAD);
+		x[1] = xtoInch;
+		y[1] = ytoInch;
+		x[2] = xtoInch + length * cos(rot-angle*DEG2RAD);
+		y[2] = ytoInch + length * sin(rot-angle*DEG2RAD);
 		GPolyline(3, x, y, INCHES, dd);
 	}
 }
