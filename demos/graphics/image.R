@@ -31,4 +31,7 @@ axis(2, at=y.at)
 box()
 title(main="Maunga Whau Volcano \n col=gray(100:200/200)", font.main=4)
 
+## Filled Contours are even nicer sometimes :
+example(filled.contour)
+
 par(opar)
