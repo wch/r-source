@@ -369,8 +369,11 @@ forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
 
     nt = n - id;
     if (id > 0) {
-	for (j = 1; j <= id; j++)
+	for (j = 1; j <= id; j++) {
 	    store[j] = w[n - j];
+	    if(ISNAN(store[j]))
+		error("missing value in last %d observations", id);
+	}
 	for (i = 1; i <= nt; i++) {
 	    aa = 0.0;
 	    for (k = 1; k <= id; ++k) {
@@ -445,7 +448,7 @@ forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
 	    a[ir2] = a1;
 	}
 
-/*     predict p */
+/*     predict P */
 
 	if (id > 0) {
 	    for (i = 1; i <= id; i++) {
@@ -518,7 +521,7 @@ forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
 		if (j < ir)
 		    P[ind2] += store[j + 1] * phii;
 		if (i < ir)
-		    P[ind2] = P[ind2] + store[i + 1] * phij + P[++ind1];
+		    P[ind2] += store[i + 1] * phij + P[++ind1];
 	    }
 	}
 
@@ -534,7 +537,7 @@ forkal(Starma G, int id, int il, double *delta, double *y, double *amse,
 	    for (j = 1; j <= id; j++) {
 		jrj = ibc + (j - 1) * (idd2 - j) / 2;
 		tmp = delta[j];
-		ams = ams + 2.0 * delta[j] * P[ir + j] + P[jrj + 1] * tmp * tmp;
+		ams += 2.0 * tmp * P[ir + j] + P[jrj + 1] * tmp * tmp;
 	    }
 	    for (j = 1; j <= id1; j++) {
 		j1 = j + 1;
