@@ -227,7 +227,16 @@ BUG FIXES
 
     o	bxp(*) now obeys axes, xaxt, yaxt & ylim arguments (again?).
 
-    o   Use FILESEP instead of '/' in devPS.c
+    o   Use FILESEP instead of '/' in devPS.c.
+
+    o   Zero the widths of undefined chars in postscript().
+
+    o   Make font metrics local to the device in postscript(), so
+	that simultaneous instances of postscript/xfig/bitmap can use
+	different values for `family'.
+
+
+
 
 	**************************************************
 	*						 *
