@@ -396,8 +396,13 @@ void ml_error(int n);
 
 #define R_DT_exp(x)	R_D_exp(R_D_Lval(x))		/* exp(x) */
 #define R_DT_Cexp(x)	R_D_exp(R_D_Cval(x))		/* exp(1 - x) */
-#define R_DT_log(p)	R_D_log(R_D_Lval(p))		/* log(p) */
-#define R_DT_Clog(p)	R_D_log(R_D_Cval(p))		/* log(1 - p) */
+
+#define R_DT_log(p)	(lower_tail ? R_D_log(p) :		\
+			 logrelerr(- (log_p ? exp(p) : p)))/* log(p)	in qF */
+
+#define R_DT_Clog(p)	(lower_tail ?				\
+			 logrelerr(- (log_p ? exp(p) : p)) :	\
+			 R_D_log(p))			/* log(1 - p)	in qF */
 
 #define R_Q_P01_check(p)			\
     if ((log_p	&& p > 0) ||			\
