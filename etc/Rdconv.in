@@ -31,8 +31,8 @@ if($ENV{"RHOME"}){
     $RHOME=$ENV{"RHOME"};
 }
 else{
-    chdir(dirname($0) . "/..");
-    $RHOME=getcwd();
+    $RHOME = `R RHOME`;
+    $RHOME =~ s/(.*)\n*/$1/;
 }
 
 chdir($cwd);
