@@ -31,4 +31,8 @@ is.integer(x)
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer type or not. 
 }
+\seealso{
+  \code{\link{round}} (and \code{ceiling} and \code{floor} on that help
+  page) to convert to integral values.
+}
 \keyword{classes}
