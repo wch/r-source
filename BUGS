@@ -29,6 +29,7 @@ Directory:  Accuracy
 Subject:  behavior of r* and d* functions at boundaries 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 17 Dec 2001 11:04:27 -0500
+--points 1 and 2 were fixed for 1.4.0
 
 Directory:  Add-ons
 
@@ -88,10 +89,6 @@ From: Rich Heiberger <rmh@surfer.sbm.temple.edu>
 Date: Tue, 4 Dec 2001 11:29:58 -0500 (EST)
 --This isn't really a bug: the line in question is a plain-text equation, not a
 --piece of R code.
-* PR# 1213 *
-Subject: Doc suggestion for detach (and library)
-From: Duncan Murdoch <murdoch@stats.uwo.ca>
-Date: Thu, 13 Dec 2001 10:26:28 -0500
 
 Directory:  Graphics
 
@@ -201,13 +198,48 @@ Subject: boxplot labels incorrect when horizontal = TRUE
 From: Rashid Nassar <rnassar@duke.edu>
 Date: Sun, 9 Dec 2001 21:46:32 -0500 (EST)
 
+Directory:  incoming
+
+* PR# 1186 *
+Subject: a patch to tapply
+From: Vadim Ogranovich <vograno@arbitrade.com>
+Date: Thu, 29 Nov 2001 14:48:35 -0600
+* PR# 1224 *
+Subject: The Ultimate Calling Card
+From: "" <send0@ewasher.org>
+Date: Fri, 21 Dec 2001 07:23:49 +0100 (MET)
+* PR# 1226 *
+Subject: problem in predict.mlm
+From: Bob Gray <gray@jimmy.harvard.edu>
+Date: Sun, 23 Dec 2001 09:05:57 -0500
+* PR# 1228 *
+Subject: bug with var(rep(1e30, 3))
+From: Emmanuel Paradis <paradis@isem.univ-montp2.fr>
+Date: Wed, 26 Dec 2001 13:03:31 +0100
+* PR# 1229 *
+Subject: RGui/R Console crashes when entering illegal symbols
+From: hb@maths.lth.se
+Date: Thu, 27 Dec 2001 11:23:13 +0100 (MET)
+* PR# 1230 *
+Subject: scale in stars() is not as documented
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Thu, 27 Dec 2001 11:28:19 +0000 (GMT)
+* PR# 1231 *
+Subject: reshape error in 1.4
+From: Kevin.Wright@pioneer.com
+Date: Thu, 27 Dec 2001 22:52:57 +0100 (MET)
+
 Directory:  In-Out
 
 none
 
 Directory:  Installation
 
-none
+* PR# 1222 *
+Subject: configure: sed: Function s%@PDFLATEX@%/usr/local/bin/pdflatex%g
+From: Peter Kleiweg <kleiweg@let.rug.nl>
+Date: Thu, 20 Dec 2001 14:09:42 +0100 (CET)
+--problem is on hppa2.0-hp-hpux10.20: may be HP-UX specific
 
 Directory:  Language
 
@@ -351,18 +383,3 @@ Date: Wed, 3 Oct 2001 11:35:58 -0400 (EDT)
 Directory:  Windows
 
 none
-
-Directory:  incoming
-
-* PR# 1186 *
-Subject: a patch to tapply
-From: Vadim Ogranovich <vograno@arbitrade.com>
-Date: Thu, 29 Nov 2001 14:48:35 -0600
-* PR# 1220 *
-Subject: cmdscale: labels missing
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 18 Dec 2001 11:10:41 +0100 (CET)
-* PR# 1221 *
-Subject: isoMDS: core dump
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Tue, 18 Dec 2001 11:16:49 +0100 (CET)
