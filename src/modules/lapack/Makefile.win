@@ -20,6 +20,8 @@ DLLLIBS=-L../../gnuwin32 -lR -lRblas -lg2c
 
 $(MODULE).dll: $(OBJS)
 
+dllversion.o: ../../include/Rversion.h
+
 clean:
 	@$(RM) Makedeps *.d *.o $(MODULE).def $(MODULE).dll Rlapack.def \
 	  Rlapack.dll libRlapack.a
@@ -45,6 +47,8 @@ libRlapack.a: Rlapack.def
 ../../../lib/libRlapack.a: libRlapack.a
 	@$(MKDIR) -p ../../../lib
 	@$(CP) $< $@
+
+Rlapackrc.o: ../../include/Rversion.h
 
 # Dependencies
 DEPS=$(CSOURCES:.c=.d)
