@@ -8,7 +8,8 @@ str(object, \dots)
 \method{str}{default}(object, max.level = 0, vec.len = 4, digits.d = 3,
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
     wid = getOption("width"), nest.lev = 0,
-    indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."),
+    indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
+    comp.str="$ ", no.list = FALSE, envir = NULL,
     \dots)
 
  ls.str(pos = 1, pattern, \dots,  envir = as.environment(pos),
@@ -58,6 +59,11 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
   \item{nest.lev}{current nesting level in the recursive calls to
     \code{str}.}
   \item{indent.str}{the indentation string to use.}
+  \item{comp.str}{string to be used for separating list components.}
+  \item{no.list}{logical; if true, no \dQuote{list of ..} is nor the
+    class is printed.}
+  \item{envir}{the environment to be used for \emph{promise} (see
+    \code{\link{delay}}) objects only.}
   \item{\dots}{potential further arguments (required for Method/Generic reasons).}
 %% The following line is swallowed, unfortunately..  fixme??
   For \code{ls.str} and \code{lsf.str}:

@@ -27,7 +27,7 @@ ar.yw(x, \dots)
 \method{ar.yw}{default}(x, aic = TRUE, order.max = NULL,
       na.action = na.fail, demean = TRUE, series, \dots)
 \method{ar.yw}{mts}(x, aic = TRUE, order.max = NULL,
-      na.action = na.fail, demean = TRUE, series, \dots)
+      na.action = na.fail, demean = TRUE, series, var.method = 1, \dots)
 
 ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
        demean = TRUE, series, \dots)
