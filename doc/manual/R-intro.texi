@@ -68,6 +68,7 @@ This is an introduction to R.
 
 @permission{}
 
+@value{ISBN-intro}
 @end titlepage
 
 @ifnothtml
@@ -89,6 +90,8 @@ This manual provides information on data types, programming elements,
 statistical modeling and graphics.
 
 The current version of this document is @value{VERSION}.
+
+@value{ISBN-intro}
 @end ifnottex
 
 @menu

@@ -46,6 +46,8 @@ notice identical to this one except for the removal of this paragraph
 @Rcopyright{2000}
 
 @permission{}
+
+@value{ISBN-lang}
 @end titlepage
 
 @ifnothtml
@@ -61,6 +63,8 @@ parsing, object oriented programming, computing on the language, and so
 forth.
 
 The current version of this document is @value{VERSION} @b{DRAFT}.
+
+@value{ISBN-lang}
 @end ifnottex
 
 @menu

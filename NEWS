@@ -287,6 +287,9 @@ DOCUMENTATION CHANGES
     o	`Writing R Extensions' now has an example of calling R's
 	random numbers from FORTRAN via C.
 
+    o   R itself and all R manuals now have ISBN numbers, please use
+        them when citing R or one of the manuals.
+
 
 INSTALLATION CHANGES
 

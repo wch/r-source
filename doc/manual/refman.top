@@ -11,22 +11,33 @@
   \strut\vfill
 
   \begin{center}
-    \textbf{\Huge The \R\ Reference Index}
+    \Huge
+    \textbf{The \R\ Environment for
+      Statistical Computing and Graphics}
+
+    \LARGE
     \par\vspace*{6\medskipamount}
-    {\LARGE The \R\ Core Team}
+    \textbf{Reference Index}
+
+    \par\vspace*{6\medskipamount}
+    The \R\ Development Core Team
+
+    \large
     \par\vspace*{3\medskipamount}
-    {\large Version \input{version}}
+    Version \input{version}
   \end{center}
 
   \vfill
   \vfill
   \noindent
-  Copyright ({\copyright}) 1999, 2000 R Development Core Team.
+  Copyright ({\copyright}) 1999--2002 R Development Core Team.
   \par\bigskip\noindent
   R is free software and comes with ABSOLUTELY NO WARRANTY.  You are
   welcome to redistribute it under the terms of the GNU General Public
   License.  For more information about these matters, see
   \textsf{http://www.gnu.org/copyleft/gpl.html}.
+  \par\bigskip\noindent
+  ISBN 3-901167-50-1
 \end{titlepage}
 
 \pagenumbering{roman}

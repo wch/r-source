@@ -43,6 +43,8 @@ notice identical to this one except for the removal of this paragraph
 @permission{}
 
 @Rcopyright{2001}
+
+@value{ISBN-admin}
 @end titlepage
 
 @ifnothtml
@@ -56,6 +58,8 @@ notice identical to this one except for the removal of this paragraph
 This is a guide to installation and administration for R.
 
 The current version of this document is @value{VERSION}.
+
+@value{ISBN-admin}
 @end ifnottex
 
 @menu

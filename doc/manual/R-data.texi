@@ -43,6 +43,8 @@ notice identical to this one except for the removal of this paragraph
 @permission{}
 
 @Rcopyright{2000}
+
+@value{ISBN-data}
 @end titlepage
 
 @ifnothtml
@@ -56,6 +58,8 @@ notice identical to this one except for the removal of this paragraph
 This is a guide to importing and exporting data to and from R.
 
 The current version of this document is @value{VERSION}.
+
+@value{ISBN-data}
 @end ifnottex
 
 @menu
