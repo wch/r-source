@@ -1,9 +1,12 @@
-## run a tangle+source and a weave on all vignettes of a package
+### * checkVignettes
+###
+### Run a tangle+source and a weave on all vignettes of a package.
 
-checkVignettes <- function(package, dir, lib.loc = NULL,
-                           tangle=TRUE, weave=TRUE,
-                           workdir=c("tmp", "src", "cur"),
-                           keepfiles = FALSE)
+checkVignettes <-
+function(package, dir, lib.loc = NULL,
+         tangle=TRUE, weave=TRUE,
+         workdir=c("tmp", "src", "cur"),
+         keepfiles = FALSE)
 {
     vigns <- pkgVignettes(package=package, dir=dir, lib.loc=lib.loc)
     if(is.null(vigns)) return(NULL)
@@ -30,9 +33,7 @@ checkVignettes <- function(package, dir, lib.loc = NULL,
              if(!keepfiles) unlink(tmpd, recursive=TRUE)
          })
 
-    result <- list(tangle=list(), weave=list(),
-                   source=list())
-
+    result <- list(tangle=list(), weave=list(), source=list())
     
     for(f in vigns$docs){
         if(tangle){
@@ -61,10 +62,9 @@ checkVignettes <- function(package, dir, lib.loc = NULL,
     result
 }
     
-    
-print.checkVignettes <- function(x, ...)
+print.checkVignettes <-
+function(x, ...)
 {
-
     mycat <- function(y, title){    
         if(length(y)>0){
             cat("\n", title, "\n\n", sep="")
@@ -77,13 +77,15 @@ print.checkVignettes <- function(x, ...)
 
     mycat(x$weave,  "*** Weave Errors ***")
     mycat(x$tangle, "*** Tangle Errors ***")
-    mycat(x$source, "*** Source Errors ***")    
+    mycat(x$source, "*** Source Errors ***")
+
+    invisible(x)
 }    
 
-
-
-## get an object of class pkgVignettes which contains a list of Sweave
-## files and the name of the directory which contains them
+### * pkgVignettes
+###
+### Get an object of class pkgVignettes which contains a list of Sweave
+### files and the name of the directory which contains them.
 
 pkgVignettes <- function(package, dir, lib.loc = NULL)
 {
@@ -98,16 +100,16 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
         if(missing(dir))
             stop("you must specify 'package' or 'dir'")
         ## Using sources from directory @code{dir} ...
-        if(!(file.exists(dir) && file.info(dir)$isdir))
+        if(!.fileTest("-d", dir))
             stop(paste("directory", sQuote(dir), "does not exist"))
         else
             ## maybe perform tilde expansion on @code{dir}
             docdir <- file.path(dirname(dir), basename(dir), "inst", "doc")
     }
     
-    if(!(file.exists(docdir) && file.info(docdir)$isdir)) return(NULL)
+    if(!.fileTest("-d", docdir)) return(NULL)
 
-    exts <- outer(c("r", "s", "R", "S"), c("nw","tex"), paste, sep="")
+    exts <- .makeFileExts("vignette")
     docs <- .listFilesWithExts(docdir, exts)
     
     z <- list(docs=docs, dir=docdir)
@@ -115,9 +117,10 @@ pkgVignettes <- function(package, dir, lib.loc = NULL)
     z
 }
 
-
-## run a weave and pdflatex on all vignettes of a package and try to
-## remove all temporary files that were created
+### * buildVignettes
+###
+### Run a weave and pdflatex on all vignettes of a package and try to
+### remove all temporary files that were created.
 
 buildVignettes <-function(package, dir, lib.loc = NULL)
 {
@@ -161,3 +164,8 @@ buildVignettes <-function(package, dir, lib.loc = NULL)
     }
     invisible(NULL)
 }
+
+### Local variables: ***
+### mode: outline-minor ***
+### outline-regexp: "### [*]+" ***
+### End: ***
