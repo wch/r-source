@@ -74,11 +74,6 @@ rchisq <- function(n, df, ncp=0) {
 	if(missing(ncp)) .Internal(rchisq(n, df))
         else .not.yet.implemented()
 }
-#-- These *REALLY* are deprecated;  just here for compatibility (<= 0.61.2):
-dnchisq <- function(x, df, lambda) .Internal(dnchisq(x, df, lambda))
-pnchisq <- function(q, df, lambda) .Internal(pnchisq(q, df, lambda))
-qnchisq <- function(p, df, lambda) .Internal(qnchisq(p, df, lambda))
-rnchisq <- function(...) .not.yet.implemented()
 
 df <- function(x, df1, df2) .Internal(df(x, df1, df2))
 pf <- function(q, df1, df2, ncp=0) {
