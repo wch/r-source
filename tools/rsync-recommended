@@ -19,15 +19,18 @@ fi
 
   ## The purpose of the rsync options is to get the timestamps on the
   ## downloaded files to reflect time of download.
-  ## We can't use -t because then we could download a changed file that
-  ## was older the last build and therefore would not be installed.
-  ## The -c (checksum first) is necessary because otherwise all the
+  ## We can't use '-t' because then we could download a changed file
+  ## that was older the last build and therefore would not be installed.
+  ## The '-c' (checksum first) is necessary because otherwise all the
   ## files get their mtime changed whether updated or not.
-  ## -C prevents -delete from removing the CVS subdirectory.
+  ## We would like to use '-C' to prevent '--delete' from removing the
+  ## CVS subdirectory, but in some versions of rsync this adds the
+  ## exclude patterns from .cvsignore without a way to override, so we
+  ## try using an exclude pattern.
 
-  rsync -rcIzC --verbose --delete \
-    --exclude=Makefile.in --exclude=Makefile --exclude=.cvsignore \
-    --include=*.tar.gz --exclude=*.tgz \
+  rsync -rcIz --verbose --delete --include="*.tar.gz" \
+    --exclude=Makefile.in --exclude=Makefile \
+    --exclude="CVS*" --exclude=.cvsignore --exclude="*.tgz" \
     "${CRAN_RSYNC}"/src/contrib/${version}/Recommended/ . || \
     (echo "*** rsync failed to update Recommended files ***" && exit 1)
 
