@@ -571,7 +571,7 @@ static double pixelHeight(void)
 static void handleEvent(XEvent event)
 {
     caddr_t temp;
-    NewDevDesc *dd;
+    NewDevDesc *dd = NULL;	/* -Wall */
     newX11Desc *xd;
     int devNum = 0;
     int do_update = 0;
