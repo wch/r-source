@@ -47,7 +47,8 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
   devices: this will be reported if you attempt to use them on a system
   where they are not supported.  They will not be not available if \R has
   been started with \code{--gui=none} (and will give a different error
-  message).
+  message), and they may not be usable unless the X11 display is
+  available to the owner of the \R process.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
@@ -66,20 +67,19 @@ png(filename ="Rplot.png", width = 480, height = 480, pointsize = 12,
   supported by this build of \R.
 }
 \examples{
+## these examples will work only if the devices are available
+## and the X11 display is available.
+
 ## copy current plot to a PNG file
-\dontrun{dev.print(png, file="myplot.png", width=480, height=480)}
-if(capabilities("png")) {
+\dontrun{dev.print(png, file="myplot.png", width=480, height=480)
+
 png(file="myplot.png", bg="transparent")
 plot(1:10)
 rect(1, 5, 3, 7, col="white")
 dev.off()
-unlink("myplot.png")
-}
-if(capabilities("jpeg")) {
+
 jpeg(file="myplot.jpeg")
 example(rect)
 dev.off()
-unlink("myplot.jpeg")
-}
-}
+}}
 \keyword{device}
