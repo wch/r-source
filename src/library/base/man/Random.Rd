@@ -101,8 +101,10 @@ set.seed(seed, kind = NULL)
     }
   }
 
-  \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default) or
-  \code{"Ahrens-Dieter"} or \code{"Box-Muller"} or \code{"user-supplied"}.
+  \code{normal.kind} can be \code{"Kinderman-Ramage"} (the default),
+  \code{"Ahrens-Dieter"}, \code{"Box-Muller"}, \code{"Inversion"} or
+  \code{"user-supplied"}.  (For inversion, see the reference in
+  \code{\link{qnorm}}.)
 
   \code{set.seed} uses its single integer argument to set as many seeds
   as are required.  It is intended as a simple way to get quite different
@@ -175,6 +177,21 @@ set.seed(seed, kind = NULL)
   \emph{The Art of Computer Programming.} Volume 2, third edition, ninth
   printing.\cr
   See \url{http://Sunburn.Stanford.EDU/~knuth/news02.html}.
+
+
+  Kinderman, A. J. and Ramage, J. G. (1976)
+  Computer generation of normal random variables.
+  \emph{Journal of the American Statistical Association} \bold{71},
+  893-896.
+
+  Ahrens, J.H. and Dieter, U. (1973)
+  Extensions of Forsythe's method for random sampling from the normal
+  distribution.
+  \emph{Mathematics of Computation} \bold{27}, 927-937.
+
+  Box, G.E.P. and Muller, M.E. (1958) A note on the generation of normal
+  random deviates. \emph{Annals of Mathmatical Statistics} \bold{29},
+  610--611.
 }
 \author{of RNGkind: Martin Maechler. Current implementation, B. D. Ripley}
 

@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 the R Development Core Team
+ *  Copyright (C) 2000-2 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -257,6 +257,8 @@ double norm_rand(void)
     case USER_NORM:
 	return *((double *) User_norm_fun());
 #endif
+    case INVERSION:
+	return qnorm5(unif_rand(), 0.0, 1.0, 1, 0);
     default:
 	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
 	    return 0.0;/*- -Wall */

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001    Robert Gentleman, Ross Ihaka 
+ *  Copyright (C) 1998-2002    Robert Gentleman, Ross Ihaka 
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,8 @@ typedef enum {
     KINDERMAN_RAMAGE,
     AHRENS_DIETER,
     BOX_MULLER,
-    USER_NORM
+    USER_NORM,
+    INVERSION
 } N01type;
 
 
