@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.38 $ ';
+my $revision = ' $Revision: 1.39 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -73,6 +73,7 @@ usage() if $opt_help;
 my $startdir = cwd();
 
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
+my $tar = R_getenv("TAR", "tar");
 
 my $INSTALL_opts = "";
 $INSTALL_opts .= " --use-zip" if $opt_use_zip;
@@ -152,7 +153,7 @@ foreach my $pkg (@ARGV) {
 	    my $filename = "${pkgname}_" . $description->{"Version"} .
 		"_R_${R_platform}.tar";
 	    $log->message("building '$filename.gz'");
-	    system("tar chXf $exclude $startdir/$filename $pkgs");
+	    system("$tar chXf $exclude $startdir/$filename $pkgs");
 	    chdir($startdir);
 	    system("gzip -9f $filename");
 	    unlink($exclude);
@@ -221,7 +222,7 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $filepath =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	system("tar chXf $exclude $filepath $pkgname");
+	system("$tar chXf $exclude $filepath $pkgname");
 	chdir($startdir);
 	system("gzip -9f $filename");
 	unlink($exclude);

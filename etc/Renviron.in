@@ -25,6 +25,7 @@ PAGER=${PAGER-'@PAGER@'}
 ## Use configure values
 AWK=${AWK-'@AWK@'}
 PERL=${PERL-'@PERL@'}
+TAR=${TAR-'@TAR@'}
 
 ### Local Variables: ***
 ### mode: sh ***
