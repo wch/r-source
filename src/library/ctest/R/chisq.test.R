@@ -55,7 +55,9 @@ function(x, y = NULL, correct = TRUE, p = rep(1 / length(x), length(x)),
                       integer(nc),
                       results = double(B),
                       PACKAGE = "ctest")
-            STATISTIC <- sum((x - E) ^ 2 / E)
+            ## Sorting before summing may look strange, but seems to be
+            ## a sensible way to deal with rounding issues (PR#3486):
+            STATISTIC <- sum(sort((x - E) ^ 2 / E, decreasing = TRUE))
             PARAMETER <- NA
             PVAL <- sum(tmp$results >= STATISTIC) / B
         }
