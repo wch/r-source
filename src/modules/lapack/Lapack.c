@@ -1,5 +1,9 @@
 /* Interface routines, callable from R using .Call, for Lapack code */
 
+#ifdef HAVE_CONFIG_H
+# include <config.h>
+#endif
+
 #include "Lapack.h"
 
 SEXP La_svd(SEXP jobu, SEXP jobv, SEXP x, SEXP s, SEXP u, SEXP v)
@@ -224,8 +228,10 @@ SEXP La_rg(SEXP x, SEXP only_values)
     return ret;
 }
 
+#ifdef Unix
 /* FIXME: until configure test is in place */
 #define HAVE_DOUBLE_COMPLEX
+#endif
 SEXP La_zgesv(SEXP A, SEXP B)
 {
 #ifdef HAVE_DOUBLE_COMPLEX

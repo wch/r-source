@@ -5,7 +5,20 @@ MODULE=lapack
 all: makeMakedeps ../../../modules/$(MODULE).dll
 
 CSOURCES=Lapack.c
-FSOURCES=${wildcard *.f}
+FSOURCES= \
+  dbdsqr.f dgebak.f dgebal.f dgebd2.f dgebrd.f dgecon.f dgees.f dgeesx.f \
+  dgeev.f dgeevx.f dgehd2.f dgehrd.f dgelq2.f dgelqf.f dgeqr2.f dgeqrf.f \
+  dgesc2.f dgesvd.f dhseqr.f dlabad.f dlabrd.f dlacon.f dlacpy.f dladiv.f \
+  dlae2.f dlaev2.f dlaexc.f dlahqr.f dlahrd.f dlaln2.f dlamch.f dlange.f \
+  dlanhs.f dlanst.f dlansy.f dlanv2.f dlapy2.f dlaqtr.f dlarf.f dlarfb.f \
+  dlarfg.f dlarft.f dlarfx.f dlartg.f dlas2.f dlascl.f dlaset.f dlasq1.f \
+  dlasq2.f dlasq3.f dlasq4.f dlasq5.f dlasq6.f dlasr.f dlasrt.f dlassq.f \
+  dlasv2.f dlaswp.f dlasy2.f dlatdf.f dlatrd.f dlatrs.f dorg2l.f dorg2r.f \
+  dorgbr.f dorghr.f dorgl2.f dorglq.f dorgql.f dorgqr.f dorgtr.f dorm2r.f \
+  dormbr.f dorml2.f dormlq.f dormqr.f drscl.f dsteqr.f dsterf.f dsyev.f \
+  dsytd2.f dsytrd.f dtrevc.f dtrexc.f dtrsen.f dtrsna.f dtrsyl.f \
+  ieeeck.f ilaenv.f \
+  dcabs1.f dsyr2.f dsyr2k.f dger.f dsymv.f dgemv.f dtrmm.f dtrsv.f dtrmv.f
 
 CFLAGS=$(OPTFLAGS) -I../../include -DHAVE_CONFIG_H -include ../../include/globalvar.h
 FFLAGS=$(OPTFLAGS)
