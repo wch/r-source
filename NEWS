@@ -156,6 +156,10 @@ NEW FEATURES
     o   format() and hence print() makes an effort to handle corrupt
 	data frames, with a warning.
 
+    o   New function replicate() for repeated evaluation of expression
+        and collection of results, wrapping a common use of sapply()
+        for simulation purposes.
+ 
 
 DEPRECATED & DEFUNCT
 
