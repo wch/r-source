@@ -66,20 +66,23 @@ I use rw1070 with ESS and (X)emacs?</a></li>
 "#What%20are%20HOME%20and%20working%20directories%3f">2.11 What are
 HOME and working directories?</a></li>
 
-<li><a href="#R%20can't%20find%20my%20file">2.12 R can't find my
+<li><a href="#How%20do%20I%20set%20environment%20variables%3f">2.12
+How do I set environment variables?</a></li>
+
+<li><a href="#R%20can't%20find%20my%20file">2.13 R can't find my
 file, but I know it is there!</a></li>
 
-<li><a href="#Does%20R%20use%20the%20Registry%3f">2.13 Does R use
+<li><a href="#Does%20R%20use%20the%20Registry%3f">2.14 Does R use
 the Registry?</a></li>
 
 <li><a href=
-"#Entering%20certain%20characters%20crashes%20Rgui.">2.14 Entering
+"#Entering%20certain%20characters%20crashes%20Rgui.">2.15 Entering
 certain characters crashes Rgui.</a></li>
 
-<li><a href="#The%20internet%20download%20functions%20fail.">2.15
+<li><a href="#The%20internet%20download%20functions%20fail.">2.16
 The internet download functions fail.</a></li>
 
-<li><a href="#Other%20strange%20crashes.">2.16 Other strange
+<li><a href="#Other%20strange%20crashes.">2.17 Other strange
 crashes.</a></li>
 </ul>
 </li>
@@ -289,7 +292,7 @@ working directory.</p>
 the Target field, for example <code>--sdi
 --max-mem-size=40M</code>. You can also set environment variables
 at the end of the Target field, for example
-<code>R_LIBS=P:/R/library</code>. <a name=
+<code>R_LIBS=p:/myRlib</code>. <a name=
 "How%20do%20I%20run%20it%3f"></a></p>
 
 <h3>2.3 How do I run it?</h3>
@@ -452,9 +455,49 @@ If all of these fail, the current working directory is used.</p>
 
 <p>You can find this from R code by
 <code>Sys.getenv("R_USER")</code>. <a name=
+"How%20do%20I%20set%20environment%20variables%3f"></a></p>
+
+<h3>2.12 How do I set environment variables?</h3>
+
+<p>Environment variables can be set in R in three different
+ways.</p>
+
+<ol type="1" start="1">
+<li>On the command line as name=value pairs. For example in the
+shortcut to <code>RGui</code> you could have<br>
+<pre>
+path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+</pre>
+</li>
+
+<li>In an environment file <code>.Renviron</code> in the working
+directory or your home directory, for example containing the
+line<br>
+<pre>
+R_LIBS=p:/myRlib
+</pre>
+
+<p>See <code>?Startup</code> for more details of environment
+files.</p>
+</li>
+
+<li>For all applications via Windows. How you set an environment
+variable is system specific: in Windows 9x you can set them in
+<code>autoexec.bat</code> or in an MS-DOS window from which you
+launch <code>Rgui</code> / <code>Rterm</code>. Under Windows
+NT/2000/XP you can use the control panel or the properties of `My
+Computer'. Under Windows ME you can use the System Configuration
+Utility (under Programs, Accessories, System Tools on the Start
+menu). You may have to log out or reboot for such changes to take
+effect.</li>
+</ol>
+
+<p>The order of precedence for environmental variables is the order
+in which these options are listed, that is the command line then
+<code>.Renviron</code> then the inherited environment. <a name=
 "R%20can't%20find%20my%20file"></a></p>
 
-<h3>2.12 R can't find my file, but I know it is there!</h3>
+<h3>2.13 R can't find my file, but I know it is there!</h3>
 
 <p>How did you specify it? Backslashes have to be doubled in R
 character strings, so for example one needs
@@ -471,7 +514,7 @@ Properties of the file on most versions of Windows, and from
 <code>dir /X</code> in a <code>Command Prompt</code> window on
 2000/XP). <a name="Does%20R%20use%20the%20Registry%3f"></a></p>
 
-<h3>2.13 Does R use the Registry?</h3>
+<h3>2.14 Does R use the Registry?</h3>
 
 <p>Not itself.</p>
 
@@ -491,7 +534,7 @@ settings are all per machine and not per user, and that this
 neither sets up nor removes the file associations. <a name=
 "Entering%20certain%20characters%20crashes%20Rgui."></a></p>
 
-<h3>2.14 Entering certain characters crashes Rgui.</h3>
+<h3>2.15 Entering certain characters crashes Rgui.</h3>
 
 <p>This used to happen occasionally, and all the occurrences we
 have solved have been traced to faulty versions of
@@ -512,7 +555,7 @@ results in the date-time functions. However, you are probably
 better off re-installing Windows. <a name=
 "The%20internet%20download%20functions%20fail."></a></p>
 
-<h3>2.15 The internet download functions fail.</h3>
+<h3>2.16 The internet download functions fail.</h3>
 
 <p>for example <code>update.packages</code> and the menu items on
 the Packages menu.</p>
@@ -530,7 +573,7 @@ so needs Internet Explorer 4 or later installed).</p>
 <p>(b) A proxy needs to be set up: see <code>?download.file</code>.
 <a name="Other%20strange%20crashes."></a></p>
 
-<h3>2.16 Other strange crashes.</h3>
+<h3>2.17 Other strange crashes.</h3>
 
 <p>Some users have found that <code>Rgui.exe</code> fails to start,
 exiting with a "Floating- point invalid operation" or other low
@@ -593,52 +636,29 @@ name=
 <code>rw1070\library</code> directory.</h3>
 
 <p>You can install packages anywhere and use the environment
-variable <code>R_LIBS</code> to point to the library
+variable <code>R_LIBS</code> (see <a href=
+"#How%20do%20I%20set%20environment%20variables%3f">How do I set
+environment variables?</a>) to point to the library
 location(s).</p>
 
-<p>Suppose your packages are installed in <code>p:\mylibs</code>.
+<p>Suppose your packages are installed in <code>p:\myRlib</code>.
 Then you can EITHER<br>
 </p>
 
 <pre>
-set the environment variable R_LIBS to p:\mylibs
+set the environment variable R_LIBS to p:\myRlib
 </pre>
 
 <p>OR use a package by, e.g.<br>
 </p>
 
 <pre>
-library(MASS, lib.loc="p:/mylibs")
+library(MASS, lib.loc="p:/myRlib")
 </pre>
 
-<p>How you set an environment variable is system specific: in
-Windows 9x you can set them in <code>autoexec.bat</code> or in an
-MS-DOS window from which you launch <code>Rgui</code> /
-<code>Rterm</code>. Under Windows NT/2000/XP you can use the
-control panel or the properties of `My Computer'. Under Windows ME
-you can use the System Configuration Utility (under Programs,
-Accessories, System Tools on the Start menu). You can also set them
-on the command line, for example in the shortcut you could have<br>
-</p>
-
-<pre>
-path_to_R\bin\Rgui.exe R_LIBS=p:/mylibs
-</pre>
-
-<p>and you can set variables in a file <code>.Renviron</code> in
-the working directory or your home directory, for example<br>
-</p>
-
-<pre>
-R_LIBS=p:/mylibs
-</pre>
-
-<p>The order of precedence for environmental variables is the
-command line then <code>.Renviron</code> then the inherited
-environment. <a name=
+<a name=
 "The%20packages%20I%20installed%20do%20not%20appear%20in%20the%20HTML%20help%20system">
-</a></p>
-
+</a> 
 <h3>3.3 The packages I installed do not appear in the HTML help
 system.</h3>
 
@@ -713,12 +733,13 @@ and install it. (Most of the installers that ActiveTcl uses will
 put the <code>bin</code> directory containing the Tcl and Tk DLLs
 in your path, but you should check. From R, run
 <code>Sys.getenv("PATH")</code> to do so.) You then need to set the
-environment variable <code>TCL_LIBRARY</code>, to something like
-<code>c:/Program Files/Tcl/lib/tcl8.3</code>. (The startup code for
-the package will warn you if this is unset, and Q3.2 explains how
-to set them. NB: do not quote the path, even if as here it contains
-spaces. If you forget, you can set the variable inside R by
-something like<br>
+environment variable <code>TCL_LIBRARY</code>(see <a href=
+"#How%20do%20I%20set%20environment%20variables%3f">How do I set
+environment variables?</a>), to something like <code>c:/Program
+Files/Tcl/lib/tcl8.3</code>. (The startup code for the package will
+warn you if this is unset. NB: do not quote the path, even if as
+here it contains spaces. If you forget, you can set the variable
+inside R by something like<br>
 </p>
 
 <pre>
