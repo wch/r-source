@@ -1257,6 +1257,9 @@ distributions of R.)
 *BradleyTerry*
      Specify and fit the Bradley-Terry model and structured versions.
 
+*BsMD*
+     Bayes screening and model discrimination follow-up designs.
+
 *CDNmoney*
      Components of Canadian monetary aggregates.
 
@@ -1873,6 +1876,10 @@ distributions of R.)
 
 *hdf5*
      Interface to the NCSA HDF5 library.
+
+*hett*
+     Functions for the fitting and summarizing of heteroscedastic
+     t-regression.
 
 *hier.part*
      Hierarchical Partitioning: variance partition of a multivariate data

@@ -1572,6 +1572,8 @@ Resonance Imaging (fMRI) datasets stored in the ANALYZE format.
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
+@item BsMD
+Bayes screening and model discrimination follow-up designs.
 @item CDNmoney
 Components of Canadian monetary aggregates.
 @item CGIwithR
@@ -2044,6 +2046,9 @@ Score tests for association of traits with haplotypes when linkage phase
 is ambiguous.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
+@item hett
+Functions for the fitting and summarizing of heteroscedastic
+t-regression.
 @item hier.part
 Hierarchical Partitioning: variance partition of a multivariate data
 set.
