@@ -297,6 +297,10 @@ BUG FIXES
     o   read.table() read too far in checking the file structure if
 	0 < nrows < 5 and more rows existed on the file. (PR1809)
 
+    o   loess() was not checking for too small a span (so no points
+	were included in the smoothing window).
+
+
 
 
 	**************************************************
