@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,31 +37,31 @@
  *
  *  GLOBAL VARIABLES:
  *
- *  linenumber:  counts the number of lines that have been written,
- *               this is used to setup storage for deparsing.
+ *  linenumber:	 counts the number of lines that have been written,
+ *		 this is used to setup storage for deparsing.
  *
- *  len:         counts the length of the current line, it will be
- *               used to determine when to break lines.
+ *  len:	 counts the length of the current line, it will be
+ *		 used to determine when to break lines.
  *
- *  incurly:     keeps track of whether we are inside a curly or not,
- *               this affects the printing of if-then-else.
+ *  incurly:	 keeps track of whether we are inside a curly or not,
+ *		 this affects the printing of if-then-else.
  *
- *  inlist:      keeps track of whether we are inside a list or not,
- *               this affects the printing of if-then-else.
+ *  inlist:	 keeps track of whether we are inside a list or not,
+ *		 this affects the printing of if-then-else.
  *
- *  startline:   indicator 0=start of a line (so we can tab out to
- *               the correct place).
+ *  startline:	 indicator 0=start of a line (so we can tab out to
+ *		 the correct place).
  *
- *  indent:      how many tabs should be written at the start of
- *               a line.
+ *  indent:	 how many tabs should be written at the start of
+ *		 a line.
  *
- *  buff:        contains the current string, we attempt to break
- *               lines at cutoff, but can handle up to BUFSIZE
- *               characters.
+ *  buff:	 contains the current string, we attempt to break
+ *		 lines at cutoff, but can handle up to BUFSIZE
+ *		 characters.
  *
- *  lbreak:      often used to indicate whether a line has been
- *               broken, this makes sure that that indenting behaves
- *               itself.
+ *  lbreak:	 often used to indicate whether a line has been
+ *		 broken, this makes sure that that indenting behaves
+ *		 itself.
  */
 
 
@@ -68,7 +69,7 @@
 /* variable "cutoff".  This could create a problem if a user interrupts */
 /* the deparse before there is a chance to restore the value.  One */
 /* possible fix is to restructure the code with another function which */
-/* takes a cutoff value as a parameter.  Then "do_deparse" and "deparse1" */
+/* takes a cutoff value as a parameter.	 Then "do_deparse" and "deparse1" */
 /* could each call this deeper function with the appropriate argument. */
 /* I wonder why I didn't just do this? -- it would have been quicker than */
 /* writing this note.  I guess it needs a bit more thought ... */
@@ -107,7 +108,7 @@ static void writeline(void);
 static void vector2buff(SEXP);
 static void vec2buff(SEXP);
 static void linebreak();
-void deparse2(SEXP, SEXP);
+static void deparse2(SEXP, SEXP);
 
 
 
@@ -134,19 +135,22 @@ SEXP do_deparse(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ca1;
 }
 
-/* The function deparse1 gets a second argument; abbrev. */
-/* If abbrev is 1 then the returned value is a STRSXP of */
-/* length 1 with at most 10 characters.	 This is use for */
-/* plot labelling etc. */
-
 SEXP deparse1(SEXP call, int abbrev)
 {
+/* Argument  abbrev ("logical"):
+	If abbrev is 1(TRUE), then the returned value
+	is a STRSXP of length 1 with at most 10 characters.	 
+	This is used for plot labelling etc. 
+*/
     SEXP svec;
     int savedigits;
 
+    PrintDefaults(R_NilValue);/* from global options() */
+    savedigits = print_digits; 
+    print_digits = DBL_DIG;/* MAX precision */
+
     svec = R_NilValue;
-    savedigits = print_digits;
-    deparse2(call, svec);
+    deparse2(call, svec);/* just to determine linenumber..*/
     PROTECT(svec = allocVector(STRSXP, linenumber));
     deparse2(call, svec);
     UNPROTECT(1);
@@ -160,6 +164,23 @@ SEXP deparse1(SEXP call, int abbrev)
     print_digits = savedigits;
     return svec;
 }
+
+/* deparse1line uses the maximum cutoff rather than the default */
+/* This is needed in terms.formula, where we must be able */
+/* to deparse a term label into a single line of text so */
+/* that it can be reparsed correctly */
+SEXP deparse1line(SEXP call, int abbrev)
+{
+   int savecutoff;
+   SEXP temp;
+
+   savecutoff = cutoff;
+   cutoff = MAX_Cutoff;
+   temp = deparse1(call, abbrev);
+   cutoff = savecutoff;
+   return(temp);
+}
+
 
 SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -264,9 +285,8 @@ static void linebreak(int *lbreak)
     }
 }
 
-void deparse2(SEXP what, SEXP svec)
+static void deparse2(SEXP what, SEXP svec)
 {
-    PrintDefaults(R_NilValue);
     strvec = svec;
     linenumber = 0;
     indent = 0;
@@ -370,18 +390,18 @@ static void deparse2buff(SEXP s)
 	   */
 	if( isValidName(CHAR(PRINTNAME(s))) )
 	    print2buff(CHAR(PRINTNAME(s)));
-        else {
-            if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
-                sprintf(tpb,"\"%s\"",CHAR(PRINTNAME(s)));
-                print2buff(tpb);
-            }
-            else {
-                sprintf(tpb,"\"");
-                strncat(tpb, CHAR(PRINTNAME(s)), 117);
-                strcat(tpb, "\"");
-                print2buff(tpb);
-            }
-        }
+	else {
+	    if( strlen(CHAR(PRINTNAME(s)))< 117 ) {
+		sprintf(tpb,"\"%s\"",CHAR(PRINTNAME(s)));
+		print2buff(tpb);
+	    }
+	    else {
+		sprintf(tpb,"\"");
+		strncat(tpb, CHAR(PRINTNAME(s)), 117);
+		strcat(tpb, "\"");
+		print2buff(tpb);
+	    }
+	}
 #endif
 	break;
     case CHARSXP:
@@ -552,7 +572,7 @@ static void deparse2buff(SEXP s)
 		case PP_FUNCALL:
 		case PP_RETURN:
 		    if (isValidName(CHAR(PRINTNAME(op))))
-		    	print2buff(CHAR(PRINTNAME(op)));
+			print2buff(CHAR(PRINTNAME(op)));
 		    else {
 			print2buff("\"");
 			print2buff(CHAR(PRINTNAME(op)));
@@ -781,7 +801,7 @@ static void vec2buff(SEXP v)
 	if (!isNull(nv) && !isNull(STRING(nv)[i])
 	    && *CHAR(STRING(nv)[i])) {
 	    if( isValidName(CHAR(STRING(nv)[i])) )
-	        deparse2buff(STRING(nv)[i]);
+		deparse2buff(STRING(nv)[i]);
 	    else {
 		print2buff("\"");
 		deparse2buff(STRING(nv)[i]);

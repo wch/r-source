@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1997-1999   Robert Gentleman, Ross Ihaka 
+ *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -452,6 +453,9 @@ static struct tms timeinfo;
 #define Max_Nsize 20000000   /* must be < LONG_MAX (= 2^32 - 1 =) 2147483647 = 2.1e9 */
 #define Max_Vsize (2048*Mega)/* must be < LONG_MAX */
 
+#define Min_Nsize 200000
+#define Min_Vsize (2*Mega)
+
 int main(int ac, char **av)
 {
     int value, ierr;
@@ -463,12 +467,27 @@ int main(int ac, char **av)
 #endif
     R_Quiet = 0;
 
+    if((p = getenv("R_VSIZE"))) {
+	value = Decode2Long(p, &ierr);
+	if(ierr != 0 || value > Max_Vsize || value < Min_Vsize) 
+	    REprintf("WARNING: invalid R_VSIZE ignored;");
+	else
+	    R_VSize = value;
+    }
+    if((p = getenv("R_NSIZE"))) {
+	value = Decode2Long(p, &ierr);
+	if(ierr != 0 || value > Max_Nsize || value < Min_Nsize) 
+	    REprintf("WARNING: invalid R_NSIZE ignored;");
+	else
+	    R_NSize = value;
+    }
+
     while(--ac) {
 	if(**++av == '-') {
 	    if (!strcmp(*av, "--version")) {
 		Rprintf("Version %s.%s %s (%s %s, %s)\n",
 			R_MAJOR, R_MINOR, R_STATUS, R_MONTH, R_DAY, R_YEAR);
-		Rprintf("Copyright (C) %s R Core Team\n\n", R_YEAR);
+		Rprintf("Copyright (C) %s R Development Core Team\n\n", R_YEAR);
 		Rprintf("R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
 		Rprintf("You are welcome to redistribute it under the terms of the\n");
 		Rprintf("GNU General Public License.  For more information about\n");
@@ -550,7 +569,7 @@ int main(int ac, char **av)
 		    REprintf("WARNING: vsize ridiculously low, Megabytes assumed\n");
 		    value *= Mega;
 		}
-		if(value > Max_Vsize || value < R_VSize)
+		if(value < Min_Vsize || value > Max_Vsize)
 		    REprintf("WARNING: invalid v(ector heap)size '%d' ignored;"
 			     "using default = %gM\n", value, R_VSize / Mega);
 		else
@@ -574,7 +593,7 @@ int main(int ac, char **av)
 		    REprintf("--nsize %ld'%c': too large", value,
 			     (ierr == 1)?'M':((ierr == 2)?'K':'k'));
 		}
-		if(value < R_NSize || value > Max_Nsize)
+		if(value < Min_Nsize || value > Max_Nsize)
 		    REprintf("WARNING: invalid language heap (n)size '%d' ignored,"
 			     " using default = %d\n", value, R_NSize);
 		else

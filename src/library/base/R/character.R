@@ -1,28 +1,16 @@
-##nchar <- function(x) {
-##	x<-as.character(x)
-##	.Internal(nchar(x))
-##}
+strsplit <- function(x,split)
+  .Internal(strsplit(as.character(x),as.character(split)))
 
-substr <- function(x,start,stop) {
-    x <- as.character(x)
-    .Internal(substr(x,as.integer(start),as.integer(stop)))
-}
-
-strsplit <- function(x,split) {
-    x <- as.character(x)
-    split <- as.character(split)
-    .Internal(strsplit(x,split))
-}
-
+substr <- function(x,start,stop)
+  .Internal(substr(x,as.integer(start),as.integer(stop)))
 substring <- function(text,first,last=1000000)
 {
     storage.mode(text) <- "character"
-    n <- max(length(text), length(first), length(last))
-    text <- rep(text, length = n)
-    first <- rep(first, length = n)
-    last <- rep(last, length = n)
+    n <- max(lt <- length(text), length(first), length(last))
+    if(lt < n) text <- rep(text, length = n)
     substr(text, first, last)
 }
+
 abbreviate <-
     function(names.arg, minlength = 4, use.classes = TRUE, dot = FALSE)
 {

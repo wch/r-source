@@ -17,18 +17,60 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*  The `` x:y ''  primitive calls do_seq(.);
- *
- *  do_seq(.) calls  cross(.) if both arguments are factors
- *	      and    seq(.)   otherwise.
- */
+/* The `` x:y ''  primitive calls do_seq(); do_seq() calls cross() if
+   both arguments are factors and seq() otherwise.
+   */
 
 #include "Defn.h"
 #include "Mathlib.h"
 
-static SEXP seq(SEXP call, SEXP s1, SEXP s2)
+static SEXP
+cross(SEXP s, SEXP t)
 {
-    int i, in1, n;
+    SEXP a, la, ls, lt;
+    int i, j, k, n, nls, nlt, vs, vt;
+
+    n = length(s);
+    nls = nlevels(s);
+    nlt = nlevels(t);
+    PROTECT(a = allocVector(INTSXP, n));
+    for (i = 0; i < n; i++) {
+	vs = INTEGER(s)[i];
+	vt = INTEGER(t)[i];
+	if ((vs == NA_INTEGER) || (vt == NA_INTEGER))
+	    INTEGER(a)[i] = NA_INTEGER;
+	else
+	    INTEGER(a)[i] = vt + (vs - 1) * nlt;
+    }
+    ls = getAttrib(s, R_LevelsSymbol);
+    lt = getAttrib(t, R_LevelsSymbol);
+    if (!isNull(ls) && !isNull(lt)) {
+	PROTECT(la = allocVector(STRSXP, nls * nlt));
+	k = 0;
+	for (i = 0; i < nls; i++) {
+	    vs = strlen(CHAR(STRING(ls)[i]));
+	    for (j = 0; j < nlt; j++) {
+		vt = strlen(CHAR(STRING(lt)[j]));
+		STRING(la)[k] = allocString(vs + vt + 1);
+		sprintf(CHAR(STRING(la)[k]), "%s:%s",
+			CHAR(STRING(ls)[i]), CHAR(STRING(lt)[j]));
+		k++;
+	    }
+	}
+	setAttrib(a, R_LevelsSymbol, la);
+	UNPROTECT(1);
+    }
+    PROTECT(la = allocVector(STRSXP, 1));
+    STRING(la)[0] = mkChar("factor");
+    setAttrib(a, R_ClassSymbol, la);
+    UNPROTECT(2);
+    return(a);
+}
+
+static SEXP
+seq(SEXP call, SEXP s1, SEXP s2)
+{
+    int i, n, in1;
     double n1, n2;
     SEXP ans;
 
@@ -67,9 +109,13 @@ static SEXP seq(SEXP call, SEXP s1, SEXP s2)
 SEXP do_seq(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     checkArity(op, args);
+    if (isFactor(CAR(args)) && isFactor(CADR(args))) {
+	if (length(CAR(args)) != length(CADR(args)))
+	    errorcall(call, "unequal factor lengths\n");
+	return(cross(CAR(args), CADR(args)));
+    }
     return seq(call, CAR(args), CADR(args));
 }
-
 
 /* It is assumed that type-checking has been done in rep */
 static SEXP rep2(SEXP s, SEXP ncopy)

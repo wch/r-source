@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -202,7 +202,7 @@ void K_bessel(double *x, double *alpha, long *nb,
     /*static double eps = 2.22e-16;*/
     /*static double xinf = 1.79e308;*/
     /*static double xmin = 2.23e-308;*/
-    static double sqxmin = 1.49e-154;
+    static double sqxmin = 1.49e-154;/* = sqrt(xmin) */
 
     /*---------------------------------------------------------------------
      * Mathematical constants

@@ -1,7 +1,8 @@
-print.socket <- function(socket)
+print.socket <- function(x, ...)
 {
-    cat("Socket connection #", socket$socket, "to", socket$host,
-        "on port", socket$port, "\n")
+    cat("Socket connection #", x$socket, "to", x$host,
+        "on port", x$port, "\n")
+    invisible(x)
 }
 
 make.socket <-

@@ -1,20 +1,25 @@
 
 COPYRIGHT STATUS
 
-The bulk of this code is copyright by Robert Gentleman and Ross Ihaka.
+The bulk of this code is copyright by members of or all of the R
+Development Core Team.
+
 See the file COPYING for the exact conditions under which you may
 redistribute it.
 
 Some of the code contain different copyright statements.  It is used
 here in accordance with the copyright conditions in that code.
 
-src/unix/rotated.[ch]
-
-	Copyright (c) 1993 Alan Richardson
-
 afm/*
 
-	Copyright (c) 1984 Adobe Systems Incorporated.
+	Copyright (c) 1984 to 1992 Adobe Systems Incorporated.
+
+
+src/gnome/gtkconsole.c
+src/gnome/gtkconsole.h
+
+	Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
+
 
 src/library/base/R/mosaicplot.R
 
@@ -25,10 +30,32 @@ src/library/base/R/biplot.R
 src/library/base/R/contr.poly.R
 src/library/base/R/predict.glm.R
 src/library/base/R/update.R
+
+	Copyright (C) 1998 W. N. Venables and B. D. Ripley
+
+
+src/library/modreg:
+
+	See the file library/modreg/COPYRIGHTS for details
+
+      src/loessc.c
+      src/loessf.f
+
+	Copyright (c) 1989, 1992 by AT&T.
+
+
+src/library/mva/R/biplot.R
 src/library/mva/R/princomp-add.R
 
 	Copyright (C) 1998 W. N. Venables and B. D. Ripley
 
-src/library/modreg:
+src/regex/* [Only used on Macintosh]
 
-	See the file src/library/modreg/COPYRIGHTS
+	Copyright (c) 1992, 1993, 1994 Henry Spencer
+
+	See the file src/regex/COPYRIGHTS
+
+src/unix/rotated.[ch]
+
+	Copyright (c) 1993 Alan Richardson
+

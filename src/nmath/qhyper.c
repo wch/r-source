@@ -30,6 +30,7 @@
 
 double qhyper(double x, double NR, double NB, double n)
 {
+/* This is basically the same code as  ./phyper.c -- keep in sync! */
     double N, xstart, xend, xr, xb, sum, term;
 #ifdef IEEE_754
     if (ISNAN(x) || ISNAN(NR) || ISNAN(NB) || ISNAN(n))

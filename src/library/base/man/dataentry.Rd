@@ -36,7 +36,7 @@ columns can be regrouped and reassigned to the correct name. This
 is handled by \code{de.restore}.
 }
 \seealso{
-\code{\link{vi}}, \code{\link{ed}}.
+\code{\link{vi}}, \code{\link{edit}}.
 }
 \examples{
 # call data entry with variables x and y

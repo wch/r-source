@@ -68,7 +68,7 @@ filled.contour(x = seq(0, 1, len = nrow(z)),
     be replaced by a genuine \code{levelplot} function which will
     work in multipanel displays.
 }
-\seealso{\code{\link{contour}}, \code{\link{palettes}}.}
+\seealso{\code{\link{contour}}, \code{\link{palette}}.}
 \examples{
 data(volcano)
 x <- 10*1:nrow(volcano)

@@ -1,4 +1,4 @@
-/* only used by ../main/random.c  & ../nmath/sunif.c
+/* only used by ../main/random.c  & ../nmath/{snorm,sunif}.c
  */
 #ifndef RANDOM_H
 #define RANDOM_H

@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the R Core Team
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -2827,7 +2828,7 @@ double GStrWidth(char *str, int units, DevDesc *dd)
     return w;
 #else
     double w;
-    static *sbuf = NULL;
+    static char *sbuf = NULL;
     if (sbuf) {
 	free(sbuf);
 	sbuf = NULL;
@@ -2835,9 +2836,11 @@ double GStrWidth(char *str, int units, DevDesc *dd)
     }
     w = 0;
     if(str && *str) {
-        char *s, *sbuf, *sb;
+        char *s, *sb;
 	double wdash;
 	sbuf = (char*)malloc(strlen(str) + 1);
+        if (sbuf == NULL)
+            error("unable to allocate memory (in GStrWidth)\n");
 	sb = sbuf;
         for(s = str; ; s++) {
             if (*s == '\n' || *s == '\0') {
@@ -2851,6 +2854,10 @@ double GStrWidth(char *str, int units, DevDesc *dd)
 	}
 	if (units != DEVICE)
 	    w = GConvertXUnits(w, DEVICE, units, dd);
+    }
+    if (sbuf) {
+	free(sbuf);
+	sbuf = NULL;
     }
     return w;
 #endif

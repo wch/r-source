@@ -22,8 +22,8 @@ uniroot(f, interval, lower = min(interval), upper = max(interval),
 }
 \details{
   Either \code{interval} or both \code{lower} and \code{upper} must be
-  specified.  The function uses Fortran code (from Netlib) based on
-  algorithms given in the reference below.
+  specified.  The function uses Fortran subroutine \file{"zeroin"} (from
+  Netlib) based on algorithms given in the reference below.
 
   If the algorithm does not converge in \code{maxiter} steps, a warning
   is printed and the current approximation is returned.

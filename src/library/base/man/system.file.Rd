@@ -25,7 +25,7 @@ system.file(..., pkg = .packages(), lib = .lib.loc)
     As a special case, \code{system.file()} gives the root of the
     \code{base} package only.
 }
-\seealso{\link{\code{list.files}}}
+\seealso{\code{\link{list.files}}}
 \examples{
 system.file()            # The root of the `base' package
 system.file(pkg="lqs")   # The root of package `lqs'

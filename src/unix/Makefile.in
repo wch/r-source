@@ -50,8 +50,9 @@ devPS.o: $(srcdir)/devPS.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/sr
 devPicTeX.o: $(srcdir)/devPicTeX.c $(top_srcdir)/src/include/Graphics.h $(top_srcdir)/src/include/Defn.h
 
 dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
-fileio.o: $(srcdir)/fileio.c $(top_srcdir)/src/include/Fileio.h
-system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h ../include/Platform.h
+system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h $(top_srcdir)/src/include/Fileio.h ../include/Platform.h
+Rsock.o: $(srcdir)/Rsock.c sock.h
+sock.o: $(srcdir)/sock.c sock.h
 
 ../include/FFTab.h ../include/FFDecl.h:
 	(cd ../include; $(MAKE) $(@F))

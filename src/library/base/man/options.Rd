@@ -22,8 +22,8 @@ options(\dots)
   numeric values. It is a suggestion only.}
 \item{editor}{sets the default text editor, e.g., for \code{\link{edit}}.}
 \item{browser}{default HTML browser used by \code{\link{help.start}()}.}
-\item{contrasts}{the default contrasts used in model fitting such as
-  \code{\link{lm}}.}
+\item{contrasts}{the default \code{\link{contrasts}} used in model
+    fitting such as with \code{\link{aov}} or \code{\link{lm}}.}
 \item{expressions}{sets a limit on the number of nested expressions that
   will be evaluated.   This is especially important on the Macintosh
   since stack overflow is likely if this is set too high.}

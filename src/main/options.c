@@ -142,10 +142,10 @@ int R_SetOptionWidth(int w)
     SEXP t, v;
     if (w < MIN_WIDTH) w = MIN_WIDTH;
     if (w > MAX_WIDTH) w = MAX_WIDTH;
-    t = install("width");
+    PROTECT(t = install("width"));
     PROTECT(v = ScalarInteger(w));
     v = SetOption(t, v);
-    UNPROTECT(1);
+    UNPROTECT(2);
     return INTEGER(v)[0];
 }
 

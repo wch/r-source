@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997, 1998  The R Core Team
+ *  Copyright (C) 1997, 1998  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -200,6 +200,7 @@ static void SubassignTypeFix(SEXP *x, SEXP *y,
 	*x = coerceVector(*x, STRSXP);
 	break;
 
+    case 1901:  /* vector     <- symbol   */
     case 1906:  /* vector     <- language   */
     case 1910:  /* vector     <- logical    */
     case 1913:  /* vector     <- integer    */
@@ -1320,6 +1321,9 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(CDR(args) = EvalSubassignArgs(CDR(args), rho));
     SubAssignArgs(args, &x, &subs, &y);
 
+#if 0
+<<<<<<< subassign.c
+#endif
     /* Handle NULL left-hand sides.  If the right-hand side */
     /* is NULL, just return the left-hand size otherwise, */
     /* convert to a zero length list (VECSXP). */
@@ -1331,6 +1335,21 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
         }
         UNPROTECT(1);
         PROTECT(x = allocVector(TYPEOF(y), 0));
+#if 0
+=======
+    if (length(x) == 0) {
+	if (length(y) > 1)
+	    x = coerceVector(x, VECSXP);
+	else if (length(y) == 1) {
+	    if (TYPEOF(x) != VECSXP)
+		x = coerceVector(x, TYPEOF(y));
+	}
+	else {
+	    UNPROTECT(1);
+	    return(x);
+	}
+>>>>>>> 1.28.2.5
+#endif
     }
 
     /* Ensure that the LHS is a local variable. */
@@ -1345,10 +1364,10 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     stretch = 0;
     if (isVector(x)) {
-	if (!isVectorList(x) && length(y) > 1)
+	if (!isVectorList(x) && LENGTH(y) > 1)
 	    error("more elements supplied than there are to replace\n");
 	if (nsubs == 1) {
-	    offset = OneIndex(x, CAR(subs), 0, &newname);
+	    offset = OneIndex(x, CAR(subs), length(x), 0, &newname);
 	    if (isVectorList(x) && isNull(y)) {
 		x = DeleteOneVectorListItem(x, offset);
 		UNPROTECT(1);
@@ -1367,6 +1386,7 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    for (i = 0; i < ndims; i++) {
 		INTEGER(index)[i] = get1index(CAR(subs), isNull(names) ?
 					      R_NilValue : VECTOR(names)[i],
+					      INTEGER(dims)[i],
 					      0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
@@ -1527,7 +1547,8 @@ SEXP do_subassign2(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PROTECT(index = allocVector(INTSXP, ndims));
 	    names = getAttrib(x, R_DimNamesSymbol);
 	    for (i = 0; i < ndims; i++) {
-		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),0);
+		INTEGER(index)[i] = get1index(CAR(subs), CAR(names),
+					      INTEGER(dims)[i], 0);
 		subs = CDR(subs);
 		if (INTEGER(index)[i] < 0 ||
 		    INTEGER(index)[i] >= INTEGER(dims)[i])

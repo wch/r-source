@@ -55,9 +55,7 @@ Keyboard entry is terminated by typing a blank line.
 \code{\link{write}}.
 }
 \examples{
-system("echo 'TITEL extra line' > ex.data")
-system("echo 2 3 5 7 >> ex.data")
-system("echo 11 13 17 >> ex.data")
+cat("TITEL extra line", "2 3 5 7", "11 13 17", file="ex.data", sep="\n")
 pp <- scan("ex.data", skip = 1, quiet= TRUE)
     scan("ex.data", skip = 1)
     scan("ex.data", skip = 1, nlines=1)# only 1 line after the skipped one

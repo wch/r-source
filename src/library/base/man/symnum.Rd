@@ -37,7 +37,7 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
 \value{
   An atomic character object of class \code{\link{noquote}} and the same
   dimensions as \code{x}.
-  It has an \code{\link{attribute}}, \code{"legend"} containing a legend
+  It has an attribute \code{"legend"} containing a legend
   of the returned character codes, in the form
   \deqn{c_1 s_1 c_2 s_2 \dots s_n c_{n+1}}{% the `..' are UGLY in LaTeX Math
     c[1] `s[1]' c[2] `s[2]' \dots `s[n]' c_[n+1]}

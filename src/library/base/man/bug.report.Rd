@@ -2,7 +2,8 @@
 \title{Send a bug report}
 \usage{
 bug.report(subject="", ccaddress=getenv("USER"),
-           method=.Options$mailer, address="r-bugs@biostat.ku.dk")
+           method=.Options$mailer, address="r-bugs@biostat.ku.dk",
+           file="R.bug.report")
 }
 \alias{bug.report}
 \arguments{
@@ -11,12 +12,35 @@ bug.report(subject="", ccaddress=getenv("USER"),
 	current user). Use \code{ccaddress=FALSE} for no copies.} 
     \item{method}{Submission method.}
     \item{address}{Recipient's email address.}
+    \item{method}{Submission method, one of "mailx", "gnuclient", "none"
+	or "ess".}
+    \item{address}{Recipient's email address.}
+    \item{file}{File to use for setting up the email (or storing it when
+	method is \code{"none"} or sending mail fails).}
 }
 \description{
     Invokes an editor to write a bug report and optionally mail it to
-    the R-bugs list at \code{r-bugs@biostat.ku.dk}.
+    the R-bugs list at \code{r-bugs@biostat.ku.dk}. Some standard
+    information on the current version and configuration of R are
+    included automatically.
 }
+\details{
+    Currently direct submission of bug reports works only on unix
+    systems. If the submission method is \code{"mailx"}, then the
+    default editor is used to write the bug report which is then mailed
+    using a unix command line mail utility such as \code{mailx}. A copy
+    of the mail is sent to current user.
+    If method is \code{"gnuclient"}, then an emacs mail buffer is opened
+    and used for sending the email.
 
+    If method is \code{"none"} or \code{NULL} (which is the default on
+    Windows systems), then only an editor is opened to help writing the
+    bug report. The report can then be copied to your favorite email
+    program and be sent to the R-bugs list.
+
+    If method is \code{"ess"} the body of the mail is simply sent to
+    stdout.
+}
 \value{
 nothing useful
 }

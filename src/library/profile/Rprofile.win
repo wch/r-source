@@ -4,3 +4,5 @@
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
 options(papersize = "a4")
 options(device = "windows")
+options(mailer = "none")
+

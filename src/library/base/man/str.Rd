@@ -33,7 +33,7 @@ lsf.str(...)
   \item{give.length}{logical; if \code{TRUE} (default), indicate
     length (as \code{[1:\dots]}).}
   \item{wid}{the page width to be used.  The default is the currently
-    active \code{\link{option}("width")}.}
+    active \code{\link{options}("width")}.}
   \item{nest.lev}{current nesting level in the recursive calls to
     \code{str}.}
   \item{indent.str}{the indentation string to use.}

@@ -16,15 +16,12 @@ name of a function which computes such matrices.}
 These functions are used to set and view the
 contrasts associated with a factor.
 If contrasts are not set for a factor the default
-functions named the system options are used.
+functions from \code{\link{options}("contrasts")} are used.
 }
 \seealso{
-\code{\link{contr.helmert}},
-\code{\link{contr.poly}},
-\code{\link{contr.sum}},
-\code{\link{contr.treatment}},
-\code{\link{glm}},
-\code{\link{lm}}.
+    \code{\link{contr.helmert}},\code{\link{contr.poly}},
+    \code{\link{contr.sum}},\code{\link{contr.treatment}},
+    \code{\link{glm}},\code{\link{lm}}.
 }
 \keyword{design}
 \keyword{regression}

@@ -22,8 +22,8 @@ Type	"q()" to quit R.
 +     "\n\t starting with 'is.' :\t ",
 +     length(is.bi <- bi[substring(bi,1,3) == "is."]), "\n")
 
-Number of base objects:		 1075 
-Number of builtin functions:	 1054 
+Number of base objects:		 1081 
+Number of builtin functions:	 1060 
 	 starting with 'is.' :	  37 
 > ## 0.14 : 31
 > ## 0.50 : 33
@@ -142,9 +142,8 @@ Warning message:
 is.nan() applied to non-(list or vector) in: fn(obj) 
 > is.ALL(list(), true.only = TRUE)
 [1] "is.R"      "is.list"   "is.vector"
-Warning messages: 
-1: is.na() applied to non-(list or vector) in: fn(obj) 
-2: is.nan() applied to non-(list or vector) in: fn(obj) 
+Warning message: 
+is.na() applied to non-(list or vector) in: fn(obj) 
 > 
 > is.ALL(1:5)
 is.R           : | 

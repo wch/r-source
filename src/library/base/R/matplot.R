@@ -51,7 +51,7 @@ matplot <- function(x, y, type="p",
 	    if(do.points) paste(" pch= (", paste.ch(pch), ")", sep=''),
 	    " ...\n\n")
     ii <- match("log", names(xargs <- list(...)), nomatch = 0)
-    log <- xargs[[ii]]
+    log <- if (ii == 0) NULL else xargs[[ii]]
     xy <- xy.coords(x, y, xlabel, ylabel, log=log)
     xlab <- if (is.null(xlab)) xy$xlab else xlab
     ylab <- if (is.null(ylab)) xy$ylab else ylab

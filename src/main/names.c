@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--1998  Robert Gentleman, Ross Ihaka and the R Core team
+ *  Copyright (C) 1997--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -487,6 +488,7 @@ FUNTAB R_FunTab[] =
 {"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},    
 {"show.help.item",do_helpitem,	0,	11,	1,	PP_FUNCALL},
 {"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
+{"int.unzip",   do_int_unzip,   0,      11,    -1,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},

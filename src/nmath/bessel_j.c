@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka and the R Core team.
+ *  Copyright (C) 1998 Ross Ihaka and the R Development Core team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -213,10 +213,10 @@ void J_bessel(double *x, double *alpha, long *nb,
 /*---------------------------------------------------------------------
   Machine-dependent parameters
  ---------------------------------------------------------------------*/
-    static double enten = 1e38;
-    static double ensig = 1e17;
+    static double enten = 1e308;	/*NETLIB had 1e38 */
+    static double ensig = 1e16;		/*NETLIB had 1e17 */
     static double rtnsig = 1e-4;
-    static double enmten = 1.2e-37;
+    static double enmten = 8.9e-308;	/*NETLIB had 1.2e-37 */
     static double xlarge = 1e4;
 
 /*---------------------------------------------------------------------

@@ -30,10 +30,10 @@ library.dynam(chname, package = .packages(), lib.loc = .lib.loc)
 }
 \seealso{
   \code{\link{.First.lib}}, \code{\link{library}},
-  \code{\link{dynload}}, \code{\link{.packages}},
+  \code{\link{dyn.load}}, \code{\link{.packages}},
   \code{\link{.lib.loc}}
 }
 \examples{
- library.dynam()# which packages have been ``dynamically loaded''
+library.dynam()# which packages have been ``dynamically loaded''
 }
 \keyword{data}

@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the
+ *                           R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1388,7 +1389,7 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		case LGLSXP:
 		case INTSXP:
 		case STRSXP:
-		    LOGICAL(ans)[i] = 1;
+		    LOGICAL(ans)[i] = 0;
 		    break;
 		case REALSXP:
 #ifdef IEEE_754
@@ -1408,6 +1409,37 @@ SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 		}
 	    }
 	    x = CDR(x);
+	}
+	break;
+    case VECSXP:
+	for (i = 0; i < n; i++) {
+	    SEXP s = VECTOR(x)[i];
+	    if (!isVector(s) || length(s) > 1)
+		LOGICAL(ans)[i] = 0;
+	    else {
+		switch (TYPEOF(s)) {
+		case LGLSXP:
+		case INTSXP:
+		case STRSXP:
+		    LOGICAL(ans)[i] = 0;
+		    break;
+		case REALSXP:
+#ifdef IEEE_754
+		    LOGICAL(ans)[i] = R_IsNaN(REAL(s)[0]);
+#else
+		    LOGICAL(ans)[i] = 0;
+#endif
+		    break;
+		case CPLXSXP:
+#ifdef IEEE_754
+		    LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(s)[0].r) ||
+				       R_IsNaN(COMPLEX(s)[0].i));
+#else
+		    LOGICAL(ans)[i] = 0;
+#endif
+		    break;
+		}
+	    }
 	}
 	break;
     default:

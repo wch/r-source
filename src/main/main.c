@@ -229,6 +229,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
     bufp = buf;
     for(;;) {
 	if(!*bufp) {
+	    R_Busy(0);
 	    if (R_ReadConsole(R_PromptString(browselevel, prompt_type),
 			     buf, 1024, 1) == 0) return;
 	    bufp = buf;
@@ -560,6 +561,7 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 		     R_NilValue, R_NilValue);
 	SETJMP(thiscontext.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &thiscontext;
+	signal(SIGINT, onintr);
 	R_BrowseLevel = savebrowselevel;
         signal(SIGINT, onintr);
 	R_ReplConsole(rho, savestack, R_BrowseLevel);

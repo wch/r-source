@@ -21,8 +21,7 @@ GZIP = --best
 
 all: Makefile R docs
 
-Makefile:
-	$(srcdir)/Makefile.in $(top_builddir)/config.status
+Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -151,4 +150,4 @@ TAGS:
 
 check test:: test-All
 test-All test-Examples::
-	-@(cd tests && $(MAKE) $@)
+	@(cd tests && $(MAKE) $@)

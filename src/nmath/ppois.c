@@ -38,7 +38,7 @@ double ppois(double x, double lambda)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
-    x = floor(x + 0.5);
+    x = floor(x + 1e-7);
     if (x < 0)
 	return 0;
 #ifdef IEEE_754

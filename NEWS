@@ -4,6 +4,7 @@
 	*						 *
 	**************************************************
 
+
 NEW FEATURES
 
     o   expression()'s have gotten semantics that are closer to
@@ -34,6 +35,121 @@ BUG FIXES
 	*	       0.64 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 0.64.2
+
+BUG FIXES
+
+    o	dput(), dump() and deparse()  now always use DBL_DIG (=15) digits
+	for numeric formatting.
+
+
+
+		CHANGES IN R VERSION 0.64.1
+
+NEW FEATURES
+
+    o   barplot() and boxplot() are now generic
+
+    o   relevel function to reorder levels in factors.
+
+    o   contr.treatment now has a base= argument for selecting the
+	baseline group.
+
+    o	New command line option `--no-environ' (under Unix) to prevent
+	sourcing the `~/.Renviron' file.  Implied by `--vanilla'.
+
+    o   Packages can now have a configure script.  If a file `configure'
+	is found it is executed before anything else is done by R
+	INSTALL.
+
+    o   If HTML help files are asked for but not available, text help 
+	is used. 
+
+    o   HTML help file conversion reports unsatisified \link{..}s. 
+
+    o   `vsize' and `nsize' can be set by the environment variables
+	R_VSIZE and R_NSIZE respectively, perhaps most conveniently from
+	`~/.Renviron' under Unix or Windows.  Command-line settings will
+	take precedence.
+
+        The defaults have been increased to 6M and 250k.
+
+    o   zip files can be used for storing help and example files. See
+	the help files for "help" and "example" for details.
+
+    o   New submission method "none" (for not sending email) in
+	bug.report().
+
+    o	`R CMD check' can now also be used for installed packages without
+	the corresponding sources.
+
+    o	The sources for the Windows port are included in src/gnuwin32.
+	See src/gnuwin32/readme.
+
+BUG FIXES
+
+    o   deparser left off empty parentheses on e.g. (function(x) x)()
+
+    o   cat() now works on "name" objects
+
+    o   forgot to set jump buffer in return context in one case
+
+    o   parser dropped off tagged missing args on function calls ( f(a=) )
+
+    o   relops tried to set time series parameters before dimensions
+
+    o   arithmetic tried to set time series parameters before dimensions
+
+    o   mvfft fixes (from Martyn Plummer) - not working with vectors and
+        segfault problem.
+
+    o	Rephrased error message on invalid assignment target.
+
+    o   ifelse() now evaluates yes/no only if needed
+
+    o   PROTECT'ed some memory in NewExtractNames that was getting overwritten
+        during garbage collection.
+
+    o	Crossing factors (`:') works again.
+
+    o   terms.formula used to choke on terms more than 60 characters long
+
+    o	is.nan() should now work correctly on new/old-style lists.
+
+    o	x[[i]] did not work correctly for negative subscripts i.
+
+    o   as.list() didn't work for expressions
+
+    o   x[[i]] <- quote(a) (x generic vector) didn't work
+
+    o   for method functions: many argument name changes, add ... where
+	needed, for consistency with the generic function.
+
+    o   example() will allow (again) aliased topic names. 
+
+    o   HTML help file conversions will find hyperlinks in the main 
+	library as well as the current library. Links containing `<'
+        or `>' now work properly.
+
+    o   Rdconv conversion of \section{}{}s to Sd corrected.
+
+    o   ppois rounded non-integer `q', should truncate.
+
+    o   pnbinom was wrong for non-integer `q'.
+
+    o   dbinom, dgeom, dnbinom, dpois give 0 with a warning for
+	non-integer arguments.
+
+    o   load / save / data allow unlimited string sizes.
+
+    o   strsplit() allows unlimited string size.
+
+    o	eigen() now should work (again) in all cases.
+
+    o   is.nan() fixed to work (again) in architectures with 
+	"unspecified" internal isnan().
 
 
 		CHANGES IN R VERSION 0.64.0
@@ -91,13 +207,13 @@ NEW FEATURES
 	you get exactly the color you request.	(Note that
 	Directcolor and staticcolor displays are not supported yet).
 
-    o	The "persp" function now allows shading of the rendered
-	surface using a simple lighting model.
+    o	The persp() function now allows shading of the rendered	surface
+	using a simple lighting model.
 
     o	Many functions providing an interface to the operating system
 	have been made "platform independent".	See the manual entries
 	for "file", "list.files" and "file.show" for details of the new
-	interface. The system.file() interface has been changed.
+	interface.  The system.file() interface has been changed.
 
     o	There is a new function "eval.with.vis" which behaves exactly
 	like "eval", but which returns both the result of the evaluation
@@ -122,7 +238,8 @@ NEW FEATURES
 
     o   new dataset co2.
 
-    o   documentation for datasets mtcars, plants, pressure, randu and sleep.
+    o   documentation for datasets mtcars, plants, pressure, randu and
+	sleep.
 
     o   the sunspots dataset is now monthly rather than annual.
 

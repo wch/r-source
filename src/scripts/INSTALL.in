@@ -19,6 +19,8 @@ BUILD_HELP_OPTS=
 BUILD_EXAMPLE=true
 SHLIB_OPTS=
 
+USE_ZIP=
+
 INSTALL='@INSTALL@'
 
 NO_PERL5=@NO_PERL5@
@@ -61,6 +63,8 @@ while test -n "${1}"; do
       BUILD_LATEX=false ;;
     --no-example)
       BUILD_EXAMPLE=false ;;
+    --use-zip)
+      USE_ZIP=true ;;
     -l|--library)
       lib=${2}; shift ;;
     *)
@@ -110,6 +114,10 @@ for pkg in ${PKGS}; do
 
   mkdir -p ${lib}/${pkg} || exit 3
   echo "Installing package \`${pkg}' ..."
+
+  if test -x ./configure ; then
+    ./configure
+  fi
 
   if test -d src; then
     echo " libs"
@@ -183,12 +191,32 @@ for pkg in ${PKGS}; do
 	${RHOME}/bin/Rd2contents ../${pkg} > ${lib}/${pkg}/CONTENTS
 	if test ${lib} = ${RHOME}/library; then 
 	  ${RHOME}/bin/build-help --htmllists
-	  cat ${RHOME}/library/*/CONTENTS > ${RHOME}/doc/html/search/index.txt
+	  cat ${RHOME}/library/*/CONTENTS \
+	    > ${RHOME}/doc/html/search/index.txt
 	fi	
+      fi
+      if test -n "${USE_ZIP}" -a -n "${R_UNZIPCMD}" -a -n "${R_ZIPCMD}"; then
+	cd ${lib}/${pkg}
+	if test -d R-ex; then
+	  (cd R-ex; ${R_ZIPCMD} -m Rhelp *.R)
+	fi
+	## NOT YET:
+	## if test -d latex; then
+	##   (cd latex; ${R_ZIPCMD} -m Rhelp *.tex)
+	## fi
+	if test -d help; then
+	  (cd help; ${R_ZIPCMD} -m Rhelp * -x 00Titles AnIndex);
+	fi
       fi
     fi
   else
     echo "  No man pages found in package \`${pkg}'"
+  fi
+
+  if ${CLEAN}; then
+    if test -x ./cleanup ; then
+      ./cleanup
+    fi
   fi
 
   echo " DONE (${pkg})"

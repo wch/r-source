@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-1999	The R core team.
+ *  Copyright (C) 1998-1999	    The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -367,11 +367,6 @@ static SEXP binary(SEXP op, SEXP args)
 	}
 
     PROTECT(x);
-    if (xts || yts) {
-	setAttrib(x, R_TspSymbol, tsp);
-	setAttrib(x, R_ClassSymbol, class);
-	UNPROTECT(2);
-    }
     /* Don't set the dims if one argument is an array of */
     /* size 0 and the other isn't of size zero, cos they're wrong */
     if (dims != R_NilValue) {
@@ -389,6 +384,12 @@ static SEXP binary(SEXP op, SEXP args)
 	    setAttrib(x, R_NamesSymbol, xnames);
 	else if (length(x) == length(ynames))
 	    setAttrib(x, R_NamesSymbol, ynames);
+    }
+
+    if (xts || yts) { /* must set *after* dims! */
+	setAttrib(x, R_TspSymbol, tsp);
+	setAttrib(x, R_ClassSymbol, class);
+	UNPROTECT(2);
     }
 
     UNPROTECT(4);

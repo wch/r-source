@@ -29,15 +29,16 @@ R --vsize v --nsize n
 
     The \code{--nsize} option can be used to specify the
     number of cons cells (each occupying 16 bytes) which \R is to use
-    (the default is 200000), and the \code{--vsize} option to  specify
-    the size of the vector heap in bytes (the default is 2 MB).  
-    Boths options must either be integers or integers ending with
+    (the default is 250000), and the \code{--vsize} option to  specify
+    the size of the vector heap in bytes (the default is 6 MB).  
+    Both options must be integers or integers ending with
     \code{M}, \code{K}, or \code{k} meaning \emph{Mega}
     (= \eqn{2^{20}} = 1048576), (computer) \emph{Kilo} (= \eqn{2^{10}} = 1024),
-    or regular \emph{kilo} (=1000).
+    or regular \emph{kilo} (= 1000). (The minimum allowed values are
+    200000 and 2M.)
     \cr
-    E.g., to read in a table of 5000 observations on 40 numeric
-    variables, \code{R --vsize 6M} should do;  For
+    E.g., to read in a table of 10000 observations on 40 numeric
+    variables, \code{R --vsize 10M} should do;  For
     \code{\link{source}()}ing a large file, you'd use \code{R --nsize 500k}.
     
     Note that the information on where to find vectors and strings on
@@ -54,6 +55,11 @@ R --vsize v --nsize n
     \cr
     \R will tell you whether you ran out of cons or heap memory. 
 
+    The defaults for \code{--nsize} and \code{--vsize} can be changed by
+    setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
+    respectively, perhaps most conveniently on Unix in the file
+    \file{~/.Renviron}.
+    
     When using \code{\link{read.table}}, the memory requirements are in
     fact higher than anticipated, because the file is first read in as
     one long string which is then split again. Use \code{\link{scan}} if

@@ -1,7 +1,8 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999  Robert Gentleman, Ross Ihaka and the R core team
+ *  Copyright (C) 1998--1999  Robert Gentleman, Ross Ihaka and the
+ *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -213,11 +214,10 @@ SEXP do_zeroin(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 /* General Nonlinear Optimization */
 
-/* These are unevaluated calls to R functions supplied */
-/* by the user.	 When the optimizer needs a value the */
-/* functions below insert the function argument and then */
-/* evaluate the call. */
-
+/* These are unevaluated calls to R functions supplied by the user.
+ * When the optimizer needs a value, the functions below insert
+ * the function argument and then evaluate the call. 
+ */
 static SEXP R_fcall;	/* function */
 static SEXP R_env;	/* where to evaluate the calls */
 

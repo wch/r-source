@@ -10,7 +10,7 @@ print.atomic <- function(x,quote=TRUE,...) print.default(x,quote=quote)
 
 print.matrix <- function (x, rowlab = dn[[1]], collab = dn[[2]],
 			  quote = TRUE, right = FALSE,
-			  na.print=NULL, print.gap=NULL) {
+			  na.print=NULL, print.gap=NULL, ...) {
     x <- as.matrix(x)
     dn <- dimnames(x)
     if(!is.null(print.gap)) warning("'print.gap' is not yet used")
