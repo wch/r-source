@@ -531,6 +531,15 @@ tmp <- data.frame(x = -5:5)
 abs(tmp)
 ## failed in 1.4.1.
 
+## PR 1363 La.svd was not working for integer args
+m <- matrix(1:4, 2)
+(s1 <- svd(m))
+(s2 <- La.svd(m))
+stopifnot(all.equal(s1$d, s2$d), all.equal(s1$u, s2$u),
+          all.equal(s1$v, t(s2$vt)))
+(e1 <- eigen(m))
+(e2 <- La.eigen(m))
+stopifnot(all.equal(e1$d, e1$d))
 
 ## This example last: needed < 1.5.0 ##
 

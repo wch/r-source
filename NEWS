@@ -339,6 +339,10 @@ BUG FIXES
 	it cannot be opened, the connection is destroyed before returning
 	from the creation call.  (related to PR#1333)
 
+    o	Sys.putenv() was not using permanent storage. (PR#1371)
+
+    o	La.svd() was not coercing integer matrices. (PR#1363)
+
 
 
 	**************************************************

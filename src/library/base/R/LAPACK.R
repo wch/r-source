@@ -1,7 +1,7 @@
 La.eigen <- function (x, symmetric, only.values = FALSE,
                       method = c("dsyevr", "dsyev"))
 {
-    if(!(typeof(x) %in% c("double","complex")))
+    if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.eigen must be numeric or complex")
     method <- match.arg(method)
     if(is.complex(x) && method == "dsyevr") {
@@ -44,6 +44,7 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
         method <- "dgesvd"
     }
     x <- as.matrix(x)
+    storage.mode(x) <- "double"
     n <- nrow(x)
     p <- ncol(x)
     if(!n || !p) stop("0 extent dimensions")
