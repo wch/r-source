@@ -36,7 +36,7 @@
     }
 
   plus Heiner Schwarte up to October 1999.
-   
+
   In addition, a large group of individuals has contributed to \R by
   donating code, bug reports and documentation, notably
 
@@ -52,6 +52,7 @@
   Patrick Lindsey,
   Jim Lindsey,
   John Maindonald,
+  Jens Oehlschaegel-Akiyoshi,
   Steve Oncley and Gordon Maclean,
   Richard Okeefe,
   Hubert Palme,
