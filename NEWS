@@ -227,6 +227,7 @@ BUG FIXES
 
     o	bxp(*) now obeys axes, xaxt, yaxt & ylim arguments (again?).
 
+    o   Use FILESEP instead of '/' in devPS.c
 
 	**************************************************
 	*						 *
