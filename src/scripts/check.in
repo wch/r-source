@@ -418,7 +418,7 @@ foreach my $pkg (@ARGV) {
 		    if(!$R_check_all_non_ISO_C) {
 			@lines = grep(!/^ *\/.*: warning: .*ISO C/,
 				      @lines);
-			$warn_re = "warning: *ISO C	forbids.*" .
+			$warn_re = "warning: *ISO C forbids.*" .
 			    "function pointer";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
