@@ -340,3 +340,45 @@ mean.POSIXct <- function (x, ...)
 
 mean.POSIXlt <- function (x, ...)
     as.POSIXlt(mean(as.POSIXct(x), ...))
+
+difftime <-
+    function(t1, t2, tz = "",
+             units = c("auto", "secs", "mins", "hours", "days"))
+{
+    t1 <- as.POSIXct(t1, tz = tz)
+    t2 <- as.POSIXct(t2, tz = tz)
+    z <- unclass(t1) - unclass(t2)
+    zz <- min(abs(z))
+    if(units == "auto") {
+        if(zz < 60) units <- "secs"
+        else if(zz < 3600) units <- "mins"
+        else if(zz < 86400) units <- "hours"
+        else units <- "days"
+    }
+    switch(units,
+           "secs" = structure(z, units="secs", class="difftime"),
+           "mins" = structure(z/60, units="mins", class="difftime"),
+           "hours"= structure(z/3600, units="hours", class="difftime"),
+           "days" = structure(z/86400, units="days", class="difftime")
+           )
+}
+
+print.difftime <- function(x, digits = getOption("digits"), ...)
+{
+    if(length(x) > 1)
+        cat("Time differences of ",
+            paste(format(unclass(x), digits=digits), collapse = ", "), " ",
+            attr(x, "units"), "\n", sep="")
+    else
+        cat("Time difference of ", format(unclass(x), digits=digits), " ",
+            attr(x, "units"), "\n", sep="")
+
+    invisible(x)
+}
+
+round.difftime <- function (x, digits = 0)
+{
+   units <- attr(x, "units")
+   z <- NextMethod()
+   structure(z, units=units, class="difftime")
+}

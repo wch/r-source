@@ -106,7 +106,7 @@ double R_canberra(double *x, int nr, int nc, int i1, int i2)
 	i2 += nr;
     }
     if(count == 0) return NA_REAL;
-    if(count != nc) dist /= count;
+    if(count != nc) dist *= ((double)count/nc);
     return dist;
 }
 

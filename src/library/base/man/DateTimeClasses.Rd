@@ -27,6 +27,9 @@
 \alias{as.matrix.POSIXlt}
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
+\alias{difftime}
+\alias{print.difftime}
+\alias{round.difftime}
 \title{Date-Time Classes}
 \description{
   Description of the classes \code{"POSIXlt"} and \code{"POSIXct"}
@@ -42,6 +45,8 @@ summary.POSIXlt(object, digits = 15, ...)
 time + number
 time - number
 time1 lop time2
+difftime(time1, time2, tz = "",
+         units = c("auto", "secs", "mins", "hours", "days"))
 
 c(time1, ...)
 mean(time)
@@ -56,6 +61,9 @@ mean(time)
   \item{number}{a numeric object.}
   \item{lop}{One of \code{==}, \code{!=}, \code{<}, \code{<=}, \code{>}
     or \code{>=}.}
+  \item{units}{character.  Units in which the results are desired. If
+    \code{"auto"}, a suitable set of units is chosen, the largest
+    possible in which all the absilute differences are greater than one.}
 }
 \details{
   There are two basic classes of date/times.  Class \code{"POSIXct"}
@@ -110,6 +118,11 @@ mean(time)
 
   Using \code{c} on \code{"POSIXlt"} objects converts them to the
   current time zone.
+
+  Function \code{difftime} takes a difference of two date/time objects
+  (of either class) and returns an object of class \code{"difftime"}
+  with an attribute indicating the units.  There is a \code{\link{round}}
+  method for objects of this class.
 }
 \seealso{
   \code{\link{as.POSIXct}} and \code{\link{as.POSIXlt}} for conversion
@@ -131,6 +144,7 @@ mean(time)
 
 (z <- Sys.time() - 3600)      # an hour ago
 Sys.time() - z                # just over 3600 seconds.
+difftime(Sys.time(), z)
 
 as.POSIXlt(Sys.time(), "GMT") # the current time in GMT
 format(.leap.seconds)         # all 22 leapseconds in your timezone

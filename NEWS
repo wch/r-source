@@ -29,7 +29,14 @@ NEW FEATURES
 
      o  package.skeleton() helps with creating new packages.
 
-     o  Generalised "birthday paradox" functions [pq]birthday
+     o  Generalised "birthday paradox" functions [pq]birthday.
+
+     o  dist() can now handle missing values.
+
+     o  New function difftime() and corresponding class for date/time 
+	differences.
+
+
 
 BUG FIXES
 
