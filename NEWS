@@ -70,6 +70,10 @@ BUG FIXES
     o   Rprof(NULL) or Rprof("") called when not profiling caused a
 	segfault: now silently ignored.  (PR#1471)
 
+    o   On systems (e.g. Windows) using R's own code for expm1, the
+	values were wrong for large negative x, and this affected
+	pweibull, for example.
+
 
 
 		CHANGES IN R VERSION 1.5.0
