@@ -110,8 +110,13 @@ SEXP eval(SEXP e, SEXP rho)
 #endif
 	    UNPROTECT(1);
 	}
+#ifdef OLD
 	else if (!isNull(tmp))
 	    NAMED(tmp) = 1;
+#else
+	else if (!isNull(tmp) && NAMED(tmp) < 1)
+	    NAMED(tmp) = 1;
+#endif
 	break;
     case PROMSXP:
 	if (PRVALUE(e) == R_UnboundValue) {
