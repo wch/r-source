@@ -156,7 +156,7 @@ install.packages <-
             status <- system(cmd)
             if(status > 0)
                 warning("Installation of package ", sQuote(update[i, 1]),
-                        "had non-zero exit status")
+                        " had non-zero exit status")
         }
         if(!is.null(tmpd) && is.null(destdir))
             cat("\n", gettext("The downloaded packages are in "),
