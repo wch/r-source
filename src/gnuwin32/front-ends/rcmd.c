@@ -48,6 +48,7 @@ int main (int argc, char **argv)
    
     putenv("R_CMD=Rcmd");
     putenv("R_UNDER_WINDOWS=1");
+    putenv("R_OSTYPE=windows");
 
     strcpy(PATH, "PATH=");
     strcat(PATH, RHome); strcat(PATH, "\\bin;");
