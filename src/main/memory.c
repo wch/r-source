@@ -1431,6 +1431,7 @@ SEXP allocVector(SEXPTYPE type, int length)
 	R_SmallVallocSize += alloc_size;
       }
       else {
+	s = NULL; /* initialize to suppress warning */
 	if (size >= (LONG_MAX / sizeof(VECREC)) - sizeof(SEXPREC_ALIGN) ||
 	    (s = malloc(sizeof(SEXPREC_ALIGN) + size * sizeof(VECREC)))
 	    == NULL) {
