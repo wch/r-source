@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-59, 2001-05-23
+@set FAQ-VERSION 1.2-60, 2001-05-25
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1595,6 +1595,8 @@ Functions and datasets for fitting models to Panel data.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item pinktoe
+Converts S trees to @HTML{}/Perl files for interactive tree traversal.
 @item pls
 Univariate Partial Least Squares Regression.
 @item polymars
