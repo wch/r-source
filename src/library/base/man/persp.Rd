@@ -3,10 +3,12 @@
 \usage{
 persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
+      xlab = NULL, ylab = NULL, zlab = NULL,
       theta = 0, phi = 15, r = sqrt(3), d = 1,
       scale = TRUE, expand = 1, 
       col = NULL, border = NULL, ltheta = -135, lphi = 0,
-      shade = NA, box = TRUE, axes = TRUE, ...) 
+      shade = NA, box = TRUE, axes = TRUE, nticks = 5, ticktype = "simple",
+      ...) 
 }
 \alias{persp}
 \arguments{
@@ -20,6 +22,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
     convenience.}
   \item{xlim, ylim, zlim}{x-, y-  and z-limits.  The plot is produced
     so that the rectangular volume defined by these limits is visible.}
+  \item{xlab, ylab, zlab}{titles for the axes.}
   \item{theta, phi}{angles defining the viewing direction.
     \code{theta} gives the azimuthal direction and \code{phi}
     the colattitude.}
@@ -58,6 +61,11 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
   \item{axes}{should ticks and labels be added to the box.  The 
     default is \code{TRUE}.  If \code{box} is \code{FALSE} then no
     ticks or labels are drawn.}
+  \item{ticktype}{character: "simple" draws just an arrow parallel to 
+    the axis to indicate direction of increase; "detailed" draws normal
+    ticks as per 2D plots.}
+  \item{nticks}{the (approximate) number of tick marks to draw on the
+    axes.  Has no effect if \code{ticktype} is "simple".}
   \item{\dots}{additional graphical parameters (see \code{\link{par}})
     and the arguments to \code{\link{title}} may also be supplied.}
 }
@@ -91,9 +99,11 @@ f <- function(x,y)
 z <- outer(x, y, f)
 z[is.na(z)] <- 1
 par(bg = "white")
-persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue") 
 persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
-      ltheta = 120, shade = 0.75)
+      xlab = "X", ylab = "Y", zlab = "Z") 
+persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
+      ltheta = 120, shade = 0.75, ticktype = "detailed",
+      xlab = "X", ylab = "Y", zlab = "Z") 
 
 
 # (2) Visualizing a simple DEM model
@@ -102,7 +112,7 @@ data(volcano)
 z <- 2 * volcano        # Exaggerate the relief
 x <- 10 * (1:nrow(z))   # 10 meter spacing (S to N)
 y <- 10 * (1:ncol(z))   # 10 meter spacing (E to W)
-persp(x, y, z, theta = 120, phi = 15, scale = FALSE)
+persp(x, y, z, theta = 120, phi = 15, scale = FALSE, axes = FALSE)
 
 
 # (3) Now something more complex
@@ -121,13 +131,13 @@ fill[1,] <- "gray"
 fill[nrow(fill),] <- "gray"
 
 par(bg = "lightblue")
-persp(x, y, z, theta = 120, phi = 15, col = fill, scale = FALSE)
+persp(x, y, z, theta = 120, phi = 15, col = fill, scale = FALSE, axes = FALSE)
 title(main = "Maunga Whau\nOne of 50 Volcanoes in the Auckland Region.",
       font.main = 4)
 
 par(bg = "slategray")
 persp(x, y, z, theta = 135, phi = 30, col = fill, scale = FALSE,
-      ltheta = -120, lphi = 15, shade = 0.65)
+      ltheta = -120, lphi = 15, shade = 0.65, axes = FALSE)
 persp(x, y, z, theta = 135, phi = 30, col = "green3", scale = FALSE,
       ltheta = -120, shade = 0.75, border = NA, box = FALSE)
 }
