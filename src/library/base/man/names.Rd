@@ -13,7 +13,7 @@ names(x) <- value
 }
 \arguments{
   \item{x}{an \R object.}
-  \item{value}{a character vector of the same length as \code{x}, or
+  \item{value}{a character vector of up to the same length as \code{x}, or
     \code{NULL}.} 
 }
 \value{
@@ -29,6 +29,9 @@ names(x) <- value
   generic replacement function.  The default methods get and set
   the \code{"names"} attribute of a vector or list.
 
+  If \code{value} is shorter than \code{x}, it is extended by character
+  \code{NA}s to the length of \code{x}.
+  
   It is possible to update just part of the names attribute via the
   general rules: see the examples.  This works because the expression
   there is evaluated as \code{z <- "names<-"(z, "[<-"(names(z), 3, "c2"))}.
@@ -45,6 +48,13 @@ z <- list(a=1, b="c", c=1:3)
 names(z)
 # change just the name of the third element.
 names(z)[3] <- "c2"
+z
+
+## assign just one name
+z <- 1:3
+names(z)
+# change just the name of the third element.
+names(z)[2] <- "b"
 z
 }
 \keyword{attribute}

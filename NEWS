@@ -74,6 +74,9 @@ NEW FEATURES
      o  Add `difftime' methods for the group generics. (Thereby fixing
         PR#2345)
 
+     o  When assigning names to a vector, a value that is too short is
+	padded by character NAs. (Wishlist part of PR#2358)
+
 
 INSTALLATION CHANGES
 

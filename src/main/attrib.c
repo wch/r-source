@@ -477,6 +477,12 @@ SEXP namesgets(SEXP vec, SEXP val)
 
     /* Check that the lengths and types are compatible */
 
+    if (length(val) < length(vec)) {
+	val = lengthgets(val, length(vec));
+	UNPROTECT(1);
+	PROTECT(val);
+    }
+
     checkNames(vec, val);
 
     /* Special treatment for one dimensional arrays */
