@@ -5,14 +5,14 @@ ave(x, \dots, FUN = mean)
 }
 \alias{ave}
 \arguments{
- \item{x}{A numeric.}
- \item{\dots}{Grouping variables, typically factors, all of the same
-   \code{length} as \code{x}.}
- \item{FUN}{Function to apply for each factor level combination.}
+  \item{x}{A numeric.}
+  \item{\dots}{Grouping variables, typically factors, all of the same
+    \code{length} as \code{x}.}
+  \item{FUN}{Function to apply for each factor level combination.}
 }
 \description{
-Subsets of \code{x[]} are averaged, where each subset consist of those
-observations with the same factor levels.
+  Subsets of \code{x[]} are averaged, where each subset consist of those
+  observations with the same factor levels.
 }
 \value{
   A numeric vector, say \code{y} of length \code{length(x)}.
@@ -22,6 +22,8 @@ observations with the same factor levels.
 }
 \seealso{\code{\link{mean}}, \code{\link{median}}.}
 \examples{
+ave(1:3)# no grouping -> grand mean
+
 data(warpbreaks)
 attach(warpbreaks)
 ave(breaks, wool)
