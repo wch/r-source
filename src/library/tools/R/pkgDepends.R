@@ -76,7 +76,7 @@ buildDepList <- function(depMtrx, instPkgs, recursive=TRUE,
     }
 
     ## Get which of the direct depends are installed
-    instDeps <- depMtrx[installedDepends(depMtrx, instPkgs),]
+    instDeps <- depMtrx[installedDepends(depMtrx, instPkgs),,drop=FALSE]
 
     if (recursive == TRUE) {
         mtrxList$Depends <- depMtrx
