@@ -34,17 +34,17 @@
   \item{\dots}{Other graphics parametes.}
 }
 \references{
-  C.C Holt (1957)
+  C. C. Holt (1957)
   Forecasting seasonals and trends by exponentially weighted
   moving averages,
   ONR Research Memorandum, Carnigie Institute 52.
   
-  P.R Winters (1960)
+  P. R. Winters (1960)
   Forecasting sales by exponentially weighted moving averages,
   \emph{Management Science} \bold{6}, 324--342.
 }
 \author{
-  David Meyer \email{david.meyer@ci.tuwien.ac.at}
+  David Meyer \email{David.Meyer@wu-wien.ac.at}
 }
 \seealso{
   \code{\link{HoltWinters}}, \code{\link{predict.HoltWinters}}
