@@ -4,12 +4,10 @@ X11 <- function(display = "", width = 7, height = 7, pointsize = 12,
                 fonts = getOption("X11fonts"))
 {
 
-  if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "") {
-    Sys.putenv(DISPLAY = ":0")
-  }
-
+  if(display == "" && .Platform$GUI == "AQUA" && Sys.getenv("DISPLAY") == "")
+      Sys.putenv(DISPLAY = ":0")
   .Internal(X11(display, width, height, pointsize, gamma, colortype,
-                maxcubesize, bg, canvas, fonts))
+                maxcubesize, bg, canvas, fonts, NA))
 }
 
 x11 <- X11

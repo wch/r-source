@@ -48,6 +48,11 @@ png(filename = "Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
   It seems \code{width} and \code{height} are limited to
   \eqn{2^{15}-1}{2^15-1} and there is a 16Mb limit on the total amount
   of memory in Windows 95/98/Me.
+
+  By default no resolution is recorded in the file.  Readers will often
+  assume nominal resolution of 72dpi when none is recorded.  As
+  resolutions in PNG files are recorded in pixels/metre, the dpi value
+  will be changed slightly.
 }
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.

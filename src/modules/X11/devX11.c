@@ -140,10 +140,11 @@ static void newX11_MetricInfo(int c,
 			      double* width, NewDevDesc *dd);
 static void newX11_Mode(int mode, NewDevDesc *dd);
 static void newX11_NewPage(R_GE_gcontext *gc, NewDevDesc *dd);
+/* declared in devX11.h
 Rboolean newX11_Open(NewDevDesc *dd, newX11Desc *xd,
 		     char *dsp, double w, double h,
 		     double gamma_fac, X_COLORTYPE colormodel,
-		     int maxcube, int bgcolor, int canvascolor);
+		     int maxcube, int bgcolor, int canvascolor, int res); */
 static void newX11_Polygon(int n, double *x, double *y,
 			   R_GE_gcontext *gc,
 			   NewDevDesc *dd);
@@ -896,7 +897,7 @@ static int R_X11IOErr(Display *dsp)
 Rboolean
 newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	 double gamma_fac, X_COLORTYPE colormodel, int maxcube,
-	 int bgcolor, int canvascolor)
+	 int bgcolor, int canvascolor, int res)
 {
     /* if we have to bail out with "error", then must free(dd) and free(xd) */
     /* That means the *caller*: the X11DeviceDriver code frees xd, for example */
@@ -926,6 +927,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	xd->fp = fp;
 	type = PNG;
 	p = "";
+	xd->res_dpi = res; /* place holder */
 #endif
     }
     else if (!strncmp(dsp, "jpeg::", 6)) {
@@ -947,6 +949,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	xd->fp = fp;
 	type = JPEG;
 	p = "";
+	xd->res_dpi = res; /* place holder */
 #endif
     } else if (!strcmp(dsp, "XImage")) {
 	type = XIMAGE;
@@ -1225,11 +1228,11 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 
 extern int R_SaveAsPng(void  *d, int width, int height,
 		       unsigned long (*gp)(XImage *, int, int),
-		       int bgr, FILE *fp, unsigned int transparent);
+		       int bgr, FILE *fp, unsigned int transparent, int res);
 
 extern int R_SaveAsJpeg(void  *d, int width, int height,
 			unsigned long (*gp)(XImage *, int, int),
-			int bgr, int quality, FILE *outfile);
+			int bgr, int quality, FILE *outfile, int res);
 
 
 static long knowncols[512];
@@ -1295,10 +1298,10 @@ static void X11_Close_bitmap(newX11Desc *xd)
 	}
 	R_SaveAsPng(xi, xd->windowWidth, xd->windowHeight,
 		    bitgp, 0, xd->fp,
-		    (xd->fill != PNG_TRANS) ? 0 : pngtrans);
+		    (xd->fill != PNG_TRANS) ? 0 : pngtrans, xd->res_dpi);
     } else if (xd->type == JPEG)
 	R_SaveAsJpeg(xi, xd->windowWidth, xd->windowHeight,
-		     bitgp, 0, xd->quality, xd->fp);
+		     bitgp, 0, xd->quality, xd->fp, xd->res_dpi);
     XDestroyImage(xi);
 }
 
@@ -1629,7 +1632,8 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
 			    int maxcube, 
 			    int bgcolor, 
 			    int canvascolor, 
-			    SEXP sfonts)
+			    SEXP sfonts,
+			    int res)
 {
     newX11Desc *xd;
     char *fn;
@@ -1651,7 +1655,7 @@ Rboolean newX11DeviceDriver(DevDesc *dd,
 
     if (!newX11_Open((NewDevDesc*)(dd), xd, disp_name, width, height,
 		     gamma_fac, colormodel, maxcube, bgcolor, 
-		     canvascolor)) {
+		     canvascolor, res)) {
 	free(xd);
 	return FALSE;
     }
@@ -1889,7 +1893,8 @@ static char *SaveString(SEXP sxp, int offset)
 static DevDesc* 
 Rf_addX11Device(char *display, double width, double height, double ps, 
 		double gamma, int colormodel, int maxcubesize,
-		int bgcolor, int canvascolor, char *devname, SEXP sfonts)
+		int bgcolor, int canvascolor, char *devname, SEXP sfonts,
+		int res)
 {
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
@@ -1911,7 +1916,7 @@ Rf_addX11Device(char *display, double width, double height, double ps,
 	 */
 	if (!newX11DeviceDriver((DevDesc*)(dev), display, width, height, 
 				ps, gamma, colormodel, maxcubesize, 
-				bgcolor, canvascolor, sfonts)) {
+				bgcolor, canvascolor, sfonts, res)) {
 	    free(dev);
 	    errorcall(gcall, "unable to start device %s", devname);
        	}
@@ -1928,7 +1933,7 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char *display, *vmax, *cname, *devname;
     double height, width, ps, gamma;
-    int colormodel, maxcubesize, bgcolor, canvascolor;
+    int colormodel, maxcubesize, bgcolor, canvascolor, res;
     SEXP sc, sfonts;
 
     checkArity(op, args);
@@ -1982,6 +1987,8 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     sfonts = CAR(args);
     if (!isString(sfonts) || LENGTH(sfonts) != 2)
 	errorcall(call, "invalid value of `fonts'");
+    args = CDR(args);
+    res = asInteger(CAR(args));
 
     devname = "X11";
     if (!strncmp(display, "png::", 5)) devname = "PNG";
@@ -1989,7 +1996,7 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!strcmp(display, "XImage")) devname = "XImage";
 
     Rf_addX11Device(display, width, height, ps, gamma, colormodel, 
-		    maxcubesize, bgcolor, canvascolor, devname, sfonts);
+		    maxcubesize, bgcolor, canvascolor, devname, sfonts, res);
     vmaxset(vmax);
     return R_NilValue;
 }

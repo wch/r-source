@@ -723,7 +723,7 @@ FUNTAB R_FunTab[] =
 {"devga",	do_devga,	0,	111,   15,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 #ifdef Unix
-{"X11",		do_X11,		0,	111,	10,	{PP_FUNCALL, PREC_FN,	0}},
+{"X11",		do_X11,		0,	111,	11,	{PP_FUNCALL, PREC_FN,	0}},
 {"Quartz",	do_Quartz,	0,	111,	7,	{PP_FUNCALL, PREC_FN,	0}},
 #endif
 
