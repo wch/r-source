@@ -53,6 +53,9 @@ static double approx1(double v, double *x, double *y, int n, int method)
 	
 		/* interpolation */
 
+	if(v == x[i]) return y[i];
+	if(v == x[j]) return y[j];
+
 	if(method == 1) {
 		return (x[i] == x[j]) ?
 			y[i] :
