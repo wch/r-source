@@ -32,7 +32,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.40 $ ';
+my $revision = ' $Revision: 1.41 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -522,16 +522,17 @@ sub check_pkg {
     if($opt_examples && <$library/$pkgname/R-ex/*.R>) {
 	$log->creating("${pkgname}-Ex.R");
         my $iszipped = 0;
-        my $massage = "massage-Examples";
-        $massage .= ".sh" if($WINDOWS);
+	my $cmd;
+	
         if(-e "${library}/${pkgname}/R-ex/R-ex.zip") {
             $iszipped = 1;
             system("unzip ${library}/${pkgname}/R-ex/R-ex.zip " .
                    "-d ${library}/${pkgname}/R-ex");
         }
-  	if(system("${R_CMD} ${massage} ".
-  		  "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
-  		  "> ${pkgname}-Ex.R")){
+	$cmd = "${R_CMD} sh ${R_HOME}/share/sh/massage-Examples.sh ".
+	         "${pkgname} ${library}/${pkgname}/R-ex/*.R ".
+		 "> ${pkgname}-Ex.R";
+	if(system($cmd)) {
   	    $log->error();
   	    exit(1);
   	}
