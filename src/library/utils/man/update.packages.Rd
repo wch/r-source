@@ -63,14 +63,14 @@ install.packages(pkgs, lib, CRAN = getOption("CRAN"),
 }
 \details{
   \code{installed.packages} scans the \file{DESCRIPTION} files of each
-  package found along \code{lib.loc} and returns a list of package
+  package found along \code{lib.loc} and returns a matrix including package
   names, library paths and version numbers.  \code{CRAN.packages}
-  returns a similar list, but corresponding to packages currently
+  returns a similar matrix, but corresponding to packages currently
   available in the contrib section of CRAN, the comprehensive R archive
-  network.  The current list of packages is downloaded over the internet
-  (or copied from a local CRAN mirror). Both functions use
+  network.  The current set of packages is downloaded over the internet
+  (or copied from a local CRAN mirror).  Both functions use
   \code{\link{read.dcf}} for parsing the description files.
-  \code{old.packages} compares the two lists and reports installed
+  \code{old.packages} compares the two matrices and reports installed
   packages that have newer versions on CRAN.
 
   \code{download.packages} takes a list of package names and a
