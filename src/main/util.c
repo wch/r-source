@@ -1193,7 +1193,7 @@ void mbcsToLatin1(char *in, char *out)
     out[res] = '\0';
 }
 
-/* MBCS-aware versions of common comparisons. Only used for ASCII c */
+/* MBCS-aware versions of common comparisons.  Only used for ASCII c */
 char *Rf_strchr(const char *s, int c)
 {
     char *p = (char *)s;
@@ -1223,6 +1223,13 @@ char *Rf_strrchr(const char *s, int c)
     }
     return plast;
 }
+#else
+/* Dummy entry points so R.dll always has them */
+int utf8clen(char c) { return 1;}
+size_t Mbrtowc(wchar_t *wc, const char *s, size_t n, void *ps)
+{ return (size_t)(-1);}
+Rboolean mbcsValid(char *str) { return TRUE; }
+void mbcsToLatin1(char *in, char *out) {}
 #endif
 
 #ifdef Win32

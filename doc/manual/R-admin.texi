@@ -1097,7 +1097,7 @@ A version of @R{} with UTF-8 support can also be run in other multi-byte
 locales, for example those using the EUC-JP, EUC-KR and EUC-TW
 encodings.  A few parts of @R{} currently assume that ASCII characters
 never occur as part of multi-byte character sequences, which is true of
-UTF-8 and the EUC-* locales, but not of @code{ja_JP.ujis}.
+UTF-8 and the EUC-* locales but not some Chinese and Korean locales.
 
 @node Configuration variables, Using make, Internationalization, Configuration on Unix
 @section Configuration variables
