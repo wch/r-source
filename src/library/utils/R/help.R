@@ -133,13 +133,14 @@ function(x, ...)
             thispkg <- sub("_.*$", "", thispkg) # versioned installs.
             hlpfile <- paste(wfile, "/chtml/", thispkg, ".chm", sep = "")
             if(file.exists(hlpfile)) {
-                err <- .C("Rchtml", hlpfile, topic,
+                err <- .C("Rchtml", hlpfile, basename(file),
                           err = integer(1), PACKAGE = "")$err
                 if(err) stop("CHM file could not be displayed")
             } else
                 stop(paste("No CHM help for ", sQuote(topic),
+                           " in package ", sQuote(thispkg),
                            " is available:\n",
-                           "corresponding file is missing.",
+                           "the CHM file is for the package is missing.",
                            sep = ""))
         }
         else if(type == "help") {
