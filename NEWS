@@ -115,6 +115,11 @@ BUG FIXES
 
     o	readLines(ok=FALSE) was not generating an error when it should.
 
+    o	princomp(covmat=) has been broken.
+
+    o	Many documentation clean-ups: formerly undocumented arguments,
+	use of T/F rather than TRUE/FALSE.
+
 
 
 
