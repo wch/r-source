@@ -25,12 +25,9 @@
 #include "Defn.h"
 #include "Print.h"
 
-#define MAX_WIDTH	200
-#define MIN_WIDTH	10
-#define MIN_DIGITS	1
-#define MAX_DIGITS	22
-#define MIN_EXPRESSIONS 25
-#define MAX_EXPRESSIONS 100000
+/* The global var. R_Expressions is in Defn.h */
+#define R_MIN_EXPRESSIONS_OPT	25
+#define R_MAX_EXPRESSIONS_OPT	100000
 
 /*
  *  "prompt"
@@ -83,7 +80,7 @@ int GetOptionWidth(SEXP rho)
 {
     int w;
     w = asInteger(GetOption(install("width"), rho));
-    if (w < MIN_WIDTH || w > MAX_WIDTH) {
+    if (w < R_MIN_WIDTH_OPT || w > R_MAX_WIDTH_OPT) {
 	warning("invalid printing width, used 80");
 	return 80;
     }
@@ -94,7 +91,7 @@ int GetOptionDigits(SEXP rho)
 {
     int d;
     d = asInteger(GetOption(install("digits"), rho));
-    if (d < MIN_DIGITS || d > MAX_DIGITS) {
+    if (d < R_MIN_DIGITS_OPT || d > R_MAX_DIGITS_OPT) {
 	warning("invalid printing digits, used 7");
 	return 7;
     }
@@ -145,8 +142,8 @@ static SEXP SetOption(SEXP tag, SEXP value)
 int R_SetOptionWidth(int w)
 {
     SEXP t, v;
-    if (w < MIN_WIDTH) w = MIN_WIDTH;
-    if (w > MAX_WIDTH) w = MAX_WIDTH;
+    if (w < R_MIN_WIDTH_OPT) w = R_MIN_WIDTH_OPT;
+    if (w > R_MAX_WIDTH_OPT) w = R_MAX_WIDTH_OPT;
     PROTECT(t = install("width"));
     PROTECT(v = ScalarInteger(w));
     v = SetOption(t, v);
@@ -186,7 +183,7 @@ void InitOptions(void)
     v = CDR(v);
 
     TAG(v) = install("expressions");
-    CAR(v) = ScalarInteger(500);
+    CAR(v) = ScalarInteger(R_Expressions);
     v = CDR(v);
 
     TAG(v) = install("width");
@@ -336,20 +333,21 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tag = install(CHAR(namei));
 	    if (streql(CHAR(namei), "width")) {
 		k = asInteger(argi);
-		if (k < MIN_WIDTH || k > MAX_WIDTH)
+		if (k < R_MIN_WIDTH_OPT || k > R_MAX_WIDTH_OPT)
 		    errorcall(call, "invalid width parameter");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "digits")) {
 		k = asInteger(argi);
-		if (k < MIN_DIGITS || k > MAX_DIGITS)
+		if (k < R_MIN_DIGITS_OPT || k > R_MAX_DIGITS_OPT)
 		    errorcall(call, "invalid digits parameter");
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "expressions")) {
 		k = asInteger(argi);
-		if (k < MIN_EXPRESSIONS || k > MAX_EXPRESSIONS)
+		if (k < R_MIN_EXPRESSIONS_OPT || k > R_MAX_EXPRESSIONS_OPT)
 		    errorcall(call, "expressions parameter invalid");
+		R_Expressions = k;
 		VECTOR(value)[i] = SetOption(tag, ScalarInteger(k));
 	    }
 	    else if (streql(CHAR(namei), "editor")) {

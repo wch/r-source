@@ -66,6 +66,11 @@ void printMatrix(SEXP, int, SEXP, int, int, SEXP, SEXP, char*, char*);
 void printNamedVector(SEXP, SEXP, int, char*);
 void printVector(SEXP, int, int);
 /* Offset for rowlabels if there are named dimnames */
-#define MIN_LBLOFF 2
+#define R_MIN_LBLOFF 2
+
+#define R_MIN_WIDTH_OPT		10
+#define R_MAX_WIDTH_OPT		200
+#define R_MIN_DIGITS_OPT	1
+#define R_MAX_DIGITS_OPT	22
 
 #endif

@@ -578,7 +578,7 @@ SEXP labelformat(SEXP labels)
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
 #ifdef OLD
-	    strp = EncodeString(CHAR(STRING(labels)[i]), 0, 0, adj_left);
+	    strp = EncodeString(CHAR(STRING(labels)[i]), 0, 0, Rprt_adj_left);
 	    STRING(ans)[i] = mkChar(strp);
 #else
 	    STRING(ans)[i] = STRING(labels)[i];
@@ -615,7 +615,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	    REAL(at)[i] = axp[0] + (i / dn) * rng;
 	    if (fabs(REAL(at)[i]) < small)
 		REAL(at)[i] = 0;
-	}       
+	}
     }
     else { /* ------ log axis ----- */
 	n = (axp[2] + 0.5);
@@ -872,7 +872,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	    xtckCoords = MAR3;
 	}
 	dd->gp.col = fg;
-	GLine(fmax2(low, REAL(at)[0]), y, 
+	GLine(fmax2(low, REAL(at)[0]), y,
 	      fmin2(high, REAL(at)[n - 1]), y, USER, dd);
 	if (R_FINITE(dd->gp.tck)) {
 	    /* The S way of doing ticks */
@@ -974,7 +974,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	dd->gp.col = fg;
 	/* clip axis major line to user coordinates */
-	GLine(x, fmax2(low, REAL(at)[0]), x, 
+	GLine(x, fmax2(low, REAL(at)[0]), x,
 	      fmin2(high, REAL(at)[n - 1]), USER, dd);
 	if (R_FINITE(dd->gp.tck)) {
 	    /* The S way of doing ticks */
@@ -1045,7 +1045,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 				   dd->gp.mgp[1], 0, y, dd->gp.las, dd);
 		    }
 		    else {
-			labw = GStrWidth(CHAR(STRING(lab)[ind[i]]), 
+			labw = GStrWidth(CHAR(STRING(lab)[ind[i]]),
 					 INCHES, dd);
 			labw = GConvertYUnits(labw, INCHES, NFC, dd);
 			tnew = tempy - 0.5 * labw;
@@ -2358,7 +2358,7 @@ SEXP do_box(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 static void drawPointsLines(double xp, double yp, double xold, double yold,
-			    char type, int first, DevDesc *dd) 
+			    char type, int first, DevDesc *dd)
 {
     if (type == 'p' || type == 'o')
 	GSymbol(xp, yp, DEVICE, dd->gp.pch, dd);
@@ -2404,14 +2404,14 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	args = CDR(args);
 	if (isString(CAR(args)) && LENGTH(CAR(args)) == 1)
 	    stype = CAR(args);
-	else 
+	else
 	    errorcall(call, "invalid plot type");
 	type = CHAR(STRING(stype)[0])[0];
 	PROTECT(x = allocVector(REALSXP, n));
 	PROTECT(y = allocVector(REALSXP, n));
 	PROTECT(nobs=allocVector(INTSXP,1));
 	i = 0;
-	
+
 	GMode(2, dd);
 	while (i < n) {
 	    if (!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
@@ -2442,7 +2442,7 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
 	CAR(saveans) = x;
 	CADR(saveans) = y;
 	CADDR(saveans) = nobs;
-	CADDDR(saveans) = CAR(args); 
+	CADDDR(saveans) = CAR(args);
 	/* Record the points and lines that were drawn in the display list */
 	recordGraphicOperation(op, saveans, dd);
 	UNPROTECT(5);
@@ -2461,12 +2461,12 @@ double hypot(double x, double y)
 #define THRESHOLD	0.25
 
 static void drawLabel(double xi, double yi, int pos, double offset, char *l,
-		      DevDesc *dd) 
+		      DevDesc *dd)
 {
     switch (pos) {
     case 4:
 	xi = xi+offset;
-	GText(xi, yi, INCHES, l, 0.0, 
+	GText(xi, yi, INCHES, l, 0.0,
 	      dd->gp.yCharOffset, 0.0, dd);
 	break;
     case 2:
@@ -2538,13 +2538,13 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    R_Visible = 0;
 	    return NULL;
 	}
-	
+
 	offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
 	PROTECT(ind = allocVector(LGLSXP, n));
 	PROTECT(pos = allocVector(INTSXP, n));
 	for (i = 0; i < n; i++)
 	    LOGICAL(ind)[i] = 0;
-	
+
 	k = 0;
 	GMode(2, dd);
 	while (k < npts) {
@@ -2569,7 +2569,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else {
 		k++;
 		LOGICAL(ind)[imin] = 1;
-		
+
 		xi = REAL(x)[imin];
 		yi = REAL(y)[imin];
 		GConvert(&xi, &yi, USER, INCHES, dd);
@@ -2589,8 +2589,8 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 			INTEGER(pos)[imin] = 1;
 		    }
 		}
-		if (plot) 
-		    drawLabel(xi, yi, INTEGER(pos)[imin], offset, 
+		if (plot)
+		    drawLabel(xi, yi, INTEGER(pos)[imin], offset,
 			      CHAR(STRING(l)[imin]), dd);
 	    }
 	}
@@ -2605,7 +2605,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	CADDDR(saveans) = y;
 	CAD4R(saveans) = Offset;
 	CAD4R(CDR(saveans)) = l;
-	
+
 	/* We are recording, so save enough information to be able to
 	   redraw the text labels beside identified points */
 	if (call != R_NilValue)

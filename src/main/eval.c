@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1998-2000	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -59,7 +59,8 @@ SEXP eval(SEXP e, SEXP rho)
     /* too complex error" is quite likely. */
 
     int depthsave = R_EvalDepth++;
-    if (R_EvalDepth > asInteger(GetOption(install("expressions"), rho)))
+
+    if (R_EvalDepth > R_Expressions)
 	error("evaluation is nested too deeply: infinite recursion?");
 #ifdef Macintosh
     /* check for a user abort */
@@ -1220,8 +1221,8 @@ int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho,
 
 
 /* gr needs to be protected on return from this function */
-static void findmethod(SEXP class, char *group, char *generic, 
-		       SEXP *sxp,  SEXP *gr, SEXP *meth, int *which, 
+static void findmethod(SEXP class, char *group, char *generic,
+		       SEXP *sxp,  SEXP *gr, SEXP *meth, int *which,
 		       char *buf, SEXP rho)
 {
     int len, whichclass;
@@ -1324,7 +1325,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	    lwhich=rwhich;
 	    strcpy(lbuf, rbuf);
 	}
-    }   
+    }
 
     /* we either have a group method or a class method */
 

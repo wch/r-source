@@ -48,7 +48,7 @@
 /*	R_PPSSIZE  The pointer protection stack size  */
 /*	R_NSIZE	   The number of cons cells	 */
 /*	R_VSIZE	   The vector heap size in bytes */
-/*  These values are defaults and can be overriden in config.h	
+/*  These values are defaults and can be overriden in config.h
     The maxima and minima are in ../unix/sys-common.c */
 
 #ifndef R_PPSSIZE
@@ -337,6 +337,8 @@ extern int	R_Visible;	    /* Value visibility flag */
 extern int	R_EvalDepth	INI_as(0);	/* Evaluation recursion depth */
 extern int	R_EvalCount	INI_as(0);	/* Evaluation count */
 extern int	R_BrowseLevel	INI_as(0);	/* how deep the browser is */
+
+extern int	R_Expressions	INI_as(500);	/* options(expressions) */
 
 /* File Input/Output */
 extern int	R_Interactive	INI_as(1);	/* Non-zero during interactive use */

@@ -32,6 +32,9 @@ NEW FEATURES
 
     o   internal cleanup of do_lapply
 
+    o   internally using global R_Expressions [getOption("expressions")]
+        dramatically speeds up eval.c.
+
 BUG FIXES
 
     o   The Mathlib functions now use exactly the same values for

@@ -351,7 +351,7 @@ char *EncodeElement(SEXP x, int index, int quote)
 	break;
     case STRSXP:
 	formatString(&STRING(x)[index], 1, &w, quote);
-	EncodeString(CHAR(STRING(x)[index]), w, quote, adj_left);
+	EncodeString(CHAR(STRING(x)[index]), w, quote, Rprt_adj_left);
 	break;
     case CPLXSXP:
 	formatComplex(&COMPLEX(x)[index], 1,
@@ -424,7 +424,7 @@ void Rvprintf(const char *format, va_list arg)
 	fflush(R_Outputfile);
     }
     else {
-	char buf[BUFSIZE], *p = buf, *vmax = vmaxget(); 
+	char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
 	int res;
 
 #ifdef HAVE_VSNPRINTF
@@ -450,7 +450,7 @@ void Rvprintf(const char *format, va_list arg)
     }
 }
 
-/* 
+/*
    REvprintf is part of the error handler.
    Do not change it unless you are SURE that
    your changes are compatible with the
@@ -487,7 +487,7 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
 	Rprintf("%*s%s", w-l, "",
-		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left));
+		EncodeString(CHAR(STRING(cl)[j]), l, 0, Rprt_adj_left));
     }
     else {
 	Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
@@ -501,7 +501,7 @@ void RightMatrixColumnLabel(SEXP cl, int j, int w)
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
 	Rprintf("%*s", R_print.gap+w,
-		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_right));
+		EncodeString(CHAR(STRING(cl)[j]), l, 0, Rprt_adj_right));
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -515,7 +515,7 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
     if (!isNull(cl)) {
 	l = Rstrlen(CHAR(STRING(cl)[j]));
 	Rprintf("%*s%s%*s", R_print.gap, "",
-		EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
+		EncodeString(CHAR(STRING(cl)[j]), l, 0, Rprt_adj_left), w-l, "");
     }
     else {
 	Rprintf("%*s[,%ld]%*s", R_print.gap, "", j+1, w-IndexWidth(j+1)-3, "");
@@ -529,7 +529,7 @@ void MatrixRowLabel(SEXP rl, int i, int rlabw, int lbloff)
     if (!isNull(rl)) {
 	l = Rstrlen(CHAR(STRING(rl)[i]));
 	Rprintf("\n%*s%s%*s", lbloff, "",
-		EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left),
+		EncodeString(CHAR(STRING(rl)[i]), l, 0, Rprt_adj_left),
 		rlabw-l-lbloff, "");
     }
     else {

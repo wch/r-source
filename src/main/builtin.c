@@ -151,7 +151,7 @@ static void cat_newline(SEXP labels, int *width, int lablen, int ntot)
     *width = 0;
     if (labels != R_NilValue) {
 	Rprintf("%s ", EncodeString(CHAR(STRING(labels)[ntot % lablen]),
-				    1, 0, adj_left));
+				    1, 0, Rprt_adj_left));
 	*width += Rstrlen(CHAR(STRING(labels)[ntot % lablen])) + 1;
     }
 }
@@ -509,7 +509,7 @@ SEXP lengthgets(SEXP x, int len)
 		if (xnames != R_NilValue)
 		    STRING(names)[i] = STRING(xnames)[i];
 	    }
-	break;	
+	break;
     }
     if (isVector(x) && xnames != R_NilValue)
 	setAttrib(rval, R_NamesSymbol, names);
