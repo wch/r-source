@@ -193,7 +193,7 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return (rval);
 #else
 	errorcall(call, "intern=TRUE is not implemented on this platform");
-	return R_NilValue
+	return R_NilValue;
 #endif
     }
     else {
