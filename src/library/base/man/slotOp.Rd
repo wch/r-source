@@ -15,6 +15,8 @@ object@name
 \details{
   These operators support the formal classes of package \code{methods}.
   See \code{\link[methods]{slot}} for further details.
+  Currently there is no checking that the object is an instance of a
+  class.
 }
 \seealso{
   \code{\link{Extract}},
