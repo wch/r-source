@@ -253,6 +253,10 @@ none
 
 Directory:  incoming
 
+* PR# 881 *
+Subject: Incorrect values in non-central chisq values on Linux
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 21 Mar 2001 17:22:02 +0000 (GMT)
 * PR# 880 *
 Subject: A limitation for polyroot ?
 From: chyihung.hsu@pharma.Novartis.com
