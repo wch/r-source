@@ -1170,7 +1170,14 @@ sub text2txt {
     {
 	my ($id, $arg, $desc)  = get_arguments("item", $text, 2);
 	my $descitem = text2txt($arg);
-	$descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
+	my $ll = length($desc);
+	$descitem =~ s/\n/ /go;  # no NLs in items
+	if($ll > 0) {
+	    $descitem = "\n.tide " . $descitem . " \n". text2txt($desc);
+	} else {
+	    warn "missing text for \\item in \\describe\n";
+	    $descitem = "\n.tide " . $descitem . " \n \n"
+	}
 	$text =~ s/\\itemnormal.*$id/$descitem/s;
     }
 
