@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-SUBDIRS = X11 gnome
+SUBDIRS = X11 gnome lapack
 
 MODULES = $(R_GUIS)
 
