@@ -279,6 +279,7 @@ typedef struct RCNTXT {
     SEXP cloenv;		/* The environment */
     SEXP conexit;		/* Interpreted "on.exit" code */
     void (*cend)();		/* C "on.exit" thunk */
+    char *vmax;		        /* top of R_alloc stack */
 } RCNTXT, *context;
 
 /* The Various Context Types.
