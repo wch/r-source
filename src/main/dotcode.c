@@ -230,7 +230,7 @@ SEXP do_symbol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char buf[128], *p, *q;
     checkArity(op, args);
-    if(!isString(CAR(args)) || length(CAR(args)) < 1)
+    if(!isValidString(CAR(args)))
 	errorcall(call, "invalid argument\n");
     p = CHAR(STRING(CAR(args))[0]);
     q = buf;
@@ -254,7 +254,7 @@ SEXP do_isloaded(SEXP call, SEXP op, SEXP args, SEXP env)
     char *sym;
     int val;
     checkArity(op, args);
-    if(!isString(CAR(args)) || length(CAR(args)) < 1)
+    if(!isValidString(CAR(args)))
 	errorcall(call, "invalid argument\n");
     sym = CHAR(STRING(CAR(args))[0]);
     val = 1;
@@ -277,7 +277,7 @@ SEXP do_External(SEXP call, SEXP op, SEXP args, SEXP env)
     char *vmax = vmaxget();
 
     op = CAR(args);
-    if (!isString(op) || LENGTH(op) != 1)
+    if (!isValidString(op))
 	errorcall(call, "function name must be a string (of length 1)\n");
     if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
 	errorcall(call, "C-R function not in load table\n");
@@ -295,7 +295,7 @@ SEXP do_dotcall(SEXP call, SEXP op, SEXP args, SEXP env)
     int nargs;
     char *vmax = vmaxget();
     op = CAR(args);
-    if (!isString(op) || LENGTH(op) != 1)
+    if (!isValidString(op))
 	errorcall(call, "function name must be a string (of length 1)\n");
     if (!(fun=R_FindSymbol(CHAR(STRING(op)[0]))))
         errorcall(call, "C-R function not in load table\n");
@@ -981,7 +981,7 @@ SEXP do_dotCode(SEXP call, SEXP op, SEXP args, SEXP env)
     vmax = vmaxget();
     which = PRIMVAL(op);
     op = CAR(args);
-    if (!isString(op) || LENGTH(op) != 1)
+    if (!isValidString(op))
 	errorcall(call, "function name must be a string (of length 1)\n");
 
     /* The following code modifies the argument list */
