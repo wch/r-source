@@ -3527,7 +3527,7 @@ included header @file{R_ext/Constants.h}, the latter two mainly for compatibilit
 @findex FALSE
 Further, the included header @file{R_ext/Boolean.h}
 has constants @code{TRUE} and @code{FALSE = 0} of type @code{Rboolean} in
-order to provide a way of using ``logical'' variables in C.
+order to provide a way of using ``logical'' variables in C consistently.
 
 @node Utility functions, Version information, Mathematical Constants, The R API
 @section Utility functions
