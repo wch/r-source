@@ -333,3 +333,11 @@ Date: Wed, 1 Sep 1999 11:52:29 +0200 (MET DST)
 Subject: Problems sourcing functions with R65.0
 From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
+* PR# 264 *
+Subject: R 0.65.x bug :  attach()/eval() {was "lib.source() within library()"}
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 2 Sep 1999 12:23:43 +0200
+* PR# 265 *
+Subject: trouble with the 'exclude' parameter of factor()
+From: gautier@lion-ag.de
+Date: Thu, 2 Sep 1999 17:40:47 +0200 (MET DST)
