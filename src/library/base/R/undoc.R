@@ -77,7 +77,10 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         allObjs <- ls("package:base", all.names = TRUE)
     else if(file.exists(codeFile)) {
         codeEnv <- new.env()
-        sys.source(codeFile, envir = codeEnv)
+        yy <- try(sys.source(codeFile, envir = codeEnv))
+        if(inherits(yy, "try-error")) {
+            stop("cannot source package code")
+        }
         allObjs <- ls(envir = codeEnv, all.names = TRUE)
     }
     else
@@ -92,7 +95,9 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         dataObjs <- NULL
         if(any(i <- grep("\\.\(R\|r\)$", files))) {
             for (f in file.path(dataDir, files[i])) {
-                sys.source(f, envir = dataEnv, chdir = TRUE)
+                yy <- try(sys.source(f, envir = dataEnv, chdir = TRUE))
+                if(inherits(yy, "try-error"))
+                    stop(paste("cannot source data file", fQuote(f)))
                 new <- ls(envir = dataEnv, all.names = TRUE)
                 dataObjs <- c(dataObjs, new)
                 rm(list = new, envir = dataEnv)
@@ -101,7 +106,9 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         }
         if(any(i <- grep("\\.\(RData\|rdata\|rda\)$", files))) {
             for (f in file.path(dataDir, files[i])) {
-                load(f, envir = dataEnv)
+                yy <- load(f, envir = dataEnv)
+                if(inherits(yy, "try-error"))
+                    stop(paste("cannot load data file", fQuote(f)))
                 new <- ls(envir = dataEnv, all.names = TRUE)
                 dataObjs <- c(dataObjs, new)
                 rm(list = new, envir = dataEnv)
