@@ -448,6 +448,8 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
     val = CADR(args);
     body = CADDR(args);
 
+    if ( !isSymbol(sym) ) errorcall(call, "non-symbol loop variable\n");
+
     PROTECT(args);
     PROTECT(rho);
     PROTECT(val = eval(val, rho));
