@@ -18,7 +18,7 @@ sub get_section {
     my ($text, $section) = @_;
 
     ## remove comments
-    $text =~ s/([^\\])%.*\n/$1\n/g;
+    $text =~ s/([^\\])((\\\\)*)%.*\n/$1$2\n/g;
 
     my @text = split(/\\$section\{/, " " . $text);
     shift @text;
@@ -37,7 +37,7 @@ sub get_usages {
     my ($text, $mode, $verbose) = @_;
 
     ## remove comments
-    $text =~ s/([^\\])%.*\n/$1\n/g;
+    $text =~ s/([^\\])((\\\\)*)%.*\n/$1$2\n/g;
 
     ## <FIXME>
     ## This apparently gets quoted args wrong, e.g. in read.table().
