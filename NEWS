@@ -6,6 +6,18 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 1.8.1
+
+
+BUG FIXES
+
+    o	symnum(x) now behaves as documented when length(x) == 0 and uses
+	lower.triangular = FALSE for logical arrays.
+
+    o	c() now has a method for "noquote" objects and hence works as expected.
+
+
+
 		CHANGES IN R VERSION 1.8.0
 
 

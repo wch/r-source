@@ -719,9 +719,12 @@ stopifnot(abs(X - s$u %*% D %*% t(s$v)) < Eps)#	 X = U D V'
 stopifnot(abs(D - t(s$u) %*% X %*% s$v) < Eps)#	 D = U' X V
 ## end of moved from svd.Rd
 
+hasMethods <- .isMethodsDispatchOn() ## (for setting back)
+## was at end, as package `methods' once had persistent side effects
+stopifnot(require(methods))
+stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
 
-## trace
-hasMethods <- .isMethodsDispatchOn() ## trace requires methods
+## trace (requiring methods):
 f <- function(x, y) { c(x,y)}
 xy <- 0
 
@@ -2679,7 +2682,9 @@ stopifnot(is.S3meth(g0), is.S3meth(g1),
           is.S3meth(g2), is.S3meth(g3))
 ## all but g0 failed until 1.8.0 (Oct 6)
 
-## keep at end, as package `methods' has had persistent side effects
-library(methods)
-stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
-detach("package:methods")
+## symnum(x) for length 0 and some logical arrays:
+sm <- symnum(m <- matrix(1:8 %% 3 == 0, 2))
+stopifnot(identical(symnum(FALSE[FALSE]), noquote(""[FALSE])),
+          identical(symnum(c(m)), c(symnum(m))),
+          dim(sm) == dim(m), class(sm) == "noquote")
+## symnum(<length 0>) gave noquote("()") before 1.8.1
