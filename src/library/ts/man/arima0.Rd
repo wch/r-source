@@ -46,8 +46,8 @@ arima0.diag(fit, gof.lag = 10)
 
   \item{fixed}{optional numeric vector of the same length as the total
     number of parameters.  If supplied, only non-\code{NA} entries in
-    \code{fixed} will be varied.  Use with care if \code{transform.pars}
-    is true, when AR parameters should not be fixed.}
+    \code{fixed} will be varied.  \code{transform.pars = TRUE}
+    will be overridden if any ARMA parameters are fixed.}
 
   \item{init}{optional numeric vector of initial parameter
     values. Missing values will be filled in, by zeroes except for
@@ -115,9 +115,13 @@ arima0.diag(fit, gof.lag = 10)
   Jones (1980) and ensures that the model is stationary.  For an AR(p)
   model the parametrization is via the inverse tanh of the partial
   autocorrelations: the same procedure is applied (separately) to the
-  AR and seasonal AR terms.  The MA terms are not constrained to be
-  invertible during optimization, but they will be converted to
-  invertible form after optimization if \code{transform.pars} is true.
+  AR and seasonal AR terms.  The MA terms are also constrained to be
+  invertible during optimization by the same transformation if
+  \code{transform.pars} is true.  Note that the MLE for MA terms does
+  sometimes occur for MA polynomials with unit roots: such models can be
+  fitted by using \code{transform.pars = FALSE} and specifying a good
+  set of initial values (often obtainable from a fit with
+  \code{transform.pars = TRUE}).
 
   As from \R 1.5.0 missing values are allowed, but any missing values
   will force \code{delta} to be ignored and full recursions used.
@@ -133,6 +137,12 @@ arima0.diag(fit, gof.lag = 10)
   fits.  The ``log-likelihood'' is the first term, half the log of the
   estimated mean square.  Missing values are allowed, but will cause
   many of the innovations to be missing.
+
+  When regressors are specified, they are orthogonalized prior to
+  fitting unless any of the coefficients is fixed.  It can be helpful to
+  roughly scale the regressors to zero mean and unit variance: for
+  the \code{LakeHuron} example below \code{xreg = time(LakeHuron)} would
+  invite numerical problems.
 }
 \value{
   For \code{arima0}, a list of class \code{"arima0"} with components:
@@ -225,19 +235,38 @@ predict(fit, n.ahead = 6)
 
 data(LakeHuron)
 arima0(LakeHuron, order = c(2,0,0), xreg = time(LakeHuron)-1920)
+
+data(presidents) # contains NAs
+## graphs is example(acf) suggest order 1 or 3
+arima0(presidents, c(1, 0, 0), delta = -1)  # avoid warning
+arima0(presidents, c(3, 0, 0), delta = -1)  # smaller AIC
 \testonly{
 ## test fitting with NAs
 tmp <- LakeHuron
 trend <- time(LakeHuron) - 1920
 tmp[c(17, 45, 96)] <- NA
-arima0(tmp, order=c(2,0,0), xreg=trend)
-arima0(tmp, order=c(1,1,1), xreg=trend)
+arima0(tmp, order=c(2,0,0), xreg=trend, delta = -1)
+arima0(tmp, order=c(1,1,1), xreg=trend, delta = -1)
 trend[c(20, 67)] <- NA
-arima0(tmp, order=c(2,0,0), xreg=trend)
+arima0(tmp, order=c(2,0,0), xreg=trend, delta = -1)
 
 ## tests of prediction
 predict(arima0(lh, order=c(1,0,1)), n.ahead=5)
 predict(arima0(lh, order=c(1,1,0)), n.ahead=5)
 predict(arima0(lh, order=c(0,2,1)), n.ahead=5)
+
+## test of init
+arima0(lh, order = c(1,0,1), init = c(0.5, 0.5, NA))
+arima0(lh, order = c(1,0,1), init = c(0.5, 2, NA))
+try(arima0(lh, order = c(1,0,1), init = c(2, NA, NA)))
+
+## test of fixed
+arima0(lh, order = c(1,0,1), fixed = c(0.5, NA, NA), trans = FALSE)
+trend <- time(LakeHuron) - 1920
+arima0(LakeHuron, order=c(2,0,0), xreg=trend, delta = -1)
+arima0(x = LakeHuron, order = c(2, 0, 0), xreg = trend,
+      delta = -1, fixed = c(NA, NA, 580, -0.02))
+arima0(x = LakeHuron, order = c(2, 0, 0), xreg = trend,
+      delta = -1, fixed = c(NA, NA, 580, 0))
 }}
 \keyword{ts}

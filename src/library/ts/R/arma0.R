@@ -12,18 +12,28 @@ arima0 <- function(x, order = c(0, 0, 0),
         .Call("arma0fa", G, par, PACKAGE = "ts")
     }
 
+    arCheck <- function(ar)
+    {
+        p <- max(which(c(1,ar) != 0)) - 1
+        if(!p) return(TRUE)
+        all(Mod(polyroot(c(1, ar[1:p]))) > 1)
+    }
+
     maInvert <- function(ma)
     {
         ## polyroot can't cope with leading zero.
-        if(ma[length(ma)] == 0) return(ma)
-        roots <- polyroot(c(1, ma))
+        q <- length(ma)
+        q0 <- max(which(c(1,ma) != 0)) - 1
+        if(!q0) return(ma)
+        roots <- polyroot(c(1, ma[1:q0]))
         ind <- Mod(roots) < 1
         if(all(!ind)) return(ma)
-        if(length(ma) == 1) return(1/ma)
+        warning("converting non-invertible initial MA values")
+        if(q0 == 1) return(c(1/ma[1], rep(0, q-q0)))
         roots[ind] <- 1/roots[ind]
         x <- 1
         for(r in roots) x <- c(x, 0) - c(0, x)/r
-        Re(x[-1])
+        c(Re(x[-1]), rep(0, q-q0))
     }
 
     series <- deparse(substitute(x))
@@ -37,6 +47,7 @@ arima0 <- function(x, order = c(0, 0, 0),
        || seasonal$period == 0) seasonal$period <- frequency(x)
     arma <- c(order[-2], seasonal$order[-2], seasonal$period,
               order[2], seasonal$order[2])
+    narma <- sum(arma[1:4])
     if(d <- order[2]) x <- diff(x, 1, d)
     if(d <- seasonal$order[2]) x <- diff(x, seasonal$period, d)
     xtsp <- tsp(x)
@@ -62,15 +73,43 @@ arima0 <- function(x, order = c(0, 0, 0),
         xreg <- cbind(intercept = rep(1, n), xreg = xreg)
         ncxreg <- ncxreg + 1
     }
+
+    if (is.null(fixed)) fixed <- rep(NA, narma + ncxreg)
+    else if(length(fixed) != narma + ncxreg) stop("wrong length for fixed")
+    mask <- is.na(fixed)
+    if(!any(mask)) stop("all parameters were fixed")
+    if(transform.pars && any(!mask[1:narma])) {
+        warning("some ARMA parameters were fixed: setting transform.pars = FALSE")
+        transform.pars <- FALSE
+    }
+
     if(ncxreg) {
         if(d <- order[2]) xreg <- diff(xreg, 1, d)
         if(d <- seasonal$order[2]) xreg <- diff(xreg, seasonal$period, d)
         xreg <- as.matrix(xreg)
         if(qr(na.omit(xreg))$rank < ncol(xreg)) stop("xreg is collinear")
+        if(is.null(cn <- colnames(xreg)))
+            cn <- paste("xreg", 1:ncxreg, sep = "")
     }
-    if(any(is.na(x)) || (ncxreg && any(is.na(xreg)))) {
+    if(any(is.na(x)) || (ncxreg && any(is.na(xreg))))
         ## only exact recursions handle NAs
-        delta <- -1
+        if(method == "ML" && delta >= 0) {
+            warning("NAs present: setting delta to -1")
+            delta <- -1
+        }
+
+    init0 <- rep(0, narma)
+    parscale <- rep(1, narma)
+    if (ncxreg) {
+        orig.xreg <- (ncxreg == 1) || any(!mask[narma + 1:ncxreg])
+        if(!orig.xreg) {
+            S <- svd(na.omit(xreg))
+            xreg <- xreg %*% S$v
+        }
+        fit <- lm(x ~ xreg - 1)
+        init0 <- c(init0, coef(fit))
+        ses <- summary(fit)$coef[,2]
+        parscale <- c(parscale, 0.1/ses)
     }
 
     storage.mode(x) <- storage.mode(xreg) <- "double"
@@ -79,27 +118,36 @@ arima0 <- function(x, order = c(0, 0, 0),
                ncxreg, delta, transform.pars > 0,
                ncond - (n - n.used), PACKAGE = "ts")
     on.exit(.Call("free_starma", G, PACKAGE = "ts"))
-    .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
-    narma <- sum(arma[1:4])
-    init0 <- rep(0, narma)
-    parscale <- rep(1, narma)
-    if (ncxreg > 0) {
-        fit <- lm(x ~ xreg - 1)
-        init0 <- c(init0, coef(fit))
-        ses <- summary(fit)$coef[,2]
-        parscale <- c(parscale, 1/ses)
-    }
+
     if(!is.null(init)) {
         if(length(init) != length(init0))
             stop("`init' is of the wrong length")
         if(any(ind <- is.na(init))) init[ind] <- init0[ind]
-        if(transform.pars)
+        if(transform.pars) {
+            if(any(!mask[1:narma]))
+                warning("transformed ARMA parameters were fixed")
+            browser()
+            ## check stationarity
+            if(arma[1] > 0)
+                if(!arCheck(init[1:arma[1]]))
+                    stop("non-stationary AR part")
+            if(arma[3] > 0)
+                if(!arCheck(init[sum(arma[1:2]) + 1:arma[3]]))
+                    stop("non-stationary seasonal AR part")
+            ## enforce invertibility
+            if(arma[2] > 0) {
+                ind <- arma[1] + 1:arma[2]
+                init[ind] <- maInvert(init[ind])
+            }
+            if(arma[4] > 0) {
+                ind <- sum(arma[1:3]) + 1:arma[4]
+                init[ind] <- maInvert(init[ind])
+            }
             init <- .Call("Invtrans", G, as.double(init), PACKAGE = "ts")
+        }
     } else init <- init0
 
-    if (is.null(fixed)) fixed <- rep(NA, length(init))
-    mask <- is.na(fixed)
-    if(!any(mask)) stop("all parameters were fixed")
+
     .Call("Starma_method", G, method == "CSS", PACKAGE = "ts")
     if(!("parscale" %in% names(optim.control)))
        optim.control$parscale <- parscale[mask]
@@ -111,25 +159,6 @@ arima0 <- function(x, order = c(0, 0, 0),
     coef <- res$par
 
     if(transform.pars) {
-        ## enforce invertibility
-        cf <- fixed
-        cf[mask] <- coef
-        if(arma[2] > 0) {
-            ind <- arma[1] + 1:arma[2]
-            if(all(mask[ind]))
-                cf[ind] <- maInvert(cf[ind])
-        }
-        if(arma[4] > 0) {
-            ind <- sum(arma[1:3]) + 1:arma[4]
-            if(all(mask[ind]))
-                cf[ind] <- maInvert(cf[ind])
-        }
-        if(cf[mask] != res$par)  {  # need to re-fit
-            res <- optim(cf[mask], arma0f, method = "BFGS", hessian = TRUE,
-                         control = list(maxit = 0,
-                         parscale = optim.control$parscale))
-            coef <- res$par
-        }
         cf <- fixed
         cf[mask] <- coef
         ## do it this way to ensure hessian was computed inside
@@ -149,10 +178,18 @@ arima0 <- function(x, order = c(0, 0, 0),
     if(arma[2] > 0) nm <- c(nm, paste("ma", 1:arma[2], sep = ""))
     if(arma[3] > 0) nm <- c(nm, paste("sar", 1:arma[3], sep = ""))
     if(arma[4] > 0) nm <- c(nm, paste("sma", 1:arma[4], sep = ""))
-    if(ncxreg > 0)
-        if(!is.null(cn <- colnames(xreg))) nm <- c(nm, cn)
-        else nm <- c(nm, paste("xreg", 1:ncxreg, sep = ""))
     fixed[mask] <- coef
+    if(ncxreg > 0) {
+        nm <- c(nm, cn)
+        if(!orig.xreg) {
+            ind <- narma + 1:ncxreg
+            fixed[ind] <- S$v %*% fixed[ind]
+            A <- diag(narma + ncxreg)
+            A[ind, ind] <- S$v
+            A <- A[mask, mask]
+            var <- A %*% var %*% t(A)
+        }
+    }
     names(fixed) <- nm
     names(arma) <- c("ar", "ma", "sar", "sma", "period", "diff", "sdiff")
     dimnames(var) <- list(nm[mask], nm[mask])
@@ -173,13 +210,13 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
     cat("\nCall:", deparse(x$call, width = 75), "", sep = "\n")
     cat("Coefficients:\n")
     coef <- round(x$coef, digits = digits)
-    print.default(coef, print.gap = 2)
-    if(se && nrow(x$var.coef)) {
-        ses <- round(sqrt(diag(x$var.coef)), digits = digits)
-        names(ses) <- rownames(x$var.coef)
-        cat("\nApprox standard errors:\n")
-        print.default(ses, print.gap = 2)
+    if (se && nrow(x$var.coef)) {
+        ses <- rep(0, length(coef))
+        ses[x$mask] <- round(sqrt(diag(x$var.coef)), digits = digits)
+        coef <- matrix(coef, 1, dimnames = list(NULL, names(coef)))
+        coef <- rbind(coef, s.e. = ses)
     }
+    print.default(coef, print.gap = 2)
     cm <- x$call$method
     if(is.null(cm) || cm != "CSS")
         cat("\nsigma^2 estimated as ",
@@ -190,7 +227,7 @@ print.arima0 <- function(x, digits = max(3, getOption("digits") - 3),
     else
         cat("\nsigma^2 estimated as ",
             format(x$sigma2, digits = digits),
-            ": part log likelihood = ", format(round(x$loglik,2)),
+            ":  part log likelihood = ", format(round(x$loglik,2)),
             "\n", sep="")
     invisible(x)
 }
