@@ -1326,6 +1326,9 @@ static void newX11_NewPage(R_GE_gcontext *gc,
 /*	xd->fill = R_OPAQUE(dd->bg) ? dd->bg : xd->canvas; */
 	xd->fill = R_OPAQUE(gc->fill) ? gc->fill: PNG_TRANS;
 	SetColor(xd->fill, dd);
+	xd->clip.x = 0; xd->clip.width = xd->windowWidth;
+	xd->clip.y = 0; xd->clip.height = xd->windowHeight;
+	XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
 	XFillRectangle(display, xd->window, xd->wgc, 0, 0,
 		       xd->windowWidth, xd->windowHeight);
 	return;
