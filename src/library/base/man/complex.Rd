@@ -39,6 +39,9 @@ Conj(x)
   specified either by giving its length, its real and imaginary parts, or
   modulus and argument. (Giving just the length generates a vector of
   complex zeroes.)
+  
+  \code{as.complex} attempts to coerce its argument to be of complex
+  type: like \code{\link{as.vector}} it strips attributes including names.
 
   Note that \code{is.complex} and \code{is.numeric} are never both
   \code{TRUE}.

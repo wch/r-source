@@ -27,7 +27,8 @@ is.character(x)
   \code{character} creates a character vector of the specified length.
   The elements of the vector are all equal to \code{""}.
 
-  \code{as.character} attempts to coerce its argument to character type.
+  \code{as.character} attempts to coerce its argument to character type;
+  like \code{\link{as.vector}} it strips attributes including names.
 
   \code{is.character} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of character type or not.

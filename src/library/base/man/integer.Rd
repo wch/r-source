@@ -30,6 +30,7 @@ is.integer(x)
   Non-integral numeric values are truncated towards zero (i.e.,
   \code{as.integer(x)} equals \code{\link{trunc}(x)} there), and
   imaginary parts of complex numbers are discarded (with a warning).
+  Like \code{\link{as.vector}} it strips attributes including names.
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of integer type or not.
