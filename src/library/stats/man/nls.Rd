@@ -126,7 +126,7 @@ weighted.MM <- function(resp, conc, Vm, K)
 Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
               start = list(Vm = 200, K = 0.1),
               trace = TRUE)
-}
+
 ## The two examples below show that you can fit a model to
 ## artificial data with noise but not to artificial data
 ## without noise.

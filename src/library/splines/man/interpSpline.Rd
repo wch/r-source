@@ -40,7 +40,7 @@ interpSpline(obj1, obj2, bSpline = FALSE, period = NULL,
 \seealso{
   \code{\link{splineKnots}},
   \code{\link{splineOrder}},
-  \code{\link{periodicSpline}}}
+  \code{\link{periodicSpline}}.
 }
 \examples{
 data( women )

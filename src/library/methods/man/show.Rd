@@ -22,7 +22,6 @@ show(object)
 }
 \arguments{
   \item{object}{Any R object}
-   }
 }
 \value{
   \code{show} returns an invisible \code{NULL}.

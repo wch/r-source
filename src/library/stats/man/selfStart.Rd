@@ -46,7 +46,7 @@ selfStart(model, initial, parameters, template)
 \seealso{
   \code{\link{nls}}
 }
-XS\examples{
+\examples{
 ## self-starting logistic model
 
 SSlogis <- selfStart(~ Asym/(1 + exp((xmid - x)/scal)),
