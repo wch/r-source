@@ -1,17 +1,24 @@
-\newcommand*{\BS}{\textbackslash}
-\newcommand*{\RHOMEdir}[1]{\texttt{\emph{\$RHOME}/#1}}
-\newcommand*{\QQUAD}{\hspace*{1em}}
+\newcommand{\CMD}[1]{\texttt{{\char`\\}#1}}
+\newcommand*{\RHOMEdir}[1]{\file{\$RHOME/#1}}
+\newcommand{\pkg}[1]{{\textbf{#1}}}
+\newcommand{\var}[1]{{{\normalfont\textit{#1}}}}
+\newcommand{\COMMENT}[1]{%
+  \hfill\makebox[.5\textwidth][l]{{\normalfont{\% #1}}}}
+\newcommand{\EXPLAIN}[1]{%
+  \par\relax\qquad\parbox{0.8\textwidth}{#1}\\}
+\newcommand{\LB}{\texttt{{\char`\{}}}
+\newcommand{\RB}{\texttt{{\char`\}}}}
 
 \section{The Documentation Source Tree}
 
 The help files containing detailed documentation for (potentially) all
-\R{} functions are in the directories \RHOMEdir{src/library/*/man} where
-``\texttt{*}'' stands for \texttt{base} where all the standard functions
-are and for ``proper'' libraries such as \texttt{mva} and \texttt{eda}.
+\R{} functions are in the directories \RHOMEdir{src/library/$\ast$/man}
+where `$\ast$' stands for \pkg{base} where all the standard functions
+are and for ``proper'' libraries such as \pkg{mva} and \pkg{eda}.
 
 %%%----- FOLLOWING SHOULD BE ADAPTED TO NEW DIRECTORY STRUCTURE
-This directory, \texttt{mansrc}, contains code for translating them into
-\LaTeX{} and further documents pertaining to \R.
+This directory, \file{mansrc}, contains code for translating them into
+\LaTeX{} and further documents pertaining to \R{}.
 
 The sub-directories ``man.new'', ``man.defunct'' and ``man281'' (for
 Alan Lee functions) are not used anymore, currently.
@@ -23,69 +30,91 @@ Alan Lee functions) are not used anymore, currently.
 The help files are written in a form and syntax---closely resembling
 \TeX{} and \LaTeX{}---which can be processed into a variety of formats,
 including \LaTeX{}, [TN]roff, and \HTML{}.  The translation is carried
-out by the \textsc{perl} script \texttt{Rdconv} in \RHOMEdir{etc/}.
+out by the \textsc{perl} script \file{Rdconv} in \RHOMEdir{etc/}.
 
 The basic layout of a raw documentation file is as follows.  For a given
-function \texttt{do.this}, use the \R{} command
-\underline{\texttt{prompt(do.this)}} to produce the file
-\texttt{do.this.Rd}.
+function \code{do.this}, use the \R{} command \code{prompt(do.this)} to
+produce the file \file{do.this.Rd}.
 
 %%-- Not anymore! (yes ?)
 Note that each file should contain at least one
-\verb|\alias{|\emph{name}\texttt{\}} line.  
+\CMD{alias\LB{}\var{name}\RB{}} line.  
 
-\begin{display}
-\begin{alltt}
-\BS{}name\{\textit{myfunction}\}        \% first argument of old TITLE(. @@ .)
-\BS{}title\{\textit{Description}\}      \% 2nd   argument of old TITLE(. @@ .)
-\BS{}usage\{
-myfunction(\dots)
-\textit{One or more lines showing the synopsis of the function(s) and variables
-documented in the file.  These are set verbatim in typewriter font.}
-\}
-\BS{}alias\{\textit{alias 1}\}     \%-- \textit{need one \texttt{\BS{}alias\{obj\}}  for each object `\texttt{obj}'}
-\BS{}alias\{\textit{alias 2}\}     \%-- \textit{defined here in addition to `\texttt{myfunction}'.}
-   \textit{etc.}
-\BS{}arguments\{
- \textit{Some optional text \emph{before} the optional list}
- \BS{}item\{\textit{arg1}\}\{\textit{Description of arg1.}\}
- \BS{}item\{\textit{arg2}\}\{\textit{Description of arg2.}\}
-    \textit{etc.}
- \textit{Some optional text \emph{after} the list.}
-\}
-\BS{}description\{\textit{A precise description of what the function does.}\}
-\BS{}value\{
- \textit{A description of the value returned by the function (if any).
- If a list with  multiple values is returned, you can use} 
- \samepage\pagebreak[3]
- \BS{}item\{\textit{comp1}\}\{\textit{Description of result component `comp1'}\}
- \BS{}item\{\textit{comp2}\}\{\textit{Description of result component `comp2'}\}
-    \textit{etc.}
- \}
-\BS{}references\{
- \textit{References section.  Optional as well as all the following sections:}\}
-\BS{}note\{ \textit{Some note you want to have pointed out\dots\dots.}\}
-\BS{}author\{\dots\dots {\small(\textit{if you are not one of R \& R})}\}
-\BS{}section\{Warning\}\{\textit{\dots\dots}\}
+\begin{quote}
+  \CMD{name}\LB{}\var{myfunction}\RB{}
+  \COMMENT{1st argument of old TITLE(. @@ .)} \\
+  \CMD{title}\LB{}\var{Description}\RB{}
+  \COMMENT{2nd argument of old TITLE(. @@ .)}
 
-   \textit{and maybe more \texttt{\BS{}section\{..\}}  environments}
+  \CMD{usage}\LB{} \\
+  \var{myfunction}(\dots) 
+  \EXPLAIN{One or more lines showing the synopsis of the function(s) and
+    variables documented in the file.  These are set verbatim in
+    typewriter font.}
+  \RB{}
 
-\BS{}seealso\{
- \textit{Pointers to related \R{} functions, using \texttt{\BS{}link\{.\}},
- usually in the form of \texttt{\BS{}code\{\BS{}link\{.\}\}}.} \}
-\BS{}examples\{
- \textit{Examples of how to use the function.
- These are set verbatim in typewriter font.}
+  \CMD{alias}\LB{}\var{myfunction}\RB{} \\
+  \CMD{alias}\LB{}\var{more\_aliases\_1}\RB{}
+  \COMMENT{Need one \CMD{alias\LB{}\RB{}} for each topic explained} \\
+  \CMD{alias}\LB{}\var{more\_aliases\_2}\RB{}
+  \COMMENT{in this help page in addition to \var{myfunction}.} \\
+  \strut\quad {etc.}  
 
- \QQUAD\fbox{Use examples which are \emph{directly} executable!}
- \QQUAD\textit{To this end, define data, use random number generators (e.g.,
- \QQUAD  \texttt{x <- rnorm(100)}), or use a standard dataset, \texttt{data(\dots)}
- \QQUAD  (Use \texttt{data()} for info).}
-\}
-\BS{}keyword\{key1\}       \% \textit{use at least one  keyword out of the list}
-\BS{}keyword\{key2\}       \% \textit{in } \RHOMEdir{doc/KEYWORDS}.
-\end{alltt}
-\end{display}
+  \CMD{arguments}\LB{} \\
+  \strut\quad\var{Some optional text \emph{before} the optional list} \\
+  \strut\quad\CMD{item}\LB{}\var{arg1}\RB{}\LB{}\var{Description of arg1.}\RB{} \\
+  \strut\quad\CMD{item}\LB{}\var{arg2}\RB{}\LB{}\var{Description of arg2.}\RB{} \\
+  \strut\qquad\textrm{etc.} \\
+  \strut\quad\var{Some optional text \emph{after} the list.} \\
+  \RB{}
+
+  \CMD{description}\LB{}\var{A precise description of what the function
+    does.}\RB{}
+
+  \CMD{value}\LB{}\var{A description of the value returned by the function.}
+
+  \strut\quad If a list with  multiple values is returned, you can use \\
+  \strut\quad\CMD{item}\LB{}\var{comp1}\RB{}\LB{}\var{Description of result
+    component `comp1'}\RB{} \\
+  \strut\quad\CMD{item}\LB{}\var{comp2}\RB{}\LB{}\var{Description of result
+    component `comp2'}\RB{} \\
+  \strut\qquad etc. \\
+  \RB{}
+
+  \CMD{references}\LB{}
+  \EXPLAIN{References section.  Optional as well as all the following
+    sections}
+  \RB{}
+
+  \CMD{note}\LB{}\var{Some note you want to have pointed out \dots.}\RB{}
+
+  \CMD{author}\LB{}\var{Whoever you are (if you are not one of R \& R)}\RB{}
+
+  \CMD{section}\LB{}\var{name}\RB{}\LB{}\var{text \dots\dots}\RB{}
+
+  \strut\qquad and maybe more \CMD{section\LB{}..\RB{}} environments
+
+  \CMD{seealso}\LB{} 
+  \EXPLAIN{Pointers to related \R{} functions, using \CMD{link\LB{}.\RB{}},
+    usually in the form of \CMD{code\LB{}\CMD{link}\LB{}.\RB{}\RB{}}.}
+  \RB{}
+
+  \CMD{examples}\LB{}
+  \EXPLAIN{Examples of how to use the function.  These are set verbatim
+    in typewriter font.
+    \begin{center}
+      \textbf{Use examples which are \emph{directly} executable!}
+    \end{center}
+    Use random number generators (e.g., \code{x <- rnorm(100)}), or a
+    standard dataset loadable via \code{data(\dots)} (see \code{data()}
+    for info) to define data!}
+  \RB{}
+
+  \CMD{keyword}\LB{}\var{key\_1}\RB{}
+  \COMMENT{Use at least one  keyword out of the list} \\
+  \CMD{keyword}\LB{}\var{key\_2}\RB{}
+  \COMMENT{in \RHOMEdir{doc/KEYWORDS}}
+\end{quote}
 
 \bigskip
 \pagebreak[3]
@@ -96,81 +125,72 @@ Within the text of the document it is possible to set words in phrases
 in different styles as follows.
 \begin{quote}
   \begin{tabular}{ll}
-    \texttt{\BS{}bold\{\textit{word}\}}
+    \CMD{bold\LB{}\var{word}\RB{}}
     & set \emph{word} in \textbf{bold} font. \\
-    \texttt{\BS{}emph\{\textit{word}\}}
-    & emphasize \emph{word} (often setting \textit{italic} font.)  \\
-    \texttt{\BS{}code\{\textit{word}\}}
+    \CMD{emph\LB{}\var{word}\RB{}}
+    & emphasize \emph{word} (often setting \var{italic} font.)  \\
+    \CMD{code\LB{}\var{word}\RB{}}
     & set \emph{word} in \texttt{typewriter} font. \\
   \end{tabular}
 \end{quote}
-You should use \texttt{\BS{}bold} and \texttt{\BS{}emph} in plain text
-for emphasis and \texttt{\BS{}code} to make sure that language fragments
+You should use \CMD{bold} and \CMD{emph} in plain text
+for emphasis and \CMD{code} to make sure that language fragments
 stand out from the text.
 
 \section{Sectioning}
+
 To begin a new paragraph or leave a blank in an example, just insert an
-empty line (as in \TeX).
-%%-  \texttt{PARA} on a line by itself 
-%%- and to leave a blank line in an example place \texttt{BLANK}
-%%- on a line by itself.
-%%- \textbf{Note:} Do \underline{\emph{not}} use
-%%- \texttt{PARA} in the \textsc{EXAMPLES} section, but rather \texttt{BLANK}
-%%- ({\footnotesize The reason is an \texttt{nroff} problem: The \emph{nofill}
-%%-   command (\texttt{.nf}) is invalidated by a paragraph break}).
-%%-
-Besides the \texttt{\BS{}description\{..\}}, \texttt{\BS{}value\{..\}},
-\texttt{\BS{}references\{.\}} and \texttt{\BS{}note\{.\}} sections, you can
-``define'' arbitrary ones by
-\texttt{\BS{}section\{\emph{section\_title}\}\{\ldots\}}, e.g., 
-\begin{display}
+empty line (as in \TeX{}).  Besides the \CMD{description\LB{}..\RB{}},
+\CMD{value\LB{}..\RB{}}, \CMD{references\LB{}.\RB{}} and \CMD{note\LB{}.\RB{}} sections,
+you can ``define'' arbitrary ones by
+\CMD{section\LB{}\var{section\_title}\RB{}\LB{}\ldots\RB{}}, e.g.,
+
+\begin{quote}
 \begin{alltt}
-\BS{}section\{Warning\}\{ You must not call this function unless \ldots\ldots\}
+\CMD{section}\LB{}Warning\RB{}\LB{}You must not call this function unless ...\RB{}
 \end{alltt}
-\end{display}
+\end{quote}
 
 \section{Hyperlinks}
-Currently, this only affects the creation of the \HTML{} pages (used, e.g.,
-by \texttt{help.start()}): \ \
-\texttt{\BS{}link\{foo\}} (usually in the combination
-\texttt{\BS{}code\{\BS{}link\{foo\}\}}) 
-produces a hyperlink to the help page for function \texttt{`foo'}.
-One main usage of  `\texttt{\BS{}link}' is in the \texttt{\BS{}seealso}
-section of the help page, see~\ref{sec:doc-format}, above.
 
+Currently, this only affects the creation of the \HTML{} pages (used,
+e.g., by \code{help.start()}): \CMD{link\LB{}foo\RB{}} (usually in the
+combination \CMD{code\LB{}\CMD{link}\LB{}foo\RB{}\RB{}}) produces a hyperlink to the
+help page for function \texttt{foo}.  One main usage of \CMD{link} is in
+the \CMD{seealso} section of the help page, see~\ref{sec:doc-format},
+above.
 
 \section{Miscellaneous}
-Use \texttt{\BS{}dots} for the dots in function argument list
-``\texttt{...}'', and \texttt{\BS{}ldots} for $\ldots$ (ellipsis dots).
+
+Use \CMD{dots} for the dots in function argument list ``\texttt{...}'',
+and \CMD{ldots} for $\ldots$ (ellipsis dots).
 
 After a \texttt{\%}, you can put your own comments regarding the help
 text. This will be completely disregarded, normally. Therefore, you can
 also use it to make part of the `help' invisible.  If \texttt{\%} occurs
-in \R{} code, you must ``escape'' it as ``\verb|\%|''.
+in \R{} code, you must ``escape'' it as `\verb|\%|'.
 
 \section{Mathematics}
+
 Mathematical formula are something we want ``perfectly'' for printed
 documentation (i.e. for the conversion to \LaTeX{} and PostScript
-subsequently) and still want something useful for ASCII and \HTML{} 
+subsequently) and still want something useful for ASCII and \HTML{}
 online help.
 
-To this end, the two commands
-\texttt{\BS{}eqn\{\textit{latex}\}\{\textit{ascii}\}} and
-\texttt{\BS{}deqn\{\textit{latex}\}\{\textit{ascii}\}} are used. 
-Where \texttt{\BS{}eqn} is used for ``inline'' formula (corresponding to
-(La)\TeX's \$\ldots\$),
- \texttt{\BS{}deqn} gives ``displayed equations'' ({\`a} la \LaTeX's
- \texttt{equation} environment, or \TeX's \$\$\ldots\ldots\$\$).
+To this end, the two commands \CMD{eqn\LB{}\var{latex}\RB{}\LB{}\var{ascii}\RB{}}
+and \CMD{deqn\LB{}\var{latex}\RB{}\LB{}\var{ascii}\RB{}} are used.  Where \CMD{eqn}
+is used for ``inline'' formula (corresponding to (La)\TeX{}'s \ldots{}),
+\CMD{deqn} gives ``displayed equations'' ({\`a} la \LaTeX{}'s
+\texttt{displaymath} environment, or \TeX{}'s \$\$\ldots\ldots\$\$).
 
-\noindent The following example is from the \texttt{Poisson} help page:
-%\samepage
-\begin{display}
+The following example is from the \texttt{Poisson} help page:
+\begin{quote}
 \begin{verbatim}
 \deqn{p(x) = {\lambda^x\ \frac{e^{-\lambda}}{x!}}
      {p(x) = lambda^x exp(-lambda)/x!}
 for \eqn{x = 0, 1, 2, ...}.
 \end{verbatim}
-\end{display}
+\end{quote}
 which, for the \LaTeX{} manual, becomes
 \begin{quote}
   \[ p(x) = \lambda^x\ \frac{e^{-\lambda}}{x!}  \]
@@ -184,58 +204,6 @@ becomes
              for x = 0, 1, 2, ....
 \end{verbatim}
         
-%%- 
-%%- These are constructs that you can use for writing formulae:
-%%- %
-%%- \begin{center}
-%%- \begin{tabular}{l@{\ \ $\to$\ \ }p{12em}@{\ \ $\longrightarrow$\ \ }l}
-%%- \hline
-%%- Help-File & \LaTeX-code & \LaTeX ``result'' \\
-%%- \hline\hline
-%%- 
-%%-   %%--- the following lines are original straight from  latex/doc2latex 
-%%-   %%- 1)  (query-replace-regexp "define(\\([A-z_]+\\),\\(.*\\))"
-%%-   %%                      "\\1  & \\\\verb#\\2#         & $ \\2 $ \\\\\\\\" nil)
-%%-   %%- 2)  (query-replace "$1" "a1" nil)
-%%-   %%-     (query-replace "$2" "a2" nil)
-%%-   %%- 3)  (query-replace-regexp "\\$ `\\(.*\\)' \\$" "$ \\1 $" nil)
-%%- EQUALS          & \verb#`='#    & $ = $ \\
-%%- LT              & \verb#`<'#    & $ < $ \\
-%%- LE              & \verb#`\le'#  & $ \le $ \\
-%%- GE              & \verb#`\ge'#  & $ \ge $ \\
-%%- GT              & \verb#`>'#    & $ > $ \\
-%%- LOG             & \verb#`\log'#         & $ \log $ \\
-%%- EXP             & \verb#`\exp'#         & $ \exp $ \\
-%%- SQRT            & \verb#`\sqrt{a1}'#    & $ \sqrt{a1} $ \\
-%%- DISPLAYSTYLE    & \verb#`{\displaystyle a1}'#   & $ {\displaystyle a1} $ \\
-%%- OVER            & \verb#{{a1} \over {a2}}#      & $ {{a1} \over {a2}} $ \\
-%%- SUP             & \verb#`{{a1}^{a2}}'#  & $ {{a1}^{a2}} $ \\
-%%- SUB             & \verb#`{{a1}_{a2}}'#  & $ {{a1}_{a2}} $ \\
-%%- CHOOSE          & \verb#`{ a1 \choose a2 }'#    & $ { a1 \choose a2 } $ \\
-%%- PAREN           & \verb#`{\left( a1 \right)}'#  & $ {\left( a1 \right)} $ \\
-%%- SP              & \verb#`'#     & $  $ \\
-%%- \hline
-%%- greekGamma      & \verb#`\Gamma'#       & $ \Gamma $ \\
-%%- greekalpha      & \verb#`\alpha'#       & $ \alpha $ \\
-%%- greekpi         & \verb#`\pi'#  & $ \pi $ \\
-%%- greekmu         & \verb#`\mu'#  & $ \mu $ \\
-%%- greeksigma      & \verb#`\sigma'#       & $ \sigma $ \\
-%%- greeklambda     & \verb#`\lambda'#      & $ \lambda $ \\
-%%- boldgreekbeta   & \verb#`\bold{\beta}'#         & $ \bold{\beta} $ \\
-%%- boldgreekepsilon& \verb#`\bold{\varepsilon}'#   & $ \bold{\varepsilon} $ \\
-%%- \hline\hline
-%%- EQBOLD          & \verb#`\bold{a1}'#    & $ \bold{a1} $ \\
-%%- EQN             & \verb#`$ a1 $'#       & $  a1  $ \\
-%%- DEQN\{\textsc{tex}\}\{ascii\} & \verb#`\[ #\textsc{tex}\verb# \]'#
-%%-                                         &  $\displaystyle \textsc{tex} $  \\
-%%- DEQTEX          & \verb#\[ a1 \]#       &  $\displaystyle a1 $  \\
-%%- DEQHTML         & \verb#`'#     & $  $ \\ \hline
-%%- \end{tabular}
-%%- \end{center}
-%%- 
-%%- \bigskip
-
-
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "ABOUT"
