@@ -90,7 +90,7 @@ NEW FEATURES
 
     o   new dataset co2.
 
-    o   documentation for datasets mtcars, plants, randu and sleep.
+    o   documentation for datasets mtcars, plants, pressure, randu and sleep.
 
     o   the sunspots dataset is now monthly rather than annual.
 
