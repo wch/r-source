@@ -97,7 +97,8 @@ ps.options <- function(..., reset=FALSE, override.check= FALSE)
 ##--> source in ../../../main/devices.c	 and ../../../main/devPS.c :
 
 postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
-                        onefile=TRUE, family, ...)
+                        onefile = TRUE, family,
+                        title = "R Graphics Output", ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
@@ -117,7 +118,8 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
                                "ISOLatin1.enc")
     .Internal(PS(file, old$paper, old$family, old$encoding, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
-                 old$onefile, old$pagecentre, old$print.it, old$command))
+                 old$onefile, old$pagecentre, old$print.it, old$command,
+                 title))
 }
 
 xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
@@ -133,7 +135,8 @@ xfig <- function (file = ifelse(onefile,"Rplots.fig", "Rplot%03d.fig"),
 }
 
 pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
-                 width = 6, height = 6, onefile=TRUE, ...)
+                 width = 6, height = 6, onefile = TRUE,
+                 title = "R Graphics Output", ...)
 {
     new <- list(onefile=onefile, ...)# eval
     old <- check.options(new = new, name.opt = ".PostScript.Options",
@@ -144,7 +147,7 @@ pdf <- function (file = ifelse(onefile, "Rplots.pdf", "Rplot%03d.pdf"),
                                "windows" = "WinAnsi.enc",
                                "ISOLatin1.enc")
     .Internal(PDF(file, old$family, old$encoding, old$bg, old$fg,
-                  width, height, old$pointsize, old$onefile))
+                  width, height, old$pointsize, old$onefile, title))
 }
 
 .ps.prolog <- c(

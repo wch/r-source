@@ -805,7 +805,8 @@ static void PSFileHeader(FILE *fp, char* encname,
 			 char *papername, double paperwidth,
 			 double paperheight, Rboolean landscape,
 			 int EPSFheader, Rboolean paperspecial,
-			 double left, double bottom, double right, double top)
+			 double left, double bottom, double right, double top, 
+			 char *title)
 {
     int i;
     SEXP prolog;
@@ -821,7 +822,7 @@ static void PSFileHeader(FILE *fp, char* encname,
     if(!EPSFheader)
 	fprintf(fp, "%%%%DocumentMedia: %s %.0f %.0f 0 () ()\n",
 		papername, paperwidth, paperheight);
-    fprintf(fp, "%%%%Title: R Graphics Output\n");
+    fprintf(fp, "%%%%Title: %s\n", title);
     fprintf(fp, "%%%%Creator: R Software\n");
     fprintf(fp, "%%%%Pages: (atend)\n");
     if (!EPSFheader && !paperspecial) { /* gs gets confused by this */
@@ -1000,6 +1001,7 @@ typedef struct {
     Rboolean pagecentre;/* centre image on page? */
     Rboolean printit;	/* print page at close? */
     char command[PATH_MAX];
+    char title[1024];
 
     FILE *psfp;		/* output file */
 
@@ -1099,7 +1101,7 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
 		    double width, double height,
 		    Rboolean horizontal, double ps,
 		    Rboolean onefile, Rboolean pagecentre,
-		    Rboolean printit, char *cmd)
+		    Rboolean printit, char *cmd, char *title)
 {
     /* If we need to bail out with some sort of "error"
        then we must free(dd) */
@@ -1126,6 +1128,7 @@ innerPSDeviceDriver(NewDevDesc *dd, char *file, char *paper, char *family,
     /* initialise postscript device description */
     strcpy(pd->filename, file);
     strcpy(pd->papername, paper);
+    strncpy(pd->title, title, 1024);
     pd->fontfamily = strcmp(family, "User") ? MatchFamily(family) : USERAFM;
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -1326,12 +1329,12 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	       double width, double height,
 	       Rboolean horizontal, double ps,
 	       Rboolean onefile, Rboolean pagecentre,
-	       Rboolean printit, char*cmd)
+	       Rboolean printit, char *cmd, char *title)
 {
     return innerPSDeviceDriver((NewDevDesc*) dd, file, paper, family,
 			       afmpaths, encoding, bg, fg, width, height,
 			       horizontal, ps, onefile, pagecentre,
-			       printit, cmd);
+			       printit, cmd, title);
 }
 
 static int MatchFamily(char *name)
@@ -1477,7 +1480,8 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 		     dd->bottom,
 		     dd->left,
 		     dd->top,
-		     dd->right);
+		     dd->right,
+		     pd->title);
     else
 	PSFileHeader(pd->psfp,
 		     pd->encname,
@@ -1490,7 +1494,8 @@ static Rboolean PS_Open(NewDevDesc *dd, PostScriptDesc *pd)
 		     dd->left,
 		     dd->bottom,
 		     dd->right,
-		     dd->top);
+		     dd->top,
+		     pd->title);
 
     return TRUE;
 }
@@ -2544,7 +2549,6 @@ static void XFig_MetricInfo(int c, int font, double cex, double ps,
 
 /* TODO
    Flate encoding?
-   clipping?
 */
 
 
@@ -2586,6 +2590,7 @@ typedef struct {
     int pagemax;
     int startstream; /* position of start of current stream */
     Rboolean inText;
+    char title[1024];
 }
 PDFDesc;
 
@@ -2632,7 +2637,7 @@ static void PDF_Text(double x, double y, char *str,
 static Rboolean
 innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
 		     char *bg, char *fg, double width, double height,
-		     double ps, int onefile)
+		     double ps, int onefile, char *title)
 {
     /* If we need to bail out with some sort of "error" */
     /* then we must free(dd) */
@@ -2670,6 +2675,7 @@ innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
 
     /* initialize PDF device description */
     strcpy(pd->filename, file);
+    strncpy(pd->title, title, 1024);
     pd->fontfamily = MatchFamily(family);
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -2789,10 +2795,10 @@ static void PDF_Invalidate(NewDevDesc *dd)
 Rboolean
 PDFDeviceDriver(DevDesc* dd, char *file, char *family, char *encoding,
 		char *bg, char *fg, double width, double height, double ps,
-		int onefile)
+		int onefile, char *title)
 {
     return innerPDFDeviceDriver((NewDevDesc*) dd, file, family, encoding,
-				bg, fg, width, height, ps, onefile);
+				bg, fg, width, height, ps, onefile, title);
 }
 
 static void PDF_SetLineColor(int color, NewDevDesc *dd)
@@ -2903,6 +2909,7 @@ static void PDF_startfile(PDFDesc *pd)
 	    "/ModDate (D:%04d%02d%02d%02d%02d%02d)\n",
 	    1900 + ltm->tm_year, ltm->tm_mon+1, ltm->tm_mday,
 	    ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
+    fprintf(pd->pdffp, "/Title (%s)\n", pd->title);
     fprintf(pd->pdffp, "/Producer (R %s.%s)\n/Creator (R)\n>>\nendobj\n",
 	    R_MAJOR, R_MINOR);
 
