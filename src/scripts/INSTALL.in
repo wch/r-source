@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.91 $'
+revision='$Revision: 1.92 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -452,14 +452,16 @@ do_install () {
     elif test -f TITLE; then
       cp TITLE "${lib}/${pkg}"
     fi
-    ## copy DESCRIPTION file and remove blank lines
+    ## Copy DESCRIPTION file, stamp with build information, and remove
+    ## blank lines.  (Need to add an empty line to deal with missing
+    ## trailing newlines at EOF.)
     if test -f DESCRIPTION; then
-      cat DESCRIPTION | sed '/^[	]*$/d;' \
+      (cat DESCRIPTION; \
+        echo; \
+        echo "Built: R" ${R_VERSION}\;  ${R_PLATFORM}\;  `date`) \
+	  | sed '/^[	]*$/d;' \
 	> "${lib}/${pkg}/DESCRIPTION"
     fi
-    ## stamp DESCRIPTION with build information
-    echo "Built: R" ${R_VERSION}\;  ${R_PLATFORM}\;  `date` \
-      >> "${lib}/${pkg}/DESCRIPTION"
 
     if test -d man; then
       message "help"
