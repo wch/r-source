@@ -55,6 +55,11 @@ BUG FIXES
     o	Building libR.so with the zlib in the R sources was not
 	finding the local zlib headers.
 
+    o	system(intern=TRUE) has an undocumented line length limit of
+	119 chars both on Unix and Windows.  The limit is now 8096 and
+	documented.  On Unix (only) every 120th character used to be 
+	discarded.
+
 
 
 		CHANGES IN R VERSION 1.6.1
