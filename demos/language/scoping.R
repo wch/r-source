@@ -27,7 +27,7 @@ open.account <- function(total) {
 	 withdraw = function(amount) {
 	     if(amount > total)
 		 stop("You don't have that much money!\n")
-	     total < <- total - amount
+	     total <- total - amount
 	     cat(amount,"withdrawn.  Your balance is", total, "\n\n")
 	 },
 	 balance = function() {
