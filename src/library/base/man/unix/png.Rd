@@ -54,6 +54,11 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480, pointsize = 12,
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
+\section{Warning}{
+  If you plot more than one page on one of these devices and do not
+  include somthing like \code{\%d} for the sequence number in
+  \code{file}, the file will contain the last page plotted.
+}
 \note{
   These are based on the \code{\link{X11}} device, so the additional
   arguments to that device work, but are rarely appropriate.  The

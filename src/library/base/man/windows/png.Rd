@@ -42,6 +42,11 @@ png(filename = "Rplot\%03d..png", width = 480, height = 480, pointsize = 12,
 \value{
   A plot device is opened: nothing is returned to the \R interpreter.
 }
+\section{Warning}{
+  If you plot more than one page on one of these devices and do not
+  include somthing like \code{\%d} for the sequence number in
+  \code{file}, the file will contain the last page plotted.
+}
 \note{
   These devices effectively plot on a hidden screen and then copy the
   image to the required format.  This means that they have the same
