@@ -264,13 +264,13 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     class = R_data_class(obj, FALSE);
     nclass = length(class);
     for (i = 0; i < nclass; i++) {
-	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
+	snprintf(buf, 512, "%s.%s", generic, CHAR(STRING_ELT(class, i)));
 	method = install(buf);
 	sxp = R_LookupMethod(method, rho, callrho, defrho);
 	/* autoloading requires that promises be evaluated <TSL>*/
-	if (TYPEOF(sxp)==PROMSXP){
-	  PROTECT(tmp=eval(sxp, rho));
-	  sxp=tmp;
+	if (TYPEOF(sxp) == PROMSXP){
+	  PROTECT(tmp = eval(sxp, rho));
+	  sxp = tmp;
 	  UNPROTECT(1);
 	}
 	if (isFunction(sxp)) {
@@ -301,7 +301,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 	    return 1;
 	}
     }
-    sprintf(buf, "%s.default", generic);
+    snprintf(buf, 512, "%s.default", generic);
     method = install(buf);
     sxp = R_LookupMethod(method, rho, callrho, defrho);
     if (TYPEOF(sxp) == PROMSXP)
@@ -335,7 +335,6 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
 
 SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[128];
     SEXP ans, generic, obj;
     SEXP callenv, defenv;
     int nargs;
@@ -383,9 +382,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	strlen(CHAR(STRING_ELT(generic, 0))) == 0)
 	errorcall(call, "first argument must be a generic name");
 
-    strcpy(buf, CHAR(STRING_ELT(generic, 0)));
-
-    if (usemethod(buf, obj, call, CDR(args),
+    if (usemethod(CHAR(STRING_ELT(generic, 0)), obj, call, CDR(args),
 		  env, callenv, defenv, &ans) == 1) {
 	UNPROTECT(1);
 	PROTECT(ans);
@@ -393,7 +390,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	UNPROTECT(1);
     }
     else
-	error("no applicable method for \"%s\"", buf);
+	error("no applicable method for \"%s\"", CHAR(STRING_ELT(generic, 0)));
     return R_NilValue; /* NOT Used */
 }
 
@@ -432,7 +429,7 @@ static SEXP fixcall(SEXP call, SEXP args)
 
 SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    char buf[128], b[512], bb[512], tbuf[10];
+    char buf[512], b[512], bb[512], tbuf[10];
     SEXP ans, s, t, class, method, matchedarg, generic, nextfun;
     SEXP sysp, m, formals, actuals, tmp, newcall;
     SEXP a, group, basename;
@@ -625,25 +622,25 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if( method != R_UnboundValue) {
 	if( !isString(method) )
 	    error("Wrong value for .Method");
-	for( i=0; i<length(method); i++ ) {
-	  sprintf(b,"%s", CHAR(STRING_ELT(method, i)));
+	for( i = 0; i < length(method); i++ ) {
+	  snprintf(b, 512, "%s", CHAR(STRING_ELT(method, i)));
 	  if( strlen(b) )
 	    break;
 	}
 	/* for binary operators check that the second argument's method
 	   is the same or absent */
 	for(j=i;j<length(method); j++){
-	  sprintf(bb,"%s",CHAR(STRING_ELT(method, j)));
+	  snprintf(bb, 512, "%s",CHAR(STRING_ELT(method, j)));
 	  if (strlen(bb) && strcmp(b,bb))
 	      warning("Incompatible methods ignored");
 	}
     }
     else {
-      sprintf(b,"%s", CHAR(PRINTNAME(CAR(cptr->call))));
+      snprintf(b, 512, "%s", CHAR(PRINTNAME(CAR(cptr->call))));
     }
 
     for (j = 0; j < length(class); j++) {
-      sprintf(buf,"%s.%s", CHAR(STRING_ELT(basename, 0)),
+      snprintf(buf, 512, "%s.%s", CHAR(STRING_ELT(basename, 0)),
 	CHAR(STRING_ELT(class, j)));
       if ( !strcmp(buf,b) )
 	break;
@@ -657,7 +654,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     /* we need the value of i on exit from the for loop to figure out
 	   how many classes to drop. */
     for (i = j ; i < length(class); i++) {
-	    sprintf(buf, "%s.%s", CHAR(STRING_ELT(generic, 0)),
+	    snprintf(buf, 512, "%s.%s", CHAR(STRING_ELT(generic, 0)),
 		CHAR(STRING_ELT(class, i)));
 	nextfun = R_LookupMethod(install(buf), env, callenv, defenv);
 	if (TYPEOF(nextfun) == PROMSXP)
@@ -666,7 +663,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
 	if (group !=R_UnboundValue){
 	    /* if not Generic.foo, look for Group.foo */
-	    sprintf(buf, "%s.%s", CHAR(STRING_ELT(basename, 0)),
+	    snprintf(buf, 512, "%s.%s", CHAR(STRING_ELT(basename, 0)),
 		CHAR(STRING_ELT(class, i)));
 	    nextfun = R_LookupMethod(install(buf), env, callenv, defenv);
 	    if (TYPEOF(nextfun) == PROMSXP)
@@ -678,7 +675,7 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	    break;
     }
     if (!isFunction(nextfun)) {
-	sprintf(buf, "%s.default", CHAR(STRING_ELT(generic, 0)));
+	snprintf(buf, 512, "%s.default", CHAR(STRING_ELT(generic, 0)));
 	nextfun = R_LookupMethod(install(buf), env, callenv, defenv);
 	if (TYPEOF(nextfun) == PROMSXP)
 	    nextfun = eval(nextfun, env);
