@@ -775,6 +775,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
 registerS3methods <- function(info, env)
 {
     n <- length(info)
+    if(n == 0) return()
     regs <- getNamespaceInfo(env, "S3methods")
     newregs <- list(n)
 
