@@ -8,7 +8,7 @@ matlines  <- function(x, y, lty=1:5, pch=NULL, col=1:6, ...)
 matplot <- function(x, y, type="p",
 		    lty=1:5, pch=NULL, col=1:6,
 		    xlab=NULL, ylab=NULL, xlim=NULL, ylim=NULL,
-		    ..., add= FALSE, verbose = FALSE)
+		    ..., add= FALSE, verbose = .Options$verbose)
 {
 	## Purpose: Plots columns of  x	  vs. columns of  y.	--> ?matplot
 	## ------------------------------------------------------------------
