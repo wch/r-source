@@ -1,1 +1,0 @@
-export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11)

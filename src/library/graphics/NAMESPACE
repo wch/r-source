@@ -1,4 +1,4 @@
-# leave most of the default methods visible as people seme to call them.
+# leave most of the default methods visible as people seem to call them.
 export(Hershey, abline, arrows, assocplot, axTicks, axis, axis.Date,
        axis.POSIXct, barplot, barplot, barplot.default, box, boxplot,
        boxplot.default, boxplot.stats, bxp, check.options,
@@ -51,3 +51,15 @@ S3method(points, default)
 S3method(points, formula)
 S3method(print, recordedplot)
 S3method(text, default)
+
+if(.Platform$OS.type == "unix") {
+export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11)
+}
+
+if(.Platform$OS.type == "windows") {
+export(X11, bitmap, bmp, bringToTop, dev2bitmap, jpeg, png, savePlot,
+       win.graph, win.metafile, win.print, windows, x11)
+
+S3method("[", SavedPlots)
+S3method(print, SavedPlots)
+}
