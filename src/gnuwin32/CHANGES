@@ -34,6 +34,9 @@ Help | Console information screen.
 Rterm in interactive use sets the title of the window it is running
 in, and unsets it when it terminates.
 
+Note that unlink() no longer deletes empty directories, but has
+a new argument recursive=TRUE to delete directories (empty or not).
+
 make check no longer makes R, just runs the tests (as make test
 always has).
 
