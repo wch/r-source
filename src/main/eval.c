@@ -48,9 +48,7 @@ void isintrpt()
    if(CheckEventQueueForUserCancel()){  
 	Rprintf("\n");
 	error("user break");
-#ifndef __MRC__
 	raise(SIGINT);
-#endif
 	return;
     }
 
