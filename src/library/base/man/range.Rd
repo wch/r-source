@@ -20,7 +20,7 @@ range.default(\dots, na.rm = FALSE, finite = FALSE)
 \details{
   This is a generic function; currently, it has only a default method
   (\code{\link{range.default}}).
-    
+
   It is also a member of the \code{Summary} group of functions, see
   \code{\link{Methods}}.
 
@@ -31,6 +31,9 @@ range.default(\dots, na.rm = FALSE, finite = FALSE)
   If \code{finite} is \code{TRUE}, the minimum
   and maximum of all finite values is computed, i.e.,
   \code{finite=TRUE} \emph{includes} \code{na.rm=TRUE}.
+
+  A special situation occurs when there is no (after omission
+  of \code{NA}s) nonempty argument left, see \code{\link{min}}.% Extremes.Rd
 }
 \seealso{
   \code{\link{min}},
