@@ -62,6 +62,9 @@ SEXP do_Platform(SEXP call, SEXP op, SEXP args, SEXP rho)
  *  POSIX calls which should be available on each platform.  We should
  *  perhaps check this in the configure script.
  */
+/* BDR 2000/7/20.
+ *  time and ctime are in fact ANSI C calls, so we don't check them.
+ */
 char *R_Date()
 {
     time_t t;
