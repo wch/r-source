@@ -35,8 +35,6 @@ print.formula <- function(x, ...) {
     print.default(unclass(x), ...)
 }
 
-formula.environment <- function(x) attr(x,".Environment")
-
 "[.formula" <- function(x,i) {
     ans <- NextMethod("[")
     if(as.character(ans[[1]]) == "~")

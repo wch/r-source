@@ -133,7 +133,7 @@ SEXP do_envir(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return CLOENV(CAR(args));
     else if (CAR(args) == R_NilValue)
 	return R_GlobalContext->sysparent;
-    return R_NilValue;
+    else return getAttrib(CAR(args), R_DotEnvSymbol);
 }
 
 SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -141,6 +141,8 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (TYPEOF(CAR(args)) == CLOSXP && isEnvironment(CADR(args)))
 	CLOENV(CAR(args)) = CADR(args);
+    else if (isEnvironment(CADR(args)))
+	setAttrib(CAR(args), R_DotEnvSymbol, CADR(args));
     return CAR(args);
 }
 

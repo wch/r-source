@@ -245,6 +245,11 @@ NEW FEATURES
     o	Mathlib can be built as a standalone library: see directory
 	src/nmath/standalone.
 
+    o	Formulas created with the tilde operator now cintain the
+	environment in which they were created.  The envorinment of a
+	formula can be accessed withthe `environment' function.  This
+	facility is still experimental; it is intended to help simplify
+	writing modeling functions.
 
 
 BUG FIXES

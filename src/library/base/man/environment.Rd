@@ -17,19 +17,20 @@ is.environment(obj)
 new.env()
 }
 \arguments{
-  \item{fun}{a \code{\link{function}} or \code{NULL}, which is the
-    default.}
+  \item{fun}{a \code{\link{function}}, a \code{\link{formula}}, or
+    \code{NULL}, which is the default.}
   \item{value}{}
   \item{obj}{an arbitrary \R object.}
 }
 \value{
-  If \code{fun} is a function then \code{environment(fun)} returns the
-  environment associated with that function.  If \code{fun} is
-  \code{NULL} then the global environment, \code{.GlobalEnv}, is
-  returned.  This variable is currently defined as \code{globalenv()}.
+  If \code{fun} is a function or a formula then \code{environment(fun)}
+  returns the environment associated with that function or formula.
+  If \code{fun} is \code{NULL} then the global environment,
+  \code{.GlobalEnv}, is returned.  This variable is currently defined
+  as \code{globalenv()}.
 
-  The assignment form sets the environment of the function \code{fun} to
-  the \code{value} given.
+  The assignment form sets the environment of the function or formula
+  \code{fun} to the \code{value} given.
 
   \code{is.environment(obj)} returns \code{TRUE} iff \code{obj} is an
   \code{environment}.
