@@ -16,8 +16,8 @@ table <- function(x, ...)
 	nl <- length(l <- levels(cat))
 	dims <- c(dims, nl)
 	dn <- c(dn, list(l))
-	## requiring   all(unique(codes(cat)) == 1:nlevels(cat))  :
-	bin <- bin + pd * (codes(cat) - 1)
+	## requiring   all(unique(as.integer(cat)) == 1:nlevels(cat))  :
+	bin <- bin + pd * (as.integer(cat) - 1)
 	pd <- pd * nl
  }
  bin <- bin[!is.na(bin)]
