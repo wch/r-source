@@ -17,7 +17,14 @@ NEW FEATURES
 
 BUG FIXES
 
-    o   load/save/data allow unlimited string sizes.
+    o   ppois rounded non-integer `q', should truncate.
+
+    o   pnbinom was wrong for non-integer `q'.
+
+    o   dbinom, dgeom, dnbinom, dpois give 0 with a warning for
+	non-integer arguments.
+
+    o   load / save / data allow unlimited string sizes.
 
     o   strsplit() allows unlimited string size.
 

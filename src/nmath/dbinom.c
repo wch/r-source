@@ -39,7 +39,10 @@ double dbinom(double x, double n, double p)
 	ML_ERROR(ME_DOMAIN);
 	return ML_NAN;
     }
-    x = floor(x + 0.5);
+    if(fabs(x - floor(x + 0.5)) > 1e-7) {
+	warning("non-integer x = %f ", x);
+	return 0;
+    }
     if (x < 0 || x > n)
 	return 0;
     if (p == 0)
