@@ -60,7 +60,7 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
   Mardia, K. V., J. T. Kent, and J. M. Bibby (1979)
   \emph{Multivariate Analysis}, London: Academic Press.
 
-  Venables, W. N. and B. D. Ripley (1997)
+  Venables, W. N. and B. D. Ripley (1997, 9)
   \emph{Modern Applied Statistics with S-PLUS}, Springer-Verlag.
 }
 \seealso{
@@ -69,11 +69,11 @@ prcomp(x, retx = TRUE, center = TRUE, scale. = FALSE, tol = NULL)
 }
 \examples{
 ## the variances of the variables in the
-## USArrests data vary by orders of magnitude
+## USArrests data vary by orders of magnitude, so scaling is appropriate
 data(USArrests)
-prcomp(USArrests)
+prcomp(USArrests)  # inappropriate
 prcomp(USArrests, scale = TRUE)
 plot(prcomp(USArrests))
-summary(prcomp(USArrests))
+summary(prcomp(USArrests, scale = TRUE))
 }
 \keyword{multivariate}

@@ -12,7 +12,7 @@ princomp(x, cor = FALSE, scores = TRUE, covmat = NULL,
          subset = rep(TRUE, nrow(as.matrix(x))))
 loadings(x)
 plot(x, npcs = min(10, length(x$sdev)),
-          type = c("barplot", "lines"), \dots)
+     type = c("barplot", "lines"), \dots)
 screeplot(x, npcs = min(10, length(x$sdev)),
           type = c("barplot", "lines"), \dots)
 
@@ -87,14 +87,14 @@ print(x, \dots)  summary(object)  predict(object, \dots)
 }
 \examples{
 ## The variances of the variables in the
-## USArrests data vary by orders of magnitude
+## USArrests data vary by orders of magnitude, so scaling is appropriate
 data(USArrests)
-(pc.cr <- princomp(USArrests))
+(pc.cr <- princomp(USArrests))  # inappropriate
 princomp(USArrests, cor = TRUE) # =^= prcomp(USArrests, scale=TRUE)
 ## Similar, but different:
-princomp(scale(USArrests, scale = TRUE, center = TRUE), cor = FALSE)
+## The standard deviations differ by a factor of sqrt(49/50)
 
-summary(pc.cr <- princomp(USArrests))
+summary(pc.cr <- princomp(USArrests, cor=TRUE))
 loadings(pc.cr)
 plot(pc.cr) # does a screeplot.
 biplot(pc.cr)
