@@ -568,6 +568,7 @@ static void handleEvent(XEvent event)
     caddr_t temp;
     NewDevDesc *dd;
     newX11Desc *xd;
+    int devNum = 0;
 
     if (event.xany.type == Expose) {
 	while(XCheckTypedEvent(display, Expose, &event))
@@ -581,7 +582,15 @@ static void handleEvent(XEvent event)
 		     dd);
 	    xd->resize = 0;
 	}
-	GEplayDisplayList((GEDevDesc*) GetDevice(devNumber((DevDesc*) dd)));
+	/* It appears possible that a device may receive an expose
+	 * event in the middle of the device being "kill"ed by R
+	 * This means that R knows nothing about the device
+	 * so devNumber becomes 0 (the null device) and it is not 
+	 * a good idea to pass the null device to GEplayDisplayList
+	 */
+	devNum = devNumber((DevDesc*) dd);
+	if (devNum > 0)
+	    GEplayDisplayList((GEDevDesc*) GetDevice(devNum));
     }
     else if (event.type == ConfigureNotify) {
 	XFindContext(display, event.xconfigure.window,
