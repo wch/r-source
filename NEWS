@@ -14,6 +14,17 @@ USER-VISIBLE CHANGES
     o	The stub packages from 1.9.x have been removed: the library()
 	function selects the new home for their code.
 
+    o	`Lazy loading' of R code has been implemented, and is used for
+	the standard and recommended packages by default.  Rather than
+	keep R objects in memory, they are kept in a database on disc
+	and only loaded on first use.  This speeds up startup (down to
+	40% of the time for 1.9.x) and reduces memory usage -- the
+	latter is probably unimportant of itself, but reduces
+	commensurately the time spent in garbage collection.
+
+	Packages can be installed to use lazy loading with
+	R CMD INSTALL --lazy.
+
     o	The default barplot() method now by default uses a
 	gamma-corrected grey palette (rather than the heat color
 	palette) for coloring its output when given a matrix.
@@ -227,6 +238,9 @@ INSTALLATION CHANGES
 
     o	The XPG4 sed is used on Solaris for forming dependencies,
 	which should now be done correctly.
+
+    o	The configure option --enable-lazy-loading controls if lazy
+	loading is the default for the standard and recommended packages.
 
 
 BUG FIXES
