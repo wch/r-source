@@ -34,18 +34,25 @@ write.dcf(x, file = "", append = FALSE,
   The DCF rules as implemented in R are:
   \enumerate{
     \item A database consists of one or more records, each with one or
-      more named fields. Not every record must contain each field.
+    more named fields. Not every record must contain each field.
     \item Regular lines start with a non-whitespace character.
     \item Regular lines are of form \code{tag:value}, i.e.,
-      have a name tag and a value for the field, seperated
-      by \code{:} (only the first \code{:} counts). The value can be
-      missing.
+    have a name tag and a value for the field, seperated
+    by \code{:} (only the first \code{:} counts). The value can be
+    empty (=whitespace only).
     \item Lines starting with whitespace are continuation lines (to the
-      preceding field) if at least one character
-      in the line is non-whitespace.
+    preceding field) if at least one character
+    in the line is non-whitespace.
     \item Records are seperated by one or more empty (=whitespace only)
-      lines.
+    lines.
   }
+
+  \code{read.dcf} returns a character matrix with one line per record
+  and one column per field. Leading and trailing whitespace of field
+  values is ignored. If a tag name is specified, but the corresponding
+  value is empty, then an empty string of length 0 is returned. If the
+  tag name of a fields is never used in a record, then \code{NA} is
+  returned.
 }    
 \seealso{
   \code{\link{write.table}}.
