@@ -348,6 +348,8 @@ Date: Wed, 20 Feb 2002 16:41:27 +0100 (MET)
 Subject: Setting working directory
 From: jmf@atmiserv.com
 Date: Fri, 1 Mar 2002 16:19:56 +0100 (MET)
+-- unistd.c declares an array of length FILENAME_MAX to hold the path. This need
+--not be (and isn't) big enough. Perhaps 256 would be better.
 
 Directory:  Misc
 
@@ -460,10 +462,6 @@ Date: Fri, 25 Jan 2002 14:36:52 -0500
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
-* PR# 1312 *
-Subject: latitude <-> longitude in quake.tab
-From: ckhung@cyut.edu.tw
-Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
 * PR# 1330 *
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
@@ -472,19 +470,15 @@ Date: Tue, 26 Feb 2002 15:13:04 -0500
 Subject: bessel_i
 From: martin.schlather@uni-bayreuth.de
 Date: Mon, 4 Mar 2002 09:04:50 +0100 (MET)
-* PR# 1362 *
-Subject: Maritime Newsletter (Week 10)
-From: "MarineDigital Inc."<newsletter@marinedigital.com>
-Date: Fri, 8 Mar 2002 00:49:33 +0900
-* PR# 1363 *
-Subject: svd, La.svd
-From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
-Date: Thu, 07 Mar 2002 13:41:46 -0400
 * PR# 1364 *
 Subject: An introduction to R
 From: kjetil halvorsen <kjetilh@umsanet.edu.bo>
 Date: Thu, 07 Mar 2002 16:02:05 -0400
-* PR# 1365 *
-Subject: Your password
-From: saikat <saikat@stat.wisc.edu>
-Date: Thu,  7 Mar 2002 23:06:07 +0100 (CET)
+* PR# 1370 *
+Subject: 1st January isn't
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Fri, 8 Mar 2002 13:01:38 -0800 (PST)
+* PR# 1371 *
+Subject:  Sys.putenv environment variables disappear 
+From: David Brahm  <a215020@onyx.fmr.com>
+Date: Fri, 8 Mar 2002 16:35:53 -0500 (EST)
