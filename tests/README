@@ -9,7 +9,8 @@ make check-devel
 
 for people changing the code: this runs things like the demos and
 no-segfault which might be broken by code changes, and checks on the
-documentation (effectively R CMD check on each of the base packages).
+documentation (effectively R CMD check on each of the base packages,
+with R_CHECK_FF_CALLS set).
 
 make check-all
 
