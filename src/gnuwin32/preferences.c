@@ -50,7 +50,7 @@ struct structGUI
     int tt_font;
     int pointsize;
     char style[20];
-    int crows, ccols, setWidthOnResize, prows, pcols;
+    int crows, ccols, setWidthOnResize, prows, pcols, cbb, cbl;
     rgb bg, fg, user, hlt;
 };
 typedef struct structGUI *Gui;
@@ -82,11 +82,11 @@ static window wconfig;
 static button bApply, bSave, bFinish, bCancel;
 static label l_mdi, l_mwin, l_font, l_point, l_style, l_crows, l_ccols,
     l_prows, l_pcols,
-    l_cols, l_bgcol, l_fgcol, l_usercol, l_highlightcol;
+    l_cols, l_bgcol, l_fgcol, l_usercol, l_highlightcol, l_cbb, l_cbl;
 static radiobutton rb_mdi, rb_sdi, rb_mwin, rb_swin;
 static listbox f_font, f_style, d_point, bgcol, fgcol, usercol, highlightcol;
 static checkbox toolbar, statusbar, tt_font, c_resize;
-static field f_crows, f_ccols, f_prows, f_pcols;
+static field f_crows, f_ccols, f_prows, f_pcols, f_cbb,f_cbl;
 
 
 static void getGUIstate(Gui p)
@@ -102,6 +102,8 @@ static void getGUIstate(Gui p)
     p->crows = atoi(gettext(f_crows));
     p->ccols = atoi(gettext(f_ccols));
     p->setWidthOnResize = ischecked(c_resize);
+    p->cbb = atoi(gettext(f_cbb));
+    p->cbl = atoi(gettext(f_cbl));
     p->prows = atoi(gettext(f_prows));
     p->pcols = atoi(gettext(f_pcols));
     p->bg = nametorgb(gettext(bgcol));
@@ -124,6 +126,8 @@ static int has_changed()
 	strcmp(a->style, b->style) ||
 	a->crows != b->crows ||
 	a->ccols != b->ccols ||
+	a->cbb != b->cbb ||
+	a->cbl != b->cbl ||
 	a->setWidthOnResize != b->setWidthOnResize ||
 	a->prows != b->prows ||
 	a->pcols != b->pcols ||
@@ -145,6 +149,7 @@ static void cleanup()
     delobj(l_style); delobj(f_style);
     delobj(l_crows); delobj(f_crows); delobj(l_ccols); delobj(f_ccols);
     delobj(c_resize);
+    delobj(l_cbb); delobj(f_cbb); delobj(l_cbl); delobj(f_cbl);
     delobj(l_prows); delobj(f_prows); delobj(l_pcols); delobj(f_pcols);
     delobj(l_cols);
     delobj(l_bgcol); delobj(bgcol);
@@ -219,6 +224,8 @@ static void apply(button b)
 	sprintf(buf, "%d", ROWS); settext(f_crows, buf);
 	sprintf(buf, "%d", COLS); settext(f_ccols, buf);
     }
+    if (p->lbuf->dim != newGUI.cbb || p->lbuf->ms != newGUI.cbl)
+	xbufgrow(p->lbuf, newGUI.cbb, newGUI.cbl);
     
 /* Set colours and redraw */
     p->fg = consolefg = newGUI.fg;
@@ -293,12 +300,17 @@ static void save(button b)
 	    gettext(d_point), 
 	    gettext(f_style));
     fprintf(fp, "# Dimensions (in characters) of the console.\n");
-    fprintf(fp, "rows = %s\ncolumns = %s\n", gettext(f_crows), gettext(f_ccols));
+    fprintf(fp, "rows = %s\ncolumns = %s\n", 
+	    gettext(f_crows), gettext(f_ccols));
     fprintf(fp, "# Dimensions (in characters) of the internal pager.\n");
-    fprintf(fp, "pgrows = %s\npgcolumns = %s\n", gettext(f_prows), gettext(f_pcols));
+    fprintf(fp, "pgrows = %s\npgcolumns = %s\n", 
+	    gettext(f_prows), gettext(f_pcols));
     fprintf(fp, "# should options(width=) be set to the console width?\n");
     fprintf(fp, "setwidthonresize = %s\n\n",
 	    ischecked(c_resize) ? "yes" : "no");
+    fprintf(fp, "# memory limits for the console scrolling buffer, in bytes and lines\n");
+    fprintf(fp, "bufbytes = %s\nbufiles = %s\n\n", 
+	    gettext(f_cbb), gettext(f_cbl));
     fprintf(fp, "%s\n%s\n%s\npagerstyle = %s\n\n\n",
 	    "# The internal pager can displays help in a single window",
 	    "# or in multiple windows (one for each topic)",
@@ -407,17 +419,23 @@ void Rgui_configure()
     l_ccols = newlabel("columns", rect(150, 150, 60, 20), AlignLeft);
     sprintf(buf, "%d", COLS);
     f_ccols = newfield(buf, rect(220, 150, 30, 20));
+    l_cbb = newlabel("buffer bytes", rect(270, 150, 70, 20), AlignLeft);
+    sprintf(buf, "%ld", p->lbuf->dim);
+    f_cbb = newfield(buf, rect(350, 150, 60, 20));
+    l_cbl = newlabel("lines", rect(430, 150, 70, 20), AlignLeft);
+    sprintf(buf, "%d", p->lbuf->ms);
+    f_cbl = newfield(buf, rect(480, 150, 40, 20));
     c_resize = newcheckbox("set options(width) on resize?", 
-			   rect(300, 150, 200, 20), NULL);
+			   rect(50, 175, 200, 20), NULL);
     if(setWidthOnResize) check(c_resize);
 
 /* Pager size */
-    l_prows = newlabel("Pager   rows", rect(10, 200, 70, 20), AlignLeft);
+    l_prows = newlabel("Pager   rows", rect(10, 210, 70, 20), AlignLeft);
     sprintf(buf, "%d", pagerrow);
-    f_prows = newfield(buf, rect(100, 200, 30, 20));
-    l_pcols = newlabel("columns", rect(150, 200, 60, 20), AlignLeft);
+    f_prows = newfield(buf, rect(100, 210, 30, 20));
+    l_pcols = newlabel("columns", rect(150, 210, 60, 20), AlignLeft);
     sprintf(buf, "%d", pagercol);
-    f_pcols = newfield(buf, rect(220, 200, 30, 20));
+    f_pcols = newfield(buf, rect(220, 210, 30, 20));
 
 /* Font colours */
     l_cols = newlabel("Console and Pager Colours", 
