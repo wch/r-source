@@ -21,8 +21,6 @@ make.packages.html <- function(lib.loc=.libPaths())
     }
     file.append(f.tg, f.hd)
     out <- file(f.tg, open="a")
-    cat('<table width=\"100%\" summary="R Package list">\n',
-        file=out)
     rh <- chartr("\\", "/", R.home())
     drive <- substring(rh, 1, 2)
     for (lib in lib.loc) {
@@ -42,7 +40,8 @@ make.packages.html <- function(lib.loc=.libPaths())
                 sep = "", file = out)
         if(libname != "the standard library")
             cat("<p>Cross-links from this library to other libraries may not work.\n\n", file = out)
-        cat("<p>\n<table width=\"100%\">\n", file = out)
+        cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
+            file = out)
         for (i in  pg) {
             title <- packageDescription(i, fields="Title", lib.loc = lib)[1]
             if (is.na(title)) title <- "-- Title is missing --"

@@ -251,7 +251,7 @@ sub build_htmlpkglist {
 				 "", "", "./R.css");
 
     print htmlfile "<p><h3>Packages in the standard library</h3>\n", 
-    "<p>\n<table width=\"100%\">\n";
+    "<p>\n<table width=\"100%\" summary=\"R Package list\">\n";
 
     foreach $key (sort(keys %htmltitles)) {
 	print htmlfile "<tr align=\"left\" valign=\"top\">\n";
@@ -511,6 +511,7 @@ sub html_pagehead
 	$cssloc) = @_;
 
     my $retval = "<html><head><title>R: $title</title>\n" .
+	"<meta http-equiv=\"Content-Type\" content=\"text/html; charset=iso-8859-1\">\n" .
 	"<link rel=\"stylesheet\" type=\"text/css\" href=\"$cssloc\">\n" .
 	"</head><body>\n" .
 	"<h1>$title " .
