@@ -86,13 +86,17 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     }
     lsDocs <- ls(envir = .DocsEnv, all.names = TRUE)
 
-    lib.source <- function(file, env) {
+    lib.source <- function(file, envir) {
         oop <- options(keep.source = FALSE)
         on.exit(options(oop))
+        assignmentSymbol <- as.name("<-")
         exprs <- parse(n = -1, file = file)
         if(length(exprs) == 0)
             return(invisible())
-        for(i in exprs) yy <- eval(i, env)
+        for(e in exprs) {
+            if(e[[1]] == assignmentSymbol)
+                yy <- eval(e, envir)
+        }
         invisible()
     }
     .CodeEnv <- new.env()

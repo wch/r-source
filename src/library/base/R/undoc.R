@@ -69,6 +69,20 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
         dataDir <- file.path(dir, "data")
     }
 
+    lib.source <- function(file, envir) {
+        oop <- options(keep.source = FALSE)
+        on.exit(options(oop))
+        assignmentSymbol <- as.name("<-")
+        exprs <- parse(n = -1, file = file)
+        if(length(exprs) == 0)
+            return(invisible())
+        for(e in exprs) {
+            if(e[[1]] == assignmentSymbol)
+                yy <- eval(e, envir)
+        }
+        invisible()
+    }
+    
     if(isBase)
         allObjs <- ls("package:base", all.names = TRUE)
     else if(file.exists(codeFile)) {
@@ -80,7 +94,7 @@ undoc <- function(package, dir, lib.loc = .lib.loc)
             }
         }
         else {
-            yy <- try(sys.source(codeFile, envir = codeEnv))
+            yy <- try(lib.source(codeFile, envir = codeEnv))
             if(inherits(yy, "try-error")) {
                 stop("cannot source package code")
             }
