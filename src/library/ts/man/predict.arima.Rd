@@ -19,7 +19,7 @@
 \details{
   Finite-history prediction is used, via \code{\link{KalmanForecast}}.
   This is only statistically efficient if the MA part of the fit is
-  invertible, so \code{predict.arima} will give a warning for
+  invertible, so \code{predict.Arima} will give a warning for
   non-invertible MA models.
 
   The standard errors of prediction exclude the uncertainty in the
