@@ -14,6 +14,9 @@ options(pdfviewer = as.vector(Sys.getenv("R_PDFVIEWER")))
 if(interactive()){
   if (.Platform$GUI=="AQUA")
     options(device="quartz")
+  ## on Mac, DISPLAY is not a reliable guide to a running X server
+  else if (!is.null(Sys.info) && Sys.info()["sysname"]=="Darwin")
+    options(device="pdf")
   else if (Sys.getenv("DISPLAY") != "")
     options(device = switch(.Platform$GUI, "Tk" = "X11",
               "X11" = "X11", "GNOME" = "X11", "postscript"))
@@ -46,7 +49,8 @@ if(.Platform$GUI == "AQUA") {
 
     ## this is set to let RAqua use both X11 device and
     ## X11/TclTk
-    Sys.putenv("DISPLAY"=":0")
+    if (Sys.getenv("DISPLAY")=="")
+      Sys.putenv("DISPLAY"=":0")
 
     ## sets initial current working directory to user's root
     ## as RAqua is installed at system level

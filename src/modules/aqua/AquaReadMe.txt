@@ -7,18 +7,17 @@ Building R with Aqua GUI from Source:
   http://www.economia.unimi.it/R/
  for some recommendations.  
 
-1)
-You can build the R with Aqua GUI either with or without X11 support, and with 
-or without Tcl/Tk support.  
-
+1) You can build the R with Aqua GUI either with or without X11
+  support, and with or without Tcl/Tk support.  If you plan to use R
+  under ESS you will want to have X11 support
+  
 Without either X11 or Tcl/Tk:
 %  ./configure --enable-R-shlib --with-blas='-framework vecLib' 
-   --with-lapack --with-aqua --without-x
+   --with-lapack --with-aqua --without-x 
 
 With both:
 %  ./configure --enable-R-shlib --with-blas='-framework vecLib' 
-   --with-lapack 
-   --with-aqua
+   --with-lapack    --with-aqua
 provided that you have built and installed tk and tcl from the unix tree 
 of the respective sources.
 
@@ -26,27 +25,32 @@ Then build R with
 %  make
 
 
-Compiling with X11 support requires X11 header files (SDK, as Apple 
-calls it) and running with X11 support requires an X server, such as 
-Apple's Xquartz server (http://www.apple.com/macosx/x11/download/).  
-The X server is shipped with Panther along with the SDK. The latter
-is not installed by default.
+Compiling with X11 support requires X11 header files (SDK, as Apple
+calls it) and running with X11 support requires an X server, such as
+Apple's Xquartz server (http://www.apple.com/macosx/x11/download/).
+The X server is shipped with Panther along with the SDK, and the
+server, but not the SDK, is installed by default.
+
 
 Compiling with Tcl/Tk requires the X11 implementation of the libraries. 
 See
      http://www.economia.unimi.it/R/
 for more information on where to get it and how to install it.
 
-2)	R with Aqua GUI requires R to be built as a framework, which is default. Thus,
-        you need to install R as a framework with
+2)  R with Aqua GUI requires R to be built as a framework, which is 
+    default. Thus  you need to install R as a framework with
+
 %  sudo make install-Rframework
-        which installs, by default, the R.framework inside /Library/Frameworks. You can
-        change the R.framework location at build-time in the near future by specifying the
-        flag  --enable-R-framework[=DIR]  at configure time, DIR beign /Library/Frameworks
-        by default.
+
+ which installs, by default, the R framework inside /Library/Frameworks. 
+You can change the R framework location at build-time in the near future 
+by specifying the flag  
+     --enable-R-framework[=DIR]  
+at configure time. The default is --enable-R-framework=/Library/Frameworks
+
         
-3)	To install the R with Aqua GUI, provided that you have installed the R.framework as
-        in point 2) you should type
+3) To install the R with Aqua GUI you must have already installed the
+  R framework. Type
 
 %  make install-aqua
 
@@ -55,14 +59,25 @@ administrator password and sudo:
 
 %  sudo make install-aqua
 
+After installation you can drag the R icon from Applications to anywhere 
+else on the system.
 
-3)  double-click on the R icon in /Applications, or drag it to the 
-Dock and single-click it. You can move the R applications everywhere on your system
+
+3)  To run R double-click on the R icon in /Applications, or drag it to the 
+Dock and single-click it.
+
+
 
 
 Installing packages:
-Binary packages will be provided by the time R is released.  Source 
-packages can be installed but may need some extra stuff:
+-------------------
+
+Binary packages are provided automatically at CRAN for any source
+package that compiles without human intervention.  These can be
+installed from the Packages menu, and require no extra software
+
+
+Source packages can be installed but may need some extra tools:
 
  - For packages with no C or Fortran, R is sufficient.
 
@@ -73,19 +88,24 @@ Otherwise see
   http://www.economia.unimi.it/R/
 for details.
 
+The Bioconductor project provides its own installation system, which
+can be invoked from the Packages menu.  
 
-Creating packages:
-The tar command in OS X is missing some features that are used by R CMD 
+
+Creating your own packages:
+---------------------------
+The tar command in OS X 10.2 is missing some features that are used by R CMD 
 build.  At the moment the recommended work-around is to install GNU tar 
 (eg, as part of fink) and set the TAR environment variable to point to 
-GNU tar. Under Panther, GNU tar is the default tar.
+GNU tar. 
 Eg
-  setenv TAR /sw/bin/tar
+%  setenv TAR /sw/bin/tar
 
+Under 10.3 (Panther), GNU tar is the default tar and this is unnecessary.
 
 
 About the R with Aqua GUI:
-
+-------------------------
 The GUI has separate input and output windows.  What you type goes into
 the small input window, and the output goes in the large window above. 
 You can change the colors and font sizes in Preferences.  The output
@@ -149,5 +169,5 @@ you can't find a local declaration for a variable look at the top of the
 file.
 
 
-This version: dec 13rd 2003
+This version: 2004-8-1
 	

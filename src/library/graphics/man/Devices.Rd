@@ -80,8 +80,10 @@ dev.interactive()
   If no device is open, using a high-level graphics function will cause
   a device to be opened.  Which device is given by
   \code{\link{options}("device")} which is initially set as the most
-  appropriate for each platform: a screen device in interactive use and
-  \code{\link{postscript}} otherwise.
+  appropriate for each platform: a screen device for most interactive use and
+  \code{\link{postscript}} otherwise. The exception is  interactive
+  use under Unix if no screen device is known to be available, when
+  postscript() is used for most systems; pdf() for Mac OS X.
 }
 \seealso{
   The individual help files for further information on any of the
