@@ -22,12 +22,12 @@
 			maps internal functions in S to R equivalents
  */
 
-#ifndef S_COMPAT_H_
-#define S_COMPAT_H_
+#ifndef R_S_COMPAT_H_
+#define R_S_COMPAT_H_
 
 #include "S.h"
-#include "Fortran.h"/*-> Mathlib.h */
-#include "Linpack.h"/*-> Blas.h */
+/* #include "Fortran.h"*/
+#include "R_ext/Linpack.h"
 
 /* REdefine these for (undocumented!) S compatibility : */
 #undef dnorm

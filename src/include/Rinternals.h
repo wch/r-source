@@ -21,10 +21,9 @@
 #ifndef _R_INTERNALS_H_
 #define _R_INTERNALS_H_
 
-#include "config.h"
 #include "R_ext/Arith.h"
 #include "R_ext/Complex.h"
-#include "R_ext/Errormsg.h"
+#include "R_ext/Error.h"
 #include "R_ext/Memory.h"
 #include "R_ext/PrtUtil.h"
 #include "R_ext/Utils.h"
@@ -38,16 +37,6 @@
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
-#ifdef PSIGNAL
-#include <psignal.h>
-#else
-#include <signal.h>
-#include <setjmp.h>
-#endif
-#include <time.h>
-#ifdef HAVE_LOCALE_H
-#include <locale.h>
-#endif
 
 #ifdef __MAIN__
 #define extern

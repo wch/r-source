@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *                2000        the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,8 +21,6 @@
 #ifndef ERRORMSG_H
 #define ERRORMSG_H
 
-#include "Error.h"
-
 	/* Packaged Error Messages */
 	/* Argument list length and type errors */
 
@@ -35,7 +34,6 @@
 
 #define ERROR_UNIMPLEMENTED	9998
 #define ERROR_UNKNOWN		9999
-
 
 
 	/* Packaged Warning Messages */

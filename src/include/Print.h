@@ -20,7 +20,7 @@
 #ifndef PRINT_H_
 #define PRINT_H_
 
-#include "PrtUtil.h"
+#include "R_ext/PrtUtil.h"
 #include "Defn.h"
 
 typedef struct {

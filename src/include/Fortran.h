@@ -18,11 +18,11 @@
  */
 
 #ifndef FORTRAN_H
-#include "Mathlib.h"
+#include "R_ext/Mathlib.h"
 #define FORTRAN_H
 
-#include "config.h"
-#include "Complex.h"
+/*#include "config.h"*/
+#include "R_ext/Complex.h"
 
 	/* General F2C Macros */
 
@@ -46,6 +46,7 @@
 #define TRUE    (1)
 #define FALSE   (0)
 
+/* not defined in any R header */
 #ifndef _STDLIB_H
 #define abs(x) ((x) >= 0 ? (x) : -(x))
 #endif
@@ -58,6 +59,7 @@
 
 	/* Versions of Fortran Intrinsics */
 
+/* not defined in any R header */
 #ifdef NONSTANDARD_F77LIBS
 
 #define POW_DD	f77_pow_dd

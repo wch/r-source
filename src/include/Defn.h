@@ -23,17 +23,32 @@
 
 #define COUNTING
 
-#include "Rinternals.h"		/*-> Arith.h, Complex.h, Errormsg.h, Memory.h
-				  PrtUtil.h, Utils.h, config.h */
+#include "config.h"
+#include "Rinternals.h"		/*-> Arith.h, Complex.h, Error.h, Memory.h
+				  PrtUtil.h, Utils.h */
+#include "Errormsg.h"
+
+/* PSIGNAL may be defined on Win32 in config.h */
+#ifdef PSIGNAL
+#include <psignal.h>
+#else
+#include <signal.h>
+#include <setjmp.h>
+#endif
+#include <time.h>
+#ifdef HAVE_LOCALE_H
+#include <locale.h>
+#endif
+
 
 /*  Heap and Pointer Protection Stack Sizes.  */
-/*  These values are minima and can be overriden in config.h	*/
 
 #define Mega 1048576. /* 1 Mega Byte := 2^20 (= 1048576) Bytes */
 
 /*	R_PPSSIZE  The pointer protection stack size  */
 /*	R_NSIZE	   The number of cons cells	 */
 /*	R_VSIZE	   The vector heap size in bytes */
+/*  These values are minima and can be overriden in config.h	*/
 
 #ifndef R_PPSSIZE
 #define	R_PPSSIZE	10000L
@@ -61,12 +76,6 @@
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
-#include <signal.h>
-#include <setjmp.h>
-#include <time.h>
-#ifdef HAVE_LOCALE_H
-#include <locale.h>
-#endif
 */
 
 /* Formerly in Arith.h */

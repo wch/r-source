@@ -25,16 +25,13 @@
 
 #ifndef USING_R
 #define USING_R
+/* is this a good idea? - conflicts with many versions of f2c.h */
 #define longint int
 #endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#include "Error.h"
-#include "Memory.h"
-#include "config.h"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -47,8 +44,15 @@ extern "C" {
 #include <math.h>
 #endif
 
+#include "Rconfig.h"
+#include "R_ext/Constants.h"
+#include "R_ext/Memory.h" /* S_alloc */
+
+/* Not quite full compatibility: beware! */
+/* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
 #define call_S call_R
 
+/* subset of those in Random.h */
 extern void seed_in(long *);
 extern void seed_out(long *);
 extern double unif_rand(void);
@@ -56,30 +60,23 @@ extern double norm_rand(void);
 
 /* Macros for S/R Compatibility */
 
-#include "Rdefines.h"
+#include "R_ext/RS.h"
+/* for PROBLEM ... Calloc, Realloc, Free, Memcpy, F77_xxxx */
 
-/* Can't be sure Mathlib.h or math.h is included */
+/* S's complex is different, and is a define to S_complex now */
+typedef struct {
+	double re;
+	double im;
+} S_complex;
 
-#ifndef M_PI
-#define M_PI 3.141592653589793238462643383279502884197169399375
+#ifdef S_OLD_COMPLEX
+#  define complex S_complex
 #endif
 
-#define PI             M_PI
-#define SINGLE_EPS     FLT_EPSILON
-#define SINGLE_BASE    FLT_RADIX
-#define SINGLE_XMIN    FLT_MIN
-#define SINGLE_XMAX    FLT_MAX
-#define DOUBLE_DIGITS  DBL_MANT_DIG
-#define DOUBLE_EPS     DBL_EPSILON
-#define DOUBLE_XMAX    DBL_MAX
-#define DOUBLE_XMIN    DBL_MIN
+/* Not quite full compatibility: beware! */
+/* void	call_R(char*, long, void**, char**, long*, char**, long, char**);*/
+#define call_S call_R
 
-/*
-extern int F77_SYMBOL(dblepr) (char *label, int *nchar,
-			       double *data, int *ndata);
-extern int F77_SYMBOL(intpr) (char *label, int *nchar,
-			      int *data, int *ndata);
-*/
 
 #ifdef __cplusplus
 }
