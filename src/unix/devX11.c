@@ -342,8 +342,8 @@ static void SetupPseudoColor()
 			    RGBlevels[i][2]))
 	    break;
     if (PaletteSize == 0) {
-	printf("unable to obtain color cube\n");
-	exit(0);
+	warning("X11 driver unable to obtain color cube\n");
+	depth = 1;
     }
 }
 
