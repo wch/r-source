@@ -636,6 +636,8 @@ int cmdlineoptions(int ac, char **av)
        embedded applications get no limit */
     GlobalMemoryStatus(&ms);
     R_max_memory = min(256 * Mega, ms.dwTotalPhys);
+    /* need enough to start R: fails on a 8Mb system */
+    R_max_memory = max(16 * Mega, R_max_memory);
     
     R_DefParams(Rp);
     Rp->CharacterMode = CharacterMode;
@@ -718,7 +720,7 @@ int cmdlineoptions(int ac, char **av)
 			    value,
 			    (ierr == 1) ? 'M': ((ierr == 2) ? 'K':'k'));
 		    R_ShowMessage(s);
-		} else if (value < 10*1024*1024) {
+		} else if (value < 10*Mega) {
 		    sprintf(s, "WARNING: max-mem-size =%4.1fM too small and ignored\n", value/(1024.0 * 1024.0));
 		    R_ShowMessage(s);
 		} else

@@ -13,6 +13,9 @@ The windows() device no longer rounds width and height to the nearest inch.
 
 File extract-usage needed for codoc was missing from the binary distribution.
 
+The memory limit is set to at least 16Mb even when running on an 8Mb
+machine, to allow R to start on such machines.
+
 
 
 rw1022
