@@ -61,7 +61,7 @@ HTM = $(filter-out 00Index.html, $(wildcard *.html))
 	hcrtf /x $*.hpj
 
 %.rtf: $(HTM)
-	perl $(RHOME)/src/gnuwin32/help/html-to-rtf.pl $*.hhp
+	perl $(RHOME)/share/perl/hhw-to-rtf.pl $*.hhp
 
 Rchm.css: $(RHOME)/src/gnuwin32/help/Rchm.css
 	$(CP) $^ $@

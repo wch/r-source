@@ -6,7 +6,7 @@
 #   `Freeware. You may not resell it or claim you wrote it. 
 #    You can use it for anything, commercial or otherwise.'
 #
-# Modifications for R (C) 1999 B. D. Ripley
+# Modifications for R (C) 1999, 2000 B. D. Ripley
 #
 # Routines for HTML to RTF
 #
@@ -22,7 +22,7 @@ $Font{"H6"} = "\\f0\\fs18";
 $Font{"PRE"} = "\\f1\\fs20";
 $Font{"BLOCKQUOTE"} = "\\f0\\fs20\\li720";
 
-## Routines called by html.pl
+## Routines called by parse-html.pl
 $Begin{"HEAD"} = "begin_head";
 $End{"HEAD"} = "end_head";
 
