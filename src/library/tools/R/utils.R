@@ -41,9 +41,9 @@ fileTest <-
 function(op, x, y)
 {
     ## Provide shell-style '-f', '-d', '-nt' and '-ot' tests.
-    ## Note that file.exists() only tests existence ('test -e') but not
-    ## for being a regular file ('test -f').  We cannot really do this,
-    ## so our '-f' tests for existence and not being a directory.
+    ## Note that file.exists() only tests existence ('test -e' on some
+    ## systems), and that our '-f' tests for existence and not being a
+    ## directory (the GNU variant tests for being a regular file).
     ## Note: vectorized in x and y.
     switch(op,
            "-f" = !is.na(isdir <- file.info(x)$isdir) & !isdir,

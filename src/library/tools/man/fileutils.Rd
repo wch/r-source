@@ -41,11 +41,8 @@ listFilesWithType(dir, type)
   (Only purely alphanumeric extensions are recognized.)
 
   \code{fileTest} performs shell-style file tests.  Note that
-  \code{\link{file.exists}} only tests existence (\code{test -e}) but
-  not for being a regular file (\code{test -f}), and that
-  \code{\link{file.info}} does not know about regular files: hence,
-  \code{fileTest("-f", x)} tests whether the elements of \code{x}
-  name existing files which are not directories.
+  \code{\link{file.exists}} only tests for existence (\code{test -e} on
+  some systems) but not for not being a directory.
 
   \code{listFilesWithExts} returns the paths or names of the files in
   directory \code{dir} with extension matching one of the elements of
