@@ -295,13 +295,14 @@ NEW FEATURES
 	new optional arguments and uses a much better layout when more
 	than one page of plots is produced.
 
-    o	format() on character arrays was losing the dimensions.
+    o	New   dev.interactive()	 function, useful for setting defaults for
+	par(ask=*) in multifigure plots.
 
-    o   New keyword `internal' which can be used to hide objects that
-        are not part of the API from indices like the alphabetical
-        lists in the HTML help system.
+    o	New keyword `internal' which can be used to hide objects that
+	are not part of the API from indices like the alphabetical
+	lists in the HTML help system.
 
-    o   configure now tests for the versions of jpeg (>= 6b) and 
+    o	configure now tests for the versions of jpeg (>= 6b) and 
 	libpng (>= 1.0.5).
 
 
@@ -365,6 +366,8 @@ BUG FIXES
 
     o	qr.X() was ignoring pivoting (which happens only in
 	rank-deficient cases).
+
+    o	format() on character arrays was losing the dimensions.
 
     o	svd(x)$v was not a matrix when x had only 1 row (PR#963).
 

@@ -2,6 +2,7 @@
 \title{List of Graphical Devices}
 \usage{
 postscript(\dots)
+pdf(\dots)
 pictex(\dots)  
 #ifdef unix
 x11(\dots)
@@ -17,10 +18,14 @@ bmp(\dots)
 #ifdef mac
 macintosh(\dots)
 #endif
+xfig(\dots)
 bitmap(\dots)
+
+dev.interactive()
 }
 \alias{Devices}
 \alias{device}
+\alias{dev.interactive}
 \description{The following graphics devices are currently available:
 \itemize{
   \item \code{\link{postscript}} Writes PostScript graphics commands to a file
@@ -43,7 +48,11 @@ bitmap(\dots)
   \item \code{\link{xfig}} Device for XFIG graphics file format
   \item \code{\link{bitmap}} bitmap pseudo-device via \code{GhostScript} (if
     available).
+  }
 }
+\value{
+  \code{dev.interactive()} returns a logical, \code{TRUE} iff an
+  interactive (screen) device is in use.
 }
 \seealso{
   The individual help files for further information on any of the
