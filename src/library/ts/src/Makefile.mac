@@ -49,7 +49,8 @@ SrcFiles        =  	burg.c ¶
 					qr.c ¶
 					starma.c ¶
 					stl.c ¶
-					arima.c
+					arima.c ¶
+					HoltWinters.c
 					
 
 
@@ -71,7 +72,9 @@ ObjFiles-PPC    =   burg.o ¶
 					qr.o ¶
 					starma.o ¶
 					stl.o ¶
-					arima.o
+					arima.o ¶
+					HoltWinters.o
+					
 					
 
 
@@ -143,6 +146,7 @@ qr.o		Ä	qr.c
 starma.o	Ä	starma.c
 stl.o		Ä	stl.c
 arima.o     Ä   arima.c
+HoltWinters.o Ä HoltWinters.c
 
 ### Optional Dependencies ###
 ### Build this target to generate "include file" dependencies. ###
