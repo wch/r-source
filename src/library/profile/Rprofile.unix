@@ -3,8 +3,8 @@
 
 .lib.loc <- unique(c(unlist(strsplit(getenv("RLIBS"), ":")), .Library))
 
-options(printcmd = getenv("R_PRINTCMD"))
-options(papersize = getenv("R_PAPERSIZE"))
+options(printcmd = as.vector(getenv("R_PRINTCMD")))
+options(papersize = as.vector(getenv("R_PAPERSIZE")))
 options(device = if(interactive() && getenv("DISPLAY") != "")
         "X11" else "postscript")
 
