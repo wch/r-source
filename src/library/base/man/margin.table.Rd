@@ -12,12 +12,13 @@ margin.table(x, margin=NULL)
   Compute the sum of table entries for a given index.
 }
 \details{
-  This is really just \code{apply(x,margin,sum)} packaged up for
+  This is really just \code{apply(x, margin, sum)} packaged up for
   newbies, except that if \code{margin} has length zero you get
   \code{sum(x)}.
 }
 \value{
-  The relevant marginal table.
+  The relevant marginal table.  The class of \code{x} is copied to the
+  output table, except in the summation case.
 }
 \author{Peter Dalgaard}
 \examples{
