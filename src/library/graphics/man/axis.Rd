@@ -36,8 +36,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{col}{color for the axis line and the tick marks.  The default
     \code{NULL} means to use \code{par("fg")}.}
   \item{\dots}{other graphical parameters may also be passed as arguments to
-    this function, particularly, \code{cex.axis}, \code{col.axis}, and
-    \code{font.axis} for axis annotation, further, \code{las} for
+    this function, particularly, \code{cex.axis}, \code{col.axis} and
+    \code{font.axis} for axis annotation, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
     \code{col}, see \code{\link{par}} on these.}
 }
@@ -52,12 +52,20 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   rounding error) are plotted, but the ticks and their labels may well
   extend outside the plot region.
 
-  When \code{at = NULL}, pretty tick mark locations are computed internally,
-  the same \code{\link{axTicks}(side)} would, from
-  \code{\link{par}("usr","lab")}, and \code{\link{par}("xlog")} (or
-  \code{ylog} respectively).
+  When \code{at = NULL}, pretty tick mark locations are computed internally
+  (the same way \code{\link{axTicks}(side)} would) from
+  \code{\link{par}("usr", "lab")} and \code{\link{par}("xlog")} (or
+  \code{"ylog"}).
+
+  Several of the graphics parameters affect the way axes are drawn. The
+  vertical (for sides 1 and 3) positions of the axis and the tick labels
+  are controlled by \code{mpg}, the size of the ticks is controlled by
+  \code{tck} and \code{tcl} and the appearance of the tick labels by
+  \code{cex.axis}, \code{col.axis} and \code{font.axis} with
+  orientation controlled by \code{las} (but not \code{srt}).
 }
-\seealso{\code{\link{axTicks}} returns the axis tick locations
+\seealso{
+  \code{\link{axTicks}} returns the axis tick locations
   corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible
   for computing pretty tick coordinates and does \emph{not} depend on
   (nor adapt to) the coordinate system in use.
