@@ -39,7 +39,11 @@ BUG FIXES
 
     o	handle null models arising in drop1(), step, etc.
 
-    o   partial matching problem with $ indexing
+    o	partial matching problem with $ indexing
+
+    o	matplot(.) works with lwd vectors
+
+    o	par("cex.axis") now has the desired effect...
 
 
 		CHANGES IN R VERSION 0.63
@@ -52,7 +56,7 @@ NEW FEATURES
     o	new  .Platform	variable  for better modularizing
 	platform dependence. __This_is_"beta"_and_bound_to_be_changed___
 
-    o	new arguments to colnames(..) and 
+    o	new arguments to colnames(..) and
 	rownames(x, do.NULL = TRUE, prefix = "row").
 			   _
     o	par(bty = "]") for _| box(.) in plots.
@@ -155,12 +159,12 @@ NEW FEATURES
 	and is subject to internal and interface changes.
 
     o	gctorture() for torturing the garbage collector to reveal
-	memory protection bugs. (Call GC on every memory allocation). 
+	memory protection bugs. (Call GC on every memory allocation).
 
-    o	B. Ripley's aov code (and more) has been added. This includes: 
+    o	B. Ripley's aov code (and more) has been added. This includes:
 
 	- aov() now handles models with Error terms, multiple
-	  responses. 
+	  responses.
 
 	- proj(), model.tables(), se.contrast(), replications(),
 	  eff.aovlist() are implemented for aov fits, and where
@@ -173,7 +177,7 @@ NEW FEATURES
 
 	- summary() and deviance() -- mlm methods.
 
-	- kappa()  for estimating condition numbers) 
+	- kappa()  for estimating condition numbers)
 
 	- labels() to find a suitable set of labels from an object
 
@@ -181,12 +185,12 @@ NEW FEATURES
 
 	- anova(), plot(), summary() and deviance() methods for mlm fits
 
-    o	eval() semantics changed when envir= is a list. A 3rd argument is 
+    o	eval() semantics changed when envir= is a list. A 3rd argument is
 	now allowed, specifying the enclosure (i.e. where R looks for
-	variables *not* found in envir=) it defaults to the calling 
+	variables *not* found in envir=) it defaults to the calling
 	environment (was .GlobalEnv). Note that when used inside a function,
-	it is often desirable to set the enclosure to the parent 
-	environment instead. [ eval(e, data, sys.frame(sys.parent())) ] 
+	it is often desirable to set the enclosure to the parent
+	environment instead. [ eval(e, data, sys.frame(sys.parent())) ]
 
 
 BUG FIXES
