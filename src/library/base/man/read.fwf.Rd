@@ -7,7 +7,7 @@
 }
 \usage{
 read.fwf(file, widths, sep = "\t", as.is = FALSE,
-         skip = 0, row.names, col.names, n = -1)
+         skip = 0, row.names, col.names, n = -1, \dots)
 }
 \arguments{
   \item{file}{
@@ -28,6 +28,8 @@ read.fwf(file, widths, sep = "\t", as.is = FALSE,
   \item{col.names}{see \code{\link{read.table}}.}
   \item{n}{the maximum number of records (lines) to be read, defaulting
     to no limit.}
+  \item{\dots}{further arguments to be passed to
+    \code{\link{read.table}}.}
 }
 \value{
   A \code{\link{data.frame}} as produced by \code{\link{read.table}}
