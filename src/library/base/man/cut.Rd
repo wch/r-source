@@ -40,10 +40,13 @@ cut(x, \dots)
   If a \code{labels} parameter is specified, its values are used
   to name the factor levels. If none is specified, the factor
   level labels are constructed as \code{"(b1, b2]"}, \code{"(b2, b3]"}
-  etc. for \code{right=TRUE} and as \code{"[b1, b2)"}, \ldots if
-  \code{right=FALSE}.
-  In this case, \code{dig.lab} indicates how many digits should be used in
-  formatting the numbers \code{b1}, \code{b2}, \ldots.
+  etc. for \code{right = TRUE} and as \code{"[b1, b2)"}, \ldots if
+  \code{right = FALSE}.
+  In this case, \code{dig.lab} indicates the minimum number  of digits
+  should be used in formatting the numbers \code{b1}, \code{b2}, \ldots.
+  A larger value (up to 12) will be used if needed to distinguish
+  between any pair of  endpoints: if this fails labels such as
+  \code{"Range3"} will be used.
 }
 \note{
   Instead of \code{table(cut(x, br))}, \code{hist(x, br, plot = FALSE)} is
@@ -91,5 +94,10 @@ table(cut(y, breaks =  1*(-3:3), dig.lab=4))
 # extra digits don't "harm" here
 table(cut(y, breaks =  1*(-3:3), right = FALSE))
 #- the same, since no exact INT!
+
+## sometimes the default dig.lab is not enough to be avoid confusion:
+aaa <- c(1,2,3,4,5,2,3,4,5,6,7)
+cut(aaa, 3)
+cut(aaa, 3, dig.lab=4)
 }
 \keyword{category}

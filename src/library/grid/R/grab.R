@@ -35,22 +35,6 @@ current.vpNames <-function() {
   ls(env=grid.Call("L_currentViewport")$children)
 }
 
-grabWarn <- function(msg, certain, wrapFix) {
-  warning(msg, " (grab ",
-          if (certain) gettext("WILL not be faithful")
-          else gettext("MAY not be faithful"),
-          if (wrapFix) "; try wrap=TRUE)" else ")",
-          call.=FALSE, domain = NA)
-}
-
-warn1 <- function(msg, wrapFix) {
-  grabWarn(msg, TRUE, wrapFix)
-}
-
-warn2 <- function(msg, wrapFix) {
-  grabWarn(msg, FALSE, wrapFix)
-}
-
 # vp might be a viewport, or a vpList, or a vpStack, or a vpTree
 vpExists <- function(vp) {
   UseMethod("vpExists")
@@ -119,7 +103,7 @@ grabDL <- function(warn, wrap, ...) {
       names <- getNames()
       # Check for overwriting existing grob
       if (length(unique(names)) != length(names))
-        warn1(gettext("grob(s) overwritten"), TRUE)
+        warning("grob(s) overwritten (grab WILL not be faithful; try 'wrap=TRUE')")
     }
     grid.newpage(recording=FALSE)
     # Start at 2 because first element is viewport[ROOT]
@@ -145,7 +129,7 @@ grabDL <- function(warn, wrap, ...) {
             # with existing viewport name
             if (inherits(tempvp, "viewport") &&
                 vpExists(tempvp))
-              warn2("viewport overwritten", FALSE)
+              warning("viewport overwritten (grab MAY not be faithful)")
           }
           if (!is.null(tempvp))
             tempdepth <- depth(tempvp)
@@ -171,7 +155,7 @@ grabDL <- function(warn, wrap, ...) {
                 pathSame = FALSE
             }
             if (!pathSame)
-              warn2("grob pushed viewports and did not pop/up them", TRUE)
+              warning("grob pushed viewports and did not pop/up them (grab MAY not be faithful)")
           }
           elt$vp <- drawPath
           if (!is.null(tempvp))
@@ -185,7 +169,7 @@ grabDL <- function(warn, wrap, ...) {
           # Check to see if about to push a viewport
           # with existing viewport name
           if (vpExists(elt))
-            warn2("viewport overwritten", FALSE)
+            warning("viewport overwritten (grab MAY not be faithful)")
           grid.draw(elt, recording=FALSE)
         ###########
         # grabPop

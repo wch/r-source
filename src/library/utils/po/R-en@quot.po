@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-04 18:03\n"
-"PO-Revision-Date: 2005-03-04 18:03\n"
+"POT-Creation-Date: 2005-03-11 08:07\n"
+"PO-Revision-Date: 2005-03-11 08:07\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -214,6 +214,31 @@ msgstr "‘%s’ has a help file but no examples file"
 msgid "'fix' requires a name"
 msgstr "‘fix’ requires a name"
 
+msgid "No documentation for '%s' in specified packages and libraries:"
+msgstr "No documentation for ‘%s’ in specified packages and libraries:"
+
+msgid "you could try 'help.search(\"%s\")'"
+msgstr "you could try ‘help.search(“%s”)’"
+
+msgid ""
+"Help for topic '%s' is not in any loaded package but can be found in the "
+"following packages:"
+msgstr ""
+"Help for topic ‘%s’ is not in any loaded package but can be found in the "
+"following packages:"
+
+msgid "Package"
+msgstr "Package"
+
+msgid "Library"
+msgstr "Library"
+
+msgid "Help on topic '%s' was found in the following packages:"
+msgstr "Help on topic ‘%s’ was found in the following packages:"
+
+msgid "Using the first match ..."
+msgstr "Using the first match ..."
+
 msgid ""
 "No HTML help for '%s' is available:\n"
 "corresponding file is missing"
@@ -233,6 +258,9 @@ msgid ""
 msgstr ""
 "No CHM help for ‘%s’ in package ‘%s’ is available:\n"
 "the CHM file is for the package is missing"
+
+msgid "R Help on '%s'"
+msgstr "R Help on ‘%s’"
 
 msgid ""
 "No text help for '%s' is available:\n"

@@ -347,7 +347,7 @@ SEXP duplicated(SEXP x)
     HashData data;
 
     if (!isVector(x)) 
-	error(_("duplicatd applies only to vectors"));
+	error(_("'duplicated' applies only to vectors"));
 
     n = LENGTH(x);
     HashTableSetup(x, &data);
@@ -485,15 +485,17 @@ static SEXP HashLookup(SEXP table, SEXP x, HashData *d)
 
 SEXP do_match(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+#ifdef NOTMOVED
     SEXP x, table;
     SEXPTYPE type;
+#endif
     int nomatch;
 
     checkArity(op, args);
 
     if ((!isVector(CAR(args)) && !isNull(CAR(args)))
 	|| (!isVector(CADR(args)) && !isNull(CADR(args))))
-	error(_("match requires vector arguments"));
+	error(_("'match' requires vector arguments"));
 
     /* Coerce to a common type; type == NILSXP is ok here.
      * Note that R's match() does only coerce factors (to character).

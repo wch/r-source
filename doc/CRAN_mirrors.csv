@@ -30,7 +30,8 @@ Turkey,Turkey,Istanbul,http://godel.cs.bilgi.edu.tr/mirror/cran/,"Istanbul Bilgi
 Taiwan,Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>"
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>"
 "UK (London)",UK,London,http://www.sourcekeg.co.uk/cran/,"Sourcekeg, London",mirrors@sourcekeg.co.uk
-"USA (CA)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA",
+"USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu
+"USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA",
 "USA (MA)",USA,Boston,http://www.bioconductor.org/CRAN/,"Dana Farber Cancer Institute, Boston, MA","Jeff Gentry <jgentry@jimmy.harvard.edu>"
 "USA (MI)",USA,Houghton,http://www.biometrics.mtu.edu/CRAN/,"Michigan Technological University, Houghton, MI","Robert Froese <froese@mtu.edu>"
 "USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>"

@@ -13,7 +13,6 @@
 setClassUnion(name, members, where)
 isClassUnion(Class)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{name}{ the name for the new union class. }
   \item{members}{ the classes that should be members of this union.}
@@ -73,7 +72,6 @@ isClassUnion(Class)
 }
 
 \examples{
-
 ## a class for either numeric or logical data
 setClassUnion("maybeNumber", c("numeric", "logical"))
 

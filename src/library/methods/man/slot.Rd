@@ -3,6 +3,7 @@
 \alias{slot<-}
 \alias{@<-}
 \alias{slotNames}
+\alias{.slotNames}
 \title{ The Slots in an Object from a Formal Class }
 \description{
   These functions return or set information about the individual slots
@@ -16,6 +17,7 @@ slot(object, name)
 slot(object, name, check = TRUE) <- value
 
 slotNames(x)
+.slotNames(x)
 }
 \arguments{
   \item{object}{ An object from a formally defined class.}
@@ -30,7 +32,6 @@ slotNames(x)
     as the value of this slot.  You should never set this to
     \code{FALSE} in normal use, since the result can create invalid objects.
     }
-
   }
 \details{
   The \code{"@"} operator and the \code{slot} function extract or
@@ -77,11 +78,23 @@ slotNames(x)
   \code{\link{getClass}}
 }
 \examples{
-\dontrun{
-slot(myTrack, "x")
-slot(myTrack, "y") <- log(slot(myTrack, "x"))
+\dontshow{if(isClass("track")) removeClass("track")}
 
-slotNames("track")
-}}
+setClass("track", representation(x="numeric", y="numeric"))
+myTrack <- new("track", x = -4:4, y = exp(-4:4))
+slot(myTrack, "x")
+slot(myTrack, "y") <- log(slot(myTrack, "y"))
+str(myTrack)
+
+slotNames("track") # is the same as
+slotNames(myTrack)
+
+## sophisticated:
+clDef <- getClass(class(myTrack))
+slotNames(clDef) # "x" and "y" -- as for myTrack
+.slotNames(clDef)# the slots of the class definition object itself
+
+\dontshow{removeClass("track")##  should not be needed... see ./setClass.Rd}
+}
 \keyword{programming}
 \keyword{classes}

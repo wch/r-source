@@ -1515,7 +1515,7 @@ void InitMemory()
 
 /* Since memory allocated from the heap is non-moving, R_alloc just
    allocates off the heap as CHARSXP's and maintains the stack of
-   allocations thorugh the ATTRIB pointer.  The stack pointer R_VStack
+   allocations through the ATTRIB pointer.  The stack pointer R_VStack
    is traced by the collector. */
 char *vmaxget(void)
 {
@@ -1529,14 +1529,27 @@ void vmaxset(char *ovmax)
 
 char *R_alloc(long nelem, int eltsize)
 {
-  R_size_t size = nelem * eltsize;
-  if (size > 0) {
-    SEXP s = allocString(size); /**** avoid extra null byte?? */
-    ATTRIB(s) = R_VStack;
-    R_VStack = s;
-    return CHAR(s);
-  }
-  else return NULL;
+    R_size_t size = nelem * eltsize;
+    double dsize = nelem * eltsize;
+    if (dsize > 0) { /* precaution against integer overflow */
+	SEXP s;
+#if SIZE_LONG > 4
+	if(dsize < R_LEN_T_MAX)
+	    s = allocString(size); /**** avoid extra null byte?? */
+	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
+	    s = allocVector(REALSXP, (int)(0.99+dsize/sizeof(double)));
+	else
+	    error(_("cannot allocate memory block of size %.0f"), dsize);
+#else
+	if(dsize > R_LEN_T_MAX)
+	    error(_("cannot allocate memory block of size %.0f"), dsize);
+	s = allocString(size); /**** avoid extra null byte?? */
+#endif
+	ATTRIB(s) = R_VStack;
+	R_VStack = s;
+	return CHAR(s);
+    }
+    else return NULL;
 }
 
 /* S COMPATIBILITY */

@@ -83,7 +83,7 @@ SEXP do_matrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     lendat = length(vals);
     nr = asInteger(snr);
     if (nr == NA_INTEGER) /* This is < 0 */
-	error(_("matrix: invalid 'nrow value' (too large or NA)"));
+	error(_("matrix: invalid 'nrow' value (too large or NA)"));
     if (nr < 0)
 	error(_("matrix: invalid 'nrow' value (< 0)"));
     nc = asInteger(snc);

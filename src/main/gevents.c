@@ -57,7 +57,7 @@ SEXP do_getGraphicsEvent(SEXP call, SEXP op, SEXP args, SEXP env)
     else if (!nd->canGenMouseDown)
 	errorcall(call, _("'onMouseDown' not supported"));
     else if (TYPEOF(onMouseDown) != CLOSXP) 
-	errorcall(call, _("invalid 'onMouseDow'n callback"));
+	errorcall(call, _("invalid 'onMouseDown' callback"));
     args = CDR(args);
     
     onMouseMove = CAR(args);

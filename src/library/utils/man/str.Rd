@@ -51,7 +51,7 @@ str(object, \dots)
   \item{no.list}{logical; if true, no \dQuote{list of ..} is nor the
     class is printed.}
   \item{envir}{the environment to be used for \emph{promise} (see
-    \code{\link{delay}}) objects only.}
+    \code{\link{delayedAssign}}) objects only.}
   \item{\dots}{potential further arguments (required for Method/Generic reasons).}
 }
 \value{

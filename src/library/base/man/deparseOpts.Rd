@@ -48,10 +48,9 @@
       default for \code{dump}.
     }
     \item{\code{delayPromises}}{
-      Deparse promises as calls to \code{\link{delay}}
-      rather than evaluating them.  If the environment of a promise is
-      other than the base or global environments, it is represented by
-      \code{<environment>} and the deparsed code cannot be sourced.
+      Deparse promises in the form <promise: expression> rather than evaluating 
+      them.  The value and the environment of the promise will not be shown
+      and the deparsed code cannot be sourced.
     }
   }
   For the most readable (but perhaps incomplete) display, use

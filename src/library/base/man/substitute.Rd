@@ -30,7 +30,7 @@ quote(expr)
   Substitution takes place by examining each component of the parse tree
   as follows: If it is not a bound symbol in \code{env}, it is
   unchanged. If it is a promise object, i.e., a formal argument to a
-  function or explicitly created using \code{\link{delay}()}, the expression
+  function or explicitly created using \code{\link{delayedAssign}()}, the expression
   slot of the promise replaces the symbol. If it is an ordinary
   variable, its value is substituted, unless \code{env} is
   \code{\link{.GlobalEnv}} in which case the symbol is left unchanged.

@@ -12,10 +12,9 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
 	expr <- sexpr
 	if(is.null(ylab)) ylab <- deparse(sexpr)
     }
-    lims <-
-        if(is.null(xlim)) delay({pu <- par("usr")[1:2]
+    if (is.null(xlim)) delayedAssign("lims", {pu <- par("usr")[1:2]
                                  if(par("xlog")) 10^pu else pu})
-        else xlim
+        else lims <- xlim
     if(missing(from)) from <- lims[1]
     if(missing(to))     to <- lims[2]
     lg <-

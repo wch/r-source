@@ -14,7 +14,8 @@ gettextf(fmt, \dots, domain = NULL)
 \arguments{
   \item{fmt}{a format string.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
-    integer, real and character vectors are supported.}
+    integer, real and character vectors are supported, but some coercion
+    will be done: see the Details section.}
   \item{domain}{see \code{\link{gettext}}.}
 }
 \details{
@@ -24,7 +25,7 @@ gettextf(fmt, \dots, domain = NULL)
   \code{Inf}, \code{-Inf} and \code{NaN}) are handled correctly.
 
   \code{gettextf} is a convenience function which provides C-style
-  string formatting with possible translation on the format string.
+  string formatting with possible translation of the format string.
 
   The arguments (including \code{fmt}) are recycled if possible a whole
   number of times to the length of the longest, and then the formatting
@@ -40,7 +41,9 @@ gettextf(fmt, \dots, domain = NULL)
 
   \describe{
     \item{\code{d, i, x, X}}{Integer value, \code{x} and \code{X}
-      being hexadecimal.}
+      being hexadecimal. Numeric variables with exactly integer values
+      will be coerced to integer.
+    }
 
     \item{\code{f}}{Double precision value, in decimal notation of the
       form "[-]mmm.ddd".  The number of decimal places is specified by
@@ -62,10 +65,11 @@ gettextf(fmt, \dots, domain = NULL)
     \item{\code{\%}}{Literal \code{\%} (none of the formatting
       characters given below are permitted in this case).}
   }
-  Integer and logical variables will be coerced to numeric for use with
-  \code{f, e, E, g, G}, numeric values that are exactly integer will be
-  coerced for use with \code{d, i, x}, and
-  \code{\link{as.character}} is used with \code{s}.
+  \code{\link{as.character}} is used for non-character argument with
+  \code{s} and \code{\link{as.double}} for non-double arguments with
+  \code{f, e, E, g, G}.  NB: the length is determined before conversion,
+  so do not rely on the internal coercion if this would change the
+  length.
   
   In addition, between the initial \code{\%} and the terminating
   conversion character there may be, in any order:

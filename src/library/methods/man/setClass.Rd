@@ -243,6 +243,11 @@ sealClass(Class, where)
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
+\seealso{
+  \code{\link{setClassUnion}},
+  \code{\link{Methods}},
+  \code{\link{makeClassRepresentation}}
+}
 \examples{
 \dontshow{
  if(isClass("trackMultiCurve")) removeClass("trackMultiCurve")
@@ -302,7 +307,8 @@ stopifnot(identical(new("xNum")@x, xxx))
 ### tests of the C macros MAKE_CLASS and NEW
 ### FIXME:  there should be a separate man page for the C-level macros
 ### and the tests below should be there.
-stopifnot(identical(.Call("R_methods_test_MAKE_CLASS", "trackCurve", PACKAGE = "methods"),
+stopifnot(identical(.Call("R_methods_test_MAKE_CLASS", "trackCurve",
+                          PACKAGE = "methods"),
                     getClass("trackCurve")))
 
 stopifnot(identical(.Call("R_methods_test_NEW", "track", PACKAGE = "methods"),
@@ -324,12 +330,8 @@ resetClass("logical")
 removeClass("trackMultiCurve")
 removeClass("trackCurve")
 removeClass("track")
+}%dont show
 }
-}
-\seealso{
-  \code{\link{setClassUnion}},
-  \code{\link{Methods}},
-  \code{\link{makeClassRepresentation}}}
 \keyword{programming}
 \keyword{classes}
 \keyword{methods}

@@ -135,8 +135,11 @@ SEXP do_sprintf(SEXP call, SEXP op, SEXP args, SEXP env)
 		    case 'e':
 		    case 'f':
 		    case 'g':
-			if(TYPEOF(this) == INTSXP || TYPEOF(this) == LGLSXP)
-			    this = coerceVector(this, REALSXP);
+			if(TYPEOF(this) != REALSXP) {
+			    PROTECT(tmp = lang2(install("as.double"), this));
+			    this = eval(tmp, env);
+			    UNPROTECT(1);
+			}
 			break;
 		    case 's':
 			if(TYPEOF(this) != STRSXP) {

@@ -303,7 +303,7 @@ replications <- function(formula, data = NULL, na.action)
 	}
 	if(length(select) > 0)
 	    tble <- tapply(dummy, unclass(data[select]), length)
-	nrep <- unique(tble)
+	nrep <- unique(as.vector(tble))
 	if(length(nrep) > 1) {
 	    balance <- FALSE
 	    tble[is.na(tble)] <- 0
@@ -397,33 +397,41 @@ eff.aovlist <- function(aovlist)
     if(names(aovlist)[[1]] == "(Intercept)") aovlist <- aovlist[-1]
     pure.error.strata <- sapply(aovlist, function(x) is.null(x$qr))
     aovlist <- aovlist[!pure.error.strata]
-    proj.len <-
+    s.labs <- names(aovlist)
+    ## find which terms are in which strata
+    s.terms <-
+        lapply(aovlist, function(x) {
+            asgn <- x$assign[x$qr$pivot[1:x$rank]]
+            attr(terms(x), "term.labels")[asgn]
+        })
+    t.labs <- attr(Terms, "term.labels")
+    t.labs <- t.labs[t.labs %in% unlist(s.terms)]
+    eff <- matrix(0, ncol = length(t.labs), nrow = length(s.labs),
+		  dimnames = list(s.labs, t.labs))
+    for(i in names(s.terms)) eff[i, s.terms[[i]] ] <- 1
+    cs <- colSums(eff)
+    ## if all terms are in just one stratum we are done
+    if(all(cs <= 1)) return(eff[, cs > 0, drop = FALSE])
+
+    nm <- t.labs[ cs > 1]
+    pl <-
 	lapply(aovlist, function(x)
 	   {
 	       asgn <- x$assign[x$qr$pivot[1:x$rank]]
 	       sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	       sapply(sp, function(x, y) sum(y[x]), y=diag(x$qr$qr)^2)
+               sp <- sp[names(sp) %in% nm]
+	       sapply(sp, function(x, y) {
+                   y <- y[x, x, drop = FALSE]
+                   res <- sum(diag(y)^2)
+                   if(nrow(y) > 1 && sum(y^2) > 1.01 * res)
+                       stop("eff.aovlist: non-orthogonal contrasts would give an incorrect answer")
+                   res
+               }, y=x$qr$qr)
 	   })
-    x.len <-
-	lapply(aovlist, function(x) {
-	    X <- as.matrix(qr.X(x$qr)^2)
-	    asgn <- x$assign[x$qr$pivot[1:x$rank]]
-	    sp <- split(seq(along=asgn), attr(terms(x), "term.labels")[asgn])
-	    sapply(sp, function(x, y) sum(y[,x, drop = FALSE]), y=X)
-	})
-    t.labs <- attr(Terms, "term.labels")
-    s.labs <- names(aovlist)
-    eff <- matrix(0, ncol = length(t.labs), nrow = length(s.labs),
-		  dimnames = list(s.labs, t.labs))
-    ind <- NULL
-    for(i in names(proj.len))
-	ind <- rbind(ind, cbind(match(i, s.labs),
-				match(names(proj.len[[i]]), t.labs)))
-    eff[ind] <- unlist(x.len)
-    x.len <- t(eff) %*% rep.int(1, length(s.labs))
-    eff[ind] <- unlist(proj.len)
-    eff <- sweep(eff, 2, x.len, "/")
-    eff[, x.len != 0, drop = FALSE]
+    for(i in names(pl)) eff[i, names(pl[[i]]) ] <- pl[[i]]
+    cs <- colSums(eff)
+    eff <- eff/rep(cs, each = nrow(eff))
+    eff[, cs != 0, drop = FALSE]
 }
 
 

@@ -7,8 +7,8 @@ sys.calls <-function()
 sys.frame <-function(which = 0)
     .Internal(sys.frame(which))
 
-sys.function <-function(n = 0)
-    .Internal(sys.function(n))
+sys.function <-function(which = 0)
+    .Internal(sys.function(which))
 
 sys.frames <-function()
     .Internal(sys.frames())
@@ -23,7 +23,8 @@ sys.parents <- function()
     .Internal(sys.parents())
 
 sys.status <- function()
-    list(sys.calls=sys.calls(), sys.parents=sys.parents(), sys.frames=sys.frames())
+    list(sys.calls=sys.calls(), sys.parents=sys.parents(),
+         sys.frames=sys.frames())
 
 sys.on.exit <- function()
     .Internal(sys.on.exit())

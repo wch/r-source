@@ -648,6 +648,10 @@ void setup_Rmainloop(void)
 	UNPROTECT(1);
     }
     /* gc_inhibit_torture = 0; */
+    if (R_CollectWarnings) {
+	REprintf(_("During startup - "));
+	PrintWarnings();
+    }
 }
 
 void end_Rmainloop(void)

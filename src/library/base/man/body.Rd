@@ -26,6 +26,12 @@ body(fun, envir = parent.frame()) <- value
   parent environment.
   If it is not specified, the function calling \code{body} is used.
 }
+\note{
+  For ancient historical reasons, \code{envir = NULL} uses the global
+  environment rather than the base environment.  
+  Please use \code{envir = \link{globalenv}()} instead if this is what you want,
+  as the special handling of \code{NULL} may change in a future release.
+}
 \seealso{
   \code{\link{alist}},
   \code{\link{args}},

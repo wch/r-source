@@ -49,7 +49,7 @@ getClassDef(Class, where, package)
   the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
@@ -61,11 +61,13 @@ getClassDef(Class, where, package)
 \examples{
 getClass("numeric") ## a built in class
 
-\dontshow{
-getClass("thisIsAnUndefinedClass", .Force = TRUE) ## returns NULL
-try(getClass("thisIsAnUndefinedClass")) ## generates an error
-try(getClassDef("thisIsAnUndefinedClass")) ## generates an error
-}
+cld <- getClass("thisIsAnUndefinedClass", .Force = TRUE)
+cld ## a NULL prototype
+## If you are really curious:
+str(cld)
+## Whereas these generate errors:
+try(getClass("thisIsAnUndefinedClass"))
+try(getClassDef("thisIsAnUndefinedClass"))
 }
 \keyword{programming}
 \keyword{classes}

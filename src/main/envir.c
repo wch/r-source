@@ -2460,7 +2460,7 @@ SEXP do_builtins(SEXP call, SEXP op, SEXP args, SEXP rho)
   This function copies the bindings in the loading environment to the
   library environment frame (the one that gets put in the search path)
   and removes the bindings from the loading environment.  Values that
-  contain promises (created by delay, for example) are not forced.
+  contain promises (created by delayedAssign, for example) are not forced.
   Values that are closures with environments equal to the loading
   environment are reparented to .GlobalEnv.  Finally, all bindings are
   removed from the loading environment.

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-04 18:03\n"
+"POT-Creation-Date: 2005-03-11 08:07\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -179,6 +179,27 @@ msgstr ""
 msgid "'fix' requires a name"
 msgstr ""
 
+msgid "No documentation for '%s' in specified packages and libraries:"
+msgstr ""
+
+msgid "you could try 'help.search(\"%s\")'"
+msgstr ""
+
+msgid "Help for topic '%s' is not in any loaded package but can be found in the following packages:"
+msgstr ""
+
+msgid "Package"
+msgstr ""
+
+msgid "Library"
+msgstr ""
+
+msgid "Help on topic '%s' was found in the following packages:"
+msgstr ""
+
+msgid "Using the first match ..."
+msgstr ""
+
 msgid "No HTML help for '%s' is available:\ncorresponding file is missing"
 msgstr ""
 
@@ -189,6 +210,9 @@ msgid "CHM file could not be displayed"
 msgstr ""
 
 msgid "No CHM help for '%s' in package '%s' is available:\nthe CHM file is for the package is missing"
+msgstr ""
+
+msgid "R Help on '%s'"
 msgstr ""
 
 msgid "No text help for '%s' is available:\ncorresponding file is missing"

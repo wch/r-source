@@ -3512,3 +3512,43 @@ cat(shQuote(x, "cmd"), sep="\n", file=tf)
 unlink(tf)
 stopifnot(identical(x, x2))
 ## At one point pre-2.1.0 got confused
+
+
+## se.contrast failed in 2.0.1 with some effectively one-stratum designs.
+old <- getOption("contrasts")
+options(contrasts = c("contr.helmert", "contr.poly"))
+Lab <- factor(rep(c("1","2","3"), each=12))
+Material <- factor(rep(c("A","B","C","D"),each=3,times=3))
+Measurement <- c(12.20,12.28,12.16,15.51,15.02,15.29,18.14,18.08,18.21,
+                 18.54,18.36,18.45,12.59,12.30,12.67,14.98,15.46,15.22,
+                 18.54,18.31,18.60,19.21,18.77,18.69,12.72,12.78,12.66,
+                 15.33,15.19,15.24,18.00,18.15,17.93,18.88,18.12,18.03)
+testdata <- data.frame(Lab, Material, Measurement)
+(test.aov <- aov(Measurement ~ Material + Error(Lab/Material),
+                 data = testdata))
+eff.aovlist(test.aov)
+(res <- se.contrast(test.aov,
+                    list(Material=="A", Material=="B",
+                         Material=="C", Material=="D"),
+                    coef = c(1, 1, -1, -1), data = testdata))
+## failed in 2.0.1 as a matrix was 1 x 1.
+
+## 2.0.1 also failed to check for orthogonal contrasts
+## in calculating the efficiencies (which are 1 here).
+options(contrasts = c("contr.treatment", "contr.poly"))
+(test2.aov <- aov(Measurement ~ Material + Error(Lab/Material),
+                  data = testdata))
+(res2 <- se.contrast(test2.aov,
+                     list(Material=="A", Material=="B",
+                          Material=="C", Material=="D"),
+                     coef = c(1, 1, -1, -1), data = testdata))
+stopifnot(all.equal(res, res2))
+
+## related checks on eff.aovlist
+example(eff.aovlist) # helmert contrasts
+eff1 <- eff.aovlist(fit)
+fit <- aov(Yield ~ A * B * C + Error(Block), data = aovdat)
+eff2 <- eff.aovlist(fit)
+stopifnot(all.equal(eff1, eff2)) # will have rounding-error differences
+options(contrasts = old)
+## Were different in earlier versions

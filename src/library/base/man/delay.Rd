@@ -1,7 +1,5 @@
-\name{delay}
-\alias{delay}
-\concept{promise}
-\concept{promises}
+\name{delay-deprecated}
+\alias{delay-deprecated}
 \title{Delay Evaluation}
 \description{
   \code{delay} creates a \emph{promise} to evaluate the given

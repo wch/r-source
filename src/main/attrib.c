@@ -478,6 +478,7 @@ SEXP R_data_class2 (SEXP obj)
 	else
 	    class0 = mkChar("array");
     }
+    PROTECT(class0);
     switch(t = TYPEOF(obj)) {
     case CLOSXP: case SPECIALSXP: case BUILTINSXP:
 	class = mkChar("function");
@@ -488,10 +489,9 @@ SEXP R_data_class2 (SEXP obj)
 	    PROTECT(value = allocVector(STRSXP, 2));
 	    SET_STRING_ELT(value, 0, type2str(t));
 	    SET_STRING_ELT(value, 1, mkChar("numeric"));
-	    UNPROTECT(1);
+	    UNPROTECT(2);
 	}
 	else {
-	    PROTECT(class0);
 	    PROTECT(value = allocVector(STRSXP, 3));
 	    SET_STRING_ELT(value, 0, class0);	
 	    SET_STRING_ELT(value, 1, type2str(t));
@@ -509,7 +509,7 @@ SEXP R_data_class2 (SEXP obj)
     default:
 	class = type2str(t);
     }
-    PROTECT(class0); PROTECT(class);
+    PROTECT(class);
     if(isNull(class0)) {
 	PROTECT(value = allocVector(STRSXP, 1));
 	SET_STRING_ELT(value, 0, class);

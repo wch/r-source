@@ -137,6 +137,7 @@ FUNTAB R_FunTab[] =
 {"on.exit",	do_onexit,	0,	100,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"Recall",	do_recall,	0,	10,	-1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"delay",	do_delay,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},
+{"delayedAssign",do_delayed,	0,	111,	4,	{PP_FUNCALL, PREC_FN,	  0}},
 /*{".Alias",	do_alias,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	  0}},*/
 {".Primitive",	do_primitive,	0,	1,	1,	{PP_FUNCALL, PREC_FN,	  0}},
 {"identical",	do_ident,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	  0}},

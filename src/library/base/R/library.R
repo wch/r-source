@@ -314,7 +314,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             on.exit(do.call("detach", list(name = pkgname)))
             attr(env, "path") <- file.path(which.lib.loc, package)
             ## the actual copy has to be done by C code to avoid forcing
-            ## promises that might have been created using delay().
+            ## promises that might have been created using delayedAssign().
             .Internal(lib.fixup(loadenv, env))
 
             ## Do this before we use any code from the package
@@ -364,9 +364,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         if(file.exists(vignetteIndexRDS <-
                        file.path(pkgPath, "Meta", "vignette.rds")))
             docFiles <- c(docFiles, vignetteIndexRDS)
-        pkgInfo <- vector(length = 4, mode = "list")
-        pkgInfo[[1]] <- paste("\n\t\tInformation on package",
-                              sQuote(pkgName))
+        pkgInfo <- vector(length = 3, mode = "list")
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
                 txt <- .readRDS(f)$DESCRIPTION
@@ -394,7 +392,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 readLines(f)
         }
         for(i in which(file.exists(docFiles)))
-            pkgInfo[[i+1]] <- readDocFile(docFiles[i])
+            pkgInfo[[i]] <- readDocFile(docFiles[i])
         y <- list(name = pkgName, path = pkgPath, info = pkgInfo)
         class(y) <- "packageInfo"
         return(y)
@@ -459,9 +457,9 @@ function(x, ...)
     outConn <- file(outFile, open = "w")
     first <- TRUE
     for(lib in names(out)) {
-        writeLines(paste(ifelse(first, "", "\n"),
-                         "Packages in library ", sQuote(lib), ":\n",
-                         sep = ""),
+        writeLines(gettextf("%sPackages in library '%s':\n",
+                            ifelse(first, "", "\n"),
+                            lib),
                    outConn)
         writeLines(formatDL(out[[lib]][, "Package"],
                             out[[lib]][, "Title"]),
@@ -471,14 +469,14 @@ function(x, ...)
     if(first) {
         close(outConn)
         unlink(outFile)
-        writeLines("no packages found")
+        message("no packages found")
     }
     else {
         if(!is.null(x$footer))
             writeLines(c("\n", x$footer), outConn)
         close(outConn)
         file.show(outFile, delete.file = TRUE,
-                  title = "R packages available")
+                  title = gettext("R packages available"))
     }
     invisible(x)
 }
@@ -858,21 +856,21 @@ print.packageInfo <- function(x, ...)
     outFile <- tempfile("RpackageInfo")
     outConn <- file(outFile, open = "w")
     vignetteMsg <-
-        paste("Further information is available in the following ",
-              "vignettes in directory ",
-              sQuote(file.path(x$path, "doc")),
-              ":",
-              sep = "")
-    headers <- c("", "Description:\n\n", "Index:\n\n",
+        gettextf("Further information is available in the following vignettes in directory '%s':",
+                 file.path(x$path, "doc"))
+    headers <- c(gettext("Description:\n\n"),
+                 gettext("Index:\n\n"),
                  paste(paste(strwrap(vignetteMsg), collapse = "\n"),
                        "\n\n", sep = ""))
-    footers <- c("\n", "\n", "\n", "")
+    footers <- c("\n", "\n", "")
     formatDocEntry <- function(entry) {
         if(is.list(entry) || is.matrix(entry))
             formatDL(entry, style = "list")
         else
             entry
     }
+    writeLines(gettextf("\n\t\tInformation on package '%s'\n", x$name),
+               outConn)
     for(i in which(!sapply(x$info, is.null))) {
         writeLines(headers[i], outConn, sep = "")
         writeLines(formatDocEntry(x$info[[i]]), outConn)
@@ -880,8 +878,7 @@ print.packageInfo <- function(x, ...)
     }
     close(outConn)
     file.show(outFile, delete.file = TRUE,
-              title = paste("Documentation for package",
-              sQuote(x$name)))
+              title = gettextf("Documentation for package '%s'", x$name))
     invisible(x)
 }
 
@@ -898,7 +895,7 @@ manglePackageName <- function(pkgName, pkgVersion)
 }
 
 .getRequiredPackages2 <-
-    function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
+function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
 {
     pkgs <- names(pkgInfo$Depends)
     if (length(pkgs)) {
@@ -916,8 +913,8 @@ manglePackageName <- function(pkgName, pkgVersion)
                              call. = FALSE, domain = NA)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
                     if (!eval(parse(text=paste("current", z$op, "z$version"))))
-                        stop("package '%s' %s was found, but %s %s is required by '%s'",
-                             pkg, current, z$op, z$version, pkgname,
+                        stop(gettextf("package '%s' %s was found, but %s %s is required by '%s'",
+                             pkg, current, z$op, z$version, pkgname),
                              call. = FALSE, domain = NA)
                 }
 
@@ -934,8 +931,8 @@ manglePackageName <- function(pkgName, pkgVersion)
                                          package = pkg, lib.loc = lib.loc)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
                     if (!eval(parse(text=paste("current", z$op, "z$version"))))
-                        stop("package '%s' %s is loaded, but %s %s is required by '%s'",
-                             pkg, current, z$op, z$version, pkgname,
+                        stop(gettextf("package '%s' %s is loaded, but %s %s is required by '%s'",
+                             pkg, current, z$op, z$version, pkgname),
                              call. = FALSE, domain = NA)
                 }
             }

@@ -2011,11 +2011,24 @@ mkdir Translation-it
 cd Translation-it
 (cd $R_HOME; tar cf - share/locale/it library/*/po/it) | tar xf -
 # the next step is not needed on Windows
-cp -p $R_SRC_HOME/po/RGui-it.po share/locale/it/LC_MESSAGES
+msgfmt -c -o share/locale/it/LC_MESSAGES/RGui.mo $R_SRC_HOME/po/RGui-it.gmo
 # create a DESCRIPTION file
 cd ..
 R CMD build Translation-it
 @end example
+
+It is probably appropriate to give the package a version number based on
+the version of @R{} which has been translated.  So the
+@file{DESCRIPTION} file might look like
+@example
+Package: Translation-it
+Type: Translation
+Version: 2.1.0-1
+Author: The translators
+Maintainer: Some Body <somebody@@some.where.net>
+Licence: GPL Version 2 or later.
+@end example
+
 
 @node Writing R documentation files, Tidying and profiling R code, Creating R packages, Top
 @chapter Writing R documentation files
@@ -4035,7 +4048,7 @@ The usual @R{} object modes are given in the table.
 
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
-@code{CHARSXP} etc.  (@strong{Note}: although it is possible to return
+@code{CHARSXP}, @code{PROMSXP}, etc.  (@strong{Note}: although it is possible to return
 objects of internal types, it is unsafe to do so as assumptions are
 made about how they are handled which may be violated at user-level
 evaluation.)
@@ -5536,6 +5549,10 @@ This is only recommended for experts.
 
 Note that this memory will be freed on error or user interrupt
 (if allowed: @pxref{Allowing interrupts}).
+
+Note that although @var{n} is @code{long}, there are limits imposed by
+@R{}'s internal allocation.  These will only come into play on 64-bit
+systems, where the current limit for @var{n} is 8*(2^31 - 1).
 
 @node User-controlled,  , Transient, Memory allocation
 @subsection User-controlled memory

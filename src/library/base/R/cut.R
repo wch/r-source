@@ -16,9 +16,9 @@ cut.default <- function (x, breaks, labels=NULL, include.lowest = FALSE,
     if (any(duplicated(breaks))) stop("'breaks' are not unique")
     codes.only <- FALSE
     if (is.null(labels)) {#- try to construct nice ones ..
-	for(dig in dig.lab:12) {
+	for(dig in dig.lab:max(12, dig.lab)) {
 	    ch.br <- formatC(breaks, digits=dig, wid=1)
-	    if(ok <- all(ch.br[-1]!=ch.br[-nb])) break
+	    if(ok <- all(ch.br[-1] != ch.br[-nb])) break
 	}
 	labels <-
 	    if(ok) paste(if(right)"(" else "[",

@@ -7,6 +7,8 @@ See the file NEWS for changes that affect all versions of R.
 R 2.1.0
 =======
 
+There is no longer a miniR distribution.
+
 Support for seek() on > 2Gb files has been added.
 
 You will be asked to select a CRAN mirror when downloading/updating
@@ -30,8 +32,8 @@ such front-ends.
 
 R CMD / Rcmd now set HOME if unset, e.g. for use in Rcmd check.
 
-The installer now offers the option of a `quick launch icon" for R
-(by default unchecked).
+The installer now offers the option (by default unchecked) of a `quick
+launch icon" for R.
 
 par(ask = TRUE) now takes input from the graphics window, rather than
 from the console.
