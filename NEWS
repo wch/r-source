@@ -66,6 +66,9 @@ NEW FEATURES
 	this is available, and so is always consistent with the ordering
 	used by sort().
 
+    o	sapply  has a new argument USE.NAMES=TRUE  and now returns a named
+        result when it's input was a character.
+
 
 BUG FIXES
 
@@ -126,10 +129,14 @@ BUG FIXES
 	qr did not work correctly if n < p and the first n cols were
 	rank-deficient.
 
-    o	str() wouldn't work quite right for named characters.
+    o	str() wouldn't work quite right for named characters;  doesn't quote
+	symbols anymore.
 
-    o   Colour conversion (rgb, gray, hsv) truncated doubles and so
+    o	Colour conversion (rgb, gray, hsv) truncated doubles and so
 	gave machine-dependent results on the examples. It now rounds.
+
+    o	cat() now admits again that it can't handle lists instead of
+	"random" segfaulting.
 
 
 
