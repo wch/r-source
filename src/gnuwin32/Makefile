@@ -98,11 +98,25 @@ Rcode: fixed/fixdesc
 	done
 	@$(ECHO) "  ... done"
 
+LAZY_PKGS = utils graphics stats methods grid
+
+baselazy:
+	(cat ../library/tools/R/makeLazyLoad.R ../../share/R/makebasedb.R; \
+	  echo "makeLazyLoading(\"base\")") | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null
 
 rpackage: ../../library/R.css
 	@for pkg in $(PKGS); do \
 	  R_START_PACKAGES=NULL $(MAKE) --no-print-directory $${pkg}; \
 	done
+	@(cat ../library/tools/R/makeLazyLoad.R; \
+	  echo "makeLazyLoading(\"tools\")") | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null
+	@for pkg in $(LAZY_PKGS); do \
+	  echo "tools:::makeLazyLoading(\"$${pkg}\")" | \
+	  $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
+	done
+
 	@$(MAKE) --no-print-directory vignettes
 
 rlibs:
