@@ -421,13 +421,13 @@ int findGapUp(double *xxx, double *yyy, int ns, double labelDistance,
 	/* Find a gap big enough for the label
 	   use several segments if necessary
 	*/
-	dX = xxx[jjj] - xxx[jjj - n - 1];
+	dX = xxx[jjj] - xxx[jjj - n - 1]; /* jjj - n - 1 == 0 */
 	dY = yyy[jjj] - yyy[jjj - n - 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
 	dYC = GConvertYUnits(dY, USER, INCHES, dd);
 	distanceSum = hypot(dXC, dYC);
-	jjj = (jjj + 1);
-	n += 1;
+	jjj++;
+	n++;
     }
     if (distanceSum < labelDistance)
 	return 0;
@@ -447,18 +447,19 @@ int findGapDown(double *xxx, double *yyy, int ns, double labelDistance,
 	/* Find a gap big enough for the label
 	   use several segments if necessary
 	*/
-	dX = xxx[jjj] - xxx[jjj + n + 1];
+	REprintf("%d %d %d\n",ns, jjj, jjj+n+1);
+	dX = xxx[jjj] - xxx[jjj + n + 1]; /*jjj + n + 1 == ns -1 */
 	dY = yyy[jjj] - yyy[jjj + n + 1];
 	dXC = GConvertXUnits(dX, USER, INCHES, dd);
 	dYC = GConvertYUnits(dY, USER, INCHES, dd);
 	distanceSum = hypot(dXC, dYC);
 	jjj--;
-	n -= 1;
+	n++;
     }
     if (distanceSum < labelDistance)
 	return 0;
     else
-	return -n;
+	return n;
 }
 
 /* 
