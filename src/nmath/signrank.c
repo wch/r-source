@@ -1,6 +1,6 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1999-2000  The R Development Core Team
+ *  Copyright (C) 1999-2001  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,9 +40,34 @@
 
 static double **w;
 
-/* The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
+/* MATHLIB_STANDALONE only:
+   The idea is to allocate w of size SIGNRANK_MAX on the first small call, and
    to reallocate only for n > SIGNRANK_MAX, although for some reason
-   realloc is not used */
+   realloc is not used.  As errors/interrupts are fatal, there is no
+   need to recover allocated memory.
+
+   Inside R, R_alloc is now (1.4.0) used.
+*/
+
+#ifndef MATHLIB_STANDALONE
+
+#include "R_ext/Memory.h"
+#ifdef Macintosh
+extern void isintrpt();
+#endif
+#ifdef Win32
+extern void R_ProcessEvents();
+#endif
+static void
+w_init_maybe(int n)
+{
+    int i;
+    w = (double **) R_alloc(n + 1, sizeof(double *));
+    for (i = 0; i <= n; i++) w[i] = NULL;
+}
+static void w_free_maybe(int n) {}
+
+#else /* MATHLIB_STANDALONE */
 
 static void
 w_free(int n)
@@ -78,10 +103,23 @@ w_init_maybe(int n)
     }
 }
 
+#endif /* MATHLIB_STANDALONE */
+
+
 static double
 csignrank(int k, int n)
 {
     int c, u, i;
+
+#ifndef MATHLIB_STANDALONE
+    /* check for a user abort */
+#ifdef Macintosh
+    isintrpt();
+#endif
+#ifdef Win32
+    R_ProcessEvents();
+#endif
+#endif
 
     u = n * (n + 1) / 2;
     c = (int) (u / 2);
@@ -91,12 +129,14 @@ csignrank(int k, int n)
     if (k > c)
 	k = u - k;
     if (w[n] == 0) {
+#ifndef MATHLIB_STANDALONE
+	w[n] = (double *) R_alloc(c + 1, sizeof(double));
+#else
 	w[n] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[n]) {
-	    /* free up memory iff n is large */
-	    w_free_maybe(n);
 	    MATHLIB_ERROR("%s", "signrank allocation error");
 	}
+#endif
 	for (i = 0; i <= c; i++)
 	    w[n][i] = -1;
     }

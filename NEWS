@@ -371,6 +371,11 @@ BUG FIXES
 	in strptime() which were seen only on glibc-based systems
 	(PR#1155).
 
+    o	The [pqr]signrank and [pqr]wilcox functions failed to check that
+	memory has been allocated (PR#1149), and had (often large)
+	memory leaks if interrupted.  They now make use of R_alloc,
+	can be interrupted on Windows and MacOS and don't leak memory.
+
 
 
 	**************************************************
