@@ -42,6 +42,7 @@ realclean: acclean
 	@-rm -f bin/R*
 	@-rm -rf `echo library/* | sed 's@library/CVS *@@'`
 	@-rm -f doc/manual/pkg-*
+	@-rm -f doc/html/packages* doc/html/function* 
 	@cd demos/dynload; make $@
 	@echo "Realcleaning ./etc"; cd etc; make $@
 	@echo "Realcleaning the source tree"; cd src; make $@
