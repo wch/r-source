@@ -8,7 +8,8 @@ is(object, class2)
 
 extends(class1, class2, maybe=TRUE)
 
-setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL, where=-1)
+setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
+      by = NULL, where = 1)
 
 }
 \description{
@@ -52,12 +53,38 @@ Returns \code{maybe} if the extension includes a test.
   
 The relationship can be conditional, if a function is supplied as the \code{test}
 argument.  If a function is supplied as the \code{coerce} argument, this function will
-be applied to any \code{class1} object in order to turn it into a \code{class2} object.
+be applied to any \code{class1} object in order to turn it into a
+\code{class2} object.
+If the relationship is to be defined indirectly through a third class,
+this class can be named in the \code{by} argument.
 
 Extension may imply that a \code{class1} object contains a \code{class2} object.  The default
 sense of containing is that all the slots of the simpler class are found in the
 more elaborate one.  If the \code{replace} argument is supplied as an S replacement
-function, this function will be used to implement \code{as(obj, class2) <- value}.
+function, this function will be used to implement \code{as(obj, class2)
+  <- value}.
+
+The \code{coerce}, \code{replace}, and \code{by} arguments behave
+as described for the \code{\link{setAs}} function. It's  unlikely you
+would use the \code{by} argument directly, but it is used in defining
+cached information about classes. The value returned (invisibly) by
+\code{setIs} is the extension information, as a list.
+
+Information about \code{setIs} relations can be stored in the metadata
+for either \code{class1} (in the \code{extends} information) or in the
+metadata for \code{class2} (in the \code{subclasses} information).  For
+the information to be retained for a future session, one of these
+classes must be defined in the current database (i.e., the global
+environment), since only objects assigned there are saved by
+\code{\link{save.image}}.  If neither class is defined in environment
+\code{where}, \code{setIs} generates an error.
+
+Because only global environment information is saved, it rarely makes
+sense to give a value other than the default for argument \code{where}.
+One exception is \code{where=0}, which modifies the cached (i.e.,
+session-scope) information about the class.  Class completion
+computations use this version, but don't use it yourself unless you are
+quite sure you know what you're doing.
 
 }
 \references{

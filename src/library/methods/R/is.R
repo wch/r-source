@@ -65,37 +65,46 @@ setIs <-
   ## more elaborate one.  If the `replace' argument is supplied as an S replacement
   ## function, this function will be used to implement `as(obj, class2) <- value'.
   function(class1, class2, test = NULL, coerce = NULL,
-           replace = NULL, where = -1)
+           replace = NULL, by = NULL, where = 1)
 {
     obj <- list()
     obj$test <- test
     obj$coerce <- coerce
     obj$replace <- replace
+    obj$by <- by
     if(length(obj) == 0)
         obj <- TRUE                     # simple extension
-    if(isClass(class1)) {
-        def <- getClassDef(class1, where = where)
-        ext <- getExtends(def)
+    classDef1 <- getClassDef(class1, where)
+    classDef2 <- getClassDef(class2, where)
+    if(is.null(classDef1) && is.null(classDef2))
+        Stop("Neither \"", class1, "\" nor \"", class2,
+             "\" has a definition in database ", where,
+             ": can't store the setIs information")
+    if(!is.null(classDef1)) {
+        ext <- getExtends(classDef1)
         oldExt <- ext
         elNamed(ext, class2) <- obj
-        setExtends(def, ext)
+        setExtends(classDef1, ext)
+        if(identical(where, 0))
+            ## used to modify class completion information only
+            return(invisible(obj))
         ## check for errors, reset the class def if they occur
-        on.exit(setExtends(def, oldExt))
-        completeClassDefinition(class1, def)
+        on.exit(setExtends(classDef1, oldExt))
+        completeClassDefinition(class1, classDef1)
         on.exit()
         resetClass(class1)
+        obj <- NULL
     }
-    else if(isClass(class2)) {
-        ## put the information in the subclasses of class2
-        ## (A bit dicey, since we can't check errors with
-        ## completeClassDefinition)
-        def <- getClassDef(class2, where = where)
-        ext <- getSubclasses(def)
+    if(!is.null(classDef2)) {
+        ## insert the extension information in the subclasses:
+        ## if obj is NULL, this will delete an earlier entry (which we
+        ## want to do, if we have just inserted a forward link in class1).
+        ext <- getSubclasses(classDef2)
         elNamed(ext, class1) <- obj
-        setSubclasses(def, ext)
-        resetClass(class2)
+        setSubclasses(classDef2, ext)
+        if(!identical(where, 0))
+            resetClass(class2)
     }
-    else
-        stop("Can't set an is relation unless one of the classes has a formal definition")
+    invisible(obj)
 }
 
