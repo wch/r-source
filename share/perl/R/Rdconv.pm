@@ -510,14 +510,33 @@ sub transform_S3method {
     ## Note that this markup should really only be used inside \usage.
     my ($text) = @_;
     my $S3method_RE =
-      "([ \t]*)\\\\method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}";
+      "([ \t]*)\\\\(S3)?method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.]+)\}";
     while($text =~ /$S3method_RE/) {
-	if($3 eq "default") {
-	    $text =~ s/$S3method_RE/$1\#\# Default S3 method:\n$1$2/s;
+	if($4 eq "default") {
+	    $text =~
+		s/$S3method_RE/$1\#\# Default S3 method:\n$1$3/s;
 	}
 	else {
-	    $text =~ s/$S3method_RE/$1\#\# S3 method for class '$3':\n$1$2/s;
+	    $text =~
+		s/$S3method_RE/$1\#\# S3 method for class '$4':\n$1$3/s;
 	}
+    }
+    $text;
+}
+
+sub transform_S4method {
+    ## \S4method{GENERIC}{SIGLIST}
+    ## Note that this markup should really only be used inside \usage.
+    my ($text) = @_;
+    my $S4method_RE =
+      "([ \t]*)\\\\S4method\{([a-zA-Z0-9.]+)\}\{([a-zA-Z0-9.,]+)\}";
+    local($Text::Wrap::columns) = 60;
+    while($text =~ /$S4method_RE/) {
+	my $pretty = wrap("$1\#\# ", "$1\#\#   ",
+			  "S4 method for signature '" .
+			  join(", ", split(/,/, $3)) . "':\n") .
+			  "$1$2";
+	$text =~ s/$S4method_RE/$pretty/s;
     }
     $text;
 }
@@ -873,6 +892,7 @@ sub code2html {
     $text = unmark_brackets($text);
 
     $text = transform_S3method($text);
+    $text = transform_S4method($text);
 
     $text;
 }
@@ -1346,6 +1366,7 @@ sub code2txt {
     $text = unmark_brackets($text);
 
     $text = transform_S3method($text);
+    $text = transform_S4method($text);
 
     $text;
 }
@@ -2006,6 +2027,7 @@ sub code2nroff {
     $text = unmark_brackets($text);
 
     $text = transform_S3method($text);
+    $text = transform_S4method($text);
 
     $text;
 }
@@ -2145,6 +2167,7 @@ sub code2examp {
     $text = unmark_brackets($text);
 
     $text = transform_S3method($text);
+    $text = transform_S4method($text);
 
     $text;
 }
@@ -2298,6 +2321,7 @@ sub code2latex {
     $text = unmark_brackets($text);
 
     $text = transform_S3method($text);
+    $text = transform_S4method($text);
 
     $text;
 }
@@ -2728,6 +2752,7 @@ sub code2Ssgm {
     $text = unmark_brackets($text);
 
     $text = transform_S3method($text);
+    $text = transform_S4method($text);
 
     $text;
 }
