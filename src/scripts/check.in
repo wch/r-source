@@ -37,7 +37,7 @@ use Text::Wrap;
 ## Don't buffer output.
 $| = 1;
 
-my $revision = ' $Revision: 1.177.2.2 $ ';
+my $revision = ' $Revision: 1.177.2.3 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -770,7 +770,7 @@ sub check_pkg {
     ## Also, if --install=skip, bundles never get DESCRIPTION files
     ## made in the source dir which is what we are checking here.
     ## </NOTE>
-    if(!$is_base_pkg && $opt_install && ($opt_install ne "skip")) {
+    if($opt_install) {
 	$log->checking("package dependencies");
 	## According to FL, everything listed in Depends or Suggests
 	## should be available for successfully running R CMD check.
@@ -779,7 +779,7 @@ sub check_pkg {
 	## package vignette must require its own package, which otoh is
 	## not required in the package DESCRIPTION file.
 	## Namespace imports must really be in Depends.
-	my $Rcmd = "tools:::.checkPackageDepends(dir = \"${pkgdir}\")\n";
+	my $Rcmd = "tools:::.checkPackageDepends(\"${pkgname}\")\n";
 	my @out = R_runR($Rcmd, "${R_opts} --quiet",
 			 "R_DEFAULT_PACKAGES=tools");
 	@out = grep(!/^\>/, @out);
@@ -910,8 +910,9 @@ sub check_pkg {
 	## Do subdirectories of 'inst' interfere with R package system
 	## subdirectories?
 	if((-d "inst")) {
-	    my @R_system_subdirs = ("Meta", "R", "data", "demo", "exec",
-				    "man", "help", "html", "latex", "R-ex");
+	    my @R_system_subdirs =
+		("Meta", "R", "data", "demo", "exec", "man", "help",
+		 "html", "latex", "R-ex");
 	    my @bad_dirs = ();
 	    foreach my $dir (@R_system_subdirs) {
 		push(@bad_dirs, $dir)

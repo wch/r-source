@@ -2314,11 +2314,12 @@ function(x, ...)
 ### * .checkPackageDepends
 
 .checkPackageDepends <-
-function(dir) {
-    
-    if(!fileTest("-d", dir))
-        stop(paste("directory", sQuote(dir), "does not exist"))
-    dir <- filePathAsAbsolute(dir)
+function(package)
+{
+    if(length(package) != 1)
+        stop(paste("argument", sQuote("package"),
+                   "must be of length 1"))
+    dir <- .find.package(package)
     
     ## We definitely need a valid DESCRIPTION file.
     db <- try(read.dcf(file.path(dir, "DESCRIPTION"))[1, ],
@@ -2357,7 +2358,7 @@ function(dir) {
 
     ## Are all vignette dependencies at least suggested or equal to
     ## the package name?
-    vignetteDir <- file.path(dir, "inst", "doc")
+    vignetteDir <- file.path(dir, "doc")
     if(fileTest("-d", vignetteDir)
        && length(listFilesWithType(vignetteDir, "vignette"))) {
         reqs <- .buildVignetteIndex(dir)$Depends
