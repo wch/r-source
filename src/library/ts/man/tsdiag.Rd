@@ -21,7 +21,7 @@ tsdiag(object, gof.lag, ...)
   the p-values of a Portmanteau test for all lags up to \code{gof.lag}.
 
   The method for \code{\link{arima0}} objects plots residuals scaled by
-  the estimate of the innovations standard deviation, and uses the
+  the estimate of their (individual) variance, and uses the
   Ljung--Box version of the portmanteau test.
 }
 \value{
