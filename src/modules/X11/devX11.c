@@ -1849,32 +1849,6 @@ Rf_setX11Display(Display *dpy, double gamma_fac, X_COLORTYPE colormodel,
     return(TRUE);
 }
 
-/**
- This allocates an x11Desc instance  and sets its default values.
- */
-newX11Desc * Rf_allocX11DeviceDesc(double ps)
-{
-  newX11Desc *xd;
-    /* allocate new device description */
-    if (!(xd = (newX11Desc*)malloc(sizeof(newX11Desc))))
-	return FALSE;
-
-    /* From here on, if we need to bail out with "error", */
-    /* then we must also free(xd). */
-
-    /*	Font will load at first use.  */
-
-    if (ps < 6 || ps > 24) ps = 12;
-    xd->fontface = -1;
-    xd->fontsize = -1;
-    xd->basefontface = 1;
-    xd->basefontsize = ps;
-    xd->handleOwnEvents = FALSE;
-    xd->window = (Window) NULL;
-
-  return(xd);
-}
-
 typedef Rboolean (*X11DeviceDriverRoutine)(DevDesc*, char*, 
 					   double, double, double, double,
 					   X_COLORTYPE, int, int);
