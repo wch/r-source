@@ -23,6 +23,11 @@
 #include <Rconfig.h>
 #endif
 
+#define OLD
+#ifndef OLD
+#define DEBUG_X11
+#endif
+
 #include <stdio.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
@@ -608,6 +613,7 @@ void ProcessEvents(void)
     }
 }
 
+#ifdef OLD
         /* Font information array. */
         /* Point sizes: 6-24 */
         /* Faces: plain, bold, oblique, bold-oblique */
@@ -769,6 +775,145 @@ static void SetFont(int face, int size, DevDesc *dd)
 	XSetFont(display, xd->wgc, xd->font->fid);
     }
 }
+#else /* not OLD */
+static char *fontname = "-*-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*";
+static char *symbolname	 = "-*-symbol-*-*-*-*-%d-*-*-*-*-*-*-*";
+
+static char *slant[]  = {"r", "o"};
+static char *weight[] = {"medium", "bold"};
+
+/* That number is sum(2^(x-1)) with x the Adobe design sizes (see
+   below). I suppose I should get it converted to hex... --pd */
+
+static unsigned int adobe_sizes = 8600544;
+
+#define MAXFONTS 64
+#define CLRFONTS 16 /* Number to free when cache runs full */
+
+typedef struct {int face, size;  XFontStruct *font;} cacheentry;
+
+static cacheentry fontcache[MAXFONTS];
+static int nfonts = 0, cache_full = 0 ;
+static int force_nonscalable = 0; /* for testing */
+
+#define ADOBE_SIZE(I) (adobe_sizes & (1<<((I)-1)))
+#define SMALLEST 5
+
+static XFontStruct *RLoadFont(int face, int size)
+{
+    int pixelsize, i;
+    cacheentry *f;
+    char buf[128];
+    XFontStruct *tmp;
+
+    if (size < SMALLEST) size = SMALLEST;
+    face--;
+
+    /* search fontcache */
+    for ( i = nfonts ; i-- ; ) {
+	f = &fontcache[i];
+	if ( f->face == face && f->size == size ) return f->font;
+    }
+
+    
+
+    /* Here's a 1st class fudge: make sure that the Adobe design sizes
+       8, 10, 11, 12, 14, 17, 18, 20, 24, 25, 34 can be obtained via
+       an integer "size", namely 6, 7, 8, 9, 10, 12, 13, 14, 17, 18,
+       24 points. It's almost y = x * 100/72, but not quite. The
+       constants were found using lm(). --pd */
+    
+    pixelsize = rint(size * 1.43 - 0.4);
+
+    if(face == 4)
+	sprintf(buf, symbolname,  pixelsize);
+    else
+	sprintf(buf, fontname, 
+		weight[face & 1],
+		slant[(face & 2)>>1 ],  pixelsize);
+#ifdef DEBUG_X11
+    Rprintf("loading:\n%s\n",buf);
+#endif
+    tmp = XLoadQueryFont(display, buf);
+#ifdef DEBUG_X11
+    if(tmp) Rprintf("success\n"); else Rprintf("failure\n");
+#endif
+    if (!tmp || (force_nonscalable && !ADOBE_SIZE(size)) ){
+ 	static int near[]=
+	  {20,24,24,25,25,25,34,34,34};
+	/* 15 16 17 18 19 20 21 22 23 */
+	if ( ADOBE_SIZE(size) ) return NULL; /* tried it */ 
+
+	if ( size <= 5 ) 
+	    pixelsize = 8;
+	else if (size == 11)
+	    pixelsize = 14;
+	else if (size < 24) /* must be at least 15 */
+	    pixelsize = near[size-15];
+	else
+	    pixelsize = 34;
+
+
+	if(face == 4)
+	    sprintf(buf, symbolname, pixelsize);
+	else
+	    sprintf(buf, fontname, 
+		    weight[face & 1],
+		    slant[(face & 2)>>1 ],  pixelsize);
+#ifdef DEBUG_X11
+	Rprintf("loading:\n%s\n",buf);
+#endif
+	tmp = XLoadQueryFont(display, buf);
+#ifdef DEBUG_X11
+	if(tmp) Rprintf("success\n"); else Rprintf("failure\n");
+#endif
+    }
+
+    if (tmp){
+	f = &fontcache[nfonts++];
+	f->face = face;
+	f->size = size;
+	f->font = tmp; 
+    }
+    if (nfonts == MAXFONTS) /* make room in the font cache */
+    {
+	for (i = 0 ; i < CLRFONTS ; i++)
+	    XFreeFont(display, fontcache[i].font);
+	for (i = CLRFONTS ; i < MAXFONTS ; i++)
+	    fontcache[i - CLRFONTS] = fontcache[i];
+	nfonts -= CLRFONTS;
+    }
+    return tmp;
+}
+static int SetBaseFont(x11Desc *xd)
+{
+    xd->fontface = 1;
+    xd->fontsize = 12; /* Shouldn't one get this from the device parms??? */
+    xd->usefixed = 0;
+    xd->font = RLoadFont(xd->fontface, xd->fontsize);
+    if(!xd->font) {
+	xd->usefixed = 1;
+	xd->font = xd->fixedfont = XLoadQueryFont(display, "fixed");
+	if(!xd->fixedfont)
+	    return 0;
+    }
+    return 1;
+}
+static void SetFont(int face, int size, DevDesc *dd)
+{
+    x11Desc *xd = (x11Desc *) dd->deviceSpecific;
+
+    if(face < 1 || face > 5) face = 1;
+
+    if(!xd->usefixed && (size != xd->fontsize  || face != xd->fontface)) {
+	xd->font = RLoadFont(face, size);
+	xd->fontface = face;
+	xd->fontsize = size;
+	XSetFont(display, xd->wgc, xd->font->fid);
+    }
+}
+#endif
+
 
 static void SetColor(int color, DevDesc *dd)
 {
@@ -1114,7 +1259,9 @@ static void X11_NewPage(DevDesc *dd)
 
 static void X11_Close(DevDesc *dd)
 {
+#ifdef OLD
     int i, j;
+#endif
     x11Desc *xd = (x11Desc *) dd->deviceSpecific;
 
     /* process pending events */
@@ -1127,7 +1274,9 @@ static void X11_Close(DevDesc *dd)
 
     numX11Devices--;
     if (numX11Devices == 0)  {
+
 	/* Free Resources Here */
+#ifdef OLD
 	for(i=0 ; i<NFONT ; i++)
 	    for(j=0 ; j<5 ; j++) {
 		if(fontarray[i][j] != NULL) {
@@ -1136,6 +1285,10 @@ static void X11_Close(DevDesc *dd)
 		}
 		missingfont[i][j] = 0;
 	    }
+#else 
+	while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
+	nfonts = 0;
+#endif
 	XCloseDisplay(display);
 	displayOpen = 0;
     }
