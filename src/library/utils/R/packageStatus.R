@@ -1,6 +1,14 @@
 packageStatus <- function(lib.loc = NULL,
                            repositories = getOption("repositories")())
 {
+    .checkRversion <- function(x) {
+        if(is.na(xx <- x["Depends"])) return(TRUE)
+        xx <- tools:::.split_dependencies(xx)
+        if(length(z <- xx[["R"]]) > 1)
+            eval(parse(text=paste("currentR", z$op, "z$version")))
+        else TRUE
+    }
+
     newestVersion <- function(x)
     {
         ## only used for length(x) >= 2
@@ -51,21 +59,23 @@ packageStatus <- function(lib.loc = NULL,
     y <- char2df(y)
     names(y) <- FIELDS1
 
-    if(length(repositories) > 0){
+    if(length(repositories) > 0) {
         repositories <- unique(as.character(repositories))
-        z <- matrix("", nrow=0, ncol=length(FIELDS2))
+        z <- matrix("", nrow = 0, ncol = length(FIELDS2))
         colnames(z) <- FIELDS2
         for(rep in repositories){
-            z1 <- try(read.dcf(paste(rep,"PACKAGES",sep="/"),
-                               fields=FIELDS2), silent=TRUE)
+            z1 <- try(read.dcf(paste(rep, "PACKAGES", sep = "/"),
+                               fields = FIELDS2), silent = TRUE)
             if(inherits(z1, "try-error")) {
-                cat("Warning: unable to access index for repository", rep, "\n")
+                cat("Warning: unable to access index for repository",
+                    rep, "\n")
                 repositories <- repositories[repositories != rep]
                 next
             }
 
             ## ignore packages which don't fit our version of R
-            z1 <- z1[package.dependencies(z1, check=TRUE),,drop=FALSE]
+            currentR <- getRversion()
+            z1 <- z1[apply(z1, 1, .checkRversion),,drop=FALSE]
             if(length(z1)==0) next
 
             z1[,"Repository"] <- rep

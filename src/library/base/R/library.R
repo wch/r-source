@@ -4,38 +4,38 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
          keep.source = getOption("keep.source.pkgs"),
          verbose = getOption("verbose"), version)
 {
-    testRversion <- function(fields)
+    testRversion <- function(pkgInfo)
     {
-        current <- paste(R.version[c("major", "minor")], collapse = ".")
+        current <- getRversion()
+        pkgname <- sQuote(pkgInfo$DESCRIPTION["Package"])
         ## depends on R version?
-        if(!package.dependencies(fields, check = TRUE)) {
-            dep <- package.dependencies(fields)[[1]]
-            o <- match("R", dep[, 1])
-            stop(paste("This is R ", current, ", package ",
-                       fields[1, "Package"],
-                       " needs ", dep[o, 2], " ", dep[o, 3], sep=""),
-                 call. = FALSE)
+        if(!is.null(Rdeps <- pkgInfo$Rdepends)) {
+            target <- Rdeps$version
+            res <- eval(parse(text=paste("current", Rdeps$op, "target")))
+            if(!res)
+                stop(paste("This is R ", current, ", package ",
+                           pkgname, " needs ", Rdeps$op, " ", target, sep=""),
+                     call. = FALSE)
         }
         ## which version was this package built under?
-        if(!is.na(built <- fields[1, "Built"])) {
-            builtFields <- strsplit(built, ";", fixed=TRUE)[[1]]
-            builtunder <- substring(builtFields[1], 3)
+        if(!is.null(built <- pkgInfo$Built)) {
             ## must be >= 2.0.0
-            if(!nchar(builtunder) || compareVersion("2.0.0", builtunder) > 0)
-                stop("package ", fields[1, "Package"], " was built before R 2.0.0: please re-install it", call. = FALSE)
+            if(built$R < "2.0.0")
+                stop("package ", pkgname,
+                     " was built before R 2.0.0: please re-install it",
+                     call. = FALSE)
             ## warn if later than this version
-            if(compareVersion(current, builtunder) < 0) {
-                warning(paste("package", fields[1, "Package"],
-                              "was built under R version", builtunder),
+            if(built$R > current)
+                warning(paste("package", pkgname,
+                              "was built under R version", built$R),
                         call. = FALSE)
-            }
             if(.Platform$OS.type == "unix") {
-                platform <- builtFields[2]
+                platform <- built$Platform
                 if(length(grep("\\w", platform))) {
                     ## allow for small mismatches, e.g. OS version number.
                     m <- agrep(platform, R.version$platform)
                     if(!length(m))
-                        stop(paste("package", fields[1, "Package"],
+                        stop(paste("package", pkgname,
                                    "was built for", platform),
                              call. = FALSE)
 		}
@@ -213,14 +213,12 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
 		} else stop(txt)
             }
             which.lib.loc <- dirname(pkgpath)
-            descfile <- system.file("DESCRIPTION", package = package,
-                                    lib.loc = which.lib.loc)
-            if(!nchar(descfile))
-            	stop("This is not a valid package -- no DESCRIPTION exists")
-
-            descfields <- read.dcf(descfile, fields =
-                                   c("Package", "Depends", "Built"))
-            testRversion(descfields)
+            pfile <- system.file("Meta", "package.rds", package = package,
+                                 lib.loc = which.lib.loc)
+            if(!nchar(pfile))
+            	stop("This is not a valid package -- installed < 2.0.0?")
+            pkgInfo <- .readRDS(pfile)
+            testRversion(pkgInfo)
 
             ## The check for inconsistent naming is now in .find.package
 
@@ -233,98 +231,96 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     pos <- 2
                 } else pos <- npos
             }
-            if(newpackage) {
-                ## temporary kludge
-                if(! pkgname %in% c("package:lattice", "package:nlme"))
-                    .getRequiredPackages(descfile)
-		## If the name space mechanism is available and the package
-		## has a name space, then the name space loading mechanism
-		## takes over.
-		if (packageHasNamespace(package, which.lib.loc)) {
-		    tt <- try({
-			ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
-                        dataPath <- file.path(which.lib.loc, package, "data")
-			env <- attachNamespace(ns, pos = pos,
-                                               dataPath = dataPath)
-		    })
-		    if (inherits(tt, "try-error"))
-			if (logical.return)
-			    return(FALSE)
-			else stop("package/namespace load failed")
-		    else {
-			on.exit(do.call("detach", list(name = pkgname)))
-			nogenerics <- checkNoGenerics(env, package)
-			if(warn.conflicts &&
-			   !exists(".conflicts.OK", envir = env, inherits = FALSE))
-                            checkConflicts(package, pkgname, pkgpath, nogenerics)
+            ## temporary kludge
+            if(! pkgname %in% c("package:lattice", "package:nlme"))
+                .getRequiredPackages2(pkgInfo)
+            ## If the name space mechanism is available and the package
+            ## has a name space, then the name space loading mechanism
+            ## takes over.
+            if (packageHasNamespace(package, which.lib.loc)) {
+                tt <- try({
+                    ns <- loadNamespace(package, c(which.lib.loc, lib.loc))
+                    dataPath <- file.path(which.lib.loc, package, "data")
+                    env <- attachNamespace(ns, pos = pos,
+                                           dataPath = dataPath)
+                })
+                if (inherits(tt, "try-error"))
+                    if (logical.return)
+                        return(FALSE)
+                    else stop("package/namespace load failed")
+                else {
+                    on.exit(do.call("detach", list(name = pkgname)))
+                    nogenerics <- checkNoGenerics(env, package)
+                    if(warn.conflicts &&
+                       !exists(".conflicts.OK", envir = env, inherits = FALSE))
+                        checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-                        if(!nogenerics && .isMethodsDispatchOn() &&
-                           !identical(pkgname, "package:methods"))
-                            methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
-                        runUserHook(package, pkgpath)
-			on.exit()
-			if (logical.return)
-			    return(TRUE)
-			else
-			    return(invisible(.packages()))
-		    }
-		}
-		codeFile <- file.path(which.lib.loc, package, "R",
-				      libraryPkgName(package))
-		## create environment (not attached yet)
-		loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
-		## save the package name in the environment
-		assign(".packageName", package, envir = loadenv)
-		## source file into loadenv
-		if(file.exists(codeFile))
-		    sys.source(codeFile, loadenv, keep.source = keep.source)
-		else if(verbose)
-		    warning(paste("Package ", sQuote(package),
-				  "contains no R code"))
-                ## lazy-load data sets if required
-                dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
-                if(file.exists(paste(dbbase, ".rdb", sep="")))
-                    lazyLoad(dbbase, loadenv)
-                ## lazy-load a sysdata database if present
-                dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
-                if(file.exists(paste(dbbase, ".rdb", sep="")))
-                    lazyLoad(dbbase, loadenv)
-		## now transfer contents of loadenv to an attached frame
-		env <- attach(NULL, pos = pos, name = pkgname)
-		## detach does not allow character vector args
-		on.exit(do.call("detach", list(name = pkgname)))
-		attr(env, "path") <- file.path(which.lib.loc, package)
-		## the actual copy has to be done by C code to avoid forcing
-		## promises that might have been created using delay().
-		.Internal(lib.fixup(loadenv, env))
+                    if(!nogenerics && .isMethodsDispatchOn() &&
+                       !identical(pkgname, "package:methods"))
+                        methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+                    runUserHook(package, pkgpath)
+                    on.exit()
+                    if (logical.return)
+                        return(TRUE)
+                    else
+                        return(invisible(.packages()))
+                }
+            }
+            codeFile <- file.path(which.lib.loc, package, "R",
+                                  libraryPkgName(package))
+            ## create environment (not attached yet)
+            loadenv <- new.env(hash = TRUE, parent = .GlobalEnv)
+            ## save the package name in the environment
+            assign(".packageName", package, envir = loadenv)
+            ## source file into loadenv
+            if(file.exists(codeFile))
+                sys.source(codeFile, loadenv, keep.source = keep.source)
+            else if(verbose)
+                warning(paste("Package ", sQuote(package),
+                              "contains no R code"))
+            ## lazy-load data sets if required
+            dbbase <- file.path(which.lib.loc, package, "data", "Rdata")
+            if(file.exists(paste(dbbase, ".rdb", sep="")))
+                lazyLoad(dbbase, loadenv)
+            ## lazy-load a sysdata database if present
+            dbbase <- file.path(which.lib.loc, package, "R", "sysdata")
+            if(file.exists(paste(dbbase, ".rdb", sep="")))
+                lazyLoad(dbbase, loadenv)
+            ## now transfer contents of loadenv to an attached frame
+            env <- attach(NULL, pos = pos, name = pkgname)
+            ## detach does not allow character vector args
+            on.exit(do.call("detach", list(name = pkgname)))
+            attr(env, "path") <- file.path(which.lib.loc, package)
+            ## the actual copy has to be done by C code to avoid forcing
+            ## promises that might have been created using delay().
+            .Internal(lib.fixup(loadenv, env))
 
-		## run .First.lib
-		if(exists(".First.lib", mode = "function",
-                          envir = env, inherits = FALSE)) {
-		    firstlib <- get(".First.lib", mode = "function",
-                                    envir = env, inherits = FALSE)
-		    tt<- try(firstlib(which.lib.loc, package))
-		    if(inherits(tt, "try-error"))
-			if (logical.return) return(FALSE)
-			else stop(".First.lib failed")
-		}
-		if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
-		    tt<- try(firstlib(which.lib.loc, package))
-		    if(inherits(tt, "try-error"))
-			if (logical.return) return(FALSE)
-			else stop(".First.lib failed")
-		}
-		nogenerics <- checkNoGenerics(env, package)
-		if(warn.conflicts &&
-		   !exists(".conflicts.OK", envir = env, inherits = FALSE))
-		    checkConflicts(package, pkgname, pkgpath, nogenerics)
+            ## run .First.lib
+            if(exists(".First.lib", mode = "function",
+                      envir = env, inherits = FALSE)) {
+                firstlib <- get(".First.lib", mode = "function",
+                                envir = env, inherits = FALSE)
+                tt<- try(firstlib(which.lib.loc, package))
+                if(inherits(tt, "try-error"))
+                    if (logical.return) return(FALSE)
+                    else stop(".First.lib failed")
+            }
+            if(!is.null(firstlib <- getOption(".First.lib")[[package]])){
+                tt<- try(firstlib(which.lib.loc, package))
+                if(inherits(tt, "try-error"))
+                    if (logical.return) return(FALSE)
+                    else stop(".First.lib failed")
+            }
+            nogenerics <- checkNoGenerics(env, package)
+            if(warn.conflicts &&
+               !exists(".conflicts.OK", envir = env, inherits = FALSE))
+                checkConflicts(package, pkgname, pkgpath, nogenerics)
 
-		if(!nogenerics && .isMethodsDispatchOn() &&
-		   !identical(pkgname, "package:methods"))
-                    methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
-                runUserHook(package, pkgpath)
-		on.exit()
-	    }
+            if(!nogenerics && .isMethodsDispatchOn() &&
+               !identical(pkgname, "package:methods"))
+                methods::cacheMetaData(env, TRUE, searchWhere = .GlobalEnv)
+            runUserHook(package, pkgpath)
+            on.exit()
 	}
 	if (verbose && !newpackage)
             warning(paste("Package", sQuote(package),
@@ -804,4 +800,18 @@ manglePackageName <- function(pkgName, pkgVersion)
         }
     }
     invisible()
+}
+
+.getRequiredPackages2 <- function(pkgInfo, quietly = FALSE)
+{
+    pkgs <- names(pkgInfo$Depends)
+    if(length(pkgs)) {
+        sch <- search()
+        for(pkg in pkgs)
+            if (!paste("package", pkg, sep = ":") %in% sch ) {
+                if (!quietly) cat("Loading required package:", pkg, "\n")
+                library(pkg, character.only = TRUE, logical = TRUE) ||
+                stop("package '", pkg, "' could not be loaded", call. = FALSE)
+            }
+    }
 }

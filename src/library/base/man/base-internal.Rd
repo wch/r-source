@@ -2,6 +2,7 @@
 \alias{.find.package}
 \alias{.path.package}
 \alias{.getRequiredPackages}
+\alias{.getRequiredPackages2}
 \title{Internal Functions in the Base Package}
 \description{
   Internal functions in the base package, which are only user-visible
@@ -14,6 +15,7 @@
 .path.package(package, quiet = FALSE)
 
 .getRequiredPackages(file = "DESCRIPTION", quietly = FALSE)
+.getRequiredPackages2(pkgInfo, quietly = FALSE)
 }
 \arguments{
   \item{package}{the name of a package}
@@ -26,6 +28,8 @@
     printed.}
   \item{file}{The full path to the \file{DESCRIPTION} file of a package.}
   \item{quietly}{logical: should progress messages be given.}
+  \item{pkginfo}{A processed \file{DESCRIPTION} file of class
+    \code{"packageDescription2"}.}
 }
 \details{
   \code{.find.package} returns the paths to the locations where the
