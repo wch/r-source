@@ -36,9 +36,16 @@ cp src/modules/aqua/Contents/Info.plist /Applications/StartR.app/RAqua.app/Conte
 
 mkdir -p /Applications/StartR.app/Contents
 mkdir -p /Applications/StartR.app/Contents/Resources
-cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns /Applications/StartR.app/Contents/Resources/
+cp src/modules/aqua/RAqua/Contents/Resources/RAqua.icns \
+    /Applications/StartR.app/Contents/Resources/
 cp src/modules/aqua/RAqua/Contents/PkgInfo /Applications/StartR.app/Contents/
 cp src/modules/aqua/RAqua/Contents/Info.plist /Applications/StartR.app/Contents/
+# move libR.dylib inside Frameworks
+mkdir -p /Applications/StartR.app/Contents/Frameworks
+if !(test /Applications/StartR.app/Contents/MacOS/libR.dylib ); then
+ mv /Applications/StartR.app/Contents/MacOS/libR.dylib \
+   /Applications/StartR.app/Contents/Frameworks/
+fi
 
 cd ${here}
 cd ${top_builddir}/${subdir}/
