@@ -179,9 +179,8 @@ test-DocArgs:
 	@for p in $(R_PKGS); do \
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
-	  dir="$(top_srcdir)/src/library/$${p}"; \
 	  out=`(echo "library(tools)"; \
-                echo "checkDocArgs(\"$${dir}\")") | \
+                echo "checkDocArgs(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -197,9 +196,8 @@ test-DocStyle:
 	@for p in $(R_PKGS); do \
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
-	  dir="$(top_srcdir)/src/library/$${p}"; \
 	  out=`(echo "library(tools)"; \
-	        echo "checkDocStyle(\"$${dir}\")") | \
+	        echo "checkDocStyle(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -230,9 +228,8 @@ test-Methods:
 	@for p in $(R_PKGS); do \
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
-	  dir="$(top_srcdir)/src/library/$${p}"; \
 	  out=`(echo "library(tools)"; \
-	        echo "checkMethods(\"$${dir}\")") | \
+	        echo "checkMethods(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -249,7 +246,7 @@ test-codoc:
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
-	        echo "codoc(\"$(top_srcdir)/src/library/$${p}\")") | \
+	        echo "codoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^Using/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \
@@ -266,7 +263,7 @@ test-undoc:
 	  out="package"; \
 	  echo @ECHO_N@ "$${out} \`$${p}' ...@ECHO_C@"; \
 	  out=`(echo "library(tools)"; \
-	        echo "undoc(\"$${p}\")") | \
+	        echo "undoc(package = \"$${p}\")") | \
 	       $(R) -q | sed '/^>/d; /^character/d'`; \
 	  if test -n "$${out}"; then \
 	    echo "@ECHO_T@ WARNING"; \

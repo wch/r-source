@@ -38,7 +38,7 @@ use Text::DelimMatch;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.68 $ ';
+my $revision = ' $Revision: 1.69 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -520,7 +520,12 @@ sub check_pkg {
 	my $Rout = "$TMPDIR/Rout.$$";
 	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
 	print RCMD "library(tools)\n";
-        print RCMD "checkMethods(dir = \"${pkgdir}\")\n";
+	if($opt_install && ($OS eq "unix")) {
+	    print RCMD "checkMethods(package = \"${pkgname}\")\n";
+	}
+	else {
+	    print RCMD "checkMethods(dir = \"${pkgdir}\")\n";
+	}
         close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
@@ -550,7 +555,12 @@ sub check_pkg {
 	my $Rout = "$TMPDIR/Rout.$$";
 	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
 	print RCMD "library(tools)\n";
-        print RCMD "checkAssignFuns(dir = \"${pkgdir}\")\n";
+	if($opt_install && ($OS eq "unix")) {
+	    print RCMD "checkAssignFuns(package = \"${pkgname}\")\n";
+	}
+	else {
+	    print RCMD "checkAssignFuns(dir = \"${pkgdir}\")\n";
+	}
         close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
@@ -716,7 +726,12 @@ sub check_pkg {
 	my $Rout = "$TMPDIR/Rout.$$";
 	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
 	print RCMD "library(tools)\n";
-        print RCMD "undoc(dir = \"${pkgdir}\")\n";
+	if($opt_install && ($OS eq "unix")) {
+	    print RCMD "undoc(package = \"${pkgname}\")\n";
+	}
+	else {
+	    print RCMD "undoc(dir = \"${pkgdir}\")\n";
+	}
         close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
@@ -752,7 +767,12 @@ sub check_pkg {
 	my $Rout = "$TMPDIR/Rout.$$";
 	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
 	print RCMD "library(tools)\n";
-        print RCMD "codoc(dir = \"${pkgdir}\")\n";
+	if($opt_install && ($OS eq "unix")) {
+	    print RCMD "codoc(package = \"${pkgname}\")\n";
+	}
+	else {
+	    print RCMD "codoc(dir = \"${pkgdir}\")\n";
+	}
         close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
@@ -787,7 +807,12 @@ sub check_pkg {
 	my $Rout = "$TMPDIR/Rout.$$";
 	open RCMD, "> $Rcmd" or die "Error: cannot write to \`$Rcmd'\n";
 	print RCMD "library(tools)\n";
-        print RCMD "checkDocArgs(dir = \"${pkgdir}\")\n";
+	if($opt_install && ($OS eq "unix")) {
+	    print RCMD "checkMethods(package = \"${pkgname}\")\n";
+	}
+	else {
+	    print RCMD "checkDocArgs(dir = \"${pkgdir}\")\n";
+	}
         close RCMD;
         system("${R_exe} ${R_opts} --quiet < ${Rcmd} > ${Rout}");
         my @out;
@@ -951,42 +976,58 @@ sub check_pkg {
 
     ## Run LaTeX on the manual.
             
-    if($opt_latex && (-d "$library/$pkgname/latex")) {
-	$ENV{'TEXINPUTS'} = 
-            env_path("$R_HOME/share/texmf", $ENV{'TEXINPUTS'});
-        $log->creating("${pkgname}-manual.tex");
-        open MANUAL, "> ${pkgname}-manual.tex";
-        print MANUAL "\\documentclass\{article\}\n" .
-            "\\usepackage[ae, hyper]\{Rd\}\n".
+    if($opt_latex) {
+	if(-d "$library/$pkgname/latex") {
+	    $ENV{'TEXINPUTS'} = 
+	      env_path("$R_HOME/share/texmf", $ENV{'TEXINPUTS'});
+	    $log->creating("${pkgname}-manual.tex");
+	    open MANUAL, "> ${pkgname}-manual.tex";
+	    print MANUAL "\\documentclass\{article\}\n" .
+	      "\\usepackage[ae, hyper]\{Rd\}\n".
                 "\\begin\{document\}\n";
-        while(<$library/$pkgname/latex/*.tex>) {
-            my $file = $_;
-            open(FILE, "< $file") ||
-                $log->error("cannot open file \`$file' for reading");
-            while(<FILE>) {
-                print MANUAL $_;
-            }
-            close FILE;
-        }
-        print MANUAL "\\end\{document\}\n";
-        close MANUAL;
-        $log->result("OK");
-        if($HAVE_LATEX) {
-            $log->checking("${pkgname}-manual.tex");
-            print "\n";
-            if(Rsystem("$LATEX ${pkgname}-manual")) {
-                $log->error();
-                exit(1);
-            }
-            $log->result("OK");
-        }
+	    while(<$library/$pkgname/latex/*.tex>) {
+		my $file = $_;
+		open(FILE, "< $file") ||
+		  $log->error("cannot open file \`$file' for reading");
+		while(<FILE>) {
+		    print MANUAL $_;
+		}
+		close FILE;
+	    }
+	    print MANUAL "\\end\{document\}\n";
+	    close MANUAL;
+	    $log->result("OK");
+	    if($HAVE_LATEX) {
+		$log->checking("${pkgname}-manual.tex");
+		print "\n";
+		if(Rsystem("$LATEX ${pkgname}-manual")) {
+		    $log->error();
+		    exit(1);
+		}
+		$log->result("OK");
+	    }
+	}
+	else {
+	    if($HAVE_LATEX) {
+		$log->checking("DVI version of manual");
+		my $Rd2dvi_opts = "--no-preview -o ${pkgname}-manual.dvi";
+		## <FIXME>
+		## Surely there is a better way?
+		$Rd2dvi_opts .= ">/dev/null 2>&1" if($OS eq "unix");
+		## </FIXME>
+		if(Rsystem("${R_CMD} Rd2dvi ${Rd2dvi_opts} $pkgdir")) {
+		    $log->error("installation failed");
+		    exit(1);
+		}
+		$log->result("OK");
+	    }
+	}
     }
 }
-            
 
 #**********************************************************
 
-sub Rsystem 
+sub Rsystem
 {
     my $cmd = $_[0];
     if($WINDOWS) {

@@ -10,18 +10,17 @@
   use \code{TRUE} and \code{FALSE} for the logicals.
 }
 \usage{
-checkTnF(file, package, dir, lib.loc = .lib.loc)
+checkTnF(package, dir, file, lib.loc = .lib.loc)
 }
 \arguments{
-  \item{file}{the name of a file containing R code to be checked.}
   \item{package}{a character string naming an installed package.  If
-    given and \code{file} is not given, the installed R code of the
-    package is checked.  R code installed as an image file cannot be
-    checked.}
+    given, the installed R code of the package is checked.  R code
+    installed as an image file cannot be checked.}
   \item{dir}{a character string specifying the path to a package's root
     source directory.  This should contain the subdirectory \code{R}
-    (for R code).  Used if neither \code{file} not \code{package} are
-    given.}
+    (for R code).  Only used if \code{package} is not given.}
+  \item{file}{the name of a file containing R code to be checked.  Used
+    if neither \code{package} nor \code{dir} are given.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search for \code{package}.}
 }

@@ -3,7 +3,8 @@
 \alias{print.codoc}
 \title{Check Code/Documentation Consistency}
 \usage{
-codoc(dir, use.values = FALSE, use.positions = TRUE,
+codoc(package, dir, lib.loc = .lib.loc,
+      use.values = FALSE, use.positions = TRUE,
       ignore.generic.functions = FALSE,
       keep.tempfiles = FALSE,
       verbose = getOption("verbose"))
@@ -15,10 +16,13 @@ codoc(dir, use.values = FALSE, use.positions = TRUE,
   functions.
 }
 \arguments{
+  \item{package}{a character string naming an installed package.}
   \item{dir}{a character string specifying the path to a package's root
     source directory.  This must contain the subdirectories \file{man}
     with \R documentation sources (in Rd format) and \file{R} with \R
-    code.}
+    code.  Only used if \code{package} is not given.}
+  \item{lib.loc}{a character vector describing the location of \R
+    library trees to search for \code{package}.}
   \item{use.positions}{a logical indicating whether to use the positions
     of function arguments when comparing.}
   \item{use.values}{a logical indicating whether to use function default
@@ -26,7 +30,8 @@ codoc(dir, use.values = FALSE, use.positions = TRUE,
   \item{ignore.generic.functions}{if \code{TRUE}, functions the body of
     which contains \code{"UseMethod"} are ignored.}
   \item{keep.tempfiles}{if \code{TRUE}, keep temporary code and docs
-    files used for comparison.  This is useful for debugging.}
+    files used for comparison.  This used to be useful for debugging,
+    but is now deprecated and will be removed in future versions.}
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
 }
@@ -34,12 +39,15 @@ codoc(dir, use.values = FALSE, use.positions = TRUE,
   The purpose of this function is to check whether the documented usage
   of function objects agrees with their formal arguments as defined in
   the \R code.  This is not always straightforward, in particular as the
-  usage information for methods to generic functions typically employs
-  the name of the generic rather than the method.
+  usage information for methods to generic functions often employs the
+  name of the generic rather than the method.
 
-  The following algorithm is used.  The \R code of the package is
-  sourced in a new environment.  Then, the usage sections of the Rd
-  files are extracted and manipulated in order to give function stubs
+  The following algorithm is used.  If an installed package is used, it
+  is loaded (unless it is the base package), after possibly detaching an
+  already loaded version of the package.  Otherwise, if the sources are
+  used, the \R code files of the package are collected and sourced in a
+  new environment.  Then, the usage sections of the Rd files are
+  extracted and manipulated in order to give function stubs
   corresponding to the indicated usage, which are then sourced in
   another new environment.  For interpreted functions in both the code
   and docs environment, the formals are compared according to the values

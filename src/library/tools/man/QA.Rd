@@ -9,16 +9,19 @@
   Functions for performing various quality checks.
 }
 \usage{
-checkAssignFuns(dir)
-checkDocArgs(dir)
-checkDocStyle(dir)
-checkMethods(dir)
+checkAssignFuns(package, dir, lib.loc = .lib.loc)
+checkDocArgs(package, dir, lib.loc = .lib.loc)
+checkDocStyle(package, dir, lib.loc = .lib.loc)
+checkMethods(package, dir, lib.loc = .lib.loc)
 }
 \arguments{
+  \item{package}{a character string naming an installed package.}
   \item{dir}{a character string specifying the path to a package's root
     source directory.  This should contain the subdirectories \code{R}
     (for R code) and \file{man} with \R documentation sources (in Rd
-    format).}
+    format).  Only used if \code{package} is not given.}
+  \item{lib.loc}{a character vector describing the location of \R
+    library trees to search for \code{package}.}
 }
 \details{
   \code{checkAssignFuns} checks whether assignment functions in the
@@ -42,6 +45,11 @@ checkMethods(dir)
   method.  The generics are sought first in the given package and then
   in the base package.  The rules when \code{\dots} is involved are
   subtle: see the source code.
+
+  If using an installed package, the checks needing access to all R
+  objects of the package will load the package (unless it is the base
+  package), after possibly detaching an already loaded version of the
+  package.
 }
 \section{Warning}{
   These functions are still experimental.  Both names and interfaces
