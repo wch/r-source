@@ -485,12 +485,14 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 
     /* set up the arglist */
-    /**** FIXME: need test for symbol? */
     s = R_LookupMethod(CAR(cptr->call), env, callenv, defenv);
-    if (TYPEOF(s) == PROMSXP)
+    if (TYPEOF(s) == PROMSXP)  /* looks like R_LookupMethod just did this */
 	s = eval(s, env);
+    if (TYPEOF(s) == SYMSXP && s == R_UnboundValue) 
+	error("No calling generic was found: was a method called directly?");
     if (TYPEOF(s) != CLOSXP){
-	errorcall(R_NilValue, "function is not a closure");
+	errorcall(R_NilValue, "function is not a closure, but of type %d", 
+		  TYPEOF(s));
     }
     /* get formals and actuals; attach the names of the formals to
        the actuals, expanding any ... that occurs */

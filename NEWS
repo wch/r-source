@@ -49,6 +49,10 @@ BUG FIXES
 
     o	methods(class = "lqs") does not produce extraneous entries anymore.
 
+    o	Calling a method that uses NextMethod() no longer produces the
+	erroneous error message 'function is not a closure'.
+
+
 
 		CHANGES IN R VERSION 1.8.1
 
