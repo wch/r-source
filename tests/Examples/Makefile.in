@@ -18,8 +18,8 @@ R = $(top_builddir)/bin/R --vanilla --vsize 6
 Pkgs = base eda mva stepfun
 Ex_R = $(Pkgs:=-Ex.R)
 Ex_Rout = $(Ex_R:.R=.Rout)
-.SUFFIXES = -Ex.R -Ex.Rout
-.SECONDARY= $(Ex_R)
+.SUFFIXES : -Ex.R -Ex.Rout
+.SECONDARY: $(Ex_R)
 
 all: Makefile test-Examples
 
@@ -42,7 +42,7 @@ $(Ex_Rout): %-Ex.Rout: %-Ex.R $(top_builddir)/stamp-R
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Massaging examples into $@ ..."
-	-@$(srcdir)/massage-Examples $* $^ > $@
+	-@$(srcdir)/massage-Examples $* $(top_builddir)/library/%/R-ex/*.R > $@
 
 $(top_builddir)/library/*/R-ex/%.R:
 	(cd $(top_builddir)/src/library && $(MAKE) PKGS="$(Pkgs)" stamp-examples)
