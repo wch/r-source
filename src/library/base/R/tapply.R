@@ -1,4 +1,4 @@
-tapply <- function (X, INDEX, FUN=NULL, simplify=TRUE, ...)
+tapply <- function (X, INDEX, FUN=NULL, ..., simplify=TRUE)
 {
     FUN <- if (!is.null(FUN)) match.fun(FUN)
     if (!is.list(INDEX)) INDEX <- list(INDEX)

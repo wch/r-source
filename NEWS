@@ -386,6 +386,9 @@ BUG FIXES
     o	boxplot.stats() no returns the correct `n' component in the case of
 	NAs. This also affects `conf', the notch length (PR#967).
 
+    o   tapply() had "..." argument after simplify=, which made it
+	incompatible with S when passing additional unnamed arguments to FUN.
+
 
 	**************************************************
 	*						 *

@@ -7,7 +7,7 @@
   levels of certain factors.
 }
 \usage{
-tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
+tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
 }
 \arguments{
   \item{X}{an atomic object, typically a vector.}
@@ -16,11 +16,11 @@ tapply(X, INDEX, FUN = NULL, simplify = TRUE, \dots)
     \code{+}, \code{\%*\%}, etc., the function name must be quoted.  If
     \code{FUN} is \code{NULL}, tapply returns a vector which can be used
     to subscript the multi-way array \code{tapply} normally produces.}
+  \item{\dots}{optional arguments to \code{FUN}.}
   \item{simplify}{If \code{FALSE}, \code{tapply} always returns an array
     of mode \code{"list"}.  If \code{TRUE} (the default), then if
     \code{FUN} always returns a scalar, \code{tapply} returns an array
     with the mode of the scalar.}
-  \item{\dots}{optional arguments to \code{FUN}.}
 }
 \value{
   When \code{FUN} is present, \code{tapply} calls \code{FUN} for each
