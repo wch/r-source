@@ -476,7 +476,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
         wrap <- function(method, home) {
             method <- method  # force evaluation
             home <- home      # force evaluation
-            delay(get(method, env = envir), env = environment())
+            delay(get(method, env = home), env = environment())
         }
         if(!exists(method, env = envir)) {
             warning("S3 method `", method,
