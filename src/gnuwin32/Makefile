@@ -46,7 +46,7 @@ rbuild: fixfiles rlibs ../../bin/R.dll libR.a ../include/globalvar.h \
 rpackage: $(PKGS)
 
 rinstaller:
-	$(MAKE) -C installer PREFIX=$(PREFIX)
+	$(MAKE) -C installer PREFIX=$(RPREFIX)
 
 rdemo:  libR.a
 	make -C ../../demos/dynload -f ../../src/gnuwin32/MkDyndemo
