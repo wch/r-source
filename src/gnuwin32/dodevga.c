@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998, 1999  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998-2001  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd;
     char *display, *vmax;
-    double height, width, ps;
+    double height, width, ps, xpinch, ypinch;
     int recording = 0, resize = 1;
 
     gcall = call;
@@ -69,6 +69,10 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
     resize = asInteger(CAR(args));
     if (resize == NA_INTEGER)
 	errorcall(call, "invalid value of `resize'");
+    args = CDR(args);
+    xpinch = asReal(CAR(args));
+    args = CDR(args);
+    ypinch = asReal(CAR(args));
 
     R_CheckDeviceAvailable();
     BEGIN_SUSPEND_INTERRUPTS {
@@ -78,6 +82,7 @@ SEXP do_devga(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Do this for early redraw attempts */
 	dd->displayList = R_NilValue;
 	GInit(&dd->dp);
+	GAsetunits(xpinch, ypinch);
 	if (!GADeviceDriver(dd, display, width, height, ps, 
 			    (Rboolean)recording, resize)) {
 	    free(dd);
