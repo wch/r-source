@@ -122,7 +122,7 @@ makeGeneric <-
 ###--------
       value
   }
-    
+
 
 makeStandardGeneric <-
   ## a utility function that makes a valid function calling standardGeneric for name f
@@ -409,7 +409,7 @@ unRematchDefinition <- function(definition) {
     }
     definition
 }
-    
+
 getGeneric <-
   ## return the definition of the function named f as a generic.
   ##
@@ -543,7 +543,7 @@ is.primitive <-
     switch(typeof(fdef),
            "special" = , "builtin" = TRUE,
            FALSE)
-    
+
 
 cacheMetaData <- function(where, attach = TRUE, searchWhere = as.environment(where)) {
     ## a collection of actions performed on attach or detach
@@ -579,7 +579,7 @@ cacheGenericsMetaData <- function(f, fdef, attach = TRUE, where = topenv(parent.
         else {
             code <- "clear"
             if(!missing(where)) {
-                dbs <- find(mlistMetaName(f))
+                dbs <- utils::find(mlistMetaName(f))
                 if(is.numeric(where))
                     where <- search()[where]
                 ## are there other methods for f still left?
@@ -633,14 +633,14 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
             where <- unlist(where)
         if(is.numeric(where))
             where <- search()[where]
-        warning(message, " found on: ", 
+        warning(message, " found on: ",
                 paste(where, collapse = ", "),
                     "; using the first one.")
             where <- where[1]
     }
     where
 }
-    
+
 MethodAddCoerce <- function(method, argName, thisClass, methodClass)
 {
     if(.identC(thisClass, methodClass))
@@ -714,8 +714,8 @@ balanceMethodsList <- function(mlist, args, check = TRUE) {
     mlist@methods <- methods
     mlist
 }
-    
-    
+
+
 sigToEnv <- function(signature, genericSig) {
     value <- new.env()
     classes <- as.character(signature)
@@ -755,7 +755,7 @@ sigToEnv <- function(signature, genericSig) {
     object
 }
 
-    
+
 .getOrMakeMethodsList <- function(f, where, genericFun) {
     allMethods <- getMethodsMetaData(f, where = where)
     if(is.null(allMethods)) {
@@ -870,7 +870,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         TRUE
     }
 }
-    
+
 .GenericInPrimitiveMethods <- function(mlist, f) {
     methods <- mlist@methods
     for(i in seq(along = methods)) {

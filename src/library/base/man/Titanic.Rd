@@ -57,6 +57,7 @@
   Gloucester, UK: Allan Sutton Publishing.
 }
 \examples{
+require(graphics)
 data(Titanic)
 mosaicplot(Titanic, main = "Survival on the Titanic")
 ## Higher survival rates in children?

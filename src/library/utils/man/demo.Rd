@@ -42,7 +42,7 @@ demo() # for attached packages
 ## All available demos:
 demo(package = .packages(all.available = TRUE))
 
-demo(lm.glm)
+demo(lm.glm, package="stats")
 \dontrun{
  ch <- "scoping"
  demo(ch, character = TRUE)

@@ -45,6 +45,7 @@
   \emph{Science}, \bold{187}, 398--403.
 }
 \examples{
+require(graphics)
 data(UCBAdmissions)
 ## Data aggregated over departments
 apply(UCBAdmissions, c(1, 2), sum)

@@ -28,6 +28,8 @@
 \seealso{the contrary, \code{\link{Deprecated}} and
   \code{\link{Defunct}} for outdated code.}
 \examples{
+require(graphics)
+require(stats)
 plot.mlm         # to see how the "NotYetImplemented"
                  # reference is made automagically
 try(plot.mlm())

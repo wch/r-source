@@ -52,6 +52,7 @@ unstack(x, \dots)
   \code{\link[stats]{lm}}, \code{\link[stats]{reshape}}
 }
 \examples{
+require(stats)
 data(PlantGrowth)
 formula(PlantGrowth)         # check the default formula
 pg <- unstack(PlantGrowth)   # unstack according to this formula

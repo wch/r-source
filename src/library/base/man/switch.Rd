@@ -38,6 +38,7 @@ switch(EXPR, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(stats)
 centre <- function(x, type) {
   switch(type,
         mean = mean(x),

@@ -75,6 +75,7 @@ prompt(object, filename = NULL, name = NULL, \dots)
   Wadsworth \& Brooks/Cole.
 }
 \examples{
+require(graphics)
 prompt(plot.default)
 prompt(interactive, force.function = TRUE)
 unlink("plot.default.Rd")
@@ -84,7 +85,7 @@ data(women) # data.frame
 prompt(women)
 unlink("women.Rd")
 
-data(sunspots) # non-data.frame data
+data(sunspots, package="stats") # non-data.frame data
 prompt(sunspots)
 unlink("sunspots.Rd")
 }

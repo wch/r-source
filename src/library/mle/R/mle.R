@@ -25,7 +25,7 @@ mle <- function(minuslogl, start=formals(minuslogl), method="BFGS",
         l[n] <- fixed
         do.call("minuslogl", l)
     }
-    oout <- optim(unlist(start), f, method=method, hessian=TRUE, ...)
+    oout <- stats::optim(unlist(start), f, method=method, hessian=TRUE, ...)
     coef <- oout$par
     vcov <- if(length(coef)) solve(oout$hessian) else matrix(numeric(0),0,0)
     min <-  oout$value

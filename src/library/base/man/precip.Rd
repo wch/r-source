@@ -19,6 +19,7 @@
   New York: Wiley.
 }
 \examples{
+require(graphics)
 data(precip)
 dotchart(precip[order(precip)], main = "precip data")
 title(sub = "Average annual precipitation (in.)")

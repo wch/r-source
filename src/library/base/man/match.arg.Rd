@@ -30,6 +30,7 @@ match.arg(arg, choices)
   \code{\link{match.call}}.
 }
 \examples{
+require(stats)
 ## Extends the example for 'switch'
 center <- function(x, type = c("mean", "median", "trimmed")) {
   type <- match.arg(type)
@@ -41,7 +42,7 @@ center <- function(x, type = c("mean", "median", "trimmed")) {
 x <- rcauchy(10)
 center(x, "t")       # Works
 center(x, "med")     # Works
-\dontrun{center(x, "m")       # Error
+try(center(x, "m"))  # Error
 }
 }
 \keyword{programming}

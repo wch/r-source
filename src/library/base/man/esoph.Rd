@@ -36,6 +36,8 @@
 }
 \author{Thomas Lumley}
 \examples{
+require(stats)
+require(graphics)
 data(esoph)
 summary(esoph)
 ## effects of alcohol, tobacco and interaction, age-adjusted

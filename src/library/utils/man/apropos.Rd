@@ -44,11 +44,11 @@ find(what, mode = "any", numeric. = FALSE, simple.words = TRUE)
 apropos(ls)
 apropos("lq")
 
-lm <- 1:pi
-find(lm)        #> ".GlobalEnv"   "package:base"
-find(lm, num=TRUE) # numbers with these names
-find(lm, num=TRUE, mode="function")# only the second one
-rm(lm)
+cor <- 1:pi
+find(cor)        #> ".GlobalEnv"   "package:stats"
+find(cor, num=TRUE) # numbers with these names
+find(cor, num=TRUE, mode="function")# only the second one
+rm(cor)
 
 \dontrun{apropos(".", mode="list") # a long list}
 

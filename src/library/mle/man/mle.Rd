@@ -31,10 +31,10 @@ mle(minuslogl, start = formals(minuslogl), method = "BFGS", fixed = list(), ...)
 \examples{
 x <- 0:10
 y <- c(26, 17, 13, 12, 20, 5, 9, 8, 5, 4, 8)
-ll <- function(ymax=15,xhalf=6)
-    -sum(dpois(y,lambda=ymax/(1+x/xhalf),log=TRUE))
+ll <- function(ymax=15, xhalf=6)
+    -sum(stats::dpois(y, lambda=ymax/(1+x/xhalf), log=TRUE))
 mle(ll)
-mle(ll,fixed=list(xhalf=6))
+mle(ll, fixed=list(xhalf=6))
 }
-\keyword{models}% at least one, from doc/KEYWORDS
+\keyword{models}
 

@@ -46,6 +46,7 @@
   \code{\link[graphics]{mosaicplot}}
 }
 \examples{
+require(graphics)
 data(HairEyeColor)
 ## Full mosaic
 mosaicplot(HairEyeColor)

@@ -163,7 +163,7 @@ tracingState(on = NULL)
   constructing general expressions.
 }
 \examples{
-\dontshow{ hasMethods <- .isMethodsDispatchOn()}
+if(.isMethodsDispatchOn()) { # trace needs method package attached.
 
 f <- function(x, y) {
     y <- pmax(y, .001)
@@ -189,8 +189,7 @@ trace("as.matrix", recover)
 ## turn off the tracing
 
 untrace(c("f", "as.matrix"))
-
-if(!hasMethods) detach("package:methods")
+}
 }
 \keyword{programming}
 \keyword{debugging}

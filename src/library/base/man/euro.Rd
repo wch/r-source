@@ -38,6 +38,7 @@ all(euro.cross == outer(1/euro, euro))
 ## Convert 20 Spanish Pesetas to Italian Lira
 20 * euro.cross["ESP", "ITL"]
 
+require(graphics)
 dotchart(euro,
          main = "euro data: 1 Euro in currency unit")
 dotchart(1/euro,

@@ -15,6 +15,7 @@
   Wiley.
 }
 \examples{
+require(graphics)
 data(islands)
 dotchart(log(islands, 10),
    main = "islands data: log10(area) (log10(sq. miles))")

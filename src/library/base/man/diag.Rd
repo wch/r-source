@@ -47,11 +47,12 @@ diag(x) <- value
 \code{\link{upper.tri}}, \code{\link{lower.tri}}, \code{\link{matrix}}.
 }
 \examples{
+require(stats)
 dim(diag(3))
 diag(10,3,4) # guess what?
 all(diag(1:3) == {m <- matrix(0,3,3); diag(m) <- 1:3; m})
 
-diag(var(M <- cbind(X=1:5, Y=stats::rnorm(5))))#-> vector with names "X" and "Y"
+diag(var(M <- cbind(X=1:5, Y=rnorm(5))))#-> vector with names "X" and "Y"
 rownames(M) <- c(colnames(M),rep("",3));
 M; diag(M) #  named as well
 }

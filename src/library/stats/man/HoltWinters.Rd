@@ -110,7 +110,6 @@ HoltWinters(x, alpha = NULL, beta = NULL, gamma = NULL,
 }
 
 \examples{
-library(ts)
 data(co2)
 
 ## Seasonal Holt-Winters

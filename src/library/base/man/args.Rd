@@ -33,6 +33,6 @@ args(name)
 }
 \examples{
 args(c)            # -> NULL (c is a 'primitive' function)
-args(plot.default)
+args(graphics::plot.default)
 }
 \keyword{documentation}

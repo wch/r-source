@@ -25,6 +25,7 @@
   New York, NY: Wiley.
 }
 \examples{
+require(stats)
 data(sleep)
 ## ANOVA
 anova(lm(extra ~ group, data = sleep))

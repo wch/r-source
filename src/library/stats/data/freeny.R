@@ -68,4 +68,4 @@ freeny.y <-
 		9.79424), .Tsp = c(1962.25, 1971.75, 4))
 
 ##-- This gives a data.frame which sometimes [str(..)] behaves horribly :
-freeny <- data.frame(y = freeny.y, freeny.x, row.names = time(freeny.y))
+freeny <- data.frame(y = freeny.y, freeny.x, row.names = stats::time(freeny.y))

@@ -82,16 +82,17 @@ lsf.str(pos = 1, \dots, envir = as.environment(pos))
   \code{\link{summary}}, \code{\link{args}}.
 }
 \examples{
+require(stats)
 ## The following examples show some of 'str' capabilities
 str(1:12)
 str(ls)
-str(args)#- more useful than  args(args) !
+str(args) #- more useful than  args(args) !
 data(freeny); str(freeny)
 str(str)
 str(.Machine, digits = 20)
 str( lsfit(1:9,1:9))
-str( lsfit(1:9,1:9),  max =1)
-op <- options(); str(op)#- save first; otherwise internal options() is used.
+str( lsfit(1:9,1:9),  max = 1)
+op <- options(); str(op) #- save first; otherwise internal options() is used.
 need.dev <- !exists(".Device") || is.null(.Device)
 if(need.dev) postscript()
 str(par()); if(need.dev) graphics.off()
@@ -104,7 +105,7 @@ str(longch)
 str(longch, nchar.max = 52)
 
 lsf.str()#- how do the functions look like which I am using?
-ls.str(mode = "list")#- what are the structured objects I have defined?
+ls.str(mode = "list") #- what are the structured objects I have defined?
 ## which base functions have "file" in their name ?
 lsf.str(pos = length(search()), pattern = "file")
 \dontshow{

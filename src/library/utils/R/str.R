@@ -155,8 +155,8 @@ str.default <-
 # 	    v.len <- switch(t.cl,rts=.8, cts=.6, its=.9) * v.len
 # 	    class(object) <- if(any(!b.ts)) cl[!b.ts]
 # 	    std.attr <- c(std.attr, "tspar")
-	} else if(is.ts(object)) {
-	    tsp.a <- tsp(object)
+	} else if(stats::is.ts(object)) {
+	    tsp.a <- stats::tsp(object)
 	    str1 <- P0(" Time-Series ", le.str, " from ", format(tsp.a[1]),
 		       " to ", format(tsp.a[2]), ":")
 	    std.attr <- c("tsp","class") #- "names"

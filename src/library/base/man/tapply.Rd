@@ -53,6 +53,7 @@ tapply(X, INDEX, FUN = NULL, \dots, simplify = TRUE)
   \code{\link{sapply}} and \code{\link{mapply}}.
 }
 \examples{
+require(stats)
 groups <- as.factor(rbinom(32, n = 5, p = .4))
 tapply(groups, groups, length) #- is almost the same as
 table(groups)

@@ -34,6 +34,7 @@
   abortions is omitted.
 }
 \examples{
+require(stats)
 data(infert)
 model1 <- glm(case ~ spontaneous+induced, data=infert,family=binomial())
 summary(model1)

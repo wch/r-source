@@ -115,45 +115,46 @@ heatmap(x, Rowv=NULL, Colv=if(symm)"Rowv" else NULL,
 \seealso{\code{\link{image}}, \code{\link{hclust}}}
 
 \examples{
- data(mtcars)
- x  <- as.matrix(mtcars)
- rc <- rainbow(nrow(x), start=0, end=.3)
- cc <- rainbow(ncol(x), start=0, end=.3)
- hv <- heatmap(x, col = cm.colors(256), scale="column",
-	       RowSideColors = rc, ColSideColors = cc, margin=c(5,10),
-	       xlab = "specification variables", ylab= "Car Models",
-	       main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
- str(hv) # the two re-ordering index vectors
+require(graphics)
+data(mtcars)
+x  <- as.matrix(mtcars)
+rc <- rainbow(nrow(x), start=0, end=.3)
+cc <- rainbow(ncol(x), start=0, end=.3)
+hv <- heatmap(x, col = cm.colors(256), scale="column",
+	      RowSideColors = rc, ColSideColors = cc, margin=c(5,10),
+	      xlab = "specification variables", ylab= "Car Models",
+	      main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+str(hv) # the two re-ordering index vectors
 
- ## no column dendrogram (nor reordering) at all:
- heatmap(x, Colv = NA, col = cm.colors(256), scale="column",
-	 RowSideColors = rc, margin=c(5,10),
-         xlab = "specification variables", ylab= "Car Models",
-	 main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
+## no column dendrogram (nor reordering) at all:
+heatmap(x, Colv = NA, col = cm.colors(256), scale="column",
+	RowSideColors = rc, margin=c(5,10),
+	xlab = "specification variables", ylab= "Car Models",
+	main = "heatmap(<Mtcars data>, ..., scale = \"column\")")
 \testonly{
- ## no row dendrogram (nor reordering) at all:
- heatmap(x, Rowv = NA, col = cm.colors(256), scale="column",
-	 ColSideColors = cc, margin=c(5,10),
-         xlab = "xlab", ylab= "ylab")# no main
+## no row dendrogram (nor reordering) at all:
+heatmap(x, Rowv = NA, col = cm.colors(256), scale="column",
+	ColSideColors = cc, margin=c(5,10),
+	xlab = "xlab", ylab= "ylab")# no main
 }
- ## "no nothing"
- heatmap(x, Rowv = NA, Colv = NA, scale="column",
-         main = "heatmap(*, NA, NA) ~= image(t(x))")
+## "no nothing"
+heatmap(x, Rowv = NA, Colv = NA, scale="column",
+	main = "heatmap(*, NA, NA) ~= image(t(x))")
 %% also want example using the `add.exp' argument!
 
- data(attitude)
- round(Ca <- cor(attitude), 2)
- symnum(Ca) # simple graphic
- heatmap(Ca,		 symm = TRUE, margin=c(6,6))# with reorder()
- heatmap(Ca, Rowv=FALSE, symm = TRUE, margin=c(6,6))# _NO_ reorder()
+data(attitude)
+round(Ca <- cor(attitude), 2)
+symnum(Ca) # simple graphic
+heatmap(Ca,		 symm = TRUE, margin=c(6,6))# with reorder()
+heatmap(Ca, Rowv=FALSE, symm = TRUE, margin=c(6,6))# _NO_ reorder()
 
- ## For variable clustering, rather use distance based on cor():
- data(USJudgeRatings)
- symnum( cU <- cor(USJudgeRatings) )
+## For variable clustering, rather use distance based on cor():
+data(USJudgeRatings)
+symnum( cU <- cor(USJudgeRatings) )
 
- hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
-              distfun = function(c) as.dist(1 - c))
- ## The Correlation matrix with same reordering:
- round(100 * cU[hU[[1]], hU[[2]]])
+hU <- heatmap(cU, Rowv = FALSE, symm = TRUE, col = topo.colors(16),
+	     distfun = function(c) as.dist(1 - c))
+## The Correlation matrix with same reordering:
+round(100 * cU[hU[[1]], hU[[2]]])
 }
 \keyword{hplot}

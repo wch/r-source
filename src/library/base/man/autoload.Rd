@@ -29,6 +29,7 @@ autoloader(name, package, \dots)
   \code{\link{delay}}, \code{\link{library}}
 }
 \examples{
+require(stats)
 autoload("interpSpline", "splines")
 search()
 ls("Autoloads")

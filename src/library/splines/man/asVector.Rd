@@ -31,7 +31,7 @@ data( women )
 ispl <- interpSpline( weight ~ height,  women )
 pred <- predict(ispl)
 class(pred)
-str(pred)
+utils::str(pred)
 asVector(pred)
 }
 \keyword{models}

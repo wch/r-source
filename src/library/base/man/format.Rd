@@ -134,7 +134,7 @@ prettyNum(r, big.mark = "'", decimal.mark = ",")
 (dd <- sapply(1:10, function(i)paste((9:0)[1:i],collapse="")))
 prettyNum(dd, big.mark="'")
 
-pN <- pnorm(1:7, lower=FALSE)
+pN <- stats::pnorm(1:7, lower=FALSE)
 cbind(format (pN, small.mark = " ", digits = 15))
 cbind(formatC(pN, small.mark = " ", digits = 17, format = "f"))
 }

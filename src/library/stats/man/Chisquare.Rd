@@ -82,7 +82,7 @@ all.equal(pchisq(x, df=2), pexp(x, 1/2))
 
 ## non-central RNG -- df=0 is ok for ncp > 0:  Z0 has point mass at 0!
 Z0 <- rchisq(100, df = 0, ncp = 2.)
-stem(Z0)
+graphics::stem(Z0)
 
 \dontrun{## visual testing
 ## do P-P plots for 1000 points at various degrees of freedom
