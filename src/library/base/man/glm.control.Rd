@@ -6,7 +6,7 @@
   Typically only used when calling \code{\link{glm}} or \code{\link{glm.fit}}.
 }
 \usage{
-glm.control(epsilon=1e-04, maxit=10, trace=FALSE)
+glm.control(epsilon=1e-8, maxit=25, trace=FALSE)
 }
 \arguments{
   \item{epsilon}{positive convergence tolerance \eqn{epsilon};
@@ -40,6 +40,7 @@ glm.D93X <- glm(counts ~ outcome + treatment, family=poisson(),
                 trace = TRUE, epsilon = 1e-14)
 options(oo)
 coef(glm.D93X) # the last two are closer to 0 than in ?glm's  glm.D93
+# put less so than in R < 1.8.0 when the default was 1e-4
 }
 \keyword{optimize}
 \keyword{models}

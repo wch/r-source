@@ -40,6 +40,10 @@ NEW FEATURES
     o	contr.poly() has a new `scores' argument to use as the base set
 	for the polynomials.
 
+    o   The defaults for glm.control(epsilon=1e-8, maxit=25) have been
+	tightened: this will produce more accurate results, slightly
+	slower.
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-04-28)
+Version 1.8.0 Under development (unstable) (2003-05-09)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -1744,11 +1744,11 @@ Call:  glm(formula = y ~ x, family = poisson(identity), start = c(1,      0))
 
 Coefficients:
 (Intercept)            x  
-     0.5113       0.1709  
+     0.5114       0.1690  
 
 Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    68.01 
-Residual Deviance: 60.67 	AIC: 168.7 
+Residual Deviance: 60.66 	AIC: 168.7 
 Warning messages: 
 1: Step size truncated: out of bounds 
 2: Step size truncated: out of bounds 
@@ -1761,12 +1761,12 @@ Call:  glm(formula = y ~ x, family = poisson(identity), start = c(1,      0))
 
 Coefficients:
 (Intercept)            x  
-     1.1078       0.4228  
+     1.1561       0.4413  
 
 Degrees of Freedom: 99 Total (i.e. Null);  98 Residual
 Null Deviance:	    317.2 
-Residual Deviance: 230.2 	AIC: 346.4 
-There were 12 warnings (use warnings() to see them)
+Residual Deviance: 228.5 	AIC: 344.7 
+There were 27 warnings (use warnings() to see them)
 > warnings()
 Warning messages:
 1: Step size truncated: out of bounds
@@ -1779,8 +1779,23 @@ Warning messages:
 8: Step size truncated: out of bounds
 9: Step size truncated: out of bounds
 10: Step size truncated: out of bounds
-11: Algorithm did not converge in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
-12: Algorithm stopped at boundary value in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
+11: Step size truncated: out of bounds
+12: Step size truncated: out of bounds
+13: Step size truncated: out of bounds
+14: Step size truncated: out of bounds
+15: Step size truncated: out of bounds
+16: Step size truncated: out of bounds
+17: Step size truncated: out of bounds
+18: Step size truncated: out of bounds
+19: Step size truncated: out of bounds
+20: Step size truncated: out of bounds
+21: Step size truncated: out of bounds
+22: Step size truncated: out of bounds
+23: Step size truncated: out of bounds
+24: Step size truncated: out of bounds
+25: Step size truncated: out of bounds
+26: Algorithm did not converge in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
+27: Algorithm stopped at boundary value in: (if (is.empty.model(mt)) glm.fit.null else glm.fit)(x = X, y = Y,   ...
 > 
 > 
 > ## extending char arrrays

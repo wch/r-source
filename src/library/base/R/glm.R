@@ -86,7 +86,7 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 }
 
 
-glm.control <- function(epsilon = 0.0001, maxit = 10, trace = FALSE)
+glm.control <- function(epsilon = 1e-8, maxit = 25, trace = FALSE)
 {
     if(!is.numeric(epsilon) || epsilon <= 0)
 	stop("value of epsilon must be > 0")
