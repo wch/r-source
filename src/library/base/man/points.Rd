@@ -51,7 +51,7 @@ points(rnorm(200), rnorm(200), col = "red")
 points(rnorm(100)/2, rnorm(100)/2, col = "blue", cex = 1.5)
 
 ##-------- Showing all the graphics symbols ------------
-Pex <- if(.Device=="postscript") 9 else 20
+Pex <- if(.Device=="postscript") 5 else 20
 ipch <- 1:25; dd <- c(-1,1)/2
 rx <- dd+ range(ix <- (ipch-1) \%/\% 5)
 ry <- dd+ range(iy <- 3 + 4-(ipch-1) \%\% 5)
