@@ -42,26 +42,30 @@
 #define LTRUE	1
 #define LFALSE	0
 
-/* function to evaluate logarithm of the factorial i. If (i > 7), */
-/* use Stirling's approximation otherwise, use table lookup. */
+/* afc(i) :=  ln( i! )	[logarithm of the factorial i.
+ *	   If (i > 7), use Stirling's approximation, otherwise use table lookup.
+*/
 
 static double al[9] =
 {
     0.0,
-    0.0,
-    0.0,
-    0.6931471806,
-    1.791759469,
-    3.178053830,
-    4.787491743,
-    6.579251212,
-    8.525161361
+    0.0,/*ln(0!)=ln(1)*/
+    0.0,/*ln(1!)=ln(1)*/
+    0.69314718055994530941723212145817,/*ln(2) */
+    1.79175946922805500081247735838070,/*ln(6) */
+    3.17805383034794561964694160129705,/*ln(24)*/
+    4.78749174278204599424770093452324,
+    6.57925121201010099506017829290394,
+    8.52516136106541430016553103634712
+    /*, 10.60460290274525022841722740072165*/
 };
 
 static double afc(int i)
 {
     double di, value;
-    if (i <= 7) {
+    if (i < 0) {
+      REprintf("rhyper.c: afc(i), i=%d < 0 -- SHOULD NOT HAPPEN!\n",i);
+    } else if (i <= 7) {
 	value = al[i + 1];
     } else {
 	di = i;
