@@ -5,7 +5,8 @@ frame.cvt <- function(x, as.is=FALSE)
 	else x
 }
 
-data.frame <- function (..., row.names=NULL, col.names=NULL, as.is=FALSE)
+data.frame <- function (..., row.names=NULL, col.names=NULL, as.is=FALSE,
+        check.names = TRUE)
 {
  frame <- list(...)
  n <- length(frame)
@@ -42,6 +43,9 @@ data.frame <- function (..., row.names=NULL, col.names=NULL, as.is=FALSE)
  DF <- .Internal(data.frame(frame,
                             as.character(row.names),
                             as.logical(as.is)))
+ if (!check.names)
+    names(DF) <- names(frame)
+
  if (is.null(row.names))
    rownames(DF) <- 1 : nrow(DF)
  DF
