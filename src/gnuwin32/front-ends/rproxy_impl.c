@@ -2,26 +2,26 @@
  *  RProxy: Connector implementation between application and R language
  *  Copyright (C) 1999 Thomas Baier
  *
- *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--1999  
+ *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--2000
  *                                  R Development Core Team
  *
- * 
+ *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
  *  License as published by the Free Software Foundation; either
  *  version 2 of the License, or (at your option) any later version.
- * 
+ *
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Library General Public License for more details.
- * 
+ *
  *  You should have received a copy of the GNU Library General Public
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
- *  $Id: rproxy_impl.c,v 1.10 2000/08/07 03:20:38 luke Exp $
+ *  $Id: rproxy_impl.c,v 1.11 2000/09/22 14:28:57 maechler Exp $
  */
 
 #define NONAMELESSUNION
@@ -57,7 +57,7 @@ extern void R_DefParams(Rstart);
 extern void R_SetParams(Rstart);
 extern void setup_term_ui(void);
 extern char *getRHOME();
-extern void setup_Rmainloop(), end_Rmainloop(), R_ReplDLLinit();
+extern void end_Rmainloop(), R_ReplDLLinit();
 extern void askok(char *);
 
 extern SC_CharacterDevice* __output_device;
@@ -124,19 +124,19 @@ int SEXP2BDX_Data (SEXP pExpression,BDX_Data** pData)
 #if 0
       printf (">> %s is a NULL value\n",
 	      pSymbol);
-#endif      
+#endif
       lData->type = BDX_NULL;
-      
+
       // dimensions: 1
       lData->dim_count = 1;
       lData->dimensions =
 	(BDX_Dimension*) malloc (sizeof (BDX_Dimension));
       lData->dimensions[0] = 0;
-	  
+
       // data: empty (just a dummy data record)
       lData->raw_data =
 	(BDX_RawData*) malloc (sizeof (BDX_RawData));
-	  
+
       //      UNPROTECT (1);
 
       return SC_PROXY_OK;
@@ -373,7 +373,7 @@ int R_Proxy_init ()
   Rp->WriteConsole = R_Proxy_WriteConsole;
   Rp->CallBack = R_Proxy_CallBack;
   Rp->message = R_Proxy_askok;
-                                                                               
+
   Rp->yesnocancel = R_Proxy_askyesnocancel;
   Rp->busy = R_Proxy_Busy;
   Rp->R_Quiet = 1;
@@ -676,7 +676,7 @@ int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 	      for (i = 0;i < lTotalSize;i++)
 		{
 		  SEXP lStringSExp;
-		  lStringSExp = 
+		  lStringSExp =
 		    allocString (strlen (pData->raw_data[i].string_value));
 		  PROTECT (lStringSExp); lProtectCount++;
 		  strcpy (CHAR(lStringSExp),pData->raw_data[i].string_value);
