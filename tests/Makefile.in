@@ -159,6 +159,12 @@ test-codoc:
 	  echo; \
 	done
 
+test-FF:
+	@for p in $(R_PKGS); do \
+	  echo "checking foreign function calls in package \`$${p}':"; \
+	  echo "checkFF(package = \"$${p}\")" | $(R) -q | grep "^\..*"; \
+	done
+
 $(test-out): Makefile stamp-R
 
 stamp-R: $(top_builddir)/bin/R.bin $(top_builddir)/library/base/R/base
