@@ -391,7 +391,7 @@ automatically printed.
 
 Commands are separated either by a semi-colon (@samp{@code{;}}), or by a
 newline.  Elementary commands can be grouped together into one compound
-expression by braces (@samp{@code{@{}} .. @samp{@code{@}}}).
+expression by braces (@samp{@code{@{}} and @samp{@code{@}}}).
 @emph{Comments} can be put almost@footnote{@strong{not} inside strings,
 nor within the argument list of a function definition} anywhere,
 starting with a hashmark (@samp{@code{#}}), everything to the end of the
@@ -1008,7 +1008,7 @@ gives @code{y} all but the first five elements of @code{x}.
 @strong{A vector of character strings}.  This possibility only applies
 where an object has a @code{names} attribute to identify its components.
 In this case a sub-vector of the names vector may be used in the same way
-as the positive integral labels in 2.@: above.
+as the positive integral labels in item 2 further above.
 
 @example
 > fruit <- c(5, 10, 1, 20)
@@ -1308,12 +1308,12 @@ While the ``real'' application of factors is with model formulae
 @section A specific example
 
 Suppose, for example, we have a sample of 30 tax accountants from all
-the states and territories@footnote{Foreign readers should note that
- there are eight states and territories in Australia, namely the
- Australian Capital Territory, New South Wales, the Northern Territory,
- Queensland, South Australia, Tasmania, Victoria and Western Australia.}
-and their individual state of origin is specified by a character vector
-of state mnemonics as
+the states and territories of Australia@footnote{Foreign readers should
+note that there are eight states and territories in Australia, namely
+the Australian Capital Territory, New South Wales, the Northern
+Territory, Queensland, South Australia, Tasmania, Victoria and Western
+Australia.}  and their individual state of origin is specified by a
+character vector of state mnemonics as
 
 @example
 > state <- c("tas", "sa",  "qld", "nsw", "nsw", "nt",  "wa",  "wa",
@@ -1389,14 +1389,13 @@ The function @code{tapply()} is used to apply a function, here
 @code{mean()}, to each group of components of the first argument, here
 @code{incomes}, defined by the levels of the second component, here
 @code{statef}@footnote{Note that @code{tapply()} also works in this case
- when its second argument is not a factor, e.g.,
- @samp{@code{taply(incomes,state)}}, and this is true for quite a few
- other functions, since arguments are @emph{coerced} to @code{factor}s when
- necessary (using @code{as.factor(.)}).},
-as if they were separate vector structures.  The result
-is a structure of the same length as the levels attribute of the factor
-containing the results.  The reader should consult the help document for
-more details.
+when its second argument is not a factor, e.g.,
+@samp{@code{tapply(incomes, state)}}, and this is true for quite a few
+other functions, since arguments are @emph{coerced} to factors when
+necessary (using @code{as.factor()}).}, as if they were separate vector
+structures.  The result is a structure of the same length as the levels
+attribute of the factor containing the results.  The reader should
+consult the help document for more details.
 
 Suppose further we needed to calculate the standard errors of the state
 income means.  To do this we need to write an @R{} function to calculate
@@ -1932,13 +1931,15 @@ When after
 > b <- A %*% x
 @end example
 
-only @code{A} and @code{b} are given, the vector @code{x} is the solution
-of that linear equation system.  In @R{},
+@noindent
+only @code{A} and @code{b} are given, the vector @code{x} is the
+solution of that linear equation system.  In @R{},
 
 @example
 > solve(A,b)
 @end example
 
+@noindent
 solves the system, returning @code{x} (up to some accuracy loss).
 Note that in linear algebra, formally
 @eqn{@strong{x} = @strong{A}^{-1} @strong{b}, @code{x = A^@{-1@} %*% b}}
@@ -1950,8 +1951,9 @@ where
 solve(A)
 @end example
 
-but rarely is needed.  Numerically, it is both inefficient and unstable to
-compute @code{x <- solve(A) %*% b} instead of @code{solve(A,b)}.
+@noindent
+but rarely is needed.  Numerically, it is both inefficient and unstable
+to compute @code{x <- solve(A) %*% b} instead of @code{solve(A,b)}.
 
 The quadratic form
 @eqn{@strong{x' A^{-1} x},@ @code{x %*% A^@{-1@} %*% x} @ }
@@ -2103,7 +2105,7 @@ In the assignment
 the arguments to @code{cbind()} must be either vectors of any length, or
 matrices with the same column size, that is the same number of rows.
 The result is a matrix with the concatenated arguments @var{arg_1},
-@code{var_2}, @dots{} forming the columns.
+@var{arg_2}, @dots{} forming the columns.
 
 If some of the arguments to @code{cbind()} are vectors they may be
 shorter than the column size of any matrices present, in which case they
@@ -2509,7 +2511,7 @@ directory, all of which have variables named @code{x}, @code{y} and
 
 @code{attach()} is a generic function that allows not only directories
 and data frames to be attached to the search path, but other classes of
-object as well.  In particular any object of mode @code{list} may be
+object as well.  In particular any object of mode @code{"list"} may be
 attached in the same way:
 
 @example
@@ -2864,16 +2866,18 @@ CDFs and a few other functions: see the on-line help for current
 details.
 
 The @code{p@var{xxx}} and @code{q@var{xxx}} functions all have logical
-arguments @var{lower.tail} and  @code{log.p} and the @code{d@var{xxx}} ones
-have @code{log}.  This allows, e.g., getting the cumulative (or ``integrated'')
-@emph{hazard} function,
-@eqn{H(t) = - \log(1 - F(t)), H(t) = - log(1 - F(t))}, by
+arguments @code{lower.tail} and @code{log.p} and the @code{d@var{xxx}}
+ones have @code{log}.  This allows, e.g., getting the cumulative (or
+``integrated'') @emph{hazard} function, @eqn{H(t) = - \log(1 - F(t)),
+H(t) = - log(1 - F(t))}, by
+
 @smallexample
  - p@var{xxx}(t, ..., lower.tail = FALSE, log.p = TRUE)
 @end smallexample
+
 @noindent
-or more accurate log-likelihoods (by @code{d@var{xxx}(..., log = TRUE)}),
-directly.
+or more accurate log-likelihoods (by @code{d@var{xxx}(..., log =
+TRUE)}), directly.
 
 In addition there are functions @code{ptukey} and @code{qtukey} for the
 distribution of the studentized range of samples from a normal
@@ -3567,8 +3571,8 @@ the function @code{par()} and functions like @code{plot()} allow the
 user to pass on graphical parameters to @code{par()} to control the
 graphical output.  (@xref{The par() function}, for more details on the
 @code{par()} function.)  This can be done by including an extra
-argument, literally ``@code{@dots{}}'', of the function, which may then
-be passed on.  An outline example is given in the example below.
+argument, literally @samp{@dots{}}, of the function, which may then be
+passed on.  An outline example is given in the example below.
 
 @example
 fun1 <- function(data, data.frame, graph=TRUE, limit=20, ...) @{
@@ -3881,9 +3885,9 @@ special initialization file.  Finally, the special functions
 @code{.First} and @code{.Last} can be used.
 
 The system initialization file is called @file{Rprofile} and it is found
-in the @R{} home subdirectory @file{library}.  This file should contain
-the commands that you want to execute every time @R{} is started under
-your system.  A second, personal, profile file named
+in the @R{} home subdirectory @file{library/base/R}.  This file should
+contain the commands that you want to execute every time @R{} is started
+under your system.  A second, personal, profile file named
 @file{.Rprofile}@footnote{So it is hidden under UNIX.} can be placed in
 any directory.  If @R{} is invoked in that directory then that file will
 be sourced.  This file gives individual users control over their
@@ -3964,16 +3968,10 @@ function:
 @end example
 
 Conversely the number of classes a generic function can handle can also
-be quite large.  For example the @code{plot()} function has variants for
-classes of object
-
-@example
-data.frame   default   density   factor
-@end example
-
-@noindent
-and more.  A complete list can be got again by using the
-@code{methods()} function:
+be quite large.  For example the @code{plot()} function has a default
+method and variants for objects of classes @code{"data.frame"},
+@code{"density"}, @code{"factor"}, and more.  A complete list can be got
+again by using the @code{methods()} function:
 
 @example
 > methods(plot)
@@ -4225,12 +4223,12 @@ a column of ones if included in the model).
 @cindex Factors
 @cindex Ordered factors
 What about a @math{k}-level factor @code{A}?  The answer differs for
-unordered and ordered factors.  For @emph{unordered} factors @math{k - 1}
-columns are generated for the indicators of the second, @dots{},
+unordered and ordered factors.  For @emph{unordered} factors @math{k -
+1} columns are generated for the indicators of the second, @dots{},
 @math{k}th levels of the factor. (Thus the implicit parameterization is
 to contrast the response at each level with that at the first.)  For
 @emph{ordered} factors the @math{k - 1} columns are the orthogonal
-polynomials on @code{1, @dots{}, k}, omitting the constant term.
+polynomials on @math{1, @dots{}, k}, omitting the constant term.
 
 Although the answer is already complicated, it is not the whole story.
 First, if the intercept is omitted in a model that contains a factor
@@ -4488,7 +4486,7 @@ Note especially that if the @code{data=} argument is specified on the
 original call to the model fitting function, this information is passed on
 through the fitted model object to @code{update()} and its allies.
 
-The name ``@code{.}'' can also be used in other contexts, but with slightly
+The name @samp{.} can also be used in other contexts, but with slightly
 different meaning.  For example
 
 @example
@@ -4563,7 +4561,7 @@ f_Y(y;\mu,\varphi)
 = \exp\left[{A \over \varphi}\left\{y\lambda(\mu) -
 \gamma\left(\lambda(\mu)\right)\right\} + \tau(y,\varphi)\right]
 $$
-where $\varphi$ is a @emph{scale parameter}, (possibly known), and is
+where $\varphi$ is a @emph{scale parameter} (possibly known), and is
 constant for all observations, $A$ represents a prior weight, assumed
 known but possibly varying with the observations, and $\mu$ is the mean
 of $y$.
@@ -4723,7 +4721,7 @@ $$ y \sim {\rm B}(n, F(\beta_0 + \beta_1 x)) $$
 @end tex
 where for the probit case,
 @eqn{F(z) = \Phi(z), F(z) = Phi(z)}
-is the standard normal distribution function, and in the logit case,
+is the standard normal distribution function, and in the logit case
 (the default),
 @eqn{F(z) = e^z/(1+e^z),F(z) = e^z/(1+e^z)}.
 In both cases the LD50 is
@@ -4846,7 +4844,7 @@ x_1 = z_2/z_1, x_2 = -1/x_1, beta_1 = 1/theta_1, and beta_2 =
 theta_2/theta_1.
 @end ifnottex
 @tex
-where $x_1 = z_2/z_1$, $x_2=-1/x_1$, $\beta_1=1/\theta_1$ and
+$x_1 = z_2/z_1$, $x_2=-1/x_1$, $\beta_1=1/\theta_1$ and
 $\beta_2=\theta_2/\theta_1$.
 @end tex
 Supposing a suitable data frame to be set up we could fit this
@@ -6036,7 +6034,7 @@ specification).  Thus to produce a plot for inclusion use something like
 
 @example
 > postscript("plot1.eps", horizontal=FALSE, onefile=FALSE,
-        height=8, width=6, pointsize=10)
+             height=8, width=6, pointsize=10)
 @end example
 
 
@@ -6094,7 +6092,7 @@ depending on how the device was initiated.
 @itemx dev.print(device, @dots{}, which=@var{k})
 Make a copy of the device @var{k}.  Here @code{device} is a device
 function, such as @code{postscript}, with extra arguments, if needed,
-specified by @code{@dots{}}.  @code{dev.print} is similar, but the
+specified by @samp{@dots{}}.  @code{dev.print} is similar, but the
 copied device is immediately closed, so that end actions, such as
 printing hardcopies, are immediately performed.
 
@@ -6109,8 +6107,7 @@ Terminate all graphics devices on the list, except the null device.
 @R{} does not (currently) have a builtin function for dynamic graphics,
 for example to rotate point clouds or to ``brush'' (interactively
 highlight) plots.  However, extensive dynamic graphics facilities are
-available in the system @code{XGobi} by Swayne, Cook and Buja available
-from
+available in the system XGobi by Swayne, Cook and Buja available from
 
 @quotation
 @uref{http://www.research.att.com/areas/stat/xgobi/}
@@ -6119,7 +6116,7 @@ from
 @noindent
 and these can be accessed from @R{} via the package @pkg{xgobi}.
 
-@code{XGobi} currently runs under the X Windows system on either Unix or
+XGobi currently runs under the X Windows system on either Unix or
 Windows, and @R{} interfaces are available for each.
 
 
@@ -6255,7 +6252,7 @@ Compare the five experiments with simple boxplots.
 Analyze as a randomized block, with `runs' and `experiments' as factors.
 
 @item fm0 <- update(fm, . ~ . - Run)
-@itemx anova(fm0,fm)
+@itemx anova(fm0, fm)
 Fit the sub-model omitting `runs', and compare using a formal analysis
 of variance.
 
@@ -6270,8 +6267,15 @@ We now look at some more graphical features: contour and image plots.
 @table @code
 @item x <- seq(-pi, pi, len=50)
 @itemx y <- x
-@math{x} is a vector of 50 equally spaced values
-in @eqn{-\pi\leq x \leq \pi, the interval [-pi\, pi]}.
+@math{x} is a vector of 50 equally spaced values in
+@ifnottex
+the interval [-pi\, pi]}.
+@end ifnottex
+@iftex
+@tex
+$-\pi\leq x \leq \pi$.
+@end tex
+@end iftex
 @math{y} is the same.
 
 @item f <- outer(x, y, function(x, y) cos(y)/(1 + x^2))
@@ -6366,6 +6370,7 @@ with a variety of options in the form
 @code{R} [@var{options}] [@code{<}@var{infile}] [@code{>}@var{outfile}],
 @end display
 
+@noindent
 or, via the @code{R CMD} interface, as a wrapper to various @R{} tools
 (e.g., for processing files in @R{} documentation format or manipulating
 add-on packages) which are not intended to be called ``directly''.
@@ -6438,7 +6443,7 @@ asked for the desired behavior when ending the session with @kbd{q()};
 in batch mode, one of these must be specified.
 
 @item --no-environ
-Do not read any file to set environment variables.
+Do not read any user file to set environment variables.
 
 @item --no-site-file
 Do not read the site-wide profile at startup.
