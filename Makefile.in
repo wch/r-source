@@ -138,10 +138,6 @@ uninstall:
 	@echo "  rebuilding help index ..."
 	@(cd $(rhome)/library; \
 	  cat */TITLE > LibIndex 2> /dev/null || echo "" > LibIndex)
-	@echo "  rebuilding HTML index ..."
-	@if test -x $(rhome)/bin/R -a -f $(rhome)/bin/build-help; then \
-	  $(rhome)/bin/R CMD build-help --rhome $(rhome) --htmllists; \
-	fi
 	@echo "uninstalling headers ..."
 	@rm -rf $(rhome)/include
 	@echo "uninstalling executables ..."
