@@ -418,7 +418,6 @@ void REprintf(char *format, ...)
 void Rcons_vprintf(const char *format, va_list arg)
 {
     char buf[BUFSIZE], *p = buf, *vmax = vmaxget();
-#ifdef HAVE_VSNPRINTF
     int res;
 
     res = vsnprintf(p, BUFSIZE, format, arg);
@@ -433,11 +432,6 @@ void Rcons_vprintf(const char *format, va_list arg)
 	    warning("printing of extremely long output is truncated");
 	}
     }
-#else
-    /* allocate a large buffer and hope */
-    p = R_alloc(10*BUFSIZE, sizeof(char));
-    vsprintf(p, format, arg);
-#endif
     R_WriteConsole(p, strlen(buf));
     vmaxset(vmax);
 }

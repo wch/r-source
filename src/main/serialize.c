@@ -184,12 +184,8 @@ static int Rsnprintf(char *buf, int size, const char *format, ...)
     int val;
     va_list(ap);
     va_start(ap, format);
-#ifdef HAVE_VSNPRINTF
     val = vsnprintf(buf, size, format, ap);
     buf[size-1] = '\0';
-#else
-    val = vsprintf(buf, format, ap);
-#endif
     va_end(ap);
     return val;
 }

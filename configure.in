@@ -457,8 +457,10 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS(access acosh asinh atanh bcopy bzero finite ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii isnan matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv snprintf strcoll \
-  stat strptime system times unsetenv vsnprintf)
+  stat strptime system times unsetenv)
 AC_REPLACE_FUNCS(strdup)
+## This is tricky: vsnprintf.c can substitute for both snprintf and vsnprintf
+AC_REPLACE_FUNCS(vsnprintf)
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl])
@@ -477,8 +479,8 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h errno.h fcntl.h \
   floatingpoint.h fpu_control.h grp.h ieee754.h ieeefp.h locale.h \
   netdb.h netinet/in.h pwd.h readline/history.h readline/readline.h \
-  rpc/xdr.h string.h strings.h sys/param.h sys/select.h sys/socket.h \
-  sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
+  rpc/xdr.h stdarg.h string.h strings.h sys/param.h sys/select.h \
+  sys/socket.h sys/stat.h sys/time.h sys/times.h sys/utsname.h unistd.h)
 ## <FIXME>
 ## AC_CHECK_HEADERS(libintl.h)
 ## src/main/regex.c uses HAVE_LIBINTL_H.

@@ -28,6 +28,9 @@
 #include <config.h>
 #endif
 
+/* we have a substitute snprintf */
+#define HAVE_SNPRINTF
+
 #if !defined(Unix) || defined(HAVE_BSD_NETWORKING)
 
 #ifdef Win32

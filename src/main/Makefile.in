@@ -40,7 +40,7 @@ SOURCES_F = \
 	xxxpr.f
 ## <FIXME>
 ## Need better names ...
-EXTRA_SOURCES_C = alloca.c strdup.c
+EXTRA_SOURCES_C = alloca.c strdup.c vsnprintf.c
 ## </FIXME>
 DEPENDS = $(SOURCES_C:.c=.d) $(EXTRA_SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F)

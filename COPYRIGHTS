@@ -183,3 +183,15 @@ src/modules/lapack/double.f, cmplx.f
     It is freely-available software, and is copyrighted.
 
   although no actual copyright statement appears in the code.
+
+src/main/vsnprintf.c
+
+Taken from the wget 1.8.1 distribution: only used on platforms
+without vnsprintf.
+/*
+ * Copyright Patrick Powell 1995
+ * This code is based on code written by Patrick Powell (papowell@astart.com)
+ * It may be used for any purpose as long as this notice remains intact
+ * on all source code distributions
+ */
+

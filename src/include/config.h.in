@@ -1,4 +1,4 @@
-/* src/include/config.h.in.  Generated automatically from configure.in by autoheader 2.13.  */
+/* src/include/config.h.in.  Generated automatically from configure.in by autoheader.  */
 /* acconfig.h
    Descriptive text for the C preprocessor macros that are needed by R.
    */
@@ -389,6 +389,9 @@
 
 /* Define if you have the <rpc/xdr.h> header file.  */
 #undef HAVE_RPC_XDR_H
+
+/* Define if you have the <stdarg.h> header file.  */
+#undef HAVE_STDARG_H
 
 /* Define if you have the <string.h> header file.  */
 #undef HAVE_STRING_H

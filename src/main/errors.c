@@ -146,12 +146,8 @@ static void setupwarnings(void)
 static int Rvsnprintf(char *buf, size_t size, const char  *format, va_list ap)
 {
     int val;
-#ifdef HAVE_VSNPRINTF
     val = vsnprintf(buf, size, format, ap);
     buf[size-1] = '\0';
-#else
-    val = vsprintf(buf, format, ap);
-#endif
     return val;
 }
 

@@ -63,6 +63,9 @@ C-LEVEL FACILITIES
 	F77_SUB(interv)(.) to be called from Fortran; this used to be
 	part of predict.smooth.spline's underlying Fortran code.
 
+    o	A substitute for (v)snprintf will be used if the OS does not
+	supply one, so tests for HAVE_(V)SNPRINTF are no longer needed.
+
 
 BUG FIXES
 
