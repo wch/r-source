@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2004-12-10
+Version 2.0.2004-12-13
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2204,6 +2204,9 @@ distributions of R.)
 *lattice*
      Lattice graphics, an implementation of Trellis Graphics functions.
      _Recommended_.
+
+*latticeExtra*
+     Generic functions and standard methods for Trellis-based displays.
 
 *lazy*
      Lazy learning for local regression.

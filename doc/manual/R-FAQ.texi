@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-10
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-12-13
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2393,6 +2393,8 @@ Osborne et al.@: (1998).
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
+@item latticeExtra
+Generic functions and standard methods for Trellis-based displays.
 @item lazy
 Lazy learning for local regression.
 @item ldDesign
