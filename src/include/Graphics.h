@@ -21,8 +21,6 @@
 #define GRAPHICS_H_
 
 #include "Defn.h"
-#include "Arith.h"
-#include "Errormsg.h"
 
 #ifndef NA_REAL
 #define NA_REAL R_NaReal
@@ -39,7 +37,7 @@
 #endif
 
 #ifdef Windows
-#include "windows.h"
+#include <windows.h>
 #endif
 
 #include <float.h>
