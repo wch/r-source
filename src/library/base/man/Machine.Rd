@@ -20,24 +20,22 @@ Machine()
   \code{Machine()} returns a list with components (for simplicity, the
   prefix ``double'' is omitted in the explanations)
   \item{"double.eps"}{the smallest positive floating-point number
-    \code{x} such that \code{1 + x != 1}.
-    In particular, if either \code{base} is 2 or \code{rounding} is 0,
-    \code{eps} equals \code{base ^ ulp.digits};  otherwise, it is
-    \code{(base ^ ulp.digits) / 2}.}
+    \code{x} such that \code{1 + x != 1}.  It equals
+    \code{base^ulp.digits} if either \code{base} is 2 or \code{rounding}
+    is 0;  otherwise, it is \code{(base^ulp.digits) / 2}.}
   \item{"double.neg.eps"}{a small positive floating-point number \code{x}
-    such that \code{1 - x != 1}.
-    In particular, if \code{base} is 2 or \code{round} is 0, then
-    \code{neg.eps} equals \code{base ^ neg.ulp.digits};  otherwise, it
-    is \code{(base ^ neg.ulp.digits) / 2}.
+    such that \code{1 - x != 1}.  It equals \code{base^neg.ulp.digits}
+    if \code{base} is 2 or \code{round} is 0;  otherwise, it is
+    \code{(base^neg.ulp.digits) / 2}.
     As \code{neg.ulp.digits} is bounded below by \code{-(digits + 3)},
     \code{neg.eps} may not be the smallest number that can alter 1 by
     subtraction.}
   \item{"double.xmin"}{the smallest non-vanishing normalized
-    floating-point power of the radix, i.e., \code{base ^ min.exp}.}
+    floating-point power of the radix, i.e., \code{base^min.exp}.}
   \item{"double.xmax"}{the largest finite floating-point number.
-    Typically \code{(1 - neg.eps) * base ^ max.exp}, but on some
-    machines it is only the second, or perhaps third, largest number,
-    being too small by 1 or 2 units in the last digit of the
+    Typically, it is equal to \code{(1 - neg.eps) * base^max.exp}, but
+    on some machines it is only the second, or perhaps third, largest
+    number, being too small by 1 or 2 units in the last digit of the
     significand.}
   \item{"double.base"}{the radix for the floating-point representation}
   \item{"double.digits"}{the number of base digits in the floating-point
@@ -56,12 +54,12 @@ Machine()
     truncates and more than \code{digits} base \code{base} digits
     participate in the post-normalization shift of the floating-point
     significand in multiplication, and 0 otherwise.}
-  \item{"double.ulp.digits"}{
-    the largest negative integer \code{i} such that \code{1 + base ^ i
-      != 1}, except that it is bounded below by \code{-(digits + 3)}.}
-  \item{"double.neg.ulp.digits"}{
-    the largest negative integer \code{i} such that \code{1 - base ^ i
-      != 1}, except that it is bounded below by \code{-(digits + 3)}.}
+  \item{"double.ulp.digits"}{the largest negative integer \code{i} such
+    that \code{1 + base^i != 1}, except that it is bounded below by
+    \code{-(digits + 3)}.}
+  \item{"double.neg.ulp.digits"}{the largest negative integer \code{i}
+    such that \code{1 - base^i != 1}, except that it is bounded below by
+    \code{-(digits + 3)}.}
   \item{"double.exponent"}{
     the number of bits (decimal places if \code{base} is 10) reserved
     for the representation of the exponent (including the bias or sign)
