@@ -2,7 +2,7 @@
 
 ## The available kinds are in
 ## ../../../include/Random.h  and ../../../nmath/sunif.c [RNG_Table]
-RNGkind <- function(kind = NULL) 
+RNGkind <- function(kind = NULL)
 {
     kinds <- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper",
                ## NOT yet: "Mersenne-Twister",
@@ -16,8 +16,10 @@ RNGkind <- function(kind = NULL)
 	    stop(paste("'",kind,"' is not a valid abbrevation of an RNG",
 		       sep=""))
     } else i.knd <- NULL
-    
+
     r <- kinds[1 + .Internal(RNGkind(i.knd))]
     if(do.set) invisible(r) else r
 }
 
+set.seed <- function(seed, kind = NULL)
+    invisible(.Internal(set.seed(seed, kind)))

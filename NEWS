@@ -89,7 +89,10 @@ NEW FEATURES
     o	New function ftable() for creating and manipulating flat
 	contingency tables.
 
-    o	New function cutree() fur cutting hclust trees in package mva.
+    o	New function cutree() for cutting hclust trees in package mva.
+
+    o	New function set.seed() to use a single integer to set the
+	random number seeds.
 
 
 BUG FIXES

@@ -150,6 +150,30 @@ SEXP do_RNGkind (SEXP call, SEXP op, SEXP args, SEXP env)
     return r;
 }
 
+
+SEXP do_setseed (SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP skind;
+    int seed;
+    RNGtype kind;
+
+    checkArity(op,args);
+    seed = asInteger(CAR(args));
+    if (seed == NA_INTEGER)
+	error("supplied seed is not a valid integer");
+    skind = CADR(args);
+    if (!isNull(skind)) {
+	kind = asInteger(skind);
+	RNGkind(kind);
+    } else
+	kind = RNG_kind;
+    RNG_Init(kind, (Int32) seed);
+    PutRNGstate();
+    return R_NilValue;
+}
+
+
+
 /*------ Part without RNGkind dependency ------------------------*/
 
 static int naflag = 0;

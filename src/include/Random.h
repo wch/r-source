@@ -23,7 +23,7 @@
 #ifndef RANDOM_H
 #define RANDOM_H
 
-typedef unsigned long Int32;/* how is this done on 64-bit archtictures? */
+typedef unsigned long Int32;/* how is this done on 64-bit architectures? */
 
 typedef enum {
     WICHMANN_HILL,
@@ -57,7 +57,7 @@ typedef struct {
 void MaybeAllocSeeds(RNGtype);
 void Randomize(RNGtype);
 void FixupSeeds(RNGtype);
-void RNG_Init(RNGtype kind, long seed);
+void RNG_Init(RNGtype kind, Int32 seed);
 
 extern RNGTAB  RNG_Table[];
 extern RNGtype RNG_kind;

@@ -4,7 +4,8 @@
 .Random.seed <- c(rng.kind, n1, n2, \dots)
 save.seed <- .Random.seed
 
-RNGkind(kind=NULL)
+RNGkind(kind = NULL)
+set.seed(seed, kind = NULL)
 }
 \alias{.Random.seed}
 \alias{RNG}
@@ -14,30 +15,34 @@ RNGkind(kind=NULL)
   generator (RNG) \bold{state} for random number generation in \R.
 
   \code{RNGkind} is a more friendly interface to query or set the kind
-  of RNG in use. 
+  of RNG in use.
+
+  \code{set.seed} is a simple way to specify seeds by a single number.
 }
 \arguments{
   \item{kind}{character or \code{NULL}.  If \code{kind} is a character
-    string, set \R's RNG to the kind desired, if its \code{NULL},
+    string, set \R's RNG to the kind desired. If it is \code{NULL},
     return the currently used RNG.}
+  \item{seed}{a single value, interpreted as an integer.}
   \item{rng.kind}{integer code in \code{0:k} for the above \code{kind}.}
   \item{n1,n2,\dots}{integers. See the details for how many are required
     (which depends on \code{rng.kind}).}
 }
 \details{
-  Currently available RNG kinds
+  The currently available RNG kinds are givne below. \code{kind} is
+  partially matched to this list.
   \itemize{
-    \item ``Wichmann-Hill'': \code{.Random.seed[1] == 0} 
+    \item \code{"Wichmann-Hill"}: \code{.Random.seed[1] == 0} 
      
     The seed, \code{.Random.seed[-1] == r[1:3]} is an integer vector of
     length 3, where each \code{r[i]} is in \code{1:(p[i] - 1)}, where
     \code{p} is the length 3 vector of primes, \code{p = (30269, 30307,
       30323)}.
-    The Wichmann-Hill generator has a cycle length of 6.9536e12 (=
-    \code{prod(p-1)/4} ), see p.123 of Applied Statistics (1984) vol.33
-    which corrects the original article.
+    The Wichmann--Hill generator has a cycle length of 6.9536e12 (=
+    \code{prod(p-1)/4} ), see \emph{Applied Statistics} (1984)
+    \bold{33}, 123 which corrects the original article.
     
-    \item ``Marsaglia-Multicarry'': \code{.Random.seed[1] == 1} 
+    \item \code{"Marsaglia-Multicarry"}: \code{.Random.seed[1] == 1} 
 
     A \emph{multiply-with-carry} RNG is used, as recommended by George
     Marsaglia in his post to the mailing list \file{sci.stat.math} on
@@ -45,7 +50,7 @@ RNGkind(kind=NULL)
     all tests (according to Marsaglia).  The seed is two integers (all
     values allowed).
 
-    \item ``Super-Duper'': \code{.Random.seed[1] == 2} 
+    \item \code{"Super-Duper"}: \code{.Random.seed[1] == 2} 
 
     Marsaglia's famous Super-Duper from the 70's.  This is the original
     version which does \emph{not} pass the MTUPLE test of the Diehard
@@ -53,7 +58,7 @@ RNGkind(kind=NULL)
       4.6*10^18} for most initial seeds. The seed is two integers (all
     values allowed for the first seed: the second must be odd).
     
-    We use the implementation as by Reeds et al.\ (1982--83), with the
+    We use the implementation by Reeds et al.\ (1982--83), with the
     additional non-0 seed measure (see note below).
     
     The two seeds are the Tausworthe and Congruence long integers,
@@ -82,6 +87,10 @@ RNGkind(kind=NULL)
  \bold{Note}: If any of \code{.Random.seed[i]} (\eqn{i>1}) is set to
  \code{0}, it will be substituted with \code{1} in the next call to a
  random number generator, such as \code{\link{runif}}.
+
+ \code{set.seed} uses its single integer argument to set as many seeds
+ as are required. It is intended as a simple way to get quite different
+ seeds by specifying small integer arguments.
 }
 \value{
   \code{.Random.seed} is an \code{\link{integer}} vector whose first
@@ -89,12 +98,13 @@ RNGkind(kind=NULL)
   where {k+1} is the number of available RNGs.
 
   In the underlying C, \code{.Random.seed[-1]} is used as \code{unsigned
-    long} (32 bits at least); in \R, whose \code{integer}s are C's
-  \code{long}, \code{.Random.seed[i]} can therefore be negative for
-  \eqn{i > 1}.
+    long} (32 bits at least); in \R \code{.Random.seed[i]} can therefore
+  be negative for \eqn{i > 1}.
   
   \code{RNGkind} returns the RNG in use \emph{before} the call,
   invisibly if \code{kind} is not \code{NULL}.
+
+  \code{set.seed} returns \code{NULL}, invisibly.
 }
 \references{
   Wichmann, B. A.  and Hill, I. D. (1982)
@@ -113,9 +123,9 @@ RNGkind(kind=NULL)
   random number generators. \emph{Computers in Physics}, \bold{8}, 117--121. 
 }
 \note{
-  Initially, there is no seed;  a new one is created, using
-  ``Randomize''.  Hence, student exercises will each have different
-  simulation results, by default.
+  Initially, there is no seed;  a new one is created from the current
+  time when one is required.  Hence, different session will give
+  different simulation results, by default.
 }
 \author{of RNGkind: Martin Maechler}
 
