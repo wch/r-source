@@ -93,7 +93,7 @@ undoc <- function(pkg, dir)
         dataObjs <- NULL
         if(any(i <- grep("\\.\(R\|r\)$", files))) {
             for (f in file.path(dataDir, files[i])) {
-                sys.source(f, envir = dataEnv)
+                sys.source(f, envir = dataEnv, chdir = TRUE)
                 new <- ls(all = TRUE, envir = dataEnv)
                 dataObjs <- c(dataObjs, new)
                 rm(list = new, envir = dataEnv)

@@ -6,11 +6,13 @@
   them in the specified environment.  By default, evaluation is done in
   the global environment.
 }
-\usage{sys.source(file, envir = NULL)}
+\usage{sys.source(file, envir = NULL, chdir = FALSE)}
 \arguments{
   \item{file}{a character string naming the file to be read from}
   \item{envir}{an \R object specifying the environment in which the
     expressions are to be evaluated.  May also be a list or an integer.}
+  \item{chdir}{logical; if \code{TRUE}, the R working directory is
+    changed to the directory containing \code{file} for evaluating.}
 }
 \details{
   The \code{keep.source} option is set to \code{FALSE} when reading from

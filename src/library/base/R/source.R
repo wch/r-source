@@ -87,15 +87,20 @@ source <-
     invisible(yy)
 }
 
-sys.source <- function(file, envir = NULL)
+sys.source <- function(file, envir = NULL, chdir = FALSE)
 {
     if(!(is.character(file) && file.exists(file)))
-	stop(paste('"',file,'" is not an existing file', sep=""))
+	stop(paste("`", file, "' is not an existing file", sep = ""))
     oop <- options(keep.source = FALSE)
     on.exit(options(oop))
     exprs <- parse(n = -1, file = file)
     if (length(exprs) == 0)
 	return(invisible())
+    if (chdir && (path <- dirname(file)) != ".") {
+	owd <- getwd()
+	on.exit(setwd(owd), add = TRUE)
+	setwd(path)
+    }
     for (i in exprs) {
 	yy <- eval(i, envir)
     }
