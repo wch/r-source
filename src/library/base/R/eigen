@@ -1,13 +1,11 @@
-"eigen" <-
-function (x, symmetric, only.values=FALSE) 
+eigen <- function (x, symmetric, only.values=FALSE)
 {
 	x <- as.matrix(x)
-        if (nrow(x) != ncol(x)) 
-                stop("non-square matrix in eigen")
-        n <- nrow(x)
-
-	if(is.complex(x)) {
-		complex.vals <- TRUE
+	n <- nrow(x)
+	if (n != ncol(x))
+		stop("non-square matrix in eigen")
+	complex.x <- is.complex(x)
+	if(complex.x) {
 		if(missing(symmetric))
 			symmetric <- all(x == Conj(t(x)))
 	}
@@ -15,74 +13,71 @@ function (x, symmetric, only.values=FALSE)
 		storage.mode(x) <- "double"
 		if(missing(symmetric))
 			symmetric <- all(x == t(x))
-		complex.vals <- FALSE
 	}
 	else stop("numeric or complex values required in eigen")
 
-	if(symmetric) {
-		if(complex.vals) {
+	dbl.n <- double(n)
+	if(symmetric) {##--> real values
+		if(complex.x) {
 			xr <- Re(x)
 			xi <- Im(x)
-			vals <- double(n)
 			z <- .Fortran(
 				"ch",
 				n,
 				n,
 				xr,
 				xi,
-				values = vals,
-				only.values == FALSE,
+				values = dbl.n,
+				!only.values,
 				vectors = xr,
 				ivectors = xi,
-				vals,
-				vals,
+				dbl.n,
+				dbl.n,
 				double(2*n),
 				ierr = integer(1))
-			if (z$ierr) 
+			if (z$ierr)
 				stop(paste("ch returned code ", z$ierr, " in eigen"))
 			if(!only.values)
 				z$vectors <- matrix(complex(re=z$vectors,
 						im=z$ivectors), nc=n)
 		}
 		else {
-			vals <- double(n)
 			z <- .Fortran(
 				"rs",
 				n,
 				n,
 				x,
-				values = vals,
-				only.values == FALSE,
+				values = dbl.n,
+				!only.values,
 				vectors = x,
-				vals,
-				vals,
+				dbl.n,
+				dbl.n,
 				ierr = integer(1))
-			if (z$ierr) 
+			if (z$ierr)
 				stop(paste("rs returned code ", z$ierr, " in eigen"))
 		}
 		ord <- rev(order(z$values))
 	}
-	else {
-		if(complex.vals) {
+	else {##- Asymmetric :
+		if(complex.x) {
 			xr <- Re(x)
 			xi <- Im(x)
-			vals <- double(n)
 			z <- .Fortran(
 				"cg",
 				n,
 				n,
 				xr,
 				xi,
-				values = vals,
-				ivalues = vals,
-				only.values == FALSE,
+				values = dbl.n,
+				ivalues = dbl.n,
+				!only.values,
 				vectors = xr,
 				ivectors = xi,
-				vals,
-				vals,
-				vals,
+				dbl.n,
+				dbl.n,
+				dbl.n,
 				ierr = integer(1))
-			if (z$ierr) 
+			if (z$ierr)
 				stop(paste("cg returned code ", z$ierr, " in eigen"))
 			z$values <- complex(re=z$values,im=z$ivalues)
 			if(!only.values)
@@ -95,17 +90,18 @@ function (x, symmetric, only.values=FALSE)
 				n,
 				n,
 				x,
-				values = double(n),
-				ivalues = double(n),
-				only.values == FALSE,
+				values = dbl.n,
+				ivalues = dbl.n,
+				!only.values,
 				vectors = x,
 				integer(n),
-				double(n),
+				dbl.n,
 				ierr = integer(1))
-			if (z$ierr) 
+			if (z$ierr)
 				stop(paste("rg returned code ", z$ierr, " in eigen"))
-			ind <- seq(n)[z$ivalues > 0]
-			if(length(ind) > 0) {
+			ind <- z$ivalues > 0
+			if(any(ind)) {#- have complex (conjugated) values
+				ind <- seq(n)[ind]
 				z$values <- complex(re=z$values,im=z$ivalues)
 				if(!only.values) {
 					z$vectors[, ind] <- complex(re=z$vectors[,ind],
@@ -117,7 +113,7 @@ function (x, symmetric, only.values=FALSE)
 		ord <- rev(order(Mod(z$values)))
 	}
 	z$values <- z$values[ord]
-	if(only.values == FALSE) {
+	if(!only.values) {
 		z$vectors <- z$vectors[,ord]
 		z[c("values", "vectors")]
 	}
