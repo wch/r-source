@@ -49,8 +49,6 @@ install-sources: installdirs
 	    $(INSTALL_DATA) $${f} $(rhome)/share/perl/$${d}; \
 	  done; \
 	done
-	@$(INSTALL_DATA) $(srcdir)/perl/R/Rdtools.pl \
-	  $(rhome)/share/perl/R
 install-strip: install
 uninstall:
 	@echo "uninstalling share ..."

@@ -1,4 +1,10 @@
+package R::Rdtools;
+
 use Text::DelimMatch;
+use Exporter;
+
+@ISA = qw(Exporter);
+@EXPORT = qw(get_section get_usages);
 
 my $delimcurly = new Text::DelimMatch("\\{", "\\}");
 $delimcurly->escape("\\");

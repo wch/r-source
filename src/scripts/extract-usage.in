@@ -2,7 +2,7 @@
 
 ## Usage: extract-usage Rdfile
 
-require "R/Rdtools.pl";
+use R::Rdtools;
 
 my $text;
 my $OSdir = "unix";
