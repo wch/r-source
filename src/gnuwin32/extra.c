@@ -270,12 +270,24 @@ SEXP do_flushconsole(SEXP call, SEXP op, SEXP args, SEXP env)
     TCHAR szCSDVersion[ 128 ];
     } OSVERSIONINFO; */
 
+typedef struct _OSVERSIONINFOEXA {
+    DWORD dwOSVersionInfoSize;
+    DWORD dwMajorVersion;
+    DWORD dwMinorVersion;
+    DWORD dwBuildNumber;
+    DWORD dwPlatformId;
+    CHAR szCSDVersion[ 128 ];
+    WORD wServicePackMajor;
+    WORD wServicePackMinor;
+    WORD wReserved[2];
+} OSVERSIONINFOEXA;
 
 SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     char isNT[8]="??", ver[256];
     SEXP ans;
     OSVERSIONINFO verinfo;
+    OSVERSIONINFOEXA verinfoex;
 
     checkArity(op, args);
     verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
@@ -295,9 +307,20 @@ SEXP do_winver(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
     }
 
-    sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
-	    (int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
-	    LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
+    if((int)verinfo.dwMajorVersion >= 5) {
+	verinfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEXA);
+	GetVersionEx(&verinfoex);
+	sprintf(ver, "Windows %d.%d (build %d) Service Pack %d.%d (%s)",
+		(int)verinfoex.dwMajorVersion, (int)verinfoex.dwMinorVersion,
+		LOWORD(verinfoex.dwBuildNumber),
+		(int)verinfoex.wServicePackMajor,
+		(int)verinfoex.wServicePackMinor,
+		verinfoex.szCSDVersion);
+    } else {
+	sprintf(ver, "Windows %s %d.%d (build %d) %s", isNT,
+		(int)verinfo.dwMajorVersion, (int)verinfo.dwMinorVersion,
+		LOWORD(verinfo.dwBuildNumber), verinfo.szCSDVersion);
+    }
 
     PROTECT(ans = allocVector(STRSXP, 1));
     STRING(ans)[0] = mkChar(ver);
@@ -351,6 +374,8 @@ SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     type = CHAR(STRING(CAR(args))[0]);
     message = CADR(args);
+    if(!isString(message) || length(message) != 1)
+	error("invalid `message' argument");
     if (strcmp(type, "ok")  == 0) {
 	askok(CHAR(STRING(message)[0]));
 	res = 10;
@@ -377,9 +402,9 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
     message = CAR(args);
     if(!isString(message) || length(message) != 1)
 	error("invalid `message' argument");
+    def = CADR(args);
     if(!isString(def) || length(def) != 1)
 	error("invalid `default' argument");
-    def = CADR(args);
     string = askstring(CHAR(STRING(message)[0]), CHAR(STRING(def)[0]));
     if (string) {
 	ans = allocVector(STRSXP, 1);
@@ -398,12 +423,12 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP smenu, sitem;
     int res;
     char errmsg[50];
-    
+
     checkArity(op, args);
     if (CharacterMode != RGui)
 	errorcall(call, "Menu functions can only be used in the GUI");
     smenu = CAR(args);
-    if(!isString(menu) || length(menu) != 1)
+    if(!isString(smenu) || length(smenu) != 1)
 	error("invalid `menuname' argument");
     sitem = CADR(args);
     if (isNull(sitem)) { /* add a menu */
@@ -412,7 +437,7 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
 	    sprintf(msgbuf, "unable to add menu (%s)", errmsg);
 	    errorcall(call, msgbuf);
 	}
-	
+
     } else { /* add an item */
 	if(!isString(sitem) || length(sitem) != 1)
 	    error("invalid `itemname' argument");
@@ -433,17 +458,17 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP smenu, sitem;
     int res;
     char errmsg[50];
-    
+
     checkArity(op, args);
     if (CharacterMode != RGui)
 	errorcall(call, "Menu functions can only be used in the GUI");
     smenu = CAR(args);
-    if(!isString(menu) || length(menu) != 1)
+    if(!isString(smenu) || length(smenu) != 1)
 	error("invalid `menuname' argument");
     sitem = CADR(args);
     if (isNull(sitem)) { /* delete a menu */
 	res = windelmenu (CHAR(STRING(smenu)[0]), errmsg);
-	if (res > 0) 
+	if (res > 0)
 	    errorcall(call, "menu does not exist");
     } else { /* delete an item */
 	if(!isString(sitem) || length(sitem) != 1)
@@ -462,7 +487,7 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 void Rwin_fpset()
 {
     _fpreset();
-    _controlfp(_MCW_EM, _MCW_EM);    
+    _controlfp(_MCW_EM, _MCW_EM);
 }
 
 #include "console.h"  /* for savehistory */
@@ -470,12 +495,12 @@ void Rwin_fpset()
 SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP sfile;
-    
+
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
 	errorcall(call, "invalid file argument");
-    if (CharacterMode == RGui)    
+    if (CharacterMode == RGui)
 	savehistory(RConsole, CHAR(STRING(sfile)[0]));
     else if (CharacterMode == RTerm)
 	gl_savehistory(CHAR(STRING(sfile)[0]));
