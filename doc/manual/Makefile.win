@@ -69,7 +69,8 @@ all: pdf
 	$(TEX) $<
 
 .texi.html:
-	$(TEXI2HTML) -D UseExternalXrefs $< -o $@ || touch $@
+	@echo "creating doc/manual/$@"
+	@$(TEXI2HTML) -D UseExternalXrefs $< -o $@ || touch $@
 
 .texi.info:
 	$(MAKEINFO) -D UseExternalXrefs $<
@@ -83,9 +84,10 @@ all: pdf
 ## So use that in the sources if we can -- it is not in the svn archive.
 ## There are no cross-references, external or not.
 R-admin.html:
-	if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
+	@if test -f "$(top_srcdir)/doc/html/R-admin.html" ; then \
 	  cp "$(top_srcdir)/doc/html/R-admin.html" R-admin.html ; \
 	else \
+	  echo "creating doc/manual/$@" ; \
 	  $(TEXI2HTML) -I$(srcdir) $(srcdir)/R-admin.texi -o $@ || touch $@ ; \
 	fi
 
@@ -327,7 +329,7 @@ version.texi: Makefile.win $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=$(shell perl $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION); \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
-	if test "$(R_PAPERSIZE)" = "a4"; then \
+	@if test "$(R_PAPERSIZE)" = "a4"; then \
 	  echo "@afourpaper" >> $@ ; \
 	fi
 
