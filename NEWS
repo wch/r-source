@@ -224,6 +224,9 @@ DEPRECATED & DEFUNCT
 	removed in favor of the internal functions .dynLibs() and
 	.libPaths().
 
+    o   restart() is deprecated in preparation for proper exception 
+	handling. Use try(), as has long been recommended.
+	
 
 DOCUMENTATION CHANGES
 

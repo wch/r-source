@@ -8,10 +8,11 @@ warning <- function(..., call. = TRUE)
     .Internal(warning(as.logical(call.), message))
 }
 
-restart <- function(on = TRUE).Internal(restart(on))
 geterrmessage <- function() .Internal(geterrmessage())
+
 try <- function(expr, first = TRUE)
 {
+    restart <- function(on = TRUE).Internal(restart(on))
     restart(first)
     if(is.logical(first) && first) {
         first <- FALSE

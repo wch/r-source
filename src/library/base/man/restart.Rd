@@ -1,5 +1,5 @@
 \name{restart}
-\alias{restart}
+\alias{restart-deprecated}
 \title{Restart an Expression}
 \usage{
 restart(on = TRUE)
@@ -21,6 +21,9 @@ restart(on = TRUE)
   The direct use of \code{restart} is likely to result in an infinite loop.
   Use \code{\link{try}} unless you are \bold{sure} you know what
   you are doing.
+
+  In fact, as \code{restart} is deprecated, don't use it  even if you
+  \bold{are} sure you know what you are doing.
 }
 \seealso{
   \code{\link{try}} for a safer interface.

@@ -7,6 +7,7 @@
 \alias{machine}
 \alias{Platform}
 \alias{Machine}
+\alias{restart}
 \description{
   These functions are provided for compatibility with older versions of
   \R only, and may be defunct as soon as of the next release.
@@ -22,6 +23,11 @@
   \code{Machine()} and \code{Platform()} are functions returning the
   variables \code{\link{.Machine}} and \code{\link{.Platform}}
   respectively.
+
+  \code{restart()} should be replaced by \code{try()}, in preparation
+  for an exception-based implementation.  If you use \code{restart()} in
+  a way that cannot be replaced with \code{try()} then ask for help on \code{r-devel}.
+  
 }
 \seealso{
   \code{\link{Defunct}},

@@ -30,4 +30,11 @@ Platform <- function()
     .Deprecated(".Platform")
     get(".Platform", "package:base")
 }
+
+restart<-function (on = TRUE){
+    .Deprecated("try")
+    .Internal(restart(on))
+}
+
 ## </entry>
+
