@@ -3,13 +3,19 @@
 \title{Pearson's Chi-square Test for Count Data}
 \usage{
 chisq.test(x, y = NULL, correct = TRUE,
-           p = rep(1/length(x), length(x)))
+           p = rep(1/length(x), length(x)),
+           simulate.p.value = FALSE, B = 2000)
 }
 \arguments{
     \item{x}{a vector or matrix.}
     \item{y}{a vector; ignored if \code{x} is a matrix.}
     \item{correct}{a logical indicating whether to apply continuity
     	correction when computing the test statistic.}
+    \item{p}{a vector of probabilities of the same length of \code{x}.}
+    \item{simulate.p.value}{a logical indicating whether to compute
+	p-values by Monte Carlo simulation.}
+    \item{B}{an integer specifying the number of replicates used in the
+	Monte Carlo simulation.}
 }
 \description{
     \code{chisq.test} performs chi-square tests on contingency tables.
@@ -29,18 +35,26 @@ chisq.test(x, y = NULL, correct = TRUE,
     contingency table is computed from these.  Then, Pearson's
     chi-square test of the null that the joint distribution of the cell
     counts in a 2-dimensional contingency table is the product of the row
-    and column marginals is performed.  Continuity correction is only
+    and column marginals is performed.  If \code{simulate.p.value} is
+    \code{FALSE}, the p-value is computed from the asymptotic chi-square
+    distribution of the test statistic; continuity correction is only
     used in the 2-by-2 case if \code{correct} is \code{TRUE}.
+    Otherwise, if \code{simulate.p.value} is \code{TRUE}, the p-value is
+    computed by Monte Carlo simulation with \code{B} replicates.  This
+    is done by random sampling from the set of all contingency tables
+    with given marginals, and works only if the marginals are positive.
 }
 \value{
     A list with class \code{"htest"} containing the following
     components:
     \item{statistic}{the value the chi-square test statistic.}
     \item{parameter}{the degrees of freedom of the approximate
-	chi-square distribution of the test statistic.}
+	chi-square distribution of the test statistic, \code{NA} if the
+	p-value is computed by Monte Carlo simulation.}
     \item{p.value}{the p-value for the test.}
     \item{method}{a character string indicating the type of test
-    	performed, and whether continuity correction was used.}
+	performed, and whether Monte Carlo simulation or continuity
+	correction was used.}
     \item{data.name}{a character string giving the name(s) of the data.}
     \item{observed}{the observed counts.}
     \item{expected}{the expected counts under the null hypothesis.}
@@ -53,6 +67,16 @@ chisq.test(insects$count > 7, insects$spray)$obs
                                 # Counts observed
 chisq.test(insects$count > 7, insects$spray)$obs
                                 # Counts expected under the null
+
+## Effect of simulating p-values
+x <- matrix(c(12, 5, 7, 7), nc = 2)
+chisq.test(x)$p.value           # 0.4233
+chisq.test(x, simulate.p.value = TRUE, B = 10000)$p.value
+                                # around 0.29!
+
+## Testing for population probabilities
+x <- trunc(5 * runif(100))
+chisq.test(table(x))            # NOT `chisq.test(x)'!
 }
 \keyword{htest}
 \keyword{distribution}
