@@ -352,9 +352,11 @@ print.summary.lm <-
 residuals.lm <- function(object, ...) object$residuals
 fitted.lm <- function(object, ...) object$fitted.values
 coef.lm <- function(object, ...) object$coefficients
-weights.lm <- function(object, ...) object$weights
+## need this for results of lm.fit() in drop1():
+weights.default <- function(object, ...) object$weights
+weights.lm <- .Alias(weights.default)
 df.residual.lm <- function(object, ...) object$df.residual
-deviance.lm <- function(object, ...) sum((object$residuals)^2)
+deviance.lm <- function(object, ...) sum(weighted.residuals(object)^2)
 formula.lm <- function(object, ...) formula(object$terms)
 family.lm <- function(object, ...) { gaussian() }
 

@@ -9,11 +9,13 @@ hat <- function(x, intercept = TRUE)
     apply(qr.qy(x, diag(1, nrow = n, ncol = x$rank))^2, 1, sum)
 }
 
-weighted.residuals <- function(obj)
+weighted.residuals <- function(obj, drop0 = TRUE)
 {
     w <- weights(obj)
-    if(is.null(w)) residuals(obj)
-    else (sqrt(w)*residuals(obj))[w!=0]
+    r <- residuals(obj)
+    if(is.null(w)) r
+    else if(drop0) (sqrt(w)*r)[w != 0]
+    else sqrt(w)*r
 }
 
 lm.influence <- function (lm.obj)
@@ -22,7 +24,7 @@ lm.influence <- function (lm.obj)
 	warning("Can\'t compute influence on an empty model")
 	return(NULL)
     }
-    n<-as.integer(nrow(lm.obj$qr$qr))
+    n <- as.integer(nrow(lm.obj$qr$qr))
     k <- as.integer(lm.obj$qr$rank)
     e <- weighted.residuals(lm.obj)
     .Fortran("lminfl",
@@ -73,7 +75,7 @@ cooks.distance <- function(lm.obj)
 {
     p <- lm.obj$rank
     e <- weighted.residuals(lm.obj)
-    s <- sqrt(sum(e^2)/df.residual(lm.obj))
+    s <- sqrt(deviance(lm.obj)/df.residual(lm.obj))
     h <- lm.influence(lm.obj)$hat
     ((e/(s * (1 - h)))^2 * h)/p
 }
