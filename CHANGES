@@ -1,6 +1,19 @@
 		CHANGES IN R VERSION 0.62.2
 
+(The new functions predict.glm, poly, aov, alias, biplot.default and
+biplot.princop, update.default and rug all come from Brian D. Ripley,
+who is also responsible for finding and/or fixing a lot of the bugs)
+
 NEW FEATURES
+
+    o   predict.glm() added.
+
+    o   text() is generic.
+
+    o   update.default() (replaces update.glm() and update.lm()).
+        (This will only work if you comment out update.lm and
+	update.glm in the sources, or disable them with
+	update.lm<-function(object,...)NextMethod(), etc.)
 
     o	predict.lm() changed towards S-plus compatibility. Intervals are
 	still available via interval= argument.
@@ -19,7 +32,7 @@ NEW FEATURES
 
     o	alias() for displaying ``aliased'' factor levels in (>=2)way anova.
 
-    o	mva: Now has  biplot and biplot.princomp [B.Ripley]
+    o	mva: Now has  biplot and biplot.princomp
 
     o	rug() plot.
 
@@ -29,6 +42,58 @@ NEW FEATURES
         correct date)
 
 BUG FIXES
+
+    o   abbreviate() now always retains the first letter. 
+
+    o   attr() partial matches for attribute name.
+
+    o   axis() accepts graphical parameters.
+
+    o   binomial() accepts factor responses.
+
+    o   cbind() works with data frames. 
+
+    o   contrasts() gives simpler labels (like S) for factors with
+        two levels.
+
+    o   contrasts<-() now has a how.many= argument.
+
+    o   contour() and image() can accept a list to specify the matrix.
+
+    o   contr.poly() uses orthogonal polynomials (like S) not raw
+        polynomials.
+
+    o   data() could fail with a partial match to the dataset name.
+
+    o   density() works correctly if from= or to= are used.
+            n= can now take any value, not just a large power of 2.
+
+    o   expand.grid() now accepts more than two arguments, 
+        or a list of factors.
+
+    o   factor() and ordered() handle their levels argument better.
+
+    o   family.glm() now returns the correct family (including link etc).
+
+    o   legend() now knows about lwd.
+
+    o   match.args() works correctly for default arguments.
+
+    o   model.frame.lm() did not invoke `lm'.
+
+    o   model.matrix() calls model.frame() if needed.
+
+    o   model.response() now returns names, so glm() gives names to
+        residuals, fitted values, etc.
+
+    o   quasi() works in glm() (was missing aic component).
+
+    o   seq() sometimes omitted the final value due to rounding error.
+
+    o   terms.formula() and update.formula() now resolve `.' in formulae
+        and tidy up `(a + b) - b' etc.
+    
+    o   ... is now passed down correctly to functions inside functions.
 
     o   save.image didn't work (Martyn Plummer)
 
@@ -44,8 +109,6 @@ BUG FIXES
 
     o	density() default 'bw' now 0.9*(...) instead of 1.06*(...)
 				[=Silverman's rule of thumb].
-
-    o   update.glm and predict.glm  more consistent now [BDR, PD].
 
     o	detach(2) now works.
 
@@ -74,6 +137,7 @@ BUG FIXES
 	now use a MAKE environment variable if present.
 	R INSTALL only rebuilds man pages if they are not already
 	up to date.
+
 
 		CHANGES IN R VERSION 0.62.1
 
