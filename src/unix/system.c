@@ -30,7 +30,7 @@
 #include "Graphics.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
-#include "devX11.h"
+#include "devUI.h"
 #undef __SYSTEM__
 
 #include "Startup.h"

@@ -1,6 +1,4 @@
-/* Declarations (for devX11.c) which are not only there,
- * ------------ but also, e.g., in  system.c  [event loop]
- */
+/* Declarations of device  and UI pointers */
 
 #ifdef __SYSTEM__
 #define extern
@@ -29,6 +27,7 @@ extern int  (*ptr_R_ChooseFile)(int, char *, int);
 #ifdef __SYSTEM__
 #undef extern
 #endif
+
 int stub_X11DeviceDriver(DevDesc*, char*, double, double, double, double, 
 			 int, int);
 int stub_GnomeDeviceDriver(DevDesc*, char*, double, double, double);

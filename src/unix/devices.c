@@ -39,10 +39,10 @@ static char *SaveString(SEXP sxp, int offset)
     return s;
 }
 
-#include "../unix/devX11.h"
+#include "devUI.h"
 
 /*  X11 Device Driver Parameters:
- *  -----------------		--> ../unix/devX11.c
+ *  -----------------		--> X11/devX11.c
  *  display	= display
  *  width	= width in inches
  *  height	= height in inches
