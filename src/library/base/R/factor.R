@@ -41,6 +41,8 @@ codes.factor <- function(x)
   rank(levels(x))[x]
 }
 
+codes.ordered <- .Alias(as.numeric)
+
 "codes<-" <- function(x, value)
 {
   if ( length(value) == 1 )
@@ -48,8 +50,8 @@ codes.factor <- function(x)
   else if ( length(x) != length(value) )
     stop("Length mismatch in \"codes<-\"")
   ## S-plus again...
-  value<-order(levels(x))[value]
-  attributes(value)<-attributes(x)
+  if ( !is.ordered(x) ) value <- order(levels(x))[value]
+  attributes(value) <- attributes(x)
   value
 }
 
