@@ -1,6 +1,6 @@
 
-R : Copyright 1999, The R Development Core Team
-Version 0.65.0 Under development (unstable) (May 28, 1999)
+R : Copyright 2000, The R Development Core Team
+Version 0.99.0 Under development (unstable) (January 17, 2000)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -19,11 +19,23 @@ Type	"q()" to quit R.
 > ####	r|andom number generation
 > ####
 > ####	Functions for  ``d/p/q/r''
->
+> 
+> ###-- these are identical in ./arith-true.R ["fixme": use source(..)]
+> opt.conformance <- 0
+> Meps <- .Machine $ double.eps
+> options(rErr.eps = 1e-30)
+> rErr <- function(approx, true, eps = .Options$rErr.eps)
++ {
++     if(is.null(eps)) { eps <- 1e-30; options(rErr.eps = eps) }
++     ifelse(Mod(true) >= eps,
++ 	   1 - approx / true, # relative error
++ 	   true - approx)     # absolute error (e.g. when true=0)
++ }
+> 
 > if(!interactive()) .Random.seed <- c(0,rep(7654, 3))
->
+> 
 > ###--- Discrete Distributions: Simple Consistency Checks  pZZ = cumsum(dZZ)
->
+> 
 > ## Currently, just Wilcoxon  [should do this for all !]
 > is.sym <- TRUE
 > for(n in rpois(5, lam=6))
@@ -38,18 +50,24 @@ Type	"q()" to quit R.
 +     }
 > is.sym
 [1] TRUE
->
+> 
 > ##--- Cumulative Poisson '==' Cumulative Chi^2 :
 > ##--- Abramowitz & Stegun, p.941 :  26.4.21 (26.4.2)
 > n1 <- 20; n2 <- 16
 > for(lambda in rexp(n1))
 +     for(k in rpois(n2, lambda)) {
 + 	tst <- all.equal(1 - pchisq(2*lambda, 2*(k+1)),
-+ 			 sum(dpois(0:k, lambda=lambda)))
++ 			 pp <- sum(dpois(0:k, lambda=lambda)), tol = 100*Meps)
 + 	if(!(is.logical(tst) && tst))
 + 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
++ 	tst2 <- all.equal(pp, ppois(k, lambda=lambda), tol = 100*Meps)
++ 	if(!(is.logical(tst2) && tst2))
++ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
++ 	tst3 <- all.equal(1 - pp, ppois(k, lambda=lambda, lower.tail=FALSE))
++ 	if(!(is.logical(tst3) && tst3))
++ 	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
 +     }
->
+> 
 > ##--- Cumulative Binomial '==' Cumulative F :
 > ##--- Abramowitz & Stegun, p.945-6;  26.5.24  AND  26.5.28 :
 > n0 <- 50; n1 <- 16; n2 <- 20; n3 <- 8
@@ -84,7 +102,7 @@ n= 37 : ......................
 n= 39 : ......................
 n= 37 : ......................
 n= 50 : ......................
->
+> 
 > ##---  Gamma (incl. chi^2) Density :
 > x <- round(rgamma(100, shape = 2),2)
 > for(sh in round(rlnorm(30),2)) {
@@ -103,4 +121,21 @@ n= 50 : ......................
 +                 "\n  shape,scale=",formatC(c(sh, sig)),"\n")
 +     }
 + }
->
+> 
+> ## 2 Examples from  Wichura (1988); AS 241 Applied Statistics -- would be better
+> all.equal(qnorm(0.25),-0.6744897501960817, tol = 1e-14)
+[1] TRUE
+> all.equal(qnorm(0.001),-3.090232306168, tol = 1e-12)
+[1] TRUE
+> 
+> z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
+[1] TRUE
+> z <- rt(1000,3)
+> for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
++     cat("ERROR -- df = ", df, "\n")
+> 
+> ###==========  p <-> q  Inversion consistency =====================
+> p <- pnorm(z); ok <- 1e-5 < p & p < 1 - 1e-5
+> all.equal(z[ok], qnorm(p[ok]), tol= 1e-12)
+[1] TRUE
+> 
