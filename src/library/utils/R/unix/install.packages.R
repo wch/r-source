@@ -10,13 +10,12 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
                           "is missing: using", lib))
     }
     oneLib <- length(lib) == 1
-    localcran <- length(grep("^file:", contriburl)) > 0
-    if(!localcran) {
-        if (is.null(destdir)) {
-            tmpd <- tempfile("Rinstdir")
-            if (!dir.create(tmpd))
-                stop('Unable to create temp directory ', tmpd)
-        } else tmpd <- destdir
+    tmpd <- destdir
+    nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
+    if(is.null(destdir) && nonlocalcran) {
+        tmpd <- tempfile("Rinstdir")
+        if (!dir.create(tmpd))
+            stop('Unable to create temp directory ', tmpd)
     }
 
     if(dependencies && !oneLib) {
@@ -83,7 +82,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
                               "had non-zero exit status"))
         }
         cat("\n")
-        if(!localcran && is.null(destdir)) {
+        if(!is.null(tmpd) && is.null(destdir)) {
             answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
             if(answer == "y" | answer == "Y")
                 unlink(tmpd, TRUE)
@@ -91,7 +90,7 @@ install.packages <- function(pkgs, lib, CRAN = getOption("CRAN"),
                 cat("The packages are in", tmpd)
             cat("\n")
         }
-    } else unlink(tmpd, TRUE)
+    } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 
     invisible()
 }
@@ -104,8 +103,9 @@ download.packages <- function(pkgs, destdir, available = NULL,
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
-    localcran <- length(grep("^file:", contriburl)) > 0
-    if(!localcran && !dirTest(destdir)) stop("destdir is not a directory")
+    nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
+    if(nonlocalcran && !dirTest(destdir))
+        stop("destdir is not a directory")
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
 
@@ -124,12 +124,12 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 ok[ok][!keep] <- FALSE
             }
             fn <- paste(p, "_", available[ok, "Version"], ".tar.gz", sep="")
-            if(localcran){
-                fn <- paste(substring(contriburl, 6), fn, sep="/")
+            repos <- available[ok, "Repository"]
+            if(length(grep("^file:", repos)) > 0) { # local repository
+                fn <- paste(substring(repos, 6), fn, sep = "/")
                 retval <- rbind(retval, c(p, fn))
-            }
-            else{
-                url <- paste(available[ok, "Repository"], fn, sep="/")
+            } else {
+                url <- paste(repos, fn, sep="/")
                 destfile <- file.path(destdir, fn)
 
                 if(download.file(url, destfile, method) == 0)
