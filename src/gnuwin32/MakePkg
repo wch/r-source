@@ -62,7 +62,7 @@ INSTFILES=$(wildcard $(SPKG)/inst/*)
 # src Makefile?
 SRCMAKE=$(wildcard $(SSPKG)/Makefile.win)
 
-all:  bare  $(DATA) $(DYNLIB)
+all:  $(DPKG)/zzzz $(DYNLIB) $(DPKG)/R/$(PKG) $(DPKG)/demo $(DATA)
 bare: $(DPKG)/zzzz $(DPKG)/R/$(PKG) $(DPKG)/demo
 
 include $(RHOME)/src/gnuwin32/MkRules
@@ -116,7 +116,7 @@ endif
 	fi
 ifeq ($(strip $(STAMP)),YES)
 	@echo "  adding build stamp to DESCRIPTION"
-	@echo  "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave --vanilla >> ${DPKG}/DESCRIPTION
+	@echo "cat('Built: R ', R.version[['major']], '.', R.version[['minor']], ';  Win32;  ', format(Sys.time()), sep='')" | $(RHOME)/bin/Rterm --slave --vanilla >> ${DPKG}/DESCRIPTION
 endif
 
 $(DATA): $(DSOURCES)
@@ -137,6 +137,8 @@ ifeq ($(strip $(SRCMAKE)),)
 else
 	@$(MAKE) -C $(SSPKG) RHOME=$(RHOME) -f Makefile.win
 endif
+	@echo "  DLL made"
+	@echo
 
 FORCE:
 
