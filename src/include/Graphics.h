@@ -502,6 +502,7 @@ int MacDeviceDriver(char**, int, double*, int);
 #define initDisplayList		Rf_initDisplayList
 #define InitGraphics		Rf_InitGraphics
 #define KillAllDevices		Rf_KillAllDevices
+#define killDevice		Rf_killDevice
 #define KillDevice		Rf_KillDevice
 #define LTYget			Rf_LTYget
 #define LTYpar			Rf_LTYpar

@@ -5220,7 +5220,7 @@ int selectDevice(int devNum)
 	return selectDevice(nextDevice(devNum));
 }
 
-
+static
 void removeDevice(int devNum)
 {
     if ((devNum > 0) &&
@@ -5316,6 +5316,7 @@ void recordGraphicOperation(SEXP op, SEXP args, DevDesc *dd)
 }
 
 
+static
 void restoredpSaved(DevDesc *dd)
 {
     /* NOTE that not all params should be restored before playing */
