@@ -1324,6 +1324,7 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	}
 	if (res == 0) { /* timeout, no data available yet */
 	    used += tv.tv_sec + 1e-6 * tv.tv_usec;
+	    if (used > timeout) return(0);
 	    res = RxmlNanoFTPCheckResponse(ctxt);
 	    if (res < 0) {
 		closesocket(ctxt->dataFd); ctxt->dataFd = -1;
@@ -1352,7 +1353,6 @@ RxmlNanoFTPRead(void *ctx, void *dest, int len)
 	    closesocket(ctxt->dataFd); ctxt->dataFd = -1;
 	    return(-1);
 	} else  break;
-	if (used > timeout) return(0);
     }
     return got;
 }
