@@ -857,11 +857,11 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     /* NOTE: FindSubexprs is destructive, hence the duplication */
     PROTECT(ans = duplicate(expr));
     f_index = FindSubexprs(ans);
-    UNPROTECT(1);
     d_index = (int*)R_alloc(nderiv, sizeof(int));
     if (hessian) 
 	d2_index = (int*)R_alloc((nderiv * (1 + nderiv))/2, sizeof(int));
     else d2_index = d_index;/*-Wall*/
+    UNPROTECT(1);
     for(i=0, k=0; i<nderiv ; i++) {
 	PROTECT(ans = duplicate(expr));
 	PROTECT(ans = D(ans, install(CHAR(STRING_ELT(names, i)))));
@@ -984,15 +984,15 @@ SEXP do_deriv(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     else if (isString(funarg)) {
 	PROTECT(names = duplicate(funarg));
-	funarg = allocSExp(CLOSXP);
-	ans = allocList(length(names));
+	PROTECT(funarg = allocSExp(CLOSXP));
+	PROTECT(ans = allocList(length(names)));
 	SET_FORMALS(funarg, ans);
 	for(i = 0; i < length(names); i++) {
 	    SET_TAG(ans, install(CHAR(STRING_ELT(names, i))));
 	    SETCAR(ans, R_MissingArg);
 	    ans = CDR(ans);
 	}
-	UNPROTECT(1);
+	UNPROTECT(3);
 	SET_BODY(funarg, exprlist);
 	SET_CLOENV(funarg, R_GlobalEnv);
     }

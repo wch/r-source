@@ -288,6 +288,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   pointer protection in deriv (PR#953)
+
     o   Occasionally insane results of is.nan(NULL), is.na(NULL) (PR#952)
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
