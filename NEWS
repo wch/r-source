@@ -12,7 +12,10 @@
 NEW FEATURES
 
     o   hclust() takes new argument `members' allowing dissimilarity
-	matrices both for singletons (as until now) and clusters. 
+	matrices both for singletons (as until now) and clusters.
+
+    o	hist() now returns a "histogram" object and calls
+	new plot.histogram() for plotting.
 
     o	The more recent GNU regex from grep-2.4.2 is used.
 
@@ -29,7 +32,7 @@ NEW FEATURES
     o   Add-ons for utilities like perl or LaTeX have now a central
         place in $R_HOME/share. Migration of existing files might take
         a while, though.
- 
+
 
 
 	**************************************************
