@@ -69,7 +69,7 @@ int NextConnection()
     int i;
     for(i = 3; i < NCONNECTIONS; i++)
 	if(!Connections[i]) break;
-    if(i > NCONNECTIONS)
+    if(i >= NCONNECTIONS)
 	error("All connections are in use");
     return i;
 }

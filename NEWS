@@ -317,6 +317,9 @@ BUG FIXES
         the various combinations of super-classes and prototypes that
         can be supplied as unnamed arguments.
 
+    o	Internal code allowed one more connection to be allocated than
+	the table size, leading to segfaults. (PR#1333)
+
 
 
 	**************************************************
