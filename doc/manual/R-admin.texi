@@ -225,6 +225,22 @@ discrepancies.  To re-run the tests you would need
 make check FORCE=FORCE
 @end smallexample
 
+More comprehensive testing can be done by
+
+@smallexample
+make check-devel
+@end smallexample
+
+@noindent
+or
+
+@smallexample
+make check-all
+@end smallexample
+
+@noindent
+see @file{tests/README}.
+
 If these commands execute successfully, the @R{} binary will be copied
 to the @file{@var{R_HOME}/bin} directory.  In addition, a shell-script
 front-end called @file{R} will be created and copied to the same
@@ -1358,16 +1374,6 @@ native blas seems not to have been built with the flags needed to
 suppress @code{SIGFPE}'s.  Currently R does not set a signal handler for
 @code{SIGFPE} on platforms that support @acronym{IEEE} arithmetic, so
 these are fatal.
-
-@command{make check} passes with no problems.  
-@c @command{make test-all-extras} in the @file{tests} directory fails at the end of
-@c @code{reg-tests-1.R} since this system does not have @code{vsnprintf}.
-@c As currently written, the test at the end of @code{reg-tests-1.R} causes
-@c a segfault in this case.  You can complete the tests by executing
-
-@c @smallexample
-@c touch reg-tests-1.Rout
-@c @end smallexample
 
 
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
