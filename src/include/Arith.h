@@ -104,7 +104,7 @@ static int R_FINITE(double x) {
 */
 
 # ifndef HAVE_FINITE
-#  define R_FINITE(x)		((x) != R_NaReal)
+#  define R_FINITE(x)		((x) != R_NaReal && (x) != R_PosInf && (x) != R_NegInf)
 # else
 #  define R_FINITE(x)		finite(x)
 # endif

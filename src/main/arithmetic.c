@@ -137,8 +137,8 @@ void InitArithmetic()
 #else
     R_NaN = -DBL_MAX;
     R_NaReal = R_NaN;
-    R_PosInf = -DBL_MAX;
-    R_NegInf = DBL_MAX;
+    R_PosInf = DBL_MAX;
+    R_NegInf = -DBL_MAX;
 #ifdef Unix
     signal(SIGFPE, handle_fperror);
 #endif
