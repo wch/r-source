@@ -150,12 +150,12 @@ FUNTAB R_FunTab[] =
 {"vector",	do_makevector,	0,	11,	2,	PP_FUNCALL,	0},
 {"complex",	do_complex,	0,	11,	3,	PP_FUNCALL,	0},
 {"matrix",	do_matrix,	0,	11,	4,	PP_FUNCALL,	0},
-  /*MM(98/4/22){"array",	do_array,	0,	1,	2,	PP_FUNCALL,	0},*/
+/*MM(98/4/22){"array",	do_array,0,	1,	2,	PP_FUNCALL,	0},*/
 {"length",	do_length,	0,	1,	1,	PP_FUNCALL,	0},
 {"length<-",	do_lengthgets,	0,	1,	2,	PP_FUNCALL,	0},
 {"row",		do_rowscols,	1,	11,	1,	PP_FUNCALL,	0},
 {"col",		do_rowscols,	2,	11,	1,	PP_FUNCALL,	0},
-{"c",		do_c,		0,	0,	-1,	PP_FUNCALL,	0},
+{"c",/* bind.c:*/do_c,		0,	0,	-1,	PP_FUNCALL,	0},
 {"unlist",	do_c,		1,	0,	-1,	PP_FUNCALL,	0},
 {"cbind",	do_bind,	1,	11,	-1,	PP_FUNCALL,	0},
 {"rbind",	do_bind,	2,	11,	-1,	PP_FUNCALL,	0},
