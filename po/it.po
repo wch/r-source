@@ -51,7 +51,7 @@ msgstr "rcont2 [%d,%d]: exp underflow a 0; algoritmo interrotto"
 
 #: src/appl/strsignif.c:109
 msgid ".C(..): Width cannot be zero"
-msgstr "".C(..): La larghezza non può essere zero"
+msgstr ".C(..): La larghezza non può essere zero"
 
 #: src/appl/strsignif.c:123
 msgid ".C(..): 'type' must be \"integer\" for  \"d\"-format"
@@ -366,7 +366,7 @@ msgstr "ATTENZIONE: non è stato specificato un valore per max-mem-size\n"
 #: src/gnuwin32/system.c:862
 #, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
-msgstr "ATTENZIONE: valore non valido di  --max-mem-size: verrà ignorato"
+msgstr "ATTENZIONE: valore non valido di  --max-mem-size: verrà ignorato\n"
 
 #: src/gnuwin32/system.c:864
 #, c-format
@@ -376,7 +376,7 @@ msgstr "ATTENZIONE: valore di --max-mem-size=%lu'%c': troppo grande e quindi ign
 #: src/gnuwin32/system.c:869
 #, c-format
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
-msgstr "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato"
+msgstr "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
 
 #: src/gnuwin32/system.c:879 src/unix/system.c:230
 #, c-format
@@ -469,7 +469,7 @@ msgstr "ATTENZIONE: nessun valore specificato per %s\n"
 #: src/main/CommandLineArgs.c:205
 #, c-format
 msgid "WARNING: %s value is invalid: ignored\n"
-msgstr "ATTENZIONE: il valore 5s non è valido: verrà ignorato"
+msgstr "ATTENZIONE: il valore 5s non è valido: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:209
 #, c-format
@@ -482,7 +482,7 @@ msgstr "ATTENZIONE: nessun valore specificato per --max-ppsize\n"
 
 #: src/main/CommandLineArgs.c:231
 msgid "WARNING: -max-ppsize value is negative: ignored\n"
-msgstr "ATTENZIONE: il valore di -max-ppsize è negativo: verrà ignorato"
+msgstr "ATTENZIONE: il valore di -max-ppsize è negativo: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:233
 msgid "WARNING: -max-ppsize value is too small: ignored\n"
@@ -513,7 +513,7 @@ msgstr "ATTENZIONE: nessun valore di nsize specificato\n"
 #: src/main/CommandLineArgs.c:276
 #, c-format
 msgid "WARNING: --nsize value is invalid: ignored\n"
-msgstr "ATTENZIONE: il valore di --nsize non è valido: verrà ignorato"
+msgstr "ATTENZIONE: il valore di --nsize non è valido: verrà ignorato\n"
 
 #: src/main/CommandLineArgs.c:278
 #, c-format
@@ -607,7 +607,7 @@ msgstr "non è possibile allocare memoria per 'path'"
 #: src/main/Rdynload.c:561
 #, c-format
 msgid "DLLname %s is too long"
-msgstr "nome DLL %s" troppo lungo"
+msgstr "nome DLL %s troppo lungo"
 
 #: src/main/Rdynload.c:582
 msgid "could not allocate space for 'name'"
