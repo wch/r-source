@@ -22,7 +22,7 @@
 #include <Rconfig.h>
 #endif
 
-#include "Defn.h"/*-> Arith.h */
+#include "Defn.h"		/*-> Arith.h */
 #include "Mathlib.h"
 #include "Applic.h"		/* machar */
 #include "arithmetic.h"
@@ -64,7 +64,7 @@ int matherr(struct exception *exc)
 #endif
 
 #ifdef IEEE_754
-double R_Zero_Hack = 0.0;  /* Silence the Sun compiler */
+double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
 
 typedef union
 {
@@ -239,22 +239,23 @@ double R_pow(double x, double y) /* = x ^ y */
 #endif
     }
     if(!R_FINITE(x)) {
-	if(x > 0) /* Inf ^ y */
+	if(x > 0)		/* Inf ^ y */
 	    return((y < 0.)? 0. : R_PosInf);
-	else { /* (-Inf) ^ y */
+	else {			/* (-Inf) ^ y */
 	    if(R_FINITE(y) && y == floor(y)) /* (-Inf) ^ n */
 		return((y < 0.) ? 0. : (myfmod(y,2.) ? x  : -x));
 	}
     }
     if(!R_FINITE(y)) {
 	if(x >= 0) {
-	    if(y > 0) /* y == +Inf */
+	    if(y > 0)		/* y == +Inf */
 		return((x >= 1)? R_PosInf : 0.);
-	    else /* y == -Inf */
+	    else		/* y == -Inf */
 		return((x < 1) ? R_PosInf : 0.);
 	}
     }
-    return(R_NaN);/* all other cases: (-Inf)^{+-Inf, non-int}; (neg)^{+-Inf} */
+    return(R_NaN);		/* all other cases: (-Inf)^{+-Inf,
+				   non-int}; (neg)^{+-Inf} */
 }
 #endif
 
@@ -294,7 +295,7 @@ SEXP do_arith(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("operator with more than two arguments\n");
     }
-    return ans;/* never used; to keep -Wall happy */
+    return ans;			/* never used; to keep -Wall happy */
 }
 
 
@@ -352,7 +353,7 @@ static SEXP binary(SEXP op, SEXP args)
 	else if (xarray) {
 	    PROTECT(dims = getAttrib(x, R_DimSymbol));
 	}
-	else /*(yarray)*/ {
+	else {			/* (yarray) */
 	    PROTECT(dims = getAttrib(y, R_DimSymbol));
 	}
 	PROTECT(xnames = getAttrib(x, R_DimNamesSymbol));
@@ -383,7 +384,7 @@ static SEXP binary(SEXP op, SEXP args)
 	    PROTECT(tsp = getAttrib(x, R_TspSymbol));
 	    PROTECT(class = getAttrib(x, R_ClassSymbol));
 	}
-	else /*(yts)*/ {
+	else {			/* (yts) */ 
 	    if (length(y) < length(x))
 		ErrorMessage(lcall, ERROR_TSVEC_MISMATCH);
 	    PROTECT(tsp = getAttrib(y, R_TspSymbol));
@@ -412,8 +413,8 @@ static SEXP binary(SEXP op, SEXP args)
 	}
 
     PROTECT(x);
-    /* Don't set the dims if one argument is an array of */
-    /* size 0 and the other isn't of size zero, cos they're wrong */
+    /* Don't set the dims if one argument is an array of size 0 and the
+       other isn't of size zero, cos they're wrong */ 
     if (dims != R_NilValue) {
 	if (!((xarray && (nx == 0) && (ny != 0)) ||
 	      (yarray && (ny == 0) && (nx != 0)))){
@@ -431,7 +432,7 @@ static SEXP binary(SEXP op, SEXP args)
 	    setAttrib(x, R_NamesSymbol, ynames);
     }
 
-    if (xts || yts) { /* must set *after* dims! */
+    if (xts || yts) {		/* must set *after* dims! */
 	setAttrib(x, R_TspSymbol, tsp);
 	setAttrib(x, R_ClassSymbol, class);
 	UNPROTECT(2);
@@ -454,7 +455,7 @@ static SEXP unary(SEXP op, SEXP s1)
     default:
 	errorcall(lcall, "Invalid argument to unary operator\n");
     }
-    return s1;/* never used; to keep -Wall happy */
+    return s1;			/* never used; to keep -Wall happy */
 }
 
 static SEXP integer_unary(int code, SEXP s1)
@@ -477,7 +478,7 @@ static SEXP integer_unary(int code, SEXP s1)
     default:
 	error("illegal unary operator\n");
     }
-    return s1;/* never used; to keep -Wall happy */
+    return s1;			/* never used; to keep -Wall happy */
 }
 
 static SEXP real_unary(int code, SEXP s1)
@@ -504,7 +505,7 @@ static SEXP real_unary(int code, SEXP s1)
     default:
 	errorcall(lcall, "illegal unary operator\n");
     }
-    return s1;/* never used; to keep -Wall happy */
+    return s1;			/* never used; to keep -Wall happy */
 }
 
 /* i1 = i % n1; i2 = i % n2;
@@ -777,7 +778,7 @@ static SEXP real_binary(int code, SEXP s1, SEXP s2)
 static double unavailable(double x)
 {
     errorcall(lcall, "function unavailable in this R\n");
-    return 0.;/* to keep -Wall happy */
+    return 0.;			/* to keep -Wall happy */
 }
 #ifndef HAVE_ASINH
 #define asinh unavailable
@@ -828,7 +829,7 @@ static SEXP math1(SEXP op, SEXP sa, double(*f)())
 	return sy;
     }
     else errorcall(lcall, "Non-numeric argument to mathematical function\n");
-    return sa;/* never used; to keep -Wall happy */
+    return sa;			/* never used; to keep -Wall happy */
 }
 
 SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -845,7 +846,6 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     lcall = call;
 
     switch (PRIMVAL(op)) {
-    case 0: return math1(op, CAR(args), fabs);
     case 1: return math1(op, CAR(args), floor);
     case 2: return math1(op, CAR(args), ceil);
     case 3: return math1(op, CAR(args), sqrt);
@@ -879,7 +879,7 @@ SEXP do_math1(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "unimplemented real function\n");
     }
-    return s;/* never used; to keep -Wall happy */
+    return s;			/* never used; to keep -Wall happy */
 }
 
 static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
@@ -893,6 +893,8 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
 
     na = LENGTH(sa);
     nb = LENGTH(sb);
+    if ((na == 0) || (nb == 0))
+	return(allocVector(REALSXP, 0));
     n = (na < nb) ? nb : na;
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sb = coerceVector(sb, REALSXP));
@@ -900,30 +902,24 @@ static SEXP math2(SEXP op, SEXP sa, SEXP sb, double (*f)())
     a = REAL(sa);
     b = REAL(sb);
     y = REAL(sy);
-    if (na < 1 || nb < 1) {
-	for (i = 0; i < n; i++)
-	    y[i] = NA_REAL;
-    }
-    else {
-	naflag = 0;
-	mod_iterate(na, nb, ia, ib) {
-	    ai = a[ia];
-	    bi = b[ib];
-	    if (ISNAN(ai) || ISNAN(bi)) {
+    naflag = 0;
+    mod_iterate(na, nb, ia, ib) {
+	ai = a[ia];
+	bi = b[ib];
+	if (ISNAN(ai) || ISNAN(bi)) {
 #ifdef IEEE_754
-		y[i] = ai + bi;
+	    y[i] = ai + bi;
 #else
+	    y[i] = NA_REAL;
+#endif
+	}
+	else {
+	    y[i] = MATH_CHECK(f(ai, bi));
+	    if (ISNAN(y[i])) {
+#ifdef OLD
 		y[i] = NA_REAL;
 #endif
-	    }
-	    else {
-		y[i] = MATH_CHECK(f(ai, bi));
-		if (ISNAN(y[i])) {
-#ifdef OLD
-		    y[i] = NA_REAL;
-#endif
-		    naflag = 1;
-		}
+		naflag = 1;
 	    }
 	}
     }
@@ -994,7 +990,7 @@ SEXP do_math2(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "unimplemented real function\n");
     }
-    return op;/* never used; to keep -Wall happy */
+    return op;			/* never used; to keep -Wall happy */
 }
 
 SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1018,7 +1014,7 @@ SEXP do_atan(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("%d arguments passed to \"atan\" which requires 1 or 2\n", n);
     }
-    return s;/* never used; to keep -Wall happy */
+    return s;			/* never used; to keep -Wall happy */
 }
 
 SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -1027,7 +1023,7 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
-    b = R_NilValue;	/* -Wall */
+    b = R_NilValue;		/* -Wall */
     lcall = call;
     switch (n = length(args)) {
     case 1:
@@ -1036,6 +1032,8 @@ SEXP do_round(SEXP call, SEXP op, SEXP args, SEXP env)
 	REAL(b)[0] = 0;
 	break;
     case 2:
+	if (length(CADR(args)) == 0)
+	    errorcall(call, "illegal 2nd arg of length 0");	    
 	PROTECT(a = CAR(args));
 	PROTECT(b = CADR(args));
 	break;
@@ -1066,6 +1064,8 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
 	else
 	    return math1(op, CAR(args), R_log);
     case 2:
+	if (length(CADR(args)) == 0)
+	    errorcall(call, "illegal 2nd arg of length 0");	    
 	if (isComplex(CAR(args)) || isComplex(CDR(args)))
 	    return complex_math2(call, op, args, env);
 	else
@@ -1073,16 +1073,16 @@ SEXP do_log(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	error("%d arguments passed to \"log\" which requires 1 or 2\n", n);
     }
-    return s;/* never used; to keep -Wall happy */
+    return s;			/* never used; to keep -Wall happy */
 }
 
-SEXP do_signif (SEXP call, SEXP op, SEXP args, SEXP env)
+SEXP do_signif(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP a, b;
     int n;
     if (DispatchGroup("Math", call, op, args, env, &a))
 	return a;
-    b = R_NilValue;	/* -Wall */
+    b = R_NilValue;		/* -Wall */
     lcall = call;
     switch (n = length(args)) {
     case 1:
@@ -1091,6 +1091,8 @@ SEXP do_signif (SEXP call, SEXP op, SEXP args, SEXP env)
 	REAL(b)[0] = 6;
 	break;
     case 2:
+	if (length(CADR(args)) == 0)
+	    errorcall(call, "illegal 2nd arg of length 0");	    
 	PROTECT(a = CAR(args));
 	PROTECT(b = CADR(args));
 	break;
@@ -1119,11 +1121,14 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
     double ai, bi, ci, *a, *b, *c, *y;
 
     if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc))
-	errorcall(lcall, "Non-numeric argument to mathematical function\n");
+	errorcall(lcall,
+		  "Non-numeric argument to mathematical function\n");
 
     na = LENGTH(sa);
     nb = LENGTH(sb);
     nc = LENGTH(sc);
+    if ((na == 0) || (nb == 0) || (nc == 0))
+	return(allocVector(REALSXP, 0));
     n = na;
     if (n < nb) n = nb;
     if (n < nc) n = nc;
@@ -1135,31 +1140,25 @@ static SEXP math3(SEXP op, SEXP sa, SEXP sb, SEXP sc, double (*f)())
     b = REAL(sb);
     c = REAL(sc);
     y = REAL(sy);
-    if (na < 1 || nb < 1 || nc < 1) {
-	for (i = 0; i < n; i++)
-	    y[i] = NA_REAL;
-    }
-    else {
-	naflag = 0;
-	mod_iterate3 (na, nb, nc, ia, ib, ic) {
-	    ai = a[ia];
-	    bi = b[ib];
-	    ci = c[ic];
-	    if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci)) {
+    naflag = 0;
+    mod_iterate3 (na, nb, nc, ia, ib, ic) {
+	ai = a[ia];
+	bi = b[ib];
+	ci = c[ic];
+	if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci)) {
 #ifdef IEEE_754
-		y[i] = ai + bi + ci;
+	    y[i] = ai + bi + ci;
 #else
+	    y[i] = NA_REAL;
+#endif
+	}
+	else {
+	    y[i] = MATH_CHECK(f(ai, bi, ci));
+	    if (ISNAN(y[i])) {
+#ifdef OLD
 		y[i] = NA_REAL;
 #endif
-	    }
-	    else {
-		y[i] = MATH_CHECK(f(ai, bi, ci));
-		if (ISNAN(y[i])) {
-#ifdef OLD
-		    y[i] = NA_REAL;
-#endif
-		    naflag = 1;
-		}
+		naflag = 1;
 	    }
 	}
     }
@@ -1265,7 +1264,7 @@ SEXP do_math3(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "unimplemented real function\n");
     }
-    return op;/* never used; to keep -Wall happy */
+    return op;			/* never used; to keep -Wall happy */
 } /* do_math3() */
 
 #define mod_iterate4(n1,n2,n3,n4,i1,i2,i3,i4) for (i=i1=i2=i3=i4=0; i<n; \
@@ -1285,6 +1284,8 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     nb = LENGTH(sb);
     nc = LENGTH(sc);
     nd = LENGTH(sd);
+    if ((na == 0) || (nb == 0) || (nc == 0) || (nd == 0))
+	return(allocVector(REALSXP, 0));
     n = na;
     if (n < nb) n = nb;
     if (n < nc) n = nc;
@@ -1299,32 +1300,26 @@ static SEXP math4(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, double (*f)())
     c = REAL(sc);
     d = REAL(sd);
     y = REAL(sy);
-    if (na < 1 || nb < 1 || nc < 1 || nd < 1) {
-	for (i = 0; i < n; i++)
-	    y[i] = NA_REAL;
-    }
-    else {
-	naflag = 0;
-	mod_iterate4 (na, nb, nc, nd, ia, ib, ic, id) {
-	    ai = a[ia];
-	    bi = b[ib];
-	    ci = c[ic];
-	    di = d[id];
-	    if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di)) {
+    naflag = 0;
+    mod_iterate4 (na, nb, nc, nd, ia, ib, ic, id) {
+	ai = a[ia];
+	bi = b[ib];
+	ci = c[ic];
+	di = d[id];
+	if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di)) {
 #ifdef IEEE_754
-		y[i] = ai + bi + ci + di;
+	    y[i] = ai + bi + ci + di;
 #else
+	    y[i] = NA_REAL;
+#endif
+	}
+	else {
+	    y[i] = MATH_CHECK(f(ai, bi, ci, di));
+	    if (ISNAN(y[i])) {
+#ifdef OLD
 		y[i] = NA_REAL;
 #endif
-	    }
-	    else {
-		y[i] = MATH_CHECK(f(ai, bi, ci, di));
-		if (ISNAN(y[i])) {
-#ifdef OLD
-		    y[i] = NA_REAL;
-#endif
-		    naflag = 1;
-		}
+		naflag = 1;
 	    }
 	}
     }
@@ -1387,7 +1382,7 @@ SEXP do_math4(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "unimplemented real function\n");
     }
-    return op;/* never used; to keep -Wall happy */
+    return op;			/* never used; to keep -Wall happy */
 }
 
 #ifdef WHEN_MATH5_IS_THERE
@@ -1405,7 +1400,8 @@ static SEXP math5(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se,
     int i, ia, ib, ic, id, ie, n, na, nb, nc, nd, ne;
     double ai, bi, ci, di, ei, *a, *b, *c, *d, *e, *y;
 
-    if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) || !isNumeric(sd) || !isNumeric(se))
+    if (!isNumeric(sa) || !isNumeric(sb) || !isNumeric(sc) ||
+	!isNumeric(sd) || !isNumeric(se))
 	errorcall(lcall, "Non-numeric argument to mathematical function\n");
 
     na = LENGTH(sa);
@@ -1413,11 +1409,13 @@ static SEXP math5(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se,
     nc = LENGTH(sc);
     nd = LENGTH(sd);
     ne = LENGTH(se);
+    if ((na == 0) || (nb == 0) || (nc == 0) || (nd == 0) || (ne == 0))
+	return(allocVector(REALSXP, 0));
     n = na;
     if (n < nb) n = nb;
     if (n < nc) n = nc;
     if (n < nd) n = nd;
-    if (n < ne) n = ne; /* n = min(na,nb,nc,nd,ne) */
+    if (n < ne) n = ne;		/* n = max(na,nb,nc,nd,ne) */
     PROTECT(sa = coerceVector(sa, REALSXP));
     PROTECT(sb = coerceVector(sb, REALSXP));
     PROTECT(sc = coerceVector(sc, REALSXP));
@@ -1430,34 +1428,28 @@ static SEXP math5(SEXP op, SEXP sa, SEXP sb, SEXP sc, SEXP sd, SEXP se,
     d = REAL(sd);
     e = REAL(se);
     y = REAL(sy);
-    if (na < 1 || nb < 1 || nc < 1 || nd < 1 || ne < 1) {
-	for (i = 0; i < n; i++)
-	    y[i] = NA_REAL;
-    }
-    else {
-	naflag = 0;
-	mod_iterate5 (na, nb, nc, nd, ne,
-		      ia, ib, ic, id, ie) {
-	    ai = a[ia];
-	    bi = b[ib];
-	    ci = c[ic];
-	    di = d[id];
-	    ei = e[ie];
-	    if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di) || ISNAN(ei)) {
+    naflag = 0;
+    mod_iterate5 (na, nb, nc, nd, ne,
+		  ia, ib, ic, id, ie) {
+	ai = a[ia];
+	bi = b[ib];
+	ci = c[ic];
+	di = d[id];
+	ei = e[ie];
+	if (ISNAN(ai) || ISNAN(bi) || ISNAN(ci) || ISNAN(di) || ISNAN(ei)) {
 #ifdef IEEE_754
-		y[i] = ai + bi + ci + di + ei;
+	    y[i] = ai + bi + ci + di + ei;
 #else
+	    y[i] = NA_REAL;
+#endif
+	}
+	else {
+	    y[i] = MATH_CHECK(f(ai, bi, ci, di, ei));
+	    if (ISNAN(y[i])) {
+#ifdef OLD
 		y[i] = NA_REAL;
 #endif
-	    }
-	    else {
-		y[i] = MATH_CHECK(f(ai, bi, ci, di, ei));
-		if (ISNAN(y[i])) {
-#ifdef OLD
-		    y[i] = NA_REAL;
-#endif
-		    naflag = 1;
-		}
+		naflag = 1;
 	    }
 	}
     }
@@ -1525,7 +1517,7 @@ SEXP do_math5(SEXP call, SEXP op, SEXP args, SEXP env)
     default:
 	errorcall(call, "unimplemented real function\n");
     }
-    return op;/* never used; to keep -Wall happy */
+    return op;			/* never used; to keep -Wall happy */
 } /* do_math5() */
 
-#endif/* Math5 is there */
+#endif /* Math5 is there */
