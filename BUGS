@@ -207,6 +207,10 @@ Directory:  Low-level
 Subject: "[.data.frame" allows un-named 3rd subscript
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Mon, 18 Jun 2001 13:13:46 -0700 (PDT)
+* PR# 1063 *
+Subject: interrupting Sys.sleep
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Mon, 20 Aug 2001 13:55:29 -0700 (PDT)
 
 Directory:  Macintosh
 
@@ -262,6 +266,10 @@ Date: Wed, 11 Jul 2001 15:34:23 +0200 (MET DST)
 Subject: make check failure on SGI-IRIX6.5
 From: laurent@cbs.dtu.dk
 Date: Mon, 16 Jul 2001 15:06:17 +0200 (MET DST)
+* PR# 1062 *
+Subject: system.file("",package)
+From: Thomas Lumley <tlumley@u.washington.edu>
+Date: Sun, 19 Aug 2001 16:01:57 -0700 (PDT)
 
 Directory:  TooMuchAtOnce
 
@@ -273,55 +281,15 @@ none
 
 Directory:  incoming
 
-* PR# 1051 *
-Subject:      erappin' - daily morning update 8-13-01
-From: eminidaytrading <erap@eminidaytrading.com>
-Date:         Mon, 13 Aug 2001 09:18:54 -0400
 * PR# 1052 *
 Subject:  Inconsistent behaviour of is.vector? 
 From: J.C.Rougier@durham.ac.uk
 Date: Tue, 14 Aug 2001 09:04:57 +0100
-* PR# 1053 *
-Subject:      erappin' - daily morning update 8-14-01
-From: eminidaytrading <erap@eminidaytrading.com>
-Date:         Tue, 14 Aug 2001 07:00:20 -0400
 * PR# 1054 *
 Subject: documented but missing from the code
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
 Date: Wed, 15 Aug 2001 12:11:42 -0400
-* PR# 1055 *
-Subject:      books - special offers by eminidaytrading.com
-From: eminidaytrading <erap@eminidaytrading.com>
-Date:         Wed, 15 Aug 2001 22:01:34 -0400
-* PR# 1056 *
-Subject:      books - special offers by eminidaytrading.com
-From: eminidaytrading <erap@eminidaytrading.com>
-Date:         Thu, 16 Aug 2001 00:03:08 -0400
 * PR# 1057 *
 Subject: crt1.o skipped at configure time ?
 From: laurent@cbs.dtu.dk
 Date: Thu, 16 Aug 2001 08:52:34 +0200 (MET DST)
-* PR# 1058 *
-Subject:      erappin' - daily morning update 8-16-01
-From: eminidaytrading <erap@eminidaytrading.com>
-Date:         Thu, 16 Aug 2001 07:40:00 -0400
-* PR# 1059 *
-Subject: lm()
-From: JDiaz-Saiz@uh.edu
-Date: Thu, 16 Aug 2001 19:31:07 +0200 (MET DST)
-* PR# 1060 *
-Subject: Error in report.
-From: "Joaquin Diaz-Saiz" <xoaquin@worldnet.att.net>
-Date: Thu, 16 Aug 2001 20:13:32 -0500
-* PR# 1061 *
-Subject: error message in chol()
-From: jerome@stat.ubc.ca
-Date: Sun, 19 Aug 2001 23:05:47 +0200 (MET DST)
-* PR# 1062 *
-Subject: system.file("",package)
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Sun, 19 Aug 2001 16:01:57 -0700 (PDT)
-* PR# 1063 *
-Subject: interrupting Sys.sleep
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Mon, 20 Aug 2001 13:55:29 -0700 (PDT)
