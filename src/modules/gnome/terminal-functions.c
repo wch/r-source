@@ -91,44 +91,15 @@ void R_gtk_terminal_quit()
 
 static void file_open_ok(GtkWidget *widget, gpointer data)
 {
-  FILE *fp;
   SEXP img, lst;
   int i;
+  char *name;
 
   R_gtk_terminal_run("\n");
 
-  fp = R_fopen(gtk_file_selection_get_filename(GTK_FILE_SELECTION(data)), "r");
-
-  if(!fp) {
-    error("can't restore environment -- unable to open %s for reading", gtk_file_selection_get_filename(GTK_FILE_SELECTION(data)));
-    return;
-  }
-
-#ifdef OLD
-        FRAME(R_GlobalEnv) = R_LoadFromFile(fp, 0);
-#else
-	PROTECT(img = R_LoadFromFile(fp, 0));
-	switch (TYPEOF(img)) {
-	case LISTSXP:
-	    while (img != R_NilValue) {
-		defineVar(TAG(img), CAR(img), R_GlobalEnv);
-		img = CDR(img);
-	    }
-	    break;
-	case VECSXP:
-	    for (i = 0; i < LENGTH(img); i++) {
-		lst = VECTOR_ELT(img, i);
-		while (lst != R_NilValue) {
-		    defineVar(TAG(lst), CAR(lst), R_GlobalEnv);
-		    lst = CDR(lst);
-		}
-	    }
-	    break;
-	}
-        UNPROTECT(1);
-#endif
+  name = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
+  R_RestoreGlobalEnvFromFile(name, TRUE);
   Rprintf("Previously saved workspace restored\n");
-  fclose(fp);
 
   gtk_widget_hide(GTK_WIDGET(data));
 }
@@ -166,21 +137,12 @@ void R_gtk_terminal_file_save(GtkWidget *widget, gpointer data)
 
 static void file_saveas_ok(GtkWidget *widget, gpointer data)
 {
-  FILE *fp;
-  R_gtk_terminal_run("\n");
-
-  fp = R_fopen(gtk_file_selection_get_filename(GTK_FILE_SELECTION(data)), "w");
-		     
-  if (!fp) {
-    error("can't save environment -- unable to open %s for writing", gtk_file_selection_get_filename(GTK_FILE_SELECTION(data)));
-    return;
-  }
-
-  R_SaveToFile(FRAME(R_GlobalEnv), fp, 0);
-  Rprintf("Workspace saved\n");
-  fclose(fp);
-
-  gtk_widget_hide(GTK_WIDGET(data));
+    char *name;
+    R_gtk_terminal_run("\n");
+    name = gtk_file_selection_get_filename(GTK_FILE_SELECTION(data));
+    R_SaveGlobalEnvToFile(name);
+    Rprintf("Workspace saved\n");
+    gtk_widget_hide(GTK_WIDGET(data));
 }
 
 void R_gtk_terminal_file_saveas(GtkWidget *widget, gpointer data)
