@@ -41,7 +41,7 @@ approxfun(x, y = NULL,       method="linear",
     values to the left and right of the point then the value is
     \code{y0*(1-f)+y1*f} so that \code{f=0} is right-continuous and
     \code{f=1} is left-continuous.}
-  \item{ties}{Handling of tied \code{x} values. Either a function
+  \item{ties}{Handling of tied \code{x} values.  Either a function
     with a single vector argument returning a single number result or
     the string \code{"ordered"}.}
 }
