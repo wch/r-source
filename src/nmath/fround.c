@@ -35,6 +35,13 @@
 #define USE_BUILTIN_RINT
 #endif
 
+#ifdef WIN32
+/* earlier Windows headers did not include rint */
+#if __MINGW32_MAJOR_VERSION < 2
+#define USE_BUILTIN_RINT
+#endif
+#endif
+
 #ifdef USE_BUILTIN_RINT
 #define R_rint private_rint
 
