@@ -13,11 +13,14 @@ menu(choices, graphics = FALSE, title = "")
   \item{choices}{a character vector of choices}
   \item{graphics}{a logical indicating whether a graphics menu should be
     used.  Currently unused.}
-  \item{title}{a character string to be used as the title of the menu}
+  \item{title}{a character string to be used as the title of the menu.
+    \code{NULL} is also accepted.}
 }
 \details{
-  Ten or few items will be displayed in a single column, more in
-  multiple columns if possible.
+  Ten or fewer items will be displayed in a single column, more in
+  multiple columns if possible within the current display width.
+
+  No title is displayed if \code{title} is \code{NULL} or \code{""}.
 }
 \value{
   The number corresponding to the selected item, or 0 if no choice was

@@ -4,7 +4,7 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
         return(.Internal(select.list(list, preselect, multiple, title)))
     ## simple text-based alternatives.
     if(!multiple) {
-        res <- menu(list, , if(is.null(title)) "" else title)
+        res <- menu(list, , title)
         if(res < 1 || res > length(list)) return("")
         else return(list[res])
     } else {
@@ -19,7 +19,8 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
             nw <- nchar(fop[1], "w") + 2
             ncol <- getOption("width") %/% nw
             if(ncol > 1)
-                op <- paste(fop, c(rep("  ", ncol - 1), "\n"), collapse="")
+                op <- paste(fop, c(rep("  ", ncol - 1), "\n"),
+                            sep ="", collapse="")
             cat("", op, sep="\n")
         } else cat("", op, "", sep="\n")
         cat(gettext("Enter zero or more numbers separated by space\n"))
