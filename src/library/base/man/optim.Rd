@@ -207,7 +207,7 @@ optim(par, fn, gr = NULL,
   The code for method \code{"SANN"} was contributed by A. Trapletti.
 }
 
-\seealso{\code{\link{nlm}}, \code{\link{optimize}}}
+\seealso{\code{\link{nlm}}, \code{\link{optimize}}, \code{\link{constrOptim}}}
 
 \examples{
 fr <- function(x) {   ## Rosenbrock Banana function

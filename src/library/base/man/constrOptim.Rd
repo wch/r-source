@@ -1,6 +1,5 @@
 \name{constrOptim}
 \alias{constrOptim}
-%- Also NEED an `\alias' for EACH other topic documented here.
 \title{Linearly constrained optimisation}
 \description{
 Minimise a function subject to linear inequality constraints using an
@@ -58,11 +57,15 @@ constrOptim(theta, f, grad, ui, ci, mu = 1e-04, control = list(),
   number of outer iterations (calls to \code{optim})
 }
 
-\references{K Lange "Numerical Analysis for Statisticians" Springer
-  2001, p185ff }
+\references{
+  K. Lange \emph{Numerical Analysis for Statisticians.} Springer
+  2001, p185ff
+}
 
-\seealso{\code{\link{optim}}, especially \code{method="L-BGFS-B"} which
-  does box-constrained optimisation.}
+\seealso{
+  \code{\link{optim}}, especially \code{method="L-BGFS-B"} which
+  does box-constrained optimisation.
+}
 
 \examples{
      ## from optim
