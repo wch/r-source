@@ -11,21 +11,6 @@
 
 NEW FEATURES
 
-    o	is.loaded() accepts an argument PACKAGE to search within
-	a specific DLL/shared library.
-
-    o	New mechanism for explicitly registering native routines in a
-	DLL/shared library accessible via .C(), .Call(), .Fortran()
-	and .External(). This is potentially more robust than the 
-	existing dynamic lookup, since it checks the number of arguments,
-	type of the routine.
-
-    o	New mechanism allowing registration of C routines for converting R
-	objects to C pointers in .C() calls. Useful for references to data
-	in other languages and libraries (e.g. C and hdf5).
-
-    o	persp(), image() and qqnorm() are now generic functions.
-
     o	Changes to connections:
 
 	-  New function url() to read from URLs.  file() will also
@@ -62,14 +47,6 @@ NEW FEATURES
 	-  The `blocking' argument for file, fifo  and socket connections
 	   is now operational.
 
-    o	The default method for download.file() (and functions which use
-	it such as update.packages()) is now "internal", and uses code
-	compiled into R.
-
-    o	The internal ftp/http access code maintains the event loop, so
-	you can download whilst running tcltk or Rggobi, say. It can
-	be hooked into package XML too.
-
     o	Changes to date/time classes and functions:
 
 	-  Date/time objects now all inherit from class "POSIXt".
@@ -89,188 +66,18 @@ NEW FEATURES
 	-  Convenience generic functions weekdays(), months(), quarters()
 	   and julian() with methods for "POSIXt" objects.
 
-    o	`hessian' argument added to deriv and its methods.  A new function
-	deriv3() provides identical capabilities to deriv() except that
-	`hessian' is TRUE by default.
-	deriv(*, *, func = TRUE) for convenience.
-
-    o	New components in .Machine give the sizes of long, long long and
-	long double C types (or 0 if they do not exist).
-
-    o	postscript() allows user-specified encoding, with encoding files
-	supplied for Windows, Mac, Unicode and various others, and with
-	an appropriate platform-specific default.
-
-    o	New pdf() graphics driver.
-
-    o	eigen() tests for symmetry with a numerical tolerance.
-
-    o	New function checkFF() for checking foreign function calls.
-
-    o	package.skeleton() helps with creating new packages.
-
-    o	Generalised "birthday paradox" functions [pq]birthday.
-
-    o	dist() can now handle missing values, and zeroes in the	Canberra
-	distance.
-
-    o	stl() has more optional arguments for fine tuning, a summary()
-	and an improved plot() method.
-
-    o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
-
-    o	New replacement functions substr<-() and substring<-().
-
-    o	Under Unix, shlib modules for add-on packages are now linked
-	against R as a shared library (`libR') if this exists.	(This
-	allows for improved embedding of R into other applications.)
-
-    o	coplot() has a new argument `bar.bg' (color of conditioning bars),
-	gives nicer plots when the conditioners are factors, and allows
-	factors for x and y (treated almost as if unclass()ed) using new
-	argument `axlabels' {original ideas by Thomas Baummann}.
-
-    o	read.fwf() has a new argument `n' for specifying the number of
-	records (lines) read in.
-
-    o	plot.mts() has a new argument `panel' providing the same
-	functionality as in coplot().
-
-    o	outer() has a speed-up in the default case of a matrix outer
-	product (by Jonathan Rougier).
-
-    o	aperm() uses strides in the internal C code and so is
-	substantially faster (by Jonathan Rougier).
-
-    o	sort(x) now produces an error when x is not atomic instead of
-	just returning x.
-
-    o	New function is.unsorted() the C version of which also speeds up
-	.Internal(sort()) for sorted input.
-
-    o	New function integrate() with S-compatible call.
-
-    o	New function col2rgb() for color conversion of names, hex, or
-	integer.
-
-    o	Support for package-specific demo scripts (R code).  demo() now
-	has new arguments to specify the location of demos and to allow
-	for running base demos as part of `make check'.
-
-    o	Perl scripts now use Cwd::cwd() in place of Cwd::getcwd(), as
-	cwd() can be much faster.
-
-    o	New function capabilities() to report optional capabilities
-	such as jpeg, png, tcltk, gzfile and url support.
-
-    o	split() now allows splitting on a list of factors in which case
-	their interaction defines the grouping.
-
-    o	rep() now handles lists (as generic vectors).
-
-    o	Arguments `pkg' and `lib' of system.file() have been renamed to
-	`package' and `lib.loc', respectively, to be consistent with
-	related functions.  The old names are deprecated.  Argument
-	`package' must now specify a single package.
-
-    o	New function strwrap() for formatting character strings into
-	paragraphs.
-
-    o	New function formatDL() for formatting description lists.
-
-    o	New function write.dcf() for writing data in Debian Control File
-	format.	 parse.dcf() has been replaced by (much faster)	internal
-	read.dcf().
-
-    o	New function oneway.test() in package ctest for testing for
-	equal means in a one-way layout, assuming normality but not
-	necessarily equal variances.
-
-    o	Dataset swiss now has row names.
+    o	Coercion from real to integer now gives NA for out-of-range
+	values, rather than the most extreme integer of the same sign.
 
     o	The Ansari-Bradley, Bartlett, Fligner-Killeen, Friedman,
 	Kruskal-Wallis, Mood, Quade, t, and Wilcoxon tests as well as
 	cor.test() and var.test() in package ctest now have formula
 	interfaces.
 
-    o	R::Dcf.pm can now also handle files with more than one record
-	and checks (a little bit) for continuation lines without leading
-	whitespace.
-
-    o	[dpqr]nbinom also accept an alternative parametrization via the
-	mean and the dispersion parameter (thanks to Ben Bolker).
-
-    o	A function is allowed as the error option, as an alternative to
-	an expression.	(The blue book only allows a function; current
-	S-Plus a function or an expression.)
-
-    o	Exact p-values are available for the two-sided two-sample
-	Kolmogorov-Smirnov test.
-
-    o	The Wilcoxon and Ansari-Bradley tests now return point
-	estimators of the location or scale parameter of interest along
-	with confidence intervals for these.
-
-    o	The INSTALL command for package installation allows a `--save'
-	option.	 Using it causes a binary image of the package contents
-	to be created at INSTALL time and loaded when the library is
-	attached.  This saves time, but also uses a more standard way
-	of source-ing the package.  Packages that do more than just
-	assign object definitions may need to install with `--save'.
-	Putting a file `install.R' in the package directory makes
-	`--save' the default behavior.  If that file is not empty, its
-	contents should be R commands executed at the end of creating
-	the image.
-	There is also a new command line option `--configure-vals' for
-	passing variables to the configure script of a package.
-
-    o	scan() has a new argument `multi.line' for S compatibility,
-	but the default remains the opposite of S (records can cross
-	line boundaries by default).
-
-    o	If not explicitly given a library tree to install to or remove
-	from, respectively, R CMD INSTALL and R CMD REMOVE now operate
-	on the first directory given in `R_LIBS' if this is set and
-	non-null, and the default library otherwise.
-
-    o	Functions httpclient(), read.table.url(), scan.url() and
-	source.url() are now deprecated, and hence method="socket' in
-	download.file() is.  Use url connections instead: in
-	particular URLs can be specified for read.table(), scan() and
-	source().
-
-    o	Formerly deprecated function getenv() is now defunct.
-
-    o	prompt() improved for data sets, particularly non-dataframes.
-
-    o	read.table() now uses a single pass through the dataset.
-
-    o	R CMD check now also checks the keyword entries against the list
-	of standard keywords, for code/documentation mismatches (this
-	can be turned off by the command line option `--no-codoc'), and
-	for sufficient file permissions (Unix only).  There is a new check
-	for the correct usage of library.dynam.
-
-	It also has a new command line option `--use-gct' to use 
-	`gctorture(TRUE)' when running R code.
-
-    o	Matrix multiplication functions %*% and crossprod now use a
+    o	Matrix multiplication functions %*% and crossprod() now use a
 	level-3 BLAS routine dgemm.  When R is linked with the ATLAS
 	or other enhanced BLAS libraries this can be substantially
 	faster than the previous code.
-
-    o	R CMD Rd2dvi has better support for producing reference manuals
-	for packages and package bundles.
-
-    o	Coercion from real to integer now gives NA for out-of-range
-	values, rather than the most extreme integer of the same sign.
-
-    o	lm() now passes `...' to the low level functions for regression
-	fitting.
-
-    o	New manual `R Installation and Administration' with fuller
-	details on the installation process: file `INSTALL' is now a
-	brief introduction referencing that manual.
 
     o	New functions La.eigen() and La.svd() for eigenvector and
 	singular value decompositions, based on LAPACK.	 These are
@@ -286,17 +93,87 @@ NEW FEATURES
 
 	qr, qr.coef, qr.solve, qr.qy, qr.qty, solve.default, svd, La.svd.
 
-    o	Contingency tables created by xtabs() or table() now have a
-	summary() method.
+
+
+    o	aperm() uses strides in the internal C code and so is
+	substantially faster (by Jonathan Rougier).
+
+    o	The four bessel[IJKY](x,nu) functions are now defined for nu < 0.
+
+    o	[dpqr]nbinom also accept an alternative parametrization via the
+	mean and the dispersion parameter (thanks to Ben Bolker).
+
+    o	Generalised "birthday paradox" functions [pq]birthday.
+
+    o	boxplot() and bxp() have a new argument `at'
+
+    o	New function capabilities() to report optional capabilities
+	such as jpeg, png, tcltk, gzfile and url support.
+
+    o	New function checkFF() for checking foreign function calls.
+
+    o	New function col2rgb() for color conversion of names, hex, or
+	integer.
+
+    o	coplot() has a new argument `bar.bg' (color of conditioning bars),
+	gives nicer plots when the conditioners are factors, and allows
+	factors for x and y (treated almost as if unclass()ed) using new
+	argument `axlabels'.  [original ideas by Thomas Baummann]
+
+    o	`hessian' argument added to deriv() and its methods.  A new function
+	deriv3() provides identical capabilities to deriv() except that
+	`hessian' is TRUE by default.
+	deriv(*, *, func = TRUE) for convenience.
+
+    o	New dev.interactive() function, useful for setting defaults for
+	par(ask=*) in multifigure plots.
+
+    o	dist() in package mva can now handle missing values, and
+	zeroes in the Canberra distance.
+
+    o	The default method for download.file() (and functions which use
+	it such as update.packages()) is now "internal", and uses code
+	compiled into R.
+
+    o	eigen() tests for symmetry with a numerical tolerance.
+
+    o	New function formatDL() for formatting description lists.
+
+    o	New argument `nsmall' to format.default(), for S-PLUS
+	compatibility (and used in various packages).
+
+    o	?/help() now advertises help.search() if it fails to find a topic.
+
+    o	image() is now a generic function.
+
+    o	New function integrate() with S-compatible call.
+
+    o	New function is.unsorted() the C version of which also speeds up
+	.Internal(sort()) for sorted input.
+
+    o	is.loaded() accepts an argument PACKAGE to search within
+	a specific DLL/shared library.
+
+    o	Exact p-values are available for the two-sided two-sample
+	Kolmogorov-Smirnov test.
+
+    o	lm() now passes `...' to the low level functions for regression
+	fitting.
+
+    o	Generic functions logLik() and AIC() moved from packages nls
+	and nlme to base, as well as their *.lm methods.
+
+    o	New components in .Machine give the sizes of long, long long and
+	long double C types (or 0 if they do not exist).
+
+    o	merge.data.frame() has new arguments, `all[.xy]' and `suffixes',
+	for S compatibility.
 
     o	model.frame() now calls na.action with the terms attribute set
 	on the data frame (needed to distiguish the response, for
 	example).
 
-    o	print.htest() can now handle test names that are longer than
-	one line.
-
-    o	New generic functions naresid(), napredict() and naprint()
+     o	New generic functions naresid(), napredict() and naprint()
 	(formerly in packages survival5 and MASS, also used in rpart).
 	Also na.exclude(), a variant on na.omit() that is handled
 	differently by naresid() and napredict().
@@ -304,44 +181,234 @@ NEW FEATURES
 	The default, lm and glm methods for fitted, residuals, predict
 	and weights make use of these.
 
-    o	New argument `nsmall' to format.default(), for S-PLUS
-	compatibility (and used in various packages).
+   o	New function oneway.test() in package ctest for testing for
+	equal means in a one-way layout, assuming normality but not
+	necessarily equal variances.
 
-    o	Generic functions logLik() and AIC() moved from nls an nlme to
-	base, as well as their *.lm methods.
+    o	options(error) accepts a function, as an alternative to
+	an expression.	(The Blue Book only allows a function; current
+	S-PLUS a function or an expression.)
+
+    o	outer() has a speed-up in the default case of a matrix outer
+	product (by Jonathan Rougier).
+
+    o	package.skeleton() helps with creating new packages.
+
+    o	New pdf() graphics driver.
+
+    o	persp() is now a generic function.
 
     o	plot.acf() makes better use of white space for `nser > 2', has
 	new optional arguments and uses a much better layout when more
 	than one page of plots is produced.
 
-    o	New   dev.interactive()	 function, useful for setting defaults for
-	par(ask=*) in multifigure plots.
+    o	plot.mts() has a new argument `panel' providing the same
+	functionality as in coplot().
+
+    o	postscript() allows user-specified encoding, with encoding files
+	supplied for Windows, Mac, Unicode and various others, and with
+	an appropriate platform-specific default.
+
+    o	print.htest() can now handle test names that are longer than
+	one line.
+
+    o	prompt() improved for data sets, particularly non-dataframes.
+
+    o	qqnorm() is now a generic function.
+
+    o	read.fwf() has a new argument `n' for specifying the number of
+	records (lines) read in.
+
+    o	read.table() now uses a single pass through the dataset.
+
+    o	rep() now handles lists (as generic vectors).
+
+    o	scan() has a new argument `multi.line' for S compatibility,
+	but the default remains the opposite of S (records can cross
+	line boundaries by default).
+
+    o	sort(x) now produces an error when x is not atomic instead of
+	just returning x.
+
+    o	split() now allows splitting on a list of factors in which case
+	their interaction defines the grouping.
+
+    o	stl() has more optional arguments for fine tuning, a summary()
+	and an improved plot() method.
+
+    o	New function strwrap() for formatting character strings into
+	paragraphs.
+
+    o	New replacement functions substr<-() and substring<-().
+
+    o	Dataset swiss now has row names.
+
+    o	Arguments `pkg' and `lib' of system.file() have been renamed to
+	`package' and `lib.loc', respectively, to be consistent with
+	related functions.  The old names are deprecated.  Argument
+	`package' must now specify a single package.
+
+    o	The Wilcoxon and Ansari-Bradley tests now return point
+	estimators of the location or scale parameter of interest along
+	with confidence intervals for these.
+
+    o	New function write.dcf() for writing data in Debian Control File
+	format.	 parse.dcf() has been replaced by (much faster)	internal
+	read.dcf().
+
+    o	Contingency tables created by xtabs() or table() now have a
+	summary() method.
+
+
+    o	Functions httpclient(), read.table.url(), scan.url() and
+	source.url() are now deprecated, and hence method="socket' in
+	download.file() is.  Use url connections instead: in
+	particular URLs can be specified for read.table(), scan() and
+	source().
+
+    o	Formerly deprecated function getenv() is now defunct.
+
+
+    o	Support for package-specific demo scripts (R code).  demo() now
+	has new arguments to specify the location of demos and to allow
+	for running base demos as part of `make check'.
+
+    o	If not explicitly given a library tree to install to or remove
+	from, respectively, R CMD INSTALL and R CMD REMOVE now operate
+	on the first directory given in `R_LIBS' if this is set and
+	non-null, and the default library otherwise.
+
+    o	R CMD INSTALL and package.description() fix some common problems
+	of DESCRIPTION files (blank lines, ...)
+
+    o	The INSTALL command for package installation allows a `--save'
+	option.	 Using it causes a binary image of the package contents
+	to be created at INSTALL time and loaded when the library is
+	attached.  This saves time, but also uses a more standard way
+	of source-ing the package.  Packages that do more than just
+	assign object definitions may need to install with `--save'.
+	Putting a file `install.R' in the package directory makes
+	`--save' the default behavior.  If that file is not empty, its
+	contents should be R commands executed at the end of creating
+	the image.
+
+	There is also a new command line option `--configure-vals' for
+	passing variables to the configure script of a package.
+
+    o	R CMD check now also checks the keyword entries against the list
+	of standard keywords, for code/documentation mismatches (this
+	can be turned off by the command line option `--no-codoc'), and
+	for sufficient file permissions (Unix only).  There is a new check
+	for the correct usage of library.dynam.
+
+	It also has a new command line option `--use-gct' to use
+	`gctorture(TRUE)' when running R code.
+
+    o	R CMD Rd2dvi has better support for producing reference manuals
+	for packages and package bundles.
+
+    o	configure now tests for the versions of jpeg (>= 6b) and
+	libpng (>= 1.0.5).
+
+    o	Perl scripts now use Cwd::cwd() in place of Cwd::getcwd(), as
+	cwd() can be much faster.
+
+    o	R::Dcf.pm can now also handle files with more than one record
+	and checks (a little bit) for continuation lines without leading
+	whitespace.
+
+
+    o	New manual `R Installation and Administration' with fuller
+	details on the installation process: file `INSTALL' is now a
+	brief introduction referencing that manual.
 
     o	New keyword `internal' which can be used to hide objects that
 	are not part of the API from indices like the alphabetical
 	lists in the HTML help system.
 
-    o	configure now tests for the versions of jpeg (>= 6b) and 
-	libpng (>= 1.0.5).
 
-    o	?/help() now advertises help.search() if it fails to find a topic.
+    o	Under Unix, shlib modules for add-on packages are now linked
+	against R as a shared library (`libR') if this exists.	(This
+	allows for improved embedding of R into other applications.)
 
-    o	merge.data.frame() has new arguments, `all[.xy]' and `suffixes',
-	for S compatibility.
+    o	New mechanism for explicitly registering native routines in a
+	DLL/shared library accessible via .C(), .Call(), .Fortran()
+	and .External(). This is potentially more robust than the
+	existing dynamic lookup, since it checks the number of arguments,
+	type of the routine.
 
-    o	boxplot() and bxp() have a new argument `at'
+    o	New mechanism allowing registration of C routines for converting R
+	objects to C pointers in .C() calls. Useful for references to data
+	in other languages and libraries (e.g. C and hdf5).
+
+    o	The internal ftp/http access code maintains the event loop, so
+	you can download whilst running tcltk or Rggobi, say. It can
+	be hooked into package XML too.
 
 
 
 BUG FIXES
 
-    o   sign of pearson residuals was wrong for reciprocal link (PR#862)
+    o	boxplot.stats() now returns the correct `n' component in the case of
+	NAs. This also affects `conf', the notch length (PR#967).
+
+    o	the "coef = 0" fix (PR#917) to boxplot.stats() broke
+	boxplot.stats(do.out = FALSE).
+
+    o	curve(* , add = FALSE) now works correctly again if used when
+	par("xlog") is true.
+
+    o	Printing a dataframe with a column called "row.names" or
+	"check.names" omitted the column.
+
+    o	data.frame(a=1, b=2)[1, -(1:2)]  now works, giving an empty
+	data frame.  as.matrix(df), deparse() and dput() now work for
+	empty data frames.
+
+    o	dbeta() could return zero erroneously on some platforms where
+	roundoff makes e.g. 1.3 - 1 > (1.3 + 1) - 2 (Solaris and HP-UX
+	were affected). (PR#970)
+
+    o	pointer protection in deriv() (PR#953)
+
+    o	format() on character arrays was losing the dimensions.
+
+    o	hist.default() was ignoring its `probability' argument for
+	equi-spaced breaks.
+
+    o	Occasionally insane results of is.nan(NULL), is.na(NULL) (PR#952)
+
+    o	ks.test() in package ctest now had the one-sided alternatives in
+	the one-sample case reversed (PR#934).
+
+    o	ls.str() and lsf.str() now work better with pos > 1, and are
+	correctly documented (PR#899).
+
+    o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
+
+    o	promax() was not using its `m' argument (m=4 was always used).
+
+    o	qr.X() was ignoring pivoting (which happens only in
+	rank-deficient cases).
+
+    o   sign of Pearson residuals was wrong for reciprocal link (PR#862)
+
+    o	The algorithm for determining starting estimates in the SSfpl
+	self-starting model in the nls package was changed following a
+	suggestion by Phillipe Grosjean <phgrosje@ulb.ac.be>
+
+    o	svd(x)$v was not a matrix when x had only 1 row (PR#963).
+
+    o	symnum(x) behaves more reasonably for zero length or non-numeric x.
+
+    o	The implementation of sys.function() did not work when the
+	current function was already a function (e.g., a closure).
+
+    o   tapply() had "..." argument after simplify=, which made it
+	incompatible with S when passing additional unnamed arguments to FUN.
 
     o   use formula environments in xy.coords() (PR#932)
 
-    o	pointer protection in deriv (PR#953)
-
-    o	Occasionally insane results of is.nan(NULL), is.na(NULL) (PR#952)
 
     o	Unused entry points in `src/appl/fortran.c' and `Fortran.h'
 	have been removed.
@@ -349,75 +416,21 @@ BUG FIXES
     o	Unused directory `src/f2clib' and header `src/include/R_ext/f2c.h'
 	have been removed.
 
-    o	plot(1:2, xaxs = "i") now gives both "1.0" and "2.0" x-axis labels.
-
-    o	symnum(x) behaves more reasonably for zero length or non-numeric x.
-
-    o	R CMD INSTALL and package.description() fix some common problems
-	of DESCRIPTION files (blank lines, ...)
-
-    o	the "coef = 0" fix (PR#917) to boxplot.stats() accidentally broke
-	boxplot.stats(do.out = FALSE).
-
     o	The documentation and parts of the parse/deparse mechanism
 	indicated that there was an operator `%'. Corrected (PR#925).
+
     o	Fixed some cases where the deparser gave code that threw a
 	syntax error when parsed.
 
-    o	The implementation of sys.function() did not work when the
-	current function was already a function (e.g., a closure).
-
     o	Using a pushback with more than two lines at a time could crash.
-
-    o	hist.default() was ignoring its `probability' argument for
-	equi-spaced breaks.
-
-    o	Printing a dataframe with a column called "row.names" or
-	"check.names" omitted the column.
-
-    o	curve(* , add = FALSE) now works correctly again if used when
-	par("xlog") is true.
 
     o	Eliminate or warn on use of .Last.value in help examples, since
 	.Last.value is only set from top-level expressions (and was
 	incorrectly documented).
 
-    o	The algorithm for determining starting estimates in the SSfpl
-	self-starting model in the nls package was changed following a
-	suggestion by Phillipe Grosjean <phgrosje@ulb.ac.be>
-
     o	asInteger was ignoring integer overflow (PR#929 and others).
 
-    o	ls.str() and lsf.str() now work better with pos > 1, and are
-	correctly documented (PR#899).
 
-    o	ks.test() in package ctest now had the one-sided alternatives in
-	the one-sample case reversed (PR#934).
-
-    o	qr.X() was ignoring pivoting (which happens only in
-	rank-deficient cases).
-
-    o	format() on character arrays was losing the dimensions.
-
-    o	svd(x)$v was not a matrix when x had only 1 row (PR#963).
-
-    o	boxplot.stats() now returns the correct `n' component in the case of
-	NAs. This also affects `conf', the notch length (PR#967).
-
-    o   tapply() had "..." argument after simplify=, which made it
-	incompatible with S when passing additional unnamed arguments to FUN.
-
-    o	dbeta() could return zero erroneously on some platforms where 
-	roundoff makes e.g. 1.3 - 1 > (1.3 + 1) - 2 (Solaris and HP-UX
-	were affected). (PR#970)
-
-    o	data.frame(a=1,b=2)[1,-(1:2)]  now works, giving empty df.
-	as.matrix( df ) now works for empty data.frames.
-	deparse() and dput() now work for empty data.frames.
-
-    o	promax() was not using the `m' argument (m=4 was always used).
-
-    
 
 	**************************************************
 	*						 *
