@@ -60,7 +60,7 @@ static menubar RMenuBar;
 static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
-    mmanext, mmanlang, mapropos, mhelpstart, mhelpsearch, mFAQ, 
+    mmanext, mmanlang, mapropos, mhelpstart, mhelpsearch, mFAQ,
     mrwFAQ, mpkgl, mpkgi, mpkgil, mpkgb, mpkgu, mpkgbu, mde;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext;
 static menu m, mman;
@@ -412,7 +412,7 @@ static void menuhelpsearch(control m)
 
     if (!ConsoleAcceptCmd) return;
     s = askstring("Search help", olds);
-    if (s) {
+    if (s && strlen(s)) {
 	snprintf(cmd, 1024, "help.search(\"%s\")", s);
 	if (strlen(s) > 256) s[255] = '\0';
 	strcpy(olds, s);
@@ -527,7 +527,7 @@ static void menuact(control m)
 
 void readconsolecfg()
 {
-    int   consoler, consolec, consolex, consoley, pagerrow, pagercol, 
+    int   consoler, consolec, consolex, consoley, pagerrow, pagercol,
 	multiplewin, widthonresize;
     int   bufbytes, buflines;
     rgb   consolebg, consolefg, consoleuser, highlight ;
@@ -945,11 +945,7 @@ int setupui()
     if (!check_doc_file("doc\\html\\faq.html")) disable(mFAQ);
     MCHECK(mrwFAQ = newmenuitem("FAQ on R for &Windows", 0, menurwFAQ));
     if (!check_doc_file("doc\\html\\rw-faq.html")) disable(mrwFAQ);
-    MCHECK(newmenuitem("-", 0, NULL));
-    MCHECK(mhelp = newmenuitem("R functions (text)...", 0, menuhelp));
-    MCHECK(mhelpstart = newmenuitem("Html help", 0, menuhelpstart));
-    MCHECK(mhelpsearch = newmenuitem("Search help...", 0, menuhelpsearch));
-    if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
+
     MCHECK(mman = newsubmenu(m, "Manuals"));
     MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, menumainman));
     lmanintro = check_doc_file("doc\\manual\\R-intro.pdf");
@@ -969,6 +965,11 @@ int setupui()
     if (!lmanintro && !lmanref && !lmanlang && !lmanext) disable(mman);
     addto(m);
 
+    MCHECK(newmenuitem("-", 0, NULL));
+    MCHECK(mhelp = newmenuitem("R functions (text)...", 0, menuhelp));
+    MCHECK(mhelpstart = newmenuitem("Html help", 0, menuhelpstart));
+    if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
+    MCHECK(mhelpsearch = newmenuitem("Search help...", 0, menuhelpsearch));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mapropos = newmenuitem("Apropos...", 0, menuapropos));
     MCHECK(newmenuitem("-", 0, NULL));
