@@ -31,4 +31,8 @@ local <-
 
 Recall <- function(...) .Internal(Recall(...))
 
+with <- function(data, expr, ...) UseMethod("with")
+
+with.default <- function(data, expr, ...)
+    eval(substitute(expr), data, enclos=parent.frame())
 

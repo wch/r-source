@@ -419,6 +419,9 @@ NEW FEATURES
 
     o	New capabilities() options "GNOME" and "IEEE754".
 
+    o	New function with() for evaluating expressions in environments
+	constructed from data.
+
 
 DOCUMENTATION CHANGES
 
