@@ -282,6 +282,8 @@ NEW FEATURES
     o   New function reg.finalizer() to provide R interface to
         finalization.  
 
+    o   new function reshape() extends reshape{Long,Wide} to multiple
+        variables. 
 
 BUG FIXES
 
