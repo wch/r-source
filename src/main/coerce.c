@@ -788,6 +788,14 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	for (i = 0; i < n;  i++) {
 	    if (isString(VECTOR_ELT(v, i)) && length(VECTOR_ELT(v, i)) == 1)
 		SET_STRING_ELT(rval, i, STRING_ELT(VECTOR_ELT(v, i), 0));
+#if 0
+	    /* this will make as.character(list(s)) not backquote
+	     * non-syntactic name s. It is not entirely clear that
+	     * that is really desirable though....
+	     */
+	    else if (isSymbol(VECTOR_ELT(v, i)))
+	    	SET_STRING_ELT(rval, i, PRINTNAME(VECTOR_ELT(v, i)));
+#endif
 	    else
 		SET_STRING_ELT(rval, i,
 			       STRING_ELT(deparse1line(VECTOR_ELT(v, i), 0), 0));
@@ -1802,8 +1810,10 @@ SEXP substituteList(SEXP el, SEXP rho)
 	return t;
     }
     else {
-	PROTECT(h = substitute(CAR(el), rho));
+	/* This could involve deep recursion on long lists, so do tail
+	 * first to avoid overflowing the protect stack */
 	PROTECT(t = substituteList(CDR(el), rho));
+	PROTECT(h = substitute(CAR(el), rho));
 	if (isLanguage(el))
 	    t = LCONS(h, t);
 	else
