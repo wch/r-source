@@ -14,4 +14,4 @@ is.mts(x)
 \details{
   These are not to be called by the user.
 }
-\keyword{ts}
+\keyword{internal}

@@ -875,6 +875,12 @@ Each @code{\keyword} entry should specify one of the standard keywords
 (as listed in the file @file{$R_HOME/doc/KEYWORDS}).  There must be at
 least one @code{\keyword} entry, but can be more that one if the @R{}
 object being documented falls into more than one category.
+
+The special keyword @code{"internal"} marks a page of internal objects
+that are not part of the packages' API. If the help page for object
+@code{foo} has keyword @code{"internal"}, then @code{help(foo)} gives
+this help page, but @code{foo} is excluded from several object indices,
+like the alphabetical list of objects in the HTML help system.
 @end table
 
 @findex prompt

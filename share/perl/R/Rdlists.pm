@@ -303,11 +303,13 @@ sub build_index { # lib, dest
     my $naliases;
     my $nmanfiles;
     my %firstlettersfound;
+    my %internal;
                            
     foreach $manfile (@mandir) {
 	if($manfile =~ /\.Rd$/i){
 
 	    my $rdname = basename($manfile, (".Rd", ".rd"));
+	    my $internal = 0;
 
 	    if($main::opt_dosnames){
 		$manfilebase = "x" . $nmanfiles++;
@@ -326,6 +328,7 @@ sub build_index { # lib, dest
 	    my $rdtitle = $1;
 	    $rdtitle =~ s/\n/ /sg;
 	    $rdtitle =~ s/\\R/R/g; # don't use \R in titles
+	    $internal = 1 if $text=~ /\\keyword\{internal\}/;
 
 	    $main::filenm{$rdname} = $manfilebase;
 	    if($main::opt_chm) {
@@ -335,6 +338,9 @@ sub build_index { # lib, dest
 	    while($text =~ s/\\(alias|name)\{\s*(.*)\s*\}//){
 		$alias = $2;
 		$alias =~ s/\\%/%/g;
+		if ($internal){
+		    $internal{$alias} = 1;
+		}
 		my $an = $main::aliasnm{$alias};
 		if ($an) {
 		    if($an ne $manfilebase) {
@@ -344,8 +350,10 @@ sub build_index { # lib, dest
 		} else {
 		    $main::alltitles{$alias} = $rdtitle;
 		    $main::aliasnm{$alias} = $manfilebase;
-		    my $flc = firstLetterCategory($alias);
-		    $firstlettersfound{$flc}++;
+		    if(!$internal){
+			my $flc = firstLetterCategory($alias);
+			$firstlettersfound{$flc}++;
+		    }
 		    $naliases++;
 		}
 	    }
@@ -393,38 +401,40 @@ sub build_index { # lib, dest
     my $current = "", $currentfile = "", $file, $generic;
     while(<anindex>){
         chomp;  ($alias, $file) = split /\t/;
-        $aliasfirst = firstLetterCategory($alias);
-	if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
-	    print htmlfile "</table>\n";
-	    print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
-	    print htmlfile "<table width=\"100%\">\n";
-	    if($main::opt_chm) {
-		print chmfile "</table>\n";
-		print chmfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
-		print chmfile "<table width=\"100%\">\n";
+	if(!$internal{$alias}){
+	    $aliasfirst = firstLetterCategory($alias);
+	    if( ($naliases > 100) && ($aliasfirst ne $firstletter) ) {
+		print htmlfile "</table>\n";
+		print htmlfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
+		print htmlfile "<table width=\"100%\">\n";
+		if($main::opt_chm) {
+		    print chmfile "</table>\n";
+		    print chmfile html_title2("<a name=\"$aliasfirst\">-- $aliasfirst --</a>");
+		    print chmfile "<table width=\"100%\">\n";
+		}
+		$firstletter = $aliasfirst;
 	    }
-	    $firstletter = $aliasfirst;
-	}
 # skip method aliases.
-	$generic = $alias;  
-	$generic =~ s/\.data\.frame$/.dataframe/o;
-	$generic =~ s/\.model\.matrix$/.modelmatrix/o;
-	$generic =~ s/\.[^.]+$//o;
+	    $generic = $alias;  
+	    $generic =~ s/\.data\.frame$/.dataframe/o;
+	    $generic =~ s/\.model\.matrix$/.modelmatrix/o;
+	    $generic =~ s/\.[^.]+$//o;
 #	print "   $alias, $generic, $file, $currentfile\n";
-	next if $alias =~ /<-$/o || $generic =~ /<-$/o;
-	if ($generic ne "" && $generic eq $current && 
-	    $file eq $currentfile && $generic ne "ar") { 
+	    next if $alias =~ /<-$/o || $generic =~ /<-$/o;
+	    if ($generic ne "" && $generic eq $current && 
+		$file eq $currentfile && $generic ne "ar") { 
 #	    print "skipping $alias\n";
-	    next; 
-	} else { $current = $alias; $currentfile = $file;}
+		next; 
+	    } else { $current = $alias; $currentfile = $file;}
 
-	print titleindex "$alias\t$main::alltitles{$alias}\n";
-	my $title = striptitle($main::alltitles{$alias});
-	print htmlfile "<tr><td width=\"25%\"><a href=\"$file.$HTML\">" .
-	    encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
-	if($main::opt_chm) {
-	    print chmfile "<tr><td width=\"25%\"><a href=\"$file.$HTML\">" .
+	    print titleindex "$alias\t$main::alltitles{$alias}\n";
+	    my $title = striptitle($main::alltitles{$alias});
+	    print htmlfile "<tr><td width=\"25%\"><a href=\"$file.$HTML\">" .
 		encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
+	    if($main::opt_chm) {
+		print chmfile "<tr><td width=\"25%\"><a href=\"$file.$HTML\">" .
+		    encodealias($alias) . "</a></td>\n<td>$title</td></tr>\n";
+	    }
 	}
     }
 
