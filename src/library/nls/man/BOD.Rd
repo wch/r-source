@@ -18,9 +18,12 @@ A numeric vector giving the biochemical oxygen demand (mg/l).
 }
 }
 \source{
-Bates and Watts (1998), Nonlinear Regression Analysis and Its
-Applications, Wiley, Appendix A1.4.  Originally from Marske (1967),
-M.Sc. Thesis, University of Wisconsin - Madison.
+  Bates, D.M. and Watts, D.G. (1988),
+  \emph{Nonlinear Regression Analysis and Its Applications},
+  Wiley, Appendix A1.4.
+
+  Originally from Marske (1967),
+  M.Sc. Thesis, University of Wisconsin -- Madison.
 }
 \examples{
 library(nls)
