@@ -20,7 +20,7 @@
   The output from \code{example(plotmath)} includes several tables which
   show the available features.  In these tables, the columns of grey text
   show sample \R expressions, and the columns of black text show the
-  resulting output.  
+  resulting output.
 
   The available features are also described in the tables below:
 
@@ -135,6 +135,14 @@ matplot(x, y, type = "l", xaxt = "n",
 axis(1, at = c(-pi, -pi/2, 0, pi/2, pi),
      lab = expression(-pi, -pi/2, 0, pi/2, pi))
 
+
+## How to combine "math" and numeric variables :
+plot(1:10, type="n", xlab="", ylab="", main = "plot math & numbers")
+tt <- 1.23 ; mtext(substitute(hat(theta) == that, list(that= tt)))
+for(i in 2:9)
+    text(i,i+1, substitute(list(xi,eta) == group("(",list(x,y),")"),
+                           list(x=i, y=i+1)))
+
 plot(1:10, 1:10)
 text(4, 9, expression(hat(beta) == (X^t * X)^{-1} * X^t * y))
 text(4, 8.4, "expression(hat(beta) == (X^t * X)^{-1} * X^t * y)",
@@ -151,7 +159,7 @@ text(8, 5, expression(paste(frac(1, sigma*sqrt(2*pi)), " ",
 ######
 make.table <- function(nr, nc) {
     savepar <- par(mar=rep(0, 4), pty="s")
-    plot(c(0, nc*2 + 1), c(0, -(nr + 1)), 
+    plot(c(0, nc*2 + 1), c(0, -(nr + 1)),
          type="n", xlab="", ylab="", axes=FALSE)
     savepar
 }
