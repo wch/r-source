@@ -148,13 +148,15 @@ test-Demo:
 	@$(MAKE) -f Makefile.win $(test-out-demo) RVAL_IF_DIFF=0
 
 internet.Rout2:
-	@$(R) --internet2 < internet.R > internet.Rout2 2>&1
+	-@$(R) --internet2 < internet.R > internet.Rout2 2>&1 || \
+	  echo " testing --internet2 failed"
 
 ## These depend on an internet connection, and the sites being up
 test-Internet:
 	@echo "running tests of Internet and socket functions ..."
 	@echo "  expect some differences"
-	@$(MAKE) -f Makefile.win $(test-out-internet) RVAL_IF_DIFF=0
+	-@$(MAKE) -f Makefile.win $(test-out-internet) RVAL_IF_DIFF=0 || \
+	  echo " testing standard internet connectivity failed"
 	@$(MAKE) -f Makefile.win internet.Rout2 RVAL_IF_DIFF=0
 	-@diff internet.Rout internet.Rout2
 
