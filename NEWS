@@ -342,18 +342,13 @@ BUG FIXES
 
     o	rep(1:2, 0) and hence array(1:2, 0) fail no longer.
 
-    o	apply(matrix("", 3,0), 2, length) now works.
+    o	apply(matrix("", 3, 0), 2, length) now works.
 
     o	order(na.last = NA, decreasing = TRUE) now sorts in decreasing
 	order.  (PR#1906)
 
-
-
-	**************************************************
-	*						 *
-	*	       1.5 SERIES NEWS			 *
-	*						 *
-	**************************************************
+    o	source() would crash if the `keep.source = TRUE' and the input
+	contained a function with a line longer than 1024 chars. (PR#1900)
 
 
 		CHANGES IN R VERSION 1.5.1

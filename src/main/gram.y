@@ -2,7 +2,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -657,10 +657,21 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 		    nc = p - p0;
 		    if (*p != '\n')
 			nc++;
-		    strncpy((char *)SourceLine, (char *)p0, nc);
-		    SourceLine[nc] = '\0';
-		    SET_STRING_ELT(source, lines++,
-				   mkChar((char *)SourceLine));
+		    if (nc <= MAXLINESIZE) {
+			strncpy((char *)SourceLine, (char *)p0, nc);
+			SourceLine[nc] = '\0';
+			SET_STRING_ELT(source, lines++,
+				       mkChar((char *)SourceLine));
+		    } else { /* over-long line */
+			char *LongLine = (char *) malloc(nc);
+			if(!LongLine) 
+			    yyerror("unable to allocate space to source line");
+			strncpy(LongLine, (char *)p0, nc);
+			LongLine[nc] = '\0';
+			SET_STRING_ELT(source, lines++,
+				       mkChar((char *)LongLine));
+			free(LongLine);
+		    }
 		    p0 = p + 1;
 		}
 	    /* PrintValue(source); */
@@ -1630,7 +1641,7 @@ int isValidName(char *name)
     if( c != '.' && !isalpha(c) )
         return 0;
 
-    if (c == '.' && isdigit(*p)) 
+    if (c == '.' && isdigit((int)*p)) 
 	return 0;
 
     while ( c = *p++, (isalnum(c) || c=='.') )
