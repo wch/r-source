@@ -8,6 +8,7 @@
 \alias{SetThreadName}
 \alias{NewThread}
 \alias{JoinThread}
+\alias{PreemptiveScheduling}
 \alias{NewMutex}
 \alias{NewCondvar}
 \alias{MutexName}
@@ -38,6 +39,7 @@ ThreadName(t)
 SetThreadName(t, n)
 NewThread(f)
 JoinThread(t)
+PreemptiveScheduling(val)
 NewMutex(name = NULL)
 NewCondvar(name = NULL)
 MutexName(mx)
@@ -130,8 +132,9 @@ Concurrently(function() g("A",3), function() g("B",3))
 h<-function(s, n) for (i in 1:n) { cat(paste(s, i, "\n")); Snooze(0.5) }
 Concurrently(function() h("A",3), function() h("B",3))
 
-# if preemtion is turned on in the source code then long threads will switch
+# if preemtion is turned on then long threads will switch
 k<-function(s, n) for (i in 1:n) if (i \%\% 500 == 0) cat(paste(s, i, "\n"))
+PreemptiveScheduling(TRUE)
 Concurrently(function() k("A",5000), function() k("B",5000))
 
 # TclTk can have its loop run in a thread.

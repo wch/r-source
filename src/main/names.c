@@ -62,6 +62,7 @@ SEXP do_currentthread(SEXP, SEXP, SEXP, SEXP);
 SEXP do_threadname(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setthreadname(SEXP, SEXP, SEXP, SEXP);
 SEXP do_threadsenabled(SEXP, SEXP, SEXP, SEXP);
+SEXP do_preemptsched(SEXP, SEXP, SEXP, SEXP);
 SEXP do_newmutex(SEXP, SEXP, SEXP, SEXP);
 SEXP do_newcondvar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_mutexname(SEXP, SEXP, SEXP, SEXP);
@@ -846,6 +847,7 @@ FUNTAB R_FunTab[] =
 {"NewThread", do_newthread, 0, 11, 1, PP_FUNCALL, do_newthread_nr},
 {"JoinThread", do_jointhread, 0, 11, 1, PP_FUNCALL, do_jointhread_nr},
 {"ThreadsEnabled", do_threadsenabled, 0, 11, -1, PP_FUNCALL},
+{"PreemptiveScheduling", do_preemptsched, 0, 11, -1, PP_FUNCALL},
 {"NewMutex", do_newmutex, 0, 11, 1, PP_FUNCALL},
 {"NewCondvar", do_newcondvar, 0, 11, 1, PP_FUNCALL},
 {"MutexName", do_mutexname, 0, 11, 1, PP_FUNCALL},

@@ -11,6 +11,10 @@ ThreadsEnabled <-function(val) {
     if (missing(val)) .Internal(ThreadsEnabled())
     else .Internal(ThreadsEnabled(val))
 }
+PreemptiveScheduling <-function(val) {
+    if (missing(val)) .Internal(PreemptiveScheduling())
+    else .Internal(PreemptiveScheduling(val))
+}
 
 Concurrently<-function(...) .Internal(Concurrently(...))
 
