@@ -45,7 +45,7 @@
 #include "Graphics.h"
 #include "rotated.h"/* 'Public' routines from here */
 
-#include "../eventloop.h" /* For the input handlers of the event loop mechanism. */
+#include "eventloop.h" /* For the input handlers of the event loop mechanism. */
 
 /* external routines from here */
 int X11ConnectionNumber();
@@ -1320,7 +1320,7 @@ static void X11_Close(DevDesc *dd)
 
     numX11Devices--;
     if (numX11Devices == 0)  {
-
+      int fd = ConnectionNumber(display);
 	/* Free Resources Here */
 #ifdef OLD
 	for(i=0 ; i<NFONT ; i++)
@@ -1335,6 +1335,7 @@ static void X11_Close(DevDesc *dd)
 	while (nfonts--)  XFreeFont(display, fontcache[nfonts].font);
 	nfonts = 0;
 #endif
+        removeInputHandler(&InputHandlers, getInputHandler(InputHandlers,fd));        
 	XCloseDisplay(display);
 	displayOpen = 0;
     }
