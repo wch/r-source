@@ -128,6 +128,8 @@ time1 lop time2
   current time zone.
 }
 \seealso{
+  \link{Dates} for for dates without times.
+  
   \code{\link{as.POSIXct}} and \code{\link{as.POSIXlt}} for conversion
   between the classes.
 
