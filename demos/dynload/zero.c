@@ -1,7 +1,7 @@
 /* A version for R of the example in 
         Becker, Chambers & Wilks (1998) pp. 205-211. */
 
-#include <S.h>
+#include <R.h>
 
 static void *func;
 
@@ -15,7 +15,7 @@ static double zfun(double z)
     mode[0] = "double"; length[0] = 1;
     args[0] = (void*)(zz); zz[0] = z;
     
-    call_S(func, 1L, args, mode, length, 0L, 1L, values);
+    call_R(func, 1L, args, mode, length, 0L, 1L, values);
     
     result = (double*)values[0];
     return result[0];
