@@ -1,6 +1,6 @@
 \name{strsplit}
 \title{Split the Strings in a Vector}
-\usage{strsplit(x, split)}
+\usage{strsplit(x, split, extended = TRUE)}
 \alias{strsplit}
 \description{
   Split the strings in \code{x} into substrings according to the
@@ -12,6 +12,8 @@
     as ``split''.  If empty matches occur, in particular if \code{split}
     has length 0, \code{x} is split into single characters.  If
     \code{split} is a vector, it is re-cycled along \code{x}.}
+  \item{extended}{if \code{TRUE}, extended regular expression matching
+    is used, and if \code{FALSE} basic regular expressions are used.}
 }
 \value{
   A list of length \code{length(x)} the \code{i}-th element of which

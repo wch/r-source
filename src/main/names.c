@@ -427,7 +427,7 @@ FUNTAB R_FunTab[] =
 
 {"nchar",	do_nchar,	1,	11,	1,	PP_FUNCALL},
 {"substr",	do_substr,	1,	11,	3,	PP_FUNCALL},
-{"strsplit",	do_strsplit,	1,	11,	2,	PP_FUNCALL},
+{"strsplit",	do_strsplit,	1,	11,	3,	PP_FUNCALL},
 {"abbreviate",	do_abbrev,	1,	11,	3,	PP_FUNCALL},
 {"make.names",	do_makenames,	0,	11,	1,	PP_FUNCALL},
 {"grep",	do_grep,	1,	11,	5,	PP_FUNCALL},

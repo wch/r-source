@@ -243,6 +243,10 @@ NEW FEATURES
 	`date' and `chron'; unlike those packages these support
 	functions know about time zones (if the OS does).
 
+    o	strsplit() has a new argument `extended' controlling whether to
+	use extended (the default) or basic regular expressions for
+	splitting.
+	
     o	tcltk library now has tkpager() which is designed to be used
 	by file.show() and shows help pages etc. in separate text
 	widgets. 
