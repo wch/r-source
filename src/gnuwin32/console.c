@@ -645,7 +645,7 @@ FBEGIN
 	if (p->my1 >= NUMLINES) p->my1 = NUMLINES - 1;
 	if (p->my1 < 0) p->my1 = 0;
 	len = strlen(LINE(p->my1));
-	if (p->mx1 >= len) p->mx1 = len - 1;
+	if (p->mx1 >= len) p->mx1 = len/* - 1*/;
 	if (p->mx1 < 0) p->mx1 = 0;
 	c1 = (p->my0 < p->my1);
 	c2 = (p->my0 == p->my1);
@@ -1239,7 +1239,7 @@ FBEGIN
 	    else if (cl < y1) s = LINE(cl++);
 	    else if (cl == y1) {
 		s = strncpy(buf, LINE(cl++), 1023);
-		s[min(x0, 1023) + 1] = '\0';
+		s[min(x1, 1023) + 1] = '\0';
 	    } else break;
 	}
 	if (!*s) {
@@ -1262,6 +1262,71 @@ FBEGIN
     del(lpr);
     setcursor(cur);
 FVOIDEND
+
+void consolesavefile(console c)
+FBEGIN
+    char *fn;
+    cursor cur;
+    FILE *fp;
+    int x0, y0, x1, y1, cl;
+    char *s, buf[1024];
+
+    setuserfilter("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0");
+    if(p->sel) 
+        fn = askfilesave("Save selection to", "lastsave.txt");
+    else
+        fn = askfilesave("Save console contents to", "lastsave.txt");
+    show(c);
+    if (fn) {
+	fp = fopen(fn, "wt");
+	if (!fp) return;
+	cur = currentcursor();
+	setcursor(WatchCursor);
+
+	/* Look for a selection */
+	if (p->sel) {
+	    int len, c1, c2, c3;
+	    if (p->my0 >= NUMLINES) p->my0 = NUMLINES - 1;
+	    if (p->my0 < 0) p->my0 = 0;
+	    len = strlen(LINE(p->my0));
+	    if (p->mx0 >= len) p->mx0 = len - 1;
+	    if (p->mx0 < 0) p->mx0 = 0;
+	    if (p->my1 >= NUMLINES) p->my1 = NUMLINES - 1;
+	    if (p->my1 < 0) p->my1 = 0;
+	    len = strlen(LINE(p->my1));
+	    if (p->mx1 >= len) p->mx1 = len - 1;
+	    if (p->mx1 < 0) p->mx1 = 0;
+	    c1 = (p->my0 < p->my1);
+	    c2 = (p->my0 == p->my1);
+	    c3 = (p->mx0 < p->mx1);
+	    if (c1 || (c2 && c3)) {
+		x0 = p->mx0; y0 = p->my0;
+		x1 = p->mx1; y1 = p->my1;
+	    }
+	    else {
+		x0 = p->mx1; y0 = p->my1;
+		x1 = p->mx0; y1 = p->my0;
+	    }
+	} else {
+	    x0 = y0 = 0;
+	    y1 = NUMLINES - 1;
+	    x1 = strlen(LINE(y1));
+	}
+
+	for (cl = y0; cl <= y1; cl++) {
+	    if (cl == y0) s = LINE(cl) + x0;
+	    else if (cl < y1) s = LINE(cl);
+	    else if (cl == y1) {
+		s = strncpy(buf, LINE(cl), 1023);
+		s[min(x1, 1023) + 1] = '\0';
+	    } else break;
+	    fputs(s, fp); fputc('\n', fp);
+	}
+	fclose(fp);
+	setcursor(cur);
+    }
+FVOIDEND
+
 
 console newconsole(char *name, int flags)
 {

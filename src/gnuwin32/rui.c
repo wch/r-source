@@ -181,6 +181,12 @@ static void menuprint(control m)
     show(RConsole);
 }
 
+static void menusavefile(control m)
+{
+    consolesavefile(RConsole);
+    show(RConsole);
+}
+
 static void menuexit(control m)
 {
     R_CleanUp(SA_DEFAULT, 0, 1);
@@ -685,6 +691,7 @@ int setupui()
     MCHECK(newmenuitem("Change dir", 0, menuchangedir));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("Print", 0, menuprint));
+    MCHECK(newmenuitem("Save to File", 0, menusavefile));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(newmenuitem("Exit", 0, menuexit));
 

@@ -43,6 +43,7 @@ void consoletogglelazy(console c);
 int  consolegetlazy(console c);
 void consoleflush(console c);
 void consoleprint(console c);
+void consolesavefile(console c);
 void drawconsole(control c, rect r);
 void consoleclear(control c);
 

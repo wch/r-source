@@ -61,6 +61,10 @@ Gui changes
 -   The Print menu item on the File menu of a console or pager now prints
     the selection if there is one, and the whole (saved) contents otherwise.
 
+-   There is a new Save to File item on the File menu of a console or pager
+    which saves the selection if there is one, and the whole (saved) 
+    contents otherwise.
+
 -   The RGui console now uses the same history mechanism as Rterm. The
     history limit is now just on the number of lines (rather than on the
     number of lines and the total size).  The mechanism has been altered
@@ -69,6 +73,10 @@ Gui changes
 -   There are some additional command-line editing commands: see the
     Help | Console information screen.  (There is also one addition,
     ^W, in Rterm: see README.rterm.)
+
+-   Selection works slightly differently: if the selection extends beyond
+    the last character on the line the (invisible) CRLF is made part of
+    the selection, but not if only up to the last character is selected.
 
 
 New utilities for preparing packages
