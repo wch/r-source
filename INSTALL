@@ -133,7 +133,7 @@ To make these, cd to the `doc/manual' directory and use
 	make info	to create info files (not refman)
 
 You will not be able to build the info files unless you have makeinfo
-version 4 or later installed (and most Linux distributions have 3.2).
+version 4 or later installed (and most Linux distributions have 3.12).
 
 The DVI versions can be previewed and printed using standard programs
 such as `xdvi' and `dvips'.  The PDF versions can be viewed using
