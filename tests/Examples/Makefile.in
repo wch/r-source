@@ -18,7 +18,8 @@ R = $(top_builddir)/bin/R --vanilla
 PKGS = base eda lqs modreg mva stepfun
 EX_IN = $(PKGS:=-Ex.R)
 EX_OUT = $(EX_IN:.R=.Rout)
-.SUFFIXES: -Ex.R -Ex.Rout
+.SUFFIXES:
+.SUFFIXES: .R .Rout
 .SECONDARY: $(EX_IN)
 
 all: Makefile test-Examples
@@ -33,13 +34,13 @@ test-Examples: R $(EX_OUT)
 R:
 	@cd $(top_builddir) && $(MAKE) R
 
-$(EX_OUT): %-Ex.Rout: %-Ex.R
+.R.Rout:
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Running all help() examples ..."
 	$(R) < $< > $@
 
-%-Ex.R:: FORCE
+%-Ex.R: FORCE
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo "Collecting components of $@ ..."

@@ -74,7 +74,7 @@ Reference.dvi: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 Version.tex: $(top_builddir)/bin/R
 	$(top_builddir)/bin/R --version > $@
 
-pkg-%.tex:: FORCE
+pkg-%.tex: FORCE
 	@echo "Collecting components of $@ ..."
 	@cd $(top_builddir)/src/library && \
 	  OPTS="--latex" $(MAKE) PKGS="$*" DOCS
