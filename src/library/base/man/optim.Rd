@@ -246,8 +246,7 @@ res
 (r2 <- optim(res$par, fw, method="BFGS"))
 points(r2$par, r2$val, pch = 8, col = "red", cex = 2)
 
-\dontrun{## Combinatorial optimization: Traveling salesman problem
-## this is rather slow: 20 secs on 1Ghz PIII
+## Combinatorial optimization: Traveling salesman problem
 library(mva)
 library(ts) # for embed
 
@@ -271,8 +270,9 @@ genseq <- function(sq) {  # Generate new candidate sequence
 sq <- c(1,2:NROW(eurodistmat),1)  # Initial sequence
 distance(sq)
 
+set.seed(2222) # chosen to get a good soln quickly
 res <- optim(sq, distance, genseq, method="SANN",
-             control = list(maxit=20000, temp=2000, trace=TRUE))
+             control = list(maxit=6000, temp=2000, trace=TRUE))
 res  # Near optimum distance around 12842
 
 loc <- cmdscale(eurodist)
@@ -293,6 +293,7 @@ plot(x, y, type="n", asp=1, xlab="", ylab="",
 arrows(tspres[s,1], -tspres[s,2], tspres[s+1,1], -tspres[s+1,2],
        angle=10, col="red")
 text(x, y, names(eurodist), cex=0.8)
+\testonly{detach("package:mva"); detach("package:ts")}
 }}
 \keyword{nonlinear}
 \keyword{optimize}
