@@ -1028,7 +1028,9 @@ Flag @option{--enable-R-shlib} causes the make process to build @R{} as
 a dynamic (shared) library, typically called @file{libR.so}, and link
 the main @R{} executable @file{R.bin} against that library.  This can
 only be done if all the code (including system libraries) can be
-compiled into a dynamic library, and there may be a small performance
+compiled into a dynamic library, and there may be a
+performance@footnote{We have measured 15--20% on i686 Linux and around
+10% on x86_64 Linux.}
 penalty.  So you probably only want this if you will be using an
 application which embeds @R{}.  Note that C code in packages installed
 on a @R{} system linked with @option{--enable-R-shlib} are linked

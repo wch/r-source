@@ -6269,7 +6269,7 @@ foo.default <- base::foo
 
 @R{} can be built as a shared library@footnote{In the parlance of MacOS
 X this is a @emph{dynamic} library, and is the normal way to build R on
-that platform.} if configured with @option{--enable-R-shared}.  This
+that platform.} if configured with @option{--enable-R-shlib}.  This
 shared library can be used to run @R{} from alternative front-end
 programs.  We will assume this has been done for the rest of this
 section.
