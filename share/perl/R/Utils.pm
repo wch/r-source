@@ -204,7 +204,7 @@ sub R_runR
     open RIN, "> $Rin" or die "Error: cannot write to '$Rin'\n";
     print RIN "$cmd\n";
     close RIN;
-    R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout}");
+    R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout} 2>&1");
     my @out;
     open ROUT, "< $Rout";
     while(<ROUT>) {chomp; push(@out, $_);}
