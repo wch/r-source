@@ -163,10 +163,6 @@
    problem with getting the prototype of strptime(). */
 #undef HAVE_GLIBC2
 
-/* Define if you have the GNOME headers and libraries, and want the GNOME GUI
-   to be built. */
-#undef HAVE_GNOME
-
 /* Define to 1 if you have the <grp.h> header file. */
 #undef HAVE_GRP_H
 

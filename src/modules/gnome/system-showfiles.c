@@ -31,6 +31,7 @@
 # include <sys/stat.h>
 #endif
 
+#include "system.h"
 #include "terminal.h"
 #include "terminal-prefs.h"
 #include "gtkconsole.h"

@@ -12,7 +12,6 @@ R_HOME = $(top_builddir)
 include $(top_builddir)/Makeconf
 
 ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) $(GNOME_INCLUDEDIR) $(LIBGLADE_CFLAGS) $(X_CFLAGS) $(CPPFLAGS) $(DEFS)
-ALL_CFLAGS_LO = $(R_XTRA_CFLAGS) $(CPICFLAGS) $(SHLIB_CFLAGS) $(CFLAGS)
 ALL_GNOME_LIBS = $(GNOME_LIBDIR) $(GNOMEUI_LIBS) $(LIBGLADE_LIBS)
 ALL_X_LIBS = $(X_PRE_LIBS) $(X_LIBS) $(X_EXTRA_LIBS)
 
@@ -25,7 +24,7 @@ SOURCES = \
 	terminal-find.c terminal-functions.c terminal-menu.c \
 	terminal-prefs.c terminal-toolbar.c terminal.c 
 DEPENDS = $(SOURCES:.c=.d)
-OBJECTS = $(SOURCES:.c=.lo)
+OBJECTS = $(SOURCES:.c=.o)
 HEADERS = \
 	command-grep.h \
 	gdkrotated.h \
@@ -37,16 +36,8 @@ HEADERS = \
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in $(SOURCES) $(HEADERS)
 
-## <FIXME>
-## Change to 'R_gnome.la' when using libtool for shlibs.
-## Remove when using automake ... also fix target 'install' then.
-R_gnome_la = R_gnome$(SHLIB_EXT)
-## </FIXME>
-Rexecmodulesdir_LTLIBRARIES = $(R_gnome_la)
-R_gnome_la_SOURCES = $(SOURCES)
-R_gnome_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@R_gnome_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
-R_gnome_la_LIBADD = $(ALL_GNOME_LIBS) $(ALL_X_LIBS) $(R_XTRA_LIBS) $(LIBR)
+R_binary = Rgnome
+R_gnome_LIBADD = $(ALL_GNOME_LIBS) $(ALL_X_LIBS) $(R_XTRA_LIBS)
 
 all: Makefile Makedeps R
 
@@ -60,19 +51,19 @@ Makedeps: Makefile $(DEPENDS)
 	@touch $@
 
 R: Makefile
+@WANT_R_SHLIB_FALSE@	@echo "ERROR: must use --enable-R-shlib to build GNOME"; exit 1
 	@$(MAKE) Makedeps
-	@$(MAKE) $(Rexecmodulesdir_LTLIBRARIES)
+	@$(MAKE) install-bin-local
 
-$(R_gnome_la): $(R_gnome_la_OBJECTS) $(R_gnome_la_DEPENDENCIES)
-	$(SHLIB_LINK) -o $@ $(R_gnome_la_LDFLAGS) $(R_gnome_la_OBJECTS) $(R_gnome_la_LIBADD) $(LIBS)
-## <FIXME>
-## Not sure of we want to do this ...
+$(R_binary): $(OBJECTS)
+	$(MAIN_LINK) -o $@ $(OBJECTS) $(R_gnome_LIBADD) $(LIBS) -L../../../lib -lR
+
+
+install-bin-local: $(R_binary)
 	@$(MAKE) rhome="$(abs_top_builddir)" install
-## </FIXME>
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_gnome_la) "$(Rexecmodulesdir)/R_gnome$(SHLIB_EXT)"
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(R_gnome_la) "$(Rexecmodulesdir)"
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/Rgnome"
 installdirs:
 	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
@@ -83,7 +74,7 @@ uninstall:
 mostlyclean: clean
 clean:
 	@-rm -rf .libs _libs
-	@-rm -f Makedeps *.d *.o *.a *.lo *.la *$(SHLIB_EXT)
+	@-rm -f Makedeps *.d *.o *.a *.o *.lo *.la *$(SHLIB_EXT) $(Rbinary)
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

@@ -22,6 +22,7 @@
 #endif
 
 #include "Defn.h"
+#include "system.h"
 #include "gtkconsole.h"
 #include "terminal.h"
 

@@ -1489,12 +1489,7 @@ fi
 if test "${use_gnome}" != yes; then
   use_gnome="no"
   GNOME_IF_FILES=
-else
-  AC_DEFINE(HAVE_GNOME, 1,
-            [Define if you have the GNOME headers and libraries,
-             and want the GNOME GUI to be built.])
 fi
-AC_SUBST(HAVE_GNOME)
 AC_SUBST(GNOME_IF_FILES)
 ])# R_GNOME
 

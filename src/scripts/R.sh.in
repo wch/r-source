@@ -95,6 +95,8 @@ error () {
 args=
 debugger=
 debugger_args=
+gui=
+R_binary="${R_HOME}/bin/exec/R"
 while test -n "${1}"; do
   case ${1} in
     RHOME|--print-home)
@@ -102,8 +104,18 @@ while test -n "${1}"; do
     CMD)
       shift;
       exec sh "${R_HOME}/bin/Rcmd" "${@}" ;;
-    --gnome)
-      error "option '${1}' is defunct, use '--gui=gnome'"
+    -g|--gui)
+      if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
+	gui="${2}"
+        args="${args} ${1} ${2}"
+	shift
+      else
+	error "option '${1}' requires an argument"
+      fi
+      ;;
+    --gui=*)
+      gui=`echo "${1}" | sed -e 's/[^=]*=//'`
+      args="${args} ${1}"
       ;;
     -d|--debugger)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then      
@@ -126,6 +138,13 @@ while test -n "${1}"; do
   shift
 done
 
+if test "${gui}" = "gnome"; then
+  R_binary="${R_HOME}/bin/exec/Rgnome"
+fi
+if test "${gui}" = "GNOME"; then
+  R_binary="${R_HOME}/bin/exec/Rgnome"
+fi
+
 ## R_HOME may have moved, so check
 ## (or you get "GUI X11 is not supported")
 if test -x "${R_HOME}"; then
@@ -146,7 +165,6 @@ R_SESSION_TMPDIR="${tmp}"
 export R_SESSION_TMPDIR
 
 ## Startup
-R_binary="${R_HOME}/bin/exec/R"
 if test -z "${debugger}"; then
   exec "${R_binary}" @R_BATCHSAVE@ ${args}
 else

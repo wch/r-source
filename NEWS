@@ -58,6 +58,11 @@ INSTALLATION CHANGES
     o	Files FAQ, RESOURCES, doc/html/resources.html are no longer in
 	the SVN sources but are made by 'make dist'.
 
+    o	GNOME GUI is via a separate front end rather than by loading a
+	module, and can only be used with R as a shared library.
+	[This is currently rough, and will lead to the GNOME GUI being
+	unbundled in due course.]
+
 
 BUG FIXES
 

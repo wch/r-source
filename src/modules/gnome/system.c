@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,7 +33,6 @@
 #include <locale.h>
 #endif
 
-/* used to have Mac conditionals, but not used on classic MacOS */
 #ifdef HAVE_STAT
 # include <sys/types.h>
 # ifdef HAVE_SYS_STAT_H
@@ -46,15 +45,13 @@
 #include "Defn.h"
 #include "Fileio.h"
 #include "Rdevices.h"
-
-#include "../../unix/Runix.h"
-
-
 #include "Startup.h"
 
 #include "gtkconsole.h"
 #include "terminal.h"
 #include "terminal-prefs.h"
+
+#include "system.h"
 
 	/*--- Initialization Code ---*/
 
@@ -273,11 +270,48 @@ void R_set_SaveAction(int sa)
     SaveAction = sa;
 }
 
-void gnome_start(int ac, char **av, Rstart Rp)
+
+int main(int ac, char **av)
 {
-    char *p;
-    int value, ierr;
+    int i, ioff = 1, j, value, ierr;
+    char *p, **avv;
+    structRstart rstart;
+    Rstart Rp = &rstart;
     struct stat sb;
+
+    R_GUIType = "GNOME";
+    ptr_R_Suicide = Rgnome_Suicide;
+    ptr_R_ShowMessage = Rgnome_ShowMessage;
+    ptr_R_ReadConsole = Rgnome_ReadConsole;
+    ptr_R_WriteConsole = Rgnome_WriteConsole;
+    ptr_R_ResetConsole = Rgnome_ResetConsole;
+    ptr_R_FlushConsole = Rgnome_FlushConsole;
+    ptr_R_ClearerrConsole = Rgnome_ClearerrConsole;
+    ptr_R_Busy = Rgnome_Busy;
+    ptr_R_CleanUp = Rgnome_CleanUp;
+    ptr_R_ShowFiles = Rgnome_ShowFiles;
+    ptr_R_ChooseFile = Rgnome_ChooseFile;
+    ptr_R_loadhistory = Rgnome_loadhistory;
+    ptr_R_savehistory = Rgnome_savehistory;
+
+    R_timeout_handler = NULL;
+    R_timeout_val = 0;
+
+    R_GlobalContext = NULL; /* Make R_Suicide less messy... */
+
+    if((R_Home = R_HomeDir()) == NULL)
+	R_Suicide("R home directory is not defined");
+
+    process_system_Renviron();
+
+#ifdef _R_HAVE_TIMING_
+    R_setStartTime();
+#endif
+    R_DefParams(Rp);
+    /* Store the command line arguments before they are processed
+       by the R option handler. 
+     */
+    R_set_command_line_arguments(ac, av);
 
 
     /* Gnome startup preferences */
@@ -290,6 +324,22 @@ void gnome_start(int ac, char **av, Rstart Rp)
 
     /* command line params */
     R_common_command_line(&ac, av, Rp);
+
+    /* remove GUI from command line args */
+    for(i = 0, avv = av; i < ac; i++, avv++) {
+	if(!strncmp(*avv, "--gui", 5) || !strncmp(*avv, "-g", 2)) {
+	    if(!strncmp(*avv, "--gui", 5) && strlen(*avv) >= 7)
+		p = &(*avv)[6];
+	    else {
+		if(i+1 < ac) {
+		    avv++; p = *avv; ioff++;
+		}
+	    }
+	    for(j = i; j < ac-ioff; j++)  av[j] = av[j + ioff];
+	    ac -= ioff;
+	    break;
+	}
+    }
 
     /* Initialise Gnome library */
     gnome_init("R",
@@ -357,8 +407,7 @@ void gnome_start(int ac, char **av, Rstart Rp)
 
     fpu_setup(1);
 
-
-    /* start main loop */
     mainloop();
     /*++++++  in ../main/main.c */
+    return 0;
 }

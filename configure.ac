@@ -169,13 +169,7 @@ AC_ARG_ENABLE([R-shlib],
                 [build R as a shared library @<:@no@:>@])],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
-AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
-if test "${want_R_shlib}" = yes; then
-  LIBR="-L\$(R_HOME)/lib -lR"
-else
-  LIBR=
-fi
-AC_SUBST(LIBR)
+## processed after GNOME, which can set this.
 
 ## Enable maintainer-specific portions of Makefiles.
 AC_ARG_ENABLE([maintainer-mode],
@@ -237,8 +231,10 @@ AC_ARG_WITH([gnome],
   want_gnome=no
 elif test "${withval}" = yes; then
   want_gnome=yes
+  want_R_shlib=yes
 else
   want_gnome=yes
+  want_R_shlib=yes
   CPPFLAGS="${CPPFLAGS} -I${withval}/include"
   LDFLAGS="${LDFLAGS} -L${withval}/lib"
   gnome_prefix="${withval}/lib"
@@ -303,6 +299,14 @@ AC_ARG_WITH([pcre],
 [R_ARG_USE(pcre)],
 [use_pcre=no])
 
+## needs to come after GNOME
+AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
+if test "${want_R_shlib}" = yes; then
+  LIBR="-L\$(R_HOME)/lib -lR"
+else
+  LIBR=
+fi
+AC_SUBST(LIBR)
 
 ## <FIXME>
 ## Completely disable using libtool for building shlibs until libtool

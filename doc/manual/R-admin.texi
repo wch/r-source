@@ -1274,15 +1274,15 @@ device uses the @acronym{GNOME} canvas, and is not currently available.
 
 Due to its experimental nature, the @acronym{GNOME} interface for @R{}
 will not be built automatically.  You must specify it by running
-configure with the @option{--with-gnome} option.  For example, you might
-run
+configure with the @option{--with-gnome} option, which requires
+@option{--enable-R-shlib}.  For example, you might run
 
 @smallexample
-./configure --with-gnome
+./configure --with-gnome --enable-R-shlib
 @end smallexample
 
 @noindent
-but please check you have all the requirements first. You need at least
+but please check you have all the requirements first.  You need at least
 the following libraries (or later) installed
 
 @smallexample

@@ -77,10 +77,7 @@ int R_ChooseFile(int new, char *buf, int len)
 { return ptr_R_ChooseFile(new, buf, len); }
 
 
-void (*ptr_gnome_start)(int ac, char **av, Rstart Rp);
-
 void R_setStartTime(void); /* in sys-unix.c */
-void R_load_gnome_shlib(void); /* in dynload.c */
 
 
 #ifdef HAVE_AQUA
@@ -96,7 +93,7 @@ Rboolean useCocoa = FALSE;
 int Rf_initialize_R(int ac, char **av)
 {
     int i, ioff = 1, j, value, ierr;
-    Rboolean useX11 = TRUE, usegnome = FALSE, useTk = FALSE;
+    Rboolean useX11 = TRUE, useTk = FALSE;
     char *p, msg[1024], **avv;
     structRstart rstart;
     Rstart Rp = &rstart;
@@ -150,7 +147,7 @@ int Rf_initialize_R(int ac, char **av)
 	    if(!strcmp(p, "none"))
 		useX11 = FALSE;
 	    else if(!strcmp(p, "gnome") || !strcmp(p, "GNOME"))
-		usegnome = TRUE;
+		;
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
 		useaqua = TRUE;
@@ -181,20 +178,7 @@ int Rf_initialize_R(int ac, char **av)
     }
 
 #ifdef HAVE_X11
-    if(useX11) {
-	if(!usegnome) {
-	    R_GUIType = "X11";
-	} else {
-#ifndef HAVE_GNOME
-	    R_Suicide("GNOME GUI is not available in this version");
-#endif
-	    R_load_gnome_shlib();
-	    R_GUIType = "GNOME";
-	    ptr_gnome_start(ac, av, Rp);
-	    /* this will never return, but for safety */
-	    return 0;
-	}
-    }
+    if(useX11) R_GUIType = "X11";
 #endif /* HAVE_X11 */
 #ifdef HAVE_AQUA
     if(useaqua) {
