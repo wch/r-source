@@ -1630,7 +1630,7 @@ static BBOX theOperatorBBox(SEXP operator)
     return asciiBBox(operatorAscii(operator));
 }
 
-static useRelGap = 1;
+static int useRelGap = 1;
   
 static BBOX operatorLimitBBox(SEXP limit)
 {
@@ -1838,9 +1838,6 @@ static void drawAbs(SEXP expr)
 	BBOX bodyBBox = elementBBox(expr);
 	double height = bboxHeight(bodyBBox);
 	double depth = bboxDepth(bodyBBox);
-	double width = bboxWidth(bodyBBox);
-	double savedX = currentX;
-	double savedY = currentY;
 	double x[2], y[2];
 
 	moveUp(-depth);
