@@ -134,6 +134,8 @@ BUG FIXES
 
     o   segmentation fault with tmp[[1,]] (PR#904)
 
+    o   incorrect "..." handling in plot.factor (PR#830)
+
 
 		CHANGES IN R VERSION 1.2.2
 
