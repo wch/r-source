@@ -728,6 +728,12 @@ AC_DEFUN([R_PROG_F77_FLIBS],
 r_save_LIBS="${LIBS}"
 LIBS=
 AC_F77_LIBRARY_LDFLAGS
+if test -z "${MAIN_LD}" ; then
+  LIBS=
+  R_C_LIBRARY_LDFLAGS
+else
+  CLIBS=
+fi
 LIBS="${r_save_LIBS}"
 ## Currently g77 on Darwin links against '-lcrt1.o' (and for GCC 3.1 or
 ## better also against '-lcrtbegin.o'), which (unlike '-lcrt0.o') are
@@ -761,8 +767,7 @@ LIBS="${r_save_LIBS}"
 ## 2) g77 also tends to duplicate paths via ../../.., so we canonicalize
 ## paths and remove duplicates.
 ## 3) We do not need -L/lib etc, nor those in LDFLAGS
-## 4) We only need a path like /usr/lib/gcc-lib/i686-linux/3.4.3 if it contains
-## libg2c.a, libgfortranpreview ... but cover that later.
+## 4) We exclude path with CC will include when linking.
 ##
 ## First try to fathom out what -Lfoo commands are unnecessary.
 case "${host_os}" in
@@ -777,10 +782,13 @@ case "${host_os}" in
     ;;
 esac
 r_extra_libs=
-for arg in ${LDFLAGS}; do
+for arg in ${LDFLAGS} ${CLIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
+      test -d "${lib}" || continue
+      ## Canonicalize (/usr/lib/gcc-lib/i686-linux/3.4.3/../../..).
+      lib=`cd "${lib}" && ${GETWD}`
       r_extra_libs="${r_extra_libs} $lib"
       ;;
   esac

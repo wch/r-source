@@ -141,7 +141,10 @@ INSTALLATION CHANGES
     o	Configuring without having the recommended packages is now an
 	error unless --with-recommended-packages=no is used.
 
-    o	Configure tries harder to find a minimal set of FLIBS.
+    o	Configure tries harder to find a minimal set of FLIBS.  Under
+	some circumstances this may remove from R_LD_LIBRARY_PATH
+	path elements that ought to have specified in LDFLAGS (but
+	were not).
 
 
 BUG FIXES

@@ -25738,6 +25738,337 @@ ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
 ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
+if test -z "${MAIN_LD}" ; then
+  LIBS=
+  ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+echo "$as_me:$LINENO: checking how to get verbose linking output from ${CC}" >&5
+echo $ECHO_N "checking how to get verbose linking output from ${CC}... $ECHO_C" >&6
+if test "${r_cv_prog_c_v+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext
+if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
+  (eval $ac_compile) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest.$ac_objext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_cv_prog_c_v=
+# Try some options frequently used verbose output
+for r_verb in -v -verbose --verbose -V -\#\#\#; do
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+
+# Compile and link our simple test program by passing a flag (argument
+# 1 to this macro) to the Fortran compiler in order to get
+# "verbose" output that we can then parse for the Fortran linker
+# flags.
+r_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS $r_verb"
+(eval echo $as_me:25815: \"$ac_link\") >&5
+r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
+echo "$r_c_v_output" >&5
+CFLAGS=$r_save_CFLAGS
+
+rm -f conftest*
+
+# On HP/UX there is a line like: "LPATH is: /foo:/bar:/baz" where
+# /foo, /bar, and /baz are search directories for the Fortran linker.
+# Here, we change these into -L/foo -L/bar -L/baz (and put it first):
+r_c_v_output="`echo $r_c_v_output |
+	grep 'LPATH is:' |
+	sed 's,.*LPATH is\(: *[^ ]*\).*,\1,;s,: */, -L/,g'` $r_c_v_output"
+
+case $r_c_v_output in
+  # If we are using xlc then replace all the commas with spaces.
+  *xlcentry*)
+    r_c_v_output=`echo $r_c_v_output | sed 's/,/ /g'` ;;
+
+  # With Intel ifc, ignore the quoted -mGLOB_options_string stuff (quoted
+  # $LIBS confuse us, and the libraries appear later in the output anyway).
+  *mGLOB_options_string*)
+    r_c_v_output=`echo $r_c_v_output | sed 's/\"-mGLOB[^\"]*\"/ /g'` ;;
+esac
+
+
+  # look for -l* and *.a constructs in the output
+  for r_arg in $r_c_v_output; do
+     case $r_arg in
+        [\\/]*.a | ?:[\\/]*.a | -[lLRu]*)
+          r_cv_prog_c_v=$r_verb
+          break 2 ;;
+     esac
+  done
+done
+if test -z "$r_cv_prog_c_v"; then
+   { echo "$as_me:$LINENO: WARNING: cannot determine how to obtain linking information from ${CC}" >&5
+echo "$as_me: WARNING: cannot determine how to obtain linking information from ${CC}" >&2;}
+fi
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+{ echo "$as_me:$LINENO: WARNING: compilation failed" >&5
+echo "$as_me: WARNING: compilation failed" >&2;}
+fi
+rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
+
+fi
+echo "$as_me:$LINENO: result: $r_cv_prog_c_v" >&5
+echo "${ECHO_T}$r_cv_prog_c_v" >&6
+echo "$as_me:$LINENO: checking for C libraries of ${CC}" >&5
+echo $ECHO_N "checking for C libraries of ${CC}... $ECHO_C" >&6
+if test "${r_cv_c_libs+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "x$CLIBS" != "x"; then
+  r_cv_c_libs="$CLIBS" # Let the user override the test.
+else
+
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+int
+main ()
+{
+
+  ;
+  return 0;
+}
+_ACEOF
+
+# Compile and link our simple test program by passing a flag (argument
+# 1 to this macro) to the Fortran compiler in order to get
+# "verbose" output that we can then parse for the Fortran linker
+# flags.
+r_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS $r_cv_prog_c_v"
+(eval echo $as_me:25897: \"$ac_link\") >&5
+r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
+echo "$r_c_v_output" >&5
+CFLAGS=$r_save_CFLAGS
+
+rm -f conftest*
+
+# On HP/UX there is a line like: "LPATH is: /foo:/bar:/baz" where
+# /foo, /bar, and /baz are search directories for the Fortran linker.
+# Here, we change these into -L/foo -L/bar -L/baz (and put it first):
+r_c_v_output="`echo $r_c_v_output |
+	grep 'LPATH is:' |
+	sed 's,.*LPATH is\(: *[^ ]*\).*,\1,;s,: */, -L/,g'` $r_c_v_output"
+
+case $r_c_v_output in
+  # If we are using xlc then replace all the commas with spaces.
+  *xlcentry*)
+    r_c_v_output=`echo $r_c_v_output | sed 's/,/ /g'` ;;
+
+  # With Intel ifc, ignore the quoted -mGLOB_options_string stuff (quoted
+  # $LIBS confuse us, and the libraries appear later in the output anyway).
+  *mGLOB_options_string*)
+    r_c_v_output=`echo $r_c_v_output | sed 's/\"-mGLOB[^\"]*\"/ /g'` ;;
+esac
+
+
+
+r_cv_c_libs=
+
+# Save positional arguments (if any)
+r_save_positional="$@"
+
+set X $r_c_v_output
+while test $# != 1; do
+  shift
+  r_arg=$1
+  case $r_arg in
+        [\\/]*.a | ?:[\\/]*.a)
+            ac_exists=false
+  for ac_i in $r_cv_c_libs; do
+    if test x"$r_arg" = x"$ac_i"; then
+      ac_exists=true
+      break
+    fi
+  done
+
+  if test x"$ac_exists" = xtrue; then
+  :
+else
+  r_cv_c_libs="$r_cv_c_libs $r_arg"
+fi
+
+          ;;
+        -bI:*)
+            ac_exists=false
+  for ac_i in $r_cv_c_libs; do
+    if test x"$r_arg" = x"$ac_i"; then
+      ac_exists=true
+      break
+    fi
+  done
+
+  if test x"$ac_exists" = xtrue; then
+  :
+else
+  if test "$ac_compiler_gnu" = yes; then
+  for ac_link_opt in $r_arg; do
+    r_cv_c_libs="$r_cv_c_libs -Xlinker $ac_link_opt"
+  done
+else
+  r_cv_c_libs="$r_cv_c_libs $r_arg"
+fi
+fi
+
+          ;;
+          # Ignore these flags.
+        -lang* | -lcrt[01].o | -lcrtbegin.o | -lc | -lgcc | -libmil | -LANG:=*)
+          ;;
+        -lkernel32)
+          test x"$CYGWIN" != xyes && r_cv_c_libs="$r_cv_c_libs $r_arg"
+          ;;
+        -[LRuY])
+          # These flags, when seen by themselves, take an argument.
+          # We remove the space between option and argument and re-iterate
+          # unless we find an empty arg or a new option (starting with -)
+	  case $2 in
+	     "" | -*);;
+	     *)
+		r_arg="$r_arg$2"
+		shift; shift
+		set X $r_arg "$@"
+		;;
+	  esac
+          ;;
+        -YP,*)
+          for r_j in `echo $r_arg | sed -e 's/-YP,/-L/;s/:/ -L/g'`; do
+              ac_exists=false
+  for ac_i in $r_cv_c_libs; do
+    if test x"$r_j" = x"$ac_i"; then
+      ac_exists=true
+      break
+    fi
+  done
+
+  if test x"$ac_exists" = xtrue; then
+  :
+else
+  r_arg="$r_arg $r_j"
+                               r_cv_c_libs="$r_cv_c_libs $r_j"
+fi
+
+          done
+          ;;
+        -[lLR]*)
+            ac_exists=false
+  for ac_i in $r_cv_c_libs; do
+    if test x"$r_arg" = x"$ac_i"; then
+      ac_exists=true
+      break
+    fi
+  done
+
+  if test x"$ac_exists" = xtrue; then
+  :
+else
+  r_cv_c_libs="$r_cv_c_libs $r_arg"
+fi
+
+          ;;
+          # Ignore everything else.
+  esac
+done
+# restore positional arguments
+set X $r_save_positional; shift
+
+# We only consider "LD_RUN_PATH" on Solaris systems.  If this is seen,
+# then we insist that the "run path" must be an absolute path (i.e. it
+# must begin with a "/").
+case `(uname -sr) 2>/dev/null` in
+   "SunOS 5"*)
+      r_ld_run_path=`echo $r_c_v_output |
+                        sed -n 's,^.*LD_RUN_PATH *= *\(/[^ ]*\).*$,-R\1,p'`
+      test "x$r_ld_run_path" != x &&
+        if test "$ac_compiler_gnu" = yes; then
+  for ac_link_opt in $r_ld_run_path; do
+    r_cv_c_libs="$r_cv_c_libs -Xlinker $ac_link_opt"
+  done
+else
+  r_cv_c_libs="$r_cv_c_libs $r_ld_run_path"
+fi
+      ;;
+esac
+fi # test "x$CLIBS" = "x"
+
+fi
+echo "$as_me:$LINENO: result: $r_cv_c_libs" >&5
+echo "${ECHO_T}$r_cv_c_libs" >&6
+CLIBS=
+for arg in $r_cv_c_libs; do
+  case "${arg}" in
+    -L*)
+      CLIBS="${CLIBS} $arg"
+      ;;
+  esac
+done
+
+ac_ext=c
+ac_cpp='$CPP $CPPFLAGS'
+ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
+ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
+ac_compiler_gnu=$ac_cv_c_compiler_gnu
+
+else
+  CLIBS=
+fi
 LIBS="${r_save_LIBS}"
 case "${host_os}" in
   linux*)
@@ -25751,10 +26082,13 @@ case "${host_os}" in
     ;;
 esac
 r_extra_libs=
-for arg in ${LDFLAGS}; do
+for arg in ${LDFLAGS} ${CLIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
+      test -d "${lib}" || continue
+      ## Canonicalize (/usr/lib/gcc-lib/i686-linux/3.4.3/../../..).
+      lib=`cd "${lib}" && ${GETWD}`
       r_extra_libs="${r_extra_libs} $lib"
       ;;
   esac

@@ -13,6 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README \
 	R.m4 \
+	clibs.m4 \
 	codeset.m4 \
 	libtool.m4
 

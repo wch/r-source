@@ -31,6 +31,7 @@ Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 ACLOCAL_M4 = aclocal.m4
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
+	m4/clibs.m4 \
 	m4/codeset.m4 \
 	m4/libtool.m4
 CONFIGURE_DEPENDENCIES = $(srcdir)/VERSION
