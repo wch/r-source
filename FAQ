@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-18
+Version 2.0.2005-01-24
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -372,6 +372,7 @@ port of R for Macintosh is no longer supported.
 The `bin/linux' directory of a CRAN site contains the following packages.
 
                  CPU      Versions                        Provider
+     ------------------------------------------------------------------------ 
      Mandrake    i386     10.0                            Michele Alzetta
      Red Hat     i386     8/9/Fedora1/Fedora2/Fedora3     Martyn Plummer
                  x86_64   Fedora1                         James Henstridge
@@ -632,8 +633,8 @@ of precompiled binaries due to security reasons.  In particular, binary
 packages for Windows and Mac OS X are provided by the respective binary
 package maintainers.
 
-     *Note*:  It is very important that you indicate the copyright
-     (license) information (GPL, BSD, Artistic, ...)  in your submission.
+     Note: It is very important that you indicate the copyright (license)
+     information (GPL, BSD, Artistic, ...) in your submission.
 
    Please always use the URL of the master site when referring to CRAN.
 
@@ -942,7 +943,7 @@ to safeguard against possible crashes.  Other possibilities are logging
 your sessions, or have your R commands stored in text files which can be
 read in using `source()'.
 
-     *Note*:  If you run R from within Emacs (see *Note R and Emacs::), you
+     Note: If you run R from within Emacs (see *Note R and Emacs::), you
      can save the contents of the interaction buffer to a file and
      conveniently manipulate it using `ess-transcript-mode', as well as
      save source copies of all functions and data used.
@@ -967,9 +968,9 @@ There are some differences in the modeling code, such as
      expression with attributes, in R it is a formula with attributes.  The
      attributes have the same names but are mostly stored differently.
 
-   * Finally, in R `y~x+0' is an alternative to `y~x-1' for specifying a
-     model with no intercept.  Models with no parameters at all can be
-     specified by `y~0'.
+   * Finally, in R `y ~ x + 0' is an alternative to `y ~ x - 1' for
+     specifying a model with no intercept.  Models with no parameters at all
+     can be specified by `y ~ 0'.
 
 3.3.3 Others
 ------------
@@ -1777,6 +1778,9 @@ distributions of R.)
      Output analysis and diagnostics for Markov Chain Monte Carlo (MCMC)
      simulations.
 
+*colorspace*
+     Mapping between assorted color spaces.
+
 *combinat*
      Combinatorics utilities.
 
@@ -2407,6 +2411,9 @@ distributions of R.)
 *mlica*
      Independent Component Analysis using Maximum Likelihood.
 
+*mlmRev*
+     Examples from Multilevel Modelling Software Review.
+
 *mmlcr*
      Mixed-mode latent class regression (also known as mixed-mode mixture
      model regression or mixed-mode mixture regression models) which can
@@ -2677,6 +2684,9 @@ distributions of R.)
      Functions to facilitate inference on the relative importance of
      predictors in a linear or generalized linear model.
 
+*relsurv*
+     Various functions for regression in relative survival.
+
 *rgdal*
      Provides bindings to Frank Warmerdam's Geospatial Data Abstraction
      Library (GDAL).
@@ -2870,6 +2880,10 @@ distributions of R.)
 *statmod*
      Miscellaneous biostatistical modelling functions.
 
+*stepwise*
+     A stepwise approach to identifying recombination breakpoints in a
+     sequence alignment.
+
 *strucchange*
      Various tests on structural change in linear regression models.
 
@@ -3009,6 +3023,9 @@ these a try, of course.  This area of CRAN currently contains
 
 *GLMMGibbs*
      Generalised Linear Mixed Models by Gibbs sampling.
+
+*GPArotation*
+     Gradient Projection Algorithm rotation for factor analysis.
 
 *RPgSQL*
      Provides methods for accessing data stored in PostgreSQL tables.
