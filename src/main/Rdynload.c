@@ -138,10 +138,6 @@ static DllInfo LoadedDLL[MAX_NUM_DLLS];
 OSDynSymbol Rf_osDynSymbol;
 OSDynSymbol *R_osDynSymbol = &Rf_osDynSymbol;
 
-#ifdef DL_SEARCH_PROG
-static DllInfo baseDll;
-#endif
-
 
 Rboolean R_useDynamicSymbols(DllInfo *info, Rboolean value)
 {

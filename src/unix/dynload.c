@@ -66,10 +66,6 @@ static int computeDLOpenFlag(int asLocal, int now);
 
 void InitFunctionHashing()
 {
-#ifdef DL_SEARCH_PROG
-    baseDLL.handle = dlopen(0, RTLD_NOW);
-#endif
-
     R_osDynSymbol->loadLibrary = loadLibrary;
     R_osDynSymbol->dlsym = R_dlsym;
     R_osDynSymbol->closeLibrary = closeLibrary;
@@ -140,12 +136,6 @@ static void deleteCachedSymbols(DllInfo *dll)
 
 static DL_FUNC getBaseSymbol(const char *name)
 {
-#ifdef DL_SEARCH_PROG
-    DL_FUNC fcnptr;
-
-    fcnptr = R_osDynSymbol->dlsym(&baseDll, name);
-    return(fcnptr);
-#else
     int i;
 
     for(i = 0 ; R_osDynSymbol->CFunTab[i].name ; i++)
@@ -153,7 +143,6 @@ static DL_FUNC getBaseSymbol(const char *name)
 	    return R_osDynSymbol->CFunTab[i].func;
 
     return((DL_FUNC) NULL);
-#endif
 }
 
 
