@@ -29,7 +29,8 @@ help.start(gui = "irrelevant", browser = "irrelevant")
   call. Then, the hypertext \R help interface is opened in any already
   running browser or a new one if necessary.
 
-  All future help requests are sent to the browser.
+  All future help requests are sent to the browser specified by
+  \code{options("browser")} (the default for the \code{browser} argument).
 #endif
 #ifdef windows
   The Windows file association mechanism is used to send the HTML file

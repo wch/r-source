@@ -36,7 +36,8 @@ help(topic, offline = FALSE, package = .packages(),
 #ifdef unix
  \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE} (which is the
      default after \code{\link{help.start}} has been called), the HTML
-     version of the help will be shown in a browser.}
+     version of the help will be shown in the browser specified by
+     \code{options("browser")}.}
 #endif
 #ifdef mac
   \item{htmlhelp}{logical (or \code{NULL}).  If \code{TRUE}, the HTML
