@@ -1,5 +1,5 @@
 \name{formatC}
-\title{Flexible Formatting}
+\title{Formatting Using C-style Formats}
 \usage{
 formatC(x, digits = NULL, width = NULL,
         format = NULL, flag = "", mode = NULL)
@@ -10,42 +10,47 @@ format.char(x, width = NULL, flag = "-")
 \arguments{
   \item{x}{an atomic numerical or character object, typically a vector
     of real numbers.}
+
   \item{digits}{the desired number of digits after the decimal
     point (\code{format = "f"}) or \emph{significant} digits
     (\code{format = "g"}, \code{= "e"} or \code{= "fg"}).
 
     Default: 2 for integer, 4 for real numbers.  If less than 0,
     the C default of 6 digits is used.}
+
   \item{width}{the total field width; if both \code{digits} and
-      \code{width} are unspecified, \code{width} defaults to 1,
-      otherwise to \code{digits + 1}.  \code{width = 0} will use
-      \code{width = digits}, \code{width < 0} means left
-      justify the number in this field (equivalent to \code{flag ="-"}).
-      If necessary, the result will have more characters than \code{width}.}
+    \code{width} are unspecified, \code{width} defaults to 1,
+    otherwise to \code{digits + 1}.  \code{width = 0} will use
+    \code{width = digits}, \code{width < 0} means left
+    justify the number in this field (equivalent to \code{flag ="-"}).
+    If necessary, the result will have more characters than \code{width}.}
+
   \item{format}{equal to \code{"d"}  (for integers), \code{"f"},
     \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"}, \code{"fg"} (for
-    reals), or \code{"s"} (for strings). Default \code{"d"} for
+    reals), or \code{"s"} (for strings). Default is \code{"d"} for
     integers, \code{"g"} for reals.
 
     \code{"f"} gives numbers in the usual
-    ``xxx.xxx'' format;  \code{"e"} and \code{"E"} give ``n.dddenn'' or
-    ``n.dddEnn'' (scientific format); \code{"g"} and \code{"G"} put
+    \code{xxx.xxx} format;  \code{"e"} and \code{"E"} give \code{n.ddde+nn} or
+    \code{n.dddE+nn} (scientific format); \code{"g"} and \code{"G"} put
     \code{x[i]} into scientific format only if it saves space to do so.
 
     \code{"fg"} uses fixed format as \code{"f"}, but \code{digits} as
     number of \emph{significant} digits.  Note that this can lead to
     quite long result strings, see examples below.}
-  \item{flag}{format modifier as in Kernighan and Ritchie, 2nd ed.,
-    page 243.
+
+  \item{flag}{format modifier as in Kernighan and Ritchie (1988, page 243).
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
     others are \code{"+"}, \code{" "}, and \code{"#"}.}
+  
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
     \code{"character"}.
-    Default: Automatic.}
+    Default: Determined from the storage mode of \code{x}.}
 }
 \description{
     Formatting numbers individually and flexibly, using \code{C} style
-    format specifications.
+    format specifications.  \code{format.char} is a helper function for
+    \code{formatC}.
 }
 \value{
   A character object of same size and attributes as \code{x}.
@@ -59,10 +64,22 @@ format.char(x, width = NULL, flag = "-")
 \details{
   If you set \code{format} it over-rides the setting of \code{mode}, so
   \code{formatC(123.45, mode="double", format="d")} gives \code{123}.
+
+  The rendering of scientific format is platform-dependent: some systems
+  use \code{n.ddde+nnn} or \code{n.dddenn} rather than \code{n.ddde+nn}.
+
+  \code{formatC} does not necessarily align the numbers on the decimal
+  point, so \code{formatC(c(6.11, 13.1), digits=2, format="fg")} gives
+  \code{c("6.1", " 13")}.  If you want common formatting for several
+  numbers, use \code{\link{format}}.
 }
 \author{
- Originally written by Bill Dunlap, later much improved by Martin Maechler,
- it was first adapted for \R by Friedrich Leisch.
+  Originally written by Bill Dunlap, later much improved by Martin Maechler,
+  it was first adapted for \R by Friedrich Leisch.
+}
+\references{
+  Kernighan, B. W. and Ritchie, D. M. (1988)
+  \emph{The C Programming Language.}  Second edition. Prentice Hall.
 }
 \seealso{
   \code{\link{format}}.
