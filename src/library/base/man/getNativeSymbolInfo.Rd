@@ -23,7 +23,9 @@ getNativeSymbolInfo(name, PACKAGE)
 }
 \arguments{
   \item{name}{the name of the native symbol as used in a call
-    to \code{\link{is.loaded}}, etc.}
+    to \code{\link{is.loaded}}, etc. Note that Fortran symbols should be
+    supplied as-is, not wrapped in \code{symbol.For}.
+  }
   \item{PACKAGE}{an optional argument that specifies to which
     dynamically loaded library we restrict the search for this symbol.
     If this is \code{"base"}, we search in the R executable itself.}
@@ -102,6 +104,6 @@ getNativeSymbolInfo(name, PACKAGE)
 library(stats) # normally loaded
 getNativeSymbolInfo("dansari")
 
-getNativeSymbolInfo(symbol.For("hcass2"))
+getNativeSymbolInfo("hcass2")  # a Fortran symbol
 }
 \keyword{interface}
