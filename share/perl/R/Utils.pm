@@ -286,7 +286,9 @@ sub get_exclude_patterns {
 			    "\~\$", "\\.bak\$", "\\.swp\$",
 			    "(^|/)\\.#[^/]*\$", "(^|/)#[^/]*#\$",
 			    "^TITLE\$", "^data/00Index\$",
-			    "^inst/doc/00Index.dcf\$"
+			    "^inst/doc/00Index.dcf\$",
+			    "^config\\.(cache|log|status)\$",
+			    "^autom4te.cache\$"
 			    );
     ## </NOTE>
     @exclude_patterns;
