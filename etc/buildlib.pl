@@ -35,6 +35,9 @@ sub buildinit {
 
     my $currentdir = getcwd();
 
+    print STDERR "buildinit: pkg=$pkg, lib=$lib, currentdir=$currentdir\n"
+      if $opt_debug;
+
     if($pkg){
 	die("Package $pkg does not exit\n") unless (-d $pkg);
     }
@@ -46,6 +49,7 @@ sub buildinit {
 
     if($lib){
         mkdir "$lib", $dir_mod || die "Could not create $lib: $!\n";
+	chdir $lib;
 	$lib=getcwd();
     }
     else{
@@ -56,6 +60,9 @@ sub buildinit {
 
     chdir($pkg) or die("Cannot change to $pkg\n");
     $pkg = basename(getcwd());
+
+    print STDERR "buildinit[2]: pkg=$pkg, lib=$lib, currentdir=$currentdir\n"
+      if $opt_debug;
 
     chdir "man" or die("There are no man pages in $pkg\n");
     opendir man, '.';
