@@ -14,6 +14,10 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   The code underlying polygon drawing contained a memory leak.
+	This showed up in persp, but did not effect other graphics
+	functions.  It is now possible to draw big DEMs.
+
     o   library() was changed so that when the methods package is
 	attached it no longer complains about generic functions not
 	specific to the library.
