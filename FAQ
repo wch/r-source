@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-39, 2001-04-12
+Version 1.2-40, 2001-04-13
 Kurt Hornik
 
 
@@ -1199,6 +1199,9 @@ works, was published in the Journal of Statistical Software
 *conf.design*
      A series of simple tools for constructing and manipulating confounded
      and fractional factorial designs.
+
+*cramer*
+     Routine for the multivariate nonparametric Cramer test.
 
 *date*
      Functions for dealing with dates.  The most useful of them accepts a
