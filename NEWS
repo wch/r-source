@@ -46,7 +46,7 @@ NEW FEATURES
     o	Installed packages under Unix without compiled code are no
 	longer stamped with the platform and can be copied to other
 	Unix-alike platforms (but not to other OSes because of
-	potential problems with line endings).
+	potential problems with line endings and OS-specific help files).
 
     o	New generic function flush() with a method to flush connections.
 
