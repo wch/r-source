@@ -18,5 +18,9 @@ endif
 R/$(PKG): $(PKGRFILES)
 	@echo "  collecting R files"
 	@$(MKDIR) -p $(DPKG)/R
+ifeq ($(strip $(BUILD)),CROSS)
+	@$(CAT) $(PKGRFILES) | $(SED) -e 's+= file.path(.Library+= file.path("../../../library"+' > $@
+else
 	@$(CAT) $(PKGRFILES)   > $@
+endif
 
