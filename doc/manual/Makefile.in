@@ -56,9 +56,7 @@ texiincludes = version.texi $(srcdir)/R-defs.texi
 all: Makefile R docs
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 R: Makefile @MAINTAINER_MODE_TRUE@ maintainer-build
 

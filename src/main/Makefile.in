@@ -106,9 +106,7 @@ Makefile: $(srcdir)/Makefile.in \
   ../include/config.h \
   ../include/Rversion.h \
   $(SOURCES_C)
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 Makedeps: Makefile $(DEPENDS)
 	@cat $(DEPENDS) >> Makefile

@@ -47,13 +47,9 @@ all: Makefile DESCRIPTION
 	    $(top_builddir)/library/$(pkg)/man/$(pkg).Rd)
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 DESCRIPTION: $(srcdir)/DESCRIPTION.in $(top_builddir)/config.status
-	@cd $(top_builddir) && \
-	  CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= \
-	  $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 
 mostlyclean: clean
 clean:
