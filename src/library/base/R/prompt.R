@@ -1,16 +1,18 @@
-prompt <- function(object, ...) UseMethod("prompt")
+prompt <- function(object, filename = paste0(name, ".Rd"), name = NULL, ...)
+    UseMethod("prompt")
 
 ## Fixme : Both methods share a lot of code;  really re-use with namespace
 ## -----   For now, often change *both*
 
 prompt.default <-
-    function(object, filename = paste0(name, ".Rd"),
+    function(object, filename = paste0(name, ".Rd"), name = NULL,
              force.function = FALSE, ...)
 {
     paste0 <- function(...) paste(..., sep = "")
     is.missing.arg <- function(arg)
         typeof(arg) == "symbol" && deparse(arg) == ""
 
+    if(missing(name))
     name <-
         if(is.character(object))
             object
@@ -19,9 +21,10 @@ prompt.default <-
             if(is.language(name) && !is.name(name)) name <- eval(name)
             as.character(name)
         }
-    fn <- get(name)
+    ## better than get(); works when called in fun :
+    fn <- get(name, envir = parent.frame())
     if(is.data.frame(fn))
-       return(prompt.data.frame(fn, filename = filename))
+       return(prompt.data.frame(fn, filename = filename, name = name))
 
     ## `file' [character(NN)] will contain the lines to be put in the
     ## Rdoc file
@@ -121,16 +124,23 @@ prompt.default <-
     invisible(file)
 }
 
-prompt.data.frame <- function (object, filename = paste0(name, ".Rd"), ...)
+prompt.data.frame <-
+    function (object, filename = paste0(name, ".Rd"), name = NULL, ...)
 {
     paste0 <- function(...) paste(..., sep = "")
-##    describe <- function(object) UseMethod()
 
-    name <- substitute(object)
-    if (is.language(name) && !is.name(name))
-        name <- eval(name)
-    name <- as.character(name)
-    dat <- get(name)
+    if(missing(name))
+    name <-
+        if(is.character(object))
+            object
+        else {
+            name <- substitute(object)
+            if(is.language(name) && !is.name(name)) name <- eval(name)
+            as.character(name)
+        }
+    ## better than get(); works when called in fun :
+    dat <- get(name, envir = parent.frame())
+
     ## `file' [character(NN)] will contain the lines to be put in the
     ## Rdoc file
     file <- c(paste0("\\name{", name, "}"), paste0("\\alias{", name, "}"))

@@ -2,13 +2,13 @@
 \title{Produce Prototype of an R Documentation File}
 \synopsis{
 prompt.default(object,
-    filename = paste0(name, ".Rd"), force.function = FALSE, \dots)
+    filename = paste0(name, ".Rd"), name = NULL, force.function = FALSE, \dots)
 
 prompt.data.frame(object,
-    filename = paste0(name, ".Rd"), \dots)
+    filename = paste0(name, ".Rd"), name = NULL, \dots)
 }
 \usage{
-prompt(object, \dots)
+prompt(object, name = NULL, \dots)
 
 prompt.default(object,
     filename = paste(name, ".Rd", sep = ""),
