@@ -16,6 +16,9 @@ NEW FEATURES
     o	cmdscale() now takes rownames from a dist object `d' as well
 	as from a matrix.
 
+    o	New functions rowMean(), colSums(), rowMeans() and colMeans():
+	versions of apply() optimized for these cases. 
+
 
 DEPRECATED & DEFUNCT
 

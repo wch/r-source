@@ -1,0 +1,67 @@
+\name{colSums}
+\alias{colSums}
+\alias{rowSums}
+\alias{colMeans}
+\alias{rowMeans}
+\title{Form Row and Column Sums and Means}
+\description{
+  Form row and column sums and means for numeric arrays.
+}
+\usage{
+colSums (x, na.rm = FALSE, dims = 1)
+rowSums (x, na.rm = FALSE, dims = 1)
+colMeans(x, na.rm = FALSE, dims = 1)
+rowMeans(x, na.rm = FALSE, dims = 1)
+}
+\arguments{
+  \item{x}{an array or two or more dimensions, containing numeric,
+    complex, integer or logical values.}
+  \item{na.rm}{logical. Should missing values be omitted from the
+    calculations?}
+  \item{dims}{Which dimensions are regarded as ``rows'' or ``columns''
+    to sum over.  For \code{col*}, the sum or mean is over dimensions
+    \code{dims+1, \dots}; for \code{row*} it is over dimensions
+    \code{1:dims}.}
+}
+\details{
+  These functions are equivalent to use of \code{\link{apply}} with
+  \code{FUN = mean} or \code{FUN = sum} with appropriate margins, but
+  are a lot faster.
+}
+\value{
+  A numeric or complex array of suitable size, or a vector if the result is
+  one-dimensional.  The \code{dimnames} (or \code{names} for a vector
+  result) are taken from the original array.
+}
+\seealso{\code{\link{apply}}}
+\examples{
+## Compute row and column sums for a matrix:
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+rowSums(x); colSums(x)
+dimnames(x)[[1]] <- letters[1:8]
+rowSums(x); colSums(x); rowMeans(x); colMeans(x)
+x[] <- as.integer(x)
+rowSums(x); colSums(x)
+x[] <- x < 3
+rowSums(x); colSums(x)
+x <- cbind(x1 = 3, x2 = c(4:1, 2:5))
+x[3, ] <- NA; x[4, 2] <- NA
+rowSums(x); colSums(x); rowMeans(x); colMeans(x)
+rowSums(x, na.rm = TRUE); colSums(x, na.rm = TRUE)
+rowMeans(x, na.rm = TRUE); colMeans(x, na.rm = TRUE)
+
+## an array
+data(UCBAdmissions)
+dim(UCBAdmissions)
+rowSums(UCBAdmissions); rowSums(UCBAdmissions, dims = 2)
+colSums(UCBAdmissions); colSums(UCBAdmissions, dims = 2)
+
+## complex case
+x <- cbind(x1 = 3 + 2i, x2 = c(4:1, 2:5) - 5i)
+x[3, ] <- NA; x[4, 2] <- NA
+rowSums(x); colSums(x); rowMeans(x); colMeans(x)
+rowSums(x, na.rm = TRUE); colSums(x, na.rm = TRUE)
+rowMeans(x, na.rm = TRUE); colMeans(x, na.rm = TRUE)
+}
+\keyword{array}
+\keyword{algebra}
