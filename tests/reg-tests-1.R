@@ -3034,8 +3034,16 @@ stopifnot(inherits(try(e == e), "try-error"))
 
 
 ## "nowhere" interpolation (PR#6809)
-approx(list(x=rep(NaN,9),y=1:9), xout=NaN)
+approx(list(x=rep(NaN, 9), y=1:9), xout=NaN)
 ## gave a seg.fault in 1.9.0
+
+
+## aggregate.data.frame failed if result would have one row
+## Philippe Hupé, R-help, 2004-05-14
+dat <- data.frame(a=rep(2,10),b=rep("a",10))
+aggregate(dat$a, by=list(a1=dat$a, b1=dat$b), NROW)
+## failed due to missing drop = FALSE
+
 
 ### end of tests added in 1.9.1 ###
 

@@ -17,7 +17,8 @@ unserialize(connection, refhook = NULL)
 \arguments{
   \item{object}{\R object to serialize.}
   \item{file}{a connection or the name of the file where the R object
-    is saved to or read from.}
+    is saved to or read from, or \code{NULL} for \code{serialize}
+    (see details).}
   \item{ascii}{a logical.  If \code{TRUE}, an ASCII representation is
     written; otherwise (default), a more compact binary one is used.}
   \item{version}{the workspace format version to use.  \code{NULL}
@@ -35,7 +36,7 @@ unserialize(connection, refhook = NULL)
   connection.  Sharing of reference objects is preserved within the
   object but not across separate calls to serialize.  If
   \code{connection} is \code{NULL} then \code{object} is serialized to a
-  scaler string, which is returned as the result of \code{serialize}.
+  scalar string, which is returned as the result of \code{serialize}.
   For a text mode connection, the default value of \code{ascii} is set
   to \code{TRUE}.
 
@@ -56,8 +57,18 @@ unserialize(connection, refhook = NULL)
   values might change in future versions.  \code{.saveRDS} and
   \code{.readRDS} are intended for internal use.
 }
+\value{
+  For \code{serialize}, \code{NULL} unless \code{connection=NULL}, when
+  the result is stored in the first element of a character vector (but
+  is not a normal character string and should not be processed except by
+  \code{unserialize}.)
+
+  For \code{unserialize} and \code{.readRDS}, an \R object.
+
+  For \code{.saveRDS}, \code{NULL} invisibly.
+}
 \examples{
-x<-serialize(list(1,2,3),NULL)
+x <- serialize(list(1,2,3), NULL)
 unserialize(x)
 }
 \keyword{internal}
