@@ -39,6 +39,7 @@ function(dir, outDir)
                        ## Could also use
                        ##   format(Sys.time(), "%a %b %d %X %Y")
                        Sys.time(),
+                       "; ",                       
                        .Platform$OS.type,
                        sep = "")),
                file.path(outDir, "DESCRIPTION"))
