@@ -292,18 +292,10 @@ none
 
 Directory:  incoming
 
-* PR# 779 *
-Subject: Problem with sink() in 1.20 on Windows
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Tue, 19 Dec 2000 15:04:51 -0500
-* PR# 765 *
-Subject: cannot allocate vector of size in merge
-From: viktorm@pdf.com
-Date: Fri, 15 Dec 2000 00:06:56 +0100 (MET)
-* PR# 771 *
-Subject: problems with glm
-From: Jim Lindsey <james.lindsey@luc.ac.be>
-Date: Mon, 18 Dec 2000 09:28:01 +0100 (MET)
+* PR# 788 *
+Subject: Re: [Rd] Inconsistency in creating/opening/closing/destroying
+From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 20 Dec 2000 13:14:56 +0000 (GMT)
 * PR# 768 *
 Subject: R on Redhat 7 / glibc problem
 From: B.Rowlingson@lancaster.ac.uk
@@ -312,6 +304,22 @@ Date: Fri, 15 Dec 2000 19:12:29 +0100 (MET)
 Subject: R1.2.0
 From: Jim Lindsey <james.lindsey@luc.ac.be>
 Date: Fri, 15 Dec 2000 16:12:12 +0100 (MET)
+* PR# 765 *
+Subject: cannot allocate vector of size in merge
+From: viktorm@pdf.com
+Date: Fri, 15 Dec 2000 00:06:56 +0100 (MET)
+* PR# 772 *
+Subject: demo(is.things) fails
+From: B.Rowlingson@lancaster.ac.uk
+Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
+* PR# 771 *
+Subject: problems with glm
+From: Jim Lindsey <james.lindsey@luc.ac.be>
+Date: Mon, 18 Dec 2000 09:28:01 +0100 (MET)
+* PR# 775 *
+Subject: R 1.2.0 : logspline does not install from install.packages(). Missing #include | library ?
+From: charpent@bacbuc.dyndns.org
+Date: Mon, 18 Dec 2000 20:48:42 +0100 (MET)
 * PR# 774 *
 Subject: \item{x}<cr>{description of x}
 From: Paul Gilbert <pgilbert@bank-banque-canada.ca>
@@ -320,23 +328,51 @@ Date: Mon, 18 Dec 2000 11:05:39 -0500
 Subject: INSTALL should have info on make check
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 18 Dec 2000 16:13:59 +0100
-* PR# 772 *
-Subject: demo(is.things) fails
-From: B.Rowlingson@lancaster.ac.uk
-Date: Mon, 18 Dec 2000 13:46:02 +0100 (MET)
-* PR# 776 *
-Subject: strwidth does not take font into account
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
-* PR# 775 *
-Subject: R 1.2.0 : logspline does not install from install.packages(). Missing #include | library ?
-From: charpent@bacbuc.dyndns.org
-Date: Mon, 18 Dec 2000 20:48:42 +0100 (MET)
-* PR# 778 *
-Subject: Bug in glm.fit() or plot.lm()
-From: murdoch@stats.uwo.ca (Duncan Murdoch)
-Date: Tue, 19 Dec 2000 14:57:59 -0500
 * PR# 777 *
 Subject: Minor "make check" bug.
 From: Martyn Plummer <plummer@iarc.fr>
 Date: Tue, 19 Dec 2000 15:11:24 +0100 (CET)
+* PR# 776 *
+Subject: strwidth does not take font into account
+From: Martyn Plummer <plummer@iarc.fr>
+Date: Tue, 19 Dec 2000 14:56:01 +0100 (CET)
+* PR# 780 *
+Subject: glm gives incorrect results for zero-weight cases
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 20 Dec 2000 10:59:48 +0000 (GMT)
+* PR# 779 *
+Subject: Problem with sink() in 1.20 on Windows
+From: Setzer.Woodrow@epamail.epa.gov
+Date: Tue, 19 Dec 2000 15:04:51 -0500
+* PR# 778 *
+Subject: Bug in glm.fit() or plot.lm()
+From: murdoch@stats.uwo.ca (Duncan Murdoch)
+Date: Tue, 19 Dec 2000 14:57:59 -0500
+* PR# 783 *
+Subject: unlink() is not synchronized with existing connections
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Wed, 20 Dec 2000 13:36:17 +0100
+* PR# 782 *
+Subject: closing the sink connection a) is possible and b) can't be undone
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Wed, 20 Dec 2000 13:32:41 +0100
+* PR# 781 *
+Subject: syskern fails Rcmd check on Windows, gives incorrect information
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 20 Dec 2000 11:12:47 +0000 (GMT)
+* PR# 785 *
+Subject: Re: [Rd] unlink() is not synchronized with existing connections
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 20 Dec 2000 12:47:30 +0000 (GMT)
+* PR# 784 *
+Subject: showConnections() does not show closed (or non-opened) connections though help says so
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Wed, 20 Dec 2000 13:42:43 +0100
+* PR# 787 *
+Subject: Inconsistency in creating/opening/closing/destroying connections
+From: =?iso-8859-1?Q?"Jens=20Oehlschl=E4gel"?= <joehl@web.de>
+Date: Wed, 20 Dec 2000 13:56:49 +0100
+* PR# 786 *
+Subject: Re: [Rd] showConnections() does not show closed (or non-opened)
+From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
+Date: Wed, 20 Dec 2000 12:51:33 +0000 (GMT)
