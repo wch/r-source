@@ -32,13 +32,19 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	"approx" and "approxfun", have had some minor adjustments.
+	which fix the interpretation of the rule= argument.  The
+	code for piecewise constant case is now internal C code
+	that than interpreted.  This should boost performance in
+	this case.
+
     o	There has been a minor fixup of "model.frame" to ensure that
 	subsets, weights, etc are handled properly.
 
     o	Model fitting of the form
 
-		lm(y~.,data=df)
-		glm(y~.,data=df)
+		lm(y~., data=df)
+		glm(y~., data=df)
 
 	will now work.  The RHS of the model will consist of an
 	additive model containing all (non-respose) variabels in the
@@ -61,5 +67,5 @@ BUG FIXES
 
     o   Syntax errors in parse(text="...") would cause R to terminate
 	with a segmentation violation.  This no longer happens, although
-	the result is still not perfect (the parse() returns ...).
-	Help is on the way.
+	the result is still not perfect (the parse() returns).
+	This will be fixed by a future parse rewrite.
