@@ -23,6 +23,7 @@ arima0 <- function(x, order=c(0,0,0),
         xreg <- as.matrix(xreg)
         ncxreg <- ncol(xreg)
     }
+    class(xreg) <- NULL
     if(include.mean) {
         xreg <- cbind(intercept=rep(1, n.used), xreg)
         ncxreg <- ncxreg+1
