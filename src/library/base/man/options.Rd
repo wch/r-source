@@ -32,7 +32,15 @@ getOption(x)
     on UNIX.}
 
   \item{pager}{the (stand-alone) program used for displaying ASCII files on
-    \R's console.  Defaults to \file{\$R\_HOME/bin/pager} on UNIX.}
+    \R's console.
+#ifdef unix
+   Defaults to \file{\$R\_HOME/bin/pager}.
+#endif
+#ifdef windows
+   Defaults to \code{"internal"}, which uses a pager similar to the GUI
+   console. Another possibility is \code{"console"} to use the console itself.
+#endif
+  }
 
   \item{browser}{default HTML browser used by \code{\link{help.start}()}
     on UNIX.}
@@ -64,8 +72,7 @@ getOption(x)
 
   \item{printcmd}{the command used by \code{\link{postscript}} for
     printing; set by environment variable \code{R_PRINTCMD}. This should
-    be a command that expects input to be piped to \file{stdin}
-    \emph{or} be given a filename argument.}
+    be a command that expects input to be piped to \fiel{stdin}.}
 #ifdef unix
   \item{latexcmd, dvipscmd}{character strings giving commands to be used
     in off-line printing of help pages.}

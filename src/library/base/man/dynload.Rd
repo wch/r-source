@@ -22,12 +22,20 @@ symbol.For(name)
   \item{local}{a logical value controlling whether the symbols in the
     DLL are stored in their own local table and not shared across DLLs,
     or added to the global symbol table.  Whether this has any effect is
-    system-dependent.}
+    system-dependent.
+#ifdef windows
+    It is ignored on Windows.
+#endif
+  }
   \item{now}{a logical controlling whether all symbols are resolved (and
     relocated) immediately the library is loaded or deferred until they
     are used.  This control is useful for developers testing whether a
     library is complete and has all the necessary symbols and for users
-    to ignore missing symbols.}
+    to ignore missing symbols. Whether this has any effect is system-dependent.
+#ifdef windows
+    It is ignored on Windows.
+#endif
+  }
   \item{symbol}{a character string giving a symbol name.}
   \item{name}{a character string giving either the name of a C function
     or Fortran subroutine.  Fortran names probably need to be given
@@ -41,6 +49,7 @@ symbol.For(name)
   defaults values are appropriate and one should override them only if 
   there is good reason and you understand the implications.
 
+#ifdef unix
   The \code{local} argument allows one to control whether the symbols in
   the DLL being attached are visible to other DLLs.  While maintaining
   the symbols in their own namespace is good practice, the ability to
@@ -77,6 +86,7 @@ symbol.For(name)
   There is a short discussion of these additional arguments with some
   example code available at
   \url{http://cm.bell-labs.com/stat/duncan/R/dynload}.
+#endif
 }
 \value{
   The function \code{dyn.load} is used for its side effect which links
