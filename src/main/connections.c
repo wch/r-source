@@ -416,6 +416,7 @@ static Rconnection newfile(char *description, char *mode)
     new->fflush = &file_fflush;
     new->read = &file_read;
     new->write = &file_write;
+    new->canseek = TRUE;
     new->private = (void *) malloc(sizeof(struct fileconn));
     if(!new->private) {
 	free(new->description); free(new->class); free(new);
