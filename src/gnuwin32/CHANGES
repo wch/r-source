@@ -65,8 +65,9 @@ New file README.Rterm providing basic documentation on Rterm.exe.
 undoc() is now available under Windows.
 
 There is a new script R_HOME/bin/build.sh, a version of R CMD build.
-You will need R_HOME set as an environment variable to use it, and
-you will need the full set of tools from tools.zip in your path.
+You will need R_HOME set as an environment variable to use it, and you
+will need the full set of tools from tools.zip (see readme.packages)
+in your path.
 
 The batch wrappers to Perl files Rdconv.bat Rdindex.bat Rd2txt.bat
 Sd2Rd.bat have been revised to work on more Perl/OS versions.
@@ -87,6 +88,13 @@ preference to a file Makevars.
 
 The Makefiles for packages now allow C++ code (with extension .cc or
 .cpp or .C) in the src directory.
+
+If you use a private library and HTML help, you need to copy R.css
+from rw1011\library to each private library directory.
+
+Function win.version() should give slightly more information (the
+latest service pack number x.y) on Windows 2000.
+
 
 
 rw1010

@@ -165,7 +165,7 @@ Using Borland C++
 Borland C++5.5 is available as a free download from
 http://www.borland.com/bcppbuilder/freecompiler/ and as part of C++
 Builder 5.  The following will make convolve.dll from convolve.c (flag
--6 optimizes for a Pentium Pro/II/III)
+-6 optimizes for a Pentium Pro/II/III, and -u- removes extra underscores)
 
 bcc32 -u- -6 -O2 -WDE convolve.c
 
@@ -208,6 +208,11 @@ conversion at all to the symbol name.  It is normally best to use
 Care is needed in passing character strings to and from a DLL by .C:
 they must be equivalent to the C type char** and null-terminated.  Not
 even the mingw32 g77 Fortran uses null-terminated strings.
+
+WARNING: DLLs made with some compilers reset the FPU in their
+startup code (Delphi is one), and this will cause operations such as 0./0.
+to crash R.  You can re-set the FPU to the correct values by a call
+to the C entry point Rwin_fpset().
 
 
 Simple Ports
