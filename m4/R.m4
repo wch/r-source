@@ -810,7 +810,7 @@ int main () {
 	    [r_cv_func_finite_works=yes],
 	    [r_cv_func_finite_works=no],
 	    [r_cv_func_finite_works=no])])
-if test "x${r_cv_func_finite_works}" = yes; then
+if test "x${r_cv_func_finite_works}" = xyes; then
   AC_DEFINE(HAVE_WORKING_FINITE)
 fi
 ])
@@ -1378,13 +1378,14 @@ int main() {
   fi
 ])
 ##
-## R_USES_LEAPSECONDS
-## See if leap seconds are used.
+## R_SYS_POSIX_LEAPSECONDS
+## See if your system time functions do not count leap seconds, as
+## required by POSIX.
 ##
-AC_DEFUN([R_USES_LEAPSECONDS],
-  [ AC_CACHE_CHECK([whether leap seconds are counted],
-      r_cv_uses_leapseconds,
-      AC_TRY_RUN([
+AC_DEFUN([R_SYS_POSIX_LEAPSECONDS],
+[AC_CACHE_CHECK([whether leap seconds are treated according to POSIX],
+r_cv_sys_posix_leapseconds,
+AC_TRY_RUN([
 #include <stdlib.h>
 #include <time.h>
 #include <stdio.h>
@@ -1399,10 +1400,10 @@ int main () {
   tm = gmtime(&ct);
   if(tm->tm_sec == 0) exit(1); else exit(0);
 }],
-	r_cv_uses_leapseconds=yes,
-	r_cv_uses_leapseconds=no,
-	r_cv_uses_leapseconds=no))
-    if test "${r_cv_uses_leapseconds}" = yes; then
-      AC_DEFINE(USING_LEAPSECONDS, 1)
-    fi
-  ])
+	       [r_cv_sys_posix_leapseconds=no],
+	       [r_cv_sys_posix_leapseconds=yes],
+	       [r_cv_sys_posix_leapseconds=yes]))
+if test "x${r_cv_sys_posix_leapseconds}" = xyes; then
+  AC_DEFINE(HAVE_POSIX_LEAPSECONDS)
+fi
+])

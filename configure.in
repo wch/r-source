@@ -910,7 +910,7 @@ R_XDR
 R_ZLIB
 
 ## POSIX times.
-R_USES_LEAPSECONDS
+R_SYS_POSIX_LEAPSECONDS
 
 ## R profiling.
 if test "${want_R_profiling}" = yes; then

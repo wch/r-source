@@ -51,6 +51,10 @@
 /* Define if you have the PNG headers and libraries. */
 #undef HAVE_PNG
 
+/* Define if your system time functions do not count leap seconds, as
+   required by POSIX. */
+#undef HAVE_POSIX_LEAPSECONDS
+
 /* Define if you have POSIX.1 compatible sigsetjmp/siglongjmp. */
 #undef HAVE_POSIX_SETJMP
 
@@ -123,9 +127,6 @@
 /* Define if your system's rint() is broken.
    Apparently needed on HPUX. */
 #undef USE_BUILTIN_RINT
-
-/* Define if your system time functions count leap seconds. */
-#undef USING_LEAPSECONDS
 
 /* Define on HPUX if not using GCC. */
 #undef _HPUX_SOURCE

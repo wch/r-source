@@ -66,7 +66,7 @@ static const int days_in_month[12] =
 #define isleap(y) ((((y) % 4) == 0 && ((y) % 100) != 0) || ((y) % 400) == 0)
 #define days_in_year(year) (isleap(year) ? 366 : 365)
 
-#ifdef USING_LEAPSECONDS
+#ifndef HAVE_POSIX_LEAPSECONDS
 static const time_t leapseconds[] =
 {  78796800, 94694400,126230400,157766400,189302400,220924800,252460800,
   283996800,315532800,362793600,425865600,489024000,520560000,567993600,
@@ -204,7 +204,7 @@ static double guess_offset (struct tm *tm)
 static double mktime0 (struct tm *tm, const int local)
 {
     double res;
-#ifdef USING_LEAPSECONDS
+#ifndef HAVE_POSIX_LEAPSECONDS
     int i;
 #endif
 
@@ -218,7 +218,7 @@ static double mktime0 (struct tm *tm, const int local)
        tm->tm_year > 02)
 #endif
     {   res = (double) mktime(tm);
-#ifdef USING_LEAPSECONDS
+#ifndef HAVE_POSIX_LEAPSECONDS
         for(i = 0; i < 22; i++)
             if(res > leapseconds[i]) res -= 1.0;
 #endif
@@ -245,7 +245,7 @@ static struct tm * localtime0(const double *tp, const int local)
        d > -2147483647.0) {
 #endif
 	t = (time_t) d;
-#ifdef USING_LEAPSECONDS
+#ifndef HAVE_POSIX_LEAPSECONDS
         for(y = 0; y < 22; y++) if(t > leapseconds[y] + y - 1) t++;
 #endif
 	return local ? localtime(&t) : gmtime(&t);
@@ -301,7 +301,7 @@ SEXP do_systime(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     time_t res = time(NULL);
     SEXP ans = allocVector(REALSXP, 1);
-#ifdef USING_LEAPSECONDS
+#ifndef HAVE_POSIX_LEAPSECONDS
     res -= 22;
 #endif
     if(res != (time_t)(-1)) REAL(ans)[0] = (double) res;
