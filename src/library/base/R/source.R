@@ -85,8 +85,9 @@ sys.source <- function (file)
     invisible(yy)
 }
 
-demo <- function(topic, device = x11, directory.sep = "/")
+demo <- function(topic, device = .Options$device)
 {
+    if (is.character(device)) device <- get(device)
     Topics <-cbind(graphics	= c("graphics", "graphics.R",	"G"),
 		   image	= c("graphics", "image.R",	"G"),
 		   lm.glm	= c("models",	"lm+glm.R",	"G"),
@@ -118,10 +119,10 @@ demo <- function(topic, device = x11, directory.sep = "/")
 	readline()
 	if(dev.cur()<=1 && Topics["flag",i.top] == "G")
 	    device()
-	source(paste(getenv("RHOME"),
+	source(paste(R.home(),
 		     "demos",
 		     Topics["dir",  i.top],
-		     Topics["file", i.top], sep= directory.sep),
+		     Topics["file", i.top], sep= .Platform$file.sep),
 	       echo = TRUE, max.deparse.length=250)
     }
 }

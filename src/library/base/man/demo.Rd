@@ -1,10 +1,11 @@
 \name{demo}
 \title{Demonstrations of \R functions}
-\usage{demo(topic)}
+\usage{demo(topic, device = .Options$device)}
 \alias{demo}
 \arguments{
   \item{topic}{The topic which should be demonstrated.
     If omitted, the list of available topics is displayed.}
+  \item{device}{The graphics device to be used.}
 }
 \description{
   \code{demo} is a user-friendly interface to running some demonstration R

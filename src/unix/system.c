@@ -890,6 +890,7 @@ int __main() {return 0;}
 
 /* New / Experimental API elements */
 
+#ifdef DEFUNCT
 int R_ShowFile(char *file, char *title)
 {
     FILE *fp;
@@ -902,6 +903,12 @@ int R_ShowFile(char *file, char *title)
     if (system(buf) != 0) return 0;
     else return 1;
 }
+#endif
+
+/* This function can be used to display the named files with the */
+/* given titles and overall title.  On GUI platforms we could */
+/* use a read-only window to display the result.  Here we just */
+/* make up a temporary file and invoke a page on it. */
 
 int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
 {
@@ -935,6 +942,9 @@ int R_ShowFiles(int nfile, char **file, char **title, char *wtitle)
     return 1;
 }
 
+
+/* The location of the R system files */
+
 char *R_HomeDir()
 {
 	return getenv("RHOME");
@@ -947,21 +957,27 @@ char *R_HomeDir()
 int R_ChooseFile(int new, char *buf, int len)
 {
     int namelen;
+    char *bufp;
     R_ReadConsole("Enter file name: ", buf, len, 0);
     namelen = strlen(buf);
-    if (buf[namelen - 1] == '\n')
-	buf[namelen - 1] = '\0';
+    bufp = &buf[namelen - 1];
+    while (bufp > buf && isspace(*bufp))
+	*bufp-- = '\0';
     return strlen(buf);
 }
 
 /* Unix file names which begin with "." are invisible. */
 /* Macintosh file names which end with "\r" are invisible. */
+/* More complex tests may be needed on other platforms. */
 
 int R_HiddenFile(char *name)
 {
     if (name && name[0] != '.') return 0;
     else return 1;
 }
+
+/* This call provides a simple interface to the "stat" */
+/* system call.  This is available on the Macintosh too. */
 
 #include <sys/types.h>
 #include <sys/stat.h>
