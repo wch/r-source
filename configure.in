@@ -148,7 +148,7 @@ AC_ARG_WITH(readline,
   use_readline=true)
 
 AC_ARG_WITH(gnome,
-  [  --with-gnome            use GNOME, or specify its library dir [no]],
+  [  --with-gnome            use GNOME, or specify its prefix [no]],
   [ if test "${withval}" = no; then
       want_gnome=no
     elif test "${withval}" = yes; then
