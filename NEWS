@@ -340,7 +340,12 @@ NEW FEATURES
     o	.Alias has been removed from all R sources and deprecated.
 
     o	symbols() now has automatical xlab and ylab and a main argument
-	which eliminates a wrong warning.
+	which eliminates an incorrect warning.
+
+    o	hist.default() allows `breaks' to specify a rule to choose the
+        number of classes, and rules "Sturges" (the previous default, 
+	"Scott" and "FD" (Freedman-Diaconis) are supplied (based on 
+	package MASS).
 
 
 

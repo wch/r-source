@@ -2,7 +2,7 @@
 \title{Histograms}
 \usage{
 hist(x, \dots)
-hist.default(x, breaks, freq = NULL, probability = !freq,
+hist.default(x, breaks = "Sturges", freq = NULL, probability = !freq,
      include.lowest = TRUE,
      right = TRUE, col = NULL, border = par("fg"),
      main = paste("Histogram of" , xname),
@@ -15,9 +15,16 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
 \alias{hist.default}
 \arguments{
   \item{x}{a vector of values for which the histogram is desired.}
-  \item{breaks}{either a single number giving the approximate number of
-    cells for the histogram or a vector giving the breakpoints between
-    histogram cells.}
+  \item{breaks}{one of:
+    \itemize{
+      \item a vector giving the breakpoints between histogram cells,
+      \item a single number giving the number of cells for the histogram,
+      \item a character string naming an algorithm to compute the
+      number of cells (see Details),
+      \item an function to compute the number of cells.
+    }
+    In the last three cases the number is a suggestion only.
+  }
   \item{freq}{logical; if \code{TRUE}, the
     histogram graphic is to present a representation of frequencies, i.e,
     the \code{counts} component of the result; if \code{FALSE},
@@ -40,10 +47,11 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
     plot is drawn.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
-  \item{labels}{logical or character.  Additionally draw labels on top of bars,
-    if not \code{FALSE}; see \code{\link{plot.histogram}}.}
-  \item{nclass}{numeric (integer).  For S compatibility only,
-    \code{nclass=n} is equivalent to \code{breaks=n} (n scalar).}
+  \item{labels}{logical or character.  Additionally draw labels on top
+    of bars, if not \code{FALSE}; see \code{\link{plot.histogram}}.}
+  \item{nclass}{numeric (integer).  For S(-PLUS) compatibility only,
+    \code{nclass} is equivalent to \code{breaks} for a scalar or
+    character argument.}
   \item{\dots}{further graphical parameters to \code{title} and \code{axis}.}
 }
 \description{
@@ -54,13 +62,20 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
 }
 \details{
   If \code{right = TRUE} (default), the histogram cells are intervals
-  of the form \code{(a,b]}, i.e. they include their right-hand endpoint,
+  of the form \code{(a, b]}, i.e. they include their right-hand endpoint,
   but not their left one, with the exception of the first cell when
   \code{include.lowest} is \code{TRUE}.
 
-  For \code{right = FALSE}, the intervals are of the form \code{[a,b)},
+  For \code{right = FALSE}, the intervals are of the form \code{[a, b)},
   and \code{include.lowest} really has the meaning of
   ``\emph{include highest}''.
+
+  The default for \code{breaks} is \code{"Sturges"}: see
+  \code{\link{nclass.Sturges}}.  Other names for which algorithms
+  are supplied are \code{"Scott"} and \code{"FD"} /
+  \code{"Friedman-Diaconis"}.  Case is ignored and partial matching is used.
+  Alternatively, a function can be supplied which
+  will compute the intended number of breaks as a function of \code{x}.
 }
 \value{
   an object of class \code{"histogram"} which is a list with components:
@@ -85,18 +100,28 @@ hist.default(x, breaks, freq = NULL, probability = !freq,
   the arguments \code{freq} (or \code{probability})
   or \code{plot}.  This is intentionally different from S.
 }
-\seealso{\code{\link{stem}}, \code{\link{density}}.}
+
+\references{
+  Venables, W. N. and Ripley. B. D. (1999)
+  \emph{Modern Applied Statistics with S-PLUS}.  Springer.
+}
+
+\seealso{
+  \code{\link{nclass.Sturges}}, \code{\link{stem}},
+  \code{\link{density}}.
+}
+
 \examples{
 data(islands)
-op <- par(mfrow=c(2,2))
+op <- par(mfrow=c(2, 2))
 hist(islands)
 str(hist(islands, col="gray", labels = TRUE))
 
 hist(sqrt(islands), br = 12, col="lightblue", border="pink")
 ##-- For non-equidistant breaks, counts should NOT be graphed unscaled:
-r <- hist(sqrt(islands), br = c(4* 0:5,10* 3:5,70,100,140), col='blue1')
-text(r$mids, r$density, r$counts, adj=c(.5,-.5), col='blue3')
-sapply(r[2:3],sum)
+r <- hist(sqrt(islands), br = c(4*0:5, 10*3:5, 70, 100, 140), col='blue1')
+text(r$mids, r$density, r$counts, adj=c(.5, -.5), col='blue3')
+sapply(r[2:3], sum)
 sum(r$density * diff(r$breaks)) # == 1
 lines(r, lty = 3, border = "purple") # -> lines.histogram(*)
 par(op)

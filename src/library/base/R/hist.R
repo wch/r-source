@@ -1,7 +1,8 @@
 hist <- function(x, ...) UseMethod("hist")
 
 hist.default <-
-    function (x, breaks, freq= NULL, probability = !freq, include.lowest= TRUE,
+    function (x, breaks = "Sturges", freq= NULL,
+              probability = !freq, include.lowest= TRUE,
               right= TRUE, col = NULL, border = par("fg"),
               main = paste("Histogram of" , xname),
               xlim = range(breaks), ylim = NULL,
@@ -23,19 +24,26 @@ hist.default <-
     if(use.br)
         breaks <- sort(breaks)
     else {                              # construct vector of breaks
-        rx <- range(x)
-        nnb <-
-            if(missing(breaks)) 1 + log2(n)
-            else {                      # breaks = `nclass'
-                if (is.na(breaks) | breaks < 2)
-                    stop("invalid number of breaks")
-                breaks
-            }
-        breaks <- pretty (rx, n = nnb, min.n=1)
-
+        if(is.character(breaks)) {
+            breaks <- match.arg(tolower(breaks),
+                                c("sturges", "fd",
+                                  "freedman-diaconis", "scott"))
+            breaks <- switch(breaks,
+                             sturges = nclass.Sturges(x),
+                             "freedman-diaconis" =,
+                             fd = nclass.FD(x),
+                             scott = nclass.scott(x),
+                             stop("Unknown breaks algorithm"))
+        } else if(is.function(breaks)) {
+            breaks <- breaks(x)
+        }
+        if(!is.numeric(breaks) || is.na(breaks) || breaks < 2)
+            stop("invalid number of breaks")
+        breaks <- pretty (range(x), n = breaks, min.n=1)
         nB <- length(breaks)
         if(nB <= 1) ##-- Impossible !
-            stop(paste("hist.default: pretty() error, breaks=",format(breaks)))
+            stop(paste("hist.default: pretty() error, breaks=",
+                       format(breaks)))
     }
 
     ## Do this *before* adding fuzz or logic breaks down...
@@ -137,3 +145,18 @@ plot.histogram <-
 }
 
 lines.histogram <- function(x, ...) plot.histogram(x, ..., add = TRUE)
+
+nclass.Sturges <- function(x) floor(log2(length(x)) + 1)
+
+nclass.scott <- function(x)
+{
+    h <- 3.5 * sqrt(var(x)) * length(x)^(-1/3)
+    ceiling(diff(range(x))/h)
+}
+
+nclass.FD <- function(x)
+{
+    r <- as.vector(quantile(x, c(0.25, 0.75)))
+    h <- 2 * (r[2] - r[1]) * length(x)^(-1/3)
+    ceiling(diff(range(x))/h)
+}
