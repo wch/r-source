@@ -47,6 +47,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   plot.formula now allows ylab to be set
+
     o   plotmath had trouble with paste()'ing expressions
 
     o   plotting math expressions now also works for objects of mode
