@@ -367,11 +367,13 @@ BUG FIXES
 
     o	order(na.last=NA) failed if all args were of length 1. (PR#1913)
 
-    o	grid() now works properly also with log coordinates active.
+    o	grid() now works properly also with log coordinates active. <MM:FIXME>
 
     o	plot.table(tab, xlab="X", ylab="Y") now works as expected.
 
     o	plot.formula(ask=FALSE) now works. (PR#1923)
+
+    o	as.list(<logical>) now works properly (PR#1926).
 
 
 

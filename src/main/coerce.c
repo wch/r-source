@@ -55,7 +55,7 @@ const static char * const falsenames[] = {
 
 void CoercionWarning(int warn)
 {
-/* FIXME: Use  
+/* FIXME: Use
    =====
    WarningMessage(R_NilValue, WARNING_....);
 */
@@ -596,6 +596,9 @@ static SEXP coerceToVectorList(SEXP v)
     PROTECT(ans = allocVector(VECSXP, n));
     switch (TYPEOF(v)) {
     case LGLSXP:
+	for (i = 0; i < n; i++)
+	    SET_VECTOR_ELT(ans, i, ScalarLogical(LOGICAL(v)[i]));
+	break;
     case INTSXP:
 	for (i = 0; i < n; i++)
 	    SET_VECTOR_ELT(ans, i, ScalarInteger(INTEGER(v)[i]));
@@ -813,7 +816,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 
 static SEXP coerceSymbol(SEXP v, SEXPTYPE type)
 {
-    SEXP rval = R_NilValue;	
+    SEXP rval = R_NilValue;
     if (type == EXPRSXP) {
 	PROTECT(rval = allocVector(type, 1));
 	SET_VECTOR_ELT(rval, 0, v);
@@ -1234,7 +1237,7 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     case 200:		/* is.atomic */
 	switch(TYPEOF(CAR(args))) {
-	case NILSXP: 
+	case NILSXP:
 	    /* NULL is atomic (S compatibly), but not in isVectorAtomic(.) */
 	case CHARSXP:
 	case LGLSXP:
@@ -1841,7 +1844,7 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
     setAttrib(obj, R_ClassSymbol, value);
   else if(length(value) == 0) {
     UNPROTECT(nProtect); nProtect = 0;
-    error("Invalid replacement object to be a class string");    
+    error("Invalid replacement object to be a class string");
   }
   else {
     char *valueString, *classString;
@@ -1879,7 +1882,7 @@ SEXP R_set_class(SEXP obj, SEXP value, SEXP call)
 	PROTECT(obj = ascommon(call, obj, valueType));
 	nProtect++;
       }
-      else if(!strcmp("array", valueString) && 
+      else if(!strcmp("array", valueString) &&
 	      length(getAttrib(obj, R_DimSymbol)) >0) {}
       else if(!strcmp("matrix", valueString) &&
 	      length(getAttrib(obj, R_DimSymbol)) == 2) {}

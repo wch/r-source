@@ -893,6 +893,11 @@ order(x, x, x, na.last=NA)
 order(c(1,2,3,NA), na.last=NA, decreasing=TRUE)
 ## ignored `decreasing' in 1.5.1
 
+## as.list() coerced logical to integer (PR#1926)
+x <- c(TRUE,FALSE,NA)
+stopifnot(identical(x, unlist(as.list(x))))
+## the 2nd was 1:1 in before 1.6
+
 ## keep at end, as package `methods' has had persistent side effects
 library(methods)
 stopifnot(all.equal(3:3, 3.), all.equal(1., 1:1))
