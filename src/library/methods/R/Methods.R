@@ -259,7 +259,6 @@ setMethod <-
                    ## extra classes in method => use "..." to rematch
                    definition <- rematchDefinition(definition, fdef, mnames, fnames, signature)
                }
-               def <- fnames[1:length(signature)]
            },
            builtin = , special = {
              ## the only primitive methods allowed are those equivalent
@@ -269,10 +268,11 @@ setMethod <-
                 stop("Primitive functions cannot be methods; they must be enclosed in a regular function")
            },
            "NULL" = {
-               def <- NULL
+            
            }, # Will remove the method, if any, currently in this signature
            stop("Invalid method definition: not a function"))
-    allMethods <- insertMethod(allMethods, signature, def,
+    margs  <- (fdef@signature)[1:length(signature)]
+    allMethods <- insertMethod(allMethods, signature, margs,
                                asMethodDefinition(definition, signature, sealed))
     ## assign the methods (also updates the session info)
     assignMethodsMetaData(f, allMethods, fdef, where, deflt)
