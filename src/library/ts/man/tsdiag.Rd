@@ -3,7 +3,6 @@
 \alias{tsdiag.arima0}
 \alias{tsdiag.Arima}
 \alias{tsdiag.StructTS}
-\alias{arima0.diag}
 \title{Diagnostic Plots for Time-Series Fits}
 \description{
   A generic function to plot time-series diagnostics.
@@ -34,10 +33,6 @@ tsdiag(object, gof.lag, ...)
 
 \seealso{
   \code{\link{arima}}, \code{\link{StructTS}}, \code{\link{Box.test}}
-}
-\note{
-  \code{\link{arima0.diag}} was an earlier version using the Box--Pierce
-  test which is now deprecated.
 }
 
 \examples{
