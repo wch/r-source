@@ -13,7 +13,7 @@ include $(top_builddir)/Makeconf
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in
 
-R = $(top_builddir)/bin/R --vanilla --vsize 6
+R = $(top_builddir)/bin/R --vanilla
 
 Pkgs = base eda modreg mva stepfun
 Ex_R = $(Pkgs:=-Ex.R)
