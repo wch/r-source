@@ -33,6 +33,9 @@ NEW FEATURES
 
     o	The ``Introduction to R'' manual.
 
+    o	Conversion of .Rd help files to text format is done in Perl,
+	and no longer requires nroff.  This makes the conversion 8-bit
+	clean and more accurate.
 
 
 BUG FIXES
