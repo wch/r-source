@@ -317,7 +317,7 @@ R_EXE = $(top_builddir)/bin/R --vanilla
 
 update-pkg-po: Makefile update-pkg-R-trs update-pkg-trs
 
-update-pkg-R-trs: update-pkg-pot
+update-pkg-R-trs: en@quot.insert-header update-pkg-pot
 	@for pkg in $(R_PKGS_PO); do \
 	  echo "updating translations of R-$${pkg}.pot"; \
 	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
@@ -359,7 +359,7 @@ update-pkg-R-trs: update-pkg-pot
 	  cd $$tmpdir; \
 	done
 
-update-pkg-trs: update-pkg-pot
+update-pkg-trs: en@quot.insert-header update-pkg-pot
 	@for pkg in $(R_PKGS_SRC_PO); do \
 	  echo "updating translations of $${pkg}.pot"; \
 	  test "$(srcdir)" = . && cdcmd="../src/library/$${pkg}/po" || cdcmd="cd $(top_srcdir)/src/library/$${pkg}/po && "; \
