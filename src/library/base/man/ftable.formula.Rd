@@ -3,11 +3,8 @@
 \title{Formula Notation for Flat Contingency Tables}
 \description{Produce or manipulate a flat contingency table using
   formula notation.}
-\synopsis{
-ftable.formula(formula, data = NULL, subset, na.action, ...)
-}
 \usage{
-ftable(formula, data = NULL, subset, na.action, \dots)
+\method{ftable}{formula}(formula, data = NULL, subset, na.action, \dots)
 }
 \arguments{
   \item{formula}{a formula object with both left and right hand sides

@@ -7,16 +7,8 @@
 \alias{write.ftable}
 \title{Flat Contingency Tables}
 \description{Create and manipulate ``flat'' contingency tables.}
-\synopsis{
-ftable(x, ...)
-ftable.default(..., exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
-as.table.ftable(x)
-print.ftable(x, digits = getOption("digits"), ...)
-read.ftable(file, sep = "", quote = "\"", row.var.names, col.vars, skip = 0)
-write.ftable(x, file = "", quote = TRUE, digits = getOption("digits"))
-}
 \usage{
-ftable(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
+\method{ftable}{default}(\dots, exclude = c(NA, NaN), row.vars = NULL, col.vars = NULL)
 as.table.ftable(x)
 read.ftable(file, sep = "", quote = "\"",
             row.var.names, col.vars, skip = 0)
