@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-13 2004-05-12
+Version 1.9-14 2004-05-15
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1986,6 +1986,10 @@ distributions of R.)
 *kernlab*
      Kernel-based machine learning methods including support vector
      machines.
+
+*klaR*
+     Miscellaneous functions for classification and visualization developed
+     at the Department of Statistics, University of Dortmund.
 
 *knnTree*
      Construct or predict with k-nearest-neighbor classifiers, using

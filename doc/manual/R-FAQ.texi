@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-13 @value{FAQ-YEAR}-05-12
+@set FAQ-VERSION 1.9-14 @value{FAQ-YEAR}-05-15
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -2142,6 +2142,9 @@ order statistics, peaks over thresholds and point processes.
 An S4 class for handling irregular time series.
 @item kernlab
 Kernel-based machine learning methods including support vector machines.
+@item klaR
+Miscellaneous functions for classification and visualization developed
+at the Department of Statistics, University of Dortmund.
 @item knnTree
 Construct or predict with @math{k}-nearest-neighbor classifiers, using
 cross-validation to select @math{k}, choose variables (by forward or
