@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--2000  Robert Gentleman, Ross Ihaka and the
- *                            R Development Core Team
+ *			      R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1930,7 +1930,7 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     else GPretty(&min, &max, &n);
     if (fabs(max - min) < fmax2(fabs(max), fabs(min))*100*DBL_EPSILON)
 	error("relative range of values is too small to compute accurately");
-    
+
     if(swap) {
 	temp = min;
 	min = max;
@@ -2321,12 +2321,12 @@ void GCheckState(DevDesc *dd)
  */
 
 /* CLIPPING paradigm:
-   R uses both the clipping capabilities of the device (if present) 
+   R uses both the clipping capabilities of the device (if present)
    and its own internal clipping algorithms.
    If the device has no clipping capabilities (canClip = 0) then R
    does all of the clipping internally.
    If the device has clipping capabilities, R still does some internal
-   clipping (to the device extent).  This is to avoid "silly" values 
+   clipping (to the device extent).  This is to avoid "silly" values
    being sent to the device (e.g., X11 and Ghostview will barf if you
    send a ridiculously large number to them).  Call this silly-clipping.
        The problem with getting R to do some of the clipping is that it is
@@ -2554,9 +2554,9 @@ static void CScliplines(int n, double *x, double *y, int coords, DevDesc *dd)
 }
 
 /* Clip the line
-   If toDevice = 1, clip to the device extent (i.e., temporarily ignore 
+   If toDevice = 1, clip to the device extent (i.e., temporarily ignore
    dd->gp.xpd) */
-static int clipLine(double *x1, double *y1, double *x2, double *y2, 
+static int clipLine(double *x1, double *y1, double *x2, double *y2,
 		     int coords, int toDevice, DevDesc *dd)
 {
     double temp;
@@ -2590,7 +2590,7 @@ static int clipLine(double *x1, double *y1, double *x2, double *y2,
 }
 
 /* Draw a line. */
-/* If the device canClip, R clips line to device extent and 
+/* If the device canClip, R clips line to device extent and
    device does all other clipping. */
 void GLine(double x1, double y1, double x2, double y2, int coords, DevDesc *dd)
 {
@@ -2897,7 +2897,7 @@ void GPolygon(int n, double *x, double *y, int coords,
 
 #include <stdio.h>
 
-/* Clip and draw the polyline.  
+/* Clip and draw the polyline.
    If clipToDevice = 0, clip according to dd->gp.xpd
    If clipToDevice = 1, clip to the device extent */
 static void clipPolyline(int n, double *x, double *y, int coords,
@@ -2947,12 +2947,12 @@ static void convertCircle(double x, double y, int coords, double r,
    how the circle should be clipped.
    The return value will be -1 if the circle is to
    be totally clipped out of existence, -2 if the circle is to be
-   totally left alone, 0 and above if the circle has been converted 
-   into a polygon (in which case, the return value indicates the 
+   totally left alone, 0 and above if the circle has been converted
+   into a polygon (in which case, the return value indicates the
    number of vertices of the polygon and the function convertCircle()
    should be called to obtain the vertices of the polygon). */
-static int clipCircleCode(double x, double y, int coords, double r, 
-			  DevDesc *dd) 
+static int clipCircleCode(double x, double y, int coords, double r,
+			  DevDesc *dd)
 {
     int result;
     /* determine clipping region */
@@ -3014,7 +3014,7 @@ static void clipCircle(double x, double y, int coords,
     if (clipToDevice) {
 	xpdsaved = dd->gp.xpd;
 	dd->gp.xpd = 2;
-    } 
+    }
     switch (result) {
     case -2: /* No clipping;  draw all of circle */
 	dd->dp.circle(x, y, coords, r, bg, fg, dd);
@@ -3230,7 +3230,7 @@ double GStrHeight(char *str, int units, DevDesc *dd)
     h = n * GConvertYUnits(1, CHARS, DEVICE, dd);
     /*  Add in the ascent of the font, if available */
     GMetricInfo('M', &asc, &dsc, &wid, DEVICE, dd);
-    if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0)) 
+    if ((asc == 0.0) && (dsc == 0.0) && (wid == 0.0))
 	asc = GConvertYUnits(1, CHARS, DEVICE, dd);
     h += asc;
     if (units != DEVICE)
@@ -3239,17 +3239,17 @@ double GStrHeight(char *str, int units, DevDesc *dd)
     return h;
 }
 
-/* Return a code indicating how the text should be clipped 
-   NOTE that x, y indicate the bottom-left of the text 
-   NOTE also that x and y are in INCHES 
+/* Return a code indicating how the text should be clipped
+   NOTE that x, y indicate the bottom-left of the text
+   NOTE also that x and y are in INCHES
    NOTE also also that this is a bit crude because it actually uses
    a bounding box for the entire text to determine the clipping code.
-   This will mean that in certain (very rare ?) cases, a piece of 
+   This will mean that in certain (very rare ?) cases, a piece of
    text will be characterised as intersecting with the clipping region
-   when in fact it lies totally outside the clipping region.  But 
+   when in fact it lies totally outside the clipping region.  But
    this is not a problem because the final output will still be correct.
-   0 means totally outside clip region 
-   1 means totally inside clip region 
+   0 means totally outside clip region
+   1 means totally inside clip region
    2 means intersects clip region */
 static int clipTextCode(double x, double y, char *str,
 		     double rot, DevDesc *dd)
@@ -3291,7 +3291,7 @@ static void clipText(double x, double y, char *str, double rot,
     case 1:  /* text totally inside;  draw all */
 	dd->dp.text(x, y, INCHES, str, rot, dd);
 	break;
-    case 2:  /* text intersects clip region 
+    case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
 	if (clipToDevice) /* Device will do clipping */
 	    dd->dp.text(x, y, INCHES, str, rot, dd);
@@ -3380,7 +3380,7 @@ void GText(double x, double y, int coords, char *str,
 					    INCHES, dd);
 				/* Set maxHeight and maxDepth from height
 				   and depth of first char.
-				   Must NOT set to 0 in case there is 
+				   Must NOT set to 0 in case there is
 				   only 1 char and it has negative
 				   height or depth
 				*/
@@ -3409,7 +3409,7 @@ void GText(double x, double y, int coords, char *str,
 		    clipText(xleft, ybottom, sbuf, rot, 1, dd);
 		} else
 		    clipText(xleft, ybottom, sbuf, rot, 0, dd);
-#ifdef OLD	       
+#ifdef OLD
 		if(dd->dp.canClip) {
 		    GClip(dd);
 		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
@@ -3432,7 +3432,7 @@ void GText(double x, double y, int coords, char *str,
 			    return;
 		    dd->dp.text(xleft, ybottom, INCHES, sbuf, rot, dd);
 		}
-#endif	       
+#endif
 		sb = sbuf;
 		i += 1;
 	    }
@@ -3736,7 +3736,7 @@ void GPretty(double *lo, double *up, int *ndiv)
 #else
 #define GSTR_0  dd->dp.cra[1] * 0.5 * dd->gp.ipr[0] * dd->gp.cex
 /* NOTE: This cex is already multiplied with cexbase */
-#endif 
+#endif
 /* Draw one of the R special symbols. */
 void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 {
@@ -4207,6 +4207,7 @@ char *DefaultPalette[] = {
 static int ColorDataBaseSize;
 
 ColorDataBaseEntry ColorDataBase[] = {
+    /* name		rgb         code -- filled in by InitColors() */
     {"white",		"#FFFFFF",	0},
     {"aliceblue",	"#F0F8FF",	0},
     {"antiquewhite",	"#FAEBD7",	0},
