@@ -60,6 +60,17 @@ static int R_eval(ClientData clientData,
     return TCL_OK;
 }
 
+/* Functions to evaluate callbacks. Notice that these have no error
+   checks, since the calls are assumed to be generated internally, and
+   not by users. There are two forms:
+
+   R_call 0xnnnnnnnn arg1 arg2 arg3...
+   R_call_lang 0xnnnnnnnn 0xmmmmmmmm
+
+   In the former, the hex address is assumed to correspond to a
+   function closure which gets called with the arguments given.  The
+   latter assumes that the first hex address is a LANGSXP and the
+   second is an ENVSXP. */
 
 static int R_call(ClientData clientData,
 		  Tcl_Interp *interp,
@@ -67,7 +78,7 @@ static int R_call(ClientData clientData,
 		  char *argv[])
 {
     int i;
-    SEXP expr, ans, fun, alist;
+    SEXP expr, fun, alist;
 
     alist = R_NilValue;
     for (i = argc - 1 ; i > 1 ; i--){
@@ -81,12 +92,28 @@ static int R_call(ClientData clientData,
     expr = LCONS(fun, alist);
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
-    ans = eval(expr, R_GlobalEnv);
+    eval(expr, R_GlobalEnv);
 
     return TCL_OK;
 }
 
+static int R_call_lang(ClientData clientData,
+		  Tcl_Interp *interp,
+		  int argc,
+		  char *argv[])
+{
+    int i;
+    SEXP expr, env, fun, alist;
 
+    expr = (SEXP) strtoul(argv[1], NULL, 16);
+    env  = (SEXP) strtoul(argv[2], NULL, 16);
+
+    expr = LCONS(install("try"), LCONS(expr, R_NilValue));
+
+    eval(expr, env);
+
+    return TCL_OK;
+}
 
 
 char* tk_eval(char *cmd)
@@ -103,7 +130,9 @@ char* tk_eval(char *cmd)
     return Tcl_interp->result;
 }
 
-/* FIXME get rid of fixed size buffers in do_Tclcallback */
+/* FIXME get rid of fixed size buffers in do_Tclcallback et al. (low
+   priority, since there is no meaningful way to override the current
+   buffer length) */
 
 SEXP dotTcl(SEXP args)
 {
@@ -118,26 +147,17 @@ SEXP dotTcl(SEXP args)
     return ans;
 }
 
-SEXP dotTclcallback(SEXP args)
+/* Warning: These two functions return a pointer to internal static
+   data. Copy immediately. */
+
+static char * callback_closure(SEXP closure)
 {
-    SEXP ans, closure = CADR(args), formals;
-
-    char buf[256], tmp[20];
-
-    if (!isFunction(closure))
-    	error("argument is not a function");
+    static char buf[256], tmp[20];
+    SEXP formals;
 
     formals = FORMALS(closure);
 
-    sprintf(buf, "{ R_call 0x%lx", (unsigned long) closure);
-
-    /* FIXME: we really should do something to ensure that "closure"
-       is protected from later GCs. Otherwise we'll have buttons that
-       make R go Boom... We need register_callback(closure) or
-       something to that effect + a run through registered callbacks
-       in the MarkPhase of GC. [Currently, this is handled by having
-       .Tcl.args assign an alias to the function in the environment of
-       the window with which the callback is associated] */
+    sprintf(buf, "R_call 0x%lx", (unsigned long) closure);
 
     while ( formals != R_NilValue )
     {
@@ -146,8 +166,42 @@ SEXP dotTclcallback(SEXP args)
 	strcat(buf, tmp);
 	formals = CDR(formals);
     }
-    strcat(buf, " }");
-    ans = mkString(buf);
+    return buf;
+}
+
+static char * callback_lang(SEXP call, SEXP env)
+{
+    static char buf[256];
+
+    sprintf(buf, "R_call_lang 0x%lx 0x%lx", 
+	    (unsigned long) call,
+	    (unsigned long) env);
+
+    return buf;
+}
+
+/* Setup to invoke callback from Tcl. Notice that something needs to
+   ensure that the callback is protected from GC as long as anything
+   is around to invoke it. This is handled in interpreted code by
+   assigning into the environment of the window with which the
+   callback is associated */
+
+SEXP dotTclcallback(SEXP args)
+{
+    SEXP ans, callback = CADR(args), env;
+
+    char *rval;
+
+    if (isFunction(callback))
+        rval = callback_closure(callback);
+    else if (isLanguage(callback)) {
+        env = CADDR(args);
+        rval = callback_lang(callback, env);
+    }
+    else
+    	error("argument is not of correct type");
+
+    ans = mkString(rval);
     return ans;
 }
 
@@ -221,6 +275,12 @@ void tcltk_init(void)
     Tcl_CreateCommand(Tcl_interp,
 		      "R_call",
 		      R_call,
+		      (ClientData) NULL,
+		      (Tcl_CmdDeleteProc *) NULL);
+
+    Tcl_CreateCommand(Tcl_interp,
+		      "R_call_lang",
+		      R_call_lang,
 		      (ClientData) NULL,
 		      (Tcl_CmdDeleteProc *) NULL);
 

@@ -284,7 +284,14 @@ NEW FEATURES
     o   Changes to the tcltk package:
 
         - New interface for accessing Tcl variables, effectively
-          making the R representations lexically scoped.
+          making the R representations lexically scoped. The old form
+          is being deprecated.
+
+        - Callbacks can now be expressions, with slightly unorthodox
+          semantics. In particular this allows bindings to contain
+          "break" expressions (this is necessary to bind code to
+          e.g. Alt-x without having the key combination also insert an
+          "x" in a text widget.)
 
     o   step() is now closer to stepAIC() and so handles a wider range
 	of objects (but stepAIC [in MASS] is still more powerful).

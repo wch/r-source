@@ -13,14 +13,41 @@
             paste("-",x,sep="")
         else ""
 
-    ## Convert arguments. R functions and windows require special treatment
+    isCallback <- function(x) 
+	is.function(x) || is.call(x) || is.expression(x)
+
+    makeAtomicCallback <- function(x, e) {
+	if (is.name(x))
+	    x <- eval(x, e)
+	if (is.call(x)){
+	    if(identical(x[[1]], as.name("break")))
+		return("break")
+	    if(identical(x[[1]], as.name("function"))) 
+                x <- eval(x, e)
+        }
+	.Tcl.callback(x, e)
+    }
+
+    makeCallback <- function(x, e) {
+	if (is.expression(x))
+	    paste(lapply(x,makeAtomicCallback, e),collapse=";")
+	else
+	    makeAtomicCallback(x, e)
+    }
+	
+    ## Convert arguments. Callbacks and windows require special treatment
     ## everything else is converted to strings
     val2string <- function(x) {
         if (is.null(x)) return("")
         if (is.tkwin(x)){current.win <<- x ; return (.Tk.ID(x))}
-        if (is.function(x)){
-            callback <- .Tcl.callback(x)
-            assign(callback, .Alias(x), envir=current.win$env)
+        if (isCallback(x)){
+	    # Jump through some hoops to protect from GC...
+	    e <- parent.frame()
+	    ref <- local({value<-x; envir<-e; environment()})
+            callback <- makeCallback(get("value",envir=ref), 
+		                     get("envir",envir=ref))
+	    callback <- paste("{", callback, "}")
+            assign(callback, ref, envir=current.win$env)
             return(callback)
         }
         ## quoting hell...
@@ -105,8 +132,8 @@ tclVar <- function(init="") {
    l
 }
 
-tclvalue <- function(x, ...) UseMethod("tclvalue")
-"tclvalue<-" <- function(x, value, ...) UseMethod("tclvalue<-")
+tclvalue <- function(x) UseMethod("tclvalue")
+"tclvalue<-" <- function(x, value) UseMethod("tclvalue<-")
 
 tclvalue.tclVar <- function(x) tkcmd("set",ls(x$env))
 "tclvalue<-.tclVar" <- function(x, value) {tkcmd("set",ls(x$env), value); x} 

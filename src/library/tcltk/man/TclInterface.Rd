@@ -49,8 +49,8 @@ tclvar$name <- value  # Deprecated
 
 tclVar(init="")
 as.character.tclVar(x)
-tclvalue(x, ...)
-tclvalue(x, ...) <- value
+tclvalue(x)
+tclvalue(x) <- value
 
 addTclPath(path)
 tclRequire(package, warn = TRUE)
@@ -65,8 +65,6 @@ tclRequire(package, warn = TRUE)
   \item{warn}{logical. Warn if not found?}
   \item{...}{Additional arguments. See below.}
   \item{init}{initialization value}
-% Actually, both .Tcl and .Tcl.callback take only a single argument;
-% I've forgotten why they were defined as ... arguments.
 }
 \details{
   Many of these functions are not intended for general use but are used
@@ -81,17 +79,27 @@ tclRequire(package, warn = TRUE)
   argument. In the rare case one needs an option with no subsequent
   value \code{tag=NULL} can be used. Most values are just converted to
   character mode and inserted in the command string, but window objects
-  are passed using their ID string, and functions are passed via the
+  are passed using their ID string, and callbacks are passed via the
   result of \code{.Tcl.callback}. Tags are converted to option flags
   simply by prepending a \code{-}
 
-  \code{.Tcl.callback} converts \R functions to Tcl command strings.  The
-  argument must be a function closure.  The
-  return value is something of the form \code{\{ R_call 0x408b94d4 \}} in which
-  the hexadecimal number is the memory address of the function.  
-  \code{.Tcl.args} takes special precautions to ensure that the function
-  will exist at that address by assigning the function into the relevant
-  window environment (see below).
+  Callbacks can be either \emph{atomic callbacks} handled by
+  \code{.Tcl.callback} or expressions. An expression is treated as a
+  list of atomic callbacks, with the following exceptions: if an
+  element is a name, it is first evaluated in the callers frame, and
+  likewise if it is an explicit function definition; the \code{break}
+  expression is translated directly to the Tcl counterpart.
+  \code{.Tcl.callback} converts \R functions and unevaluated calls to
+  Tcl command strings.  The argument must be either a function closure
+  or an object of mode \code{"call"} followed by an environment.  The
+  return value in the first case is of the form \code{R_call
+  0x408b94d4} in which the hexadecimal number is the memory address of
+  the function. In the second case it will be of the form
+  \code{R_call_lang 0x8a95904 0x819bfd0}. For expressions, a sequence
+  of similar items is generated, separated by
+  semicolons. \code{.Tcl.args} takes special precautions to ensure
+  that the function will exist at that address by assigning the
+  callback into the relevant window environment (see below).
 
   Tk windows are represented as objects of class \code{tkwin} which are
   lists containing  a \code{ID} field and an \code{env} field which is
