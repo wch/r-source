@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2002  Guido Masarotto and Brian Ripley
+ *  Copyright (C) 1998--2003  Guido Masarotto and Brian Ripley
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,11 @@
 /*--- Device Driver for Windows; this file started from
  *  ../unix/X11/devX11.c --
  */
+
+/* uncomment to enable double-buffering.
+#define BUFFERED
+*/
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -81,10 +86,20 @@ static rgb GArgb(int color, double gamma)
 #define MM_PER_INCH	25.4	/* mm -> inch conversion */
 
 #define TRACEDEVGA(a)
-#define NOBM(a) if(xd->kind==SCREEN){a;}
 #define CLIP if (xd->clip.width>0) gsetcliprect(_d,xd->clip)
+#ifdef BUFFERED
+
+static drawing _d;
+#define DRAW(a) {if(xd->kind==SCREEN) _d=xd->bm;else _d=xd->gawin; CLIP;a;}
+#define SHOW  if(xd->kind==SCREEN) gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));
+#define SH if(xd->kind==SCREEN) GA_Timer(xd)
+#else
+#define NOBM(a) if(xd->kind==SCREEN){a;}
 #define DRAW(a) {drawing _d=xd->gawin;CLIP;a;NOBM(_d=xd->bm;CLIP;a;)}
 #define SHOW  gbitblt(xd->gawin,xd->bm,pt(0,0),getrect(xd->bm));
+#define SH
+#endif
+
 
 #define SF 20  /* scrollbar resolution */
 
@@ -171,6 +186,36 @@ rect getregion(gadesc *xd)
     r.height = min(r.height, xd->showHeight);
     return r;
 }
+
+#ifdef BUFFERED
+/* Update the screen 100ms after last plotting call or 500ms after last
+   update */
+
+static UINT TimerNo = 0;
+static gadesc *GA_xd;
+static DWORD GALastUpdate = 0;
+
+static VOID CALLBACK
+GA_timer_proc(HWND hwnd, UINT message, UINT tid, DWORD time)
+{
+    if ((message != WM_TIMER) || tid != TimerNo) return;
+    gbitblt(GA_xd->gawin, GA_xd->bm, pt(0,0), getrect(GA_xd->bm));
+    GALastUpdate = time;
+}
+
+static void GA_Timer(gadesc *xd)
+{
+    DWORD now = GetTickCount();
+    if(TimerNo != 0) KillTimer(0, TimerNo);
+    if(now > GALastUpdate + 500) {
+	gbitblt(xd->gawin, xd->bm, pt(0,0), getrect(xd->bm));
+	GALastUpdate = now;
+    } else {
+	GA_xd = xd;
+	TimerNo = SetTimer(0, 0, (UINT) 100, GA_timer_proc);
+    }
+}
+#endif
 
 	/********************************************************/
 	/* There are a number of actions that every device 	*/
@@ -1898,6 +1943,7 @@ static void GA_Rect(double x0, double y0, double x1, double y1,
 	SetLinetype(lty, lwd, dd);
 	DRAW(gdrawrect(_d, xd->lwd, xd->lty, xd->fgcolor, r, 0));
     }
+    SH;
 }
 
 	/********************************************************/
@@ -1944,6 +1990,7 @@ static void GA_Circle(double x, double y, double r,
 	SetColor(col, gamma, dd);
 	DRAW(gdrawellipse(_d, xd->lwd, xd->fgcolor, rr, 0));
     }
+    SH;
 }
 
 	/********************************************************/
@@ -1973,6 +2020,7 @@ static void GA_Line(double x1, double y1, double x2, double y2,
     if (R_OPAQUE(xd->fgcolor))
 	DRAW(gdrawline(_d, xd->lwd, xd->lty, xd->fgcolor,
 		       pt(xx1, yy1), pt(xx2, yy2), 0));
+    SH;
 }
 
 	/********************************************************/
@@ -2007,6 +2055,7 @@ static void GA_Polyline(int n, double *x, double *y,
 	DRAW(gdrawpolyline(_d, xd->lwd, xd->lty, xd->fgcolor, p, n, 0, 0));
     }
     vmaxset(vmax);
+    SH;
 }
 
 	/********************************************************/
@@ -2051,6 +2100,7 @@ static void GA_Polygon(int n, double *x, double *y,
 	DRAW(gdrawpolygon(_d, xd->lwd, xd->lty, xd->fgcolor, points, n, 0 ));
     }
     vmaxset(vmax);
+    SH;
 }
 
 
@@ -2094,6 +2144,7 @@ static void GA_Text(double x, double y, char *str,
 	DRAW(gdrawstr1(_d, xd->font, xd->fgcolor, pt(x, y), str, hadj));
 #endif
     }
+    SH;
 }
 
 	/********************************************************/
@@ -2122,7 +2173,9 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
     gsetcursor(xd->gawin, CrossCursor);
     setstatus("Locator is active");
     while (!xd->clicked) {
-      /*	SHOW;*/
+#ifdef BUFFERED
+	SHOW;
+#endif
         WaitMessage();
 	R_ProcessEvents();
     }
