@@ -6,6 +6,8 @@
         <string>English</string>
 	<key>CFBundleExecutable</key>
 	<string>R</string>
+        <key>CFBundleIdentifier</key>
+        <string>org.r-project.R</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>
