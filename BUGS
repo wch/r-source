@@ -33,24 +33,30 @@ Date: Tue, 28 Nov 2000 13:24:33 +0800
 
 Directory:  Add-ons
 
-* PR# 950 *
-Subject:  lattice: dev.print(postscript) gives probl. false background Info 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 23:20:29 +0200
+* PR# 966 *
+Subject: update.packages() and parse(text="A B")
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Sun, 03 Jun 2001 15:34:41 +0200
+--Error in DESCRIPTION file of gregmisc
+--Windows pre-compiled version is fixed
 * PR# 496 *
 From: bonneau@epi.roazhon.inra.fr (en148)
 Date: Tue, 21 Mar 2000 10:57:13 +0100 (MET)
 --base R has no est.variogram function.
 --This appears to be a bug report on sgeostat.
-* PR# 948 *
-Subject:  xyplot,grid.text segfault 
-From: Peter Malewski <p.malewski@tu-bs.de>
-Date: Sat, 26 May 2001 13:24:11 +0200
 * PR# 930 *
 Subject: Re: [R] Crazy plots of time-series against dates
 From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
 Date: 01 May 2001 21:33:53 +0200
 --error in chron package
+* PR# 950 *
+Subject:  lattice: dev.print(postscript) gives probl. false background Info 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 23:20:29 +0200
+* PR# 948 *
+Subject:  xyplot,grid.text segfault 
+From: Peter Malewski <p.malewski@tu-bs.de>
+Date: Sat, 26 May 2001 13:24:11 +0200
 
 Directory:  Analyses
 
@@ -240,16 +246,10 @@ Date: Tue, 14 Mar 2000 10:32:43 +0100 (MET)
 
 Directory:  System-specific
 
-* PR# 935 *
-Subject:  help.start() fails 
-From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
-Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
---Report on 1.2.1: on other systems the file is installed with 644.
-* PR# 863 *
-Subject: src/main/arithmetic.c on OpenBSD
-From: ian@darwinsys.com (Ian Darwin)
-Date: Tue,  6 Mar 2001 19:49:53 -0500 (EST)
---Not applied for 1.2.3 (why?)
+* PR# 964 *
+Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
+From: paul@gromit.dlib.vt.edu
+Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
 * PR# 851 *
 Subject: Comments on R-1.2.1 builds
 From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
@@ -263,6 +263,16 @@ Date: Fri, 16 Feb 2001 17:44:17 -0700 (MST)
 Subject: X11 device doesn't handle destroy events correcly
 From: Thomas Vogels <tov@ece.cmu.edu>
 Date: 13 Feb 2001 17:40:46 -0500
+* PR# 935 *
+Subject:  help.start() fails 
+From: "Wilhelm B. Kloke" <wb@vestein.arb-phys.uni-dortmund.de>
+Date: Wed, 9 May 2001 13:43:49 +0200 (MET DST)
+--Report on 1.2.1: on other systems the file is installed with 644.
+* PR# 863 *
+Subject: src/main/arithmetic.c on OpenBSD
+From: ian@darwinsys.com (Ian Darwin)
+Date: Tue,  6 Mar 2001 19:49:53 -0500 (EST)
+--Not applied for 1.2.3 (why?)
 
 Directory:  TooMuchAtOnce
 
@@ -316,22 +326,10 @@ Date: Tue, 10 Apr 2001 17:50:44 +0200 (MET DST)
 
 Directory:  incoming
 
-* PR# 966 *
-Subject: update.packages() and parse(text="A B")
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Sun, 03 Jun 2001 15:34:41 +0200
-* PR# 953 *
-Subject: bugs in deriv(*, *, function.arg = ) 
-Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Mon, 28 May 2001 10:44:59 +0200
-Date: Mon, 16 Apr 2001 21:02:10 +0200
---The second bug is a missing PROTECT. 
-* PR# 957 *
-Subject: Rcmd REMOVE does not allow --library argument
-From: Setzer.Woodrow@epamail.epa.gov
-Date: Wed, 30 May 2001 12:41:43 -0400
+* PR# 967 *
+Subject: boxplot.stats() returns wrong value for n
+From: gregory_r_warnes@groton.pfizer.com
+Date: Mon, 4 Jun 2001 19:29:02 +0200 (MET DST)
 * PR# 956 *
 Subject: unbelievable parser bug
 From: Martin Maechler <maechler@stat.math.ethz.ch>
@@ -340,35 +338,11 @@ Date: Tue, 29 May 2001 14:25:00 +0200
 Subject: argument names in generic print functions
 From: Richard Beare <Richard.Beare@cmis.csiro.au>
 Date: Tue, 29 May 2001 09:49:06 +1000
-* PR# 960 *
-Subject: format() of a character matrix converts to vector
-From: John.Peters@tip.csiro.au (John Peters)
-Date: Thu, 31 May 2001 17:27:45 +1000 (EST)
-* PR# 959 *
-Subject: Re: R-WinEdt
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Thu, 31 May 2001 09:21:14 +0200
-* PR# 958 *
-Subject: zero-extent matrices
-From: Thomas Lumley <tlumley@u.washington.edu>
-Date: Wed, 30 May 2001 11:59:59 -0700 (PDT)
-* PR# 962 *
-Subject: documentation for image(): zlim update
-From: eglen@pcg.wustl.edu
-Date: Thu, 31 May 2001 22:07:43 +0200 (MET DST)
-* PR# 961 *
-Subject: R-1.2.3: a small suggestion
-From: "Nelson H. F. Beebe" <beebe@math.utah.edu>
-Date: Thu, 31 May 2001 09:19:26 -0600 (MDT)
-* PR# 965 *
-Subject: Documentation bug in bug.report
-From: thoffman@zappa.sax.de
-Date: Fri, 1 Jun 2001 19:50:58 +0200 (MET DST)
-* PR# 964 *
-Subject: R-1.2.3 OSF precompiled binary doesn't run under DU4.0D
-From: paul@gromit.dlib.vt.edu
-Date: Fri, 1 Jun 2001 17:47:10 +0200 (MET DST)
-* PR# 963 *
-Subject: v matrix of svd(X) loses dimensions if nrow(X)==1
-From: Marcel Wolbers <wolbers@stat.math.ethz.ch>
-Date: Fri, 1 Jun 2001 13:47:01 +0200
+* PR# 953 *
+Subject: bugs in deriv(*, *, function.arg = ) 
+Subject: PROTECT() bugs in deriv(*, *, function.arg = ) 
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Mon, 28 May 2001 10:44:59 +0200
+Date: Mon, 16 Apr 2001 21:02:10 +0200
+--The second bug is a missing PROTECT. 
