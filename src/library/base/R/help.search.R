@@ -119,8 +119,7 @@ help.search <- function(pattern, fields = c("alias", "title"),
                    outConn)
         dbnam <- paste(db[ , "name"], "(", db[, "pkg"], ")", sep = "")
         dbtit <- paste(db[ , "title"], sep = "")
-        writeLines(paste(format(dbnam), dbtit, sep = "   "),
-                   outConn)
+        writeLines(formatDL(dbnam, dbtit), outConn)
         close(outConn)
         file.show(outFile, delete.file = TRUE)
     } else {
