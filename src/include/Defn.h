@@ -683,6 +683,8 @@ void R_SetMaxVSize(int);
 int R_GetMaxNSize(void);
 void R_SetMaxNSize(int);
 
+void R_run_onexits(RCNTXT *);
+
 
 /* gram.y & gram.c : */
 void yyerror(char *);
