@@ -1,24 +1,24 @@
 #! @PERL@
 #-*- perl -*-
 
-# Copyright (C) 2000-2004 R Development Core Team
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the GNU
-# General Public License for more details.
-#
-# A copy of the GNU General Public License is available via WWW at
-# http://www.gnu.org/copyleft/gpl.html.	 You can also obtain it by
-# writing to the Free Software Foundation, Inc., 59 Temple Place,
-# Suite 330, Boston, MA  02111-1307  USA.
+## Copyright (C) 2000-2004 R Development Core Team
+##
+## This program is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2, or (at your option)
+## any later version.
+##
+## This program is distributed in the hope that it will be useful, but
+## WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	 See the GNU
+## General Public License for more details.
+##
+## A copy of the GNU General Public License is available via WWW at
+## http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+## writing to the Free Software Foundation, Inc., 59 Temple Place,
+## Suite 330, Boston, MA  02111-1307  USA.
 
-# Send any bug reports to r-bugs@r-project.org
+## Send any bug reports to r-bugs@r-project.org
 
 use Cwd;
 use File::Basename;
@@ -44,7 +44,7 @@ $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-## Options
+### Options
 my $opt_clean = 1;
 my $opt_examples = 1;
 my $opt_tests = 1;
@@ -54,7 +54,9 @@ my $opt_codoc = 1;
 my $opt_install = 1;
 my $opt_vignettes = 1;
 my $opt_use_valgrind = 0;
-my $opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf");
+my $opt_rcfile = "";		# Only set this if $ENV{"HOME"} is set.
+$opt_rcfile = &file_path($ENV{"HOME"}, ".R", "check.conf")
+    if defined($ENV{"HOME"});
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -96,7 +98,7 @@ if(defined($ENV{"_R_CHECK_FF_CALLS_"})) {
 ## Use system default unless explicitly specified otherwise.
 $ENV{"R_DEFAULT_PACKAGES"} = "";
 
-## Configurable variables
+### Configurable variables
 my $R_check_use_install_log =
     &R_getenv("_R_CHECK_USE_INSTALL_LOG_", "FALSE");
 my $R_check_subdirs_nocase =
