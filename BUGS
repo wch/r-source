@@ -138,6 +138,14 @@ Date: Fri, 6 Dec 2002 19:41:48 +0100 (MET)
 Subject: nlme() and parameters "model", "fixed" and "random"
 From: jerome@hivnet.ubc.ca
 Date: Wed, 11 Dec 2002 22:29:47 +0100 (MET)
+* PR# 2369 *
+Subject: convergence problem with nlme()
+From: jerome@hivnet.ubc.ca
+Date: Thu, 12 Dec 2002 23:43:14 +0100 (MET)
+* PR# 2374 *
+Subject: quantreg package - predict method for rq objects
+From: John Maindonald <u9801539@leonard.anu.edu.au>
+Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
 
 Directory:  Analyses
 
@@ -592,10 +600,6 @@ Date: Mon, 15 Apr 2002 10:13:36 +0000
 Subject: hitting ^C breaks readline history
 From: Cyril Humbert <humbertc@univ-mlv.fr>
 Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
-* PR# 2091 *
-Subject: Scripts not executable
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Wed, 2 Oct 2002 00:54:15 +0200 (CEST)
 * PR# 2144 *
 Subject: Save() with ascii=TRUE may corrupt numeric values
 From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
@@ -625,10 +629,6 @@ Date: Wed, 15 May 2002 08:30:50 +0200 (MET DST)
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2357 *
-Subject: pmax loses row names
-From: hosking@watson.ibm.com
-Date: Mon, 9 Dec 2002 16:54:41 +0100 (MET)
 * PR# 2365 *
 Subject: R-intro: Simple manipulations/Vectors and assignment
 From: nvj@fys.ku.dk
@@ -637,15 +637,11 @@ Date: Thu, 12 Dec 2002 00:17:26 +0100 (MET)
 Subject: R -g gnome has graphics bugs
 From: chris-public@math.uu.se
 Date: Thu, 12 Dec 2002 14:19:43 +0100 (MET)
-* PR# 2369 *
-Subject: convergence problem with nlme()
-From: jerome@hivnet.ubc.ca
-Date: Thu, 12 Dec 2002 23:43:14 +0100 (MET)
 * PR# 2371 *
 Subject: Minor glitch in building documentation
 From: Peter Rye <prye@shiraz.apana.org.au>
 Date: 12 Dec 2002 23:47:22 +1100
-* PR# 2374 *
-Subject: quantreg package - predict method for rq objects
-From: John Maindonald <u9801539@leonard.anu.edu.au>
-Date: Sat, 14 Dec 2002 20:46:34 +1100 (EST)
+* PR# 2375 *
+Subject: Fuera estrés ya !!!
+From: "Centro Relax" <centrorelax@axtel.net>
+Date: Sun, 15 Dec 2002 07:42:53 -0600
