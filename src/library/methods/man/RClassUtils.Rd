@@ -47,8 +47,6 @@
 %% not explicitly documented here
 \alias{.BasicClasses}
 \alias{.BasicVectorClasses}
-\alias{classGetsInR}
-\alias{classInR}
 \alias{.InitBasicClasses}
 \alias{.InitMethodsListClass}
 \alias{.setCoerceGeneric}

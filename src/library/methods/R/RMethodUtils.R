@@ -146,6 +146,8 @@ getAllMethods <-
         if(!is.null(mw))
           methods <- mergeMethods(methods, mw)
       }
+    if(is.null(methods))
+      stop(paste("no methods defined for \"", f, "\"", sep=""))
     methods <- setAllMethodsSlot(methods)
     assign(".Methods", methods, ev)
     environment(fdef) <- ev
@@ -179,7 +181,7 @@ setAllMethodsSlot <- function(mlist) {
   ## any inherited methods stored in allMethods.
   if(is.null(mlist)) return(mlist)
   methods <- mlist@methods
-  mnames <- names(methods)
+  mnames <- allNames(methods)
   modified <- FALSE
   for(i in seq(along=methods)) {
     method <-methods[[i]]

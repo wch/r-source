@@ -96,23 +96,23 @@ isGeneric <-
 removeGeneric <-
   ## Remove the generic function of this name.
   ##
-  ## If `where' supplied, just remove the version on this element of the search list;
+  ## If `where' supplied,  remove the version on this element of the search list;
   ## otherwise, removes the first version encountered.
     function(f, where = -1)
 {
+  removeFromMethodMetaData(f)
     if(identical(where, -1)) {
         where <- findFunction(f)
-        if(length(where) > 0)
-            where <- el(where, 1)
     }
-    else {
-        if(!existsFunction(f, where=where))
-            where <- character()
-    }
-    if(length(where) > 0)
+    for(db in where) {
+      if(existsFunction(f, where = db) &&
+         isGeneric(get(f, db))) {
         rm(list = f, pos = where)
-    else
-        warning(paste("Function \"", f, "\" not found for removal", sep=""))
+        return(TRUE)
+      }
+    }
+  warning(paste("Generic function \"", f, "\" not found for removal", sep=""))
+  return(FALSE)
 }
 
 
