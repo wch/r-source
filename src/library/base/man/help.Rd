@@ -43,6 +43,13 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
 }
+\note{
+    The help files can be many small files. On some file systems it is
+    desirable to save space, and the text files in the \file{help} directory
+    of an installed package can be zipped up as a zip archive
+    \file{Rhelp.zip}. Ensure the files \file{AnIndex} and
+    \file{00Titles} remain un-zipped.
+}
 \seealso{
   \code{\link{help.start}()} which opens the HTML version of the \R
   Manual;
