@@ -19,7 +19,7 @@ is.environment(obj)
 globalenv()
 new.env(hash=FALSE, parent=parent.frame())
 parent.env(env)
-parent.env<-(env, value)
+parent.env(env) <- value
 }
 \arguments{
   \item{fun}{a \code{\link{function}}, a \code{\link{formula}}, or
