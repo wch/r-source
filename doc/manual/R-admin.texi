@@ -97,18 +97,18 @@ members are listed at @uref{http://cran.r-project.org/mirrors.html}.
 The simplest way is to download the most recent
 @file{R-@var{x}.@var{y}.@var{z}.tgz} file, and unpack it with
 
-@smallexample
+@example
 tar xvfz R-@var{x}.@var{y}.@var{z}.tgz
-@end smallexample
+@end example
 
 @noindent
 on systems that have GNU @command{tar} installed.  On other systems you
 need at least to have the @command{gzip} program installed.  Then you
 can use
 
-@smallexample
+@example
 gzip -dc R-@var{x}.@var{y}.@var{z}.tgz | tar xvf -
-@end smallexample
+@end example
 
 The pathname of the directory into which the sources are unpacked should
 not contain spaces, as @code{make} (specifically GNU make 3.80) does not
@@ -118,9 +118,9 @@ If you need to transport the sources on floppy disks, you can download
 the @file{R-@var{x}.@var{y}.@var{z}.tgz-split.*} files and paste them
 together at the destination with (Unix)
 
-@smallexample
+@example
 cat R-@var{x}.@var{y}.@var{z}-split.* > R-@var{x}.@var{y}.@var{z}.tgz
-@end smallexample
+@end example
 
 @noindent
 and proceed as above.  If you want the build to be usable by a group of
@@ -159,9 +159,9 @@ current r-patched from
 (where @var{x} and @var{y} are the major and minor number of the current
 released version of R).  E.g., use
 
-@smallexample
+@example
 svn checkout https://svn.r-project.org/R/trunk/ @var{path}
-@end smallexample
+@end example
 
 @noindent
 to check out r-devel into directory @var{path}.
@@ -169,13 +169,13 @@ to check out r-devel into directory @var{path}.
 Note that @samp{https:} is required, and that the SSL certificate for
 the Subversion server of the R project is
 
-@smallexample
+@example
 Certificate information:
  - Hostname: svn.r-project.org
  - Valid: from Jul 16 08:10:01 2004 GMT until Jul 14 08:10:01 2014 GMT
  - Issuer: Department of Mathematics, ETH Zurich, Zurich, Switzerland, CH
  - Fingerprint: c9:5d:eb:f9:f2:56:d1:04:ba:44:61:f8:64:6b:d9:33:3f:93:6e:ad
-@end smallexample
+@end example
 
 @noindent
 (currently, there is no ``trusted certificate'').  You can accept this
@@ -201,11 +201,11 @@ sources to make the requisite links in @file{src/library/Recommended}.
 A suitable incantation from the top level of the R sources using
 @command{wget} might be
 
-@smallexample
+@example
 wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
   http://CRAN.R-project.org/src/contrib/@var{dir}
 ./tools/link-recommended
-@end smallexample
+@end example
 
 
 
@@ -255,41 +255,41 @@ the following commands:
 
 @findex configure
 
-@smallexample
+@example
 ./configure
 make
-@end smallexample
+@end example
 
 @noindent
 (See @ref{Using make} if your make is not called @samp{make}.)
 
 Then check the built system works correctly, by
 
-@smallexample
+@example
 make check
-@end smallexample
+@end example
 
 @noindent
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
 discrepancies.  To re-run the tests you would need
 
-@smallexample
+@example
 make check FORCE=FORCE
-@end smallexample
+@end example
 
 More comprehensive testing can be done by
 
-@smallexample
+@example
 make check-devel
-@end smallexample
+@end example
 
 @noindent
 or
 
-@smallexample
+@example
 make check-all
-@end smallexample
+@end example
 
 @noindent
 see @file{tests/README}.
@@ -311,11 +311,11 @@ directory (say, @file{@var{TOP_SRCDIR}}).  To build in
 
 @findex configure
 
-@smallexample
+@example
 cd @var{BUILDDIR}
 @var{TOP_SRCDIR}/configure
 make
-@end smallexample
+@end example
 
 @noindent
 and so on, as described further below.  This has the advantage of always
@@ -335,9 +335,9 @@ For those obtaining @R{} @emph{via} Subversion, one additional step is
 necessary:
 @cindex vignettes
 
-@smallexample
+@example
 make vignettes
-@end smallexample
+@end example
 
 @noindent
 which makes the @samp{grid} vignettes (which are contained in the tarballs): 
@@ -345,7 +345,7 @@ it takes several minutes.
 
 Now @code{rehash} if necessary, type @kbd{R}, and read the @R{} manuals
 and the @R{} @acronym{FAQ} (files @file{FAQ} or
-@file{doc/html/faq.html}, or
+@file{doc/manual/R-FAQ.html}, or
 @uref{http://CRAN.R-project.org/doc/FAQ/R-FAQ.html} which always has
 the latest version).
 
@@ -359,7 +359,7 @@ There is a set of manuals that can be built from the sources,
 @item refman
 Printed versions of all the help pages.
 @item R-FAQ
-R @acronym{FAQ} (which is already built for you).
+R @acronym{FAQ}
 @item R-intro
 ``An Introduction to R''.
 @item R-data
@@ -375,11 +375,11 @@ R @acronym{FAQ} (which is already built for you).
 @noindent
 To make these, use
 
-@smallexample
+@example
 make dvi      @r{to create DVI versions}
 make pdf      @r{to create PDF versions}
 make info     @r{to create info files (not @samp{refman}).}
-@end smallexample
+@end example
 
 You will not be able to build the info files unless you have
 @command{makeinfo} version 4.5 or later installed.
@@ -449,19 +449,19 @@ e.g. for printing.
 After
 
 @findex configure
-@smallexample
+@example
 ./configure
 make
 make check
-@end smallexample
+@end example
 
 @noindent
 have been completed successfully, you can install the complete @R{} tree
 to your system by typing
 
-@smallexample
+@example
 make install
-@end smallexample
+@end example
 
 @noindent
 This will install to the following directories:
@@ -481,9 +481,9 @@ where @var{prefix} is determined during configuration (typically
 the option @option{--prefix}, as in
 
 @findex configure
-@smallexample
+@example
 ./configure --prefix=/where/you/want/R/to/go
-@end smallexample
+@end example
 
 @noindent
 This causes @command{make install} to install the @R{} executable to
@@ -492,9 +492,9 @@ installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  You can install into
 another directory by using
 
-@smallexample
+@example
 make prefix=/path/to/here install
-@end smallexample
+@end example
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.
@@ -503,11 +503,11 @@ More precise control is available at configure time via options: see
 
 To install DVI, info and PDF versions of the manuals, use one or more of
 
-@smallexample
+@example
 make install-dvi
 make install-info
 make install-pdf
-@end smallexample
+@end example
 
 @noindent
 To ensure that the installed tree is usable by the right group of users,
@@ -553,11 +553,11 @@ that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.  Open a commands window at a directory @emph{whose
 path does not contain spaces}, and run something like
 
-@smallexample
+@example
 tar zxvf R-@value{VERSIONno}.tgz
 cd R-@value{VERSIONno}\src\gnuwin32
 make all recommended
-@end smallexample
+@end example
 
 @noindent
 sit back and wait (for about 15 minutes on 1GHz PIII with a fast local
@@ -613,9 +613,9 @@ The first two options are strongly recommended.
 specifying the flag @option{--enable-R-framework[=DIR]} or at install
 time as
 
-@smallexample
+@example
 make prefix=/where/you/want/R.framework/to/go install
-@end smallexample
+@end example
 
 @noindent
 the @file{R.framework} has not to be specified in the path.
@@ -653,9 +653,9 @@ more than one library, of course.
 
 To install packages from source on Unix use
 
-@smallexample
+@example
 R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
-@end smallexample
+@end example
 
 @noindent
 The part @samp{-l /path/to/library} can be omitted, in which case the
@@ -672,16 +672,16 @@ Alternatively, packages can be downloaded and installed from within
 @R{}.  First set the option @code{CRAN} to your nearest @acronym{CRAN}
 mirror, for example
 
-@smallexample
+@example
 > options(CRAN = "http://cran.us.r-project.org/")
-@end smallexample
+@end example
 
 @noindent
 Then download and install package @pkg{foo} by
 
-@smallexample
+@example
 > install.packages("foo")
-@end smallexample
+@end example
 
 @noindent
 Unless the library is specified (argument @code{lib}) the first library
@@ -739,16 +739,16 @@ package manager for future versions of R.
 Packages can be removed in a number of ways.  From a command prompt they
 can be removed by
 
-@smallexample
+@example
 R CMD REMOVE -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
-@end smallexample
+@end example
 
 From a running @R{} process they can be removed by
 
-@smallexample
+@example
 > remove.packages(c("pkg1", "pkg2"),
                   lib = file.path("path", "to", "library"))
-@end smallexample
+@end example
 
 Finally, in most installations one can just remove the package directory
 from the library.
@@ -881,19 +881,19 @@ the wrong thread could result in segfaults.)  A remaining issue is that
 problems.  You may want to disable profiling if you use a multi-threaded
 version of ATLAS.  You can use a multi-threaded ATLAS by specifying
 
-@smallexample
+@example
 --with-blas="-lptf77blas -lpthread -latlas"
-@end smallexample
+@end example
 
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available at
 @uref{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
 installed, it can be used by one of
 
-@smallexample
+@example
 --with-blas=goto
 --with-blas=-lgoto
-@end smallexample
+@end example
 
 Multi-threaded versions of Goto's BLAS are available, so please note the
 @emph{caveat} in the previous paragraph.
@@ -902,9 +902,9 @@ For Intel processors under Linux, Intel's Math Kernel Library
 @uref{http://www.intel.com/software/products/mkl/}
 can be used by
 
-@smallexample
+@example
 --with-blas="-lmkl -lguide -lpthread"
-@end smallexample
+@end example
 
 @noindent
 with the same caveat on multi-threading.  (Thanks to Andy Liaw for the
@@ -935,9 +935,9 @@ look for an external library @code{-llapack}.  Sites searching for the
 fastest possible linear algebra may want to build a LAPACK library using
 the ATLAS-optimized subset of LAPACK.  To do so specify something like
 
-@smallexample
+@example
 --with-lapack="-L/path/to/libs -llapack -lcblas"
-@end smallexample
+@end example
 
 @noindent
 since the ATLAS subset of LAPACK depends on @code{libcblas}.  A value
@@ -951,9 +951,9 @@ with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
 sources).  In particular, bugs in @code{DGEEV} and @code{DGESDD} have
 resulted in error messages such as
 
-@smallexample
+@example
 DGEBRD gave error code -10
-@end smallexample
+@end example
 
 @noindent
 (from the Debian @code{-llapack} which was current in late 2002).  Other
@@ -996,9 +996,9 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 
 @command{configure} has many options: running
 
-@smallexample
+@example
 ./configure --help
-@end smallexample
+@end example
 
 @noindent
 will give a list.  Probably the most important ones not covered
@@ -1048,9 +1048,9 @@ other than their default, you can do that by either editing the file
 @file{config.site} (which documents all the variables you might want to
 set) or on the command line as
 
-@smallexample
+@example
 ./configure VAR=@var{value}
-@end smallexample
+@end example
 
 @noindent
 If you are building in a directory different from the sources, there can
@@ -1137,9 +1137,9 @@ GNU @command{make} is called @samp{gmake}, you need to set the variable
 @code{MAKE} at configure time, for example
 
 @findex configure
-@smallexample
+@example
 ./configure MAKE=gmake
-@end smallexample
+@end example
 
 @node Using FORTRAN, Compile and load flags, Using make, Configuration on Unix
 @section Using FORTRAN
@@ -1345,9 +1345,9 @@ of the @code{png()} and @code{jpeg} devices.
 The @code{vecLib} library of Mac OS X >= 10.2.2 can be used @emph{via} the
 configuration options
 
-@smallexample
+@example
 --with-blas="-framework vecLib" --with-lapack
-@end smallexample
+@end example
 
 @noindent
 to provide higher-performance versions of the BLAS and LAPACK
@@ -1394,9 +1394,9 @@ When using the SunPro compilers do @emph{not} specify @option{-fast}, as
 this disables @acronym{IEEE} arithmetic and @command{make check} will
 fail.  The maximal set of optimization options known to work is
 
-@smallexample
+@example
 -xlibmil -xO5 -dalign
-@end smallexample
+@end example
 
 We have found little performance difference between @command{gcc} and
 @command{cc} but considerable benefit from using a SunPro Fortran
@@ -1416,14 +1416,14 @@ To compile for a 64-bit target on Solaris (which needs an UltraSparc
 chip and for support to be enabled in the OS) with the Forte 6 and 7
 compilers we used
 
-@smallexample
+@example
 CC="cc -xarch=v9"
 CFLAGS="-xO5 -xlibmil -dalign"
 F77="f95 -xarch=v9"
 FFLAGS="-xO5 -xlibmil -dalign"
 CXX="CC -xarch=v9"
 CXXFLAGS="-xO5 -xlibmil -dalign"
-@end smallexample
+@end example
 
 @noindent
 in @file{config.site}.
@@ -1431,12 +1431,12 @@ in @file{config.site}.
 
 For 64-bit compilation with @command{gcc} 3.2.x and later we used
 
-@smallexample
+@example
 CC="gcc -m64"
 FFLAGS="-m64 -g -O2"
 CXXFLAGS="-m64 -g -O2"
 LDFLAGS="-L/usr/local/lib/sparcv9 -L/usr/local/lib"
-@end smallexample
+@end example
 
 Note that @samp{/usr/local/lib/sparcv9} will need to be in the
 @samp{LD_LIBRARY_PATH} during configuration.
@@ -1487,19 +1487,19 @@ been compiled with the appropriate flag for producing position
 independent code (@acronym{PIC}).  This will result in @command{make}
 failing with a linker error similar to
 
-@smallexample
+@example
 ld: CODE_ONE_SYM fixup to non-code subspace in file foo.o -
 shared library must be position independent. Use +z or +Z to recompile.
-@end smallexample
+@end example
 
 @noindent
 (@option{+z} and @option{+Z} are the @acronym{PIC} flags for the native
 compiler @command{cc}.)  If this is the case you either need to modify
 your @command{g77} installation or configure with
 
-@smallexample
+@example
 F77=fort77
-@end smallexample
+@end example
 
 @noindent
 to specify use of the native @acronym{POSIX}-compliant FORTRAN 77
@@ -1513,14 +1513,14 @@ not in the library path.  The symptom will the linker error shown in the
 last paragraph.  Static libraries that might be found and would cause
 problems are
 
-@smallexample
+@example
 BLAS                   @r{use @option{--without-blas}}
 Tcl/Tk                 @r{use @option{--without-tcltk}}
 GNOME                  @r{not built by default}
 libpng                 @r{use @option{--without-libpng}}
 jpeg                   @r{use @option{--without-jpeglib}}
 zlib                   @r{use @option{--without-zlib}}
-@end smallexample
+@end example
 
 @noindent
 and @code{bzip2} and @code{pcre} are problematic when building
@@ -1530,12 +1530,12 @@ and @option{--without-pcre} respectively, but these are the defaults.
 Some versions of @command{gcc} may contain what appears to be a bug at
 the @option{-O2} optimization level that causes
 
-@smallexample
+@example
 > 2 %/% 2
 [1] 1
 > 1:2 %/% 2
 [1] 0 0     # wrong!!
-@end smallexample
+@end example
 
 @noindent
 which will cause @command{make check} to fail.  If this is the case, you
@@ -1558,9 +1558,9 @@ alternative work-around is to add @option{-DIEEE_754} to the
 You can configure @R{} to use both the native @command{cc} and
 @command{fort77} with
 
-@smallexample
+@example
 ./configure CC=cc F77=fort77
-@end smallexample
+@end example
 
 @command{f90} insists on linking against a static @file{libF90.a} which
 typically resides in a non-standard directory (e.g.,
@@ -1579,9 +1579,9 @@ LDFLAGS=/opt/fortran90/lib}).
 executables and the native compilers for a 64-bit executable.  The
 command
 
-@smallexample
+@example
 ./configure CC="cc -64" F77="f77 -64" --with-tcltk=no
-@end smallexample
+@end example
 
 @noindent
 was used to create the 64-bit executable.  It was necessary to
@@ -1653,7 +1653,7 @@ and @samp{SHLIB_LDFLAGS="-Wl,-G"} in this case.
 Harald Servat Gelabert <harald at cepba dot upc dot es> reported
 success building @R{} 1.7.0 under AIX 5.1 with
 
-@smallexample
+@example
 CC=xlc
 F77=xlf
 CXX=xlC
@@ -1662,7 +1662,7 @@ FFLAGS='-O3 -qstrict -qmaxmem=8192'
 CXXFLAGS='-O2 -qmaxmem=8192'
 MAIN_LDFLAGS='-Wl,-brtl'
 SHLIB_LDFLAGS='-Wl,-G'
-@end smallexample
+@end example
 
 @noindent
 but was unable to use the X libraries or the native BLAS (ESSL) and so
@@ -1671,7 +1671,7 @@ used @option{--without-x --without-blas}.
 Tim Hoar <thoar at cgd dot ucar dot edu> reported success building
 @R{} 1.9.0 under AIX 5.1 in 64-bit mode with
 
-@smallexample
+@example
 OBJECT_MODE=64
 CC=/usr/bin/xlc_r
 F77=/usr/bin/xlf_r
@@ -1680,7 +1680,7 @@ LDFLAGS='-brtl'
 CFLAGS='-O -qstrict'
 FFLAGS='-O -qstrict'
 CXXFLAGS='-O -qstrict'
-@end smallexample
+@end example
 
 @noindent
 and the @code{X11()} device worked.  His system required the
@@ -1781,9 +1781,9 @@ by Javascript code, so the first thing to do is to ensure that both are
 enabled in your favourite browser.  Then try it and see: with most
 browsers you should see
 
-@smallexample
+@example
 Applet SearchEngine started
-@end smallexample
+@end example
 
 @noindent
 displayed in the status bar.  (Internet Explorer shows @code{Applet
