@@ -101,7 +101,8 @@ function(dir)
 }
 
 checkMethods <-
-function(dir) {
+function(dir)
+{
     fQuote <- function(s) paste("`", s, "'", sep = "")
     listFilesWithExts <- function(dir, exts, path = TRUE) {
         ## Return the paths or names of the files in `dir' with
@@ -328,7 +329,8 @@ function(file, package, dir, lib.loc = .lib.loc)
 }
 
 checkDocStyle <-
-function(dir) {
+function(dir)
+{
     fQuote <- function(s) paste("`", s, "'", sep = "")
     listFilesWithExts <- function(dir, exts, path = TRUE) {
         ## Return the paths or names of the files in `dir' with
@@ -467,7 +469,7 @@ function(dir) {
         ## Note: Special \method{GENERIC}{CLASS} Rd markup was preserved
         ## by calling extract-usage in mode `style'.  We keep this in
         ## usageTxt for later, but of course need to replace it by the
-        ## GENERIC.CLASS S3 function names for parsin.
+        ## GENERIC.CLASS S3 function names for parsing.
         exprs <- try(parse(n = -1,
                            text = gsub(paste("\\\\method",
                                              "{([a-zA-Z0-9.]+)}",
@@ -529,7 +531,8 @@ function(dir) {
 }
 
 checkAssignFuns <-
-function(dir) {
+function(dir)
+{
     fQuote <- function(s) paste("`", s, "'", sep = "")
     listFilesWithExts <- function(dir, exts, path = TRUE) {
         ## Return the paths or names of the files in `dir' with

@@ -103,7 +103,7 @@ function(dir, use.values = FALSE, use.positions = TRUE,
     ## where this misses the .Primitive functions.  Hence, when checking
     ## base for objects shown in \usage but missing from the code, we
     ## get the primitive functions from the version of R we are using.
-    ## Maybe one we will have R code for the primitives as well ...
+    ## Maybe one day we will have R code for the primitives as well ...
     if(isBase) {
         baseObjs <- ls(envir = as.environment(NULL), all.names = TRUE)
         isPrimitive <- function(fname, envir) {
