@@ -78,8 +78,8 @@ const double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
 
 typedef union
 {
-  double value;
-  unsigned int word[2];
+    double value;
+    unsigned int word[2];
 } ieee_double;
 
 /* These variables hw and lw are only used if IEEE_754 is defined.
@@ -519,15 +519,22 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
     if (mismatch)
 	warningcall(lcall, "longer object length\n\tis not a multiple of shorter object length");
 
+/* need to preserve object here, as *_binary copies class attributes */
     if (TYPEOF(x) == CPLXSXP || TYPEOF(y) == CPLXSXP) {
+        int xo = OBJECT(x), yo = OBJECT(y);
 	REPROTECT(x = coerceVector(x, CPLXSXP), xpi);
 	REPROTECT(y = coerceVector(y, CPLXSXP), ypi);
+        SET_OBJECT(x, xo);
+	SET_OBJECT(y, yo);
 	x = complex_binary(PRIMVAL(op), x, y);
     }
     else
 	if (TYPEOF(x) == REALSXP || TYPEOF(y) == REALSXP) {
+            int xo = OBJECT(x), yo = OBJECT(y);
 	    REPROTECT(x = coerceVector(x, REALSXP), xpi);
 	    REPROTECT(y = coerceVector(y, REALSXP), ypi);
+	    SET_OBJECT(x, xo);
+	    SET_OBJECT(y, yo);
 	    x = real_binary(PRIMVAL(op), x, y);
 	}
 	else {

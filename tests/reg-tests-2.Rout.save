@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-10-16)
+Version 1.4.0 Under development (unstable) (2001-11-13)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -670,6 +670,7 @@ Error in log(x) : Non-numeric argument to mathematical function
 > unlink("all.Rout")
 > ## many of these were untested before 1.4.0.
 > 
+> 
 > ## test mean() works on logical but not factor
 > x <- c(TRUE, FALSE, TRUE, TRUE)
 > mean(x)
@@ -679,4 +680,19 @@ Error in log(x) : Non-numeric argument to mathematical function
 Warning message: 
 argument is not numeric or logical: returning NA in: mean.default(as.factor(x)) 
 > ## last had confusing error message in 1.3.1.
+> 
+> 
+> ## Kurt Hornik 2001-Nov-13
+> z <- table(x = 1:2, y = 1:2)
+> z - 1
+   y
+x    1  2
+  1  0 -1
+  2 -1  0
+> unclass(z - 1)
+   y
+x    1  2
+  1  0 -1
+  2 -1  0
+> ## lost object bit prior to 1.4.0, so printed class attribute.
 > 

@@ -290,8 +290,16 @@ try(log("a"))
 unlink("all.Rout")
 ## many of these were untested before 1.4.0.
 
+
 ## test mean() works on logical but not factor
 x <- c(TRUE, FALSE, TRUE, TRUE)
 mean(x)
 mean(as.factor(x))
 ## last had confusing error message in 1.3.1.
+
+
+## Kurt Hornik 2001-Nov-13
+z <- table(x = 1:2, y = 1:2)
+z - 1
+unclass(z - 1)
+## lost object bit prior to 1.4.0, so printed class attribute.

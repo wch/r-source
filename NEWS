@@ -298,6 +298,7 @@ NEW FEATURES
 	corresponds to all currently known libraries as before.
 
 
+
 BUG FIXES
 
 
@@ -411,6 +412,10 @@ BUG FIXES
 
     o	Use exact Hodges-Lehmann estimators for the Wilcoxon tests in
         package ctest (PR#1150).
+
+    o	Arithmetic which coerced types could lose the class
+	information, for example `table - real' had a class attribute
+	but was not treated as a classed object.
 
 
 
