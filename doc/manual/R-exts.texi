@@ -215,11 +215,11 @@ The @samp{Description} field should give a comprehensive description of
 what the package does.  One can use several (complete) sentences, but
 only one paragraph.
 
-The @samp{Title} field should give a short description of the package
-and not have any continuation lines.  Older versions of @R{} used a
-separate file @file{TITLE} for giving this information; this is now
-deprecated in favor of using the @samp{Title} field in file
-@file{DESCRIPTION} file.
+The @samp{Title} field should give a short description of the package.
+It should be capitalized, not use any markup, not have any continuation
+lines, and not end in a period.  Older versions of @R{} used a separate
+file @file{TITLE} for giving this information; this is now defunct, and
+the @samp{Title} field in @file{DESCRIPTION} is required.
 
 The @samp{Author} field describes who wrote the package.  It is a plain
 text field intended for human readers, but not for automatic processing
