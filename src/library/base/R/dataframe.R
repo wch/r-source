@@ -10,7 +10,7 @@ row.names <- function(x) attr(x,"row.names")
     x
 }
 
-"is.na.data.frame" <- function (x)
+is.na.data.frame <- function (x)
 {
     y <- do.call("cbind", lapply(x, "is.na"))
     rownames(y) <- row.names(x)
@@ -355,8 +355,7 @@ data.frame <- function(..., row.names = NULL, check.rows = FALSE, check.names = 
 }
 
 
-"[[.data.frame"<-
-    function(x, ...)
+"[[.data.frame" <- function(x, ...)
 {
     ## use in-line functions to refer to the 1st and 2nd ... arguments
     ## explicitly. Also will check for wrong number or empty args
@@ -758,12 +757,12 @@ print.data.frame <-
 	cat("<0 rows> (or 0-length row.names)\n")
     } else {
 	if(!is.null(digits)) {
-	    ## if 'x' has factors & numeric, as.matrix(x) will use
-	    ## format(.) on the numbers -- set options(.) for the following print(.):
+	    ## if 'x' has factors & numeric, as.matrix(x) will apply format(.)
+	    ## to the numbers -- set options(.) for the following print(.):
 	    op <- options(digits = digits)
 	    on.exit(options(op))
 	}
-	print(as.matrix(x), ..., quote = quote, right = right)
+	print.matrix(as.matrix(x), ..., quote = quote, right = right)
     }
     invisible(x)
 }

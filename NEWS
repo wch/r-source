@@ -87,6 +87,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	print.data.frame(.) now calls print.matrix instead of print(.)
+	which finally enables the 'right = TRUE' argument.
+
     o	R --help  gives more
 
     o	postscript() now uses 'hyphen' instead of 'plusminus' for a minus.
