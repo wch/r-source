@@ -78,3 +78,20 @@ unlink("test.dat")
 tmp <- array(list(3), c(2, 3))
 tmp[[2, 3]] <- "fred"
 all.equal(t(tmp), aperm(tmp))
+
+## Martin Maechler, 2001-03-07 [1.2.2 and in parts earlier]
+tf <- tempfile()
+cat(1:3,"\n", file = tf)
+for(line in list(4:6, "", 7:9)) cat(line,"\n", file = tf, append = TRUE)
+
+count.fields(tf) # 3 3 3 : ok {blank line skipped}
+z <- scan(tf, what=rep(list(""),3), nmax = 3)
+all(sapply(z, length) == 3)
+## FALSE in 1.2.2
+z <- as.data.frame(scan(tf, what=rep(list(""),3), n=9))
+dim(z)
+## should be 3 3.  Was 2 3 in 1.2.2.
+read.table(tf)
+## gave error in 1.2.2
+unlink(tf)
+

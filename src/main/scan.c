@@ -477,7 +477,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
 		} else if (!badline)
 		    badline = linesread;
 	    }
-	    if (maxitems > 0 && linesread >= maxitems)
+	    if (maxitems > 0 && n >= maxitems)
 		goto done;
 	    if (maxlines > 0 && linesread == maxlines)
 		goto done;
