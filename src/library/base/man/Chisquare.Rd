@@ -53,7 +53,11 @@ rchisq(n, df, ncp=0)
   \eqn{\lambda} being the sum of squares of the normal means.
   Note that the the degrees of freedom \code{df}\eqn{= n}, can be
   non-integer, and for non-centrality \eqn{\lambda > 0}, even \eqn{n = 0};
-  see the reference, chapter 29.
+  see the reference, chapter 29. 
+  
+ Warning: The code for \code{pchisq} and
+  \code{qchisq} is unreliable for
+values of \code{ncp} above approximately 290.
 }
 \seealso{
   \code{\link{dgamma}} for the Gamma distribution which generalizes the
