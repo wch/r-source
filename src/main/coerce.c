@@ -1193,6 +1193,7 @@ SEXP do_is(SEXP call, SEXP op, SEXP args, SEXP rho)
 	break;
     case 201:		/* is.recursive */
 	switch(TYPEOF(CAR(args))) {
+	case VECSXP:
 	case LISTSXP:
 	case CLOSXP:
 	case ENVSXP:

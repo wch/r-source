@@ -66,6 +66,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	is.recursive(list(.)) is now TRUE [PR#221].
+
     o	help([<-.factor) (etc) work again.
 
     o	Default editor files (e.g. from fix()) are now removed at termination.
