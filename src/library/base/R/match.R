@@ -13,7 +13,7 @@ pmatch <-
     y
 }
 
-"%in%" <- function(x, y) match(x, y, nomatch = 0) > 0
+"%in%" <- function(x, table) match(x, table, nomatch = 0) > 0
 
 match.arg <- function (arg, choices) {
     if (missing(choices)) {

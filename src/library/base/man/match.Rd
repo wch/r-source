@@ -11,13 +11,14 @@ x \%in\% table
 \item{table}{the values to be matched against.}
 \item{nomatch}{the value to be returned in the case when no match is found.}}
 \description{
-\code{match}: If \code{x[i]} is found to equal \code{table[j]}
-then the value returned in the \code{i}-th position of the return value is
-\code{j}.  If no match is found, the value is \code{nomatch}.
-
-\code{\%in\%}: A utility function, currently defined as \cr
-  \code{"\%in\%" <- function(x, y) match(x, y, nomatch = 0) > 0} allowing
-an intuitive usage and returning a logical vector of length \code{length(x)}.
+  \code{match}: If \code{x[i]} is found to equal \code{table[j]}
+  then the value returned in the \code{i}-th position of the return value is
+  \code{j}.  If no match is found, the value is \code{nomatch}.
+  
+  \code{\%in\%}: A utility function, currently defined as \cr
+  \code{"\%in\%" <- function(x, table) match(x, table, nomatch = 0) > 0}
+  allowing
+  an intuitive usage and returning a logical vector of length \code{length(x)}.
 }
 \seealso{
 \code{\link{pmatch}} and \code{\link{charmatch}} for (\emph{partial})
