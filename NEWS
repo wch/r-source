@@ -177,6 +177,10 @@ BUG FIXES
 
     o	ccf(plot = FALSE) was returning a spurious extra 0 at lag 0.
 
+    o	On console-based versions of R (Windows, GNOME, probably
+	MacOS) warning/error messages longer than 8192 chars could
+	crash R. (PR#1651)
+
 
 
 		CHANGES IN R VERSION 1.5.0
