@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.9-52 2004-09-17
+Version 1.9-53 2004-09-26
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2339,6 +2339,9 @@ distributions of R.)
      regression to approximate the minimum number of observations that can
      be removed such that the reduced data set has complete separation.
 
+*ncvar*
+     High-level R interface to netCDF datasets.
+
 *negenes*
      Estimating the number of essential genes in a genome on the basis of
      data from a random transposon mutagenesis experiment, through the use
@@ -2478,6 +2481,11 @@ distributions of R.)
 *psy*
      Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
      screeplot, PCA and related methods.
+
+*pwt*
+     The Penn World Table providing purchasing power parity and national
+     income accounts converted to international prices for 168 countries for
+     some or all of the years 1950-2000.
 
 *qcc*
      Quality Control Charts.  Shewhart quality control charts for

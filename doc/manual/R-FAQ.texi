@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-52 @value{FAQ-YEAR}-09-17
+@set FAQ-VERSION 1.9-53 @value{FAQ-YEAR}-09-26
 @set REL-VERSION 1.9.1
 @set REL-YEAR 2004
 @c <FIXME>
@@ -2461,6 +2461,8 @@ Interface to Unidata netCDF data files.
 Functions to perform the regression depth method (RDM) to binary
 regression to approximate the minimum number of observations that can be
 removed such that the reduced data set has complete separation.
+@item ncvar
+High-level R interface to netCDF datasets.
 @item negenes
 Estimating the number of essential genes in a genome on the basis of
 data from a random transposon mutagenesis experiment, through the use of
@@ -2578,6 +2580,10 @@ Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
 Various procedures used in psychometry: Kappa, ICC, Cronbach alpha,
 screeplot, PCA and related methods.
+@item pwt
+The Penn World Table providing purchasing power parity and national
+income accounts converted to international prices for 168 countries for
+some or all of the years 1950--2000.
 @item qcc
 Quality Control Charts.  Shewhart quality control charts for continuous,
 attribute and count data.  Cusum and EWMA charts.  Operating
