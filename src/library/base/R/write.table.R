@@ -171,7 +171,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 	rnames <- as.character(row.names)
         rn <- TRUE
 	if(length(rnames) != nrow(x))
-            stop("invalid 'row.names 'specification")
+            stop("invalid 'row.names' specification")
     }
     if(!is.null(quote) && rn) # quote the row names
 	quote <- c(0, quote)
