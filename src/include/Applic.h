@@ -32,9 +32,12 @@ void bakslv(double *, int *, int *,
 	    double *, int *, int *,
 	    double *, int *, int *);
 
-void bincode (double *, int *, double *, int *, int *, int *, int *);
+void bincode (double *x, int *n, double *breaks, int *nb,
+	      int *code, int *right, int *include_border, int *naok);
+void bincount(double *x, int *n, double *breaks, int *nb, int *count,
+	      int *right, int *include_border, int *naok);
+/*unused*/
 void bincode2(double *, int *, double *, int *, int *, int *, int *);
-void bincount(double *, int *, double *, int *, int *, int *, int *);
 
 /* cpoly.c : */
 int F77_SYMBOL(cpoly)(double *opr, double *opi, int *degree,

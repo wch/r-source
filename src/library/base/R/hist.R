@@ -1,8 +1,8 @@
 hist <- function(x, ...) UseMethod("hist")
 
 hist.default <-
-    function (x, breaks, freq = NULL, probability = !freq, include.lowest = TRUE,
-	      col = NULL, border = par("fg"),
+    function (x, breaks, freq= NULL, probability = !freq, include.lowest= TRUE,
+	      right=TRUE, col = NULL, border = par("fg"),
 	      main = paste("Histogram of" , deparse(substitute(x))),
 	      xlim = range(breaks), ylim = range(y, 0),
 	      xlab = deparse(substitute(x)), ylab,
@@ -27,14 +27,17 @@ hist.default <-
 		    })
 	}
     nB <- length(breaks)
+    storage.mode(x) <- "double"
+    storage.mode(breaks) <- "double"
     counts <- .C("bincount",
-		 as.double(x),
+		 x,
 		 n,
-		 as.double(breaks),
+		 breaks,
 		 nB,
 		 counts = integer(nB - 1),
+                 right  = as.logical(right),
 		 include= as.logical(include.lowest),
-		 NAOK = FALSE) $counts
+		 NAOK = FALSE, DUP = FALSE) $counts
     if (any(counts < 0))
 	stop("negative `counts'. Internal Error in C-code for \"bincount\"")
     if (sum(counts) < n)
@@ -54,6 +57,8 @@ hist.default <-
     intensities <- counts/(n*h)
     mids <- 0.5 * (breaks[-1] + breaks[-nB])
     y <- if (freq) counts else intensities
+    r <- list(breaks = breaks, counts = counts,
+              intensities = intensities, mids = mids)
     if (plot) {
 	plot.new()
 	plot.window(xlim, ylim, "") #-> ylim's default from 'y'
@@ -72,7 +77,7 @@ hist.default <-
 	    text(mids, y,
 		 labels = if(freq) counts else round(intensities,3),
 		 adj = c(0.5, -0.5))
+        invisible(r)
     }
-    invisible(list(breaks = breaks, counts = counts,
-		   intensities = intensities, mids = mids))
+    else r
 }
