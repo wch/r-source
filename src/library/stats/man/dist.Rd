@@ -68,7 +68,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
       \emph{proportion} of bits in which only one is on amongst those in
       which at least one is on.}
 
-    \item{\code{minkowki}:}{The \eqn{p} norm, the \eqn{p}th root of the
+    \item{\code{minkowski}:}{The \eqn{p} norm, the \eqn{p}th root of the
       sum of the \eqn{p}th powers of the differences of the components.}
   }
 
@@ -112,7 +112,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
     and \code{upper} above, specifying how the object should be printed.}
   \item{call}{optionally, the \code{\link{call}} used to create the
     object.}
-  \item{method}{optionally, the distance method used; resulting form
+  \item{method}{optionally, the distance method used; resulting from
     \code{\link{dist}()}, the (\code{\link{match.arg}()}ed) \code{method}
     argument.}
 }
@@ -130,7 +130,7 @@ as.dist(m, diag = FALSE, upper = FALSE)
 }
 \seealso{
   \code{\link[cluster]{daisy}} in the \pkg{cluster} package with more
-  possibilities in the case of \emph{mixed} (contiuous / categorical)
+  possibilities in the case of \emph{mixed} (continuous / categorical)
   variables.
   \code{\link{hclust}}.
 }
