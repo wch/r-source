@@ -1,7 +1,7 @@
 # Subroutines for converting R documentation into text, HTML, LaTeX
 # and R (Examples) format
 
-# Copyright (C) 1997-2000 R Development Core Team
+# Copyright (C) 1997-2001 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -567,9 +567,9 @@ sub text2html {
 	$argkey =~ s/&lt;/</go;
 	$argkey =~ s/&gt;/>/go;
 	$htmlfile = $main::htmlindex{$argkey};
-	if($htmlfile){
+	if($htmlfile && !length($opt)){
 	    if($using_chm) {
-		if ($htmlfile =~ s+^$pkg/html/++) {
+		if ($htmlfile =~ s+^$pkgname/html/++) {
 		    # in the same chm file
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
@@ -692,9 +692,9 @@ sub code2html {
 	$argkey =~ s/&amp;/&/go;
 	$htmlfile = $main::htmlindex{$argkey};
 
-	if($htmlfile){
+	if($htmlfile && !length($opt)){
 	    if($using_chm) {
-		if ($htmlfile =~ s+^$pkg/html/++) {
+		if ($htmlfile =~ s+^$pkgname/html/++) {
 		    # in the same chm file
 		    $text =~
 			s/\\link(\[.*\])?$id.*$id/<a href=\"$htmlfile\">$arg<\/a>/s;
@@ -2283,8 +2283,8 @@ sub mklink {
        "style=\"text-decoration: underline; color: blue; cursor: hand\""
 }
 
-sub JScript{
-print $htmlout <<END
+sub JScript {
+    print $htmlout <<END
 <script Language="JScript">
 function findlink(pkg, fn) {
 var Y, link;

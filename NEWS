@@ -118,6 +118,9 @@ BUG FIXES
     o   edit.data.frame() was trying to set row.names on a list, which
 	is no longer allowed.
 
+    o	In the \link[pkg]{topic}, `pkg' was not being used if `topic'
+	was found in a package in .lib.loc.  Now `pkg' is always used.
+
 
 
 		CHANGES IN R VERSION 1.2.0
