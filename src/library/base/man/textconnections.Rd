@@ -44,7 +44,7 @@ textConnection(object, open = "r")
 }
 
 \seealso{
-  \code{\link{connection}}, \code{\link{showConnections}},
+  \code{\link{connections}}, \code{\link{showConnections}},
   \code{\link{pushBack}}
 }
 

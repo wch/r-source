@@ -59,7 +59,7 @@ writeBin(object, con, size = NA, endian = .Platform$endian)
   For \code{writeBin}, none.
 }
 \seealso{
-  \code{\link{connection}}, \code{\link{readLines}},
+  \code{\link{connections}}, \code{\link{readLines}},
   \code{\link{writeLines}}.
 
   \code{\link{.Machine}} for the sizes of \code{long}, \code{long long}

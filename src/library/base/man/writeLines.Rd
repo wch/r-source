@@ -22,7 +22,7 @@ writeLines(text, con = stdout(), sep = "\n")
   If it is not open, it is opened for the duration of the call and then
   closed again.
 }
-\seealso{\code{\link{connection}}, \code{\link{readLines}}, \code{\link{cat}}}
+\seealso{\code{\link{connections}}, \code{\link{readLines}}, \code{\link{cat}}}
 
 \keyword{file}
 \keyword{connection}

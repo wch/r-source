@@ -52,7 +52,7 @@ stderr()
 
   \code{getConnection} returns a connection object, or \code{NULL}.
 }
-\seealso{\code{\link{connection}}}
+\seealso{\code{\link{connections}}}
 
 \examples{
 showConnections(all = TRUE)

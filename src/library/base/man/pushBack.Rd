@@ -31,7 +31,7 @@ pushBackLength(connection)
 
   \code{pushBackLength} returns number of lines currently pushed back.
 }
-\seealso{\code{\link{connection}}, \code{\link{readLines}}.}
+\seealso{\code{\link{connections}}, \code{\link{readLines}}.}
 
 \examples{
 zz <- textConnection(LETTERS)
