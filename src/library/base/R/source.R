@@ -109,7 +109,10 @@ sys.source <-
     invisible()
 }
 
-demo <- function(topic, device = getOption("device")) {
+demo <- function(topic, device = getOption("device"),
+                 character.only = FALSE,
+                 interactively = interactive()) 
+{
     if (is.character(device)) device <- get(device)
     Topics <-cbind(graphics	= c("graphics", "graphics.R",	"G"),
 		   image	= c("graphics", "image.R",	"G"),
@@ -128,12 +131,13 @@ demo <- function(topic, device = getOption("device")) {
     dimnames(Topics)[[1]] <- c("dir", "file", "flag")
     topic.names <- dimnames(Topics)[[2]]
     demo.help <- function() {
-	cat("Use `demo(topic)' where choices for argument `topic' are:\n")
+	if(interactively)
+            cat("Use `demo(topic)' where choices for argument `topic' are:\n")
 	cbind(topics = topic.names)
     }
     if(missing(topic)) return(demo.help())
-    topic <- substitute(topic)
-    if (!is.character(topic)) topic <- deparse(topic)[1]
+    if(!character.only)
+        topic <- as.character(substitute(topic))
     i.top <- pmatch(topic, topic.names)
     if (is.na(i.top) || i.top == 0) {
 	cat("unimplemented `topic' in demo.\n")
@@ -141,10 +145,12 @@ demo <- function(topic, device = getOption("device")) {
 	stop()
     } else {
 	topic <- topic.names[i.top]
-	cat("\n\n\tdemo(",topic,")\n\t---- ",rep("~",nchar(topic)),
-	    "\n\nType  <Return>	 to start : ",sep="")
-	readline()
-	if(dev.cur()<=1 && Topics["flag",i.top] == "G")
+	cat("\n\n\tdemo(",topic,")\n\t---- ",rep("~",nchar(topic)),"\n",sep="")
+	if(interactively) {
+	    cat("\nType  <Return>	 to start : ")
+            readline()
+        }
+	if(dev.cur() <= 1 && Topics["flag",i.top] == "G")
 	    device()
 	source(file.path(R.home(),
 		     "demos",

@@ -103,6 +103,8 @@ NEW FEATURES
 
     o	New function col2rgb() for color conversion of names, hex, or integer.
 
+    o	demo() has new arguments, mainly to be run in "make check".
+
 
 BUG FIXES
 
