@@ -9,7 +9,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
            pointsize, \dots)
 }
 \arguments{
-  \item{file}{The putput file name, with an appropriate extension.}
+  \item{file}{The output file name, with an appropriate extension.}
   \item{type}{The type of bitmap. the default is \code{"png256"}.}
   \item{height}{The plot height, in inches.}
   \item{width}{The plot width, in inches.}
@@ -48,7 +48,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
   \code{"jpeggray"}, \code{"pdfwrite"}.
 }
 \value{
-    None.
+  None.
 }
 \author{B. D. Ripley}
 
