@@ -640,6 +640,7 @@ static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 	case LGLSXP:
 	case INTSXP:
 	case REALSXP:
+    case STRSXP:
 	    if (!nalast) for (i = 0; i < n; i++) isna[i] = !isna[i];
 	    for (t = 1; 4*t*t <= n; t += t);
 #define less(a, b) (isna[a] > isna[b] || (isna[a] == isna[b] && a > b))
