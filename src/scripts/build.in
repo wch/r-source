@@ -1,0 +1,180 @@
+#! @PERL@
+#-*- perl -*-
+
+use Cwd;
+use File::Basename;
+use File::Find;
+use Getopt::Long;
+use R::Dcf;
+use R::Utils;
+use R::Rd;
+#use strict;
+
+## don't buffer output
+$|=1;
+
+my $revision = ' $Revision: 1.1 $ ';
+my $version;
+my $name;
+$revision =~ / ([\d\.]*) /;
+$version = $1;
+($name = $0) =~ s|.*/||;
+
+$make = "@MAKE@";
+
+$opt_clean = $opt_examples = $opt_tests = $opt_latex = 1;
+my @knownoptions = ("help|h", "version|v", "nsize:s", "vsize:s");
+
+GetOptions (@knownoptions) || usage();
+
+R_version($name, $version) if $opt_version;
+usage() if $opt_help;
+
+my $startdir=getcwd();
+
+my $tmpdir = R_getenv("TMPDIR", "/tmp");
+my $R_HOME = $ENV{'R_HOME'} ||
+    die "Error: Environment variable R_HOME not found\n";
+
+my $R_opts = "--vanilla";
+$R_opts .= " --nsize=$opt_nsize" if $opt_nsize;
+$R_opts .= " --vsize=$opt_vsize" if $opt_vsize;
+
+## this is the main loop over all packages that shall be checked
+my $pkg;
+foreach $pkg (@ARGV){
+    my $is_bundle=0;
+    $pkg =~ s/\/$//;
+    my $pkgname = basename($pkg);
+    chdir($startdir);
+
+    my $log = new R::Logfile();
+
+    my $description;
+    $log->checking("for file \`$pkg/DESCRIPTION'");
+    if(-r "$pkg/DESCRIPTION"){
+	$description = new R::Dcf("$pkg/DESCRIPTION");
+	$log->result("OK");
+    }
+    else{
+	$log->result("NO");
+	exit(1);
+    }
+	
+    if($description->{"Contains"}){
+	$log->message("Looks like \`${pkg}' is a package bundle");
+	$is_bundle=1;
+	my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	my $ppkg="";
+	foreach $ppkg (@bundlepkgs){
+	    $log->message("preparing \`$ppkg' in bundle \`$pkg':");
+	    $log->setstars("**");
+	    chdir($startdir);
+	    prepare_pkg("$pkg/$ppkg", $is_bundle, $description, $log);
+	    $log->setstars("*");
+	}
+    }
+    else{
+	$is_bundle=0;
+	chdir($startdir);
+	$log->message("preparing \`$pkg':");
+	prepare_pkg("$pkg", $is_bundle, $description, $log);
+    }
+
+    chdir($startdir);
+    $exclude = "$tmpdir/Rbuild.$$";
+    open exclude, "> $exclude" ||
+	die "Cannot write to \`$exlude'\n";
+    find(\&findExcludeFiles, "$pkg");
+    close exclude;
+    
+    my $filename = "${pkg}_" . $description->{"Version"} . ".tar";
+    $log->message("building \`$filename.gz'");
+    system("tar -c -h -X $exclude -f $filename $pkg");
+    unlink("$filename.gz") if (-f "$filename.gz");
+    system("gzip -9 $filename");
+    unlink($exclude);
+
+    $log->close();
+    print("\n");
+}
+
+    
+sub findExcludeFiles {
+
+    print exclude "$File::Find::name\n" if (-d $_ && /^check$/);
+    print exclude "$File::Find::name\n" if (-d $_ && /[Oo]ld$/);
+    print exclude "$File::Find::name\n" if /^GNUMakefile$/;
+    print exclude "$File::Find::name\n" if /^CVS$/;
+    print exclude "$File::Find::name\n" if /\~$/;
+}
+    
+	
+
+
+#**********************************************************
+
+sub prepare_pkg {
+
+    my ($pkg, $in_bundle, $description, $log) = @_;
+
+    chdir($pkg);
+    my $pkgdir = getcwd();
+    if(-d "src"){
+	chdir("src");
+	$log->message("cleaning src");
+	if(-r "Makefile"){
+	    system("$make clean");
+	}
+	else{
+	    my $file;
+	    foreach $file (<*.o *s[lo]>){
+		unlink($file);
+	    }
+	}
+    }
+    chdir($pkgdir);
+    if(-x "./cleanup"){
+	$log->message("running cleanup");
+	system("./cleanup");
+    }
+
+    find(\&deleteJunkFiles, $pkgdir);
+
+    ### !!! Missing: check & rebuild various indices !!!
+
+    1;
+}
+
+sub deleteJunkFiles {
+    unlink($_) if /^(\.Rdata|\.Rhistory)$/;
+}
+
+#**********************************************************
+
+sub usage {
+    print STDERR <<END;
+Usage: $name [options] pkgdirs
+
+Build R packages from package sources in the directories specified by
+pkgdirs. 
+
+If necessary for creating .Rout.save files (for regression testing),
+use the \`--vsize' and \`--nsize' options to increase R's memory
+(\`--vanilla' is used by default).
+
+Options:
+  -h, --help		print short help message and exit
+  -v, --version		print version info and exit
+
+  --vsize=N		set R's vector heap size to N bytes
+  --nsize=N		set R's number of cons cells to N
+
+Email bug reports to <r-bugs\@lists.r-project.org>.
+END
+    exit 0;
+}
+
+
+
+
