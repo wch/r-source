@@ -100,17 +100,26 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         if(!force && (length(oldtop)==1) && top == oldtop) return(TRUE)
         olddoc <- paste(oldtop, "/doc", sep="")
         oldbase <- paste(oldtop, "/library/base", sep="")
+        oldutils <- paste(oldtop, "/library/utils", sep="")
+        oldgraphics <- paste(oldtop, "/library/graphics", sep="")
+        oldstats <- paste(oldtop, "/library/stats", sep="")
     } else {
         olddoc <- "../../../doc"
         oldbase <- "../../base"
+        oldutils <- "../../utils"
+        oldgraphics <- "../../graphics"
+        oldstats <- "../../stats"
     }
     if(!file.create(fixedfile)) return(FALSE)
     cat(top, "\n", sep="", file=fixedfile)
     htmldir <- file.path(pkg, "html")
     if(!file.exists(htmldir)) return(FALSE)
-    files <- list.files(htmldir, pattern = "\.html$", full.names = TRUE)
+    files <- list.files(htmldir, pattern = "\\.html$", full.names = TRUE)
     doc <- paste(top, "/doc", sep="")
     base <- paste(top, "/library/base", sep="")
+    utils <- paste(top, "/library/utils", sep="")
+    graphics <- paste(top, "/library/graphics", sep="")
+    stats <- paste(top, "/library/stats", sep="")
     for(f in files) {
         page <- readLines(f)
         try(out <- file(f, open = "w"))
@@ -120,6 +129,9 @@ fixup.package.URLs <- function(pkg, force = FALSE)
         }
         page <- gsub(olddoc, doc, page)
         page <- gsub(oldbase, base, page)
+        page <- gsub(oldutils, utils, page)
+        page <- gsub(oldgraphics, graphics, page)
+        page <- gsub(oldstats, stats, page)
         writeLines(page, out)
         close(out)
     }

@@ -30,13 +30,14 @@ fixup.libraries.URLs(lib.loc = .libPaths())
     present?}
 }
 \details{
-  Cross-library links do not work on this
-  platform. \code{fixup.package.URLs} attempts to correct links in the
-  named package to the \code{doc} directory (usually to icons) and to
-  the base library, and then stamps a file \file{fixedHTMLlinks} in the
-  package directory.  If that file is found, no correction is attempted
-  unless \code{force = TRUE} or the \R installation directory (recorded
-  in the stamp) has been changed.
+  Cross-library links do not work on this platform.
+  \code{fixup.package.URLs} attempts to correct links in the
+  named package to the \code{doc} directory (usually to icons) and to the
+  \code{base}, \code{utils}, \code{graphics} and \code{stats} packages,
+  and then stamps a file \file{fixedHTMLlinks} in the package directory.
+  If that file is found, no correction is attempted unless \code{force =
+    TRUE} or the \R installation directory (recorded in the stamp) has been
+  changed.
 
   \code{fixup.libraries.URLs} calls \code{fixup.package.URLs} on all
   packages in current library trees except the standard one.
@@ -52,7 +53,9 @@ fixup.libraries.URLs(lib.loc = .libPaths())
   \file{R\_HOME\\doc\\html\\search\\index.txt} are (re-)created by
   \code{make.packages.html} and \code{make.search.html} respectively.
 }
-\note{You will need write permission in the \file{R\_HOME\\doc\\html}
+\note{
+  You will need write permission in the \file{R\_HOME\\doc\\html}
   directory to use any of the first three functions, and in the
-  appropriate library trees to use the last two.}
+  appropriate library trees to use the last two.
+}
 \keyword{utilities}
