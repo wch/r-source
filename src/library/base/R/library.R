@@ -28,13 +28,14 @@ function(package, help, lib.loc = NULL, character.only = FALSE,
                         call. = FALSE)
             }
             if(.Platform$OS.type == "unix") {
-                platform <- builtFields[2]
-                ## allow for small mismatches, e.g. OS version number.
-                m <- agrep(platform, R.version$platform)
-                if(!length(m))
-                    stop(paste("package", fields[1, "Package"],
-                               "was built for", platform),
-                         call. = FALSE)
+                if(!is.na(platform <- builtFields[2])) {
+                    ## allow for small mismatches, e.g. OS version number.
+                    m <- agrep(platform, R.version$platform)
+                    if(!length(m))
+                        stop(paste("package", fields[1, "Package"],
+                                   "was built for", platform),
+                             call. = FALSE)
+		}
             }
         }
         else
