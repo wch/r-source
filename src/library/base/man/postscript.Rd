@@ -2,7 +2,7 @@
 \title{PostScript Graphics}
 \synopsis{
 postscript(file = ifelse(onefile, "Rplots.ps", "Rplot\%03d.ps"),
-           onefile = TRUE, \dots)
+           onefile = TRUE, family, \dots)
 ps.options(\dots, reset = FALSE, override.check = FALSE)
 }
 \usage{
