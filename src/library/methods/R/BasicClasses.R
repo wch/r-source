@@ -78,19 +78,12 @@
     setClass("OptionalFunction", sealed = TRUE, where = envir)
     setIs("function", "OptionalFunction", where = envir)
     setIs("NULL", "OptionalFunction")
-    
-    ## some heuristics to find known old-style classes by looking for plausible
-    ## method names (!)  We can't guarantee anything about this list, but it's used
-    ## to avoid annoying warning message from matchSignature
-    oldClasses <-  unique(c(
-           substring(objects("package:base", pat = "^plot[.]"), 6),
-           substring(objects("package:base", pat = "^summary[.]"), 9),
-           substring(objects("package:base", pat = "^predict[.]"), 9),
-           substring(objects("package:base", pat = "^Ops[.]"), 5),
-           substring(objects("package:base", pat = "^print[.]"), 7)))
-    ## there are no known old classes with >1 dot in the name??
-    oldClasses <- oldClasses[-grep("[.].*[.]", clList)]
-    assign(".BasicClasses", c(clList, oldClasses), envir)
+    assign(".BasicClasses", clList, envir)
+    ## call setOldClass on some known old-style classes.  Ideally this would be done
+    ## in the code that uses the classes, but that code doesn't know about the methods
+    ## package.
+    for(cl in .OldClassesList)
+        setOldClass(cl, envir)
     ## restore the true definition of the hidden functions
     assign("reconcilePropertiesAndPrototype", real.reconcileP, envir)
 }
@@ -146,3 +139,33 @@
                   }
               })
 }
+
+## .OldClassList is a purely heuristic list of known old-style classes, with emphasis
+## on old-style class inheritiance.  Used in .InitBasicClasses to call setOldClass for
+## each known class pattern.
+.OldClassesList <-
+    list(
+         c("anova", "data.frame"),
+         c("mlm", "lm"),
+         c("POSIXt", "POSIXct"),
+         "dump.frames",
+         c("ordered", "factor"),
+         c("glm.null", "glm", "lm"),
+         c("anova.glm.null", "anova.glm"),
+         "hsearch",
+         "integrate",
+         "packageInfo",
+         "libraryIQR",
+         "packageIQR",
+         "mtable",
+         "table",
+         "summary.table",
+         "mts", ## ts is done like matrix, array--is that reasonable?
+         "recordedplot",
+         "socket",
+         "packageIQR",
+         "density",
+         "formula",
+         "logLik",
+         "rle"
+)
