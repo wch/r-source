@@ -252,11 +252,11 @@ getAllMethods <-
       funs <- c(fdef, groups)
       changed <- FALSE
       for(fun in rev(funs)) {
-          fun <- getGeneric(fun)
+          fun <- getGeneric(fun, where = where)
           if(is.null(fun))
               next # but really an error?
           genericLabel <- if(primCase && !identical(fun, fdef)) f else character()
-          libs = .findAll(mlistMetaName(fun@generic), .genericEnv(fun))
+          libs = .findAll(mlistMetaName(fun@generic), where)
           for(mwhere in rev(libs)) {
               mw <- getMethodsMetaData(fun, mwhere)
               methods <- mergeMethods(methods, mw, genericLabel)
@@ -494,7 +494,7 @@ assignMethodsMetaData <-
     if(is.primitive(deflt))
         setPrimitiveMethods(f, deflt, "reset", fdef, NULL)
     if(is(fdef, "groupGenericFunction")) # reset or turn on members of group
-        cacheGenericsMetaData(f, fdef, package = fdef@package)
+        cacheGenericsMetaData(f, fdef, where = where, package = fdef@package)
   }
 
 mlistMetaName <-
