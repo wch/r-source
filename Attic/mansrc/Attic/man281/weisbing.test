@@ -1,8 +1,0 @@
-TITLE(weisbing.test @@ Weisberg-Bingham Test)
-USAGE(
-weisbing.test(x)
-)
-DESCRIPTION(
-Calculates the value of the Weisberg-Bingham test statistic for the data
-in the vector LANG(x).
-)

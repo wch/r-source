@@ -1,5 +1,0 @@
-awk '
-BEGIN	{printed=0}
-/^$/	{if(!printed) print; printed=1}
-/^..*$/	{print $0; printed=0}
-'

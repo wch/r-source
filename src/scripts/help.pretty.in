@@ -1,9 +1,0 @@
-#! @PERL@
-
-undef $/;
-
-$_ = <>;
-s/\n*$/\n\n/s;               # remove all trailing blank lines
-s/\n\s*\n\s*\n/\n\n/sg;    # convert two blank lines into one
-print;
-
