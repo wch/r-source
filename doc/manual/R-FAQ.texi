@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-32, 2000-11-30
+@set FAQ-VERSION 1.1-33, 2000-12-08
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -409,7 +409,7 @@ See the @uref{http://www.stats.ox.ac.uk/pub/R/rw-FAQ.html, R Windows
 
 A binhexed self-extracting archive containing a pre-alpha port of R
 1.1.1 for MacOS has recently been made available by
-@email{stefano.iacus@@unimi.it at, Stefano Iacus} at
+@email{stefano.iacus@@unimi.it, Stefano Iacus} at
 @uref{http://www.eco-dip.unimi.it/R/}.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
@@ -1522,6 +1522,8 @@ including stabilized test procedures by Laeuter et.@: al.
 @item multiv
 Functions for hierarchical clustering, partitioning, bond energy
 algorithm, Sammon mapping, PCA and correspondence analysis.
+@item mvtnorm
+Multivariate normal and t distributions.
 @item nlme
 Fit and compare Gaussian linear and nonlinear mixed-effects models.
 @item nnet
@@ -1649,8 +1651,6 @@ Interface to the @acronym{NCSA} HDF5 library.
 @item multidim
 Code for correspondence analysis and other multidimensional descriptive
 statistics.
-@item mvtnorm
-Multivariate normal and t distributions.
 @item netCDF
 Read data from netCDF files.
 @item npConfRatio

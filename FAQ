@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-32, 2000-11-30
+Version 1.1-33, 2000-12-08
 Kurt Hornik
 
 
@@ -332,7 +332,7 @@ more details.
 
    A binhexed self-extracting archive containing a pre-alpha port of R
 1.1.1 for MacOS has recently been made available by Stefano Iacus
-<stefano.iacus@unimi.it at> at `http://www.eco-dip.unimi.it/R/'.
+<stefano.iacus@unimi.it> at `http://www.eco-dip.unimi.it/R/'.
 
 2.6 Are there Unix binaries for R?
 ==================================
@@ -1259,6 +1259,9 @@ works, was published in the Journal of Statistical Software
      Functions for hierarchical clustering, partitioning, bond energy
      algorithm, Sammon mapping, PCA and correspondence analysis.
 
+*mvtnorm*
+     Multivariate normal and t distributions.
+
 *nlme*
      Fit and compare Gaussian linear and nonlinear mixed-effects models.
 
@@ -1411,9 +1414,6 @@ these a try, of course.  This area of CRAN currently contains
 *multidim*
      Code for correspondence analysis and other multidimensional descriptive
      statistics.
-
-*mvtnorm*
-     Multivariate normal and t distributions.
 
 *netCDF*
      Read data from netCDF files.
