@@ -1,3 +1,4 @@
+## called by var(.):
 cov <- function (x, y=NULL, use="all.obs")
 {
     na.method <- pmatch(use, c("all.obs", "complete.obs",
