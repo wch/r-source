@@ -204,7 +204,7 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
 new.packages <- function(lib.loc = NULL, repos = CRAN,
                          contriburl = contrib.url(repos),
                          CRAN = getOption("repos"),
-                         method, available = NULL)
+                         method, available = NULL, ask = FALSE)
 {
     if(is.null(lib.loc)) lib.loc <- .libPaths()
 
@@ -223,6 +223,7 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
     if(any(ok)) { # we have at least one bundle installed
         for(b in unique(instp[ok, "Bundle"]))
             if(!is.na(b)) {
+                if(! b %in% rownames(available)) next
                 ok1 <- which(instp[, "Bundle"] == b)
                 contains <- instp[ok1[1], "Contains"]
                 if(!is.na(contains)) {
@@ -241,7 +242,27 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
     instp[ok, "Package"] <- instp[ok, "Bundle"]
     installed <- unique(instp[, "Package"])
     poss <- sort(unique(available[ ,"Package"])) # sort in local locale
-    setdiff(poss, installed)
+    res <- setdiff(poss, installed)
+    update <- character(0)
+    if(is.character(ask) && ask == "graphics") {
+        if(.Platform$OS.type == "unix"
+           && capabilities("tcltk") && capabilities("X11")) {
+            k <- tcltk::tk_select.list(res, multiple = TRUE,
+                                       title = "New packages to be installed")
+            update <- res[match(k, res)]
+        } else if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
+            k <- select.list(res, multiple = TRUE,
+                             title = "New packages to be installed")
+            update <- res[match(k, res)]
+        }
+    } else if(is.logical(ask) && ask)
+        update <- res[match(select.list(res, multiple = TRUE,
+                                        title = "New packages to be installed")
+                            , res)]
+    if(length(update))
+        install.packages(update, lib = lib.loc[1], repos = repos,
+                         method = method, available = available)
+    res
 }
 
 installed.packages <- function(lib.loc = NULL, priority = NULL)

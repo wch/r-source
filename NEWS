@@ -579,7 +579,7 @@ PACKAGE INSTALLATION CHANGES
 
     o	New function new.packages() to report uninstalled packages
 	available at the requested repositories.  This also reports
-	incomplete bundles.
+	incomplete bundles.  It will optionally install new packages.
 
     o	New function available.packages(), similar to CRAN.packages()
 	but for use with multiple repositories.	 Both now only report
