@@ -1292,25 +1292,21 @@ static void newX11_Clip(double x0, double x1, double y0, double y1,
     newX11Desc *xd = (newX11Desc *) dd->deviceSpecific;
 
     if (x0 < x1) {
-	xd->clip.x = dd->clipLeft = (int) x0 ;
+	xd->clip.x = (int) x0 ;
 	xd->clip.width = (int) x1 - (int) x0 + 1;
-	dd->clipRight = dd->clipLeft + xd->clip.width;
     }
     else {
-	xd->clip.x = dd->clipLeft = (int) x1;
+	xd->clip.x = (int) x1;
 	xd->clip.width = (int) x0 - (int) x1 + 1;
-	dd->clipRight = dd->clipLeft + xd->clip.width;
     }
 
     if (y0 < y1) {
-	xd->clip.y = dd->clipBottom = (int) y0;
+	xd->clip.y = (int) y0;
 	xd->clip.height = (int) y1 -  (int) y0 + 1;
-	dd->clipTop = dd->clipBottom + xd->clip.height;
     }
     else {
-	xd->clip.y = dd->clipBottom = (int) y1;
+	xd->clip.y = (int) y1;
 	xd->clip.height = (int) y0 - (int) y1 + 1;
-	dd->clipTop = dd->clipBottom + xd->clip.height;
     }
 
     XSetClipRectangles(display, xd->wgc, 0, 0, &(xd->clip), 1, Unsorted);
