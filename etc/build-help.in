@@ -5,27 +5,30 @@
 # Usage:  build-help [--rhome dir] [--html] [--nroff] [--latex] [pkg] [lib]
 # Install all html help files for package pkg to library lib
 # (defaults are `${RHOME}/src/library/base' and the default library,
-# `${RHOME}/library', respectively). 
+# `${RHOME}/library', respectively).
 
 use File::Basename;
 use Cwd;
 use Getopt::Long;
 
-@knownoptions = ("rhome:s", "html", "nroff", "latex");
+@knownoptions = ("rhome:s", "html", "nroff", "latex", "debug");
 GetOptions (@knownoptions) || usage();
 
 $cwd=getcwd();
 if($opt_rhome){
     $RHOME=$opt_rhome;
+    print STDERR "RHOME from --rhome: '$RHOME'\n" if $opt_debug;
 }
 elsif($ENV{"RHOME"}){
     $RHOME=$ENV{"RHOME"};
+    print STDERR "RHOME from ENV: '$RHOME'\n" if $opt_debug;
 }
 else{
     chdir(dirname($0) . "/..");
     $RHOME=getcwd();
 }
 chdir($cwd);
+print STDERR "Current directory (cwd): '$cwd'\n" if $opt_debug;
 
 require "$RHOME/etc/Rdconvlib.pl";
 require "$RHOME/etc/buildlib.pl";
@@ -39,12 +42,16 @@ if(!$opt_html && !$opt_nroff && !$opt_latex){
 
 ($pkg, $lib, @mandir) = buildinit();
 $dest = "$lib/$pkg";
+print STDERR "Destination 'dest'= '$dest'\n" if $opt_debug;
 
 # if building help or html pages we have to create the corresponding
 # directories and build some indices
 
 if($opt_html || $opt_nroff){
     build_index();
+}
+if($opt_latex){
+  mkdir "$dest/latex", $dir_mod || die "Could not create $dest/latex: $!\n";
 }
 
 print " >>> Building help pages for package `$pkg'\n";
@@ -53,16 +60,16 @@ print "nroff " if $opt_nroff;
 print "html " if $opt_html;
 print "latex " if $opt_latex;
 print "\n";
-    
+
 if($opt_html){
     %htmlindex = read_htmlindex($lib);
 }
 
-if($opt_latex){
-    $destfile="$RHOME/doc/manual/pkg-$pkg.tex";
-    open(latexout, "> $destfile") or die "Cannot write to $destfile!\n";
-}
-	
+# if($opt_latex){
+#     $destfile="$RHOME/doc/manual/pkg-$pkg.tex";
+#     open(latexout, "> $destfile") or die "Cannot write to $destfile!\n";
+# }
+#
 
 foreach $manfile (@mandir) {
     if($manfile =~ /\.Rd$/){
@@ -72,62 +79,61 @@ foreach $manfile (@mandir) {
 	if($opt_nroff){
 	    $destfile = "$dest/help/$manfilebase";
 	    open(nroffout,"|nroff -ms 2> /dev/null | ${RHOME}/etc/help.pretty >$destfile");
-	    Rdconv($manfile, "nroff", "");
+	    Rdconv($manfile, "nroff", "");# maybe $opt_debug
 	    close(nroffout);
 	}
 
 	if($opt_html){
 	    $destfile = "$dest/html/$manfilebase.html";
 	    open(htmlout,">$destfile");
-	    Rdconv($manfile, "html", "");
+	    Rdconv($manfile, "html", "");# maybe $opt_debug
 	    close(htmlout);
 	}
 
 	if($opt_latex){
-	    Rdconv($manfile, "latex", "");
+	    $destfile = "$dest/latex/$manfilebase.tex";
+	    open(latexout,">$destfile");
+	    Rdconv($manfile, "latex", "");# maybe $opt_debug
+	    close(latexout);
 	}
     }
 }
 
-if($opt_latex){
-    close latexout;
-}
+# if($opt_latex){
+#     close latexout;
+# }
 
 
 sub build_index {
 
     if(! -d $lib){
-	system("mkdir $lib");
-	die("Cannot create $lib\n") unless (-d "$lib");
+        mkdir "$lib", $dir_mod || die "Could not create directory $lib: $!\n";
     }
-    
-    if(! -d "$dest"){    
-	system("mkdir $dest");
-	die("Cannot create $dest\n") unless (-d "$dest");
+
+    if(! -d "$dest"){
+        mkdir "$dest", $dir_mod || die "Could not create directory $dest: $!\n";
     }
-    
+
     system("/bin/cp ../TITLE $dest/TITLE");
     open title, "<../TITLE";
     $title = <title>;
     close title;
     $title =~ s/^\S*\s*(.*)/$1/;
-    
-    system("mkdir $dest/help");
-    die("Cannot create $dest/help\n") unless (-d "$dest/help");
-    system("mkdir $dest/html");
-    die("Cannot create $dest/html\n") unless (-d "$dest/html");
-    
+
+    mkdir "$dest/help", $dir_mod || die "Could not create $dest/help: $!\n";
+    mkdir "$dest/html", $dir_mod || die "Could not create $dest/html: $!\n";
+
     $anindex = "$lib/$pkg/help/AnIndex";
     open(anindex, ">${anindex}.in");
-    
+
     foreach $manfile (@mandir) {
 	if($manfile =~ /\.Rd$/){
 	    $manfilebase = basename($manfile, ".Rd");
-	    
+
 	    if(!($pkg =~ /^base$/)){
 		print anindex "$manfilebase\t$manfilebase\n";
 	    }
-	    
+
 	open(aliases, "grep '^\\\\alias' $manfile |");
 	    while(<aliases>){
 		/\\alias\{(.*)\}/;
@@ -138,7 +144,7 @@ sub build_index {
 	    close aliases;
 	}
     }
-    
+
     close anindex;
 
     system("sort -f -d ${anindex}.in | uniq > ${anindex}");
@@ -158,9 +164,9 @@ sub build_index {
     print htmlfile "<HR ALIGN=middle>\n";
     print htmlfile "<CENTER><TABLE>\n";
     print htmlfile "<TR ALIGN=LEFT>\n";
-    
+
     $k = 0;
-    
+
     while(<anindex>){
 	($alias, $file) = split;
 	print htmlfile "<TD><A HREF=\"$file.html\">$alias</A>\n";
@@ -170,13 +176,13 @@ sub build_index {
 	    $k=0;
 	}
     }
-    
+
     print htmlfile "</TABLE></CENTER>\n";
     print htmlfile "</BODY>\n";
-    
+
     close htmlfile;
     close anindex;
-    
+
 
     build_htmlpkglist($lib);
 }
