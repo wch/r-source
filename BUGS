@@ -469,3 +469,11 @@ Date: Fri, 22 Mar 2002 08:00:13 +0000 (GMT)
 Subject: rare bad bug in sys.function() {or match.arg()}
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Fri, 22 Mar 2002 20:41:52 +0100
+* PR# 1410 *
+Subject: A  WinXP patch
+From: "markieboy13a" <markieboy13a@hotmail.com>
+Date: 23 Mar 2002 02:17:38 +0100
+* PR# 1411 *
+Subject: [±¤°?] ?? ?º ?? ¶? ?? ?²
+From: ??º? <happypeople@kornet.net>
+Date: Sat, 23 Mar 2002 15:53:08 +0900
