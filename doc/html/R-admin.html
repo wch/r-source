@@ -14,7 +14,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-<p>The current version of this document is 1.4.0 (2001-11-29).
+<p>The current version of this document is 1.4.0 (2001-12-07).
 
 </ul>
 
@@ -414,6 +414,16 @@ downloads the list of available packages and their current versions,
 compares it with those installed and offers to fetch and install any
 that have later versions on <small>CRAN</small>.
 
+<p>An alternative way of keeping packages up-to-date is provided by the
+command <code>packageStatus()</code>, which returns an object with information
+on all installed packages and packages available at multiple
+repositories (CRAN, local archive, <small>...</small>). The <code>print</code> and
+<code>summary</code> methods give an overview of installed and available
+packages, the <code>upgrade</code> method offers to fetch and install outdated
+packages.  This allows R to fetch packages from several repositories and
+keep in sync with all of them, instead of only one CRAN mirror, and is
+intended to become the default package manager for future versions of R.
+
 <a name="Removing%20packages"></a>
 
 <h2>5.3 Removing packages</h2>
@@ -736,49 +746,53 @@ structures are passed.
 
 <h2>B.6 Building the <small>GNOME</small> interface</h2>
 
-<p>This interface is experimental, incomplete and not currently being
-developed.  It provides a console and a graphics device <code>(gtk()</code>;
-the <code>x11()</code> device can also be used).  Many of the `features' of
-the console are currently stubs.
+<p>This interface is experimental and incomplete.  It provides a console
+and two graphics devices named <code>gtk()</code> and <code>gnome()</code>.  The
+console offers a basic command line editing and history mechanism, along
+with tool and button bars that give a point-and-click interface to some
+R commands.  Many of the features of the console are currently
+stubs. The <code>gtk()</code> graphics device is a port of the <code>x11()</code>
+device to <small>GDK</small> (the GIMP Drawing Kit). The <code>gnome()</code>
+device uses the <small>GNOME</small> canvas.
 
-<p>The <small>GNOME</small> interface for R will only be built if you specify
-it by running configure with the <code>--with-gnome</code> option.  For
-example, you might run
+<p>Due to its experimental nature, the <small>GNOME</small> interface for R
+will not be built automatically.  You must specify it by running
+configure with the <code>--with-gnome</code> option.  For example, you might
+run
 
 <pre>./configure --with-gnome
 </pre>
 
-<p>but please check you have all the requirements first.  It is advisable
-to have reasonably-up-to-date versions of the <code>gnome</code> and
-<code>gtk+</code> libraries.  You can find the versions you have by
+<p>but please check you have all the requirements first. The
+<small>GNOME</small> interface for R is currently being developed under
+<small>GNOME</small> 1.4, and is not guaranteed to work with previous
+versions.  You therefore need at least the following libraries installed
 
-<pre>gnome-config --version
-gtk-config --version
+<pre>audiofile-0.2.1
+esound-0.2.23
+glib-1.2.10
+gtk+-1.2.10
+imlib-1.9.10
+ORBit-0.5.12
+gnome-libs-1.4.1.2
+libxml-1.8.16
+libglade-0.17
 </pre>
 
-<p>We know 1.0.10 and 1.2.3 suffice.  On Red Hat systems, you need the
-following RPMs and their dependencies installed:
+<p>It is preferable to have a complete installation of the <small>GNOME</small>
+desktop environment.  If you use Linux, then this should be provided
+with your distribution.  In addition, packaged binary distributions of
+GNOME are available from <a href="http://www.ximian.com">http://www.ximian.com</a> for the most
+popular Linux distributions and for Solaris.
 
-<pre>gnome-libs
-gnome-libs-devel
-gtk+
-gtk+-devel
-glib
-glib-devel
-</pre>
+<p>Remember that some package management systems (such as <small>RPM</small> and
+deb) make a distinction between the user version of a package and the
+developer version. The latter usually has the same name but with the
+extension "-devel". If you use a pre-packaged version of <small>GNOME</small>
+then you must have the developer versions of the above packages in order
+to compile the R-GNOME interface.
 
-<p>You will need also <code>libglade</code> 0.5 or later for correct behaviour. 
-For more information on <code>libglade</code> and to download the source, see
-<a href="http://www.daa.com.au/~james/gnome/">http://www.daa.com.au/~james/gnome/</a>.  The sources are also
-available from the <small>GNOME</small> ftp site (<a href="ftp://ftp.gnome.org/">ftp://ftp.gnome.org/</a>
-and mirrors).  RPMs are in RedHat 6.1 and later.
-
-<p>Library <code>libglade</code> needs <code>libxml</code> 1.4 or later, the source for
-which is available from the <small>GNOME</small> ftp site
-(<a href="ftp://ftp.gnome.org/">ftp://ftp.gnome.org/</a> and mirrors).
-
-<p>The locations of some of these libraries can be set as configuration
-options, by (defaults in brackets)
+<p>The full list of <small>GNOME</small> options to configure is
 
 <dl>
 <dt><code>--with-gnome</code>
