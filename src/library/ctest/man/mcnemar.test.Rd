@@ -1,9 +1,9 @@
 \name{mcnemar.test}
 \alias{mcnemar.test}
-\title{McNemar's Chi-square Test for Count Data}
+\title{McNemar's Chi-squared Test for Count Data}
 \description{
-  Performs McNemar's chi-square test for symmetry of rows and columns in
-  a two-dimensional contingency table.
+  Performs McNemar's chi-squared test for symmetry of rows and columns
+  in a two-dimensional contingency table.
 }
 \usage{
 mcnemar.test(x, y = NULL, correct = TRUE)

@@ -1,8 +1,8 @@
 \name{mantelhaen.test}
 \alias{mantelhaen.test}
-\title{Cochran-Mantel-Haenszel Chi-Square Test for Count Data}
+\title{Cochran-Mantel-Haenszel Chi-Squared Test for Count Data}
 \description{
-  Performs a Cochran-Mantel-Haenszel chi-square test of the null that
+  Performs a Cochran-Mantel-Haenszel chi-squared test of the null that
   two nominal variables are conditionally independent in each stratum,
   assuming that there is no three-way interaction.
 }
@@ -39,7 +39,7 @@ mantelhaen.test(x, y = NULL, z = NULL,
   A list with class \code{"htest"} containing the following components:
   \item{statistic}{Only present if no exact test is performed.  In the
     classical case of a 2 by 2 by \eqn{K} table (i.e., of dichotomous
-    underlying variables), the Mantel-Haenszel chi-square statistic;
+    underlying variables), the Mantel-Haenszel chi-squared statistic;
     otherwise, the generalized Cochran-Mantel-Haenszel statistic.}
   \item{parameter}{the degrees of freedom of the approximate chi-square
     distribution of the test statistic (\eqn{1} in the classical case).

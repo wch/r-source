@@ -33,7 +33,7 @@ friedman.test(y, groups, blocks)
 }
 \value{
   A list with class \code{"htest"} containing the following components:
-  \item{statistic}{the value of Friedman's chi-square statistic.}
+  \item{statistic}{the value of Friedman's chi-squared statistic.}
   \item{parameter}{the degrees of freedom of the approximate
     chi-square distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}

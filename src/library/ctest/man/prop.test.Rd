@@ -70,7 +70,7 @@ prop.test(x, n = NULL, p = NULL,
 \value{
   A list with class \code{"htest"} containing the following
   components:
-  \item{statistic}{the value of Pearson's chi-square test statistic.}
+  \item{statistic}{the value of Pearson's chi-squared test statistic.}
   \item{parameter}{the degrees of freedom of the approximate
     chi-square distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}

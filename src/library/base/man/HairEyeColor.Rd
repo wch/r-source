@@ -18,7 +18,7 @@
 }
 \details{
   This data set is useful for illustrating various techniques for the
-  analysis of contingency tables, such as the standard chi-square test
+  analysis of contingency tables, such as the standard chi-squared test
   or, more generally, log-linear modelling, and graphical methods such
   as mosaic plots, sieve diagrams or association plots.
 }

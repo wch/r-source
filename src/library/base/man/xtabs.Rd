@@ -38,13 +38,13 @@ summary.xtabs(object, \dots)
   \item{drop.unused.levels}{a logical indicating whether to drop unused
     levels in the classifying factors.  If this is \code{FALSE} and
     there are unused levels, the table will contain zero marginals, and
-    a subsequent chi-square test for independence of the factors will
+    a subsequent chi-squared test for independence of the factors will
     not work.}
 }
 \details{
   There is a \code{summary} method for contingency table objects created
   by \code{xtabs}, which currently gives basic information and performs
-  a chi-square test for independence of factors (note that the function
+  a chi-squared test for independence of factors (note that the function
   \code{\link[ctest]{chisq.test}} in package \bold{ctest} currently only
   handles 2-d tables).
 }

@@ -1,6 +1,6 @@
 \name{chisq.test}
 \alias{chisq.test}
-\title{Pearson's Chi-square Test for Count Data}
+\title{Pearson's Chi-squared Test for Count Data}
 \usage{
 chisq.test(x, y = NULL, correct = TRUE,
            p = rep(1/length(x), length(x)),
@@ -18,7 +18,7 @@ chisq.test(x, y = NULL, correct = TRUE,
 	Monte Carlo simulation.}
 }
 \description{
-    \code{chisq.test} performs chi-square tests on contingency tables.
+    \code{chisq.test} performs chi-squared tests on contingency tables.
 }
 \details{
     If \code{x} is a matrix with one row or column, or if \code{x} is a
@@ -33,7 +33,7 @@ chisq.test(x, y = NULL, correct = TRUE,
     must be vectors or factors of the same length; incomplete cases are
     removed, the objects are coerced into factor objects, and the
     contingency table is computed from these.  Then, Pearson's
-    chi-square test of the null that the joint distribution of the cell
+    chi-squared test of the null that the joint distribution of the cell
     counts in a 2-dimensional contingency table is the product of the row
     and column marginals is performed.  If \code{simulate.p.value} is
     \code{FALSE}, the p-value is computed from the asymptotic chi-square
@@ -47,7 +47,7 @@ chisq.test(x, y = NULL, correct = TRUE,
 \value{
     A list with class \code{"htest"} containing the following
     components:
-    \item{statistic}{the value the chi-square test statistic.}
+    \item{statistic}{the value the chi-squared test statistic.}
     \item{parameter}{the degrees of freedom of the approximate
 	chi-square distribution of the test statistic, \code{NA} if the
 	p-value is computed by Monte Carlo simulation.}

@@ -67,7 +67,7 @@ loglin(table, margin, start = rep(1, length(table)), fit = FALSE,
   table) in the model.
 
   Assuming that there are no structural zeros, both the Likelihood
-  Ratio Test and Pearson test statistics have an asymptotic chisquare
+  Ratio Test and Pearson test statistics have an asymptotic chi-squared
   distribution with \code{df} degrees of freedom.
     
   Package `MASS' contains \code{loglm}, a front-end to \code{loglin}
