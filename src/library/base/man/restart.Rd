@@ -11,7 +11,7 @@ restart(on=TRUE)
 \code{restart} performs a type of non-local return.
 When \code{restart} is called with \code{on=TRUE} the evaluator marks that 
 function as a return point. Any errors or signals (such as control-C on
-Unix) case control to return to the start of the function containing the
+Unix) cause control to return to the start of the function containing the
 call to \code{restart}. The most recently established function is always
 entered first.
 
@@ -30,5 +30,6 @@ f<-function(x, first=TRUE){
  else
         return(NA)
 }
+f("a")
 }
 \keyword{programming}
