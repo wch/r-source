@@ -115,7 +115,7 @@ rpackage: ../../library/R.css
 	@$(ECHO)
 	@if ! test -f ../../library/base/R/base.rdb ; then \
 	  echo "preparing package base for lazy loading" ; \
-	  (cat ../library/tools/R/makeLazyLoad.R ../../share/R/makebasedb.R; \
+	  (cat ../library/tools/R/makeLazyLoad.R ../library/base/makebasedb.R; \
 	    echo "makeLazyLoading(\"base\")") | \
 	    $(RHOME)/bin/rterm.exe --vanilla --slave R_DEFAULT_PACKAGES=NULL LC_COLLATE=C > /dev/null ; \
 	fi
@@ -128,7 +128,7 @@ rpackage: ../../library/R.css
 	@for pkg in $(LAZY_PKGS); do \
 	  $(MAKE) --no-print-directory PKG=$${pkg} RHOME=$(RHOME) -f $(RHOME)/src/gnuwin32/MakePkg lazyload ; \
 	done
-	touch ../../library/methods/R/all.rda
+	@touch ../../library/methods/R/all.rda
 
 	@$(MAKE) --no-print-directory vignettes
 
