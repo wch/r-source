@@ -55,11 +55,10 @@ x <- c(0,0,0,100,0,0,0)
 y <- c(0,0,1, 2 ,1,0,0)/4
 zapsmall(convolve(x,y))         #  *NOT* what you first thought.
 zapsmall(convolve(x, y[3:5], type="f")) # rather
-x <- stats::rnorm(50)
-y <- stats::rnorm(50)
+x <- rnorm(50)
+y <- rnorm(50)
 # Circular convolution *has* this symmetry:
-all.equal(convolve(x,y, conj = FALSE),
-          rev(convolve(rev(y),x)))
+all.equal(convolve(x,y, conj = FALSE), rev(convolve(rev(y),x)))
 
 n <- length(x <- -20:24)
 y <- (x-10)^2/1000 + rnorm(x)/8

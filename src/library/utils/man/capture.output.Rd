@@ -24,16 +24,16 @@ capture.output(\dots, file = NULL, append = FALSE)
 \seealso{ \code{\link{sink}}, \code{\link{textConnection}} }
 
 \examples{
-glmout<-capture.output(example(glm))
+require(stats)
+glmout <- capture.output(example(glm))
 glmout[1:5]
-capture.output(1+1,2+2)
-capture.output({1+1;2+2})
+capture.output(1+1, 2+2)
+capture.output({1+1; 2+2})
 \dontrun{
 ## on Unix with enscript available
-ps<-pipe("enscript -o tempout.ps","w")
+ps <- pipe("enscript -o tempout.ps","w")
 capture.output(example(glm), file=ps)
 close(ps)
 }
 }
-\keyword{utilities}% at least one, from doc/KEYWORDS
-
+\keyword{utilities}

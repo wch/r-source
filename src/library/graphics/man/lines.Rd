@@ -49,6 +49,6 @@ lines(x, \dots)
 data(cars)
 # draw a smooth line through a scatter plot
 plot(cars, main="Stopping Distance versus Speed")
-lines(stats::lowess(cars))
+lines(lowess(cars))
 }
 \keyword{aplot}

@@ -46,7 +46,7 @@ print(try(log("a"), TRUE))
 
 ## run a simulation, keep only the results that worked.
 set.seed(123)
-x <- stats::rnorm(50)
+x <- rnorm(50)
 doit <- function(x)
 {
     x <- sample(x, replace=TRUE)

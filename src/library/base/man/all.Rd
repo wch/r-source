@@ -38,7 +38,7 @@ all(\dots, na.rm = FALSE)
   \dQuote{insurance}.
 }
 \examples{
-range(x <- sort(round(stats::rnorm(10) - 1.2,1)))
+range(x <- sort(round(rnorm(10) - 1.2,1)))
 if(all(x < 0)) cat("all x values are negative\n")
 }
 \keyword{logic}

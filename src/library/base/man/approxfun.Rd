@@ -77,7 +77,7 @@ approxfun(x, y = NULL,       method="linear",
 }
 \examples{
 x <- 1:10
-y <- stats::rnorm(10)
+y <- rnorm(10)
 par(mfrow = c(2,1))
 plot(x, y, main = "approx(.) and approxfun(.)")
 points(approx(x, y), col = 2, pch = "*")
