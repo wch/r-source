@@ -270,7 +270,7 @@ function(x, y = NULL, z = NULL,
                       / (ntot^2 * (ntot - 1)))
         }
         n <- n - m
-        STATISTIC <- crossprod(n, qr.solve(V, n))
+        STATISTIC <- c(crossprod(n, qr.solve(V, n)))
         PARAMETER <- df
         PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
         names(STATISTIC) <- "Cochran-Mantel-Haenszel M^2"
