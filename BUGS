@@ -48,12 +48,6 @@ Date: Tue, 31 Jul 2001 11:24:09 -0400
 Subject: Polymarsall.c
 From: pleu@hotmail.com
 Date: Tue, 7 Aug 2001 22:42:07 +0200 (MET DST)
-* PR# 1116 *
-Subject: get.hist.quote does not work
-From: arto.luoma@uta.fi
-Date: Thu, 4 Oct 2001 14:45:29 +0200 (MET DST)
---Seems specific to one locale on one system.
---The bug is unlikely to be in R.
 * PR# 1178 *
 Subject: segfault using svm from e1071
 From: Jan Rychter <jan@rychter.com>
@@ -75,6 +69,13 @@ Date: Tue, 5 Mar 2002 21:19:46 +0100 (MET)
 Subject: R bug in cluster package
 From: David Hitchcock <dhitchco@stat.ufl.edu>
 Date: Mon, 20 May 2002 14:33:24 -0400
+* PR# 1662 *
+Subject: fisher.test FEXACT memory bug "should not occur"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Thu, 13 Jun 2002 08:21:50 +0200
+--The supplementary (table of sum one) is fixed for 1.5.1.
+--Detection code for the first problem has been added to 1.5.1 which will stop
+--the crash, but the underlying cause is still open.
 
 Directory:  Analyses
 
@@ -509,3 +510,15 @@ Date: Tue, 11 Jun 2002 12:32:44 +0800 (CST)
 Subject: documentation error for quantile
 From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
 Date: Wed, 12 Jun 2002 23:01:00 +0200
+* PR# 1664 *
+Subject: Bug in rnorm.
+From: Rolf Turner <rolf@math.unb.ca>
+Date: Thu, 13 Jun 2002 16:35:59 -0300 (ADT)
+* PR# 1665 *
+Subject: BUSINESS PROPOSAL
+From: "DR.SIJUWADE TAYLOR" <Sijuwade_Taylor@lycos.com>
+Date: Thu, 13 Jun 2002 22:01:37
+* PR# 1666 *
+Subject: Maritime Newsletter (Week 24)
+From: "Marine Digital Inc."<newsletter@marinedigital.com>
+Date: Fri, 14 Jun 2002 06:17:39 +0900
