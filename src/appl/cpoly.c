@@ -809,16 +809,16 @@ static int mcon_(double *eta, double *infiny, double *smalno, double *base)
 	m = 63;
 	n = -65;
 	i__1 = 1 - t;
-	*eta = pow_di(base, &i__1);
+	*eta = POW_DI(base, &i__1);
 	i__1 = -t;
 	i__2 = m - 1;
-	*infiny = *base * (1. - pow_di(base, &i__1)) * pow_di(base, &i__2);
+	*infiny = *base * (1. - POW_DI(base, &i__1)) * POW_DI(base, &i__2);
 	i__1 = n + 3;
 
 	/* Computing 3rd power */
 
 	d__1 = *base, d__2 = d__1;
-	*smalno = pow_di(base, &i__1) / (d__2 * (d__1 * d__1));
+	*smalno = POW_DI(base, &i__1) / (d__2 * (d__1 * d__1));
 	return 0;
 }
 #else
