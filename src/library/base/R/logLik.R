@@ -1,6 +1,20 @@
 logLik <- function(object, ...) UseMethod("logLik")
 
-print.logLik <- function(x, ...) print(c(x), ...)
+print.logLik <- function(x, digits = getOption("digits"), ...)
+{
+    cat("`log Lik.' ",format(c(x), digits=digits),
+        " (df=",format(attr(x,"df")),")\n",sep="")
+    invisible(x)
+}
+
+str.logLik <- function(object, digits = max(2, getOption("digits") - 3), ...)
+{
+    cl <- class(object)
+    cat("Class", if (length(cl) > 1) "es",
+        " `", paste(cl, collapse = "', `"), "' : ",
+        format(c(object), digits=digits),
+        " (df=",format(attr(object,"df")),")\n",sep="")
+}
 
 ## >> logLik.nls() in ../../nls/R/nls.R
 
@@ -41,7 +55,7 @@ logLik.lm <- function(object, REML = FALSE, ...)
     if(REML) val <- val - sum(log(abs(diag(object$qr$qr)[1:p])))
     attr(val, "nall") <- N0
     attr(val, "nobs") <- N
-    attr(val, "df") <- p + 1
+    attr(val, "df") <- p
     class(val) <- "logLik"
     val
 }
