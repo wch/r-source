@@ -56,8 +56,7 @@ isSeekable(con)
   \item{server}{logical.  Should the socket be a client or a server?}
   \item{open}{character.  A description of how to open the connection
     (if at all). See Details for possible values.}
-  \item{blocking}{logical.  If false, operations return immediately without
-    waiting for further input.}
+  \item{blocking}{logical.  See `Blocking' section below.}
   \item{encoding}{An integer vector of length 256.}
   \item{compression}{integer in 0--9.  The amount of compression to be
     applied when writing, from none to maximal.  The default is a good
@@ -134,16 +133,35 @@ isSeekable(con)
   currently open.
 
   \code{isIncomplete} returns a logical value, whether last read attempt
-  was blocked (currently always false), ot for an output text connection
-  whether there is unflushed output.
+  was blocked, or for an output text connection whether there is
+  unflushed output.
+}
+\section{Blocking}{
+  The default condition for all but socket connections is to be in
+  blocking mode.  In that mode, functions do not return to the \R
+  evaluator until they are complete.   In non-blocking mode, operations
+  return as soon as possible, so on input they will return with whatever
+  input is available (possibly none) and for output they will return
+  whether or not the write succeeded.
+
+  The function \code{\link{readLines}} behaves differently in respect of
+  incomplete last lines in the two modes: see its help page.
+
+  Even when a connection is in blocking mode, attempts are made to
+  ensure that it does not block the event loop and hence the operation
+  of GUI parts of \R.  These do not always succeed, and the whole
+  process will be blocked during a DNS lookup on Unix, for example.
+
+  Most blocking operations on URLs and sockets are subject to the
+  timeout set by \code{options("timeout")}.  Note that this is a timeout
+  for no response at all, not for the whole operation.
 }
 \note{
   \R's connections are modelled on those in S version 4 (see Chambers,
   1998), but the implementation is currently incomplete.  In particular:
   \itemize{
     \item Pipes are only implemented on Unix and \code{Rterm} on
-    Windows. Fifos are not yet implemented. We also envisage
-    having connections to sockets.
+    Windows. Fifos are not yet implemented.
 
     \item Svr4 has separate read and write positions for files: \R does
     not.
@@ -200,22 +218,24 @@ cat(format(round(rnorm(100), 4)), sep = "\n", file = zz)
 close(zz)
 file.show("outfile", delete.file=TRUE)}
 
-\dontrun{## example for Unix machine with a finger daemon
+\dontrun{## example for Unix machine running a finger daemon
 
-con <- socketConnection("localhost", 79)
+con <- socketConnection(port = 79, blocking = TRUE)
 writeLines(paste(system("whoami", intern=TRUE), "\r", sep=""), con)
 gsub(" *$", "", readLines(con))
 close(con)}
 
-\dontrun{## two R processes communicating via sockets
+\dontrun{## two R processes communicating via non-blocking sockets
 # window 1
-con1 <- socketConnection("localhost", 6011, server=TRUE)
+con1 <- socketConnection(port = 6011, server=TRUE)
 writeLines(LETTERS, con1)
 close(con1)
 
 # window 2
-con2 <- socketConnection("localhost", 6011)
+con2 <- socketConnection(port = 6011)
+# as non-blocking, may need to loop for input
 readLines(con2)
+while(isIncomplete(con2)) {Sys.sleep(1); readLines(con2)}
 close(con2)}
 }
 \keyword{file}

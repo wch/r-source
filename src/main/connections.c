@@ -1090,7 +1090,6 @@ SEXP do_textconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 /* ------------------- socket connections  --------------------- */
 
 
-
 static void sock_open(Rconnection con)
 {
     Rsockconn this = (Rsockconn)con->private;
@@ -1100,8 +1099,8 @@ static void sock_open(Rconnection con)
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     R_SockTimeout(timeout);
+    this->pend = this->pstart = this->inbuf;
 
-    
     if(this->server) {
 	sock1 = R_SockOpen(this->port);
 	if(sock1 < 0) error("port %d cannot be opened", this->port);
@@ -1133,22 +1132,39 @@ static void sock_close(Rconnection con)
     con->isopen = FALSE;
 }
 
-static int sock_fgetc(Rconnection con)
+static int sock_read_helper(Rconnection con, void *ptr, size_t size)
 {
     Rsockconn this = (Rsockconn)con->private;
+    int res;
+
+    if(this->pstart == this->pend){
+	this->pstart = this->pend = this->inbuf;
+	res = R_SockRead(this->fd, this->inbuf, 4096, con->blocking);
+	/* Rprintf("socket read %d\n", res); */
+	con->incomplete = (-res == EAGAIN);
+	if(res <= 0) return res;
+	this->pend = this->inbuf + res;
+    } else res = this->pend - this->pstart;
+    if(size < res) res = size;
+    memcpy(ptr, this->pstart, res);
+    this->pstart += res;
+    return res;
+}
+
+
+static int sock_fgetc(Rconnection con)
+{
     unsigned char c;
     int n;
-    
-    n = R_SockRead(this->fd, (char *)&c, 1, con->blocking);
+  
+    n = sock_read_helper(con, (char *)&c, 1);
     return (n == 1) ? con->encoding[c] : R_EOF;
 }
 
 static size_t sock_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
-    Rsockconn this = (Rsockconn)con->private;
-
-    return R_SockRead(this->fd, ptr, size * nitems, con->blocking)/size;
+    return sock_read_helper(con, ptr, size * nitems)/size;
 }
 
 static size_t sock_write(const void *ptr, size_t size, size_t nitems,
@@ -1270,7 +1286,7 @@ SEXP do_open(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `open' argument");
     block = asLogical(CADDR(args));
     if(block == NA_LOGICAL)
-	error("invalid `block' argument");
+	error("invalid `blocking' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     if(strlen(open) > 0) strcpy(con->mode, open);
     con->blocking = block;
@@ -1490,6 +1506,7 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(con->canseek && !con->blocking)
 	    con->seek(con, con->seek(con, -1, 1), 1);
     }
+    con->incomplete = FALSE;
     
     buf = (char *) malloc(buf_size);
     if(!buf)
@@ -1526,7 +1543,6 @@ SEXP do_readLines(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 no_more_lines:
     if(!wasopen) con->close(con);
-    con->incomplete = TRUE;
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && con->blocking) {
 	    nread++;
@@ -1534,7 +1550,7 @@ no_more_lines:
 	} else {
 	    /* push back the rest */
 	    pushback(con, 0, buf);
-	    con->incomplete = FALSE;
+	    con->incomplete = TRUE;
 	}
     }
     free(buf);

@@ -81,6 +81,7 @@ typedef struct sockconn {
     int server;
     int fd;
     char *host;
+    char inbuf[4096], *pstart, *pend;
 } *Rsockconn;
 
 int Rconn_fgetc(Rconnection con);

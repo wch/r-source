@@ -284,8 +284,6 @@ void R_SockTimeout(int delay)
     timeout = (unsigned int) delay;
 }
 
-static char inbuf[4096], *pstart, *pend;
-
 int R_SockConnect(int port, char *host)
 {
     SOCKET s = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -297,7 +295,6 @@ int R_SockConnect(int port, char *host)
     struct hostent *hp;
 
     check_init();
-    pend = pstart = inbuf;
 
     if (s == -1)  return -1;
 
@@ -420,18 +417,10 @@ int R_SockClose(int sockp)
 int R_SockRead(int sockp, void *buf, int len, int blocking)
 {
     int res;
-    if(pstart == pend){
-	pstart = pend = inbuf;
-	if(blocking && R_SocketWait(sockp, 0) != 0) return 0;
-	res = (int) recv(sockp, inbuf, 4096, 0);
-	if(res <= 0) return res;
-	pend = inbuf+res;
-    } else res = pend-pstart;
-    if(len < res) res = len;
-    memcpy(buf, pstart, res);
-    pstart += res;
-    /* Rprintf("returned %d/%d %c\n", res, len, *pstart); */
-    return res;
+    
+    if(blocking && R_SocketWait(sockp, 0) != 0) return 0;
+    res = (int) recv(sockp, buf, len, 0);
+    return (res >= 0) ? res : -socket_errno();
 }
 
 int R_SockOpen(int port)
@@ -448,7 +437,10 @@ int R_SockListen(int sockp, char *buf, int len)
 
 int R_SockWrite(int sockp, const void *buf, int len)
 {
+    int res;
+
     /* Rprintf("socket %d writing |%s|\n", sockp, buf); */
-    return (int) send(sockp, buf, len, 0);
+    res = (int) send(sockp, buf, len, 0);
+    return (res >= 0) ? res : -socket_errno();
 }
 
