@@ -101,13 +101,9 @@ double lgamma(double x)
 	}
 
 	if (x > 0)
-	  return;
-
-	if (((int)(-x))%2 == 0)
+	  return /* ans */;
+	else if (((int)(-x))%2 == 0)
 	  signgam = -1;
 	return ans;
-    } /*  |x| > 10 */
+    }
 }
-
-
-
