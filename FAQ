@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-16, 2000-10-06
+Version 1.1-17, 2000-10-13
 Kurt Hornik
 
 
@@ -341,7 +341,19 @@ packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and Vin
 Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht Gebhardt,
-and Linuxppc 5.0 RPMs by Alex Buerkle.
+Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc 5.0 RPMs by
+Alex Buerkle.
+
+   The Debian packages can be accessed through APT, the Debian package
+maintenance tool.  Simply add the line
+
+     deb http://cran.r-project.org/bin/linux/debian DISTRIBUTION main
+
+(where DISTRIBUTION is either `stable' or `unstable'; feel free to use a
+CRAN mirror instead of the master) to the file `/etc/apt/sources.list'.
+Once you have added that line the programs `apt-get', `apt-cache', and
+`dselect' (using the apt access method) will automatically detect and
+install updates of the R packages.
 
    The `bin/osf' directory of a CRAN site contains RPMs by Albrecht
 Gebhardt for alpha systems running Digital Unix 4.0.
@@ -503,6 +515,7 @@ being mirrored daily at
 
      `http://cran.dk.r-project.org/'  (Denmark)
      `http://cran.hu.r-project.org/'  (Hungary)
+     `http://cran.it.r-project.org/'  (Italy)
      `http://cran.ch.r-project.org/'  (Switzerland)
      `http://cran.uk.r-project.org/'  (United Kingdom)
      `http://cran.us.r-project.org/'  (USA/Wisconsin)

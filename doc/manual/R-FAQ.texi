@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2000
-@set FAQ-VERSION 1.1-16, 2000-10-06
+@set FAQ-VERSION 1.1-17, 2000-10-13
 @set REL-VERSION 1.1.1
 @set DEV-VERSION 1.2.0
 @c %**end of header
@@ -403,11 +403,12 @@ distribution is available.  We hope that this will change soon.
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
 
-@c Linux binaries as of 2000-08-23:
+@c Linux binaries as of 2000-10-10:
 @c
 @c debian   2.2 i386  1.1.1  Doug Bates
 @c          2.3 i386  1.1.1  Doug Bates
 @c linuxppc 5.0 ppc   1.1.0  Alex Buerkle <buerkle@hawaii.edu>
+@c mandrake 7.1 i386  1.1.1  Michele Alzetta <mikalzet@libero.it>
 @c redhat   6.x alpha 1.1.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
 @c              i386  1.1.1  Martyn Plummer <plummer@iarc.fr>
 @c              sparc 1.1.1  Vin Everett <vin.everett@mrc-bsu.cam.ac.uk>
@@ -419,7 +420,23 @@ packages for the i386 platform (now part of the Debian distribution and
 maintained by Doug Bates), Red Hat 6.x packages for the alpha, i386 and
 sparc platforms (maintained by Naoki Takebayashi, Martyn Plummer, and
 Vin Everett, respectively), SuSE 5.3/6.4 i386 packages by Albrecht
-Gebhardt, and Linuxppc 5.0 RPMs by Alex Buerkle.
+Gebhardt, Mandrake 7.1 i386 packages by Michele Alzetta, and Linuxppc
+5.0 RPMs by Alex Buerkle.
+
+The Debian packages can be accessed through APT, the Debian package
+maintenance tool.  Simply add the line
+
+@smallexample
+deb http://cran.r-project.org/bin/linux/debian @var{distribution} main
+@end smallexample
+
+@noindent
+(where @var{distribution} is either @samp{stable} or @samp{unstable};
+feel free to use a CRAN mirror instead of the master) to the file
+@file{/etc/apt/sources.list}.  Once you have added that line the
+programs @code{apt-get}, @code{apt-cache}, and @code{dselect} (using the
+apt access method) will automatically detect and install updates of the
+R packages.
 
 The @file{bin/osf} directory of a CRAN site contains RPMs by Albrecht
 Gebhardt for alpha systems running Digital Unix 4.0.
@@ -620,9 +637,11 @@ currently being mirrored daily at
 @tab (Denmark)
 @item @uref{http://cran.hu.r-project.org/}
 @tab (Hungary)
-@c @item @uref{http://cran.it.r-project.org/}
-@c @c @uref{http://www.stat.unipg.it/pub/stat/statlib/R/CRAN/}
-@c @tab (Italy)
+@item @uref{http://cran.it.r-project.org/}
+@c @uref{http://erlug.economia.unibo.it/www.r-projects.org/}
+@c Contact: Daniele Medri @email{madrid@linux.it}
+@c   @uref{http://www.linux.it/~madrid/}
+@tab (Italy)
 @item @uref{http://cran.ch.r-project.org/}
 @c @uref{http://stat.ethz.ch/CRAN/}
 @tab (Switzerland)
