@@ -43,6 +43,10 @@
 
 #include "Mathlib.h"
 
+#ifdef DEBUG_qnorm
+# include "PrtUtil.h"
+#endif
+
 double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 {
     double p_, q, r, val;
@@ -52,11 +56,16 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	return p + mu + sigma;
 #endif
     R_Q_P01_check(p);
-    if(sigma  < 0.)	ML_ERR_return_NAN;
-    if(sigma == 0.)	return mu;
+    if(sigma  < 0)	ML_ERR_return_NAN;
+    if(sigma == 0)	return mu;
 
     p_ = R_DT_qIv(p);/* real lower_tail prob. p */
     q = p_ - 0.5;
+
+#ifdef DEBUG_qnorm
+    REprintf("qnorm(p=%10.7g, m=%7g, s=%7g, l.t.=%2d, log=%2d): q = %7g\n",
+	     p,mu,sigma, lower_tail, log_p, q);
+#endif
 
     if (fabs(q) <= 0.42) {
 
@@ -75,12 +84,18 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	if (q > 0)
 	    r = R_DT_CIv(p);/* 1-p */
 	else
-	    r = p_;/* p */
+	    r = p_;/* = R_DT_Iv(p) ^=  p */
+#ifdef DEBUG_qnorm
+	REprintf("\t 'middle p': r = %7g\n", r);
+#endif
 
 	if(r > DBL_EPSILON) {
-	    r = sqrt(- (log_p
-			?(q > 0. ? R_D_Cval(p) : R_D_Lval(p))
-			:/*normal*/ log(r)));
+	    r = sqrt(- (log_p && !lower_tail
+			?(q > 0. ? p : 1 - p)
+			:/* else */ log(r)));
+#ifdef DEBUG_qnorm
+	    REprintf(" new r = %7g\n", r);
+#endif
 	    val = (((2.32121276858 * r + 4.85014127135) * r
 		    - 2.29796479134) * r - 2.78718931138)
 		/ ((1.63706781897 * r + 3.54388924762) * r + 1.0);
@@ -107,6 +122,9 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
  *	  (using p, not p_ , and a different derivative )
  */
 
+#ifdef DEBUG_qnorm
+    REprintf("\t before final step: val = %7g\n", val);
+#endif
     /* Final Newton step: */
     val = val -
 	(pnorm(val, 0., 1., /*lower*/LTRUE, /*log*/LFALSE) - p_) /
