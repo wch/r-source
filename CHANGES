@@ -36,14 +36,18 @@ NEW FEATURES
     o	.First.lib() now implemented; called by library() after loading
 	a package.
 
-    o	print.summary.lm() now gives `significance stars' and a symbolic
+    o	print.summary.[g]lm() now give `significance stars' and a symbolic
 	correlation matrix.
 
     o	new is.R() function.
 
     o   glm() now also returns an AIC value [from JL].
+	print..glm methods indicate the options()$contrasts in some cases.
 	In summary.glm(..., correlation=..), the default has been changed to
 	corr. = FALSE  which is consistent with  summary.lm().
+	predict() now works again for glm objects.
+
+    o   the 'flag' argument in formatC(.) can now have more than one character.
 
     o	nlm() returns the number of iterations used [from J.Lindsey].
 
