@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.42 $ ';
+my $revision = ' $Revision: 1.43 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -54,6 +54,8 @@ R::Vars::error("R_HOME", "R_CMD");
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
 my @excludepatterns = R::Utils::get_exclude_patterns();
+
+my $vignette_exts_re = "[rRsS](nw|tex)";
 
 my @knownoptions = ("help|h", "version|v", "binary", "no-docs",
 		    "use-zip", "use-zip-help", "use-zip-data",
@@ -286,8 +288,8 @@ sub prepare_pkg {
     updateRdIndex("INDEX", "man", 0, $log);
     updateRdIndex("data/00Index", "man", 1, $log) if(-d "data");
 
-    if(!$opt_no_vignettes){
-	if(glob("inst/doc/*.[rRsS]nw inst/doc/*.[rRsS]tex")) {
+    if(!$opt_no_vignettes && (-d "inst/doc")) {
+	if(list_files_with_exts("inst/doc", $vignette_exts_re)) {
 	    $log->creating("vignettes");
 	    my $Rcmd = "library(tools); buildVignettes(dir='.')\n";
 	    my @out = R_runR($Rcmd, "--vanilla --no-save --quiet");
@@ -369,7 +371,7 @@ sub buildVignetteIndex {
     my $delimcurly = new Text::DelimMatch("\\{", "\\}");
     $delimcurly->escape("\\");
     my @entries = ();
-    my @Snwfiles = glob("$dir/*.[rRsS]nw $dir/*.[rRsS]tex");
+    my @Snwfiles = &list_files_with_exts("$dir", $vignette_exts_re);
 
     foreach my $file (@Snwfiles) {
 	open(SNWFILE, "< $file")
@@ -379,7 +381,7 @@ sub buildVignetteIndex {
 		      "\n" . join("\n", @text));
 	if($#text >= 1) {
 	    $delimcurly->match("\{" . $text[1]);
-	    $file = basename($file, (".rnw", ".Rnw", ".snw", ".Snw"));
+	    $file =~ s/\.$vignette_exts_re$//;
 	    push(@entries,
 		 "$file.pdf: " . substr($delimcurly->matched, 1, -1));
 	}
