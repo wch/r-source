@@ -130,13 +130,17 @@ DEPRECATED & DEFUNCT
 
     o	The deprecated argument 'white' of parse() has been removed.
 
+    o	plot.mts() has been deprecated and its functionality
+	incorporated into plot.ts().
+
 
 INSTALLATION CHANGES
 
     o	The zlib code in the sources is used unless the external
 	version found is at least version 1.1.4 (up from 1.1.3).
 
-    o	The regression checks now have to be passed exactly.
+    o	The regression checks now have to be passed exactly, except
+	those depending on recommended packages.
 
     o	There are new macros DYLIB_* for building dynamic libraries,
 	and these are used for the dynamic Rmath library (which was

@@ -1,37 +1,30 @@
 \name{plot.ts}
 \alias{plot.ts}
-\alias{plot.mts}
 \alias{lines.ts}
 \title{Plotting Time-Series Objects}
 \description{
-  Plotting methods for objects of inheriting from class \code{"ts"}
-  or \code{"mts"} (multivariate time-series).
+  Plotting method for objects inheriting from class \code{"ts"}.
 }
 \synopsis{
 plot.ts(x, y = NULL, type = "l", xlim = NULL, ylim = NULL,
-	  xlab = "Time", ylab, log = "",
-	  col = par("col"), bg = NA,
-	  pch = par("pch"), cex = par("cex"),
-	  lty = par("lty"), lwd = par("lwd"),
-	  axes = TRUE, frame.plot = axes, ann = par("ann"),
-	  main = NULL, plot.type = c("multiple", "single"),
-	  xy.labels = n <= 150, xy.lines = do.lab, panel=lines,
-          nc, ...)
-plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
-         log = "", col = par("col"),  bg = NA, pch = par("pch"),
-         cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
-         ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
-         oma=c(6, 0, 5, 0), nc, ...)
+	xlab = "Time", ylab, log = "",
+	col = par("col"), bg = NA,
+	pch = par("pch"), cex = par("cex"),
+	lty = par("lty"), lwd = par("lwd"),
+	axes = TRUE, frame.plot = axes, ann = par("ann"),
+	main = NULL, plot.type = c("multiple", "single"),
+	xy.labels = (n <= 150), xy.lines = do.lab, panel = lines,
+        oma = c(6, 0, 5, 0), nc, ...)
 }
 \usage{
 \method{plot}{ts}(x, y = NULL, type = "l", frame.plot = axes,
      plot.type = c("multiple", "single"),
-     xy.labels = n <= 150, xy.lines = do.lab, panel=lines, nc, ...)
+     xy.labels = (n <= 150), xy.lines = do.lab, panel = lines, nc, ...)
 
 lines(x, \dots)
 }
 \arguments{
-  \item{x, y}{time series objects, usually of class \code{"ts"}.}
+  \item{x, y}{time series objects, usually inheriting from class \code{"ts"}.}
 
   \item{type}{the type of plot, see \code{\link{plot}}.  When \code{y}
     is present, the default will depend on \code{xy.labels}, see below.}
@@ -60,8 +53,9 @@ lines(x, \dots)
     \code{\link{plot.default}} and \code{\link{par}}.}
 }
 \details{
-  If \code{y} is missing, these functions create time series plots,
-  for multivariate series of one of two kinds depending on \code{plot.type},
+  If \code{y} is missing, this function creates a time series
+  plot, for multivariate series of one of two kinds depending on
+  \code{plot.type}.
 
   If \code{y} is present, both \code{x} and \code{y} must be univariate,
   and a ``scatter'' plot \code{y ~ x} will be drawn, enhanced by
@@ -74,7 +68,6 @@ lines(x, \dots)
   functionality.
 }
 \examples{
-
 ## Multivariate
 z <- ts(matrix(rt(300, df = 3), 100, 3), start=c(1961, 1), frequency=12)
 plot(z, type = "b")    # multiple

@@ -37,6 +37,7 @@
 \alias{Machine}
 \alias{restart}
 \alias{printNoClass}
+\alias{plot.mts}
 %
 \description{
   The functions or variables listed here are no longer part of \R as
@@ -99,6 +100,12 @@ restart()
 % Removed in 1.8.0
 printNoClass(x, digits = NULL, quote = TRUE, na.print = NULL,
              print.gap = NULL, right = FALSE, \dots)
+% plot.mts can't have such an object, though
+plot.mts(x, plot.type = c("multiple", "single"), panel = lines,
+         log = "", col = par("col"),  bg = NA, pch = par("pch"),
+         cex = par("cex"), lty = par("lty"), lwd = par("lwd"),
+         ann = par("ann"),  xlab = "Time", type = "l", main=NULL,
+         oma=c(6, 0, 5, 0), \dots)
 % </Removed 1.8.0>
 }
 \details{
@@ -162,6 +169,9 @@ printNoClass(x, digits = NULL, quote = TRUE, na.print = NULL,
 
   \code{printNoClass} was in package \code{methods} and calls directly the
   internal function \code{print.default}.
+
+  \code{plot.mts} has been removed, as \code{\link{plot.ts}} now has the
+  same functionality.
 }
 \seealso{\code{\link{Deprecated}}}
 \keyword{documentation}
