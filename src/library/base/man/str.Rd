@@ -4,9 +4,8 @@
 str(object, \dots)
 str.data.frame(object, \dots)
 str.default(object, max.level = 0, vec.len = 4, digits.d = 3,
-    give.attr = TRUE, give.length = TRUE,
-    wid = getOption("width"),
-    nest.lev = 0,
+    nchar.max = 128, give.attr = TRUE, give.length = TRUE,
+    wid = getOption("width"), nest.lev = 0,
     indent.str = paste(rep(" ", max(0, nest.lev + 1)), collapse = ".."))
 
 ls.str(name, pattern, mode = "any", max.level = 1, give.attr = FALSE)
@@ -23,11 +22,14 @@ lsf.str(\dots)
   \item{max.level}{maximal level of nesting which is applied for
     displaying nested structures, e.g., a list containing sub lists.
     Default 0: Display all nesting levels.}
-  \item{vec.len}{numeric indicating how many ``first few'' elements are
-    displayed of each vector. The number is multiplied by different
+  \item{vec.len}{numeric (>= 0) indicating how many ``first few'' elements
+    are displayed of each vector.  The number is multiplied by different
     factors (from .5 to 3) depending on the kind of vector.  Default 4.}
   \item{digits.d}{number of digits for numerical components (as for
     \code{\link{print}}).}
+  \item{nchar.max}{maximal number of characters to show for
+    \code{\link{character}} strings.  Longer strings are truncated, see
+    \code{longch} example below.}
   \item{give.attr}{logical; if \code{TRUE} (default), show attributes
     as sub structures.}
   \item{give.length}{logical; if \code{TRUE} (default), indicate
@@ -73,7 +75,12 @@ str( lsfit(1:9,1:9))
 str( lsfit(1:9,1:9),  max =1)
 op <- options(); str(op)#- save first; otherwise internal options() is used.
 need.dev <- !exists(".Device") || is.null(.Device)
-if(need.dev) postscript(); str(par()); if(need.dev) graphics.off()
+if(need.dev) postscript()
+str(par()); if(need.dev) graphics.off()
+
+nchar(longch <- paste(rep(letters,100), collapse=""))
+str(longch)
+str(longch, nchar.max = 52)
 
 lsf.str()#- how do the functions look like which I am using?
 ls.str(mode = "list")#- what are the structured objects I have defined?
