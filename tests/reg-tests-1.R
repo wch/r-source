@@ -614,6 +614,13 @@ update(ships.glm, start = coef(ships.glm))
 ## failed in 1.4.1.
 
 
+## PR#1439 file.info()$isdir was only partially logical
+(info <- file.info("."))
+info$isdir
+stopifnot(info$isdir == TRUE)
+## 1.4.1 had a TRUE value that was not internally integer 1.
+
+
 ## This example last: needed < 1.5.0 ##
 
 ## PR 902 segfaults when warning string is too long, Ben Bolker 2001-04-09
