@@ -39,7 +39,7 @@ help(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     If \code{offline} is \code{TRUE}, hardcopy of the documentation is
     produced by running the LaTeX version of the help page through
     \code{latex} (note that LaTeX 2e is needed). You need to customize
-    the file \file{R_HOME/bin/helpPRINT.bat} which contains an example.  
+    the file \file{R\_HOME/bin/helpPRINT.bat} which contains an example.  
     The appearance of the output can be customized through a file
     \file{Rhelp.cfg} somewhere in your LaTeX search path.
 }
