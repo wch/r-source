@@ -4,7 +4,7 @@
 \title{A Test File}
 \author{Friedrich Leisch}
 
-\SweaveOpts{echo=F}
+\SweaveOpts{echo=FALSE}
 \usepackage{a4wide}
 
 \begin{document}
