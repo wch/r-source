@@ -313,12 +313,8 @@ function(package, dir, lib.loc = NULL,
     ## Maybe one day we will have R code for the primitives as well ...
     if(isBase) {
         baseObjs <- ls(envir = as.environment(NULL), all.names = TRUE)
-        isPrimitive <- function(fname, envir) {
-            f <- get(fname, envir = envir)
-            is.function(f) && any(grep("^\\.Primitive", deparse(f)))
-        }
         lsCode <-
-            c(lsCode, baseObjs[sapply(baseObjs, isPrimitive, NULL)],
+            c(lsCode, baseObjs[sapply(baseObjs, .isPrimitive, NULL)],
               c(".First.lib", ".Last.lib", ".Random.seed"))
     }
     ## </FIXME>

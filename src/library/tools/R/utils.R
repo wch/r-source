@@ -139,13 +139,25 @@ function(ns, dir, nsInfo)
     S3methods
 }
 
+### ** .isPrimitive
+
+.isPrimitive <-
+function(fname, envir)
+{
+    ## Determine whether object named 'fname' found in environment
+    ## 'envir' is a primitive function.
+    f <- get(fname, envir = envir, inherits = FALSE)
+    is.function(f) && any(grep("^\\.Primitive", deparse(f)))
+}
+
 ### ** .isS3Generic
 
 .isS3Generic <-
-function(fname, envir, mustMatch = TRUE) {
-    ## Determine whether object named 'fname' found in
-    ## environment 'envir' is (to be considered) an S3 generic function.
-    ## Note, found *in* not found *from*, so envir does not have a default
+function(fname, envir, mustMatch = TRUE)
+{
+    ## Determine whether object named 'fname' found in environment
+    ## 'envir' is (to be considered) an S3 generic function.  Note,
+    ## found *in* not found *from*, so envir does not have a default.
     ##
     ## If it is, does it despatch methods of fname?  We need that to
     ## look for possible methods as functions named fname.* ....
