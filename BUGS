@@ -319,3 +319,7 @@ Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
 Subject: segfault in garbage collection
 From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
 Date: Thu, 25 Nov 1999 17:54:15 +0100
+* PR# 345 *
+Subject: Bug in version 65.0
+From: mhdelsemme@ulg.ac.be
+Date: Fri, 26 Nov 1999 10:54:23 +0100 (MET)
