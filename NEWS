@@ -271,6 +271,10 @@ BUG FIXES
 
     o   demo(is.things) had been broken by the introduction of is.element.
 
+    o   palette() didn't check for overflow and was limited to 256
+        colors, so palette(colors()) would segfault. Limit increased
+        to 1024 and check inserted.
+ 
 
 	**************************************************
 	*						 *

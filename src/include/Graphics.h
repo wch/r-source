@@ -62,7 +62,7 @@
 #define R_RED(col)	(((col)	   )&255)
 #define R_GREEN(col)	(((col)>> 8)&255)
 #define R_BLUE(col)	(((col)>>16)&255)
-#define COLOR_TABLE_SIZE 256
+#define COLOR_TABLE_SIZE 1024
 
 /*
  *	Some Notes on Line Textures
