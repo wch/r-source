@@ -9,7 +9,6 @@ C
       subroutine BDRsmart(m,mu,p,q,n, w,x,y,ww,smod,nsmod,
      &     sp,nsp,dp,ndp,edf)
 
-c     implicit none
       integer m,mu,p,q,n, nsmod, nsp,ndp
       double precision x(p,n),y(q,n),w(n),ww(q),smod(nsmod),
      &     sp(nsp),edf(m),dp(ndp)
@@ -30,7 +29,7 @@ c     implicit none
      &     t,asr,
      &     r,sc,bt,g,
      &     dp,flm,edf)
-c     implicit none
+
       integer m,mu,p,q,n
       double precision w(n),x(p,n),y(*),ww(q), yb(q), ys
       double precision a(p,m),b(q,m),f(n,m),t(n,m), asr
@@ -39,13 +38,13 @@ c     implicit none
 C                        ^^^ really (ndb) of  BDRsmart(.)
       integer i,j,l, lm
       double precision sw,s
-
-      double precision span,alpha,big
-      integer ifl,lf
+c Common Vars
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
       sw=0d0
@@ -112,7 +111,8 @@ C REPEAT
 531     continue
 521   continue
       if(lm.le.mu) goto 9999
-      l=sc(lm,1)!back to integer
+c back to integer:
+      l=sc(lm,1)
       asr=0d0
       do 561 j=1,n
         do 561 i=1,q
@@ -139,18 +139,21 @@ C END REPEAT
 
       subroutine BDRsubfit(m,p,q,n,w,sw,x,r,ww,lm,a,b,f,t,asr,sc,
      &     bt,g,dp,edf)
-      implicit double precision (a-h, o-z)
-      integer p,q
-      double precision w(n),x(p,n),ww(q),a(p,m),f(n,m),t(n,m),r(q,n)
-      double precision sc(n,15),g(p,3),b(q,m),bt(q),edf(m)
+c Args
+      integer              m,p,q,n,            lm
+      double precision w(n),sw, x(p,n),r(q,n),ww(q),a(p,m),b(q,m),
+     &     f(n,m), t(n,m), asr, sc(n,15), bt(q), g(p,3), edf(m)
       double precision dp(*)
-
-      double precision span,alpha,big
-      integer ifl,lf
+c Var
+      integer i,j,l, iflsv
+      double precision asrold
+c Common Vars
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
       asr=big
@@ -180,28 +183,33 @@ C END REPEAT
 
       subroutine BDRfulfit(lm,lbf,p,q,n,w,sw,x,r,ww,a,b,f,t,
      &     asr,sc,bt,g,dp,edf)
-      implicit double precision (a-h, o-z)
-      integer p,q
-      double precision w(n),x(p,n),ww(q),a(p,lm),f(n,lm),t(n,lm),r(q,n)
-      double precision sc(n,15),g(p,3),b(q,lm),bt(q),asr(1+lm),edf(lm)
+c Args
+      integer              lm,lbf,p,q,n
+      double precision w(n),sw,x(p,n),r(q,n),ww(q),a(p,lm),b(q,lm),
+     &     f(n,lm),t(n,lm),asr(1+lm), sc(n,15),bt(q),g(p,3), edf(lm)
       double precision dp(*)
-
-      double precision span,alpha,big
-      integer ifl,lf
+c Var
+      double precision asri, fsv, asrold
+      integer i,j,iter,lp,isv
+c Common Vars
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
       if(lbf.le.0) return
       asri=asr(1)
-      iter=0
       fsv=cutmin
       isv=mitone
-      if(lbf .ge. 3) goto 10711
-      cutmin=1d0
-      mitone=lbf-1
+      if(lbf .lt. 3) then
+         cutmin=1d0
+         mitone=lbf-1
+      endif
+      iter=0
+C Outer loop:
 10711 continue
       asrold=asri
       iter=iter+1
@@ -231,30 +239,33 @@ C END REPEAT
 10841       r(i,j)=r(i,j)-b(i,lp)*f(j,lp)
 10731   continue
       if((iter .le. maxit) .and. ((asri .gt. 0d0) .and.
-     & ((asrold-asri)/asrold .ge. conv))) goto 10711
+     &       ((asrold-asri)/asrold .ge. conv))) goto 10711
       cutmin=fsv
       mitone=isv
-      if(ifl .le. 0) goto 10871
-      asr(1+lm) = asri
-      asr(1) = asri
-10871 continue
+      if(ifl .gt. 0) then
+         asr(1+lm) = asri
+         asr(1) = asri
+      endif
       return
       end
 
       subroutine BDRonetrm(jfl,p,q,n,w,sw,x,y,ww,a,b,f,t,asr,
-     & sc,g,dp,edf)
-      implicit double precision (a-h, o-z)
-      integer p,q
-      double precision w(n),x(p,n),y(q,n),ww(q),a(p),b(q),f(n),t(n)
-      double precision sc(n,13),g(p,2)
+     &     sc,g,dp,edf)
+c Args
+      integer              jfl,p,q,n
+      double precision w(n),sw, x(p,n),y(q,n),ww(q),a(p),b(q),f(n),t(n),
+     &     asr, sc(n,13),g(p,2), edf
       double precision dp(*)
-
-      double precision span,alpha,big
-      integer ifl,lf
+c Var
+      double precision asrold,s
+      integer i,j,iter
+c Common Vars
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
       iter=0
@@ -286,19 +297,21 @@ C REPEAT
       return
       end
 
-      subroutine BDRoneone(ist,p,n,w,sw,y,x,a,f,t,asr,sc,g,dp,edf)
-
-      implicit double precision (a-h, o-z)
-      integer ist,p,n
-      double precision w(n),y(n),x(p,n),a(p),f(n),t(n),sc(n,12),g(p,2)
-      double precision dp(*)
-
-      double precision span,alpha,big
-      integer ifl,lf
+      subroutine BDRoneone(ist,p,n, w,sw,y,x,a,f,t,asr,sc,g,dp,edf)
+c Args
+      integer              ist,p,n
+      double precision w(n),sw,y(n),x(p,n),a(p),f(n),t(n),asr,
+     &     sc(n,12), g(p,2), edf, dp(*)
+c Var
+      integer i,j,k,iter
+      double precision sml, s,v,cut,asrold
+c Common Vars
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
       sml=1d0/big
@@ -410,56 +423,60 @@ c--------------
 
 
       subroutine BDRdir(p,n,w,sw,r,x,d,e,g)
-      implicit double precision (a-h, o-z)
-      integer p
-      double precision w(n),r(n),x(p,n),d(n),e(p)
-      double precision s,g(*)
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      integer           p,n
+      double precision      w(n),sw,r(n),x(p,n),d(n),e(p), g(*)
+
+      double precision s
+      integer i,j,k,l,m1,m2
+
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
-      do 11241 i=1,p
-        s=0d0
-        do 11251 j=1,n
-          s=s+w(j)*d(j)*x(i,j)
-11251   continue
-        e(i)=s/sw
-11241 continue
+      do 10 i=1,p
+         s=0d0
+         do 15 j=1,n
+            s=s+w(j)*d(j)*x(i,j)
+ 15      continue
+         e(i)=s/sw
+ 10   continue
       k=0
       m1=p*(p+1)/2
       m2=m1+p
-      do 11261 j=1,p
-        s=0d0
-        do 11271 l=1,n
-          s=s+w(l)*r(l)*(d(l)*x(j,l)-e(j))
-11271   continue
-        g(m1+j)=s/sw
-        do 11281 i=1,j
-          s=0d0
-          do 11291 l=1,n
-            s=s+w(l)*(d(l)*x(i,l)-e(i))*(d(l)*x(j,l)-e(j))
-11291     continue
-          k=k+1
-          g(k)=s/sw
-11281   continue
-11261 continue
+      do 20 j=1,p
+         s=0d0
+         do 22 l=1,n
+            s=s+w(l)*r(l)*(d(l)*x(j,l)-e(j))
+ 22      continue
+         g(m1+j)=s/sw
+         do 25 i=1,j
+            s=0d0
+            do 27 l=1,n
+               s=s+w(l)*(d(l)*x(i,l)-e(i))*(d(l)*x(j,l)-e(j))
+ 27         continue
+            k=k+1
+            g(k)=s/sw
+ 25      continue
+ 20   continue
       call BDRconj(p,g,g(m1+1),g(m2+1),cjeps,mitcj,g(m2+p+1))
-      do 11301 i=1,p
-        e(i)=g(m2+i)
-11301 continue
+      do 30 i=1,p
+         e(i)=g(m2+i)
+ 30   continue
       return
       end
 
       subroutine BDRconj(p,g,c,x,eps,maxit,sc)
-      implicit double precision (a-h, o-z)
-      integer p
-      double precision g(*),c(p),x(p),sc(p,4)
+      integer p,maxit
+      double precision g(*),c(p),x(p),eps,sc(p,4)
+
+      integer i,j,im1,iter,nit
       double precision beta,h,s,alpha,t
-      do 11311 i=1,p
-        x(i)=0d0
-        sc(i,2)=0d0
-11311 continue
+
+      do 1 i=1,p
+         x(i)=0d0
+         sc(i,2)=0d0
+ 1    continue
       nit=0
 C REPEAT
 11321 continue
@@ -535,9 +552,11 @@ C REPEAT
       end
 
       subroutine BDRder (n,x,s,w,fdel,d,sc)
-      implicit double precision (a-h, o-z)
-      double precision x(n),s(n),w(n),d(n),sc(n,3)
-      integer bl,el,bc,ec,br,er
+      integer n
+      double precision x(n),s(n),w(n), fdel, d(n),sc(n,3)
+
+      integer i,j,bl,el,bc,ec,br,er
+      double precision scale, del
 c
 c     unnecessary initialization of bl el ec to keep g77 -Wall happy
 c
@@ -615,9 +634,12 @@ c
       end
 
       subroutine BDRpool (n,x,y,w,del)
-      implicit double precision (a-h, o-z)
-      double precision x(n),y(n),w(n)
-      integer bb,eb,br,er,bl,el
+      integer n
+      double precision x(n),y(n),w(n),del
+
+      integer i,bb,eb,br,er,bl,el
+      double precision px, py, pw
+
       bb=0
       eb=bb
 11621 if(eb.ge.n) goto 11622
@@ -691,13 +713,17 @@ c
       end
 
       subroutine BDRnewb(lm,q,ww,b)
-      implicit double precision (a-h, o-z)
-      integer q
+      integer lm, q
       double precision ww(q),b(q,lm)
 
-      double precision span,alpha,big
-      integer ifl,lf
+      integer i,lm1,l,l1
+      double precision s,t,sml
+c Common
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
+
+
       sml=1d0/big
       if(q .ne. 1) goto 11831
       b(1,lm)=1d0
@@ -750,18 +776,17 @@ c
 
       block data BDRbkppr
 
-c     implicit none
-
-      double precision span,alpha,big
-      integer ifl,lf
+c Common Vars
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision conv,cutmin,fdel,cjeps
-      integer maxit,mitone,mitcj
+      double precision conv,            cutmin,fdel,cjeps
+      integer              maxit,mitone,                  mitcj
       common /BDRz01/ conv,maxit,mitone,cutmin,fdel,cjeps,mitcj
 
-      double precision df, gcvpen
-      integer ismethod
+      double precision     df, gcvpen
+      integer                          ismethod
       common /BDRspsmooth/ df, gcvpen, ismethod
 
       data ifl,maxit, conv, mitone, cutmin, fdel,
@@ -773,16 +798,15 @@ c     implicit none
 
       subroutine BDRsetppr(span1, alpha1, optlevel, ism, df1, gcvpen1)
 c Put `parameters' into Common blocks
-c     implicit none
       integer optlevel,ism
       double precision span1,alpha1, df1, gcvpen1
 
-      double precision span,alpha,big
-      integer ifl,lf
+      double precision         span,alpha,big
+      integer           ifl,lf
       common /BDRparms/ ifl,lf,span,alpha,big
 
-      double precision df, gcvpen
-      integer ismethod
+      double precision     df, gcvpen
+      integer                          ismethod
       common /BDRspsmooth/ df, gcvpen, ismethod
 
       span = span1
@@ -796,7 +820,6 @@ c     implicit none
 
       subroutine BDRfsort(mu,n,f,t,sp)
 c
-c     implicit none
       integer mu, n
       double precision f(n,mu),t(n,mu),sp(n,2)
 c
@@ -818,12 +841,12 @@ c
 
       subroutine BDRpred(np,x,smod,y,sc)
 
-      implicit double precision (a-h, o-z)
-
       integer np
       double precision x(np,*),y(np,*),smod(*), sc(*)
 
-      integer p,q, place,low,high
+      integer p,q, place,low,high, i,j,l,m,n, 
+     +     inp,ja,jb,jf,jt,jfl,jfh,jtl,jth, mu
+      double precision ys, s, t
 
       m=smod(1)+.1
       p=smod(2)+.1
@@ -899,8 +922,10 @@ C        END
       end
 
       subroutine BDRsetsmu
-      implicit double precision (a-h, o-z)
+      double precision     df, gcvpen
+      integer                          ismethod
       common /BDRspsmooth/ df, gcvpen, ismethod
+
       ismethod = 0
       return
       end
@@ -950,11 +975,20 @@ c    a prespecified fixed span smoother (span > 0) should be
 c    used. reasonable span values are 0.2 to 0.4.
 c
 c------------------------------------------------------------------
-c
-      implicit double precision (a-h, o-z)
-      dimension x(n),y(n),w(n),smo(n),sc(n,7)
-      double precision df, gcvpen
-      common /BDRspans/ spans(3) /BDRconsts/ big,sml,eps
+
+c Args
+      integer n, iper
+      double precision x(n),y(n),w(n), smo(n),sc(n,7)
+      double precision span, alpha, edf
+c Var
+      double precision sy,sw, a,h,f, scale,vsmlsq,resmin
+      integer i,j, jper
+
+      double precision  spans(3),          big,sml,eps
+      common /BDRspans/ spans  /BDRconsts/ big,sml,eps
+
+      double precision     df, gcvpen
+      integer                          ismethod
       common /BDRspsmooth/ df, gcvpen, ismethod
 
       if (x(n).gt.x(1)) go to 30
@@ -1029,11 +1063,12 @@ C     change by BDR
       end
 
       subroutine BDRsmooth (n,x,y,w,span,iper,vsmlsq,smo,acvr)
-
-      implicit double precision (a-h, o-z)
-      dimension x(n),y(n),w(n),smo(n),acvr(n)
-      integer in,out
-      double precision wt,fbo,fbw,xm,ym,tmp,var,cvar,a,h,sy
+c Args      
+      integer n, iper
+      double precision x(n),y(n),w(n), span,vsmlsq, smo(n),acvr(n)
+c Var
+      integer i,j, in,out, jper,ibw,it, j0
+      double precision xm,ym,var,cvar, fbw,fbo,xti,xto,tmp, a,h,sy,wt
 
       xm=0d0
       ym=xm
@@ -1133,9 +1168,11 @@ c--
       end
 
       block data BDRbksupsmu
-      implicit double precision (a-h, o-z)
-      common /BDRspans/ spans(3) /BDRconsts/ big,sml,eps
-c
+      double precision spans(3), big,sml,eps
+      common /BDRspans/ spans /BDRconsts/ big,sml,eps
+
+      data spans, big,sml,eps /0.05,0.2,0.5, 1.0e20,1.0e-7,1.0e-3/
+      end
 c---------------------------------------------------------------
 c
 c this sets the compile time (default) values for various
@@ -1145,7 +1182,7 @@ c spans : span values for the three running linear smoothers.
 c spans(1) : tweeter span.
 c spans(2) : midrange span.
 c spans(3) : woofer span.
-c (these span values should be changed only with care.)
+c	(these span values should be changed only with care.)
 c big : a large representable floating point number.
 c sml : a small number. should be set so that (sml)**(10.0) does
 c       not cause floating point underflow.
@@ -1157,9 +1194,6 @@ c relevant labeled common in the main program and resetting
 c them with executable statements.
 c
 c-----------------------------------------------------------------
-c
-      data spans,big,sml,eps /0.05,0.2,0.5,1.0e20,1.0e-7,1.0e-3/
-      end
 
 
       subroutine BDRspline (n, x, y, w, smo, edf)
@@ -1176,15 +1210,19 @@ c   smo(n) : smoothed ordinate (response) values.
 c   edf : equivalent degrees of freedom
 c
 c------------------------------------------------------------------
-c
-      implicit double precision (a-h, o-z)
-      dimension x(n),y(n),w(n),smo(n)
+c Args
+      integer n
+      double precision x(n), y(n), w(n), smo(n), edf
+c Var
       double precision knot(29), coef(25), work((17+25)*25)
-      double precision df, df1, lambda, gcvpen, lev(2500), s
-      double precision dx(2500), dy(2500), dw(2500), dsmo(2500)
-      integer par(2)
-      double precision param(3), crit
+      double precision dx(2500),dy(2500), dw(2500),dsmo(2500), lev(2500)
+      double precision param(3), df1, lambda, crit, p, s
+      integer par(2), i, nk, ip, isetup,ier
+
+      double precision     df, gcvpen
+      integer                          ismethod
       common /BDRspsmooth/ df, gcvpen, ismethod
+
       if (n .gt. 2500) call bdrsplerr()
       do 10 i = 1,n
         dx(i) = (x(i)-x(1))/(x(n)-x(1))
@@ -1244,10 +1282,8 @@ C=== This was 'sort()' in  gamfit's  mysort.f  [or sortdi() in sortdi.f ] :
 C
 C===  FIXME:  Translate to C and add to ../../../main/sort.c <<<<<
 C
-C
-C why on earth  is a[] double precision ????
-      subroutine BDRsort (v,a,ii,jj)
-      implicit double precision (a-h, o-z)
+C     why on earth is       a() double precision ????
+      subroutine BDRsort (v,a, ii,jj)
 c
 c     puts into a the permutation vector which sorts v into
 c     increasing order.  only elements from ii to jj are considered.
@@ -1256,9 +1292,13 @@ c
 c     this is a modification of CACM algorithm #347 by R. C. Singleton,
 c     which is a modified Hoare quicksort.
 c
-      double precision v(*)
-      dimension a(jj),iu(20),il(20)
-      integer t,tt
+      integer ii,jj
+      double precision v(*), a(jj)
+c
+      integer iu(20),il(20)
+      integer t,tt, m,i,j,ij,k,l
+      double precision vt, vtt
+
       m=1
       i=ii
       j=jj
