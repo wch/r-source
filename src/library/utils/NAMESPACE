@@ -1,7 +1,7 @@
 export(.helpForCall, .tryHelp)
 
 export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
-       as.person, as.personList, bibtex, browseEnv, browseURL,
+       as.person, as.personList, browseEnv, browseURL,
        bug.report, capture.output, citation, citEntry, citHeader,
        citFooter, close.socket, compareVersion, contrib.url, data,
        data.entry, dataentry, de, de.ncols, de.restore, de.setup,
@@ -9,15 +9,16 @@ export("?", CRAN.packages, Rprof, apropos, assignInNamespace,
        edit, emacs, example, file.edit, find, fix, fixInNamespace,
        getAnywhere, getFromNamespace, getS3method, head, help,
        help.search, help.start, history, index.search,
-       install.packages, latex, installed.packages, limitedLabels,
+       install.packages, installed.packages, limitedLabels,
        loadhistory, ls.str, lsf.str, make.packages.html, make.socket,
        menu, methods, object.size, old.packages, package.contents,
        package.skeleton, packageDescription, packageStatus, page,
        person, personList, pico, prompt, promptData, readCitationFile,
        read.fwf, read.fortran, read.socket, recover, remove.packages,
        savehistory, str, sessionInfo, summaryRprof, tail, topicName,
-       update.packageStatus, update.packages, upgrade, url.show, vi,
-       vignette, write.socket, wsbrowser, xedit, xemacs)
+       toBibtex, toLatex, update.packageStatus, update.packages,
+       upgrade, url.show, vi, vignette, write.socket, wsbrowser,
+       xedit, xemacs)
 
 S3method("[", getAnywhere)
 S3method(as.character, person)
@@ -25,10 +26,6 @@ S3method(as.character, personList)
 S3method(as.person, default)
 S3method(as.personList, default)
 S3method(as.personList, person)
-S3method(bibtex, citation)
-S3method(bibtex, citationList)
-S3method(bibtex, person)
-S3method(bibtex, personList)
 S3method(edit, data.frame)
 S3method(edit, default)
 S3method(edit, matrix)
@@ -36,14 +33,13 @@ S3method(head, data.frame)
 S3method(head, default)
 S3method(head, "function")
 S3method(head, matrix)
-S3method(latex, sessionInfo)
 S3method(print, citation)
-S3method(print, bibtex)
+S3method(print, Bibtex)
 S3method(print, citationList)
 S3method(print, getAnywhere)
 S3method(print, hsearch)
 S3method(print, "help_files_with_topic")
-S3method(print, latex)
+S3method(print, Latex)
 S3method(print, "ls_str")
 S3method(print, MethodsFunction)
 S3method(print, packageDescription)
@@ -60,6 +56,11 @@ S3method(tail, data.frame)
 S3method(tail, default)
 S3method(tail, "function")
 S3method(tail, matrix)
+S3method(toBibtex, citation)
+S3method(toBibtex, citationList)
+S3method(toBibtex, person)
+S3method(toBibtex, personList)
+S3method(toLatex, sessionInfo)
 S3method(upgrade, packageStatus)
 ## can't register update.packageStatus as update is in stats
 ## and would create a cycle.

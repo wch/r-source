@@ -399,8 +399,8 @@ UTILITIES
 
     o	Package 'utils' contains several new functions:
 
-        - Generics for converting R objects to BibTeX and LaTeX (but
-          almost no methods yet).
+        - Generics toBibtex() and toLatex() for converting
+	  R objects to BibTeX and LaTeX (but almost no methods yet).
 
         - A much improved citation() function which also has a package
 	  argument.  By default the citation is auto-generated from

@@ -1,7 +1,7 @@
 \name{sessionInfo}
 \title{Collect Information About the Current R Session}
 \alias{sessionInfo}
-\alias{latex.sessionInfo}
+\alias{toLatex.sessionInfo}
 \alias{print.sessionInfo}
 \description{
   Print version information about R and attached packages.
@@ -9,7 +9,7 @@
 \usage{
 sessionInfo(package=NULL)
 \S3method{print}{sessionInfo}(x, ...)
-\S3method{latex}{sessionInfo}(object, ...)
+\S3method{toLatex}{sessionInfo}(object, ...)
 }
 \arguments{
  \item{package}{a character vector naming installed packages.  By
@@ -21,5 +21,5 @@ sessionInfo(package=NULL)
 \keyword{misc}
 \examples{
 sessionInfo()
-latex(sessionInfo())
+toLatex(sessionInfo())
 }

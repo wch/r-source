@@ -1,15 +1,15 @@
 \name{citation}
 \title{Citing R and R Packages in Publications}
 \alias{citation}
-\alias{bibtex.citation}
-\alias{bibtex.citationList}
+\alias{toBibtex.citation}
+\alias{toBibtex.citationList}
 \description{
   How to cite R and R packages in publications.
 }
 \usage{
 citation(package = "base", lib.loc = NULL)
-\S3method{bibtex}{citation}(object, \dots)
-\S3method{bibtex}{citationList}(object, \dots)
+\S3method{toBibtex}{citation}(object, \dots)
+\S3method{toBibtex}{citationList}(object, \dots)
 }
 \arguments{
   \item{package}{a character string with the name of a single package.
@@ -39,7 +39,7 @@ citation(package = "base", lib.loc = NULL)
   If only one reference is given, the print method shows both a text
   version and a BibTeX entry for it, if a package has more than one
   reference then only the text versions are shown. The BibTeX versions
-  can be obtained using function \code{bibtex} (see the examples below).
+  can be obtained using function \code{toBibtex} (see the examples below).
 }
 \value{
   An object of class \code{"citationList"}.
@@ -56,5 +56,5 @@ if(nchar(system.file(package="foreign"))) citation("foreign")
 
 ## extract the bibtex entry from the return value
 x <- citation()
-bibtex(x)
+toBibtex(x)
 }

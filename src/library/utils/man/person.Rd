@@ -9,8 +9,8 @@
 \alias{as.personList.default}
 \alias{as.character.person}
 \alias{as.character.personList}
-\alias{bibtex.person}
-\alias{bibtex.personList}
+\alias{toBibtex.person}
+\alias{toBibtex.personList}
 \description{
   A class and utility methods for holding information about persons
   like name and email address.
@@ -24,8 +24,8 @@ as.personList(x)
 \S3method{as.character}{person}(x, ...)
 \S3method{as.character}{personList}(x, ...)
 
-\S3method{bibtex}{person}(object, ...)
-\S3method{bibtex}{personList}(object, ...)
+\S3method{toBibtex}{person}(object, ...)
+\S3method{toBibtex}{personList}(object, ...)
 }
 \arguments{
   \item{first}{character string, first name}
@@ -56,5 +56,5 @@ ps
 as.personList(ps)
 
 ## convert to BibTeX author field
-bibtex(p)
+toBibtex(p)
 }

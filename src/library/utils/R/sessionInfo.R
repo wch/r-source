@@ -34,7 +34,7 @@ print.sessionInfo <- function(x, ...)
 
 }
 
-latex.sessionInfo <- function(object, ...)
+toLatex.sessionInfo <- function(object, ...)
 {
     opkgver <- sapply(object$otherPkgs, function(x) x$Version)
     z <- c("\\begin{itemize}",
@@ -52,7 +52,7 @@ latex.sessionInfo <- function(object, ...)
                        indent=2, exdent=4))
     }
     z <- c(z, "\\end{itemize}")
-    class(z) <- "latex"
+    class(z) <- "Latex"
     z
 }
 

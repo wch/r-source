@@ -66,7 +66,7 @@ print.citation <- function(x, bibtex=TRUE, ...){
 
     if(bibtex){
         cat("A BibTeX entry for LaTeX users is\n\n")
-        print(bibtex(x), prefix="  ")
+        print(toBibtex(x), prefix="  ")
     }
 
     if(!is.null(attr(x, "footer"))){
@@ -179,39 +179,38 @@ as.character.personList <- function(x, ...)
 
 ###**********************************************************
 
-bibtex.person <- function(object, ...)
+toBibtex.person <- function(object, ...)
 {
     if(length(grep(" ", object$name["last"]))>0)
         object$name["last"] <- paste("{", object$name["last"], "}", sep="")
     as.character(object)
 }
 
-bibtex.personList <- function(object, ...)
+toBibtex.personList <- function(object, ...)
 {
-    z <- sapply(object, bibtex)
+    z <- sapply(object, toBibtex)
     paste(z, collapse = " and ")
 }
 
-bibtex.citation <- function(object, ...)
+toBibtex.citation <- function(object, ...)
 {
     z <- paste("@", attr(object, "entry"), "{,", sep="")
 
     if("author" %in% names(object)){
-        object$author <- bibtex(object$author)
+        object$author <- toBibtex(object$author)
     }
     
     for(n in names(object))
         z <- c(z, paste("  ", n, " = {", object[[n]], "},", sep=""))
 
     z <- c(z, "}")
-    class(z) <- "bibtex"
-
+    class(z) <- "Bibtex"
     z
 }
 
-bibtex.citationList <- function(object, ...)
+toBibtex.citationList <- function(object, ...)
 {
-    lapply(object, bibtex)
+    lapply(object, toBibtex)
 }
               
 ###**********************************************************
