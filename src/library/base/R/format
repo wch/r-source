@@ -68,7 +68,7 @@ function (x, digits=NULL, width=max(0, digits) + 1, format=NULL,
 	else {
 		if (any(format == c("f", "e", "E", "g", "G"))) {
 			if (mode == "integer")
-				mode <- storage.mode(x) <- "single"
+				mode <- storage.mode(x) <- "real"
 		}
 		else if (format == "d") {
 			if (mode != "integer")
@@ -83,7 +83,7 @@ function (x, digits=NULL, width=max(0, digits) + 1, format=NULL,
 	i.strlen <-
 	  pmax(abs(width),
 	       if(format == "f") {
-		 xEx <- as.integer(floor(log10(abs(x))))
+		 xEx <- as.integer(floor(log10(abs(x+ifelse(x==0,1,0)))))
 		 as.integer(x < 0 | flag!="") + abs(digits) + 2 + pmax(xEx,0)
 	       } else rep(abs(digits)+8, n) # format == "g" or "e"
 	       )
