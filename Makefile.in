@@ -2,13 +2,13 @@ install:
 	@echo Building/Installing R
 	cd src; make install
 
-docs: help html latex
+docs: build-docs
 
 help: build-help
 html: build-html
 latex: build-latex
 
-build-help build-latex build-html test-Examples:
+build-docs build-help build-latex build-html test-Examples:
 	@cd etc; make $@
 
 tests: test-Examples

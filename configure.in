@@ -358,6 +358,23 @@ fi
 
 AC_PATH_PROG(PERL, perl)
 
+if test -x $PERL 
+then
+    AC_MSG_CHECKING(wether perl is perl 5)
+    PERL_VERSION_NUMBER=`perl -v | sed -n 's/^.*perl.*version \(.\).*/\1/p'`
+    if test $PERL_VERSION_NUMBER -ge 5
+    then
+        NO_PERL5=""
+        AC_MSG_RESULT(yes)
+    else
+        NO_PERL5="true"
+        AC_MSG_RESULT(no)
+    fi
+else
+    NO_PERL5="true"
+fi
+
+
 AC_SUBST(LDCMD)
 AC_SUBST(DLLFLAGS)
 AC_SUBST(PICFLAGS)
@@ -367,6 +384,7 @@ AC_SUBST(BLAS)
 AC_SUBST(FFLAGS)
 AC_SUBST(FPICFLAGS)
 AC_SUBST(PERL)
+AC_SUBST(NO_PERL5)
 
 AC_OUTPUT(Makefile
 src/main/Makefile
@@ -379,12 +397,12 @@ src/front/R.sh
 etc/SHLIB
 etc/COMPILE
 etc/INSTALL
+etc/REMOVE
 etc/Rdconv
 etc/Rdindex
 etc/Rman2Rd
 etc/Sd2Rd
-etc/build-html
-etc/build-index
+etc/build-help
 etc/build-htmlpkglist
 etc/help.pretty
 etc/html2dos
@@ -394,7 +412,7 @@ cmd/fwf2table
 )
 
 AC_OUTPUT_COMMANDS(
-(cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd \
-         build-html build-htmlpkglist build-index help.pretty html2dos)
+(cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
+         build-help build-htmlpkglist help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
 )
