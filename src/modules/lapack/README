@@ -1,0 +1,19 @@
+The Fortran routines here are extracted from LAPACK 3.0
+(http://www.netlib.org/lapack and mirrors).
+
+double.f are support routines for `real' LAPACK calls
+cmplx.f are support routines for LAPACK calls from complex arithmetic
+routines, that are only used if COMPLEX*16 is supported by the Fortran
+compiler and compatible with the Rcomplex type (guaranteed for f2c users).
+
+blas2.f contains additional (to src/appl/blas.f) BLAS routines needed
+by double.f.
+
+cmplxblas.f contains BLAS routines needed by cmplx.f.
+
+blas2.f and complxblas.f are not used if a full BLAS implementation is
+found at configure time.
+
+Do not be tempted to replace double.f and cmplx.f by another LAPACK
+installation.  dgeev.f had to be corrected (lines 3047-8 of double.f)
+to allow LWORK queries to run.

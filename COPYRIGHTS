@@ -156,3 +156,16 @@ src/main/RNG.c
     AS LONG AS YOU MAKE ABSOLUTELY NO CHANGES!
 
   and is used unchanged.
+
+src/modules/lapack/double.f, cmplx.f
+
+  Extracted from
+  *  -- LAPACK routine (version 3.0) --
+  *     Univ. of Tennessee, Univ. of California Berkeley, NAG Ltd.,
+  *     Courant Institute, Argonne National Lab, and Rice University
+
+  The README says
+
+    It is freely-available software, and is copyrighted.
+
+  although no actual copyright statement appears in the code.
