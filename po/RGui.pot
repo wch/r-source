@@ -1006,17 +1006,14 @@ msgid "Jpeg"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1546
-#, c-format
 msgid "50% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1547
-#, c-format
 msgid "75% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1548
-#, c-format
 msgid "100% quality..."
 msgstr ""
 
