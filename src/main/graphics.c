@@ -3142,7 +3142,7 @@ void GRect(double x0, double y0, double x1, double y1, int coords,
 	dd->gp.xpd = xpdsaved;
 	if (dd->dp.canClip && result == 1) {
 	    GClip(dd);
-	    dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd); 
+	    dd->dp.rect(x0, y0, x1, y1, coords, bg, fg, dd);
 	}
 	else {
 	    vmax = vmaxget();
@@ -3265,7 +3265,7 @@ static int clipTextCode(double x, double y, char *str,
     double theta1 = M_PI/2 - angle;
     double width = GStrWidth(str, INCHES, dd);
     double height = GStrHeight(str, INCHES, dd);
-    double length = sqrt(width*width + height*height);
+    double length = pythag(width, height);
     double theta2 = angle + atan2(height, width);
     x -= hadj*width*cos(angle);
     y -= hadj*width*sin(angle);
@@ -3780,7 +3780,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    break;
 
 	case 3: /* S plus */
-	    xc = sqrt(2.)*RADIUS*GSTR_0;
+	    xc = M_SQRT2*RADIUS*GSTR_0;
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    GLine(x-xc, y, x+xc, y, INCHES, dd);
 	    GLine(x, y-xc, x, y+xc, INCHES, dd);
@@ -3794,7 +3794,7 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    break;
 
 	case 5: /* S diamond */
-	    xc = sqrt(2.) * RADIUS * GSTR_0;
+	    xc = M_SQRT2 * RADIUS * GSTR_0;
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+xc;
@@ -3829,13 +3829,13 @@ void GSymbol(double x, double y, int coords, int pch, DevDesc *dd)
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    GLine(x-xc, y-xc, x+xc, y+xc, INCHES, dd);
 	    GLine(x-xc, y+xc, x+xc, y-xc, INCHES, dd);
-	    xc = sqrt(2.) * xc;
+	    xc = M_SQRT2 * xc;
 	    GLine(x-xc, y, x+xc, y, INCHES, dd);
 	    GLine(x, y-xc, x, y+xc, INCHES, dd);
 	    break;
 
 	case 9: /* S diamond and plus superimposed */
-	    xc = sqrt(2.) * RADIUS * GSTR_0;
+	    xc = M_SQRT2 * RADIUS * GSTR_0;
 	    GConvert(&x, &y, coords, INCHES, dd);
 	    xx[0] = x-xc; yy[0] = y;
 	    xx[1] = x; yy[1] = y+xc;
