@@ -222,20 +222,20 @@ static void SaveAsPostscript(DevDesc *dd, char *fn)
 	SEXP names = getAttrib(s, R_NamesSymbol);
 	int i,done;
 	for (i=0, done=0; (done<4) && (i<length(s)) ; i++) {
-	    if(!strcmp("family", CHAR(STRING(names)[i]))) {
-		strcpy(family, CHAR(STRING(VECTOR(s)[i])[0]));
+	    if(!strcmp("family", CHAR(STRING_ELT(names, i)))) {
+		strcpy(family, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
 		done += 1;
 	    }
-	    if(!strcmp("paper", CHAR(STRING(names)[i]))) {
-		strcpy(paper, CHAR(STRING(VECTOR(s)[i])[0]));
+	    if(!strcmp("paper", CHAR(STRING_ELT(names, i)))) {
+		strcpy(paper, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
 		done += 1;
 	    }
-	    if(!strcmp("bg", CHAR(STRING(names)[i]))) {
-		strcpy(bg, CHAR(STRING(VECTOR(s)[i])[0]));
+	    if(!strcmp("bg", CHAR(STRING_ELT(names, i)))) {
+		strcpy(bg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
 		done += 1;
 	    }
-	    if(!strcmp("fg", CHAR(STRING(names)[i]))) {
-		strcpy(fg, CHAR(STRING(VECTOR(s)[i])[0]));
+	    if(!strcmp("fg", CHAR(STRING_ELT(names, i)))) {
+		strcpy(fg, CHAR(STRING_ELT(VECTOR_ELT(s, i), 0)));
 		done += 1;
 	    }
 	}
@@ -659,17 +659,18 @@ extern GPar savedGPar;
 #define GETDL SEXP vDL=findVar(install(".SavedPlots"), R_NilValue)
 #define SETDL gsetVar(install(".SavedPlots"), vDL, R_NilValue)
 #define PLOTHISTORYMAGIC 31415
-#define pMAGIC      (INTEGER(VECTOR(vDL)[0])[0])
-#define pNUMPLOTS   (INTEGER(VECTOR(vDL)[1])[0])
-#define pMAXPLOTS   (INTEGER(VECTOR(vDL)[2])[0])
-#define pCURRENTPOS (INTEGER(VECTOR(vDL)[3])[0])
-#define pHISTORY    (VECTOR(vDL)[4])
-#define pCURRENT    (VECTOR(pHISTORY)[pCURRENTPOS])
-#define pCURRENTdl  (VECTOR(pCURRENT)[0])
-#define pCURRENTgp  (INTEGER(VECTOR(pCURRENT)[1]))
+#define pMAGIC      (INTEGER(VECTOR_ELT(vDL, 0))[0])
+#define pNUMPLOTS   (INTEGER(VECTOR_ELT(vDL, 1))[0])
+#define pMAXPLOTS   (INTEGER(VECTOR_ELT(vDL, 2))[0])
+#define pCURRENTPOS (INTEGER(VECTOR_ELT(vDL, 3))[0])
+#define pHISTORY    (VECTOR_ELT(vDL, 4))
+#define SET_pHISTORY(v)    (SET_VECTOR_ELT(vDL, 4, v))
+#define pCURRENT    (VECTOR_ELT(pHISTORY, pCURRENTPOS))
+#define pCURRENTdl  (VECTOR_ELT(pCURRENT, 0))
+#define pCURRENTgp  (INTEGER(VECTOR_ELT(pCURRENT, 1)))
 #define pCHECK      if ((TYPEOF(vDL)!=VECSXP)||\
-                       (TYPEOF(VECTOR(vDL)[0])!=INTSXP) ||\
-                       (LENGTH(VECTOR(vDL)[0])!=1) ||\
+                       (TYPEOF(VECTOR_ELT(vDL, 0))!=INTSXP) ||\
+                       (LENGTH(VECTOR_ELT(vDL, 0))!=1) ||\
                        (pMAGIC != PLOTHISTORYMAGIC)) {\
                        R_ShowMessage("Plot history seems corrupted");\
                        return;}
@@ -690,14 +691,14 @@ static SEXP NewPlotHistory(int n)
 
     PROTECT(vDL = allocVector(VECSXP, 5));
     for (i = 0; i < 4; i++)
-	PROTECT(VECTOR(vDL)[i] = allocVector(INTSXP, 1));
-    PROTECT(pHISTORY = allocVector(VECSXP, n));
+	PROTECT(SET_VECTOR_ELT(vDL, i, allocVector(INTSXP, 1)));
+    PROTECT(SET_pHISTORY (allocVector(VECSXP, n)));
     pMAGIC = PLOTHISTORYMAGIC;
     pNUMPLOTS = 0;
     pMAXPLOTS = n;
     pCURRENTPOS = -1;
     for (i = 0; i < n; i++)
-	VECTOR(pHISTORY)[i] = R_NilValue;
+	SET_VECTOR_ELT(pHISTORY, i, R_NilValue);
     SETDL;
     UNPROTECT(6);
     return vDL;
@@ -713,7 +714,7 @@ static SEXP GrowthPlotHistory(SEXP vDL)
     oldCurrent = pCURRENTPOS;
     PROTECT(vDL = NewPlotHistory(pMAXPLOTS + GROWTH));
     for (i = 0; i < oldNPlots; i++)
-	VECTOR(pHISTORY)[i] = VECTOR(vOLD)[i];
+	SET_VECTOR_ELT(pHISTORY, i, VECTOR_ELT(vOLD, i));
     pNUMPLOTS = oldNPlots;
     pCURRENTPOS = oldCurrent;
     SETDL;
@@ -745,11 +746,11 @@ static void AddtoPlotHistory(SEXP dl,GPar *gp,int replace)
 	where = pNUMPLOTS;
     PROTECT(dl);
     PROTECT(nDL = allocVector(VECSXP, 2));
-    VECTOR(nDL)[0] = dl;
+    SET_VECTOR_ELT(nDL, 0, dl);
     lGPar = 1 + sizeof(GPar) / sizeof(int);
-    VECTOR(nDL)[1] = allocVector(INTSXP, lGPar);
-    copyGPar(gp, (GPar *) INTEGER(VECTOR(nDL)[1]));
-    VECTOR(pHISTORY)[where] = nDL;
+    SET_VECTOR_ELT(nDL, 1, allocVector(INTSXP, lGPar));
+    copyGPar(gp, (GPar *) INTEGER(VECTOR_ELT(nDL, 1)));
+    SET_VECTOR_ELT(pHISTORY, where, nDL);
     pCURRENTPOS = where;
     if (!replace) pNUMPLOTS += 1;
     SETDL;
@@ -1928,12 +1929,12 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
     filename = CADR(args);
     if (!isString(filename) || LENGTH(filename) != 1)
 	errorcall(call, "invalid filename argument");
-    fn = CHAR(STRING(filename)[0]);
+    fn = CHAR(STRING_ELT(filename, 0));
     fixslash(fn);
     type = CADDR(args);
     if (!isString(type) || LENGTH(type) != 1)
 	errorcall(call, "invalid type argument");
-    tp = CHAR(STRING(type)[0]);
+    tp = CHAR(STRING_ELT(type, 0));
 
     if(!strcmp(tp, "png")) {
 	SaveAsPng(dd, fn);
