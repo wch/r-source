@@ -1,5 +1,6 @@
 \name{connection}
 \alias{file}
+\alias{pipe}
 \alias{textConnection}
 \alias{open}
 \alias{open.connection}
@@ -57,16 +58,16 @@ isIncomplete(con)
   argument the connection is re-positioned (if possible) to the
   specified position.
 
-  Text connections are opened and the character vector is copied at the
+  Text connections \emph{are} opened and the character vector is copied at the
   time the connection object is created, and \code{close} destroys the copy.
   You cannot \code{seek} on a text connection, and \code{seek} will
   always return zero as the position.
 
   Possible values for the mode \code{open} to open a connection are
-  \description{
-    \item{\code{"rt"}}{or \code{"r"}. Open for reading in text mode.}
-    \item{\code{"wt"}}{or \code{"w"}. Open for writing in text mode.}
-    \item{\code{"at"}}{or \code{"a"}. Open for appending in text mode.}
+  \describe{
+    \item{\code{"r"}}{or \code{"rt"}. Open for reading in text mode.}
+    \item{\code{"w"}}{or \code{"wt"}. Open for writing in text mode.}
+    \item{\code{"a"}}{or \code{"at"}. Open for appending in text mode.}
     \item{\code{"rb"}}{Open for reading in binary mode.}
     \item{\code{"wb"}}{Open for writing in binary mode.}
     \item{\code{"ab"}}{Open for appending in binary mode.}
