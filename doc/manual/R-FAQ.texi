@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 1.9-11 @value{FAQ-YEAR}-05-05
+@set FAQ-VERSION 1.9-12 @value{FAQ-YEAR}-05-07
 @set REL-VERSION 1.9.0
 @set REL-YEAR 2004
 @set FAQ-ISBN 3-900051-01-1
@@ -773,6 +773,8 @@ Daily mirrors are available at @acronym{URL}s including
 @tab (INRA, Toulouse, France)
 @item @uref{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
+@item @uref{http://cran.pt.R-project.org/}
+@tab (Universidade do Porto, Portugal)
 @item @uref{http://cran.uk.R-project.org/}
 @tab (U of Bristol, United Kingdom)
 @item @uref{http://cran.us.R-project.org/}
