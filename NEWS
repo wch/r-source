@@ -1,6 +1,27 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       1.4 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 1.4.0
+
+
+NEW FEATURES
+
+    o	Function identical(), a fast and reliable way to test for exact
+	equality of two objects.
+
+
+
+BUG FIXES
+
+
+
+	**************************************************
+	*						 *
 	*	       1.3 SERIES NEWS			 *
 	*						 *
 	**************************************************
