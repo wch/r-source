@@ -65,15 +65,11 @@ int R_IsNA(double);		/* True for Real NA only */
 int R_IsNaN(double);		/* True for special NaN, *not* for NA */
 
 #define MATH_CHECK(call)	(call)
-#ifdef Win32
-extern int _isnan(double);
-extern int _finite(double);
-#define FINITE(x)		_finite(x)
-#define ISNAN(x)		_isnan(x)  /* -> True, *both* for NA | NaN */
-#else
 #define FINITE(x)		finite(x)
-#define ISNAN(x)		isnan(x)  /* -> True, *both* for NA | NaN */
-#endif
+#define ISNAN(x)		(isnan(x)!=0)  /* -> True, *both* for NA | NaN */
+						/* NOTE: some systems do
+						 * not return 1 for
+						 * TRUE!*/
 #define ISNA(x)			R_IsNA(x) /* from ../main/arithmetic.c */
 
 #else
