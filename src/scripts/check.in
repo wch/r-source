@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.127 $ ';
+my $revision = ' $Revision: 1.128 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1198,11 +1198,11 @@ sub check_pkg {
 
 	if($opt_use_gct) {
             $cmd = "(echo 'gctorture(TRUE)'; cat ${pkgname}-Ex.R) " .
-	      "| ${R::Vars::R_EXE} ${R_opts} > ${pkgname}-Ex.Rout";
+	      "| ${R::Vars::R_EXE} ${R_opts} > ${pkgname}-Ex.Rout 2>&1";
 	}
 	else {
             $cmd = "${R::Vars::R_EXE} ${R_opts} " .
-	      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout";
+	      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout 2>&1";
 	}
 	if(R_system($cmd)) {
 	    $log->error();
