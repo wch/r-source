@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2002	The R Development Core Team.
+ *  Copyright (C) 1998--2003	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -198,6 +198,10 @@ static void R_EndProfiling()
     R_Profiling = 0;
 }
 
+#if !defined(Win32) && defined(_R_HAVE_TIMING_)
+double R_getClockIncrement(void);
+#endif
+
 static void R_InitProfiling(char * filename, int append, double dinterval)
 {
 #ifndef Win32
@@ -206,8 +210,17 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     int wait;
     HANDLE Proc = GetCurrentProcess();
 #endif
-    int interval = 1e6 * dinterval+0.5;
-
+    int interval;
+    
+    /* according to man setitimer, it waits until the next clock
+       tick, usually 10ms, so avoid too small intervals here */
+#ifdef _R_HAVE_TIMING_
+    double clock_incr = R_getClockIncrement();
+    int nclock = floor(dinterval/clock_incr + 0.5);
+    interval = 1e6 * ((nclock > 1)?nclock:1) * clock_incr + 0.5;
+#else
+    interval = 1e6 * dinterval + 0.5;
+#endif
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = fopen(filename, append ? "a" : "w");
     if (R_ProfileOutfile == NULL)

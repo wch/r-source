@@ -33,6 +33,10 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
   \R process is running and executing an \R command.  It is not however just
   CPU time, for if \code{readline()} is waiting for input, that counts
   (on Windows, but not on Unix).
+
+  Note that the timing interval cannot be too small, for the time spent
+  in each profiling step is added to the interval.  What is feasible is
+  machine-dependent, but 10ms seems as small as advisable on a 1GHz machine.
 }
 \note{
   Using \code{Rcmd Rprof} needs Windows Perl to be installed.

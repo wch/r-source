@@ -324,6 +324,10 @@ BUG FIXES
 	used, and that conversion neither respected `digits' nor
 	`quote'.
 
+    o	Rprof() gave misleading results for too small values of
+	`interval' and in practice the default 20ms was about as small
+	as is advisable on Linux.  Now the interval is forced to be at
+	least one clock tick.
 
 
 
