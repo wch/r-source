@@ -57,7 +57,7 @@ my $opt_vignettes = 1;
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
-R::Vars::error("R_HOME", "R_CMD", "R_EXE");
+R::Vars::error("R_HOME", "R_EXE");
 
 my @known_options = ("help|h", "version|v", "outdir|o:s", "library|l:s",
 		    "no-clean", "no-examples", "no-tests", "no-latex",
@@ -237,10 +237,15 @@ foreach my $pkg (@ARGV) {
 		    (($opt_install =~ /^check/) ||
 		     $ENV{"R_CHECK_USE_INSTALL_LOG"} ||
 		     !(-t STDIN && -t STDOUT));
-		my $cmd = "${R::Vars::R_CMD} INSTALL -l";
-		$cmd .= " " . &shell_quote_file_path($library);
-		$cmd .= " --fake" if($opt_install eq "fake");
-		$cmd .= " " . &shell_quote_file_path($pkgdir);
+		my $INSTALL_opts = "";
+		$INSTALL_opts = "--fake" if($opt_install eq "fake");
+		my $cmd =
+		    join(" ",
+			 (&shell_quote_file_path(${R::Vars::R_EXE}),
+			  "CMD INSTALL -l",
+			  &shell_quote_file_path($library),
+			  "$INSTALL_opts",
+			  &shell_quote_file_path($pkgdir)));
 		if(!$use_install_log) {
 		    ## Case A: No redirection of stdout/stderr from
 		    ## installation.
@@ -1249,13 +1254,16 @@ sub check_pkg {
   		     "${pkgname} ${Rexdir} ".
   		     "> ${pkgname}-Ex.R";
         } else {
-	    $cmd = join(" ",
-			("${R::Vars::R_CMD} perl",
-			 &file_path(${R::Vars::R_HOME}, "share", "perl",
-				    "massage-Examples.pl"),
-			 "${pkgname}",
-			 &shell_quote_file_path(${Rexdir}),
-			 "> ${pkgname}-Ex.R"));
+	    $cmd =
+		join(" ",
+		     (&shell_quote_file_path(${R::Vars::R_EXE}),
+		      "CMD perl",
+		      &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+							"share", "perl",
+							"massage-Examples.pl")),
+		      "${pkgname}",
+		      &shell_quote_file_path(${Rexdir}),
+		      "> ${pkgname}-Ex.R"));
         }
 
  	if(R_system($cmd)) {
@@ -1272,12 +1280,19 @@ sub check_pkg {
 	$log->checking("examples");
 
 	if($opt_use_gct) {
-            $cmd = "(echo 'gctorture(TRUE)'; cat ${pkgname}-Ex.R) " .
-	      "| ${R::Vars::R_EXE} ${R_opts} > ${pkgname}-Ex.Rout 2>&1";
+            $cmd = join(" ",
+			("(echo 'gctorture(TRUE)';",
+			 "cat ${pkgname}-Ex.R) |",
+			 &shell_quote_file_path(${R::Vars::R_EXE}),
+			 "${R_opts}",
+			 "> ${pkgname}-Ex.Rout 2>&1"));
 	}
 	else {
-            $cmd = "${R::Vars::R_EXE} ${R_opts} " .
-	      "< ${pkgname}-Ex.R > ${pkgname}-Ex.Rout 2>&1";
+            $cmd = join(" ",
+			(&shell_quote_file_path(${R::Vars::R_EXE}),
+			 "${R_opts}",
+			 "< ${pkgname}-Ex.R",
+			 "> ${pkgname}-Ex.Rout 2>&1"));
 	}
 	if(R_system($cmd)) {
 	    $log->error();
@@ -1337,9 +1352,10 @@ sub check_pkg {
 	foreach my $file (&list_files($testsrcdir)) {
 	    copy($file, basename($file));
 	}
-        my $makefiles = "-f " . &file_path(${R::Vars::R_HOME},
-					   "share", "make",
-					   "tests.mk");
+        my $makefiles = "-f " .
+	    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
+					      "share", "make",
+					      "tests.mk"));
         if($WINDOWS) {
             $makefiles = "-f ${R::Vars::R_HOME}/share/make/wintests.mk";}
         my $makevars = "";
@@ -1516,9 +1532,12 @@ sub check_pkg {
 	else {
 	    if($HAVE_LATEX) {
 		$log->checking("DVI version of manual");
-		my $cmd = "${R::Vars::R_CMD} Rd2dvi --batch --no-preview";
-		$cmd .= " -o ${pkgname}-manual.dvi >/dev/null 2>&1";
-		$cmd .= " $pkgdir";
+		my $cmd =
+		    join(" ",
+			 (&shell_quote_file_path("${R::Vars::R_EXE}"),
+			  "CMD Rd2dvi --batch --no-preview",
+			  "-o ${pkgname}-manual.dvi >/dev/null 2>&1",
+			  "$pkgdir"));
 		if(R_system($cmd)) {
 		    $log->error();
 		    $log->print("LaTeX errors when creating DVI version.\n");

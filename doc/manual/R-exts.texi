@@ -608,8 +608,8 @@ if test -z "$@{R_HOME@}"; then
   echo "could not determine R_HOME"
   exit 1
 fi
-CC=`$@{R_HOME@}/bin/R CMD config CC`
-CFLAGS=`$@{R_HOME@}/bin/R CMD config CFLAGS`
+CC=`"$@{R_HOME@}/bin/R" CMD config CC`
+CFLAGS=`"$@{R_HOME@}/bin/R" CMD config CFLAGS`
 @end group
 @end smallexample
 
@@ -636,9 +636,9 @@ Autoconf Macro Archive, one can simply do
 
 @smallexample
 @group
-F77=`$@{R_HOME@}/bin/R CMD config F77`
+F77=`"$@{R_HOME@}/bin/R" CMD config F77`
 AC_PROG_F77
-FLIBS=`$@{R_HOME@}/bin/R CMD config FLIBS`
+FLIBS=`"$@{R_HOME@}/bin/R" CMD config FLIBS`
 ACX_BLAS([], AC_MSG_ERROR([could not find your BLAS library], 1))
 @end group
 @end smallexample

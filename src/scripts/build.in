@@ -45,7 +45,7 @@ $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-R::Vars::error("R_HOME", "R_CMD");
+R::Vars::error("R_HOME", "R_EXE");
 
 my $WINDOWS = ($R::Vars::OSTYPE eq "windows");
 
@@ -120,7 +120,8 @@ foreach my $pkg (@ARGV) {
 	    or die "Error: cannot create directory '$libdir'\n";
 
 	if(R_system(join(" ",
-			 ("${R::Vars::R_CMD} INSTALL -l",
+			 (&shell_quote_file_path(${R::Vars::R_EXE}),
+			  "CMD INSTALL -l",
 			  &shell_quote_file_path($libdir),
 			  "$INSTALL_opts",
 			  &shell_quote_file_path($pkg))))) {

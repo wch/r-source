@@ -41,7 +41,7 @@ Rlapack_la = libRlapack$(DYLIB_EXT)
 Rexecmodulesdir_LTLIBRARIES = $(lapack_la)
 lapack_la_SOURCES = $(SOURCES)
 lapack_la_OBJECTS = $(OBJECTS)
-@USE_LIBTOOL_TRUE@lapack_la_LDFLAGS = -avoid-version -rpath $(Rexecmodulesdir) -module
+@USE_LIBTOOL_TRUE@lapack_la_LDFLAGS = -avoid-version -rpath "$(Rexecmodulesdir)" -module
 ## Used for passing '+s' to SHLIB_LINK on HP-UX.
 @USE_LIBTOOL_FALSE@lapack_la_LDFLAGS = @LAPACK_LDFLAGS@
 lapack_la_LIBADD = $(LIBR)
@@ -96,15 +96,15 @@ Rlapack_install: $(Rlapack_la)
 	  $(R_HOME)/lib/$(Rlapack_la)
 
 install: installdirs
-@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
-@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) $(Rexecmodulesdir)
-@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) $(Rexeclibdir)/libRlapack$(DYLIB_EXT)
+@USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(lapack_la) "$(Rexecmodulesdir)/lapack$(SHLIB_EXT)"
+@USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(lapack_la) "$(Rexecmodulesdir)"
+@USE_EXTERNAL_LAPACK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(Rlapack_la) "$(Rexeclibdir)/libRlapack$(DYLIB_EXT)"
 installdirs:
-	@$(MKINSTALLDIRS) $(Rexecmodulesdir)
+	@$(MKINSTALLDIRS) "$(Rexecmodulesdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -f $(Rexecmodulesdir)/lapack$(SHLIB_EXT)
+	@rm -f "$(Rexecmodulesdir)/lapack$(SHLIB_EXT)"
 
 mostlyclean: clean
 clean:

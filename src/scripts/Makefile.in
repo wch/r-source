@@ -97,27 +97,27 @@ $(top_builddir)/libtool:
 install: installdirs install-cmds
 	@rm -f $(bindir)/R
 	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
-	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > $(Rexecbindir)/R; \
+	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > "$(Rexecbindir)/R"; \
 	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > $(bindir)/R)
-	@chmod 755 $(bindir)/R $(Rexecbindir)/R
+	@chmod 755 $(bindir)/R "$(Rexecbindir)/R"
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)
 install-cmds:
-	@$(MKINSTALLDIRS) $(Rexecbindir)
+	@$(MKINSTALLDIRS) "$(Rexecbindir)"
 	@for f in $(SCRIPTS_S); do \
-	  $(INSTALL_SCRIPT) $(srcdir)/$${f} $(Rexecbindir); \
+	  $(INSTALL_SCRIPT) $(srcdir)/$${f} "$(Rexecbindir)"; \
 	done
 	@for f in $(SCRIPTS_B); do \
-	  $(INSTALL_SCRIPT) $${f} $(Rexecbindir); \
+	  $(INSTALL_SCRIPT) $${f} "$(Rexecbindir)"; \
 	done
-	@$(INSTALL_SCRIPT) $(top_builddir)/libtool $(Rexecbindir)
+	@$(INSTALL_SCRIPT) $(top_builddir)/libtool "$(Rexecbindir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@for f in $(SCRIPTS_S) $(SCRIPTS_B) libtool R; do \
-	  rm -f $(Rexecbindir)/$${f}; \
+	  rm -f "$(Rexecbindir)/$${f}"; \
 	done
-	@rmdir $(Rexecbindir) 2>/dev/null \
+	@rmdir "$(Rexecbindir)" 2>/dev/null \
 	  || echo "  subdir $(Rexecbindir) not removed"
 	@rm -f $(bindir)/R
 

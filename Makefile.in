@@ -96,18 +96,18 @@ install: installdirs
 
 
 installdirs:
-	@$(MKINSTALLDIRS) $(rhome)
+	@$(MKINSTALLDIRS) "$(rhome)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@for f in $(INSTFILES); do \
-	  rm -f $(rhome)/$${f}; \
+	  rm -f "$(rhome)/$${f}"; \
 	done
-	@rm -rf $(Rexecbindir) $(Rexeclibdir)
-	@rm -rf $(rhome)/demos
-	@rm -rf $(rhome)/gnome
+	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
+	@rm -rf "$(rhome)/demos"
+	@rm -rf "$(rhome)/gnome"
 
 
 mostlyclean: clean

@@ -37,7 +37,7 @@ libunix_a_OBJECTS = $(OBJECTS)
 noinst_LTLIBRARIES = libunix.la
 libunix_la_SOURCES = $(SOURCES)
 libunix_la_OBJECTS = $(OBJECTS:.o=.lo)
-@USE_LIBTOOL_TRUE@libunix_la_LDFLAGS = -avoid-version -rpath $(Rexeclibdir)
+@USE_LIBTOOL_TRUE@libunix_la_LDFLAGS = -avoid-version -rpath "$(Rexeclibdir)"
 
 all: Makefile Makedeps R
 

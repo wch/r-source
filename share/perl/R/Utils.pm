@@ -109,7 +109,9 @@ sub R_runR
     open RIN, "> $Rin" or die "Error: cannot write to '$Rin'\n";
     print RIN "$cmd\n";
     close RIN;
-    R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout} 2>&1",
+    R_system(join(" ",
+		  (&shell_quote_file_path(${R::Vars::R_EXE}),
+		   "${Ropts} < ${Rin} > ${Rout} 2>&1")),
 	     $Renv);
     my @out;
     open ROUT, "< $Rout";
@@ -139,7 +141,9 @@ sub R_run_R {
     print RIN "$cmd\n";
     close(RIN);
     $status =
-	R_system("${R::Vars::R_EXE} ${Ropts} < ${Rin} > ${Rout} 2>&1",
+	R_system(join(" ",
+		      (&shell_quote_file_path(${R::Vars::R_EXE}),
+		       "${Ropts} < ${Rin} > ${Rout} 2>&1")),
 		 $Renv);
     @out = &read_lines($Rout);
     unlink($Rin);
