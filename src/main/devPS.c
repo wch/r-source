@@ -2998,7 +2998,7 @@ static void PDF_Clip(double x0, double x1, double y0, double y1, NewDevDesc *dd)
 
     if(pd->inText) textoff(pd);
     if(x0 != 0.0 || y0 != 0.0 || x1 != 72*pd->width || y1 != 72*pd->height)
-	fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W s\n",
+	fprintf(pd->pdffp, "Q q %.2f %.2f %.2f %.2f re W n\n",
 		x0, y0, x1 - x0, y1 - y0);
     else fprintf(pd->pdffp, "Q q\n");
     PDF_Invalidate(dd);
