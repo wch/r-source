@@ -68,8 +68,8 @@ void init(double *work)
 
 	Algorithm AS 177.1   Appl. Statist. (1982) Vol. 31, No. 2
 
-	calling R's pnorm() instead of
-	EXTERNAL alnorm { = Appl.Stat. AS 66 }	 = {1 - } pnorm(.)
+	Now calling R's pnorm() instead of
+	external alnorm { = Appl.Stat. AS 66 }
 */
 
     const double xstart = -9.;
@@ -100,7 +100,7 @@ void init(double *work)
 } /* init */
 
 
-double correc(int, int);
+static double correc(int, int);
 
 void nscor2(float *s, int *n, int *n2, int *ier)
 {
@@ -199,7 +199,7 @@ void nscor2(float *s, int *n, int *n2, int *ier)
 } /* nscor2 */
 
 
-double correc(int i, int n)
+static double correc(int i, int n)
 {
 /*	calculates correction for tail area of the i-th largest of n
 	order statistics. */
@@ -215,11 +215,12 @@ double correc(int i, int n)
     double an;
 
     if (i * n == 4)		return c14;
-    if (i < 1 || i > 7)		return 0.f;
-    if (i != 4 && n > 20)	return 0.f;
-    if (i == 4 && n > 40)	return 0.f;
+    if (i < 1 || i > 7)		return 0;
+    if (i != 4 && n > 20)	return 0;
+    if (i == 4 && n > 40)	return 0;
     /* else : */
     an = (double) n;
     an = 1. / (an * an);
-    return((c1[i - 1] + an * (c2[i - 1] + an * c3[i - 1])) * mic);
+    i--;
+    return((c1[i] + an * (c2[i] + an * c3[i])) * mic);
 } /* correc */
