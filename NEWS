@@ -154,6 +154,7 @@ NEW FEATURES
 
     o   New bitmap devices png() and jpeg() on Unix/X11.
 
+    o   expand.model.frame() for adding variables to a model frame
 
 BUG FIXES
 

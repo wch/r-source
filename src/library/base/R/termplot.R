@@ -1,6 +1,6 @@
 termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 		     rug=FALSE,terms=NULL, se=FALSE, xlabs=NULL, ylab=NULL,
-                     main = deparse(model$call), ...)
+                     colors=list(curve=1,points=2,rug=1,se=3), main=NULL,...)
 {
     terms <- ## need if(), since predict.coxph() has non-NULL default terms :
 	if (is.null(terms))
@@ -15,7 +15,7 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
     ## Defaults:
     if (is.null(xlabs))
 	xlabs <- nmt
-    if (is.null(ylab)) # "link(.)" really is only for  glm() alikes...
+    if (is.null(ylab)) 
 	ylab <- substitute(link(foo),
                            list(foo=formula(model)[[2]]))
 
@@ -45,20 +45,20 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 	    ff <- mf[,nmt[i]]
 	    ll <- levels(ff)
 	    xlims <- range(seq(along=ll)) + c(-.5, .5)
+            xx <- codes(ff)
 	    if(rug) {
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
 		xlims[2] <- xlims[2]+0.03*diff(xlims)
-		xx <- codes(ff)
 	    }
 	    plot(1,0, type = "n", xlab = xlabs[i], ylab = ylab,
-                 xlim = xlims, ylim = ylims, main = main, ...)
+                 xlim = xlims, ylim = ylims, main=main, ...)
 	    for(j in seq(along=ll)) {
 		ww <- which(ff==ll[j])[c(1,1)]
 		jf <- j + c(-.4, .4)
-		lines(jf,tms[ww,i],...)
+		lines(jf,tms[ww,i],...,col=colors$curve)
 		if (se) {
-		    lines(jf, tms[ww,i] + 1.96*terms$se.fit[ww,i], lty=2)
-		    lines(jf, tms[ww,i] - 1.96*terms$se.fit[ww,i], lty=2)
+		    lines(jf, tms[ww,i] + 2*terms$se.fit[ww,i], lty=2,col=colors$se)
+		    lines(jf, tms[ww,i] - 2*terms$se.fit[ww,i], lty=2,col=colors$se)
 		}
 	    }
 	}
@@ -69,21 +69,21 @@ termplot <- function(model, data=model.frame(model), partial.resid=FALSE,
 		xlims[1] <- xlims[1]-0.07*diff(xlims)
 	    oo <- order(xx)
 	    plot(xx[oo], tms[oo,i], type = "l", xlab = xlabs[i], ylab = ylab,
-		 xlim = xlims, ylim = ylims, main = main, ...)
+		 xlim = xlims, ylim = ylims, col=colors$curve,main=main,...)
 	    if (se) {
-		lines(xx[oo], tms[oo,i] + 1.96*terms$se.fit[oo,i], lty=2)
-		lines(xx[oo], tms[oo,i] - 1.96*terms$se.fit[oo,i], lty=2)
+		lines(xx[oo], tms[oo,i] + 1.96*terms$se.fit[oo,i], lty=2,col=colors$se)
+		lines(xx[oo], tms[oo,i] - 1.96*terms$se.fit[oo,i], lty=2,col=colors$se)
 	    }
 	}
 	if (partial.resid)
-	    points(xx,pres[,i])
+	    points(xx,pres[,i],col=colors$points)
 	if (rug) {
             n <- length(xx)
 	    lines(rep(jitter(xx), rep(3,n)),
-                  rep(ylims[1] + c(0,0.05,NA)*diff(ylims), n))
+                  rep(ylims[1] + c(0,0.05,NA)*diff(ylims), n),col=colors$rug)
 	    if (partial.resid)
 		lines(rep(xlims[1] + c(0,0.05,NA)*diff(xlims), n),
-                      rep(pres[,i],rep(3,n)))
+                      rep(pres[,i],rep(3,n)),col=colors$rug)
 	}
     }
 }
