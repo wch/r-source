@@ -76,22 +76,30 @@ removeMethod(f, signature, where)
   \code{definition} match those of the generic..
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \examples{
-\testonly{  if(!exists("smooth.spline")) library(modreg)
+\testonly{  require(modreg)
   setClass("track",
     representation(x="numeric", y = "numeric"))
   setClass("trackCurve", representation("track",
     smooth = "numeric"))
+  setClass("trackMultiCurve", representation(x="numeric", y="matrix", smooth="matrix"),
+          prototype = list(x=numeric(), y=matrix(0,0,0), smooth=
+  matrix(0,0,0)))
 }
 
 ## methods for plotting track objects (see the example for \link{setClass})
@@ -189,6 +197,40 @@ t1/2
 
 ## check it hasn't screwed up S3 methods
 ISOdate(1990, 12, 1)- ISOdate(1980, 12, 1)
+
+## A test of nested calls to "[" with matrix-style arguments
+## applied to data.frames (S3 methods)
+
+setMethod("[", c("trackMultiCurve", "numeric", "numeric"), function(x, i, j, ..., drop) {
+### FIXME:  a better version has only 1st arg in signature
+### and uses callNextMethod, when this works with primitives.
+    x@y <- x@y[i, j, drop=FALSE]
+    x@x <- x@x[i]
+    x
+})
+
+
+"testFunc" <-
+function(cur) {
+    sorted <- cur[order(cur[,1]),]
+    sorted[ !is.na(sorted[,1]), ]
+}
+
+Nrow <- 1000 # at one time, values this large triggered a bug in gc/protect
+## the loop here was a trigger for the bug
+Niter <- 10
+for(i in 1:Niter)  {
+    yy <- matrix(rnorm(10*Nrow), 10, Nrow)
+    tDF <- as.data.frame(yy)
+    testFunc(tDF)
+}
+
+
+tMC <- new("trackMultiCurve", x=seq(length=Nrow), y = yy)
+## not enough functions have methods for this class to use testFunc
+
+stopifnot(identical(tMC[1:10, 1:10]@y, yy[1:10, 1:10]))
+
 
 ## verify we can remove methods and generic
 
