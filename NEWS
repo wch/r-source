@@ -28,6 +28,10 @@ NEW FEATURES
     o	checkAssignFuns() in package tools has been renamed to
 	checkReplaceFuns().
 
+    o	New option("scipen") provides some user control over the
+	printing of numbers in fixed-point or exponential notation.
+	(Contributed by David Brahm.)
+
 
 DEPRECATED & DEFUNCT
 

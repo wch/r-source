@@ -86,6 +86,8 @@ void PrintDefaults(SEXP rho)
     R_print.quote = 1;
     R_print.right = 0;
     R_print.digits = GetOptionDigits(rho);
+    R_print.scipen = asInteger(GetOption(install("scipen"), rho));
+    if (R_print.scipen == NA_INTEGER) R_print.scipen = 0;
     R_print.gap = 1;
     R_print.width = GetOptionWidth(rho);
 }

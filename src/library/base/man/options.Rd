@@ -239,6 +239,12 @@ getOption(x)
     \item{\code{internet.info}:}{The minimum level of information to be
       printed on URL downloads etc.  Default is 2, for failure causes.
       Set to 1 or 0 to get more information.}
+
+    \item{\code{scipen}:}{integer.  A penalty to be applied
+      when deciding to print numeric values in fixed or exponential
+      notation.  Positive values bias towards fixed and negative towards
+      scientific notation: fixed notation will be preferred unless it is
+      more than \code{scipen} digits wider.}
   }
 
   The default settings of some of these options are
@@ -258,7 +264,8 @@ getOption(x)
     \code{warn} \tab \code{0}\tab
     \code{warning.length} \tab \code{1000}\cr
     \code{echo} \tab \code{TRUE} \tab
-    \code{verbose} \tab \code{FALSE}
+    \code{verbose} \tab \code{FALSE} \tab
+    \code{scipen} \tab \code{0}
   }
   Others are set from environment variables or are platform-dependent.
 }
@@ -279,6 +286,10 @@ old.o
 
 options(check.bounds = TRUE)
 x <- NULL; x[4] <- "yes" # gives a warning
+
+options(digits=5)
+print(1e5)
+options(scipen=3); print(1e5)
 
 options(op)     # reset (all) initial options
 options('digits')
