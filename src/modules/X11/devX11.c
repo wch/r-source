@@ -918,7 +918,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 #else
 	if(strlen(dsp+5) >= 512) error("filename too long in png() call");
 	strcpy(xd->filename, dsp+5);
-	sprintf(buf, dsp+5, 1); /* page 1 to start */
+	snprintf(buf, 600, dsp+5, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning("could not open PNG file `%s'", buf);
 	    return FALSE;
@@ -939,7 +939,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
 	xd->quality = atoi(dsp+6);
 	if(strlen(p+1) >= 512) error("filename too long in jpeg() call");
 	strcpy(xd->filename, p+1);
-	sprintf(buf, p+1, 1); /* page 1 to start */
+	snprintf(buf, 600, p+1, 1); /* page 1 to start */
 	if (!(fp = R_fopen(R_ExpandFileName(buf), "w"))) {
 	    warning("could not open JPEG file `%s'", buf);
 	    return FALSE;
@@ -1185,14 +1185,14 @@ static void newX11_NewPage(int fill, double gamma, NewDevDesc *dd)
 	    if (xd->type != XIMAGE && xd->fp != NULL) fclose(xd->fp);
 	    if (xd->type == PNG) {
 		char buf[600];
-		sprintf(buf, xd->filename, xd->npages);
+		snprintf(buf, 600, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
 		    error("could not open PNG file `%s'", buf);
 	    }
 	    if (xd->type == JPEG) {
 		char buf[600];
-		sprintf(buf, xd->filename, xd->npages);
+		snprintf(buf, 600, xd->filename, xd->npages);
 		xd->fp = R_fopen(R_ExpandFileName(buf), "w");
 		if (!xd->fp)
 		    error("could not open JPEG file `%s'", buf);

@@ -802,12 +802,16 @@ static void menupdf(control m)
 static void menuwm(control m)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(m);
-    char  display[512], *fn;
+    char  display[550], *fn;
 
     setuserfilter("Enhanced metafiles (*.emf)\0*.emf\0All files (*.*)\0*.*\0\0");
     fn = askfilesave("Enhanced metafiles", "");
     if (!fn) return;
     fixslash(fn);
+    if(strlen(fn) > 512) {
+	askok("file path selected is too long: only 512 bytes are allowed");
+	return;
+    }
     sprintf(display, "win.metafile:%s", fn);
     SaveAsWin(dd, display);
 }
@@ -1513,7 +1517,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
 	}
-	sprintf(buf, xd->filename, 1);
+	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
 	    warning("Unable to open file `%s' for writing", buf);
@@ -1537,7 +1541,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    warning("Unable to allocate bitmap");
 	    return FALSE;
 	}
-	sprintf(buf, xd->filename, 1);
+	snprintf(buf, 600, xd->filename, 1);
 	if ((xd->fp = fopen(buf, "wb")) == NULL) {
 	    del(xd->gawin);
 	    warning("Unable to open file `%s' for writing", buf);
@@ -1560,7 +1564,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	if(ld > ls && strlen(&dsp[ls + 1]) >= 512) 
 	    error("filename too long in win.metafile() call");
 	strcpy(xd->filename, (ld > ls) ? &dsp[ls + 1] : "");
-	sprintf(buf, xd->filename, 1);
+	snprintf(buf, 600, xd->filename, 1);
 	xd->w = MM_PER_INCH * w;
 	xd->h =  MM_PER_INCH * h;
 	xd->gawin = newmetafile(buf, MM_PER_INCH * w, MM_PER_INCH * h);
@@ -1787,7 +1791,7 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 	    error("A clipboard metafile can store only one figure.");
 	else {
 	    del(xd->gawin);
-	    sprintf(buf, xd->filename, xd->npage);
+	    snprintf(buf, 600, xd->filename, xd->npage);
 	    xd->gawin = newmetafile(buf, xd->w, xd->h);
 	}
     }
@@ -1795,7 +1799,7 @@ static void GA_NewPage(int fill, double gamma, NewDevDesc *dd)
 	&& xd->needsave) {
 	char buf[600];
 	SaveAsBitmap(dd);
-	sprintf(buf, xd->filename, xd->npage);
+	snprintf(buf, 600, xd->filename, xd->npage);
 	if ((xd->fp = fopen(buf, "wb")) == NULL)
 	    error("Unable to open file `%s' for writing", buf);
     }
@@ -2396,7 +2400,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP filename, type;
-    char *fn, *tp, display[512];
+    char *fn, *tp, display[550];
     int device;
     NewDevDesc* dd;
 
@@ -2424,6 +2428,10 @@ SEXP do_saveDevga(SEXP call, SEXP op, SEXP args, SEXP env)
       /*Default quality suggested in libjpeg*/
         SaveAsJpeg(dd, 75, fn);
     } else if (!strcmp(tp, "wmf")) {
+	if(strlen(fn) > 512) {
+	    askok("file path selected is too long: only 512 bytes are allowed");
+	    return R_NilValue;
+	}
 	sprintf(display, "win.metafile:%s", fn);
 	SaveAsWin(dd, display);
     } else if (!strcmp(tp, "ps")) {
