@@ -133,7 +133,7 @@ sub read_functiontitles {
 		if(-r "$lib/$pkg/TITLE"){
 		    open rtitle, "< $lib/$pkg/help/00Titles";
 		    while(<rtitle>){
-			/^(\S*)\s*(.*)/;
+			/^([^\t]*)\s*(.*)/;
 			my $alias = $1;
 			$tit{$alias} = $2 . " ($pkg)";
 		    }
