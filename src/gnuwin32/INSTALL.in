@@ -26,11 +26,11 @@ several mirrors) and have packaged a set at
 CRAN/bin/windows/windows-NT/base/etc/tools.zip.  (The April 2000
 version of make in the cygwin distribution crashes building packages.)
 
-It is also possible to use the compilers from the cygwin-b21 release
+It is also possible to use the compilers from the cygwin-1.1.x release
 with the -mno-cygwin flag.  (You will need the cygwin*, gcc* and
 binutils* bundles.)  We have also successfully used the variant of
-mingw32 that uses the MSVCRT run-time system.  Be aware that not all
-Windows machines have MSVCRT.DLL installed.
+mingw32 that uses the MSVCRT run-time system.  Be aware that many
+Windows 95 machines do have MSVCRT.DLL installed.
 
 perl5, available via http://www.perl.com/CPAN/ports/.
 
