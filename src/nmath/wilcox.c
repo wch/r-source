@@ -185,16 +185,16 @@ pwilcox(double x, double m, double n)
 
     w_init_maybe(m, n);
     c = choose(m + n, n);
+    p = 0;
     if (x <= (m * n / 2)) {
-	p = 0;
 	for (i = 0; i <= x; i++)
 	    p += cwilcox(i, m, n) / c;
     }
     else {
 	x = m * n - x;
-	p = 1;
-	for (i = 0; i <= x; i++)
-	    p -= cwilcox(i, m, n) / c;
+	for (i = 0; i < x; i++)
+	    p += cwilcox(i, m, n) / c;
+	p = 1 - p;
     }
     w_free_maybe(m, n);
     
@@ -228,9 +228,9 @@ qwilcox(double x, double m, double n)
 
     w_init_maybe(m, n);
     c = choose(m + n, n);
+    p = 0;
     q = 0;
     if (x <= 0.5) {
-	p = 0;
 	for (;;) {
 	    p += cwilcox(q, m, n) / c;
 	    if (p >= x)
@@ -239,10 +239,10 @@ qwilcox(double x, double m, double n)
 	}
     }
     else {
-	p = 1;
+	x = 1 - x;
 	for (;;) {
-	    p -= cwilcox(q, m, n) / c;
-	    if (p < x) {
+	    p += cwilcox(q, m, n) / c;
+	    if (p > x) {
 		q = m * n - q;
 		break;
 	    }

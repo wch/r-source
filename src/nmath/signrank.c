@@ -154,16 +154,17 @@ psignrank(double x, double n)
 	return(1);
 
     w_init_maybe(n);
-    f = exp(- log(n) * 2);
+    f = exp(- n * log(2));
+    p = 0;
     if (x <= (n * (n + 1) / 4)) {
-	p = 0;
 	for (i = 0; i <= x; i++)
 	    p += csignrank(i, n) * f;
     }
     else {
-	p = 1;
-	for (i = 0; i <= x; i++)
-	    p -= csignrank(i, n) * f;
+	x = n * (n + 1) / 2 - x;
+	for (i = 0; i < x; i++)
+	    p += csignrank(i, n) * f;
+	p = 1 - p;
     }
     w_free_maybe(n);
     
@@ -195,10 +196,10 @@ qsignrank(double x, double n)
 	return(n * (n + 1) / 2);
 
     w_init_maybe(n);
-    f = exp(- log(n) * 2);
+    f = exp(- n * log(2));
+    p = 0;
     q = 0;
     if (x <= 0.5) {
-	p = 0;
 	for (;;) {
 	    p += csignrank(q, n) * f;
 	    if (p >= x)
@@ -207,10 +208,10 @@ qsignrank(double x, double n)
 	}
     }
     else {
-	p = 1;
+	x = 1 - x;
 	for (;;) {
-	    p -= csignrank(q, n) * f;
-	    if (p < x) {
+	    p += csignrank(q, n) * f;
+	    if (p > x) {
 		q = n * (n + 1) / 2 - q;
 		break;
 	    }
