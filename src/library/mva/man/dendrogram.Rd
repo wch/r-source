@@ -28,7 +28,7 @@ as.dendrogram(object, \dots)
 \method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
          center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
          nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
-         horiz = FALSE, \dots)
+         horiz = FALSE, frame.plot = FALSE, \dots)
 
 \method{cut}{dendrogram}(x, h, \dots)
 
@@ -36,27 +36,9 @@ as.dendrogram(object, \dots)
 
 \method{rev}{dendrogram}(x)
 
-\method{str}{dendrogram}(x, \dots)% codoc warning; MM: hate to document
-% all arguments: user should rather look at ?str
-% Also: 'object' has different meaning here
-}
-\synopsis{
-as.dendrogram(object, \dots)
-
-\method{plot}{dendrogram}(x, type = c("rectangle", "triangle"),
-         center = FALSE, edge.root = !is.null(attr(x,"edgetext")),
-         nodePar = NULL, edgePar = list(), xlab = "", ylab = "",
-         horiz = FALSE, \dots)
-
-\method{cut}{dendrogram}(x, h, \dots)
-
-\method{print}{dendrogram}(x, digits, \dots)
-
-\method{rev}{dendrogram}(x)
-
-str.dendrogram(object, max.level = 0, vec.len = 4, digits.d = 3,
-    nchar.max = 128, give.attr = TRUE, give.length = TRUE,
-    wid = getOption("width"), nest.lev = 0, indent.str = "", \dots)
+\method{str}{dendrogram}(object, max.level = 0, digits.d = 3,
+    give.attr = FALSE, wid = getOption("width"),
+    nest.lev = 0, indent.str = "", \dots)
 }
 \arguments{
   \item{object}{any \R object that can be made into one of class
@@ -78,11 +60,17 @@ str.dendrogram(object, max.level = 0, vec.len = 4, digits.d = 3,
     named \code{col}, \code{lty} and/or \code{lwd}.}
   \item{horiz}{logical indicating if the dendrogram should be draw
     \emph{horizontally} or not.}
+  \item{frame.plot}{logical indicating if a box around the plot should
+    be drawn, see \code{\link{plot.default}}.}
   \item{h}{height at which the tree is cut.}
   \item{\dots, xlab, ylab}{graphical parameters, or arguments for
     other methods.}
   \item{digits}{integer specifiying the precision for printing, see
     \code{\link{print.default}}.}
+  \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
+    arguments to \code{str}, see \code{\link{str.default}()}.  Note that
+    the default `give.attr = FALSE' still shows \code{height} and
+    \code{members} attributes for each node.}
 }
 \details{
   Warning: This documentation is preliminary.

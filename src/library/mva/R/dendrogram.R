@@ -14,9 +14,7 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     for (k in 1:nMerge) {
 	x <- sort(object$merge[k, ])
 	if (any(neg <- x < 0))
-	    h0 <- if (hang < 0)
-		0
-	    else max(0, oHgt[k] - hang * hMax)
+	    h0 <- if (hang < 0) 0 else max(0, oHgt[k] - hang * hMax)
 	if (all(neg)) {			# two leaves
 	    zk <- as.list(rev(-x))
 	    attr(zk, "members") <- two
@@ -78,12 +76,45 @@ as.dendrogram.hclust <- function (object, hang = -1, ...)
     r
 }
 
+.midDend <- function(x)
+    if(is.null(mp <- attr(x, "midpoint"))) 0 else mp
+
+.remid.dendrogram <- function (x, type = "hclust")
+{
+    ## Recompute the  "midpoint" attributes of a dendrogram, e.g. after reorder().
+
+    type <- match.arg(type) ## currently only "hclust"
+    if( !inherits(x, "dendrogram") )
+        stop("we require a dendrogram")
+    remid <- function(x, type) {
+        if(isLeaf(x))# no "midpoint"
+            return(x)
+        k <- length(x)
+        if(k < 1)
+            stop("dendrogram node with non-positive #{branches}")
+        if(type == "hclust" && k != 2)
+            stop("remid()ing of non-binary dendrograms not yet implemented")
+        r <- x # incl. attributes!
+
+        ## for(j in 1:k) {  r[[j]] <- remid(x[[j]]) .... }
+        r[[1]] <- remid(x[[1]], type); L1 <- isLeaf(x[[1]])
+        r[[2]] <- remid(x[[2]], type); L2 <- isLeaf(x[[2]])
+
+        attr(r, "midpoint") <- (.memberDend(x[[1]]) +
+                                .midDend(x[[1]]) + .midDend(x[[2]])) / 2
+        r
+    }
+
+    remid(x, type=type)
+}
+
+
 ### Define a very concise print() method for dendrograms:
 ##  Martin Maechler, 15 May 2002
 print.dendrogram <- function(x, digits = getOption("digits"), ...)
 {
     cat("`dendrogram' ")
-    if(inherits(x, "dendrogramLeaf"))
+    if(isLeaf(x))
 	cat("leaf", format(attr(x, "label"), digits = digits))
     else
 	cat("with", length(x), "branches and",
@@ -94,46 +125,53 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 }
 
 str.dendrogram <-
-function (object, max.level = 0, vec.len = 4, digits.d = 3, nchar.max = 128,
-	  give.attr = TRUE, give.length = TRUE, wid = getOption("width"),
-	  nest.lev = 0, indent.str = "", ...)
+function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
+          wid = getOption("width"), nest.lev = 0, indent.str = "", ...)
 {
+    ## FIXME: `wid' argument is currently disregarded
+    pasteLis <- function(lis, dropNam, sep = " = ") {
+	## drop uninteresting "attributes" here
+	lis <- lis[!(names(lis) %in% dropNam)]
+        fl <- sapply(lis, format, digits=digits.d, wid=wid)
+        paste(paste(names(fl), fl, sep=sep), collapse = ", ")
+    }
+
     nind <- nchar(istr <- indent.str)
     if(substr(istr, nind,nind) == " ")
        substr(istr, nind,nind) <- "`"
     cat(istr, "--", sep="")
+
+    nAt <- names(at <- attributes(object))
+    memb <- at[["members"]]
+    hgt  <- at[["height"]]
     if(!isLeaf(object)) {
 	le <- length(object)
-	cat("[dendrogram w/", le, "branches and", attr(object,"members"),
-	    "members at h =", format(attr(object,"height"), digits=digits.d),
-	    "]\n")
+        if(give.attr) {
+            if(nchar(at <- pasteLis(at, c("class", "height", "members"))))
+                at <- paste(",", at)
+        }
+	cat("[dendrogram w/ ", le, " branches and ", memb, " members at h = ",
+            format(hgt, digits=digits.d), if(give.attr) at, "]\n", sep="")
 	if (max.level==0 || nest.lev < max.level) {
 	    for(i in 1:le) {
 		##cat(indent.str, nam.ob[i], ":", sep="")
 		str(object[[i]], nest.lev = nest.lev + 1,
 		    indent.str= paste(indent.str, if(i < le) " |" else "  "),
-		    nchar.max=nchar.max,
-		    max.level=max.level, vec.len=vec.len, digits.d=digits.d,
-		    give.attr= give.attr, give.length= give.length, wid=wid)
+		    max.level=max.level, digits.d=digits.d,
+		    give.attr= give.attr, wid=wid)
 	    }
 	}
     } else { ## leaf
-	at <- attributes(object)
 	cat("leaf",
 	    if(is.character(at$label)) paste("",at$label,"",sep='"') else
 	    format(object, digits=digits.d),"")
-	any.at <- (h <- at$height) != 0
-	if(any.at) cat("(h=",format(h, digits=digits.d))
-	if((m <- at$members) != 1) #MM: when can this happen?
-	    cat(if(any.at)", " else {any.at <- TRUE; "("}, "memb= ", m, sep="")
-	## drop `leaf = TRUE' which we know here
-	at <- at[!(names(at) %in% c("class", "height", "leaf", "members"))]
-	at$label <- NULL
-	for(i in seq(along=at))
-	    cat(if(any.at) "," else {any.at <- TRUE; "("},
-		names(at)[i],"=", format(at[[i]], digits=digits.d,wid=wid))
-	if(any.at) cat(")")
-	cat("\n")
+	any.at <- hgt != 0
+	if(any.at) cat("(h=",format(hgt, digits=digits.d))
+	if(memb != 1) #MM: when can this happen?
+	    cat(if(any.at)", " else {any.at <- TRUE; "("}, "memb= ",memb,sep="")
+        at <- pasteLis(at, c("class", "height", "members", "leaf", "label"))
+        if(any.at || nchar(at)) cat(if(!any.at)"(", at, ")")
+        cat("\n")
     }
 }
 
@@ -149,11 +187,6 @@ function (object, max.level = 0, vec.len = 4, digits.d = 3, nchar.max = 128,
 }
 
 
-## MM: new "flag"  `leaflab' = c("perpendicular", "textlike","none")
-
-### CARE : THIS starts labeling cluster dendrograms !!!
-### ==== : where it didn't before
-
 ## Also: need larger par("mar")[1] or [4] for longish labels !
 ## [probably don't change, just print a warning or so !!
 plot.dendrogram <-
@@ -161,7 +194,7 @@ plot.dendrogram <-
 	      edge.root = !is.null(attr(x, "edgetext")), nodePar = NULL,
 	      xaxt="n", yaxt="s",
 	      edgePar = list(), leaflab= c("perpendicular", "textlike", "none"),
-	      xlab = "", ylab = "", horiz = FALSE, ...)
+	      xlab = "", ylab = "", horiz = FALSE, frame.plot = FALSE, ...)
 {
     type <- match.arg(type)
     leaflab <- match.arg(leaflab)
@@ -179,7 +212,7 @@ plot.dendrogram <-
 	tmp <- xaxt; xaxt <- yaxt; yaxt <- tmp
     }
     plot(0, xlim = xlim, ylim = ylim, type = "n", xlab = xlab, ylab = ylab,
-	 xaxt = xaxt, yaxt = yaxt, ...)
+	 xaxt = xaxt, yaxt = yaxt, frame.plot = frame.plot, ...)
     if (edge.root) {
 	x0 <- plotNodeLimit(x1, x2, x, center)$x
 	if (horiz)
@@ -251,12 +284,10 @@ plotNode <-
 		cat("ch.", k, "@ h=", yBot, "; ")
 	    if (is.null(yBot))
 		yBot <- 0
-	    xBot <- if (center)
-		mean(bx$limit[k:(k + 1)])
-	    else {
-		mid <- attr(child, "midpoint")
-		bx$limit[k] + if (is.null(mid)) 0 else mid
-	    }
+	    xBot <-
+                if (center) mean(bx$limit[k:(k + 1)])
+                else bx$limit[k] + .midDend(child)
+
 	    hasE <- !is.null(ePar <- attr(child, "edgePar"))
 	    if (!hasE)
 		ePar <- edgePar
@@ -437,7 +468,7 @@ reorder.dendrogram <- function(x, wts, ...)
         }
         x
     }
-    oV(x, wts)
+    .remid.dendrogram( oV(x, wts) )
 }
 
 rev.dendrogram <- function(x) {
@@ -450,7 +481,7 @@ rev.dendrogram <- function(x) {
     r <- x # incl. attributes!
     for(j in 1:k) ## recurse
  	r[[j]] <- rev(x[[k+1-j]])
-    r
+    .remid.dendrogram( r )
 }
 
 ## original Andy Liaw; modified RG, MM

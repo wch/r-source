@@ -722,6 +722,9 @@ BUG FIXES
 
     o	readBin(what = "foo") didn't convert `what' to its type.  (PR#4043)
 
+    o	reorder.dendrogram() now properly resets the "midpoint" attributes
+	such that reorder()ed dendrograms now plot properly.
+
     o	sapply() for matrix result does not return list(NULL,NULL) dimnames
 	anymore.
 
