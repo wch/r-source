@@ -47,13 +47,13 @@ if(.Platform$GUI == "AQUA") {
 ## this is to allow g77 compiler to work
  Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep=""))
 
-if( !file.exists("~/Library/R") )
- dir.create("~/Library/R")
+if( !file.exists("~/Library/RAqua") )
+ dir.create("~/Library/RAqua")
 
-if( !file.exists("~/Library/R/library") )
- dir.create("~/Library/R/library")
+if( !file.exists("~/Library/RAqua/library") )
+ dir.create("~/Library/RAqua/library")
 
-.libPaths("~/Library/R/library")
+.libPaths("~/Library/RAqua/library")
 
 ## still undocumented, will be moved to base soon
 "browse.pkgs" <-
