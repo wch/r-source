@@ -4,7 +4,8 @@
 
 srcdir = .
 
-RHOME = $(shell perl ../src/gnuwin32/pwd.pl ..)# must be absolute path
+## Can't test when cross-building
+RHOME = $(shell ../src/gnuwin32/Rpwd.exe ..)# must be absolute path
 R= $(RHOME)/bin/Rterm --vanilla LC_ALL=C SRCDIR=.
 RDIFF = $(RHOME)/bin/Rcmd Rdiff.sh
 RVAL_IF_DIFF=0

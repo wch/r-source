@@ -22,7 +22,11 @@ TEX = tex
 
 MAKEINDEX = makeindex
 TEXINDEX = texindex
+ifneq ($(strip $(BUILD)),CROSS)
+RHOME=$(shell ../../src/gnuwin32/Rpwd.exe ../..)
+else
 RHOME=$(shell perl ../../src/gnuwin32/pwd.pl ../..)
+endif
 R_PKGS=base ctest eda lqs modreg mva nls splines stepfun tcltk ts
 
 R_PAPERSIZE = a4
