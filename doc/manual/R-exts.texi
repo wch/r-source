@@ -784,7 +784,11 @@ only, run from the directory containing @file{mypkg} as a subdirectory.)
 @item
 Run @code{R CMD check} to check that the package will install and will
 runs its examples, and that the documentation is complete and can be
-processed.
+processed.  If the package contains code that needs to be compiled, try
+to enable a reasonable amount of diagnostic messaging (``warnings'') when
+compiling, such as e.g.@: @samp{-Wall -pedantic} for tools from GCC, the
+Gnu Compiler Collection.  (If @R{} was not configured accordingly, one
+can achieve this e.g.@: via @code{PKG_CFLAGS} and related variables.)
 
 @item
 Run @code{R CMD build} to run a few further checks and to make the
