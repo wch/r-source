@@ -75,7 +75,7 @@ ltsreg(\ldots)
     current value of \code{.Random.seed} will be preserved if it is set..
   }
   \item{\dots}{arguments to be passed to \code{lqs.default} or
-    \code{lqs.control}.}
+    \code{lqs.control}, see \code{control} above and \code{Details}.}
 }
 \value{
   An object of class \code{"lqs"}.  This is a list with components
@@ -112,10 +112,11 @@ ltsreg(\ldots)
   The \code{control} argument is a list with components
   \describe{
     \item{\code{psamp}:}{the size of each sample. Defaults to \code{p}.}
-    \item{\code{nsamp}:}{the number of samples or \code{"best"} or
-      \code{"exact"} or \code{"sample"}.  If \code{"sample"} the number
-      chosen is \code{min(5*p, 3000)}, taken from Rousseeuw and Hubert (1997).
-      If \code{"best"} exhaustive enumeration is done up to 5000 samples:
+    \item{\code{nsamp}:}{the number of samples or \code{"best"} (the
+      default) or \code{"exact"} or \code{"sample"}.
+      If \code{"sample"} the number chosen is \code{min(5*p, 3000)},
+      taken from Rousseeuw and Hubert (1997).
+      If \code{"best"} exhaustive enumeration is done up to 5000 samples;
       if \code{"exact"} exhaustive enumeration will be attempted however
       many samples are needed.}
     \item{\code{adjust}:}{should the intercept be optimized for each
