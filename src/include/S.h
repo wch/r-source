@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 1997--1998, The R Development Core Team.
  *
@@ -32,6 +32,7 @@
 extern "C" {
 #endif
 
+#include "Error.h"
 #include "Platform.h"
 
 #include <stddef.h>
@@ -45,19 +46,18 @@ extern "C" {
 #include <math.h>
 #endif
 
-  extern char *S_alloc();
-  extern void call_R();
+extern char *S_alloc();
+extern void call_R();
 #define call_S call_R
-  extern void seed_in(long *);
-  extern void seed_out(long *);
-  extern double unif_rand(void);
-  extern double norm_rand(void);
 
-  extern void error(const char *format,...);
-  extern void warning(const char *format,...);
+extern void seed_in(long *);
+extern void seed_out(long *);
+extern double unif_rand(void);
+extern double norm_rand(void);
+
 
 #define PROBLEM_BUFSIZE 4096
-  char problem_buf[PROBLEM_BUFSIZE];
+char problem_buf[PROBLEM_BUFSIZE];
 
 #define NULL_ENTRY
 #define PROBLEM		sprintf(problem_buf,
@@ -94,3 +94,8 @@ extern int F77_SYMBOL(intpr) (char *label, int *nchar,
 #endif
 
 #endif /* !R_S_H */
+
+
+
+
+
