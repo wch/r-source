@@ -268,7 +268,7 @@ int usemethod(char *generic, SEXP obj, SEXP call, SEXP args,
     PROTECT(newcall = duplicate(cptr->call));
 
     class = R_data_class(obj, FALSE);
-    /* if(R_has_methods(NULL)) /* if the methods package has been attached */
+    /* if(R_has_methods(NULL))  if the methods package has been attached */
     /*    class = R_data_class(obj, FALSE);
     else if (isObject(obj)) 
 	class = getAttrib(obj, R_ClassSymbol);
