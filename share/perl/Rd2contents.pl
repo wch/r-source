@@ -17,6 +17,7 @@
 
 use File::Basename;
 use Getopt::Long;
+use R::Rdtools;
 use R::Utils;
 
 my @knownoptions = ("o|output:s", "os|OS:s");
@@ -71,11 +72,7 @@ sub do_one {
     my $file = basename($_, (".Rd", ".rd"));
     my ($text, $rdname, $rdtitle, @aliases, @keywords);
 
-    open(RDFILE, "< $_");
-    while(<RDFILE>){
-	$text .= $_;
-    }
-    close RDFILE;
+    $text = &Rdpp($_, $OSdir);
 
     $text =~ /\\name\{\s*([^\}]+)\s*\}/s;
     $rdname = $1;
