@@ -94,7 +94,6 @@ principal authors of the packages mentioned are
 @item @pkg{hdf5} @tab Marcus Daniels
 @item @pkg{Java} @tab John Chambers and Duncan Temple Lang
 @item @pkg{netCDF} @tab Thomas Lumley
-@item @pkg{RmSQL} @tab  Torsten Hothorn
 @item @pkg{RMySQL} @tab David James and Saikat DebRoy
 @item @pkg{RODBC} @tab Michael Lapsley and Brian Ripley
 @item @pkg{RSPerl} @tab Duncan Temple Lang
@@ -1055,7 +1054,7 @@ There are several packages available on @acronym{CRAN} to help @R{}
 communicate with DBMSs.  They provide different levels of abstraction.
 Some provide means to copy whole data frames to and from databases.  All
 have functions to select data within the database via @acronym{SQL}
-queries, and (except @pkg{RmSQL}) to retrieve the result as a whole as a
+queries, and to retrieve the result as a whole as a
 data frame or in pieces (usually as groups of rows, but @pkg{RPgSQL} can
 retrieve columns).  
 
@@ -1071,7 +1070,6 @@ included DBMS @code{SQLite}, @uref{http://www.hwaci.com/sw/sqlite}).
 * DBI / RMySQL::                
 * RODBC::                       
 * RPgSQL::                      
-* RmSQL::                       
 @end menu
 
 
@@ -1295,7 +1293,7 @@ able to map the differences.
 The ODBC interface to Excel spreadsheets is read-only; you cannot alter
 the spreadsheet data.
 
-@node RPgSQL, RmSQL, RODBC, R interface packages
+@node RPgSQL,  , RODBC, R interface packages
 @subsection Package RPgSQL
 @cindex PostgreSQL database system
 
@@ -1412,47 +1410,6 @@ restored provided we preserve that field in the query.
 @pkg{RPgSQL} provides means to extend its mapping between @R{} classes
 within a data frame and PostgreSQL types.
 
-@node RmSQL,  , RPgSQL, R interface packages
-@subsection Package RmSQL
-@cindex Mini SQL database system
-
-Package @pkg{RmSQL} on @acronym{CRAN} provides an interface to the Mini
-@acronym{SQL} database system (also known as mSQL,
-@url{http://www.hughes.com.au}, Yarger @emph{et al.@:}, 1999).  The
-package documentation describes mSQL as
-@quotation
-Note that mSQL is NOT GPL licenced but free of charge for universities
-and noncommercial organisations.
-@end quotation
-@noindent
-@pkg{RmSQL} provides the most basic interface of those in this chapter,
-a wrapper to the C-@acronym{API} of mSQL with no additional
-functionality.
-
-@findex msqlConnect
-@findex msqlSelect
-@findex msqlClose
-@findex msqlQuery
-@findex msqlStoreResult
-@findex msqlFreeResult
-A database connection is opened by first selecting a host with
-@code{msqlConnect} and then a database by @code{msqlSelect}.  The
-connection is closed by a call to @code{msqlClose}.  Then an
-@acronym{SQL} query is sent by a call to @code{msqlQuery}, and the
-results stored by a call to @code{msqlStoreResult}.  When a query is
-finished with, the result can be freed by @code{msqlFreeResult}.
-
-@findex msqlFetchRow
-@findex msqlDataSeek
-@findex msqlNumRows
-Once the result of a query has been stored, the values can be retrieved
-row by row using @code{msqlFetchRow}.  This fetches the rows in order
-unless the position is reset by a call to @code{msqlDataSeek}.  A call to
-@code{msqlNumRows} gives the total number of rows in the result.
-
-No example is given here as the basic interface makes any example
-lengthy, but there is one in the @file{Example} directory of the package.
-
 
 @node Binary files, Connections, Relational databases, Top
 @chapter Binary files
@@ -1466,84 +1423,6 @@ Binary connections (@ref{Connections}) are now the preferred way to
 handle binary files.
 
 
-@c  @node Package Rstreams, Binary data formats, Binary files, Binary files
-@c  @section Package Rstreams
-
-@c  Package @pkg{Rstreams} on @acronym{CRAN} provides a low-level interface
-@c  to read from and write to binary files.  It has been used to read in
-@c  data from MRI experiments and Windows sound files, for example.
-
-@c  @findex openstream
-@c  @findex closestream
-@c  @pkg{Rstreams}' view of the file is as a stream of bytes.  A file can be
-@c  opened by the function @code{openstream} for either reading or writing.
-@c  The return value is a number (in fact the file descriptor) that is used
-@c  to reference the open file until it is closed by @code{closestream}.
-
-@c  @findex readint
-@c  @findex readfloat
-@c  @findex readcomplex
-@c  @findex readchar
-@c  Once a stream is open for reading, bytes can be transferred from it to
-@c  an @R{} object by one of the functions
-
-@c  @example
-@c  readint(stream, n, size = 4, signed = TRUE, swapbytes = FALSE)
-@c  readfloat(stream, n, size = 8, swapbytes = FALSE)
-@c  readcomplex(stream, n, size = 8, swapbytes = FALSE)
-@c  readchar(stream, n = 1, len = NA, bufsize = 256)
-@c  @end example
-
-@c  @noindent
-@c  These return an @R{} object of an appropriate mode and storage mode.
-@c  (Integers too large to be represented in storage mode @code{"integer"}
-@c  will be read into a vector of storage mode @code{"double"}.)  Here
-@c  @code{n} is the number of items to be read, but fewer will be read if
-@c  there is insufficient data on the file.
-
-@c  The size of the data components on file need not be the same as that in
-@c  the machine running @R{}, and data written on a little-endian machine
-@c  can be read on a big-endian machine or @emph{vice versa} by setting
-@c  @code{swapbytes = TRUE}.
-
-@c  Character data can be read by @code{readchar} either as fixed-length
-@c  blocks of bytes (by specifying @code{len}) or as
-@c  @acronym{ASCII}-zero-delimited strings.  It is also possible to read
-@c  lines of text separated by one of the standard end-of-line marks
-@c  (LF, CRLF or CR) by
-@c  @findex readlines
-@c  @example
-@c  readlines(stream, n = 1, bufsize = 256, eol)
-@c  @end example
-@c  @noindent
-@c  where by default the @code{eol} mark is detected automatically.
-
-
-@c  @findex writeint
-@c  @findex writefloat
-@c  @findex writecomplex
-@c  @findex writechar
-@c  A file open for writing can be written to by any of
-
-@c  @example
-@c  writeint(stream, data, size = 4, swapbytes = FALSE)
-@c  writefloat(stream, data, size = 8, swapbytes = FALSE)
-@c  writecomplex(stream, data, size = 8, swapbytes = FALSE)
-@c  writechar(stream, data, asciiz = FALSE)
-@c  @end example
-
-@c  @noindent
-@c  where @code{data} is an @R{} vector of an appropriate mode.  There is no
-@c  separator between character strings on the file unless @code{asciiz =
-@c  TRUE} is specified.
-
-@c  @findex copystream
-@c  Function @code{copystream} can copy a specified number of bytes from one
-@c  open stream to another.
-
-@c  @findex truncate
-@c  Function @code{truncate} truncates a stream at its current position, so
-@c  all data after that point is lost.
 
 
 @node Binary data formats,  , Binary files, Binary files
