@@ -912,8 +912,7 @@ SEXP L_newpagerecording()
 {
     GEDevDesc *dd = getDevice();
     if (LOGICAL(gridStateElement(dd, GSS_ASK))[0]) {
-	unsigned char buf[16];
-	R_ReadConsole("Hit <Return> to see next page: ", buf, 16, 0);
+	NewFrameConfirm();
     }
     GEinitDisplayList(dd);
     return R_NilValue;
