@@ -1208,11 +1208,11 @@ from the library.
 
 Utilities such as @code{install.packages} can be pointed at any
 CRAN-style repository, and @R{} users may want to set up their own.  The
-`base' of a repository is a URL such as @uref{http://www.omegahat.org/R}:
-this must be an URL scheme that @code{download.packages} supports which
-also includes @code{ftp://} and @code{file://}.  Under that base URL
-there should be directory trees for one or more of the following types
-of package distributions:
+`base' of a repository is a URL such as
+@uref{http://www.omegahat.org/R}: this must be an URL scheme that
+@code{download.packages} supports (which also includes @code{ftp://} and
+@code{file://}).  Under that base URL there should be directory trees
+for one or more of the following types of package distributions:
 
 @itemize
 @item 
@@ -1230,12 +1230,12 @@ versions @code{x.y.z} and containing @code{.tgz} files.
 
 Each terminal directory must also contain a @file{PACKAGES} file.  This
 can be a concatenation of the @file{DESCRIPTION} files of the packages
-(provided there are no bundles), but only a few of the fields are
-needed.  The simplest way to set up such a file is to use function
-@code{write_PACKAGES} in the @pkg{tools} packages, and its help explains
-which fields are needed.
+separated by blank lines (provided there are no bundles), but only a few
+of the fields are needed.  The simplest way to set up such a file is to
+use function @code{write_PACKAGES} in the @pkg{tools} package, and its
+help explains which fields are needed.
 
-To add your repository to the list offered by @code{setRepositories},
+To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
 
 @node Internationalization, Essential and useful other programs in Unix, Add-on packages, Top
