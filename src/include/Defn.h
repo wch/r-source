@@ -594,7 +594,6 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define deparse1line		Rf_deparse1line
 # define DispatchGroup		Rf_DispatchGroup
 # define DispatchOrEval		Rf_DispatchOrEval
-# define duplicated		Rf_duplicated
 # define dynamicfindVar		Rf_dynamicfindVar
 # define EncodeRaw              Rf_EncodeRaw
 # define EncodeString           Rf_EncodeString
@@ -631,7 +630,6 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define mainloop		Rf_mainloop
 # define ParseBrowser	Rf_ParseBrowser
 # define mat2indsub		Rf_mat2indsub
-# define match			Rf_match
 # define Mbrtowc		Rf_mbrtowc
 # define mkCLOSXP		Rf_mkCLOSXP
 # define mkComplex              Rf_mkComplex

@@ -489,6 +489,7 @@ SEXP Rf_dimgets(SEXP, SEXP);
 SEXP Rf_dimnamesgets(SEXP, SEXP);
 SEXP Rf_DropDims(SEXP);
 SEXP Rf_duplicate(SEXP);
+SEXP Rf_duplicated(SEXP);
 SEXP Rf_elt(SEXP, int);
 SEXP Rf_emptyEnv(void);
 SEXP Rf_eval(SEXP, SEXP);
@@ -563,6 +564,7 @@ SEXP Rf_list4(SEXP, SEXP, SEXP, SEXP);
 SEXP Rf_listAppend(SEXP, SEXP);
 SEXP R_lsInternal(SEXP, Rboolean);
 SEXP Rf_makeSubscript(SEXP, SEXP, int *);
+SEXP Rf_match(SEXP, SEXP, int);
 SEXP Rf_matchArg(SEXP, SEXP*);
 SEXP Rf_matchArgExact(SEXP, SEXP*);
 SEXP Rf_matchArgs(SEXP, SEXP);
@@ -916,6 +918,7 @@ int R_system(char *);
 #define dimnamesgets		Rf_dimnamesgets
 #define DropDims                Rf_DropDims
 #define duplicate		Rf_duplicate
+#define duplicated		Rf_duplicated
 #define elt			Rf_elt
 #define emptyEnv		Rf_emptyEnv
 #define EnsureString		Rf_EnsureString
@@ -996,6 +999,7 @@ int R_system(char *);
 #define LogicalFromReal		Rf_LogicalFromReal
 #define LogicalFromString	Rf_LogicalFromString
 #define makeSubscript		Rf_makeSubscript
+#define match			Rf_match
 #define matchArg		Rf_matchArg
 #define matchArgExact		Rf_matchArgExact
 #define matchArgs		Rf_matchArgs
