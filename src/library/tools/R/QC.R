@@ -3,6 +3,7 @@
 undoc <-
 function(package, dir, lib.loc = NULL)
 {
+    nsInfo <- NULL
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -68,10 +69,19 @@ function(package, dir, lib.loc = NULL)
             if(inherits(yy, "try-error")) {
                 stop("cannot source package code")
             }
+            if(file.exists(file.path(dir, "NAMESPACE")))
+                nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
         }
     }
 
     codeObjs <- ls(envir = codeEnv, all.names = TRUE)
+    if(length(nsInfo)) {
+        ## look only at exported objects (and not declared S3 methods)
+        OK <- codeObjs[codeObjs %in% nsInfo$exports]
+        for (p in nsInfo$exportPatterns)
+            OK <- c(OK, grep(p, codeObjs, value = TRUE))
+        codeObjs <- unique(OK)
+    }
 
     dataObjs <- character(0)
     dataDir <- file.path(dir, "data")
@@ -185,6 +195,7 @@ function(package, dir, lib.loc = NULL,
          verbose = getOption("verbose"))
 {
     ## Argument handling.
+    S3reg <- character(0); nsInfo <- NULL
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -207,6 +218,14 @@ function(package, dir, lib.loc = NULL,
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
+        ## if there is a NAMESPACE,
+        ## find non-exported methods declared in S3methods directives.
+        if(exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
+                            "NAMESPACE"))) {
+            S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
+                             function(x) x[[3]])
+            S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE) ]
+        }
     }
     else {
         if(missing(dir))
@@ -242,10 +261,22 @@ function(package, dir, lib.loc = NULL,
         if(inherits(yy, "try-error")) {
             stop("cannot source package code")
         }
-
+        if(file.exists(file.path(dir, "NAMESPACE")))
+            nsInfo <- parseNamespaceFile(basename(dir), dirname(dir))
     }
 
     lsCode <- ls(envir = codeEnv, all.names = TRUE)
+    if(length(nsInfo)) {
+        ## look only at exported objects
+        OK <- lsCode[lsCode %in% nsInfo$exports]
+        for (p in nsInfo$exportPatterns)
+            OK <- c(OK, grep(p, lsCode, value = TRUE))
+        lsCode <- unique(OK)
+        ## S3reg are unexported but declared S3 methods
+        S3m <- sapply(nsInfo$S3methods,
+                      function(x) if(length(x) > 2) x[3] else paste(x, sep="."))
+        if(length(S3m)) S3reg <- S3m[! S3m %in% lsCode]
+    }
 
     ## Find the function objects to work on.
     funs <- lsCode[sapply(lsCode, function(f) {
@@ -339,6 +370,7 @@ function(package, dir, lib.loc = NULL,
             badDocObjs[[docObj]] <- badUsagesInFile
 
         usagesNotInCode <- usages[! usages %in% lsCode]
+        usagesNotInCode <- usagesNotInCode[! usagesNotInCode %in% S3reg]
         if(length(usagesNotInCode) > 0) {
             writeLines(paste("Objects with usage in documentation",
                              "object", sQuote(docObj),
@@ -402,6 +434,7 @@ function(x, ...)
 checkAssignFuns <-
 function(package, dir, lib.loc = NULL)
 {
+    S3reg <- character(0)
     ## Argument handling.
     if(!missing(package)) {
         if(length(package) != 1)
@@ -421,6 +454,17 @@ function(package, dir, lib.loc = NULL)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
+        ## if there is a NAMESPACE, we want to test any non-exported
+        ## replacement methods declared in S3method directives.
+        if(exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
+                            "NAMESPACE"))) {
+            S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
+                             function(x) x[[3]])
+            S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
+            S3reg <- grep("<-", S3reg, value = TRUE)
+            if(length(S3reg) > 0)
+                S3Table <- get(".__S3MethodsTable__.", envir = NULL)
+        }
     }
     else {
         if(missing(dir))
@@ -455,11 +499,13 @@ function(package, dir, lib.loc = NULL)
     lsCode <- ls(envir = codeEnv, all.names = TRUE)
 
     ## Find the assignment functions in the given package.
-    assignFuns <- lsCode[grep("<-", lsCode)]
+    assignFuns <- c(lsCode[grep("<-", lsCode)], S3reg)
     ## Find the assignment functions with last arg not named 'value'.
     badAssignFuns <-
         assignFuns[sapply(assignFuns, function(f) {
-            argNames <- names(formals(get(f, envir = codeEnv)))
+            gf <- if(f %in% S3reg) get(f, envir = S3Table)
+                  else get(f, envir = codeEnv)
+            argNames <- names(formals(gf))
             argNames[length(argNames)] != "value"
         }) == TRUE]
 
@@ -912,6 +958,7 @@ checkMethods <-
 function(package, dir, lib.loc = NULL)
 {
     ## Argument handling.
+    S3reg <- character(0)
     if(!missing(package)) {
         if(length(package) != 1)
             stop(paste("argument", sQuote("package"),
@@ -930,6 +977,16 @@ function(package, dir, lib.loc = NULL)
         codeEnv <-
             as.environment(match(paste("package", package, sep = ":"),
                                  search()))
+        ## if there is a NAMESPACE, we want to test any non-exported
+        ## methods declared in S3method directives.
+        if(exists(file.path(.find.package(package, lib.loc, quiet = TRUE),
+                            "NAMESPACE"))) {
+            S3reg <- sapply(getNamespaceInfo(package, "S3methods"),
+                             function(x) x[[3]])
+            S3reg <- S3reg[! S3reg %in% ls(codeEnv, all.names = TRUE)]
+            if(length(S3reg) > 0)
+                S3Table <- get(".__S3MethodsTable__.", envir = NULL)
+        }
     }
     else {
         if(missing(dir))
@@ -967,6 +1024,7 @@ function(package, dir, lib.loc = NULL)
     funs <-
         lsCode[sapply(lsCode, function(f)
                       is.function(get(f, envir = codeEnv))) == TRUE]
+    funs <- c(funs, S3reg)
 
     methodsStopList <- .makeS3MethodsStopList(basename(dir))
 
@@ -979,7 +1037,9 @@ function(package, dir, lib.loc = NULL)
         gArgs <- names(formals(get(g, envir = env)))
         if(g == "plot") gArgs <- gArgs[-2]
         ogArgs <- gArgs
-        mArgs <- omArgs <- names(formals(get(m, envir = codeEnv)))
+        gm <- if(m %in% S3reg) get(m, envir = S3Table)
+              else get(m, envir = codeEnv)
+        mArgs <- omArgs <- names(formals(gm))
         ## If m is a formula method, its first argument *may* be called
         ## formula.  (Note that any argument name mismatch throws an
         ## error in current S-PLUS versions.)
