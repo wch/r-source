@@ -5,7 +5,7 @@
 \alias{predict.npolySpline}
 \alias{predict.ppolySpline}
 %\alias{plot.spline}
-\title{Evaluate a spline at new values of x}
+\title{Evaluate a Spline at New Values of x}
 \description{
   The \code{predict} methods for the classes that inherit from the
   virtual classes \code{bSpline} and \code{polySpline} are used to
