@@ -176,7 +176,7 @@ Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
 --Neither of the proposed changes actually works in sufficient generality.
 --
 --The easy and unimportant part of this, the labels, is fixed in 1.2.2. Getting
---the data right is a project for 1.3
+--the data right is a project for 1.3 [or 1.6.0, perhaps]
 * PR# 831 *
 Subject: screen can't go back to (split) screen with log="y" plot
 From: Thomas Vogels <tov@ece.cmu.edu>
@@ -326,6 +326,11 @@ Date: Tue, 11 Jun 2002 22:14:07 +0200 (MET DST)
 Subject: R configure.in makes bad alpha assumptions
 From: mcmahill@mtl.mit.edu
 Date: Sat, 15 Jun 2002 19:21:09 -0400 (EDT)
+* PR# 1825 *
+Subject: bug in R-1.5.1 for Mac OS X installer
+From: Kow Kuroda <kkuroda@crl.ucsd.edu>
+Date: Mon, 22 Jul 2002 16:40:26 -0700
+--Darwin port
 
 Directory:  Language
 
@@ -540,7 +545,7 @@ Date: Tue, 16 Jul 2002 16:59:22 -0400
 Subject: read.table bug
 From: mmcstephen@cogstate.com
 Date: Fri, 19 Jul 2002 05:11:59 +0200 (MET DST)
-* PR# 1825 *
-Subject: bug in R-1.5.1 for Mac OS X installer
-From: Kow Kuroda <kkuroda@crl.ucsd.edu>
-Date: Mon, 22 Jul 2002 16:40:26 -0700
+* PR# 1829 *
+Subject: R config failure on solaris
+From: "Siva Ginjupalli" <gsivrao@hotmail.com>
+Date: Wed, 24 Jul 2002 20:08:49 +0000
