@@ -276,10 +276,10 @@ none
 
 Directory:  incoming
 
-* PR# 733 *
-Subject: gnome-support problems
-From: olav@melvin.jordforsk.no
-Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
+* PR# 745 *
+Subject: RE: [Rd] lm() appears to fail with large number of variables (PR#
+From: Bill.Venables@CMIS.CSIRO.AU
+Date: Thu, 23 Nov 2000 06:53:43 +1000
 * PR# 737 *
 Subject: Bug in R 1.1.1 dev.print() with fix
 From: frost@pocketmail.com
@@ -288,10 +288,10 @@ Date: Fri, 17 Nov 2000 20:45:58 +0100 (MET)
 Subject:  Assigning into a dataframe 
 From: J.C.Rougier@durham.ac.uk
 Date: Fri, 10 Nov 2000 16:00:31 GMT
-* PR# 741 *
-Subject: match() is not correct for "close numerics"
-From: Martin Maechler <maechler@stat.math.ethz.ch>
-Date: Tue, 21 Nov 2000 16:15:23 +0100
+* PR# 733 *
+Subject: gnome-support problems
+From: olav@melvin.jordforsk.no
+Date: Fri, 10 Nov 2000 10:55:31 +0100 (MET)
 * PR# 740 *
 Subject:  contour documentation 
 From: J.C.Rougier@durham.ac.uk
@@ -301,3 +301,15 @@ Subject: Bug in stars.R
 From: Tom Dye <tdye@lava.net>
 Date: Sun, 19 Nov 2000 21:48:16 -1000 (HST)
 --fixed for 1.2
+* PR# 741 *
+Subject: match() is not correct for "close numerics"
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Tue, 21 Nov 2000 16:15:23 +0100
+* PR# 744 *
+Subject: lm() appears to fail with large number of variables
+From: r@marksmucker.com
+Date: Wed, 22 Nov 2000 21:28:59 +0100 (MET)
+* PR# 743 *
+Subject: Re: [Rd] How do you construct a function from a list?
+From: dmurdoch@pair.com (Duncan Murdoch)
+Date: Wed, 22 Nov 2000 12:57:19 GMT
