@@ -36,6 +36,9 @@ BUG FIXES
     o   Making html links would fail if packages-head.html was not
 	writeable. (PR#2133)
 
+    o   Sweave.sty was not installed to $R_HOME/share/texmf when
+        builddir != srcdir 
+
 
 
 		CHANGES IN R VERSION 1.6.0
