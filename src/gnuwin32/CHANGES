@@ -62,6 +62,9 @@ not installing on top of the source more foolprof.
 
 The output when building R or source packages is much quieter.
 
+Warnings are printed if a loaded DLL changes the floating point
+control word: see ?dyn.load for the details.
+
 
 
 rw1061
