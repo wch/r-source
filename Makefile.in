@@ -85,7 +85,19 @@ install: installdirs
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
 @WANT_R_FRAMEWORK_TRUE@		@(sed 's/^LIBR =.*/LIBR = -framework R/' \
-@WANT_R_FRAMEWORK_TRUE@		$(top_builddir)/etc/Makeconf > $(rhome)/etc/Makeconf)
+@WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > $(rhome)/etc/Makeconf)
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' \
+@WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
+@WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
+@WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
+@WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/R)
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's/-L$$[{]R\_HOME[}]\/bin -lR/-framework R/' \
+@WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/SHLIB > \
+@WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/SSHLIB)
+@WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/SSHLIB $(R_FRAMEWORK_DIR)/Resources/bin/SHLIB)
+@WANT_R_FRAMEWORK_TRUE@		@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/SHLIB)
+
+
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)
 install-strip:
@@ -182,6 +194,11 @@ install-R-framework:
 	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
 	  chmod 755 RAqua && \
 	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/bin/libR.dylib" libR.dylib)
+	@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' $(R_FRAMEWORK_DIR)/Resources/bin/RAqua > \
+	  $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua)
+	@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
+	@(chmod 755 $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
+
 
 install-aqua:
 	@(rm -rf /Applications/R.app)
