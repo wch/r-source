@@ -82,9 +82,9 @@ sub buildinit {
     $pkg_name = basename($tmp) unless($pkg_name);
 
     my $version;
-    if(-r &file_path($pkg_dir, "DESCRIPTION")) {
+    if(-r &file_path($lib, $pkg_name, "DESCRIPTION")) {
 	$description =
-	    new R::Dcf(&file_path($pkg_dir, "DESCRIPTION"));
+	    new R::Dcf(&file_path($lib, $pkg_name, "DESCRIPTION"));
 	if(defined($description->{"Version"})) {
 	    $version = $description->{"Version"};
 	} else {$version = "";}
@@ -309,8 +309,9 @@ sub build_index { # lib, dest, version, [chmdir]
 
     my $title = "";
     my $pkg_name = "";
-    if(-r "../DESCRIPTION") {
-	my $rdcf = R::Dcf->new("../DESCRIPTION");
+    ## did not work if builddir ne srcdir
+    if(-r &file_path($dest, "DESCRIPTION")) {
+	my $rdcf = R::Dcf->new(&file_path($dest, "DESCRIPTION"));
 	if($rdcf->{"Package"}) {
 	    $pkg_name = $rdcf->{"Package"};
 	    chomp $pkg_name;
