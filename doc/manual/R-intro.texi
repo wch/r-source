@@ -6476,6 +6476,7 @@ command line options are disregarded, and should instead be given when
 starting the @R{} executable from inside the debugger.
 
 @item --gui=@var{type}
+@itemx -g @var{type}
 Use @var{type} as graphical user interface (note that this also includes
 interactive graphics).  Currently, possible values for @var{type} are
 @code{X11} (the default) and @code{GNOME} provided that GNOME support

@@ -69,9 +69,8 @@ Options:
   --silent              Same as --quiet
   --slave               Make R run as quietly as possible
   --verbose             Print more information about progress
-  -d NAME, --debugger=NAME
-                        Run R through debugger NAME
-  --gui=TYPE		Use TYPE as GUI; possible values are \`X11'
+  -d, --debugger=NAME   Run R through debugger NAME
+  -g, --gui=TYPE	Use TYPE as GUI; possible values are \`X11'
 			(default) and \`GNOME'
 
 Commands:
@@ -108,11 +107,11 @@ while test -n "${1}"; do
       cmd="${1}"; shift; exec sh "${R_HOME}/bin/${cmd}" "${@}" ;;
     CMD)
       shift; PATH="${R_HOME}/bin:${PATH}" exec "${@}" ;;
-    -g|--gnome)
+    --gnome)
       echo "option \`${1}' is defunct, use \`--gui=GNOME'"
       exit 1
       ;;
-    --gui)
+    -g|--gui)
       if test -n "`echo ${2} | sed 's/^-.*//'`"; then
 	gui="${2}"; shift
       else
