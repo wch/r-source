@@ -28,6 +28,9 @@ INSTALLATION ISSUES
 	a working build: the critical LAPACK routines are now compiled
 	with -ffloat-store.
 
+    o   Added patches to enable 64-bit builds on AIX 5.1: see the R-admin
+	manual for details.
+
 
 BUG FIXES
 
@@ -55,7 +58,7 @@ BUG FIXES
     o	type.convert() ignored na.strings when no conversion was done.
 	(PR#6781, not needed for its primary use in read.table.)
 
-    o	Fixed the clipping problem in the quartz() device.
+    o	Fixed a clipping problem in the quartz() device.
 
     o	Subsetting a factor swapped the order of the attributes, which
 	identical() cares about.  (PR#6799)
