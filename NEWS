@@ -46,7 +46,7 @@ USER-VISIBLE CHANGES
 
     o	Datasets 'sunspot.month' and 'sunspot.year' are available
         separately but not via data(sunspot) (which is used by package
-        lattice to retrieve a dataset 'sunspot'.
+        lattice to retrieve a dataset 'sunspot').
 
     o	The default barplot() method by default uses a
 	gamma-corrected grey palette (rather than the heat color
