@@ -182,13 +182,47 @@ format(a, justify="right")
 ## PR 963
 svd(rbind(1:7))## $v lost dimensions in 1.2.3
 
+## Make sure  on.exit() keeps being evaluated in the proper env [from PD]:
+## A more complete example:
+g1 <- function(fitted) { on.exit(remove(fitted)); return(function(foo) foo) }
+g2 <- function(fitted) { on.exit(remove(fitted));        function(foo) foo }
+f <- function(g) { fitted <- 1; h <- g(fitted); print(fitted)
+                   ls(envir=environment(h)) }
+f(g1)
+f(g2)
+
+f2 <- function()
+{
+  g.foo <- g1
+  g.bar <- g2
+  g <- function(x,...) UseMethod("g")
+  fitted <- 1; class(fitted) <- "foo"
+  h <- g(fitted); print(fitted); print(ls(envir=environment(h)))
+  fitted <- 1; class(fitted) <- "bar"
+  h <- g(fitted); print(fitted); print(ls(envir=environment(h)))
+  invisible(NULL)
+}
+f2()
+## The first case in f2() is broken in 1.3.0(-patched).
+
+## on.exit() consistency check from Luke:
+g <- function() pos.to.env(-1)
+f <- function(x) UseMethod("f")
+f.foo <- function(x) { on.exit(e <<- g()); NULL }
+f.bar <- function(x) { on.exit(e <<- g()); return(NULL) }
+f(structure(1,class = "foo"))
+ls(env = e)# only "x", i.e. *not* the GlobalEnv
+f(structure(1,class = "bar"))
+e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
+
+
 ## some tests that R supports logical variables in formula
 ## it coerced them to numeric prior to 1.4.0
 ## they should appear like 2-level factors, following S
 
 oldCon <- options("contrasts")
 y <- rnorm(10)
-x <- rep(c(T,F), 5)
+x <- rep(c(TRUE,FALSE), 5)
 model.matrix(y ~ x)
 lm(y ~ x)
 DF <- data.frame(x, y)
@@ -200,7 +234,6 @@ z <- 1:10
 lm(y ~ x*z)
 lm(y ~ x*z - 1)
 options(oldCon)
-
 
 ## diffinv, Adrian Trapletti, 2001-08-27
 library(ts)

@@ -1,6 +1,6 @@
 
 R : Copyright 2001, The R Development Core Team
-Version 1.4.0 Under development (unstable) (2001-08-31)
+Version 1.4.0 Under development (unstable) (2001-09-06)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -454,13 +454,63 @@ $v
 [7,] 0.59160798
 
 > 
+> ## Make sure  on.exit() keeps being evaluated in the proper env [from PD]:
+> ## A more complete example:
+> g1 <- function(fitted) { on.exit(remove(fitted)); return(function(foo) foo) }
+> g2 <- function(fitted) { on.exit(remove(fitted));        function(foo) foo }
+> f <- function(g) { fitted <- 1; h <- g(fitted); print(fitted)
++                    ls(envir=environment(h)) }
+> f(g1)
+[1] 1
+character(0)
+> f(g2)
+[1] 1
+character(0)
+> 
+> f2 <- function()
++ {
++   g.foo <- g1
++   g.bar <- g2
++   g <- function(x,...) UseMethod("g")
++   fitted <- 1; class(fitted) <- "foo"
++   h <- g(fitted); print(fitted); print(ls(envir=environment(h)))
++   fitted <- 1; class(fitted) <- "bar"
++   h <- g(fitted); print(fitted); print(ls(envir=environment(h)))
++   invisible(NULL)
++ }
+> f2()
+[1] 1
+attr(,"class")
+[1] "foo"
+character(0)
+[1] 1
+attr(,"class")
+[1] "bar"
+character(0)
+> ## The first case in f2() is broken in 1.3.0(-patched).
+> 
+> ## on.exit() consistency check from Luke:
+> g <- function() pos.to.env(-1)
+> f <- function(x) UseMethod("f")
+> f.foo <- function(x) { on.exit(e <<- g()); NULL }
+> f.bar <- function(x) { on.exit(e <<- g()); return(NULL) }
+> f(structure(1,class = "foo"))
+NULL
+> ls(env = e)# only "x", i.e. *not* the GlobalEnv
+[1] "x"
+> f(structure(1,class = "bar"))
+NULL
+> e # == .GlobalEnv (in R 1.3.[01]  but not (yet?!) in 1.4.0).
+<environment: 0x8d4f280>
+> 
+> 
 > ## some tests that R supports logical variables in formula
 > ## it coerced them to numeric prior to 1.4.0
 > ## they should appear like 2-level factors, following S
 > 
 > oldCon <- options("contrasts")
 > y <- rnorm(10)
-> x <- rep(c(T,F), 5)
+> x <- rep(c(TRUE,FALSE), 5)
 > model.matrix(y ~ x)
    (Intercept) xTRUE
 1            1     1
@@ -546,7 +596,6 @@ Coefficients:
  1.17337  -0.19209  -0.02433   0.15074  
 
 > options(oldCon)
-> 
 > 
 > ## diffinv, Adrian Trapletti, 2001-08-27
 > library(ts)
