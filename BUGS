@@ -217,14 +217,10 @@ none
 
 Directory:  incoming
 
-* PR# 828 *
-Subject: termplot fails for composite non-factor terms
-From: John Maindonald <john.maindonald@anu.edu.au>
-Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
-* PR# 827 *
-Subject: tseries 0.7-0 with R 1.2.1 dumps core
-From: keith.briggs@bt.com
-Date: Fri, 26 Jan 2001 11:46:22 -0000
+* PR# 829 *
+Subject: variables in nls
+From: baron@cattell.psych.upenn.edu
+Date: Sun, 28 Jan 2001 15:07:27 +0100 (MET)
 * PR# 825 *
 Subject: Snowhite and the Seven Dwarfs - The REAL story!
 From: Hahaha <hahaha@sexyfun.net>
@@ -233,3 +229,11 @@ Date: Wed, 24 Jan 2001 23:40:48 GMT
 Subject: trouble with netCDF 
 From: jasont@indigoindustrial.co.nz
 Date: Thu, 25 Jan 2001 12:00:39 +1300
+* PR# 828 *
+Subject: termplot fails for composite non-factor terms
+From: John Maindonald <john.maindonald@anu.edu.au>
+Date: Sat, 27 Jan 2001 11:57:37 +1100 (EST)
+* PR# 827 *
+Subject: tseries 0.7-0 with R 1.2.1 dumps core
+From: keith.briggs@bt.com
+Date: Fri, 26 Jan 2001 11:46:22 -0000
