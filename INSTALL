@@ -166,7 +166,10 @@ and can be set by running configure with the option
 
 This installs the R executable to `/where/you/want/R/to/go/bin', and so
 on.  The prefix of the installation directories can also be seen in the
-status message that is displayed at the end of configure.
+status message that is displayed at the end of configure.  You can
+install into another directory by using
+
+	make prefix=/path/to/here install
 
 To install dvi, info and PDF versions of the manuals, use `make
 install-dvi', `make install-info' and `make install-pdf', respectively.
