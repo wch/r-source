@@ -115,9 +115,9 @@ cov.mcd(x, cor = FALSE, quantile.used = floor((n + p + 1)/2),
   multivariate outliers and leverage points, 
   \emph{Journal of the American Statistical Association}, \bold{85}, 633--639.
 
-  P. J. Rousseeuw and K. van Driessen (1997) A fast algorithm for the
-  minimum covariance determinant estimator. Technical Report, Department
-  of Mathematics and Computer Science, Universitaire Instelling Antwerpen.
+  P. J. Rousseeuw and K. van Driessen (1999) A fast algorithm for the
+  minimum covariance determinant estimator. \emph{Technometrics}
+  \bold{41}, 212--223.
 
   P. Rousseeuw and M. Hubert (1997) Recent developments in PROGRESS. In
   \emph{L1-Statistical Procedures and Related Topics }
