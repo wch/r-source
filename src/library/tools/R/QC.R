@@ -139,17 +139,19 @@ function(package, dir, lib.loc = NULL)
                 codeObjs[sapply(codeObjs, function(f) {
                     fdef <- get(f, envir = codeEnv)
                     if(is(fdef, "genericFunction")) {
-                        fOther <- getFunction(f, generic = FALSE, mustFind = FALSE,
-                                              where = topenv(environment(fdef)))
+                        fOther <-
+                            getFunction(f, generic = FALSE,
+                                        mustFind = FALSE,
+                                        where = topenv(environment(fdef)))
                         if(is.null(fOther))
                             TRUE
                         else 
-                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)),
+                            !is(finalDefaultMethod(getMethodsMetaData(f, codeEnv)), 
                                           "derivedDefaultMethod")
                     }
                     else
                         TRUE
-                })]
+                }) == TRUE]
         }
         ## </FIXME>
 
