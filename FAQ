@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 0.65-11, 1999/11/10
+Version 0.65-12, 1999/11/15
 Kurt Hornik
 
 
@@ -165,8 +165,8 @@ implementation and semantics are derived from Scheme.  *Note What are the
 differences between R and S?::, for a discussion of the differences between
 R and S.
 
-   R was initially written by Ross Ihaka <ihaka@stat.auckland.ac.nz> and
-Robert Gentleman <rgentlem@stat.auckland.ac.nz>, who are Senior Lecturers
+   R was initially written by Ross Ihaka <Ross.Ihaka@r-project.org> and
+Robert Gentleman <Robert.Gentleman@r-project.org>, who are Senior Lecturers
 at the Department of Statistics of the University of Auckland in Auckland,
 New Zealand.  In addition, a large group of individuals has contributed to
 R by sending code and bug reports.
@@ -279,7 +279,8 @@ latest binary distributions of R for 32 bit versions of MS Windows (i.e.,
 95, 98 or NT), as well as binary distributions for a large number of add-on
 packages from CRAN.  The Windows version of R was created by Robert
 Gentleman, and is now being developed and maintained by Guido Masarotto
-<guido@sirio.stat.unipd.it> and Brian D. Ripley <ripley@stats.ox.ac.uk>.
+<Guido.Masarotto@r-project.org> and Brian D. Ripley
+<Brian.Ripley@r-project.org>.
 
    For most installations the installer `rwinst.exe' will be the easiest
 tool to use.
@@ -375,8 +376,8 @@ Graphical Statistics_, *5*, 299-314.
 2.9 What mailing lists exist for R?
 ===================================
 
-   Thanks to Martin Maechler <maechler@stat.math.ethz.ch>, there are three
-mailing lists devoted to R.
+   Thanks to Martin Maechler <Martin.Maechler@r-project.org>, there are
+three mailing lists devoted to R.
 
 `r-announce'
      This list is for announcements about the development of R and the
@@ -397,12 +398,12 @@ mailing lists devoted to R.
 Note that the r-announce list is gatewayed into r-help, so you don't need
 to subscribe to both of them.
 
-   Send email to <r-help@stat.math.ethz.ch> to reach everyone on the r-help
-mailing list.  To subscribe (or unsubscribe) to this list send `subscribe'
-(or `unsubscribe') in the BODY of the message (not in the subject!)  to
-<r-help-request@stat.math.ethz.ch>.  Information about the list can be
-obtained by sending an email with `info' as its contents to
-<r-help-request@stat.math.ethz.ch>.
+   Send email to <r-help@lists.r-project.org> to reach everyone on the
+r-help mailing list.  To subscribe (or unsubscribe) to this list send
+`subscribe' (or `unsubscribe') in the BODY of the message (not in the
+subject!)  to <r-help-request@lists.r-project.org>.  Information about the
+list can be obtained by sending an email with `info' as its contents to
+<r-help-request@lists.r-project.org>.
 
    Subscription and posting to the other lists is done analogously, with
 `r-help' replaced by `r-announce' and `r-devel', respectively.
@@ -422,7 +423,7 @@ in a monthly schedule via the `doc/mail/mail.html' file in CRAN.  An HTML
 archive of the lists are available via
 `http://www.ens.gu.edu.au/robertk/R/'.
 
-   The R Core Team can be reached at <r-core@stat.math.ethz.ch> for
+   The R Core Team can be reached at <r-core@lists.r-project.org> for
 comments and reports.
 
 2.10 What is CRAN?
@@ -835,6 +836,9 @@ being as compatible as possible with S.
      the loop.  In R it is local to the environment where the `for()'
      statement is executed.
 
+   * In S, `tapply(simplify=TRUE)' returns a vector where R returns a
+     one-dimensional array (which can have named dimnames).
+
 
    There are also differences which are not intentional, and result from
 missing or incorrect code in R.  The developers would appreciate hearing
@@ -1207,8 +1211,8 @@ use
 
 where LIB gives the path to the library tree to install to.
 
-   As of R version 0.65.1, the need for explicit unpacking for installing
-will be removed.
+   As of R version 0.65.1, you no longer need to explicitly unpack for
+installing; i.e., you can do `R INSTALL /path/to/pkg_ver.tar.gz'.
 
    You can use several library trees of add-on packages.  The easiest way
 to tell R to use these is via the environment variable `R_LIBS' which
@@ -1219,7 +1223,7 @@ E.g., to use a private tree in `$HOME/lib/R' and a public site-wide tree in
 
      R_LIBS="$HOME/lib/R:/usr/local/lib/R/site"; export R_LIBS
 
-into your (Bourne) shell profile.
+into your (Bourne) shell profile or your `~/.Renviron' file.
 
 5.3 How can add-on packages be used?
 ====================================
@@ -1340,7 +1344,8 @@ in `src'.  Note that the `Makefile' most likely is not needed.
 available for loading using `data()'.  Currently, data files can have one
 of three types as indicated by their extension:  plain R code (`.R' or
 `.r'), tables (`.tab', `.txt', or `.csv'), or `save()' images (`.RData' or
-`.rda').
+`.rda').  The subdirectory should contain a `00Index' file that describes
+the datasets available.
 
    The contents of the `inst' subdirectory will be copied recursively to
 the installation directory.
@@ -1349,11 +1354,11 @@ the installation directory.
 typically Shell or Perl scripts.  This mechanism is currently not used by
 any package, and still experimental.
 
-   You can also provide shell scripts `configure' and `cleanup' for
-configuration before installation (such as checking for additional software
-that might be needed by the package), and removing the files created in
-this process.  See the add-on package *e1071* on CRAN for an example of
-this mechanism.
+   You can also provide (Bourne) shell scripts `configure' and `cleanup'
+for configuration before installation (such as checking for additional
+software that might be needed by the package), and removing the files
+created in this process.  See the add-on package *e1071* on CRAN for an
+example of this mechanism.
 
    See the documentation for `library()' for more information.
 
@@ -1369,7 +1374,7 @@ maintained by Thomas Lumley provides information on porting S packages to R.
 and communicating problems is certainly of great value.
 
    One place where functionality is still missing is the modeling software
-as described in "Statistical Models in S" (see *Note What is S?::).
+as described in "Statistical Models in S" (see *Note What is S?::);
 Generalized Additive Models (*gam*) and some of the nonlinear modeling code
 are not there yet.
 
@@ -1379,7 +1384,7 @@ are not there yet.
 be worth porting to R.
 
    If you are interested in working on any of these projects, please notify
-Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>.
+Kurt Hornik <Kurt.Hornik@r-project.org>.
 
 6 R and Emacs
 *************
@@ -1387,34 +1392,33 @@ Kurt Hornik <Kurt.Hornik@ci.tuwien.ac.at>.
 6.1 Is there Emacs support for R?
 =================================
 
-   There is an Emacs-Lisp interface for interactive statistical programming
-and data analysis called ESS ("Emacs Speaks Statistics").  Languages
-supported include: S dialects (S 3/4, S-PLUS 3.x, and R), LispStat dialects
-(XLispStat, ViSta), and SAS.  Stata and SPSS dialect (SPSS, PSPP) support
-is being examined for possible future implementation (a preliminary Stata
-mode is distributed).
+   There is an Emacs package which provides a standard interface between
+statistical programs and statistical processes called ESS ("Emacs Speaks
+Statistics").  It is intended to provide assistance for interactive
+statistical programming and data analysis.  Languages supported include: S
+dialects (S 3/4, S-PLUS 3.x/4.x/5.x, and R), LispStat dialects (XLispStat,
+ViSta), SAS, Stata, SPSS dialects (SPSS, Fiasco) and SCA.
 
    ESS grew out of the desire for bug fixes and extensions to S-mode 4.8
-(which was a GNU Emacs interface to S/S-PLUS version 3 only).  In
-particular, XEmacs support as well as extensions to incorporate R were
-desired.  In addition, with new modes being developed for R, Stata, and
-SAS, it was felt that providing for a unifying framework would eliminate
-differences in the user interface, as well as to provide for faster
-development of production tools and statistical analysis.  ESS has, for its
-guts, the basic framework from S-mode.  However, it has been cleaned,
-streamlined, brought closer to conformance as a standard GNU Emacs package,
-and redesigned for modularity and reuse.
+(which was a GNU Emacs interface to S/S-PLUS version 3 only).  The current
+set of developers desired support for XEmacs, R, S4, and MS Windows.  In
+addition, with new modes being developed for R, Stata, and SAS, it was felt
+a unifying interface and framework for the user interface, would benefit
+both the user and the developer, by helping both groups conform to standard
+Emacs usage.  The end result is an increase in efficiency for statistical
+programming and data analysis, over the usual tools.
 
    R support contains code for editing R source code (syntactic indentation
 and highlighting of source code, partial evaluations of code, loading and
 error-checking of code, and source code revision maintenance) and
-documentation (including sending examples to a running R process and
-previewing), interacting with an inferior R process from within Emacs
-(command-line editing, searchable command history, command-line completion
-of R object and file names, quick access to object and search lists,
-transcript recording, and an interface to the help system), and transcript
-manipulation (in particular for re-evaluating commands from transcript
-files).
+documentation (syntactic indentation and highlighting of source code,
+sending Examples to running ESS process, and previewing), interacting with
+an inferior R process from within Emacs (command-line editing, searchable
+command history, command-line completion of R object and file names, quick
+access to object and search lists, transcript recording, and an interface
+to the help system), and transcript manipulation (recording and saving
+transcript files, manipulating and editing saved transcripts, and
+re-evaluating commands from transcript files).
 
    The latest versions of ESS are available from
 `http://ess.stat.wisc.edu/pub/ESS/' or `ftp://ess.stat.wisc.edu/pub/ESS/',
@@ -1907,7 +1911,7 @@ ensures that the site profile and saved data files are not read.
    On Unix systems a bug report can be generated using the function
 `bug.report()'. This automatically includes the version information and
 sends the bug to the correct address.  Alternatively the bug report can be
-emailed to <r-bugs@biostat.ku.dk> or submitted to the Web page at
+emailed to <r-bugs@lists.r-project.org> or submitted to the Web page at
 `http://bugs.r-project.org'.
 
    Bug reports on contributed packages should perhaps be sent to the
