@@ -120,7 +120,6 @@ static int InstallVar(SEXP var)
     SEXP v;
     int indx;
     /* Check that variable is legitimate */
-    if (isString(var)) var = install(CHAR(STRING_ELT(var, 0)));
     if (!isSymbol(var) && !isLanguage(var) && !isZeroOne(var))
 	error("invalid term in model formula");
     /* Lookup/Install it */
@@ -179,7 +178,7 @@ static void ExtractVars(SEXP formula, int checkonly)
 
     if (isNull(formula) || isZeroOne(formula))
 	return;
-    if (isSymbol(formula)|| isString(formula)) {
+    if (isSymbol(formula)) {
 	if (!checkonly) {
 	    if (formula == dotSymbol && framenames != R_NilValue) {
 		haveDot = TRUE;
@@ -573,7 +572,7 @@ static SEXP EncodeVars(SEXP formula)
 	else intercept = 1;
 	return R_NilValue;
     }
-    if (isSymbol(formula) || isString(formula)) {
+    if (isSymbol(formula)) {
 	if (formula == dotSymbol && framenames != R_NilValue) {
 	    /* prior to 1.7.0 this made term.labels in reverse order. */
 	    SEXP r = R_NilValue, v = R_NilValue; /* -Wall */

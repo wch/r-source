@@ -22,9 +22,6 @@ USER-VISIBLE CHANGES
     o	Saving data containing name space references no longer warns
 	about name spaces possibly being unavailable on load.
 
-
-CHANGES TO THE LANGUAGE
-
     o	On Unix-like systems interrupt signals now set a flag that is
 	checked periodically rather than calling longjmp from the
 	signal handler.	 This is analogous to the behavior on Windows.
@@ -33,6 +30,9 @@ CHANGES TO THE LANGUAGE
 	system in an inconsistent state.  It also reduces the number
 	of system calls, which can speed up computations on some
 	platforms and make R more usable with systems like Mosix.
+
+
+CHANGES TO THE LANGUAGE
 
     o	Error and warning handling has been modified to incorporate a
 	flexible condition handling mechanism.	See the online
@@ -44,18 +44,20 @@ CHANGES TO THE LANGUAGE
 	variable b in name space a).
 
     o	Non-syntactic variable names can now be specified by inclusion
-	between backticks `Like This`. The deparse() code has been
+	between backticks `Like This`.  The deparse() code has been
 	changed to output non-syntactical names with this convention,
 	when they occur as operands in expressions. This is controlled
 	by a `backtick' argument, which is by default TRUE for
 	composite expressions and FALSE for single symbols. This
 	should give minimal interference with existing code.
 
-    o   Terms in formulae can be quoted by single or double quotes as
-	well as by backticks: they will be deparsed with backticks.
-	terms.formula() will quote non-syntactic names in its
-	"term.labels" attribute.  [Note that other code using terms
-	objects may expect syntactic names.]
+    o	Variables in formulae can be quoted by backticks, and such
+	formulae can be used in the common model-fitting functions.
+	terms.formula() will quote (by backticks) non-syntactic names
+	in its "term.labels" attribute.  [Note that other code using
+	terms objects may expect syntactic names and/or not accept
+	quoted names: such code will still work if the new feature is
+	not used.]
 
 
 NEW FEATURES
@@ -196,7 +198,7 @@ NEW FEATURES
     o	xy.coords() coerces "POSIXt" objects to "POSIXct", allowing
 	lines etc to added to plot.POSIXlt() plots.
 
-    o	.Machine has a  new entry, sizeof.pointer.
+    o	.Machine has a new entry, sizeof.pointer.
 
     o	.Random.seed is only looked for and stored in the user's
 	workspace.  Previously the first place a variable of that name
@@ -290,8 +292,8 @@ STANDARD PACKAGES
     	- The package is now in a namespace.  To remove it you will
  	  now need to use unloadNamespace("tcltk").
 
-	- as.tclObj() has gained a `drop' argument
-	  to decide what should happen for vectors of length one.
+	- as.tclObj() has gained a `drop' argument to decide what
+	  should happen for vectors of length one.
 
     o	Changes in package 'tools':
 
@@ -350,46 +352,6 @@ USING PACKAGES
 	default for argument `where'.  The topenv() function and
 	sys.source() have been changed correspondingly.	 See the
 	online help.
-
-
-DEPRECATED & DEFUNCT
-
-    o	The assignment operator `_' has been removed.
-
-    o	printNoClass() is defunct.
-
-    o	The classic MacOS port is no longer supported, and its files
-	have been removed from the sources.
-
-    o	The deprecated argument 'white' of parse() has been removed.
-
-    o	Methods pacf/plot.mts() have been removed and their functionality
-	incorporated into pacf.default/plot.ts().
-
-    o	print.coefmat() is deprecated in favour of printCoefmat()
-	(which is identical apart from the default for na.print which
-	is changed from "" to "NA", and better handling of the 0-rank
-	case where all coefficients are missing).
-
-    o	codes() and codes<-() are deprecated, as almost all uses
-	misunderstood what they actually do.
-
-    o	The use of multi-argument return() calls is deprecated: use a
-	(named) list instead.
-
-    o	anovalist.lm (replaced in 1.2.0) is now deprecated.
-
-    o	- and Ops methods for POSIX[cl]t objects are removed: the
-	POSIXt methods have been used since 1.3.0.
-
-    o	glm.fit.null(), lm.fit.null() and lm.wfit.null() are deprecated.
-
-    o	Classes "lm.null" and "glm.null" are deprecated and all of their
-	methods have been removed.
-
-    o	Method weights.lm(), a copy of weights.default(), has been removed.
-
-    o	print.atomic() is now deprecated.
 
 
 DOCUMENTATION CHANGES
@@ -653,7 +615,7 @@ BUG FIXES
 	as.POSIXlt() was corrupted when trying to guess the DST offset
 	at dates the OS was unable to handle.
 
-    o	legend(x,y, leg) doesn't triple `leg' anymore when it is a call.
+    o	legend(x, y, leg) doesn't triple `leg' anymore when it is a call.
 
 
 

@@ -2427,8 +2427,8 @@ formula(lm1) # is expanded out
 slm1 <- step(lm1)
 add1(lm1, ~ I(Education^2) + .^2)
 step(lm1, scope=~ I(Education^2) + .^2)
-Quine <-
-structure(list(Eth = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+
+Quine <- structure(list(Eth = structure(c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2,
@@ -2494,6 +2494,20 @@ DF <- data.frame(y=rnorm(21), `x 1`=-10:10., check.names = FALSE)
 lm(y ~ ., data = DF)
 (fm <- lm(y ~ `x 1` + I(`x 1`^2), data = DF))
 step(fm)
+
+N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
+P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
+K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
+yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,55.0,
+           62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
+npk <- data.frame(`block no`=gl(6,4), N=factor(N), P=factor(P),
+                  K=factor(K), yield=yield, check.names=FALSE)
+op <- options(contrasts=c("contr.helmert", "contr.treatment"))
+(npk.aovE <- aov(yield ~  N*P*K + Error(`block no`), npk))
+summary(npk.aovE)
+model.tables(npk.aovE)
+model.tables(npk.aovE, "means")
+options(op)# reset to previous
 ## Didn't work before 1.8.0
 
 

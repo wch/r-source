@@ -433,8 +433,8 @@ model.frame.aovlist <- function(formula, data = NULL, ...)
     rm(formula)
     indError <- attr(Terms, "specials")$Error
     errorterm <-  attr(Terms, "variables")[[1 + indError]]
-    form <- update.formula(Terms, paste(". ~ .-", deparse(errorterm, width=500),
-					"+", deparse(errorterm[[2]], width=500)))
+    form <- update.formula(Terms, paste(". ~ .-", deparse(errorterm, width=500, backtick = TRUE),
+					"+", deparse(errorterm[[2]], width=500, backtick = TRUE)))
     nargs <- as.list(call)
     oargs <- as.list(oc)
     nargs <- nargs[match(c("data", "na.action", "subset"), names(nargs), 0)]

@@ -52,8 +52,8 @@ as.formula(object, env = parent.frame())
   nested within those on the right.  For example \code{a+b\%in\%a}
   expands to the formula \code{a+a:b}.  The \code{-} operator removes
   the specified terms, so that \code{(a+b+c)^2 - a:b} is identical to
-  \code{a + b + c + b:c + a:c}. It can also used to remove the intercept
-  term: \code{y~x - 1} is a line through the origin. A model with no
+  \code{a + b + c + b:c + a:c}.  It can also used to remove the intercept
+  term: \code{y~x - 1} is a line through the origin.  A model with no
   intercept can be also specified as \code{y~x + 0} or \code{0 + y~x}.
 
   While formulae usually involve just variable and factor
@@ -71,9 +71,9 @@ as.formula(object, env = parent.frame())
   \code{y ~ a + I(b+c)}, the term \code{b+c} is to be
   interpreted as the sum of \code{b} and \code{c}.
 
-  As from \R 1.7.1 variable names can be quoted in formulae, to allow
-  use of non-syntactic names.  Note that this does not apply to
-  variables used in functions in formulae. 
+  As from \R 1.8.0 variable names can be quoted by backticks \code{`like
+    this`} in formulae, although there is no guarantee that all code
+  using formulae will accept such non-syntactic names.
 }
 \section{Environments}{
   A formula object has an associated environment, and

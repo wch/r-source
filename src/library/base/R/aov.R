@@ -28,11 +28,12 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         on.exit(options(opcons))
         allTerms <- Terms
         errorterm <-  attr(Terms, "variables")[[1 + indError]]
-        eTerm <- deparse(errorterm[[2]], width = 500)
+        eTerm <- deparse(errorterm[[2]], width = 500, backtick = TRUE)
         intercept <- attr(Terms, "intercept")
         ecall <- lmcall
         ecall$formula <-
-            as.formula(paste(deparse(formula[[2]], width = 500), "~", eTerm,
+            as.formula(paste(deparse(formula[[2]], width = 500,
+                                     backtick = TRUE), "~", eTerm,
                              if(!intercept) "- 1"),
                        env=environment(formula))
 
@@ -41,7 +42,9 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         ecall$contrasts <- NULL
         er.fit <- eval(ecall, parent.frame())
         options(opcons)
-        nmstrata <- attr(terms(er.fit),"term.labels")
+        nmstrata <- attr(terms(er.fit), "term.labels")
+        ## remove backticks from simple labels for strata (only)
+        nmstrata <- sub("^`(.*)`$", "\\1", nmstrata)
         if(intercept) nmstrata <- c("(Intercept)", nmstrata)
         qr.e <- er.fit$qr
         rank.e <- er.fit$rank
@@ -57,7 +60,8 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         } else result <- vector("list", max(asgn.e) + 1)
         names(result) <- nmstrata
         lmcall$formula <- form <-
-            update(formula, paste(". ~ .-", deparse(errorterm, width = 500)))
+            update(formula, paste(". ~ .-", deparse(errorterm, width = 500,
+                                                    backtick = TRUE)))
         Terms <- terms(form)
         lmcall$method <- "model.frame"
         mf <- eval(lmcall, parent.frame())
