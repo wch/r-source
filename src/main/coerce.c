@@ -1272,7 +1272,7 @@ SEXP substituteList(SEXP el, SEXP rho)
 
 SEXP do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP env, s;
+	SEXP env, s, t;
 
 		/* set up the environment for substitution */
 
@@ -1282,12 +1282,21 @@ SEXP do_substitute(SEXP call, SEXP op, SEXP args, SEXP rho)
 		env = eval(CADR(args), rho);
 	if (env == R_NilValue)
 		env = R_GlobalEnv;
+
+	if (TYPEOF(env) == LISTSXP){
+		PROTECT(s = duplicate(env));
+                PROTECT(env = allocSExp(ENVSXP));
+                FRAME(env) = s;
+		UNPROTECT(2);
+	}
+
 	if (TYPEOF(env) != ENVSXP)
 		errorcall(call, "invalid environment specified\n");
 
 	PROTECT(env);
-	CDR(args) = R_NilValue;
-	s = substituteList(args, env);
-	UNPROTECT(1);
+	PROTECT(t = duplicate(args));
+	CDR(t) = R_NilValue;
+	s = substituteList(t, env);
+	UNPROTECT(2);
 	return CAR(s);
 }
