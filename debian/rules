@@ -15,6 +15,7 @@ build:
 	dh_testdir
 	R_UNZIPCMD=/usr/bin/miniunzip R_ZIPCMD=/usr/bin/minizip\
 	CFLAGS="-Wall -O2" FFLAGS="-Wall -O2"\
+	PATH=${PATH}:/usr/bin/X11\   # so /usr/bin/X11/imake is found
 	SHLIBLDFLAGS="-shared -lc" ./configure --prefix=/usr 		 \
 					--with-g77			 \
 					--mandir=$(debtmp)/usr/share/man \
@@ -44,20 +45,21 @@ binary-arch: build
 	dh_clean -k
 	dh_installdirs
 	make; make check; make install prefix=`pwd`/debian/tmp/usr
+	make info pdf
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/bin/R
 	sed -e '/{R_HOME=.*/s::{R_HOME=/usr/lib/R}:' \
 	  < bin/R > debian/tmp/usr/lib/R/bin/R
-	# remove unneeded license files
+# remove unneeded license files
 	rm -v $(debtmp)/usr/lib/R/library/base/help/license     	\
 	      $(debtmp)/usr/lib/R/library/base/latex/license.tex	\
 	      $(debtmp)/usr/lib/R/COPYING  
 	dh_installdocs BUGS PLATFORMS Y2K 
+	dh_installinfo doc/R-ext.info doc/R-intro.info
 	(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
 	(cd $(debdoc) && ln -s ../../../lib/R/library .)
 	dh_installmenu
 	dh_installmanpages re_format.7 regex.3 getline.3
-#	dh_undocumented	Rd2txt.1 Rdindex.1 Sd2Rd.1
 	dh_installchangelogs NEWS 
 	dh_strip
 	dh_compress
@@ -67,7 +69,6 @@ binary-arch: build
 	dh_gencontrol
 	dh_makeshlibs
 	dh_md5sums -X'usr/bin/R'  -XLibIndex -Xindex.txt -Xfunction.html -Xpackages.html
-#	dh_md5sums 
 	dh_builddeb
 
 # Below here is fairly generic really
