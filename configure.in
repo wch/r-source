@@ -386,6 +386,7 @@ etc/Sd2Rd
 etc/build-html
 etc/build-index
 etc/build-htmlpkglist
+etc/help.pretty
 etc/html2dos
 demos/dynload/Makefile
 src/library/LIBSETUP
@@ -395,6 +396,6 @@ cmd/fwf2table
 
 AC_OUTPUT_COMMANDS(
 (cd etc; chmod +x INSTALL Rdconv Rdindex Rman2Rd Sd2Rd \
-         build-html build-index html2dos build-htmlpkglist)
+         build-html build-htmlpkglist build-index help.pretty html2dos)
 (cd cmd; chmod +x fwf2table)
 )

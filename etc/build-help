@@ -51,7 +51,8 @@ for file in ${FILES}
 do
     name=`basename $file .Rd`
     ${RHOME}/etc/Rdconv -t nroff ${file} \
-	| nroff -ms 2> /dev/null > ${DEST}/${name}	
+	| nroff -ms 2> /dev/null \
+	| ${RHOME}/etc/help.pretty > ${DEST}/${name}	
     echo "  ${name}"
 done
 
