@@ -7,11 +7,19 @@ names as glibc/libiconv's iconv, it does not work.
 
 So we modified the iconv references to use our extra test and to use Riconv.
 
+
 Since we do not use relocation (and it was not easy to get to compile on
 Windows) we have removed it, as well as OS/2 compatibility.
 
+
 Since the packages will need libintl.h, we need to install it.  We also
 need to ensure that we get our version and not, e.g. the Solaris version.
+
+
+On Windows we got the warning
+printf-args.c: In function `libintl_vasnprintf':
+printf-args.c:83: warning: `wint_t' is promoted to `int' when passed through `...'
+as wint_t is unsigned short.
 
 BDR
 

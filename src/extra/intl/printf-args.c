@@ -80,7 +80,7 @@ printf_fetchargs (va_list args, arguments *a)
 	break;
 #ifdef HAVE_WINT_T
       case TYPE_WIDE_CHAR:
-	ap->a.a_wide_char = va_arg (args, wint_t);
+	  ap->a.a_wide_char = va_arg (args, /* wint_t */ int);
 	break;
 #endif
       case TYPE_STRING:
