@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.3-20, 2001-08-31
+@set FAQ-VERSION 1.3-21, 2001-09-06
 @set REL-VERSION 1.3.1
 @c %**end of header
 
@@ -416,24 +416,23 @@ available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
 
 @c Linux binaries as of 2001-07-11:
 @c
-@c debian   2.2 i386  1.3.0  Doug Bates <bates@stat.wisc.edu>
-@c          2.3 i386  1.3.0  Doug Bates <bates@stat.wisc.edu>
-@c linuxppc 5.0 ppc   1.3.0  Alex Buerkle <buerkle@hawaii.edu>
+@c debian   2.2 i386  1.3.1  Doug Bates <bates@stat.wisc.edu>
+@c          2.3 i386  1.3.1  Doug Bates <bates@stat.wisc.edu>
+@c linuxppc 5.0 ppc   1.3.1  Alex Buerkle <buerkle@hawaii.edu>
 @c mandrake 7.x i386  1.3.0  Maximino Ameneiro Gomez <maximino.ameneiro@metropoli2000.com>
-@c          8.0 i386  1.3.0  Michele Alzetta <mikalzet@libero.it>
-@c redhat   6.x alpha 1.2.2  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.2.3  Martyn Plummer <plummer@iarc.fr>
-@c          7.x alpha 1.3.0  Naoki Takebayashi <ntakebay@bio.indiana.edu>
-@c              i386  1.3.0  Martyn Plummer <plummer@iarc.fr>
+@c          8.0 i386  1.3.1  Michele Alzetta <mikalzet@libero.it>
+@c redhat   6.x i386  1.3.1  Martyn Plummer <plummer@iarc.fr>
+@c          7.x alpha 1.3.1  Naoki Takebayashi <ntakebay@bio.indiana.edu>
+@c              i386  1.3.1  Martyn Plummer <plummer@iarc.fr>
 @c suse     7.2 i386  1.3.0  A Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
 
 The @file{bin/linux} directory of a @acronym{CRAN} site contains Debian
 2.2/2.3 packages for the i386 platform (now part of the Debian
-distribution and maintained by Doug Bates), Red Hat 6.x/7.x packages for
-the alpha and i386 platforms (maintained by Naoki Takebayashi and Martyn
-Plummer, respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt,
-Mandrake 8.0 and 7.2 i386 packages by Michele Alzetta and Maximino
-Ameneiro Gomez, and LinuxPPC 5.0 RPMs by Alex Buerkle.
+distribution and maintained by Doug Bates), Red Hat 6.x/7.x i386 and 7.x
+alpha packages (maintained by Martyn Plummer and Naoki Takebayashi,
+respectively), SuSE 7.2 i386 packages by Albrecht Gebhardt, Mandrake 8.0
+and 7.2 i386 packages by Michele Alzetta and Maximino Ameneiro Gomez,
+and LinuxPPC 5.0 RPMs by Alex Buerkle.
 
 The Debian packages can be accessed through APT, the Debian package
 maintenance tool.  Simply add the line
@@ -1402,6 +1401,9 @@ Constrained Correspondence Analysis.
 @item Devore5
 Data sets and sample analyses from ``Probability and Statistics for
 Engineering and the Sciences (5th ed)'' by Jay L. Devore, 2000, Duxbury.
+@item EMV
+Estimation of missing values in a matrix by a @math{k}-th nearest
+neighboors algorithm.
 @item GLMMGibbs
 Generalised Linear Mixed Models by Gibbs sampling.
 @item GeneSOM
@@ -1688,6 +1690,9 @@ Functions for simple fixed and random effects meta-analysis for
 two-sample comparison of binary outcomes.
 @item rpart
 Recursive PARTitioning and regression trees.
+@item rpvm
+R interface to PVM (Parallel Virtual Machine).  Provides interface to
+PVM APIs, and examples and documentation for its use.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
 @item sem
@@ -1742,6 +1747,9 @@ Package for time series analysis with emphasis on non-linear modelling.
 @item twostage
 Functions for optimal design of two-stage-studies using the Mean Score
 method.
+@item vegan
+Various help functions for vegetation scientists and community
+ecologists.
 @item wavethresh
 Software to perform 1-d and 2-d wavelet statistics and transforms.
 @item wle
@@ -1774,6 +1782,10 @@ Functions for generating and manipulating generalised binned kernel
 density estimates.
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
+@item Rdbi
+Generic framework for database access in R.
+@item Rdbi.PgSQL
+Provides methods for accessing data stored in PostgreSQL tables.
 @item StatDataML
 Read and write StatDataML.
 @item cxx
