@@ -1,0 +1,5 @@
+all:
+	@echo PKG_CFLAGS:   "$(PKG_CFLAGS)"
+	@echo PKG_CPPFLAGS: "$(PKG_CPPFLAGS)"
+	@echo PKG_CXXFLAGS: "$(PKG_CXXFLAGS)"
+	@echo PKG_FFLAGS:   "$(PKG_FFLAGS)"

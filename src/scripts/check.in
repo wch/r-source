@@ -1271,7 +1271,7 @@ sub check_pkg {
 	}
     }
 
-    ## Check C sources/headers for CRLF line endings.
+    ## Check C/C++/Fortran sources/headers for CRLF line endings.
 
     ## <FIXME>
     ## Does ISO C really require LF line endings?  (Reference?)
@@ -1309,10 +1309,29 @@ sub check_pkg {
 	}
     }
 
+    ## Check src/Makevars[.in] for portable compilation flags.
+
+    if((-f &file_path("src", "Makevars.in"))
+       || (-f &file_path("src", "Makevars"))) {
+	$log->checking("for portable compilation flags in Makevars");
+	my $Rcmd = "tools:::.check_make_vars(\"src\")\n";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+			 "R_DEFAULT_PACKAGES=NULL");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+    
+
     chdir($pkgoutdir);
 
     ## Run the examples.
-    ## This setting applies to vignettes below too
+    ## This setting applies to vignettes below too.
     ${R_opts} = ${R_opts}." -d valgrind" if $opt_use_valgrind;
 
     if($opt_examples && (-d &file_path($library, $pkgname, "R-ex"))) {

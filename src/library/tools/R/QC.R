@@ -2889,6 +2889,79 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_make_vars
+
+.check_make_vars <-
+function(dir)
+{
+
+    bad_flags <- list()
+    class(bad_flags) <- "check_make_vars"
+
+    paths <- file.path(dir, c("Makevars.in", "Makevars"))
+    paths <- paths[file_test("-f", paths)]
+    if(!length(paths)) return(bad_flags)
+    mfile <- paths[1]
+
+    lines <-
+        try(system(sprintf("%s -f %s -f %s",
+                           Sys.getenv("MAKE"),
+                           shQuote(mfile),
+                           shQuote(file.path(R.home(), "share",
+                                             "make", "check.mk"))),
+                   intern = TRUE,
+                   if(identical(.Platform$OS.type, "unix"))
+                   ignore.stderr = TRUE),
+            silent = TRUE)
+    if(!length(lines) || inherits(lines, "try-error"))
+        return(bad_flags)
+    
+    ## Try to be careful ...
+    lines <- lines[regexpr("^PKG_[A-Z]*FLAGS: ", lines) > -1]
+    names <- sub(":.*", "", lines)
+    lines <- sub("^PKG_[A-Z]*FLAGS: ", "", lines)
+    flags <- strsplit(lines, "[[:space:]]+")
+    ## Bad flags:
+    ##   -O*
+    ##      (BDR: for example Sun Fortran compilers used to accept -O
+    ##      but not -O2, and VC++ accepts -Ox (literal x) but not -O.)
+    ##   -Wall -pedantic -ansi -traditional -std* -f* -m* [GCC]
+    ##   -x [Solaris]
+    ##   -q [AIX]
+    ## It is hard to think of anything apart from -I* and -D* that is
+    ## safe for general use ...
+    bad_flags_regexp <-
+        sprintf("^-(%s)$",
+                paste(c("O.*",
+                        "Wall", "ansi", "pedantic", "traditiona",
+                        "f.*", "m.*", "std.*",
+                        "x",
+                        "q"),
+                      collapse = "|"))
+    for(i in seq(along = lines)) {
+        bad <- grep(bad_flags_regexp, flags[[i]], value = TRUE)
+        if(length(bad))
+            bad_flags <- c(bad_flags,
+                           structure(list(bad), names = names[i]))
+    }
+
+    class(bad_flags) <- "check_make_vars"
+    bad_flags
+}
+
+print.check_make_vars <-
+function(x, ...)
+{
+    if(length(x) > 0) {
+        for(i in seq(along = x)) {
+            writeLines(c(sprintf("Non-portable flags in variable '%s':",
+                                 names(x)[i]),
+                         sprintf("  %s", paste(x[[i]], collapse = " "))))
+        }
+    }
+    invisible(x)
+}
+
 
 ### * as.alist.call
 

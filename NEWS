@@ -321,7 +321,8 @@ UTILITIES
     o	R CMD check has a new option '--use-valgrind'.
 
     o	R CMD check now checks that Fortran and C++ files have LF
-	line endings, as well as C files.
+	line endings, as well as C files.  It also checks Makevars[.in]
+	files for portable compilation flags.
 
     o	R CMD check will now work on a source tarball and prints out
 	information about the version of R and the package.
