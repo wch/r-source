@@ -52,13 +52,15 @@ plot (data.frame.obj, \dots)
   \item{data.frame.obj}{objects of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
 }
+\description{
+  These functions create or manipulate data frames, tightly coupled collections
+  of variables which share many of the properties of matrices and of
+  lists, used as the fundamental data structure by most of \R's
+  modeling software.
+}
 \value{
-  For \code{data.frame(.)} a data frame.  Data frames are the
-  fundamental data structure used by
-  most of \R's modeling software.  They are tightly coupled collections
-  of variables which share many of the properties of matrices.  The main
-  difference being that the columns of a data frame may be of differing
-  types (numeric, factor and character).
+  For \code{data.frame(.)} a data frame, a matrix-like stucture whose
+  columns may be of differing types (numeric, factor and character).
 
   \code{as.data.frame} is generic function with many \code{\link{methods}}.
   It attempts to coerce its argument to be a data frame.
@@ -81,6 +83,16 @@ plot (data.frame.obj, \dots)
   rows of a data frame.  It is used by the data frame methods of
   \code{[<-} and \code{[[<-} (which perform subscripted assignments on a
   data frame), and not intended to be called directly.
+}
+\details{
+  Non-numeric variables passed to \code{data.frame} are converted to
+  factor columns unless protected by \code{\link{I}}. This applies to
+  character and logical variables, in particular. It also applies to
+  adding columns to a data frame.
+
+  If a data frame or matrix is passed to \code{data.frame} it is as if
+  each column had been passed as a separate argument, which the
+  exception of matrices of class \code{\link{model.matrix}}.
 }
 \seealso{
   \code{\link{read.table}}, \code{\link{Math.data.frame}},etc, about
