@@ -28,17 +28,20 @@ function(file)
 print.libraryIQR <-
 function(x, ...)
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
     db <- x$results
     ## Split according to LibPath.
-    out <- lapply(split(1 : nrow(db), db[, "LibPath"]),
-                  function(ind) db[ind, c("Package", "Title"),
-                                   drop = FALSE])
+    out <- if(nrow(db) == 0)
+        NULL
+    else lapply(split(1 : nrow(db), db[, "LibPath"]),
+                function(ind) db[ind, c("Package", "Title"),
+                                 drop = FALSE])
     outFile <- tempfile("RlibraryIQR")
     outConn <- file(outFile, open = "w")
     first <- TRUE
     for(lib in names(out)) {
         writeLines(paste(ifelse(first, "", "\n"),
-                         "Packages in library `", lib, "':\n",
+                         "Packages in library ", sQuote(lib), ":\n",
                          sep = ""),
                    outConn)
         writeLines(formatDL(out[[lib]][, "Package"],
@@ -47,9 +50,9 @@ function(x, ...)
         first <- FALSE
     }
     if(first) {
-        warning("no packages found")
         close(outConn)
         unlink(outFile)
+        writeLines("no packages found")
     }
     else {
         close(outConn)
@@ -61,11 +64,15 @@ function(x, ...)
 print.packageIQR <-
 function(x, ...)
 {
+    sQuote <- function(s) paste("`", s, "'", sep = "")
     db <- x$results
     ## Split according to Package.
-    out <- lapply(split(1 : nrow(db), db[, "Package"]),
-                  function(ind) db[ind, c("Item", "Title"),
-                                   drop = FALSE])
+    out <- if(nrow(db) == 0)
+         NULL
+    else
+        lapply(split(1 : nrow(db), db[, "Package"]),
+               function(ind) db[ind, c("Item", "Title"),
+                                drop = FALSE])
     outFile <- tempfile("RpackageIQR")
     outConn <- file(outFile, open = "w")
     first <- TRUE
@@ -74,7 +81,7 @@ function(x, ...)
                          switch(x$type,
                                 data = "Data sets",
                                 demo = "Demos"),
-                         " in package `", pkg, "':\n",
+                         " in package ", sQuote(pkg), ":\n",
                          sep = ""),
                    outConn)
         writeLines(formatDL(out[[pkg]][, "Item"],
@@ -83,9 +90,9 @@ function(x, ...)
         first <- FALSE
     }
     if(first) {
-        warning(paste("no", x$type, "listings found"))
         close(outConn)
         unlink(outFile)
+        writeLines(paste("no", x$type, "listings found"))
     }
     else {
         if(!is.null(x$footer))
