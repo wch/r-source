@@ -3480,3 +3480,8 @@ close(cn.x, sep=" ")
 unlink("ex.data")
 stopifnot(identical(res, c(235, 335, 535, 735, 115, 135, 175)))
 ## dropped some first chars < 2.1.0
+
+
+## PR#7686 formatC does not pick up on incorrect 'flag' inputs
+try(formatC(1, flag="s"))
+## segfaulted in 2.0.1

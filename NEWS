@@ -610,6 +610,8 @@ BUG FIXES
 
     o	str(<S4.object>) was misleading for the case of a single slot.
 
+    o	formatC() did not check its 'flag' argument, and could
+	segfault if it was incorrect. (PR#7686)
 
 
 

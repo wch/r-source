@@ -47,7 +47,8 @@ format.char(x, width = NULL, flag = "-")
 
   \item{flag}{format modifier as in Kernighan and Ritchie (1988, page 243).
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
-    others are \code{"+"}, \code{" "}, and \code{"#"}.}
+    others are \code{"+"}, \code{" "}, and \code{"#"}.  There can be
+    more than one of these, in any order.}
 
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
     \code{"character"}.
@@ -73,7 +74,7 @@ format.char(x, width = NULL, flag = "-")
   simple (left or right) padding with white space.
 }
 \details{
-  If you set \code{format} it over-rides the setting of \code{mode}, so
+  If you set \code{format} it overrides the setting of \code{mode}, so
   \code{formatC(123.45, mode="double", format="d")} gives \code{123}.
 
   The rendering of scientific format is platform-dependent: some systems
