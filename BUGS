@@ -40,20 +40,11 @@ Date: Wed, 16 Feb 2000 13:03:18 +0100 (MET)
 
 Directory:  Analyses
 
-* PR# 144 *
-Subject: glm throws erroneous(?)'names attribute must be the same length as the vector' 
-From: wagman@enteract.com
-Date: Thu, 18 Mar 1999 08:58:47 +0100
---Can anyone reproduce this ??
---Same error as when doing regression on empty subset. All fitted
---values might be 0 or 1
+none
 
 Directory:  Documentation
 
-* PR# 440 *
-Subject: html help: dev.xxx
-From: Bill Simpson <wsi@gcal.ac.uk>
-Date: Tue, 15 Feb 2000 12:27:45 +0000 (GMT)
+none
 
 Directory:  Graphics
 
@@ -151,10 +142,6 @@ Date: 13 Jan 2000 14:31:42 +0100
 Subject:  graphics bugs: steep slopes and large values beyond ylim 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Mon, 7 Feb 2000 18:28:04 -0500
-* PR# 441 *
-Subject: contour() labels
-From: Ray Brownrigg <Ray.Brownrigg@mcs.vuw.ac.nz>
-Date: Wed, 16 Feb 2000 16:51:27 +1300 (NZDT)
 * PR# 442 *
 Subject:  rug() extends axes instead of clipping 
 From: Berwin Turlach <berwin@maths.uwa.edu.au>
@@ -186,10 +173,6 @@ From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
 Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 --There is a 128K limit on functions wirh keep.source set. Try modular
 --programming!
-* PR# 394 *
-Subject: formatC (bug and fix)
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Tue, 4 Jan 2000 10:31:53 +0100
 * PR# 408 *
 Subject: convolution bug
 From: wsimpson@gcal.ac.uk
@@ -203,11 +186,6 @@ Subject: strsplit
 From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
 Date: Tue, 8 Feb 2000 12:58:09 +0100 (MET)
 --Intentional change
-* PR# 425 *
-Subject: Row subsetting of data frames
-From: Martyn Plummer <plummer@iarc.fr>
-Date: Wed, 09 Feb 2000 18:46:07 +0100 (CET)
---pmatch is not S-compatible
 
 Directory:  Low-level
 
@@ -274,18 +252,13 @@ Date: Mon, 12 Oct 1998 09:43:51 +0200 (MET DST)
 -- 5. Splus gives NA and the if(class(z)=="repeated") doesn't work in either
 -- 10. seems to work
 -- 7.  seems to do what Jim wants now
---  
+--1.0.0
+-- 1. is S-compatible and has been altered to make R incompatible
+--13. There are many such options.
 * PR# 76 *
 Subject: R-0.63.0
 From: Rashid Nassar <rnassar@acpub.duke.edu>
 Date: Fri, 11 Dec 1998 23:20:08 -0500 (EST)
-* PR# 410 *
-Subject: Bugs and comments.
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 2 Feb 2000 13:41:50 +0100 (MET)
---1) is fixed for 0.99.0
---2) Use ctrl+arrows, as documented: rw0990 has a horizontal scrollbar
---3) ?
 
 Directory:  Windows
 
@@ -321,7 +294,7 @@ Date: Wed, 16 Feb 2000 22:35:05 +0100 (MET)
 Subject: "a.matrix[a.char.matrix]<- " crashes R
 From: "Charles C. Berry" <cberry@tajo.ucsd.edu>
 Date: Wed, 16 Feb 2000 16:12:01 -0800
-* PR# 448 *
-Subject: bug in rbinom?
-From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
-Date: Thu, 17 Feb 2000 13:08:17 +0100
+* PR# 449 *
+Subject: Installation of rpm file on Suse Linux 6.2
+From: luzi@stud.phys.ethz.ch
+Date: Thu, 17 Feb 2000 18:36:04 +0100 (MET)
