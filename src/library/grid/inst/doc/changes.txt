@@ -109,6 +109,18 @@ Changes from grid_1.8.0 to grid_1.8.1:
 
       xyplot(1:4~1:4, cex=1:4, pch=1)
 
+4.  Fixed a bug in multiplication of scalar by unit object, when the
+    scalar has length > 1.  The following example demonstrates
+    the problem:
+
+      grid.segments(x0=1:3/4, y0=0.1, x1=1:3/4,
+                    y1=1:3/4*unit(1, "npc"))
+
+    This should behave the same as:
+
+      grid.segments(x0=1:3/4, y0=0.1, x1=1:3/4,
+                    y1=unit(1:3/4, "npc"))
+      
 
 Changes from grid_0.7-4 to grid_1.8.0:
 ------------------------------------

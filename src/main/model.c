@@ -824,12 +824,23 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SETCAR(a, v = allocVector(INTSXP, k));
     if (k > 0) {
 	call = formula; /* call is to be the previous value */
-	for (l = response, k = 0; l < nvar; l++)
-	    if (!strncmp(CHAR(STRING_ELT(varnames, l)), "offset(", 7)) {
+	for (l = response, k = 0; l < length(formula)+response; l++) {
+	    SEXP thisterm;
+	    Rboolean have_offset = FALSE;
+	    thisterm = (l > response) ? CDR(call): call;
+	    for (i = 1; i <= nvar; i++) {
+		if (GetBit(CAR(thisterm), i) &&
+		    !strncmp(CHAR(STRING_ELT(varnames, i-1)), "offset(", 7)) {
+		    have_offset = TRUE;
+		    break;
+		}
+	    }
+	    if (have_offset) {
 		INTEGER(v)[k++] = l+1;
 		if (l == response) call = formula = CDR(formula);
 		else SETCDR(call, CDR(CDR(call)));
 	    } else if (l > response) call = CDR(call);
+	}
 	SET_TAG(a, install("offset"));
 	a = CDR(a);
     }

@@ -1060,7 +1060,18 @@ x[2]
 x[2, drop=FALSE]
 ## both dim and dimnames lost in 1.8.0
 
+
 ## print.dist() didn't show NA's prior to 1.8.1
 x <- cbind(c(1,NA,2,3), c(NA,2,NA,1))
 (d <- dist(x))
 print(d, diag = TRUE)
+##
+
+
+## offsets in model terms where sometimes not deleted correctly
+attributes(terms(~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+attributes(terms(y ~ a + b + a:b + offset(c)))[c("offset", "term.labels")]
+attributes(terms(~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+attributes(terms(y ~ offset(c) + a + b + a:b))[c("offset", "term.labels")]
+## errors prior to 1.8.1
+
