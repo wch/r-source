@@ -754,7 +754,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     dd->gp.xpd = 1;
     dd->gp.adj = 0.5;
     dd->gp.font = dd->gp.fontaxis;
-    dd->gp.cex = dd->gp.cex * dd->gp.cexbase;
+    dd->gp.cex = dd->gp.cexbase * dd->gp.cexaxis;
     col = dd->gp.col;
     fg = dd->gp.fg;
 
@@ -1596,8 +1596,7 @@ SEXP do_text(SEXP call, SEXP op, SEXP args, SEXP env)
 	    else
 		dd->gp.col = dd->dp.col;
 	    if(ncex && FINITE(REAL(cex)[i%ncex]))
-		dd->gp.cex = dd->gp.cexbase *
-		    REAL(cex)[i % ncex];
+		dd->gp.cex = dd->gp.cexbase * REAL(cex)[i % ncex];
 	    else
 		dd->gp.cex = dd->gp.cexbase;
 	    if (nfont && INTEGER(font)[i % nfont] != NA_INTEGER)
