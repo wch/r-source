@@ -134,6 +134,8 @@ NEW FEATURES
 	   new generic function tsSmooth() for fixed-interval
 	   state-space smoothing of such models.
 
+	-  New function monthplot() (contributed by Duncan Murdoch).
+
     o   Much improved printing of matrices and arrays of type "list".
 
     o   deriv/deriv3() can now handle expressions involving pnorm and

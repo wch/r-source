@@ -25,5 +25,6 @@ plot(cbind(JJ, sm[, 1], sm[, 3]-0.5), plot.type = "single",
      col = c("black", "green", "blue"))
 abline(h = -0.5, col = "grey60")
 
+monthplot(fit)
 }
 \keyword{datasets}
