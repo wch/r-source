@@ -21,6 +21,8 @@ Recent changes caused (D)COM to sometimes go into infinite loops.
 Any change of preference changed font (even if to the same font as before).
 This is causing problems in MDI mode with toolbars (PR#7277).
 
+Control keys in TCL/TK windows were not handled properly.
+
     -------------------------------------------------------------------
 
 	For changes prior to the release of R 2.0.0 on 4 Oct 2004

@@ -445,14 +445,16 @@ int handle_menu_key(WPARAM wParam)
 {
     object win, obj;
     win = find_by_handle(GetFocus());
-    if (win->kind != WindowObject)
-	win = win->parent;
-    obj = find_by_key(win, wParam);
-    if (obj) {
+    if (win) {
+    	if (win->kind != WindowObject)
+	    win = win->parent;
+    	obj = find_by_key(win, wParam);
+        if (obj) {
 	    adjust_menus_top_down(obj);
 	    if (isenabled(obj)) /* Don't do menu actions which are greyed out. CJ */
 		activatecontrol(obj);
 	    return 1;
 	}
+    }
     return 0;
 }
