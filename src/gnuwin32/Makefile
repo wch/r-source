@@ -231,12 +231,11 @@ endif
 base-HELP = ziponly
 graphics-HELP = ziponly
 methods-HELP = ziponly
-nls-HELP = ziponly
 stats-HELP = ziponly
-ts-HELP = ziponly
 utils-HELP = ziponly
+
 base-ZIPDATA = zip
-ts-ZIPDATA = zip
+stats-ZIPDATA = zip
 
 MASS-HELP = ziponly
 MASS-ZIPDATA = zip
