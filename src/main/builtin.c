@@ -152,23 +152,20 @@ SEXP do_envirgets(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_newenv(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP s;
+    SEXP enclos;
     int hash;
 
     checkArity(op, args);
 
     hash = asInteger(CAR(args));
-    if( !isEnvironment(CADR(args)) )
+    enclos = CADR(args);
+    if( !isEnvironment(enclos) )
 	errorcall(call, "enclos needs to be an environment");
 
-    PROTECT(s = NewEnvironment(R_NilValue, R_NilValue,
-			       CADR(args))); 
-
-    /* 0, 0 gets the recomended minima */
     if( hash )
-	SET_HASHTAB(s, R_NewHashTable(0,0));
-    UNPROTECT(1);
-    return(s);
+	return R_NewHashedEnv(enclos);
+    else
+	return NewEnvironment(R_NilValue, R_NilValue, enclos);
 }
 
 SEXP do_parentenv(SEXP call, SEXP op, SEXP args, SEXP rho)

@@ -655,7 +655,7 @@ void Rcons_vprintf(const char *, va_list);
 void RemoveClass(SEXP, char *);
 SEXP R_data_class(SEXP , int);
 SEXP R_LoadFromFile(FILE*, int);
-SEXP R_NewHashTable(int, int);
+SEXP R_NewHashedEnv(SEXP);
 extern int R_Newhashpjw(char*);
 FILE* R_OpenLibraryFile(char *);
 void R_PreserveObject(SEXP);

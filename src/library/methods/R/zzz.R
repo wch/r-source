@@ -26,7 +26,7 @@
     assign(".methodsEnv", where, envir=where)
     assign(".MethodsDispatchOn", TRUE, envir = where)
     ## initialize the environment used as the session table to store methods definitions
-    table <- new.env()
+    table <- new.env(hash=TRUE)
     assign("__MethodMetaData", table, envir = where)
     .Call("R_initialize_methods_metadata", table, PACKAGE = "methods")
     if(!get(".saveImage", envir = where)) {

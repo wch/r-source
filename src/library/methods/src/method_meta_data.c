@@ -5,16 +5,10 @@
 
 #include "RSMethods.h"
 
-/* taken or inferred from main/envir.c */
-#define HASHTABLESIZE 100
-#define HASHTABLEGROWTHRATE 1.2
-
 /* from Defn.h */
 #define streql(s, t)	(!strcmp((s), (t)))
 #define setVarInFrame		Rf_setVarInFrame
 SEXP setVarInFrame(SEXP, SEXP, SEXP);
-
-SEXP R_NewHashTable(int size, int growth_rate);
 
 /* These tables should not be "global".  They will need to be specific
    to thread and to namespace.  Remains to design a correct but
@@ -27,9 +21,6 @@ SEXP R_initialize_methods_metadata(SEXP table)
        First.lib in the RSMethods package) to protect it from garbage
        collection */
     methods_table = table;
-    /* enforce hashing of entries by initializing the hash table */
-    if(HASHTAB(table) == R_NilValue)
-	SET_HASHTAB(table, R_NewHashTable(HASHTABLESIZE, HASHTABLEGROWTHRATE));
     return table;
 }
 
