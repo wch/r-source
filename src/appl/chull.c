@@ -101,22 +101,22 @@ static void split(long n, double *x, long m, long *in, long ii,
 	}
 	if (z > 0.) {
 /* THE POINT IS ABOVE THE LINE */
-	  if (s == -2) continue;
-	  ++(*na);
-	  iabv[*na] = is;
-	  if (z >= up) {  
-	    up = z;
-	    *maxa = *na;
-	  }
+	    if (s == -2) continue;
+	    ++(*na);
+	    iabv[*na] = is;
+	    if (z >= up) {  
+		up = z;
+		*maxa = *na;
+	    }
         }
 	else if (s != 2 && z < 0.) {
 /* THE POINT IS BELOW THE LINE */
-	  ++(*nb);
-	  ibel[*nb] = is;
-	  if (z <= down) {
-	    down = z;
-	    *maxb = *nb;
-	  }
+	    ++(*nb);
+	    ibel[*nb] = is;
+	    if (z <= down) {
+		down = z;
+		*maxb = *nb;
+	    }
 	}
     }
 }
@@ -127,7 +127,7 @@ void chull(long *n, double *x, long *m, long *in, long *ia, long *ib,
     /* Local variables */
     logical mine, maxe;
     long i, j, ilinh, ma, mb, kn, mm, kx, mx, mp1, mbb, nia, nib, 
-	    inh, min, mxa, mxb, mxbb;
+	inh, min, mxa, mxb, mxbb;
     int x_dim1, x_offset;
     double d1;
 
@@ -209,18 +209,18 @@ void chull(long *n, double *x, long *m, long *in, long *ia, long *ib,
 	j = in[i];
 	if ((d1 = x[j] - x[kx]) < 0.) {
 	} else if (d1 == 0) {
-	  maxe = TRUE_;
+	    maxe = TRUE_;
 	} else {
-	  maxe = FALSE_;
-	  mx = i;
-	  kx = j;
+	    maxe = FALSE_;
+	    mx = i;
+	    kx = j;
 	}
 	if ((d1 = x[j] - x[kn]) < 0.) {
-	  mine = FALSE_;
-	  min = i;
-	  kn = j;
+	    mine = FALSE_;
+	    min = i;
+	    kn = j;
 	} else if (d1 == 0) {
-	  mine = TRUE_;
+	    mine = TRUE_;
 	}
     }
 /* IF THE MAX AND MIN ARE EQUAL, ALL M POINTS LIE ON A */
@@ -233,7 +233,7 @@ void chull(long *n, double *x, long *m, long *in, long *ia, long *ib,
     if (maxe || mine) {
 	goto L23;
     }
-L7:
+ L7:
     ih[1] = kx;
     ih[2] = kn;
     *nh = 3;
@@ -250,13 +250,13 @@ L7:
     in[*m - 1] = kn;
 /* BEGIN BY PARTITIONING THE ROOT OF THE TREE */
     split(*n, &x[x_offset], mm, &in[1], ih[1], ih[2], 0, &ia[1], &mb,
-	     &mxa, &ib[1], &ia[ma], &mxbb);
+	  &mxa, &ib[1], &ia[ma], &mxbb);
 /* FIRST TRAVERSE THE LEFT HALF OF THE TREE */
 /* START WITH THE LEFT SON */
-L8:
+ L8:
     nib += ia[ma];
     --ma;
-L9:
+ L9:
     if (mxa == 0) goto L11;
     il[*nh] = il[inh];
     il[inh] = *nh;
@@ -266,14 +266,14 @@ L9:
     ++(*nh);
     if (mb == 0) goto L10;
     ilinh = il[inh];
-    split(*n, &x[x_offset], mb, &ia[1], ih[inh], ih[ilinh], 1, &ia[1]
-	    , &mbb, &mxa, &ib[nib], &ia[ma], &mxb);
+    split(*n, &x[x_offset], mb, &ia[1], ih[inh], ih[ilinh], 1, &ia[1], 
+	  &mbb, &mxa, &ib[nib], &ia[ma], &mxb);
     mb = mbb;
     goto L8;
 /* THEN THE RIGHT SON */
-L10:
+ L10:
     inh = il[inh];
-L11:
+ L11:
     inh = il[inh];
     ++ma;
     nib -= ia[ma];
@@ -285,21 +285,21 @@ L11:
 /* TRIANGLE WITH VERTICES WHICH ARE ALSO VERTICES OF THE */
 /* CONVEX POLYGON AND HENCE THE SUBSET MAY BE NEGLECTED. */
     split(*n, &x[x_offset], ia[ma], &ib[nib], ih[inh], ih[ilinh], 2, 
-	    &ia[1], &mb, &mxa, &ib[nib], &mbb, &mxb);
+	  &ia[1], &mb, &mxa, &ib[nib], &mbb, &mxb);
     ia[ma] = mbb;
     goto L9;
 /* NOW TRAVERSE THE RIGHT HALF OF THE TREE */
-L12:
+ L12:
     mxb = mxbb;
     ma = *m;
     mb = ia[ma];
     nia = 1;
     ia[ma] = 0;
 /* START WITH THE RIGHT SON */
-L13:
+ L13:
     nia += ia[ma];
     --ma;
-L14:
+ L14:
     if (mxb == 0) goto L16;
     il[*nh] = il[inh];
     il[inh] = *nh;
@@ -309,14 +309,14 @@ L14:
     ++(*nh);
     if (mb == 0) goto L15;
     ilinh = il[inh];
-    split(*n, &x[x_offset], mb, &ib[nib], ih[inh], ih[ilinh], -1, &ia[
-	    nia], &ia[ma], &mxa, &ib[nib], &mbb, &mxb);
+    split(*n, &x[x_offset], mb, &ib[nib], ih[inh], ih[ilinh], -1, 
+	  &ia[nia], &ia[ma], &mxa, &ib[nib], &mbb, &mxb);
     mb = mbb;
     goto L13;
 /* THEN THE LEFT SON */
-L15:
+ L15:
     inh = il[inh];
-L16:
+ L16:
     inh = il[inh];
     ++ma;
     nia -= ia[ma];
@@ -328,9 +328,9 @@ L16:
 /* TRIANGLE WITH VERTICES WHICH ARE ALSO VERTICES OF THE */
 /* CONVEX POLYGON AND HENCE THE SUBSET MAY BE NEGLECTED. */
     split(*n, &x[x_offset], ia[ma], &ia[nia], ih[inh], ih[ilinh], -2, 
-	    &ia[nia], &mbb, &mxa, &ib[nib], &mb, &mxb);
+	  &ia[nia], &mbb, &mxa, &ib[nib], &mb, &mxb);
     goto L14;
-L17:
+ L17:
     --(*nh);
 /* put the results in order, as given by IH */
     for (i = 1; i <= *nh; ++i) {
@@ -344,7 +344,7 @@ L17:
     return;
 /* ALL THE SPECIAL CASES ARE HANDLED DOWN HERE */
 /* IF ALL THE POINTS LIE ON A VERTICAL LINE */
-L18:
+ L18:
     kx = in[1];
     kn = in[1];
     for (i = 1; i <= *m; ++i) {
@@ -354,20 +354,20 @@ L18:
 	}
 	mx = i;
 	kx = j;
-L19:
+    L19:
 	if (x[j + x_dim1] >= x[kn + x_dim1]) {
 	    goto L20;
 	}
 	min = i;
 	kn = j;
-L20:
+    L20:
 	;
     }
     if (kx == kn) {
 	goto L22;
     }
 /* IF THERE ARE ONLY TWO POINTS */
-L21:
+ L21:
     ih[1] = kx;
     ih[2] = kn;
     *nh = 3;
@@ -376,7 +376,7 @@ L21:
     }
     goto L17;
 /* IF THERE IS ONLY ONE POINT */
-L22:
+ L22:
     *nh = 2;
     ih[1] = in[1];
     il[1] = 1;
@@ -384,27 +384,27 @@ L22:
 /* MULTIPLE EXTREMES ARE HANDLED HERE */
 /* IF THERE ARE SEVERAL POINTS WITH THE (SAME) LARGEST */
 /* FIRST COORDINATE */
-L23:
+ L23:
     if (maxe) {
-      for (i = 1; i <= *m; ++i) {
-	j = in[i];
-	if (x[j] != x[kx]) continue;
-	if (x[j + x_dim1] <= x[kx + x_dim1]) continue;
-	mx = i;
-	kx = j;
-      }
+	for (i = 1; i <= *m; ++i) {
+	    j = in[i];
+	    if (x[j] != x[kx]) continue;
+	    if (x[j + x_dim1] <= x[kx + x_dim1]) continue;
+	    mx = i;
+	    kx = j;
+	}
     }
     
 /* IF THERE ARE SEVERAL POINTS WITH THE (SAME) SMALLEST */
 /* FIRST COORDINATE */
     if (mine) {
-      for (i = 1; i <= *m; ++i) {
-	j = in[i];
-	if (x[j] != x[kn]) continue;
-	if (x[j + x_dim1] >= x[kn + x_dim1]) continue;
-	min = i;
-	kn = j;
-      }
+	for (i = 1; i <= *m; ++i) {
+	    j = in[i];
+	    if (x[j] != x[kn]) continue;
+	    if (x[j + x_dim1] >= x[kn + x_dim1]) continue;
+	    min = i;
+	    kn = j;
+	}
     }
 } /* chull */
 
