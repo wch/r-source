@@ -149,8 +149,7 @@ UTILITIES
 
     o	R CMD check now tests for mis-use on an installed or binary
 	package, and sets 'T' and 'F' to 'NULL' when running the
-	examples.  It also checks the foreign function calls in the R
-	code (currently, for potentially missing 'PACKAGE' args).
+	examples.
 
 
 BUG FIXES
