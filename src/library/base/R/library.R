@@ -35,7 +35,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## warn if later than this version
             if(built$R > current)
                 warning(gettextf("package '%s' was built under R version %s",
-                                 pkgname, built$R),
+                                 pkgname, as.character(built$R)),
                         call. = FALSE, domain = NA)
             if(.Platform$OS.type == "unix") {
                 platform <- built$Platform
