@@ -193,7 +193,6 @@ seq.Date <- function(from, to, by, length.out=NULL, along.with=NULL, ...)
     if (!missing(to)) {
         if (!inherits(to, "Date")) stop("'to' must be a Date object")
         if (length(as.Date(to)) != 1) stop("'to' must be of length 1")
-        if (to <= from) stop("'to' must be later than 'from'")
     }
     if (!missing(along.with)) {
         length.out <- length(along.with)

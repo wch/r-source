@@ -10,8 +10,7 @@
 sprintf(fmt, \dots)
 }
 \arguments{
-  \item{fmt}{a format string, which should be single-byte characters in
-    a non-UTF-8 multibyte locale.}
+  \item{fmt}{a format string.}
   \item{\dots}{values to be passed into \code{fmt}.  Only logical,
     integer, real and character vectors are accepted.}
 }
@@ -21,18 +20,21 @@ sprintf(fmt, \dots)
   the format supplied, and \R's special values (\code{NA}, \code{Inf},
   \code{-Inf} and \code{NaN}) are handled correctly.
 
-  The arguments (including \code{fmt}) are recycled if possible to the
-  length of the longest, and then the formatting is done in parallel.
+  The arguments (including \code{fmt}) are recycled if possible a whole
+  number of times to the length of the longest, and then the formatting
+  is done in parallel.
   
-  The following is abstracted from K&R (see References, below).  The
-  string \code{fmt} contains normal characters, which are passed through
-  to the output string, and also special characters that operate on the
-  arguments provided through \code{\dots}.  Special characters start
-  with a \code{\%} and end with one of the letters in the set
-  \code{difeEgGsx\%}.  These letters denote the following types:
+  The following is abstracted from Kernighan and Ritchie
+  (see References).  The string \code{fmt} contains normal characters,
+  which are passed through to the output string, and also special
+  characters that operate on the arguments provided through
+  \code{\dots}.  Special characters start with a \code{\%} and end with
+  one of the letters in the set \code{difeEgGsxX\%}.  These letters
+  denote the following types:
 
   \describe{
-    \item{\code{d, i, x}}{Integer value, \code{x} being hexadecimal.}
+    \item{\code{d, i, x, X}}{Integer value, \code{x} and \code{X}
+      being hexadecimal.}
 
     \item{\code{f}}{Double precision value, in decimal notation of the
       form "[-]mmm.ddd".  The number of decimal places is specified by
@@ -136,6 +138,11 @@ sprintf("\%G", 1e-6 * pi)
 
 ## no truncation:
 sprintf("\%1.f",101)
+
+n <- 0:15
+xx <- sprintf("\%d \%x \%X", n, n, n)
+xx <- matrix(xx, dimnames=list(rep("", 16), "\%d\%x\%X"))
+noquote(format(xx, justify="right"))
 
 ## More sophisticated:
 

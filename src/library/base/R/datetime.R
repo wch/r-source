@@ -466,7 +466,6 @@ seq.POSIXt <-
     if (!missing(to)) {
         if (!inherits(to, "POSIXt")) stop("'to' must be a POSIXt object")
         if (length(as.POSIXct(to)) != 1) stop("'to' must be of length 1")
-        if (to <= from) stop("'to' must be later than 'from'")
     }
     if (!missing(along.with)) {
         length.out <- length(along.with)

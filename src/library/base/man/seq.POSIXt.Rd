@@ -8,8 +8,8 @@
 \method{seq}{POSIXt}(from, to, by, length.out = NULL, along.with = NULL, \dots)
 }
 \arguments{
-  \item{from}{starting date. Required}
-  \item{to}{end date. Optional. If supplied must be after \code{from}.}
+  \item{from}{starting date. Required.}
+  \item{to}{end date. Optional.}
   \item{by}{increment of the sequence. Optional. See Details.}
   \item{length.out}{integer, optional. desired length of the sequence.}
   \item{along.with}{take the length from the length of this argument.}
@@ -23,13 +23,14 @@
     \item A character string, containing one of \code{"sec"},
     \code{"min"}, \code{"hour"}, \code{"day"}, \code{"DSTday"},
     \code{"week"}, \code{"month"} or \code{"year"}.  This can optionally be
-    preceded by an integer and a space, or followed by \code{"s"}.
+    preceded by a (positive or negative) integer and a space,
+    or followed by \code{"s"}.
   }
   The difference between \code{"day"} and \code{"DSTday"} is that the
   former ignores changes to/from daylight savings time and the latter takes
   the same clock time each day.  (\code{"week"} ignores DST, but
   \code{"7 DSTdays"}) can be used as an alternative.  \code{"month"} and
-  \code{"year"} allow for DST as from \R 1.5.0.)
+  \code{"year"} allow for DST.)
 }
 \value{
   A vector of class \code{"POSIXct"}.

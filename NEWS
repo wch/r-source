@@ -226,41 +226,44 @@ NEW FEATURES
     o	contr.SAS() has been moved from the nlme package to the stats package.
 
     o	sprintf() has been enhanced to allow the POSIX/XSI specifiers
-	like "%2$6d", and also accepts "%x".
+	like "%2$6d", and also accepts "%x" and "%X".
 
 	sprintf() does limited coercion of its arguments.
 
 	sprintf() accepts vector arguments and operates on them in
 	parallel (after re-cycling if needed).
 
-    o   pbeta() now uses a different algorithm for large values of at
+    o	pbeta() now uses a different algorithm for large values of at
 	least one of the shape parameters, which is much faster and is
 	accurate and reliable for very large values.  (This affects
 	pbinom(), pf(), qbeta() and other functions using pbeta at C
 	level.)
 
-    o   the functions xinch(), yinch(), and xyinch() have been moved
+    o	The functions xinch(), yinch(), and xyinch() have been moved
 	from package 'grDevices' into package 'graphics'.
         
-    o   Replacement in a non-existent column of a data frame tries
+    o	Replacement in a non-existent column of a data frame tries
 	harder to create a column of the correct length and so avoid a
 	corrupt data frame.
 
-    o   The default methods for add1() and drop1() check for changes
+    o	The default methods for add1() and drop1() check for changes
 	in the number of cases in use.
 
 	The "lm" and "glm" methods for add1() quoted the <none> model
 	on the original fitted values when using (with a warning) a
 	smaller set of cases for the expanded models.
 
-    o   The cov() function in the non-Pearson cases now ranks data after
-        removal of missing values, not before. The pairwise-complete method 
-        should now be consistent with cor.test. Code contributed by Shigenobu
-        Aoki.
+    o	The cov() function in the non-Pearson cases now ranks data after
+        removal of missing values, not before.  The pairwise-complete
+        method should now be consistent with cor.test.  Code
+        contributed by Shigenobu Aoki.
 
-    o   mahalanobis() now has a '...' argument which is passed to solve()
+    o	mahalanobis() now has a '...' argument which is passed to solve()
         for computing the inverse of the covariance matrix, this replaces
         the former 'tol.inv' argument.
+
+    o	seq.Date() and seq.POSIXt() now allow 'to' to be before 'from'
+	if 'by' is negative.
 	
 
 
