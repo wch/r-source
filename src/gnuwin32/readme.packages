@@ -4,7 +4,8 @@ Building from a source-code library under Windows
 If your package has no C nor Fortran nor C++ sources, see `Simple ports' 
 near the bottom of this file.
 
-First collect the tools that you need.
+First collect the tools that you need.  There is a `portal' with
+current links at http://www.stats.ox.ac.uk/pub/Rtools/.
 
 We recommend that you use the mingw32 port of gcc-2.95.2 by Mumit Khan
 from http://www.mingw.org/ or
@@ -18,7 +19,7 @@ or (gzip, tar) compiled from the sources.
 BEWARE: `Native' ports of make are _not_ suitable, and the 18 Jan 2000
 cygwin port of make crashes when building packages.  There are also
 problems with earlier versions of the cygwin1.dll and we have used
-version 1.1.3.  To avoid frustration, please use our tool set.
+version 1.1.4.  To avoid frustration, please use our tool set.
 
 
 It may also be possible to use the compilers from the cygwin 1.1
