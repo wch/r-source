@@ -240,8 +240,6 @@ void I_bessel(double *x, double *alpha, long *nb,
     static double enten = 1e308;
     static double xlarge = 1e4;
 
-    extern double gamma_cody(double);/*--> ./gamma.c */
-
     /* Local variables */
     long nend, intx, nbmx, k, l, n, nstart;
     double pold, test,	p, em, en, empal, emp2al, halfx,
