@@ -109,7 +109,7 @@
             stop("can't use \"at\" argument unless the function body has the form { ... }")
         for(i in at) {
             if(print)
-                expri <- substitute({if(tracingState()){methods:::.doTracePrint(MSG); TRACE}; EXPR},
+                expri <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
                             list(TRACE = tracer, MSG = paste("step",i), EXPR = fBody[[i]]))
             else
                 expri <- substitute({if(tracingState())TRACE; EXPR},
@@ -119,7 +119,7 @@
     }
     else if(!is.null(tracer)){
             if(print)
-                fBody <- substitute({if(tracingState()){methods:::.doTracePrint(MSG); TRACE}; EXPR},
+                fBody <- substitute({if(tracingState()){methods::.doTracePrint(MSG); TRACE}; EXPR},
                             list(TRACE = tracer, MSG = paste("on entry"), EXPR = fBody))
             else
                 fBody <- substitute({if(tracingState())TRACE; EXPR},
@@ -127,7 +127,7 @@
     }
     if(!is.null(exit)) {
         if(print)
-            exit <- substitute(if(tracingState()){methods:::.doTracePrint(MSG); EXPR},
+            exit <- substitute(if(tracingState()){methods::.doTracePrint(MSG); EXPR},
                             list(EXPR = exit, MSG = paste("on exit")))
         else
             exit <- substitute(if(tracingState())EXPR,
@@ -158,10 +158,10 @@
     }
     f
 }
-        
+
 
 .InitTraceFunctions <- function(envir)  {
-    setClass("traceable", representation(original = "PossibleMethod"), contains = "VIRTUAL", 
+    setClass("traceable", representation(original = "PossibleMethod"), contains = "VIRTUAL",
              where = envir); clList <- "traceable"
     ## create the traceable classes
     for(cl in c("function", "MethodDefinition", "MethodWithNext", "genericFunction",
