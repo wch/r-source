@@ -11,6 +11,7 @@ core.pkgs <-
 ## .packages(all=TRUE,lib.loc = .lib.loc[length(.lib.loc)])
 stop.list <- vector("list", length(core.pkgs))
 names(stop.list) <- core.pkgs
+stop.list$tcltk <- NULL
 
 ## -- Stop List for "base" :
 edit.int <- c("fix", "edit", "edit.data.frame", "edit.matrix",
