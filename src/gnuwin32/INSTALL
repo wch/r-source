@@ -53,10 +53,11 @@ http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip: unzip it at the
 top level of the R sources: it will add directories $RHOME/Tcl,
 $RHOME/Tcl/bin, etc.
 
-If you want to make compiled html (.chm) files you will need the
+To make compiled html (.chm) files you will need the
 Microsoft HTML Help Workshop, currently available for download at
 http://msdn.microsoft.com/library/en-us/htmlhelp/html/hwmicrosofthtmlhelpdownloads.asp
-and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm
+and http://www.microsoft.com/office/ork/xp/appndx/appa06.htm.
+(It is not longer documented how not to make .chm files.)
 
 You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
