@@ -162,8 +162,13 @@ FUNTAB R_FunTab[] =
 {"col",		do_rowscols,	2,	11,	1,	PP_FUNCALL},
 {"c",/* bind.c:*/do_c,		0,	0,	-1,	PP_FUNCALL},
 {"unlist",	do_unlist,	0,	10,	3,	PP_FUNCALL},
+#ifdef OLD_DF
 {"cbind",	do_bind,	1,	11,	-1,	PP_FUNCALL},
 {"rbind",	do_bind,	2,	11,	-1,	PP_FUNCALL},
+#else
+{"cbind",	do_bind,	1,	10,	-1,	PP_FUNCALL},
+{"rbind",	do_bind,	2,	10,	-1,	PP_FUNCALL},
+#endif
 {"drop",	do_drop,	0,	11,	1,	PP_FUNCALL},
 {"class",	do_class,	0,	1,	1,	PP_FUNCALL},
 {"class<-",	do_classgets,	0,	1,	2,	PP_FUNCALL},

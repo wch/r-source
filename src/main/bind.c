@@ -793,74 +793,98 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 } /* do_unlist */
 
 
+#define LNAMBUF 100
+
 static SEXP rho;
+
+SEXP FetchMethod(char *generic, char *classname, SEXP env)
+{
+    char buf[LNAMBUF];
+    SEXP method;
+    if (strlen(generic) + strlen(classname) + 2 > LNAMBUF)
+	error("class name too long in %s\n", generic);
+    sprintf(buf, "%s.%s", generic, classname);
+    method = findVar(install(buf), env);
+    if (TYPEOF(method) != CLOSXP)
+	method = R_NilValue;
+    return method;
+}
 
 SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    int mode = ANYSXP;	/* for -Wall; none from the ones below */
-    SEXP a, t;
+    SEXP a, t, obj, class, classlist, classname, method, classmethod;
+    char *generic;
+    int mode = ANYSXP;
 
-    /* First we check to see if any of the arguments are data frames.
-     * If there are, we need to do a special dispatch	 -----------
-     * to the interpreted data.frame functions.
+    /* Lazy evaluation and method dispatch based on argument types are
+     * fundamentally incompatible notions.  The results here are
+     * ghastly.
+     *
+     * We build promises to evaluate the arguments and then force the
+     * promises so that if we despatch to a closure below, the closure
+     * is still in a position to use "substitute" to get the actual
+     * expressions which generated the argument (for naming purposes).
+     *
+     * The dispatch rule here is as follows: 
+     *
+     * 1) For each argument we get the list of possible class
+     *    memberships from the class attribute.
+     *
+     * 2) We inspect each class in turn to see if there is an
+     *    an applicable method.
+     *
+     * 3) If we find an applicable method we make sure that it is
+     *    identical to any method determined for prior arguments.
+     *    If it is identical, we proceed, otherwise we immediately
+     *    drop through to the default code.
      */
 
-    /* This function has to change so that it receives its arguments
-     * unevaluated.  This is because we need to dispatch on the
-     * the classes of the objects, but we also need to pass the
-     * unevaluated arguments on to closures which will probably choose
-     * to deparse them to get row and column labels.
-     *
-     * Lazy evaluation and method dispatch based on argument types
-     * are fundamentally incompatible notions.  The results here
-     * are ghastly.
-     *
-     * Here we will have to march through the arguments building
-     * promises and forcing them because we need both evaluated
-     * and unevaluated in the code below.
-     */
-
+    PROTECT(args = promiseArgs(args, env));
     mode = 0;
+    generic = (PRIMVAL(op) == 1) ? "cbind" : "rbind";
+    class = R_NilValue;
+    method = R_NilValue;
     for (a = args; a != R_NilValue; a = CDR(a)) {
-	if (isFrame(CAR(a)))
-	    mode = 1;
+	obj = eval(CAR(a), env);
+	if (isObject(obj)) {
+	    int i;
+	    classlist = getAttrib(obj, R_ClassSymbol);
+	    for (i = 0; i < length(classlist); i++) {
+		classname = STRING(classlist)[i];
+		classmethod = FetchMethod(generic, CHAR(classname), env);
+		if (classmethod != R_NilValue) {
+		    if (class == R_NilValue) {
+			/* There is no previous class */
+			/* We use this method. */
+			class = classname;
+			method = classmethod;
+		    }
+		    else {
+			/* Check compatibility with the */
+			/* previous class.  If the two are not */
+			/* compatible we drop through to the */
+			/* default method. */
+			if (strcmp(CHAR(class), CHAR(classname))) {
+			    method = R_NilValue;
+			    break;
+			}
+		    }
+		}
+	    }
+	}
     }
-    if (mode) {
-	/* FIXME KH 1998/06/23
-	   This should obviously do something useful, but
-	   currently breaks [cr]bind() if one arg is a df
-	*/
-#ifdef OLD_DF
-	a = args;
-	t = CDR(call);
-	while (a != R_NilValue) {
-	    if (t == R_NilValue)
-		errorcall(call, "corrupt data frame args!\n");
-	    p = mkPROMISE(CAR(t), rho);
-	    PRVALUE(p) = CAR(a);
-	    CAR(a) = p;
-	    t = CDR(t);
-	    a = CDR(a);
-	}
-#endif
-	switch(PRIMVAL(op)) {
-	case 1:
-	    op = install("cbind.data.frame");
-	    break;
-	case 2:
-	    op = install("rbind.data.frame");
-	    break;
-	}
-	PROTECT(op = findFun(op, env));
-	if (TYPEOF(op) != CLOSXP)
-	    errorcall(call, "non closure invoked in rbind/cbind\n");
-	args = applyClosure(call, op, args, env, R_NilValue);
-	UNPROTECT(1);
+    if (method != R_NilValue) {
+	PROTECT(method);
+	args = applyClosure(call, method, args, env, R_NilValue);
+	UNPROTECT(2);
 	return args;
     }
 
-    /* There are no data frames in the argument list. */
-    /* Perform default action */
+    /* Despatch based on class membership has failed. */
+    /* The default code for rbind/cbind.default follows */
+    /* First, extract the evaluated arguments. */
+    for (a = args; a != R_NilValue; a = CDR(a))
+        CAR(a) = PRVALUE(CAR(a));
 
     rho = env; /* GLOBAL */
     ans_flags = 0;
@@ -905,6 +929,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
 	a = cbind(call, args, mode);
     else
 	a = rbind(call, args, mode);
+    UNPROTECT(1);
     return a;
 }
 
