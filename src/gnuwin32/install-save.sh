@@ -15,8 +15,11 @@ if test "x${BUILD}" = "xCROSS"; then
 R_DEFAULT_PACKAGES=NULL
 export R_DEFAULT_PACKAGES
 R_EXE="${RX_EXE} --slave --no-site-file --no-init-file"
+## we have to install into a temporary dir to avoid libpath problems
+lib1=/tmp/RtmpWin
 else
 R_EXE="${R_HOME}/bin/Rterm --slave --no-site-file --no-init-file R_DEFAULT_PACKAGES=NULL"
+lib1=${lib}
 fi
 
 ## This is apparently needed, but no one told the Windows maintainers.
@@ -25,11 +28,18 @@ export R_PACKAGE_NAME
 
 if ${R_SAVE_IMAGE}; then
     echo "  save image"
+    if test "x${BUILD}" = "xCROSS"; then
+        mkdir -p ${lib1}/${pkg}
+        cp -r ${lib}/${pkg}/DESCRIPTION ${lib}/${pkg}/R ${lib1}/${pkg}
+        if test -f NAMESPACE; then
+          cp ${lib}/${pkg}/NAMESPACE ${lib1}/${pkg}
+        fi
+    fi
     save_image_defaults="list(compress=TRUE, safe=FALSE)"
     code_file="${lib}/${pkg}/R/${pkg}"
     rda_file="${lib}/${pkg}/R/all.rda"
     if test -f NAMESPACE; then
-        code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib}\")"
+        code_cmd="echo saveNamespaceImage(\"${pkg}\", \"${rda_file}\", \"${lib1}\")"
         loader_file=nsrdaload.R
         R_SAVE_EXE=""
     else
@@ -39,11 +49,14 @@ if ${R_SAVE_IMAGE}; then
     fi
     (echo "options(save.image.defaults=${save_image_defaults})"; \
       if test -s R_PROFILE.R; then cat R_PROFILE.R; fi; \
-      echo "invisible(.libPaths(c(\"${lib}\", .libPaths())))"; \
+      echo "invisible(.libPaths(c(\"${lib1}\", .libPaths())))"; \
       ${code_cmd}) | ${R_EXE} ${R_SAVE_EXE} \
         || (echo "Execution of package source for ${pkg} failed"; exit 1)
     if test ! -f NAMESPACE; then
         mv .RData ${rda_file}
+    fi
+    if test "x${BUILD}" = "xCROSS"; then
+        rm -rf ${lib1}
     fi
     ## we used to install the dumped code but this seems a waste of space
     rm "${code_file}"
