@@ -1,7 +1,8 @@
 \name{persp}
 \title{Perspective Plots}
 \usage{
-persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
+persp(x, ...)
+persp.default(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
       xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
       theta = 0, phi = 15, r = sqrt(3), d = 1, scale = TRUE, expand = 1, 
@@ -10,6 +11,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
       ...) 
 }
 \alias{persp}
+\alias{persp.default}
 \arguments{
   \item{x, y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
@@ -71,7 +73,7 @@ persp(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), z,
 }
 \description{
   This function draws perspective plots of surfaces over the
-  x--y plane.
+  x--y plane. \code{persp} is a generic function.
 }
 \details{
   The plots are produced by first transforming the

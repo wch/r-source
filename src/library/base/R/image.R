@@ -1,4 +1,6 @@
-image <- function (x = seq(0, 1, len = nrow(z)),
+image <- function(x, ...) UseMethod("image")
+
+image.default <- function (x = seq(0, 1, len = nrow(z)),
 		   y = seq(0, 1, len = ncol(z)),
 		   z,
 		   zlim = range(z[is.finite(z)]),

@@ -1,7 +1,8 @@
 \name{image}
 \title{Display a Color Image}
 \usage{
-image(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
+image(x, \dots)
+image.default(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
       add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab,
       breaks, oldstyle = FALSE, \dots)
 }
@@ -13,6 +14,7 @@ image(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
     ...) 
 }
 \alias{image}
+\alias{image.default}
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
     measured.  These must be in ascending order.  By default, equally
@@ -56,6 +58,7 @@ image(x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
   Creates a grid of colored or gray-scale rectangles with colors
   corresponding to the values in \code{z}.  This can be used to display
   three-dimensional or spatial data aka ``images''.
+  This is a generic function.
 
   The functions \code{\link{heat.colors}}, \code{\link{terrain.colors}}
   and \code{\link{topo.colors}} create heat-spectrum (red to white) and

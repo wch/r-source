@@ -1,4 +1,6 @@
-persp <-
+persp <- function(x, ...) UseMethod("persp")
+
+persp.default <-
 function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)), 
     z, xlim = range(x), ylim = range(y), zlim = range(z, na.rm = TRUE), 
     xlab = NULL, ylab = NULL, zlab = NULL, main = NULL, sub = NULL,
