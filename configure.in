@@ -109,6 +109,11 @@ AC_PROG_YACC
 AC_CHECK_PROG(AR, ar, ar)
 AC_CHECK_PROG(RATFOR, ratfor, ratfor)
 
+## Make.
+
+MAKE=${MAKE-make}
+AC_SUBST(MAKE)
+
 ## Perl.
 
 AC_PATH_PROG(PERL, perl)
@@ -155,12 +160,12 @@ esac
 ##
 ### We need these before trying to find libf2c.
 
-if test -z "$AR"; then
+if test -z "${AR}"; then
   AR=ar
 fi
 AC_SUBST(AR)
 
-if test -z "$ARFLAGS"; then
+if test -z "${ARFLAGS}"; then
   ARFLAGS="rc"
 fi
 AC_SUBST(ARFLAGS)
@@ -209,7 +214,7 @@ fi
 
 if test -n "${F77}"; then
   FC=${F77}
-  LDCMD=${FC}
+  LDCMD=${LDCMD-${FC}}
   AC_MSG_CHECKING(for underscore after Fortran symbols)
   cat > conftestf.f <<EOF
       subroutine try
@@ -275,7 +280,7 @@ EOF
   fi
   rm -f conftest*
 
-  LDCMD=${CC}
+  LDCMD=${LDCMD-${CC}}
   AC_DEFINE(HAVE_F77_UNDERSCORE)
   AC_CHECK_LIB(f2c, f_open, FLIBS=-lf2c, FLIBS=, -L. -lconflib -lm)
   if test -z "${FLIBS}"; then
@@ -326,6 +331,8 @@ AC_SUBST(BLAS)
 if ${use_readline}; then
   AC_CHECK_LIB(readline, rl_callback_read_char)
 fi
+
+LIBS="${FLIBS} ${LIBS}"
 
 ### Library functions.
 
@@ -378,7 +385,7 @@ SHLIBEXT=so
 
 #  We create a fake Imakefile and then run xmkmf so that we can
 #  determine PICFLAGS and SHLIBLDFLAGS.  The only platform I know
-#  of which uses DLLFLAGS is linux-elf which requires -rdynamic.
+#  of which uses DLLFLAGS is hpux.
 #
 #  DLLFLAGS     - flags for loading the main
 #  CPICFLAGS    - flags for compiling C library code
@@ -420,20 +427,10 @@ SHLIBLDFLAGS=${SHLIBLDFLAGS-${shlibldflags}}
 
 case "${host}" in
   alpha*osf*)
-    CFLAGS="-ieee_with_inexact ${CFLAGS}"
     AC_DEFINE(HAVE_NO_SYMBOL_UNDERSCORE)
+    CFLAGS="-ieee_with_inexact ${CFLAGS}"
     CPICFLAGS=
-    SHLIBLDFLAGS=-shared
-    ;;
-  *linuxaout)
-    sed '/HAVE_ELF_H/d' confdefs.h > tmp.h ; mv tmp.h confdefs.h
-    LDCMD=gcc
-    LIBS="-lf2c ${LIBS}"
-    ;;
-  *linux)
-    LDCMD=gcc
-    LIBS="-lf2c ${LIBS}"
-    DLLFLAGS=-rdynamic
+    SHLIBLDFLAGS="-shared"
     ;;
   *sgi*)
     SHLIBLDFLAGS="-shared"
@@ -503,9 +500,9 @@ AC_SUBST(CFLAGS)
 AC_SUBST(FFLAGS)
 AC_SUBST(F2CFLAGS)
 
-AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/INSTALL
-  etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB
-  etc/Sd2Rd etc/build-help etc/help.pretty
+AC_OUTPUT(Makeconf cmd/fwf2table doc/keyword-test etc/COMPILE
+  etc/INSTALL etc/Makeconf etc/REMOVE etc/Rdconv etc/Rdindex etc/Rman2Rd
+  etc/SHLIB etc/Sd2Rd etc/build-help etc/help.pretty
   etc/html2dos src/front/R.sh demos/dynload/Makefile
   doc/manual/lib2tex
 )
