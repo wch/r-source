@@ -6,7 +6,7 @@
 
 # @configure_input@
 
-VERSION="0.1-1"
+VERSION="0.1-2"
 USAGE_MSG="Usage:  R INSTALL [options] [-l lib] pkg_1 ... pkg_n"
 
 DEBUG=false
@@ -106,11 +106,11 @@ for pkg in ${PKGS}; do
     if test -f src/Makefile; then
       (cd src;
 	${MAKE} -f ${RHOME}/etc/Makeconf -f Makefile \
-	  && cp *.so ${lib}/${pkg}/libs)
+	  && cp *.@SHLIBEXT@ ${lib}/${pkg}/libs)
     else
       (cd src;
 	sh ${RHOME}/bin/SHLIB ${SHLIB_OPTS} \
-	   -o ${lib}/${pkg}/libs/${pkg}.so *.[cf])
+	   -o ${lib}/${pkg}/libs/${pkg}.@SHLIBEXT@ *.[cf])
     fi || {
       echo "ERROR: Compilation failed for package \`${pkg}'"
       exit 4
