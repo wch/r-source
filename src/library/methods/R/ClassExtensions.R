@@ -144,12 +144,16 @@ makeExtends <- function(Class, to,
                 ext <- getAllSuperClasses(classDef1, TRUE)
                 toSlots <- classDef2@slots
                 sameSlots <- TRUE
-                for(eclass in ext)
-                    if(!.identC(eclass, to) && isClass(eclass) &&
-                       length(getClassDef(eclass)@slots) > 0) {
+                for(eclass in ext) {
+                    ## does any superclass other than "to" have slots?
+                    if(.identC(eclass, to))
+                        next
+                    edef <- getClassDef(eclass, where = packageEnv)
+                    if(!is.null(edef) && length(edef@slots) > 0) {
                         sameSlots <- FALSE
                         break
                     }
+                }
                 if(sameSlots)
                     body(replace, envir = packageEnv) <-
                         substitute({class(value) <- FROM; value}, list(FROM = Class))

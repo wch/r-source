@@ -240,7 +240,8 @@
     setMethod("initialize", "traceable",
               function(.Object, def, tracer, exit, at, print, doEdit) {
                   oldClass <- class(def)
-                  if(isClass(oldClass) && length(getClass(oldClass)@slots) > 0)
+                  oldClassDef <- getClass(oldClass)
+                  if(!is.null(oldClassDef) && length(oldClassDef@slots) > 0)
                       as(.Object, oldClass) <- def # to get other slots in def
                   .Object@original <- def
                   if(!is.null(elNamed(getSlots(getClass(class(def))), ".Data")))

@@ -147,7 +147,7 @@ makeClassRepresentation <-
     }
     validity <- .makeValidityMethod(name, validity)
     if(is.na(virtual)) {
-        virtual <- testVirtual(slots, contains, prototype)
+        virtual <- testVirtual(slots, contains, prototype, where)
         if(virtual && !is.na(match("VIRTUAL", superClasses)))
             elNamed(contains, "VIRTUAL") <- NULL
     }
@@ -535,12 +535,19 @@ initialize <- function(.Object, ...) {
             for(i in seq(along=snames)) {
                 slotName <- el(snames, i)
                 slotClass <- elNamed(slotDefs, slotName)
+                slotClassDef <- getClassDef(slotClass, package=ClassDef@package)
                 slotVal <- el(elements, i)
                 ## perform non-strict coercion, but leave the error messages for
                 ## values not conforming to the slot definitions to validObject(),
                 ## hence the check = FALSE argument in the slot assignment
-                if(is(slotVal, slotClass) && !.identC(class(slotVal), slotClass))
-                    slotVal <- as(slotVal, slotClass, strict = FALSE)
+                if(!.identC(class(slotVal), slotClass)
+                   && !is.null(slotClassDef) ) {
+                    valClass <- class(slotVal)
+                    valClassDef <- getClassDef(valClass, package = ClassDef@package)
+                    if(!identical(possibleExtends(valClass, slotClass,
+                                         valClassDef, slotClassDef), FALSE))
+                        slotVal <- as(slotVal, slotClass, strict = FALSE)
+                }
                 slot(.Object, slotName, check = FALSE) <- slotVal
             }
         }

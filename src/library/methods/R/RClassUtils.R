@@ -6,16 +6,18 @@ testVirtual <-
   ## Can be forced to be virtual by extending "VIRTUAL".  Otherwise, a class is
   ## virtual only if it has no slots, extends no non-virtual classes, and has a
   ## NULL Prototype
-  function(properties, extends, prototype)
+  function(properties, extends, prototype, where)
 {
     if(length(extends)) {
         en <- names(extends)
         if(!is.na(match("VIRTUAL", en)))
             return(TRUE)
         ## does the class extend a known non-virtual class?
-        for(what in en)
-            if(isClass(what) && identical(getClass(what)@virtual, FALSE))
+        for(what in en) {
+            enDef <- getClassDef(what, where)
+            if(!is.null(enDef) && identical(enDef@virtual, FALSE))
                 return(FALSE)
+        }
     }
     (length(properties)==0 && is.null(prototype))
 }
@@ -137,7 +139,7 @@ makePrototypeFromClassDef <-
         if(is.na(i)) {
             ## if the class of the j-th element of slots is defined and non-virtual,
             ## generate an object from it; else insert NULL
-            slot(prototype, name, check = FALSE) <- tryNew(el(slots, j))
+            slot(prototype, name, check = FALSE) <- tryNew(el(slots, j), where)
         }
     }
     extra <- pnames[is.na(match(pnames, snames)) & !is.na(match(pnames, pslots))]
@@ -203,7 +205,7 @@ completeClassDefinition <-
     subclasses <- if(doExtends) completeSubclasses(ClassDef, where = where) else ClassDef@subclasses
     if(is.na(virtual))
         ## compute it from the immediate extensions, but all the properties
-        virtual <- testVirtual(properties, immediate, prototype)
+        virtual <- testVirtual(properties, immediate, prototype, where)
     ## modify the initial class definition object, rather than creating
     ## a new one, to allow extensions of "classRepresentation"
     ## Done by a separate function to allow a bootstrap version.
@@ -356,7 +358,8 @@ superClassDepth <-
     }
     ext <- ext[ok]
     immediate <- names(ext)
-    immediate <- immediate[is.na(match(immediate, soFar))]
+    notSoFar <- is.na(match(immediate, soFar))
+    immediate <- immediate[notSoFar]
     super <- list(label=immediate, depth = rep(1, length(immediate)), ext = ext)
     for(i  in seq(along = immediate)) {
         what <- immediate[[i]]
@@ -364,13 +367,12 @@ superClassDepth <-
            ## watch out for loops (e.g., matrix/array have mutual is relationship)
            next
         exti <- ext[[i]]
-        soFar <- c(soFar, exti)
+        soFar <- c(soFar, what)
         if(!is(exti, "SClassExtension"))
             stop("In definition of class \"", ClassDef@className,
                  "\"  information for superclass \"", what,
                  "\" is of class \"", class(exti), "\" (expected \"SClassExtension\"")
         superClass <-  getClassDef(exti@superClass, package = exti@package)
-        if(isClass(what)) {
             if(is.null(superClass)) {
                 warning("class \"", ClassDef@className, "\" extends an undefined class,\"",
                         what, "\"")
@@ -393,10 +395,6 @@ superClassDepth <-
                 super$label <- c(super$label, more$label)
                 super$ext <- c(super$ext, more$ext)
             }
-        }
-        else
-            warning("Class information incomplete: class \"",
-                    what, "\" not defined")
     }
     super
 }
@@ -681,7 +679,7 @@ reconcilePropertiesAndPrototype <-
           propName <- el(what, i)
           if(!identical(propName, ".Data") &&
              is.null(attr(prototype, propName)))
-              slot(prototype, propName, FALSE) <- tryNew(el(props, i))
+              slot(prototype, propName, FALSE) <- tryNew(el(props, i), where)
       }
       list(properties = properties, prototype = prototype)
   }
@@ -692,10 +690,11 @@ tryNew <-
   ##
   ## This is inefficient and also not a good idea when actually generating objects,
   ## but is useful in the initial definition of classes.
-  function(Class) {
-    if(!isClass(Class) || isVirtualClass(Class))
+  function(Class, where) {
+      ClassDef <- getClassDef(Class, where)
+    if(is.null(ClassDef) || isVirtualClass(ClassDef))
       return(NULL)
-    value <- trySilent(new(Class))
+    value <- trySilent(new(ClassDef))
     if(is(value, "try-error"))
       NULL
     else
@@ -793,7 +792,7 @@ print.classRepresentation <-
   showClass(x, propertiesAreCalled="Slots")
 
 ## bootstrap definition to be used before getClass() works
-possibleExtends <- function(class1, class2, classDef1, classDef2)
+possibleExtends <- function(class1, class2, ClassDef1, ClassDef2)
     .identC(class1, class2) || .identC(class2, "ANY")
 
 

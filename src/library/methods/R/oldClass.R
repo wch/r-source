@@ -5,7 +5,7 @@ setOldClass <- function(Classes, where = topenv(parent.frame()), test = FALSE) {
         return(.setOldIs(Classes, where))
     prevClass <- "oldClass"
     for(cl in rev(Classes)) {
-        if(isClass(cl)) {
+        if(isClass(cl, where)) {
             if(!extends(cl, prevClass))
                 warning("inconsistent old-style class information for \"",
                         cl,"\" (maybe mixing old and new classes?)")
@@ -32,7 +32,7 @@ setOldClass <- function(Classes, where = topenv(parent.frame()), test = FALSE) {
         stop("Argument Classes must be a vector of two classes; got an argument of length ",
              length(Classes))
     for(cl in Classes) {
-        if(isClass(cl)) {
+        if(isClass(cl, where)) {
             if(!extends(cl, "oldClass"))
                 warning("inconsistent old-style class information for \"",
                         cl,"\" (maybe mixing old and new classes?)")

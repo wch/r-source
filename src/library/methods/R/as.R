@@ -144,52 +144,63 @@ as <-
 
 setAs <- 
   function(from, to, def, replace = NULL, where = topenv(parent.frame()))
-  {
+{
     ## where there is an "is" relation, modify it
-      fromDef <- getClassDef(from, where)
-    if(extends(fromDef, to, TRUE)) {
-      extds <- fromDef@contains
-      if(is.list(extds)) {
-        test <- elNamed(extds, "test")
-        if(missing(replace))
-          replace <- elNamed(extds, "replace")
-      }
-      else
+    fromDef <- getClassDef(from, where)
+    extds <- possibleExtends(from, to, fromDef)
+    if(is(extds, "SClassExtension")) {
+        test <- extds@test
+        if(is.null(replace))
+            replace <- extds@replace
         test <- NULL
-      setIs(from, to, test = test, coerce = def, replace = replace, where = where)
+        setIs(from, to, test = test, coerce = def, replace = replace, where = where)
     }
-    else {
-      args <- formalArgs(def)
-      if(!is.na(match("strict", args))) args <- args[-match("strict", args)]
-      if(length(args) == 1)
-          def <- substituteFunctionArgs(def, "from")
-      else if(length(args) == 2)
-          def <- substituteFunctionArgs(def, c("from", "to"))
-      else stop(paste("as method must have one or two arguments, plus optional `strict'; got (",
-                      paste(formalArgs(def), collapse = ", "), ")", sep=""))
-      method <- as.list(coerce@.Data) # the function def'n, just to get arguments correct
-      method$to <- to
-      method <- as.function(method)
-      body(method, envir = environment(def)) <- body(def)
-      setMethod("coerce", c(from, to), method, where = where)
-      if(!is.null(replace)) {
-        args <- formalArgs(replace)
-        if(length(args) != 2)
-          stop("a replace method definition in setAs must be a function of two arguments")
-        replace <- body(replace)
-        if(!identical(args, c("from", "value"))) {
-          ll <- list(quote(from), quote(value))
-          names(ll) <- args
-          replace <- substituteDirect(replace, ll)
-          warning("Argument names in replace changed to agree with \"coerce<-\" generic:\n",
-                  paste(deparse(bdy), sep="\n    "), "\n")
+    else if(identical(extds, TRUE)) {
+        if(.identC(from, to))
+            stop("Trying to set an as relation from \"", .class1(from),
+                 "\" to itself")
+        ## usually to will be a class union, where setAs() is not
+        ## allowed by the definition of a union
+        toDef <- getClassDef(to, where=where)
+        if(is.null(toDef))
+            stop("Class \"", to, "\" is not defined in this environment")
+        if(isClassUnion(toDef))
+            stop("Class \"",to,"\" is a class union: coerce relations to a class union are not meaningful")
+        ## else go ahead (but are there any cases here where extds is TRUE?)
+        setIs(from, to, coerce = def, replace = replace, where = where)
+    }
+    else {  # extds is FALSE
+        args <- formalArgs(def)
+        if(!is.na(match("strict", args))) args <- args[-match("strict", args)]
+        if(length(args) == 1)
+            def <- substituteFunctionArgs(def, "from")
+        else if(length(args) == 2)
+            def <- substituteFunctionArgs(def, c("from", "to"))
+        else stop(paste("as method must have one or two arguments, plus optional `strict'; got (",
+                        paste(formalArgs(def), collapse = ", "), ")", sep=""))
+        method <- as.list(coerce@.Data) # the function def'n, just to get arguments correct
+        method$to <- to
+        method <- as.function(method)
+        body(method, envir = environment(def)) <- body(def)
+        setMethod("coerce", c(from, to), method, where = where)
+        if(!is.null(replace)) {
+            args <- formalArgs(replace)
+            if(length(args) != 2)
+                stop("a replace method definition in setAs must be a function of two arguments")
+            replace <- body(replace)
+            if(!identical(args, c("from", "value"))) {
+                ll <- list(quote(from), quote(value))
+                names(ll) <- args
+                replace <- substituteDirect(replace, ll)
+                warning("Argument names in replace changed to agree with \"coerce<-\" generic:\n",
+                        paste(deparse(bdy), sep="\n    "), "\n")
+            }
+            method <- eval(function(from, to, value)NULL)
+            functionBody(method, envir = .GlobalEnv) <- replace
+            setMethod("coerce<-", c(from, to), method, where = where)
         }
-        method <- eval(function(from, to, value)NULL)
-        functionBody(method, envir = .GlobalEnv) <- replace
-        setMethod("coerce<-", c(from, to), method, where = where)
-      }
     }
-  }
+}
 
 .setCoerceGeneric <- function(where) {
   ## create the initial version of the coerce function, with methods that convert

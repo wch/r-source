@@ -369,41 +369,37 @@ inheritedSubMethodLists <-
         ## no superclasses for "missing"
   }
   else {
-    ## search in the superclasses, but don't use inherited methods
-    ## There are two cases:  if thisClass is formally defined & unsealed, use its
-    ## superclasses.  Otherwise, look in the subclasses of those classes for
-    ## which methods exist.
+      ## search in the superclasses, but don't use inherited methods
+      ## There are two cases:  if thisClass is formally defined & unsealed, use its
+      ## superclasses.  Otherwise, look in the subclasses of those classes for
+      ## which methods exist.
       classDef <- getClassDef(thisClass, ev)
-      useSuperClasses <- !is.null(classDef)  &&
-           !classDef@sealed
-    if(useSuperClasses) {
-      ## for consistency, order the available methods by
-      ## the ordering of the superclasses of thisClass
-      superClasses <- names(classDef@contains)
-      classes <- superClasses[!is.na(match(superClasses, classes))]
-      for(which in seq(along=classes)) {
-        tryClass <- el(classes, which)
-        ## TODO:  There is potential bug here:  If the is relation is conditional,
-        ## we should not cache this selection.  Needs another trick in the environment
-        ## to FORCE no caching regardless of what happens elsewhere; e.g., storing a
-        ## special object in .Class
-        if(is.null(object) || is(object, tryClass)) {
-          elNamed(value, tryClass) <- elNamed(methods, tryClass)
-        }
-      }
-    }
-    else {
-      for(which in seq(along = classes)) {
-        tryClass <- el(classes, which)
-        if(isClass(tryClass)) {
-            tryClassDef <- getClass(tryClass)
-            if(is(tryClassDef, "classRepresentation")) {
-              if(!is.na(match(thisClass, names(tryClassDef@subclasses))))
-                elNamed(value, tryClass) <- el(methods, which)
+      useSuperClasses <- !is.null(classDef) && !classDef@sealed
+      if(useSuperClasses) {
+          ## for consistency, order the available methods by
+          ## the ordering of the superclasses of thisClass
+          superClasses <- names(classDef@contains)
+          classes <- superClasses[!is.na(match(superClasses, classes))]
+          for(which in seq(along=classes)) {
+              tryClass <- el(classes, which)
+              ## TODO:  There is potential bug here:  If the is relation is conditional,
+              ## we should not cache this selection.  Needs another trick in the environment
+              ## to FORCE no caching regardless of what happens elsewhere; e.g., storing a
+              ## special object in .Class
+              if(is.null(object) || is(object, tryClass)) {
+                  elNamed(value, tryClass) <- elNamed(methods, tryClass)
+              }
           }
-        }
-    }
-  }
+      }
+      else {
+          for(which in seq(along = classes)) {
+              tryClass <- el(classes, which)
+              tryClassDef <- getClassDef(tryClass, ev)
+              if(!is.null(tryClassDef) &&
+                 !is.na(match(thisClass, names(tryClassDef@subclasses))))
+                  elNamed(value, tryClass) <- el(methods, which)
+          }
+      }
   }
   if(!is.null(defaultMethod))
       elNamed(value, "ANY") <- defaultMethod
