@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Langage for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2001-2  The R Development Core Team
+ *  Copyright (C) 2001-3  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 /*           This operation is non-destructive     */
 /*           i.e. first and second are duplicated  */
 
-SEXP append(SEXP first, SEXP second)
+SEXP Rf_append(SEXP first, SEXP second)
 {
     SEXP e;
 

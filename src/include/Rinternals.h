@@ -429,7 +429,6 @@ LibExtern SEXP	R_BlankString;	    /* "" as a CHARSXP */
 #define allocSExp		Rf_allocSExp
 #define allocString		Rf_allocString
 #define allocVector		Rf_allocVector
-#define append			Rf_append
 #define applyClosure		Rf_applyClosure
 #define arraySubscript		Rf_arraySubscript
 #define asChar			Rf_asChar
@@ -621,7 +620,6 @@ SEXP allocSExp(SEXPTYPE);
 SEXP allocString(int);
 SEXP allocVector(SEXPTYPE, int);
 SEXP allocList(int);
-SEXP append(SEXP, SEXP);
 SEXP applyClosure(SEXP, SEXP, SEXP, SEXP, SEXP);
 SEXP asChar(SEXP);
 Rcomplex asComplex(SEXP);

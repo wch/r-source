@@ -323,6 +323,9 @@ C-LEVEL FACILITIES
 	ROUTINES file (in src/appl/) and associated scripts to
 	generate FFTab.h and FFDecl.h are no longer used.
 
+    o	Entry point Rf_append is no longer in the installed headers
+	(but is still available).
+
 
 BUG FIXES
 

@@ -657,6 +657,7 @@ void R_SetVarLocValue(R_varloc_t, SEXP);
 
 /* Other Internally Used Functions */
 
+SEXP Rf_append(SEXP, SEXP); /* apparently unused now */
 void begincontext(RCNTXT*, int, SEXP, SEXP, SEXP, SEXP);
 void checkArity(SEXP, SEXP);
 void CheckFormals(SEXP);
