@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-2, 2000-12-13
+Version 1.2-3, 2000-12-16
 Kurt Hornik
 
 
@@ -1431,6 +1431,12 @@ these a try, of course.  This area of CRAN currently contains
    Directory `src/contrib/Omegahat' contains yet unreleased packages from
 the Omegahat Project for Statistical Computing (http://www.omegahat.org).
 Currently, there are
+
+*CORBA*
+     Dynamic CORBA client/server facilities for R.  Connects to other
+     CORBA-aware applications developed in arbitrary languages, on different
+     machines and allows R functionality to be exported in the same way to
+     other applications.
 
 *Java*
      An interface from R to Java to create and call Java objects and
