@@ -38,10 +38,12 @@
 #define R_MSG_list "a list"
 #define R_MSG_A1   "first argument"
 #define R_MSG_A2   "second argument"
-#define R_MSG_A1_char R_MSG_A1 "must be" R_MSG_char
-#define R_MSG_A1_list R_MSG_A1 "must be" R_MSG_list
-#define R_MSG_A2_char R_MSG_A2 "must be" R_MSG_char
-#define R_MSG_A2_list R_MSG_A2 "must be" R_MSG_list
+
+#define R_MSG_must "must be"
+#define R_MSG_A1_char R_MSG_A1 " " R_MSG_must " " R_MSG_char
+#define R_MSG_A1_list R_MSG_A1 " " R_MSG_must " " R_MSG_list
+#define R_MSG_A2_char R_MSG_A2 " " R_MSG_must " " R_MSG_char
+#define R_MSG_A2_list R_MSG_A2 " " R_MSG_must " " R_MSG_list
 
 #define R_MSG_subs_o_b	"subscript out of bounds"
 #define R_MSG_ob_nonsub	"object is not subsettable"

@@ -17,7 +17,7 @@ NEW FEATURES
 
     o	help() has a new argument `try.all.packages' set by the option
 	"help.try.all.packages". If help is not found in the normal
-	path and this is TRUE then a search is made of all packages 
+	path and this is TRUE then a search is made of all packages
 	for possible matches.
 
     o	Improved detection of Tcl/Tk at configure time.  One can either
@@ -89,7 +89,7 @@ BUG FIXES
 
     o	R CMD check  did not run more than one specific test.
 
-    o	keyword2html omitted items when changing up a level, so 
+    o	keyword2html omitted items when changing up a level, so
 	the HTML search engine keyword list was missing `data' and
 	`utilities', for example.
 
@@ -103,6 +103,7 @@ BUG FIXES
 	correctly if they are vectors of length > 1.  (It is not clear
 	from the help that this was ever intended.)
 
+    o	Error messages of do.call(), e.g., are now spaced properly.
 
 
 		CHANGES IN R VERSION 1.1.0
