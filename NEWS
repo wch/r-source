@@ -61,7 +61,7 @@ NEW FEATURES
         holder, and includes the R ISBN number and a pointer to the new
         citation() function.
 
-    o   The "solve" function now uses the tol argument for non-complex
+    o   The "solve" function now uses the tol argument for all non-complex
         cases.  The default tolerance for LINPACK is 1e-7, as before.
         For LAPACK it currently is .Machine$double.eps but may be made
         tighter in future versions of R.
