@@ -48,7 +48,7 @@ plot.lm (x, which = 1:4,
 
     This `S-L' and the Q-Q plot use \emph{standardized} residuals which
     have identical variance (under the hypothesis).  They are given as
-    \eqn{R_i / \sqrt{1 - h_{ii}}}{R[i] / sqrt(1 - h.ii)} where
+    \eqn{R_i / (s \times \sqrt{1 - h_{ii}})}{R[i] / (s*sqrt(1 - h.ii))} where
     \eqn{h_{ii}}{h.ii} are the diagonal entries of the hat matrix,
 % bug in Rdconv: "$" and \link inside \code fails; '\$' doesn't help...
     \code{\link{lm.influence}()}\code{$hat}, see also \code{\link{hat}}.
@@ -62,6 +62,9 @@ plot.lm (x, which = 1:4,
 
     Hinkley, D. V. (1975). On power transformations to
     symmetry. \emph{Biometrika} \bold{62}: 101-111.
+
+    McCullagh, P. and Nelder, J. A. (1989).
+    \emph{Generalized Linear Models}.  London: Chapman and Hall.
 }
 \author{John Maindonald and Martin Maechler.
 }
@@ -70,22 +73,22 @@ plot.lm (x, which = 1:4,
 }
 
 \examples{
-## Analysis of the life-cycle savings data given in Belsley, Kuh
-## and Welsch.
-data(LifeCycleSavings)
-plot(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi, data = LifeCycleSavings))
+## Analysis of the life-cycle savings data
+## given in Belsley, Kuh and Welsch.
+data(savings)
+plot(lm.SR <- lm(sr ~ pop15 + pop75 + dpi + ddpi,data=savings))
 
 ## 4 plots on 1 page; allow room for printing model formula in outer margin:
-par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))
+par(mfrow=c(2,2),oma=c(0,0,2,0))
 plot(lm.SR)
 plot(lm.SR, id.n = NULL)# no id's
 plot(lm.SR, id.n = 5, labels.id=NULL)# 5 id numbers
 
 ## Fit a smmooth curve, where applicable:
-plot(lm.SR, panel=panel.smooth)
+plot(lm.SR, panel= panel.smooth)
 ## Gives a smoother curve
-plot(lm.SR, panel=function(x,y)panel.smooth(x,y, span=1))
-## Warnings:  panel = panel.smoth, span = 1
+plot(lm.SR, panel= function(x,y)panel.smooth(x,y, span=1))
+% Warnings:  panel = panel.smoth, span = 1
 
 par(mfrow=c(2,1))# same oma as above
 plot(lm.SR, which = 1:2, sub.caption= "Saving Rates, n=50, p=5")

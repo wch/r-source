@@ -13,10 +13,14 @@ plot.lm <- function (x, which = 1:4,
     show[which] <- TRUE
     r <- residuals(x)
     n <- length(r)
-    yh <- predict(x)# != fitted() for glm
+    yh <- predict(x) # != fitted() for glm
     hii <- lm.influence(x)$hat
-    if(any(show[2:3]))
-       rs <- r/sqrt(1 - hii)
+    s <- sqrt(deviance(x)/df.residual(x))
+    if (any(show[2:3])) {
+	ylab23 <- switch(class(x)[1], lm = "Standardized residuals",
+			 glm = "Std. dev. residuals")
+	rs <- r/sqrt(1 - hii)/s
+    }
     one.fig <- prod(par("mfcol")) == 1
     if (ask) {
 	op <- par(ask = TRUE)
@@ -57,8 +61,7 @@ plot.lm <- function (x, which = 1:4,
     if (show[2]) {
 	ylim <- range(rs)
 	ylim[2] <- ylim[2] + diff(ylim) * 0.075
-	qq <- qqnorm(rs, main = main,
-		     ylab = "Standardized Residuals", ylim = ylim, ...)
+	qq <- qqnorm(rs, main = main, ylab = ylab23, ylim = ylim, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	mtext(caption[2], 3, 0.25)
@@ -72,8 +75,8 @@ plot.lm <- function (x, which = 1:4,
     if (show[3]) {
 	sqrtabsr <- sqrt(abs(rs))
 	ylim <- c(0, max(sqrtabsr))
-	plot(yh, sqrtabsr, xlab = "Fitted values",
-	     ylab = expression(sqrt(abs(" std.resid "))), main = main,
+	yl <- as.expression(substitute(sqrt(abs(YL)), list(YL=as.name(ylab23))))
+	plot(yh, sqrtabsr, xlab = "Fitted values", ylab = yl, main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yh, sqrtabsr, ...)
 	if (one.fig)
