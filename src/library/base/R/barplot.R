@@ -76,10 +76,15 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	    xyrect(0, w.l, c(height), w.r, horizontal = horiz,
 		   angle = angle, density = density, col = col, border = border)
 	else {
+	    ## noInside <- NC > 1 && !inside # outside border, but not inside
+	    ## bordr <- if(noInside) 0 else border
 	    for (i in 1:NC) {
 		xyrect(height[1:NR, i], w.l[i], height[-1, i], w.r[i],
 		       horizontal = horiz, angle = angle, density = density,
-		       col = col, border = border)
+		       col = col, border = border)# = bordr
+                ## if(noInside)
+                ##  xyrect(min(height[, i]), w.l[i], max(height[, i]), w.r[i],
+                ##         horizontal = horiz, border= border)
 	    }
 	}
 	if (axisnames && !is.null(names.arg)) { # specified or from {col}names
