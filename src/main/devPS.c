@@ -1655,6 +1655,7 @@ static void PS_MetricInfo(int c, int font, double cex, double ps,
 			  double* width, NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
+    if(font < 1 || font > 5) font = 1;
 
     PostScriptMetricInfo(c, ascent, descent, width,
 			 &(pd->metrics[font-1]));
