@@ -13,7 +13,7 @@ RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 PKGD = $(shell ./Rpwd.exe $(PKGDIR))# must be absolute path
 
-FLIBS+=-lRblas
+#FLIBS+=-lRblas
 
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
@@ -69,7 +69,7 @@ pkgclean-%:
 
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
-	-@mkdir -p $(PKGDIR)/$*/check
+	-@$(MKDIR) -p $(PKGDIR)/$*/check
 	@$(MAKE) --no-print-directory -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) \
 	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 	@if test -d $(PKGDIR)/$*/tests ; then \
