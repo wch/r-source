@@ -117,6 +117,76 @@ function(x, ...)
     invisible(x)
 }
 
+### * .buildHsearchIndex
+
+.buildHsearchIndex <-
+function(contents, packageName, libDir)
+{
+    ## Build an index of the Rd contents in 'contents', of a package
+    ## named 'packageName' (to be) installed in 'libDir', in a form
+    ## useful for help.search().
+
+    dbAliases <- dbKeywords <- matrix(character(), nc = 3)
+    
+    if((nr <- NROW(contents)) > 0) {
+        ## IDs are used for indexing the Rd objects in the help.search
+        ## db.
+        IDs <- seq(length = nr)
+        if(!is.data.frame(contents)) {
+            colnames(contents) <-
+                c("Name", "Aliases", "Title", "Keywords")
+            base <- contents[, c("Name", "Title"), drop = FALSE]
+            ## If the contents db is not a data frame, then it has the
+            ## aliases collapsed.  Split again as we need the first
+            ## alias as the help topic to indicate for matching Rd
+            ## objects. 
+            aliases <- strsplit(contents[, "Aliases"], " +")
+            ## Don't do this for keywords though, as these might be
+            ## non-standard (and hence contain white space ...).
+        }
+        else {
+            base <-
+                as.matrix(contents[, c("Name", "Title")])
+            aliases <- contents[, "Aliases"]
+        }
+        keywords <- contents[, "Keywords"]
+        ## We create 3 character matrices (cannot use data frames for
+        ## efficiency reasons): 'dbBase' holds all character string
+        ## data, and 'dbAliases' and 'dbKeywords' hold character vector
+        ## data in a 3-column character matrix format with entry, ID of
+        ## the Rd object the entry comes from, and the package the
+        ## object comes from.  The latter is useful when subscripting
+        ## the help.search db according to package. 
+        dbBase <- cbind(packageName, libDir, IDs, base,
+                        topic = sapply(aliases, "[", 1))
+        ## If there are no aliases at all, cbind() below would give
+        ## matrix(packageName, nc = 1).  (Of course, Rd objects without
+        ## aliases are useless ...)
+        if(length(a <- unlist(aliases)) > 0)
+            dbAliases <-
+                cbind(a, rep.int(IDs, sapply(aliases, length)),
+                      packageName)
+        ## And similarly if there are no keywords at all.
+        if(length(k <- unlist(keywords)) > 0)
+            dbKeywords <-
+                cbind(k, rep.int(IDs, sapply(keywords, length)),
+                      packageName)
+    }
+    else {
+        dbBase <- matrix(character(), nc = 6)
+    }
+        
+    colnames(dbBase) <-
+        c("Package", "LibPath", "ID", "name", "title", "topic")
+    colnames(dbAliases) <-
+        c("Aliases", "ID", "Package")
+    colnames(dbKeywords) <-
+        c("Keywords", "ID", "Package")
+
+    list(dbBase, dbAliases, dbKeywords)
+}
+
+
 ### Local variables: ***
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***

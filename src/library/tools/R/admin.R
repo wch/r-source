@@ -83,7 +83,9 @@ function(dir, outDir)
     dataDir <- file.path(dir, "data")
     packageName <- basename(dir)
 
-    indices <- c(file.path("Meta", "Rd.rds"), "CONTENTS", "INDEX")
+    indices <- c(file.path("Meta", "Rd.rds"),
+                 file.path("Meta", "hsearch.rds"),
+                 "CONTENTS", "INDEX")
     upToDate <- fileTest("-nt", file.path(outDir, indices), docsDir)
     if(fileTest("-d", dataDir)) {
         ## Note that the data index is computed from both the package's
@@ -99,6 +101,9 @@ function(dir, outDir)
     contents <- Rdcontents(listFilesWithType(docsDir, "docs"))
 
     .writeContentsRDS(contents, file.path(outDir, "Meta", "Rd.rds"))
+
+    .saveRDS(.buildHsearchIndex(contents, packageName, outDir),
+             file.path(outDir, "Meta", "hsearch.rds"))
 
     .writeContentsDCF(contents, packageName,
                       file.path(outDir, "CONTENTS"))

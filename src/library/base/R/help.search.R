@@ -54,8 +54,10 @@ function(pattern, fields = c("alias", "title"),
     ## help.search db, we use a global file cache for this information
     ## if possible.  This is wrong because multiple processes or threads
     ## use the same cache (no locking!), and we should really save the
-    ## information on a package or library level, preferably already at
-    ## package install time.  Argh ...
+    ## information in one (thread-local) global table, e.g. as a local
+    ## variable in the environment of help.search(), or something that
+    ## can go in a 'shelf' (but not necessarily to a specific file) if
+    ## memory usage is an issue.  Argh.
     ## </FIXME>
 
     ### Set up the help db.
@@ -99,6 +101,7 @@ function(pattern, fields = c("alias", "title"),
             || ((unlink(dir) == 0) && dir.create(dir)))
 	   && (unlink(dbfile) == 0))
 	    save.db <- TRUE
+        
         ## If we cannot save the help db only use the given packages.
         ## <FIXME>
         ## Why don't we just use the given packages?  The current logic
@@ -109,115 +112,96 @@ function(pattern, fields = c("alias", "title"),
         else
             .packages(all.available = TRUE, lib.loc = lib.loc)
         ## </FIXME>
+        
 	## Create the help db.
-#	contentsEnv <- new.env()
 	contentsDCFFields <-
 	    c("Entry", "Aliases", "Description", "Keywords")
 	contentsRDSFields <-
 	    c("Name", "Aliases", "Title", "Keywords")
-	dbBase <- dbAliases <- dbKeywords <- NULL
-	nEntries <- 0
-	if(verbose) {
+        np <- 0
+	if(verbose)
 	    cat("Packages:\n")
-	    np <- 0
-	}
 
+        ## Starting with R 1.8.0, prebuilt hsearch indices are available
+        ## in Meta/hsearch.rds, and the code to build this from the Rd
+        ## contents (as obtained from both new and old style Rd indices) 
+        ## has been moved to tools:::.buildHsearchIndex(), which creates
+        ## a per-package list of base, aliases and keywords information.
+        ## When building the global index, it again (see e.g. also the
+        ## code in tools:::Rdcontents()), it seems most efficient to
+        ## create a list *matrix* (dbMat below), stuff the individual
+        ## indices into its rows, and finally create the base, aliases
+        ## and keyword information in rbind() calls on the columns.
+        ## This is *much* more efficient than building incrementally.
+        dbMat <- vector("list", length(packagesInHelpDB) * 3)
+        dim(dbMat) <- c(length(packagesInHelpDB), 3)
+        
 	for(p in packagesInHelpDB) {
+            np <- np + 1
 	    if(verbose)
-		cat("", p, if((np <- np + 1)%% 5 == 0) "\n")
-	    contents <- NULL
+		cat("", p, if((np %% 5) == 0) "\n")
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
 		stop(paste("could not find package", sQuote(p)))
-	    lib <- dirname(path)
 
-	    ## Read the contents info from the respective Rd meta
-	    ## files.
-	    if(file.exists(contentsFile <-
-                           file.path(path, "Meta", "Rd.rds"))) {
-		contents <-
-		    .readRDS(contentsFile)[ , contentsRDSFields,
-					   drop = FALSE]
+            if(file.exists(hsearchFile <-
+                           file.path(path, "Meta", "hsearch.rds"))) {
+                hDB <- .readRDS(hsearchFile)
             }
-	    else if(file.exists(contentsFile <-
-				file.path(path, "CONTENTS")))
-		contents <-
-		    read.dcf(contentsFile, fields = contentsDCFFields)
-
-	    if(!is.null(contents)) {
-		## If we found something ...
-		if((nr <- NROW(contents)) > 0) {
-		    if(!is.data.frame(contents)) {
-			colnames(contents) <- contentsRDSFields
-			base <- contents[, c("Name", "Title"), drop = FALSE]
-			## If the contents db is not a data frame, then
-			## it has the aliases collapsed.  Split again as
-			## we need the first alias as the help topic to
-			## indicate for matching Rd objects.
-			aliases <-
-			    strsplit(contents[, "Aliases"], " +")
-			## Don't do it for keywords, though, as these
-			## might be non-standard (and hence contain
-			## white space ...).
-		    }
-		    else {
-			base <-
-			    as.matrix(contents[, c("Name", "Title")])
-			aliases <- contents[, "Aliases"]
-		    }
-
-		    ## IDs holds the numbers of the Rd objects in the
-		    ## help.search db.
-		    IDs <- seq(from = nEntries + 1, to = nEntries + nr)
-		    ## We create 3 character matrices (cannot use data
-		    ## frames for efficiency reasons): 'dbBase' holds
-		    ## all character string data, and 'dbAliases' and
-		    ## 'dbKeywords' hold character vector data in a
-		    ## 3-column character matrix format with entry, ID
-		    ## of the Rd object the entry comes from, and the
-		    ## package the object comes from.  The latter is
-		    ## useful when subscripting according to package.
-		    dbBase <-
-			rbind(dbBase,
-			      cbind(p, lib, IDs, base,
-				    topic = sapply(aliases, "[", 1)))
-		    ## If there are no aliases at all, cbind() below
-		    ## would give matrix(p, nc = 1).  (Of course, Rd
-		    ## objects without aliases are useless ...)
-		    if(length(a <- unlist(aliases)) > 0)
-			dbAliases <-
-			    rbind(dbAliases,
-				  cbind(a,
-					rep.int(IDs,
-                                                sapply(aliases, length)),
-					p))
-		    keywords <- contents[, "Keywords"]
-                    ## And similarly if there are no keywords at all.
-                    if(length(k <- unlist(keywords)) > 0)
-                        dbKeywords <-
-                            rbind(dbKeywords,
-                                  cbind(k,
-                                        rep.int(IDs,
-                                                sapply(keywords, length)),
-                                        p))
-		    nEntries <- nEntries + nr
-		} else {
-		    warning(paste("Empty contents for package",
-				  sQuote(p), "in", sQuote(lib)))
-		}
-	    }
-	}
-	if(verbose)
+            else {
+                hDB <- contents <- NULL
+                ## Read the contents info from the respective Rd meta
+                ## files.
+                if(file.exists(contentsFile <-
+                               file.path(path, "Meta", "Rd.rds"))) {
+                    contents <-
+                        .readRDS(contentsFile)[ , contentsRDSFields,
+                                               drop = FALSE]
+                }
+                else if(file.exists(contentsFile
+                                    <- file.path(path, "CONTENTS"))) {
+                    contents <-
+                        read.dcf(contentsFile,
+                                 fields = contentsDCFFields)
+                }
+                ## If we found Rd contents information ...
+                if(!is.null(contents)) {
+                    ## build the hsearch index from it;
+                    hDB <- tools:::.buildHsearchIndex(contents, p,
+                                                      dirname(path))
+                }
+                else {
+                    ## otherwise, issue a warning.
+                    warning(paste("No Rd contents for package",
+                                  sQuote(p), "in",
+                                  sQuote(dirname(path))))
+                }
+            }
+            if(!is.null(hDB)) {
+                ## Put the hsearch index for the np-th package into the
+                ## np-th row of the matrix used for aggregating.
+                dbMat[np, ] <- hDB
+            }
+        }
+            
+        if(verbose)
 	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"))
-	colnames(dbBase) <-
-	    c("Package", "LibPath", "ID", "name", "title", "topic")
-	colnames(dbAliases) <-
-	    c("Aliases", "ID", "Package")
-	colnames(dbKeywords) <-
-	    c("Keywords", "ID", "Package")
-	db <- list(Base = dbBase,
-		   Aliases = dbAliases,
-		   Keywords = dbKeywords)
+
+        ## Create the global base, aliases and keywords tables via calls
+        ## to rbind() on the columns of the matrix used for aggregating.
+        db <- list(Base = do.call("rbind", dbMat[, 1]),
+                   Aliases = do.call("rbind", dbMat[, 2]),
+                   Keywords = do.call("rbind", dbMat[, 3]))
+        ## And finally, make the IDs globally unique by prefixing them
+        ## with the number of the package in the global index.
+        for(i in which(sapply(db, NROW) > 0)) {
+            db[[i]][, "ID"] <-
+                paste(rep.int(seq(along = packagesInHelpDB),
+                              sapply(dbMat[, i], NROW)),
+                      db[[i]][, "ID"],
+                      sep = "/")
+        }
+        
 	## Maybe save the help db
 	## <FIXME>
 	## Shouldn't we serialize instead?
@@ -251,6 +235,12 @@ function(pattern, fields = c("alias", "title"),
 		       x[x[, "Package"] %in% package, , drop = FALSE]
 		   })
     }
+
+    ## <FIXME>
+    ## No need continuing if there are no objects in the data base.
+    ## But shouldn't we return something of class "hsearch"?
+    if(!length(db$Base)) return(invisible())
+    ## </FIXME>
 
     ## If agrep is NULL (default), we want to use fuzzy matching iff
     ## 'pattern' contains no characters special to regular expressions.
