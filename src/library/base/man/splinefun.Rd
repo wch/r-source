@@ -56,3 +56,5 @@ splinecoef <- eval(expression(z), envir = environment(f))
 curve(f(x), 1, 10, col = "green", lwd = 1.5)
 points(splinecoef, col = "purple", cex = 2)
 }
+\keyword{math}
+\keyword{dplot}

@@ -65,3 +65,5 @@ points(x, y)
 is.function(fc <- approxfun(x, y, method = "const"))  # T
 curve(fc(x), 0, 10, col = "darkblue", add = TRUE)
 }
+\keyword{math}
+\keyword{dplot}

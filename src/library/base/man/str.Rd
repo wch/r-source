@@ -10,6 +10,7 @@ str(object, max.level = 0, vec.len = 4, digits.d = 3,
 ls.str(name, pattern, mode = "any", max.level = 1, give.attr = FALSE)
 lsf.str(...)
 }
+\alias{str}
 \alias{ls.str}
 \alias{lsf.str}
 \arguments{
