@@ -96,7 +96,7 @@ fourfoldplot <- function(x, color = c("red", "blue"), conf.level = 0.95,
     stdize <- function(tab, std, x) {
         ## Standardize the 2 x 2 table `tab'.
         if(std == "margins") {
-            if(margin == c(1, 2)) {
+            if(all(sort(margin) == c(1, 2))) {
                 ## standardize to equal row and col margins
                 u <- sqrt(odds(tab)$or)
                 u <- u / (1 + u)
