@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.1-13, 2000-09-24
+Version 1.1-14, 2000-10-01
 Kurt Hornik
 
 
@@ -1116,6 +1116,13 @@ works, was published in the Journal of Statistical Software
      vector of input dates in any of the forms `8/30/53', `30Aug53', `30
      August 1953', ..., `August 30 53', or any mixture of these.
 
+*dse*
+     Dynamic System Estimation, a multivariate time series package.
+     Contains *dse1* (DSE kernel plus ARMA and state space models), *dse2*
+     (DSE extensions), *syskern* (functions for writing code that is
+     operating system and R/S independent), and *tframe* (functions for
+     writing code that is independent of the representation of time).
+
 *e1071*
      Miscellaneous functions used at the Department of Statistics at TU Wien
      (E1071), including moments, short-time Fourier transforms, Independent
@@ -1318,8 +1325,9 @@ these a try, of course.  This area of CRAN currently contains
 *dopt*
      Finding D-optimal experimental designs.
 
-*dse*
-     Multivariate time series.
+*dseplus*
+     Extensions to *dse*, the Dynamic Systems Estimation multivariate time
+     series package.  Contains PADI, juice and monitoring extensions.
 
 *exactDistr*
      Exact distributions for rank tests.

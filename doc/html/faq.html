@@ -14,7 +14,7 @@
 <body>
 <h1>R FAQ</h1>
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.1-13, 2000-09-24</h2>
+<h2>Version 1.1-14, 2000-10-01</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 
@@ -1428,6 +1428,13 @@ and fractional factorial designs.
 vector of input dates in any of the forms <code>8/30/53</code>,
 <code>30Aug53</code>, <code>30 August 1953</code>, <small>...</small>, <code>August 30 53</code>, or
 any mixture of these. 
+<br><dt><strong>dse</strong>
+<dd>Dynamic System Estimation, a multivariate time series package.  Contains
+<strong>dse1</strong> (DSE kernel plus ARMA and state space models),
+<strong>dse2</strong> (DSE extensions), <strong>syskern</strong> (functions for writing
+code that is operating system and R/S independent), and <strong>tframe</strong>
+(functions for writing code that is independent of the representation of
+time). 
 <br><dt><strong>e1071</strong>
 <dd>Miscellaneous functions used at the Department of Statistics at TU Wien
 (E1071), including moments, short-time Fourier transforms, Independent
@@ -1580,8 +1587,9 @@ in competing risks.
 <dd>A small C++ test package. 
 <br><dt><strong>dopt</strong>
 <dd>Finding D-optimal experimental designs. 
-<br><dt><strong>dse</strong>
-<dd>Multivariate time series. 
+<br><dt><strong>dseplus</strong>
+<dd>Extensions to <strong>dse</strong>, the Dynamic Systems Estimation multivariate
+time series package.  Contains PADI, juice and monitoring extensions. 
 <br><dt><strong>exactDistr</strong>
 <dd>Exact distributions for rank tests. 
 <br><dt><strong>foreign</strong>
