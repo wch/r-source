@@ -1517,7 +1517,7 @@ works, was published in the Journal of Statistical Software
      in classification and regression as well as resampling based estimators
      of prediction error.
 
-*knn.in.leaf*
+*knnTree*
      Construct or predict with k-nearest-neighbor classifiers, using
      cross-validation to select k, choose variables (by forward or
      backwards selection), and choose scaling (from among no scaling,
