@@ -15,31 +15,45 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+ * 
+ *
+ *  Modified by Heiner Schwarte to allow growth of vector heap
+ *  Copyright (C) 1997, Heiner Schwarte
  */
- 
+
+
 #include "Defn.h"
 #include "Mathlib.h"
 #include "Fileio.h"
 
-	/* Static Globals */
+extern VECREC*HS_Stacks[];
+extern VECREC*HS_StackPtr;
 
-static char buf[MAXELTSIZE];	/* Buffer for character strings */
-static char *bufp;		/* A pointer to that buffer */
+extern VECREC*HS_Heaps[];
+extern VECREC*HS_HeapPtrs[];
+extern int	HS_HeapActive;
 
-static int NSymbol;		/* Number of symbols */
-static int NSave;		/* Number of non-symbols */
-static int NTotal;		/* NSymbol + NSave */
-static int NVSize;		/* Number of vector cells */
+extern void	HS_expandHeap();
 
-static int *OldOffset;		/* Offsets in previous incarnation */
-static SEXP *NewAddress;	/* Addresses in this incarnation */
+/* Static Globals */
 
-static int VersionId;
+static char	buf[MAXELTSIZE];/* Buffer for character strings */
+static char	*bufp;		/* A pointer to that buffer */
 
-static SEXP DataLoad(FILE*);
-static void DataSave(SEXP, FILE*);
+static int	NSymbol;	/* Number of symbols */
+static int	NSave;		/* Number of non-symbols */
+static int	NTotal;		/* NSymbol + NSave */
+static int	NVSize;		/* Number of vector cells */
 
-	/* I/O Function Pointers */
+static int	*OldOffset;	/* Offsets in previous incarnation */
+static SEXP	*NewAddress;	/* Addresses in this incarnation */
+
+static int	VersionId;
+
+static SEXP	DataLoad(FILE*);
+static void	DataSave(SEXP, FILE*);
+
+/* I/O Function Pointers */
 
 static void	(*OutInit)(FILE*);
 static void	(*OutInteger)(FILE*, int);
@@ -54,87 +68,108 @@ static void	(*InInit)(FILE*);
 static int	(*InInteger)(FILE*);
 static double	(*InReal)(FILE*);
 static complex	(*InComplex)(FILE*);
-static char*	(*InString)(FILE*);
+static char	*	(*InString)(FILE*);
 static void	(*InTerm)(FILE*);
 
 
 
-	/*********************************/
-	/*				 */
-	/*   Dummy Placeholder Routine   */
-	/*				 */
-	/*********************************/
+/*********************************/
+/*				 */
+/*   Dummy Placeholder Routine   */
+/*				 */
+/*********************************/
 
 static void Dummy(FILE *fp)
 {
 }
 
 
-	/************************************/
-	/*				    */
-	/*   Functions for Ascii Pickling   */
-	/*				    */
-	/************************************/
+/************************************/
+/*				    */
+/*   Functions for Ascii Pickling   */
+/*				    */
+/************************************/
 
 static void AsciiOutInteger(FILE *fp, int i)
 {
-	if(i == NA_INTEGER) fprintf(fp, "NA");
-	else fprintf(fp, "%d", i);
+	if (i == NA_INTEGER) 
+		fprintf(fp, "NA");
+	else 
+		fprintf(fp, "%d", i);
 }
+
 
 static int AsciiInInteger(FILE *fp)
 {
 	int x;
 	fscanf(fp, "%s", buf);
-	if(strcmp(buf, "NA") == 0) return NA_INTEGER;
+	if (strcmp(buf, "NA") == 0) 
+		return NA_INTEGER;
 	else {
 		sscanf(buf, "%d", &x);
 		return x;
 	}
 }
 
+
 static void AsciiOutReal(FILE *fp, double x)
 {
-	if(!FINITE(x)) fprintf(fp, "NA");
-	else fprintf(fp, "%g", x);
+	if (!FINITE(x)) 
+		fprintf(fp, "NA");
+	else 
+		fprintf(fp, "%g", x);
 }
+
 
 static double AsciiInReal(FILE *fp)
 {
 	double x;
 	fscanf(fp, "%s", buf);
-	if(strcmp(buf, "NA") == 0) x = NA_REAL;
-	else sscanf(buf, "%lg", &x);
+	if (strcmp(buf, "NA") == 0) 
+		x = NA_REAL;
+	else 
+		sscanf(buf, "%lg", &x);
 	return x;
 }
 
+
 static void AsciiOutComplex(FILE *fp, complex x)
 {
-	if(!FINITE(x.r) || !FINITE(x.i)) fprintf(fp, "NA NA");
-	else fprintf(fp, "%g %g", x.r, x.i);
+	if (!FINITE(x.r) || !FINITE(x.i)) 
+		fprintf(fp, "NA NA");
+	else 
+		fprintf(fp, "%g %g", x.r, x.i);
 }
+
 
 static complex AsciiInComplex(FILE *fp)
 {
 	complex x;
 	fscanf(fp, "%s", buf);
-	if(strcmp(buf, "NA") == 0) x.r = NA_REAL;
-	else sscanf(buf, "%lg", &x.r);
+	if (strcmp(buf, "NA") == 0) 
+		x.r = NA_REAL;
+	else 
+		sscanf(buf, "%lg", &x.r);
 	fscanf(fp, "%s", buf);
-	if(strcmp(buf, "NA") == 0) x.i = NA_REAL;
-	else sscanf(buf, "%lg", &x.i);
+	if (strcmp(buf, "NA") == 0) 
+		x.i = NA_REAL;
+	else 
+		sscanf(buf, "%lg", &x.i);
 	return x;
 }
+
 
 static void AsciiOutSpace(FILE *fp)
 {
 	fputc(' ', fp);
 }
 
+
 static void AsciiOutNewline(FILE *fp)
 {
 	fputc('\n', fp);
 }
+
 
 /* TODO: To make saved files completely portable, the output */
 /* representation of strings should be completely ascii.  This */
@@ -145,25 +180,61 @@ static void AsciiOutString(FILE *fp, char *s)
 {
 	char *p = s;
 	fputc('\"', fp);
-	while(*p) {
-		switch(*p) {
-		case '\n': fputc('\\', fp); fputc('n', fp); break;
-		case '\t': fputc('\\', fp); fputc('t', fp); break;
-		case '\v': fputc('\\', fp); fputc('v', fp); break;
-		case '\b': fputc('\\', fp); fputc('b', fp); break;
-		case '\r': fputc('\\', fp); fputc('r', fp); break;
-		case '\f': fputc('\\', fp); fputc('f', fp); break;
-		case '\a': fputc('\\', fp); fputc('a', fp); break;
-		case '\\': fputc('\\', fp); fputc('\\', fp); break;
-		case '\?': fputc('\\', fp); fputc('\?', fp); break;
-		case '\'': fputc('\\', fp); fputc('\'', fp); break;
-		case '\"': fputc('\\', fp); fputc('\"', fp); break;
-		default:   fputc(*p, fp); break;
+	while (*p) {
+		switch (*p) {
+		case '\n': 
+			fputc('\\', fp); 
+			fputc('n', fp); 
+			break;
+		case '\t': 
+			fputc('\\', fp); 
+			fputc('t', fp); 
+			break;
+		case '\v': 
+			fputc('\\', fp); 
+			fputc('v', fp); 
+			break;
+		case '\b': 
+			fputc('\\', fp); 
+			fputc('b', fp); 
+			break;
+		case '\r': 
+			fputc('\\', fp); 
+			fputc('r', fp); 
+			break;
+		case '\f': 
+			fputc('\\', fp); 
+			fputc('f', fp); 
+			break;
+		case '\a': 
+			fputc('\\', fp); 
+			fputc('a', fp); 
+			break;
+		case '\\': 
+			fputc('\\', fp); 
+			fputc('\\', fp); 
+			break;
+		case '\?': 
+			fputc('\\', fp); 
+			fputc('\?', fp); 
+			break;
+		case '\'': 
+			fputc('\\', fp); 
+			fputc('\'', fp); 
+			break;
+		case '\"': 
+			fputc('\\', fp); 
+			fputc('\"', fp); 
+			break;
+		default:   
+			fputc(*p, fp); 
+			break;
 		}
 		p++;
 	}
 	fputc('\"', fp);
 }
+
 
 static char *AsciiInString(FILE *fp)
 {
@@ -172,20 +243,44 @@ static char *AsciiInString(FILE *fp)
 	while ((c = R_fgetc(fp)) != '"');
 	while ((c = R_fgetc(fp)) != R_EOF && c != '"') {
 		if (c == '\\') {
-			if((c = R_fgetc(fp)) == R_EOF) break;
-			switch(c) {
-				case 'n':  c = '\n'; break;
-				case 't':  c = '\t'; break;
-				case 'v':  c = '\v'; break;
-				case 'b':  c = '\b'; break;
-				case 'r':  c = '\r'; break;
-				case 'f':  c = '\f'; break;
-				case 'a':  c = '\a'; break;
-				case '\\': c = '\\'; break;
-				case '\?': c = '\?'; break;
-				case '\'': c = '\''; break;
-				case '\"': c = '\"'; break;
-				default:  break;
+			if ((c = R_fgetc(fp)) == R_EOF) 
+				break;
+			switch (c) {
+			case 'n':  
+				c = '\n'; 
+				break;
+			case 't':  
+				c = '\t'; 
+				break;
+			case 'v':  
+				c = '\v'; 
+				break;
+			case 'b':  
+				c = '\b'; 
+				break;
+			case 'r':  
+				c = '\r'; 
+				break;
+			case 'f':  
+				c = '\f'; 
+				break;
+			case 'a':  
+				c = '\a'; 
+				break;
+			case '\\': 
+				c = '\\'; 
+				break;
+			case '\?': 
+				c = '\?'; 
+				break;
+			case '\'': 
+				c = '\''; 
+				break;
+			case '\"': 
+				c = '\"'; 
+				break;
+			default:  
+				break;
 			}
 		}
 		*bufp++ = c;
@@ -193,6 +288,7 @@ static char *AsciiInString(FILE *fp)
 	*bufp = '\0';
 	return buf;
 }
+
 
 void AsciiSave(SEXP s, FILE *fp)
 {
@@ -207,6 +303,7 @@ void AsciiSave(SEXP s, FILE *fp)
 	DataSave(s, fp);
 }
 
+
 SEXP AsciiLoad(FILE *fp)
 {
 	VersionId = 0;
@@ -218,6 +315,7 @@ SEXP AsciiLoad(FILE *fp)
 	InTerm = Dummy;
 	return DataLoad(fp);
 }
+
 
 SEXP AsciiLoadOld(FILE *fp, int version)
 {
@@ -234,11 +332,11 @@ SEXP AsciiLoadOld(FILE *fp, int version)
 
 #ifdef HAVE_RPC_XDR_H
 
-	/***********************************************/
-	/*					       */
-	/*   Functions for Binary Pickling Using XDR   */
-	/*					       */
-	/***********************************************/
+/***********************************************/
+/*					       */
+/*   Functions for Binary Pickling Using XDR   */
+/*					       */
+/***********************************************/
 
 #include <rpc/rpc.h>
 
@@ -249,20 +347,24 @@ static void XdrOutInit(FILE *fp)
 	xdrstdio_create(&xdrs, fp, XDR_ENCODE);
 }
 
+
 static void XdrOutTerm(FILE *fp)
 {
 	xdr_destroy(&xdrs);
 }
+
 
 static void XdrInInit(FILE *fp)
 {
 	xdrstdio_create(&xdrs, fp, XDR_DECODE);
 }
 
+
 static void XdrInTerm(FILE *fp)
 {
 	xdr_destroy(&xdrs);
 }
+
 
 static void XdrOutInteger(FILE *fp, int i)
 {
@@ -272,7 +374,8 @@ static void XdrOutInteger(FILE *fp, int i)
 	}
 }
 
-static int XdrInInteger(FILE * fp)
+
+static int XdrInInteger(FILE *fp)
 {
 	int i;
 	if (!xdr_int(&xdrs, &i)) {
@@ -282,6 +385,7 @@ static int XdrInInteger(FILE * fp)
 	return i;
 }
 
+
 static void XdrOutReal(FILE *fp, double x)
 {
 	if (!xdr_double(&xdrs, &x)) {
@@ -290,7 +394,8 @@ static void XdrOutReal(FILE *fp, double x)
 	}
 }
 
-static double XdrInReal(FILE * fp)
+
+static double XdrInReal(FILE *fp)
 {
 	double x;
 	if (!xdr_double(&xdrs, &x)) {
@@ -300,41 +405,46 @@ static double XdrInReal(FILE * fp)
 	return x;
 }
 
+
 static void XdrOutComplex(FILE *fp, complex x)
 {
-        if (!xdr_double(&xdrs, &(x.r)) | !xdr_double(&xdrs, &(x.i))) {
+	if (!xdr_double(&xdrs, &(x.r)) | !xdr_double(&xdrs, &(x.i))) {
 		xdr_destroy(&xdrs);
-                error("a write error occured\n");
+		error("a write error occured\n");
 	}
 }
 
-static complex XdrInComplex(FILE * fp)
+
+static complex XdrInComplex(FILE *fp)
 {
 	complex x;
-        if (!xdr_double(&xdrs, &(x.r)) | !xdr_double(&xdrs, &(x.i))) {
+	if (!xdr_double(&xdrs, &(x.r)) | !xdr_double(&xdrs, &(x.i))) {
 		xdr_destroy(&xdrs);
 		error("a read error occured\n");
 	}
 	return x;
 }
 
+
 static void XdrOutString(FILE *fp, char *s)
 {
-	if(!xdr_string(&xdrs, &s, MAXELTSIZE-1)) {
+	if (!xdr_string(&xdrs, &s, MAXELTSIZE - 1)) {
 		xdr_destroy(&xdrs);
 		error("a write error occured\n");
 	}
 }
 
+
 static char *XdrInString(FILE *fp)
 {
 	char *bufp = buf;
-	if(!xdr_string(&xdrs, &bufp, MAXELTSIZE-1)) {
+	if (!xdr_string(&xdrs, &bufp, MAXELTSIZE - 1)) {
 		xdr_destroy(&xdrs);
 		error("a read error occured\n");
 	}
 	return buf;
 }
+
 
 static void XdrSave(SEXP s, FILE *fp)
 {
@@ -349,6 +459,7 @@ static void XdrSave(SEXP s, FILE *fp)
 	DataSave(s, fp);
 }
 
+
 static SEXP XdrLoad(FILE *fp)
 {
 	VersionId = 0;
@@ -360,13 +471,15 @@ static SEXP XdrLoad(FILE *fp)
 	InTerm = XdrInTerm;
 	return DataLoad(fp);
 }
+
+
 #endif
 
-	/*************************************/
-	/*				     */
-	/*   Functions for Binary Pickling   */
-	/*				     */
-	/*************************************/
+/*************************************/
+/*				     */
+/*   Functions for Binary Pickling   */
+/*				     */
+/*************************************/
 
 static void BinaryOutInteger(FILE *fp, int i)
 {
@@ -374,7 +487,8 @@ static void BinaryOutInteger(FILE *fp, int i)
 		error("a write error occured");
 }
 
-static int BinaryInInteger(FILE * fp)
+
+static int BinaryInInteger(FILE *fp)
 {
 	int i;
 	if (fread(&i, sizeof(int), 1, fp) != 1)
@@ -382,13 +496,15 @@ static int BinaryInInteger(FILE * fp)
 	return i;
 }
 
+
 static void BinaryOutReal(FILE *fp, double x)
 {
 	if (fwrite(&x, sizeof(double), 1, fp) != 1)
 		error("a write error occured\n");
 }
 
-static double BinaryInReal(FILE * fp)
+
+static double BinaryInReal(FILE *fp)
 {
 	double x;
 	if (fread(&x, sizeof(double), 1, fp) != 1)
@@ -396,13 +512,15 @@ static double BinaryInReal(FILE * fp)
 	return x;
 }
 
+
 static void BinaryOutComplex(FILE *fp, complex x)
 {
-        if (fwrite(&x, sizeof(complex), 1, fp) != 1)
-                error("a write error occured\n");
+	if (fwrite(&x, sizeof(complex), 1, fp) != 1)
+		error("a write error occured\n");
 }
 
-static complex BinaryInComplex(FILE * fp)
+
+static complex BinaryInComplex(FILE *fp)
 {
 	complex x;
 	if (fread(&x, sizeof(complex), 1, fp) != 1)
@@ -410,22 +528,24 @@ static complex BinaryInComplex(FILE * fp)
 	return x;
 }
 
+
 static void BinaryOutString(FILE *fp, char *s)
 {
-	int n = strlen(s)+1;	/* NULL too */
+	int n = strlen(s) + 1;	/* NULL too */
 	if (fwrite(s, sizeof(char), n, fp) != n)
 		error("a write error occured\n");
 }
+
 
 static char *BinaryInString(FILE *fp)
 {
 	bufp = buf;
 	do {
 		*bufp = R_fgetc(fp);
-	}
-	while (*bufp++);
+	} while (*bufp++);
 	return buf;
 }
+
 
 void BinarySave(SEXP s, FILE *fp)
 {
@@ -440,6 +560,7 @@ void BinarySave(SEXP s, FILE *fp)
 	DataSave(s, fp);
 }
 
+
 SEXP BinaryLoad(FILE *fp)
 {
 	VersionId = 0;
@@ -451,6 +572,7 @@ SEXP BinaryLoad(FILE *fp)
 	InTerm = Dummy;
 	return DataLoad(fp);
 }
+
 
 SEXP BinaryLoadOld(FILE *fp, int version)
 {
@@ -465,37 +587,39 @@ SEXP BinaryLoadOld(FILE *fp, int version)
 }
 
 
-	/*******************************************/
-	/*					   */
-	/*   Magic Numbers for R Save File Types   */
-	/*					   */
-	/*******************************************/
+/*******************************************/
+/*					   */
+/*   Magic Numbers for R Save File Types   */
+/*					   */
+/*******************************************/
 
 
 void R_WriteMagic(FILE *fp, int number)
 {
 	unsigned char buf[5];
 	number = abs(number);
-	buf[0] = (number/1000) % 10 + '0';
-	buf[1] = (number/100) % 10 + '0';
-	buf[2] = (number/10) % 10 + '0';
+	buf[0] = (number / 1000) % 10 + '0';
+	buf[1] = (number / 100) % 10 + '0';
+	buf[2] = (number / 10) % 10 + '0';
 	buf[3] = number % 10 + '0';
 	buf[4] = '\n';
-	fwrite((char*)buf, sizeof(char), 5, fp);
+	fwrite((char * )buf, sizeof(char), 5, fp);
 }
+
 
 int R_ReadMagic(FILE *fp)
 {
 	unsigned char buf[6];
 	int d1, d2, d3, d4, d1234;
-	fread((char*)buf, sizeof(char), 5, fp);
+	fread((char * )buf, sizeof(char), 5, fp);
 	/* Intel gcc seems to screw up a single expression here */
-	d1 = (buf[3]-'0') % 10;
-	d2 = (buf[2]-'0') % 10;
-	d3 = (buf[1]-'0') % 10;
-	d4 = (buf[0]-'0') % 10;
-	return d1234 = d1 + 10*d2 + 100*d3 + 1000*d4;
+	d1 = (buf[3] - '0') % 10;
+	d2 = (buf[2] - '0') % 10;
+	d3 = (buf[1] - '0') % 10;
+	d4 = (buf[0] - '0') % 10;
+	return d1234 = d1 + 10 * d2 + 100 * d3 + 1000 * d4;
 }
+
 
 static void ReallocVector(SEXP s, int length)
 {
@@ -508,61 +632,81 @@ static void ReallocVector(SEXP s, int length)
 	case INTSXP:
 	case FACTSXP:
 	case ORDSXP:
-		if (length <= 0) size = 0;
-		else size = 1 + INT2VEC(length);
+		if (length <= 0) 
+			size = 0;
+		else 
+			size = 1 + INT2VEC(length);
 		break;
 	case REALSXP:
-		if (length <= 0) size = 0;
-		else size = 1 + FLOAT2VEC(length);
+		if (length <= 0) 
+			size = 0;
+		else 
+			size = 1 + FLOAT2VEC(length);
 		break;
 	case CPLXSXP:
-		if (length <= 0) size = 0;
-		else size = 1 + COMPLEX2VEC(length);
+		if (length <= 0) 
+			size = 0;
+		else 
+			size = 1 + COMPLEX2VEC(length);
 		break;
 	case STRSXP:
 	case VECSXP:
 	case EXPRSXP:
-		if (length <= 0) size = 0;
-		else size = 1 + PTR2VEC(length);
+		if (length <= 0) 
+			size = 0;
+		else 
+			size = 1 + PTR2VEC(length);
 		break;
 	default:
 		error("invalid type in ReallocVector\n");
 	}
-	if (R_VMax - R_VTop < size)
-		error("restore memory exhausted (should not happen)\n");
-
+	if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size) {
+		if (HS_Heaps[HS_HeapActive+1] == NULL)
+			HS_expandHeap();
+		HS_HeapActive++;
+	}
+	if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size)
+		error("could not allocate memory 3");
 	LENGTH(s) = length;
 	if (size > 0) {
-		CHAR(s) = (char *) (R_VTop + 1);
-		BACKPOINTER(*R_VTop) = s;
-		R_VTop += size;
-	}
-	else CHAR(s) = (char*)0;
+		CHAR(s) = (char *) (HS_HeapPtrs[HS_HeapActive] + 1);
+		BACKPOINTER(*HS_HeapPtrs[HS_HeapActive]) = s;
+		HS_HeapPtrs[HS_HeapActive] += size;
+	} else 
+		CHAR(s) = (char * )0;
 }
+
 
 static void ReallocString(SEXP s, int length)
 {
 	long size = 1 + BYTE2VEC(length + 1);
-	if (R_VMax - R_VTop < size)
-		error("restore memory exhausted (should not happen)\n");
+	if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size) {
+		if (HS_Heaps[HS_HeapActive+1] == NULL)
+			HS_expandHeap();
+		HS_HeapActive++;
+	}
+	if (&HS_Heaps[HS_HeapActive][R_VSize-1] - HS_HeapPtrs[HS_HeapActive] < size)
+		error("could not allocate memory 4");
 	if (TYPEOF(s) != CHARSXP)
 		error("ReallocString: type conflict\n");
-	CHAR(s) = (char*)(R_VTop + 1);
+	CHAR(s) = (char * )(HS_HeapPtrs[HS_HeapActive] + 1);
 	LENGTH(s) = length;
 	TAG(s) = R_NilValue;
 	NAMED(s) = 0;
 	ATTRIB(s) = R_NilValue;
-	BACKPOINTER(*R_VTop) = s;
-	R_VTop += size;
+	BACKPOINTER(*HS_HeapPtrs[HS_HeapActive]) = s;
+	HS_HeapPtrs[HS_HeapActive] += size;
 }
+
 
 static void MarkSave(SEXP s)
 {
 	int i, len;
 
-	if(s == R_NilValue || s == R_GlobalEnv
-			   || s == R_UnboundValue
-			   || s == R_MissingArg) return;
+	if (s == R_NilValue || s == R_GlobalEnv
+	     || s == R_UnboundValue
+	     || s == R_MissingArg) 
+		return;
 
 	if (s && !MARK(s)) {
 		MARK(s) = 1;
@@ -600,8 +744,8 @@ static void MarkSave(SEXP s)
 		case VECSXP:
 		case EXPRSXP:
 			NSave++;
-			NVSize += 1 + PTR2VEC(len=LENGTH(s));
-			for (i=0; i < len; i++)
+			NVSize += 1 + PTR2VEC(len = LENGTH(s));
+			for (i = 0; i < len; i++)
 				MarkSave(VECTOR(s)[i]);
 			break;
 		case ENVSXP:
@@ -623,40 +767,52 @@ static void MarkSave(SEXP s)
 	}
 }
 
+
 static int NodeToOffset(SEXP s)
 {
-	if (s == R_NilValue) return -1;
-	if (s == R_GlobalEnv) return -2;
-	if (s == R_UnboundValue) return -3;
-	if (s == R_MissingArg) return -4;
-	return s - R_NHeap;;
+	if (s == R_NilValue) 
+		return - 1;
+	if (s == R_GlobalEnv) 
+		return - 2;
+	if (s == R_UnboundValue) 
+		return - 3;
+	if (s == R_MissingArg) 
+		return - 4;
+	return s - R_NHeap;
+	;
 }
+
 
 static SEXP OffsetToNode(int offset)
 {
 	int l, m, r;
 
-	if(offset == -1) return R_NilValue;
-	if(offset == -2) return R_GlobalEnv;
-	if(offset == -3) return R_UnboundValue;
-	if(offset == -4) return R_MissingArg;
-	
-		/* binary search for offset */
+	if (offset == -1) 
+		return R_NilValue;
+	if (offset == -2) 
+		return R_GlobalEnv;
+	if (offset == -3) 
+		return R_UnboundValue;
+	if (offset == -4) 
+		return R_MissingArg;
+
+	/* binary search for offset */
 
 	l = 0;
 	r = NTotal - 1;
 	do {
-		m = (l + r)/2;
-		if(offset < OldOffset[m])
+		m = (l + r) / 2;
+		if (offset < OldOffset[m])
 			r = m - 1;
-		else
+			else
 			l = m + 1;
-	}
-	while(offset != OldOffset[m] && l <= r);
-	if(offset == OldOffset[m]) return NewAddress[m];
+	} while (offset != OldOffset[m] && l <= r);
+	if (offset == OldOffset[m]) 
+		return NewAddress[m];
 
 	error("unresolved node during restore\n");
 }
+
 
 static void DataSave(SEXP s, FILE *fp)
 {
@@ -664,30 +820,34 @@ static void DataSave(SEXP s, FILE *fp)
 	char *strp;
 	SEXP t;
 
-		/* compute the storage requirements */
-		/* and write these to the save file */
-		/* NSymbol = # of symbols written */
-		/* NSave = # of symbols written */
-		/* NVSize = # of vector cells written */
+	/* compute the storage requirements */
+	/* and write these to the save file */
+	/* NSymbol = # of symbols written */
+	/* NSave = # of symbols written */
+	/* NVSize = # of vector cells written */
 
 	NSave = 0;
 	NSymbol = 0;
 	NVSize = 0;
 	unmarkPhase();
 	MarkSave(s);
-	
+
 	OutInit(fp);
 
-	OutInteger(fp, NSymbol); OutSpace(fp);
-	OutInteger(fp, NSave); OutSpace(fp);
-	OutInteger(fp, NVSize); OutNewline(fp);
+	OutInteger(fp, NSymbol); 
+	OutSpace(fp);
+	OutInteger(fp, NSave); 
+	OutSpace(fp);
+	OutInteger(fp, NVSize); 
+	OutNewline(fp);
 
-		/* write out any required symbols */
+	/* write out any required symbols */
 
-	k = 0; n = 0;
-	for (i=0 ; i<R_NSize ; i++) {
+	k = 0; 
+	n = 0;
+	for (i = 0 ; i < R_NSize ; i++) {
 		if (MARK(&R_NHeap[i])) {
-			if(TYPEOF(&R_NHeap[i]) == SYMSXP) {
+			if (TYPEOF(&R_NHeap[i]) == SYMSXP) {
 				OutInteger(fp, n);
 				OutSpace(fp);
 				OutInteger(fp, NodeToOffset(&R_NHeap[i]));
@@ -699,15 +859,16 @@ static void DataSave(SEXP s, FILE *fp)
 			n++;
 		}
 	}
-	if(k != NSymbol || n != NSymbol+NSave)
+	if (k != NSymbol || n != NSymbol + NSave)
 		error("symbol count conflict\n");
 
-		/* write out the forwarding address table */
+	/* write out the forwarding address table */
 
-	k = 0; n = 0;
-	for (i=0 ; i<R_NSize ; i++) {
+	k = 0; 
+	n = 0;
+	for (i = 0 ; i < R_NSize ; i++) {
 		if (MARK(&R_NHeap[i])) {
-			if(TYPEOF(&R_NHeap[i]) != SYMSXP) {
+			if (TYPEOF(&R_NHeap[i]) != SYMSXP) {
 				OutInteger(fp, n);
 				OutSpace(fp);
 				OutInteger(fp, NodeToOffset(&R_NHeap[i]));
@@ -717,13 +878,14 @@ static void DataSave(SEXP s, FILE *fp)
 			n++;
 		}
 	}
-	if(k != NSave || n != NSymbol+NSave)
+	if (k != NSave || n != NSymbol + NSave)
 		error("node count conflict\n");
 
-	k = 0; n = 0;
+	k = 0; 
+	n = 0;
 	for (i = 0; i < R_NSize; i++) {
 		if (MARK(&R_NHeap[i])) {
-			if(TYPEOF(&R_NHeap[i]) != SYMSXP) {
+			if (TYPEOF(&R_NHeap[i]) != SYMSXP) {
 
 				OutInteger(fp, n);
 				OutSpace(fp);
@@ -768,9 +930,9 @@ static void DataSave(SEXP s, FILE *fp)
 					OutNewline(fp);
 					for (j = 0; j < l; j++) {
 						OutReal(fp, REAL(&R_NHeap[i])[j]);
-						if((j+1)%10 == 0 || j==l-1)
+						if ((j + 1) % 10 == 0 || j == l - 1)
 							OutNewline(fp);
-						else
+							else
 							OutSpace(fp);
 					}
 					break;
@@ -780,9 +942,9 @@ static void DataSave(SEXP s, FILE *fp)
 					OutNewline(fp);
 					for (j = 0; j < l; j++) {
 						OutComplex(fp, COMPLEX(&R_NHeap[i])[j]);
-						if((j+1)%10 == 0 || j==l-1)
+						if ((j + 1) % 10 == 0 || j == l - 1)
 							OutNewline(fp);
-						else
+							else
 							OutSpace(fp);
 					}
 					break;
@@ -795,9 +957,9 @@ static void DataSave(SEXP s, FILE *fp)
 					OutNewline(fp);
 					for (j = 0; j < l; j++) {
 						OutInteger(fp, INTEGER(&R_NHeap[i])[j]);
-						if((j+1)%10 == 0 || j==l-1)
+						if ((j + 1) % 10 == 0 || j == l - 1)
 							OutNewline(fp);
-						else
+							else
 							OutSpace(fp);
 					}
 					break;
@@ -809,9 +971,9 @@ static void DataSave(SEXP s, FILE *fp)
 					OutNewline(fp);
 					for (j = 0; j < l; j++) {
 						OutInteger(fp, NodeToOffset(VECTOR(&R_NHeap[i])[j]));
-						if((j+1)%10 == 0 || j==l-1)
+						if ((j + 1) % 10 == 0 || j == l - 1)
 							OutNewline(fp);
-						else
+							else
 							OutSpace(fp);
 					}
 				}
@@ -820,15 +982,17 @@ static void DataSave(SEXP s, FILE *fp)
 			n++;
 		}
 	}
-	if(k != NSave) error("node count conflict\n");
+	if (k != NSave) 
+		error("node count conflict\n");
 
-		/* write out the offset of the list */
+	/* write out the offset of the list */
 
 	OutInteger(fp, NodeToOffset(s));
 	OutNewline(fp);
 
 	OutTerm(fp);
 }
+
 
 static void RestoreSEXP(SEXP s, FILE *fp)
 {
@@ -837,16 +1001,18 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 
 	TYPEOF(s) = InInteger(fp);
 
-	if(VersionId) {
-		switch(VersionId) {
+	if (VersionId) {
+		switch (VersionId) {
 
 		case 16:
 			/* In the version 0.16.1 -> 0.50 switch */
 			/* we really introduced complex values */
 			/* and found that numeric/complex numbers */
 			/* had to be contiguous.  Hence this switch */
-			if(TYPEOF(s) == STRSXP) TYPEOF(s) = CPLXSXP;
-			else if(TYPEOF(s) == CPLXSXP) TYPEOF(s) = STRSXP;
+			if (TYPEOF(s) == STRSXP) 
+				TYPEOF(s) = CPLXSXP;
+			else if (TYPEOF(s) == CPLXSXP) 
+				TYPEOF(s) = STRSXP;
 			break;
 
 		default:
@@ -893,7 +1059,8 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 	case FACTSXP:
 	case ORDSXP:
 	case LGLSXP:
-		LENGTH(s) = len = InInteger(fp);;
+		LENGTH(s) = len = InInteger(fp);
+		;
 		ReallocVector(s, len);
 		for (j = 0; j < len; j++)
 			INTEGER(s)[j] = InInteger(fp);
@@ -910,12 +1077,13 @@ static void RestoreSEXP(SEXP s, FILE *fp)
 	}
 }
 
+
 static SEXP DataLoad(FILE *fp)
 {
 	int i, j, k;
 	char *vmaxsave;
 
-		/* read in the size information */
+	/* read in the size information */
 
 	InInit(fp);
 
@@ -924,77 +1092,77 @@ static SEXP DataLoad(FILE *fp)
 	NVSize = InInteger(fp);
 	NTotal = NSymbol + NSave;
 
-		/* allocate the forwarding-address tables */
-		/* these are non-relocatable, so we must */
-		/* save the current non-relocatable base */
+	/* allocate the forwarding-address tables */
+	/* these are non-relocatable, so we must */
+	/* save the current non-relocatable base */
 
 	vmaxsave = vmaxget();
-	OldOffset = (int*)R_alloc(NSymbol+NSave, sizeof(int));
-	NewAddress = (SEXP*)R_alloc(NSymbol+NSave, sizeof(SEXP));
-	for(i=0 ; i<NTotal ; i++) {
+	OldOffset = (int * )R_alloc(NSymbol + NSave, sizeof(int));
+	NewAddress = (SEXP * )R_alloc(NSymbol + NSave, sizeof(SEXP));
+	for (i = 0 ; i < NTotal ; i++) {
 		OldOffset[i] = 0;
 		NewAddress[i] = R_NilValue;
 	}
 
-		/* read in the required symbols */
-		/* expanding the symbol table and */
-		/* computing the forwarding addresses */
+	/* read in the required symbols */
+	/* expanding the symbol table and */
+	/* computing the forwarding addresses */
 
-	for(i=0 ; i<NSymbol ; i++) {
+	for (i = 0 ; i < NSymbol ; i++) {
 		j = InInteger(fp);
 		OldOffset[j] = InInteger(fp);
 		NewAddress[j] = install(InString(fp));
 	}
 
-		/* symbols are all installed */
-		/* gc() and check space */
+	/* symbols are all installed */
+	/* gc() and check space */
 
 	gc();
 
-		/* a gc after this point will be a disaster */
-		/* because nothing will have been protected */
+	/* a gc after this point will be a disaster */
+	/* because nothing will have been protected */
 
-	if ((VECREC *)vmaxget() - R_VTop < NVSize)
-		error("vector heap is too small to restore data\n");
+	/*   if ((VECREC *)vmaxget() - R_VTop < NVSize) */
+	/*     error("vector heap is too small to restore data\n"); */
 
 	if (R_Collected < NSave)
 		error("cons heap is too small to restore data\n");
 
-		/* build the full forwarding table */
-		/* allocating SEXPs from the free list */
+	/* build the full forwarding table */
+	/* allocating SEXPs from the free list */
 
-	for(i=0 ; i<NSave ; i++) {
+	for (i = 0 ; i < NSave ; i++) {
 		j = InInteger(fp);
 		OldOffset[j] = InInteger(fp);
 		NewAddress[j] = R_FreeSEXP;
 		R_FreeSEXP = CDR(R_FreeSEXP);
 	}
 
-		/* restore the saved nodes */
+	/* restore the saved nodes */
 
-	for (i=0 ; i < NSave ;  i++) {
+	for (i = 0 ; i < NSave ; i++) {
 		RestoreSEXP(NewAddress[InInteger(fp)], fp);
 	}
 
-		/* restore the heap */
+	/* restore the heap */
 
 	vmaxset(vmaxsave);
 
-		/* return the "top-level" object */
-		/* this is usually a list */
+	/* return the "top-level" object */
+	/* this is usually a list */
 
 	InTerm(fp);
 
 	return OffsetToNode(InInteger(fp));
 }
 
+
 void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 {
-	if(ascii) {
+	if (ascii) {
 		R_WriteMagic(fp, R_MAGIC_ASCII);
 		AsciiSave(obj, fp);
-	}
-	else {
+	} else {
 #ifdef HAVE_RPC_XDR_H
 		R_WriteMagic(fp, R_MAGIC_XDR);
 		XdrSave(obj, fp);
@@ -1005,11 +1173,12 @@ void R_SaveToFile(SEXP obj, FILE *fp, int ascii)
 	}
 }
 
+
 SEXP R_LoadFromFile(FILE *fp)
 {
 	SEXP ans;
 
-	switch(R_ReadMagic(fp)) {
+	switch (R_ReadMagic(fp)) {
 #ifdef HAVE_RPC_XDR_H
 	case R_MAGIC_XDR:
 		ans = XdrLoad(fp);
@@ -1035,17 +1204,17 @@ SEXP R_LoadFromFile(FILE *fp)
 }
 
 
-	/***************************************/
-	/*				       */
-	/*   Interpreter Interface Functions   */
-	/*				       */
-	/***************************************/
+/***************************************/
+/*				       */
+/*   Interpreter Interface Functions   */
+/*				       */
+/***************************************/
 
 SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP s, t;
 	int len, j;
-	FILE *fp;
+	FILE * fp;
 
 	checkArity(op, args);
 
@@ -1077,11 +1246,12 @@ SEXP do_save(SEXP call, SEXP op, SEXP args, SEXP env)
 	return R_NilValue;
 }
 
+
 SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP a, ans, e;
 	int i;
-	FILE *fp;
+	FILE * fp;
 
 	checkArity(op, args);
 
@@ -1098,12 +1268,12 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 	fclose(fp);
 
 
-		/* store the components of the list in the Global Env */
+	/* store the components of the list in the Global Env */
 
 	a = ans;
-	while(a != R_NilValue) {
-		for(e=FRAME(R_GlobalEnv) ; e!=R_NilValue ; e=CDR(e)) {
-			if(TAG(e) == TAG(a)) {
+	while (a != R_NilValue) {
+		for (e = FRAME(R_GlobalEnv) ; e != R_NilValue ; e = CDR(e)) {
+			if (TAG(e) == TAG(a)) {
 				CAR(e) = CAR(a);
 				a = CDR(a);
 				goto NextItem;
@@ -1113,8 +1283,10 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 		a = CDR(a);
 		CDR(e) = FRAME(R_GlobalEnv);
 		FRAME(R_GlobalEnv) = e;
-	NextItem:
+NextItem:
 		;
 	}
 	return R_NilValue;
 }
+
+
