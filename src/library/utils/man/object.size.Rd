@@ -11,15 +11,18 @@ object.size(x)
   \item{x}{An \R object.}
 }
 \details{
-  Exactly which parts of the memory allocation should be attributed
-  to which object is not clear-cut.  This function merely provides
-  a rough indication.  For example, it will not detect if character
-  storage for character strings are shared between identical elements
-  (which it will be if \code{rep} was used, for example).
-
+  Exactly which parts of the memory allocation should be attributed to
+  which object is not clear-cut.  This function merely provides a rough
+  indication: it should be reasonably accurate for atomic vectors, but
+  does not detect if elements of a list are shared, for example. (As
+  from \R 2.0.0 sharing amongst elements of a character vector is taken
+  into account.)
+  
   The calculation is of the size of the object, and excludes the space
   needed to store its name in the symbol table.
 
+  Object sizes are larger on 64-bit platforms than 32-bit ones, but will
+  very likely be the same on different platforms with the same word length.
 }
 \value{
   An estimate of the memory allocation attributable to the object, in bytes.

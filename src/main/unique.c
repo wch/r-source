@@ -1004,3 +1004,45 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return ans;
 }
+
+/* use hashing to improve object.size. Here we want equal CHARSXPs, 
+   not equal contents. */
+
+static int csequal(SEXP x, int i, SEXP y, int j)
+{
+    return STRING_ELT(x, i) == STRING_ELT(y, j);
+}
+
+static void HashTableSetup1(SEXP x, HashData *d)
+{
+    d->hash = shash;
+    d->equal = csequal;
+    MKsetup(LENGTH(x), d);
+    d->HashTable = allocVector(INTSXP, d->M);
+}
+
+SEXP csduplicated(SEXP x)
+{
+    SEXP ans;
+    int *h, *v;
+    int i, n;
+    HashData data;
+
+    if(TYPEOF(x) != STRSXP)
+	error("csduplicated not called on a STRSXP");
+    n = LENGTH(x);
+    HashTableSetup1(x, &data);
+    PROTECT(data.HashTable);
+    ans = allocVector(LGLSXP, n);
+    UNPROTECT(1);
+    h = INTEGER(data.HashTable);
+    v = LOGICAL(ans);
+
+    for (i = 0; i < data.M; i++)
+	h[i] = NIL;
+
+    for (i = 0; i < n; i++)
+	v[i] = isDuplicated(x, i, &data);
+
+    return ans;
+}

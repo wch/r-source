@@ -440,6 +440,12 @@ BUG FIXES
     o   constrOptim now passes ... arguments through optim to the
         objective function
 
+    o	object.size() now has a better estimate for character vectors:
+	it was in general too low (but only significantly so for
+	very short character strings) but over-estimated NA and
+	duplicated elements.
+
+
 
 
 	**************************************************
