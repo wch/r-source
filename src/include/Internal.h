@@ -409,10 +409,12 @@ SEXP do_warning(SEXP, SEXP, SEXP, SEXP);
 SEXP do_while(SEXP, SEXP, SEXP, SEXP);
 SEXP do_zeroin(SEXP, SEXP, SEXP, SEXP);
 
-SEXP do_getDL(SEXP, SEXP, SEXP, SEXP);
+/* SEXP do_getDL(SEXP, SEXP, SEXP, SEXP);
+   SEXP do_getGPar(SEXP, SEXP, SEXP, SEXP); */
 SEXP do_playDL(SEXP, SEXP, SEXP, SEXP);
-SEXP do_getGPar(SEXP, SEXP, SEXP, SEXP);
 SEXP do_setGPar(SEXP, SEXP, SEXP, SEXP);
+SEXP do_getSnapshot(SEXP, SEXP, SEXP, SEXP);
+SEXP do_playSnapshot(SEXP, SEXP, SEXP, SEXP);
 
 SEXP R_do_data_class(SEXP call, SEXP op, SEXP args, SEXP env);
 SEXP R_do_set_class(SEXP call, SEXP op, SEXP args, SEXP env);

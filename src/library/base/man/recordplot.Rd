@@ -18,6 +18,9 @@ replayPlot(x)
   graphics device.  The returned object is of class
   \code{"recordedplot"}, and \code{replayPlot} acts as a \code{print}
   method for that class.
+
+  The format of recorded plots was changed in \R 1.4.0: plots saved in
+  earlier versions can still be replayed.
 }
 \value{
   \code{recordPlot} returns an object of class \code{"recordedplot"}, a

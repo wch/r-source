@@ -3464,6 +3464,31 @@ SEXP do_erase(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+SEXP do_getSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd = CurrentDevice();
+
+    checkArity(op, args);
+    if (dd->newDevStruct) {
+	return GEcreateSnapshot((GEDevDesc*) dd);
+    } else {
+	errorcall(call, "can't take snapshot of old-style device");
+	return R_NilValue;
+    }
+}
+
+SEXP do_playSnapshot(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    DevDesc *dd = CurrentDevice();
+
+    checkArity(op, args);
+    if (dd->newDevStruct)
+	GEplaySnapshot(CAR(args), (GEDevDesc*) dd);
+    else
+	errorcall(call, "can't play snapshot on old-style device");
+    return R_NilValue;
+}
+
 /* I don't think this gets called in any base R code
  */
 SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -3477,6 +3502,7 @@ SEXP do_replay(SEXP call, SEXP op, SEXP args, SEXP env)
     return R_NilValue;
 }
 
+#ifdef OLD
 SEXP do_getDL(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     DevDesc *dd = CurrentDevice();
@@ -3486,6 +3512,19 @@ SEXP do_getDL(SEXP call, SEXP op, SEXP args, SEXP env)
     else
 	return dd->displayList;
 }
+
+SEXP do_getGPar(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP GP;
+    int lGPar = 1 + sizeof(GPar) / sizeof(int);
+    DevDesc *dd = CurrentDevice();
+
+    checkArity(op, args);
+    GP = allocVector(INTSXP, lGPar);
+    copyGPar(dpSavedptr(dd), (GPar *) INTEGER(GP));
+    return GP;
+}
+#endif
 
 SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -3515,18 +3554,6 @@ SEXP do_playDL(SEXP call, SEXP op, SEXP args, SEXP env)
 	gpptr(dd)->ask = ask;
     }
     return R_NilValue;
-}
-
-SEXP do_getGPar(SEXP call, SEXP op, SEXP args, SEXP env)
-{
-    SEXP GP;
-    int lGPar = 1 + sizeof(GPar) / sizeof(int);
-    DevDesc *dd = CurrentDevice();
-
-    checkArity(op, args);
-    GP = allocVector(INTSXP, lGPar);
-    copyGPar(dpSavedptr(dd), (GPar *) INTEGER(GP));
-    return GP;
 }
 
 SEXP do_setGPar(SEXP call, SEXP op, SEXP args, SEXP env)
