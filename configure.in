@@ -426,8 +426,9 @@ AC_CHECK_LIB(ncurses, main,,
 ))
 AC_CHECK_LIB(dl, dlopen)
 
-AC_CHECK_LIB(z, main)
-AC_CHECK_LIB(hdf5, main)
+AC_CHECK_LIB(z, main,
+  AC_CHECK_LIB(hdf5, main)
+)
 
 BLAS="blas.o"
 if ${use_dxml}; then
@@ -438,7 +439,7 @@ if test -n "${BLAS}" && ${use_blas}; then
     [ FLIBS="-lblas ${FLIBS}" BLAS=""
       if ${use_blas_risc}; then
         AC_CHECK_LIB(blas_risc, main,
-	  FLIBS="-lblas_risc ${FLIBS}", ,-lblas -lf2c)
+	  FLIBS="-lblas_risc ${FLIBS}", , -lblas -lf2c)
       fi
     ])
 fi
