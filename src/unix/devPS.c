@@ -238,7 +238,8 @@ int PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	if(pointsize > pd->maxpointsize) pointsize = pd->maxpointsize;
 	dd->dp.ps = pointsize;
 	dd->dp.cra[0] = (6.0/12.0) * pointsize;
-	dd->dp.cra[1] = (10.0/12.0) * pointsize;
+	/* dd->dp.cra[1] = (10.0/12.0) * pointsize; */
+	dd->dp.cra[1] = 1.2 * pointsize;
 
 		/* Character Addressing Offsets */
 		/* These offsets should center a single */
@@ -511,15 +512,15 @@ static void PS_NewPage(DevDesc *dd)
 	if(dd->dp.bg != R_RGB(255,255,255)) {
 		SetFill(dd->dp.bg, dd);
 #ifdef OLD
-		PostScriptRectangle(psfp,
-			0, 0, 72.0 * pagewidth, 72.0 * pageheight);
-		fprintf(pd->psfp, "p2\n");
-#else
 		PostScriptRectangle(pd->psfp,
 			dd->gp.left,
 			dd->gp.bottom,
 			dd->gp.right,
 			dd->gp.top);
+		fprintf(pd->psfp, "p2\n");
+#else
+		PostScriptRectangle(pd->psfp,
+			0, 0, 72.0 * pd->pagewidth, 72.0 * pd->pageheight);
 		fprintf(pd->psfp, "p2\n");
 #endif
 	}
