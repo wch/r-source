@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-26, 2003-12-10
+Version 1.8-27, 2003-12-19
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1708,6 +1708,10 @@ distributions of R.)
 *foreign*
      Functions for reading and writing data stored by statistical software
      like Minitab, SAS, SPSS, Stata, etc.  _Recommended_.
+
+*fork*
+     Functions for handling multiple processes: simple wrappers around the
+     Unix process management API calls.
 
 *forward*
      Forward search approach to robust analysis in linear and generalized
