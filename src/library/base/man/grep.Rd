@@ -1,12 +1,12 @@
 \name{grep}
 \title{Pattern Matching and Replacement}
 \usage{
-grep(pattern, x, ignore.case=FALSE, extended=TRUE, value=FALSE)
+grep(pattern, x, ignore.case=FALSE, extended=TRUE, perl=FALSE, value=FALSE)
 sub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE)
+        ignore.case=FALSE, extended=TRUE perl=FALSE)
 gsub(pattern, replacement, x,
-        ignore.case=FALSE, extended=TRUE)
-regexpr(pattern, text,  extended=TRUE)
+        ignore.case=FALSE, extended=TRUE, perl=FALSE)
+regexpr(pattern, text,  extended=TRUE, perl=FALSE)
 }
 \alias{grep}
 \alias{sub}
@@ -20,6 +20,8 @@ regexpr(pattern, text,  extended=TRUE)
   \emph{case sensitive} and if \code{TRUE}, case is ignored during matching.}
 \item{extended}{if \code{TRUE}, extended regular expression matching
   is used, and if \code{FALSE} basic regular expressions are used.}
+\item{perl}{logical. Should perl-compatible regexps be used if available?  
+  Has priority over \code{extended}.}
 \item{value}{if \code{FALSE}, a vector containing the (\code{integer}) indices
   of the matches determined by \code{grep} is returned,
   and if \code{TRUE}, a vector containing the matching
@@ -43,7 +45,8 @@ regexpr(pattern, text,  extended=TRUE)
 
   The regular expressions used are those specified by POSIX 1003.2,
   either extended or basic, depending on the value of the
-  \code{extended} argument.
+  \code{extended} argument, unless \code{perl = TRUE} when they are those of
+  PCRE, \url{ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/}.
 }
 \value{
     For \code{grep} a vector giving either the indices of the elements
@@ -57,6 +60,10 @@ regexpr(pattern, text,  extended=TRUE)
     \code{text} giving the starting position of the first match, or -1
     if there is none, with attribute \code{"match.length"} giving the
     length of the matched text (or -1 for no match).
+}
+\note{
+  \code{perl=TRUE} will only be available if \R was compiled against 
+  PCRE: this is detected at configure time.
 }
 \seealso{
   \code{\link{tolower}}, \code{\link{toupper}} and \code{\link{chartr}}
