@@ -19,6 +19,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	string tags now converted to symbols and strange symbolic
+	tags print as strings, cf. e<-quote(c(F=2, "tail area" = .5)), etc. 
+
     o   row.names(.) <- val  doesn't allow duplicated values anymore.
 
     o   library(mva)'s dist() now works with both "euclidean" & "euclidian"
