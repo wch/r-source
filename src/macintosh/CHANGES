@@ -20,4 +20,5 @@ rm160
 * Date arithmetic fails (PR#1819). This bug have been partially
   fixed. Arithmetic is fine now but there is still a problem 
   with the TZ (Time Zone) settings.
-
+* fixed a bug in Locator of Macintosh device. Now it is possible
+  to interrupt it.
