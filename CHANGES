@@ -1,5 +1,7 @@
 		CHANGES IN R VERSION 0.62.2
 
+    o   Tick marks acting up on log axes (fix from Martyn Plummer)
+
 		CHANGES IN R VERSION 0.62.1
 
 BUG FIXES
