@@ -18,7 +18,8 @@ NEW FEATURES
 	`more' (and not `more -s' as previously).
 
     o	configure now tests for strptime functions that fail on inputs
-	before 1970 (found on Irix).
+	before 1970 (found on Irix).  It no longer checks for the SCSL
+	and SGIMATH libraries on Irix.
 
     o	New formula interface to cor.test() in package ctest.
 
