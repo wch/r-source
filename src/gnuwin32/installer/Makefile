@@ -16,7 +16,7 @@ IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
 # location where binary packages are kept
-PKGS=C:/R/Rdist/libs
+PKGS=C:/R/Rdist/libs/rw1040
 
 R.iss: JRins.pl ../$(RPREFIX)b.zip ../$(RPREFIX)h.zip \
 ../$(RPREFIX)ch.zip ../$(RPREFIX)d1.zip ../$(RPREFIX)d2.zip \
@@ -66,7 +66,8 @@ Rsmall.iss: JRsmall.pl ../$(RPREFIX)b.zip \
 	for p in $(RECOMMENDED); do \
 	  unzip -qo $(PKGS)/$${p} -d $(RPREFIX)/library; \
 	done
-	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex
+	rm -rf $(RPREFIX)/library/*/html $(RPREFIX)/library/*/latex \
+	  $(RPREFIX)/library/*/man
 	rm -rf $(RPREFIX)/library/rpart/Manuscript
 	rm -rf $(RPREFIX)/library/survival/doc
 	perl JRsmall.pl $(RPREFIX)
