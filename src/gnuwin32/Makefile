@@ -509,9 +509,10 @@ install:
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)/Recommended
 
 rsync-recommended:
-	(cd ../library; \
+	@(cd ../library; \
 	rsync -rvCt --delete --exclude=Makefile.in --exclude=.cvsignore \
-	  --include=*.tar.gz $(CRANREC) . ); \
+	  --include=*.tar.gz --exclude=*.tgz $(CRANREC) . ); \
+	$(RM) ../library/Recommended/*.tgz; \
 	(cd ../library/Recommended; for i in ${RECOMMENDED} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 ../library/%/DESCRIPTION: ../library/RECOMMENDED/%.tgz
