@@ -98,6 +98,14 @@ BUG FIXES
     o	Using install.packages() to install the same package to more
 	than one library gave an incorrect warning message.
 
+    o   .packages(all.available=TRUE) returned packages with an invalid
+	version field whereas .find.packages() and
+	packageDescription() did not.  Now both do not.
+
+    o   packageDescription() now correctly reports that a package does
+	not exist, rather than that its DESCRIPTION file is 'missing
+	or broken'.
+
 
 
 

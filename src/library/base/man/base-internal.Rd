@@ -26,7 +26,7 @@
 }
 \arguments{
   \item{x}{object from which to extract elements.}
-  \item{package}{the name of a package}
+  \item{package}{the name of a package.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
@@ -54,7 +54,9 @@
   \code{quiet = TRUE} a warning will be given about the named packages
   which are not found, and an error if none are.  If \code{verbose} is
   true, warnings about packages found more than once are given.  It does
-  know about versioned installs of packages.
+  know about versioned installs of packages, and for a package to be
+  returned it must have a \file{DESCRIPTION} file containing a valid
+  \code{version} field.
 
   \code{.path.package} returns the paths from which the named packages
   were loaded, or if none were named, for all currently loaded packages.

@@ -19,6 +19,8 @@
   attached packages \emph{invisibly} whereas
   \code{.packages(all.available = TRUE)} gives (visibly) \emph{all}
   packages available in the library location path \code{lib.loc}.
+  For a package to be regarded as being available it must have a
+  \file{DESCRIPTION} file containing a valid \code{version} field.
 }
 \value{
   A character vector of package \dQuote{base names}, invisible unless
