@@ -1436,7 +1436,8 @@ INSTALLATION CHANGES
 	contents data base, are serialized as R objects in the 'Meta'
 	subdirectory of the top-level package directory, allowing for
 	faster and more reliable index-based computations (e.g., in
-	help.search()).
+	help.search()). For vignettes an HTML index is generated
+	and linked into the HTML help system.
 
     o	The Rd contents data base is now computed when installing source
 	packages using R code in package tools.	 The information is
