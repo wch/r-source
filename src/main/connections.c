@@ -2460,15 +2460,24 @@ SEXP do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
+typedef struct {
+    int length;
+    char *type;
+    void *ctxt;
+} inetconn;
+
+
 #ifdef HAVE_LIBXML
 #define INTERNET 1
-/* <FIXME> put these in a header file */
 
 
 void *R_HTTPOpen(const char *url)
 {
+    inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int len = -1;
+    char *type = NULL;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
 
@@ -2479,56 +2488,83 @@ void *R_HTTPOpen(const char *url)
 	if(rc != 200) {
 	    RxmlNanoHTTPClose(ctxt);
 	    error("cannot open: HTTP status was `%d'", rc);
-	    ctxt = NULL;
+	    return NULL;
 	} else {
-	    char *p = RxmlNanoHTTPContentType(ctxt);
-	    Rprintf("Content type `%s' length %d bytes\n",
-		    p ? p : "unknown",
-		    RxmlNanoHTTPContentLength(ctxt));
+	    type = RxmlNanoHTTPContentType(ctxt);
+	    len = RxmlNanoHTTPContentLength(ctxt);
+	    if(!IDquiet){
+		Rprintf("Content type `%s'", type ? type : "unknown");
+		if(len >= 0) Rprintf(" length %d bytes\n", len);
+		else Rprintf(" length unknown\n", len);
 #ifdef Win32
-	    R_FlushConsole();
+		R_FlushConsole();
 #endif
+	    }
 	}
-    }     
-return ctxt;
+    }
+    con = (inetconn *) malloc(sizeof(inetconn));
+    if(con) {
+	con->length = len;
+	con->type = type;
+	con->ctxt = ctxt;
+    }
+    return con;
 }
 
 int R_HTTPRead(void *ctx, void *dest, int len)
 {
-    return RxmlNanoHTTPRead(ctx, dest, len);
+    return RxmlNanoHTTPRead(((inetconn *)ctx)->ctxt, dest, len);
 }
 
 void R_HTTPClose(void *ctx)
 {
-    RxmlNanoHTTPClose(ctx);
+    if(ctx) {
+	RxmlNanoHTTPClose(((inetconn *)ctx)->ctxt);
+	free(ctx);
+    }
 }
 
 void *R_FTPOpen(const char *url)
 {
+    inetconn *con;
     void *ctxt;
     int timeout = asInteger(GetOption(install("timeout"), R_NilValue));
+    int len = 0;
 
     if(timeout == NA_INTEGER || timeout <= 0) timeout = 60;
     RxmlNanoFTPTimeout(timeout);
     ctxt = RxmlNanoFTPOpen(url);
-    if(ctxt) {
-	Rprintf("ftp data connection made, file length %d bytes\n",
-		RxmlNanoFTPContentLength(ctxt));
+    if(!ctxt) return NULL;
+    if(!IDquiet) {
+	len = RxmlNanoFTPContentLength(ctxt);
+	if(len >= 0)
+	    Rprintf("ftp data connection made, file length %d bytes\n", len);
+	else
+	    Rprintf("ftp data connection made, file length unknown\n");
 #ifdef Win32
 	R_FlushConsole();
 #endif
-    }    
-    return ctxt;
+    }
+    con = (inetconn *) malloc(sizeof(inetconn));
+    if(con) {
+	con->length = len;
+	con->type = NULL;
+	con->ctxt = ctxt;
+    }
+    return con;
 }
 
 int R_FTPRead(void *ctx, void *dest, int len)
 {
-    return RxmlNanoFTPRead(ctx, dest, len);
+    return RxmlNanoFTPRead(((inetconn *)ctx)->ctxt, dest, len);
 }
 
 void R_FTPClose(void *ctx)
 {
-    RxmlNanoFTPClose(ctx);
+    if(ctx) {
+	RxmlNanoFTPClose(((inetconn *)ctx)->ctxt);
+	free(ctx);
+    }
 }
 #endif /* HAVE_LIBXML */
 
@@ -2539,6 +2575,8 @@ void R_FTPClose(void *ctx)
 #include <windows.h>
 #include <wininet.h>
 typedef struct wictxt {
+    int length;
+    char * type;
     HINTERNET hand;
     HINTERNET session;
 } wIctxt, *WIctxt;
@@ -2551,7 +2589,7 @@ static int timeout;
 static int callback_status;
 static LPINTERNET_ASYNC_RESULT callback_res;
 
-static void CALLBACK 
+static void CALLBACK
 InternetCallback(HINTERNET hInternet, DWORD context, DWORD Status,
 		 LPVOID lpvStatusInformation,
 		 DWORD dwStatusInformationLength)
@@ -2569,7 +2607,7 @@ void *R_HTTPOpen(const char *url)
     WIctxt  wictxt;
     DWORD status, d1 = 4, d2 = 0, d3 = 100;
     char buf[101];
-    
+
 /*	BOOL res = InternetAttemptConnect(0);
 
 	if (res != ERROR_SUCCESS) {
@@ -2578,6 +2616,8 @@ void *R_HTTPOpen(const char *url)
 	}*/
 
     wictxt = (WIctxt) malloc(sizeof(wIctxt));
+    wictxt->length = -1;
+    wictxt->type = NULL;
     wictxt->hand =
 	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
 #ifdef USE_WININET_ASYNC
@@ -2597,7 +2637,7 @@ void *R_HTTPOpen(const char *url)
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
     if(!IDquiet) {
-	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n", 
+	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n",
 		timeout);
 	R_FlushConsole();
     }
@@ -2607,8 +2647,8 @@ void *R_HTTPOpen(const char *url)
 		    NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 		    17);
-    
-    { 
+
+    {
 	DWORD t1 = GetTickCount();
 	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
 	      && GetTickCount() < t1 + 1000*timeout) {
@@ -2618,10 +2658,10 @@ void *R_HTTPOpen(const char *url)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    error("InternetOpenUrl timed out");	    
+	    error("InternetOpenUrl timed out");
 	}
     }
-    
+
     wictxt->session = (HINTERNET) callback_res->dwResult;
 #else
     if(!IDquiet) {
@@ -2652,17 +2692,19 @@ void *R_HTTPOpen(const char *url)
 	error("cannot open: HTTP status was `%d %s'", status, buf);
     }
 
+    HttpQueryInfo(wictxt->session,
+		  HTTP_QUERY_CONTENT_TYPE, &buf, &d3, &d2);
+    d2 = 0;
+    HttpQueryInfo(wictxt->session,
+		  HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
+		  &status, &d1, &d2);
+    wictxt->length = status;
+    wictxt->type = strdup(buf);
     if(!IDquiet) {
-	HttpQueryInfo(wictxt->session,
-		      HTTP_QUERY_CONTENT_TYPE, &buf, &d3, &d2);
-	d2 = 0;
-	HttpQueryInfo(wictxt->session,
-		      HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,
-		      &status, &d1, &d2);
 	Rprintf("Content type `%s' length %d bytes\n", buf, status);
 	R_FlushConsole();
     }
-    
+
     R_ProcessEvents();
     return (void *)wictxt;
 }
@@ -2670,7 +2712,7 @@ void *R_HTTPOpen(const char *url)
 int R_HTTPRead(void *ctx, void *dest, int len)
 {
     DWORD nread;
-    
+
     InternetReadFile(((WIctxt)ctx)->session, dest, len, &nread);
 #ifdef USE_WININET_ASYNC
     {
@@ -2694,6 +2736,7 @@ void R_HTTPClose(void *ctx)
 {
     InternetCloseHandle(((WIctxt)ctx)->session);
     InternetCloseHandle(((WIctxt)ctx)->hand);
+    if(((WIctxt)ctx)->type) free(((WIctxt)ctx)->type);
     free(ctx);
 }
 
@@ -2702,6 +2745,9 @@ void *R_FTPOpen(const char *url)
     WIctxt  wictxt;
 
     wictxt = (WIctxt) malloc(sizeof(wIctxt));
+    wictxt->length = -1;
+    wictxt->type = NULL;
+
     wictxt->hand =
 	InternetOpen("R", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL,
 #ifdef USE_WININET_ASYNC
@@ -2721,7 +2767,7 @@ void *R_FTPOpen(const char *url)
     InternetSetStatusCallback(wictxt->hand,
 			      (INTERNET_STATUS_CALLBACK) InternetCallback);
     if(!IDquiet) {
-	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n", 
+	Rprintf("using Asynchronous WinInet calls, timeout %d secs\n",
 		timeout);
 	R_FlushConsole();
     }
@@ -2731,7 +2777,7 @@ void *R_FTPOpen(const char *url)
 		    NULL, 0,
         INTERNET_FLAG_KEEP_CONNECTION | INTERNET_FLAG_NO_CACHE_WRITE,
 		    17);
-    { 
+    {
 	DWORD t1 = GetTickCount();
 	while(callback_status != INTERNET_STATUS_REQUEST_COMPLETE
 	      && GetTickCount() < t1 + 1000*timeout) {
@@ -2741,7 +2787,7 @@ void *R_FTPOpen(const char *url)
 	if(callback_status != INTERNET_STATUS_REQUEST_COMPLETE) {
 	    InternetCloseHandle(wictxt->hand);
 	    free(wictxt);
-	    error("InternetOpenUrl timed out");	    
+	    error("InternetOpenUrl timed out");
 	}
     }
 
@@ -2762,9 +2808,9 @@ void *R_FTPOpen(const char *url)
 
 int R_FTPRead(void *ctx, void *dest, int len)
 {
-    int len = R_HTTPRead(ctx, dest, len);
+    int nread = R_HTTPRead(ctx, dest, len);
     R_ProcessEvents();
-    return len;
+    return nread;
 }
 
 void R_FTPClose(void *ctx)
@@ -2811,7 +2857,7 @@ void RxmlMessage(int level, const char *format, ...)
     va_list(ap);
 
     if(level < 2) return;
-    
+
     va_start(ap, format);
 #ifdef HAVE_VSNPRINTF
     vsnprintf(buf, MBUFSIZE, format, ap);
