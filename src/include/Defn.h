@@ -521,6 +521,8 @@ extern SEXP	R_RestartStack;	/* Stack of available restarts */
 
 extern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 
+/* Initialization of the R environment when it is embedded */
+extern int Rf_initEmbeddedR(int argc, char **argv);
 
 /* GUI type */
 
