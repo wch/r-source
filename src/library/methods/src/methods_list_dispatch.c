@@ -886,7 +886,7 @@ static char *check_single_string(SEXP obj, Rboolean nonEmpty, char *what) {
 
 static char *check_symbol_or_string(SEXP obj, Rboolean nonEmpty, char *what) {
     if(isSymbol(obj))
-	return PRINTNAME(obj);
+	return CHAR(PRINTNAME(obj));
     else
 	return check_single_string(obj, nonEmpty, what);
 }
