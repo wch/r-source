@@ -26,6 +26,15 @@ s/C_FUNCTION(\(.*\))/	"\1",	\1,/
 ' ${ROUTINES} > include/FFTab.h
 echo done
 
+# C Versions of Application Code
+
+echo "Converting applications code"
+cd $RHOME/src/appl.c
+cp ../appl/*.[chf] .
+f2c *.f
+rm *.f
+echo done
+
 # Library of interpreted functions
 
 echo -n "Creating interpreted function libraries ... "
