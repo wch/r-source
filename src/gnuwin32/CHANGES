@@ -28,6 +28,15 @@ R CMD / Rcmd now set HOME if unset, e.g. for use in Rcmd check.
 
 
 
+R 2.0.1 patched
+===============
+
+We work around reported bugs in Windows XP as to which characters are
+printable by attempting to print all non-control characters when using
+print().
+
+
+
 R 2.0.1
 =======
 
