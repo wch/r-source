@@ -66,7 +66,7 @@ if($OSTYPE eq "windows"){
 	$R_EXE = "Rterm.exe";
 	$R_CMD = "Rcmd.exe";
     }
-    $TMPDIR = getenv("TMPDIR", "/TEMP");
+    getenv("TMPDIR", "TMPDIR", "C:/TEMP");
     $TMPDIR = "" unless (-d $TMPDIR);
 }
 elsif($OSTYPE eq "mac"){
@@ -81,14 +81,17 @@ else{
 	$R_EXE = "R";
     }
     $R_CMD = "$R_EXE CMD";
-    $TMPDIR = getenv("TMPDIR", "/tmp");
+    getenv("TMPDIR", "TMPDIR", "/tmp");
     $TMPDIR = "" unless (-d $TMPDIR);
 }
 
 
 ## return the value of an environment variable; or the default if no
 ## such environment variable is set or it is empty. additionally
-## record it in hash envnames (for suitable error messages below.
+## record it in hash envnames (for suitable error messages below).
+## The "strange" 3 argument interface allows to simultaneously set the
+## variable and record which environment variable was tried to get a
+## value for it.
 
 my %envnames;
 sub getenv {
@@ -112,7 +115,7 @@ sub warning {
 	if(! ${"R::Vars::$v"}){
 	    if($envnames{$v}){
 		carp "Warning: environment variable $envnames{$v} not set " .
-		    "and no default available.\n";
+		    "(or set to unusable value) and no default available.\n";
 	    }
 	    else{
 		carp "Warning: R::Vars::$v not defined";
@@ -131,7 +134,7 @@ sub error {
 	if(! ${"R::Vars::$v"}){
 	    if($envnames{$v}){
 		croak "Error: environment variable $envnames{$v} not set " .
-		    "and no default available.\n";
+		    "(or set to unusable value) and no default available.\n";
 	    }
 	    else{
 		croak "Error: R::Vars::$v not defined";
