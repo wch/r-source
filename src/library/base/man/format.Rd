@@ -13,7 +13,9 @@ format.pval(x, digits= max(1,.Options$digits-2), eps = .Machine$double.eps)
   \item{trim}{logical; if \code{TRUE}, leading blanks are trimmed off the
     strings.}
   \item{digits}{how many significant digits are to be used for
-    \code{\link{numeric} x}.}
+    \code{\link{numeric} x}. This is a suggestion: enough decimal
+    places will be used so that the smallest (in magnitude) number has
+    this many significant digits.}
 }
 \description{
 These functions convert their first argument to a vector (or array) of

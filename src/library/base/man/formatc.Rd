@@ -24,7 +24,8 @@ format.char(x, width = NULL, flag = "-")
       If necessary, the result will have more characters than \code{width}.}
   \item{format}{equal to \code{"d"}  (for integers), \code{"f"},
     \code{"e"}, \code{"E"}, \code{"g"}, \code{"G"}, \code{"fg"} (for
-    reals), or \code{"s"} (for strings).
+    reals), or \code{"s"} (for strings). Default \code{"d"} for
+    integers, \code{"g"} for reals.
 
     \code{"f"} gives numbers in the usual
     ``xxx.xxx'' format;  \code{"e"} and \code{"E"} give ``n.dddenn'' or
@@ -54,6 +55,10 @@ format.char(x, width = NULL, flag = "-")
 
   \code{format.char(x)} and \code{formatC}, for character \code{x}, do
   simple (left or right) padding with white space.
+}
+\details{
+  If you set \code{format} it over-rides the setting of \code{mode}, so
+  \code{formatC(123.45, mode="double", format="d")} gives \code{123}.
 }
 \author{
  Originally written by Bill Dunlap, later much improved by Martin Maechler,
