@@ -230,7 +230,8 @@ static InputHandler* waitForActivity()
 	tv.tv_sec = 0;
 	tv.tv_usec = R_wait_usec;
 	maxfd = setSelectMask(R_InputHandlers, &readMask);
-    } while (!select(maxfd+1, &readMask, NULL, NULL, &tv));
+    } while (!select(maxfd+1, &readMask, NULL, NULL, 
+		     (R_wait_usec) ? &tv : NULL));
 
     return(getSelectedHandler(R_InputHandlers, &readMask));
 }
