@@ -712,21 +712,44 @@ static int pstrmatch(SEXP target, SEXP input, int slen)
 
 SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP x, y, input, nlist;
+    SEXP x, y, input, nlist, ans, arg1;
     int slen;
 
     checkArity(op, args);
 
-    PROTECT(x = eval(CAR(args), env));
+    /* first translate CADR of args into a string so that we can
+       pass it down to DispatchorEval and have it behave correctly */
+    input = allocVector(STRSXP, 1);
+
     nlist = CADR(args);
     if(isSymbol(nlist) )
-	input = PRINTNAME(nlist);
+	STRING(input)[0] = PRINTNAME(nlist);
     else if(isString(nlist) )
-	input = STRING(nlist)[0];
+	STRING(input)[0] = STRING(nlist)[0];
     else {
 	errorcall(call, "invalid subscript type");
 	return R_NilValue; /*-Wall*/
     }
+
+    /* replace the second argument with a string */
+    CADR(args) = input;
+
+    /* If the first argument is an object and there is */
+    /* an approriate method, we dispatch to that method, */
+    /* otherwise we evaluate the arguments and fall */
+    /* through to the generic code below.  Note that */
+    /* evaluation retains any missing argument indicators. */
+
+    if(DispatchOrEval(call, op, args, env, &ans, 0))
+	return(ans);
+    PROTECT(args = ans);
+
+#ifdef AAA
+    PROTECT(x = eval(CAR(args), env));
+#else
+    x = CAR(args);
+#endif
+    input = STRING(CADR(args))[0];
 
     /* Optimisation to prevent repeated recalculation */
     slen = strlen(CHAR(input));
@@ -788,3 +811,4 @@ SEXP do_subset3(SEXP call, SEXP op, SEXP args, SEXP env)
     UNPROTECT(1);
     return R_NilValue;
 }
+
