@@ -3239,7 +3239,7 @@ void *R_HTTPOpen(const char *url)
     return (void *)wictxt;
 }
 
-int R_HTTPRead(void *ctx, void *dest, int len)
+int R_HTTPRead(void *ctx, char *dest, int len)
 {
     DWORD nread;
 
