@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-46, 2004-03-02
+Version 1.8-47, 2004-03-03
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2487,6 +2487,10 @@ distributions of R.)
 
 *tree*
      Classification and regression trees.
+
+*treeglia*
+     Stem analysis functions for volume increment and carbon uptake
+     assessment from tree-rings.
 
 *tripack*
      A constrained two-dimensional Delaunay triangulation package.
