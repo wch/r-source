@@ -20,7 +20,7 @@ Up:<a rel="up" accesskey="u" href="#dir">(dir)</a>
 <h2 class="unnumbered">R FAQ</h2>
 
    <h2>Frequently Asked Questions on R</h2>
-<h2>Version 1.7-14, 2003-06-01</h2>
+<h2>Version 1.7-15, 2003-06-03</h2>
 <h2>ISBN 3-901167-51-X</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
@@ -299,8 +299,8 @@ Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <h3 class="section">2.4 How can R be obtained?</h3>
 
-   <p>Sources, binaries and documentation for R can be obtained via
-<small>CRAN</small>, the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
+   <p>Sources, binaries and documentation for R can be obtained via <small>CRAN</small>,
+the "Comprehensive R Archive Network" (see <a href="#What%20is%20CRAN%3f">What is CRAN?</a>).
 
    <p>Sources are also available via anonymous rsync.  Use
 
@@ -357,8 +357,7 @@ has full details.
    <p>Note that you need a FORTRAN compiler or <code>f2c</code> in addition to
 a C compiler to build R.  Also, you need Perl version 5 to build the R
 object documentations.  (If this is not available on your system, you
-can obtain a PDF version of the object reference manual via
-<small>CRAN</small>.)
+can obtain a PDF version of the object reference manual via <small>CRAN</small>.)
 
    <p>In the simplest case, untar the R source code, change to the directory
 thus created, and issue the following commands (at the shell prompt):
@@ -427,12 +426,12 @@ Up:<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R
 
 <h4 class="subsection">2.5.2 How can R be installed (Windows)</h4>
 
-   <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains
-binaries for a base distribution and a large number of add-on packages
-from <small>CRAN</small> to run on Windows 95, 98, ME, NT4, 2000, and XP (at
-least) on Intel and clones (but not on other platforms).  The Windows
-version of R was created by Robert Gentleman, and is now being developed
-and maintained by <a href="mailto:murdoch@stats.uwo.ca">Duncan Murdoch</a> and
+   <p>The <code>bin/windows</code> directory of a <small>CRAN</small> site contains binaries for
+a base distribution and a large number of add-on packages from <small>CRAN</small>
+to run on Windows 95, 98, ME, NT4, 2000, and XP (at least) on Intel and
+clones (but not on other platforms).  The Windows version of R was
+created by Robert Gentleman, and is now being developed and maintained
+by <a href="mailto:murdoch@stats.uwo.ca">Duncan Murdoch</a> and
 <a href="mailto:Brian.Ripley@r-project.org">Brian D. Ripley</a>.
 
    <p>For most installations the Windows installer program will be the easiest
@@ -450,11 +449,11 @@ Up:<a rel="up" accesskey="u" href="#How%20can%20R%20be%20installed%3f">How can R
 
 <h4 class="subsection">2.5.3 How can R be installed (Macintosh)</h4>
 
-   <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains
-bin-hexed (<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base
-distribution and a large number of add-on packages to run under MacOS
-8.6 to MacOS 9.1 or MacOS X natively.  The Mac version of R and the Mac
-binaries are maintained by
+   <p>The <code>bin/macos</code> directory of a <small>CRAN</small> site contains bin-hexed
+(<code>hqx</code>) and stuffit (<code>sit</code>) archives for a base distribution
+and a large number of add-on packages to run under MacOS 8.6 to MacOS
+9.1 or MacOS X natively.  The Mac version of R and the Mac binaries are
+maintained by
 <a href="mailto:Stefano.Iacus@r-project.org">Stefano Iacus</a>.
 
    <p>The <a href="http://www.eco-dip.unimi.it/R/rmac-FAQ.html">"R for Macintosh <small>FAQ</small>/DOC"</a> has more details.
@@ -489,8 +488,8 @@ maintenance tool.  Simply add the line
      </pre>
 
 <p>(where <var>distribution</var> is either <code>stable</code> or <code>testing</code>;
-feel free to use a <small>CRAN</small> mirror instead of the master) to the
-file <code>/etc/apt/sources.list</code>.  Once you have added that line the
+feel free to use a <small>CRAN</small> mirror instead of the master) to the file
+<code>/etc/apt/sources.list</code>.  Once you have added that line the
 programs <code>apt-get</code>, <code>apt-cache</code>, and <code>dselect</code>
 (using the apt access method) will automatically detect and install
 updates of the R packages.
@@ -690,8 +689,8 @@ can be obtained by sending an email with <code>info</code> as its contents to
 `r-help' replaced by `r-announce' and `r-devel', respectively.
 
    <p>Subscriptions to `r-help' and `r-devel' are also available in digest
-format, see the <code>doc/html/mail.html</code> file in <small>CRAN</small> for
-more information.
+format, see the <code>doc/html/mail.html</code> file in <small>CRAN</small> for more
+information.
 
    <p>It is recommended that you send mail to r-help rather than only to the R
 Core developers (who are also subscribed to the list, of course).  This
@@ -704,8 +703,8 @@ include information on the system and version of R being used.  See
 <a href="#R%20Bugs">R Bugs</a> for more details.
 
    <p>Archives of the above three mailing lists are made available on the net
-in a monthly schedule via the <code>doc/html/mail.html</code> file in
-<small>CRAN</small>.  Searchable archives of the lists are available via
+in a monthly schedule via the <code>doc/html/mail.html</code> file in <small>CRAN</small>. 
+Searchable archives of the lists are available via
 <a href="http://maths.newcastle.edu.au/~rking/R/">http://maths.newcastle.edu.au/~rking/R/</a>.
 
    <p>The R Core Team can be reached at <a href="mailto:r-core@lists.r-project.org">r-core@lists.r-project.org</a>
@@ -722,8 +721,8 @@ Up:<a rel="up" accesskey="u" href="#R%20Basics">R Basics</a>
 
 <h3 class="section">2.10 What is <small>CRAN</small>?</h3>
 
-   <p>The "Comprehensive R Archive Network" (<small>CRAN</small>) is a collection
-of sites which carry identical material, consisting of the R
+   <p>The "Comprehensive R Archive Network" (<small>CRAN</small>) is a collection of
+sites which carry identical material, consisting of the R
 distribution(s), the contributed extensions, documentation for R, and
 binaries.
 
@@ -760,20 +759,19 @@ binaries.
         <br></td></tr></table>
 </blockquote>
 
-<p>Please use the <small>CRAN</small> site closest to you to reduce network
-load.
+<p>Please use the <small>CRAN</small> site closest to you to reduce network load.
 
-   <p>From <small>CRAN</small>, you can obtain the latest official release of R,
-daily snapshots of R (copies of the current CVS trees), as gzipped and
-bzipped tar files, a wealth of additional contributed code, as well as
-prebuilt binaries for various operating systems (Linux, Digital Unix,
-and MS Windows).  <small>CRAN</small> also provides access to documentation
-on R, existing mailing lists and the R Bug Tracking system.
+   <p>From <small>CRAN</small>, you can obtain the latest official release of R, daily
+snapshots of R (copies of the current CVS trees), as gzipped and bzipped
+tar files, a wealth of additional contributed code, as well as prebuilt
+binaries for various operating systems (Linux, MacOS Classic, MacOS X,
+and MS Windows).  <small>CRAN</small> also provides access to documentation on R,
+existing mailing lists and the R Bug Tracking system.
 
    <p>To "submit" to <small>CRAN</small>, simply upload to
 <a href="ftp://cran.r-project.org/incoming/">ftp://cran.r-project.org/incoming/</a> and send an email to
-<a href="mailto:cran@r-project.org">cran@r-project.org</a>.  Note that CRAN generally does not accept
-submissions of precompiled binaries due to security reasons.
+<a href="mailto:cran@r-project.org">cran@r-project.org</a>.  Note that <small>CRAN</small> generally does not
+accept submissions of precompiled binaries due to security reasons.
 
    <blockquote>
 <strong>Note:</strong>  It is very important that you indicate the copyright
@@ -1459,6 +1457,25 @@ Up:<a rel="up" accesskey="u" href="#R%20Add-On%20Packages">R Add-On Packages</a>
 
 <h3 class="section">5.1 Which add-on packages exist for R?</h3>
 
+<ul class="menu">
+<li><a accesskey="1" href="#Add-on%20packages%20in%20R">Add-on packages in R</a>: 
+<li><a accesskey="2" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>: 
+<li><a accesskey="3" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>: 
+<li><a accesskey="4" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>: 
+<li><a accesskey="5" href="#Other%20add-on%20packages">Other add-on packages</a>: 
+</ul>
+
+<div class="node">
+<p><hr>
+Node:<a name="Add-on%20packages%20in%20R">Add-on packages in R</a>,
+Next:<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
+Previous:<a rel="previous" accesskey="p" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>,
+Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+<br>
+</div>
+
+<h4 class="subsection">5.1.1 Add-on packages in R</h4>
+
    <p>The R distribution comes with the following extra packages:
 
      <dl>
@@ -1495,9 +1512,20 @@ distribution functions.
      <dd>Time Series. 
 </dl>
 
-   <p>The following packages are available from the <small>CRAN</small>
-<code>src/contrib</code> area.  (Packages denoted as <em>Recommended</em> are to
-be included in all binary distributions of R.)
+<div class="node">
+<p><hr>
+Node:<a name="Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
+Next:<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
+Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20in%20R">Add-on packages in R</a>,
+Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+<br>
+</div>
+
+<h4 class="subsection">5.1.2 Add-on packages from <small>CRAN</small></h4>
+
+   <p>The following packages are available from the <small>CRAN</small> <code>src/contrib</code>
+area.  (Packages denoted as <em>Recommended</em> are to be included in all
+binary distributions of R.)
 
      <dl>
 <dt><strong>AnalyzeFMRI</strong>
@@ -2178,8 +2206,8 @@ ecologists.
    <p>There is also a <small>CRAN</small> <code>src/contrib/Devel</code> directory which
 contains packages still "under development" or depending on features
 only present in the current development versions of R.  Volunteers are
-invited to give these a try, of course.  This area of <small>CRAN</small>
-currently contains
+invited to give these a try, of course.  This area of <small>CRAN</small> currently
+contains
 
      <dl>
 <dt><strong>Dopt</strong>
@@ -2226,8 +2254,19 @@ visualization.
 matrix. 
 </dl>
 
-   <p>Directory <code>src/contrib/Omegahat</code> contains yet unreleased packages
-from the <a href="http://www.omegahat.org/">Omegahat Project for Statistical Computing</a>.  Currently, there are
+<div class="node">
+<p><hr>
+Node:<a name="Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
+Next:<a rel="next" accesskey="n" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20CRAN">Add-on packages from CRAN</a>,
+Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+<br>
+</div>
+
+<h4 class="subsection">5.1.3 Add-on packages from Omegahat</h4>
+
+   <p>The <code>src/contrib/Omegahat</code> Directory of a CRAN site contains yet
+unreleased packages from the <a href="http://www.omegahat.org/">Omegahat Project for Statistical Computing</a>.  Currently, there are
 
      <dl>
 <dt><strong>CORBA</strong>
@@ -2320,6 +2359,17 @@ from C objects, call graphs, etc.
      <dd>An extension module for libxslt, the <small>XML</small>-<small>XSL</small> document translator,
 that allows <small>XSL</small> functions to be implemented via R functions. 
 </dl>
+
+<div class="node">
+<p><hr>
+Node:<a name="Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Next:<a rel="next" accesskey="n" href="#Other%20add-on%20packages">Other add-on packages</a>,
+Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20Omegahat">Add-on packages from Omegahat</a>,
+Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+<br>
+</div>
+
+<h4 class="subsection">5.1.4 Add-on packages from BioConductor</h4>
 
    <p>The <a href="http://www.bioconductor.org">Bioconductor Project</a> produces an
 open source software framework that will assist biologists and
@@ -2421,6 +2471,16 @@ interfaces.
 
    <p>These packages will eventually also be made available via <small>CRAN</small>
 as well.
+
+<div class="node">
+<p><hr>
+Node:<a name="Other%20add-on%20packages">Other add-on packages</a>,
+Previous:<a rel="previous" accesskey="p" href="#Add-on%20packages%20from%20BioConductor">Add-on packages from BioConductor</a>,
+Up:<a rel="up" accesskey="u" href="#Which%20add-on%20packages%20exist%20for%20R%3f">Which add-on packages exist for R?</a>
+<br>
+</div>
+
+<h4 class="subsection">5.1.5 Other add-on packages</h4>
 
    <a href="mailto:jlindsey@luc.ac.be">Jim Lindsey</a> has written a collection of R
 packages for nonlinear regression and repeated measurements, consisting

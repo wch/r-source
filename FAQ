@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.7-14, 2003-06-01
+Version 1.7-15, 2003-06-03
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -52,6 +52,11 @@ R FAQ
 
 5 R Add-On Packages
   5.1 Which add-on packages exist for R?
+    5.1.1 Add-on packages in R
+    5.1.2 Add-on packages from CRAN
+    5.1.3 Add-on packages from Omegahat
+    5.1.4 Add-on packages from BioConductor
+    5.1.5 Other add-on packages
   5.2 How can add-on packages be installed?
   5.3 How can add-on packages be used?
   5.4 How can add-on packages be removed?
@@ -596,8 +601,8 @@ Please use the CRAN site closest to you to reduce network load.
    From CRAN, you can obtain the latest official release of R, daily
 snapshots of R (copies of the current CVS trees), as gzipped and bzipped
 tar files, a wealth of additional contributed code, as well as prebuilt
-binaries for various operating systems (Linux, Digital Unix, and MS
-Windows).  CRAN also provides access to documentation on R, existing
+binaries for various operating systems (Linux, MacOS Classic, MacOS X, and
+MS Windows).  CRAN also provides access to documentation on R, existing
 mailing lists and the R Bug Tracking system.
 
    To "submit" to CRAN, simply upload to
@@ -1131,6 +1136,9 @@ requirement for the user is a JavaScript capable browser.  See
 5.1 Which add-on packages exist for R?
 ======================================
 
+5.1.1 Add-on packages in R
+--------------------------
+
    The R distribution comes with the following extra packages:
 
 *ctest*
@@ -1175,6 +1183,9 @@ requirement for the user is a JavaScript capable browser.  See
 
 *ts*
      Time Series.
+
+5.1.2 Add-on packages from CRAN
+-------------------------------
 
    The following packages are available from the CRAN `src/contrib' area.
 (Packages denoted as _Recommended_ are to be included in all binary
@@ -2122,9 +2133,12 @@ these a try, of course.  This area of CRAN currently contains
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
 
-   Directory `src/contrib/Omegahat' contains yet unreleased packages from
-the Omegahat Project for Statistical Computing (http://www.omegahat.org/).
-Currently, there are
+5.1.3 Add-on packages from Omegahat
+-----------------------------------
+
+   The `src/contrib/Omegahat' Directory of a CRAN site contains yet
+unreleased packages from the Omegahat Project for Statistical Computing
+(http://www.omegahat.org/).  Currently, there are
 
 *CORBA*
      Dynamic CORBA client/server facilities for R.  Connects to other
@@ -2240,6 +2254,9 @@ Currently, there are
 *Sxslt*
      An extension module for libxslt, the XML-XSL document translator, that
      allows XSL functions to be implemented via R functions.
+
+5.1.4 Add-on packages from BioConductor
+---------------------------------------
 
    The Bioconductor Project (http://www.bioconductor.org) produces an open
 source software framework that will assist biologists and statisticians
@@ -2364,6 +2381,9 @@ of BioConductor, with more packages under development.
      interfaces.
 
    These packages will eventually also be made available via CRAN as well.
+
+5.1.5 Other add-on packages
+---------------------------
 
    Jim Lindsey <jlindsey@luc.ac.be> has written a collection of R packages
 for nonlinear regression and repeated measurements, consisting of *event*
