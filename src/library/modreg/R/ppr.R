@@ -50,12 +50,12 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
     msmod <- ml*(p+q+2*n)+q+7+ml+1	# for asr
     nsp <- n*(q+15)+q+3*p
     ndp <- p*(p+1)/2+6*p
-    .Fortran("bdrsetppr",
+    .Fortran("setppr",
 	     as.double(span), as.double(bass), as.integer(optlevel),
 	     as.integer(ism), as.double(df), as.double(gcvpen),
 	     PACKAGE="modreg"
 	     )
-    Z <- .Fortran("bdrsmart",
+    Z <- .Fortran("smart",
 		  as.integer(ml), as.integer(mu),
 		  as.integer(p), as.integer(q), as.integer(n),
 		  as.double(weights),
@@ -75,7 +75,7 @@ function(x, y, weights=rep(1,n), ww=rep(1,q), nterms, max.terms=nterms,
 		    dimnames=list(xnames, tnames))
     beta <- matrix(smod[q+6+p*ml + 1:(q*mu)], q, mu,
 		   dimnames=list(ynames, tnames))
-    fitted <- drop(matrix(.Fortran("bdrpred",
+    fitted <- drop(matrix(.Fortran("pppred",
 				   as.integer(nrow(x)),
 				   as.double(x),
 				   as.double(smod),
@@ -183,7 +183,7 @@ predict.ppr <- function(object, newdata, ...)
     if(ncol(x) != object$p) stop("wrong number of columns in x")
     res <- matrix(NA, length(keep), object$q,
                   dimnames = list(rn, object$ynames))
-    res[keep, ] <- matrix(.Fortran("bdrpred",
+    res[keep, ] <- matrix(.Fortran("pppred",
                                    as.integer(nrow(x)),
                                    as.double(x),
                                    as.double(object$smod),

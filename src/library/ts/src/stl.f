@@ -46,7 +46,7 @@ c periodicity at least 2:
       k = 0
 c --- outer loop -- robustnes iterations
  100  continue
-      call STL1stp(y,n, newnp,newns,newnt,newnl, isdeg,itdeg,ildeg,
+      call stlstp(y,n, newnp,newns,newnt,newnl, isdeg,itdeg,ildeg,
      &     nsjump,ntjump,nljump, ni,userw,rw,season, trend, work)
       k = k+1
       if(k .gt. no) goto 10
@@ -54,7 +54,7 @@ c --- outer loop -- robustnes iterations
       do 3 i = 1,n
          work(i,1) = trend(i)+season(i)
  3    continue
-      call STLrwts(y,n,work(1,1),rw)
+      call stlrwt(y,n,work(1,1),rw)
       userw = .true.
       goto 100
 c --- end Loop
@@ -69,7 +69,7 @@ c     robustness weights when there were no robustness iterations:
       return
       end
       
-      subroutine STLess(y,n,len,ideg,njump,userw,rw,ys,res)
+      subroutine stless(y,n,len,ideg,njump,userw,rw,ys,res)
 
       implicit none
 c Arg
@@ -90,7 +90,7 @@ c Var
          nleft = 1
          nright = n
          do 20 i = 1,n,newnj 
-            call STLest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
+            call stlest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
      &           userw,rw,ok)
             if(.not. ok) ys(i) = y(i)
  20      continue
@@ -106,7 +106,7 @@ c Var
                   nleft = nleft+1
                   nright = nright+1
                endif
-               call STLest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
+               call stlest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
      &              userw,rw,ok)
                if(.not. ok) ys(i) = y(i)
  30         continue
@@ -124,7 +124,7 @@ c Var
                   nright = len+i-nsh
                endif
 
-               call STLest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
+               call stlest(y,n,len,ideg,dble(i),ys(i),nleft,nright,res,
      &              userw,rw,ok)
                if(.not. ok) ys(i) = y(i)
  40         continue
@@ -143,7 +143,7 @@ c Var
          k = ((n-1)/newnj)*newnj+1
 
          if(k .ne. n) then
-            call STLest(y,n,len,ideg,dble(n),ys(n),nleft,nright,res,
+            call stlest(y,n,len,ideg,dble(n),ys(n),nleft,nright,res,
      &           userw,rw,ok)
             if(.not. ok) ys(n) = y(n)
 
@@ -158,7 +158,7 @@ c Var
       return
       end
 
-      subroutine STLest(y,n,len,ideg,xs,ys,nleft,nright,w,
+      subroutine stlest(y,n,len,ideg,xs,ys,nleft,nright,w,
      &     userw,rw,ok)
 
       implicit none
@@ -224,18 +224,18 @@ c Var
       return
       end
 
-      subroutine STLfts(x,n,np,trend,work)
+      subroutine stlfts(x,n,np,trend,work)
       integer n, np
       double precision x(n), trend(n), work(n)
 
-      call STLma(x,    n,      np, trend)
-      call STLma(trend,n-np+1, np, work)
-      call STLma(work, n-2*np+2,3, trend)
+      call stlma(x,    n,      np, trend)
+      call stlma(trend,n-np+1, np, work)
+      call stlma(work, n-2*np+2,3, trend)
       return
       end
 
 
-      subroutine STLma(x, n, len, ave)
+      subroutine stlma(x, n, len, ave)
 
 c Moving Average (aka "running mean")
 c ave(i) := mean(x{j}, j = max(1,i-k),..., min(n, i+k))
@@ -269,7 +269,7 @@ c Var
       end
 
 
-      subroutine STL1stp(y,n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,
+      subroutine stlstp(y,n,np,ns,nt,nl,isdeg,itdeg,ildeg,nsjump,
      &     ntjump,nljump,ni,userw,rw,season,trend,work)
 
       implicit none
@@ -284,10 +284,10 @@ c Var
          do 1 i = 1,n
             work(i,1) = y(i)-trend(i)
  1       continue
-         call STLss(work(1,1),n,np,ns,isdeg,nsjump,userw,rw,work(1,2),
+         call stlss(work(1,1),n,np,ns,isdeg,nsjump,userw,rw,work(1,2),
      &        work(1,3),work(1,4),work(1,5),season)
-         call STLfts(work(1,2),n+2*np,np,work(1,3),work(1,1))
-         call STLess(work(1,3),n,nl,ildeg,nljump,.false.,work(1,4),
+         call stlfts(work(1,2),n+2*np,np,work(1,3),work(1,1))
+         call stless(work(1,3),n,nl,ildeg,nljump,.false.,work(1,4),
      &        work(1,1),work(1,5))
          do 3 i = 1,n
             season(i) = work(np+i,2)-work(i,1)
@@ -295,13 +295,13 @@ c Var
          do 5 i = 1,n
             work(i,1) = y(i)-season(i)
  5       continue
-         call STLess(work(1,1),n,nt,itdeg,ntjump,userw,rw,trend,
+         call stless(work(1,1),n,nt,itdeg,ntjump,userw,rw,trend,
      &        work(1,3))
  80   continue
       return
       end
 
-      subroutine STLrwts(y,n,fit,rw)
+      subroutine stlrwt(y,n,fit,rw)
 c Robustness Weights
 c	rw_i := B( |y_i - fit_i| / (6 M) ),   i = 1,2,...,n
 c		where B(u) = (1 - u^2)^2  * 1[|u| < 1]   {Tukey's biweight}
@@ -337,10 +337,10 @@ c     = 6 * MAD
       return
       end
 
-      subroutine STLss(y,n,np,ns,isdeg,nsjump,userw,rw,season,
+      subroutine stlss(y,n,np,ns,isdeg,nsjump,userw,rw,season,
      &     work1,work2,work3,work4)
 c
-c	called by STL1stp() at the beginning of each (inner) iteration
+c	called by stlstp() at the beginning of each (inner) iteration
 c
       implicit none
 c Arg
@@ -365,15 +365,15 @@ c Var
                work3(i) = rw((i-1)*np+j)
  12         continue
          endif
-         call STLess(work1,k,ns,isdeg,nsjump,userw,work3,work2(2),work4)
+         call stless(work1,k,ns,isdeg,nsjump,userw,work3,work2(2),work4)
          xs = 0
          nright = min0(ns,k)
-         call STLest(work1,k,ns,isdeg,xs,work2(1),1,nright,work4,
+         call stlest(work1,k,ns,isdeg,xs,work2(1),1,nright,work4,
      &        userw,work3,ok)
          if(.not. ok) work2(1) = work2(2)
          xs = k+1
          nleft = max0(1,k-ns+1)
-         call STLest(work1,k,ns,isdeg,xs,work2(k+2),nleft,k,work4,
+         call stlest(work1,k,ns,isdeg,xs,work2(k+2),nleft,k,work4,
      &        userw,work3,ok)
          if(.not. ok) work2(k+2) = work2(k+1)
          do 18 m = 1,k+2
@@ -423,7 +423,7 @@ c Var
       do 2 i = 1,n
          trend(i) = 0.
  2    continue
-      call STL1stp(y,n,newnp,newns,nt,nl,isdeg,itdeg,ildeg,nsjump,
+      call stlstp(y,n,newnp,newns,nt,nl,isdeg,itdeg,ildeg,nsjump,
      &     ntjump,nljump,ni,.false.,rw,season,trend,work)
 
       no = 0
@@ -436,8 +436,8 @@ C        Loop  --- 15 robustness iterations
                work(i,7) = trend(i)
                work(i,1) = trend(i)+season(i)
  35        continue
-            call STLrwts(y,n,work(1,1),rw)
-            call STL1stp(y, n, newnp, newns, nt,nl, isdeg,itdeg,ildeg, 
+            call stlrwt(y,n,work(1,1),rw)
+            call stlstp(y, n, newnp, newns, nt,nl, isdeg,itdeg,ildeg, 
      &           nsjump,ntjump,nljump, ni, .true., 
      &           rw, season, trend, work)
             no = no+1

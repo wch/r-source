@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001   The R Development Core Team.
+ *  Copyright (C) 2001-2   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,14 +58,14 @@ loess_ise(double *y, double *x, double *x_evaluate, double *weights,
 void F77_SUB(lowesw)(double *res, int *n, double *rw, int *pi);
 void F77_SUB(lowesp)(int *n, double *y, double *yhat, double *pwgts,
 		     double *rwgts, int *pi, double *ytilde);
-void F77_SUB(bdrsetppr)(double *span1, double *alpha1,
+void F77_SUB(setppr)(double *span1, double *alpha1,
 	int *optlevel, int *ism, double *df1, double *gcvpen1);
-void F77_SUB(bdrsmart)(int *m, int *mu, int *p, int * q, int *n,
-		       double *w, double *x, double *y,
-		       double *ww, double *smod, int *nsmod, double *sp,
-		       int *nsp, double *dp, int *ndp, double *edf);
-void F77_SUB(bdrpred)(int *np, double *x, double *smod,
-		      double *y, double *sc);
+void F77_SUB(smart)(int *m, int *mu, int *p, int * q, int *n,
+		    double *w, double *x, double *y,
+		    double *ww, double *smod, int *nsmod, double *sp,
+		    int *nsp, double *dp, int *ndp, double *edf);
+void F77_SUB(pppred)(int *np, double *x, double *smod,
+		     double *y, double *sc);
 void F77_SUB(qsbart)(double *penalt, double *dofoff,
 		     double *xs, double *ys, double *ws, double *ssw,
 		     int *n, double *knot, int *nk, double *coef,
@@ -102,7 +102,7 @@ void F77_NAME(sslvrg)(double *penalt, double *dofoff,
 
 void F77_SUB(bvalus)(int *n, double *knot, double *coef,
 		     int *nk, double *x, double *s, int *order);
-void F77_SUB(bdrsupsmu)(int *n, double *x, double *y,
-			double *w, int *iper, double *span, double *alpha,
-			double *smo, double *sc, double *edf);
+void F77_SUB(supsmu)(int *n, double *x, double *y,
+		     double *w, int *iper, double *span, double *alpha,
+		     double *smo, double *sc, double *edf);
 #endif

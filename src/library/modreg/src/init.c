@@ -34,12 +34,12 @@ R_CMethodDef CEntries[] = {
 R_FortranMethodDef FortEntries[] = {
     {"lowesw", (DL_FUNC) &F77_SUB(lowesw), 4},  
     {"lowesp", (DL_FUNC) &F77_SUB(lowesp), 7},  
-    {"bdrsetppr", (DL_FUNC) &F77_SUB(bdrsetppr), 6},  
-    {"bdrsmart", (DL_FUNC) &F77_SUB(bdrsmart), 16},  
-    {"bdrpred", (DL_FUNC) &F77_SUB(bdrpred), 5},  
+    {"setppr", (DL_FUNC) &F77_SUB(setppr), 6},  
+    {"smart", (DL_FUNC) &F77_SUB(smart), 16},  
+    {"pppred", (DL_FUNC) &F77_SUB(pppred), 5},  
     {"qsbart", (DL_FUNC) &F77_SUB(qsbart), 21},  
     {"bvalus", (DL_FUNC) &F77_SUB(bvalus), 7},  
-    {"bdrsupsmu", (DL_FUNC) &F77_SUB(bdrsupsmu), 10},  
+    {"supsmu", (DL_FUNC) &F77_SUB(supsmu), 10},  
     {NULL, NULL, 0}
 };
 

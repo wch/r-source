@@ -256,8 +256,8 @@ supsmu <-
     leno <- length(ord)
     if(diff <- n - leno)
 	warning(paste(diff, "observation(s) with NAs, NaNs and/or Infs deleted"))
-    .Fortran("bdrsetsmu", PACKAGE = "modreg")
-    smo <- .Fortran("bdrsupsmu",
+    .Fortran("setsmu", PACKAGE = "modreg")
+    smo <- .Fortran("supsmu",
 		    as.integer(leno),
 		    as.double(xo),
 		    as.double(y[ord]),
@@ -267,7 +267,7 @@ supsmu <-
 		    as.double(bass),
 		    smo=double(leno),
 		    double(n*7), double(1),
-		    PACKAGE="modreg")$smo
+		    PACKAGE = "modreg")$smo
     ## eliminate duplicate xsort values and corresponding smoothed values
     dupx <- duplicated(xo)
     list(x = xo[!dupx], y = smo[!dupx])
