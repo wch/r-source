@@ -208,7 +208,7 @@ make
 @noindent
 (See @ref{Using make} if your make is not called @samp{make}.)
 
-Then check the built system worked correctly, by
+Then check the built system works correctly, by
 
 @smallexample
 make check
@@ -519,7 +519,10 @@ versions of packages and downloads the latest version (if any).
 
 On Windows @code{install.packages} can also install a binary package
 from a local @file{zip} file by setting argument @code{CRAN} to
-@code{NULL}.
+@code{NULL}.   @code{RGui.exe} has a menu @code{Packages} with a GUI
+interface to @code{install.packages}, @code{update.packages} and
+@code{library}.
+
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -614,9 +617,12 @@ You will also need to install a X sub-system or configure with
 The command-line editing depends on the @code{readline} library
 available from any GNU mirror: you will need a fairly recent version.
 
+Use of @code{gzfile} connections needs @code{zlib} (version 1.1.3 or later).
+
 The bitmapped graphics devices @code{jpeg()} and @code{png()} need the 
-appropriate libraries installed: @code{jpeg} version 6 or @code{libpng}
-and @code{libz} respectively.
+appropriate libraries installed: @code{jpeg} (version 6b or later) or
+@code{libpng} (version 1.0.5 or later)
+and @code{zlib} (version 1.1.3 or later) respectively.
 
 The @code{bitmap} and @code{dev2bitmap} devices make use of ghostscript
 (@uref{http://www.cs.wisc.edu/~ghost}).
@@ -968,7 +974,7 @@ that platform.
 
 If you are having trouble getting @R{} to work on your platform please
 feel free to get in touch to ask questions.  We've had a fair amount
-of practice at porting R to new platforms @dots{}.
+of practice at porting R to new platforms @enddots{}
 
 
 @node Function and variable index, Concept index, New platforms, Top
