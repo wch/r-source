@@ -36,8 +36,11 @@ data <- function(..., list = character(0), package = .packages(),
   invisible(names)
 }
 
-getenv <- function(item) {
-  system(paste("echo $", item, sep = ""), intern = TRUE)
+getenv <- function(x) {
+  y <- structure(character(length(x)), names = x)
+  for (i in x)
+    y[i] <- system(paste("echo $", i, sep = ""), intern = TRUE)
+  y 
 }
 
 help <- function(topic, package = .packages(), lib.loc = .lib.loc) {
@@ -175,6 +178,12 @@ system.time <- function(expr) {
   if(length(new.time) == 3)    new.time <- c(new.time, 0, 0)
   if(length(time) == 3)        time     <- c(time, 0, 0)
   new.time - time
+}
+
+tempfile <- function(pattern = "file") {
+  system(paste("for p in", paste(pattern, collapse = " "), ";",
+               "do echo /tmp/$p$$; done"),
+         intern = TRUE)
 }
 
 unlink <- function(x) {
