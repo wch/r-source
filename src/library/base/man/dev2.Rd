@@ -5,10 +5,10 @@
 \alias{dev.control}
 \title{Copy Graphics Between Multiple Devices}
 \usage{
-dev.copy(device, \dots, which=dev.next())
-dev.print(device=postscript, \dots)
+dev.copy(device, \dots, which = dev.next())
+dev.print(device = postscript, \dots)
 dev.copy2eps(\dots)
-dev.control(displaylist)
+dev.control(displaylist = c("inhibit", "enable"))
 }
 \arguments{
   \item{device}{A device function (e.g., \code{x11},
@@ -17,14 +17,17 @@ dev.control(displaylist)
     For \code{dev.print}, this includes \code{which} and by default any
     \code{\link{postscript}} arguments.}
   \item{which}{A device number specifying the device to copy to}
-  \item{displaylist}{A character string: the only valid value is
-    \code{"inhibit"}.}
+  \item{displaylist}{A character string: the only valid values are
+    \code{"inhibit"} and \code{"enable"}.}
 }
 \description{
   \code{dev.copy} copies the graphics contents of the current device
   to the device specified by \code{which} or to a new device which has
   been created by the function specified by \code{device} (it is an
-  error to specify both \code{which} and \code{device}).
+  error to specify both \code{which} and \code{device}).  (If recording
+  is off on the current device, there are no contents to copy: this will
+  result in no plot or an empty plot.)
+  The device copied to becomes the current device.
 
   \code{dev.print} copies the graphics contents of the current device
   to a new device which has been created by the function specified by
@@ -35,7 +38,10 @@ dev.control(displaylist)
 
   \code{dev.control} allows the user to control the recording of
   graphics operations in a device.  If \code{displaylist} is \code{"inhibit"}
-  then recording is turned off.
+  (\code{"enable")} then recording is turned off (on). It is only safe
+  to change this at the beginning of a plot (just before or just after a
+  new page).  Initially recording is on for screen devices, and off for
+  print devices.
 }
 \value{
   \code{dev.copy} returns the name and number of the device which has

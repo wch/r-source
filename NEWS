@@ -285,6 +285,9 @@ NEW FEATURES
 
     o	lm(singular.ok = FALSE) is now implemented.
 
+    o	dev.control() now accepts "enable" as well as
+	"inhibit". (Wishlist PR#3424)
+
 
 DEPRECATED & DEFUNCT
 

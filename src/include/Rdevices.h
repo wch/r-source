@@ -28,6 +28,7 @@
 #define deviceNumber		Rf_deviceNumber
 #define devNumber		Rf_devNumber
 #define DevNull			Rf_DevNull
+#define enableDisplayList	Rf_enableDisplayList
 #define inhibitDisplayList	Rf_inhibitDisplayList
 #define InitGraphics		Rf_InitGraphics
 #define GetDevice		Rf_GetDevice
@@ -102,6 +103,7 @@ void DevNull(void);
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
 void copyDisplayList(int);
 void playDisplayList(DevDesc*);
+void enableDisplayList(DevDesc*);
 void inhibitDisplayList(DevDesc*);
 
 /*-------------------------------------------------------------------

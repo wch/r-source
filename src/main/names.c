@@ -708,7 +708,7 @@ FUNTAB R_FunTab[] =
 
 /* Graphics */
 
-{"dev.control",	do_devcontrol,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
+{"dev.control",	do_devcontrol,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dev.copy",	do_devcopy,	0,	111,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"dev.cur",	do_devcur,	0,	111,	0,	{PP_FUNCALL, PREC_FN,	0}},
 /*

@@ -174,14 +174,14 @@ dev.copy2eps <- function(...)
     dev.set(current.device)
 }
 
-dev.control <- function(displaylist)
+dev.control <- function(displaylist = c("inhibit", "enable"))
 {
+    if(dev.cur() <= 1)
+        stop("dev.control() called without an open graphics device")
     if(!missing(displaylist)) {
-	if(displaylist == "inhibit") {
-            if(dev.cur() > 1) .Internal(dev.control())
-            else stop("dev.control() called without an open graphics device")
-	} else stop("displaylist should be inhibit")
-    }
+        displaylist <- match.arg(displaylist)
+	.Internal(dev.control(displaylist == "enable"))
+    } else stop("argument is missing with no default")
     invisible()
 }
 

@@ -51,9 +51,16 @@ void NewFrameConfirm(void)
 
 SEXP do_devcontrol(SEXP call, SEXP op, SEXP args, SEXP env)
 {
+    int listFlag;
+    
     checkArity(op, args);
-    inhibitDisplayList(CurrentDevice());
-    return R_NilValue;
+    listFlag = asLogical(CAR(args));
+    if(listFlag == NA_LOGICAL) errorcall(call, "invalid argument");
+    if(listFlag)
+	enableDisplayList(CurrentDevice());
+    else
+	inhibitDisplayList(CurrentDevice());
+    return ScalarLogical(listFlag);
 }
 
 SEXP do_devcopy(SEXP call, SEXP op, SEXP args, SEXP env)

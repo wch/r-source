@@ -6099,3 +6099,12 @@ void inhibitDisplayList(DevDesc *dd)
     else
 	dd->displayListOn = FALSE;
 }
+
+void enableDisplayList(DevDesc *dd)
+{
+    GEinitDisplayList((GEDevDesc*) dd);
+    if (dd->newDevStruct)
+	((GEDevDesc*) dd)->dev->displayListOn = TRUE;
+    else
+	dd->displayListOn = TRUE;
+}
