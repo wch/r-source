@@ -639,7 +639,7 @@ FUNTAB R_FunTab[] =
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"XFig",	do_XFig,	0,	111,   12,	PP_FUNCALL},
 #ifdef Win32
-{"devga",	do_devga,	0,	111,	5,	PP_FUNCALL},
+{"devga",	do_devga,	0,	111,	7,	PP_FUNCALL},
 #endif
 #ifdef Unix
 {"X11",		do_X11,		0,	111,	7,	PP_FUNCALL},
