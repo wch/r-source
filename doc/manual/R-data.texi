@@ -383,9 +383,13 @@ names override the header line (if present).
 
 Normally looking at the file will determine the field separator to be
 used, but with white-space separated files there may be a choice between
-@code{sep = ""} which uses any white space (spaces, tabs or newlines) as
-a separator, @code{sep = " "} and @code{sep = "\t"}.  Note that the
-choice of separator affects the input of quoted strings.
+the default @code{sep = ""} which uses any white space (spaces, tabs or
+newlines) as a separator, @code{sep = " "} and @code{sep = "\t"}.  Note
+that the choice of separator affects the input of quoted strings.  
+
+If you have a tab-delimited file containing empty fields be sure to use
+@code{sep = "\t"}.
+
 
 @item @strong{Quoting}
 @cindex Quoting strings
@@ -464,11 +468,16 @@ If the options to @code{read.table} are specified incorrectly, the error
 message will usually be of the form
 
 @smallexample
-row.lens=
- [1] 4 4 5 5 5 4 6 4 4 4 5 4 4 5 5
-Error in read.table("file.dat", header = TRUE) :
-        all rows must have the same length.
+Error in scan(file = file, what = what, sep = sep, : 
+        line 1 did not have 5 elements
 @end smallexample
+@noindent
+or
+@smallexample
+Error in read.table("files.dat", header = TRUE) : 
+        more columns than column names
+@end smallexample
+
 @findex count.fields
 
 @noindent
