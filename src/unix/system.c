@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2000   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka
  *			      and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -19,29 +19,32 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-	 /* See system.txt for a description of functions */
+/* See system.txt for a description of functions
+ */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 /* necessary for some (older, i.e., ~ <= 1997) Linuxen, and apparently
    also some AIX systems.
    */
 #ifndef FD_SET
-#ifdef HAVE_SYS_TIME_H
-#include <sys/time.h>
-#endif
+# ifdef HAVE_SYS_TIME_H
+#  include <sys/time.h>
+# endif
 #endif
 
-#include <unistd.h> /* isatty() */
+#ifdef HAVE_UNISTD_H
+# include <unistd.h>		/* isatty() */
+#endif
 
 #include "Defn.h"
 #include "Fileio.h"
 #include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
-#include "devUI.h" /* includes Startup.h */
+#include "devUI.h"		/* includes Startup.h */
 #undef __SYSTEM__
 
 #include "Runix.h"
@@ -193,7 +196,7 @@ int Rf_initialize_R(int ac, char **av)
 	    return 0;
 	}
     }
-#endif
+#endif /* HAVE_X11 */
 
     R_common_command_line(&ac, av, Rp);
     while (--ac) {

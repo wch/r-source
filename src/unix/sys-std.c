@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -303,7 +303,7 @@ getSelectedHandler(InputHandler *handlers, fd_set *readMask)
 
 
 #ifdef HAVE_LIBREADLINE
-	/* callback for rl_callback_read_char */
+/* callback for rl_callback_read_char */
 
 static int readline_gotaline;
 static int readline_addtohistory;
@@ -318,10 +318,10 @@ static void readline_handler(char *line)
     if ((readline_eof = !line)) /* Yes, I don't mean ==...*/
 	return;
     if (line[0]) {
-#ifdef HAVE_READLINE_HISTORY_H
+# ifdef HAVE_READLINE_HISTORY_H
 	if (strlen(line) && readline_addtohistory)
 	    add_history(line);
-#endif
+# endif
 	l = (((readline_len-2) > strlen(line))?
 	     strlen(line): (readline_len-2));
 	strncpy((char *)readline_buf, line, l);
@@ -334,9 +334,9 @@ static void readline_handler(char *line)
     }
     readline_gotaline = 1;
 }
-#endif
+#endif /* HAVE_LIBREADLINE */
 
-	/* Fill a text buffer from stdin or with user typed console input. */
+/* Fill a text buffer from stdin or with user typed console input. */
 
 int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 		     int addtohistory)
@@ -373,7 +373,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 	    rl_callback_handler_install(prompt, readline_handler);
 	}
 	else
-#endif
+#endif /* HAVE_LIBREADLINE */
 	{
 	    fputs(prompt, stdout);
 	    fflush(stdout);
@@ -396,7 +396,7 @@ int Rstd_ReadConsole(char *prompt, unsigned char *buf, int len,
 			    return 1;
 		    }
 		    else
-#endif
+#endif /* HAVE_LIBREADLINE */
 		    {
 			if(fgets((char *)buf, len, stdin) == NULL)
 			    return 0;
@@ -504,13 +504,13 @@ void Rstd_CleanUp(SA_TYPE saveact, int status, int runLast)
 	if(runLast) R_dot_Last();
 	if(R_DirtyImage) R_SaveGlobalEnv();
 #ifdef HAVE_LIBREADLINE
-#ifdef HAVE_READLINE_HISTORY_H
+# ifdef HAVE_READLINE_HISTORY_H
 	if(R_Interactive && UsingReadline) {
 	    stifle_history(R_HistorySize);
 	    write_history(R_HistoryFile);
 	}
-#endif
-#endif
+# endif /* HAVE_READLINE_HISTORY_H */
+#endif /* HAVE_LIBREADLINE */
 	break;
     case SA_NOSAVE:
 	if(runLast) R_dot_Last();
@@ -615,12 +615,12 @@ void Rstd_ShowMessage(char *s)
 void Rstd_read_history(char *s)
 {
 #ifdef HAVE_LIBREADLINE
-#ifdef HAVE_READLINE_HISTORY_H
+# ifdef HAVE_READLINE_HISTORY_H
     if(R_Interactive && UsingReadline) {
 	read_history(s);
     }
-#endif
-#endif
+# endif /* HAVE_READLINE_HISTORY_H */
+#endif /* HAVE_LIBREADLINE */
 }
 
 void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
@@ -677,16 +677,19 @@ static void (* OldHandler)(void);
 
 
 #ifdef HAVE_TIMES
-#include <time.h>
-#include <sys/times.h>
-#ifndef CLK_TCK
-/* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV */
-#ifdef HZ
-#define CLK_TCK HZ
-#else
-#define CLK_TCK	60
-#endif
-#endif /* CLK_TCK */
+# include <time.h>
+# ifdef HAVE_SYS_TIMES_H
+#  include <sys/times.h>
+# endif
+# ifndef CLK_TCK
+/* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV
+ */
+#  ifdef HZ
+#   define CLK_TCK HZ
+#  else
+#   define CLK_TCK 60
+#  endif
+# endif /* not CLK_TCK */
 
 static struct tms timeinfo;
 static double timeint, start, elapsed;
@@ -700,7 +703,6 @@ static void SleepHandler(void)
 	R_wait_usec = 1e6*(timeint - elapsed) + 10000;
     OldHandler();
 }
-
 
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -731,10 +733,10 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     return R_NilValue;
 }
 
-#else
+#else /* not HAVE_TIMES */
 SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("Sys.sleep is not implemented on this system");
     return R_NilValue;		/* -Wall */
 }
-#endif /* HAVE_TIMES */
+#endif /* not HAVE_TIMES */

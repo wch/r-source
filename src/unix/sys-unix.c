@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2002   Robert Gentleman, Ross Ihaka
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka
  *                            and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -89,7 +89,7 @@ char *R_ExpandFileName(char *s)
 {
     return( tilde_expand(s) );
 }
-#else
+#else /* not HAVE_LIBREADLINE */
 static int HaveHOME=-1;
 static char UserHOME[PATH_MAX];
 static char newFileName[PATH_MAX];
@@ -113,7 +113,7 @@ char *R_ExpandFileName(char *s)
 	return newFileName;
     } else return s;
 }
-#endif
+#endif /* not HAVE_LIBREADLINE */
 
 
 /*
@@ -126,16 +126,19 @@ SEXP do_machine(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 #ifdef HAVE_TIMES
-#include <time.h>
-#include <sys/times.h>
-#ifndef CLK_TCK
-/* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV */
-#ifdef HZ
-#define CLK_TCK HZ
-#else
-#define CLK_TCK	60
-#endif
-#endif /* CLK_TCK */
+# include <time.h>
+# ifdef HAVE_SYS_TIMES_H
+#  include <sys/times.h>
+# endif
+# ifndef CLK_TCK
+/* this is in ticks/second, generally 60 on BSD style Unix, 100? on SysV
+ */
+#  ifdef HZ
+#   define CLK_TCK HZ
+#  else
+#   define CLK_TCK 60
+#  endif
+# endif /* not CLK_TCK */
 
 static clock_t StartTime;
 static struct tms timeinfo;
@@ -201,10 +204,10 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
 	UNPROTECT(1);
 	return (rval);
-#else
+#else /* not HAVE_POPEN */
 	errorcall(call, "intern=TRUE is not implemented on this platform");
 	return R_NilValue;
-#endif
+#endif /* not HAVE_POPEN */
     }
     else {
 	tlist = allocVector(INTSXP, 1);
@@ -261,15 +264,15 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #ifdef HAVE_SYS_UTSNAME_H
-#include <sys/utsname.h>
+# include <sys/utsname.h>
 
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
+# ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+# endif
 
-#ifdef HAVE_PWD_H
-#include <pwd.h>
-#endif
+# ifdef HAVE_PWD_H
+#  include <pwd.h>
+# endif
 
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -311,28 +314,28 @@ SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(2);
     return ans;
 }
-#else
+#else /* not HAVE_SYS_UTSNAME_H */
 SEXP do_sysinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     warning("Sys.info is not implemented on this system");
     return R_NilValue;		/* -Wall */
 }
-#endif
+#endif /* not HAVE_SYS_UTSNAME_H */
 
 /*
  *  helpers for start-up code
  */
 
 #ifdef __FreeBSD__
-#ifdef HAVE_FLOATINGPOINT_H
-#include <floatingpoint.h>
-#endif
+# ifdef HAVE_FLOATINGPOINT_H
+#  include <floatingpoint.h>
+# endif
 #endif
 
 #ifdef linux
-#ifdef HAVE_FPU_CONTROL_H
-#include <fpu_control.h>
-#endif
+# ifdef HAVE_FPU_CONTROL_H
+#  include <fpu_control.h>
+# endif
 #endif
 
 void fpu_setup(Rboolean start)
@@ -355,4 +358,3 @@ void fpu_setup(Rboolean start)
 #endif
     }
 }
-
