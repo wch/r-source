@@ -3050,10 +3050,11 @@ A package consists of a subdirectory containing the files `DESCRIPTION' and
 can also contain script files `configure' and `cleanup' which are executed
 before and after installation.
 
-   See section "Creating R packages" in `Writing R Extensions', for details.
-This manual is included in the R distribution, *note What documentation
-exists for R?::, and gives information on package structure, the configure
-and cleanup mechanisms, and on automated package checking and building.
+   See section "Creating R packages" in `Writing R Extensions', for
+details.  This manual is included in the R distribution, *note What
+documentation exists for R?::, and gives information on package structure,
+the configure and cleanup mechanisms, and on automated package checking and
+building.
 
    R version 1.3.0 has added the function `package.skeleton()' which will
 set up directories, save data and code, and create skeleton help files for
@@ -3707,9 +3708,9 @@ JavaScript need to be enabled in your browser.
 
    There have been a number of compatibility issues with versions of Java
 and of browsers.  For further details please consult section "Enabling
-search in HTML help" in `R Installation and Administration'.  This manual
-is included in the R distribution, *note What documentation exists for
-R?::, and its HTML version is linked from the HTML search page.
+search in HTML help" in `R Installation and Administration'.  This manual is
+included in the R distribution, *note What documentation exists for R?::,
+and its HTML version is linked from the HTML search page.
 
 8 R Programming
 ***************

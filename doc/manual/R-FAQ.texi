@@ -3133,16 +3133,15 @@ the package can also contain script files @file{configure} and
 
 @ifclear UseExternalXrefs
 See section ``Creating R packages'' in @cite{Writing R Extensions}, for
-details.
+details.  This manual is included in the R distribution, @pxref{What
+documentation exists for R?}, and gives information on package
+structure, the configure and cleanup mechanisms, and on automated
+package checking and building.
 @end ifclear
 @ifset UseExternalXrefs
 @xref{Creating R packages, , Creating R packages, R-exts, Writing R
 Extensions}, for details.
 @end ifset
-This manual is included in the R distribution, @pxref{What documentation
-exists for R?}, and gives information on package structure, the
-configure and cleanup mechanisms, and on automated package checking and
-building.
 
 R version 1.3.0 has added the function @code{package.skeleton()} which
 will set up directories, save data and code, and create skeleton help
@@ -4022,15 +4021,15 @@ There have been a number of compatibility issues with versions of Java
 and of browsers.  
 @ifclear UseExternalXrefs
 For further details please consult section ``Enabling search in HTML
-help'' in @cite{R Installation and Administration}.
+help'' in @cite{R Installation and Administration}.  This manual is
+included in the R distribution, @pxref{What documentation exists for
+R?}, and its @acronym{HTML} version is linked from the @acronym{HTML}
+search page.
 @end ifclear
 @ifset UseExternalXrefs
 @xref{Enabling search in HTML help, , Enabling search in HTML help,
 R-admin, R Installation and Administration}, for further details.
 @end ifset
-This manual is included in the R distribution, @pxref{What documentation
-exists for R?}, and its @acronym{HTML} version is linked from the
-@acronym{HTML} search page. 
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
@@ -4063,14 +4062,13 @@ code, send an interrupt, and then set the required breakpoints.
 
 @ifclear UseExternalXrefs
 See section ``Finding entry points in dynamically loaded code'' in
-@cite{Writing R Extensions}.
+@cite{Writing R Extensions}.  This manual is included in the R
+distribution, @pxref{What documentation exists for R?}.
 @end ifclear
 @ifset UseExternalXrefs
 @xref{Finding entry points, , Finding entry points in dynamically loaded
 code, R-exts, Writing R Extensions}.
 @end ifset
-This manual is included in the R distribution, @pxref{What documentation
-exists for R?}.
 
 @node How can I inspect R objects when debugging?, How can I change compilation flags?, How can I debug dynamically loaded code?, R Programming
 @section How can I inspect R objects when debugging?
