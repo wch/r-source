@@ -1,32 +1,36 @@
 ## based on, especially multivariate case, code by Martyn Plummer
 ar <-
-    function (x, aic = TRUE, order.max = NULL, method=c("yule-walker","burg"),
-              na.action = na.fail, series = deparse(substitute(x)))
+    function (x, aic = TRUE, order.max = NULL,
+              method=c("yule-walker","burg", "ols"),
+              na.action = na.fail, series = deparse(substitute(x)), ...)
 {
     res <- switch(match.arg(method),
         "yule-walker" = ar.yw(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series),
+                              na.action = na.action, series=series, ...),
 	"burg" = ar.burg(x, aic=aic, order.max=order.max,
-                              na.action = na.action, series=series)
+                              na.action = na.action, series=series, ...),
+	"ols" = ar.ols(x, aic=aic, order.max=order.max,
+                              na.action = na.action, series=series, ...)
     )
     res$call <- match.call()
     res
 }
 
-ar.burg <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                   series = deparse(substitute(x)))
-    .NotYetImplemented()
 
 ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
-                   series = deparse(substitute(x)))
+                   demean = TRUE, series = NULL, ...)
 {
-    x <- na.action(x)
+    if(is.null(series)) series <- deparse(substitute(x))
     xfreq <- frequency(as.ts(x))
     if(ists <- is.ts(x)) xtsp <- tsp(x)
+    x <- na.action(as.ts(x))
+    xfreq <- frequency(x)
     x <- as.matrix(x)
     if(any(is.na(x))) stop("NAs in x")
-    xm <- apply(x, 2, mean)
-    x <- sweep(x, 2, xm)
+    if (demean) {
+        xm <- apply(x, 2, mean)
+        x <- sweep(x, 2, xm)
+    } else xm <- rep(0, nser)
     n.used <- nrow(x)
     nser <- ncol(x)
     order.max <- if (is.null(order.max)) floor(10 * log10(n.used))
@@ -60,58 +64,38 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
                 B[i + 1, , ] <<- Bold[i + 1, , ] + KB %*% Aold[m + 2 - i, , ]
             }
         }
-        cal.aic <- function()
-        {
-            det <- abs(prod(diag(qr(var.pred)$qr)))
+        cal.aic <- function() {
+            det <- abs(prod(diag(qr(EA)$qr)))
             return(n.used * log(det) + 2 * m * nser * nser)
         }
-        cal.var.pred <- function()
-        {
-            vp <- 0
-            for (i in 0:m)
-                for (j in 0:m) {
-                    R <- xacf[abs(i - j) + 1, , ]
-                    if (j < i) R <- t(R)
-                    vp <- vp + A[i + 1, , ] %*% R %*% t(A[j + 1, , ])
-                }
-            #Splus compatibility fix
-            vp * n.used/(n.used - nser * (m + 1))
-        }
-        cal.resid <- function()
-        {
-            resid <- array(dim = c(n.used, nser))
-            fitted <- array(0, dim = c(n.used - order, nser))
-            if (order > 0) {
-                A <- array(dim = c(nser, nser))
-                for (i in 1:order) {
-                    A[, ] <- ar[i, , , drop = FALSE]
-                    fitted <- fitted +
-                        x[(order - i + 1):(n.used - i), , drop = FALSE] %*% t(A)
-                }
+        cal.resid <- function() {
+            resid <- array(0, dim = c(n.used - order, nser))
+            for (i in 0:order) {
+                resid <- resid + x[(order - i + 1):(n.used - i),
+                                   , drop = FALSE] %*% t(ar[i + 1, , ])
             }
-            resid[(order + 1):n.used, ] <-
-                x[(order + 1):n.used, , drop = FALSE] - fitted
-            colnames(resid) <- snames
-            return(resid)
+            return(rbind(matrix(NA, order, nser), resid))
         }
-        ar.list <- vector("list", order.max)
+        order <- 0
         for (m in 0:order.max) {
-            var.pred <- cal.var.pred()
             xaic[m + 1] <- cal.aic()
+            if (!aic || xaic[m + 1] == min(xaic[1:(m + 1)])) {
+                ar <- A
+                order <- m
+                var.pred <- EA * n.used/(n.used - nser * (m + 1))
+            }
             if (m < order.max) {
                 solve.yw(m)
                 partialacf[m + 1, , ] <- -A[m + 2, , ]
-                ar.list[[m + 1]] <- -A[2:(m + 2), , , drop = FALSE]
             }
         }
         xaic <- xaic - min(xaic)
         names(xaic) <- 0:order.max
-        order <- if (aic) (0:order.max)[xaic == 0] else order.max
-        ar <- if (order > 0) ar.list[[order]] else array(0, dim = c(1, nser, nser))
+        resid <- cal.resid()
+        ar <- -ar[2:(max(order, 1) + 1), , , drop = FALSE]
         dimnames(ar) <- list(1:order, snames, snames)
         dimnames(var.pred) <- list(snames, snames)
         dimnames(partialacf) <- list(1:order.max, snames, snames)
-        resid <- cal.resid()
     } else {
         ## univariate case
         r <- as.double(drop(xacf))
@@ -128,7 +112,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
         xaic <- xaic - min(xaic)
         names(xaic) <- 0:order.max
         order <- if (aic) (0:order.max)[xaic == 0] else order.max
-        ar <- if (order > 0) coefs[order,1:order] else 0
+        ar <- if (order > 0) coefs[order, 1:order] else 0
         var.pred <- var.pred[order+1]
         ## Splus compatibility fix
         var.pred <- var.pred * n.used/(n.used - (order + 1))
@@ -140,7 +124,7 @@ ar.yw <- function (x, aic = TRUE, order.max = NULL, na.action = na.fail,
             attr(resid, "class") <- "ts"
         }
     }
-    res <- list(order=order, ar=ar, var.pred=var.pred, x.mean= drop(xm),
+    res <- list(order=order, ar=ar, var.pred=var.pred, x.mean = drop(xm),
                 aic = xaic, n.used=n.used, order.max=order.max,
                 partialacf=partialacf, resid=resid, method = "Yule-Walker",
                 series=series, frequency=xfreq, call=match.call())
@@ -159,10 +143,12 @@ print.ar <- function(x, digits = max(3, .Options$digits - 3), ...)
         res$ar <- aperm(res$ar, c(2,3,1))
         print(res, digits=digits)
     } else {
-        cat("Coefficients:\n")
-        coef <- round(x$ar, digits = digits)
-        names(coef) <- 1:x$order
-        print.default(coef, print.gap = 2)
+        if(x$order > 0) {
+            cat("Coefficients:\n")
+            coef <- drop(round(x$ar, digits = digits))
+            names(coef) <- seq(length=x$order)
+            print.default(coef, print.gap = 2)
+        }
         cat("\nOrder selected", x$order, " sigma^2 estimated as ",
             format(x$var.pred, digits = digits),"\n")
 
@@ -227,3 +213,4 @@ predict.ar <- function(object, newdata, n.ahead = 1, se.fit=TRUE, ...)
     pred <- ts(pred, start = st + dt, frequency=xfreq)
     if(se.fit) return(pred, se) else return(pred)
 }
+

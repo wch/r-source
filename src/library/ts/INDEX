@@ -27,8 +27,9 @@ Functions in package ts:
 -----------------------
 
 acf		Autocovariance and autocorrelation function
-ar              Wrapper for autoregression estimation functions
-ar.yw           Estimate autoregression model by solving Yule-Walker equations
+ar		Wrapper for autoregression estimation functions
+ar.ols		Estimate autoregression model by ordinary least squares
+ar.yw		Estimate autoregression model by solving Yule-Walker equations
 arima0		ARIMA modelling -- provisional version
 Box.test	Box-Pierce and Ljung-Box tests of independence
 ccf		Cross-covariance and cross-correlations for two series
@@ -37,24 +38,24 @@ cycle		Create time series giving the positions in a cycle
 		   of a time series
 deltat		Return time interval between observations
 diffinv		Discrete integration, the inverse of diff()
-embed           Embedding a time series
+embed		Embedding a time series
 filter		Linear filtering on a time series
-kernel          Smoothing kernel objects (and Daniell, Fejer and 
-                   (modified) Dirichlet kernels)
+kernel		Smoothing kernel objects (and Daniell, Fejer and 
+		   (modified) Dirichlet kernels)
 lag		Compute lagged version of time series
 na.contiguous	Find longest contiguous stretch of non-NAs
 na.omit.ts	na.omit method for time series
 pacf		Partial autocorrelation function
-plot.acf        Plot autocorrelation function
-plot.spec       Plot spectral density estimate
+plot.acf	Plot autocorrelation function
+plot.spec	Plot spectral density estimate
 plot.spec.coherency
 plot.spec.phase
 PP.test		Phillips-Perron test for unit root
 predict		methods for ar and arima0
-spec.ar	        Estimate spectral density by autoregression
-spec.pgram      Estimate spectral density from periodogram
-spec.taper      Taper by cosine bell
-spectrum        Wrapper for spectral density estimation functions
+spec.ar		Estimate spectral density by autoregression
+spec.pgram	Estimate spectral density from periodogram
+spec.taper	Taper by cosine bell
+spectrum	Wrapper for spectral density estimation functions
 stl		Seasonal decomposition using loess
 toeplitz	Generate Toeplitz matrix
 ts.intersect	Bind time series as multivariate ts over the common time base
@@ -71,27 +72,26 @@ options(ts.S.compat=TRUE) has been set.
 Datasets in base R:
 ------------------
 
-airmiles        Passenger-Miles on US Airlines 1937-1960
-co2             Moana Loa Atmospheric CO2 Concentrations
-nhtemp          Yearly Average Temperatures in New Haven CT
-presidents      Quarterly Approval Ratings for US Presidents
-sunspots        Monthly Mean Relative Sunspot Numbers
+airmiles	Passenger-Miles on US Airlines 1937-1960
+co2		Moana Loa Atmospheric CO2 Concentrations
+nhtemp		Yearly Average Temperatures in New Haven CT
+presidents	Quarterly Approval Ratings for US Presidents
+sunspots	Monthly Mean Relative Sunspot Numbers
 uspop		Populations Recorded by the US Census
 
 
 Datasets in package ts:
 ----------------------
 
-accdeaths       US accidental deaths 1973-8
-beaver1         time series of body temperatures of two beavers
-beaver2
-deaths          time-series on UK lung deaths 1974-9 from Diggle (1990)
+accdeaths	US accidental deaths 1973-8
+beaver		time series of body temperatures of two beavers
+deaths		time-series on UK lung deaths 1974-9 from Diggle (1990)
 mdeaths, fdeaths  as above, for males and females
-drivers         time series on UK road deaths of drivers from Harvey (1989)
-finance         daily closing prices of major European stock indices, 1991-1998
-lh              dataset on luteinizing hormone from Diggle (1990)
-nottem		time-series of temperatures in Nottingham, 1920-1939
+drivers 	time series on UK road deaths of drivers from Harvey (1989)
+finance 	daily closing prices of major European stock indices, 1991-1998
+lh		dataset on luteinizing hormone from Diggle (1990)
+nottem		monthly time-series of temperatures in Nottingham, 1920-1939
 sales		sales data with leading indicator
-sunspot.year	yearly sunspot data, 1700-1988
-sunspot.month	monthly sunspot data, 1749-1997
+sunspot		yearly sunspot data, 1700-1988
+		monthly sunspot data, 1749-1997
 treering	yearly tree ring data, -6000-1979
