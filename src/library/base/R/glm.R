@@ -619,10 +619,8 @@ print.summary.glm <-
 	p <- NCOL(correl)
 	if(p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")
-	    if(is.logical(symbolic.cor) && symbolic.cor) { # NULL < 1.7.0 objects
-		res <- symnum(correl)
-		colnames(res) <- rep("", p)
-		print(res)
+	    if(is.logical(symbolic.cor) && symbolic.cor) {# NULL < 1.7.0 objects
+		print(symnum(correl, abbr.col = NULL))
 	    } else {
 		correl <- format(round(correl, 2), nsmall = 2, digits = digits)
 		correl[!lower.tri(correl)] <- ""

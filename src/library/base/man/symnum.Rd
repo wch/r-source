@@ -10,6 +10,7 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
        legend = length(symbols) >= 3,
        na="?", eps=1e-5,
        corr = missing(cutpoints), show.max = if(corr) "1", show.min = NULL,
+       abbr.colnames = length(dimnames(ans)[[2]]),
        lower.triangular = corr & is.matrix(x),
        diag.lower.tri = corr & !is.null(show.max))
 }
@@ -35,11 +36,16 @@ symnum(x, cutpoints=c(0.3, 0.6, 0.8, 0.9, 0.95),
   \item{corr}{logical.  If \code{TRUE}, \code{x} contains correlations.
     The cutpoints are augmented by \code{0} and \code{1} and
     \code{abs(x)} is coded.}
-  \item{show.max}{If \code{TRUE}, or of mode \code{character}, the
+  \item{show.max}{if \code{TRUE}, or of mode \code{character}, the
     maximal cutpoint is coded especially.}
-  \item{show.min}{If \code{TRUE}, or of mode \code{character}, the
+  \item{show.min}{if \code{TRUE}, or of mode \code{character}, the
     minmal cutpoint is coded especially.}
-  \item{lower.triangular}{logical. If \code{TRUE} and \code{x} is a
+  \item{abbr.colnames}{logical, integer or \code{NULL} indicating how
+    column names should be abbreviated (if there are); if \code{NULL}
+    (or \code{FALSE} and \code{x} has no column names),
+    the column names will all be empty, i.e., \code{""}; otherwise if
+    \code{abbr.colnames} is false, they are left unchanged.}
+  \item{lower.triangular}{logical.  If \code{TRUE} and \code{x} is a
     matrix, only the \emph{lower triangular} part of the matrix is coded
     as non-blank.}
   \item{diag.lower.tri}{logical.  If \code{lower.triangular} \emph{and}
@@ -70,6 +76,9 @@ symnum(1:12 \%\% 3 == 0)# use for logical
 ##-- Symbolic correlation matrices:
 data(attitude)
 symnum(cor(attitude), diag = FALSE)
+symnum(cor(attitude), abbr.= NULL)
+symnum(cor(attitude), abbr.= FALSE)
+symnum(cor(attitude), abbr.= 2)
 
 symnum(cor(rbind(1, rnorm(25), rnorm(25)^2)))
 symnum(cor(matrix(rexp(30, 1), 5, 18))) # <<-- PATTERN ! --
