@@ -21,7 +21,7 @@
  *  I/O Support for Consoles and Character Vectors
  *
  *  This code provides analogues for the stdio routines "fgetc" and
- *  "ungetc" for "consoles" and character vectors.  These routines
+ *  (formerly) "ungetc" for "consoles" and character vectors.  These routines
  *  are used for parsing input from the console window and character
  *  vectors.
  */
@@ -67,11 +67,9 @@ int R_IoBufferFree(IoBuffer*);
 int R_IoBufferReadReset(IoBuffer*);
 int R_IoBufferWriteReset(IoBuffer*);
 int R_IoBufferGetc(IoBuffer*);
-int R_IoBufferUngetc(int, IoBuffer*);
 int R_IoBufferPutc(int, IoBuffer*);
 int R_IoBufferPuts(char*, IoBuffer*);
 
 int R_TextBufferInit(TextBuffer*, SEXP);
 int R_TextBufferFree(TextBuffer*);
 int R_TextBufferGetc(TextBuffer*);
-int R_TextBufferUngetc(int, TextBuffer*);

@@ -333,7 +333,6 @@ cr	:					{ EatLines = 1; }
 /*----------------------------------------------------------------------------*/
 
 static int (*ptr_getc)(void);
-static int (*ptr_ungetc)(int);
 
 /* Private pushback, since file ungetc only guarantees one byte.
    We need up to one MBCS-worth */
@@ -366,7 +365,6 @@ static int xxungetc(int c)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
-    /* return ptr_ungetc(c); */
     if(npush >= 16) return EOF;
     pushback[npush++] = c;
     return c;
@@ -1031,18 +1029,12 @@ static int file_getc(void)
     return R_fgetc(fp_parse);
 }
 
-static int file_ungetc(int c)
-{
-    return ungetc(c, fp_parse);
-}
-
 SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
     fp_parse = fp;
     ptr_getc = file_getc;
-    ptr_ungetc = file_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -1054,18 +1046,12 @@ static int buffer_getc()
     return R_IoBufferGetc(iob);
 }
 
-static int buffer_ungetc(int c)
-{
-    return R_IoBufferUngetc(c, iob);
-}
-
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
     iob = buffer;
     ptr_getc = buffer_getc;
-    ptr_ungetc = buffer_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -1077,18 +1063,12 @@ static int text_getc()
     return R_TextBufferGetc(txtb);
 }
 
-static int text_ungetc(int c)
-{
-    return R_TextBufferUngetc(c, txtb);
-}
-
 SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
     ParseInit();
     GenerateCode = gencode;
     txtb = textb;
     ptr_getc = text_getc;
-    ptr_ungetc = text_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -1102,7 +1082,6 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
     ParseInit();
     GenerateCode = gencode;
     ptr_getc = g_getc;
-    ptr_ungetc = g_ungetc;
     R_Parse1(status);
     return R_CurrentExpr;
 }
@@ -1173,7 +1152,6 @@ SEXP R_ParseFile(FILE *fp, int n, ParseStatus *status)
     R_ParseError = 1;
     fp_parse = fp;
     ptr_getc = file_getc;
-    ptr_ungetc = file_ungetc;
     return R_Parse(n, status);
 }
 
@@ -1191,18 +1169,12 @@ static int con_getc(void)
     return (last = c);
 }
 
-static int con_ungetc(int c)
-{
-    return Rconn_ungetc(c, con_parse);
-}
-
 SEXP R_ParseConn(Rconnection con, int n, ParseStatus *status)
 {
     GenerateCode = 1;
     R_ParseError = 1;
     con_parse = con;;
     ptr_getc = con_getc;
-    ptr_ungetc = con_ungetc;
     return R_Parse(n, status);
 }
 
@@ -1215,7 +1187,6 @@ SEXP R_ParseVector(SEXP text, int n, ParseStatus *status)
     GenerateCode = 1;
     R_ParseError = 1;
     ptr_getc = text_getc;
-    ptr_ungetc = text_ungetc;
     rval = R_Parse(n, status);
     R_TextBufferFree(&textb);
     return rval;
@@ -1228,7 +1199,6 @@ SEXP R_ParseGeneral(int (*ggetc)(), int (*gungetc)(), int n,
     GenerateCode = 1;
     R_ParseError = 1;
     ptr_getc = ggetc;
-    ptr_ungetc = gungetc;
     return R_Parse(n, status);
 }
 #endif
