@@ -62,7 +62,7 @@ gc <- function(verbose = .Options$verbose)
     matrix(.Internal(gc(verbose)),2,2,
            dimnames = list(c("Ncells","Vcells"),c("free","total")))
 gcinfo <- function(verbose).Internal(gcinfo(verbose))
-gctorture <- function(on=TRUE).Internal(gctorture(on))
+gctorture <- function(on=TRUE)invisible(.Internal(gctorture(on)))
 gray <- function(level).Internal(gray(level))
 lib.fixup <- function(env, globenv).Internal(lib.fixup(env, globenv)) ### NO DOC
 
