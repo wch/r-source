@@ -111,8 +111,9 @@ FORCE:
 
 .R.Rout:
 	@rm -f $@ $@.fail
-	@echo "running \`$<'"
+	@echo @ECHO_N@ "running code in \`$<' ...@ECHO_C@"
 	@$(R) < $< > $@ || (mv $@ $@.fail && exit 1)
+	@echo "@ECHO_T@ OK"
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ \
