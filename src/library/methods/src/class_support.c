@@ -5,10 +5,12 @@
 
 SEXP R_dummy_extern_place()
 {
-	error("calling the C routine used as an initializer for \"externalptr\" objects");
+    error("calling the C routine used as an initializer for \"externalptr\" objects");
+    return R_NilValue; /* -Wall */
 }
 
 SEXP R_externalptr_prototype_object()
 {
-	return R_MakeExternalPtr((void *)R_dummy_extern_place, R_NilValue, R_NilValue);
+    return R_MakeExternalPtr((void *)R_dummy_extern_place, R_NilValue, 
+			     R_NilValue);
 }

@@ -345,6 +345,7 @@ static SEXP R_S_sysfunction(int n, SEXP ev)
     return val;
 }
 
+#if 0 /* -Wall warns and this confuses users */
 static SEXP R_get_function_env(SEXP obj, SEXP fname)
 {
     if(TYPEOF(obj) != CLOSXP)
@@ -363,6 +364,7 @@ static SEXP R_get_from_f_env(SEXP env, SEXP what, SEXP fname)
 	      CHAR_STAR(what), CHAR_STAR(fname));
     return obj;
 }
+#endif
 
 /* quick tests for generic and non-generic functions.  May mistakenly
    identify non-generics as generics:  a class with data part of type
@@ -503,8 +505,8 @@ static SEXP nonstandard_primitive(primitive_type which, SEXP skeleton,
 /* C version of the standardGeneric R function. */
 SEXP R_standardGeneric(SEXP fname, SEXP ev, SEXP fdef)
 {
-    SEXP f_env, mlist, f, val, call, fsym;
-    int nprotect = 0; Rboolean prim_case;
+    SEXP f_env=R_NilValue, mlist=R_NilValue, f, val, call, fsym; /* -Wall */
+    int nprotect = 0; Rboolean prim_case = FALSE;
 
     if(!initialized)
 	R_initMethodDispatch();
