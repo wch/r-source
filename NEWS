@@ -437,6 +437,10 @@ C-LEVEL FACILITIES
 	compiled then the body is returned.  This is to support byte
 	compilation.
 
+    o	Internal support for executing byte compiled code has been added.
+	A compiler for producing byte compiled code will be made available
+	separately and should become part of a future R release.
+
 
 UTILITIES
 

@@ -23,6 +23,7 @@
 
 #define COUNTING
 
+#define BYTECODE
 #define NEW_CONDITION_HANDLING
 
 /* To test the write barrier used by the generational collector,
