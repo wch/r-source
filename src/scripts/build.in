@@ -42,7 +42,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.48 $ ';
+my $revision = ' $Revision: 1.49 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -306,7 +306,6 @@ sub prepare_pkg {
     }
 
     updateRdIndex("INDEX", "man", 0, $log);
-    updateRdIndex("data/00Index", "man", 1, $log) if(-d "data");
 
     if((-d "inst/doc")
        && list_files_with_exts("inst/doc", $vignette_exts_re)) {
@@ -325,7 +324,6 @@ sub prepare_pkg {
 		$log->result("OK");
 	    }
 	}
-	updateVignetteIndex("inst/doc/00Index.dcf", "inst/doc", $log);
     }
 
     1;
@@ -384,50 +382,6 @@ sub updateRdIndex {
     1;
 }
 
-sub updateVignetteIndex {
-    my ($oldindex, $dir, $log) = @_;
-    
-    my $newindex = ".Rbuildindex.$$";
-    
-    buildVignetteIndex($dir, $newindex);
-    updateIndex($oldindex, $newindex, $log);
-    
-    1;
-}
-
-sub buildVignetteIndex {
-    my ($dir, $newindex) = @_;
-
-    my $delimcurly = new Text::DelimMatch("\\{", "\\}");
-    $delimcurly->escape("\\");
-    my @entries = ();
-    my @Snwfiles = &list_files_with_exts("$dir", $vignette_exts_re);
-
-    foreach my $file (@Snwfiles) {
-	open(SNWFILE, "< $file")
-	    or die("Error: cannot open '$file' for reading");
-	my @text = <SNWFILE>;
-	@text = split(/\n\s*\%+\s*\\VignetteIndexEntry\{/,
-		      "\n" . join("\n", @text));
-	if($#text >= 1) {
-	    $delimcurly->match("\{" . $text[1]);
-	    $file =~ s/\.$vignette_exts_re$//;
-	    push(@entries,
-		 "$file.pdf: " . substr($delimcurly->matched, 1, -1));
-	}
-	close(SNWFILE);
-    }
-
-    open(NEWINDEX, "> $newindex")
-	or die("Error: cannot open '$newindex' for writing");
-    foreach my $entry (@entries) {
-	print NEWINDEX wrap("", "    ", $entry), "\n";
-    }
-    close(NEWINDEX);
-
-    1;
-
-}
 
 #**********************************************************
 
