@@ -47,10 +47,12 @@ R_PAPERSIZE = @R_PAPERSIZE@
 R_RD4DVI = @R_RD4DVI@
 R_RD4PDF = @R_RD4PDF@
 
-pkgsrcs_BASE = $(R_PKGS_BASE:=-pkg.tex)
-pkgsrcs_RECOMMENDED = $(R_PKGS_RECOMMENDED_EXPANDED:=-pkg.tex)
-pkgsrcs = $(pkgsrcs_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(pkgsrcs_RECOMMENDED)
-@USE_RECOMMENDED_PACKAGES_TRUE@USE_RECOMMENDED_PACKAGES = yes
+texinputs_BASE = $(R_PKGS_BASE:=-pkg.tex)
+texinputs_RECOMMENDED = $(R_PKGS_RECOMMENDED_EXPANDED:=-pkg.tex)
+R_PKGS_refman = base methods tools @USE_RECOMMENDED_PACKAGES_TRUE@ grid
+refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
+refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/Rd.sty
+fullrefman_TEXINPUTS = $(texinputs_BASE) @USE_RECOMMENDED_PACKAGES_TRUE@ $(texinputs_RECOMMENDED)
 
 texiincludes = version.texi $(srcdir)/R-defs.texi
 
@@ -88,7 +90,7 @@ docs: html
 	TEXINPUTS="$(srcdir):$$TEXINPUTS" $(TEXI2PDF) $<
 
 dvi: refman.dvi $(OBJECTS_DVI)
-refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
+refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	@if test "$(LATEX)" = false; then \
 	  echo "ERROR: 'latex' needed but missing on your system."; \
 	  exit 1; \
@@ -103,17 +105,9 @@ refman.dvi: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-dvi
 	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
-	  if test "$(USE_RECOMMENDED_PACKAGES)" = yes; then \
-	    echo "\\part{Base Packages}"; \
-	    pkgsrcs="$(pkgsrcs_BASE)"; \
-	    for p in $${pkgsrcs}; do echo "\\input{$${p}}"; done; \
-	    echo "\\part{Recommended Packages}"; \
-	    pkgsrcs=`(for p in $(pkgsrcs_RECOMMENDED); \
-	      do echo $${p}; done) | sort`; \
-	    for p in $${pkgsrcs}; do echo "\\input{$${p}}"; done; \
-	  else \
-	    for p in $(pkgsrcs_BASE); do echo "\\input{$${p}}"; done; \
-	  fi; \
+	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
@@ -127,9 +121,9 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
 	  echo "$${v}") > $@
-stamp-refman-dvi: $(pkgsrcs)
+stamp-refman-dvi: $(refman_TEXINPUTS)
 	@touch $@
-$(pkgsrcs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
+$(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
@@ -139,7 +133,7 @@ $(pkgsrcs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
-$(pkgsrcs_RECOMMENDED): FORCE
+$(texinputs_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -pkg.tex`; \
 	find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
 	    -print 2> /dev/null | grep $@ > /dev/null || \
@@ -148,6 +142,38 @@ $(pkgsrcs_RECOMMENDED): FORCE
 	  RLIB="$(top_builddir)/library" \
 	    $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	))
+
+fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
+	@if test "$(LATEX)" = false; then \
+	  echo "ERROR: 'latex' needed but missing on your system."; \
+	  exit 1; \
+	fi
+	@echo "DVI/LaTeX documentation: full reference index ..."
+	@rm -f *.aux fullrefman.toc fullrefman.ind stamp-fullrefman-dvi
+	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
+	  echo "\\documentclass[$${opt}]{book}"; \
+	  opt="$${R_RD4DVI-$(R_RD4DVI)}"; \
+	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  cat $(srcdir)/refman.top; \
+	  echo "\\part{}"; \
+	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
+	  echo "\\part{}"; \
+	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $(refman_TEXINPUTS); do \
+	    texinputs=`echo "$${texinputs}" | sed "s/$${f}//"`; \
+	  done; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
+	  cat $(srcdir)/refman.bot) > fullrefman.tex
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	@-$(MAKEINDEX) fullrefman
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  $(LATEX) '\nonstopmode\input{fullrefman.tex}'
+	@touch stamp-fullrefman-dvi
+stamp-fullrefman-dvi: $(fullrefman_TEXINPUTS)
 
 $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)
@@ -183,7 +209,7 @@ R-intro.info: $(texiincludes)
 R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
-refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
+refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	@if test "$(PDFLATEX)" = false; then \
 	  echo "ERROR: 'pdflatex' needed but missing on your system."; \
 	  exit 1; \
@@ -198,7 +224,9 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat $(srcdir)/refman.top; \
-	  for p in $(pkgsrcs_BASE); do echo "\\input{$${p}}"; done; \
+	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
 	  cat $(srcdir)/refman.bot) > refman.tex
 ## </NOTE>
 	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
@@ -212,8 +240,44 @@ refman.pdf: version.tex $(top_srcdir)/share/texmf/Rd.sty stamp-refman-pdf
 	  pool_size=500000 max_strings=50000 \
 	  $(PDFLATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-pdf
-stamp-refman-pdf: $(pkgsrcs_BASE)
+stamp-refman-pdf: $(texinputs_BASE)
 	@touch $@
+fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
+	@if test "$(PDFLATEX)" = false; then \
+	  echo "ERROR: 'pdflatex' needed but missing on your system."; \
+	  exit 1; \
+	fi
+	@echo "PDF/LaTeX documentation: full reference index ..."
+	@rm -f *.aux fullrefman.toc fullrefman.ind stamp-fullrefman-pdf
+	@(opt="$${R_PAPERSIZE-$(R_PAPERSIZE)}paper"; \
+	  echo "\\documentclass[$${opt}]{book}"; \
+	  opt="$${R_RD4PDF-$(R_RD4PDF)}"; \
+	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  cat $(srcdir)/refman.top; \
+	  echo "\\part{}"; \
+	  texinputs=`(for f in $(refman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
+	  echo "\\part{}"; \
+	  texinputs=`(for f in $(fullrefman_TEXINPUTS); \
+	    do echo $${f}; done) | LC_COLLATE=C sort`; \
+	  for f in $(refman_TEXINPUTS); do \
+	    texinputs=`echo "$${texinputs}" | sed "s/$${f}//"`; \
+	  done; \
+	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
+	  cat $(srcdir)/refman.bot) > fullrefman.tex
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
+	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	@-$(MAKEINDEX) fullrefman
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
+	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	@TEXINPUTS="$(top_srcdir)/share/texmf:$$TEXINPUTS" \
+	  pool_size=500000 max_strings=50000 dest_names_size=50000 \
+	  $(PDFLATEX) '\nonstopmode\input{fullrefman.tex}'
+	@touch stamp-fullrefman-pdf
+stamp-fullrefman-pdf: $(fullrefman_TEXINPUTS)
 
 $(OBJECTS_PDF): $(srcdir)/texinfo.tex $(srcdir)/pdfcolor.tex
 R-admin.pdf: $(texiincludes)
