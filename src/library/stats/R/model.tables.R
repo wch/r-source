@@ -303,7 +303,7 @@ replications <- function(formula, data = NULL, na.action)
 	}
 	if(length(select) > 0)
 	    tble <- tapply(dummy, unclass(data[select]), length)
-	nrep <- unique(tble)
+	nrep <- unique(as.vector(tble))
 	if(length(nrep) > 1) {
 	    balance <- FALSE
 	    tble[is.na(tble)] <- 0

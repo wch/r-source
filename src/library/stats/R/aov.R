@@ -561,6 +561,7 @@ se.contrast.aov <-
     }
     weights <- contrast.weight.aov(object, contrast)
     rdf <- object$df.resid
+    if(rdf == 0) stop("no degrees of freedom for residuals")
     resid <- as.matrix(object$residuals)
     wt <- object$weights
     if(!is.null(wt)) resid <- resid * wt^0.5
@@ -614,6 +615,7 @@ se.contrast.aovlist <-
             rank <- aov.object$rank
             rdf <- nobs - rank
         }
+        if(rdf == 0) return(NA)
         resid <- as.matrix(aov.object$residuals)
         wt <- aov.object$weights
         if(!is.null(wt)) resid <- resid * wt^0.5

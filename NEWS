@@ -873,6 +873,10 @@ BUG FIXES
     o	The 'datalist' file was not being used during installation
 	(2.0.1 only).
 
+    o	replications() was wrongly reporting lack of balance in 
+	designs with interactions (and had since unique() gained a
+	matrix method).
+
 
 
 		CHANGES IN R VERSION 2.0.1
