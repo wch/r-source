@@ -32,6 +32,7 @@ print(summary.lm.obj, digits = max(3, .Options$digits - 3),
 \alias{residuals.lm}
 \alias{weights}
 \alias{weights.lm}
+\alias{weights.default}
 \alias{plot.lm}
 \alias{plot.mlm}
 \alias{print.lm}
