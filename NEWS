@@ -118,7 +118,7 @@ BUG FIXES
 	recent versions of Tk, but conceivably not for old
 	tkConfig.sh files.
 
-    o   Detach was not recomputing the methods for primitives
+    o   detach() was not recomputing the methods for primitives
         correctly.
 
     o   "raw" added & "expression" partly fixed in basic classes, so
@@ -127,7 +127,7 @@ BUG FIXES
 
     o   Promised function getGroupMembers added.
 
-    o   Collecting warnings had message with unneeded trailing space.
+    o   Collected warnings had messages with unneeded trailing space.
 
     o   The ave() function had trouble if the grouping contained 
         unused levels. 
