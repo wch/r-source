@@ -51,8 +51,7 @@ subset(x, \dots)
 }
 \value{
   An object similar to \code{x} contain just the selected elements (for
-  a vector), rows (for a matrix) rows and columns (for a data frame),
-  and so on.
+  a vector), rows and columns (for a matrix or data frame), and so on.
 }
 \author{Peter Dalgaard and Brian Ripley}
 \seealso{
