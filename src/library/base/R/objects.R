@@ -168,10 +168,10 @@ getS3method <-  function(f, class, optional = FALSE)
 ###	MM thinks the one here is wrong
     findGeneric <- function(fname, envir) {
         if(!exists(fname, mode = "function", envir = envir)) return("")
-        if(any(fname == tools:::.getInternalS3generics())) return(fname)
+        if(any(fname == knownGenerics)) return(fname)
         f <- get(fname, mode = "function", envir = envir)
         if(.isMethodsDispatchOn() && is(f, "genericFunction")) {
-            ## maybe an S3 pseudo-generic was turned into the default
+            ## maybe an S3 generic was turned into the S4 default
             fdeflt <- finalDefaultMethod(getMethodsForDispatch(fname, f))
             if(is(fdeflt, "derivedDefaultMethod"))
                 f <- fdeflt
@@ -203,7 +203,8 @@ getS3method <-  function(f, class, optional = FALSE)
         isUME(body(f))
     }
 
-    S3groupGenerics <- tools:::.getS3groupGenerics()
+    knownGenerics <- c(tools:::.getInternalS3generics(),
+                       tools:::.getS3groupGenerics())
     truegf <- findGeneric(f, parent.frame())
     if(nchar(truegf)) f <- truegf
     else {
@@ -214,19 +215,18 @@ getS3method <-  function(f, class, optional = FALSE)
     if(exists(method, mode = "function", envir = parent.frame()))
         return(get(method, mode = "function", envir = parent.frame()))
     ## also look for registered method in namespaces
-    if(f %in% S3groupGenerics)
+    if(f %in% knownGenerics)
         defenv <- .BaseNamespaceEnv
     else {
         genfun <- get(f, mode="function", envir = parent.frame())
         defenv <- if (typeof(genfun) == "closure") environment(genfun)
         else .BaseNamespaceEnv
-        S3Table <- get(".__S3MethodsTable__.", envir = defenv)
-        S3reg <- ls(S3Table)
-        if(length(grep(gsub("([.[$])", "\\\\\\1", method), S3reg)))
-            return(get(method, envir = S3Table))
     }
-    if(optional) NULL
-    else stop("S3 method ", method, " not found")
+    S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+    S3reg <- ls(S3Table)
+    if(length(grep(gsub("([.[$])", "\\\\\\1", method), S3reg)))
+        return(get(method, envir = S3Table))
+    if(optional) NULL else stop("S3 method ", method, " not found")
 }
 
 getFromNamespace <- function(x, ns, pos = -1, envir = as.environment(pos))
