@@ -68,7 +68,8 @@ attr.all.equal(target, current, \dots)
   \emph{Programming with Data. A Guide to the S Language}.
   Springer (for \code{=}).
 }
-\seealso{\code{\link{==}}, and \code{\link{all}} for exact equality testing.}
+\seealso{\code{\link{identical}}, \code{\link{==}}, and \code{\link{all}} 
+for exact equality testing.}
 \examples{
 all.equal(pi, 355/113) # not precise enough (default tol) > relative error
 
