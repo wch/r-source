@@ -30,6 +30,6 @@ plot.xy(xy, type, pch=1, lty="solid", col=par("fg"), bg=NA, cex=1, \dots)
   \code{\link{lines}}.
 }
 \examples{
-points.default # to see how it calls "plot.xy(xy.coords(x, y), ...)"
+getAnywhere("points.default") # to see how it calls "plot.xy(xy.coords(x, y), ...)"
 }
 \keyword{aplot}
