@@ -28,7 +28,7 @@ SUBDIRS = R_ext
 TIMESTAMPS = $(SRC_HEADERS:.h=.ts) $(OBJ_HEADERS:.h=.ts)
 
 CLEANFILES = $(OBJ_HEADERS) stamp-R $(TIMESTAMPS)
-DISTCLEANFILES = Makefile config.h stamp-h
+DISTCLEANFILES = Makefile Rmath.h0 config.h stamp-h
 
 .SUFFIXES:
 .SUFFIXES: .h .ts
