@@ -975,7 +975,12 @@ LIBR_LDFLAGS="${SHLIB_LDFLAGS}"
 case "${host_os}" in
   darwin*)
     LIBR_EXT=".dylib"
-    LIBR_LDFLAGS="-dynamiclib"
+    ## <FIXME>
+    ## We need '-framework Carbon' because currently the Quartz device
+    ## driver gets linked to the main binary and hence also the R dylib.
+    ##  Change once the driver is modularized.
+    LIBR_LDFLAGS="-dynamiclib -framework Carbon"
+    ## </FIXME>
     ;;
 esac
 
