@@ -466,14 +466,14 @@ int main(int ac, char **av)
 #endif
     R_Quiet = 0;
 
-    if(p = getenv("R_VSIZE")) {
+    if((p = getenv("R_VSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if(ierr != 0 || value > Max_Vsize || value < Min_Vsize) 
 	    REprintf("WARNING: invalid R_VSIZE ignored;");
 	else
 	    R_VSize = value;
     }
-    if(p = getenv("R_NSIZE")) {
+    if((p = getenv("R_NSIZE"))) {
 	value = Decode2Long(p, &ierr);
 	if(ierr != 0 || value > Max_Nsize || value < Min_Nsize) 
 	    REprintf("WARNING: invalid R_NSIZE ignored;");
