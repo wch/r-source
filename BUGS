@@ -219,6 +219,11 @@ Subject: summary.rpart() in rpart package
 From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
 Date: Tue, 17 Feb 2004 17:07:02 -0600
 ..Unreadable, and no response to follow-up.
+* PR# 6701 *
+Subject: lookup.xport in foreign ignoring some datasets
+From: Svetlana Eden <svetlana.eden@vanderbilt.edu>
+Date: Fri, 26 Mar 2004 15:45:18 -0600
+..SAS version*5* is probably not supported.
 
 Directory:  Analyses
 
@@ -574,6 +579,16 @@ Directory:  Macintosh
 Subject: http://cran.r-project.org/bin/macosx/RAqua-FAQ.html not found
 From: Markus Gail <gail@gmx.de>
 Date: Mon, 22 Mar 2004 13:13:24 +0100
+* PR# 6700 *
+Subject: Mac OS X Limited User cannot access R
+From: nave@macalester.edu
+Date: Fri, 26 Mar 2004 17:01:13 +0100 (CET)
+* PR# 6708 *
+Subject: Greek symbols not generated on quartz device
+From: marksj@nrel.colostate.edu
+Date: Sun, 28 Mar 2004 09:54:48 +0200 (CEST)
+..Actually, a bug report on his installation of MacOS X 10.3.3, since it works on
+..10.2.8.
 
 Directory:  Misc
 
@@ -799,27 +814,15 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6695 *
-Subject: Odd error in R CMD check
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Thu, 25 Mar 2004 11:23:43 -0500
-* PR# 6700 *
-Subject: Mac OS X Limited User cannot access R
-From: nave@macalester.edu
-Date: Fri, 26 Mar 2004 17:01:13 +0100 (CET)
-* PR# 6701 *
-Subject: lookup.xport in foreign ignoring some datasets
-From: Svetlana Eden <svetlana.eden@vanderbilt.edu>
-Date: Fri, 26 Mar 2004 15:45:18 -0600
-* PR# 6702 *
-Subject: cbind/rbind fail on matrixes containing lists
-From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
-Date: Fri, 26 Mar 2004 17:08:28 -0500
-* PR# 6706 *
-Subject: exit() and stop() documentation
+* PR# 6709 *
+Subject: Cheap software on CDs, R.
+From: "Dirigible G. Tilt" <proton@the-fat-slags.com>
+Date: Sun, 28 Mar 2004 07:10:51 -0800
+* PR# 6710 *
+Subject: add "select" to subset docs
 From: ivo.welch@yale.edu
-Date: Sat, 27 Mar 2004 17:43:10 +0100 (CET)
-* PR# 6707 *
-Subject: Medications like Phentermine on sale now!
-From: "Mabel Stroud" <RGUTHXFN@iprolink.ch>
-Date: Sat, 27 Mar 2004 23:45:17 +0300
+Date: Sun, 28 Mar 2004 19:26:07 +0200 (CEST)
+* PR# 6711 *
+Subject: Help Documentation
+From: ivo welch <ivo.welch@yale.edu>
+Date: Sun, 28 Mar 2004 16:52:48 -0500
