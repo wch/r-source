@@ -31,7 +31,7 @@ Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
 
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
-$(srcdir)/configure: $(srcdir)/configure.in $(srcdir)/aclocal.m4
+$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(srcdir)/aclocal.m4
 	@cd $(srcdir) && autoconf
 
 R:
