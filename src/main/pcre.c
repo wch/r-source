@@ -43,11 +43,7 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     int i, j, n, nmatches;
     int igcase_opt, value_opt, erroffset;
-#ifdef SUPPORT_UTF8
-    int options = PCRE_UTF8;
-#else
     int options = 0;
-#endif
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
@@ -59,6 +55,10 @@ SEXP do_pgrep(SEXP call, SEXP op, SEXP args, SEXP env)
     value_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (value_opt == NA_INTEGER) value_opt = 0;
+
+#ifdef SUPPORT_UTF8
+    if(utf8locale) options = PCRE_UTF8;
+#endif
 
     if (!isString(pat) || length(pat) < 1 || !isString(vec))
 	errorcall(call, R_MSG_IA);
@@ -203,11 +203,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, rep, vec, ans;
     int i, j, n, ns, nns, nmatch, offset, re_nsub;
     int global, igcase_opt, erroffset;
-#ifdef SUPPORT_UTF8
-    int options = PCRE_UTF8;
-#else
     int options = 0;
-#endif
     char *s, *t, *u, *uu;
     const char *errorptr;
     pcre *re_pcre;
@@ -224,6 +220,9 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
 
+#ifdef SUPPORT_UTF8
+    if(utf8locale) options = PCRE_UTF8;
+#endif
     if (!isString(pat) || length(pat) < 1 ||
 	!isString(rep) || length(rep) < 1 ||
 	!isString(vec))
