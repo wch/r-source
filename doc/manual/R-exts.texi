@@ -3043,7 +3043,7 @@ distribution's parameters.  Argument @code{lower_tail} should be
 
 Note that you directly get the cumulative (or ``integrated'') @emph{hazard}
 function, @eqn{H(t) = - \log(1 - F(t)), H(t) = - log(1 - F(t))},
-by using 
+by using
 @example
 - p@var{dist}(t, ..., /*lower_tail = */ LFALSE, /* give_log = */ LTRUE)
 @end example
@@ -3100,22 +3100,64 @@ distributions.
 @end quotation
 @noindent
 The argument sequences are not all quite the same as the @R{} ones.
+@c ^^^ FIXME ?? (argument names in the C code wouldn't change the API ..) ^^
+@c {don't want to change the R function argument names} -- <<
 
 @node Mathematical Utilities, Mathematical Constants, Distribution functions, The R API
 @section Mathematical Utilities
-@findex R_pow
-@findex pythag
-@c @findex log1p
 There are a few other numerical utilities available as entry points.
 
+@c FIXME :  Not yet documented (but in the public API) are
+@c -----    ------------------
+@c ======== These are all mathematically non-trivial
+@c ======== whereas the "Mathematical Utilities" here are at least elementary.
+@c ======== We should hence use an extra [section + node] ...
+
+@c void	gammalims(double*, double*);
+@c double	lgammacor(double);
+@c double	gammafn(double);
+@c double	gamma_cody(double);
+@c double	lgammafn(double);
+@c void	dpsifn(double, int, int, int, double*, int*, int*);
+@c double	digamma(double);
+@c double	trigamma(double);
+@c double	tetragamma(double);
+@c double	pentagamma(double);
+@c
+@c double	choose(double, double);
+@c double	lchoose(double, double);
+@c double	fastchoose(double, double);
+@c double	lfastchoose(double, double);
+@c
+@c 	/* Bessel Functions of All Kinds */
+@c
+@c double	bessel_i(double, double, double);
+@c double	bessel_j(double, double);
+@c double	bessel_k(double, double, double);
+@c double	bessel_y(double, double);
+@c void	I_bessel(double*, double*, long*, long*, double*, long*);
+@c void	J_bessel(double*, double*, long*,	 double*, long*);
+@c void	K_bessel(double*, double*, long*, long*, double*, long*);
+@c void	Y_bessel(double*, double*, long*,	 double*, long*);
+@c
+@c 	/* Beta and Related Functions */
+@c
+@c double	beta(double, double);
+@c double	lbeta(double, double);
+
+
+@findex R_pow
 @smallexample
-double R_pow(double x, double y)
+double R_pow(double x, double y);
+double R_pow_di(double x, int i);
 @end smallexample
 @noindent
-@code{R_pow(x,y)} computes @code{x ^ y} using @code{R_FINITE} checks and
-returning the proper result (the same as @R{}) for the cases where @code{x}
-or @code{y} are 0 or missing or infinite or @code{NaN}.
+@code{R_pow(x,y)} and @code{R_pow(x,i)} compute @code{x ^ y} and @code{x ^ i},
+respectively using @code{R_FINITE} checks and returning the proper result
+(the same as @R{}) for the cases where @code{x}, @code{y} or @code{i} are 0
+or missing or infinite or @code{NaN}.
 
+@findex pythag
 @smallexample
 double pythag(double a, double b)
 @end smallexample
@@ -3124,6 +3166,63 @@ double pythag(double a, double b)
 destructive underflow: for example it still works when both @code{a} and
 @code{b} are between @code{1e200} and @code{1e300} (in IEEE double
 precision).
+
+@findex log1p
+@smallexample
+double log1p(x)
+@end smallexample
+@noindent
+@code{log1p(x)} computes @code{log(1 + x)} (@emph{log 1 @b{p}lus x}),
+accurately even for small x, i.e. @eqn{|x| \ll 1, |x| << 1}.
+
+@findex imax2
+@findex imin2
+@findex fmax2
+@findex fmin2
+@smallexample
+int	imax2(int x, int y);
+int	imin2(int x, int y);
+double	fmax2(double x, double y);
+double	fmin2(double x, double y);
+@end smallexample
+@noindent
+return the larger (@code{max}) or smaller (@code{min}) of two integer or
+double numbers, respectively.
+
+@findex sign
+@findex fsign
+@smallexample
+double	sign(double x);
+double	fsign(double x, double y);
+@end smallexample
+@noindent
+compute the @emph{signum} function,
+where sign(x) is  1, 0, or -1, when x is positive, 0, or negative, respectively.
+@*
+@code{fsign(x,y)} performs ``transfer of sign'' and is defined as
+@eqn{|x| \hbox{sign}(y), |x| * sign(x)}.
+
+@findex fprec
+@findex fround
+@smallexample
+double fprec (double x, double digits);
+double fround(double x, double digits);
+@end smallexample
+@noindent
+@code{fround(x, dig)} returns the value of @code{x} rounded to @code{dig}
+decimal digits ``after the decimal point''. This is the function used
+by @R{}'s @code{round()}.
+@*
+@code{fprec(x, dig)} returns the value of @code{x} rounded to @code{dig}
+@emph{significant} decimal digits.  This is the function used by @R{}'s
+@code{signif()}.
+
+@c --- FIXME : These are not yet in there
+@c double	ftrunc(double);
+@c double	fmod(double, double);
+@c
+@c double	fsquare(double);
+@c double	fcube(double);
 
 
 @node Mathematical Constants, Utility functions, Mathematical Utilities, The R API
