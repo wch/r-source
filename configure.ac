@@ -506,7 +506,9 @@ esac
 
 ## Readline.
 if test "${use_readline}" = yes; then
+  AC_CHECK_HEADERS(readline/history.h readline/readline.h)
   r_save_LIBS="${LIBS}"
+  LIBS=
   ## don't use the cached value as we need to rebuild LIBS
   unset ac_cv_lib_readline_rl_callback_read_char
   AC_CHECK_LIB(readline, rl_callback_read_char)
@@ -520,10 +522,10 @@ if test "${use_readline}" = yes; then
     AC_CHECK_LIB(readline, rl_callback_read_char)
     use_readline="${ac_cv_lib_readline_rl_callback_read_char}"
   fi
-  if test "${use_readline}" = no; then
-    LIBS="${r_save_LIBS}"
-  fi
+  READLINE_LIBS="${LIBS}"
+  LIBS="${r_save_LIBS}"
 fi
+AC_SUBST(READLINE_LIBS)
 
 ### * Checks for header files.
 
@@ -536,8 +538,7 @@ AC_HEADER_SYS_WAIT
 ## includes.
 AC_CHECK_HEADERS(arpa/inet.h dl.h dlfcn.h elf.h fcntl.h floatingpoint.h \
   fpu_control.h grp.h ieee754.h ieeefp.h limits.h locale.h \
-  netdb.h netinet/in.h \
-  pwd.h readline/history.h readline/readline.h strings.h \
+  netdb.h netinet/in.h pwd.h strings.h \
   sys/param.h sys/select.h sys/socket.h sys/stat.h sys/time.h \
   sys/times.h sys/utsname.h unistd.h wchar.h)
 ## </NOTE>

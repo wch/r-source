@@ -143,7 +143,7 @@ R: Makefile
 	(cd $(@D); $(MAKE) $(@F))
 
 $(R_binary): $(R_bin_OBJECTS) $(R_bin_DEPENDENCIES)
-@WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(LIBS)
+@WANT_R_SHLIB_FALSE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) $(R_bin_LDADD) $(READLINE_LIBS) $(LIBS)
 @WANT_R_SHLIB_TRUE@	$(MAIN_LINK) -o $@ $(R_bin_LDFLAGS) $(R_bin_OBJECTS) -L../../lib -lR
 
 install-bin-local: $(R_binary)
@@ -163,7 +163,7 @@ $(libR_la): $(libR_la_OBJECTS) $(libR_la_DEPENDENCIES)
 ## against ... the definition of $(SHLIB_LINK) in the top level Makeconf
 ## has a libtool conditional which we do not have here (as we currently
 ## cannot use libtool anyway).
-	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(LIBS)
+	$(DYLIB_LINK) $(LIBR_LDFLAGS) -o $@ $(libR_la_LDFLAGS) $(libR_la_OBJECTS) `ls ../appl/*.lo ../nmath/*.lo ../unix/*.lo  2>/dev/null` $(libR_la_LIBADD) $(READLINE_LIBS) $(LIBS)
 ## </FIXME>
 
 install-lib-local: $(libR_la)
