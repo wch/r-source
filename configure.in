@@ -182,7 +182,7 @@ AC_C_CONST
 AC_TYPE_SIGNAL
 AC_FUNC_VFORK
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(strtod strtol isnan matherr times)
+AC_CHECK_FUNCS(strtod strtol isnan finite matherr times)
 AC_CHECK_FUNCS(rint)
 AC_CHECK_FUNCS(asinh acosh atanh)
 AC_CHECK_FUNCS(regcomp)

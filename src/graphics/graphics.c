@@ -24,8 +24,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-int finite(double);
-
 #define	DEG2RAD		0.01745329251994329576
 #define XINVFMAP(x)	((x - GP->fig2dev.ax)/GP->fig2dev.bx)
 #define YINVFMAP(y)	((y - GP->fig2dev.ay)/GP->fig2dev.by)

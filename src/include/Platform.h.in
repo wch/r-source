@@ -6,6 +6,7 @@
 /* Floating Point Arithmetic */
 #undef HAVE_MATHERR		/* System V */
 #undef HAVE_ISNAN		/* IEEE Arith indicator */
+#undef HAVE_FINITE
 
 /* Signal Handler Type */
 #define RETSIGTYPE int
