@@ -37,7 +37,7 @@ as.dendrogram(object, \dots)
 
 \method{rev}{dendrogram}(x)
 
-\method{str}{dendrogram}(object, max.level = 2, digits.d = 3,
+\method{str}{dendrogram}(object, max.level = 0, digits.d = 3,
     give.attr = FALSE, wid = getOption("width"),
     nest.lev = 0, indent.str = "", stem = "--", \dots)
 }
@@ -73,8 +73,9 @@ as.dendrogram(object, \dots)
     \code{\link{print.default}}.}
   \item{max.level, digits.d, give.attr, wid, nest.lev, indent.str}{%
     arguments to \code{str}, see \code{\link{str.default}()}.  Note that
-    by default, \code{max.level = 2}, only the first two levels are
-    displayed by \code{str()} and that \code{give.attr = FALSE} still
+    %% by default, \code{max.level = 2}, only the first two levels are
+    %% displayed by \code{str()} and that
+    \code{give.attr = FALSE} still
     shows \code{height} and \code{members} attributes for each node.}
   \item{stem}{a string used for \code{str()} specifying the \emph{stem}
     to use for each dendrogram branch.}

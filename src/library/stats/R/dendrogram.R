@@ -126,10 +126,14 @@ print.dendrogram <- function(x, digits = getOption("digits"), ...)
 }
 
 str.dendrogram <-
-function (object, max.level = 2, digits.d = 3, give.attr = FALSE,
+function (object, max.level = 0, digits.d = 3, give.attr = FALSE,
           wid = getOption("width"), nest.lev = 0, indent.str = "",
           stem = "--", ...)
 {
+## MM: Maybe improve this :
+## -- e.g. when 'object' is part of a larger structure which *is* str()ed
+## with default max.level= 0,  the dendrogram shouldn't be str()ed to all levels
+
     ## FIXME: `wid' argument is currently disregarded
     pasteLis <- function(lis, dropNam, sep = " = ") {
 	## drop uninteresting "attributes" here
