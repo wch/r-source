@@ -87,8 +87,8 @@ typedef union
 } ieee_double;
 
 /* These variables hw and lw are only used if IEEE_754 is defined.
-   The value of each is fixed once we determine the endiannes
-   of the machine, and this cna be done via WORDS_BIGENDIAN.
+   The value of each is fixed once we determine the endianness
+   of the machine, and this can be done via WORDS_BIGENDIAN.
 
    Earlier code used to use establish_endianness()
    to compute these, but this is uncessary and makes them
