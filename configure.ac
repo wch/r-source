@@ -1399,6 +1399,7 @@ AC_CONFIG_FILES(
   src/scripts/check
   src/scripts/f77
   src/unix/Makefile
+  share/perl/build-help.pl
   tests/Makefile
   tests/Embedding/Makefile
   tests/Examples/Makefile

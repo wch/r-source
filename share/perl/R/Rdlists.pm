@@ -100,6 +100,16 @@ sub buildinit {
 	@mandir = sort(values %Rds);
 	push @mandir, sort(values %RdsOS);
     }
+    if(-d $main::AQUAdir) {
+	foreach $file (@mandir) { $Rds{$file} = $file; }
+	opendir man, $main::AQUAdir;
+	foreach $file (readdir(man)) {
+	    delete $Rds{$file};
+	    $RdsOS{$file} = file_path($main::OSdir, $file);
+	}
+	@mandir = sort(values %Rds);
+	push @mandir, sort(values %RdsOS);
+    }
     ## </FIXME>
 
     ($pkg_name, $lib, @mandir);
