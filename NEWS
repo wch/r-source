@@ -6,6 +6,9 @@
 
 NEW FEATURES
 
+    o   parse.dcf for parsing files in debian control file format
+        (DESCRIPTION, CONTENTS, ...)
+
     o   All HTML pages now use the new style sheet doc/html/R.css
 
     o  	S.h now contains (via Rdefines.h) a MESSAGE macro, and
