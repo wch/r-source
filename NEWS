@@ -3,7 +3,7 @@
 NEW FEATURES
 
     o	library(... , warn.conflicts = TRUE)
-	now prints all conflicts arising from attach the given package.
+	now prints all conflicts arising from attaching the given package.
 
     o	new  .Platform	variable  for better modularizing
 	platform dependence. __This_is_"beta"_and_bound_to_be_changed___
