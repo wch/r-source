@@ -517,6 +517,15 @@ unpack-recommended:
 clean-recommended:
 	@for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do $(RM) -r ../library/$${i} ; done
 
+ifeq ($(strip $(HELP)),YES)
+ifeq ($(strip $(WINHELP)),CHM)
+DOCSTYPE=chm
+else
+DOCSTYPE=normal
+endif
+else
+DOCSTYPE=none
+endif
 
 recommended: unpack-recommended
 	@$(ECHO) "--- Making recommended packages"
@@ -526,7 +535,7 @@ ifeq ($(strip $(BUILD)),CROSS)
         done
 else
 	@for p in $(R_PKGS_RECOMMENDED_SOURCES); do \
-	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe ../library/$${p} || exit 1; \
+	  $(RHOME)/bin/rcmd.exe INSTALL --unsafe ../library/$${p} --docs=$(DOCSTYPE) || exit 1; \
 	done
 endif
 
