@@ -4,6 +4,14 @@ frequency <- function(x, ...) UseMethod("frequency")
 time	<- function(x, ...) UseMethod("time")
 window	<- function(x, ...) UseMethod("window")
 
+# The first 2 as requested by  <la-jassine@aix.pacwan.net>
+start.default	<- function (x) start(ts(x))
+end.default	<- function (x)	end(ts(x))
+frequency.default<-function (x) frequency(ts(x))
+time.default	<- function (x)	time(ts(x))
+window.default	<- function (x)	window(ts(x))
+
+
 options(ts.eps = 1e-5)#- default as S
 
 ts <- function(data=NA, start=1, end=numeric(0), frequency=1, deltat=1,
@@ -95,7 +103,7 @@ end.ts <- function(x)
 
 frequency.ts <- function(x) { attr(as.ts(x), "tsp")[3] }
 
-time.ts <- function (x) 
+time.ts <- function (x)
 {
 	x <- as.ts(x)
 	n <- if(is.matrix(x)) nrow(x) else length(x)
@@ -167,9 +175,9 @@ function (x, type="l", xlim, ylim, xlab = "Time", ylab, log="",
 		lines.default(time.x, x, col=col[1], bg=bg, lty=lty[1],
 			pch=pch[1], type=type)
 	}
-	
+
 	pars <- list(...)
-	if (ann) 
+	if (ann)
 		title(main = main, xlab = xlab, ylab = ylab, pars = pars)
 	if (axes) {
 		axis(1, pars = pars)
