@@ -18,11 +18,11 @@ run: $(PKG)-Ex.R
 
 $(PKG)-Ex.R: $(RLIB)/$(PKG)/R-ex/*.R
 	@$(ECHO) "Massaging examples into '$(PKG)-Ex.R' ..."
-	@$(SED) -e s/@PKG@/$(PKG)/ -e s+@RLIB@+$(RLIB)+ \
-	  $(RHOME)/src/gnuwin32/check/makeRex.R > MakeRex.R
-	@$(R) --quiet < makeRex.R > nul
-	@$(RM) makeRex.R
-
+#	@$(SED) -e s/@PKG@/$(PKG)/ -e s+@RLIB@+$(RLIB)+ \
+#	  $(RHOME)/src/gnuwin32/check/makeRex.R > MakeRex.R
+#	@$(R) --quiet < makeRex.R > nul
+#	@$(RM) makeRex.R
+	@$(RHOME)/bin/Rcmd massage-Examples.sh $(PKG) $^ > $@
 
 test-src-1=$(shell ls *.R 2> nul)
 test-src-auto=$(shell ls *.Rin 2> nul | sed 's/Rin$$/R/')
