@@ -2,7 +2,7 @@ package R::Dcf;
 
 =head1 NAME
     
-  R::Dcf - parse files in dcf format.
+  R::Dcf - parse files in DCF format.
     
 =head1 SYNOPSIS
 
@@ -65,7 +65,7 @@ sub new {
 		$record{ $field } .= $_;
 	    }
 	    else{
-		die "Malformed DCF file (line $.)\n";
+		die "Malformed DCF file (file $file, line $.)\n";
 	    }
 	}
 	else{
@@ -76,7 +76,7 @@ sub new {
 		$keyval = $record{ $field } if($field eq $key);
 	    }
 	    else{
-		die "Malformed DCF file (line $.)\n";
+		die "Malformed DCF file (file $file, line $.)\n";
 	    }
 	}
     }
@@ -88,7 +88,3 @@ sub new {
 }
 
 1;
-
-
-
-
