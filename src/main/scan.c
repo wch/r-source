@@ -59,7 +59,6 @@ static int ConsoleGetchar()
     return *ConsoleBufp++;
 }
 
-
 static int save = 0;
 static int sepchar = 0;
 static FILE *fp;
@@ -349,7 +348,7 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     for (i = 0; i < nc; i++) {
 	if (!isVector(VECTOR(what)[i])) {
 	    if (!ttyflag) fclose(fp);
-	    error("\"scan\" invalid \"what=\" specified");
+	    error("\"scan\": invalid \"what=\" specified");
 	}
 	VECTOR(ans)[i] = allocVector(TYPEOF(VECTOR(what)[i]), blksize);
     }
@@ -465,6 +464,23 @@ static SEXP scanFrame(SEXP what, int maxitems, int maxlines, int flush,
     return ans;
 }
 
+#define scan_sep_check				\
+    if (isString(sep) || isNull(sep)) {		\
+	if (LENGTH(sep) == 0)			\
+	    sepchar = 0;			\
+	else					\
+	    sepchar = CHAR(STRING(sep)[0])[0];	\
+    }						\
+    else					\
+	errorcall(call, "invalid sep value");
+
+#define scan_file						\
+	ttyflag = 0;						\
+	filename = R_ExpandFileName(filename);			\
+	if ((fp = R_fopen(filename, "r")) == NULL)		\
+	    errorcall(call, "can't open file %s", filename);	\
+	for (i = 0; i < nskip; i++)				\
+	    while ((c = scanchar()) != '\n' && c != R_EOF);
 
 SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -485,45 +501,31 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     stripwhite = CAR(args);	   args = CDR(args);
     quiet = asLogical(CAR(args));
 
-    if (quiet == NA_LOGICAL)
-	quiet = 0;
-    if (nskip < 0 || nskip == NA_INTEGER)
-	nskip = 0;
-    if (nlines < 0 || nlines == NA_INTEGER)
-	nlines = 0;
-    if (nmax < 0 || nmax == NA_INTEGER)
-	nmax = 0;
+    if (quiet == NA_LOGICAL)			quiet = 0;
+    if (nskip < 0 || nskip == NA_INTEGER)	nskip = 0;
+    if (nlines < 0 || nlines == NA_INTEGER)	nlines = 0;
+    if (nmax < 0 || nmax == NA_INTEGER)		nmax = 0;
 
-    if (isString(sep) || isNull(sep)) {
-	if (LENGTH(sep) == 0)
-	    sepchar = 0;
-	else
-	    sepchar = CHAR(STRING(sep)[0])[0];
-    }
-    else
-	errorcall(call, "invalid sep value");
     if (TYPEOF(stripwhite) != LGLSXP)
 	errorcall(call, "invalid strip.white value");
     if (length(stripwhite) != 1 && length(stripwhite) != length(what))
 	errorcall(call, "invalid strip.white length");
     if (TYPEOF(NAstrings) != STRSXP)
 	errorcall(call, "invalid na.strings value");
+
+    scan_sep_check
+
     filename = NULL;
-    if (!isNull(file) && isString(file)) {
-	filename = CHAR(*STRING(file));
-	if (strlen(filename) == 0)
+    if (isValidString(file)) {
+	filename = CHAR(STRING(file)[0]);
+	if (strlen(filename) == 0)/* file == "" */
 	    filename = NULL;
     }
     else
-	errorcall(call, "\"scan\" file name required");
+	errorcall(call, "invalid file name");
 
     if (filename) {
-	ttyflag = 0;
-	filename = R_ExpandFileName(filename);
-	if ((fp = R_fopen(filename, "r")) == NULL)
-	    error("\"scan\" can't open file");
-	for (i = 0; i < nskip; i++)
-	    while ((c = scanchar()) != '\n' && c != R_EOF);
+	scan_file
     }
     else ttyflag = 1;
 
@@ -548,12 +550,12 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     case CPLXSXP:
 	if (!ttyflag)
 	    fclose(fp);
-	error("scan(): what=\"complex\" is not yet supported");
+	errorcall(call, "what=\"complex\" is not yet supported");
 #endif
     default:
 	if (!ttyflag)
 	    fclose(fp);
-	error("\"scan\" invalid \"what=\" specified");
+	errorcall(call, "invalid \"what=\" specified");
     }
     if (!ttyflag)
 	fclose(fp);
@@ -569,36 +571,22 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
 
-    file = CAR(args); args = CDR(args);
-    sep = CAR(args); args = CDR(args);
+    file = CAR(args);	args = CDR(args);
+    sep = CAR(args);	args = CDR(args);
     nskip = asInteger(CAR(args));
 
     if (nskip < 0 || nskip == NA_INTEGER) nskip = 0;
 
-    if (isString(sep) || isNull(sep)) {
-	if (length(sep) == 0) sepchar = 0;
-	else sepchar = CHAR(STRING(sep)[0])[0];
-    }
-    else errorcall(call, "invalid sep value");
+    scan_sep_check
 
-    if (isValidString(file)) {
-	filename = CHAR(*STRING(file));
-	if (strlen(filename) == 0)
-	    filename = NULL;
+    if (isValidStringF(file)) {
+	filename = CHAR(STRING(file)[0]);
     }
     else
-	filename = NULL;
-
-    if (filename == NULL)
-	errorcall(call, "\"scan\" file name required");
+	errorcall(call, "invalid file name");
 
     if (filename) {
-	ttyflag = 0;
-	filename = R_ExpandFileName(filename);
-	if ((fp = R_fopen(filename, "r")) == NULL)
-	    error("\"scan\" can't open file");
-	for (i = 0; i < nskip; i++)
-	    while ((c = scanchar()) != '\n' && c != R_EOF);
+	scan_file
     }
 
     blocksize = SCAN_BLOCKSIZE;
@@ -674,6 +662,8 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     UNPROTECT(1);
     return bns;
 }
+#undef scan_sep_check
+#undef scan_file
 
 /* frame.convert(char, na.strings, as.is) */
 
