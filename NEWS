@@ -88,8 +88,8 @@ NEW FEATURES
 	vector now wraps it in as.integer() so it will be source()d
 	correctly.  (Related to PR#4361.)
 
-    o   .Deprecated() has a new argument `package' which is used in
-        the warning message for non-base packages.
+    o	.Deprecated() has a new argument `package' which is used in
+	the warning message for non-base packages.
 
     o	The print() method for "difftime" objects now handles arrays.
 
@@ -423,9 +423,9 @@ UTILITIES
     o	Option 'repositories' to list URLs for package repositories
 	added.
 
-    o   package.description() has been replaced by packageDescription().
+    o	package.description() has been replaced by packageDescription().
 
-    o   R CMD INSTALL/build now skip Subversion's .svn directories as
+    o	R CMD INSTALL/build now skip Subversion's .svn directories as
 	well as CVS directories.
 
 
@@ -770,40 +770,42 @@ BUG FIXES
     o	Sweave no longer wraps the output of code chunks with
 	echo=false and results=tex in Schunk environments.
 
-    o   termplot() handles models with missing data better, especially
-        with na.action=na.exclude.
+    o	termplot() handles models with missing data better, especially
+	with na.action=na.exclude.
 
     o	1:2 * 1e-100  now prints with correct number of spaces.
 
-    o   Negative subscripts that were out of range or NA were not handled
-        correctly.  Mixing negative and NA subscripts is now caught as
-        an error: it was not caught on some platforms and segfaulted
-        on others.
+    o	Negative subscripts that were out of range or NA were not handled
+	correctly.  Mixing negative and NA subscripts is now caught as
+	an error: it was not caught on some platforms and segfaulted
+	on others.
 
-    o   gzfile() connections had trouble at EOF when used on uncompressed
+    o	gzfile() connections had trouble at EOF when used on uncompressed
 	file.
 
-    o   The Unix version of dataentry segfaulted if the `Copy' button
+    o	The Unix version of dataentry segfaulted if the `Copy' button
 	was used.  (PR#6605)
 
-    o   unlist on lists containing expressions now works (PR#5628)
+    o	unlist on lists containing expressions now works (PR#5628)
 
     o	D(), deriv() and deriv3() now also can deal with gamma and lgamma.
 
-    o   The X11 module can now be built against XFree86 4.4.0 headers (still
+    o	The X11 module can now be built against XFree86 4.4.0 headers (still
 	with some warnings).
 
-    o   seq.POSIXt(from, to, by="DSTdays") was shorter than expected
+    o	seq.POSIXt(from, to, by="DSTdays") was shorter than expected
 	for rare times in the UK time zone.  (PR#4558)
 
-    o   c/rbind() did not support vectors/matrices of mode "list".  (PR#6702)
+    o	c/rbind() did not support vectors/matrices of mode "list".  (PR#6702)
 
-    o   summary() methods for POSIX[cl]t and Date classes coerced the
+    o	summary() methods for POSIX[cl]t and Date classes coerced the
 	number of NAs to a date on printing.
 
-    o	KalmanSmooth would sometimes return NA values with NA inputs. 
+    o	KalmanSmooth would sometimes return NA values with NA inputs.
 	(PR#6738)
- 
+
+    o	fligner.test() worked correctly only if data were already sorted
+	by group levels. (PR#6739)
 
 
 
@@ -967,9 +969,6 @@ BUG FIXES
     o	Conversion to POSIXlt (including printing) of POSIXct dates
 	before 1902 and after 2038 computed which were leap years from
 	(year-1900) so got some xx00 years wrong.
-
-    o   fligner.test() worked correctly only if data were already sorted
-        by group levels. (PR#6739)
 
 
 		CHANGES IN R VERSION 1.8.0
