@@ -109,3 +109,181 @@ zip.file.extract <- function(file, zipname="R.zip")
     }
     file
 }
+
+### the following functions support update.packages()
+
+parse.description <- function(desc)
+{
+    ## remove empty lines
+    ok <- grep("^[ \t]+$", desc)
+    if(length(ok)>0){
+        desc <- desc[!ok]
+    }
+
+    ## put continuation lines into single fields\
+    ## remove leading whitespace
+    lastok <- 1
+    for(k in 1:length(desc)){
+        if(length(grep("^[ \t]+", desc[k])) > 0){
+            desc[lastok] <- paste(desc[lastok],
+                                  sub("^[ \t]+", "", desc[k]),
+                                  sep="\n")
+            desc[k] <- NA
+        }
+        else
+        {
+            lastok <- k
+        }
+    }
+    desc <- desc[!is.na(desc)]
+
+    retval <- list(Package=NA, Version=NA)
+
+    ## all before the first `:' is the field name, the rest is the
+    ## value of the field. For Version make sure that only the number
+    ## gets extracted (some people put dates or something else on the
+    ## same line).
+
+    for(d in desc){
+        x <- sub("^([^:]*):.*$", "\\1", d)
+        y <- sub("^[^:]*:[ \t]*(.*)$", "\\1", d)
+        if(x=="Version")
+            y <- unlist(strsplit(y, " "))[1]
+        retval[[x]] <- y
+    }
+    retval
+}
+
+installed.packages <- function(lib.loc = .lib.loc)
+{
+    retval <- NULL
+    for(lib in lib.loc)
+    {
+        pkgs <- .packages(all.available=TRUE, lib.loc = lib)
+        for(p in pkgs){
+            descfile <- system.file("DESCRIPTION", pkg=p, lib=lib)
+            if(descfile != ""){
+                desc <- scan("", file=descfile, sep="\n", quiet=TRUE)
+                desc <- parse.description(desc)
+            }
+            else
+                desc <- list(Version=NA)
+            retval <- rbind(retval, c(p, lib, desc$Version))
+        }
+    }
+    colnames(retval) <- c("Package", "LibPath", "Version")
+    retval
+}
+
+CRAN.packages <- function(CRAN=options("CRAN"),
+                          method=c("wget", "lynx"))
+{
+    method <- match.arg(method)
+
+    tmpf <- tempfile()
+    download.file(url=paste(CRAN,
+                  "/bin/windows/windows-NT/contrib/README", sep=""),
+                  destfile=tmpf, method=method)
+    alldesc <- scan("", file=tmpf, sep="\n", quiet=TRUE)
+    unlink(tmpf)
+    pkgstart <- c(grep("^.+\\.zip", alldesc), length(alldesc)+1)
+    retval <- NULL
+    for(k in 1:(length(pkgstart)-1)){
+        line <- alldesc[pkgstart[k]]
+        Package <- sub("\\.zip.*", "", line)
+        Version <- sub("^.+\\.zip[ \t]*", "", line)
+        Version <- sub("[ \t]+.*$", "", Version)
+        retval <- rbind(retval, c(Package, Version))
+    }
+    colnames(retval) <- c("Package", "Version")
+    retval
+}
+
+update.packages <- function(lib.loc=.lib.loc, CRAN=options("CRAN"),
+                            method=c("wget", "lynx"))
+{
+    instp <- installed.packages(lib.loc=lib.loc)
+    cranp <- CRAN.packages(CRAN=CRAN, method=method)
+
+    update <- NULL
+    for(k in 1:nrow(instp)){
+        ok <- cranp[,"Package"] == instp[k, "Package"]
+        if(any(cranp[ok, "Version"] > instp[k, "Version"]))
+        {
+            cat(instp[k, "Package"], ":\n",
+                "Version", instp[k, "Version"],
+                "in", instp[k, "LibPath"], "\n",
+                "Version", cranp[ok, "Version"], "on CRAN")
+            cat("\n")
+            answer <- substr(readline("Update Package (y/N)?  "), 1, 1)
+            if(answer == "y" | answer == "Y")
+                update <- rbind(update, instp[k, c("Package", "LibPath")])
+            cat("\n")
+        }
+    }
+    pkgs <- NULL
+    if(!is.null(update)) {
+        tmpd <- tempfile("Rinstdir")
+        shell(paste("mkdir", tmpd))
+        pkgs <- download.packages(update[,"Package"], destdir=tmpd,
+                                  available=cranp, CRAN=CRAN, method=method)
+        if(!is.null(pkgs)) {
+            for(lib in unique(update[,"LibPath"]))
+            {
+                oklib <- lib==update[,"LibPath"]
+                for(p in update[oklib,"Package"])
+                {
+                    okp <- p==pkgs[, 1]
+                    if(length(okp) > 0) {
+                        cmd <- paste("unzip -o", pkgs[okp, 2], "-d", lib)
+                        system(cmd)
+                    }
+                }
+            }
+        }
+        cat("\n")
+        answer <- substr(readline("Delete downloaded files (y/N)? "), 1, 1)
+        if(answer == "y" | answer == "Y") {
+            for(file in pkgs[,2]) unlink(file)
+            unlink(tmpd)
+        } else
+            cat("The packages are in", tmpd)
+        cat("\n")
+    }
+}
+
+download.file <- function(url, destfile, method=c("wget", "lynx"))
+{
+    method <- match.arg(method)
+
+    if(method=="wget")
+        status <- system(paste("wget", url, "-O", destfile))
+    else if(method=="lynx")
+        status <- shell(paste("lynx -dump", url, ">", destfile))
+
+    invisible(status)
+}
+
+download.packages <- function(pkgs, destdir, available=NULL,
+                              CRAN=options("CRAN"),
+                              method=c("wget", "lynx"))
+{
+    method <- match.arg(method)
+
+    if(missing(available))
+        available <- CRAN.packages(CRAN=CRAN, method=method)
+
+    retval <- NULL
+    for(p in unique(pkgs))
+    {
+        fn <- paste(p, ".zip", sep="")
+        url <- paste(CRAN, "bin/windows/windows-NT/contrib", fn, sep="/")
+        destfile <- file.path(destdir, fn)
+        if(download.file(url, destfile, method) == 0)
+            retval <- rbind(retval, c(p, destfile))
+        else
+            warning(paste("Download of package", p, "failed"))
+    }
+    retval
+}
+
