@@ -21,7 +21,10 @@ solve.default <- function(a, b, tol = 1e-7, ...)
         if(missing(b)) B <- diag(1+0i, nrow(a)) else B <- b
         if(!is.complex(A)) A[] <- as.complex(A)
         if(!is.complex(B)) B[] <- as.complex(B)
-        return (.Call("La_zgesv", A, B, PACKAGE = "base"))
+        return (if (is.matrix(B))
+	    .Call("La_zgesv", A, B, PACKAGE = "base")
+	else
+	    drop(.Call("La_zgesv", A, as.matrix(B), PACKAGE = "base")))
     }
     if( !is.qr(a) )
 	a <- qr(a, tol = tol)

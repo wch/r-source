@@ -514,6 +514,9 @@ BUG FIXES
 
    o	cbind(NULL) {and similar} gave an error instead of NULL.
 
+   o	the complex version of solve(a,b) now also works if b is a
+        vector
+
 
 		CHANGES IN R VERSION 1.5.1
 

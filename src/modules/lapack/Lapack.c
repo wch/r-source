@@ -300,7 +300,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP B)
     if (!(isMatrix(A) && isComplex(A)))
 	error("A must be a complex matrix");
     if (!(isMatrix(B) && isComplex(B)))
-	error("A must be a complex matrix");
+	error("B must be a complex matrix");
     Adims = INTEGER(coerceVector(getAttrib(A, R_DimSymbol), INTSXP));
     Bdims = INTEGER(coerceVector(getAttrib(B, R_DimSymbol), INTSXP));
     n = Adims[0];
@@ -310,7 +310,8 @@ static SEXP modLa_zgesv(SEXP A, SEXP B)
     if(Adims[1] != n)
 	error("A (%d x %d) must be square", n, Adims[1]);
     if(Bdims[0] != n)
-	error("B (%d x %d) must be square", Bdims[0], p);
+	error("B (%d x %d) must be compatible with A (%d x %d)",
+		Bdims[0], p, n, n);
     ipiv = (int *) R_alloc(n, sizeof(int));
 
     avals = (Rcomplex *) R_alloc(n * n, sizeof(Rcomplex));
