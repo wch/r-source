@@ -34,7 +34,9 @@ R_RD4DVI = ae
 # set the next to `ae' to omit the hyperlinks
 R_RD4PDF = ae,hyper
 
-pkgsrcs = $(R_PKGS:=-pkg.tex)
+R_PKGS_refman = base methods tools grid
+refman_TEXINPUTS = $(R_PKGS_refman:=-pkg.tex)
+refman_DEPENDENCIES = version.tex $(top_srcdir)/share/texmf/Rd.sty
 
 texiincludes = version.texi R-defs.texi
 
@@ -60,7 +62,7 @@ all: pdf
 
 dvi: refman.dvi $(OBJECTS_DVI)
 
-refman.dvi: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
+refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
   refman.top refman.bot
 	@echo "DVI/LaTeX documentation: reference index ..."
 	@$(RM) -f *.aux refman.toc refman.ind
@@ -69,7 +71,7 @@ refman.dvi: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
 	  opt="$${R_RD4DVI:-$(R_RD4DVI)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
-	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  for f in $(refman_TEXINPUTS); do echo "\\input{$${f}}"; done; \
 	  cat refman.bot) > refman.tex
 	@TEXINPUTS="../../share/texmf;$$TEXINPUTS" \
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
@@ -117,7 +119,7 @@ R-lang.info: $(texiincludes)
 
 pdf: refman.pdf $(OBJECTS_PDF)
 
-refman.pdf: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
+refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
    refman.top refman.bot
 	@echo " PDF/LaTeX documentation: reference index ..."
 	@(opt="$${R_PAPERSIZE:-$(R_PAPERSIZE)}paper"; \
@@ -125,7 +127,7 @@ refman.pdf: $(pkgsrcs) version.tex ../../share/texmf/Rd.sty \
 	  opt="$${R_RD4PDF:-$(R_RD4PDF)}"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
 	  cat refman.top; \
-	  for p in $(R_PKGS); do echo "\\input{$${p}-pkg.tex}"; done; \
+	  for f in $(refman_TEXINPUTS); do echo "\\input{$${f}}"; done; \
 	  cat refman.bot) > refman.tex
 	@$(RM) -f *.aux refman.toc refman.ind
 ifeq ($(strip $(BUILD)),CROSS)
