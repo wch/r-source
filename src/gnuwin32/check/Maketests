@@ -7,6 +7,7 @@ srcdir = .
 RHOME= ..
 
 R= $(RHOME)/bin/rterm  --vanilla
+RDIFF = $(RHOME)/tools/Rdiff
 
 TESTsrc = arith-true.R arith.R d-p-q-r-tests.R eval-etc.R \
 	is-things.R lm-tests.R primitive-funs.R simple-true.R \
@@ -15,19 +16,20 @@ TESTsrc = arith-true.R arith.R d-p-q-r-tests.R eval-etc.R \
 %.R : $(srcdir)/make-%.R
 	$(R) < $< > /dev/null
 
+%.Rout : %.R
+	@rm -f $@.fail
+	$(R) < $< > $@
+	@if [ -f $(srcdir)/$@.save ] ; then \
+	  echo -n \
+	    "Comparing \`$@' to \`$(srcdir)/$@.save' ..."; \
+	  $(RDIFF) $@ $(srcdir)/$@.save $(RVAL_IF_DIFF) || \
+	    (mv $@ $@.fail && exit 1); \
+	  echo "OK"; \
+	fi
+
 TESTout = $(TESTsrc:.R=.Rout)
 
 strict-tests: $(TESTout)
 
 clean:
 	@rm -f *.Rout *.Rout.fail
-
-%.Rout: %.R
-	@rm -f $@.fail
-	@(SRCDIR=$(srcdir); export SRCDIR; \
-	  echo "$(R) < $< > $@"; \
-	  $(R) < $< > $@)
-	@echo -n "Comparing \`$@' to \`$(srcdir)/$@.save' ..."
-	@$(RHOME)/tools/Rdiff $@ $(srcdir)/$@.save \
-	  || (mv $@ $@.fail && exit 1)
-	@echo " OK"
