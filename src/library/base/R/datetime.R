@@ -48,12 +48,9 @@ as.POSIXct.dates <- function(x, ...)
 {
     if(inherits(x, "dates")) {
         z <- attr(x, "origin")
-        x <- x * 86400
+        x <- as.numeric(x) * 86400
         if(length(z) == 3 && is.numeric(z))
-            x  <- x - asPOSIXct(structure(list(sec=0, min=0, hour=0,
-                                               mday=z[2], mon=z[1],
-                                               year=z[3]-1900, isdst=-1
-                                               ), class = "POSIXlt"))
+            x  <- x - as.numeric(ISOdate(z[3], z[1], z[2], 0))
         return(structure(x, class = "POSIXct"))
     } else stop(paste("`", deparse(substitute(x)),
                       "' is not a \"dates\" object", sep=""))
@@ -326,4 +323,7 @@ ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
 ISOdate <- function(year, month, day, hour=12, min=0, sec=0, tz="GMT")
     ISOdatetime(year, month, day, hour, min, sec, tz)
 
-
+as.matrix.POSIXlt <- function(x)
+{
+    as.matrix(as.data.frame(unclass(x)))
+}
