@@ -87,11 +87,6 @@ Date: Tue, 2 Jul 2002 10:37:10 +0200 (MET DST)
 Subject: groupedData constructor from a function
 From: dieter.menne@menne-biomed.de
 Date: Thu, 4 Jul 2002 15:59:59 +0200 (MET DST)
-* PR# 1745 *
-Subject: nlme: failed augPred with NA in an unused column
-From: dieter.menne@menne-biomed.de
-Date: Fri, 5 Jul 2002 08:32:32 +0200 (MET DST)
-..nlme needs an update as suggested in the followup
 * PR# 1901 *
 Subject: svm seg faults
 From: stefan.boehringer+science@uni-bochum.de
@@ -682,3 +677,11 @@ Date: Sun, 29 Dec 2002 16:28:49 -0800
 Subject: EARN $15 PER REFERRAL PAID INSTANTLY!
 From: "Paying Everyday" <payday4uty035@aol.com>
 Date: Sat, 28 Dec 2002 15:02:32 +0800
+* PR# 2404 *
+Subject: Lose 22.5 lbs in 3 weeks!
+From: "Weight Loss" <wgtlss2003il260@aol.com>
+Date: Sun, 29 Dec 2002 14:00:53 -0000
+* PR# 2405 *
+Subject: A strong, at-home, methodical money opp.
+From: optimumopplist3000@yahoo.com
+Date: Sun, 29 Dec 2002 16:22:52 -0500
