@@ -4517,7 +4517,7 @@ of the `0.25' offset as required to move the axis labels up or down
 relative to the x axis.  See `?par' for more information.
 
    Also see Figure 1 and associated code in Paul Murrell (2003),
-"Integrating grid Graphics Output with Base Graphics Output", _RNews_,
+"Integrating grid Graphics Output with Base Graphics Output", _R News_,
 *3/2*, 7-12.
 
 7.28 Why is read.table() so inefficient?
@@ -4535,11 +4535,13 @@ of the table.
 
 A "package" is a standardized collection of material extending R, e.g.
 providing code, data, or documentation.  A "library" is a place (directory)
-where R knows to find packages it can use (i.e., which were _installed_).
+where R knows to find packages it can use (i.e., which were "installed").
 R is told to use a package (to "load" it and add it to the search path) via
-calls to the function `library'.
+calls to the function `library'.  I.e., `library()' is employed to load a
+package from libraries containing packages.
 
-   *Note R Add-On Packages::, for more details.
+   *Note R Add-On Packages::, for more details.  See also Uwe Ligges (2003),
+"R Help Desk: Package Management", _R News_, *3/3*, 37-39.
 
 8 R Programming
 ***************
@@ -4582,10 +4584,10 @@ CMD SHLIB' with compilation flags other than the default ones (which were
 determined when R was built).
 
    Starting with R 2.1.0, users can provide personal Makevars configuration
-files in `HOME/.R' to override the default flags.
+files in `$`HOME'/.R' to override the default flags.
 
    For earlier versions of R, you could change the file
-``R_HOME'/etc/Makeconf' to reflect your preferences, or (at least for
+`$`R_HOME'/etc/Makeconf' to reflect your preferences, or (at least for
 systems using GNU Make) override them by the environment variable
 `MAKEFLAGS'.  See section "Creating shared objects" in `Writing R
 Extensions'.

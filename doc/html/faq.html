@@ -4297,7 +4297,7 @@ to move the axis labels up or down relative to the x axis.  See
 
    <p>Also see Figure 1 and associated code in Paul Murrell (2003),
 &ldquo;Integrating grid Graphics Output with Base Graphics Output&rdquo;,
-<em>RNews</em>, <strong>3/2</strong>, 7&ndash;12.
+<em>R News</em>, <strong>3/2</strong>, 7&ndash;12.
 
 <div class="node">
 <p><hr>
@@ -4328,10 +4328,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Miscellanea">R Miscellanea</a>
 <p>A <dfn>package</dfn> is a standardized collection of material extending R,
 e.g. providing code, data, or documentation.  A <dfn>library</dfn> is a
 place (directory) where R knows to find packages it can use (i.e., which
-were <em>installed</em>).  R is told to use a package (to &ldquo;load&rdquo; it and
-add it to the search path) via calls to the function <code>library</code>.
+were <dfn>installed</dfn>).  R is told to use a package (to &ldquo;load&rdquo; it and
+add it to the search path) via calls to the function <code>library</code>. 
+I.e., <code>library()</code> is employed to load a package from libraries
+containing packages.
 
-   <p>See <a href="#R-Add_002dOn-Packages">R Add-On Packages</a>, for more details.
+   <p>See <a href="#R-Add_002dOn-Packages">R Add-On Packages</a>, for more details.  See also Uwe Ligges (2003),
+&ldquo;R Help Desk: Package Management&rdquo;, <em>R News</em>, <strong>3/3</strong>,
+37&ndash;39.
 
 <div class="node">
 <p><hr>
@@ -4419,7 +4423,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R-Programming">R Programming</a>
 (which were determined when R was built).
 
    <p>Starting with R 2.1.0, users can provide personal Makevars configuration
-files in <span class="file">HOME/.R</span> to override the default flags. 
+files in <span class="file">$HOME/.R</span> to override the default flags. 
 <!-- <FIXME> -->
 <!-- 2.1.0 -->
 <!-- Provide refs/xrefs. -->
@@ -4434,7 +4438,7 @@ files in <span class="file">HOME/.R</span> to override the default flags.
 <!-- </FIXME> -->
 
    <p>For earlier versions of R, you could change the file
-<span class="file">R_HOME/etc/Makeconf</span> to reflect your preferences, or (at
+<span class="file">$R_HOME/etc/Makeconf</span> to reflect your preferences, or (at
 least for systems using <acronym>GNU</acronym> Make) override them by the
 environment variable <span class="env">MAKEFLAGS</span>. 
 See section &ldquo;Creating shared objects&rdquo; in <cite>Writing R Extensions</cite>.
