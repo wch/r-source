@@ -1,21 +1,10 @@
 %% From package:nlme  AIC.Rd,v 1.4 2000/07/03 18:22:45 bates
 %% with additional "k = 2" argument (MM)
 \name{AIC}
-\title{Akaike's An Information Criterion}
-\usage{
-AIC(object, \dots, k = 2)
-}
 \alias{AIC}
 \alias{AIC.default}
-% \alias{AIC.lm}% << once needed for  library(nlme)
-\arguments{
-  \item{object}{a fitted model object, for which there exists a
-    \code{logLik} method to extract the corresponding log-likelihood, or
-    an object inheriting from class \code{logLik}.}
-  \item{\dots}{optionally more fitted model objects.}
-  \item{k}{numeric, the \dQuote{penalty} per parameter to be used; the
-    default \code{k = 2} is the classical AIC.}
-}
+\alias{AIC.logLik}
+\title{Akaike's An Information Criterion}
 \description{
   Generic function calculating the Akaike information criterion for
   one or several fitted model objects for which a log-likelihood value
@@ -25,6 +14,17 @@ AIC(object, \dots, k = 2)
   fitted model, and \eqn{k = 2} for the usual AIC, or \eqn{k = \log(n)}
   (\eqn{n} the number of observations) for the so-called BIC or SBC
   (Schwarz's Bayesian criterion).
+}
+\usage{
+AIC(object, \dots, k = 2)
+}
+\arguments{
+  \item{object}{a fitted model object, for which there exists a
+    \code{logLik} method to extract the corresponding log-likelihood, or
+    an object inheriting from class \code{logLik}.}
+  \item{\dots}{optionally more fitted model objects.}
+  \item{k}{numeric, the \dQuote{penalty} per parameter to be used; the
+    default \code{k = 2} is the classical AIC.}
 }
 \details{
   The default method for \code{AIC}, \code{AIC.default()} entirely
@@ -47,7 +47,7 @@ AIC(object, \dots, k = 2)
 }
 \author{Jose Pinheiro and Douglas Bates}
 \seealso{
-  \code{\link{extractAIC}}, \code{\link{logLik}}, \code{\link{AIC.logLik}}.
+  \code{\link{extractAIC}}, \code{\link{logLik}}.
 }
 \examples{
 data(swiss)

@@ -2,6 +2,8 @@
 \alias{rep}
 \alias{rep.default}
 \alias{rep.int}
+\alias{rep.POSIXct}
+\alias{rep.POSIXlt}
 \title{Replicate Elements of Vectors and Lists}
 \description{
   \code{rep} replicates the values in \code{x}. It is a generic
@@ -17,7 +19,8 @@ rep(x, times, \dots)
 rep.int(x, times)
 }
 \arguments{
-  \item{x}{a vector (of any mode including a list) or a pairlist.}
+  \item{x}{a vector (of any mode including a list) or a pairlist or a
+    \code{POSIXct} or \code{POSIXlt} object.}
   \item{times}{non-negative integer.  A vector giving the number of
     times to repeat each element if of length \code{length(x)}, or to
     repeat the whole vector if of length 1.}
@@ -46,6 +49,9 @@ rep.int(x, times)
 
   Non-integer values of \code{times} will be truncated towards zero.
   If \code{times} is a computed quantity it is prudent to add a small fuzz.
+}
+\value{
+  A vector of the same class as \code{x}.
 }
 \note{
   If the original vector has names, these are also replicated and so
@@ -79,5 +85,11 @@ rep(1, 40*(1-.8)+1e-7) # better
 ## replicate a list
 fred <- list(happy = 1:10, name = "squash")
 rep(fred, 5)
+
+# date-time objects
+x <- .leap.seconds[1:3]
+rep(x, 2)
+rep(as.POSIXlt(x), rep(2, 3))
 }
 \keyword{manip}
+\keyword{chron}

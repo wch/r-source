@@ -7,6 +7,7 @@
 \title{Construct Design Matrices}
 \usage{
 model.matrix(object, \dots)
+
 \method{model.matrix}{default}(object, data = environment(object),
              contrasts.arg = NULL, xlev = NULL, \dots)
 }
