@@ -27,6 +27,7 @@
  */
 
 #include "Mathlib.h"
+#include "Errormsg.h"/* for warning() */
 
 double qwilcox(double x, double m, double n)
 {
@@ -41,7 +42,7 @@ double qwilcox(double x, double m, double n)
   }
 #endif
 
-  m = floor(m + 0.5);  
+  m = floor(m + 0.5);
   n = floor(n + 0.5);
   if (x < 0 || x > 1 || m <= 0 || n <= 0) {
     ML_ERROR(ME_DOMAIN);

@@ -20,18 +20,19 @@
  *
  *    #include "Mathlib.h"
  *    double pwilcox(double x, double m, double n)
- *  
+ *
  *  DESCRIPTION
  *
  *    The distribution function of the Wilcoxon distribution.
  */
 
 #include "Mathlib.h"
+#include "Errormsg.h"/* for warning() */
 
 double pwilcox(double x, double m, double n) {
   int i;
   double p = 0.0;
-  
+
 #ifdef IEEE_754
   if (ISNAN(x) || ISNAN(m) || ISNAN(n))
     return x + n + p;
@@ -40,7 +41,7 @@ double pwilcox(double x, double m, double n) {
     return ML_NAN;
   }
 #endif
-  m = floor(m + 0.5);  
+  m = floor(m + 0.5);
   n = floor(n + 0.5);
   if (m <= 0 || n <= 0) {
     ML_ERROR(ME_DOMAIN);

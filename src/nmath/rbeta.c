@@ -43,7 +43,7 @@ double rbeta(double aa, double bb)
 
 	qsame = (olda == aa) && (oldb == bb);
 
-	if (!qsame)
+	if (!qsame) {
 		if (aa > 0.0 && bb > 0.0) {
 			olda = aa;
 			oldb = bb;
@@ -51,6 +51,7 @@ double rbeta(double aa, double bb)
 			ML_ERROR(ME_DOMAIN);
 			return ML_NAN;
 		}
+	}
 	if (fmin2(aa, bb) <= 1.0) {	/* Algorithm BC */
 		if (!qsame) {
 			a = fmax2(aa, bb);

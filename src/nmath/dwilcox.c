@@ -27,13 +27,14 @@
  */
 
 #include "Mathlib.h"
+#include "Errormsg.h"/* for warning() */
 
 static double *w[WILCOX_MMAX][WILCOX_NMAX];
 
 static double cwilcox(int k, int m, int n) {
   int c, u, i, j, l;
 
-  u = m * n;  
+  u = m * n;
   c = (int)(u / 2);
 
   if ((k < 0) || (k > u))
@@ -65,7 +66,7 @@ double dwilcox(double x, double m, double n) {
   if (ISNAN(x) || ISNAN(m) || ISNAN(n)) return x + m + n;
 #endif
   m = floor(m + 0.5);
-  n = floor(n + 0.5);    
+  n = floor(n + 0.5);
   if (m <= 0 || n <= 0) {
     ML_ERROR(ME_DOMAIN);
     return ML_NAN;
