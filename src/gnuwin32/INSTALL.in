@@ -64,7 +64,19 @@ Windows compiler installation (this has been available for download at
 ftp://ftp.microsoft.com/softlib/mslfiles/hcwsetup.exe).
 
 All of these need to be installed and in your path, and the
-appropriate environment variables set.
+appropriate environment variables set.  You also need `.' in your path.
+
+
+Check your path
+---------------
+
+You need the following in your path
+.
+our toolset
+mingw\bin
+Perl\bin
+the latex bin directory
+zip.exe, unzip.exe, hhc.exe
 
 
 Building
