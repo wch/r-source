@@ -39,28 +39,6 @@ library <- function(name, help, lib.loc = .lib.loc,
     .NotYetImplemented()
 }
 
-library.dynam <- function(chname, package = .packages(), lib.loc = .lib.loc) {
-    ## FIXME (this is == Unix  with changes 
-    ## ----- 1) .dll instead of .so	 2) "\\" for "/"
-    if (!exists(".Dyn.libs"))
-	assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
-    if(missing(chname) || (LEN <- nchar(chname)) == 0)
-	return(.Dyn.libs)
-    if (substr(chname, LEN - 3, LEN) == ".dll") {
-	chname <- substr(chname, 1, LEN - 4)
-    }
-    if (is.na(match(chname, .Dyn.libs))) {
-	file <- system.file(paste("libs", "\\", chname, ".", "dll", sep = ""),
-			    package, lib.loc)
-	if (file == "") {
-	    stop(paste("dynamic library `", chname, "' not found", sep = ""))
-	}
-	.Internal(dyn.load(file))
-	assign(".Dyn.libs", c(.Dyn.libs, chname), envir = .AutoloadEnv)
-    }
-    invisible(.Dyn.libs)
-}
-
 system <- function(call, intern = FALSE)
     .Internal(system(call, intern))
 
