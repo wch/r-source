@@ -211,3 +211,7 @@ Date: Fri, 17 Mar 2000 17:17:23 +0100
 Subject: optim: problem with additional arguments
 From: "Dirk F. Moore" <dirk@surfer.sbm.temple.edu>
 Date: Fri, 17 Mar 2000 12:05:32 -0500
+* PR# 494 *
+Subject:  minor problem in barplot legend 
+From: Ben Bolker <bolker@zoo.ufl.edu>
+Date: Mon, 20 Mar 2000 17:31:36 -0500
