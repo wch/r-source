@@ -1,6 +1,6 @@
-dnl aclocal.m4 generated automatically by aclocal 1.4-p5
+dnl aclocal.m4 generated automatically by aclocal 1.4-p4
 
-dnl Copyright (C) 1994, 1995-8, 1999, 2001 Free Software Foundation, Inc.
+dnl Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 dnl This file is free software; the Free Software Foundation
 dnl gives unlimited permission to copy and/or distribute it,
 dnl with or without modifications, as long as this notice is preserved.
@@ -1454,21 +1454,19 @@ AC_SUBST(BLAS_LIBS)
 ])# R_BLAS_LIBS
 
 AC_DEFUN([R_XDR],
-[AC_CACHE_CHECK([for XDR support],
+[AC_CHECK_HEADER(rpc/types.h)
+if test "${ac_cv_header_rpc_types_h}" = yes ; then
+  AC_CHECK_HEADER(rpc/xdr.h, , , [#include <rpc/types.h>])
+fi
+AC_CACHE_CHECK([for XDR support],
                 [r_cv_xdr],
-[
-  AC_CHECK_HEADER(rpc/types.h)
-  if test "${ac_cv_header_rpc_types_h}" = yes ; then
-    AC_CHECK_HEADER(rpc/xdr.h, , , [#include <rpc/types.h>])
-    if test "${ac_cv_header_rpc_xdr_h}" = yes \
-      && test "${ac_cv_search_xdr_string}" != no ; then
-      r_cv_xdr=yes
-    else
-      r_cv_xdr=no
-    fi
-  else
-    r_cv_xdr=no
-  fi
+[if test "${ac_cv_header_rpc_types_h}" = yes \
+     && test "${ac_cv_header_rpc_xdr_h}" = yes \
+     && test "${ac_cv_search_xdr_string}" != no ; then
+  r_cv_xdr=yes
+else
+  r_cv_xdr=no
+fi
 ])
 AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ])# R_XDR
@@ -5292,7 +5290,7 @@ ifelse([AC_DISABLE_FAST_INSTALL])
 
 # Define a conditional.
 
-AC_DEFUN([AM_CONDITIONAL],
+AC_DEFUN(AM_CONDITIONAL,
 [AC_SUBST($1_TRUE)
 AC_SUBST($1_FALSE)
 if $2; then
@@ -5312,7 +5310,7 @@ fi])
 dnl Usage:
 dnl AM_INIT_AUTOMAKE(package,version, [no-define])
 
-AC_DEFUN([AM_INIT_AUTOMAKE],
+AC_DEFUN(AM_INIT_AUTOMAKE,
 [AC_REQUIRE([AC_PROG_INSTALL])
 PACKAGE=[$1]
 AC_SUBST(PACKAGE)
@@ -5340,7 +5338,7 @@ AC_REQUIRE([AC_PROG_MAKE_SET])])
 # Check to make sure that the build environment is sane.
 #
 
-AC_DEFUN([AM_SANITY_CHECK],
+AC_DEFUN(AM_SANITY_CHECK,
 [AC_MSG_CHECKING([whether build environment is sane])
 # Just in case
 sleep 1
@@ -5381,7 +5379,7 @@ AC_MSG_RESULT(yes)])
 
 dnl AM_MISSING_PROG(NAME, PROGRAM, DIRECTORY)
 dnl The program must properly implement --version.
-AC_DEFUN([AM_MISSING_PROG],
+AC_DEFUN(AM_MISSING_PROG,
 [AC_MSG_CHECKING(for working $2)
 # Run test in a subshell; some versions of sh will print an error if
 # an executable is not found, even if stderr is redirected.

@@ -22255,13 +22255,7 @@ fi
 
 
 ## XDR headers and library routines.
-echo "$as_me:$LINENO: checking for XDR support" >&5
-echo $ECHO_N "checking for XDR support... $ECHO_C" >&6
-if test "${r_cv_xdr+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-
-  if test "${ac_cv_header_rpc_types_h+set}" = set; then
+if test "${ac_cv_header_rpc_types_h+set}" = set; then
   echo "$as_me:$LINENO: checking for rpc/types.h" >&5
 echo $ECHO_N "checking for rpc/types.h... $ECHO_C" >&6
 if test "${ac_cv_header_rpc_types_h+set}" = set; then
@@ -22364,8 +22358,8 @@ echo "${ECHO_T}$ac_cv_header_rpc_types_h" >&6
 fi
 
 
-  if test "${ac_cv_header_rpc_types_h}" = yes ; then
-    echo "$as_me:$LINENO: checking for rpc/xdr.h" >&5
+if test "${ac_cv_header_rpc_types_h}" = yes ; then
+  echo "$as_me:$LINENO: checking for rpc/xdr.h" >&5
 echo $ECHO_N "checking for rpc/xdr.h... $ECHO_C" >&6
 if test "${ac_cv_header_rpc_xdr_h+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -22401,15 +22395,19 @@ echo "$as_me:$LINENO: result: $ac_cv_header_rpc_xdr_h" >&5
 echo "${ECHO_T}$ac_cv_header_rpc_xdr_h" >&6
 
 
-    if test "${ac_cv_header_rpc_xdr_h}" = yes \
-      && test "${ac_cv_search_xdr_string}" != no ; then
-      r_cv_xdr=yes
-    else
-      r_cv_xdr=no
-    fi
-  else
-    r_cv_xdr=no
-  fi
+fi
+echo "$as_me:$LINENO: checking for XDR support" >&5
+echo $ECHO_N "checking for XDR support... $ECHO_C" >&6
+if test "${r_cv_xdr+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test "${ac_cv_header_rpc_types_h}" = yes \
+     && test "${ac_cv_header_rpc_xdr_h}" = yes \
+     && test "${ac_cv_search_xdr_string}" != no ; then
+  r_cv_xdr=yes
+else
+  r_cv_xdr=no
+fi
 
 fi
 echo "$as_me:$LINENO: result: $r_cv_xdr" >&5
