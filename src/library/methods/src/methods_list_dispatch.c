@@ -555,7 +555,7 @@ SEXP R_standardGeneric(SEXP fname, SEXP ev)
 		    op = deflt;
 		    /* just shut off dispatching of methods for this op */
 		    PROTECT(prev_fun = 
-			    do_set_prim_method(deflt, "clear", NULL, NULL)); nprotect++;
+			    do_set_prim_method(deflt, "suppress", NULL, NULL)); nprotect++;
 		    /* TO DO:  use context control to ensure the restores in
 		       case of an error */
 		}

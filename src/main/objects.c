@@ -960,15 +960,26 @@ SEXP R_set_prim_method(SEXP fname, SEXP op, SEXP code_vec, SEXP fundef,
 SEXP do_set_prim_method(SEXP op, char *code_string, SEXP fundef, SEXP mlist)
 {
   int offset = 0; prim_methods_t code; SEXP value;
+  Rboolean errorcase = FALSE;
   switch(code_string[0]) {
   case 'c': /* clear */
     code = NO_METHODS; break;
   case 'r': /* reset */
     code = NEEDS_RESET; break;
   case 's': /* set */
-    code = HAS_METHODS; break;
+      switch(code_string[1]) {
+      case 'e': code = HAS_METHODS; break;
+      case 'u': code = SUPPRESSED; break;
+      default: errorcase = TRUE;
+      }
+      break;
   default:
-    error("Invalid primitive methods code (\"%s\"): should be \"clear\", \"reset\", or \"set\"", code_string);
+      errorcase = TRUE;
+  }
+  if(errorcase) {
+      error("Invalid primitive methods code (\"%s\"): should be
+ \"clear\", \"reset\", or \"set\"", code_string);
+      return R_NilValue;
   }
   switch(TYPEOF(op)) {
   case BUILTINSXP: case SPECIALSXP:
@@ -1109,7 +1120,6 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args,
   if(!fundef || TYPEOF(fundef) != CLOSXP)
     error("primitive function \"%s\" has been set for methods but no  generic function supplied",
 	  PRIMNAME(op));
-  prim_methods[offset] = SUPPRESSED;
   /* To do:  arrange for the setting to be restored in case of an
      error in method search */
   value = applyClosure(call, fundef, args, rho, R_NilValue);
