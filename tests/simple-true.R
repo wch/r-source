@@ -86,3 +86,9 @@ l2 $ e <- 55
 all.equal(l2, list(a = 1, b = 2, cc = pi, d = 4, e = 55), tol = 0)
 all.equal(l2["d"], list(d = 4))
 l2$d == 4 && l2$d == l2[["d"]]
+
+## bug in R <= 1.1
+f1 <- y1 ~ x1
+f2 <- y2 ~ x2
+f2[2] <- f1[2]
+deparse(f2) == "y1 ~ x2"

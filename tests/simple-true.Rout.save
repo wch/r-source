@@ -1,6 +1,6 @@
 
 R : Copyright 2000, The R Development Core Team
-Version 1.1.0 Under development (unstable) (March 13, 2000)
+Version 1.2.0 Under development (unstable) (2000-09-11)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -133,5 +133,12 @@ Type	"q()" to quit R.
 > all.equal(l2["d"], list(d = 4))
 [1] TRUE
 > l2$d == 4 && l2$d == l2[["d"]]
+[1] TRUE
+> 
+> ## bug in R <= 1.1
+> f1 <- y1 ~ x1
+> f2 <- y2 ~ x2
+> f2[2] <- f1[2]
+> deparse(f2) == "y1 ~ x2"
 [1] TRUE
 > 
