@@ -572,14 +572,17 @@ static SEXP subDots(SEXP rho)
     int len,i;
     char tbuf[10];
 
-    dots = findVarInFrame(rho, R_DotsSymbol);
+    dots = findVar(R_DotsSymbol, rho);
+
+    if (dots == R_UnboundValue)
+	error("... used in a situation where it doesn't exist");
 
     if (dots == R_MissingArg)
 	return dots;
 
     len = length(dots);
     PROTECT(rval=allocList(len));
-    for(a=dots, b=rval, i=1; a!=R_NilValue; a=CDR(a), b=CDR(b), i++) {
+    for(a=dots, b=rval, i=1; i<len; a=CDR(a), b=CDR(b), i++) {
 	sprintf(tbuf,"..%d",i);
 	if( TAG(a) != R_NilValue )
 	    TAG(b) = TAG(a);
