@@ -398,10 +398,13 @@ for arg in ${FLIBS}; do
 done
 FLIBS="${flibs}"
 if test "${G77}" = yes; then
-  AC_LANG_PUSH(Fortran 77)
-  flibs=`echo ${FLIBS} | sed 's/-lg2c/-lg2c-pic/'`
+  r_save_LIBS="${LIBS}"
+  flibs=`echo ${ac_cv_flibs} | sed 's/-lg2c/-lg2c-pic/'`
+  LIBS="${LIBS} ${flibs}"
+  AC_LANG_PUSH(C)
   AC_TRY_LINK([], [], [FLIBS="${flibs}"])
-  AC_LANG_POP(Fortran 77)
+  AC_LANG_POP(C)
+  LIBS="${r_save_LIBS}"
 fi
 ])# R_PROG_F77_FLIBS
 
