@@ -4,9 +4,6 @@ La.eigen <- function (x, symmetric, only.values = FALSE,
     if(!is.numeric(x) && !is.complex(x))
 	stop("argument to La.eigen must be numeric or complex")
     method <- match.arg(method)
-    if(is.complex(x) && method == "dsyevr") {
-        method <- "dsyev"
-    }
     x <- as.matrix(x)
     if (nrow(x) != ncol(x)) stop("non-square matrix in La.eigen")
     if (nrow(x) == 0) stop("0 x 0 matrix in La.eigen")
