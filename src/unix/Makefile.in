@@ -19,7 +19,7 @@ SOURCES_C_DARWIN = dlfcn-darwin.c
 SOURCES = $(SOURCES_C_BASE) @BUILD_DLFCN_DARWIN_TRUE@ $(SOURCES_C_DARWIN)
 DEPENDS = $(SOURCES:.c=.d)
 OBJECTS = $(SOURCES:.c=.o)
-HEADERS = Runix.h devUI.h hpdlfcn.h dlfcn-darwin.h
+HEADERS = Runix.h hpdlfcn.h dlfcn-darwin.h
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = \

@@ -13,7 +13,7 @@ distdir = $(PACKAGE)-$(VERSION)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS NEWS THANKS
 NON_SVN_INSTFILES = FAQ RESOURCES
 DISTFILES = $(INSTFILES) \
-	ChangeLog INSTALL ONEWS README VERSION Y2K \
+	ChangeLog INSTALL ONEWS OONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
 	config.site configure configure.ac \
 	date-stamp
@@ -97,13 +97,13 @@ install: installdirs svnonly
 @WANT_R_FRAMEWORK_TRUE@		@(cp $(R_FRAMEWORK_DIR)/Resources/bin/R $(R_FRAMEWORK_DIR)/Resources/R)
 
 svnonly:
-	@if test ! -f "$(srcdir)/FAQ" -o -f non-tarball ; then \
+	@if test ! -f "$(srcdir)/FAQ" || test -f non-tarball ; then \
 	  cd doc/manual && $(MAKE) front-matter ; \
 	  touch non-tarball ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
-	      $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	      $(INSTALL_DATA) $(srcdir)/$${f} $(top_builddir); \
 	    done \
 	  fi \
 	fi

@@ -42,13 +42,13 @@ R: Makefile $(OBJECTS) svnonly
 	done
 
 svnonly:
-	@if test ! -f "$(srcdir)/resources.html" -o -f non-tarball ; then \
-	  cd ../manual && $(MAKE) html-non-svn ; \
+	@if test ! -f "$(srcdir)/resources.html" || test -f non-tarball ; then \
+	  (cd ../manual && $(MAKE) html-non-svn) ; \
 	  touch non-tarball ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
-	      $(INSTALL_DATA) $(srcdir)/$${f} $(builddir); \
+	      $(INSTALL_DATA) $(srcdir)/$${f} . ; \
 	    done \
 	  fi \
 	fi
