@@ -440,6 +440,16 @@ function(packages = NULL, FUN, ...)
     out
 }
 
+### ** .read_Rd_lines_quietly
+
+.read_Rd_lines_quietly <-
+function(con)
+{
+    ## Read lines from a connection to an Rd file, trying to suppress
+    ## "incomplete final line found by readLines" warnings.
+    .try_quietly(readLines(con))
+}
+
 ### ** .read_description
 
 .read_description <-
@@ -498,6 +508,23 @@ function(file, envir)
     invisible()
 }
 
+### .source_assignments_in_code_dir
+
+.source_assignments_in_code_dir <-
+function(dir, env)
+{
+    ## Combine all code files in @code{dir}, read and parse expressions,
+    ## and successively evaluated the top-level assignments in
+    ## @code{env}.
+    con <- tempfile("Rcode")
+    on.exit(unlink(con))
+    if(!file.create(con))
+        stop(paste("unable to create", con))
+    if(!all(file.append(con, list_files_with_type(dir, "code"))))
+        stop("unable to write code files")
+    .source_assignments(con, env)
+}
+    
 ### ** .strip_whitespace
 
 .strip_whitespace <-

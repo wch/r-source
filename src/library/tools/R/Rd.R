@@ -97,7 +97,7 @@ function(file)
         stop(.wrong_args("file",
                          "must be a character string or connection"))
 
-    lines <- Rdpp(readLines(file))
+    lines <- Rdpp(.read_Rd_lines_quietly(file))
 
     aliases <- .get_Rd_metadata_from_Rd_lines(lines, "alias")
     concepts <- .get_Rd_metadata_from_Rd_lines(lines, "concept")
@@ -343,7 +343,7 @@ function(package, dir, lib.loc = NULL)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- list()
         for(f in docsFiles) {
-            lines <- readLines(f)
+            lines <- .read_Rd_lines_quietly(f)
             eofPos <- grep("\\eof$", lines)
             db <- c(db, split(lines[-eofPos],
                               rep(seq(along = eofPos),
@@ -376,7 +376,7 @@ function(package, dir, lib.loc = NULL)
             stop(paste("directory", sQuote(dir),
                        "does not contain Rd sources"))
         docsFiles <- list_files_with_type(docsDir, "docs")
-        db <- lapply(docsFiles, readLines)
+        db <- lapply(docsFiles, .read_Rd_lines_quietly)
         names(db) <- docsFiles
     }
 
@@ -402,9 +402,7 @@ function(file, text = NULL)
         if(!inherits(file, "connection"))
             stop(.wrong_args("file",
                              "must be a character string or connection"))
-        ## Try to suppress "incomplete final line found by readLines"
-        ## warnings.
-        lines <- .try_quietly(Rdpp(readLines(file)))
+        lines <- Rdpp(.read_Rd_lines_quietly(file))
     }
     
     ## Get meta data (need to agree on what precisely these are), and
