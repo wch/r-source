@@ -1,7 +1,6 @@
 #include "tcltk.h" /* declarations of our `public' interface */
 extern int (*R_timeout_handler)();
 extern long R_timeout_val;
-extern int (*ptr_gnome_start)();
 
 static Tcl_Interp *RTcl_interp;      /* Interpreter for this application. */
 
@@ -544,6 +543,8 @@ SEXP dotTclcallback(SEXP args)
 
 
 #ifndef Win32
+#define R_INTERFACE_PTRS 1
+#include <Rinterface.h>  /* R_GUIType and more for console */
 /* Add/delete Tcl/Tk event handler */
 
 static void (* OldHandler)(void);
@@ -570,7 +571,7 @@ static void addTcl(void)
     if (Tcl_loaded)
 	error("Tcl already loaded");
     Tcl_loaded = 1;
-    if (ptr_gnome_start != NULL) {
+    if (strcmp(R_GUIType, "GNOME") == 0) {
         R_timeout_handler = Gtk_TclHandler;
         R_timeout_val = 500;
     } else {
@@ -586,7 +587,7 @@ void delTcl(void)
 {
     if (!Tcl_loaded)
 	error("Tcl is not loaded");
-    if (ptr_gnome_start != NULL) {
+    if (strcmp(R_GUIType, "GNOME") == 0) {
         R_timeout_handler = NULL;
         R_timeout_val = 0;
     } else {
@@ -706,14 +707,14 @@ void tcltk_init(void)
 #ifndef TCL80
 /* ----- Tcl/Tk console routines ----- */
 
-/* From src/unix/devUI.h */
+/* From former src/unix/devUI.h 
 extern int  (*ptr_R_ReadConsole)(char *, unsigned char *, int, int);
 extern void (*ptr_R_WriteConsole)(char *, int);
 extern void (*ptr_R_ResetConsole)();
 extern void (*ptr_R_FlushConsole)();
 extern void (*ptr_R_ClearerrConsole)();
 extern FILE * R_Consolefile;
-extern FILE * R_Outputfile;
+extern FILE * R_Outputfile; */
 
 /* Fill a text buffer with user typed console input. */
 
