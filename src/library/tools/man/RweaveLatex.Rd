@@ -45,18 +45,18 @@ RweaveLatexSetup(file, syntax, output=NULL, quiet=FALSE, debug=FALSE,
     \item{echo:}{logical (\code{TRUE}). Include S code in the
       output file?}
     \item{eval:}{logical (\code{TRUE}). If \code{FALSE}, the code chunk is not
-      evaluated, and hence no text or graphical output produced.
-      \item{results:}{character string (\code{verbatim}).
+      evaluated, and hence no text or graphical output produced.}
+    \item{results:}{character string (\code{verbatim}).
       If \code{verbatim}, the output of S commands is
       included in the verbatim-like Soutput environment. If
       \code{tex}, the output is taken to be already proper latex markup
       and included as is. If \code{hide} then all output is
       completely suppressed (but the code executed during the weave).}
-    \item{print:}{logical (\code{FALSE}).
+    \item{print:}{logical (\code{FALSE})
       If \code{TRUE}, each expression in the
       code chunk is wrapped into a \code{print()} statement before evaluation,
-      such that the values of all expressions become visible.
-      \item{term:}{logical (\code{TRUE}). If \code{TRUE}, visibility of values
+      such that the values of all expressions become visible.}
+    \item{term:}{logical (\code{TRUE}). If \code{TRUE}, visibility of values
       emulates an interactive R session: values of assignments are not
       printed, values of single objects are printed. If \code{FALSE},
       output comes only from explicit \code{\link{print}} or
