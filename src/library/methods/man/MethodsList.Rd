@@ -51,8 +51,8 @@ loadMethod(method, fname, envir)
 \section{Details}{
 
   \describe{
-  
-    \item{\code{MethodsList}:}{ 
+
+    \item{\code{MethodsList}:}{
       Create a MethodsList object out of the arguments.
 
       Conceptually, this object is a named collection of methods to be
@@ -71,7 +71,7 @@ loadMethod(method, fname, envir)
       methods and, in R, to emulate S4-style methods.
     }
 
-    \item{\code{SignatureMethod}:}{ 
+    \item{\code{SignatureMethod}:}{
       construct a MethodsList object containing (only) this method,
       corresponding to the signature; i.e., such that
       \code{signature[[1]]} is the match for the first argument,
@@ -83,23 +83,21 @@ loadMethod(method, fname, envir)
       corresponding to the signatures.
     }
 
-    \item{\code{insertMethod}:}{ 
+    \item{\code{insertMethod}:}{
       insert the definition \code{def} into the MethodsList object,
       \code{mlist}, corresponding to the signature.  By default, insert
-      it in the slot \code{"methods"}, but
-      \code{\link{cacheOnly=TRUE}} inserts it into the
-      \code{"allMethods"} slot (used for dispatch but not
-      saved).
+      it in the slot \code{"methods"}, but \code{cacheOnly=TRUE} inserts
+      it into the \code{"allMethods"} slot (used for dispatch but not saved).
     }
 
-    \item{\code{inheritedSubMethodLists}:}{ 
+    \item{\code{inheritedSubMethodLists}:}{
       Utility function to match the object  or the class (if the object
       is \code{NULL}) to the elements of a methods list.
       Used in finding inherited methods, and not meant to be called
       directly.
     }
 
-    \item{\code{showMlist}:}{ 
+    \item{\code{showMlist}:}{
       Prints the contents of the MethodsList.  If \code{includeDefs} the
       signatures and the corresonding definitions will be printed;
       otherwise, only the signatures.
@@ -107,13 +105,13 @@ loadMethod(method, fname, envir)
       The function calls itself recursively: \code{prev} is the
       previously selected classes.
     }
-    
+
     \item{\code{listFromMlistForPrint}:}{
       Undo the recursive nature of the methods list, making a list of
       function defintions, with the names of the list being the
       corresponding signatures (designed for printing; for looping over
       the methods, use \code{\link{listFromMlist}} instead).
-  
+
       The function calls itself recursively: \code{prev} is the
       previously selected classes.
     }
@@ -164,7 +162,7 @@ loadMethod(method, fname, envir)
   the reference that reflect the S4 implementation may appear
   differently in R.  Also, there are extensions to the programming
   interface developed more recently than the reference.  For a
-  discussion of details and ongoing development, see the web page 
+  discussion of details and ongoing development, see the web page
   \url{http://developer.r-project.org/methodsPackage.html} and the
   pointers from that page.
 }
