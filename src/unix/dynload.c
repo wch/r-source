@@ -447,11 +447,16 @@ extern DL_FUNC ptr_X11DeviceDriver, ptr_dataentry;
 
 void R_load_X11_shlib()
 {
-    char X11_DLL[PATH_MAX], buf[1000];
+    char X11_DLL[PATH_MAX], buf[1000], *p;
     void *handle;
     struct stat sb;
 
-    strcpy(X11_DLL, getenv("R_HOME"));
+    p = getenv("R_HOME");
+    if(!p) {
+	sprintf(buf, "R_HOME was not set");
+	R_Suicide(buf);
+    }
+    strcpy(X11_DLL, p);
     strcat(X11_DLL, "/bin/R_X11.");
     strcat(X11_DLL, SHLIBEXT); /* from config.h */
     if(stat(X11_DLL, &sb))
@@ -481,11 +486,16 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
 
 void R_load_gnome_shlib()
 {
-    char gnome_DLL[PATH_MAX], buf[1000];
+    char gnome_DLL[PATH_MAX], buf[1000], *p;
     void *handle;
     struct stat sb;
 
-    strcpy(gnome_DLL, getenv("R_HOME"));
+    p = getenv("R_HOME");
+    if(!p) {
+	sprintf(buf, "R_HOME was not set");
+	R_Suicide(buf);
+    }
+    strcpy(gnome_DLL, p);
     strcat(gnome_DLL, "/gnome/R_gnome.");
     strcat(gnome_DLL, SHLIBEXT); /* from config.h */
     if(stat(gnome_DLL, &sb))
