@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.107 $'
+revision='$Revision: 1.108 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -377,6 +377,11 @@ do_install_source () {
     ## exclude everything in @file{.Rbuildignore}, but that's another
     ## story ...)
     cp -r inst/* "${lib}/${pkg}"
+  fi
+
+  ## Install the NAMESPACE file if present
+  if test -f NAMESPACE; then
+    cp NAMESPACE "${lib}/${pkg}/NAMESPACE"
   fi
 
   case ${save} in
