@@ -42,7 +42,7 @@ Manual.tex: $(srcdir)/Manual.tex.in
 Reference.tex: $(srcdir)/Reference.tex.in
 	sed -e s/@R_PAPERSIZE@/$(PAPER)/ $^ > $@
 
-pdf: Manual.pdf Reference.pdf R-external.pdf
+pdf: Manual.pdf Reference.pdf R-external.pdf R-prog.pdf
 
 Manual.pdf: Manual.tex Version.tex $(mansrcs) $(srcdir)/Rd.sty
 	@echo "Making PDF LaTeX documentation ..."
@@ -65,6 +65,9 @@ Reference.pdf: Reference.tex Version.tex $(pkgsrcs) $(srcdir)/Rd.sty
 	  $(LATEX) '\nonstopmode\input{Reference.tex}'
 
 R-external.pdf: R-external.texi
+	$(TEX) $^
+	$(TEX) $^
+R-prog.pdf: R-prog.texi
 	$(TEX) $^
 	$(TEX) $^
 
