@@ -65,25 +65,25 @@ Copyright @copyright{} 1999, 2000 R Development Core Team
 @node Top, Preface, (dir), (dir)
 
 @menu
-* Preface::
-* Introduction and preliminaries::
-* Simple manipulations numbers and vectors::
-* Objects::
-* Factors::
-* Arrays and matrices::
-* Lists and data frames::
-* Reading data from files::
-* Probability distributions::
-* Loops and conditional execution::
-* Writing your own functions::
-* Statistical models in R::
-* Graphics::
-* A sample session::
-* Invoking R::
-* The command line editor::
-* Function and variable index::
-* Concept index::
-* References::
+* Preface::                     
+* Introduction and preliminaries::  
+* Simple manipulations numbers and vectors::  
+* Objects::                     
+* Factors::                     
+* Arrays and matrices::         
+* Lists and data frames::       
+* Reading data from files::     
+* Probability distributions::   
+* Loops and conditional execution::  
+* Writing your own functions::  
+* Statistical models in R::     
+* Graphics::                    
+* A sample session::            
+* Invoking R::                  
+* The command line editor::     
+* Function and variable index::  
+* Concept index::               
+* References::                  
 @end menu
 
 @node Preface, Introduction and preliminaries, Top, Top
@@ -127,16 +127,16 @@ been digested.
 @chapter Introduction and preliminaries
 
 @menu
-* The R environment::
-* Related software and documentation::
-* R and statistics::
-* R and the window system::
-* Using R interactively::
-* Getting help::
-* R commands; case sensitivity etc::
-* Recall and correction of previous commands::
-* Executing commands from or diverting output to a file::
-* Data permanency and removing objects::
+* The R environment::           
+* Related software and documentation::  
+* R and statistics::            
+* R and the window system::     
+* Using R interactively::       
+* Getting help::                
+* R commands; case sensitivity etc::  
+* Recall and correction of previous commands::  
+* Executing commands from or diverting output to a file::  
+* Data permanency and removing objects::  
 @end menu
 
 @node The R environment, Related software and documentation, Introduction and preliminaries, Introduction and preliminaries
@@ -514,14 +514,14 @@ been conducted in the same directory.
 @cindex Vectors
 
 @menu
-* Vectors and assignment::
-* Vector arithmetic::
-* Generating regular sequences::
-* Logical vectors::
-* Missing values::
-* Character vectors::
-* Index vectors::
-* Other types of objects::
+* Vectors and assignment::      
+* Vector arithmetic::           
+* Generating regular sequences::  
+* Logical vectors::             
+* Missing values::              
+* Character vectors::           
+* Index vectors::               
+* Other types of objects::      
 @end menu
 
 @node Vectors and assignment, Vector arithmetic, Simple manipulations numbers and vectors, Simple manipulations numbers and vectors
@@ -1095,10 +1095,10 @@ extend @R{}.  @xref{Writing your own functions}.
 @cindex Attributes
 
 @menu
-* The intrinsic attributes mode and length::
-* Changing the length of an object::
-* Getting and setting attributes::
-* The class of an object::
+* The intrinsic attributes mode and length::  
+* Changing the length of an object::  
+* Getting and setting attributes::  
+* The class of an object::      
 @end menu
 
 @node The intrinsic attributes mode and length, Changing the length of an object, Objects, Objects
@@ -1351,8 +1351,8 @@ used.
 @end example
 
 @menu
-* The function tapply() and ragged arrays::
-* Ordered factors::
+* The function tapply() and ragged arrays::  
+* Ordered factors::             
 @end menu
 
 @node The function tapply() and ragged arrays, Ordered factors, Factors, Factors
@@ -1468,16 +1468,16 @@ linear models are different.
 @chapter Arrays and matrices
 
 @menu
-* Arrays::
-* Array indexing::
-* Index arrays::
-* The array() function::
-* The outer product of two arrays::
-* Generalized transpose of an array::
-* Matrix facilities::
-* Forming partitioned matrices::
-* The concatenation function c() with arrays::
-* Frequency tables from factors::
+* Arrays::                      
+* Array indexing::              
+* Index arrays::                
+* The array() function::        
+* The outer product of two arrays::  
+* Generalized transpose of an array::  
+* Matrix facilities::           
+* Forming partitioned matrices::  
+* The concatenation function c() with arrays::  
+* Frequency tables from factors::  
 @end menu
 
 @node Arrays, Array indexing, Arrays and matrices, Arrays and matrices
@@ -1706,7 +1706,7 @@ concerning mixed array and vector calculations has to be considered a
 little more carefully.
 
 @menu
-* The recycling rule::
+* The recycling rule::          
 @end menu
 
 @node The recycling rule,  , The array() function, The array() function
@@ -1853,11 +1853,11 @@ number of rows and columns in the matrix @code{A} respectively.
 @findex ncol
 
 @menu
-* Multiplication::
-* Linear equations and inversion::
-* Eigenvalues and eigenvectors::
-* Singular value decomposition and determinants::
-* Least squares fitting and the QR decomposition::
+* Multiplication::              
+* Linear equations and inversion::  
+* Eigenvalues and eigenvectors::  
+* Singular value decomposition and determinants::  
+* Least squares fitting and the QR decomposition::  
 @end menu
 
 @node  Multiplication, Linear equations and inversion, Matrix facilities, Matrix facilities
@@ -2211,9 +2211,9 @@ Extension to higher way frequency tables is immediate.
 @chapter Lists and data frames
 
 @menu
-* Lists::
-* Constructing and modifying lists::
-* Data frames::
+* Lists::                       
+* Constructing and modifying lists::  
+* Data frames::                 
 @end menu
 
 @node Lists, Constructing and modifying lists, Lists and data frames, Lists and data frames
@@ -2323,7 +2323,7 @@ additional components.  For example
 @end example
 
 @menu
-* Concatenating lists::
+* Concatenating lists::         
 @end menu
 
 @node Concatenating lists,  , Constructing and modifying lists, Constructing and modifying lists
@@ -2375,11 +2375,11 @@ matrix form, and its rows and columns extracted using matrix indexing
 conventions.
 
 @menu
-* Making data frames::
-* attach() and detach()::
-* Working with data frames::
-* Attaching arbitrary lists::
-* Managing the search path::
+* Making data frames::          
+* attach() and detach()::       
+* Working with data frames::    
+* Attaching arbitrary lists::   
+* Managing the search path::    
 @end menu
 
 @node Making data frames, attach() and detach(), Data frames, Data frames
@@ -2571,27 +2571,19 @@ such as file editors or @code{perl}@footnote{Under UNIX, the utilities
 @code{sed} or @code{awk} can be used.} to fit in with the requirements
 of @R{}.  Generally this is very simple.
 
-@findex read.fwf
-There is, however, a function @code{read.fwf()} that can be used to read
-in a file with fixed-width, non-separated input fields. (It does so by
-using a @code{perl} script to convert the file into a form suitable for
-reading by @code{read.table}.)  There is also a facility
-@code{count.fields()} that will count the number of fields on each line
-of such a file.  Occasionally for very simple conversion and checking
-problems these may be adequate to the task, but in most cases it is
-better to do the preliminary spade work before the @R{} session begins.
-
 If variables are to be held mainly in data frames, as we strongly
 suggest they should be, an entire data frame can be read directly with
 the @code{read.table()} function.  There is also a more primitive input
 function, @code{scan()}, that can be called directly.
 
+For more details on importing data into @R{} and also exporting data,
+see the @emph{R Data Import/Export} manual.
+
 @menu
-* The read.table() function::
-* The scan() function::
-* Accessing builtin datasets::
-* Editing data::
-* Importing data::
+* The read.table() function::   
+* The scan() function::         
+* Accessing builtin datasets::  
+* Editing data::                
 @end menu
 
 @node The read.table() function, The scan() function, Reading data from files, Reading data from files
@@ -2755,7 +2747,7 @@ In most cases this will load an @R{} object of the same name, usually a
 data frame.  However, in a few cases it loads several objects, so see the
 on-line help for the object to see what to expect.
 
-@subsection Loading data from other packages
+@subsection Loading data from other R packages
 
 To access data from another package, use the @code{package} argument,
 for example
@@ -2785,10 +2777,10 @@ with a set of datasets which is now available on CRAN as the package
 @pkg{Rnotes}.
 
 
-@node Editing data, Importing data, Accessing builtin datasets, Reading data from files
+@node Editing data,  , Accessing builtin datasets, Reading data from files
 @section Editing data
 
-Once a data set has been read, there is a window based facility in some
+Once a data set has been read, there is a window-based facility in some
 versions of @R{} for making small changes.  The command
 
 @example
@@ -2812,29 +2804,15 @@ Calling @code{data.entry()} with no arguments,
 @noindent
 lets you enter new data via the spreadsheet interface.
 
-@node Importing data,  , Editing data, Reading data from files
-@section Importing data
-@cindex Importing data
-
-It can be an important part of some projects to import data from
-external databases or from files intended for other systems.  There are
-various packages being developed to ease the importing of data to @R{}.
-Currently there as a package @pkg{stataread} which reads and writes
-Stata files and an experimental package @pkg{foreign} which it is
-planned will be able to read SAS, Minitab and SPSS files.  Several
-packages provide interfaces to SQL databases, and a package @pkg{RODBC}
-is being developed to provide connections to ODBC databases (such as
-Access on Windows).
-
 
 @node Probability distributions, Loops and conditional execution, Reading data from files, Top
 @chapter Probability distributions
 @cindex Probability distributions
 
 @menu
-* R as a set of statistical tables::
-* Examining the distribution of a set of data::
-* One- and two-sample tests::
+* R as a set of statistical tables::  
+* Examining the distribution of a set of data::  
+* One- and two-sample tests::   
 @end menu
 
 @node R as a set of statistical tables, Examining the distribution of a set of data, Probability distributions, Probability distributions
@@ -3233,8 +3211,8 @@ cannot compute correct p-values with ties in: ks.test(A, B)
 @cindex Loops and conditional execution
 
 @menu
-* Grouped expressions::
-* Control statements::
+* Grouped expressions::         
+* Control statements::          
 @end menu
 
 @node Grouped expressions, Control statements, Loops and conditional execution, Loops and conditional execution
@@ -3258,8 +3236,8 @@ parentheses and used a part of an even larger expression, and so on.
 @cindex Control statements
 
 @menu
-* Conditional execution::
-* Repetitive execution::
+* Conditional execution::       
+* Repetitive execution::        
 @end menu
 
 @node Conditional execution, Repetitive execution, Control statements, Control statements
@@ -3406,15 +3384,15 @@ A call to the function then usually takes the form
 anywhere a function call is legitimate.
 
 @menu
-* Simple examples::
-* Defining new binary operators::
-* Named arguments and defaults::
-* The ellipsis argument (...)::
-* Assignment within functions::
-* More advanced examples::
-* Scope::
-* Customizing the environment::
-* Object orientation::
+* Simple examples::             
+* Defining new binary operators::  
+* Named arguments and defaults::  
+* The ellipsis argument (...)::  
+* Assignment within functions::  
+* More advanced examples::      
+* Scope::                       
+* Customizing the environment::  
+* Object orientation::          
 @end menu
 
 @node Simple examples, Defining new binary operators, Writing your own functions, Writing your own functions
@@ -3624,9 +3602,9 @@ in @R{}.  These are discussed further in @ref{Scope}.
 @section More advanced examples
 
 @menu
-* Efficiency factors in block designs::
-* Dropping all names in a printed array::
-* Recursive numerical integration::
+* Efficiency factors in block designs::  
+* Dropping all names in a printed array::  
+* Recursive numerical integration::  
 @end menu
 
 @node Efficiency factors in block designs, Dropping all names in a printed array, More advanced examples, More advanced examples
@@ -4025,14 +4003,14 @@ basic output is minimal, and one needs to ask for the details by calling
 extractor functions.
 
 @menu
-* Formulae for statistical models::
-* Linear models::
-* Generic functions for extracting model information::
-* Analysis of variance and model comparison::
-* Updating fitted models::
-* Generalized linear models::
-* Nonlinear least squares and maximum likelihood models::
-* Some non-standard models::
+* Formulae for statistical models::  
+* Linear models::               
+* Generic functions for extracting model information::  
+* Analysis of variance and model comparison::  
+* Updating fitted models::      
+* Generalized linear models::   
+* Nonlinear least squares and maximum likelihood models::  
+* Some non-standard models::    
 @end menu
 
 @node Formulae for statistical models, Linear models, Statistical models in R, Statistical models in R
@@ -4232,7 +4210,7 @@ implicit.  This is not the case in other contexts, for example in
 specifying nonlinear models.
 
 @menu
-* Contrasts::
+* Contrasts::                   
 @end menu
 
 @node Contrasts,  , Formulae for statistical models, Formulae for statistical models
@@ -4443,7 +4421,7 @@ would typically be used to describe an experiment with mean model
 ``within farms, between blocks'' and ``within blocks''.
 
 @menu
-* ANOVA tables::
+* ANOVA tables::                
 @end menu
 
 @node ANOVA tables,  , Analysis of variance and model comparison, Analysis of variance and model comparison
@@ -4617,8 +4595,8 @@ reference works on the subject for full details, such as McCullagh &
 Nelder (1989) or Dobson (1990).
 
 @menu
-* Families::
-* The glm() function::
+* Families::                    
+* The glm() function::          
 @end menu
 
 @node Families, The glm() function, Generalized linear models, Generalized linear models
@@ -4902,8 +4880,8 @@ try, and convergence depends critically upon the quality of the initial
 guesses.
 
 @menu
-* Least squares::
-* Maximum likelihood::
+* Least squares::               
+* Maximum likelihood::          
 @end menu
 
 @node Least squares, Maximum likelihood, Nonlinear least squares and maximum likelihood models, Nonlinear least squares and maximum likelihood models
@@ -5176,13 +5154,13 @@ In addition, @R{} maintains a list of @emph{graphical parameters} which
 can be manipulated to customize your plots.
 
 @menu
-* High-level plotting commands::
-* Low-level plotting commands::
-* Interacting with graphics::
-* Using graphics parameters::
-* Graphics parameters::
-* Device drivers::
-* Dynamic graphics::
+* High-level plotting commands::  
+* Low-level plotting commands::  
+* Interacting with graphics::   
+* Using graphics parameters::   
+* Graphics parameters::         
+* Device drivers::              
+* Dynamic graphics::            
 @end menu
 
 @node High-level plotting commands, Low-level plotting commands, Graphics, Graphics
@@ -5195,10 +5173,10 @@ otherwise.) High-level plotting commands always start a new plot,
 erasing the current plot if necessary.
 
 @menu
-* The plot() function::
-* Displaying multivariate data::
-* Display graphics::
-* Arguments to high-level plotting functions::
+* The plot() function::         
+* Displaying multivariate data::  
+* Display graphics::            
+* Arguments to high-level plotting functions::  
 @end menu
 
 @node The plot() function, Displaying multivariate data, High-level plotting commands, High-level plotting commands
@@ -5520,8 +5498,8 @@ valid input.  In this way functions such as @code{locator()} (see below)
 may be used to specify positions on a plot interactively.
 
 @menu
-* Mathematical annotation::
-* Hershey vector fonts::
+* Mathematical annotation::     
+* Hershey vector fonts::        
 @end menu
 
 @node Mathematical annotation, Hershey vector fonts, Low-level plotting commands, Low-level plotting commands
@@ -5662,8 +5640,8 @@ permanently, affecting all graphics functions which access the current
 device; or temporarily, affecting only a single graphics function call.
 
 @menu
-* The par() function::
-* Arguments to graphics functions::
+* The par() function::          
+* Arguments to graphics functions::  
 @end menu
 
 @node The par() function, Arguments to graphics functions, Using graphics parameters, Using graphics parameters
@@ -5744,10 +5722,10 @@ setting the parameter.
 @end table
 
 @menu
-* Graphical elements::
-* Axes and tick marks::
-* Figure margins::
-* Multiple figure environment::
+* Graphical elements::          
+* Axes and tick marks::         
+* Figure margins::              
+* Multiple figure environment::  
 @end menu
 
 @node Graphical elements, Axes and tick marks, Graphics parameters, Graphics parameters
@@ -6022,8 +6000,8 @@ of hardcopy devices this ensures that every page is completed and has
 been sent to the printer.
 
 @menu
-* PostScript diagrams for typeset documents::
-* Multiple graphics devices::
+* PostScript diagrams for typeset documents::  
+* Multiple graphics devices::   
 @end menu
 
 @node PostScript diagrams for typeset documents, Multiple graphics devices, Device drivers, Device drivers
@@ -6374,8 +6352,8 @@ want to save it.
 @appendix Invoking R
 
 @menu
-* Invoking R under UNIX::
-* Invoking R under Windows::
+* Invoking R under UNIX::       
+* Invoking R under Windows::    
 @end menu
 
 @node Invoking R under UNIX, Invoking R under Windows, Invoking R, Invoking R
@@ -6406,9 +6384,8 @@ first of these files found is sourced to set environment variables.  The
 variables are exported automatically, provided that they are set in
 lines of the form @samp{@var{name}=@var{value}}.  Variables you might
 want to set include @env{R_PAPERSIZE} (the default paper size),
-@env{R_PRIMTCMD} (the default print command), @env{R_LIBS} (specifies
-the list of @R{} library trees searched for add-on packages), and
-@env{R_VSIZE} and @env{R_NSIZE} (see further below).
+@env{R_PRIMTCMD} (the default print command) and @env{R_LIBS} (specifies
+the list of @R{} library trees searched for add-on packages).
 
 @item
 Then @R{} searches for the site-wide startup profile unless the command
@@ -6434,14 +6411,8 @@ reside in @file{.RData}.
 
 In addition, there are options for controlling the memory available to
 the @R{} process (see the on-line help for topic @samp{Memory} for more
-information).  Currently, @R{} uses a @emph{static} memory model.  This
-means that when it starts up, it asks the operating system to reserve a
-fixed amount of memory for it.  The size of this chunk cannot be changed
-subsequently. Hence, it can happen that not enough memory was allocated,
-e.g., when trying to read large data sets into @R{}.  The command line
-options @option{--nsize} and @option{--vsize} (or the corresponding
-environment variables @env{R_NSIZE} and @env{R_VSIZE}) can be used for
-controlling the memory available for fixed and variable sized objects.
+information).  Users will not normally need to use these unless they
+are trying to limit the amount of memory used by @R{}.
 
 @R{} accepts the following command-line options.
 
@@ -6499,17 +6470,20 @@ when running @R{} from within Emacs using the ESS (``Emacs Speaks
 Statistics'') package.  @xref{The command line editor}, for more
 information.
 
-@item --vsize=@var{N}
-Specify the amount of memory used for variable size objects by setting
-the ``vector heap'' size to @var{N} bytes.  Here, @var{N} must either be
-an integer or an integer ending with @samp{M}, @samp{K}, or @samp{k},
-meaning `Mega' (2^20), (computer) `Kilo' (2^10), or regular `kilo'
-(1000).
+@item --min-vsize=@var{N}
+@itemx --max-vsize=@var{N}
+Specify the minimum or maximum amount of memory used for variable size
+objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
+@var{N} must either be an integer or an integer ending with @samp{M},
+@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
+or regular `kilo' (1000).
 
-@item --nsize=@var{N}
+@item --min-nsize=@var{N}
+@itemx --max-nsize=@var{N}
 Specify the amount of memory used for fixed size objects by setting the
-number of ``cons cells'' to @var{N}.  See option @option{--vsize} for
-details on @var{N}.
+number of ``cons cells'' to @var{N}.  See the previous option for
+details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
+usually 56 bytes on a 64-bit machine.
 
 @item --quiet
 @itemx --silent
@@ -6625,9 +6599,8 @@ set, the file @file{.Renviron} in the user's home directory, exists, it
 is read to set environment variables.  Reading is suppressed by the flag
 @option{--no-environ}.  The variables are set by separate lines of the
 form @samp{@var{name}=@var{value}}.  Variables you might want to set
-include @env{R_PAPERSIZE} (the default paper size), @env{R_LIBS}
-(controls the list of @R{} library trees searched for add-on packages),
-and @env{R_VSIZE} and @env{R_NSIZE} (see further below).
+include @env{R_PAPERSIZE} (the default paper size) and @env{R_LIBS}
+(controls the list of @R{} library trees searched for add-on packages).
 
 Environment variables can also be supplied as
 @samp{@var{name}=@var{value}} pairs at the end of  the command line.
@@ -6661,8 +6634,7 @@ means that when it starts up, it asks the operating system to reserve a
 fixed amount of memory for it.  The size of this chunk cannot be changed
 subsequently. Hence, it can happen that not enough memory was allocated,
 e.g., when trying to read large data sets into @R{}.  The command line
-options @option{--nsize} and @option{--vsize} (or the corresponding
-environment variables @env{R_NSIZE} and @env{R_VSIZE}) can be used for
+options @option{--nsize} and @option{--vsize} can be used for
 controlling the memory available for fixed and variable sized objects.
 
 @R{} for Windows accepts the following command line options.
@@ -6713,17 +6685,26 @@ Combine @option{--no-save}, @option{--no-restore},
 @option{--no-site-file}, @option{--no-init-file} and
 @option{--no-environ}.
 
-@item --vsize=@var{N}
-Specify the amount of memory used for variable size objects by setting
-the ``vector heap'' size to @var{N} bytes.  Here, @var{N} must either be
-an integer or an integer ending with @samp{M}, @samp{K}, or @samp{k},
-meaning `Mega' (2^20), (computer) `Kilo' (2^10), or regular `kilo'
-(1000).
+@item --min-vsize=@var{N}
+@itemx --max-vsize=@var{N}
+Specify the minimum or maximum amount of memory used for variable size
+objects by setting the ``vector heap'' size to @var{N} bytes.  Here,
+@var{N} must either be an integer or an integer ending with @samp{M},
+@samp{K}, or @samp{k}, meaning `Mega' (2^20), (computer) `Kilo' (2^10),
+or regular `kilo' (1000).
 
-@item --nsize=@var{N}
+@item --min-nsize=@var{N}
+@itemx --max-nsize=@var{N}
 Specify the amount of memory used for fixed size objects by setting the
-number of ``cons cells'' to @var{N}.  See option @option{--vsize} for
-details on @var{N}.
+number of ``cons cells'' to @var{N}.  See the previous option for
+details on @var{N}.  A cons cell takes 28 bytes on a 32-bit machine, and
+usually 56 bytes on a 64-bit machine.
+
+@item --max-mem-size=@var{N}
+Specify a limit for the amount of memory to be used both for @R{}
+objects and working areas (`@code{malloc}-ed' memory).  This is set by
+default to the smaller of 256Mb and the amount of physical RAM in the machine.
+
 
 @item --quiet
 @itemx --silent
@@ -6763,6 +6744,8 @@ Install add-on packages.
 Remove add-on packages.
 @item SHLIB
 Make a DLL for use with @code{dyn.load}.
+@item BATCH
+Run @R{} in batch mode.
 @item build
 Build add-on packages.
 @item check

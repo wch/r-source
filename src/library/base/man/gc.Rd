@@ -7,26 +7,31 @@ gcinfo(verbose)
 \alias{gc}
 \alias{gcinfo}
 \arguments{
-\item{verbose}{logical; if \code{TRUE}, the garbage collection prints
-    statistics about cons cells [in Bytes] and the vector heap [in KBytes].}
+  \item{verbose}{logical; if \code{TRUE}, the garbage collection prints
+    statistics about cons cells and the vector heap.}
 }
 \description{
-    A call of \code{gc} causes a garbage collection to take place.
-    \code{gcinfo} sets a flag so that
-    automatic collection is either silent (\code{verbose=FALSE}) or
-    prints memory use statistics (\code{verbose=TRUE}).
+  A call of \code{gc} causes a garbage collection to take place.
+  \code{gcinfo} sets a flag so that
+  automatic collection is either silent (\code{verbose=FALSE}) or
+  prints memory usage statistics (\code{verbose=TRUE}).
 }
 \details{
-A call of \code{gc} causes a garbage collection to take place.
-This takes place automagically without user intervention, and the
-primary purpose of calling \code{gc} is for the report on memory usage.
+  A call of \code{gc} causes a garbage collection to take place.
+  This takes place automatically without user intervention, and the
+  primary purpose of calling \code{gc} is for the report on memory usage.
+
+  However, it can be useful to call \code{gc} after a large object
+  has been removed, as this may prompt \R to return memory to the
+  operating system.
 }
+
 \value{
-  \code{gc} returns a 2*4 matrix with rows \code{"Ncells"} (\emph{cons
-    cells}, usually 28 bytes each on 32-bit systems, and \code{"Vcells"}
-  (\emph{vector cells}, 8 bytes each), and columns \code{"used"},
-  \code{"total"}, each also interpreted in megabytes (rounded up to
-  the next 0.1Mb).
+  \code{gc} returns a matrix with rows \code{"Ncells"} (\emph{cons
+    cells}, usually 28 bytes each on 32-bit systems and 56 bytes on
+  64-bit systems, and \code{"Vcells"} (\emph{vector cells}, 8 bytes
+  each), and columns \code{"used"} and \code{"gc trigger"},
+  each also interpreted in megabytes (rounded up to the next 0.1Mb).
 
   If maxima have been set for either \code{"Ncells"} or \code{"Vcells"},
   a fifth column is printed giving the current limits in Mb (with

@@ -116,7 +116,7 @@ int Rf_initialize_R(int ac, char **av)
     R_setStartTime();
 #endif
     R_DefParams(Rp);
-    R_SizeFromEnv(Rp);
+/*    R_SizeFromEnv(Rp); */
     /* Store the command line arguments before they are processed
        by the R option handler. These are stored in Rp and then moved
        to the global variable CommandLineArgs in R_SetParams.

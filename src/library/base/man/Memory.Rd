@@ -72,12 +72,12 @@ mem.limits(nsize = NA, vsize = NA)
   never be reduced below the current values for triggering garbage
   collection, and attempts to do so will be silently ignored.
 
-  The defaults for \code{--min-nsize} and \code{--min-vsize} can be changed by
-  setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
-  respectively, perhaps most conveniently in the file \file{.Renviron}
-  or \file{\eqn{\sim}{~}/.Renviron}. There should no longer be any need
-  to do so.
-
+%  The defaults for \code{--min-nsize} and \code{--min-vsize} can be changed by
+%  setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
+%  respectively, perhaps most conveniently in the file \file{.Renviron}
+%  or \file{\eqn{\sim}{~}/.Renviron}. There should no longer be any need
+%  to do so.
+%
   When using \code{\link{read.table}}, the memory requirements are in
   fact higher than anticipated, because the file is first read in as one
   long string which is then split again.  Use \code{\link{scan}} if

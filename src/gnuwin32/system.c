@@ -694,7 +694,7 @@ int cmdlineoptions(int ac, char **av)
 	Rp->NoRenviron = TRUE;
     }
     env_command_line(&ac, av);
-    R_SizeFromEnv(Rp);
+/*    R_SizeFromEnv(Rp); */
 
     R_common_command_line(&ac, av, Rp);
 
