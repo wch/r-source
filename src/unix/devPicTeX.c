@@ -25,9 +25,6 @@
 #include "Graphics.h"
 #include "Fileio.h"
 
-unsigned int str2col(char*);
-
-/*void error(char*);*/
 int ValidColor(unsigned int);
 
 
@@ -720,8 +717,8 @@ int PicTeXDeviceDriver(DevDesc *dd, char *filename, char *bg, char *fg,
 
 	strcpy(ptd->filename, filename);
 
-        dd->dp.bg = dd->gp.bg = str2col(bg);
-        dd->dp.fg = dd->gp.fg = str2col(fg);
+        dd->dp.bg = dd->gp.bg = str2col(bg, dd);
+        dd->dp.fg = dd->gp.fg = str2col(fg, dd);
 
 	dd->dp.activate = PicTeX_Activate;
 	dd->dp.deactivate = PicTeX_Deactivate;
