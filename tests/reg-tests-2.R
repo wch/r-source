@@ -173,3 +173,7 @@ a <- matrix(c("axx","b","c","d","e","f","g","h"), nrow=2)
 format(a)
 format(a, justify="right")
 ## lost dimensions in 1.2.3
+
+## PR 963
+svd(rbind(1:7))## $v lost dimensions in 1.2.3
+
