@@ -1,0 +1,105 @@
+#! @PERL@ 
+#-*- perl -*- (for html2dos.in ..)
+
+# Convert a html directory with long filenames to DOS 8.3 filenames
+
+# Copyright (C) 1997,1998 Friedrich Leisch
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+# 
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details. 
+# 
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+# writing to the Free Software Foundation, Inc., 675 Mass Ave,
+# Cambridge, MA 02139, USA.
+
+use File::Basename;
+use Cwd;
+use Getopt::Long;
+
+GetOptions ("keep") || usage();
+
+undef $/;
+
+format STDOUT =
+@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<< 
+$unixn,                          $dosn,              
+.
+
+$root = getcwd();
+    
+foreach $d (@ARGV) {
+
+    chdir $root;
+    chdir $d or die "Can't change to dir $d\n";
+
+    print "******* Converting files in $d *******\n";
+    
+    opendir dir, '.';
+    @dir = readdir(dir);
+
+    undef %filenames;
+    undef %namecount;
+
+    foreach $unixn (@dir) {
+	if($unixn =~ /\.html$/i){
+	    $dosn = basename($unixn, (".html", ".HTML"));
+	    $dosn = substr($dosn, 0, 5);
+	    $dosn =~ s/\./_/g;
+	    $dosn =~ s/(.*)/\L$1/;
+	    $namecount{$dosn}++;
+	    if($namecount{$dosn}>1){
+		$dosn = "$dosn-$namecount{$dosn}";
+	    }
+	    
+	    $dosn = $dosn . ".htm";
+	    $filenames{$unixn} = $dosn;
+	}
+    }
+    
+    foreach $unixn (sort(keys(%filenames))) {
+	
+	$dosn = $filenames{$unixn};
+	
+	open uf, "<$unixn";
+	open df, ">$dosn";
+	
+	$html = <uf>;
+	$html =~ s/<a href\s*=\s*\"\.\.\/index\.html\">/<a href=\"..\/index.htm\">/g;
+	$html =~ s/<a href\s*=\s*\"index\.html\">/<a href=\"index.htm\">/g;
+	
+	$html =~ s/<A HREF\s*=\s*\"\.\.\/index\.html\">/<a href=\"..\/index.htm\">/g;
+	$html =~ s/<A HREF\s*=\s*\"index\.html\">/<a href=\"index.htm\">/g;
+	
+	foreach $link (keys(%filenames)) {
+	    $html =~ s/<a href\s*=\s*\"\s*$link\s*\">/<a href=\"$filenames{$link}\">/g;
+	    $html =~ s/<A HREF\s*=\s*\"\s*$link\s*\">/<a href=\"$filenames{$link}\">/g;
+	}
+	
+	print df $html;
+	write;
+	close uf;
+	close df;
+	unlink $unixn unless $opt_keep;
+    }
+}
+
+
+sub usage {
+
+    print "Usage:  html2dos [--keep] dir1 [dir2 ...]\n\n" .
+	  "        --keep:  Don't remove original files (long names)\n\n";
+
+    exit 0;
+}
+
+
+
+

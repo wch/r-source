@@ -1,0 +1,96 @@
+#! @PERL@
+
+# Extract R object INDEX information from Rd files.
+# Usage:  Rdindex [-l x] [-r y] file_1 ... file_n
+# The titles are nicely formatted between the columns x and y (defaults
+# are 25 and 72, respectively).
+
+# Copyright (C) 1997, 1998 Kurt Hornik and Fritz Leisch
+#
+# This document is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+# writing to the Free Software Foundation, Inc., 675 Mass Ave,
+# Cambridge, MA 02139, USA.
+
+# Bug reports to Friedrich.Leisch@ci.tuwien.ac.at
+
+use Getopt::Long;
+
+GetOptions(("l=s","r=s"));
+
+$opt_l = 25 unless $opt_l;
+$opt_r = 72 unless $opt_r;
+
+$l1 = $opt_l - 2;
+$l2 = $opt_r - $opt_l;
+
+$cmd = "format short =\n";
+$cmd .= "@" . rep("<", $l1) . " ^" . rep("<", $l2) . "\n";
+$cmd .= "\$name, \$desc\n";
+$cmd .= ".\n";
+
+eval($cmd);
+
+
+$cmd = "format long =\n";
+$cmd .= "@" . rep("<", $opt_r) . "\n";
+$cmd .= "\$name\n";
+$cmd .= ".\n";
+
+eval($cmd);
+
+$cmd = "format cont =\n";
+$cmd .= "~" . rep(" ", $l1) . " ^" . rep("<", $l2) . "\n";
+$cmd .= "\$desc\n";
+$cmd .= ".\n";
+
+eval($cmd);
+    
+
+undef $/;
+
+foreach $file (@ARGV) {
+  if (!open(FILE, $file)) {
+    print STDERR "File $file not found\n";
+  }
+  else {
+    $_ = <FILE>;
+    m/\\name\{([^\}]*)\}/;
+    $name = $1;
+    $l = length($name);
+    if($l <= $l1){
+	$~ = short;
+    }
+    else{
+	$~ = long;
+    }
+    /\\title\{\s*([^\}]+)\s*\}/s;
+    $desc = $1;
+    write;
+    $~ = cont;
+    while($desc){
+	write;
+    }
+  }
+}
+
+
+sub rep {
+
+    my $retval = "";
+    for($k=0;$k<$_[1];$k++){
+	$retval .= $_[0];
+    }
+
+    $retval;
+}

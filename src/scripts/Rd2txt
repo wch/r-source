@@ -1,0 +1,8 @@
+#!/bin/sh
+
+RHOME=`R RHOME`
+
+$RHOME/bin/Rdconv -t nroff $1 \
+  | tbl \
+  | nroff -ms 2> /dev/null \
+  | $RHOME/bin/help.pretty
