@@ -15,7 +15,7 @@
 .path.package(package, quiet = FALSE)
 
 .getRequiredPackages(file = "DESCRIPTION", quietly = FALSE)
-.getRequiredPackages2(pkgInfo, quietly = FALSE)
+.getRequiredPackages2(pkgInfo, quietly = FALSE, lib.loc = NULL)
 }
 \arguments{
   \item{package}{the name of a package}
@@ -47,13 +47,17 @@
   meant to be called by users, and its interface might change in future
   versions.
 
-  \code{.getRequiredPackages} attaches all the packages mentioned in the
-  \code{Depends} field: failure to find a package is an error.
+  \code{.getRequiredPackages2} attaches all the packages mentioned in the
+  \code{Depends} field: failure to find a package is an error.  It also
+  checks the versions of the packages found against the depends field.
+
+  \code{.getRequiredPackages} is a wrapper using a \file{DESCRIPTION} file.
 }
 \value{
   \code{.find.package} and \code{.path.packages} return a character
   vector of paths to installed packages.
   
-  \code{.getRequiredPackages} returns \code{invisible()}.
+  \code{.getRequiredPackages} and \code{.getRequiredPackages2}
+  return \code{invisible()}.
 }
 \keyword{internal}

@@ -234,6 +234,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             ## temporary kludge
             if(! pkgname %in% c("package:lattice", "package:nlme"))
                 .getRequiredPackages2(pkgInfo)
+#                .getRequiredPackages2(pkgInfo, lib.loc = lib.loc)
             ## If the name space mechanism is available and the package
             ## has a name space, then the name space loading mechanism
             ## takes over.
@@ -784,34 +785,54 @@ manglePackageName <- function(pkgName, pkgVersion)
 
 .getRequiredPackages <- function(file="DESCRIPTION", quietly = FALSE)
 {
-    req <- read.dcf(file, fields = "Depends")[,1]
-    if(!is.na(req)) {
-        sch <- search()
-        ## keep in step with tools:::.check_package_depends
-        pkgs <- unlist(strsplit(req, ","))
-        pkgs <- gsub("^[[:space:]]*([[:alnum:].]+).*$", "\\1" , pkgs)
-        for(pkg in pkgs) {
-            if(pkg == "R") next
-            if (!paste("package", pkg, sep = ":") %in% sch ) {
-                if (!quietly) cat("Loading required package:", pkg, "\n")
-                library(pkg, character.only = TRUE, logical = TRUE) ||
-                stop("package '", pkg, "' could not be loaded", call. = FALSE)
-            }
-        }
-    }
+    ## OK to call tools as only used during installation.
+    pkgInfo <- tools:::.split_description(tools:::.read_description(file))
+    .getRequiredPackages2(pkgInfo, quietly)
     invisible()
 }
 
-.getRequiredPackages2 <- function(pkgInfo, quietly = FALSE)
+.getRequiredPackages2 <- function(pkgInfo, quietly = FALSE, lib.loc = NULL)
 {
     pkgs <- names(pkgInfo$Depends)
-    if(length(pkgs)) {
+    if (length(pkgs)) {
         sch <- search()
-        for(pkg in pkgs)
-            if (!paste("package", pkg, sep = ":") %in% sch ) {
+        pkgname <- pkgInfo$DESCRIPTION["Package"]
+        for(pkg in pkgs) {
+            z <- pkgInfo$Depends[[pkg]]
+            if ( !paste("package", pkg, sep = ":") %in% sch ) {
+                if (length(z) > 1) {
+                    pfile <- system.file("Meta", "package.rds",
+                                         package = pkg, lib.loc = lib.loc)
+                    if(nchar(pfile) == 0)
+                        stop("package ", sQuote(pkg), " required by ",
+                             sQuote(pkgname), " could not be found",
+                             call. = FALSE)
+                    current <- .readRDS(pfile)$DESCRIPTION["Version"]
+                    if (!eval(parse(text=paste("current", z$op, "z$version"))))
+                        stop("package ", sQuote(pkg), " ", current,
+                             " was found, but ", z$op, " ", z$version,
+                             " is required by ", sQuote(pkgname),
+                             call. = FALSE)
+                }
+
                 if (!quietly) cat("Loading required package:", pkg, "\n")
-                library(pkg, character.only = TRUE, logical = TRUE) ||
+                library(pkg, character.only = TRUE, logical = TRUE,
+                        lib.loc = lib.loc) ||
                 stop("package '", pkg, "' could not be loaded", call. = FALSE)
+
+            } else {
+                ## check the required version number, if any
+                if (length(z) > 1) {
+                    pfile <- system.file("Meta", "package.rds",
+                                         package = pkg, lib.loc = lib.loc)
+                    current <- .readRDS(pfile)$DESCRIPTION["Version"]
+                    if (!eval(parse(text=paste("current", z$op, "z$version"))))
+                        stop("package ", sQuote(pkg), " ", current,
+                             " is loaded, but ", z$op, " ", z$version,
+                             " is required by ", sQuote(pkgname),
+                             call. = FALSE)
+                }
             }
+        }
     }
 }

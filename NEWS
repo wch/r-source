@@ -40,7 +40,8 @@ USER-VISIBLE CHANGES
 
     o	Package 'graphics' has been split into 'grDevices' (the
 	graphics devices shared between base and grid graphics) and
-	'graphics' (base graphics).
+	'graphics' (base graphics).  Both graphics and grid packages
+	load grDevices when they are attached.
 
     o	The semantics of data() have changed (and were incorrectly
 	documented in recent releases) and the function has been moved
@@ -172,6 +173,10 @@ NEW FEATURES
 
     o	New functions is.leaf(), dendrapply() and a labels() method for
 	dendrogram objects.
+
+    o	library() now checks the version dependence (if any) of
+	required packages mentioned in the Depends: field of the
+	DESCRIPTION file.
 
     o	ls.str() and lsf.str() now return an object of class "ls_str" which
 	has a print method.
