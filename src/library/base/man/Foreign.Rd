@@ -3,15 +3,19 @@
 \alias{.Fortran}
 \alias{.External}
 \alias{.Call}
+\alias{.External.graphics}
+\alias{.Call.graphics}
 \title{Foreign Function Interface}
 \description{
   Functions to make calls to compiled code that has been loaded into \R.
 }
 \usage{
-       .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
- .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
-.External(name, \dots)
-    .Call(name, \dots)
+                .C(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
+          .Fortran(name, \dots, NAOK = FALSE, DUP = TRUE, PACKAGE)
+         .External(name, \dots)
+             .Call(name, \dots)
+.External.graphics(name, \dots)
+    .Call.graphics(name, \dots)
 }
 \arguments{
   \item{name}{a character string giving the name of a C function or
@@ -35,22 +39,29 @@
   the \code{\dots} list of arguments passed in, but reflecting any
   changes made by the C or Fortran code.
 
-  \code{.External} and \code{.Call} return an \R object.
+  \code{.External}, \code{.Call}, \code{.External.graphics},
+  and \code{.Call.graphics} return an \R object.
 
   These calls are typically made in conjunction with
   \code{\link{dyn.load}} which links DLLs to \R.
+
+  The \code{.graphics} versions of \code{.Call} and \code{.External}
+  are used when calling code which makes low-level graphics calls.
+  They take additional steps to ensure that the device driver display
+  lists are updated correctly.
 }
 \details{
   The functions \code{.C} and \code{.Fortran} can be used to make calls
   to C and Fortran code.
 
-  \code{.External} can be used to call compiled code that uses \R
-  objects in the same way as internal \R functions.
+  \code{.External} and \code{.External.graphics} can be used to call
+  compiled code that uses \R objects in the same way as internal
+  \R functions.
 
-  \code{.Call} can be used call compiled code which makes use of
-  internal \R objects.  The arguments are passed to the C code as a
-  sequence of \R objects.  It is included to provide compatibility with
-  S version 4.
+  \code{.Call} and \code{.Call.graphics} can be used call compiled code
+  which makes use of internal \R objects.  The arguments are passed to
+  the C code as a sequence of \R objects.  It is included to provide
+  compatibility with S version 4.
 
   For details about how to write code to use with \code{.Call} and
   \code{.External}, see the chapter on ``System and foreign language
