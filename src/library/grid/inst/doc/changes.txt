@@ -85,6 +85,12 @@ Changes from grid_1.9.0 to grid_2.0.0:
 	 very big number means that conversion only happens for lines
 	 that are almost parallel at join).
 
+13. New grid.prompt() function for controlling whether the user is
+    prompted before starting a new page of output.
+
+    Grid no longer responds to the par(ask) setting in the "graphics"
+    package.
+
 
 Changes from grid_1.9.0 to grid_1.9.1:
 ------------------------------------

@@ -22,6 +22,7 @@ export(
        "grid.newpage",
        "grid.plot.and.legend",
        "grid.pretty",
+       "grid.prompt",
        "grid.show.layout", "grid.show.viewport",
 
        "unit",

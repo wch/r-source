@@ -887,6 +887,19 @@ SEXP L_setEngineRecording(SEXP value)
     return R_NilValue;
 }
 
+SEXP L_getAsk() 
+{
+    GEDevDesc *dd = getDevice();
+    return gridStateElement(dd, GSS_ASK);
+}
+
+SEXP L_setAsk(SEXP value)
+{
+    GEDevDesc *dd = getDevice();
+    setGridStateElement(dd, GSS_ASK, value);
+    return R_NilValue;
+}
+
 SEXP L_currentGPar()
 {
     /* Get the current device 
@@ -895,11 +908,12 @@ SEXP L_currentGPar()
     return gridStateElement(dd, GSS_GPAR);
 }
 
-SEXP L_newpagerecording(SEXP ask)
+SEXP L_newpagerecording()
 {
     GEDevDesc *dd = getDevice();
-    if (LOGICAL(ask)[0]) {
-	NewFrameConfirm();
+    if (LOGICAL(gridStateElement(dd, GSS_ASK))[0]) {
+	unsigned char buf[16];
+	R_ReadConsole("Hit <Return> to see next page: ", buf, 16, 0);
     }
     GEinitDisplayList(dd);
     return R_NilValue;

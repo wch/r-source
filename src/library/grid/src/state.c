@@ -42,11 +42,12 @@ int gridRegisterIndex;
  * GSS_ENGINERECORDING 13 = are we already inside a .Call.graphics call?
  *   Used by grid.Call.graphics to avoid unnecessary recording on 
  *   engine display list
+ * GSS_ASK 14 = should we prompt the user before starting a new page?
 */
 
 SEXP createGridSystemState()
 {
-    return allocVector(VECSXP, 14);
+    return allocVector(VECSXP, 15);
 }
 
 void initDL(GEDevDesc *dd)
@@ -92,7 +93,7 @@ void initOtherState(GEDevDesc* dd)
 void fillGridSystemState(SEXP state, GEDevDesc* dd) 
 {
     SEXP devsize, currloc, prevloc, dlon, enginedlon, recording;
-    SEXP griddev;
+    SEXP griddev, gridask;
     PROTECT(devsize = allocVector(REALSXP, 2));
     REAL(devsize)[0] = 0;
     REAL(devsize)[1] = 0;
@@ -130,7 +131,10 @@ void fillGridSystemState(SEXP state, GEDevDesc* dd)
     PROTECT(griddev = allocVector(LGLSXP, 1));
     LOGICAL(griddev)[0] = FALSE;
     SET_VECTOR_ELT(state, GSS_GRIDDEVICE, griddev);
-    UNPROTECT(7);
+    PROTECT(gridask = allocVector(LGLSXP, 1));
+    LOGICAL(gridask)[0] = FALSE;
+    SET_VECTOR_ELT(state, GSS_ASK, gridask);
+    UNPROTECT(8);
 }
 
 SEXP gridStateElement(GEDevDesc *dd, int elementIndex)

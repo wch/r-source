@@ -50,6 +50,7 @@
 #define GSS_ENGINEDLON 11
 #define GSS_CURRGROB 12
 #define GSS_ENGINERECORDING 13
+#define GSS_ASK 14
 
 /*
  * Structure of a viewport
@@ -248,8 +249,10 @@ SEXP L_getCurrentGrob();
 SEXP L_setCurrentGrob(SEXP value);
 SEXP L_getEngineRecording();
 SEXP L_setEngineRecording(SEXP value);
+SEXP L_getAsk();
+SEXP L_setAsk(SEXP value);
 SEXP L_currentGPar();
-SEXP L_newpagerecording(SEXP ask);
+SEXP L_newpagerecording();
 SEXP L_newpage();
 SEXP L_initGPar();
 SEXP L_initViewportStack();
