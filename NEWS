@@ -434,6 +434,9 @@ INSTALLATION CHANGES
     o	Makeinfo 4.5 or later is now required for building the HTML and
 	Info versions of the manuals.
 
+    o   f2c is not allowed on 64-bit platforms, as it uses longs for
+	Fortran integers.
+
 
 PACKAGE INSTALLATION CHANGES
 

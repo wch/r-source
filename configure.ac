@@ -593,6 +593,9 @@ if test -n "${F77}"; then
   R_PROG_F77_CC_COMPAT_COMPLEX
   R_PROG_F77_MAKEFRAG  
 else
+  if test ${ac_cv_sizeof_long} -gt 4 ; then
+    AC_MSG_ERROR([Cannot use f2c on a > 32-bit machine])
+  fi
   R_PROG_F2C_FLIBS
   AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
   AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1)

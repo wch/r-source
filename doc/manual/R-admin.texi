@@ -1108,7 +1108,9 @@ sure that all libraries are on this path.
 You must set whatever compilation flags (if any) are needed to ensure
 that FORTRAN @code{integer} is equivalent to a C @code{int} pointer and
 FORTRAN @code{double precision} is equivalent to a C @code{double}
-pointer.  This is checked during the configuration process.
+pointer.  This is checked during the configuration process.  Because
+of this, f2c will not be accepted on a 64-bit platform as it produces
+64-bit integers, incompatible with C's @code{int} on such platforms.
 
 Some of the FORTRAN code makes use of @code{COMPLEX*16} variables, which
 is a FORTRAN 90 extension.  This is checked for at configure

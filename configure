@@ -26565,6 +26565,11 @@ fi
 
 
 else
+  if test ${ac_cv_sizeof_long} -gt 4 ; then
+    { { echo "$as_me:$LINENO: error: Cannot use f2c on a > 32-bit machine" >&5
+echo "$as_me: error: Cannot use f2c on a > 32-bit machine" >&2;}
+   { (exit 1); exit 1; }; }
+  fi
 
 
 if test "${r_cv_f2c_flibs+set}" = set; then
