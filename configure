@@ -11601,9 +11601,9 @@ fi
     ## http://developer.apple.com /documentation/MacOSX/ has nothing
     ## official.
 
-echo "$as_me:$LINENO: checking for saveFP in -lcc_dynamic" >&5
-echo $ECHO_N "checking for saveFP in -lcc_dynamic... $ECHO_C" >&6
-if test "${ac_cv_lib_cc_dynamic_saveFP+set}" = set; then
+echo "$as_me:$LINENO: checking for main in -lcc_dynamic" >&5
+echo $ECHO_N "checking for main in -lcc_dynamic... $ECHO_C" >&6
+if test "${ac_cv_lib_cc_dynamic_main+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   ac_check_lib_save_LIBS=$LIBS
@@ -11616,17 +11616,11 @@ cat confdefs.h >>conftest.$ac_ext
 cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 
-/* Override any gcc2 internal prototype to avoid an error.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-/* We use char because int might match the return type of a gcc2
-   builtin and then its argument prototype would still apply.  */
-char saveFP ();
+
 int
 main ()
 {
-saveFP ();
+main ();
   ;
   return 0;
 }
@@ -11643,19 +11637,19 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  ac_cv_lib_cc_dynamic_saveFP=yes
+  ac_cv_lib_cc_dynamic_main=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-ac_cv_lib_cc_dynamic_saveFP=no
+ac_cv_lib_cc_dynamic_main=no
 fi
 rm -f conftest.$ac_objext conftest$ac_exeext conftest.$ac_ext
 LIBS=$ac_check_lib_save_LIBS
 fi
-echo "$as_me:$LINENO: result: $ac_cv_lib_cc_dynamic_saveFP" >&5
-echo "${ECHO_T}$ac_cv_lib_cc_dynamic_saveFP" >&6
-if test $ac_cv_lib_cc_dynamic_saveFP = yes; then
+echo "$as_me:$LINENO: result: $ac_cv_lib_cc_dynamic_main" >&5
+echo "${ECHO_T}$ac_cv_lib_cc_dynamic_main" >&6
+if test $ac_cv_lib_cc_dynamic_main = yes; then
   cat >>confdefs.h <<_ACEOF
 #define HAVE_LIBCC_DYNAMIC 1
 _ACEOF
@@ -15030,7 +15024,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:15033: \"$ac_link\") >&5
+(eval echo $as_me:15027: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -15110,7 +15104,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:15113: \"$ac_link\") >&5
+(eval echo $as_me:15107: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -17955,7 +17949,7 @@ fi ;;
 	shlib_ldflags="-bundle -flat_namespace -undefined suppress" ;;
     esac
     shlib_cxxldflags="${shlib_ldflags}"
-    if test "${ac_cv_lib_cc_dynamic_saveFP}" = yes; then
+    if test "${ac_cv_lib_cc_dynamic_main}" = yes; then
       ## Could also try grepping LIBS for '-lcc_dynamic' ...
       SHLIB_LIBADD="-lcc_dynamic"
     fi
