@@ -2,9 +2,14 @@
 all:  $(DLLNAME).dll
 
 SOURCES=$(wildcard -f *.c *.f *.cc)
+CXXSOURCES=$(wildcard -f *.cc)
 OBJSA=$(foreach i,$(SOURCES),$(basename $i).o)
 
 include $(RHOME)/src/gnuwin32/MkRules
+
+ifneq ($(strip $(CXXSOURCES)),)
+  DLL_LDMAIN=g++
+endif
 
 ifdef DEBUG
   DLLFLAGS=
@@ -14,18 +19,14 @@ else
   DEBUGFLAG=-Wall
 endif
 
-CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include
-CFLAGS=$(CPPFLAGS) -include $(RHOME)/src/include/globalvar.h $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
+CPPFLAGS=$(PKG_CPPFLAGS) -I$(RHOME)/src/include -include $(RHOME)/src/include/globalvar.h 
+CFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CFLAGS)
 CXXFLAGS=$(CPPFLAGS) $(DEBUGFLAG) -O2 $(PKG_CXXFLAGS)
 FFLAGS=-O2 $(DEBUGFLAG)
-DLLLIBS=-L$(RHOME)/src/gnuwin32  $(FLIBS) $(PKG_LIBS) -lR 
-
+DLLLIBS=-L$(RHOME)/src/gnuwin32 $(PKG_LIBS) $(FLIBS) -lR 
 
 ifeq ($(PKG),RODBC)
   DLLLIBS+=-lodbc32
-endif 
-ifeq ($(PKG),Matrix)
-  DLLLIBS+=-lstdc++
 endif 
 
 
