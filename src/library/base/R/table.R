@@ -59,3 +59,9 @@ table <- function (..., exclude = c(NA, NaN),
     class(y) <- "table"
     y
 }
+
+print.table <- function(x, digits = .Options$digits, quote = FALSE,
+                        na.print = "", ...) {
+    print.default(unclass(x), digits = digits, quote = quote,
+                  na.print = na.print, ...)
+}
