@@ -13,7 +13,8 @@ better when R_LIBS omits the drive, and uses relative links for
 the main library.
 
 Rcmd INSTALL now rejects invalid options for --docs (rather than
-ignoring them).
+ignoring them), and checks for R version in exactly the same way
+as Rcmd check (so with fewer spurious messages).
 
 
 
