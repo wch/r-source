@@ -13,7 +13,7 @@ pmin(\dots, na.rm=FALSE)
 \alias{pmin}
 \value{
 \code{max} and \code{min} return the maximum or minimum of all the values
-present in their arguments.
+present in their arguments, as \code{\link{double}}.
 If \code{na.rm} is \code{FALSE} an \code{NA} value in any
 of the arguments will cause a value of \code{NA} to be returned,
 otherwise \code{NA} values are ignored.
