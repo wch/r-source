@@ -150,10 +150,6 @@ Date: Thu, 11 Jul 2002 18:21:42 +1000
 Subject: documentation: Missing paranthesis in reshape.Rd
 From: lina@u.washington.edu
 Date: Wed, 16 Oct 2002 08:36:07 +0200 (MET DST)
-* PR# 2175 *
-Subject:  Documentation for .Renviron 
-From: j.c.rougier@durham.ac.uk
-Date: Wed, 16 Oct 2002 18:19:48 +0100
 
 Directory:  Graphics
 
@@ -600,10 +596,6 @@ Date: Tue, 9 Jul 2002 11:39:15 -0400
 Subject: rhome.c: getRHOME() fails, if R is called from SJava
 From: grimm.heinz@rcc.ch
 Date: Wed, 11 Sep 2002 15:17:53 +0200 (MET DST)
-* PR# 2005 *
-Subject: R_HOME/etc/Renviron.site not interpreted on windows
-From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
-Date: Thu, 12 Sep 2002 13:34:55 +0200
 * PR# 2018 *
 Subject: missing data in stripchart
 From: baron@CATTELL.psych.upenn.edu
@@ -672,3 +664,15 @@ Date: Thu, 17 Oct 2002 23:15:10 +0900
 Subject: underflow handling in besselK
 From: Ben Bolker <ben@zoo.ufl.edu>
 Date: Thu, 17 Oct 2002 14:01:08 -0400 (EDT)
+* PR# 2180 *
+Subject: (±¤°í)¼÷ÃëÇØ¼Ò~Ä¦Áó~Ä¦Áó<100%ÀÇ ¿ø¾×>
+From: ¿ø¾×»ó»ç <k987yu@hanmail.net>
+Date: Fri, 18 Oct 2002 15:29:16 +0900
+* PR# 2181 *
+Subject: Chron problem with R 1.6.0
+From: rab@nauticom.net
+Date: Fri, 18 Oct 2002 16:21:47 +0200 (MET DST)
+* PR# 2182 *
+Subject: Call for Papers - 2003 Hawaii International Conference on
+From: statistics@hicstatistics.org
+Date: Fri, 18 Oct 2002 07:57:36 -1000
