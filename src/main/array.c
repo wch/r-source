@@ -200,13 +200,13 @@ SEXP DropDims(SEXP x)
     }
     else {
 	/* We have a lower dimensional array. */
-	SEXP newdims, dimnamesnames, newnamesnames = R_NilValue;
-	dimnamesnames = getAttrib(dimnames, R_NamesSymbol);
+	SEXP newdims, dnn, newnamesnames = R_NilValue;
+	dnn = getAttrib(dimnames, R_NamesSymbol);
 	PROTECT(newdims = allocVector(INTSXP, n));
 	for (i = 0, n = 0; i < ndims; i++)
 	    if (INTEGER(dims)[i] != 1)
 		INTEGER(newdims)[n++] = INTEGER(dims)[i];
-	if (dimnames != R_NilValue) {
+	if (!isNull(dimnames)) {
 	    int havenames = 0;
 	    for (i = 0; i < ndims; i++)
 		if (INTEGER(dims)[i] != 1 && VECTOR(dimnames)[i] != R_NilValue)
@@ -216,7 +216,8 @@ SEXP DropDims(SEXP x)
 		PROTECT(newnamesnames = allocVector(STRSXP, n));
 		for (i = 0, n = 0; i < ndims; i++) {
 		    if (INTEGER(dims)[i] != 1) {
-			STRING(newnamesnames)[n] = STRING(dimnamesnames)[i];
+			if(!isNull(dnn))
+			    STRING(newnamesnames)[n] = STRING(dnn)[i];
 			VECTOR(newnames)[n++] = VECTOR(dimnames)[i];
 		    }
 		}
@@ -228,7 +229,8 @@ SEXP DropDims(SEXP x)
 	setAttrib(x, R_DimSymbol, newdims);
 	if (dimnames != R_NilValue)
 	{
-	    setAttrib(newnames, R_NamesSymbol, newnamesnames);
+	    if(!isNull(dnn))
+		setAttrib(newnames, R_NamesSymbol, newnamesnames);
 	    setAttrib(x, R_DimNamesSymbol, newnames);
 	    UNPROTECT(2);
 	}
@@ -540,12 +542,24 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames = allocVector(VECSXP, 2);
-	    if (xdims != R_NilValue)
+	    SEXP dimnames, dimnamesnames, dn;
+	    PROTECT(dimnames = allocVector(VECSXP, 2));
+	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
+	    if (xdims != R_NilValue) {
+		dn = getAttrib(xdims, R_NamesSymbol);
 		VECTOR(dimnames)[0] = VECTOR(xdims)[0];
-	    if (ydims != R_NilValue)
+		if(!isNull(dn))
+		    STRING(dimnamesnames)[0] = STRING(dn)[0];
+	    }
+	    if (ydims != R_NilValue) {
+		dn = getAttrib(ydims, R_NamesSymbol);
 		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
+		if(!isNull(dn))
+		    STRING(dimnamesnames)[1] = STRING(dn)[1];
+	    }
+	    setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
 	    setAttrib(ans, R_DimNamesSymbol, dimnames);
+	    UNPROTECT(2);
 	}
     }
     else {
@@ -559,12 +573,25 @@ SEXP do_matprod(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(xdims = getAttrib(CAR(args), R_DimNamesSymbol));
 	PROTECT(ydims = getAttrib(CADR(args), R_DimNamesSymbol));
 	if (xdims != R_NilValue || ydims != R_NilValue) {
-	    SEXP dimnames = allocVector(VECSXP, 2);
-	    if (xdims != R_NilValue)
+	    SEXP dimnames, dimnamesnames, dnx, dny;
+	    PROTECT(dimnames = allocVector(VECSXP, 2));
+	    PROTECT(dimnamesnames = allocVector(STRSXP, 2));
+	    if (xdims != R_NilValue) {
+		dnx = getAttrib(xdims, R_NamesSymbol);
 		VECTOR(dimnames)[0] = VECTOR(xdims)[1];
-	    if (ydims != R_NilValue)
+		if(!isNull(dnx))
+		    STRING(dimnamesnames)[0] = STRING(dnx)[1];
+	    }
+	    if (ydims != R_NilValue) {
+		dny = getAttrib(ydims, R_NamesSymbol);
 		VECTOR(dimnames)[1] = VECTOR(ydims)[1];
+		if(!isNull(dny))
+		    STRING(dimnamesnames)[1] = STRING(dny)[1];
+	    }
+	    if(!isNull(dnx) || !isNull(dny))
+		setAttrib(dimnames, R_NamesSymbol, dimnamesnames);
 	    setAttrib(ans, R_DimNamesSymbol, dimnames);
+	    UNPROTECT(2);
 	}
     }
     UNPROTECT(3);
@@ -649,7 +676,7 @@ SEXP do_transpose(SEXP call, SEXP op, SEXP args, SEXP rho)
 	PROTECT(dimnames = allocVector(VECSXP, 2));
 	VECTOR(dimnames)[0] = cnames;
 	VECTOR(dimnames)[1] = rnames;
-	if (!isNull(dimnamesnames)) {
+	if(!isNull(dimnamesnames)) {
 	    PROTECT(ndimnamesnames = allocVector(VECSXP, 2));
 	    STRING(ndimnamesnames)[1] = STRING(dimnamesnames)[0];
 	    STRING(ndimnamesnames)[0] = STRING(dimnamesnames)[1];
