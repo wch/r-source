@@ -50,6 +50,8 @@ BUG FIXES
     o   Allow round() to work again on very large numbers (introduced
 	in fixing PR#1138). (PR#1254)
 
+    o	Rinternals.h is now accepted by a C++ compiler.
+
 
 
 		CHANGES IN R VERSION 1.4.0
