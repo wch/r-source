@@ -225,6 +225,7 @@ function(package)
            "rep.int",
 	   "split.screen",
 	   "update.packages"),
+           XML = "text.SAX",
 	   quadprog = c("solve.QP", "solve.QP.compact"),
 	   sm = "print.graph",
 	   ts = "lag.plot",
