@@ -11,7 +11,7 @@ topo.colors(n)
 \alias{terrain.colors}
 \alias{topo.colors}
 \arguments{
-\item{n}{the number of colors to be in the palette.}
+\item{n}{the number of colors (\eqn{\ge 1}{>= 1}) to be in the palette.}
 \item{s,v}{the ``saturation'' and ``value'' to be used to
   complete the HSV color descriptions.}
 \item{start}{the (corrected) hue at which the rainbow begins.}
