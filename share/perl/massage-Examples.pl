@@ -71,7 +71,7 @@ foreach $file  (@ARGV) {
     open FILE, "< $file" or die "file $file cannot be opened";
     while (<FILE>) {
 	$have_examples = 1 if /_ Examples _/o;
-	$have_par = 1 if /par\(/o;
+	$have_par = 1 if (/[^a-zA-Z0-9.]par\(/o || /^par\(/o);
 	$have_contrasts = 1 if /options\(contrasts/o;
     }
     close FILE;
