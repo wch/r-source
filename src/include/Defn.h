@@ -342,6 +342,9 @@ enum {
 extern int	errno;
 extern int	gc_inhibit_torture;
 
+/* R Home Directory */
+extern char*	R_Home;		    /* Root of the R tree */
+
 /* Memory Management */
 extern int	R_NSize;	    /* Size of cons cell heap */
 extern int	R_VSize;	    /* Size of the vector heap */
