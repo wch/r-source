@@ -35,7 +35,8 @@ x = value
   assigned.  If such a variable is found then its value is redefined,
   otherwise assignment takes place globally.  Note that their semantics
   differ from that in the S language, but are useful in conjunction with
-  the scoping rules of \R.
+  the scoping rules of \R.  See \sQuote{The R Language Definition}
+  manual for further details and examples.
 
   In all the assignment operator expressions, \code{x} can be a name
   or an expression defining a part of an object to be replaced (e.g.,
