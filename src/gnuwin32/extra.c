@@ -1267,7 +1267,7 @@ SEXP do_getWindowHandle(SEXP call, SEXP op, SEXP args, SEXP rho)
     return result;
 }
 
-#include "devga.h"
+#include "devWindows.h"
 #include "Startup.h"
 extern UImode CharacterMode;
 

@@ -1,1 +1,0 @@
-PKG_CPPFLAGS=-I$(RHOME)/src/include -I$(RHOME)/src/gnuwin32 -DHAVE_CONFIG_H

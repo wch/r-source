@@ -37,7 +37,7 @@
 #include "console.h"
 #include "rui.h"
 #include "windows.h"
-#include "devga.h"
+#include "devWindows.h"
 #include "grDevices.h"
 
 Rboolean 
