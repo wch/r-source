@@ -322,7 +322,7 @@ BUG FIXES
 
     o	Added strptime() workaround for those platforms (such as
 	Solaris) that returned missing components as 0.  Missing
-	months and days are now detected, but missing years will still
+	days are now detected, but missing years will still
 	be interpreted as 1900 on such platforms.
 
     o   Inheritance in formal classes (the methods package) works
