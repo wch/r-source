@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,8 +17,8 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*== see ./printutils.c  for general remarks on Printing and the Encode.. utils.
- *== see ./format.c      for the  format_FOO_  functions used below.
+/*== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
+ *== see ./format.c	 for the  format_FOO_  functions used below.
  */
 #include "Defn.h"
 #include "Print.h"
@@ -325,7 +325,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c, int quote, SEXP
 			MatrixRowLabel(rl, i, rlabw);
 			for (j = jmin; j < jmax; j++) {
 				Rprintf("%*s%s", PRINT_GAP, "",
-					EncodeString(CHAR(x[i+j*r]), w[j], quote));
+					EncodeString(CHAR(x[i+j*r]), w[j], quote, adj_left));
 			}
 		}
 		Rprintf("\n");
@@ -567,7 +567,7 @@ void printDataFrame(SEXP x)
 		case FACTSXP:
 		case ORDSXP:
 			STRING(levels)[i] = getAttrib(s, R_LevelsSymbol);
-	                formatFactor(&FACTOR(s)[k*r], r, &itmp, STRING(levels)[i], LEVELS(s));
+			formatFactor(&FACTOR(s)[k*r], r, &itmp, STRING(levels)[i], LEVELS(s));
 			break;
 		case STRSXP:
 			formatString(&STRING(s)[k*r], r, &itmp, '"');
@@ -613,7 +613,7 @@ void printDataFrame(SEXP x)
 					Rprintf("%s", EncodeFactor(FACTOR(s)[i+k*r], LEVELS(s), w[j], STRING(levels)[j]));
 					break;
 				case STRSXP:
-					Rprintf("%s", EncodeString(CHAR(STRING(s)[i]), w[j], '"'));
+					Rprintf("%s", EncodeString(CHAR(STRING(s)[i]), w[j], '"', adj_left));
 					break;
 				default:
 					error("invalid data type\n");

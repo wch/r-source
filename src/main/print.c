@@ -18,7 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*== see ./printutils.c  for general remarks on Printing and the Encode.. utils.
+/*== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
  */
 #include "Defn.h"
 #include "Print.h"
@@ -120,13 +120,13 @@ SEXP do_printmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return x;
 }
 
-	
+
 SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP x, naprint;
 
 	checkArity(op, args);
-	
+
 	PrintDefaults(rho);
 
 	x = CAR(args); args = CDR(args);
@@ -301,7 +301,7 @@ void PrintValueRec(SEXP s)
 		Rprintf("<primitive: %s>\n", PRIMNAME(s));
 		break;
 	case CHARSXP:
-		Rprintf("\"%s\"\n", EncodeString(CHAR(s),0,'"'));
+		Rprintf("\"%s\"\n", EncodeString(CHAR(s),0,'"', adj_left));
 		break;
 	case EXPRSXP:
 		PrintExpression(s);
@@ -405,7 +405,7 @@ static void printAttributes(SEXP s)
 				goto nextattr;
 			if (i > 1)
 				Rprintf("\n");
-			sprintf(ptag, "attr(,\"%s\")", EncodeString(CHAR(PRINTNAME(TAG(a))),0,0));
+			sprintf(ptag, "attr(,\"%s\")", EncodeString(CHAR(PRINTNAME(TAG(a))),0,0, adj_left));
 			Rprintf("%s\n", tagbuf);
 			PrintValueRec(CAR(a));
 		nextattr:

@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
-/*== see ./printutils.c  for general remarks on Printing and the Encode.. utils.
+/*== see ./printutils.c	 for general remarks on Printing and the Encode.. utils.
  *   see ./format.c	 for the  format_Foo_  functions.
  */
 #include "Defn.h"
@@ -25,9 +25,12 @@
 
 SEXP mkChar(char *);
 
-/* do_paste uses two passes to paste the arguments (in CAR(args)) */
-/* together the first pass calculates the width of the paste buffer, */
-/* then it is alloc-ed and the second pass stuffs the information in. */
+/*  .Internal(paste(args, sep, collapse)) */
+
+/* do_paste uses two passes to paste the arguments (in CAR(args)) together.
+ * The first pass calculates the width of the paste buffer,
+ * then it is alloc-ed and the second pass stuffs the information in.
+ */
 SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
 	SEXP ans, collapse, sep, px, x, tmpchar;
@@ -35,7 +38,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	char *s, *buf;
 
 	checkArity(op, args);
-	
+
 		/* We use formatting and so we */
 		/* must initialize printing. */
 
@@ -191,10 +194,10 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		if(!trim) {
 			formatString(STRING(l), nl, &w, 0);
 			for(i=0 ; i<nl ; i++) {
-				strp = EncodeString(CHAR(STRING(l)[i]), w, 0);
+				strp = EncodeString(CHAR(STRING(l)[i]), w, 0, adj_left);
 				STRING(l)[i] = mkChar(strp);
 			}
-			nastring = mkChar(EncodeString(CHAR(nastring), w, 0));
+			nastring = mkChar(EncodeString(CHAR(nastring), w, 0, adj_left));
 		}
 		for(i=0 ; i<n ; i++) {
 			if(INTEGER(x)[i] < 1 || INTEGER(x)[i] > nl)
@@ -241,7 +244,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 		if (trim) w = 0;
 		PROTECT(y = allocVector(STRSXP, n));
 		for (i = 0; i < n; i++) {
-			strp = EncodeString(CHAR(STRING(x)[i]), w, 0);
+			strp = EncodeString(CHAR(STRING(x)[i]), w, 0, adj_left);
 			STRING(y)[i] = mkChar(strp);
 		}
 		UNPROTECT(1);
@@ -259,7 +262,7 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 /* format.info(obj)  --> 3 integers  (w,d,e) with the formatting information
  *			w = total width (#{chars}) per item
  *			d = #{digits} to RIGHT of "."
- *			e = {0:2}.   0: Fixpoint;  
+ *			e = {0:2}.   0: Fixpoint;
  *				   1,2: exponential with 2/3 digit expon.
  */
 SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)

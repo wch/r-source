@@ -24,6 +24,9 @@
 #define PRINT_GAP	print_gap
 #define PRINT_WIDTH	R_print_width
 
+#define adj_right 0
+#define adj_left  1
+
 extern int  R_print_width;
 extern SEXP print_na_string;
 extern int  print_na_width;
@@ -49,8 +52,7 @@ char *EncodeReal(double, int, int, int);
 #ifdef COMPLEX_DATA
 char *EncodeComplex(complex, int, int, int, int, int, int);
 #endif
-char *EncodeString(char*, int, int);
-char *EncodeRjustString(char*, int, int);
+char *EncodeString(char*, int, int, int);
 char *EncodeElement(SEXP, int, int);
 
 /* Printing */

@@ -122,7 +122,7 @@ static void cat_newline(SEXP labels, int * width, int lablen, int ntot)
 	Rprintf("\n");
 	*width = 0;
 	if (labels != R_NilValue) {
-		Rprintf("%s ", EncodeString(CHAR(STRING(labels)[ntot % lablen]), 1, 0));
+		Rprintf("%s ", EncodeString(CHAR(STRING(labels)[ntot % lablen]), 1, 0, adj_left));
 		*width += Rstrlen(CHAR(STRING(labels)[ntot % lablen])) + 1;
 	}
 }
@@ -156,7 +156,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	char *p;
 
 	checkArity(op, args);
-	
+
 		/* Use standard printing defaults */
 
 	PrintDefaults(rho);
@@ -562,7 +562,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
 /*
  * do_get returns the SEXP associated with the character argument, do_get
  * needs the environment of the calling function as a default,
- * 
+ *
  */
 
 #define FUNSXP 999
@@ -615,7 +615,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (isString(CAR(CDDR(args)))) {
 		if(!strcmp(CHAR(STRING(CAR(CDDR(args)))[0]),"function"))
 			gmode = FUNSXP;
-		else 
+		else
 			gmode = str2type(CHAR(STRING(CAR(CDDR(args)))[0]));
 	} else errorcall(call,"invalid mode argument\n");
 
@@ -673,10 +673,10 @@ SEXP findVar1(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 /*
  * for switch, evaluate the first arg, if it is a character then try to match
  * the name with the remaining args, and evaluate the match, if there is no
- * match then evaluate the first unnamed arg.  If the value of the first arg 
- * is not a character string then coerce it to integer (k) and choose the kth 
+ * match then evaluate the first unnamed arg.  If the value of the first arg
+ * is not a character string then coerce it to integer (k) and choose the kth
  * argument from those that remain provided 0 < k < (nargs-1)
- * For character matching, if the value is missing then take the next 
+ * For character matching, if the value is missing then take the next
  * non-missing arg as the value
  * then things like
  *  switch(as.character(answer), yes=, YES=1, no=, NO=2, 3)

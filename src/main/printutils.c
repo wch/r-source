@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -22,14 +22,14 @@
  * =========
  *
  * All printing in R is done via the functions Rprintf and REprintf.
- * These routines work exactly like printf(3).  Rprintf writes to
- * ``standard output''.  It is redirected by the sink() function,
- * and is suitable for ordinary output.  REprintf writes to
+ * These routines work exactly like printf(3).	Rprintf writes to
+ * ``standard output''.	 It is redirected by the sink() function,
+ * and is suitable for ordinary output.	 REprintf writes to
  * ``standard error'' and is useful for error messages and warnings.
  * It is not redirected by sink().
  *
  *== see ./format.c  for the  format_FOO_  functions which provide
- *       ~~~~~~~~~~  the  length, width, etc.. that are used here.
+ *	 ~~~~~~~~~~  the  length, width, etc.. that are used here.
  *
  * Following UTILITIES:
  *
@@ -38,7 +38,7 @@
  * for printing.  These print the values passed in a formatted form
  * or, in the case of NA values, an NA indicator.  EncodeString takes
  * care of printing all the standard ANSI escapes \a, \t \n etc.
- * so that these appear in their backslash form in the string.  There
+ * so that these appear in their backslash form in the string.	There
  * is also a routine called Rstrlen which computes the length of the
  * string in its escaped rather than literal form.
  *
@@ -172,7 +172,7 @@ char *EncodeComplex(complex x, int wr, int dr, int er, int wi, int di, int ei)
 
 static int hexdigit(unsigned int x)
 {
-	return ((x <= 9)? '0' :  'A'-10) + x;
+	return ((x <= 9)? '0' :	 'A'-10) + x;
 }
 
 int Rstrlen(char *s)
@@ -185,7 +185,9 @@ int Rstrlen(char *s)
 		if(isprint(*p)) {
 			switch(*p) {
 			case '\\':
+#ifdef ESCquote
 			case '\'':
+#endif
 			case '\"': len += 2; break;
 			default: len += 1; break;
 			}
@@ -211,15 +213,19 @@ int Rstrlen(char *s)
 	return len;
 }
 
-char *EncodeString(char *s, int w, int quote)
+char *EncodeString(char *s, int w, int quote, int left)
 {
 	int b, i;
 	char *p, *q;
 	q = Encodebuf;
+	if(!left) { /*Right justifying */
+		b = w - Rstrlen(s) - (quote ? 2 : 0);
+		for(i=0 ; i<b ; i++) *q++ = ' ';
+	}
 	if(quote) *q++ = quote;
-	if (s == CHAR(NA_STRING) ) 
+	if (s == CHAR(NA_STRING) )
 		p = CHAR(print_na_string);
-	else    p = s;
+	else	p = s;
 	while(*p) {
 
 		/* ASCII */
@@ -227,7 +233,9 @@ char *EncodeString(char *s, int w, int quote)
 		if(isprint(*p)) {
 			switch(*p) {
 			case '\\': *q++ = '\\'; *q++ = '\\'; break;
+#ifdef ESCquote
 			case '\'': *q++ = '\\'; *q++ = '\''; break;
+#endif
 			case '\"': *q++ = '\\'; *q++ = '\"'; break;
 			default: *q++ = *p; break;
 			}
@@ -257,46 +265,12 @@ char *EncodeString(char *s, int w, int quote)
 		}
 		p++;
 	}
-	if(quote) *q++ = quote; *q = '\0';
-	b = w - strlen(Encodebuf);
-	for(i=0 ; i<b ; i++) *q++ = ' ';
-	*q = '\0';
-	return Encodebuf;
-}
-
-char *EncodeRjustString(char *s, int w, int quote)
-{
-	int b, i;
-	char *p, *q;
-	p = s;
-	q = Encodebuf;
-	b = w - Rstrlen(s) - (quote ? 2 : 0);
-	for(i=0 ; i<b ; i++) *q++ = ' ';
 	if(quote) *q++ = quote;
-	while(*p) {
-		if(isprint(*p)) {
-			switch(*p) {
-			case '\\': *q++ = '\\'; *q++ = '\\'; break;
-			case '\'': *q++ = '\\'; *q++ = '\''; break;
-			case '\"': *q++ = '\\'; *q++ = '\"'; break;
-			default: *q++ = *p; break;
-			}
-		}
-		else switch(*p) {
-		case '\a': *q++ = '\\'; *q++ = 'a'; break;
-		case '\b': *q++ = '\\'; *q++ = 'b'; break;
-		case '\f': *q++ = '\\'; *q++ = 'f'; break;
-		case '\n': *q++ = '\\'; *q++ = 'n'; break;
-		case '\r': *q++ = '\\'; *q++ = 'r'; break;
-		case '\t': *q++ = '\\'; *q++ = 't'; break;
-		case '\v': *q++ = '\\'; *q++ = 'v'; break;
-		default: *q++ = '0'; *q++ = 'x';
-			*q++ = hexdigit((*p & 0xF0) >> 4);
-			*q++ = hexdigit(*p & 0x0F);
-		}
-		p++;
+	if(left) { /* Left justifying */
+		*q = '\0';
+		b = w - strlen(Encodebuf);
+		for(i=0 ; i<b ; i++) *q++ = ' ';
 	}
-	if(quote) *q++ = quote;
 	*q = '\0';
 	return Encodebuf;
 }
@@ -327,7 +301,7 @@ char *EncodeElement(SEXP x, int index, int quote)
 			break;
 		case STRSXP:
 			formatString(&STRING(x)[index], 1, &w, quote);
-			EncodeString(CHAR(STRING(x)[index]), w, quote);
+			EncodeString(CHAR(STRING(x)[index]), w, quote, adj_left);
 			break;
 #ifdef COMPLEX_DATA
 		case CPLXSXP:
@@ -422,9 +396,9 @@ void MatrixColumnLabel(SEXP cl, int j, int w)
 {
 	int l;
 
-	if (!isNull(cl)) { 
+	if (!isNull(cl)) {
 		l = Rstrlen(CHAR(STRING(cl)[j]));
-		Rprintf("%*s%s", w-l, "", EncodeString(CHAR(STRING(cl)[j]), l, 0));
+		Rprintf("%*s%s", w-l, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left));
 	}
 	else {
 		Rprintf("%*s[,%ld]", w-IndexWidth(j+1)-3, "", j+1);
@@ -435,22 +409,22 @@ void LeftMatrixColumnLabel(SEXP cl, int j, int w)
 {
 	int l;
 
-	if (!isNull(cl)) { 
+	if (!isNull(cl)) {
 		l = Rstrlen(CHAR(STRING(cl)[j]));
-		Rprintf("%*s%s%*s", PRINT_GAP, "", EncodeString(CHAR(STRING(cl)[j]), l, 0), w-l, "");
+		Rprintf("%*s%s%*s", PRINT_GAP, "", EncodeString(CHAR(STRING(cl)[j]), l, 0, adj_left), w-l, "");
 	}
 	else {
 		Rprintf("%*s[,%ld]%*s", PRINT_GAP, "", j+1, w-IndexWidth(j+1)-3, "");
 	}
 }
- 
+
 void MatrixRowLabel(SEXP rl, int i, int rlabw)
 {
 	int l;
 
 	if (!isNull(rl)) {
 		l = Rstrlen(CHAR(STRING(rl)[i]));
-		Rprintf("\n%s%*s", EncodeString(CHAR(STRING(rl)[i]), l, 0), rlabw-l, "");
+		Rprintf("\n%s%*s", EncodeString(CHAR(STRING(rl)[i]), l, 0, adj_left), rlabw-l, "");
 	}
 	else {
 		Rprintf("\n%*s[%ld,]", rlabw-3-IndexWidth(i + 1), "", i+1);
