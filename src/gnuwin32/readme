@@ -288,13 +288,12 @@ Differences from Unix versions of R
 Using package tcltk
 ===================
 
-The package tcltk introduced in version 1.1.0 provides somewhat
-experimental support for building graphical interfaces with Tcl/Tk.
-To use this you need to install either ActiveTcl 8.3.3 from
-http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ or tcl832.exe
-from dev.scriptics.com, and you will need the Tcl and Tk dlls in your path.
-Also, you need to set the environment variable TCL_LIBRARY, to
-something like c:/Program Files/Tcl/lib/tcl8.3.
+The package tcltk supports building graphical interfaces with Tcl/Tk.
+To use this you need to install ActiveTcl 8.3.x from
+http://aspn.activestate.com/ASPN/Downloads/ActiveTcl/ and you will
+need to have the Tcl and Tk dlls in your path (which the installer
+will probably do for you).  Also, you need to set the environment
+variable TCL_LIBRARY, to something like c:/Program Files/Tcl/lib/tcl8.3.
 
 How you set environmental variables under Windows is system-dependent,
 but with R you can always use the form
