@@ -72,10 +72,13 @@ BUG FIXES
     o	Unused directory src/f2clib and header src/include/R_ext/f2c.h
 	have been removed.
 
-    o	A problem with "..." in substitutions has been fixed. 
+    o	A problem with "..." in substitutions has been fixed (PR#860). 
 
     o   Various strangeness with match.call() and "..." has been fixed
         (PR#813).
+
+    o   sys.function() could return an unevaluated promise, messing up
+        formals() and match.arg() (PR#872)
 
     o	We now use match.fun() in tapply() so that it won't get trapped
 	by non-functions masking FUN.
