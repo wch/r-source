@@ -51,8 +51,7 @@ WARNING: we have had reports that a program called VirusScan
 (attributed to Dr Solomon's or McAfee) interferes with installation of
 previous versions by rwinst.exe to the extent of making the PC
 unusable.  If you have this, please either disable it during
-installation or install manually.  Hopefully we have circumvented the
-problem in this release.
+installation or install manually.
 
 
 Usage
