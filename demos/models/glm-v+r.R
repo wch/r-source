@@ -10,8 +10,11 @@ Brand <- gl(2, 1, 24, labels=c("X", "M"))
 
 detg <- data.frame(Fr,Temp,Soft,M.user,Brand)
 detg.m0 <- glm(Fr ~ M.user*Temp*Soft+Brand, family=poisson, data=detg)
+summary(detg.m0)
 
 detg.mod <- glm(terms(Fr~M.user*Temp*Soft+Brand*M.user*Temp,keep.order=TRUE),
 		family=poisson, data=detg)
-summary(detg.mod, correlation=FALSE)
+summary(detg.mod, correlation=FALSE)# corr.=F:  now (0.62) default
+symnum(summary(detg.mod, correlation=TRUE)$corr)
 
+anova(detg.m0, detg.mod)
