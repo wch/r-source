@@ -104,7 +104,7 @@ optim(par, fn, gr = NULL,
       \code{100} for the derivative-based methods, and
       \code{500} for \code{"Nelder-Mead"}. For \code{"SANN"}
       \code{maxit} gives the total number of function evaluations. There is
-      no other stopping criteria. Defaults to \code{10000}.}
+      no other stopping criterion. Defaults to \code{10000}.}
     \item{\code{abstol}}{The absolute convergence tolerance. Only
       useful for non-negative functions, as a tolerance for reaching zero.}
     \item{\code{reltol}}{Relative convergence tolerance.  The algorithm

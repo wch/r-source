@@ -17,7 +17,7 @@
   \item{x}{an object of class \code{"summary.glm"}, usually, a result of a
     call to \code{summary.glm}.}
   \item{dispersion}{the dispersion parameter for the fitting family.
-    By default it is obtained from \code{glm.obj}.}
+    By default it is obtained from \code{object}.}
   \item{correlation}{logical; if \code{TRUE}, the correlation matrix of
     the estimated parameters is returned and printed.}
   \item{digits}{the number of significant digits to use when printing.}
