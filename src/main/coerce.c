@@ -524,15 +524,15 @@ static SEXP coerceToString(SEXP v)
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(ans, i, StringFromReal(REAL(v)[i], &warn));
-	break;
 	R_print.digits = savedigits;
+	break;
     case CPLXSXP:
 	PrintDefaults(R_NilValue);
 	savedigits = R_print.digits; R_print.digits = DBL_DIG;/* MAX precision */
 	for (i = 0; i < n; i++)
 	    SET_STRING_ELT(ans, i, StringFromComplex(COMPLEX(v)[i], &warn));
-	break;
 	R_print.digits = savedigits;
+	break;
     }
     if (warn) CoercionWarning(warn);/*2000/10/23*/
     UNPROTECT(1);
