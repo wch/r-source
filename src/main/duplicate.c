@@ -106,10 +106,34 @@ SEXP duplicate(SEXP s)
     case INTSXP:
     case REALSXP:
     case CPLXSXP:
+	n = length(s);
 	PROTECT(s);
-	t = allocVector(TYPEOF(s), LENGTH(s));
-	copyVector(t, s);
-	PROTECT(t);
+	PROTECT(t = allocVector(TYPEOF(s), LENGTH(s)));
+	switch (TYPEOF(s)) {
+	case STRSXP:
+	case EXPRSXP:
+	  for (i = 0; i < n; i++)
+	    VECTOR(t)[i] = VECTOR(s)[i];
+	  break;
+	case LGLSXP:
+	  for (i = 0; i < n; i++)
+	    LOGICAL(t)[i] = LOGICAL(s)[i];
+	  break;
+	case INTSXP:
+	  for (i = 0; i < n; i++)
+	    INTEGER(t)[i] = INTEGER(s)[i];
+	  break;
+	case REALSXP:
+	  for (i = 0; i < n; i++)
+	    REAL(t)[i] = REAL(s)[i];
+	  break;
+	case CPLXSXP:
+	  for (i = 0; i < n; i++)
+	    COMPLEX(t)[i] = COMPLEX(s)[i];
+	break;
+	default:
+	  UNIMPLEMENTED("copyVector");
+	}
 	ATTRIB(t) = duplicate(ATTRIB(s));
 	UNPROTECT(2);
 	TRUELENGTH(t) = TRUELENGTH(s);
