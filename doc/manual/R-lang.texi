@@ -2598,7 +2598,7 @@ all, any, max, min, prod, range, sum
 
 @item Ops
 @code{+}, @code{-}, @code{*}, @code{/}, @code{^}, @code{<} , @code{>},
-@code{<=}, @code{>=}, @code{!=}, @code{==}, @code{%%}, @code{%\%},
+@code{<=}, @code{>=}, @code{!=}, @code{==}, @code{%%}, @code{%/%},
 @code{&}, @code{|}, @code{!}
 @end table
 
