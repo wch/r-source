@@ -436,14 +436,15 @@ quasi <- function (link = "identity", variance = "constant")
     ##this is a function used in  glm()
     ##it holds everything personal to the family
     ##converts link into character string
-    if (is.expression(linktemp))
-	linktemp <- eval(linktemp)
-    if (!is.character(linktemp)) {
-	linktemp <- deparse(linktemp)
-	if (linktemp == "link")
-	    linktemp <- eval(link)
-    }
-    stats <- make.link(linktemp)
+    linktemp <- substitute(link)
+    if ( is.expression(linktemp) || is.call(linktemp) )
+        linktemp <- link
+    else if (!is.character(linktemp))
+        linktemp <- deparse(linktemp)
+    if( is.character(linktemp) )
+        stats <- make.link(linktemp)
+    else
+        stats <- linktemp
     ##converts variance into character string
     variancetemp <- substitute(variance)
     if (!is.character(variancetemp)) {

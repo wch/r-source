@@ -4,17 +4,17 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
     parse.dcf.entry <- function(text, fields=NULL, versionfix=FALSE)
     {
         contlines <- grep("^[ \t]+", text)
-        
+
         if(is.null(fields)){
             if(length(contlines))
                 fields <- sub("^([^:]*):.*$", "\\1", text[-contlines])
             else
                 fields <- sub("^([^:]*):.*$", "\\1", text)
         }
-        
+
         retval <- as.list(rep(NA, length(fields)))
         names(retval) <- fields
-        
+
         for(d in 1:length(text)){
             if(any(contlines == d))
                 y <- sub("^[ \t]+(.*)$", "\\1", text[d])
@@ -22,10 +22,10 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
                 x <- sub("^([^:]*):.*$", "\\1", text[d])
                 y <- sub("^[^:]*:[ \t]*(.*)$", "\\1", text[d])
             }
-            
+
             if(versionfix & x=="Version")
                 y <- unlist(strsplit(y, " "))[1]
-            
+
             if(any(fields==x))
                 if(is.na(retval[[x]]))
                     retval[[x]] <- y
@@ -36,8 +36,8 @@ parse.dcf <- function(text=NULL, file="", fields=NULL, versionfix=FALSE)
     }
 
     if(missing(text))
-        text <- scan(file=file, what="",  sep="\n", quiet=TRUE)
-    
+        text <- scan(file=file, what="",  quote="", sep="\n", quiet=TRUE)
+
     ## remove empty lines
     notok <- grep("^[ \t]+$", text)
     if (length(notok) > 0){
