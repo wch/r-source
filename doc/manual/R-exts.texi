@@ -41,7 +41,7 @@ permission notice identical to this one.
 Permission is granted to copy and distribute translations of this manual
 into another language, under the above conditions for modified versions,
 except that this permission notice may be stated in a translation
-approved by the Free Software Foundation.
+approved by the R Development Core Team.
 @end ifinfo
 
 @titlepage
@@ -62,7 +62,7 @@ permission notice identical to this one.
 Permission is granted to copy and distribute translations of this manual
 into another language, under the above conditions for modified versions,
 except that this permission notice may be stated in a translation
-approved by the Free Software Foundation.
+approved by the R Development Core Team.
 
 Copyright @copyright{} 1999, 2000 R Development Core Team
 @end titlepage
@@ -114,14 +114,15 @@ You can also obtain it by writing to the Free Software Foundation, Inc.,
 @section Acknowledgments
 
 The contributions of Saikat DebRoy (who wrote the first draft of a guide
-to using @code{.Call} and @code{.External}) are gratefully acknowledged.
+to using @code{.Call} and @code{.External}) and of Adrian Trapletti (who
+provided information on the C++ interface) are gratefully acknowledged.
 
 @node Creating R packages, Writing R documentation, Legalese, Top
 @chapter Creating R packages
 
 Packages provide a mechanism for loading optional code and attached
 documentation as needed.  The @R{} distribution provides several
-packages, such as @strong{eda}, @strong{mva}, and @strong{stepfun}.
+packages, such as @pkg{eda}, @pkg{mva}, and @pkg{stepfun}.
 
 A package consists of a subdirectory containing the files
 @file{DESCRIPTION}, @file{INDEX}, and @file{TITLE}, and the
@@ -213,18 +214,18 @@ used by any Unix package, and still experimental.
 
 @menu
 * Package bundles::             
-* Configure / cleanup::         
+* Configure and cleanup::       
 @end menu
 
-@node  Package bundles, Configure / cleanup, Creating R packages, Creating R packages
+@node  Package bundles, Configure and cleanup, Creating R packages, Creating R packages
 @section Package bundles
 
 Sometimes it is convenient to distribute several packages as a
-@emph{bundle}. (The main current example is @code{VR} which contains
+@emph{bundle}.  (The main current example is @pkg{VR} which contains
 four packages.)  The installation scripts on both Unix and Windows can
 handle package bundles as from @R{} 0.90.1.
 
-The @file{DESCRIPTION} file of a bundle has an extra @code{Bundle:}
+The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle:}
 field, as in
 
 @smallexample
@@ -235,12 +236,12 @@ Date: 1999/11/26
 Author: S original by Venables & Ripley.
   R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
   work by Kurt Hornik and Albrecht Gebhardt.
-BundleDescription: Various functions from the libraries of Venables and
-  Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
+BundleDescription: Various functions from the libraries of Venables
+  and Ripley, `Modern Applied Statistics with S-PLUS' (3rd edition).
 License: GPL (version 2 or later)
 @end smallexample
 
-The @code{Contains:} field lists the packages, which should be contained
+The @samp{Contains:} field lists the packages, which should be contained
 in separate subdirectories with the names given.  These are standard
 packages in all respects except that the @file{DESCRIPTION} file is
 replaced by a @file{DESCRIPTION.in} file which just contains fields
@@ -251,9 +252,9 @@ Package: spatial
 Description: Functions for kriging and point pattern analysis.
 @end smallexample
 
-@node Configure / cleanup,  , Package bundles, Creating R packages
+@node Configure and cleanup,  , Package bundles, Creating R packages
 @comment  node-name,  next,  previous,  up
-@section Configure / cleanup
+@section Configure and cleanup
 
 If your package needs some system-dependent configuration before
 installation you can include a script @file{configure} in your package
@@ -315,8 +316,9 @@ information for a user on a non-Unix platform to configure it manually.
 * Documentation format::        
 * Sectioning::                  
 * Marking text::                
+* Cross-references::            
 * Mathematics::                 
-* Miscellaneous::               
+* Insertions::                  
 * Platform-specific sections::  
 @end menu
 
@@ -326,8 +328,8 @@ information for a user on a non-Unix platform to configure it manually.
 The help files containing detailed documentation for (potentially) all
 @R{} objects are in the @file{src/library/*/man} subdirectories of the
 @R{} source tree, where @samp{*} stands for @strong{base} where all the
-standard objects are, and for ``standard'' packages such as @strong{eda}
-and @strong{mva}.  The @file{doc/manual} subdirectory contains code for
+standard objects are, and for ``standard'' packages such as @pkg{eda}
+and @pkg{mva}.  The @file{doc/manual} subdirectory contains code for
 running the translated help files through La@TeX{} and further documents
 pertaining to @R{}.
 
@@ -337,8 +339,8 @@ pertaining to @R{}.
 The help files are written in a form and syntax---closely resembling
 @TeX{} and La@TeX{}---which can be processed into a variety of formats,
 including La@TeX{}, [TN]roff, and @HTML{}.  The translation is carried
-out by the @sc{Perl} script @file{Rdconv} in @file{$R_HOME/bin}
-and by the installation scripts for packages.
+out by the Perl script @code{Rdconv} in @file{$R_HOME/bin} and by the
+installation scripts for packages.
 
 For a given @R{} function @code{myfun}, use the @R{} command
 @code{prompt(myfun)} to produce the file @file{myfun.Rd}, a ``raw''
@@ -450,6 +452,7 @@ and @code{\testonly@{@}} for extra commands for testing @R{} that should
 not be shown to users.
 
 For example,
+
 @example
 x <- runif(10)       @r{Shown and run.}
 \dontrun@{plot(x)@}    @r{Only shown.}
@@ -528,7 +531,7 @@ E.g.,
 fixed positions in the output (before @code{\note}, @code{\seealso} and
 the examples), no matter where they appear in the input.
 
-@node Marking text, Mathematics, Sectioning, Writing R documentation
+@node Marking text, Cross-references, Sectioning, Writing R documentation
 @section Marking text
 
 The following logical markup commands are available for indicating
@@ -564,13 +567,6 @@ Fragments of @R{} code, including the names of @R{} objects, should be
 marked using @code{\code}.  Only backslashes and percent signs need to be
 escaped (by a backslash) inside @code{\code}.
 
-Finally, @code{\link@{@var{foo}@}} (usually in the combination
-@code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
-page for object @var{foo}.  One main usage of @code{\link} is in the
-@code{\seealso} section of the help page, @pxref{Documentation format},
-above.  (This only affects the creation of hyperlinks, for example in
-the @HTML{} pages used by @code{help.start()}.)
-
 There are also some markup commands which apply to paragraphs, modeled
 on La@TeX{} environments.
 
@@ -581,6 +577,7 @@ left-justification, @code{r} for right-justification or @code{c} for
 centring.)  The second argument consists of an arbitrary number of lines
 separated by @code{\cr}, and with fields separated by @code{\tab}. For
 example:
+
 @example
   \tabular@{rlll@}@{
     [,1] \tab Ozone   \tab numeric \tab Ozone (ppb)\cr
@@ -591,6 +588,7 @@ example:
     [,6] \tab Day     \tab numeric \tab Day of month (1--31)
   @}
 @end example
+
 @noindent
 There must be the same number of fields on each line as there are
 alignments in the first argument, and they must be non-empty.
@@ -606,8 +604,17 @@ possible, not currently for text processing).
 
 @code{\itemize} and @code{\enumerate} commands may be nested.
 
+@node Cross-references, Mathematics, Marking text, Writing R documentation
+@section Cross-references
 
-@node Mathematics, Miscellaneous, Marking text, Writing R documentation
+@code{\link@{@var{foo}@}} (usually in the combination
+@code{\code@{\link@{@var{foo}@}@}}) produces a hyperlink to the help
+page for object @var{foo}.  One main usage of @code{\link} is in the
+@code{\seealso} section of the help page, @pxref{Documentation format},
+above.  (This only affects the creation of hyperlinks, for example in
+the @HTML{} pages used by @code{help.start()}.)
+
+@node Mathematics, Insertions, Cross-references, Writing R documentation
 @section Mathematics
 
 Mathematical formula are something we want ``perfectly'' for printed
@@ -671,8 +678,8 @@ For historic reasons mostly, the @TeX{}/La@TeX{} commands @code{\alpha},
 @findex \left(
 @findex \right)
 
-@node Miscellaneous, Platform-specific sections, Mathematics, Writing R documentation
-@section Miscellaneous
+@node Insertions, Platform-specific sections, Mathematics, Writing R documentation
+@section Insertions
 
 @findex \R
 Use @code{\R} for the @R{} system itself (you don't need extra
@@ -700,7 +707,7 @@ currently must escape all La@TeX{} special characters, i.e., besides
 and @samp{|} must only be used in math mode, i.e., within @code{\eqn} or
 @code{\deqn}.
 
-@node  Platform-specific sections,  , Miscellaneous, Writing R documentation
+@node  Platform-specific sections,  , Insertions, Writing R documentation
 @section Platform-specific documentation
 
 Sometimes the documentation needs to differ by platform.  Currently
@@ -738,6 +745,7 @@ documented are only relevant to one platform, platform-specific
 * Operating system access::     
 * Interface functions .C and .Fortran::  
 * dyn.load and dyn.unload::     
+* Interfacing C++ code::        
 * Handling R objects in C::     
 * Interface Functions .Call and .External::  
 * Evaluating R Expressions from C::  
@@ -748,15 +756,19 @@ documented are only relevant to one platform, platform-specific
 @section  Operating system access
 
 Access to operating system functions is via the @R{} function
-@code{system}.  The details will differ by platform (see the on-line
-help), and about all that can safely be assumed is that the first
-argument will be a string @code{command} that will be passed for
-execution (not necessarily by a shell) and the second argument will be
-@code{internal} which if true will collect the output of the command
-into an @R{} character vector.
+@code{system}.
+@findex system
+The details will differ by platform (see the on-line help), and about
+all that can safely be assumed is that the first argument will be a
+string @code{command} that will be passed for execution (not necessarily
+by a shell) and the second argument will be @code{internal} which if
+true will collect the output of the command into an @R{} character
+vector.
 
-The function @code{system.time} is available for timing (although the
-information available may be limited on non-Unix-like platforms).
+The function @code{system.time}
+@findex system.time
+is available for timing (although the information available may be
+limited on non-Unix-like platforms).
 
 @node Interface functions .C and .Fortran, dyn.load and dyn.unload, Operating system access, System and foreign language interfaces
 @section Interface functions @code{.C} and @code{.Fortran}
@@ -768,13 +780,16 @@ These two functions provide a standard interface to compiled code that
 has been linked into @R{}, either at build time or via @code{dyn.load}
 (q.v.).  They are primarily intended for compiled C and Fortran code
 respectively, but the @code{.C} function can be used with other
-languages which can generate C interfaces, for example C++.
+languages which can generate C interfaces, for example C++
+(@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string given the
 symbol name as known to C or Fortran, that is the function or subroutine
 name.  (The mapping to the symbol name in the load table is given by the
-functions @code{symbol.C} and @code{symbol.For}; that the symbol is
-loaded can be tested by, for example,
+functions @code{symbol.C} and @code{symbol.For};
+@findex symbol.C
+@findex symbol.For
+that the symbol is loaded can be tested by, for example,
 @code{is.loaded(symbol.C("loglin"))}.)
 
 There can be up to 65 further arguments giving @R{} objects to be passed
@@ -787,13 +802,16 @@ The following table gives the mapping between the modes of @R{} vectors
 and the types of arguments to a C function or Fortran subroutine.
 
 @quotation
-@multitable {storage.mode} {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
-@item @tab @R{} storage mode @tab  C type  @tab   Fortran type
-@item @tab @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
-@item @tab @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
-@item @tab @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
-@item @tab @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
-@item @tab @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
+@multitable {RRR storage.mode} {RRR storage.mode} {DOUBLE PRECISION}
+
+@item @R{} storage mode @tab  C type  @tab   Fortran type
+      
+@item @code{logical}   @tab @code{int *}     @tab @code{INTEGER}
+@item @code{integer}   @tab @code{int *}     @tab @code{INTEGER}
+@item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
+@item @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
+@item @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
+
 @end multitable
 @end quotation
 
@@ -862,7 +880,7 @@ storage mode before calling @code{.C}; mistakes in matching the types
 can lead to wrong results or hard-to-catch errors.
 
 
-@node dyn.load and dyn.unload, Handling R objects in C, Interface functions .C and .Fortran, System and foreign language interfaces
+@node dyn.load and dyn.unload, Interfacing C++ code, Interface functions .C and .Fortran, System and foreign language interfaces
 @section @code{dyn.load} and @code{dyn.unload}
 
 @findex dyn.load
@@ -875,8 +893,8 @@ it is needed to allow the DLL to be re-built on some platforms,
 including Windows.
 
 The first argument to both functions is a character string giving the
-path to library.  Programmers should not assume a specific file
-extension for the library (such as @code{.so}) but use a construction
+path to the library.  Programmers should not assume a specific file
+extension for the library (such as @samp{.so}) but use a construction
 like
 
 @example
@@ -886,15 +904,17 @@ file.path(path1, path2, paste("mylib", .Platform$dynlib.ext, sep=""))
 @noindent
 for platform independence.  On Unix systems the path supplied to
 @code{dyn.load} can be an absolute path, one relative to the current
-directory or, if it starts with @code{~}, relative to the user's home
+directory or, if it starts with @samp{~}, relative to the user's home
 directory.
 
-Loading is most often done via a call to @code{library.dynam} in the
-@code{.First.lib} function of a package.  This has the form
+Loading is most often done via a call to @code{library.dynam}
+@findex library.dynam
+in the @code{.First.lib} function of a package.  This has the form
 
 @smallexample
 library.dynam("libname", package, lib.loc)
 @end smallexample
+
 @noindent
 where @code{libname} is the library/DLL name with the extension omitted.
 
@@ -910,10 +930,8 @@ libraries, the most recently loaded occurrence is used.  The
 @code{PACKAGES} argument provides a good way to avoid any ambiguity in
 which occurrence is meant.
 
+@node Interfacing C++ code, Handling R objects in C, dyn.load and dyn.unload, System and foreign language interfaces
 @section Interfacing C++ code
-
-@noindent
-(Contributed by @emph{Adrian Trapletti}.)
 
 Suppose we have the following hypothetical C++ library, consisting of
 the two files @file{X.hh} and @file{X.cc}, which we want to use in R:
@@ -922,15 +940,12 @@ the two files @file{X.hh} and @file{X.cc}, which we want to use in R:
 @cartouche
 // X.hh
 
-class X
-@{
+class X @{
 public:
   X ();
   ~X ();
 @};
-
-class Y
-@{
+class Y @{
 public:
   Y ();
   ~Y ();
@@ -974,8 +989,7 @@ For example,
 
 extern "C" @{
 
-void X_main ()
-@{
+void X_main () @{
   X x;
 @}
 
@@ -1014,7 +1028,7 @@ Save workspace image? [y/n/c]: y
 destructor Y
 @end smallexample
 
-@node Handling R objects in C, Interface Functions .Call and .External, dyn.load and dyn.unload, System and foreign language interfaces
+@node Handling R objects in C, Interface Functions .Call and .External, Interfacing C++ code, System and foreign language interfaces
 @section Handling R objects in C
 
 Using C code to speed up the execution of an @R{} function is often very
@@ -1036,6 +1050,8 @@ in each case is similar to that of @code{.C}, but the two functions have
 rather different C interfaces.  Generally the @code{.Call} interface
 (which is modelled on the interface of the same name in S version 4) is
 a little simpler to use, but @code{.External} is a little more general.
+@findex .Call
+@findex .External
 
 A call to @code{.Call} is very similar to @code{.C}, for example
 
@@ -1078,7 +1094,7 @@ arguments can be extracted.
 In each case the @R{} objects are available for manipulation via a set
 of functions and macros defined in the header file @file{Rinternals.h}
 or some higher-level macros defined in @file{Rdefines.h} (included by
-@code{S.h}).  Details on @code{.Call} and @code{.External} are given
+@file{S.h}).  Details on @code{.Call} and @code{.External} are given
 further below.
 
 Before you decide to use @code{.Call} or @code{.External}, you should
@@ -1108,7 +1124,7 @@ the code might be shared with S at any stage.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
-examples and ``how to do it':' indeed many of the examples here were
+examples and ``how to do it'': indeed many of the examples here were
 developed by examining closely @R{} system functions for similar tasks.
 Do make use of the source code for inspirational examples.
 
@@ -1162,12 +1178,12 @@ The programmer is solely responsible for housekeeping the calls to
 @code{PROTECT}.  There is a corresponding macro @code{UNPROTECT} that
 takes as argument an @code{int} giving the number of @code{SEXP}s to
 unprotect when they are no longer needed.  The protection mechanism is
-stack-based, so @code{UNPROTECT(n)} unprotects the last @code{n} objects
-which were protected.  The calls to @code{PROTECT} and @code{UNPROTECT}
-must balance when the user's code returns, even if it returns because of
-an error (calling @code{error} or @code{errorcall} for example).  @R{}
-will warn about @code{stack imbalance in .Call} (or @code{.External}) if
-the housekeeping is wrong.
+stack-based, so @code{UNPROTECT(@var{n})} unprotects the last @var{n}
+objects which were protected.  The calls to @code{PROTECT} and
+@code{UNPROTECT} must balance when the user's code returns, even if it
+returns because of an error (calling @code{error} or @code{errorcall}
+for example).  @R{} will warn about @code{"stack imbalance in .Call"}
+(or @code{.External}) if the housekeeping is wrong.
 
 Here is a small example of creating an @R{} numeric vector in C code.
 First we use the macros in @file{Rdefines.h}:
@@ -1208,9 +1224,9 @@ Protection is not needed for objects which @R{} already knows are in
 use.  In particular, this applies to function arguments.
 
 There is a less-used@footnote{for historical reasons,
-@code{UNPROTECT_PTR(s)} has existed only since @R{} version 0.63.0 (Nov.@:
-1998)} macro @code{UNPROTECT_PTR(s)} that unprotects the @code{SEXP} s.
-
+@code{UNPROTECT_PTR(@var{s})} has existed only since @R{} version 0.63.0
+(Nov.@: 1998)} macro @code{UNPROTECT_PTR(@var{s})} that unprotects the
+@code{SEXP} @var{s}.
 @findex UNPROTECT_PTR
 
 @node Allocating storage, Details of R types, Garbage Collection, Handling R objects in C
@@ -1261,21 +1277,25 @@ The usual @R{} object modes are given in the table.
 
 @quotation
 @multitable {SEXPTYPE} {numeric with storage mode integer integer}
+
 @item @strong{SEXPTYPE} @tab @strong{@R{} equivalent / explanation}
+
 @item @code{REALSXP}  @tab numeric with storage mode @code{double}
 @item @code{INTSXP}   @tab integer
 @item @code{CPLXSXP}  @tab complex
 @item @code{LGLSXP}   @tab logical
 @item @code{STRSXP}   @tab character
 @item @code{VECSXP}   @tab list (generic vector)
-@item @code{LISTXP}   @tab "dotted-pair" list
-@item @code{DOTSXP}   @tab a @dots{} object
+@item @code{LISTXP}   @tab ``dotted-pair'' list
+@item @code{DOTSXP}   @tab a @samp{@dots{}} object
 @item @code{NILSXP}   @tab NULL
 @item @code{SYMSXP}   @tab name/symbol
 @item @code{CLOSXP}   @tab function or function closure
 @item @code{ENVSXP}   @tab environment
+
 @end multitable
 @end quotation
+
 @noindent
 Among the important internal @code{SEXPTYPE}s are @code{LANGSXP},
 @code{CHARSXP} etc.
@@ -1342,7 +1362,7 @@ out <- function(x, y) .Call("out", as.double(x), as.double(y))
 @noindent
 where we expect @code{x} and @code{y} to be numeric vectors, possibly
 with names.  This time we do the coercion in the calling @R{} code.
-@*
+
 C code to do the computations is
 
 @example
@@ -1401,10 +1421,13 @@ SEXP out(SEXP x, SEXP y)
 @end example
 
 This example introduces several new features.  The @code{getAttrib} and
-@code{setAttrib} functions get and set individual attributes.  Their
-second argument is a @code{SEXP} defining the name in the symbol table
-of the attribute we want; these and many such symbols are defined in the
-header file @file{Rinternals.h}.
+@code{setAttrib}
+@findex getAttrib
+@findex setAttrib
+functions get and set individual attributes.  Their second argument is a
+@code{SEXP} defining the name in the symbol table of the attribute we
+want; these and many such symbols are defined in the header file
+@file{Rinternals.h}.
 
 There are shortcuts here too: the functions @code{namesgets},
 @code{dimgets} and @code{dimnamesgets} are the internal versions of
@@ -1412,9 +1435,10 @@ There are shortcuts here too: the functions @code{namesgets},
 functions such as @code{GetMatrixDimnames} and @code{GetArrayDimnames}.
 
 What happens if we want to add an attribute that is not pre-defined? We
-need to add a symbol for it @emph{via} a call to @code{install}.
-Suppose for illustration we wanted to add an attribute @code{"version"}
-with value @code{3.0}.  We could use
+need to add a symbol for it @emph{via} a call to
+@findex install
+@code{install}.  Suppose for illustration we wanted to add an attribute
+@code{"version"} with value @code{3.0}.  We could use
 
 @example
   @{ SEXP version;
@@ -1461,8 +1485,8 @@ from a C character array, which we do using the macro
 @cindex Handling lists
 
 Some care is needed with lists, as @R{} has moved from using LISP-like
-lists (now called `pairlists') to S-like generic vectors.  As a result,
-the appropriate test for a object of mode @code{list} is
+lists (now called ``pairlists'') to S-like generic vectors.  As a
+result, the appropriate test for a object of mode @code{list} is
 @code{isNewList}, and we need @code{allocVector(VECSXP, n}) and
 @emph{not} @code{allocList(n)}.
 
@@ -1483,7 +1507,7 @@ Then we can access @code{a$g} as @code{a[[2]]} by
 @end example
 
 This can rapidly become tedious, and the following function (based on
-one in package @code{nls}) is very useful:
+one in package @pkg{nls}) is very useful:
 
 @example
 /* get the list element named str, or return NULL */
@@ -1501,8 +1525,10 @@ SEXP getListElement(SEXP list, char *str)
   return elmt;
 @}
 @end example
+
 @noindent
 and enables us to say
+
 @example
   double g;
   g = REAL(getListElement(a, "g"))[0];
@@ -1534,9 +1560,11 @@ SEXP getvar(SEXP name, SEXP rho)
 @}
 @end example
 
-The main work is done by @code{findVar}, but to use it we need to
-install @code{name} as a name in the symbol table.  As we wanted the
-value for internal use, we return @code{NULL}.
+The main work is done by
+@findex findVar
+@code{findVar}, but to use it we need to install @code{name} as a name
+in the symbol table.  As we wanted the value for internal use, we return
+@code{NULL}.
 
 Similar functions with syntax
 
@@ -1544,6 +1572,8 @@ Similar functions with syntax
 void defineVar(SEXP symbol, SEXP value, SEXP rho)
 void setVar(SEXP symbol, SEXP value, SEXP rho)
 @end example
+@findex defineVar
+@findex setVar
 
 @noindent
 can be used to assign values to @R{} objects, in the specified
@@ -1559,7 +1589,6 @@ These two interfaces have almost the same functionality. @code{.Call} is
 based on the interface of the same name in S version 4, and
 @code{.External} is based on @code{.Internal}.  @code{.External} is more
 complex but allows a variable number of arguments.
-
 
 @menu
 * Calling .Call::               
@@ -1607,7 +1636,7 @@ SEXP convolve2(SEXP a, SEXP b)
 @}
 @end example
 
-zNote that unlike the macros in S version 4, the @R{} versions of these
+Note that unlike the macros in S version 4, the @R{} versions of these
 macros do check that coercion can be done and raise an error if it
 fails.  They will raise warnings if missing values are introduced by
 coercion.  Although we illustrate doing the coercion in the C code here,
@@ -1617,7 +1646,6 @@ Now for the version in @R{}-internal style.  Only the C code changes.
 
 @example
 #include <Rinternals.h>
-
 SEXP convolve2(SEXP a, SEXP b)
 @{
   int i, j, na, nb, nab;
@@ -1686,7 +1714,10 @@ of the interface they are objects that are already in use.  The macros
 
 @noindent
 provide convenient ways to access the first four arguments.  More
-generally we can use the @code{CDR} and @code{CAR} macros as in
+generally we can use the
+@findex CAR
+@findex CDR
+@code{CDR} and @code{CAR} macros as in
 
 @example
   args = CDR(args); a = CAR(args);
@@ -1719,11 +1750,11 @@ SEXP showArgs(SEXP args)
       switch(TYPEOF(CAR(args))) @{
       case REALSXP:
         printf("[%d] '%s' %f\n", i+1, name, REAL(CAR(args))[0]);
-      break;
+        break;
       case LGLSXP:
       case INTSXP:
         printf("[%d] '%s' %d\n", i+1, name, INTEGER(CAR(args))[0]);
-      break;
+        break;
       case CPLXSXP:
         cpl = COMPLEX(CAR(args))[0];
         printf("[%d] '%s' %f + %fi\n", i+1, name, cpl.r, cpl.i);
@@ -1770,6 +1801,7 @@ handle @code{NA}s using macros defined in @file{Arith.h}.
 
 The code changes are the same in any of the versions of @code{convolve2}
 or @code{convolveE}:
+
 @example
     ...
   for(i = 0; i < na; i++)
@@ -1780,6 +1812,9 @@ or @code{convolveE}:
           xab[i + j] += xa[i] * xb[j];
     ...
 @end example
+
+@findex ISNA
+@findex ISNAN
 
 Note that the @code{ISNA} macro, and the similar macros @code{ISNAN}
 (which checks for @code{NaN} or @code{NA}) and @code{R_FINITE} (which is
@@ -2004,6 +2039,7 @@ with example usage
 Note the need to quote the expression to stop it being evaluated.
 
 Here is the complete C code which we will explain section by section.
+
 @example
 #include <S.h> /* for DOUBLE_EPS */
 #include <Rinternals.h>
@@ -2189,6 +2225,7 @@ Under Windows the @R{} engine is itself in a DLL, and the procedure is
 @item
 Start @R{} under the debugger after setting a breakpoint for
 @code{WinMain}.
+
 @example
 gdb .../bin/Rgui.exe
 (gdb) break WinMain
@@ -2206,13 +2243,16 @@ At the @R{} prompt, use @code{dyn.load} or @code{library} to load your library.
 Set the breakpoints in your code.
 @item
 Use
+
 @example
 (gdb) clear R_ReadConsole
 (gdb) continue
 @end example
+
 @noindent
 to continue running with the breakpoints set.
 @end itemize
+
 @noindent
 Windows has little support for signals, so the usual idea of running a
 program under a debugger and sending it a signal to interrupt it and
@@ -2230,9 +2270,11 @@ the code to be debugged.
 
 Another way is to call @code{PrintValue} from the symbolic debugger. For
 example, from @code{gdb} we can use
+
 @example
 (gdb) p PrintValue(ab)
 @end example
+
 @noindent
 using the object @code{ab} from the convolution example, if we have
 placed a suitable breakpoint in the convolution C code.
