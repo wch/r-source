@@ -2,7 +2,7 @@ PKG <- "@PKG@"
 exloc <- file.path("../../../../library", PKG, "R-ex")
 if(!file.exists(exloc)) stop("no examples found")
 list.of.files <- list.files(exloc, ".*\\.R")
-file <- paste(PKG, "-ex.R", sep="")
+file <- paste(PKG, "-Ex.R", sep="")
 file.create(file)
 cat(file=file, append=T, 'attach(NULL, name = ".CheckExEnv")\n',
 'assign(".CheckExEnv", pos.to.env(2), pos = length(search()))\n',
