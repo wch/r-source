@@ -25,17 +25,18 @@
 #include "Defn.h"
 #include "Mathlib.h"
 
-static SEXP integer_relop(int code, SEXP s1, SEXP s2);
-static SEXP real_relop(int code, SEXP s1, SEXP s2);
-static SEXP complex_relop(int code, SEXP s1, SEXP s2);
-static SEXP string_relop(int code, SEXP s1, SEXP s2);
+static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP real_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
+static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2);
 
-static SEXP rcall;
+static SEXP rcall;/* global, for error messages */
 
 SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, y, class=R_NilValue, dims, tsp=R_NilValue, xnames, ynames, ans;
-    int mismatch, nx, ny, xarray, yarray, xts, yts;
+    int nx, ny, xarray, yarray, xts, yts;
+    Rboolean mismatch, iS;
 
     if (DispatchGroup("Ops", call, op, args, env, &ans))
 	return ans;
@@ -43,31 +44,40 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     x = CAR(args);
     y = CADR(args);
 
-    if (isSymbol(x)) {
+    if ((iS = isSymbol(x)) || TYPEOF(x) == LANGSXP) {
 	PROTECT(x);
 	x = allocVector(STRSXP, 1);
-	SET_STRING_ELT(x, 0, PRINTNAME(CAR(args)));
+	SET_STRING_ELT(x, 0,
+		       (iS) ? PRINTNAME(CAR(args)) : deparse1(CAR(args), 0));
 	SETCAR(args, x);
 	UNPROTECT(1);
     }
-    if (isSymbol(y)) {
+    if ((iS = isSymbol(y)) || TYPEOF(y) == LANGSXP) {
 	PROTECT(y);
 	y = allocVector(STRSXP, 1);
-	SET_STRING_ELT(y, 0, PRINTNAME(CADR(args)));
+	SET_STRING_ELT(y, 0,
+		       (iS) ? PRINTNAME(CADR(args)) : deparse1(CADR(args), 0));
 	SETCADR(args, y);
 	UNPROTECT(1);
     }
 
-    if (!isVector(x) || !isVector(y))
+    /* FIXME (?): S does
+    if (!isVectorAtomic(x) || !isVectorAtomic(y)) { */
+    if (!isVector(x) || !isVector(y)) {
+	if (isNull(x) || isNull(y))
+	    return allocVector(LGLSXP,0);
 	errorcall(call,
-		  "comparison (%d) is possible only for vector types",
+		  "comparison (%d) is possible only for atomic types",
 		  PRIMVAL(op));
+    }
+
+    /* ELSE :  x and y are both atomic */
 
     if (LENGTH(x) <= 0 || LENGTH(y) <= 0)
 	return allocVector(LGLSXP,0);
 
     rcall = call;
-    mismatch = 0;
+    mismatch = FALSE;
     xarray = isArray(x);
     yarray = isArray(y);
     xts = isTs(x);
@@ -90,10 +100,8 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     else {
 	nx = length(x);
 	ny = length(y);
-	if (nx > 0 && ny > 0) {
-	    if (nx > ny) mismatch = nx % ny;
-	    else mismatch = ny % nx;
-	}
+	if (nx > 0 && ny > 0)
+	    mismatch = ((nx > ny) ? nx % ny : ny % nx) != 0;
 	PROTECT(dims = R_NilValue);
 	PROTECT(xnames = getAttrib(x, R_NamesSymbol));
 	PROTECT(ynames = getAttrib(y, R_NamesSymbol));
@@ -118,7 +126,9 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
 	    PROTECT(class = getAttrib(y, R_ClassSymbol));
 	}
     }
-    if (mismatch) warningcall(call, "longer object length\n\tis not a multiple of shorter object length");
+    if (mismatch)
+	warningcall(call, "longer object length\n"
+		    "\tis not a multiple of shorter object length");
 
     if (isString(x) || isString(y)) {
 	x = SETCAR(args, coerceVector(x, STRSXP));
@@ -163,7 +173,7 @@ SEXP do_relop(SEXP call, SEXP op, SEXP args, SEXP env)
     return x;
 }
 
-static SEXP integer_relop(int code, SEXP s1, SEXP s2)
+static SEXP integer_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2;
     int x1, x2;
@@ -242,7 +252,7 @@ static SEXP integer_relop(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-static SEXP real_relop(int code, SEXP s1, SEXP s2)
+static SEXP real_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2;
     double x1, x2;
@@ -321,7 +331,7 @@ static SEXP real_relop(int code, SEXP s1, SEXP s2)
     return ans;
 }
 
-static SEXP complex_relop(int code, SEXP s1, SEXP s2)
+static SEXP complex_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2;
     Rcomplex x1, x2;
@@ -361,6 +371,8 @@ static SEXP complex_relop(int code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = (x1.r != x2.r || x1.i != x2.i);
 	}
 	break;
+    default:
+	/* never happens (-Wall) */
     }
     UNPROTECT(2);
     return ans;
@@ -373,7 +385,7 @@ static SEXP complex_relop(int code, SEXP s1, SEXP s2)
 
 
 
-static SEXP string_relop(int code, SEXP s1, SEXP s2)
+static SEXP string_relop(RELOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, n, n1, n2;
     SEXP ans;
