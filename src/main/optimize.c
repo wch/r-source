@@ -628,6 +628,12 @@ SEXP do_nlm(SEXP call, SEXP op, SEXP args, SEXP rho)
  	have_hessian = 1;
        }
     }
+    if (((msg/4) % 2) && !iahflg) { /* don't check of analytic Hessian */
+      msg -= 4;
+    }
+    if (((msg/2) % 2) && !iagflg) { /* don't check of analytic gradient */
+      msg -= 2;
+    }
     FT_init(n);
     /* Plug in the call to the optimizer here */
 
