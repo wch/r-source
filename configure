@@ -1639,7 +1639,7 @@ if eval "test \"`echo '$''{'octave_cv_flibs'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   echo "      END" > conftest.f
-foutput=`${F77-f77} -v -o conftest conftest.f 2>&1`
+foutput=`${F77-f77} -v -o conftest conftest.f 2>&1 | grep -v "^Driving"`
 xlf_p=`echo $foutput | grep xlfentry`
 if test -n "$xlf_p"; then
   foutput=`echo $foutput | sed 's/,/ /g'`

@@ -139,7 +139,7 @@ AC_DEFUN(OCTAVE_FLIBS,
 AC_CACHE_VAL(octave_cv_flibs,
 [changequote(, )dnl
 echo "      END" > conftest.f
-foutput=`${F77-f77} -v -o conftest conftest.f 2>&1`
+foutput=`${F77-f77} -v -o conftest conftest.f 2>&1 | grep -v "^Driving"`
 dnl
 dnl The easiest thing to do for xlf output is to replace all the commas
 dnl with spaces.  Try to only do that if the output is really from xlf,
