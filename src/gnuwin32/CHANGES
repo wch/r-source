@@ -16,6 +16,11 @@ library tree (as happens on Unix) when there is more than one tree.
 The Java-based search index now covers all packages in all current
 library trees.
 
+When using help.start() with more than one library tree, an attempt is
+made to correct the URLs in non-standard libraries which point to the
+R_HOME/doc directory or to the base package.  One this is done a
+stamp `fixedHTMLlinks' is placed in the package directory.
+
 The output when building R or source packages is much quieter.
 
 Rcmd.exe and Rprof have been moved to the main distribution (although 

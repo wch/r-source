@@ -8,6 +8,7 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
     }
     make.packages.html(lib.loc)
     make.search.html(lib.loc)
+    fixup.libraries.URLs(lib.loc)
 }
 
 make.packages.html <- function(lib.loc=.libPaths())
@@ -88,4 +89,39 @@ make.search.html <- function(lib.loc=.libPaths())
         }
     }
     close(out)
+}
+
+fixup.package.URLs <- function(pkg, force = FALSE)
+{
+    fixedfile <- file.path(pkg, "fixedHTMLlinks")
+    if(!force && file.exists(fixedfile)) return(TRUE)
+    if(!file.create(fixedfile)) return(FALSE)
+    htmldir <- file.path(pkg, "html")
+    if(!file.exists(htmldir)) return(FALSE)
+    files <- list.files(htmldir, pattern = "\.html$", full.names = TRUE)
+    doc <- paste("file:///", gsub("\\\\", "/", R.home()), "/doc", sep="")
+    base <- paste("file:///", gsub("\\\\", "/", R.home()),
+                  "/library/base", sep="")
+    for(f in files) {
+        page <- readLines(f)
+        try(out <- file(f, open = "w"))
+        if(class(out) == "try-error") {
+            warning("cannot update", f)
+            next
+        }
+        page <- gsub("../../../doc", doc, page)
+        page <- gsub("../../base", base, page)
+        writeLines(page, out)
+        close(out)
+    }
+    return(TRUE)
+}
+
+fixup.libraries.URLs <- function(lib.loc = .libPaths())
+{
+    for (lib in lib.loc) {
+        if(lib == .Library) next
+        pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
+        for(pkg in pg) fixup.package.URLs(file.path(lib,pkg))
+    }
 }
