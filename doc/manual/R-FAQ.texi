@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-35, 2001-03-09
+@set FAQ-VERSION 1.2-36, 2001-03-14
 @set REL-VERSION 1.2.2
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1245,7 +1245,7 @@ subsequently modified; in R it doesn't.
 
 @item
 From R version 1.3.0, @code{data.frame} strips @code{I()} when creating
-names.
+(column) names.
 
 @end itemize
 
@@ -2052,6 +2052,7 @@ dir /opt/R/src/unix
 * How can I substitute into a plot label?::  
 * What are valid names?::       
 * Are GAMs implemented in R?::  
+* Why is the output not printed when I source() a file?::  
 @end menu
 
 @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -2497,7 +2498,7 @@ to do with names in the language, but it is traditional to call these
 strings file ``names''.
 @end enumerate
 
-@node Are GAMs implemented in R?,  , What are valid names?, R Miscellanea
+@node Are GAMs implemented in R?, Why is the output not printed when I source() a file?, What are valid names?, R Miscellanea
 @section Are GAMs implemented in R?
 
 There is a @code{gam()} function for Generalized Additive Models in
@@ -2514,6 +2515,50 @@ BRUTO.
 @c   You might want to try the packages mgcv, which has a version of
 @c   gam(), or gss which will fit a wide range of spline models.
 @c Something about this should be added once it is proven to work.
+
+@node Why is the output not printed when I source() a file?,  , Are GAMs implemented in R?, R Miscellanea
+@section Why is the output not printed when I source() a file?
+
+Most R commands do not generate any output. The command
+
+@smallexample
+1+1
+@end smallexample
+
+@noindent
+computes the value 2 and returns it; the command
+
+@smallexample
+summary(glm(y~x+z, family=binomial))
+@end smallexample
+
+@noindent
+fits a logistic regression model, computes some summary information and
+returns an object of class @code{"summary.glm"} (@pxref{How should I
+write summary methods?}).
+
+If you type @code{1+1} or @code{summary(glm(y~x+z,family=binomial))} at
+the command line the returned value is automatically printed (unless it
+is @code{invisible()}), but in other circumstances, such as in a
+@code{source()}d file or inside a function it isn't printed unless you
+specifically print it.
+
+To print the value use
+
+@smallexample
+print(1+1)
+@end smallexample
+
+@noindent
+or
+
+@smallexample
+print(summary(glm(y~x+z, family=binomial)))
+@end smallexample
+
+@noindent
+instead, or use @code{source(@var{file}, echo=TRUE)}.
+
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
