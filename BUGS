@@ -121,6 +121,26 @@ Date: 07 Dec 1999 15:19:46 +0100
 Subject: hist() with horiz=TRUE does not give horiz. plots
 From: fran@stat.berkeley.edu
 Date: Sun, 12 Dec 1999 00:27:25 +0100 (MET)
+* PR# 378 *
+Subject: plot()  after split.screen() on postscript() Device produces inconsistent PostScript file
+From: boble@usa.net
+Date: Fri, 17 Dec 1999 21:32:23 +0100 (MET)
+* PR# 384 *
+Subject: tck crash
+From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
+Date: Wed, 22 Dec 1999 10:05:48 +0100 (MET)
+* PR# 389 *
+Subject: coredump with plot(x,y,pch="+",cex=2.2)
+From: Rashid Nassar <rnassar@duke.edu>
+Date: Sun, 26 Dec 1999 18:14:10 -0500 (EST)
+* PR# 390 *
+Subject: axis for small ranges
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Tue, 28 Dec 1999 13:28:01 +0100
+* PR# 400 *
+Subject: X11 troubles
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 13 Jan 2000 14:31:42 +0100
 
 Directory:  In-Out
 
@@ -151,19 +171,12 @@ Date: Wed, 1 Sep 1999 11:58:51 +0200 (MET DST)
 
 Directory:  Low-level
 
-* PR# 37 *
-Subject: S.h compatibility issues
-From: Prof Brian D Ripley <ripley@stats.ox.ac.uk>
-Date: Sun, 6 Sep 1998 19:58:47 +0100 (BST)
---1 is fixed
---2 R's own RNG entry points are still not public
---3 is the perennial issue of what is the `public' API -- specific points are
---fixed
 * PR# 101 *
 Subject: Re: [R] Re: R-0.63.2 for Windows - some comments
 From: Guido Masarotto <guido@hal.stat.unipd.it>
 Date: Fri, 22 Jan 1999 12:40:26 +0100
 --This is really about fixed buffer sizes in printutils.c
+--Does anyone know how to compute the size of a print statement? vsnprintf? 
 * PR# 135 *
 Subject: summary() of lm() problem
 From: Simon Fear <fears@roycastle.liv.ac.uk>
@@ -189,6 +202,23 @@ Date: Wed, 24 Nov 1999 11:34:10 -0800 (PST)
 Subject: [[ substitution
 From: clive@bell-labs.com
 Date: Fri, 3 Dec 1999 16:45:08 +0100 (MET)
+* PR# 377 *
+Subject: lists of functions
+From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
+Date: Fri, 17 Dec 1999 09:10:50 +0100 (MET)
+--same as PR#358
+* PR# 386 *
+Subject: as.matrix.data.frame() modifies content of character columns
+From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Date: Wed, 22 Dec 1999 16:18:19 +0100
+* PR# 387 *
+Subject: different subscripting behaviour using  $<-  or  [<-  for data.frames
+From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Date: Thu, 23 Dec 1999 19:10:17 +0100
+* PR# 388 *
+Subject: data.frame(I(matrix)) ?
+From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
+Date: Thu, 23 Dec 1999 19:12:58 +0100
 
 Directory:  Misc
 
@@ -229,43 +259,11 @@ none
 
 Directory:  incoming
 
-* PR# 377 *
-Subject: lists of functions
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Fri, 17 Dec 1999 09:10:50 +0100 (MET)
-* PR# 378 *
-Subject: plot()  after split.screen() on postscript() Device produces inconsistent PostScript file
-From: boble@usa.net
-Date: Fri, 17 Dec 1999 21:32:23 +0100 (MET)
-* PR# 384 *
-Subject: tck crash
-From: Patrick Lindsey <plindsey@alpha.luc.ac.be>
-Date: Wed, 22 Dec 1999 10:05:48 +0100 (MET)
 * PR# 385 *
 Subject: Apply dimnames
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Wed, 22 Dec 1999 11:22:27 +0000 (GMT)
 --(+ patch proposal)
-* PR# 386 *
-Subject: as.matrix.data.frame() modifies content of character columns
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Wed, 22 Dec 1999 16:18:19 +0100
-* PR# 387 *
-Subject: different subscripting behaviour using  $<-  or  [<-  for data.frames
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Thu, 23 Dec 1999 19:10:17 +0100
-* PR# 388 *
-Subject: data.frame(I(matrix)) ?
-From: "=?iso-8859-1?Q?Jens_Oehlschl=E4gel-Akiyoshi?=" <jens.oehlschlaegel-akiyoshi@mdfactory.de>
-Date: Thu, 23 Dec 1999 19:12:58 +0100
-* PR# 389 *
-Subject: coredump with plot(x,y,pch="+",cex=2.2)
-From: Rashid Nassar <rnassar@duke.edu>
-Date: Sun, 26 Dec 1999 18:14:10 -0500 (EST)
-* PR# 390 *
-Subject: axis for small ranges
-From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-Date: Tue, 28 Dec 1999 13:28:01 +0100
 * PR# 391 *
 Subject: Segfault in dataentry()
 From: Peter Dalgaard BSA <p.dalgaard@pubhealth.ku.dk>
@@ -278,11 +276,15 @@ Date: Tue, 4 Jan 2000 10:31:53 +0100
 Subject: a +1 shift overlaying lines/points on a boxplot
 From: acuster@nature.berkeley.edu
 Date: Tue, 11 Jan 2000 02:53:56 +0100 (MET)
-* PR# 400 *
-Subject: X11 troubles
-From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
-Date: 13 Jan 2000 14:31:42 +0100
-* PR# 402 *
-Subject: core dump involving function closure
-From: Jim Lindsey <jlindsey@alpha.luc.ac.be>
-Date: Tue, 25 Jan 2000 08:59:06 +0100 (MET)
+* PR# 405 *
+Subject: error in dweibull
+From: setzer.woodrow@epa.gov
+Date: Thu, 27 Jan 2000 16:37:06 +0100 (MET)
+* PR# 406 *
+Subject: handling of dimension-attribute in density
+From: polzehl@wias-berlin.de
+Date: Thu, 27 Jan 2000 17:12:35 +0100 (MET)
+* PR# 407 *
+Subject: NA not printed after table
+From: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
+Date: Thu, 27 Jan 2000 18:47:38 +0100
