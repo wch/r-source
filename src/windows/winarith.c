@@ -1,5 +1,5 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
+ *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -21,20 +21,20 @@
 
 int isnan(double x)
 {
-        int hx, lx;
-        hx = ((int*)&x)[1];
-        lx = ((int*)&x)[0];
-        hx &= 0x7fffffff;
-        hx |= (unsigned)(lx|(-lx))>>31;
-        hx = 0x7ff00000 - hx;
-        return (int)((unsigned)(hx))>>31;
+    int hx, lx;
+    hx = ((int*)&x)[1];
+    lx = ((int*)&x)[0];
+    hx &= 0x7fffffff;
+    hx |= (unsigned)(lx|(-lx))>>31;
+    hx = 0x7ff00000 - hx;
+    return (int)((unsigned)(hx))>>31;
 
 }
 
 int finite(double x)
 {
-        int hx = ((int*)&x)[1];
-        return (int)((unsigned)((hx&0x7fffffff)-0x7ff00000)>>31);
+    int hx = ((int*)&x)[1];
+    return (int)((unsigned)((hx&0x7fffffff)-0x7ff00000)>>31);
 }
 
 
@@ -42,14 +42,11 @@ int finite(double x)
 
 double erf(double x)
 {
-        return(pnorm(x, 0, 1));
+    return(pnorm(x, 0, 1));
 }
-
-
-
 
 /* 1-erf(x); should be done better than this */
 double erfc(double x)
 {
-        return (pnorm(-x,0,1));
+    return (pnorm(-x,0,1));
 }
