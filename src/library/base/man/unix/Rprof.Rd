@@ -28,7 +28,9 @@ Rprof(filename = "Rprof.out", append = TRUE, interval = 0.02)
   be used to process the output file to produce a summary of the usage.
 }
 \note{
-  Profiling is not available on all platforms.
+  Profiling is not available on all platforms, and is not enabled by
+  default.  Configure \R with \code{--enable-R-profiling} to see if
+  it can be used on your system.
 
   As \R profiling uses the same mechanisms as C profiling, the two
   cannot be used together, so do not use \code{Rprof} in an executable

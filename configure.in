@@ -58,6 +58,18 @@ if test -r ${f}; then echo "loading build specific script ${f}"; . ${f} ; fi
 config_opts=${ac_configure_args}
 AC_SUBST(config_opts)
 
+## Allow the user to specify support for R-profiling.
+AC_ARG_ENABLE(R-profiling,
+  [  --enable-R-profiling    attempt to compile support for Rprof()],
+  [ if test "${withval}" = no; then
+      want_Rprof=no
+    elif test "${withval}" = yes; then
+      want_Rprof=yes
+    else
+      want_Rprof=yes
+    fi],
+  want_Rprof=no)
+
 ## Allow the user to force us to use f2c.
 AC_ARG_WITH(f2c,
   [  --with-f2c              use f2c even if FORTRAN compiler is available],
@@ -122,7 +134,7 @@ AC_ARG_WITH(readline,
   use_readline=true)
 
 AC_ARG_WITH(gnome,
-  [  --with-gnome            use GNOME, or specify its prefix],
+  [  --with-gnome            use GNOME, or specify its library dir],
   [ if test "${withval}" = no; then
       want_gnome=no
     elif test "${withval}" = yes; then
@@ -147,6 +159,7 @@ AC_ARG_WITH(tcltk,
       tcltk_prefix=${withval}
     fi],
   want_tcltk=yes)
+
 
 ### Programs.
 
@@ -750,6 +763,12 @@ AC_SUBST(R_GUIS)
 
 R_TCLTK
 
+## R-profiling
+if test "${want_Rprof}" = yes; then
+  AC_CHECK_FUNCS(setitimer, [AC_DEFINE(R_PROFILING)], [want_Rprof="no"])
+fi
+AC_SUBST(R_PROFILING)
+
 ### Miscellaneous.
 
 ## Printing
@@ -872,7 +891,6 @@ AC_OUTPUT(Makeconf
   tools/Rdnewer
   tools/help2man
   tools/keyword-test
-  tools/keywords2html
   tools/install-info
   tools/pkg2tex
 )
@@ -883,7 +901,6 @@ AC_OUTPUT_COMMANDS(
   tools/help2man \
   tools/install-info \
   tools/keyword-test \
-  tools/keywords2html \
   tools/pkg2tex
   test -f src/include/stamp-h || echo timestamp > src/include/stamp-h
 )
@@ -905,6 +922,7 @@ R is now configured for ${host}
   X11 support:              ${use_X11}
   Gnome support:            ${use_gnome}
   Tcl/Tk support:           ${use_tcltk}
+  R-profiling support:      ${want_Rprof}
 ])
 
 if test -n "${warn_f77_and_g77}"; then
