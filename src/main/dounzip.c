@@ -23,8 +23,12 @@
 #include <config.h>
 #endif
 
+#if defined(Unix) || defined(Win32)
 #include "Defn.h"
 #include "unzip.h"
+#ifdef HAVE_SYS_STAT_H
+#include <sys/stat.h>
+#endif
 
 #define BUF_SIZE 4096
 static int
@@ -1252,3 +1256,12 @@ unzCloseCurrentFile(unzFile file)
 
     return err;
 }
+
+#else
+SEXP
+do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    errorcall(call, "not defined on this platform");
+}
+#endif
+
