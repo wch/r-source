@@ -30,6 +30,9 @@ tapply <- function (x, INDEX, FUN=NULL, simplify=TRUE, ...)
 		ansmat <- array(vector("list", prod(extent)),
 			dim=extent, dimnames=namelist)
 	}
-	ansmat[as.numeric(names(ans))] <- ans
+	# old : ansmat[as.numeric(names(ans))] <- ans
+	index <- as.numeric(names(ans))
+	names(ans) <- NULL
+	ansmat[index] <- ans
 	ansmat
 }
