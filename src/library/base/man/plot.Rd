@@ -20,7 +20,7 @@ plot(y ~ x, \dots)
       \item \code{"p"} for \bold{p}oints,
       \item \code{"l"} for \bold{l}ines,
       \item \code{"b"} for \bold{b}oth,
-      \item \code{"o"} for both ``\bold{o}verplotted'', 
+      \item \code{"o"} for both ``\bold{o}verplotted'',
       \item \code{"h"} for ``\bold{h}istogram'' like vertical lines,
       \item \code{"s"} for \bold{s}teps,
       \item \code{"S"} for other \bold{s}teps,
@@ -54,5 +54,9 @@ plot(cars)
 lines(lowess(cars))
 
 plot(sin, -pi, 2*pi)
+
+## Discrete Distribution Plot:
+plot(table(rpois(100,5)), type = "h", col = "red", lwd=10,
+     main="rpois(100,lambda=5)")
 }
 \keyword{hplot}

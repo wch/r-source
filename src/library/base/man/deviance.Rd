@@ -19,6 +19,6 @@ details on how to use this function
 There is no default method for this function.
 }
 \seealso{
-\code{\link{df.residual}}, \code{\link{glm}}, \code{\link{lm}}.
+\code{\link{df.residual}}, \code{\link{extractAIC}}, \code{\link{glm}}, \code{\link{lm}}.
 }
 \keyword{models}

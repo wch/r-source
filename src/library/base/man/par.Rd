@@ -142,7 +142,12 @@ par(\dots, no.readonly = FALSE)
   \item{mfcol, mfrow}{A vector of the form \code{c(nr, nc)}.
     Subsequent figures will be drawn in an \code{nr}-by-\code{nc}
     array on the device by \emph{columns} (\code{mfcol}), or
-    \emph{rows} (\code{mfrow}), respectively.}
+    \emph{rows} (\code{mfrow}), respectively.
+
+    Consider the alternatives, \code{\link{layout}(..)} and
+    \code{\link{split.screen}(..)}.
+}
+
   \item{mfg}{A numerical vector of the form \code{c(i, j, nr, nc)} where
     \code{i} and \code{j} indicate which figure in an
     \code{nr}-by-\code{nc} array of figures is currently being drawn.}
@@ -179,7 +184,7 @@ par(\dots, no.readonly = FALSE)
     the width or height of the plotting region.
     If \code{tck=1}, grid lines are drawn. The default setting is
     to use \code{tcl=-0.5} (see below).}
-  \item{tcl}{The length of tick marks as a fraction of the height of
+  \item{tcl}{The length of tick marks as a fraction of the height
     of a line of text.  The default value is \code{-0.5}.}
   \item{tmag}{A number specifying the enlargement of text of the main
     title relative to the other annotating text of the plot.}
@@ -218,8 +223,7 @@ par(\dots, no.readonly = FALSE)
   components with a string of the form \code{"#RRGGBB"} where each of
   the pairs \code{RR}, \code{GG}, \code{BB} consist of two hexidecimal
   digits giving a value in the range \code{00} to \code{FF}.  Colors can
-  also be specified by giving an index into a small table of colors
-  (which can be specified using \code{\link{palette}}).
+  also be specified by giving an index into a small table of colors.
   This provides compatibility with S.
 
   The functions \code{rgb}, \code{hsv}, \code{gray} and \code{rainbow}
@@ -237,7 +241,9 @@ par(\dots, no.readonly = FALSE)
   \code{\link{colors}}, \code{\link{gray}}, \code{\link{rainbow}},
   \code{\link{rgb}};
   \code{\link{options}} for other setup parameters;
-  graphic devices \code{\link{x11}}, \code{\link{postscript}}.
+  graphic devices \code{\link{x11}}, \code{\link{postscript}} and
+  setting up device regions by \code{\link{layout}} and
+  \code{\link{split.screen}}.
 }
 \examples{
 op <- par(mfrow = c(2, 2), # 2 x 2 pictures on one plot
