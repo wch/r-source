@@ -210,3 +210,11 @@ src/main/dounzip.c, unzip.h
 
   Contains code Copyright (C) 1998 Gilles Vollant from contrib/minizip
   in the zlib 1.1.3 distribution.
+
+src/main/acosh.c, asinh.c, atanh.c
+
+used on Windows mainly.  Based on
+
+  Cephes Math Library Release 2.8:  June, 2000
+  Copyright 1984, 1995, 2000 by Stephen L. Moshier
+

@@ -990,20 +990,17 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 
 /* Mathematical Functions of One Argument */
 
-#if !defined(HAVE_ASINH) || !defined(HAVE_ACOSH) || !defined(HAVE_ATANH)
-static double dummy(double x){ return R_NaN;}
-#define  unavailable (errorcall(call,\
-        "function unavailable in this R"), dummy)
+/* These are substituted if necessary */
 #ifndef HAVE_ASINH
-#define asinh unavailable
+extern double asinh(double x);
 #endif
 #ifndef HAVE_ACOSH
-#define acosh unavailable
+extern double acosh(double x);
 #endif
 #ifndef HAVE_ATANH
-#define atanh unavailable
+extern double atanh(double x);
 #endif
-#endif
+
 
 static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 {
