@@ -35,7 +35,7 @@
 static unsigned char  ConsoleBuf[CONSOLE_BUFFER_SIZE];
 static unsigned char *ConsoleBufp;
 static int  ConsoleBufCnt;
-static unsigned char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
+static char  ConsolePrompt[CONSOLE_PROMPT_SIZE];
 
 
 static int save = 0;
@@ -69,7 +69,7 @@ static int ConsoleGetchar()
 	}
 	R_ParseCnt++;
 	ConsoleBufp = ConsoleBuf;
-	ConsoleBufCnt = strlen(ConsoleBuf);
+	ConsoleBufCnt = strlen((char *)ConsoleBuf);
 	ConsoleBufCnt--;
     }
     return *ConsoleBufp++;

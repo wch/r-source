@@ -1574,13 +1574,13 @@ static void R_WriteMagic(FILE *fp, int number)
     number = abs(number);
     switch (number) {
     case R_MAGIC_ASCII_V1:   /* Version 1 - R Data, ASCII Format */
-	strcpy(buf, "RDA1");
+	strcpy((char*)buf, "RDA1");
 	break;
     case R_MAGIC_BINARY_V1:  /* Version 1 - R Data, Binary Format */
-	strcpy(buf, "RDB1");
+	strcpy((char*)buf, "RDB1");
 	break;
     case R_MAGIC_XDR_V1:     /* Version 1 - R Data, XDR Binary Format */
-	strcpy(buf, "RDX1");
+	strcpy((char*)buf, "RDX1");
 	break;
     default:
 	buf[0] = (number/1000) % 10 + '0';
@@ -1597,13 +1597,13 @@ static int R_ReadMagic(FILE *fp)
     unsigned char buf[6];
     int d1, d2, d3, d4, d1234;
     fread((char*)buf, sizeof(char), 5, fp);
-    if (strncmp(buf, "RDA1\n", 5) == 0) {
+    if (strncmp((char*)buf, "RDA1\n", 5) == 0) {
 	return R_MAGIC_ASCII_V1;
     }
-    else if (strncmp(buf, "RDB1\n", 5) == 0) {
+    else if (strncmp((char*)buf, "RDB1\n", 5) == 0) {
 	return R_MAGIC_BINARY_V1;
     }
-    else if (strncmp(buf, "RDX1\n", 5) == 0) {
+    else if (strncmp((char*)buf, "RDX1\n", 5) == 0) {
 	return R_MAGIC_XDR_V1;
     }
     /* Intel gcc seems to screw up a single expression here */

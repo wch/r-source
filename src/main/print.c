@@ -78,15 +78,23 @@ void PrintDefaults(SEXP rho)
 
 SEXP do_sink(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    int  append_, ifile;
+    int  append_, ifile, closeOnExit;
 
     ifile = asInteger(CAR(args));
     append_ = asLogical(CADR(args));
-    if (append_ == NA_LOGICAL)
-        errorcall(call, "invalid append specification");
+    closeOnExit = asLogical(CADDR(args));
+    if(closeOnExit == NA_LOGICAL)
+	error("invalid value for closeOnExit");
     switch_stdout(ifile); /* will open new connection if required */
-    if (R_SinkCon >= 3) con_close(R_SinkCon);
+    if (R_SinkCon >= 3) {
+	if(R_SinkCon_to_close == 1) con_close(R_SinkCon);
+	else if (R_SinkCon_to_close == 2) {
+	    Rconnection con = getConnection(R_SinkCon);
+	    con->close(con);
+	}
+    }
     R_SinkCon = R_OutputCon = ifile;
+    R_SinkCon_to_close = closeOnExit;
     return R_NilValue;
 }
 

@@ -1929,11 +1929,12 @@ static SEXP xxdefun(SEXP fname, SEXP formals, SEXP body)
 	    for (p = FunctionStart[FunctionLevel]; p < end ; p++)
 		if (*p == '\n' || p == end - 1) {
 		    nc = p - p0;
-		    if (*p != '\n') 
-			nc++; 
-		    strncpy(SourceLine, p0, nc);
+		    if (*p != '\n')
+			nc++;
+		    strncpy((char *)SourceLine, (char *)p0, nc);
 		    SourceLine[nc] = '\0';
-		    SET_STRING_ELT(source, lines++, mkChar(SourceLine));
+		    SET_STRING_ELT(source, lines++,
+				   mkChar((char *)SourceLine));
 		    p0 = p + 1;
 		}
 	    /* PrintValue(source); */
@@ -2455,7 +2456,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 	try_again:
 	    if(!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
-				 buf, 1024, 1) == 0) return R_NilValue;
+				 (unsigned char *)buf, 1024, 1) == 0)
+		    return R_NilValue;
 		bufp = buf;
 	    }
 	    while ((c = *bufp++)) {
@@ -2488,7 +2490,8 @@ SEXP R_ParseBuffer(IoBuffer *buffer, int n, int *status, SEXP prompt)
 	for (;;) {
 	    if (!*bufp) {
 		if(R_ReadConsole(Prompt(prompt, prompt_type),
-				 buf, 1024, 1) == 0) return R_NilValue;
+				 (unsigned char *)buf, 1024, 1) == 0)
+		   return R_NilValue;
 		bufp = buf;
 	    }
 	    while ((c = *bufp++)) {
@@ -2933,7 +2936,7 @@ static int SymbolValue(int c)
     if ((kw = KeywordLookup(yytext))) {
 	if ( kw == FUNCTION ) {
 	    if ( FunctionLevel++ == 0 && GenerateCode) {
-		strcpy(FunctionSource, "function");
+		strcpy((char *)FunctionSource, "function");
 		SourcePtr = FunctionSource + 8;
 	    }
 	    FunctionStart[FunctionLevel] = SourcePtr - 8;

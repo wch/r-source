@@ -121,7 +121,7 @@ char *R_PromptString(int browselevel, int type)
 static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 {
     int c, status, browsevalue;
-    char *bufp, buf[1024];
+    unsigned char *bufp, buf[1024];
 
     R_IoBufferWriteReset(&R_ConsoleIob);
     prompt_type = 1;
@@ -217,7 +217,7 @@ static void R_ReplConsole(SEXP rho, int savestack, int browselevel)
 }
 
 
-static char DLLbuf[1024], *DLLbufp;
+static unsigned char DLLbuf[1024], *DLLbufp;
 
 void R_ReplDLLinit()
 {

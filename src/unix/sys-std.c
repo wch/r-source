@@ -316,11 +316,11 @@ static void readline_handler(unsigned char *line)
     if (line[0]) {
 #ifdef HAVE_READLINE_HISTORY_H
 	if (strlen((char *)line) && readline_addtohistory)
-	    add_history(line);
+	    add_history((char *)line);
 #endif
 	l = (((readline_len-2) > strlen((char *)line))?
 	     strlen((char *)line): (readline_len-2));
-	strncpy(readline_buf, line, l);
+	strncpy(readline_buf, (char *)line, l);
 	readline_buf[l] = '\n';
 	readline_buf[l+1] = '\0';
     }

@@ -737,10 +737,12 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 
 	    if (vectorFonts) {
 		/* 1, 1 => sans serif, basic font */
-		labelDistance = GVStrWidth(buffer, typeface, fontindex,
-					   INCHES, dd);
-		labelHeight = GVStrHeight(buffer, typeface, fontindex,
-					  INCHES, dd);
+		labelDistance = 
+		    GVStrWidth((unsigned char *)buffer, typeface, fontindex,
+			       INCHES, dd);
+		labelHeight = 
+		    GVStrHeight((unsigned char *)buffer, typeface, fontindex,
+				INCHES, dd);
 	    }
 	    else {
 		labelDistance = GStrWidth(buffer, INCHES, dd);
