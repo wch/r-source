@@ -49,7 +49,7 @@ extern int R_EvalCount;
 SEXP eval(SEXP e, SEXP rho)
 {
     SEXP op, tmp, val;
- 
+
     /* The use of depthsave below is necessary because of the possibility */
     /* of non-local returns from evaluation.  Without this an "expression */
     /* too complex error" is quite likely. */
@@ -399,7 +399,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PrintValue(body);
 	    do_browser(call,op,args,rho);
 	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue, 
+	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue,
 		     R_NilValue, R_NilValue);
 	if ((tmp = sigsetjmp(cntxt.cjmpbuf, 1))) {
 	    if (tmp == CTXT_BREAK) break;	/* break */
@@ -519,7 +519,7 @@ SEXP do_repeat(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    PrintValue(CAR(args));
 	    do_browser(call, op, args, rho);
 	}
-	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue, 
+	begincontext(&cntxt, CTXT_LOOP, R_NilValue, R_NilValue,
 		     R_NilValue, R_NilValue);
 	if ((cond = sigsetjmp(cntxt.cjmpbuf, 1))) {
 	    if (cond == CTXT_BREAK) break;	/*break */
@@ -944,14 +944,6 @@ void CheckFormals(SEXP ls)
 }
 
 
-/* Error recovery for incorrect argument count error. */
-
-void WrongArgCount(char *s)
-{
-    error("incorrect number of arguments to \"%s\"\n", s);
-}
-
-
 
 /* Evaluate the first argument in the environment specified by */
 /* the second argument. */
@@ -1165,7 +1157,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	set = 0;
 	if (isString(t)) {
 	    for (j = 0 ; j < length(t) ; j++) {
-		if (!strcmp(CHAR(STRING(t)[j]), 
+		if (!strcmp(CHAR(STRING(t)[j]),
 			    CHAR(STRING(class)[whichclass]))) {
 		    STRING(m)[i] = mkChar(buf);
 		    set = 1;

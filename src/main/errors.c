@@ -176,6 +176,13 @@ SEXP do_warning(SEXP call, SEXP op, SEXP args, SEXP rho)
     return CAR(args);
 }
 
+/* Error recovery for incorrect argument count error. */
+void WrongArgCount(char *s)
+{
+    error("incorrect number of arguments to \"%s\"\n", s);
+}
+
+
 void  UNIMPLEMENTED(char *s)
 {
     error("Unimplemented feature in %s\n", s);
