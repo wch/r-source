@@ -795,7 +795,7 @@ sub rdoc2nroff { # (filename); 0 for STDOUT
     print nroffout ".SH\n";
     print nroffout $blocks{"title"}, "\n";
     nroff_print_block("description", "Description");
-    nroff_print_codeblock("usage", "");
+    nroff_print_codeblock("usage", "Usage");
     nroff_print_argblock("arguments", "Arguments");
     nroff_print_block("format", "Format");
     nroff_print_block("details", "Details");
