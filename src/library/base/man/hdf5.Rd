@@ -2,7 +2,7 @@
 \title{Interface to the HDF5 Library}
 \usage{
 hdf5save(file, \dots)
-hdf5load(file load=TRUE)
+hdf5load(file, load=TRUE)
 }
 \alias{hdf5save}
 \alias{hdf5load}
@@ -12,7 +12,7 @@ hdf5load(file load=TRUE)
   \item{load}{a logical value.  If \code{FALSE}, a character vector
     containing the names of the objects in the file is returned.
     If \code{TRUE} (the default), the objects are returned as the
-    components of a named list.
+    components of a named list.}
 }
 \description{
   \code{hdf5save} and \code{hd5fload} provide an experimental interface
@@ -30,10 +30,15 @@ hdf5load(file load=TRUE)
   This capability is only available on machines which have the HDF5
   library.
 }
-\author{
-Marcus G. Daniels (mgd@santafe.edu).
-}
+\author{Marcus G. Daniels \email{mgd@santafe.edu}.}
+\references{\url{http://hdf.ncsa.uiuc.edu}}
 \seealso{
   \code{\link{save}}, \code{\link{load}}.
+}
+\examples{
+\dontrun{
+hdf5save("examp.hdf", pi, letters, ls)
+str(hdf5load("examp.hdf"))
+}
 }
 \keyword{file}
