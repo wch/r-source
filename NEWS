@@ -38,6 +38,8 @@ BUG FIXES
 	In related changes, prototype() now works as documented, and is the
         recommended way to provide prototype objects.
 
+    o	Sorting an ordered factor would return an unordered one.
+    	This caused some trouble with panel.superpose (PR#974).
 
 
 		CHANGES IN R VERSION 1.7.0
