@@ -38,6 +38,10 @@ double pgeom(double x, double p, int lower_tail, int log_p)
     if (x < 0. || p == 0.) return R_DT_0;
     if (!R_FINITE(x)) return R_DT_1;
 
+    if(p == 1.) { /* we cannot assume IEEE */
+	x = lower_tail ? 1: 0;
+	return log_p ? log(x) : x;
+    }
     x = log1p(-p) * (x + 1);
     if (log_p)
 	return R_DT_Clog(x);
