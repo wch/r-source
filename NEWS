@@ -23,6 +23,8 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   There is a GUI (RAqua) for Mac OS X
+
     o   eval of a promise forces the promise and printing a promise forces
         the promise
 
@@ -294,6 +296,8 @@ NEW FEATURES
     o	.Random.seed is only looked for and stored in the user's
 	workspace.  Previously the first place a variable of that name
 	was found on the search path was used.
+
+    o   bquote does partial substitution like LISP backquote.
 
 
 DEPRECATED & DEFUNCT
