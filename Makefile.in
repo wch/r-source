@@ -98,16 +98,14 @@ uninstall:
 
 mostlyclean: clean
 clean:
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
+	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
+	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	  rm -f $(INSTFILES); \
 	fi
 distclean: clean
-	@for d in $(SUBDIRS); do \
-	  (cd $${d} && $(MAKE) $@); \
-	done
+	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
+	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
 	@rm -rf bin include library gnome
 	@rm -f Makeconf Makefile Makefile.bak Makefrag.* \
 	  config.cache config.log config.status libtool
