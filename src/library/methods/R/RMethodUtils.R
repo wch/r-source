@@ -637,17 +637,18 @@ findUnique <- function(what, message, where = topenv(parent.frame()))
     if(length(where) > 1) {
         if(missing(message)) {
             if(identical(doFind, findFunction))
-                message <- paste("function ", dQuote(what))
+                message <- paste("function ", sQuote(what))
             else
-                message <- dQuote(what)
+                message <- sQuote(what)
         }
         if(is.list(where))
             where <- unlist(where)
         if(is.numeric(where))
             where <- search()[where]
-        warning(message, " found on: ",
-                paste(where, collapse = ", "),
-                    "; using the first one.")
+        warning(message,
+                gettextf(" found on: %s; using the first one",
+                         paste(sQuote(where), collapse = ", ")),
+                domain = NA)
             where <- where[1]
     }
     where
