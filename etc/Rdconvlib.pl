@@ -1392,6 +1392,7 @@ sub txt_fill { # pre1, base, "text to be formatted"
     $text =~ s/\\%/%/go;
     my @paras = split /\n\n/, $text;
     $indent1 = $pre1; $indent2 = $indent;
+
     foreach $para (@paras) {
 	# strip leading white space
 	$para  =~ s/^\s+//;
@@ -1402,10 +1403,12 @@ sub txt_fill { # pre1, base, "text to be formatted"
 	    $indent1 = $indent;
 	    $indent2 = $indent1 . (" " x 3);
 	}
+
         # check for .in command
 	if ($para =~ s/^[\n]*\.in (.*)/\1/) {
 	    $INDENT = $INDENT + $para;
 	    $indent1 = $indent2 = $indent = " " x $INDENT;
+
         # check for a \deqn block
 	} elsif ($para0 =~ s/^\s*\.DS B\s*(.*)\.DE/\1/) {
 	    $para0 =~ s/\s*$//o;
@@ -1415,15 +1418,79 @@ sub txt_fill { # pre1, base, "text to be formatted"
 		my $shift = int((70 - length($para0))/2);
 		print txtout "\n", " " x $shift, $para0, "\n";
 	    }
+
 	# check for a \tabular block
 	} elsif ($para =~ s/^\.TS\n//) {
-	    my @blocks = split /\n/, $para;
-	    print txtout "\n";
-	    foreach $text (@blocks) {
-		print txtout $indent, $text, "\n";
+	    my $format = $para;
+	    $format =~ s/([rlc]*)\n.*/$1/o;
+	    # parse the format of the tabular environment
+	    my $ncols = length($format);
+	    my @colformat = ();
+	    for($k=0; $k<$ncols; $k++){
+		my $cf = substr($format, $k, 1);
+		
+		if($cf =~ /l/o){
+		    $colformat[$k] = "l";
+		}
+		elsif($cf =~ /r/o){
+		    $colformat[$k] = "r";
+		}
+		elsif($cf =~ /c/o){
+		    $colformat[$k] = "c";
+		}
 	    }
+	    my @colwidths, $colwidth, $left, $right;
+	    for($l = 0; $l < $#colformat; $l++){ $colwidths[$l] = 0; }
+
+	    # now do the real work: split into lines and columns
+	    # first scan them and get the field widths.
+	    $para =~ s/([^\n]*)\n//o;
+	    my @rows = split(/\\cr/, $para);
+	    my $tmp, $line = "";
+	    for($k = 0; $k <= $#rows; $k++){
+		my @cols = split(/\\tab/, $rows[$k]);
+		die("Error:\n  $rows[$k]\\cr\n" .
+		    "does not fit tabular format \{$format\}\n")
+		    if ($#cols != $#colformat);
+		for($l = 0; $l <= $#cols; $l++){
+		    $tmp = $cols[$l];
+		    $tmp =~ s/^\s*//;
+		    $tmp =~ s/\s*$//;
+		    $colwidth = length($tmp);
+		    if ($colwidth > $colwidths[$l]) { 
+			$colwidths[$l] = $colwidth;
+		    }
+		}
+	    }
+	    print txtout "\n";
+	    for($k = 0; $k <= $#rows; $k++){
+		$line = "  "; # indent by two
+		my @cols = split(/\\tab/, $rows[$k]);
+		for($l = 0; $l <= $#cols; $l++){
+		    $tmp = $cols[$l];
+		    $tmp =~ s/^\s*//;
+		    $tmp =~ s/\s*$//;
+		    $colwidth = length($tmp);
+		    if ($colformat[$l] eq "r") {
+			$left = $colwidths[$l] - $colwidth;
+		    } elsif ($colformat[$l] eq "c") {
+			$left = int (($colwidths[$l] - $colwidth)/2);
+		    } else {
+			$left = 0;
+		    }
+		    # 2 is the column gap
+		    $right = $colwidths[$l] - $colwidth + 2 - $left;
+		    if ($l == $#cols) {
+			$right = 0; # don't need to right-pad end.
+		    }
+		    $line .= " " x $left . $tmp . " " x $right;
+		}
+		print txtout $indent, "$line\n";
+	    }
+
+	# plain text    
 	} else {
-	    $para =~ s/\n/ /go;
+	    $para =~ s/\n\s*/ /go;
 	    print txtout "\n";
 	    # Now split by \cr blocks
 	    my @blocks = split /\\cr/, $para;
@@ -1588,86 +1655,7 @@ sub txt_tables {
 	    }
 	}
 
-	# need to map chars before width calculations. Not perfect,
-	# but otherwise need to postpone this.
-	$arg =~ s/\\dots/\\&.../go;
-	$arg =~ s/\\ldots/\\&.../go;
-	$arg =~ s/\\le/<=/go;
-	$arg =~ s/\\ge/>=/go;
-	$arg =~ s/\\%/%/sgo;
-	$arg =~ s/\\\$/\$/sgo;
-
-	$arg =~ s/\\Gamma/Gamma/go;
-	$arg =~ s/\\alpha/alpha/go;
-	$arg =~ s/\\Alpha/Alpha/go;
-	$arg =~ s/\\pi/pi/go;
-	$arg =~ s/\\mu/mu/go;
-	$arg =~ s/\\sigma/sigma/go;
-	$arg =~ s/\\Sigma/Sigma/go;
-	$arg =~ s/\\lambda/lambda/go;
-	$arg =~ s/\\beta/beta/go;
-	$arg =~ s/\\epsilon/epsilon/go;
-	$arg =~ s/\\left\(/\(/go;
-	$arg =~ s/\\right\)/\)/go;
-	$arg =~ s/\\R/R/go;
-	$arg =~ s/---/--/go;
-	$arg =~ s/--/-/go;
-	$arg =~ s/$EOB/\{/go;
-	$arg =~ s/$ECB/\}/go;
-	$arg =~ s/\\&//sgo;
-	my @colwidths, $colwidth, $left, $right;
-	my $table = "\n\n.TS\n";
-	for($l = 0; $l < $#colformat; $l++){
-	    $colwidths[$l] = 0;
-	}
-
-
-	# now do the real work: split into lines and columns
-	# first scan them and get the field widths.
-	my @rows = split(/\\cr/, $arg);
-	my $tmp;
-	for($k = 0; $k <= $#rows; $k++){
-	    my @cols = split(/\\tab/, $rows[$k]);
-	    die("Error:\n  $rows[$k]\\cr\n" .
-		"does not fit tabular format \{$format\}\n")
-		if ($#cols != $#colformat);
-	    for($l = 0; $l <= $#cols; $l++){
-		$tmp = $cols[$l];
-		$tmp =~ s/^\s*//;
-		$tmp =~ s/\s*$//;
-		$tmp = unmark_brackets($tmp);
-		$colwidth = length($tmp);
-		if ($colwidth > $colwidths[$l]) {
-		    $colwidths[$l] = $colwidth;
-		}
-	    }
-	}
-	for($k = 0; $k <= $#rows; $k++){
-	    $table .= "  "; # indent by two
-	    my @cols = split(/\\tab/, $rows[$k]);
-	    for($l = 0; $l <= $#cols; $l++){
-		$cols[$l] =~ s/^\s*//;
-		$cols[$l] =~ s/\s*$//;
-		$tmp = unmark_brackets($cols[$l]);
-		$colwidth = length($tmp);
-		if ($colformat[$l] eq "r") {
-		    $left = $colwidths[$l] - $colwidth
-		} elsif ($colformat[$l] eq "c") {
-		    $left = int (($colwidths[$l] - $colwidth)/2);
-		} else {
-		    $left = 0;
-		}
-		# 2 is the column gap
-		$right = $colwidths[$l] - $colwidth + 2 - $left;
-		if ($l == $#cols) {
-		    $right = 0; # don't need to right-pad end.
-		}
-		$table .= " " x $left . $cols[$l] . " " x $right;
-	    }
-	    $table .= "\n";
-	}
-	$table .= "\n";
-	$table =~ s/--/---/go; # will get undone again by text2txt
+	my $table = "\n\n.TS\n$format\n$arg\n\n";
 
 	$text =~ s/\\tabular.*$id/$table/s;
     }
