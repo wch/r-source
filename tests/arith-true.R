@@ -1,7 +1,7 @@
 ####=== Numerical / Arithmetic Tests
 ####--- ALL tests here should return  TRUE !
 ###
-### '##P': This lines give not 'T' but relevant ``Print output''
+### '##P': These lines don't give TRUE but relevant ``Print output''
 
 ### --> d-p-q-r-tests.R  for distribution things
 
@@ -40,14 +40,17 @@ is.nan(i1 / i1)
 1/0 == Inf & 0 ^ -1 == Inf
 1/Inf == 0 & Inf ^ -1 == 0
 
+iNA <- as.integer(NA)
 !is.na(Inf) & !is.nan(Inf) &   is.infinite(Inf) & !is.finite(Inf)
 !is.na(-Inf)& !is.nan(-Inf)&   is.infinite(-Inf)& !is.finite(-Inf)
  is.na(NA)  & !is.nan(NA)  &  !is.infinite(NA)  & !is.finite(NA)
  is.na(NaN) &  is.nan(NaN) &  !is.infinite(NaN) & !is.finite(NaN)
+ is.na(iNA) & !is.nan(iNA) &  !is.infinite(iNA) & !is.finite(iNA)
 
-all(!is.nan(c(1,NA)))
-all(c(F,T,F) == is.nan(c   (1,NaN,NA)))
-all(c(F,T,F) == is.nan(list(1,NaN,NA)))
+## These are "double"s:
+all(!is.nan(c(1.,NA)))
+all(c(FALSE,TRUE,FALSE) == is.nan(c   (1.,NaN,NA)))
+all(c(FALSE,TRUE,FALSE) == is.nan(list(1.,NaN,NA)))
 
 
 ##  log() and "pow()" -- POSIX is not specific enough..
@@ -179,7 +182,7 @@ for(i in 1:n) {
 ## PR#741:
 pi != (pi0 <- pi + 2*.Machine$double.eps)
 is.na(match(c(1,pi,pi0), pi)[3])
-    
+
 ## PR#749:
 all(is.na(c(NA && TRUE, TRUE  && NA, NA && NA,
             NA || FALSE,FALSE || NA, NA || NA)))
