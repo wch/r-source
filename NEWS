@@ -222,13 +222,22 @@ NEW FEATURES
 	- Utilities for testing and listing files, manipulating file
           paths, and delimited pattern matching are now exported.
 
+	- codoc() no longer ignores \usage for replacement functions or
+	  S3 replacement methods.
+
 	- checkDocArgs() now also determines 'over-documented' arguments
           which are given in the \arguments section but not in \usage.
 
+	- checkDocStyle() and checkMethods() now know about internal S3
+          generics and S3 group generics.
+
+	- S4 classes and methods are included in the QC tests.
+
     o	New logical markup commands in R documentation format for
 	emphasizing (\strong) and quoting (\sQuote and \dQuote) text,
-	and for indicating specific kinds of text (\acronym, \cite,
-	\command, \dfn, \env, \kbd, \option, \pkg, \samp, \var).
+	for indicating the usage of an S4 method (\S4method), and for
+	indicating specific kinds of text (\acronym, \cite, \command,
+	\dfn, \env, \kbd, \option, \pkg, \samp, \var).
 
     o	Rdconv now produces more informative output from the special
 	\method{GENERIC}{CLASS} markup for indicating the usage of S3
@@ -319,6 +328,10 @@ INSTALLATION CHANGES
 
 
 UTILITIES
+
+    o	R CMD INSTALL (Unix only) is now 'safe': if the attempt to
+	install a package fails, leftovers are removed.  If the package
+	was already installed, the old version is restored.
 
     o	R CMD build excludes possible (obsolete) data and vignette
         indices in DCF format (and hence also no longer rebuilds them).
