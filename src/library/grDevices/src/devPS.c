@@ -629,7 +629,12 @@ PostScriptStringWidth(unsigned char *p, FontMetricInfo *metrics, int face)
     if(utf8locale && !utf8strIsASCII((char *) p) && face != 5) {
 	wchar_t wc, wc2;
 	while (*p) {
-	    p += mbrtowc(&wc, (char *)p, MB_CUR_MAX, NULL);
+	    int res = mbrtowc(&wc, (char *)p, MB_CUR_MAX, NULL);
+	    if(res > 0) p += res;
+	    else {
+		warning("invalid character in PostScriptStringWidth");
+		return 0.001 * sum;
+	    }
 	    if(*p) mbrtowc(&wc2, (char *)p, MB_CUR_MAX, NULL); else wc2 = 0;
 #ifdef USE_HYPHEN
 	    if (wc == L'-' && !iswdigit(wc2))
