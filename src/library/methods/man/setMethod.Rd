@@ -5,7 +5,7 @@
   Create and save a formal method for a given function and list of classes.
 }
 \usage{
-setMethod(f, signature=character(), def, where=1, valueClass)
+setMethod(f, signature=character(), definition, where=1, valueClass)
 }
 \arguments{
   \item{f}{ The character-string name of the generic function. }
@@ -14,7 +14,7 @@ setMethod(f, signature=character(), def, where=1, valueClass)
       argument can also just be the vector of class names, in which case
       the first name corresponds to the first formal argument, the
       next to the second formal argument, etc.}
-  \item{def}{ A function definition, which will become the method
+  \item{definition}{ A function definition, which will become the method
       called when the arguments in a call to \code{f} match the
       classes in \code{signature}, directly or through inheritance. }
   \item{where}{ The database in which to store the definition of the
@@ -27,7 +27,7 @@ setMethod(f, signature=character(), def, where=1, valueClass)
   R methods for a particular generic function are stored in an object
   of class \code{\link{MethodsList}}, which in turn is stored with the
   definition of the generic function.  The effect of calling
-  \code{setMethod} is to store \code{def}  in a \code{MethodsList}
+  \code{setMethod} is to store \code{definition}  in a \code{MethodsList}
   object in a definition of the generic function on database
   \code{where}.   If no such function exists (on that database) one
   will be created, by copying the generic function from where it is
@@ -60,7 +60,7 @@ setMethod(f, signature=character(), def, where=1, valueClass)
   S-Plus, the current implementation enforces this partly with a
   warning and a reconstruction of a method that fails to match, but
   don't count on this for the future:  Make the formal arguments of
-  \code{def} match those of the generic..
+  \code{definition} match those of the generic..
 }
 \references{
 The web page \url{http://www.omegahat.org/RSMethods/index.html} is the primary documentation.

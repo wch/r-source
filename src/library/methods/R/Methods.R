@@ -194,14 +194,14 @@ setMethod <-
   ##
   ## Note that assigning methods anywhere but the global environment (`where==1') will
   ## not have a permanent effect beyond the current R session.
-  function(f, signature = character(), def, where = 1, valueClass)
+  function(f, signature = character(), definition, where = 1, valueClass)
 {
     whereString <- if(is.environment(where)) deparse(where) else where
     doAssign <- !isGeneric(f, where = where)
     ## automatic creation of a new generic is allowed in two cases:  there is a
     ## generic (somewhere else) or there is a non-generic (to be made into the
     ## default method).  In either case, arguments
-    ## must match def.
+    ## must match definition.
     if(doAssign) {
         fdef <- getGeneric(f, mustFind=FALSE)
         if(is.null(fdef)) {
@@ -225,14 +225,14 @@ setMethod <-
     names <- formalArgs(fdef)
     snames <- names(signature)
     if(length(snames)>0)
-        signature <- matchSignature(names, signature, def)
+        signature <- matchSignature(names, signature, definition)
     ## check the formal arguments
-    if(identical(typeof(def), "closure") && !identical(names, formalArgs(def))) {
+    if(identical(typeof(definition), "closure") && !identical(names, formalArgs(definition))) {
         warning("Method and generic have different arguments: a revised version of the method will be generated")
-        def <- conformMethodArgs(def, fdef, ev)
+        definition <- conformMethodArgs(definition, fdef, ev)
     }
     allMethods <- get(".Methods",  ev )
-    allMethods <- insertMethod(allMethods, signature, names, def)
+    allMethods <- insertMethod(allMethods, signature, names, definition)
     assign(".Methods", allMethods, ev)
     ## cancel the session copy of the generic if there is one.
     if(!is.null(getFromMethodMetaData(f)))
