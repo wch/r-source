@@ -1,31 +1,34 @@
 \name{RClassUtils}
+%% FIXME the following are undocumented utilities (Sep 23/02)
+\alias{completeSubclasses}
+\alias{getClassPackage}
+\alias{newClassRepresentation}
+\alias{print.classRepresentation}
+\alias{setExtendsMetaData}
+\alias{setSubclassMetaData}
+\alias{subclassesMetaName}
+\alias{extendsMetaName}
+\alias{completeSubclasses}
+\alias{classPrototypeDef-class}
+\alias{trySilent}
+%%
 \alias{testVirtual}
 \alias{SessionClassMetaData}
 \alias{makePrototypeFromClassDef}
 \alias{newEmptyObject}
 \alias{completeClassDefinition}
-\alias{getFromClassDef}
-\alias{setInClassDef}
-\alias{synchronizeClassDef}
 \alias{getProperties}
-\alias{setProperties}
 \alias{getSlots}
 \alias{getExtends}
 \alias{getAccess}
 \alias{getAllSuperClasses}
 \alias{superClassDepth}
-\alias{setExtends}
 \alias{getPrototype}
-\alias{setPrototype}
 \alias{getVirtual}
 \alias{isVirtualClass}
-\alias{setVirtual}
 \alias{getSubclasses}
-\alias{setSubclasses}
 \alias{getClassName}
-\alias{setClassName}
 \alias{assignClassDef}
-\alias{newClassEnvironment}
 \alias{newBasic}
 \alias{makeExtends}
 \alias{reconcilePropertiesAndPrototype}
@@ -33,7 +36,6 @@
 \alias{empty.dump}
 \alias{showClass}
 \alias{showExtends}
-\alias{print.classRepEnvironment}
 \alias{getFromClassMetaData}
 \alias{assignToClassMetaData}
 \alias{removeFromClassMetaData}
@@ -42,7 +44,6 @@
 \alias{classMetaName}
 \alias{methodsPackageMetaName}
 \alias{metaNameUndo}
-\alias{as.data.frame}
 \alias{requireMethods}
 \alias{checkSlotAssignment}
 \alias{defaultPrototype}
@@ -73,15 +74,7 @@ newEmptyObject()
 
 completeClassDefinition(Class, ClassDef)
 
-getFromClassDef(ClassDef, what)
-
-setInClassDef(ClassDef, what, value, synchronize=TRUE)
-
-synchronizeClassDef(ClassDef)
-
 getProperties(ClassDef)
-
-setProperties(ClassDef, value)
 
 getSlots(x, complete = TRUE)
 
@@ -93,46 +86,34 @@ getAllSuperClasses(ClassDef)
 
 superClassDepth(ClassDef, soFar)
 
-setExtends(ClassDef, value)
-
 getPrototype(ClassDef)
-
-setPrototype(ClassDef, value)
 
 getVirtual(ClassDef)
 
 isVirtualClass(Class)
 
-setVirtual(ClassDef, value)
-
 getSubclasses(ClassDef)
-
-setSubclasses(ClassDef, value)
 
 getClassName(ClassDef)
 
-setClassName(ClassDef, value)
-
 assignClassDef(Class, def, where=.GlobalEnv)
-
-newClassEnvironment(name, properties, extends, prototype, subclasses,
-                 virtual, validity, access)
 
 newBasic(Class, ...)
 
-makeExtends(extends)
+makeExtends(Class, to, coerce, test, replace, by, package, slots,
+                 classDef1, classDef2)
 
 reconcilePropertiesAndPrototype(name, properties, prototype, superClasses)
 
 tryNew(Class)
+
+trySilent(expr)
 
 empty.dump()
 
 showClass(Class, complete=TRUE, propertiesAreCalled="Properties")
 
 showExtends(ext, printTo = stdout())
-
-print.classRepEnvironment(x, ...)
 
 getFromClassMetaData(name)
 
@@ -142,15 +123,13 @@ removeFromClassMetaData(name)
 
 possibleExtends(class1, class2)
 
-completeExtends(ClassDef, breadthFirst = TRUE)
+completeExtends(ClassDef)
 
 classMetaName(name)
 
 methodsPackageMetaName(prefix, name)
 
 metaNameUndo(strings, prefix = "M", searchForm = FALSE)
-
-as.data.frame(x, row.names=NULL, optional=FALSE)
 
 requireMethods(functions, signature, message)
 
@@ -225,32 +204,13 @@ setDataPart(object, value)
       properties (".Properties", etc.)  Strictly a utility function.
     }
 
-    \item{\code{setInClassDef}:}{ 
-      Set Property in Class Definition.
-      Set one of the intrinsically defined class definition properties
-      (".Properties", etc.)  Strictly a utility function.
-    }
 
-    \item{\code{synchronizeClassDef}:}{ 
-      Does whatever is needed to synchronize information in the class
-      definition.
-
-      Basically computes derived information used to make object
-      manipulations more efficient but that need to be revised if
-      information changes.
-
-      (Nothing at the moment)
-    }
 
     \item{\code{getProperties}:}{ 
       Extracts the class's Properties information from the class
       representation (only, not from the name of the class).
     }
     
-    \item{\code{setProperties}:}{ 
-      Sets the class's Properties information given the class
-      representation (only, not from the name of the class)
-    }
 
     \item{\code{getSlots}:}{
       Returns a named character vector.  The names are the names of the
@@ -288,11 +248,6 @@ setDataPart(object, value)
       network of class relationships.
     }
 
-    \item{\code{setExtends}:}{ 
-      set the class's Extends information given the class representation
-      (only, not from the name of the class)
-    }
-
     \item{\code{getPrototype}:}{ 
       extract the class's Prototype information from the class
       representation (only, not from the name of the class)
@@ -303,11 +258,6 @@ setDataPart(object, value)
       representation (only, not from the name of the class)
     }
 
-    \item{\code{setPrototype}:}{ 
-      set the class's Prototype information given the class
-      representation (only, not from the name of the class)
-    }
-    
     \item{\code{getVirtual}:}{ 
       extract the class's Virtual information from the class
       representation (only, not from the name of the class)
@@ -320,27 +270,15 @@ setDataPart(object, value)
       class is not formally defined.
     }
 
-    \item{\code{setVirtual}:}{
-      set the class's Virtual information given the class representation
-      (only, not from the name of the class)
-    }
     
     \item{\code{getSubclasses}:}{ 
       extract the class's Subclasses information from the class
       representation (only, not from the name of the class)
     }
     
-    \item{\code{setSubclasses}:}{ 
-      set the class's Subclasses information given the class
-      representation (only, not from the name of the class)
-    }
 
     \item{\code{getClassName}:}{ 
       The internal property in the class definition for the class name.
-    }
-    
-    \item{\code{setClassName}:}{ 
-      set the name of the class inside the class definition
     }
     
     \item{\code{assignClassDef}:}{ 

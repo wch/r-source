@@ -72,10 +72,10 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
     \code{MethodsListSelect}.  Currently must be supplied, but should
     usually be \code{sys.frame(sys.parent())} when calling the function
     explicitly for debugging purposes.}
-  \item{fEnv, finalDefault, evalArgs, useInherited, fdef}{ Internal-use
+  \item{fEnv, finalDefault, evalArgs, useInherited}{ Internal-use
     arguments for the function's environment, the method to use as
-    the overall default, whether to evaluate arguments, which
-    arguments should use inheritance, and the generic function definition.}
+    the overall default, whether to evaluate arguments, and which
+    arguments should use inheritance.}
 }
 \details{
   A call to \code{getMethod} returns the method for a particular
@@ -144,16 +144,20 @@ MethodsListSelect(f, env, mlist, fEnv, finalDefault, evalArgs,
   error in this case.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package implement a facility for classes and
-  methods as described in \emph{Programming with Data} (John
-  M. Chambers, Springer, 1998).  See this book for further details and
-  examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \keyword{programming}
 \keyword{classes}

@@ -14,8 +14,8 @@
   of a class.
 }
 \usage{
-setClass(Class, representation, prototype,
-         contains=character(), validity, access, where=1, version=FALSE)
+setClass(Class, representation, prototype, contains=character(), validity, 
+         access, where=1, version=FALSE, sealed, package)
 
 removeClass(Class, where=-1, removeSubclassLinks = TRUE)
 
@@ -26,7 +26,7 @@ getClasses(where)
 
 findClass(Class)
 
-resetClass(Class)
+resetClass(Class, resetSubclasses = TRUE)
 
 }
 \arguments{
@@ -46,6 +46,13 @@ resetClass(Class)
     searches for a definition to remove, for \code{removeClass}. }
   \item{validity, access, version}{ Control arguments included for
     compatibility with the S-Plus API, but not currently used.  }
+  \item{sealed}{ If \code{TRUE}, the class definition will be sealed,
+    so that another call to \code{setClass} will fail on this class name.
+    }
+  \item{package}{ An optional package name for the class.  By default
+  (and usually) the package where the class definition is assigned
+  will be used.
+    }
   \item{x}{an arbitrary object.}
   \item{formal}{ Should a formal definition be required? }
   \item{object}{ any R object. }
@@ -57,6 +64,12 @@ resetClass(Class)
       them. You can omit the  argument, or supply it as the
       positions in the search list to look for these links (by default
       all attached object tables will be searched).}
+  \item{resetSubclasses}{
+      Should \code{resetClass} also reset all known
+    subclasses.  Usually \code{TRUE}, unless you know from the context
+    these will be reset elsewhere.
+
+    }
 }
 \details{
 
@@ -127,6 +140,7 @@ resetClass(Class)
       definition of a class that this class extends (but doing that in
       the  middle of a session is living dangerously, since it may
       invalidate existing objects).
+
     }
   }
 }

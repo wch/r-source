@@ -27,7 +27,7 @@ makeMethodsList(object, level=1)
 
 SignatureMethod(names, signature, definition)
 
-insertMethod(mlist, signature, args, def, whichMethods)
+insertMethod(mlist, signature, args, def, cacheOnly)
 
 inheritedSubMethodLists(object, thisClass, mlist, ev)
 
@@ -86,9 +86,9 @@ loadMethod(method, fname, envir)
     \item{\code{insertMethod}:}{ 
       insert the definition \code{def} into the MethodsList object,
       \code{mlist}, corresponding to the signature.  By default, insert
-      it in the slot \code{which="methods"}, but
-      \code{\link{cacheMethod}} inserts it into the
-      \code{which="allMethods"} slot (used for dispatch but not
+      it in the slot \code{"methods"}, but
+      \code{\link{cacheOnly=TRUE}} inserts it into the
+      \code{"allMethods"} slot (used for dispatch but not
       saved).
     }
 
@@ -153,15 +153,20 @@ loadMethod(method, fname, envir)
   methods, but avoid doing so if you want your code to port to S-Plus.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \keyword{internal}
 

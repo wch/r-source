@@ -1,4 +1,13 @@
 \name{RMethodUtils}
+%% FIXME:  undocumented utilities (Sep. 23/02)
+\alias{asMethodDefinition}
+\alias{nonstandardGeneric-class}
+\alias{nonstandardGenericFunction-class}
+\alias{nonstandardGroupGenericFunction-class}
+\alias{OptionalFunction-class}
+\alias{PossibleMethod-class}
+%%
+\alias{substituteFunctionArgs}
 \alias{makeGeneric}
 \alias{makeStandardGeneric}
 \alias{getAllMethods}
@@ -47,7 +56,7 @@
 }
 \usage{
 makeGeneric(f, fdef, fdefault, group=character(),
-            valueClass=character(), package, signature)
+            valueClass=character(), package, signature, genericFunction)
 
 makeStandardGeneric(f, fdef)
 
@@ -105,7 +114,7 @@ unRematchDefinition(definition)
 
 asMethodDefinition(def, signature)
 
-findNextMethod(method, f, mlist, optional = FALSE)
+findNextMethod(method, f, mlist, optional = FALSE, envir)
 
 }
 \section{Summary of Functions}{

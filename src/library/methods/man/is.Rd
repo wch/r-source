@@ -23,7 +23,7 @@ is(object, class2)
 extends(class1, class2, maybe=TRUE)
 
 setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
-      by = NULL, dataPart, where = 1)
+      by = NULL, where = 1)
 
 }
 \arguments{
@@ -41,9 +41,6 @@ setIs(class1, class2, test=NULL, coerce=NULL, replace=NULL,
     The name of an intermediary class.  Coercion will proceed by first
     coercing to this class and from there to the target class.  (The
     intermediate coercions have to be valid.)}
-  \item{dataPart}{ Supplied as \code{TRUE} if the relation defines the
-      \code{.Data} slot (don't use this argument directly).
-      }
   \item{where}{
     Where to store the metadata defining the relationship. Default is
     the global environment.}
@@ -90,15 +87,20 @@ quite sure you know what you're doing.
 
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package emulate the facility for classes and
-  methods described in \emph{Programming with Data} (John M. Chambers,
-  Springer, 1998).  See this book for further details and examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \examples{
 \testonly{

@@ -10,7 +10,7 @@
 }
 \usage{
 setGeneric(name, def, group=NULL, valueClass=NULL, where=1, package, 
-           signature, useAsDefault)
+           signature, useAsDefault, genericFunction)
 
 setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers, 
                 package, where=1)
@@ -54,8 +54,16 @@ setGroupGeneric(name, def, group=NULL, valueClass=NULL, knownMembers,
     and possibly the generic function; by
     default, stored into the top-level environment.
   }
-  \item{package}{ The name of the package to which this generic
-      function belongs.  
+  \item{signature}{
+      Optionally, the signature of arguments in the function that can
+      be used in methods for this generic.  By default, all arguments
+      other than \code{...} can be used.  The signature argument can
+      prohibit methods from using some arguments.  The argument, if
+      provided, is a vector of formal argument names.
+  }
+  \item{genericFunction}{ The object to be used as a (nonstandard)
+  generic function definition. Supply this explicitly \emph{only} if
+  you know what you are doing!
   }
   \item{useAsDefault}{
     Override the usual choice of default argument (an existing

@@ -9,7 +9,15 @@
   value of \code{callNextMethod}.
 }
 \usage{
-callNextMethod()
+callNextMethod(...)
+}
+\arguments{
+  \item{\dots}{
+If included, the call to the next methods uses these as its arguments
+(but note that the dispatch is as described below.)  The
+recommendation for most applications is to use \code{callNextMethod}
+with no explicit arguments.
+    }
 }
 \details{
   The definition of the first inherited method is that is the method
@@ -40,16 +48,20 @@ callNextMethod()
   The value returned by the selected method.
 }
 \references{
-  The web page \url{http://www.omegahat.org/RSMethods/index.html} is the
-  primary documentation.
+  The R package \code{methods} implements, with a few exceptions, the
+  programming interface for classes
+  and methods in the book \emph{Programming with Data} (John
+  M. Chambers, Springer, 1998), in particular sections 1.6, 2.7, 2.8,
+  and chapters 7 and 8.
 
-  The functions in this package implement a facility for classes and
-  methods as described in \emph{Programming with Data} (John
-  M. Chambers, Springer, 1998).  See this book for further details and
-  examples.
-}
-\author{
-  John Chambers
+  While the programming interface for the methods package follows the reference,
+  the R software is an original implementation, so details in
+  the reference that reflect the S4 implementation may appear
+  differently in R.  Also, there are extensions to the programming
+  interface developed more recently than the reference.  For a
+  discussion of details and ongoing development, see the web page 
+  \url{http://developer.r-project.org/methodsPackage.html} and the
+  pointers from that page.
 }
 \seealso{\link{Methods} for the general behavior of method dispatch}
 

@@ -9,7 +9,7 @@ call it to create a class definition without assigning it, as
 }
 \usage{
 makeClassRepresentation(name, slots=list(), superClasses=character(),
-          prototype=NULL, package, validity, access, virtual=NA)
+          prototype=NULL, package, validity, access, version, sealed, virtual=NA)
 }
 \arguments{
   \item{name}{ character string name for the class }
@@ -25,6 +25,9 @@ makeClassRepresentation(name, slots=list(), superClasses=character(),
       methods in the reference.}
    \item{access}{Access information.  Not currently used.
        }
+     \item{version} { Optional version key for version control.
+     Currently generated, but not used.}
+   \item{sealed} { Is the class sealed? See \code{\link{setClass}}. }
   \item{virtual}{ Is this known to be a virtual class? }
 }
 \references{
