@@ -55,6 +55,18 @@
 /* Define if you have the bzip2 headers and libraries. */
 #undef HAVE_BZLIB
 
+/* Define to 1 if you have the declaration of `acosh', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ACOSH
+
+/* Define to 1 if you have the declaration of `asinh', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ASINH
+
+/* Define to 1 if you have the declaration of `atanh', and to 0 if you don't.
+   */
+#undef HAVE_DECL_ATANH
+
 /* Define to 1 if you have the declaration of `isfinite', and to 0 if you
    don't. */
 #undef HAVE_DECL_ISFINITE
@@ -62,6 +74,22 @@
 /* Define to 1 if you have the declaration of `isnan', and to 0 if you don't.
    */
 #undef HAVE_DECL_ISNAN
+
+/* Define to 1 if you have the declaration of `snprintf', and to 0 if you
+   don't. */
+#undef HAVE_DECL_SNPRINTF
+
+/* Define to 1 if you have the declaration of `strdup', and to 0 if you don't.
+   */
+#undef HAVE_DECL_STRDUP
+
+/* Define to 1 if you have the declaration of `strncasecmp', and to 0 if you
+   don't. */
+#undef HAVE_DECL_STRNCASECMP
+
+/* Define to 1 if you have the declaration of `vsnprintf', and to 0 if you
+   don't. */
+#undef HAVE_DECL_VSNPRINTF
 
 /* Define if you have the <dirent.h> header file, and it defines `DIR'. */
 #undef HAVE_DIRENT_H

@@ -982,7 +982,7 @@ AC_FUNC_FORK
 AC_CHECK_FUNCS(access bcopy bzero expm1 fcntl finite ftruncate getcwd \
   getgrgid getpwuid getuid hypot isascii isnan log1p matherr memcpy \
   memmove mempcpy mkfifo popen putenv rint setenv strcoll stat \
-  strncasecmp strptime system times unsetenv)
+  strptime system times unsetenv)
 
 ## Used to build src/include/Rmath.h.
 if test "${ac_cv_func_expm1}" = yes; then
@@ -998,7 +998,12 @@ else
 fi
 AC_SUBST(RMATH_HAVE_LOG1P)
 
-AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup vsnprintf)
+## do we need substitutes?
+AC_REPLACE_FUNCS(acosh asinh atanh snprintf strdup strncasecmp vsnprintf)
+## enable declarations in Defn.h?
+AC_CHECK_DECLS([acosh, asinh, atanh], , , [#include <math.h>])
+AC_CHECK_DECLS([snprintf, strdup, strncasecmp, vsnprintf])
+
 AC_SEARCH_LIBS(connect, [socket])
 AC_SEARCH_LIBS(gethostbyname, [nsl socket])
 AC_SEARCH_LIBS(xdr_string, [nsl])

@@ -990,18 +990,6 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 
 /* Mathematical Functions of One Argument */
 
-/* These are substituted if necessary */
-#ifndef HAVE_ASINH
-extern double asinh(double x);
-#endif
-#ifndef HAVE_ACOSH
-extern double acosh(double x);
-#endif
-#ifndef HAVE_ATANH
-extern double atanh(double x);
-#endif
-
-
 static SEXP math1(SEXP sa, double(*f)(), SEXP lcall)
 {
     SEXP sy;
