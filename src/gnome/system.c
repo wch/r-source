@@ -204,24 +204,24 @@ void R_ShowMessage(char *s)
     gchar *s_copy;
 
     if(R_gnome_initialised) {
-	dialog = gnome_message_box_new(s,
-				       GNOME_MESSAGE_BOX_INFO,
-				       GNOME_STOCK_BUTTON_OK,
-				       NULL);
-	
-	if(R_gtk_main_window != NULL)
-	    gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
-	gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
-	gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
-	
-	gnome_dialog_run_and_close(GNOME_DIALOG(dialog));    
+        dialog = gnome_message_box_new(s,
+                                       GNOME_MESSAGE_BOX_WARNING,
+                                       GNOME_STOCK_BUTTON_OK,
+                                       NULL);
+                           
+        if(R_gtk_main_window != NULL)
+            gnome_dialog_set_parent(GNOME_DIALOG(dialog), GTK_WINDOW(R_gtk_main_window));
+        gtk_window_set_modal(GTK_WINDOW(dialog), TRUE);
+        gnome_dialog_set_default(GNOME_DIALOG(dialog), 0);
+
+        gnome_dialog_run_and_close(GNOME_DIALOG(dialog));    
     }
     else {
-	/* queue the message */
-	s_copy = g_strdup(s);
+        /* queue the message */
+        s_copy = g_strdup(s);
 
-	messages_list = g_list_append(messages_list,
-				      (gpointer) s_copy);
+        messages_list = g_list_append(messages_list,
+                                      (gpointer) s_copy);
     }
 }
 
@@ -230,8 +230,8 @@ void R_ShowQueuedMessages()
     GList *l;
 
     for(l = messages_list; l != NULL; l = l->next) {
-	R_ShowMessage((char *) l->data);
-	g_free(l->data);
+        R_ShowMessage((char *) l->data);
+        g_free(l->data);
     }
 
     g_list_free(messages_list);
