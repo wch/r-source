@@ -6,13 +6,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
-"Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-03-15 21:18+0000\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-03-11 08:53\n"
 "PO-Revision-Date: 2005-03-15 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=GB2312\n"
+"Content-Type: text/plain; charset=CP936\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
@@ -22,11 +22,11 @@ msgstr "内存不够"
 
 #: console.c:939 console.c:943
 msgid "Insufficient memory: text not copied to the clipboard"
-msgstr ""
+msgstr "内存不够:  原文没有拷贝到剪輯板"
 
 #: console.c:985 graphapp/clipboard.c:54 graphapp/clipboard.c:80
 msgid "Unable to open the clipboard"
-msgstr ""
+msgstr "无法打开剪輯板"
 
 #: console.c:1539
 msgid "Insufficient memory. Please close the console"
@@ -55,7 +55,7 @@ msgstr "保存控制台内容到"
 
 #: console.c:1845
 msgid "Scrolling.\n"
-msgstr ""
+msgstr "滾動。\n"
 
 #: console.c:1846
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
@@ -66,16 +66,16 @@ msgid ""
 "  Mouse: use the scrollbar(s).\n"
 "\n"
 msgstr ""
-"  Mouse: use the scrollbar(s).\n"
+"  鼠标: 用滾動條。\n"
 "\n"
 
 #: console.c:1848
 msgid "Editing.\n"
-msgstr ""
+msgstr "修訂。\n"
 
 #: console.c:1849
 msgid "  Moving the cursor: \n"
-msgstr ""
+msgstr "  移动游標: \n"
 
 #: console.c:1850
 msgid "     Left arrow or Ctrl+B: move backward one character;\n"
@@ -112,7 +112,8 @@ msgstr "     Backspace: 删除目前位置之前的字符;\n"
 #: console.c:1858
 msgid ""
 "     Ctrl+Del or Ctrl+K: delete text from current character to end of line.\n"
-msgstr "     Ctrl+Del或Ctrl+K: 删除目前位置到行尾的所有文字。\n"
+msgstr ""
+"     Ctrl+Del或Ctrl+K: 删除目前位置到行尾的所有文字。\n"
 
 #: console.c:1859
 msgid "     Ctrl+U: delete all text from current line.\n"
@@ -120,27 +121,31 @@ msgstr "     Ctrl+U: 从目前所在的行开始删除所有的文字。\n"
 
 #: console.c:1860
 msgid "  Copy and paste.\n"
-msgstr ""
+msgstr "  拷贝和貼補.\n"
 
 #: console.c:1861
 msgid ""
 "     Use the mouse (with the left button held down) to mark (select) text.\n"
-msgstr "     用鼠标(持续按下左键) 来选择文字。\n"
+msgstr ""
+"     用鼠标(持续按下左键) 来选择文字。\n"
 
 #: console.c:1862
 msgid ""
 "     Use Shift+Del (or Ctrl+C) to copy the marked text to the clipboard and\n"
 msgstr ""
+"     用Shift+Del(或Ctrl+C) 来拷贝选择好了的文字到剪輯板\n"
 
 #: console.c:1863
 msgid ""
 "     Shift+Ins (or Ctrl+V or Ctrl+Y) to paste the content of the clipboard "
 "(if any)  \n"
 msgstr ""
+"     Shift+Ins(或Ctrl+V或Ctrl+Y)来补贴剪輯板的内容"
+"(如果有的话)  \n"
 
 #: console.c:1864
 msgid "     to the console, Ctrl+X first copy then paste\n"
-msgstr ""
+msgstr "     到控制台, Ctrl+X先拷贝再貼補\n"
 
 #: console.c:1865
 msgid "  Misc:\n"
@@ -268,7 +273,7 @@ msgid ""
 "  Right-click menu for copy, paste, autosize currently selected column\n"
 "\n"
 msgstr ""
-"Navigation.\n"
+"導航。\n"
 "  键盘: 游标键用来移到选择的内容\n"
 "\tTab右移, Shift+Tab左移\n"
 "\tPgDn或Ctrl+F: 整屏下移\n"
@@ -298,7 +303,7 @@ msgstr "拷贝选择了的字元格"
 
 #: dataentry.c:1558
 msgid "Paste to selected cell"
-msgstr ""
+msgstr "貼補妻选择了的字元格"
 
 #: dataentry.c:1559
 msgid "Autosize column"
@@ -332,7 +337,7 @@ msgstr "拷贝  \tCTRL+C"
 
 #: dataentry.c:1645
 msgid "Paste \tCTRL+V"
-msgstr ""
+msgstr "貼補 \tCTRL+V"
 
 #: dataentry.c:1646
 msgid "Delete\tDEL"
@@ -348,7 +353,7 @@ msgstr "数据编辑器"
 
 #: editor.c:438 pager.c:170 pager.c:190
 msgid "No RGui console to paste to"
-msgstr ""
+msgstr "没有可以貼補上的RGui控制台"
 
 #: editor.c:538
 msgid "R EDITOR\n"
@@ -372,25 +377,27 @@ msgstr "     按Ctrl-R\n"
 
 #: editor.c:545
 msgid "     Select \"Run line or selection\" from the \"Edit\" menu\n"
-msgstr ""
+msgstr "     从\"Edit\"菜單中选择\"Run line or selection\"\n"
 
 #: editor.c:546
 msgid "     Press the \"Run line or selection\" icon on the toolbar\n"
-msgstr ""
+msgstr "     按工具栏上的\"Run line or selection\"圖符\n"
 
 #: editor.c:547
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
-msgstr "这会把选择了的命令拷贝到控制台来执行这些命令。\n"
+msgstr ""
+"这会把选择了的命令拷贝到控制台来执行这些命令。\n"
 
 #: editor.c:548
 msgid ""
 "If there is no selection, this will just run the current line and advance\n"
-msgstr "如果没有选择的话，目前所在行的命令会被执行\n"
+msgstr ""
+"如果没有选择的话，目前所在行的命令会被执行\n"
 
 #: editor.c:549
 msgid "the cursor by one line.\n"
-msgstr ""
+msgstr "游標一行。\n"
 
 #: editor.c:561 editor.c:636 editor.c:697
 msgid "Run line or selection"
@@ -411,7 +418,7 @@ msgstr "拷贝"
 
 #: editor.c:567 editor.c:689 rui.c:867 rui.c:1044 rui.c:1098
 msgid "Paste"
-msgstr ""
+msgstr "貼補"
 
 #: editor.c:568 editor.c:691
 msgid "Delete"
@@ -513,7 +520,7 @@ msgstr "打开文件时出了错"
 
 #: pager.c:84
 msgid "Insufficient memory to display file in internal pager"
-msgstr ""
+msgstr "用内部頁面調度程序来显示文件时内存不够"
 
 #: pager.c:162 pager.c:174 pager.c:194 rui.c:218 rui.c:245
 msgid "No selection"
@@ -521,11 +528,11 @@ msgstr "没有选择"
 
 #: pager.c:289 pager.c:419 pager.c:463
 msgid "Paste to console"
-msgstr ""
+msgstr "貼補到控制台"
 
 #: pager.c:290 pager.c:424 pager.c:465
 msgid "Paste commands to console"
-msgstr ""
+msgstr "貼補命令到控制台"
 
 #: pager.c:455 rui.c:1092
 msgid "Save to File..."
@@ -537,7 +544,7 @@ msgstr "看"
 
 #: pager.c:499
 msgid "Unable to create pager window"
-msgstr ""
+msgstr "无法建立頁面調度程序窗口"
 
 #: preferences.c:223
 #, c-format
@@ -620,11 +627,11 @@ msgstr "只能拉-和-放有.R，.RData和.rda后缀的文件"
 
 #: rui.c:868 rui.c:1099
 msgid "Paste commands only"
-msgstr ""
+msgstr "只能貼補命令"
 
 #: rui.c:869 rui.c:1048
 msgid "Copy and paste"
-msgstr ""
+msgstr "拷贝和貼補"
 
 #: rui.c:871
 msgid "Clear window"
@@ -632,7 +639,7 @@ msgstr "清除窗口"
 
 #: rui.c:875 rui.c:1115
 msgid "Buffered output"
-msgstr ""
+msgstr "緩衝的输出"
 
 #: rui.c:915
 msgid "Packages"
@@ -648,7 +655,7 @@ msgstr "设定CRAN镜子..."
 
 #: rui.c:920
 msgid "Select repositories..."
-msgstr ""
+msgstr "选择貯藏處..."
 
 #: rui.c:922
 msgid "Install package(s)..."
@@ -768,7 +775,7 @@ msgstr "改变目录..."
 
 #: rui.c:1101
 msgid "Copy and Paste"
-msgstr ""
+msgstr "拷贝和貼補"
 
 #: rui.c:1105
 msgid "Data editor..."
@@ -784,7 +791,7 @@ msgstr "中断目前的计算           \tESC"
 
 #: rui.c:1113
 msgid "Break to debugger"
-msgstr ""
+msgstr "暫停进入到偵錯器"
 
 #: rui.c:1117
 msgid "List objects"
@@ -813,11 +820,11 @@ msgstr "'mname'的长度最多只能有100个字符"
 #: rui.c:1248
 #, c-format
 msgid "menu %s does not exist"
-msgstr ""
+msgstr "没有%s这样的菜單"
 
 #: rui.c:1290
 msgid "Only 16 menus are allowed"
-msgstr ""
+msgstr "最多只能有16个菜單"
 
 #: rui.c:1294
 msgid "'menu' is limited to 50 chars"
@@ -825,39 +832,39 @@ msgstr "'menu'的长度最多只能有50个字符"
 
 #: rui.c:1304
 msgid "base menu does not exist"
-msgstr ""
+msgstr "基本菜單不存在"
 
 #: rui.c:1319
 msgid "failed to allocate menu"
-msgstr ""
+msgstr "无法配置菜單"
 
 #: rui.c:1331
 msgid "too many menu items have been created"
-msgstr ""
+msgstr "建立了太多的菜單條款"
 
 #: rui.c:1335 rui.c:1446
 msgid "menu + item is limited to 100 chars"
-msgstr ""
+msgstr "菜單+條款的长度只能在100个字符内"
 
 #: rui.c:1343 rui.c:1415
 msgid "menu does not exist"
-msgstr ""
+msgstr "没有这一菜單"
 
 #: rui.c:1361 rui.c:1374 rui.c:1379
 msgid "failed to allocate char storage"
-msgstr ""
+msgstr "配置字符儲存器失败"
 
 #: rui.c:1387
 msgid "failed to allocate menuitem"
-msgstr ""
+msgstr "配置菜單條款失败"
 
 #: rui.c:1436
 msgid "menu not found"
-msgstr ""
+msgstr "找不到菜單"
 
 #: rui.c:1454
 msgid "menu or item does not exist"
-msgstr ""
+msgstr "菜單或條款不存在"
 
 #: system.c:403
 msgid "Save workspace image?"
@@ -865,7 +872,7 @@ msgstr "保存工作空间映像?"
 
 #: graphapp/clipboard.c:70 graphapp/clipboard.c:74
 msgid "Insufficient memory: cell not copied to the clipboard"
-msgstr ""
+msgstr "内存不够: 字元格没有拷贝到剪輯板"
 
 #: graphapp/dialogs.c:102 graphapp/dialogs.c:119
 msgid "Question"
@@ -903,15 +910,15 @@ msgstr "窗口"
 
 #: graphapp/gmenus.c:49
 msgid "Cascade"
-msgstr ""
+msgstr "層疊"
 
 #: graphapp/gmenus.c:50
 msgid "Tile"
-msgstr ""
+msgstr "平鋪"
 
 #: graphapp/gmenus.c:51
 msgid "Arrange Icons"
-msgstr ""
+msgstr "安排圖符"
 
 #: ../library/grDevices/src/devWindows.c:845
 msgid "Png files (*.png)"
@@ -984,7 +991,7 @@ msgstr "要保存到的变数名"
 
 #: ../library/grDevices/src/devWindows.c:1494
 msgid "Copy to the clipboard as a metafile"
-msgstr ""
+msgstr "作为metafile拷贝到剪輯板"
 
 #: ../library/grDevices/src/devWindows.c:1512
 #: ../library/grDevices/src/devWindows.c:1523
@@ -1038,19 +1045,19 @@ msgstr "Jpeg"
 
 #: ../library/grDevices/src/devWindows.c:1546
 msgid "50% quality..."
-msgstr ""
+msgstr "50% 印刷質量..."
 
 #: ../library/grDevices/src/devWindows.c:1547
 msgid "75% quality..."
-msgstr ""
+msgstr "75% 印刷質量..."
 
 #: ../library/grDevices/src/devWindows.c:1548
 msgid "100% quality..."
-msgstr ""
+msgstr "100% 印刷質量..."
 
 #: ../library/grDevices/src/devWindows.c:1549
 msgid "Copy to the clipboard"
-msgstr ""
+msgstr "拷贝到剪輯板"
 
 #: ../library/grDevices/src/devWindows.c:1550
 msgid "as a Bitmap\tCTRL+C"
