@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-63, 2001-06-05
+Version 1.2-64, 2001-06-13
 Kurt Hornik
 
 
@@ -1329,6 +1329,10 @@ works, was published in the Journal of Statistical Software
 
 *logspline*
      Logspline density estimation.
+
+*lokern*
+     Kernel regression smoothing with adaptive local or global plug-in
+     bandwidth selection.
 
 *lpridge*
      Local polynomial (ridge) regression.

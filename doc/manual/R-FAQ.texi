@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2001
-@set FAQ-VERSION 1.2-63, 2001-06-05
+@set FAQ-VERSION 1.2-64, 2001-06-13
 @set REL-VERSION 1.2.3
 @set DEV-VERSION 1.3.0
 @c %**end of header
@@ -1546,6 +1546,9 @@ and H. Sonnberger, 1986, Physica.
 Local Regression, likelihood and density estimation.
 @item logspline
 Logspline density estimation.
+@item lokern
+Kernel regression smoothing with adaptive local or global plug-in
+bandwidth selection.
 @item lpridge
 Local polynomial (ridge) regression.
 @item maptree
