@@ -19,10 +19,10 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     tmpdir <- paste("file://", tempdir(), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
-    writeLines(strwrap(sprintf(gettext("If '%s' is already running, it is *not* restarted, and you must switch to its window."),
-                               browser),
+    writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
+                                browser),
                        exdent = 4))
-    writeLines("Otherwise, be patient ...")
+    writeLines(gettext("Otherwise, be patient ..."))
     browseURL(url)
     options(htmlhelp = TRUE)
 }

@@ -6,7 +6,7 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     {
         dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
         if(!dirTest(path) && !dir.create(path))
-            stop("cannot create directory ", sQuote(path))
+            stop(gettextf("cannot create directory '%s'", path), domain = NA)
     }
 
     if(missing(list))
@@ -16,8 +16,11 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
         stop("'list' should be a character vector naming R objects")
     have <- sapply(list, exists)
     if(any(!have))
-        warning("object(s) ", paste(sQuote(list[!have]), collapse=", "),
-                " not found")
+        warning(sprintf(ngettext(sum(!have),
+                                 "object %s not found",
+                                 "objects %s not found"),
+                        paste(sQuote(list[!have]), collapse=", ")),
+                domain = NA)
     list <- list[have]
     if(!length(list))
         stop("no R objects specified or available")
@@ -25,7 +28,7 @@ function(name = "anRpackage", list, environment = .GlobalEnv,
     cat("Creating directories ...\n")
     ## Make the directories
     if(file.exists(file.path(path,name)) && !force)
-        stop("Directory ", sQuote(name), " already exists")
+        stop(gettextf("directory '%s' already exists", name), domain = NA)
 
     safe.dir.create(file.path(path, name))
     safe.dir.create(file.path(path, name, "man"))

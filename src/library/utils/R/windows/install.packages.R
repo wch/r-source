@@ -151,7 +151,8 @@
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop('Unable to create temp directory ', tmpd)
+            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+                 domain = NA)
     }
 
     if(is.null(available))
@@ -222,8 +223,8 @@
         }
         if(!is.null(tmpd) && is.null(destdir))
             ## tends to be a long path on Windows
-            cat("\n", gettext("The downloaded packages are in "), "\n",
-                normalizePath(tmpd), "\n", sep = "")
+            cat("\n", gettextf("The downloaded packages are in\n\t%s",
+                               normalizePath(tmpd)), "\n", sep = "")
         link.html.help(verbose = TRUE)
     } else if(!is.null(tmpd) && is.null(destdir)) unlink(tmpd, TRUE)
 

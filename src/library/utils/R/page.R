@@ -4,7 +4,7 @@ page <- function(x, method = c("dput", "print"), ...)
     if( is.name(subx) )
 	subx <- deparse(subx)
     if (!is.character(subx) || length(subx) != 1)
-	stop("page requires a name")
+	stop("'page' requires a name")
     method <- match.arg(method)
     parent <- parent.frame()
     if(exists(subx, envir = parent, inherits=TRUE)) {
@@ -18,5 +18,5 @@ page <- function(x, method = c("dput", "print"), ...)
         }
 	file.show(file, title = subx, delete.file = TRUE, ...)
     } else
-	stop("no object named ", sQuote(subx), " to edit")
+	stop(gettextf("no object named '%s' to show", subx), domain = NA)
 }

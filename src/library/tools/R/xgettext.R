@@ -21,6 +21,8 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
                        %in% c("gettext", "gettextf"))) {
                     domain <- e[["domain"]]
                     suppress <- !is.null(domain) && !is.name(domain) && is.na(domain)
+                    if(as.character(e[[1]]) %in% "gettextf")
+                        e <- e[2] # just look at first arg
                 }
                 for(i in seq(along = e)) find_strings2(e[[i]], suppress)
             }

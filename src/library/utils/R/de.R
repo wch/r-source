@@ -9,7 +9,7 @@ de.ncols <- function(inlist)
 	}
 	else if( is.list(telt) ) {
 	    for( telt2 in telt )
-		if( !is.vector(telt2) ) stop("wrong argument to dataentry")
+		if( !is.vector(telt2) ) stop("wrong argument to 'dataentry'")
 	    ncols[i, 1] <- length(telt)
 	    ncols[i, 2] <- 3
 	}
@@ -17,7 +17,7 @@ de.ncols <- function(inlist)
 	    ncols[i, 1] <- 1
 	    ncols[i, 2] <- 1
 	}
-	else stop("wrong argument to dataentry")
+	else stop("wrong argument to 'dataentry'")
 	i <- i+1
     }
     return(ncols)
@@ -57,7 +57,7 @@ de.setup <- function(ilist, list.names, incols)
 		i <- i+1
 	    }
 	}
-	else stop("wrong argument to dataentry")
+	else stop("wrong argument to 'dataentry'")
     }
     names(ivec) <- inames
     return(ivec)
@@ -143,11 +143,11 @@ de <- function(..., Modes=list(), Names=NULL)
 	odata <- de.setup(sdata, snames, ncols)
 	if(length(Names))
 	    if( length(Names) != length(odata) )
-		warning("names argument ignored")
+		warning("'names' argument ignored")
 	    else names(odata) <- Names
 	if(length(Modes))
 	    if(length(Modes) != length(odata)) {
-		warning("modes argument ignored")
+		warning("'modes' argument ignored")
 		Modes <- list()
 	    }
     }
@@ -170,6 +170,6 @@ data.entry <- function(..., Modes=NULL, Names=NULL)
 	assign(i, tmp1[[j]], env=.GlobalEnv)
 	j <- j+1
     }
-    if(j==1) warning("not assigned anything")
+    if(j==1) warning("did not assign() anything")
     invisible(nn)
 }

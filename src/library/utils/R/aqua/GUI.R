@@ -245,7 +245,7 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
     untar<-function(what, where)
       {
         xcode <- system(paste("tar zxf", what, "-C", where), intern=FALSE)
-        if (xcode) warning("tar returned non-zero exit code: ",xcode)
+        if (xcode) warning("'tar' returned non-zero exit code: ",xcode)
       }
 
     ## edited from windows download.packages
@@ -256,7 +256,7 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
       {
         dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
 
-        if(!dirTest(destdir)) stop("destdir is not a directory")
+        if(!dirTest(destdir)) stop("'destdir' is not a directory")
         localcran <- length(grep("^file:", contriburl)) > 0
         if(is.null(available))
           available <- CRAN.packages(contriburl=contriburl, method=method)
@@ -267,7 +267,7 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
             ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
             ok <- ok & !is.na(ok)
             if(!any(ok))
-              warning("no package ", sQuote(p), " on CRAN")
+              warning(gettextf("no package '%s' on CRAN", p), domain = NA)
             else{
               fn <- paste(p, "_", available[ok, "Version"], ".tgz", sep="")
               ##fn<-paste(p,".tgz",sep="")
@@ -282,7 +282,8 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
                 if(download.file(url, destfile, method, mode="wb") == 0)
                   retval <- rbind(retval, c(p, destfile))
                 else
-                  warning("Download of package", sQuote(p), "failed")
+                  warning(gettextf("Download of package '%s' failed", p),
+                          domain = NA)
               }
                 }
           }
@@ -298,7 +299,8 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
         ## dir over to the appropriate install dir.
             tmpDir <- tempfile(, lib)
             if (!dir.create(tmpDir))
-              stop('Unable to create temp directory ', tmpDir)
+                stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+                     domain = NA)
             cDir <- getwd()
             on.exit(setwd(cDir), add = TRUE)
             res <- untar(pkg, tmpDir)
@@ -348,7 +350,8 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
         if(length(.libPaths()) > 1)
-            warning("argument 'lib' is missing: using ", lib)
+            warning(gettextf("argument 'lib' is missing: using %s", lib),
+                    immediate. = TRUE, domain = NA)
     }
     pkgnames <- basename(pkgs)
     pkgnames <- sub("\\.tgz$", "", pkgnames)
@@ -368,7 +371,8 @@ install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
       if (is.null(destdir)){
         tmpd <- tempfile("Rinstdir")
         if (!dir.create(tmpd))
-          stop('Unable to create temp directory ', tmpd)
+            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+                 domain = NA)
       } else tmpd <- destdir
     }
 

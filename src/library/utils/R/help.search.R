@@ -19,14 +19,12 @@ function(pattern, fields = c("alias", "concept", "title"),
     ### Argument handling.
     TABLE <- c("alias", "concept", "keyword", "name", "title")
 
-    ## Simplified version of tools:::wrong_args().
-    .wrong_args <- function(args, msg)
-        paste("argument", sQuote(args), msg)
+    .wrong_args <- function(args)
+        gettextf("argument '%s' must be a single character string", args)
 
     if(!missing(pattern)) {
 	if(!is.character(pattern) || (length(pattern) > 1))
-	    stop(.wrong_args("pattern",
-                             "must be a single character string"))
+	    stop(.wrong_args("pattern"), domain = NA)
 	i <- pmatch(fields, TABLE)
 	if(any(is.na(i)))
 	    stop("incorrect field specification")
@@ -34,16 +32,14 @@ function(pattern, fields = c("alias", "concept", "title"),
 	    fields <- TABLE[i]
     } else if(!missing(apropos)) {
 	if(!is.character(apropos) || (length(apropos) > 1))
-	    stop(.wrong_args("apropos",
-                             "must be a single character string"))
+	    stop(.wrong_args("apropos"), domain = NA)
 	else {
 	    pattern <- apropos
 	    fields <- c("alias", "title")
 	}
     } else if(!missing(keyword)) {
 	if(!is.character(keyword) || (length(keyword) > 1))
-	    stop(.wrong_args("keyword",
-                             "must be a single character string"))
+	    stop(.wrong_args("keyword"), domain = NA)
 	else {
 	    pattern <- keyword
 	    fields <- "keyword"
@@ -51,21 +47,20 @@ function(pattern, fields = c("alias", "concept", "title"),
 	}
     } else if(!missing(whatis)) {
 	if(!is.character(whatis) || (length(whatis) > 1))
-	    stop(.wrong_args("whatis",
-                             "must be a single character string"))
+	    stop(.wrong_args("whatis"), domain = NA)
 	else {
 	    pattern <- whatis
 	    fields <- "alias"
 	}
     } else {
-	stop("don't know what to search")
+	stop("do not know what to search")
     }
 
     if(is.null(lib.loc))
 	lib.loc <- .libPaths()
 
     if(!missing(help.db))
-        warning(.wrong_args("help.db", "is deprecated"))
+        warning("argument 'help.db' is deprecated")
 
 
     ### Set up the hsearch db.
@@ -150,7 +145,7 @@ function(pattern, fields = c("alias", "concept", "title"),
                 next
 	    path <- .find.package(p, lib.loc, quiet = TRUE)
 	    if(length(path) == 0)
-		stop("could not find package ", sQuote(p))
+		stop(gettextf("could not find package '%s'", p), domain = NA)
 
             if(file.exists(hsearch_file <-
                            file.path(path, "Meta", "hsearch.rds"))) {
@@ -183,9 +178,8 @@ function(pattern, fields = c("alias", "concept", "title"),
                 }
                 else {
                     ## otherwise, issue a warning.
-                    warning("No Rd contents for package ",
-                            sQuote(p), " in ",
-                            sQuote(dirname(path)))
+                    warning(gettextf("no Rd contents for package '%s' in '%s'",
+                                    p, dirname(path)), domain = NA)
                 }
                 ## </FIXME>
             }
@@ -269,8 +263,8 @@ function(pattern, fields = c("alias", "concept", "title"),
 	pos_in_hsearch_db <-
 	    match(package, unique(db$Base[, "Package"]), nomatch = 0)
 	if(any(pos_in_hsearch_db) == 0)
-	    stop("could not find package ",
-                 sQuote(package[pos_in_hsearch_db == 0][1]))
+	    stop(gettextf("could not find package '%s'",
+                          package[pos_in_hsearch_db == 0][1]), domain = NA)
 	db <-
 	    lapply(db,
 		   function(x) {
@@ -303,7 +297,7 @@ function(pattern, fields = c("alias", "concept", "title"),
 	agrep <- TRUE
     }
     else
-	stop("incorrect agrep specification")
+	stop("incorrect 'agrep' specification")
 
     searchFun <- function(x) {
 	if(agrep)

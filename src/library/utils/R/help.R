@@ -119,9 +119,7 @@ function(x, ...)
             if(file.exists(file))
                 .show_help_on_topic_as_HTML(file, topic)
             else
-                stop("No HTML help for ", sQuote(topic),
-                     " is available:\n",
-                     "corresponding file is missing")
+                stop(gettextf("No HTML help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
         }
         else if(type == "chm") {
             ## unneeded but harmless under Unix
@@ -139,10 +137,7 @@ function(x, ...)
                           err = integer(1), PACKAGE = "")$err
                 if(err) stop("CHM file could not be displayed")
             } else
-                stop("No CHM help for ", sQuote(topic),
-                     " in package ", sQuote(thispkg),
-                     " is available:\n",
-                     "the CHM file is for the package is missing")
+                stop(gettextf("No CHM help for '%s' in package '%s' is available:\nthe CHM file is for the package is missing", topic, thispkg), domain = NA)
         }
         else if(type == "help") {
             zfile <- zip.file.extract(file, "Rhelp.zip")
@@ -152,9 +147,7 @@ function(x, ...)
                           delete.file = (zfile != file),
                           pager = attr(x, "pager"))
             else
-                stop("No text help for", sQuote(topic),
-                     " is available:\n",
-                     "corresponding file is missing")
+                stop(gettextf("No text help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
         }
         else if(type == "latex") {
             ok <- FALSE
@@ -186,9 +179,7 @@ function(x, ...)
                 }
             }
             if(!ok)
-                stop("No offline help for ", sQuote(topic),
-                     " is available:\n",
-                     "corresponding file is missing")
+                stop(gettextf("No offline help for '%s' is available:\ncorresponding file is missing", topic), domain = NA)
         }
     }
 

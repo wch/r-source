@@ -25,8 +25,8 @@ available.packages <-
                                    cacheOK = FALSE, quiet = TRUE),
                        silent = TRUE)
             if(inherits(z, "try-error")) {
-                warning("unable to access index for repository ", repos,
-                        call. = FALSE, immediate. = TRUE)
+                warning(gettextf("unable to access index for repository %s", repos),
+                        call. = FALSE, immediate. = TRUE, domain = NA)
                 next
             }
         }
@@ -145,7 +145,8 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
 
     instp <- installed.packages(lib.loc = lib.loc)
     if(is.null(dim(instp)))
-        stop("no installed.packages for (invalid?) lib.loc=",lib.loc)
+        stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
+                      lib.loc), domain = NA)
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
@@ -209,7 +210,8 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
 
     instp <- installed.packages(lib.loc = lib.loc)
     if(is.null(dim(instp)))
-        stop("no installed.packages for (invalid?) lib.loc=", lib.loc)
+        stop(gettextf("no installed packages for (invalid?) 'lib.loc=%s'",
+                      lib.loc), domain = NA)
     if(is.null(available))
         available <- available.packages(contriburl = contriburl,
                                         method = method)
@@ -226,14 +228,14 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
                 if(!is.na(contains)) {
                     contains <- strsplit(contains, "[[:space:]]+")[[1]]
                     if(!all(contains %in% instp[ok1, "Package"]))
-                        warning("bundle ", sQuote(b),
-                                " is incompletely installed")
+                        warning(gettextf("bundle '%s' is incompletely installed", b), domain = NA)
                 }
                 new <- setdiff(strsplit(available[b, "Contains"], "[[:space:]]+")[[1]],
                                instp[ok1, "Package"])
                 if(length(new))
-                    warning("bundle ", sQuote(b), " has extra contents ",
-                            paste(sQuote(new), collapse = ", "))
+                    warning(gettextf("bundle '%s' has extra contents %s", b,
+                                     paste(sQuote(new), collapse = ", ")),
+                            domain = NA)
             }
     }
     instp[ok, "Package"] <- instp[ok, "Bundle"]
@@ -302,7 +304,8 @@ remove.packages <- function(pkgs, lib, version) {
     hv <- !missing(version)
     if(missing(lib) || is.null(lib)) {
         lib <- .libPaths()[1]
-        warning("argument 'lib' is missing: using ", lib, immediate. = TRUE)
+        warning(gettextf("argument 'lib' is missing: using %s", lib),
+                immediate. = TRUE, domain = NA)
     }
     have <- installed.packages(lib.loc=lib)
     is_bundle <- pkgs %in% have[, "Bundle"]
@@ -338,7 +341,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
 
     nonlocalcran <- length(grep("^file:", contriburl)) < length(contriburl)
     if(nonlocalcran && !dirTest(destdir))
-        stop("destdir is not a directory")
+        stop("'destdir' is not a directory")
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
@@ -348,7 +351,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
-            warning("No package ", sQuote(p), " at the repositories")
+            warning(gettextf("no package '%s' at the repositories", p),
+                    domain = NA)
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -373,7 +377,8 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 if(download.file(url, destfile, method, mode="wb") == 0)
                     retval <- rbind(retval, c(p, destfile))
                 else
-                    warning("download of package", sQuote(p), "failed")
+                    warning(gettextf("download of package '%s' failed", p),
+                            domain = NA)
             }
         }
     }
@@ -542,7 +547,8 @@ compareVersion <- function(a, b)
     ## given a character vector of packages,
     ## return a named list of character vectors of their dependencies
     if(!length(pkgs)) return(NULL)
-    if(is.null(available)) stop(sQuote(available), " must be supplied")
+    if(is.null(available))
+        stop(gettextf("'%s' must be supplied", available), domain = NA)
     info <- available[pkgs, c("Depends", "Imports"), drop = FALSE]
     x <- apply(info, 1, .clean_up_dependencies)
     if(length(pkgs) == 1) {x <- list(as.vector(x)); names(x) <- pkgs}
@@ -573,8 +579,9 @@ compareVersion <- function(a, b)
     while(length(DL)) {
         OK <- sapply(DL, function(x) all(x %in% done))
         if(!any(OK)) {
-            warning(paste(sQuote(names(DL)), collapse = ", "),
-                    "are mutually dependent")
+            warning(gettextf("packages %s are mutually dependent",
+                             paste(sQuote(names(DL)), collapse = ", ")),
+                    domain = NA)
             return(c(done,  names(DL)))
         }
         done <- c(done, names(DL[OK]))

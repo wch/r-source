@@ -7,7 +7,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
     }
 
     if(system.file(package = pkg, lib.loc = lib.loc) == "") {
-        warning("No package ", sQuote(pkg), " was found\n")
+        warning(gettextf("no package '%s' was found", pkg), domain = NA)
         return(NA)
     }
 
@@ -24,8 +24,7 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE)
     }
 
     if((file == "") || (length(retval) == 0)){
-        warning("DESCRIPTION file of package ", sQuote(pkg),
-                " is missing or broken\n")
+        warning("DESCRIPTION file of package '%d' is missing or broken", pkg)
         return(NA)
     }
 

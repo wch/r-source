@@ -235,7 +235,7 @@ citation <- function(package="base", lib.loc = NULL)
         return(citation("base"))
 
     if(length(desc)==1 && is.na(desc))
-       stop("package ", sQuote(package), " not found\n")
+       stop(gettextf("package '%s' not found", package), domain = NA)
 
     z <- list(title = paste(package, ": ", desc$Title, sep=""),
               author = as.personList(desc$Author),
@@ -244,12 +244,11 @@ citation <- function(package="base", lib.loc = NULL)
               )
 
     if(is.null(desc$Date)){
-        warning("no date field in DESCRIPTION of package ",
-                sQuote(package), "\n")
+        warning(gettextf("no date field in DESCRIPTION file of package '%s'",
+                         package), domain = NA)
     }
     else if(length(z$year)==0){
-        warning("could not determine year for ",
-                sQuote(package), " from package DESCRIPTION\n")
+        warning(gettextf("could not determine year for '%s' from package DESCRIPTION file", package), domain = NA)
     }
 
     z$url <- desc$URL

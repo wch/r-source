@@ -20,8 +20,7 @@ help.start <- function(update = TRUE, gui = "irrelevant",
         }
     }
     a <- chartr("/", "\\", a)
-    cat(gettext("If nothing happens, you should open"), sQuote(a),
-        gettext("yourself\n"))
+    cat(gettextf("If nothing happens, you should open '%s' yourself\n", a))
     browseURL(a, browser = browser)
     invisible("")
 }
