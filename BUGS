@@ -296,6 +296,11 @@ Subject: return() undocumented
 From: Scot@Wilcoxon.Org
 Date: Sat, 10 Jan 2004 16:12:16 +0100 (CET)
 ..He meant in R-lang
+* PR# 6847 *
+Subject: Typo in help(optim)
+From: Stephen Eglen <stephen@anc.ed.ac.uk>
+Date: Mon, 3 May 2004 13:26:06 +0100
+..we need to check which is right
 
 Directory:  Graphics
 
@@ -863,8 +868,3 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: segfault in approx()
 From: kjetil@entelnet.bo
 Date: Wed, 21 Apr 2004 17:49:03 -0400
-* PR# 6830 *
-Subject: 'R CMD build' fails when there are spaces in the path
-From: ellis@stat.harvard.edu
-Date: Tue, 27 Apr 2004 16:18:44 +0200 (CEST)
-..On Unix.
