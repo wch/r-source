@@ -1,11 +1,12 @@
 \name{InternalMethods}
 \alias{InternalMethods}
 \title{Internal Generic Functions}
-\description{Many \R-internal functions are \emph{generic} and allow
+\description{
+  Many \R-internal functions are \emph{generic} and allow
   methods to be written for.
 }
 
-\section{Simple Dispatching}{
+\details{
   % -------------------- grep -nw DispatchOrEval src/*/*[ch]
   %                         --------------
   The following builtin functions are \emph{generic} as well, i.e., you
@@ -56,6 +57,6 @@
   \code{\link{is.ts}}.
 }
 \seealso{
-  \code{\link{methods}} for methods of non-Internal generic functions.
+  \code{\link{methods}} for the methods of non-Internal generic functions.
 }
 \keyword{methods}

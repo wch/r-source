@@ -72,7 +72,7 @@ is.ts(x)
 
   \code{is.ts} tests if an object is a time series. It is generic: you
   can write methods to handle of specific classes of objects,
-  see \link{Methods}.
+  see \link{InternalMethods}.
 }
 \seealso{
   \code{\link{tsp}},

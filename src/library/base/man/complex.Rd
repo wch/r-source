@@ -55,7 +55,7 @@ Conj(x)
   functions are available for complex values.
 
   \code{is.complex} is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 \examples{
 0i ^ (-3:3)

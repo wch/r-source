@@ -20,7 +20,7 @@ length(x) <- n
 }
 \details{
   \code{length} is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 
   The replacement form can be used to reset
   the length of a vector.

@@ -41,7 +41,7 @@ is.nan(x)
   since systems typically have many different NaN values.
   In most ports of \R one of these is used for the numeric missing
   value \code{NA}.  It is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 \note{
   In \R, basically all mathematical functions (including basic

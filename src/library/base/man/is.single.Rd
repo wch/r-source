@@ -11,6 +11,6 @@ values in R.
 }
 \details{
   \code{is.single} is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 \keyword{classes}

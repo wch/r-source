@@ -50,7 +50,7 @@ x$name
   of the assignment.
 
   These operators are generic. You can write methods to handle subsetting
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 
   The \code{[[} operator requires all relevant subscripts to be supplied.
   With the \code{[} operator a comma separated blank indicates that all

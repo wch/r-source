@@ -95,7 +95,7 @@ as.ordered(x)
   Under those circumstances missing values are printed as \code{<NA>}.
 
   \code{is.factor} is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 \section{Warning}{
   The interpretation of a factor depends on both the codes and the

@@ -20,7 +20,8 @@ is.character(x)
 }
 \details{
   \code{as.character} and \code{is.character} are generic: you can
-  write methods to handle of specific classes of objects, see \link{Methods}.
+  write methods to handle specific classes of objects,
+  see \link{InternalMethods}.
 }
 \value{
   \code{character} creates a character vector of the specified length.

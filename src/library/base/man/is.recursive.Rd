@@ -18,7 +18,7 @@ is.recursive(x)
 }
 \details{
   These are generic: you can write methods to handle of specific classes
-  of objects, see \link{Methods}.
+  of objects, see \link{InternalMethods}.
 }
 \seealso{
   \code{\link{is.list}},

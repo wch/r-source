@@ -3,6 +3,7 @@
 \alias{UseMethod}
 \alias{NextMethod}
 \alias{methods}
+\alias{S3Methods}
 \alias{.isMethodsDispatchOn}
 \description{
   \R possesses a simple generic function mechanism which can be used for

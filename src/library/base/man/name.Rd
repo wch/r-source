@@ -31,7 +31,7 @@ is.name(y)
 }
 \details{
   \code{is.symbol} is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 \seealso{
   \code{\link{call}}, \code{\link{is.language}}. For the internal

@@ -14,7 +14,7 @@ is.language(x)
 }
 \details{
   \code{is.language} is generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 \examples{
 ll <- list(a = expression(x^2 - 2*x + 1), b = as.name("Jim"),

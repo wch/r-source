@@ -25,7 +25,7 @@ is.numeric(x)
 }
 \details{
   \code{is.numeric} is  generic: you can write methods to handle
-  of specific classes of objects, see \link{Methods}.
+  of specific classes of objects, see \link{InternalMethods}.
 }
 
 \note{
