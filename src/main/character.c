@@ -42,11 +42,12 @@
 #include <sys/types.h>
 
 #include "Defn.h"
+#include <R_ext/RS.h>
+
 
 #ifdef SUPPORT_UTF8
 # include <wchar.h>
 # include <wctype.h>
-# include <R_ext/RS.h>
 #endif
 
 /* The next must come after other header files to redefine RE_DUP_MAX */
