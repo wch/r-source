@@ -38,7 +38,7 @@ codes.factor <- function(x)
 {
   ## This is the S-plus semantics.
   ## The deeper meaning? Search me...
-  order(levels(x))[x]
+  rank(levels(x))[x]
 }
 
 "codes<-" <- function(x, value)
@@ -48,7 +48,7 @@ codes.factor <- function(x)
   else if ( length(x) != length(value) )
     stop("Length mismatch in \"codes<-\"")
   ## S-plus again...
-  value<-rank(levels(x))[value]
+  value<-order(levels(x))[value]
   attributes(value)<-attributes(x)
   value
 }

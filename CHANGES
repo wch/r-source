@@ -25,6 +25,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	codes() had *opposite* semantics of Splus. Now it's the same. 
+
     o   replicating factors now yields factors (again)
 
     o   print.summary.xxx  functions more consistent, using new function
