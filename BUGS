@@ -567,6 +567,11 @@ Date: Tue, 28 May 2002 12:07:07 +0200 (MET DST)
 Subject: Scripts not executable
 From: Peter Kleiweg <kleiweg@let.rug.nl>
 Date: Wed, 2 Oct 2002 00:54:15 +0200 (CEST)
+* PR# 2144 *
+Subject: Save() with ascii=TRUE may corrupt numeric values
+From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
+Date: Thu, 10 Oct 2002 14:09:21 -0700
+..Only on systems without vsnprintf
 
 Directory:  TooMuchAtOnce
 
@@ -613,34 +618,33 @@ Subject: switch
 From: rwehrens@sci.kun.nl
 Date: Tue, 17 Sep 2002 23:25:39 +0200 (MET DST)
 ..not a bug; but worth a documentation hint
-* PR# 2038 *
-Subject: savehistory directories and quitting R
-From: Mark.Bravington@csiro.au
-Date: Thu, 19 Sep 2002 14:53:25 +1000
-* PR# 2090 *
-Subject: Unsolved symbols: meet_ Tcl_EvalObjv
-From: Peter Kleiweg <kleiweg@let.rug.nl>
-Date: Wed, 2 Oct 2002 00:44:42 +0200 (CEST)
 * PR# 2094 *
 Subject: Mean and var inconsistency
 From: Kevin.Wright@pioneer.com
 Date: Wed, 2 Oct 2002 16:19:27 +0200 (MET DST)
-* PR# 2116 *
-From: "Brian McArdle" <b.mcardle@auckland.ac.nz>
-Date: Mon, 7 Oct 2002 15:46:21 +1300
-* PR# 2144 *
-Subject: Save() with ascii=TRUE may corrupt numeric values
-From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
-Date: Thu, 10 Oct 2002 14:09:21 -0700
 * PR# 2159 *
 Subject: The class attribute on an environment seems buggy
 From: hb@maths.lth.se
 Date: Mon, 14 Oct 2002 01:34:45 +0200 (MET DST)
-* PR# 2190 *
-Subject: ±¡½ì¥Î«~  ºô¸ôÁÊª«°Ó«°
-From: mlpi_uy_rff03dw@amazon.com
-Date: 12 Oct 2002 00:15:11 +0800
-* PR# 2191 *
-Subject: =?ISO-8859-1?B?rLCm86VMpmKmYqjipn6kurFxpEWkR6RAqPyoYaThxdymqKTrpEqkraRRuFU/Pz8/Pw==?=
-From: real@h8h.com.tw
-Date: 21 Oct 2002 20:22:39 +0800
+..Not a bug, but perhaps a useful feature: should the attributes of environments
+..be copied on assignment?
+* PR# 2197 *
+Subject:  Minor changes in ?class 
+From: j.c.rougier@durham.ac.uk
+Date: Tue, 22 Oct 2002 16:46:38 +0100
+* PR# 2198 *
+Subject: ÀÎÅÍ³Ý ¾Æ¸£¹ÙÀÌÆ® ¸ðÁý(±¸ÀÎ±¤°í)
+From: Çö´ëÄ³ÇÇÅ» <capitalo@lycos.co.kr>
+Date: Wed, 23 Oct 2002 01:16:51 +0900
+* PR# 2199 *
+Subject: negative numbers in R plots in Illustrator 8 (and higher?)
+From: "RenE J.V. Bertin" <rjvbertin@hotmail.com>
+Date: Tue, 22 Oct 2002 18:14:31 +0200
+* PR# 2200 *
+Subject: =?ks_c_5601-1987?B?W7GksO1dIL7ux9Cxs8DnILy8sOggxse4xSAxwKcgxeXF9bnMv6G8rSC5q7fhu/nHwyBDRLimILq4s7u15biztM+02S4=?=
+From: =?ks_c_5601-1987?B?xeXF9bnM?= <hyun10310@kornet.net>
+Date: Wed, 23 Oct 2002 03:19:26 +0900
+* PR# 2201 *
+Subject: =?ks_c_5601-1987?B?W7GksO1dIL7ux9Cxs8DnILy8sOggxse4xSAxwKcgxeXF9bnMv6G8rSC5q7fhu/nHwyBDRLimILq4s7u15biztM+02S4=?=
+From: =?ks_c_5601-1987?B?xeXF9bnM?= <hyun10310@kornet.net>
+Date: Wed, 23 Oct 2002 03:19:23 +0900
