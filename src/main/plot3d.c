@@ -675,7 +675,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
     double xend, yend;
     int i, ii, j, jj, ns, ns2, dir, nc;
     SEGP seglist, seg, s, start, end;
-    SEXP ctr, level, xsxp, ysxp;
+    SEXP ctr, level, xsxp, ysxp, names;
     /* Begin following contours. */
     /* 1. Grab a segment */
     /* 2. Follow its tail */
@@ -753,6 +753,16 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		SET_VECTOR_ELT(ctr, CONTOUR_LIST_X, xsxp);
 		SET_VECTOR_ELT(ctr, CONTOUR_LIST_Y, ysxp);
 		/* 
+		 * Set the names attribute for the contour
+		 * So that users can extract components using 
+		 * meaningful names
+		 */
+		PROTECT(names = allocVector(STRSXP, 3));
+		SET_STRING_ELT(names, 0, mkChar("level"));
+		SET_STRING_ELT(names, 1, mkChar("x"));
+		SET_STRING_ELT(names, 2, mkChar("y"));
+		setAttrib(ctr, R_NamesSymbol, names);
+		/* 
 		 * We're about to add another line to the list ...
 		 */
 		nlines += 1;
@@ -762,7 +772,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
 		    SET_VECTOR_ELT(container, 0, 
 				   growList(VECTOR_ELT(container, 0)));
 		SET_VECTOR_ELT(VECTOR_ELT(container, 0), nlines - 1, ctr);
-		UNPROTECT(4);
+		UNPROTECT(5);
 	    }
 	}
     return nlines;
