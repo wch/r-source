@@ -103,7 +103,8 @@ double log1p(double x)
 #endif
 
     if (x == 0.) return 0.;/* speed */
-    if (x <= -1) ML_ERR_return_NAN;
+    if (x == -1) return(R_NegInf);
+    if (x  < -1) ML_ERR_return_NAN;
 
     if (x < xmin) {
 	/* answer less than half precision because x too near -1 */
