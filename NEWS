@@ -37,16 +37,19 @@ INSTALLATION ISSUES
 
     o	Added some patches to allow non-IEEE-754 installations to work
 	reasonably well.  (Infs and NAs are still not handled properly
-	in complex arithmetics and functions such as sin().)
+	in complex arithmetic and functions such as sin().)
 
     o	Installation will now work in et_EE* locales, which sort z
 	before u.  (PR#6958)
 
 
-BUG FIXES
+DEPRECATED & DEFUNCT
 
-    o   Copying lattice (grid) output to another device now works again
-        (PR #6915, #6947, and #6948).  
+    o	Support for non-IEEE-754 arithmetic (which has been untested
+	for some time) will be removed in the next full release.
+
+
+BUG FIXES
 
     o	pbinom(q, N, prob) is now more accurate when prob is close to 0.
 	(PR#6757)
@@ -130,7 +133,7 @@ BUG FIXES
     o	Assignments of the form adf[i,j] <- value now accept a
 	data-frame value as well as a list value.
 
-    o	dir.create() sometimes erroneously continue to report a directory
+    o	dir.create() sometimes erroneously continued to report a directory
 	already existed after the first instance.  (PR#6892)
 
     o	arima.sim() allows a null model.
@@ -151,6 +154,9 @@ BUG FIXES
 
     o	heatmap(*, labRow=., labCol=.) now also reorders the labels when
 	specified---not only when using default labels.
+
+    o   Copying lattice (grid) output to another device now works again
+        (PR#6915, #6947/8).  
 
     o	hist() uses a more robust choice of its 'diddle' factor, used
 	to detect if an observation is on a bin boundary.  (PR#6931)
