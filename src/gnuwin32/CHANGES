@@ -35,9 +35,11 @@ several for-loops fail.
 R BATCH|SHLIB|INSTALL|REMOVE no longer work: use Rcmd or R CMD (as
 required under Unix) instead.
 
-Rcmd INSTALL now does a `safe installation': it moves away any existing 
-installation of the packages, and moves them back if it fails.  In any case,
-a failed installation is removed.
+Rcmd INSTALL now does a `safe installation': it moves away any
+existing installation of the packages, and moves them back if it
+fails.  In any case, a failed installation is removed.  Bundles are
+processed differently, by combining the DESCRIPTION and DESCRIPTION.in
+files and processing each package separately.
 
 Installation of a bundle now fails as soon as installing any component
 package fails.

@@ -93,6 +93,8 @@ if((-e "$R_HOME/doc/html/R.css") && !(-e "$library/R.css")) {
     system("cp $R_HOME/doc/html/R.css $library/R.css");
 }
 
+my $istar = 0; # any tar in the args
+
 ## this is the main loop over all packages/bundles to be installed
 my $pkg;
 foreach $pkg (@ARGV){
@@ -100,7 +102,6 @@ foreach $pkg (@ARGV){
     $pkg =~ s/\/$//; $pkg =~ s/\\$//;
     my $pkgname = basename($pkg);
     my $is_bundle = 0;
-    my $istar = 0;
 
     if (!(-e $pkg)) {
 	warn "`$pkg' does not exist: skipping\n";
@@ -108,8 +109,9 @@ foreach $pkg (@ARGV){
     }
 
 ## is this a tar archive?
-    if($pkgname =~ /\.tar\.gz$/) {
+    if($pkgname =~ /\.tar\.gz$/ || $pkgname =~ /\.tgz$/) {
 	$pkgname =~ s/\.tar\.gz$//;
+	$pkgname =~ s/\.tgz$//;
 	$pkgname =~ s/_[0-9\.-]*$//;
 	my $dir = "R.INSTALL";
 	mkdir($dir, 755);
@@ -135,17 +137,36 @@ foreach $pkg (@ARGV){
 
     my $makecmd = "pkg";
     $makecmd = "pkgfake" if $opt_fake;
-    if(-r "$pkg/DESCRIPTION"){
-	$description = new R::Dcf("$pkg/DESCRIPTION");
-    }
+    $description = new R::Dcf("$pkg/DESCRIPTION");
     
+    ## do we have a package bundle?
     my $zippkgs = $pkgname;
+    my @bundlepkgs = ($pkgname);
     if($description->{"Contains"}) {
 	print "\nLooks like \`${pkg}' is a package bundle\n";
-	$makecmd = "bundle";
 	$is_bundle = 1;
 	@bundlepkgs = split(/\s+/, $description->{"Contains"});
 	$zippkgs = join(" ", @bundlepkgs);
+	## join up description files
+	foreach $ppkg (@bundlepkgs) {
+	    open pkgdesc, "> $pkg/$ppkg/DESCRIPTION" 
+		|| die "cannot write $ppkg/DESCRIPTION";
+	    if (open pkgdescin, "< $pkg/$ppkg/DESCRIPTION.in") {
+		while(<pkgdescin>) { print pkgdesc $_; }
+		close pkgdescin;
+	    } else {
+		print "no DESCRIPTION.in found for package $ppkg\n";
+		print pkgdesc "Package: $ppkg\n";
+	    }
+	    open bundledesc, "< $pkg/DESCRIPTION"
+		|| die "no DESCRIPTION found for bundle";
+	    while(<bundledesc>) {
+		if(!/^Contains:/) {print pkgdesc $_;}
+	    }
+	    close bundledesc;
+	    close pkgdesc;
+	}
+	$pkgdir = $pkg;
     }
     print "\n";
 
@@ -168,42 +189,6 @@ foreach $pkg (@ARGV){
 	    }
         }
     }
-
-    my $save = "CHECK";
-    $save = "false" if $opt_no_save;
-    $save = "true" if $opt_save;
-    my $tmp = parse_description_field("SaveImage");
-    $save = "false" if($tmp == 0);
-    $save = "true" if($tmp == 1);
-    print "*** save is $save ***\n" if($opt_debug);
-
-    my $lazyload = -1;
-    $lazyload = 0 if $is_bundle; # flunk autotests for bundles
-    $lazyload = 1 if $opt_lazy;
-    $lazyload = 0 if $opt_no_lazy;
-    my $tmp = parse_description_field("LazyLoad");
-    $lazyload = $tmp if($tmp >= 0);
-
-    my $lazydata = 0;
-    $lazydata = 1 if $opt_lazy_data;
-    $lazydata = 0 if $opt_no_lazy_data;
-    my $tmp = parse_description_field("LazyData");
-    $lazydata = $tmp if($tmp >= 0);
-    print "*** lazydata is $lazydata ***\n" if($opt_debug);
-
-    my $opt = "";
-    my $dpkg = $library. "/" . $pkgname;
-    if($opt_with_package_versions) {
-	if($is_bundle) {
-	    print "\n*** Installing a bundle with package versions is not supported ***\n\n";
-	} else {
-	    $dpkg = $dpkg . "_" . $description->{"Version"};
-	    $decpkgname = $pkgname . "_" . $description->{"Version"};
-	}
-    } else {
-	$decpkgname = $pkgname;
-    }
-
     ## Now we are ready to install
     my $lockdir = $library . "/" . "00LOCK";
     if(-d $lockdir || -f $lockdir) {
@@ -217,19 +202,47 @@ foreach $pkg (@ARGV){
 	print "Permission problem?\n";
 	exit 3;
     }
-    # if exists, move existing installation to $lockdir
-    if($is_bundle) {
-	foreach $ppkg (@bundlepkgs) {
-	    $dppkg = $library. "/" . $ppkg;
-	    system("mv $dppkg $lockdir") if -d $dppkg;
-	}
-    } else {
-	system("mv $dpkg $lockdir") if -d $dpkg;
-    }
 
-    if(!$is_bundle) {
+    my $res;
+    ## loop over pkgs in the bundle
+    for $pkgname (@bundlepkgs) {
+	my $dpkg = $library. "/" . $pkgname;
+	if($opt_with_package_versions) {
+	    $dpkg = $dpkg . "_" . $description->{"Version"};
+	    $decpkgname = $pkgname . "_" . $description->{"Version"};
+	} else {
+	    $decpkgname = $pkgname;
+	}
+	# if exists, move existing installation to $lockdir
+	system("mv $dpkg $lockdir") if -d $dpkg;
+
+	$description = new R::Dcf("$pkgdir/$pkgname/DESCRIPTION");
+
+	my $save = "CHECK";
+	$save = "false" if $opt_no_save;
+	$save = "true" if $opt_save;
+	my $tmp = parse_description_field("SaveImage");
+	$save = "false" if($tmp == 0);
+	$save = "true" if($tmp == 1);
+	print "*** save is $save ***\n" if($opt_debug);
+
+	my $lazyload = -1;
+	$lazyload = 1 if $opt_lazy;
+	$lazyload = 0 if $opt_no_lazy;
+	my $tmp = parse_description_field("LazyLoad");
+	$lazyload = $tmp if($tmp >= 0);
+
+	my $lazydata = 0;
+	$lazydata = 1 if $opt_lazy_data;
+	$lazydata = 0 if $opt_no_lazy_data;
+	my $tmp = parse_description_field("LazyData");
+	$lazydata = $tmp if($tmp >= 0);
+	print "*** lazydata is $lazydata ***\n" if($opt_debug);
+
+	my $opt = "";
+
 	$opt = "DPKG=$dpkg";;
-        if($opt_auto_zip || $opt_build) {
+	if($opt_auto_zip || $opt_build) {
 	    my $dir = $pkgdir. "/" . $pkgname . "/data";
 	    if(-d $dir && 
 	       $pkgname ne "RadioSonde" && $pkgname ne "dichromat"
@@ -262,105 +275,74 @@ foreach $pkg (@ARGV){
 		$opt = $opt . " $pkgname-HELP=ziponly" if @files > 20;
 	    }
 	    print "Using auto-selected zip options '$opt'\n";
-        } else {
-            $opt = "$pkgname-ZIPDATA=zip" 
+	} else {
+	    $opt = "$pkgname-ZIPDATA=zip" 
 		if ($opt_use_zip || $opt_use_zip_data);
-            $opt = $opt . " $pkgname-HELP=ziponly"
+	    $opt = $opt . " $pkgname-HELP=ziponly"
 		if ($opt_use_zip || $opt_use_zip_help);
-        }
-    } else {
-        ## note: --auto-zip is not supported for bundles
-        foreach $ppkg (@bundlepkgs) {
-	    $opt = $opt . " $ppkg-ZIPDATA=zip" if ($opt_use_zip || $opt_use_zip_data);
-	    $opt = $opt . " $ppkg-HELP=ziponly" if ($opt_use_zip || $opt_use_zip_help);
 	}
-    }
-    my $res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname");
-    if($res) {
-	printf "*** Installation of $pkgname failed ***\n";
-    } else {
-	if($lazyload == -1) { # choose based on code size
-	    my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
-	    $codesize =~ / *([0-9]+)/;
-	    $codesize = $1;
-	    print "*** codesize is $codesize ***\n" if $opt_debug;
-	    if($codesize > 50000) {$lazyload = 1;} else {$lazyload = 0;}
-	    print "*** lazyload is $lazyload ***\n" if($opt_debug);
-	}
-	if($lazyload) {
-	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 ";
-	    if($is_bundle) {
-		$cmd .= "PKGDIR=$pkgdir/$pkgname";
-		foreach $ppkg (@bundlepkgs) {$cmd .= " lazyload-$ppkg";}
-	    } else {
+#	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
+    	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library SAVE=$save $opt $helpflags $makecmd-$pkgname");
+	if($res) {
+	    printf "*** Installation of $pkgname failed ***\n";
+	} else {
+	    if($lazyload == -1) { # choose based on code size
+		my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
+		$codesize =~ / *([0-9]+)/;
+		$codesize = $1;
+		print "*** codesize is $codesize ***\n" if $opt_debug;
+		if($codesize > 50000) {$lazyload = 1;} else {$lazyload = 0;}
+		print "*** lazyload is $lazyload ***\n" if($opt_debug);
+	    }
+	    if($lazyload) {
+		my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32 ";
 		$cmd .= "PKGDIR=$pkgdir lazyload-$pkgname";
+		system($cmd);
 	    }
-	    system($cmd);
-	}
 
-	if($lazydata) {
-	    my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
-	    if($is_bundle) {
-		foreach $ppkg (@bundlepkgs) {$cmd .= " lazydata-$ppkg";}
-	    } else {
+	    if($lazydata) {
+		my $cmd = "make --no-print-directory -C $R_HOME/src/gnuwin32";
 		$cmd .= " lazydata-$pkgname";
+		system($cmd);
 	    }
-	    system($cmd);
-	}
 
-        if($opt_build) {
-	    my $filename = "${pkgname}_" . $description->{"Version"};
-	    chdir($library);
-	    $startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
-	    system("rm -f  $startdir/$filename.zip");
-	    system("zip -r9Xq $startdir/$filename.zip $zippkgs");
-	    if ($is_bundle) {
-		## Need to get the toplevel files in there
-		$currentDir = cwd();
-		chdir($canonpkg);
-		system("zip $startdir/$filename.zip $topLevelFiles");
-		chdir($currentDir);
-	    }
-	}
+	    
+	} # end of if($res)
 
-    } # end of if($res)
+	system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean);
 
-    system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library pkgclean-$pkgname") if ($opt_clean && $is_bundle == 0);
-
-    if($opt_clean && $is_bundle) {
-	foreach $ppkg (@bundlepkgs) {
-	    system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir/$pkgname RLIB=$library pkgclean-$ppkg") 
-	}
-
-    }
-    if ($istar > 0) {
-	chdir($startdir);
-	rmtree("R.INSTALL");
-    }
-    print("\n");
-    if(!$res) {
-	print("\* DONE\n");
-    } else {
-	if($is_bundle) {
-	    foreach $ppkg (@bundlepkgs) { rmtree($library . $ppkg); }
-	} else {
+	print("\n");
+	if($res) {
 	    rmtree($dpkg);
-	}
-	# move back any previously installed packages
-	if($is_bundle) {
-	    foreach $ppkg (@bundlepkgs) {
-		$dppkg = $lockdir. "/" . $ppkg;
-		system("mv $dppkg $library") if -d $dppkg;
-	    }
-	} else {
+	    # move back any previously installed package
 	    $dppkg = $lockdir . "/" . $decpkgname;
 	    system("mv $dppkg $library") if -d $dppkg;
+	    last;
+	}
+    } # end of loop over bundle
+
+    if(!$res && $opt_build) {
+	my $filename = "${pkgname}_" . $description->{"Version"};
+	chdir($library);
+	$startdir = Win32::GetShortPathName($startdir) if $startdir =~ / /;
+	system("rm -f  $startdir/$filename.zip");
+	system("zip -r9Xq $startdir/$filename.zip $zippkgs");
+	if ($is_bundle) {
+	    ## Need to get the toplevel files in there
+	    $currentDir = cwd();
+	    chdir($canonpkg);
+	    system("zip $startdir/$filename.zip $topLevelFiles");
+	    chdir($currentDir);
 	}
     }
     # wipe out lockdir
     rmtree($lockdir);
     exit $res if $res;
+    print("\* DONE\n");
 }
+
+## remove unpack directory
+if ($istar > 0) { chdir($startdir); rmtree("R.INSTALL"); }
 
 sub parse_description_field { # fieldname
     my ($field) = @_;
