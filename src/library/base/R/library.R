@@ -419,7 +419,7 @@ function(chname, libpath, verbose = getOption("verbose"),
         chname <- substr(chname, 1, ncChname - ncFileExt)
     num <- match(chname, .Dyn.libs, 0)
     if(is.na(num))
-        stop(paste("shared library", sQuote(chname), " was not loaded"))
+        stop(paste("shared library", sQuote(chname), "was not loaded"))
     file <- file.path(libpath, "libs", paste(chname, file.ext, sep = ""))
     if(!file.exists(file))
         stop(paste("shared library", sQuote(chname), "not found"))

@@ -10,7 +10,8 @@
 \usage{
 library.dynam(chname, package = .packages(), lib.loc = NULL,
               verbose = getOption("verbose"), file.ext, \dots)
-library.dynam.unload(chname, libpath, verbose = getOption("verbose"), file.ext)
+library.dynam.unload(chname, libpath,
+                     verbose = getOption("verbose"), file.ext)
 .dynLibs(new)
 }
 \arguments{
@@ -20,7 +21,8 @@ library.dynam.unload(chname, libpath, verbose = getOption("verbose"), file.ext)
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
     of \code{NULL} corresponds to all libraries currently known.}
-  \item{libpath}{The path to the loaded package whose shared libraru is to be unloaded.}
+  \item{libpath}{the path to the loaded package whose shared library is
+    to be unloaded.}
   \item{verbose}{a logical value indicating whether an announcement
     is printed on the console before loading the shared library.  The
     default value is taken from the verbose entry in the system

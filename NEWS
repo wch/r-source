@@ -124,10 +124,10 @@ NEW FEATURES
 
 	- adf[j] <- value and adf[[j]] <- value did not convert
 	  character vectors to factors, but adf[,j] <- value did.
-	  Now none do.  Nor is a list `value' corced to a data frame
+	  Now none do.  Nor is a list `value' coerced to a data frame
 	  (thereby coercing character elements to factors).
 
-	- Where replicating the replacment value a whole number of
+	- Where replicating the replacement value a whole number of
           times will produce the right number of values, this is
           always done (rather than some times but not others).
 
@@ -197,8 +197,8 @@ NEW FEATURES
         beware that as.character() and deparse() now act differently on
         symbols.
  
-    o   In the tcltk package, as.tclObj() has gained a `drop´ argument to 
-	decide what should happen for vectors of length one.
+    o   In the tcltk package, as.tclObj() has gained a 'drop' to decide
+	what should happen for vectors of length one.
  
     o	New argument grep(..., fixed = TRUE) to avoid the need to escape
 	strings to match.
