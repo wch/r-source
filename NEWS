@@ -75,8 +75,8 @@ NEW FEATURES
 	the "example" and "demo" functions no longer print invisible
 	values when the example script is run.
 
-    o   Index files in data directories in packages should be 00Index
-	not index.doc.
+    o   Index files in data directories in packages should be `00Index'
+	not `index.doc'.
 
     o   Function interaction() to compute factor interactions.
 
@@ -88,11 +88,13 @@ NEW FEATURES
 
     o	pairs.formula() allows formula notations for scatter plot matrix.
 
+    o   new dataset co2.
+
     o   documentation for datasets mtcars, plants, randu and sleep.
 
-BUG FIXES
+    o   the sunspots dataset is now monthly rather than annual.
 
-    o   the sunspots dataset is now monthly.
+BUG FIXES
 
     o   ts() allows a data-frame argument `data'.
 
