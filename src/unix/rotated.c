@@ -413,7 +413,8 @@ static int XRotPaintAlignedString(Display *dpy, XFontStruct *font, double angle,
 
     /* this gc has similar properties to the user's gc */
     my_gc=XCreateGC(dpy, drawable, (unsigned long)0, 0);
-    XCopyGC(dpy, gc, GCForeground|GCBackground|GCFunction|GCPlaneMask,
+    XCopyGC(dpy, gc, GCForeground|GCBackground|GCFunction|GCPlaneMask
+	    |GCClipMask,
 	    my_gc);
 
     /* alignment : which point (hot_x, hot_y) relative to bitmap centre
@@ -628,7 +629,7 @@ static int XRotDrawHorizontalString(Display *dpy, XFontStruct *font,
     my_gc=XCreateGC(dpy, drawable, (unsigned long)0, 0);
     XCopyGC(dpy, gc,
 	    GCForeground|GCBackground|GCFunction|GCStipple|GCFillStyle|
-	    GCTileStipXOrigin|GCTileStipYOrigin|GCPlaneMask, my_gc);
+	    GCTileStipXOrigin|GCTileStipYOrigin|GCPlaneMask|GCClipMask, my_gc);
     XSetFont(dpy, my_gc, font->fid);
 
     /* count number of sections in string */

@@ -2938,27 +2938,25 @@ void GMMathText(SEXP str, int side, double line, int outer,
     if (outer) {
 	switch (side) {
 	case 1:
-	    line = line + 1;
-	    coords = MAR1;
+	    coords = OMA1;
 	    a = 0;
 	    xadj = MathDevice->gp.adj;
 	    yadj = NA_REAL;
 	    break;
 	case 2:
-	    coords = MAR2;
+	    coords = OMA2;
 	    a = 90;
 	    xadj = MathDevice->gp.adj;
 	    yadj = NA_REAL;
 	    break;
 	case 3:
-	    coords = MAR3;
+	    coords = OMA3;
 	    a = 0.0;
 	    xadj = MathDevice->gp.adj;
 	    yadj = NA_REAL;
 	    break;
 	case 4:
-	    line = line + 1;
-	    coords = MAR4;
+	    coords = OMA4;
 	    a = 90.0;
 	    xadj = MathDevice->gp.adj;
 	    yadj = NA_REAL;
