@@ -607,8 +607,8 @@ function(dir, env)
 function(x)
 {
     ## Strip leading and trailing whitespace.
-    x <- sub("^[[:space:]]*", "", x)
-    x <- sub("[[:space:]]*$", "", x)
+    x <- sub("^[[:space:]]+", "", x)
+    x <- sub("[[:space:]]+$", "", x)
     x
 }
 
