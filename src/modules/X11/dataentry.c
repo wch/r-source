@@ -1151,7 +1151,6 @@ static void eventloop(void)
 		if(ioevent.xclient.message_type == _XA_WM_PROTOCOLS
 		   && ioevent.xclient.data.l[0] == protocol) {
 		    /* user clicked on `close' aka `destroy' */
-		       closewin();
 		       done = 1;
 		}
 		break;

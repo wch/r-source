@@ -607,6 +607,8 @@ BUG FIXES
     o   Some X servers displayed random bytes in the window title of
 	graphics windows (PR#1451)
 
+    o   The data editor would segfault if closed with window manager
+        controls (PR#1453)
 
 	**************************************************
 	*						 *
