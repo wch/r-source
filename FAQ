@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-47, 2001-04-29
+Version 1.2-48, 2001-05-01
 Kurt Hornik
 
 
@@ -1473,6 +1473,12 @@ these a try, of course.  This area of CRAN currently contains
 *StatDataML*
      Read and write StatDataML.
 
+*car*
+     Companion to Applied Regression, containing functions for applied
+     regession, linear models, and generalized linear models, with an
+     emphasis on regression diagnostics, particularly graphical diagnostic
+     methods.
+
 *cmprsk*
      Estimation, testing and regression modeling of subdistribution
      functions in competing risks.
@@ -1510,6 +1516,11 @@ these a try, of course.  This area of CRAN currently contains
 
 *regexp*
      Simple regular expression interface.
+
+*sem*
+     Functions for fitting general linear Structural Equation Models (with
+     observed and unobserved variables) by the method of maximum likelihood
+     using the RAM approach.
 
 *write.snns*
      Function for writing a SNNS pattern file from a data frame or matrix.
