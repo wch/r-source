@@ -58,7 +58,7 @@ $(LIB): $(OBJS)
 	$(AR) cr $(LIB) $(OBJS)
 	$(RANLIB) $(LIB)
 
-$(OBJS): $(top_srcdir)/src/include/Mathlib.h
+$(OBJS): $(top_srcdir)/src/include/Mathlib.h $(top_srcdir)/src/include/Arith.h
 sunif.o: $(top_srcdir)/src/include/Random.h
 
 mostlyclean: clean
