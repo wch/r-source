@@ -1214,6 +1214,7 @@ void R_LoadSavedData(FILE *fp, SEXP aenv)
 
     PROTECT(a = ans);
     while (a != R_NilValue) {
+#ifdef OLD
 	for (e = FRAME(aenv); e != R_NilValue ; e = CDR(e)) {
 	    if (TAG(e) == TAG(a)) {
 		CAR(e) = CAR(a);
@@ -1231,6 +1232,10 @@ void R_LoadSavedData(FILE *fp, SEXP aenv)
 	CAR(e) = ConvertPairToVector(CAR(e)); /* PAIRLIST conv */
     NextItem:
 	;
+#else
+        setVarInFrame(aenv, TAG(a), ConvertPairToVector(CAR(a)));
+        a = CDR(a);
+#endif
     }
     UNPROTECT(1);
 }
