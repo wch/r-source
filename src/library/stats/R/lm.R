@@ -405,9 +405,12 @@ residuals.lm <-
                   working =, response = r,
                   deviance=, pearson =
                   if(is.null(object$weights)) r else r * sqrt(object$weights),
-                  partial = r + predict(object,type="terms")
+                  partial = r
            )
-    naresid(object$na.action, res)
+    res<-naresid(object$na.action, res)
+    if (type=="partial") ## predict already does naresid
+      res<-res+predict(object,type="terms")
+    res
 }
 
 #fitted.lm <- function(object, ...)
