@@ -23,6 +23,14 @@ NEW FEATURES
 	FORTRAN 77 compiler, and no longer disallows wrapper scripts for
 	this compiler.
 
+    o	New Rd markup \method{GENERIC}{CLASS} for indicating the usage
+	of methods.
+
+    o	print.ftable() and write.ftable() now have a `digits' argument.
+
+    o	undoc() has a new `lib.loc' argument, and its first argument is
+	now called `package'.
+
 
 BUG FIXES
 
@@ -48,35 +56,37 @@ BUG FIXES
 	now happens by default).
 
     o	scan now sets the maximal sizes internally when `what' is a list
-	from `nmax' and failing that `nlines'.	This uses memory much more
-	efficiently if `nmax' is specified.  read.table() makes use of this.
+	from `nmax' and failing that `nlines'.	This uses memory much
+	more efficiently if `nmax' is specified.  read.table() makes use
+	of this.
 
-    o	The Fortran code used is now much closer to ANSI compliance.
+    o	The FORTRAN code used is now much closer to ANSI compliance.
 
-    o	cov.rob() gives a useful error message on nearly-degenerate matrices.
+    o	cov.rob() gives a useful error message on nearly-degenerate
+	matrices.
 
-    o	summary on a data frame was computing results to a precision
+    o	summary() on a data frame was computing results to a precision
 	based on options("digits") (default 4), not its `digits'
 	argument.  Now results are computed to full precision but 
 	formatted using `digits'.
 
     o	When returning parameters from .C/.Fortran, the OBJECT field was
-	not copied even though class attributes were (PR #834)
+	not copied even though class attributes were (PR#834).
 
     o	There was a spurious warning from the X11 driver on 100 dpi
-	displays. (PR#840 Fix from Tom Vogels)
+	displays (PR#840, fix from Tom Vogels).
 
     o	scan() was reading all-blank numeric fields as zero. 
 	Should be read as NA, and are now. 
 
-    o	dnbinom(*, size, *) now works again for size < 1 (PR #842).
+    o	dnbinom(*, size, *) now works again for size < 1 (PR#842).
 
     o	dgeom(*, p = 0) doesn't give NaN anymore.
 
     o	smooth.spline() allows zero weights again.
 
     o	aperm() fix for list arg; aperm(*, resize=FALSE) now works with
-	dimnames (by dropping them), 
+	dimnames (by dropping them).
 
 
 		CHANGES IN R VERSION 1.2.1
