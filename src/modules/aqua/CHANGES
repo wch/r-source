@@ -11,8 +11,10 @@ CHANGES IN R (AQUA) VERSION 1.9.0
 
 NEW FEATURES
     o   Dragging a file on the R icon, causes R to source the
-        file. At the moment there is no control over the file
-        type.
+        file or load the data into the workspace if the file
+        is a RDX1/RDX2 R image file. At the moment there is no 
+        control over the file and the user is responsible of
+        what is trying to load into R.
 
     o   The user can select a startup working directory in the 
         Preferences using the Misc tab.

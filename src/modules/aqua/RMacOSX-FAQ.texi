@@ -655,10 +655,15 @@ portions of @R{} code to execute via files. This is the approach used by the @R{
 
 @node Finder actions, , External editors,R and external applications
 @section Finder actions
-Dragging a file on the @R{} icon, causes @R{} to source this file via the @command{source} @R{} command.
-At the moment there is no control over the file types, i.e. dragging a binary file simply gives an error and
-in particular you cannot load workspaces or @file{.rda} data files by simply dragging them on @R{}.
+Dragging a file on the @R{} icon, causes @R{} to source this file via the @command{source} @R{} command or,
+if the file is an @R{} image data file RDX1 or RDX2 (normally files with extension @file{.rda} or @file{.Rdata}), the data is loaded in the workspace and every object
+with the same name in the workspace is overwritten wihtout notice. Loading a data file is equivalent to
+the @R{} command @command{load}.
+At the moment there is no control over the file types, i.e. dragging wrong files (i.e. files that are
+not @R{} scripts or image data) simply gives an error. It's up to the user to @emph{do the right thing}.
 
+@noindent
+If @R{} is not yet running this action causes @R{} to startup.
 
 @node Quartz device, Additional resources, R and external applications, Top
 @chapter Quartz device
@@ -735,6 +740,7 @@ in random order. Last but not least Apple for amazing OS and GUI.
 @menu
 * How can I have a per session .Rprofile?::
 * What happens if I drag a file on the R icon?::
+* How can I interrupt lengthy operations or output?::
 @end menu
 
 @node How can I have a per session .Rprofile?,What happens if I drag a file on the R icon?,,Sparse questions
@@ -742,9 +748,15 @@ in random order. Last but not least Apple for amazing OS and GUI.
 You can by writing a @file{.Rprofile} file in your favourite
 session directory and change accordingly the startup working directory using the Preferences (@pxref{The current and startup working directories}).
 
-@node What happens if I drag a file on the R icon?,,How can I have a per session .Rprofile?,Sparse questions
+@node What happens if I drag a file on the R icon?,How can I interrupt lengthy operations or output?,How can I have a per session .Rprofile?,Sparse questions
 @section What happens if I drag a file on the R icon?
-In this case @R{} will try to source this file no matter what's its contents (@pxref{Finder actions}).
+In this case @R{} will try to source this file or load the image data file (@pxref{Finder actions}). If @R{} is not
+yet running it will be launched.
+
+@node How can I interrupt lengthy operations or output?, ,What happens if I drag a file on the R icon?,Sparse questions
+@section How can I interrupt lengthy operations or output?
+You can now use the standard Macintosh control break sequence, that is you should press
+"Cmd option" and "." (dot). This will interrupt any @R{} loops. The "Esc" key gives you the same result. 
 
 
 @bye

@@ -845,10 +845,19 @@ void ShowWorkingDir(void){
 	DrawOneControl(WorkingDirControl);     
 }
 
+/*  This sets the initial working directory according to the
+	Preferences settings. If the selected directory does not
+	exists, the startup working dir is set to the the user's
+	home.
+*/	
 void ChangeStartupDir(void){
 	
-	//    chdir(R_ExpandFileName("~/"));
-    chdir(R_ExpandFileName(CurrentPrefs.WorkingDirectory));
+	if(chdir(R_ExpandFileName(CurrentPrefs.WorkingDirectory)) < 0) {
+		fprintf(stderr,"\nR: Cannot set working directory according to Preferences");
+		fprintf(stderr,"\nR: Working directory is now user's home");
+		R_ShowMessage("Startup working directory set as user's home.\nPlease, change it in the Preferences.");
+	    chdir(R_ExpandFileName("~/"));
+	}
     ShowWorkingDir();
 }
 
@@ -3742,6 +3751,30 @@ cleanup:
 				 }
 				 
 OSErr GotRequiredParams( const AppleEvent *ae );
+
+/*  isImageData:
+	returns -1 on error, 0 if the file is RDX2 or RDX1, 
+	1 otherwise.
+*/	
+int isImageData(char *fname);
+int isImageData(char *fname){
+	FILE * fp;
+	int flen;
+	
+	char buf[5];
+	if( (fp = R_fopen(R_ExpandFileName(fname), "r")) ){
+			fseek(fp, 0L, SEEK_END);
+			flen = ftell(fp);
+			rewind(fp);
+			if(flen<4) 
+				return(1);
+			fread(buf, 1, 4, fp);
+			buf[4] = '\0';
+			if( (strcmp(buf,"RDX2")==0) || ((strcmp(buf,"RDX1")==0))) return(0);
+			else return(1);
+	} else
+		return(-1);
+}
 				 
 /* HandleOpenDocument routine :
    Description :
@@ -3749,9 +3782,6 @@ OSErr GotRequiredParams( const AppleEvent *ae );
    This event can only be depatched by the ProcessEvent routine.
    Thus, even you click on the file icon of R to start R, this event
    will not be catch until the R_readConsole start.
-   FIXME: This function does not control if the file can be sourced by R
-		just try to do this. We should check if it is an RDA file for
-		example. To be done in 1.9.1.
 */
 pascal OSErr HandleOpenDocument( const AppleEvent *ae,
 					AppleEvent *reply, SInt32 refCon )
@@ -3791,9 +3821,13 @@ pascal OSErr HandleOpenDocument( const AppleEvent *ae,
     if (err != noErr) goto cleanup;
 
 	err = FSMakePath(fileSpec.vRefNum, fileSpec.parID, fileSpec.name, buf, 300);  
-	sprintf(cmd,"source(\"%s\")",buf);
-	consolecmd(cmd);
-	goto cleanup;
+	if(isImageData(buf)==0){
+		sprintf(cmd,"load(\"%s\")",buf);
+		consolecmd(cmd);
+	} else {
+		sprintf(cmd,"source(\"%s\")",buf);
+		consolecmd(cmd);
+	}
     
 cleanup:
     return err;

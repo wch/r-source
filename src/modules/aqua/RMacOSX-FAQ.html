@@ -983,9 +983,14 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#R%20and%20external%20applications">R a
 
 <h3 class="section">Finder actions</h3>
 
-<p>Dragging a file on the <small>R</small> icon, causes <small>R</small> to source this file via the <code>source</code> <small>R</small> command. 
-At the moment there is no control over the file types, i.e. dragging a binary file simply gives an error and
-in particular you cannot load workspaces or <code>.rda</code> data files by simply dragging them on <small>R</small>.
+<p>Dragging a file on the <small>R</small> icon, causes <small>R</small> to source this file via the <code>source</code> <small>R</small> command or,
+if the file is an <small>R</small> image data file RDX1 or RDX2 (normally files with extension <code>.rda</code> or <code>.Rdata</code>), the data is loaded in the workspace and every object
+with the same name in the workspace is overwritten wihtout notice. Loading a data file is equivalent to
+the <small>R</small> command <code>load</code>. 
+At the moment there is no control over the file types, i.e. dragging wrong files (i.e. files that are
+not <small>R</small> scripts or image data) simply gives an error. It's up to the user to <em>do the right thing</em>.
+
+<p>If <small>R</small> is not yet running this action causes <small>R</small> to startup.
 
 <div class="node">
 <p><hr>
@@ -1145,6 +1150,7 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Top">Top</a>
 <ul class="menu">
 <li><a accesskey="1" href="#How%20can%20I%20have%20a%20per%20session%20.Rprofile%3f">How can I have a per session .Rprofile?</a>: 
 <li><a accesskey="2" href="#What%20happens%20if%20I%20drag%20a%20file%20on%20the%20R%20icon%3f">What happens if I drag a file on the R icon?</a>: 
+<li><a accesskey="3" href="#How%20can%20I%20interrupt%20lengthy%20operations%20or%20output%3f">How can I interrupt lengthy operations or output?</a>: 
 </ul>
 
 <div class="node">
@@ -1163,6 +1169,7 @@ session directory and change accordingly the startup working directory using the
 <div class="node">
 <p><hr>
 Node:&nbsp;<a name="What%20happens%20if%20I%20drag%20a%20file%20on%20the%20R%20icon%3f">What happens if I drag a file on the R icon?</a>,
+Next:&nbsp;<a rel="next" accesskey="n" href="#How%20can%20I%20interrupt%20lengthy%20operations%20or%20output%3f">How can I interrupt lengthy operations or output?</a>,
 Previous:&nbsp;<a rel="previous" accesskey="p" href="#How%20can%20I%20have%20a%20per%20session%20.Rprofile%3f">How can I have a per session .Rprofile?</a>,
 Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</a>
 <br>
@@ -1170,7 +1177,21 @@ Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</
 
 <h3 class="section">What happens if I drag a file on the R icon?</h3>
 
-<p>In this case <small>R</small> will try to source this file no matter what's its contents (see <a href="#Finder%20actions">Finder actions</a>).
+<p>In this case <small>R</small> will try to source this file or load the image data file (see <a href="#Finder%20actions">Finder actions</a>). If <small>R</small> is not
+yet running it will be launched.
+
+<div class="node">
+<p><hr>
+Node:&nbsp;<a name="How%20can%20I%20interrupt%20lengthy%20operations%20or%20output%3f">How can I interrupt lengthy operations or output?</a>,
+Previous:&nbsp;<a rel="previous" accesskey="p" href="#What%20happens%20if%20I%20drag%20a%20file%20on%20the%20R%20icon%3f">What happens if I drag a file on the R icon?</a>,
+Up:&nbsp;<a rel="up" accesskey="u" href="#Sparse%20questions">Sparse questions</a>
+<br>
+</div>
+
+<h3 class="section">How can I interrupt lengthy operations or output?</h3>
+
+<p>You can now use the standard Macintosh control break sequence, that is you should press
+"Cmd option" and "." (dot). This will interrupt any <small>R</small> loops. The "Esc" key gives you the same result.
 
    </body></html>
 
