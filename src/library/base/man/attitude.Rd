@@ -2,23 +2,30 @@
 \alias{attitude}
 \title{Attitudes Toward Supervisors}
 \usage{data(attitude)}
-\description{Not available (yet).}
+\description{From a survey of the clerical employees
+  of a large financial organization, the data are aggregated from the
+  questionnaires of the approximately 35 employees for each of
+  30 (randomly selected) departments.  The numbers give the percent
+  proportion of favourable responses to seven questions in each department.}
 \format{
-  A data from with 30 observations on 7 variables.
-
+  A dataframe with 30 observations on 7 variables. The first column are the
+  short names from the reference, the second one the variable names in
+  the data frame:
   \tabular{rlll}{
-    [,1] \tab rating   \tab numeric  \tab Overall rating \cr
-    [,2] \tab complaints\tab numeric \tab Handling of employee complaints \cr
-    [,3] \tab privileges\tab numeric \tab Gives special privileges \cr
-    [,4] \tab learning \tab numeric  \tab Opportunity to learn \cr
-    [,5] \tab raises   \tab numeric  \tab Gives raises \cr
-    [,6] \tab critical \tab numeric  \tab Too critical \cr
-    [,7] \tab advancel \tab numeric  \tab Advancement}
+     Y   \tab rating    \tab numeric  \tab Overall rating \cr
+    X[1] \tab complaints\tab numeric \tab Handling of employee complaints \cr
+    X[2] \tab privileges\tab numeric \tab Does not allow special privileges \cr
+    X[3] \tab learning \tab numeric  \tab Opportunity to learn \cr
+    X[4] \tab raises   \tab numeric  \tab Raises based on performance \cr
+    X[5] \tab critical \tab numeric  \tab Too critical \cr
+    X[6] \tab advancel \tab numeric  \tab Advancement}
 }
 \source{
   Chatterjee, S. and Price, B. (1977)
   \emph{Regression Analysis by Example.}
-  New York: Wiley.
+  New York: Wiley.\cr
+  (Section 3.7, p.68ff of 2nd ed.(1991).)
+
 }
 \examples{
 data(attitude)
