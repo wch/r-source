@@ -534,17 +534,7 @@ From: John Chambers <jmc@research.bell-labs.com>
 Date: Tue, 16 Jul 2002 16:59:22 -0400
 --follow up to 1796
 --stop() allows multiple args as from 1.6.0
-* PR# 1801 *
-Subject: R crashes when using "xyplot"
-From: carsten.dormann@web.de
-Date: Wed, 17 Jul 2002 15:42:08 +0200 (MET DST)
-* PR# 1802 *
-Subject: Maritime Newsletter (Week 29)
-From: "Marine Digital Inc."<newsletter@marinedigital.com>
-Date: Thu, 18 Jul 2002 04:51:26 +0900
-* PR# 1803 *
-Subject: Returned mail--"div ends "
-Subject: div ends <br>
-From: postmaster <postmaster@r-project.org>
-From: r-bugs@r-project.org<br>
-Date: Wed, 17 Jul 2002 14:50:07 -0700 (PDT)
+* PR# 1808 *
+Subject: =?euc-kr?B?XkxeIL+pt6+60LKyILjewM+4rr26xq64piC977ursKGw3cC4t84guPC9yg==?=	=?euc-kr?B?tM+02S4uLluxpLDtXTwtPC0t?=
+From: han2797@lovehunt.com
+Date: Fri, 19 Jul 2002 04:02:41 +0900
