@@ -261,13 +261,13 @@ chooseCRANmirror <- function()
 
 contrib.url <- function(repos)
 {
-    if(interactive() && !nchar(getOption("CRAN"))) {
-        cat("--- Please select a CRAN mirror for use in this session ---\n")
-        flush.console()
-        chooseCRANmirror()
-    }
-    ## now evaluate repos after setting options.
-    if(all(nchar(repos) == 0)) stop("no CRAN mirror is set")
+    if(length(grep("@CRAN@", repos)) > 0)
+        if(interactive()) {
+            cat("--- Please select a CRAN mirror for use in this session ---\n")
+            flush.console()
+            chooseCRANmirror()
+            repos <- sub("@CRAN@", getOption("CRAN"), repos)
+        } else stop("Trying to use CRAN without setting a mirror")
     ver <- paste(R.version$major, substring(R.version$minor, 1, 1), sep = ".")
     file.path(gsub("/$", "", repos), "bin", "windows", "contrib", ver)
 }

@@ -12,6 +12,7 @@ Support for seek() on > 2Gb files has been added.
 You will be asked to select a CRAN mirror when downloading/updating
 packages unless options("CRAN") has already been set in your session,
 e.g. in your .Rprofile file or from the 'Select CRAN mirror' menu item.
+(In batch use, not setting a mirror will lead to an error.)
 
 The new graphics pars "lend", "ljoin" and "lmitre" are now
 implemented.
@@ -24,7 +25,7 @@ You can look in BDRs collection for additional precompiled packages by
 setting 
 options(CRAN=c(some_cran_mirror, http://www.stats.ox.ac.uk/pub/RWin"))
 
-R CMD / Rcmd now set HOME if unset.
+R CMD / Rcmd now set HOME if unset, for use e.g. in Rcmd check.
 
 
 
