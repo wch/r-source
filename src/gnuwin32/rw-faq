@@ -159,8 +159,8 @@ Create a separate shortcut for each project: see Q2.3. All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
-Alternatively, start R double-clicking a saved `.RData' file in the
-directory for the current project.
+Alternatively, start R by double-clicking on a saved `.RData' file in
+the directory for the project you want to use.
 
 2.6 How do I print from R?
 ==========================
@@ -267,7 +267,7 @@ menu items on the `Packages' menu to provide a point-and-click
 interface to package installation.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
-<http://cran.r-project.org/bin/windows/contrib/ReadMe>
+`http://cran.r-project.org/bin/windows/contrib/ReadMe'
 
 If there is not a pre-compiled version or that is not up-to-date or you
 prefer compiling from source, get `rw1030sp.zip' from the distribution
@@ -319,7 +319,7 @@ inherited environment.
 3.3 The packages I installed do not appear in the HTML help system.
 ===================================================================
 
-HTML help only works for packages installed in `rw1030\library'.
+The HTML search only works for packages installed in `rw1030\library'.
 
 To update the HTML indices after you have installed a pre-compiled
 package, run at the R prompt.
@@ -364,7 +364,7 @@ package was compiled too long ago.
 For package `tcltk' to work (try `demo(tkdensity)' or `demo(tkttest)'
 after `library(tcltk)') you need to have Tcl installed.  Download
 `tcl832.exe' (or use `tcl831.exe' if you already have it) from
-<dev.scriptics.com> and install it. (That will put the `bin' directory
+`dev.scriptics.com' and install it. (That will put the `bin' directory
 containing the Tcl and Tk DLLs in your path).  You then need to set the
 environment variable `TCL_LIBRARY', to something like `c:/Program
 Files/Tcl/lib/tcl8.3'.  (The startup code for the package will warn you
@@ -393,7 +393,8 @@ package to cure this.
 
    * Command-line editing is always available, but is simpler than the
      readline-based editing on Unix. For `Rgui.exe', the menu item
-     `Help | Console' will give details.
+     `Help | Console' will give details.  For `Rterm.exe' see file
+     `README.rterm'.
 
    * Using `help.start()' does not automatically send help requests to
      the browser: use `options(htmlhelp=T)' to turn this on.
