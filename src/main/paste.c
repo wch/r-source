@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 1997--2003  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -80,7 +81,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 	    maxlen = length(VECTOR_ELT(x, j));
     }
     if(maxlen == 0)
-	return mkString("");
+	return (!isNull(collapse)) ? mkString("") : allocVector(STRSXP, 0);
 
     PROTECT(ans = allocVector(STRSXP, maxlen));
 

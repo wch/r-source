@@ -114,7 +114,7 @@ NEW FEATURES
 
     o	hist.POSIXt() can now pass arguments to hist.default()
 
-    o	A triple colon operators can be used to access values of internal
+    o	A triple colon operator can be used to access values of internal
 	variables in a name space (i.e. a:::b is the value of the internal
 	variable b in name space a).
 
@@ -204,6 +204,8 @@ BUG FIXES
 	recycled.  Now they are discarded, with a warning.
 
     o   as.data.frame.matrix() ignored the `row.names' argument.
+
+    o   paste() applied to 0-length vectors gave "" not a 0-length vector.
 
 
 
