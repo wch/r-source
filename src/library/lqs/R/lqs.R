@@ -11,7 +11,7 @@ lqs.formula <-
 {
     method <- match.arg(method)
     mf <- match.call(expand.dots = FALSE)
-    mf$method <- mf$contrasts <- mf$model <- mf$x <- mf$y <- mf$... <- NULL
+    mf$method <- mf$contrasts <- mf$model <- mf$x.ret <- mf$y.ret <- mf$... <- NULL
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, parent.frame())
     if (method == "model.frame") return(mf)
