@@ -68,6 +68,8 @@ old.packages <- function(lib.loc=NULL, CRAN=getOption("CRAN"),
         lib.loc <- .libPaths()
 
     instp <- installed.packages(lib.loc=lib.loc)
+    if(is.null(dim(instp)))
+        stop("no installed.packages for (invalid?) lib.loc=",lib.loc)
     if(is.null(available))
         available <- CRAN.packages(contriburl=contriburl, method=method)
 
@@ -151,7 +153,7 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
             retval <- rbind(retval, c(p, lib, desc))
         }
     }
-    if (!is.null(retval))
+    if (length(retval))
         colnames(retval) <- c("Package", "LibPath", pkgFlds)
     retval
 }
