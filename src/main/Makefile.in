@@ -29,6 +29,7 @@ all: R
 R: $(top_builddir)/bin/R.binary
 
 $(top_builddir)/bin/R.binary: $(OBJS) $(RLIBS)
+	@$(MKINSTALLDIRS) $(top_builddir)/bin
 	$(LDCMD) $(DLLFLAGS) -o $@ $(OBJS) $(ALL_LIBS)
 
 ../unix/libunix.a:
