@@ -124,6 +124,9 @@ BUG FIXES
 	unintentionally removed along with nroff-based conversion to text).
 
 
+    o   strheight("X") with no active device would segfault
+
+
 		CHANGES IN R VERSION 1.0.1
 
 

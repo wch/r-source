@@ -2734,6 +2734,8 @@ SEXP do_strheight(SEXP call, SEXP op, SEXP args, SEXP env)
     DevDesc *dd = CurrentDevice();
 
     checkArity(op,args);
+    GCheckState(dd);
+    
     str = CAR(args);
     if ((TYPEOF(str) != STRSXP) && (TYPEOF(str) != EXPRSXP))
 	errorcall(call, "character or expression first argument expected");
