@@ -453,15 +453,11 @@ Date: Fri, 25 Jan 2002 15:08:33 -0500
 Subject:  itemize/item crashes R CMD check 
 From: Ben Bolker <bolker@zoo.ufl.edu>
 Date: Tue, 26 Feb 2002 15:13:04 -0500
-* PR# 1391 *
-Subject: Sos!
-From: Kouichirou <Kouichirou@eto.com>
-Date: Sun, 17 Mar 2002 12:57:12 -0600
-* PR# 1392 *
-Subject: Thank you
-From: "" <ronald-chase@broadcast.net>
-Date: Sun, 17 Mar 2002 20:32:01 +0100
-* PR# 1393 *
-Subject: Thank you
-From: "" <greta-martin@runbox.com>
-Date: Sun, 17 Mar 2002 20:27:07 +0100 (MET)
+* PR# 1395 *
+Subject: mgp parameter in par()
+From: mh.smith@niwa.cri.nz
+Date: Tue, 19 Mar 2002 06:11:49 +0100 (MET)
+* PR# 1396 *
+Subject: truehist (MASS) nbins problem
+From: rechung@aol.com
+Date: Tue, 19 Mar 2002 21:50:04 +0100 (MET)
