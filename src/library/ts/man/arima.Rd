@@ -75,6 +75,9 @@ arima(x, order = c(0, 0, 0),
   S-PLUS.  Further, if \code{include.mean} is true, this formula
   applies to \eqn{X-m} rather than \eqn{X}.  For ARIMA models with
   differencing, the differenced series follows a zero-mean ARMA model.
+  If a \code{xreg} term is included, a linear regression (with a
+  constant term if \code{include.mean} is true) is fitted with an ARMA
+  model for the error term.
 
   The variance matrix of the estimates is found from the Hessian of
   the log-likelihood, and so may only be a rough guide.
