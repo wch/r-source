@@ -34,7 +34,7 @@ Summary.factor(x, \dots)
 \description{Many \R-internal functions  are \emph{generic} and  allow
   methods to be written for.  \emph{Group} methods in particular are
   available for the \code{"Math"},  \code{"Ops"}, and
-  \code{"Summary"} group.
+  \code{"Summary"} groups.
 }
 \arguments{
   \item{x, e1, e2}{objects.}
@@ -132,6 +132,12 @@ Summary.factor(x, \dots)
     \code{\link{as.vector}}, %do_asvector() [coerce.c:948]
     \code{\link{is.na}}, %do_isna()     [coerce.c:1244]
     \code{\link{is.nan}}%do_isnan()    [coerce.c:1332]
+}
+\details{
+  The number of arguments supplied for \code{"Math"} group generic
+  methods is not checked prior to dispatch. (Prior to \R 1.7.0,
+  all those whose default method has one argument were checked, but the
+  others were not.)
 }
 \references{
   Appendix A, \emph{Classes and Methods} of\cr

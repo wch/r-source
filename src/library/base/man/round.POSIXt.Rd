@@ -7,7 +7,7 @@
 }
 \usage{
 \method{round}{POSIXt}(x, units=c("secs", "mins", "hours", "days"))
-trunc.POSIXt(x, units=c("secs", "mins", "hours", "days"))
+\method{trunc}{POSIXt}(x, units=c("secs", "mins", "hours", "days"))
 }
 \arguments{
   \item{x}{an object inheriting from \code{"POSIXt"}.}
@@ -17,10 +17,6 @@ trunc.POSIXt(x, units=c("secs", "mins", "hours", "days"))
   The time is rounded or truncated to the second, minute, hour or day.
   Timezones are only relevant to days, when midnight in the current
   timezone is used.
-}
-\note{
-  \code{trunc} is not generic, so \code{trunc.POSIXt} has to be called
-  explicitly.
 }
 \value{
   An object of class \code{"POSIXlt"}.

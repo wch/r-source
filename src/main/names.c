@@ -212,10 +212,10 @@ FUNTAB R_FunTab[] =
 
 
 /* Mathematical Functions */
-{"round",	do_round,	10001,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"round",	do_Math2,	10001,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"atan",	do_atan,	10002,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"log",		do_log,		10003,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
-{"signif",	do_signif,	10004,	11,	1,	{PP_FUNCALL, PREC_FN,	0}},
+{"log",		do_log,		10003,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"signif",	do_Math2,	10004,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"abs",		do_abs,		6,	1,	1,	{PP_FUNCALL, PREC_FN,	0}},
 
 /* KH(1999/09/12)-> complex: {"abs", do_math1, 0, 1, 1, {PP_FUNCALL, PREC_FN,	0}}, */

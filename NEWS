@@ -136,6 +136,11 @@ NEW FEATURES
      o  pie(...) has always accepted graphical pars but only passed
 	them on to title().  Now pie(, cex=1.5) works.
 
+     o  The Math group generic does not check the number of arguments
+	supplied before dispatch: it used to if the default method had
+	one argument but not if it had too.  This allows trunc.POSIXt()
+	to be called via the group generic trunc().
+
 
 INSTALLATION CHANGES
 
@@ -357,9 +362,6 @@ BUG FIXES
         conversion to/from POSIXct times prior to 1970-01-01 to be
         inconsistent.  On such platforms this is a run-time test to
         allow e.g. R compiled on RH7.2 to run on RH8.0.
-
-    o   Clipping was not being reset properly between plots on the gtk()
-        device (the default under the GNOME interface). (PR#2366)
 
 
 
