@@ -14323,6 +14323,7 @@ trap 'rm -fr `echo "Makeconf
   src/Makefile
   src/appl/Makefile
   src/include/Makefile
+  src/include/R_ext/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
   src/library/base/Makefile
@@ -14635,6 +14636,7 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/Makefile
   src/appl/Makefile
   src/include/Makefile
+  src/include/R_ext/Makefile
   src/library/Makefile
   src/library/base/DESCRIPTION
   src/library/base/Makefile
