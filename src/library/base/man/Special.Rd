@@ -45,7 +45,7 @@ lfactorial(x)
   The functions \code{gamma} and \code{lgamma} return the gamma function
   \eqn{\Gamma(x)} and the natural logarithm of the absolute value of the
   gamma function.  The gamma function is defined by (Abramowitz and Stegun (6.1.1), page 255)
-  \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral0^Inf t^(a-1) exp(-t) dt}
+  \deqn{\Gamma(x) = \int_0^\infty t^{a-1} e^{-t} dt}{integral_0^Inf t^(a-1) exp(-t) dt}
   \code{factorial(x)} is \eqn{x!} and identical to
   \code{gamma(x+1)} and \code{lfactorial} is \code{lgamma(x+1)}.
 
@@ -77,9 +77,7 @@ lfactorial(x)
   miscellaneous mathematical functions and \code{\link{Bessel}} for the
   real Bessel functions.
 
-  For the incomplete gamma function see \code{\link{pgamma}}: in the
-  notation of Abramowitz and Stegun 6.5.1 the incomplete gamma
-  function \eqn{P(a, x)} is \code{pgamma(x, a)}.
+  For the incomplete gamma function see \code{\link{pgamma}}.
 }
 \examples{
 choose(5, 2)
