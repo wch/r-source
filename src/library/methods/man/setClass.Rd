@@ -107,7 +107,7 @@ sealClass(Class, where)
       remove the (first) definition found.
     }
     \item{\code{isClass}:}{
-      Is this a the name of a formally defined class? (Argument
+      Is this the name of a formally defined class? (Argument
       \code{formal} is for compatibility and is ignored.)
     }
     \item{\code{getClasses}:}{
