@@ -159,6 +159,10 @@ Date: Tue, 03 Jul 2001 15:50:06 -0500
 Subject: bug(?) in R FAQ - Should I run R from within Emacs?
 From: Tim.Harrold@csiro.au
 Date: Thu, 11 Jul 2002 18:21:42 +1000
+* PR# 2545 *
+Subject: colSums etc. documentation
+From: "Gunter, Bert" <bert_gunter@merck.com>
+Date: Thu, 13 Feb 2003 09:08:44 -0500
 
 Directory:  Graphics
 
@@ -581,10 +585,6 @@ Directory:  incoming
 Subject: apropos() with partial name
 From: John Maindonald <u9801539@leonard.anu.edu.au>
 Date: Thu, 16 Jan 2003 20:22:23 +1100 (EST)
-* PR# 2545 *
-Subject: colSums etc. documentation
-From: "Gunter, Bert" <bert_gunter@merck.com>
-Date: Thu, 13 Feb 2003 09:08:44 -0500
 * PR# 2577 *
 Subject: Problem with hessian in deriv3 
 From: j.c.rougier@durham.ac.uk
@@ -601,19 +601,27 @@ Date: Wed, 12 Mar 2003 17:27:34 +0100 (CET)
 Subject: recursive default argument reference in debugger
 From: pburns@pburns.seanet.com
 Date: Wed, 19 Mar 2003 12:23:40 +0100 (MET)
-* PR# 2676 *
-Subject: brackets in prompt.data.frame
-From: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-Date: Mon, 24 Mar 2003 17:35:31 +0100 (CET)
 * PR# 2687 *
 Subject: termplot
 From: Mark.Bravington@csiro.au
 Date: Wed, 26 Mar 2003 10:32:17 +1100
-* PR# 2689 *
-Subject: (±¤°í)Ä¿ÇÇ °í°´Á¢´ë ±ÍÂúÀ¸½ÃÁÒ.@
-From: ºÎ»ê·»Å»Ä¿ÇÇ<coffee@busancoffee.co.kr>
-Date: Wed, 26 Mar 2003 19:46:00 +0900
-* PR# 2690 *
-Subject: a few adjustments and my computer is much, much faster!
-From: "hot" <hot@freewebcash.net>
-Date: Wed, 26 Mar 2003 04:32:59 -0800
+* PR# 2693 *
+Subject: URGENT RESPONSES NEEDED
+From: "MICHEAL SANKOH JNR." <mark_sank04@mal.com>
+Date: Thu, 27 Mar 2003 15:11:53 +0100
+* PR# 2694 *
+Subject: panel.stripplot
+From: steven.j.novick@gsk.com
+Date: Thu, 27 Mar 2003 15:48:15 +0100 (MET)
+* PR# 2695 *
+Subject: =?EUC-KR?B?KLGksO0pIL/suK6+xrHiILq4ubAxyKMgodogvNLB38fRILz4sKPAuyC/tb/4yPchIEAg?=
+From: "¿ì¸®¾Æ±â" <dnfldeks14@lycos.co.kr>
+Date: Thu, 27 Mar 2003 23:59:20 +0900
+* PR# 2696 *
+Subject: Deprecated component in plot.histogram 
+From: j.c.rougier@durham.ac.uk
+Date: Thu, 27 Mar 2003 15:16:00 GMT
+* PR# 2697 *
+Subject: NEW! 60% off Generic Viagra!
+From: "Monica Rosado" <Zachery9729b@angelfire.com>
+Date: Fri, 28 Mar 03 17:12:12 GMT
