@@ -122,7 +122,7 @@ Some familiarity with @R{} is assumed.  This is not an introduction to
 @R{} but rather a programmers' reference manual.  Other manuals provide
 complementary information: in particular @ref{Preface, , , R-intro, R
 Introduction} provides an introduction to @R{} and @ref{System and
-foreign language interfaces, , , R-ext, Writing R Extensions} details
+foreign language interfaces, , , R-exts, Writing R Extensions} details
 how to extend @R{} using compiled code.
 
 
@@ -3329,7 +3329,7 @@ platform-independent way.
 @findex .Call
 @findex .External
 
-See @ref{System and foreign language interfaces, , , R-ext, Writing R
+See @ref{System and foreign language interfaces, , , R-exts, Writing R
 Extensions} for the details of adding functionality to @R{} via compiled
 code.
 
@@ -3349,7 +3349,7 @@ compiled code (primarily compiled @C{} code) to mainipulate @R{} objects.
 
 The @code{.Internal} and @code{.Primitive} interfaces are used to call
 @C{} code compiled into @R{} at build time.
-@xref{.Internal and .Primitive, , , R-ext, Writing R Extensions}.
+@xref{.Internal and .Primitive, , , R-exts, Writing R Extensions}.
 
 
 @node Exception handling, Debugging, System and foreign language interfaces, Top
