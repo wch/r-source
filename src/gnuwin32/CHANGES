@@ -55,6 +55,10 @@ the warning says "DLL attempted to change FPU control word from
 XXXXX to 8001f", that's a sign of an internal bug somewhere else:
 8001f is the R default value.
 
+The BLAS library Rblas.dll is no longer automatically linked against
+when building a package: as on Unix PKG_LIBS=$(BLAS_LIBS) is required
+in Makevars(.win).
+
 
 
 rw1062
