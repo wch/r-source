@@ -1013,7 +1013,8 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(isLanguage(expr) || isExpression(expr) || isSymbol(expr)) {
 	PROTECT(expr);
 	begincontext(&cntxt, CTXT_RETURN, call, env, rho, args);
-	expr = eval(expr, env);
+	if (!SETJMP(cntxt.cjmpbuf))
+	    expr = eval(expr, env);
 	endcontext(&cntxt);
 	UNPROTECT(1);
     }

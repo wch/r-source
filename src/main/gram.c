@@ -470,7 +470,7 @@ static const short yycheck[] = {     0,
     40,    41,    -1,    -1,    44,    45,    46,    47
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
-#line 3 "/usr/share/misc/bison.simple"
+#line 3 "/usr/lib/bison.simple"
 
 /* Skeleton output parser for bison,
    Copyright (C) 1984, 1989, 1990 Free Software Foundation, Inc.
@@ -663,7 +663,7 @@ __yy_memcpy (char *to, char *from, int count)
 #endif
 #endif
 
-#line 196 "/usr/share/misc/bison.simple"
+#line 196 "/usr/lib/bison.simple"
 
 /* The user can define YYPARSE_PARAM as the name of an argument to be passed
    into yyparse.  The argument should have type void *.
@@ -1261,7 +1261,7 @@ case 73:
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
-#line 498 "/usr/share/misc/bison.simple"
+#line 498 "/usr/lib/bison.simple"
 
   yyvsp -= yylen;
   yyssp -= yylen;
@@ -1779,7 +1779,7 @@ static SEXP xxfuncall(SEXP expr, SEXP args)
 	if (isString(expr))
 	    expr = install(CHAR(STRING(expr)[0])); 
 	PROTECT(expr);
-	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg)
+	if (length(CDR(args)) == 1 && CADR(args) == R_MissingArg && TAG(CDR(args)) == R_NilValue )
 	    ans = lang1(expr);
 	else    
 	    ans = LCONS(expr, CDR(args));   

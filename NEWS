@@ -47,6 +47,8 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   a handful of Robert's fixes to the development version transferred
+
     o   relops tried to set time series parameters before dimensions
 
     o   arithmetic tried to set time series parameters before dimensions
