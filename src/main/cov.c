@@ -1,6 +1,6 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the R Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -314,7 +314,7 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP x, y, ans, xm, ym, ind;
     int ansmat, cor, method, n, ncx, ncy, pair;
     checkArity(op, args);
-    cor = PRIMVAL(op);
+    cor = PRIMVAL(op);/* cor(...) if non-0,  cov(...) otherwise */
     /* Argument-1: x */
     x = CAR(args) = coerceVector(CAR(args), REALSXP);
     if ((ansmat = isMatrix(x))) {
@@ -451,6 +451,6 @@ SEXP do_cov(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     UNPROTECT(1);
     if(ZeroSD)
-	warning("standard deviation equal to zero in cor\n");
+	warning("standard deviation equal to zero in cor(.)\n");
     return ans;
 }
