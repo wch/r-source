@@ -147,9 +147,20 @@ calls to the \code{setAs} function.
   With this explanation as background, the function \code{setAs} does a
   fairly obvious computation:  It constructs and sets a method for the function
   \code{coerce} with signature \code{c(from, to)}, using the \code{def}
-  argument to define the body of the method.  The function \code{coerce}
+  argument to define the body of the method.  The function supplied as
+  \code{def} can have one argument (interpreted as an object to be
+  coerced) or two arguments (the \code{from} object and the \code{to}
+  class).  Either way, \code{setAs} constructs a function of two
+  arguments, with the second defaulting to the name of the \code{to}
+  class.  The method will be called from \code{as} with the object
+  as the only argument:  The default for the
+  second argument is provided so the method can know the intended
+  \code{to} class.
+
+  The function \code{coerce}
   exists almost entirely as a repository for such methods, to be
-  selected as desribed above by the \code{as} function.  In fact, it
+  selected as desribed above by the \code{as} function.
+  In fact, it
   would usually be a bad idea to call \code{coerce} directly, since then
   you would get inheritance on the \code{to} argument; as mentioned,
   this is not likely to be what you want.
@@ -247,13 +258,13 @@ CA <- new("ca", a ="A", id = 1)
 
 CB <- new("cb", b = "B", id = 2)
 
-setAs("cb", "ca", function(from)new("ca", a=from@b, id = from@id))
+setAs("cb", "ca", function(from, to )new(to, a=from@b, id = from@id))
 
 as(CB, "numeric")
 
 \testonly{
 ## should generate an error (should have been a function of one argument)
-try(setAs("track", "numeric", function(x, ...)x@y))
+try(setAs("track", "numeric", function(x, y,z)x@y))
 
 }
 
