@@ -1164,7 +1164,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     SEXP class, s, t, m, meth, sxp, gr, newrho;
     char buf[512], generic[128], *pt;
     /* check whether we are processing the default method */
-    sprintf(buf, "%s", CHAR(PRINTNAME(CAR(call))));
+    sprintf(buf, "%s", PRIMNAME(op) );
     pt = strtok(buf, ".");
     pt = strtok(NULL, ".");
 
