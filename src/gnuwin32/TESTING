@@ -100,6 +100,7 @@ Testing R build under Windows
 - Try building using an ATLAS BLAS, and run the make check and make
   test-all-extras tests again.
 
+- Check you can interrupt RGui with ESC and Rterm with Ctrl-C.
 
 BDR
 2001-12-03
