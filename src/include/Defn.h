@@ -446,12 +446,7 @@ FUNTAB	R_FunTab[];	    /* Built in functions */
 #endif
 
 /* Formerly in Arith.h */
-#ifdef IEEE_754
-# define MATH_CHECK(call)	(call)
-#else
-  extern double R_tmp;
-# define MATH_CHECK(call)	(errno=0,R_tmp=call,(errno==0)?R_tmp:R_NaN)
-#endif
+#define MATH_CHECK(call)	(call)
 
 /* extern int	errno; already have errno.h ! */
 extern int	gc_inhibit_torture INI_as(1);

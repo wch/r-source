@@ -80,11 +80,9 @@ static int rhash(SEXP x, int indx, HashData *d)
     /* There is a problem with signed 0s under IEEE */
     double tmp = (REAL(x)[indx] == 0.0) ? 0.0 : REAL(x)[indx];
     /* need to use both 32-byte chunks or endianness is an issue */
-#ifdef IEEE_754 /* otherwise always false */
     /* we want all NaNs except NA equal, and all NAs equal */
     if (R_IsNA(tmp)) tmp = NA_REAL;
     else if (R_IsNaN(tmp)) tmp = R_NaN;
-#endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
 	union foo tmpu;
 	tmpu.d = tmp;
@@ -99,13 +97,11 @@ static int chash(SEXP x, int indx, HashData *d)
     unsigned int u;
     tmp.r = (COMPLEX(x)[indx].r == 0.0) ? 0.0 : COMPLEX(x)[indx].r;
     tmp.i = (COMPLEX(x)[indx].i == 0.0) ? 0.0 : COMPLEX(x)[indx].i;
-#ifdef IEEE_754 /* otherwise always false */
     /* we want all NaNs except NA equal, and all NAs equal */
     if (R_IsNA(tmp.r)) tmp.r = NA_REAL;
     else if (R_IsNaN(tmp.r)) tmp.r = R_NaN;
     if (R_IsNA(tmp.i)) tmp.i = NA_REAL;
     else if (R_IsNaN(tmp.i)) tmp.i = R_NaN;
-#endif
     if (sizeof(double) >= sizeof(unsigned int)*2) {
 	union foo tmpu;
 	tmpu.d = tmp.r;
@@ -139,9 +135,7 @@ static int requal(SEXP x, int i, SEXP y, int j)
     if (!ISNAN(REAL(x)[i]) && !ISNAN(REAL(y)[j]))
 	return (REAL(x)[i] == REAL(y)[j]);
     else if (R_IsNA(REAL(x)[i]) && R_IsNA(REAL(y)[j])) return 1;
-#ifdef IEEE_754 /* otherwise always false */
     else if (R_IsNaN(REAL(x)[i]) && R_IsNaN(REAL(y)[j])) return 1;
-#endif
     else return 0;
 }
 
@@ -154,11 +148,9 @@ static int cequal(SEXP x, int i, SEXP y, int j)
     else if ((R_IsNA(COMPLEX(x)[i].r) || R_IsNA(COMPLEX(x)[i].i))
 	    && (R_IsNA(COMPLEX(y)[j].r) || R_IsNA(COMPLEX(y)[j].i)))
 	return 1;
-#ifdef IEEE_754 /* otherwise always false */
     else if ((R_IsNaN(COMPLEX(x)[i].r) || R_IsNaN(COMPLEX(x)[i].i))
 	    && (R_IsNaN(COMPLEX(y)[j].r) || R_IsNaN(COMPLEX(y)[j].i)))
 	return 1;
-#endif
     else
 	return 0;
 }
@@ -781,7 +773,7 @@ SEXP do_matchcall(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
-#if defined(IEEE_754) & defined(HAVE_STRING_H)
+#if defined(HAVE_STRING_H)
 #  include <string.h>
 #  ifdef _AIX  /*some people just have to be different */
 #    include <memory.h>

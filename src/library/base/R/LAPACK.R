@@ -5,7 +5,6 @@ La.svd <- function(x, nu = min(n, p), nv = min(n, p),
 	stop("argument to La.svd must be numeric or complex")
     if (any(!is.finite(x))) stop("infinite or missing values in x")
     method <- match.arg(method)
-    if(!capabilities("IEEE754")) method <- "dgesvd"
     if(is.complex(x) && method == "dgesdd") {
         method <- "dgesvd"
     }

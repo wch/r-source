@@ -78,12 +78,7 @@ static Rboolean rsum(double *x, int n, double *value, Rboolean narm)
 	}
 	else if (!narm) {
 	    if(!updated) updated = 1;
-#ifdef IEEE_754
 	    s += x[i];
-#else
-	    *value = NA_REAL;
-	    return(updated);
-#endif
 	}
     }
     *value = s;
@@ -99,21 +94,10 @@ static Rboolean csum(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
 
     s.r = s.i = 0;
     for (i = 0; i < n; i++) {
-	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i))
-#ifdef IEEE_754
-	    || !narm
-#endif
-	    ) {
+	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
 	    if(!updated) updated=1;
 	    s.r += x[i].r;
 	    s.i += x[i].i;
-#ifndef IEEE_754
-	}
-	else if (!narm) {
-	    if(!updated) updated=1;
-	    value->r = value->i = NA_REAL;
-	    return(updated);
-#endif
 	}
     }
     value->r = s.r;
@@ -152,7 +136,6 @@ static Rboolean  rmin(double *x, int n, double *value, Rboolean narm)
     int i;
     Rboolean updated = FALSE;
 
-#ifdef IEEE_754
     s = R_PosInf;
     for (i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
@@ -167,23 +150,6 @@ static Rboolean  rmin(double *x, int n, double *value, Rboolean narm)
 	}
     }
     *value = /* (!updated) ? NA_REAL : */ s;
-#else
-    s = NA_REAL;
-    for (i = 0; i < n; i++) {
-	if (!ISNAN(x[i])) {
-	    if (ISNAN(s) || s > x[i]) {
-		s = x[i];
-		if(!updated) updated = 1;
-	    }
-	}
-	else if (!narm) {
-	    if(!updated) updated = 1;
-	    *value = NA_REAL;
-	    return(updated);
-	}
-    }
-    *value = s;
-#endif
 
     return(updated);
 }
@@ -215,7 +181,7 @@ static Rboolean rmax(double *x, int n, double *value, Rboolean narm)
     double s;
     int i;
     Rboolean updated = FALSE;
-#ifdef IEEE_754
+
     s = R_NegInf;
     for (i = 0; i < n; i++) {
 	if (ISNAN(x[i])) {/* Na(N) */
@@ -230,22 +196,6 @@ static Rboolean rmax(double *x, int n, double *value, Rboolean narm)
 	}
     }
     *value = /* (!updated) ? NA_REAL : */ s;
-#else
-    s = NA_REAL;
-    for (i = 0; i < n; i++) {
-	if (!ISNAN(x[i])) {
-	    if (ISNAN(s) || s < x[i])
-		s = x[i];
-	    if(!updated) updated = 1;
-	}
-	else if (!narm) {
-	    if(!updated) updated = 1;
-	    *value = NA_REAL;
-	    return(updated);
-	}
-    }
-    *value = s;
-#endif
 
     return(updated);
 }
@@ -289,12 +239,7 @@ static Rboolean rprod(double *x, int n, double *value, Rboolean narm)
 	}
 	else if (!narm) {
 	    if(!updated) updated = 1;
-#ifdef IEEE_754
 	    s *= x[i];/* Na(N) */
-#else
-	    *value = NA_REAL;
-	    return(updated);
-#endif
 	}
     }
     *value = s;
@@ -310,28 +255,13 @@ static Rboolean cprod(Rcomplex *x, int n, Rcomplex *value, Rboolean narm)
     s.r = 1;
     s.i = 0;
     for (i = 0; i < n; i++) {
-	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i))
-#ifdef IEEE_754
-	    || !narm
-#endif
-	    ) {
+	if ((!ISNAN(x[i].r) && !ISNAN(x[i].i)) || !narm) {
 	    if(!updated) updated = 1;
 	    t.r = s.r;
 	    t.i = s.i;
 	    s.r = MATH_CHECK(t.r * x[i].r - t.i * x[i].i);
 	    s.i = MATH_CHECK(t.r * x[i].i + t.i * x[i].r);
 	}
-#ifndef IEEE_754
-	else if (!narm) {
-	    if(!updated) updated = 1;
-	    value->r = value->i = NA_REAL;
-	    return(updated);
-	}
-	if(ISNAN(s.r) || ISNAN(s.i)) {
-	    value->r = value->i = NA_REAL;
-	    return(updated);
-	}
-#endif
     }
     value->r = s.r;
     value->i = s.i;
@@ -389,22 +319,14 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     case 2:/* min */
 	DbgP2("do_summary: min(.. na.rm=%d) ", narm);
 	ans_type = INTSXP;
-#ifdef IEEE_754
 	zcum.r = R_PosInf;
-#else
-	zcum.r = NA_REAL;
-#endif
 	icum = INT_MAX;
 	break;
 
     case 3:/* max */
 	DbgP2("do_summary: max(.. na.rm=%d) ", narm);
 	ans_type = INTSXP;
-#ifdef IEEE_754
 	zcum.r = R_NegInf;;
-#else
-	zcum.r = NA_REAL;
-#endif
 	icum = R_INT_MIN;
 	break;
 
@@ -461,15 +383,8 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			if (int_a) tmp = Int2Real(itmp);
 			DbgP3(" REAL: (old)cum= %g, tmp=%g\n", zcum.r,tmp);
 			if (ISNAN(tmp)) {
-#ifdef IEEE_754
 			    zcum.r += tmp;/* NA or NaN */
-#else
-			    goto na_answer;
-#endif
 			} else if(
-#ifndef IEEE_754
-			    ISNAN(zcum.r) ||
-#endif
 			    (iop==2 && tmp < zcum.r) ||
 			    (iop==3 && tmp > zcum.r))	zcum.r = tmp;
 		    }
@@ -506,9 +421,6 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    updated = rsum(REAL(a), length(a), &tmp, narm);
 		    if(updated) {
-#ifndef IEEE_754
-			if(ISNAN(tmp)) goto na_answer;
-#endif
 			zcum.r += tmp;
 		    }
 		    break;
@@ -520,9 +432,6 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 			ans_type = CPLXSXP;
 		    updated = csum(COMPLEX(a), length(a), &ztmp, narm);
 		    if(updated) {
-#ifndef IEEE_754
-			if(ISNAN(ztmp.r)) goto na_answer;
-#endif
 			zcum.r += ztmp.r;
 			zcum.i += ztmp.i;
 		    }
@@ -544,9 +453,6 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    else
 			updated = iprod(INTEGER(a), length(a), &tmp, narm);
 		    if(updated) {
-#ifndef IEEE_754
-			if(ISNAN(tmp)) goto na_answer;
-#endif
 			zcum.r *= tmp;
 			zcum.i *= tmp;
 		    }
@@ -555,9 +461,6 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
 		    ans_type = CPLXSXP;
 		    updated = cprod(COMPLEX(a), length(a), &ztmp, narm);
 		    if(updated) {
-#ifndef IEEE_754
-			if(ISNAN(ztmp.r)) goto na_answer;
-#endif
 			z.r = zcum.r;
 			z.i = zcum.i;
 			zcum.r = MATH_CHECK(z.r * ztmp.r - z.i * ztmp.i);

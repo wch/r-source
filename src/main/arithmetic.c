@@ -38,20 +38,6 @@
 #undef MATHLIB_PRIVATE
 #include "arithmetic.h"
 
-/* Error Handling for Floating Point Errors */
-
-#ifndef IEEE_754
-#ifdef Unix
-#include <signal.h>
-
-static RETSIGTYPE handle_fperror(int dummy)
-{
-    errno = ERANGE;
-    signal(SIGFPE, handle_fperror);
-}
-#endif /* Unix */
-#endif /* not IEEE_754 */
-
 #ifdef HAVE_MATHERR
 
 /* Override the SVID matherr function */
@@ -74,7 +60,6 @@ int matherr(struct exception *exc)
 }
 #endif
 
-#ifdef IEEE_754
 #ifndef _AIX
 const double R_Zero_Hack = 0.0;	/* Silence the Sun compiler */
 #else
@@ -87,8 +72,8 @@ typedef union
 } ieee_double;
 
 /* These variables hw and lw are only used if IEEE_754 is defined.
-   The value of each is fixed once we determine the endiannes
-   of the machine, and this cna be done via WORDS_BIGENDIAN.
+   The value of each is fixed once we determine the endianness
+   of the machine, and this can be done via WORDS_BIGENDIAN.
 
    Earlier code used to use establish_endianness()
    to compute these, but this is uncessary and makes them
@@ -183,56 +168,16 @@ int R_finite(double x)
 #endif
 }
 
-#else /* not IEEE_754 */
-
-int R_IsNA(double x)
-{
-    return (x == R_NaReal);
-}
-
-/* NaN but not NA: never true */
-int R_IsNaN(double x)
-{
-    return 0;
-}
-
-int R_IsNaNorNA(double x)
-{
-# ifndef HAVE_ISNAN
-    return (x == R_NaReal);
-# else
-    return (isnan(x) != 0 || x == R_NaReal);
-# endif
-}
-
-/* Having finite() is irrelevant as we are not using IEEE */
-int R_finite(double x)
-{
-    return (x != R_NaReal && x < R_PosInf && x > R_NegInf);
-}
-#endif /* IEEE_754 */
 
 /* Arithmetic Initialization */
 
 void InitArithmetic()
 {
     R_NaInt = INT_MIN;
-
-#ifdef IEEE_754
-    /* establish_endianness(); */
     R_NaN = 0.0/R_Zero_Hack;
     R_NaReal = R_ValueOfNA();
     R_PosInf = 1.0/R_Zero_Hack;
     R_NegInf = -1.0/R_Zero_Hack;
-#else
-    R_NaN = -DBL_MAX*(1-1e-15);
-    R_NaReal = R_NaN;
-    R_PosInf = DBL_MAX;
-    R_NegInf = -DBL_MAX;
-#ifdef Unix
-    signal(SIGFPE, handle_fperror);
-#endif
-#endif
 }
 
 
@@ -265,13 +210,8 @@ double R_pow(double x, double y) /* = x ^ y */
     }
     if (R_FINITE(x) && R_FINITE(y))
 	return(pow(x,y));
-    if (ISNAN(x) || ISNAN(y)) {
-#ifdef IEEE_754
+    if (ISNAN(x) || ISNAN(y))
 	return(x + y);
-#else
-	return(NA_REAL);
-#endif
-    }
     if(!R_FINITE(x)) {
 	if(x > 0)		/* Inf ^ y */
 	    return((y < 0.)? 0. : R_PosInf);
@@ -588,16 +528,8 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
     case MINUSOP:
 	ans = duplicate(s1);
 	n = LENGTH(s1);
-	for (i = 0; i < n; i++) {
-#ifdef IEEE_754
+	for (i = 0; i < n; i++)
 	    REAL(ans)[i] = -REAL(s1)[i];
-#else
-	    double x;
-	    x = REAL(s1)[i];
-	    REAL(ans)[i] = ISNA(x) ? NA_REAL :
-		((x == 0.0) ? 0.0 : -x);
-#endif
-	}
 	return ans;
     default:
 	errorcall(lcall, "illegal unary operator");
@@ -739,11 +671,7 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 	mod_iterate(n1, n2, i1, i2) {
 	    x1 = INTEGER(s1)[i1];
 	    x2 = INTEGER(s2)[i2];
-#ifdef IEEE_754
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
-#else
-		if (x1 == NA_INTEGER || x2 == NA_INTEGER || x2 == 0)
-#endif
 		    REAL(ans)[i] = NA_REAL;
 		else
 		    REAL(ans)[i] = (double) x1 / (double) x2;
@@ -810,9 +738,6 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
     int i, i1, i2, n, n1, n2;
     SEXP ans;
-#ifndef IEEE_754
-    double x1, x2;
-#endif
 
     /* Note: "s1" and "s2" are protected above. */
     n1 = LENGTH(s1);
@@ -833,136 +758,37 @@ static SEXP real_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     switch (code) {
     case PLUSOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = REAL(s1)[i1] + REAL(s2)[i2];
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else if(x1 == R_PosInf)
-		REAL(ans)[i] = (x2 == R_NegInf) ? NA_REAL : x1;
-	    else if(x1 == R_NegInf)
-		REAL(ans)[i] = (x2 == R_PosInf) ? NA_REAL : x1;
-	    else
-		REAL(ans)[i] = MATH_CHECK(x1 + x2);
-#endif
 	}
 	break;
     case MINUSOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = REAL(s1)[i1] - REAL(s2)[i2];
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else if(x1 == R_PosInf)
-		REAL(ans)[i] = (x2 == x1) ? NA_REAL : x1;
-	    else if(x1 == R_NegInf)
-		REAL(ans)[i] = (x2 == x1) ? NA_REAL : x1;
-	    else
-		REAL(ans)[i] = MATH_CHECK(x1 - x2);
-#endif
 	}
 	break;
     case TIMESOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = REAL(s1)[i1] * REAL(s2)[i2];
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else if(x1 == R_PosInf)
-		REAL(ans)[i] = (x2 == 0.) ? NA_REAL : 
-		    ((x2 > 0) ? R_PosInf : R_NegInf);
-	    else if(x1 == R_NegInf)
-		REAL(ans)[i] = (x2 == 0.) ? NA_REAL : 
-		    ((x2 < 0) ? R_PosInf : R_NegInf);
-	    else if(x2 == R_PosInf)
-		REAL(ans)[i] = (x1 == 0.) ? NA_REAL : 
-		    ((x1 > 0) ? R_PosInf : R_NegInf);
-	    else if(x2 == R_NegInf)
-		REAL(ans)[i] = (x1 == 0.) ? NA_REAL : 
-		    ((x1 < 0) ? R_PosInf : R_NegInf);
-	    else
-		REAL(ans)[i] = MATH_CHECK(x1 * x2);
-#endif
 	}
 	break;
     case DIVOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = REAL(s1)[i1] / REAL(s2)[i2];
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (!R_FINITE(x1) && !R_FINITE(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else if (ISNA(x1) || ISNA(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else if (x1 == 0.0 && x2 == 0.0)
-		REAL(ans)[i] = NA_REAL;
-	    else if (x2 == 0.0)
-		REAL(ans)[i] = (x1 > 0) ? R_PosInf : R_NegInf;
-	    else if (x1 == R_PosInf)
-		REAL(ans)[i] = (x2 > 0) ? R_PosInf : R_NegInf;
-	    else if (x1 == R_NegInf)
-		REAL(ans)[i] = (x2 < 0) ? R_PosInf : R_NegInf;
-	    else if (!R_FINITE(x2)) /* +/- Inf */
-		REAL(ans)[i] = 0.0;
-	    else
-		REAL(ans)[i] = MATH_CHECK(x1 / x2);
-#endif
 	}
 	break;
     case POWOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = R_pow(REAL(s1)[i1], REAL(s2)[i2]);
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else
-		REAL(ans)[i] = MATH_CHECK(R_pow(x1, x2));
-#endif
 	}
 	break;
     case MODOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = myfmod(REAL(s1)[i1], REAL(s2)[i2]);
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2) || x2 == 0)
-		REAL(ans)[i] = NA_REAL;
-	    else
-		REAL(ans)[i] = MATH_CHECK(myfmod(x1, x2));
-#endif
 	}
 	break;
     case IDIVOP:
 	mod_iterate(n1, n2, i1, i2) {
-#ifdef IEEE_754
 	    REAL(ans)[i] = floor(REAL(s1)[i1] / REAL(s2)[i2]);
-#else
-	    x1 = REAL(s1)[i1];
-	    x2 = REAL(s2)[i2];
-	    if (ISNA(x1) || ISNA(x2))
-		REAL(ans)[i] = NA_REAL;
-	    else {
-		if (x2 == 0)
-		    REAL(ans)[i] = 0;
-		else
-		    REAL(ans)[i] = MATH_CHECK(floor(x1 / x2));
-	    }
-#endif
 	}
 	break;
     }

@@ -22,7 +22,7 @@
 
 <p>This is a guide to installation and administration for R.
 
-   <p>The current version of this document is 2.0.0 (2004-05-12).
+   <p>The current version of this document is 2.0.0 (2004-05-13).
 
    ISBN 3-900051-02-X
 
@@ -1221,11 +1221,10 @@ specified in the C9x draft standard.  In particular, this means that
 <code>finite</code> has been replaced by <code>isfinite</code>.  A <code>gcc</code>
 configured for HP-UX 10.2 run on 11.0 will not find <code>isfinite</code>, and
 as a result <code>configure</code> does not recognize the machine as fully
-supporting <small>IEEE</small> arithmetic and does not define <code>IEEE_754</code>
-when compiling C code.  This results in a failure in <code>make
-check</code>.  The best solution is to install a properly configured
-<code>gcc</code>.  An alternative work-around is to add <code>-DIEEE_754</code>
-to the <code>CFLAGS</code> variable.
+supporting <small>IEEE</small> arithmetic and so will not complete.  The best
+solution is to install a properly configured <code>gcc</code>.  An
+alternative work-around is to add <code>-DIEEE_754</code> to the
+<code>CFLAGS</code> variable.
 
    <p>You can configure R to use both the native <code>cc</code> and
 <code>fort77</code> with
@@ -1338,8 +1337,10 @@ R 1.9.0 under AIX 5.1 in 64-bit mode with
      CXXFLAGS='-O -qstrict'
      </pre>
 
-<p>and the X11() device worked.  His system required the Makeconf file to
-be edited to replace /lib/crt0.o by /lib/crt0_64.o.
+<p>and the <code>X11()</code> device worked.  His system required the
+<code>Makeconf</code> file to be edited to replace <code>/lib/crt0.o</code> by
+<code>/lib/crt0_64.o</code> in <code>R_XTRA_LIBS</code>, and <code>configure</code> now
+tries to detect this.
 
    <p>We understand that <code>--enable-R-shlib</code> does not work under AIX.
 

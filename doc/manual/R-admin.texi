@@ -1459,11 +1459,10 @@ specified in the C9x draft standard.  In particular, this means that
 @code{finite} has been replaced by @code{isfinite}.  A @command{gcc}
 configured for HP-UX 10.2 run on 11.0 will not find @code{isfinite}, and
 as a result @command{configure} does not recognize the machine as fully
-supporting @acronym{IEEE} arithmetic and does not define @code{IEEE_754}
-when compiling C code.  This results in a failure in @command{make
-check}.  The best solution is to install a properly configured
-@command{gcc}.  An alternative work-around is to add @option{-DIEEE_754}
-to the @code{CFLAGS} variable.
+supporting @acronym{IEEE} arithmetic and so will not complete.  The best
+solution is to install a properly configured @command{gcc}.  An
+alternative work-around is to add @option{-DIEEE_754} to the
+@code{CFLAGS} variable.
 
 You can configure @R{} to use both the native @command{cc} and
 @command{fort77} with

@@ -246,14 +246,10 @@ static void printNamedRealVector(double * x, int n, SEXP * names)
     w = wr + wi + 2
 
 #undef P_IMAG_NA
-#ifdef IEEE_754
-# define P_IMAG_NA				\
+#define P_IMAG_NA				\
 	    if(ISNAN(x[k].i))			\
 		Rprintf("+%si", "NaN");		\
 	    else
-#else
-# define P_IMAG_NA
-#endif
 
 static void printNamedComplexVector(Rcomplex * x, int n, SEXP * names)
     PRINT_N_VECTOR(INI_F_CPLX,

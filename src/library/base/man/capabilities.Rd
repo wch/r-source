@@ -37,7 +37,7 @@ capabilities(what = NULL)
       }
     \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note
       that this is more correctly known by the international standard
-      IEC 60559.}
+      IEC 60559, and will always be true from \R version 2.0.0.}
     \item{bzip2}{Is \code{\link{bzfile}} available?}
     \item{PCRE}{Is the Perl-Compatible Regular Expression library
       available?  This is needed for the \code{perl = TRUE} option to
