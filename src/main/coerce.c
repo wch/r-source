@@ -376,7 +376,7 @@ SEXP do_isvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
 	SEXP ans, dims, names, x;
-	int i, lenx;
+	int i, n;
 
 	if(DispatchOrEval(call, op, args, rho, &ans, 1))
 		return(ans);
@@ -385,9 +385,10 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	checkArity(op, args);
 
 	if (!isList(CAR(args)) && !isVector(CAR(args)))
-		error("is.na applies only to lists and vectors\n");
+		errorcall(call, "is.na applies only to lists and vectors\n");
 	ans = allocVector(LGLSXP, length(CAR(args)));
 	x = CAR(args);
+	n = length(x);
 	if (isVector(x)) {
 		PROTECT(dims = getAttrib(x, R_DimSymbol));
 		if (isArray(x))
@@ -415,8 +416,8 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 			LOGICAL(ans)[i] = (STRING(x)[i] == NA_STRING);
 		break;
 	case LISTSXP:
-		lenx = length(x);
-		for (i = 0; i < lenx; i++) {
+		n = length(x);
+		for (i = 0; i < n; i++) {
 			if (!isVector(CAR(x)) || length(CAR(x)) > 1)
 				LOGICAL(ans)[i] = 0;
 			else {
@@ -453,21 +454,21 @@ SEXP do_isna(SEXP call, SEXP op, SEXP args, SEXP rho)
 	return ans;
 }
 
-SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
+SEXP do_isnan(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-	SEXP ans, x, names, dims;
+	SEXP ans, dims, names, x;
 	int i, n;
+
+	if(DispatchOrEval(call, op, args, rho, &ans, 1))
+		return(ans);
+
+	PROTECT(args = ans);
 	checkArity(op, args);
-	switch(TYPEOF(CAR(args))) {
-	    case REALSXP:
-	    case CPLXSXP:
-		break;
-	    default:
-		CAR(args) = coerceVector(CAR(args), REALSXP);
-	}
+
+	if (!isList(CAR(args)) && !isVector(CAR(args)))
+		errorcall(call, "is.nan applies only to lists and vectors\n");
+	ans = allocVector(LGLSXP, length(CAR(args)));
 	x = CAR(args);
-	n = length(x);
-	PROTECT(ans = allocVector(LGLSXP, n));
 	if (isVector(x)) {
 		PROTECT(dims = getAttrib(x, R_DimSymbol));
 		if (isArray(x))
@@ -475,22 +476,160 @@ SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
 		else
 			PROTECT(names = getAttrib(x, R_NamesSymbol));
 	}
-	if(isComplex(x)) {
-		for(i=0 ; i<n ; i++)
-			INTEGER(ans)[i] = (FINITE(COMPLEX(x)[i].r)
-					&& FINITE(COMPLEX(x)[i].i));
+	switch (TYPEOF(x)) {
+	case LGLSXP:
+	case INTSXP:
+	case STRSXP:
+		for (i = 0; i < length(x); i++)
+			LOGICAL(ans)[i] = (INTEGER(x)[i] == NA_INTEGER);
+		break;
+	case REALSXP:
+		for (i = 0; i < length(x); i++)
+#ifdef IEEE_754
+			LOGICAL(ans)[i] = R_IsNaN(REAL(x)[i]);
+#else
+			LOGICAL(ans)[i] = 0;
+#endif
+		break;
+	case CPLXSXP:
+		for (i = 0; i < length(x); i++)
+#ifdef IEEE_754
+			LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(x)[i].r)
+					|| R_IsNaN(COMPLEX(x)[i].i));
+#else
+			LOGICAL(ans)[i] = 0;
+#endif
+		break;
+	case LISTSXP:
+		n = length(x);
+		for (i = 0; i < n; i++) {
+			if (!isVector(CAR(x)) || length(CAR(x)) > 1)
+				LOGICAL(ans)[i] = 0;
+			else {
+				switch (TYPEOF(CAR(x))) {
+				case LGLSXP:
+				case INTSXP:
+				case STRSXP:
+					LOGICAL(ans)[i] = 1;
+					break;
+				case REALSXP:
+#ifdef IEEE_754
+				        LOGICAL(ans)[i] = R_IsNaN(REAL(CAR(x))[0]);
+#else
+					LOGICAL(ans)[i] = 0;
+#endif
+					break;
+				case CPLXSXP:
+#ifdef IEEE_754
+					LOGICAL(ans)[i] = (R_IsNaN(COMPLEX(CAR(x))[0].r)
+						|| R_IsNaN(COMPLEX(CAR(x))[0].i));
+#else
+					LOGICAL(ans)[i] = 0;
+#endif
+					break;
+				}
+			}
+			x = CDR(x);
+		}
+		break;
 	}
-	else {
-		for(i=0 ; i<n ; i++)
-			INTEGER(ans)[i] = FINITE(REAL(x)[i]);
+	if (isVector(x)) {
+		setAttrib(ans, R_DimSymbol, dims);
+		if (isArray(x))
+			setAttrib(ans, R_DimNamesSymbol, names);
+		else
+			setAttrib(ans, R_NamesSymbol, names);
+		UNPROTECT(2);
 	}
-	setAttrib(ans, R_DimSymbol, dims);
-	if (isArray(x))
-		setAttrib(ans, R_DimNamesSymbol, names);
-	else
-		setAttrib(ans, R_NamesSymbol, names);
-	UNPROTECT(3);
+	UNPROTECT(1);
 	return ans;
+}
+
+SEXP do_isfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+  SEXP ans, x, names, dims;
+  int i, n;
+  checkArity(op, args);
+  if (!isList(CAR(args)) && !isVector(CAR(args)))
+    errorcall(call, "is.finite applies only to vectors\n");
+  x = CAR(args);
+  n = length(x);
+  ans = allocVector(LGLSXP, n);
+  if (isVector(x)) {
+    dims = getAttrib(x, R_DimSymbol);
+    if (isArray(x))
+      names = getAttrib(x, R_DimNamesSymbol);
+    else
+      names = getAttrib(x, R_NamesSymbol);
+  }
+  switch (TYPEOF(x)) {
+  case LGLSXP:
+  case INTSXP:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = (INTEGER(x)[i] != NA_INTEGER);
+    break;
+  case REALSXP:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = FINITE(REAL(x)[i]);
+    break;
+  case CPLXSXP:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = (FINITE(COMPLEX(x)[i].r) && FINITE(COMPLEX(x)[i].i));
+    break;
+  default:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = 0;
+  }
+  setAttrib(ans, R_DimSymbol, dims);
+  if (isArray(x))
+    setAttrib(ans, R_DimNamesSymbol, names);
+  else
+    setAttrib(ans, R_NamesSymbol, names);
+  return ans;
+}
+
+SEXP do_isinfinite(SEXP call, SEXP op, SEXP args, SEXP rho)
+{
+  SEXP ans, x, names, dims;
+  int i, n;
+  checkArity(op, args);
+  if (!isList(CAR(args)) && !isVector(CAR(args)))
+    errorcall(call, "is.infinite applies only to vectors\n");
+  x = CAR(args);
+  n = length(x);
+  ans = allocVector(LGLSXP, n);
+  if (isVector(x)) {
+    dims = getAttrib(x, R_DimSymbol);
+    if (isArray(x))
+      names = getAttrib(x, R_DimNamesSymbol);
+    else
+      names = getAttrib(x, R_NamesSymbol);
+  }
+#ifdef IEEE_754
+  switch (TYPEOF(x)) {
+  case REALSXP:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = !(FINITE(REAL(x)[i]) || R_IsNA(REAL(x)[i]));
+    break;
+  case CPLXSXP:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = !(FINITE(COMPLEX(x)[i].r) || R_IsNA(COMPLEX(x)[i].r) &&
+			  FINITE(COMPLEX(x)[i].i) || R_IsNA(COMPLEX(x)[i].i));
+    break;
+  default:
+    for(i=0 ; i<n ; i++)
+      INTEGER(ans)[i] = 0;
+  }
+#else
+  for(i=0 ; i<n ; i++)
+    INTEGER(ans)[i] = 0;
+#endif
+  setAttrib(ans, R_DimSymbol, dims);
+  if (isArray(x))
+    setAttrib(ans, R_DimNamesSymbol, names);
+  else
+    setAttrib(ans, R_NamesSymbol, names);
+  return ans;
 }
 
 SEXP coerceVector(SEXP v, SEXPTYPE type)

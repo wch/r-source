@@ -107,6 +107,16 @@ int R_IsNA(double x)
 	}
 	return 0;
 }
+
+int R_IsNaN(double x)
+{
+	if(x != x) {
+		ieee_double y;
+		y.value = x;
+		return (y.word[lw] != 1954);
+	}
+	return 0;
+}
 #endif
 
 	/* Arithmetic Initialization */
