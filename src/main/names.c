@@ -57,7 +57,7 @@ FUNTAB R_FunTab[] =
 {"repeat",	do_repeat,	0,	0,	-1,	PP_REPEAT,	0},
 {"break",	do_break,	CTXT_BREAK,0,	-1,	PP_BREAK,	0},
 {"next",	do_break,	CTXT_NEXT,0,	-1,	PP_NEXT,	0},
-{"return",	do_return,	0,	1,	-1,	PP_RETURN,	0},
+{"return",	do_return,	0,	0,	-1,	PP_RETURN,	0},
 {"stop",	do_stop,	0,	1,	1,	PP_FUNCALL,	0},
 {"warning",	do_warning,	0,	101,	1,	PP_FUNCALL,	0},
 {"function",	do_function,	0,	0,	-1,	PP_FUNCTION,	0},
