@@ -1,4 +1,8 @@
 \name{Tk-widgets}
+\title{Tk widgets}
+\description{
+  Create Tk widgets and associated \R objects.
+}
 \alias{tkwidget}
 \alias{tkbutton}
 \alias{tkcanvas}
@@ -15,17 +19,14 @@
 \alias{tkscrollbar}
 \alias{tktext}
 \alias{tktoplevel}
-
-\title{Tk widgets}
-\description{
-Create Tk widgets and associated R objects.
-}
 \usage{
-tkwidget(parent, type, ...)
-tkbutton(parent, ...)
+tkwidget(parent, type, \dots)
+tkbutton(parent, \dots)
+
   ...many more...
-tktext(parent, ...)
-tktoplevel(parent=.TkRoot, ...)
+
+tktext(parent, \dots)
+tktoplevel(parent=.TkRoot, \dots)
 }
 \arguments{
   \item{parent}{ Parent of widget window }
@@ -33,15 +34,15 @@ tktoplevel(parent=.TkRoot, ...)
   \item{\dots}{handled via \code{.Tcl.args}}
 }
 \details{
-  These functions create Tk widgets. \code{tkwidget} creates a widget of
+  These functions create Tk widgets.  \code{tkwidget} creates a widget of
   a given type, the others simply call \code{tkwidget} with the
   respective \code{type} argument.
 
   It is not possible to describe the widgets and their arguments in
-  full. Please refer to the Tcl/Tk documentation.
+  full.  Please refer to the Tcl/Tk documentation.
 }
 \seealso{\code{\link{Tcl-interface}}, \code{\link{Tk-commands}},
-  \code{\link{Tk-widgetcmd}}} 
+  \code{\link{Tk-widgetcmd}}}
 
 \examples{
 \dontrun{
@@ -53,7 +54,7 @@ label.widget <- tklabel(tt, text="Hello, World!")
 button.widget <- tkbutton(tt, text="Push",
                           command=function()cat("OW!\n"))
 tkpack(label.widget, button.widget) # geometry manager
-                                    # see Tk-commands 
+                                    # see Tk-commands
 
 ## Push the button and then...
 

@@ -83,7 +83,6 @@
 \alias{tkplace.info}
 \alias{tkplace.slaves}
 }
-
 \title{Tk non-widget commands}
 \description{
   These functions interface to Tk non-widget commands, such as the
@@ -100,19 +99,19 @@ tkpack.configure(...)
 }
 \details{
   \code{tkcmd} provides a generic interface to calling any Tk or Tcl
-  command by simply running \code{.Tcl.args} on the arguments and passing the
-  result to \code{.Tcl}
-  
+  command by simply running \code{.Tcl.args} on the arguments and
+  passing the result to \code{.Tcl}
+
   There are far too many of these commands to describe them and their
-  arguments in full. Please refer to the Tcl/Tk documentation for details.
-  Notice the general pattern for converting Tcl subcommands like
-  \code{pack configure} to function names. The naming pattern should be obvious
-  with a few exceptions. E.g.  \code{tkXselection.clear}
-  has been renamed to avoid confusion with a similarly named
-  widget command.
+  arguments in full.  Please refer to the Tcl/Tk documentation for
+  details.  Notice the general pattern for converting Tcl subcommands
+  like \code{pack configure} to function names.  The naming pattern
+  should be obvious with a few exceptions.  E.g.,
+  \code{tkXselection.clear} has been renamed to avoid confusion with a
+  similarly named widget command.
 }
 \seealso{\code{\link{Tcl-interface}}, \code{\link{Tk-widgets}},
-  \code{\link{Tk-widgetcmd}}} 
+  \code{\link{Tk-widgetcmd}}}
 
 \examples{
 \dontrun{
@@ -129,4 +128,4 @@ tkdestroy(tt)
 }
 
 }
-\keyword{ misc }%-- one or more ...
+\keyword{misc}%-- one or more ...
