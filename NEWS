@@ -221,6 +221,26 @@ NEW FEATURES
 	defaulting to 'na.pass', rather than the value of
 	getOption("na.action").
 
+    o   There are five new par() settings:
+
+	'family' can be used to specify a font family for graphics
+	text.  This is a device-independent family specification
+	which gets mapped by the graphics device to a device-specific
+	font specification (see, for example, postscriptFonts()).
+	Currently, only PostScript, PDF, and X11 respond to this
+	setting.
+
+	'lend', 'ljoin', and 'lmitre' control the cap style and
+	join style for drawing lines (only noticeable on thick lines
+	or borders).  Currently, only PostScript, PDF, and X11 
+	respond to these settings.
+
+	'lheight' is a multiplier used in determining the vertical
+	spacing of multi-line text.
+
+	All of these settings are currently only available via par()
+	(i.e., not in-line as arguments to plot(), lines(), ...)
+
     o   It is now possible to specify colours with a full alpha
 	transparency channel via the new 'alpha' argument to the
 	rgb() and hsv() functions, or as a string of the form "#RRGGBBAA".

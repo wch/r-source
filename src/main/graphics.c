@@ -2027,6 +2027,7 @@ void GInit(GPar *dp)
     dp->mkh = .001;/* dummy value > 0  --- FIXME : */
     /* GREset has Rf_gpptr(dd)->mkh = Rf_gpptr(dd)->cra[0] * Rf_gpptr(dd)->ipr[0]; */
     dp->cex = 1.0;
+    dp->lheight = 1.0;
     dp->cexbase = 1.0;
     dp->cexmain = 1.2;
     dp->cexlab = 1.0;
@@ -2042,6 +2043,7 @@ void GInit(GPar *dp)
 
     /* dp->ps = 10; */	/* Device Specific */
     dp->metricInfo = 0;
+    strcpy(dp->family, "");
     dp->font = 1;
     dp->fontmain = 2;
     dp->fontlab = 1;
@@ -2050,6 +2052,9 @@ void GInit(GPar *dp)
 
     dp->pch = 1;
     dp->lty = LTY_SOLID;
+    dp->lend = GE_ROUND_CAP;
+    dp->ljoin = GE_ROUND_JOIN;
+    dp->lmitre = 10.0;
     dp->smo = 1;
 
     /* String Adjustment and rotation */
@@ -2166,6 +2171,7 @@ static double	adjsave;	/* adj */
 static int	annsave;	/* ann */
 static int	btysave;	/* bty */
 static double	cexsave;	/* cex */
+static double   lheightsave;
 static double	cexbasesave;	/* cexbase */
 static double	cexmainsave;	/* cex.main */
 static double	cexlabsave;	/* cex.lab */
@@ -2179,6 +2185,7 @@ static int	collabsave;	/* col.lab */
 static int	colsubsave;	/* col.sub */
 static int	colaxissave;	/* col.axis */
 static double	crtsave;	/* character rotation */
+static char     familysave[50]; 
 static int	fontsave;	/* font */
 static int	fontmainsave;	/* font.main */
 static int	fontlabsave;	/* font.lab */
@@ -2189,6 +2196,9 @@ static int	labsave[3];	/* axis labelling parameters */
 static int	lassave;	/* label style */
 static int	ltysave;	/* line type */
 static double	lwdsave;	/* line width */
+static R_GE_lineend lendsave;
+static R_GE_linejoin ljoinsave;
+static double   lmitresave;
 static double	mgpsave[3];	/* margin position for annotation */
 static double	mkhsave;	/* mark height */
 static int	pchsave;	/* plotting character */
@@ -2211,6 +2221,7 @@ void GSavePars(DevDesc *dd)
     annsave = Rf_gpptr(dd)->ann;
     btysave = Rf_gpptr(dd)->bty;
     cexsave = Rf_gpptr(dd)->cex;
+    lheightsave = Rf_gpptr(dd)->lheight;
     cexbasesave = Rf_gpptr(dd)->cexbase;
     cexlabsave = Rf_gpptr(dd)->cexlab;
     cexmainsave = Rf_gpptr(dd)->cexmain;
@@ -2225,6 +2236,7 @@ void GSavePars(DevDesc *dd)
     colaxissave = Rf_gpptr(dd)->colaxis;
     crtsave = Rf_gpptr(dd)->crt;
     errsave = Rf_gpptr(dd)->err;
+    strcpy(familysave, Rf_gpptr(dd)->family);
     fontsave = Rf_gpptr(dd)->font;
     fontmainsave = Rf_gpptr(dd)->fontmain;
     fontlabsave = Rf_gpptr(dd)->fontlab;
@@ -2237,6 +2249,9 @@ void GSavePars(DevDesc *dd)
     lassave = Rf_gpptr(dd)->las;
     ltysave = Rf_gpptr(dd)->lty;
     lwdsave = Rf_gpptr(dd)->lwd;
+    lendsave = Rf_gpptr(dd)->lend;
+    ljoinsave = Rf_gpptr(dd)->ljoin;
+    lmitresave = Rf_gpptr(dd)->lmitre;
     mgpsave[0] = Rf_gpptr(dd)->mgp[0];
     mgpsave[1] = Rf_gpptr(dd)->mgp[1];
     mgpsave[2] = Rf_gpptr(dd)->mgp[2];
@@ -2266,6 +2281,7 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->ann = annsave;
     Rf_gpptr(dd)->bty = btysave;
     Rf_gpptr(dd)->cex = cexsave;
+    Rf_gpptr(dd)->lheight = lheightsave;
     Rf_gpptr(dd)->cexbase = cexbasesave;
     Rf_gpptr(dd)->cexlab = cexlabsave;
     Rf_gpptr(dd)->cexmain = cexmainsave;
@@ -2280,6 +2296,7 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->colaxis = colaxissave;
     Rf_gpptr(dd)->crt = crtsave;
     Rf_gpptr(dd)->err = errsave;
+    strcpy(Rf_gpptr(dd)->family, familysave);
     Rf_gpptr(dd)->font = fontsave;
     Rf_gpptr(dd)->fontmain = fontmainsave;
     Rf_gpptr(dd)->fontlab = fontlabsave;
@@ -2292,6 +2309,9 @@ void GRestorePars(DevDesc *dd)
     Rf_gpptr(dd)->las = lassave;
     Rf_gpptr(dd)->lty = ltysave;
     Rf_gpptr(dd)->lwd = lwdsave;
+    Rf_gpptr(dd)->lend = lendsave;
+    Rf_gpptr(dd)->ljoin = ljoinsave;
+    Rf_gpptr(dd)->lmitre = lmitresave;
     Rf_gpptr(dd)->mgp[0] = mgpsave[0];
     Rf_gpptr(dd)->mgp[1] = mgpsave[1];
     Rf_gpptr(dd)->mgp[2] = mgpsave[2];
@@ -2428,26 +2448,14 @@ void gcontextFromGP(R_GE_gcontext *gc, DevDesc *dd)
     gc->gamma = Rf_gpptr(dd)->gamma;
     gc->lwd = Rf_gpptr(dd)->lwd;
     gc->lty = Rf_gpptr(dd)->lty;
-    /*
-     * FIXME:  Need to add lineend/join/mitre pars so user can control these
-     */
-    gc->lend = GE_ROUND_CAP;
-    gc->ljoin = GE_ROUND_JOIN;
-    gc->lmitre = 10;
+    gc->lend = Rf_gpptr(dd)->lend;
+    gc->ljoin = Rf_gpptr(dd)->ljoin;
+    gc->lmitre = Rf_gpptr(dd)->lmitre;
     gc->cex = Rf_gpptr(dd)->cex;
     gc->ps = (double) Rf_gpptr(dd)->ps;
-    /*
-     * FIXME:  Need to add a lineheight par so user can control this
-     */
-    gc->lineheight = 1;
+    gc->lineheight = Rf_gpptr(dd)->lheight;
     gc->fontface = Rf_gpptr(dd)->font;
-    /*
-     * FIXME:  Need to add a fontfamily par so user can control this
-     *
-     * A font family of "" means that the default font
-     * set up by the device will be used.
-     */
-    strcpy(gc->fontfamily, "");
+    strcpy(gc->fontfamily, Rf_gpptr(dd)->family);
 }
 
 /* Draw a line. */
@@ -4804,11 +4812,13 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->bg = Rf_dpSavedptr(dd)->bg;
     Rf_dpptr(dd)->bty = Rf_dpSavedptr(dd)->bty;
     Rf_dpptr(dd)->cex = Rf_dpSavedptr(dd)->cex;
+    Rf_gpptr(dd)->lheight = Rf_dpSavedptr(dd)->lheight;
     Rf_dpptr(dd)->col = Rf_dpSavedptr(dd)->col;
     Rf_dpptr(dd)->crt = Rf_dpSavedptr(dd)->crt;
     Rf_dpptr(dd)->err = Rf_dpSavedptr(dd)->err;
     Rf_dpptr(dd)->fg = Rf_dpSavedptr(dd)->fg;
     Rf_dpptr(dd)->font = Rf_dpSavedptr(dd)->font;
+    strcpy(Rf_dpptr(dd)->family, Rf_dpSavedptr(dd)->family);
     Rf_dpptr(dd)->gamma = Rf_dpSavedptr(dd)->gamma;
     Rf_dpptr(dd)->lab[0] = Rf_dpSavedptr(dd)->lab[0];
     Rf_dpptr(dd)->lab[1] = Rf_dpSavedptr(dd)->lab[1];
@@ -4816,6 +4826,9 @@ void restoredpSaved(DevDesc *dd)
     Rf_dpptr(dd)->las = Rf_dpSavedptr(dd)->las;
     Rf_dpptr(dd)->lty = Rf_dpSavedptr(dd)->lty;
     Rf_dpptr(dd)->lwd = Rf_dpSavedptr(dd)->lwd;
+    Rf_dpptr(dd)->lend = Rf_dpSavedptr(dd)->lend;
+    Rf_dpptr(dd)->ljoin = Rf_dpSavedptr(dd)->ljoin;
+    Rf_dpptr(dd)->lmitre = Rf_dpSavedptr(dd)->lmitre;
     Rf_dpptr(dd)->mgp[0] = Rf_dpSavedptr(dd)->mgp[0];
     Rf_dpptr(dd)->mgp[1] = Rf_dpSavedptr(dd)->mgp[1];
     Rf_dpptr(dd)->mgp[2] = Rf_dpSavedptr(dd)->mgp[2];

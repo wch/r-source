@@ -24,6 +24,7 @@
 \concept{cxy}
 \concept{din}
 \concept{err}
+\concept{family}
 \concept{fg}
 \concept{fig}
 \concept{fin}
@@ -35,6 +36,10 @@
 \concept{gamma}
 \concept{lab}
 \concept{las}
+\concept{lend}
+\concept{lheight}
+\concept{ljoin}
+\concept{lmitre}
 \concept{lty}
 \concept{lwd}
 \concept{mai}
@@ -118,7 +123,8 @@ par(\dots, no.readonly = FALSE)
   \code{\link{title}}, \code{\link{text}}, \code{\link{mtext}}:
   \itemize{
     \item \code{"ask"}
-    \item \code{"fig"}, \code{"fin"}
+    \item \code{"family"}, \code{"fig"}, \code{"fin"}
+    \item \code{"lend"}, \code{"lheight"}, \code{"ljoin"}, \code{"lmitre"}
     \item \code{"mai"}, \code{"mar"}, \code{"mex"}
     \item \code{"mfrow"}, \code{"mfcol"}, \code{"mfg"}
     \item \code{"new"}
@@ -204,6 +210,15 @@ par(\dots, no.readonly = FALSE)
     \item{\code{err}}{(\emph{Unimplemented}; \R is silent when points
       outside the plot region are \emph{not} plotted.)
       The degree of error reporting desired.}
+    \item{\code{family}}{The name of a font family for drawing text.
+      This name is device-independent and gets mapped by each
+      graphics device to a device-specific font description.
+      The default value is \code{""} which means that the
+      default device font will be used.
+      Standard values are \code{"serif"}, \code{"sans"},
+      \code{"mono"}, and \code{"symbol"}.  Different devices
+      may define others.  Some devices will ignore this setting
+      completely.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
       This is the default color used for things like axes and boxes
       around plots.  A description of how colors are specified is given
@@ -240,6 +255,28 @@ par(\dots, no.readonly = FALSE)
       }
       Note that other string/character rotation (via argument \code{srt}
       to \code{par}) does \emph{not} affect the axis labels.
+    }
+    \item{\code{lend}}{The line end style.
+      This can be specified as an integer or string:
+      0 and \code{"round"} mean rounded line caps;
+      1 and \code{"butt"} mean butt line caps;
+      2 and \code{"square"} mean square line caps.
+    }
+    \item{\code{lheight}}{The line height multiplier.
+      The height of a line of text (used to vertically space
+      multi-line text) is found by multiplying the current
+      font size both by the current character expansion and by the
+      line height multiplier.  Default value is 1.}
+    \item{\code{ljoin}}{The line join style.
+      This can be specified as an integer or string:
+      0 and \code{"round"} mean rounded line joins;
+      1 and \code{"mitre"} mean mitred line joins;
+      2 and \code{"bevel"} mean bevelled line joins.}  
+    \item{\code{lmitre}}{The line mitre limit.
+      This controls when mitred line joins are automatically
+      converted into bevelled line joins.  The 
+      value must be larger than 1 and the default is 10.  Not all
+      devices will honour this setting.
     }
     \item{\code{lty}}{The line type.
       Line types can either be specified as an integer (0=blank,

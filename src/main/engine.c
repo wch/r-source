@@ -489,6 +489,23 @@ R_GE_lineend LENDpar(SEXP value, int ind)
     }
 }
 
+SEXP LENDget(unsigned int lend)
+{
+    SEXP ans = R_NilValue;
+    int i;
+
+    for (i = 0; lineend[i].name; i++) {
+	if(lineend[i].end == lend)
+	    return mkString(lineend[i].name);
+    }
+
+    error("invalid line end");
+    /*
+     * Should never get here
+     */
+    return ans;
+}
+
 typedef struct {
     char *name;
     R_GE_linejoin join;
@@ -535,6 +552,23 @@ R_GE_linejoin LJOINpar(SEXP value, int ind)
     else {
 	error("invalid line join"); /*NOTREACHED, for -Wall : */ return 0;
     }
+}
+
+SEXP LJOINget(unsigned int ljoin)
+{
+    SEXP ans = R_NilValue;
+    int i;
+
+    for (i = 0; linejoin[i].name; i++) {
+	if(linejoin[i].join == ljoin)
+	    return mkString(linejoin[i].name);
+    }
+
+    error("invalid line join");
+    /*
+     * Should never get here
+     */
+    return ans;
 }
 
 /****************************************************************
@@ -1388,23 +1422,11 @@ static void clipText(double x, double y, char *str, double rot, double hadj,
     case 0:  /* text totally clipped; draw nothing */
 	break;
     case 1:  /* text totally inside;  draw all */
-        /*
-	 * FIXME:  Pass on the fontfamily, fontface, and
-	 * lineheight so that the device can use them
-	 * if it wants to.
-	 * NOTE: fontface corresponds to old "font"
-	 */
 	dd->dev->text(x, y, str, rot, hadj, gc, dd->dev);
 	break;
     case 2:  /* text intersects clip region
 		act according to value of clipToDevice */
 	if (toDevice) /* Device will do clipping */
-	    /*
-	     * FIXME:  Pass on the fontfamily, fontface, and
-	     * lineheight so that the device can use them
-	     * if it wants to.
-	     * NOTE: fontface corresponds to old "font"
-	     */
 	    dd->dev->text(x, y, str, rot, hadj, gc, dd->dev);
 	else /* don't draw anything; this could be made less crude :) */
 	    ;

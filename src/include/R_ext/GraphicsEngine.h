@@ -248,7 +248,9 @@ double toDeviceHeight(double value, GEUnit from, GEDevDesc *dd);
 #define LTY_TWODASH	2 + (2<<4) + (6<<8) + (2<<12)
 
 R_GE_lineend LENDpar(SEXP value, int ind);
+SEXP LENDget(R_GE_lineend lend);
 R_GE_linejoin LJOINpar(SEXP value, int ind);
+SEXP LJOINget(R_GE_linejoin ljoin);
 
 void GESetClip(double x1, double y1, double x2, double y2, GEDevDesc *dd);
 void GENewPage(R_GE_gcontext *gc, GEDevDesc *dd);
