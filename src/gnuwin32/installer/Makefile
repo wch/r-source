@@ -16,7 +16,7 @@ GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
 	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh
 
 # we don't want share/{Makefile.in,glade,sh} installed
-SHARE_DIRS = R make perl texmf
+SHARE_DIRS = R make perl texmf licenses
 
 all: $(RPREFIX).exe miniR.exe
 
