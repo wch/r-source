@@ -11,7 +11,7 @@ subdir = src/scripts
 include $(top_builddir)/Makeconf
 
 SCRIPTS_S = BATCH LINK Rcmd Rdiff Rd2dvi Rd2txt filename help \
-	help.links maketitle.awk massage-Examples pager
+	help.links massage-Examples pager
 SCRIPTS_B_IN = COMPILE.in INSTALL.in REMOVE.in Rd2contents.in \
 	Rdconv.in Rdindex.in Rprof.in SHLIB.in Sd2Rd.in \
 	build-help.in build.in check.in extract-usage.in

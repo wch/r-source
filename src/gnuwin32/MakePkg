@@ -84,7 +84,7 @@ endif
 
 $(SPKG)/TITLE:
 	if [ ! -f $(SPKG)/TITLE -a -f $(SPKG)/DESCRIPTION ] ; then \
-	  $(AWK) -f $(RHOME)/src/gnuwin32/maketitle.awk $(SPKG)/DESCRIPTION > $@; \
+	  perl $(RHOME)/share/perl/maketitle.pl $(SPKG)/DESCRIPTION > $@; \
 	fi
 
 # This fails if DESCRIPTION.. doesn't exist.
