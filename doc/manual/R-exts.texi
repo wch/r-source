@@ -1988,7 +1988,7 @@ matrix as the gradient attribute of @code{ans}, unprotect the remaining
 protected locations and return the answer @code{ans}.
 
 @node R (internal) programming miscellania, Function and variable index, System and foreign language interfaces, Top
-@chapter R (internal) programming miscellania
+@appendix R (internal) programming miscellania
 
 @menu
 * Which R functions should stay @sc{<primitive>}?::  
