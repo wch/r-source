@@ -827,6 +827,10 @@ BUG FIXES
     o	power.*test() now gives an error when 'sig.level' is outside [0,1].
 	(PR#7245)
 
+    o	Fitting a binomial glm with a matrix response lost the names of
+	the response, which should have been transferred to the
+	residuals and fitted values.
+
 
 
 	**************************************************

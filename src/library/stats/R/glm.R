@@ -104,7 +104,7 @@ glm.fit <-
 {
     x <- as.matrix(x)
     xnames <- dimnames(x)[[2]]
-    ynames <- names(y)
+    ynames <- if(is.matrix(y)) rownames(y) else names(y)
     conv <- FALSE
     nobs <- NROW(y)
     nvars <- ncol(x)

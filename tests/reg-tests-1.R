@@ -3288,3 +3288,15 @@ y <- structure(c("a", "b", "2", "0.2-25", "O", "O"), .Dim = c(2, 3),
                .Dimnames = list(c("1", "2"), c("P", "V", "1")))
 merge(x, y, all.y = TRUE)
 ## failed for a while in pre-2.0.0
+
+
+## matrix responses in binomial glm lost names prior to 2.0.0
+y <- rbinom(10, 10, 0.5)
+x <- 1:10
+names(y) <- letters[1:10]
+ym <- cbind(y, 10-y)
+fit2 <- glm(ym ~ x, binomial)
+stopifnot(identical(names(resid(fit2)), names(y)))
+## Note: fit <- glm(y/10 ~ x, binomial, weights=rep(10, 10))
+## Does not preserve names in R, but does in S.
+## The problem was glm.fit assumed a vector response.
