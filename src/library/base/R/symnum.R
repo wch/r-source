@@ -38,10 +38,9 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 
     ##: Scor <- as.character(cut(x, breaks= cutpoints, labels= symbols))
     ##:-- more efficiently, using the function from within  cut :
-    iS <-
-	.C("bincode2", x= as.double(x), length(x),
-	   as.double(cutpoints), as.integer(ns+1),
-	   code= integer(length(x)), include = TRUE, NAOK = TRUE)$code
+    iS <- .C("bincode2", x= as.double(x), length(x),
+	     as.double(cutpoints), as.integer(ns+1),
+	     code= integer(length(x)), include = TRUE, NAOK = TRUE)$code
     if(any(ii <- is.na(iS))) {
 	##-- can get 0, if x[i]== minc	--- only case ?
 	iS[which(ii)[abs(x[ii] - minc) < eps]] <- 1 #-> symbol[1]
@@ -65,7 +64,7 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	dimnames(Scor)[[2]] <-
 	    if(length(coln)) {
 		ch <- abbreviate(coln, minlength=1)
-		if(sum(1+nchar(ch)) + max(nchar(coln)) + 1 > .Options[["width"]])
+		if(sum(1+nchar(ch)) + max(nchar(coln)) + 1 > .Options$width)
 		    ##-- would not fit on one line
 		    abbreviate(ch, minlength=2, use.classes=FALSE)
 		else ch
@@ -73,12 +72,11 @@ symnum <- function(x, cutpoints = c(  .3,  .6,	 .8,  .9, .95),
 	    else rep("", dim(Scor)[2])
     }
     formatI <- function(x) { #- format individually
-	n<-length(x); r<-character(n); for(i in 1:n) r[i]<-format(x[i]); r
+	n <- length(x); r <- character(n); for(i in 1:n)r[i] <- format(x[i]); r
     }
     legend <- c(rbind(formatI(cutpoints), c(paste("`",symbols,"'",sep=""),"")),
 		if(has.na) paste(" ## NA: `",na,"'",sep=""))
-    attr(Scor,"legend") <- paste(legend[-2*(ns+1)], collapse="	")
+    attr(Scor,"legend") <- paste(legend[-2*(ns+1)], collapse="  ")
     noquote(Scor)
 }
 ## Martin Maechler, 21 Jan 94;	Dedicated to	Benjamin Schaad,  born that day
-
