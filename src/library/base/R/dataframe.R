@@ -19,6 +19,8 @@ row.names.default <- function(x) attr(x,"row.names")
   }
   x
 }
+"row.names<-.default" <- function(x, value)
+    "row.names<-.data.frame"(as.data.frame(x),value)
 
 "is.na.data.frame" <- function (x)
 {

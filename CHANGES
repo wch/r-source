@@ -25,6 +25,9 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   row.names<-.default now exists. Converts object to data
+        frame and then adds row names
+
     o	codes() had *opposite* semantics of Splus. Now it's the same. 
 
     o   replicating factors now yields factors (again)
