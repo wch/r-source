@@ -1643,7 +1643,7 @@ unchecked.
 Argument @code{DUP} can be used to suppress copying.  It is dangerous:
 see the on-line help for arguments against its use.  It is not possible
 to pass numeric vectors as @code{float *} or @code{REAL} if
-@code{DUP=TRUE}.
+@code{DUP=FALSE}.
 
 Finally, argument @code{PACKAGE} confines the search for the symbol name
 to a specific shared library (or use @code{"base"} for code compiled
