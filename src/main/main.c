@@ -20,6 +20,10 @@
 #include "Defn.h"
 #include "Graphics.h"
 
+/*--- The `real'  main() program is in	../<SYSTEM>/system.c,
+ *---		  ======	e.g.,	../unix/system.c
+ */
+
 	/* Heap and Pointer Protection Stack Sizes. */
 	/* These have moved to Defn.h and Platform.h */
 
@@ -113,9 +117,9 @@ SEXP	R_CommentSymbol;		/* "comment" */
 			/* Arithmetic Values */
 
 double	R_tmp;				/* Temporary Value */
-double	R_NaN;				/* NaN or -DBL_MAX */  
-double	R_PosInf;			/* IEEE Inf or DBL_MAX */  
-double	R_NegInf;			/* IEEE -Inf or -DBL_MAX */  
+double	R_NaN;				/* NaN or -DBL_MAX */
+double	R_PosInf;			/* IEEE Inf or DBL_MAX */
+double	R_NegInf;			/* IEEE -Inf or -DBL_MAX */
 int	R_NaInt;			/* NA_INTEGER */
 double	R_NaReal;			/* NA_REAL */
 SEXP	R_NaString;			/* NA_STRING */
@@ -139,7 +143,7 @@ void InitGlobalEnv()
 
 
 
-	/* This is the R read-eval-print loop.  If R_Console */
+	/* This is the R read-eval-print loop.	If R_Console */
 	/* is zero, it is assumed that R_Inputfile contains */
 	/* a file descriptor which is to be read to end of file */
 	/* If R_Console is one, input is taken from the console. */
@@ -246,7 +250,7 @@ void mainloop()
 	R_Toplevel.promargs = R_NilValue;
 	R_Toplevel.call = R_NilValue;
 	R_Toplevel.cloenv = R_NilValue;
-	R_Toplevel.sysparent = R_NilValue; 
+	R_Toplevel.sysparent = R_NilValue;
 	R_Toplevel.conexit = R_NilValue;
 	R_Toplevel.cend = NULL;
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
@@ -276,8 +280,8 @@ void mainloop()
 	}
 
 		/* This is where we try to load a user's */
-		/* saved data.  The right thing to do here */
-		/* is very platform dependent.  E.g. Under */
+		/* saved data.	The right thing to do here */
+		/* is very platform dependent.	E.g. Under */
 		/* Unix we look in a special hidden file and */
 		/* on the Mac we look in any documents which */
 		/* might have been double clicked on or dropped */
@@ -293,7 +297,7 @@ void mainloop()
 		R_InitialData();
 	}
 
-#ifndef Macintosh 
+#ifndef Macintosh
 		/* This is where we source the system-wide */
 		/* profile file.  If there is an error */
 		/* we drop through to further processing. */
@@ -309,7 +313,7 @@ void mainloop()
 			doneit = 1;
 			R_Repl(R_NilValue, 0, 0);
 		}
-	}	
+	}
 
 		/* This is where we source the user's */
 		/* profile file.  If there is an error */
@@ -326,7 +330,7 @@ void mainloop()
 			doneit = 1;
 			R_Repl(R_GlobalEnv, 0, 0);
 		}
-	}	
+	}
 #endif
 
 		/* Initial Loading is done.  At this point */
@@ -379,7 +383,7 @@ void mainloop()
 
 int R_BrowseLevel = 0;
 
-static int ParseBrowser(SEXP CExpr, SEXP rho) 
+static int ParseBrowser(SEXP CExpr, SEXP rho)
 {
 	int rval=0;
 
@@ -423,12 +427,12 @@ SEXP do_browser(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	if( !DEBUG(rho) ) {
 		cptr=R_GlobalContext;
-		while (cptr->callflag != CTXT_RETURN && cptr->callflag ) 
+		while (cptr->callflag != CTXT_RETURN && cptr->callflag )
 			cptr = cptr->nextcontext;
 		Rprintf("Called from: ");
 		PrintValueRec(cptr->call);
 	}
-	
+
 	R_ReturnedValue = R_NilValue;
 
 		/* Here we establish two contexts.  The first */
