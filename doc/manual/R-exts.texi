@@ -419,7 +419,7 @@ functionality, respectively.
 You will very likely need to ensure that the same C compiler and
 compiler flags are used in the @file{configure} tests as when compiling
 @R{} or your package.  You can achieve this by including the following
-fragment early in @file{configure.in}
+fragment early in @file{configure.ac}
 
 @smallexample
 @group
@@ -4020,7 +4020,7 @@ column number of the maximal element in the @var{i}-th row (the same as
 @R{}'s @code{max.col()} function).
 @end deftypefun
 
-@deftypefun int findInterval(double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
+@deftypefun int findInterval (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
 Given the ordered vector @var{xt} of length @var{n}, return the interval
 or index of @var{x} in @code{@var{xt}[]}, typically max(i ; 1 <= i <=
 @var{n} & @var{xt}[i] <= @var{x}) where we use 1-indexing as in @R{} and

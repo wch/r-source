@@ -36,7 +36,7 @@ The files are as follows.
   libglade.m4
 	are from the GNOME project and used for the GNOME configuration.
 	Changes made in gnome.m4:
-	* Replace AC_ARG_WITH(gnome) by our version in configure.in
+	* Replace AC_ARG_WITH(gnome) by our version in configure.ac
 	  because we need want_gnome=no by default and use LIBS and
 	  CPPFLAGS rather than LDFLAGS and CFLAGS.
 	* In AC_ARG_WITH(gnome-includes), standardize doc strings and

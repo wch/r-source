@@ -14,8 +14,8 @@ INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS FAQ NEWS RESOURCES THANKS
 DISTFILES = $(INSTFILES) \
 	BUGS ChangeLog INSTALL ONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	acconfig.h acinclude.m4 aclocal.m4 \
-	config.site configure configure.in \
+	acinclude.m4 aclocal.m4 \
+	config.site configure configure.ac \
 	date-stamp
 SUBDIRS = m4 tools afm doc etc share src tests
 
@@ -24,15 +24,13 @@ GZIP = --best
 all: Makefile Makeconf R docs
 
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
-	@cd $(top_builddir) \
-	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $@
 Makeconf: $(srcdir)/Makeconf.in $(top_builddir)/config.status
-	@cd $(top_builddir) \
-	  && CONFIG_FILES=$@ CONFIG_HEADERS= $(SHELL) ./config.status
+	@cd $(top_builddir) && $(SHELL) ./config.status $@
 
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 ACLOCAL_DEPENDENCIES = \
-	configure.in \
+	configure.ac \
 	acinclude.m4
 ACINCLUDE_DEPENDENCIES = \
 	m4/R.m4 \
@@ -44,9 +42,9 @@ ACINCLUDE_DEPENDENCIES = \
 	m4/libtool.m4
 config.status: $(srcdir)/configure
 	@$(SHELL) ./config.status --recheck
-$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(ACLOCAL_M4)
+$(srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_M4)
 	@cd $(srcdir) && $(AUTOCONF)
-$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.in $(ACLOCAL_DEPENDENCIES)
+$(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(srcdir)/configure.ac $(ACLOCAL_DEPENDENCIES)
 	@cd $(srcdir) && $(ACLOCAL)
 $(srcdir)/acinclude.m4: @MAINTAINER_MODE_TRUE@ $(ACINCLUDE_DEPENDENCIES)
 	@cd $(srcdir) && cat $(ACINCLUDE_DEPENDENCIES) > $@
