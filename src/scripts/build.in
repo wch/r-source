@@ -94,7 +94,7 @@ if(!$opt_binary && $INSTALL_opts ne "") {
 }
 ## </FIXME>
 
-## This is the main loop over all packages to be checked.
+## This is the main loop over all packages to be packaged.
 foreach my $pkg (@ARGV) {
     my $is_bundle = 0;
     $pkg =~ s/\/$//;
@@ -114,7 +114,7 @@ foreach my $pkg (@ARGV) {
 	exit(1);
     }
 
-    if($opt_binary) {
+    if($opt_binary) {                # build a binary distribution
 	my $libdir = &file_path(${R::Vars::TMPDIR}, "Rbuild.$$");
 	mkdir("$libdir", 0755)
 	    or die "Error: cannot create directory '$libdir'\n";
@@ -220,11 +220,12 @@ foreach my $pkg (@ARGV) {
 	chdir($startdir);
 	rmtree($libdir);
     }
-    else {
+    else {                    # Build a source tarball
+	my @bundlepkgs;
 	if($description->{"Contains"}) {
 	    $log->message("looks like '${pkg}' is a package bundle");
 	    $is_bundle = 1;
-	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
+	    @bundlepkgs = split(/\s+/, $description->{"Contains"});
 	    foreach my $ppkg (@bundlepkgs) {
 		$log->message("preparing '$ppkg' in bundle '$pkg':");
 		$log->setstars("**");
@@ -294,7 +295,7 @@ foreach my $pkg (@ARGV) {
 			## Seems that the Tar '-X' option uses exclude
                         ## *shell* patterns, where '*', '?', and '[...]'
                         ## are the usual shell wildcards and '\' escapes
-			## them.  Hence we need to escape the wildchard
+			## them.  Hence we need to escape the wildcard
 			## characters in file names.  On Windows, the
 			## first two are invalid (and hence rejected by
 			## R CMD check), and the last two do not need
@@ -312,9 +313,8 @@ foreach my $pkg (@ARGV) {
 	close(EXCLUDE);
 
 	my $filename = "${pkgname}_" . $description->{"Version"} . ".tar";
-	$log->message("building '$filename.gz'");
 	my $filepath = &file_path($startdir, $filename);
-	## under Windows, need separate Cygwin and Windows versions.
+	## under Windows, need separate Cygwin and Windows versions of path.
 	my $origfilepath = $filepath;
 	if($WINDOWS) {
 	    ## workaround for paths in Cygwin tar
@@ -359,7 +359,16 @@ foreach my $pkg (@ARGV) {
 	## Add build stamp to the DESCRIPTION file.
 	&add_build_stamp_to_description_file(&file_path($pkgname,
 							"DESCRIPTION"));
+	$log->message("checking for LF line-endings in source files");
+	if($is_bundle) {
+	    foreach my $ppkg (@bundlepkgs) {
+		&fix_CRLF_in_source_files(&file_path($pkgname, $ppkg));
+	    }
+	} else {
+	    &fix_CRLF_in_source_files($pkgname);
+	}
 	## Finalize.
+	$log->message("building '$filename.gz'");
 	R_system(join(" ",
 		      ("$tar chf",
 		       &shell_quote_file_path($filepath),
@@ -533,7 +542,37 @@ sub update_Rd_index {
     update_index($oldindex, $newindex, $log);
     1;
 }
+
+sub fix_CRLF_in_source_files {
+    my ($pkgname) = @_;
 
+    if(-d "$pkgname/src") {
+	my @src_files = &list_files_with_exts("$pkgname/src", "(c|h|f|cc|cpp)");
+	foreach my $file (@src_files) {
+	    my $has_CRLF = 0;
+	    open(FILE, "< $file")
+		or die "Error: cannot open '$pkgname/$file' for reading\n";
+	    open(TFILE, "> $file.tmp")
+		or die "Error: cannot open '$pkgname/$file.tmp' for writing\n";
+            binmode(FILE); binmode(TFILE);	# for Windows
+	    while(<FILE>) {
+		chop;
+		$has_CRLF = 1 if $_ =~ /\r$/;
+		$_ =~ s/\r$//;
+		print TFILE "$_\n";
+	    }
+	    close(TFILE); close(FILE);
+	    if ($has_CRLF) {
+		print("    file '$file' had CRLF line endings\n");
+		unlink($file); # should not be necessary, but is on Windows
+		rename("$file.tmp", $file) 
+		    or die "Error: cannot rename '$file.tmp'\n";
+	    } else {
+		unlink($file.tmp);
+	    }
+	}
+    }
+}
 
 
 sub usage {

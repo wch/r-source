@@ -883,7 +883,7 @@ sections of Rd files are documented in the corresponding
 @code{\arguments} section.
 
 @item
-C, C++ and Fortran source and header files are tested for correct 
+C, C++ and Fortran source and header files are tested for portable 
 (LF-only) line endings.
 
 @item
@@ -922,7 +922,8 @@ packages from their sources (for example, for subsequent release).
 Prior to actually building the package in the common gzipped tar file
 format, a few diagnostic checks and cleanups are performed.  In
 particular, it is tested whether object indices exist and can be assumed
-to be up-to-date.
+to be up-to-date, and C, C++ and Fortran source files are tested and
+converted to LF line-endings if necessary.
 
 Run-time checks whether the package works correctly should be performed
 using @code{R CMD check} prior to invoking the build procedure.

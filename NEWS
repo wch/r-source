@@ -142,6 +142,8 @@ UTILITIES
         method opens the corresponidng PDF file. The edit() method can
         be used to open the code of the vignette in an editor.
 
+    o	R CMD build now changes src files to LF line endings if necessary.
+
 
 DOCUMENTATION
 
