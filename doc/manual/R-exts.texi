@@ -5072,7 +5072,13 @@ c(formals(foo.default), alist(... = ))}.)
 
 Note that this cannot be used for functions in another package, as the
 order of packages on the search path cannot be controlled, except that
-all precede the base package.
+all precede the base package.  Where the name of the package is known
+and it is in a namespace (currently only @pkg{base}) another way to
+access the orignal form is 
+
+@smallexample
+foo.default <- base::foo
+@end smallexample
 
 
 @node R (internal) programming miscellanea, R coding standards, Generic functions and methods, Top
