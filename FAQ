@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.6-15, 2002-11-13
+Version 1.6-16, 2002-11-22
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -1761,9 +1761,6 @@ distributions of R.)
 
 *pspline*
      Smoothing splines with penalties on order m derivatives.
-
-*ptproc*
-     Tools for analyzing multi-dimensional point process models.
 
 *qtl*
      Analysis of experimental crosses to identify QTLs.
