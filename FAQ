@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 1.2-38, 2001-04-09
+Version 1.2-39, 2001-04-12
 Kurt Hornik
 
 
@@ -1496,6 +1496,11 @@ Currently, there are
      CORBA-aware applications developed in arbitrary languages, on different
      machines and allows R functionality to be exported in the same way to
      other applications.
+
+*OOP*
+     OOP style classes and methods for R and S-PLUS.  Object references and
+     class-based method definition are supported in the style of languages
+     such as Java and C++.
 
 *RSMethods*
      An implementation of S version 4 methods and classes for R, consistent
