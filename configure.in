@@ -140,6 +140,8 @@ else
   AC_CHECK_PROG(CC, ${CC})
 fi
 
+AC_PROG_GCC_TRADITIONAL
+
 CFLAGS=${CFLAGS-"-g"}
 
 case ${host} in
@@ -184,7 +186,7 @@ elif ${use_f2c}; then
   AC_MSG_RESULT([defining F2C to be ${F2C}])
 else
   if test -z "${FC}"; then
-    AC_CHECK_PROGS(F77, g77 f77 f90 xlf cf77 fc)
+    AC_CHECK_PROGS(F77, g77 fort77 f77 f90 xlf cf77 fc)
   else
     F77=${FC}
   fi
