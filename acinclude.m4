@@ -1257,6 +1257,7 @@ fi
 ## ------------
 ## Suggested by Nelson H. F. Beebe <beebe@math.utah.edu> to deal with
 ## inaccuracies on at least NetBSD 1.6 and OpenBSD 3.2.
+## However, don't test all the way into denormalized x (he had k > -1074)
 AC_DEFUN([R_FUNC_LOG1P],
 [AC_CACHE_CHECK([for working log1p], [r_cv_func_log1p_works],
 [AC_RUN_IFELSE([AC_LANG_SOURCE([[
@@ -1269,8 +1270,9 @@ int main () {
   double x;
   /* log(1+x) = x - (1/2)x^2 + (1/3)x^3 - (1/4)x^4 ... */
   /*          = x for x sufficiently small */
-  for(k = -54; k > -1074; --k) {	
-    x = pow(2.0, (double)(k));
+  x = pow(2.0, -53.0);
+  for(k = -54; k > -1022; --k) {	
+    x /= 2.0;
     if(x == 0.0)
       exit(0);			/* OK: reached underflow limit */
     d = log1p(x);
