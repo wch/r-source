@@ -298,10 +298,11 @@ nlme-HELP = ziponly
 rpart-HELP = ziponly
 survival-HELP = ziponly
 
+SAVE=CHECK
 pkg-%:
 	@$(MAKE) --no-print-directory SAVE=$($*-SAVE) \
           DLLNM=$($*-DLLNM) FLIBS="$(FLIBS)" BUILD=$(BUILD) \
-	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) \
+	  PKG=$* RHOME=$(RHOME) RLIB=$(RLIB) RVER=$(RVER) SAVE=$(SAVE)\
 	  -C $(PKGD)/$* -f $(RHOME)/src/gnuwin32/MakePkg
 	@if test -d $(RLIB)/$*/data ; then \
 	  $(MAKE) --no-print-directory $($*-ZIPDATA)data-$* ; \
