@@ -637,6 +637,9 @@ BUG FIXES
     o	sprintf() did not check for buffer overflow on character
 	strings.  (PR#7554)
 
+    o	The error message when evaluation depth was exceeded itself
+	caused an error in deparsing and so was not shown.
+
 
 
 		CHANGES IN R VERSION 2.0.1
