@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.7.0 Under development (unstable) (2003-03-01)
+Version 1.8.0 Under development (unstable) (2003-06-04)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -562,11 +562,13 @@ Error: x is not TRUE
 [1] TRUE
 > res <- try(as.complex( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.complex(res))
+[1] TRUE
 > res <- try(as.data.frame( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.data.frame(res))
 [1] TRUE
 > res <- try(as.double( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.double(res))
+[1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.environment(res))
 > res <- try(as.expression( x ), silent = TRUE)
@@ -578,11 +580,13 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error')) report(is.function(res))
 > res <- try(as.integer( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.integer(res))
+[1] TRUE
 > res <- try(as.list( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.list(res))
 [1] TRUE
 > res <- try(as.logical( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.logical(res))
+[1] TRUE
 > res <- try(as.matrix( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.matrix(res))
 [1] TRUE
@@ -593,6 +597,7 @@ Error: x is not TRUE
 [1] TRUE
 > res <- try(as.numeric( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.numeric(res))
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.ordered(res))
 > res <- try(as.pairlist( x ), silent = TRUE)
@@ -602,6 +607,7 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error')) report(is.qr(res))
 > res <- try(as.real( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.real(res))
+[1] TRUE
 > res <- try(as.symbol( x ), silent = TRUE)
 > if(!inherits(res, 'try-error')) report(is.symbol(res))
 > res <- try(as.table( x ), silent = TRUE)
@@ -630,6 +636,7 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.complex(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.data.frame( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.data.frame(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -639,6 +646,7 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.double(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.environment( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.environment(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -660,6 +668,7 @@ Error: x is not TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.integer(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.list( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.list(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -669,6 +678,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.logical(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.matrix( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.matrix(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -687,6 +697,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.numeric(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.ordered( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.ordered(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -704,6 +715,7 @@ IS: [1] TRUE
 > if(!inherits(res, 'try-error'))
 +    report({if(is.real(x)) { cat('IS: ');all.equal(x, res, tol=0)
 +    } else   !isall.equal(x, res)})
+[1] TRUE
 > res <- try(as.symbol( x ), silent = TRUE)
 > if(!inherits(res, 'try-error'))
 +    report({if(is.symbol(x)) { cat('IS: ');all.equal(x, res, tol=0)
@@ -735,6 +747,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.complex( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.complex( f )))
+[1] TRUE
 > f <- try(as.data.frame( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.data.frame( f )))
 [1] TRUE
@@ -742,6 +755,7 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
+[1] TRUE
 > f <- try(as.environment( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.environment( f )))
 > f <- try(as.expression( x ), silent = TRUE)
@@ -755,11 +769,13 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.function( f )))
 > f <- try(as.integer( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.integer( f )))
+[1] TRUE
 > f <- try(as.list( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.list( f )))
 [1] TRUE
 > f <- try(as.logical( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.logical( f )))
+[1] TRUE
 > f <- try(as.matrix( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.matrix( f )))
 [1] TRUE
@@ -770,6 +786,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.numeric( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.numeric( f )))
+[1] TRUE
 > f <- try(as.ordered( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ordered( f )))
 > f <- try(as.pairlist( x ), silent = TRUE)
@@ -779,8 +796,10 @@ IS: [1] TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
 > f <- try(as.real( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.real( f )))
+[1] TRUE
 > f <- try(as.single( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.single( f )))
+[1] TRUE
 > f <- try(as.symbol( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.symbol( f )))
 > f <- try(as.table( x ), silent = TRUE)
@@ -2167,6 +2186,6 @@ Error: x is not TRUE
 >   if(!inherits(f, 'try-error')) report(identical(f, as.vector( f )))
 [1] TRUE
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.44 0.03 0.47 NA NA 
+Time elapsed:  0.48 0.01 0.51 NA NA 
 > 
 > 
