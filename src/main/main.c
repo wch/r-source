@@ -45,6 +45,7 @@
 extern void InitAquaIO(void);			/* from src/modules/aqua/aquaconsole.c */
 extern void RSetConsoleWidth(void);		/* from src/modules/aqua/aquaconsole.c */
 extern Rboolean CocoaGUI;				/* from src/unix/system.c              */
+extern Rboolean useCocoa;				/* from src/unix/system.c              */
 #endif
 
 /* The `real' main() program is in ../<SYSTEM>/system.c */
@@ -454,7 +455,7 @@ void setup_Rmainloop(void)
     InitGraphics();
     R_Is_Running = 1;
 #ifdef HAVE_AQUA 
-    if( (strcmp(R_GUIType, "AQUA") == 0) & !CocoaGUI){ 
+    if( (strcmp(R_GUIType, "AQUA") == 0) && !CocoaGUI && !useCocoa){ 
 		InitAquaIO(); /* must be after InitTempDir() */
 		RSetConsoleWidth();
 	}
