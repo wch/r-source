@@ -25,46 +25,26 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  $(SHELL) ./config.status
 
 R: Makefile
-	@for g in $(MODULES) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) $@) || exit 1; \
-	  fi; \
+	@for d in $(MODULES); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 
 install install-strip:
-## <FIXME>
-## This should really work for all subdirs ...
-	@for g in $(MODULES) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) $@); \
-	  fi; \
+	@for d in $(MODULES); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-## </FIXME>
 installdirs:
 uninstall:
 	@rm -rf $(Rexecmodulesdir)
 
 mostlyclean: clean
 clean:
-## <FIXME>
-## This should really work for all subdirs ...
-	@for g in $(MODULES) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) $@); \
-	  fi; \
-	done
-## </FIXME>
-distclean: clean
-## <FIXME>
-## This should really work for all subdirs ...
-	@for g in $(MODULES) ""; do \
-	  if test -n "$${g}"; then \
-	    (cd $${g} && $(MAKE) $@); \
-	  fi; \
-	done
-## </FIXME>
 	@for d in $(SUBDIRS); do \
-	  rm -f $${d}/Makefile; \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
+	done
+distclean: clean
+	@for d in $(SUBDIRS); do \
+	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@-rm -f Makefile
 maintainer-clean: distclean
