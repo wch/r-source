@@ -33,7 +33,7 @@
 /endash /emdash /quotedblleft /quotedblright /quoteleft /quoteright /divide /.notdef
 /ydieresis /Ydieresis /fraction /Euro /guilsinglleft /guilsinglright /fi /fl
 /daggerdbl /periodcentered /quotesinglbase /quotedblbase  /perthousand /Acircumflex /Ecircumflex /Aacute
-/Edieresis /Egrave /lacute /lcircumflex /ldieresis /lgrave /Oacute /Ocircumflex
+/Edieresis /Egrave /Iacute /Icircumflex /Idieresis /Igrave /Oacute /Ocircumflex
 /.notdef /Ograve /Uacute /Ucircumflex /Ugrave /dotlessi /circumflex /tilde
 /macron /breve /dotaccent /ring /cedilla /hungarumlaut /ogonek /caron
 ]
