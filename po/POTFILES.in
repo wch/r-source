@@ -74,6 +74,7 @@ src/main/print.c
 src/main/printarray.c
 src/main/qsort.c
 src/main/random.c
+src/main/regex.c
 src/main/relop.c
 src/main/saveload.c
 src/main/scan.c

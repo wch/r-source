@@ -86,7 +86,7 @@
 # endif
 #endif
 
-/* This is for other GNU distributions with internationalized messages.  */
+/* This is for other GNU distributions with internationalized messages.
 #if HAVE_LIBINTL_H || defined _LIBC
 # include <libintl.h>
 # ifdef _LIBC
@@ -94,6 +94,12 @@
 #  define gettext(msgid) \
   INTUSE(__dcgettext) (INTUSE(_libc_intl_domainname), msgid, LC_MESSAGES)
 # endif
+#else
+# define gettext(msgid) (msgid)
+#endif
+*/
+#ifdef ENABLE_NLS
+# include <libintl.h>
 #else
 # define gettext(msgid) (msgid)
 #endif
