@@ -536,7 +536,7 @@ SEXP do_c(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Attempt method dispatch. */
 
-    if (DispatchOrEval(call, op, args, env, &ans, 1)) {
+    if (DispatchOrEval(call, "c", args, env, &ans, 1)) {
 	R_Visible = 1;
 	return(ans);
     }
@@ -660,7 +660,7 @@ SEXP do_unlist(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Attempt method dispatch. */
 
-    if (DispatchOrEval(call, op, args, env, &ans, 1)) {
+    if (DispatchOrEval(call, "unlist", args, env, &ans, 1)) {
 	R_Visible = 1;
 	return(ans);
     }

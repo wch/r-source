@@ -16,6 +16,9 @@ as.single.default <- function(x,...) {
     structure(.Internal(as.vector(x,"double")), Csingle=TRUE)
 }
 
+# as.character is now internal.  The default method remains here to
+# preserve the semantics that for a call with an object argument
+# dispatching is done first on as.character and then on as.vector.
 as.character.default <- function(x,...) .Internal(as.vector(x,"character"))
 
 as.expression <- function(x,...) UseMethod("as.expression")

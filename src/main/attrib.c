@@ -425,7 +425,7 @@ SEXP do_names(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, "dimnames<-", args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
@@ -493,7 +493,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, "dimnames", args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
@@ -505,7 +505,7 @@ SEXP do_dimnames(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, "dim", args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);
@@ -517,7 +517,7 @@ SEXP do_dim(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_dimgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    if (DispatchOrEval(call, op, args, env, &ans, 0))
+    if (DispatchOrEval(call, "dim<-", args, env, &ans, 0))
 	return(ans);
     PROTECT(args = ans);
     checkArity(op, args);

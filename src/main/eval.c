@@ -1341,29 +1341,34 @@ SEXP EvalArgs(SEXP el, SEXP rho, int dropmissing)
  * To call this an ugly hack would be to insult all existing ugly hacks
  * at large in the world.
  */
-int DispatchOrEval(SEXP call, SEXP op, SEXP args, SEXP rho,
+int DispatchOrEval(SEXP call, char *generic, SEXP args, SEXP rho,
 		   SEXP *ans, int dropmissing)
 {
     SEXP x;
-    char *pt, buf[128];
     RCNTXT cntxt;
 
     /* NEW */
     PROTECT(args = promiseArgs(args, rho));
     PROTECT(x = eval(CAR(args),rho));
-    pt = strrchr(CHAR(PRINTNAME(CAR(call))), '.');
 
-    if( isObject(x) && (pt == NULL || strcmp(pt,".default")) ) {
-	/* PROTECT(args = promiseArgs(args, rho)); */
-	SET_PRVALUE(CAR(args), x);
-	sprintf(buf, "%s",CHAR(PRINTNAME(CAR(call))));
-	begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args);
-	if(usemethod(buf, x, call, args, rho, ans)) {
+    if( isObject(x)) {
+	char *pt;
+	if (TYPEOF(CAR(call)) == SYMSXP)
+	    pt = strrchr(CHAR(PRINTNAME(CAR(call))), '.');
+	else
+	    pt = NULL;
+
+	if (pt == NULL || strcmp(pt,".default")) {
+	    /* PROTECT(args = promiseArgs(args, rho)); */
+	    SET_PRVALUE(CAR(args), x);
+	    begincontext(&cntxt, CTXT_RETURN, call, rho, rho, args);
+	    if(usemethod(generic, x, call, args, rho, ans)) {
+		endcontext(&cntxt);
+		UNPROTECT(2);
+		return 1;
+	    }
 	    endcontext(&cntxt);
-	    UNPROTECT(2);
-	    return 1;
 	}
-	endcontext(&cntxt);
     }
     /* else PROTECT(args); */
     *ans = CONS(x, EvalArgs(CDR(args), rho, dropmissing));
