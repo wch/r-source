@@ -236,7 +236,17 @@ evals <- eigen(Sm)$values
 
 ##  SVD .....
 
+## "if M is in fact square, then, ..."
+## <init>
+M <- cbind(1,1:3,c(5,2,3))
+X <- cbind(1:9, .25*(-4:4)^2)
+X1 <- cbind(1:7, -1)
+X2 <- cbind(0,2:8)
+y <- c(1:4, 2:6)
+## </init>
+
 absdetM <- prod(svd(M)$d)
+stopifnot(all.equal(absdetM, abs(det(M))))# since det() nowadays exists
 
 ans <- lsfit(X, y)
 
@@ -259,12 +269,36 @@ statefr
 factor(cut(incomes, breaks = 35+10*(0:7))) -> incomef
 table(incomef,statef)
 
+###--- @chapter 6. Lists and data frames
+
 Lst <- list(name="Fred", wife="Mary", no.children=3,
             child.ages=c(4,7,9))
+Lst$name
+Lst$wife
+Lst$child.ages[1]
+stopifnot(Lst$name == Lst[[1]], Lst[[1]] == "Fred",
+          Lst$child.ages[1] == Lst[[4]][1], Lst[[4]][1] == 4
+          )
+
+x <- "name" ; Lst[[x]]
+
+## @section  6.2  Constructing and modifying lists
+
+##<init>
+Mat <- cbind(1, 2:4)
+##</init>
+Lst[5] <- list(matrix=Mat)
+
+## @section  6.3  Data frames
+
+accountants <- data.frame(home=statef, loot=incomes, shot=incomef)
+## MM: add the next lines to R-intro.texi !
+accountants
+str(accountants)
 
 ## ..........
 
-###--- @chapter Probability distributions
+###--- @chapter 8. Probability distributions
 
 ## 2-tailed p-value for t distribution
 2*pt(-2.43, df = 13)
