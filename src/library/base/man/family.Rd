@@ -67,7 +67,7 @@ print.family(x, \dots)
   London: Chapman and Hall.
 }
 \seealso{
-  \code{\link{glm}}, \code{\link{power}}.
+  \code{\link{glm}}
 }
 \examples{
 nf <- gaussian()# Normal family
