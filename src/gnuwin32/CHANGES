@@ -15,9 +15,6 @@ file("clipboard") to read from or write to the clipboard.
 As most input/output functions in R use file(), this makes it possible
 to read data from or write data to the clipboard in many ways.
 
-Hitting the key q (or Q) with an internal pager window in focus will
-close the pager.
-
 A site-wide environment file R_HOME/etc/Renviron.site (or as set by
 the `R_ENVIRON' environment variable) is now implemented on Windows.
 
@@ -34,13 +31,8 @@ stamp `fixedHTMLlinks' is placed in the package directory, and
 correction will only be done again if the R installation directory
 is changed.
 
-The output when building R or source packages is much quieter.
-
 Rcmd.exe and Rprof have been moved to the main distribution (although
 to use them you will need perl installed).
-
-Rcmd INSTALL tries to find canonical paths to make the check for
-not installing on top of the source more foolprof.
 
 
 
