@@ -43,7 +43,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.61 $ ';
+my $revision = ' $Revision: 1.62 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -77,10 +77,6 @@ my $startdir = cwd();
 
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
 my $tar = R_getenv("TAR", "tar");
-
-## JG:  topLevelFiles will be files that sit in the top level of a
-##      zip/tarball along with any included directories.
-my $topLevelFiles = "DESCRIPTION";
 
 my $INSTALL_opts = "";
 $INSTALL_opts .= " --use-zip" if $opt_use_zip;
@@ -133,22 +129,26 @@ foreach my $pkg (@ARGV) {
 	chdir($libdir);
 
 	my $pkgs = $pkgname;
+	## JG:  topLevelFiles will be files that sit in the top level of
+	## a zip/tarball along with any included directories.
+	my $topLevelFiles;
 	if($description->{"Contains"}) {
 	    $log->message("looks like '${pkg}' is a package bundle");
 	    $is_bundle = 1;
 	    my @bundlepkgs = split(/\s+/, $description->{"Contains"});
-	    ## JG: Get a copy of the bundle's DESCRIPTION file
-	    ##     and add it into the zip archive
+	    $pkgs = join(" ", @bundlepkgs);
+	    ## JG: Get a copy of the bundle's DESCRIPTION file and add
+	    ## it into the zip archive.
 	    $log->message("copying $pkg/DESCRIPTION");
 	    copy("$startdir/$pkg/DESCRIPTION", "DESCRIPTION");
-	    $pkgs = join(" ", @bundlepkgs);
+	    $topLevelFiles = "DESCRIPTION";
 	}
 
 	if($WINDOWS) {
 	    my $filename = "${pkgname}_" . $description->{"Version"};
 	    $log->message("building '$filename.zip'");
 	    system("rm -f $startdir/$filename.zip");
-	    system("zip -r9X $startdir/$filename.zip" .
+	    system("zip -r9X $startdir/$filename.zip " .
 		   "$pkgs $topLevelFiles");
 	    chdir($startdir);
 	} else {
@@ -171,7 +171,7 @@ foreach my $pkg (@ARGV) {
 	    my $filename = "${pkgname}_" . $description->{"Version"} .
 		"_R_${R_platform}.tar";
 	    $log->message("building '$filename.gz'");
-	    system("$tar chXf $exclude $startdir/$filename" .
+	    system("$tar chXf $exclude $startdir/$filename " .
 		   "$pkgs $topLevelFiles");
 	    chdir($startdir);
 	    system("gzip -9f $filename");
@@ -358,7 +358,7 @@ sub deleteJunkFiles {
 
 sub updateIndex {
     my ($oldindex, $newindex, $log) = @_;
-    
+
     $log->checking("whether '$oldindex' is up-to-date");
     if(-r $oldindex) {
 	if(compare($oldindex, $newindex) != 0) {
@@ -386,7 +386,7 @@ sub updateIndex {
 	unlink $oldindex;
 	rename($newindex, $oldindex);
     }
-    
+
     1;
 }
 

@@ -29,13 +29,13 @@ mem.limits(nsize = NA, vsize = NA)
   by operating-system facilities such as \code{limit} on Unix),
 #endif
 #ifdef windows
-  using the option \code{--max-mem-size} on Windows),
+  using the option \option{--max-mem-size} on Windows),
 #endif
-  and since setting larger values of the minima will make \R slightly more
-  efficient on large tasks.
+  and since setting larger values of the minima will make \R slightly
+  more efficient on large tasks.
 
 #ifdef windows
-  (On Windows the \code{--max-mem-size} option sets the maximum memory
+  (On Windows the \option{--max-mem-size} option sets the maximum memory
   allocation: it has a minimum allowed value of 10M.  This is intended
   to catch attempts to allocate excessive amounts of memory which may
   cause other processes to run out of resources.  The default is the
@@ -54,18 +54,18 @@ mem.limits(nsize = NA, vsize = NA)
   Each cons cell occupies 28 bytes on a 32-bit machine, (usually) 56 bytes
   on a 64-bit machine.
 
-  The \code{--*-nsize} options can be used to specify the number of cons
-  cells and the \code{--*-vsize} options specify the size of the vector heap in
-  bytes.  Both options must be integers or integers followed by
-  \code{G}, \code{M}, \code{K}, or \code{k} meaning \code{Giga}
-  (\eqn{2^{30} = 1073741824}) \emph{Mega} (\eqn{2^{20} = 1048576}),
-  (computer) \emph{Kilo} (\eqn{2^{10} = 1024}), or regular \emph{kilo}
-  (1000).
+  The \option{--*-nsize} options can be used to specify the number of
+  cons cells and the \option{--*-vsize} options specify the size of the
+  vector heap in bytes.  Both options must be integers or integers
+  followed by \code{G}, \code{M}, \code{K}, or \code{k} meaning
+  \code{Giga} (\eqn{2^{30} = 1073741824}) \emph{Mega} (\eqn{2^{20} =
+    1048576}), (computer) \emph{Kilo} (\eqn{2^{10} = 1024}), or regular
+  \emph{kilo} (1000).
 
-  The \code{--min-*} options set the minimal sizes for the number of
+  The \option{--min-*} options set the minimal sizes for the number of
   cons cells and for the vector heap.  These values are also the initial
   values, but thereafter \R will grow or shrink the areas depending on
-  usage, but never exceeding the limits set by the \code{--max-*}
+  usage, but never exceeding the limits set by the \option{--max-*}
   options nor decreasing below the initial values.
 
   The default values are currently minima of 350k cons cells,
@@ -82,12 +82,12 @@ mem.limits(nsize = NA, vsize = NA)
   never be reduced below the current values for triggering garbage
   collection, and attempts to do so will be silently ignored.
 
-%  The defaults for \code{--min-nsize} and \code{--min-vsize} can be changed by
-%  setting the environment variables \code{R_NSIZE} and \code{R_VSIZE}
-%  respectively, perhaps most conveniently in the file \file{.Renviron}
-%  or \file{\eqn{\sim}{~}/.Renviron}. There should no longer be any need
-%  to do so.
-%
+%  The defaults for \option{--min-nsize} and \option{--min-vsize} can be
+%  changed by setting the environment variables \env{R\_NSIZE} and
+%  \env{R\_VSIZE} respectively, perhaps most conveniently in the file
+%  \file{.Renviron} or \file{\eqn{\sim}{~}/.Renviron}.  There should no
+%  longer be any need to do so.
+
   When using \code{\link{read.table}}, the memory requirements are in
   fact higher than anticipated, because the file is first read in as one
   long string which is then split again.  Use \code{\link{scan}} if
@@ -110,8 +110,9 @@ mem.limits(nsize = NA, vsize = NA)
 }
 
 \note{
-  For backwards compatibility, options \code{--nsize} and \code{--vsize}
-  are equivalent to \code{--min-nsize} and \code{--min-vsize}.
+  For backwards compatibility, options \option{--nsize} and
+  \option{--vsize} are equivalent to \option{--min-nsize} and
+  \option{--min-vsize}.
 #ifdef windows
   
   When using the \code{Rgui} console it is simplest to make a shortcut and

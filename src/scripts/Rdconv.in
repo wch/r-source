@@ -27,7 +27,7 @@ use R::Rdconv;
 use R::Utils;
 use R::Vars;
 
-my $revision = ' $Revision: 1.23 $ ';
+my $revision = ' $Revision: 1.24 $ ';
 my $version;
 my $name;
 
@@ -35,10 +35,11 @@ $revision =~ / ([\d\.]*) /;
 $version = $1;
 ($name = $0) =~ s|.*/||;
 
-## <NOTE>
-## Used in Rdconv.pm and Rdlists.pm ...
-my $OSdir = $R::Vars::OSTYPE;
-## </NOTE>
+## <FIXME>
+## Used in Rdconv.pm and Rdlists.pm via $main::OSdir, and hence must not
+## be lexical.  Argh.
+$OSdir = $R::Vars::OSTYPE;
+## </FIXME>
 
 my @knownoptions = ("debug|d", "type|t:s", "h|help", "v|version", 
 		    "o|output:s", "os|OS=s" => \$OSdir);

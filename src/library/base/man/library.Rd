@@ -163,7 +163,7 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   which autoloading has been promised.
 
   \code{.Library} is a character string giving the location of the
-  default library, the \file{library} subdirectory of \code{R_HOME}.
+  default library, the \file{library} subdirectory of \env{R\_HOME}.
   \code{.libPaths} is used for getting or setting the library trees that
   \R knows about (and hence uses when looking for packages).  If called
   with argument \code{new}, the library search path is set to
@@ -172,18 +172,16 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   returned.
 
 #ifdef unix
-  The library search path is initialized at startup from the
-  environment variable \code{R_LIBS} (which should be a
-  colon-separated
-  list of directories at which \R library trees are rooted) by calling
-  \code{.libPaths} with the directories specified in \code{R_LIBS}.
+  The library search path is initialized at startup from the environment
+  variable \env{R\_LIBS} (which should be a colon-separated list of
+  directories at which \R library trees are rooted) by calling
+  \code{.libPaths} with the directories specified in \env{R\_LIBS}.
 #endif
 #ifdef windows  
-  The library search path is initialized at startup from the
-  environment variable \code{R_LIBS} (which should be a
-  semicolon-separated
-  list of directories at which \R library trees are rooted) by calling
-  \code{.libPaths} with the directories specified in \code{R_LIBS}.
+  The library search path is initialized at startup from the environment
+  variable \code{R\_LIBS} (which should be a semicolon-separated list of
+  directories at which \R library trees are rooted) by calling
+  \code{.libPaths} with the directories specified in \env{R\_LIBS}.
 #endif
 }
 \value{

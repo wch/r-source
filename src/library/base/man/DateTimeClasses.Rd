@@ -96,7 +96,7 @@ time1 lop time2
 
   \code{"POSIXlt"} objects will often have an attribute \code{"tzone"},
   a character vector of length 3 giving the timezone name from the
-  \code{"TZ"} environment variable and the names of the base timezone
+  \env{TZ} environment variable and the names of the base timezone
   and the alternate (daylight-saving) timezone.  Sometimes this may
   just be of length one, giving the timezone name.
 

@@ -55,7 +55,7 @@ dev.interactive()
   }
 #ifdef unix
   The following devices will be available if \R was compiled to use them
-  and started with the appropriate \code{--gui} argument:
+  and started with the appropriate \option{--gui} argument:
   \itemize{
     \item \code{\link{X11}} The graphics driver for the X11 Window
     system

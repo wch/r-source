@@ -4,7 +4,7 @@
 
 # @configure_input@
 
-revision='$Revision: 1.124 $'
+revision='$Revision: 1.125 $'
 version=`set - ${revision}; echo ${2}`
 version="R add-on package installer ${version}
 
@@ -78,6 +78,13 @@ NO_PERL5_MSG="\
 ***    http://cran.r-project.org/"
 startdir=`${GETWD}`
 tmpdir="${TMPDIR-/tmp}/R.INSTALL.$$"
+if (test -d "${tmpdir}" && test -w "${tmpdir}") || \
+    mkdir -p "${tmpdir}" 2> /dev/null; then
+  tmpdir=`cd "${tmpdir}" && ${GETWD}`
+else
+  echo "ERROR: cannot write to or create temporary directory '${tmpdir}'"
+  exit 1
+fi
 
 : ${R_OSTYPE=unix}
 ## <NOTE>
@@ -200,7 +207,6 @@ while test -n "${1}"; do
       configure_vars=`echo "${1}" | sed -e 's/[^=]*=//'` ;;
     *)
       if test -f "${1}"; then
-        mkdir -p "${tmpdir}"
 	pkgname=`basename "${1}"`
 	## Also allow for 'package.tgz' ...
 	pkgname=`basename "${pkgname}" .tgz`
@@ -234,7 +240,7 @@ if test -z "${pkgs}"; then
 fi
 
 if (test -d "${lib}" && test -w "${lib}") || \
-    mkdir "${lib}" 2> /dev/null; then
+    mkdir -p "${lib}" 2> /dev/null; then
   lib=`cd "${lib}" && ${GETWD}`
 else
   echo "ERROR: cannot write to or create directory '${lib}'"
@@ -272,6 +278,8 @@ elif ${debug}; then
   build_help_opts="--debug ${build_help_opts}"
 fi
 
+is_first_package=yes
+
 ### 
 ### Install a *binary* package from the current directory. 
 
@@ -294,7 +302,7 @@ do_install_binary () {
   
   cp -r . "${R_PACKAGE_DIR}"
 
-  if test "${?}" -ne 0; then
+  if test ${?} -ne 0; then
     echo "ERROR: installing binary package failed"
     do_exit_on_error
   fi
@@ -329,9 +337,8 @@ do_install_source () {
     mkdir -p "${R_PACKAGE_DIR}"
     ## Preserve man pages to speed up installation?  Only makes sense
     ## if we install from a non-temporary directory.
-    if test -d "${tmpdir}" \
-        && test "`cd .. && ${GETWD}`" = \
-	        "`cd \"${tmpdir}\" && ${GETWD}`"; then :; else
+    if test "`cd .. && ${GETWD}`" != \
+            "`cd \"${tmpdir}\" && ${GETWD}`"; then
       (cd "${lockdir}/${R_PACKAGE_NAME}" \
           && tar cf - R-ex help html latex) | \
 	(cd "${R_PACKAGE_DIR}" && tar xf -)
@@ -604,7 +611,7 @@ do_install () {
     ## Currently, only operators '<=' and '>=' are supported.  Hence we
     ## check this, and also whether we found a version string.
     if (test "${dep_operator}" = "<=" \
-         || test "${dep_operator}" = ">=") \
+           || test "${dep_operator}" = ">=") \
          && test -n "${dep_version}"; then
       dep_ok=`expr ${R_VERSION} ${dep_operator} ${dep_version} `
       if test ${dep_ok} -eq 0; then
@@ -646,6 +653,8 @@ do_install () {
     is_source_package=true
   fi
 
+  test "${is_first_package}" = no && echo
+
   if ${is_source_package}; then
     ## This is a source package ... hopefully.
     do_install_source "${pkg}" "${R_PACKAGE_DIR}" "${R_PACKAGE_NAME}"
@@ -657,7 +666,7 @@ do_install () {
   chmod -R a+r "${R_PACKAGE_DIR}"
 
   message "DONE (${pkg})"
-  echo
+  is_first_package=no
 }
 
 ### 
@@ -684,18 +693,18 @@ do_cleanup () {
     rm -rf "${tmpdir}"
   fi
 
-  ## <NOTE>
-  ## In theory, we should only do this in case we successfully installed
-  ## at least *one* package ...
-  cp "${R_HOME}/doc/html/R.css" "${lib}"
-  if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
-    cat "${R_HOME}"/library/*/CONTENTS \
-      > "${R_HOME}"/doc/html/search/index.txt
-    if ${build_help} && test "${NO_PERL5}" = "false"; then
-      ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+  if test "${is_first_package}" = no; then
+    ## Only need to do this in case we successfully installed  at least
+    ## *one* package ... 
+    cp "${R_HOME}/doc/html/R.css" "${lib}"
+    if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
+      cat "${R_HOME}"/library/*/CONTENTS \
+        > "${R_HOME}"/doc/html/search/index.txt
+      if ${build_help} && test "${NO_PERL5}" = "false"; then
+        ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+      fi
     fi
   fi
-  ## </NOTE>
 
   rm -rf "${lockdir}"
 }

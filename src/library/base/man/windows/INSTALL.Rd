@@ -27,12 +27,12 @@
   CRAN (these are then extracted in a temporary directory
   \file{R.INSTALL} of the current directory).
 
-  If the option \code{--save} is used, the installation procedure
+  If the option \option{--save} is used, the installation procedure
   creates a binary image of the package code, which is then loaded when
   the library is attached, rather than evaluating the package source at
   that time.  Having a file \code{install.R} in the package directory
   makes this the default behavior for the package (option
-  \code{--no-save} overrides).  You may need \code{--save} if your
+  \option{--no-save} overrides).  You may need \option{--save} if your
   package requires other packages to evaluate its own source.  If the
   file \file{install.R} is non-empty, it should contain R expressions to
   be executed when the package is attached, after loading the saved
@@ -42,7 +42,7 @@
   use \code{Rcmd check [-l lib] <pkg>}: use \code{Rcmd check --help}
   for more information.
 
-  Which forms of help are produced is controlled by the \code{--docs}
+  Which forms of help are produced is controlled by the \option{--docs}
   option which takes values \code{none} or \code{normal} (text and HTML)
   or \code{chm} (the default, text, HTML and CHTML) or \code{winhlp} or
   \code{all} (adding old-style Windows \code{.hlp} files, no longer tested).

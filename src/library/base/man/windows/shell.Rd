@@ -51,8 +51,8 @@ shell(cmd, shell, flag="/c", intern=FALSE, wait=TRUE,
 
 \details{
   If no \code{shell} is specified, the environment variables
-  \code{R\_SHELL}, \code{SHELL} and \code{COMSPEC} are tried in turn:
-  \code{COMSPEC} should always succeed. Using \code{shell=NULL}
+  \env{R\_SHELL}, \env{SHELL} and \env{COMSPEC} are tried in turn:
+  \env{COMSPEC} should always succeed. Using \code{shell=NULL}
   invokes the command \code{cmd} directly, in which case an extension
   of \code{.exe} is assumed. It is possible to use batch files
   directly if their extension is given: Windows (rather than \R) then

@@ -247,7 +247,7 @@ wish.
 @section There seems to be a limit on the memory it uses!
 
 Indeed there is.  It is set by the command-line flag
-@code{--max-mem-size} (@pxref{How do I install R for Windows?}) and
+@option{--max-mem-size} (@pxref{How do I install R for Windows?}) and
 defaults to the smaller of the amount of physical RAM in the machine and
 1Gb.  It can be set to any amount over 10M. (R will not run in less.)
 Be aware though that Windows has (in most versions) a maximum amount of
@@ -261,7 +261,7 @@ usage.  The limit can be raised by calling @code{memory.limit} within a
 running R session.
 
 We have found that starting R with too large a value of
-@code{--max-mem-size} may fail: the limit seemed to be about 1.7Gb on
+@option{--max-mem-size} may fail: the limit seemed to be about 1.7Gb on
 Windows 2000 Professional.
 
 R can be compiled to use a different memory manager which might be better
@@ -346,9 +346,9 @@ by the `Start in' field of the shortcut's properties.  You can find this
 from R code by the call @code{getwd()}.
 
 The home directory is set as follows:@*
-If environment variable @code{R_USER} is set, its value is used.@*
-Otherwise if environment variable @code{HOME} is set, its value is used.@*
-Otherwise if environment variables @code{HOMEDRIVE} and @code{HOMEPATH}
+If environment variable @env{R_USER} is set, its value is used.@*
+Otherwise if environment variable @env{HOME} is set, its value is used.@*
+Otherwise if environment variables @env{HOMEDRIVE} and @env{HOMEPATH}
 are set, the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.@*
 If all of these fail, the current working directory is used.
 
@@ -457,7 +457,7 @@ We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible fixes.
 
 (a) Use the alternative @code{internet2.dll} by starting R with the flag
-@code{--internet2} (@pxref{How do I install R for Windows?}) which uses
+@option{--internet2} (@pxref{How do I install R for Windows?}) which uses
 the Internet Explorer internals (and so needs Internet Explorer 4 or
 later installed).  Note that this does not work with proxies that need
 authentication.
@@ -575,9 +575,11 @@ are because people have not done so.
 @section I don't have permission to write to the @file{@RWVER@\library} directory.
 
 You can install packages anywhere and use the environment variable
-@code{R_LIBS} (@pxref{How do I set environment variables?}) to point to the library location(s).  
+@env{R_LIBS} (@pxref{How do I set environment variables?}) to point to
+the library location(s).
 
-Suppose your packages are installed in @code{p:\myRlib}.  Then you can EITHER
+Suppose your packages are installed in @code{p:\myRlib}.  Then you can
+EITHER
 
 @example
 set the environment variable R_LIBS to p:\myRlib
@@ -712,7 +714,7 @@ the package's DLL when it is loaded.  So use @code{update.packages()}
 (or the menu equivalent) in a new session.
 
 If you put @code{library(foo)} in your @file{.Rprofile} you will need to
-start R with @code{--vanilla} to be able to update package @code{foo}.
+start R with @option{--vanilla} to be able to update package @code{foo}.
 
 @newchap{}
 @node Windows Features, Workspaces, Packages, Top

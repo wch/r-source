@@ -6730,7 +6730,7 @@ reside in @file{.RData}.
 In addition, there are options for controlling the memory available to
 the @R{} process (see the on-line help for topic @samp{Memory} for more
 information).  Users will not normally need to use these.  @R{} for
-Windows has an additional flag @code{--max-mem-size} described below,
+Windows has an additional flag @option{--max-mem-size} described below,
 which by default does limit the memory usage of an @R{} process.
 
 @R{} for Windows accepts the following command line options.

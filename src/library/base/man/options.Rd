@@ -75,8 +75,13 @@ getOption(x)
       \code{\link{help.start}()} on UNIX, or a non-default browser on
       Windows.}
 
+#ifdef unix
+    \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
+      environment variable \env{R\_PDFVIEWER}.}
+#endif
+
     \item{\code{mailer}:}{default mailer used by
-      \code{\link{bug.report}()}. can be \code{"none"}.}
+      \code{\link{bug.report}()}.  Can be \code{"none"}.}
 
     \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
       model fitting such as with \code{\link{aov}} or \code{\link{lm}}.
@@ -86,9 +91,9 @@ getOption(x)
 
     \item{\code{defaultPackages}:}{the packages that are attached by
       default when \R starts up.  Initially set from value of the
-      environment variables \code{R_DefaultPackages}, or if that is
+      environment variables \env{R\_DefaultPackages}, or if that is
       unset to \code{c("methods", "ctest")}.  (Set
-      \code{R_DEFAULT_PACKAGES} to \code{NULL} or a comma-separated list
+      \env{R\_DEFAULT\_PACKAGES} to \code{NULL} or a comma-separated list
       of package names.)  A call to \code{options} should be in your
       \file{.Rprofile} file to ensure that the change takes effect
       before the base package is initialized (see \code{\link{Startup}}).}
@@ -108,7 +113,7 @@ getOption(x)
     \item{\code{keep.source.pkgs}:}{As for \code{keep.source}, for
       functions in packages loaded by \code{\link{library}} or
       \code{\link{require}}.  Defaults to \code{FALSE} unless the
-      environment variable \code{R_KEEP_PKG_SOURCE} is set to
+      environment variable \env{R\_KEEP\_PKG\_SOURCE} is set to
       \code{yes}.}
 
     \item{\code{na.action}:}{the name of a function for treating missing
@@ -116,11 +121,11 @@ getOption(x)
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
-      \code{R_PAPERSIZE} when \R is started and defaulting to
+      \env{R\_PAPERSIZE} when \R is started and defaulting to
       \code{"a4"} if that is unset or invalid.}
 
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
-      for printing; set by environment variable \code{R_PRINTCMD} when
+      for printing; set by environment variable \env{R\_PRINTCMD} when
       \R is started.  This should be a command that expects either input
       to be piped to \file{stdin} or to be given a single filename
       argument.
@@ -186,11 +191,11 @@ getOption(x)
 
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
       when it controls whether input is echoed.  Command-line option
-      \code{--slave} sets this initially to \code{FALSE}.}
+      \option{--slave} sets this initially to \code{FALSE}.}
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
-      \code{--verbose}.}
+      \option{--verbose}.}
 
     \item{\code{device}:}{a character string giving the default device
       for that session.  This defaults to the normal screen device

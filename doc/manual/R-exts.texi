@@ -760,9 +760,9 @@ binary distributions.
 
 @quotation
 @strong{Note:} @code{R CMD check} and @code{R CMD build} run @R{} with
-@option{--vanilla}, so none of the user's startup files are read.
-If you need @code{R_LIBS} set (to find packages in a non-standard
-library) you will need to set it in the environment.
+@option{--vanilla}, so none of the user's startup files are read.  If
+you need @env{R_LIBS} set (to find packages in a non-standard library)
+you will need to set it in the environment.
 @end quotation
 
 @quotation

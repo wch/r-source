@@ -13,7 +13,7 @@
 \details{
   If used as \code{R CMD INSTALL pkgs} without explicitly specifying
   \code{lib}, packages are installed into the library tree rooted at the
-  first directory given in the environment variable \code{R\_LIBS} if
+  first directory given in the environment variable \env{R\_LIBS} if
   this is set and non-null, and to the default library tree (which is
   rooted at \file{\$R\_HOME/library}) otherwise.
 
@@ -26,32 +26,32 @@
   CRAN, these are then extracted in a temporary directory.
   
   Some package sources contain a \file{configure} script that can be
-  passed arguments or variables via the option \code{--configure-args}
-  and \code{--configure-vars}, respectively, if necessary.  The latter
+  passed arguments or variables via the option \option{--configure-args}
+  and \option{--configure-vars}, respectively, if necessary.  The latter
   is useful in particular if libraries or header files needed for the
   package are in non-system directories.  In this case, one can use the
   configure variables \code{LIBS} and \code{CPPFLAGS} to specify these
-  locations (and set these via \code{--configure-vars}), see section
+  locations (and set these via \option{--configure-vars}), see section
   \dQuote{Configuration variables} in \dQuote{R Installation and
     Administration} for more information.  One can also bypass the
-  configure mechanism using the option \code{--no-configure}.
+  configure mechanism using the option \option{--no-configure}.
   
-  If \code{--no-docs} is given, no help files are built.  Options
-  \code{--no-text}, \code{--no-html}, and \code{--no-latex} suppress
+  If \option{--no-docs} is given, no help files are built.  Options
+  \option{--no-text}, \option{--no-html}, and \option{--no-latex} suppress
   creating the text, HTML, and LaTeX versions, respectively.  The
   default is to build help files in all three versions.
 
-  If the option \code{--save} is used, the installation procedure
+  If the option \option{--save} is used, the installation procedure
   creates a binary image of the package code, which is then loaded when
   the package is attached, rather than evaluating the package source at
   that time.  Having a file \file{install.R} in the package directory
   makes this the default behavior for the package (option
-  \code{--no-save} overrides).  You may need  \code{--save} if your
+  \option{--no-save} overrides).  You may need  \option{--save} if your
   package requires other packages to evaluate its own source.  If the
   file \file{install.R} is non-empty, it should contain R expressions to
   be executed when the package is attached, after loading the saved
   image.  Options to be passed to R when creating the save image can be
-  specified via \code{--save=ARGS}.
+  specified via \option{--save=ARGS}.
 
   Use \code{R CMD INSTALL --help} for more usage information.
 }

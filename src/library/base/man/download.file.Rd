@@ -61,7 +61,7 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   is exceeded.
 
   There is an alternative method if you have Internet Explorer 4 or
-  later installed.   You can use the flag \code{--internet2}, when
+  later installed.   You can use the flag \option{--internet2}, when
   the \sQuote{Internet Options} of the system are used to choose proxies
   and so on; these are set in the Control Panel and are those used for
   Internet Explorer.
@@ -99,10 +99,10 @@ download.file(url, destfile, method, quiet = FALSE, mode="w",
   altered later by calling \code{Sys.putenv}.
 
   Usernames and passwords can be set for HTTP proxy transfers via
-  environment variable \code{"http_proxy_user"} in the form \code{user:passwd}.
-  Alternatively, \code{"http_proxy"} can be of the form
-  \code{"http://user:pass@proxy.dom.com:8080/"} for compatibility with
-  \code{wget}. Only the HTTP/1.0 basic authentication scheme is
+  environment variable \env{http\_proxy\_user} in the form
+  \code{user:passwd}.  Alternatively, \code{"http_proxy"} can be of the
+  form \code{"http://user:pass@proxy.dom.com:8080/"} for compatibility
+  with \code{wget}.  Only the HTTP/1.0 basic authentication scheme is
   supported.
 #ifdef windows
   Under Windows, if \code{"http_proxy_user"} is set to \code{"ask"} then

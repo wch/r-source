@@ -135,7 +135,7 @@ bug.report(subject = "", ccaddress = Sys.getenv("USER"),
   wonderful.  You should still report the facts as well as any
   explanations or solutions.
 
-  Invoking \R with the \code{--vanilla} option may help in isolating a
+  Invoking \R with the \option{--vanilla} option may help in isolating a
   bug.  This ensures that the site profile and saved data files are not
   read.
 

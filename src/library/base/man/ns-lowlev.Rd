@@ -48,7 +48,7 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
   an internal variable in the name space (it should not be exported).
   This function is called with the same arguments as
   \code{.First.lib}.  Partial loading is used so support installation with
-  the \code{--save} option.
+  the \option{--save} option.
 
   \code{loadNamespace} does not attach the name space it loads to the
   search path.  \code{attachNamespace} can be used to attach a frame
@@ -75,7 +75,7 @@ saveNamespaceImage(package, rdafile, lib.loc = NULL,
   An error is signaled of a name space is not currently being loaded.
 
   \code{saveNamespaceImage} is used to save name space images for
-  packages installed with \code{--save}.
+  packages installed with \option{--save}.
 }
 \keyword{internal}
 \author{Luke Tierney}

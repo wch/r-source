@@ -33,17 +33,18 @@ tempdir()
 
 #ifdef unix
   The file name is made of the pattern, the process number in hex and a
-  random suffix in hex. By default, the filenames will be in the directory 
-  given by \code{tempdir()}.  This will be a subdirectory of the directory given
-  \code{TMPDIR} if set, otherwise \code{"/tmp"}.
+  random suffix in hex.  By default, the filenames will be in the
+  directory given by \code{tempdir()}.  This will be a subdirectory of
+  the directory given by the environment variable \env{TMPDIR} if set,
+  otherwise \code{"/tmp"}.
 #endif
 #ifdef windows
-  By default, \code{tempdir()} gives a subdirectory of the first found of
-  the environment variables \code{TMP}, \code{TEMP} and \code{R\_USER}
+  By default, \code{tempdir()} gives a subdirectory of the first found
+  of the environment variables \env{TMP}, \env{TEMP} and \code{R\_USER}
   (see \code{\link{Rconsole}}) which points to a writeable directory.
-  If the path to the directory contains
-  a space in any of the components, the path returned will use the
-  shortnames version of the path. 
+  If the path to the directory contains a space in any of the
+  components, the path returned will use the shortnames version of the
+  path.
 #endif
 }
 \references{

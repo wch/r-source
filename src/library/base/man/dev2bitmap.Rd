@@ -32,7 +32,7 @@ dev2bitmap(file, type = "png256", height = 6, width = 6, res = 72,
 
   You will need a recent version of \code{ghostscript} (5.10 and
   later have been tested): the full path to the executable can be set by
-  the environment variable \code{"R_GSCMD"}.
+  the environment variable \env{R\_GSCMD}.
 
   The types available will depend on the version of \code{ghostscript},
   but are likely to include

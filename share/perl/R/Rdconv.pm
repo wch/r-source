@@ -112,25 +112,34 @@ sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
     undef @section_body;
     undef @section_title;
 
-    $skipping = 0;
-    ## remove comments (everything after a '%') and CR in CRLF
+    ## Remove comments (everything after a '%') and CR in CRLF
     ## terminators.
+    my $skip_level;
+    my @skip_state;
+    my $skip;
     while(<rdfile>){
 	$_ = expand $_;
 	s/\r//;
+	## <FIXME>
+	## Copied from Rdtools::Rdpp() so that nested conditionals are
+	## handled correctly.  Should really *call* Rdpp() instead.
 	if (/^#ifdef\s+([A-Za-z0-9]+)/o) {
-	    if ($1 ne $main::OSdir) { $skipping = 1; }
-	    next;
+	    $skip = $1 ne $main::OSdir;
+            $skip_level += $skip;
+            push(@skip_state, $skip);
+            next;
 	}
 	if (/^#ifndef\s+([A-Za-z0-9]+)/o) {
-	    if ($1 eq $main::OSdir) { $skipping = 1; }
-	    next;
+            $skip = $1 eq $main::OSdir;
+            $skip_level += $skip;
+            push(@skip_state, $skip);
+            next;
 	}
 	if (/^#endif/o) {
-	    $skipping = 0;
-	    next;
-	}
-	next if $skipping > 0;
+            $skip_level -= pop(@skip_state);
+            next;
+        }
+        next if $skip_level > 0;
 	next if /^\s*%/o;	# completely drop full comment lines
 	my $loopcount = 0;
 	while(checkloop($loopcount++, $_, "\\%")

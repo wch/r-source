@@ -32,7 +32,7 @@ capabilities(what = NULL)
       session?  This is false in non-interactive sessions.
 #ifdef unix
       It will be true if \code{readline} supported has been compiled in
-      and \code{--no-readline} was \emph{not} invoked.
+      and \option{--no-readline} was \emph{not} invoked.
 #endif
       }
     \item{IEEE754}{Does this platform have IEEE 754 arithmetic?  Note

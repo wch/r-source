@@ -1934,7 +1934,7 @@ environment or in other packages.
 As of @R{} 1.6.x package @pkg{base} has a name space, but no other
 package does (nor are means yet provided for users to make use of name
 spaces).  This can currently be disabled by setting the environment
-variable @code{R_NO_BASE_NAMESPACE}.
+variable @env{R_NO_BASE_NAMESPACE}.
 
 
 @c @node Evaluation of calls, Functions, Evaluation of expressions, Top

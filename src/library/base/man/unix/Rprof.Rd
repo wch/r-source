@@ -39,7 +39,7 @@ Rprof(filename = "Rprof.out", append = FALSE, interval = 0.02)
 \note{
   Profiling is not available on all platforms.  By default, it is
   attempted to compile support for profiling.  Configure \R with
-  \code{--disable-R-profiling} to change this.
+  \option{--disable-R-profiling} to change this.
 
   As \R profiling uses the same mechanisms as C profiling, the two
   cannot be used together, so do not use \code{Rprof} in an executable

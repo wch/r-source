@@ -76,7 +76,7 @@ type?topic
   the printer or saved in a file.  If the programs are in non-standard
   locations and hence were not found at compile time, you can either set
   the options \code{latexcmd} and \code{dvipscmd}, or the environment
-  variables \code{R_LATEXCMD} and \code{R_DVIPSCMD} appropriately.
+  variables \env{R\_LATEXCMD} and \env{R\_DVIPSCMD} appropriately.
   The appearance of the output can be customized through a file
   \file{Rhelp.cfg} somewhere in your LaTeX search path.
 #endif

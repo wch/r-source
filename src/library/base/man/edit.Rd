@@ -23,8 +23,8 @@ xedit(name = NULL, file = "")
     then the file specified by \code{file} is opened for editing.}
   \item{file}{a string naming the file to write the edited version to.}
   \item{editor}{a string naming the text editor you want to use.  On
-    Unix the default is set from the environment variables \code{EDITOR}
-    or \code{VISUAL} if either is set, otherwise \code{vi} is used.  On
+    Unix the default is set from the environment variables \env{EDITOR}
+    or \env{VISUAL} if either is set, otherwise \code{vi} is used.  On
     Windows it defaults to \code{notepad}.}
   \item{\dots}{further arguments to be passed to or from methods.}
 }

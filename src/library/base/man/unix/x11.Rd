@@ -15,7 +15,7 @@ X11(display = "", width = 7, height = 7, pointsize = 12,
 \arguments{
   \item{display}{the display on which the graphics window will appear.
     The default is to use the value in the user's environment variable
-    \code{DISPLAY}.}
+    \env{DISPLAY}.}
   \item{width}{the width of the plotting window in inches.}
   \item{height}{the height of the plotting window in inches.}
   \item{pointsize}{the default pointsize to be used.}

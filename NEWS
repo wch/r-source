@@ -241,6 +241,8 @@ NEW FEATURES
 	of system calls, which can speed up computations on some
 	platforms and make R more usable with systems like Mosix.
 
+    o	New function vignette() for viewing or listing vignettes.
+
 
 DEPRECATED & DEFUNCT
 
