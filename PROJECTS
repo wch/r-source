@@ -20,10 +20,6 @@ taken on by anyone.
     Statistics for the video game generation ...  We need to move to
     an event-based model for this.
 
- o  NONLINEAR MODELLING
-    Was that Doug Bates I heard rustling about over there in the
-    corner ... :-)
-
  o  GAM MODELS
     The basic code is at STATLIB.
 
