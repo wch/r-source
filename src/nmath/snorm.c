@@ -246,7 +246,7 @@ double norm_rand(void)
 	    return R * cos(theta);
 	}
     default:
-	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind);
+	MATHLIB_ERROR("norm_rand(): invalid N01_kind: %d\n", N01_kind)
 	return 0.0;/*- -Wall */
     }/*switch*/
 }

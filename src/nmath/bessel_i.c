@@ -42,7 +42,7 @@ double bessel_i(double x, double alpha, double expo)
     I_bessel(&x, &alpha, &nb, &ize, bi, &ncalc);
     if(ncalc != nb) {/* error input */
 	if(ncalc < 0)
-	    MATHLIB_WARNING4("bessel_i(%g): ncalc (=%d) != nb (=%d); alpha=%g."
+	    MATHLIB_WARNING4("bessel_i(%g): ncalc (=%ld) != nb (=%ld); alpha=%g."
 			     " Arg. out of range?\n",
 			     x, ncalc, nb, alpha);
 	else

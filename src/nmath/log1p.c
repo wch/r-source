@@ -103,7 +103,7 @@ double log1p(double x)
 #endif
 
     if (x == 0.) return 0.;/* speed */
-    if (x == -1) return(R_NegInf);
+    if (x == -1) return(ML_NEGINF);
     if (x  < -1) ML_ERR_return_NAN;
 
     if (fabs(x) <= .375) {
