@@ -232,7 +232,7 @@ NEW FEATURES
         collection.
 
     o   gc() now reports the space allocated, not the space free,
-	since the total space in now variable.
+	since the total space is now variable.
 
     o   prop.table() and margin.table() now work with an empty margin.
 
@@ -360,6 +360,8 @@ BUG FIXES
 
     o	model.matrix now uses ":" not "." in labelling interaction
 	terms, as terms() and the prototype do (PR#701).
+
+    o	strsplit had two memory leaks.
 
 
 	**************************************************
