@@ -11,6 +11,11 @@
 
 NEW FEATURES
 
+    o	New options(error.halt = FALSE) (default is TRUE) allows
+	continuation after an error in batch processing.
+
+    o	In graphics, lty has now 6 instead of 4 predefined line types.
+
     o	as.hclust.twins() in package mva to convert (and plot)
 	objects from agnes() and daisy() of package cluster.
 
@@ -66,7 +71,7 @@ BUG FIXES
 
     o	Several patches for systems with long != int.
 
-    o   approx failed if inputs contained NAs.
+    o	approx failed if inputs contained NAs.
 
     o	weighted lm fits with 1 diml x failed if any weight was zero.
 
@@ -74,7 +79,7 @@ BUG FIXES
 
     o	problem with function()... inside saved functions because arg count
 	increased to accommodate stored source. (incorrect number of
-	arguments to "lambda") 
+	arguments to "lambda")
 
     o	improvements to generation of HTML help files: should work
 	better on viewers other than Netscape.

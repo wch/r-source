@@ -14,7 +14,7 @@ SUBDIRS = Examples
 
 R = LC_ALL=C $(top_builddir)/bin/R --vanilla
 
-TESTsrc-strict = \
+TESTsrc-strict-1 = \
 	arith-true.R \
 	arith.R \
 	d-p-q-r-tests.R \
@@ -23,16 +23,23 @@ TESTsrc-strict = \
 	primitive-funs.R \
 	simple-tests.R \
 	simple-true.R
-TESTsrc-sloppy = \
+TESTsrc-strict-auto = \
+	isas-tests.R
+TESTsrc-sloppy-1 = \
 	print-tests.R
+TESTsrc-sloppy-auto =
+
+TESTsrc-strict = $(TESTsrc-strict-1) $(TESTsrc-strict-auto)
+TESTsrc-sloppy = $(TESTsrc-sloppy-1) $(TESTsrc-sloppy-auto)
 TESTsrc = $(TESTsrc-strict) $(TESTsrc-sloppy)
+TESTsrc-auto = $(TESTsrc-strict-auto) $(TESTsrc-sloppy-auto)
 TESTout-strict = $(TESTsrc-strict:.R=.Rout)
 TESTout-sloppy = $(TESTsrc-sloppy:.R=.Rout)
 TESTout = $(TESTsrc:.R=.Rout)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in README Rdiff \
-	mode-methods.R \
+	mode-methods.R make*.R \
 	$(TESTsrc) \
 	$(TESTsrc:.R=.Rout.save)
 
@@ -63,14 +70,12 @@ Makedeps: Makefile
 	@touch $@
 FORCE:
 
+$(TESTsrc-auto): %.R : $(srcdir)/make-%.R
+	$(R) < $< > /dev/null
+
 test-All: Makefile
 	@$(MAKE) test-Examples
-	@echo "updating test dependencies"
-	@$(MAKE) Makedeps
-	@echo "running strict specific tests"
-	@$(MAKE) test-Specific-strict RVAL_IF_DIFF=1
-	@echo "running sloppy specific tests"
-	@$(MAKE) test-Specific-sloppy RVAL_IF_DIFF=0
+	@$(MAKE) test-Specific
 test-Examples:
 	@(cd Examples && $(MAKE) $@)
 test-Specific-strict: $(TESTout-strict)

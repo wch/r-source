@@ -226,34 +226,18 @@ void InitOptions(void)
     LOGICAL(CAR(v))[0] = 0;	/* no storage of function source */
                                 /* turned on after load of base  */
 
+    TAG(v) = install("error.halt");
+    CAR(v) = allocVector(LGLSXP, 1);
+    LOGICAL(CAR(v))[0] = R_Error_Halt;
+    /* stop on error()/stop() if not interactive() */
+
     SYMVALUE(install(".Options")) = val;
     UNPROTECT(2);
 }
 
-#if 0
-/* FIXME : This functionality should be universal */
-/* See also in bind.c. */
-
-/* static */ SEXP EnsureString(SEXP s)
-{
-    switch(TYPEOF(s)) {
-    case SYMSXP:
-	s = PRINTNAME(s);
-	break;
-    case STRSXP:
-	s = STRING(s)[0];
-	break;
-    case CHARSXP:
-	break;
-    case NILSXP:
-	s = R_BlankString;
-	break;
-    default:
-	error("invalid tag in name extraction\n");
-    }
-    return s;
-}
-#endif
+/* FIXME:  SEXP EnsureString(SEXP s)
+   is globally defined in ./util.c, used in ./bind.c , but not used here (anymore!)
+*/
 
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -379,11 +363,17 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
 		    errorcall(call, "echo parameter invalid\n");
 		k = asInteger(argi);
-		/* Should be quicker than checking options(echo) every
-		   time R prompts for input.
+		/* Should be quicker than checking options(echo)
+		   every time R prompts for input:
 		   */
 		R_Slave = !k;
 		VECTOR(value)[i] = SetOption(tag, ScalarLogical(k));
+	    }
+	    else if (streql(CHAR(namei), "error.halt")) {
+		if (TYPEOF(argi) != LGLSXP || LENGTH(argi) != 1)
+		    errorcall(call, "error.halt parameter invalid\n");
+		R_Error_Halt = asLogical(argi);
+		VECTOR(value)[i] = SetOption(tag, ScalarLogical(R_Error_Halt));
 	    }
 	    else {
 		VECTOR(value)[i] = SetOption(tag, duplicate(argi));
