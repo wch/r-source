@@ -745,7 +745,7 @@ static double unavailable(double x)
 #ifndef HAVE_ACOSH
 #define acosh unavailable
 #endif
-#ifdef HAVE_ATANH
+#ifndef HAVE_ATANH
 #define atanh unavailable
 #endif
 
