@@ -29,7 +29,6 @@
 #include "Defn.h"
 #include "Graphics.h"
 #include "RIntf.h"
-#include "PicComments.h"
 #include <Rdevices.h>
 
 #include <ATSUnicode.h>
@@ -800,8 +799,6 @@ static void Mac_Text(double x, double y, int coords,
     RGBColor aColor;
     Rect zeroRect,rgnRect;
     SInt16  WinIndex;
-    TTxtPicHdl hT;
-    TCenterHdl cT;
     RgnHandle oldClip;
     CGrafPtr savedPort;
     GDHandle savedDevice;
