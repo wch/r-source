@@ -40,7 +40,7 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
 \examples{
 data(faithful)
 with(faithful, {
-    plot(density(eruptions, bw=0.15))
+    plot(stats::density(eruptions, bw=0.15))
     rug(eruptions)
     rug(jitter(eruptions, amount = .01), side = 3, col = "light blue")
 })

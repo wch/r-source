@@ -81,7 +81,7 @@ data(UCBAdmissions)
 x <- aperm(UCBAdmissions, c(2, 1, 3))
 dimnames(x)[[2]] <- c("Yes", "No")
 names(dimnames(x)) <- c("Sex", "Admit?", "Department")
-ftable(x)
+stats::ftable(x)
 
 ## Fourfold display of data aggregated over departments, with
 ## frequencies standardized to equate the margins for admission

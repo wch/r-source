@@ -130,7 +130,7 @@ stars(mtcars[, 1:7], len = 0.6, key.loc = c(1.5, 0),
 data(USJudgeRatings)
 ## scale linearly (not affinely) to [0, 1]
 USJudge <- apply(USJudgeRatings, 2, function(x) x/max(x))
-Jnam <- case.names(USJudgeRatings)
+Jnam <- row.names(USJudgeRatings)
 Snam <- abbreviate(substring(Jnam,1,regexpr("[,.]",Jnam) - 1), 7)
 stars(USJudge, labels = Jnam, scale = FALSE,
       key.loc = c(13, 1.5), main = "Judge not ...", len = 0.8)

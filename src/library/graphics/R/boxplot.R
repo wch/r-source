@@ -70,7 +70,7 @@ boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
 {
     nna <- !is.na(x)
     n <- sum(nna)                       # including +/- Inf
-    stats <- fivenum(x, na.rm = TRUE)
+    stats <- stats::fivenum(x, na.rm = TRUE)
     iqr <- diff(stats[c(2, 4)])
     if(coef < 0) stop(paste(sQuote("coef"), "must not be negative"))
     if(coef == 0)

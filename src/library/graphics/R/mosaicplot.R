@@ -196,7 +196,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
         if(is.null(margin))
             margin <- as.list(1:dimd)
         ## Fit the loglinear model.
-        E <- loglin(x, margin, fit = TRUE, print = FALSE)$fit
+        E <- stats::loglin(x, margin, fit = TRUE, print = FALSE)$fit
         ## Compute the residuals.
         type <- match.arg(type)
         residuals <-
@@ -345,7 +345,7 @@ function(formula, data = NULL, ...,
        || inherits(edata, "table")
        || length(dim(edata)) > 2) {
         data <- as.table(data)
-        varnames <- attr(terms(formula), "term.labels")
+        varnames <- attr(stats:::terms.formula(formula), "term.labels")
         if(all(varnames != "."))
             data <- margin.table(data,
                                  match(varnames, names(dimnames(data))))
