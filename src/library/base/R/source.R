@@ -47,8 +47,11 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
                 stop("unable to find a plausible encoding")
             if(verbose) cat("encoding =", dQuote(encoding), "chosen\n")
         }
-        file <- if(file == "") stdin()
-        else file(file, encoding = encoding)
+        if(file == "") file <- stdin()
+        else {
+	    file <- file(file, "r", encoding = encoding)
+	    on.exit(close(file))
+	}
     }
     Ne <- length(exprs <- .Internal(parse(file, n = -1, NULL, "?")))
     if (verbose)
