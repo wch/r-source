@@ -99,8 +99,8 @@ postscript <- function (file = ifelse(onefile,"Rplots.ps", "Rplot%03d.ps"),
     old <- check.options(new = new, name.opt = ".PostScript.Options",
 			 reset = FALSE, assign.opt = FALSE)
 
-    if(old$command == "default")
-        old$command <-if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
+    if(is.null(old$command) || old$command == "default")
+        old$command <- if(!is.null(cmd <- getOption("printcmd"))) cmd else ""
     .Internal(PS(file, old$paper, old$family, old$bg, old$fg,
 		 old$width, old$height, old$horizontal, old$pointsize,
                  old$onefile, old$pagecentre, old$print.it, old$command))
