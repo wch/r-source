@@ -102,14 +102,15 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                 else
                     return(as.numeric(q >= lo))
             }
-            if(ncp^(hi - lo) == Inf) {
+            if(ncp == Inf) {
                 if(upper.tail)
                     return(as.numeric(q <= hi))
                 else
                     return(as.numeric(q >= hi))
             }
             u <- lo : hi
-            d <- dhyper(u, m, n, k) * ncp ^ (0 : (hi - lo))
+            d <- dhyper(u, m, n, k, log=TRUE) + log(ncp) * u
+            d <- exp(d - max(d)) # beware of overflow
             d <- d / sum(d)
             if(upper.tail)
                 sum(d[u >= q])
@@ -124,14 +125,15 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
                        two.sided = {
                            if(or == 0)
                                as.numeric(x == lo)
-                           else if(or^(hi - lo) == Inf)
+                           else if(or == Inf)
                                as.numeric(x == hi)
                            else {
                                ## Note that we need a little fuzz.
                                relErr <- 1 + 10 ^ (-7)
                                u <- lo : hi
-                               d <- (dhyper(lo : hi, m, n, k)
-                                     * or ^ (0 : (hi - lo)))
+                               d <- dhyper(u, m, n, k, log=TRUE)
+                                     + log(or) * u
+                               d <- exp(d - max(d))
                                d <- d / sum(d)
                                sum(d[d <= d[x - lo + 1] * relErr])
                            }
@@ -148,12 +150,12 @@ function(x, y = NULL, workspace = 200000, hybrid = FALSE, or = 1,
             mnhyper <- function(ncp) {
                 if(ncp == 0)
                     return(lo)
-                if(ncp^(hi - lo) == Inf)
+                if(ncp == Inf)
                     return(hi)
                 q <- lo : hi
-                d <- dhyper(q, m, n, k) * ncp ^ (0 : (hi - lo))
-                d <- d / sum(d)
-                sum(q * d)
+                d <- dhyper(q, m, n, k, log=TRUE) + log(ncp) * q
+                d <- exp(d - max(d))
+                sum(q * d) / sum(d)
             }
             mu <- mnhyper(1)
             if(mu > x)

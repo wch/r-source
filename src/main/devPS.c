@@ -737,7 +737,7 @@ static void PSEncodeFont(FILE *fp, char *encname)
 	fprintf(fp, "        { code get /result exch def /found true def exit }\n");
 	fprintf(fp, "        { pop /found false def } ifelse\n");
 	fprintf(fp, "      } forall\n");
-	fprintf(fp, "      %% define character if it was found and accumulate encoding\n"); 
+	fprintf(fp, "      %% define character if it was found and accumulate encoding\n");
 	fprintf(fp, "      found { CharStrings code result put code } { /.notdef } ifelse\n");
 	fprintf(fp, "    } ifelse\n");
 	fprintf(fp, "  } forall\n");
@@ -878,17 +878,24 @@ static void PostScriptSetFont(FILE *fp, int typeface, double size)
     fprintf(fp, "/ps %.0f def %s %.0f s\n", size, TypeFaceDef[typeface], size);
 }
 
-static void PostScriptSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
+static void
+PostScriptSetLineTexture(FILE *fp, char *dashlist, int nlty, double lwd)
 {
-    double dash;
-    int i;
-    fprintf(fp,"[");
-    for (i = 0; i < nlty; i++) {
-        dash = (lwd >= 1 ? lwd:1) * ((i % 2) ? lty[i] + 1 : lty[i] - 1);
-	if (dash < 0) dash = 0;
-	fprintf(fp," %.2f", dash);
-    }
-    fprintf(fp,"] 0 setdash\n");
+/* use same macro for Postscript and PDF */
+#define PP_SetLineTexture(_CMD_)						\
+    double dash;								\
+    int i;									\
+    fprintf(fp,"[");								\
+    for (i = 0; i < nlty; i++) {						\
+	dash = (lwd >= 1 ? lwd: 1) *						\
+	    ((i % 2) ? dashlist[i] + 1						\
+	     :((nlty == 1 && dashlist[i] == 1.) ? 1. : dashlist[i] - 1));	\
+	if (dash < 0) dash = 0;							\
+	fprintf(fp," %.2f", dash);						\
+    }										\
+    fprintf(fp,"] 0 %s\n", _CMD_)
+
+    PP_SetLineTexture("setdash");
 }
 
 
@@ -1013,10 +1020,10 @@ PostScriptDesc;
 
 static void PS_Activate(NewDevDesc *dd);
 static void PS_Circle(double x, double y, double r,
-		      int col, int fill, double gamma, 
+		      int col, int fill, double gamma,
 		      int lty, double lwd,
 		      NewDevDesc *dd);
-static void PS_Clip(double x0, double x1, double y0, double y1, 
+static void PS_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void PS_Close(NewDevDesc *dd);
 static void PS_Deactivate(NewDevDesc *dd);
@@ -1031,15 +1038,15 @@ static void PS_MetricInfo(int c, int font, double cex, double ps,
 static void PS_Mode(int mode, NewDevDesc *dd);
 static void PS_NewPage(int fill, double gamma, NewDevDesc *dd);
 static Rboolean PS_Open(NewDevDesc*, PostScriptDesc*);
-static void PS_Polygon(int n, double *x, double *y, 
-		       int col, int fill, double gamma, 
+static void PS_Polygon(int n, double *x, double *y,
+		       int col, int fill, double gamma,
 		       int lty, double lwd,
 		       NewDevDesc *dd);
-static void PS_Polyline(int n, double *x, double *y, 
+static void PS_Polyline(int n, double *x, double *y,
 			int col, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
 static void PS_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, double gamma, 
+		    int col, int fill, double gamma,
 		    int lty, double lwd,
 		    NewDevDesc *dd);
 static void PS_Size(double *left, double *right,
@@ -1047,9 +1054,9 @@ static void PS_Size(double *left, double *right,
 		     NewDevDesc *dd);
 static double PS_StrWidth(char *str, int font,
 			      double cex, double ps, NewDevDesc *dd);
-static void PS_Text(double x, double y, char *str, 
-		    double rot, double hadj, 
-		    int col, double gamma, 
+static void PS_Text(double x, double y, char *str,
+		    double rot, double hadj,
+		    int col, double gamma,
 		    int font, double cex, double ps,
 		    NewDevDesc *dd);
 
@@ -1316,7 +1323,7 @@ PSDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 	       Rboolean printit, char*cmd)
 {
     return innerPSDeviceDriver((NewDevDesc*) dd, file, paper, family,
-			       afmpaths, encoding, bg, fg, width, height, 
+			       afmpaths, encoding, bg, fg, width, height,
 			       horizontal, ps, onefile, pagecentre,
 			       printit, cmd);
 }
@@ -1360,7 +1367,8 @@ static void SetFill(int color, NewDevDesc *dd)
 static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
 {
     PostScriptDesc *pd = (PostScriptDesc *) dd->deviceSpecific;
-    int i, ltyarray[8];
+    char dashlist[8];
+    int i;
 
     if (pd->current.lty != newlty || pd->current.lwd != newlwd) {
 	pd->current.lwd = newlwd;
@@ -1368,10 +1376,10 @@ static void SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
 	PostScriptSetLineWidth(pd->psfp, newlwd * 0.75);
 	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
-	    ltyarray[i] = newlty & 15;
+	    dashlist[i] = newlty & 15;
 	    newlty = newlty >> 4;
 	}
-	PostScriptSetLineTexture(pd->psfp, ltyarray, i, newlwd * 0.75);
+	PostScriptSetLineTexture(pd->psfp, dashlist, i, newlwd * 0.75);
     }
 }
 
@@ -1609,7 +1617,7 @@ static void PS_MetricInfo(int c, int font, double cex, double ps,
 }
 
 static void PS_Rect(double x0, double y0, double x1, double y1,
-		    int col, int fill, double gamma, 
+		    int col, int fill, double gamma,
 		    int lty, double lwd,
 		    NewDevDesc *dd)
 {
@@ -1637,7 +1645,7 @@ static void PS_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void PS_Circle(double x, double y, double r,
-		      int col, int fill, double gamma, 
+		      int col, int fill, double gamma,
 		      int lty, double lwd,
 		      NewDevDesc *dd)
 {
@@ -1681,8 +1689,8 @@ static void PS_Line(double x1, double y1, double x2, double y2,
     }
 }
 
-static void PS_Polygon(int n, double *x, double *y, 
-		       int col, int fill, double gamma, 
+static void PS_Polygon(int n, double *x, double *y,
+		       int col, int fill, double gamma,
 		       int lty, double lwd,
 		       NewDevDesc *dd)
 {
@@ -1720,7 +1728,7 @@ static void PS_Polygon(int n, double *x, double *y,
     }
 }
 
-static void PS_Polyline(int n, double *x, double *y, 
+static void PS_Polyline(int n, double *x, double *y,
 			int col, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
@@ -1746,9 +1754,9 @@ static void PS_Polyline(int n, double *x, double *y,
 }
 
 
-static void PS_Text(double x, double y, char *str, 
-		    double rot, double hadj, 
-		    int col, double gamma, 
+static void PS_Text(double x, double y, char *str,
+		    double rot, double hadj,
+		    int col, double gamma,
 		    int font, double cex, double ps,
 		    NewDevDesc *dd)
 {
@@ -1920,10 +1928,10 @@ static int XF_SetLty(int lty)
 
 static void XFig_Activate(NewDevDesc *dd);
 static void XFig_Circle(double x, double y, double r,
-		       int col, int fill, double gamma, 
+		       int col, int fill, double gamma,
 			int lty, double lwd,
 		       NewDevDesc *dd);
-static void XFig_Clip(double x0, double x1, double y0, double y1, 
+static void XFig_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void XFig_Close(NewDevDesc *dd);
 static void XFig_Deactivate(NewDevDesc *dd);
@@ -1937,15 +1945,15 @@ static void XFig_MetricInfo(int c, int font, double cex, double ps,
 			      double* width, NewDevDesc *dd);
 static void XFig_Mode(int mode, NewDevDesc *dd);
 static void XFig_NewPage(int fill, double gamma, NewDevDesc *dd);
-static void XFig_Polygon(int n, double *x, double *y, 
-			int col, int fill, double gamma, 
+static void XFig_Polygon(int n, double *x, double *y,
+			int col, int fill, double gamma,
 			 int lty, double lwd,
 			NewDevDesc *dd);
-static void XFig_Polyline(int n, double *x, double *y, 
+static void XFig_Polyline(int n, double *x, double *y,
 			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd);
 static void XFig_Rect(double x0, double y0, double x1, double y1,
-		     int col, int fill, double gamma, 
+		     int col, int fill, double gamma,
 		      int lty, double lwd,
 		     NewDevDesc *dd);
 static void XFig_Size(double *left, double *right,
@@ -1953,8 +1961,8 @@ static void XFig_Size(double *left, double *right,
 		     NewDevDesc *dd);
 static double XFig_StrWidth(char *str, int font,
 			      double cex, double ps, NewDevDesc *dd);
-static void XFig_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
+static void XFig_Text(double x, double y, char *str,
+		     double rot, double hadj,
 		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd);
 static Rboolean XFig_Open(NewDevDesc*, XFigDesc*);
@@ -2164,8 +2172,8 @@ XFigDeviceDriver(DevDesc *dd, char *file, char *paper, char *family,
 		 Rboolean horizontal, double ps,
 		 Rboolean onefile, Rboolean pagecentre)
 {
-    return innerXFigDeviceDriver((NewDevDesc*) dd, file, paper, family, 
-				 bg, fg, width, height, horizontal, 
+    return innerXFigDeviceDriver((NewDevDesc*) dd, file, paper, family,
+				 bg, fg, width, height, horizontal,
 				 ps, onefile, pagecentre);
 }
 
@@ -2354,7 +2362,7 @@ static void XFig_Rect(double x0, double y0, double x1, double y1,
 }
 
 static void XFig_Circle(double x, double y, double r,
-			int col, int fill, double gamma, 
+			int col, int fill, double gamma,
 			int inlty, double inlwd,
 			NewDevDesc *dd)
 {
@@ -2401,8 +2409,8 @@ static void XFig_Line(double x1, double y1, double x2, double y2,
     }
 }
 
-static void XFig_Polygon(int n, double *x, double *y, 
-			 int col, int fill, double gamma, 
+static void XFig_Polygon(int n, double *x, double *y,
+			 int col, int fill, double gamma,
 			 int inlty, double inlwd,
 			 NewDevDesc *dd)
 {
@@ -2431,7 +2439,7 @@ static void XFig_Polygon(int n, double *x, double *y,
     }
 }
 
-static void XFig_Polyline(int n, double *x, double *y, 
+static void XFig_Polyline(int n, double *x, double *y,
 			  int col, double gamma, int inlty, double inlwd,
 			  NewDevDesc *dd)
 {
@@ -2458,8 +2466,8 @@ static void XFig_Polyline(int n, double *x, double *y,
 
 static const int styles[4] = {0,2,1,3};
 
-static void XFig_Text(double x, double y, char *str, 
-		      double rot, double hadj, 
+static void XFig_Text(double x, double y, char *str,
+		      double rot, double hadj,
 		      int col, double gamma, int font, double cex, double ps,
 		      NewDevDesc *dd)
 {
@@ -2484,11 +2492,11 @@ static void XFig_Text(double x, double y, char *str,
 	/* FIXME:  Why is this calling GStr[Height|Width] when it
 	 * presumably could be calling XFig_Str[Height|Width] ?
 	 */
-	fprintf(fp, "%d %d ", 
-		(int)(16.667*GStrHeight(str, DEVICE, 
+	fprintf(fp, "%d %d ",
+		(int)(16.667*GStrHeight(str, DEVICE,
 					GetDevice(devNumber((DevDesc*) dd)))
 		      +0.5),
-		(int)(16.667*GStrWidth(str, DEVICE, 
+		(int)(16.667*GStrWidth(str, DEVICE,
 				       GetDevice(devNumber((DevDesc*) dd)))
 		      +0.5));
 	fprintf(fp, "%d %d ", (int)x, (int)y);
@@ -2593,7 +2601,7 @@ static void PDF_Activate(NewDevDesc *dd);
 static void PDF_Circle(double x, double y, double r,
 		       int col, int fill, double gamma, int lty, double lwd,
 		       NewDevDesc *dd);
-static void PDF_Clip(double x0, double x1, double y0, double y1, 
+static void PDF_Clip(double x0, double x1, double y0, double y1,
 		     NewDevDesc *dd);
 static void PDF_Close(NewDevDesc *dd);
 static void PDF_Deactivate(NewDevDesc *dd);
@@ -2607,10 +2615,10 @@ static void PDF_MetricInfo(int c, int font, double cex, double ps,
 			      double* width, NewDevDesc *dd);
 static void PDF_Mode(int mode, NewDevDesc *dd);
 static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd);
-static void PDF_Polygon(int n, double *x, double *y, 
+static void PDF_Polygon(int n, double *x, double *y,
 			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd);
-static void PDF_Polyline(int n, double *x, double *y, 
+static void PDF_Polyline(int n, double *x, double *y,
 			    int col, double gamma, int lty, double lwd,
 			    NewDevDesc *dd);
 static void PDF_Rect(double x0, double y0, double x1, double y1,
@@ -2621,14 +2629,14 @@ static void PDF_Size(double *left, double *right,
 		     NewDevDesc *dd);
 static double PDF_StrWidth(char *str, int font,
 			      double cex, double ps, NewDevDesc *dd);
-static void PDF_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
+static void PDF_Text(double x, double y, char *str,
+		     double rot, double hadj,
 		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd);
 
 static Rboolean
 innerPDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
-		     char *bg, char *fg, double width, double height, 
+		     char *bg, char *fg, double width, double height,
 		     double ps, int onefile)
 {
     /* If we need to bail out with some sort of "error" */
@@ -2817,26 +2825,17 @@ static void PDF_SetFill(int color, NewDevDesc *dd)
     }
 }
 
-/* Note that the line texture is scaled by the line width.
-   Almost the same as PS, but the operator has a short name */
-
-static void PDFSetLineTexture(FILE *fp, int *lty, int nlty, double lwd)
+/* Note that the line texture is scaled by the line width.*/
+static void PDFSetLineTexture(FILE *fp, char *dashlist, int nlty, double lwd)
 {
-    double dash;
-    int i;
-    fprintf(fp,"[");
-    for (i = 0; i < nlty; i++) {
-        dash = (lwd >= 1 ? lwd:1) * ((i % 2) ? lty[i] + 1 : lty[i] - 1);
-	if (dash < 0) dash = 0;
-	fprintf(fp," %.2f", dash);
-    }
-    fprintf(fp,"] 0 d\n");
+    PP_SetLineTexture("d");
 }
 
 static void PDF_SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
 {
     PDFDesc *pd = (PDFDesc *) dd->deviceSpecific;
-    int i, ltyarray[8];
+    char dashlist[8];
+    int i;
 
     if (pd->current.lty != newlty || pd->current.lwd != newlwd) {
 	pd->current.lwd = newlwd;
@@ -2844,10 +2843,10 @@ static void PDF_SetLineStyle(int newlty, double newlwd, NewDevDesc *dd)
 	fprintf(pd->pdffp, "%.2f w\n", newlwd * 0.75);
 	/* process lty : */
 	for(i = 0; i < 8 && newlty & 15 ; i++) {
-	    ltyarray[i] = newlty & 15;
+	    dashlist[i] = newlty & 15;
 	    newlty = newlty >> 4;
 	}
-	PDFSetLineTexture(pd->pdffp, ltyarray, i, newlwd * 0.75);
+	PDFSetLineTexture(pd->pdffp, dashlist, i, newlwd * 0.75);
     }
 }
 
@@ -3049,15 +3048,15 @@ static void PDF_NewPage(int fill, double gamma, NewDevDesc *dd)
     char buf[512];
 
     if(pd->pageno >= pd->pagemax || pd->nobjs >= 3*pd->pagemax) {
-	pd->pageobj = (int *) 
+	pd->pageobj = (int *)
 	    realloc(pd->pageobj, 2*pd->pagemax * sizeof(int));
-	pd->pos = (int *) realloc(pd->pos, 
+	pd->pos = (int *) realloc(pd->pos,
 				  (6*pd->pagemax + 50) * sizeof(int));
 	if(!pd->pos || !pd->pageobj)
 	    error("unable to increase page limit: please shutdown the pdf device");
 	pd->pagemax *= 2;
     }
-    
+
 
     if(pd->pageno > 0) {
 	PDF_endpage(pd);
@@ -3196,7 +3195,7 @@ static void PDF_Line(double x1, double y1, double x2, double y2,
     }
 }
 
-static void PDF_Polygon(int n, double *x, double *y, 
+static void PDF_Polygon(int n, double *x, double *y,
 			int col, int fill, double gamma, int lty, double lwd,
 			NewDevDesc *dd)
 {
@@ -3231,7 +3230,7 @@ static void PDF_Polygon(int n, double *x, double *y,
 
 }
 
-static void PDF_Polyline(int n, double *x, double *y, 
+static void PDF_Polyline(int n, double *x, double *y,
 			 int col, double gamma, int lty, double lwd,
 			 NewDevDesc *dd)
 {
@@ -3256,8 +3255,8 @@ static void PDF_Polyline(int n, double *x, double *y,
 }
 
 
-static void PDF_Text(double x, double y, char *str, 
-		     double rot, double hadj, 
+static void PDF_Text(double x, double y, char *str,
+		     double rot, double hadj,
 		     int col, double gamma, int font, double cex, double ps,
 		     NewDevDesc *dd)
 {

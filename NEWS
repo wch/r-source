@@ -148,8 +148,8 @@ BUG FIXES
     o   merge() with multiple and differently-named match columns
         failed. (PR#1510)
 
-    o   NAs in right-justified unquoted matrices were being mis-aligned.
-	This mainly affected printing data frames.
+    o   NAs in right-justified unquoted character matrices were being 
+	mis-aligned.  This mainly affected printing data frames.
 
     o	predict.*bSpline() bugs extrapolating for deriv >= 1 (PR#1473),
         and predict.[bn]s bug e.g. for bs(x), reported by Ch.Sangiorgio.
@@ -190,7 +190,7 @@ BUG FIXES
 
     o   Workaround for NetBSD bug in compiling dounzip.c. (PR#1565/6)
 
-    o   real conversions in type.convert were always treating "NA" as
+    o   Conversions to numeric in type.convert were always treating "NA" as
 	missing whatever the setting of na.strings. (PR#1568)
 
     o	R CMD check now deals correctly with package names containing a
@@ -249,7 +249,7 @@ BUG FIXES
 
     o   tcltk package didn't work with tcl8.0.x.  Compatibility code
         inserted (PR#1640, thanks to René Bertin for helping out with
-        this). 
+        this).
 
     o	selfStart() {pkg "nls"} now works again when parameter names are
         not specified (but implicit).
@@ -263,6 +263,25 @@ BUG FIXES
 	library, and so update.packages() would only update a bundle
 	in the first location in lib.loc.
 
+    o   fisher.test() could miscalculate odds ratio and confidence
+        interval for tables with large entries, due to numerical
+        overflow.
+
+    o	Using lty = "1" (or "10") does no longer produce invalid
+	postscript or pdf.  Using "0" in a character lty is currently not
+	implemented device-independently and needs more fixing.
+
+    o	ccf(plot = FALSE) was returning a spurious extra 0 at lag 0.
+
+    o	On console-based versions of R (Windows, GNOME, probably
+	MacOS) warning/error messages longer than 8192 chars could
+	crash R. (PR#1651)
+
+    o   Comparisons between objects of mode "call" using "==" now return
+        TRUE if both sides deparse to the same string (as always intended).
+
+    o	HoltWinters() now initializes correctly in the exponential
+	smoothing case, and plot.HoltWinters() allows lty to be set. 
 
 
 		CHANGES IN R VERSION 1.5.0

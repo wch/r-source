@@ -463,9 +463,10 @@ void REvprintf(const char *format, va_list arg)
     if(R_Consolefile) {
 	vfprintf(R_Consolefile, format, arg);
     } else {
-	char buf[BUFSIZE]; int slen;
+	char buf[BUFSIZE];
+	int slen;
 
-	vsprintf(buf, format, arg);
+	vsnprintf(buf, BUFSIZE, format, arg);
 	slen = strlen(buf);
 	R_WriteConsole(buf, slen);
     }

@@ -5344,6 +5344,8 @@ void InitColors(void)
  *  The lengths are typically interpreted as pixels on a screen
  *  and as "points" in postscript.
  *
+ *  more comments (and LTY_* def.s) in	../include/Rgraphics.h
+ *					----------------------
  */
 
 typedef struct {
@@ -5351,7 +5353,6 @@ typedef struct {
     unsigned int pattern;
 } LineTYPE;
 
-/* LTY_... integer patterns are in ../include/Rgraphics.h ! */
 static LineTYPE linetype[] = {
     { "blank",   LTY_BLANK   },/* 0 */
     { "solid",	 LTY_SOLID   },/* 1 */
