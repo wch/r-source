@@ -4373,52 +4373,79 @@ void GMtext(char *str, int side, double line, int outer, double at, int las,
 /* Based on HSV_TO_RGB from Foley and Van Dam First Ed. Page 616 */
 /* See Alvy Ray Smith, Color Gamut Transform Pairs, SIGGRAPH '78 */
 
-void hsv2rgb(double *h, double *s, double *v, double *r, double *g, double *b)
+void hsv2rgb(double h, double s, double v, double *r, double *g, double *b)
 {
     double f, p, q, t;
     int i;
 
-    f = modf(*h * 6.0, &t);
+    f = modf(h * 6.0, &t);
     i = ((int) t) % 6;
 
-    p = *v * (1 - *s);
-    q = *v * (1 - *s * f);
-    t = *v * (1 - (*s * (1 - f)));
+    p = v * (1 - s);
+    q = v * (1 - s * f);
+    t = v * (1 - (s * (1 - f)));
     switch (i) {
-    case 0:
-	*r = *v;
-	*g = t;
-	*b = p;
-	break;
-    case 1:
-	*r = q;
-	*g = *v;
-	*b = p;
-	break;
-    case 2:
-	*r = p;
-	*g = *v;
-	*b = t;
-	break;
-    case 3:
-	*r = p;
-	*g = q;
-	*b = *v;
-	break;
-    case 4:
-	*r = t;
-	*g = p;
-	*b = *v;
-	break;
-    case 5:
-	*r = *v;
-	*g = p;
-	*b = q;
-	break;
+    case 0:	*r = v;		*g = t;		*b = p;	break;
+    case 1:	*r = q;		*g = v;		*b = p;	break;
+    case 2:	*r = p;		*g = v;		*b = t;	break;
+    case 3:	*r = p;		*g = q;		*b = v; break;
+    case 4:	*r = t;		*g = p;		*b = v; break;
+    case 5:	*r = v;		*g = p;		*b = q;	break;
     default:
 	error("bad hsv to rgb color conversion");
     }
 }
+
+/* rgb2hsv() -- the reverse (same reference as above
+ *	this implementation is adapted from code by Nicholas Lewin-Koh.
+ */
+void rgb2hsv(double r, double g, double b,
+	     double *h, double *s, double *v)
+{
+    double min, max, delta;
+
+    /* Compute  min(r,g,b) and max(r,g,b): */
+    min = max = r;
+    if(min > g) { /* g < r */
+	if(b < g)
+	    min = b;/* &  max = r */
+        else { /* g <= b, g < r */
+	    min = g;
+	    if(b > r) max = g; /* else : g <= b <=r */
+	}
+    } else { /* r <= g */
+	if(b > g)
+	    max = b;/* &  min = r */
+        else { /* b,r <= g */
+	    max = g;
+	    if(b < r) min = b; /* else : r <= b <= g */
+	}
+    }
+
+    *v = max;
+    if( max == 0 || (delta = max - min) == 0) {
+	/*   r = g = b : "gray" : s = 0, h is undefined */
+	*s = 0;
+	*h = NA_REAL;
+	return;
+    }
+    /* else : */
+    *s = delta / max;
+
+    if( r == max )
+	*h = ( g - b ) / delta;  /* between yellow & magenta */
+    else if( g == max )
+	*h = 2 + ( b - r ) / delta; /* between cyan & yellow*/
+    else
+	*h = 4 + ( r - g ) / delta; /* between magenta & cyan */
+
+    *h *= 60; /* degrees */
+    if(*h < 0)
+	*h += 360;
+    *h /= 360;
+    return;
+}
+
 
 /*
  *  Color Specification

@@ -136,7 +136,7 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	gg = REAL(gm)[i % ng];
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1)
 	    errorcall(call, "invalid HSV color");
-	hsv2rgb(&hh, &ss, &vv, &r, &g, &b);
+	hsv2rgb(hh, ss, vv, &r, &g, &b);
 	r = pow(r, gg);
 	g = pow(g, gg);
 	b = pow(b, gg);

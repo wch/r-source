@@ -37,8 +37,6 @@
  * The first pass calculates the width of the paste buffer,
  * then it is alloc-ed and the second pass stuffs the information in.
  */
-
-
 SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, collapse, sep, x, tmpchar;
