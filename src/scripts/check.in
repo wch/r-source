@@ -31,7 +31,7 @@ use R::Utils;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.27.2.3 $ ';
+my $revision = ' $Revision: 1.27.2.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -443,9 +443,9 @@ sub check_pkg {
 	$log->result("OK");
     }
 
-    if($opt_tests && (-d "$startdir/$pkg/tests")){
+    if($opt_tests && (-d "$startdir/$pkgname/tests")){
         $log->checking("tests");
-        my $testsrcdir="$startdir/$pkg/tests";
+        my $testsrcdir="$startdir/$pkgname/tests";
         my $testdir="$pkgoutdir/tests";
         if(! -d $testdir){
             if(! mkdir($testdir, 0755)){
