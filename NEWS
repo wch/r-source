@@ -69,9 +69,11 @@ BUG FIXES
     o	scan() was reading all-blank numeric fields as zero. 
 	Should be read as NA, and are now. 
 
-    o	dnbinom(*, size, *) now works again for non-integer size (PR #842)
+    o	dnbinom(*, size, *) now works again for size < 1 (PR #842).
 
-    o   smooth.spline() allows zero weights again.
+    o	dgeom(*, p = 0) doesn't give NaN anymore.
+
+    o	smooth.spline() allows zero weights again.
 
 
 
