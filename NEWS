@@ -574,6 +574,8 @@ BUG FIXES
 
     o   weighted.mean() now checks the length of the weight vector w.
 
+    o   poisson family now calculates correct AIC when outcome is a rate.
+
 
 
 

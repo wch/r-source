@@ -141,12 +141,16 @@ poisson <- function (link = "log")
 	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
     aic <- function(y, n, mu, wt, dev)
 #	2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
-	-2*sum(dpois(y, mu, log=TRUE)*wt)
+#	-2*sum(dpois(y, mu, log=TRUE)*wt)
+        -2*sum(dpois(round(y*wt), mu*wt, log=TRUE))
     initialize <- expression({
 	if (any(y < 0))
 	    stop("negative values not allowed for the Poisson family")
 	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
+        m <- weights * y
+        if (any(abs(m - round(m)) > 0.001))
+          warning("non-integer counts in a Poisson glm!")
     })
     structure(list(family = "poisson",
 		   link = linktemp,
