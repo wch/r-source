@@ -47,6 +47,7 @@ BUG FIXES
     o   buildVignettes() uses file.remove() instead of unlink() to
         remove temporary files.
 
+    o	methods(class = "lqs") does not produce extraneous entries anymore.
 
 
 		CHANGES IN R VERSION 1.8.1

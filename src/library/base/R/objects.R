@@ -38,11 +38,8 @@ methods <- function (generic.function, class)
         isUME(body(f))
     }
 
-## FIXME[MM]: An abstraction of this function should go to "tools" or similar:
     rbindSome <- function(df, nms, msg) {
-        ## rbind.data.frame() -- dropping duplicated rows
-        seriDf <- function(x)
-            do.call("paste", c(cbind(rownames(x), x), sep = "\r"))
+        ## rbind.data.frame() -- dropping rows with duplicated names
         n2 <- length(nms)
         dnew <- data.frame(visible = rep.int(FALSE, n2),
                            from    = rep.int(msg,   n2),
@@ -50,7 +47,7 @@ methods <- function (generic.function, class)
         n <- nrow(df)
         if(n == 0) return(dnew)
         ## else
-        keep <- !duplicated(c(seriDf(df), seriDf(dnew)))
+        keep <- !duplicated(c(rownames(df), rownames(dnew)))
         rbind(df  [keep[1:n] , ],
               dnew[keep[(n+1):(n+n2)] , ])
     }
