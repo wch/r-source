@@ -434,3 +434,27 @@ Date: Fri, 25 Jan 2002 14:36:52 -0500
 Subject: make check fails when R_HOME env var set
 From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
 Date: Fri, 25 Jan 2002 15:08:33 -0500
+* PR# 1299 *
+Subject: testing
+From: Peter Dalgaard BSA <p.dalgaard@biostat.ku.dk>
+Date: 07 Feb 2002 16:54:23 +0100
+* PR# 1300 *
+Subject: FW: layout and piechart diameter problem
+From: "Warnes, Gregory R" <gregory_r_warnes@groton.pfizer.com>
+Date: Thu, 7 Feb 2002 11:05:15 -0500 
+* PR# 1301 *
+Subject: incorrect handling of arrays of list elements
+From: =?iso-8859-1?Q?Jens=20Oehlschl=E4gel?= <joehl@web.de>
+Date: Thu, 7 Feb 2002 13:43:19 +0100
+* PR# 1302 *
+Subject: Re: [R] expressions in legends
+From: Uwe Ligges <ligges@statistik.uni-dortmund.de>
+Date: Mon, 04 Feb 2002 16:42:46 +0100
+* PR# 1303 *
+Subject: failure of http://r-bugs.biostat.ku.dk/cgi-bin/R
+From: Dimitri PAPADOPOULOS-ORFANOS <papadopo@shfj.cea.fr>
+Date: Mon, 4 Feb 2002 13:43:21 +0100 (MET)
+* PR# 1304 *
+Subject: R loads uncorrect readline library
+From: Dimitri PAPADOPOULOS-ORFANOS <papadopo@shfj.cea.fr>
+Date: Mon, 4 Feb 2002 13:40:48 +0100 (MET)
