@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-21, 2003-11-29
+Version 1.8-23, 2003-12-03
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -1587,6 +1587,9 @@ distributions of R.)
 *combinat*
      Combinatorics utilities.
 
+*concord*
+     Measures of concordance and reliability.
+
 *conf.design*
      A series of simple tools for constructing and manipulating confounded
      and fractional factorial designs.
@@ -1866,6 +1869,9 @@ distributions of R.)
      Lattice graphics, an implementation of Trellis Graphics functions.
      _Recommended_.
 
+*ldDesign*
+     Design of experiments for detection of linkage disequilibrium,
+
 *leaps*
      A package which performs an exhaustive search for the best subsets of a
      given set of potential regressors, using a branch-and-bound algorithm,
@@ -2107,6 +2113,10 @@ distributions of R.)
      Functions intended to facilitate certain basic analyses of DNA array
      data, especially with regard to comparing expression levels between two
      types of tissue.
+
+*phyloarray*
+     Software to process data from phylogenetic or identification
+     microarrays.
 
 *pinktoe*
      Converts S trees to HTML/Perl files for interactive tree traversal.
