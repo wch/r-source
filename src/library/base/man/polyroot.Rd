@@ -5,7 +5,8 @@ polyroot(z)
 }
 \alias{polyroot}
 \arguments{
-  \item{z}{the vector of polynomial coefficients in increasing order.}
+  \item{z}{the vector of polynomial coefficients in increasing
+    order.  The last coefficient must be non-zero.}
 }
 \description{
   Find zeros of a real or complex polynomial.
