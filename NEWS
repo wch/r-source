@@ -28,6 +28,10 @@ NEW FEATURES
 
 BUG FIXES
 
+    o   as.list didn't work for expressions
+
+    o   x[[i]]<-quote(a) (x generic vector) didn't work
+
     o   many argument name changes, add ... for method functions for
 	consistency with the gneric function.
 
