@@ -22,8 +22,11 @@ BUG FIXES
 	numbers correctly.  This affected the way they were printed on
 	Windows, for example.
 
-    o	legend() now draws points after lines allowing "empty dots on lines"
-	thanks to Ben Bolker.
+    o	legend() now draws points after lines allowing "empty dots on
+	lines" thanks to Ben Bolker.
+
+    o	Setting row/column names preserves the names of the dimnames
+	(PR#809). 
 
 
 		CHANGES IN R VERSION 1.2.1
