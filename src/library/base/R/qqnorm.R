@@ -1,4 +1,4 @@
-# returns value, extra protection.  BDR 29/5/98.
+### returns value, extra protection.  BDR 29/5/98.
 qqnorm <-
 function(y, ylim, main="Normal Q-Q Plot",
          xlab="Theoretical Quantiles", ylab="Sample Quantiles",
@@ -13,12 +13,12 @@ function(y, ylim, main="Normal Q-Q Plot",
         invisible(list(x = x, y = y))
 }
 
-qqline <- 
+qqline <-
 function(y, ...)
 {
-        y <- quantile(y[!is.na(y)],c(0.25, 0.75)) 
+        y <- quantile(y[!is.na(y)],c(0.25, 0.75))
         x <- qnorm(c(0.25, 0.75))
         slope <- diff(y)/diff(x)
         int <- y[1]-slope*x[1]
-        abline(int, slope, ...)    
+        abline(int, slope, ...)
 }
