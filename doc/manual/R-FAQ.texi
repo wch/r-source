@@ -2019,6 +2019,8 @@ Analysis of configuration frequencies.
 @item chplot
 Augmented convex hull plots: informative and nice plots for grouped
 bivariate data.
+@item changeLOS
+Change in length of hospital stay (LOS).
 @item chron
 A package for working with chronological objects (times and dates).
 @item circular
