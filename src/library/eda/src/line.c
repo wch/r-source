@@ -1,10 +1,12 @@
 #include "R_ext/Utils.h"/* R_rsort() */
 #include <math.h>
 
-/* Speed up by `inlining' these (as macros) [since 1.2]: */
+#include "eda.h"
+
+/* Speed up by `inlining' these (as macros) [since R version 1.2] : */
 #if 1
-#define il(n,x)	floor((n - 1) * x) 
-#define iu(n,x)	 ceil((n - 1) * x) 
+#define il(n,x)	(int)floor((n - 1) * x) 
+#define iu(n,x)	(int) ceil((n - 1) * x) 
 
 #else
 static int il(int n, double x)
