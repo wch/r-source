@@ -82,7 +82,8 @@ this.)
 
 If you need or want to set certain configure variables to something
 other than their default, you can do that by either editing the file
-`config.site' or on the command line as
+`config.site' (which documents all the variables you might want to set)
+or on the command line as
 
 	VAR="..." ./configure		   # Bourne shell compatibles
 	(setenv VAR "..."; ./configure)	   # C shell

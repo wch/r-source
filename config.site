@@ -153,3 +153,7 @@
 # and tk.h headers.
 # TCLTK_CPPFLAGS=
 
+# make name.
+# Set this if you want to use a make by another name, for example 
+# if your GNU make is called `gmake', use MAKE=gmake.
+# MAKE=
