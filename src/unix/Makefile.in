@@ -45,8 +45,7 @@ devPicTeX.o: $(srcdir)/devPicTeX.c $(top_srcdir)/src/include/Graphics.h $(top_sr
 
 dynload.o: $(srcdir)/dynload.c ../include/FFTab.h ../include/FFDecl.h
 fileio.o: $(srcdir)/fileio.c $(top_srcdir)/src/include/Fileio.h
-system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h $(top_srcdir)/src/include/Platform.h
-
+system.o: $(srcdir)/system.c $(top_srcdir)/src/include/Defn.h ../include/Platform.h
 
 ../include/FFTab.h ../include/FFDecl.h::
 	(cd ../include; $(MAKE) $(@F))
