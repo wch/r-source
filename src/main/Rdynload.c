@@ -951,7 +951,7 @@ Rf_MakeDLLInfo(DllInfo *info)
 
     SET_VECTOR_ELT(ref, 3, Rf_makeDllObject(info->handle));
 
-    SET_VECTOR_ELT(ref, 4, Rf_makeDllInfoReference(info));
+    SET_VECTOR_ELT(ref, 4, Rf_makeDllInfoReference((HINSTANCE) info));
 
     PROTECT(elNames = allocVector(STRSXP, n));
     for(i = 0; i < n; i++)
@@ -985,7 +985,7 @@ R_getSymbolInfo(SEXP sname, SEXP spackage)
     char *package, *name;
     R_RegisteredNativeSymbol symbol = {R_ANY_SYM, {NULL}, NULL};
     SEXP sym = R_NilValue;
-    DL_FUNC f;
+    DL_FUNC f = NULL;
 
     package = "";
 
