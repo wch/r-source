@@ -48,7 +48,7 @@ ALL_CPPFLAGS = $(R_XTRA_CPPFLAGS) -I$(srcdir) $(CPPFLAGS) $(DEFS)
 
 R all: all-@USE_INCLUDED_LIBINTL@
 all-yes: Makefile 
-	@$(MAKE) headers
+	@$(MAKE) headers localecharset.h
 	@$(MAKE) Makedeps
 	@$(MAKE) $(noinst_LIBRARIES)
 all-no: Makefile
@@ -78,10 +78,20 @@ libgnuintl.h: $(srcdir)/libgnuintl.h.in
 	    -e 's,@''HAVE_WPRINTF''@,@HAVE_WPRINTF@,g' \
 	  < $(srcdir)/libgnuintl.h.in > libgnuintl.h
 
+charset.alias: $(srcdir)/config.charset
+	@$(SHELL) $(srcdir)/config.charset '@host@' > t-$@
+	@$(SHELL) $(top_srcdir)/tools/copy-if-change t-$@ $@
+	@rm t-$@
+
+localecharset.h: charset.alias
+	@echo "cp =" > $@
+	@ @SED@ -e 's/\([^ ]\{1,\}\)/"\1" "\\0"/g' charset.alias >> $@
+	@echo ";" >> $@
+
 mostlyclean: clean
 clean:
 	@-rm -f Makedeps *.d *.o *.lo *.a
-	@rm -f libgnuintl.h libintl.h charset.alias ref-add.sed ref-del.sed
+	@rm -f libgnuintl.h libintl.h charset.alias localecharset.h ref-add.sed ref-del.sed
 distclean: clean
 	@-rm -f Makefile
 maintainer-clean: distclean

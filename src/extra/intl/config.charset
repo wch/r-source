@@ -115,11 +115,6 @@
 
 host="$1"
 os=`echo "$host" | sed -e 's/^[^-]*-[^-]*-\(.*\)$/\1/'`
-echo "# This file contains a table of character encoding aliases,"
-echo "# suitable for operating system '${os}'."
-echo "# It was automatically generated from config.charset."
-# List of references, updated during installation:
-echo "# Packages using this file: "
 case "$os" in
     linux-gnulibc1*)
 	# Linux libc5 doesn't have nl_langinfo(CODESET); therefore
