@@ -46,7 +46,8 @@ Methods for
   A \code{\link{data.frame}} containing the variables used in
   \code{formula}.
 }
-\seealso{\code{\link{model.matrix}} for the ``design matrix'' and
+\seealso{\code{\link{model.matrix}} for the ``design matrix'',
+  \code{\link{formula}} for formulas  and
   \code{\link{expand.model.frame}} for model.frame manipulation.
 }
 \examples{

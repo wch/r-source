@@ -37,6 +37,10 @@ NEW FEATURES
 	only when it is printed as a quoted string.  This makes
 	print(, quote=FALSE) and cat() consistent.
 
+    o   model.frame() now uses the environment of its formula argument,
+	rather than the parent environment, to evaluate variables not
+	found in the data argument. See help(formula).
+
     o	The standard methods for add1() and drop1() now attempt to cope
 	with missing values by using a subset of the data that is
 	`cleaned' by na.action for the maximal model under consideration.

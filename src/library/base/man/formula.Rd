@@ -66,6 +66,17 @@ I(x)
   \code{y ~ a + I(b+c)}, the term \code{b+c} is to be
   interpreted as the sum of \code{b} and \code{c}.
 }
+\section{Environments}{
+  As of version 1.1 a formula object has an associated environment, and
+  as of version 1.2 this environment (rather than the parent
+  environment) is used by \code{\link{model.frame}} to evaluate variables
+  that are not found in the supplied \code{data} argument.
+
+  Formulas created with the \code{~} operator use the
+  environment in which they were created; formulas created from strings
+  with \code{as.formula} have the \code{NULL} environment and will
+  usually need to be assigned a more appropriate environment.
+  }
 \value{
   All the functions above produce an object
   of class \code{formula} which contains a symbolic model formula.
@@ -78,6 +89,11 @@ class(fo <- y ~ x1*x2) # "formula"
 fo
 typeof(fo)# R internal : "language"
 terms(fo)
+
+environment(fo)
+fo2<-as.formula("y~x") 
+environment(fo2)                  # NULL
+environment(fo2)<-environment()   # assign it the current environment
 
 ## Create a formula for a model with a large number of variables:
 xnam <- paste("x", 1:25, sep="")
