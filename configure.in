@@ -27,7 +27,7 @@ AC_CONFIG_HEADER(src/include/Platform.h)
 
 . ${srcdir}/config.site
 
-AC_CONFIG_AUX_DIR(aux)
+AC_CONFIG_AUX_DIR(${srcdir}/aux)
 
 ### Platform
 ###
@@ -568,27 +568,24 @@ AC_SUBST(FFLAGS)
 AC_SUBST(F2CFLAGS)
 
 AC_OUTPUT(Makeconf Makefile
-  doc/keyword-test 
-  etc/COMPILE etc/INSTALL etc/Makeconf etc/Makefile etc/REMOVE 
-  etc/Rdconv etc/Rdindex etc/Rman2Rd etc/SHLIB etc/Sd2Rd 
-  etc/build-help etc/help.pretty etc/html2dos
-  demos/dynload/Makefile
-  doc/manual/lib2tex
-  src/Makefile src/appl/Makefile src/include/Makefile 
+  afm/Makefile
+  demos/Makefile
+  doc/Makefile doc/keyword-test doc/manual/Makefile doc/manual/lib2tex
+  etc/Makefile etc/Makeconf
+  src/Makefile src/appl/Makefile src/include/Makefile
   src/library/Makefile src/main/Makefile src/nmath/Makefile
   src/scripts/Makefile src/unix/Makefile
-  src/include/GETSYMBOLS
   src/library/base/Makefile src/library/profile/Makefile
-  src/scripts/fwf2table src/scripts/R.sh
+  src/scripts/COMPILE src/scripts/INSTALL src/scripts/REMOVE
+  src/scripts/R.sh src/scripts/Rdconv src/scripts/Rdindex
+  src/scripts/Rman2Rd src/scripts/SHLIB src/scripts/Sd2Rd
+  src/scripts/build-help src/scripts/fwf2table src/scripts/help.pretty
+  src/scripts/html2dos
+  tests/Makefile tests/Examples/Makefile
 )
 
 AC_OUTPUT_COMMANDS(
-  (cd doc; chmod +x keyword-test)
-  (cd doc/manual; chmod +x lib2tex)
-  (cd etc; chmod +x INSTALL REMOVE Rdconv Rdindex Rman2Rd Sd2Rd \
-           build-help help.pretty html2dos)
-  mkdir -p bin include library
-  (cd src/include; chmod +x GETSYMBOLS; ./GETSYMBOLS)
+  chmod +x doc/keyword-test doc/manual/lib2tex
 )
 
 if test -z "${F77}"; then
