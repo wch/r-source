@@ -182,7 +182,7 @@ install-R-framework:
 	  cp Info.plist "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources")
 	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
 	  ln -f -s -n Resources/include Headers && \
-	  ln -f -s -n Resources/bin/libR.dylib R && \
+	  ln -f -s -n Resources/lib/libR.dylib R && \
 	  test -d "Resources/bin/Frameworks" || mkdir -p "Resources/bin/Frameworks" && \
 	  cd Resources/bin/exec && \
 	  ln -f -s -n ../Frameworks Frameworks)
@@ -198,7 +198,7 @@ install-R-framework:
 	  sed 's/^args=/args=--gui=aqua/' < R > RAqua && \
 	  chmod 755 RAqua) 
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
-	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/bin/libR.dylib" libR.dylib)
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" ../lib/libR.dylib)
 	@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' $(R_FRAMEWORK_DIR)/Resources/bin/RAqua > \
 	  $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua)
 	@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RRAqua $(R_FRAMEWORK_DIR)/Resources/bin/RAqua)
