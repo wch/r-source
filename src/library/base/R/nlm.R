@@ -7,8 +7,9 @@ nlm <- function(f, p, hessian=FALSE, typsize=rep(1,length(p)),
     print.level <- as.integer(print.level)
     if(print.level < 0 || print.level > 2)
 	stop("`print.level' must be in {0,1,2}")
-    msg <- c(9,1,17)[1+print.level]
-    if(!check.analyticals) msg <- msg + 6
+    ## msg is collection of bits, i.e., sum of 2^k (k = 0,..,4):
+    msg <- (1 + c(8,0,16))[1+print.level]
+    if(!check.analyticals) msg <- msg + (2 + 4)
     .Internal(nlm(function(x) f(x, ...), p, hessian, typsize, fscale,
                   msg, ndigit, gradtol, stepmax, steptol, iterlim))
 }
