@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.9-16 2004-05-19
+Version 1.9-17 2004-05-20
 ISBN 3-900051-01-1
 Kurt Hornik
 
@@ -2469,8 +2469,8 @@ distributions of R.)
      observed and unobserved variables) by the method of maximum likelihood
      using the RAM approach.
 
-*serialize*
-     Simple interfce for serializing to connections.
+*seqmon*
+     Sequential monitoring of clinical trials.
 
 *session*
      Functions for interacting with, saving and restoring R sessions.
