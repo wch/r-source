@@ -6,7 +6,6 @@ library <-
   function (name, help, lib.loc = .lib.loc, character.only = FALSE, 
             logical.return = FALSE, warn.conflicts = name != "MASS") 
 {
-  fsep <- .Platform$file.sep
   if (!missing(name)) {
     if (!character.only) 
       name <- as.character(substitute(name))
@@ -29,8 +28,7 @@ library <-
         }
         else stop(txt)
       }
-      which.lib.loc <- lib.loc[match(packagedir[1],
-                                     paste(lib.loc, name, sep = fsep))]
+      which.lib.loc <- lib.loc[match(packagedir[1], file.path(lib.loc, name))]
       if (length(packagedir) > 1) {
         warning(paste("Package `", name, "' found more than once,\n  ", 
                       "using the one found in `", which.lib.loc, 
@@ -96,8 +94,8 @@ library <-
     for (lib in lib.loc) {
       cat("\nPackages in library `", lib, "':\n\n", sep = "", 
           file = libfil, append = TRUE)
-      if (file.exists(libind <- paste(lib, "LibIndex", 
-                                      sep = fsep))) {
+      if (file.exists(libind <- file.path(lib, "LibIndex")))
+      {
         file.append(libfil, libind)
         ## This gives warnings and partly garbage,
         ## since contrib's LibIndex isn't really "clean":
@@ -132,13 +130,12 @@ library.dynam <-
     assign(".Dyn.libs", character(0), envir = .AutoloadEnv)
   if (missing(chname) || (LEN <- nchar(chname)) == 0) 
     return(.Dyn.libs)
-  fsep <- .Platform$file.sep
   nc.ext <- nchar(file.ext)
   if (substr(chname, LEN - nc.ext + 1, LEN) == file.ext) 
     chname <- substr(chname, 1, LEN - nc.ext)
   if (is.na(match(chname, .Dyn.libs))) {
-    file <- system.file(paste("libs", fsep, chname, file.ext, 
-                              sep = ""), pkg = package, lib = lib.loc)
+    file <- system.file(file.path("libs", paste(chname, file.ext, 
+                              sep = "")), pkg = package, lib = lib.loc)
     if (file == "") {
       stop(paste("dynamic library `", chname, "' not found", 
                  sep = ""))
@@ -184,12 +181,10 @@ provide <- function(name) {
 
 .packages <- function(all.available = FALSE, lib.loc = .lib.loc) {
     if(all.available) {
-	fsep <- .Platform$file.sep
         a <- list.files(lib.loc, all.files=FALSE, full.names=FALSE)
 	ans <- character(0)
 	for (name in a) {
-	    pkg <- system.file(paste("R",name, sep=fsep), pkg=name,
-                               lib=lib.loc) 
+	    pkg <- system.file(file.path("R",name), pkg=name, lib=lib.loc)
 	    if (pkg != "") ans <- c(ans,name)
 	}
 	return(ans)

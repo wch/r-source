@@ -10,7 +10,6 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
     if (!missing(package)) 
         if (is.name(y <- substitute(package))) 
             package <- as.character(y)
-    fsep <- .Platform$file.sep
     if (!missing(topic)) {
         topic <- substitute(topic)
         if (is.name(topic)) 
@@ -31,12 +30,13 @@ function (topic, offline = FALSE, package = c(.packages(), .Autoloaded),
         else if (!is.na(match(topic, c("%*%")))) 
             topic <- "matmult"
         topic <- gsub("\\[", "\\\\[", topic)
-        INDICES <- paste(t(outer(lib.loc, package, paste, sep = fsep)))
+#        INDICES <- paste(t(outer(lib.loc, package, paste, sep = .Platform$file.sep)))
+        INDICES <- system.file(pkg=package, lib=lib.loc)
         file <- index.search(topic, INDICES, "AnIndex")
         if (file == "") {
             # try data .doc -- this is OUTDATED
-            file <- system.file(paste("data", fsep, topic, ".doc", 
-                sep = ""), package, lib.loc)
+            file <- system.file(file.path("data", paste(topic, ".doc", 
+                sep = "")), pkg = package, lib = lib.loc)
         }
         if (length(file) && file != "") {
             if (verbose) 

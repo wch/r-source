@@ -119,10 +119,10 @@ demo <- function(topic, device = .Options$device)
 	readline()
 	if(dev.cur()<=1 && Topics["flag",i.top] == "G")
 	    device()
-	source(paste(R.home(),
+	source(file.path(R.home(),
 		     "demos",
 		     Topics["dir",  i.top],
-		     Topics["file", i.top], sep= .Platform$file.sep),
+		     Topics["file", i.top]),
 	       echo = TRUE, max.deparse.length=250)
     }
 }

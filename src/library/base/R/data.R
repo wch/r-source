@@ -13,9 +13,8 @@ function (..., list = character(0),
   found <- FALSE
   fsep <- .Platform$file.sep
   if (length(names) == 0) 
-    show.data(package, lib.loc, fsep)
+    show.data(package, lib.loc)
   else for (name in names) {
-    dn <- paste("data", name, sep = fsep)
     files <- list.files(system.file("data", pkg = package, lib = lib.loc),
                         full = TRUE)
     files <- files[grep(name, files)]
@@ -60,8 +59,9 @@ function (..., list = character(0),
   invisible(names)
 }
 
+### fsep is unused! BDR
 show.data <-
-  function (package, lib.loc, fsep) 
+  function (package, lib.loc, fsep=.Platform$file.sep) 
 {
   ## give `index' of all possible data sets
   file <- tempfile("R.")
