@@ -6,7 +6,7 @@ function(lines)
     if(!is.character(lines))
         stop(paste("argument", sQuote(lines),
                    "must be a character vector"))
-    
+
     ppLineIndices <- grep("^#(endif|ifn?def[[:space:]]+[[:alnum:]]+)",
                           lines)
     ## <NOTE>
@@ -85,6 +85,13 @@ function(file)
                    "must be a character string or connection"))
 
     lines <- Rdpp(readLines(file))
+
+    ## <NOTE>
+    ## Compatibility code for R::Rdtools::Rdpp(): strip comment lines.
+    commentLineIndices <- grep("^[[:space:]]*\%", lines)
+    if(length(commentLineIndices) > 0)
+        lines <- lines[-commentLineIndices]
+    ## </NOTE>
     
     aliasesRegExp <- "^\\\\alias{[[:space:]]*(.*)[[:space:]]*}.*"
     aliases <- grep(aliasesRegExp, lines, value = TRUE)
