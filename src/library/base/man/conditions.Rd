@@ -161,9 +161,9 @@ restartFormals(r)
    the handler to call when the restart is invoked.  Another simple
    variant is as \code{name=string} where the string is stored in the
    \code{description} field of the restart object returned by
-   \code{find.restart}; in this case the handler ignores its arguments
-   and returns NULL.  The most flexible form of a restart specification
-   is as a list that can include several fields, including
+   \code{findRestart}; in this case the handler ignores its arguments
+   and returns \code{NULL}.  The most flexible form of a restart
+   specification is as a list that can include several fields, including
    \code{hander}, \code{description}, and \code{test}.  The
    \code{test} field should contain a function of one argument, a
    condition, that returns \code{TRUE} if the restart applies to the

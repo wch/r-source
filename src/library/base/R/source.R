@@ -120,8 +120,6 @@ function(topic, device = getOption("device"),
     ## Earlier versions remembered given packages with no 'demo'
     ## subdirectory, and warned about them.
 
-#    demoExts <- tools:::.makeFileExts("demo")
-
     if(missing(topic)) {
         ## List all possible demos.
 
@@ -203,11 +201,12 @@ function(topic, device = getOption("device"),
         stop(paste("No demo found for topic", sQuote(topic)))
     if(length(available) > 1) {
         available <- available[1]
-        warning("Demo for topic",
-                sQuote(topic),
-                "found more than once,\n",
-                "using the one found in",
-                sQuote(dirname(available[1])))
+        warning(paste("Demo for topic ",
+                      sQuote(topic),
+                      " found more than once,\n",
+                      "using the one found in ",
+                      sQuote(dirname(available[1])),
+                      sep = ""))
     }
     cat("\n\n",
         "\tdemo(", topic, ")\n",
