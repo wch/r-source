@@ -4,7 +4,7 @@ END-INFO-DIR-ENTRY
 
    R FAQ
 Frequently Asked Questions on R
-Version 1.8-7, 2003-10-17
+Version 1.8-9, 2003-10-23
 ISBN 3-901167-51-X
 Kurt Hornik
 
@@ -609,6 +609,9 @@ and is currently being mirrored daily at
      `http://cran.ch.R-project.org/'  (ETH Zürich, Switzerland)
      `http://cran.de.R-project.org/'  (APP, Germany)
      `http://cran.dk.R-project.org/'  (SunSITE, Denmark)
+     `http://cran.es.R-project.org/'  
+     Spanish National Research        
+     Network, Madrid, Spain           
      `http://cran.hu.R-project.org/'  (Semmelweis U, Hungary)
      `http://cran.uk.R-project.org/'  (U of Bristol, United
                                       Kingdom)
@@ -1853,6 +1856,10 @@ distributions of R.)
 *locfit*
      Local Regression, likelihood and density estimation.
 
+*logistf*
+     Firth's bias reduced logistic regression approach with penalized
+     profile likelihood based confidence intervals for parameter estimates.
+
 *logspline*
      Logspline density estimation.
 
@@ -2186,6 +2193,9 @@ distributions of R.)
 
 *sma*
      Functions for exploratory (statistical) microarray analysis.
+
+*smoothSurv*
+     Survival regression with smoothed error distribution.
 
 *sn*
      Functions for manipulating skew-normal probability distributions and

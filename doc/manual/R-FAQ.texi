@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2003
-@set FAQ-VERSION 1.8-7, @value{FAQ-YEAR}-10-17
+@set FAQ-VERSION 1.8-9, @value{FAQ-YEAR}-10-23
 @set REL-VERSION 1.8.0
 @set FAQ-ISBN 3-901167-51-X
 @documentlanguage en
@@ -736,6 +736,8 @@ and is currently being mirrored daily at
 @tab (APP, Germany)
 @item @uref{http://cran.dk.R-project.org/}
 @tab (SunSITE, Denmark)
+@item @uref{http://cran.es.R-project.org/}
+Spanish National Research Network, Madrid, Spain
 @item @uref{http://cran.hu.R-project.org/}
 @tab (Semmelweis U, Hungary)
 @c @item @uref{http://cran.it.R-project.org/}
@@ -2022,6 +2024,9 @@ from the book ``The linear regression model under test'' by W. Kraemer
 and H. Sonnberger, 1986, Physica.
 @item locfit
 Local Regression, likelihood and density estimation.
+@item logistf
+Firth's bias reduced logistic regression approach with penalized profile
+likelihood based confidence intervals for parameter estimates.
 @item logspline
 Logspline density estimation.
 @item lokern
@@ -2279,6 +2284,8 @@ Analysis:  The Kernel Approach with @SPLUS{} Illustrations'' by
 A. W. Bowman and A. Azzalini (1997), Oxford University Press.
 @item sma
 Functions for exploratory (statistical) microarray analysis.
+@item smoothSurv
+Survival regression with smoothed error distribution.
 @item sn
 Functions for manipulating skew-normal probability distributions and for
 fitting them to data, in the scalar and the multivariate case.
