@@ -35,7 +35,6 @@ options(show.error.messages = TRUE)
 options(defaultPackages = c("methods", "ctest"))
 
 .First <- function() {
-    for(pkg in options()$defaultPackages)
-        ## following because library can't take general form of argument
-        eval(substitute(require(PKG, quietly = TRUE), list(PKG=pkg)))
+    for(pkg in getOption("defaultPackages"))
+        require(pkg, quietly = TRUE, character.only = TRUE)
 }
