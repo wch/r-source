@@ -111,7 +111,8 @@ static void file_open(Rconnection con)
     int fd, flags;
 
     fp = R_fopen(R_ExpandFileName(con->description), con->mode);
-    if(!fp) error("cannot open file `%s'", con->description);
+    if(!fp) error("cannot open file `%s'", 
+		  R_ExpandFileName(con->description));
     ((Rfileconn)(con->private))->fp = fp;
     con->isopen = 1;
     if(!con->blocking) {
@@ -186,9 +187,11 @@ static Rconnection newfile(char *description, char *mode)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error("allocation of file connection failed");
-    new->class = (char *) malloc(strlen("file"));
+    new->class = (char *) malloc(strlen("file") + 1);
+    if(!new->class) error("allocation of file connection failed");
     strcpy(new->class, "file");
-    new->description = (char *) malloc(strlen(description));
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) error("allocation of file connection failed");
     strcpy(new->description, description);
     strcpy(new->mode, mode);
     new->isopen = new->incomplete = 0;
@@ -208,6 +211,7 @@ static Rconnection newfile(char *description, char *mode)
     new->write = &file_write;
     new->nPushBack = 0;
     new->private = (void*) malloc(sizeof(struct fileconn));
+    if(!new->private) error("allocation of file connection failed");
     return new;
 }
 
@@ -231,7 +235,7 @@ SEXP do_file(SEXP call, SEXP op, SEXP args, SEXP env)
 	error("invalid `block' argument");
     open = CHAR(STRING_ELT(sopen, 0));
     ncon = NextConnection();
-    con = Connections[ncon] = newfile(file, strlen(open) ? open : "rt");
+    con = Connections[ncon] = newfile(file, strlen(open) ? open : "r");
 
     /* open it if desired */
     if(strlen(open)) con->open(con);
@@ -320,9 +324,11 @@ static Rconnection newterminal(char *description, char *mode)
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
     if(!new) error("allocation of terminal connection failed");
-    new->class = (char *) malloc(strlen("terminal"));
+    new->class = (char *) malloc(strlen("terminal") + 1);
+    if(!new->class) error("allocation of terminal connection failed");
     strcpy(new->class, "terminal");
-    new->description = (char *) malloc(strlen(description));
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) error("allocation of terminal connection failed");
     strcpy(new->description, description);
     strcpy(new->mode, mode);
     new->isopen = 1;
@@ -483,10 +489,12 @@ static Rconnection newtext(char *description, SEXP text)
 {
     Rconnection new;
     new = (Rconnection) malloc(sizeof(struct Rconn));
-    if(!new) error("allocation of file connection failed");
-    new->class = (char *) malloc(strlen("textConnection"));
+    if(!new) error("allocation of text connection failed");
+    new->class = (char *) malloc(strlen("textConnection") + 1);
+    if(!new->class) error("allocation of text connection failed");
     strcpy(new->class, "textConnection");
-    new->description = (char *) malloc(strlen(description));
+    new->description = (char *) malloc(strlen(description) + 1);
+    if(!new->description) error("allocation of text connection failed");
     strcpy(new->description, description);
     strcpy(new->mode, "r");
     new->isopen = new->text = new->canread = 1;
@@ -503,6 +511,7 @@ static Rconnection newtext(char *description, SEXP text)
     new->read = &null_read;
     new->write = &null_write;
     new->private = (void*) malloc(sizeof(struct textconn));
+    if(!new->private) error("allocation of text connection failed");
     new->nPushBack = 0;
     text_init(new, text);
     return new;
