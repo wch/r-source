@@ -135,6 +135,20 @@ test.sys.on.exit <- function() {
 }
 test.sys.on.exit()
 ## gives 'language print(1)', prints 1 on exit
+
+## An example where the parent is not the next frame up the stack
+## since method dispatch uses a frame.
+as.double.foo <- function(x)
+{
+    str(sys.calls())
+    print(sys.frames())
+    print(sys.parents())
+    print(sys.frame(-1)); print(parent.frame())
+    x
+}
+t2 <- function(x) as.double(x)
+a <- structure(pi, class = "foo")
+t2(a)
 }
 \keyword{programming}
 \keyword{data}
