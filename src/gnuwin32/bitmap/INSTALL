@@ -1,6 +1,6 @@
 ==============================================
 IMPORTANT: Tested only with
-           libpng ver. 1.0.{5,6,8,9,10,12}, 1.2.{0,1,2,3,4,5}
+           libpng ver. 1.0.{5,6,8,9,10,12}, 1.2.{0,1,2,3,4,5,6,7}
            jpeg ver. 6b
 ==============================================
 
@@ -11,7 +11,7 @@ IMPORTANT: Tested only with
    The libpng sources must be in sub-dir named 'libpng' (as required 
    by the libpng documentation).
    Example:
-   > mv libpng-1.2.5 libpng
+   > mv libpng-1.2.7 libpng
    > tar xzvf jpegsrc.v6b.tar.gz
    If jpeg version is different from 6b, edit 'Makefile' and change 
    the definition of JPEGDIR.

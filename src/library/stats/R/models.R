@@ -310,6 +310,11 @@ model.frame.default <-
     if(is.null(predvars)) predvars <- vars
     varnames <- sapply(vars,deparse, width.cutoff=500)[-1]
     variables <- eval(predvars, data, env)
+    if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
+        ## see if we can get rownames from the response
+        lhs <- variables[[resp]]
+        rownames <- if(is.matrix(lhs)) rownames(lhs) else names(lhs)
+    }
     if(possible_newdata && length(variables)) {
         ## need to do this before subsetting and na.action
         nr2 <- max(sapply(variables, NROW))
@@ -323,14 +328,9 @@ model.frame.default <-
             predvars[[i+1]] <- makepredictcall(variables[[i]], vars[[i+1]])
         attr(formula, "predvars") <- predvars
     }
-    extranames <- names(substitute(list(...))[-1])
     extras <- substitute(list(...))
+    extranames <- names(extras[-1])
     extras <- eval(extras, data, env)
-    ##if(length(extras)) { # remove NULL args
-    ##    keep <- !sapply(extras, is.null)
-    ##    extras <- extras[keep]
-    ##    extranames <- extranames[keep]
-    ##}
     subset <- eval(substitute(subset), data, env)
     data <- .Internal(model.frame(formula, rownames, variables, varnames,
 				  extras, extranames, subset, na.action))
@@ -342,7 +342,7 @@ model.frame.default <-
 		if(is.null(nxl <- levels(xi)))
 		    warning(paste("variable", nm, "is not a factor"))
 		else {
-		    xi <- xi[, drop= TRUE] # drop unused levels
+		    xi <- xi[, drop = TRUE] # drop unused levels
 		    if(any(m <- is.na(match(nxl, xl))))
 			stop(paste("factor", nm, "has new level(s)", nxl[m]))
 		    data[[nm]] <- factor(xi, levels=xl)

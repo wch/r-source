@@ -1,9 +1,38 @@
 				Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
+	*	       2.1 SERIES NEWS			 *
+	*						 *
+	**************************************************
+
+
+		CHANGES IN R VERSION 2.1.0
+
+
+NEW FEATURES
+
+
+BUG FIXES
+
+
+
+	**************************************************
+	*						 *
 	*	       2.0 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+		CHANGES IN R VERSION 2.0.0 patched
+
+
+BUG FIXES
+
+    o	model.frame.default() takes row names from the response
+	variable if that has suitable names and there is no 'data'
+	argument.  (This follows S but was not previously implemented
+	in R.)
+
 
 
 		CHANGES IN R VERSION 2.0.0
