@@ -10,7 +10,7 @@
   equal to \code{meanlog} and standard  deviation equal to \code{sdlog}.
 }
 \usage{
-dlnorm(x, meanlog = 0, sdlog = 1, log = FALSE)                    
+dlnorm(x, meanlog = 0, sdlog = 1, log = FALSE)
 plnorm(q, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
 qlnorm(p, meanlog = 0, sdlog = 1, lower.tail = TRUE, log.p = FALSE)
 rlnorm(n, meanlog = 0, sdlog = 1)
@@ -41,6 +41,10 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   }{f(x) = 1/(sqrt(2 pi) sigma x) e^-((log x - mu)^2 / (2 sigma^2))}
   where \eqn{\mu} and \eqn{\sigma} are the mean and standard
   deviation of the logarithm.
+}
+\note{
+  The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
+  is \code{-plnorm(t, r, lower = FALSE, log = TRUE)}.
 }
 \seealso{
   \code{\link{dnorm}} for the normal distribution.

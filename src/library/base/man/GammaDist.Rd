@@ -40,6 +40,10 @@ rgamma(n, shape, scale=1)
 }{f(x) = 1/(b^a Gamma(a)) x^(a-1) e^-(x/b)}
 for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{b > 0}.
 }
+\note{
+  The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
+  is \code{-pgamma(t, r, lower = FALSE, log = TRUE)}.
+}
 \seealso{
   \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
   the Beta distribution and \code{\link{dchisq}} for the chi-square

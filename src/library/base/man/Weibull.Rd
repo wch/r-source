@@ -41,6 +41,10 @@ rweibull(n, shape, scale = 1)
     f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
   for \eqn{x > 0}.
 }
+\note{
+  The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
+  is \code{-pweibull(t, r, lower = FALSE, log = TRUE)}.
+}
 \seealso{
   \code{\link{dexp}} for the Exponential which is a special case of a
   Weibull distribution.

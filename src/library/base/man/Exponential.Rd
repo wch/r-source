@@ -46,6 +46,10 @@ rexp(n, rate = 1)
   \code{\link{dweibull}} for the Weibull distribution, both of which
   generalize the exponential.
 }
+\note{
+  The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
+  is \code{-pexp(t, r, lower = FALSE, log = TRUE)}.
+}
 \examples{
 dexp(1) - exp(-1) #-> 0
 r <- rexp(100)
