@@ -14,13 +14,24 @@ NEW FEATURES
     o	There has been a major change in directory structure
 	masterminded by Kurt Hornik.
 
-    o   Use of "dimnames" and "names" attributes on one dimensional
-	arrays will now produce identical results.  This means that
-	you really don't need differentiate between vectors and
-        one dimensional arrays.
+    o   The use of "names" on one dimensional arrays will now produce
+	sensible results.  This means that for most purposes, one
+	one dimensional arrays can be treated like vectors.
 
 
 BUG FIXES
+
+    o	There has been a minor fixup of "model.frame" to ensure that
+	subsets, weights, etc are handled properly.
+
+    o	Model fitting of the form
+
+		lm(y~.,data=df)
+		glm(y~.,data=df)
+
+	will now work.  The RHS of the model will consist of an
+	additive model containing all (non-respose) variabels in the
+	given data frame.
 
     o	The following type of assignment to data frame subsets
 
@@ -30,6 +41,14 @@ BUG FIXES
 	was producing incorrect results.  The solution was to wrap
 	an implicit "as.data.frame" around the RHS.
 
+    o   "[.data.frame" no longer has a default drop=TRUE argument.
+	This means that subsetting a data frame with "[" will always
+	yield a data frame.
+
     o	There was a swap of coordinates internally in "mtext" which
 	meant that labels were coming out in the wrong place.  Fixed.
 
+    o   Syntax errors in parse(text="...") would cause R to terminate
+	with a segmentation violation.  This no longer happens, although
+	the result is still not perfect (the parse() returns ...).
+	Help is on the way.
