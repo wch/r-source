@@ -5,14 +5,19 @@ formula.default <- function (x, ...)
     else if (!is.null(x$call$formula))	eval(x$call$formula)
     else if (!is.null(x$terms))		x$terms
     else if (!is.null(attr(x, "formula"))) attr(x, "formula")
-    else switch(mode(x),
+    else {form<-switch(mode(x),
 		NULL = structure(NULL, class = "formula"),
 		character = formula(eval(parse(text = x)[[1]])),
 		call = eval(x), stop("invalid formula"))
+        environment(form)<-NULL
+        form
+    }
 }
 formula.formula <- function(x, ...) x
 formula.terms <- function(x, ...) {
+    env<- environment(x)
     attributes(x) <- list(class="formula")
+    environment(x) <- env
     x
 }
 
@@ -104,7 +109,9 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 	lhs <- if(length(form) == 2) NULL else deparse(form[[2]])
 	rhs <- if(length(tmp)) paste(tmp, collapse = " + ") else "1"
 	if(!attr(terms(object), "intercept")) rhs <- paste(rhs, "- 1")
-	formula(paste(lhs, "~", rhs))
+	ff <- formula(paste(lhs, "~", rhs))
+        environment(ff) <- environment(form)
+        ff
     }
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data)
@@ -113,6 +120,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     ## need to fix up . in formulae in R
     terms <- fixFormulaObject(tmp)
     attributes(terms) <- attributes(tmp)
+    environment(terms) <- environment(x)
     offsets <- attr(terms, "specials")$offset
     if (!is.null(offsets)) {
 	names <- dimnames(attr(terms, "factors"))[[1]][offsets]
@@ -251,23 +259,24 @@ model.frame.default <-
 	    na.action <- naa
     }
     if(missing(data))
-	data <- sys.frame(sys.parent())
+	data <- environment(formula)
     else if (!is.data.frame(data) && !is.environment(data) && !is.null(class(data)))
         data <- as.data.frame(data)
+    env<-environment(formula)
     if(!inherits(formula, "terms"))
 	formula <- terms(formula, data = data)
     rownames <- attr(data, "row.names")
     varnames <- as.character(attr(formula, "variables")[-1])
-    variables <- eval(attr(formula, "variables"), data, sys.frame(sys.parent()))
-    extranames <- as.character(substitute(list(...))[-1])
+    variables <- eval(attr(formula, "variables"), data, env)
+    extranames <- names(substitute(list(...))[-1])
     extras <- substitute(list(...))
-    extras <- eval(extras, data, sys.frame(sys.parent()))
+    extras <- eval(extras, data, env)
     ##if(length(extras)) { # remove NULL args
     ##    keep <- !sapply(extras, is.null)
     ##    extras <- extras[keep]
     ##    extranames <- extranames[keep]
     ##}
-    subset <- eval(substitute(subset), data, sys.frame(sys.parent()))
+    subset <- eval(substitute(subset), data, env)
     data <- .Internal(model.frame(formula, rownames, variables, varnames,
 				  extras, extranames, subset, na.action))
     ## fix up the levels
@@ -309,7 +318,7 @@ model.offset <- function(x) {
 }
 
 model.matrix <- function(object, ...) UseMethod("model.matrix")
-model.matrix.default <- function(formula, data = sys.frame(sys.parent()),
+model.matrix.default <- function(formula, data = environment(formula),
 				 contrasts.arg = NULL, xlev = NULL)
 {
     t <- terms(formula)

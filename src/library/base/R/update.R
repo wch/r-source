@@ -4,7 +4,8 @@
 update.default <-
     function (object, formula., ..., evaluate = TRUE)
 {
-    if (is.null(call <- object$call))
+    call <- object$call
+    if (is.null(call))
 	stop("need an object with call component")
     extras <- match.call(expand.dots = FALSE)$...
     if (!missing(formula.))
@@ -18,11 +19,14 @@ update.default <-
 	    call <- as.call(call)
 	}
     }
-    if(evaluate) eval(call, sys.frame(sys.parent()))
+    if(evaluate) eval(call, parent.frame())
     else call
 }
 
 update.formula <- function (old, new) {
+    env <- environment(old)
     tmp <- .Internal(update.formula(as.formula(old), as.formula(new)))
-    formula(terms.formula(tmp))
+    out <- formula(terms.formula(tmp))
+    environment(out) <- env
+    return(out)
 }

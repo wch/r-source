@@ -19,9 +19,10 @@ local(expr, envir = new.env())
   \item{expr}{object of mode \code{\link{expression}} or\code{call} or
     an ``unevaluated expression''.}
   \item{envir}{the \code{\link{environment}} in which \code{expr} is to
-    be evaluated.  May also be a list or an integer as in
+    be evaluated.  May also be a list, a data frame, or an integer as in
     \code{sys.call}.}
-  \item{enclos}{Only relevant if \code{envir} is a list. Specifies the
+  \item{enclos}{Relevant when \code{envir} is a list or a data frame.
+    Specifies the
     enclosure, i.e., where \R looks for objects not found in
     \code{envir}.}
   \item{n}{parent generations to go back}

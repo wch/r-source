@@ -11,8 +11,8 @@ stripplot <- function(x, method="overplot", jitter=0.1, offset=1/3,
     groups <-
 	if(is.language(x)) {
 	    if (inherits(x, "formula") && length(x) == 3) {
-		groups <- eval(x[[3]], sys.frame(sys.parent()))
-		x <- eval(x[[2]], sys.frame(sys.parent()))
+		groups <- eval(x[[3]], parent.frame())
+		x <- eval(x[[2]], parent.frame())
 		split(x, groups)
 	    }
 	}

@@ -16,7 +16,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
     lmcall$projections <- NULL
     if(is.null(indError)) {
         ## no Error term
-        fit <- eval(lmcall, sys.frame(sys.parent()))
+        fit <- eval(lmcall, parent.frame())
         if(projections) fit$projections <- proj(fit)
         class(fit) <- if(inherits(fit, "mlm"))
             c("maov", "aov", class(fit)) else c("aov", class(fit))
@@ -38,7 +38,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
         ecall$method <- "qr"
         ecall$qr <- TRUE
         ecall$contrasts <- NULL
-        er.fit <- eval(ecall, sys.frame(sys.parent()))
+        er.fit <- eval(ecall, parent.frame())
         options(opcons)
         nmstrata <- attr(terms(er.fit),"term.labels")
         if(intercept) nmstrata <- c("(Intercept)", nmstrata)
@@ -59,7 +59,7 @@ aov <- function(formula, data = NULL, projections = FALSE, qr = TRUE,
             update(formula, paste(". ~ .-", deparse(errorterm)))
         Terms <- terms(form)
         lmcall$method <- "model.frame"
-        mf <- eval(lmcall, sys.frame(sys.parent()))
+        mf <- eval(lmcall, parent.frame())
         xvars <- as.character(attr(Terms, "variables"))[-1]
         if ((yvar <- attr(Terms, "response")) > 0)
             xvars <- xvars[-yvar]
@@ -451,7 +451,7 @@ se.contrast.aov <-
         res
     }
     if(is.null(data)) contrast.obj <- eval(contrast.obj)
-    else contrast.obj <- eval(substitute(contrast.obj), data, sys.frame(sys.parent()))
+    else contrast.obj <- eval(substitute(contrast.obj), data, parent.frame())
     if(!missing(coef)) {
         if(sum(coef) != 0)
             stop("coef must define a contrast, i.e., sum to 0")
@@ -537,7 +537,7 @@ se.contrast.aovlist <-
     }
     contrast.obj <-
         if(is.null(data)) eval(contrast.obj)
-        else eval(substitute(contrast.obj), data, sys.frame(sys.parent()))
+        else eval(substitute(contrast.obj), data, parent.frame())
     if(!missing(coef)) {
         if(sum(coef) != 0)
             stop("coef must define a contrast, i.e., sum to 0")

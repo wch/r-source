@@ -5,7 +5,7 @@ subset.data.frame <-
 	r <- TRUE
     else {
 	e <- substitute(subset)
-	r <- eval(e, x, sys.frame(sys.parent()))
+	r <- eval(e, x, parent.frame())
 	r <- r & !is.na(r)
     }
     if(missing(select))
@@ -13,7 +13,7 @@ subset.data.frame <-
     else {
 	nl <- as.list(1:ncol(x))
 	names(nl) <- names(x)
-	vars <- eval(substitute(select),nl, sys.frame(sys.parent()))
+	vars <- eval(substitute(select),nl, parent.frame())
     }
     x[r,vars,drop=FALSE]
 }
@@ -29,7 +29,7 @@ subset.default <-
 transform.data.frame <-
     function (x, ...)
 {
-    e <- eval(substitute(list(...)), x, sys.frame(sys.parent()))
+    e <- eval(substitute(list(...)), x, parent.frame())
     tags <- names(e)
     inx <- match(tags, names(x))
     matched <- !is.na(inx)
@@ -59,7 +59,7 @@ stack.data.frame <-
     if (!missing(select)) {
 	nl <- as.list(1:ncol(x))
 	names(nl) <- names(x)
-	vars <- eval(substitute(select),nl, sys.frame(sys.parent()))
+	vars <- eval(substitute(select),nl, parent.frame())
         x <- x[, vars, drop=FALSE]
     }
     x <- x[, unlist(lapply(x, is.vector)), drop = FALSE]

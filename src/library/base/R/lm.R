@@ -11,7 +11,7 @@ lm <- function (formula, data = list(), subset, weights, na.action,
     mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
-    mf <- eval(mf, sys.frame(sys.parent()))
+    mf <- eval(mf, parent.frame())
     if (method == "model.frame")
 	return(mf)
     else if (method != "qr")
@@ -74,7 +74,7 @@ lm.fit <- function (x, y, offset = NULL, method = "qr", tol = 1e-07, ...)
         ## oops, null model
         cc <- match.call()
         cc[[1]] <- as.name("lm.fit.null")
-        return(eval(cc, sys.frame(sys.parent())))
+        return(eval(cc, parent.frame()))
     }
     ny <- NCOL(y)
     ## treat one-col matrix as vector
@@ -163,7 +163,7 @@ lm.wfit <- function (x, y, w, offset = NULL, method = "qr", tol = 1e-7, ...)
         ## oops, null model
         cc <- match.call()
         cc[[1]] <- as.name("lm.wfit.null")
-        return(eval(cc, sys.frame(sys.parent())))
+        return(eval(cc, parent.frame()))
     }
     storage.mode(y) <- "double"
     wts <- sqrt(w)
@@ -385,7 +385,7 @@ model.frame.lm <-
 	    fcall <- formula$call
 	    fcall$method <- "model.frame"
 	    fcall[[1]] <- as.name("lm")
-	    eval(fcall, sys.frame(sys.parent()))
+	    eval(fcall, parent.frame())
 	}
 	else formula$model
     }
@@ -647,14 +647,12 @@ anovalist.lm <- function (object, ..., test = NULL)
       }
 
       if (!is.null(terms)){
-
         predictor <- predictor[, terms, drop=FALSE]
         if (se.fit)
           ip <- ip[, terms, drop=FALSE]
-
-      }
-      attr(predictor,  'constant') <- if (hasintercept) termsconst else 0
     }
+      attr(predictor, 'constant') <- if (hasintercept) termsconst else 0
+  }
 ## Now construct elements of the list that will be returned
     if(interval != "none") {
 	tfrac <- qt((1 - level)/2, df)
@@ -662,7 +660,6 @@ anovalist.lm <- function (object, ..., test = NULL)
 			    confidence=sqrt(ip),
 			    prediction=sqrt(ip+res.var)
 			    )
-
         if(type!="terms"){
             predictor <- cbind(predictor, predictor + w %o% c(1, -1))
             colnames(predictor) <- c("fit", "lwr", "upr")
@@ -722,3 +719,33 @@ predict.mlm <- function(object, newdata, se.fit = FALSE, ...)
     pred <- X[, piv, drop = FALSE] %*% object$coefficients[piv,]
     if(inherits(object, "mlm")) pred else pred[, 1]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

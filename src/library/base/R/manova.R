@@ -2,7 +2,7 @@ manova <- function(...)
 {
     Call <- fcall <- match.call()
     fcall[[1]] <- as.name("aov")
-    result <- eval(fcall, sys.frame(sys.parent()))
+    result <- eval(fcall, parent.frame())
     if(inherits(result, "aovlist")) {
         for(i in seq(along=result)) {
             if(!inherits(result[[i]], "maov")) stop("need multiple response")

@@ -16,7 +16,7 @@ mode <- function(x) {
 {
     mde <- paste("as.",value,sep="")
     atr <- attributes(x)
-    x <- eval(call(mde,x), sys.frame(sys.parent()))
+    x <- eval(call(mde,x), parent.frame())
     attributes(x) <- atr
     if(value == "single") attr(x, "Csingle") <- TRUE
     else attr(x, "Csingle") <- NULL

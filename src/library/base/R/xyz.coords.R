@@ -10,7 +10,7 @@ xyz.coords <-
 		zlab <- deparse(x[[2]])
 		ylab <- deparse(rhs[[3]])
 		xlab <- deparse(rhs[[2]])
-		env <- sys.frame(sys.parent())
+		env <- parent.frame()
 		z <- eval(x[[2]], env)
 		y <- eval(rhs[[3]], env)
 		x <- eval(rhs[[2]], env)

@@ -67,22 +67,22 @@ coplot <-
     ## evaluate the formulae components to get the data values
 
     if (missing(data))
-	data <- sys.frame(sys.parent())
+	data <- parent.frame()
     x.name <- deparse(x)
-    x <- eval(x, data, sys.frame(sys.parent()))
+    x <- eval(x, data, parent.frame())
     nobs <- length(x)
     y.name <- deparse(y)
-    y <- eval(y, data, sys.frame(sys.parent()))
+    y <- eval(y, data, parent.frame())
     if(length(y) != nobs) bad.lengths()
     a.name <- deparse(a)
-    a <- eval(a, data, sys.frame(sys.parent()))
+    a <- eval(a, data, parent.frame())
     if(length(a) != nobs) bad.lengths()
     if(is.character(a)) a <- as.factor(a)
     a.levels <- NULL
     if (have.b) {
         b.levels <- NULL
 	b.name <- deparse(b)
-	b <- eval(b, data, sys.frame(sys.parent()))
+	b <- eval(b, data, parent.frame())
 	if(length(b) != nobs) bad.lengths()
         if(is.character(b)) b <- as.factor(b)
         missingrows <- which(is.na(x) | is.na(y) | is.na(a) | is.na(b))

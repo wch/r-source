@@ -1,4 +1,4 @@
-xtabs <- function(formula = ~., data = sys.frame(sys.parent()), subset,
+xtabs <- function(formula = ~., data = parent.frame(), subset,
 		  na.action, exclude = c(NA, NaN), drop.unused.levels = FALSE)
 {
     if(!missing(formula) && !inherits(formula, "formula"))
@@ -8,11 +8,11 @@ xtabs <- function(formula = ~., data = sys.frame(sys.parent()), subset,
     if(missing(na.action))
 	na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
-    if(is.matrix(eval(m$data, sys.frame(sys.parent()))))
+    if(is.matrix(eval(m$data, parent.frame())))
 	m$data <- as.data.frame(data)
     m$... <- m$exclude <- m$drop.unused.levels <- NULL
     m[[1]] <- as.name("model.frame")
-    mf <- eval(m, sys.frame(sys.parent()))
+    mf <- eval(m, parent.frame())
     if(length(formula) == 2) {
 	by <- mf
 	y <- NULL

@@ -11,7 +11,7 @@ source <-
 		  parent.frame())
 	.Internal(eval.with.vis(expr, envir, enclos))
     envir <- if (local)
-	sys.frame(sys.parent())
+	parent.frame()
     else .GlobalEnv
     if (!missing(echo)) {
 	if (!is.logical(echo))

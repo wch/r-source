@@ -520,7 +520,9 @@ step <- function(object, scope, scale = 0,
 	if (length(offset <- attr(tt, "offset")))
 	    tmp <- paste(tmp, deparse(attr(tt, "variables")[offset + 1]),
 			 sep = " + ")
-	formula(tmp)
+	form<-formula(tmp)
+        environment(form)<-environment(tt)
+        form
     }
 
     cut.string <- function(string)

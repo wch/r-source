@@ -23,7 +23,7 @@ curve <- function(expr, from, to, n=101, add=FALSE, type="l",
 		stop("`from' & `to' must be > 0	 with  log=\"x\"")
 	    exp(seq(log(from), log(to), length=n))
 	} else seq(from,to,length=n)
-    y <- eval(expr, envir=list(x = x), enclos=sys.frame(sys.parent(1)))
+    y <- eval(expr, envir=list(x = x), enclos=parent.frame())
     if(add)
 	lines(x, y, type=type, ...)
     else

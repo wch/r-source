@@ -1614,6 +1614,7 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP c, fun, names;
     int i, n;
+    RCNTXT *cptr;
 
     checkArity(op, args);
 
@@ -1643,7 +1644,17 @@ SEXP do_docall(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_TAG(c, install(CHAR(ItemName(names, i))));
 	c = CDR(c);
     }
-    call = eval(call, rho);
+    cptr = R_GlobalContext;
+    while (cptr->nextcontext != NULL) {
+        if (cptr->callflag & CTXT_FUNCTION ) {
+		if(cptr->cloenv == rho)
+		   break;
+	}
+    }
+    if( cptr->cloenv == rho )
+    	call = eval(call, cptr->sysparent);
+    else
+        error("do.call: couldn't find parent environment");
     UNPROTECT(1);
     return call;
 }

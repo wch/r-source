@@ -823,8 +823,29 @@ SEXP findVar1mode(SEXP symbol, SEXP rho, SEXPTYPE mode, int inherits)
 }
 
 
-/*----------------------------------------------------------------------
+/* 
+   ddVal:
+   a function to take a name and determine if it is of the form
+   ..x where x is an integer; if so x is returned otherwise 0 is returned
+*/
+static int ddVal(SEXP symbol)
+{
+    char *buf, *endp;
+    int rval;
+        
+    buf = CHAR(PRINTNAME(symbol));
+    if( !strncmp(buf,"..",2) && strlen(buf) > 2 ) {
+        buf += 2;
+        rval = strtol(buf, &endp, 10);
+        if( *endp != '\0')
+                return 0;
+        else
+                return rval;
+    }
+    return 0;
+}
 
+/*----------------------------------------------------------------------
   ddfindVar
 
   This function fetches the variables ..1, ..2, etc from the first
@@ -853,7 +874,7 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
     if (vl != R_UnboundValue)
 	return(vl);
 
-    i = DDVAL(symbol);
+    i = ddVal(symbol);
     vl = findVarInFrame(rho, R_DotsSymbol);
     if (vl != R_UnboundValue) {
 	if (length(vl) >= i) {
@@ -863,8 +884,12 @@ SEXP ddfindVar(SEXP symbol, SEXP rho)
 	else
 	    error("The ... list does not contain %d elements",i);
     }
-    else
+    else {
+	vl = findVar(symbol, rho);
+	if( vl != R_UnboundValue )
+	    return(vl);
 	error("..%d used in an incorrect context, no ... to look in",i);
+    }
     return R_NilValue;
 }
 
@@ -1367,21 +1392,24 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 static int isMissing(SEXP symbol, SEXP rho)
 {
+    int ddv=0;
     SEXP vl, s;
 
-    if (DDVAL(symbol))
+    if (DDVAL(symbol)) {
 	s = R_DotsSymbol;
+	ddv = ddVal(symbol);
+    }
     else
 	s = symbol;
 
     vl = mfindVarInFrame(rho, s);
     if (vl != R_NilValue) {
 	if (DDVAL(symbol)) {
-	    if (length(CAR(vl)) < DDVAL(symbol) || CAR(vl) == R_MissingArg)
+	    if (length(CAR(vl)) < ddv || CAR(vl) == R_MissingArg)
 		return 1;
 	    /* defineVar(symbol, value, R_GlobalEnv); */
 	    else
-		vl = nthcdr(CAR(vl), DDVAL(symbol)-1);
+		vl = nthcdr(CAR(vl), ddv-1);
 	}
 	if (MISSING(vl) == 1 || CAR(vl) == R_MissingArg)
 	    return 1;
@@ -1396,6 +1424,7 @@ static int isMissing(SEXP symbol, SEXP rho)
 
 SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
+    int ddv=0;
     SEXP rval, t, sym, s;
 
     checkArity(op, args);
@@ -1404,6 +1433,7 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error("\"missing\" illegal use of missing");
 
     if (DDVAL(sym)) {
+        ddv = ddVal(sym);
 	sym = R_DotsSymbol;
     }
     rval=allocVector(LGLSXP,1);
@@ -1411,12 +1441,12 @@ SEXP do_missing(SEXP call, SEXP op, SEXP args, SEXP rho)
     t = mfindVarInFrame(rho, sym);
     if (t != R_NilValue) {
 	if (DDVAL(s)) {
-	    if (length(CAR(t)) < DDVAL(s)  || CAR(t) == R_MissingArg) {
+	    if (length(CAR(t)) < ddv  || CAR(t) == R_MissingArg) {
 		LOGICAL(rval)[0] = 1;
 		return rval;
 	    }
 	    else
-		t = nthcdr(CAR(t), DDVAL(s)-1);
+		t = nthcdr(CAR(t), ddv-1);
 	}
 	if (MISSING(t) || CAR(t) == R_MissingArg) {
 	    LOGICAL(rval)[0] = 1;

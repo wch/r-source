@@ -20,14 +20,14 @@ glm <- function(formula, family=gaussian, data=list(), weights=NULL,
 
     ## extract x, y, etc from the model formula and frame
     mt <- terms(formula, data=data)
-    if(missing(data)) data <- sys.frame(sys.parent())
+    if(missing(data)) data <- environment(formula)
     mf <- match.call(expand.dots = FALSE)
     mf$family <- mf$start <- mf$control <- mf$maxit <- NULL
     mf$model <- mf$method <- mf$x <- mf$y <- mf$contrasts <- NULL
     mf$... <- NULL
     ##	      mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
-    mf <- eval(mf, sys.frame(sys.parent()))
+    mf <- eval(mf, parent.frame())
     switch(method,
 	   "model.frame" = return(mf),
 	   "glm.fit"= 1,
@@ -108,7 +108,7 @@ glm.fit <-
 	## oops, you'd want glm.fit.null, then
 	cc <- match.call()
 	cc[[1]] <- as.name("glm.fit.null")
-	return(eval(cc, sys.frame(sys.parent())))
+	return(eval(cc, parent.frame()))
     }
     ## define weights and offset if needed
     if (is.null(weights))
@@ -131,7 +131,7 @@ glm.fit <-
 	validmu <- function(mu) TRUE
     if(is.null(mustart))
 	## next line calculates mustart and may change y and weights
-	eval(family$initialize, sys.frame(sys.nframe()))
+	eval(family$initialize)
     if (NCOL(y) > 1)
 	stop("y must be univariate unless binomial")
     eta <-
@@ -660,7 +660,7 @@ model.frame.glm <-
 	fcall <- formula$call
 	fcall$method <- "model.frame"
 	fcall[[1]] <- as.name("glm")
-	eval(fcall, sys.frame(sys.parent()))
+	eval(fcall, parent.frame())
     }
     else formula$model
 }

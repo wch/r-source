@@ -1,8 +1,8 @@
-expand.model.frame<-function(model,extras, enclos=sys.frame(sys.parent()),na.expand=FALSE){
+expand.model.frame<-function(model,extras, enclos=parent.frame(),na.expand=FALSE){
     ## don't use model$call$formula -- it might be a variable name
     f<-formula(model)
     data<-eval(model$call$data,enclos)
-    
+
     # new formula (there must be a better way...)
     ff<-foo~bar+baz
     if (is.call(extras))
@@ -24,6 +24,6 @@ expand.model.frame<-function(model,extras, enclos=sys.frame(sys.parent()),na.exp
         keep<-match(rownames(oldmf),rownames(rval))
         rval<-rval[keep,]
     }
-    
+
     return(rval)
 }

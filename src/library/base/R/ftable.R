@@ -82,7 +82,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
     if(missing(na.action))
         na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
-    edata <- eval(m$data, sys.frame(sys.parent()))
+    edata <- eval(m$data, parent.frame())
     if(inherits(edata, "ftable")
        || inherits(edata, "table")
        || length(dim(edata)) > 2) {
@@ -127,7 +127,7 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
                                    paste(c(rvars, cvars),
                                          collapse = "+")))
         m[[1]] <- as.name("model.frame")
-        mf <- eval(m, sys.frame(sys.parent()))
+        mf <- eval(m, parent.frame())
         ftable(mf, row.vars = rvars, col.vars = cvars, ...)
     }
 }

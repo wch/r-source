@@ -1,4 +1,4 @@
-load <- function(file,envir = sys.frame(sys.parent()))
+load <- function(file,envir = parent.frame())
     .Internal(load(file,envir))
 
 save <- function(..., list = character(0), file = "", ascii = FALSE)

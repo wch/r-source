@@ -3,7 +3,7 @@ boxplot <- function(x, ...) UseMethod("boxplot")
 boxplot.default <-
 function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
          notch = FALSE, names, boxwex = 0.8,
-	 data = sys.frame(sys.parent()), plot = TRUE,
+	 data = parent.frame(), plot = TRUE,
          border = par("fg"), col = NULL, log = "", pars = NULL)
 {
     args <- list(x, ...)
@@ -17,8 +17,8 @@ function(x, ..., range = 1.5, width = NULL, varwidth = FALSE,
 	if(is.language(x)) {
             warning("Using `formula' in boxplot.default -- shouldn't boxplot.formula be called?")
 	    if(inherits(x, "formula") && length(x) == 3) {
-		groups <- eval(x[[3]], data, sys.frame(sys.parent()))
-		x <- eval(x[[2]], data, sys.frame(sys.parent()))
+		groups <- eval(x[[3]], data, parent.frame())
+		x <- eval(x[[2]], data, parent.frame())
 		split(x, groups)
 	    }
 	}
@@ -70,11 +70,11 @@ boxplot.formula <- function(formula, data = NULL, subset, na.action, ...)
     if(missing(na.action))
         na.action <- getOption("na.action")
     m <- match.call(expand.dots = FALSE)
-    if(is.matrix(eval(m$data, sys.frame(sys.parent()))))
+    if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- NULL
     m[[1]] <- as.name("model.frame")
-    mf <- eval(m, sys.frame(sys.parent()))
+    mf <- eval(m, parent.frame())
     response <- attr(attr(mf, "terms"), "response")
     boxplot(split(mf[[response]], mf[[-response]]), ...)
 }
