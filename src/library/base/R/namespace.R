@@ -263,9 +263,9 @@ loadNamespace <- function (package, lib.loc = NULL,
             for (lib in nsInfo$dynlibs) {
                dlls[[lib]]  = library.dynam(lib, package, package.lib)
             }
-            setNamespaceInfo(env, "DLLs", dlls)            
+            setNamespaceInfo(env, "DLLs", dlls)
         }
-        addNamespaceDynLibs(env, nsInfo$dynlibs)        
+        addNamespaceDynLibs(env, nsInfo$dynlibs)
 
 
         # run the load hook
@@ -683,6 +683,7 @@ namespaceExport <- function(ns, vars) {
     }
 }
 
+## NB this needs a decorated name, foo_ver, if appropriate
 packageHasNamespace <- function(package, package.lib) {
     namespaceFilePath <- function(package, package.lib)
         file.path(package.lib, package, "NAMESPACE")
