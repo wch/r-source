@@ -25,7 +25,7 @@ GetOptions (@knownoptions) || &usage();
 
 sub usage {
   print STDERR <<END;
-Usage: [R CMD] perl Rd2contents.pl [options] FILE
+Usage: [R CMD] perl /path/to/Rd2contents.pl [options] FILE
 
 Prepare the CONTENTS file for a directory.
 

@@ -26,7 +26,7 @@ use R::Rdtools;
 use R::Utils;
 use R::Rd;
 
-my $revision = ' $Revision: 1.5 $ ';
+my $revision = ' $Revision: 1.6 $ ';
 my $version;
 my $name;
 
@@ -36,7 +36,7 @@ $version = $1;
 
 sub usage {
     print STDERR <<END;
-Usage: R CMD perl /path/to/extract-usage.pl [options] FILE
+Usage: [R CMD] perl /path/to/extract-usage.pl [options] FILE
 
 Extract usage information for use by codoc from the Rd source files
 listed in FILE.
