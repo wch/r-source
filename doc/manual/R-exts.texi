@@ -3372,11 +3372,12 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 @findex R_NegInf
 @findex NA_REAL
 
-It is possible to compile @R{} on a platform without @acronym{IEEE}
-754-compatible arithmetic, so users should not assume that it is
-available.  Rather a set of functions is provided to test for @code{NA},
-@code{Inf}, @code{-Inf} (which exists on all platforms) and @code{NaN}.
-These functions are accessed via macros:
+It is possible to compile @R{} on a platform without @acronym{IEC} 559
+(more commonly known as @acronym{IEEE} 754)-compatible arithmetic, so
+users should not assume that it is available.  Rather a set of functions
+is provided to test for @code{NA}, @code{Inf}, @code{-Inf} (which exists
+on all platforms) and @code{NaN}.  These functions are accessed via
+macros:
 
 @example
 ISNA(@var{x})        @r{True for R's @code{NA} only}
