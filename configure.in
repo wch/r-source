@@ -249,7 +249,7 @@ else
     fi
   done
   if test -z "${F77}"; then
-    AC_CHECK_PROG(F2C, f2c)
+    AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
 fi
 
