@@ -1,4 +1,4 @@
-% $Id: SSasympOrig.Rd,v 1.2 2001/03/24 06:57:57 ripley Exp $
+% $Id: SSasympOrig.Rd,v 1.2.4.1 2001/08/07 14:05:15 ripley Exp $
 \name{SSasympOrig}
 \title{Asymptotic Regression Model through the Origin}
 \usage{
@@ -41,7 +41,7 @@ summary(fm1)
   xx <- seq(0, 5, len = 101)
   yy <- 5 * (1- exp(-xx/(2*log(2))))
   par(mar = c(0, 0, 3.5, 0))
-  plot(xx, yy, type = "l", axes = F, ylim = c(0,6), xlim = c(-1, 5),
+  plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
        xlab = "", ylab = "", lwd = 2,
        main = "Parameters in the SSasympOrig model")
   usr <- par("usr")

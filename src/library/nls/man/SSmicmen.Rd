@@ -1,4 +1,4 @@
-% $Id: SSmicmen.Rd,v 1.3 2001/03/24 06:57:57 ripley Exp $
+% $Id: SSmicmen.Rd,v 1.3.4.1 2001/08/07 14:05:15 ripley Exp $
 \name{SSmicmen}
 \title{Michaelis-Menten Model}
 \usage{
@@ -45,7 +45,7 @@ summary(fm2)
   xx <- seq(0, 5, len = 101)
   yy <- 5 * xx/(1+xx)
   par(mar = c(0, 0, 3.5, 0))
-  plot(xx, yy, type = "l", axes = F, ylim = c(0,6), xlim = c(-1, 5),
+  plot(xx, yy, type = "l", axes = FALSE, ylim = c(0,6), xlim = c(-1, 5),
        xlab = "", ylab = "", lwd = 2,
        main = "Parameters in the SSmicmen model")
   usr <- par("usr")

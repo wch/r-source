@@ -94,7 +94,7 @@ plot(1:10)
 screen(4)                 # prepare screen 4 for output
 plot(1:10, ylab="ylab 4")
 screen(1, FALSE)              #return to screen 1, but do not clear
-plot(10:1, axes=F, lty=2, ylab="")  # overlay second plot
+plot(10:1, axes=FALSE, lty=2, ylab="")  # overlay second plot
 axis(4)                   # add tic marks to right-hand axis
 title("Plot 1")
 close.screen(all = TRUE) # exit split-screen mode

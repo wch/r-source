@@ -1,4 +1,4 @@
-% $Id: SSbiexp.Rd,v 1.2 2001/03/24 06:57:57 ripley Exp $
+% $Id: SSbiexp.Rd,v 1.2.4.1 2001/08/07 14:05:15 ripley Exp $
 \name{SSbiexp}
 \title{Biexponential model}
 \usage{
@@ -49,7 +49,7 @@ summary(fm1)
   y2 <- 1.5 * exp(-xx)
   yy <- y1 + y2
   par(mar = c(0, 0, 3.5, 0))
-  plot(xx, yy, type = "n", axes = F, ylim = c(-0.2,6), xlim = c(0, 5),
+  plot(xx, yy, type = "n", axes = FALSE, ylim = c(-0.2,6), xlim = c(0, 5),
        xlab = "", ylab = "", main = "Components of the SSbiexp model")
   usr <- par("usr")
   lines(xx, y1, lty = 2, lwd = 0.75)

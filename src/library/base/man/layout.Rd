@@ -92,7 +92,7 @@ and \code{\link{par}(mfg=..)}
  top <- max(c(xhist$counts, yhist$counts))
  xrange <- c(-3,3)
  yrange <- c(-3,3)
- nf <- layout(matrix(c(2,0,1,3),2,2,T), c(3,1), c(1,3), TRUE)
+ nf <- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(3,1), c(1,3), TRUE)
  layout.show(nf)
 
  par(mar=c(3,3,1,1))
