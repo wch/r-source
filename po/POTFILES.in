@@ -18,6 +18,7 @@ src/gnuwin32/run.c
 src/gnuwin32/shext.c
 src/gnuwin32/sys-win32.c
 src/gnuwin32/system.c
+src/gnuwin32/graphapp/gmenus.c
 src/include/Errormsg.h
 src/main/CConverters.c
 src/main/CommandLineArgs.c

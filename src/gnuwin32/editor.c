@@ -534,18 +534,18 @@ static void editorhelp()
 {
     char s[4096];
 
-    strcpy(s,"R EDITOR\n");
+    strcpy(s,_("R EDITOR\n"));
     strcat(s,"\n");
-    strcat(s,"A standard text editor for editing and running R code.\n");
+    strcat(s,_("A standard text editor for editing and running R code.\n"));
     strcat(s,"\n");
-    strcat(s,"RUNNING COMMANDS\n");
-    strcat(s,"To run a line or section of R code, select the code and either\n");
-    strcat(s,"     Press Ctrl-R\n");
-    strcat(s,"     Select \"Run line or selection\" from the \"Edit\" menu\n");
-    strcat(s,"     Press the \"Run line or selection\" icon on the toolbar\n");
-    strcat(s,"This will copy the selected commands to the console and evaluate them.\n");
-    strcat(s,"If there is no selection, this will just run the current line and advance\n");
-    strcat(s,"the cursor by one line.\n");
+    strcat(s,_("RUNNING COMMANDS\n"));
+    strcat(s,_("To run a line or section of R code, select the code and either\n"));
+    strcat(s,_("     Press Ctrl-R\n"));
+    strcat(s,_("     Select \"Run line or selection\" from the \"Edit\" menu\n"));
+    strcat(s,_("     Press the \"Run line or selection\" icon on the toolbar\n"));
+    strcat(s,_("This will copy the selected commands to the console and evaluate them.\n"));
+    strcat(s,_("If there is no selection, this will just run the current line and advance\n"));
+    strcat(s,_("the cursor by one line.\n"));
 
     askok(s);
 }
@@ -557,16 +557,16 @@ static void menueditorhelp(control m)
 }
 
 static MenuItem EditorPopup[] = {                /* Numbers used below */
-    {"Run line or selection", menueditorrun, 'R', 0}, /* 0 */
+    {N_("Run line or selection"), menueditorrun, 'R', 0}, /* 0 */
     {"-", 0, 0, 0},
-    {"Undo", editorundo, 'Z', 0},                     /* 2 */
+    {N_("Undo"), editorundo, 'Z', 0},                     /* 2 */
     {"-", 0, 0, 0},
-    {"Cut", editorcut, 'X', 0},                       /* 4 */
-    {"Copy", editorcopy, 'C', 0},                     /* 5 */
-    {"Paste", editorpaste, 'V', 0},                   /* 6 */
-    {"Delete", editordelete, 0, 0},                   /* 7 */
+    {N_("Cut"), editorcut, 'X', 0},                       /* 4 */
+    {N_("Copy"), editorcopy, 'C', 0},                     /* 5 */
+    {N_("Paste"), editorpaste, 'V', 0},                   /* 6 */
+    {N_("Delete"), editordelete, 0, 0},                   /* 7 */
     {"-", 0, 0, 0},
-    {"Select all", editorselectall, 'A', 0},          /* 9 */
+    {N_("Select all"), editorselectall, 'A', 0},          /* 9 */
     LASTMENUITEM
 };
 
@@ -624,24 +624,24 @@ static editor neweditor()
 	MCHECK(tb = newtoolbar(btsize + 4));
 	addto(tb);
 	MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
-	MCHECK(addtooltip(bt, "Open script"));
+	MCHECK(addtooltip(bt, _("Open script")));
 	setdata(bt, c);
 	r.x += (btsize + 1) ;
 	MCHECK(bt = newtoolbutton(save_image, r, menueditorsave));
-	MCHECK(addtooltip(bt,  "Save script"));
+	MCHECK(addtooltip(bt,  _("Save script")));
 	setdata(bt, c);
 	r.x += (btsize + 6);
 	MCHECK(bt = newtoolbutton(copy1_image, r, menueditorrun));
-	MCHECK(addtooltip(bt, "Run line or selection"));
+	MCHECK(addtooltip(bt, _("Run line or selection")));
 	setdata(bt, t);
 	r.x += (btsize + 6);
 	MCHECK(bt = newtoolbutton(console_image, r, editorconsole));
-	MCHECK(addtooltip(bt, "Return focus to Console"));
+	MCHECK(addtooltip(bt, _("Return focus to Console")));
 	r.x += (btsize + 6);
 	MCHECK(bt = newtoolbutton(print_image, r, editorprint));
-	MCHECK(addtooltip(bt, "Print script"));
+	MCHECK(addtooltip(bt, _("Print script")));
 	setdata(bt, t);
-	MCHECK(addtooltip(bt, "Print"));
+	MCHECK(addtooltip(bt, _("Print")));
     }
 #endif
     addto(c);
@@ -659,51 +659,51 @@ static editor neweditor()
     addto(c);
     MCHECK(m = newmenubar(editormenuact));
     setdata(m, t);
-    MCHECK(newmenu("File"));
-    MCHECK(m = newmenuitem("New script", 'N', menueditornew));
+    MCHECK(newmenu(_("File")));
+    MCHECK(m = newmenuitem(_("New script"), 'N', menueditornew));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Open script...", 'O', menueditoropen));
+    MCHECK(m = newmenuitem(_("Open script..."), 'O', menueditoropen));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Save", 'S', menueditorsave));
+    MCHECK(m = newmenuitem(_("Save"), 'S', menueditorsave));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Save as...", 0, menueditorsaveas));
+    MCHECK(m = newmenuitem(_("Save as..."), 0, menueditorsaveas));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Print...", 0, editorprint));
+    MCHECK(m = newmenuitem(_("Print..."), 0, editorprint));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Close script", 0, menueditorclose));
+    MCHECK(m = newmenuitem(_("Close script"), 0, menueditorclose));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Exit", 0, closeconsole));
+    MCHECK(m = newmenuitem(_("Exit"), 0, closeconsole));
     setdata(m, c);
-    MCHECK(newmenu("Edit"));
-    MCHECK(m = newmenuitem("Undo", 'Z', editorundo));
+    MCHECK(newmenu(_("Edit")));
+    MCHECK(m = newmenuitem(_("Undo"), 'Z', editorundo));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(p->mcut = newmenuitem("Cut", 'X', editorcut));
+    MCHECK(p->mcut = newmenuitem(_("Cut"), 'X', editorcut));
     setdata(p->mcut, t);
-    MCHECK(p->mcopy = newmenuitem("Copy", 'C', editorcopy));
+    MCHECK(p->mcopy = newmenuitem(_("Copy"), 'C', editorcopy));
     setdata(p->mcopy, t);
-    MCHECK(m = newmenuitem("Paste", 'V', editorpaste));
+    MCHECK(m = newmenuitem(_("Paste"), 'V', editorpaste));
     setdata(m, t);
-    MCHECK(p->mdelete = newmenuitem("Delete", 0, editordelete));
+    MCHECK(p->mdelete = newmenuitem(_("Delete"), 0, editordelete));
     setdata(p->mdelete, t);
-    MCHECK(m = newmenuitem("Select all", 'A', editorselectall));
+    MCHECK(m = newmenuitem(_("Select all"), 'A', editorselectall));
     setdata(m, t);
-    MCHECK(newmenuitem("Clear console", 'L', menuclear));
+    MCHECK(newmenuitem(_("Clear console"), 'L', menuclear));
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Run line or selection", 'R', menueditorrun));
+    MCHECK(m = newmenuitem(_("Run line or selection"), 'R', menueditorrun));
     setdata(m, t);
-    MCHECK(m = newmenuitem("Run all", 0, editorrunall));
+    MCHECK(m = newmenuitem(_("Run all"), 0, editorrunall));
     setdata(m, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(p->mfind = newmenuitem("Find...", 'F', editorfind));
+    MCHECK(p->mfind = newmenuitem(_("Find..."), 'F', editorfind));
     setdata(p->mfind, t);
-    MCHECK(p->mreplace = newmenuitem("Replace...", 'H', editorreplace));
+    MCHECK(p->mreplace = newmenuitem(_("Replace..."), 'H', editorreplace));
     setdata(p->mreplace, t);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(newmenuitem("GUI preferences...", 0, menuconfig));
+    MCHECK(newmenuitem(_("GUI preferences..."), 0, menuconfig));
 
     /* Packages menu should go here */
     RguiPackageMenu();
@@ -711,8 +711,8 @@ static editor neweditor()
     newmdimenu(); /* Create and fill the 'Window' menu */
 #endif
 
-    MCHECK(m = newmenu("Help"));
-    MCHECK(newmenuitem("Editor", 0, menueditorhelp));
+    MCHECK(m = newmenu(_("Help")));
+    MCHECK(newmenuitem(_("Editor"), 0, menueditorhelp));
     MCHECK(newmenuitem("-", 0, NULL));
     RguiCommonHelp(m);
 
@@ -782,7 +782,7 @@ int Rgui_Edit(char *filename, char *title, int stealconsole)
 	editor_set_title(c, title);
     }
     else {
-	editor_set_title(c, "Untitled");
+	editor_set_title(c, _("Untitled"));
     }
     show(c);
     if (stealconsole) {

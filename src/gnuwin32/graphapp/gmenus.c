@@ -25,6 +25,7 @@
  */
 
 #include "internal.h"
+#include "../win-nls.h"
 
 static void mdimenu(menuitem m) {
   switch (getvalue(m)) {
@@ -43,10 +44,10 @@ static void mdimenu(menuitem m) {
 menu newmdimenu() {
    menu m ;
    if (!ismdi()) return NULL;
-   m = newmenu("Windows");
-   setvalue(newmenuitem("Cascade",0,mdimenu),1);
-   setvalue(newmenuitem("Tile",0,mdimenu),2);
-   setvalue(newmenuitem("Arrange Icons",0,mdimenu),3);
+   m = newmenu(_("Windows"));
+   setvalue(newmenuitem(_("Cascade"),0,mdimenu),1);
+   setvalue(newmenuitem(_("Tile"),0,mdimenu),2);
+   setvalue(newmenuitem(_("Arrange Icons"),0,mdimenu),3);
    current_menubar->menubar = m;
    return m;
 }
@@ -87,7 +88,7 @@ static int addmenuitemarray(menu m,MenuItem a[]) {
   while (a[i].nm) {
     if (!strcmp(a[i].nm,"@STARTMENU")) {
          i += 1;
-         ma = newsubmenu(m,a[i].nm);
+         ma = newsubmenu(m, _(a[i].nm));
     }
     else if (!strcmp(a[i].nm,"@ENDMENU")) {
          i += 1;
@@ -105,7 +106,7 @@ static int addmenuitemarray(menu m,MenuItem a[]) {
          ma = a[i].m;
     }
     else {
-         if (!(a[i].m = newmenuitem(a[i].nm, a[i].key, a[i].fn))) return 0;
+         if (!(a[i].m = newmenuitem(_(a[i].nm), a[i].key, a[i].fn))) return 0;
     }
     i += 1;
   }

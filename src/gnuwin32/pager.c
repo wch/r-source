@@ -285,14 +285,14 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
 }
 
 static MenuItem PagerPopup[] = {		   /* Numbers used below */
-    {"Copy", pagercopy, 'C', 0},			   /* 0 */
-    {"Paste to console", pagerpaste, 'V', 0},		   /* 1 */
-    {"Paste commands to console", pagerpastecmds, 0, 0},   /* 2 */
-    {"Select all", pagerselectall, 'A', 0},		   /* 3 */
+    {N_("Copy"), pagercopy, 'C', 0},			   /* 0 */
+    {N_("Paste to console"), pagerpaste, 'V', 0},	   /* 1 */
+    {N_("Paste commands to console"), pagerpastecmds, 0, 0},   /* 2 */
+    {N_("Select all"), pagerselectall, 'A', 0},		   /* 3 */
     {"-", 0, 0, 0},
-    {"Stay on top", pagerstayontop, 0, 0},		   /* 5 */
+    {N_("Stay on top"), pagerstayontop, 0, 0},		   /* 5 */
     {"-", 0, 0, 0},
-    {"Close", pagerclose, 0, 0},			   /* 7 */
+    {N_("Close"), pagerclose, 0, 0},			   /* 7 */
     LASTMENUITEM
 };
 
@@ -411,27 +411,27 @@ static pager pagercreate()
 	gsetcursor(tb, ArrowCursor);
         addto(tb);
         MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
-        MCHECK(addtooltip(bt, "Open script"));
+        MCHECK(addtooltip(bt, _("Open script")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;	
         MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
-        MCHECK(addtooltip(bt, "Paste to console"));
+        MCHECK(addtooltip(bt, _("Paste to console")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newtoolbutton(copy1_image, r, pagerpastecmds));
-        MCHECK(addtooltip(bt, "Paste commands to console"));
+        MCHECK(addtooltip(bt, _("Paste commands to console")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newtoolbutton(print_image, r, pagerprint));
-        MCHECK(addtooltip(bt, "Print"));
+        MCHECK(addtooltip(bt, _("Print")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
         r.x += (btsize + 6) ;
         MCHECK(bt = newtoolbutton(console_image, r, pagerconsole));
-        MCHECK(addtooltip(bt, "Return focus to Console"));
+        MCHECK(addtooltip(bt, _("Return focus to Console")));
 	gsetcursor(bt, ArrowCursor);
         setdata(bt, (void *) c);
     }
@@ -447,27 +447,27 @@ static pager pagercreate()
     setdata(PagerPopup[7].m, c);
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
-    MCHECK(newmenu("File"));
-    MCHECK(m = newmenuitem("New script", 'N', menueditornew));
-    MCHECK(m = newmenuitem("Open script...", 'O', menueditoropen));
-    MCHECK(m = newmenuitem("Print...", 0, pagerprint));
+    MCHECK(newmenu(_("File")));
+    MCHECK(m = newmenuitem(_("New script"), 'N', menueditornew));
+    MCHECK(m = newmenuitem(_("Open script..."), 'O', menueditoropen));
+    MCHECK(m = newmenuitem(_("Print..."), 0, pagerprint));
     setdata(m, c);
-    MCHECK(m = newmenuitem("Save to File...", 0, pagersavefile));
+    MCHECK(m = newmenuitem(_("Save to File..."), 0, pagersavefile));
     setdata(m, c);
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(m = newmenuitem("Close", 0, pagerclose));
+    MCHECK(m = newmenuitem(_("Close"), 0, pagerclose));
     setdata(m, c);
-    MCHECK(newmenu("Edit"));
-    MCHECK(p->mcopy = newmenuitem("Copy", 'C', pagercopy));
+    MCHECK(newmenu(_("Edit")));
+    MCHECK(p->mcopy = newmenuitem(_("Copy"), 'C', pagercopy));
     setdata(p->mcopy, c);
-    MCHECK(p->mpaste = newmenuitem("Paste to console", 'V', pagerpaste));
+    MCHECK(p->mpaste = newmenuitem(_("Paste to console"), 'V', pagerpaste));
     setdata(p->mpaste, c);
-    MCHECK(p->mpastecmds = newmenuitem("Paste commands to console", 0, pagerpastecmds));
+    MCHECK(p->mpastecmds = newmenuitem(_("Paste commands to console"), 0, pagerpastecmds));
     setdata(p->mpastecmds, c);
-    MCHECK(m = newmenuitem("Select all", 'A', pagerselectall));
+    MCHECK(m = newmenuitem(_("Select all"), 'A', pagerselectall));
     setdata(m, c);
     if (!pagerMultiple) {
-	MCHECK(newmenu("View"));
+	MCHECK(newmenu(_("View")));
 	for (i = 0; i < PAGERMAXKEPT; i++) {
 	    sprintf(pagerTitles[i], "&%c.  ", 'A' + i);
 	    MCHECK(pagerMenus[i] = newmenuitem(&pagerTitles[i][1], 0,

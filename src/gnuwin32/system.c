@@ -25,10 +25,6 @@
 # include <config.h>
 #endif
 
-#ifdef SUPPORT_GUI_MBCS
-#define SUPPORT_MBCS 1
-#endif
-
 #include "Defn.h"
 #include <R_ext/Riconv.h>
 #include "Fileio.h"

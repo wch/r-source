@@ -1498,15 +1498,15 @@ static void de_popup_vw(void)
 {
     char blah[25];
 
-    devw = newwindow("Cell width(s)",
+    devw = newwindow(_("Cell width(s)"),
 		      rect(0, 0, 250, 60),
 		      Titlebar | Centered | Closebox | Modal);
     setclose(devw, vw_close);
     setbackground(devw, bbg);
-    lwhat = newlabel("Cell width", rect(10, 20, 70, 20), AlignLeft);
+    lwhat = newlabel(_("Cell width"), rect(10, 20, 70, 20), AlignLeft);
     sprintf(blah, "%d", nboxchars);
     varname = newfield(blah, rect(80, 20, 40, 20));
-    varwidths = newcheckbox("variable", rect(150, 20, 80, 20), vw_callback);
+    varwidths = newcheckbox(_("variable"), rect(150, 20, 80, 20), vw_callback);
     if (nboxchars == 0) {
 	check(varwidths);
 	disable(varname);
@@ -1545,21 +1545,21 @@ static void deresize(console c, rect r)
 
 static void menudehelp(control m)
 {
-    char s[] = "Navigation.\n  Keyboard: cursor keys move selection\n\tTab move right, Shift+Tab moves left\n\tPgDn or Ctrl+F: move down one screenful\n\tPgUp or Ctrl+B: move up one screenful\n\tHome: move to (1,1) cell\n\tEnd: show last rows of last column.\n   Mouse: left-click in a cell, use the scrollbar(s).\n\nEditing.\n  Type in the currently hightlighted cell\n  Double-click in a cell for an editable field\n\nMisc.\n  Ctrl-L redraws the screen, auto-resizing the columns\n  Ctrl-C copies selected cell\n  Ctrl-V pastes to selected cell\n  Right-click menu for copy, paste, autosize currently selected column\n\n";
-    askok(s);
+    char s[] = N_("Navigation.\n  Keyboard: cursor keys move selection\n\tTab move right, Shift+Tab moves left\n\tPgDn or Ctrl+F: move down one screenful\n\tPgUp or Ctrl+B: move up one screenful\n\tHome: move to (1,1) cell\n\tEnd: show last rows of last column.\n   Mouse: left-click in a cell, use the scrollbar(s).\n\nEditing.\n  Type in the currently hightlighted cell\n  Double-click in a cell for an editable field\n\nMisc.\n  Ctrl-L redraws the screen, auto-resizing the columns\n  Ctrl-C copies selected cell\n  Ctrl-V pastes to selected cell\n  Right-click menu for copy, paste, autosize currently selected column\n\n");
+    askok(_(s));
 }
 
 
 static MenuItem DePopup[28] = {
-    {"Help", menudehelp, 0},
+    {N_("Help"), menudehelp, 0},
     {"-", 0, 0},
-    {"Copy selected cell", de_copy, 0},
-    {"Paste to selected cell", de_paste, 0},
-    {"Autosize column", de_autosize, 0},
+    {N_("Copy selected cell"), de_copy, 0},
+    {N_("Paste to selected cell"), de_paste, 0},
+    {N_("Autosize column"), de_autosize, 0},
     {"-", 0, 0},
-    {"Stay on top", de_stayontop, 0},
+    {N_("Stay on top"), de_stayontop, 0},
     {"-", 0, 0},
-    {"Close", declose, 0},
+    {N_("Close"), declose, 0},
     LASTMENUITEM
 };
 
@@ -1609,7 +1609,7 @@ static dataeditor newdataeditor(void)
 	x = (devicewidth(NULL) - w) / 3;
 	y = (deviceheight(NULL) - h) / 3 ;
     }
-    c = (dataeditor) newwindow(" Data Editor", rect(x, y, w, h),
+    c = (dataeditor) newwindow(_("Data Editor"), rect(x, y, w, h),
 			       Document | StandardWindow | Menubar |
 			       VScrollbar | HScrollbar | TrackMouse);
     if (!c) {
@@ -1635,18 +1635,18 @@ static dataeditor newdataeditor(void)
     }
     MCHECK(gpopup(depopupact, DePopup));
     MCHECK(m = newmenubar(demenuact));
-    MCHECK(newmenu("File"));
+    MCHECK(newmenu(_("File")));
 /*    MCHECK(m = newmenuitem("-", 0, NULL));*/
-    MCHECK(m = newmenuitem("Close", 0, declose));
+    MCHECK(m = newmenuitem(_("Close"), 0, declose));
     newmdimenu();
-    MCHECK(newmenu("Edit"));
-    MCHECK(m = newmenuitem("Copy  \tCTRL+C", 0, de_copy));
-    MCHECK(m = newmenuitem("Paste \tCTRL+V", 0, de_paste));
-    MCHECK(m = newmenuitem("Delete\tDEL", 0, de_delete));
+    MCHECK(newmenu(_("Edit")));
+    MCHECK(m = newmenuitem(_("Copy  \tCTRL+C"), 0, de_copy));
+    MCHECK(m = newmenuitem(_("Paste \tCTRL+V"), 0, de_paste));
+    MCHECK(m = newmenuitem(_("Delete\tDEL"), 0, de_delete));
     MCHECK(m = newmenuitem("-", 0, NULL));
-    MCHECK(de_mvw = newmenuitem("Cell widths ...", 0, menudecellwidth));
-    MCHECK(m = newmenu("Help"));
-    MCHECK(newmenuitem("Data editor", 0, menudehelp));
+    MCHECK(de_mvw = newmenuitem(_("Cell widths ..."), 0, menudecellwidth));
+    MCHECK(m = newmenu(_("Help")));
+    MCHECK(newmenuitem(_("Data editor"), 0, menudehelp));
 
     setdata(c, p);
     setresize(c, deresize);
