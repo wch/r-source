@@ -160,6 +160,14 @@ close(zz)
 readLines("ex.data")
 unlink("ex.data")
 
+if(capabilities()["libz"]) {
+  zz <- gzfile("ex.gz", "w")  # compressed file
+  cat("TITLE extra line", "2 3 5 7", "", "11 13 17", file = zz, sep = "\n")
+  close(zz)
+  print(readLines(gzfile("ex.gz")))
+  unlink("ex.gz")
+}
+
 \dontrun{## Unix examples of use of pipes
 
 # read listing of current directory
