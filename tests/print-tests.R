@@ -19,7 +19,7 @@ v1 <- 2^c(-12, 2*(-4:-2),3,6,9)
 v2 <- v1^(63/64)
 ## avoid ending in `5' as printing then depends on rounding of
 ## the run-time (and not all round to even).
-v1[2:4] <-c(3.90624e-03, 1.5624e-02, 6.24e-02)
+v1[1:4] <-c(2.44140624e-04, 3.90624e-03, 1.5624e-02, 6.24e-02)
 
 
 v3 <- pi*100^(-1:3)
