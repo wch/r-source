@@ -107,9 +107,9 @@ csphd(hcl(h = seq(120, 0, length = 4) + 150))
 
 # Warm Colors
 csphd(hcl(h = seq(120, 0, length = 4) - 30))
-}
 
 # Single Color
 hist(rnorm(1000), col = hcl(240))
+}
 \keyword{color}
 \keyword{dplot}
