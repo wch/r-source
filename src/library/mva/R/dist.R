@@ -2,7 +2,7 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
 {
     ## account for possible spellings of euclid?an
     if(!is.na(pmatch(method, "euclidian")))
-        method <- "euclidean"
+	method <- "euclidean"
     
     method <- pmatch(method, c("euclidean", "maximum",
 			       "manhattan", "canberra", "binary"))
@@ -18,7 +18,8 @@ dist <- function(x, method="euclidean", diag=FALSE, upper=FALSE)
 	    nc= ncol(x),
 	    d = double(N*(N - 1)/2),
 	    diag  = as.integer(FALSE),
-	    method= as.integer(method)) $ d
+	    method= as.integer(method),
+	    DUP = FALSE) $ d
     attr(d, "Size") <- N
     attr(d, "Labels") <- dimnames(x)[[1]]
     attr(d, "Diag") <- diag
