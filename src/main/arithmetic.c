@@ -389,7 +389,7 @@ SEXP R_binary(SEXP, SEXP, SEXP, SEXP);
 static SEXP integer_unary(ARITHOP_TYPE, SEXP);
 static SEXP real_unary(ARITHOP_TYPE, SEXP, SEXP);
 static SEXP real_binary(ARITHOP_TYPE, SEXP, SEXP);
-static SEXP integer_binary(ARITHOP_TYPE, SEXP, SEXP);
+static SEXP integer_binary(ARITHOP_TYPE, SEXP, SEXP, SEXP);
 
 #if 0
 static int naflag;
@@ -531,7 +531,7 @@ SEXP R_binary(SEXP call, SEXP op, SEXP x, SEXP y)
 	    x = real_binary(PRIMVAL(op), x, y);
 	}
 	else {
-	    x = integer_binary(PRIMVAL(op), x, y);
+	    x = integer_binary(PRIMVAL(op), x, y, lcall);
 	}
 
     PROTECT(x);
@@ -639,11 +639,36 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
 	i2 = (++i2 == n2) ? 0 : i2,\
 	++i)
 
-static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
+
+
+/* The tests using integer comparisons are a bit faster than the tests
+   using doubles, but they depend on a two's complement representation
+   (but that is almost universal).  The tests that compare results to
+   double's depend on being able to accurately represent all int's as
+   double's.  Since int's are almost universally 32 bit that should be
+   OK. */
+
+/* This should be handled properly in configure. Configure should also
+   check that a double can accurately represent any int. */
+#define USES_TWOS_COMPLEMENT (~0 == (unsigned) -1)
+
+#if USES_TWOS_COMPLEMENT
+# define OPPOSITE_SIGNS(x, y) ((x < 0) ^ (y < 0))
+# define GOODISUM(x, y, z) (((x) > 0) ? ((y) < (z)) : ! ((y) < (z)))
+# define GOODIDIFF(x, y, z) (!(OPPOSITE_SIGNS(x, y) && OPPOSITE_SIGNS(x, z)))
+#else
+# define GOODISUM(x, y, z) ((double) (x) + (double) (y) == (z))
+# define GOODIDIFF(x, y, z) ((double) (x) - (double) (y) == (z))
+#endif
+#define GOODIPROD(x, y, z) ((double) (x) * (double) (y) == (z))
+#define INTEGER_OVERFLOW_WARNING "NAs produced by integer overflow"
+
+static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2, SEXP lcall)
 {
     int i, i1, i2, n, n1, n2;
     int x1, x2;
     SEXP ans;
+    Rboolean naflag = FALSE;
 
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
@@ -667,9 +692,18 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		INTEGER(ans)[i] = NA_INTEGER;
-	    else
-		INTEGER(ans)[i] = x1 + x2;
+	    else {
+		int val = x1 + x2;
+		if (val != NA_INTEGER && GOODISUM(x1, x2, val))
+		    INTEGER(ans)[i] = val;
+		else {
+		    INTEGER(ans)[i] = NA_INTEGER;
+		    naflag = TRUE;
+		}
+	    }
 	}
+	if (naflag)
+	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
 	break;
     case MINUSOP:
 	mod_iterate(n1, n2, i1, i2) {
@@ -677,9 +711,18 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		INTEGER(ans)[i] = NA_INTEGER;
-	    else
-		INTEGER(ans)[i] = x1 - x2;
+	    else {
+		int val = x1 - x2;
+		if (val != NA_INTEGER && GOODIDIFF(x1, x2, val))
+		    INTEGER(ans)[i] = val;
+		else {
+		    naflag = TRUE;
+		    INTEGER(ans)[i] = NA_INTEGER;
+		}
+	    }
 	}
+	if (naflag)
+	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
 	break;
     case TIMESOP:
 	mod_iterate(n1, n2, i1, i2) {
@@ -687,9 +730,18 @@ static SEXP integer_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	    x2 = INTEGER(s2)[i2];
 	    if (x1 == NA_INTEGER || x2 == NA_INTEGER)
 		INTEGER(ans)[i] = NA_INTEGER;
-	    else
-		INTEGER(ans)[i] = x1 * x2;
+	    else {
+		int val = x1 * x2;
+		if (val != NA_INTEGER && GOODIPROD(x1, x2, val))
+		    INTEGER(ans)[i] = val;
+		else {
+		    naflag = TRUE;
+		    INTEGER(ans)[i] = NA_INTEGER;
+		}
+	    }
 	}
+	if (naflag)
+	    warningcall(lcall, INTEGER_OVERFLOW_WARNING);
 	break;
     case DIVOP:
 	mod_iterate(n1, n2, i1, i2) {
