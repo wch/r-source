@@ -70,7 +70,6 @@ extern DL_FUNC ptr_R_Suicide, ptr_R_ShowMessage, ptr_R_ReadConsole,
     ptr_GnomeDeviceDriver, ptr_GTKDeviceDriver,
     ptr_R_loadhistory, ptr_R_savehistory;
 
-
 /* This is called too early to use moduleCdynload */
 void R_load_gnome_shlib(void)
 {

@@ -1,6 +1,6 @@
 .First.lib <- function(lib, pkg) {
-    if (.Platform$GUI=="GNOME")
-	stop("Tcl/Tk library does not work with GNOME interface")
+###    if (.Platform$GUI=="GNOME")
+###	stop("Tcl/Tk library does not work with GNOME interface")
     library.dynam("tcltk", pkg, lib)
     .C("tcltk_init", PACKAGE="tcltk")
     addTclPath(system.file("exec", package = "tcltk"))

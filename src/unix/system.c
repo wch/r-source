@@ -113,6 +113,8 @@ int Rf_initialize_R(int ac, char **av)
     ptr_R_ChooseFile = Rstd_ChooseFile;
     ptr_R_loadhistory = Rstd_loadhistory;
     ptr_R_savehistory = Rstd_savehistory;
+    R_timeout_handler = NULL;
+    R_timeout_val = 0;
 
     R_GlobalContext = NULL; /* Make R_Suicide less messy... */
 

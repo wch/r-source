@@ -34,7 +34,8 @@ extern int  (*ptr_R_ShowFiles)(int, char **, char **, char *, Rboolean, char *);
 extern int  (*ptr_R_ChooseFile)(int, char *, int);
 extern void (*ptr_R_loadhistory)(SEXP, SEXP, SEXP, SEXP);
 extern void (*ptr_R_savehistory)(SEXP, SEXP, SEXP, SEXP);
-
+extern int (*R_timeout_handler)();
+extern long R_timeout_val;
 
 extern DevDesc* 
 Rf_addX11Device(char *display, double height, double width, double ps, 

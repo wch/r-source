@@ -26,7 +26,9 @@
 SEXP R_ParseVector(SEXP, int, int *);
 
 #include "tcltk.h" /* declarations of our `public' interface */
-
+extern int (*R_timeout_handler)();
+extern long R_timeout_val;
+extern  (*ptr_gnome_start)();
 
 static Tcl_Interp *Tcl_interp;      /* Interpreter for this application. */
 
@@ -220,26 +222,43 @@ void TclHandler(void)
     OldHandler();
 }
 
+unsigned int Gtk_TclHandler(void)
+{
+    while (Tcl_DoOneEvent(TCL_DONT_WAIT))
+	;
+    return 1;
+}
+
 void addTcl(void)
 {
     if (Tcl_loaded)
 	error("Tcl already loaded");
     Tcl_loaded = 1;
-    OldHandler = R_PolledEvents;
-    OldTimeout = R_wait_usec;
-    R_PolledEvents = TclHandler;
-    if ( R_wait_usec > 10000 || R_wait_usec == 0)
-	R_wait_usec = 10000;
+    if (ptr_gnome_start != NULL) {
+        R_timeout_handler = Gtk_TclHandler;
+        R_timeout_val = 500;
+    } else {
+        OldHandler = R_PolledEvents;
+	OldTimeout = R_wait_usec;
+	R_PolledEvents = TclHandler;
+	if ( R_wait_usec > 10000 || R_wait_usec == 0)
+	    R_wait_usec = 10000;
+    }
 }
 
 void delTcl(void)
 {
     if (!Tcl_loaded)
 	error("Tcl is not loaded");
-    if (R_PolledEvents != TclHandler)
-	error("Tcl is not last loaded handler");
-    R_PolledEvents = OldHandler;
-    R_wait_usec = OldTimeout;
+    if (ptr_gnome_start != NULL) {
+        R_timeout_handler = NULL;
+        R_timeout_val = 0;
+    } else {
+        if (R_PolledEvents != TclHandler)
+	    error("Tcl is not last loaded handler");
+	R_PolledEvents = OldHandler;
+	R_wait_usec = OldTimeout;
+    }
     Tcl_loaded = 0;
 }
 #endif

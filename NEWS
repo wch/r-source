@@ -91,6 +91,7 @@ NEW FEATURES
 
    o	New read-only connections to zip files via unz().
 
+   o    The tcltk package now works with the gnome user interface.
 
 DEPRECATED & DEFUNCT
 

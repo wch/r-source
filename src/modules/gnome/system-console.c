@@ -35,6 +35,8 @@
 	 * the GtkConsole widget.
 	 */
 
+extern int (*R_timeout_handler)();
+extern long R_timeout_val;
 
 /* Catch input in the console window */
 void
@@ -57,7 +59,7 @@ Rgnome_ReadConsole (char *prompt, unsigned char *buf, int len,
       if (!R_Slave)
 	fputs (buf, stdout);
     }
-  else
+   else
     {
       gtk_console_enable_input (GTK_CONSOLE (R_gtk_terminal_text), prompt,
 				strlen (prompt));
@@ -65,6 +67,8 @@ Rgnome_ReadConsole (char *prompt, unsigned char *buf, int len,
 			  "console_line_ready",
 			  GTK_SIGNAL_FUNC (R_gtk_terminal_line_event), NULL);
 
+      if (R_timeout_handler && R_timeout_val)
+	  gtk_timeout_add(R_timeout_val, R_timeout_handler, NULL);
       gtk_main ();
 
       gtk_console_read (GTK_CONSOLE (R_gtk_terminal_text), buf, len,
