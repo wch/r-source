@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2001  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2002  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -20,25 +20,28 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 #ifndef Macintosh
-#include <sys/types.h>
+# include <sys/types.h>
 #else 
-#include <types.h>
+# include <types.h>
 #endif
 
 #include "Defn.h"
+
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #ifdef USE_SYSTEM_REGEX
-#include <regex.h>
+# include <regex.h>
 #else
-#include "Rregex.h"
+# include "Rregex.h"
 #endif
 
+#include "apse.h"
+
 #ifndef MAX
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
+# define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
 /* Functions to perform analogues of the standard C string library. */
@@ -938,4 +941,77 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 
     UNPROTECT(1);
     return(y);
+}
+
+SEXP
+do_agrep(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP pat, vec, ind, ans;
+    int i, j, n, nmatches;
+    int igcase_opt, value_opt, max_distance_opt;
+    int max_deletions_opt, max_insertions_opt, max_substitutions_opt;
+    apse_t *aps;
+    char *str;
+    
+    checkArity(op, args);
+    pat = CAR(args); args = CDR(args);
+    vec = CAR(args); args = CDR(args);
+    igcase_opt = asLogical(CAR(args)); args = CDR(args);
+    value_opt = asLogical(CAR(args)); args = CDR(args);
+    max_distance_opt = (apse_size_t)asInteger(CAR(args));
+    args = CDR(args);
+    max_deletions_opt = (apse_size_t)asInteger(CAR(args));
+    args = CDR(args);
+    max_insertions_opt = (apse_size_t)asInteger(CAR(args));
+    args = CDR(args);
+    max_substitutions_opt = (apse_size_t)asInteger(CAR(args));
+
+    if(igcase_opt == NA_INTEGER) igcase_opt = 0;
+    if(value_opt == NA_INTEGER) value_opt = 0;
+
+    if(!isString(pat) || length(pat) < 1 || !isString(vec))
+	errorcall(call, R_MSG_IA);
+
+    str = CHAR(STRING_ELT(pat, 0));
+    aps = apse_create((unsigned char *)str, (apse_size_t)strlen(str),
+		      max_distance_opt);
+    if((apse_set_deletions(aps, max_deletions_opt) < 0)
+       || (apse_set_insertions(aps, max_insertions_opt) < 0)
+       || (apse_set_substitutions(aps, max_substitutions_opt) < 0))
+	errorcall(call, "invalid agrep specification");
+
+    n = length(vec);
+    ind = allocVector(LGLSXP, n);
+    nmatches = 0;
+    for(i = 0 ; i < n ; i++) {
+	str = CHAR(STRING_ELT(vec, i));
+	if(apse_set_caseignore_slice(aps, 1, (apse_ssize_t)strlen(str),
+				     (apse_bool_t)igcase_opt) < 0)
+	    errorcall(call, "invalid agrep specification");
+	if(apse_match(aps,
+		      (unsigned char *)str,
+		      (apse_size_t)strlen(str))) {
+	    INTEGER(ind)[i] = 1;
+	    nmatches++;
+	}
+	else INTEGER(ind)[i] = 0;
+    }
+    apse_destroy(aps);
+    PROTECT(ind);
+    if(value_opt) {
+	ans = allocVector(STRSXP, nmatches);
+	j = 0;
+	for (i = 0 ; i < n ; i++)
+	    if(INTEGER(ind)[i]) {
+		SET_STRING_ELT(ans, j++, STRING_ELT(vec, i));
+	    }
+    }
+    else {
+	ans = allocVector(INTSXP, nmatches);
+	j = 0;
+	for(i = 0 ; i < n ; i++)
+	    if(INTEGER(ind)[i]) INTEGER(ans)[j++] = i + 1;
+    }
+    UNPROTECT(1);
+    return ans;
 }

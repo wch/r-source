@@ -450,6 +450,7 @@ FUNTAB R_FunTab[] =
 {"sub.perl",    do_pgsub,	0,	11,	4,	PP_FUNCALL},
 {"gsub.perl",	do_pgsub,	1,	11,	4,	PP_FUNCALL},
 {"regexpr.perl",do_pregexpr,	1,	11,	2,	PP_FUNCALL},
+{"agrep",	do_agrep,	1,	11,	8,	PP_FUNCALL},	
 {"tolower",	do_tolower,	1,	11,	1,	PP_FUNCALL},
 {"toupper",	do_toupper,	1,	11,	1,	PP_FUNCALL},
 {"chartr",	do_chartr,	1,	11,	3,	PP_FUNCALL},
