@@ -238,7 +238,8 @@ void GetRNGstate()
     /* Get  .Random.seed  into proper variables */
     int len_seed, j, tmp;
     SEXP seeds;
-
+    RNGtype newRNG; N01type newN01;
+    
     seeds = findVar(R_SeedsSymbol, R_GlobalEnv);
     if (seeds == R_UnboundValue) {
 	Randomize(RNG_kind);
@@ -250,15 +251,17 @@ void GetRNGstate()
 	if (!isVector(seeds))
 	    error(".Random.seed is not a vector");
 	tmp = INTEGER(seeds)[0];
-	if(tmp == NA_INTEGER)
+	if (tmp == NA_INTEGER)
 	    error(".Random.seed[0] is not a valid integer");
-	RNG_kind = tmp % 100;
-	N01_kind = tmp / 100;
+	newRNG = tmp % 100;
+	newN01 = tmp / 100;
 	/*if (RNG_kind > USER || RNG_kind < 0) {
 	    warning(".Random.seed was invalid: re-initializing");
 	    RNG_kind = RNG_DEFAULT;
 	    }*/
- 	switch(RNG_kind) {
+	if (newN01 < 0 || newN01 > BOX_MULLER)
+	    error(".Random.seed[0] is not a valid Normal type");
+ 	switch(newRNG) {
  	case WICHMANN_HILL:
  	case MARSAGLIA_MULTICARRY:
  	case SUPER_DUPER:
@@ -270,9 +273,9 @@ void GetRNGstate()
 		error(".Random.seed[1] = 5 but no user-supplied generator");
 	    break;
 	default:
-	    RNG_kind = RNG_DEFAULT; N01_kind = 0;
 	    error(".Random.seed[1] is NOT a valid RNG kind (code)");
 	}
+	RNG_kind = newRNG; N01_kind = newN01;
 	len_seed = RNG_Table[RNG_kind].n_seed;
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
 	    error(".Random.seed has wrong length");
@@ -292,8 +295,15 @@ void GetRNGstate()
 
 void PutRNGstate()
 {
+    /* Copy out seeds to  .Random.seed  */
     int len_seed, j;
     SEXP seeds;
+    
+    if (RNG_kind < 0 || RNG_kind > USER ||
+	N01_kind < 0 || N01_kind > BOX_MULLER ) {
+	warning("Internal .Random.seed is corrupt: not saving");
+	return;
+    }
     
     len_seed = RNG_Table[RNG_kind].n_seed;
    
