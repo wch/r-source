@@ -34,7 +34,7 @@ FORCE:
 
 docs:
 
-install: install-message installdirs install-sources
+install: install-message installdirs install-sources install-built
 installdirs:
 	@$(MKINSTALLDIRS) $(rhome)/share
 	@$(MKINSTALLDIRS) $(rhome)/share/R
@@ -78,6 +78,8 @@ install-sources: installdirs
 		  $(srcdir)/texmf/*.fd; do \
 	  $(INSTALL_DATA) $${f} $(rhome)/share/texmf; \
 	done
+install-built: installdirs
+	$(INSTALL_DATA) perl/build-help.pl $(rhome)/share/perl
 install-strip: install
 
 uninstall:
