@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-13
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-01-14
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2190,6 +2190,8 @@ The Rmetrics module for ``The Valuation of Options''.
 @item fSeries
 The Rmetrics module for ``The Dynamical Process Behind Financial
 Markets''.
+@item far
+Modelization for Functional AutoRegressive processes.
 @item faraway
 Functions and datasets for books by Julian Faraway.
 @item fastICA

@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-01-13
+Version 2.0.2005-01-14
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -1954,6 +1954,9 @@ distributions of R.)
 *fSeries*
      The Rmetrics module for "The Dynamical Process Behind Financial
      Markets".
+
+*far*
+     Modelization for Functional AutoRegressive processes.
 
 *faraway*
      Functions and datasets for books by Julian Faraway.
