@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
 /* override for this file only */
@@ -33,7 +33,7 @@
 #include <R_ext/R-ftp-http.h>
 #include <R_ext/RS.h>
 
-int R_OutputCon; /* used in printutils.c */
+int R_OutputCon;		/* used in printutils.c */
 
 #ifdef HAVE_UNISTD_H
 # include <unistd.h>
@@ -113,7 +113,7 @@ void Rconn_setEncoding(Rconnection con, SEXP enc)
 static Rboolean null_open(Rconnection con)
 {
     error("open/close not enabled for this connection");
-    return FALSE; /* -Wall */
+    return FALSE;		/* -Wall */
 }
 
 static void null_close(Rconnection con)
@@ -129,7 +129,7 @@ static void null_destroy(Rconnection con)
 static int null_vfprintf(Rconnection con, const char *format, va_list ap)
 {
     error("printing not enabled for this connection");
-    return 0; /* -Wall */
+    return 0;			/* -Wall */
 }
 
 #define BUFSIZE 1000
@@ -161,13 +161,13 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 static int null_fgetc(Rconnection con)
 {
     error("getc not enabled for this connection");
-    return 0; /* -Wall */
+    return 0;			/* -Wall */
 }
 
 static long null_seek(Rconnection con, int where, int origin, int rw)
 {
     error("seek not enabled for this connection");
-    return 0; /* -Wall */
+    return 0;			/* -Wall */
 }
 
 static void null_truncate(Rconnection con)
@@ -184,14 +184,14 @@ static size_t null_read(void *ptr, size_t size, size_t nitems,
 			Rconnection con)
 {
     error("read not enabled for this connection");
-    return 0; /* -Wall */
+    return 0;			/* -Wall */
 }
 
 static size_t null_write(const void *ptr, size_t size, size_t nitems,
 			 Rconnection con)
 {
     error("write not enabled for this connection");
-    return 0; /* -Wall */
+    return 0;			/* -Wall */
 }
 
 void init_con(Rconnection new, char *description, char *mode)
@@ -446,20 +446,24 @@ static Rconnection newfile(char *description, char *mode)
 
 #ifdef HAVE_STAT
 # ifndef Macintosh
-#  include <sys/types.h>
-#  include <sys/stat.h>
-# else
+#  ifdef HAVE_SYS_TYPES_H
+#   include <sys/types.h>
+#  endif
+#  ifdef HAVE_SYS_STAT_H
+#   include <sys/stat.h>
+#  endif
+# else /* Macintosh */
 #  include <types.h>
 #  ifndef __MRC__
 #   include <stat.h>
 #  else
 #   include <mpw_stat.h>
 #  endif
-# endif /* mac */
-#endif
+# endif /* Macintosh */
+#endif /* HAVE_STAT */
 
 #ifdef HAVE_ERRNO_H
-#include <errno.h>
+# include <errno.h>
 #endif
 
 static Rboolean fifo_open(Rconnection con)
@@ -632,7 +636,7 @@ SEXP do_fifo(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 #else
     error("fifo connections are not available on this system");
-    return R_NilValue; /* -Wall */
+    return R_NilValue;		/* -Wall */
 #endif
 }
 
@@ -761,7 +765,7 @@ SEXP do_pipe(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 #else
     error("pipe connections are not available on this system");
-    return R_NilValue; /* -Wall */
+    return R_NilValue;		/* -Wall */
 #endif
 }
 
@@ -2734,7 +2738,7 @@ SEXP do_sumconnection(SEXP call, SEXP op, SEXP args, SEXP env)
 
 
 #if defined(USE_WININET_ASYNC) && !defined(USE_WININET)
-#define USE_WININET 2
+# define USE_WININET 2
 #endif
 
 
@@ -2746,7 +2750,7 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, ncon, block;
     Rconnection con = NULL;
 #ifdef HAVE_INTERNET
-    UrlScheme type = HTTPsh; /* -Wall */
+    UrlScheme type = HTTPsh;	/* -Wall */
 #endif
 
     checkArity(op, args);

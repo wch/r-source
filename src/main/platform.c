@@ -19,11 +19,11 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+# include <config.h>
 #endif
 
-#include "Defn.h"
-#include "Fileio.h"
+#include <Defn.h>
+#include <Fileio.h>
 
 #include <time.h>
 
@@ -281,11 +281,11 @@ SEXP do_fileremove(SEXP call, SEXP op, SEXP args, SEXP rho)
 }
 
 #if defined(Win32) || defined(Macintosh)
-#include <errno.h>
+# include <errno.h>
 #endif
 
 #ifdef Win32
-# include <io.h>  /* for unlink */
+# include <io.h>		/* for unlink */
 #endif
 
 SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
@@ -330,7 +330,7 @@ SEXP do_filerename(SEXP call, SEXP op, SEXP args, SEXP rho)
 #elif HAVE_NDIR_H
 # include <ndir.h>
 #elif defined(Macintosh)
-# include "dirent.h"  /* We use a local equivalent to dirent.h */
+# include "dirent.h"		/* use a local equivalent to dirent.h */
 #endif
 
 #ifdef USE_SYSTEM_REGEX
@@ -562,16 +562,20 @@ SEXP do_filechoose(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 #ifdef HAVE_STAT
 # ifndef Macintosh
-#  include <sys/types.h>
-#  include <sys/stat.h>
-# else
+#  ifdef HAVE_SYS_TYPES_H
+#   include <sys/types.h>
+#  endif
+#  ifdef HAVE_SYS_STAT_H
+#   include <sys/stat.h>
+#  endif
+# else /* Macintosh */
 #  include <types.h>
 #  ifndef __MRC__
 #   include <stat.h>
 #  else
 #   include <mpw_stat.h>
 #  endif
-#  endif /* mac */
+# endif /* Macintosh */
 
 # if defined(Unix) && defined(HAVE_PWD_H) && defined(HAVE_GRP_H) \
   && defined(HAVE_GETPWUID) && defined(HAVE_GETGRGID)
@@ -671,7 +675,7 @@ SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_fileinfo(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("file.info is not implemented on this system");
-    return R_NilValue; /* -Wall */
+    return R_NilValue;		/* -Wall */
 }
 #endif
 
@@ -707,7 +711,7 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     error("file.access is not implemented on this system");
-    return R_NilValue; /* -Wall */
+    return R_NilValue;		/* -Wall */
 }
 #endif
 
@@ -916,7 +920,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     SET_STRING_ELT(ansnames, i, mkChar("libz"));
-    LOGICAL(ans)[i++] = TRUE; /* always true in this version */
+    LOGICAL(ans)[i++] = TRUE;	/* always true in this version */
 
     SET_STRING_ELT(ansnames, i, mkChar("http/ftp"));
 #if HAVE_INTERNET
@@ -1004,7 +1008,7 @@ SEXP do_nsl(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     hp = gethostbyname(name);
 
-    if(hp == NULL) { /* cannot resolve the address */
+    if(hp == NULL) {		/* cannot resolve the address */
 	warning("nsl() was unable to resolve host `%s'", name);
     } else {
 	if (hp->h_addrtype == AF_INET) {
