@@ -58,9 +58,9 @@ rt(n, df)
   \code{ncp}\eqn{= \mu - \mu_0}{= mu - m0}.
 }
 \references{
-    Lenth, R. V. (1989). \emph{Algorithm AS 243} --
+    Lenth, R. V. (1989). \emph{Algorithm AS 243} ---
     Cumulative distribution function of the non-central \eqn{t} distribution,
-    \emph{Appl.\ Statist.} \bold{38}, 185--189.
+    \emph{Appl. Statist.} \bold{38}, 185-189.
 }
 \seealso{
   \code{\link{df}} for the F distribution.
