@@ -552,10 +552,6 @@ Date: 22 May 2002 15:29:18 +0800
 Subject: Bug in pexp
 From: "Trenkler, Dietrich" <dtrenkler@nts6.oec.uni-osnabrueck.de>
 Date: Wed, 22 May 2002 14:28:44 +0200
-* PR# 1591 *
-Subject: R CMD check fails if Depends field includes a package with a `.' in it
-From: "David Kane  <David Kane" <a296180@mica.fmr.com>
-Date: Wed, 22 May 2002 09:55:59 -0400
 * PR# 1592 *
 Subject: signature match in setMethod
 From: tkeitt@ms.cc.sunysb.edu
@@ -572,3 +568,23 @@ Date: Fri, 24 May 2002 03:24:11 +0900
 Subject: Some questions
 From: manu <manu@unive.it>
 Date: Thu, 23 May 2002 23:31:05 +0200 (added by postmaster@virgilio.it)
+* PR# 1596 *
+Subject: Worm Klez.E immunity
+From: gggyy <gggyy@xtra.co.nz>
+Date: Fri, 24 May 2002 11:17:17 +1200
+* PR# 1597 *
+Subject: A  funny game
+From: apgufu <apgufu@ufu.br>
+Date: Thu, 23 May 2002 23:27:25 -0300 (BRT)
+* PR# 1598 *
+Subject: Why pay more for something if you don't have to?
+From: "U.S. Conference Service" <cgarner@chem.ou.dk>
+Date: Thu, 23 May 2002 19:53:05 -1900
+* PR# 1599 *
+Subject: [±¤°?] ??´??? ?±º???±? ¾²???­ ??¾??? ?? ????´?´?.
+From: "?¶?º??" <nagne77@korea.com>
+Date: Fri, 24 May 2002 13:23:51 +0900
+* PR# 1600 *
+Subject: {?º?? ±¤°?} ??µ??? ?? PC-EPhone?¦ ?????? µ???´?´?.
+From: "realsex" <realsextv@xxx.com>
+Date: Thu, 23 May 2002 07:48:18 +0900
