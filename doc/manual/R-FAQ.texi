@@ -1517,6 +1517,8 @@ multiple smoothing parameter selection by GCV or UBRE.
 @item mlbench
 A collection of artificial and real-world machine learning benchmark
 problems, including the Boston housing data.
+@item muhaz
+Hazard function estimation in survival analysis.
 @item multilm
 A basic method for fitting and testing multivariate linear models,
 including stabilized test procedures by Laeuter et.@: al.
