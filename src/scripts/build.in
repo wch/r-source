@@ -44,7 +44,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.71 $ ';
+my $revision = ' $Revision: 1.72 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -314,11 +314,18 @@ foreach my $pkg (@ARGV) {
 	## Add build stamp to the DESCRIPTION file.
 	my @lines = &read_lines(&file_path($pkgname, "DESCRIPTION"));
 	@lines = grep(!/^\s*$/, @lines); # Remove blank lines.
+	my $user_name;
+	if($WINDOWS) {
+	    $user_name = Win32::LoginName();
+	}
+	else {
+	    $user_name = (getpwuid($<))[0];
+	}
 	my $fh = new IO::File(&file_path($pkgname, "DESCRIPTION"), "w");
 	$fh->print(join("\n", @lines), "\n");
 	$fh->print("Packaged: ",
 		   scalar(localtime()), "; ",
-		   (getpwuid($<))[0], "\n");
+		   $user_name, "\n");
 	$fh->close();
 	## Finalize.
 	system("$tar chf $filepath $pkgname");
@@ -371,7 +378,8 @@ sub prepare_pkg {
 	system("./cleanup");
     }
 
-    &updateRdIndex("INDEX", "man", $log);
+    ## Only update existing INDEX files.
+    &updateRdIndex("INDEX", "man", $log) if(-f "INDEX");
 
     if((-d &file_path("inst", "doc"))
        && &list_files_with_type(&file_path("inst", "doc"),
@@ -446,10 +454,17 @@ sub updateRdIndex {
 
     my $Rcmd = "Rdindex(\"${Rdfiles}\", \"${newindex}\")\n";
 
-    ## <FIXME>
-    ## What if this fails?
-    R_runR($Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=tools");
-    ## </FIXME>
+    my %result = 
+	R_run_R($Rcmd, "--vanilla --quiet", "R_DEFAULT_PACKAGES=tools");
+    if($result{"status"}) {
+	## This is a bit silly ... but just in case this fails, we want
+	## a decent error message.
+	my @out = grep(!/^\>/, @{$result{"out"}});
+	$log->message("computing Rd index");
+	$log->error();
+	$log->print(join("\n", @out) . "\n");
+	exit(1);
+    }
 
     updateIndex($oldindex, $newindex, $log);
     1;
