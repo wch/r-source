@@ -40,6 +40,7 @@ void	setRVector(double*, int, double);
 int	StringFalse(char*);
 int	StringTrue(char*);
 
-void	hsv2rgb(double h, double s, double v, double *r, double *g, double *b);
+void	hsv2rgb(double *h, double *s, double *v,/* in */
+		double *r, double *g, double *b);/* out */
 
 #endif

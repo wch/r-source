@@ -43,6 +43,18 @@ SEXP cons(SEXP car, SEXP cdr)
     return e;
 }
 
+/* Return the last element of a list */
+SEXP lastElt(SEXP list)
+{
+    SEXP result = R_NilValue;
+    while (list != R_NilValue) {
+	result = list;
+	list = CDR(list);
+    }
+    return result;
+}
+
+
 /* Shorthands for creating small lists */
 
 SEXP list1(SEXP s)

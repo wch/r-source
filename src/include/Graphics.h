@@ -125,7 +125,7 @@ typedef struct {
 struct colorDataBaseEntry {
 	char *name;     /* X11 Color Name */
 	char *rgb;      /* #RRGGBB String */
-	unsigned code;  /* Internal R Color Code */
+	unsigned int code;  /* Internal R Color Code */
 };
 
 typedef struct colorDataBaseEntry ColorDataBaseEntry;
@@ -396,24 +396,37 @@ typedef struct {
 	SEXP displayList;     	/* display list */
 } DevDesc;
 
-char *R_alloc(long, int);
-char *vmaxget(void);
-void vmaxset(char*);
-
 		/* User Callable Functions */
 
-		/* Programmer Device functions */
+/*-------------------------------------------------------------------
+ *
+ *  DEVICE FUNCTIONS are concerned with the creation and destruction
+ *  of devices.
+ *
+ */
 
+
+/* Return a pointer to the current device. */
 DevDesc* CurrentDevice();
-void DevNull(void);
+/* Return a pointer to a device which is identified by number */
 DevDesc* GetDevice(int);
+/* Initialise internal device structures. */
 void InitGraphics(void);
+/* Kill device which is identified by number. */
 void KillDevice(DevDesc*);
+/* Kill all active devices (used at shutdown). */
 void KillAllDevices();
+/* Is the null device the current device? */
 int NoDevices();
+/* How many devices exist ? (>= 1) */
 int NumDevices();
+/* Get the index of the specified device. */
 int deviceNumber(DevDesc*);
+/* Create a new device. */
 int StartDevice(SEXP, SEXP, int, SEXP, int);
+
+void DevNull(void);
+
 /*- these added by MM, eliminating -Wall "implicit declaration"s: */
 void recordGraphicOperation(SEXP, SEXP, DevDesc*);
 void initDisplayList();
@@ -421,21 +434,46 @@ void copyDisplayList(int);
 void playDisplayList(DevDesc*);
 void inhibitDisplayList(DevDesc*);
 
-		/* Utility Device functions */
+/*-------------------------------------------------------------------
+ *
+ *  DEVICE UTILITIES are concerned with providing information
+ *  for R interpreted functions.
+ *
+ */
 
-void addDevice(DevDesc *);
+/* Return the number of the current device. */
 int curDevice();
+/* Return the number of the next device. */
 int nextDevice(int);
+/* Return the number of the previous device. */
 int prevDevice(int);
+/* Make the specified device (specified by number) the current device */
 int selectDevice(int);
+/* Kill device which is identified by number. */
 void killDevice(int);
+/* ...NO DOC... */
+void addDevice(DevDesc *);
 
-		/* Programmer GPar functions */
 
+/*-------------------------------------------------------------------
+ *
+ *  GPAR FUNCTIONS are concerned with operations on the
+ *  entire set of graphics parameters for a device
+ *  (e.g., initialisation, saving, and restoring)
+ */
+
+/* Default the settings for general graphical parameters
+ * (i.e., defaults that do not depend on the device type: */
 void GInit(GPar*);
+/* Reset the current graphical parameters from the default ones: */
 void GRestore(DevDesc*);
+/* Make a temporary copy of the current parameters */
 void GSavePars(DevDesc*);
+/* Restore the temporary copy saved by GSavePars */
 void GRestorePars(DevDesc*);
+
+		/* More Programmer GPar functions */
+
 void ProcessInlinePars(SEXP, DevDesc*);
 
 SEXP FixupPch(SEXP, DevDesc*);
@@ -445,66 +483,176 @@ SEXP FixupCol(SEXP, DevDesc*);
 SEXP FixupCex(SEXP);
 
 
-		/* Device State functions */
 
+/*-------------------------------------------------------------------
+ *
+ *  DEVICE STATE FUNCTIONS are concerned with getting and setting
+ *  the current state of the device;  is it ready to be drawn into?
+ */
+
+/* has plot.new been called yet? */
 void GCheckState(DevDesc*);
+/* Set to 1 when plot.new succeeds
+ * Set to 0 when don't want drawing to go ahead */
 void GSetState(int, DevDesc*);
 
-		/* Graphical Primitives */
-		/* Device Drivers must do all of these */
 
+
+/*-------------------------------------------------------------------
+ *
+ *  GRAPHICAL PRIMITIVES are the generic front-end for the functions
+ *  that every device driver must provide.
+ *
+ *  NOTE that locations supplied to these functions may be in any
+ *  of the valid coordinate systems (each function takes a "coords"
+ *  parameter to indicate the coordinate system);  the device-specific
+ *  version of the function is responsible for calling GConvert to get
+ *  the location into device coordinates.
+ *
+ */
+
+
+/* Draw a circle, centred on (x,y) with radius r (in inches). */
 void GCircle(double, double, int, double, int, int, DevDesc*);
+/* Set clipping region (based on current setting of dd->gp.xpd).
+ * Only clip if new clipping region is different from the current one */
 void GClip(DevDesc*);
-void GEndPath(DevDesc*);
+/* Always clips */
 void GForceClip(DevDesc*);
+/* Draw a line from (x1,y1) to (x2,y2): */
 void GLine(double, double, double, double, int, DevDesc*);
+/* Return the location of the next mouse click: */
 int  GLocator(double*, double*, int, DevDesc*);
+/* Return the height, depth, and width of the specified
+ * character in the specified units: */
 void GMetricInfo(int, double*, double*, double*, int, DevDesc*);
+/* Set device "mode" (drawing or not drawing) here for windows and mac drivers.
+ */
 void GMode(DevDesc*, int);
+/* Draw a polygon using the specified lists of x and y values: */
 void GPolygon(int, double*, double*, int, int, int, DevDesc*);
+/* Draw series of straight lines using the specified lists of x and y values: */
 void GPolyline(int, double*, double*, int, DevDesc*);
+/* Draw a rectangle given two opposite corners: */
 void GRect(double, double, double, double, int, int, int, DevDesc*);
-void GStartPath(DevDesc*);
+/* Return the height of the specified string in the specified units: */
 double GStrHeight(char*, int, DevDesc*);
+/* Return the width of the specified string in the specified units */
 double GStrWidth(char*, int, DevDesc*);
+/* Draw the specified text at location (x,y) with the specified
+ * rotation and justification: */
 void GText(double, double, int, char*, double, double, double, DevDesc*);
+
+
+void GStartPath(DevDesc*);
+void GEndPath(DevDesc*);
 
 void GMathText(double, double, int, SEXP, double, double, double, DevDesc*);
 void GMMathText(SEXP, int, double, int, double, int, DevDesc*);
 
-		/* Graphical Utilities */
 
+/*-------------------------------------------------------------------
+ *
+ *  GRAPHICAL UTILITIES are functions that produce graphical output
+ *  using the graphical primitives (i.e., they are generic - NOT
+ *  device-specific).
+ *
+ */
+
+/* Draw a line from (x1,y1) to (x2,y2) with an arrow head
+ * at either or both ends. */
 void GArrow(double, double, double, double, int, double, double, int, DevDesc*);
+/* Draw a box around specified region:
+ *  1=plot region, 2=figure region, 3=inner region, 4=device. */
 void GBox(int, DevDesc*);
+/* Return a "nice" min, max and number of intervals for a given
+ * range on a linear or _log_ scale, respectively: */
+void GPretty(double*, double*, int*);
+void GLPretty(double*, double*, int*);
+/* Draw text in margins. */
+void GMtext(char*, int, double, int, double, int, DevDesc*);
+/* Draw one of the predefined symbols (circle, square, diamond, ...) */
+void GSymbol(double, double, int, int, DevDesc*);
+
 double GExpressionHeight(SEXP, int, DevDesc*);
 double GExpressionWidth(SEXP, int, DevDesc*);
-void GLPretty(double*, double*, int*);
-void GMtext(char*, int, double, int, double, int, DevDesc*);
-void GPretty(double*, double*, int*);
-void GSymbol(double, double, int, int, DevDesc*);
-unsigned RGBpar(SEXP, int, DevDesc*);
 
-		/* Coordinate Transformation functions */
 
-double Log10(double);
-void currentFigureLocation(int*, int*, DevDesc*);
-DevDesc *GNewPlot(int, int);
-void GReset(DevDesc*);
-void GMapWin2Fig(DevDesc*);
+
+/*-------------------------------------------------------------------
+ *
+ *  COLOUR CODE is concerned with the internals of R colour representation
+ *
+ */
+
+/* Convert an R colour specification (which might be a number or */
+/* a string) into an internal colour specification. */
+unsigned int RGBpar(SEXP, int, DevDesc*);
+
+
+/*-------------------------------------------------------------------
+ *
+ *  LINE TEXTURE CODE is concerned with the internals of R
+ *  line texture representation.
+ */
+unsigned int LTYpar(SEXP, int);
+
+
+/*----------------------------------------------------------------------
+ *
+ *  TRANSFORMATIONS are concerned with converting locations between
+ *  coordinate systems and dimensions between different units.
+ */
+
+/* Convert an R unit (e.g., "user") into an internal unit (e.g., USER)> */
+int GMapUnits(int);
+/* Convert a location from one coordinate system to another: */
 void GConvert(double*, double*, int, int, DevDesc*);
+/* Convert an x/y-dimension from one set of units to another: */
 double GConvertXUnits(double, int, int, DevDesc*);
 double GConvertYUnits(double, int, int, DevDesc*);
-void GScale(double, double, int, DevDesc*);
-void GSetupAxis(int, DevDesc*);
-int GMapUnits(int);
 
+/* Set up the different regions on a device (i.e., inner region,
+ * figure region, plot region) and transformations for associated
+ * coordinate systems (called whenever anything that affects the
+ * coordinate transformations changes):
+ */
+void GReset(DevDesc*);
+
+/* Set up the user coordinate transformations: */
+void GMapWin2Fig(DevDesc*);
+/* Set up the device for a new plot by Resetting graphics parameters
+ * and Resetting the regions and coordinate Systems */
+DevDesc *GNewPlot(int, int);
+/* Set up the user coordinates based on the axis limits */
+void GScale(double, double, int, DevDesc*);
+/* Set up the axis limits based on the user coordinates */
+void GSetupAxis(int, DevDesc*);
+/* Return row and column of current figure in the layout matrix */
+void currentFigureLocation(int*, int*, DevDesc*);
+
+double Log10(double);
+
+double xDevtoNDC(double x, DevDesc *dd);
+double yDevtoNDC(double y, DevDesc *dd);
+double xDevtoNFC(double x, DevDesc *dd);
+double yDevtoNFC(double y, DevDesc *dd);
 double xNPCtoUsr(double, DevDesc*);
 double yNPCtoUsr(double, DevDesc*);
 
-		/* Miscellaneous (from graphics.c) */
+
+		/* Miscellaneous (from graphics.c & colors.c) */
 
 unsigned int rgb2col(char *);
 unsigned int name2col(char *);
-unsigned str2col(char *s, DevDesc *dd);
+unsigned int char2col(char *s);/* rgb2col() or name2col() */
+char* col2name(unsigned int);
+unsigned int str2col(char *s, DevDesc *dd);
+
+unsigned int ScaleColor(double x);
+
+char* RGB2rgb(unsigned int, unsigned int, unsigned int);
+
+int StrMatch(char *s, char *t);
 
 #endif

@@ -1,6 +1,6 @@
 /*
- *  R : A Computer Langage for Statistical Data Analysis
- *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
+ *  R : A Computer Language for Statistical Data Analysis
+ *  Copyright (C) 1995-1998  Robert Gentleman, Ross Ihaka and the R core team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,31 +21,17 @@
 #include "Mathlib.h"
 #include "Graphics.h"
 
-static int StrMatch(char *s, char *t)
-{
-    for (;;) {
-	if (*s == '\0' && *t == '\0') return 1;
-	if (*s == ' ') {
-	    s++; continue;
-	}
-	if (*t == ' ') {
-	    t++; continue;
-	}
-	if (tolower(*s++) != tolower(*t++)) return 0;
-    }
-}
-
-static unsigned int ScaleColor(double x)
-{
-    if (!FINITE(x) || x < 0.0 || x > 1.0)
-	error("invalid color intensity\n");
-    return (unsigned int)(255*x);
-}
-
-static unsigned char2col(char *s)
+unsigned int char2col(char *s)
 {
     if (s[0] == '#') return rgb2col(s);
     else return name2col(s);
+}
+
+unsigned int ScaleColor(double x)
+{
+    if (!FINITE(x) || x < 0.0 || x > 1.0)
+	error("color intensity %g, not in [0,1]\n",x);
+    return (unsigned int)(255*x);
 }
 
 static void setpalette(char **palette)
@@ -55,11 +41,6 @@ static void setpalette(char **palette)
 	ColorTable[i] = name2col(palette[i]);
     ColorTableSize = i;
 }
-
-/* FIXME: These should be in a header file */
-
-char* col2name(unsigned int);
-char* RGB2rgb(unsigned int, unsigned int, unsigned int);
 
 SEXP do_palette(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -98,7 +79,7 @@ SEXP do_colors(SEXP call, SEXP op, SEXP args, SEXP rho)
 	n++;
     PROTECT(ans = allocVector(STRSXP, n));
     n = 0;
-    while (ColorDataBase[n].name!=NULL) 
+    while (ColorDataBase[n].name!=NULL)
 	STRING(ans)[n++] = mkChar(ColorDataBase[n].name);
     UNPROTECT(1);
     return ans;
@@ -140,7 +121,7 @@ SEXP do_hsv(SEXP call, SEXP op, SEXP args, SEXP env)
 	gg = REAL(gm)[i % ng];
 	if (hh < 0 || hh > 1 || ss < 0 || ss > 1 || vv < 0 || vv > 1)
 	    errorcall(call, "invalid HSV color\n");
-	hsv2rgb(hh, ss, vv, &r, &g, &b);
+	hsv2rgb(&hh, &ss, &vv, &r, &g, &b);
 	r = pow(r, gg);
 	g = pow(g, gg);
 	b = pow(b, gg);

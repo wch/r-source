@@ -566,6 +566,7 @@ SEXP lang1(SEXP);
 SEXP lang2(SEXP, SEXP);
 SEXP lang3(SEXP, SEXP, SEXP);
 SEXP lang4(SEXP, SEXP, SEXP, SEXP);
+SEXP lastElt(SEXP list);
 SEXP lcons(SEXP, SEXP);
 int length(SEXP);
 SEXP levelsgets(SEXP, SEXP);
