@@ -876,9 +876,9 @@ case "${host_os}" in
       fi
     else
       cpicflags="-KPIC"
-      if test "`basename ${CC}`" = "cc" ; then
+      if test "`basename ${CXX}`" = "CC" ; then
         ## Forte version 7 needs -lCstd: Forte 6 does not.	
-        ver=`cc -V 2>&1 | sed 2d | grep 'Forte Developer 7 C'`
+        ver=`${CXX} -V 2>&1 | sed 2d | grep 'Forte Developer 7 C++'`
         if test -n "${ver}" ; then
           shlib_cxxldflags="-G -lCstd"
         fi
