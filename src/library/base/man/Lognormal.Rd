@@ -39,10 +39,13 @@ rlnorm(n, meanlog = 0, sdlog = 1)
   }{f(x) = 1/(sqrt(2 pi) sigma x) e^-((log x - mu)^2 / (2 sigma^2))}
   where \eqn{\mu} and \eqn{\sigma} are the mean and standard
   deviation of the logarithm.
+  The mean is \eqn{E(X) = exp(\mu + 1/2 \sigma^2)}, and the variance
+  \eqn{Var(X) = exp(2\mu + \sigma^2)(exp(\sigma^2) - 1)}{%
+    Var(X) = exp(2*mu + sigma^2)*(exp(sigma^2) - 1)} and
+  hence the coefficient of variation is
+  \eqn{\sqrt{exp(\sigma^2) - 1}}{sqrt(exp(sigma^2) - 1)} which is
+    approximately \eqn{\sigma} when that is small (e.g. \eqn{\sigma < 1/2}).
 %% Mode = exp(max(0, mu - sigma^2)); Median = exp(mu)
-%% E[X]   = exp(mu + 1/2 sigma^2);
-%% Var[X] = exp(sigma^2) (exp(sigma^2) - 1) exp(2 mu)
-%% -> coeff.var. = sigma/mu = sqrt(exp(sigma^2) - 1) ~= sigma, if sigma < 1/2
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}

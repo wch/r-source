@@ -35,7 +35,8 @@ rpois(n, lambda)
 %-- please leave the linebreaking for the next two ! --
   \deqn{p(x) = \frac{\lambda^x e^{-\lambda}}{x!}}{%
         p(x) = lambda^x exp(-lambda)/x!}
-  for \eqn{x = 0, 1, 2, \ldots}.
+  for \eqn{x = 0, 1, 2, \ldots}.  The mean and variance are
+  \eqn{E(X) = Var(X) = \lambda}.
 
   If an element of \code{x} is not integer, the result of \code{dpois}
   is zero, with a warning.
