@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--1999 R Development Core Team
+ *  Copyright (C) 1998--2000	R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -149,7 +149,8 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 	/* check series length */
 
     if (n <= 0) {
-	old_n = 0; *pmaxf = 0; *pmaxp = 0; return;
+	old_n = 0; *pmaxf = 0; *pmaxp = 0;
+	return;
     }
     else old_n = n;
 
@@ -157,11 +158,12 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
 
     m = 0;
     k = n;/* k := remaining unfactored factor of n */
-    if (k == 1) return;
+    if (k == 1)
+	return;
 
 	/* extract square factors first ------------------ */
 
-    /* extract 4^2 = 16 separately 
+    /* extract 4^2 = 16 separately
      * ==> at most one remaining factor 2^2 = 4, done below */
     while(k % 16 == 0) {
 	nfac[m++] = 4;
@@ -205,7 +207,8 @@ void fft_factor(int n, int *pmaxf, int *pmaxp)
     if (m <= kt+1)
 	maxp = m+kt+1;
     if (m+kt > 15) {		/* error - too many factors */
-	old_n = 0; *pmaxf = 0; *pmaxp = 0; return;
+	old_n = 0; *pmaxf = 0; *pmaxp = 0;
+	return;
     }
     else {
 	if (kt != 0) {
@@ -225,12 +228,12 @@ static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
 		  int m, int kt, double *at, double *ck, double *bt, double *sk,
 		  int *np, int *nfac)
 {
-/* called from  fft_work() */
+/* called from	fft_work() */
 
 /* Design BUG:	One purpose of fft_factor() would be to compute
  * ----------	nfac[] once and for all; and fft_work() [i.e. fftmx ]
  *		could reuse the factorization.
- * However: nfac[] is `destroyed' currently in the code below  
+ * However: nfac[] is `destroyed' currently in the code below
  */
     double aa, aj, ajm, ajp, ak, akm, akp;
     double bb, bj, bjm, bjp, bk, bkm, bkp;
@@ -242,7 +245,7 @@ static void fftmx(double *a, double *b, int ntot, int n, int nspan, int isn,
     int lim, maxf, mm, nn, nt;
 
     a--; b--; at--; ck--; bt--; sk--;
-    np--; 
+    np--;
     nfac--;/*the global one!*/
 
     inc = abs(isn);
@@ -585,7 +588,7 @@ L270:
     for(k=2; k < jf; k++) {
 	ak += at[k]*ck[jj];
 	bk += bt[k]*ck[jj];
-	k++;		  
+	k++;
 	aj += at[k]*sk[jj];
 	bj += bt[k]*sk[jj];
 	jj += j;
@@ -823,19 +826,19 @@ L570:
     if( nt >= 0) goto L_ord;
 }
 
-int fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
-	     double *work, int *iwork)
+Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
+		  double *work, int *iwork)
 {
     int nf, nspan, ntot;
 
 	/* check that factorization was successful */
 
-    if(old_n == 0) return 0;
+    if(old_n == 0) return FALSE;
 
 	/* check that the parameters match those of the factorization call */
 
     if(n != old_n || nseg <= 0 || nspn <= 0 || isn == 0)
-	return 0;
+	return FALSE;
 
 	/* perform the transform */
 
@@ -843,9 +846,9 @@ int fft_work(double *a, double *b, int nseg, int n, int nspn, int isn,
     nspan = nf * nspn;
     ntot = nspan * nseg;
 
-    fftmx(a, b, ntot, nf, nspan, isn, m, kt, 
-	  &work[0], &work[maxf], &work[2*maxf], &work[3*maxf], 
+    fftmx(a, b, ntot, nf, nspan, isn, m, kt,
+	  &work[0], &work[maxf], &work[2*maxf], &work[3*maxf],
 	  iwork, nfac);
 
-    return 1;
+    return TRUE;
 }

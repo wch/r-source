@@ -24,8 +24,8 @@
 
 #include "Defn.h"
 
-extern void * fft_factor();
-extern int  * fft_work();
+extern void fft_factor();
+extern Rboolean fft_work();
 /*
   These are the R interface routines to the plain FFT code in
   ../appl/fft.c.
@@ -182,13 +182,13 @@ SEXP do_mvfft(SEXP call, SEXP op, SEXP args, SEXP env)
     return z;
 }
 
-static int ok_n(int n, int *f, int nf)
+static Rboolean ok_n(int n, int *f, int nf)
 {
     int i;
     for (i = 0; i < nf; i++) {
 	while(n % f[i] == 0) {
 	    if ((n = n / f[i]) == 1)
-		return 1;
+		return TRUE;
 	}
     }
     return n == 1;
