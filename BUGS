@@ -55,12 +55,7 @@ Date: Wed, 20 Dec 2000 11:12:47 +0000 (GMT)
 
 Directory:  Analyses
 
-* PR# 653 *
-Subject: bug in spline()?
-From: Ian White <imsw@holyrood.ed.ac.uk>
-Date: Mon, 4 Sep 2000 12:29:26 +0100 (BST)
---bug in spline: replace by interSpline in package spline?
---address problems are fixed
+none
 
 Directory:  Documentation
 
@@ -146,10 +141,7 @@ Date: Mon, 15 Jan 2001 09:54:16 +0000 (GMT Standard Time)
 
 Directory:  Installation
 
-* PR# 806 *
-Subject: configure error on alpha
-From: Richard Beare <Richard.Beare@cmis.CSIRO.AU>
-Date: Wed, 10 Jan 2001 16:52:58 +1100
+none
 
 Directory:  Language
 
