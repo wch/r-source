@@ -640,10 +640,6 @@ Date: Thu, 10 Oct 2002 06:19:29 +0100
 Subject: Endspan 
 From: legal <legal@car-finance.net>
 Date: Thu, 10 Oct 2002 06:25:01 +0100
-* PR# 2142 *
-Subject: Sweave
-From: "Christophe Declercq" <c.declercq@orsnpdc.org>
-Date: Thu, 10 Oct 2002 16:02:50 +0100
 * PR# 2143 *
 Subject: Honey
 From: servicet <servicet@smartnet.com.tw>
@@ -652,3 +648,19 @@ Date: Thu, 10 Oct 2002 23:52:57 +0800 (CST)
 Subject: Save() with ascii=TRUE may corrupt numeric values
 From: "Efthymiou, Nick" <Nick.Efthymiou@schwab.com>
 Date: Thu, 10 Oct 2002 14:09:21 -0700
+* PR# 2145 *
+Subject: A Rescue Disk set requires that you restart
+From: jane4toad <jane4toad@aol.com>
+Date: Fri, 11 Oct 2002 16:21:37 +0100
+* PR# 2146 *
+Subject: Technical Support Site at 
+From: gord <gord@thebarras.co.uk>
+Date: Fri, 11 Oct 2002 16:16:34 +0100
+* PR# 2147 *
+Subject: Please wait ...
+From: fharrell <fharrell@virginia.edu>
+Date: Fri, 11 Oct 2002 16:12:07 +0100
+* PR# 2148 *
+Subject:  Odd outcome of attr with environments 
+From: j.c.rougier@durham.ac.uk
+Date: Fri, 11 Oct 2002 19:37:37 +0100
