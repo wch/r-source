@@ -415,20 +415,24 @@ Windows @acronym{FAQ}''} for more details.
 @node How can R be installed (Macintosh),  , How can R be installed (Windows), How can R be installed?
 @subsection How can R be installed (Macintosh)
 
-The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
-(@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
-and a large number of add-on packages to run under MacOS 8.6 to MacOS
-9.1 or MacOS X natively.  The Mac version of R and the Mac binaries are
-maintained by
-@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.
+The @file{bin/macosx} directory of a @CRAN{} site contains a standard Apple installer package
+named (@file{RAqua.pkg.sit}) compressed in Aladdin Stuffit format. Once downloaded, uncompressed
+and executed, the installer will install the current non-developer release of R.
+RAqua is a native MacOSX Darwin version with Aqua GUI.
 
-The @uref{http://www.eco-dip.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
+Inside @file{bin/macosx/x.y} there are prebuilt binary version of packages ready to be 
+used with RAqua corresponding to R major release ``x.y''. The installation of these 
+packages is available through the ``Package'' menu of the RAqua GUI. 
+
+This port of R for MacOSX is maintained by
+@email{Stefano.Iacus@@R-project.org, Stefano Iacus}.
+The @uref{http://www.economia.unimi.it/R/rmac-FAQ.html, ``R for Macintosh
 @acronym{FAQ}/DOC''} has more details.
 
-Binaries of base distributions for MacOS X (Darwin) with X11 are made
-available by @email{deleeuw@@stat.ucla.edu, Jan de Leeuw} in the
-@file{bin/macosx} directory of a @CRAN{} site.
-@c @uref{http://www.stat.ucla.edu/~deleeuw/R/}.
+The @file{bin/macos} directory of a @CRAN{} site contains bin-hexed
+(@file{hqx}) and stuffit (@file{sit}) archives for a base distribution
+and a large number of add-on packages of R-1.7.1 to run under MacOS 8.6 to MacOS
+9.2.2. This port of R for Macintosh is no longer supported.
 
 @node Are there Unix binaries for R?, What documentation exists for R?, How can R be installed?, R Basics
 @section Are there Unix binaries for R?
