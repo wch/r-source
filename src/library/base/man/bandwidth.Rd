@@ -70,6 +70,7 @@ Springer.
 \examples{
 data(precip)
 plot(density(precip, n=1000))
+rug(precip)
 lines(density(precip, bw="nrd"), col = 2)
 lines(density(precip, bw="ucv"), col = 3)
 lines(density(precip, bw="bcv"), col = 4)

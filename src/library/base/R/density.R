@@ -50,8 +50,7 @@ density <-
                      nrd = bw.nrd(x),
                      ucv = bw.ucv(x),
                      bcv = bw.bcv(x),
-                     SJ = ,
-                     "sj-ste" = bw.SJ(x, method="ste"),
+                     sj = , "sj-ste" = bw.SJ(x, method="ste"),
                      "sj-dpi" = bw.SJ(x, method="dpi"),
                      stop("unknown bandwidth rule"))
 # width adjustments from V&R 1994 p.137.
@@ -158,7 +157,7 @@ bw.nrd <- function (x)
 }
 
 bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
-		     method = c("ste", "dpi"))
+                  method = c("ste", "dpi"))
 {
     fSD <- function(h, x, alph2, c1, n, d)
         (c1/SDh(x, alph2 * h^(5/7), n, d))^(1/5) - h
@@ -182,6 +181,8 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
            PACKAGE="base")$u
 
     method <- match.arg(method)
+    if(!is.numeric(x) || !length(x))
+        stop("invalid x")
     n <- length(x)
     storage.mode(x) <- "double"
     n <- length(x)
@@ -225,6 +226,8 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
            u = double(1),
            PACKAGE="base")$u
 
+    if(!is.numeric(x) || !length(x))
+        stop("invalid x")
     n <- length(x)
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
@@ -256,6 +259,8 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
            u = double(1),
            PACKAGE="base")$u
 
+    if(!is.numeric(x) || !length(x))
+        stop("invalid x")
     n <- length(x)
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
