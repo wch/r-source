@@ -13,7 +13,7 @@ use R::Rd;
 ## don't buffer output
 $|=1;
 
-my $revision = ' $Revision: 1.3 $ ';
+my $revision = ' $Revision: 1.4 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -78,10 +78,10 @@ foreach $pkg (@ARGV){
 	
 	## use */ below such that LibIndex is ignored
 	system("tar -c -h */ > $startdir/$filename");
-	system("rm -rf $libdir");
 	chdir($startdir);
 	unlink("$filename.gz") if (-f "$filename.gz");	
 	system("gzip -9 $filename");
+	system("rm -rf $libdir");
     }
     else{
 	if($description->{"Contains"}){
