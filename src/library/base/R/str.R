@@ -4,7 +4,6 @@ str <- function(object, ...) UseMethod("str")
 str.data.frame <- function(object, ...)
 {
     ## Method to 'str' for  'data.frame' objects
-    ## $Id: str.R,v 1.29 2003/04/24 19:29:15 ripley Exp $
     if(! is.data.frame(object)) {
 	warning("str.data.frame(.) called with non-data.frame. Coercing one.")
 	object <- data.frame(object)
@@ -215,10 +214,11 @@ str.default <-
 	    ##-- has.class superfluous --
 	    mod <- mode(object)
 	    give.mode <- FALSE
-	    if (any(mod == c("call", "language", "symbol", "externalptr", "weakref"))
-                || is.environment(object)) {
+	    if (any(mod == c("call", "language", "(", "symbol",
+                    "externalptr", "weakref")) || is.environment(object)) {
 		##give.mode <- !is.vector(object)#--then it has not yet been done
 		object <- deparse(object)
+                if(mod == "(") give.mode <- TRUE
 		le <- length(object) #== 1, always / depending on char.length ?
 		format.fun <- function(x)x
 		v.len <- round(.5 * v.len)

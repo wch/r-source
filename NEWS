@@ -380,6 +380,8 @@ BUG FIXES
     o	lm.influence() called on a 0-rank fit either crashed or produced
 	incorrect output.
 
+    o	str(x) gives better output when x is of mode "(".
+
 
 
 		CHANGES IN R VERSION 1.7.1
