@@ -79,9 +79,14 @@ barplot <-
 	axis(if(horiz) 2 else 1, at = w.m, labels = names.arg, lty = 0)
     }
     if (!is.null(legend.text)) {
+        legend.col <- col
+        if((horiz & beside) | (!horiz & !beside)){
+            legend.text <- rev(legend.text)
+            legend.col <- rev(legend.col)
+        }
 	xy <- par("usr")
 	legend(xy[2] - xinch(0.1), xy[4] - yinch(0.1),
-	       legend = rev(legend.text), fill = rev(col),
+	       legend = legend.text, fill = legend.col,
 	       xjust = 1, yjust = 1)
     }
     title(main = main, xlab = xlab, ylab = ylab, ...)
