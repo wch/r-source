@@ -2568,7 +2568,7 @@ RWinHandler( EventHandlerCallRef inCallRef, EventRef inEvent, void* inUserData )
 	UInt32		eventClass;
 	TXNObject 	HlpObj = NULL;
 	HIPoint where;
-	WindowDefPartCode part;
+	WindowPartCode partCode;
 	EventRecord outEvent;
 	Str255	fontname; 
 	
