@@ -546,19 +546,19 @@ static SEXP CreateAtVector(double *axp, double *usr, int nint, int log)
 	case 1:
 	    n = floor(log10(axp[1])) - ceil(log10(axp[0])) + 0.25;
 	    nint = n / nint + 1;
-	    rng = pow(10.0, (double)nint);
+	    rng = pow(10., (double)nint);
 	    dn = axp[0];
 	    n = 0;
 	    while(dn < umax) {
 		n++;
-		dn = rng * dn;
+		dn *= rng;
 	    }
 	    at = allocVector(REALSXP, n);
 	    dn = axp[0];
 	    n = 0;
 	    while(dn < umax) {
 		REAL(at)[n++] = dn;
-		dn = rng * dn;
+		dn *= rng;
 	    }
 	    break;
 	case 2:
@@ -2001,8 +2001,8 @@ SEXP do_locator(SEXP call, SEXP op, SEXP args, SEXP env)
     while(i < n) {
 	if(!GLocator(&(REAL(x)[i]), &(REAL(y)[i]), USER, dd))
 	    break;
-	if (dd->gp.xlog) REAL(x)[i] = pow(10, REAL(x)[i]);
-	if (dd->gp.ylog) REAL(y)[i] = pow(10, REAL(y)[i]);
+	if (dd->gp.xlog) REAL(x)[i] = pow(10., REAL(x)[i]);
+	if (dd->gp.ylog) REAL(y)[i] = pow(10., REAL(y)[i]);
 	i += 1;
     }
     GMode(dd, 0);

@@ -981,7 +981,7 @@ double yDevtoNPC(double y, DevDesc *dd)
 double xNPCtoUsr(double x, DevDesc *dd)
 {
   if (dd->gp.xlog)
-    return pow(10, dd->gp.logusr[0] +
+    return pow(10., dd->gp.logusr[0] +
 	       x*(dd->gp.logusr[1] - dd->gp.logusr[0]));
   else
     return dd->gp.usr[0] + x*(dd->gp.usr[1] - dd->gp.usr[0]);
@@ -990,7 +990,7 @@ double xNPCtoUsr(double x, DevDesc *dd)
 double yNPCtoUsr(double y, DevDesc *dd)
 {
   if (dd->gp.ylog)
-    return pow(10, dd->gp.logusr[2] +
+    return pow(10., dd->gp.logusr[2] +
 	       y*(dd->gp.logusr[3]-dd->gp.logusr[2]));
   else
     return dd->gp.usr[2] + y*(dd->gp.usr[3] - dd->gp.usr[2]);
@@ -1000,7 +1000,7 @@ double xDevtoUsr(double x, DevDesc *dd)
 {
   double nfc = xDevtoNFC(x, dd);
   if (dd->gp.xlog)
-     return pow(10, (nfc - dd->gp.win2fig.ax)/dd->gp.win2fig.bx);
+     return pow(10., (nfc - dd->gp.win2fig.ax)/dd->gp.win2fig.bx);
   else
      return (nfc - dd->gp.win2fig.ax)/dd->gp.win2fig.bx;
 }
@@ -1009,7 +1009,7 @@ double yDevtoUsr(double y, DevDesc *dd)
 {
   double nfc = yDevtoNFC(y, dd);
   if (dd->gp.ylog)
-    return pow(10, (nfc - dd->gp.win2fig.ay)/dd->gp.win2fig.by);
+    return pow(10., (nfc - dd->gp.win2fig.ay)/dd->gp.win2fig.by);
   else
     return (nfc - dd->gp.win2fig.ay)/dd->gp.win2fig.by;
 }
@@ -2122,8 +2122,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
 
   if(axis == 1 || axis == 3) {
     if (log) {
-      dd->gp.usr[0] = dd->dp.usr[0] = pow(10,min);
-      dd->gp.usr[1] = dd->dp.usr[1] = pow(10,max);
+      dd->gp.usr[0] = dd->dp.usr[0] = pow(10.,min);
+      dd->gp.usr[1] = dd->dp.usr[1] = pow(10.,max);
       dd->gp.logusr[0] = dd->dp.logusr[0] = min;
       dd->gp.logusr[1] = dd->dp.logusr[1] = max;
     } else {
@@ -2134,8 +2134,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
     }
   } else {
     if (log) {
-      dd->gp.usr[2] = dd->dp.usr[2] = pow(10,min);
-      dd->gp.usr[3] = dd->dp.usr[3] = pow(10,max);
+      dd->gp.usr[2] = dd->dp.usr[2] = pow(10.,min);
+      dd->gp.usr[3] = dd->dp.usr[3] = pow(10.,max);
       dd->gp.logusr[2] = dd->dp.logusr[2] = min;
       dd->gp.logusr[3] = dd->dp.logusr[3] = max;
     } else {
@@ -2155,8 +2155,8 @@ void GScale(double min, double max, int axis, DevDesc *dd)
   else swap = 0;
 
   if(log) {
-    min = pow(10.0, min);
-    max = pow(10.0, max);
+    min = pow(10., min);
+    max = pow(10., max);
     GLPretty(&min, &max, &n);
   }
   else GPretty(&min, &max, &n);
@@ -3028,8 +3028,8 @@ void GLPretty(double *xmin, double *xmax, int *n)
   else {
     p1 = ceil(*xmin-0.0001);
     p2 = floor(*xmax+0.0001);
-    u1 = pow(10.0, p1);
-    v1 = pow(10.0, p2);
+    u1 = pow(10., p1);
+    v1 = pow(10., p2);
     *n = p2 - p1;
 
     if(*n <= 1) {
@@ -3080,23 +3080,23 @@ void GLPretty(double *ul, double *uh, int *n)
   else if (p2 - p1 <= LPR_SMALL) {
     /* Small range */
     /* Use 1,2,5,10 times 10^k tickmarks */
-    *ul = pow(10.0, (double)p1);
-    *uh = pow(10.0, (double)p2);
+    *ul = pow(10., (double)p1);
+    *uh = pow(10., (double)p2);
     *n = 3;
   }
   else if (p2 - p1 <= LPR_MEDIUM) {
     /* Medium range */
     /* Use 1,5 times 10^k tickmarks */
-    *ul = pow(10.0, (double)p1);
-    *uh = pow(10.0, (double)p2);
+    *ul = pow(10., (double)p1);
+    *uh = pow(10., (double)p2);
     *n = 2;
   }
   else {
     /* Large range */
     /* Use 10^k tickmarks */
     /* But decimate, when there are too many */
-    *ul = pow(10.0, (double)p1);
-    *uh = pow(10.0, (double)p2);
+    *ul = pow(10., (double)p1);
+    *uh = pow(10., (double)p2);
     *n = 1;
   }
 }
@@ -3135,7 +3135,7 @@ void GPretty(double *lo, double *up, int *ndiv)
     cell = dx;
   cell /= *ndiv;
 
-  base = pow(10, floor(log10(cell))); /* base <= cell < 10*base */
+  base = pow(10., floor(log10(cell))); /* base <= cell < 10*base */
 
   /* unit :=  arg min _u { |u - cell| ;	 u = c(1,2,5,10) * base } */
   unit = base;
