@@ -40,7 +40,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <setjmp.h>
 
 /* 8 bits red, green and blue channel */
 #define DECLARESHIFTS int RSHIFT=(bgr)?0:16, GSHIFT=8, BSHIFT=(bgr)?16:0
@@ -54,6 +53,8 @@ void R_ShowMessage(char *msg);
 #ifdef HAVE_PNG_H
 
 #include "png.h"
+#include <setjmp.h>
+
 /* 
  * Try to save the content of the device 'd' in 'filename' as png.
  * If numbers of colors is less than 256 we use a 'palette' png.
