@@ -14,19 +14,20 @@ distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
 DISTFILES = Makefile.in 
 R = $(top_builddir)/bin/R
 
-# This should probably get configure'd into Makeconf instead
-# It can point to a local mirror if there's no direct CRAN connection
+## This should probably get configure'd into Makeconf instead
+## It can point to a local mirror if there's no direct CRAN connection
 CRANREC = cran.r-project.org::CRAN/src/contrib/$(VERSION)/Recommended/
 
 CLEANFILES = Timestamp
 DISTCLEANFILES = Makefile Timestamp
 
 all: Makefile Timestamp
-	for i in $(R_PKGS_RECD) ; do\
-		if [ $${i}_*tar.gz -nt Timestamp ] ; then \
-			$(R) CMD INSTALL $${i}_*tar.gz || exit 1;\
-		fi;\
-	done; touch Timestamp
+	@for i in $(R_PKGS_RECOMMENDED); do \
+	  if test $${i}_*tar.gz -nt Timestamp ; then \
+	    R_LIBS= $(R) CMD INSTALL $${i}_*tar.gz || exit 1; \
+	  fi; \
+	done
+	@touch Timestamp
 
 .SUFFIXES:
 .SUFFIXES: .in
@@ -41,22 +42,22 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	  done) >> $@
 
 Timestamp:
-	touch $@
-	sleep 1
-	if [ $(BUILDDIR_IS_SRCDIR) = no ] ; then \
-		find $(srcdir) -name '*.tar.gz' -exec cp {} . \; ;\
+	@touch $@
+	@sleep 1
+	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
+	  find "$(srcdir)" -name '*.tar.gz' -exec cp {} . \; ; \
 	fi
-	find . -name '*.tar.gz' -exec touch {} . \; 
+	@find . -name '*.tar.gz' -exec touch {} . \; 
 
 R: $(OBJECTS)
 $(OBJECTS): $(top_builddir)/config.status
 
-# Notice that if we can't use -t on rsync because that defeats the
-# purpose of the Timestamp... The -c (checksum first) is also necessary
-# because otherwise all the files get the mtime changed. Sigh.
+## Notice that if we can't use -t on rsync because that defeats the
+## purpose of the Timestamp... The -c (checksum first) is also necessary
+## because otherwise all the files get the mtime changed.  Sigh.
 rsync-update: Timestamp
-	rsync -rcIzC --delete --exclude=Makefile \
-               --exclude=Makefile.in --exclude=Timestamp $(CRANREC) .
+	@rsync -rcIzC --delete --exclude=Makefile \
+	  --exclude=Makefile.in --exclude=Timestamp $(CRANREC) .
 
 install: installdirs
 installdirs:
@@ -67,11 +68,11 @@ uninstall:
 mostlyclean: clean
 clean:
 	-@test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
-	@test $(BUILDDIR_IS_SRCDIR) = yes || \
+	-@test "$(BUILDDIR_IS_SRCDIR)" = yes || \
 		rm -f *.tar.gz \; 
 distclean: clean
 	-@test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
-	@test $(BUILDDIR_IS_SRCDIR) = yes || \
+	-@test "$(BUILDDIR_IS_SRCDIR)" = yes || \
 		rm -f *.tar.gz \; 
 maintainer-clean: distclean
 
