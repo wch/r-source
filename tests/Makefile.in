@@ -82,7 +82,7 @@ FORCE:
 	@if [ -f $(srcdir)/$@.save ] ; then \
 	  mv $@ $@.fail; \
 	  echo @ECHO_N@ \
-	    "Comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"; \
+	    "comparing \`$@' to \`$(srcdir)/$@.save' ...@ECHO_C@"; \
 	  $(RDIFF) $@.fail $(srcdir)/$@.save $(RVAL_IF_DIFF) || exit 1; \
 	  mv $@.fail $@; \
 	  echo "@ECHO_T@ OK"; \
@@ -107,7 +107,7 @@ test-Specific:
 # follows to make sure we can load the base package twice.
 test-undoc:
 	@for p in $(R_PKGS); do \
-	  echo "Undocumented objects in package \`$${p}':"; \
+	  echo "undocumented objects in package \`$${p}':"; \
 	  echo "undoc(\"$${p}\")" | $(R) --nsize=500000 | grep "^ *\\["; \
 	  echo; \
 	done
