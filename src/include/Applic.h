@@ -251,4 +251,8 @@ double F77_SYMBOL(fmin)(double *ax, double *bx, D_fp f, double *tol);
 int F77_SYMBOL(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
 		       double *resid, double *hat, double *coef, double *sigma);
 
+/* ../appl/zeroin.c */
+double zeroin(double ax, double bx, double (*f)(double, void *), void *info,
+	      double *tol, int *maxit);
+
 #endif
