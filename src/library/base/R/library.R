@@ -478,64 +478,79 @@ function(x, ...)
 }
 
 library.dynam <-
-function(chname, package = NULL, lib.loc = NULL, verbose =
-         getOption("verbose"), file.ext = .Platform$dynlib.ext, ...)
+function(chname, package = NULL, lib.loc = NULL,
+         verbose = getOption("verbose"),
+         file.ext = .Platform$dynlib.ext, ...)
 {
-    #.Dyn.libs <- .dynLibs()
-    .Dyn.libs <- getLoadedDLLs()
+    dll_list <- .dynLibs()
 
-    if(missing(chname) || (ncChname <- nchar(chname)) == 0)
-        return(.Dyn.libs)
-    ncFileExt <- nchar(file.ext)
-    if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
-        chname <- substr(chname, 1, ncChname - ncFileExt)
-    if(TRUE || is.na(match(chname, .Dyn.libs))) {
-        for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
-            file <- file.path(pkg, "libs",
-                              paste(chname, file.ext, sep = ""))
-            if(file.exists(file)) break else file <- ""
-        }
-        if(file == "")
-            stop("shared library ", sQuote(chname), " not found")
-        which <- sapply(.Dyn.libs, function(x) x$path == file)
-        if(any(which)) {
-            if(verbose)
-                cat("DLL", file, "already loaded\n")
-            return(.Dyn.libs[[ seq(along=.Dyn.libs)[which] ]])
-        }
-        if(verbose)
-            cat("now dyn.load(", file, ") ...\n", sep = "")
-        dll <- dyn.load(file, ...)
-        .dynLibs(c(.Dyn.libs, chname))
-        return(dll)
+    if(missing(chname) || (nc_chname <- nchar(chname)) == 0)
+        return(dll_list)
+
+    ## Be defensive about possible system-specific extension for shared
+    ## libraries, although the docs clearly say they should not be
+    ## added.
+    nc_file_ext <- nchar(file.ext)
+    if(substr(chname, nc_chname - nc_file_ext + 1, nc_chname)
+       == file.ext)
+        chname <- substr(chname, 1, nc_chname - nc_file_ext)
+
+    for(pkg in .find.package(package, lib.loc, verbose = verbose)) {
+        file <- file.path(pkg, "libs",
+                          paste(chname, file.ext, sep = ""))
+        if(file.exists(file)) break else file <- ""
     }
-#XXX
-    invisible(.dynLibs())
+    if(file == "")
+        stop(sprintf("shared library '%s' not found", chname))
+    ind <- sapply(dll_list, function(x) x$path == file)
+    if(any(ind)) {
+        if(verbose)
+            cat(gettext(sprintf("shared library '%s' already loaded",
+                                chname)), "\n")
+        return(dll_list[[ seq(along = dll_list)[ind] ]])
+    }
+    if(verbose)
+        cat(gettext(sprintf("now dyn.load(\"%s\") ...", file)), "\n")
+    dll <- dyn.load(file, ...)
+    .dynLibs(c(dll_list, list(dll)))
+    dll
 }
-
+        
 library.dynam.unload <-
 function(chname, libpath, verbose = getOption("verbose"),
          file.ext = .Platform$dynlib.ext)
 {
-    .Dyn.libs <- .dynLibs()
-    if(missing(chname) || (ncChname <- nchar(chname)) == 0)
+    dll_list <- .dynLibs()
+    
+    if(missing(chname) || (nc_chname <- nchar(chname)) == 0)
         stop("no shared library was specified")
-    ncFileExt <- nchar(file.ext)
-    if(substr(chname, ncChname - ncFileExt + 1, ncChname) == file.ext)
-        chname <- substr(chname, 1, ncChname - ncFileExt)
-    num <- match(chname, .Dyn.libs, 0)
-    if(is.na(num))
-        stop("shared library ", sQuote(chname), " was not loaded")
-    file <- file.path(libpath, "libs", paste(chname, file.ext, sep = ""))
-    if(!file.exists(file))
-        stop("shared library ", sQuote(chname), " not found")
-    if(verbose)
-        cat("now dyn.unload(", file, ") ...\n", sep = "")
-    dyn.unload(file)
-    .dynLibs(.Dyn.libs[-num])
-    invisible(.dynLibs())
-}
 
+    ## Be defensive about possible system-specific extension for shared
+    ## libraries, although the docs clearly say they should not be
+    ## added.
+    nc_file_ext <- nchar(file.ext)
+    if(substr(chname, nc_chname - nc_file_ext + 1, nc_chname)
+       == file.ext)
+        chname <- substr(chname, 1, nc_chname - nc_file_ext)
+
+    file <- file.path(libpath, "libs",
+                      paste(chname, file.ext, sep = ""))
+    pos <- which(sapply(dll_list, function(x) x$path == file))
+    if(!length(pos))
+        stop(sprintf("shared library '%s' was not loaded", chname))
+    
+    if(!file.exists(file))
+        stop(sprintf("shared library '%s' not found", chname))
+    if(verbose)
+        cat(gettext(sprintf("now dyn.unload(\"%s\") ...", file)), "\n")
+    dyn.unload(file)
+    .dynLibs(dll_list[-pos])
+    ## <FIXME>
+    ## What should this really return?
+    invisible(dll_list[[pos]])
+    ## </FIXME>
+}
+    
 require <-
 function(package, quietly = FALSE, warn.conflicts = TRUE,
          keep.source = getOption("keep.source.pkgs"),
@@ -638,12 +653,18 @@ function(package, quietly = FALSE, warn.conflicts = TRUE,
                     try(read.dcf(file.path(lib, nam, "DESCRIPTION"),
                                  c("Package", "Version"))[1, ],
                         silent = TRUE)
-                ## In fact, info from 'package.rds' should be validated.
-                if(inherits(info, "try-error") || any(is.na(info)))
+                ## In principle, info from 'package.rds' should be
+                ## validated, but we already had counterexamples ...
+                ## <FIXME>
+                ## Shouldn't we warn about packages with bad meta data?
+                if(inherits(info, "try-error")
+                   || (length(info) != 2)
+                   || any(is.na(info)))
                     next
                 if(regexpr(valid_package_version_regexp,
                            info["Version"]) == -1)
                     next
+                ## </FIXME>
                 ans <- c(ans, nam)
                 ## </FIXME>
             }
@@ -767,7 +788,11 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                     try(read.dcf(file.path(p, "DESCRIPTION"),
                                  c("Package", "Version"))[1, ],
                         silent = TRUE)
-                if(inherits(info, "try-error"))
+                ## In principle, info from 'package.rds' should be
+                ## validated, but we already had counterexamples ...
+                if(inherits(info, "try-error")
+                   || (length(info) != 2)
+                   || any(is.na(info)))
                     c(Package=NA, Version=NA) # need dimnames below
                 else
                     info
