@@ -14,7 +14,7 @@
 
 #include <windows.h>
 #include "psignal.h"
-
+extern int UserBreak;
 
 /* Define stuff ************************************************************ */
 #ifndef TRUE
@@ -150,6 +150,9 @@ static BOOL CALLBACK hwIntrHandler (DWORD type)
 	SetThreadContext/ResumeThread but I had success only under NT.
     */    
     raise(SIGBREAK);
+    /* Seems that SIGBREAK is not working under 1,4,0, so do it via
+       a semaphore, as RGui does */
+    UserBreak = 1;
     ret = TRUE;
     break;
   default:
