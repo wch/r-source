@@ -2263,12 +2263,12 @@ static void contour(SEXP x, int nx, SEXP y, int ny, SEXP z, double zc,
 				xxx[ns] = s->x0;
 				yyy[ns++] = s->y0;
 				while(s) {
-					xxx[ns] = s->x0;
-					yyy[ns++] = s->y0;
+					xxx[ns] = s->x1;
+					yyy[ns++] = s->y1;
 					s = s->next;
 				}
 				GMode(dd, 1);
-				GPolyline(ns+1, xxx, yyy, USER, dd);
+				GPolyline(ns, xxx, yyy, USER, dd);
 				GMode(dd, 0);
 				C_free((char *) xxx);
 				C_free((char *) yyy);
@@ -2285,6 +2285,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	int ltysave, colsave;
 	double atom, zmin, zmax;
 	char *vmax, *vmax0;
+	SEXP originalArgs = args;
 	DevDesc *dd = CurrentDevice();
 
 	GCheckState(dd);
@@ -2395,6 +2396,12 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 	dd->gp.lty = ltysave;
 	dd->gp.col = colsave;
 	UNPROTECT(2);
+
+                /* NOTE that i only record operation if no "error"  */
+                /* NOTE that if we're replaying then call == R_NilValue */
+        if (call != R_NilValue)
+                recordGraphicOperation(op, originalArgs, dd);
+
 	return R_NilValue;
 }
 
