@@ -451,7 +451,7 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	int row, col, nrow, ncol, np;
 	value = coerceVector(value, INTSXP);
 	np = length(value);
-	if(np != 2 && np != 4) 
+	if(np != 2 && np != 4)
 	    errorcall(gcall, "parameter \"mfg\" has the wrong length");
 	posIntCheck(INTEGER(value)[0], what);
 	posIntCheck(INTEGER(value)[1], what);
@@ -459,9 +459,9 @@ static int Specify(char *what, SEXP value, DevDesc *dd)
 	col = INTEGER(value)[1];
 	nrow = dd->dp.numrows;
 	ncol = dd->dp.numcols;
-	if(row <= 0 || row > nrow) 
+	if(row <= 0 || row > nrow)
 	    errorcall(gcall, "parameter \"i\" in \"mfg\" is out of range");
-	if(col <= 0 || col > ncol) 
+	if(col <= 0 || col > ncol)
 	    errorcall(gcall, "parameter \"j\" in \"mfg\" is out of range");
 	if(np == 4) {
 	    posIntCheck(INTEGER(value)[2], what);
@@ -1462,7 +1462,7 @@ static SEXP Query(char *what, DevDesc *dd)
     else if (streql(what, "yaxt")) {
 	char buf[2];
 	PROTECT(value = allocVector(STRSXP, 1));
-	buf[0] = dd->dp.xaxt;
+	buf[0] = dd->dp.yaxt;
 	buf[1] = '\0';
 	STRING(value)[0] = mkChar(buf);
 	UNPROTECT(1);
