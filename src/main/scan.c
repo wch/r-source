@@ -91,7 +91,7 @@ static double Strtod (const char *nptr, char **endptr)
 	    else if (convbuf[i] == '.')
 		convbuf[i] = decchar;
 	x = strtod(convbuf, &end);
-	*endptr = nptr + (end - convbuf);
+	*endptr = (char *) nptr + (end - convbuf);
 	return x;
     } 
 }	
