@@ -10,7 +10,8 @@
 sprintf(fmt, \dots)
 }
 \arguments{
-  \item{fmt}{a format string.}
+  \item{fmt}{a format string, which should be single-byte characters in
+    a non-UTF-8 multibyte locale.}
   \item{\dots}{values to be passed into \code{fmt}. Only logical,
     integer, real and character vectors are accepted, and only the first
     value is read from each vector.}
