@@ -5,6 +5,22 @@
 
 #define PLOTHISTORY
 
+/* AIX at least. */
+#ifndef _ALL_SOURCE
+#undef _ALL_SOURCE
+#endif
+
+/* alloca */
+#undef C_ALLOCA
+#undef HAVE_ALLOCA
+#undef HAVE_ALLOCA_H
+
+/* Define to empty if the keyword does not work.  */
+#undef const
+
+/* Define if you have the ANSI C header files.  */
+#define STDC_HEADERS
+
 /* (Long) Integers */
 
 #define SIZEOF_LONG 4
@@ -31,6 +47,14 @@ extern int _finite(double);
 /* Signal Handler Type */
 #define RETSIGTYPE int
 
+/* Process ID */
+#undef pid_t
+/* Object size */
+#undef size_t
+
+/* Define if you have <sys/wait.h> that is POSIX.1 compatible.  */
+#undef HAVE_SYS_WAIT_H
+
 /* Dynamic Linking */
 #undef HAVE_DL_H		/* hpux */
 #undef HAVE_DLFCN_H		/* Everything else */
@@ -41,7 +65,9 @@ extern int _finite(double);
 /* Process Timing */
 #define HAVE_TIMES
 #undef HAVE_TIMES_H
+#undef HAVE_SYS_TIME_H
 #undef HAVE_SYS_TIMES_H
+#undef TIME_WITH_SYS_TIME
 
 /* XDR Library Available */
 #define HAVE_RPC_XDR_H
@@ -94,7 +120,7 @@ double atanh(double);
 
 
 /* Some Linux systems may need this */
-#undef HAVE___SETFPUCW
+#undef NEED___SETFPUCW
 
 /* Fortran and C Links */
 #define HAVE_F77_UNDERSCORE
@@ -141,7 +167,8 @@ double atanh(double);
 #define R_PRINTCMD	""
 
 /* Getting the working directory */
-#if defined(HAVE_UNISTD_H)
+#undef HAVE_GETCWD
+#if defined(HAVE_GETCWD)
 #define R_GETCWD(x, y) getcwd(x, y)
 #elif defined(Win32)
 #define R_GETCWD(x, y) GetCurrentDirectory(y, x)

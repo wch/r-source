@@ -28,6 +28,24 @@
 #include <windows.h>
 #include "graphapp/ga.h"
 
+static char DefaultFileName[MAX_PATH];
+
+/* 
+ * replacement for Windows function that uses root directory
+ */
+char * tmpnam(char * str)
+{
+    char *tmp, *tmp2;
+
+    if(str) tmp2 = str; else tmp2 = DefaultFileName;
+    tmp = getenv("TMP");
+    if (!tmp) tmp = getenv("TEMP");
+    if (!tmp) tmp = getenv("R_USER");
+    sprintf(tmp2, "%s/RtmpXXXXXX", tmp);
+    mktemp(tmp2); /* Windows function to replace X's */
+    return(tmp2);
+}
+
 
 SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
 {

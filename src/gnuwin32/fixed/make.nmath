@@ -9,7 +9,7 @@ SOURCES=$(wildcard *.c *.f)
 OBJS=$(foreach i, $(SOURCES), $(basename $i).o)
 
 fround.o: fround.c
-	$(CC) -I../include  -o $@ -c $^
+	$(CC) -I../include  -o $@ -c $<
 
 
 ../gnuwin32/nmath.a: $(OBJS)
