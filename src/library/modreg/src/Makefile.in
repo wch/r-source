@@ -14,7 +14,7 @@ RHOME = $(top_builddir)
 
 pkg = modreg
 LIB = $(pkg).$(SHLIBEXT)
-OBJS = bsplvd.o bvalue.o bvalus.o dpbfa.o dpbsl.o ksmooth.o loessc.o \
+OBJS = bsplvd.o bvalue.o bvalus.o ksmooth.o loessc.o \
 	loessf.o ppr.o qsbart.o sbart.o sgram.o sinerp.o sslvrg.o stxwx.o
 
 all: $(LIB)
