@@ -457,3 +457,11 @@ Date: Sat, 16 Feb 2002 01:35:20 +0100 (MET)
 Subject: Gnome causes different behaviour of some R functions 
 From: alobo@ija.csic.es
 Date: Fri, 22 Feb 2002 14:41:17 +0100 (MET)
+* PR# 1322 *
+Subject: wish: postscript-device - LaTeX ec-fonts
+From: stud8351@ma.tum.de
+Date: Sat, 23 Feb 2002 04:56:14 +0100 (MET)
+* PR# 1323 *
+Subject: bug in options() - help page
+From: Ole Christensen <o.christensen@lancaster.ac.uk>
+Date: Sat, 23 Feb 2002 16:56:56 +0000
