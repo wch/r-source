@@ -144,10 +144,15 @@ dev.print <- function(device = postscript,  ...)
             pt <- ps.options()$pointsize
             oc$pointsize <- pt * w/din[1]
         }
+        if(is.null(oc$horizontal)) oc$horizontal <- hz
+        if(is.null(oc$width)) oc$width <- w
+        if(is.null(oc$height)) oc$height <- h
+    } else {
+        if(is.null(oc$width))
+            oc$width <- if(!is.null(oc$height)) w/h * oc$height else w
+        if(is.null(oc$height))
+            oc$height <- if(!is.null(oc$height)) h/w * oc$width else h
     }
-    if(is.null(oc$width))	oc$width <- w
-    if(is.null(oc$height))	oc$height <- h
-    if(is.null(oc$horizontal))	oc$horizontal <- hz
     dev.off(eval.parent(oc))
     dev.set(current.device)
 }

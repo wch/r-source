@@ -166,7 +166,7 @@ library.dynam <-
     chname <- substr(chname, 1, LEN - nc.ext)
   if (is.na(match(chname, .Dyn.libs))) {
     file <- system.file(file.path("libs", paste(chname, file.ext,
-			      sep = "")), pkg = package, lib = lib.loc)
+			      sep = "")), pkg = package, lib = lib.loc)[1]
     if (file == "") {
       stop(paste("dynamic library `", chname, "' not found",
 		 sep = ""))
