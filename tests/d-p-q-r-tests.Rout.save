@@ -1,17 +1,18 @@
 
-R : Copyright 2003, The R Development Core Team
-Version 1.7.1 Beta (2003-06-14)
+R : Copyright 2004, The R Foundation for Statistical Computing
+Version 1.8.1 Patched (2004-01-09), ISBN 3-900051-00-3
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ####	d|ensity
 > ####	p|robability (cumulative)
@@ -252,6 +253,20 @@ Warning messages:
 > xB <- c(2000,1e6,1e50,Inf)
 > for(df in c(0.1, 1, 10))
 +     for(ncp in c(0, 1, 10, 100)) stopifnot(pchisq(xB, df=df, ncp=ncp) == 1)
+> all.equal(qchisq(0.025,31,ncp=1,lower.tail=FALSE),# inf.loop PR#875
++           49.77662465615, tol= 1e-11)
+[1] TRUE
+> ## p ~= 1 (<==> 1-p ~= 0) -- gave infinite loop in R <= 1.8.1 -- PR#6421
+> psml <- 2^-(10:54)
+> q0 <- qchisq(psml,    df=1.2, ncp=10, lower.tail=FALSE)
+> q1 <- qchisq(1 -psml, df=1.2, ncp=10)
+> p0 <- pchisq(q0, df=1.2, ncp=10, lower.tail=FALSE)
+> p1 <- pchisq(q1, df=1.2, ncp=10, lower.tail=FALSE)
+> iO <- 1:10
+> all.equal(q0[iO], q1[iO])
+[1] TRUE
+> all.equal(p0[iO], psml[iO], tol = 0.08)# bad tol (0.0744 on 386-Linux).
+[1] TRUE
 > 
 > ##--- Beta (need more):
 > 
@@ -861,5 +876,5 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  6.53 0.14 6.71 0 0 
+Time elapsed:  1.03 0.06 2.92 0 0 
 > 

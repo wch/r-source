@@ -66,6 +66,8 @@ BUG FIXES
     o	postscript() could crash if given a font value outside the
 	valid range 1...5.
 
+    o	qchisq(1-e, ..., ncp=.) did not terminate. (PR#6421 (& PR#875))
+
 
 
 		CHANGES IN R VERSION 1.8.1
