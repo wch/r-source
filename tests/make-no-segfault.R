@@ -26,6 +26,7 @@ stop.list[["base"]] <-
 	## "Interactive" ones:
 	dev.int <- c("X11", "windows", "macintosh")
 	misc.2 <- c("help.start",
+                    "gctorture",
 		    "data.entry", "dataentry", "de", apropos("^de\."))
 	c(inet.list, socket.fun, dev.int, edit.int, misc.int, misc.2)
     }
