@@ -19,8 +19,8 @@ download.file(url, destfile, method = "auto", quiet=FALSE)
     or \code{"lynx"} the executable must be installed on your system and
     in your path. To use \code{"socket"} the file must be on an
     \code{HTTP} server, in plain text, and your system must allow socket
-    connections to be opened.}
-  \item{quiet}{If \code{TRUE}, suppress status messeges of the download
+    connections to be opened to that server.}
+  \item{quiet}{If \code{TRUE}, suppress status messages from the download
     tool (if any).}
 }
 \details{
@@ -34,5 +34,9 @@ download.file(url, destfile, method = "auto", quiet=FALSE)
   available tools at runtime.
   The \code{url} must start with a type specification such as
   \code{"http://"}, \code{"ftp://"} or \code{"file:"}.
+}
+\note{
+  Cacheing proxies and firewalls may well not allow method \code{"socket"}
+  socket to be used.
 }
 \keyword{utilities}

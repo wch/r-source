@@ -153,7 +153,7 @@ par(\dots, no.readonly = FALSE)
     \code{"blank"} uses `invisible lines' (i.e. doesn't draw them).
 
     Alternatively, a string of up to 8 characters
-    (from code{c(0:9, "A":"F")}) may be given, giving
+    (from \code{c(0:9, "A":"F")}) may be given, giving
     the length (typically in points/pixels) of line segments which are
     alternatively drawn and skipped.  For example, \code{"44"} is dashed and
     \code{"13"} is dotted.}

@@ -46,11 +46,13 @@ url.show(url, title = url, file = tempfile(),
 \dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch11b.txt")}
 \dontrun{beaver<-read.table.url("http://lib.stat.cmu.edu/datasets/csb/ch11b.dat",
   col.names=c("obsnum","day","time","temperature","activity"),row.names=1)}
+# the next two examples will only work if socket connections to
+# statlib are allowed from your site.
 \dontrun{url.show("http://lib.stat.cmu.edu/datasets/csb/ch3a.txt",
                   method="socket")}
 \dontrun{ozone<-read.table.url("http://lib.stat.cmu.edu/datasets/csb/ch3a.dat",
   col.names=c("date","day.cts","day.passive","night.cts","night.passive"),
-  na.strings=".",method="socket")}
+  na.strings=".", method="socket")}
 }
 \keyword{file}
 \keyword{misc}
