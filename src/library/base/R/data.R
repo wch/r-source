@@ -50,23 +50,28 @@ function(..., list = character(0),
         db <- matrix(character(0), nr = 0, nc = 4)
         noindex <- character(0)
         for(path in paths) {
-            INDEX <- file.path(path, "data", "00Index")
+            entries <- NULL
             ## <NOTE>
+            ## Check for new-style '00Index.dcf', then for '00Index'.
             ## Earlier versions also used to check for 'index.doc'.
             ## </NOTE>
-            if(file.exists(INDEX)) {
-                entries <- read.00Index(INDEX)
-                if(NROW(entries) > 0) {
-                    db <- rbind(db,
-                                cbind(basename(path),
-                                      dirname(path),
-                                      entries))
-                }
+            if(file.exists(INDEX <-
+                           file.path(path, "data", "00Index.dcf"))) {
+                entries <- read.dcf(INDEX)
+                entries <- cbind(colnames(entries), c(entries))
             }
+            else if(file.exists(INDEX <-
+                                file.path(path, "data", "00Index")))
+                entries <- read.00Index(INDEX)
             else {
-                ## no index: check whether subdir 'data' contains files.
+                ## No index: check whether subdir 'data' contains files.
                 if(length(list.files(file.path(path, "data"))) > 0)
                     noindex <- c(noindex, basename(path))
+            }
+            if(NROW(entries) > 0) {
+                db <- rbind(db,
+                            cbind(basename(path), dirname(path),
+                                  entries))
             }
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
