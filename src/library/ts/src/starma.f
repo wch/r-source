@@ -1,3 +1,6 @@
+c Code in this file based on Applied Statistics algorithms 
+c (C) Royal Statistical Society 1980, 1982
+c
 c  applied statistics algorithm as154
 c
 c  start of as 154

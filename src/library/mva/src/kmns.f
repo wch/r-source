@@ -1,3 +1,6 @@
+c Code in this file based on Applied Statistics algorithms 
+c (C) Royal Statistical Society 1979
+c
 C a minimal modification of AS136 to use double precision
 C all variables are now declared.
 C B.D. Ripley 1998/06/17

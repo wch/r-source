@@ -65,3 +65,12 @@ src/unix/rotated.[ch]
 
 	Copyright (c) 1993 Alan Richardson
 
+src/appl/chisqsim.c, loglin.c
+src/library/ts/src/starma.f
+src/library/mva/src/kmns.f
+src/nmath/pgamma.c, pnbeta.c, pnchisq.c, pnt.c, qbeta.c, qgamma.c, 
+	qnorm.c, qtukey.c, sunif.c
+
+are based in whole or in part on Applied Statistics algorithms
+(C) Royal Statistical Society
+

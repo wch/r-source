@@ -1,5 +1,6 @@
 /*
  *  Algorithm AS 275 appl.statist. (1992), vol.41, no.2
+ *  original (C) 1992 Royal Statistical Society
  *
  *  computes the noncentral chi-square distribution function with
  *  positive real degrees of freedom f and nonnegative noncentrality

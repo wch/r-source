@@ -1,7 +1,8 @@
 /*
  *  Algorithm AS 226 Appl. Statist. (1987) Vol. 36, No. 2
  *  Incorporates modification AS R84 from AS Vol. 39, pp311-2, 1990
- *
+ *  original (C) Royal Statistical Society 1987, 1990
+ *  
  *  Returns the cumulative probability of x for the non-central
  *  beta distribution with parameters a, b and non-centrality lambda.
  *

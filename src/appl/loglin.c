@@ -1,4 +1,5 @@
 /* Algorithm AS 51 Appl. Statist. (1972), vol. 21, p. 218 
+   original (C) Royal Statistical Society 1972
 
    Performs an iterative proportional fit of the marginal totals of a
    contingency table.

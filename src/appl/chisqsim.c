@@ -1,4 +1,5 @@
 /* Algorithm AS 159 Applied Statistics (1981), vol. 30, no. 1
+   original (C) Royal Statistical Society 1981
 
    Generate random two-way table with given marginal totals.
    */
