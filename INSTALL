@@ -183,24 +183,25 @@ versions you have by
 	gtk-config --version
 
 We know 1.0.10 and 1.2.3 suffice.  Updates are available, for example
-from update.redhat.com for rpm-based systems.  You need all of the
-following rpms installed
+via ftp from ftp.gurulabs.com/pub/gnome/updates for RPM-based systems.
+You need the following RPMs and their dependencies installed:
 
 	gnome-libs
 	gnome-libs-devel
 	gtk+
 	gtk+-devel
+	glib
+	glib-devel
 
 You will need also libglade 0.3.  For more information on libglade and
 to download the source, see
 
     http://www.daa.com.au/~james/gnome/
 
-This needs a recent version of libxml (it says >= 1.3, but only 1.4
-seems available). You can obtain sources of libglade and libxml from
-the sources directory of the GNOME distribution (ftp.gnome.org and
-mirrors). Rpms of libxml-1.4 and libxml-devel-1.4 are available from
-rawhide.redhat.com and mirrors.  We are not aware of any rpm for libglade.
+libglade needs libxml 1.4, the source for which is available from the
+GNOME ftp site (ftp.gnome.org and mirrors).  RPMs of libxml-1.4 and
+libxml-devel-1.4 are available from ftp.gurulabs.com/pub/gnome/updates.
+We are not aware of any RPMs for libglade.
 
 
 NEW PLATFORMS (Standards Hah!)
