@@ -1,5 +1,5 @@
 ### file lqs/R/lqs.R
-### copyright (C) 1998-9 B. D. Ripley
+### copyright (C) 1998-2003 B. D. Ripley
 
 lqs <- function(x, ...) UseMethod("lqs")
 
@@ -171,11 +171,14 @@ print.lqs <- function (x, digits = max(3, getOption("digits") - 3), ...)
     invisible(x)
 }
 
-predict.lqs <- function (object, newdata, ...)
+predict.lqs <- function (object, newdata, na.action = na.pass, ...)
 {
     if (missing(newdata)) return(fitted(object))
-    X <- model.matrix(delete.response(terms(object)), newdata,
-		      contrasts = object$contrasts, xlev = object$xlevels)
+    ## work hard to predict NA for rows with missing data
+    Terms <- delete.response(terms(object))
+    m <- model.frame(Terms, newdata, na.action = na.action,
+                     xlev = object$xlevels)
+    X <- model.matrix(Terms, m, contrasts = object$contrasts)
     drop(X %*% object$coefficients)
 }
 
