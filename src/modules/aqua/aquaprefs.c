@@ -80,8 +80,8 @@ void CallFontPanel(void);
 #define kInputColorButton   	1010
 #define kOutputBackButton   	1011
 #define kInputBackButton    	1012
-#define kBufferingBox			1013
-#define kBufferSizeSlider       1014
+#define kSaveConsolePosBox		1062
+#define kSetConsoleWidthBox		1063
 
 
 #define	kDeviceFontButton   	3001
@@ -99,8 +99,6 @@ void CallFontPanel(void);
 
 #define kGrabStdoutBox		6000
 #define kGrabStderrBox		6001
-#define kSaveConsolePosBox  6002
-#define kSetConsoleWidthBox 6003
 
 #define kApplyPrefsButton	5000
 #define kCancelPrefsButton	5001 
@@ -128,8 +126,6 @@ ControlID	AntiAliasingID = { kPrefControlsSig, kAntiAliasingBox };
 ControlID	QuartzPosID = { kPrefControlsSig, kQuartzPosPopUp };
 ControlID	InputColorID = { kPrefControlsSig, kInputColorText };
 ControlID	OutputColorID = { kPrefControlsSig, kOutputColorText };
-ControlID	BufferingID = { kPrefControlsSig, kBufferingBox };
-ControlID	BufferSizeID = { kPrefControlsSig, kBufferSizeSlider };
 ControlID	CRANmirrorID = { kPrefControlsSig, kCRANmirrorText };
 ControlID	BIOCmirrorID = { kPrefControlsSig, kBIOCmirrorText };
 ControlID   GlobalPackagesID = {kPrefControlsSig, kGlobalPackagesBox };
@@ -153,8 +149,6 @@ static	double		DefaultDeviceHeight = 5.0;
 static	int		DefaultAntiAlias = 1;
 static	int		DefaultAutoRefresh = 1;
 static	int		DefaultOverrideRDefaults = 0;
-static	int		DefaultBuffering = 1;
-static  int             DefaultBufferSize = 10;
 static  int             DefaultQuartzPos = 1;
 static  char            DefaultCRANmirror[] ="http://cran.r-project.org";
 static  char            DefaultBIOCmirror[] ="http://www.bioconductor.org";
@@ -213,7 +207,7 @@ void	SaveConsolePosToPrefs(void);
 
 
 CFStringRef appName, RTabSizeKey, RFontSizeKey, RFontFaceKey, devicefontKey;
-CFStringRef outfgKey, outbgKey, infgKey, inbgKey, bufferingKey, bufferSizeKey;
+CFStringRef outfgKey, outbgKey, infgKey, inbgKey;
 CFStringRef devWidthKey, devHeightKey, devPSizeKey;
 CFStringRef devAutoRefreshKey, devAntialiasingKey, devOverrideRDefKey;
 CFStringRef CRANmirrorKey, BIOCmirrorKey, GlobalPackagesKey, GrabStderrKey, GrabStdoutKey;
@@ -243,8 +237,6 @@ void	SetUpPrefSymbols(void){
     devAntialiasingKey = CFSTR("Device Antialiasing");
     devOverrideRDefKey = CFSTR("Override R Defaults");
     devQuartzPosKey = CFSTR("Quartz Device Window Positioning");
-    bufferingKey = CFSTR("Buffered Output");
-    bufferSizeKey = CFSTR("Output Buffer Size");
     CRANmirrorKey = CFSTR("CRAN mirror");
     BIOCmirrorKey = CFSTR("BIOC mirror");
     GlobalPackagesKey = CFSTR("Global Packages");
@@ -346,8 +338,6 @@ void SetDefaultPrefs(void)
     DefaultPrefs.AntiAlias = DefaultAntiAlias;
     DefaultPrefs.AutoRefresh = DefaultAutoRefresh;
     DefaultPrefs.OverrideRDefaults = DefaultOverrideRDefaults;
-    DefaultPrefs.Buffering = DefaultBuffering;
-    DefaultPrefs.BufferSize = DefaultBufferSize;
 	DefaultPrefs.QuartzPos = DefaultQuartzPos;
     strcpy(DefaultPrefs.CRANmirror,DefaultCRANmirror);
     strcpy(DefaultPrefs.BIOCmirror,DefaultBIOCmirror);
@@ -375,8 +365,6 @@ void CopyPrefs(RAquaPrefsPointer From, RAquaPrefsPointer To)
     To->AntiAlias = From->AntiAlias;
     To->AutoRefresh = From->AutoRefresh;
     To->OverrideRDefaults = From->OverrideRDefaults;
-    To->Buffering = From->Buffering;
-    To->BufferSize = From->BufferSize;
     To->QuartzPos = From->QuartzPos;
     strcpy(To->CRANmirror, From->CRANmirror);
     strcpy(To->BIOCmirror, From->BIOCmirror);
@@ -399,7 +387,7 @@ void GetRPrefs(void)
     RGBColor    fgout,bgout,fgin,bgin;
 	Rect		consolebounds;
     char  devicefont[255], CRANmirror[255], BIOCmirror[255];
-    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
+    int	autorefresh, antialiasing, overrideRdef;
     int	grabstdout, grabstderr, globalpackages, saveconsolepos, setconsolewidth;
     
     
@@ -525,24 +513,6 @@ void GetRPrefs(void)
 
     CurrentPrefs.OverrideRDefaults = overrideRdef;
 
-    /* Buffered Text Output */
-    value = CFPreferencesCopyAppValue(bufferingKey, appName);   
-    if (value) {
-	if (!CFNumberGetValue(value, kCFNumberIntType, &buffering)) buffering = DefaultPrefs.Buffering;
-	CFRelease(value);
-    } else 
-	buffering = DefaultPrefs.Buffering; /* set default value */
-
-    CurrentPrefs.Buffering = buffering;
-
-    value = CFPreferencesCopyAppValue(bufferSizeKey, appName);   
-    if (value) {
-	if (!CFNumberGetValue(value, kCFNumberIntType, &buffersize)) buffersize = DefaultPrefs.BufferSize;
-	CFRelease(value);
-    } else 
-	buffersize = DefaultPrefs.BufferSize; /* set default value */
-
-    CurrentPrefs.BufferSize = buffersize;
 
 /*  Console Out Foreground color */
     color = CFPreferencesCopyAppValue(outfgKey, appName);   
@@ -749,11 +719,6 @@ void SetUpPrefsWindow(RAquaPrefsPointer Settings)
     GetControlByID(RPrefsWindow, &AntiAliasingID, &myControl);
     SetControl32BitValue(myControl, Settings->AntiAlias);
 
-    GetControlByID(RPrefsWindow, &BufferingID, &myControl);
-    SetControl32BitValue(myControl, Settings->Buffering);
-
-    GetControlByID(RPrefsWindow, &BufferSizeID, &myControl);
-    SetControl32BitValue(myControl, Settings->BufferSize);
 
     GetControlByID(RPrefsWindow, &QuartzPosID, &myControl);
     SetControl32BitValue(myControl, Settings->QuartzPos);
@@ -802,7 +767,7 @@ void SaveRPrefs(void)
     CFDataRef	color, bounds;
     RGBColor    fgout,bgout,fgin,bgin;
 	char 	 devicefont[255], cran[255], bioc[255];
-    int	autorefresh, antialiasing, overrideRdef, buffering, buffersize;
+    int	autorefresh, antialiasing, overrideRdef;
     int	grabstdout, grabstderr, globalpackages, saveconsolepos, setconsolewidth;
 
 
@@ -823,8 +788,6 @@ void SaveRPrefs(void)
     antialiasing = CurrentPrefs.AntiAlias;
 	quartzpos = CurrentPrefs.QuartzPos;
     overrideRdef = CurrentPrefs.OverrideRDefaults;
-    buffering = CurrentPrefs.Buffering;
-    buffersize = CurrentPrefs.BufferSize;
     globalpackages = CurrentPrefs.GlobalPackages;
     grabstdout = CurrentPrefs.GrabStdout;
     grabstderr = CurrentPrefs.GrabStderr;
@@ -890,15 +853,6 @@ void SaveRPrefs(void)
 /* Override R Defaults */
     value = CFNumberCreate(NULL, kCFNumberIntType, &overrideRdef); 
     CFPreferencesSetAppValue(devOverrideRDefKey, value, appName);
-    CFRelease(value);
-
-/* Buffering */
-    value = CFNumberCreate(NULL, kCFNumberIntType, &buffering); 
-    CFPreferencesSetAppValue(bufferingKey, value, appName);
-    CFRelease(value);
-
-    value = CFNumberCreate(NULL, kCFNumberIntType, &buffersize); 
-    CFPreferencesSetAppValue(bufferSizeKey, value, appName);
     CFRelease(value);
 
     /* CRAN */
@@ -1232,12 +1186,6 @@ void GetDialogPrefs(void)
  
     GetControlByID( RPrefsWindow, &OverrideRDefBoxID, &controlField );
     CurrentPrefs.OverrideRDefaults = GetControl32BitValue(controlField);
-
-    GetControlByID( RPrefsWindow, &BufferingID, &controlField );
-    CurrentPrefs.Buffering = GetControl32BitValue(controlField);
- 
-    GetControlByID( RPrefsWindow, &BufferSizeID, &controlField );
-    CurrentPrefs.BufferSize = GetControl32BitValue(controlField);
     
     GetControlByID( RPrefsWindow, &RFontFaceID, &controlField );
     CurrentPrefs.RFontFace = GetControl32BitValue(controlField);

@@ -59,8 +59,6 @@ typedef struct
 	int			AntiAlias;
 	int			AutoRefresh;
 	int			OverrideRDefaults;
-	int			Buffering;
-	int			BufferSize;
 	char		CRANmirror[255];
 	char		BIOCmirror[255];
 	int			GlobalPackages;
