@@ -1,12 +1,13 @@
 data <-
-function(..., list = character(0), package =c(.packages(),.Autoloaded),
+function(..., list = character(0), package =c(.packages(), .Autoloaded),
 	 lib.loc = .lib.loc, trace = FALSE) {
   names <- c(as.character(substitute(list(...))[-1]), list)
   if (!missing(package))
     if (is.name(y <- substitute(package)))# && !is.character(package))
       package <- as.character(y)
   found <- FALSE
-  if (length(names) == 0) { #-- give 'index' of all possible data sets
+  if (length(names) == 0) {             # give `index' of all possible
+                                        # data sets
     file <- tempfile("Rdata.")
     on.exit(unlink(file))
     for (lib in lib.loc)
@@ -74,7 +75,8 @@ getenv <- function(x) {
 }
 
 help <-
-function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
+function(topic, offline = FALSE, package = c(.packages(), .Autoloaded),
+         lib.loc =.lib.loc) {
   if (!missing(package))
     if (is.name(y <- substitute(package)))# && !is.character(package))
       package <- as.character(y)
@@ -92,21 +94,40 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
       topic <- "Extract"
     else if (!is.na(match(topic, c("&", "&&", "|", "||", "!"))))
       topic <- "Logic"
-    else if (!is.na(match(topic,c("%*%"))))
+    else if (!is.na(match(topic, c("%*%"))))
       topic<- "matmult"
-    topic <- gsub("\\[","\\\\[", topic)#- for cmd/help ..
+    topic <- gsub("\\[","\\\\[", topic) # for cmd/help ..
     INDICES <- paste(t(outer(lib.loc, package, paste, sep = "/")),
 		     "help", "AnIndex", sep = "/", collapse = " ")
     file <- system(paste("${RHOME}/cmd/help '", topic, "' ", INDICES, sep=""),
 		   intern = TRUE)
-    if (file == "") { # try data .doc -- this is OUTDATED
+    if (file == "") {                   # try data .doc -- this is OUTDATED
       file <- system.file(paste("data", "/", topic, ".doc", sep = ""),
 			  package, lib.loc)
     }
     if (length(file) && file != "") {
       if (!is.null(.Options$trace) && .Options$trace)
-        cat ("\t\t\t\t\t\tHelp file name '", sub(".*/","",file),".Rd'\n",sep="")
-      system(paste("${RHOME}/cmd/pager", file))
+        cat ("\t\t\t\t\t\tHelp file name `", sub(".*/", "", file),
+             ".Rd'\n", sep = "")
+      if (!offline)
+        system(paste("${RHOME}/cmd/pager", file))
+      else {
+        FILE <- tempfile()
+        TMPDIR <- sub("/[^/]*$", "", FILE)
+        TEXFILE <- paste(FILE, ".tex", sep = "")
+        on.exit(unlink(paste(FILE, "*", sep = "")))
+        cat("\\documentclass[a4paper]{book}\n", file = TEXFILE)
+        system(paste("cat ${RHOME}/doc/manual/Rd.sty >>", TEXFILE))
+        cat("\\begin{document}\n", file = TEXFILE, append = TRUE)
+        system(paste("cat ", sub("help/", "latex/", file), ".tex >>",
+                     TEXFILE, sep = ""))
+        cat("\\end{document}\n", file = TEXFILE, append = TRUE)
+        system(paste("cd", TMPDIR, "&&", "${LATEX}", FILE))
+        system(paste("cd", TMPDIR, "&&", "${DVIPS} -o",
+                     paste("!", .Options$printcmd, sep = ""),
+                     FILE))
+        return()
+      }
     } else
       stop(paste("No documentation for `", topic, "'", sep = ""))
   }
@@ -115,7 +136,7 @@ function(topic, package = c(.packages(),.Autoloaded), lib.loc =.lib.loc) {
   else if (!missing(lib.loc))
     library(lib = lib.loc)
   else
-    help("help", "base", .Library)
+    help("help", package = "base", lib.loc = .Library)
 }
 
 library <-
