@@ -55,6 +55,8 @@ DisableStartupPrompt=yes
 OutputDir=.
 OutputBaseFilename=SetupR
 WizardSmallImageFile=R.bmp
+UsePreviousAppDir=no
+ChangesAssociations=yes
 
 [Types]
 Name: "user"; Description: "User installation"
@@ -84,6 +86,12 @@ Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
 Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"
+
+Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue 
+Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey 
+Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0" 
+Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe" 
+
 
 [Files]
 END

@@ -36,10 +36,11 @@ clean:
 
 # section for JR software installer.
 
-RECOMMENDED=KernSmooth VR boot cluster foreign mgcv nlme rpart survival5
+RECOMMENDED=KernSmooth Matrix VR boot cluster foreign mgcv nlme rpart survival5
 IS: SetupR.exe
 # location where Inno Setup was installed
 ISDIR=C:/packages/Inno
+# location where binary packages are kept
 PKGS=C:/R/Rdist/libs
 
 R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
@@ -69,7 +70,7 @@ R.iss: JRins.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip ../$(PREFIX)h.zip \
 	perl JRins.pl $(PREFIX)
 
 SetupR.exe: R.iss
-	"$(ISDIR)/compil32" /cc R.iss
+	"$(ISDIR)/iscc" R.iss > setupR.log
 
 Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
   ../$(PREFIX)h.zip ../$(PREFIX)ch.zip ../$(PREFIX)d1.zip
@@ -85,13 +86,15 @@ Rsmall.iss: JRsmall.pl ../$(PREFIX)b1.zip ../$(PREFIX)b2.zip \
 	  unzip -qo $(PKGS)/$${p} -d $(PREFIX)/library; \
 	done
 	rm -rf $(PREFIX)/library/*/html $(PREFIX)/library/*/latex
+	rm -rf $(PREFIX)/library/rpart/Manuscript
+	rm -rf $(PREFIX)/library/survival5/doc
 	perl JRsmall.pl $(PREFIX)
 
 miniR.exe: Rsmall.iss
-	"$(ISDIR)/compil32" /cc Rsmall.iss
+	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 ISclean:
-	rm -rf R.iss Rsmall.iss $(PREFIX)*
+	rm -rf R.iss Rsmall.iss *.log $(PREFIX)*
 
 ISdistclean: ISclean
 	rm -f SetupR.exe miniR*

@@ -55,6 +55,8 @@ DisableStartupPrompt=yes
 OutputDir=.
 OutputBaseFilename=miniR
 WizardSmallImageFile=R.bmp
+UsePreviousAppDir=no
+ChangesAssociations=yes
 DiskSpanning=yes
 
 [Types]
@@ -78,6 +80,11 @@ Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty
 Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekey
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"
+
+Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue 
+Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey 
+Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0" 
+Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe" 
 
 [Messages]
 WelcomeLabel2=This will install [name/ver] on your computer.%n%nIt is strongly recommended that you close all other applications you have running before continuing. This will help prevent any conflicts during the installation process.%n%nThis is a minimal installation, not including HTML help etc..%n
