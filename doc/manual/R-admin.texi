@@ -1,7 +1,7 @@
 \input texinfo
 @c %**start of header
 @setfilename R-admin.info
-@settitle R Installation and Adminstration
+@settitle R Installation and Administration
 @setchapternewpage on
 @c %**end of header
 
