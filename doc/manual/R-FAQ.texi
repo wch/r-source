@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2004
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-24
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-11-25
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1799,9 +1799,6 @@ Functions to import Arc/Info V7.x coverages and data.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
-@item RCurl
-Allows one to compose HTTP requests to fetch URIs, post forms, etc., and
-process the results returned by the Web server.
 @item RMySQL
 An interface between R and the MySQL database system.
 @item RNetCDF
@@ -1849,9 +1846,6 @@ statistical computing can be carried out.
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
 @c REMOVED 2001-12-08
-@item Rstem
-Interface to Snowball implementation of Porter's word stemming
-algorithm.
 @c @item Rstreams
 @c Binary file stream support functions.
 @item Rwave
