@@ -397,3 +397,11 @@ Date: Wed, 15 Sep 1999 17:36:46 +0200
 Subject: plot ( <aov.obj> ) failed -- easy fix
 From: Martin Maechler <maechler@stat.math.ethz.ch>
 Date: Wed, 15 Sep 1999 18:42:56 +0200
+* PR# 280 *
+Subject: install/libraries on solaris2.6
+From: ulrich.poetter@ruhr-uni-bochum.de
+Date: Thu, 16 Sep 1999 22:43:34 +0200 (MET DST)
+* PR# 281 *
+Subject: mtext(. col = ...) stopped working in 0.65.0
+From: Martin Maechler <maechler@stat.math.ethz.ch>
+Date: Fri, 17 Sep 1999 15:10:40 +0200
