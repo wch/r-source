@@ -16,7 +16,7 @@ DISTFILES = $(shell cd $(srcdir) && ls Makefile.in *.[cfhy])
 OBJS = arithmetic.o array.o attrib.o bind.o builtin.o character.o       \
 	coerce.o colors.o complex.o context.o cov.o cum.o debug.o       \
 	deparse.o deriv.o devices.o dotcode.o dstruct.o duplicate.o     \
-	envir.o errors.o eval.o format.o fourier.o gram.o graphics.o    \
+	envir.o errors.o eval.o format.o fourier.o gram.o gram-ex.o graphics.o    \
 	iosupport.o list.o logic.o main.o match.o memory.o model.o      \
 	names.o objects.o optimize.o options.o par.o paste.o platform.o \
 	plot.o plot3d.o plotmath.o print.o printarray.o printvector.o   \

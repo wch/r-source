@@ -468,13 +468,25 @@ FUNTAB R_FunTab[] =
 {"Version",	do_version,	0,	11,	0,	PP_FUNCALL},
 {"machine",	do_machine,	0,	11,	0,	PP_FUNCALL},
 {"Machine",	do_Machine,	0,	11,	0,	PP_FUNCALL},
+#ifdef Win32
+{"system",	do_system,	0,	11,	3,	PP_FUNCALL},
+#else
 {"system",	do_system,	0,	11,	2,	PP_FUNCALL},
+#endif
 #ifdef Unix
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
 #endif
-#ifdef Win32
+#ifdef oldWin32
 {"system.file",	do_sysfile,	0,	11,	2,	PP_FUNCALL},
 {"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
+#endif
+#ifdef Win32
+{"tempfile",	do_tempfile,	0,	11,	1,	PP_FUNCALL},
+{"unlink",	do_unlink,	0,	11,	1,	PP_FUNCALL},   
+{"getenv",	do_getenv,	0,	11,	1,	PP_FUNCALL},
+{"help.start",	do_helpstart,	0,	11,	0,	PP_FUNCALL},    
+{"show.help.item",do_helpitem,	0,	11,	1,	PP_FUNCALL},
+{"flush.console",do_flushconsole,0,     11,     0,      PP_FUNCALL},
 #endif
 {"parse",	do_parse,	0,	11,	4,	PP_FUNCALL},
 {"save",	do_save,	0,	111,	3,	PP_FUNCALL},
@@ -567,7 +579,11 @@ FUNTAB R_FunTab[] =
 
 /* Device Drivers */
 
+#ifdef Win32
+{"X11",		do_devga,	0,	111,	4,	PP_FUNCALL},
+#else
 {"X11",		do_X11,		0,	111,	5,	PP_FUNCALL},
+#endif
 {"PS",		do_PS,		0,	111,	9,	PP_FUNCALL},
 {"PicTeX",	do_PicTeX,	0,	111,	6,	PP_FUNCALL},
 {"Macintosh",	do_Macintosh,	0,	111,	4,	PP_FUNCALL},

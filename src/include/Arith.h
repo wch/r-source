@@ -59,19 +59,21 @@ extern double	R_NaReal;	/* NA_REAL */
 #define NA_REAL		R_NaReal
 #define NA_STRING	R_NaString
 
-#ifdef Win32
-extern int isnan(double);
-extern int finite(double);
-#endif
-
 #ifdef IEEE_754
 
 int R_IsNA(double);		/* True for Real NA only */
 int R_IsNaN(double);		/* True for special NaN, *not* for NA */
 
 #define MATH_CHECK(call)	(call)
+#ifdef Win32
+extern int _isnan(double);
+extern int _finite(double);
+#define FINITE(x)		_finite(x)
+#define ISNAN(x)		_isnan(x)  /* -> True, *both* for NA | NaN */
+#else
 #define FINITE(x)		finite(x)
 #define ISNAN(x)		isnan(x)  /* -> True, *both* for NA | NaN */
+#endif
 #define ISNA(x)			R_IsNA(x) /* from ../main/arithmetic.c */
 
 #else

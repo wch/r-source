@@ -54,6 +54,15 @@ SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
 #endif
 
 #ifdef Win32
+SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);
+SEXP do_tempfile(SEXP, SEXP, SEXP, SEXP);
+SEXP do_unlink(SEXP, SEXP, SEXP, SEXP);
+SEXP do_helpstart(SEXP,SEXP,SEXP,SEXP);
+SEXP do_helpitem(SEXP,SEXP,SEXP,SEXP);
+SEXP do_flushconsole(SEXP,SEXP,SEXP,SEXP);
+SEXP do_devga(SEXP, SEXP, SEXP, SEXP);
+#endif
+#ifdef oldWin32
 SEXP do_winedit(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sysfile(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getenv(SEXP, SEXP, SEXP, SEXP);

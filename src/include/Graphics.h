@@ -73,6 +73,13 @@
 #define LTY_DOTDASH	1 + (3<<4) + (4<<8) + (3<<12)
 #endif
 
+#ifdef Win32
+#define LTY_SOLID	0
+#define LTY_DASHED	4 + (4<<4)
+#define LTY_DOTTED	1 + (2<<4)
+#define LTY_DOTDASH	1 + (3<<4) + (4<<8) + (3<<12)
+#endif
+
 #ifdef Macintosh
 #define LTY_SOLID	0
 #define LTY_DASHED	4 + (4<<4)

@@ -770,26 +770,6 @@ static SEXP NextArg(SEXP l, SEXP s, SEXP tag)
     return l;
 }
 
-/*--------------------------------------------------------------------------*/
-
-/* Basic File IO : This code is here because at this particular instant */
-/* it seems closely related to cget(), which appears below.  But now it */
-/* doesn't.  Move this to iosupport.c or trash it */
-
-int R_fgetc(FILE *fp)
-{
-    int c = fgetc(fp);
-    /* get rid of  CR in CRLF line termination */
-    if (c == '\r') {
-	c = fgetc(fp);
-	/* retain CR's with no following linefeed */
-	if (c != '\n') {
-	    ungetc(c,fp);
-	    return('\r');
-	}
-    }
-    return feof(fp) ? R_EOF : c;
-}
 
 
 /*--------------------------------------------------------------------------*/
