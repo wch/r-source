@@ -16,8 +16,8 @@
 \newenvironment{display}[0]%
   {\begin{list}{}{\setlength{\leftmargin}{30pt}}\item}%
   {\end{list}}
-\newcommand{\HTML}{\textsc{html}}
-\newcommand{\R}{\textsc{r}}
+\newcommand{\HTML}{{\normalfont\textsc{html}}}
+\newcommand{\R}{{\normalfont\textsc{r}}}
 
 \def\href#1#2{\special{html:<a href="#1">}{#2}\special{html:</a>}}
 
@@ -90,5 +90,5 @@
 \newcommand{\deqn}[2]{\[#1\]}
 \newcommand{\file}[1]{\textsf{#1}}
 \newcommand{\link}[1]{#1}
-%\newcommand{\email}[1]{\textless{#1}\textgreater}
+%\newcommand{\email}[1]{$\langle${#1}$\rangle$}
 \newcommand{\email}[1]{$<${#1}$>$}
