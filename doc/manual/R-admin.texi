@@ -727,6 +727,16 @@ generic library by the configuration option @option{--with-lapack}.
 The default for @option{--with-lapack} is to check the BLAS library and 
 then look for an external library @code{-llapack}.
 
+If you do use @option{--with-lapack}, be aware of potential problems
+with bugs in the LAPACK 3.0 sources (or in the posted corrections to those
+sources).  In particular, bugs in @code{DGEEV} and @code{DGESDD} have
+resulted in error messages such as
+@smallexample
+DGEBRD gave error code -10
+@end smallexample
+@noindent
+(from the Debian @code{-llapack} which was current in late 2002).
+
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
 that on Sun Sparc using the native compilers the flag @option{-dalign}
