@@ -14448,6 +14448,8 @@ trap 'rm -fr `echo "Makeconf
   src/library/tcltk/DESCRIPTION
   src/library/tcltk/Makefile
   src/library/tcltk/src/Makefile
+  src/library/tools/DESCRIPTION
+  src/library/tools/Makefile
   src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
@@ -14762,6 +14764,8 @@ CONFIG_FILES=\${CONFIG_FILES-"Makeconf
   src/library/tcltk/DESCRIPTION
   src/library/tcltk/Makefile
   src/library/tcltk/src/Makefile
+  src/library/tools/DESCRIPTION
+  src/library/tools/Makefile
   src/library/ts/DESCRIPTION
   src/library/ts/Makefile
   src/library/ts/src/Makefile
