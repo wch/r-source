@@ -84,13 +84,14 @@ void Raqua_StartConsole(void)
 	OSErr				err = noErr;
 	CFURLRef    		bundleURL = NULL;
  	CFBundleRef 		RBundle = NULL;
-
-/*
-    bundleURL = CFURLCreateWithFileSystemPath( 
-                            kCFAllocatorDefault,
-                            CFSTR("/Users/jago/NewR.bundle"), 
-                            kCFURLPOSIXPathStyle, 
-                            TRUE);
+    char                buf[300];
+    
+    /*    sprintf(buf,"%s/aqua.bundle",R_HomeDir());
+     fprintf(stderr,"\n buf=%s",buf); 
+    bundleURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault,
+                      CFStringCreateWithCString(kCFAllocatorDefault,buf,
+                       kCFStringEncodingMacRoman ),
+                       kCFURLPOSIXPathStyle, TRUE);
 
     if(bundleURL == NULL)
      goto fine;
@@ -102,19 +103,20 @@ void Raqua_StartConsole(void)
     err = CreateNibReferenceWithCFBundle (RBundle, 
                             CFSTR("main"), &nibRef);
 */   
+
     err = CreateNibReference(CFSTR("main"), &nibRef);
-  //  fprintf(stderr,"\n CreateNibErr=%d",err);
+/*    fprintf(stderr,"\n CreateNibErr=%d",err); */
     if(err != noErr) 
      goto fine;
      
     err = SetMenuBarFromNib(nibRef, CFSTR("MenuBar"));
-  //  fprintf(stderr,"\n CreateMenuBarNibErr=%d",err);
+/*    fprintf(stderr,"\n CreateMenuBarNibErr=%d",err); */
     if(err != noErr)
      goto fine;
     
     
  	err = CreateWindowFromNib(nibRef,CFSTR("MainWindow"),&ConsoleWindow);
- //   fprintf(stderr,"\n CreateWinFromNibErr=%d",err);
+ /*   fprintf(stderr,"\n CreateWinFromNibErr=%d",err); */
     if(err != noErr)
      goto fine;
     
@@ -127,7 +129,7 @@ void Raqua_StartConsole(void)
     
 	/* Check for availability of MLTE api */
 	if (TXNVersionInformation == (void*)kUnresolvedCFragSymbolAddress){ 
-	//	  fprintf(stderr,"\nTXNVersionInformation error\n");							
+	/*	  fprintf(stderr,"\nTXNVersionInformation error\n"); */							
           goto fine;
 		}
 		
@@ -165,10 +167,10 @@ void Raqua_StartConsole(void)
 		{		
 			if (RConsoleObject != NULL) 
 			{
-				// sets the state of the scrollbars so they are drwan correctly
+				/* sets the state of the scrollbars so they are drawn correctly */
 				err = TXNActivate(RConsoleObject, frameID, kScrollBarsSyncWithFocus);
-				if (err != noErr){ // Check for availability of MLTE api
-		       //  fprintf(stderr,"\nNO TXNACti error=%d\n",err);							
+				if (err != noErr){ /* Check for availability of MLTE api */
+		       /*  fprintf(stderr,"\nNO TXNACti error=%d\n",err);	*/						
                  goto fine;
 		        }
 			
@@ -176,9 +178,6 @@ void Raqua_StartConsole(void)
 				err = SetWindowProperty(ConsoleWindow,'GRIT','tObj',sizeof(TXNObject),&RConsoleObject);
 			}
 
-			
-			//DoJustification(window, iDefaultJustify); 	// set justification default for new doc
-	
 		} 
 	
 	if(err == noErr){
