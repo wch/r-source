@@ -291,7 +291,7 @@ fixed/html/rw-FAQ.html: rw-FAQ.texi ../../VERSION
 
 rw-faq: rw-FAQ.texi ../../VERSION
 	$(SED) $(SEDVER) $< | \
-	  makeinfo --no-headers --number-sections -o $@
+	  makeinfo --no-headers --number-sections $< -o $@
 
 
 distribution: bindist packagedist docsdist
