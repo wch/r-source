@@ -18,6 +18,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include "Error.h"
 #include <windows.h>
 #include <string.h>
 #include <ctype.h>
@@ -193,23 +194,30 @@ static void xbuffixl(xbuf p)
    To be fixed: during creation, memory is allocated two times
    (faster for small files but a big waste otherwise)
 */
-static xbuf file2xbuf(char *name,int del)
+static xbuf file2xbuf(char *name, int del)
 {
     HANDLE f;
     DWORD rr, vv;
-    char *q, *p;
+    char *q, *p, buf[MAX_PATH + 25];
     xlong dim;
     xint  ms;
     xbuf  xb;
 
     f = CreateFile(name, GENERIC_READ, FILE_SHARE_WRITE,
 		   NULL, OPEN_EXISTING, 0, NULL);
-    if (f == INVALID_HANDLE_VALUE)
+    if (f == INVALID_HANDLE_VALUE) {
+	sprintf(buf, "File %s could not be opened by internal pager\n", name);
+	warning(buf);
 	return NULL;
+    }
     vv = GetFileSize(f, NULL);
     p = (char *) winmalloc((size_t) vv + 1);
     if (!p) {
 	CloseHandle(f);
+	sprintf(buf,
+		"Insufficient memory to display %s in internal pager\n",
+		name);
+	warning(buf);
 	return NULL;
     }
     ReadFile(f, p, vv, &rr, NULL);
@@ -258,7 +266,7 @@ struct structConsoleData {
 
     int   cur_pos, max_pos, prompt_len;	/* editing */
     xbuf  history;
-    
+
     char  chbrk, modbrk;	/* hook for user's break */
     void  (*fbrk) ();
 
@@ -633,7 +641,7 @@ FBEGIN
     int i;
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
     }
     storekey(c, BEGINLINE);
@@ -655,7 +663,7 @@ FBEGIN
     char *pc, *new = NULL;
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
      }
     if (p->kind == PAGER) FVOIDRETURN;
@@ -667,7 +675,7 @@ FBEGIN
            new = winrealloc((void *)p->clp, strlen(p->clp) + strlen(pc) + 1);
         }
         else {
-           new = winmalloc(strlen(pc) + 1) ;   
+           new = winmalloc(strlen(pc) + 1) ;
            if (new) new[0] = '\0';
            p->already = p->numkeys;
            p->pclp = 0;
@@ -678,7 +686,7 @@ FBEGIN
         }
         else {
            askok("Not enough memory");
-        }   
+        }
         GlobalUnlock(hglb);
     }
     CloseClipboard();
@@ -924,7 +932,7 @@ FBEGIN
     }
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
     }
 FVOIDEND
@@ -975,9 +983,9 @@ static char consolegetc(control c)
     }
     if (p->sel) {
 	p->sel = 0;
-	p->needredraw = 1; 
+	p->needredraw = 1;
 	REDRAW;
-    }    
+    }
     if (!p->already && p->clp)
     {
 	ch = p->clp[p->pclp++];
@@ -1209,7 +1217,7 @@ int setWidthOnResize = 0;
 int consolecols(console c)
 {
     ConsoleData p = getdata(c);
-    
+
     return p->cols;
 }
 
@@ -1291,7 +1299,7 @@ setconsoleoptions(char *fnname,int fnsty, int fnpoints,
        consolefn = FixedFont;
     }
     if (!ghasfixedwidth(consolefn)) {
-       sprintf(msg, 
+       sprintf(msg,
 	       "Font %s-%d-%d has variable width.\nUsing system fixed font.",
                fontname, fontsty, pointsize);
        askok(msg);
@@ -1517,7 +1525,7 @@ static void pagerpaste(control m)
     if (consolecanpaste(RConsole)) {
 	consolepaste(RConsole);
 	show(RConsole);
-    } 
+    }
 }
 
 static void pagerselectall(control m)
@@ -1565,7 +1573,7 @@ static int pageraddfile(char *wtitle, char *filename, int deleteonexit)
     xbuf nxbuf = file2xbuf(filename, deleteonexit);
 
     if (!nxbuf) {
-	askok("File not found or memory insufficient");
+/*	askok("File not found or memory insufficient"); */
 	return 0;
     }
     if (pagerActualKept == PAGERMAXKEPT) {
@@ -1650,7 +1658,7 @@ static pager pagercreate()
     if (!c) {
          freeConsoleData(p);
          return NULL;
-    }         
+    }
     setdata(c, p);
     if(h == 0) HEIGHT = getheight(c);
     if(w == 0) WIDTH  = getwidth(c);
@@ -1686,10 +1694,10 @@ static pager pagercreate()
     addto(c);
     MCHECK(m = gpopup(pagermenuact, PagerPopup));
     setdata(m, c);
-    setdata(p->mpopcopy = PagerPopup[0].m, c); 
-    setdata(p->mpoppaste = PagerPopup[1].m, c); 
-    setdata(PagerPopup[2].m, c); 
-    setdata(PagerPopup[4].m, c); 
+    setdata(p->mpopcopy = PagerPopup[0].m, c);
+    setdata(p->mpoppaste = PagerPopup[1].m, c);
+    setdata(PagerPopup[2].m, c);
+    setdata(PagerPopup[4].m, c);
     MCHECK(m = newmenubar(pagermenuact));
     setdata(m, c);
     MCHECK(newmenu("File"));

@@ -1157,17 +1157,24 @@ int R_ShowFiles(int nfile, char **file, char **headers, char *wtitle,
 {
     int   i;
     char  buf[1024];
+    WIN32_FIND_DATA fd;
 
     if (nfile > 0) {
 	if (pager == NULL || strlen(pager) == 0)
 	    pager = "internal";
 	for (i = 0; i < nfile; i++) {
-	    if (!strcmp(pager, "internal")) {
-		newpager(wtitle, file[i], headers[i], del);
+	    if (FindFirstFile(file[i], &fd) != INVALID_HANDLE_VALUE) {
+		if (!strcmp(pager, "internal")) {
+		    newpager(wtitle, file[i], headers[i], del);
+		} else {
+		    sprintf(buf, "%s  %s", pager, file[i]);
+		    runcmd(buf, 0, 1, "");
+		}
 	    } else {
-		sprintf(buf, "%s  %s", pager, file[i]);
-		runcmd(buf, 0, 1, "");
+		sprintf(buf, "file.show(): file %s does not exist\n", file[i]);
+		warning(buf);
 	    }
+	    
 	}
 	return 0;
     }

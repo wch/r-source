@@ -194,7 +194,7 @@ char *runerror()
 }
 
 
-int runcmd(char *cmd,int wait,int visible,char *finput) 
+int runcmd(char *cmd, int wait, int visible, char *finput) 
 {
     HANDLE p;
     int ret;

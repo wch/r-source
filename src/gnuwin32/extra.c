@@ -34,9 +34,9 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP  ans;
     char *tmp, *tn, tm[MAX_PATH];
     unsigned int n, done = 0;
-
     WIN32_FIND_DATA fd;
     HANDLE h;
+
     checkArity(op, args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
 	errorcall(call, "invalid file name argument\n");
