@@ -103,7 +103,7 @@ double qnorm5(double p, double mu, double sigma, int lower_tail, int log_p)
 	    else	return ML_POSINF;
 	}
     }
-/* FIXME: This should be improved when log_p or !lower_tail ?
+/* FIXME: This could be improved when log_p or !lower_tail ?
  *	  (using p, not p_ , and a different derivative )
  */
 
