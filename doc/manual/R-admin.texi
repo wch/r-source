@@ -1074,7 +1074,8 @@ about the encoding in use.
 As from version 2.1.0, @R{} has some support for multi-byte character
 sets (@acronym{MBCS}), in particular for UTF-8 locales (which are
 usually identified by suffix @code{.utf8}, something like
-@code{en_GB.utf8}.  UTF-8 is an encoding of Unicode and in principle
+@code{en_GB.utf8}@footnote{As usual, AIX has to be different: it has
+@code{EN_US.UTF-8}!}.  UTF-8 is an encoding of Unicode and in principle
 covers all human languages simultaneously: however, a given system may
 not have fonts capable of displaying all these languages.
 
