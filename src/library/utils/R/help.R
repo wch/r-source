@@ -81,36 +81,38 @@ function(x, ...)
     topic <- attr(x, "topic")
     paths <- as.character(x)
     if(!length(paths)) {
-        writeLines(c(paste("No documentation for", sQuote(topic),
-                           "in specified packages and libraries:"),
-                     paste("you could try",
-                           sQuote(paste("help.search(\"", topic, "\")",
-                                        sep = "")))))
+        writeLines(c(gettextf("No documentation for '%s' specified packages and libraries:",
+                              topic),
+                     gettextf("you could try 'help.search(\"%s\")'",
+                              topic)))
         return(invisible(x))
     }
     if(attr(x, "tried_all_packages")) {
         paths <- unique(dirname(dirname(paths)))
-        msg <- paste("Help for topic", sQuote(topic),
-                     "is not in any loaded package but can be found",
-                     "in the following packages:")
+        msg <- gettextf("Help for topic '%s' is not in any loaded package but can be found in the following packages:",
+                     topic)
         writeLines(c(strwrap(msg), "",
                      paste(" ",
-                           formatDL(c("Package", basename(paths)),
-                                    c("Library", dirname(paths)),
+                           formatDL(c(gettext("Package"),
+                                      basename(paths)),
+                                    c(gettext("Library"),
+                                      dirname(paths)),
                                     indent = 22))))
     }
     else {
         if(length(paths) > 1) {
             file <- paths[1]
-            msg <- paste("Help on topic", sQuote(topic),
-                         "was found in the following packages:")
+            msg <- gettextf("Help on topic '%s' was found in the following packages:",
+                            topic)
             paths <- dirname(dirname(paths))
             writeLines(c(strwrap(msg), "",
                          paste(" ",
-                               formatDL(c("Package", basename(paths)),
-                                        c("Library", dirname(paths)),
+                               formatDL(c(gettext("Package"),
+                                          basename(paths)),
+                                        c(gettext("Library"),
+                                          dirname(paths)),
                                         indent = 22)),
-                         "\nUsing the first match ..."))
+                         gettext("\nUsing the first match ...")))
         }
         else
             file <- paths
@@ -143,7 +145,7 @@ function(x, ...)
             zfile <- zip.file.extract(file, "Rhelp.zip")
             if(file.exists(zfile))
                 file.show(zfile,
-                          title = paste("R Help on", sQuote(topic)),
+                          title = gettextf("R Help on '%s'", topic),
                           delete.file = (zfile != file),
                           pager = attr(x, "pager"))
             else
