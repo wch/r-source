@@ -355,8 +355,11 @@ BUG FIXES
     o	labels.lm was broken. (PR#7417)
 
     o	The hashing used for character vectors in object.size() was
-	inefficient for vectors of with tens of thousands of identical
-	values not sharing the same storage (an unusual case).
+	inefficient for vectors with thousands of identical values not
+	sharing the same storage (an unusual case).
+
+    o	data.matrix() now warns if applied to a data frame with
+	classed columns.
 
 
 
