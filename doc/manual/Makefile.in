@@ -123,6 +123,8 @@ version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
 	  echo "$${v}") > $@
 stamp-refman-dvi: $(refman_TEXINPUTS)
 	@touch $@
+
+## <NOTE> This assumes none of the latex dirs are zipped </NOTE>
 $(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	@(pkg=`basename $@ -pkg.tex`; \
 	if $(PERL) $(top_srcdir)/tools/Rdnewer.pl \
@@ -130,16 +132,17 @@ $(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	  echo "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
 	    OPTS="--latex" $(MAKE) R_PKGS_BASE="$${pkg}" DOCS); \
-	  $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
+	  PERL5LIB=$(top_srcdir)/share/perl $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
+
 $(texinputs_RECOMMENDED): FORCE
 	@(pkg=`basename $@ -pkg.tex`; \
 	if find $@ -newer $(top_builddir)/library/$${pkg}/DESCRIPTION \
 	    -print 2> /dev/null | grep $@ > /dev/null; then :; else \
 	  echo "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  RLIB="$(top_builddir)/library" \
-	    $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
+	    PERL5LIB=$(top_srcdir)/share/perl $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 
 fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi

@@ -37,7 +37,7 @@ use Text::Wrap;
 ## don't buffer output
 $| = 1;
 
-my $revision = ' $Revision: 1.143 $ ';
+my $revision = ' $Revision: 1.144 $ ';
 my $version;
 my $name;
 $revision =~ / ([\d\.]*) /;
@@ -1495,10 +1495,22 @@ sub check_pkg {
     ## Run LaTeX on the manual.
 
     if($opt_latex) {
-	if(-d &file_path($library, $pkgname, "latex")) {
+        my $latex_dir = &file_path($library, $pkgname, "latex");
+	if(-d $latex_dir) {
 	    $ENV{'TEXINPUTS'} =
 	      env_path(&file_path($R::Vars::R_HOME, "share", "texmf"),
 		       $ENV{'TEXINPUTS'});
+            my $was_zipped = 0;
+            # latex files might have been zipped
+            if(-f &file_path($library, $pkgname, "latex", "Rhelp.zip")) {
+                $was_zipped = 1;
+                my $cmd = "cd $latex_dir; unzip -qo Rhelp.zip";
+                if(R_system($cmd)) {
+		    $log->error();
+		    $log->print("Unzipping latex files failed.\n");
+		    exit(1);
+                }
+            }
 	    $log->creating("${pkgname}-manual.tex");
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
@@ -1519,6 +1531,13 @@ sub check_pkg {
 	    }
 	    print MANUAL "\\end\{document\}\n";
 	    close(MANUAL);
+            if($was_zipped) {
+                if(R_system("rm -f $latex_dir/*.tex")) {
+		    $log->error();
+		    $log->print("Removing unzipped latex files failed.\n");
+		    exit(1);
+                }
+            }
 	    $log->result("OK");
 	    if($HAVE_LATEX) {
 		$log->checking("${pkgname}-manual.tex");

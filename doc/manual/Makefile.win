@@ -246,15 +246,19 @@ version.tex: $(top_srcdir)/VERSION
 
 # bundles such as VR are not unpacked in src/library directly
 %-pkg.tex: FORCE
-	@if test -d "$(top_srcdir)/src/library/$*" ; then \
-	  if perl ../../tools/Rdnewer.pl \
-	      "$(top_srcdir)/src/library/$*" "$@"; then \
-	    echo "collecting LaTeX docs for package \`$*' ..."; \
-	    (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
-	    perl ../../tools/pkg2tex.pl $*; \
-	  fi \
+	@echo "collecting LaTeX docs for package \`$*' ..."
+	@if test -f "$(top_srcdir)/library/$*/latex/Rhelp.zip" ; then \
+	  PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
 	else \
-	  perl ../../tools/pkg2tex.pl $*; \
+	  if test -d "$(top_srcdir)/src/library/$*" ; then \
+	    if perl ../../tools/Rdnewer.pl \
+		"$(top_srcdir)/src/library/$*" "$@"; then \
+	      (cd ../../src/gnuwin32/help && $(MAKE)  --no-print-directory RHOME=$(RHOME) latex-$*); \
+	      PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	    fi \
+	  else \
+	    PERL5LIB=$(RHOME)/share/perl perl ../../tools/pkg2tex.pl $*; \
+	  fi \
 	fi
 FORCE:
 
