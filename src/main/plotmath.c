@@ -863,6 +863,7 @@ static int TranslatedSymbol(SEXP expr)
 	code == 0245			||   /* infinity */
 	code == 0260			||   /* degree */
 	code == 0262			||   /* second */
+	code == 0266                    ||   /* partialdiff */
 	0)
 	return code;
     else
@@ -1600,6 +1601,7 @@ AccentTable[] = {
     { "hat",		 94 },
     { "ring",		176 },
     { "tilde",		126 },
+    { "dot",            215 },
     { NULL,		  0 },
 };
 
@@ -1639,7 +1641,10 @@ static BBOX RenderAccent(SEXP expr, int draw)
 	InvalidAccent(expr);
     bodyBBox = RenderElement(body, 0);
     italic = bboxItalic(bodyBBox);
-    accentBBox = RenderChar(code, 0);
+    if (code == 215) /* dotmath */
+	accentBBox = RenderSymbolChar(code, 0);
+    else
+	accentBBox = RenderChar(code, 0);
     width = max(bboxWidth(bodyBBox) + bboxItalic(bodyBBox),
 		bboxWidth(accentBBox));
     xoffset = 0.5 *(width - bboxWidth(bodyBBox));
@@ -1652,7 +1657,10 @@ static BBOX RenderAccent(SEXP expr, int draw)
     yoffset = bboxHeight(bodyBBox) + bboxDepth(accentBBox) + 0.1 * XHeight();
     if (draw) {
 	PMoveTo(savedX + xoffset, savedY + yoffset);
-	RenderChar(code, draw);
+	if (code == 215) /* dotmath */
+	    RenderSymbolChar(code, draw);
+	else
+	    RenderChar(code, draw);
     }
     bodyBBox = CombineOffsetBBoxes(bodyBBox, 0, accentBBox, 0,
 				   xoffset, yoffset);

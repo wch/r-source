@@ -9,6 +9,17 @@
 		CHANGES IN R VERSION 1.5.1
 
 
+NEW FEATURES
+
+    o   Enhancements to mathematical annotation:
+
+	- expressions involving dot(<something>) now produce a dot accent
+	  above the <something> (initial patch from Ben Bolker).  
+
+	- within an expression, the symbol partialdiff is now converted 
+	  to a partial differential symbol (greek delta)
+
+
 BUG FIXES
 
     o	Rdconv now skips CRs in input files, even on Unix.
