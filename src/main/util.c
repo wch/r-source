@@ -576,15 +576,15 @@ int nlevels(SEXP f)
 }
 
 /* Is an object of numeric type. */
-/* FIXME:  the LGLSXP case should be excluded here. */
+/* FIXME:  the LGLSXP case should be excluded here
+ * (really? in many places we affirm they are treated like INTs)*/
 
 Rboolean isNumeric(SEXP s)
 {
-    if (inherits(s,"factor")) return FALSE;
-
     switch(TYPEOF(s)) {
-    case LGLSXP:
     case INTSXP:
+	if (inherits(s,"factor")) return FALSE;
+    case LGLSXP:
     case REALSXP:
 	return TRUE;
     default:
