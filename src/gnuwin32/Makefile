@@ -497,7 +497,7 @@ rsync-recommended:
 	(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 link-recommended:
-	$(RM) ../library/Recommended/*.tgz
+	@$(RM) ../library/Recommended/*.tgz
 	@(cd ../library/Recommended; for i in ${R_PKGS_RECOMMENDED_SOURCES} ; do cp -p $${i}*.tar.gz $${i}.tgz ; done)
 
 ../library/%/DESCRIPTION: ../library/Recommended/%.tgz
