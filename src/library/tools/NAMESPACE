@@ -1,6 +1,6 @@
 useDynLib(tools)
 
-export(".installMD5sums", "Rdindex",
+export("Rdindex",
        "checkDocFiles", "checkDocStyle", "checkFF", "checkMD5sums",
        "checkReplaceFuns", "checkS3methods", "checkTnF", "checkVignettes",
        "codoc", "codocClasses", "codocData", "md5sum", "undoc",
