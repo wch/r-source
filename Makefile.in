@@ -65,8 +65,9 @@ install: all installdirs
 	  $(INSTALL_DATA) $${f} $(rhome)/include; \
 	done
 	@echo "Installing library ..."
-	@cd library; \
-	  $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xf -)
+	@cp -r library $(rhome) || \
+	  (cd library; \
+	    $(TAR) cf - [a-z]* | (cd $(rhome)/library; $(TAR) xof -))
 	@echo "  Building help index ..."
 	@(cd $(rhome)/library; cat */TITLE > LibIndex 2> /dev/null)
 	@echo "  Building HTML index ..."
