@@ -36,14 +36,15 @@ NEW FEATURES
     o	The X11 module (and the hence X11(), jpeg() and png() devices
 	and the X-based dataentry editor) is now in principle
 	available under all Unix GUIs except --gui="none", and this is
-	reflected in capabilities().  capabilities("X11") determines
-	if an X server can be accessed, and so is more likely to be
-	accurate.
+	reflected in capabilities().
+
+	capabilities("X11") determines if an X server can be accessed,
+	and so is more likely to be accurate.
 
     o	binomial() has a new "cauchit" link (suggested by Roger Koenker).
 
     o	ecdf() now has jumps of the correct size (a multiple of 1/n)
-	if there are ties.  (wished by PR#7292).
+	if there are ties.  (Wished by PR#7292).
 
     o	Printing of arrays now honours the 'right' argument if there
 	are more than two dimensions.
@@ -56,9 +57,6 @@ NEW FEATURES
 
     o	scatter.smooth() and loess.smooth() now handle missing values
 	in their inputs.
-
-    o	The use of UseMethod() with no argument was not documented on
-	the help page and is now regarded as an error.
 
     o	Added colorRamp() and colorRampPalette() for color interpolation.
 
@@ -243,7 +241,7 @@ C-LEVEL FACILITIES
     o	There are new public C/C++ header files Rinterface.h and
 	R_ext/RStartup.h for use with external GUIs.
 
-    o	Added onExit() function to graphics devices, to be executed
+    o	Added an onExit() function to graphics devices, to be executed
 	upon user break if non-NULL.
 
 
@@ -254,6 +252,9 @@ DEPRECATED & DEFUNCT
 
     o	Capabilities "bzip2", "GNOME, "libz" and "PCRE" are defunct.
 
+    o	The undocumented use of UseMethod() with no argument was 
+	deprecated in 2.0.1 and is now regarded as an error.
+
     o	Capability "IEEE754" is deprecated.
 
     o	The 'CRAN' argument to update.packages(), old.packages(),
@@ -263,7 +264,7 @@ DEPRECATED & DEFUNCT
 
     o	The S3 methods for getting and setting names of "dist" objects
 	have been removed (as they provided names with a different
-	length than the "dist" object itself).
+	length from the "dist" object itself).
 
 
 INSTALLATION CHANGES
@@ -289,8 +290,8 @@ INSTALLATION CHANGES
     o	The C code for most of the graphics device drivers and their
 	afm files are now in package grDevices.
 
-    o	R is now linked against ncurses only if readline is specified
-	(the default).
+    o	R is now linked against ncurses/termlib/termcap only if 
+	readline is specified (the default) and requires it.
 
 
 PACKAGE INSTALLATION CHANGES
@@ -318,7 +319,7 @@ BUG FIXES
 
     o	S4 methods for primitive functions must be exported from
 	namespaces; this is now done automatically.
-	Note that is.primitive() is now in "base", not "methods" anymore.
+	Note that is.primitive() is now in "base", not "methods".
 
     o	package grid:
 
@@ -336,7 +337,7 @@ BUG FIXES
     o	str() no longer interprets control characters in character
 	strings and factor levels; also no longer truncates factor
 	levels unless they are longer than 'nchar.max'.
-	Truncation of such long strings is now indicated ``outside''
+	Truncation of such long strings is now indicated ''outside''
 	the string.
 
     o	print.factor(quote=TRUE) was not quoting levels, causing
@@ -411,7 +412,7 @@ BUG FIXES
 	classed columns.
 
     o	Plotting histograms where the expression used to deparse to
-	multiple lines now gives a sensible title.  (PR#7421)
+	multiple lines now gives a sensible default title.  (PR#7421)
 
     o	The print method for getDLLRegisteredRoutines() was badly
 	designed, and failed for all the standard packages' DLLs.
@@ -419,6 +420,8 @@ BUG FIXES
     o	getDLLRegisteredRoutines.character() was broken.
 
     o	write.table(x, row.names=FALSE) was incorrect for a 0-column x.
+
+    o	write.table() assumed dec = "," if it was not ".".
 
 
 
