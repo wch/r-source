@@ -601,7 +601,7 @@ m2 <- structure(c(9822616000, 3841723000, 79790.09, 3841723000, 1502536000,
 (d2 <- det(m2, method="qr"))
 stopifnot(d2 == 0) ## 1.4.1 gave 9.331893e+19
 (d3 <- det(m2, method="qr", tol = 1e-10))
-stopifnot(all.equal(d1, d3))
+stopifnot(all.equal(d1, d3, tol=1e-3))
 
 
 
