@@ -465,6 +465,11 @@ Subject: R 1.8.1 ./configure with "," in working directory
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Fri, 5 Dec 2003 10:19:16 +0100
 ..Well, so users expect the earth
+* PR# 6482 *
+Subject: Installation
+From: a0108661@unet.univie.ac.at
+Date: Tue, 27 Jan 2004 18:51:04 +0100 (CET)
+..Mandrake RPM installation problem.
 
 Directory:  Language
 
@@ -803,109 +808,66 @@ Subject: bug-gdk error
 From: 9busova@st.fmph.uniba.sk
 Date: Tue, 16 Dec 2003 08:13:17 +0100 (CET)
 ..Problem with gnome GUI
-* PR# 6451 *
-Subject: [g]sub behaviour with NA
-From: jonathan-rbugs@swintons.net
-Date: Wed, 21 Jan 2004 17:36:06 +0100 (CET)
-* PR# 6462 *
-Subject: 
-From: "Bertha" <kjsvy@usa.com>
-Date: Sun, 25 Jan 2004 14:01:13 -0500
-* PR# 6463 *
-Subject: Reading in .csv Files in R 1081 after uninstalling 1071
-From: jh80@cornell.edu
-Date: Mon, 26 Jan 2004 00:38:55 +0100 (CET)
-* PR# 6464 *
-Subject: Reading in .csv Files in R 1081 after uninstalling 1071
-From: jh80@cornell.edu
-Date: Mon, 26 Jan 2004 00:39:47 +0100 (CET)
-* PR# 6465 *
-Subject: - Second Attempt: Your CHECK may be Waiting.
-From: Kordo Hawrami <itsnotsohard@quickmai1.biz>
-Date: Mon, 26 Jan 2004 03:00:57 -0400
-* PR# 6466 *
-Subject: SPANISH COURSE IN VALENCIA - SPAIN
-From: "" <dynamicspanish@dynamicspanish.com>
-Date: Mon, 26 Jan 2004 11:04:15 -0300
-* PR# 6467 *
-Subject: delivery failed: 0 errors occured
-Subject: hi
-From: <MAILER-DAEMON@brokat.com>
-From: r-bugs@r-project.org
-Date: Tue, 27 Jan 2004 00:22:53 +0100 (CET)
-Date: Mon, 26 Jan 2004 15:07:44 -0800
-* PR# 6468 *
-Subject: Notification  
-Subject: HELLO
-From: postmaster@i56.fr
-From: r-bugs@r-project.org
-Date: Tue, 27 Jan 2004 00:57:21 +0100
-Date: Mon, 26 Jan 2004 18:59:03 -0500
-* PR# 6469 *
-Subject: 
-From: "Sam Fuentes" <pompousastute@attbi.com>
-Date: Tue, 27 Jan 2004 09:16:13 -0500
-* PR# 6470 *
+* PR# 6484 *
+Subject: investor
+From: "Georgina Herring" <icjwgoiiltet@diplomats.com>
+Date: Wed, 28 Jan 2004 10:41:45 +0300
+* PR# 6485 *
 Subject: Test
-From: lrklein@mail-01.med.umich.edu
-Date: Mon, 26 Jan 2004 19:42:31 -0500
-* PR# 6471 *
-From: Holger Drees <drees@num.uni-sb.de>
-Date: Tue, 27 Jan 2004 03:03:09 +0100
-* PR# 6472 *
+From: relaisco-op@co-op.ca
+Date: Wed, 28 Jan 2004 03:45:12 -0500 (EST)
+* PR# 6486 *
+From: info@warepig.com
+Date: Wed, 28 Jan 2004 06:42:09 -0600
+* PR# 6487 *
+Subject: MailMarshal has detected a Virus in your message
+From: infrateam@oxon.blackwellpublishing.com
+Date: Tue, 27 Jan 2004 16:47:37 +0000
+* PR# 6488 *
+Subject: R fails to build on AFS
+From: Atro.Tossavainen+rproject@helsinki.fi
+Date: Wed, 28 Jan 2004 14:40:27 +0100 (CET)
+* PR# 6489 *
+Subject: INTER@CTIVE... virus detectado
+From: Interactive_Antivirus@impsat.net.ec
+From: r-bugs@biostat.ku.dk
+Date: Wed, 28 Jan 2004 09:10:36 -0500
+Date: Wed, 28 Jan 2004 09:07:42 -0500
+* PR# 6490 *
 Subject: Returned mail: see transcript for details
-Subject: Qbvwesxsbrcgo
-From: Mail Delivery Subsystem <MAILER-DAEMON@smtp3.adl2.internode.on.net>
+Subject: 
+From: Mail Delivery Subsystem <MAILER-DAEMON@mailuio.impsat.net.ec>
 From: r-bugs@biostat.ku.dk
-Date: Tue, 27 Jan 2004 13:26:31 +1030 (CST)
-Date: Tue, 27 Jan 2004 13:57:46 +1100
-* PR# 6473 *
-Subject: Hello
-From: jlindsey@luc.ac.be
-Date: Mon, 26 Jan 2004 22:10:10 -0500
-* PR# 6474 *
-Subject: Returned mail: see transcript for details
-Subject: Hello
-From: Mail Delivery Subsystem <MAILER-DAEMON@mail018.syd.optusnet.com.au>
+Date: Wed, 28 Jan 2004 09:15:43 -0500 (ECT)
+Date: Wed, 28 Jan 2004 09:07:42 -0500
+* PR# 6491 *
+Subject: Re: Re: costume
+From: "Taylor Dennis" <rslkvq@dublin.com>
+Date: Wed, 28 Jan 2004 08:13:18 -0600
+* PR# 6492 *
+Subject: Wish list - Windows RGui
+From: rbaer@atsu.edu
+Date: Wed, 28 Jan 2004 16:17:37 +0100 (CET)
+* PR# 6493 *
+Subject: Viruswarnung
+From: daemon <daemon@avg.net4you.net>
+Date: Wed, 28 Jan 2004 17:20:40 +0100
+* PR# 6494 *
+Subject: unstability when using isoreg() function
+From: klaster@karlin.mff.cuni.cz
+Date: Wed, 28 Jan 2004 17:30:58 +0100 (CET)
+* PR# 6495 *
+Subject: - FINAL ATTEMPT: Your CHECK may be Waiting.
+From: Kordo Hawrami <benumber1@quickspondermail.biz>
+Date: Wed, 28 Jan 2004 13:35:10 -0400
+* PR# 6496 *
+Subject: \link{\url{anything}} gives Rdconv trouble
+From: d.firth@warwick.ac.uk
+Date: Wed, 28 Jan 2004 22:28:28 +0100 (CET)
+* PR# 6497 *
+Subject: VIRUS IN YOUR MAIL
+Subject: hello
+From: postmaster@linearg.com
 From: r-bugs@biostat.ku.dk
-Date: Tue, 27 Jan 2004 16:08:17 +1100
-Date: Tue, 27 Jan 2004 16:09:48 +1100
-* PR# 6475 *
-Subject: Die Email von r-bugs@r-project.org konnte nicht weitergeleitet
-From: fwdpgn@t-systems.com
-Date: Tue, 27 Jan 2004 04:36:09 +0160 (CET)
-* PR# 6476 *
-Subject: EMAIL REJECTED
-From: fsc@fuentez.com
-From: r-bugs@r-project.org
-Date: Tue, 27 Jan 2004 02:59:09 -0500
-* PR# 6477 *
-Subject: Delivery failure notification
-From: fsc@fuentez.com
-Date: Tue, 27 Jan 2004 02:59:09 -0500
-* PR# 6478 *
-Subject: Notification of Removed Attachment - please read for details 
-From: "SAS Postmaster 62" <replies-discarded@sas.com>
-Date: Tue, 27 Jan 2004 04:42:40 -0500
-* PR# 6479 *
-Subject: Thank you for your feedback
-From: "L-Soft list server at Sun Microsystems Inc. (1.8e)" <LISTSERV@java.sun.com>
-Date: Tue, 27 Jan 2004 03:32:34 -0700
-* PR# 6480 *
-Subject: Special News for Men
-From: Maura <Espinosauufm@idirect.com>
-Date: Tue, 27 Jan 2004 09:44:56 -0200
-* PR# 6481 *
-Subject: VIRUS (Worm/MyDoom.A2) IN MAIL FROM YOU
-Subject: Hello
-Subject: Hello
-From: postmaster <postmaster@online.be>
-From: r-bugs@biostat.ku.dk
-From: r-bugs@biostat.ku.dk
-Date: Tue, 27 Jan 2004 13:24:35 +0100 (CET)
-Date: Tue, 27 Jan 2004 13:23:36 +0100
-Date: Tue, 27 Jan 2004 13:23:36 +0100
-* PR# 6482 *
-Subject: Installation
-From: a0108661@unet.univie.ac.at
-Date: Tue, 27 Jan 2004 18:51:04 +0100 (CET)
+Date: Thu, 29 Jan 2004 08:29:24 +1100 (EST)
+Date: Thu, 29 Jan 2004 08:31:03 +1100
