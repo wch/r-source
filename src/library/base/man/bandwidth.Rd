@@ -57,7 +57,7 @@ bw.SJ(x, nb = 1000, lower, upper, method = c("ste", "dpi"))
 \seealso{
   \code{\link{density}}.
 
-  \code{\link[MASS]{bandwith.nrd}}, \code{\link[MASS]{ucv}},
+  \code{\link[MASS]{bandwidth.nrd}}, \code{\link[MASS]{ucv}},
   \code{\link[MASS]{bcv}} and \code{\link[MASS]{width.SJ}} in
   package \pkg{MASS}, which are all scaled to the \code{width} argument
   of \code{density} and so give answers four times as large.
@@ -84,7 +84,7 @@ bw.SJ(x, nb = 1000, lower, upper, method = c("ste", "dpi"))
 }
 \examples{
 data(precip)
-plot(density(precip, n=1000))
+plot(density(precip, n = 1000))
 rug(precip)
 lines(density(precip, bw="nrd"), col = 2)
 lines(density(precip, bw="ucv"), col = 3)
