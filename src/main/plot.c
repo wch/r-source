@@ -1604,7 +1604,7 @@ SEXP do_rect(SEXP call, SEXP op, SEXP args, SEXP env)
     ncol = LENGTH(col);
     args = CDR(args);
 
-    PROTECT(border =  FixupCol(CAR(args), gpptr(dd)->fg));
+    PROTECT(border =  FixupCol(CAR(args), Rf_gpptr(dd)->fg));
     nborder = LENGTH(border);
     args = CDR(args);
 
