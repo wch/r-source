@@ -1,6 +1,6 @@
 
 R : Copyright 2003, The R Development Core Team
-Version 1.8.0 Under development (unstable) (2003-08-02)
+Version 1.8.0 beta (2003-09-30)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -3226,4 +3226,21 @@ Error in "[.data.frame"(x, , c("a", "c")) :
 Error in "[.data.frame"(x, 1, c("a", "c")) : 
 	undefined columns selected
 > ## Second succeeded, third gave uniformative error message in 1.7.x.
+> 
+> 
+> ## methods(class = ) with namespaces, .Primitives etc (many missing in 1.7.x):
+> meth2gen <- function(cl)
++     noquote(sub(paste("\\.",cl,"$",sep=""),"", methods(class = cl)))
+> meth2gen("data.frame")
+ [1] [             [<-           [[            [[<-          aggregate    
+ [6] as.data.frame as.list       as.matrix     by            dim          
+[11] dimnames      dimnames<-    duplicated    edit          format       
+[16] formula       is.na         mean          merge         na.exclude   
+[21] na.omit       plot          print         prompt        row.names    
+[26] row.names<-   rowsum        split         split<-       stack        
+[31] str           subset        summary       t             transform    
+[36] unique        unstack      
+> meth2gen("dendrogram")
+[1] [[      cut     plot    print   reorder rev     str    
+> ## --> the output may need somewhat frequent updating..
 > 

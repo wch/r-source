@@ -8,35 +8,52 @@ NextMethod <- function(generic=NULL, object=NULL, ...)
 
 methods <- function (generic.function, class)
 {
-    findGeneric <-
-        function(fname, envir)
-        {
-            if(!exists(fname, mode = "function", envir = envir)) return("")
-            f <- get(fname, mode = "function", envir = envir)
-            isUMEbrace <- function(e) {
-                for (ee in as.list(e[-1]))
-                    if (nchar(res <- isUME(ee))) return(res)
-                ""
-            }
-            isUMEif <- function(e) {
-                if (length(e) == 3) isUME(e[[3]])
-                else {
-                    if (nchar(res <- isUME(e[[3]]))) res
-                    else if (nchar(res <- isUME(e[[4]]))) res
-                    else ""
-                }
-            }
-            isUME <- function(e) {
-                if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
-                    switch(as.character(e[[1]]),
-                           UseMethod = as.character(e[[2]]),
-                           "{" = isUMEbrace(e),
-                           "if" = isUMEif(e),
-                           "")
-                } else ""
-            }
-            isUME(body(f))
+## FIXME: findGeneric() is almost identical inside getS3method() !
+    findGeneric <- function(fname, envir) {
+        if(!exists(fname, mode = "function", envir = envir)) return("")
+        if(any(fname == tools:::.getInternalS3generics())) return(fname)
+        f <- get(fname, mode = "function", envir = envir)
+        isUMEbrace <- function(e) {
+            for (ee in as.list(e[-1]))
+                if (nchar(res <- isUME(ee))) return(res)
+            ""
         }
+        isUMEif <- function(e) {
+            if (length(e) == 3) isUME(e[[3]])
+            else {
+                if (nchar(res <- isUME(e[[3]]))) res
+                else if (nchar(res <- isUME(e[[4]]))) res
+                else ""
+            }
+        }
+        isUME <- function(e) {
+            if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
+                switch(as.character(e[[1]]),
+                       UseMethod = as.character(e[[2]]),
+                       "{" = isUMEbrace(e),
+                       "if" = isUMEif(e),
+                       "")
+            } else ""
+        }
+        isUME(body(f))
+    }
+
+## FIXME[MM]: An abstraction of this function should go to "tools" or similar:
+    rbindSome <- function(df, nms, msg) {
+        ## rbind.data.frame() -- dropping duplicated rows
+        seriDf <- function(x)
+            do.call("paste", c(cbind(rownames(x), x), sep = "\r"))
+        n2 <- length(nms)
+        dnew <- data.frame(visible = rep.int(FALSE, n2),
+                           from    = rep.int(msg,   n2),
+                           row.names = nms)
+        n <- nrow(df)
+        if(n == 0) return(dnew)
+        ## else
+        keep <- !duplicated(c(seriDf(df), seriDf(dnew)))
+        rbind(df  [keep[1:n] , ],
+              dnew[keep[(n+1):(n+n2)] , ])
+    }
 
     S3MethodsStopList <- tools:::.makeS3MethodsStopList(NULL)
     S3groupGenerics <- c("Ops", "Math", "Summary")
@@ -65,7 +82,7 @@ methods <- function (generic.function, class)
         name <- gsub("([.[$+*])", "\\\\\\1",name)
         info <- info[grep(name, row.names(info)), ]
         info <- info[! row.names(info) %in% S3MethodsStopList, ]
-        ## check that there are all functions
+        ## check that these are all functions
         ## might be none at this point
         if(nrow(info)) {
             keep <- sapply(row.names(info),
@@ -83,14 +100,9 @@ methods <- function (generic.function, class)
         }
         S3reg <- ls(get(".__S3MethodsTable__.", envir = defenv),
                     pattern = name)
-        if(length(S3reg)) {
-            msg <- paste("registered S3method for", generic.function)
-            nmS3reg <- rep.int(msg, length(S3reg))
-            info <- rbind(info,
-                          data.frame(visible = rep.int(FALSE, length(S3reg)),
-                                     from = nmS3reg,
-                                     row.names = S3reg))
-        }
+        if(length(S3reg))
+            info <- rbindSome(info, S3reg, msg =
+                              paste("registered S3method for", generic.function))
     }
     else if (!missing(class)) {
 	if (!is.character(class))
@@ -120,18 +132,12 @@ methods <- function (generic.function, class)
         for(i in loadedNamespaces()) {
             S3reg <- ls(get(".__S3MethodsTable__.", envir = asNamespace(i)),
                         pattern = name)
-            if(length(S3reg)) {
-                nmS3reg <- rep.int("registered S3method", length(S3reg))
-                info <- rbind(info,
-                              data.frame(visible = rep.int(FALSE, length(S3reg)),
-                                         from = nmS3reg, row.names = S3reg))
-            }
+            if(length(S3reg))
+                info <- rbindSome(info, S3reg, msg = "registered S3method")
         }
     }
     else stop("must supply generic.function or class")
 
-    ## might both export and register a method
-    info <- info[!duplicated(row.names(info)), ]
     info <- info[sort.list(row.names(info)), ]
     res <- row.names(info)
     class(res) <- "MethodsFunction"
@@ -161,45 +167,47 @@ data.class <- function(x) {
     }
 }
 
+
 getS3method <-  function(f, class, optional = FALSE)
 {
-    findGeneric <-
-        function(fname, envir)
-        {
-            if(!exists(fname, mode = "function", envir = envir)) return("")
-            f <- get(fname, mode = "function", envir = envir)
-            if(.isMethodsDispatchOn() && is(f, "genericFunction")) {
-                ## maybe an S3 pseudo-generic was turned into the default
-                fdeflt <- finalDefaultMethod(getMethodsForDispatch(fname, f))
-                if(is(fdeflt, "derivedDefaultMethod"))
-                    f <- fdeflt
-                else
-                    warning("\"", fname, "\" is a formal generic function; S3 methods will not likely be found")
-            }
-            isUMEbrace <- function(e) {
-                for (ee in as.list(e[-1]))
-                    if (nchar(res <- isUME(ee))) return(res)
-                ""
-            }
-            isUMEif <- function(e) {
-                if (length(e) == 3) isUME(e[[3]])
-                else {
-                    if (nchar(res <- isUME(e[[3]]))) res
-                    else if (nchar(res <- isUME(e[[4]]))) res
-                    else ""
-                }
-            }
-            isUME <- function(e) {
-                if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
-                    switch(as.character(e[[1]]),
-                           UseMethod = as.character(e[[2]]),
-                           "{" = isUMEbrace(e),
-                           "if" = isUMEif(e),
-                           "")
-                } else ""
-            }
-            isUME(body(f))
+### FIXME: findGeneric() is almost identical inside methods()
+###	MM thinks the one here is wrong
+    findGeneric <- function(fname, envir) {
+        if(!exists(fname, mode = "function", envir = envir)) return("")
+        if(any(fname == tools:::.getInternalS3generics())) return(fname)
+        f <- get(fname, mode = "function", envir = envir)
+        if(.isMethodsDispatchOn() && is(f, "genericFunction")) {
+            ## maybe an S3 pseudo-generic was turned into the default
+            fdeflt <- finalDefaultMethod(getMethodsForDispatch(fname, f))
+            if(is(fdeflt, "derivedDefaultMethod"))
+                f <- fdeflt
+            else
+                warning("\"", fname, "\" is a formal generic function; S3 methods will not likely be found")
         }
+        isUMEbrace <- function(e) {
+            for (ee in as.list(e[-1]))
+                if (nchar(res <- isUME(ee))) return(res)
+            ""
+        }
+        isUMEif <- function(e) {
+            if (length(e) == 3) isUME(e[[3]])
+            else {
+                if (nchar(res <- isUME(e[[3]]))) res
+                else if (nchar(res <- isUME(e[[4]]))) res
+                else ""
+            }
+        }
+        isUME <- function(e) {
+            if (is.call(e) && (is.name(e[[1]]) || is.character(e[[1]]))) {
+                switch(as.character(e[[1]]),
+                       UseMethod = as.character(e[[2]]),
+                       "{" = isUMEbrace(e),
+                       "if" = isUMEif(e),
+                       "")
+            } else ""
+        }
+        isUME(body(f))
+    }
 
     groupGenerics <- c("Ops", "Math", "Summary")
     truegf <- findGeneric(f, parent.frame())
