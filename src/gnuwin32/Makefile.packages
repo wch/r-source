@@ -6,10 +6,10 @@ include MkRules
 HELP=YES
 WINHELP=NO # Ue one of NO, CHM, BOTH (chm and winhelp)
 
-RHOME=`pwd`/../..
+RHOME=$(shell cd ../..; pwd)# must be absolute path
 RLIBS=$(RHOME)/library
 PKGDIR=$(RHOME)/src/library
-PKGD=$(shell cd $(PKGDIR); pwd)
+PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
 
 ifdef DEBUG
  OPTFLAGS=-g -O2 -Wall
@@ -24,12 +24,10 @@ FFLAGS=$(OPTFLAGS)
 libR.a:  R.exp
 	$(DLLTOOL) $(DLLTOOLFLAGS) $(R-DLLTOOLFLAGS) --dllname R.dll --def R.exp --output-lib libR.a
 
-base-HELP=ziponly
-
 
 pkg-%:  libR.a #../include/globalvar.h
 	$(MAKE) DLLNM=$($*-DLLNM)  EXTRADOCS=$($*-EXTRADOCS) \
-	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS)\
+	  -C $(PKGDIR)/$* PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS) \
 	  -f $(RHOME)/src/gnuwin32/MakePkg
 ifeq ($(strip $(HELP)),YES)
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) $($*-HELP)help-$*
@@ -49,7 +47,8 @@ pkgclean-%:
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@mkdir -p $(PKGDIR)/$*/check
-	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* -f $(RHOME)/src/gnuwin32/check/PkgCheck
+	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS) \
+	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 
 ziphelp-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziphelp-$*
@@ -58,6 +57,9 @@ ziphelp-%:
 ziponly-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziponlyhelp-$*
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) contents-$*
+
+bundle-%:
+	$(PERL) fixed/dobundle.pl $* $(PKGD) $(RLIBS)
 
 bootstrap-DLLNM=boott
 

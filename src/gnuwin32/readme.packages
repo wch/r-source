@@ -163,6 +163,19 @@ zip is often installed on Linux machines, and sources and binaries for
 Unix boxes are available via the Info-Zip site given above.
 
 
+Non-standard locations
+======================
+
+You can specify the location of the package source by PKGDIR and the
+library in which to install the package by RLIBS, as in
+
+make PKGDIR=/mysources RLIBS=/R/library pkg-mypkg
+make PKGDIR=/mysources RLIBS=/R/library pkgcheck-mypkg
+
+installs the package in \mysources\mypkg as \R\library\mypkg and checks its
+examples.
+
+
 Feedback
 ========
 

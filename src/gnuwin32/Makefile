@@ -11,7 +11,7 @@ PKGDIR=$(RHOME)/src/library
 PKGD=$(shell cd $(PKGDIR); pwd)# must be absolute path
 
 ifdef DEBUG
- OPTFLAGS=-g -O2
+ OPTFLAGS=-g -O2 -Wall
  DLLFLAGS=
 else
  OPTFLAGS=-O2 -Wall -pedantic
@@ -141,7 +141,8 @@ pkgclean-%:
 pkgcheck-%:
 	@$(ECHO) -------- Testing package $* --------
 	-@mkdir -p $(PKGDIR)/$*/check
-	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* -f $(RHOME)/src/gnuwin32/check/PkgCheck
+	@$(MAKE) -C $(PKGDIR)/$*/check PKG=$* RHOME=$(RHOME) RLIBS=$(RLIBS) \
+	  -f $(RHOME)/src/gnuwin32/check/PkgCheck
 
 ziphelp-%:
 	$(MAKE) -C ./help RHOME=$(RHOME) PKGDIR=$(PKGD) RLIBS=$(RLIBS) ziphelp-$*
@@ -259,6 +260,8 @@ packagedist:
 	$(MKDIR) $(RPREFIX)/src/library $(RPREFIX)/src/gnuwin32 
 	$(CP) -p ../../COPYING exported-vars R.exp MkRules MakePkg MakeDll $(RPREFIX)/src/gnuwin32
 	$(CP) -p Makefile.packages $(RPREFIX)/src/gnuwin32/Makefile
+	$(MKDIR) $(RPREFIX)/src/gnuwin32/fixed
+	$(CP) fixed/dobundle.pl $(RPREFIX)/src/gnuwin32/fixed
 	$(CP) -pr help check $(RPREFIX)/src/gnuwin32
 	$(RM) $(RPREFIX)/src/gnuwin32/help/*.c
 	$(MAKE) -C $(RPREFIX)/src/gnuwin32/help clean
@@ -285,7 +288,9 @@ pkgcheck-base:
 	@$(ECHO) -------- Testing package base --------
 	@(cd ../../library/base/R-ex; unzip -oq Rex)
 	-@mkdir -p ../library/base/check
-	-@$(MAKE) -C ../library/base/check PKG=base -f ../../../gnuwin32/check/PkgCheck
+	-@$(MAKE) -C ../library/base/check \
+	  PKG=base RHOME=$(RHOME) RLIBS=$(RLIBS) \
+	  -f ../../../gnuwin32/check/PkgCheck
 	@(cd ../../library/base/R-ex; rm -f *.R)
 
 bundle-%:
