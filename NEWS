@@ -113,6 +113,8 @@ BUG FIXES
 
     o	xtabs() without a response was ignoring drop.unused.levels=TRUE.
 
+    o	readLines(ok=FALSE) was not generating an error when it should.
+
 
 
 

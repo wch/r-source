@@ -1654,7 +1654,8 @@ no_more_lines:
     if(nbuf > 0) { /* incomplete last line */
 	if(con->text && con->blocking) {
 	    nread++;
-	    warningcall(call, "incomplete final line");
+	    warning("incomplete final line found by readLines on `%s'",
+		    con->description);
 	} else {
 	    /* push back the rest */
 	    pushback(con, 0, buf);
@@ -1662,8 +1663,8 @@ no_more_lines:
 	}
     }
     free(buf);
-    if(n < nnn && !ok)
-	errorcall(call, "too few lines read");
+    if(nread < nnn && !ok)
+	error("too few lines read in readLines");
     PROTECT(ans2 = allocVector(STRSXP, nread));
     for(i = 0; i < nread; i++)
 	SET_STRING_ELT(ans2, i, STRING_ELT(ans, i));
