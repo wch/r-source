@@ -2366,6 +2366,7 @@ Coefficients: (1 not defined because of singularities)
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)   1.4719     0.9484   1.552    0.165
 x1            0.5867     0.3961   1.481    0.182
+x2                NA         NA      NA       NA
 x3            0.2587     0.3509   0.737    0.485
 
 Residual standard error: 0.8063 on 7 degrees of freedom
@@ -2401,6 +2402,7 @@ Coefficients: (1 not defined because of singularities)
             Estimate Std. Error t value Pr(>|t|)
 (Intercept)   1.4719     0.9484   1.552    0.165
 x1            0.5867     0.3961   1.481    0.182
+x2                NA         NA      NA       NA
 x3            0.2587     0.3509   0.737    0.485
 
 (Dispersion parameter for gaussian family taken to be 0.6501753)

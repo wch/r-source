@@ -534,7 +534,8 @@ summary.glm <- function(object, dispersion = NULL,
     p <- object$rank
     p1 <- 1:p
 
-    ## WATCHIT! doesn't this rely on pivoting not permuting 1:p?
+    aliased <- is.na(coef(object))  # used in print method
+    ## WATCHIT! doesn't this rely on pivoting not permuting 1:p? -- that's quaranteed
     coef.p <- object$coefficients[Qr$pivot[p1]]
     covmat.unscaled <- chol2inv(Qr$qr[p1,p1,drop=FALSE])
     dimnames(covmat.unscaled) <- list(names(coef.p),names(coef.p))
@@ -568,11 +569,11 @@ summary.glm <- function(object, dispersion = NULL,
 		      "df.residual","null.deviance","df.null","iter")],
 	     list(deviance.resid= residuals(object, type = "deviance"),
 		  coefficients=coef.table,
+                  aliased=aliased,
 		  dispersion=dispersion,
-		  df=c(object$rank, df.r),
+		  df=c(object$rank, df.r, NCOL(Qr$qr)),
 		  cov.unscaled=covmat.unscaled,
 		  cov.scaled=covmat))
-    ans$df <- c(p, df.r, NCOL(Qr$qr))
 
     if(correlation) {
 	dd <- sqrt(diag(covmat.unscaled))
@@ -587,7 +588,7 @@ summary.glm <- function(object, dispersion = NULL,
 print.summary.glm <-
     function (x, digits = max(3, getOption("digits") - 3),
 	      symbolic.cor = x$symbolic.cor,
-	      signif.stars= getOption("show.signif.stars"), ...)
+	      signif.stars = getOption("show.signif.stars"), ...)
 {
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep="\n", collapse="\n"), "\n\n", sep="")
@@ -603,7 +604,13 @@ print.summary.glm <-
 	cat("\nCoefficients: (", nsingular,
 	    " not defined because of singularities)\n", sep = "")
     else cat("\nCoefficients:\n")
-    print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
+    coefs <- x$coefficients
+    if(!is.null(aliased <- x$aliased) && any(aliased)) {
+        cn <- names(aliased)
+        coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
+        coefs[!aliased, ] <- x$coefficients
+    }
+    print.coefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
     ##
     cat("\n(Dispersion parameter for ", x$family$family,
 	" family taken to be ", format(x$dispersion), ")\n\n",
@@ -620,6 +627,12 @@ print.summary.glm <-
 
     correl <- x$correlation
     if(!is.null(correl)) {
+# looks most sensible not to give NAs for undefined coefficients
+#         if(!is.null(aliased) && any(aliased)) {
+#             nc <- length(aliased)
+#             correl <- matrix(NA, nc, nc, dimnames = list(cn, cn))
+#             correl[!aliased, !aliased] <- x$correl
+#         }
 	p <- NCOL(correl)
 	if(p > 1) {
 	    cat("\nCorrelation of Coefficients:\n")

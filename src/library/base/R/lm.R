@@ -279,6 +279,7 @@ summary.lm <- function (object, correlation = FALSE, symbolic.cor = FALSE, ...)
     dimnames(ans$coefficients)<-
 	list(names(z$coefficients)[Qr$pivot[p1]],
 	     c("Estimate", "Std. Error", "t value", "Pr(>|t|)"))
+    ans$aliased <- is.na(coef(object))  # used in print method
     ans$sigma <- sqrt(resvar)
     ans$df <- c(p, rdf, NCOL(Qr$qr))
     if (p != attr(z$terms, "intercept")) {
@@ -328,8 +329,14 @@ print.summary.lm <-
 	cat("\nCoefficients: (", nsingular,
 	    " not defined because of singularities)\n", sep = "")
     else cat("\nCoefficients:\n")
+    coefs <- x$coefficients
+    if(!is.null(aliased <- x$aliased) && any(aliased)) {
+        cn <- names(aliased)
+        coefs <- matrix(NA, length(aliased), 4, dimnames=list(cn, colnames(coefs)))
+        coefs[!aliased, ] <- x$coefficients
+    }
 
-    print.coefmat(x$coef, digits=digits, signif.stars=signif.stars, ...)
+    print.coefmat(coefs, digits=digits, signif.stars=signif.stars, na.print="NA", ...)
     ##
     cat("\nResidual standard error:",
 	format(signif(x$sigma, digits)), "on", rdf, "degrees of freedom\n")

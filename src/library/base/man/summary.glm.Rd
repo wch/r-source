@@ -37,6 +37,9 @@
   coefficients, standard errors, etc. and additionally gives
   ``significance stars'' if \code{signif.stars} is \code{TRUE}.
 
+  Aliased coefficients are omitted in the returned object but (as from \R
+  1.8.0) restored by the \code{print} method.
+
   Correlations are printed to two decimal places (or symbolically): to
   see the actual correlations print \code{summary(object)$correlation}
   directly.
@@ -52,16 +55,16 @@
   \item{df.residual}{the component from \code{object}.}
   \item{null.deviance}{the component from \code{object}.}
   \item{df.null}{the component from \code{object}.}
-  \item{df}{degrees of freedom, a 3-vector \eqn{(p, n-p, p*)}, the last
-    being the number of non-aliased coefficients.}
   \item{deviance.resid}{the deviance residuals:
     see \code{\link{residuals.glm}}.}
   \item{coefficients}{the matrix of coefficients, standard errors,
     z-values and p-values.  Aliased coefficients are omitted.}
+  \item{aliased}{named logical vector showing if the original
+    coefficients are aliased.} 
   \item{dispersion}{eother the supplied argument or the estimated
     dispersion if the latter in \code{NULL}}
-  \item{df}{a 2-vector of the rank of the model and the number of
-    residual degrees of freedom.}
+  \item{df}{a 3-vector of the rank of the model and the number of
+    residual degrees of freedom, plus number of non-aliased coefficients.}
   \item{cov.unscaled}{the unscaled (\code{dispersion = 1}) estimated covariance
     matrix of the estimated coefficients.}
   \item{cov.scaled}{ditto, scaled by \code{dispersion}.}

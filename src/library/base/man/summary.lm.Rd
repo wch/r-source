@@ -49,6 +49,8 @@
   \item{coefficients}{a \eqn{p \times 4}{p x 4} matrix with columns for
     the estimated coefficient, its standard error, t-statistic and
     corresponding (two-sided) p-value.  Aliased coefficients are omitted.}
+  \item{aliased}{named logical vector showing if the original
+    coefficients are aliased.} 
   \item{sigma}{the square root of the estimated variance of the random
     error
     \deqn{\hat\sigma^2 = \frac{1}{n-p}\sum_i{R_i^2},}{%
