@@ -1,9 +1,9 @@
 \name{plot.default}
 \title{The Default Scatterplot Function}
 \usage{
-plot.default(x, y, type = "p", col = par("fg"), bg = NA,
+plot.default(x, y=NULL, type = "p", col = par("fg"), bg = NA,
              pch = par("pch"), xlim = NULL, ylim = NULL, log = "",
-             axes = TRUE, frame.plot = TRUE, panel.first = NULL,
+             axes = TRUE, frame.plot = axes, panel.first = NULL,
              panel.last = NULL, ann = par("ann"), main = NULL,
              xlab = NULL, ylab = NULL, cex = par("cex"),
              lty = par("lty"), lwd = par("lwd"), \dots)
@@ -23,9 +23,9 @@ plot.default(x, y, type = "p", col = par("fg"), bg = NA,
     specified so that each point can be given its own color.  If there
     are fewer colors than points they are recycled in the standard
     fashion.}
-  \item{bg}{???}
+  \item{bg}{background color of ???}
   \item{pch}{a vector of plotting characters or symbols.}
-  \item{xlim}{the x limits of the plot.}
+  \item{xlim}{the x limits (min,max) of the plot.}
   \item{ylim}{the y limits of the plot.}
   \item{log}{a character string which contains \code{"x"} if the x axis
     is to be logarithmic, \code{"y"} if the y axis is to be logarithmic
