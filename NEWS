@@ -71,8 +71,7 @@ NEW FEATURES
 
     o	The Ansari-Bradley, Bartlett, Fligner-Killeen, Friedman,
 	Kruskal-Wallis, Mood, Quade, t, and Wilcoxon tests as well as
-	cor.test() and var.test() in package ctest now have formula
-	interfaces.
+	var.test() in package ctest now have formula interfaces.
 
     o	Matrix multiplication functions %*% and crossprod() now use a
 	level-3 BLAS routine dgemm.  When R is linked with the ATLAS
