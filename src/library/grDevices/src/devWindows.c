@@ -19,6 +19,9 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* <MBCS> Use of strchr on display type is fine.
+ */
+
 /*--- Device Driver for Windows; this file started from
  *  src/unix/X11/devX11.c
  */
