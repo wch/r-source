@@ -6,7 +6,7 @@ CleanMe =
 rRHOME= ../..
 #
 RETC	= $(rRHOME)/etc
-R	= $(rRHOME)/bin/R
+R       = $(rRHOME)/bin/R --no-init-file --no-save --no-restore
 Rbinary = $(rRHOME)/bin/R.binary
 Rbase	= $(rRHOME)/library/base
 
@@ -57,7 +57,7 @@ All-Ex.Rout: All-Ex.R $(Rbinary) $(Rbase)
 	@if [ -f $@.bak ]; then mv $@.bak $@.bakk ; fi
 	@if [ -f $@ ]; then mv $@ $@.bak ; fi
 	@echo 'Running all help() EXAMPLES ..'
-	$(R) -v 6 --no-save --no-restore < All-Ex.R > $@
+	$(R) -v 6 < All-Ex.R > $@
 
 clean:
 	rm -f *.R
