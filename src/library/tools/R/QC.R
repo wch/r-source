@@ -2319,7 +2319,11 @@ function(package)
     if(file_test("-d", vignette_dir)
        && length(list_files_with_type(vignette_dir, "vignette"))) {
         reqs <- unlist(.build_vignette_index(vignette_dir)$Depends)
-        reqs <- reqs %w/o% c(depends, suggests, package_name)
+        ## For the time being, ignore base packages missing from the
+        ## DESCRIPTION dependencies even if explicitly given as vignette
+        ## dependencies.
+        reqs <- reqs %w/o% c(depends, suggests, package_name,
+                             standard_package_names$base)
         if(length(reqs))
             bad_depends$missing_vignette_depends <- reqs
     }
