@@ -264,6 +264,9 @@ INSTALLATION CHANGES
 
 BUG FIXES
 
+    o   summaryRprof was ignoring functions whose name begins with ., eg 
+	.C, .Call, .Fortran (PR#7137)
+
     o   Complex superassignments were wrong when a variable with the same
     	 name existed locally, and were not documented in R-lang.
 

@@ -30,8 +30,8 @@ summaryRprof <- function(filename = "Rprof.out", chunksize = 5000)
             break
     })
     if(count == 0) stop("no events were recorded")
-    totalt <- sapply(ls(envir = total), function(f) get(f, envir = total))
-    selft <- sapply(ls(envir = self), function(f) get(f, envir = self))
+    totalt <- sapply(ls(envir = total,all.names=TRUE), function(f) get(f, envir = total))
+    selft <- sapply(ls(envir = self,all.names=TRUE), function(f) get(f, envir = self))
 
     digits <- ifelse(head$interval < 1e4, 3, 2)
     totalpct <- round(totalt*100/count, 1)
