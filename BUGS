@@ -323,3 +323,7 @@ Date: Wed, 27 Oct 1999 17:31:01 +0100 (GMT)
 Subject: expand.grid()
 From: Jonathan Rougier <J.C.Rougier@durham.ac.uk>
 Date: Thu, 28 Oct 1999 17:23:02 +0100 (BST)
+* PR# 302 *
+Subject: modreg buggy: uninitialized variable in sinerp.f
+From: "Thomas Hoffmann" <thoffman@zappa.sax.de>
+Date: Sat, 30 Oct 99 13:24:14 +0100
