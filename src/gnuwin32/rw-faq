@@ -145,7 +145,7 @@ path_to_R\bin\rterm.exe --vsize 10M --nsize 300k --no-restore --no-save < %1 > %
 
 Yes. The latest versions of ESS (e.g. 5.1.9) come with support for
 this version of R, and rw0650 and later have support for interrupting the
-R process from ESS (by C-C C-C).
+R process from ESS (by C-c C-c).
 
 For help with ESS, please send email to ESS-help@stat.ethz.ch, not the R
 mailing lists.
@@ -216,8 +216,8 @@ line, for example in the shortcut you could have
 
       path_to_R\bin\rgui.exe --vsize 10M --nsize 300k R_LIBS=e:/R/library
 
-and you can set variables in a file .Renviron in your home directory,
-for example
+and you can set variables in a file .Renviron in the working directory
+or your home directory, for example
 
       R_LIBS=e:/R/library
       R_VSIZE=10M
@@ -406,14 +406,17 @@ Then you can debug by
 
 However, note
 
-   * gdb will only be able to find the source code if we run in the location
-     where the source was compiled (rw0xxx/src/gnuwin32 for the main system,
-     rw0xxx/src/library/mypkg/src for a package), unless told otherwise by
-     the `directory' command.
+   * gdb will only be able to find the source code if we run in the
+     location where the source was compiled (rw0xxx/src/gnuwin32 for
+     the main system, rw0xxx/src/library/mypkg/src for a package),
+     unless told otherwise by the `directory' command. It is most
+     convenient to set a list of code locations via `directory'
+     commands in the file .gdbinit in the directory from which gdb is
+     run.
 
-   * It is only possible to set breakpoints in a DLL after the DLL has been
-     loaded. So a way to examine the function `tukeyline' in package `eda'
-     might be
+   * It is only possible to set breakpoints in a DLL after the DLL has
+     been loaded. So a way to examine the function `tukeyline' in
+     package `eda' might be
 
            gdb ../../../../bin/Rgui.exe
            (gdb) break WinMain
