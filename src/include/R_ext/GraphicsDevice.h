@@ -412,6 +412,16 @@ typedef struct {
      *   font, cex, ps, col, gamma
      */
     void (*text)();
+    /*
+     * device_onExit is called by GEonExit when the user has aborted
+     * some operation, and so an R_ProcessEvents call may not return normally.
+     * It need not be set to any value; if null, it will not be called.
+     * 
+     * An example is ...
+     *
+     * static void X11_onExit(NewDevDesc *dd);
+    */    
+    void (*onExit)();
 } NewDevDesc;
 
 	/********************************************************/

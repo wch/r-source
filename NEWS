@@ -189,6 +189,9 @@ C-LEVEL FACILITIES
 
     o	There are new public C/C++ header files Rinterface.h and
 	R_ext/RStartup.h for use with external GUIs.
+	
+    o	Added onExit() function to graphics devices, to be executed
+    	upon user break if non-NULL.
 
 
 DEPRECATED & DEFUNCT

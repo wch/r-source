@@ -2575,11 +2575,16 @@ void GEonExit()
    * Can be cleaned up when device code moved here.
    */
     int i, devNum;
+    GEDevDesc *gd;
+    NewDevDesc *dd;
     i = 1;
     if (!NoDevices()) {
 	devNum = curDevice();
 	while (i++ < NumDevices()) {
-  	    ((GEDevDesc*) GetDevice(devNum))->recordGraphics = TRUE;
+  	    gd = (GEDevDesc*) GetDevice(devNum);
+  	    gd->recordGraphics = TRUE;
+  	    dd = gd->dev;
+  	    if (dd->onExit) dd->onExit(dd);
 	    devNum = nextDevice(devNum);
 	}
     }

@@ -1276,15 +1276,21 @@ static void CHelpKeyIn(control w, int key)
     }
 }
 
+extern Rboolean UserBreak;
+
 static void NHelpKeyIn(control w,int key)
 {
     NewDevDesc *dd = (NewDevDesc *) getdata(w);
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     if (xd->replaying) return;
-    if (key == '\n') {  /* ENTER has been translated to newline */
+    switch (key) {
+      case '\n':  /* ENTER has been translated to newline */
         xd->enterkey = TRUE;
 	return;
+      case ESC:
+        UserBreak = TRUE;
+        return;
     }
     if (ggetkeystate() != CtrlKey)
         return;
@@ -2887,9 +2893,22 @@ menu getGraphMenu(char* menuname)
     else return(NULL);
 }
 
+static void GA_confirm_onExit(NewDevDesc *dd)
+{
+    gadesc *xd = (gadesc *) dd->deviceSpecific;
+    dd->onExit = NULL;
+    addto(xd->gawin);
+    gchangemenubar(xd->mbar);
+    gchangepopup(xd->gawin, xd->grpopup);
+    addto(xd->gawin);
+    setstatus("R Graphics");
+    GA_Activate(dd);
+    
+    xd->confirmation = FALSE;
+}
+
 Rboolean winNewFrameConfirm()
 {
-    char savetitle[50];
     char msg[] = "Waiting to confirm page change...";
     gadesc *xd;
     GEDevDesc *dd = GEcurrentDevice();
@@ -2913,20 +2932,14 @@ Rboolean winNewFrameConfirm()
     R_WriteConsole(msg, strlen(msg));
     R_WriteConsole("\n", 1);
     R_FlushConsole();
-    strncpy(savetitle, gettext(xd->gawin), sizeof(savetitle));
     settext(xd->gawin, "Click or hit ENTER for next page");
+    dd->dev->onExit = GA_confirm_onExit;  /* install callback for cleanup */
     while (!xd->clicked && !xd->enterkey) {
 	if(xd->buffered) SHOW;
         WaitMessage();
-	R_ProcessEvents();
+	R_ProcessEvents(); /* May not return if user interrupts */
     }
-    addto(xd->gawin);
-    gchangemenubar(xd->mbar);
-    gchangepopup(xd->gawin, xd->grpopup);
-    addto(xd->gawin);
-    setstatus("R Graphics");
-    settext(xd->gawin, savetitle);
+    dd->dev->onExit(dd->dev);
 
-    xd->confirmation = FALSE;
     return TRUE;
 }
