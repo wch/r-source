@@ -389,5 +389,57 @@ Rapp.updates <- function() {
 
 }
    
-} # AQUA
+}else{ # NOT AQUA
 
+    browse.pkgs <- function(where = c("CRAN","BIOC"),
+                            type = c("binary","source"), global = FALSE)
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+    browse.update.pkgs <- function(where = c("CRAN", "BIOC"),
+                                   type = c("binary", "source"),
+                                   in.place = TRUE)
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+    install.binaries <- function(pkgs, lib, CRAN=getOption("CRAN"),
+                                 contriburl=contrib.url(CRAN, type="mac.binary"),
+                                 method, available=NULL, destdir=NULL,
+                                 installWithVers=FALSE)
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+   
+    install.from.file <- function(pkg = file.choose(), binary=FALSE)
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+    data.manager <- function()
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+    package.manager <- function()
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+    CRAN.binaries <- function(CRAN=getOption("CRAN"), method,
+                              contriburl=contrib.url(CRAN, type="mac.binary"))
+    {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+    flush.console <- function(){
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+    
+    Rapp.updates <- function() {
+        warning("This function is inteded to work with the Aqua GUI") 
+    }
+
+}
