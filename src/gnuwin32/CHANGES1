@@ -1,7 +1,8 @@
 		Windows-specific changes to R
 		=============================
 
-See the file NEWS for changes that affect all versions of R.
+For changes since the release of R 2.0.0 on 4 Oct 2004 see the files
+CHANGES.
 
 
 rw2000
