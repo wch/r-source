@@ -132,21 +132,19 @@ grid.rect(width=convertWidth(unit(1, "inches"), "npc"))
 The next piece of code demonstrates that, if we 
 place the calculations within a {\tt drawDetails} method, then
 the output remains consistent across device resizes and 
-copies\footnote{In order to avoid drawing the rectangle 
-multiple times, we have draw the rectangle
- but not record it on the display list ({\tt recording=FALSE}; only
-the {\tt "myrect"} grob is recorded on the display list).}.
+copies.
 
 <<results=hide>>=
 drawDetails.myrect <- function(x, recording) {
   gr <- rectGrob(width=convertWidth(unit(1, "inches"), "npc"))
-  grid.draw(gr, recording=FALSE)
+  grid.draw(gr)
 }
 grid.draw(grob(cl="myrect"))
  
 
 @
-We will now show that a {\tt drawDetails()} method can also be used
+The next example shows 
+that a {\tt drawDetails()} method can also be used
 to save base graphics output on the \grid{} display list.
 This  example
 uses 

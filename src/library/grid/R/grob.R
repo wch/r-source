@@ -1772,8 +1772,9 @@ drawGTree <- function(x) {
   preDraw(x)
   # Do any class-specific drawing
   drawDetails(x, recording=FALSE)
-  # Draw all children
-  grid.draw(x$children, recording=FALSE)
+  # Draw all children IN THE RIGHT ORDER
+  for (i in x$childrenOrder)
+    grid.draw(x$children[[i]], recording=FALSE)
   postDraw(x)
 }
 

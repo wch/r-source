@@ -1,5 +1,6 @@
 \name{grid.record}
 \alias{grid.record}
+\alias{recordGrob}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Encapsulate calculations and drawing }
 \description{
@@ -11,7 +12,8 @@
   Intended \emph{only} for expert use.
 }
 \usage{
-grid.record(expr, list)
+recordGrob(expr, list, name=NULL, gp=NULL, vp=NULL)
+grid.record(expr, list, name=NULL, gp=NULL, vp=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,10 +21,16 @@ grid.record(expr, list)
     an \dQuote{unevaluated expression}.}
   \item{list}{a list defining the environment in which \code{expr} is to
     be evaluated.}
+  \item{name}{ A character identifier. }
+  \item{gp}{An object of class \code{gpar}, typically the output
+    from a call to the function \code{gpar}.  This is basically
+    a list of graphical parameter settings.}
+  \item{vp}{A Grid viewport object (or NULL).}
 }
 \details{
   A grob is created of special class \code{"recordedGrob"}
-  and drawn.  The \code{drawDetails} method for this class
+  (and drawn, in the case of \code{grid.record}).
+  The \code{drawDetails} method for this class
   evaluates the expression with the list as the evaluation
   environment (and the grid Namespace as the parent of that
   environment).

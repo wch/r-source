@@ -155,7 +155,7 @@ int unitLength(SEXP u)
 		result = (n1 > n2) ? n1 : n2;
 	    }
 	} else /* must be "min" or "max" or "sum" */
-	    result = unitLength(arg1(u));
+	  result = 1;  /* unitLength(arg1(u)); */
     else /* Must be a unit object */
 	result = LENGTH(u);
     return result;

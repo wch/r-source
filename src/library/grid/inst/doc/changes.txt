@@ -138,6 +138,16 @@ Changes from grid_2.0.1 to grid_2.1.0:
     override the "just" argument.
     (suggested by Ross Ihaka)
 
+18. New "edits" argument for grid.xaxis() and grid.yaxis() to
+    allow specification of on-the-fly edits to axis children
+    (when at == NULL, so children are generated on-the-fly).
+
+19. applyEdit(x, edit) returns x if target of edit (i.e., child
+    specified by a gPath) cannot be found.
+
+20. Fix for calculation of length of max/min/sum unit.  Length is
+    now (correctly) reported as 1 (was reported as length of first arg).
+
 
 Changes from grid_2.0.0 to grid_2.0.1:
 ------------------------------------

@@ -32,11 +32,19 @@ drawDetails.xaxis <- function(x, recording=TRUE) {
   # If x$at is NULL, then we must calculate the
   # tick marks on-the-fly
   if (is.null(x$at)) {
-    at <- grid.pretty(current.viewport()$xscale)
-    grid.draw(make.xaxis.major(at, x$main), recording=FALSE)
-    grid.draw(make.xaxis.ticks(at, x$main), recording=FALSE)
+    x$at <- grid.pretty(current.viewport()$xscale)
+    # Add the new output as children
+    x <- addGrob(x, make.xaxis.major(x$at, x$main))
+    x <- addGrob(x, make.xaxis.ticks(x$at, x$main))
     if (x$label)
-      grid.draw(make.xaxis.labels(at, x$main), recording=FALSE)
+      x <- addGrob(x, make.xaxis.labels(x$at, x$main))
+    else
+      x <- removeGrob(x, "labels", warn=FALSE)
+    # Apply any edits relevant to children
+    x <- applyEdits(x, x$edits)
+    # Draw the children
+    for (i in childNames(x))
+      grid.draw(getGrob(x, i))
   }
 }
 
@@ -44,7 +52,7 @@ drawDetails.xaxis <- function(x, recording=TRUE) {
 # call make.XAXIS.ticks and make.XAXIS.labels
 editDetails.xaxis <- function(x, specs) {
   slot.names <- names(specs)
-  if (match("at", slot.names, nomatch=0)) {
+  if ("at" %in% slot.names) {
     # NOTE that grid.edit has already set x$at to the new value
     # We might set at to NULL to get ticks recalculated at redraw
     if (is.null(x$at)) {
@@ -60,13 +68,21 @@ editDetails.xaxis <- function(x, specs) {
         x <- removeGrob(x, "labels", warn=FALSE)
     }
   }
-  if (match("label", slot.names, nomatch=0)) {
+  if ("label" %in% slot.names) {
     if (x$label)
       x <- addGrob(x, make.xaxis.labels(x$at, x$main))
     else
       x <- removeGrob(x, "labels", warn=FALSE)    
   }
-  # FIXME:  Handle "label=" and "main=" too ?
+  if ("main" %in% slot.names)
+    if (!is.null(at)) {
+      x <- addGrob(x, make.xaxis.major(x$at, x$main))
+      x <- addGrob(x, make.xaxis.ticks(x$at, x$main))
+      if (x$label)
+        x <- addGrob(x, make.xaxis.labels(x$at, x$main))
+      else
+        x <- removeGrob(x, "labels", warn=FALSE)
+    }
   x
 }
 
@@ -105,15 +121,17 @@ make.xaxis.labels <- function(at, main) {
 }
 
 xaxisGrob <- function(at=NULL, label=TRUE, main=TRUE,
-                       name=NULL, gp=gpar(), vp=NULL) {
+                      edits=NULL, 
+                      name=NULL, gp=gpar(), vp=NULL) {
   grid.xaxis(at=at, label=label, main=main,
+             edits=edits,
              name=name, gp=gp, draw=FALSE, vp=vp)
 }
 
 # The "main" x-axis is on the bottom when vp$origin is "bottom.*"
 # and on the top when vp$origin is "top.*"
 grid.xaxis <- function(at=NULL, label=TRUE, main=TRUE,
-                       name=NULL, gp=gpar(),
+                       edits=NULL, name=NULL, gp=gpar(),
                        draw=TRUE, vp=NULL) {
   if (is.null(at)) {
     # We do not have enough information to make the ticks and labels
@@ -128,10 +146,12 @@ grid.xaxis <- function(at=NULL, label=TRUE, main=TRUE,
     else
       labels <- NULL
   }
-  xg <- gTree(at=at, label=label, main=main,
-              children=gList(major, ticks, labels),
-              name=name, gp=gp, vp=vp,
-              cl=c("xaxis", "axis"))
+  xg <- applyEdits(gTree(at=at, label=label, main=main,
+                         children=gList(major, ticks, labels),
+                         edits=edits,
+                         name=name, gp=gp, vp=vp,
+                         cl=c("xaxis", "axis")),
+                   edits)
   if (draw)
     grid.draw(xg)
   invisible(xg)
@@ -141,17 +161,22 @@ drawDetails.yaxis <- function(x, recording=TRUE) {
   # If x$at is NULL, then we must calculate and draw the
   # tick marks on-the-fly
   if (is.null(x$at)) {
-    at <- grid.pretty(current.viewport()$yscale)
-    grid.draw(make.yaxis.major(at, x$main), recording=FALSE)
-    grid.draw(make.yaxis.ticks(at, x$main), recording=FALSE)
+    x$at <- grid.pretty(current.viewport()$yscale)
+    x <- addGrob(x, make.yaxis.major(x$at, x$main))
+    x <- addGrob(x, make.yaxis.ticks(x$at, x$main))
     if (x$label)
-      grid.draw(make.yaxis.labels(at, x$main), recording=FALSE)
+      x <- addGrob(x, make.yaxis.labels(x$at, x$main))
+    else
+      x <- removeGrob(x, "labels", warn=FALSE)
+    x <- applyEdits(x, x$edits)
+    for (i in childNames(x))
+      grid.draw(getGrob(x, i))
   }
 }
 
 editDetails.yaxis <- function(x, specs) {
   slot.names <- names(specs)
-  if (match("at", slot.names, nomatch=0)) {
+  if ("at" %in% slot.names) {
     if (is.null(x$at)) {
       x <- removeGrob(x, "major", warn=FALSE)
       x <- removeGrob(x, "ticks", warn=FALSE)
@@ -165,12 +190,21 @@ editDetails.yaxis <- function(x, specs) {
         x <- removeGrob(x, "labels", warn=FALSE)
     }
   }
-  if (match("label", slot.names, nomatch=0)) {
+  if ("label" %in% slot.names) {
     if (x$label)
       x <- addGrob(x, make.xaxis.labels(x$at, x$main))
     else
       x <- removeGrob(x, "labels", warn=FALSE)    
   }
+  if ("main" %in% slot.names)
+    if (!is.null(at)) {
+      x <- addGrob(x, make.yaxis.major(x$at, x$main))
+      x <- addGrob(x, make.yaxis.ticks(x$at, x$main))
+      if (x$label)
+        x <- addGrob(x, make.yaxis.labels(x$at, x$main))
+      else
+        x <- removeGrob(x, "labels", warn=FALSE)
+    }
   x
 }
 
@@ -212,14 +246,16 @@ make.yaxis.labels <- function(at, main) {
 }
 
 yaxisGrob <- function(at=NULL, label=TRUE, main=TRUE,
+                      edits=NULL,
                       name=NULL, gp=gpar(), vp=NULL) {
-  grid.yaxis(at=at, label=label, main=main,
+  grid.yaxis(at=at, label=label, main=main, edits=edits,
              name=name, gp=gp, draw=FALSE, vp=vp)
 }
 
 # The "main" y-axis is on the left when vp$origin is "*.left"
 # and on the right when vp$origin is "*.right"
 grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE,
+                       edits=NULL,
                        name=NULL, gp=gpar(),
                        draw=TRUE, vp=NULL) {
   if (is.null(at)) {
@@ -235,10 +271,12 @@ grid.yaxis <- function(at=NULL, label=TRUE, main=TRUE,
     else
       labels <- NULL
   }
-  yg <- gTree(at=at, label=label, main=main, 
-              children=gList(major, ticks, labels),
-              name=name, gp=gp, vp=vp,
-              cl=c("yaxis", "axis"))
+  yg <- applyEdits(gTree(at=at, label=label, main=main, 
+                         children=gList(major, ticks, labels),
+                         edits=edits,
+                         name=name, gp=gp, vp=vp,
+                         cl=c("yaxis", "axis")),
+                   edits)
   if (draw)
     grid.draw(yg)
   invisible(yg)

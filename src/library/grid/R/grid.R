@@ -430,12 +430,14 @@ drawDetails.recordedGrob <- function(x, recording) {
   eval(x$expr, x$list, getNamespace("grid"))
 }
 
-grid.record <- function(expr, list) {
+grid.record <- function(expr, list,
+                        name=NULL, gp=NULL, vp=NULL) {
   grid.draw(grob(expr=substitute(expr), list=list,
-                 cl="recordedGrob"))
+                 name=name, gp=gp, vp=vp, cl="recordedGrob"))
 }
 
-recordGrob <- function(expr, list) {
-  grob(expr=substitute(expr), list=list,
-       cl="recordedGrob")
+recordGrob <- function(expr, list,
+                       name=NULL, gp=NULL, vp=NULL) {
+  grob(expr=substitute(expr), list=list, 
+       name=name, gp=gp, vp=vp, cl="recordedGrob")
 }
