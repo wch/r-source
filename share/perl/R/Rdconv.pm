@@ -60,7 +60,7 @@ $MAXLOOPS = 1000;
 sub Rdconv { # Rdconv(foobar.Rd, type, debug, filename, pkgname)
 
     $Rdname = $_[0];
-    open rdfile, "<$Rdname" || die "Rdconv(): Couldn't open '$Rdfile':$!\n";
+    open(rdfile, "<$Rdname") or die "Rdconv(): Couldn't open '$Rdfile':$!\n";
 
     $type = $_[1];
     $debug = $_[2];

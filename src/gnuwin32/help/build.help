@@ -1,5 +1,4 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
-#
 
 # Copyright (C) 1997-2001 R Development Core Team
 #
@@ -37,7 +36,6 @@ $dir_mod = 0755;#- Permission ('mode') of newly created directories.
 if($opt_dosnames){$HTML="htm";} else{$HTML="html";}
 
 my $current = cwd();
-
 if($opt_rhome){
     $R_HOME=$opt_rhome;
     print STDERR "R_HOME from --rhome: `$R_HOME'\n" if $opt_debug;
@@ -78,7 +76,9 @@ print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
 if($opt_chm) {
     $chmdir = "../chm";
-    mkdir $chmdir, $dir_mod;
+    if(! -d $chmdir) {
+	mkdir($chmdir, $dir_mod) or die "Could not create $chmdir: $!\n";
+    }
     open_hhp($pkg);
 }
 build_index($lib, $dest, $chmdir);
@@ -89,12 +89,16 @@ if($opt_chm) {
 }
 
 if ($opt_latex) {
-    $latex_d="$dest/latex";
-    mkdir "$latex_d", $dir_mod || die "Could not create $latex_d: $!\n";
+    $latex_d = "$dest/latex";
+    if(! -d $latex_d) {
+	mkdir("$latex_d", $dir_mod) or die "Could not create $latex_d: $!\n";
+    }
 }
 if ($opt_example) {
-    $Rex_d="$dest/R-ex";
-    mkdir "$Rex_d", $dir_mod || die "Could not create $Rex_d: $!\n";
+    $Rex_d = "$dest/R-ex";
+    if(! -d $Rex_d) {
+	mkdir("$Rex_d", $dir_mod) or die "Could not create $Rex_d: $!\n";
+    }
 }
 
 print " >>> Building/Updating help pages for package `$pkg'\n";
@@ -257,8 +261,8 @@ sub usage {
 sub open_hhp {
     my $pkg = $_[0];
 
-    open hhpfile, ">../chm/$pkg.hhp" 
-	|| die "Couldn't open the chm project file\n";
+    open(hhpfile, ">../chm/$pkg.hhp")
+	or die "Couldn't open the chm project file\n";
     print hhpfile "[OPTIONS]\n", "Auto Index=Yes\n",
     "Contents file=$pkg.toc\n",
     "Compatibility=1.1 or later\n",
@@ -272,8 +276,8 @@ sub open_hhp {
 
 
 sub build_chm_toc {
-    open tocfile, ">../chm/$pkg.toc"
-	|| die "Couldn't open the chm toc file";
+    open(tocfile, ">../chm/$pkg.toc")
+	or die "Couldn't open the chm toc file";
     print tocfile
 	"<!DOCTYPE HTML PUBLIC \"-//IETF//DTD HTML//EN\">\n",
 	"<HEAD></HEAD><HTML><BODY>\n<UL>\n";

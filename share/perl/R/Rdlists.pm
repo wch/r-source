@@ -58,7 +58,9 @@ sub buildinit {
     chdir $currentdir;
 
     if($lib){
-        mkdir "$lib", $dir_mod || die "Could not create $lib: $!\n";
+	if(! -d $lib) {
+	    mkdir ("$lib", $dir_mod) or die "Could not create $lib: $!\n";
+	}
 	chdir $lib;
 	$lib=cwd();
 	chdir $currentdir;
@@ -75,7 +77,6 @@ sub buildinit {
 	$tmp =~ s+\\+/+g; # need Unix-style path here
     }
     $pkg = basename($tmp);
-#    $pkg = basename(cwd());
 
     chdir "man" or die("There are no man pages in $pkg\n");
     if($main::OSdir eq "mac") {
@@ -208,7 +209,7 @@ sub build_htmlpkglist {
     my $key;
 
     open(htmlfile, ">". file_path($main::R_HOME, "doc", "html", 
-				  "packages".$HTML)) ||
+				  "packages".$HTML)) or
 	die "Could not open " . 
 	    file_path($main::R_HOME, "doc", "html", "packages".$HTML);
 
@@ -256,11 +257,11 @@ sub build_index { # lib, dest
     my $chmdir = $_[2];
 
     if(! -d $lib){
-        mkdir "$lib", $dir_mod || die "Could not create directory $lib: $!\n";
+        mkdir("$lib", $dir_mod) or die "Could not create directory $lib: $!\n";
     }
 
     if(! -d "$dest"){
-        mkdir "$dest", $dir_mod || die "Could not create directory $dest: $!\n";
+        mkdir("$dest", $dir_mod) or die "Could not create directory $dest: $!\n";
     }
 
     open title, "<../TITLE";
@@ -269,10 +270,14 @@ sub build_index { # lib, dest
     chomp $title;
     $title =~ s/^\S*\s*(.*)/$1/;
 
-    mkdir file_path($dest, "help"), $dir_mod || 
-	die "Could not create" . file.path($dest, "help").": $!\n";
-    mkdir file_path($dest, "html"), $dir_mod || 
-	die "Could not create" . file.path($dest, "html").": $!\n";
+    my $tdir = file_path($dest, "help");
+    if(! -d $tdir) {
+	mkdir($tdir, $dir_mod) or die "Could not create " . $tdir.": $!\n";
+    }
+    $tdir = file_path($dest, "html");
+    if(! -d $tdir) {
+	mkdir($tdir, $dir_mod) or die "Could not create " . $tdir.": $!\n";
+    }
     my $anindex = file_path($dest, "help", "AnIndex");
 
     my %alltitles;
@@ -337,7 +342,7 @@ sub build_index { # lib, dest
 	}
     }
 
-    open anindex, "> ${anindex}" || die "Could not open ${anindex}";
+    open(anindex, "> ${anindex}") or die "Could not open ${anindex}";
     foreach $alias (sort foldorder keys %main::aliasnm) {
 	print anindex "$alias\t$main::aliasnm{$alias}\n";
     }
@@ -346,9 +351,9 @@ sub build_index { # lib, dest
 
     open(anindex, "< $anindex");
     $tfile = file_path($dest, "html", "00Index".$HTML);
-    open(htmlfile, "> $tfile") || die "Could not open $tfile";
+    open(htmlfile, "> $tfile") or die "Could not open $tfile";
     if($main::opt_chm) { # Windows only
-	open(chmfile, "> $chmdir/00Index.$HTML") ||
+	open(chmfile, "> $chmdir/00Index.$HTML") or
 	    die "Could not open $chmdir/00Index.$HTML";
     }
 

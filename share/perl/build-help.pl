@@ -24,7 +24,7 @@ use R::Rdconv;
 use R::Rdlists;
 use R::Utils;
 
-my $revision = ' $Revision: 1.5 $ ';
+my $revision = ' $Revision: 1.6 $ ';
 my $version;
 my $name;
 
@@ -86,17 +86,15 @@ print STDERR "Destination `dest'= `$dest'\n" if $opt_debug;
 
 build_index($lib, $dest, "");
 if ($opt_latex) {
-    $latex_d="$dest/latex";
+    $latex_d = "$dest/latex";
     if(! -d $latex_d) {
-	mkdir "$latex_d", $dir_mod
-	  or die "Could not create $latex_d: $!\n";
+	mkdir("$latex_d", $dir_mod) or die "Could not create $latex_d: $!\n";
     }
 }
 if ($opt_example) {
-    $Rex_d="$dest/R-ex";
+    $Rex_d = "$dest/R-ex";
     if(! -d $Rex_d) {
-	mkdir "$Rex_d", $dir_mod
-	  or die "Could not create $Rex_d: $!\n";
+	mkdir("$Rex_d", $dir_mod) or die "Could not create $Rex_d: $!\n";
     }
 }
 
