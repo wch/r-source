@@ -1181,10 +1181,10 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(!FINITE(at)) {
 		switch(side % 2) {
 		case 0:
-			at = (1 - adjx) * GP->usr[0] + adjx * GP->usr[1];
+			at = (1 - adjx) * GP->usr[2] + adjx * GP->usr[3];
 			break;
 		case 1:
-			at = (1 - adjx) * GP->usr[2] + adjx * GP->usr[3];
+			at = (1 - adjx) * GP->usr[0] + adjx * GP->usr[1];
 			break;
 		}
 	}
