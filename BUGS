@@ -199,6 +199,7 @@ Date: Mon, 20 Oct 2003 14:17:42 -0400
 Subject: Core dump when calling tclvalue
 From: mckay@gmr.com
 Date: Wed, 22 Oct 2003 19:10:02 +0200 (MET DST)
+..it would seem that we're just not failing gracefully
 * PR# 5315 *
 Subject: O2 optimization produces wrong code
 From: jean.coursol@math.u-psud.fr
@@ -214,11 +215,6 @@ Subject: [R] lattice: levelplot: error: min not meaningful for factor
 From: Wolfram Fischer <wolfram@fischer-zim.ch>
 Date: Mon, 22 Dec 2003 17:29:49 +0100
 ..Not documented to work, but intended to.
-* PR# 6597 *
-Subject: summary.rpart() in rpart package
-From: "Chen, Feiming" <feiming_chen@spectramarketing.com>
-Date: Tue, 17 Feb 2004 17:07:02 -0600
-..Unreadable, and no response to follow-up.
 * PR# 6701 *
 Subject: lookup.xport in foreign ignoring some datasets
 From: Svetlana Eden <svetlana.eden@vanderbilt.edu>
@@ -233,6 +229,11 @@ Date: Sun, 25 Apr 2004 00:23:42 +0200 (CEST)
 Subject: foreign package:  reading epiinfo
 From: giles.crane@doh.state.nj.us
 Date: Wed, 19 May 2004 19:30:34 +0200 (CEST)
+..request for example file met no response
+* PR# 6978 *
+Subject: inheritance problem in multcomp package
+From: "Richard M. Heiberger" <rmh@temple.edu>
+Date: Sun, 13 Jun 2004 21:35:50 -0400
 
 Directory:  Analyses
 
@@ -637,6 +638,10 @@ Subject: Re: [Rd] =?iso-8859-1?q?Can=B4t_start_help_and_update_on_Mac_=28PR?=
 From: Prof Brian Ripley <ripley@stats.ox.ac.uk>
 Date: Thu, 10 Jun 2004 12:37:06 +0100 (BST)
 ..Grabbled header: part of PR#6920
+* PR# 6982 *
+Subject: out-of-date information in R for Mac OS X FAQ
+From: d.firth@warwick.ac.uk
+Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
 
 Directory:  Misc
 
@@ -886,51 +891,23 @@ Date: Tue, 20 Apr 2004 14:15:05 -0400
 Subject: Failure to preserve package attribute when coercing S4 objects
 From: "Swinton, Jonathan" <Jonathan.Swinton@astrazeneca.com>
 Date: Fri, 21 May 2004 15:04:10 +0100
-* PR# 6961 *
-Subject: bug in  bandwidths.R (function bw.nrd0)
-From: "Zhang, Yunyu" <Yunyu_Zhang@dfci.harvard.edu>
-Date: Wed, 9 Jun 2004 10:14:03 -0400 
-* PR# 6967 *
-Subject: na.omit and class conversion
-From: mark0060@tc.umn.edu
-Date: Thu, 10 Jun 2004 19:00:25 +0200 (CEST)
-* PR# 6975 *
-Subject: can't create a POSIXct from an actual Unix timestamp
-From: phil@google.com
-Date: Sun, 13 Jun 2004 06:54:07 +0200 (CEST)
-* PR# 6976 *
-Subject: Ehh, U Have Small Pen-i-s, Help Urself month talk strength 
-From: "Delphine Eugene" <fqvhkk6tbjg@jetcity.com>
-Date: Sun, 13 Jun 2004 03:49:36 -0400
-* PR# 6977 *
-Subject: The original software at only a fraction of the cost! ;-) impregnable
-From: "Alfonzo Brown" <Katie@lopezclub.com>
-Date: Sun, 13 Jun 2004 21:12:42 -0500
-* PR# 6978 *
-Subject: inheritance problem in multcomp package
-From: "Richard M. Heiberger" <rmh@temple.edu>
-Date: Sun, 13 Jun 2004 21:35:50 -0400
-* PR# 6979 *
-Subject: Windows XP Professional with Office will be only $50! andrews
-From: Bettye Austin <Anna@pcmail.com.tw>
-Date: Mon, 14 Jun 2004 00:44:45 -0200
-* PR# 6980 *
-Subject: Windows XP Professional with Office will be only $50! tomato
-From: "Todd Peck" <Sonja@radiomexico.com>
-Date: Mon, 14 Jun 2004 10:16:10 +0600
-* PR# 6981 *
-Subject: New powerful weightloss for you.
-From: "Cornelia Carlisle" <carlisle_jo@pagegallery.se>
-Date: Mon, 14 Jun 2004 05:39:45 +0100
-* PR# 6982 *
-Subject: out-of-date information in R for Mac OS X FAQ
-From: d.firth@warwick.ac.uk
-Date: Tue, 15 Jun 2004 12:50:38 +0200 (CEST)
-* PR# 6983 *
-Subject: tapply/barplot
-From: "Hjellvik Vidar" <Vidar.Hjellvik@imr.no>
-Date: Tue, 15 Jun 2004 14:20:05 +0200
-* PR# 6984 *
-Subject: is.integer()
-From: =?iso-8859-1?b?TeFyY2lv?= de Medeiros Ribeiro <mmr@tci.ufal.br>
-Date: Wed, 16 Jun 2004 11:40:39 -0300
+* PR# 6985 *
+Subject: WINNING  NOTIFICATION/FINAL  AWARD.
+From: anndejony@telstra.com
+Date: Wed, 16 Jun 2004 18:23:40 +0200
+* PR# 6986 *
+Subject: Bug in FEXACT: gave negative key
+From: Francis Clark <fc@maths.uq.edu.au>
+Date: Thu, 17 Jun 2004 20:00:31 +1000 (EST)
+* PR# 6987 *
+Subject: Bug in RODBC
+From: andrew_zachary@yahoo.com
+Date: Thu, 17 Jun 2004 16:06:38 +0200 (CEST)
+* PR# 6988 *
+Subject: xtable
+From: Claudio Lupi <lupi.claudio@fastwebnet.it>
+Date: Thu, 17 Jun 2004 16:29:35 +0200
+* PR# 6989 *
+Subject: read.epiinfo makes field char part of variable name
+From: giles.crane@doh.state.nj.us
+Date: Thu, 17 Jun 2004 17:52:32 +0200 (CEST)
