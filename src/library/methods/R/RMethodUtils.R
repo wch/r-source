@@ -296,8 +296,9 @@ doPrimitiveMethod <-
 conformMethod <-
   function(signature, mnames, fnames, f = "<unspecified>")
 {
-    ## TO DO:  arrange for "missing" to be a valid for "..." in a signature
-    ## until then, allow an omitted "..." w/o checking
+    ## Desirable, but hard:  arrange for "missing" to be valid for "..." in a signature
+    ## (needs a change to low-level dispatch code).
+    ## Until then, allow an omitted "..." w/o checking
     if(is.na(match("...", mnames)) && !is.na(match("...", fnames)))
         fnames <- fnames[-match("...", fnames)]
     omitted <- is.na(match(fnames, mnames))
@@ -306,17 +307,15 @@ conformMethod <-
     label <- paste("In method for function \"", f,"\": ", sep="")
     if(!all(diff(seq(along=fnames)[!omitted]) > 0))
         stop(label, "Formal arguments in method and function don't appear in the same order")
-    specified <- omitted[seq(length=length(signature))]
-    if(any(specified) &&
-       any(is.na(match(signature[specified], c("ANY", "missing")))))
+    signature <- c(signature, rep("ANY", length(fnames)-length(signature)))
+    if(any(is.na(match(signature[omitted], c("ANY", "missing")))))
         stop(label, "Formal arguments omitted in the method definition cannot be in the signature:",
                    paste(fnames[is.na(match(signature[omitted], c("ANY", "missing")))], collapse = ", "))
-    message(label, "Expanding the signature to include omitted arguments in definition: ",
+    else if(!all(signature[omitted] == "missing")) {
+        message(label, "Expanding the signature to include omitted arguments in definition: ",
             paste(fnames[omitted], "= \"missing\"",collapse = ", "))
-    signature[omitted] <- "missing"
-    ## there may have been some unspecified args; they go to "ANY"
-    ## (R now inserts character NA's if signature was expanded)
-    signature[is.na(signature) | (nchar(signature) == 0) ] <- "ANY"
+        signature[omitted] <- "missing"
+    }
     ## remove trailing "ANY"'s
     n <- length(signature)
     while(identical(signature[[n]], "ANY"))
