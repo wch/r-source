@@ -2822,6 +2822,8 @@ static BBOX RenderOffsetElement(SEXP expr, double x, double y, int draw)
 /* Calculate width of expression */
 /* BBOXes are in INCHES (see MetricUnit) */
 
+/* #ifdef'ed this function out to shut -Wall up */
+#ifdef OLD
 static
 void GExpressionBBox(SEXP expr, int units, double *width,
 		     double *height, double *depth, DevDesc *dd)
@@ -2844,6 +2846,7 @@ void GExpressionBBox(SEXP expr, int units, double *width,
 	*depth = GConvertYUnits(*depth, INCHES, units, dd);
     }
 }
+#endif
 
 double GExpressionWidth(SEXP expr, int units, DevDesc *dd)
 {

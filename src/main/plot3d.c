@@ -1935,7 +1935,8 @@ static void PerspAxis(double *x, double *y, double *z,
 		      char *label, DevDesc *dd) {
     Vector3d u1, u2, u3, v1, v2, v3;
     double tickLength = .03; /* proportion of axis length */
-    double min, max, *range;
+    double min, max;
+    double *range = NULL; /* -Wall */
     double axp[3];
     int nint, i;
     SEXP at, lab;

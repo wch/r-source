@@ -2560,7 +2560,8 @@ static int clipLine(double *x1, double *y1, double *x2, double *y2,
 		     int coords, int toDevice, DevDesc *dd)
 {
     double temp;
-    int dummy1, dummy2, xpdsaved;
+    int dummy1, dummy2;
+    int xpdsaved = 0; /* -Wall */
     int result;
     cliprect cr;
 
@@ -2862,8 +2863,8 @@ static void clipPolygon(int n, double *x, double *y, int coords,
     }
     else {
 	int npts;
-	int xpdsaved;
-	if (mode = 1) {
+	int xpdsaved = 0; /* -Wall */
+	if (mode == 1) {
 	    xpdsaved = dd->gp.xpd;
 	    dd->gp.xpd = 2;
 	}
@@ -2875,7 +2876,7 @@ static void clipPolygon(int n, double *x, double *y, int coords,
 	    npts = GClipPolygon(x, y, n, coords, 1, xc, yc, dd);
 	    dd->dp.polygon(npts, xc, yc, coords, bg, fg, dd);
 	}
-	if (mode = 1)
+	if (mode == 1)
 	    dd->gp.xpd = xpdsaved;
     }
     if (xc != NULL) {tmp = xc; xc = NULL; free(tmp);}
@@ -2902,7 +2903,7 @@ void GPolygon(int n, double *x, double *y, int coords,
 static void clipPolyline(int n, double *x, double *y, int coords,
 			 int clipToDevice, DevDesc *dd)
 {
-    int xpdsaved;
+    int xpdsaved = 0; /* -Wall */
     if (clipToDevice) {
 	xpdsaved = dd->gp.xpd;
 	dd->gp.xpd = 2;
@@ -3009,7 +3010,7 @@ static void clipCircle(double x, double y, int coords,
     char *vmax;
     double *xc, *yc;
     int result = clipCircleCode(x, y, coords, r, dd);
-    int xpdsaved;
+    int xpdsaved = 0; /* -Wall */
     if (clipToDevice) {
 	xpdsaved = dd->gp.xpd;
 	dd->gp.xpd = 2;
@@ -3110,7 +3111,7 @@ static void clipRect(double x0, double y0, double x1, double y1, int coords,
     char *vmax;
     double *xc, *yc;
     int result = clipRectCode(x0, y0, x1, y1, coords, dd);
-    int xpdsaved;
+    int xpdsaved = 0; /* -Wall */
     if (clipToDevice) {
 	xpdsaved = dd->gp.xpd;
 	dd->gp.xpd = 2;
@@ -3255,8 +3256,6 @@ static int clipTextCode(double x, double y, char *str,
 {
     double x0, x1, x2, x3, y0, y1, y2, y3, left, right, bottom, top;
     double angle = DEG2RAD * rot;
-    double cos_rot = cos(angle);
-    double sin_rot = sin(angle);
     double theta1 = M_PI/2 - angle;
     double width = GStrWidth(str, INCHES, dd);
     double height = GStrHeight(str, INCHES, dd);
@@ -3280,10 +3279,8 @@ static int clipTextCode(double x, double y, char *str,
 static void clipText(double x, double y, char *str, double rot,
 		     int clipToDevice, DevDesc *dd)
 {
-    char *vmax;
-    double *xc, *yc;
     int result = clipTextCode(x, y, str, rot, dd);
-    int xpdsaved;
+    int xpdsaved = 0; /* -Wall */
     if (clipToDevice) {
 	xpdsaved = dd->gp.xpd;
 	dd->gp.xpd = 2;
