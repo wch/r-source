@@ -60,11 +60,14 @@ as.dist(m, diag = FALSE, upper = FALSE)
   }
 
   Missing values are allowed, and are excluded from all computations
-  involving the rows within which they occur.  If some columns are
-  excluded in calculating a Euclidean, Manhattan or Canberra distance,
-  the sum is scaled up proportionally to the number of columns used.
-  If all pairs are excluded when calculating a particular distance,
-  the value is \code{NA}.
+  involving the rows within which they occur.
+  Further, when \code{Inf} values are involved, all pairs of values are
+  excluded when their contribution to the distance gave \code{NaN} or
+  \code{NA}.\cr
+  If some columns are excluded in calculating a Euclidean, Manhattan or
+  Canberra distance, the sum is scaled up proportionally to the number
+  of columns used.  If all pairs are excluded when calculating a
+  particular distance, the value is \code{NA}.
 
   The functions \code{as.matrix.dist()} and \code{as.dist()} can be used
   for conversion between objects of class \code{"dist"} and conventional
@@ -121,6 +124,28 @@ dist(rbind(x,y), method="binary")
 ## answer 0.4 = 2/5
 dist(rbind(x,y), method="canberra")
 ## answer 2 * (6/5)
+
+## Examples involving "Inf" :
+
+## 1)
+x[6] <- Inf
+(m2 <- rbind(x,y))
+dist(m2, method="binary")# warning, answer 0.5 = 2/4
+## These all give "Inf":
+stopifnot(Inf == dist(m2, method= "euclidean"),
+          Inf == dist(m2, method= "maximum"),
+          Inf == dist(m2, method= "manhattan"))
+##  "Inf" is same as very large number:
+x1 <- x; x1[6] <- 1e100
+stopifnot(dist(cbind(x ,y), method="canberra") ==
+    print(dist(cbind(x1,y), method="canberra")))
+
+## 2)
+y[6] <- Inf #-> 6-th pair is excluded
+dist(rbind(x,y), method="binary")# warning; 0.5
+dist(rbind(x,y), method="canberra")#  3
+dist(rbind(x,y), method="maximum")  # 1
+dist(rbind(x,y), method="manhattan")# 2.4
 }
 \keyword{multivariate}
 \keyword{cluster}
