@@ -345,7 +345,12 @@ static void z_tan(Rcomplex *r, Rcomplex *z)
     y2 = 2.0 * z->i;
     den = cos(x2) + cosh(y2);
     r->r = sin(x2)/den;
-    r->i = sinh(y2)/den;
+    /* any threshold between -log(DBL_EPSILON) 
+       and log(DBL_XMAX) will do*/
+    if (fabs(y2) < 50.0)
+	r->i = sinh(y2)/den;
+    else
+	r->i = 1.0;
 }
 
 	/* Complex Arcsin and Arccos Functions */
