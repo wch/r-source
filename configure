@@ -39197,9 +39197,14 @@ LIBS="${LIBS1} ${LIBS2}"
 ## On Linux, do not add the ld.so system directories '/lib' and
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
+## On OS X (Darwin) /usr/X11R6/lib shadows OpenGL framework and is not
+## needed in DYLD_LIBRARY_PATH.
 case "${host_os}" in
   linux* | solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
+    ;;
+  darwin*)
+    r_ld_library_defaults="/usr/X11R6/lib"
     ;;
   *)
     r_ld_library_defaults=
