@@ -2332,11 +2332,17 @@ SEXP L_points(SEXP x, SEXP y, SEXP pch, SEXP size)
 	     */
 	    symbolSize = toDeviceWidth(symbolSize, GE_INCHES, dd);
 	    if (R_FINITE(symbolSize)) {
-		if (isString(pch))
+	        if (isString(pch)) {
 		    ipch = CHAR(STRING_ELT(pch, i % npch))[0];
-		else
+		    /*
+		     * special case for pch = "."
+		     */
+		    if (ipch == 46) 
+		      symbolSize = gpCex(currentgp, i);
+		} else {
 		    ipch = INTEGER(pch)[i % npch];
-		GESymbol(xx[i], yy[i], ipch, symbolSize, &gc, dd);
+		}
+	        GESymbol(xx[i], yy[i], ipch, symbolSize, &gc, dd);
 	    }
 	}
     GEMode(0, dd);
