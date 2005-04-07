@@ -44,7 +44,8 @@ attach(what, pos = 2, name = deparse(substitute(what)))
 
   One useful \sQuote{trick} is to use \code{what = NULL} (or equivalently a
   length-zero list) to create a new environment on the search path into
-  which objects can be assigned by \code{\link{assign}}.
+  which objects can be assigned by \code{\link{assign}} or
+  \code{\link{sys.source}}.
 }
 \value{
   The \code{\link{environment}} is returned invisibly with a
@@ -74,5 +75,8 @@ find("height")
 summary(height)         # The changed copy
 detach("women")
 summary(women$height)   # unchanged
-}
+
+\dontrun{## create an environment on the search path and populate it
+sys.source("myfuns.R", envir=attach(NULL, name="myfuns"))
+}}
 \keyword{data}
