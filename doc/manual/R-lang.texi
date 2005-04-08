@@ -238,7 +238,7 @@ routine being called.  (In the @Sl{} language, vectors with integer or
 real values are both of mode @code{"numeric"}, so their storage modes
 need to be distinguished.)
 
-@smallexample
+@example
 > x <- 1:3
 > typeof(x)
 [1] "integer"
@@ -246,7 +246,7 @@ need to be distinguished.)
 [1] "numeric"
 > storage.mode(x)
 [1] "integer"
-@end smallexample
+@end example
 
 @R{}
 @cindex object
@@ -300,9 +300,10 @@ indexing operations such as
 
 @cindex type
 @cindex mode
-@R{} has six basic vector types: logical, integer, real, complex, string
-(or character) and raw.  The modes and storage modes for the different
-vector types are listed in the following table.
+@cindex atomic
+@R{} has six basic (`atomic') vector types: logical, integer, real,
+complex, string (or character) and raw.  The modes and storage modes for
+the different vector types are listed in the following table.
 
 @quotation
 @multitable {@code{character}} {@code{character}} {@code{character}}
@@ -318,10 +319,12 @@ vector types are listed in the following table.
 
 Single numbers, such as @code{4.2}, and strings, such as @code{"four
 point two"} are still vectors, of length 1; there are no more basic
-types. Vectors with length zero are possible (and useful).
+types.  Vectors with length zero are possible (and useful).
 
-String vectors have mode and storage mode @code{"character"}, which is
-somewhat confusing.
+String vectors have mode and storage mode @code{"character"}. A single
+element of a character vector is often referred to as a @emph{character
+string}.
+
 
 @node List objects, Language objects, Vector objects, Basic types
 @subsection Lists
@@ -334,6 +337,9 @@ elements are accessed through three different
 indexing operations.
 These are explained in detail in @ref{Indexing}.
 @c @ref{Data structures}.
+
+Lists are vectors, and the basic vector types are referred to as
+@emph{atomic vectors} where it is necessary to exclude lists.
 
 @node Language objects, Expression objects, List objects, Basic types
 @subsection Language objects
@@ -406,11 +412,10 @@ syntactically correct collection of
 @cindex token
 tokens.
 @cindex expression object
-Expression objects are
-special language objects which contain parsed, but unevaluated
-@R{} statements.  The main difference is that an expression object can
-contain several such expressions.  Another more subtle difference is
-that objects of type @code{"expression"} are only
+Expression objects are special language objects which contain parsed but
+unevaluated @R{} statements.  The main difference is that an expression
+object can contain several such expressions.  Another more subtle
+difference is that objects of type @code{"expression"} are only
 @cindex evaluation, expression
 evaluated when
 explicitly passed to @code{eval}, whereas other language objects may get
@@ -554,12 +559,12 @@ of @samp{...} can be accessed in the usual list manner from C code, but
 is not easily accessed as an object in interpreted code.  The object can
 be captured as a list, so for example in @code{table} one sees
 
-@smallexample
+@example
     args <- list(...)
 ## ....
     for (a in args) @{
 ## ....
-@end smallexample
+@end example
 
 @cindex function
 @cindex function argument
@@ -624,9 +629,11 @@ Pairlists are handled in the @R{} language in exactly the same way as
 generic vectors (``lists'').  In particular, elements are accessed using
 the same @code{[[]]} syntax.  The use of pairlists is deprecated since
 generic vectors are usually more efficient to use.  When an internal
-pairlist is accessed from @R{} it is generally converted to and from a
-generic vector.
+pairlist is accessed from @R{} it is generally (including when
+subsetted) converted to a generic vector.
 @c FIXME: There are still exceptions.  Change code or docs?
+
+In a very few cases pairlists are user-visible: one is @code{.Options}.
 
 @node Any-type,  , Pairlist objects, Basic types
 @subsection The ``Any'' type
@@ -917,10 +924,10 @@ Users can construct expressions and invoke the evaluator on them.
 
 Any number typed directly at the prompt is a constant and is evaluated.
 
-@smallexample
+@example
 > 1
 [1] 1
-@end smallexample
+@end example
 
 @noindent
 Constants are fairly boring and to do more we need symbols.
@@ -945,11 +952,11 @@ is an @R{} object too, but one rarely needs to deal with symbols
 directly, except when doing ``programming on the language''
 (@ref{Computing on the language}).
 
-@smallexample
+@example
 > y <- 4
 > y
 [1] 4
-@end smallexample
+@end example
 
 @c FIXME: Probably needs to go somewhere, but not here (parser section?)
 
@@ -992,10 +999,10 @@ function @emph{invocation}.
 Functions are invoked by name with a list of arguments separated by
 commas.
 
-@smallexample
+@example
 > mean(1:10)
 [1] 5.5
-@end smallexample
+@end example
 
 @noindent
 In this example the function @code{mean} was called with one argument,
@@ -1007,13 +1014,13 @@ used for their side effects, e.g., printing and plotting functions.
 
 @cindex function
 @cindex function arguments
-Function calls can have @emph{tagged} arguments, as in @code{plot(x, y,
-pch = 3)} arguments without tags are known as @emph{positional} since
-the function must distinguish their meaning from their sequential
-positions among the arguments of the call, e.g., that @code{x} denotes
-the abscissa variable and @code{y} the ordinate.  The use of tags is an
-obvious convenience for functions with a large number of optional
-arguments.
+Function calls can have @emph{tagged} (or @emph{named} arguments), as in
+@code{plot(x, y, pch = 3)} arguments without tags are known as
+@emph{positional} since the function must distinguish their meaning from
+their sequential positions among the arguments of the call, e.g., that
+@code{x} denotes the abscissa variable and @code{y} the ordinate.  The
+use of tags/names is an obvious convenience for functions with a large
+number of optional arguments.
 
 @cindex function, assignment
 A special type of function calls can appear on the left hand side of
@@ -1021,9 +1028,9 @@ the
 @cindex assignment
 assignment operator as in
 
-@smallexample
+@example
 > class(x) <- "foo"
-@end smallexample
+@end example
 
 @noindent
 What this construction really does is to call the function
@@ -1043,17 +1050,17 @@ avoid unnecessary data duplication.)
 @R{} allows the use of arithmetic expressions using operators similar to
 those of the C programming language, for instance
 
-@smallexample
+@example
 > 1 + 2
 [1] 3
-@end smallexample
+@end example
 
 Expressions can be grouped using parentheses, mixed with function calls,
 and assigned to variables in a straightforward manner
 
-@smallexample
+@example
 > y <- 2 * (a + log(x))
-@end smallexample
+@end example
 
 @R{} contains a number of operators.  They are listed in the table
 below.
@@ -1079,7 +1086,7 @@ below.
 @item @code{^}
 @tab Exponentiation, binary
 @item @code{%@var{x}%}
-@tab Special binary operators, @var{x} can be replaced by anything
+@tab Special binary operators, @var{x} can be replaced by any valid name
 @item @code{%%}
 @tab Modulus, binary
 @item @code{%/%}
@@ -1141,22 +1148,22 @@ finer points relating to vectorized operations will be discussed in
 To access individual elements of a vector, one generally uses the
 @code{x[i]} construction.
 
-@smallexample
+@example
 > x <- rnorm(5)
 > x
 [1] -0.12526937 -0.27961154 -1.03718717 -0.08156527  1.37167090
 > x[2]
 [1] -0.2796115
-@end smallexample
+@end example
 
 List components are more commonly accessed using @code{x$a} or
 @code{x[[i]]}.
 
-@smallexample
+@example
 > x <- options()
 > x$prompt
 [1] "> "
-@end smallexample
+@end example
 
 Indexing constructs can also appear on the right hand side of an
 @cindex assignment
@@ -1192,14 +1199,14 @@ not syntactically complete new lines are simply ignored by the
 evaluator.  If the session is interactive the prompt changes from
 @samp{>} to @samp{+}.
 
-@smallexample
+@example
 > x <- 0; x + 5
 [1] 5
 > y <- 1:10
 > 1; 2
 [1] 1
 [1] 2
-@end smallexample
+@end example
 
 Statements can be grouped together using braces @samp{@{} and @samp{@}}.
 A group of statements is sometimes called a @emph{block}.  Single
@@ -1209,12 +1216,12 @@ line is entered after the closing brace.  In the remainder of this
 section, @emph{statement} refers to either a single statement or a
 block.
 
-@smallexample
+@example
 > @{ x <- 0
 + x + 5
 + @}
 [1] 5
-@end smallexample
+@end example
 
 @menu
 * if::                          
@@ -1257,10 +1264,10 @@ the logarithm of a negative number.  Because if/else statements are the
 same as other statements you can assign the value of them.  The two
 examples below are equivalent.
 
-@smallexample
+@example
 > if( any(x <= 0) ) y <- log(1+x) else y <- log(x)
 > y <- if( any(x <= 0) ) log(1+x) else log(x)
-@end smallexample
+@end example
 
 The @code{else} clause is optional.  The statement @code{if(any(x <= 0))
 x <- x[x <= 0]} is valid.  When the @code{if} statement is not in a
@@ -1384,9 +1391,9 @@ languages.
 
 The syntax is
 
-@smallexample
+@example
 switch (@var{statement}, @var{list})
-@end smallexample
+@end example
 
 @noindent
 where the elements of @var{list} may be named.  First, @var{statement}
@@ -1395,7 +1402,7 @@ number between 1 and the length of @var{list} then the corresponding
 element @var{list} is evaluated and the result returned.  If @var{value}
 is too large or too small @code{NULL} is returned.
 
-@smallexample
+@example
 > x <- 3
 > switch(x, 2+2, mean(1:10), rnorm(5))
 [1]  2.2903605  2.3271663 -0.7060073  1.3622045 -0.2892720
@@ -1403,22 +1410,22 @@ is too large or too small @code{NULL} is returned.
 [1] 5.5
 > switch(6, 2+2, mean(1:10), rnorm(5))
 NULL
-@end smallexample
+@end example
 
 If @var{value} is a character vector then the element of @samp{...} with
 a name that exactly matches @var{value} is evaluated.  If there is no
 match @code{NULL} is returned.
 
-@smallexample
+@example
 > y <- "fruit"
 > switch(y, fruit = "banana", vegetable = "broccoli", meat = "beef")
 [1] "banana"
-@end smallexample
+@end example
 
 A common use of @code{switch} is to branch according to the character
 value of one of the arguments to a function.
 
-@smallexample
+@example
 > centre <- function(x, type) @{
 + switch(type,
 +        mean = mean(x),
@@ -1432,7 +1439,7 @@ value of one of the arguments to a function.
 [1] 0.5360891
 > centre(x, "trimmed")
 [1] 0.6086504
-@end smallexample
+@end example
 
 @code{switch} returns either the value of the statement that was
 evaluated or @code{NULL} if no statement was evaluated.
@@ -1570,11 +1577,12 @@ each element of the vector is applied in turn to the list, the
 selected component, the selected component of that component, and so on.
 The result is still a single element.
 
-The form using @code{$} applies to recursive objects.  It allows only a
-literal character string or a symbol as the index.  That is, the index
-is not computable: for cases where you need to evaluate an expression
-to find the index, use @code{x[[expr]]}.  When @code{$} is applied to a
-non-list object the result is always @code{NULL}.
+The form using @code{$} applies to recursive objects such as lists and
+pairlists.  It allows only a literal character string or a symbol as the
+index.  That is, the index is not computable: for cases where you need
+to evaluate an expression to find the index, use @code{x[[expr]]}.  When
+@code{$} is applied to a non-recursive object the result is always
+@code{NULL}.
 
 @menu
 * Indexing by vectors::         
@@ -1624,10 +1632,11 @@ selected values of @code{x} are those for which @code{i} is @code{TRUE}.
 @cindex partial matching
 @item
 @strong{Character}.  The strings in @code{i} are matched against the
-names attribute of @code{x} and the resulting integers are used.
-Partial matching is used if exact matching fails, so @code{x$aa} will
-match @code{x$aabb} if @code{x} does not a component named @code{"aa"}
-and @code{"aabb"} is the first name which has prefix @code{"aa"}.
+names attribute of @code{x} and the resulting integers are used.  For
+@code{[[} and @code{$} partial matching is used if exact matching fails,
+so @code{x$aa} will match @code{x$aabb} if @code{x} does not a component
+named @code{"aa"} and @code{"aabb"} is the first name which has prefix
+@code{"aa"}.  However, @code{[} requires an exact match.
 
 @item
 @strong{Factor}.  The result is identical to @code{x[as.integer(i)]}.
@@ -1681,7 +1690,7 @@ as the number of rows of the matrix.  The following example shows how
 to extract the elements @code{m[1, 1]} and @code{m[2, 2]} in one
 operation.
 
-@smallexample
+@example
 > m <- matrix(1:4, 2)
 > m
      [,1] [,2]
@@ -1694,13 +1703,12 @@ operation.
 [2,]    2    2
 > m[i]
 [1] 1 4
-@end smallexample
+@end example
 
 Both in the case of using a single
 @cindex index
-index and in matrix indexing, a
-@code{names} attribute is used if present, as had the structure been
-one-dimensional.
+index and in matrix indexing, a @code{names} attribute is used if
+present, as had the structure been one-dimensional.
 
 If an indexing operation causes the result to have one of its extents of
 length one, as in selecting a single slice of a three-dimensional matrix
@@ -1713,16 +1721,17 @@ add to the index count.  Hence the correct way of selecting the first
 row of a matrix as a @math{1} by @math{n} matrix is @code{m[1, , drop =
 FALSE]}.  Forgetting to disable the dropping feature is a common cause
 of failure in general subroutines where an index occasionally, but not
-usually has length one. This rule still applies to one-dimensional
+usually has length one.  This rule still applies to a one-dimensional
 array, where any subsetting will give a vector result unless @samp{drop
 = FALSE} is used.
 
 Notice that vectors are distinct from one-dimensional arrays in that the
 latter have @code{dim} and @code{dimnames} attributes (both of length
 one).  One-dimensional arrays are not easily obtained from subsetting
-operations but they can be constructed explicitly.  This is sometimes
-useful because the elements of the @code{dimnames} list may themselves
-be named, which is not the case for the @code{names} attribute.
+operations but they can be constructed explicitly and are returned by
+@code{table}.  This is sometimes useful because the elements of the
+@code{dimnames} list may themselves be named, which is not the case for
+the @code{names} attribute.
 
 Some operations such as @code{m[FALSE, ]} result in structures in which
 a dimension has zero extent.  @R{} generally tries to handle these
@@ -1737,7 +1746,10 @@ it is possible to have user-defined indexing operations for any
 structure.  Such a function, say @code{[.foo} is called with a set of
 arguments of which the first is the structure being indexed and the rest
 are the indices.  In the case of @code{$}, the index argument is of mode
-@code{"symbol"} even when using the @code{x$"abc"} form.
+@code{"symbol"} even when using the @code{x$"abc"} form.  It is
+important to be aware that class methods do not necessarily behave in
+the same way as the basic methods, for example with respect to partial
+matching.
 
 The most important example of a class method for @code{[} is that used
 for data frames.  It is not be described in detail here (see the help
@@ -1748,61 +1760,71 @@ single index is supplied, it is interpreted as indexing the list of
 columns---in that case the @code{drop} argument is ignored, with a
 warning.
 
+The basic operators @code{$} and @code{[[} can be applied to
+environments.  Only character indices are allowed and no partial
+matching is done.
+
+
 @node Subset assignment,  , Indexing other structures, Indexing
 @subsection Subset assignment
 @cindex assignment
 @cindex complex assignment
 
-Assignment to subsets of a structure is a special case of a general mechanism for complex assignment:
-@smallexample
+Assignment to subsets of a structure is a special case of a general
+mechanism for complex assignment:
+@example
 x[3:5] <- 13:15
-@end smallexample
+@end example
 The result of this commands is as if the following had been executed
-@smallexample
+@example
 `*tmp*` <- x
 x <- "[<-"(`*tmp*`,3:5, value=13:15)
-@end smallexample
+@end example
 
-The same mechanism can be applied to other functions than @code{[}.  The assignment function has the same name with  @code{<-} pasted on. Its last argument, which must be called @code{value}, is the new value to be assigned.
-@smallexample
+The same mechanism can be applied to other functions than @code{[}.  The
+assignment function has the same name with @code{<-} pasted on. Its last
+argument, which must be called @code{value}, is the new value to be
+assigned.
+@example
 names(x) <- c("a","b")
-@end smallexample
+@end example
 is equivalent to
-@smallexample
+@example
 `*tmp*` <- x
 x <- "names<-"(`*tmp*`, value=c("a","b"))
-@end smallexample
+@end example
 
 Nesting of complex assignments is evaluated recursively
-@smallexample
+@example
 names(x)[3] <- "Three"
-@end smallexample
+@end example
 is equivalent to
-@smallexample
+@example
 `*tmp*` <- x
 x <- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
-@end smallexample
+@end example
 
 
 
-Complex assignments in the enclosing environment (using @code{<<-}) are also permitted:
-@smallexample
+Complex assignments in the enclosing environment (using @code{<<-}) are
+also permitted:
+@example
 names(x)[3] <<- "Three"
-@end smallexample
+@end example
 is equivalent to 
-@smallexample
+@example
 `*tmp*` <<- get(x, envir=parent.env(), inherits=TRUE)
 names(`*tmp*`)[3] <- "Three"
 x <<- `*tmp*`
-@end smallexample
+@end example
 and also to
-@smallexample
+@example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 x <<- "names<-"(`*tmp*`, value="[<-"(names(`*tmp*`), 3, value="Three"))
-@end smallexample
+@end example
 
 Only the target variable is evaluated in the enclosing environment, so 
-@smallexample
+@example
 e<-c(a=1,b=2)
 i<-1
 local(@{
@@ -1810,37 +1832,37 @@ local(@{
    i <-2
    e[i] <<- e[i]+1
 @})
-@end smallexample
- uses the local value of @code{i} on both the LHS and RHS, and the local 
- value of @code{e} on the RHS of the superassignment statement.  It sets 
- @code{e} in the outer environment to
-@smallexample
+@end example
+uses the local value of @code{i} on both the LHS and RHS, and the local
+value of @code{e} on the RHS of the superassignment statement.  It sets
+@code{e} in the outer environment to
+@example
  a  b 
  1 12
-@end smallexample
+@end example
 That is, the superassignment is equivalent to the three lines
-@smallexample
+@example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 `*tmp*`[i] <- e[i]+1
 x <<- `*tmp*`
-@end smallexample
+@end example
 
 Similarly
-@smallexample
+@example
 x[is.na(x)] <<- 0
-@end smallexample
+@end example
 is equivalent to 
-@smallexample
+@example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 `*tmp*`[is.na(x)] <- 0
 x <<- `*tmp*`
-@end smallexample
+@end example
 and not to
-@smallexample
+@example
 `*tmp*` <- get(x,envir=parent.env(), inherits=TRUE)
 `*tmp*`[is.na(`*tmp*`)] <- 0
 x <<- `*tmp*`
-@end smallexample
+@end example
 These two candidate interpretations differ only if there is also a
 local variable @code{x}.  It is a good idea to avoid having a local
 variable with the same name as the target variable of a
@@ -2335,13 +2357,13 @@ This is seen in the following example where the lone @code{label}
 ensures that the label is based on the value of @code{x} before
 it is changed in the next line.
 
-@smallexample
+@example
 function(x, label = deparse(x)) @{
     label
     x <- x + 1
     print(label)
 @}
-@end smallexample
+@end example
 
 The expression slot of a promise can itself involve other promises.
 This happens whenever an unevaluated argument is passed as an argument
@@ -2402,7 +2424,7 @@ first glance peculiar, properties obtain.
 
 A simple example,
 
-@smallexample
+@example
 f <- function(x) @{
     y <- 10
     g <- function(x) x + y
@@ -2410,7 +2432,7 @@ f <- function(x) @{
 @}
 h <- f()
 h(3)
-@end smallexample
+@end example
 
 @cindex evaluation
 A rather interesting question is what happens when @code{h} is
@@ -2575,11 +2597,11 @@ function.  This is typically a function is very simple and consists of a
 single line of code.  The system function @code{mean} is just such a
 function,
 
-@smallexample
+@example
 > mean
 function (x, ...)
 UseMethod("mean")
-@end smallexample
+@end example
 
 When @code{mean} is called it can have any number of arguments but its
 first argument is special and the class of that first argument is used
@@ -2641,12 +2663,12 @@ call to @code{NextMethod}.
 @c  code segment defines objects of class @code{"cdf"} and @code{"pdf"} that
 @c  represent the cdf and pdf or the unit Exponential.
 
-@c  @smallexample
+@c  @example
 @c  > ucexp <- function(x) 1 - exp(-x)
 @c  > class(ucexp) <- "cdf"
 @c  > udexp <- function(x) exp(-x)
 @c  > class(udexp) <- "pdf"
-@c  @end smallexample
+@c  @end example
 
 @c  @noindent
 @c  Note that the corresponding classes have no slots and that there was
@@ -2668,18 +2690,18 @@ This can easily be achieved through
 generic functions.  We define the
 generic function @code{xpos} as follows.
 
-@smallexample
+@example
 xpos <- function(x, ...)
     UseMethod("xpos")
-@end smallexample
+@end example
 
 @noindent
 Now we can define methods:
 
-@smallexample
+@example
 xpos.xypoint <- function(x) x$x
 xpos.rthetapoint <- function(x) x$r * cos(x$theta)
-@end smallexample
+@end example
 
 The user simply calls the function @code{xpos} with either
 representation as the argument.  The internal dispatching method finds
@@ -3048,10 +3070,10 @@ as ``unevaluated expressions'', although this terminology is somewhat
 confusing.  The most direct method of obtaining a call object is to use
 @code{quote} with an expression argument, e.g.,
 
-@smallexample
+@example
 > e1 <- quote(2 + 2)
 > e2 <- quote(plot(x, y))
-@end smallexample
+@end example
 
 The arguments are not evaluated, the result is simply the parsed
 argument.  The objects @code{e1} and @code{e2} may be evaluated later
@@ -3062,10 +3084,10 @@ arguments.  However, @code{e1} actually has exactly the same structure
 as a call to the binary operator @code{+} with two arguments, a fact
 that gets clearly displayed by the following
 
-@smallexample
+@example
 > quote("+"(2, 2))
 2 + 2
-@end smallexample
+@end example
 
 The components of a call object are accessed using a list-like syntax,
 and may in fact be converted to and from lists using @code{as.list} and
@@ -3073,25 +3095,25 @@ and may in fact be converted to and from lists using @code{as.list} and
 @c FIXME man page for as.call says that this doesn't work, but it
 @c does...
 
-@smallexample
+@example
 > e2[[1]]
 plot
 > e2[[2]]
 x
 > e2[[3]]
 y
-@end smallexample
+@end example
 
 When keyword argument matching is used, the keywords can be used as list
 tags:
 
-@smallexample
+@example
 > e3 <- quote(plot(x = age, y = weight))
 > e3$x
 age
 > e3$y
 weight
-@end smallexample
+@end example
 
 All the components of the call object have mode @code{"name"} in the
 preceding examples.  This is true for identifiers in calls, but the
@@ -3104,20 +3126,20 @@ name can be constructed from character
 strings using @code{as.name}, so one might modify the @code{e2} object
 as follows
 
-@smallexample
+@example
 > e2[[1]] <- as.name("+")
 > e2
 x + y
-@end smallexample
+@end example
 
 To illustrate the fact that subexpressions are simply components that
 are themselves calls, consider
 
-@smallexample
+@example
 > e1[[2]] <- e2
 > e1
 x + y + 2
-@end smallexample
+@end example
 
 
 All grouping parentheses in input are preserved in parsed expressions.
@@ -3136,7 +3158,7 @@ back.
 As it happens, @R{}'s parser is not perfectly invertible, nor is its
 deparser, as the following examples show
 
-@smallexample
+@example
 > deparse(quote(c(1, 2)))
 [1] "c(1, 2)"
 > deparse(1:2)
@@ -3145,7 +3167,7 @@ deparser, as the following examples show
 2 - 2
 > quote(2 - 2)
 2 - 2
-@end smallexample
+@end example
 
 @noindent
 Deparsed expressions should, however, evaluate to an equivalent value
@@ -3164,10 +3186,10 @@ labeling plots, for instance.  An example of this is seen at the
 beginning of @code{plot.default}:
 @findex substitute
 
-@smallexample
+@example
 xlabel <- if (!missing(x))
     deparse(substitute(x))
-@end smallexample
+@end example
 
 @noindent
 This causes the variable or expression given as the @code{x} argument to
@@ -3194,21 +3216,21 @@ substitution will occur for each of these.  Also, @code{substitute} has
 an additional argument which can be an environment or a list in which
 the variables are looked up.  For example:
 
-@smallexample
+@example
 > substitute(a + b, list(a = 1, b = quote(x)))
 1 + x
-@end smallexample
+@end example
 
 Notice that quoting was necessary to substitute the @code{x}.  This kind
 of construction comes in handy in connection with the facilities for
 putting math expression in graphs, as the following case shows
 
-@smallexample
+@example
 > plot(0)
 > for (i in 1:4)
 +   text(1, 0.2 * i,
 +        substitute(x[ix] == y, list(ix = i, y = pnorm(i))))
-@end smallexample
+@end example
 
 It is important to realize that the substitutions are purely lexical;
 there is no checking that the resulting call objects make sense if they
@@ -3224,13 +3246,13 @@ Substitute will not evaluate its first argument.  This leads to the
 puzzle of how to do substitutions on an object that is contained in a
 variable.  The solution is to use @code{substitute} once more, like this
 
-@smallexample
+@example
 > expr <- quote(x + y)
 > substitute(substitute(e, list(x = 3)), list(e = expr))
 substitute(x + y, list(x = 3))
 > eval(substitute(substitute(e, list(x = 3)), list(e = expr)))
 3 + y
-@end smallexample
+@end example
 
 The exact rules for substitutions are as follows:  Each
 @cindex symbol
@@ -3258,12 +3280,12 @@ cleaner, although it does have consequences in connection with
 lazy
 evaluation that comes as a surprise to some.  Consider
 
-@smallexample
+@example
 logplot <- function(y, ylab = deparse(substitute(y))) @{
     y <- log(y)
     plot(y, ylab = ylab)
 @}
-@end smallexample
+@end example
 
 This looks straightforward, but one will discover that the y label
 becomes an ugly @code{c(...)} expression.  It happens because the rules
@@ -3271,13 +3293,13 @@ of lazy evaluation causes the evaluation of the @code{ylab} expression
 to happen @emph{after} @code{y} has been modified.  The solution is to
 force @code{ylab} to be evaluated first, i.e.,
 
-@smallexample
+@example
 logplot <- function(y, ylab = deparse(substitute(y))) @{
     ylab
     y <- log(y)
     plot(y, ylab = ylab)
 @}
-@end smallexample
+@end example
 
 Notice that one should not use @code{eval(ylab)} in this situation.  If
 @code{ylab} is a language or expression object, then that would cause
@@ -3286,18 +3308,18 @@ if a math expression like @code{quote(log[e](y))} was being passed.
 
 
 A variant on @code{substitute} is @code{bquote}, which is used to replace some subexpressions with their values.  The example from above
-@smallexample
+@example
 > plot(0)
 > for (i in 1:4)
 +   text(1, 0.2 * i,
 +        substitute(x[ix] == y, list(ix = i, y = pnorm(i))))
-@end smallexample
+@end example
 could be written more compactly as
-@smallexample
+@example
 plot(0)
 for(i in 1:4)
    text(1, 0.2*i, bquote( x[.(i)] == .(pnorm(i)) ))
-@end smallexample
+@end example
 
 The expression is quoted except for the contents of @code{.()}
 subexpressions, which are replaced with their values. There is an
@@ -3341,9 +3363,9 @@ only to evaluate an expression in a list, but also to specify an
 enclosure into which the search continues if the variable is not in the
 list.  Hence, the call has the form
 
-@smallexample
+@example
 eval(expr, data, sys.frame(sys.parent()))
-@end smallexample
+@end example
 
 Notice that evaluation in a given environment may actually change that
 environment, most obviously in cases involving the
@@ -3351,9 +3373,9 @@ environment, most obviously in cases involving the
 assignment operator,
 such as
 
-@smallexample
+@example
 eval(quote(total <- 0), environment(robert$balance)) # @r{rob Rob}
-@end smallexample
+@end example
 
 @noindent
 This is also true when evaluating in lists, but the original list does
@@ -3366,7 +3388,7 @@ not change because one is really working on a copy.
 Objects of mode @code{"expression"} are defined in @ref{Expression
 objects}.  They are very similar to lists of call objects.
 
-@smallexample
+@example
 > ex <- expression(2 + 2, 3 + 4)
 > ex[[1]]
 2 + 2
@@ -3374,7 +3396,7 @@ objects}.  They are very similar to lists of call objects.
 3 + 4
 > eval(ex)
 [1] 7
-@end smallexample
+@end example
 
 Notice that evaluating an expression object evaluates each call in turn,
 but the final value is that of the last call.  In this respect it
@@ -3388,12 +3410,12 @@ not evaluate an expression object recursively, only when it is passed
 directly to @code{eval} function as above.  The difference can be seen
 like this:
 
-@smallexample
+@example
 > eval(substitute(mode(x), list(x = quote(2 + 2))))
 [1] "numeric"
 > eval(substitute(mode(x), list(x = expression(2 + 2))))
 [1] "expression"
-@end smallexample
+@end example
 
 The deparser represents an expression object by the call
 that creates it.  This is similar to the way it handles numerical
@@ -3401,7 +3423,7 @@ vectors and several other objects that do not have a specific external
 representation.  However, it does lead to the following bit of
 confusion:
 
-@smallexample
+@example
 > e <- quote(expression(2 + 2))
 > e
 expression(2 + 2)
@@ -3412,7 +3434,7 @@ expression(2 + 2)
 expression(2 + 2)
 > mode(ee)
 [1] "expression"
-@end smallexample
+@end example
 
 @noindent
 I.e., @code{e} and @code{ee} look identical when printed, but one is a
@@ -3428,11 +3450,11 @@ function to find out how it has been called by
 looking at the result of @code{sys.call} as in the following example of
 a function that simply returns its own call:
 
-@smallexample
+@example
 > f <- function(x, y, ...) sys.call()
 > f(y = 1, 2, z = 3, 4)
 f(y = 1, 2, z = 3, 4)
-@end smallexample
+@end example
 
 However, this is not really useful except for debugging because it
 requires the function to keep track of argument matching in order to
@@ -3445,11 +3467,11 @@ corresponding formals.  To this end, the function @code{match.call} is
 used.  Here's a variant of the preceding example, a function that
 returns its own call with arguments matched
 
-@smallexample
+@example
 > f <- function(x, y, ...) match.call()
 > f(y = 1, 2, z = 3, 4)
 f(x = 2, y = 1, z = 3, 4)
-@end smallexample
+@end example
 
 Notice that the second argument now gets matched to @code{x} and appears
 in the corresponding position in the result.
@@ -3458,14 +3480,14 @@ The primary use of this technique is to call another function with the
 same arguments, possibly deleting some and adding others.  A typical
 application is seen at the start of the @code{lm} function:
 
-@smallexample
+@example
     mf <- cl <- match.call()
     mf$singular.ok <- mf$model <- mf$method <- NULL
     mf$x <- mf$y <- mf$qr <- mf$contrasts <- NULL
     mf$drop.unused.levels <- TRUE
     mf[[1]] <- as.name("model.frame")
     mf <- eval(mf, sys.frame(sys.parent()))
-@end smallexample
+@end example
 
 Notice that the resulting call is
 @cindex evaluation
@@ -3489,16 +3511,16 @@ is a switch which if set to @code{FALSE} lets all @samp{...} arguments
 be collected as a single argument with the tag @samp{...}.
 @findex match.call
 
-@smallexample
+@example
 > f <- function(x, y, ...) match.call(expand.dots = FALSE)
 > f(y = 1, 2, z = 3, 4)
 f(x = 2, y = 1, ... = list(z = 3, 4))
-@end smallexample
+@end example
 
 The @samp{...} argument is a list (a pairlist to be precise), not a call
 to @code{list} like it is in @Sl{}:
 
-@smallexample
+@example
 > e1 <- f(y = 1, 2, z = 3, 4)$...
 > e1
 $z
@@ -3506,24 +3528,24 @@ $z
 
 [[2]]
 [1] 4
-@end smallexample
+@end example
 
 One reason for using this form of @code{match.call} is simply to get rid
 of any @samp{...} arguments in order not to be passing unspecified
 arguments on to functions that may not know them.  Here's an example
 paraphrased from @code{plot.formula}:
 
-@smallexample
+@example
 m <- match.call(expand.dots = FALSE)
 m$... <- NULL
 m[[1]] <- "model.frame"
-@end smallexample
+@end example
 
 A more elaborate application is in @code{update.default} where a set of
 optional extra arguments can add to, replace, or cancel those of the
 original call:
 
-@smallexample
+@example
 extras <- match.call(expand.dots = FALSE)$...
 if (length(extras) > 0) @{
     existing <- !is.na(match(names(extras), names(call)))
@@ -3533,7 +3555,7 @@ if (length(extras) > 0) @{
         call <- as.call(call)
     @}
 @}
-@end smallexample
+@end example
 
 Notice that care is taken to modify existing arguments individually in
 case @code{extras[[a]] == NULL}.  Concatenation does not work on call
@@ -3545,11 +3567,11 @@ namely @code{call} and @code{do.call}.
 The function @code{call} allows creation of a call object from the
 function name and the list of arguments
 
-@smallexample
+@example
 > x <- 10.5
 > call("round", x)
 round(10.5)
-@end smallexample
+@end example
 
 As seen, the value of @code{x} rather than the
 @cindex symbol
@@ -3564,13 +3586,13 @@ all the arguments.  A natural use of this is when one wants to apply a
 function like @code{cbind} to all elements of a list or data frame.
 @findex do.call
 
-@smallexample
+@example
 is.na.data.frame <- function (x) @{
     y <- do.call("cbind", lapply(x, "is.na"))
     rownames(y) <- row.names(x)
     y
 @}
-@end smallexample
+@end example
 
 Other uses include variations over constructions like @code{do.call("f",
 list(...))}.  However, one should be aware that this involves evaluation
@@ -3900,7 +3922,7 @@ A call to the function @code{browser} causes @R{} to halt execution at
 that point and to provide the user with a special prompt.  Arguments to
 @code{browser} are ignored.
 
-@smallexample
+@example
 > foo <- function(s) @{
 + c <- 3
 + browser()
@@ -3912,7 +3934,7 @@ Browse[1]> s
 Browse[1]> get("c")
 [1] 3
 Browse[1]>
-@end smallexample
+@end example
 
 @node debug/undebug, trace/untrace, browser, Debugging
 @section debug/undebug
@@ -3930,7 +3952,7 @@ have special meaning.
 Debugging is turned off by a call to @code{undebug} with the function as
 an argument.
 
-@smallexample
+@example
 > debug(mean.default)
 > mean(1:10)
 debugging in: mean.default(1:10)
@@ -3958,7 +3980,7 @@ debug: n <- length(c(x, recursive = TRUE))
 Browse[1]> c
 exiting from: mean.default(1:10)
 [1] 5.5
-@end smallexample
+@end example
 
 @node trace/untrace, traceback, debug/undebug, Debugging
 @section trace/untrace
@@ -3975,14 +3997,14 @@ When @code{trace} has been invoked on a function then every time that
 function is evaluated the call to it is printed out.  This mechanism is
 removed by calling @code{untrace} with the function as an argument.
 
-@smallexample
+@example
 > get("[<-")
 .Primitive("[<-")
 > trace("[<-")
 > x <- 1:10
 > x[3] <- 4
 trace: "[<-"(*tmp*, 3, value = 4)
-@end smallexample
+@end example
 
 @node traceback,  , trace/untrace, Debugging
 @section traceback
@@ -4102,10 +4124,10 @@ Comments in @R{} are ignored by the parser.  Any text from a
 to the end of the line is taken to be a comment, unless
 the @code{#} character is inside a quoted string. For example,
 
-@smallexample
+@example
 > x <- 1  # This is a comment...
 > y <- "  #... but this is not."
-@end smallexample
+@end example
 
 @node Tokens, Expressions, Comments, Parser
 @comment  node-name,  next,  previous,  up
@@ -4152,9 +4174,9 @@ or an @samp{e}, an optional sign and a string of zero or more digits.
 Either the fractional or the decimal part can be empty, but not both at
 once.
 
-@smallexample
+@example
 @r{Valid numeric constants:} 1 10 0.1 .2 1e-7 1.2e+7 2e 3e+
-@end smallexample
+@end example
 
 @noindent
 The two latter examples are hardly useful in practice, but they are
@@ -4170,9 +4192,9 @@ Complex constants have the form of a numeric constant followed by
 constants, other complex numbers are parsed a unary or binary operations
 on numeric and imaginary numbers.
 
-@smallexample
+@example
 @r{Valid complex constants:} 2i 4.1i 1e-2i
-@end smallexample
+@end example
 
 String constants are delimited by a pair of single (@samp{'}) or double
 (@samp{"}) quotes and can contain all other printable characters.
@@ -4261,11 +4283,11 @@ following pairs are @emph{not} equivalent
 The following identifiers have a special meaning and should not be used
 for object names
 
-@smallexample
+@example
 if else repeat while function for in next break
 TRUE FALSE NULL NA Inf NaN
 ... ..1 ..2 @r{etc.}
-@end smallexample
+@end example
 
 @node Special operators, Separators, Reserved words, Tokens
 @subsection Special operators
@@ -4277,9 +4299,9 @@ for strings do not apply here.
 
 Note that the following operators are predefined
 
-@smallexample
+@example
 %% %*% %/% %in% %o% %x%
-@end smallexample
+@end example
 
 @c  @node Special symbols, Separators, Special operators, Tokens
 @c  @subsection Special symbols
@@ -4408,19 +4430,19 @@ A tag can be an identifier or a text string.
 
 Examples:
 
-@smallexample
+@example
 f(x)
 g(tag = value, , 5)
 "odd name"("strange tag" = 5, y)
 (function(x) x^2)(5)
-@end smallexample
+@end example
 
 @node Infix and prefix operators, Index constructions, Function calls (expressions), Expressions
 @subsection Infix and prefix operators
 
 The order of precedence (highest first) of the operators are
 
-@smallexample
+@example
 ::
 $ @@
 ^
@@ -4437,7 +4459,7 @@ $ @@
 -> ->>
 =                  @r{(as assignment)}
 <- <<-
-@end smallexample
+@end example
 
 The exponentiation operator @samp{^} and the
 @cindex assignment
@@ -4550,7 +4572,7 @@ skip to the next iteration).
 
 Internally, the constructs are stored as function calls:
 
-@smallexample
+@example
 "if"(@var{cond}, @var{expr})
 "if"(@var{cond}, @var{expr1}, @var{expr2})
 "while"(@var{cond}, @var{expr})
@@ -4558,7 +4580,7 @@ Internally, the constructs are stored as function calls:
 "for"(@var{var}, @var{list}, @var{expr})
 "break"()
 "next"()
-@end smallexample
+@end example
 
 @node Function definitions,  , Flow control elements, Expressions
 @subsection Function definitions

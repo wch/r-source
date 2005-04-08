@@ -10,7 +10,8 @@ as.vector(x, mode = "any")
 is.vector(x, mode = "any")
 }
 \arguments{
-  \item{mode}{A character string giving an atomic mode, or \code{"any"}.}
+  \item{mode}{A character string giving an atomic mode or \code{"list"},
+    or (not for \code{vector}) \code{"any"}.}
   \item{length}{A non-negative integer specifying the desired length.}
   \item{x}{An object.}
 }
@@ -26,6 +27,9 @@ is.vector(x, mode = "any")
   and \code{FALSE} otherwise.
 }
 \details{
+  The atomic modes are \code{"logical"}, \code{"integer"}, \code{"numeric"},
+  \code{"complex"}, \code{"character"} and \code{"raw"}.
+
   \code{is.vector} returns \code{FALSE} if \code{x} has any attributes
   except names.  (This is incompatible with S.)  On the other hand,
   \code{as.vector} removes \emph{all} attributes including names.

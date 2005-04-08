@@ -19,6 +19,13 @@ is.recursive(x)
 \details{
   These are generic: you can write methods to handle specific classes
   of objects, see \link{InternalMethods}.
+
+  \code{is.atomic} is true for the atomic vector types
+  (\code{"logical"}, \code{"integer"}, \code{"numeric"},
+  \code{"complex"}, \code{"character"} and \code{"raw"}) and \code{NULL}.
+
+  Most types of language objects are regarded as recursive: those which
+  are not are the atomic vector types, \code{NULL} and symbols.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

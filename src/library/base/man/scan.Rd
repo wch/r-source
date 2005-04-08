@@ -130,7 +130,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   field is skipped (but a \code{NULL} component appears in the result).
 
   The type of \code{what} or its components can be one of the six
-  atomic types or \code{NULL},
+  atomic vector types or \code{NULL} (see \code{\link{is.atomic}}).
 
   \sQuote{White space} is defined for the purposes of this function as
   one or more contiguous characters from the set space, horizontal tab,
