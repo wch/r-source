@@ -2624,8 +2624,6 @@ void R_LockBinding(SEXP sym, SEXP env)
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue)
 	    error(_("no binding for \"%s\""), CHAR(PRINTNAME(sym)));
-	warning(_("saved workspaces with locked bindings may not work\
- properly when loaded into older versions of R"));
 	LOCK_BINDING(binding);
     }
 }
@@ -2665,8 +2663,6 @@ void R_MakeActiveBinding(SEXP sym, SEXP fun, SEXP env)
     else {
 	SEXP binding = findVarLocInFrame(env, sym, NULL);
 	if (binding == R_NilValue) {
-	    warning(_("saved workspaces with active bindings may not work\
- properly when loaded into older versions of R"));
 	    defineVar(sym, fun, env); /* fails if env is locked */
 	    binding = findVarLocInFrame(env, sym, NULL);
 	    SET_ACTIVE_BINDING_BIT(binding);
