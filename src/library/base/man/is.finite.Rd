@@ -18,7 +18,9 @@ is.nan(x)
   and not missing).
 
   \code{Inf} and \code{-Inf} are positive and negative \dQuote{infinity}
-  whereas \code{NaN} means \dQuote{Not a Number}.
+  whereas \code{NaN} means \dQuote{Not a Number}.  (These apply to numeric
+  values and real and imaginary parts of complex values but not to
+  values of integer vectors.)
 }
 \arguments{
   \item{x}{(numerical) object to be tested.}

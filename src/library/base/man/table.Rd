@@ -24,9 +24,9 @@ is.table(x)
   \item{\dots}{objects which can be interpreted as factors (including
     character strings), or a list (or data frame) whose components can
     be so interpreted}
-  \item{exclude}{values to use in the exclude argument of \code{factor}
+  \item{exclude}{values to use in the exclude argument of \code{\link{factor}}
     when interpreting non-factor objects; if specified, levels to remove
-    from all factors in \dots.}
+    from all factors in \code{\dots}.}
   \item{dnn}{the names to be given to the dimensions in the result (the
     \emph{dimnames names}).}
   \item{deparse.level}{controls how the default \code{dnn} is
