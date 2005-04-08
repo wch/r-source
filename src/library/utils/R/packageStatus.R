@@ -66,10 +66,9 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
     }
 
     y$LibPath <- factor(y$LibPath, levels=lib.loc)
-    y$Status <- factor(y$Status, levels=c("ok", "upgrade"))
+    y$Status <- factor(y$Status, levels=c("ok", "upgrade", "unavailable"))
     z$Repository <- factor(z$Repository, levels=repositories)
-    z$Status <- factor(z$Status,
-                       levels=c("installed", "not installed", "unavailable"))
+    z$Status <- factor(z$Status, levels=c("installed", "not installed"))
 
     retval <- list(inst=y, avail=z)
     class(retval) <- "packageStatus"
