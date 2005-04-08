@@ -1861,12 +1861,14 @@ readline, in non-system directories, use the variables @code{LDFLAGS}
 (for libraries, using @samp{-L} flags to be passed to the linker) and
 @code{CPPFLAGS} (for header files, using @samp{-I} flags to be passed to
 the C/C++ preprocessors), respectively, to specify these locations.
-These default to @file{/usr/local/lib} and @file{/usr/local/include} to
-catch the most common cases.  If libraries are still not found, then
-maybe your compiler/linker does not support re-ordering of @option{-L}
-and @option{-l} flags (this has been reported to be a problem on HP-UX
-with the native @command{cc}).  In this case, use a different compiler
-(or a front end shell script which does the re-ordering).
+These default to @code{LDFLAGS=-L/usr/local/lib} and
+@code{CPPFLAGS=-I/usr/local/include} to catch the most common cases (but
+beware that @code{LDFLAGS} may need altering for 64-bit OSes).  If
+libraries are still not found, then maybe your compiler/linker does not
+support re-ordering of @option{-L} and @option{-l} flags (this has been
+reported to be a problem on HP-UX with the native @command{cc}).  In
+this case, use a different compiler (or a front end shell script which
+does the re-ordering).
 
 @node Making manuals,  , Compilation flags, Configuration variables
 @subsection Making manuals
@@ -2092,6 +2094,13 @@ position-independent code is used in any static libraries (such as the
 Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and @code{zlib}) which
 might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
+
+For versions with both 64- and 32-bit support, it is likely that
+@example
+LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
+@end example
+is appropriate since most (but not all) software installs its 64-bit
+libraries in @file{/usr/local/lib64}.
 
 64-bit versions of Linux are built with support for files > 2Gb, but
 32-bit versions usually are not.  This can be enabled for Linux kernels
