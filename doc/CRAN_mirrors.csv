@@ -7,13 +7,14 @@ Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien
 "Brasil (SP 2)",Brasil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando@vps.fmvz.usp.br>"
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>"
-Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,SunSITE,mirror@sunsite.dk
+Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>"
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>"
 "France (Paris)",France,Paris,http://mirror.internet.tp/cran/,"Boese Internet, Paris","Pelle Boese <pelle@boese.biz>"
 "Germany (Berlin)",Germany,Berlin,http://cran.r-mirror.de/,"Stefan Drees, Berlin","Stefan Drees <sdrees@ieee.org>"
 "Germany (Koeln)",Germany,Koeln,http://cran.miscellaneousmirror.org/,"Miscellaneousdata.de, Koeln","Simon Hardy-Francis <simonhf@gmail.com>"
 "Germany (Mainz)",Germany,Mainz,http://umfragen.sowi.uni-mainz.de/CRAN/,"University of Mainz",
+"Germany (Muenchen)",Germany,Muenchen,http://cran.mirrorplus.org/,"mirrorplus.org, Muenchen",admin@mirrorplus.org
 Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","Laszlo L Tornoci <torlasz@xenia.sote.hu>"
 "Italy (Arezzo)",Italy,Arezzo,http://cran.arsmachinandi.it/,"Ars Machinandi, Arezzo",cran.mirror@arsmachinandi.com
 "Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
