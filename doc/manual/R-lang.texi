@@ -2067,15 +2067,15 @@ last is the base package.  An @code{Autoloads} environment is used for
 holding proxy objects that may be loaded on demand.  Other environments
 are inserted in the path using @code{attach} or @code{library}.
 
-@cindex name space
-Packages which have a @emph{name space} have a different search path.
+@cindex namespace
+Packages which have a @emph{namespace} have a different search path.
 When a search for an @R{} object is started from an object in such a
-package, the package itself is searched first, then its imports, 
-then the global environment
-and the rest of the regular search path.  The effect is that references
-to other objects in the same package will be resolved to the package,
-and objects cannot be masked by objects of the same name in the global
-environment or in other packages.
+package, the package itself is searched first, then its imports, then
+the base namespace and finally the global environment and the rest of the
+regular search path.  The effect is that references to other objects in
+the same package will be resolved to the package, and objects cannot be
+masked by objects of the same name in the global environment or in other
+packages.
 
 
 @node Functions, Object-oriented programming, Evaluation of expressions, Top
@@ -2216,10 +2216,11 @@ this
 @cindex environment
 environment frame.
 
-The enclosing frame of the evaluation frame is the environment
-frame associated with the function being invoked.  This may be different
-than @Sl{}.  While most functions have @code{.GlobalEnv} as their environment
-this does not have to be true.
+The enclosing frame of the evaluation frame is the environment frame
+associated with the function being invoked.  This may be different from
+@Sl{}.  While many functions have @code{.GlobalEnv} as their environment
+this does not have to be true and functions defined in packages with
+namespaces (normally) have the package namespace as their environment.
 
 @node Argument matching, Argument evaluation, Evaluation environment, Evaluation
 @subsection Argument matching
@@ -2309,19 +2310,20 @@ environment and not in the
 @cindex environment, evaluation
 evaluation environment of @code{foo}.
 
-It is possible to access the actual expressions used as arguments inside
-the function.  The mechanism is implemented via promises.  When a
+It is possible to access the actual (not default) expressions used as
+arguments inside the function.  The mechanism is implemented via
+promises.  When a
 @cindex function
-function is being evaluated the actual expression
-used as an argument is stored in the promise together with a pointer to
-the environment the function was called from.  When (if) the argument is
-evaluated the stored expression is evaluated in the environment that the
-function was called from.  Since only a pointer to the environment is
-used any changes made to that environment will be in effect during this
+function is being evaluated the actual expression used as an argument is
+stored in the promise together with a pointer to the environment the
+function was called from.  When (if) the argument is evaluated the
+stored expression is evaluated in the environment that the function was
+called from.  Since only a pointer to the environment is used any
+changes made to that environment will be in effect during this
 evaluation.  The resulting value is then also stored in a separate spot
 in the promise.  Subsequent evaluations retrieve this stored value (a
 second evaluation is not carried out).  Access to the unevaluated
-expression is also available using @code{substitute}.  
+expression is also available using @code{substitute}.
 @c Because @R{} is a very
 @c flexible program it is possible to encounter promises in the interpreted
 @c language, however, users are advised not to rely on them in their own
@@ -2329,12 +2331,12 @@ expression is also available using @code{substitute}.
 
 When a
 @cindex function
-function is called, each formal argument is assigned a promise in
-the local environment of the call with the expression slot containing
-the actual argument and the environment slot containing the environment
-of the caller.  If no actual argument for a formal argument is given in
-the call and there is a default expression, it is similarly assigned to
-the expression slot of the formal argument, but with the
+function is called, each formal argument is assigned a promise in the
+local environment of the call with the expression slot containing the
+actual argument (if it exists) and the environment slot containing the
+environment of the caller.  If no actual argument for a formal argument
+is given in the call and there is a default expression, it is similarly
+assigned to the expression slot of the formal argument, but with the
 @cindex environment
 environment set
 to the local environment.
@@ -2350,12 +2352,12 @@ A promise is forced when its value is needed.  This usually happens
 inside internal
 @cindex function
 @cindex function, internal
-functions, but a promise can also be forced by direct
-evaluation of the promise itself.  This is occasionally useful when a
-default expression depends on the value of another formal argument.
-This is seen in the following example where the lone @code{label}
-ensures that the label is based on the value of @code{x} before
-it is changed in the next line.
+functions, but a promise can also be forced by direct evaluation of the
+promise itself.  This is occasionally useful when a default expression
+depends on the value of another formal argument or other variable in the
+local environment.  This is seen in the following example where the lone
+@code{label} ensures that the label is based on the value of @code{x}
+before it is changed in the next line.
 
 @example
 function(x, label = deparse(x)) @{
@@ -2743,16 +2745,18 @@ In order to determine the correct method the class attribute of the
 first argument to the generic is obtained and used to find the correct
 method.  The
 @cindex name
-name of the generic function is combined with the first
-element of the class attribute into the form,
-@code{@var{generic}.@var{class}} and a function with that name is
-sought.  If the function is found then it is used.  If no such function
-is found then the second element of the class attribute is used, and so
-on until all the elements of the class attribute have been exhausted.
-If no method has been found at that point then the method
-@code{@var{generic}.@var{default}} is used.  If the first argument to
-the generic function has no class attribute then
-@code{@var{generic}.@var{default}} is used.  Since the introduction of namespaces the methods may not be accessible by their names (i.e. @code{get("@var{generic}.@var{class}")} may fail), but they will be accessible by @code{getS3method("@var{generic}","@var{class}")}.
+name of the generic function is combined with the first element of the
+class attribute into the form, @code{@var{generic}.@var{class}} and a
+function with that name is sought.  If the function is found then it is
+used.  If no such function is found then the second element of the class
+attribute is used, and so on until all the elements of the class
+attribute have been exhausted.  If no method has been found at that
+point then the method @code{@var{generic}.@var{default}} is used.  If
+the first argument to the generic function has no class attribute then
+@code{@var{generic}.@var{default}} is used.  Since the introduction of
+namespaces the methods may not be accessible by their names
+(i.e. @code{get("@var{generic}.@var{class}")} may fail), but they will
+be accessible by @code{getS3method("@var{generic}","@var{class}")}.
 
 @cindex object
 Any object can have a @code{class} attribute.  This attribute can have
