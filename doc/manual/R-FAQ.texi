@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-05
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-08
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -1687,8 +1687,12 @@ Circular Statistics, from ``Topics in Circular Statistics'' by S. Rao
 Jammalamadaka and A. SenGupta, 2001, World Scientific.
 @item CoCo
 Graphical modeling for contingency tables using CoCo.
-@item CoCoAn
-Constrained Correspondence Analysis.
+@c <COMMENT>
+@c Moved to the Archive on 2005-05-08 as requested by
+@c Stephane Dray <dray@biomserv.univ-lyon1.fr>.
+@c @item CoCoAn
+@c Constrained Correspondence Analysis.
+@c </COMMENT>
 @item DAAG
 Various data sets used in examples and exercises in ``Data Analysis and
 Graphics Using R'' by John H. Maindonald and W. John Brown, 2003.
