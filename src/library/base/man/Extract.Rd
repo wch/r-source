@@ -28,9 +28,9 @@ x$name
     indices specifying elements to extract or replace.  \code{i, j} are
     \code{numeric} or \code{character} or empty whereas \code{name} must be
     character or an (unquoted) name.  Numeric values are coerced to
-    integer as by \code{\link{as.integer}}.  Character strings are
-    partially matched to the (dim)names of the object if exact matching
-    does not succeed.
+    integer as by \code{\link{as.integer}}.  For \code{[[} and \code{$}
+    character strings are normally partially matched to the names of the
+    object if exact matching does not succeed.
 
     For \code{[}-indexing only: \code{i, j, \dots} can be
     logical vectors, indicating elements/slices to select.  Such vectors
