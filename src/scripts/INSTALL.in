@@ -92,7 +92,7 @@ error ()   { echo "ERROR: $*" >&2 ; }
 
 startdir=`${GETWD}`
 : ${TMPDIR=/tmp}
-{ tmpdir=`mktemp -d -q "${TMPDIR}/R.INSTALL.XXXXXX" 2>/dev/null` \
+{ tmpdir=`(mktemp -d -q "${TMPDIR}/R.INSTALL.XXXXXX") 2>/dev/null` \
     && test -n "${tmpdir}" && test -d "${tmpdir}" ; } ||
   { test -n "${RANDOM}" && tmp=${TMPDIR}/R.INSTALL$$-${RANDOM} \
       && (${MKDIR_P} "${tmpdir}") ; } ||
