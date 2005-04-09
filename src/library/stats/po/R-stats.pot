@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-01 10:56\n"
+"POT-Creation-Date: 2005-04-09 17:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -683,7 +683,7 @@ msgstr ""
 msgid "%d factors is too many for %d variables"
 msgstr ""
 
-msgid "start must have %d rows"
+msgid "'start' must have %d rows"
 msgstr ""
 
 msgid "no starting values supplied"
@@ -761,7 +761,7 @@ msgstr ""
 msgid "'filter' is longer than time series"
 msgstr ""
 
-msgid "argument sides must be 1 or 2"
+msgid "argument 'sides' must be 1 or 2"
 msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
@@ -884,7 +884,7 @@ msgstr ""
 msgid "invalid fitted means in empty model"
 msgstr ""
 
-msgid "length of start should equal %d and correspond to initial coefs for %s"
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr ""
 
 msgid "cannot find valid starting values: please specify some"
@@ -1091,7 +1091,7 @@ msgstr ""
 msgid "y must be supplied.\nFor density estimation use density()"
 msgstr ""
 
-msgid "k is not an integer"
+msgid "'k' is not an integer"
 msgstr ""
 
 msgid "method = '%s' is not supported. Using 'qr'"
@@ -1196,7 +1196,7 @@ msgstr ""
 msgid "incorrect specification of 'table' or 'start'"
 msgstr ""
 
-msgid "x is empty"
+msgid "'x' is empty"
 msgstr ""
 
 msgid "%d missing values deleted"
@@ -1257,9 +1257,6 @@ msgid "sample size in each stratum must be > 1"
 msgstr ""
 
 msgid "'x' must be square with at least two rows and columns"
-msgstr ""
-
-msgid "'if 'x' is not a matrix, 'y' must be given"
 msgstr ""
 
 msgid "'x' and 'y' must have the same number of levels (minimum 2)"
@@ -1880,7 +1877,7 @@ msgstr ""
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr ""
 
-msgid "too few distinct input values to fit a asymptotic regression model"
+msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
 
 msgid "cannot fit an asymptotic regression model to these data"

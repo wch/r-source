@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-01 11:04+0100\n"
+"POT-Creation-Date: 2005-04-09 17:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -75,7 +75,7 @@ msgstr ""
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr ""
 
-#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:304
+#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:324
 msgid "cannot find unused tempfile name"
 msgstr ""
 
@@ -315,7 +315,7 @@ msgstr ""
 msgid "Impossible to create thread/pipe"
 msgstr ""
 
-#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:317
+#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:318
 msgid "seek not enabled for this connection"
 msgstr ""
 
@@ -381,17 +381,17 @@ msgstr ""
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:235
+#: src/gnuwin32/system.c:897 src/unix/system.c:233
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:239
+#: src/gnuwin32/system.c:922 src/unix/system.c:237
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr ""
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:277
+#: src/gnuwin32/system.c:940 src/unix/system.c:275
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr ""
 
@@ -654,7 +654,7 @@ msgstr ""
 msgid "arguments must be symbolic"
 msgstr ""
 
-#: src/main/apply.c:42 src/main/complex.c:601
+#: src/main/apply.c:42 src/main/complex.c:606
 msgid "invalid length"
 msgstr ""
 
@@ -1495,19 +1495,19 @@ msgstr ""
 msgid "non-numeric argument to function"
 msgstr ""
 
-#: src/main/complex.c:518 src/main/complex.c:590
+#: src/main/complex.c:523 src/main/complex.c:595
 msgid "unimplemented complex function"
 msgstr ""
 
-#: src/main/complex.c:655
+#: src/main/complex.c:660
 msgid "polynomial degree too high (49 max)"
 msgstr ""
 
-#: src/main/complex.c:668
+#: src/main/complex.c:673
 msgid "invalid polynomial coefficient"
 msgstr ""
 
-#: src/main/complex.c:673
+#: src/main/complex.c:678
 msgid "root finding code failed"
 msgstr ""
 
@@ -1539,7 +1539,7 @@ msgstr ""
 msgid "open/close not enabled for this connection"
 msgstr ""
 
-#: src/main/connections.c:176 src/main/dounzip.c:304
+#: src/main/connections.c:176 src/main/dounzip.c:305
 msgid "printing not enabled for this connection"
 msgstr ""
 
@@ -1568,7 +1568,7 @@ msgstr ""
 msgid "read not enabled for this connection"
 msgstr ""
 
-#: src/main/connections.c:304 src/main/dounzip.c:311
+#: src/main/connections.c:304 src/main/dounzip.c:312
 msgid "write not enabled for this connection"
 msgstr ""
 
@@ -2501,8 +2501,8 @@ msgstr ""
 msgid "cannot locate file '%s' in zip file '%s'"
 msgstr ""
 
-#: src/main/dounzip.c:330 src/main/dounzip.c:334 src/main/dounzip.c:340
-#: src/main/dounzip.c:357
+#: src/main/dounzip.c:331 src/main/dounzip.c:335 src/main/dounzip.c:341
+#: src/main/dounzip.c:358
 msgid "allocation of unz connection failed"
 msgstr ""
 
@@ -2559,48 +2559,48 @@ msgstr ""
 msgid "no graphics device is active"
 msgstr ""
 
-#: src/main/engine.c:2098
+#: src/main/engine.c:2100
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr ""
 
-#: src/main/engine.c:2121
+#: src/main/engine.c:2123
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr ""
 
-#: src/main/engine.c:2125
+#: src/main/engine.c:2127
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr ""
 
-#: src/main/engine.c:2163
+#: src/main/engine.c:2165
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ""
 
-#: src/main/engine.c:2165
+#: src/main/engine.c:2167
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ""
 
-#: src/main/engine.c:2432
+#: src/main/engine.c:2434
 msgid "Display list redraw incomplete"
 msgstr ""
 
-#: src/main/engine.c:2611
+#: src/main/engine.c:2613
 msgid "'expr' argument must be an expression"
 msgstr ""
 
-#: src/main/engine.c:2613
+#: src/main/engine.c:2615
 msgid "'list' argument must be a list"
 msgstr ""
 
-#: src/main/engine.c:2615
+#: src/main/engine.c:2617
 msgid "'env' argument must be an environment"
 msgstr ""
 
-#: src/main/engine.c:2637 src/main/graphics.c:2396
+#: src/main/engine.c:2639 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr ""
 
@@ -2789,92 +2789,80 @@ msgid "locking the NULL (base) environment is not supported yet"
 msgstr ""
 
 #: src/main/envir.c:2566 src/main/envir.c:2591 src/main/envir.c:2620
-#: src/main/envir.c:2638 src/main/envir.c:2656 src/main/envir.c:2688
-#: src/main/envir.c:2704
+#: src/main/envir.c:2636 src/main/envir.c:2654 src/main/envir.c:2684
+#: src/main/envir.c:2700
 msgid "not an environment"
 msgstr ""
 
-#: src/main/envir.c:2618 src/main/envir.c:2636 src/main/envir.c:2652
-#: src/main/envir.c:2686 src/main/envir.c:2702 src/main/envir.c:2794
+#: src/main/envir.c:2618 src/main/envir.c:2634 src/main/envir.c:2650
+#: src/main/envir.c:2682 src/main/envir.c:2698 src/main/envir.c:2790
 msgid "not a symbol"
 msgstr ""
 
-#: src/main/envir.c:2626 src/main/envir.c:2644 src/main/envir.c:2694
-#: src/main/envir.c:2710
+#: src/main/envir.c:2626 src/main/envir.c:2642 src/main/envir.c:2690
+#: src/main/envir.c:2706
 #, c-format
 msgid "no binding for \"%s\""
 msgstr ""
 
-#: src/main/envir.c:2627
-msgid ""
-"saved workspaces with locked bindings may not work properly when loaded into "
-"older versions of R"
-msgstr ""
-
-#: src/main/envir.c:2654
+#: src/main/envir.c:2652
 msgid "not a function"
 msgstr ""
 
-#: src/main/envir.c:2659 src/main/envir.c:2675
+#: src/main/envir.c:2657 src/main/envir.c:2671
 msgid "symbol already has a regular binding"
 msgstr ""
 
-#: src/main/envir.c:2668
-msgid ""
-"saved workspaces with active bindings may not work properly when loaded into "
-"older versions of R"
-msgstr ""
-
-#: src/main/envir.c:2755
+#: src/main/envir.c:2751
 msgid "unknown op"
 msgstr ""
 
-#: src/main/envir.c:2796
+#: src/main/envir.c:2792
 msgid "cannot unbind a locked binding"
 msgstr ""
 
-#: src/main/envir.c:2798
+#: src/main/envir.c:2794
 msgid "cannot unbind an active binding"
 msgstr ""
 
-#: src/main/envir.c:2858
+#: src/main/envir.c:2854
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr ""
 
-#: src/main/envir.c:2925
+#: src/main/envir.c:2921
 msgid "namespaces not available; using .GlobalEnv"
 msgstr ""
 
-#: src/main/envir.c:2947
+#: src/main/envir.c:2943
 msgid "bad name space name"
 msgstr ""
 
-#: src/main/envir.c:2959
+#: src/main/envir.c:2955
 msgid "name space already registered"
 msgstr ""
 
-#: src/main/envir.c:2971
+#: src/main/envir.c:2967
 msgid "name space not registered"
 msgstr ""
 
-#: src/main/envir.c:3015
+#: src/main/envir.c:3011
 msgid "bad import environment argument"
 msgstr ""
 
-#: src/main/envir.c:3017
+#: src/main/envir.c:3013
 msgid "bad export environment argument"
 msgstr ""
 
-#: src/main/envir.c:3019
+#: src/main/envir.c:3015
 msgid "bad 'names' argument"
 msgstr ""
 
-#: src/main/envir.c:3021
+#: src/main/envir.c:3017
 msgid "length of import and export names must match"
 msgstr ""
 
-#: src/main/envir.c:3044
+#: src/main/envir.c:3040
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr ""
@@ -3495,47 +3483,47 @@ msgstr ""
 msgid "invalid argument to GBox"
 msgstr ""
 
-#: src/main/graphics.c:3273
+#: src/main/graphics.c:3277
 msgid "bad hsv to rgb color conversion"
 msgstr ""
 
-#: src/main/graphics.c:4047
+#: src/main/graphics.c:4051
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr ""
 
-#: src/main/graphics.c:4088 src/main/graphics.c:4098
+#: src/main/graphics.c:4092 src/main/graphics.c:4102
 msgid "invalid RGB specification"
 msgstr ""
 
-#: src/main/graphics.c:4131
+#: src/main/graphics.c:4135
 msgid "invalid color name"
 msgstr ""
 
-#: src/main/graphics.c:4142
+#: src/main/graphics.c:4146
 msgid "invalid color specification"
 msgstr ""
 
-#: src/main/graphics.c:4283
+#: src/main/graphics.c:4287
 msgid "Invalid color"
 msgstr ""
 
-#: src/main/graphics.c:4355
+#: src/main/graphics.c:4359
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr ""
 
-#: src/main/graphics.c:4366 src/main/graphics.c:4374 src/main/graphics.c:4381
+#: src/main/graphics.c:4370 src/main/graphics.c:4378 src/main/graphics.c:4385
 msgid "invalid line type"
 msgstr ""
 
-#: src/main/graphics.c:4492
+#: src/main/graphics.c:4496
 msgid "no active or default device"
 msgstr ""
 
-#: src/main/graphics.c:4509
+#: src/main/graphics.c:4513
 msgid "too many open devices"
 msgstr ""
 
-#: src/main/graphics.c:4653
+#: src/main/graphics.c:4657
 msgid "too many devices open"
 msgstr ""
 
@@ -7115,15 +7103,15 @@ msgstr ""
 msgid "intern=TRUE is not implemented on this platform"
 msgstr ""
 
-#: src/unix/sys-unix.c:272
+#: src/unix/sys-unix.c:275 src/unix/sys-unix.c:291
 msgid "cannot mkdir R_TempDir"
 msgstr ""
 
-#: src/unix/sys-unix.c:284
+#: src/unix/sys-unix.c:304
 msgid "cannot allocate R_TempDir"
 msgstr ""
 
-#: src/unix/sys-unix.c:366
+#: src/unix/sys-unix.c:386
 msgid "Sys.info() is not implemented on this system"
 msgstr ""
 
@@ -7132,17 +7120,17 @@ msgstr ""
 msgid "WARNING: --gui or -g without value ignored"
 msgstr ""
 
-#: src/unix/system.c:194
+#: src/unix/system.c:192
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr ""
 
-#: src/unix/system.c:197
+#: src/unix/system.c:195
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr ""
 
-#: src/unix/system.c:315
+#: src/unix/system.c:313
 msgid "WARNING: Only editing the first in the list of files"
 msgstr ""
 

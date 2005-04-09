@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 09:34\n"
-"PO-Revision-Date: 2005-03-02 09:34\n"
+"POT-Creation-Date: 2005-04-09 17:42\n"
+"PO-Revision-Date: 2005-04-09 17:42\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -83,6 +83,15 @@ msgstr "Package Rd sources were installed without preserving Rd file names."
 
 msgid "Please reinstall using a current version of R."
 msgstr "Please reinstall using a current version of R."
+
+msgid "Found invalid multi-byte character data."
+msgstr "Found invalid multi-byte character data."
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr "Cannot re-encode because iconv is not available."
+
+msgid "Try running R in a single-byte locale."
+msgstr "Try running R in a single-byte locale."
 
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"

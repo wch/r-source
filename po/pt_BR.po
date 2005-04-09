@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-01 11:04+0100\n"
+"POT-Creation-Date: 2005-04-09 17:41+0100\n"
 "PO-Revision-Date: 2005-02-26 18:12-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -75,7 +75,7 @@ msgstr "não foi possível obter o diretório de trabalho"
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "'tempdir' inválido em R_tmpnam"
 
-#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:304
+#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:324
 msgid "cannot find unused tempfile name"
 msgstr ""
 "não foi possivel encontrar um nome não utilizado para arquivo temporário."
@@ -316,7 +316,7 @@ msgstr "Impossível criar pipe"
 msgid "Impossible to create thread/pipe"
 msgstr "Impossível criar thread/pipe"
 
-#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:317
+#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:318
 msgid "seek not enabled for this connection"
 msgstr "procura não habilitada para essa conexão"
 
@@ -382,17 +382,17 @@ msgstr "ATENÇÃO: --max-mem-size=%lu'%c': muito grande e ignorado\n"
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "ATENÇÃO: max-mem-size =%4.1fM muito pequeno e ignorado\n"
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:235
+#: src/gnuwin32/system.c:897 src/unix/system.c:233
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATENÇÃO: opção desconhecida '%s'\n"
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:239
+#: src/gnuwin32/system.c:922 src/unix/system.c:237
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGUMENTO '%s' __ignorado__\n"
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:277
+#: src/gnuwin32/system.c:940 src/unix/system.c:275
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "você deve especificar '--save', '--no-save' ou '--vanilla'"
 
@@ -660,7 +660,7 @@ msgstr "sem suporte a dyn.load nessa versão do R"
 msgid "arguments must be symbolic"
 msgstr "argumentos devem ser simbólicos"
 
-#: src/main/apply.c:42 src/main/complex.c:601
+#: src/main/apply.c:42 src/main/complex.c:606
 msgid "invalid length"
 msgstr "comprimento inválido"
 
@@ -1527,19 +1527,19 @@ msgstr "operação complexa não implementada"
 msgid "non-numeric argument to function"
 msgstr "argumento não numérico para função"
 
-#: src/main/complex.c:518 src/main/complex.c:590
+#: src/main/complex.c:523 src/main/complex.c:595
 msgid "unimplemented complex function"
 msgstr "função complexa não implementada"
 
-#: src/main/complex.c:655
+#: src/main/complex.c:660
 msgid "polynomial degree too high (49 max)"
 msgstr "grau do polinômio muito alto (máximo 49)"
 
-#: src/main/complex.c:668
+#: src/main/complex.c:673
 msgid "invalid polynomial coefficient"
 msgstr "coeficiente polinomial inválido"
 
-#: src/main/complex.c:673
+#: src/main/complex.c:678
 msgid "root finding code failed"
 msgstr "código para encontrar a raiz falhou"
 
@@ -1571,7 +1571,7 @@ msgstr "conversão para codificação '%s' não é suportada"
 msgid "open/close not enabled for this connection"
 msgstr "open/close não habilitados para essa conexão"
 
-#: src/main/connections.c:176 src/main/dounzip.c:304
+#: src/main/connections.c:176 src/main/dounzip.c:305
 msgid "printing not enabled for this connection"
 msgstr "impressão não habilitada para essa conexão"
 
@@ -1600,7 +1600,7 @@ msgstr "truncamento não habilitado para essa conexão"
 msgid "read not enabled for this connection"
 msgstr "read não habilitado para essa conexão"
 
-#: src/main/connections.c:304 src/main/dounzip.c:311
+#: src/main/connections.c:304 src/main/dounzip.c:312
 msgid "write not enabled for this connection"
 msgstr "write não habilitado para essa conexão"
 
@@ -2545,8 +2545,8 @@ msgstr "não é possível abrir arquivo zip '%s'"
 msgid "cannot locate file '%s' in zip file '%s'"
 msgstr "não foi possível localizar arquivo '%s' no arquivo zip '%s'"
 
-#: src/main/dounzip.c:330 src/main/dounzip.c:334 src/main/dounzip.c:340
-#: src/main/dounzip.c:357
+#: src/main/dounzip.c:331 src/main/dounzip.c:335 src/main/dounzip.c:341
+#: src/main/dounzip.c:358
 msgid "allocation of unz connection failed"
 msgstr "alocação de conexão unz falhou"
 
@@ -2605,48 +2605,48 @@ msgstr "face de fonte %d não suportada para a família de fonte '%s'"
 msgid "no graphics device is active"
 msgstr "nenhum dispositivo gráfico está ativo"
 
-#: src/main/engine.c:2098
+#: src/main/engine.c:2100
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "valor pch '%d' não implementado"
 
-#: src/main/engine.c:2121
+#: src/main/engine.c:2123
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "extensão para eixos inválida [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2125
+#: src/main/engine.c:2127
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "extensão infinita para eixos [GEPretty(%g,%g,%d)]"
 
-#: src/main/engine.c:2163
+#: src/main/engine.c:2165
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr " .. GEPretty(.): new *lo = %g < %g = x1"
 
-#: src/main/engine.c:2165
+#: src/main/engine.c:2167
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr " .. GEPretty(.): new *up = %g > %g = x2"
 
-#: src/main/engine.c:2432
+#: src/main/engine.c:2434
 msgid "Display list redraw incomplete"
 msgstr "Exibição do redesenho da lista incompleta"
 
-#: src/main/engine.c:2611
+#: src/main/engine.c:2613
 msgid "'expr' argument must be an expression"
 msgstr "argumento 'expr' deve ser uma expressão"
 
-#: src/main/engine.c:2613
+#: src/main/engine.c:2615
 msgid "'list' argument must be a list"
 msgstr "argumento 'list' deve ser uma lista"
 
-#: src/main/engine.c:2615
+#: src/main/engine.c:2617
 msgid "'env' argument must be an environment"
 msgstr "argumento 'env' deve ser um ambiente"
 
-#: src/main/engine.c:2637 src/main/graphics.c:2396
+#: src/main/engine.c:2639 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr "estado gráfico inválido"
 
@@ -2836,96 +2836,80 @@ msgid "locking the NULL (base) environment is not supported yet"
 msgstr "bloqueamento do ambiente NULL (base) não é suportado ainda"
 
 #: src/main/envir.c:2566 src/main/envir.c:2591 src/main/envir.c:2620
-#: src/main/envir.c:2638 src/main/envir.c:2656 src/main/envir.c:2688
-#: src/main/envir.c:2704
+#: src/main/envir.c:2636 src/main/envir.c:2654 src/main/envir.c:2684
+#: src/main/envir.c:2700
 msgid "not an environment"
 msgstr "não é um ambiente"
 
-#: src/main/envir.c:2618 src/main/envir.c:2636 src/main/envir.c:2652
-#: src/main/envir.c:2686 src/main/envir.c:2702 src/main/envir.c:2794
+#: src/main/envir.c:2618 src/main/envir.c:2634 src/main/envir.c:2650
+#: src/main/envir.c:2682 src/main/envir.c:2698 src/main/envir.c:2790
 msgid "not a symbol"
 msgstr "não é um símbolo"
 
-#: src/main/envir.c:2626 src/main/envir.c:2644 src/main/envir.c:2694
-#: src/main/envir.c:2710
+#: src/main/envir.c:2626 src/main/envir.c:2642 src/main/envir.c:2690
+#: src/main/envir.c:2706
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "nenhuma vinculação para \"%s\""
 
-#: src/main/envir.c:2627
-msgid ""
-"saved workspaces with locked bindings may not work properly when loaded into "
-"older versions of R"
-msgstr ""
-"áreas de trabalho salvas com vinculações bloqueadas podem não funcionar "
-"devidamente quando carregadas em versões antigas do R"
-
-#: src/main/envir.c:2654
+#: src/main/envir.c:2652
 msgid "not a function"
 msgstr "não é uma função"
 
-#: src/main/envir.c:2659 src/main/envir.c:2675
+#: src/main/envir.c:2657 src/main/envir.c:2671
 msgid "symbol already has a regular binding"
 msgstr "símbolo já tem uma vinculação regular"
 
-#: src/main/envir.c:2668
-msgid ""
-"saved workspaces with active bindings may not work properly when loaded into "
-"older versions of R"
-msgstr ""
-"áreas de trabalho salvadas com vinculações ativas podem não funcionar "
-"devidamente quando carregadas em versões antigas do R"
-
-#: src/main/envir.c:2755
+#: src/main/envir.c:2751
 msgid "unknown op"
 msgstr "operador não conhecido"
 
-#: src/main/envir.c:2796
+#: src/main/envir.c:2792
 msgid "cannot unbind a locked binding"
 msgstr "não é possível desvincular uma vinculação bloqueada"
 
-#: src/main/envir.c:2798
+#: src/main/envir.c:2794
 msgid "cannot unbind an active binding"
 msgstr "não é possível desvincular uma vinculação ativa"
 
-#: src/main/envir.c:2858
+#: src/main/envir.c:2854
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "usando .GlobalEnv ao invés de '%s'"
 
-#: src/main/envir.c:2925
+#: src/main/envir.c:2921
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "espaço de nomes não disponível; usando .GlobalEnv"
 
-#: src/main/envir.c:2947
+#: src/main/envir.c:2943
 msgid "bad name space name"
 msgstr "nome de espaço de nomes inválido"
 
-#: src/main/envir.c:2959
+#: src/main/envir.c:2955
 msgid "name space already registered"
 msgstr "espaço de nomes já registrado"
 
-#: src/main/envir.c:2971
+#: src/main/envir.c:2967
 msgid "name space not registered"
 msgstr "espaço de nomes não registrado"
 
-#: src/main/envir.c:3015
+#: src/main/envir.c:3011
 msgid "bad import environment argument"
 msgstr "argumento de importação de ambiente inválido"
 
-#: src/main/envir.c:3017
+#: src/main/envir.c:3013
 msgid "bad export environment argument"
 msgstr "argumento de exportação de ambiente inválido"
 
-#: src/main/envir.c:3019
+#: src/main/envir.c:3015
 msgid "bad 'names' argument"
 msgstr "argumento 'names' inválido"
 
-#: src/main/envir.c:3021
+#: src/main/envir.c:3017
 msgid "length of import and export names must match"
 msgstr "comprimentos dos nomes de importação e exportação devem ser iguais"
 
-#: src/main/envir.c:3044
+#: src/main/envir.c:3040
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "símbolo exportado '%s' não tem valor"
@@ -3552,47 +3536,47 @@ msgstr "parâmetro inválido par(\"bty\") = '%c'; nenhum box() desenhado"
 msgid "invalid argument to GBox"
 msgstr "argumento inválido para GBox"
 
-#: src/main/graphics.c:3273
+#: src/main/graphics.c:3277
 msgid "bad hsv to rgb color conversion"
 msgstr "conversão de cor rgb hsv inválida"
 
-#: src/main/graphics.c:4047
+#: src/main/graphics.c:4051
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "valor de dígito hexa inválido em 'color' ou 'lty'"
 
-#: src/main/graphics.c:4088 src/main/graphics.c:4098
+#: src/main/graphics.c:4092 src/main/graphics.c:4102
 msgid "invalid RGB specification"
 msgstr "especificação RGB inválida"
 
-#: src/main/graphics.c:4131
+#: src/main/graphics.c:4135
 msgid "invalid color name"
 msgstr "nome de cor inválido"
 
-#: src/main/graphics.c:4142
+#: src/main/graphics.c:4146
 msgid "invalid color specification"
 msgstr "especificação de cor inválida"
 
-#: src/main/graphics.c:4283
+#: src/main/graphics.c:4287
 msgid "Invalid color"
 msgstr "Cor inválida"
 
-#: src/main/graphics.c:4355
+#: src/main/graphics.c:4359
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "linha de tipo inválida: deve ter comprimento 2, 4, 6 ou 8"
 
-#: src/main/graphics.c:4366 src/main/graphics.c:4374 src/main/graphics.c:4381
+#: src/main/graphics.c:4370 src/main/graphics.c:4378 src/main/graphics.c:4385
 msgid "invalid line type"
 msgstr "linha de tipo inválido"
 
-#: src/main/graphics.c:4492
+#: src/main/graphics.c:4496
 msgid "no active or default device"
 msgstr "nenhum dispositivo ativo ou padrão"
 
-#: src/main/graphics.c:4509
+#: src/main/graphics.c:4513
 msgid "too many open devices"
 msgstr "muitos dispositivos abertos"
 
-#: src/main/graphics.c:4653
+#: src/main/graphics.c:4657
 msgid "too many devices open"
 msgstr "muitos dispositivos abertos"
 
@@ -7270,15 +7254,15 @@ msgstr "argumento caractere não vazio esperado"
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "itern=TRUE não está implementado nessa plataforma"
 
-#: src/unix/sys-unix.c:272
+#: src/unix/sys-unix.c:275 src/unix/sys-unix.c:291
 msgid "cannot mkdir R_TempDir"
 msgstr "não é possível criar um diretório em R_TempDir"
 
-#: src/unix/sys-unix.c:284
+#: src/unix/sys-unix.c:304
 msgid "cannot allocate R_TempDir"
 msgstr "não é possível alocar R_TempDir"
 
-#: src/unix/sys-unix.c:366
+#: src/unix/sys-unix.c:386
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() não está implementado nesse sistema"
 
@@ -7287,17 +7271,17 @@ msgstr "Sys.info() não está implementado nesse sistema"
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ATENÇÃO: --gui ou -g sem especificação e ignorado"
 
-#: src/unix/system.c:194
+#: src/unix/system.c:192
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ATENÇÃO: interface gráfica desconhecida '%s', usando X11\n"
 
-#: src/unix/system.c:197
+#: src/unix/system.c:195
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ATENÇÃO: interface gráfica '%s' desconhecida, usando nenhuma\n"
 
-#: src/unix/system.c:315
+#: src/unix/system.c:313
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATENÇÃO: Somente editando o primeiro arquivo da lista"
 
@@ -7316,6 +7300,20 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
+
+#~ msgid ""
+#~ "saved workspaces with locked bindings may not work properly when loaded "
+#~ "into older versions of R"
+#~ msgstr ""
+#~ "áreas de trabalho salvas com vinculações bloqueadas podem não funcionar "
+#~ "devidamente quando carregadas em versões antigas do R"
+
+#~ msgid ""
+#~ "saved workspaces with active bindings may not work properly when loaded "
+#~ "into older versions of R"
+#~ msgstr ""
+#~ "áreas de trabalho salvadas com vinculações ativas podem não funcionar "
+#~ "devidamente quando carregadas em versões antigas do R"
 
 #~ msgid "invalid sep value"
 #~ msgstr "valor de sep inválido"

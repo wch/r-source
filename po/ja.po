@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-01 11:04+0100\n"
+"POT-Creation-Date: 2005-04-09 17:41+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -76,7 +76,7 @@ msgstr "作業ディレクトリを得ることができません"
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam において 'tempdir' が不正です"
 
-#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:304
+#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:324
 msgid "cannot find unused tempfile name"
 msgstr "未使用の一時ファイル名を探すことができません"
 
@@ -316,7 +316,7 @@ msgstr "パイプを作ることができません"
 msgid "Impossible to create thread/pipe"
 msgstr "スレッド／パイプを作ることができません"
 
-#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:317
+#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:318
 msgid "seek not enabled for this connection"
 msgstr "このコネクションではシークが有効になっていません"
 
@@ -382,17 +382,17 @@ msgstr "警告: --max-mem-size =%lu'%c' は大きすぎるので無視されま�
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されました\n"
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:235
+#: src/gnuwin32/system.c:897 src/unix/system.c:233
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:239
+#: src/gnuwin32/system.c:922 src/unix/system.c:237
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:277
+#: src/gnuwin32/system.c:940 src/unix/system.c:275
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
@@ -660,7 +660,7 @@ msgstr "このバージョンの R は，dyn.load をサポートしていませ
 msgid "arguments must be symbolic"
 msgstr "引数はシンボルでなくてはいけません"
 
-#: src/main/apply.c:42 src/main/complex.c:601
+#: src/main/apply.c:42 src/main/complex.c:606
 msgid "invalid length"
 msgstr "長さが不正です"
 
@@ -1523,19 +1523,19 @@ msgstr "未実装の複素演算です"
 msgid "non-numeric argument to function"
 msgstr "関数の引数が数値ではありません"
 
-#: src/main/complex.c:518 src/main/complex.c:590
+#: src/main/complex.c:523 src/main/complex.c:595
 msgid "unimplemented complex function"
 msgstr "未実装の複素関数です"
 
-#: src/main/complex.c:655
+#: src/main/complex.c:660
 msgid "polynomial degree too high (49 max)"
 msgstr "多項式の次数が高すぎます（49 までです）"
 
-#: src/main/complex.c:668
+#: src/main/complex.c:673
 msgid "invalid polynomial coefficient"
 msgstr "多項式の係数が不正です"
 
-#: src/main/complex.c:673
+#: src/main/complex.c:678
 msgid "root finding code failed"
 msgstr "根を見つけるコードが失敗しました"
 
@@ -1567,7 +1567,7 @@ msgstr "'%s' へのエンコーディンはサポートされていません"
 msgid "open/close not enabled for this connection"
 msgstr "open/close はこのコネクションでは有効になっていません"
 
-#: src/main/connections.c:176 src/main/dounzip.c:304
+#: src/main/connections.c:176 src/main/dounzip.c:305
 msgid "printing not enabled for this connection"
 msgstr "このコネクションに対してはプリントは利用可能になっていません"
 
@@ -1596,7 +1596,7 @@ msgstr "このコネクションでは切りつめは有効ではありません
 msgid "read not enabled for this connection"
 msgstr "このコネクションにおいては読み込みは有効になっていません"
 
-#: src/main/connections.c:304 src/main/dounzip.c:311
+#: src/main/connections.c:304 src/main/dounzip.c:312
 msgid "write not enabled for this connection"
 msgstr "このコネクションには書き込みは有効になっていません"
 
@@ -2535,8 +2535,8 @@ msgstr "zip ファイル '%s' を開くことができません"
 msgid "cannot locate file '%s' in zip file '%s'"
 msgstr "ファイル '%s' を zip ファイル '%s' に置くことができません"
 
-#: src/main/dounzip.c:330 src/main/dounzip.c:334 src/main/dounzip.c:340
-#: src/main/dounzip.c:357
+#: src/main/dounzip.c:331 src/main/dounzip.c:335 src/main/dounzip.c:341
+#: src/main/dounzip.c:358
 msgid "allocation of unz connection failed"
 msgstr "unz 接続の割り当てに失敗しました"
 
@@ -2596,48 +2596,48 @@ msgstr ""
 msgid "no graphics device is active"
 msgstr "有効なグラフィックスデバイスがありません"
 
-#: src/main/engine.c:2098
+#: src/main/engine.c:2100
 #, c-format
 msgid "unimplemented pch value '%d'"
 msgstr "pch の値 '%d' は未実装です"
 
-#: src/main/engine.c:2121
+#: src/main/engine.c:2123
 #, c-format
 msgid "invalid axis extents [GEPretty(.,.,n=%d)"
 msgstr "不正な軸範囲です [GEPretty(.,.,n=%d)"
 
-#: src/main/engine.c:2125
+#: src/main/engine.c:2127
 #, c-format
 msgid "infinite axis extents [GEPretty(%g,%g,%d)]"
 msgstr "無限に軸が伸ばされています [GEPretty(%g,%g,%d)] "
 
-#: src/main/engine.c:2163
+#: src/main/engine.c:2165
 #, c-format
 msgid " .. GEPretty(.): new *lo = %g < %g = x1"
 msgstr ".. GEPretty(.) : new *lo = %g < %g = x1 "
 
-#: src/main/engine.c:2165
+#: src/main/engine.c:2167
 #, c-format
 msgid " .. GEPretty(.): new *up = %g > %g = x2"
 msgstr ".. GEPretty(.) : new *up = %g > %g = x2 "
 
-#: src/main/engine.c:2432
+#: src/main/engine.c:2434
 msgid "Display list redraw incomplete"
 msgstr "ディスプレイリストが不完全に再描画されました"
 
-#: src/main/engine.c:2611
+#: src/main/engine.c:2613
 msgid "'expr' argument must be an expression"
 msgstr "'expr' 引数は式でなくてはなりません"
 
-#: src/main/engine.c:2613
+#: src/main/engine.c:2615
 msgid "'list' argument must be a list"
 msgstr "'list' 引数はリストでなくてはなりません"
 
-#: src/main/engine.c:2615
+#: src/main/engine.c:2617
 msgid "'env' argument must be an environment"
 msgstr "'env' 引数は環境でなくてはなりません"
 
-#: src/main/engine.c:2637 src/main/graphics.c:2396
+#: src/main/engine.c:2639 src/main/graphics.c:2396
 msgid "invalid graphics state"
 msgstr "グラフィックスの状態が不正です"
 
@@ -2826,96 +2826,80 @@ msgid "locking the NULL (base) environment is not supported yet"
 msgstr "NULL (base) 環境を見ることは，まだサポートされていません"
 
 #: src/main/envir.c:2566 src/main/envir.c:2591 src/main/envir.c:2620
-#: src/main/envir.c:2638 src/main/envir.c:2656 src/main/envir.c:2688
-#: src/main/envir.c:2704
+#: src/main/envir.c:2636 src/main/envir.c:2654 src/main/envir.c:2684
+#: src/main/envir.c:2700
 msgid "not an environment"
 msgstr "環境ではありません"
 
-#: src/main/envir.c:2618 src/main/envir.c:2636 src/main/envir.c:2652
-#: src/main/envir.c:2686 src/main/envir.c:2702 src/main/envir.c:2794
+#: src/main/envir.c:2618 src/main/envir.c:2634 src/main/envir.c:2650
+#: src/main/envir.c:2682 src/main/envir.c:2698 src/main/envir.c:2790
 msgid "not a symbol"
 msgstr "シンボルではありません"
 
-#: src/main/envir.c:2626 src/main/envir.c:2644 src/main/envir.c:2694
-#: src/main/envir.c:2710
+#: src/main/envir.c:2626 src/main/envir.c:2642 src/main/envir.c:2690
+#: src/main/envir.c:2706
 #, c-format
 msgid "no binding for \"%s\""
 msgstr "\"%s\" にバインドされているものがありません。"
 
-#: src/main/envir.c:2627
-msgid ""
-"saved workspaces with locked bindings may not work properly when loaded into "
-"older versions of R"
-msgstr ""
-"古いバージョンの R への読み込みでは、保存されたロックされたバインディングを持"
-"つ作業スペースは適正に動作しないかも知れません"
-
-#: src/main/envir.c:2654
+#: src/main/envir.c:2652
 msgid "not a function"
 msgstr "関数でありません"
 
-#: src/main/envir.c:2659 src/main/envir.c:2675
+#: src/main/envir.c:2657 src/main/envir.c:2671
 msgid "symbol already has a regular binding"
 msgstr "シンボルは既に regular binding を持っています"
 
-#: src/main/envir.c:2668
-msgid ""
-"saved workspaces with active bindings may not work properly when loaded into "
-"older versions of R"
-msgstr ""
-"古いバージョンの R への読み込みでは、保存されたアクティブなバインディングをも"
-"つ作業スペースは適正に動作しないかも知れません"
-
-#: src/main/envir.c:2755
+#: src/main/envir.c:2751
 msgid "unknown op"
 msgstr "未知の演算子です"
 
-#: src/main/envir.c:2796
+#: src/main/envir.c:2792
 msgid "cannot unbind a locked binding"
 msgstr "ロックされたバインディングを切り離せません"
 
-#: src/main/envir.c:2798
+#: src/main/envir.c:2794
 msgid "cannot unbind an active binding"
 msgstr "現在使用中のバインディングを切り離すことはできません"
 
-#: src/main/envir.c:2858
+#: src/main/envir.c:2854
 #, c-format
 msgid "using .GlobalEnv instead of '%s'"
 msgstr "'%s' の代わりに .GlobalEnv を使います"
 
-#: src/main/envir.c:2925
+#: src/main/envir.c:2921
 msgid "namespaces not available; using .GlobalEnv"
 msgstr "ネームスペースは使えません。.GlobalEnv を使います"
 
-#: src/main/envir.c:2947
+#: src/main/envir.c:2943
 msgid "bad name space name"
 msgstr "不正なネームスペース名です"
 
-#: src/main/envir.c:2959
+#: src/main/envir.c:2955
 msgid "name space already registered"
 msgstr "ネームスペースはすでに登録されています"
 
-#: src/main/envir.c:2971
+#: src/main/envir.c:2967
 msgid "name space not registered"
 msgstr "ネームスペースはまだ登録されていません"
 
-#: src/main/envir.c:3015
+#: src/main/envir.c:3011
 msgid "bad import environment argument"
 msgstr "インポートしようとしている環境引数が不正です"
 
-#: src/main/envir.c:3017
+#: src/main/envir.c:3013
 msgid "bad export environment argument"
 msgstr "エクスポートしようとしている環境引数が不正です"
 
-#: src/main/envir.c:3019
+#: src/main/envir.c:3015
 msgid "bad 'names' argument"
 msgstr "不正なネーム引数です"
 
-#: src/main/envir.c:3021
+#: src/main/envir.c:3017
 msgid "length of import and export names must match"
 msgstr "インポートとエクスポート名の長さは一致しなければなりません"
 
-#: src/main/envir.c:3044
+#: src/main/envir.c:3040
 #, c-format
 msgid "exported symbol '%s' has no value"
 msgstr "エクスポートされたシンボル \"%s\" が値を持っていません"
@@ -3539,47 +3523,47 @@ msgstr "par(\"bty\") = '%c' が不正です：box() は描画されません"
 msgid "invalid argument to GBox"
 msgstr "GBox の引数が不正です"
 
-#: src/main/graphics.c:3273
+#: src/main/graphics.c:3277
 msgid "bad hsv to rgb color conversion"
 msgstr "hsv から rgb への色の変換が上手くいきません"
 
-#: src/main/graphics.c:4047
+#: src/main/graphics.c:4051
 msgid "invalid hex digit in 'color' or 'lty'"
 msgstr "'color' または 'lty' 中の16進数が不正です"
 
-#: src/main/graphics.c:4088 src/main/graphics.c:4098
+#: src/main/graphics.c:4092 src/main/graphics.c:4102
 msgid "invalid RGB specification"
 msgstr "RGB の指定が不正です"
 
-#: src/main/graphics.c:4131
+#: src/main/graphics.c:4135
 msgid "invalid color name"
 msgstr "色の名前が不正です"
 
-#: src/main/graphics.c:4142
+#: src/main/graphics.c:4146
 msgid "invalid color specification"
 msgstr "色の指定が不正です"
 
-#: src/main/graphics.c:4283
+#: src/main/graphics.c:4287
 msgid "Invalid color"
 msgstr "無効な色です"
 
-#: src/main/graphics.c:4355
+#: src/main/graphics.c:4359
 msgid "invalid line type: must be length 2, 4, 6 or 8"
 msgstr "行のタイプが不正です : 行の長さは 2,4,6,8 のいずれかにして下さい"
 
-#: src/main/graphics.c:4366 src/main/graphics.c:4374 src/main/graphics.c:4381
+#: src/main/graphics.c:4370 src/main/graphics.c:4378 src/main/graphics.c:4385
 msgid "invalid line type"
 msgstr "行のタイプが不正です"
 
-#: src/main/graphics.c:4492
+#: src/main/graphics.c:4496
 msgid "no active or default device"
 msgstr "アクティブまたはデフォルトデバイスがありません"
 
-#: src/main/graphics.c:4509
+#: src/main/graphics.c:4513
 msgid "too many open devices"
 msgstr "開いたデバイスが多すぎます"
 
-#: src/main/graphics.c:4653
+#: src/main/graphics.c:4657
 msgid "too many devices open"
 msgstr "開いたデバイスが多すぎます"
 
@@ -7242,15 +7226,15 @@ msgstr "空でない文字引数が期待されています"
 msgid "intern=TRUE is not implemented on this platform"
 msgstr "このプラットフォームでは intern=TRUE は実装されていません"
 
-#: src/unix/sys-unix.c:272
+#: src/unix/sys-unix.c:275 src/unix/sys-unix.c:291
 msgid "cannot mkdir R_TempDir"
 msgstr "ディレクトリ R_TempDir を作成できません"
 
-#: src/unix/sys-unix.c:284
+#: src/unix/sys-unix.c:304
 msgid "cannot allocate R_TempDir"
 msgstr "R_TempDir を割り当てることができません"
 
-#: src/unix/sys-unix.c:366
+#: src/unix/sys-unix.c:386
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() はこのシステムでは実装されていません"
 
@@ -7259,17 +7243,17 @@ msgstr "Sys.info() はこのシステムでは実装されていません"
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui または -g で，値が指定されていないので無視されました"
 
-#: src/unix/system.c:194
+#: src/unix/system.c:192
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: \"%s\" は未知の gui です。X11 を使います\n"
 
-#: src/unix/system.c:197
+#: src/unix/system.c:195
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: \"%s\" は未知の gui です。何も使いません\n"
 
-#: src/unix/system.c:315
+#: src/unix/system.c:313
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: ファイルリストの最初のみを編集します"
 
@@ -7288,6 +7272,20 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
+
+#~ msgid ""
+#~ "saved workspaces with locked bindings may not work properly when loaded "
+#~ "into older versions of R"
+#~ msgstr ""
+#~ "古いバージョンの R への読み込みでは、保存されたロックされたバインディング"
+#~ "を持つ作業スペースは適正に動作しないかも知れません"
+
+#~ msgid ""
+#~ "saved workspaces with active bindings may not work properly when loaded "
+#~ "into older versions of R"
+#~ msgstr ""
+#~ "古いバージョンの R への読み込みでは、保存されたアクティブなバインディング"
+#~ "をもつ作業スペースは適正に動作しないかも知れません"
 
 #~ msgid "not that many enclosing functions"
 #~ msgstr "そんなに多くの上位 (enclosing) 関数はありません"

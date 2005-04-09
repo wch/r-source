@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-01 10:56\n"
+"POT-Creation-Date: 2005-04-09 17:42\n"
 "PO-Revision-Date: 2005-03-23 17:00+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -701,7 +701,8 @@ msgstr "因子分析法は少なくとも 3 つの変数を必要とします"
 msgid "%d factors is too many for %d variables"
 msgstr "%d個の因子は%d個の変数に対しては多すぎます"
 
-msgid "start must have %d rows"
+#, fuzzy
+msgid "'start' must have %d rows"
 msgstr "start は %d行 を持たなければなりません"
 
 msgid "no starting values supplied"
@@ -813,7 +814,8 @@ msgstr "フィルター('filter')中に欠損値があります"
 msgid "'filter' is longer than time series"
 msgstr "フィルター('filter')は時系列より長いです"
 
-msgid "argument sides must be 1 or 2"
+#, fuzzy
+msgid "argument 'sides' must be 1 or 2"
 msgstr "引数 sides は 1 か 2 でなければなりません"
 
 msgid "length of 'init' must equal length of 'filter'"
@@ -937,7 +939,9 @@ msgstr "空モデル中の無効な線形予測子です"
 msgid "invalid fitted means in empty model"
 msgstr "空モデル中の無効な当てはめ平均です"
 
-msgid "length of start should equal %d and correspond to initial coefs for %s"
+#, fuzzy
+msgid ""
+"length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr ""
 "start の長さは %d に等しい必要があります。そして %s に対する初期 coefs に対応"
 "すべきです："
@@ -1151,7 +1155,8 @@ msgstr ""
 "y を与えなければなりません。\n"
 " 密度の推定には density() を使いましょう"
 
-msgid "k is not an integer"
+#, fuzzy
+msgid "'k' is not an integer"
 msgstr "k は整数でありません"
 
 msgid "method = '%s' is not supported. Using 'qr'"
@@ -1261,7 +1266,8 @@ msgstr "これはあり得ないことです"
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table' または 'start' の不正確な指定です"
 
-msgid "x is empty"
+#, fuzzy
+msgid "'x' is empty"
 msgstr "x は空です"
 
 msgid "%d missing values deleted"
@@ -1323,9 +1329,6 @@ msgstr "各層のサンプルサイズは > 1 である必要があります"
 
 msgid "'x' must be square with at least two rows and columns"
 msgstr "'x' は正方行列で、少なくとも 2 つの行と列を持たねばなりません"
-
-msgid "'if 'x' is not a matrix, 'y' must be given"
-msgstr "'x' が行列でなければ、'y' を与えなければなりません"
 
 msgid "'x' and 'y' must have the same number of levels (minimum 2)"
 msgstr "'x' と 'y' は同じ数のレベル(最低2)を持たねばなりません"
@@ -1975,7 +1978,8 @@ msgstr "ゼロ値のため、正確な p 値を計算することができませ
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "ゼロ値のため、正確な信頼区間を計算することができません"
 
-msgid "too few distinct input values to fit a asymptotic regression model"
+#, fuzzy
+msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "漸近回帰モデルの当てはめで、異なる入力値が少なすぎます"
 
 msgid "cannot fit an asymptotic regression model to these data"
@@ -2026,6 +2030,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "'if 'x' is not a matrix, 'y' must be given"
+#~ msgstr "'x' が行列でなければ、'y' を与えなければなりません"
 
 #~ msgid "using the"
 #~ msgstr "結合された当てはめから、行"
