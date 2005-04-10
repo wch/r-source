@@ -931,9 +931,10 @@ a1
 a2 <- glm(ncases/(ncases+ncontrols) ~ agegp + tobgp * alcgp,
 	  data = esoph, family = binomial(), weights=ncases+ncontrols)$aic
 a2
-stopifnot(a1 == a2)
+stopifnot(all.equal(a1, a2))
 ## Comments:
 # both should be 236.9645
+# changed to use all.equal rather than == in 2.1.0 -pd
 
 ## Follow up: example from Lindsey, purportedly of inaccuracy in aic
 y <- matrix(c(2, 0, 7, 3, 0, 9), ncol=2)
