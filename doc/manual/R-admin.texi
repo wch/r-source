@@ -532,9 +532,9 @@ work.
 Your file system must allow long file names (as is likely except
 perhaps for some network-mounted systems).
 
-Installation is @emph{via} the installers @file{@value{RWVERSION}.exe}
-or @file{miniR.exe}.  Just double-click on the icon and follow the
-instructions.  You can uninstall @R{} from the Control Panel.
+Installation is @emph{via} the installer @file{@value{RWVERSION}.exe}.
+Just double-click on the icon and follow the instructions.  You can
+uninstall @R{} from the Control Panel.
 
 See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
@@ -817,7 +817,6 @@ replace @code{make rinstaller} by something like
 make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 @end example
 @noindent
-(Note these packages will also be added to the miniR installer.)
 
 An alternative way to customize the installer starting with a binary
 distribution is given in file @file{installer/INSTALL}.
@@ -977,8 +976,8 @@ that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
 a valid temporary directory.
 
-There are a number of options available: use @code{R
-CMD INSTALL --help} to see the current list.
+There are a number of options available: use @code{R CMD INSTALL --help}
+to see the current list.
 
 The same command works in Windows if you have the source-code package
 files (option ``Source Package Installation Files'' in the installer)
@@ -1682,9 +1681,9 @@ compiled with compatible compilers and flags.  For example, this means
 that on Sun Sparc using the native compilers the flag @option{-dalign}
 is needed so @code{libsunperf} can be used.
 
-An ATLAS `tuned' BLAS can also be used on Windows: see
-@file{src/gnuwin32/INSTALL} for how to enable this when building from
-source, and @url{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
+An ATLAS `tuned' BLAS can also be used on Windows: see @pxref{Getting the
+source files} when building from source, and
+@url{http://CRAN.R-project.org/bin/windows/rw-FAQ.html, R Windows
 @acronym{FAQ}} for adding pre-compiled support to binary versions.
 Goto's BLAS can also be used when building from source.
 
@@ -1968,21 +1967,22 @@ Linux and MacOS X there is a problem with using the dynamic version of
 the Fortran runtime @code{libgfortran}: if this is loaded redirection of
 C @file{stdin} (which @R{} uses in many of its scripts) becomes
 non-functional.  A workaround is to use the static version of
-@code{libgfortran} if possible.@footnote{On some platforms this will not
-have been compiled with PIC flags and so it will not be possible.}  One
-way to do so is to set @code{FLIBS} @emph{before} configuration, for
-example by including
+@code{libgfortran} if possible.@footnote{On some platforms,
+e.g. @code{x86_64},  this will not have been compiled with PIC flags and
+so it will not be possible.}  One way to do so is to set @code{FLIBS}
+@emph{before} configuration, for example (and only an example)
 @example
 FLIBS=/usr/local/lib/libgfortran.a
 @end example
 on the @command{configure} command-line.
 
-In theory it should be possible to work around this by setting the
-environment variable @env{GFORTRAN_STDIN_UNIT} to @code{-1}, but
-currently (April 2005) there is a bug causing the setting to be ignored.
+It may be possible to work around this by setting the environment
+variable @env{GFORTRAN_STDIN_UNIT} to @code{-1}, but versions before 10
+April 2005 had a bug causing the setting to be ignored.
 
 Note: loading a package linked against the dynamic version of
-@code{libgfortran} is sufficient to cause the problem.
+@code{libgfortran} is sufficient to cause the problem, so it is
+essential to ensure that @emph{all} occurrences are static.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
@@ -2802,8 +2802,8 @@ this is available from
 You need a recent version of the Mingw port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  There will be a
 distribution called something like @file{MinGW-3.2.0-rc-3.exe} (which is
-built from @code{gcc-3.4.2}).  See the notes on @url{http://www.murdoch-sutherland.com/Rtools}
-for updates.
+built from @code{gcc-3.4.2}).  See the notes on
+@url{http://www.murdoch-sutherland.com/Rtools} for updates.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
