@@ -1124,6 +1124,10 @@ same time being as compatible as possible with S.
      reproduce the object, whereas `dput()' and `deparse()' default to
      options for producing deparsed code that is readable.
 
+   * In R, indexing a vector, matrix, array or data frame with `[' using a
+     character vector index looks only for exact matches (whereas `[[' and
+     `$' allow partial matches).  In S, `[' allows partial matches.
+
 
    There are also differences which are not intentional, and result from
 missing or incorrect code in R.  The developers would appreciate hearing

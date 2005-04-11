@@ -1501,6 +1501,11 @@ is not.  By default <code>dump()</code> tries to write code that will evaluate
 to reproduce the object, whereas <code>dput()</code> and <code>deparse()</code>
 default to options for producing deparsed code that is readable.
 
+     <li>In R, indexing a vector, matrix, array or data frame with <code>[</code> using
+a character vector index looks only for exact matches (whereas <code>[[</code>
+and <code>$</code> allow partial matches).  In S, <code>[</code> allows partial
+matches.
+
    </ul>
 
    <p>There are also differences which are not intentional, and result from
