@@ -1500,6 +1500,12 @@ is not.  By default @code{dump()} tries to write code that will evaluate
 to reproduce the object, whereas @code{dput()} and @code{deparse()}
 default to options for producing deparsed code that is readable.
 
+@item
+In R, indexing a vector, matrix, array or data frame with @code{[} using
+a character vector index looks only for exact matches (whereas @code{[[}
+and @code{$} allow partial matches).  In S, @code{[} allows partial
+matches.
+
 @end itemize
 
 There are also differences which are not intentional, and result from
