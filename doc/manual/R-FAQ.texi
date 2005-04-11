@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-08
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-10
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2325,7 +2325,9 @@ Functions for fitting and working with Generalized Additive Models, as
 described in chapter 7 of the White Book, and in ``Generalized Additive
 Models'' by T. Hastie and R. Tibshirani (1990).
 @item gap
-Genetic analysis package for both population and family data.
+Genetic analysis package for both population and family data.  Includes
+@strong{pathmix} for path analysis of pairs of relatives, and
+@strong{pointer} for complex segregation analysis.
 @item gbm
 Generalized Boosted Regression Models: implements extensions to Freund
 and Schapire's AdaBoost algorithm and J. Friedman's gradient boosting
@@ -2335,6 +2337,9 @@ AdaBoost exponential loss.
 @item gclus
 Clustering Graphics.  Orders panels in scatterplot matrices and parallel
 coordinate displays by some merit index.
+@item gcmrec
+Parameters estimation of the general semiparametric model for recurrent
+event data proposed by Pe@~na and Hollander.
 @item gee
 An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data.
