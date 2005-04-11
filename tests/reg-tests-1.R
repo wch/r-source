@@ -3599,6 +3599,11 @@ x <- matrix(0, nrow=2, ncol=0)
 colSums(x); rowSums(x)
 ## not allowed in 2.0.1
 
-## PR#7781 
+## PR#7781
 stopifnot(is.finite(tan(1+1000i)))
+##
+
+## infinite recursion in 2.0.1 (and R-beta 2005-04-11):
+summary(data.frame(mat = I(matrix(1:8, 2))))
+summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
 ##

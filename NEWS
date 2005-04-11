@@ -978,8 +978,11 @@ BUG FIXES
 
     o	acf() could cause a segfault with some datasets.  (PR#7771)
 
-    o   tan(1+LARGEi) now gives 0+1i rather than 0+NaNi (PR#7781)    
-   
+    o	tan(1+LARGEi) now gives 0+1i rather than 0+NaNi (PR#7781)
+
+    o	summary(data.frame(mat = I(matrix(1:8, 4)))) does not go into
+	infinite recursion anymore.
+
 
 
 	**************************************************
