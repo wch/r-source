@@ -579,24 +579,24 @@ You need to collect the following sets of files:
 Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from
 @acronym{CRAN}.  Open a commands window (or another shell) at a
 directory @emph{whose path does not contain spaces}.  We will call this
-directory @file{$R_HOME} below.  Run
+directory @var{R_HOME} below.  Run
 @example
 tar zxvf R-@value{VERSIONno}.tgz
 @end example
-to create the source tree in @file{$R_HOME}.  @strong{Beware}: do use
+to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
 @code{tar} to extract the sources rather than broken tools such as
 WinZip that don't understand about symbolic links.
 
 @item
 Extract the international character support file @file{iconv.dll} from
 @url{http://www.murdoch-sutherland.com/Rtools/iconv.zip} and put it in
-@file{R_HOME/src/gnuwin32/unicode}.
+@file{@var{R_HOME}/src/gnuwin32/unicode}.
 
 @item
 The TclTk support files are in
 @url{http://www.murdoch-sutherland.com/Rtools/R_Tcl.zip}: unzip this in
-@file{$R_HOME}, and it will add directories @file{$R_HOME/Tcl},
-@file{$R_HOME/Tcl/bin}, etc.
+@var{R_HOME}, and it will add directories @file{@var{R_HOME}/Tcl},
+@file{@var{R_HOME}/Tcl/bin}, etc.
 
 @item
 You need @code{libpng} and @code{jpeg} sources (available, e.g., from
@@ -607,7 +607,7 @@ You will need files @file{libpng-1.2.8.tar.gz} and
 @item
 You need to obtain copies of the recommended packages from
 @acronym{CRAN}.  Put the @file{.tar.gz} files in
-@file{$R_HOME/src/library/Recommended}.  If you have @code{rsync} and an
+@file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync} and an
 Internet connection, you can do this automatically using
 @example
 make rsync-recommended
@@ -624,7 +624,7 @@ Another tuned BLAS which is available for some CPUs is by Kazushige
 Goto.  He does not allow redistribution: his builds are currently available
 via @url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To
 make use of this, put the @file{DLL} somewhere in your path or in
-@file{$R_HOME/bin}, and edit @file{$R_HOME/src/gnuwin32/MkRules} to
+@file{@var{R_HOME}/bin}, and edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to
 define @code{USE_GOTO=YES} and the name of the @file{DLL} (something like
 @file{libgoto_p4_512-r0.9.dll}).
 
@@ -645,7 +645,7 @@ You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.
 
-Open a commands window at @file{$R_HOME/src/gnuwin32}.  Edit
+Open a commands window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
 @file{MkRules} to set the appropriate paths as needed and to set the
 type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
 contains tabs and some editors (e.g. WinEdt) silently remove them.  Then
@@ -672,7 +672,7 @@ it. (Norton Anti-Virus 2002 causes no problems.)
 
 @item
 By default Doug Lea's @code{malloc} in the file
-@file{$R_HOME/src/gnuwin32/malloc.c} is used for R's internal memory
+@file{@var{R_HOME}/src/gnuwin32/malloc.c} is used for R's internal memory
 allocations.  You can opt out of this by commenting the line
 @code{LEA_MALLOC=YES} in @file{MkRules}, in which case the
 @code{malloc} in @file{msvcrt.dll} is used.  This does work but
@@ -696,7 +696,7 @@ sometimes stop and have to be restarted.
 @subsection Building the bitmap files
 
 
-The file @file{$R_HOME/bin/Rbitmap.dll} is not built automatically:
+The file @file{@var{R_HOME}/bin/Rbitmap.dll} is not built automatically:
 instructions on how to build it are in the file @file{bitmap/INSTALL}.
 
 If everything is set up in directory @file{bitmap},
@@ -1114,12 +1114,12 @@ and are best removed.
 @strong{Beware}: references to variables in @file{R.dll} are converted to the
 right form by using the header files.  You must include them.
 
-For additional control, @file{$R_HOME/src/gnuwin32/Makefile} contains
+For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile} contains
 additional make targets corresponding to various options to @code{R
 CMD INSTALL}.  These assume that package @code{foo}source code has
-been installed in directory @file{$R_HOME/src/library/foo}. Then
+been installed in directory @file{@var{R_HOME}/src/library/foo}. Then
 @code{make pkg-foo} is similar to @code{R CMD INSTALL foo} (but the
-latter would require @file{$R_HOME/src/library} to be the current
+latter would require @file{@var{R_HOME}/src/library} to be the current
 directory).  Other targets are
 @itemize
 @item
@@ -1160,7 +1160,7 @@ Some variables that may be used include:
 where the package should be installed.
 @end itemize
 For a complete list of variables, see the @file{M*} files in
-@file{$R_HOME/src/gnuwin32}.  The @code{PKG_*} files are those typically
+@file{@var{R_HOME}/src/gnuwin32}.  The @code{PKG_*} files are those typically
 included in @file{Makevars} files.
 
 @node Customizing compilation under Unix,  , Customising compilation in Windows, Installing packages
@@ -2744,29 +2744,34 @@ For building simple packages containing data or @R{} source
 but no compiled code, only the first two of these are needed.
 
 A complete build of @R{} including compiled @HTML{} help files and
-PDF manuals will also need the following:
+PDF manuals, and producing the standalone installer 
+@file{@value{RWVERSION}.exe} will also need the following:
 @itemize
 @item
 The Microsoft @HTML{} Help Workshop
 @item
 @LaTeX{}
+@item
+The Inno Setup installer
 @end itemize
 
-All of these need to be installed and in your path, and the
-appropriate environment variables set.  You also need `.' in your
-path.  Do not use filepaths containing spaces: you can always use the
-short forms (found by @code{dir /x} at the Windows command line).  The
-path should include them with `.' first, and the remainder in the
-order listed above.  It is essential that the directory containing the
+Your path should include `.' first, then the @file{bin} directories of
+the tools, perl, minGW, and @LaTeX{}, as well as the Help Workshop directory.
+Do not use filepaths containing spaces: you can always use the
+short forms (found by @code{dir /x} at the Windows command line).  
+It is essential that the directory containing the
 command line tools comes first or second in the path:  there are
 typically like-named tools in other directories, and they will
-@strong{not} work.
+@strong{not} work.  The ordering of the other directories is less
+important, but if in doubt, use the order above.
 
-Edit @file{$R_home/src/gnuwin32/MkRules} to set the appropriate paths as
+Edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to set the appropriate paths as
 needed and to set the type(s) of help that you want built.
 @strong{Beware}: @file{MkRules} contains tabs and some editors
 (e.g. WinEdt) silently remove them.
 
+Set the appropriate environment variables.
+ 
 Our toolset contains copies of Cygwin dlls that may conflict
 with other ones on your system if both are in the path
 at once.  The normal recommendation is to delete the older ones;
@@ -2832,6 +2837,9 @@ and @url{http://www.microsoft.com/office/ork/xp/appndx/appa06.htm}.
 
 You may need this on the same drive as the other tools. (Although we
 have successfully used it elsewhere, others have reported problems).
+
+To skip building compiled html help, set @code{WINHELP=NO} in @file{MkRules}.
+In this case the Help Workshop will not be needed.
 
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
