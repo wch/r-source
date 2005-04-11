@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-04-08
+Version 2.0.2005-04-10
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2129,7 +2129,9 @@ distributions of R.)
      Models" by T. Hastie and R. Tibshirani (1990).
 
 *gap*
-     Genetic analysis package for both population and family data.
+     Genetic analysis package for both population and family data.  Includes
+     *pathmix* for path analysis of pairs of relatives, and *pointer* for
+     complex segregation analysis.
 
 *gbm*
      Generalized Boosted Regression Models: implements extensions to Freund
@@ -2141,6 +2143,10 @@ distributions of R.)
 *gclus*
      Clustering Graphics.  Orders panels in scatterplot matrices and
      parallel coordinate displays by some merit index.
+
+*gcmrec*
+     Parameters estimation of the general semiparametric model for recurrent
+     event data proposed by Peña and Hollander.
 
 *gee*
      An implementation of the Liang/Zeger generalized estimating equation
