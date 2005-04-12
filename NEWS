@@ -986,6 +986,9 @@ BUG FIXES
     o	writeBin() performed byte-swapping incorrectly on complex
 	vectors, also swapping real and imaginary parts. (PR#7778)
 
+    o	read.table() sometimes discarded as blank lines containing
+	only white space, even if sep=",".
+
 
 
 	**************************************************

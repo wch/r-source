@@ -164,8 +164,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   If \code{comment.char} occurs (except inside a quoted character
   field), it signals that the rest of the line
   should be regarded as a comment and be discarded.  Lines beginning
-  with a comment character (possibly after white space) are treated
-  as blank lines.
+  with a comment character (possibly after white space with the default
+  separator) are treated as blank lines.
 
   As from \R 2.1.0, \code{scan} attempts to share storage with
   character strings that have already been read in the call.

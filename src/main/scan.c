@@ -1504,8 +1504,7 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
 /* readTableHead(file, nlines, comment.char, blank.lines.skip, quote) */
 /* simplified version of readLines, with skip of blank lines and
    comment-only lines */
-/* <FIXME>  This does not handle escaped quotes, nor does it appear to
-   use the blank.lines.skip arg */
+/* <FIXME>  This does not handle escaped quotes */
 #define BUF_SIZE 1000
 SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
@@ -1583,14 +1582,18 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if(quote && c == quote) quote = 0;
 	    else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
+	    /* A line is empty only if it contains nothing before
+	       EOL, EOF or a comment char. 
+	       A line containing just white space is not empty if sep=","
+	    */
 	    if(empty && !skip)
-		if(c != ' ' && c != '\t' && c != data.comchar) empty = FALSE;
+		if(c != '\n' && c != data.comchar) empty = FALSE;
 	    if(!quote && !skip && c == data.comchar) skip = TRUE;
 	    if(quote || c != '\n') buf[nbuf++] = c; else break;
 	}
 	buf[nbuf] = '\0';
 	if(data.ttyflag && empty) break;
-	if(!empty) {
+	if(!empty || !blskip) {
 	    SET_STRING_ELT(ans, nread, mkChar(buf));
 	    nread++;
 	}
