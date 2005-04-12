@@ -89,13 +89,13 @@ msgid "argument is missing with no default"
 msgstr "argomento mancante senza valore di default"
 
 msgid "invalid arguments in '%s'  (need named args)"
-msgstr ""
+msgstr "argomenti non validi in '%s' (devono essere argomenti con nome)"
 
 msgid "'name.opt' must be character, name of an existing list"
 msgstr "'name.opt' deve essere di tipo carattere, nome di una lista esistente"
 
 msgid "cannot reset non-existent '%s'"
-msgstr ""
+msgstr "non posso re-inizializzare '%s' perché non esistente"
 
 msgid "invalid options in"
 msgstr "opzioni non valide in"
@@ -148,13 +148,11 @@ msgstr "'file' deve essere una stringa carattere non vuota"
 msgid "sorry, 'gs' cannot be found"
 msgstr "spiacente, ma non trovo 'gs'"
 
-#, fuzzy
 msgid "device '%s' is not available"
-msgstr "non disponibile"
+msgstr "device '%s' non disponibile"
 
-#, fuzzy
 msgid "Available devices are %s"
-msgstr "Dispositivi disponibili"
+msgstr "I dispositivi disponibili sono %s"
 
 msgid "quartz() device interactivity reduced without an event loop manager"
 msgstr "interattività del device quartz() ridotta senza un manager eventi"

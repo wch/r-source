@@ -260,9 +260,8 @@ msgstr ""
 "Assumo \"ISOLatin1.enc\""
 
 #: devPS.c:3998
-#, fuzzy, c-format
 msgid "invalid paper type '%s' (pdf)"
-msgstr "typo pagina '%s' non valido (xfig)"
+msgstr "tipo foglio '%s' non valido (pdf)"
 
 #: devPS.c:4026
 msgid "invalid foreground/background color (pdf)"
