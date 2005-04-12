@@ -983,6 +983,9 @@ BUG FIXES
     o	summary(data.frame(mat = I(matrix(1:8, 4)))) does not go into
 	infinite recursion anymore.
 
+    o	writeBin() performed byte-swapping incorrectly on complex
+	vectors, also swapping real and imaginary parts. (PR#7778)
+
 
 
 	**************************************************
