@@ -190,7 +190,7 @@ static void do_apply()
 
     if(newGUI.MDI != curGUI.MDI || newGUI.toolbar != curGUI.toolbar ||
        newGUI.statusbar != curGUI.statusbar)
-	askok("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n");
+	askok(_("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n"));
 
 
 /*  Set a new font? */
@@ -256,13 +256,13 @@ static void do_apply()
 
     if(haveusedapager &&
        (newGUI.prows != curGUI.prows || newGUI.pcols != curGUI.pcols))
-	askok("Changes in pager size will not apply to any open pagers");
+	askok(_("Changes in pager size will not apply to any open pagers"));
     pagerrow = newGUI.prows;
     pagercol = newGUI.pcols;
 
     if(newGUI.pagerMultiple != pagerMultiple) {
 	if(!haveusedapager ||
-	   askokcancel("Do not change pager type if any pager is open\nProceed?")
+	   askokcancel(_("Do not change pager type if any pager is open\nProceed?"))
 	   == YES)
 	    pagerMultiple = newGUI.pagerMultiple;
 	if(pagerMultiple) {
@@ -279,9 +279,9 @@ static void save(button b)
     char *file, buf[256], *p;
     FILE *fp;
 
-    setuserfilter("All files (*.*)\0*.*\0\0");
+    setuserfilter(_("All files (*.*)\0*.*\0\0"));
     strcpy(buf, getenv("R_USER"));
-    file = askfilesavewithdir("Select directory for Rconsole",
+    file = askfilesavewithdir(_("Select directory for file 'Rconsole'"),
 			      "Rconsole", buf);
     if(!file) return;
     strcpy(buf, file);
@@ -397,10 +397,10 @@ void Rgui_configure()
     rect r;
     ConsoleData p = (ConsoleData) getdata(RConsole);
 
-    wconfig = newwindow("Rgui Configuration Editor", rect(0, 0, 550, 450),
+    wconfig = newwindow(_("Rgui Configuration Editor"), rect(0, 0, 550, 450),
 			Titlebar | Centered | Modal);
     setbackground(wconfig, dialog_bg());
-    l_mdi = newlabel("Single or multiple windows",
+    l_mdi = newlabel(_("Single or multiple windows"),
 		      rect(10, 10, 150, 20), AlignLeft);
     rb_mdi = newradiobutton("MDI", rect(150, 10 , 70, 20), cMDI);
     rb_sdi = newradiobutton("SDI", rect(220, 10 , 70, 20), cSDI);
@@ -509,10 +509,10 @@ void Rgui_configure()
     setlistitem(usercol, rgbtonum(consoleuser));
     setlistitem(highlightcol, rgbtonum(pagerhighlight));
 
-    bApply = newbutton("Apply", rect(50, 410, 70, 25), apply);
-    bSave = newbutton("Save", rect(130, 410, 70, 25), save);
-    bOK = newbutton("OK", rect(350, 410, 70, 25), ok);
-    bCancel = newbutton("Cancel", rect(430, 410, 70, 25), cancel);
+    bApply = newbutton(_("Apply"), rect(50, 410, 70, 25), apply);
+    bSave = newbutton(_("Save"), rect(130, 410, 70, 25), save);
+    bOK = newbutton(_("OK"), rect(350, 410, 70, 25), ok);
+    bCancel = newbutton(_("Cancel"), rect(430, 410, 70, 25), cancel);
     show(wconfig);
     getGUIstate(&curGUI);
 }

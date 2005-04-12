@@ -914,8 +914,8 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    break;
 		}
     }
-    bFinish = newbutton("OK", rect(xmax-160, ymax-40, 70, 25), finish);
-    bCancel = newbutton("Cancel", rect(xmax-80, ymax-40, 70, 25), cancel);
+    bFinish = newbutton(_("OK"), rect(xmax-160, ymax-40, 70, 25), finish);
+    bCancel = newbutton(_("Cancel"), rect(xmax-80, ymax-40, 70, 25), cancel);
     setkeydown(wselect, key1);
     show(wselect);
     done = 0;

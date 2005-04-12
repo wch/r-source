@@ -188,7 +188,7 @@ system versions are in the @file{etc} folder); in the latter you can
 replace @code{Arial} by @code{Arial Unicode MS}, and we tried
 @code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.
 
-You do need to ensure that R is running is a suitable locale: use
+You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out, and @code{Sys.setlocale(,
 "langname")} to set it if necessary.  (CJK users may be used to their
 language characters always being available, which is that case for
@@ -203,7 +203,8 @@ GB2312).
 @node How do I check an installation?, Can I customize the installation?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
 @section How do I check an installation is not corrupt?
 
-Run the program @file{bin\md5check.exe} (not in the mini-installer).
+Run the program @file{bin\md5check.exe}.
+@c (not in the mini-installer).
 This compares checksums on all the installed files with those put into
 the installer, and will report any changed or missing files.
 
@@ -229,11 +230,10 @@ set the default installation directory
 @item /GROUP="folder name"
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
-set the initial list of components.  This is only useful with
-@code{@RWVER@.exe}, which has components @code{main}, @code{chtml},
-@code{html}, @code{latex}, @code{manuals}, @code{refman},
-@code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs}, @code{Rd} and
-@code{trans}.
+set the initial list of components.  @code{@RWVER@.exe} has components
+@code{main}, @code{chtml}, @code{html}, @code{latex}, @code{manuals},
+@code{refman}, @code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs},
+@code{Rd} and @code{trans}.
 @end table
 
 @noindent
@@ -250,12 +250,12 @@ after having checked the command line.
 @end table
 
 A successful installation has exit code 0: unsuccessful ones may give 1,
-2, 3, 4 or 5.  See the help for Inno Setup 4
+2, 3, 4 or 5.  See the help for Inno Setup
 (@uref{http://jrsoftware.org/isinfo.php}) for details.
 
 We have some facilities for building a customized installer, in
-particular to add packages to the installer.  See the file
-@file{src/gnuwin32/INSTALL} in the R sources.
+particular to add packages to the installer.  See the `R Installation
+and Administration' manual in the subsection `Building the installers'
 
 @node How do I run it?, Can I run R from a CD or USB drive?, Can I customize the installation?, Installation and Usage
 @section How do I run it?
@@ -1062,10 +1062,10 @@ cd R-@value{RVERSION}
 cd src\gnuwin32
 @end example
 @noindent
-Now read the @file{INSTALL} file and set up all the tools needed.  Then
-you can just use @code{make all bitmapdll recommended vignettes}, sit
-back and wait.  (A complete build takes about 20 minutes on a 2.6GHz P4
-with a fast local disc.)
+Now read the `R Installation and Administration' manual and set up all
+the tools needed.  Then you can just use @code{make all bitmapdll
+recommended vignettes}, sit back and wait.  (A complete build takes
+about 20 minutes on a 2.6GHz P4 with a fast local disc.)
 
 You may need to compile under a case-honouring file system: we found
 that a @code{samba}-mounted file system (which maps all file names to lower
