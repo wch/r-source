@@ -26,7 +26,7 @@ msgid "at least one entry of 'x' must be positive"
 msgstr "almeno un termine di 'x' deve essere positivo"
 
 msgid "incorrect 'col': must be length 2"
-msgstr ""
+msgstr "'col' non valido: deve essere di lunghezza 2"
 
 msgid "'side' must be in {1:4}"
 msgstr "'side' deve essere in {1:4}"
@@ -222,14 +222,13 @@ msgid "'x' must not have 0 dimensionality"
 msgstr "'x' non deve avere dimensione 0"
 
 msgid "extra argument(s) %s will be disregarded"
-msgstr ""
+msgstr "gli argomenti in eccesso %s verranno ignorati"
 
 msgid "invalid 'shade' specification"
 msgstr "specificazione di 'shade' non valida"
 
-#, fuzzy
 msgid "length of 'sort' does not conform to 'dim(x)'"
-msgstr "length(sort) non conforme a dim(x)"
+msgstr "lunghezza di 'sort' non conforme a 'dim(x)'"
 
 msgid "non-numeric argument to 'pairs'"
 msgstr "argomento non numerico a 'pairs'"
@@ -315,9 +314,8 @@ msgstr "'locations' deve essere una matrice di 2 colonne"
 msgid "number of rows of 'locations' and 'x' must be equal."
 msgstr "il numero di righe in 'locations' e 'x' deve essere uguale"
 
-#, fuzzy
 msgid "length of 'angles' must equal 'ncol(x)'"
-msgstr "length(angles) deve essere pari a ncol(x)"
+msgstr "lunghezza di 'angles' deve essere pari a 'ncol(x)'"
 
 msgid "no non-missing values"
 msgstr "nessun valore non missing"
@@ -328,9 +326,8 @@ msgstr "'scale' deve essere positivo"
 msgid "invalid plotting method"
 msgstr "metodo di disegno non valido"
 
-#, fuzzy
 msgid "'at' must have length equal to the number %d of groups"
-msgstr "'at' deve avere lunghezza = no{groups}, ovvero"
+msgstr "'at' deve avere lunghezza pari al numero di %d gruppi"
 
 msgid "'number' must have same length as 'x' and 'y'"
 msgstr "'number' deve avere la stessa lunghezza di 'x' e 'y'"
