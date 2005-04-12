@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:41+0100\n"
+"POT-Creation-Date: 2005-04-12 17:44+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -1519,8 +1519,8 @@ msgid "connection not found"
 msgstr ""
 
 #: src/main/connections.c:95 src/main/connections.c:2501
-#: src/main/connections.c:2916 src/main/connections.c:2965
-#: src/main/connections.c:3087 src/main/connections.c:3127
+#: src/main/connections.c:2924 src/main/connections.c:2973
+#: src/main/connections.c:3095 src/main/connections.c:3135
 msgid "invalid connection"
 msgstr ""
 
@@ -1629,13 +1629,13 @@ msgstr ""
 #: src/main/connections.c:712 src/main/connections.c:842
 #: src/main/connections.c:1028 src/main/connections.c:1210
 #: src/main/connections.c:1890 src/main/connections.c:2009
-#: src/main/connections.c:3318
+#: src/main/connections.c:3326
 msgid "invalid 'description' argument"
 msgstr ""
 
 #: src/main/connections.c:714 src/main/connections.c:844
 #: src/main/connections.c:1030 src/main/connections.c:1212
-#: src/main/connections.c:2011 src/main/connections.c:3320
+#: src/main/connections.c:2011 src/main/connections.c:3328
 msgid "only first element of 'description' argument used"
 msgstr ""
 
@@ -1643,25 +1643,25 @@ msgstr ""
 #: src/main/connections.c:1034 src/main/connections.c:1216
 #: src/main/connections.c:1897 src/main/connections.c:1960
 #: src/main/connections.c:2015 src/main/connections.c:2067
-#: src/main/connections.c:3329
+#: src/main/connections.c:3337
 msgid "invalid 'open' argument"
 msgstr ""
 
-#: src/main/connections.c:721 src/main/connections.c:3333
+#: src/main/connections.c:721 src/main/connections.c:3341
 msgid "invalid 'block' argument"
 msgstr ""
 
 #: src/main/connections.c:725 src/main/connections.c:853
 #: src/main/connections.c:1038 src/main/connections.c:1220
 #: src/main/connections.c:1966 src/main/connections.c:2019
-#: src/main/connections.c:3337
+#: src/main/connections.c:3345
 msgid "invalid 'encoding' argument"
 msgstr ""
 
 #: src/main/connections.c:737 src/main/connections.c:872
 #: src/main/connections.c:1053 src/main/connections.c:1231
 #: src/main/connections.c:1979 src/main/connections.c:2030
-#: src/main/connections.c:2077 src/main/connections.c:3384
+#: src/main/connections.c:2077 src/main/connections.c:3392
 msgid "unable to open connection"
 msgstr ""
 
@@ -1813,7 +1813,7 @@ msgstr ""
 #: src/main/connections.c:2126 src/main/connections.c:2175
 #: src/main/connections.c:2197 src/main/connections.c:2216
 #: src/main/connections.c:2228 src/main/connections.c:2331
-#: src/main/connections.c:2427 src/main/connections.c:3690
+#: src/main/connections.c:2427 src/main/connections.c:3698
 msgid "'con' is not a connection"
 msgstr ""
 
@@ -1841,7 +1841,7 @@ msgstr ""
 msgid "cannot close messages sink connection"
 msgstr ""
 
-#: src/main/connections.c:2199 src/main/connections.c:3405
+#: src/main/connections.c:2199 src/main/connections.c:3413
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr ""
@@ -1859,16 +1859,16 @@ msgid "invalid value for 'ok'"
 msgstr ""
 
 #: src/main/connections.c:2340 src/main/connections.c:2517
-#: src/main/connections.c:2918 src/main/dcf.c:56 src/main/serialize.c:1580
+#: src/main/connections.c:2926 src/main/dcf.c:56 src/main/serialize.c:1580
 msgid "cannot read from this connection"
 msgstr ""
 
 #: src/main/connections.c:2343 src/main/connections.c:2436
 #: src/main/connections.c:2521 src/main/connections.c:2710
-#: src/main/connections.c:2925 src/main/connections.c:2997
-#: src/main/connections.c:3159 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/connections.c:2933 src/main/connections.c:3005
+#: src/main/connections.c:3167 src/main/dcf.c:59 src/main/deparse.c:311
 #: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1010
-#: src/main/scan.c:1115 src/main/scan.c:1561 src/main/scan.c:1729
+#: src/main/scan.c:1115 src/main/scan.c:1560 src/main/scan.c:1732
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr ""
@@ -1891,8 +1891,8 @@ msgid "invalid 'sep' argument"
 msgstr ""
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
-#: src/main/connections.c:2967 src/main/connections.c:3406
-#: src/main/scan.c:1725 src/main/serialize.c:1588
+#: src/main/connections.c:2975 src/main/connections.c:3414
+#: src/main/scan.c:1728 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr ""
 
@@ -1945,8 +1945,8 @@ msgstr ""
 msgid "can only write to a binary connection"
 msgstr ""
 
-#: src/main/connections.c:2717 src/main/connections.c:2854
-#: src/main/connections.c:3036
+#: src/main/connections.c:2717 src/main/connections.c:2862
+#: src/main/connections.c:3044
 msgid "problem writing to connection"
 msgstr ""
 
@@ -1954,144 +1954,144 @@ msgstr ""
 msgid "size changing is not supported for raw vectors"
 msgstr ""
 
-#: src/main/connections.c:2881 src/main/connections.c:2884
+#: src/main/connections.c:2889 src/main/connections.c:2892
 msgid "invalid UTF-8 input in readChar()"
 msgstr ""
 
-#: src/main/connections.c:2931
+#: src/main/connections.c:2939
 msgid "supplied length is invalid"
 msgstr ""
 
-#: src/main/connections.c:2977
+#: src/main/connections.c:2985
 msgid "invalid value of 'sep'"
 msgstr ""
 
-#: src/main/connections.c:3009
+#: src/main/connections.c:3017
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 
-#: src/main/connections.c:3061 src/main/connections.c:3064
-#: src/main/connections.c:3103 src/main/connections.c:3108
+#: src/main/connections.c:3069 src/main/connections.c:3072
+#: src/main/connections.c:3111 src/main/connections.c:3116
 msgid "could not allocate space for pushBack"
 msgstr ""
 
-#: src/main/connections.c:3084
+#: src/main/connections.c:3092
 msgid "invalid 'data' argument"
 msgstr ""
 
-#: src/main/connections.c:3090
+#: src/main/connections.c:3098
 msgid "invalid 'newLine' argument"
 msgstr ""
 
-#: src/main/connections.c:3092
+#: src/main/connections.c:3100
 msgid "can only push back on open readable connections"
 msgstr ""
 
-#: src/main/connections.c:3094
+#: src/main/connections.c:3102
 msgid "can only push back on text-mode connections"
 msgstr ""
 
-#: src/main/connections.c:3147 src/main/connections.c:3207
+#: src/main/connections.c:3155 src/main/connections.c:3215
 msgid "sink stack is full"
 msgstr ""
 
-#: src/main/connections.c:3150
+#: src/main/connections.c:3158
 msgid "cannot switch output to stdin"
 msgstr ""
 
-#: src/main/connections.c:3167
+#: src/main/connections.c:3175
 msgid "no sink to remove"
 msgstr ""
 
-#: src/main/connections.c:3198
+#: src/main/connections.c:3206
 msgid "invalid value for 'closeOnExit'"
 msgstr ""
 
-#: src/main/connections.c:3200 src/main/connections.c:3228
+#: src/main/connections.c:3208 src/main/connections.c:3236
 msgid "invalid value for 'type'"
 msgstr ""
 
-#: src/main/connections.c:3202
+#: src/main/connections.c:3210
 msgid "invalid value for 'split'"
 msgstr ""
 
-#: src/main/connections.c:3355
+#: src/main/connections.c:3363
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3371 src/modules/internet/internet.c:439
+#: src/main/connections.c:3379 src/modules/internet/internet.c:439
 msgid "unsupported URL scheme"
 msgstr ""
 
-#: src/main/connections.c:3458
+#: src/main/connections.c:3466
 msgid "file stream does not have gzip magic number"
 msgstr ""
 
-#: src/main/connections.c:3469
+#: src/main/connections.c:3477
 msgid "file stream does not have valid gzip header"
 msgstr ""
 
-#: src/main/connections.c:3535
+#: src/main/connections.c:3543
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr ""
 
-#: src/main/connections.c:3635
+#: src/main/connections.c:3643
 #, c-format
 msgid "crc error %x %x\n"
 msgstr ""
 
-#: src/main/connections.c:3660
+#: src/main/connections.c:3668
 msgid "write error on 'gzcon' connection"
 msgstr ""
 
-#: src/main/connections.c:3694
+#: src/main/connections.c:3702
 msgid "'level' must be one of 0 ... 9"
 msgstr ""
 
-#: src/main/connections.c:3697
+#: src/main/connections.c:3705
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr ""
 
-#: src/main/connections.c:3700
+#: src/main/connections.c:3708
 msgid "this is already a gzcon connection"
 msgstr ""
 
-#: src/main/connections.c:3706
+#: src/main/connections.c:3714
 msgid "can only use read- or write- binary connections"
 msgstr ""
 
-#: src/main/connections.c:3710 src/main/connections.c:3714
-#: src/main/connections.c:3721 src/main/connections.c:3735
+#: src/main/connections.c:3718 src/main/connections.c:3722
+#: src/main/connections.c:3729 src/main/connections.c:3743
 msgid "allocation of 'gzcon' connection failed"
 msgstr ""
 
-#: src/main/connections.c:3780
+#: src/main/connections.c:3788
 msgid "R_compress1 requires a scalar string"
 msgstr ""
 
-#: src/main/connections.c:3787
+#: src/main/connections.c:3795
 msgid "internal error in R_compress1"
 msgstr ""
 
-#: src/main/connections.c:3802
+#: src/main/connections.c:3810
 msgid "R_decompress1 requires a scalar string"
 msgstr ""
 
-#: src/main/connections.c:3807
+#: src/main/connections.c:3815
 msgid "internal error in R_decompress1"
 msgstr ""
 
-#: src/main/connections.c:3824
+#: src/main/connections.c:3832
 msgid "not a list of sockets"
 msgstr ""
 
-#: src/main/connections.c:3829
+#: src/main/connections.c:3837
 msgid "bad write indicators"
 msgstr ""
 
-#: src/main/connections.c:3840
+#: src/main/connections.c:3848
 msgid "not a socket connection"
 msgstr ""
 
@@ -5538,7 +5538,7 @@ msgid "invalid 'na.strings' value"
 msgstr ""
 
 #: src/main/scan.c:948 src/main/scan.c:994 src/main/scan.c:1075
-#: src/main/scan.c:1078 src/main/scan.c:1549 src/main/scan.c:1552
+#: src/main/scan.c:1078 src/main/scan.c:1548 src/main/scan.c:1551
 msgid "invalid 'comment.char' value"
 msgstr ""
 
@@ -5558,11 +5558,11 @@ msgstr ""
 msgid "invalid decimal separator"
 msgstr ""
 
-#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1540
+#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1539
 msgid "out of memory"
 msgstr ""
 
-#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1546
+#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1545
 msgid "invalid quote symbol set"
 msgstr ""
 
@@ -5583,65 +5583,65 @@ msgstr ""
 msgid "Selection: "
 msgstr ""
 
-#: src/main/scan.c:1529
+#: src/main/scan.c:1528
 msgid "invalid 'nlines' value"
 msgstr ""
 
-#: src/main/scan.c:1570 src/main/scan.c:1582
+#: src/main/scan.c:1569 src/main/scan.c:1581
 msgid "cannot allocate buffer in readTableHead"
 msgstr ""
 
-#: src/main/scan.c:1609 src/main/scan.c:1612
+#: src/main/scan.c:1612 src/main/scan.c:1615
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr ""
 
-#: src/main/scan.c:1722
+#: src/main/scan.c:1725
 msgid "'file' is not a connection"
 msgstr ""
 
-#: src/main/scan.c:1741
+#: src/main/scan.c:1744
 msgid "invalid value for 'nr'"
 msgstr ""
 
-#: src/main/scan.c:1742
+#: src/main/scan.c:1745
 msgid "invalid value for 'nc'"
 msgstr ""
 
-#: src/main/scan.c:1744
+#: src/main/scan.c:1747
 msgid "invalid value for 'rnames'"
 msgstr ""
 
-#: src/main/scan.c:1745
+#: src/main/scan.c:1748
 msgid "invalid value for 'sep'"
 msgstr ""
 
-#: src/main/scan.c:1746
+#: src/main/scan.c:1749
 msgid "invalid value for 'eol'"
 msgstr ""
 
-#: src/main/scan.c:1747 src/main/util.c:1114
+#: src/main/scan.c:1750 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr ""
 
-#: src/main/scan.c:1748
+#: src/main/scan.c:1751
 msgid "invalid value for 'dec'"
 msgstr ""
 
-#: src/main/scan.c:1749
+#: src/main/scan.c:1752
 msgid "invalid value for 'qmethod'"
 msgstr ""
 
-#: src/main/scan.c:1754
+#: src/main/scan.c:1757
 msgid "'dec' must be a single character"
 msgstr ""
 
-#: src/main/scan.c:1775
+#: src/main/scan.c:1778
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 
-#: src/main/scan.c:1812
+#: src/main/scan.c:1815
 msgid "corrupt matrix -- dims not not match length"
 msgstr ""
 

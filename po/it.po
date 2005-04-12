@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:41+0100\n"
+"POT-Creation-Date: 2005-04-12 17:44+0100\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1563,8 +1563,8 @@ msgid "connection not found"
 msgstr "connessione non trovata"
 
 #: src/main/connections.c:95 src/main/connections.c:2501
-#: src/main/connections.c:2916 src/main/connections.c:2965
-#: src/main/connections.c:3087 src/main/connections.c:3127
+#: src/main/connections.c:2924 src/main/connections.c:2973
+#: src/main/connections.c:3095 src/main/connections.c:3135
 msgid "invalid connection"
 msgstr "connessione non valida"
 
@@ -1673,13 +1673,13 @@ msgstr "allocazione della connessione 'fifo' fallita"
 #: src/main/connections.c:712 src/main/connections.c:842
 #: src/main/connections.c:1028 src/main/connections.c:1210
 #: src/main/connections.c:1890 src/main/connections.c:2009
-#: src/main/connections.c:3318
+#: src/main/connections.c:3326
 msgid "invalid 'description' argument"
 msgstr "argomento 'description' non valido"
 
 #: src/main/connections.c:714 src/main/connections.c:844
 #: src/main/connections.c:1030 src/main/connections.c:1212
-#: src/main/connections.c:2011 src/main/connections.c:3320
+#: src/main/connections.c:2011 src/main/connections.c:3328
 msgid "only first element of 'description' argument used"
 msgstr "solo il primo elemento del parametro 'descrizione' viene utilizzato"
 
@@ -1687,25 +1687,25 @@ msgstr "solo il primo elemento del parametro 'descrizione' viene utilizzato"
 #: src/main/connections.c:1034 src/main/connections.c:1216
 #: src/main/connections.c:1897 src/main/connections.c:1960
 #: src/main/connections.c:2015 src/main/connections.c:2067
-#: src/main/connections.c:3329
+#: src/main/connections.c:3337
 msgid "invalid 'open' argument"
 msgstr "argomento 'open' non valido"
 
-#: src/main/connections.c:721 src/main/connections.c:3333
+#: src/main/connections.c:721 src/main/connections.c:3341
 msgid "invalid 'block' argument"
 msgstr "argomento 'block' non valido"
 
 #: src/main/connections.c:725 src/main/connections.c:853
 #: src/main/connections.c:1038 src/main/connections.c:1220
 #: src/main/connections.c:1966 src/main/connections.c:2019
-#: src/main/connections.c:3337
+#: src/main/connections.c:3345
 msgid "invalid 'encoding' argument"
 msgstr "argomento 'encoding' non valido"
 
 #: src/main/connections.c:737 src/main/connections.c:872
 #: src/main/connections.c:1053 src/main/connections.c:1231
 #: src/main/connections.c:1979 src/main/connections.c:2030
-#: src/main/connections.c:2077 src/main/connections.c:3384
+#: src/main/connections.c:2077 src/main/connections.c:3392
 msgid "unable to open connection"
 msgstr "impossibile aprire la connessione"
 
@@ -1857,7 +1857,7 @@ msgstr "i socket non sono disponibili su questo sistema"
 #: src/main/connections.c:2126 src/main/connections.c:2175
 #: src/main/connections.c:2197 src/main/connections.c:2216
 #: src/main/connections.c:2228 src/main/connections.c:2331
-#: src/main/connections.c:2427 src/main/connections.c:3690
+#: src/main/connections.c:2427 src/main/connections.c:3698
 msgid "'con' is not a connection"
 msgstr "'con' non è una connessione"
 
@@ -1885,7 +1885,7 @@ msgstr "impossibile chiudere una connessione di sink dell'output"
 msgid "cannot close messages sink connection"
 msgstr "impossibile chiudere una connessione di sink dei messaggi"
 
-#: src/main/connections.c:2199 src/main/connections.c:3405
+#: src/main/connections.c:2199 src/main/connections.c:3413
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "connessione non aperta"
@@ -1903,16 +1903,16 @@ msgid "invalid value for 'ok'"
 msgstr "valore non valido per 'ok'"
 
 #: src/main/connections.c:2340 src/main/connections.c:2517
-#: src/main/connections.c:2918 src/main/dcf.c:56 src/main/serialize.c:1580
+#: src/main/connections.c:2926 src/main/dcf.c:56 src/main/serialize.c:1580
 msgid "cannot read from this connection"
 msgstr "non posso leggere da questa connessione"
 
 #: src/main/connections.c:2343 src/main/connections.c:2436
 #: src/main/connections.c:2521 src/main/connections.c:2710
-#: src/main/connections.c:2925 src/main/connections.c:2997
-#: src/main/connections.c:3159 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/connections.c:2933 src/main/connections.c:3005
+#: src/main/connections.c:3167 src/main/dcf.c:59 src/main/deparse.c:311
 #: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1010
-#: src/main/scan.c:1115 src/main/scan.c:1561 src/main/scan.c:1729
+#: src/main/scan.c:1115 src/main/scan.c:1560 src/main/scan.c:1732
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "non posso aprire questa connessione"
@@ -1935,8 +1935,8 @@ msgid "invalid 'sep' argument"
 msgstr "argomento 'sep' non valido"
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
-#: src/main/connections.c:2967 src/main/connections.c:3406
-#: src/main/scan.c:1725 src/main/serialize.c:1588
+#: src/main/connections.c:2975 src/main/connections.c:3414
+#: src/main/scan.c:1728 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "non posso scrivere su questa connessione"
 
@@ -1989,8 +1989,8 @@ msgstr "'x' non è un vettore di tipo atomico"
 msgid "can only write to a binary connection"
 msgstr "possono scrivere solo su una connessione binaria"
 
-#: src/main/connections.c:2717 src/main/connections.c:2854
-#: src/main/connections.c:3036
+#: src/main/connections.c:2717 src/main/connections.c:2862
+#: src/main/connections.c:3044
 msgid "problem writing to connection"
 msgstr "problema nello scrivere sulla connessione"
 
@@ -1998,146 +1998,146 @@ msgstr "problema nello scrivere sulla connessione"
 msgid "size changing is not supported for raw vectors"
 msgstr "cambio di dimensione non supportata per vettori elementari"
 
-#: src/main/connections.c:2881 src/main/connections.c:2884
+#: src/main/connections.c:2889 src/main/connections.c:2892
 msgid "invalid UTF-8 input in readChar()"
 msgstr "input UTF-8 non valido in readChar()"
 
-#: src/main/connections.c:2931
+#: src/main/connections.c:2939
 msgid "supplied length is invalid"
 msgstr "lunghezza specificata non valida"
 
-#: src/main/connections.c:2977
+#: src/main/connections.c:2985
 msgid "invalid value of 'sep'"
 msgstr "valore di 'sep' non valido"
 
-#: src/main/connections.c:3009
+#: src/main/connections.c:3017
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: sono necessari più caratteri di quelle presenti nella stringa - "
 "riempirò con spazi"
 
-#: src/main/connections.c:3061 src/main/connections.c:3064
-#: src/main/connections.c:3103 src/main/connections.c:3108
+#: src/main/connections.c:3069 src/main/connections.c:3072
+#: src/main/connections.c:3111 src/main/connections.c:3116
 msgid "could not allocate space for pushBack"
 msgstr "non posso allocare spazio per pushBack"
 
-#: src/main/connections.c:3084
+#: src/main/connections.c:3092
 msgid "invalid 'data' argument"
 msgstr "argomento 'data' non valido"
 
-#: src/main/connections.c:3090
+#: src/main/connections.c:3098
 msgid "invalid 'newLine' argument"
 msgstr "argomento 'newLine' non valido"
 
-#: src/main/connections.c:3092
+#: src/main/connections.c:3100
 msgid "can only push back on open readable connections"
 msgstr "posso "
 
-#: src/main/connections.c:3094
+#: src/main/connections.c:3102
 msgid "can only push back on text-mode connections"
 msgstr "posso riavvolgere solo connessione aperte in lettura"
 
-#: src/main/connections.c:3147 src/main/connections.c:3207
+#: src/main/connections.c:3155 src/main/connections.c:3215
 msgid "sink stack is full"
 msgstr "il sink stack è pieno"
 
-#: src/main/connections.c:3150
+#: src/main/connections.c:3158
 msgid "cannot switch output to stdin"
 msgstr "non posso scambiare l'output con l'input"
 
-#: src/main/connections.c:3167
+#: src/main/connections.c:3175
 msgid "no sink to remove"
 msgstr "non c'è nulla da eliminare"
 
-#: src/main/connections.c:3198
+#: src/main/connections.c:3206
 msgid "invalid value for 'closeOnExit'"
 msgstr "valore non valido per 'closeOnExit'"
 
-#: src/main/connections.c:3200 src/main/connections.c:3228
+#: src/main/connections.c:3208 src/main/connections.c:3236
 msgid "invalid value for 'type'"
 msgstr "valore non valido per 'type'"
 
-#: src/main/connections.c:3202
+#: src/main/connections.c:3210
 msgid "invalid value for 'split'"
 msgstr "valore non valido per 'split'"
 
-#: src/main/connections.c:3355
+#: src/main/connections.c:3363
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3371 src/modules/internet/internet.c:439
+#: src/main/connections.c:3379 src/modules/internet/internet.c:439
 msgid "unsupported URL scheme"
 msgstr "schema URL no supportato"
 
-#: src/main/connections.c:3458
+#: src/main/connections.c:3466
 msgid "file stream does not have gzip magic number"
 msgstr "il file non ha il numero magico di gzip"
 
-#: src/main/connections.c:3469
+#: src/main/connections.c:3477
 msgid "file stream does not have valid gzip header"
 msgstr "il file non ha un header di tipo gzip valido"
 
-#: src/main/connections.c:3535
+#: src/main/connections.c:3543
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "errore di scrittura durante lo svuotamento della connessione 'gzcon'"
 
-#: src/main/connections.c:3635
+#: src/main/connections.c:3643
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "errore crc %x %x\n"
 
-#: src/main/connections.c:3660
+#: src/main/connections.c:3668
 msgid "write error on 'gzcon' connection"
 msgstr "errore di scrittura sulla connessione 'gzcon'"
 
-#: src/main/connections.c:3694
+#: src/main/connections.c:3702
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' deve essere fra 0 ... 9"
 
-#: src/main/connections.c:3697
+#: src/main/connections.c:3705
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' deve essere TRUE o FALSE"
 
-#: src/main/connections.c:3700
+#: src/main/connections.c:3708
 msgid "this is already a gzcon connection"
 msgstr "c'è già una connessione di tipo gzcon"
 
-#: src/main/connections.c:3706
+#: src/main/connections.c:3714
 msgid "can only use read- or write- binary connections"
 msgstr "è possibile usare soltanto connessioni binarie in scrittura o lettura"
 
-#: src/main/connections.c:3710 src/main/connections.c:3714
-#: src/main/connections.c:3721 src/main/connections.c:3735
+#: src/main/connections.c:3718 src/main/connections.c:3722
+#: src/main/connections.c:3729 src/main/connections.c:3743
 msgid "allocation of 'gzcon' connection failed"
 msgstr "allocazione della connessione 'gzcon' fallita"
 
-#: src/main/connections.c:3780
+#: src/main/connections.c:3788
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1 richiede una stringa scalare"
 
-#: src/main/connections.c:3787
+#: src/main/connections.c:3795
 msgid "internal error in R_compress1"
 msgstr "errore interno in R_compress1"
 
-#: src/main/connections.c:3802
+#: src/main/connections.c:3810
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1 richiede una stringa scalare"
 
-#: src/main/connections.c:3807
+#: src/main/connections.c:3815
 msgid "internal error in R_decompress1"
 msgstr "errore interno in R_decompress1"
 
-#: src/main/connections.c:3824
+#: src/main/connections.c:3832
 msgid "not a list of sockets"
 msgstr "non è una lista di sockets"
 
-#: src/main/connections.c:3829
+#: src/main/connections.c:3837
 msgid "bad write indicators"
 msgstr "errato indicatore di scrittura"
 
-#: src/main/connections.c:3840
+#: src/main/connections.c:3848
 msgid "not a socket connection"
 msgstr "non è una connessione socket"
 
@@ -5645,7 +5645,7 @@ msgid "invalid 'na.strings' value"
 msgstr "valore 'na.strings' non valido"
 
 #: src/main/scan.c:948 src/main/scan.c:994 src/main/scan.c:1075
-#: src/main/scan.c:1078 src/main/scan.c:1549 src/main/scan.c:1552
+#: src/main/scan.c:1078 src/main/scan.c:1548 src/main/scan.c:1551
 msgid "invalid 'comment.char' value"
 msgstr "valore 'comment.char' non valido"
 
@@ -5665,11 +5665,11 @@ msgstr "separatore decimali non valido: deve essere un byte"
 msgid "invalid decimal separator"
 msgstr "separatore decimali non valido"
 
-#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1540
+#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1539
 msgid "out of memory"
 msgstr "fuori memoria"
 
-#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1546
+#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1545
 msgid "invalid quote symbol set"
 msgstr "simbolo di quote impostato non valido"
 
@@ -5690,66 +5690,66 @@ msgstr "il primo argomento deve essere in modalità carattere"
 msgid "Selection: "
 msgstr "Selezione: "
 
-#: src/main/scan.c:1529
+#: src/main/scan.c:1528
 msgid "invalid 'nlines' value"
 msgstr "valore 'nlines' non valido"
 
-#: src/main/scan.c:1570 src/main/scan.c:1582
+#: src/main/scan.c:1569 src/main/scan.c:1581
 msgid "cannot allocate buffer in readTableHead"
 msgstr "impossibile allocare il buffer in readTableHead"
 
-#: src/main/scan.c:1609 src/main/scan.c:1612
+#: src/main/scan.c:1612 src/main/scan.c:1615
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "riga finale incompleta trovata da readTableHeader in '%s'"
 
-#: src/main/scan.c:1722
+#: src/main/scan.c:1725
 msgid "'file' is not a connection"
 msgstr "'file' non è una connessione"
 
-#: src/main/scan.c:1741
+#: src/main/scan.c:1744
 msgid "invalid value for 'nr'"
 msgstr "valore non valido per 'nr'"
 
-#: src/main/scan.c:1742
+#: src/main/scan.c:1745
 msgid "invalid value for 'nc'"
 msgstr "valore non valido per 'nc'"
 
-#: src/main/scan.c:1744
+#: src/main/scan.c:1747
 msgid "invalid value for 'rnames'"
 msgstr "valore non valido per 'rnames'"
 
-#: src/main/scan.c:1745
+#: src/main/scan.c:1748
 msgid "invalid value for 'sep'"
 msgstr "valore non valido per 'sep'"
 
-#: src/main/scan.c:1746
+#: src/main/scan.c:1749
 msgid "invalid value for 'eol'"
 msgstr "valore non valido per 'eol'"
 
-#: src/main/scan.c:1747 src/main/util.c:1114
+#: src/main/scan.c:1750 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr "valore non valido per 'na'"
 
-#: src/main/scan.c:1748
+#: src/main/scan.c:1751
 msgid "invalid value for 'dec'"
 msgstr "valore non valido per 'dec'"
 
-#: src/main/scan.c:1749
+#: src/main/scan.c:1752
 msgid "invalid value for 'qmethod'"
 msgstr "valore non valido per 'qmethod'"
 
-#: src/main/scan.c:1754
+#: src/main/scan.c:1757
 msgid "'dec' must be a single character"
 msgstr "'dec' deve un singolo carattere"
 
-#: src/main/scan.c:1775
+#: src/main/scan.c:1778
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "data frame danneggiato - la lunghezza della colonna %d non coincide con nrows"
 
-#: src/main/scan.c:1812
+#: src/main/scan.c:1815
 msgid "corrupt matrix -- dims not not match length"
 msgstr "matrice danneggiata - le dimensioni non concordano con la lunghezza"
 
