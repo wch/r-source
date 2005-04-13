@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
  *  Copyright (C) 2000  Guido Masarotto and Brian Ripley
- *                2004  R Core Development Team
+ *                2004-5  R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -190,7 +190,7 @@ static void do_apply()
 
     if(newGUI.MDI != curGUI.MDI || newGUI.toolbar != curGUI.toolbar ||
        newGUI.statusbar != curGUI.statusbar)
-	askok(_("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n"));
+	askok(G_("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n"));
 
 
 /*  Set a new font? */
@@ -256,13 +256,13 @@ static void do_apply()
 
     if(haveusedapager &&
        (newGUI.prows != curGUI.prows || newGUI.pcols != curGUI.pcols))
-	askok(_("Changes in pager size will not apply to any open pagers"));
+	askok(G_("Changes in pager size will not apply to any open pagers"));
     pagerrow = newGUI.prows;
     pagercol = newGUI.pcols;
 
     if(newGUI.pagerMultiple != pagerMultiple) {
 	if(!haveusedapager ||
-	   askokcancel(_("Do not change pager type if any pager is open\nProceed?"))
+	   askokcancel(G_("Do not change pager type if any pager is open\nProceed?"))
 	   == YES)
 	    pagerMultiple = newGUI.pagerMultiple;
 	if(pagerMultiple) {
@@ -279,9 +279,9 @@ static void save(button b)
     char *file, buf[256], *p;
     FILE *fp;
 
-    setuserfilter(_("All files (*.*)\0*.*\0\0"));
+    setuserfilter(G_("All files (*.*)\0*.*\0\0"));
     strcpy(buf, getenv("R_USER"));
-    file = askfilesavewithdir(_("Select directory for file 'Rconsole'"),
+    file = askfilesavewithdir(G_("Select directory for file 'Rconsole'"),
 			      "Rconsole", buf);
     if(!file) return;
     strcpy(buf, file);
@@ -397,10 +397,10 @@ void Rgui_configure()
     rect r;
     ConsoleData p = (ConsoleData) getdata(RConsole);
 
-    wconfig = newwindow(_("Rgui Configuration Editor"), rect(0, 0, 550, 450),
+    wconfig = newwindow(G_("Rgui Configuration Editor"), rect(0, 0, 550, 450),
 			Titlebar | Centered | Modal);
     setbackground(wconfig, dialog_bg());
-    l_mdi = newlabel(_("Single or multiple windows"),
+    l_mdi = newlabel("Single or multiple windows",
 		      rect(10, 10, 150, 20), AlignLeft);
     rb_mdi = newradiobutton("MDI", rect(150, 10 , 70, 20), cMDI);
     rb_sdi = newradiobutton("SDI", rect(220, 10 , 70, 20), cSDI);
@@ -509,10 +509,10 @@ void Rgui_configure()
     setlistitem(usercol, rgbtonum(consoleuser));
     setlistitem(highlightcol, rgbtonum(pagerhighlight));
 
-    bApply = newbutton(_("Apply"), rect(50, 410, 70, 25), apply);
-    bSave = newbutton(_("Save"), rect(130, 410, 70, 25), save);
-    bOK = newbutton(_("OK"), rect(350, 410, 70, 25), ok);
-    bCancel = newbutton(_("Cancel"), rect(430, 410, 70, 25), cancel);
+    bApply = newbutton(G_("Apply"), rect(50, 410, 70, 25), apply);
+    bSave = newbutton(G_("Save"), rect(130, 410, 70, 25), save);
+    bOK = newbutton(G_("OK"), rect(350, 410, 70, 25), ok);
+    bCancel = newbutton(G_("Cancel"), rect(430, 410, 70, 25), cancel);
     show(wconfig);
     getGUIstate(&curGUI);
 }
