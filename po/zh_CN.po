@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-12 17:44+0100\n"
+"POT-Creation-Date: 2005-04-13 07:38+0100\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -70,215 +70,215 @@ msgstr "DLL试图把FPU控制词从%x改成%x"
 msgid "cannot get working directory"
 msgstr "找不到工作目录"
 
-#: src/gnuwin32/extra.c:47
+#: src/gnuwin32/extra.c:50
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam里的'tempdir'不对"
 
-#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:324
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:324
 msgid "cannot find unused tempfile name"
 msgstr "临时文件名都用完了"
 
-#: src/gnuwin32/extra.c:93
+#: src/gnuwin32/extra.c:96
 msgid "invalid 'names' in R_unlink"
 msgstr "R_unlink的'names'不对"
 
-#: src/gnuwin32/extra.c:137 src/main/datetime.c:516 src/main/datetime.c:575
+#: src/gnuwin32/extra.c:140 src/main/datetime.c:516 src/main/datetime.c:575
 #: src/main/datetime.c:684 src/main/datetime.c:799 src/main/plot3d.c:2477
 msgid "invalid 'x' argument"
 msgstr "'x'变元不对"
 
-#: src/gnuwin32/extra.c:140
+#: src/gnuwin32/extra.c:143
 msgid "invalid 'recursive' argument"
 msgstr "'recursive'变元不对"
 
-#: src/gnuwin32/extra.c:161 src/gnuwin32/extra.c:208 src/gnuwin32/extra.c:392
-#: src/gnuwin32/extra.c:415
+#: src/gnuwin32/extra.c:164 src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:395
+#: src/gnuwin32/extra.c:418
 msgid "R_HOME not set"
 msgstr "没有设定R_HOME"
 
-#: src/gnuwin32/extra.c:168
+#: src/gnuwin32/extra.c:171
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "找不到%s\\doc\\html\\rwin.htm[l]"
 
-#: src/gnuwin32/extra.c:196 src/main/platform.c:887
+#: src/gnuwin32/extra.c:199 src/main/platform.c:887
 msgid "invalid 'topic' argument"
 msgstr "'topic'变元不对"
 
-#: src/gnuwin32/extra.c:202
+#: src/gnuwin32/extra.c:205
 #, c-format
 msgid "%s not found"
 msgstr "找不到%s"
 
-#: src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:224
+#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
 msgid "invalid 'hlpfile' argument"
 msgstr "'hlpfile'变元不对"
 
-#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
+#: src/gnuwin32/extra.c:218 src/gnuwin32/extra.c:230
 msgid "WinHelp call failed"
 msgstr "WinHelp调用失败"
 
-#: src/gnuwin32/extra.c:218
+#: src/gnuwin32/extra.c:221
 msgid "too many .hlp files opened"
 msgstr "已经打开了太多.hlp文件"
 
-#: src/gnuwin32/extra.c:229
+#: src/gnuwin32/extra.c:232
 msgid "type not yet implemented"
 msgstr "种类目前还没有实现"
 
-#: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:636
+#: src/gnuwin32/extra.c:406 src/gnuwin32/extra.c:623 src/gnuwin32/extra.c:639
 #: src/main/platform.c:850 src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "invalid 'file' argument"
 msgstr "'file'变元不对"
 
-#: src/gnuwin32/extra.c:434 src/gnuwin32/extra.c:461
+#: src/gnuwin32/extra.c:437 src/gnuwin32/extra.c:464
 msgid "invalid 'message' argument"
 msgstr "'message'变元不对"
 
-#: src/gnuwin32/extra.c:446
+#: src/gnuwin32/extra.c:449
 msgid "unknown type"
 msgstr "没有这种类别"
 
-#: src/gnuwin32/extra.c:464
+#: src/gnuwin32/extra.c:467
 msgid "invalid 'default' argument"
 msgstr "'default'变元不对"
 
-#: src/gnuwin32/extra.c:485 src/gnuwin32/extra.c:509 src/gnuwin32/extra.c:547
-#: src/gnuwin32/extra.c:582
+#: src/gnuwin32/extra.c:488 src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:550
+#: src/gnuwin32/extra.c:585
 msgid "Menu functions can only be used in the GUI"
 msgstr "菜单功能只能在GUI中用"
 
-#: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:550 src/gnuwin32/extra.c:585
+#: src/gnuwin32/extra.c:516 src/gnuwin32/extra.c:553 src/gnuwin32/extra.c:588
 msgid "invalid 'menuname' argument"
 msgstr "'menuname'变元不对"
 
-#: src/gnuwin32/extra.c:517
+#: src/gnuwin32/extra.c:520
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "无法检索项目%s (%s)"
 
-#: src/gnuwin32/extra.c:555
+#: src/gnuwin32/extra.c:558
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "无法加菜单(%s)"
 
-#: src/gnuwin32/extra.c:561 src/gnuwin32/extra.c:593
+#: src/gnuwin32/extra.c:564 src/gnuwin32/extra.c:596
 msgid "invalid 'itemname' argument"
 msgstr "'itemname'变元不对"
 
-#: src/gnuwin32/extra.c:567
+#: src/gnuwin32/extra.c:570
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "无法加入菜单(%s)项"
 
-#: src/gnuwin32/extra.c:590
+#: src/gnuwin32/extra.c:593
 msgid "menu does not exist"
 msgstr "菜单不存在"
 
-#: src/gnuwin32/extra.c:597
+#: src/gnuwin32/extra.c:600
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "无法删除菜单项(%s)"
 
-#: src/gnuwin32/extra.c:625
+#: src/gnuwin32/extra.c:628
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory只能在Rgui和Rterm里有用"
 
-#: src/gnuwin32/extra.c:640
+#: src/gnuwin32/extra.c:643
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory只能在Rgui和Rterm有用"
 
-#: src/gnuwin32/extra.c:708 src/unix/sys-std.c:973
+#: src/gnuwin32/extra.c:711 src/unix/sys-std.c:973
 msgid "invalid 'time' value"
 msgstr "'time'值不对"
 
-#: src/gnuwin32/extra.c:763 src/gnuwin32/extra.c:773
+#: src/gnuwin32/extra.c:766 src/gnuwin32/extra.c:776
 msgid "incorrect argument"
 msgstr "变元不对"
 
-#: src/gnuwin32/extra.c:766
+#: src/gnuwin32/extra.c:769
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "愚蠢!: 你的机器有4Gb的地址上限"
 
-#: src/gnuwin32/extra.c:769
+#: src/gnuwin32/extra.c:772
 msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
-#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1179
+#: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
 #: src/main/platform.c:1396 src/main/platform.c:1431
 msgid "invalid 'path' argument"
 msgstr "'path'变元不对"
 
-#: src/gnuwin32/extra.c:871
+#: src/gnuwin32/extra.c:874
 msgid "invalid 'list' argument"
 msgstr "'list'变元不对"
 
-#: src/gnuwin32/extra.c:874 src/gnuwin32/extra.c:879
+#: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882
 msgid "invalid 'preselect' argument"
 msgstr "'preselect'变元不对"
 
-#: src/gnuwin32/extra.c:1053
+#: src/gnuwin32/extra.c:1056
 msgid "argument must be a character vector"
 msgstr "变元必需为字符向量"
 
-#: src/gnuwin32/extra.c:1068 src/main/connections.c:1330
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1330
 msgid "Unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
-#: src/gnuwin32/extra.c:1073 src/main/connections.c:1334
+#: src/gnuwin32/extra.c:1076 src/main/connections.c:1334
 msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
-#: src/gnuwin32/extra.c:1199
+#: src/gnuwin32/extra.c:1202
 msgid "'default' must be a character string"
 msgstr "'default'必需为字符串"
 
-#: src/gnuwin32/extra.c:1201
+#: src/gnuwin32/extra.c:1204
 msgid "'default' is overlong"
 msgstr "'default'太长"
 
-#: src/gnuwin32/extra.c:1210
+#: src/gnuwin32/extra.c:1213
 msgid "'caption' must be a character string"
 msgstr "'caption'必需为字符串"
 
-#: src/gnuwin32/extra.c:1212
+#: src/gnuwin32/extra.c:1215
 msgid "'multi' must be a logical value"
 msgstr "'multi'必需为逻辑值"
 
-#: src/gnuwin32/extra.c:1214
+#: src/gnuwin32/extra.c:1217
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex'必需为正数"
 
-#: src/gnuwin32/extra.c:1348
+#: src/gnuwin32/extra.c:1351
 msgid "'title' must be a character string"
 msgstr "'title'必需为字符串"
 
-#: src/gnuwin32/extra.c:1380
+#: src/gnuwin32/extra.c:1383
 msgid "'which' must be length 1"
 msgstr "'which'的长度必需为1"
 
-#: src/gnuwin32/extra.c:1410
+#: src/gnuwin32/extra.c:1413
 msgid "invalid value of 'which'"
 msgstr "'which'的值不对"
 
-#: src/gnuwin32/extra.c:1412 src/gnuwin32/extra.c:1414
-#: src/gnuwin32/extra.c:1454
+#: src/gnuwin32/extra.c:1415 src/gnuwin32/extra.c:1417
+#: src/gnuwin32/extra.c:1457
 msgid "invalid device"
 msgstr "设备不对"
 
-#: src/gnuwin32/extra.c:1415
+#: src/gnuwin32/extra.c:1418
 msgid "requires SDI mode"
 msgstr "必需用SDI方式"
 
-#: src/gnuwin32/extra.c:1448
+#: src/gnuwin32/extra.c:1451
 msgid "invalid graphical device number"
 msgstr "图形设备号不对"
 
-#: src/gnuwin32/extra.c:1458
+#: src/gnuwin32/extra.c:1461
 msgid "bad device"
 msgstr "设备有错"
 
-#: src/gnuwin32/extra.c:1697 src/gnuwin32/extra.c:1705
+#: src/gnuwin32/extra.c:1700 src/gnuwin32/extra.c:1708
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs里的输入不对"
 

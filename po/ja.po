@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-12 17:44+0100\n"
+"POT-Creation-Date: 2005-04-13 07:38+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -72,215 +72,215 @@ msgstr "DLL が FPU の状態語を %x から %x に変えようとしました"
 msgid "cannot get working directory"
 msgstr "作業ディレクトリを得ることができません"
 
-#: src/gnuwin32/extra.c:47
+#: src/gnuwin32/extra.c:50
 msgid "invalid 'tempdir' in R_tmpnam"
 msgstr "R_tmpnam において 'tempdir' が不正です"
 
-#: src/gnuwin32/extra.c:60 src/unix/sys-unix.c:324
+#: src/gnuwin32/extra.c:63 src/unix/sys-unix.c:324
 msgid "cannot find unused tempfile name"
 msgstr "未使用の一時ファイル名を探すことができません"
 
-#: src/gnuwin32/extra.c:93
+#: src/gnuwin32/extra.c:96
 msgid "invalid 'names' in R_unlink"
 msgstr "R_unlink の 'names' が不正です"
 
-#: src/gnuwin32/extra.c:137 src/main/datetime.c:516 src/main/datetime.c:575
+#: src/gnuwin32/extra.c:140 src/main/datetime.c:516 src/main/datetime.c:575
 #: src/main/datetime.c:684 src/main/datetime.c:799 src/main/plot3d.c:2477
 msgid "invalid 'x' argument"
 msgstr "'x' 引数が不正です"
 
-#: src/gnuwin32/extra.c:140
+#: src/gnuwin32/extra.c:143
 msgid "invalid 'recursive' argument"
 msgstr "'recursive' 引数が不正です"
 
-#: src/gnuwin32/extra.c:161 src/gnuwin32/extra.c:208 src/gnuwin32/extra.c:392
-#: src/gnuwin32/extra.c:415
+#: src/gnuwin32/extra.c:164 src/gnuwin32/extra.c:211 src/gnuwin32/extra.c:395
+#: src/gnuwin32/extra.c:418
 msgid "R_HOME not set"
 msgstr "R_HOME が設定されていません"
 
-#: src/gnuwin32/extra.c:168
+#: src/gnuwin32/extra.c:171
 #, c-format
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "%s\\doc\\html\\rwin.htm[l] が見つかりません"
 
-#: src/gnuwin32/extra.c:196 src/main/platform.c:887
+#: src/gnuwin32/extra.c:199 src/main/platform.c:887
 msgid "invalid 'topic' argument"
 msgstr "'topic' 引数が不正です"
 
-#: src/gnuwin32/extra.c:202
+#: src/gnuwin32/extra.c:205
 #, c-format
 msgid "%s not found"
 msgstr "%s が見つかりません"
 
-#: src/gnuwin32/extra.c:212 src/gnuwin32/extra.c:224
+#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
 msgid "invalid 'hlpfile' argument"
 msgstr "'hlpfile' 引数が不正です"
 
-#: src/gnuwin32/extra.c:215 src/gnuwin32/extra.c:227
+#: src/gnuwin32/extra.c:218 src/gnuwin32/extra.c:230
 msgid "WinHelp call failed"
 msgstr "WinHelp の呼び出しに失敗しました"
 
-#: src/gnuwin32/extra.c:218
+#: src/gnuwin32/extra.c:221
 msgid "too many .hlp files opened"
 msgstr "開いた .hlp ファイルの数が多すぎます"
 
-#: src/gnuwin32/extra.c:229
+#: src/gnuwin32/extra.c:232
 msgid "type not yet implemented"
 msgstr "未実装の型です"
 
-#: src/gnuwin32/extra.c:403 src/gnuwin32/extra.c:620 src/gnuwin32/extra.c:636
+#: src/gnuwin32/extra.c:406 src/gnuwin32/extra.c:623 src/gnuwin32/extra.c:639
 #: src/main/platform.c:850 src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "invalid 'file' argument"
 msgstr "'environment' 引数が不正です"
 
-#: src/gnuwin32/extra.c:434 src/gnuwin32/extra.c:461
+#: src/gnuwin32/extra.c:437 src/gnuwin32/extra.c:464
 msgid "invalid 'message' argument"
 msgstr "'message' 引数が不正です"
 
-#: src/gnuwin32/extra.c:446
+#: src/gnuwin32/extra.c:449
 msgid "unknown type"
 msgstr "未知のデータ型です"
 
-#: src/gnuwin32/extra.c:464
+#: src/gnuwin32/extra.c:467
 msgid "invalid 'default' argument"
 msgstr "'default' 引数が不正です"
 
-#: src/gnuwin32/extra.c:485 src/gnuwin32/extra.c:509 src/gnuwin32/extra.c:547
-#: src/gnuwin32/extra.c:582
+#: src/gnuwin32/extra.c:488 src/gnuwin32/extra.c:512 src/gnuwin32/extra.c:550
+#: src/gnuwin32/extra.c:585
 msgid "Menu functions can only be used in the GUI"
 msgstr "Menu 関数は GUI でのみ使えます"
 
-#: src/gnuwin32/extra.c:513 src/gnuwin32/extra.c:550 src/gnuwin32/extra.c:585
+#: src/gnuwin32/extra.c:516 src/gnuwin32/extra.c:553 src/gnuwin32/extra.c:588
 msgid "invalid 'menuname' argument"
 msgstr "'menuname' 引数が不正です"
 
-#: src/gnuwin32/extra.c:517
+#: src/gnuwin32/extra.c:520
 #, c-format
 msgid "unable to retrieve items for %s (%s)"
 msgstr "%s(%s) に対する項目を取り出すことができません"
 
-#: src/gnuwin32/extra.c:555
+#: src/gnuwin32/extra.c:558
 #, c-format
 msgid "unable to add menu (%s)"
 msgstr "メニューを追加できません (%s)"
 
-#: src/gnuwin32/extra.c:561 src/gnuwin32/extra.c:593
+#: src/gnuwin32/extra.c:564 src/gnuwin32/extra.c:596
 msgid "invalid 'itemname' argument"
 msgstr "'itemname' 引数が不正です"
 
-#: src/gnuwin32/extra.c:567
+#: src/gnuwin32/extra.c:570
 #, c-format
 msgid "unable to add menu item (%s)"
 msgstr "メニュー項目を追加できません (%s)"
 
-#: src/gnuwin32/extra.c:590
+#: src/gnuwin32/extra.c:593
 msgid "menu does not exist"
 msgstr "メニューがありません"
 
-#: src/gnuwin32/extra.c:597
+#: src/gnuwin32/extra.c:600
 #, c-format
 msgid "unable to delete menu item (%s)"
 msgstr "メニュー項目 (%s) を削除できません"
 
-#: src/gnuwin32/extra.c:625
+#: src/gnuwin32/extra.c:628
 msgid "savehistory can only be used in Rgui and Rterm"
 msgstr "savehistory は Rgui または Rterm でのみ使えます"
 
-#: src/gnuwin32/extra.c:640
+#: src/gnuwin32/extra.c:643
 msgid "loadhistory can only be used in Rgui and Rterm"
 msgstr "loadhistory は Rgui と Rterm の中でだけ使えます"
 
-#: src/gnuwin32/extra.c:708 src/unix/sys-std.c:973
+#: src/gnuwin32/extra.c:711 src/unix/sys-std.c:973
 msgid "invalid 'time' value"
 msgstr "'time' の値が不正です"
 
-#: src/gnuwin32/extra.c:763 src/gnuwin32/extra.c:773
+#: src/gnuwin32/extra.c:766 src/gnuwin32/extra.c:776
 msgid "incorrect argument"
 msgstr "正しくない引数です"
 
-#: src/gnuwin32/extra.c:766
+#: src/gnuwin32/extra.c:769
 msgid "don't be silly!: your machine has a 4Gb address limit"
 msgstr "あらら！あなたのマシンのアドレス空間の上限は4Gbです"
 
-#: src/gnuwin32/extra.c:769
+#: src/gnuwin32/extra.c:772
 msgid "cannot decrease memory limit"
 msgstr "メモリー限界を減らすことができません"
 
-#: src/gnuwin32/extra.c:787 src/main/platform.c:890 src/main/platform.c:1179
+#: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
 #: src/main/platform.c:1396 src/main/platform.c:1431
 msgid "invalid 'path' argument"
 msgstr "'path' 引数が不正です"
 
-#: src/gnuwin32/extra.c:871
+#: src/gnuwin32/extra.c:874
 msgid "invalid 'list' argument"
 msgstr "'list' 引数が不正です"
 
-#: src/gnuwin32/extra.c:874 src/gnuwin32/extra.c:879
+#: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882
 msgid "invalid 'preselect' argument"
 msgstr "'preselect' 引数が不正です"
 
-#: src/gnuwin32/extra.c:1053
+#: src/gnuwin32/extra.c:1056
 msgid "argument must be a character vector"
 msgstr "引数は文字ベクトルでなければなりません"
 
-#: src/gnuwin32/extra.c:1068 src/main/connections.c:1330
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1330
 msgid "Unable to open the clipboard"
 msgstr "クリップボードを開くことができません"
 
-#: src/gnuwin32/extra.c:1073 src/main/connections.c:1334
+#: src/gnuwin32/extra.c:1076 src/main/connections.c:1334
 msgid "Unable to write to the clipboard"
 msgstr "クリップボードを書き込みのために開くことができません"
 
-#: src/gnuwin32/extra.c:1199
+#: src/gnuwin32/extra.c:1202
 msgid "'default' must be a character string"
 msgstr "'default' は文字列でなければなりません"
 
-#: src/gnuwin32/extra.c:1201
+#: src/gnuwin32/extra.c:1204
 msgid "'default' is overlong"
 msgstr "'default' が長すぎます"
 
-#: src/gnuwin32/extra.c:1210
+#: src/gnuwin32/extra.c:1213
 msgid "'caption' must be a character string"
 msgstr "'caption' は文字列でなければなりません"
 
-#: src/gnuwin32/extra.c:1212
+#: src/gnuwin32/extra.c:1215
 msgid "'multi' must be a logical value"
 msgstr "'multi' は論理値でなければなりません"
 
-#: src/gnuwin32/extra.c:1214
+#: src/gnuwin32/extra.c:1217
 msgid "'filterindex' must be an integer value"
 msgstr "'filterindex' は整数値でなければいけません"
 
-#: src/gnuwin32/extra.c:1348
+#: src/gnuwin32/extra.c:1351
 msgid "'title' must be a character string"
 msgstr "'title' は文字列でなければなりません"
 
-#: src/gnuwin32/extra.c:1380
+#: src/gnuwin32/extra.c:1383
 msgid "'which' must be length 1"
 msgstr "'which' は長さ1でなくてはなりません"
 
-#: src/gnuwin32/extra.c:1410
+#: src/gnuwin32/extra.c:1413
 msgid "invalid value of 'which'"
 msgstr "'which' の値が不正です"
 
-#: src/gnuwin32/extra.c:1412 src/gnuwin32/extra.c:1414
-#: src/gnuwin32/extra.c:1454
+#: src/gnuwin32/extra.c:1415 src/gnuwin32/extra.c:1417
+#: src/gnuwin32/extra.c:1457
 msgid "invalid device"
 msgstr "不正な装置です"
 
-#: src/gnuwin32/extra.c:1415
+#: src/gnuwin32/extra.c:1418
 msgid "requires SDI mode"
 msgstr "SDI モードが要求されます"
 
-#: src/gnuwin32/extra.c:1448
+#: src/gnuwin32/extra.c:1451
 msgid "invalid graphical device number"
 msgstr "グラフィックスデバイス番号が不正です"
 
-#: src/gnuwin32/extra.c:1458
+#: src/gnuwin32/extra.c:1461
 msgid "bad device"
 msgstr "不正な装置です"
 
-#: src/gnuwin32/extra.c:1697 src/gnuwin32/extra.c:1705
+#: src/gnuwin32/extra.c:1700 src/gnuwin32/extra.c:1708
 msgid "invalid input in Rmbstowcs"
 msgstr "Rmbstowcs  への入力が不正です"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-01 11:04+0100\n"
+"POT-Creation-Date: 2005-04-13 07:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -421,7 +421,7 @@ msgstr ""
 msgid "Open script..."
 msgstr ""
 
-#: editor.c:668
+#: editor.c:668 preferences.c:513
 msgid "Save"
 msgstr ""
 
@@ -478,6 +478,14 @@ msgstr ""
 msgid "Untitled"
 msgstr ""
 
+#: extra.c:920 preferences.c:514
+msgid "OK"
+msgstr ""
+
+#: extra.c:921 preferences.c:515
+msgid "Cancel"
+msgstr ""
+
 #: pager.c:77
 msgid "Error opening file"
 msgstr ""
@@ -510,6 +518,40 @@ msgstr ""
 msgid "Unable to create pager window"
 msgstr ""
 
+#: preferences.c:193
+msgid ""
+"The overall console properties cannot be changed\n"
+"on a running console.\n"
+"\n"
+"Save the preferences and restart Rgui to apply them.\n"
+msgstr ""
+
+#: preferences.c:259
+msgid "Changes in pager size will not apply to any open pagers"
+msgstr ""
+
+#: preferences.c:265
+msgid ""
+"Do not change pager type if any pager is open\n"
+"Proceed?"
+msgstr ""
+
+#: preferences.c:282 rui.c:158 rui.c:172 rui.c:1160 graphapp/dialogs.c:358
+msgid "All files (*.*)"
+msgstr ""
+
+#: preferences.c:284
+msgid "Select directory for file 'Rconsole'"
+msgstr ""
+
+#: preferences.c:400
+msgid "Rgui Configuration Editor"
+msgstr ""
+
+#: preferences.c:512
+msgid "Apply"
+msgstr ""
+
 #: rui.c:105
 msgid "R files (*.R)"
 msgstr ""
@@ -528,10 +570,6 @@ msgstr ""
 
 #: rui.c:144
 msgid "Save image in"
-msgstr ""
-
-#: rui.c:158 rui.c:172 rui.c:1160 graphapp/dialogs.c:358
-msgid "All files (*.*)"
 msgstr ""
 
 #: rui.c:159
@@ -999,17 +1037,14 @@ msgid "Jpeg"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1542
-#, c-format
 msgid "50% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1543
-#, c-format
 msgid "75% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1544
-#, c-format
 msgid "100% quality..."
 msgstr ""
 

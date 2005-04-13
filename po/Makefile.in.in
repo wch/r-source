@@ -132,7 +132,7 @@ RGui.pot-update: remove-potcdate.sed
 	  --add-comments=TRANSLATORS: \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c \
+	   -o - console.c dataentry.c editor.c extra.c pager.c preferences.c rui.c \
 	    system.c \
 	    graphapp/clipboard.c graphapp/dialogs.c graphapp/gmenus.c \
 	    graphapp/metafile.c graphapp/printer.c \
