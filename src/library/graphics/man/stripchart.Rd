@@ -34,8 +34,8 @@ stripchart(x, method = "overplot", jitter = 0.1, offset = 1/3,
     vertically rather than the default horizontal.}
   \item{group.names}{group labels which will be printed alongside
     (or underneath) each plot.}
-  \item{add}{logical, if true \emph{add} boxplot to current plot.}
-  \item{at}{numeric vector giving the locations where the boxplots should
+  \item{add}{logical, if true \emph{add} the chart to the current plot.}
+  \item{at}{numeric vector giving the locations where the charts should
     be drawn, particularly when \code{add = TRUE};
     defaults to \code{1:n} where \code{n} is the number of boxes.}
   \item{xlim, ylim, main, ylab, xlab, log, pch, col, cex}{Graphical parameters.}
