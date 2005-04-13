@@ -7303,17 +7303,3 @@ msgstr "il modulo X11 non può essere caricato"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 non disponibile"
-
-#~ msgid ""
-#~ "saved workspaces with locked bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "workspace registrati contenenti collegamenti bloccati possono non "
-#~ "funzionare correttamente in versioni meno recenti di R"
-
-#~ msgid ""
-#~ "saved workspaces with active bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "workspace registrati con collegamenti attivi possono non funzionare "
-#~ "correttamente se caricati in versioni meno recenti di R"

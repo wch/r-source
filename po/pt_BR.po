@@ -7300,23 +7300,3 @@ msgstr "módulo X11 não pode ser carregado"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 não está disponível"
-
-#~ msgid ""
-#~ "saved workspaces with locked bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "áreas de trabalho salvas com vinculações bloqueadas podem não funcionar "
-#~ "devidamente quando carregadas em versões antigas do R"
-
-#~ msgid ""
-#~ "saved workspaces with active bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "áreas de trabalho salvadas com vinculações ativas podem não funcionar "
-#~ "devidamente quando carregadas em versões antigas do R"
-
-#~ msgid "invalid sep value"
-#~ msgstr "valor de sep inválido"
-
-#~ msgid "Could not allocate memory for Encodebuf"
-#~ msgstr "Não foi possível alocar memória para Encodebuf "

@@ -7284,17 +7284,3 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
-
-#~ msgid ""
-#~ "saved workspaces with locked bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "gespeicherte Arbeitsumgebungen mit abgeschlossenen Bindungen arbeiten "
-#~ "evtl.nicht, wenn sie in ältere R Versionen geladen werden"
-
-#~ msgid ""
-#~ "saved workspaces with active bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr ""
-#~ "gespeicherte Arbeitsumgebungen mit aktiven Bindungen arbeiten evtl. "
-#~ "nicht, wenn sie in ältere R Versionen geladen werden"

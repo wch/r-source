@@ -7176,13 +7176,3 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
-
-#~ msgid ""
-#~ "saved workspaces with locked bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr "保存的工作空间有锁住了的编联，旧的R版本有可能无法用这样的工作空间"
-
-#~ msgid ""
-#~ "saved workspaces with active bindings may not work properly when loaded "
-#~ "into older versions of R"
-#~ msgstr "保存的工作空间有活动编联，旧的R版本有可能无法用这样的工作空间"
