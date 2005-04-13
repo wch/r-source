@@ -1,6 +1,6 @@
 R FAQ
 Frequently Asked Questions on R
-Version 2.0.2005-04-10
+Version 2.0.2005-04-11
 ISBN 3-900051-08-9
 Kurt Hornik
 
@@ -2734,6 +2734,9 @@ distributions of R.)
 *pls.pcr*
      Multivariate regression by PLS and PCR.
 
+*plsgenomics*
+     PLS analyses for genomics.
+
 *polspline*
      Routines for the polynomial spline fitting routines hazard regression,
      hazard estimation with flexible tails, logspline, lspec, polyclass, and
@@ -3777,7 +3780,7 @@ E.g., to use a private tree in `$HOME/lib/R' and a public site-wide tree in
 
 into your (Bourne) shell profile or even preferably, add the line
 
-     R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+     R_LIBS="~/lib/R:/usr/local/lib/R-contrib"
 
 your `~/.Renviron' file.  (Note that no `export' statement is needed or
 allowed in this file; see the on-line help for `Startup' for more

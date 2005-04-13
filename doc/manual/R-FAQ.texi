@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-10
+@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-11
 @set REL-VERSION 2.0.1
 @set REL-YEAR 2004
 @c <COMMENT>
@@ -2805,6 +2805,8 @@ Partial Least Squares Regression (PLSR) and Principal Component
 Regression (PCR).
 @item pls.pcr
 Multivariate regression by PLS and PCR.
+@item plsgenomics
+PLS analyses for genomics.
 @c <COMMENT>
 @c Outdated on CRAN along with 1.5.0 release as we do not have an active
 @c maintainer to fix outstanding quality problems.
@@ -3766,7 +3768,7 @@ R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"; export R_LIBS
 into your (Bourne) shell profile or even preferably, add the line
 
 @example
-R_LIBS="$HOME/lib/R:/usr/local/lib/R-contrib"
+R_LIBS="~/lib/R:/usr/local/lib/R-contrib"
 @end example
 
 @noindent
