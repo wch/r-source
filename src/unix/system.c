@@ -181,6 +181,8 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
 		useaqua = TRUE;
+	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
+		useaqua = TRUE;
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))
 		useX11 = TRUE;
