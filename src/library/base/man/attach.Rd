@@ -34,7 +34,7 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   cannot attach at \code{pos=1}.
 
   The database is not actually attached.  Rather, a new environment is
-  created on the search path and the elements of list (including columns
+  created on the search path and the elements of a list (including columns
   of a dataframe) or objects in a save file are \emph{copied} into the
   new environment.  If you use \code{\link{<<-}} or \code{\link{assign}}
   to assign to an attached database, you only alter the attached copy,
