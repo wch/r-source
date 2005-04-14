@@ -1,0 +1,183 @@
+# Italian translations for R package.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# stefano iacus <stefano.iacus@r-project.org>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.1.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-02-16 08:34+0000\n"
+"PO-Revision-Date: 2005-04-14 18:06+0200\n"
+"Last-Translator: stefano iacus <stefano.iacus@r-project.org>\n"
+"Language-Team: Italian <it@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "ampiezza/copertura mediane più grande di n"
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr "probabilità esterne a [0,1] in qansari()"
+
+#: arima.c:60 arima.c:153 arima.c:329
+msgid "invalid argument type"
+msgstr "tipo argomento non valido"
+
+#: arima.c:383 arima.c:471 pacf.c:302 pacf.c:342
+msgid "can only transform 100 pars in arima0"
+msgstr "posso trasformare al più 100 parametri in arima0"
+
+#: distance.c:145
+msgid "dist(.,\"binary\"): treating non-finite values as NA"
+msgstr "dist(.,\"binary\"): valori infiniti trattati come NA"
+
+#: distance.c:214
+msgid "distance(): invalid p"
+msgstr "distance(): p non valido"
+
+#: distance.c:217
+msgid "distance(): invalid distance"
+msgstr "distance(): distanza non valida"
+
+#: ksmooth.c:66
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr "sm.method=\"spline\" permette solo 2500 righe"
+
+#: loessc.c:226
+msgid "span is too small"
+msgstr "ampiezza troppo piccola"
+
+#: mburg.c:197
+msgid "Invalid vmethod"
+msgstr "metodo non valido"
+
+#: mburg.c:333
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr "l'alrgoritmo di Burg non è riuscito a trovare correlazione parziale"
+
+#: nls.c:75
+msgid "control must be a list"
+msgstr "control deve essere di tipo list"
+
+#: nls.c:77
+msgid "m must be a list"
+msgstr "m deve essere di tipo list"
+
+#: nls.c:83
+msgid "control$maxiter absent"
+msgstr "control$maxiter assente"
+
+#: nls.c:88
+msgid "control$tol absent"
+msgstr "control$tol assente"
+
+#: nls.c:93
+msgid "control$minFactor absent"
+msgstr "control$minFactor assente"
+
+#: nls.c:102
+msgid "m$conv() absent"
+msgstr "m$conv() assente"
+
+#: nls.c:107
+msgid "m$incr() absent"
+msgstr "m$incr() assente"
+
+#: nls.c:112
+msgid "m$deviance() absent"
+msgstr "m$deviance() assente"
+
+#: nls.c:117
+msgid "m$trace() absent"
+msgstr "m$trace() assente"
+
+#: nls.c:122
+msgid "m$setPars() absent"
+msgstr "m$setPars() assente"
+
+#: nls.c:127
+msgid "m$getPars() absent"
+msgstr "m$getPars() assente"
+
+#: nls.c:154
+msgid "singular gradient"
+msgstr "gradiente singolare"
+
+#: nls.c:173
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr "fattore di incremento %g sotto 'minFactor' %g"
+
+#: nls.c:181
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr "il numero di iterazioni ha superato il massimo di %d"
+
+#: nls.c:202
+msgid "theta should be of type character"
+msgstr "theta deve essere di tipo character"
+
+#: nls.c:204
+msgid "rho should be an environment"
+msgstr "rho deve essere un environment"
+
+#: nls.c:221 nls.c:243
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr "Valore mancante o infinito generato durante il calcolo del modello"
+
+#: pacf.c:72
+msgid "bad Starma struct"
+msgstr "struttura Starma errata"
+
+#: pacf.c:218
+#, c-format
+msgid "starma error code %d"
+msgstr "codice di errore starma %d"
+
+#: pacf.c:281
+#, c-format
+msgid "forkal error code %d"
+msgstr "codei di errore forkal %d"
+
+#: pacf.c:445
+msgid "invalid value of lag.max"
+msgstr "valore di lag.max non valido"
+
+#: qr.c:30
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr "fallito assert in src/library/ts/src/carray.c"
+
+#: qr.c:68
+msgid "Singular matrix in qr_solve"
+msgstr "Matrice singolare in qr_solve"
+
+#: qr.c:111
+msgid "Singular matrix in ldet"
+msgstr "Matrice singolare in ldet"
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr ""
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr "errore allocazione memoria in smooth(*, '3RSR')."
+
+#: smooth.c:242 smooth.c:252
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr "errore allocazione memoria in smooth(*, '3RSS')."
+
+#: smooth.c:262
+msgid "allocation error in smooth(*, '3R')."
+msgstr "errore allocazione memoria in smooth(*, '3R')."
+
+#: starma.c:361
+#, c-format
+msgid "missing value in last %d observations"
+msgstr "valori mancanti nelle ultime %d osservazioni"
