@@ -56,8 +56,8 @@ isIncomplete(con)
   \item{description}{character. A description of the connection. For
     \code{file} and \code{pipe} this is a path to the file to be opened.
     For \code{url} it is a complete URL, including schemes
-    (\code{http://}, \code{ftp://} or \code{file://}).  \code{file} also
-    accepts complete URLs.
+    (\code{http://}, \code{ftp://} or \code{file://} -- see Details).
+    \code{file} also accepts complete URLs.
   }
   \item{filename}{a filename within a zip file.}
   \item{con}{a connection.}
@@ -134,6 +134,27 @@ isIncomplete(con)
   is immediately opened (in \code{"w+"} mode unless \code{open="w+b"} is
   specified) and unlinked from the file system.  This provides a
   temporary file to write to and then read from.
+
+  A note on \code{file://} URLs.  The most general form (from RFC1738) is
+  \code{file://host/path/to/file}, but \R only accepts the form with an
+  empty \code{host} field referring to the local machine.
+#ifdef unix
+  This is then \code{file:///path/to/file}, where \code{path/to/file} is
+  relative to \code{/}.  So although the third slash is strictly part of
+  the specification not part of the path, this can be regarded as a way
+  to specify the file \file{/path/to/file}.  It is not possible to
+  specify a relative path using a file URL.
+#endif
+#ifdef windows
+  In this form the path is relative to the root of the filesystem, not a
+  Windows concept.  So this is parsed in \R as \code{file://} plus
+  \code{/path/to/file}, e.g. \code{file:///TEMP/some} (referring to the
+  current drive) or \code{file://d:/R/repos}.  Note that although most
+  browsers will accept these forms, strictly there should be three initial
+  slashes in the second (but not four in the first) and \R does not accept
+  that form.  Also, backslashes are accepted within the path even though
+  RFC1738 does not allow them.
+#endif
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
