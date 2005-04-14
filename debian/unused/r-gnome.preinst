@@ -1,0 +1,26 @@
+#! /bin/sh
+#
+# r-gnome.preinst
+#
+# Written and GPL'ed by Dirk Eddelbuettel <edd@debian.org> 
+ 
+set -e
+ 
+case "$1" in
+    install|upgrade)
+    # we want symlinks to r-base so old directories cannot exist
+    test -d /usr/share/doc/r-gnome && rm -rf /usr/share/doc/r-gnome
+    ;;
+ 
+    abort-upgrade)
+    ;;
+ 
+    *)
+        echo "preinst called with unknown argument \`$1'" >&2
+        exit 0
+    ;;
+esac
+ 
+#DEBHELPER#
+ 
+exit 0

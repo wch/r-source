@@ -1,1 +1,6 @@
-usr/lib/R/doc/manual usr/share/doc/r-doc-html/manual
+usr/lib/R/doc/manual/R-FAQ.html   usr/share/doc/r-doc-html/manual/R-FAQ.html
+usr/lib/R/doc/manual/R-admin.html usr/share/doc/r-doc-html/manual/R-admin.html
+usr/lib/R/doc/manual/R-data.html  usr/share/doc/r-doc-html/manual/R-data.html
+usr/lib/R/doc/manual/R-exts.html  usr/share/doc/r-doc-html/manual/R-exts.html
+usr/lib/R/doc/manual/R-intro.html usr/share/doc/r-doc-html/manual/R-intro.html
+usr/lib/R/doc/manual/R-lang.html  usr/share/doc/r-doc-html/manual/R-lang.html 

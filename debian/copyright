@@ -80,19 +80,18 @@ From the announcement of the change (2001-Feb-05)
 Some of the code contains different copyright statements.  It is used
 here in accordance with the copyright conditions in that code.
 
-src/library/grDevices/inst/afm/*___.afm
+afm/*___.afm
 
 	Copyright (c) 1984 to 1992 Adobe Systems Incorporated.
 
-src/library/grDevices/inst/afm/*l.afm
+afm/*l.afm
 
 	Copyright 1999 by (URW)++ Design & Development
 
-src/library/grDevices/inst/afm/CM_*.afm
-src/library/grDevices/inst/afm/cm*.afm
+afm/CM_*.afm
 
 	are derived from afms which are copyright by the American
-	Mathematical Society, but `the AMS does require that the
+	Mathematical Society, but `the AMS does require that the 
 	AMS copyright notice be removed from any derivative versions
 	of the fonts which have been altered in any way'.
 
@@ -101,40 +100,28 @@ doc/html/search/*.java
 	Copyright (C), 1998 Thomas Baier
 or	Copyright (C), 1998-2000, Thomas Baier, R Core Development Team
 
-doc/manual/texinfo.tex
 
-	Copyright (C) various dates Free Software Foundation, Inc.
-
-share/texmf/upquote.sty
-
-	Copyright 2000 Michael A. Covington.
-	Copyright 2003 Michael A. Covington, Frank Mittelbach.
-
-src/library/graphics/R/mosaicplot.R
+src/library/base/R/mosaicplot.R
 
 	Copyright (C) 1998 John W. Emerson
 
 
-src/library/stats/R/aov.R
-src/library/stats/R/bandwidths.R
-src/library/stats/R/contr.poly.R
+src/library/base/R/aov.R
+src/library/base/R/bandwidths.R
+src/library/base/R/contr.poly.R
 src/library/base/R/expand.grid.R
-src/library/stats/R/predict.glm.R
-src/library/stats/R/update.R
-src/library/stats/*/max.col.R*
-src/library/stats/R/biplot.R
-src/library/stats/R/princomp-add.R
+src/library/base/R/predict.glm.R
+src/library/base/R/update.R
+src/library/base/*/max.col.R*
 src/appl/bandwidths.c
 src/appl/maxcol.c
 
 	Copyright (C) various dates W. N. Venables and B. D. Ripley
 
 
-src/appl/interv.c : moved to API from code originally in
-		    src/library/stats/src/bvalue.f, see the following
-src/library/stats:
+src/library/modreg:
 
-	See the file src/library/stats/COPYRIGHTS.modreg for details
+	See the file library/modreg/COPYRIGHTS for details
 
       src/loessc.c
       src/loessf.f
@@ -142,15 +129,21 @@ src/library/stats:
 	Copyright (c) 1989, 1992 by AT&T.
 
 
-src/library/stats/R/diffinv.R
-src/library/stats/R/embed.R
-src/library/stats/R/kernel.R
-src/library/stats/src/PPsum.c
+src/library/mva/R/biplot.R
+src/library/mva/R/princomp-add.R
+
+	Copyright (C) 1998 W. N. Venables and B. D. Ripley
+
+
+src/library/ts/R/diffinv.R
+src/library/ts/R/embed.R
+src/library/ts/R/kernel.R
+src/library/ts/src/PPsum.c
 
 	Copyright (C) 1997-1999	 Adrian Trapletti
 
 
-src/library/stats/src/carray.c, mburg.c, myw.c, qr.c
+src/library/ts/src/carray.c, mburg.c, myw.c, qr.c
 
 	Copyright (C) 1999 Martyn Plummer
 
@@ -161,12 +154,12 @@ src/unix/rotated.[ch]
 
 
 src/appl/loglin.c
-src/library/stats/src/chisqsim.c
-src/library/stats/src/nscor.c
-src/library/stats/src/prho.c
-src/library/stats/src/swilk.c
-src/library/stats/src/kmns.f
-src/library/ts/src/starma.c
+src/library/ctest/src/chisqsim.c
+src/library/ctest/src/nscor.c
+src/library/ctest/src/prho.c
+src/library/ctest/src/swilk.c
+src/library/mva/src/kmns.f
+src/library/ts/src/starma.f
 src/nmath/pgamma.c
 src/nmath/pnbeta.c
 src/nmath/pnchisq.c
@@ -182,15 +175,16 @@ src/nmath/sunif.c
 src/nmath/stirlerr.c
 src/nmath/dbinom.c
 src/nmath/dpois.c
-  are now partly based on Clive Loader's (1999) work,
+  are now partly based on Clive Loader's (1999) work, and are
   (C) 1999-2000 Lucent Technologies, Bell Laboratories.
 
-src/modules/gnome/devGNOME.c
-src/modules/gnome/gdkrotated.c
-src/modules/gnome/gnome-find-dialog.c
-src/modules/gnome/gtkconsole.c
-src/modules/gnome/system-*.c
-src/modules/gnome/terminal*.c
+src/gnome/devGNOME.c
+src/gnome/devGTK.c
+src/gnome/gdkrotated.c
+src/gnome/gnome-find-dialog.c
+src/gnome/gtkconsole.c
+src/gnome/system-*.c
+src/gnome/terminal*.c
 
 	Copyright (C) 1998-1999	  Lyndon Drake
 		and the R Development Core Team
@@ -208,8 +202,7 @@ src/main/RNG.c
 
   and is used unchanged.
 
-
-src/modules/lapack/dlapack[0123].f, cmplx.f, dlamc,f rgeev.f, rsyev.f
+src/modules/lapack/double.f, cmplx.f
 
   Extracted from
   *  -- LAPACK routine (version 3.0) --

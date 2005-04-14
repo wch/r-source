@@ -3,12 +3,12 @@ Section: math
 Priority: optional
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
 Uploaders: Douglas Bates <bates@stat.wisc.edu>
-Standards-Version: 3.6.1.0
-Build-Depends: refblas3-dev | atlas3-base-dev, lapack3-dev | atlas3-base-dev, libgnome-dev, libzvt-dev, libgtkxmhtml-dev, tcl8.4-dev, tk8.4-dev, libglade-gnome0-dev, bison, g77 [!m68k], f2c [m68k], groff-base, libncurses5-dev, libreadline4-dev, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2), libbz2-dev, libpcre3-dev, libpaperg-dev, tetex-bin, tetex-extra, xpdf-reader, libpaper-utils, zlib1g-dev, libpng12-dev, libjpeg62-dev, libpcre3-dev
+Standards-Version: 3.6.1.1
+Build-Depends: refblas3-dev | atlas3-base-dev, tcl8.4-dev, tk8.4-dev, bison, g77 [!m68k], f2c [m68k], groff-base, libncurses5-dev, libreadline5-dev, debhelper (>= 3.0.0), texi2html, texinfo (>= 4.1-2), libbz2-dev, libpcre3-dev, libpaperg-dev, tetex-bin, tetex-extra, xpdf-reader, libpaper-utils, zlib1g-dev, libpng12-dev, libjpeg62-dev
 
 Package: r-base
 Architecture: all
-Depends: r-base-core
+Depends: r-base-core (= ${Source-Version}), r-recommended (= ${Source-Version})
 Recommends: r-base-html, r-base-latex
 Suggests: libpaperg, ess, r-doc-info | r-doc-pdf | r-doc-html, libpaper-utils
 Description: GNU R statistical computing language and environment
@@ -62,8 +62,8 @@ Description: GNU R core of statistical computing language and environment
 
 Package: r-gnome
 Section: gnome
-Architecture: any
-Depends: r-base-core (= ${Source-Version}), ${shlibs:Depends}
+Architecture: all
+Depends: r-base-core 
 Recommends: r-cran-gtkdevice
 Description: GNU R Gnome gui for statistical computing system
  R is `GNU S' - A language and environment for statistical computing
@@ -79,13 +79,17 @@ Description: GNU R Gnome gui for statistical computing system
  computationally intensive tasks, C, C++ and Fortran code can be
  linked and called at run time.
  .
- This package provides the dynamic link libraries needed to start GNU R
- with the GNOME libraries frontend as in "R --gui=GNOME"
+ This package used to provides the dynamic link libraries needed to start 
+ GNU R with the GNOME libraries frontend as in "R --gui=GNOME".
+ .
+ As of R 2.1.0, this interface is no longer provided with the upstream
+ sources. As such, this package is now an empty stub that will be removed
+ in a subsequent revision of the Debian package.
 
 Package: r-base-dev
 Architecture: all
 Section: devel
-Depends: r-base-core (= ${Source-Version}), refblas3-dev | atlas3-base-dev | libblas-3.so, lapack3-dev | atlas3-base-dev | liblapack-3.so, build-essential, g77 | m68k, f2c | not+m68k, type-handling, gcc, g++, libncurses5-dev, libreadline4-dev, libjpeg62-dev, libpcre3-dev, libpng12-dev, zlib1g-dev, libbz2-dev
+Depends: r-base-core (= ${Source-Version}), refblas3-dev | atlas3-base-dev | libblas-3.so, build-essential, g77, f2c, gcc, g++, libncurses5-dev, libreadline5-dev, libjpeg62-dev, libpcre3-dev, libpng12-dev, zlib1g-dev, libbz2-dev
 Description: GNU R installation of auxiliary GNU R packages 
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -105,7 +109,8 @@ Description: GNU R installation of auxiliary GNU R packages
 
 Package: r-mathlib
 Architecture: any
-Depends: r-base-core (= ${Source-Version}), r-base-dev (= ${Source-Version})
+Depends: 
+Recommends: r-base-core (= ${Source-Version}), r-base-dev (= ${Source-Version})
 Description: GNU R standalone mathematics library
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -238,7 +243,7 @@ Description: GNU R info manuals statistical computing system
 
 Package: r-recommended
 Architecture: all
-Depends: r-base-core (= ${Source-Version}), r-cran-boot, r-cran-cluster, r-cran-foreign, r-cran-kernsmooth, r-cran-lattice, r-cran-mgcv, r-cran-nlme, r-cran-rpart, r-cran-survival, r-cran-vr
+Depends: r-base-core (= ${Source-Version}), r-cran-boot (>= 1.2.19), r-cran-cluster (>= 1.9.6-2), r-cran-foreign (>= 0.7-2), r-cran-kernsmooth (>= 2.2.14), r-cran-lattice (>= 0.10.11), r-cran-mgcv (>= 1.1.5), r-cran-nlme (>= 3.1.52), r-cran-rpart (>= 3.1.20), r-cran-survival (>= 2.13.2-1), r-cran-vr (>= 7.2.8)
 Description: GNU R collection of recommended packages [metapackage]
  R is `GNU S' - A language and environment for statistical computing
  and graphics. R is similar to the award-winning S system, which was
@@ -254,7 +259,7 @@ Description: GNU R collection of recommended packages [metapackage]
  comprises the following packages (listed in their upstream names):
   - KernSmooth: Functions for kernel smoothing for Wand & Jones (1995)
   - VR: The MASS, class, nnet and spatial packages from Venables and
-    Ripley, `Modern Applied Statistics with S-PLUS' (4th edition).
+    Ripley, `Modern Applied Statistics with S' (4th edition).
   - boot: Bootstrap R (S-Plus) Functions from the book "Bootstrap Methods 
     and Their Applications" by A.C. Davison and D.V. Hinkley (1997).
   - cluster: Functions for clustering (by Rousseeuw et al.)

@@ -1,11 +1,183 @@
-r-base (1.9.1.alpha.20040820-1) unstable; urgency=low
+r-base (2.0.1.beta.20050410-1) unstable; urgency=low
 
-  * Upgraded to initial 2.0.0 alpha release candidate of 2004-08-20
-  * debian/copyright: Author list updated as suggested by Kurt Hornik
-  * debian/control: Expanded Depends for r-base-dev to include virtual
-    packages libblas-3.so and liblapack-3.so as final alternatives
+  * Upgraded to the R 2.1.0 beta release candidate dated 2005-04-10
+
+  * With R 2.1.0 scheduled to be released on April 18, this release
+    candidate will be uploaded to unstable to allow for wider testing
   
- -- Douglas Bates <bates@bates1-home>  Fri, 20 Aug 2004 13:58:03 -0500
+  * debian/rules: Also copy new file 'repositories' to /etc/R and link back
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 10 Apr 2005 21:12:25 -0500
+
+r-base (2.0.1.alpha.20050403-1) experimental; urgency=low
+
+  * Upgraded to the R 2.1.0 alpha release candidate dated 2005-04-03
+
+  * This upload is still slated for experimental; beta release 
+    candidates of 2.1.0 will go into unstable
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun,  3 Apr 2005 16:04:29 -0500
+
+r-base (2.0.1.alpha.20050322-1) experimental; urgency=low
+
+  * Initial attempt at packaging the upcoming R 2.1.0
+
+  * debian/rules: No longer install $RHOME/bin/Rdindex
+  
+  * debian/rules: No longer build the Gnome GUI which has been
+    unbundled upstream as it was never fully completed
+  * debian/control: Update r-gnome Description
+  * debian/control: r-gnome is now Binary: all, removed ${shlibs:Depends}
+    and versioned (= ${Source-Version}) part of Depends on r-base-core 
+  * debian/control: Reduce Build-Depends by libgnome-dev, libzvt-dev, 
+    libgtkxmhtml-dev, libglade-gnome0-dev
+  * debian/r-gnome.NEWS: New file with message about removeal of UI
+  
+  * debian/control: For r-base-dev, switched from the black magic
+    "g77 | m68k, f2c | not+m68k, type-handling" to "g77, f2c" as
+    type-handling no longer allows this (Closes: #296287)
+
+  * debian/r-mathlib.shlibs: Correct to 'libRmath 1 r-mathlib (>= 2.0)'
+    with thanks to Chris Lawrence
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 21 Mar 2005 21:20:09 -0600
+
+r-base (2.0.1-4) unstable; urgency=low
+
+  * Removed erroneously left-over doc-base file (Closes: #296194)
+  * debian/r-doc-{html,pdf}.links: Link individual files, not the
+    entire manual directory, in order to circumvent a dhelp bug 
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 20 Feb 2005 17:24:07 -0600
+
+r-base (2.0.1-3) unstable; urgency=low
+
+  * debian/r-doc-html.doc-base.*: Added five doc-base control files
+    to register the html documentation with doc-base (Closes: #296089)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 20 Feb 2005 07:59:53 -0600
+
+r-base (2.0.1-2) unstable; urgency=low
+
+  * debian/control: Switch the Depends: on the helper package r-base-dev
+    to libreadline5-dev to help readline5 migration (Closes: #291655)
+  * debian/control: Also switch Build-Depends: to libreadline5-dev
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 23 Jan 2005 13:39:50 -0600
+
+r-base (2.0.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Urgency medium as this version contains numerous upstream fixes, 
+    as well as Debian fixes from 2.0.0-4 that have are not yet in testing 
+
+  * debian/control: Add r-recommended to Depends: for r-base
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 15 Nov 2004 09:39:01 -0600
+
+r-base (2.0.0-4) unstable; urgency=medium
+
+  * Urgency medium to get the fix into the testing distribution in which 
+    r-recommended currently has insufficiently detailed Depends:
+  * debian/control: Change Depends: for r-recommended to be versioned, and
+    impose a minimum standard of package versions rebuilt under R 2.0.0 
+    as required by the underlying lazyloading changes (Closes: #278528)
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 27 Oct 2004 20:26:31 -0500
+
+r-base (2.0.0-3) unstable; urgency=low
+  
+  * Two improvements suggested by Kurt Hornik:
+    - debian/control: r-base now Depends: on r-base-core (= ${Source-Version})
+    - debian/control: Fix MASS book title in Description: of r-recommends
+
+  * Reorganisation of r-mathlib suggested and tested by Faheem Mitha:
+    - debian/control: r-mathlib now only Recommends: insteads of Depends:
+      on r-base-core and r-base-dev (Closes: #276038)
+    - debian/rules: Small changes to give r-mathlib its own doc directory
+    - debian/r-mathlib.links: Renamed to r-mathlib.links.unused disable
+  
+  * Update to use of Lapack code as suggested by Doug Bates:
+    - debian/rules: Set Lapack back to --with-lapack=no
+    - debian/control: Remove "lapack3-dev | atlas3-base-dev" from Build-Depends
+    - debian/control: Remove "lapack3-dev | atlas3-base-dev | liblapack-3.so"
+      from Depends for r-base-dev as well
+    - debian/rules: Turn 'make check' back on (outside of arm)
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 13 Oct 2004 20:12:30 -0500
+
+r-base (2.0.0-2) unstable; urgency=low
+
+  * src/main/startup.c: Removed 'static' on RestoreAction declaration
+    as recommend by Brian Ripley in bug report follow-up (Closes: #275791)
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon, 11 Oct 2004 09:55:11 -0500
+
+r-base (2.0.0-1) unstable; urgency=low
+
+  * New upstream release
+  
+  * src/library/tools/R/admin.R, src/scripts/INSTALL.in: Applied
+    small patch by Brian Ripley to address package build issues
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue,  5 Oct 2004 17:53:51 -0500
+
+r-base (1.9.1.beta.20040929-1) experimental; urgency=low
+
+  * Upgraded to the R 2.0.0 beta release candidate dated 2004-09-29
+  * Still uploading to 'experimental' to keep 1.9.1-3 in testing
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Wed, 29 Sep 2004 15:40:10 -0500
+
+r-base (1.9.1.beta.20040928-1) experimental; urgency=low
+
+  * Upgraded to the R 2.0.0 beta release candidate dated 2004-09-28
+  * Still uploading to 'experimental' to keep 1.9.1-3 in testing
+  * debian/rules: No longer install BUGS which is no longer in upstream sources
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue, 28 Sep 2004 22:22:52 -0500
+
+r-base (1.9.1.beta.20040925-1) experimental; urgency=low
+
+  * Upgraded to the R 2.0.0 beta release candidate dated 2004-09-25
+  * Still uploading to 'experimental' to keep 1.9.1-3 in testing
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sat, 25 Sep 2004 08:43:01 -0500
+
+r-base (1.9.1.beta.20040921-1) experimental; urgency=low
+
+  * Upgraded to the R 2.0.0 beta release candidate dated 2004-09-21
+  * Still uploading to 'experimental' to keep 1.9.1-3 in testing
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue, 21 Sep 2004 21:00:41 -0500
+
+r-base (1.9.1.alpha.20040912-1) experimental; urgency=low
+
+  * Upgraded to the R 2.0.0 alpha release candidate dated 2004-09-12
+  * Still uploading to 'experimental' as 1.9.1-3 is not yet in testing
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun, 12 Sep 2004 15:44:38 -0500
+
+r-base (1.9.1.alpha.20040906-1) experimental; urgency=low
+
+  * Upgraded to the initial R 2.0.0 alpha release candidate dated 2004-09-06 
+
+  * Distribution set to 'experimental' as we would like the previous release
+    1.9.1-3 to migrate to 'testing' first; as that has happened we will make
+    alpha and/or beta releases of 2.0.0 to 'unstable' prior to the formal 
+    release  
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Mon,  6 Sep 2004 22:00:56 -0500
+
+r-base (1.9.1-3) unstable; urgency=low
+
+  * debian/control: Expanded Depends for r-base-dev to include virtual
+    packages libblas-3.so and liblapack-3.so as final alternatives.
+  * debian/copyright: Author list updated as suggested by Kurt Hornik
+  * src/modules/gnome/system.c: Change 'R_Interactive = 1' instead of the 
+    isatty() call, as suggested by Brian D. Ripley (Closes: #269107)
+  
+ -- Dirk Eddelbuettel <edd@debian.org>  Tue, 31 Aug 2004 21:49:39 -0500
 
 r-base (1.9.1-2) unstable; urgency=low
 

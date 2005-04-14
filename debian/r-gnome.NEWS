@@ -1,0 +1,13 @@
+r-gnome (2.0.1.alpha.20050403-1) experimental; urgency=low
+
+  * The experimental and incomplete Gnome UI is no longer included 
+    in the upstream R sources as of the R 2.1.0 release. 
+  
+    Hence, this Debian package is now an empty transition package 
+    which will eventually disappear.
+  
+    The old code for the R Gnome frontend is still available via
+    svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
+
+ -- Dirk Eddelbuettel <edd@debian.org>  Sun,  3 Apr 2005 16:04:29 -0500
+

@@ -1,0 +1,11 @@
+Document: r-language
+Title: R Language Definition
+Author: R Core
+Abstract: This is an introduction to the R language, explaining evaluation,
+ parsing, object oriented programming, computing on the language, and
+ so forth.
+Section: Apps/Math
+
+Format: HTML
+Index: /usr/share/doc/r-doc-html/manual/R-lang.html
+Files: /usr/share/doc/r-doc-html/manual/R-lang.html
