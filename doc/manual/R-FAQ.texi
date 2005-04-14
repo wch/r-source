@@ -3,17 +3,17 @@
 @setfilename R-FAQ.info
 @settitle R FAQ
 @setchapternewpage on
-@set FAQ-YEAR 2005
-@set FAQ-VERSION 2.0.@value{FAQ-YEAR}-04-11
-@set REL-VERSION 2.0.1
-@set REL-YEAR 2004
+@set FAQ_YEAR 2005
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-11
+@set REL_VERSION 2.1.0
+@set REL_YEAR 2005
 @c <COMMENT>
 @c ISBNs for R 1.x.
-@c @set FAQ-ISBN 3-900051-01-1
-@c @set R-ISBN 3-900051-00-3
+@c @set FAQ_ISBN 3-900051-01-1
+@c @set R_ISBN 3-900051-00-3
 @c </COMMENT>
-@set FAQ-ISBN 3-900051-08-9
-@set R-ISBN 3-900051-07-0
+@set FAQ_ISBN 3-900051-08-9
+@set R_ISBN 3-900051-07-0
 @documentlanguage en
 @documentencoding ISO-8859-1
 @c %**end of header
@@ -52,8 +52,8 @@ FORTRAN
 @titlepage
 @title R @acronym{FAQ}
 @subtitle Frequently Asked Questions on R
-@subtitle Version @value{FAQ-VERSION}
-@subtitle ISBN @value{FAQ-ISBN}
+@subtitle Version @value{FAQ_VERSION}
+@subtitle ISBN @value{FAQ_ISBN}
 @author Kurt Hornik
 @end titlepage
 
@@ -61,8 +61,8 @@ FORTRAN
 @c We do not really see this in info, but in plain text output.
 R FAQ                            @*
 Frequently Asked Questions on R  @*
-Version @value{FAQ-VERSION}      @*
-ISBN @value{FAQ-ISBN}            @*
+Version @value{FAQ_VERSION}      @*
+ISBN @value{FAQ_ISBN}            @*
 Kurt Hornik                      @*
 
 @sp 2
@@ -78,8 +78,8 @@ Kurt Hornik                      @*
 @ifhtml
 @html
 <h2>Frequently Asked Questions on R</h2>
-<h2>Version @value{FAQ-VERSION}</h2>
-<h2>ISBN @value{FAQ-ISBN}</h2>
+<h2>Version @value{FAQ_VERSION}</h2>
+<h2>ISBN @value{FAQ_ISBN}</h2>
 <address>Kurt Hornik</address>
 <p><p><hr><p>
 @end html
@@ -116,7 +116,7 @@ questions about R.
 @node Legalese, Obtaining this document, Introduction, Introduction
 @section Legalese
 
-This document is copyright @copyright{} 1998--@value{FAQ-YEAR} by Kurt
+This document is copyright @copyright{} 1998--@value{FAQ_YEAR} by Kurt
 Hornik.
 
 This document is free software; you can redistribute it and/or modify it
@@ -168,8 +168,8 @@ subdirectory of a @CRAN{} site (@pxref{What is CRAN?}).
 @section Citing this document
 
 In publications, please refer to this @acronym{FAQ} as Hornik
-(@value{FAQ-YEAR}), ``The R @acronym{FAQ}'', and give the above,
-@emph{official} @acronym{URL} and the ISBN @value{FAQ-ISBN}.
+(@value{FAQ_YEAR}), ``The R @acronym{FAQ}'', and give the above,
+@emph{official} @acronym{URL} and the ISBN @value{FAQ_ISBN}.
 
 @node Notation, Feedback, Citing this document, Introduction
 @section Notation
@@ -286,7 +286,7 @@ If you know about other platforms, please drop us a note.
 @node What is the current version of R?, How can R be obtained?, What machines does R run on?, R Basics
 @section What is the current version of R?
  
-The current released version is @value{REL-VERSION}.  Based on this
+The current released version is @value{REL_VERSION}.  Based on this
 `major.minor.patchlevel' numbering scheme, there are two development
 versions of R, a patched version of the current release (`r-patched')
 and one working towards the next minor or eventually major (`r-devel')
@@ -710,8 +710,8 @@ To cite R in publications, use
   author       = @{@{R Development Core Team@}@},
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
-  year         = @value{REL-YEAR},
-  note         = @{@value{R-ISBN}@},
+  year         = @value{REL_YEAR},
+  note         = @{@value{R_ISBN}@},
   url          = @{http://www.R-project.org@}
 @}
 @end group
@@ -1617,7 +1617,7 @@ The R distribution comes with the following packages:
 
 @table @strong
 @c <FIXME>
-@c 2.1.0
+@c 2.2.0
 @item base
 Base R functions (and datasets before R 2.0.0).
 @item datasets
@@ -2837,10 +2837,9 @@ Jaccard and Kulczynski distance measures, clustering of MDS scores, and
 nearest neighbor based noise detection.
 @item princurve
 Fits a principal curve to a matrix of points in arbitrary dimension.
-@c <FIXME 2.1.0>
-@c @item proto
-@c An object oriented system using prototype or object-based (rather than
-@c class-based) object oriented ideas.
+@item proto
+An object oriented system using prototype or object-based (rather than
+class-based) object oriented ideas.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
@@ -4758,7 +4757,7 @@ utils::help.start()
 @end example
 
 @c <FIXME>
-@c 2.1.0
+@c 2.2.0
 @noindent
 (@code{graphics::ps.options(horizontal = FALSE)} in R 1.9.x).
 @c </FIXME>
@@ -4938,18 +4937,14 @@ Suppose you have C code file for dynloading into R, but you want to use
 
 Starting with R 2.1.0, users can provide personal Makevars configuration
 files in @file{$@env{HOME}/.R} to override the default flags.
-@c <FIXME>
-@c 2.1.0
-@c Provide refs/xrefs.
-@c @ifclear UseExternalXrefs
-@c See section ``Add-on packages'' in @cite{R Installation and
-@c Administration}.
-@c @end ifclear
-@c @ifset UseExternalXrefs
-@c @xref{Add-on packages, , Add-on packages, R-admin,
-@c R Installation and Administration}
-@c @end ifset
-@c </FIXME>
+@ifclear UseExternalXrefs
+See section ``Add-on packages'' in @cite{R Installation and
+Administration}.
+@end ifclear
+@ifset UseExternalXrefs
+@xref{Add-on packages, , Add-on packages, R-admin,
+R Installation and Administration}
+@end ifset
 
 For earlier versions of R, you could change the file
 @file{$@env{R_HOME}/etc/Makeconf} to reflect your preferences, or (at
