@@ -15,9 +15,10 @@ available.packages <-
     colnames(res) <- c(flds, "Repository")
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0
-        if(localcran)
-            tmpf <- paste(substring(repos,6), "PACKAGES", sep = "/")
-        else{
+        if(localcran) {
+            tmpf <- paste(substring(repos, 6), "PACKAGES", sep = "/")
+            tmpf <- sub("^//", "", tmpf)
+        } else {
             tmpf <- tempfile()
             on.exit(unlink(tmpf))
             z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
@@ -390,6 +391,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0) { # local repository
                 fn <- paste(substring(repos, 6), fn, sep = "/")
+                fn <- sub("^//", "", fn)
                 retval <- rbind(retval, c(p, fn))
             } else {
                 url <- paste(repos, fn, sep="/")

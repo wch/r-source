@@ -171,7 +171,8 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{destdir}.  If the list of available packages is not given as
   argument, it is obtained from repositories.  If a repository is local,
   i.e., the URL starts with \code{"file:"}, then the packages are not
-  downloaded but used directly.
+  downloaded but used directly.  (Both \code{"file:"} and
+  \code{"file://"} are allowed as prefixes to a file path.)
 
   The main function of the set is \code{update.packages}.  First a list
   of all packages/bundles found in \code{lib.loc} is created and
