@@ -573,16 +573,20 @@ field, as in
 @cartouche
 @smallexample
 Bundle: VR
+Priority: recommended
 Contains: MASS class nnet spatial
-Version: 6.1-6
-Date: 1999/11/26
+Version: 7.2-12
+Date: 2005-01-31
+Depends: R (>= 2.0.0), graphics, stats
+Suggests: lattice, nlme, survival
 Author: S original by Venables & Ripley.
-  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following
-  earlier work by Kurt Hornik and Albrecht Gebhardt.
-BundleDescription: Various functions from the libraries of
-  Venables and Ripley, `Modern Applied Statistics with S-PLUS'
-  (3rd edition).
-License: GPL (version 2 or later)
+  R port by Brian Ripley <ripley@@stats.ox.ac.uk>, following earlier
+  work by Kurt Hornik and Albrecht Gebhardt.
+Maintainer: Brian Ripley <ripley@@stats.ox.ac.uk>
+BundleDescription: Functions and datasets to support Venables and
+  Ripley, `Modern Applied Statistics with S' (4th edition).
+License: GPL (version 2 or later)  See file LICENCE.
+URL: http://www.stats.ox.ac.uk/pub/MASS4/
 @end smallexample
 @end cartouche
 @end quotation
@@ -603,6 +607,7 @@ the @file{DESCRIPTION} file of the bundle, for example
 @smallexample
 Package: spatial
 Description: Functions for kriging and point pattern analysis.
+Title: Functions for Kriging and Point Pattern Analysis
 @end smallexample
 @end cartouche
 @end quotation
