@@ -175,9 +175,9 @@ As from R 2.1.0 this is possible by installing R with support for `East
 Asian' languages (with a suitable version of Windows -- Western
 installations of Windows XP do not by default have such support). You
 will need @file{msvcp60.dll} installed: it is part of modern versions of
-Windows, and is often installed by other programs.  So it is worth
-searching your machine and copying it from another program's directory
-to R's @file{bin} directory.
+Windows, and is often installed by other programs.  So if it is not
+found automatically it is worth searching your machine and copying it
+from another program's directory to R's @file{bin} directory.
 
 In such locales @file{Rterm.exe} should be used for batch use only, but
 @file{RGui.exe} will support single- and double-width characters.
@@ -186,7 +186,9 @@ It will be necessary to select suitable fonts in @file{Rconsole} and
 @file{Rdevga} (see @code{?Rconsole} or the comments in the files: the
 system versions are in the @file{etc} folder); in the latter you can
 replace @code{Arial} by @code{Arial Unicode MS}, and we tried
-@code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.
+@code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.  (Note that
+@file{Rdevga} only applies to Windows graphics devices and not, say, to
+@code{pdf}.)
 
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out, and @code{Sys.setlocale(,
@@ -1308,14 +1310,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2004 Nov 05 by Professor B. D. Ripley
+Last edited 2005 Apr 12 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 Nov 05 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2004 Apr 12 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye
