@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-11
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-15
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -2036,7 +2036,9 @@ asymptotic likelihood ratio methods.
 Functions to perform adaptive weights smoothing.
 @item bayesSurv
 Bayesian survival regression with flexible error and (later on also
-random effects) distributions. 
+random effects) distributions.
+@item bayesm
+Bayes Inference for Marketing/Micro-econometrics.
 @item bayesmix
 Bayesian mixture models of univariate Gaussian distributions using JAGS.
 @item betareg
@@ -2899,6 +2901,8 @@ Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
 @item relsurv
 Various functions for regression in relative survival.
+@item resper
+Sampling from restricted permutations.
 @item rgdal
 Provides bindings to Frank Warmerdam's Geospatial Data Abstraction 
 Library (GDAL).
