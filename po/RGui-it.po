@@ -18,7 +18,7 @@ msgstr ""
 
 #: console.c:870 console.c:910
 msgid "Not enough memory"
-msgstr "Non c'è abbastanza memoria"
+msgstr "Memoria insufficiente"
 
 #: console.c:969 console.c:973
 msgid "Insufficient memory: text not copied to the clipboard"
@@ -55,7 +55,7 @@ msgstr "Salva contenuto console su"
 
 #: console.c:1875
 msgid "Scrolling.\n"
-msgstr ""
+msgstr "Scorrimento.\n"
 
 #: console.c:1876
 msgid "  Keyboard: PgUp, PgDown, Ctrl+Arrows, Ctrl+Home, Ctrl+End,\n"
@@ -527,7 +527,7 @@ msgstr ""
 
 #: extra.c:921 preferences.c:515
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #: pager.c:77
 msgid "Error opening file"
@@ -568,16 +568,23 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply them.\n"
 msgstr ""
+"Le proprietà generali della console non si possono cambiare\n"
+"durante l'esecuzione di una console.\n"
+"\n"
+"Salva le preferenze e riavvia Rgui per applicarle.\n"
 
 #: preferences.c:259
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
+msgstr "I cambiarmenti nella dimensione del pager non saranno applicati"
+" su quelli attivi"
 
 #: preferences.c:265
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
 msgstr ""
+"Non cambiare il tipo di pager se altri sono aperti\n"
+"Procedi?"
 
 #: preferences.c:282 rui.c:158 rui.c:172 rui.c:1160 graphapp/dialogs.c:358
 msgid "All files (*.*)"
@@ -585,15 +592,15 @@ msgstr "Tutti i file (*.*)"
 
 #: preferences.c:284
 msgid "Select directory for file 'Rconsole'"
-msgstr ""
+msgstr "Seleziona directory per il file 'Rconsole'"
 
 #: preferences.c:400
 msgid "Rgui Configuration Editor"
-msgstr ""
+msgstr "Editor di configurazione per Rgui"
 
 #: preferences.c:512
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #: rui.c:105
 msgid "R files (*.R)"
@@ -962,7 +969,7 @@ msgstr "Png file (*.png)"
 
 #: ../library/grDevices/src/devWindows.c:842
 msgid "Portable network graphics file"
-msgstr ""
+msgstr "File Portable Network Graphics"
 
 #: ../library/grDevices/src/devWindows.c:844
 msgid "Windows bitmap files (*.bmp)"
@@ -970,7 +977,7 @@ msgstr "File bitmap Windows (*.bmp)"
 
 #: ../library/grDevices/src/devWindows.c:845
 msgid "Windows bitmap file"
-msgstr ""
+msgstr "File bitmap per Windows"
 
 #: ../library/grDevices/src/devWindows.c:847
 msgid "Jpeg files (*.jpeg,*jpg)"
@@ -1002,7 +1009,7 @@ msgstr "Metafile avanzati (*.emf)"
 
 #: ../library/grDevices/src/devWindows.c:896
 msgid "Enhanced metafiles"
-msgstr ""
+msgstr "Metafile avanzati"
 
 #: ../library/grDevices/src/devWindows.c:900
 #: ../library/grDevices/src/devWindows.c:2679
@@ -1153,7 +1160,7 @@ msgstr "Ridimensiona"
 
 #: ../library/grDevices/src/devWindows.c:1568
 msgid "R mode"
-msgstr ""
+msgstr "Modalità R"
 
 #: ../library/grDevices/src/devWindows.c:1570
 msgid "Fit to window"
@@ -1189,11 +1196,4 @@ msgstr "Aspetto per confermare cambio pagina..."
 
 #: ../library/grDevices/src/devWindows.c:2995
 msgid "Click or hit ENTER for next page"
-msgstr "Click o primi premi ENTER per pagina successiva"
-
-#~ msgid ""
-#~ "Font %s-%d-%d has variable width.\n"
-#~ "Using system fixed font"
-#~ msgstr ""
-#~ "Carattere %s-%d-%d con larghezza variabile.\n"
-#~ "Utilizzo del carattere di sistema con dimensione fissa"
+msgstr "Click o premi ENTER per pagina successiva"

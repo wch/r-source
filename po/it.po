@@ -561,7 +561,7 @@ msgstr "RNG_Init: RNG di tipo %d non implementato"
 #: src/main/RNG.c:285
 msgid ".Random.seed is a missing argument with no default"
 msgstr ""
-"il parametro .Random.seed  non è specificato e non ha un valore di default"
+"il parametro .Random.seed  non è specificato e non ha un valore predefinito"
 
 #: src/main/RNG.c:287
 msgid ".Random.seed is not a vector"
@@ -708,11 +708,11 @@ msgstr ""
 
 #: src/main/arithmetic.c:495
 msgid "invalid argument to unary operator"
-msgstr "argomento non valido a operatore unario"
+msgstr "argomento non valido per l'operatore"
 
 #: src/main/arithmetic.c:519 src/main/arithmetic.c:538
 msgid "invalid unary operator"
-msgstr "operatore unario non valido"
+msgstr "operatore non valido"
 
 #: src/main/arithmetic.c:585
 msgid "NAs produced by integer overflow"
@@ -1528,7 +1528,7 @@ msgstr "rgb deve avere 3 righe (internamente)"
 
 #: src/main/complex.c:55
 msgid "invalid complex unary operator"
-msgstr "operatore unario complesso non valido"
+msgstr "operatore complesso non valido"
 
 #: src/main/complex.c:171
 msgid "unimplemented complex operation"
@@ -2715,7 +2715,7 @@ msgstr "..%d usato in un contesto sbagliato, nessun ... in cui cercare"
 #: src/main/envir.c:1216 src/main/eval.c:342 src/main/eval.c:2474
 #, c-format
 msgid "argument \"%s\" is missing, with no default"
-msgstr "l'argomento \"%s\"  non è specificato e non ha un valore di default"
+msgstr "l'argomento \"%s\"  non è specificato e non ha un valore predefinito"
 
 #: src/main/envir.c:1222
 #, c-format
@@ -3107,7 +3107,7 @@ msgstr ""
 
 #: src/main/eval.c:344 src/main/eval.c:2475
 msgid "argument is missing, with no default"
-msgstr "argomento non specificato e senza un valore di default"
+msgstr "argomento non specificato e senza un valore predefinito"
 
 #: src/main/eval.c:359 src/main/eval.c:2419
 msgid "recursive default argument reference"
@@ -6537,7 +6537,7 @@ msgid ""
 "Type 'license()' or 'licence()' for distribution details.\n"
 "\n"
 msgstr ""
-"R è un software libero e viene rilasciato SENZA ALCUNA GARANZIA.\n"
+"R è un software libero ed è rilasciato SENZA ALCUNA GARANZIA.\n"
 "Siamo ben lieti se potrai redistribuirlo, ma sotto certe condizioni.\n"
 "Scrivi 'license()' o 'licence()' per dettagli su come distribuirlo.\n"
 "\n"
@@ -6557,12 +6557,12 @@ msgstr ""
 
 #: src/main/version.c:40
 msgid ""
-"Type 'demo()' for some demos, 'help()' for on-line help, or\n"
+"Type 'demo()' for some demos, 'help()' for in-line help, or\n"
 "'help.start()' for a HTML browser interface to help.\n"
 "Type 'q()' to quit R.\n"
 "\n"
 msgstr ""
-"Scrivi 'demo()' per una dimostrazione, 'help()' per l'aiuto on-line, o\n"
+"Scrivi 'demo()' per una dimostrazione, 'help()' per la guida in linea, o\n"
 "'help.start()' per l'help navigabile con browser HTML.\n"
 "Scrivi 'q()' per uscire da R.\n"
 "\n"
