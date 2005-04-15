@@ -48,7 +48,7 @@ ifeq ($(strip $(BUILD)),CROSS)
 # Next might be i386-mingw32msvc- or i586- depending on the cross-compiler.
 BINPREF=mingw32-
 # Set this to where the mingw32 include files are. It must be accurate.
-HEADER=/users/ripley/R/cross-tools/mingw32/include
+HEADER=/users/ripley/R/cross-tools4/i586-mingw32/include
 endif
 # path (possibly full path) to same version of R on the host system
 # R_EXE=R
