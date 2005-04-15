@@ -6550,9 +6550,8 @@ msgid ""
 "\n"
 msgstr ""
 "R è un progetto di collaborazione con molti contributi esterni.\n"
-"Scrivi 'contributors()' per maggiori informazioni e\n"
-"'citation()' per sapere come citare R o i pacchetti di R nelle "
-"pubblicazioni.\n"
+"Scrivi 'contributors()' per maggiori informazioni e 'citation()'\n"
+"per sapere come citare R o i pacchetti di R nelle pubblicazioni.\n"
 "\n"
 
 #: src/main/version.c:40
