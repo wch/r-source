@@ -7,8 +7,8 @@ is.atomic(x)
 is.recursive(x)
 }
 \description{
-  \code{is.atomic} returns \code{TRUE} if \code{x} does not have a list
-  structure and \code{FALSE} otherwise.
+  \code{is.atomic} returns \code{TRUE} if \code{x} is an atomic vector
+  (or \code{NULL}) and \code{FALSE} otherwise.
 
   \code{is.recursive} returns \code{TRUE} if \code{x} has a recursive
   (list-like) structure and \code{FALSE} otherwise.
@@ -18,14 +18,16 @@ is.recursive(x)
 }
 \details{
   These are generic: you can write methods to handle specific classes
-  of objects, see \link{InternalMethods}.
+  of objects, see \link{InternalMethods}.  The description here applies
+  only to the default method.
 
   \code{is.atomic} is true for the atomic vector types
   (\code{"logical"}, \code{"integer"}, \code{"numeric"},
   \code{"complex"}, \code{"character"} and \code{"raw"}) and \code{NULL}.
 
   Most types of language objects are regarded as recursive: those which
-  are not are the atomic vector types, \code{NULL} and symbols.
+  are not are the atomic vector types, \code{NULL} and symbols (as given
+  by \code{\link{as.name}}).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
