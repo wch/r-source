@@ -106,7 +106,7 @@ x$name <- value
   Although the default for \code{drop} is \code{TRUE}, the default
   behaviour when only one \emph{row} is left is equivalent to
   specifying \code{drop = FALSE}.  To drop from a data frame to a list,
-  \code{drop = FALSE} has to specified explicitly.
+  \code{drop = TRUE} has to be specified explicitly.
 }
 \value{
   For \code{[} a data frame, list or a single column (the latter two
