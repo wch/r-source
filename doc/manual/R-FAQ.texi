@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-15
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-16
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -2025,6 +2025,8 @@ allelic and nucleotide data, reading nucleotide sequences from GenBank
 via internet, and several tools such as Mantel's test, computation of
 minimum spanning tree, or the population parameter theta based on
 various approaches.
+@item arules
+Mining association rules and frequent itemsets with R.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
 @item assist
