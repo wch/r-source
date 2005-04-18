@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-16
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-18
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -4949,7 +4949,7 @@ Administration}.
 @end ifclear
 @ifset UseExternalXrefs
 @xref{Add-on packages, , Add-on packages, R-admin,
-R Installation and Administration}
+R Installation and Administration}.
 @end ifset
 
 For earlier versions of R, you could change the file
