@@ -7,8 +7,8 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
 	x <- as.matrix(d^2)
 	if ((n <- nrow(x)) != ncol(x))
 	    stop("distances must be result of 'dist' or a square matrix")
-    }
-    else {
+        rn <- rownames(x)
+    } else {
 	x <- matrix(0, n, n)
         if(add) d0 <- x
 	x[row(x) > col(x)] <- d^2
@@ -17,6 +17,7 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
             d0[row(x) > col(x)] <- d
             d <- d0 + t(d0)
         }
+        rn <- attr(d, "Labels")
     }
     if((k <- as.integer(k)) > n - 1 || k < 1)
         stop("'k' must be in {1, 2, ..  n - 1}")
@@ -44,7 +45,6 @@ cmdscale <- function (d, k = 2, eig = FALSE, add = FALSE, x.ret = FALSE)
         warning(gettextf("some of the first %d eigenvalues are < 0", k),
                 domain = NA)
     points <- e$vectors[, 1:k, drop = FALSE] %*% diag(sqrt(ev), k)
-    rn <- if(is.matrix(d)) rownames(d) else names(d)
     dimnames(points) <- list(rn, NULL)
     if (eig || x.ret || add) {
         evalus <- e$values[-n]

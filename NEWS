@@ -61,6 +61,9 @@ BUG FIXES
     o	Typo in menu(graphics=TRUE) meant it failed on Unix if tcltk
 	was not available.
 
+    o	When names.dist() was removed, the result of cmdscale() lost
+	its rownames.  The example also lost the labels.
+
 
 
 
