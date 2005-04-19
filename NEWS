@@ -43,6 +43,14 @@ BUG FIXES
 		CHANGES IN R VERSION 2.1.0 patched
 
 
+NEW FEATURES
+
+    o	bug.report() now reports the locale in use.
+
+    o	upgrade.packageStatus() allows user input "c" to cancel the
+	upgrade, just as update.packages() does.
+
+
 BUG FIXES
 
     o	lm(qr=FALSE) now works.
