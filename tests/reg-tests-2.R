@@ -1512,3 +1512,21 @@ add1(fit, ~ . +x2)
 res <-  try(stats:::add1.default(fit, ~ . +x2))
 stopifnot(inherits(res, "try-error"))
 ## 2.0.1 ran and gave incorrect answers.
+
+
+## (PR#7789) escaped quotes in the first five lines for read.table
+tf <- tempfile()
+x <- c("6 'TV2  Shortland Street'",
+       "2 'I don\\\'t watch TV at 7'",
+       "1 'I\\\'m not bothered, whatever that looks good'",
+       "2 'I channel surf'")
+writeLines(x, tf)
+read.table(tf)
+x <- c("6 'TV2  Shortland Street'",
+       "2 'I don''t watch TV at 7'",
+       "1 'I''m not bothered, whatever that looks good'",
+       "2 'I channel surf'")
+writeLines(x, tf)
+read.table(tf, sep=" ")
+unlink(tf)
+## mangled in 2.0.1
