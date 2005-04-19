@@ -504,7 +504,7 @@ vignettes:
 ## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
-RVER-PAT = $(shell if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then echo "-patched"; else echo ""; fi)
+RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
 
 
 docfiles:
@@ -513,9 +513,9 @@ docfiles:
 bitmapdll:
 	$(MAKE) -C bitmap
 
-CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
+CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER-PAT)/Recommended
 
-## Use -c her eto avoid re-downloading the same versions of files
+## Use -c here to avoid re-downloading the same versions of files
 rsync-recommended:
 	@(cd ../library; \
 	rsync -rcvC --delete --exclude=Makefile.in --exclude=.cvsignore \
