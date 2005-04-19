@@ -689,7 +689,7 @@ DEPRECATED & DEFUNCT
 
     o	loadURL() is deprecated in favour of load(url()).
 
-    o	delay() is deprecated.	Use delayAssign() instead.
+    o	delay() is deprecated.	Use delayedAssign() instead.
 
 
 INSTALLATION CHANGES
