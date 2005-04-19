@@ -17,6 +17,16 @@ NEW FEATURES
 
 DEPRECATED & DEFUNCT
 
+    o	Capability "IEEE754" is defunct.
+
+    o	loadURL() is defunct: use load(url()).
+
+    o	delay() is defunct: use delayedAssign() instead.
+
+    o	The 'CRAN' argument to update.packages(), old.packages(),
+	new.packages(), download.packages() and install.packages() is
+	defunct in favour of 'repos'.
+
 
 BUG FIXES
 
@@ -713,7 +723,7 @@ DEPRECATED & DEFUNCT
 
     o	loadURL() is deprecated in favour of load(url()).
 
-    o	delay() is deprecated.	Use delayAssign() instead.
+    o	delay() is deprecated.	Use delayedAssign() instead.
 
 
 INSTALLATION CHANGES

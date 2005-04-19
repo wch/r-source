@@ -14,22 +14,11 @@
 
 ## consider keeping one (commented) entry here, for easier additions
 
-## <entry>
-## Deprecated in 2.1.0
-loadURL <- function (url, envir = parent.frame(), quiet = TRUE, ...)
-{
-    .Deprecated("load(url())")
-    tmp <- tempfile("url")
-    download.file(url, tmp, quiet = quiet, ...)
-    on.exit(unlink(tmp))
-    load(tmp, envir = envir)
-}
-## </entry>
 
 ## <entry>
 ## Deprecated in 2.1.0
-delay <- function(x, env=.GlobalEnv) {
-    .Deprecated("delayedAssign")
-    .Internal(delay(substitute(x), env))
-}
+# delay <- function(x, env=.GlobalEnv) {
+#     .Deprecated("delayedAssign")
+#     .Internal(delay(substitute(x), env))
+# }
 ## </entry>

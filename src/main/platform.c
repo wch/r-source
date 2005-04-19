@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001-4 The R Development Core Team
+ *  Copyright (C) 1998, 2001-5 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1220,8 +1220,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 11));
-    PROTECT(ansnames = allocVector(STRSXP, 11));
+    PROTECT(ans = allocVector(LGLSXP, 10));
+    PROTECT(ansnames = allocVector(STRSXP, 10));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1311,12 +1311,6 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     i++;
 
-    SET_STRING_ELT(ansnames, i, mkChar("IEEE754"));
-#if defined(IEEE_754)
-    LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
     SET_STRING_ELT(ansnames, i, mkChar("iconv"));
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     LOGICAL(ans)[i++] = TRUE;

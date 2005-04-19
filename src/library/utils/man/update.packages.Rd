@@ -14,9 +14,8 @@
   the repositories and update outdated packages on the fly.
 }
 \usage{
-update.packages(lib.loc = NULL, repos = CRAN,
+update.packages(lib.loc = NULL, repos = getOption("repos"),
                 contriburl = contrib.url(repos, type),
-                CRAN = getOption("repos"),
                 method, instlib = NULL,
                 ask = TRUE, available = NULL, destdir = NULL,
 		installWithVers = FALSE, checkBuilt = FALSE,
@@ -27,25 +26,21 @@ available.packages(contriburl = contrib.url(getOption("repos")), method)
 CRAN.packages(CRAN = getOption("repos"), method,
               contriburl = contrib.url(CRAN))
 
-old.packages(lib.loc = NULL, repos = CRAN,
+old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),
-             CRAN = getOption("repos"),
              method, available = NULL, checkBuilt = FALSE)
 
-new.packages(lib.loc = NULL, repos = CRAN,
+new.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),
-             CRAN = getOption("repos"),
              method, available = NULL, ask = FALSE)
 
 download.packages(pkgs, destdir, available = NULL,
-                  repos = CRAN,
+                  repos = getOption("repos"),
                   contriburl = contrib.url(repos, type),
-                  CRAN = getOption("repos"), method,
-                  type = getOption("pkgType"))
+                  method, type = getOption("pkgType"))
 
-install.packages(pkgs, lib, repos = CRAN,
+install.packages(pkgs, lib, repos = getOption("repos"),
                  contriburl = contrib.url(repos, type),
-                 CRAN = getOption("repos"),
                  method, available = NULL, destdir = NULL,
 		 installWithVers = FALSE, dependencies = FALSE,
                  type = getOption("pkgType"))

@@ -1,7 +1,6 @@
 install.packages <-
-    function(pkgs, lib, repos = CRAN,
+    function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
-             CRAN = getOption("repos"),
              method, available = NULL, destdir = NULL,
              installWithVers = FALSE, dependencies = FALSE,
              type = getOption("pkgType"))

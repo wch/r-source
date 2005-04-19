@@ -65,9 +65,8 @@ simplifyRepos <- function(repos, type)
     substr(repos, 1, ind)
 }
 
-update.packages <- function(lib.loc = NULL, repos = CRAN,
+update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             contriburl = contrib.url(repos, type),
-                            CRAN = getOption("repos"),
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
 			    installWithVers = FALSE,
@@ -136,9 +135,8 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
     }
 }
 
-old.packages <- function(lib.loc = NULL, repos = CRAN,
+old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
-                         CRAN = getOption("repos"),
                          method, available = NULL, checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
@@ -202,9 +200,8 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
     update
 }
 
-new.packages <- function(lib.loc = NULL, repos = CRAN,
+new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
-                         CRAN = getOption("repos"),
                          method, available = NULL, ask = FALSE)
 {
     if(is.null(lib.loc)) lib.loc <- .libPaths()
@@ -354,9 +351,8 @@ remove.packages <- function(pkgs, lib, version) {
 }
 
 download.packages <- function(pkgs, destdir, available = NULL,
-                              repos = CRAN,
+                              repos = getOption("repos"),
                               contriburl = contrib.url(repos, type),
-                              CRAN = getOption("repos"),
                               method, type = getOption("pkgType"))
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
