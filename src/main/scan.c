@@ -1501,14 +1501,13 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* readTableHead(file, nlines, comment.char, blank.lines.skip, quote) */
+/* readTableHead(file, nlines, comment.char, blank.lines.skip, quote, sep) */
 /* simplified version of readLines, with skip of blank lines and
    comment-only lines */
-/* <FIXME>  This does not handle escaped quotes */
 #define BUF_SIZE 1000
 SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP file, comstr, ans = R_NilValue, ans2, quotes;
+    SEXP file, comstr, ans = R_NilValue, ans2, quotes, sep;
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     char *p, *buf;
     Rboolean empty, skip;
@@ -1522,7 +1521,8 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     nlines = asInteger(CAR(args)); args = CDR(args);
     comstr = CAR(args);		   args = CDR(args);
     blskip = asLogical(CAR(args)); args = CDR(args);
-    quotes = CAR(args);
+    quotes = CAR(args);		   args = CDR(args);
+    sep = CAR(args);
 
     if (nlines <= 0 || nlines == NA_INTEGER)
 	errorcall(call, _("invalid 'nlines' value"));
@@ -1550,6 +1550,11 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1) errorcall(call, _("invalid 'comment.char' value"));
     else if (strlen(p) == 1) data.comchar = (int)*p;
+    if (isString(sep) || isNull(sep)) {
+	if (length(sep) == 0) data.sepchar = 0;
+	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	/* gets compared to chars: bug prior to 1.7.0 */
+    } else errorcall(call, _("invalid 'sep' value"));
 
     i = asInteger(file);
     data.con = getConnection(i);
@@ -1574,14 +1579,37 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (data.ttyflag) sprintf(ConsolePrompt, "%d: ", nread);
 	/* want to interpret comments here, not in scanchar */
 	while((c = scanchar(TRUE, &data)) != R_EOF) {
-	    if(nbuf == buf_size) {
+	    if(nbuf >= buf_size -1) {
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
 		if(!buf)
 		    error(_("cannot allocate buffer in readTableHead"));
 	    }
-	    if(quote && c == quote) quote = 0;
-	    else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
+	    /* Need to handle escaped embedded quotes, and how they are
+	       escaped depends on 'sep' */
+	    if(quote) {
+		if(data.sepchar == 0 && c == '\\') {
+		    /* all escapes should be passed through */
+		    buf[nbuf++] = c;
+		    c = scanchar(TRUE, &data);
+		    if(c == R_EOF)
+			errorcall(call, _("\\ followed by EOF"));
+		    buf[nbuf++] = c;
+		    continue;
+		} else if(quote && c == quote) {
+		    if(data.sepchar == 0)
+			quote = 0;
+		    else { /* need to check for doubled quote */
+			char c2 = scanchar(TRUE, &data);
+			if(c2 == quote)
+			    buf[nbuf++] = c; /* and c = c2 */
+			else {
+			    unscanchar(c2, &data);
+			    quote = 0;
+			}
+		    }
+		}
+	    } else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
 	    /* A line is empty only if it contains nothing before
 	       EOL, EOF or a comment char. 
 	       A line containing just white space is not empty if sep=","
@@ -1592,7 +1620,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(quote || c != '\n') buf[nbuf++] = c; else break;
 	}
 	buf[nbuf] = '\0';
-	if(data.ttyflag && empty) break;
+	if(data.ttyflag && empty) goto no_more_lines;
 	if(!empty || !blskip) {
 	    SET_STRING_ELT(ans, nread, mkChar(buf));
 	    nread++;

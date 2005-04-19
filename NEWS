@@ -55,7 +55,7 @@ BUG FIXES
 
     o	lm(qr=FALSE) now works.
 
-    o	predict.glm not longer loses names for "response" predictions.
+    o	predict.glm() not longer loses names for "response" predictions.
 	(PR#7792)
 
     o	Typo in menu(graphics=TRUE) meant it failed on Unix if tcltk
@@ -65,6 +65,12 @@ BUG FIXES
 	its rownames.  The example also lost the labels.
 
     o	R CMD check assumed 'tar' was GNU tar and so supported -z.
+
+    o	read.table() was not handing escaped quotes inside quoted fields
+	in the first five lines of the file.  (PR#7789)
+
+	It was also not handling correctly EOF in the first five lines
+	when reading from stdin().  (PR#7772)
 
 
 

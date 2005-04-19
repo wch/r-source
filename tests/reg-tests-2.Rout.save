@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-03-09), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-04-19), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4515,4 +4515,32 @@ Error in stats:::add1.default(fit, ~. + x2) :
 	number of rows in use has changed: remove missing values?
 > stopifnot(inherits(res, "try-error"))
 > ## 2.0.1 ran and gave incorrect answers.
+> 
+> 
+> ## (PR#7789) escaped quotes in the first five lines for read.table
+> tf <- tempfile()
+> x <- c("6 'TV2  Shortland Street'",
++        "2 'I don\\\'t watch TV at 7'",
++        "1 'I\\\'m not bothered, whatever that looks good'",
++        "2 'I channel surf'")
+> writeLines(x, tf)
+> read.table(tf)
+  V1                                         V2
+1  6                      TV2  Shortland Street
+2  2                      I don't watch TV at 7
+3  1 I'm not bothered, whatever that looks good
+4  2                             I channel surf
+> x <- c("6 'TV2  Shortland Street'",
++        "2 'I don''t watch TV at 7'",
++        "1 'I''m not bothered, whatever that looks good'",
++        "2 'I channel surf'")
+> writeLines(x, tf)
+> read.table(tf, sep=" ")
+  V1                                         V2
+1  6                      TV2  Shortland Street
+2  2                      I don't watch TV at 7
+3  1 I'm not bothered, whatever that looks good
+4  2                             I channel surf
+> unlink(tf)
+> ## mangled in 2.0.1
 > 

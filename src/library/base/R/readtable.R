@@ -40,10 +40,10 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 
     if(skip > 0) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
-    nlines <- if (nrows < 0) 5 else min(5, (header + nrows))
+    nlines <- n0lines <- if (nrows < 0) 5 else min(5, (header + nrows))
 
     lines <- .Internal(readTableHead(file, nlines, comment.char,
-                                     blank.lines.skip, quote))
+                                     blank.lines.skip, quote, sep))
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names))
@@ -56,7 +56,11 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         }
     }
     if(all(nchar(lines) == 0)) stop("empty beginning of file")
-    pushBack(c(lines, lines), file)
+    if(nlines < n0lines && file == 0)  {# stdin() has reached EOF
+        pushBack(c(lines, lines, ""), file)
+        on.exit(.Internal(clearPushback(stdin())))
+    } else
+        pushBack(c(lines, lines), file)
     first <- scan(file, what = "", sep = sep, quote = quote,
                   nlines = 1, quiet = TRUE, skip = 0,
                   strip.white = TRUE,
