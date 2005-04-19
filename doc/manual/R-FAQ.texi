@@ -1846,6 +1846,8 @@ maps and implements other GIS procedures.
 Manipulation and analysis of phylogenetically simulated data sets (as
 obtained from PDSIMUL in package PDAP) and phylogenetically-based
 analyses using GLS.
+@item PK
+Estimation of pharmacokinetic parameters.
 @item PTAk
 A multiway method to decompose a tensor (array) of any order, as a
 generalisation of SVD also supporting non-identity metrics and
