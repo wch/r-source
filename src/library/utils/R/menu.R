@@ -6,9 +6,10 @@ menu <- function(choices, graphics = FALSE, title = "")
             res <- select.list(choices, multiple=FALSE, title=title)
             return(match(res, choices, nomatch = 0))
         } else if(.Platform$OS.type == "unix"
-                && capabilities("tcltk") && capabilities("X11"))
+                && capabilities("tcltk") && capabilities("X11")) {
             res <- tcltk::tk_select.list(choices, multiple=FALSE, title=title)
             return(match(res, choices, nomatch = 0))
+        }
     }
     nc <- length(choices)
     if(length(title) && nchar(title[1])) cat(title[1], "\n")
