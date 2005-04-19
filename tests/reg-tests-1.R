@@ -3599,11 +3599,21 @@ x <- matrix(0, nrow=2, ncol=0)
 colSums(x); rowSums(x)
 ## not allowed in 2.0.1
 
+
 ## PR#7781
 stopifnot(is.finite(tan(1+1000i)))
 ##
+
 
 ## infinite recursion in 2.0.1 (and R-beta 2005-04-11):
 summary(data.frame(mat = I(matrix(1:8, 2))))
 summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
 ##
+
+
+## PR#7792: predict.glm dropped names
+nm <- names(predict(glm(y ~ x, family=binomial,
+                        data=data.frame(y=c(1, 0, 1, 0), x=c(1, 1, 0, 0))),
+                    newdata=data.frame(x=c(0, 0.5, 1)), type="response"))
+stopifnot(identical(nm, as.character(1:3)))
+## no names in 2.1.0

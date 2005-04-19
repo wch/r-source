@@ -25,9 +25,9 @@ make.link <- function (link)
     else if(!is.character(link) && !is.na(lambda <- as.numeric(link))) {
         linkfun <- function(mu) mu^lambda
         linkinv <- function(eta)
-            pmax(.Machine$double.eps, eta^(1/lambda))
+            pmax(eta^(1/lambda), .Machine$double.eps)
         mu.eta <- function(eta)
-            pmax(.Machine$double.eps, (1/lambda) * eta^(1/lambda - 1))
+            pmax((1/lambda) * eta^(1/lambda - 1), .Machine$double.eps)
         valideta <- function(eta) all(eta>0)
     }
     else
@@ -36,7 +36,7 @@ make.link <- function (link)
                    linkfun <- function(mu) log(mu/(1 - mu))
                    linkinv <- function(eta) {
                        thresh <- -log(.Machine$double.eps)
-                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       eta <- pmin(pmax(eta, -thresh), thresh)
                        exp(eta)/(1 + exp(eta))
                    }
                    mu.eta <- function(eta) {
@@ -52,7 +52,7 @@ make.link <- function (link)
                    linkfun <- function(mu) qnorm(mu)
                    linkinv <- function(eta) {
                        thresh <- - qnorm(.Machine$double.eps)
-                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       eta <- pmin(pmax(eta, -thresh), thresh)
                        pnorm(eta)
                    }
                    mu.eta <- function(eta)
@@ -63,7 +63,7 @@ make.link <- function (link)
          	   linkfun <- function(mu) qcauchy(mu)
          	   linkinv <- function(eta) {
                        thresh <- -qcauchy(.Machine$double.eps)
-                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       eta <- pmin(pmax(eta, -thresh), thresh)
                        pcauchy(eta)
          	   }
          	   mu.eta <- function(eta)
@@ -73,11 +73,11 @@ make.link <- function (link)
                "cloglog" = {
                    linkfun <- function(mu) log(-log(1 - mu))
                    linkinv <- function(eta)
-                       pmax(.Machine$double.eps,
-                            pmin(1 - .Machine$double.eps, - expm1(-exp(eta))))
+                       pmax(pmin(-expm1(-exp(eta)), 1 - .Machine$double.eps),
+                            .Machine$double.eps)
                    mu.eta <- function(eta) {
                        eta <- pmin(eta, 700)
-                       pmax(.Machine$double.eps, exp(eta) * exp(-exp(eta)))
+                       pmax(exp(eta) * exp(-exp(eta)), .Machine$double.eps)
                    }
                    valideta <- function(eta) TRUE
                },
@@ -90,9 +90,9 @@ make.link <- function (link)
                "log" = {
                    linkfun <- function(mu) log(mu)
                    linkinv <- function(eta)
-                       pmax(.Machine$double.eps, exp(eta))
+                       pmax(exp(eta), .Machine$double.eps)
                    mu.eta <- function(eta)
-                       pmax(.Machine$double.eps, exp(eta))
+                       pmax(exp(eta), .Machine$double.eps)
                    valideta <- function(eta) TRUE
                },
                "sqrt" = {
