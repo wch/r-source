@@ -78,19 +78,21 @@
   to be set, and \emph{profile files} which contain \R code.
 
   Lines in a site or user environment file should be either comment
-  lines starting with \code{#}, or lines of the form \code{name=value}.
-  The latter sets the environmental variable \code{name} to
-  \code{value}, overriding an existing value.  If \code{value} is of the
-  form \code{${foo-bar}}, the value is that of the environmental
-  variable \code{foo} if that exists and is set to a non-empty value,
-  otherwise \code{bar}.  This construction can be nested, so
-  \code{bar} can be of the same form (as in \code{${foo-${bar-blah}}}).
+  lines starting with \code{#}, or lines of the form
+  \code{name=value}. The latter sets the environmental variable
+  \code{name} to \code{value}, overriding an existing value.  If
+  \code{value} contains an expression of the form \code{${foo-bar}}, the
+  value is that of the environmental variable \code{foo} if that exists
+  and is set to a non-empty value, otherwise \code{bar}.  (If it is of
+  the form \code{${foo}}, the default is \code{""}.)  This construction
+  can be nested, so \code{bar} can be of the same form (as in
+  \code{${foo-${bar-blah}}}).  Note that the braces are essential:
+  \code{$HOME} will not be interpreted.
 
   Leading and trailing white space in \code{value} are stripped.
-%  No other interpretation of \code{value} is performed. In particular,
-%  if it is enclosed in quotes, the quotes form part of the value.
   \code{value} is processed in a similar way to a Unix shell.  In particular
-  quotes are stripped, and backslashes are removed except inside quotes.
+  the outermost level of (single or double) quotes is stripped, and
+  backslashes are removed except inside quotes.
 }
 #ifdef unix
 \note{

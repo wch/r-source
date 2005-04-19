@@ -14,6 +14,10 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o	The specification of the substitutions done when processing
+	Renviron files is more liberal: see ?Startup.  It now
+	accepts forms like R_LIBS=${HOME}/Rlibrary:${WORKGRP}/R/lib .
+
 
 DEPRECATED & DEFUNCT
 
