@@ -6,6 +6,16 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.1.0 patched
+
+
+BUG FIXES
+
+    o	lm(qr=FALSE) now works.
+
+
+
+
 		CHANGES IN R VERSION 2.1.0
 
 

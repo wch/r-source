@@ -30,7 +30,7 @@ lm <- function (formula, data, subset, weights, na.action,
 
     if (is.empty.model(mt)) {
 	x <- NULL
-	z <- list(coefficients = if (is.matrix(y)) 
+	z <- list(coefficients = if (is.matrix(y))
                     matrix(,0,3) else numeric(0), residuals = y,
 		  fitted.values = 0 * y, weights = w, rank = 0,
 		  df.residual = if (is.matrix(y)) nrow(y) else length(y))
@@ -55,6 +55,7 @@ lm <- function (formula, data, subset, weights, na.action,
 	z$x <- x
     if (ret.y)
 	z$y <- y
+    if (!qr) z$qr <- NULL
     z
 }
 

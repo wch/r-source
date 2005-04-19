@@ -45,8 +45,7 @@ lm(formula, data, subset, weights, na.action,
 
   \item{model, x, y, qr}{logicals.  If \code{TRUE} the corresponding
     components of the fit (the model frame, the model matrix, the
-    response, the QR decomposition) are returned. \code{qr=FALSE} is for
-    S-compatibility and currently unimplemented.
+    response, the QR decomposition) are returned.
   }
 
   \item{singular.ok}{logical. If \code{FALSE} (the default in S but
