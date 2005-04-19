@@ -58,6 +58,9 @@ BUG FIXES
     o	predict.glm not longer loses names for "response" predictions.
 	(PR#7792)
 
+    o	Typo in menu(graphics=TRUE) meant it failed on Unix if tcltk
+	was not available.
+
 
 
 
