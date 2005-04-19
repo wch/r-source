@@ -64,6 +64,8 @@ BUG FIXES
     o	When names.dist() was removed, the result of cmdscale() lost
 	its rownames.  The example also lost the labels.
 
+    o	R CMD check assumed 'tar' was GNU tar and so supported -z.
+
 
 
 
