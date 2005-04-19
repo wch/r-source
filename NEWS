@@ -47,6 +47,9 @@ BUG FIXES
 
     o	lm(qr=FALSE) now works.
 
+    o	predict.glm not longer loses names for "response" predictions.
+	(PR#7792)
+
 
 
 
