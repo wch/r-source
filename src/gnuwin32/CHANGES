@@ -4,6 +4,13 @@
 See the file NEWS for changes that affect all versions of R.
 
 
+R 2.0.1 patched
+===============
+
+A menu item has been added to RSiteSearch().
+
+
+
 R 2.1.0
 =======
 
