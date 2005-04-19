@@ -9,6 +9,13 @@ R 2.0.1 patched
 
 A menu item has been added to RSiteSearch().
 
+localeToCharset() was failing on some unknown (to the maintainers)
+locales such as
+
+	LC_TYPE=Chinese_People's Republic of China.936
+
+and that affected example().
+
 
 
 R 2.1.0

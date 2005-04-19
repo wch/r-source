@@ -1408,7 +1408,8 @@ to select the language for messages.)  The code tries hard to map locale
 names to languages, even on Windows.
 
 Note that you should not expect to be able to change the language once R
-is running.
+is running, and so @code{LC_MESSAGES} is not supported by
+@code{Sys.setlocale}.
 
 Messages are divided into @emph{domains}, and translations may be
 available for some or all messages in a domain.  @R{} makes use of the
