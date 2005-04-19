@@ -159,6 +159,7 @@ if($opt_library) {
 }
 
 my $tar = R_getenv("TAR", "tar");
+my $gzip = R_getenv("R_GZIPCMD", "gzip");
 
 my $R_opts = "--vanilla";
 
@@ -221,7 +222,7 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	if(system("$tar -zxf '$pkg' -C $dir")) {
+	if(R_system("$gzip -dc '$pkg' | $tar -xf - -C $dir")) {
 	    die "Error: cannot untar $pkg\n";}
 	$pkg = &file_path($dir, $pkgname);
     }
