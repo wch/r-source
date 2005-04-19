@@ -75,6 +75,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                "1255" = return("ISO 8859-8"),
                "1256" = return("ISO 8859-6"),
                "1257" = return("ISO 8859-13"),
+               {} # do nothing
                )
         return(paste("CP", x[2], sep=""))
     } else {
