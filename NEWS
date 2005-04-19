@@ -757,7 +757,7 @@ DEPRECATED & DEFUNCT
 
 INSTALLATION CHANGES
 
-    o	New configure option --enable-utf8 to enable support for
+    o	New configure option --enable-mbcs to enable support for
 	UTF-8 locales, on by default.
 
     o	R_XTRA_[CF]FLAGS are now used during the configuration tests,
