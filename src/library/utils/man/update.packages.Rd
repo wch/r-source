@@ -167,7 +167,8 @@ contrib.url(repos, type = getOption("pkgType"))
   argument, it is obtained from repositories.  If a repository is local,
   i.e., the URL starts with \code{"file:"}, then the packages are not
   downloaded but used directly.  (Both \code{"file:"} and
-  \code{"file://"} are allowed as prefixes to a file path.)
+  \code{"file:///"} are allowed as prefixes to a file path, the latter
+  for an absolute file path.)
 
   The main function of the set is \code{update.packages}.  First a list
   of all packages/bundles found in \code{lib.loc} is created and

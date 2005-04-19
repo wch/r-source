@@ -147,12 +147,10 @@ isIncomplete(con)
 #endif
 #ifdef windows
   In this form the path is relative to the root of the filesystem, not a
-  Windows concept.  So this is parsed in \R as \code{file://} plus
-  \code{/path/to/file}, e.g. \code{file:///TEMP/some} (referring to the
-  current drive) or \code{file://d:/R/repos}.  Note that although most
-  browsers will accept these forms, strictly there should be three initial
-  slashes in the second (but not four in the first) and \R does not accept
-  that form.  Also, backslashes are accepted within the path even though
+  Windows concept.  The standard form is \code{file://d:/R/repos}: for
+  compatibility with earlier versions of \R and Unix versions,
+  any other form is parsed as \R as \code{file://} plus \code{/path/to/file}.
+  Also, backslashes are accepted within the path even though
   RFC1738 does not allow them.
 #endif
 }

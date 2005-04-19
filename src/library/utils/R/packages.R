@@ -16,8 +16,13 @@ available.packages <-
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0
         if(localcran) {
+            ## see note in download.packages
             tmpf <- paste(substring(repos, 6), "PACKAGES", sep = "/")
             tmpf <- sub("^//", "", tmpf)
+            if(.Platform$OS.type == "windows") {
+                if(length(grep("[A-Za-z]:", tmpf)))
+                    tmpf <- substring(tmpf, 2)
+            }
         } else {
             tmpf <- tempfile()
             on.exit(unlink(tmpf))
@@ -386,8 +391,16 @@ download.packages <- function(pkgs, destdir, available = NULL,
                         sep="")
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0) { # local repository
+                ## We need to derive the file name from the URL
+                ## This is tricky as so many forms have been allowed,
+                ## and indeed external methods may do even more.
                 fn <- paste(substring(repos, 6), fn, sep = "/")
                 fn <- sub("^//", "", fn)
+                ## This should leave us with a path beginning with /
+                if(.Platform$OS.type == "windows") {
+                    if(length(grep("[A-Za-z]:", fn)))
+                        fn <- substring(fn, 2)
+                }
                 retval <- rbind(retval, c(p, fn))
             } else {
                 url <- paste(repos, fn, sep="/")

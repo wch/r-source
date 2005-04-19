@@ -265,9 +265,15 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	FILE *in, *out;
 	static char buf[CPBUFSIZE];
 	size_t n;
+	int nh = 7;
+#ifdef Win32
+	/* on Windows we have file:///d:/path/to 
+	   whereas on Unix it is file:///path/to */
+	if (strlen(url) > 9 && url[7] == '/' && url[9] == ':') nh = 8;
+#endif
 
 	/* Use binary transfers */
-	in = R_fopen(R_ExpandFileName(url+7), (mode[2] == 'b') ? "rb" : "r");
+	in = R_fopen(R_ExpandFileName(url+nh), (mode[2] == 'b') ? "rb" : "r");
 	if(!in) error(_("cannot open URL '%s'"), url);
 	out = R_fopen(R_ExpandFileName(file), mode);
 	if(!out) error(_("cannot open destfile '%s'"), file);

@@ -3361,8 +3361,14 @@ SEXP do_url(SEXP call, SEXP op, SEXP args, SEXP env)
 
     ncon = NextConnection();
     if(strncmp(url, "file://", 7) == 0) {
-       con = newfile(url + 7, strlen(open) ? open : "r");
-       class2 = "file";
+	int nh = 7;
+#ifdef Win32
+	/* on Windows we have file:///d:/path/to 
+	   whereas on Unix it is file:///path/to */
+	if (strlen(url) > 9 && url[7] == '/' && url[9] == ':') nh = 8;
+#endif
+	con = newfile(url + nh, strlen(open) ? open : "r");
+	class2 = "file";
 #ifdef HAVE_INTERNET
     } else if (strncmp(url, "http://", 7) == 0 ||
 	       strncmp(url, "ftp://", 6) == 0) {
