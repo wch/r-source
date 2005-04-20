@@ -48,6 +48,7 @@ LDFLAGS = @LDFLAGS@
 LIBM = @LIBM@
 LIBR = @LIBR@
 LIBS = @LIBS@
+LIBnn = @LIBnn@
 LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 MAIN_CFLAGS = @MAIN_CFLAGS@
@@ -102,13 +103,18 @@ ALL_FFLAGS_LO = $(R_XTRA_FFLAGS) $(FPICFLAGS) $(SHLIB_FFLAGS) $(FFLAGS)
 
 prefix = @prefix@
 exec_prefix = @exec_prefix@
+## only used for installing 'R'.
 bindir = @bindir@
+## unused
 datadir = @datadir@
+## only used for 'rhome'
 libdir = @libdir@
+## used for man page
 mandir = @mandir@
+## unused
 includedir = @includedir@
 
-rhome = @libdir@/R
+rhome = ${libdir}/R
 
 ## Overrides for installing R as a framework (MacOSX).
 @WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources

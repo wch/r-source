@@ -35,6 +35,17 @@ DEPRECATED & DEFUNCT
 	defunct in favour of 'repos'.
 
 
+INSTALLATION
+
+    o	LDFLAGS now defaults to -L/usr/local/lib64 on most Linux
+	64-bit OSes (but not ia64).  The use of lib/lib64 can be 
+	overridden by the new variable LIBnn.
+
+    o	The default installation directory is now ${prefix}/${LIBnn}, 
+	/usr/local/lib64 on most 64-bit Linux OSes and /usr/local/lib
+	elsewhere.
+
+
 BUG FIXES
 
 

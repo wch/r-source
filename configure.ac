@@ -112,6 +112,21 @@ if test -r "${cfile}"; then
   . "${cfile}"
 fi
 
+## We need to establish suitable defaults for a 64-bit OS
+libnn=lib
+case "${host_os}" in
+  linux*)
+    case "${host_cpu}" in
+      x86_64|mips64|ppc64|sparc64|s390x)
+        libnn=lib64
+      ;;
+    esac
+    ;;
+  solaris*)
+    ## libnn=lib/sparcv9 ## on 64-bit only, but that's compiler-specific
+    ;;  
+esac
+: ${LIBnn=$libnn}
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
 if test -f "/sw/etc/fink.conf"; then
@@ -119,8 +134,11 @@ if test -f "/sw/etc/fink.conf"; then
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
 else
   : ${CPPFLAGS="-I/usr/local/include"}
-  : ${LDFLAGS="-L/usr/local/lib"}
+  : ${LDFLAGS="-L/usr/local/${LIBnn}"}
 fi
+AC_SUBST(LIBnn)
+## <FIXME> this overrides the command-line setting
+libdir='${exec_prefix}/${LIBnn}'
 
 ### ** Handle arguments to configure.
 
@@ -387,6 +405,7 @@ AC_ARG_VAR([BLAS_LIBS],
            [flags needed for linking against external BLAS libraries])
 AC_ARG_VAR([LAPACK_LIBS],
            [flags needed for linking against external LAPACK libraries])
+AC_ARG_VAR([LIBnn], ['lib' or 'lib64' for dynamic libraries])
 
 ### ** Check whether we build in srcdir.
 

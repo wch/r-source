@@ -1871,9 +1871,9 @@ readline, in non-system directories, use the variables @code{LDFLAGS}
 (for libraries, using @samp{-L} flags to be passed to the linker) and
 @code{CPPFLAGS} (for header files, using @samp{-I} flags to be passed to
 the C/C++ preprocessors), respectively, to specify these locations.
-These default to @code{LDFLAGS=-L/usr/local/lib} and
-@code{CPPFLAGS=-I/usr/local/include} to catch the most common cases (but
-beware that @code{LDFLAGS} may need altering for 64-bit OSes).  If
+These default to @code{LDFLAGS=-L/usr/local/lib}
+(@code{/usr/local/lib64} on most 64-bit Linux OSes) and
+@code{CPPFLAGS=-I/usr/local/include} to catch the most common cases.  If
 libraries are still not found, then maybe your compiler/linker does not
 support re-ordering of @option{-L} and @option{-l} flags (this has been
 reported to be a problem on HP-UX with the native @command{cc}).  In
@@ -2030,6 +2030,8 @@ for shared libraries
 additional flags for the main link
 @item SHLIB_LDFLAGS
 additional flags for linking the shared libraries
+@item LIBnn
+the primary library directory, @file{lib} or @file{lib64}
 @end table
 
 @noindent
