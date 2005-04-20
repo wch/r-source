@@ -18,6 +18,9 @@ NEW FEATURES
 	Renviron files is more liberal: see ?Startup.  It now
 	accepts forms like R_LIBS=${HOME}/Rlibrary:${WORKGRP}/R/lib .
 
+    o	R.home() has been expanded to return the paths to components
+	(which might at some future time be installed elsewhere).
+
 
 DEPRECATED & DEFUNCT
 

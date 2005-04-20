@@ -1,9 +1,11 @@
 #Platform <- function()
 #.Internal(Platform())
 
-R.home <- function()
-.Internal(R.home())
-
+R.home <- function(component="home")
+{
+    rh <- .Internal(R.home())
+    switch(component, "home"=rh, file.path(rh, component))
+}
 file.show <-
 function (..., header=rep("", nfiles), title="R Information",
           delete.file=FALSE, pager=getOption("pager"))

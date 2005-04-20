@@ -449,7 +449,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 chooseCRANmirror <- function(graphics = TRUE)
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
-    m <- read.csv(file.path(R.home(), "doc", "CRAN_mirrors.csv"), as.is=TRUE)
+    m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
     res <- menu(m[,1], graphics, "CRAN mirror")
     if(res > 0) {
         URL <- m[res, "URL"]
@@ -465,7 +465,7 @@ setRepositories <- function(graphics=TRUE)
     if(!interactive()) stop("cannot set repositories non-interactively")
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
     if(!file.exists(p))
-        p <- file.path(R.home(), "etc", "repositories")
+        p <- file.path(R.home("etc"), "repositories")
     a <- read.delim(p, header=TRUE,
                     colClasses=c(rep("character", 3), rep("logical", 4)))
     thisType <- a[[getOption("pkgType")]]

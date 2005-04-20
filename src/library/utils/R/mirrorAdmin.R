@@ -1,11 +1,10 @@
 getCRANmirrors <- function()
-    read.csv(file.path(R.home(), "doc", "CRAN_mirrors.csv"),
-             as.is=TRUE)
+    read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
 
 
 mirror2html <- function(mirrors = NULL, file="mirrors.html",
                         head = "mirrors-head.html",
-                        foot = "mirrors-foot.html")    
+                        foot = "mirrors-foot.html")
 {
     if(is.null(mirrors)){
         mirrors <- getCRANmirrors()
@@ -16,7 +15,7 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
         z <- readLines(head)
 
     z <- c(z, "<dl>")
-    
+
     for(country in unique(mirrors$Country)){
         m = mirrors[mirrors$Country==country,]
         z <- c(z, paste("<dt>", country, "</dt>", sep=""),
@@ -36,7 +35,7 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
     }
 
     z <- c(z, "</dl>")
-    
+
     if(file.exists(foot))
         z <- c(z, readLines(foot))
 
@@ -45,7 +44,7 @@ mirror2html <- function(mirrors = NULL, file="mirrors.html",
 
     invisible(z)
 }
-  
+
 checkCRAN <-function(method)
 {
     master <- CRAN.packages(CRAN="http://cran.R-project.org", method=method)
@@ -57,9 +56,9 @@ checkCRAN <-function(method)
 
     lapply(z, function(a) all.equal(a, master))
 }
-       
-                
 
-    
 
-    
+
+
+
+

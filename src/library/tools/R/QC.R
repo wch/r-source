@@ -1166,7 +1166,7 @@ function(package, dir, lib.loc = NULL)
         db_names <- db_names[!ind]
         db_aliases <- db_aliases[!ind]
     }
-    
+
     dbArgumentNames <-
         .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
 
@@ -2970,7 +2970,7 @@ function(dir)
         try(system(sprintf("%s -f %s -f %s",
                            Sys.getenv("MAKE"),
                            shQuote(mfile),
-                           shQuote(file.path(R.home(), "share",
+                           shQuote(file.path(R.home("share"),
                                              "make", "check.mk"))),
                    intern = TRUE,
                    if(identical(.Platform$OS.type, "unix"))

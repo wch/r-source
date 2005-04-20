@@ -170,8 +170,8 @@ function(file, pdf = FALSE, clean = FALSE,
     if(clean) clean <- "--clean" else clean <- ""
     if(quiet) quiet <- "--quiet" else quiet <- ""
     if(is.null(texi2dvi)) {
-        if(file.exists(file.path(R.home(), "bin", "texi2dvi")))
-            texi2dvi <- file.path(R.home(), "bin", "texi2dvi")
+        if(file.exists(file.path(R.home("bin"), "texi2dvi")))
+            texi2dvi <- file.path(R.home("bin"), "texi2dvi")
         else
             texi2dvi <- "texi2dvi"
     }
@@ -287,7 +287,7 @@ function()
 .get_standard_Rd_keywords <-
 function()
 {
-    lines <- readLines(file.path(R.home(), "doc", "KEYWORDS.db"))
+    lines <- readLines(file.path(R.home("doc"), "KEYWORDS.db"))
     lines <- grep("^.*\\\|([^:]*):.*", lines, value = TRUE)
     lines <- sub("^.*\\\|([^:]*):.*", "\\1", lines)
     lines
@@ -299,7 +299,7 @@ function()
 ## is installed, as it is not on Windows
 .get_standard_package_names <-
 local({
-    lines <- readLines(file.path(R.home(), "share", "make", "vars.mk"))
+    lines <- readLines(file.path(R.home("share"), "make", "vars.mk"))
     lines <- grep("^R_PKGS_[[:upper:]]+ *=", lines, value = TRUE)
     out <- strsplit(sub("^R_PKGS_[[:upper:]]+ *= *", "", lines), " +")
     names(out) <-

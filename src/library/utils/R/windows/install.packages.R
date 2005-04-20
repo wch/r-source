@@ -52,7 +52,7 @@
                     for(lang in langs) {
                         path0 <- file.path(fp, lang, "LC_MESSAGES")
                         mos <- dir(path0, full.names = TRUE)
-                        path <- file.path(R.home(), "share", "locale", lang,
+                        path <- file.path(R.home("share"), "locale", lang,
                                           "LC_MESSAGES")
                         if(!file.exists(path))
                             if(!dir.create(path, FALSE, TRUE))

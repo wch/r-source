@@ -58,13 +58,12 @@ function(file, topic)
     ## Seems that now we can---rewrite this along the lines of
     ## tools:::.install_package_vignettes().
     system(paste(paste("TEXINPUTS=",
-                       file.path(R.home(), "share", "texmf"),
+                       file.path(R.home("share"), "texmf"),
                        ":",
                        "$TEXINPUTS",
                        sep = ""),
                  "/bin/sh",
-                 shQuote(file.path(R.home(), "share", "sh",
-                                   "help-print.sh")),
+                 shQuote(file.path(R.home("share"), "sh", "help-print.sh")),
                  con,
                  topic,
                  getOption("latexcmd"),

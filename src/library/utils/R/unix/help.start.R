@@ -77,7 +77,7 @@ make.packages.html <- function(lib.loc=.libPaths())
         warning("cannot create HTML search index")
         return(FALSE)
     }
-    file.append(f.tg, file.path(R.home(), "doc/html/packages-head.html"))
+    file.append(f.tg, file.path(R.home("doc"), "html", "packages-head.html"))
     out <- file(f.tg, open="a")
     search <- file(searchindex, open="w")
     known <- character(0)

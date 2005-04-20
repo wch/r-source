@@ -260,9 +260,9 @@ makeLazyLoading <-
     if (package == "base")
         stop("this cannot be used for package 'base'")
     else if (packageHasNamespace(package, dirname(pkgpath)))
-        loaderFile <- file.path(R.home(), "share", "R", "nspackloader.R")
+        loaderFile <- file.path(R.home("share"), "R", "nspackloader.R")
     else
-        loaderFile <- file.path(R.home(), "share", "R", "packloader.R")
+        loaderFile <- file.path(R.home("share"), "R", "packloader.R")
     codeFile <- file.path(pkgpath, "R", barepackage)
 
     if (!file.exists(codeFile)) {

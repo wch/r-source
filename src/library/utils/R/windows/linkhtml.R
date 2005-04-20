@@ -1,6 +1,6 @@
 link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 {
-    if(!file.exists(file.path(R.home(), "doc", "html", "search")))
+    if(!file.exists(file.path(R.home("doc"), "html", "search")))
        return(invisible(NULL))
     if(verbose) {
         cat(gettext("updating HTML package descriptions\n"))
@@ -13,8 +13,8 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 
 make.packages.html <- function(lib.loc=.libPaths())
 {
-    f.tg <- file.path(R.home(), "doc/html/packages.html")
-    f.hd <- file.path(R.home(), "doc/html/packages-head.html")
+    f.tg <- file.path(R.home("doc"), "html", "packages.html")
+    f.hd <- file.path(R.home("doc"), "html", "packages-head.html")
     if(!file.create(f.tg)) {
         warning("cannot update HTML package index")
         return(FALSE)
@@ -59,7 +59,7 @@ make.packages.html <- function(lib.loc=.libPaths())
 
 make.search.html <- function(lib.loc=.libPaths())
 {
-    f.tg <- file.path(R.home(), "doc/html/search/index.txt")
+    f.tg <- file.path(R.home("doc"), "html", "search", "index.txt")
     if(file.access(f.tg, mode=2) == -1) {
         warning("cannot update HTML search index")
         return()
