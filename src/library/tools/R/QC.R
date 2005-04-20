@@ -1149,14 +1149,8 @@ function(package, dir, lib.loc = NULL)
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
     db_names <- .get_Rd_names_from_Rd_db(db)
-    ind <- sapply(dbKeywords,
-                  function(x) any(grep("^ *internal *$", x)))
-    if(any(ind)) {                      # exclude them
-        db <- db[!ind]
-        db_names <- db_names[!ind]
-        db_aliases <- db_aliases[!ind]
-    }
     names(db) <- names(db_aliases) <- db_names
+
     db_usage_texts <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     db_usages <- lapply(db_usage_texts, .parse_usage_as_much_as_possible)
@@ -1164,6 +1158,15 @@ function(package, dir, lib.loc = NULL)
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
+    ## Exclude internal objects from further computations.
+    ind <- sapply(dbKeywords,
+                  function(x) any(grep("^ *internal *$", x)))
+    if(any(ind)) {                      # exclude them
+        db <- db[!ind]
+        db_names <- db_names[!ind]
+        db_aliases <- db_aliases[!ind]
+    }
+    
     dbArgumentNames <-
         .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
 
@@ -1338,7 +1341,8 @@ function(x, ...)
         writeLines("")
     }
 
-    if(identical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_"), "TRUE")
+    if(identical(as.logical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_")),
+                 TRUE)
        && length(bad_lines <- attr(x, "bad_lines"))) {
         writeLines(paste("Bad \\usage lines found:\n"))
         print(bad_lines)
