@@ -62,7 +62,7 @@ uninstall:
 	  && test "`cd \"$(rhome)\"; $(GETWD)`" \
 	       != "`cd $(top_builddir); $(GETWD)`"; then \
 	  (cd "$(rhome)/$(subdir)" && \
-	    rm -f $(OBJECTS) $(EXPORTFILES)); \
+	    rm -f $(OBJECTS) $(INSTFILES) $(EXPORTFILES)); \
 	  rmdir "$(rhome)/$(subdir)" 2> /dev/null \
 	    || echo "  subdir $(subdir) not removed"; \
 	fi

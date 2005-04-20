@@ -119,7 +119,10 @@ uninstall:
 	@echo "uninstalling packages ..."
 	@(cd "$(rhome)/library"; \
 	  for p in $(R_PKGS); do rm -rf $${p}; done)
-	rm -f R.css
+	@rm -f "$(rhome)/library/R.css"
+	@rmdir "$(rhome)/library" 2>/dev/null \
+          || echo "  subdir $(rhome)/library not removed"
+ 
 
 mostlyclean: clean
 clean:
