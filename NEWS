@@ -90,6 +90,8 @@ BUG FIXES
 	It was also not handling correctly EOF in the first five lines
 	when reading from stdin().  (PR#7772)
 
+    o	'make uninstall' was incomplete.
+
 
 
 

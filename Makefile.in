@@ -113,13 +113,12 @@ install-strip:
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
-	@for f in $(INSTFILES); do \
+	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
 	  rm -f "$(rhome)/$${f}"; \
 	done
 	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
-	@rm -rf "$(rhome)/demos"
-	@rm -rf "$(rhome)/gnome"
-
+	@rmdir "$(rhome)" 2>/dev/null \
+          || echo "  dir $(rhome) not removed"
 
 mostlyclean: clean
 clean:

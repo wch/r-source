@@ -83,7 +83,7 @@ uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@); \
 	done
-	@for f in $(CLEANFILES) $(INSTFILES) $(OBJECTS); do \
+	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
 	  rm -f "$(rhome)/$(subdir)/$${f}"; \
 	done
 	@rmdir "$(rhome)/$(subdir)" 2>/dev/null \
