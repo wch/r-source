@@ -936,7 +936,7 @@ int RguiPackageMenu()
 				menupkgrepos));
     MCHECK(mpkgi = newmenuitem(G_("Install package(s)..."), 0,
 			       menupkginstallpkgs));
-    MCHECK(mpkgu = newmenuitem(G_("Update packages"), 0,
+    MCHECK(mpkgu = newmenuitem(G_("Update packages..."), 0,
 			       menupkgupdate));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgil = newmenuitem(G_("Install package(s) from local zip files..."),
