@@ -15,7 +15,8 @@
         if(is.function(f))
             f(libname, pkgname)
         else
-            stop(paste("package", sQuote(pkgname),
-                       "has a non-function .First.lib"))
+            stop(gettextf("package '%s' has a non-function .First.lib",
+                          pkgname),
+                 domain = NA)
     }
 }
