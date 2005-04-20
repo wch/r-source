@@ -187,10 +187,6 @@ install-bin: installdirs
 	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(R_binary) "$(Rexecbindir)/exec/R"
 install-lib: installdirs
 @USE_LIBTOOL_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change $(libR_la) "$(Rexeclibdir)/$(libR_la)"
-## <FIXME>
-## May have an actual libR.so file in R_HOME/bin from earlier builds
-	@rm -f "$(Rexecbindir)/$(libR_la)"
-## </FIXME>
 @USE_LIBTOOL_TRUE@	@$(LIBTOOL) --mode=install $(INSTALL) $(libR_la) "$(Rexeclibdir)"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
