@@ -1570,7 +1570,7 @@ sub check_pkg {
 	}
 
 	## Can we run the code in the vignettes?
-	if($opt_vignettes) {
+	if($opt_install && $opt_vignettes) {
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
 	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
