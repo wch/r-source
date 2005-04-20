@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-18
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-20
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -2268,15 +2268,21 @@ Monte Carlo exact tests for log-linear models.
 Computes exact @math{p}-values and quantiles using an implementation of
 the Streitberg/Roehmel shift algorithm.
 @item fBasics
-The Rmetrics module for ``Markets, basic statistics, and date and time
-management''.  Rmetrics is an environment and software collection for
+The Rmetrics module for ``Markets, basic statistics, and stylized
+facts''.  Rmetrics is an environment and software collection for
 teaching financial engineering and computational finance
 (@url{http://www.Rmetrics.org/}).
+@item fCalendar
+The Rmetrics module for ``Date, Time and Calendars''.
 @item fExtremes
 The Rmetrics module for ``Beyond the Sample, Dealing with Extreme
 Values''.
+@item fMultivar
+The Rmetrics module for ``Multivariate Data Analysis''.
 @item fOptions
 The Rmetrics module for ``The Valuation of Options''.
+@item fPortfolio
+The Rmetrics module for ``Pricing and Hedging of Options''.
 @item fSeries
 The Rmetrics module for ``The Dynamical Process Behind Financial
 Markets''.
@@ -2886,6 +2892,9 @@ Breiman's random forest classifier.
 @item rbugs
 Functions to prepare files needed for running BUGS in batch mode, and
 running BUGS from R.  Support for Linux systems with Wine is emphasized.
+@item rcdd
+C Double Description for R, an interface to the CDD computational
+geometry library.
 @item ref
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
