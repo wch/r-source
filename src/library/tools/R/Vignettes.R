@@ -172,6 +172,11 @@ vignetteMetaRE <- function(tag)
 
 vignetteInfo <- function(file) {
     lines <- readLines(file)
+    ## <FIXME>
+    ## Can only proceed with lines with are valid in the current
+    ## locale ... (or should we try to iconv() from latin1?)
+    lines[is.na(nchar(lines, "c"))] <- ""
+    ## </FIXME>
     ## \VignetteIndexEntry
     vignetteIndexEntryRE <- vignetteMetaRE("IndexEntry")
     title <- grep(vignetteIndexEntryRE, lines, value = TRUE)
