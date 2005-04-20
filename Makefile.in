@@ -111,7 +111,7 @@ install-libR:
 	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
 install-libR-exists:
 	@$(MKINSTALLDIRS) "${libdir}"
-	@$(INSTALL_DATA) $(libR_la) "${libdir}"
+	@$(INSTALL_DATA) -m755 $(libR_la) "${libdir}"
 
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)"
