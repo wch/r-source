@@ -47,7 +47,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         if(en %in% "ja") return("EUC-JP")
         if(en %in% "ko") return("EUC-KR")
         if(en %in% "th") return("TIS-620")
-        if(en %in% "th") return("KOI8-T")
+        if(en %in% "tg") return("KOI8-T")
         if(en %in% "ka") return("GEORGIAN-PS")
         if(en %in% "kk") return("PT154")
         ## not safe to guess for zh
@@ -74,8 +74,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                "1254" = return("ISO 8859-9"),
                "1255" = return("ISO 8859-8"),
                "1256" = return("ISO 8859-6"),
-               "1257" = return("ISO 8859-13"),
-               {} # do nothing
+               "1257" = return("ISO 8859-13")
                )
         return(paste("CP", x[2], sep=""))
     } else {
