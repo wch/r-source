@@ -106,6 +106,13 @@ svnonly:
 	  fi \
 	fi
 
+libR_la = lib/libR$(DYLIB_EXT)
+install-libR:
+	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
+install-libR-exists:
+	@$(MKINSTALLDIRS) "${libdir}"
+	@$(INSTALL_DATA) $(libR_la) "${libdir}"
+
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)"
 install-strip:
@@ -119,6 +126,7 @@ uninstall:
 	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
 	@rmdir "$(rhome)" 2>/dev/null \
           || echo "  dir $(rhome) not removed"
+	@rm -f "${libdir}/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:
