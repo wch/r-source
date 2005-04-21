@@ -20,6 +20,9 @@ NEW FEATURES
 
     o	R.home() has been expanded to return the paths to components
 	(which might at some future time be installed elsewhere).
+	
+    o	Added tclServiceMode() function to the tcltk package to allow
+    	updating to be suspended.
 
 
 DEPRECATED & DEFUNCT
