@@ -7,7 +7,7 @@
 }
 \usage{
 readClipboard()
-writeClipboard{str}
+writeClipboard(str)
 }
 \arguments{
   \item{str}{a character vector.}
