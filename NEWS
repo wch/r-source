@@ -68,6 +68,9 @@ NEW FEATURES
     o	upgrade.packageStatus() allows user input "c" to cancel the
 	upgrade, just as update.packages() does.
 
+    o	glm() now accepts 1D arrays (e.g. tables) as a response,
+	dropping them to a vector whilst preserving names.
+
 
 BUG FIXES
 
