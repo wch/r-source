@@ -33621,7 +33621,7 @@ fi
 
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  LAPACK_LIBS="-L\${R_HOME}/lib -lRlapack"
+  LAPACK_LIBS="-L\$(R_HOME)/lib -lRlapack"
 fi
 
 
