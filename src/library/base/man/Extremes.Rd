@@ -20,9 +20,9 @@ pmin(\dots, na.rm=FALSE)
     removed.}
 }
 \value{
-  \code{max} and \code{min} return the maximum or minimum of all the
-  values present in their arguments, as \code{\link{integer}} if all are
-  \code{integer}, % and at least one is nonempty
+  \code{max} and \code{min} return the maximum or minimum of \emph{all}
+  the  values present in their arguments, as \code{\link{integer}} if
+  all are \code{integer}, % and at least one is nonempty
   or as \code{\link{double}} otherwise.
 
   The minimum and maximum of an empty set are \code{+Inf} and \code{-Inf}
@@ -39,7 +39,7 @@ pmin(\dots, na.rm=FALSE)
   \code{NA} values are ignored.
 
   \code{pmax} and \code{pmin} take several vectors (or matrices) as arguments and
-  return a single vector giving the parallel maxima (or minima) of the
+  return a single vector giving the \dQuote{parallel} maxima (or minima) of the
   vectors.  The first element of the result is the maximum (minimum) of
   the first elements of all the arguments, the second element of the
   result is the maximum (minimum) of the second elements of all the
@@ -65,8 +65,9 @@ pmin(\dots, na.rm=FALSE)
 }
 \examples{
 require(stats)
-min(5:1,pi)
-pmin(5:1, pi)
+ min(5:1, pi) #-> one number
+pmin(5:1, pi) #->  5  numbers
+
 x <- sort(rnorm(100));  cH <- 1.35
 pmin(cH, quantile(x)) # no names
 pmin(quantile(x), cH) # has names
