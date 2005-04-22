@@ -21,16 +21,16 @@ function (X, Y, FUN = "*", make.dimnames = FALSE, ...)
 
     if (make.dimnames && !(is.null(dnx) && is.null(dny))) {
         if (is.null(dnx))
-            dnx <- vector("list", length(dX))
+            dnx <- rep.int(list(NULL), length(dX))
         else if (ld < 0)
-            dnx <- c(dnx, vector("list", -ld))
+            dnx <- c(dnx, rep.int(list(NULL), -ld))
         tmp <- which(sapply(dnx, is.null))
         dnx[tmp] <- lapply(tmp, function(i) rep.int("", dX[i]))
 
         if (is.null(dny))
-            dny <- vector("list", length(dY))
+            dny <- rep.int(list(NULL), length(dY))
         else if (ld > 0)
-            dny <- c(dnx, vector("list", -ld))
+            dny <- c(dny, rep.int(list(NULL), ld))
         tmp <- which(sapply(dny, is.null))
         dny[tmp] <- lapply(tmp, function(i) rep.int("", dY[i]))
 
