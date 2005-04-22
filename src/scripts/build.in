@@ -388,7 +388,7 @@ sub prepare_pkg {
 
     chdir($pkg);
     my $pkgdir = R_cwd();
-    my $pkgname = basename($pkg);
+    my $pkgname = basename($pkgdir);
 
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, 0, 1);
@@ -472,6 +472,7 @@ sub cleanup_pkg {
 
     chdir($pkg);
     my $pkgdir = R_cwd();
+    my $pkgname = basename($pkgdir);    
 
     if(-d "src") {
 	chdir("src");
