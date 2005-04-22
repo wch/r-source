@@ -8,7 +8,7 @@
 R.home(component="home")
 }
 \arguments{
-  \item{component}{As well as \code{"home"} which gives \the \R home
+  \item{component}{As well as \code{"home"} which gives the \R home
     directory, other known values are \code{"bin"}, \code{"doc"},
     \code{"etc"} and \code{"share"} giving the paths to the
     corresponding parts of an \R installation.}
