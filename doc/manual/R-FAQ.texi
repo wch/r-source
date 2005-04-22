@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-21
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-22
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -1742,6 +1742,10 @@ neighboors algorithm.
 Empirical Bayes thresholding and related methods.
 @item Ecdat
 Data sets from econometrics textbooks.
+@item Fahrmeir
+Data from the book ``Multivariate Statistical Modelling Based
+on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
+(1994),  Springer.
 @item GDD
 Platform and X11 independent device for creating bitmaps (png, gif and
 jpeg) using the GD graphics library.
@@ -2057,6 +2061,8 @@ Bayesian interval mapping diagnostics:  functions to interpret QTLCart
 and Bmapqtl samples.
 @item bindata
 Generation of correlated artificial binary data.
+@item biopara
+Self-contained parallel system for R.
 @item bitops
 Functions for Bitwise operations on integer vectors.
 @item blighty
