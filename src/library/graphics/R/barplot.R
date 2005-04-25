@@ -6,10 +6,10 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	 density = NULL, angle = 45,
 	 col = NULL, border = par("fg"),
 	 main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-	 xlim = NULL, ylim = NULL, xpd = TRUE,
+	 xlim = NULL, ylim = NULL, xpd = TRUE, log = "",
 	 axes = TRUE, axisnames = TRUE,
 	 cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-	 inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, ...)
+	 inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, add = FALSE, ...)
 {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)# -> help(.)
 
@@ -22,24 +22,34 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	    if(is.matrix(height)) colnames(height) else names(height)
 
     if (is.vector(height)
-        || (is.array(height) && (length(dim(height)) == 1))) {
-        ## Treat vectors and 1-d arrays the same.
+	|| (is.array(height) && (length(dim(height)) == 1))) {
+	## Treat vectors and 1-d arrays the same.
 	height <- cbind(height)
 	beside <- TRUE
-        ## The above may look strange, but in particular makes color
-        ## specs work as most likely expected by the users.
-        if(is.null(col)) col <- "grey"
+	## The above may look strange, but in particular makes color
+	## specs work as most likely expected by the users.
+	if(is.null(col)) col <- "grey"
     } else if (is.matrix(height)) {
-        ## In the matrix case, we use "colors" by default.
-        if(is.null(col))
-            col <- grey.colors(nrow(height))
+	## In the matrix case, we use "colors" by default.
+	if(is.null(col))
+	    col <- grey.colors(nrow(height))
     }
     else
 	stop("'height' must be a vector or a matrix")
 
     if(is.logical(legend.text))
-	legend.text <-
-	    if(legend.text && is.matrix(height)) rownames(height)
+      legend.text <-
+	if(legend.text && is.matrix(height)) rownames(height)
+
+    stopifnot(is.character(log))
+    logx <- logy <- FALSE
+    if (log != "") {
+	logx <- any(grep("x", log))
+	logy <- any(grep("y", log))
+    }
+    ## Cannot use rect(*, density=.) when log scales used
+    if ((logx || logy) && !is.null(density))
+      stop("Cannot use shading lines in bars when log scale is used")
 
     NR <- nrow(height)
     NC <- ncol(height)
@@ -50,7 +60,6 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	width <- rep(width, length.out = NR)
     } else {
 	width <- rep(width, length.out = NC)
-	height <- rbind(0, apply(height, 2, cumsum))
     }
 
     offset <- rep(as.vector(offset), length.out = length(width))
@@ -59,14 +68,41 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     w.r <- cumsum(space + width)
     w.m <- w.r - delta
     w.l <- w.m - delta
+
+    log.dat <- (logx && horiz) || (logy && !horiz)# log scale in data direction
+    ## check height + offset if using log scale to prevent log(<=0) error
+    if (log.dat) {
+	if (min(height + offset) <= 0)
+	    stop("log scale error: at least one 'height + offset' value <= 0")
+	if (logx && !is.null(xlim) && min(xlim) <= 0)
+	    stop("log scale error: 'xlim' <= 0")
+	if (logy && !is.null(ylim) && min(ylim) <= 0)
+	    stop("log scale error: 'ylim' <= 0")
+
+	## if axis limit is set to < above, adjust bar base value
+	## to draw a full bar
+	rectbase <-
+	    if	    (logy && !horiz && !is.null(ylim))	ylim[1]
+	    else if (logx && horiz  && !is.null(xlim))	xlim[1]
+	    else 0.9 * min(height)
+    } else rectbase <- 0
+
+    ## if stacked bar, set up base/cumsum levels, adjusting for log scale
+    if (!beside)
+	height <- rbind(rectbase, apply(height, 2, cumsum))
+
+    rAdj <- offset + (if (log.dat) 0.9 * height else -0.01 * height)
+
+    delta <- width / 2
+    w.r <- cumsum(space + width)
+    w.m <- w.r - delta
+    w.l <- w.m - delta
     if (horiz) {
-	if (missing(xlim)) xlim <- range(-0.01 * height + offset,
-                                         height + offset, na.rm = TRUE)
+	if (missing(xlim)) xlim <- range(rAdj, height + offset, na.rm = TRUE)
 	if (missing(ylim)) ylim <- c(min(w.l), max(w.r))
     } else {
 	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
-	if (missing(ylim)) ylim <- range(-0.01 * height + offset,
-                                         height + offset, na.rm = TRUE)
+	if (missing(ylim)) ylim <- range(rAdj, height + offset, na.rm = TRUE)
     }
     if (beside)
 	w.m <- matrix(w.m, nc = NC)
@@ -76,8 +112,11 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 	    else	par(yaxs = "i", xpd = xpd)
 	on.exit(par(opar))
 
-	plot.new()
-	plot.window(xlim, ylim, log = "", ...)
+	if (!add) {
+	    plot.new()
+	    plot.window(xlim, ylim, log = log, ...)
+	}
+
 	xyrect <- function(x1,y1, x2,y2, horizontal = TRUE, ...) {
 	    if(horizontal)
 		rect(x1,y1, x2,y2, ...)
@@ -85,18 +124,20 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 		rect(y1,x1, y2,x2, ...)
 	}
 	if (beside)
-	    xyrect(0 + offset, w.l, c(height) + offset, w.r, horizontal = horiz,
+	    xyrect(rectbase + offset, w.l, c(height) + offset, w.r,
+		   horizontal = horiz,
 		   angle = angle, density = density, col = col, border = border)
 	else {
 	    ## noInside <- NC > 1 && !inside # outside border, but not inside
 	    ## bordr <- if(noInside) 0 else border
 	    for (i in 1:NC) {
-		xyrect(height[1:NR, i] + offset[i], w.l[i], height[-1, i] + offset[i], w.r[i],
+		xyrect(height[1:NR, i] + offset[i], w.l[i],
+		       height[ -1,  i] + offset[i], w.r[i],
 		       horizontal = horiz, angle = angle, density = density,
 		       col = col, border = border)# = bordr
-                ## if(noInside)
-                ##  xyrect(min(height[, i]), w.l[i], max(height[, i]), w.r[i],
-                ##         horizontal = horiz, border= border)
+		## if(noInside)
+		##  xyrect(min(height[, i]), w.l[i], max(height[, i]), w.r[i],
+		##	   horizontal = horiz, border= border)
 	    }
 	}
 	if (axisnames && !is.null(names.arg)) { # specified or from {col}names

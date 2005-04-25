@@ -11,10 +11,11 @@
         horiz = FALSE, density = NULL, angle = 45,
         col = NULL, border = par("fg"),
         main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
-        xlim = NULL, ylim = NULL, xpd = TRUE,
+        xlim = NULL, ylim = NULL, xpd = TRUE, log = "",
         axes = TRUE, axisnames = TRUE,
         cex.axis = par("cex.axis"), cex.names = par("cex.axis"),
-        inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0, \dots)
+        inside = TRUE, plot = TRUE, axis.lty = 0, offset = 0,
+        add = FALSE, \dots)
 }
 \arguments{
   \item{height}{either a vector or matrix of values describing the
@@ -72,6 +73,8 @@
   \item{xlim}{limits for the x axis.}
   \item{ylim}{limits for the y axis.}
   \item{xpd}{logical. Should bars be allowed to go outside region?}
+  \item{log}{string specifying if axis scales should be logarithmic; see
+    \code{\link{plot.default}}.}
   \item{axes}{logical.  If \code{TRUE}, a vertical (or horizontal, if
     \code{horiz} is true) axis is drawn.}
   \item{axisnames}{logical.  If \code{TRUE}, and if there are
@@ -90,6 +93,8 @@
     that by default the axis is suppressed.}
   \item{offset}{a vector indicating how much the bars should be shifted
     relative to the x axis.}
+  \item{add}{logical specifying if bars should be added to an already
+    existing plot; defaults to \code{FALSE}.}
   \item{\dots}{further graphical parameters (\code{\link{par}}) are
     passed to \code{\link{plot.window}()}, \code{\link{title}()} and
     \code{\link{axis}}.}
@@ -121,7 +126,7 @@
 }
 \examples{
 tN <- table(Ni <- rpois(100, lambda=5))
-r <- barplot(tN, col='gray')
+r <- barplot(tN, col=rainbow(20))
 #- type = "h" plotting *is* 'bar'plot
 lines(r, tN, type='h', col='red', lwd=2)
 
@@ -162,5 +167,9 @@ title(main = list("Death Rates in Virginia", font = 4))
 # border :
 barplot(VADeaths, border = "dark blue") % lwd = 2 << not passed
 %notyet barplot(VADeaths, inside = FALSE, main = "barplot(*, inside=FALSE)")
+
+# log scales (not much sense here):
+barplot(tN, col=heat.colors(12), log = "y")
+barplot(tN, col=gray.colors(20), log = "xy")
 }
 \keyword{hplot}
