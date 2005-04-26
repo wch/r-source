@@ -41,6 +41,8 @@ rbeta(n, shape1, shape2)
   for \eqn{a > 0}, \eqn{b > 0} and \eqn{0 \le x \le 1}{0 <= x <= 1}
   where the boundary values at \eqn{x=0} or \eqn{x=1} are defined as
   by continuity (as limits).
+  \cr
+  The mean is \eqn{a/(a+b)} and the variance is \eqn{ab/((a+b)^2 (a+b+1))}.
 
   \code{pbeta} is closely related to the incomplete beta function.  As
   defined by Abramowitz and Stegun 6.6.1
