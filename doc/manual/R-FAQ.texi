@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-22
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-25
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -1682,6 +1682,8 @@ Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
 2005, John Wiley and Sons.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
+@item Biodem
+A number of functions for biodemographycal analysis.
 @item Bolstad
 Functions and data sets for the book ``Introduction to Bayesian
 Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
