@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-25
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-26
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -716,7 +716,7 @@ To cite R in publications, use
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
   year         = @value{REL_YEAR},
-  note         = @{@value{R_ISBN}@},
+  note         = @{@{ISBN@} @value{R_ISBN}@},
   url          = @{http://www.R-project.org@}
 @}
 @end group
