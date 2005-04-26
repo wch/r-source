@@ -105,7 +105,7 @@
                     ret <- file.rename(file.path(tmpDir, curPkg), instPath)
                     if(!ret)
                         warning(sprintf(gettext(
-                             "unable to move temp installation '%d' to '%s'"),
+                             "unable to move temp installation '%s' to '%s'"),
                                         file.path(tmpDir, curPkg), instPath),
                                 domain = NA, call. = FALSE)
                 } else
