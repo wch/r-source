@@ -1,13 +1,13 @@
 \name{smooth.spline}
 \alias{smooth.spline}
-%\alias{print.smooth.spline}
+%\alias{print.smooth.spline}% is not exported
 \title{Fit a Smoothing Spline}
 \description{
   Fits a cubic smoothing spline to the supplied data.
 }
 \usage{
 smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
-              cv = FALSE, all.knots = FALSE, nknots = NULL,
+              cv = FALSE, all.knots = FALSE, nknots = NULL, keep.data = TRUE,
               df.offset = 0, penalty = 1, control.spar = list())
 }
 \arguments{
@@ -33,6 +33,9 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
  \item{nknots}{integer giving the number of knots to use when
    \code{all.knots=FALSE}.  Per default, this is less than \eqn{n}, the
    number of unique \code{x} values for \eqn{n > 49}.}
+ \item{keep.data}{logical specifiying if the input data should be kept
+   in the result.  If \code{TRUE} (as per default), fitted values and
+   residuals are available from the result.}
  \item{df.offset}{allows the degrees of freedom to be increased by
    \code{df.offset} in the GCV criterion.}
  \item{penalty}{the coefficient of the penalty for degrees of freedom
@@ -137,6 +140,12 @@ smooth.spline(x, y = NULL, w = NULL, df, spar = NULL,
   \item{y}{the fitted values corresponding to \code{x}.}
   \item{w}{the weights used at the unique values of \code{x}.}
   \item{yin}{the y values used at the unique \code{y} values.}
+  \item{data}{only if \code{keep.data = TRUE}: itself a
+    \code{\link{list}} with components \code{x}, \code{y} and \code{w}
+    of the same length.  These are the original \eqn{(x_i,y_i,w_i),
+      i=1,\dots,n}, values where \code{data$x} may have repeated values and
+    hence be longer than the above \code{x} component; see details.
+    }
   \item{lev}{leverages, the diagonal values of the smoother matrix.}
   \item{cv.crit}{cross-validation score, \dQuote{generalized} or true, depending
     on \code{cv}.}
@@ -197,7 +206,7 @@ cars.spl <- smooth.spline(speed, dist)
 (cars.spl)
 ## This example has duplicate points, so avoid cv=TRUE
 \dontshow{
-  all(cars.spl $ w == table(speed)) # TRUE (weights = multiplicities)
+  stopifnot(cars.spl $ w == table(speed)) # weights = multiplicities
   str(cars.spl, digits=5, vec.len=6)
   cars.spl$fit
 }
@@ -207,6 +216,15 @@ legend(5,120,c(paste("default [C.V.] => df =",round(cars.spl$df,1)),
                "s( * , df = 10)"), col = c("blue","red"), lty = 1:2,
        bg='bisque')
 detach()
+
+
+## Residual (Tukey Anscombe) plot:
+plot(residuals(cars.spl) ~ fitted(cars.spl))
+abline(h = 0, col="gray")
+
+## consistency check:
+stopifnot(all.equal(cars$dist,
+                    fitted(cars.spl) + residuals(cars.spl)))
 
 ##-- artificial example
 y18 <- c(1:3,5,4,7:3,2*(2:5),rep(10,4))
