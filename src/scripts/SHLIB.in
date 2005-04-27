@@ -30,7 +30,7 @@ R_HOME=`echo ${R_HOME} | sed 's/ /\\\\ /g'`
 
 objs=
 shlib=
-makefiles="-f ${R_HOME}/share/make/shlib.mk"
+makefiles="-f ${R_SHARE_DIR}/make/shlib.mk"
 shlib_libadd='@SHLIB_LIBADD@'
 with_cxx=false
 with_f77=false

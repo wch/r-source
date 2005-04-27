@@ -459,7 +459,16 @@ void setup_Rmainloop(void)
 #ifdef ENABLE_NLS
     /* This ought to have been done earlier, but be sure */
     textdomain(PACKAGE);
-    strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
+    {
+	char *p = getenv("R_SHARE_DIR");
+	if(p) {
+	    strcpy(localedir, p);
+	    strcat(localedir, "/locale");
+	} else {
+	    strcpy(localedir, R_Home);
+	    strcat(localedir, "/share/locale");
+	}
+    }
     bindtextdomain(PACKAGE, localedir);
     strcpy(localedir, R_Home); strcat(localedir, "/library/base/po");
     bindtextdomain("R-base", localedir);

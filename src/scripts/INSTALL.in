@@ -116,7 +116,7 @@ message () { echo "${stars} $*"; }
 stars="*"
 ## </NOTE>
 
-. "${R_HOME}/share/sh/dcf.sh"	# get_dcf_field()
+. "${R_SHARE_DIR}/sh/dcf.sh"	# get_dcf_field()
 
 tilde_expand () {
     h=`echo "${HOME}" | sed 's,/,\\\/,g'`
@@ -460,7 +460,7 @@ do_install_source () {
   if test "$Type" = "Translation" ; then
     message "Installing *Translation* package '${pkg_name}' ..."
     if test -d "share"; then
-      cp -r ./share ${R_HOME}
+      cp -r ./share/* ${R_SHARE_DIR}
     fi
     if test -d "library"; then
       cp -r ./library ${R_HOME}
@@ -536,7 +536,7 @@ do_install_source () {
     ${MKDIR_P} "${R_PACKAGE_DIR}/libs"
     if test -f src/Makefile; then
       cd src;
-      makefiles="-f \"${R_HOME}\"/share/make/shlib.mk -f Makefile"
+      makefiles="-f \"${R_SHARE_DIR}\"/make/shlib.mk -f Makefile"
       if test -r "${HOME}/.R/Makevars-${R_PLATFORM}"; then
 	  makefiles="${makefiles} -f \"${HOME}/.R/Makevars-${R_PLATFORM}\""
       elif test -r "${HOME}/.R/Makevars"; then
@@ -713,7 +713,7 @@ do_install_source () {
     ## we used to install the dumped code but this seems a waste of space
     rm "${code_file}"
     # mv "${code_file}" "${R_PACKAGE_DIR}/R/${pkg_name}.R"
-    cat "${R_HOME}/share/R/${loader_file}" > "${code_file}"
+    cat "${R_SHARE_DIR}/R/${loader_file}" > "${code_file}"
     ## If install.R is non-empty, arrange to evaluate the R code it
     ## contains after the package loader.
     if test -s install.R; then
@@ -780,7 +780,7 @@ do_install_source () {
 	if ${debug}; then
 	  echo "DEBUG: build-help ${build_help_opts} ${pkg_dir} ${lib} ${R_PACKAGE_DIR} ${pkg_name}"
 	fi
-	"${R_CMD}" perl "${R_HOME}/share/perl/build-help.pl" \
+	"${R_CMD}" perl "${R_SHARE_DIR}/perl/build-help.pl" \
 	  ${build_help_opts} \
 	  "${pkg_dir}" "${lib}" "${R_PACKAGE_DIR}" "${pkg_name}"
 	if test ${?} -ne 0; then
@@ -995,7 +995,7 @@ do_cleanup () {
       cat "${R_HOME}"/library/*/CONTENTS \
         > "${R_HOME}"/doc/html/search/index.txt
       if ${build_help} && test "${NO_PERL5}" = "false"; then
-        "${R_CMD}" perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+        "${R_CMD}" perl "${R_SHARE_DIR}/perl/build-help.pl" --htmllists
       fi
     fi
   fi

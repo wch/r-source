@@ -84,7 +84,7 @@ if ${NO_PERL5}; then
 fi
 
 if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
-  ${R_CMD} perl "${R_HOME}/share/perl/build-help.pl" --htmllists
+  ${R_CMD} perl "${R_SHARE_DIR}/perl/build-help.pl" --htmllists
   cat "${R_HOME}"/library/*/CONTENTS \
     > "${R_HOME}"/doc/html/search/index.txt
 fi

@@ -4,7 +4,10 @@
 R.home <- function(component="home")
 {
     rh <- .Internal(R.home())
-    switch(component, "home"=rh, file.path(rh, component))
+    switch(component,
+           "home" = rh,
+           "share"= if(nchar(p <- Sys.getenv("R_SHARE_DIR"))) p else file.path(rh, component),
+           file.path(rh, component))
 }
 file.show <-
 function (..., header=rep("", nfiles), title="R Information",
