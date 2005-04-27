@@ -124,6 +124,10 @@ BUG FIXES
 
     o	setRepositories() had a typo. (PR#7810)
 
+    o	Printing arrays/data frames with multibyte characters in the
+	column labels was sometimes misaligned or using excessive space.
+	(PR#7803)
+
 
 
 		CHANGES IN R VERSION 2.1.0
