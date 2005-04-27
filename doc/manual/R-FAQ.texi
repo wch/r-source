@@ -271,12 +271,15 @@ The current version of R will configure and build under a number of
 common Unix platforms including @var{cpu}-linux-gnu for the i386, alpha,
 arm, hppa, ia64, m68k, mips/mipsel, powerpc, s390, sparc (e.g.,
 @url{http://buildd.debian.org/build.php?&pkg=r-base}), and x86_64 CPUs,
-i386-freebsd, i386-sun-solaris, powerpc-apple-darwin, mips-sgi-irix,
+powerpc-apple-darwin, mips-sgi-irix,
 @c <FIXME>
 @c Not sure anymore ...
 @c alpha-dec-osf4,
+@c i386-freebsd,
+@c i386-sun-solaris,
+@c hppa-hp-hpux, 
 @c </FIXME>
-rs6000-ibm-aix, hppa-hp-hpux, and sparc-sun-solaris.
+rs6000-ibm-aix, and sparc-sun-solaris.
 
 @c and according to @email{jlindsey@@luc.ac.be, Jim Lindsey} also on
 @c Mac, Amiga and Atari under m68k-linux.
