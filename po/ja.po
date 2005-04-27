@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-13 07:38+0100\n"
+"POT-Creation-Date: 2005-04-27 15:05+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -207,7 +207,7 @@ msgid "cannot decrease memory limit"
 msgstr "メモリー限界を減らすことができません"
 
 #: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
-#: src/main/platform.c:1396 src/main/platform.c:1431
+#: src/main/platform.c:1390 src/main/platform.c:1425
 msgid "invalid 'path' argument"
 msgstr "'path' 引数が不正です"
 
@@ -382,17 +382,17 @@ msgstr "警告: --max-mem-size =%lu'%c' は大きすぎるので無視されま�
 msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr "警告: max-mem-size =%4.1fM は小さすぎるので無視されました\n"
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:233
+#: src/gnuwin32/system.c:897 src/unix/system.c:244
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "警告: 未知の '%s' オプション\n"
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:237
+#: src/gnuwin32/system.c:922 src/unix/system.c:248
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "引数 '%s' は無視されました\n"
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:275
+#: src/gnuwin32/system.c:940 src/unix/system.c:286
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "'--save' ,  '--no-save',  '--vanilla' のいずれかを指定してください"
 
@@ -1550,6 +1550,7 @@ msgstr "コネクションがありません"
 #: src/main/connections.c:95 src/main/connections.c:2501
 #: src/main/connections.c:2924 src/main/connections.c:2973
 #: src/main/connections.c:3095 src/main/connections.c:3135
+#: src/main/connections.c:3149
 msgid "invalid connection"
 msgstr "コネクションが不正です"
 
@@ -1658,13 +1659,13 @@ msgstr "fifo 接続の割り当てに失敗しました"
 #: src/main/connections.c:712 src/main/connections.c:842
 #: src/main/connections.c:1028 src/main/connections.c:1210
 #: src/main/connections.c:1890 src/main/connections.c:2009
-#: src/main/connections.c:3326
+#: src/main/connections.c:3341
 msgid "invalid 'description' argument"
 msgstr "'description' 引数が不正です"
 
 #: src/main/connections.c:714 src/main/connections.c:844
 #: src/main/connections.c:1030 src/main/connections.c:1212
-#: src/main/connections.c:2011 src/main/connections.c:3328
+#: src/main/connections.c:2011 src/main/connections.c:3343
 msgid "only first element of 'description' argument used"
 msgstr "'description' 引数の最初の要素だけが使われました"
 
@@ -1672,25 +1673,25 @@ msgstr "'description' 引数の最初の要素だけが使われました"
 #: src/main/connections.c:1034 src/main/connections.c:1216
 #: src/main/connections.c:1897 src/main/connections.c:1960
 #: src/main/connections.c:2015 src/main/connections.c:2067
-#: src/main/connections.c:3337
+#: src/main/connections.c:3352
 msgid "invalid 'open' argument"
 msgstr "'open' 引数が不正です"
 
-#: src/main/connections.c:721 src/main/connections.c:3341
+#: src/main/connections.c:721 src/main/connections.c:3356
 msgid "invalid 'block' argument"
 msgstr "'block' 引数が不正です"
 
 #: src/main/connections.c:725 src/main/connections.c:853
 #: src/main/connections.c:1038 src/main/connections.c:1220
 #: src/main/connections.c:1966 src/main/connections.c:2019
-#: src/main/connections.c:3345
+#: src/main/connections.c:3360
 msgid "invalid 'encoding' argument"
 msgstr "'encoding' の引数が不正です"
 
 #: src/main/connections.c:737 src/main/connections.c:872
 #: src/main/connections.c:1053 src/main/connections.c:1231
 #: src/main/connections.c:1979 src/main/connections.c:2030
-#: src/main/connections.c:2077 src/main/connections.c:3392
+#: src/main/connections.c:2077 src/main/connections.c:3413
 msgid "unable to open connection"
 msgstr "コネクションを開くことができません"
 
@@ -1843,7 +1844,7 @@ msgstr "このシステムではソケットは使えません"
 #: src/main/connections.c:2126 src/main/connections.c:2175
 #: src/main/connections.c:2197 src/main/connections.c:2216
 #: src/main/connections.c:2228 src/main/connections.c:2331
-#: src/main/connections.c:2427 src/main/connections.c:3698
+#: src/main/connections.c:2427 src/main/connections.c:3719
 msgid "'con' is not a connection"
 msgstr "'con' はコネクションではありません"
 
@@ -1871,7 +1872,7 @@ msgstr "出力 sink コネクションを閉じることができません"
 msgid "cannot close messages sink connection"
 msgstr "メッセージ sink コネクションを閉じることができません"
 
-#: src/main/connections.c:2199 src/main/connections.c:3413
+#: src/main/connections.c:2199 src/main/connections.c:3434
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "コネクションは開かれていません"
@@ -1896,9 +1897,9 @@ msgstr "このコネクションから読み込みできません"
 #: src/main/connections.c:2343 src/main/connections.c:2436
 #: src/main/connections.c:2521 src/main/connections.c:2710
 #: src/main/connections.c:2933 src/main/connections.c:3005
-#: src/main/connections.c:3167 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/connections.c:3182 src/main/dcf.c:59 src/main/deparse.c:311
 #: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1010
-#: src/main/scan.c:1115 src/main/scan.c:1560 src/main/scan.c:1732
+#: src/main/scan.c:1115 src/main/scan.c:1565 src/main/scan.c:1760
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "コネクションを開くことができません"
@@ -1921,8 +1922,8 @@ msgid "invalid 'sep' argument"
 msgstr "'sep' 引数が不正です"
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
-#: src/main/connections.c:2975 src/main/connections.c:3414
-#: src/main/scan.c:1728 src/main/serialize.c:1588
+#: src/main/connections.c:2975 src/main/connections.c:3435
+#: src/main/scan.c:1756 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "このコネクションには書き出せません"
 
@@ -2022,106 +2023,106 @@ msgstr "開いている読み込み可能コネクションへのみプッシュ
 msgid "can only push back on text-mode connections"
 msgstr "テキストモードのコネクションへのみプッシュバックできます"
 
-#: src/main/connections.c:3155 src/main/connections.c:3215
+#: src/main/connections.c:3170 src/main/connections.c:3230
 msgid "sink stack is full"
 msgstr "sink のスタックが溢れました"
 
-#: src/main/connections.c:3158
+#: src/main/connections.c:3173
 msgid "cannot switch output to stdin"
 msgstr "出力を stdin へ切り替えることができません"
 
-#: src/main/connections.c:3175
+#: src/main/connections.c:3190
 msgid "no sink to remove"
 msgstr "取り除くべき sink がありません"
 
-#: src/main/connections.c:3206
+#: src/main/connections.c:3221
 msgid "invalid value for 'closeOnExit'"
 msgstr "'closeOnExit' の値が不正です"
 
-#: src/main/connections.c:3208 src/main/connections.c:3236
+#: src/main/connections.c:3223 src/main/connections.c:3251
 msgid "invalid value for 'type'"
 msgstr "'type' の値が不正です"
 
-#: src/main/connections.c:3210
+#: src/main/connections.c:3225
 msgid "invalid value for 'split'"
 msgstr "'split' の値が不正です"
 
-#: src/main/connections.c:3363
+#: src/main/connections.c:3384
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3379 src/modules/internet/internet.c:439
+#: src/main/connections.c:3400 src/modules/internet/internet.c:445
 msgid "unsupported URL scheme"
 msgstr "サポートされていないURLスキームです"
 
-#: src/main/connections.c:3466
+#: src/main/connections.c:3487
 msgid "file stream does not have gzip magic number"
 msgstr "ファイルストリームは gzip マジックナンバーを持っていません"
 
-#: src/main/connections.c:3477
+#: src/main/connections.c:3498
 msgid "file stream does not have valid gzip header"
 msgstr "ファイルストリームは適正な gzip ヘッダを持っていません"
 
-#: src/main/connections.c:3543
+#: src/main/connections.c:3564
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "'gzcon' コネクションのフラッシュ時に書き込みエラーが生じました"
 
-#: src/main/connections.c:3643
+#: src/main/connections.c:3664
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc エラー %x %x\n"
 
-#: src/main/connections.c:3668
+#: src/main/connections.c:3689
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon' コネクションに書き込みエラーが生じました"
 
-#: src/main/connections.c:3702
+#: src/main/connections.c:3723
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' は0〜9のいずれかでなくてはなりません"
 
-#: src/main/connections.c:3705
+#: src/main/connections.c:3726
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' は TRUEまたは FALSEでなければなりません"
 
-#: src/main/connections.c:3708
+#: src/main/connections.c:3729
 msgid "this is already a gzcon connection"
 msgstr "これはすでに gzcon コネクションです"
 
-#: src/main/connections.c:3714
+#: src/main/connections.c:3735
 msgid "can only use read- or write- binary connections"
 msgstr "読み込み，または書き出しのためのバイナリコネクションのみが使えます"
 
-#: src/main/connections.c:3718 src/main/connections.c:3722
-#: src/main/connections.c:3729 src/main/connections.c:3743
+#: src/main/connections.c:3739 src/main/connections.c:3743
+#: src/main/connections.c:3750 src/main/connections.c:3764
 msgid "allocation of 'gzcon' connection failed"
 msgstr "'gzcon' コネクションで割り当てに失敗しました"
 
-#: src/main/connections.c:3788
+#: src/main/connections.c:3809
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1 はスカラー文字列を要求します"
 
-#: src/main/connections.c:3795
+#: src/main/connections.c:3816
 msgid "internal error in R_compress1"
 msgstr "R_compress1 で内部エラーが起きました"
 
-#: src/main/connections.c:3810
+#: src/main/connections.c:3831
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1 はスカラー文字列を要求します"
 
-#: src/main/connections.c:3815
+#: src/main/connections.c:3836
 msgid "internal error in R_decompress1"
 msgstr "R_decompress1 で内部エラーが起きました"
 
-#: src/main/connections.c:3832
+#: src/main/connections.c:3853
 msgid "not a list of sockets"
 msgstr "ソケットのリストではありません"
 
-#: src/main/connections.c:3837
+#: src/main/connections.c:3858
 msgid "bad write indicators"
 msgstr "不適切な書き込み指示子です"
 
-#: src/main/connections.c:3848
+#: src/main/connections.c:3869
 msgid "not a socket connection"
 msgstr "ソケットコネクションではありません"
 
@@ -3645,61 +3646,61 @@ msgstr ""
 msgid "syntax error"
 msgstr "構文エラーです"
 
-#: src/main/main.c:536
+#: src/main/main.c:545
 msgid "unable to open the base package\n"
 msgstr "baseパッケージを開くことができません\n"
 
-#: src/main/main.c:575
+#: src/main/main.c:584
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "警告: UTF-8 ロケールは，このビルドの R ではサポートされていません\n"
 
-#: src/main/main.c:604
+#: src/main/main.c:613
 msgid "unable to restore saved data in .RData\n"
 msgstr ".RData に保存されたデータを復帰できません\n"
 
-#: src/main/main.c:651
+#: src/main/main.c:660
 msgid "During startup - "
 msgstr "起動準備中です ー"
 
-#: src/main/main.c:858
+#: src/main/main.c:867
 msgid "cannot quit from browser"
 msgstr "ブラウザを終了できません"
 
-#: src/main/main.c:862
+#: src/main/main.c:871
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "\"yes\", \"no\", \"ask\" または \"default\" のどれかが期待されています"
 
-#: src/main/main.c:867
+#: src/main/main.c:876
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "非対話的な使用での save=\"ask\"：コマンドラインでの既定動作が使用されます"
 
-#: src/main/main.c:875
+#: src/main/main.c:884
 msgid "unrecognized value of 'save'"
 msgstr "'save' の値が認識できません"
 
-#: src/main/main.c:878
+#: src/main/main.c:887
 msgid "invalid 'status', 0 assumed"
 msgstr "'status' が不正です。0が仮定されました"
 
-#: src/main/main.c:883
+#: src/main/main.c:892
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "'runLast' が不正です。FALSE が仮定されました"
 
-#: src/main/main.c:914
+#: src/main/main.c:923
 msgid "cannot allocate space for toplevel callback element"
 msgstr "トップレベルの callback 要素に作業空間を割り当てることができません"
 
-#: src/main/main.c:992
+#: src/main/main.c:1001
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "R_removeTaskCallbackByIndex に負の添字が渡されました"
 
-#: src/main/main.c:1105
+#: src/main/main.c:1114
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "トップレベルの task callback '%s' からの警告メッセージ\n"
 
-#: src/main/main.c:1165
+#: src/main/main.c:1174
 msgid "top-level task callback did not return a logical value"
 msgstr "トップレベルの task callback が論理値を返していません"
 
@@ -3917,31 +3918,31 @@ msgstr ""
 msgid "term names will be truncated"
 msgstr "項の名前は切りつめらられるでしょう"
 
-#: src/main/names.c:915
+#: src/main/names.c:916
 msgid "string argument required"
 msgstr "文字列引数が要求されています"
 
-#: src/main/names.c:923
+#: src/main/names.c:924
 msgid "no such primitive function"
 msgstr "そのようなプリミティブ関数はありません"
 
-#: src/main/names.c:1036
+#: src/main/names.c:1037
 msgid "attempt to use zero-length variable name"
 msgstr "長さ0の変数名を使おうとしました"
 
-#: src/main/names.c:1038
+#: src/main/names.c:1039
 msgid "symbol print-name too long"
 msgstr "シンボルの表示名が長すぎます"
 
-#: src/main/names.c:1064
+#: src/main/names.c:1065
 msgid "invalid .Internal() argument"
 msgstr ".Internal() 引数が不正です"
 
-#: src/main/names.c:1067
+#: src/main/names.c:1068
 msgid "invalid internal function"
 msgstr "内部関数が不正です"
 
-#: src/main/names.c:1069
+#: src/main/names.c:1070
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "内部関数 \"%s\" がありません"
@@ -4654,24 +4655,24 @@ msgstr ""
 msgid "OS reports request cannot be honored"
 msgstr "OS のレポート要求は優先されません"
 
-#: src/main/platform.c:1345
+#: src/main/platform.c:1339
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' は長さ1の文字列ベクトルでなくてはなりません"
 
-#: src/main/platform.c:1351
+#: src/main/platform.c:1345
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl 関数はホスト '%s' を解決できませんでした"
 
-#: src/main/platform.c:1358
+#: src/main/platform.c:1352
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname が未知の書式を返しました"
 
-#: src/main/platform.c:1369
+#: src/main/platform.c:1363
 msgid "nsl() is not supported on this platform"
 msgstr "このプラットフォームでは nsl 関数はサポートされていません"
 
-#: src/main/platform.c:1413 src/main/platform.c:1450
+#: src/main/platform.c:1407 src/main/platform.c:1444
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' はすでに存在します"
@@ -5626,7 +5627,7 @@ msgstr "'comment' の値が不正です"
 msgid "invalid 'sep' value: must be one byte"
 msgstr "'sep' の値が不正です。1バイトでなくてはなりません"
 
-#: src/main/scan.c:959 src/main/scan.c:1088
+#: src/main/scan.c:959 src/main/scan.c:1088 src/main/scan.c:1557
 msgid "invalid 'sep' value"
 msgstr "'sep' の値が不正です"
 
@@ -5667,61 +5668,65 @@ msgstr "選択："
 msgid "invalid 'nlines' value"
 msgstr "'nlines' の値が不正です"
 
-#: src/main/scan.c:1569 src/main/scan.c:1581
+#: src/main/scan.c:1574 src/main/scan.c:1586
 msgid "cannot allocate buffer in readTableHead"
 msgstr "readTableHead にバッファを割り当てることができません"
 
-#: src/main/scan.c:1612 src/main/scan.c:1615
+#: src/main/scan.c:1596
+msgid "\\ followed by EOF"
+msgstr ""
+
+#: src/main/scan.c:1640 src/main/scan.c:1643
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "'%s' の readTableHeader で不完全な最終行が見つかりました"
 
-#: src/main/scan.c:1725
+#: src/main/scan.c:1753
 msgid "'file' is not a connection"
 msgstr "'file' はコネクションではありません"
 
-#: src/main/scan.c:1744
+#: src/main/scan.c:1772
 msgid "invalid value for 'nr'"
 msgstr "'nr' の値が不正です"
 
-#: src/main/scan.c:1745
+#: src/main/scan.c:1773
 msgid "invalid value for 'nc'"
 msgstr "'nc' の値が不正です"
 
-#: src/main/scan.c:1747
+#: src/main/scan.c:1775
 msgid "invalid value for 'rnames'"
 msgstr "'rnames' の値が不正です"
 
-#: src/main/scan.c:1748
+#: src/main/scan.c:1776
 msgid "invalid value for 'sep'"
 msgstr "'sep' の値が不正です"
 
-#: src/main/scan.c:1749
+#: src/main/scan.c:1777
 msgid "invalid value for 'eol'"
 msgstr "'eof' の値が不正です"
 
-#: src/main/scan.c:1750 src/main/util.c:1114
+#: src/main/scan.c:1778 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr "'na' の値が不正です"
 
-#: src/main/scan.c:1751
+#: src/main/scan.c:1779
 msgid "invalid value for 'dec'"
 msgstr "'dec' の値が不正です"
 
-#: src/main/scan.c:1752
+#: src/main/scan.c:1780
 msgid "invalid value for 'qmethod'"
 msgstr "'qmethod' の値が不正です"
 
-#: src/main/scan.c:1757
+#: src/main/scan.c:1785
 msgid "'dec' must be a single character"
 msgstr "'dec' は一文字でなければなりません"
 
-#: src/main/scan.c:1778
+#: src/main/scan.c:1806
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "データフレームが壊れています（列数 %d が nrows と適合していません）"
 
-#: src/main/scan.c:1815
+#: src/main/scan.c:1843
 msgid "corrupt matrix -- dims not not match length"
 msgstr "行列が壊れています。次元が長さと一致しません"
 
@@ -6595,56 +6600,56 @@ msgstr "'quiet' 引数が不正です"
 msgid "invalid 'cacheOK' argument"
 msgstr "'cacheOK' 引数が不正です"
 
-#: src/modules/internet/internet.c:271 src/modules/internet/internet.c:356
-#: src/modules/internet/internet.c:435
+#: src/modules/internet/internet.c:277 src/modules/internet/internet.c:362
+#: src/modules/internet/internet.c:441
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "URL '%s' を開けません"
 
-#: src/modules/internet/internet.c:273 src/modules/internet/internet.c:290
-#: src/modules/internet/internet.c:369
+#: src/modules/internet/internet.c:279 src/modules/internet/internet.c:296
+#: src/modules/internet/internet.c:375
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "目標ファイル '%s' を開くことができません"
 
-#: src/modules/internet/internet.c:293 src/modules/internet/internet.c:372
+#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:378
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "URL '%s' を試しています\n"
 
-#: src/modules/internet/internet.c:300 src/modules/internet/internet.c:379
+#: src/modules/internet/internet.c:306 src/modules/internet/internet.c:385
 msgid "opened URL\n"
 msgstr "開かれた URL\n"
 
-#: src/modules/internet/internet.c:305 src/modules/internet/internet.c:384
+#: src/modules/internet/internet.c:311 src/modules/internet/internet.c:390
 msgid "Download progress"
 msgstr "ダウンロード実行中です"
 
-#: src/modules/internet/internet.c:352 src/modules/internet/internet.c:431
+#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:437
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "ダウンロードされた長さ %d != 報告された長さ %d です"
 
-#: src/modules/internet/internet.c:466 src/modules/internet/internet.c:692
+#: src/modules/internet/internet.c:472 src/modules/internet/internet.c:698
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "開けません：HTTP ステータスは '%d %s' です"
 
-#: src/modules/internet/internet.c:636 src/modules/internet/internet.c:792
+#: src/modules/internet/internet.c:642 src/modules/internet/internet.c:798
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl はタイムアウトしました"
 
-#: src/modules/internet/internet.c:663 src/modules/internet/internet.c:677
-#: src/modules/internet/internet.c:814 src/modules/internet/internet.c:823
+#: src/modules/internet/internet.c:669 src/modules/internet/internet.c:683
+#: src/modules/internet/internet.c:820 src/modules/internet/internet.c:829
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl の失敗： '%s' "
 
-#: src/modules/internet/internet.c:727
+#: src/modules/internet/internet.c:733
 msgid "Internet read timed out"
 msgstr "インターネット読み込みのタイムアウト"
 
-#: src/modules/internet/internet.c:906
+#: src/modules/internet/internet.c:912
 msgid "cannot allocate memory for InternetRoutines structure"
 msgstr "InternetRoutines 構造にメモリを割り当てることができません"
 
@@ -7238,22 +7243,22 @@ msgstr "R_TempDir を割り当てることができません"
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() はこのシステムでは実装されていません"
 
-#: src/unix/system.c:172
+#: src/unix/system.c:181
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "警告: --gui または -g で，値が指定されていないので無視されました"
 
-#: src/unix/system.c:192
+#: src/unix/system.c:203
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "警告: \"%s\" は未知の gui です。X11 を使います\n"
 
-#: src/unix/system.c:195
+#: src/unix/system.c:206
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "警告: \"%s\" は未知の gui です。何も使いません\n"
 
-#: src/unix/system.c:313
+#: src/unix/system.c:324
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "警告: ファイルリストの最初のみを編集します"
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-13 07:38+0100\n"
+"POT-Creation-Date: 2005-04-27 15:05+0100\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -210,7 +210,7 @@ msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
 
 #: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
-#: src/main/platform.c:1396 src/main/platform.c:1431
+#: src/main/platform.c:1390 src/main/platform.c:1425
 msgid "invalid 'path' argument"
 msgstr "argomento 'path' non valido"
 
@@ -388,17 +388,17 @@ msgid "WARNING: max-mem-size =%4.1fM too small and ignored\n"
 msgstr ""
 "ATTENZIONE: valore di max-mem-size =%4.1fM troppo piccolo e quindi ignorato\n"
 
-#: src/gnuwin32/system.c:897 src/unix/system.c:233
+#: src/gnuwin32/system.c:897 src/unix/system.c:244
 #, c-format
 msgid "WARNING: unknown option '%s'\n"
 msgstr "ATTENZIONE: opzione %s sconosciuta\n"
 
-#: src/gnuwin32/system.c:922 src/unix/system.c:237
+#: src/gnuwin32/system.c:922 src/unix/system.c:248
 #, c-format
 msgid "ARGUMENT '%s' __ignored__\n"
 msgstr "ARGOMENTO '%s' __ignorato__\n"
 
-#: src/gnuwin32/system.c:940 src/unix/system.c:275
+#: src/gnuwin32/system.c:940 src/unix/system.c:286
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
 msgstr "si deve specificare '--save', '--no-save' oppure '--vanilla'"
 
@@ -1565,6 +1565,7 @@ msgstr "connessione non trovata"
 #: src/main/connections.c:95 src/main/connections.c:2501
 #: src/main/connections.c:2924 src/main/connections.c:2973
 #: src/main/connections.c:3095 src/main/connections.c:3135
+#: src/main/connections.c:3149
 msgid "invalid connection"
 msgstr "connessione non valida"
 
@@ -1673,13 +1674,13 @@ msgstr "allocazione della connessione 'fifo' fallita"
 #: src/main/connections.c:712 src/main/connections.c:842
 #: src/main/connections.c:1028 src/main/connections.c:1210
 #: src/main/connections.c:1890 src/main/connections.c:2009
-#: src/main/connections.c:3326
+#: src/main/connections.c:3341
 msgid "invalid 'description' argument"
 msgstr "argomento 'description' non valido"
 
 #: src/main/connections.c:714 src/main/connections.c:844
 #: src/main/connections.c:1030 src/main/connections.c:1212
-#: src/main/connections.c:2011 src/main/connections.c:3328
+#: src/main/connections.c:2011 src/main/connections.c:3343
 msgid "only first element of 'description' argument used"
 msgstr "solo il primo elemento del parametro 'descrizione' viene utilizzato"
 
@@ -1687,25 +1688,25 @@ msgstr "solo il primo elemento del parametro 'descrizione' viene utilizzato"
 #: src/main/connections.c:1034 src/main/connections.c:1216
 #: src/main/connections.c:1897 src/main/connections.c:1960
 #: src/main/connections.c:2015 src/main/connections.c:2067
-#: src/main/connections.c:3337
+#: src/main/connections.c:3352
 msgid "invalid 'open' argument"
 msgstr "argomento 'open' non valido"
 
-#: src/main/connections.c:721 src/main/connections.c:3341
+#: src/main/connections.c:721 src/main/connections.c:3356
 msgid "invalid 'block' argument"
 msgstr "argomento 'block' non valido"
 
 #: src/main/connections.c:725 src/main/connections.c:853
 #: src/main/connections.c:1038 src/main/connections.c:1220
 #: src/main/connections.c:1966 src/main/connections.c:2019
-#: src/main/connections.c:3345
+#: src/main/connections.c:3360
 msgid "invalid 'encoding' argument"
 msgstr "argomento 'encoding' non valido"
 
 #: src/main/connections.c:737 src/main/connections.c:872
 #: src/main/connections.c:1053 src/main/connections.c:1231
 #: src/main/connections.c:1979 src/main/connections.c:2030
-#: src/main/connections.c:2077 src/main/connections.c:3392
+#: src/main/connections.c:2077 src/main/connections.c:3413
 msgid "unable to open connection"
 msgstr "impossibile aprire la connessione"
 
@@ -1857,7 +1858,7 @@ msgstr "i socket non sono disponibili su questo sistema"
 #: src/main/connections.c:2126 src/main/connections.c:2175
 #: src/main/connections.c:2197 src/main/connections.c:2216
 #: src/main/connections.c:2228 src/main/connections.c:2331
-#: src/main/connections.c:2427 src/main/connections.c:3698
+#: src/main/connections.c:2427 src/main/connections.c:3719
 msgid "'con' is not a connection"
 msgstr "'con' non è una connessione"
 
@@ -1885,7 +1886,7 @@ msgstr "impossibile chiudere una connessione di sink dell'output"
 msgid "cannot close messages sink connection"
 msgstr "impossibile chiudere una connessione di sink dei messaggi"
 
-#: src/main/connections.c:2199 src/main/connections.c:3413
+#: src/main/connections.c:2199 src/main/connections.c:3434
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "connessione non aperta"
@@ -1910,9 +1911,9 @@ msgstr "non posso leggere da questa connessione"
 #: src/main/connections.c:2343 src/main/connections.c:2436
 #: src/main/connections.c:2521 src/main/connections.c:2710
 #: src/main/connections.c:2933 src/main/connections.c:3005
-#: src/main/connections.c:3167 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/connections.c:3182 src/main/dcf.c:59 src/main/deparse.c:311
 #: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1010
-#: src/main/scan.c:1115 src/main/scan.c:1560 src/main/scan.c:1732
+#: src/main/scan.c:1115 src/main/scan.c:1565 src/main/scan.c:1760
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "non posso aprire questa connessione"
@@ -1935,8 +1936,8 @@ msgid "invalid 'sep' argument"
 msgstr "argomento 'sep' non valido"
 
 #: src/main/connections.c:2432 src/main/connections.c:2704
-#: src/main/connections.c:2975 src/main/connections.c:3414
-#: src/main/scan.c:1728 src/main/serialize.c:1588
+#: src/main/connections.c:2975 src/main/connections.c:3435
+#: src/main/scan.c:1756 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "non posso scrivere su questa connessione"
 
@@ -2038,106 +2039,106 @@ msgstr "posso "
 msgid "can only push back on text-mode connections"
 msgstr "posso riavvolgere solo connessione aperte in lettura"
 
-#: src/main/connections.c:3155 src/main/connections.c:3215
+#: src/main/connections.c:3170 src/main/connections.c:3230
 msgid "sink stack is full"
 msgstr "il sink stack è pieno"
 
-#: src/main/connections.c:3158
+#: src/main/connections.c:3173
 msgid "cannot switch output to stdin"
 msgstr "non posso scambiare l'output con l'input"
 
-#: src/main/connections.c:3175
+#: src/main/connections.c:3190
 msgid "no sink to remove"
 msgstr "non c'è nulla da eliminare"
 
-#: src/main/connections.c:3206
+#: src/main/connections.c:3221
 msgid "invalid value for 'closeOnExit'"
 msgstr "valore non valido per 'closeOnExit'"
 
-#: src/main/connections.c:3208 src/main/connections.c:3236
+#: src/main/connections.c:3223 src/main/connections.c:3251
 msgid "invalid value for 'type'"
 msgstr "valore non valido per 'type'"
 
-#: src/main/connections.c:3210
+#: src/main/connections.c:3225
 msgid "invalid value for 'split'"
 msgstr "valore non valido per 'split'"
 
-#: src/main/connections.c:3363
+#: src/main/connections.c:3384
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3379 src/modules/internet/internet.c:439
+#: src/main/connections.c:3400 src/modules/internet/internet.c:445
 msgid "unsupported URL scheme"
 msgstr "schema URL no supportato"
 
-#: src/main/connections.c:3466
+#: src/main/connections.c:3487
 msgid "file stream does not have gzip magic number"
 msgstr "il file non ha il numero magico di gzip"
 
-#: src/main/connections.c:3477
+#: src/main/connections.c:3498
 msgid "file stream does not have valid gzip header"
 msgstr "il file non ha un header di tipo gzip valido"
 
-#: src/main/connections.c:3543
+#: src/main/connections.c:3564
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "errore di scrittura durante lo svuotamento della connessione 'gzcon'"
 
-#: src/main/connections.c:3643
+#: src/main/connections.c:3664
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "errore crc %x %x\n"
 
-#: src/main/connections.c:3668
+#: src/main/connections.c:3689
 msgid "write error on 'gzcon' connection"
 msgstr "errore di scrittura sulla connessione 'gzcon'"
 
-#: src/main/connections.c:3702
+#: src/main/connections.c:3723
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level' deve essere fra 0 ... 9"
 
-#: src/main/connections.c:3705
+#: src/main/connections.c:3726
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression' deve essere TRUE o FALSE"
 
-#: src/main/connections.c:3708
+#: src/main/connections.c:3729
 msgid "this is already a gzcon connection"
 msgstr "c'è già una connessione di tipo gzcon"
 
-#: src/main/connections.c:3714
+#: src/main/connections.c:3735
 msgid "can only use read- or write- binary connections"
 msgstr "è possibile usare soltanto connessioni binarie in scrittura o lettura"
 
-#: src/main/connections.c:3718 src/main/connections.c:3722
-#: src/main/connections.c:3729 src/main/connections.c:3743
+#: src/main/connections.c:3739 src/main/connections.c:3743
+#: src/main/connections.c:3750 src/main/connections.c:3764
 msgid "allocation of 'gzcon' connection failed"
 msgstr "allocazione della connessione 'gzcon' fallita"
 
-#: src/main/connections.c:3788
+#: src/main/connections.c:3809
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1 richiede una stringa scalare"
 
-#: src/main/connections.c:3795
+#: src/main/connections.c:3816
 msgid "internal error in R_compress1"
 msgstr "errore interno in R_compress1"
 
-#: src/main/connections.c:3810
+#: src/main/connections.c:3831
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1 richiede una stringa scalare"
 
-#: src/main/connections.c:3815
+#: src/main/connections.c:3836
 msgid "internal error in R_decompress1"
 msgstr "errore interno in R_decompress1"
 
-#: src/main/connections.c:3832
+#: src/main/connections.c:3853
 msgid "not a list of sockets"
 msgstr "non è una lista di sockets"
 
-#: src/main/connections.c:3837
+#: src/main/connections.c:3858
 msgid "bad write indicators"
 msgstr "errato indicatore di scrittura"
 
-#: src/main/connections.c:3848
+#: src/main/connections.c:3869
 msgid "not a socket connection"
 msgstr "non è una connessione socket"
 
@@ -3664,63 +3665,63 @@ msgstr "error: comandi 'system' non supportati in questa versione di R.\n"
 msgid "syntax error"
 msgstr "errore di sintassi"
 
-#: src/main/main.c:536
+#: src/main/main.c:545
 msgid "unable to open the base package\n"
 msgstr "impossibile aprire pacchetto base\n"
 
-#: src/main/main.c:575
+#: src/main/main.c:584
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
 msgstr "ATTENZIONE: locale UTF-8 non supportati in questa distribuzione di R\n"
 
-#: src/main/main.c:604
+#: src/main/main.c:613
 msgid "unable to restore saved data in .RData\n"
 msgstr "impossibile ripristinare i dati registrati in .RData\n"
 
-#: src/main/main.c:651
+#: src/main/main.c:660
 msgid "During startup - "
 msgstr "Durante l'avvio - "
 
-#: src/main/main.c:858
+#: src/main/main.c:867
 msgid "cannot quit from browser"
 msgstr "non posso uscire dal browser"
 
-#: src/main/main.c:862
+#: src/main/main.c:871
 msgid "one of \"yes\", \"no\", \"ask\" or \"default\" expected."
 msgstr "si ci aspetta una tra \"yes\", \"no\", \"ask\" o \"default\"."
 
-#: src/main/main.c:867
+#: src/main/main.c:876
 msgid "save=\"ask\" in non-interactive use: command-line default will be used"
 msgstr ""
 "save=\"ask\" in modalità non interattiva: viene usata la linea di comando di "
 "default"
 
-#: src/main/main.c:875
+#: src/main/main.c:884
 msgid "unrecognized value of 'save'"
 msgstr "valore sconosciuto di 'save'"
 
-#: src/main/main.c:878
+#: src/main/main.c:887
 msgid "invalid 'status', 0 assumed"
 msgstr "valore 'status' non valido, uso 0"
 
-#: src/main/main.c:883
+#: src/main/main.c:892
 msgid "invalid 'runLast', FALSE assumed"
 msgstr "argomento 'runLast' non valido, uso FALSE"
 
-#: src/main/main.c:914
+#: src/main/main.c:923
 msgid "cannot allocate space for toplevel callback element"
 msgstr ""
 "non posso allocare spazio per l'elemento di callback di livello superiore"
 
-#: src/main/main.c:992
+#: src/main/main.c:1001
 msgid "negative index passed to R_removeTaskCallbackByIndex"
 msgstr "indice negativo passato a R_removeTaskCallbackByIndex"
 
-#: src/main/main.c:1105
+#: src/main/main.c:1114
 #, c-format
 msgid "warning messages from top-level task callback '%s'\n"
 msgstr "messaggio di avviso dal processo callback di livello superiore '%s'\n"
 
-#: src/main/main.c:1165
+#: src/main/main.c:1174
 msgid "top-level task callback did not return a logical value"
 msgstr ""
 "il processo callback di livello superiore restituisce un valore non logico"
@@ -3939,31 +3940,31 @@ msgstr "problema nel termine %d in model.matrix: nessuna colonna assegnata"
 msgid "term names will be truncated"
 msgstr "i nomi dei termini saranno troncati"
 
-#: src/main/names.c:915
+#: src/main/names.c:916
 msgid "string argument required"
 msgstr "necessario argomento stringa"
 
-#: src/main/names.c:923
+#: src/main/names.c:924
 msgid "no such primitive function"
 msgstr "funzione primitiva non esistente"
 
-#: src/main/names.c:1036
+#: src/main/names.c:1037
 msgid "attempt to use zero-length variable name"
 msgstr "tentativo di utilizzo di un nome variabile di lunghezza zero"
 
-#: src/main/names.c:1038
+#: src/main/names.c:1039
 msgid "symbol print-name too long"
 msgstr "nome di stampa del simbolo troppo lungo"
 
-#: src/main/names.c:1064
+#: src/main/names.c:1065
 msgid "invalid .Internal() argument"
 msgstr "argomento .Internal() non valido"
 
-#: src/main/names.c:1067
+#: src/main/names.c:1068
 msgid "invalid internal function"
 msgstr "functione interna non valida"
 
-#: src/main/names.c:1069
+#: src/main/names.c:1070
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "nessuna funzione interna \"%s\""
@@ -4680,24 +4681,24 @@ msgstr ""
 msgid "OS reports request cannot be honored"
 msgstr "Il sistema operativo segnala che la richiesta non può essere esaudita"
 
-#: src/main/platform.c:1345
+#: src/main/platform.c:1339
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve essere una stringa character"
 
-#: src/main/platform.c:1351
+#: src/main/platform.c:1345
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nls() non riesce a identificare l'host '%s'"
 
-#: src/main/platform.c:1358
+#: src/main/platform.c:1352
 msgid "unknown format returned by gethostbyname"
 msgstr "formato sconosciuto resituito da gethostbyname"
 
-#: src/main/platform.c:1369
+#: src/main/platform.c:1363
 msgid "nsl() is not supported on this platform"
 msgstr "nls() non è supportato in questa piattaforma"
 
-#: src/main/platform.c:1413 src/main/platform.c:1450
+#: src/main/platform.c:1407 src/main/platform.c:1444
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' già esistente"
@@ -5653,7 +5654,7 @@ msgstr "valore 'comment.char' non valido"
 msgid "invalid 'sep' value: must be one byte"
 msgstr "valore 'sep' non valido: deve essere di un byte"
 
-#: src/main/scan.c:959 src/main/scan.c:1088
+#: src/main/scan.c:959 src/main/scan.c:1088 src/main/scan.c:1557
 msgid "invalid 'sep' value"
 msgstr "valore 'sep' non valido"
 
@@ -5694,62 +5695,66 @@ msgstr "Selezione: "
 msgid "invalid 'nlines' value"
 msgstr "valore 'nlines' non valido"
 
-#: src/main/scan.c:1569 src/main/scan.c:1581
+#: src/main/scan.c:1574 src/main/scan.c:1586
 msgid "cannot allocate buffer in readTableHead"
 msgstr "impossibile allocare il buffer in readTableHead"
 
-#: src/main/scan.c:1612 src/main/scan.c:1615
+#: src/main/scan.c:1596
+msgid "\\ followed by EOF"
+msgstr ""
+
+#: src/main/scan.c:1640 src/main/scan.c:1643
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "riga finale incompleta trovata da readTableHeader in '%s'"
 
-#: src/main/scan.c:1725
+#: src/main/scan.c:1753
 msgid "'file' is not a connection"
 msgstr "'file' non è una connessione"
 
-#: src/main/scan.c:1744
+#: src/main/scan.c:1772
 msgid "invalid value for 'nr'"
 msgstr "valore non valido per 'nr'"
 
-#: src/main/scan.c:1745
+#: src/main/scan.c:1773
 msgid "invalid value for 'nc'"
 msgstr "valore non valido per 'nc'"
 
-#: src/main/scan.c:1747
+#: src/main/scan.c:1775
 msgid "invalid value for 'rnames'"
 msgstr "valore non valido per 'rnames'"
 
-#: src/main/scan.c:1748
+#: src/main/scan.c:1776
 msgid "invalid value for 'sep'"
 msgstr "valore non valido per 'sep'"
 
-#: src/main/scan.c:1749
+#: src/main/scan.c:1777
 msgid "invalid value for 'eol'"
 msgstr "valore non valido per 'eol'"
 
-#: src/main/scan.c:1750 src/main/util.c:1114
+#: src/main/scan.c:1778 src/main/util.c:1114
 msgid "invalid value for 'na'"
 msgstr "valore non valido per 'na'"
 
-#: src/main/scan.c:1751
+#: src/main/scan.c:1779
 msgid "invalid value for 'dec'"
 msgstr "valore non valido per 'dec'"
 
-#: src/main/scan.c:1752
+#: src/main/scan.c:1780
 msgid "invalid value for 'qmethod'"
 msgstr "valore non valido per 'qmethod'"
 
-#: src/main/scan.c:1757
+#: src/main/scan.c:1785
 msgid "'dec' must be a single character"
 msgstr "'dec' deve un singolo carattere"
 
-#: src/main/scan.c:1778
+#: src/main/scan.c:1806
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr ""
 "data frame danneggiato - la lunghezza della colonna %d non coincide con nrows"
 
-#: src/main/scan.c:1815
+#: src/main/scan.c:1843
 msgid "corrupt matrix -- dims not not match length"
 msgstr "matrice danneggiata - le dimensioni non concordano con la lunghezza"
 
@@ -6555,8 +6560,9 @@ msgstr ""
 "\n"
 
 #: src/main/version.c:40
+#, fuzzy
 msgid ""
-"Type 'demo()' for some demos, 'help()' for in-line help, or\n"
+"Type 'demo()' for some demos, 'help()' for on-line help, or\n"
 "'help.start()' for a HTML browser interface to help.\n"
 "Type 'q()' to quit R.\n"
 "\n"
@@ -6619,56 +6625,56 @@ msgstr "argomento 'quiet' non valido"
 msgid "invalid 'cacheOK' argument"
 msgstr "argomento 'cacheOK' non valido"
 
-#: src/modules/internet/internet.c:271 src/modules/internet/internet.c:356
-#: src/modules/internet/internet.c:435
+#: src/modules/internet/internet.c:277 src/modules/internet/internet.c:362
+#: src/modules/internet/internet.c:441
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "impossibile aprire URL '%s'"
 
-#: src/modules/internet/internet.c:273 src/modules/internet/internet.c:290
-#: src/modules/internet/internet.c:369
+#: src/modules/internet/internet.c:279 src/modules/internet/internet.c:296
+#: src/modules/internet/internet.c:375
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "impossibile aprire file destinazione '%s'"
 
-#: src/modules/internet/internet.c:293 src/modules/internet/internet.c:372
+#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:378
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "provo con l'URL '%s'\n"
 
-#: src/modules/internet/internet.c:300 src/modules/internet/internet.c:379
+#: src/modules/internet/internet.c:306 src/modules/internet/internet.c:385
 msgid "opened URL\n"
 msgstr "URL aperta\n"
 
-#: src/modules/internet/internet.c:305 src/modules/internet/internet.c:384
+#: src/modules/internet/internet.c:311 src/modules/internet/internet.c:390
 msgid "Download progress"
 msgstr "Progressione caricamento"
 
-#: src/modules/internet/internet.c:352 src/modules/internet/internet.c:431
+#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:437
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "lunghezza caricamento %d != lunghezza prevista %d"
 
-#: src/modules/internet/internet.c:466 src/modules/internet/internet.c:692
+#: src/modules/internet/internet.c:472 src/modules/internet/internet.c:698
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "apertura non riuscita: stato HTTP '%d %s'"
 
-#: src/modules/internet/internet.c:636 src/modules/internet/internet.c:792
+#: src/modules/internet/internet.c:642 src/modules/internet/internet.c:798
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl fuori tempo massimo"
 
-#: src/modules/internet/internet.c:663 src/modules/internet/internet.c:677
-#: src/modules/internet/internet.c:814 src/modules/internet/internet.c:823
+#: src/modules/internet/internet.c:669 src/modules/internet/internet.c:683
+#: src/modules/internet/internet.c:820 src/modules/internet/internet.c:829
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl non riuscita: '%s'"
 
-#: src/modules/internet/internet.c:727
+#: src/modules/internet/internet.c:733
 msgid "Internet read timed out"
 msgstr "Lettura da Internet fuori tempo massimo"
 
-#: src/modules/internet/internet.c:906
+#: src/modules/internet/internet.c:912
 msgid "cannot allocate memory for InternetRoutines structure"
 msgstr "non è possibile allocare memoria per la struttura InternetRoutines"
 
@@ -7268,22 +7274,22 @@ msgstr "non è possibile allocare memoria per R_TempDir"
 msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() non è implementata su questo sistema"
 
-#: src/unix/system.c:172
+#: src/unix/system.c:181
 #, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "ATTENZIONE: --gui o -g senza valore viene ignorata"
 
-#: src/unix/system.c:192
+#: src/unix/system.c:203
 #, c-format
 msgid "WARNING: unknown gui '%s', using X11\n"
 msgstr "ATTENZIONE: gui '%s' sconosciuta, verrà utilizzata X11\n"
 
-#: src/unix/system.c:195
+#: src/unix/system.c:206
 #, c-format
 msgid "WARNING: unknown gui '%s', using none\n"
 msgstr "ATTENZIONE: gui '%s' sconosciuta, non ne verrà utilizzata alcuna\n"
 
-#: src/unix/system.c:313
+#: src/unix/system.c:324
 msgid "WARNING: Only editing the first in the list of files"
 msgstr "ATTENZIONE: Verrà editato solo il primo file della lista"
 
