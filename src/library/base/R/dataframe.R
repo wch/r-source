@@ -114,7 +114,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
 as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 {
     nrows <- length(x)
-    nm <- paste(deparse(substitute(x), width.cutoff=500), sep=" ")
+    nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
     if(is.null(row.names)) {
 	if (nrows == 0)
 	    row.names <- character(0)
@@ -235,7 +235,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 	as.data.frame.model.matrix(x, row.names, optional)
     else { # as.data.frame.vector without removing names
         nrows <- length(x)
-        nm <- paste(deparse(substitute(x), width.cutoff=500), sep=" ")
+        nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
         if(is.null(row.names)) {
             if (nrows == 0)
                 row.names <- character(0)
