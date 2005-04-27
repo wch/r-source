@@ -11,7 +11,7 @@
   fixed format.  Timezone and Daylight Saving Time are taken account of,
   but \emph{not} indicated in the result.
 
-  The day and month abbreviations are always in English, irrespsective
+  The day and month abbreviations are always in English, irrespective
   of locale.
 }
 \references{
