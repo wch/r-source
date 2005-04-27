@@ -260,6 +260,7 @@ msgstr ""
 "Assumo \"ISOLatin1.enc\""
 
 #: devPS.c:3998
+#, c-format
 msgid "invalid paper type '%s' (pdf)"
 msgstr "tipo foglio '%s' non valido (pdf)"
 
