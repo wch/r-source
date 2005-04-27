@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000--2002	The R Development Core Team.
+ *  Copyright (C) 2000--2005	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,8 @@
  *  See ./format.c	 for the  format_FOO_  functions used below.
  */
 
-/* <UTF8> char here is handled as a whole */
+/* <UTF8> char here is handled as a whole, 
+   but lengths are used as display widths */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -35,6 +36,46 @@
 
 #include "Defn.h"
 #include "Print.h"
+
+/* We need display width of a string */
+
+
+#ifdef SUPPORT_MBCS
+
+#ifdef HAVE_ALLOCA_H
+#include <alloca.h>
+#endif
+#if !HAVE_DECL_ALLOCA
+extern char *alloca(size_t);
+#endif
+
+# include <wchar.h>
+# include <wctype.h>
+#if !HAVE_DECL_WCSWIDTH
+extern int wcswidth(const wchar_t *s, size_t n);
+#endif
+#endif
+
+static int strwidth(const char *str)
+{
+#ifdef SUPPORT_MBCS
+    if(mbcslocale) {
+	int nc = mbstowcs(NULL, str, 0);
+#ifdef HAVE_WCSWIDTH
+	wchar_t *wc;
+	if(nc == 0) return 0;
+	wc = (wchar_t *) alloca((nc+1) * sizeof(wchar_t));
+	if(!wc) error(_("allocation failure in strwidth"));
+	mbstowcs(wc, str, nc + 1);
+	return wcswidth(wc, 2147483647);
+#else
+	return nc;
+#endif
+    } else
+#endif
+	return strlen(str);
+}
+
 
 static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 			       SEXP rl, SEXP cl, char *rn, char *cn)
@@ -50,7 +91,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -68,7 +109,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -126,7 +167,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -143,7 +184,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -202,7 +243,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -225,7 +266,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -284,7 +325,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -319,7 +360,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	w[j] = wr[j] + wi[j] + 2;
@@ -387,7 +428,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -404,7 +445,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
