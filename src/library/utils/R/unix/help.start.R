@@ -101,9 +101,12 @@ make.packages.html <- function(lib.loc=.libPaths())
             contentsfile <- file.path(from, "CONTENTS")
             if(!file.exists(contentsfile)) next
             contents <- readLines(contentsfile)
-            contents <- gsub(paste("/library/", i, sep = ""),
-                             paste("/library/", link, sep = ""),
-                             contents)
+            isURL <- grep("^URL:", contents, fixed = TRUE, useBytes=TRUE)
+            if(length(isURL))
+                contents[isURL] <-
+                    gsub(paste("/library/", i, sep = ""),
+                         paste("/library/", link, sep = ""),
+                         contents[isURL], fixed = TRUE)
             writeLines(contents, search)
         }
         cat("</table>\n\n", file=out)

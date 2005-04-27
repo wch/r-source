@@ -43,6 +43,10 @@ BUG FIXES
 
     o	'make uninstall' was incomplete.
 
+    o	make.packages.html() called by help.start() was failing if
+	there were installed packages with titles invalid in the
+	current locale.
+
 
 
 		CHANGES IN R VERSION 2.1.0
