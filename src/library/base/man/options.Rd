@@ -104,7 +104,7 @@ getOption(x)
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.
-      Valid values are 25\dots100000 with default 5000.}
+      Valid values are 25\dots500000 with default 5000.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
