@@ -1,4 +1,4 @@
-				Dear Emacs, please make this -*-Text-*- mode!
+			Dear Emacs, please make this -*-Text-*- mode!
 	**************************************************
 	*						 *
 	*	       2.2 SERIES NEWS			 *
@@ -119,6 +119,8 @@ BUG FIXES
 
     o	Some as.date.frame() methods failed because the expression
 	deparsed into multiple lines. (PR#7808)
+
+    o	setRepositories() had a typo. (PR#7810)
 
 
 

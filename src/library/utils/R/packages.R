@@ -469,7 +469,7 @@ setRepositories <- function(graphics=TRUE)
     a <- read.delim(p, header=TRUE,
                     colClasses=c(rep("character", 3), rep("logical", 4)))
     thisType <- a[[getOption("pkgType")]]
-    a <- a[thisType, 1:4]
+    a <- a[thisType, 1:3]
     repos <- getOption("repos")
     ## Now look for CRAN and any others in getOptions("repos")
     if("CRAN" %in% row.names(a) && !is.na(CRAN <- repos["CRAN"]))
