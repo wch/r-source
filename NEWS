@@ -11,7 +11,7 @@
 
 USER-VISIBLE CHANGES
 
-    o	plot(<lm object>) uses a new default for the forth panel when
+    o	plot(<lm object>) uses a new default for the fourth panel when
 	'which' is not specified.
 
 
@@ -36,6 +36,8 @@ NEW FEATURES
     o	plot.lm() has two new plots (for 'which' = 5 or 6), plotting
 	residuals or cook distances versus (transformed) leverages.
 	The default for 'sub.caption' is now better for long calls.
+
+    o	[g]sub() now have a 'useBytes' argument like grep() and regexpr().
 
 
 DEPRECATED & DEFUNCT

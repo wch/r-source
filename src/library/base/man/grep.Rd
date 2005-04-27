@@ -18,10 +18,12 @@ grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
      value = FALSE, fixed = FALSE, useBytes = FALSE)
 
 sub(pattern, replacement, x,
-    ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
+    ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE,
+    useBytes = FALSE)
 
 gsub(pattern, replacement, x,
-     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
+     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE,
+     useBytes = FALSE)
 
 regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
         useBytes = FALSE)

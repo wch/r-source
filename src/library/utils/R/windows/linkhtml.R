@@ -91,8 +91,9 @@ make.search.html <- function(lib.loc=.libPaths())
                           fixed = TRUE, useBytes = TRUE)
             if(length(isURL) && sed.it)
                 contents[isURL] <- gsub("URL: ../../../library", lib0,
-                                        contents[isURL], fixed = TRUE)
-            writeLines(c(contents, ""), out)
+                                        contents[isURL],
+                                        fixed = TRUE, useBytes = TRUE)
+            writeLines(c(contents, ""), out) # space between packages
         }
     }
     close(out)

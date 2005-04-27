@@ -1006,7 +1006,8 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     int i, j, n, ns, nmatch, offset;
-    int global, igcase_opt, extended_opt, fixed_opt, cflags, eflags, last_end;
+    int global, igcase_opt, extended_opt, fixed_opt, useBytes,
+	cflags, eflags, last_end;
     char *s, *t, *u;
     char *spat = NULL; /* -Wall */
     int patlen = 0, replen = 0, st, nr = 1;
@@ -1020,10 +1021,12 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     vec = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
-    fixed_opt = asLogical(CAR(args));
+    fixed_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
     if (length(pat) < 1 || length(rep) < 1)
 	errorcall(call, R_MSG_IA);
@@ -1087,7 +1090,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, ("input string %d is invalid in this locale"), i+1);
 #endif
 	if(fixed_opt) {
-	    st = fgrep_one(spat, s, 0);
+	    st = fgrep_one(spat, s, useBytes);
 	    if(st < 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -1098,10 +1101,10 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    do {
 			nr++;
 			s += st+patlen;
-		    } while((st = fgrep_one(spat, s, 0)) >= 0);
+		    } while((st = fgrep_one(spat, s, useBytes)) >= 0);
 		    /* and reset */
 		    s = CHAR(STRING_ELT(vec, i));
-		    st = fgrep_one(spat, s, 0);
+		    st = fgrep_one(spat, s, useBytes);
 		}
 		SET_STRING_ELT(ans, i, allocString(ns + nr*(replen - patlen)));
 		u = CHAR(STRING_ELT(ans, i)); *u ='\0';
@@ -1109,7 +1112,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nr = strlen(u);
 		    strncat(u, s, st); u[nr+st] = '\0'; s += st+patlen;
 		    strcat(u, t);
-		} while(global && (st = fgrep_one(spat, s, 0)) >= 0);
+		} while(global && (st = fgrep_one(spat, s, useBytes)) >= 0);
 		strcat(u, s);
 	    }
 	} else {
