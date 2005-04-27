@@ -102,7 +102,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             if(!file.exists(contentsfile)) next
             contents <- readLines(contentsfile)
             isURL <- grep("URL:", contents, fixed = TRUE, useBytes=TRUE)
-            if(length(isURL))
+            if(length(isURL) && link != i)
                 contents[isURL] <-
                     gsub(paste("/library/", i, sep = ""),
                          paste("/library/", link, sep = ""),
