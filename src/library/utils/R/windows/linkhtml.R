@@ -86,10 +86,13 @@ make.search.html <- function(lib.loc=.libPaths())
         for (i in pg) {
             cfile <- file.path(lib, i, "CONTENTS")
             if(!file.exists(cfile)) next
-            contents <- if(sed.it)
-                gsub("^URL: ../../../library", lib0, readLines(cfile))
-            else readLines(cfile)
-            writeLines(contents, out)
+            contents <- readLines(cfile)
+            isURL <- grep("URL: ../../../library", contents,
+                          fixed = TRUE, useBytes = TRUE)
+            if(length(isURL) && sed.it)
+                contents[isURL] <- gsub("URL: ../../../library", lib0,
+                                        contents[isURL], fixed = TRUE)
+            writeLines(c(contents, ""), out)
         }
     }
     close(out)
@@ -132,18 +135,20 @@ fixup.package.URLs <- function(pkg, force = FALSE)
     grD <- paste(top, "/library/grDevices", sep="")
     for(f in files) {
         page <- readLines(f)
+        ## <FIXME> use useBytes=TRUE later
+        page <- gsub(olddoc, doc, page, fixed = TRUE)
+        page <- gsub(oldbase, base, page, fixed = TRUE)
+        page <- gsub(oldutils, utils, page, fixed = TRUE)
+        page <- gsub(oldgraphics, graphics, page, fixed = TRUE)
+        page <- gsub(oldstats, stats, page, fixed = TRUE)
+        page <- gsub(olddata, datasets, page, fixed = TRUE)
+        page <- gsub(oldgrD, grD, page, fixed = TRUE)
+        ## only do this if the substitutions worked
         out <- try(file(f, open = "w"), silent = TRUE)
         if(inherits(out, "try-error")) {
             warning(gettextf("cannot update '%s'", f), domain = NA)
             next
         }
-        page <- gsub(olddoc, doc, page)
-        page <- gsub(oldbase, base, page)
-        page <- gsub(oldutils, utils, page)
-        page <- gsub(oldgraphics, graphics, page)
-        page <- gsub(oldstats, stats, page)
-        page <- gsub(olddata, datasets, page)
-        page <- gsub(oldgrD, grD, page)
         writeLines(page, out)
         close(out)
     }
@@ -155,6 +160,6 @@ fixup.libraries.URLs <- function(lib.loc = .libPaths())
     for (lib in lib.loc) {
         if(lib == .Library) next
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
-        for(pkg in pg) fixup.package.URLs(file.path(lib,pkg))
+        for(pkg in pg) try(fixup.package.URLs(file.path(lib,pkg)))
     }
 }
