@@ -29,7 +29,7 @@ printCoefmat(x, digits=max(3, getOption("digits") - 2),
     of long coefficient tables.  It defaults to the
     \code{show.signif.stars} slot of \code{\link{options}}.}
   \item{signif.legend}{logical; if \code{TRUE}, a legend for the 
-    \dQuote{significance stars} is printed.}
+    \dQuote{significance stars} is printed provided \code{signif.stars=TRUE}.}
   \item{dig.tst}{minimum number of significant digits for the test statistics,
     see \code{tst.ind}.}
   \item{cs.ind}{indices (integer) of column numbers which are (like)

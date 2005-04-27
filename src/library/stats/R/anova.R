@@ -85,7 +85,8 @@ printCoefmat <-
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE
     print.default(Cf, quote = FALSE, right = TRUE, na.print=na.print, ...)
-    if(signif.stars) cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
+    if(signif.stars && signif.legend)
+        cat("---\nSignif. codes: ",attr(Signif,"legend"),"\n")
     invisible(x)
 }
 

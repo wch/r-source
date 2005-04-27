@@ -1530,3 +1530,17 @@ writeLines(x, tf)
 read.table(tf, sep=" ")
 unlink(tf)
 ## mangled in 2.0.1
+
+
+## (PR#7802) printCoefmat(signif.legend =FALSE) failed
+set.seed(123)
+cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
+cmat <- cbind(cmat, cmat[,1]/cmat[,2])
+cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
+printCoefmat(cmat, signif.stars = TRUE)
+printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
+# no stars, so no legend
+printCoefmat(cmat, signif.stars = FALSE)
+printCoefmat(cmat, signif.stars = TRUE, signif.legend = TRUE)
+## did not work in 2.1.0
