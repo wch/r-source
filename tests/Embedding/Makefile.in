@@ -57,7 +57,7 @@ tests: $(PROGRAMS)
 	(R_HOME=$(top_builddir); export R_HOME; ./Rerror --silent)
 	(R_HOME=$(top_builddir); export R_HOME; ./Rplot --silent)
 	(R_HOME=$(top_builddir); export R_HOME; \
-	  ./Rpostscript --silent --gui=none --no-save)
+	  ./Rpostscript --silent --no-save)
 	(R_HOME=$(top_builddir); export R_HOME; ./tryEval --silent)
 
 Rtest: Rtest.o embeddedRCall.o

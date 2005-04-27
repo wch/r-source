@@ -6857,8 +6857,8 @@ starting the @R{} executable from inside the debugger.
 (UNIX only) Use @var{type} as graphical user interface (note that this
 also includes interactive graphics).  Currently, possible values for
 @var{type} are @samp{X11} (the default), provided that @samp{Tcl/Tk}
-support is available, @samp{Tk}, @samp{gnome} provided that
-@acronym{GNOME} support is available, and @samp{none}.
+support is available, @samp{Tk} and @samp{gnome} provided that package
+@pkg{gnomeGUI} is installed.
 
 @item --args
 This flag does nothing except cause the rest of the command line to be

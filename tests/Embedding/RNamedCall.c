@@ -14,7 +14,7 @@ void source(const char *name);
 int
 main(int argc, char *argv[])
 {
-  char *localArgs[] = {"R", "--gui=none", "--silent"};
+  char *localArgs[] = {"R", "--silent"};
   init_R(sizeof(localArgs)/sizeof(localArgs[0]), localArgs);
   source("foo.R");
   bar1();
