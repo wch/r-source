@@ -117,7 +117,7 @@ x$name
   interpretations would have the same outcome).
 }
 \section{Argument matching}{
-  Note that these operations do match their index arguments in the standard
+  Note that these operations do not match their index arguments in the standard
   way: argument names are ignored and positional matching only is used.
   So \code{m[j=2,i=1]} is equivalent to \code{m[2,1]} and \strong{not}
   \code{m[1,2]}.
