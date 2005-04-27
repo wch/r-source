@@ -3617,3 +3617,11 @@ nm <- names(predict(glm(y ~ x, family=binomial,
                     newdata=data.frame(x=c(0, 0.5, 1)), type="response"))
 stopifnot(identical(nm, as.character(1:3)))
 ## no names in 2.1.0
+
+
+## PR#7808: as.data.frame: Error in "names<-.default"
+x1 <- array(1:9, c(3, 3, 3))
+FUN <- function(x1, x2, x3, x4) cbind(x1[, 1, 1:2], x1[, 2, 1:2])[, 1]
+as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
+                  x3 = c("a", "b"), x4 = c("a", "b")))
+## failed in 2.1.0

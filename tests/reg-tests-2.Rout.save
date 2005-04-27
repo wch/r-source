@@ -4544,3 +4544,37 @@ Error in stats:::add1.default(fit, ~. + x2) :
 > unlink(tf)
 > ## mangled in 2.0.1
 > 
+> 
+> ## (PR#7802) printCoefmat(signif.legend =FALSE) failed
+> set.seed(123)
+> cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
+> cmat <- cbind(cmat, cmat[,1]/cmat[,2])
+> cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+> colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
+> printCoefmat(cmat, signif.stars = TRUE)
+     Estimate Std.Err Z value    Pr(>z)    
+[1,]  11.3092  2.8636  3.9493 7.837e-05 ***
+[2,]  11.2301  3.5301  3.1812  0.001467 ** 
+[3,]   9.9161  3.0927  3.2063  0.001344 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+> printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
+     Estimate Std.Err Z value    Pr(>z)    
+[1,]  11.3092  2.8636  3.9493 7.837e-05 ***
+[2,]  11.2301  3.5301  3.1812  0.001467 ** 
+[3,]   9.9161  3.0927  3.2063  0.001344 ** 
+> # no stars, so no legend
+> printCoefmat(cmat, signif.stars = FALSE)
+     Estimate Std.Err Z value    Pr(>z)
+[1,]  11.3092  2.8636  3.9493 7.837e-05
+[2,]  11.2301  3.5301  3.1812  0.001467
+[3,]   9.9161  3.0927  3.2063  0.001344
+> printCoefmat(cmat, signif.stars = TRUE, signif.legend = TRUE)
+     Estimate Std.Err Z value    Pr(>z)    
+[1,]  11.3092  2.8636  3.9493 7.837e-05 ***
+[2,]  11.2301  3.5301  3.1812  0.001467 ** 
+[3,]   9.9161  3.0927  3.2063  0.001344 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+> ## did not work in 2.1.0
+> 

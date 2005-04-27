@@ -105,6 +105,11 @@ BUG FIXES
 	there were installed packages with titles invalid in the
 	current locale.
 
+    o	printCoefmat(signif.legend = FALSE) was non-functional. (PR#7802)
+
+    o	Some as.date.frame() methods failed because the expression
+	deparsed into multiple lines. (PR#7808)
+
 
 
 		CHANGES IN R VERSION 2.1.0
