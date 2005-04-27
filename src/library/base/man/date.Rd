@@ -10,6 +10,9 @@
   length 24, since it relies on POSIX's \code{ctime} ensuring the above
   fixed format.  Timezone and Daylight Saving Time are taken account of,
   but \emph{not} indicated in the result.
+
+  The day and month abbreviations are always in English, irrespsective
+  of locale.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
