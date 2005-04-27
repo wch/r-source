@@ -57,7 +57,7 @@ Options:
   -d, --debugger=NAME   Run R through debugger NAME
   --debugger-args=ARGS  Pass ARGS as arguments to the debugger
   -g, --gui=TYPE	Use TYPE as GUI; possible values are 'X11'
-			(default), 'none', 'Tk' and 'gnome'
+			(default), 'Tk' and (with package gnomeGUI) 'gnome'
   --args                Skip the rest of the command line
 
 Commands:

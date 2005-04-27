@@ -1971,29 +1971,13 @@ on a 32-bit platform but not on a 64-bit platform.
 @subsection Using gfortran
 
 @command{gfortran} is the F95 compiler that is part of @code{gcc
-4.x.y}.@footnote{unreleased at the time of writing (April 2005) but
-already part of several Linux distributions. @command{gfortran} has also
-been available separately.}  At least on @code{ix86} and @code{x86_64}
+4.x.y}.  At least on @code{ix86} and @code{x86_64}
 Linux and MacOS X there is a problem with using the dynamic version of
 the Fortran runtime @code{libgfortran}: if this is loaded redirection of
 C @file{stdin} (which @R{} uses in many of its scripts) becomes
-non-functional.  A workaround is to use the static version of
-@code{libgfortran} if possible.@footnote{On some platforms,
-e.g. @code{x86_64},  this will not have been compiled with PIC flags and
-so it will not be possible.}  One way to do so is to set @code{FLIBS}
-@emph{before} configuration, for example (and only an example)
-@example
-FLIBS=/usr/local/lib/libgfortran.a
-@end example
-on the @command{configure} command-line.
-
-It may be possible to work around this by setting the environment
+non-functional.  A workaround is to set the environment
 variable @env{GFORTRAN_STDIN_UNIT} to @code{-1}, but versions before 10
 April 2005 had a bug causing the setting to be ignored.
-
-Note: loading a package linked against the dynamic version of
-@code{libgfortran} is sufficient to cause the problem, so it is
-essential to ensure that @emph{all} occurrences are static.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
@@ -2128,11 +2112,10 @@ this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.
 
-Several Linux distributions have shipped versions of the currently
-unreleased @code{gcc 4.0.0} and its Fortran compiler @command{gfortran}
+Several Linux distributions have shipped unreleased versions of 
+@code{gcc 4.0.0} and its Fortran compiler @command{gfortran}
 (see the separate comments).  Some versions of @code{gcc4} such as that
-in Fedora Core 3 produce incorrect code, and those of April 2005 were
-unable to compile some parts of R with full optimization.  In our
+in Fedora Core 3 produce incorrect code.  In our
 experiments @code{gcc 3.4.3} always produced faster and more reliable
 code.
 
