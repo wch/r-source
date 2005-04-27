@@ -11,6 +11,9 @@
 
 USER-VISIBLE CHANGES
 
+    o	plot(<lm object>) uses a new default for the forth panel when
+	'which' is not specified.
+
 
 NEW FEATURES
 
@@ -26,6 +29,13 @@ NEW FEATURES
 
     o	barplot() now has arguments 'log = ""' and 'add = FALSE'
 	(as in barplot2() from package 'gplots').
+
+    o	smooth.spline() has a new argument 'keep.data' which allows to
+	provide residuals() and fitted() methods fitted smoothing splines.
+
+    o	plot.lm() has two new plots (for 'which' = 5 or 6), plotting
+	residuals or cook distances versus (transformed) leverages.
+	The default for 'sub.caption' is now better for long calls.
 
 
 DEPRECATED & DEFUNCT
@@ -1080,7 +1090,7 @@ BUG FIXES
 
     o	"dist" objects of length 0 failed to print.
 
-    o   INSTALL and the libR try harder to find a temporary directory
+    o	INSTALL and the libR try harder to find a temporary directory
 	(since there might be one left over with the same PID).
 
     o	acf() could cause a segfault with some datasets.  (PR#7771)
@@ -1414,9 +1424,9 @@ BUG FIXES
     o	Function getGroupMembers(), part of the definition of S4
 	classes, had been promised for release 2.0, but slipped through.
 
-    o   toLatex(sessionInfo()) produced incorrect LaTeX on some
-        platforms due to special characters in the platform
-        identifier.
+    o	toLatex(sessionInfo()) produced incorrect LaTeX on some
+	platforms due to special characters in the platform
+	identifier.
 
 
 
