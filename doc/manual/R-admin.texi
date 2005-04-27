@@ -234,6 +234,7 @@ of this chapter we consider only building from the sources.
 * Simple compilation::          
 * Making the manuals::          
 * Installation::                
+* Uninstallation::              
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
@@ -442,7 +443,7 @@ can be overridden by setting the environment variable @code{R_RD4PDF}.
 e.g. for printing.
 
 
-@node Installation,  , Making the manuals, Installing R under Unix-alikes
+@node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
 @cindex Installation
 
@@ -500,7 +501,9 @@ make prefix=/path/to/here install
 at least with GNU @command{make}.
 
 More precise control is available at configure time via options: see
-@command{configure --help} for details.
+@command{configure --help} for details.  (However, most of them are
+currently ignored, but @code{bindir} and @code{mandir} are supported.)
+
 
 @cindex Manuals, installing
 
@@ -513,9 +516,20 @@ make install-pdf
 @end example
 
 @noindent
+Once again, it is optional to specify @code{prefix}.
+
 To ensure that the installed tree is usable by the right group of users,
 set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
 the sources and throughout the build process.
+
+@node Uninstallation,  , Installation, Installing R under Unix-alikes
+@section Uninstallation
+
+You can uninstall @R{} by
+
+@example
+make uninstall
+@end example
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
@@ -1170,8 +1184,8 @@ Some variables that may be used include:
 where the package should be installed.
 @end itemize
 For a complete list of variables, see the @file{M*} files in
-@file{@var{R_HOME}/src/gnuwin32}.  The @code{PKG_*} files are those typically
-included in @file{Makevars} files.
+@file{@var{R_HOME}/src/gnuwin32}.  The @code{PKG_*} flags are those
+typically included in @file{Makevars} files.
 
 @node Customizing compilation under Unix,  , Customising compilation in Windows, Installing packages
 @subsection Customizing compilation under Unix
@@ -2898,7 +2912,7 @@ options.
 
 It seems that @samp{gcc 3.4.x} on @samp{ix86} Linux defeats attempts by
 the LAPACK code to avoid computations entirely in extended-precision
-registers, so file @file{src/modules/lapack/dlamc.f} may need to
+registers, so file @file{src/modules/lapack/dlamc.f} may need to be
 compiled without optimization.  If configure detects @acronym{GNU}
 Fortran it adds flag @option{-ffloat-store} which suffices, but it is
 possible that @file{src/modules/lapack/Makefile} will need to be edited
