@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 09:33\n"
+"POT-Creation-Date: 2005-04-27 14:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,6 +39,18 @@ msgid "invalid 'usr'"
 msgstr ""
 
 msgid "'height' must be a vector or a matrix"
+msgstr ""
+
+msgid "Cannot use shading lines in bars when log scale is used"
+msgstr ""
+
+msgid "log scale error: at least one 'height + offset' value <= 0"
+msgstr ""
+
+msgid "log scale error: 'xlim' <= 0"
+msgstr ""
+
+msgid "log scale error: 'ylim' <= 0"
 msgstr ""
 
 msgid "incorrect number of names"
