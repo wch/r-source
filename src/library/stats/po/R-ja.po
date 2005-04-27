@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:42\n"
+"POT-Creation-Date: 2005-04-27 14:58\n"
 "PO-Revision-Date: 2005-03-23 17:00+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -723,9 +723,6 @@ msgstr ""
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "ポアソンファミリには負の値は許されません"
-
-msgid "non-integer counts in a Poisson glm!"
-msgstr "ポアソン glm 中に整数でないカウントがありました!"
 
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are "
@@ -2030,6 +2027,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "non-integer counts in a Poisson glm!"
+#~ msgstr "ポアソン glm 中に整数でないカウントがありました!"
 
 #~ msgid "'if 'x' is not a matrix, 'y' must be given"
 #~ msgstr "'x' が行列でなければ、'y' を与えなければなりません"

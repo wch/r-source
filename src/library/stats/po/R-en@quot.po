@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:42\n"
-"PO-Revision-Date: 2005-04-09 17:42\n"
+"POT-Creation-Date: 2005-04-27 14:58\n"
+"PO-Revision-Date: 2005-04-27 14:58\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -739,9 +739,6 @@ msgstr ""
 
 msgid "negative values not allowed for the Poisson family"
 msgstr "negative values not allowed for the Poisson family"
-
-msgid "non-integer counts in a Poisson glm!"
-msgstr "non-integer counts in a Poisson glm!"
 
 msgid ""
 "link \"%s\" not available for quasipoisson family; available links are "
