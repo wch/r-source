@@ -234,6 +234,7 @@ of this chapter we consider only building from the sources.
 * Simple compilation::          
 * Making the manuals::          
 * Installation::                
+* Uninstallation::              
 @end menu
 
 @node Simple compilation, Making the manuals, Installing R under Unix-alikes, Installing R under Unix-alikes
@@ -442,7 +443,7 @@ can be overridden by setting the environment variable @code{R_RD4PDF}.
 e.g. for printing.
 
 
-@node Installation,  , Making the manuals, Installing R under Unix-alikes
+@node Installation, Uninstallation, Making the manuals, Installing R under Unix-alikes
 @section Installation
 @cindex Installation
 
@@ -500,7 +501,19 @@ make prefix=/path/to/here install
 at least with GNU @command{make}.
 
 More precise control is available at configure time via options: see
-@command{configure --help} for details.
+@command{configure --help} for details.  (However, most of them are
+currently ignored, but @code{bindir} and @code{mandir} are supported.)
+
+If you have made @R{} as a shared library you can install it in our
+system's library directory by
+
+@example
+make prefix=/path/to/here install-libR
+@end example
+
+@noindent
+where @code{prefix} is optional.
+
 
 @cindex Manuals, installing
 
@@ -513,9 +526,20 @@ make install-pdf
 @end example
 
 @noindent
+Once again, it is optional to specify @code{prefix}.
+
 To ensure that the installed tree is usable by the right group of users,
 set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
 the sources and throughout the build process.
+
+@node Uninstallation,  , Installation, Installing R under Unix-alikes
+@section Uninstallation
+
+You can uninstall @R{} by
+
+@example
+make uninstall
+@end example
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
