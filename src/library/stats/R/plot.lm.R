@@ -2,7 +2,7 @@ plot.lm <-
 function (x, which = c(1:3,5), ## was which = 1:4,
 	  caption = c("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
-	  "Residuals vs Leverage", "Cook's distance vs Leverage"),
+	  "Residuals vs Leverages", "Cook's distance vs Leverage"),
 	  panel = points, sub.caption = NULL, main = "",
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
@@ -152,60 +152,65 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	    ylim <- ylim + c(-1, 1) * 0.08 * diff(ylim)
 	    show.r <- order(-cook)[iid]
 	}
-	plot(hatval, rs, ylim = ylim, main = main,
-	     xlab = "Leverages", ylab = ylab23,
-	     type="n", ...)
+        r.hat <- range(hatval, na.rm = TRUE) # though should never have NA
+	plot(hatval, rs, xlim = c(0, r.hat[2]), ylim = ylim,
+	     main = main, xlab = "Leverages", ylab = ylab23, type = "n", ...)
 	panel(hatval, rs, ...)
+        abline(h = 0, v = 0, lty = 3, col = "gray")
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	p <- length(coef(x))
-	for(crit in cook.levels){
-	    curve(sqrt(crit*p*(1-x)/x), lty=2, add=T)
-	    curve(-sqrt(crit*p*(1-x)/x), lty=2, add=T)
+        hh <- seq(min(r.hat[1], r.hat[2]/100), r.hat[2], length = 101)
+	for(crit in cook.levels) {
+	    lines(hh, sqrt(crit*p*(1-hh)/hh), lty=2)
+	    lines(hh,-sqrt(crit*p*(1-hh)/hh), lty=2)
 	}
-	xmax <- par()$usr[2]
+	xmax <- par("usr")[2]
 	ymult <- sqrt(p*(1-xmax)/xmax)
 	aty <- c(-sqrt(rev(cook.levels))*ymult, sqrt(cook.levels)*ymult)
-	axis(4, at=aty, labels=paste(c(rev(cook.levels), cook.levels)),
-	     mgp=c(.25,.25,0), las=2, tck=0, cex.axis=cex.id)
+	axis(4, at = aty, labels = paste(c(rev(cook.levels), cook.levels)),
+	     mgp = c(.25,.25,0), las = 2, tck = 0, cex.axis = cex.id)
 	mtext(caption[5], 3, 0.25)
 	if (id.n > 0) {
 	    y.id <- rs[show.r]
 	    y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
-	    text(hatval[show.r], y.id, paste(show.r), pos=2, cex=cex.id, offset=0.25)
+	    text(hatval[show.r], y.id, paste(show.r),
+		 cex = cex.id, pos = 2, offset = 0.25)
 	}
     }
     if (show[6]) {
 	ymx <- max(cook)*1.025
 	g <- hatval/(1-hatval)
-	plot(g, cook, ylim = c(0, ymx), main = main, xlab = "Leverage",
-	     xaxt = "n", xlim=c(0, max(g)),
-	     ylab = "Cook's distance", type="n", ...)
+	plot(g, cook, xlim = c(0, max(g)), ylim = c(0, ymx),
+	     main = main, xlab = "Leverage", ylab = "Cook's distance",
+	     xaxt = "n", type = "n", ...)
 	athat <- pretty(hatval)
-	axis(1, at=athat/(1-athat), labels=paste(athat))
+	axis(1, at = athat/(1-athat), labels = paste(athat))
 	panel(g, cook, ...)
 	if (one.fig)
 	    title(sub = sub.caption, ...)
 	p <- length(coef(x))
 	bval <- pretty(sqrt(p*cook/g), 5)
-	xmax <- par()$usr[2]
-	ymax <- par()$usr[4]
+
+	usr <- par("usr")
+	xmax <- usr[2]
+	ymax <- usr[4]
 	for(i in 1:length(bval)) {
 	    bi2 <- bval[i]^2
 	    if(ymax > bi2*xmax) {
 		xi <- xmax + strwidth(" ")/3
 		yi <- bi2*xi
-		abline(0, bi2, lty=2)
-		text(xi, yi, paste(bval[i]), adj=0, xpd=T)
-	    } else
-	{
-	    yi <- ymax - 1.5*strheight(" ")
-	    xi <- yi/bi2
-	    lines(c(0, xi), c(0, yi), lty=2)
-	    text(xi, ymax-0.8*strheight(" "), paste(bval[i]), adj=0.5, xpd=T)
+		abline(0, bi2, lty = 2)
+		text(xi, yi, paste(bval[i]), adj = 0, xpd = TRUE)
+	    } else {
+		yi <- ymax - 1.5*strheight(" ")
+		xi <- yi/bi2
+		lines(c(0, xi), c(0, yi), lty = 2)
+		text(xi, ymax-0.8*strheight(" "), paste(bval[i]),
+		     adj = 0.5, xpd = TRUE)
+	    }
 	}
-	}
-	xmax <- par()$usr[2]
+
 	## axis(4, at=p*cook.levels, labels=paste(c(rev(cook.levels), cook.levels)),
 	##	mgp=c(.25,.25,0), las=2, tck=0, cex.axis=cex.id)
 	mtext(caption[6], 3, 0.25)
