@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-14 07:40\n"
-"PO-Revision-Date: 2005-03-14 07:40\n"
+"POT-Creation-Date: 2005-04-28 06:47\n"
+"PO-Revision-Date: 2005-04-28 06:47\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1275,6 +1275,12 @@ msgstr "‘cmd’ could not be run"
 
 msgid "'cmd' execution failed with error code %d"
 msgstr "‘cmd’ execution failed with error code %d"
+
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr "package ‘%s’ has a non-function ‘.First.lib’"
+
+msgid "cannot find name space environment"
+msgstr "cannot find name space environment"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
