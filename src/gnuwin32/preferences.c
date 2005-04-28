@@ -279,7 +279,7 @@ static void save(button b)
     char *file, buf[256], *p;
     FILE *fp;
 
-    setuserfilter(G_("All files (*.*)\0*.*\0\0"));
+    setuserfilter("All files (*.*)\0*.*\0\0");
     strcpy(buf, getenv("R_USER"));
     file = askfilesavewithdir(G_("Select directory for file 'Rconsole'"),
 			      "Rconsole", buf);

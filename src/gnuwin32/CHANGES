@@ -17,10 +17,10 @@ with *three* slashes.
 
 
 
-R 2.0.1 patched
+R 2.1.0 patched
 ===============
 
-A menu item has been added to RSiteSearch().
+A menu item has been added for RSiteSearch().
 
 localeToCharset() was failing on some unknown (to the maintainers)
 locales such as
@@ -28,6 +28,9 @@ locales such as
 	LC_TYPE=Chinese_People's Republic of China.936
 
 and that affected example().
+
+Translation of the filters in file load/save dialog spaces was being
+handled incorrectly by gettext, and is now not attempted.
 
 
 
