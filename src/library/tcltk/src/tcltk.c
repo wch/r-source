@@ -844,7 +844,22 @@ RTcl_ReadConsole (char *prompt, unsigned char *buf, int len,
     if (code != TCL_OK)
 	return 0;
     else
+#ifdef SUPPORT_MBCS
+    {
+	    char *buf_utf8;
+	    Tcl_DString buf_utf8_ds;
+	    Tcl_DStringInit(&buf_utf8_ds);
+	    buf_utf8 =
+		    Tcl_UtfToExternalDString(NULL,
+		    			     Tcl_GetStringResult(RTcl_interp),
+					     len,
+					     &buf_utf8_ds);
+            strncpy((char *)buf, buf_utf8, len);
+	    Tcl_DStringFree(&buf_utf8_ds);
+    }
+#else /* SUPPORT_MBCS */
 	strncpy((char *)buf, (char *) Tcl_GetStringResult(RTcl_interp), len);
+#endif /* SUPPORT_MBCS */
 
     /* At some point we need to figure out what to do if the result is
      * longer than "len"... For now, just truncate. */
@@ -861,10 +876,21 @@ static void
 RTcl_WriteConsole (char *buf, int len)
 {
     Tcl_Obj *cmd[2];
+#ifdef SUPPORT_MBCS
+    char *buf_utf8;
+    Tcl_DString  buf_utf8_ds;
+
+    Tcl_DStringInit(&buf_utf8_ds);
+    buf_utf8 = Tcl_ExternalToUtfDString(NULL, buf, -1, &buf_utf8_ds);
+#endif /* SUPPORT_MBCS */
 
     /* Construct command */
     cmd[0] = Tcl_NewStringObj("Rc_write", -1);
+#ifdef SUPPORT_MBCS
+    cmd[1] = Tcl_NewStringObj(buf_utf8, -1);
+#else /* SUPPORT_MBCS */
     cmd[1] = Tcl_NewStringObj(buf, len);
+#endif /* SUPPORT_MBCS */
 
     Tcl_IncrRefCount(cmd[0]);
     Tcl_IncrRefCount(cmd[1]);
@@ -873,6 +899,9 @@ RTcl_WriteConsole (char *buf, int len)
 
     Tcl_DecrRefCount(cmd[0]);
     Tcl_DecrRefCount(cmd[1]);
+#ifdef SUPPORT_MBCS
+    Tcl_DStringFree(&buf_utf8_ds);
+#endif /* SUPPORT_MBCS */
 }
 
 /* Indicate that input is coming from the console */
