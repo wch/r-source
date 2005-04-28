@@ -751,9 +751,8 @@ function(x, ...)
         for(fname in names(functions_in_usages_not_in_code)) {
             ## <FIXME>
             ## Use message() eventually ...
-            writeLines(paste("Functions/methods with usage in",
-                             "documentation object", sQuote(fname),
-                             "but not in code:"))
+            writeLines(gettextf("Functions/methods with usage in documentation object '%s' but not in code:",
+                                fname))
             .pretty_print(unique(functions_in_usages_not_in_code[[fname]]))
             writeLines("")
             ## </FIXME>
@@ -774,8 +773,8 @@ function(x, ...)
         }
     }
     for(fname in names(x)) {
-        writeLines(paste("Codoc mismatches from documentation object ",
-                         sQuote(fname), ":", sep = ""))
+        writeLines(gettextf("Codoc mismatches from documentation object '%s':",
+                            fname))
         xfname <- x[[fname]]
         for(i in seq(along = xfname))
             writeLines(c(xfname[[i]][["name"]],
@@ -919,11 +918,10 @@ function(x, ...)
         return(invisible(x))
     formatArgs <- function(s) paste(s, collapse = " ")
     for (docObj in names(x)) {
-        writeLines(paste("S4 class codoc mismatches from ",
-                         "documentation object ", sQuote(docObj), ":",
-                         sep = ""))
+        writeLines(gettextf("S4 class codoc mismatches from documentation object '%s':",
+                            docObj))
         docObj <- x[[docObj]]
-        writeLines(c(paste("Slots for class", sQuote(docObj[["name"]])),
+        writeLines(c(gettextf("Slots for class '%s'", docObj[["name"]]),
                      strwrap(paste("Code:",
                                    formatArgs(docObj[["code"]])),
                              indent = 2, exdent = 8),
@@ -1090,13 +1088,12 @@ print.codocData <-
 function(x, ...)
 {
     formatArgs <- function(s) paste(s, collapse = " ")
-    for (docObj in names(x)) {
-        writeLines(paste("Data codoc mismatches from ",
-                         "documentation object ", sQuote(docObj), ":",
-                         sep = ""))
+    for(docObj in names(x)) {
+        writeLines(gettextf("Data codoc mismatches from documentation object '%s':",
+                            docObj))
         docObj <- x[[docObj]]
-        writeLines(c(paste("Variables in data frame",
-                           sQuote(docObj[["name"]])),
+        writeLines(c(gettextf("Variables in data frame '%s'",
+                              docObj[["name"]]),
                      strwrap(paste("Code:",
                                    formatArgs(docObj[["code"]])),
                              indent = 2, exdent = 8),
@@ -1308,33 +1305,29 @@ function(package, dir, lib.loc = NULL)
 print.checkDocFiles <-
 function(x, ...)
 {
-    for(docObj in names(x)) {
-        arg_names_in_usage_missing_in_arg_list <- x[[docObj]][["missing"]]
+    for(doc_obj in names(x)) {
+        arg_names_in_usage_missing_in_arg_list <- x[[doc_obj]][["missing"]]
         if(length(arg_names_in_usage_missing_in_arg_list) > 0) {
-            writeLines(paste("Undocumented arguments",
-                             " in documentation object ",
-                             sQuote(docObj), ":", sep = ""))
+            writeLines(gettextf("Undocumented arguments in documentation object '%s'",
+                                doc_obj))
             .pretty_print(unique(arg_names_in_usage_missing_in_arg_list))
         }
-        duplicated_args_in_arg_list <- x[[docObj]][["duplicated"]]
+        duplicated_args_in_arg_list <- x[[doc_obj]][["duplicated"]]
         if(length(duplicated_args_in_arg_list) > 0) {
-            writeLines(paste("Duplicated \\argument entries",
-                             " in documentation object ",
-                             sQuote(docObj), ":", sep = ""))
+            writeLines(gettextf("Duplicated \\argument entries in documentation object '%s':",
+                                doc_obj))
             .pretty_print(duplicated_args_in_arg_list)
         }
-        arg_names_in_arg_list_missing_in_usage <- x[[docObj]][["overdoc"]]
+        arg_names_in_arg_list_missing_in_usage <- x[[doc_obj]][["overdoc"]]
         if(length(arg_names_in_arg_list_missing_in_usage) > 0) {
-            writeLines(paste("Documented arguments not in \\usage",
-                             " in documentation object ",
-                             sQuote(docObj), ":", sep = ""))
+            writeLines(gettextf("Documented arguments not in \\usage in documentation object '%s':",
+                                doc_obj))
             .pretty_print(unique(arg_names_in_arg_list_missing_in_usage))
         }
-        functions_not_in_aliases <- x[[docObj]][["unaliased"]]
+        functions_not_in_aliases <- x[[doc_obj]][["unaliased"]]
         if(length(functions_not_in_aliases) > 0) {
-            writeLines(paste("Objects in \\usage without \\alias",
-                             " in documentation object ",
-                             sQuote(docObj), ":", sep = ""))
+            writeLines(gettextf("Objects in \\usage without \\alias in documentation object '%s':",
+                                doc_obj))
             .pretty_print(unique(functions_not_in_aliases))
         }
 
@@ -1344,8 +1337,11 @@ function(x, ...)
     if(identical(as.logical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_")),
                  TRUE)
        && length(bad_lines <- attr(x, "bad_lines"))) {
-        writeLines(paste("Bad \\usage lines found:\n"))
-        print(bad_lines)
+        for(doc_obj in names(bad_lines)) {
+            writeLines(gettextf("Bad \\usage lines found in documentation object '%s':",
+                                doc_obj))
+            writeLines(paste(" ", bad_lines[[doc_obj]]))
+        }
     }
 
     invisible(x)
@@ -1581,9 +1577,8 @@ function(x, ...) {
         ## </NOTE>
         methods_with_full_name <- x[[docObj]][["withFullName"]]
         if(length(methods_with_full_name > 0)) {
-            writeLines(paste("S3 methods shown with full name in ",
-                             "documentation object ",
-                             sQuote(docObj), ":", sep = ""))
+            writeLines(paste("S3 methods shown with full name in documentation object '%s':",
+                             docObj))
             writeLines(strwrap(paste(methods_with_full_name,
                                      collapse = " "),
                                indent = 2, exdent = 2))
@@ -1724,8 +1719,7 @@ print.checkFF <-
 function(x, ...)
 {
     if(length(x) > 0) {
-        writeLines(paste("Foreign function calls without",
-                         sQuote("PACKAGE"), "argument:"))
+        writeLines(gettextf("Foreign function calls without 'PACKAGE' argument:"))
         for(i in seq(along = x)) {
             writeLines(paste(deparse(x[[i]][[1]]),
                              "(",
@@ -2281,7 +2275,7 @@ print.checkTnF <-
 function(x, ...)
 {
     for(fname in names(x)) {
-        writeLines(paste("File ", sQuote(fname), ":", sep = ""))
+        writeLines(gettextf("File '%s':", fname))
         xfname <- x[[fname]]
         for(i in seq(along = xfname)) {
             writeLines(strwrap(paste("found T/F in",
@@ -2597,12 +2591,12 @@ function(x, ...)
         if(length(bad)) {
             writeLines("Rd files with likely Rd problems:")
             for(i in seq(along = bad)) {
-                writeLines(paste("Unaccounted top-level text in file ",
-                                 sQuote(names(bad)[i]), ":", sep = ""))
+                writeLines(gettextf("Unaccounted top-level text in file '%s':",
+                                    names(bad)[i]))
                 tags <- names(bad[[i]])
                 if(any(ind <- tags != ""))
-                    tags[ind] <- paste("Following section",
-                                       sQuote(tags[ind]))
+                    tags[ind] <- gettextf("Following section '%s'",
+                                          tags[ind])
                 tags[!ind] <- "Preceding all sections"
                 vals <- as.character(bad[[i]])
                 long <- nchar(vals, type="c") >= 128  # Why 128?  Why not?
@@ -2648,15 +2642,13 @@ function(x, ...)
     }
 
     if(length(x$files_with_bad_name)) {
-        writeLines(c(paste("Rd files with missing or empty ",
-                           sQuote("\\name"), ":", sep = ""),
+        writeLines(c(gettextf("Rd files with missing or empty '\\name':"),
                      paste(" ", x$files_with_bad_name),
                      ""))
     }
 
     if(length(x$files_with_bad_title)) {
-        writeLines(c(paste("Rd files with missing or empty ",
-                           sQuote("\\title"), ":", sep = ""),
+        writeLines(c(gettextf("Rd files with missing or empty '\\title':"),
                      paste(" ", x$files_with_bad_title),
                      ""))
     }
@@ -2665,22 +2657,22 @@ function(x, ...)
         bad <- x$files_with_missing_mandatory_tags
         bad <- split(bad[, 1], bad[, 2])
         for(i in seq(along = bad)) {
-            writeLines(c(paste("Rd files without ",
-                               sQuote(names(bad)[i]), ":", sep = ""),
+            writeLines(c(gettextf("Rd files without '%s':",
+                                  names(bad)[i]),
                          paste(" ", bad[[i]])))
         }
-        writeLines("These entries are required in an Rd file.\n")
+        writeLines(gettext("These entries are required in an Rd file.\n"))
     }
 
     if(length(x$files_with_duplicated_unique_tags)) {
         bad <- x$files_with_duplicated_unique_tags
         bad <- split(bad[, 1], bad[, 2])
         for(i in seq(along = bad)) {
-            writeLines(c(paste("Rd files with duplicate ",
-                               sQuote(names(bad)[i]), ":", sep = ""),
+            writeLines(c(gettextf("Rd files with duplicate '%s':",
+                                  names(bad)[i]),
                          paste(" ", bad[[i]])))
         }
-        writeLines("These entries must be unique in an Rd file.\n")
+        writeLines(gettext("These entries must be unique in an Rd file.\n"))
     }
 
     if(length(x$files_with_bad_keywords)) {
@@ -2693,12 +2685,8 @@ function(x, ...)
                                      "\n", sep = ""),
                                indent = 2, exdent = 4))
         }
-        msg <- paste("Each", sQuote("\\keyword"),
-                     "entry should specify one of the standard",
-                     "keywords (as listed in file",
-                     sQuote("KEYWORDS.db"), "in the",
-                     sQuote("doc"), "subdirectory of the",
-                     "R home directory).")
+        msg <-
+            gettext("Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory).")
         writeLines(c(strwrap(msg), ""))
     }
 
@@ -2897,36 +2885,20 @@ function(x, ...)
         if(length(bad$bad_dep_entry)) {
             tmp <- c("Offending entries:",
                      paste(" ", bad$bad_dep_entry),
-                     strwrap(paste("Entries must be names of packages ",
-                                   "optionally followed by ",
-                                   sQuote("<="),
-                                   " or ",
-                                   sQuote(">="),
-                                   ", white space, and a valid ",
-                                   "version number in parentheses.",
-                                   sep = "")))
+                     strwrap(gettextf("Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses.")))
             writeLines(tmp)
         }
         if(length(bad$bad_dep_op)) {
             tmp <- c("Entries with infeasible comparison operator:",
                      paste(" ", bad$bad_dep_entry),
-                     strwrap(paste("Only operators", sQuote("<="),
-                                   "and", sQuote(">="),
-                                   "are possible.")))
+                     strwrap(gettextf("Only operators '<=' and '>=' are possible.")))
 
             writeLines(tmp)
         }
         if(length(bad$bad_dep_version)) {
             tmp <- c("Entries with infeasible version number:",
                      paste(" ", bad$bad_dep_version),
-                     strwrap(paste("Version numbers must be sequences ",
-                                   "of at least two non-negative ",
-                                   "integers, separated by single ",
-                                   sQuote("."),
-                                   " or ",
-                                   sQuote("-"),
-                                   ".",
-                                   sep = "")))
+                     strwrap(gettextf("Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'.")))
             writeLines(tmp)
         }
         writeLines("")
@@ -2935,18 +2907,11 @@ function(x, ...)
         writeLines(c("Package name and namespace differ.", ""))
     if(length(x$bad_priority))
         writeLines(c("Invalid Priority field.",
-                     strwrap(paste("Packages with priorities 'base'",
-                                   "or 'recommended' or 'defunct-base'",
-                                   "must already be known to R.")),
+                     strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
                      ""))
 
     if(any(as.integer(sapply(x, length))))
-        writeLines(c(strwrap(paste("See the information on DESCRIPTION",
-                                   "files in section",
-                                   sQuote("Creating R packages"),
-                                   "of the",
-                                   sQuote("Writing R Extensions"),
-                                   "manual.")),
+        writeLines(c(strwrap(gettextf("See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual.")),
                      ""))
 
     invisible(x)
@@ -3199,3 +3164,4 @@ function(x)
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
 ### End: ***
+
