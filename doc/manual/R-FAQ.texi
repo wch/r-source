@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-27
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-28
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -3063,6 +3063,10 @@ Self-Organizing Maps (with application in gene clustering).
 @item sound
 A sound interface for R: Basic functions for dealing with @file{.wav}
 files and sound samples.
+@item sp
+A package that provides classes and methods for spatial data, including
+utility functions for plotting data as maps, spatial selection, amd much
+more.
 @item spatial
 Functions for kriging and point pattern analysis from ``Modern Applied
 Statistics with S'' by W. Venables and B. Ripley.  Contained in the
