@@ -2392,6 +2392,8 @@ function(x, ...)
     if(length(bad <- x$missing_vignette_depends)) {
         writeLines("Vignette dependencies not required:")
         .pretty_print(bad)
+        msg <- gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")
+        writeLines(strwrap(msg))
         writeLines("")
     }
     if(length(bad <- x$missing_namespace_depends)) {
