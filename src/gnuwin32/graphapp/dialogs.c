@@ -355,7 +355,7 @@ static void browse_button(control c)
     ofn.lStructSize     = sizeof(OPENFILENAME);
     ofn.hwndOwner       = 0;
     ofn.hInstance       = 0;
-    ofn.lpstrFilter     = G_("All files (*.*)\0*.*\0\0");
+    ofn.lpstrFilter     = "All files (*.*)\0*.*\0\0";
     ofn.lpstrCustomFilter = NULL;
     ofn.nMaxCustFilter  = 0;
     ofn.nFilterIndex    = 0;
