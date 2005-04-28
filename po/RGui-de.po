@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-13 07:51+0100\n"
+"POT-Creation-Date: 2005-04-28 07:48+0100\n"
 "PO-Revision-Date: 2005-03-22 19:27+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -40,10 +40,6 @@ msgid ""
 msgstr ""
 "Schrift %s-%d-%d nicht gefunden.\n"
 "Nutze fixed Systemschrift"
-
-#: console.c:1773
-msgid "Text files (*.txt)"
-msgstr "Text Dateien (*.txt)"
 
 #: console.c:1775
 msgid "Save selection to"
@@ -300,7 +296,7 @@ msgstr ""
 "automatisch anzupassen\n"
 "\n"
 
-#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1125
+#: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1142
 msgid "Help"
 msgstr "Hilfe"
 
@@ -316,7 +312,7 @@ msgstr "Füge in ausgewählte Zelle ein"
 msgid "Autosize column"
 msgstr "Autosize Spalte"
 
-#: dataentry.c:1561 pager.c:293 rui.c:876
+#: dataentry.c:1561 pager.c:293 rui.c:891
 #: ../library/grDevices/src/devWindows.c:1589
 msgid "Stay on top"
 msgstr "Bleibe oben"
@@ -329,12 +325,12 @@ msgstr "Schließe"
 msgid "Data Editor"
 msgstr "Dateneditor"
 
-#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1075
+#: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
 #: ../library/grDevices/src/devWindows.c:1534
 msgid "File"
 msgstr "Datei"
 
-#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1096
+#: dataentry.c:1643 editor.c:681 pager.c:460 rui.c:1113
 msgid "Edit"
 msgstr "Bearbeiten"
 
@@ -422,12 +418,12 @@ msgstr "Rückgängig"
 msgid "Cut"
 msgstr "Ausschneiden"
 
-#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:866 rui.c:1040
-#: rui.c:1097
+#: editor.c:566 editor.c:687 pager.c:288 pager.c:461 rui.c:881 rui.c:1057
+#: rui.c:1114
 msgid "Copy"
 msgstr "Kopieren"
 
-#: editor.c:567 editor.c:689 rui.c:867 rui.c:1044 rui.c:1098
+#: editor.c:567 editor.c:689 rui.c:882 rui.c:1061 rui.c:1115
 msgid "Paste"
 msgstr "Einfügen"
 
@@ -435,11 +431,11 @@ msgstr "Einfügen"
 msgid "Delete"
 msgstr "Löschen"
 
-#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:873 rui.c:1102
+#: editor.c:570 editor.c:693 pager.c:291 pager.c:467 rui.c:888 rui.c:1119
 msgid "Select all"
 msgstr "Alles auswählen"
 
-#: editor.c:628 pager.c:414 rui.c:1028
+#: editor.c:628 pager.c:414 rui.c:1045
 msgid "Open script"
 msgstr "Öffne Skript"
 
@@ -455,16 +451,16 @@ msgstr "Gebe Fokus an Konsole zurück"
 msgid "Print script"
 msgstr "Drucke Skript"
 
-#: editor.c:645 pager.c:429 rui.c:1056
+#: editor.c:645 pager.c:429 rui.c:1073
 #: ../library/grDevices/src/devWindows.c:1496
 msgid "Print"
 msgstr "Drucken"
 
-#: editor.c:664 pager.c:451 rui.c:1077
+#: editor.c:664 pager.c:451 rui.c:1094
 msgid "New script"
 msgstr "Neues Skript"
 
-#: editor.c:666 pager.c:452 rui.c:1078
+#: editor.c:666 pager.c:452 rui.c:1095
 msgid "Open script..."
 msgstr "Öffne Skript..."
 
@@ -476,7 +472,7 @@ msgstr "Speichern"
 msgid "Save as..."
 msgstr "Speichern unter..."
 
-#: editor.c:673 pager.c:453 rui.c:1091
+#: editor.c:673 pager.c:453 rui.c:1108
 #: ../library/grDevices/src/devWindows.c:1592
 msgid "Print..."
 msgstr "Drucken..."
@@ -485,11 +481,11 @@ msgstr "Drucken..."
 msgid "Close script"
 msgstr "Schließe Skript"
 
-#: editor.c:679 rui.c:1094
+#: editor.c:679 rui.c:1111
 msgid "Exit"
 msgstr "Beenden"
 
-#: editor.c:695 rui.c:1103
+#: editor.c:695 rui.c:1120
 msgid "Clear console"
 msgstr "Leere Konsole"
 
@@ -505,7 +501,7 @@ msgstr "Finde..."
 msgid "Replace..."
 msgstr "Ersetze..."
 
-#: editor.c:707 rui.c:1107
+#: editor.c:707 rui.c:1124
 msgid "GUI preferences..."
 msgstr "GUI Einstellungen..."
 
@@ -553,7 +549,7 @@ msgstr "Einfügen in Konsole"
 msgid "Paste commands to console"
 msgstr "Einfügen der Befehle in Konsole"
 
-#: pager.c:455 rui.c:1092
+#: pager.c:455 rui.c:1109
 msgid "Save to File..."
 msgstr "Speichern in Datei..."
 
@@ -583,10 +579,6 @@ msgid ""
 "Proceed?"
 msgstr ""
 
-#: preferences.c:282 rui.c:158 rui.c:172 rui.c:1160 graphapp/dialogs.c:358
-msgid "All files (*.*)"
-msgstr "Alle Dateien (*.*)"
-
 #: preferences.c:284
 msgid "Select directory for file 'Rconsole'"
 msgstr ""
@@ -599,17 +591,9 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: rui.c:105
-msgid "R files (*.R)"
-msgstr "R Dateien (*.R)"
-
 #: rui.c:106
 msgid "Select file to source"
 msgstr "Wähle Datei zum Einlesen"
-
-#: rui.c:127 rui.c:143
-msgid "R images (*.RData)"
-msgstr "R Speicherabbilder (*.RData)"
 
 #: rui.c:128
 msgid "Select image to load"
@@ -653,256 +637,264 @@ msgid "Search help"
 msgstr "Durchsuche Hilfe"
 
 #: rui.c:494
+msgid "Search for words in help list archives and documentation"
+msgstr ""
+
+#: rui.c:509
 msgid "Apropos"
 msgstr "Apropos"
 
-#: rui.c:821
+#: rui.c:836
 #, c-format
 msgid "Error at line %d of file %s"
 msgstr "Fehler in Zeile %d von Datei %s"
 
-#: rui.c:862
+#: rui.c:877
 msgid "Can only drag-and-drop .R, .RData and .rda files"
 msgstr "Drag-and-Drop nur mit .R, .RData und .rda Dateien"
 
-#: rui.c:868 rui.c:1099
+#: rui.c:883 rui.c:1116
 msgid "Paste commands only"
 msgstr "Füge nur Befehle ein"
 
-#: rui.c:869 rui.c:1048
+#: rui.c:884 rui.c:1065
 msgid "Copy and paste"
 msgstr "Copy und Paste"
 
-#: rui.c:871
+#: rui.c:886
 msgid "Clear window"
 msgstr "Leere Fenster"
 
-#: rui.c:875 rui.c:1115
+#: rui.c:890 rui.c:1132
 msgid "Buffered output"
 msgstr "Zwischengespeicherte Ausgabe"
 
-#: rui.c:915
+#: rui.c:930
 msgid "Packages"
 msgstr "Pakete"
 
-#: rui.c:916
+#: rui.c:931
 msgid "Load package..."
 msgstr "Lade Paket..."
 
-#: rui.c:918
+#: rui.c:933
 msgid "Set CRAN mirror..."
 msgstr "Setze CRAN-Mirror..."
 
-#: rui.c:920
+#: rui.c:935
 msgid "Select repositories..."
 msgstr "Wähle Repositories..."
 
-#: rui.c:922
+#: rui.c:937
 msgid "Install package(s)..."
 msgstr "Installiere Paket(e)..."
 
-#: rui.c:924
-msgid "Update packages"
-msgstr "Aktualisiere Pakete"
+#: rui.c:939
+msgid "Update packages..."
+msgstr "Aktualisiere Pakete..."
 
-#: rui.c:927
+#: rui.c:942
 msgid "Install package(s) from local zip files..."
 msgstr "Installiere Paket(e) aus lokalen Zip-Dateien..."
 
-#: rui.c:944
+#: rui.c:959
 msgid "FAQ on R"
 msgstr "FAQ über R"
 
-#: rui.c:946
+#: rui.c:961
 msgid "FAQ on R for &Windows"
 msgstr "FAQ über R für Windows"
 
-#: rui.c:957 rui.c:960
+#: rui.c:972 rui.c:975
 msgid "Manuals (in PDF)"
 msgstr "Handbücher (PDF)"
 
-#: rui.c:961
+#: rui.c:976
 msgid "An &Introduction to R"
 msgstr "An &Introduction to R"
 
-#: rui.c:964
+#: rui.c:979
 msgid "R &Reference Manual"
 msgstr "R &Reference Manual"
 
-#: rui.c:967
+#: rui.c:982
 msgid "R Data Import/Export"
 msgstr "R Data Import/Export"
 
-#: rui.c:970
+#: rui.c:985
 msgid "R Language Definition"
 msgstr "R Language Definiton"
 
-#: rui.c:973
+#: rui.c:988
 msgid "Writing R Extensions"
 msgstr "Writing R Extensions"
 
-#: rui.c:976
+#: rui.c:991
 msgid "R Installation and Administration"
 msgstr "R Installation and Administration"
 
-#: rui.c:984
+#: rui.c:999
 msgid "R functions (text)..."
 msgstr "R Funktionen (Text)..."
 
-#: rui.c:985
+#: rui.c:1000
 msgid "Html help"
 msgstr "HTML Hilfe"
 
-#: rui.c:987
+#: rui.c:1002
 msgid "Search help..."
 msgstr "Durchsuche Hilfe..."
 
-#: rui.c:989
+#: rui.c:1003
+msgid "search.r-project.org ..."
+msgstr ""
+
+#: rui.c:1006
 msgid "Apropos..."
 msgstr "Apropos..."
 
-#: rui.c:991
+#: rui.c:1008
 msgid "R Project home page"
 msgstr "R Projekt Homepage"
 
-#: rui.c:992
+#: rui.c:1009
 msgid "CRAN home page"
 msgstr "CRAN Homepage"
 
-#: rui.c:994
+#: rui.c:1011
 msgid "About"
 msgstr "Über"
 
-#: rui.c:1032
+#: rui.c:1049
 msgid "Load image"
 msgstr "Lade Speicherabbild"
 
-#: rui.c:1036
+#: rui.c:1053
 msgid "Save image"
 msgstr "Sichere Speicherabbild"
 
-#: rui.c:1052
+#: rui.c:1069
 msgid "Stop current computation"
 msgstr "Aktuelle Berechnung abbrechen"
 
-#: rui.c:1076
+#: rui.c:1093
 msgid "Source R code..."
 msgstr "Lese R Code ein..."
 
-#: rui.c:1079
+#: rui.c:1096
 msgid "Display file(s)..."
 msgstr "Datei(en) anzeigen..."
 
-#: rui.c:1081
+#: rui.c:1098
 msgid "Load Workspace..."
 msgstr "Lade Workspace..."
 
-#: rui.c:1082
+#: rui.c:1099
 msgid "Save Workspace..."
 msgstr "Sichere Workspace..."
 
-#: rui.c:1084
+#: rui.c:1101
 msgid "Load History..."
 msgstr "Lade History..."
 
-#: rui.c:1086
+#: rui.c:1103
 msgid "Save History..."
 msgstr "Speichere History..."
 
-#: rui.c:1089
+#: rui.c:1106
 msgid "Change dir..."
 msgstr "Verzeichnis wechseln..."
 
-#: rui.c:1101
+#: rui.c:1118
 msgid "Copy and Paste"
 msgstr "Copy und Paste"
 
-#: rui.c:1105
+#: rui.c:1122
 msgid "Data editor..."
 msgstr "Dateneditor..."
 
-#: rui.c:1109
+#: rui.c:1126
 msgid "Misc"
 msgstr "Verschiedenes"
 
-#: rui.c:1110
+#: rui.c:1127
 msgid "Stop current computation           \tESC"
 msgstr "Aktuelle Berechnung abbrechen      \tESC"
 
-#: rui.c:1113
+#: rui.c:1130
 msgid "Break to debugger"
 msgstr "Abbruch zum Debugger"
 
-#: rui.c:1117
+#: rui.c:1134
 msgid "List objects"
 msgstr "Liste Objekte auf"
 
-#: rui.c:1118
+#: rui.c:1135
 msgid "Remove all objects"
 msgstr "Entferne alle Objekte"
 
-#: rui.c:1119
+#: rui.c:1136
 msgid "List &search path"
 msgstr "Liste Suchpfad auf"
 
-#: rui.c:1126
+#: rui.c:1143
 msgid "Console"
 msgstr "Konsole"
 
-#: rui.c:1161
+#: rui.c:1178
 msgid "Select file"
 msgstr "Wähle Datei"
 
-#: rui.c:1208
+#: rui.c:1225
 msgid "'mname' is limited to 100 chars"
 msgstr "'mname' ist auf 100 Zeichen begrenzt"
 
-#: rui.c:1248
+#: rui.c:1265
 #, c-format
 msgid "menu %s does not exist"
 msgstr "Menü %s existiert nicht"
 
-#: rui.c:1290
+#: rui.c:1307
 msgid "Only 16 menus are allowed"
 msgstr "Nur 16 Menüs erlaubt"
 
-#: rui.c:1294
+#: rui.c:1311
 msgid "'menu' is limited to 50 chars"
 msgstr "'menu' ist begrenzt auf 50 Zeichen"
 
-#: rui.c:1304
+#: rui.c:1321
 msgid "base menu does not exist"
 msgstr "Basismenü existiert nicht"
 
-#: rui.c:1319
+#: rui.c:1336
 msgid "failed to allocate menu"
 msgstr "Allokieren eines Menüs fehlgeschlagen"
 
-#: rui.c:1331
+#: rui.c:1348
 msgid "too many menu items have been created"
 msgstr "zu viele Menüeinträge erzeugt"
 
-#: rui.c:1335 rui.c:1446
+#: rui.c:1352 rui.c:1463
 msgid "menu + item is limited to 100 chars"
 msgstr "Menü + Eintrag sind auf 100 Zeichen begrenzt"
 
-#: rui.c:1343 rui.c:1415
+#: rui.c:1360 rui.c:1432
 msgid "menu does not exist"
 msgstr "Menü existiert nicht"
 
-#: rui.c:1361 rui.c:1374 rui.c:1379
+#: rui.c:1378 rui.c:1391 rui.c:1396
 msgid "failed to allocate char storage"
 msgstr "Allokieren von Speicher für Zeichen fehlgeschlagen"
 
-#: rui.c:1387
+#: rui.c:1404
 msgid "failed to allocate menuitem"
 msgstr "Allokieren von Menüeintrag fehlgeschlagen"
 
-#: rui.c:1436
+#: rui.c:1453
 msgid "menu not found"
 msgstr "Menü nicht gefunden"
 
-#: rui.c:1454
+#: rui.c:1471
 msgid "menu or item does not exist"
 msgstr "Menü oder Eintrag existieren nicht"
 
@@ -1194,6 +1186,18 @@ msgstr "Warte auf Bestätigung des Seitenwechsels..."
 #: ../library/grDevices/src/devWindows.c:2995
 msgid "Click or hit ENTER for next page"
 msgstr "Klicke oder Return für die nächste Seite"
+
+#~ msgid "Text files (*.txt)"
+#~ msgstr "Text Dateien (*.txt)"
+
+#~ msgid "All files (*.*)"
+#~ msgstr "Alle Dateien (*.*)"
+
+#~ msgid "R files (*.R)"
+#~ msgstr "R Dateien (*.R)"
+
+#~ msgid "R images (*.RData)"
+#~ msgstr "R Speicherabbilder (*.RData)"
 
 #~ msgid ""
 #~ "Font %s-%d-%d has variable width.\n"
