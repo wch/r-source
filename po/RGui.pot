@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02+0100\n"
+"POT-Creation-Date: 2005-04-28 07:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,10 +37,6 @@ msgstr ""
 msgid ""
 "Font %s-%d-%d  not found.\n"
 "Using system fixed font"
-msgstr ""
-
-#: console.c:1773
-msgid "Text files (*.txt)"
 msgstr ""
 
 #: console.c:1775
@@ -536,10 +532,6 @@ msgid ""
 "Proceed?"
 msgstr ""
 
-#: preferences.c:282 rui.c:158 rui.c:172 rui.c:1177 graphapp/dialogs.c:358
-msgid "All files (*.*)"
-msgstr ""
-
 #: preferences.c:284
 msgid "Select directory for file 'Rconsole'"
 msgstr ""
@@ -552,16 +544,8 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: rui.c:105
-msgid "R files (*.R)"
-msgstr ""
-
 #: rui.c:106
 msgid "Select file to source"
-msgstr ""
-
-#: rui.c:127 rui.c:143
-msgid "R images (*.RData)"
 msgstr ""
 
 #: rui.c:128
@@ -1045,17 +1029,14 @@ msgid "Jpeg"
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1542
-#, c-format
 msgid "50% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1543
-#, c-format
 msgid "75% quality..."
 msgstr ""
 
 #: ../library/grDevices/src/devWindows.c:1544
-#, c-format
 msgid "100% quality..."
 msgstr ""
 
