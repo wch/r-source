@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 14:58\n"
+"POT-Creation-Date: 2005-04-28 07:12\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1501,7 +1501,8 @@ msgstr "组数不够"
 msgid "use only with \"lm\" objects"
 msgstr "只对\"lm\"目标对象适用"
 
-msgid "'which' must be in 1:4"
+#, fuzzy
+msgid "'which' must be in 1:6"
 msgstr "'which'必需在1:4之间"
 
 msgid "'id.n' must be in {1,..,%d}"
@@ -1713,6 +1714,9 @@ msgstr "NA lev[];很可能平滑参数'spar'的值太大了!"
 
 msgid "setting df = 1  __use with care!__"
 msgstr "设定df = 1  小心使用!"
+
+msgid "need result of smooth.spline(*, keep.data=TRUE)"
+msgstr ""
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr " \"smooth.spline\"目标对象不对"

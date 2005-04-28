@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 14:58\n"
+"POT-Creation-Date: 2005-04-28 07:12\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1536,7 +1536,8 @@ msgstr "troppi pochi gruppi"
 msgid "use only with \"lm\" objects"
 msgstr "usare solo con oggetti \"lm\""
 
-msgid "'which' must be in 1:4"
+#, fuzzy
+msgid "'which' must be in 1:6"
 msgstr "'which' deve essere in 1:4"
 
 msgid "'id.n' must be in {1,..,%d}"
@@ -1749,6 +1750,9 @@ msgstr "NA lev[]; probabilmente il parametro di smothh 'spar' è troppo grande!"
 
 msgid "setting df = 1  __use with care!__"
 msgstr "uso df = 1 __usare con molta cautela!__"
+
+msgid "need result of smooth.spline(*, keep.data=TRUE)"
+msgstr ""
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr "oggetto \"smooth.spline\" non valido"

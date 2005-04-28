@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 14:58\n"
+"POT-Creation-Date: 2005-04-28 07:12\n"
 "PO-Revision-Date: 2005-03-23 17:00+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1516,7 +1516,8 @@ msgstr "グループが少なすぎます"
 msgid "use only with \"lm\" objects"
 msgstr "\"lm\" オブジェクトに対してだけ使用してください"
 
-msgid "'which' must be in 1:4"
+#, fuzzy
+msgid "'which' must be in 1:6"
 msgstr "'which' は 1:4 中になければなりません"
 
 msgid "'id.n' must be in {1,..,%d}"
@@ -1733,6 +1734,9 @@ msgstr "Na lev[ ]; おそらく平滑化パラメ‐タ 'spar'が大きすぎま
 
 msgid "setting df = 1  __use with care!__"
 msgstr "設定 df = 1 は注意して使わなければなりません！"
+
+msgid "need result of smooth.spline(*, keep.data=TRUE)"
+msgstr ""
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr "有効な \"smooth.spline\" オブジェクトではありません"
