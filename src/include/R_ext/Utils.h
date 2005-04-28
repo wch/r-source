@@ -96,7 +96,7 @@ int F77_SUB(interv)(double *xt, int *n, double *x,
 void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);
 
-/* ../../appl/massdist.c */
+/* ../../appl/maxcol.c */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes);
 
 #ifdef  __cplusplus
