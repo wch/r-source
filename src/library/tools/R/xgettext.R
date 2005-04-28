@@ -1,5 +1,6 @@
 xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
 {
+    bn <- basename(dir)
     dir <- file.path(dir, "R")
     exts <- .make_file_exts("code")
     R_files <- list_files_with_exts(dir, exts)
@@ -7,6 +8,11 @@ xgettext <- function(dir, verbose = FALSE, asCall = TRUE)
         OSdir <- file.path(dir, d)
         if(file_test("-d", OSdir))
             R_files <- c(R_files, list_files_with_exts(OSdir, exts))
+    }
+    if(bn == "base") {
+        ## include loader files in R_HOME/share/R
+        shdir <- file.path(dir, "../../../../share/R")
+        R_files <- c(R_files, list_files_with_exts(shdir, exts))
     }
     out <- vector("list", length = length(R_files))
     names(out) <- R_files

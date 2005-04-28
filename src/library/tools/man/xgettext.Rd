@@ -44,6 +44,9 @@ xgettext2pot(dir, potFile)
   unique in the file (as \pkg{GNU Gettext} requires), but does not do so
   for \code{ngettext} calls (and the rules are not stated in the Gettext
   manual).
+
+  If applied to the \code{base} package, this also looks in the \code{.R}
+  files in \file{R_HOME/share/R}.
 }
 \value{
   For \code{xgettext}, a list of objects of class \code{"xgettext"}
