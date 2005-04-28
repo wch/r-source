@@ -497,10 +497,11 @@ sub cleanup_pkg {
 		$makefiles .= " -f Makefile";
 		R_system("${R::Vars::MAKE} $makefiles clean");
 	    } else {
-		foreach my $file (<*.o *.s[lo] .dylib>) {
-		    unlink($file);
-		}
+		## Also cleanup possible Windows leftovers ...
+		unlink((<*.o *.s[lo] *.dylib>, 
+			"$pkgname.a", "$pkgname.dll", "$pkgname.def"));
 		rmtree(".libs") if (-d ".libs");
+		rmtree("_libs") if (-d "_libs");		
 	    }
 	}
     }
