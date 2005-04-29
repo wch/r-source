@@ -10,6 +10,7 @@ top_srcdir = @top_srcdir@
 top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
+R_SHARE_DIR = $(R_HOME)/share
 
 SOURCES_C = text.c init.c Rmd5.c md5.c
 SOURCES_F =
