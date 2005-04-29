@@ -67,6 +67,9 @@ INSTALLATION
 
 BUG FIXES
 
+    o	Printing was not allowing for double-width characters in its
+	layout.
+
 
 
 

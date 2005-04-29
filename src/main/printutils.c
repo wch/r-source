@@ -224,19 +224,21 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
 #ifdef SUPPORT_MBCS
 #include <wchar.h>
 #include <wctype.h>
+#if !HAVE_DECL_WCWIDTH
+extern int wcwidth(wchar_t c);
+#endif
 #endif
 /* strlen() using escaped rather than literal form,
    and allows for embedded nuls.
-   In MBCS locales it works in characters.
+   In MBCS locales it works in characters, and reports in display width.
  */
-int Rstrlen(SEXP s, int quote)
+int Rstrwid(char *str, int slen, int quote)
 {
-    char *p;
+    char *p = str;
     int len, i;
 
     len = 0;
-    p = CHAR(s);
-    for (i = 0; i < LENGTH(s); i++) {
+    for (i = 0; i < slen; i++) {
 
 	/* ASCII */
 	if((unsigned char) *p < 0x80) {
@@ -270,7 +272,13 @@ int Rstrlen(SEXP s, int quote)
 	    int res; wchar_t wc;
 	    res = mbrtowc(&wc, p, MB_CUR_MAX, NULL);
 	    if(res > 0) {
-		len += iswprint((int)wc) ? 1 : (wc > 0xffff ? 10 : 6);
+		len += iswprint((wint_t)wc) ?
+#ifdef HAVE_WCWIDTH
+		    wcwidth(wc)
+#else
+		    1
+#endif
+		    : (wc > 0xffff ? 10 : 6);
 		i += (res - 1);
 		p += res;
 	    } else {
@@ -287,6 +295,11 @@ int Rstrlen(SEXP s, int quote)
 	}
     }
     return len;
+}
+
+int Rstrlen(SEXP s, int quote)
+{
+    return Rstrwid(CHAR(s), LENGTH(s), quote);
 }
 
 /* Here w appears to be the minimum field width */
