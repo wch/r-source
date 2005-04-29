@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-28
+@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-29
 @set REL_VERSION 2.1.0
 @set REL_YEAR 2005
 @c <COMMENT>
@@ -2524,9 +2524,12 @@ Nearest-neighbor classification with categorical variables.
 @item ks
 Kernel smoothing: bandwidth matrices for kernel density estimators and
 kernel discriminant analysis for bivariate data.
-@item kza
-Kolmogorov-Zurbenko Adpative filter for locating change points in a time
-series.
+@c <COMMENT>
+@c Moved to the Archive on 2005-04-29.
+@c @item kza
+@c Kolmogorov-Zurbenko Adpative filter for locating change points in a time
+@c series.
+@c </COMMENT>
 @item labdsv
 Laboratory for Dynamic Synthetic Vegephenomenology.
 @item labstatR
@@ -2617,9 +2620,12 @@ ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
-@item mathgraph
-Tools for constructing and manipulating objects from a class of directed
-and undirected graphs.
+@c <COMMENT>
+@c Moved to the Archive on 2005-04-29.
+@c @item mathgraph
+@c Tools for constructing and manipulating objects from a class of directed
+@c and undirected graphs.
+@c </COMMENT>
 @item matlab
 Emulate MATLAB code using R.
 @item maxstat
