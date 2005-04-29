@@ -2004,6 +2004,8 @@ static void GA_NewPage(R_GE_gcontext *gc,
 	    del(xd->gawin);
 	    snprintf(buf, 600, xd->filename, xd->npage);
 	    xd->gawin = newmetafile(buf, xd->w, xd->h);
+	    if(!xd->gawin)
+		error(_("metafile '%s' could not be created"), buf);
 	}
     }
     if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP)
@@ -2085,7 +2087,7 @@ static void GA_Close(NewDevDesc *dd)
 	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
       SaveAsBitmap(dd, xd->res_dpi);
-    }
+    } 
     del(xd->font);
     del(xd->gawin);
 /*

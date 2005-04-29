@@ -32,6 +32,9 @@ and that affected example().
 Translation of the filters in file load/save dialog spaces was being
 handled incorrectly by gettext, and is now not attempted.
 
+Attempting to plot repeatedly to the same metafile sometimes crashed
+R.  (PR#7821: it is unclear why Windows does not allow this.)
+
 
 
 R 2.1.0

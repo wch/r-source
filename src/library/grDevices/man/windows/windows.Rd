@@ -147,6 +147,10 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
 
   \code{pch="."} with \code{cex = 1} corresponds to a rectangle of sides
   the larger of one pixel and 0.01 inch.
+
+  For \code{win.metafile} only one plot is allowed per file, and Windows
+  seems to disallow reusing the file.  So the \emph{only} way to allow
+  multiple plots is to use a parametrized \code{filename} as in the example.
 }
 
 \value{
