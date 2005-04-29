@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:42\n"
+"POT-Creation-Date: 2005-04-29 08:52\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -32,6 +32,52 @@ msgstr "ls directory '%s' non contiene codice R"
 msgid "directory '%s' does not contain Rd sources"
 msgstr "la directory '%s' non contiene sorgenti Rd"
 
+msgid ""
+"Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+
+#, fuzzy
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+msgid "Slots for class '%s'"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+#, fuzzy
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "Variables in data frame '%s'"
+msgstr "impossibile creare '%s'"
+
+#, fuzzy
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+#, fuzzy
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
 msgid "unable to create"
 msgstr "impossibile creare"
 
@@ -47,6 +93,9 @@ msgstr "il file '%s' non esiste"
 msgid "parse error in file '%s'"
 msgstr "errore analisi file '%s'"
 
+msgid "Foreign function calls without 'PACKAGE' argument:"
+msgstr ""
+
 msgid "declared S3 method '%s' not found"
 msgstr "il metodo S3 '%s' è dichiarato ma non trovato"
 
@@ -56,12 +105,54 @@ msgstr "impossibile verificare codice R installato come immagine"
 msgid "parse error in examples from file '%s'"
 msgstr "errore di analisi negli esempi del file '%s'"
 
+msgid "File '%s':"
+msgstr ""
+
+msgid ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+
 msgid "Package Rd sources were installed without preserving Rd file names."
-msgstr "I sorgenti Rd del pacchetto sono stati installati senza mantenere i nomi "
+msgstr ""
+"I sorgenti Rd del pacchetto sono stati installati senza mantenere i nomi "
 "originali dei file Rd."
 
 msgid "Please reinstall using a current version of R."
 msgstr "Si prega di reinstallare usando una versione corrente di R."
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr ""
+
+#, fuzzy
+msgid "Following section '%s'"
+msgstr "sezione '%s' non conclusa"
+
+#, fuzzy
+msgid "Rd files with missing or empty '\\name':"
+msgstr "I file Rd devono avere \\name non vuoto."
+
+#, fuzzy
+msgid "Rd files with missing or empty '\\title':"
+msgstr "I file Rd devono avere \\title non vuoto."
+
+msgid "Rd files without '%s':"
+msgstr ""
+
+msgid "These entries are required in an Rd file."
+msgstr ""
+
+msgid "Rd files with duplicate '%s':"
+msgstr ""
+
+msgid "These entries must be unique in an Rd file."
+msgstr ""
+
+msgid ""
+"Each '\\keyword' entry should specify one of the standard keywords (as "
+"listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home "
+"directory)."
+msgstr ""
 
 msgid "Found invalid multi-byte character data."
 msgstr "Trovato dati multi-byte carattere non validi."
@@ -72,11 +163,35 @@ msgstr "Non posso ricodificare perché iconv non è disponbile"
 msgid "Try running R in a single-byte locale."
 msgstr "Prova ed eseguire R in un locale single-byte"
 
+msgid ""
+"Entries must be names of packages optionally followed by '<=' or '>=', white "
+"space, and a valid version number in parentheses."
+msgstr ""
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr ""
+
+msgid ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single '.' or '-'."
+msgstr ""
+
+msgid ""
+"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
+"already be known to R."
+msgstr ""
+
+msgid ""
+"See the information on DESCRIPTION files in section 'Creating R packages' of "
+"the 'Writing R Extensions' manual."
+msgstr ""
+
 msgid "argument 'lines' must be a character vector"
 msgstr "argomento 'lines' deve essere un vettore carattere"
 
 msgid "argument 'file' must be a character string or connection"
-msgstr "argomento 'file' deve essere una stringa di caratteri o una connessione"
+msgstr ""
+"argomento 'file' deve essere una stringa di caratteri o una connessione"
 
 msgid "missing/empty \\name field in '%s'"
 msgstr "campo \\name mancante/vuoto in '%s'"
@@ -85,7 +200,9 @@ msgid "Rd files must have a non-empty \\name."
 msgstr "I file Rd devono avere \\name non vuoto."
 
 msgid "See chapter 'Writing R documentation' in manual 'Writing R Extensions'."
-msgstr "Si veda il capitolo 'Writing R documentation' nel manuale 'Writing R Extensions'."
+msgstr ""
+"Si veda il capitolo 'Writing R documentation' nel manuale 'Writing R "
+"Extensions'."
 
 msgid "missing/empty \\title field in '%s'"
 msgstr "campo \\title mancante/vuoto in '%s'"
@@ -94,7 +211,8 @@ msgid "Rd files must have a non-empty \\title."
 msgstr "I file Rd devono avere \\title non vuoto."
 
 msgid "argument 'outFile' must be a character string or connection"
-msgstr "l'argomento 'outFile' deve essere una stringa carattere o una connessione"
+msgstr ""
+"l'argomento 'outFile' deve essere una stringa carattere o una connessione"
 
 msgid "directory '%s' does not contain Rd objects"
 msgstr "la directory '%s' non contiene oggetti Rd"
@@ -162,26 +280,24 @@ msgstr "*** qualcuno ha danneggiato il campo Builr nel pacchetto '%s' ***"
 msgid "cannot open directory '%s'"
 msgstr "impossibile leggere directory '%s'"
 
-msgid "*** someone has corrupted the Built field in package"
-msgstr "*** qualcuno ha danneggiato il campo Built del pacchetto"
-
-msgid "Package"
-msgstr "Pacchetto"
-
-msgid "***"
-msgstr "***"
-
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "non posso disabilitare l'ordinamento tramite locale usando LC_COLLATE"
+
+msgid "duplicated files in '%s' field:"
+msgstr ""
+
+msgid "files in '%s' field missing from '%s':"
+msgstr ""
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr ""
 
 msgid "unable to create '%s'"
 msgstr "impossibile creare '%s'"
 
-msgid "unable to copy INDEX to"
+#, fuzzy
+msgid "unable to copy INDEX to '%s'"
 msgstr "impossibile copiare INDEX su"
-
-msgid "INDEX"
-msgstr ""
 
 msgid "cannot create directory '%s'"
 msgstr "impossibile creare directory '%s'"
@@ -243,6 +359,9 @@ msgstr "pacchetto '%s' non trovato"
 msgid "bad operand"
 msgstr "operatore sbagliato"
 
+msgid "Package"
+msgstr "Pacchetto"
+
 msgid "had its dependencies reduced to a minimal set."
 msgstr "le sue dipendenze sono state ridotte ad un insieme minimale."
 
@@ -281,3 +400,9 @@ msgstr "fatto"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
+
+#~ msgid "*** someone has corrupted the Built field in package"
+#~ msgstr "*** qualcuno ha danneggiato il campo Built del pacchetto"
+
+#~ msgid "***"
+#~ msgstr "***"

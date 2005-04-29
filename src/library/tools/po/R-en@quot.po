@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:42\n"
-"PO-Revision-Date: 2005-04-09 17:42\n"
+"POT-Creation-Date: 2005-04-29 08:52\n"
+"PO-Revision-Date: 2005-04-29 08:52\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,44 @@ msgstr "directory ‘%s’ does not contain R code"
 msgid "directory '%s' does not contain Rd sources"
 msgstr "directory ‘%s’ does not contain Rd sources"
 
+msgid ""
+"Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+"Functions/methods with usage in documentation object ‘%s’ but not in code:"
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr "Codoc mismatches from documentation object '%s':"
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr "S4 class codoc mismatches from documentation object '%s':"
+
+msgid "Slots for class '%s'"
+msgstr "Slots for class ‘%s’"
+
+msgid "name"
+msgstr "name"
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr "Data codoc mismatches from documentation object '%s':"
+
+msgid "Variables in data frame '%s'"
+msgstr "Variables in data frame ‘%s’"
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr "Undocumented arguments in documentation object ‘%s’"
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr "Duplicated \\argument entries in documentation object '%s':"
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr "Documented arguments not in \\usage in documentation object '%s':"
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr "Objects in \\usage without \\alias in documentation object '%s':"
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr "Bad \\usage lines found in documentation object '%s':"
+
 msgid "unable to create"
 msgstr "unable to create"
 
@@ -69,6 +107,9 @@ msgstr "file ‘%s’ does not exist"
 msgid "parse error in file '%s'"
 msgstr "parse error in file ‘%s’"
 
+msgid "Foreign function calls without 'R' argument:"
+msgstr "Foreign function calls without ‘R’ argument:"
+
 msgid "declared S3 method '%s' not found"
 msgstr "declared S3 method ‘%s’ not found"
 
@@ -78,11 +119,54 @@ msgstr "cannot check R code installed as image"
 msgid "parse error in examples from file '%s'"
 msgstr "parse error in examples from file ‘%s’"
 
+msgid "File '%s':"
+msgstr "File '%s':"
+
+msgid ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+"Vignette dependencies (\\VignetteDepends{} entries) must be contained in the "
+"DESCRIPTION Depends/Suggests/Imports entries."
+
 msgid "Package Rd sources were installed without preserving Rd file names."
 msgstr "Package Rd sources were installed without preserving Rd file names."
 
 msgid "Please reinstall using a current version of R."
 msgstr "Please reinstall using a current version of R."
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr "Unaccounted top-level text in file '%s':"
+
+msgid "Following section '%s'"
+msgstr "Following section ‘%s’"
+
+msgid "Rd files with missing or empty '\\name':"
+msgstr "Rd files with missing or empty '\\name':"
+
+msgid "Rd files with missing or empty '\\title':"
+msgstr "Rd files with missing or empty '\\title':"
+
+msgid "Rd files without '%s':"
+msgstr "Rd files without '%s':"
+
+msgid "These entries are required in an Rd file."
+msgstr "These entries are required in an Rd file."
+
+msgid "Rd files with duplicate '%s':"
+msgstr "Rd files with duplicate '%s':"
+
+msgid "These entries must be unique in an Rd file."
+msgstr "These entries must be unique in an Rd file."
+
+msgid ""
+"Each '\\keyword' entry should specify one of the standard keywords (as "
+"listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home "
+"directory)."
+msgstr ""
+"Each ‘\\keyword’ entry should specify one of the standard keywords (as "
+"listed in file ‘KEYWORDS.db’ in the ‘doc’ subdirectory of the R home "
+"directory)."
 
 msgid "Found invalid multi-byte character data."
 msgstr "Found invalid multi-byte character data."
@@ -92,6 +176,37 @@ msgstr "Cannot re-encode because iconv is not available."
 
 msgid "Try running R in a single-byte locale."
 msgstr "Try running R in a single-byte locale."
+
+msgid ""
+"Entries must be names of packages optionally followed by '<=' or '>=', white "
+"space, and a valid version number in parentheses."
+msgstr ""
+"Entries must be names of packages optionally followed by ‘<=’ or '>=', white "
+"space, and a valid version number in parentheses."
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr "Only operators ‘<=’ and ‘>=’ are possible."
+
+msgid ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single '.' or '-'."
+msgstr ""
+"Version numbers must be sequences of at least two non-negative integers, "
+"separated by single ‘.’ or '-'."
+
+msgid ""
+"Packages with priorities 'base' or 'recommended' or 'defunct-base' must "
+"already be known to R."
+msgstr ""
+"Packages with priorities ‘base’ or ‘recommended’ or ‘defunct-base’ must "
+"already be known to R."
+
+msgid ""
+"See the information on DESCRIPTION files in section 'Creating R packages' of "
+"the 'Writing R Extensions' manual."
+msgstr ""
+"See the information on DESCRIPTION files in section ‘Creating R packages’ of "
+"the ‘Writing R Extensions’ manual."
 
 msgid "argument 'lines' must be a character vector"
 msgstr "argument ‘lines’ must be a character vector"
@@ -184,26 +299,23 @@ msgstr "*** someone has corrupted the Built field in package ‘%s’ ***"
 msgid "cannot open directory '%s'"
 msgstr "cannot open directory ‘%s’"
 
-msgid "*** someone has corrupted the Built field in package"
-msgstr "*** someone has corrupted the Built field in package"
-
-msgid "Package"
-msgstr "Package"
-
-msgid "***"
-msgstr "***"
-
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
 msgstr "cannot turn off locale-specific sorting via LC_COLLATE"
+
+msgid "duplicated files in '%s' field:"
+msgstr "duplicated files in ‘%s’ field:"
+
+msgid "files in '%s' field missing from '%s':"
+msgstr "files in ‘%s’ field missing from '%s':"
+
+msgid "files in '%s' missing from '%s' field:"
+msgstr "files in ‘%s’ missing from ‘%s’ field:"
 
 msgid "unable to create '%s'"
 msgstr "unable to create ‘%s’"
 
-msgid "unable to copy INDEX to"
-msgstr "unable to copy INDEX to"
-
-msgid "INDEX"
-msgstr "INDEX"
+msgid "unable to copy INDEX to '%s'"
+msgstr "unable to copy INDEX to ‘%s’"
 
 msgid "cannot create directory '%s'"
 msgstr "cannot create directory ‘%s’"
@@ -264,6 +376,9 @@ msgstr "package ‘%s’ was not found"
 
 msgid "bad operand"
 msgstr "bad operand"
+
+msgid "Package"
+msgstr "Package"
 
 msgid "had its dependencies reduced to a minimal set."
 msgstr "had its dependencies reduced to a minimal set."

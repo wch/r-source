@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-09 17:42\n"
+"POT-Creation-Date: 2005-04-29 08:52\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,42 @@ msgstr ""
 msgid "directory '%s' does not contain Rd sources"
 msgstr ""
 
+msgid "Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Slots for class '%s'"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Variables in data frame '%s'"
+msgstr ""
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr ""
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr ""
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr ""
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr ""
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr ""
+
 msgid "unable to create"
 msgstr ""
 
@@ -47,6 +83,9 @@ msgstr ""
 msgid "parse error in file '%s'"
 msgstr ""
 
+msgid "Foreign function calls without 'PACKAGE' argument:"
+msgstr ""
+
 msgid "declared S3 method '%s' not found"
 msgstr ""
 
@@ -56,10 +95,43 @@ msgstr ""
 msgid "parse error in examples from file '%s'"
 msgstr ""
 
+msgid "File '%s':"
+msgstr ""
+
+msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+
 msgid "Package Rd sources were installed without preserving Rd file names."
 msgstr ""
 
 msgid "Please reinstall using a current version of R."
+msgstr ""
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr ""
+
+msgid "Following section '%s'"
+msgstr ""
+
+msgid "Rd files with missing or empty '\\name':"
+msgstr ""
+
+msgid "Rd files with missing or empty '\\title':"
+msgstr ""
+
+msgid "Rd files without '%s':"
+msgstr ""
+
+msgid "These entries are required in an Rd file."
+msgstr ""
+
+msgid "Rd files with duplicate '%s':"
+msgstr ""
+
+msgid "These entries must be unique in an Rd file."
+msgstr ""
+
+msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory)."
 msgstr ""
 
 msgid "Found invalid multi-byte character data."
@@ -69,6 +141,21 @@ msgid "Cannot re-encode because iconv is not available."
 msgstr ""
 
 msgid "Try running R in a single-byte locale."
+msgstr ""
+
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr ""
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr ""
+
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr ""
+
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
+msgstr ""
+
+msgid "See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual."
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"
@@ -161,25 +248,22 @@ msgstr ""
 msgid "cannot open directory '%s'"
 msgstr ""
 
-msgid "*** someone has corrupted the Built field in package"
-msgstr ""
-
-msgid "Package"
-msgstr ""
-
-msgid "***"
-msgstr ""
-
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr ""
+
+msgid "duplicated files in '%s' field:"
+msgstr ""
+
+msgid "files in '%s' field missing from '%s':"
+msgstr ""
+
+msgid "files in '%s' missing from '%s' field:"
 msgstr ""
 
 msgid "unable to create '%s'"
 msgstr ""
 
-msgid "unable to copy INDEX to"
-msgstr ""
-
-msgid "INDEX"
+msgid "unable to copy INDEX to '%s'"
 msgstr ""
 
 msgid "cannot create directory '%s'"
@@ -240,6 +324,9 @@ msgid "package '%s' was not found"
 msgstr ""
 
 msgid "bad operand"
+msgstr ""
+
+msgid "Package"
 msgstr ""
 
 msgid "had its dependencies reduced to a minimal set."
