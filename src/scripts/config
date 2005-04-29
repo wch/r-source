@@ -112,7 +112,7 @@ if test $# = 0; then
   exit 1
 fi
 
-makefiles="-f ${R_HOME}/etc/Makeconf -f ${R_HOME}/share/make/config.mk"
+makefiles="-f ${R_HOME}/etc/Makeconf -f ${R_SHARE_DIR}/make/config.mk"
 query="${MAKE} -s ${makefiles} print R_HOME=${R_HOME}"
 
 LIBR=`eval $query VAR=LIBR`

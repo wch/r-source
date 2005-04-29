@@ -1377,8 +1377,8 @@ sub check_pkg {
 		join(" ",
 		     (&shell_quote_file_path(${R::Vars::R_EXE}),
 		      "CMD perl",
-		      &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-							"share", "perl",
+		      &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+							"perl",
 							"massage-Examples.pl")),
 		      "${pkgname}",
 		      &shell_quote_file_path(${Rexdir}),
@@ -1487,11 +1487,10 @@ sub check_pkg {
 	    copy($file, basename($file));
 	}
         my $makefiles = "-f " .
-	    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-					      "share", "make",
-					      "tests.mk"));
+	    &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+					      "make", "tests.mk"));
         if($WINDOWS) {
-            $makefiles = "-f ${R::Vars::R_HOME}/share/make/wintests.mk";}
+            $makefiles = "-f ${R::Vars::R_SHARE_DIR}/make/wintests.mk";}
         my $makevars = "";
         if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
             $makefiles .= " -f $testsrcdir/Makefile.win";
@@ -1607,7 +1606,7 @@ sub check_pkg {
         my $latex_dir = &file_path($library, $pkgname, "latex");
 	if(-d $latex_dir) {
 	    $ENV{'TEXINPUTS'} =
-	      env_path(&file_path($R::Vars::R_HOME, "share", "texmf"),
+	      env_path(&file_path($R::Vars::R_SHARE_DIR, "texmf"),
 		       $ENV{'TEXINPUTS'});
             my $is_zipped = 0;
             # latex files might have been zipped
