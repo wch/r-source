@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02+0100\n"
+"POT-Creation-Date: 2005-04-29 08:24+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -5208,11 +5208,15 @@ msgstr "realpr でメモリ確保に失敗しました"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK 関数 '%6s' はエラーコード %d を返しました "
 
-#: src/main/printarray.c:466
+#: src/main/printarray.c:68
+msgid "allocation failure in strwidth"
+msgstr "strwidth で割り当てに失敗しました"
+
+#: src/main/printarray.c:507
 msgid "too few row labels"
 msgstr "行ラベルの数が少なすぎます"
 
-#: src/main/printarray.c:468
+#: src/main/printarray.c:509
 msgid "too few column labels"
 msgstr "列ラベルの数が少なすぎます"
 

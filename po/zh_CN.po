@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02+0100\n"
+"POT-Creation-Date: 2005-04-29 08:24+0100\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -5149,11 +5149,15 @@ msgstr "realpr内存分配错误"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK 例行程序'%6s'产生了错误%d信息"
 
-#: src/main/printarray.c:466
+#: src/main/printarray.c:68
+msgid "allocation failure in strwidth"
+msgstr "分配strwidth失败"
+
+#: src/main/printarray.c:507
 msgid "too few row labels"
 msgstr "行標記不够"
 
-#: src/main/printarray.c:468
+#: src/main/printarray.c:509
 msgid "too few column labels"
 msgstr "列標記不够"
 

@@ -313,7 +313,7 @@ update-po: Makefile
 	$(MAKE) $(DOMAIN).pot-update
 	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
 	$(MAKE) update-gmo
-	$(MAKE) RGui.pot-update
+	#$(MAKE) RGui.pot-update
 
 ## NB datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base grDevices graphics grid methods splines stats stats4 tcltk tools utils

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02+0100\n"
+"POT-Creation-Date: 2005-04-29 08:24+0100\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -5234,11 +5234,15 @@ msgstr "eoore allocazione memoria in realpr"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "la routine LAPACK '%6s' ha restituito un codice errore %d"
 
-#: src/main/printarray.c:466
+#: src/main/printarray.c:68
+msgid "allocation failure in strwidth"
+msgstr "allocazione di memoria non riuscita in strwidth"
+
+#: src/main/printarray.c:507
 msgid "too few row labels"
 msgstr "troppo poche etichette di riga"
 
-#: src/main/printarray.c:468
+#: src/main/printarray.c:509
 msgid "too few column labels"
 msgstr "troppo poche etichette colonna"
 
@@ -6560,7 +6564,6 @@ msgstr ""
 "\n"
 
 #: src/main/version.c:40
-#, fuzzy
 msgid ""
 "Type 'demo()' for some demos, 'help()' for on-line help, or\n"
 "'help.start()' for a HTML browser interface to help.\n"

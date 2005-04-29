@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02+0100\n"
+"POT-Creation-Date: 2005-04-29 08:24+0100\n"
 "PO-Revision-Date: 2005-03-14 19:27+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -5215,11 +5215,15 @@ msgstr "Speicherallokierungsfehler in realpr"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK-Routine '%6s' gab Fehlercode %d"
 
-#: src/main/printarray.c:466
+#: src/main/printarray.c:68
+msgid "allocation failure in strwidth"
+msgstr "Allokationsfehler in strwidth"
+
+#: src/main/printarray.c:507
 msgid "too few row labels"
 msgstr "zu wenig Zeilenlabel"
 
-#: src/main/printarray.c:468
+#: src/main/printarray.c:509
 msgid "too few column labels"
 msgstr "zu wenig Spaltenlabel"
 
