@@ -54,7 +54,7 @@ void rcmdusage (char *RCMD)
 	    "  Rprof    Post process R profiling files.\n",
 	    "  Rdconv   Convert Rd format to various other formats, including html, Nroff,\n",
 	    "           LaTeX, plain text, and S documentation format.\n",
-	    "  Rd2dvi.sh Convert Rd format to DVI/PDF.\n",
+	    "  Rd2dvi   Convert Rd format to DVI/PDF.\n",
 	    "  Rd2txt   Convert Rd format to text.\n",
 	    "  Sd2Rd    Convert S documentation to Rd format.\n");
 
@@ -67,16 +67,18 @@ void rcmdusage (char *RCMD)
 int rcmdfn (int cmdarg, int argc, char **argv)
 {
     /* tasks:
-       find R_HOME
+       find R_HOME, set as env variable
+       set R_SHARE_DIR as env variable
        set PATH to include R_HOME\bin
-       set PERL5LIB to %R_HOME%/share/perl;%Perl5LIB%
-       set TEXINPUTS to %R_HOME%/share/texmf;%TEXINPUTS%
+       set PERL5LIB to %R_SHARE_DIR%/perl;%Perl5LIB%
+       set TEXINPUTS to %R_SHARE_DIR%/texmf;%TEXINPUTS%
        set HOME if unset
        launch %R_HOME%\bin\$*
      */
     int i, iused, res, status = 0;
     char *RHome, PERL5LIB[MAX_PATH], TEXINPUTS[MAX_PATH], PATH[10000],
-	RHOME[MAX_PATH], *p, cmd[10000], Rversion[25], HOME[MAX_PATH + 10];
+	RHOME[MAX_PATH], *p, cmd[10000], Rversion[25], HOME[MAX_PATH + 10],
+	RSHARE[MAX_PATH];
     char RCMD[] = "R CMD";
     int len = strlen(argv[0]);
     
@@ -225,6 +227,11 @@ int rcmdfn (int cmdarg, int argc, char **argv)
 	strcat(RHOME, RHome);
 	for (p = RHOME; *p; p++) if (*p == '\\') *p = '/';
 	putenv(RHOME);
+
+	/* currently used by Rd2dvi and by perl Vars.pm (with default) */
+	strcpy(RSHARE, "R_START_DIR=");
+	strcat(RSHARE, RHome); strcat(RSHARE, "/share");
+	putenv(RSHARE);
 
 	sprintf(Rversion, "R_VERSION=%s.%s", R_MAJOR, R_MINOR);
 	putenv(Rversion);
