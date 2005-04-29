@@ -137,8 +137,16 @@ else
   : ${LDFLAGS="-L/usr/local/${LIBnn}"}
 fi
 AC_SUBST(LIBnn)
-## <FIXME> this overrides the command-line setting
-libdir='${exec_prefix}/${LIBnn}'
+## take care not to  override the command-line setting
+if test "${libdir}" = '${exec_prefix}/lib'; then
+  libdir='${exec_prefix}/${LIBnn}'
+fi
+if test "${datadir}" = '${prefix}/share'; then
+  datadir='${libdir}/share'
+fi
+if test "${includedir}" = '${prefix}/include'; then
+  includedir='${libdir}/include'
+fi
 
 ### ** Handle arguments to configure.
 

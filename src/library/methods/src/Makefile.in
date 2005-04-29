@@ -11,6 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
+R_INCLUDE = $(R_HOME)/include
 
 SOURCES_C = do_substitute_direct.c init.c methods_list_dispatch.c \
   slot.c class_support.c tests.c

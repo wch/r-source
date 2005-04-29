@@ -215,13 +215,13 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @cindex Installing under Unix-alikes
 
 @R{} will configure and build under a number of common Unix and
-Unix-alike platforms including i386-*-freebsd, @var{cpu}-*-linux-gnu for
-the i386, alpha, amd64, arm, hppa, ia64, m68k, powerpc, and sparc CPUs
-(see e.g.@: @url{http://buildd.debian.org/build.php?&pkg=r-base}),
+Unix-alike platforms including@var{cpu}-*-linux-gnu for the alpha,
+amd64, arm, hppa, ix86, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
+@url{http://buildd.debian.org/build.php?&pkg=r-base}),
 powerpc-apple-darwin and sparc-sun-solaris, as well as probably (it is
-tested less frequently on these) i386-*-netbsd, i386-*-openbsd,
-i386-sun-solaris, mips-sgi-irix, alpha-dec-osf*, rs6000-ibm-aix and
-hppa-hp-hpux.
+tested less frequently on these) i386-*-freebsd, i386-*-netbsd,
+i386-*-openbsd, i386-sun-solaris, mips-sgi-irix, alpha-dec-osf*,
+rs6000-ibm-aix and hppa-hp-hpux.
 
 @cindex Linux
 @cindex Mac OS X
@@ -472,8 +472,10 @@ This will install to the following directories:
 the front-end shell script
 @item @var{prefix}/man/man1
 the man page
-@item @var{prefix}/lib/R
-all the rest (libraries, on-line help system, @dots{})
+@item @var{prefix}/$LIBnn/R
+all the rest (libraries, on-line help system, @dots{}).  Here
+@code{$LIBnn} is usually @code{lib}, but may be @code{lib64} on some
+64-bit Linux systems.
 @end table
 
 @noindent
@@ -491,7 +493,7 @@ This causes @command{make install} to install the @R{} executable to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  You can install into
-another directory by using
+another directory tree by using
 
 @example
 make prefix=/path/to/here install
@@ -501,10 +503,29 @@ make prefix=/path/to/here install
 at least with GNU @command{make}.
 
 More precise control is available at configure time via options: see
-@command{configure --help} for details.  (However, most of them are
-currently ignored, but @code{bindir} and @code{mandir} are supported.)
+@command{configure --help} for details.  (However, many of them are
+currently ignored.)
 
-If you have made @R{} as a shared library you can install it in our
+Both @code{bindir} and @code{mandir} are supported and govern where a
+copy of the @command{R} script and the @code{man} page are installed.
+
+The setting of @code{libdir} controls where the main @R{} files are
+installed, and @code{datadir} can be used to install the
+system-independent @file{share} directory to somewhere other than
+@code{libdir}.  The C header files are installed to @code{includedir}:
+not that as the headers are not installed into a subdirectory you
+probably want something like @code{--includedir=/usr/local/include/R-2.2.0}.
+The defaults for these are in fact
+@example
+libdir=EPREFIX/$@{LIBnn@}/R
+datadir=$@{libdir@}/share
+includedir=$@{libdir@}/include
+@end example
+@noindent
+rather than as stated by @command{configure --help}. @code{libdir} and
+@code{datadir} can also be specified on the @command{make} command line.)
+
+If you have made @R{} as a shared library you can install it in your
 system's library directory by
 
 @example
@@ -512,7 +533,8 @@ make prefix=/path/to/here install-libR
 @end example
 
 @noindent
-where @code{prefix} is optional.
+where @code{prefix} is optional, and @code{libdir} can be used for
+more precise control.
 
 
 @cindex Manuals, installing
@@ -540,6 +562,15 @@ You can uninstall @R{} by
 @example
 make uninstall
 @end example
+@noindent
+specifyihg @code{prefix} etc in the same way as specified for
+installation.
+
+There is no simple way to uninstall the @code{info} files, but the other
+manuals are uninstalled by @code{make uninstall}.
+
+Be aware that uninstallation will remove the @code{installdir} and
+@code{datadir} directories, so if used these should be @R{}-specific.
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows

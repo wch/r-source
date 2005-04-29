@@ -97,8 +97,9 @@ $(top_builddir)/libtool:
 install: installdirs install-cmds
 	@rm -f $(bindir)/R
 	@(d=`echo '$(rhome)' | sed 's,/,\\\/,g';`; \
-	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > "$(Rexecbindir)/R"; \
-	  sed "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" < R.fe > $(bindir)/R)
+	  sed -e "s/\\(R_HOME_DIR=\\).*/\\1$${d}/;" -e "s+\\(R_SHARE_DIR=\\).*+\\1$(rsharehome)+;" -e  "s+\\(R_INCLUDE=\\).*+\\1$(includedir)+;"\
+	  < R.fe > "$(Rexecbindir)/R")
+	@cp  "$(Rexecbindir)/R" $(bindir)/R
 	@chmod 755 $(bindir)/R "$(Rexecbindir)/R"
 installdirs:
 	@$(MKINSTALLDIRS) $(bindir)

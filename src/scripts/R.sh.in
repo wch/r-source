@@ -10,6 +10,8 @@ R_HOME="${R_HOME_DIR}"
 export R_HOME
 R_SHARE_DIR="${R_HOME_DIR}/share"
 export R_SHARE_DIR
+R_INCLUDE="${R_HOME_DIR}/include"
+export R_INCLUDE
 
 ## NOTE:
 ## We must set this here rather than in the main binary.
