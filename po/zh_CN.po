@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:05+0100\n"
+"POT-Creation-Date: 2005-04-29 08:57+0100\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1151,8 +1151,8 @@ msgstr "substr<-()函数右手有错"
 msgid "non-character argument in strsplit()"
 msgstr "strsplit()不能用于非字符变元"
 
-#: src/main/character.c:363 src/main/pcre.c:114 src/main/pcre.c:253
-#: src/main/pcre.c:423
+#: src/main/character.c:363 src/main/pcre.c:114 src/main/pcre.c:256
+#: src/main/pcre.c:426
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl = TRUE只适用于UTF-8语言环境"
 
@@ -1177,25 +1177,25 @@ msgstr "不能有非字符名字"
 msgid "invalid value of 'allow_'"
 msgstr "'allow_'值不对"
 
-#: src/main/character.c:792 src/main/character.c:1318
+#: src/main/character.c:792 src/main/character.c:1321
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "多字节字符串%d有错"
 
-#: src/main/character.c:871 src/main/character.c:1207 src/main/pcre.c:116
-#: src/main/pcre.c:428
+#: src/main/character.c:871 src/main/character.c:1210 src/main/pcre.c:116
+#: src/main/pcre.c:431
 msgid "regular expression is invalid in this locale"
 msgstr "正规表现不适用于此语言环境"
 
-#: src/main/character.c:893 src/main/character.c:1049
-#: src/main/character.c:1210 src/main/pcre.c:123 src/main/pcre.c:274
-#: src/main/pcre.c:433
+#: src/main/character.c:893 src/main/character.c:1052
+#: src/main/character.c:1213 src/main/pcre.c:123 src/main/pcre.c:277
+#: src/main/pcre.c:436
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "正规表现’%s'不对"
 
-#: src/main/character.c:903 src/main/character.c:1225 src/main/pcre.c:138
-#: src/main/pcre.c:307 src/main/pcre.c:448
+#: src/main/character.c:903 src/main/character.c:1228 src/main/pcre.c:138
+#: src/main/pcre.c:310 src/main/pcre.c:451
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "输入的字符串%d不适用于此语言环境"
@@ -1205,114 +1205,114 @@ msgstr "输入的字符串%d不适用于此语言环境"
 msgid "invalid backreference %d in regular expression"
 msgstr "正规表现中回转参考%d有错"
 
-#: src/main/character.c:1044 src/main/pcre.c:255
+#: src/main/character.c:1047 src/main/pcre.c:258
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern'的值在本语言环境下不对"
 
-#: src/main/character.c:1046 src/main/pcre.c:257
+#: src/main/character.c:1049 src/main/pcre.c:260
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement'的值在本语言环境下不对"
 
-#: src/main/character.c:1055
+#: src/main/character.c:1058
 msgid "zero-length pattern"
 msgstr "式样长度为0"
 
-#: src/main/character.c:1294
+#: src/main/character.c:1297
 msgid "non-character argument to tolower()"
 msgstr "非字符变元不能用于tolower()"
 
-#: src/main/character.c:1368
+#: src/main/character.c:1371
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "范围设定是不能递减的('%lc-%lc')"
 
-#: src/main/character.c:1454
+#: src/main/character.c:1457
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "范围设定是不能递减的('%c-%c')"
 
-#: src/main/character.c:1532
+#: src/main/character.c:1535
 msgid "invalid (NA) arguments."
 msgstr "(NA)变元不对."
 
-#: src/main/character.c:1554
+#: src/main/character.c:1557
 msgid "invalid multibyte string 'old'"
 msgstr "多字节字符串'old'有错"
 
-#: src/main/character.c:1561
+#: src/main/character.c:1564
 msgid "invalid multibyte string 'new'"
 msgstr "多字节字符串'new'有错"
 
-#: src/main/character.c:1580 src/main/character.c:1641
+#: src/main/character.c:1583 src/main/character.c:1644
 msgid "'old' is longer than 'new'"
 msgstr "'old'比'new'要长"
 
-#: src/main/character.c:1597
+#: src/main/character.c:1600
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "输入的多字节字符串%d有错"
 
-#: src/main/character.c:1740
+#: src/main/character.c:1743
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr "在UTF-8语言环境下agrep()只能对ASCII字符串适用"
 
-#: src/main/character.c:1749
+#: src/main/character.c:1752
 msgid "could not allocate memory for approximate matching"
 msgstr "做近似比较时无法分配足够内存"
 
-#: src/main/character.c:1773
+#: src/main/character.c:1776
 msgid "could not perform case insensitive matching"
 msgstr "无法进行不区分字体大小写的比较"
 
-#: src/main/character.c:1815
+#: src/main/character.c:1818
 msgid "argument must be a character vector of length 1"
 msgstr "变元必需是长度为1的字符向量"
 
-#: src/main/character.c:1817
+#: src/main/character.c:1820
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr "变元应当是长度为1的字节向量，除第一个单元外其他所有的单元都略过不用"
 
-#: src/main/character.c:1832 src/main/character.c:1864
-#: src/main/character.c:1885
+#: src/main/character.c:1835 src/main/character.c:1867
+#: src/main/character.c:1888
 msgid "argument 'x' must be a raw vector"
 msgstr "变元'x'必需是原始向量"
 
-#: src/main/character.c:1835
+#: src/main/character.c:1838
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "变元'multiple'的值要么是TRUE要么是FALSE"
 
-#: src/main/character.c:1866
+#: src/main/character.c:1869
 msgid "argument 'shift' must be a small integer"
 msgstr "变元'shift'必需数值不是太大的整数"
 
-#: src/main/character.c:1903
+#: src/main/character.c:1906
 msgid "argument 'x' must be a integer vector"
 msgstr "变元'x'必需是整数向量"
 
-#: src/main/character.c:1923
+#: src/main/character.c:1926
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "变元'x'必需是原始值, 整数值或逻辑值"
 
-#: src/main/character.c:1925
+#: src/main/character.c:1928
 msgid "argument 'type' must be a character string"
 msgstr "变元’type’必需是字符串"
 
-#: src/main/character.c:1929
+#: src/main/character.c:1932
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "变元'x'必需是%d值的整倍数"
 
-#: src/main/character.c:1943 src/main/character.c:1958
+#: src/main/character.c:1946 src/main/character.c:1961
 msgid "argument 'x' must not contain NAs"
 msgstr "变元'x'不能含NA值"
 
-#: src/main/character.c:1983
+#: src/main/character.c:1986
 msgid "strtrim() requires a character vector"
 msgstr "strtrim()需要字符向量"
 
-#: src/main/character.c:1988 src/main/character.c:1992
+#: src/main/character.c:1991 src/main/character.c:1995
 msgid "invalid 'width' argument"
 msgstr "'width'这个变元不对"
 
@@ -5149,11 +5149,11 @@ msgstr "realpr内存分配错误"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK 例行程序'%6s'产生了错误%d信息"
 
-#: src/main/printarray.c:466
+#: src/main/printarray.c:471
 msgid "too few row labels"
 msgstr "行標記不够"
 
-#: src/main/printarray.c:468
+#: src/main/printarray.c:473
 msgid "too few column labels"
 msgstr "列標記不够"
 

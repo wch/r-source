@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:05+0100\n"
+"POT-Creation-Date: 2005-04-29 08:57+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1172,8 +1172,8 @@ msgstr "substr <- () において右辺が不正です"
 msgid "non-character argument in strsplit()"
 msgstr "strplit 関数の引数が文字列ではありません"
 
-#: src/main/character.c:363 src/main/pcre.c:114 src/main/pcre.c:253
-#: src/main/pcre.c:423
+#: src/main/character.c:363 src/main/pcre.c:114 src/main/pcre.c:256
+#: src/main/pcre.c:426
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl=TRUE は UTF-8 ロケールに対してのみ完全実装されています"
 
@@ -1198,25 +1198,25 @@ msgstr "名前が文字列ではありません"
 msgid "invalid value of 'allow_'"
 msgstr "'allow_' の値が不正です"
 
-#: src/main/character.c:792 src/main/character.c:1318
+#: src/main/character.c:792 src/main/character.c:1321
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "%d は不正なマルチバイト文字です"
 
-#: src/main/character.c:871 src/main/character.c:1207 src/main/pcre.c:116
-#: src/main/pcre.c:428
+#: src/main/character.c:871 src/main/character.c:1210 src/main/pcre.c:116
+#: src/main/pcre.c:431
 msgid "regular expression is invalid in this locale"
 msgstr "このロケールでは，正規表現は無効です"
 
-#: src/main/character.c:893 src/main/character.c:1049
-#: src/main/character.c:1210 src/main/pcre.c:123 src/main/pcre.c:274
-#: src/main/pcre.c:433
+#: src/main/character.c:893 src/main/character.c:1052
+#: src/main/character.c:1213 src/main/pcre.c:123 src/main/pcre.c:277
+#: src/main/pcre.c:436
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s' の正規表現が不正です"
 
-#: src/main/character.c:903 src/main/character.c:1225 src/main/pcre.c:138
-#: src/main/pcre.c:307 src/main/pcre.c:448
+#: src/main/character.c:903 src/main/character.c:1228 src/main/pcre.c:138
+#: src/main/pcre.c:310 src/main/pcre.c:451
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "入力文字列 %d はこのロケールでは不適切です"
@@ -1226,71 +1226,71 @@ msgstr "入力文字列 %d はこのロケールでは不適切です"
 msgid "invalid backreference %d in regular expression"
 msgstr "正規表現における後方参照 %d が不正です"
 
-#: src/main/character.c:1044 src/main/pcre.c:255
+#: src/main/character.c:1047 src/main/pcre.c:258
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' は現在のロケールでは不正です"
 
-#: src/main/character.c:1046 src/main/pcre.c:257
+#: src/main/character.c:1049 src/main/pcre.c:260
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' は現在のロケールでは不正です"
 
-#: src/main/character.c:1055
+#: src/main/character.c:1058
 msgid "zero-length pattern"
 msgstr "長さゼロのパターン"
 
-#: src/main/character.c:1294
+#: src/main/character.c:1297
 msgid "non-character argument to tolower()"
 msgstr "tolower 関数の引数が文字列ではありません"
 
-#: src/main/character.c:1368
+#: src/main/character.c:1371
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "範囲指定を縮小します ('%lc-%lc') "
 
-#: src/main/character.c:1454
+#: src/main/character.c:1457
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "範囲指定を縮小します ('%c-%c') "
 
-#: src/main/character.c:1532
+#: src/main/character.c:1535
 msgid "invalid (NA) arguments."
 msgstr "引数が不正(NA)です"
 
-#: src/main/character.c:1554
+#: src/main/character.c:1557
 msgid "invalid multibyte string 'old'"
 msgstr "'old' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1561
+#: src/main/character.c:1564
 msgid "invalid multibyte string 'new'"
 msgstr "'new' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1580 src/main/character.c:1641
+#: src/main/character.c:1583 src/main/character.c:1644
 msgid "'old' is longer than 'new'"
 msgstr "'old' が 'new' より長いです"
 
-#: src/main/character.c:1597
+#: src/main/character.c:1600
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "不正なマルチバイト文字列入力 %d です"
 
-#: src/main/character.c:1740
+#: src/main/character.c:1743
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "UTF-8 ロケールにおける agrep 関数の使用は ASCII 文字列以外では保証されません"
 
-#: src/main/character.c:1749
+#: src/main/character.c:1752
 msgid "could not allocate memory for approximate matching"
 msgstr "近似マッチングのためのメモリを割り当てられませんでした"
 
-#: src/main/character.c:1773
+#: src/main/character.c:1776
 msgid "could not perform case insensitive matching"
 msgstr "大小文字を無視したマッチングを行なえませんでした"
 
-#: src/main/character.c:1815
+#: src/main/character.c:1818
 msgid "argument must be a character vector of length 1"
 msgstr "引数は長さ1の文字ベクトルでなくてはなりません"
 
-#: src/main/character.c:1817
+#: src/main/character.c:1820
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1298,45 +1298,45 @@ msgstr ""
 "引数は長さ1の文字ベクトルであるべきです\n"
 "最初の要素以外は無視されます"
 
-#: src/main/character.c:1832 src/main/character.c:1864
-#: src/main/character.c:1885
+#: src/main/character.c:1835 src/main/character.c:1867
+#: src/main/character.c:1888
 msgid "argument 'x' must be a raw vector"
 msgstr "引数 'x' は raw ベクトルでなくてはなりません"
 
-#: src/main/character.c:1835
+#: src/main/character.c:1838
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "引数 'multiple' は TRUE か FALSE でなくてはなりません"
 
-#: src/main/character.c:1866
+#: src/main/character.c:1869
 msgid "argument 'shift' must be a small integer"
 msgstr "引数 'shift' は小さな整数でなくてはなりません"
 
-#: src/main/character.c:1903
+#: src/main/character.c:1906
 msgid "argument 'x' must be a integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
-#: src/main/character.c:1923
+#: src/main/character.c:1926
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "引数'x'は，raw, 整数，論理値でなくてはいけません"
 
-#: src/main/character.c:1925
+#: src/main/character.c:1928
 msgid "argument 'type' must be a character string"
 msgstr "引数 'type' は文字列でなくてはなりません"
 
-#: src/main/character.c:1929
+#: src/main/character.c:1932
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "引数 'x' は長さ %d の整数倍でなくてはなりません"
 
-#: src/main/character.c:1943 src/main/character.c:1958
+#: src/main/character.c:1946 src/main/character.c:1961
 msgid "argument 'x' must not contain NAs"
 msgstr "引数 'x' は，NA を含んではいけません"
 
-#: src/main/character.c:1983
+#: src/main/character.c:1986
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 関数は文字ベクトルを要求します"
 
-#: src/main/character.c:1988 src/main/character.c:1992
+#: src/main/character.c:1991 src/main/character.c:1995
 msgid "invalid 'width' argument"
 msgstr "'width' 引数が不正です"
 
@@ -5208,11 +5208,11 @@ msgstr "realpr でメモリ確保に失敗しました"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK 関数 '%6s' はエラーコード %d を返しました "
 
-#: src/main/printarray.c:466
+#: src/main/printarray.c:471
 msgid "too few row labels"
 msgstr "行ラベルの数が少なすぎます"
 
-#: src/main/printarray.c:468
+#: src/main/printarray.c:473
 msgid "too few column labels"
 msgstr "列ラベルの数が少なすぎます"
 
