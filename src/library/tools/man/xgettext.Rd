@@ -46,7 +46,7 @@ xgettext2pot(dir, potFile)
   manual).
 
   If applied to the \code{base} package, this also looks in the \code{.R}
-  files in \file{R_HOME/share/R}.
+  files in \file{R\_HOME/share/R}.
 }
 \value{
   For \code{xgettext}, a list of objects of class \code{"xgettext"}
