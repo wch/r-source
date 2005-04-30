@@ -51,7 +51,7 @@ function(x, g, ...)
                  parameter = PARAMETER,
                  p.value = PVAL,
                  data.name = DNAME,
-                 method = "Bartlett test for homogeneity of variances")
+                 method = "Bartlett test of homogeneity of variances")
     class(RVAL) <- "htest"
     return(RVAL)
 }

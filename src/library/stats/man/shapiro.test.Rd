@@ -2,7 +2,7 @@
 \alias{shapiro.test}
 \title{Shapiro-Wilk Normality Test}
 \description{
-  Performs the Shapiro-Wilk test for normality.
+  Performs the Shapiro-Wilk test of normality.
 }
 \usage{
 shapiro.test(x)
