@@ -13,7 +13,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        contr.treatment, contrasts, "contrasts<-", convolve,
        cooks.distance, cor, cov, cov.wt, cov2cor, covratio, cycle, D,
        dbeta, dbinom, dcauchy, dchisq, delete.response, deltat,
-       density, deriv, deriv.default, deriv.formula, deriv3,
+       density, density.default, deriv, deriv.default, deriv.formula, deriv3,
        deriv3.default, deriv3.formula, deviance, dexp, df,
        df.residual, dfbeta, dfbetas, dffits, dgamma, dgeom, dhyper,
        diff.ts, dlnorm, dlogis, dmultinom, dnbinom, dnorm, dpois,
@@ -257,7 +257,6 @@ S3method(bartlett.test, default)
 S3method(bartlett.test, formula)
 S3method(cor.test, default)
 S3method(cor.test, formula)
-S3method(density, default)
 S3method(fligner.test, default)
 S3method(fligner.test, formula)
 S3method(friedman.test, default)
