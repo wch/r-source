@@ -161,7 +161,7 @@ dw <- density(unique(fe), weights = table(fe)/length(fe), bw = d$bw)
 str(dw) ## smaller n: only 126, but identical estimate:
 stopifnot(all.equal(d[1:3], dw[1:3]))
 
-(kernels <- eval(formals(density)$kernel))
+(kernels <- eval(formals(density.default)$kernel))
 
 ## show the kernels in the R parametrization
 plot (density(0, bw = 1), xlab = "",
