@@ -1,14 +1,16 @@
 \name{density}
 \alias{density}
+\alias{density.default}
 \alias{print.density}
 \title{Kernel Density Estimation}
 \usage{
-density(x, bw = "nrd0", adjust = 1,
+density(x, \dots)
+\method{density}{default}(x, bw = "nrd0", adjust = 1,
         kernel = c("gaussian", "epanechnikov", "rectangular",
                    "triangular", "biweight", "cosine", "optcosine"),
-        window = kernel, width,
+        weights = NULL, window = kernel, width,
         give.Rkern = FALSE,
-        n = 512, from, to, cut = 3, na.rm = FALSE)
+        n = 512, from, to, cut = 3, na.rm = FALSE, \dots)
 }
 \arguments{
   \item{x}{the data from which the estimate is to be computed.}
@@ -39,6 +41,11 @@ density(x, bw = "nrd0", adjust = 1,
     However, \code{"cosine"} is the version used by S.
   }
 
+  \item{weights}{numeric vector of non-negative observation weights,
+    hence of same length as \code{x}. The default \code{NULL} is
+    equivalent to \code{weights = rep(1/nx, nx)} where \code{nx} is the
+    length of (the finite entries of) \code{x[]}.}
+
   \item{width}{this exists for compatibility with S; if given, and
     \code{bw} is not, will set \code{bw} to \code{width} if this is a
     character string, or to a kernel-dependent multiple of \code{width}
@@ -61,13 +68,15 @@ density(x, bw = "nrd0", adjust = 1,
 
   \item{na.rm}{logical; if \code{TRUE}, missing values are removed
     from \code{x}. If \code{FALSE} any missing values cause an error.}
+  \item{\dots}{further arguments for (non-default) methods.}
 }
 \description{
-  The function \code{density} computes kernel density estimates
-  with the given kernel and bandwidth.
+  The (S3) generic function \code{density} computes kernel density
+  estimates.  Its default method does so with the given kernel and
+  bandwidth for univariate observations.
 }
 \details{
-  The algorithm used in \code{density} disperses the mass of the
+  The algorithm used in \code{density.default} disperses the mass of the
   empirical distribution function over a regular grid of at least 512
   points and then uses the fast Fourier transform to convolve this
   approximation with a discretized version of the kernel and then uses
@@ -145,6 +154,12 @@ doR <- density(x, bw = 0.15, na.rm = TRUE)
 lines(doR, col = "blue")
 points(xx[i.out], rep(0.01, 10))
 
+## Weighted observations:
+fe <- sort(faithful$eruptions) # has quite a few non-unique values
+## use 'counts / n' as weights:
+dw <- density(unique(fe), weights = table(fe)/length(fe), bw = d$bw)
+str(dw) ## smaller n: only 126, but identical estimate:
+stopifnot(all.equal(d[1:3], dw[1:3]))
 
 (kernels <- eval(formals(density)$kernel))
 
@@ -163,28 +178,29 @@ for(i in 2:length(kernels))
    lines(density(0, width=2, kern =  kernels[i]), col = i)
 legend(0.6, 1.0, legend = kernels, col = seq(kernels), lty = 1)
 
+##-------- Semi-advanced theoretic from here on ---------------------------
+%% i.e. "secondary example" in a new help system ...
+
 (RKs <- cbind(sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))))
 100*round(RKs["epanechnikov",]/RKs, 4) ## Efficiencies
 
-if(interactive()) {
 bw <- bw.SJ(precip) ## sensible automatic choice
-plot(density(precip, bw = bw, n = 2^13),
+plot(density(precip, bw = bw),
      main = "same sd bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, kern =  kernels[i], n = 2^13), col = i)
+   lines(density(precip, bw = bw, kern =  kernels[i]), col = i)
 
 ## Bandwidth Adjustment for "Exactly Equivalent Kernels"
 h.f <- sapply(kernels, function(k)density(kern = k, give.Rkern = TRUE))
 (h.f <- (h.f["gaussian"] / h.f)^ .2)
 ## -> 1, 1.01, .995, 1.007,... close to 1 => adjustment barely visible..
 
-plot(density(precip, bw = bw, n = 2^13),
+plot(density(precip, bw = bw),
      main = "equivalent bandwidths, 7 different kernels")
 for(i in 2:length(kernels))
-   lines(density(precip, bw = bw, adjust = h.f[i], kern =  kernels[i],
-         n = 2^13), col = i)
+   lines(density(precip, bw = bw, adjust = h.f[i], kern = kernels[i]),
+         col = i)
 legend(55, 0.035, legend = kernels, col = seq(kernels), lty = 1)
-}
 }
 \keyword{distribution}
 \keyword{smooth}

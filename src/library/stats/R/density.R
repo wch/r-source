@@ -1,13 +1,17 @@
-density <-
+density <- function(x, ...) UseMethod("density")
+
+density.default <-
     function(x, bw = "nrd0", adjust = 1,
-             kernel = c("gaussian", "epanechnikov", "rectangular",
-             "triangular", "biweight", "cosine", "optcosine"),
-             window = kernel, width,
-             give.Rkern = FALSE,
-             n = 512, from, to, cut = 3, na.rm = FALSE)
+	     kernel = c("gaussian", "epanechnikov", "rectangular",
+	     "triangular", "biweight", "cosine", "optcosine"),
+	     weights = NULL, window = kernel, width,
+	     give.Rkern = FALSE,
+	     n = 512, from, to, cut = 3, na.rm = FALSE, ...)
 {
+    if(length(list(...)) > 0)
+	warning("non-matched further arguments are disregarded")
     if(!missing(window) && missing(kernel))
-        kernel <- window
+	kernel <- window
     kernel <- match.arg(kernel)
     if(give.Rkern)
         ##-- sigma(K) * R(K), the scale invariant canonical bandwidth:
@@ -32,10 +36,32 @@ density <-
     }
     N <- nx <- length(x)
     x.finite <- is.finite(x)
+
+    ## Handle 'weights'
+    if(is.null(weights))  {
+        weights <- rep.int(1/nx, nx)
+        wsum <- 1
+    }
+    else {
+        if(length(weights) != nx)
+            stop("'x' and 'weights' have unequal length")
+        if(!all(is.finite(weights)))
+            stop("'weights' must all be finite")
+        if(any(weights < 0))
+            stop("'weights' must not be negative")
+        wsum <- sum(weights)
+        ## FIXME: Shouldn't we rather signal an error?
+        if (!isTRUE(all.equal(1, wsum)))
+            warning("sum(weights) != 1  -- will not get true density")
+    }
+
     if(any(!x.finite)) {
         x <- x[x.finite]
-        nx <- sum(x.finite)
-    }
+        weights <- weights[x.finite]
+        nx <- length(x) # == sum(x.finite)
+        wsum.fini <- sum(weights)
+    } else wsum.fini <- wsun
+
     n.user <- n
     n <- max(n, 512)
     if (n > 512) n <- 2^ceiling(log2(n)) #- to be fast with FFT
@@ -59,7 +85,7 @@ density <-
         if(is.character(width)) bw <- width
     }
     if (is.character(bw)) {
-        if(length(x) < 2)
+        if(nx < 2)
             stop("need at least 2 points to select a bandwidth automatically")
         bw <- switch(tolower(bw),
                      nrd0 = bw.nrd0(x),
@@ -84,12 +110,13 @@ density <-
     up <- to + 4 * bw
     y <- .C("massdist",
 	    x = as.double(x),
+            xmass = as.double(weights),
 	    nx = nx,
 	    xlo = as.double(lo),
 	    xhi = as.double(up),
 	    y = double(2 * n),
 	    ny = as.integer(n),
-	    PACKAGE = "base")$y * (nx/N)
+            PACKAGE = "base" )$y * (wsum.fini/wsum)
     kords <- seq(0, 2*(up-lo), length = 2 * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,
