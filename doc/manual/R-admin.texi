@@ -508,7 +508,7 @@ at least with GNU @command{make}.
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, many of them are
-currently ignored.)
+currently unused.)
 
 Configure options @option{--bindir} and @option{--mandir} are supported and
 govern where a copy of the @command{R} script and the @code{man} page
@@ -519,21 +519,20 @@ are installed: the default is in fact
 @example
 libdir=EPREFIX/$@{LIBnn@}
 @end example
-@noindent
-rather than as stated by @command{configure --help}.  
 
 All of @code{bindir} and @code{mandir} and @code{libdir} can also be
 specified on the @command{make install} command line.
 
-The @command{make} variables @code{rdocdir} and @code{rsharedir} can be
-used to install the system-independent @file{doc} and @file{share}
-directories to somewhere other than @code{libdir}.  The C header files
-can be installed to @code{rincludedir}: note that as the headers are not
-installed into a subdirectory you probably want something like
+The @command{configure} or @command{make} variables @code{rdocdir} and
+@code{rsharedir} can be used to install the system-independent
+@file{doc} and @file{share} directories to somewhere other than
+@code{libdir}.  The C header files can be installed to the value of
+@code{rincludedir}: note that as the headers are not installed into a
+subdirectory you probably want something like
 @code{rincludedir=/usr/local/include/R-2.2.0}.
 
-If you have made @R{} as a shared library you can install it in your
-system's library directory by
+If you have made @R{} as a shared/dynamic library you can install it in
+your system's library directory by
 
 @example
 make prefix=/path/to/here install-libR

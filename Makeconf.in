@@ -115,11 +115,11 @@ mandir = @mandir@
 includedir = @includedir@
 
 rhome = ${libdir}/R
-rsharedir = ${rhome}/share
-rincludedir = ${rhome}/include
-rdocdir = ${rhome}/doc
+rsharedir = @rsharedir@
+rincludedir = @rincludedir@
+rdocdir = @rdocdir@
 
-## Overrides for installing R as a framework (MacOSX).
+## Overrides for installing R as a framework (MacOS X).
 @WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources
 @WANT_R_FRAMEWORK_TRUE@bindir = $(rhome)
 @WANT_R_FRAMEWORK_TRUE@mandir = $(rhome)

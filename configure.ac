@@ -142,6 +142,29 @@ if test "${libdir}" = '${exec_prefix}/lib'; then
   libdir='${exec_prefix}/${LIBnn}'
 fi
 
+## R installation directories
+m4_divert_once([HELP_BEGIN], [
+R installation directories:
+  --libdir=DIR        R files to R_HOME=DIR/R @<:@EPREFIX/$LIBnn@:>@
+    rdocdir=DIR       R doc files to DIR      @<:@R_HOME/doc@:>@
+    rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
+    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
+
+if test -z ${rdocdir}; then
+  rdocdir='${rhome}/doc'
+fi
+AC_SUBST([rdocdir])
+
+if test -z ${rincludedir}; then
+  rincludedir='${rhome}/include'
+fi
+AC_SUBST([rincludedir])
+
+if test -z ${rsharedir}; then
+  rsharedir='${rhome}/share'
+fi
+AC_SUBST([rsharedir])
+
 ### ** Handle arguments to configure.
 
 config_opts="${ac_configure_args}"
