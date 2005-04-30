@@ -2,7 +2,7 @@
 \alias{bartlett.test}
 \alias{bartlett.test.default}
 \alias{bartlett.test.formula}
-\title{Bartlett Test for Homogeneity of Variances}
+\title{Bartlett Test of Homogeneity of Variances}
 \description{
   Performs Bartlett's test of the null that the variances in each of the
   groups (samples) are the same.
@@ -51,7 +51,7 @@ bartlett.test(x, \dots)
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{the character string
-    \code{"Bartlett test for homogeneity of variances"}.}
+    \code{"Bartlett test of homogeneity of variances"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \seealso{
