@@ -48,14 +48,14 @@ $(TIMESTAMPS): stamp-R
 
 install: installdirs
 	@for f in $(R_EXT_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(includedir)/R_ext"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rincludedir)/R_ext"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(includedir)/R_ext"
+	@$(MKINSTALLDIRS) "$(rincludedir)/R_ext"
 install-strip:
 	$(MAKE) INSTALL_PROGRAM="${INSTALL_PROGRAM} -s" install
 uninstall:
-	@rm -rf "$(includedir)/R_ext"
+	@rm -rf "$(rincludedir)/R_ext"
 
 mostlyclean: clean
 clean:

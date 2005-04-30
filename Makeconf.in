@@ -105,17 +105,19 @@ prefix = @prefix@
 exec_prefix = @exec_prefix@
 ## only used for installing 'R'.
 bindir = @bindir@
-## used for installation of share directory.
+## not used
 datadir = @datadir@
-## only used for 'rhome'
+## used for 'rhome' and installation of standalone Rmath
 libdir = @libdir@
 ## used for man page
 mandir = @mandir@
-## used for installation of C headers
+## used for installation of standalone Rmath headers
 includedir = @includedir@
 
 rhome = ${libdir}/R
-rsharehome = ${datadir}
+rsharedir = ${rhome}/share
+rincludedir = ${rhome}/include
+rdocdir = ${rhome}/doc
 
 ## Overrides for installing R as a framework (MacOSX).
 @WANT_R_FRAMEWORK_TRUE@rhome = $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources

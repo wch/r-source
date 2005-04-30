@@ -82,15 +82,15 @@ install: installdirs install-intl-@USE_INCLUDED_LIBINTL@
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(SRC_HEADERS); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(includedir)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rincludedir)"; \
 	done
 	@for f in $(OBJ_HEADERS); do \
-	  $(INSTALL_DATA) $${f} "$(includedir)"; \
+	  $(INSTALL_DATA) $${f} "$(rincludedir)"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(includedir)"
+	@$(MKINSTALLDIRS) "$(rincludedir)"
 install-intl-yes:
-	@$(INSTALL_DATA) libintl.h "$(includedir)"
+	@$(INSTALL_DATA) libintl.h "$(rincludedir)"
 install-intl-no:
 
 install-strip:
@@ -99,7 +99,7 @@ uninstall:
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
-	@rm -rf "$(includedir)"
+	@rm -rf "$(rincludedir)"
 
 mostlyclean: clean
 clean:

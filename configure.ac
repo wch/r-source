@@ -141,12 +141,6 @@ AC_SUBST(LIBnn)
 if test "${libdir}" = '${exec_prefix}/lib'; then
   libdir='${exec_prefix}/${LIBnn}'
 fi
-if test "${datadir}" = '${prefix}/share'; then
-  datadir='${libdir}/share'
-fi
-if test "${includedir}" = '${prefix}/include'; then
-  includedir='${libdir}/include'
-fi
 
 ### ** Handle arguments to configure.
 
@@ -171,8 +165,8 @@ fi],
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
 [AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
-                [build R framework (if possible), and specify its
-                 installation prefix @<:@yes, /Library/Frameworks@:>@])],
+                [MacOS X only: build R framework (if possible), and specify
+                 its installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
 [want_R_framework=yes])
 ## Can only build frameworks on Darwin.
@@ -208,7 +202,7 @@ AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
 ## </NOTE>
 AC_ARG_ENABLE([R-shlib],
 [AC_HELP_STRING([--enable-R-shlib],
-                [build R as a shared library @<:@no@:>@])],
+                [build the shared/dynamic library 'libR' @<:@no@:>@])],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
 ## processed after GNOME, which can set this.
@@ -237,13 +231,13 @@ fi
 
 AC_ARG_ENABLE([linux-lfs],
 [AC_HELP_STRING([--enable-linux-lfs],
-                [Enable support for > 2GB files on Linux @<:@no@:>@])],
+                [enable support for > 2GB files on Linux @<:@no@:>@])],
 [want_linux_lfs="${enableval}"],
 [want_linux_lfs=no])
 
 AC_ARG_ENABLE([mbcs],
 [AC_HELP_STRING([--enable-mbcs],
-                [Enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
+                [enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
 [want_mbcs_support="${enableval}"],
 [want_mbcs_support=yes])
 
@@ -274,7 +268,7 @@ AC_ARG_WITH([readline],
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AC_HELP_STRING([--with-aqua],
-                [use Aqua (if available) @<:@no@:>@])],
+                [MacOS X only: use Aqua (if available) @<:@no@:>@])],
 [want_aqua=yes])
 
 ## Tcl/Tk.

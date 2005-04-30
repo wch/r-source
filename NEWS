@@ -64,12 +64,8 @@ INSTALLATION
 	/usr/local/lib64/R on most 64-bit Linux OSes and /usr/local/lib/R
 	elsewhere.
 
-    o	It is now possible to install the share directory other than to
-	${libdir}/share by specifying --datadir when configuring:
-	see the R-admin manual.
-
-	Similarly, the installation location for the include directory
-	can be specified by specifying --includedir.  
+    o	The places where the doc, include and share directory trees are
+	installed can be specified independently: see the R-admin manual.
 
 
 BUG FIXES

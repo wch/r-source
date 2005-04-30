@@ -447,6 +447,10 @@ e.g. for printing.
 @section Installation
 @cindex Installation
 
+To ensure that the installed tree is usable by the right group of users,
+set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
+the sources and throughout the build process.
+
 After
 
 @findex configure
@@ -468,11 +472,11 @@ make install
 This will install to the following directories:
 
 @table @file
-@item @var{prefix}/bin
+@item @var{prefix}/bin or @var{bindir}
 the front-end shell script
-@item @var{prefix}/man/man1
+@item @var{prefix}/man/man1 or @var{mandir}/man1
 the man page
-@item @var{prefix}/$LIBnn/R
+@item @var{prefix}/$LIBnn/R or @var{libdir}/R
 all the rest (libraries, on-line help system, @dots{}).  Here
 @code{$LIBnn} is usually @code{lib}, but may be @code{lib64} on some
 64-bit Linux systems.
@@ -506,24 +510,27 @@ More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, many of them are
 currently ignored.)
 
-Both @code{bindir} and @code{mandir} are supported and govern where a
-copy of the @command{R} script and the @code{man} page are installed.
+Configure options @option{--bindir} and @option{--mandir} are supported and
+govern where a copy of the @command{R} script and the @code{man} page
+are installed.
 
-The setting of @code{libdir} controls where the main @R{} files are
-installed, and @code{datadir} can be used to install the
-system-independent @file{share} directory to somewhere other than
-@code{libdir}.  The C header files are installed to @code{includedir}:
-not that as the headers are not installed into a subdirectory you
-probably want something like @code{--includedir=/usr/local/include/R-2.2.0}.
-The defaults for these are in fact
+The configure option @option{--libdir} controls where the main @R{} files
+are installed: the default is in fact
 @example
-libdir=EPREFIX/$@{LIBnn@}/R
-datadir=$@{libdir@}/share
-includedir=$@{libdir@}/include
+libdir=EPREFIX/$@{LIBnn@}
 @end example
 @noindent
-rather than as stated by @command{configure --help}. @code{libdir} and
-@code{datadir} can also be specified on the @command{make} command line.)
+rather than as stated by @command{configure --help}.  
+
+All of @code{bindir} and @code{mandir} and @code{libdir} can also be
+specified on the @command{make install} command line.
+
+The @command{make} variables @code{rdocdir} and @code{rsharedir} can be
+used to install the system-independent @file{doc} and @file{share}
+directories to somewhere other than @code{libdir}.  The C header files
+can be installed to @code{rincludedir}: note that as the headers are not
+installed into a subdirectory you probably want something like
+@code{rincludedir=/usr/local/include/R-2.2.0}.
 
 If you have made @R{} as a shared library you can install it in your
 system's library directory by
@@ -533,8 +540,8 @@ make prefix=/path/to/here install-libR
 @end example
 
 @noindent
-where @code{prefix} is optional, and @code{libdir} can be used for
-more precise control.
+where @code{prefix} is optional, and @code{libdir} will give more
+precise control.
 
 
 @cindex Manuals, installing
@@ -548,11 +555,13 @@ make install-pdf
 @end example
 
 @noindent
-Once again, it is optional to specify @code{prefix}.
+Once again, it is optional to specify @code{prefix}.  
 
-To ensure that the installed tree is usable by the right group of users,
-set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
-the sources and throughout the build process.
+More precise control is possible.  For info, the setting used is that of
+@code{infodir} (default @code{@var{prefix}/info}, set by configure
+option @option{--infodir}).  The DVI and PDF files are installed into
+the @R{} @file{doc} tree, set by the @command{make} variable
+@code{rdocdir}.
 
 @node Uninstallation,  , Installation, Installing R under Unix-alikes
 @section Uninstallation
@@ -563,14 +572,13 @@ You can uninstall @R{} by
 make uninstall
 @end example
 @noindent
-specifyihg @code{prefix} etc in the same way as specified for
+specifying @code{prefix} etc in the same way as specified for
 installation.
 
-There is no simple way to uninstall the @code{info} files, but the other
-manuals are uninstalled by @code{make uninstall}.
+This will also uninstall any installed manuals.  There are specific
+targets to uninstall DVI, info and PDF manuals in
+@file{doc/manual/Makefile}.
 
-Be aware that uninstallation will remove the @code{installdir} and
-@code{datadir} directories, so if used these should be @R{}-specific.
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
@@ -662,8 +670,8 @@ You will need files @file{libpng-1.2.8.tar.gz} and
 @item
 You need to obtain copies of the recommended packages from
 @acronym{CRAN}.  Put the @file{.tar.gz} files in
-@file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync} and an
-Internet connection, you can do this automatically using
+@file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync}
+and an Internet connection, you can do this automatically using
 @example
 make rsync-recommended
 @end example
@@ -676,11 +684,13 @@ and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
 area on @acronym{CRAN}.
 
 Another tuned BLAS which is available for some CPUs is by Kazushige
-Goto.  He does not allow redistribution: his builds are currently available
-via @url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To
-make use of this, put the @file{DLL} somewhere in your path or in
-@file{@var{R_HOME}/bin}, and edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to
-define @code{USE_GOTO=YES} and the name of the @file{DLL} (something like
+Goto.  He does not allow redistribution: his builds are currently
+available via
+@url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To make
+use of this, put the @file{DLL} somewhere in your path or in
+@file{@var{R_HOME}/bin}, and edit
+@file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_GOTO=YES}
+and the name of the @file{DLL} (something like
 @file{libgoto_p4_512-r0.9.dll}).
 
 Goto's BLAS takes preference over ATLAS, and seems a little faster.
@@ -752,13 +762,12 @@ sometimes stop and have to be restarted.
 @cindex Rbitmap.dll
 
 The file @file{@var{R_HOME}/bin/Rbitmap.dll} is not built automatically.
-Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap}, install
-the @code{libpng} and @code{jpeg} sources in sub-directories.  
-The @code{libpng} sub-directory must be named @file{libpng} 
-(as required by the @code{libpng} documentation).  The
-@code{jpeg} sub-directory for version 6b is named @file{jpeg-6b}Ã; if you use
-a different version, edit @file{Makefile} and change the definition
-of @code{JPEGDIR}.
+Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
+install the @code{libpng} and @code{jpeg} sources in sub-directories.
+The @code{libpng} sub-directory must be named @file{libpng} (as required
+by the @code{libpng} documentation).  The @code{jpeg} sub-directory for
+version 6b is named @file{jpeg-6b}; if you use a different version, edit
+@file{Makefile} and change the definition of @code{JPEGDIR}.
 
 Example:
 @example
@@ -777,11 +786,11 @@ should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 This version of @R{} can be built with support for some multibyte
 character sets such those used in Chinese, Japanese and Korean.
 
-Define @code{SUPPORT_MBCS} in config.h to enable support in the @R{} engine for
-multi-byte character sets.  This is only useful if you have an `East
-Asian' version of Windows, as only those versions have multi-byte
-locales.  We have only tested this under Windows XP, but it is
-expected to work under Windows 95/98/ME as well as NT-based versions
+Define @code{SUPPORT_MBCS} in config.h to enable support in the @R{}
+engine for multi-byte character sets.  This is only useful if you have
+an `East Asian' version of Windows, as only those versions have
+multi-byte locales.  We have only tested this under Windows XP, but it
+is expected to work under Windows 95/98/ME as well as NT-based versions
 of Windows.
 
 This also enables support for multi-byte locales in the RGui console,
@@ -890,9 +899,10 @@ distribution is given in file @file{installer/INSTALL}.
 @subsection Checking the build
 
 You can test a build by (optionally) building the recommended packages
-(see below) and running @code{make check}.  You may need to set @code{TMPDIR} to
-the absolute path to a suitable temporary directory: the default is
-@file{c:/TEMP}.  (Use forward slashes and do not use a path including spaces.)
+(see below) and running @code{make check}.  You may need to set
+@code{TMPDIR} to the absolute path to a suitable temporary directory:
+the default is @file{c:/TEMP}.  (Use forward slashes and do not use a
+path including spaces.)
 
 @node Cross-building on ix86 Linux,  , Checking the build, Building from source
 @subsection Cross-building on ix86 Linux
@@ -915,8 +925,8 @@ cd /somewhere/R-2.x.y/src/gnuwin32
 Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
 paths (including @code{HEADER}) as needed.
 
-Edit @file{MkRules} to set the type(s) of help that you want built. (You will
-not be able to cross-build @file{.chm} files, so @code{WINHELP} is
+Edit @file{MkRules} to set the type(s) of help that you want built. (You
+will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
 automatically set to @code{NO}.)
 
 You also need a working copy of @emph{this version} of R on Linux:
@@ -952,8 +962,8 @@ The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
 icon and the archive will be expanded as an image di file. Read the
 @file{ReadMe.txt} inside the disk image and follow the instructions.
 
-See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
-@acronym{FAQ}} for more details.
+See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
+for Mac OS X @acronym{FAQ}} for more details.
 
 @menu
 * Building from source on Mac OS X::  
@@ -1171,21 +1181,22 @@ of @code{$HOME}.)  For the record, the order of precedence is (last wins)
 @file{src/Makefile.win} if present causes all of the above to be ignored.
 @end itemize
 
-@strong{Beware}: files @file{src/Makefile} or @file{src/Makevars} will be used
-if they exist and the @file{.win} equivalents do not.  Such files
-included in package sources are usually designed for use under Unix
-and are best removed.
+@strong{Beware}: files @file{src/Makefile} or @file{src/Makevars} will
+be used if they exist and the @file{.win} equivalents do not.  Such
+files included in package sources are usually designed for use under
+Unix and are best removed.
 
 @strong{Beware}: references to variables in @file{R.dll} are converted to the
 right form by using the header files.  You must include them.
 
-For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile} contains
-additional make targets corresponding to various options to @code{R
-CMD INSTALL}.  These assume that package @code{foo} source code has
-been installed in directory @file{@var{R_HOME}/src/library/foo}. Then
-@code{make pkg-foo} is similar to @code{R CMD INSTALL foo} (but the
-latter would require @file{@var{R_HOME}/src/library} to be the current
-directory).  Other targets are
+For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile}
+contains additional make targets corresponding to various options to
+@code{R CMD INSTALL}.  These assume that package @code{foo}'s source
+code has been installed in directory
+@file{@var{R_HOME}/src/library/foo}. Then @code{make pkg-foo} is similar
+to @code{R CMD INSTALL foo} (but the latter would require
+@file{@var{R_HOME}/src/library} to be the current directory).  Other
+targets are
 @itemize
 @item
 @code{ziponly-foo}, to use zip to compress the help files after building

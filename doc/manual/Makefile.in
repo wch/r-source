@@ -224,7 +224,7 @@ version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
 R-intro.dvi: stamp-images-eps $(texiincludes)
 stamp-images-eps:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rhome=$(top_builddir) install-images-eps; \
+	  $(MAKE) rdocdir=$(top_builddir)/doc install-images-eps; \
 	fi
 	@touch $@
 R-lang.dvi: $(texiincludes)
@@ -323,7 +323,7 @@ R-exts.pdf: $(texiincludes)
 R-intro.pdf: stamp-images-pdf $(texiincludes)
 stamp-images-pdf:
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rhome=$(top_builddir) install-images-pdf; \
+	  $(MAKE) rdocdir=$(top_builddir)/doc install-images-pdf; \
 	fi
 	@touch $@
 R-lang.pdf: $(texiincludes)
@@ -332,28 +332,28 @@ install: install-message installdirs install-html
 install-message:
 	@echo "installing $(subdir) ..."
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
+	@$(MKINSTALLDIRS) "$(rdocdir)/manual"
 install-strip: install
 install-dvi: dvi installdirs install-images-eps
 	@echo "installing R manuals in DVI format ..."
 	@for f in *.dvi; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual"; \
 	done
 install-images-eps:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"/images
+	@$(MKINSTALLDIRS) "$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.eps; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"/images; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual/images"; \
 	done
 install-images-pdf:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"/images
+	@$(MKINSTALLDIRS) "$(rdocdir)/manual/images"
 	@-for f in $(srcdir)/images/*.pdf; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"/images; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual/images"; \
 	done
 ## if there is no makeinfo >= 4.7 then there are no html pages
 install-html:
 	@for f in $(OBJECTS_HTML); do \
 	  if test -f $${f} ; then \
-	    $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	    $(INSTALL_DATA) $${f} "$(rdocdir)/manual"; \
 	  fi \
 	done
 install-info: info $(infodir)/dir
@@ -370,7 +370,7 @@ install-info: info $(infodir)/dir
 install-pdf: pdf installdirs
 	@echo "installing R manuals in PDF format ..."
 	@for f in *.pdf; do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/manual"; \
 	done
 
 $(infodir)/dir:
@@ -383,12 +383,12 @@ uninstall:
 	  $(MAKE) uninstall-info; \
 	fi
 	@echo "uninstalling $(subdir) ..."
-	@rm -rf "$(rhome)/$(subdir)"
+	@rm -rf "$(rdocdir)/manual"
 uninstall-dvi:
 	@echo "uninstalling R manuals in DVI format ..."
-	@-rm -f "$(rhome)/$(subdir)"/images/*.eps
-	@-rmdir "$(rhome)/$(subdir)"/images
-	@-rm -f "$(rhome)/$(subdir)"/*.dvi
+	@-rm -f "$(rdocdir)/manual"/images/*.eps
+	@-rmdir "$(rdocdir)/manual"/images
+	@-rm -f "$(rdocdir)/manual"/*.dvi
 uninstall-info:
 	@echo "uninstalling R info pages ..."
 	@for f in $(OBJECTS_INFO); do \
@@ -400,7 +400,7 @@ uninstall-info:
 	done
 uninstall-pdf:
 	@echo "uninstalling R manuals in PDF format ..."
-	@-rm -f "$(rhome)/$(subdir)"/*.pdf
+	@-rm -f "$(rdocdir)/manual"/*.pdf
 
 mostlyclean: clean
 clean:

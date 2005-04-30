@@ -7,6 +7,7 @@ R.home <- function(component="home")
     switch(component,
            "home" = rh,
            "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p else file.path(rh, component),
+	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p else file.path(rh, component),
            file.path(rh, component))
 }
 file.show <-

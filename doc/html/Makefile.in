@@ -35,7 +35,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 
 R: Makefile $(OBJECTS) svnonly
 	@if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
-	  $(MAKE) rhome=$(top_builddir) install-sources; \
+	  $(MAKE) rdocdir=$(top_builddir)/doc install-sources; \
 	fi
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
@@ -61,21 +61,21 @@ FORCE:
 
 install: svnonly install-message installdirs install-sources
 	@for f in $(OBJECTS); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/html"; \
 	done
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
 	done
 	@for f in $(NON_SVN_INSTFILES); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/html"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
+	@$(MKINSTALLDIRS) "$(rdocdir)/html"
 install-message:
 	@echo "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)/html"; \
 	done
 install-strip: install
 uninstall:
@@ -84,9 +84,9 @@ uninstall:
 	  (cd $${d} && $(MAKE) $@); \
 	done
 	@for f in $(CLEANFILES) $(INSTFILES) $(NON_SVN_INSTFILES) $(OBJECTS); do \
-	  rm -f "$(rhome)/$(subdir)/$${f}"; \
+	  rm -f "$(rdocdir)/html/$${f}"; \
 	done
-	@rmdir "$(rhome)/$(subdir)" 2>/dev/null \
+	@rmdir "$(rdocdir)/html" 2>/dev/null \
 	  || echo "  subdir $(subdir) not removed"
 
 mostlyclean:
