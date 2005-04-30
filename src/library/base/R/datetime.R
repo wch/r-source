@@ -32,7 +32,7 @@ as.POSIXlt <- function(x, tz = "")
     if(inherits(x, "Date")) return(.Internal(Date2POSIXlt(x)))
     tzone <- attr(x, "tzone")
     if(inherits(x, "date") || inherits(x, "dates")) x <- as.POSIXct(x)
-    if(is.character(x)) return(fromchar(x))
+    if(is.character(x)) return(fromchar(unclass(x))) # precaution PR7826
     if(is.factor(x))	return(fromchar(as.character(x)))
     if(is.logical(x) && all(is.na(x))) x <- as.POSIXct.default(x)
     if(!inherits(x, "POSIXct"))
@@ -256,6 +256,7 @@ as.data.frame.POSIXct <- as.data.frame.vector
 
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
+## <FIXME> check the argument validity
 c.POSIXct <- function(..., recursive=FALSE)
     structure(c(unlist(lapply(list(...), unclass))),
               class=c("POSIXt","POSIXct"))
