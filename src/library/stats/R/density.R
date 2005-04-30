@@ -60,7 +60,7 @@ density.default <-
         weights <- weights[x.finite]
         nx <- length(x) # == sum(x.finite)
         wsum.fini <- sum(weights)
-    } else wsum.fini <- wsun
+    } else wsum.fini <- wsum
 
     n.user <- n
     n <- max(n, 512)
