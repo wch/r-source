@@ -215,13 +215,13 @@ wget -r -l1 --no-parent -A\*.gz -nd -P src/library/Recommended \
 @cindex Installing under Unix-alikes
 
 @R{} will configure and build under a number of common Unix and
-Unix-alike platforms including i386-*-freebsd, @var{cpu}-*-linux-gnu for
-the i386, alpha, amd64, arm, hppa, ia64, m68k, powerpc, and sparc CPUs
-(see e.g.@: @url{http://buildd.debian.org/build.php?&pkg=r-base}),
+Unix-alike platforms including@var{cpu}-*-linux-gnu for the alpha,
+amd64, arm, hppa, ix86, ia64, m68k, powerpc, and sparc CPUs (see e.g.@:
+@url{http://buildd.debian.org/build.php?&pkg=r-base}),
 powerpc-apple-darwin and sparc-sun-solaris, as well as probably (it is
-tested less frequently on these) i386-*-netbsd, i386-*-openbsd,
-i386-sun-solaris, mips-sgi-irix, alpha-dec-osf*, rs6000-ibm-aix and
-hppa-hp-hpux.
+tested less frequently on these) i386-*-freebsd, i386-*-netbsd,
+i386-*-openbsd, i386-sun-solaris, mips-sgi-irix, alpha-dec-osf*,
+rs6000-ibm-aix and hppa-hp-hpux.
 
 @cindex Linux
 @cindex Mac OS X
@@ -447,6 +447,10 @@ e.g. for printing.
 @section Installation
 @cindex Installation
 
+To ensure that the installed tree is usable by the right group of users,
+set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
+the sources and throughout the build process.
+
 After
 
 @findex configure
@@ -468,11 +472,11 @@ make install
 This will install to the following directories:
 
 @table @file
-@item @var{prefix}/bin
+@item @var{prefix}/bin or @var{bindir}
 the front-end shell script
-@item @var{prefix}/man/man1
+@item @var{prefix}/man/man1 or @var{mandir}/man1
 the man page
-@item @var{prefix}/lib/R
+@item @var{prefix}/lib/R or @var{libdir}/R
 all the rest (libraries, on-line help system, @dots{})
 @end table
 
@@ -491,7 +495,7 @@ This causes @command{make install} to install the @R{} executable to
 @file{/where/you/want/R/to/go/bin}, and so on.  The prefix of the
 installation directories can be seen in the status message that is
 displayed at the end of @command{configure}.  You can install into
-another directory by using
+another directory tree by using
 
 @example
 make prefix=/path/to/here install
@@ -502,7 +506,8 @@ at least with GNU @command{make}.
 
 More precise control is available at configure time via options: see
 @command{configure --help} for details.  (However, most of them are
-currently ignored, but @code{bindir} and @code{mandir} are supported.)
+currently ignored, but @code{bindir}, @code{libdir} and @code{mandir}
+are supported.)
 
 
 @cindex Manuals, installing
@@ -516,11 +521,9 @@ make install-pdf
 @end example
 
 @noindent
-Once again, it is optional to specify @code{prefix}.
-
-To ensure that the installed tree is usable by the right group of users,
-set @code{umask} appropriately (perhaps to @samp{022}) before unpacking
-the sources and throughout the build process.
+Once again, it is optional to specify @code{prefix}. For info, the
+setting used is that of @code{infodir} (default
+@code{@var{prefix}/info}, set by configure option @option{--infodir}).
 
 @node Uninstallation,  , Installation, Installing R under Unix-alikes
 @section Uninstallation
@@ -530,6 +533,14 @@ You can uninstall @R{} by
 @example
 make uninstall
 @end example
+@noindent
+specifying @code{prefix} etc in the same way as specified for
+installation.
+
+This will also uninstall any installed manuals.  There are specific
+targets to uninstall DVI, info and PDF manuals in
+@file{doc/manual/Makefile}.
+
 
 @node Installing R under Windows, Installing R under Mac OS X, Installing R under Unix-alikes, Top
 @chapter Installing R under Windows
@@ -621,8 +632,8 @@ You will need files @file{libpng-1.2.8.tar.gz} and
 @item
 You need to obtain copies of the recommended packages from
 @acronym{CRAN}.  Put the @file{.tar.gz} files in
-@file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync} and an
-Internet connection, you can do this automatically using
+@file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync}
+and an Internet connection, you can do this automatically using
 @example
 make rsync-recommended
 @end example
@@ -635,11 +646,13 @@ and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
 area on @acronym{CRAN}.
 
 Another tuned BLAS which is available for some CPUs is by Kazushige
-Goto.  He does not allow redistribution: his builds are currently available
-via @url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To
-make use of this, put the @file{DLL} somewhere in your path or in
-@file{@var{R_HOME}/bin}, and edit @file{@var{R_HOME}/src/gnuwin32/MkRules} to
-define @code{USE_GOTO=YES} and the name of the @file{DLL} (something like
+Goto.  He does not allow redistribution: his builds are currently
+available via
+@url{http://www.cs.utexas.edu/users/kgoto/signup_first.html}.  To make
+use of this, put the @file{DLL} somewhere in your path or in
+@file{@var{R_HOME}/bin}, and edit
+@file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_GOTO=YES}
+and the name of the @file{DLL} (something like
 @file{libgoto_p4_512-r0.9.dll}).
 
 Goto's BLAS takes preference over ATLAS, and seems a little faster.
@@ -711,13 +724,12 @@ sometimes stop and have to be restarted.
 @cindex Rbitmap.dll
 
 The file @file{@var{R_HOME}/bin/Rbitmap.dll} is not built automatically.
-Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap}, install
-the @code{libpng} and @code{jpeg} sources in sub-directories.  
-The @code{libpng} sub-directory must be named @file{libpng} 
-(as required by the @code{libpng} documentation).  The
-@code{jpeg} sub-directory for version 6b is named @file{jpeg-6b}Ã; if you use
-a different version, edit @file{Makefile} and change the definition
-of @code{JPEGDIR}.
+Working in the directory @file{@var{R_HOME}/src/gnuwin32/bitmap},
+install the @code{libpng} and @code{jpeg} sources in sub-directories.
+The @code{libpng} sub-directory must be named @file{libpng} (as required
+by the @code{libpng} documentation).  The @code{jpeg} sub-directory for
+version 6b is named @file{jpeg-6b}; if you use a different version, edit
+@file{Makefile} and change the definition of @code{JPEGDIR}.
 
 Example:
 @example
@@ -736,11 +748,11 @@ should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 This version of @R{} can be built with support for some multibyte
 character sets such those used in Chinese, Japanese and Korean.
 
-Define @code{SUPPORT_MBCS} in config.h to enable support in the @R{} engine for
-multi-byte character sets.  This is only useful if you have an `East
-Asian' version of Windows, as only those versions have multi-byte
-locales.  We have only tested this under Windows XP, but it is
-expected to work under Windows 95/98/ME as well as NT-based versions
+Define @code{SUPPORT_MBCS} in config.h to enable support in the @R{}
+engine for multi-byte character sets.  This is only useful if you have
+an `East Asian' version of Windows, as only those versions have
+multi-byte locales.  We have only tested this under Windows XP, but it
+is expected to work under Windows 95/98/ME as well as NT-based versions
 of Windows.
 
 This also enables support for multi-byte locales in the RGui console,
@@ -849,9 +861,10 @@ distribution is given in file @file{installer/INSTALL}.
 @subsection Checking the build
 
 You can test a build by (optionally) building the recommended packages
-(see below) and running @code{make check}.  You may need to set @code{TMPDIR} to
-the absolute path to a suitable temporary directory: the default is
-@file{c:/TEMP}.  (Use forward slashes and do not use a path including spaces.)
+(see below) and running @code{make check}.  You may need to set
+@code{TMPDIR} to the absolute path to a suitable temporary directory:
+the default is @file{c:/TEMP}.  (Use forward slashes and do not use a
+path including spaces.)
 
 @node Cross-building on ix86 Linux,  , Checking the build, Building from source
 @subsection Cross-building on ix86 Linux
@@ -874,8 +887,8 @@ cd /somewhere/R-2.x.y/src/gnuwin32
 Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
 paths (including @code{HEADER}) as needed.
 
-Edit @file{MkRules} to set the type(s) of help that you want built. (You will
-not be able to cross-build @file{.chm} files, so @code{WINHELP} is
+Edit @file{MkRules} to set the type(s) of help that you want built. (You
+will not be able to cross-build @file{.chm} files, so @code{WINHELP} is
 automatically set to @code{NO}.)
 
 You also need a working copy of @emph{this version} of R on Linux:
@@ -911,8 +924,8 @@ The simplest way is to use @file{R.dmg.sit}.  Just double-click on the
 icon and the archive will be expanded as an image di file. Read the
 @file{ReadMe.txt} inside the disk image and follow the instructions.
 
-See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R for Mac OS X
-@acronym{FAQ}} for more details.
+See the @url{http://CRAN.R-project.org/bin/macosx/RMacOSX-FAQ.html, R
+for Mac OS X @acronym{FAQ}} for more details.
 
 @menu
 * Building from source on Mac OS X::  
@@ -1130,21 +1143,22 @@ of @code{$HOME}.)  For the record, the order of precedence is (last wins)
 @file{src/Makefile.win} if present causes all of the above to be ignored.
 @end itemize
 
-@strong{Beware}: files @file{src/Makefile} or @file{src/Makevars} will be used
-if they exist and the @file{.win} equivalents do not.  Such files
-included in package sources are usually designed for use under Unix
-and are best removed.
+@strong{Beware}: files @file{src/Makefile} or @file{src/Makevars} will
+be used if they exist and the @file{.win} equivalents do not.  Such
+files included in package sources are usually designed for use under
+Unix and are best removed.
 
 @strong{Beware}: references to variables in @file{R.dll} are converted to the
 right form by using the header files.  You must include them.
 
-For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile} contains
-additional make targets corresponding to various options to @code{R
-CMD INSTALL}.  These assume that package @code{foo}source code has
-been installed in directory @file{@var{R_HOME}/src/library/foo}. Then
-@code{make pkg-foo} is similar to @code{R CMD INSTALL foo} (but the
-latter would require @file{@var{R_HOME}/src/library} to be the current
-directory).  Other targets are
+For additional control, @file{@var{R_HOME}/src/gnuwin32/Makefile}
+contains additional make targets corresponding to various options to
+@code{R CMD INSTALL}.  These assume that package @code{foo}'s source
+code has been installed in directory
+@file{@var{R_HOME}/src/library/foo}. Then @code{make pkg-foo} is similar
+to @code{R CMD INSTALL foo} (but the latter would require
+@file{@var{R_HOME}/src/library} to be the current directory).  Other
+targets are
 @itemize
 @item
 @code{ziponly-foo}, to use zip to compress the help files after building
