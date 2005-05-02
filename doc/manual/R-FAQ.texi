@@ -4,9 +4,14 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_VERSION 2.0.@value{FAQ_YEAR}-04-29
-@set REL_VERSION 2.1.0
+@set FAQ_DATE @value{FAQ_YEAR}-05-02
 @set REL_YEAR 2005
+@set REL_MAJOR 2
+@set REL_MINOR 1
+@set REL_PATCHLEVEL 0
+@set REL_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{REL_PATCHLEVEL}
+@set FAQ_VERSION @value{REL_MAJOR}.@value{REL_MINOR}.@value{FAQ_DATE}
+
 @c <COMMENT>
 @c ISBNs for R 1.x.
 @c @set FAQ_ISBN 3-900051-01-1
@@ -1692,6 +1697,9 @@ Functions and data sets for the book ``Introduction to Bayesian
 Statistics'' by W. M. Bolstad, 2004, John Wiley and Sons.
 @item BradleyTerry
 Specify and fit the Bradley-Terry model and structured versions.
+@item BSDA
+Data sets for the book ``Basic Statistics and Data Analysis'' by
+L. J. Kitchens, 2003, Duxbury.
 @item BsMD
 Bayes screening and model discrimination follow-up designs.
 @item CDNmoney
