@@ -136,7 +136,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contriburl,
                          method = method,
                          available = available, destdir = destdir,
-                         installWithVers = installWithVers, type)
+                         installWithVers = installWithVers, type = type)
     }
 }
 
