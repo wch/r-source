@@ -1,6 +1,6 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-03-06), ISBN 3-900051-00-3
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 Under development (unstable) (2005-05-04), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +8,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -33,8 +33,9 @@ Type 'q()' to quit R.
 +     str(sa)
 +     detach("package:survival")
 + }
-Loading required package: survival 
- Surv [1:23, 1:2]  9  13  13+ 18  23  28+ 31  34  45+ 48  ...
+Loading required package: survival
+Loading required package: splines
+ Surv [1:23, 1:2]   9   13   13+  18   23   28+  31   34   45+  48  ...
  - attr(*, "dimnames")=List of 2
   ..$ : NULL
   ..$ : chr [1:2] "time" "status"
@@ -49,7 +50,7 @@ Loading required package: survival
 +     ## row 57 should have hat = 1 and resid=0.
 +     summary(influence.measures(fit))
 + }
-Loading required package: MASS 
+Loading required package: MASS
 $hat
          1          2          3          4          5          6          7 
 0.09313909 0.07134091 0.19138434 0.08101081 0.24991662 0.10448752 0.12591828 
@@ -481,4 +482,31 @@ Potentially influential observations of
 +     plot(fm1)
 + }
 > ## gave warnings in 1.8.1
+> 
+> 
+> ## PR#7829 model.tables & replications
+> if(require(MASS)) {
++ oats.aov <- aov(Y ~ B + V + N + V:N, data=oats[-1,])
++ model.tables(oats.aov, "means", cterms=c("N", "V:N"))
++ }
+Tables of means
+Grand mean
+         
+103.8732 
+
+ N 
+    0.0cwt 0.2cwt 0.4cwt 0.6cwt
+     78.74   98.5  113.8    123
+rep  17.00   18.0   18.0     18
+
+ V:N 
+             N
+V             0.0cwt 0.2cwt 0.4cwt 0.6cwt
+  Golden.rain  79.53  98.03 114.20 124.37
+  rep           6.00   6.00   6.00   6.00
+  Marvellous   86.20 108.03 116.70 126.37
+  rep           6.00   6.00   6.00   6.00
+  Victory      69.77  89.20 110.37 118.03
+  rep           5.00   6.00   6.00   6.00
+> ## wrong printed output in 2.1.0
 > 
