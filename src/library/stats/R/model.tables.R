@@ -36,8 +36,11 @@ model.tables.aov <- function(x, type = "effects", se = FALSE, cterms, ...)
     }
     tables <- make.tables.aovproj(dn.proj, m.factors, prjs, mf)
 
-    n <- replications(paste("~", paste(names(tables), collapse = "+")),
-		      data = mf)
+    ## This was reordering some interaction terms, e.g. N + V:N
+    ##n <- replications(paste("~", paste(names(tables), collapse = "+")),
+    ##		      data = mf)
+    n <- NULL
+    for(xx in names(tables)) n <- c(n, replications(paste("~", xx), data=mf))
     if(se)
 	if(is.list(n)) {
 	    message("Design is unbalanced - use se.contrast() for se's")

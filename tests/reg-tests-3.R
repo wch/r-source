@@ -33,3 +33,11 @@ if(require(MASS)) {
     plot(fm1)
 }
 ## gave warnings in 1.8.1
+
+
+## PR#7829 model.tables & replications
+if(require(MASS)) {
+oats.aov <- aov(Y ~ B + V + N + V:N, data=oats[-1,])
+model.tables(oats.aov, "means", cterms=c("N", "V:N"))
+}
+## wrong printed output in 2.1.0

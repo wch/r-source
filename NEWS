@@ -155,6 +155,10 @@ BUG FIXES
     o	update.packages() was not passing 'type' correctly to 
 	install.packages().
 
+    o	Printing the result of an unbalanced model.tables() call
+	sometimes got confused if terms() had rearranged interaction
+	terms.  (PR#7829)
+
 
 
 
