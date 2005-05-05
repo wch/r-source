@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-29 08:52\n"
+"POT-Creation-Date: 2005-05-05 12:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,13 +293,7 @@ msgstr ""
 msgid "package seems to be using lazy loading for data already"
 msgstr ""
 
-msgid "object(s)"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "are created by more than one data call"
+msgid "object(s) %s are created by more than one data call"
 msgstr ""
 
 msgid "source list must have names for all elements"
@@ -326,10 +320,7 @@ msgstr ""
 msgid "bad operand"
 msgstr ""
 
-msgid "Package"
-msgstr ""
-
-msgid "had its dependencies reduced to a minimal set."
+msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
 
 msgid "argument '%s' must be a character string or connection"

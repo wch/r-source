@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-29 08:52\n"
+"POT-Creation-Date: 2005-05-05 12:00\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -326,13 +326,8 @@ msgstr "il pacchetto '%s' non ha un file .rda"
 msgid "package seems to be using lazy loading for data already"
 msgstr "il pacchetto sembra già utilizzare il lazy loading per i dati"
 
-msgid "object(s)"
-msgstr "oggetto(i)"
-
-msgid ","
-msgstr ""
-
-msgid "are created by more than one data call"
+#, fuzzy
+msgid "object(s) %s are created by more than one data call"
 msgstr "creati da più di una chiamata data"
 
 msgid "source list must have names for all elements"
@@ -359,10 +354,8 @@ msgstr "pacchetto '%s' non trovato"
 msgid "bad operand"
 msgstr "operatore sbagliato"
 
-msgid "Package"
-msgstr "Pacchetto"
-
-msgid "had its dependencies reduced to a minimal set."
+#, fuzzy
+msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr "le sue dipendenze sono state ridotte ad un insieme minimale."
 
 msgid "argument '%s' must be a character string or connection"
@@ -400,6 +393,12 @@ msgstr "fatto"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
+
+#~ msgid "Package"
+#~ msgstr "Pacchetto"
+
+#~ msgid "object(s)"
+#~ msgstr "oggetto(i)"
 
 #~ msgid "*** someone has corrupted the Built field in package"
 #~ msgstr "*** qualcuno ha danneggiato il campo Built del pacchetto"
