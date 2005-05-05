@@ -18,6 +18,7 @@ src/main/CConverters.c
 src/main/CommandLineArgs.c
 src/main/RNG.c
 src/main/Rdynload.c
+src/main/Rstrptime.h
 src/main/apply.c
 src/main/arithmetic.c
 src/main/array.c

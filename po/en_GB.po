@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-29 08:57+0100\n"
+"POT-Creation-Date: 2005-05-05 17:14+0100\n"
 "PO-Revision-Date: 2005-02-22 16:55+0000\n"
 "Last-Translator: Prof Brian Ripley <ripley@stats.ox.ac.uk>\n"
 "Language-Team: English\n"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr ""
 
-#: src/gnuwin32/extra.c:199 src/main/platform.c:887
+#: src/gnuwin32/extra.c:199 src/main/platform.c:888
 msgid "invalid 'topic' argument"
 msgstr ""
 
@@ -127,7 +127,7 @@ msgid "type not yet implemented"
 msgstr ""
 
 #: src/gnuwin32/extra.c:406 src/gnuwin32/extra.c:623 src/gnuwin32/extra.c:639
-#: src/main/platform.c:850 src/unix/sys-std.c:901 src/unix/sys-std.c:923
+#: src/main/platform.c:851 src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "invalid 'file' argument"
 msgstr ""
 
@@ -204,8 +204,8 @@ msgstr ""
 msgid "cannot decrease memory limit"
 msgstr ""
 
-#: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
-#: src/main/platform.c:1390 src/main/platform.c:1425
+#: src/gnuwin32/extra.c:790 src/main/platform.c:891 src/main/platform.c:1180
+#: src/main/platform.c:1391 src/main/platform.c:1426
 msgid "invalid 'path' argument"
 msgstr ""
 
@@ -594,59 +594,75 @@ msgstr ""
 msgid "R_RegisterRoutines called with invalid DllInfo object."
 msgstr ""
 
-#: src/main/Rdynload.c:496
+#: src/main/Rdynload.c:499
 msgid "Maximal number of DLLs reached..."
 msgstr ""
 
-#: src/main/Rdynload.c:548
+#: src/main/Rdynload.c:551
 msgid "could not allocate space for 'path'"
 msgstr ""
 
-#: src/main/Rdynload.c:561
+#: src/main/Rdynload.c:564
 #, c-format
 msgid "DLLname '%s' is too long"
 msgstr ""
 
-#: src/main/Rdynload.c:582
+#: src/main/Rdynload.c:585
 msgid "could not allocate space for 'name'"
 msgstr ""
 
-#: src/main/Rdynload.c:842 src/main/Rdynload.c:858 src/main/util.c:1000
+#: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:1000
 msgid "character argument expected"
 msgstr ""
 
-#: src/main/Rdynload.c:847 src/main/Rdynload.c:876
+#: src/main/Rdynload.c:850 src/main/Rdynload.c:879
 #, c-format
 msgid ""
 "unable to load shared library '%s':\n"
 "  %s"
 msgstr ""
 
-#: src/main/Rdynload.c:861
+#: src/main/Rdynload.c:864
 #, c-format
 msgid "dynamic/shared library '%s' was not loaded"
 msgstr ""
 
-#: src/main/Rdynload.c:1007
+#: src/main/Rdynload.c:1010
 msgid "must pass package name or DllInfo reference"
 msgstr ""
 
-#: src/main/Rdynload.c:1088
+#: src/main/Rdynload.c:1091
 #, c-format
 msgid "Unimplemented type %d in createRSymbolObject"
 msgstr ""
 
-#: src/main/Rdynload.c:1167
+#: src/main/Rdynload.c:1170
 msgid "R_getRegisteredRoutines() expects a DllInfo reference"
 msgstr ""
 
-#: src/main/Rdynload.c:1172
+#: src/main/Rdynload.c:1175
 msgid "NULL value passed for DllInfo"
 msgstr ""
 
-#: src/main/Rdynload.c:1209 src/main/Rdynload.c:1215 src/main/Rdynload.c:1222
-#: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
+#: src/main/Rdynload.c:1212 src/main/Rdynload.c:1218 src/main/Rdynload.c:1225
+#: src/main/Rdynload.c:1231 src/main/Rdynload.c:1237
 msgid "no dyn.load support in this R version"
+msgstr ""
+
+#: src/main/Rstrptime.h:1090
+msgid "input string is too long"
+msgstr ""
+
+#: src/main/Rstrptime.h:1092
+msgid "invalid multibyte input string"
+msgstr ""
+
+#: src/main/Rstrptime.h:1095
+msgid "format string is too long"
+msgstr ""
+
+#: src/main/Rstrptime.h:1097
+msgid "invalid multibyte format string"
 msgstr ""
 
 #: src/main/apply.c:39 src/main/envir.c:2336
@@ -1887,7 +1903,7 @@ msgstr ""
 msgid "too few lines read in readLines"
 msgstr ""
 
-#: src/main/connections.c:2430 src/main/platform.c:896
+#: src/main/connections.c:2430 src/main/platform.c:897
 msgid "invalid 'sep' argument"
 msgstr ""
 
@@ -4443,169 +4459,169 @@ msgstr ""
 msgid "vector arguments only"
 msgstr ""
 
-#: src/main/platform.c:219 src/main/platform.c:277
+#: src/main/platform.c:220 src/main/platform.c:278
 msgid "invalid filename specification"
 msgstr ""
 
-#: src/main/platform.c:221
+#: src/main/platform.c:222
 msgid "invalid 'headers'"
 msgstr ""
 
-#: src/main/platform.c:223
+#: src/main/platform.c:224
 msgid "invalid 'title'"
 msgstr ""
 
-#: src/main/platform.c:225
+#: src/main/platform.c:226
 msgid "invalid 'pager' specification"
 msgstr ""
 
-#: src/main/platform.c:274
+#: src/main/platform.c:275
 msgid "invalid 'editor' specification"
 msgstr ""
 
-#: src/main/platform.c:344 src/main/platform.c:390
+#: src/main/platform.c:345 src/main/platform.c:391
 msgid "write error during file append"
 msgstr ""
 
-#: src/main/platform.c:358 src/main/platform.c:442 src/main/platform.c:471
+#: src/main/platform.c:359 src/main/platform.c:443 src/main/platform.c:472
 msgid "invalid first filename"
 msgstr ""
 
-#: src/main/platform.c:360 src/main/platform.c:473
+#: src/main/platform.c:361 src/main/platform.c:474
 msgid "invalid second filename"
 msgstr ""
 
-#: src/main/platform.c:362
+#: src/main/platform.c:363
 msgid "nothing to append to"
 msgstr ""
 
-#: src/main/platform.c:364
+#: src/main/platform.c:365
 msgid "'outFile' must be a single file"
 msgstr ""
 
-#: src/main/platform.c:419 src/main/platform.c:569
+#: src/main/platform.c:420 src/main/platform.c:570
 msgid "invalid filename argument"
 msgstr ""
 
-#: src/main/platform.c:475
+#: src/main/platform.c:476
 msgid "nothing to link"
 msgstr ""
 
-#: src/main/platform.c:504
+#: src/main/platform.c:505
 msgid "symlinks are not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:519
+#: src/main/platform.c:520
 msgid "'source' must be a single string"
 msgstr ""
 
-#: src/main/platform.c:522
+#: src/main/platform.c:523
 msgid "expanded source name too long"
 msgstr ""
 
-#: src/main/platform.c:526
+#: src/main/platform.c:527
 msgid "'destination' must be a single string"
 msgstr ""
 
-#: src/main/platform.c:529
+#: src/main/platform.c:530
 msgid "expanded destination name too long"
 msgstr ""
 
-#: src/main/platform.c:644
+#: src/main/platform.c:645
 msgid "file.info() is not implemented on this system"
 msgstr ""
 
-#: src/main/platform.c:708
+#: src/main/platform.c:709
 msgid "directory/folder path name too long"
 msgstr ""
 
-#: src/main/platform.c:710
+#: src/main/platform.c:711
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
 msgstr ""
 
-#: src/main/platform.c:792
+#: src/main/platform.c:793
 msgid "invalid 'directory' argument"
 msgstr ""
 
-#: src/main/platform.c:798
+#: src/main/platform.c:799
 msgid "invalid 'pattern' argument"
 msgstr ""
 
-#: src/main/platform.c:805
+#: src/main/platform.c:806
 msgid "'recursive = TRUE' is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:811
+#: src/main/platform.c:812
 msgid "invalid 'pattern' regular expression"
 msgstr ""
 
-#: src/main/platform.c:840
+#: src/main/platform.c:841
 msgid "unable to determine R home location"
 msgstr ""
 
-#: src/main/platform.c:893
+#: src/main/platform.c:894
 msgid "invalid 'indexname' argument"
 msgstr ""
 
-#: src/main/platform.c:899
+#: src/main/platform.c:900
 msgid "invalid 'type' argument"
 msgstr ""
 
-#: src/main/platform.c:957
+#: src/main/platform.c:958
 msgid "file choice cancelled"
 msgstr ""
 
-#: src/main/platform.c:959
+#: src/main/platform.c:960
 msgid "file name too long"
 msgstr ""
 
-#: src/main/platform.c:977
+#: src/main/platform.c:978
 msgid "invalid 'names' argument"
 msgstr ""
 
-#: src/main/platform.c:980
+#: src/main/platform.c:981
 msgid "invalid 'mode' value"
 msgstr ""
 
-#: src/main/platform.c:995
+#: src/main/platform.c:996
 msgid "file.access() is not implemented on this system"
 msgstr ""
 
-#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
+#: src/main/platform.c:1018 src/main/platform.c:1048 src/main/platform.c:1083
 msgid "invalid 'category' argument"
 msgstr ""
 
-#: src/main/platform.c:1049
+#: src/main/platform.c:1050
 msgid "invalid 'locale' argument"
 msgstr ""
 
-#: src/main/platform.c:1074
+#: src/main/platform.c:1075
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1088
+#: src/main/platform.c:1089
 msgid "OS reports request cannot be honored"
 msgstr ""
 
-#: src/main/platform.c:1339
+#: src/main/platform.c:1340
 msgid "'hostname' must be a character vector of length 1"
 msgstr ""
 
-#: src/main/platform.c:1345
+#: src/main/platform.c:1346
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr ""
 
-#: src/main/platform.c:1352
+#: src/main/platform.c:1353
 msgid "unknown format returned by gethostbyname"
 msgstr ""
 
-#: src/main/platform.c:1363
+#: src/main/platform.c:1364
 msgid "nsl() is not supported on this platform"
 msgstr ""
 
-#: src/main/platform.c:1407 src/main/platform.c:1444
+#: src/main/platform.c:1408 src/main/platform.c:1445
 #, c-format
 msgid "'%s' already exists"
 msgstr ""
