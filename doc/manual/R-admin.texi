@@ -2882,11 +2882,14 @@ this is available from
 @node The MinGW compilers, The Microsoft HTML Help Workshop, Perl, The Windows toolset
 @section The MinGW compilers
 
-You need a recent version of the Mingw port of @code{gcc} from
+You need a recent version of the MinGW port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  There will be a
 distribution called something like @file{MinGW-3.2.0-rc-3.exe} (which is
 built from @code{gcc-3.4.2}).  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools} for updates.
+
+The MinGW project is experimenting with other installers: if you use one
+do check that you have installed @code{g77}.
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop

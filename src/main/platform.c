@@ -149,11 +149,12 @@ static void Init_R_Platform(SEXP rho)
 #endif
 #ifdef Win32
     SET_VECTOR_ELT(value, 5, mkString("win.binary"));
-#else
+#else /* not Win32 */
 #ifdef HAVE_AQUA
     SET_VECTOR_ELT(value, 5, mkString("mac.binary"));
-#endif
+#else /* not Win32 nor Aqua */
     SET_VECTOR_ELT(value, 5, mkString("source"));
+#endif
 #endif
     setAttrib(value, R_NamesSymbol, names);
     defineVar(install(".Platform"), value, rho);
