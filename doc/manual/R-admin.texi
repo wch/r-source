@@ -1664,12 +1664,10 @@ the environment variable @env{BLAS_LIBS} can be set, for example in
 @file{config.site}.)
 
 For systems with multiple processors it is possible to use a
-multi-threaded version of ATLAS.  (Prior to @R{} 1.8.0 this was not
-supported since @code{SIGINT} signals sent to the process and handled by
-the wrong thread could result in segfaults.)  A remaining issue is that
-@R{} profiling, which uses the @code{SIGPROF} signal, may cause
-problems.  You may want to disable profiling if you use a multi-threaded
-version of ATLAS.  You can use a multi-threaded ATLAS by specifying
+multi-threaded version of ATLAS.  An issue is that @R{} profiling, which
+uses the @code{SIGPROF} signal, may cause problems, and you may want to
+disable profiling if you use a multi-threaded version of ATLAS.  You can
+use a multi-threaded ATLAS by specifying
 
 @example
 --with-blas="-lptf77blas -lpthread -latlas"
@@ -1715,15 +1713,16 @@ but not single-precision nor complex routines.
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
 cope with BLAS libraries which contain a copy of LAPACK (such as
-@code{libsunperf} on Solaris and @code{vecLib} on Mac OS X).
-However, the likely performance gains are thought to be small (and may
-be negative), and the default is not to search for a suitable LAPACK
-library.  You can specify a specific LAPACK library or a search for a
-generic library by the configuration option @option{--with-lapack}.  The
-default for @option{--with-lapack} is to check the BLAS library and then
-look for an external library @code{-llapack}.  Sites searching for the
-fastest possible linear algebra may want to build a LAPACK library using
-the ATLAS-optimized subset of LAPACK.  To do so specify something like
+@code{libsunperf} on Solaris and @code{vecLib} on Mac OS X).  However,
+the likely performance gains are thought to be small (and may be
+negative), and the default is not to search for a suitable LAPACK
+library, this is definitely @strong{not} recommended.  You can specify a
+specific LAPACK library or a search for a generic library by the
+configuration option @option{--with-lapack}.  The default for
+@option{--with-lapack} is to check the BLAS library and then look for an
+external library @code{-llapack}.  Sites searching for the fastest
+possible linear algebra may want to build a LAPACK library using the
+ATLAS-optimized subset of LAPACK.  To do so specify something like
 
 @example
 --with-lapack="-L/path/to/libs -llapack -lcblas"
@@ -1750,7 +1749,8 @@ DGEBRD gave error code -10
 potential problems are incomplete versions of the libraries: for example
 @code{libsunperf} from Sun Forte 6.x was missing the entry point for
 @code{DLANGE} and @code{vecLib} has omitted the BLAS routine
-@code{LSAME}.
+@code{LSAME}.  For problems compiling LAPACK using recent versions of
+@samp{gcc} on @samp{ix86} Linux, see @ref{New platforms}.
 
 As with all libraries, you need to ensure that they and @R{} were
 compiled with compatible compilers and flags.  For example, this means
@@ -2966,13 +2966,13 @@ Once you know the recipe you can modify the file @file{config.site}
 (following the instructions therein) so that the build will use these
 options.
 
-It seems that @samp{gcc 3.4.x} on @samp{ix86} Linux defeats attempts by
-the LAPACK code to avoid computations entirely in extended-precision
-registers, so file @file{src/modules/lapack/dlamc.f} may need to be
-compiled without optimization.  If configure detects @acronym{GNU}
-Fortran it adds flag @option{-ffloat-store} which suffices, but it is
-possible that @file{src/modules/lapack/Makefile} will need to be edited
-to remove optimization on other platforms.
+It seems that @samp{gcc 3.4.x} and later on @samp{ix86} Linux defeat
+attempts by the LAPACK code to avoid computations entirely in
+extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
+may need to be compiled without optimization.  If configure detects
+@acronym{GNU} Fortran it adds flag @option{-ffloat-store} which
+suffices, but it is possible that @file{src/modules/lapack/Makefile}
+will need to be edited to remove optimization on other platforms.
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include
