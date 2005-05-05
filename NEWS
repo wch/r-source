@@ -161,8 +161,8 @@ BUG FIXES
 	sometimes got confused if terms() had rearranged interaction
 	terms.  (PR#7829)
 
-    o	.Platform$pkgType was wrong on the CRAN MacOS X build. 
-
+    o	.Platform$pkgType was wrong on the CRAN MacOS X build, and
+	.install.macbinary() was missing.
 
     o	as.personList() as used by citation() got confused by names
 	containing "and".  (PR#7797)
