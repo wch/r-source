@@ -45,6 +45,8 @@ NEW FEATURES
 	masses different than the default 1/N -- based on a suggestion and
 	code from Adrian Baddeley.
 
+    o	The default mosaicplot() method by default draws grey boxes.
+
 
 DEPRECATED & DEFUNCT
 

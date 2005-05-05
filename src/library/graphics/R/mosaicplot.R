@@ -16,7 +16,7 @@ mosaicplot <- function(x, ...) UseMethod("mosaicplot")
 mosaicplot.default <-
 function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
          ylab = NULL, sort = NULL, off = NULL, dir = NULL,
-         color = FALSE, shade = FALSE, margin = NULL,
+         color = NULL, shade = FALSE, margin = NULL,
          cex.axis = 0.66, las = par("las"),
          type = c("pearson", "deviance", "FT"), ...)
 {
@@ -224,7 +224,7 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if (is.null(off) || length(off) != dimd) { # Initialize spacing.
         off <- rep.int(10, dimd)
     }
-    if (is.null(dir) || length(dir) != dimd) {# Initialize directions
+    if (is.null(dir) || length(dir) != dimd) { # Initialize directions.
         dir <- rep(c("v","h"), length.out = dimd)
     }
     if (!is.null(sort)) {
@@ -240,11 +240,14 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     ncolors <- length(tabulate(Ind[,dimd]))
     if(!extended && ((is.null(color) || length(color) != ncolors))) {
         color <-
-            if (is.logical(color) && color[1])
-                heat.colors(ncolors)
-            else if (is.null(color) || (is.logical(color) && !color[1]))
-                rep.int(0, ncolors)
-            else ## recycle
+            if(is.logical(color))
+                if(color[1])
+                    grey.colors(ncolors)
+                else
+                    rep.int(0, ncolors)
+            else if(is.null(color))
+                rep.int("grey", ncolors)
+            else                        # recycle
                 rep(color, length.out = ncolors)
     }
 
