@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-04
+@set FAQ_DATE @value{FAQ_YEAR}-05-05
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1899,6 +1899,9 @@ ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
 @item RGrace
 Mouse/menu driven interactive plotting application.
+@item RGraphics
+Data and functions from the book ``R Graphics'' by Paul Murrell, 2005,
+Chapman & Hall/CRC.
 @item RII
 Estimation of the relative index of inequality for interval-censored
 data using natural cubic splines.
@@ -2538,12 +2541,9 @@ Nearest-neighbor classification with categorical variables.
 @item ks
 Kernel smoothing: bandwidth matrices for kernel density estimators and
 kernel discriminant analysis for bivariate data.
-@c <COMMENT>
-@c Moved to the Archive on 2005-04-29.
-@c @item kza
-@c Kolmogorov-Zurbenko Adpative filter for locating change points in a time
-@c series.
-@c </COMMENT>
+@item kza
+Kolmogorov-Zurbenko Adpative filter for locating change points in a time
+series.
 @item labdsv
 Laboratory for Dynamic Synthetic Vegephenomenology.
 @item labstatR
