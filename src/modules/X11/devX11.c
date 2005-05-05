@@ -52,7 +52,7 @@
 /* For the input handlers of the event loop mechanism: */
 #include <R_ext/eventloop.h>
 #include <R_ext/Memory.h>	/* vmaxget */
-#include "Rdevices.h"
+#include <Rdevices.h>
 
 #ifdef SUPPORT_MBCS
 /* This uses fontsets only in mbcslocales */

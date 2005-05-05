@@ -29,7 +29,7 @@
 #define __MAIN__
 #include "Defn.h"
 #include "Graphics.h"
-#include "Rdevices.h"		/* for InitGraphics */
+#include <Rdevices.h>		/* for InitGraphics */
 #include "IOStuff.h"
 #include "Fileio.h"
 #include "Parse.h"

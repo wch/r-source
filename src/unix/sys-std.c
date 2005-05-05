@@ -40,7 +40,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Rdevices.h"		/* for KillAllDevices */
+#include <Rdevices.h>		/* for KillAllDevices */
 #include "Runix.h"
 #include "Startup.h"
 #include <R_ext/Riconv.h>

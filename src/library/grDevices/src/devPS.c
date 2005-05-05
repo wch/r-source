@@ -32,7 +32,7 @@
 #endif
 
 #include "Defn.h"
-#include "Rmath.h" /* for rround */
+#include <Rmath.h>		/* for rround */
 #include "Graphics.h"
 #include <R_ext/Error.h>
 #include "Fileio.h"
