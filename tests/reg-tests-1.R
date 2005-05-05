@@ -3610,6 +3610,7 @@ summary(data.frame(mat = I(matrix(1:8, 2))))
 summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
 ##
 
+### fixes for 2.1.1 ###
 
 ## PR#7792: predict.glm dropped names
 nm <- names(predict(glm(y ~ x, family=binomial,
@@ -3625,3 +3626,10 @@ FUN <- function(x1, x2, x3, x4) cbind(x1[, 1, 1:2], x1[, 2, 1:2])[, 1]
 as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
                   x3 = c("a", "b"), x4 = c("a", "b")))
 ## failed in 2.1.0
+
+
+## PR#7797 citation() chops "Roeland "
+stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
+## was empty in 2.1.0.
+
+### end of tests added in 2.0.1 patched ###

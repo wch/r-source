@@ -155,7 +155,7 @@ as.personList.default <- function(x)
     x <- as.character(x)
 
     ## first split into individual persons
-    x <- unlist(strsplit(x,"[[:space:]]?(,|and)[[:space:]]+"))
+    x <- unlist(strsplit(x,"[[:space:]]?(,|[[:space:]]and)[[:space:]]+"))
     x <- x[nchar(x)>0]
 
     z <- list()

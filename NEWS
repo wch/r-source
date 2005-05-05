@@ -162,6 +162,9 @@ BUG FIXES
     o	.Platform$pkgType was wrong on the CRAN MacOS X build. 
 
 
+    o	as.personList() as used by citation() got confused by names
+	containing "and".  (PR#7797)
+
 
 
 		CHANGES IN R VERSION 2.1.0
