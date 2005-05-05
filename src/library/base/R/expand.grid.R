@@ -23,13 +23,14 @@ expand.grid <- function(...)
                          sep = "")
 	nx <- length(x)
 	orep <- orep/nx
-	x <- rep.int(rep.int(x, rep.int(rep.fac, nx)), orep)
+	x <- x[rep.int(rep.int(seq(length = nx),
+                               rep.int(rep.fac, nx)), orep)]
 	## avoid sorting the levels of character variates
 	if(!is.factor(x) && is.character(x)) x <- factor(x, levels = unique(x))
 	cargs[[i]] <- x
 	rep.fac <- rep.fac * nx
     }
-    res <- do.call("cbind.data.frame", cargs)
-    attr(res, "out.attrs") <- list(dim=d, dimnames=dn)
-    res
+    attr(cargs, "out.attrs") <- list(dim=d, dimnames=dn)
+    structure(cargs, row.names = seq(length = prod(d)), colnames = nmc,
+              class = "data.frame")
 }
