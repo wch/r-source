@@ -47,6 +47,9 @@ NEW FEATURES
 
     o	The default mosaicplot() method by default draws grey boxes.
 
+    o	labels() now has a method for "dist" objects (replacing that
+	for names() which was withdrawn in 2.1.0).
+
 
 DEPRECATED & DEFUNCT
 

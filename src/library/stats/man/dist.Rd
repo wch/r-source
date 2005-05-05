@@ -2,6 +2,7 @@
 \alias{dist}
 \alias{print.dist}
 \alias{format.dist}
+\alias{labels.dist}
 \alias{as.matrix.dist}
 \alias{as.dist}
 \alias{as.dist.default}
@@ -150,6 +151,9 @@ dist(rbind(x,y), method="binary")
 ## answer 0.4 = 2/5
 dist(rbind(x,y), method="canberra")
 ## answer 2 * (6/5)
+
+## To find the names
+labels(eurodist)
 
 ## Examples involving "Inf" :
 ## 1)
