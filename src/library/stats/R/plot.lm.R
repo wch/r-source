@@ -2,7 +2,7 @@ plot.lm <-
 function (x, which = c(1:3,5), ## was which = 1:4,
 	  caption = c("Residuals vs Fitted", "Normal Q-Q",
 	  "Scale-Location", "Cook's distance",
-	  "Residuals vs Leverages", "Cook's distance vs Leverage"),
+	  "Residuals vs Leverage", "Cook's distance vs Leverage"),
 	  panel = points, sub.caption = NULL, main = "",
 	  ask = prod(par("mfcol")) < length(which) && dev.interactive(), ...,
 	  id.n = 3, labels.id = names(residuals(x)), cex.id = 0.75,
