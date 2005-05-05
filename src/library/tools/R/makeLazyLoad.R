@@ -129,8 +129,10 @@ data2LazyLoadDB <- function(package, lib.loc = NULL, compress = TRUE)
             }
             dup<- duplicated(loaded)
             if(any(dup))
-                warning("object(s) ", paste(sQuote(loaded[dup]), collapse=", "),
-                    " are created by more than one data call")
+                warning(gettextf("object(s) %s are created by more than one data call",
+                                 paste(sQuote(loaded[dup]),
+                                       collapse=", ")),
+                        domain = NA)
 
             if(length(loaded)) {
                 dbbase <- file.path(dataDir, "Rdata")
