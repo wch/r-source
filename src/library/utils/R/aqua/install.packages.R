@@ -73,10 +73,11 @@
                 ## Move the new package to the install lib and
                 ## remove our temp dir
                 ret <- file.rename(file.path(tmpDir, curPkg), instPath)
-                if(!ret) warning("unable to move temp installation ",
-                                 sQuote(file.path(tmpDir, curPkg)),
-                                 " to ",
-                                 sQuote(instPath), call. = FALSE)
+                if(!ret)
+                    warning(sprintf(gettext(
+                         "unable to move temp installation '%s' to '%s'"),
+                                    file.path(tmpDir, curPkg), instPath),
+                            domain = NA, call. = FALSE)
             } else
                 stop("cannot remove prior installation of package ",
                      sQuote(curPkg), call. = FALSE)

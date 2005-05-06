@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-29 08:24+0100\n"
+"POT-Creation-Date: 2005-05-06 13:09+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -103,7 +103,7 @@ msgstr "R_HOME が設定されていません"
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "%s\\doc\\html\\rwin.htm[l] が見つかりません"
 
-#: src/gnuwin32/extra.c:199 src/main/platform.c:887
+#: src/gnuwin32/extra.c:199 src/main/platform.c:888
 msgid "invalid 'topic' argument"
 msgstr "'topic' 引数が不正です"
 
@@ -129,7 +129,7 @@ msgid "type not yet implemented"
 msgstr "未実装の型です"
 
 #: src/gnuwin32/extra.c:406 src/gnuwin32/extra.c:623 src/gnuwin32/extra.c:639
-#: src/main/platform.c:850 src/unix/sys-std.c:901 src/unix/sys-std.c:923
+#: src/main/platform.c:851 src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "invalid 'file' argument"
 msgstr "'environment' 引数が不正です"
 
@@ -206,8 +206,8 @@ msgstr "あらら！あなたのマシンのアドレス空間の上限は4Gbで
 msgid "cannot decrease memory limit"
 msgstr "メモリー限界を減らすことができません"
 
-#: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
-#: src/main/platform.c:1396 src/main/platform.c:1431
+#: src/gnuwin32/extra.c:790 src/main/platform.c:891 src/main/platform.c:1180
+#: src/main/platform.c:1397 src/main/platform.c:1432
 msgid "invalid 'path' argument"
 msgstr "'path' 引数が不正です"
 
@@ -430,8 +430,8 @@ msgstr "二番目の引数は文字列でなければなりません"
 msgid "second argument must be a list"
 msgstr "二番目の引数はリストでなければなりません"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
-#: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
+#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:215
+#: src/main/subscript.c:320 src/main/subscript.c:323 src/main/subscript.c:417
 msgid "subscript out of bounds"
 msgstr "添え字が許される範囲外です"
 
@@ -1917,7 +1917,7 @@ msgstr "'%s' に関する readLines で不完全な最終行が見つかりま�
 msgid "too few lines read in readLines"
 msgstr "readLines で読み込む行が少なすぎます"
 
-#: src/main/connections.c:2430 src/main/platform.c:896
+#: src/main/connections.c:2430 src/main/platform.c:897
 msgid "invalid 'sep' argument"
 msgstr "'sep' 引数が不正です"
 
@@ -4510,169 +4510,169 @@ msgstr "不可能なモード（x）です"
 msgid "vector arguments only"
 msgstr "引数はベクトルのみです"
 
-#: src/main/platform.c:219 src/main/platform.c:277
+#: src/main/platform.c:220 src/main/platform.c:278
 msgid "invalid filename specification"
 msgstr "ファイル名の指定が不正です"
 
-#: src/main/platform.c:221
+#: src/main/platform.c:222
 msgid "invalid 'headers'"
 msgstr "'headers' が不正です"
 
-#: src/main/platform.c:223
+#: src/main/platform.c:224
 msgid "invalid 'title'"
 msgstr "'title' が不正です"
 
-#: src/main/platform.c:225
+#: src/main/platform.c:226
 msgid "invalid 'pager' specification"
 msgstr "'pager' の指定が不正です"
 
-#: src/main/platform.c:274
+#: src/main/platform.c:275
 msgid "invalid 'editor' specification"
 msgstr "'editor' の指定が不正です"
 
-#: src/main/platform.c:344 src/main/platform.c:390
+#: src/main/platform.c:345 src/main/platform.c:391
 msgid "write error during file append"
 msgstr "ファイル追加中に書き込みエラーが生じました"
 
-#: src/main/platform.c:358 src/main/platform.c:442 src/main/platform.c:471
+#: src/main/platform.c:359 src/main/platform.c:443 src/main/platform.c:472
 msgid "invalid first filename"
 msgstr "一番目のファイル名が不正です"
 
-#: src/main/platform.c:360 src/main/platform.c:473
+#: src/main/platform.c:361 src/main/platform.c:474
 msgid "invalid second filename"
 msgstr "二番目のファイル名が不正です"
 
-#: src/main/platform.c:362
+#: src/main/platform.c:363
 msgid "nothing to append to"
 msgstr "付け足す（append）べきものがありません"
 
-#: src/main/platform.c:364
+#: src/main/platform.c:365
 msgid "'outFile' must be a single file"
 msgstr "'outFile' は単一のファイルでなくてはなりません"
 
-#: src/main/platform.c:419 src/main/platform.c:569
+#: src/main/platform.c:420 src/main/platform.c:570
 msgid "invalid filename argument"
 msgstr "ファイル名引数が不正です"
 
-#: src/main/platform.c:475
+#: src/main/platform.c:476
 msgid "nothing to link"
 msgstr "リンクすべきものがありません"
 
-#: src/main/platform.c:504
+#: src/main/platform.c:505
 msgid "symlinks are not supported on this platform"
 msgstr "このプラットフォームでは symlink はサポートされていません"
 
-#: src/main/platform.c:519
+#: src/main/platform.c:520
 msgid "'source' must be a single string"
 msgstr "'source' は１つの文字列でなければなりません"
 
-#: src/main/platform.c:522
+#: src/main/platform.c:523
 msgid "expanded source name too long"
 msgstr "展開されたソース名が長すぎます"
 
-#: src/main/platform.c:526
+#: src/main/platform.c:527
 msgid "'destination' must be a single string"
 msgstr "'destination' は単一の文字列でなければなりません"
 
-#: src/main/platform.c:529
+#: src/main/platform.c:530
 msgid "expanded destination name too long"
 msgstr "展開された destination 名が長すぎます"
 
-#: src/main/platform.c:644
+#: src/main/platform.c:645
 msgid "file.info() is not implemented on this system"
 msgstr "このシステムには file.info 関数は実装されていません"
 
-#: src/main/platform.c:708
+#: src/main/platform.c:709
 msgid "directory/folder path name too long"
 msgstr "ディレクトリまたはフォルダのパス名が長すぎます"
 
-#: src/main/platform.c:710
+#: src/main/platform.c:711
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
 msgstr "list.files: '%s' は読めないディレクトリです"
 
-#: src/main/platform.c:792
+#: src/main/platform.c:793
 msgid "invalid 'directory' argument"
 msgstr "'directory' 引数が不正です"
 
-#: src/main/platform.c:798
+#: src/main/platform.c:799
 msgid "invalid 'pattern' argument"
 msgstr "'pattern' 引数が不正です"
 
-#: src/main/platform.c:805
+#: src/main/platform.c:806
 msgid "'recursive = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE' はこのプラットフォームではサポートされていません"
 
-#: src/main/platform.c:811
+#: src/main/platform.c:812
 msgid "invalid 'pattern' regular expression"
 msgstr "正規表現の 'pattern' が不正です"
 
-#: src/main/platform.c:840
+#: src/main/platform.c:841
 msgid "unable to determine R home location"
 msgstr "R のホームロケーションを決定できません"
 
-#: src/main/platform.c:893
+#: src/main/platform.c:894
 msgid "invalid 'indexname' argument"
 msgstr "'indexname' 引数が不正です"
 
-#: src/main/platform.c:899
+#: src/main/platform.c:900
 msgid "invalid 'type' argument"
 msgstr "'type' 引数が不正です"
 
-#: src/main/platform.c:957
+#: src/main/platform.c:958
 msgid "file choice cancelled"
 msgstr "ファイルの選択がキャンセルされました"
 
-#: src/main/platform.c:959
+#: src/main/platform.c:960
 msgid "file name too long"
 msgstr "ファイル名が長すぎます"
 
-#: src/main/platform.c:977
+#: src/main/platform.c:978
 msgid "invalid 'names' argument"
 msgstr "'names' 引数が不正です"
 
-#: src/main/platform.c:980
+#: src/main/platform.c:981
 msgid "invalid 'mode' value"
 msgstr "'mode' 値が不正です"
 
-#: src/main/platform.c:995
+#: src/main/platform.c:996
 msgid "file.access() is not implemented on this system"
 msgstr "このシステムには file.access 関数は実装されていません"
 
-#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
+#: src/main/platform.c:1018 src/main/platform.c:1048 src/main/platform.c:1083
 msgid "invalid 'category' argument"
 msgstr "'category' 引数が不正です"
 
-#: src/main/platform.c:1049
+#: src/main/platform.c:1050
 msgid "invalid 'locale' argument"
 msgstr "'local' 引数が不正です"
 
-#: src/main/platform.c:1074
+#: src/main/platform.c:1075
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1088
+#: src/main/platform.c:1089
 msgid "OS reports request cannot be honored"
 msgstr "OS のレポート要求は優先されません"
 
-#: src/main/platform.c:1345
+#: src/main/platform.c:1346
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' は長さ1の文字列ベクトルでなくてはなりません"
 
-#: src/main/platform.c:1351
+#: src/main/platform.c:1352
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl 関数はホスト '%s' を解決できませんでした"
 
-#: src/main/platform.c:1358
+#: src/main/platform.c:1359
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname が未知の書式を返しました"
 
-#: src/main/platform.c:1369
+#: src/main/platform.c:1370
 msgid "nsl() is not supported on this platform"
 msgstr "このプラットフォームでは nsl 関数はサポートされていません"
 
-#: src/main/platform.c:1413 src/main/platform.c:1450
+#: src/main/platform.c:1414 src/main/platform.c:1451
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' はすでに存在します"
@@ -6194,7 +6194,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] の添え字（%d）が範囲外です"
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:552 src/main/subset.c:904
+#: src/main/subscript.c:565 src/main/subset.c:904
 msgid "invalid subscript type"
 msgstr "添え字の型が不正です"
 
@@ -6214,27 +6214,37 @@ msgstr "二つ以上の要素を選択しようとしました"
 msgid "internal error in use of recursive indexing"
 msgstr "再帰的インデックスの使用中に，内部エラーが起きました"
 
-#: src/main/subscript.c:231
+#: src/main/subscript.c:194
+#, fuzzy
+msgid "incorrect number of columns in matrix subscript"
+msgstr "添え字の数が正しくありません"
+
+#: src/main/subscript.c:209
+#, fuzzy
+msgid "negative values are not allowed in a matrix subscript"
+msgstr "負の長さのベクトルは許されません"
+
+#: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
 msgstr " (subscript) 論理値添え字が長すぎます"
 
-#: src/main/subscript.c:314
+#: src/main/subscript.c:327
 msgid "only 0's may be mixed with negative subscripts"
 msgstr "負の添字と混在できるのは 0 という添字だけです"
 
-#: src/main/subscript.c:378
+#: src/main/subscript.c:391
 msgid "character vector element does not have type CHARSXP"
 msgstr "文字列ベクトル要素は型 CHARSXP を持ちません"
 
-#: src/main/subscript.c:455
+#: src/main/subscript.c:468
 msgid "no 'dimnames' attribute for array"
 msgstr "配列に 'dimnames' 属性がありません"
 
-#: src/main/subscript.c:462
+#: src/main/subscript.c:475
 msgid "invalid subscript"
 msgstr "添え字が不正です"
 
-#: src/main/subscript.c:492
+#: src/main/subscript.c:505
 msgid "subscripting on non-vector"
 msgstr "ベクトルでないものへの添え字操作"
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-29 08:24+0100\n"
+"POT-Creation-Date: 2005-05-06 13:09+0100\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -106,7 +106,7 @@ msgstr "R_HOME non impostata"
 msgid "%s\\doc\\html\\rwin.htm[l] not found"
 msgstr "%s\\doc\\html\\rwin.htm[l] non trovata"
 
-#: src/gnuwin32/extra.c:199 src/main/platform.c:887
+#: src/gnuwin32/extra.c:199 src/main/platform.c:888
 msgid "invalid 'topic' argument"
 msgstr "argomento 'topic' non valido"
 
@@ -132,7 +132,7 @@ msgid "type not yet implemented"
 msgstr "type non ancora implementato"
 
 #: src/gnuwin32/extra.c:406 src/gnuwin32/extra.c:623 src/gnuwin32/extra.c:639
-#: src/main/platform.c:850 src/unix/sys-std.c:901 src/unix/sys-std.c:923
+#: src/main/platform.c:851 src/unix/sys-std.c:901 src/unix/sys-std.c:923
 msgid "invalid 'file' argument"
 msgstr "argomento 'file' non valido"
 
@@ -209,8 +209,8 @@ msgstr "esagerato! la tua macchina ha un limite massimo di indirizzi di 4Gb"
 msgid "cannot decrease memory limit"
 msgstr "impossibile diminuire il limite di memoria"
 
-#: src/gnuwin32/extra.c:790 src/main/platform.c:890 src/main/platform.c:1179
-#: src/main/platform.c:1396 src/main/platform.c:1431
+#: src/gnuwin32/extra.c:790 src/main/platform.c:891 src/main/platform.c:1180
+#: src/main/platform.c:1397 src/main/platform.c:1432
 msgid "invalid 'path' argument"
 msgstr "argomento 'path' non valido"
 
@@ -437,8 +437,8 @@ msgstr "il secondo argomento deve essere una stringa di tipo character"
 msgid "second argument must be a list"
 msgstr "il secondo argomento deve essere di tipo list"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
-#: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
+#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:215
+#: src/main/subscript.c:320 src/main/subscript.c:323 src/main/subscript.c:417
 msgid "subscript out of bounds"
 msgstr "indice fuori limite"
 
@@ -1931,7 +1931,7 @@ msgstr "riga finale incompleta in readLines su '%s'"
 msgid "too few lines read in readLines"
 msgstr "troppo poche righe lette in readLines"
 
-#: src/main/connections.c:2430 src/main/platform.c:896
+#: src/main/connections.c:2430 src/main/platform.c:897
 msgid "invalid 'sep' argument"
 msgstr "argomento 'sep' non valido"
 
@@ -4536,169 +4536,169 @@ msgstr "modalità ( x ) impossbile"
 msgid "vector arguments only"
 msgstr "solo argomenti vettoriali"
 
-#: src/main/platform.c:219 src/main/platform.c:277
+#: src/main/platform.c:220 src/main/platform.c:278
 msgid "invalid filename specification"
 msgstr "specificazione filename non valida"
 
-#: src/main/platform.c:221
+#: src/main/platform.c:222
 msgid "invalid 'headers'"
 msgstr "'headers' non valido"
 
-#: src/main/platform.c:223
+#: src/main/platform.c:224
 msgid "invalid 'title'"
 msgstr "'title' non valido"
 
-#: src/main/platform.c:225
+#: src/main/platform.c:226
 msgid "invalid 'pager' specification"
 msgstr "specificazione di 'pager' non valida"
 
-#: src/main/platform.c:274
+#: src/main/platform.c:275
 msgid "invalid 'editor' specification"
 msgstr "specificazione di 'editor' non valida"
 
-#: src/main/platform.c:344 src/main/platform.c:390
+#: src/main/platform.c:345 src/main/platform.c:391
 msgid "write error during file append"
 msgstr "errore di scrittura durante file append"
 
-#: src/main/platform.c:358 src/main/platform.c:442 src/main/platform.c:471
+#: src/main/platform.c:359 src/main/platform.c:443 src/main/platform.c:472
 msgid "invalid first filename"
 msgstr "nome primo file non valido"
 
-#: src/main/platform.c:360 src/main/platform.c:473
+#: src/main/platform.c:361 src/main/platform.c:474
 msgid "invalid second filename"
 msgstr "nome secondo file non valido"
 
-#: src/main/platform.c:362
+#: src/main/platform.c:363
 msgid "nothing to append to"
 msgstr "niente da accodare"
 
-#: src/main/platform.c:364
+#: src/main/platform.c:365
 msgid "'outFile' must be a single file"
 msgstr "'outFile' deve essere un file singolo"
 
-#: src/main/platform.c:419 src/main/platform.c:569
+#: src/main/platform.c:420 src/main/platform.c:570
 msgid "invalid filename argument"
 msgstr "argomento 'filename' non valido"
 
-#: src/main/platform.c:475
+#: src/main/platform.c:476
 msgid "nothing to link"
 msgstr "niente da collegare"
 
-#: src/main/platform.c:504
+#: src/main/platform.c:505
 msgid "symlinks are not supported on this platform"
 msgstr "symlink non supportati su questa piattaforma"
 
-#: src/main/platform.c:519
+#: src/main/platform.c:520
 msgid "'source' must be a single string"
 msgstr "'source' deve essere una stringa character"
 
-#: src/main/platform.c:522
+#: src/main/platform.c:523
 msgid "expanded source name too long"
 msgstr "nome sorgente esteso troppo lungo"
 
-#: src/main/platform.c:526
+#: src/main/platform.c:527
 msgid "'destination' must be a single string"
 msgstr "'destination' deve essere un singola stringa"
 
-#: src/main/platform.c:529
+#: src/main/platform.c:530
 msgid "expanded destination name too long"
 msgstr "nome destinazione esteso troppo lungo"
 
-#: src/main/platform.c:644
+#: src/main/platform.c:645
 msgid "file.info() is not implemented on this system"
 msgstr "file.info() non è implementata su questo sistema"
 
-#: src/main/platform.c:708
+#: src/main/platform.c:709
 msgid "directory/folder path name too long"
 msgstr "nome directory/cartella tropo lungo"
 
-#: src/main/platform.c:710
+#: src/main/platform.c:711
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
 msgstr "list.files: '%s' non è una directory leggibile"
 
-#: src/main/platform.c:792
+#: src/main/platform.c:793
 msgid "invalid 'directory' argument"
 msgstr "argomento 'directory' non valido"
 
-#: src/main/platform.c:798
+#: src/main/platform.c:799
 msgid "invalid 'pattern' argument"
 msgstr "argomento 'pattern' non valido"
 
-#: src/main/platform.c:805
+#: src/main/platform.c:806
 msgid "'recursive = TRUE' is not supported on this platform"
 msgstr "'recursive = TRUE' non è supportato su questa piattaforma"
 
-#: src/main/platform.c:811
+#: src/main/platform.c:812
 msgid "invalid 'pattern' regular expression"
 msgstr "espressione regolare 'pattern' non valida"
 
-#: src/main/platform.c:840
+#: src/main/platform.c:841
 msgid "unable to determine R home location"
 msgstr "impossibile determinare posizione R home"
 
-#: src/main/platform.c:893
+#: src/main/platform.c:894
 msgid "invalid 'indexname' argument"
 msgstr "argomento 'indexname' non valido"
 
-#: src/main/platform.c:899
+#: src/main/platform.c:900
 msgid "invalid 'type' argument"
 msgstr "argomento 'type' non valido"
 
-#: src/main/platform.c:957
+#: src/main/platform.c:958
 msgid "file choice cancelled"
 msgstr "scelta file annullata"
 
-#: src/main/platform.c:959
+#: src/main/platform.c:960
 msgid "file name too long"
 msgstr "nome file troppo lungo"
 
-#: src/main/platform.c:977
+#: src/main/platform.c:978
 msgid "invalid 'names' argument"
 msgstr "argomento 'names' non valido"
 
-#: src/main/platform.c:980
+#: src/main/platform.c:981
 msgid "invalid 'mode' value"
 msgstr "valore 'mode' non valido"
 
-#: src/main/platform.c:995
+#: src/main/platform.c:996
 msgid "file.access() is not implemented on this system"
 msgstr "file.access() non è implementata in questo sistema"
 
-#: src/main/platform.c:1017 src/main/platform.c:1047 src/main/platform.c:1082
+#: src/main/platform.c:1018 src/main/platform.c:1048 src/main/platform.c:1083
 msgid "invalid 'category' argument"
 msgstr "argomento 'category' non valido"
 
-#: src/main/platform.c:1049
+#: src/main/platform.c:1050
 msgid "invalid 'locale' argument"
 msgstr "argomento 'locale' non valido"
 
-#: src/main/platform.c:1074
+#: src/main/platform.c:1075
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
 msgstr ""
 
-#: src/main/platform.c:1088
+#: src/main/platform.c:1089
 msgid "OS reports request cannot be honored"
 msgstr "Il sistema operativo segnala che la richiesta non può essere esaudita"
 
-#: src/main/platform.c:1345
+#: src/main/platform.c:1346
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname' deve essere una stringa character"
 
-#: src/main/platform.c:1351
+#: src/main/platform.c:1352
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nls() non riesce a identificare l'host '%s'"
 
-#: src/main/platform.c:1358
+#: src/main/platform.c:1359
 msgid "unknown format returned by gethostbyname"
 msgstr "formato sconosciuto resituito da gethostbyname"
 
-#: src/main/platform.c:1369
+#: src/main/platform.c:1370
 msgid "nsl() is not supported on this platform"
 msgstr "nls() non è supportato in questa piattaforma"
 
-#: src/main/platform.c:1413 src/main/platform.c:1450
+#: src/main/platform.c:1414 src/main/platform.c:1451
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s' già esistente"
@@ -6220,7 +6220,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] indice (%d) fuori limiti"
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:552 src/main/subset.c:904
+#: src/main/subscript.c:565 src/main/subset.c:904
 msgid "invalid subscript type"
 msgstr "tipo di indice non valido"
 
@@ -6240,27 +6240,37 @@ msgstr "tentativo di selezionare più di un elemnto"
 msgid "internal error in use of recursive indexing"
 msgstr "errore interno nell'uso dell'indicizzazione ricorsiva"
 
-#: src/main/subscript.c:231
+#: src/main/subscript.c:194
+#, fuzzy
+msgid "incorrect number of columns in matrix subscript"
+msgstr "numero di indici non corretto"
+
+#: src/main/subscript.c:209
+#, fuzzy
+msgid "negative values are not allowed in a matrix subscript"
+msgstr "vettori di lunghezza negativa non ammessi"
+
+#: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
 msgstr "(subscript) indice logicol troppo lungo"
 
-#: src/main/subscript.c:314
+#: src/main/subscript.c:327
 msgid "only 0's may be mixed with negative subscripts"
 msgstr "solo gli 0 si posso usare assieme agli indici negativi"
 
-#: src/main/subscript.c:378
+#: src/main/subscript.c:391
 msgid "character vector element does not have type CHARSXP"
 msgstr "il vettore carattere non ha un tipo CHARSXP"
 
-#: src/main/subscript.c:455
+#: src/main/subscript.c:468
 msgid "no 'dimnames' attribute for array"
 msgstr "attributo 'dimnames' mancante per l'array"
 
-#: src/main/subscript.c:462
+#: src/main/subscript.c:475
 msgid "invalid subscript"
 msgstr "indici non valido"
 
-#: src/main/subscript.c:492
+#: src/main/subscript.c:505
 msgid "subscripting on non-vector"
 msgstr "indicizzazione su un non vettore"
 
