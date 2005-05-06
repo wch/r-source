@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-05 12:00\n"
+"POT-Creation-Date: 2005-05-06 13:01\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -238,11 +238,9 @@ msgstr "manca la descrizione dell'\\item per l'elemento '%s'"
 msgid "unmatched \\item description for item '%s'"
 msgstr "descrizione \\item non coincidente per l'elemento '%s'"
 
-msgid "unclosed \\dontrun"
+#, fuzzy
+msgid "unclosed \\%s"
 msgstr "\\dontrun non chiusa"
-
-msgid "unclosed \\dontshow or \\testonly"
-msgstr "\\dontshow o \\testonly non chiusa"
 
 msgid "Rd syntax errors found"
 msgstr "Trovati errori di sintassi Rd"
@@ -393,6 +391,9 @@ msgstr "fatto"
 
 msgid "parsing '%s'"
 msgstr "analizzo '%s'"
+
+#~ msgid "unclosed \\dontshow or \\testonly"
+#~ msgstr "\\dontshow o \\testonly non chiusa"
 
 #~ msgid "Package"
 #~ msgstr "Pacchetto"

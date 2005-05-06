@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-05 17:14+0100\n"
+"POT-Creation-Date: 2005-05-06 13:00+0100\n"
 "PO-Revision-Date: 2005-01-25 12:01+0000\n"
 "Last-Translator: Brian Ripley <Brian.Ripley@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -426,8 +426,8 @@ msgstr ""
 msgid "second argument must be a list"
 msgstr ""
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
-#: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
+#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:215
+#: src/main/subscript.c:320 src/main/subscript.c:323 src/main/subscript.c:417
 msgid "subscript out of bounds"
 msgstr ""
 
@@ -6114,7 +6114,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr ""
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:552 src/main/subset.c:904
+#: src/main/subscript.c:565 src/main/subset.c:904
 msgid "invalid subscript type"
 msgstr ""
 
@@ -6134,27 +6134,35 @@ msgstr ""
 msgid "internal error in use of recursive indexing"
 msgstr ""
 
-#: src/main/subscript.c:231
+#: src/main/subscript.c:194
+msgid "incorrect number of columns in matrix subscript"
+msgstr ""
+
+#: src/main/subscript.c:209
+msgid "negative values are not allowed in a matrix subscript"
+msgstr ""
+
+#: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
 msgstr ""
 
-#: src/main/subscript.c:314
+#: src/main/subscript.c:327
 msgid "only 0's may be mixed with negative subscripts"
 msgstr ""
 
-#: src/main/subscript.c:378
+#: src/main/subscript.c:391
 msgid "character vector element does not have type CHARSXP"
 msgstr ""
 
-#: src/main/subscript.c:455
+#: src/main/subscript.c:468
 msgid "no 'dimnames' attribute for array"
 msgstr ""
 
-#: src/main/subscript.c:462
+#: src/main/subscript.c:475
 msgid "invalid subscript"
 msgstr ""
 
-#: src/main/subscript.c:492
+#: src/main/subscript.c:505
 msgid "subscripting on non-vector"
 msgstr ""
 

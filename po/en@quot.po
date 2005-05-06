@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-05 17:14+0100\n"
-"PO-Revision-Date: 2005-05-05 17:14+0100\n"
+"POT-Creation-Date: 2005-05-06 13:00+0100\n"
+"PO-Revision-Date: 2005-05-06 13:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -451,8 +451,8 @@ msgstr "second argument must be a character string"
 msgid "second argument must be a list"
 msgstr "second argument must be a list"
 
-#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:203
-#: src/main/subscript.c:307 src/main/subscript.c:310 src/main/subscript.c:404
+#: src/include/Errormsg.h:42 src/main/eval.c:2602 src/main/subscript.c:215
+#: src/main/subscript.c:320 src/main/subscript.c:323 src/main/subscript.c:417
 msgid "subscript out of bounds"
 msgstr "subscript out of bounds"
 
@@ -6195,7 +6195,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] subscript (%d) out of bounds"
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:552 src/main/subset.c:904
+#: src/main/subscript.c:565 src/main/subset.c:904
 msgid "invalid subscript type"
 msgstr "invalid subscript type"
 
@@ -6215,27 +6215,35 @@ msgstr "attempt to select more than one element"
 msgid "internal error in use of recursive indexing"
 msgstr "internal error in use of recursive indexing"
 
-#: src/main/subscript.c:231
+#: src/main/subscript.c:194
+msgid "incorrect number of columns in matrix subscript"
+msgstr "incorrect number of columns in matrix subscript"
+
+#: src/main/subscript.c:209
+msgid "negative values are not allowed in a matrix subscript"
+msgstr "negative values are not allowed in a matrix subscript"
+
+#: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
 msgstr "(subscript) logical subscript too long"
 
-#: src/main/subscript.c:314
+#: src/main/subscript.c:327
 msgid "only 0's may be mixed with negative subscripts"
 msgstr "only 0's may be mixed with negative subscripts"
 
-#: src/main/subscript.c:378
+#: src/main/subscript.c:391
 msgid "character vector element does not have type CHARSXP"
 msgstr "character vector element does not have type CHARSXP"
 
-#: src/main/subscript.c:455
+#: src/main/subscript.c:468
 msgid "no 'dimnames' attribute for array"
 msgstr "no ‘dimnames’ attribute for array"
 
-#: src/main/subscript.c:462
+#: src/main/subscript.c:475
 msgid "invalid subscript"
 msgstr "invalid subscript"
 
-#: src/main/subscript.c:492
+#: src/main/subscript.c:505
 msgid "subscripting on non-vector"
 msgstr "subscripting on non-vector"
 

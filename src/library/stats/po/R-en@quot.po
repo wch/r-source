@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-28 07:12\n"
-"PO-Revision-Date: 2005-04-28 07:12\n"
+"POT-Creation-Date: 2005-05-06 13:01\n"
+"PO-Revision-Date: 2005-05-06 13:01\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -619,11 +619,26 @@ msgstr "‘ColSideColors’ must be a character vector of length ncol(x)"
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr "‘RowSideColors’ must be a character vector of length nrow(x)"
 
+msgid "non-matched further arguments are disregarded"
+msgstr "non-matched further arguments are disregarded"
+
 msgid "argument 'x' must be numeric"
 msgstr "argument ‘x’ must be numeric"
 
 msgid "'x' contains missing values"
 msgstr "‘x’ contains missing values"
+
+msgid "'x' and 'weights' have unequal length"
+msgstr "‘x’ and ‘weights’ have unequal length"
+
+msgid "'weights' must all be finite"
+msgstr "‘weights’ must all be finite"
+
+msgid "'weights' must not be negative"
+msgstr "‘weights’ must not be negative"
+
+msgid "sum(weights) != 1  -- will not get true density"
+msgstr "sum(weights) != 1  -- will not get true density"
 
 msgid "need at least 2 points to select a bandwidth automatically"
 msgstr "need at least 2 points to select a bandwidth automatically"

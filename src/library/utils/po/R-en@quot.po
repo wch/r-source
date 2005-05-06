@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 14:58\n"
-"PO-Revision-Date: 2005-04-27 14:58\n"
+"POT-Creation-Date: 2005-05-06 13:06\n"
+"PO-Revision-Date: 2005-05-06 13:06\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -565,6 +565,9 @@ msgstr "select.list() cannot be used non-interactively"
 msgid "Enter zero or more numbers separated by space"
 msgstr "Enter zero or more numbers separated by space"
 
+msgid "Invalid input, please try again"
+msgstr "Invalid input, please try again"
+
 msgid "'subject' missing"
 msgstr "‘subject’ missing"
 
@@ -674,6 +677,9 @@ msgstr "Download of package ‘%s’ failed"
 
 msgid "cannot remove prior installation of package"
 msgstr "cannot remove prior installation of package"
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr "‘tar’ returned non-zero exit code %d"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"
