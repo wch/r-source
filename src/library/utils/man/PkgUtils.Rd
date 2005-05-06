@@ -8,8 +8,8 @@
   them.
 }
 \usage{
-R CMD build [options] pkgdirs
-R CMD check [options] pkgdirs
+\special{R CMD build [options] pkgdirs}
+\special{R CMD check [options] pkgdirs}
 }
 \arguments{
   \item{pkgdirs}{a list of names of directories with sources of \R

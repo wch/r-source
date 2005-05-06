@@ -44,7 +44,7 @@
 
 time + number
 time - number
-time1 lop time2
+\special{time1 lop time2}
 }
 \arguments{
   \item{x, object}{An object to be printed or summarized from one of the

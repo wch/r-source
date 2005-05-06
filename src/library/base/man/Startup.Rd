@@ -11,7 +11,7 @@
 \usage{
 .First <- function() { \dots\dots }
 
-.Rprofile <startup file>
+\special{.Rprofile <startup file>}
 }
 \description{
   In \R, the startup mechanism is as follows.

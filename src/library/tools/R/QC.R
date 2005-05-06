@@ -3109,6 +3109,7 @@ function(txt)
 {
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
+    txt <- .Rd_transform_command(txt, "special", function(u) NULL)
     txt <- gsub(.S3_method_markup_regexp, "\"\\\\\\1\"", txt)
     txt <- gsub(.S4_method_markup_regexp, "\"\\\\\\1\"", txt)
     ## Transform <<see below>> style markup so that we can catch and
