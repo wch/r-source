@@ -23,7 +23,7 @@ NEW FEATURES
 	accepts forms like R_LIBS=${HOME}/Rlibrary:${WORKGRP}/R/lib .
 
     o	R.home() has been expanded to return the paths to components
-	(which might at some future time be installed elsewhere).
+	(which can as from this version be installed elsewhere).
 
     o	Added tclServiceMode() function to the tcltk package to allow
 	updating to be suspended.
