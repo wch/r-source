@@ -306,7 +306,11 @@ function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
         tag <- names(x)[i]
+        ## <FIXME>
+        ## Internationalize this properly ...
+        ## Most likely only by building a msg db indexed by the tags.
         writeLines(paste("Undocumented ", tag, ":", sep = ""))
+        ## </FIXME>
         ## We avoid markup for indicating S4 methods, hence need to
         ## special-case output for these ...
         if(tag == "S4 methods")
@@ -1142,7 +1146,7 @@ function(package, dir, lib.loc = NULL)
     db <- lapply(db, function(f) Rd_pp(f))
     ## Do vectorized computations for metadata first.
     db_aliases <- lapply(db, .get_Rd_metadata_from_Rd_lines, "alias")
-    dbKeywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
+    db_keywords <- lapply(db, .get_Rd_metadata_from_Rd_lines, "keyword")
     ## Now collapse.
     db <- lapply(db, paste, collapse = "\n")
     db_names <- .get_Rd_names_from_Rd_db(db)
@@ -1155,8 +1159,15 @@ function(package, dir, lib.loc = NULL)
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
 
+    db_aliases_by_db_names <-
+        split(rep(db_names, sapply(db_aliases, length)),
+              unlist(db_aliases, use.names = FALSE))
+    duplicated_aliases <-
+        db_aliases_by_db_names[sapply(db_aliases_by_db_names,
+                                      length) > 1]
+
     ## Exclude internal objects from further computations.
-    ind <- sapply(dbKeywords,
+    ind <- sapply(db_keywords,
                   function(x) any(grep("^ *internal *$", x)))
     if(any(ind)) {                      # exclude them
         db <- db[!ind]
@@ -1164,7 +1175,7 @@ function(package, dir, lib.loc = NULL)
         db_aliases <- db_aliases[!ind]
     }
 
-    dbArgumentNames <-
+    db_argument_names <-
         .apply_Rd_filter_to_Rd_db(db, .get_Rd_argument_names)
 
     functions_to_be_ignored <-
@@ -1178,7 +1189,7 @@ function(package, dir, lib.loc = NULL)
         if(!length(exprs)) next
 
         aliases <- db_aliases[[docObj]]
-        arg_names_in_arg_list <- dbArgumentNames[[docObj]]
+        arg_names_in_arg_list <- db_argument_names[[docObj]]
 
         ## Determine function names ('functions') and corresponding
         ## arguments ('arg_names_in_usage') in the \usage.  Note how we
@@ -1231,7 +1242,7 @@ function(package, dir, lib.loc = NULL)
         arg_names_in_arg_list_missing_in_usage <-
             arg_names_in_arg_list %w/o% arg_names_in_usage
         if(length(arg_names_in_arg_list_missing_in_usage) > 0) {
-            usageText <- db_usage_texts[[docObj]]
+            usage_text <- db_usage_texts[[docObj]]
             bad_args <- character()
             ## In the case of 'over-documented' arguments, try to be
             ## defensive and reduce to arguments which either are not
@@ -1247,7 +1258,7 @@ function(package, dir, lib.loc = NULL)
             bad <- sapply(arg_names_in_arg_list_missing_in_usage,
                           function(x)
                           regexpr(paste("\\b", x, "\\b", sep = ""),
-                                  usageText) == -1)
+                                  usage_text) == -1)
             arg_names_in_arg_list_missing_in_usage <-
                 c(bad_args,
                   arg_names_in_arg_list_missing_in_usage[as.logical(bad)])
@@ -1299,6 +1310,7 @@ function(package, dir, lib.loc = NULL)
 
     class(bad_doc_objects) <- "checkDocFiles"
     attr(bad_doc_objects, "bad_lines") <- bad_lines
+    attr(bad_doc_objects, "duplicated_aliases") <- duplicated_aliases
     bad_doc_objects
 }
 
@@ -1334,14 +1346,23 @@ function(x, ...)
         writeLines("")
     }
 
-    if(identical(as.logical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_")),
-                 TRUE)
+    if(!identical(as.logical(Sys.getenv("_R_CHECK_WARN_BAD_USAGE_LINES_")),
+                  FALSE)
        && length(bad_lines <- attr(x, "bad_lines"))) {
         for(doc_obj in names(bad_lines)) {
             writeLines(gettextf("Bad \\usage lines found in documentation object '%s':",
                                 doc_obj))
             writeLines(paste(" ", bad_lines[[doc_obj]]))
         }
+        writeLines("")
+    }
+
+    if(length(duplicated_aliases <- attr(x, "duplicated_aliases"))) {
+        for(alias in names(duplicated_aliases)) {
+            writeLines(gettextf("Documentation objects with duplicated alias '%s':", alias))
+            .pretty_print(duplicated_aliases[[alias]])
+        }
+        writeLines("")
     }
 
     invisible(x)
@@ -1577,8 +1598,8 @@ function(x, ...) {
         ## </NOTE>
         methods_with_full_name <- x[[docObj]][["withFullName"]]
         if(length(methods_with_full_name > 0)) {
-            writeLines(paste("S3 methods shown with full name in documentation object '%s':",
-                             docObj))
+            writeLines(gettextf("S3 methods shown with full name in documentation object '%s':",
+                                docObj))
             writeLines(strwrap(paste(methods_with_full_name,
                                      collapse = " "),
                                indent = 2, exdent = 2))
@@ -2380,24 +2401,24 @@ print.check_package_depends <-
 function(x, ...)
 {
     if(length(bad <- x$required_but_not_installed)) {
-        writeLines("Packages required but not available:")
+        writeLines(gettext("Packages required but not available:"))
         .pretty_print(bad)
         writeLines("")
     }
     if(length(bad <- x$required_but_stub)) {
-        writeLines("Former standard packages required but now defunct:")
+        writeLines(gettext("Former standard packages required but now defunct:"))
         .pretty_print(bad)
         writeLines("")
     }
     if(length(bad <- x$missing_vignette_depends)) {
-        writeLines("Vignette dependencies not required:")
+        writeLines(gettext("Vignette dependencies not required:"))
         .pretty_print(bad)
         msg <- gettext("Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries.")
         writeLines(strwrap(msg))
         writeLines("")
     }
     if(length(bad <- x$missing_namespace_depends)) {
-        writeLines("Namespace dependencies not required:")
+        writeLines(gettext("Namespace dependencies not required:"))
         .pretty_print(bad)
         writeLines("")
     }
@@ -2572,7 +2593,7 @@ print.check_Rd_files_in_Rd_db <-
 function(x, ...)
 {
     if(length(x$files_with_surely_bad_Rd)) {
-        writeLines("Rd files with syntax errors:")
+        writeLines(gettext("Rd files with syntax errors:"))
         bad <- x$files_with_surely_bad_Rd
         for(i in seq(along = bad)) {
             writeLines(c(paste("  ", names(bad)[i], ":", sep = ""),
@@ -2591,7 +2612,7 @@ function(x, ...)
                       function(x) x[regexpr("^[[:space:]}]*$", x) == -1])
         bad <- bad[sapply(bad, length) > 0]
         if(length(bad)) {
-            writeLines("Rd files with likely Rd problems:")
+            writeLines(gettext("Rd files with likely Rd problems:"))
             for(i in seq(along = bad)) {
                 writeLines(gettextf("Unaccounted top-level text in file '%s':",
                                     names(bad)[i]))
@@ -2610,13 +2631,13 @@ function(x, ...)
     }
 
     if(length(x$files_with_unknown_encoding)) {
-        writeLines(c("Rd files with unknown encoding:",
+        writeLines(c(gettext("Rd files with unknown encoding:"),
                      paste(" ", x$files_with_unknown_encoding),
                      ""))
     }
 
     if(length(x$files_with_non_ASCII_meta_data)) {
-        writeLines("Rd files with invalid non-ASCII meta data:")
+        writeLines(gettext("Rd files with invalid non-ASCII meta data:"))
         bad <- x$files_with_non_ASCII_meta_data
         ## Reinstate the Rd markup tags for better intelligibility.
         bad[ , 2] <- sub("aliases", "\\\\alias", bad[ , 2])
@@ -2633,7 +2654,7 @@ function(x, ...)
     }
 
     if(length(x$files_with_non_ASCII_section_titles)) {
-        writeLines("Rd files with non-ASCII section titles:")
+        writeLines(gettext("Rd files with non-ASCII section titles:"))
         bad <- x$files_with_non_ASCII_section_titles
         bad <- split(bad[, 2], bad[, 1])
         for(i in seq(along = bad)) {
@@ -2678,7 +2699,7 @@ function(x, ...)
     }
 
     if(length(x$files_with_bad_keywords)) {
-        writeLines("Rd files with non-standard keywords:")
+        writeLines(gettext("Rd files with non-standard keywords:"))
         bad <- x$files_with_bad_keywords
         bad <- split(bad[, 2], bad[, 1])
         for(i in seq(along = bad)) {
@@ -2858,47 +2879,47 @@ print.check_package_description <-
 function(x, ...)
 {
     if(length(x$missing_encoding))
-        writeLines(c("Unknown encoding", ""))
+        writeLines(c(gettext("Unknown encoding"), ""))
     if(length(x$fields_with_non_ASCII_tags)) {
-        writeLines("Fields with non-ASCII tags:")
+        writeLines(gettext("Fields with non-ASCII tags:"))
         .pretty_print(x$fields_with_non_ASCII_tags)
-        writeLines(c("All field tags must be ASCII.", ""))
+        writeLines(c(gettext("All field tags must be ASCII."), ""))
     }
     if(length(x$fields_with_non_ASCII_values)) {
-        writeLines("Fields with non-ASCII values:")
+        writeLines(gettext("Fields with non-ASCII values:"))
         .pretty_print(x$fields_with_non_ASCII_values)
-        writeLines(c("These fields must have ASCII values.", ""))
+        writeLines(c(gettext("These fields must have ASCII values."), ""))
     }
     if(length(x$missing_required_fields)) {
-        writeLines("Required fields missing:")
+        writeLines(gettext("Required fields missing:"))
         .pretty_print(x$missing_required_fields)
         writeLines("")
     }
     if(length(x$bad_package))
         writeLines(c(strwrap(x$bad_package), ""))
     if(length(x$bad_version))
-       writeLines(c("Malformed package version.", ""))
+        writeLines(c(gettext("Malformed package version."), ""))
     if(length(x$bad_maintainer))
-        writeLines(c("Malformed maintainer field.", ""))
+        writeLines(c(gettext("Malformed maintainer field."), ""))
 
     if(any(as.integer(sapply(x$bad_depends_or_suggests_or_imports, length)))) {
         bad <- x$bad_depends_or_suggests_or_imports
-        writeLines("Malformed Depends or Suggests or Imports field.")
+        writeLines(gettext("Malformed Depends or Suggests or Imports field."))
         if(length(bad$bad_dep_entry)) {
-            tmp <- c("Offending entries:",
+            tmp <- c(gettext("Offending entries:"),
                      paste(" ", bad$bad_dep_entry),
                      strwrap(gettextf("Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses.")))
             writeLines(tmp)
         }
         if(length(bad$bad_dep_op)) {
-            tmp <- c("Entries with infeasible comparison operator:",
+            tmp <- c(gettext("Entries with infeasible comparison operator:"),
                      paste(" ", bad$bad_dep_entry),
                      strwrap(gettextf("Only operators '<=' and '>=' are possible.")))
 
             writeLines(tmp)
         }
         if(length(bad$bad_dep_version)) {
-            tmp <- c("Entries with infeasible version number:",
+            tmp <- c(gettext("Entries with infeasible version number:"),
                      paste(" ", bad$bad_dep_version),
                      strwrap(gettextf("Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'.")))
             writeLines(tmp)
@@ -2906,9 +2927,9 @@ function(x, ...)
         writeLines("")
     }
     if(length(x$bad_namespace))
-        writeLines(c("Package name and namespace differ.", ""))
+        writeLines(c(gettext("Package name and namespace differ."), ""))
     if(length(x$bad_priority))
-        writeLines(c("Invalid Priority field.",
+        writeLines(c(gettext("Invalid Priority field."),
                      strwrap(gettextf("Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R.")),
                      ""))
 
@@ -2984,8 +3005,8 @@ function(x, ...)
 {
     if(length(x) > 0) {
         for(i in seq(along = x)) {
-            writeLines(c(sprintf("Non-portable flags in variable '%s':",
-                                 names(x)[i]),
+            writeLines(c(gettextf("Non-portable flags in variable '%s':",
+                                  names(x)[i]),
                          sprintf("  %s", paste(x[[i]], collapse = " "))))
         }
     }
