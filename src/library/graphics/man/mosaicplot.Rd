@@ -10,7 +10,7 @@ mosaicplot(x, \dots)
 \method{mosaicplot}{default}(x, main = deparse(substitute(x)), 
            sub = NULL, xlab = NULL, ylab = NULL,
            sort = NULL, off = NULL, dir = NULL,
-           color = FALSE, shade = FALSE, margin = NULL,
+           color = NULL, shade = FALSE, margin = NULL,
            cex.axis = 0.66, las = par("las"),
            type = c("pearson", "deviance", "FT"), \dots)
 
