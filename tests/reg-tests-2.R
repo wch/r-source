@@ -1544,3 +1544,32 @@ printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
 printCoefmat(cmat, signif.stars = FALSE)
 printCoefmat(cmat, signif.stars = TRUE, signif.legend = TRUE)
 ## did not work in 2.1.0
+
+
+## PR#7824 subscripting an array by a matrix
+x <- matrix(1:6, ncol=2)
+x[rbind(c(1,1), c(2,2))]
+x[rbind(c(1,1), c(2,2), c(0,1))]
+x[rbind(c(1,1), c(2,2), c(0,0))]
+x[rbind(c(1,1), c(2,2), c(0,2))]
+x[rbind(c(1,1), c(2,2), c(0,3))]
+x[rbind(c(1,1), c(2,2), c(1,0))]
+x[rbind(c(1,1), c(2,2), c(2,0))]
+x[rbind(c(1,1), c(2,2), c(3,0))]
+x[rbind(c(1,0), c(0,2), c(3,0))]
+x[rbind(c(1,0), c(0,0), c(3,0))]
+x[rbind(c(1,1), c(2,2), c(1,2))]
+x[rbind(c(1,1), c(2,NA), c(1,2))]
+x[rbind(c(1,0), c(2,NA), c(1,2))]
+try(x[rbind(c(1,1), c(2,2), c(-1,2))])
+try(x[rbind(c(1,1), c(2,2), c(-2,2))])
+try(x[rbind(c(1,1), c(2,2), c(-3,2))])
+try(x[rbind(c(1,1), c(2,2), c(-4,2))])
+try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
+try(x[rbind(c(1,1,1), c(2,2,2))])
+
+# verify that range checks are applied to negative indices
+x <- matrix(1:6, ncol=3)
+try(x[rbind(c(1,1), c(2,2), c(-3,3))])
+try(x[rbind(c(1,1), c(2,2), c(-4,3))])
+## generally allowed in 2.1.0.

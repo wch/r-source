@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-04-19), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-05-06), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4577,4 +4577,61 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
 > ## did not work in 2.1.0
+> 
+> 
+> ## PR#7824 subscripting an array by a matrix
+> x <- matrix(1:6, ncol=2)
+> x[rbind(c(1,1), c(2,2))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,1))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,0))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,2))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,3))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(1,0))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(2,0))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(3,0))]
+[1] 1 5
+> x[rbind(c(1,0), c(0,2), c(3,0))]
+numeric(0)
+> x[rbind(c(1,0), c(0,0), c(3,0))]
+numeric(0)
+> x[rbind(c(1,1), c(2,2), c(1,2))]
+[1] 1 5 4
+> x[rbind(c(1,1), c(2,NA), c(1,2))]
+[1]  1 NA  4
+> x[rbind(c(1,0), c(2,NA), c(1,2))]
+[1] NA  4
+> try(x[rbind(c(1,1), c(2,2), c(-1,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-2,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-2, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-3,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-4,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, -1))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1,1), c(2,2,2))])
+[1] 1 2 1 2 1 2
+> 
+> # verify that range checks are applied to negative indices
+> x <- matrix(1:6, ncol=3)
+> try(x[rbind(c(1,1), c(2,2), c(-3,3))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 3))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-4,3))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) : 
+	negative values are not allowed in a matrix subscript
+> ## generally allowed in 2.1.0.
 > 

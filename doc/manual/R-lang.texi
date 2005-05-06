@@ -1705,6 +1705,12 @@ operation.
 [1] 1 4
 @end example
 
+@noindent
+Negative indices are not allowed in indexing matrices.  @code{NA} and
+zero values are allowed: rows in an index matrix containing a zero are
+ignored, whereas rows containing an @code{NA} produce an @code{NA} in
+the result.
+
 Both in the case of using a single
 @cindex index
 index and in matrix indexing, a @code{names} attribute is used if

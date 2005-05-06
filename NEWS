@@ -175,6 +175,10 @@ BUG FIXES
     o	as.personList() as used by citation() got confused by names
 	containing "and".  (PR#7797)
 
+    o	Subscripting an array by a matrix containing zero or negative
+	values or the wrong number of columns was not handled
+	consistently. (PR#7824)
+
 
 
 		CHANGES IN R VERSION 2.1.0
