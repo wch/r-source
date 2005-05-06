@@ -35,6 +35,9 @@ handled incorrectly by gettext, and is now not attempted.
 Attempting to plot repeatedly to the same metafile sometimes crashed
 R.  (PR#7821: it is unclear why Windows does not allow this.)
 
+Using the mouse scroll wheel in the data editor sometimes caused
+it to scroll out of range and crash or display garbage.
+
 
 
 R 2.1.0
