@@ -179,6 +179,9 @@ BUG FIXES
 	values or the wrong number of columns was not handled
 	consistently. (PR#7824)
 
+    o	select.list(multiple=TRUE) now detects and tries again for invalid
+	text input.
+
 
 
 		CHANGES IN R VERSION 2.1.0
