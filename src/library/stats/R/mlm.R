@@ -58,10 +58,11 @@ estVar.mlm <- function(object, ...)
 ###  Tr: is the trace operator
 ###  proj: the projection operator possibly generalized to matrices.
 ###  Rg: matrix rank
-###  Thin: thin matrix to full (row) rank
+###  Thin.row, Thin.col: thin matrix to full (row/column) rank
 
 Tr <- function(matrix) sum(diag(matrix))
 proj.matrix <- function(X, orth=FALSE){
+    X <- Thin.col(X)
     P <- if (ncol(X) == 0)
         matrix(0,nrow(X),nrow(X))
     else
@@ -172,7 +173,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
     pp <- nrow(T)
     U <- solve(Psi,B)
     sigma <- Tr(U)/pp/object$df
-    lambda <- Re(eigen(U, symmetric=TRUE)$values)
+    lambda <- Re(eigen(U)$values)
     GG.eps <- sum(lambda)^2/sum(lambda^2)/pp
     n <- object$df
     HF.eps <- ((n + 1) * pp * GG.eps - 2) / (pp * (n - pp * GG.eps))
