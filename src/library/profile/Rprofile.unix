@@ -28,23 +28,13 @@ options(X11fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
 options(mailer = "mailx")
 
 
-## non standard settings for the Aqua GUI of the Darwin port
+## non standard settings for the R.app GUI of the Mac OS X port
 if(.Platform$GUI == "AQUA") {
-
     ## this is set to let RAqua use both X11 device and
     ## X11/TclTk
     if (Sys.getenv("DISPLAY") == "")
 	Sys.putenv("DISPLAY" = ":0")
 
-    ## sets initial current working directory to user's root
-    ## as R.app is installed at system level
-
     ## this is to allow g77 compiler to work
     Sys.putenv("PATH" = paste(Sys.getenv("PATH"),":/usr/local/bin",sep = ""))
-
-    if( !file.exists("~/Library/R") )
-	dir.create(path.expand("~/Library/R"))
-    if( !file.exists("~/Library/R/library") )
-	dir.create(path.expand("~/Library/R/library"))
-    .libPaths(path.expand("~/Library/R/library"))
 }## end "Aqua"
