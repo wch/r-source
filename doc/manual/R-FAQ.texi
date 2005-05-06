@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-05
+@set FAQ_DATE @value{FAQ_YEAR}-05-06
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2996,6 +2996,9 @@ random numbers from different sources.
 @item rwt
 Rice Wavelet Toolbox wrapper, providing a set of functions for
 performing digital signal processing.
+@item sac
+Semiparametric empirical likelihood ratio based test of changepoint with
+one-change or epidemic alternatives with data-based model diagnostic.
 @item sampfling
 Implements a modified version of the Sampford sampling algorithm.  Given
 a quantity assigned to each unit in the population, samples are drawn
@@ -5154,6 +5157,11 @@ example by starting with @samp{Wishlist:}.
 
 Comments on and suggestions for the Windows port of R should be sent to
 @email{R-windows@@R-project.org}.
+
+Corrections to and comments on message translation should be sent to the
+last translator (listed at the top of the appropriate @samp{.po} file)
+or to the translation team as listed at
+@url{http://developer.r-project.org/TranslationTeams.html}.
 
 @node Acknowledgments,  , R Bugs, Top
 @chapter Acknowledgments
