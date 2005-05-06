@@ -1,7 +1,13 @@
+## called as
+# .install.winbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
+#                    method = method, available = available,
+#                    destdir = destdir,
+#                    installWithVers = installWithVers,
+#                    dependencies = dependencies)
+
 .install.winbinary <-
-    function(pkgs, lib, repos = CRAN,
+    function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
-             CRAN = getOption("repos"),
              method, available = NULL, destdir = NULL,
              installWithVers = FALSE, dependencies = FALSE)
 {
@@ -241,14 +247,6 @@ menuInstallLocal <- function()
     install.packages(choose.files('',filters=Filters[c('zip','All'),]),
                      .libPaths()[1], repos = NULL)
 }
-
-# menuInstallBioc <- function()
-# {
-#     a <- available.packages(contrib.url(getOption("BIOC")))
-#     install.packages(select.list(a[,1], , TRUE), .libPaths()[1],
-#                      available = a, repos = getOption("BIOC"),
-#                      dependencies = TRUE)
-# }
 
 ### the following function supports .install.winbinaries()
 
