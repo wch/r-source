@@ -1458,7 +1458,7 @@ static void de_sbf(control c, int pos)
 	colmin = 1 + (-pos*xScrollbarScale - 1);
     } else {
 	rowmin = 1 + pos*yScrollbarScale;
-	if(rowmin > ymaxused - nhigh + 2) rowmin = ymaxused - nhigh + 2;
+	if(rowmin > ymaxused - nhigh + 2) rowmin = max(1,ymaxused - nhigh + 2);
     }
     drawwindow();
 }
