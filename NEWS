@@ -189,6 +189,14 @@ BUG FIXES
 	when the model and the upper scope had different orders for
 	the main effects.  (PR#7842)
 
+    o   A bug had sneaked into the anova.mlmlist code, affecting the
+	Greenhouse-Geisser epsilon. Code wrongly assumed a matrix to
+        be symmetric. (Thanks to Bela Bauer.)
+
+    o   anova.mlmlist and mauchley.test are now more tolerant to rank 
+        deficiency in the M and X matrices (also when they are implicitly
+        generated via model.matrix).
+
 
 
 		CHANGES IN R VERSION 2.1.0
