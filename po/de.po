@@ -392,7 +392,7 @@ msgstr "Argument '%s' __ignoriert__\n"
 
 #: src/gnuwin32/system.c:940 src/unix/system.c:286
 msgid "you must specify '--save', '--no-save' or '--vanilla'"
-msgstr "Sie müssen '--save', '--nosave' oder '--vanilla' angeben"
+msgstr "Sie müssen '--save', '--no-save' oder '--vanilla' angeben"
 
 #: src/gnuwin32/system.c:945
 msgid ""
@@ -654,9 +654,8 @@ msgid "no dyn.load support in this R version"
 msgstr "keine dyn.load Unterstützung in dieser R Version"
 
 #: src/main/Rstrptime.h:1090
-#, fuzzy
 msgid "input string is too long"
-msgstr "Pfad aus zip ist zu lang"
+msgstr ""
 
 #: src/main/Rstrptime.h:1092
 #, fuzzy
@@ -664,9 +663,8 @@ msgid "invalid multibyte input string"
 msgstr "ungültige multi-byte Zeichenkette"
 
 #: src/main/Rstrptime.h:1095
-#, fuzzy
 msgid "format string is too long"
-msgstr "'destination' ist zu lang"
+msgstr ""
 
 #: src/main/Rstrptime.h:1097
 #, fuzzy
