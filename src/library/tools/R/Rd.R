@@ -693,16 +693,12 @@ function(txt)
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
 
-    ## Simple version of [Perl] R::Rdconv::drop_full_command().    
-    txt <- .Rd_transform_command(txt, "dontrun", function(u) NULL)
-    ## Simple version of [Perl] R::Rdconv::undefine_command().
-    ## <FIXME>
-    ## It would be nice to handle \dontshow and \testonly at once (as
-    ## earlier versions did).  Could be achieved by modifying
-    ## .Rd_transform_command to work on a sequence of commands ...
-    ## </FIXME>
-    txt <- .Rd_transform_command(txt, "dontshow", function(u) u)
-    txt <- .Rd_transform_command(txt, "testonly", function(u) u)
+    ## Version of [Perl] R::Rdconv::drop_full_command().    
+    txt <- .Rd_transform_command(txt, "dontrun",
+                                 function(u) NULL)
+    ## Version of [Perl] R::Rdconv::undefine_command().
+    txt <- .Rd_transform_command(txt, c("dontshow", "testonly"),
+                                 function(u) u)
     txt
 }
 
@@ -720,11 +716,14 @@ function(txt, cmd, FUN)
     ## Currently, optional arguments to \cmd are not supported.
 
     if(length(txt) != 1) return(character())
+
+    ## Vectorized in 'cmd':
+    pattern <- sprintf("\\\\%s\\{", paste(cmd, collapse = "|"))
     
     out <- character()
-    pattern <- sprintf("\\\\%s\\{", cmd)
     while((pos <- regexpr(pattern, txt)) != -1) {
         out <- c(out, substring(txt, 1, pos - 1))
+        cmd <- substring(txt, pos, pos + attr(pos, "match.length") - 2)
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
             stop(sprintf("unclosed \\%s", cmd))
