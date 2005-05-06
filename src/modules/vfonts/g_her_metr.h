@@ -106,8 +106,11 @@
    coordinates.  Idea is that the font size (i.e. the nominal minimum
    inter-line spacing) corresponds to HERSHEY_LARGE_CAPHEIGHT Hershey units. */
 
-#define HERSHEY_UNITS_TO_USER_UNITS(size) \
-	((size)*(gc->ps * gc->cex)/(HERSHEY_LARGE_ASCENT))
+#define HERSHEY_X_UNITS_TO_USER_UNITS(size) \
+	((size)*((gc->ps * gc->cex / 72) / (dd->dev)->ipr[0])/(HERSHEY_LARGE_HEIGHT))
+
+#define HERSHEY_Y_UNITS_TO_USER_UNITS(size) \
+	((size)*((gc->ps * gc->cex / 72) / (dd->dev)->ipr[1])/(HERSHEY_LARGE_HEIGHT))
 
 /************************************************************************/
 

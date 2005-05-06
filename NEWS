@@ -89,6 +89,11 @@ BUG FIXES
     o	Printing was not allowing for double-width characters in its
 	layout.
 
+    o   Hershey fonts were printing as very small when printed from
+	directly from Windows menu.  
+
+	Fix means that default size of Hershey fonts may be slightly 
+	different, for example, smaller by default on PostScript and PDF.
 
 
 
