@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:01\n"
+"POT-Creation-Date: 2005-05-06 18:37\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,12 @@ msgstr ""
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr ""
 
+msgid "Documentation objects with duplicated alias '%s':"
+msgstr ""
+
+msgid "S3 methods shown with full name in documentation object '%s':"
+msgstr ""
+
 msgid "unable to create"
 msgstr ""
 
@@ -98,7 +104,19 @@ msgstr ""
 msgid "File '%s':"
 msgstr ""
 
+msgid "Packages required but not available:"
+msgstr ""
+
+msgid "Former standard packages required but now defunct:"
+msgstr ""
+
+msgid "Vignette dependencies not required:"
+msgstr ""
+
 msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+
+msgid "Namespace dependencies not required:"
 msgstr ""
 
 msgid "Package Rd sources were installed without preserving Rd file names."
@@ -107,10 +125,25 @@ msgstr ""
 msgid "Please reinstall using a current version of R."
 msgstr ""
 
+msgid "Rd files with syntax errors:"
+msgstr ""
+
+msgid "Rd files with likely Rd problems:"
+msgstr ""
+
 msgid "Unaccounted top-level text in file '%s':"
 msgstr ""
 
 msgid "Following section '%s'"
+msgstr ""
+
+msgid "Rd files with unknown encoding:"
+msgstr ""
+
+msgid "Rd files with invalid non-ASCII meta data:"
+msgstr ""
+
+msgid "Rd files with non-ASCII section titles:"
 msgstr ""
 
 msgid "Rd files with missing or empty '\\name':"
@@ -131,6 +164,9 @@ msgstr ""
 msgid "These entries must be unique in an Rd file."
 msgstr ""
 
+msgid "Rd files with non-standard keywords:"
+msgstr ""
+
 msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory)."
 msgstr ""
 
@@ -143,19 +179,64 @@ msgstr ""
 msgid "Try running R in a single-byte locale."
 msgstr ""
 
+msgid "Unknown encoding"
+msgstr ""
+
+msgid "Fields with non-ASCII tags:"
+msgstr ""
+
+msgid "All field tags must be ASCII."
+msgstr ""
+
+msgid "Fields with non-ASCII values:"
+msgstr ""
+
+msgid "These fields must have ASCII values."
+msgstr ""
+
+msgid "Required fields missing:"
+msgstr ""
+
+msgid "Malformed package version."
+msgstr ""
+
+msgid "Malformed maintainer field."
+msgstr ""
+
+msgid "Malformed Depends or Suggests or Imports field."
+msgstr ""
+
+msgid "Offending entries:"
+msgstr ""
+
 msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr ""
+
+msgid "Entries with infeasible comparison operator:"
 msgstr ""
 
 msgid "Only operators '<=' and '>=' are possible."
 msgstr ""
 
+msgid "Entries with infeasible version number:"
+msgstr ""
+
 msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr ""
+
+msgid "Package name and namespace differ."
+msgstr ""
+
+msgid "Invalid Priority field."
 msgstr ""
 
 msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
 msgstr ""
 
 msgid "See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual."
+msgstr ""
+
+msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"
