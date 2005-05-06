@@ -50,6 +50,9 @@ NEW FEATURES
     o	labels() now has a method for "dist" objects (replacing that
 	for names() which was withdrawn in 2.1.0).
 
+    o	checkDocFiles() in package 'tools' now checks for bad \usage
+	lines (syntactically invalid R code) and duplicated aliases.
+
 
 DEPRECATED & DEFUNCT
 
