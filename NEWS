@@ -182,6 +182,10 @@ BUG FIXES
     o	select.list(multiple=TRUE) now detects and tries again for invalid
 	text input.
 
+    o	add1.[g]lm could give strange results with interaction terms
+	when the model and the upper scope had different orders for
+	the main effects.  (PR#7842)
+
 
 
 		CHANGES IN R VERSION 2.1.0
