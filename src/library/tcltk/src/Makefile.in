@@ -11,7 +11,7 @@ top_builddir = ../../../..
 subdir = src/library/$(pkg)/src
 R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
-R_INCLUDE = $(R_HOME)/include
+R_INCLUDE_DIR = $(R_HOME)/include
 
 SOURCES_C = init.c tcltk.c
 SOURCES_F =
