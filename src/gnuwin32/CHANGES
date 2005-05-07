@@ -20,6 +20,8 @@ with *three* slashes.
 R 2.1.0 patched
 ===============
 
+The installer allows a choice of languages.
+
 A menu item has been added for RSiteSearch().
 
 localeToCharset() was failing on some unknown (to the maintainers)
