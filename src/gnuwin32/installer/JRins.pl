@@ -74,11 +74,25 @@ END
 
 my $lines2=<<END;
 
+[Languages]
+Name: en; MessagesFile: "compiler:Default.isl"
+Name: cz; MessagesFile: "compiler:Languages\\Czech.isl"
+Name: nl; MessagesFile: "compiler:Languages\\Dutch.isl"
+Name: fr; MessagesFile: "compiler:Languages\\French.isl"
+Name: de; MessagesFile: "compiler:Languages\\German.isl"
+Name: no; MessagesFile: "compiler:Languages\\Norwegian.isl"
+Name: po; MessagesFile: "compiler:Languages\\PortugueseStd.isl"
+Name: pt; MessagesFile: "compiler:Languages\\Polish.isl"
+Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
+Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
+
+
 [Tasks]
 Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
 Name: "quicklaunchicon"; Description: "Create a &Quick Launch icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked 
 Name: "associate"; Description: "&Associate R with .RData files"; GroupDescription: "Registry entries:"; MinVersion: 4,4
 Name: "DCOM"; Description: "&Register R path for use by the (D)COM server"; GroupDescription: "Registry entries:"; MinVersion: 4,4
+
 
 [Icons]
 Name: "{group}\\R $RVER"; Filename: "{app}\\bin\\Rgui.exe"; $iconpars
