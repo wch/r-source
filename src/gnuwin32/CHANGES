@@ -38,6 +38,11 @@ R.  (PR#7821: it is unclear why Windows does not allow this.)
 Using the mouse scroll wheel in the data editor sometimes caused
 it to scroll out of range and crash or display garbage.
 
+The support for mitred lines encountered a Windows problem with a
+dramatic slowdown if more than 1000 or so segments were plotted in a
+polyline.  We now plot in bunches of 1000, which is less accurate but
+works around the Windows problem.
+
 
 
 R 2.1.0
