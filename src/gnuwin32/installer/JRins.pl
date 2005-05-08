@@ -82,7 +82,6 @@ Name: fr; MessagesFile: "compiler:Languages\\French.isl"
 Name: de; MessagesFile: "compiler:Languages\\German.isl"
 Name: no; MessagesFile: "compiler:Languages\\Norwegian.isl"
 Name: po; MessagesFile: "compiler:Languages\\Polish.isl"
-Name: pt; MessagesFile: "compiler:Languages\\PortugueseStd.isl"
 Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 
