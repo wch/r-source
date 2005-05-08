@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-4 R Development Core Team
+# Copyright (C) 2001-5 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -86,11 +86,49 @@ Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 
 
+[CustomMessages]
+en.regentries=Registry entries:
+en.associate=&Associate R with .RData files
+en.dcom=&Register R path for use by the (D)COM 
+
+de.regentries= Einträge in der Windows-Registrierung:
+de.associate=&Verknüpfe R mit .RData Dateien
+de.dcom=&Registriere den R Pfad für den (D)COM Server
+
+cz.regentries=Registry entries:
+cz.associate=&Associate R with .RData files
+cz.dcom=&Register R path for use by the (D)COM 
+
+nl.regentries=Registry entries:
+nl.associate=&Associate R with .RData files
+nl.dcom=&Register R path for use by the (D)COM 
+
+fr.regentries=Registry entries:
+fr.associate=&Associate R with .RData files
+fr.dcom=&Register R path for use by the (D)COM 
+
+no.regentries=Registry entries:
+no.associate=&Associate R with .RData files
+no.dcom=&Register R path for use by the (D)COM 
+
+po.regentries=Registry entries:
+po.associate=&Associate R with .RData files
+po.dcom=&Register R path for use by the (D)COM 
+
+ru.regentries=Registry entries:
+ru.associate=&Associate R with .RData files
+ru.dcom=&Register R path for use by the (D)COM 
+
+sl.regentries=Registry entries:
+sl.associate=&Associate R with .RData files
+sl.dcom=&Register R path for use by the (D)COM 
+
+
 [Tasks]
-Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
-Name: "quicklaunchicon"; Description: "Create a &Quick Launch icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked 
-Name: "associate"; Description: "&Associate R with .RData files"; GroupDescription: "Registry entries:"; MinVersion: 4,4
-Name: "DCOM"; Description: "&Register R path for use by the (D)COM server"; GroupDescription: "Registry entries:"; MinVersion: 4,4
+Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
+Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4; Flags: unchecked 
+Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4
+Name: "DCOM"; Description: {cm:dcom}; GroupDescription: {cm:regentries}; MinVersion: 4,4
 
 
 [Icons]
