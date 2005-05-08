@@ -92,6 +92,7 @@ The information here applies only to recent versions of R for Windows,
 @menu
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
+* The installer does not offer my language::  
 * I want to run R in Chinese/Japanese/Korean::  
 * How do I check an installation?::  
 * Can I customize the installation?::  
@@ -139,7 +140,7 @@ versions of R.  The @code{r-patched} build includes bug fixes to the
 current release, and @code{r-devel} contains changes that will eventually
 make it into the next major @code{x.y.0} release.
 
-@node How do I install R for Windows?, I want to run R in Chinese/Japanese/Korean, Where can I find the latest version?, Installation and Usage
+@node How do I install R for Windows?, The installer does not offer my language, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
 You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
@@ -167,8 +168,33 @@ field (@emph{after} any final double quote), for example @code{--sdi
 --max-mem-size=1Gb}.  You can also set environment variables at the end
 of the Target field, for example @code{R_LIBS=p:/myRlib}.
 
+@node The installer does not offer my language, I want to run R in Chinese/Japanese/Korean, How do I install R for Windows?, Installation and Usage
+@section The installer does not offer my language
 
-@node I want to run R in Chinese/Japanese/Korean, How do I check an installation?, How do I install R for Windows?, Installation and Usage
+Two things may be happening.  First, only languages which can be
+displayed using the current codepage are offered so you cannot install
+in Japanese unless running Windows in Japanese.
+
+Second, only a limited range of languages is supported (but still wider
+than those for which R has translations), currently
+Brazilian Portuguese,
+Catalan,
+(Simplified) Chinese,
+Czech,
+Danish,
+Dutch,
+French,
+German,
+Hungarian,
+Italian,
+Japanese,
+Norwegian
+Polish,
+Portuguese,
+Russian,
+Slovenian.
+
+@node I want to run R in Chinese/Japanese/Korean, How do I check an installation?, The installer does not offer my language, Installation and Usage
 @section I want to run R in Chinese/Japanese/Korean
 
 As from R 2.1.0 this is possible by installing R with support for `East
@@ -193,7 +219,7 @@ replace @code{Arial} by @code{Arial Unicode MS}, and we tried
 You do need to ensure that R is running in a suitable locale: use
 @code{Sys.getlocale()} to find out, and @code{Sys.setlocale(,
 "langname")} to set it if necessary.  (CJK users may be used to their
-language characters always being available, which is that case for
+language characters always being available, which is the case for
 so-called `Unicode' Windows applications.  However, R has to run on
 Windows 9x and is not therefore `Unicode'.)  You can find suitable
 locale names from
