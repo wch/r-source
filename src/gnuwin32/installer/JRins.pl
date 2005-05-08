@@ -104,6 +104,15 @@ en.full=Full installation
 en.CJK=Chinese/Japanese/Korean installation
 en.custom=Custom installation
 
+br.regentries=Entradas no registro:
+br.associate=&Associar arquivos .RData ao R
+br.dcom=&Registrar o caminho do R para uso pelo servidor (D)COM
+br.user=Instalação modo usuário
+br.compact=Instalação modo usuário mínima
+br.full=Instalação completa
+br.CJK=Instalação em chinês/japonês/coreano
+br.custom=Instalação personalizada
+
 de.regentries= Einträge in der Windows-Registrierung:
 de.associate=&Verknüpfe R mit .RData Dateien
 de.dcom=&Registriere den R Pfad für den (D)COM Server
