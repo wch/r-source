@@ -1,5 +1,5 @@
 #-*- perl -*-
-# Copyright (C) 2001-4 R Development Core Team
+# Copyright (C) 2001-5 R Development Core Team
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -76,22 +76,52 @@ my $lines2=<<END;
 
 [Languages]
 Name: en; MessagesFile: "compiler:Default.isl"
+Name: br; MessagesFile: "compiler:Languages\\BrazilianPortuguese.isl"
+Name: ca; MessagesFile: "compiler:Languages\\Catalan.isl"
 Name: cz; MessagesFile: "compiler:Languages\\Czech.isl"
+Name: da; MessagesFile: "compiler:Languages\\Danish.isl"
 Name: nl; MessagesFile: "compiler:Languages\\Dutch.isl"
 Name: fr; MessagesFile: "compiler:Languages\\French.isl"
 Name: de; MessagesFile: "compiler:Languages\\German.isl"
+Name: hu; MessagesFile: "compiler:Languages\\Hungarian.isl"
+Name: it; MessagesFile: "compiler:Languages\\Italian.isl"
 Name: no; MessagesFile: "compiler:Languages\\Norwegian.isl"
-Name: po; MessagesFile: "compiler:Languages\\PortugueseStd.isl"
+Name: po; MessagesFile: "compiler:Languages\\Portuguese.isl"
 Name: pt; MessagesFile: "compiler:Languages\\Polish.isl"
 Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 
 
+[CustomMessages]
+en.addicons=Additional icons:
+en.regentries= Registry entries:
+en.desktop=Create a &desktop icon
+en.quicklaunch=Create a &Quick Launch icon
+en.associate=&Associate R with .RData files
+en.dcom=&Register R path for use by the (D)COM server
+en.user=User installation
+en.compact=Minimal user installation
+en.full=Full installation
+en.CJK=Chinese/Japanese/Korean installation
+en.custom=Custom installation
+
+de.addicons=Additional icons:
+de.regentries= Registry entries:
+de.desktop=Create a &desktop icon
+de.quicklaunch=Create a &Quick Launch icon
+de.associate=&Associate R with .RData files
+de.dcom=&Register R path for use by the (D)COM server
+de.user=User installation
+de.compact=Minimal user installation
+de.full=Full installation
+de.CJK=Chinese/Japanese/Korean installation
+de.custom=Custom installation
+
 [Tasks]
-Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4
-Name: "quicklaunchicon"; Description: "Create a &Quick Launch icon"; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked 
-Name: "associate"; Description: "&Associate R with .RData files"; GroupDescription: "Registry entries:"; MinVersion: 4,4
-Name: "DCOM"; Description: "&Register R path for use by the (D)COM server"; GroupDescription: "Registry entries:"; MinVersion: 4,4
+Name: "desktopicon"; Description: {cm:desktop}; GroupDescription: "Additional icons:"; MinVersion: 4,4
+Name: "quicklaunchicon"; Description: {cm:quicklaunch}; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked 
+Name: "associate"; Description: {cm:associate}; GroupDescription: "Registry entries:"; MinVersion: 4,4
+Name: "DCOM"; Description: {cm:dcom}; GroupDescription: "Registry entries:"; MinVersion: 4,4
 
 
 [Icons]
@@ -122,11 +152,11 @@ print insfile <<END;
 Name: "{group}\\R $RVER Help"; Filename: "{app}\\doc\\html\\Rwin.html"; Components: html
 
 [Types]
-Name: "user"; Description: "User installation"
-Name: "compact"; Description: "Minimal user installation"
-Name: "full"; Description: "Full installation"
-Name: "CJK"; Description: "Chinese/Japanese/Korean installation";
-Name: "custom"; Description: "Custom installation"; Flags: iscustom
+Name: "user"; Description: {cm:user}
+Name: "compact"; Description: {cm:compact}
+Name: "full"; Description: {cm:full}
+Name: "CJK"; Description: {cm:CJK}
+Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: user compact full CJK custom; Flags: fixed
@@ -150,8 +180,8 @@ print minifile $lines2;
 print minifile <<END;
 
 [Types]
-Name: "compact"; Description: "Minimal user installation"
-Name: "custom"; Description: "Custom installation"; Flags: iscustom
+Name: "compact"; Description: {cm:compact}
+Name: "custom"; Description: {cm:custom}; Flags: iscustom
 
 [Components]
 Name: "main"; Description: "Main Files"; Types: compact custom; Flags: fixed

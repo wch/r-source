@@ -2922,8 +2922,8 @@ make @file{refman.pdf} and set the environment variables @code{R_RD4DVI} and
 @section The Inno Setup installer
 
 To make the install package (@file{@value{RWVERSION}.exe}) in the
-current Windows style we require Inno Setup 4.1.5 or later (preferably
-5.0.6 or later) from @url{http://jrsoftware.org}.
+current Windows style we require Inno Setup 5.1.2 or later from
+@url{http://jrsoftware.org}.
 
 
 @node New platforms, Function and variable index, The Windows toolset, Top
