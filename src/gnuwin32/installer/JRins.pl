@@ -90,13 +90,12 @@ Name: po; MessagesFile: "compiler:Languages\\Polish.isl"
 Name: pt; MessagesFile: "compiler:Languages\\Portuguese.isl"
 Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
+Name: chs; MessagesFile: "ChineseSimp.isl"
+Name: ja; MessagesFile: "Japanese.isl"
 
 
 [CustomMessages]
-en.addicons=Additional icons:
 en.regentries=Registry entries:
-en.desktop=Create a &desktop icon
-en.quicklaunch=Create a &Quick Launch icon
 en.associate=&Associate R with .RData files
 en.dcom=&Register R path for use by the (D)COM server
 en.user=User installation
@@ -105,10 +104,7 @@ en.full=Full installation
 en.CJK=Chinese/Japanese/Korean installation
 en.custom=Custom installation
 
-de.addicons=Weitere Symbole:
 de.regentries= Einträge in der Windows-Registrierung:
-de.desktop=Erzeuge Symbol auf dem &Desktop
-de.quicklaunch=Erzeuge Symbol in der &Schnellstartleiste
 de.associate=&Verknüpfe R mit .RData Dateien
 de.dcom=&Registriere den R Pfad für den (D)COM Server
 de.user=Benutzerinstallation
@@ -118,8 +114,8 @@ de.CJK=Chinesische/Japanische/Koreanische Installation
 de.custom=Benutzerdefinierte Installation
 
 [Tasks]
-Name: "desktopicon"; Description: {cm:desktop}; GroupDescription: {cm:addicons}; MinVersion: 4,4
-Name: "quicklaunchicon"; Description: {cm:quicklaunch}; GroupDescription: {cm:addicons}; MinVersion: 4,4; Flags: unchecked 
+Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
+Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4; Flags: unchecked 
 Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4
 Name: "DCOM"; Description: {cm:dcom}; GroupDescription: {cm:regentries}; MinVersion: 4,4
 
