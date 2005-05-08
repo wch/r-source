@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-06 18:37\n"
+"POT-Creation-Date: 2005-05-08 21:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,6 +24,21 @@ msgid "cannot source package code"
 msgstr ""
 
 msgid "neither code nor data objects found"
+msgstr ""
+
+msgid "Undocumented code objects:"
+msgstr ""
+
+msgid "Undocumented data sets:"
+msgstr ""
+
+msgid "Undocumented S4 classes:"
+msgstr ""
+
+msgid "Undocumented S4 methods:"
+msgstr ""
+
+msgid "Undocumented %s:"
 msgstr ""
 
 msgid "directory '%s' does not contain R code"
@@ -66,9 +81,6 @@ msgid "Objects in \\usage without \\alias in documentation object '%s':"
 msgstr ""
 
 msgid "Bad \\usage lines found in documentation object '%s':"
-msgstr ""
-
-msgid "Documentation objects with duplicated alias '%s':"
 msgstr ""
 
 msgid "S3 methods shown with full name in documentation object '%s':"
@@ -168,6 +180,9 @@ msgid "Rd files with non-standard keywords:"
 msgstr ""
 
 msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory)."
+msgstr ""
+
+msgid "Rd files with duplicated alias '%s':"
 msgstr ""
 
 msgid "Found invalid multi-byte character data."

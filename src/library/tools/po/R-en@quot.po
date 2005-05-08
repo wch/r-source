@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-06 18:37\n"
-"PO-Revision-Date: 2005-05-06 18:37\n"
+"POT-Creation-Date: 2005-05-08 21:44\n"
+"PO-Revision-Date: 2005-05-08 21:44\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,21 @@ msgstr "cannot source package code"
 
 msgid "neither code nor data objects found"
 msgstr "neither code nor data objects found"
+
+msgid "Undocumented code objects:"
+msgstr "Undocumented code objects:"
+
+msgid "Undocumented data sets:"
+msgstr "Undocumented data sets:"
+
+msgid "Undocumented S4 classes:"
+msgstr "Undocumented S4 classes:"
+
+msgid "Undocumented S4 methods:"
+msgstr "Undocumented S4 methods:"
+
+msgid "Undocumented %s:"
+msgstr "Undocumented %s:"
 
 msgid "directory '%s' does not contain R code"
 msgstr "directory ‘%s’ does not contain R code"
@@ -91,9 +106,6 @@ msgstr "Objects in \\usage without \\alias in documentation object '%s':"
 
 msgid "Bad \\usage lines found in documentation object '%s':"
 msgstr "Bad \\usage lines found in documentation object '%s':"
-
-msgid "Documentation objects with duplicated alias '%s':"
-msgstr "Documentation objects with duplicated alias '%s':"
 
 msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr "S3 methods shown with full name in documentation object '%s':"
@@ -203,6 +215,9 @@ msgstr ""
 "Each ‘\\keyword’ entry should specify one of the standard keywords (as "
 "listed in file ‘KEYWORDS.db’ in the ‘doc’ subdirectory of the R home "
 "directory)."
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr "Rd files with duplicated alias '%s':"
 
 msgid "Found invalid multi-byte character data."
 msgstr "Found invalid multi-byte character data."
