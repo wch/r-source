@@ -94,7 +94,7 @@ Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 
 [CustomMessages]
 en.addicons=Additional icons:
-en.regentries= Registry entries:
+en.regentries=Registry entries:
 en.desktop=Create a &desktop icon
 en.quicklaunch=Create a &Quick Launch icon
 en.associate=&Associate R with .RData files
@@ -105,23 +105,23 @@ en.full=Full installation
 en.CJK=Chinese/Japanese/Korean installation
 en.custom=Custom installation
 
-de.addicons=Additional icons:
-de.regentries= Registry entries:
-de.desktop=Create a &desktop icon
-de.quicklaunch=Create a &Quick Launch icon
-de.associate=&Associate R with .RData files
-de.dcom=&Register R path for use by the (D)COM server
-de.user=User installation
-de.compact=Minimal user installation
-de.full=Full installation
-de.CJK=Chinese/Japanese/Korean installation
-de.custom=Custom installation
+de.addicons=Weitere Symbole:
+de.regentries= Einträge in der Windows-Registrierung:
+de.desktop=Erzeuge Symbol auf dem &Desktop
+de.quicklaunch=Erzeuge Symbol in der &Schnellstartleiste
+de.associate=&Verknüpfe R mit .RData Dateien
+de.dcom=&Registriere den R Pfad für den (D)COM Server
+de.user=Benutzerinstallation
+de.compact=Minimale Installation
+de.full=Vollständige Installation
+de.CJK=Chinesische/Japanische/Koreanische Installation
+de.custom=Benutzerdefinierte Installation
 
 [Tasks]
-Name: "desktopicon"; Description: {cm:desktop}; GroupDescription: "Additional icons:"; MinVersion: 4,4
-Name: "quicklaunchicon"; Description: {cm:quicklaunch}; GroupDescription: "Additional icons:"; MinVersion: 4,4; Flags: unchecked 
-Name: "associate"; Description: {cm:associate}; GroupDescription: "Registry entries:"; MinVersion: 4,4
-Name: "DCOM"; Description: {cm:dcom}; GroupDescription: "Registry entries:"; MinVersion: 4,4
+Name: "desktopicon"; Description: {cm:desktop}; GroupDescription: {cm:addicons}; MinVersion: 4,4
+Name: "quicklaunchicon"; Description: {cm:quicklaunch}; GroupDescription: {cm:addicons}; MinVersion: 4,4; Flags: unchecked 
+Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4
+Name: "DCOM"; Description: {cm:dcom}; GroupDescription: {cm:regentries}; MinVersion: 4,4
 
 
 [Icons]
