@@ -306,11 +306,17 @@ function(x, ...)
 {
     for(i in which(sapply(x, length) > 0)) {
         tag <- names(x)[i]
-        ## <FIXME>
-        ## Internationalize this properly ...
-        ## Most likely only by building a msg db indexed by the tags.
-        writeLines(paste("Undocumented ", tag, ":", sep = ""))
-        ## </FIXME>
+        msg <- switch(tag,
+                      "code objects" =
+                      gettext("Undocumented code objects:"),
+                      "data sets" =
+                      gettext("Undocumented data sets:"),
+                      "S4 classes" =
+                      gettext("Undocumented S4 classes:"),
+                      "S4 methods" =
+                      gettext("Undocumented S4 methods:"),
+                      gettextf("Undocumented %s:", tag))
+        writeLines(msg)
         ## We avoid markup for indicating S4 methods, hence need to
         ## special-case output for these ...
         if(tag == "S4 methods")
@@ -580,11 +586,11 @@ function(package, dir, lib.loc = NULL,
 
         ## Get variable names and data set usages first, mostly for
         ## curiosity.
-        ## <FIXME>
+        ## <NOTE>
         ## Use '<=' as we could get 'NULL' ... although of course this
         ## is not really a variable.
         ind <- sapply(exprs, length) <= 1
-        ## </FIXME>
+        ## </NOTE>
         if(any(ind)) {
             variables_in_usages <-
                 c(variables_in_usages,
@@ -765,9 +771,9 @@ function(x, ...)
 
     if(length(x) == 0)
         return(invisible(x))
-    hasOnlyNames <- is.character(x[[1]][[1]][["code"]])
-    formatArgs <- function(s) {
-        if(hasOnlyNames) {
+    has_only_names <- is.character(x[[1]][[1]][["code"]])
+    format_args <- function(s) {
+        if(has_only_names) {
             paste("function(", paste(s, collapse = ", "), ")", sep = "")
         }
         else {
@@ -783,10 +789,10 @@ function(x, ...)
         for(i in seq(along = xfname))
             writeLines(c(xfname[[i]][["name"]],
                          strwrap(paste("Code:",
-                                       formatArgs(xfname[[i]][["code"]])),
+                                       format_args(xfname[[i]][["code"]])),
                                  indent = 2, exdent = 17),
                          strwrap(paste("Docs:",
-                                       formatArgs(xfname[[i]][["docs"]])),
+                                       format_args(xfname[[i]][["docs"]])),
                                  indent = 2, exdent = 17)))
         writeLines("")
     }
@@ -920,17 +926,17 @@ function(x, ...)
 {
     if (length(x) == 0)
         return(invisible(x))
-    formatArgs <- function(s) paste(s, collapse = " ")
+    format_args <- function(s) paste(s, collapse = " ")
     for (docObj in names(x)) {
         writeLines(gettextf("S4 class codoc mismatches from documentation object '%s':",
                             docObj))
         docObj <- x[[docObj]]
         writeLines(c(gettextf("Slots for class '%s'", docObj[["name"]]),
                      strwrap(paste("Code:",
-                                   formatArgs(docObj[["code"]])),
+                                   format_args(docObj[["code"]])),
                              indent = 2, exdent = 8),
                      strwrap(paste("Docs:",
-                                   formatArgs(docObj[["docs"]])),
+                                   format_args(docObj[["docs"]])),
                              indent = 2, exdent = 8)))
         writeLines("")
     }
@@ -1091,7 +1097,7 @@ function(package, lib.loc = NULL)
 print.codocData <-
 function(x, ...)
 {
-    formatArgs <- function(s) paste(s, collapse = " ")
+    format_args <- function(s) paste(s, collapse = " ")
     for(docObj in names(x)) {
         writeLines(gettextf("Data codoc mismatches from documentation object '%s':",
                             docObj))
@@ -1099,10 +1105,10 @@ function(x, ...)
         writeLines(c(gettextf("Variables in data frame '%s'",
                               docObj[["name"]]),
                      strwrap(paste("Code:",
-                                   formatArgs(docObj[["code"]])),
+                                   format_args(docObj[["code"]])),
                              indent = 2, exdent = 8),
                      strwrap(paste("Docs:",
-                                   formatArgs(docObj[["docs"]])),
+                                   format_args(docObj[["docs"]])),
                              indent = 2, exdent = 8)))
         writeLines("")
     }
@@ -1158,13 +1164,6 @@ function(package, dir, lib.loc = NULL)
     ind <- as.logical(sapply(db_usages,
                              function(x) !is.null(attr(x, "bad_lines"))))
     bad_lines <- lapply(db_usages[ind], attr, "bad_lines")
-
-    db_aliases_by_db_names <-
-        split(rep(db_names, sapply(db_aliases, length)),
-              unlist(db_aliases, use.names = FALSE))
-    duplicated_aliases <-
-        db_aliases_by_db_names[sapply(db_aliases_by_db_names,
-                                      length) > 1]
 
     ## Exclude internal objects from further computations.
     ind <- sapply(db_keywords,
@@ -1310,7 +1309,6 @@ function(package, dir, lib.loc = NULL)
 
     class(bad_doc_objects) <- "checkDocFiles"
     attr(bad_doc_objects, "bad_lines") <- bad_lines
-    attr(bad_doc_objects, "duplicated_aliases") <- duplicated_aliases
     bad_doc_objects
 }
 
@@ -1353,14 +1351,6 @@ function(x, ...)
             writeLines(gettextf("Bad \\usage lines found in documentation object '%s':",
                                 doc_obj))
             writeLines(paste(" ", bad_lines[[doc_obj]]))
-        }
-        writeLines("")
-    }
-
-    if(length(duplicated_aliases <- attr(x, "duplicated_aliases"))) {
-        for(alias in names(duplicated_aliases)) {
-            writeLines(gettextf("Documentation objects with duplicated alias '%s':", alias))
-            .pretty_print(duplicated_aliases[[alias]])
         }
         writeLines("")
     }
@@ -2023,14 +2013,14 @@ function(package, dir, lib.loc = NULL)
 print.checkS3methods <-
 function(x, ...)
 {
-    formatArgs <- function(s)
+    format_args <- function(s)
         paste("function(", paste(s, collapse = ", "), ")", sep = "")
     for(entry in x) {
         writeLines(c(paste(names(entry)[1], ":", sep = ""),
-                     strwrap(formatArgs(entry[[1]]),
+                     strwrap(format_args(entry[[1]]),
                              indent = 2, exdent = 11),
                      paste(names(entry)[2], ":", sep = ""),
-                     strwrap(formatArgs(entry[[2]]),
+                     strwrap(format_args(entry[[2]]),
                              indent = 2, exdent = 11),
                      ""))
     }
@@ -2503,12 +2493,16 @@ function(db)
     files_with_bad_name <- files_with_bad_title <- NULL
     files_with_bad_keywords <- NULL
 
+    db_aliases <- vector("list", length(db))
+    names(db_aliases) <- names(db)
+
     for(f in names(db)) {
         x <- tryCatch(Rd_parse(text = db[[f]]), error = function(e) e)
         if(inherits(x, "error")) {
             files_with_surely_bad_Rd[[f]] <- conditionMessage(x)
             next
         }
+        db_aliases[[f]] <- unique(x$meta$aliases)
         if(length(x$rest))
             files_with_likely_bad_Rd[[f]] <- x$rest
         if(length(x$meta$encoding) && is.na(x$meta$encoding))
@@ -2564,6 +2558,13 @@ function(db)
                       cbind(f, bad_keywords))
     }
 
+    db_aliases_by_db_names <-
+        split(rep(names(db_aliases), sapply(db_aliases, length)),
+              unlist(db_aliases, use.names = FALSE))
+    files_with_duplicated_aliases <-
+        db_aliases_by_db_names[sapply(db_aliases_by_db_names,
+                                      length) > 1]
+
     val <- list(files_with_surely_bad_Rd,
                 files_with_likely_bad_Rd,
                 files_with_unknown_encoding,
@@ -2573,7 +2574,8 @@ function(db)
                 files_with_duplicated_unique_tags,
                 files_with_bad_name,
                 files_with_bad_title,
-                files_with_bad_keywords)
+                files_with_bad_keywords,
+                files_with_duplicated_aliases)
     names(val) <-
         c("files_with_surely_bad_Rd",
           "files_with_likely_bad_Rd",
@@ -2584,7 +2586,8 @@ function(db)
           "files_with_duplicated_unique_tags",
           "files_with_bad_name",
           "files_with_bad_title",
-          "files_with_bad_keywords")
+          "files_with_bad_keywords",
+          "files_with_duplicated_aliases")
     class(val) <- "check_Rd_files_in_Rd_db"
     val
 }
@@ -2708,9 +2711,17 @@ function(x, ...)
                                      "\n", sep = ""),
                                indent = 2, exdent = 4))
         }
-        msg <-
-            gettext("Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory).")
+        msg <- gettext("Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory).")
         writeLines(c(strwrap(msg), ""))
+    }
+
+    if(length(x$files_with_duplicated_aliases)) {
+        bad <- x$files_with_duplicated_aliases
+        for(alias in names(bad)) {
+            writeLines(gettextf("Rd files with duplicated alias '%s':", alias))
+            .pretty_print(bad[[alias]])
+        }
+        writeLines("")
     }
 
     invisible(x)
