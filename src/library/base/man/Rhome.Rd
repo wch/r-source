@@ -15,7 +15,8 @@ R.home(component="home")
 }
 \value{
   A character string giving the current \R home directory or path to a
-  particular component.  Currently the components are all subdirectories
-  of the \R home directory, but this may change.
+  particular component.  Normally the components are all subdirectories
+  of the \R home directory, but this may not be the case in a Unix-like
+  installation.
 }
 \keyword{utilities}
