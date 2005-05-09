@@ -103,9 +103,9 @@ nl.regentries=Registry entries:
 nl.associate=&Associate R with .RData files
 nl.dcom=&Register R path for use by the (D)COM 
 
-fr.regentries=Registry entries:
-fr.associate=&Associate R with .RData files
-fr.dcom=&Register R path for use by the (D)COM 
+fr.regentries=Entrées dans le registre:
+fr.associate=&Associer R avec les fichiers .RData
+fr.dcom=&Enregistrer R pour l'utiliser avec '(D)COM server'
 
 no.regentries=Registry entries:
 no.associate=&Associate R with .RData files
