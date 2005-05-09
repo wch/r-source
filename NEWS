@@ -120,6 +120,8 @@ NEW FEATURES
     o	glm() now accepts 1D arrays (e.g. tables) as a response,
 	dropping them to a vector whilst preserving names.
 
+    o	df() with one infinite df() now works (to match pf()).
+
 
 BUG FIXES
 
@@ -189,13 +191,19 @@ BUG FIXES
 	when the model and the upper scope had different orders for
 	the main effects.  (PR#7842)
 
-    o   A bug had sneaked into the anova.mlmlist code, affecting the
+    o   A bug had sneaked into the anova.mlmlist() code, affecting the
 	Greenhouse-Geisser epsilon. Code wrongly assumed a matrix to
         be symmetric. (Thanks to Bela Bauer.)
 
-    o   anova.mlmlist and mauchley.test are now more tolerant to rank 
+    o   anova.mlmlist() and mauchley.test() are now more tolerant to rank 
         deficiency in the M and X matrices (also when they are implicitly
         generated via model.matrix).
+
+    o   pf() with one infinite df is allowed again.  It is now more
+	accurate for extreme ratios of dfs, especially when there is a
+	non-centrality parameter.
+
+    o   df() was inaccuarate for large df (1e16 or greater).
 
 
 
