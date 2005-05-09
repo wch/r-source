@@ -205,6 +205,9 @@ BUG FIXES
 
     o   df() was inaccuarate for large df (1e16 or greater).
 
+    o   dt() was inaccuarate for large df (1e10 or greater) with a
+	non-centrality parameter.
+
 
 
 		CHANGES IN R VERSION 2.1.0
