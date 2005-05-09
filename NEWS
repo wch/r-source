@@ -203,9 +203,9 @@ BUG FIXES
 	accurate for extreme ratios of dfs, especially when there is a
 	non-centrality parameter.
 
-    o   df() was inaccuarate for large df (1e16 or greater).
+    o   df() was inaccurate for large df (1e16 or greater).
 
-    o   dt() was inaccuarate for large df (1e10 or greater) with a
+    o   dt() was inaccurate for large df (1e10 or greater) with a
 	non-centrality parameter.
 
 
