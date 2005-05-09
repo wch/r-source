@@ -119,7 +119,7 @@ fr.dcom=&Enregistrer R pour l'utiliser avec '(D)COM server'
 fr.user=Installation utilisateur
 fr.compact=Installation utilisateur minimale
 fr.full=Installation utilisateur complète
-fr.CJK=Installation chinois/japonais/koréen
+fr.CJK=Installation chinois/japonais/coréen
 fr.custom=Installation personnalisée
 
 de.regentries= Einträge in der Windows-Registrierung:
