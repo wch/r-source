@@ -1573,3 +1573,27 @@ x <- matrix(1:6, ncol=3)
 try(x[rbind(c(1,1), c(2,2), c(-3,3))])
 try(x[rbind(c(1,1), c(2,2), c(-4,3))])
 ## generally allowed in 2.1.0.
+
+
+## Inf df in pf etc.
+# apparently pf(df2=Inf) worked in 2.0.1 (undocumented) but df did not.
+x <- c(1/pi, 1, pi)
+df(x, 3, 1e6)
+df(x, 3, Inf)
+pf(x, 3, 1e6)
+pf(x, 3, Inf)
+
+df(x, 1e6, 5)
+df(x, Inf, 5)
+pf(x, 1e6, 5)
+pf(x, Inf, 5)
+
+df(pi, Inf, Inf)
+pf(pi, Inf, Inf)
+
+pf(x, 5, Inf, ncp=0)
+pf(x, 5, 1e6, ncp=1)
+pf(x, 5, 1e7, ncp=1)
+pf(x, 5, 1e8, ncp=1)
+pf(x, 5, Inf, ncp=1)
+## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.

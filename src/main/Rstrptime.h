@@ -1083,14 +1083,14 @@ strptime (const char *buf, const char *format, struct tm *tm)
 	get_locale_w_strings();
 #endif
 	n = mbstowcs(NULL, buf, 1000);
-	if(n > 1000) error("input string is too long");
+	if(n > 1000) error(_("input string is too long"));
 	n = mbstowcs(wbuf, buf, 1000);
-	if(n == -1) error("invalid multibyte input string");
+	if(n == -1) error(_("invalid multibyte input string"));
 	
 	n = mbstowcs(NULL, format, 1000);
-	if(n > 1000) error("format string is too long");
+	if(n > 1000) error(_("format string is too long"));
 	n = mbstowcs(wfmt, format, 1000);
-	if(n == -1) error("invalid multibyte format string");
+	if(n == -1) error(_("invalid multibyte format string"));
 	return (char *) w_strptime_internal (wbuf, wfmt, tm, &decided);
     } else
 #endif

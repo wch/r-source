@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:09+0100\n"
+"POT-Creation-Date: 2005-05-07 17:42+0100\n"
 "PO-Revision-Date: 2005-02-10 09:29+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -650,6 +650,26 @@ msgstr "给DllInfo了一个NULL 值"
 #: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
 msgid "no dyn.load support in this R version"
 msgstr "本R版本不支持dyn.load"
+
+#: src/main/Rstrptime.h:1086
+#, fuzzy
+msgid "input string is too long"
+msgstr "zip路径太长"
+
+#: src/main/Rstrptime.h:1088
+#, fuzzy
+msgid "invalid multibyte input string"
+msgstr "多字节字符串不对"
+
+#: src/main/Rstrptime.h:1091
+#, fuzzy
+msgid "format string is too long"
+msgstr "'destination'太长"
+
+#: src/main/Rstrptime.h:1093
+#, fuzzy
+msgid "invalid multibyte format string"
+msgstr "多字节字符串不对"
 
 #: src/main/apply.c:39 src/main/envir.c:2336
 msgid "arguments must be symbolic"

@@ -4,7 +4,7 @@
  *    October 23, 2000.
  *
  *  Merge in to R:
- *	Copyright (C) 2000, The R Core Development Team
+ *	Copyright (C) 2000, 2005 The R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,6 +45,14 @@ double df(double x, double m, double n, int give_log)
 #endif
     if (m <= 0 || n <= 0) ML_ERR_return_NAN;
     if (x <= 0.) return(R_D__0);
+    if (!R_FINITE(m) && !R_FINITE(n)) /* both +Inf */
+	ML_ERR_return_NAN;
+    if (!R_FINITE(n)) /* must be +Inf by now */
+	return(dgamma(x, m/2, 2./m, give_log));
+    if (m > 1e14) {/* includes +Inf: code below is inaccurate there */
+	dens = dgamma(1./x, n/2, 2./n, give_log);
+	return give_log ? dens - 2*log(x): dens/(x*x);
+    }
 
     f = 1./(n+x*m);
     q = n*f;

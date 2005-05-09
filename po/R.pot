@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:09+0100\n"
+"POT-Creation-Date: 2005-05-07 17:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -648,6 +648,22 @@ msgstr ""
 #: src/main/Rdynload.c:1209 src/main/Rdynload.c:1215 src/main/Rdynload.c:1222
 #: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
 msgid "no dyn.load support in this R version"
+msgstr ""
+
+#: src/main/Rstrptime.h:1086
+msgid "input string is too long"
+msgstr ""
+
+#: src/main/Rstrptime.h:1088
+msgid "invalid multibyte input string"
+msgstr ""
+
+#: src/main/Rstrptime.h:1091
+msgid "format string is too long"
+msgstr ""
+
+#: src/main/Rstrptime.h:1093
+msgid "invalid multibyte format string"
 msgstr ""
 
 #: src/main/apply.c:39 src/main/envir.c:2336

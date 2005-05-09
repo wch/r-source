@@ -41,8 +41,9 @@ to install it manually for testing.
 Windows RGui translations
 =========================
 
-These are contained in RGui.pot, created by running 'make RGui.pot-update'
-(called by 'make update-po').
+These are contained in RGui.pot, created by running 'make RGui.pot-update'.
+It needs manual adjustment in 3 instances of 50%, 75% and 100% which are
+not c-format.
 
 Translations should be called RGui-ll.po for language 'll': such a file is
 compiled by

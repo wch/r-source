@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:        R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:09+0100\n"
+"POT-Creation-Date: 2005-05-07 17:42+0100\n"
 "PO-Revision-Date:          2005-03-15 00:00-0600\n"
 "Last-Translator:           Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
 "Language-Team:             Russian\n"
@@ -652,6 +652,26 @@ msgstr ""
 #: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
 msgid "no dyn.load support in this R version"
 msgstr ""
+
+#: src/main/Rstrptime.h:1086
+msgid "input string is too long"
+msgstr ""
+
+# DIG: многобайтный (emacs) или многобайтовый (glibc)?
+#: src/main/Rstrptime.h:1088
+#, fuzzy
+msgid "invalid multibyte input string"
+msgstr "неправильная многобайтовая строка"
+
+#: src/main/Rstrptime.h:1091
+msgid "format string is too long"
+msgstr ""
+
+# DIG: многобайтный (emacs) или многобайтовый (glibc)?
+#: src/main/Rstrptime.h:1093
+#, fuzzy
+msgid "invalid multibyte format string"
+msgstr "неправильная многобайтовая строка"
 
 #: src/main/apply.c:39 src/main/envir.c:2336
 msgid "arguments must be symbolic"

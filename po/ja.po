@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:09+0100\n"
+"POT-Creation-Date: 2005-05-07 17:42+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -655,6 +655,26 @@ msgstr "DlInfo にNULL 値が渡されました"
 #: src/main/Rdynload.c:1228 src/main/Rdynload.c:1234
 msgid "no dyn.load support in this R version"
 msgstr "このバージョンの R は，dyn.load をサポートしていません"
+
+#: src/main/Rstrptime.h:1086
+#, fuzzy
+msgid "input string is too long"
+msgstr "zipファイルのパスが長すぎます"
+
+#: src/main/Rstrptime.h:1088
+#, fuzzy
+msgid "invalid multibyte input string"
+msgstr "マルチバイト文字列が不正です"
+
+#: src/main/Rstrptime.h:1091
+#, fuzzy
+msgid "format string is too long"
+msgstr "'destination' が長すぎます"
+
+#: src/main/Rstrptime.h:1093
+#, fuzzy
+msgid "invalid multibyte format string"
+msgstr "マルチバイト文字列が不正です"
 
 #: src/main/apply.c:39 src/main/envir.c:2336
 msgid "arguments must be symbolic"
