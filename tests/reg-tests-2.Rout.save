@@ -4689,8 +4689,6 @@ NaNs produced in: pf(q, df1, df2, lower.tail, log.p)
 [1] 0.3989423
 > dt(1, 1e8, ncp=1)
 [1] 0.3989423
-> dt(1, 1e9, ncp=1)
-[1] 0.3989423
 > dt(1, 1e10, ncp=1) # = Inf
 [1] 0.3989423
 > ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.

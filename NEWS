@@ -205,7 +205,7 @@ BUG FIXES
 
     o   df() was inaccurate for large df (1e16 or greater).
 
-    o   dt() was inaccurate for large df (1e10 or greater) with a
+    o   dt() was inaccurate for large df (1e9 or greater) with a
 	non-centrality parameter.
 
 

@@ -1603,6 +1603,5 @@ dt(1, Inf, ncp=1)
 dt(1, 1e6, ncp=1)
 dt(1, 1e7, ncp=1)
 dt(1, 1e8, ncp=1)
-dt(1, 1e9, ncp=1)
 dt(1, 1e10, ncp=1) # = Inf
 ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.

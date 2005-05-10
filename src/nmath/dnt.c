@@ -75,10 +75,10 @@ double dnt(double x, double df, double ncp, int give_log)
 	return R_D__0;
 
     /* If infinite df then the density is identical to a
-       normal distribution with mean = ncp.  Howveer, the formula
-       loses accuracy around df=1e9
+       normal distribution with mean = ncp.  However, the formula
+       loses a lot of accuracy around df=1e9
     */
-    if(!R_FINITE(df) || df > 1e9)
+    if(!R_FINITE(df) || df > 1e8)
 	return dnorm(x, ncp, 1., give_log);
 
     /* Consider two cases: x==0 or not */
