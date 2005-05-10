@@ -23,7 +23,7 @@ GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf
 
-all: $(RPREFIX).exe # miniR.exe
+all: $(RPREFIX).exe
 
 imagedir:
 	$(RM) -r $(RPREFIX)
@@ -101,19 +101,17 @@ fixups:
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
-R.iss Rsmall.iss: JRins.pl imagedir fixups md5sums
+R.iss: JRins.pl imagedir fixups md5sums
 	perl JRins.pl $(RPREFIX) $(RPREFIX)
 
 $(RPREFIX).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log
-miniR.exe: Rsmall.iss
-	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
 
 clean:
 	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) 
 
 distclean: clean
-	rm -f $(RPREFIX).exe miniR*
+	rm -f $(RPREFIX).exe
 
 myR:
 	$(CAT) $(IMAGEDIR)/library/*/CONTENTS >  \
