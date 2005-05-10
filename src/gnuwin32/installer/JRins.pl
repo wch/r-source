@@ -21,7 +21,7 @@
 use Cwd;
 use File::Find;
 
-my $fn, $component, $mini, $path;
+my $fn, $component, $path;
 my $startdir=cwd();
 my $RVER;
 my $RW=$ARGV[0];
@@ -38,14 +38,6 @@ $RVER =~ s/\n.*$//;
 $RVER =~ s/Under .*$/Pre-release/;
 
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
-open minifile,"> Rsmall.iss" || die "Cannot open Rsmall.iss\n";
-
-print minifile <<END;
-[Setup]
-OutputBaseFilename=miniR
-DiskSpanning=yes
-END
-
 print insfile <<END;
 [Setup]
 OutputBaseFilename=${RW}
@@ -198,21 +190,6 @@ Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 [Files]
 END
 
-print minifile $lines;
-print minifile $lines2;
-print minifile <<END;
-
-[Types]
-Name: "compact"; Description: {cm:compact}
-Name: "custom"; Description: {cm:custom}; Flags: iscustom
-
-[Components]
-Name: "main"; Description: "Main Files"; Types: compact custom; Flags: fixed
-Name: "manuals"; Description: "On-line (PDF) Manuals"; Types: custom
-
-[Files]
-END
-
 my %develfiles=("doc\\html\\logo.jpg" => 1,
 		"README.packages" => 1,
 		"COPYING.LIB" => 1,
@@ -232,12 +209,10 @@ $path="${SRCDIR}";chdir($path);
 find(\&listFiles, ".");
 
 close insfile;
-close minifile;
 
 sub listFiles {
     $fn = $File::Find::name;
     $fn =~ s+^./++;
-    my $mini = 1;
     my $newname = "";
     if (!(-d $_)) {
 	$fn =~ s+/+\\+g;
@@ -247,16 +222,11 @@ sub listFiles {
 	$dir =~ s/\\$//;
 	$_ = $fn;
 	
-	if (m/^library\\tcltk/ || m/^MD5/ || m/^bin\\md5check.exe/) {
-	    $mini = 0;
-	}
 	if ($_ eq "bin\\Rchtml.dll" 
 	    || m/^library\\[^\\]*\\chtml/) {
 	    $component = "chtml";
-	    $mini = 0;
 	} elsif ($_ eq "doc\\html\\logo.jpg") {
 	    $component = "html devel";
-	    $mini = 0;
 	} elsif ($_ eq "doc\\manual\\R-FAQ.html"
 		 || $_ eq "doc\\html\\rw-FAQ.html"
 		 || $_ eq "share\\texmf\\Sweave.sty") {
@@ -267,24 +237,16 @@ sub listFiles {
 		 || m/^library\\[^\\]*\\CONTENTS/
 		 || $_ eq "library\\R.css") {
 	    $component = "html";
-	    $mini = 0;
 	} elsif ($_ eq "doc\\manual\\refman.pdf") {
 	    $component = "refman";
-	    $mini = 0;
 	} elsif (m/^doc\\manual/ && $_ ne "doc\\manual\\R-FAQ.pdf") {
 	    $component = "manuals";
-	    if (m/R-admin.pdf/ || m/R-exts.pdf/ || m/R-lang.pdf/) {
-		$mini = 0;
-	    }
 	} elsif (m/^library\\[^\\]*\\latex/) {
 	    	$component = "latex";
-	    	$mini = 0;
 	} elsif (m/^library\\[^\\]*\\man/) {
 	    	$component = "Rd";
-	    	$mini = 0;
 	} elsif (m/^Tcl/) {
 	    $component = "tcl";
-	    $mini = 0;
 	} elsif (exists($develfiles{$_})
 		 || m/^doc\\KEYWORDS/
 		 || m/^src\\gnuwin32/
@@ -308,21 +270,16 @@ sub listFiles {
 		 || m/^bin\\SHLIB/
 		 || m/^lib\\/) {
 	    $component = "devel";
-	    $mini = 0;
 	} elsif (m/^library\\grid\\doc/
 		 || $_ eq "library\\survival\\survival.ps.gz") {
 	    $component = "libdocs";
-	    $mini = 0;
 	} elsif ($_ eq "modules\\iconv.dll") {
 	    $component = "main";
-	    $mini = 0;
 	} elsif (m/^share\\locale/ 
 		 || m/^library\\[^\\]*\\po/) { # needs iconv
 	    $component = "trans";
-	    $mini = 0;
 	} elsif ($_ eq "bin\\Rmbcs.dll") {
 	    $component = "mbcs";
-	    $mini = 0;
 	    $newname = "R.dll";
 	} else {
 	    $component = "main";
@@ -332,8 +289,5 @@ sub listFiles {
 	$lines="Source: \"$path\\$fn\"; DestDir: \"{app}$dir\"; DestName: \"$newname\"; Flags: ignoreversion; Components: $component\n" if $newname ne "";
 
 	print insfile $lines;
-	if ($mini) {
-	    print minifile $lines;
-	}
     }
 }

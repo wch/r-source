@@ -125,15 +125,6 @@ collect the files you need.  The current release is distributed as an
 installer @code{@RWVER@.exe} of about 25Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
-@c 2) Directory @code{miniR} contains @code{miniR.exe} and eight files
-@c @code{miniR-?.bin}.  You can put @code{miniR.exe} and @code{miniR-1.bin}
-@c on one floppy and the remaining @code{miniR-?.bin} on a floppy each.
-@c This is a small installation, containing the text versions of the help
-@c files and the @emph{An Introduction to R} and @emph{Data Import/Export}
-@c manuals in PDF.  There is no support for @code{tcltk} nor @code{iconv}
-@c in this version, and no documentation for packages @code{grid} or
-@c @code{survival}.
-
 There are also links on that page to the @code{r-patched} and
 @code{r-devel} releases.  These are frequently updated builds of development
 versions of R.  The @code{r-patched} build includes bug fixes to the
@@ -232,7 +223,6 @@ GB2312).
 @section How do I check an installation is not corrupt?
 
 Run the program @file{bin\md5check.exe}.
-@c (not in the mini-installer).
 This compares checksums on all the installed files with those put into
 the installer, and will report any changed or missing files.
 
