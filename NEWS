@@ -53,6 +53,9 @@ NEW FEATURES
     o	checkDocFiles() in package 'tools' now checks for bad \usage
 	lines (syntactically invalid R code).
 
+    o	dump() now skips missing objects with a warning rather than
+	throw an error.
+
 
 DEPRECATED & DEFUNCT
 
