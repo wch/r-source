@@ -3627,9 +3627,17 @@ as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
                   x3 = c("a", "b"), x4 = c("a", "b")))
 ## failed in 2.1.0
 
-
 ## PR#7797 citation() chops "Roeland "
 stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
 ## was empty in 2.1.0.
 
-### end of tests added in 2.0.1 patched ###
+## runmed()'s Turlach algorithm seg.faulted in rare cases:
+t2 <- c(-2,-7,5,2,-3, 0,1,3,2,-1,2,1,2,1,1,1,-2,4, 1,1,1, 32)
+rS <- runmed(t2, k=21, algorithm= "Stuetzle")
+rT <- runmed(t2, k=21, algorithm= "Turlach")
+stopifnot(identical(rS, rT))
+## seg.fault in 2.1.0
+
+
+### end of tests added in 2.1.0 patched ###
+
