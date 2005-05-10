@@ -213,6 +213,9 @@ BUG FIXES
 
     o	runmed(*, algorithm="Turlach") seg.faulted in rare cases.
 
+    o	strwrap() now makes a reasonable job of text that is invalid in the
+	current locale.
+
 
 
 		CHANGES IN R VERSION 2.1.0
