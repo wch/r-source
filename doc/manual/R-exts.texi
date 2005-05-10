@@ -2345,9 +2345,10 @@ info).
 @findex \keyword
 @item \keyword@{@var{key}@}
 Each @code{\keyword} entry should specify one of the standard keywords
-(as listed in the file @file{@var{R_HOME}/doc/KEYWORDS.db}).  There must
-be at least one @code{\keyword} entry, but can be more that one if the
-@R{} object being documented falls into more than one category.
+(as listed in the file @file{@var{R_DOC_DIR}/KEYWORDS.db}, default
+@file{@var{R_HOME}/doc/KEYWORDS.db}).  There must be at least one
+@code{\keyword} entry, but can be more that one if the @R{} object being
+documented falls into more than one category.
 
 The special keyword @samp{internal} marks a page of internal objects
 that are not part of the packages' API. If the help page for object
@@ -3839,8 +3840,8 @@ within C code.  The first (historically) is to use the macros and
 functions that have been used to implement the core parts of @R{}
 through @code{.Internal} calls.  A public subset of these is defined in
 the header file @file{Rinternals.h} in the directory
-@file{@var{R_HOME}/include} that should be available on any @R{}
-installation.
+@file{R_INCLUDE_DIR} (default @file{@var{R_HOME}/include}) that should
+be available on any @R{} installation.
 
 Another approach is to use @R{} versions of the macros and functions
 defined for the @Sl{} version 4 interface @code{.Call}, which are
@@ -5450,7 +5451,7 @@ The recommended procedure to use these is to include the header file
 
 @noindent
 This will include several other header files from the directory
-@file{@var{R_HOME}/include/R_ext}, and there are other header files
+@file{@var{R_INCLUDE_DIR}/R_ext}, and there are other header files
 there that can be included too, but many of the features they contain
 should be regarded as undocumented and unstable.
 
@@ -6683,7 +6684,8 @@ to read the seeds).
 @section Organization of header files
 
 The header files which @R{} installs are in directory
-@file{R_HOME/include}.  This currently contains
+@file{R_INCLUDE_DIR} (default @file{R_HOME/include}).  This currently
+contains
 
 @quotation
 @multitable @columnfractions 0.30 0.55
@@ -6960,7 +6962,9 @@ environment for the executable, and this is used for
 
 @itemize @bullet
 @item
-Setting @env{R_HOME} and checking it is valid.
+Setting @env{R_HOME} and checking it is valid, as well as the path
+@env{R_SHARE_DIR} and @env{R_DOC_DIR} to the installed @file{share} and
+@file{doc} directory trees.
 
 @item
 Setting @env{LD_LIBRARY_PATH} to include the directories used in linking
