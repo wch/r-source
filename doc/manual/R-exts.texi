@@ -234,6 +234,9 @@ start with a space or tab.  The @samp{Package}, @samp{Version},
 @samp{Maintainer} fields are mandatory, the remaining fields
 (@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
 
+The @file{DESCRIPTION} file should be written entirely in ASCII for
+portability.
+
 The @samp{Package} and @samp{Version} fields give the name and the
 version of the package, respectively.  The name should consist of
 letters, numbers, and the dot character and start with a letter.  The
@@ -380,11 +383,10 @@ added by the package management tools.
 The optional file @file{INDEX} contains a line for each sufficiently
 interesting object in the package, giving its name and a description
 (functions such as print methods not usually called explicitly might not
-be included).  Normally this file is missing,
-and the corresponding information is
-automatically generated from the documentation sources (using
-@code{Rdindex()} from package @pkg{tools}) when installing from source
-and when using the package builder (@pxref{Checking and building
+be included).  Normally this file is missing, and the corresponding
+information is automatically generated from the documentation sources
+(using @code{Rdindex()} from package @pkg{tools}) when installing from
+source and when using the package builder (@pxref{Checking and building
 packages}).
 
 @node The install.R and R_PROFILE.R files, Package subdirectories, The INDEX file, Package structure
