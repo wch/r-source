@@ -114,7 +114,7 @@ update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
 
     if(is.null(old)) return(invisible())
     if(is.character(ask) && ask == "graphics") {
-        if(.Platform$OS.type == "unix"
+        if(.Platform$OS.type == "unix" && .Platform$GUI != "AQUA"
            && capabilities("tcltk") && capabilities("X11")) {
             k <- tcltk::tk_select.list(old[,1], old[,1], multiple = TRUE,
                                        title = "Packages to be updated")
