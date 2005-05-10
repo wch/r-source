@@ -79,7 +79,7 @@ Name: en; MessagesFile: "compiler:Default.isl"
 Name: br; MessagesFile: "compiler:Languages\\BrazilianPortuguese.isl"
 Name: ca; MessagesFile: "compiler:Languages\\Catalan.isl"
 Name: cz; MessagesFile: "compiler:Languages\\Czech.isl"
-Name: da; MessagesFile: "compiler:Languages\\Danish.isl"
+Name: dk; MessagesFile: "compiler:Languages\\Danish.isl"
 Name: nl; MessagesFile: "compiler:Languages\\Dutch.isl"
 Name: fr; MessagesFile: "compiler:Languages\\French.isl"
 Name: de; MessagesFile: "compiler:Languages\\German.isl"
@@ -112,6 +112,15 @@ br.compact=Instalação modo usuário mínima
 br.full=Instalação completa
 br.CJK=Instalação em chinês/japonês/coreano
 br.custom=Instalação personalizada
+
+dk.regentries=Indgange i registreringsdatabasen:
+dk.associate=&Associere R med .Rdata filer
+dk.dcom=&Registrer R til brug for (D)COM server
+dk.user=Brugerinstallation
+dk.compact=Minimal brugerinstallation
+dk.full=Luld installation
+dk.CJK=Kinesisk/Japansk/Koreansk installation
+dk.custom=Brugerdefinet installation
 
 fr.regentries=Entrées dans le registre:
 fr.associate=&Associer R avec les fichiers .RData
