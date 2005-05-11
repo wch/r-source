@@ -20,10 +20,14 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
         enc <- desc[["Encoding"]]
         if(!is.null(enc) && !is.na(encoding)) {
             ## Determine encoding and re-encode if necessary and possible.
-            if((Sys.getlocale("LC_CTYPE") != "C") && capabilities("iconv"))
-                desc <- lapply(desc, iconv, from=enc, to=encoding)
-            else
-                warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible")
+            if((Sys.getlocale("LC_CTYPE") != "C") && capabilities("iconv")) {
+                ## might have an invalid encoding ...
+                newdesc <- try(lapply(desc, iconv, from=enc, to=encoding))
+                if(!inherits(newdesc, "try-error")) desc <- newdesc
+                else
+                    warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
+            } else
+                warning("'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible", call. = FALSE)
         }
         if(!is.null(fields)){
             ok <- names(desc) %in% fields
