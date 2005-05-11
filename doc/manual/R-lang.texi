@@ -4192,13 +4192,16 @@ once.
 The two latter examples are hardly useful in practice, but they are
 accepted and treated as @samp{2} and @samp{3}, respectively.
 
+Numeric constants can also be hexadecimal, starting with @samp{0x} or
+@samp{0x} followed by zero or more digits, @samp{a-f} or @samp{A-F}.
+
 Notice that there is no separate class of integer constants.
 
 Note also that a preceding sign is treated as a unary operator, not as
 part of the constant.
 
-Complex constants have the form of a numeric constant followed by
-@samp{i}.  Notice that only purely imaginary numbers are actual
+Complex constants have the form of a decimal numeric constant followed
+by @samp{i}.  Notice that only purely imaginary numbers are actual
 constants, other complex numbers are parsed a unary or binary operations
 on numeric and imaginary numbers.
 

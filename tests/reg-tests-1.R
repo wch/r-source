@@ -3641,3 +3641,12 @@ stopifnot(identical(rS, rT))
 
 ### end of tests added in 2.1.0 patched ###
 
+## tests of hexadecimal constants
+x <- 0xAbc
+stopifnot(x == 2748)
+xx <- as.integer("0xAbc")
+stopifnot(x == xx)
+xx <- as.numeric("0xAbc")
+stopifnot(x == xx)
+stopifnot(as.integer("13.7") == 13)
+## new in 2.2.0

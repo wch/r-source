@@ -56,6 +56,9 @@ NEW FEATURES
     o	dump() now skips missing objects with a warning rather than
 	throw an error.
 
+    o	Hexadecimal values are now allowed for as.numeric() and
+	as.integer() on all platforms, and as integer constants in R code.
+
 
 DEPRECATED & DEFUNCT
 

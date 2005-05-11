@@ -28,7 +28,11 @@ as.single(x, \dots)
   length.  The elements of the vector are all equal to \code{0}.
 
   \code{as.double} attempts to coerce its argument to be of double
-  type: like \code{\link{as.vector}} it strips attributes including names.
+  type: like \code{\link{as.vector}} it strips attributes including
+  names.    Character strings containing either a decimal representation or a
+  heaxadecimal representation (starting with \code{0x} or \code{0X}) can
+  be converted.
+
 
   \code{is.double} returns \code{TRUE} or \code{FALSE} depending on
   whether its argument is of double type or not.  It is generic:
