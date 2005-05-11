@@ -14,7 +14,7 @@ link.html.help <- function(verbose=FALSE, lib.loc=.libPaths())
 make.packages.html <- function(lib.loc=.libPaths())
 {
     f.tg <- file.path(R.home("doc"), "html", "packages.html")
-    f.hd <- file.path(R.home("doc"), "html", "packages-head.html")
+    f.hd <- file.path(R.home("doc"), "html", "packages-head-utf8.html")
     if(!file.create(f.tg)) {
         warning("cannot update HTML package index")
         return(FALSE)
@@ -43,7 +43,8 @@ make.packages.html <- function(lib.loc=.libPaths())
         cat("<p>\n<table width=\"100%\" summary=\"R Package list\">\n",
             file = out)
         for (i in  pg) {
-            title <- packageDescription(i, fields="Title", lib.loc = lib)[1]
+            title <- packageDescription(i, lib.loc = lib, field = "Title",
+                                        encoding = "UTF-8")
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="', lib0, '/', i,
