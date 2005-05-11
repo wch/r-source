@@ -84,6 +84,14 @@ INSTALLATION
 	installed can be specified independently: see the R-admin manual.
 
 
+PACKAGE INSTALLATION CHANGES
+
+    o	The encoding for a packages' index.html is chosen from the
+	Encoding: field (if any) of the DESCRIPTION file and from the
+	\encoding{} fields of any Rd files with non-ASCII titles.
+	If there are conflicts, first-found wins with a warning.
+
+
 C-LEVEL FACILITIES
 
     o	C function massdist() {called from density()} has new 2nd argument
