@@ -374,7 +374,7 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                     if(!inherits(tmp, "try-error"))
                         txt <- tmp
                     else
-                        warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible")
+                        warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
                 }
                 nm <- paste(names(txt), ":", sep="")
                 formatDL(nm, txt, indent = max(nchar(nm, type="w")) + 3)
@@ -420,9 +420,18 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
                 title <- if(file != "") {
-                    tmp <- .readRDS(file)
-                    if(is.list(tmp)) tmp <- tmp$DESCRIPTION
-                    tmp["Title"]
+                    txt <- .readRDS(file)
+                    if(is.list(txt)) txt <- txt$DESCRIPTION
+                    ## we may need to re-encode here.
+                    if("Encoding" %in% names(txt)) {
+                        to <- if(Sys.getlocale("LC_CTYPE") == "C") "ASCII//TRANSLIT" else ""
+                        tmp <- try(iconv(txt, txt["Encoding"], to, "?"))
+                        if(!inherits(tmp, "try-error"))
+                            txt <- tmp
+                        else
+                            warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                    }
+                    txt["Title"]
                 } else NA
                 if(is.na(title))
                     title <- " ** No title available (pre-2.0.0 install?)  ** "
