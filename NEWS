@@ -125,6 +125,9 @@ NEW FEATURES
 
     o	df() with one infinite df() now works (to match pf()).
 
+    o	The Encoding: field of a DESCRIPTION file is now documented,
+	and used by packageDescription() and library(help=).
+
 
 BUG FIXES
 

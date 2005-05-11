@@ -235,7 +235,7 @@ start with a space or tab.  The @samp{Package}, @samp{Version},
 (@samp{Date}, @samp{Depends}, @samp{URL}, @dots{}) are optional.
 
 The @file{DESCRIPTION} file should be written entirely in ASCII for
-portability.
+maximal portability.
 
 The @samp{Package} and @samp{Version} fields give the name and the
 version of the package, respectively.  The name should consist of
@@ -369,6 +369,13 @@ are stored in a saved image @pxref{The install.R and R_PROFILE.R files}.
 The optional @samp{ZipData} field controls whether the automatic
 Windows build will zip up the data directory or no: set this to
 @samp{no} if your package will not work with a zipped data directory.
+
+If the @file{DESCRIPTION} file is not entirely in ASCII it should
+contain an @samp{Encoding} field specifying an encoding.  This is
+currently used as the encoding of the @file{DESCRIPTION} file itself,
+and may in the future be taken as the encoding for other documentation
+in the package.  Only encoding names @code{latin1}, @code{latin2} and
+@code{UTF-8} are known to be portable.
 
 @quotation Note
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
