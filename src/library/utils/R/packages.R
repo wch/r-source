@@ -285,7 +285,8 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
         # this excludes packages without DESCRIPTION files
         pkgs <- .packages(all.available = TRUE, lib.loc = lib)
         for(p in pkgs){
-            desc <- packageDescription(p, lib = lib, fields = pkgFlds)
+            desc <- packageDescription(p, lib = lib, fields = pkgFlds,
+                                       encoding = NA)
             ## this gives NA if the package has no Version field
             if (is.logical(desc)) {
                 desc <- rep(as.character(NA), length(pkgFlds))

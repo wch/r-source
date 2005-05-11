@@ -6,7 +6,8 @@
   Parses and returns the \file{DESCRIPTION} file of a package.
 }
 \usage{
-packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE)
+packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE,
+                   encoding = "")
 }
 \arguments{
   \item{pkg}{a character string with the package name.}
@@ -19,6 +20,8 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE)
   \item{drop}{If \code{TRUE} and the length of \code{fields} is 1, then
     a single character string with the value of the respective field is
     returned instead of an object of class \code{"packageDescription"}.}
+  \item{encoding}{If there is an \code{Encoding} field, what re-encoding
+    should be attempted?  If \code{NA}, no re-encoding.}
 }
 \details{
   A package will not be \sQuote{found} unless it has a \file{DESCRIPTION} file
