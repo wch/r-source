@@ -186,6 +186,20 @@ isIncomplete(con)
 
   Re-encoding only works for connections in text mode.
 
+  The encoding \code{"UCS-2LE"} is treated specially, as it is the
+  appropriate value for Windows \sQuote{Unicode} text files.  If the
+  first two bytes are the Byte Order Mark \code{0xFFFE} then these are
+  removed as most implementations of \code{\link{iconv}} do not accept
+  BOMs.  Note that some implementations
+#ifdef windows
+  (including that used on Windows)
+#endif
+  will handle BOMs using encoding \code{"UCS2"} but many
+#ifdef windows
+  (including that in \code{glibc})
+#endif
+  will not.
+
   Exactly what happens when the requested translation cannot be done is
   in general undocumented.  Requesting a conversion that is not supported is
   an error, reported when the connection is opened.  On output the
@@ -384,7 +398,8 @@ close(con2)
 
 \dontrun{ ## examples of use of encodings
 cat(x, file = file("foo", "w", encoding="UTF-8"))
-}
-}
+# read a 'Windows Unicode' file including names
+A <- read.table(file("students", encoding="UCS-2LE"))
+}}
 \keyword{file}
 \keyword{connection}

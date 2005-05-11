@@ -53,14 +53,9 @@ iconvlist()
 \note{
   Not all platforms support these functions.  See also
   \code{\link{capabilities}("iconv")}.
-
-#ifdef windows
-  The support DLL for these functions is not included in the miniR
-  distribution.
-#endif
 }
 \seealso{
-  \code{\link{localeToCharset}}, \code{\link{file}}.
+  \code{\link{localeToCharset}}, \code{\link{file}}. 
 }
 \examples{\dontrun{
 iconvlist()

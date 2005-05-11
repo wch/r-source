@@ -219,6 +219,10 @@ BUG FIXES
     o	strwrap() now makes a reasonable job of text that is invalid in the
 	current locale.
 
+    o	Reading with encoding "UCS-2LE" will remove any Byte Order
+	Mark, as most implementations of iconv fail to handle BOMs
+	(which are present in 'Windows Unicode' files).
+
 
 
 		CHANGES IN R VERSION 2.1.0

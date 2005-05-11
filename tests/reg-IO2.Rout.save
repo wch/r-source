@@ -1,6 +1,6 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-05-23), ISBN 3-900051-00-3
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 Under development (unstable) (2005-05-11), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +8,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -61,7 +61,7 @@ Error in read.table("foo1") : no lines available in input
 > try(read.table("foo3", header=TRUE, col.names=letters[1:4]))
 Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
 	line 1 did not have 4 elements
-In addition: Warning message: 
+In addition: Warning message:
 header and 'col.names' are of different lengths in: read.table("foo3", header = TRUE, col.names = letters[1:4]) 
 > unlink("foo3")
 > 
@@ -71,7 +71,7 @@ header and 'col.names' are of different lengths in: read.table("foo3", header = 
   head
 1    2
 3    4
-Warning message: 
+Warning message:
 incomplete final line found by readTableHeader on 'foo4' 
 > unlink("foo4")
 > 
@@ -199,5 +199,9 @@ logical(0)
 5     3           0.8           3
 > unlink("test.dat")
 > 
+> ## test on Windows Unicode file
+> scan(file("WinUnicode.dat", encoding="UCS-2LE"), 0)
+Read 8 items
+[1] 1 2 3 4 5 6 7 8
 > ## end of tests
 > 

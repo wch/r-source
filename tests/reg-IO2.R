@@ -97,4 +97,6 @@ cat('%comment\n\n%another\n%\n%\n',
 read.table("test.dat", comment.char = "%")
 unlink("test.dat")
 
+## test on Windows Unicode file
+scan(file("WinUnicode.dat", encoding="UCS-2LE"), 0)
 ## end of tests
