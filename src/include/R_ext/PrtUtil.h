@@ -55,8 +55,8 @@ void formatComplex(Rcomplex*, int, int*, int*, int*, int*, int*, int*, int);
 /* Formating of values */
 char *EncodeLogical(int, int);
 char *EncodeInteger(int, int);
-char *EncodeReal(double, int, int, int);
-char *EncodeComplex(Rcomplex, int, int, int, int, int, int);
+char *EncodeReal(double, int, int, int, char);
+char *EncodeComplex(Rcomplex, int, int, int, int, int, int, char);
 
 /* Printing */
 void VectorIndex(int, int);

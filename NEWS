@@ -59,6 +59,9 @@ NEW FEATURES
     o	Hexadecimal values are now allowed for as.numeric() and
 	as.integer() on all platforms, and as integer constants in R code.
 
+    o	New option("OutDec") to set the decimal point for output conversions.
+	[Experimental for now.]
+
 
 DEPRECATED & DEFUNCT
 

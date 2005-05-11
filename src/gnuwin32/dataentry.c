@@ -511,7 +511,7 @@ static int get_col_width(int col)
 	if(lab != NA_STRING) w = strlen(CHAR(lab)); else w = fw;
 	PrintDefaults(R_NilValue);
 	for (i = 0; i < INTEGER(lens)[col - 1]; i++) {
-	    strp = EncodeElement(tmp, i, 0);
+	    strp = EncodeElement(tmp, i, 0, '.');
 	    w1 = strlen(strp);
 	    if (w1 > w) w = w1;
 	}
@@ -605,14 +605,14 @@ static void printelt(SEXP invec, int vrow, int ssrow, int sscol)
     PrintDefaults(R_NilValue);
     if (TYPEOF(invec) == REALSXP) {
 	if (REAL(invec)[vrow] != ssNA_REAL) {
-	    strp = EncodeElement(invec, vrow, 0);
+	    strp = EncodeElement(invec, vrow, 0, '.');
 	    printstring(strp, strlen(strp), ssrow, sscol, 0);
 	}
     }
     else if (TYPEOF(invec) == STRSXP) {
 	if (!streql(CHAR(STRING_ELT(invec, vrow)),
 		    CHAR(STRING_ELT(ssNA_STRING, 0)))) {
-	    strp = EncodeElement(invec, vrow, 0);
+	    strp = EncodeElement(invec, vrow, 0, '.');
 	    printstring(strp, strlen(strp), ssrow, sscol, 0);
 	}
     }
@@ -1106,11 +1106,11 @@ static char *get_cell_text(void)
 	    PrintDefaults(R_NilValue);
 	    if (TYPEOF(tvec) == REALSXP) {
 		if (REAL(tvec)[wrow] != ssNA_REAL)
-		    prev = EncodeElement(tvec, wrow, 0);
+		    prev = EncodeElement(tvec, wrow, 0, '.');
 	    } else if (TYPEOF(tvec) == STRSXP) {
 		if (!streql(CHAR(STRING_ELT(tvec, wrow)),
 			    CHAR(STRING_ELT(ssNA_STRING, 0))))
-		    prev = EncodeElement(tvec, wrow, 0);
+		    prev = EncodeElement(tvec, wrow, 0, '.');
 	    } else error(G_("dataentry: internal memory error"));
 	}
     }

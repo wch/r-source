@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998-2000   The R Development Core Team.
+ *  Copyright (C) 1998-2005   The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -209,7 +209,7 @@ void InitOptions(void)
     SEXP t, val, v;
     char *p;
 
-    PROTECT(v = val = allocList(13));
+    PROTECT(v = val = allocList(14));
 
     SET_TAG(v, install("prompt"));
     SETCAR(v, mkString("> "));
@@ -273,13 +273,14 @@ void InitOptions(void)
     LOGICAL(CAR(v))[0] = R_KeepSource;
     v = CDR(v);
 
-    SET_TAG(v, install("error.messages"));
-    SETCAR(v, allocVector(LGLSXP, 1));
-    LOGICAL(CAR(v))[0] = 1;
-
     SET_TAG(v, install("warnings.length"));
     SETCAR(v, allocVector(INTSXP, 1));
     INTEGER(CAR(v))[0] = 1000;
+    v = CDR(v);
+
+    SET_TAG(v, install("OutDec"));
+    SETCAR(v, allocVector(STRSXP, 1));
+    SET_STRING_ELT(CAR(v), 0, mkChar("."));
 
     SET_SYMVALUE(install(".Options"), val);
     UNPROTECT(2);
@@ -466,6 +467,13 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 		   */
 		R_Slave = !k;
 		SET_VECTOR_ELT(value, i, SetOption(tag, ScalarLogical(k)));
+	    }
+	    else if (streql(CHAR(namei), "OutDec")) {
+		if (TYPEOF(argi) != STRSXP || LENGTH(argi) != 1 ||
+		    strlen(CHAR(STRING_ELT(argi, 0))) !=1)
+		    errorcall(call, _("OutDec parameter invalid"));
+		OutDec = CHAR(STRING_ELT(argi, 0))[0];
+		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));
 	    }
 	    else {
 		SET_VECTOR_ELT(value, i, SetOption(tag, duplicate(argi)));

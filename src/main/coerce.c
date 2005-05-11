@@ -357,7 +357,7 @@ SEXP StringFromReal(double x, int *warn)
     int w, d, e;
     formatReal(&x, 1, &w, &d, &e, 0);
     if (ISNA(x)) return NA_STRING;
-    else return mkChar(EncodeReal(x, w, d, e));
+    else return mkChar(EncodeReal(x, w, d, e, OutDec));
 }
 
 SEXP StringFromComplex(Rcomplex x, int *warn)
@@ -366,7 +366,7 @@ SEXP StringFromComplex(Rcomplex x, int *warn)
     formatComplex(&x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
     if (ISNA(x.r) || ISNA(x.i)) return NA_STRING;
     else
-	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei));
+	return mkChar(EncodeComplex(x, wr, dr, er, wi, di, ei, OutDec));
 }
 
 SEXP StringFromRaw(Rbyte x, int *warn)

@@ -541,6 +541,8 @@ extern SEXP	R_RestartStack;	/* Stack of available restarts */
 LibExtern Rboolean utf8locale  INI_as(FALSE);  /* is this a UTF-8 locale? */
 LibExtern Rboolean mbcslocale  INI_as(FALSE);  /* is this a MBCS locale? */
 
+extern char OutDec	INI_as('.');  /* decimal point used for output */
+
 /* Initialization of the R environment when it is embedded */
 extern int Rf_initEmbeddedR(int argc, char **argv);
 

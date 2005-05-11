@@ -1712,7 +1712,7 @@ static void change_dec(char *tmp, char cdec, SEXPTYPE t)
 
 /* a version of EncodeElement with different escaping of char strings */
 static char *EncodeElement2(SEXP x, int indx, Rboolean quote,
-			    Rboolean qmethod, R_StringBuffer *buff)
+			    Rboolean qmethod, R_StringBuffer *buff, char cdec)
 {
     int nbuf;
     char *p, *p0, *q;
@@ -1731,7 +1731,7 @@ static char *EncodeElement2(SEXP x, int indx, Rboolean quote,
 	*q++ = '"'; *q = '\0';
 	return buff->data;
     }
-    return EncodeElement(x, indx, quote ? '"' : 0);
+    return EncodeElement(x, indx, quote ? '"' : 0, cdec);
 }
 
 
@@ -1784,7 +1784,7 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strlen(CHAR(STRING_ELT(dec, 0))) != 1)
 	errorcall(call, _("'dec' must be a single character"));
     cdec = CHAR(STRING_ELT(dec, 0))[0];
-    cdec = (cdec == '.') ? '\0' : cdec;
+    /* cdec = (cdec == '.') ? '\0' : cdec; */
     quote_col = (Rboolean *) R_alloc(nc, sizeof(Rboolean));
     for(j = 0; j < nc; j++) quote_col[j] = FALSE;
     for(i = 0; i < length(quote); i++) { /* NB, quote might be NULL */
@@ -1813,7 +1813,7 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!isNull(rnames))
 		writecon(con, "%s%s",
 			 EncodeElement2(rnames, i, quote_rn, qmethod,
-					&strBuf), csep);
+					&strBuf, cdec), csep);
 	    for(j = 0; j < nc; j++) {
 		xj = VECTOR_ELT(x, j);
 		if(j > 0) writecon(con, "%s", csep);
@@ -1822,12 +1822,12 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if(!isNull(levels[j])) {
 			tmp = EncodeElement2(levels[j], INTEGER(xj)[i] - 1,
 					     quote_col[j], qmethod,
-					     &strBuf);
+					     &strBuf, cdec);
 		    } else {
 			tmp = EncodeElement2(xj, i, quote_col[j], qmethod,
-					     &strBuf);
+					     &strBuf, cdec);
 		    }
-		    if(cdec) change_dec(tmp, cdec, TYPEOF(xj));
+		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(xj)); */
 		}
 		writecon(con, "%s", tmp);
 	    }
@@ -1846,14 +1846,14 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!isNull(rnames))
 		writecon(con, "%s%s",
 			 EncodeElement2(rnames, i, quote_rn, qmethod,
-					&strBuf), csep);
+					&strBuf, cdec), csep);
 	    for(j = 0; j < nc; j++) {
 		if(j > 0) writecon(con, "%s", csep);
 		if(isna(x, i + j*nr)) tmp = cna;
 		else {
 		    tmp = EncodeElement2(x, i + j*nr, quote_col[j], qmethod,
-					&strBuf);
-		    if(cdec) change_dec(tmp, cdec, TYPEOF(x));
+					&strBuf, cdec);
+		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(x)); */
 		}
 		writecon(con, "%s", tmp);
 	    }

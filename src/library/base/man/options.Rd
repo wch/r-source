@@ -279,6 +279,10 @@ getOption(x)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
+    \item{\code{OutDec}:}{one-character string.  The character to be
+      used as the decimal point in output conversions, that is in
+      printing, plotting and \code{as.character} but not deparsing.}
+
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}

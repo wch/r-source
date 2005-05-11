@@ -137,9 +137,9 @@ char *EncodeRaw(Rbyte x)
     return buffer->data;
 }
 
-char *EncodeReal(double x, int w, int d, int e)
+char *EncodeReal(double x, int w, int d, int e, char cdec)
 {
-    char fmt[20];
+    char *p, fmt[20];
 
     R_AllocStringBuffer(0, buffer);
     /* IEEE allows signed zeros (yuck!) */
@@ -184,10 +184,15 @@ char *EncodeReal(double x, int w, int d, int e)
 	sprintf(fmt,"%%%d.%df", w, d);
 	sprintf(buffer->data, fmt, x);
     }
+
+    if(cdec != '.')
+      for(p = buffer->data; *p; p++) if(*p == '.') *p = cdec;
+
     return buffer->data;
 }
 
-char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
+char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei,
+		    char cdec)
 {
     char *Re, *Im, *tmp;
     int  flagNegIm = 0;
@@ -204,13 +209,13 @@ char *EncodeComplex(Rcomplex x, int wr, int dr, int er, int wi, int di, int ei)
     else {
 	/* EncodeReal returns pointer to static storage so copy */
 
-	tmp = EncodeReal(x.r, wr, dr, er);
+	tmp = EncodeReal(x.r, wr, dr, er, cdec);
 	Re = Calloc(strlen(tmp)+1, char);
 	strcpy(Re, tmp);
 
 	if ( (flagNegIm = (x.i < 0)) )
 	    x.i = -x.i;
-	tmp = EncodeReal(x.i, wi, di, ei);
+	tmp = EncodeReal(x.i, wi, di, ei, cdec);
 	Im = Calloc(strlen(tmp)+1, char);
 	strcpy(Im, tmp);
 
@@ -402,7 +407,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     return buffer->data;
 }
 
-char *EncodeElement(SEXP x, int indx, int quote)
+char *EncodeElement(SEXP x, int indx, int quote, char dec)
 {
     int w, d, e, wi, di, ei;
 
@@ -417,7 +422,7 @@ char *EncodeElement(SEXP x, int indx, int quote)
 	break;
     case REALSXP:
 	formatReal(&REAL(x)[indx], 1, &w, &d, &e, 0);
-	EncodeReal(REAL(x)[indx], w, d, e);
+	EncodeReal(REAL(x)[indx], w, d, e, dec);
 	break;
     case STRSXP:
 	formatString(&STRING_PTR(x)[indx], 1, &w, quote);
@@ -427,7 +432,7 @@ char *EncodeElement(SEXP x, int indx, int quote)
 	formatComplex(&COMPLEX(x)[indx], 1,
 		      &w, &d, &e, &wi, &di, &ei, 0);
 	EncodeComplex(COMPLEX(x)[indx],
-		      w, d, e, wi, di, ei);
+		      w, d, e, wi, di, ei, dec);
 	break;
     case RAWSXP:
 	EncodeRaw(RAW(x)[indx]);
