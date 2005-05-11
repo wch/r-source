@@ -369,7 +369,8 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
             if(basename(f) %in% "package.rds") {
                 txt <- .readRDS(f)$DESCRIPTION
                 if("Encoding" %in% names(txt)) {
-                    tmp <- try(iconv(txt, from=txt["Encoding"], to=""))
+                    to <- if(Sys.getlocale("LC_CTYPE") == "C") "ASCII//TRANSLIT"else ""
+                    tmp <- try(iconv(txt, from=txt["Encoding"], to=to))
                     if(!inherits(tmp, "try-error"))
                         txt <- tmp
                     else
