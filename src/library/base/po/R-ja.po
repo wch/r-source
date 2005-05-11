@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-28 06:47\n"
+"POT-Creation-Date: 2005-05-11 15:39\n"
 "PO-Revision-Date: 2005-03-26 13:36+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -697,6 +697,9 @@ msgstr "First.lib は '%s' に対して失敗しました"
 
 msgid "package '%s' already present in search()"
 msgstr "パッケージ '%s' は既に search() 中に存在します"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr ""
 
 msgid "%sPackages in library '%s':"
 msgstr "ライブラリ '%2%s' 中の %1%s パッケージ："

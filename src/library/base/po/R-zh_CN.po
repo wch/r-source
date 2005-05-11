@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-28 06:47\n"
+"POT-Creation-Date: 2005-05-11 15:39\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -682,6 +682,9 @@ msgstr ".First.lib载入失败，原因为'%s'"
 
 msgid "package '%s' already present in search()"
 msgstr "程辑包'%s'已存在于search()"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr ""
 
 msgid "%sPackages in library '%s':"
 msgstr "图书馆'%2$s'有%s程辑包："

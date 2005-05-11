@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:00+0100\n"
-"PO-Revision-Date: 2005-05-06 13:00+0100\n"
+"POT-Creation-Date: 2005-05-11 15:39+0100\n"
+"PO-Revision-Date: 2005-05-11 15:39+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -243,11 +243,11 @@ msgstr "invalid ‘preselect’ argument"
 msgid "argument must be a character vector"
 msgstr "argument must be a character vector"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1330
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1345
 msgid "Unable to open the clipboard"
 msgstr "Unable to open the clipboard"
 
-#: src/gnuwin32/extra.c:1076 src/main/connections.c:1334
+#: src/gnuwin32/extra.c:1076 src/main/connections.c:1349
 msgid "Unable to write to the clipboard"
 msgstr "Unable to write to the clipboard"
 
@@ -336,7 +336,7 @@ msgstr "Impossible to create pipe"
 msgid "Impossible to create thread/pipe"
 msgstr "Impossible to create thread/pipe"
 
-#: src/gnuwin32/run.c:432 src/main/connections.c:280 src/main/dounzip.c:318
+#: src/gnuwin32/run.c:432 src/main/connections.c:295 src/main/dounzip.c:318
 msgid "seek not enabled for this connection"
 msgstr "seek not enabled for this connection"
 
@@ -345,9 +345,9 @@ msgid "truncate not enabled for this connection"
 msgstr "truncate not enabled for this connection"
 
 #: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
-#: src/gnuwin32/run.c:541 src/main/connections.c:797
-#: src/main/connections.c:801 src/main/connections.c:807
-#: src/main/connections.c:821
+#: src/gnuwin32/run.c:541 src/main/connections.c:812
+#: src/main/connections.c:816 src/main/connections.c:822
+#: src/main/connections.c:836
 msgid "allocation of pipe connection failed"
 msgstr "allocation of pipe connection failed"
 
@@ -868,7 +868,7 @@ msgstr "value out of range in ‘perm’"
 msgid "invalid permutation ('perm')"
 msgstr "invalid permutation ('perm')"
 
-#: src/main/array.c:1028 src/main/connections.c:2508
+#: src/main/array.c:1028 src/main/connections.c:2523
 msgid "invalid value of 'n'"
 msgstr "invalid value of ‘n’"
 
@@ -1575,10 +1575,10 @@ msgstr "all connections are in use"
 msgid "connection not found"
 msgstr "connection not found"
 
-#: src/main/connections.c:95 src/main/connections.c:2501
-#: src/main/connections.c:2924 src/main/connections.c:2973
-#: src/main/connections.c:3095 src/main/connections.c:3135
-#: src/main/connections.c:3149
+#: src/main/connections.c:95 src/main/connections.c:2516
+#: src/main/connections.c:2939 src/main/connections.c:2988
+#: src/main/connections.c:3110 src/main/connections.c:3150
+#: src/main/connections.c:3164
 msgid "invalid connection"
 msgstr "invalid connection"
 
@@ -1587,571 +1587,571 @@ msgstr "invalid connection"
 msgid "conversion from encoding '%s' is unsupported"
 msgstr "conversion from encoding ‘%s’ is unsupported"
 
-#: src/main/connections.c:147
+#: src/main/connections.c:150
 #, c-format
 msgid "conversion to encoding '%s' is unsupported"
 msgstr "conversion to encoding ‘%s’ is unsupported"
 
-#: src/main/connections.c:160
+#: src/main/connections.c:163
 msgid "open/close not enabled for this connection"
 msgstr "open/close not enabled for this connection"
 
-#: src/main/connections.c:176 src/main/dounzip.c:305
+#: src/main/connections.c:179 src/main/dounzip.c:305
 msgid "printing not enabled for this connection"
 msgstr "printing not enabled for this connection"
 
-#: src/main/connections.c:197 src/main/connections.c:1778
+#: src/main/connections.c:200 src/main/connections.c:1793
 msgid "printing of extremely long output is truncated"
 msgstr "printing of extremely long output is truncated"
 
-#: src/main/connections.c:218
+#: src/main/connections.c:221
 msgid "invalid char string in output conversion"
 msgstr "invalid char string in output conversion"
 
-#: src/main/connections.c:257
+#: src/main/connections.c:272
 #, c-format
 msgid "invalid input found on input connection '%s'"
 msgstr "invalid input found on input connection ‘%s’"
 
-#: src/main/connections.c:274
+#: src/main/connections.c:289
 msgid "getc not enabled for this connection"
 msgstr "getc not enabled for this connection"
 
-#: src/main/connections.c:286
+#: src/main/connections.c:301
 msgid "truncation not enabled for this connection"
 msgstr "truncation not enabled for this connection"
 
-#: src/main/connections.c:297
+#: src/main/connections.c:312
 msgid "read not enabled for this connection"
 msgstr "read not enabled for this connection"
 
-#: src/main/connections.c:304 src/main/dounzip.c:312
+#: src/main/connections.c:319 src/main/dounzip.c:312
 msgid "write not enabled for this connection"
 msgstr "write not enabled for this connection"
 
-#: src/main/connections.c:364 src/main/dounzip.c:101
+#: src/main/connections.c:379 src/main/dounzip.c:101
 #, c-format
 msgid "cannot open file '%s'"
 msgstr "cannot open file ‘%s’"
 
-#: src/main/connections.c:444
+#: src/main/connections.c:459
 msgid "connection is not open for reading"
 msgstr "connection is not open for reading"
 
-#: src/main/connections.c:449
+#: src/main/connections.c:464
 msgid "connection is not open for writing"
 msgstr "connection is not open for writing"
 
-#: src/main/connections.c:474 src/main/connections.c:1385
+#: src/main/connections.c:489 src/main/connections.c:1400
 msgid "can only truncate connections open for writing"
 msgstr "can only truncate connections open for writing"
 
-#: src/main/connections.c:479 src/main/connections.c:482
+#: src/main/connections.c:494 src/main/connections.c:497
 msgid "file truncation failed"
 msgstr "file truncation failed"
 
-#: src/main/connections.c:484
+#: src/main/connections.c:499
 msgid "file truncation unavailable on this platform"
 msgstr "file truncation unavailable on this platform"
 
-#: src/main/connections.c:529 src/main/connections.c:533
-#: src/main/connections.c:539 src/main/connections.c:556
+#: src/main/connections.c:544 src/main/connections.c:548
+#: src/main/connections.c:554 src/main/connections.c:571
 msgid "allocation of file connection failed"
 msgstr "allocation of file connection failed"
 
-#: src/main/connections.c:599
+#: src/main/connections.c:614
 #, c-format
 msgid "cannot create fifo '%s'"
 msgstr "cannot create fifo ‘%s’"
 
-#: src/main/connections.c:604
+#: src/main/connections.c:619
 #, c-format
 msgid "'%s' exists but is not a fifo"
 msgstr "‘%s’ exists but is not a fifo"
 
-#: src/main/connections.c:617
+#: src/main/connections.c:632
 #, c-format
 msgid "fifo '%s' is not ready"
 msgstr "fifo ‘%s’ is not ready"
 
-#: src/main/connections.c:618
+#: src/main/connections.c:633
 #, c-format
 msgid "cannot open fifo '%s'"
 msgstr "cannot open fifo ‘%s’"
 
-#: src/main/connections.c:669 src/main/connections.c:673
-#: src/main/connections.c:679 src/main/connections.c:695
+#: src/main/connections.c:684 src/main/connections.c:688
+#: src/main/connections.c:694 src/main/connections.c:710
 msgid "allocation of fifo connection failed"
 msgstr "allocation of fifo connection failed"
 
-#: src/main/connections.c:712 src/main/connections.c:842
-#: src/main/connections.c:1028 src/main/connections.c:1210
-#: src/main/connections.c:1890 src/main/connections.c:2009
-#: src/main/connections.c:3341
+#: src/main/connections.c:727 src/main/connections.c:857
+#: src/main/connections.c:1043 src/main/connections.c:1225
+#: src/main/connections.c:1905 src/main/connections.c:2024
+#: src/main/connections.c:3356
 msgid "invalid 'description' argument"
 msgstr "invalid ‘description’ argument"
 
-#: src/main/connections.c:714 src/main/connections.c:844
-#: src/main/connections.c:1030 src/main/connections.c:1212
-#: src/main/connections.c:2011 src/main/connections.c:3343
+#: src/main/connections.c:729 src/main/connections.c:859
+#: src/main/connections.c:1045 src/main/connections.c:1227
+#: src/main/connections.c:2026 src/main/connections.c:3358
 msgid "only first element of 'description' argument used"
 msgstr "only first element of ‘description’ argument used"
 
-#: src/main/connections.c:718 src/main/connections.c:848
-#: src/main/connections.c:1034 src/main/connections.c:1216
-#: src/main/connections.c:1897 src/main/connections.c:1960
-#: src/main/connections.c:2015 src/main/connections.c:2067
-#: src/main/connections.c:3352
+#: src/main/connections.c:733 src/main/connections.c:863
+#: src/main/connections.c:1049 src/main/connections.c:1231
+#: src/main/connections.c:1912 src/main/connections.c:1975
+#: src/main/connections.c:2030 src/main/connections.c:2082
+#: src/main/connections.c:3367
 msgid "invalid 'open' argument"
 msgstr "invalid ‘open’ argument"
 
-#: src/main/connections.c:721 src/main/connections.c:3356
+#: src/main/connections.c:736 src/main/connections.c:3371
 msgid "invalid 'block' argument"
 msgstr "invalid ‘block’ argument"
 
-#: src/main/connections.c:725 src/main/connections.c:853
-#: src/main/connections.c:1038 src/main/connections.c:1220
-#: src/main/connections.c:1966 src/main/connections.c:2019
-#: src/main/connections.c:3360
+#: src/main/connections.c:740 src/main/connections.c:868
+#: src/main/connections.c:1053 src/main/connections.c:1235
+#: src/main/connections.c:1981 src/main/connections.c:2034
+#: src/main/connections.c:3375
 msgid "invalid 'encoding' argument"
 msgstr "invalid ‘encoding’ argument"
 
-#: src/main/connections.c:737 src/main/connections.c:872
-#: src/main/connections.c:1053 src/main/connections.c:1231
-#: src/main/connections.c:1979 src/main/connections.c:2030
-#: src/main/connections.c:2077 src/main/connections.c:3413
+#: src/main/connections.c:752 src/main/connections.c:887
+#: src/main/connections.c:1068 src/main/connections.c:1246
+#: src/main/connections.c:1994 src/main/connections.c:2045
+#: src/main/connections.c:2092 src/main/connections.c:3428
 msgid "unable to open connection"
 msgstr "unable to open connection"
 
-#: src/main/connections.c:751
+#: src/main/connections.c:766
 msgid "fifo connections are not available on this system"
 msgstr "fifo connections are not available on this system"
 
-#: src/main/connections.c:773
+#: src/main/connections.c:788
 #, c-format
 msgid "cannot open pipe() cmd '%s'"
 msgstr "cannot open pipe() cmd ‘%s’"
 
-#: src/main/connections.c:890
+#: src/main/connections.c:905
 msgid "pipe connections are not available on this system"
 msgstr "pipe connections are not available on this system"
 
-#: src/main/connections.c:903
+#: src/main/connections.c:918
 #, c-format
 msgid "cannot open compressed file '%s'"
 msgstr "cannot open compressed file ‘%s’"
 
-#: src/main/connections.c:944
+#: src/main/connections.c:959
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence = “end” is not implemented for gzfile connections"
 
-#: src/main/connections.c:950
+#: src/main/connections.c:965
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "seek on a gzfile connection returned an internal error"
 
-#: src/main/connections.c:984 src/main/connections.c:988
-#: src/main/connections.c:994 src/main/connections.c:1013
+#: src/main/connections.c:999 src/main/connections.c:1003
+#: src/main/connections.c:1009 src/main/connections.c:1028
 msgid "allocation of gzfile connection failed"
 msgstr "allocation of gzfile connection failed"
 
-#: src/main/connections.c:1041
+#: src/main/connections.c:1056
 msgid "invalid 'compress' argument"
 msgstr "invalid ‘compress’ argument"
 
-#: src/main/connections.c:1086
+#: src/main/connections.c:1101
 #, c-format
 msgid "cannot open bzip2-ed file '%s'"
 msgstr "cannot open bzip2-ed file ‘%s’"
 
-#: src/main/connections.c:1095 src/main/connections.c:1104
+#: src/main/connections.c:1110 src/main/connections.c:1119
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "file ‘%s’ appears not to be compressed by bzip2"
 
-#: src/main/connections.c:1167 src/main/connections.c:1171
-#: src/main/connections.c:1177 src/main/connections.c:1195
+#: src/main/connections.c:1182 src/main/connections.c:1186
+#: src/main/connections.c:1192 src/main/connections.c:1210
 msgid "allocation of bzfile connection failed"
 msgstr "allocation of bzfile connection failed"
 
-#: src/main/connections.c:1286 src/modules/X11/devX11.c:2425
+#: src/main/connections.c:1301 src/modules/X11/devX11.c:2425
 msgid "memory allocation to copy clipboard failed"
 msgstr "memory allocation to copy clipboard failed"
 
-#: src/main/connections.c:1291 src/modules/X11/devX11.c:2413
+#: src/main/connections.c:1306 src/modules/X11/devX11.c:2413
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard cannot be opened or contains no text"
 
-#: src/main/connections.c:1302
+#: src/main/connections.c:1317
 msgid "memory allocation to open clipboard failed"
 msgstr "memory allocation to open clipboard failed"
 
-#: src/main/connections.c:1374
+#: src/main/connections.c:1389
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "attempt to seek outside the range of the clipboard"
 
-#: src/main/connections.c:1414
+#: src/main/connections.c:1429
 msgid "clipboard connection is open for reading only"
 msgstr "clipboard connection is open for reading only"
 
-#: src/main/connections.c:1432
+#: src/main/connections.c:1447
 msgid "clipboard buffer is full and output lost"
 msgstr "clipboard buffer is full and output lost"
 
-#: src/main/connections.c:1447
+#: src/main/connections.c:1462
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "‘mode’ for the clipboard must be ‘r’ or ‘w’"
 
-#: src/main/connections.c:1450
+#: src/main/connections.c:1465
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "‘mode’ for the clipboard must be ‘r’ on Unix"
 
-#: src/main/connections.c:1453 src/main/connections.c:1459
-#: src/main/connections.c:1465 src/main/connections.c:1482
+#: src/main/connections.c:1468 src/main/connections.c:1474
+#: src/main/connections.c:1480 src/main/connections.c:1497
 msgid "allocation of clipboard connection failed"
 msgstr "allocation of clipboard connection failed"
 
-#: src/main/connections.c:1552 src/main/connections.c:1556
-#: src/main/connections.c:1562
+#: src/main/connections.c:1567 src/main/connections.c:1571
+#: src/main/connections.c:1577
 msgid "allocation of terminal connection failed"
 msgstr "allocation of terminal connection failed"
 
-#: src/main/connections.c:1636
+#: src/main/connections.c:1651
 msgid "cannot allocate memory for text connection"
 msgstr "cannot allocate memory for text connection"
 
-#: src/main/connections.c:1681
+#: src/main/connections.c:1696
 msgid "seek is not relevant for text connection"
 msgstr "seek is not relevant for text connection"
 
-#: src/main/connections.c:1689 src/main/connections.c:1693
-#: src/main/connections.c:1699 src/main/connections.c:1712
-#: src/main/connections.c:1845 src/main/connections.c:1849
-#: src/main/connections.c:1855 src/main/connections.c:1868
-#: src/main/connections.c:1874
+#: src/main/connections.c:1704 src/main/connections.c:1708
+#: src/main/connections.c:1714 src/main/connections.c:1727
+#: src/main/connections.c:1860 src/main/connections.c:1864
+#: src/main/connections.c:1870 src/main/connections.c:1883
+#: src/main/connections.c:1889
 msgid "allocation of text connection failed"
 msgstr "allocation of text connection failed"
 
-#: src/main/connections.c:1825
+#: src/main/connections.c:1840
 msgid "text connection: appending to a non-existent char vector"
 msgstr "text connection: appending to a non-existent char vector"
 
-#: src/main/connections.c:1894 src/main/connections.c:2425
+#: src/main/connections.c:1909 src/main/connections.c:2440
 msgid "invalid 'text' argument"
 msgstr "invalid ‘text’ argument"
 
-#: src/main/connections.c:1901
+#: src/main/connections.c:1916
 msgid "invalid 'environment' argument"
 msgstr "invalid ‘environment’ argument"
 
-#: src/main/connections.c:1915
+#: src/main/connections.c:1930
 msgid "unsupported mode"
 msgstr "unsupported mode"
 
-#: src/main/connections.c:1943
+#: src/main/connections.c:1958
 msgid "invalid 'host' argument"
 msgstr "invalid ‘host’ argument"
 
-#: src/main/connections.c:1948
+#: src/main/connections.c:1963
 msgid "invalid 'port' argument"
 msgstr "invalid ‘port’ argument"
 
-#: src/main/connections.c:1952
+#: src/main/connections.c:1967
 msgid "invalid 'server' argument"
 msgstr "invalid ‘server’ argument"
 
-#: src/main/connections.c:1956 src/main/connections.c:2070
+#: src/main/connections.c:1971 src/main/connections.c:2085
 msgid "invalid 'blocking' argument"
 msgstr "invalid ‘blocking’ argument"
 
-#: src/main/connections.c:1991
+#: src/main/connections.c:2006
 msgid "sockets are not available on this system"
 msgstr "sockets are not available on this system"
 
-#: src/main/connections.c:2057 src/main/connections.c:2111
-#: src/main/connections.c:2126 src/main/connections.c:2175
-#: src/main/connections.c:2197 src/main/connections.c:2216
-#: src/main/connections.c:2228 src/main/connections.c:2331
-#: src/main/connections.c:2427 src/main/connections.c:3719
+#: src/main/connections.c:2072 src/main/connections.c:2126
+#: src/main/connections.c:2141 src/main/connections.c:2190
+#: src/main/connections.c:2212 src/main/connections.c:2231
+#: src/main/connections.c:2243 src/main/connections.c:2346
+#: src/main/connections.c:2442 src/main/connections.c:3734
 msgid "'con' is not a connection"
 msgstr "‘con’ is not a connection"
 
-#: src/main/connections.c:2060
+#: src/main/connections.c:2075
 msgid "cannot open standard connections"
 msgstr "cannot open standard connections"
 
-#: src/main/connections.c:2062
+#: src/main/connections.c:2077
 msgid "connection is already open"
 msgstr "connection is already open"
 
-#: src/main/connections.c:2096
+#: src/main/connections.c:2111
 msgid "unknown 'rw' value"
 msgstr "unknown ‘rw’ value"
 
-#: src/main/connections.c:2177
+#: src/main/connections.c:2192
 msgid "cannot close standard connections"
 msgstr "cannot close standard connections"
 
-#: src/main/connections.c:2180
+#: src/main/connections.c:2195
 msgid "cannot close output sink connection"
 msgstr "cannot close output sink connection"
 
-#: src/main/connections.c:2182
+#: src/main/connections.c:2197
 msgid "cannot close messages sink connection"
 msgstr "cannot close messages sink connection"
 
-#: src/main/connections.c:2199 src/main/connections.c:3434
+#: src/main/connections.c:2214 src/main/connections.c:3449
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "connection is not open"
 
-#: src/main/connections.c:2288 src/main/connections.c:2300
+#: src/main/connections.c:2303 src/main/connections.c:2315
 msgid "Line longer than buffer size"
 msgstr "Line longer than buffer size"
 
-#: src/main/connections.c:2335 src/main/context.c:488 src/main/context.c:558
+#: src/main/connections.c:2350 src/main/context.c:488 src/main/context.c:558
 msgid "invalid value for 'n'"
 msgstr "invalid value for ‘n’"
 
-#: src/main/connections.c:2338
+#: src/main/connections.c:2353
 msgid "invalid value for 'ok'"
 msgstr "invalid value for ‘ok’"
 
-#: src/main/connections.c:2340 src/main/connections.c:2517
-#: src/main/connections.c:2926 src/main/dcf.c:56 src/main/serialize.c:1580
+#: src/main/connections.c:2355 src/main/connections.c:2532
+#: src/main/connections.c:2941 src/main/dcf.c:56 src/main/serialize.c:1580
 msgid "cannot read from this connection"
 msgstr "cannot read from this connection"
 
-#: src/main/connections.c:2343 src/main/connections.c:2436
-#: src/main/connections.c:2521 src/main/connections.c:2710
-#: src/main/connections.c:2933 src/main/connections.c:3005
-#: src/main/connections.c:3182 src/main/dcf.c:59 src/main/deparse.c:311
-#: src/main/deparse.c:381 src/main/saveload.c:2202 src/main/scan.c:1010
+#: src/main/connections.c:2358 src/main/connections.c:2451
+#: src/main/connections.c:2536 src/main/connections.c:2725
+#: src/main/connections.c:2948 src/main/connections.c:3020
+#: src/main/connections.c:3197 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/deparse.c:385 src/main/saveload.c:2202 src/main/scan.c:1010
 #: src/main/scan.c:1115 src/main/scan.c:1565 src/main/scan.c:1760
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "cannot open the connection"
 
-#: src/main/connections.c:2353 src/main/connections.c:2372
+#: src/main/connections.c:2368 src/main/connections.c:2387
 msgid "cannot allocate buffer in readLines"
 msgstr "cannot allocate buffer in readLines"
 
-#: src/main/connections.c:2389
+#: src/main/connections.c:2404
 #, c-format
 msgid "incomplete final line found by readLines on '%s'"
 msgstr "incomplete final line found by readLines on ‘%s’"
 
-#: src/main/connections.c:2399
+#: src/main/connections.c:2414
 msgid "too few lines read in readLines"
 msgstr "too few lines read in readLines"
 
-#: src/main/connections.c:2430 src/main/platform.c:897
+#: src/main/connections.c:2445 src/main/platform.c:897
 msgid "invalid 'sep' argument"
 msgstr "invalid ‘sep’ argument"
 
-#: src/main/connections.c:2432 src/main/connections.c:2704
-#: src/main/connections.c:2975 src/main/connections.c:3435
+#: src/main/connections.c:2447 src/main/connections.c:2719
+#: src/main/connections.c:2990 src/main/connections.c:3450
 #: src/main/scan.c:1756 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "cannot write to this connection"
 
-#: src/main/connections.c:2471
+#: src/main/connections.c:2486
 msgid "incomplete string at end of file has been discarded"
 msgstr "incomplete string at end of file has been discarded"
 
-#: src/main/connections.c:2483
+#: src/main/connections.c:2498
 msgid "null terminator not found: breaking string at 10000 chars"
 msgstr "null terminator not found: breaking string at 10000 chars"
 
-#: src/main/connections.c:2502
+#: src/main/connections.c:2517
 msgid "can only read from a binary connection"
 msgstr "can only read from a binary connection"
 
-#: src/main/connections.c:2505
+#: src/main/connections.c:2520
 msgid "invalid value of 'what'"
 msgstr "invalid value of ‘what’"
 
-#: src/main/connections.c:2512
+#: src/main/connections.c:2527
 msgid "invalid value of 'signed'"
 msgstr "invalid value of ‘signed’"
 
-#: src/main/connections.c:2515 src/main/connections.c:2702
+#: src/main/connections.c:2530 src/main/connections.c:2717
 msgid "invalid value of 'swap'"
 msgstr "invalid value of ‘swap’"
 
-#: src/main/connections.c:2536 src/main/connections.c:2756
+#: src/main/connections.c:2551 src/main/connections.c:2771
 msgid "size changing is not supported for complex vectors"
 msgstr "size changing is not supported for complex vectors"
 
-#: src/main/connections.c:2560 src/main/connections.c:2578
-#: src/main/connections.c:2604 src/main/connections.c:2645
-#: src/main/connections.c:2665 src/main/connections.c:2737
-#: src/main/connections.c:2750 src/main/connections.c:2809
-#: src/main/connections.c:2838
+#: src/main/connections.c:2575 src/main/connections.c:2593
+#: src/main/connections.c:2619 src/main/connections.c:2660
+#: src/main/connections.c:2680 src/main/connections.c:2752
+#: src/main/connections.c:2765 src/main/connections.c:2824
+#: src/main/connections.c:2853
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "size %d is unknown on this machine"
 
-#: src/main/connections.c:2589
+#: src/main/connections.c:2604
 msgid "raw is always of size 1"
 msgstr "raw is always of size 1"
 
-#: src/main/connections.c:2694
+#: src/main/connections.c:2709
 msgid "'x' is not an atomic vector type"
 msgstr "‘x’ is not an atomic vector type"
 
-#: src/main/connections.c:2698
+#: src/main/connections.c:2713
 msgid "can only write to a binary connection"
 msgstr "can only write to a binary connection"
 
-#: src/main/connections.c:2717 src/main/connections.c:2862
-#: src/main/connections.c:3044
+#: src/main/connections.c:2732 src/main/connections.c:2877
+#: src/main/connections.c:3059
 msgid "problem writing to connection"
 msgstr "problem writing to connection"
 
-#: src/main/connections.c:2761
+#: src/main/connections.c:2776
 msgid "size changing is not supported for raw vectors"
 msgstr "size changing is not supported for raw vectors"
 
-#: src/main/connections.c:2889 src/main/connections.c:2892
+#: src/main/connections.c:2904 src/main/connections.c:2907
 msgid "invalid UTF-8 input in readChar()"
 msgstr "invalid UTF-8 input in readChar()"
 
-#: src/main/connections.c:2939
+#: src/main/connections.c:2954
 msgid "supplied length is invalid"
 msgstr "supplied length is invalid"
 
-#: src/main/connections.c:2985
+#: src/main/connections.c:3000
 msgid "invalid value of 'sep'"
 msgstr "invalid value of ‘sep’"
 
-#: src/main/connections.c:3017
+#: src/main/connections.c:3032
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 
-#: src/main/connections.c:3069 src/main/connections.c:3072
-#: src/main/connections.c:3111 src/main/connections.c:3116
+#: src/main/connections.c:3084 src/main/connections.c:3087
+#: src/main/connections.c:3126 src/main/connections.c:3131
 msgid "could not allocate space for pushBack"
 msgstr "could not allocate space for pushBack"
 
-#: src/main/connections.c:3092
+#: src/main/connections.c:3107
 msgid "invalid 'data' argument"
 msgstr "invalid ‘data’ argument"
 
-#: src/main/connections.c:3098
+#: src/main/connections.c:3113
 msgid "invalid 'newLine' argument"
 msgstr "invalid ‘newLine’ argument"
 
-#: src/main/connections.c:3100
+#: src/main/connections.c:3115
 msgid "can only push back on open readable connections"
 msgstr "can only push back on open readable connections"
 
-#: src/main/connections.c:3102
+#: src/main/connections.c:3117
 msgid "can only push back on text-mode connections"
 msgstr "can only push back on text-mode connections"
 
-#: src/main/connections.c:3170 src/main/connections.c:3230
+#: src/main/connections.c:3185 src/main/connections.c:3245
 msgid "sink stack is full"
 msgstr "sink stack is full"
 
-#: src/main/connections.c:3173
+#: src/main/connections.c:3188
 msgid "cannot switch output to stdin"
 msgstr "cannot switch output to stdin"
 
-#: src/main/connections.c:3190
+#: src/main/connections.c:3205
 msgid "no sink to remove"
 msgstr "no sink to remove"
 
-#: src/main/connections.c:3221
+#: src/main/connections.c:3236
 msgid "invalid value for 'closeOnExit'"
 msgstr "invalid value for ‘closeOnExit’"
 
-#: src/main/connections.c:3223 src/main/connections.c:3251
+#: src/main/connections.c:3238 src/main/connections.c:3266
 msgid "invalid value for 'type'"
 msgstr "invalid value for ‘type’"
 
-#: src/main/connections.c:3225
+#: src/main/connections.c:3240
 msgid "invalid value for 'split'"
 msgstr "invalid value for ‘split’"
 
-#: src/main/connections.c:3384
+#: src/main/connections.c:3399
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") only supports open = “w+” and open = “w+b”: using the former"
 
-#: src/main/connections.c:3400 src/modules/internet/internet.c:445
+#: src/main/connections.c:3415 src/modules/internet/internet.c:445
 msgid "unsupported URL scheme"
 msgstr "unsupported URL scheme"
 
-#: src/main/connections.c:3487
+#: src/main/connections.c:3502
 msgid "file stream does not have gzip magic number"
 msgstr "file stream does not have gzip magic number"
 
-#: src/main/connections.c:3498
+#: src/main/connections.c:3513
 msgid "file stream does not have valid gzip header"
 msgstr "file stream does not have valid gzip header"
 
-#: src/main/connections.c:3564
+#: src/main/connections.c:3579
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "writing error whilst flushing ‘gzcon’ connection"
 
-#: src/main/connections.c:3664
+#: src/main/connections.c:3679
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc error %x %x\n"
 
-#: src/main/connections.c:3689
+#: src/main/connections.c:3704
 msgid "write error on 'gzcon' connection"
 msgstr "write error on ‘gzcon’ connection"
 
-#: src/main/connections.c:3723
+#: src/main/connections.c:3738
 msgid "'level' must be one of 0 ... 9"
 msgstr "‘level’ must be one of 0 ... 9"
 
-#: src/main/connections.c:3726
+#: src/main/connections.c:3741
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "‘allowNonCompression’ must be TRUE or FALSE"
 
-#: src/main/connections.c:3729
+#: src/main/connections.c:3744
 msgid "this is already a gzcon connection"
 msgstr "this is already a gzcon connection"
 
-#: src/main/connections.c:3735
+#: src/main/connections.c:3750
 msgid "can only use read- or write- binary connections"
 msgstr "can only use read- or write- binary connections"
 
-#: src/main/connections.c:3739 src/main/connections.c:3743
-#: src/main/connections.c:3750 src/main/connections.c:3764
+#: src/main/connections.c:3754 src/main/connections.c:3758
+#: src/main/connections.c:3765 src/main/connections.c:3779
 msgid "allocation of 'gzcon' connection failed"
 msgstr "allocation of ‘gzcon’ connection failed"
 
-#: src/main/connections.c:3809
+#: src/main/connections.c:3824
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1 requires a scalar string"
 
-#: src/main/connections.c:3816
+#: src/main/connections.c:3831
 msgid "internal error in R_compress1"
 msgstr "internal error in R_compress1"
 
-#: src/main/connections.c:3831
+#: src/main/connections.c:3846
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1 requires a scalar string"
 
-#: src/main/connections.c:3836
+#: src/main/connections.c:3851
 msgid "internal error in R_decompress1"
 msgstr "internal error in R_decompress1"
 
-#: src/main/connections.c:3853
+#: src/main/connections.c:3868
 msgid "not a list of sockets"
 msgstr "not a list of sockets"
 
-#: src/main/connections.c:3858
+#: src/main/connections.c:3873
 msgid "bad write indicators"
 msgstr "bad write indicators"
 
-#: src/main/connections.c:3869
+#: src/main/connections.c:3884
 msgid "not a socket connection"
 msgstr "not a socket connection"
 
@@ -2270,7 +2270,7 @@ msgstr "invalid ‘cutoff’ for deparse, using default"
 msgid "deparse may be incomplete"
 msgstr "deparse may be incomplete"
 
-#: src/main/deparse.c:320 src/main/deparse.c:386 src/main/deparse.c:392
+#: src/main/deparse.c:320 src/main/deparse.c:393 src/main/deparse.c:399
 msgid "wrote too few characters"
 msgstr "wrote too few characters"
 
@@ -2293,7 +2293,7 @@ msgstr "bad environment"
 msgid "Object \"%s\" not found"
 msgstr "Object “%s” not found"
 
-#: src/main/deparse.c:1216
+#: src/main/deparse.c:1224
 msgid "badly formed function expression"
 msgstr "badly formed function expression"
 
