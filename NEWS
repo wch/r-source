@@ -123,7 +123,7 @@ NEW FEATURES
     o	glm() now accepts 1D arrays (e.g. tables) as a response,
 	dropping them to a vector whilst preserving names.
 
-    o	df() with one infinite df() now works (to match pf()).
+    o	df() with one infinite df now works (to match pf()).
 
     o	The Encoding: field of a DESCRIPTION file is now documented,
 	and used by packageDescription() and library(help=).
@@ -203,7 +203,7 @@ BUG FIXES
 
     o	anova.mlmlist() and mauchley.test() are now more tolerant to rank
 	deficiency in the M and X matrices (also when they are implicitly
-	generated via model.matrix).
+	generated via model.matrix()).
 
     o	pf() with one infinite df is allowed again.  It is now more
 	accurate for extreme ratios of dfs, especially when there is a
