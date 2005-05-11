@@ -138,6 +138,9 @@ void set_iconv(Rconnection con)
 	/* initialize state, and prepare any initial bytes */
 	Riconv(tmp, NULL, NULL, &ob, &onb);
 	con->navail = 50-onb; con->inavail = 0;
+	/* libiconv can handle BOM marks on Windows Unicode files, but
+	   glibc's iconv cannot. Aargh ... */
+	if(streql(con->encname, "UCS-2LE")) con->inavail = -2;
     }
     if(con->canwrite) {
 	size_t onb = 25;
@@ -229,14 +232,20 @@ int dummy_vfprintf(Rconnection con, const char *format, va_list ap)
 int dummy_fgetc(Rconnection con)
 {
     int c;
+    Rboolean checkBOM = FALSE;
 
     if(con->inconv) {
 	if(con->navail <= 0) {
 	    unsigned int i, inew = 0;
-	    char *p = con->iconvbuff + con->inavail, *ib, *ob;
+	    char *p, *ib, *ob;
 	    size_t inb, onb, res;
 
 	    if(con->EOF_signalled) return R_EOF;
+	    if(con->inavail == -2) {
+		con->inavail = 0;
+		checkBOM = TRUE;
+	    }
+	    p = con->iconvbuff + con->inavail;
 	    for(i = con->inavail; i < 25; i++) {
 		c = con->fgetc_internal(con);
 		if(c == R_EOF){ con->EOF_signalled = TRUE; break; }
@@ -245,6 +254,12 @@ int dummy_fgetc(Rconnection con)
 		inew++;
 	    }
 	    if(inew == 0) return R_EOF;
+	    if(checkBOM && con->inavail >= 2 &&
+	       (unsigned char) con->iconvbuff[0] == 255 &&
+	       (unsigned char) con->iconvbuff[1] == 254) {
+		con->inavail -= 2;
+		memmove(con->iconvbuff, con->iconvbuff+2, con->inavail);
+	    }
 	    ib = con->iconvbuff; inb = con->inavail;
 	    ob = con->oconvbuff; onb = 50;
 	    res = Riconv(con->inconv, &ib, &inb, &ob, &onb);
