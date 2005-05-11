@@ -368,6 +368,13 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
                 txt <- .readRDS(f)$DESCRIPTION
+                if("Encoding" %in% names(txt)) {
+                    tmp <- try(iconv(txt, from=txt["Encoding"], to=""))
+                    if(!inherits(tmp, "try-error"))
+                        txt <- tmp
+                    else
+                        warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible")
+                }
                 nm <- paste(names(txt), ":", sep="")
                 formatDL(nm, txt, indent = max(nchar(nm, type="w")) + 3)
             } else if(basename(f) %in% "vignette.rds") {
