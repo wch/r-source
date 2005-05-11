@@ -86,7 +86,7 @@ INSTALLATION
 
 PACKAGE INSTALLATION CHANGES
 
-    o	The encoding for a packages' index.html is chosen from the
+    o	The encoding for a packages' 00Index.html is chosen from the
 	Encoding: field (if any) of the DESCRIPTION file and from the
 	\encoding{} fields of any Rd files with non-ASCII titles.
 	If there are conflicts, first-found wins with a warning.
