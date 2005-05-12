@@ -103,6 +103,9 @@ C-LEVEL FACILITIES
     o	C function massdist() {called from density()} has new 2nd argument
 	'xmass' (= weights).
 
+    o	Raw vectors passed to .C() are now passed as unsigned char * rather
+	than as SEXPs.  (Wish of Keith Frost, PR#7853)
+
 
 BUG FIXES
 

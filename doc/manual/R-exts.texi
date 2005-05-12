@@ -3211,6 +3211,7 @@ and the types of arguments to a C function or FORTRAN subroutine.
 @item @code{double}    @tab @code{double *}  @tab @code{DOUBLE PRECISION}
 @item @code{complex}   @tab @code{Rcomplex *} @tab @code{DOUBLE COMPLEX}
 @item @code{character} @tab @code{char **}   @tab @code{CHARACTER*255}
+@item @code{raw}       @tab @code{char *}    @tab none
 @end multitable
 @end quotation
 
@@ -3219,7 +3220,7 @@ Do please note the first two.  On the 64-bit Unix/Linux platforms,
 Code ported from S-PLUS (which uses @code{long *} for @code{logical} and
 @code{integer}) will not work on all 64-bit platforms (although it may
 appear to work on some).  Note too that if your compiled code is a
-mixture of C functions and FORTRAN subprogams the argument types must
+mixture of C functions and FORTRAN subprograms the argument types must
 match as given in the table above.
 
 C type @code{Rcomplex} is a structure with @code{double} members
