@@ -1965,6 +1965,8 @@ statistical computing can be carried out.
 @c @item Rnotes
 @c The data sets for the exercises in ``An Introduction to R''
 @c (@pxref{What documentation exists for R?}).
+@item Rpad
+Utility functions for the Rpad workbook-style interface.
 @c REMOVED 2001-12-08
 @c @item Rstreams
 @c Binary file stream support functions.
