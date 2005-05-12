@@ -244,6 +244,8 @@ BUG FIXES
 	Mark, as most implementations of iconv fail to handle BOMs
 	(which are present in 'Windows Unicode' files).
 
+    o	unique() for a list was incorrectly returning `unimplemented'.
+
 
 
 		CHANGES IN R VERSION 2.1.0
