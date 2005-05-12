@@ -15,10 +15,6 @@ expected form is
 
 with *three* slashes.
 
-Inno Setup >= 5.1.2 is now required to build the installer, more
-languages are supported and R-specific parts of the installer screens
-are translated.
-
 
 
 R 2.1.0 patched
@@ -48,6 +44,12 @@ The support for mitred lines encountered a Windows problem with a
 dramatic slowdown if more than 1000 or so segments were plotted in a
 polyline.  We now plot in bunches of 1000, which is less accurate but
 works around the Windows problem.
+
+There is a workaround for the Windows-specific problems that
+Sys.putenv(TZ="GMT") was not recognized by the OS and that Windows
+believes that there is such a thing as "GMT Standard Time".
+
+Inno Setup >= 5.1.2 is now required to build the installer.
 
 
 

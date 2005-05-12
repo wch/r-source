@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000-2004  The R Development Core Team.
+ *  Copyright (C) 2000-2005  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -457,6 +457,12 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
 	error(_("invalid 'tz' value"));
     tz = CHAR(STRING_ELT(stz, 0));
+    if(strlen(tz) == 0) {
+	/* do a direct look up here as this does not otherwise
+	   work on Windows */
+	char *p = getenv("TZ");
+	if(p) tz = p;
+    }
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
@@ -518,6 +524,12 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
 	error(_("invalid 'tz' value"));
 
     tz = CHAR(STRING_ELT(stz, 0));
+    if(strlen(tz) == 0) {
+	/* do a direct look up here as this does not otherwise
+	   work on Windows */
+	char *p = getenv("TZ");
+	if(p) tz = p;
+    }
     if(strcmp(tz, "GMT") == 0  || strcmp(tz, "UTC") == 0) isgmt = 1;
     if(!isgmt && strlen(tz) > 0) settz = set_tz(tz, oldtz);
 
