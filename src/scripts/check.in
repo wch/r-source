@@ -1257,7 +1257,9 @@ sub check_pkg {
 	my @msg_doc_files =
 	  ("Functions with \\usage entries",
 	   "need to have the appropriate \\alias entries,",
-	   "and all their arguments documented.\n");
+	   "and all their arguments documented.\n",
+	   "The \\usage entries must correspond to syntactically",
+	   "valid R code.\n");
 
 	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
