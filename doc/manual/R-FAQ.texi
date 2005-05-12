@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-06
+@set FAQ_DATE @value{FAQ_YEAR}-05-12
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1758,6 +1758,9 @@ neighboors algorithm.
 Empirical Bayes thresholding and related methods.
 @item Ecdat
 Data sets from econometrics textbooks.
+@item Epi
+Statistical analysis in epidemiology, with functions for demographic and
+epidemiological analysis in the Lexis diagram.
 @item Fahrmeir
 Data from the book ``Multivariate Statistical Modelling Based
 on Generalized Linear Models'' by Ludwig Fahrmeir and Gerhard Tutz
@@ -2112,6 +2115,8 @@ Includes maximum likelihood and Bayesian tools.
 @item brlr
 Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
+@item caMassClass
+Processing and Classification of protein mass spectra (SELDI) data.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
