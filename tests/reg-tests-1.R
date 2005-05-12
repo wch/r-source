@@ -3638,6 +3638,12 @@ rT <- runmed(t2, k=21, algorithm= "Turlach")
 stopifnot(identical(rS, rT))
 ## seg.fault in 2.1.0
 
+## duplicated and unique on a list
+x <- list(1, 2, 3, 2)
+duplicated(x)
+unique(x)
+## unique failed in 2.1.0
+
 
 ### end of tests added in 2.1.0 patched ###
 

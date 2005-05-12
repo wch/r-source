@@ -368,7 +368,6 @@ SEXP duplicated(SEXP x)
 
 /* .Internal(duplicated(x))       [op=0]
    .Internal(unique(x))	          [op=1]
-   .Internal(duplicated.list(x)) [op=2]
 */
 SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -428,6 +427,11 @@ SEXP do_duplicated(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0; i < n; i++)
 	    if (LOGICAL(dup)[i] == 0)
 		SET_STRING_ELT(ans, k++, STRING_ELT(x, i));
+	break;
+    case VECSXP:
+	for (i = 0; i < n; i++)
+	    if (LOGICAL(dup)[i] == 0)
+		SET_VECTOR_ELT(ans, k++, VECTOR_ELT(x, i));
 	break;
     case RAWSXP:
 	for (i = 0; i < n; i++)
