@@ -633,6 +633,11 @@ An Example-Based Approach'', Cambridge University Press, ISBN
 S. M. Iacus and G. Masarotto (2002), ``Laboratorio di statistica con
 R'', McGraw-Hill, ISBN 88-386-6084-0 (in Italian),@*
 @url{http://www.ateneonline.it/LibroAteneo.asp?item_id=1436}.
+
+P. Murrell (2005), ``R Graphics'', Chapman & Hall/CRC, ISBN:
+1-584-88486-X,@*
+@url{http://www.stat.auckland.ac.nz/~paul/RGraphics/rgraphics.html}.
+
 @end quotation
 
 @noindent
@@ -5141,8 +5146,11 @@ Existing Reports'' facility in the Bug Tracking page at
 @url{http://bugs.R-project.org/}.  Second, consult
 @url{https://svn.R-project.org/R/trunk/NEWS}, which records changes that
 will appear in the @emph{next} release of R, including some bug fixes
-that do not appear in Bug Tracking.  If a bug has already been reported
-or fixed, please do not submit further bug reports on it.
+that do not appear in Bug Tracking.  (Windows users should additionally
+consult @url{https://svn.R-project.org/R/trunk/src/gnuwin32/CHANGES}.)
+Third, if possible try the current r-patched or r-devel version of R.
+If a bug has already been reported or fixed, please do not submit
+further bug reports on it.
 
 On Unix systems a bug report can be generated using the function
 @code{bug.report()}.  This automatically includes the version
