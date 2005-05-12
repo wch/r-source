@@ -112,6 +112,10 @@ BUG FIXES
     o	Printing was not allowing for double-width characters in its
 	layout.
 
+    o	%/% has been adjusted to make x == (x %% y) + y * ( x %/% y )
+	more likely in cases when extended-precision registers were
+	interfering.
+
     o	Hershey fonts were printing as very small when printed from
 	directly from Windows menu.
 
