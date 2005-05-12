@@ -198,10 +198,5 @@ logical(0)
 4     2           0.6           2
 5     3           0.8           3
 > unlink("test.dat")
-> 
-> ## test on Windows Unicode file
-> scan(file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"), encoding="UCS-2LE"), 0)
-Read 8 items
-[1] 1 2 3 4 5 6 7 8
 > ## end of tests
 > 
