@@ -2442,13 +2442,9 @@ Precision library.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
-@c <COMMENT>
-@c Moved to the Archive on 2004-10-08 as fails R CMD check.
-@c (In addition, email to the maintainer address bounces.)
-@c @item gpls
-@c Classification using generalized partial least squares for two-group and
-@c multi-group (more than 2 group) classification.
-@c </COMMENT>
+@item gpls
+Classification using generalized partial least squares for two-group and
+multi-group (more than 2 group) classification.
 @item grasper
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
