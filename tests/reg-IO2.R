@@ -98,5 +98,7 @@ read.table("test.dat", comment.char = "%")
 unlink("test.dat")
 
 ## test on Windows Unicode file
-scan(file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"), encoding="UCS-2LE"), 0)
+if(capabilities("iconv"))
+    print(scan(file(file.path(Sys.getenv("SRCDIR"), "WinUnicode.dat"),
+                    encoding="UCS-2LE"), 0))
 ## end of tests
