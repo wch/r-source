@@ -617,6 +617,23 @@ sub transform_S3method {
 	}
 	$text =~ s/$S3method_RE/$str/s;
     }
+    ## Also try to handle markup for S3 methods for binary ops.
+    $S3method_RE = "([ \t]*)\\\\(S3)?method" .
+	"\{(" .
+	join("|",
+	     ("\\\+", "\\\-", "\\\*", "\\\/", "\\\^",
+	      "<=?", ">=?", "!=", "==", "\\\&", "\\\|",
+	      "\\\%[[:alnum:][:punct:]]*\\\%")) .
+	")\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
+    while($text =~ /$S3method_RE/) {
+	$str = "$1\#\# S3 method for class '$4':\n$1";
+	$name = $3;
+	@args = split(/,\s*/, $5);
+	## These are all binary ops, so we should really check on
+	## scalar(@args) to be 2 ...
+	$str .= "$args[0] $name $args[1]";
+	$text =~ s/$S3method_RE/$str/s;
+    }
     $text;
 }
 
