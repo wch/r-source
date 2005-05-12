@@ -246,6 +246,9 @@ BUG FIXES
 
     o	unique() for a list was incorrectly returning `unimplemented'.
 
+    o	The parser's contextstack was not protected against overflow,
+	e.g. more than 50 unmatched '('.  (PR#7859)
+
 
 
 		CHANGES IN R VERSION 2.1.0
