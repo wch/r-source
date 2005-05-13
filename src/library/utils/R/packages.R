@@ -262,9 +262,13 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
         update <- res[match(select.list(res, multiple = TRUE,
                                         title = "New packages to be installed")
                             , res)]
-    if(length(update))
+    if(length(update)) {
         install.packages(update, lib = lib.loc[1], repos = repos,
                          method = method, available = available)
+        # now check if they were installed and update 'res'
+        updated <- update[update %in%  list.files(lib.loc[1])]
+        res <- res[!res %in% update]
+    }
     res
 }
 
