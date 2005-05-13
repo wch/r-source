@@ -70,7 +70,7 @@ my $mainlib = file_path($R_HOME, "library");
 # exit
 
 if($opt_htmllists){
-    # build_htmlpkglist($mainlib);
+    build_htmlpkglist($mainlib);
 
     %anindex = read_anindex($mainlib);
     %htmlindex = read_htmlindex($mainlib);
