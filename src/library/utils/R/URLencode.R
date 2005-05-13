@@ -1,7 +1,7 @@
 URLencode <- function(URL, reserved = TRUE)
 {
-    OK <- if(!reserved) "[^A-Za-z0-9$\\-_.+!*'(),;/?:@=&]"
-          else "[^A-Za-z0-9$\\-_.+!*'(),]"
+    OK <- if(!reserved) "[^-A-Za-z0-9$_.+!*'(),;/?:@=&]"
+          else "[^-A-Za-z0-9$_.+!*'(),]"
     x <- strsplit(URL, "")[[1]]
     z <- grep(OK, x)
     if(length(z)) {
