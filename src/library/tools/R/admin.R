@@ -448,6 +448,7 @@ function(src_dir, out_dir, packages)
     for(p in unlist(strsplit(packages, "[[:space:]]+")))
         tools:::.install_package_indices(file.path(src_dir, p),
                                          file.path(out_dir, p))
+    tools:::unix.packages.html(.Library)
     invisible()
 }
 
@@ -573,7 +574,7 @@ function(dir, outDir)
     outMetaDir <- file.path(outDir, "Meta")
     if(!file_test("-d", outMetaDir) && !dir.create(outMetaDir))
         stop(gettextf("cannot open directory '%s'", outMetaDir),
-             domain = NA) 
+             domain = NA)
     .saveRDS(nsInfo, nsInfoFilePath)
     invisible()
 }

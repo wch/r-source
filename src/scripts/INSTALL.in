@@ -995,7 +995,8 @@ do_cleanup () {
       cat "${R_HOME}"/library/*/CONTENTS \
         > "${R_HOME}"/doc/html/search/index.txt
       if ${build_help} && test "${NO_PERL5}" = "false"; then
-        "${R_CMD}" perl "${R_SHARE_DIR}/perl/build-help.pl" --htmllists
+        echo "tools:::unix.packages.html(.Library)" | \
+        R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" --vanilla >/dev/null
       fi
     fi
   fi

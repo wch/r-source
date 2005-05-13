@@ -101,6 +101,13 @@ PACKAGE INSTALLATION CHANGES
 	\encoding{} fields of any Rd files with non-ASCII titles.
 	If there are conflicts, first-found wins with a warning.
 
+    o	R_HOME/doc/html/packages.html is now remade by R not Perl code.
+	This may result in small changes in layout and a change in
+	encoding (to UTF-8 where supported).
+
+    o	The return value of new.packages() is now updated for any
+	packages which may be installed.
+
 
 C-LEVEL FACILITIES
 

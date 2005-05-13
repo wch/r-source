@@ -16,6 +16,7 @@ INSTFILES = \
 	left.jpg logo.jpg logosm.jpg right.jpg up.jpg \
 	about.html \
 	packages-head.html \
+	packages-head-utf8.html \
 	template.html \
 	thanks.html
 NON_SVN_INSTFILES = resources.html

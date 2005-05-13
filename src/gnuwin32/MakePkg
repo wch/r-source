@@ -290,11 +290,11 @@ indices:
 	@$(MKDIR) -p $(RHOME)/doc/html/search
 	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 ifneq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "utils::make.packages.html(.Library)" | \
+	@$(ECHO) "tools::win.packages.html(.Library)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 else
-	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
-	  $(RHOME)/share/perl/build-help-windows.pl -htmllists
+	@$(ECHO) "tools::win.packages.html(.Library, docdir=\"$(RHOME)/doc\", library=\"$(RLIB)\")" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 endif
 
 md5sums:

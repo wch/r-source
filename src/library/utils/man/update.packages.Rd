@@ -231,7 +231,8 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{"Built"} (the version built under), \code{"ReposVer"} and
   \code{"Repository"}.
   
-  For \code{new.packages} a character vector of package/bundle names.
+  For \code{new.packages} a character vector of package/bundle names,
+  \emph{after} any have been installed.
 
   For \code{download.packages}, a two-column matrix of names and
   destination file names, for those packages/bundles successfully downloaded.

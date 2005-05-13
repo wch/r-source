@@ -90,7 +90,8 @@ make.packages.html <- function(lib.loc=.libPaths())
     search <- file(searchindex, open="w")
     known <- character(0)
     for (lib in lib.loc) {
-        cat("<p><h3>Packages in ", lib, '</h3>\n<p><table width="100%">\n',
+        cat("<p><h3>Packages in ", lib,
+            '</h3>\n<p><table width="100%" summary="R Package list">\n',
             sep = "", file=out)
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         for (i in pg) {
