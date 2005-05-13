@@ -288,9 +288,14 @@ indices:
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 # need not have HTML installed when building packages
 	@$(MKDIR) -p $(RHOME)/doc/html/search
-	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt	
+	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
+ifneq ($(strip $(BUILD)),CROSS)
+	@$(ECHO) "utils::make.packages.html(.Library)" | \
+	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
+else
 	@PERL5LIB=$(RHOME)/share/perl $(PERL) \
 	  $(RHOME)/share/perl/build-help-windows.pl -htmllists
+endif
 
 md5sums:
 	@$(ECHO) "  adding MD5 sums"
