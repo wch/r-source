@@ -2035,14 +2035,15 @@ on a 32-bit platform but not on a 64-bit platform.
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN
 @subsection Using gfortran
 
-@command{gfortran} is the F95 compiler that is part of @code{gcc
-4.x.y}.  At least on @code{ix86} and @code{x86_64}
-Linux and MacOS X there is a problem with using the dynamic version of
-the Fortran runtime @code{libgfortran}: if this is loaded redirection of
-C @file{stdin} (which @R{} uses in many of its scripts) becomes
-non-functional.  A workaround is to set the environment
-variable @env{GFORTRAN_STDIN_UNIT} to @code{-1}, but versions before 10
-April 2005 had a bug causing the setting to be ignored.
+@command{gfortran} is the F95 compiler that is part of @code{gcc 4.0.0}.
+At least on @code{ix86} and @code{x86_64} Linux and MacOS X there is a
+problem with using the dynamic version of the Fortran runtime
+@code{libgfortran}: if this is loaded redirection of C @file{stdin}
+(which @R{} uses in many of its scripts) becomes non-functional.  A
+workaround is to set the environment variable @env{GFORTRAN_STDIN_UNIT}
+to @code{-1}, but versions before 10 April 2005 had a bug causing the
+setting to be ignored.  This problem has been fixed for @code{gcc 4.0.1}
+and the workaround will become unnecessary.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
