@@ -53,7 +53,6 @@ docs:
 	@echo "building all R object docs (text, HTML, LaTeX, examples)"
 	@$(MAKE) help-indices
 	@$(MAKE) Rdfiles
-	@$(R_CMD_BUILD_HELP) --htmllists
 	@$(MAKE) indices
 	@touch stamp-docs
 
@@ -98,7 +97,8 @@ help:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--txt"
 html:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--html"
-	@$(R_CMD_BUILD_HELP) --htmllists
+	@echo "tools:::unix.packages.html(.Library)" | \
+	  R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_EXE}" >/dev/null
 latex:
 	@$(MAKE) Rdfiles R_CMD_BUILD_HELP_OPTS="--latex"
 examples:
@@ -110,7 +110,8 @@ install: installdirs
 	  (cd $(top_builddir)/library; \
 	    $(TAR) cf - . | (cd "$(rhome)/library"; $(TAR) xmof -))
 	@echo "  building HTML index ..."
-	@$(R_CMD_BUILD_HELP) --rhome "$(rhome)" --htmllists
+	@echo "tools:::unix.packages.html(.Library, docdir=\"${rdocdir}\")" | \
+          R_DEFAULT_PACKAGES=NULL LC_ALL=C ${R_EXE} >/dev/null
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)/library"
 install-strip:
@@ -122,7 +123,7 @@ uninstall:
 	@rm -f "$(rhome)/library/R.css"
 	@rmdir "$(rhome)/library" 2>/dev/null \
           || echo "  subdir $(rhome)/library not removed"
- 
+
 
 mostlyclean: clean
 clean:

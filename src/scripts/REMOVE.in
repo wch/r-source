@@ -75,10 +75,10 @@ for pkg in ${pkgs}; do
 done
 
 if test "${lib}" = `cd "${R_HOME}/library" && ${GETWD}`; then
-  echo "tools:::unix.packages.html(.Library)" | \
+  echo "tools:::unix.packages.html(.Library, docdir=\"${R_DOC_DIR}\")" | \
     R_DEFAULT_PACKAGES=NULL LC_ALL=C "${R_HOME}/bin/R" --vanilla >/dev/null
   cat "${R_HOME}"/library/*/CONTENTS \
-    > "${R_HOME}"/doc/html/search/index.txt
+    > "${R_DOC_DIR}"/html/search/index.txt
 fi
 
 ### Local Variables: ***
