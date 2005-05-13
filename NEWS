@@ -62,6 +62,10 @@ NEW FEATURES
     o	New option("OutDec") to set the decimal point for output conversions.
 	[Experimental for now.]
 
+    o	New functions URLencode() and URLdecode(), particularly for use
+	with file:// URLs.  These are used by e.g. browse.env(),
+	download.file(), download.packages() and various help() print methods.
+
 
 DEPRECATED & DEFUNCT
 

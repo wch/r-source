@@ -18,7 +18,7 @@ function(file, topic)
                      "style sheet and hyperlinks may be incorrect")
         warning(paste(strwrap(msg), collapse = "\n"))
     }
-    file <- paste("file://", file, sep = "")
+    file <- paste("file://", URLencode(file), sep = "")
     if(is.null(browser <- getOption("browser")))
         stop("options(\"browser\") not set")
     browseURL(file)

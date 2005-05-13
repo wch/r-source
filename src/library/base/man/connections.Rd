@@ -153,6 +153,8 @@ isIncomplete(con)
   Also, backslashes are accepted within the path even though
   RFC1738 does not allow them.
 #endif
+  Also, no attempt is made to decode an encoded URL: call
+  \code{\link{URLdecode}} if necessary.
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},

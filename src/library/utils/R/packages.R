@@ -397,6 +397,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 ## and indeed external methods may do even more.
                 fn <- paste(substring(repos, 6), fn, sep = "/")
                 fn <- sub("^//", "", fn)
+                fn <- URLdecode(fn)
                 ## This should leave us with a path beginning with /
                 if(.Platform$OS.type == "windows") {
                     if(length(grep("[A-Za-z]:", fn)))

@@ -45,7 +45,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   The remaining details apply to method \code{"internal"} only.
 
   See \code{\link{url}} for how \code{"file://"} URLs are interpreted,
-  especially on Windows.
+  especially on Windows.  This function does decode encoded URLs.
 
   The timeout for many parts of the transfer can be set by the option
   \code{timeout} which defaults to 60 seconds.

@@ -11,9 +11,10 @@ download.file <- function(url, destfile, method,
     if(method == "auto") {
         if(capabilities("http/ftp"))
             method <- "internal"
-        else if(length(grep("^file:", url)))
+        else if(length(grep("^file:", url))) {
             method <- "internal"
-        else if(system("wget --help", invisible=TRUE)==0)
+            url <- URLdecode(URL)
+        } else if(system("wget --help", invisible=TRUE)==0)
             method <- "wget"
         else if(shell("lynx -help", invisible=TRUE)==0)
             method <- "lynx"

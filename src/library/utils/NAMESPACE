@@ -1,7 +1,7 @@
 export(.helpForCall, .tryHelp)
 
-export("?", CRAN.packages, Rprof, RSiteSearch, alarm, apropos,
-       assignInNamespace, as.person, as.personList,
+export("?", CRAN.packages, Rprof, RSiteSearch, URLdecode, URLencode,
+       alarm, apropos, assignInNamespace, as.person, as.personList,
        available.packages, browseEnv, browseURL, bug.report,
        capture.output, checkCRAN, chooseCRANmirror, citation,
        citEntry, citHeader, citFooter, close.socket, compareVersion,

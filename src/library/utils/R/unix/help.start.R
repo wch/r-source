@@ -16,7 +16,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     .Script("sh", "help-links.sh",
             paste(tempdir(), paste(.libPaths(), collapse = " ")))
     make.packages.html()
-    tmpdir <- paste("file://", tempdir(), "/.R", sep = "")
+    tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
     writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",

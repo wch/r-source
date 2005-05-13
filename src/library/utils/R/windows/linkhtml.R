@@ -30,7 +30,7 @@ make.packages.html <- function(lib.loc=.libPaths())
             libname <- chartr("/", "\\", lib)
             lib0 <- if(substring(lib, 2, 2) != ":")
                 paste(drive, lib, sep="") else lib
-            lib0 <- paste("file:///", lib0, sep="")
+            lib0 <- paste("file:///", URLencode(lib0), sep="")
         } else {
             lib0 <- "../../library"
             libname <- "the standard library"
@@ -79,7 +79,7 @@ make.search.html <- function(lib.loc=.libPaths())
         if(is.na(pmatch(rh, lib))) {
             lib0 <- if(substring(lib, 2, 2) != ":") paste(drive, lib, sep="")
             else lib
-            lib0 <- paste("URL: file:///", lib0, sep="")
+            lib0 <- paste("URL: file:///", URLencode(lib0), sep="")
             sed.it <- TRUE
         } else {
             sed.it <- FALSE
