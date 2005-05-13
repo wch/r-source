@@ -290,10 +290,10 @@ indices:
 	@$(MKDIR) -p $(RHOME)/doc/html/search
 	@$(CAT) $(RHOME)/library/*/CONTENTS > $(RHOME)/doc/html/search/index.txt
 ifneq ($(strip $(BUILD)),CROSS)
-	@$(ECHO) "tools::win.packages.html(.Library)" | \
+	@$(ECHO) "tools:::win.packages.html(.Library)" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 else
-	@$(ECHO) "tools::win.packages.html(.Library, docdir=\"$(RHOME)/doc\", library=\"$(RLIB)\")" | \
+	@$(ECHO) "tools:::win.packages.html(.Library, docdir=\"$(RHOME)/doc\", library=\"$(RLIB)\")" | \
 	  R_DEFAULT_PACKAGES=NULL LC_COLLATE=C R_OSTYPE=windows $(REXE) > /dev/null
 endif
 
