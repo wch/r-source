@@ -27,22 +27,18 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     }
     n <- length(r)
     if (any(show[2:6])) {
-	s <- if (inherits(x, "rlm"))
-	    x$s
-	else sqrt(deviance(x)/df.residual(x))
+	s <- if (inherits(x, "rlm")) x$s else sqrt(deviance(x)/df.residual(x))
 	hii <- lm.influence(x, do.coef = FALSE)$hat
 	if (any(show[4:6])) {
 	    cook <- if (isGlm)cooks.distance(x)
-	    else cooks.distance(x, sd = s, res = r)
+            else cooks.distance(x, sd = s, res = r)
 	}
     }
     if (any(show[c(2:3,5)])) {
 	ylab23 <- if (isGlm)
 	    "Std. deviance resid."
 	else "Standardized residuals"
-	r.w <- if (is.null(w))
-	    r
-	else sqrt(w) * r
+	r.w <- if (is.null(w)) r else sqrt(w) * r
 	rs <- r.w/(s * sqrt(1 - hii))
     }
     if (any(show[5:6])) {
@@ -67,7 +63,8 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	if(any(show[2:3]))
 	    show.rs <- sort.list(abs(rs), decreasing = TRUE)[iid]
 	text.id <- function(x, y, ind, adj.x = TRUE) {
-	    labpos <- if(adj.x) label.pos[1+as.numeric(x > mean(range(x)))] else 3
+	    labpos <-
+                if(adj.x) label.pos[1+as.numeric(x > mean(range(x)))] else 3
 	    text(x, y, labels.id[ind], cex = cex.id, xpd = TRUE,
 		 pos = labpos, offset = 0.25)
 	}
@@ -154,7 +151,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	}
         r.hat <- range(hatval, na.rm = TRUE) # though should never have NA
 	plot(hatval, rs, xlim = c(0, r.hat[2]), ylim = ylim,
-	     main = main, xlab = "Leverages", ylab = ylab23, type = "n", ...)
+	     main = main, xlab = "Leverage", ylab = ylab23, type = "n", ...)
 	panel(hatval, rs, ...)
         abline(h = 0, v = 0, lty = 3, col = "gray")
 	if (one.fig)
@@ -162,8 +159,9 @@ function (x, which = c(1:3,5), ## was which = 1:4,
 	p <- length(coef(x))
         hh <- seq(min(r.hat[1], r.hat[2]/100), r.hat[2], length = 101)
 	for(crit in cook.levels) {
-	    lines(hh, sqrt(crit*p*(1-hh)/hh), lty=2)
-	    lines(hh,-sqrt(crit*p*(1-hh)/hh), lty=2)
+            cl.h <- sqrt(crit*p*(1-hh)/hh)
+	    lines(hh, cl.h, lty=2)
+	    lines(hh,-cl.h, lty=2)
 	}
 	xmax <- par("usr")[2]
 	ymult <- sqrt(p*(1-xmax)/xmax)
