@@ -17,7 +17,7 @@ write(x, file = "data",
   }
   \item{ncolumns}{the number of columns to write the data in.}
   \item{append}{if \code{TRUE} the data \code{x} is appended to file \code{file}.}
-  \item{append}{a string used to separate columns.  Using \code{sep = "\t"}
+  \item{sep}{a string used to separate columns.  Using \code{sep = "\t"}
     gives tab delimited output; default is \code{" "}.}
 }
 \description{
