@@ -505,12 +505,12 @@ static void RFontInit()
 static int SetBaseFont(gadesc *xd)
 {
     xd->fontface = 1;
-    xd->fontsize = xd->basefontsize;
+    xd->fontsize = MulDiv(xd->basefontsize, xd->wanteddpi, xd->truedpi);
     xd->fontangle = 0.0;
     xd->usefixed = FALSE;
     xd->fontfamily[0] = '\0';
     xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0],
-			MulDiv(xd->fontsize, xd->wanteddpi, xd->truedpi), 0.0);
+			xd->fontsize, 0.0);
     if (!xd->font) {
 	xd->usefixed= TRUE;
 	xd->font = xd->fixedfont = FixedFont;

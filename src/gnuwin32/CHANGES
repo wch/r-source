@@ -51,6 +51,9 @@ believes that there is such a thing as "GMT Standard Time".
 
 Inno Setup >= 5.1.2 is now required to build the installer.
 
+For some devices the first text drawn could be improperly sized 
+(PR#7860).
+
 
 
 R 2.1.0

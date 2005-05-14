@@ -30,7 +30,8 @@ typedef struct {
     int   col;			   /* Color */
     int   bg;			   /* Background */
     int   fontface;		   /* Typeface */
-    int   fontsize, basefontsize;  /* Size in points */
+    int   fontsize, basefontsize;  /* Size in points.  fontsize has been adjusted
+    					for dpi diffs, basefontsize has not */
     double fontangle;
 
     /* devga Driver Specific */
