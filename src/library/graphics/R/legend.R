@@ -17,7 +17,8 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     mfill <- !missing(fill) || !missing(density)
 
     if(length(title) > 1) stop("invalid title")
-
+    n.leg <- if(is.call(legend)) 1 else length(legend)
+    if(n.leg == 0) stop("'legend' is of length 0")
     auto <-
 	if (is.character(x))
 	    match.arg(x, c("bottomright", "bottom", "bottomleft",
@@ -86,7 +87,6 @@ function(x, y = NULL, legend, fill=NULL, col = "black", lty, lwd, pch,
     }
     do.lines <- (!missing(lty) && (is.character(lty) || any(lty > 0))
 		 ) || !missing(lwd)
-    n.leg <- if(is.call(legend)) 1 else length(legend)
 
     ## legends per column:
     n.legpercol <-
