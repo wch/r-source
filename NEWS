@@ -72,6 +72,8 @@ NEW FEATURES
 
     o	write() has a new argument 'sep'.
 
+    o	New function trans3d(), the 3D -> 2D utility from persp()'s example.
+
 
 DEPRECATED & DEFUNCT
 
