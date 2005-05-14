@@ -1,12 +1,18 @@
-URLencode <- function(URL, reserved = TRUE)
+URLencode <- function(URL, reserved = FALSE)
 {
-    OK <- if(!reserved) "[^-A-Za-z0-9$_.+!*'(),;/?:@=&]"
-          else "[^-A-Za-z0-9$_.+!*'(),]"
+    ## It is unsafe to use ranges here as collation is locale-dependent.
+    ## We want to do this on characters and not on bytes.
+    OK <-
+        if(!reserved)
+            "[^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzz0123456789$_.+!*'(),;/?:@=&]"
+        else
+            "[^-ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzz0123456789$_.+!*'(),]"
+
     x <- strsplit(URL, "")[[1]]
     z <- grep(OK, x)
     if(length(z)) {
         y <- sapply(x[z], function(x) as.character(charToRaw(x)))
-        x[z] <- paste("%", y, sep="")
+        x[z] <- paste("%", y, sep="", collapse="")
     }
     paste(x, collapse="")
 }
