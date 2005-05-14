@@ -32,7 +32,7 @@ NEW FEATURES
 	(as in barplot2() from package 'gplots').
 
     o	smooth.spline() has a new argument 'keep.data' which allows to
-	provide residuals() and fitted() methods fitted smoothing splines.
+	provide residuals() and fitted() methods for smoothing splines.
 
     o	plot.lm() has two new plots (for 'which' = 5 or 6), plotting
 	residuals or cook distances versus (transformed) leverages.
