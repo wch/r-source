@@ -68,6 +68,10 @@ NEW FEATURES
 
     o	[g]sub(perl = TRUE) support \L and \U in the replacement.
 
+    o	match.arg() has a new argument 'several.ok = FALSE'.
+
+    o	write() has a new argument 'sep'.
+
 
 DEPRECATED & DEFUNCT
 
