@@ -131,7 +131,9 @@ ISOdate(year, month, day, hour = 12, min = 0, sec = 0, tz = "GMT")
   OS-dependent.
     
   \code{ISOdatetime} and \code{ISOdate} are convenience wrappers for
-  \code{strptime}, that differ only in their defaults.
+  \code{strptime}, that differ only in their defaults and that
+  \code{ISOdate} sets a timezone.  (For dates without times is would be
+  better to use the \code{"\link{Date}"} class.)
 }
 \value{
   The \code{format} methods and \code{strftime} return character vectors

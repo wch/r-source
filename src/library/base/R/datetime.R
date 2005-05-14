@@ -157,7 +157,8 @@ summary.POSIXlt <- function(object, digits = 15, ...)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
     if (inherits(e1, "difftime")) e1 <- coerceTimeUnit(e1)
     if (inherits(e2, "difftime")) e2 <- coerceTimeUnit(e2)
-    structure(unclass(e1) + unclass(e2), class = c("POSIXt", "POSIXct"))
+    structure(unclass(e1) + unclass(e2), class = c("POSIXt", "POSIXct"),
+              tzone = attr(e1, "tzone"))
 }
 
 "-.POSIXt" <- function(e1, e2)
@@ -187,6 +188,7 @@ Ops.POSIXt <- function(e1, e2)
     if (!boolean) stop(.Generic, " not defined for \"POSIXt\" objects")
     if(inherits(e1, "POSIXlt")) e1 <- as.POSIXct(e1)
     if(inherits(e2, "POSIXlt")) e2 <- as.POSIXct(e2)
+    check_tzones(e1, e2)
     NextMethod(.Generic)
 }
 
@@ -195,12 +197,28 @@ Math.POSIXt <- function (x, ...)
     stop(.Generic, " not defined for POSIXt objects")
 }
 
+check_tzones <- function(...)
+{
+    tzs <- unique(sapply(list(...), function(x) {
+        y <- attr(x, "tzone")
+        if(is.null(y)) "" else y
+    }))
+    tzs <- tzs[tzs != ""]
+    if(length(tzs) > 1)
+        warning("'tzone' attributes are inconsistent")
+    if(length(tzs)) tzs[1] else NULL
+}
+
 Summary.POSIXct <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(.Generic, " not defined for \"POSIXct\" objects")
+    args <- list(x, ...)
+    args$na.rm <- NULL
+    tz <- do.call("check_tzones", args)
     val <- NextMethod(.Generic)
     class(val) <- oldClass(x)
+    attr(val, "tzone") <- tz
     val
 }
 
@@ -208,9 +226,12 @@ Summary.POSIXlt <- function (x, ...)
 {
     ok <- switch(.Generic, max = , min = , range = TRUE, FALSE)
     if (!ok) stop(.Generic, " not defined for \"POSIXlt\" objects")
+    args <- list(x, ...)
+    args$na.rm <- NULL
+    tz <- do.call("check_tzones", args)
     x <- as.POSIXct(x)
     val <- NextMethod(.Generic)
-    as.POSIXlt(structure(val, class = c("POSIXt", "POSIXct")))
+    as.POSIXlt(structure(val, class = c("POSIXt", "POSIXct"), tzone = tz))
 }
 
 "[.POSIXct" <-
@@ -220,6 +241,7 @@ function(x, ..., drop = TRUE)
     class(x) <- NULL
     val <- NextMethod("[")
     class(val) <- cl
+    attr(val, "tzone") <- attr(x, "tzone")
     val
 }
 
@@ -230,6 +252,7 @@ function(x, ..., drop = TRUE)
     class(x) <- NULL
     val <- NextMethod("[[")
     class(val) <- cl
+    attr(val, "tzone") <- attr(x, "tzone")
     val
 }
 
@@ -238,9 +261,11 @@ function(x, ..., value) {
     if(!as.logical(length(value))) return(x)
     value <- as.POSIXct(value)
     cl <- oldClass(x)
+    tz <- attr(x, "tzone")
     class(x) <- class(value) <- NULL
     x <- NextMethod(.Generic)
     class(x) <- cl
+    attr(x, "tzone") <- tz
     x
 }
 
@@ -257,6 +282,7 @@ as.data.frame.POSIXct <- as.data.frame.vector
 is.na.POSIXlt <- function(x) is.na(as.POSIXct(x))
 
 ## <FIXME> check the argument validity
+## This is documented to remove the timezone
 c.POSIXct <- function(..., recursive=FALSE)
     structure(c(unlist(lapply(list(...), unclass))),
               class=c("POSIXt","POSIXct"))
@@ -267,8 +293,10 @@ c.POSIXlt <- function(..., recursive=FALSE)
 
 ## force absolute comparisons
 all.equal.POSIXct <- function(target, current, ..., scale=1)
+{
+    check_tzone(target, current)
     NextMethod("all.equal")
-
+}
 
 
 ISOdatetime <- function(year, month, day, hour, min, sec, tz="")
@@ -287,7 +315,7 @@ as.matrix.POSIXlt <- function(x)
 
 mean.POSIXct <- function (x, ...)
     structure(mean(unclass(x), ...), class = c("POSIXt", "POSIXct"),
-              tzone=attr(x, "tzone"))
+              tzone = attr(x, "tzone"))
 
 mean.POSIXlt <- function (x, ...)
     as.POSIXlt(mean(as.POSIXct(x), ...))
@@ -465,7 +493,9 @@ seq.POSIXt <-
 {
     if (missing(from)) stop("'from' must be specified")
     if (!inherits(from, "POSIXt")) stop("'from' must be a POSIXt object")
-        if(length(as.POSIXct(from)) != 1) stop("'from' must be of length 1")
+    cfrom <- as.POSIXct(from)
+    if(length(cfrom) != 1) stop("'from' must be of length 1")
+    tz <- attr(cfrom , 'tzone')
     if (!missing(to)) {
         if (!inherits(to, "POSIXt")) stop("'to' must be a POSIXt object")
         if (length(as.POSIXct(to)) != 1) stop("'to' must be of length 1")
@@ -480,13 +510,13 @@ seq.POSIXt <-
     if(sum(status) != 2)
         stop("exactly two of 'to', 'by' and 'length.out' / 'along.with' must be specified")
     if (missing(by)) {
-        from <- unclass(as.POSIXct(from))
+        from <- unclass(cfrom)
         to <- unclass(as.POSIXct(to))
         ## Till (and incl.) 1.6.0 :
         ##- incr <- (to - from)/length.out
         ##- res <- seq.default(from, to, incr)
         res <- seq.default(from, to, length.out = length.out)
-        return(structure(res, class = c("POSIXt", "POSIXct")))
+        return(structure(res, class = c("POSIXt", "POSIXct"), tzone=tz))
     }
 
     if (length(by) != 1) stop("'by' must be of length 1")
@@ -519,7 +549,7 @@ seq.POSIXt <-
             ## defeat test in seq.default
             res <- seq.default(0, to - from, by) + from
         }
-        return(structure(res, class=c("POSIXt", "POSIXct")))
+        return(structure(res, class=c("POSIXt", "POSIXct"), tzone=tz))
     } else {  # months or years or DSTdays
         r1 <- as.POSIXlt(from)
         if(valid == 7) {

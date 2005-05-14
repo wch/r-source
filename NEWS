@@ -127,6 +127,10 @@ BUG FIXES
 	more likely in cases when extended-precision registers were
 	interfering.
 
+    o	Operations on POSIXct objects (such as seq(), max() and
+	subsetting) try harder to preserve time zones and warn if
+	inconsistent time zones are used.
+
     o	Hershey fonts were printing as very small when printed from
 	directly from Windows menu.
 
