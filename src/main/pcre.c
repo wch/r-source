@@ -185,13 +185,15 @@ static int length_adj(char *repl, int *ovec, int nsubexpr)
 			  k);
 		n += (ovec[2*k+1] - ovec[2*k]) - 2;
 		p++;
-	    }
-	    else if (p[1] == 0) {
+	    } else if (p[1] == 'U') {
+		p++; n -= 2;
+	    } else if (p[1] == 'L') {
+		p++; n -= 2;
+	    } else if (p[1] == 0) {
 				/* can't escape the final '\0' */
-		n -= 1;
-	    }
-	    else {
-		n -= 1;
+		n--;
+	    } else {
+		n--;
 		p++;
 	    }
 	}
@@ -203,23 +205,30 @@ static int length_adj(char *repl, int *ovec, int nsubexpr)
 static char *string_adj(char *target, char *orig, char *repl, int *ovec)
 {
     int i, k;
-    char *p = repl, *t = target;
+    char *p = repl, *t = target, c;
+    Rboolean upper = FALSE, lower = FALSE;
     while (*p) {
 	if (*p == '\\') {
 	    if ('1' <= p[1] && p[1] <= '9') {
 		k = p[1] - '0';
-		for (i = ovec[2*k] ; i < ovec[2*k+1] ; i++) *t++ = orig[i];
+		for (i = ovec[2*k] ; i < ovec[2*k+1] ; i++) {
+		    c = orig[i];
+		    *t++ = upper ? toupper(c) : (lower ? tolower(c) : c);
+		}
 		p += 2;
-	    }
-	    else if (p[1] == 0) {
+	    } else if (p[1] == 'U') {
+		p += 2;
+		upper = TRUE; lower = FALSE;
+	    } else if (p[1] == 'L') {
+		p += 2;
+		upper = FALSE; lower = TRUE;
+	    } else if (p[1] == 0) {
 		p += 1;
-	    }
-	    else {
+	    } else {
 		p += 1;
 		*t++ = *p++;
 	    }
-	}
-	else *t++ = *p++;
+	} else *t++ = *p++;
     }
     return t;
 }

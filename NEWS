@@ -66,6 +66,8 @@ NEW FEATURES
 	with file:// URLs.  These are used by e.g. browse.env(),
 	download.file(), download.packages() and various help() print methods.
 
+    o	[g]sub(perl = TRUE) support \L and \U in the replacement.
+
 
 DEPRECATED & DEFUNCT
 
