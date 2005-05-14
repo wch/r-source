@@ -6,7 +6,7 @@
   Functions to encode or decode characters in URLs.
 }
 \usage{
-URLencode(UR, reserved = FALSE)
+URLencode(URL, reserved = FALSE)
 URLdecode(URL)
 }
 \arguments{
@@ -19,7 +19,7 @@ URLdecode(URL)
   plus a two-digit hexadecimal representation, and any single-byte
   character can be so encoded. (Multi-byte characters are encoded as
   byte-by-byte.)
-  
+
   In addition, \code{; / ? : @ = &} are reserved characters, and should
   be encoded unless used in their reserved sense, which is scheme
   specific.  The default in \code{URLencode} is to leave them alone, which
