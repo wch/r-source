@@ -31,6 +31,7 @@
 \alias{mean.POSIXct}
 \alias{mean.POSIXlt}
 \alias{str.POSIXt}
+\alias{check_tzones}
 
 \title{Date-Time Classes}
 \description{
