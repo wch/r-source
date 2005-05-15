@@ -4088,6 +4088,7 @@ some fashion objects of class @code{"data.frame"} include
 [<-   mean    plot   summary
 @end example
 
+@findex methods
 A currently complete list can be got by using the @code{methods()}
 function:
 
@@ -4105,8 +4106,57 @@ again by using the @code{methods()} function:
 > methods(plot)
 @end example
 
-The reader is referred to the official references for a complete
-discussion of this mechanism.
+For many generic functions the function body is quite short, for example
+
+@example
+> coef
+function (object, ...)
+UseMethod("coef")
+@end example
+
+@noindent
+The presence of @code{UseMethod} indicates this is a generic function.
+To see what methods are available we can use @code{methods()}
+
+@example
+> methods(coef)
+[1] coef.aov*         coef.Arima*       coef.default*     coef.listof*
+[5] coef.nls*         coef.summary.nls*
+
+   Non-visible functions are asterisked
+@end example
+
+@noindent
+In this example there are six methods, none of which can be seen by
+typing its name.  We can read these by either of
+
+@findex getAnywhere
+@findex getS3method
+@example
+> getAnywhere("coef.aov")
+A single object matching 'coef.aov' was found
+It was found in the following places
+  registered S3 method for coef from namespace stats
+  namespace:stats
+with value
+
+function (object, ...)
+@{
+    z <- object$coef
+    z[!is.na(z)]
+@}
+
+> getS3method("coef", "aov")
+function (object, ...)
+@{
+    z <- object$coef
+    z[!is.na(z)]
+@}
+@end example
+
+
+The reader is referred to the @emph{R Language Definition} for a more
+complete discussion of this mechanism.
 
 
 @node Statistical models in R, Graphics, Writing your own functions, Top
@@ -5169,7 +5219,7 @@ problems.
 @itemize @bullet
 @item
 @cindex Mixed models
-@strong{Mixed models.}  The user-contributed @pkg{nlme} package provides
+@strong{Mixed models.}  The recommended @pkg{nlme} package provides
 functions @code{lme()} and @code{nlme()}
 @findex lme
 @findex nlme
