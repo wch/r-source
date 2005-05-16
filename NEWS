@@ -139,8 +139,9 @@ BUG FIXES
 	subsetting) try harder to preserve time zones and warn if
 	inconsistent time zones are used.
 
-    o	Hershey fonts were printing as very small when printed from
-	directly from Windows menu.
+    o	Hershey fonts were being sized based on pixels not points so came
+        out too small on devices where pixels were noticeably different 
+	from points (e.g., win.printer and high-resolution screens).
 
 	Fix means that default size of Hershey fonts may be slightly
 	different, for example, smaller by default on PostScript and PDF.
