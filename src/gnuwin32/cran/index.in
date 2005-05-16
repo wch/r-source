@@ -14,10 +14,10 @@
 NT4.0, 2000 and XP on Intel/clone chips.</p>
 
 <p>Patches
-to this release are incorporated in the <a href="rpatched.html">r-patched release</a>.</p>
+to this release are incorporated in the <a href="rpatched.html">r-patched snapshot build</a>.</p>
 
 <p>A build of the development version (which will eventually become the next major release of R)
-is available in the <a href="rdevel.html">r-devel release</a>.</p>
+is available in the <a href="rdevel.html">r-devel snapshot build</a>.</p>
 
 <p>In this directory:</p>
 

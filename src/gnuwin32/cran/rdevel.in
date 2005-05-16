@@ -11,7 +11,7 @@
 <h1>R-@FULLVERSION@ build for Windows</h1>
 
 <p>This directory contains a Windows binary build of the @DATE@ development
-version of R (which will eventually become R-@RVER@).</p>
+snapshot of R (which will eventually become R-@RVER@).</p>
 
 <p>This is a development version of R. <strong>It likely contains
 bugs, so be careful if you use it</strong>.  Please don't report bugs 
