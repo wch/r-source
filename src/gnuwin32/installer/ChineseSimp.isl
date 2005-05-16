@@ -308,3 +308,12 @@ UninstallProgram=卸载 %1
 LaunchProgram=运行 %1
 AssocFileExtension=将 %1 与扩展名 %2 连接(&A)
 AssocingFileExtension=正在将 %1 与扩展名 %2 连接...
+regentries=登記冊记录項:
+associate=&把R程序同.RData文件联合起来
+dcom=&将R程序路徑进行登記这样(D)COM服务器可以使用
+user=用户安装
+compact=最少用户安装
+full=全部安装
+CJK=中文/日文/韩文安装
+custom=自定義安装
+
