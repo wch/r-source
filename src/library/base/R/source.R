@@ -25,6 +25,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	print(envir)
     }
     if(is.character(file)) {
+        ofile <- file # for use with chdir = TRUE
         if(capabilities("iconv")) {
             if(identical(encoding, "unknown")) {
                 enc <- utils::localeToCharset()
@@ -57,10 +58,13 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 	cat("--> parsed", Ne, "expressions; now eval(.)ing them:\n")
     if (Ne == 0)
 	return(invisible())
-    if (chdir && is.character(file) && (path <- dirname(file)) != ".") {
-	owd <- getwd()
-	on.exit(setwd(owd))
-	setwd(path)
+    if (chdir && is.character(ofile)) {
+        isURL <- length(grep("^(ftp|http|file)://", ofile)) > 0
+        if(!isURL && (path <- dirname(ofile)) != ".") {
+            owd <- getwd()
+            on.exit(setwd(owd), add=TRUE)
+            setwd(path)
+        }
     }
 
     if (echo) {
