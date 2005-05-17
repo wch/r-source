@@ -5,10 +5,11 @@ export(Hershey, check.options, col2rgb, colors, colours, cm, colorRamp,
        cm.colors, dev.control, dev.copy, dev.copy2eps, dev.cur,
        dev.interactive, dev.list, dev.next, dev.off, dev.prev,
        dev.print, dev.set, getGraphicsEvent, graphics.off, gray, grey,
-       gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb,
+       gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb, n2mfrow,
        palette, pdf, pictex, postscript, postscriptFont,
        postscriptFonts, ps.options, rainbow, recordGraphics, recordPlot,
-       replayPlot, rgb, rgb2hsv, terrain.colors, topo.colors, xfig)
+       replayPlot, rgb, rgb2hsv, terrain.colors, topo.colors, xfig,
+       xy.coords, xyz.coords)
 
 S3method(print, recordedplot)
 S3method(print, colorConverter)

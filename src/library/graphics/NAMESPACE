@@ -7,12 +7,12 @@ export(abline, arrows, assocplot, axTicks, axis, axis.Date,
        filled.contour, fourfoldplot, frame, grid, hist, hist.default,
        identify, image, layout, layout.show, lcm, legend, lines, lines.default,
        locator, matlines, matplot, matpoints, mosaicplot, mtext,
-       n2mfrow, nclass.FD, nclass.Sturges, nclass.scott, pairs,
+       nclass.FD, nclass.Sturges, nclass.scott, pairs,
        panel.smooth, par, persp, pie, plot, plot.design, plot.new,
        plot.window, plot.xy, points, polygon, rect, rug, screen,
        segments, split.screen, stars, stem, strheight, stripchart,
        strwidth, sunflowerplot, symbols, text, title, trans3d, xinch,
-       xy.coords, xyinch, xyz.coords, yinch)
+       xyinch, yinch)
 
 # leave most of the default methods visible as people seem to call them.
 export(barplot.default, boxplot.default, contour.default,
