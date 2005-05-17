@@ -198,7 +198,7 @@ BUG FIXES
     o	'make uninstall' was incomplete.
 
     o	make.packages.html() called by help.start() was failing if
-	there were installed packages with titles invalid in the
+	there were installed packages with help titles invalid in the
 	current locale.
 
     o	printCoefmat(signif.legend = FALSE) was non-functional. (PR#7802)
@@ -272,6 +272,10 @@ BUG FIXES
 
     o	The parser's contextstack was not protected against overflow,
 	e.g. more than 50 unmatched '('.  (PR#7859)
+
+    o	source(file, chdir = TRUE) was not checking that 'file' was a
+	filepath (rather than a URL).  For 2.1.0 only, it did not work
+	even if 'file' was a filepath.
 
 
 
