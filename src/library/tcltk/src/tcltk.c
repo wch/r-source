@@ -810,7 +810,26 @@ void tcltk_init(void)
 
 }
 
-
+SEXP RTcl_ServiceMode(SEXP args)
+{
+    SEXP ans;
+    int value;
+    
+    if (!isLogical(CADR(args)) || length(CADR(args)) > 1)
+    	error("invalid argument");
+    
+    if (length(CADR(args))) value = Tcl_SetServiceMode(LOGICAL(CADR(args))[0] ? 
+    						TCL_SERVICE_ALL : TCL_SERVICE_NONE);
+    else {
+    	value = Tcl_SetServiceMode(TCL_SERVICE_NONE);
+    	if (value != TCL_SERVICE_NONE) Tcl_SetServiceMode(value); /* Tcl_GetServiceMode was not found */
+    }
+    
+    ans = allocVector(LGLSXP, 1);
+    LOGICAL(ans)[0] = value == TCL_SERVICE_ALL;
+    return ans;
+}
+    
 #ifndef Win32
 #ifndef TCL80
 /* ----- Tcl/Tk console routines ----- */
