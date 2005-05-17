@@ -1281,6 +1281,7 @@ static void CHelpKeyIn(control w, int key)
 }
 
 __declspec(dllimport) extern int UserBreak;
+static void donelocator(gadesc *xd);
 
 static void NHelpKeyIn(control w, int key)
 {
@@ -1305,6 +1306,7 @@ static void NHelpKeyIn(control w, int key)
 	    xd->enterkey = TRUE;
 	    return;
 	  case ESC:
+	    if (xd->locator) donelocator(xd);
 	    UserBreak = TRUE;
 	    return;
 	}
@@ -2405,6 +2407,21 @@ static void GA_Text(double x, double y, char *str,
 	/* not all devices will do anything (e.g., postscript)	*/
 	/********************************************************/
 
+static void donelocator(gadesc *xd)
+{
+    addto(xd->gawin);
+    gchangemenubar(xd->mbar);
+    if (xd->stoploc) {
+      hide(xd->stoploc);
+      show(xd->gawin);
+    }
+    gsetcursor(xd->gawin, ArrowCursor);
+    gchangepopup(xd->gawin, xd->grpopup);
+    addto(xd->gawin);
+    setstatus(_("R Graphics"));
+    xd->locator = FALSE;
+}
+
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2428,17 +2445,7 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
         WaitMessage();
 	R_ProcessEvents();
     }
-    addto(xd->gawin);
-    gchangemenubar(xd->mbar);
-    if (xd->stoploc) {
-      hide(xd->stoploc);
-      show(xd->gawin);
-    }
-    gsetcursor(xd->gawin, ArrowCursor);
-    gchangepopup(xd->gawin, xd->grpopup);
-    addto(xd->gawin);
-    setstatus(_("R Graphics"));
-    xd->locator = FALSE;
+    donelocator(xd);
     if (xd->clicked == 1) {
 	*x = xd->px;
 	*y = xd->py;
