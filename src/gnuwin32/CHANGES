@@ -54,6 +54,8 @@ Inno Setup >= 5.1.2 is now required to build the installer.
 For some devices the first text drawn could be improperly sized 
 (PR#7860).
 
+R would crash when ESC was pressed during locator() (PR#7873).
+
 
 
 R 2.1.0
