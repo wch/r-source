@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-12
+@set FAQ_DATE @value{FAQ_YEAR}-05-18
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1951,6 +1951,8 @@ A platform-independent basic-statistics GUI (graphical user interface)
 for R, based on the @strong{tcltk} package.
 @item ResistorArray
 Electrical properties of resistor networks.
+@item Rfwdmv
+Forward Search for Multivariate Data.
 @item Rlab
 Functions and data sets for the NCSU ST370 class.
 @c <COMMENT>
