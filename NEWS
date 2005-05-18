@@ -142,12 +142,6 @@ BUG FIXES
 	subsetting) try harder to preserve time zones and warn if
 	inconsistent time zones are used.
 
-    o	Hershey fonts were being sized based on pixels not points so came
-        out too small on devices where pixels were noticeably different
-	from points (e.g., win.printer and high-resolution screens).
-
-	Fix means that default size of Hershey fonts may be slightly
-	different, for example, smaller by default on PostScript and PDF.
 
 
 
@@ -172,12 +166,22 @@ NEW FEATURES
 	dropping them to a vector whilst preserving names.
 
     o	df() with one infinite df now works (to match pf()).
+	
+    o	Added tclServiceMode() function to the tcltk package to allow
+    	updating to be suspended.
 
     o	The Encoding: field of a DESCRIPTION file is now documented,
 	and used by packageDescription() and library(help=).
 
 
 BUG FIXES
+
+    o	Hershey fonts were being sized based on pixels not points so came
+        out too small on devices where pixels were noticeably different 
+	from points (e.g., win.printer and high-resolution screens).
+
+	Fix means that default size of Hershey fonts may be slightly
+	different, for example, smaller by default on PostScript and PDF.
 
     o	lm(qr=FALSE) now works.
 
