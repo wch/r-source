@@ -74,8 +74,9 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	-@(cd src/library && $(MAKE) $@)
 
-SVN-REVISION:
-	@(cd $(srcdir); svn info) | sed -n '/Revision/p' > $@
+SVN-REVISION: FORCE
+	@(cd $(srcdir); svn info  || echo "Revision: unknown") 2> /dev/null \
+	  | sed -n '/Revision/p' > $@
 
 install: installdirs svnonly
 	@for d in $(SUBDIRS); do \
