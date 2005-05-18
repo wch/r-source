@@ -2,8 +2,8 @@ include MkRules
 include ../../share/make/vars.mk
 
 all:
-	-@mv $(RHOME)/SVN-REVISION $(RHOME)/SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) --no-print-directory Rpwd.exe
+	-mv ../../SVN-REVISION ../../SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
 	@$(MAKE) --no-print-directory htmldocs
@@ -604,8 +604,8 @@ rbuild-no-mbcs:
 	@$(RM) ../include/config.h ../include/Rconfig.h
 
 distribution:
-	-@mv $(RHOME)/SVN-REVISION $(RHOME)/SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) Rpwd.exe
+	-mv ../../SVN-REVISION ../../SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) rbuild-no-mbcs
 	@$(MAKE) rbuild
 	@$(MAKE) rpackage
