@@ -3,7 +3,9 @@ include ../../share/make/vars.mk
 
 all:
 	@$(MAKE) --no-print-directory Rpwd.exe
-	-mv ../../SVN-REVISION ../../SVN-REVISION.bak 2> /dev/null
+	@if test -f  ../../SVN-REVISION ; then \
+	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
+	fi
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
 	@$(MAKE) --no-print-directory htmldocs
