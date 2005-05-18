@@ -508,6 +508,18 @@ RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`
 
 ## if we do not have svn, preserve any existing file.
 ../../SVN-REVISION: FORCE
+ifdef USE_SVNVERSION
+	@rm -f svn-tmp 
+	echo "Revision: `svnversion ../..`" 2> /dev/null > svn-tmp 
+	@if test -f $@; then \
+	  grep -v exported svn-tmp > /dev/null || rm -f svn-tmp ; \
+	fi 
+	@if test -f svn-tmp; then \
+	  cp svn-tmp $@; \
+	else \
+	  echo "Revision: unknown" > $@ ; \
+	fi 
+else
 	@if test -f $@; then \
 	  rm -f svn-tmp ; \
 	  (cd ../..; svn info) 2> /dev/null > svn-tmp \
@@ -517,6 +529,7 @@ RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`
 	  (cd ../..; svn info || echo "Revision: unknown") 2> /dev/null \
 	    | sed -n '/Revision/p' > $@ ; \
 	fi
+endif
 
 docfiles:
 	$(MAKE) -f Makefile.docfiles

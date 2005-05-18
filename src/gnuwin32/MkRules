@@ -37,6 +37,10 @@ TCL_VERSION = 84
 # Define to use unicows
 # USE_UNICOWS = YES
 
+# Define to use svnversion to set SVN-REVISION (slow, but more informative
+# than without it because mixed or modified revisions will be indicated)
+# USE_SVNVERSION = YES
+
 ## ====== configuration macros for building installers ===========
 
 # location where Inno Setup 5.1.x was installed. Spaces allowed.
