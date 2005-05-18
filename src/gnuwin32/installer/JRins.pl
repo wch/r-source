@@ -132,6 +132,15 @@ de.full=Vollstдndige Installation
 de.CJK=Chinesische/Japanische/Koreanische Installation
 de.custom=Benutzerdefinierte Installation
 
+ru.regentries=Записи в системном регистре:
+ru.associate=Связать R с файлами .RData
+ru.dcom=Зарегистрировать путь к R для использования (D)COM-сервером
+ru.user=Пользовательская установка
+ru.compact=Минимальная пользовательская установка
+ru.full=Полная установка
+ru.CJK=Китайская/Японская/Корейская установка
+ru.custom=Выборочная установка
+
 [Tasks]
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
 Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4; Flags: unchecked 
