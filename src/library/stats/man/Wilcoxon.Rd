@@ -48,7 +48,7 @@ rwilcox(nn, m, n)
 }
 \note{
   S-PLUS uses a different (but equivalent) definition of the Wilcoxon
-  statistic.
+  statistic: see \code{\link{wilcox.test}} for details.
 }
 \author{Kurt Hornik}
 \seealso{

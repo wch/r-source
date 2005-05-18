@@ -19,7 +19,8 @@ wilcox.test(x, \dots)
 \method{wilcox.test}{formula}(formula, data, subset, na.action, \dots)
 }
 \arguments{
-  \item{x}{numeric vector of data values.}
+  \item{x}{numeric vector of data values.  Non-finite (e.g. infinite or
+    missing) values will be omitted.}
   \item{y}{an optional numeric vector of data values.}
   \item{alternative}{a character string specifying the alternative
     hypothesis, must be one of \code{"two.sided"} (default),
@@ -57,9 +58,9 @@ wilcox.test(x, \dots)
 
   Otherwise, if both \code{x} and \code{y} are given and \code{paired}
   is \code{FALSE}, a Wilcoxon rank sum test (equivalent to the
-  Mann-Whitney test) is carried out.  In this case, the null hypothesis
-  is that the location of the distributions of \code{x} and \code{y}
-  differ by \code{mu}.
+  Mann-Whitney test: see the Note) is carried out.  In this case, the
+  null hypothesis is that the location of the distributions of \code{x}
+  and \code{y} differ by \code{mu}.
 
   By default (if \code{exact} is not specified), an exact p-value is
   computed if the samples contain less than 50 finite values and there
@@ -95,11 +96,25 @@ wilcox.test(x, \dots)
   \item{estimate}{an estimate of the location parameter.
     (Only present if argument \code{conf.int = TRUE}.)}
 }
+\note{
+  The literature is not unanimous about the definitions of the Wilcoxon
+  rank sum and Mann-Whitney tests.  The two most common definitions
+  correspond to the sum of the ranks of the first sample with the
+  minimum value subtracted or not: \R subtracts and S-PLUS does not,
+  giving a value which is larger by \eqn{m(m+1)/2} for a first sample
+  of size \eqn{m}.  (It seems Wilcoxon's original paper used the
+  unadjusted sum of the ranks but subsequent tables subtracted the minimum.)
+
+  \R's value can also be computed as the number of all pairs
+  \code{(x[i], y[j])} for which \code{y[j]} is not greater than
+  \code{x[i]}, the most common definition of the Mann-Whitney test.
+}
 \references{
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric statistical inference}.
   New York: John Wiley & Sons.
-  Pages 27--33 (one-sample), 68--75 (two-sample).
+  Pages 27--33 (one-sample), 68--75 (two-sample).\cr
+  Or second edition (1999).
 
   David F. Bauer (1972),
   Constructing confidence sets using rank statistics.
@@ -107,6 +122,8 @@ wilcox.test(x, \dots)
   \bold{67}, 687--690.
 }
 \seealso{
+  \code{\link{psignrank}}, \code{\link{pwilcox}}.
+  
   \code{\link{kruskal.test}} for testing homogeneity in location
   parameters in the case of two or more samples;
   \code{\link{t.test}} for a parametric alternative under normality
