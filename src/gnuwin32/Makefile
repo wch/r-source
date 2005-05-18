@@ -511,7 +511,7 @@ RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`
 	@if test -f $@; then \
 	  rm -f svn-tmp ; \
 	  (cd ../..; svn info) 2> /dev/null > svn-tmp \
-	  && sed -n '/Revision/p' > svn-tmp $@ ;\
+	  && sed -n '/Revision/p' svn-tmp > $@ ;\
 	  rm -f svn-tmp ; \
 	else \
 	  (cd ../..; svn info || echo "Revision: unknown") 2> /dev/null \
