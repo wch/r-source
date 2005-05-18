@@ -3,19 +3,19 @@
 # ${RHOME}/tools/GETVERSION
 
 TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
-(cd ${TOOLS_DIR}/..
-  maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < VERSION`
-  min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < VERSION`
-  rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < VERSION`
+(
+  maj=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\1/' < ${TOOLS_DIR}/../VERSION`
+  min=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\2/' < ${TOOLS_DIR}/../VERSION`
+  rev=`sed 's/\([^ .]*\).\([^ ]*\) *\(.*\)/\3/' < ${TOOLS_DIR}/../VERSION`
   pl=`echo ${min} | sed 's/\..*//'`
   sl=`echo ${min} | sed 's/.*\.//'`
   ver=`expr ${maj} \\* 65536 + ${pl} \\* 256 + ${sl}`
-  y=`cut -d/ -f1 < date-stamp`
-  m=`cut -d/ -f2 < date-stamp`
-  d=`cut -d/ -f3 < date-stamp`
+  y=`cut -d/ -f1 < ${TOOLS_DIR}/../date-stamp`
+  m=`cut -d/ -f2 < ${TOOLS_DIR}/../date-stamp`
+  d=`cut -d/ -f3 < ${TOOLS_DIR}/../date-stamp`
   y1=`expr ${y} - 2000`
-  if test -f SVN-REVISION ; then
-    svn_rev=`sed 's/^Revision: //' < SVN-REVISION`
+  if test -f ../../SVN-REVISION ; then
+    svn_rev=`sed -n -e 's/^Revision: //' -e '1p' < ../../SVN-REVISION`
   else
     svn_rev=unknown
   fi

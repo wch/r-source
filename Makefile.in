@@ -11,7 +11,7 @@ include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
 INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS NEWS ONEWS THANKS
-NON_SVN_INSTFILES = FAQ RESOURCES
+NON_SVN_INSTFILES = FAQ RESOURCES SVN-REVISION
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL OONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
@@ -74,10 +74,6 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	-@(cd src/library && $(MAKE) $@)
 
-SVN-REVISION: FORCE
-	@(cd $(srcdir); svn info  || echo "Revision: unknown") 2> /dev/null \
-	  | sed -n '/Revision/p' > $@
-
 install: installdirs svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
@@ -100,8 +96,12 @@ install: installdirs svnonly
 
 svnonly:
 	@if test ! -f "$(srcdir)/FAQ" || test -f non-tarball ; then \
-	  cd doc/manual && $(MAKE) front-matter ; \
+	  (cd doc/manual && $(MAKE) front-matter) ; \
 	  touch non-tarball ; \
+	  (cd $(srcdir); TZ=GMT svn info  || echo "Revision: unknown") 2> /dev/null \
+	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p > SVN-REVISION-tmp ; \
+	   $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
+	   rm -f SVN-REVISION-tmp ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
@@ -168,7 +168,7 @@ dist-unix: distdir
 	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $${dirname}; \
 	  rm -rf $${dirname}
 dist-win:
-distdir: $(DISTFILES) SVN-REVISION vignettes
+distdir: $(DISTFILES) vignettes
 	@rm -rf $(distdir)
 	@mkdir $(distdir)
 	@-chmod 755 $(distdir)
@@ -177,7 +177,7 @@ distdir: $(DISTFILES) SVN-REVISION vignettes
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for f in $(NON_SVN_INSTFILES) SVN-REVISION; do \
+	@for f in $(NON_SVN_INSTFILES) ; do \
 	  cp -p $${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
