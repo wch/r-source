@@ -53,7 +53,8 @@ Rmath.h: Rmath.h0
 ## This needs to be copy-on-change.
 ## We don't get the date from svn info as it is not in GMT.
 ## <FIXME> USE_SVNVERSION does not work if there is no 'svnversion'
-$(R_HOME)/SVN-REVISION: 
+FORCE:
+$(R_HOME)/SVN-REVISION: FORCE
 ifdef USE_SVNVERSION
 	@svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
 	@grep -v exported svn-tmp > /dev/null || rm -f svn-tmp
