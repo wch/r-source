@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000		    The R Development Core Team.
+ *  Copyright (C) 2000-5       	    The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -355,7 +355,7 @@ static void z_tan(Rcomplex *r, Rcomplex *z)
 
 	/* Complex Arcsin and Arccos Functions */
 	/* Equation (4.4.37) Abramowitz and Stegun */
- 	/* with additional terms to force the branch
+ 	/* with additional terms to force the branch */
  	/* to agree with figure 4.4, p79.  Continuity */
  	/* on the branch cuts (real axis; y==0, |x| > 1) is */
  	/* standard: z_asin() is continuous from below if x >= 1 */
