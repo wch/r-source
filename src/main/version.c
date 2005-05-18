@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2000, 2005  The R Development Core Team
+ *  Copyright (C) 1998-2005   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,12 +30,13 @@ void PrintGreeting(void)
     Rprintf("\nR : Copyright %s, The R Foundation for Statistical Computing\n",
 	    R_YEAR);
     if (strcmp(R_SVN_REVISION, "unknown"))
-        Rprintf("Version %s.%s %s (%s-%s-%s r%s), ISBN 3-900051-07-0\n\n",
+        Rprintf("Version %s.%s %s (%s-%s-%s r%s)\n",
 		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
 		R_SVN_REVISION);
     else
-        Rprintf("Version %s.%s %s (%s-%s-%s), ISBN 3-900051-07-0\n\n",
+        Rprintf("Version %s.%s %s (%s-%s-%s)\n",
                 R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+    Rprintf("ISBN 3-900051-07-0\n\n");
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
 You are welcome to redistribute it under certain conditions.\n\
 Type 'license()' or 'licence()' for distribution details.\n\n"));
