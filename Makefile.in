@@ -98,10 +98,19 @@ svnonly:
 	@if test ! -f "$(srcdir)/FAQ" || test -f non-tarball ; then \
 	  (cd doc/manual && $(MAKE) front-matter) ; \
 	  touch non-tarball ; \
-	  (cd $(srcdir); TZ=GMT svn info  || echo "Revision: unknown") 2> /dev/null \
-	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p > SVN-REVISION-tmp ; \
-	   $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
-	   rm -f SVN-REVISION-tmp ; \
+	  (cd $(srcdir); TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
+	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
+	    |  cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
+	  if grep unknown SVN-REVISION-tmp > /dev/null ; then \
+	    echo "Last Changed Date: Today" >> SVN-REVISION-tmp ; \
+	    if test -f "$(srcdir)/.svn/entries" ; then \
+	      rev=`grep committed-rev "$(srcdir)/.svn/entries" | head -1 | sed -e 's/^ *committed-rev=\"//' -e 's/\"//'`; \
+	      cdate=`grep committed-date "$(srcdir)/.svn/entries" | head -1 | sed -e 's/^ *committed-date=\"//' -e 's/T.*//'`; \
+	      sed -e "s/unknown/$${rev}/" -e "s/Today/$${cdate}/" SVN-REVISION-tmp > SVN-REVISION-tmp2; mv SVN-REVISION-tmp2 SVN-REVISION-tmp ; \
+	    fi ; \
+	  fi ; \
+	  $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
+	  rm -f SVN-REVISION-tmp ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
