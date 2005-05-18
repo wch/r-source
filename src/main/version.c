@@ -29,8 +29,13 @@ void PrintGreeting(void)
 {
     Rprintf("\nR : Copyright %s, The R Foundation for Statistical Computing\n",
 	    R_YEAR);
-    Rprintf("Version %s.%s %s (%s-%s-%s), ISBN 3-900051-07-0\n\n",
-	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+    if (strcmp(R_SVN_REVISION, "unknown"))
+        Rprintf("Version %s.%s %s (%s-%s-%s r%s), ISBN 3-900051-07-0\n\n",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
+		R_SVN_REVISION);
+    else
+        Rprintf("Version %s.%s %s (%s-%s-%s), ISBN 3-900051-07-0\n\n",
+                R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
 You are welcome to redistribute it under certain conditions.\n\
 Type 'license()' or 'licence()' for distribution details.\n\n"));

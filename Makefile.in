@@ -74,6 +74,9 @@ stamp-recommended: R docs
 vignettes: stamp-recommended
 	-@(cd src/library && $(MAKE) $@)
 
+SVN-REVISION:
+	@(cd $(srcdir); svn info) | sed -n '/Revision/p' > $@
+
 install: installdirs svnonly
 	@for d in $(SUBDIRS); do \
 	  (cd $${d} && $(MAKE) $@) || exit 1; \
@@ -164,7 +167,7 @@ dist-unix: distdir
 	  GZIP=$(GZIP) $(TAR) czf $${distname}.tar.gz $${dirname}; \
 	  rm -rf $${dirname}
 dist-win:
-distdir: $(DISTFILES) vignettes
+distdir: $(DISTFILES) SVN-REVISION vignettes
 	@rm -rf $(distdir)
 	@mkdir $(distdir)
 	@-chmod 755 $(distdir)
@@ -173,7 +176,7 @@ distdir: $(DISTFILES) vignettes
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for f in $(NON_SVN_INSTFILES); do \
+	@for f in $(NON_SVN_INSTFILES) SVN-REVISION; do \
 	  cp -p $${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \
