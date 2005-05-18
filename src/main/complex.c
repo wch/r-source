@@ -355,6 +355,11 @@ static void z_tan(Rcomplex *r, Rcomplex *z)
 
 	/* Complex Arcsin and Arccos Functions */
 	/* Equation (4.4.37) Abramowitz and Stegun */
+ 	/* with additional terms to force the branch
+ 	/* to agree with figure 4.4, p79.  Continuity */
+ 	/* on the branch cuts (real axis; y==0, |x| > 1) is */
+ 	/* standard: z_asin() is continuous from below if x >= 1 */
+ 	/* and continuous from above if x <= -1. */
 
 static void z_asin(Rcomplex *r, Rcomplex *z)
 {
@@ -367,6 +372,7 @@ static void z_asin(Rcomplex *r, Rcomplex *z)
     bet = t1 - t2;
     r->r = asin(bet);
     r->i = log(alpha + sqrt(alpha*alpha - 1));
+    if(y < 0 || (y == 0 && x > 1)) r->i *= -1;
 }
 
 static void z_acos(Rcomplex *r, Rcomplex *z)
@@ -379,6 +385,11 @@ static void z_acos(Rcomplex *r, Rcomplex *z)
 
 	/* Complex Arctangent Function */
 	/* Equation (4.4.39) Abramowitz and Stegun */
+ 	/* with additional terms to force the branch cuts */
+ 	/* to agree with figure 4.4, p79.  Continuity */
+ 	/* on the branch cuts (pure imaginary axis; x==0, |y|>1) */
+ 	/* is standard: z_asin() is continuous from the right */
+ 	/*  if y >= 1, and continuous from the left if y <= -1.	*/
 
 static void z_atan(Rcomplex *r, Rcomplex *z)
 {
@@ -388,6 +399,10 @@ static void z_atan(Rcomplex *r, Rcomplex *z)
     r->r = 0.5 * atan(2 * x / ( 1 - x * x - y * y));
     r->i = 0.25 * log((x * x + (y + 1) * (y + 1)) /
 		      (x * x + (y - 1) * (y - 1)));
+    if(x*x + y*y > 1) {
+	r->r += M_PI_2;
+	if(x < 0 || (x == 0 && y < 0)) r->r -= M_PI;
+    }
 }
 
 static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
