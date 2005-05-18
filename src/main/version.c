@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2000  The R Development Core Team
+ *  Copyright (C) 1998, 2000, 2005  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -85,8 +85,13 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 void PrintVersion(char *s)
 {
     char tmp[50];
-    sprintf(s, "R %s.%s %s (%s-%s-%s)\n",
-	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+    if (strcmp(R_SVN_REVISION, "unknown"))
+	sprintf(s, "R %s.%s %s (%s-%s-%s r%s)\n",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
+		R_SVN_REVISION);
+    else
+	sprintf(s, "R %s.%s %s (%s-%s-%s)\n",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     sprintf(tmp, "Copyright (C) %s R Development Core Team\n\n", R_YEAR);
     strcat(s, tmp);
     strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");
