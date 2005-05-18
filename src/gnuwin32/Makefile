@@ -2,6 +2,7 @@ include MkRules
 include ../../share/make/vars.mk
 
 all:
+	-@mv $(RHOME)/SVN-REVISION $(RHOME)/SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) --no-print-directory Rpwd.exe
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
@@ -173,7 +174,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 
-fixfiles: docfiles ../../SVN-REVISION
+fixfiles: docfiles 
 	@$(MKDIR) -p ../../bin
 	@$(MAKE) --no-print-directory -C ./fixed BUILD=$(BUILD)
 
@@ -506,31 +507,6 @@ vignettes:
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
 
-## if we do not have svn, preserve any existing file.
-../../SVN-REVISION: FORCE
-ifdef USE_SVNVERSION
-	@rm -f svn-tmp 
-	echo "Revision: `svnversion ../..`" 2> /dev/null > svn-tmp 
-	@if test -f $@; then \
-	  grep -v exported svn-tmp > /dev/null || rm -f svn-tmp ; \
-	fi 
-	@if test -f svn-tmp; then \
-	  cp svn-tmp $@; \
-	else \
-	  echo "Revision: unknown" > $@ ; \
-	fi 
-else
-	@if test -f $@; then \
-	  rm -f svn-tmp ; \
-	  (cd ../..; svn info) 2> /dev/null > svn-tmp \
-	  && sed -n '/Revision/p' svn-tmp > $@ ;\
-	  rm -f svn-tmp ; \
-	else \
-	  (cd ../..; svn info || echo "Revision: unknown") 2> /dev/null \
-	    | sed -n '/Revision/p' > $@ ; \
-	fi
-endif
-
 docfiles:
 	$(MAKE) -f Makefile.docfiles
 
@@ -628,6 +604,7 @@ rbuild-no-mbcs:
 	@$(RM) ../include/config.h ../include/Rconfig.h
 
 distribution:
+	-@mv $(RHOME)/SVN-REVISION $(RHOME)/SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) Rpwd.exe
 	@$(MAKE) rbuild-no-mbcs
 	@$(MAKE) rbuild
@@ -640,6 +617,7 @@ distribution:
 	$(MAKE) manuals
 	$(MAKE) rinstaller
 	$(MAKE) crandir
+	@$(RM) -f $(RHOME)/SVN-REVISION.bak
 
 
 ## ============= End of maintainer targets ========================
