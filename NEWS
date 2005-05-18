@@ -30,6 +30,13 @@ NEW FEATURES
 
 BUG FIXES
 
+    o	Hershey fonts were being sized based on pixels not points so came
+        out too small on devices where pixels were noticeably different 
+	from points (e.g., win.printer and high-resolution screens).
+
+	Fix means that default size of Hershey fonts may be slightly
+	different, for example, smaller by default on PostScript and PDF.
+
     o	lm(qr=FALSE) now works.
 
     o	predict.glm() not longer loses names for "response" predictions.
