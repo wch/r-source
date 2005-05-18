@@ -54,8 +54,8 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128];
     checkArity(op, args);
     sprintf(buf,"%s, %s", R_CPU, R_OS);
-    PROTECT(value = allocVector(VECSXP,11));
-    PROTECT(names = allocVector(STRSXP,11));
+    PROTECT(value = allocVector(VECSXP,12));
+    PROTECT(names = allocVector(STRSXP,12));
     SET_STRING_ELT(names, 0, mkChar("platform"));
     SET_VECTOR_ELT(value, 0, mkString(R_PLATFORM));
     SET_STRING_ELT(names, 1, mkChar("arch"));
@@ -76,8 +76,10 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(value, 8, mkString(R_MONTH));
     SET_STRING_ELT(names, 9, mkChar("day"));
     SET_VECTOR_ELT(value, 9, mkString(R_DAY));
-    SET_STRING_ELT(names, 10, mkChar("language"));
-    SET_VECTOR_ELT(value, 10, mkString("R"));
+    SET_STRING_ELT(names, 10, mkChar("svn rev"));
+    SET_VECTOR_ELT(value, 10, mkString(R_SVN_REVISION));
+    SET_STRING_ELT(names, 11, mkChar("language"));
+    SET_VECTOR_ELT(value, 11, mkString("R"));
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
