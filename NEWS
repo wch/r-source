@@ -179,13 +179,6 @@ NEW FEATURES
 
 BUG FIXES
 
-    o	Hershey fonts were being sized based on pixels not points so came
-        out too small on devices where pixels were noticeably different 
-	from points (e.g., win.printer and high-resolution screens).
-
-	Fix means that default size of Hershey fonts may be slightly
-	different, for example, smaller by default on PostScript and PDF.
-
     o	lm(qr=FALSE) now works.
 
     o	predict.glm() not longer loses names for "response" predictions.
@@ -286,6 +279,18 @@ BUG FIXES
     o	source(file, chdir = TRUE) was not checking that 'file' was a
 	filepath (rather than a URL).  For 2.1.0 only, it did not work
 	even if 'file' was a filepath.
+
+    o	Hershey fonts were being sized based on pixels not points so came
+        out too small on devices where pixels were noticeably different 
+	from points (e.g., win.printer() and high-resolution screens).
+
+	Fix means that default size of Hershey fonts may be slightly
+	different, for example, smaller by default on PostScript and PDF.
+
+    o	The branch cuts in the complex versions of the inverse
+	trigonometric and hyperbolic functions were non-standard.
+	(PR#7871)
+
 
 
 

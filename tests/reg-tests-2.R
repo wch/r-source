@@ -1605,3 +1605,12 @@ dt(1, 1e7, ncp=1)
 dt(1, 1e8, ncp=1)
 dt(1, 1e10, ncp=1) # = Inf
 ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+
+
+## Branch cuts in complex inverse trig functions
+atan(2)
+atan(2+0i)
+tan(atan(2+0i))
+atan(1.0001+0i)
+atan(0.9999+0i)
+## previously not as in Abramowitz & Stegun.

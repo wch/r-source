@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-05-09), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-05-18 r34393)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4692,4 +4693,18 @@ NaNs produced in: pf(q, df1, df2, lower.tail, log.p)
 > dt(1, 1e10, ncp=1) # = Inf
 [1] 0.3989423
 > ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+> 
+> 
+> ## Branch cuts in complex inverse trig functions
+> atan(2)
+[1] 1.107149
+> atan(2+0i)
+[1] 1.107149+0i
+> tan(atan(2+0i))
+[1] 2+0i
+> atan(1.0001+0i)
+[1] 0.7854482+0i
+> atan(0.9999+0i)
+[1] 0.7853482+0i
+> ## previously not as in Abramowitz & Stegun.
 > 
