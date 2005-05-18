@@ -35,7 +35,7 @@ Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
 	@sh GC > Rconfig.h
 	@$(RM) GC
 
-Rversion.h: $(R_HOME)/date-stamp $(R_HOME)/VERSION
+Rversion.h: $(R_HOME)/date-stamp $(R_HOME)/VERSION $(R_HOME)/SVN-REVISION
 	@$(SED) -e 1d $(R_HOME)/tools/GETVERSION > $(R_HOME)/tools/GV
 	@sh $(R_HOME)/tools/GV > $@
 	@$(RM) $(R_HOME)/tools/GV

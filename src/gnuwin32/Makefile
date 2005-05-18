@@ -173,7 +173,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 
-fixfiles: docfiles
+fixfiles: docfiles ../../SVN-REVISION
 	@$(MKDIR) -p ../../bin
 	@$(MAKE) --no-print-directory -C ./fixed BUILD=$(BUILD)
 
@@ -506,6 +506,17 @@ vignettes:
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
 RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
 
+## if we do not have svn, preserve any existing file.
+../../SVN-REVISION: FORCE
+	@if test -f $@; then \
+	  rm -f svn-tmp ; \
+	  (cd ../..; svn info) 2> /dev/null > svn-tmp \
+	  && sed -n '/Revision/p' > svn-tmp $@ ;\
+	  rm -f svn-tmp ; \
+	else \
+	  (cd ../..; svn info || echo "Revision: unknown") 2> /dev/null \
+	    | sed -n '/Revision/p' > $@ ; \
+	fi
 
 docfiles:
 	$(MAKE) -f Makefile.docfiles
