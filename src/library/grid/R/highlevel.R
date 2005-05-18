@@ -69,7 +69,7 @@ grid.multipanel <- function(x = stats::runif(90), y = stats::runif(90),
         grid.newpage()
     if (!is.null(vp))
         pushViewport(vp)
-    stopifnot(nplots < 1)
+    # stopifnot(nplots < 1)
     if(missing(nrow) || missing(ncol)) { # determine 'smart' default ones
         rowcol <- grDevices::n2mfrow(nplots)
         nrow <- rowcol[1]
