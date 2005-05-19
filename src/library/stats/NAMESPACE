@@ -64,7 +64,9 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
 
 
 import(graphics)
-importFrom(grDevices, dev.interactive, palette)
+## 'graphics' imports 'grDevices' completely; hence this is currently a noop:
+importFrom(grDevices, dev.interactive, palette, extendrange, xy.coords)
+
 importFrom(utils, str)
 
 ## register all the methods for generics elsewhere in case namespace is

@@ -91,7 +91,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     if (show[1]) {
 	ylim <- range(r, na.rm=TRUE)
 	if(id.n > 0)
-	    ylim <- ylim + c(-1, 1)* 0.08 * diff(ylim)
+	    ylim <- extendrange(r= ylim, f = 0.08)
 	plot(yh, r, xlab = l.fit, ylab = "Residuals", main = main,
 	     ylim = ylim, type = "n", ...)
 	panel(yh, r, ...)
@@ -146,7 +146,7 @@ function (x, which = c(1:3,5), ## was which = 1:4,
     if (show[5]) {
 	ylim <- range(rs, na.rm = TRUE)
 	if (id.n > 0) {
-	    ylim <- ylim + c(-1, 1) * 0.08 * diff(ylim)
+	    ylim <- extendrange(r= ylim, f = 0.08)
 	    show.r <- order(-cook)[iid]
 	}
         r.hat <- range(hatval, na.rm = TRUE) # though should never have NA
