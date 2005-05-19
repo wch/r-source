@@ -259,7 +259,7 @@ endif
 
 Rfake:
 	@if test -f $(SPKG)/NAMESPACE; then \
-	  echo ".onLoad <- function(list, pkg) NULL" >> $(DPKG)/R/$(PKG) ; \
+	  echo ".onLoad <- .onAttach <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ; \
 	else \
 	  echo ".First.lib <- function(lib, pkg) NULL" >> $(DPKG)/R/$(PKG) ;\
 	fi
