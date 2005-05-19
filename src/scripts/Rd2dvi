@@ -143,7 +143,9 @@ Rd_DESCRIPTION_to_LaTeX () {
   ${echo} "\\begin{description}"
   ${echo} "\\raggedright{}"
   for f in `${echo} "${fields}" | sed '/Package/d; /Bundle/d;'`; do
-    text=`get_dcf_field ${f} ${1}`
+    text=`get_dcf_field ${f} ${1} | \
+      tr '\n' ' ' | \
+      sed "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g"`
     ${echo} "\\item[${f}] \\AsIs{${text}}"
   done
   ${echo} "\\end{description}"
