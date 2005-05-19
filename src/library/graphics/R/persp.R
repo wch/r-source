@@ -49,9 +49,3 @@ function (x = seq(0, 1, len = nrow(z)), y = seq(0, 1, len = ncol(z)),
         title(main = main, sub = sub, ...)
     invisible(r)
 }
-
-trans3d <- function(x,y,z, pmat) {
-    tr <- cbind(x,y,z,1) %*% pmat
-    list(x = tr[,1]/tr[,4],
-	 y = tr[,2]/tr[,4])
-}

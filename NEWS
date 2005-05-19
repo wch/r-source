@@ -78,7 +78,8 @@ NEW FEATURES
 
     o	write() has a new argument 'sep'.
 
-    o	New function trans3d(), the 3D -> 2D utility from persp()'s example.
+    o	New functions trans3d(), the 3D -> 2D utility from persp()'s example,
+	and extendrange(), both in package 'grDevices'.
 
 
 DEPRECATED & DEFUNCT
@@ -129,7 +130,7 @@ C-LEVEL FACILITIES
 	'xmass' (= weights).
 
     o	Raw vectors passed to .C() are now passed as unsigned char * rather
-	than as SEXPs.  (Wish of Keith Frost, PR#7853)
+	than as SEXPs.	(Wish of Keith Frost, PR#7853)
 
 
 BUG FIXES
@@ -169,9 +170,9 @@ NEW FEATURES
 	dropping them to a vector whilst preserving names.
 
     o	df() with one infinite df now works (to match pf()).
-	
+
     o	Added tclServiceMode() function to the tcltk package to allow
-    	updating to be suspended.
+	updating to be suspended.
 
     o	The Encoding: field of a DESCRIPTION file is now documented,
 	and used by packageDescription() and library(help=).
@@ -281,7 +282,7 @@ BUG FIXES
 	even if 'file' was a filepath.
 
     o	Hershey fonts were being sized based on pixels not points so came
-        out too small on devices where pixels were noticeably different 
+	out too small on devices where pixels were noticeably different
 	from points (e.g., win.printer() and high-resolution screens).
 
 	Fix means that default size of Hershey fonts may be slightly
@@ -290,7 +291,6 @@ BUG FIXES
     o	The branch cuts in the complex versions of the inverse
 	trigonometric and hyperbolic functions were non-standard.
 	(PR#7871)
-
 
 
 

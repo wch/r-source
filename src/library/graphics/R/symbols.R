@@ -43,20 +43,16 @@ function (x, y = NULL, circles, squares, rectangles, stars,
     if (!add) {
 	if(is.null(xlab)) xlab <- xy$xlab
 	if(is.null(ylab)) ylab <- xy$ylab
-	if(is.null(xlim)) {
-	    ## Expand the range by 20% : wild guess !
-	    ## FIXME: better guess: use size of largest symbol...
-	    ##	      really would need	 (x, y, type, data, inches) ->
-	    ##	      rather an internal symbols.limits()
-	    xlim <- range(x, na.rm = TRUE)
-	    xlim <- xlim + c(-1, 1) * .10 * diff(xlim)
-	}
-	if(is.null(ylim)) {
-	    ylim <- range(y, na.rm = TRUE)
-	    ylim <- ylim + c(-1, 1) * .10 * diff(ylim)
-	}
-	plot(NA, NA, type="n", xlim=xlim, ylim=ylim,
-	     xlab=xlab, ylab=ylab, main=main, ...)
+	## Expand the range by 2 * 0.10 = 20% : wild guess !
+	## FIXME: better guess: use size of largest symbol...
+	##	      really would need	 (x, y, type, data, inches) ->
+	##	      rather an internal symbols.limits()
+	if(is.null(xlim))
+	    xlim <- extendrange(x, f = 0.10)
+	if(is.null(ylim))
+	    ylim <- extendrange(y, f = 0.10)
+	plot(NA, NA, type = "n", xlim = xlim, ylim = ylim,
+	     xlab = xlab, ylab = ylab, main = main, ...)
     }
     .Internal(symbols(x, y, type, data, inches, bg, fg, ...))
 }
