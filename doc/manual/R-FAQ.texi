@@ -1696,6 +1696,8 @@ Experimenters II'' by G. E. P. Box, J. S. Hunter, and W. C. Hunter,
 @item BMA
 Bayesian Model Averaging for linear models, generalizable linear models
 and survival models (Cox regression).
+@item BRugs
+OpenBUGS and its R interface BRugs.
 @item Bhat
 Functions for general likelihood exploration (MLE, MCMC, CIs).
 @item Biodem
