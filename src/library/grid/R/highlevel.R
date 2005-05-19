@@ -22,8 +22,8 @@ grid.strip <- function(label="whatever", range.full=c(0, 1),
 
 grid.panel <- function(x = stats::runif(10), y = stats::runif(10),
                    zrange = c(0, 1), zbin = stats::runif(2),
-                   xscale = range(x)+c(-1,1)*.05*diff(range(x)),
-                   yscale = range(y)+c(-1,1)*.05*diff(range(y)),
+                   xscale = extendrange(x),
+                   yscale = extendrange(y),
                    axis.left = TRUE, axis.left.label = TRUE,
                    axis.right = FALSE, axis.right.label = TRUE,
                    axis.bottom = TRUE, axis.bottom.label = TRUE,
@@ -69,16 +69,17 @@ grid.multipanel <- function(x = stats::runif(90), y = stats::runif(90),
         grid.newpage()
     if (!is.null(vp))
         pushViewport(vp)
-    # stopifnot(nplots < 1)
-    if(missing(nrow) || missing(ncol)) { # determine 'smart' default ones
+    stopifnot(nplots >= 1)
+    if((missing(nrow) || missing(ncol)) && !missing(nplots)) {
+        ## determine 'smart' default ones
         rowcol <- grDevices::n2mfrow(nplots)
         nrow <- rowcol[1]
         ncol <- rowcol[2]
     }
     temp.vp <- viewport(layout = grid.layout(nrow, ncol))
     pushViewport(temp.vp)
-    xscale <- range(x)+c(-1,1)*.05*diff(range(x))
-    yscale <- range(y)+c(-1,1)*.05*diff(range(y))
+    xscale <- extendrange(x)
+    yscale <- extendrange(y)
     breaks <- seq(min(z), max(z), length = nplots + 1)
     for (i in 1:nplots) {
         col <- (i - 1) %% ncol + 1

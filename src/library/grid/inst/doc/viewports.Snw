@@ -192,8 +192,8 @@ We will be establishing some scales appropriate for these data,
 so we calculate sensible ranges now.
 
 <<>>=
-xscale <- range(x) + c(-1, 1)*diff(range(x))*0.05
-yscale <- range(y) + c(-1, 1)*diff(range(y))*0.05
+xscale <- extendrange(x)
+yscale <- extendrange(y)
 
 @
 We now produce a set of viewports that will be useful in creating the

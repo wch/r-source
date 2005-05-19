@@ -51,7 +51,7 @@ get.gpar(names = NULL)
   The \code{alpha} setting is combined with the alpha channel for
   individual colours by multiplying (with both alpha settings
   normalised to the range 0 to 1).
-  
+
   The size of text is \code{fontsize}*\code{cex}.  The size of a line
   is \code{fontsize}*\code{cex}*\code{lineheight}.
 
@@ -60,7 +60,7 @@ get.gpar(names = NULL)
   \code{cex} of 0.5, the effective \code{cex} is 0.25.
 
   The \code{alpha} and \code{lex} settings are also cumulative.
-  
+
   Changes to the \code{fontfamily} may be ignored by some devices,
   but is supported by PostScript, PDF, X11, Windows, and Quartz.  The
   \code{fontfamily} may be used to specify one
@@ -78,7 +78,7 @@ get.gpar(names = NULL)
   For the special case of the HersheySerif font family,
   \code{"cyrillic"}, \code{"cyrillic.oblique"}, and \code{"EUC"}
   are also available.
-  
+
   Specifying the value \code{NULL} for a parameter is the same as not
   specifying any value for that parameter, except for \code{col} and
   \code{fill}, where \code{NULL} indicates not to draw a border or
@@ -89,7 +89,7 @@ get.gpar(names = NULL)
   notice of the first parameter value.)
 
   The \code{gamma} parameter is deprecated.
-  
+
   \code{get.gpar()} returns all current graphical parameter settings.
 }
 \value{
@@ -100,7 +100,9 @@ get.gpar(names = NULL)
 }
 \author{Paul Murrell}
 \examples{
-get.gpar()
+gp <- get.gpar()
+utils::str(gp)
+## These *do* nothing but produce a "gpar" object:
 gpar(col = "red")
 gpar(col = "blue", lty = "solid", lwd = 3, fontsize = 16)
 get.gpar(c("col", "lty"))

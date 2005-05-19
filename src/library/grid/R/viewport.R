@@ -356,18 +356,19 @@ plotViewport <- function(margins=c(5.1, 4.1, 4.1, 2.1), ...) {
 # Create a viewport from data
 # If xscale not specified then determine from x
 # If yscale not specified then determine from y
-dataViewport <- function(xData=NULL, yData=NULL, xscale=NULL, yscale=NULL,
-                         extension=0.05, ...) {
-  extension <- rep(extension, length.out=2)
-  if (is.null(xscale)) {
-    if (is.null(xData))
-      stop("Must specify at least one of 'x' or 'xscale'")
-    xscale <- range(xData) + c(-1, 1)*diff(range(xData))*extension[1]
-  }
-  if (is.null(yscale)) {
-    if (is.null(yData))
-      stop("Must specify at least one of 'y' or 'yscale'")
-    yscale <- range(yData) + c(-1, 1)*diff(range(yData))*extension[2]
-  }
-  viewport(xscale=xscale, yscale=yscale, ...)
+dataViewport <- function(xData = NULL, yData = NULL,
+                         xscale = NULL, yscale = NULL, extension = 0.05, ...)
+{
+    extension <- rep(extension, length.out = 2)
+    if (is.null(xscale)) {
+        if (is.null(xData))
+            stop("Must specify at least one of 'x' or 'xscale'")
+        xscale <- extendrange(xData, f = extension[1])
+    }
+    if (is.null(yscale)) {
+        if (is.null(yData))
+            stop("Must specify at least one of 'y' or 'yscale'")
+        yscale <- extendrange(yData, f = extension[2])
+    }
+    viewport(xscale = xscale, yscale = yscale, ...)
 }

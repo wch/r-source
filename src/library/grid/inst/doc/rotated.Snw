@@ -43,17 +43,9 @@ y <- x + rnorm(50, 1, 2)
 Next we generate some statistics from the data.
 
 <<complex2, results=hide>>=
-rx <- range(x)
-dx <- diff(rx)
-ry <- range(y)
-dy <- diff(ry)
-max <- max(rx, ry)
-min <- min(rx, ry)
-r <- c(min(rx, ry), max(rx, ry))
-d <- diff(r)
 # We will extend the axes over the entire region so
 # extrapolate scale from main data region
-scale <- r + c(-1, 1)*d*.05
+scale <- extendrange(r = range(x,y))
 extscale <- c(min(scale), max(scale)+diff(scale)*1/3)
 
 @
