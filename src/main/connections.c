@@ -449,7 +449,11 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
 #if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
     off_t pos = f_tell(fp);
 #else
+#ifdef Win32
+    off64_t pos = f_tell(fp);
+#else
     long pos = f_tell(fp);
+#endif
 #endif
     int whence = SEEK_SET;
 
