@@ -296,6 +296,9 @@ BUG FIXES
 	now works for larger files at least on 64-bit OSes and others
 	where ftruncate supports such files.  (Related to PR#7879)
 
+    o	proj.aovlist() did not work correctly on objects fitted from a
+	data frame with row names.
+
 
 
 		CHANGES IN R VERSION 2.1.0

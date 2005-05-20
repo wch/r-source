@@ -158,7 +158,7 @@ proj.aovlist <- function(object, onedf = FALSE, unweighted.scale = FALSE, ...)
     n.object <- length(object)
     result <- vector("list", n.object)
     names(result) <- names(object)
-    D1 <- rownames(err.qr$qr)
+    D1 <- seq(length=NROW(err.qr$qr))
     if(unweighted.scale) wt <- attr(object, "weights")
     for(i in names(object)) {
 	prj <- proj.lm(object[[i]], onedf = onedf)
