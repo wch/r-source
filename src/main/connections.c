@@ -487,7 +487,15 @@ static void file_truncate(Rconnection con)
     Rfileconn this = con->private;
     FILE *fp = this->fp;
     int fd = fileno(fp);
+#ifdef HAVE_OFF_T
+    off_t size = lseek(fd, 0, SEEK_CUR);
+#else
+#ifdef Win32
+    __int64 size = lseek64(fd, 0, SEEK_CUR);
+#else
     int size = lseek(fd, 0, SEEK_CUR);
+#endif
+#endif
 
     if(!con->isopen || !con->canwrite)
 	error(_("can only truncate connections open for writing"));
@@ -495,9 +503,6 @@ static void file_truncate(Rconnection con)
     if(!this->last_was_write) this->rpos = f_tell(this->fp);
 #ifdef HAVE_FTRUNCATE
     if(ftruncate(fd, size))
-	error(_("file truncation failed"));
-#elif defined(Win32)
-    if(chsize(fd, size))
 	error(_("file truncation failed"));
 #else
     error(_("file truncation unavailable on this platform"));
