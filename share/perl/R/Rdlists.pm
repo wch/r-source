@@ -438,6 +438,8 @@ sub build_index { # lib, dest, version, [chmdir]
 	    die "Could not open $chmdir/00Index$HTML";
     }
 
+    $pkg_encoding = "iso-8859-1" if lc($pkg_encoding) eq "latin1";
+    $pkg_encoding = "iso-8859-2" if lc($pkg_encoding) eq "latin2";
     $pkg_encoding = "iso-8859-1" if $pkg_encoding eq "unknown";
 
     print htmlfile html_pagehead("$title", "../../../doc/html",
