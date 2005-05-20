@@ -411,8 +411,14 @@ foreach my $pkg (@ARGV) {
 			copy(substr($opt_install, 6), $out);
 			$opt_install = "check";
 			@lines = &read_lines($out);
+			## <NOTE>
+			## We used to have
+			## $install_error =
+			##    ($lines[$#lines] !~ /^\* DONE/);
+			## but what if there is output from do_cleanup
+			## in (Unix) R CMD INSTALL?
 			$install_error =
-			    ($lines[$#lines] !~ /^\* DONE/);
+			    (scalar(grep(/^\* DONE/, @lines)) == 0);
 		    }
 		    else {
 			$cmd .= " >" .
