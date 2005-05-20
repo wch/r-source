@@ -292,9 +292,9 @@ BUG FIXES
 	trigonometric and hyperbolic functions were non-standard.
 	(PR#7871)
 
-    o	truncate() on file() connections was limited to files < 2Gb.
-	It now works for larger files at least on 64-bit OSes and
-	Windows (where ftruncate supports such files).  (Related to PR#7879)
+    o	truncate() on file() connections was limited to files < 2Gb.  It
+	now works for larger files at least on 64-bit OSes and others
+	where ftruncate supports such files.  (Related to PR#7879)
 
 
 
