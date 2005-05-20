@@ -255,8 +255,8 @@ int dummy_fgetc(Rconnection con)
 	    }
 	    if(inew == 0) return R_EOF;
 	    if(checkBOM && con->inavail >= 2 &&
-	       (unsigned char) con->iconvbuff[0] == 255 &&
-	       (unsigned char) con->iconvbuff[1] == 254) {
+	       ((int)con->iconvbuff[0] & 0xff) == 255 &&
+	       ((int)con->iconvbuff[1] & 0xff) == 254) {
 		con->inavail -= 2;
 		memmove(con->iconvbuff, con->iconvbuff+2, con->inavail);
 	    }
