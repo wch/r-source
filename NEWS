@@ -18,8 +18,8 @@ USER-VISIBLE CHANGES
     o	graphics::xy.coords, xyz.coords and n2mfrow have been moved to
 	the grDevices name space (to be available in grid as well).
 
-    o	If R is built from a snapshot tarball, the SVN revision number
-	will appear after the date in the welcome message.
+    o	The SVN revision number will appear after the date in the
+	welcome message, provided it is available.
 
 
 NEW FEATURES
