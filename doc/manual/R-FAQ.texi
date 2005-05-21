@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-19
+@set FAQ_DATE @value{FAQ_YEAR}-05-21
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1832,6 +1832,9 @@ the book ``Kernel Smoothing'' by M. P. Wand and M. C. Jones, 1995.
 @emph{Recommended}.
 @item LDheatmap
 Heat maps of linkage disequilibrium measures.
+@item LMGene
+Date transformation and identification of differentially expressed genes
+in gene expression arrays.
 @item LogicReg
 Routines for Logic Regression.
 @item MASS
@@ -2261,6 +2264,8 @@ techniques, forecasting, and for evaluating forecasting model),
 @strong{tframe} (functions for writing code that is independent of the
 representation of time), and @strong{setRNG} (a mechanism for generating
 the same random numbers in S and R).
+@item dyn
+Time series regression.
 @item dynamicGraph
 Interactive graphical tool for manipulating graphs.
 @item dynlm
@@ -3013,6 +3018,8 @@ performing digital signal processing.
 @item sac
 Semiparametric empirical likelihood ratio based test of changepoint with
 one-change or epidemic alternatives with data-based model diagnostic.
+@item sampling
+A set of tools to select and to calibrate samples.
 @item sampfling
 Implements a modified version of the Sampford sampling algorithm.  Given
 a quantity assigned to each unit in the population, samples are drawn
