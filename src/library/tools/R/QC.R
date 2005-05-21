@@ -320,7 +320,7 @@ function(x, ...)
         ## We avoid markup for indicating S4 methods, hence need to
         ## special-case output for these ...
         if(tag == "S4 methods")
-            writeLines(strwrap(x[[i]], indent = 2, exdent = 2))
+            writeLines(strwrap(x[[i]], indent = 2, exdent = 4))
         else
             .pretty_print(x[[i]])
     }
@@ -570,7 +570,7 @@ function(package, dir, lib.loc = NULL,
     ## that of a method ...
     functions_to_be_ignored <-
         c(.functions_to_be_ignored_from_usage(basename(dir)),
-          .functions_with_no_useful_S3_method_markup)
+          .functions_with_no_useful_S3_method_markup())
     ## </FIXME>
 
     bad_doc_objects <- list()
@@ -759,13 +759,10 @@ function(x, ...)
         attr(x, "functions_in_usages_not_in_code")
     if(length(functions_in_usages_not_in_code) > 0) {
         for(fname in names(functions_in_usages_not_in_code)) {
-            ## <FIXME>
-            ## Use message() eventually ...
             writeLines(gettextf("Functions/methods with usage in documentation object '%s' but not in code:",
                                 fname))
             .pretty_print(unique(functions_in_usages_not_in_code[[fname]]))
             writeLines("")
-            ## </FIXME>
         }
     }
 
@@ -788,11 +785,11 @@ function(x, ...)
         xfname <- x[[fname]]
         for(i in seq(along = xfname))
             writeLines(c(xfname[[i]][["name"]],
-                         strwrap(paste("Code:",
-                                       format_args(xfname[[i]][["code"]])),
+                         strwrap(gettextf("Code: %s",
+                                          format_args(xfname[[i]][["code"]])),
                                  indent = 2, exdent = 17),
-                         strwrap(paste("Docs:",
-                                       format_args(xfname[[i]][["docs"]])),
+                         strwrap(gettextf("Docs: %s",
+                                          format_args(xfname[[i]][["docs"]])),
                                  indent = 2, exdent = 17)))
         writeLines("")
     }
@@ -932,11 +929,11 @@ function(x, ...)
                             docObj))
         docObj <- x[[docObj]]
         writeLines(c(gettextf("Slots for class '%s'", docObj[["name"]]),
-                     strwrap(paste("Code:",
-                                   format_args(docObj[["code"]])),
+                     strwrap(gettextf("Code: %s",
+                                      format_args(docObj[["code"]])),
                              indent = 2, exdent = 8),
-                     strwrap(paste("Docs:",
-                                   format_args(docObj[["docs"]])),
+                     strwrap(gettextf("Docs: %s",
+                                      format_args(docObj[["docs"]])),
                              indent = 2, exdent = 8)))
         writeLines("")
     }
@@ -1104,10 +1101,10 @@ function(x, ...)
         docObj <- x[[docObj]]
         writeLines(c(gettextf("Variables in data frame '%s'",
                               docObj[["name"]]),
-                     strwrap(paste("Code:",
+                     strwrap(gettextf("Code: %s",
                                    format_args(docObj[["code"]])),
                              indent = 2, exdent = 8),
-                     strwrap(paste("Docs:",
+                     strwrap(gettextf("Docs: %s",
                                    format_args(docObj[["docs"]])),
                              indent = 2, exdent = 8)))
         writeLines("")
@@ -1277,7 +1274,7 @@ function(package, dir, lib.loc = NULL)
             ## excluded from this test (e.g., the usage for '+' in
             ## 'DateTimeClasses.Rd' ...).
             functions <-
-                functions %w/o% .functions_with_no_useful_S3_method_markup
+                functions %w/o% .functions_with_no_useful_S3_method_markup()
             ## Argh.  There are good reasons for keeping \S4method{}{}
             ## as is, but of course this is not what the aliases use ...
             ## <FIXME>
@@ -2289,9 +2286,9 @@ function(x, ...)
         writeLines(gettextf("File '%s':", fname))
         xfname <- x[[fname]]
         for(i in seq(along = xfname)) {
-            writeLines(strwrap(paste("found T/F in",
-                                     paste(deparse(xfname[[i]]),
-                                           collapse = "")),
+            writeLines(strwrap(gettextf("found T/F in %s",
+                                        paste(deparse(xfname[[i]]),
+                                              collapse = "")),
                                exdent = 4))
         }
         writeLines("")
@@ -2800,7 +2797,7 @@ function(dfile)
         tmp <- character()
         if(regexpr(sprintf("^%s$", valid_package_name_regexp),
                    val) == -1)
-            tmp <- c(tmp, "Malformed package name")
+            tmp <- c(tmp, gettext("Malformed package name"))
         ## <FIXME>
         ## Not clear if we really want to do this.  The Perl code still
         ## seemed to assume that when checking a package, package name
@@ -2812,14 +2809,12 @@ function(dfile)
         if(!is_base_package) {
             if(val %in% standard_package_names$base)
                 tmp <- c(tmp,
-                         c("Invalid package name.",
-                           "This is the name of a base package."))
+                         c(gettext("Invalid package name."),
+                           gettext("This is the name of a base package.")))
             else if(val %in% standard_package_names$stubs)
                 tmp <- c(tmp,
-                         c("Invalid package name.",
-                           paste("This name was used for a base",
-                                 "package and is remapped by",
-                                 "library().")))
+                         c(gettext("Invalid package name."),
+                           gettext("This name was used for a base package and is remapped by library().")))
         }
         if(length(tmp))
             out$bad_package <- tmp
@@ -3078,12 +3073,36 @@ function(package_name)
 ### * .functions_with_no_useful_S3_method_markup
 
 .functions_with_no_useful_S3_method_markup <-
-    ## Currently there is no useful markup for S3 Ops group methods and
-    ## S3 methods for subscripting and subassigning.
-    c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=",
-      "==", "%%", "%/%", "&", "|", "!",
-      "[", "[[", "$", "[<-", "[[<-", "$<-")
-
+function()
+{
+    ## Once upon a time ... there was no useful markup for S3 methods
+    ## for subscripting/subassigning and binary operators.  There is
+    ## still no such markup for *unary* operators, and, strictly
+    ## speaking, for S3 Ops group methods for binary operators [but it
+    ## seems that people do not want to provide explicit documentation
+    ## for these].
+    ##
+    ## Support for S3 methods for subscripting/subassigning was added
+    ## for R 2.1, and for S3 methods for binary operators in 2.2.
+    ## Markup for the former is a bit controversial, as some legacy docs
+    ## have non-synopsis-style \usage entries for these methods.  E.g.,
+    ## as of 2005-05-21, \link[base]{Extract.data.frame} has
+    ##   x[i]
+    ##   x[i] <- value
+    ##   x[i, j, drop = TRUE]
+    ##   x[i, j] <- value
+    ## Hence, we provide internal environment variables for controlling
+    ## what should be ignored.
+    c(if(!identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_SUBSET_")),
+                    TRUE))
+      c("[", "[[", "$", "[<-", "[[<-", "$<-"),
+      if(identical(as.logical(Sys.getenv("_R_CHECK_RD_USAGE_METHOD_BINOPS_")),
+                   FALSE))
+      c("+", "-", "*", "/", "^", "<", ">", "<=", ">=", "!=", "==", "%%",
+        "%/%", "&", "|"),
+      ## Current, nothing for unary operators.
+      "!")
+}
 
 ### * .is_call_from_replacement_function_usage
 
@@ -3176,14 +3195,24 @@ function(x)
 ### * .S3_method_markup_regexp
 
 ## For matching \(S3)?method{GENERIC}{CLASS}.
-## GENERIC can be a syntactically valid name, or one of $ [ [[.
-## Support for S3 Ops group generics may be added eventually, provided
-## we also enhance Rdconv accordingly.
+## GENERIC can be
+## * a syntactically valid name
+## * one of $ [ [[
+## * one of the binary operators
+##   + - * / ^ < <= > >= != == | & %something%
+## (as supported by Rdconv).
 ## See also .functions_with_no_useful_S3_method_markup.
 
 .S3_method_markup_regexp <-
     sprintf("(\\\\(S3)?method\\{(%s)\\}\\{(%s)\\})",
-            "[._[:alnum:]]*|\\$|\\[\\[?",
+            paste(c("[._[:alnum:]]*",
+                    ## Subscripting
+                    "\\$", "\\[\\[?",
+                    ## Binary operators
+                    "\\+", "\\-", "\\*", "\\/", "\\^", "<=?", ">=?",
+                    "!=", "==", "\\&", "\\|",
+                    "\\%[[:alnum:][:punct:]]*\\%"),
+                  collapse = "|"),
             "[._[:alnum:]]*")
 
 ### * .S4_method_markup_regexp

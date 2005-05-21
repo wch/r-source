@@ -15,7 +15,7 @@
   Create, print and round time intervals.
 }
 \usage{
-time1 - time2
+\special{time1 - time2}
 
 difftime(time1, time2, tz = "",
          units = c("auto", "secs", "mins", "hours", "days", "weeks"))

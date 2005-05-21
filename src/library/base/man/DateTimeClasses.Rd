@@ -43,8 +43,8 @@
 
 \method{summary}{POSIXct}(object, digits = 15, \dots)
 
-time + number
-time - number
+\special{time + number}
+\special{time - number}
 \special{time1 lop time2}
 }
 \arguments{
