@@ -993,8 +993,8 @@ LoopNode: /* Generate a node */
     } else { /* Column marginals are new node */
 
 	for (i = 1; i <= nco; ++i)
-	    it[i] = ico[i] - lb[i];
-
+	    it[i] = imax2(ico[i] - lb[i], 0);
+	
 	/* Sort column marginals it[] : */
 	if (nco == 2) {
 	    if (it[1] > it[2]) { /* swap */
