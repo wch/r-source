@@ -40,7 +40,7 @@ win.packages.html <-
                 ## we may need to re-encode here.
                 if("Encoding" %in% names(txt)) {
                         to <- "UTF-8"
-                        tmp <- try(iconv(txt, txt["Encoding"], to, "?"))
+                        tmp <- try(utils::iconv(txt, txt["Encoding"], to, "?"))
                         if(!inherits(tmp, "try-error"))
                             txt <- tmp
                         else
