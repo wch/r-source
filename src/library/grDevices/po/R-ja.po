@@ -145,16 +145,16 @@ msgid "invalid first argument"
 msgstr "不正な 'family' 引数です"
 
 msgid "'x' and 'y' lengths differ"
-msgstr ""
+msgstr "'x' と 'y' の長さが異なります"
 
 msgid "invalid first argument [bad language object]"
-msgstr ""
+msgstr "最初の引数が無効です [誤った言語オブジェクトです]"
 
 msgid "at least 2 columns needed"
-msgstr ""
+msgstr "少なくとも二つの列が必要です"
 
 msgid "'x', 'y' and 'z' lengths differ"
-msgstr ""
+msgstr "'x','y' そして 'z' の長さが異なります"
 
 msgid "'file' is missing with no default"
 msgstr "'file' はデフォルトなしで欠損となっています"
@@ -226,15 +226,15 @@ msgstr[1] "が新しいものと古いもので異なります"
 
 msgid "%d x value <= 0 omitted from logarithmic plot"
 msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
+msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
 
 msgid "%d y value <= 0 omitted from logarithmic plot"
 msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 個の正でない y の値が対数プロットから除かれました"
+msgstr[1] "%d 個の正でない y の値が対数プロットから除かれました"
 
 msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
+msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
