@@ -236,7 +236,7 @@ by a version with support for those languages.
 The normal way to customize the installation is by selecting components
 from the wizards shown.  However, sysadmins might like to install R from
 scripts, and the following command-line flags are available for use with
-either installer.
+the installer.
 
 @table @samp
 @item /SILENT
@@ -273,7 +273,7 @@ A successful installation has exit code 0: unsuccessful ones may give 1,
 
 We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation
-and Administration' manual in the subsection `Building the installers'
+and Administration' manual in the subsection `Building the installers'.
 
 @node How do I run it?, Can I run R from a CD or USB drive?, Can I customize the installation?, Installation and Usage
 @section How do I run it?
@@ -537,7 +537,7 @@ Windows, and from @code{dir /X} in a @code{Command Prompt} window on
 
 Not itself.
 
-The installers set some entries to allow uninstallation.  In addition
+The installer sets some entries to allow uninstallation.  In addition
 (by default, but this can be de-selected) they set a Registry key
 @code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
 path.  Again, this is not used by R itself, but it will be used by the
