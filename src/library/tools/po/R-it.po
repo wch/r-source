@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:11\n"
+"POT-Creation-Date: 2005-05-21 13:29\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -54,6 +54,18 @@ msgstr ""
 #, fuzzy
 msgid "Codoc mismatches from documentation object '%s':"
 msgstr "Errore di sintassi nella documentazione dell'oggetto '%s':"
+
+msgid "Code: %s"
+msgstr ""
+
+msgid "code"
+msgstr ""
+
+msgid "Docs: %s"
+msgstr ""
+
+msgid "docs"
+msgstr ""
 
 #, fuzzy
 msgid "S4 class codoc mismatches from documentation object '%s':"
@@ -125,6 +137,9 @@ msgid "parse error in examples from file '%s'"
 msgstr "errore di analisi negli esempi del file '%s'"
 
 msgid "File '%s':"
+msgstr ""
+
+msgid "found T/F in %s"
 msgstr ""
 
 msgid "Packages required but not available:"
@@ -216,6 +231,18 @@ msgstr "Non posso ricodificare perché iconv non è disponbile"
 
 msgid "Try running R in a single-byte locale."
 msgstr "Prova ed eseguire R in un locale single-byte"
+
+msgid "Malformed package name"
+msgstr ""
+
+msgid "Invalid package name."
+msgstr ""
+
+msgid "This is the name of a base package."
+msgstr ""
+
+msgid "This name was used for a base package and is remapped by library()."
+msgstr ""
 
 msgid "Unknown encoding"
 msgstr ""
