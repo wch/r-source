@@ -40,7 +40,7 @@ $RVER =~ s/Under .*$/Pre-release/;
 open insfile, "> R.iss" || die "Cannot open R.iss\n";
 print insfile <<END;
 [Setup]
-OutputBaseFilename=${RW}
+OutputBaseFilename=${RW}-win32
 END
 
 my $lines=<<END;

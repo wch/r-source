@@ -7,6 +7,10 @@ See the file NEWS for changes that affect all versions of R.
 R 2.2.0
 =======
 
+The installer will be called R-2.2.0-win32.exe and by default install
+into C:/Program Files/R/R-2.2.0.  The 'rw2010' notation has been
+dropped.
+
 file:// URLs are now interpreted by download.file(), download.packages() 
 and url() in the same way as Mozilla-based browsers.  That is, the
 expected form is

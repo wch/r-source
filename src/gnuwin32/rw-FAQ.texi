@@ -80,8 +80,7 @@ that version.  The main R FAQ can be found at
 @end display
 
 The information here applies only to recent versions of R for Windows,
-(@code{2.1.0} or later); the current version is often called something like
-@code{@value{VERSION}} (although not officially).
+(@code{2.2.0} or later).
 
 
 
@@ -121,15 +120,16 @@ The information here applies only to recent versions of R for Windows,
 
 Go to any CRAN site (see @uref{http://cran.r-project.org/mirrors.html}
 for a list), navigate to the @code{bin/windows/base} directory and
-collect the files you need.  The current release is distributed as an
-installer @code{@RWVER@.exe} of about 25Mb.  This contains all the
+collect the file(s) you need.  The current release is distributed as an
+installer @code{@RWVER@-win32.exe} of about 25Mb.  This contains all the
 components and allows as complete as installation as you choose.
 
 There are also links on that page to the @code{r-patched} and
-@code{r-devel} releases.  These are frequently updated builds of development
-versions of R.  The @code{r-patched} build includes bug fixes to the
-current release, and @code{r-devel} contains changes that will eventually
-make it into the next major @code{x.y.0} release.
+@code{r-devel} snapshots.  These are frequently updated builds of
+development versions of R.  The @code{r-patched} build includes bug
+fixes to the current release, and @code{r-devel} contains these as well
+as changes that will eventually make it into the next major @code{x.y.0}
+release.
 
 @node How do I install R for Windows?, The installer does not offer my language, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
@@ -144,7 +144,7 @@ If you want to build packages from sources, we recommend that you choose
 an installation path not containing spaces.  (Using a path with spaces
 in will probably work, but is little-tested.)
 
-To install use @code{@RWVER@.exe}.  Just double-click on the icon and
+To install use @code{@RWVER@-win32.exe}.  Just double-click on the icon and
 follow the instructions.  If you installed R this way you can uninstall
 it from the Control Panel or Start Menu (unless you supressed making a
 group for R).
@@ -188,13 +188,13 @@ Slovenian.
 @node I want to run R in Chinese/Japanese/Korean, How do I check an installation?, The installer does not offer my language, Installation and Usage
 @section I want to run R in Chinese/Japanese/Korean
 
-As from R 2.1.0 this is possible by installing R with support for `East
-Asian' languages (with a suitable version of Windows -- Western
-installations of Windows XP do not by default have such support). You
-will need @file{msvcp60.dll} installed: it is part of modern versions of
-Windows, and is often installed by other programs.  So if it is not
-found automatically it is worth searching your machine and copying it
-from another program's directory to R's @file{bin} directory.
+This is possible by installing R with support for `East Asian' languages
+(with a suitable version of Windows -- Western installations of Windows
+XP do not by default have such support).  You will need
+@file{msvcp60.dll} installed: it is part of modern versions of Windows,
+and is often installed by other programs.  So if it is not found
+automatically it is worth searching your machine and copying it from
+another program's directory to R's @file{bin} directory.
 
 In such locales @file{Rterm.exe} should be used for batch use only, but
 @file{RGui.exe} will support single- and double-width characters.
@@ -248,10 +248,10 @@ set the default installation directory
 @item /GROUP="folder name"
 set the default Start-menu group name
 @item /COMPONENTS="comma separated list of component names"
-set the initial list of components.  @code{@RWVER@.exe} has components
-@code{main}, @code{chtml}, @code{html}, @code{latex}, @code{manuals},
-@code{refman}, @code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs},
-@code{Rd} and @code{trans}.
+set the initial list of components: Components are named @code{main},
+@code{chtml}, @code{html}, @code{latex}, @code{manuals}, @code{refman},
+@code{libdocs}, @code{devel}, @code{tcl}, @code{mbcs}, @code{Rd} and
+@code{trans}.
 @end table
 
 @noindent
@@ -306,7 +306,7 @@ version of Windows, but otherwise does mean that it may not be possible
 to run R without creating a shortcut in a writable folder.
 
 R 2.0.x ran more slowly from a slow storage medium but this is no longer
-true as from 2.1.0.
+true.
 
 
 @node How do I UNinstall R?, What's the best way to upgrade?, Can I run R from a CD or USB drive?, Installation and Usage
@@ -671,23 +671,22 @@ You can install pre-compiled packages either from CRAN or from a local
 There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
-2.1.? the files are in @code{bin/windows/contrib/2.1}.  You can try
+2.2.? the files are in @code{bin/windows/contrib/2.2}.  You can try
 those compiled for earlier versions, at your own risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
 gives the locations of a few other precompiled packages.
 
-If there is not a pre-compiled version or that is not up-to-date or
-you prefer compiling from source, read the `R Installation and
+If there is not a pre-compiled version or that is not up-to-date or you
+prefer compiling from source, read the `R Installation and
 Administration' manual section on `Add-on Packages'.  You need to make
-sure you installed the necessary files from @code{@RWVER@.exe}, and
-you will need to collect and install several tools: you can download
-them via the portal at
-@uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done so,
-just run @code{R CMD INSTALL pkgname}.  To check the package (including
-running all the examples on its help pages and in its test suite, if
-any) use @code{R CMD check pkgname}: see the @emph{`Writing R
+sure you installed the necessary files, and you will need to collect and
+install several tools: you can download them via the portal at
+@uref{http://www.murdoch-sutherland.com/Rtools/}.  Once you have done
+so, just run @code{R CMD INSTALL pkgname}.  To check the package
+(including running all the examples on its help pages and in its test
+suite, if any) use @code{R CMD check pkgname}: see the @emph{`Writing R
 Extensions'} manual.
 
 Note that this is rather tricky; please do ensure that you have followed
@@ -775,9 +774,8 @@ inside R.)
 
 For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
-installed.  This is an optional part of the installation by
-@code{@value{VERSION}.exe}, although it is selected by default.
-If the message is
+installed.  This is an optional part of the installation although it is
+selected by default.  If the message is
 @smallexample
 Tcl/Tk support files were not installed
 @end smallexample
@@ -1127,10 +1125,10 @@ to one of his DLLs.  On the @code{svd} problem they took 6.8 sec.
 
 We strongly encourage you to do this @emph{via} building an R package:
 see the @emph{`Writing R Extensions'} manual.  In any event you should
-install the parts of the R system for building R packages (in
-@code{@RWVER@.exe}), and get and install the tools (including Perl) and
-compilers mentioned in the @emph{`R Installation and Administration'} 
-manual.  Then you can use
+install the parts of the R system for building R packages (installed by
+default), and get and install the tools (including Perl) and compilers
+mentioned in the @emph{`R Installation and Administration'} manual.
+Then you can use
 @example
 ...\bin\R CMD SHLIB foo.c bar.f
 @end example

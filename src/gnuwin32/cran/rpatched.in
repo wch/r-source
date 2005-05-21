@@ -10,15 +10,17 @@
 
 <h1>R-@FULLVERSION@ build for Windows</h1>
 
-<p>This directory contains a Windows binary build of R including patches up to @DATE@.</p>
+<p>This directory contains a Windows binary build of R including
+patches up to @DATE@.</p>
 
-<p>This is not an official release of R. Please check bugs 
+<p>This is not an official release of R. Please check bugs
 in this version against the official release before reporting them. </p>
 
 <p>The current
-official release is available <a href="index.html">here</a>. </p> 
+official release is available <a href="index.html">here</a>. </p>
 
-<p>A build of the development snapshot of the next release is available <a href="rdevel.html">here</a>.</p>
+<p>A build of the development snapshot of the next release is
+available <a href="rdevel.html">here</a>.</p>
 
 <p>In this directory:</p>
 
@@ -31,22 +33,26 @@ official release is available <a href="index.html">here</a>. </p>
   <tr>
     <td width="19%" valign="top"><a href="CHANGES.@RWVER@">CHANGES</a></td>
     <td width="81%">New features of this Windows version.</td>
-  </tr> 
+  </tr>
   <tr>
     <td width="19%" valign="top"><a href="NEWS.@RWVER@">NEWS</a></td>
     <td width="81%">New features of all versions.</td>
-  </tr>  
+  </tr>
   <tr>
-    <td width="19%" valign="top"><a href="@RWVER@.exe">@RWVER@.exe</a></td>
-    <td width="81%">Setup program (about 25 megabytes). Please download this 
+    <td width="19%" valign="top"><a
+href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
+    <td width="81%">Setup program (about 25 megabytes). Please download this
     from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
     This corresponds to the file named <b>SetupR.exe</b> in pre-1.6.0 releases.</td>
   </tr>
 </TBODY>
 </table>
-<p> Please see the <a href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for general
-information about R and the <a href="rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
-including upgrade advice.</p>
+
+<p> Please see the <a
+href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
+general information about R and the <a href="rw-FAQ.html">R Windows
+FAQ</a> for Windows-specific information, including upgrade
+advice.</p>
 
 <hr>
 

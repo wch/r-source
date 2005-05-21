@@ -108,7 +108,7 @@ $(RPREFIX).exe: R.iss
 	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log
 
 clean:
-	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) 
+	rm -rf R.iss *.log $(RPREFIX) 
 
 distclean: clean
 	rm -f $(RPREFIX).exe

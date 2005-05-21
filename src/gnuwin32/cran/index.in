@@ -10,14 +10,15 @@
 
 <h1>R-@RVER@ for Windows</h1>
 
-<p>This directory contains a binary distribution of R-@RVER@ to run on Windows 95, 98, ME,
-NT4.0, 2000 and XP on Intel/clone chips.</p>
+<p>This directory contains a binary distribution of R-@RVER@ to run on
+Windows 95, 98, ME, NT4.0, 2000 and XP on Intel/clone chips.</p>
 
-<p>Patches
-to this release are incorporated in the <a href="rpatched.html">r-patched snapshot build</a>.</p>
+<p>Patches to this release are incorporated in the <a
+href="rpatched.html">r-patched snapshot build</a>.</p>
 
-<p>A build of the development version (which will eventually become the next major release of R)
-is available in the <a href="rdevel.html">r-devel snapshot build</a>.</p>
+<p>A build of the development version (which will eventually become
+the next major release of R) is available in the <a
+href="rdevel.html">r-devel snapshot build</a>.</p>
 
 <p>In this directory:</p>
 
@@ -36,8 +37,9 @@ is available in the <a href="rdevel.html">r-devel snapshot build</a>.</p>
     <td width="81%">New features of all versions.</td>
   </tr>
   <tr>
-    <td width="19%" valign="top"><a href="@RWVER@.exe">@RWVER@.exe</a></td>
-    <td width="81%">Setup program (about 25 megabytes). Please download this 
+    <td width="19%" valign="top"><a
+href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
+    <td width="81%">Setup program (about 25 megabytes). Please download this
     from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
     This corresponds to the file named <b>SetupR.exe</b> in pre-1.6.0 releases.</td>
   </tr>
@@ -53,12 +55,15 @@ is available in the <a href="rdevel.html">r-devel snapshot build</a>.</p>
   </tr>
 </TBODY>
 </table>
-<p> Please see the <a href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for general
-information about R and the <a href="rw-FAQ.html">R Windows FAQ</a> for Windows-specific information,
-including upgrade advice.</p>
 
-<p> Note to webmasters:  A stable link which will redirect to the current Windows binary release
-is <br>
+<p> Please see the <a
+href="http://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a> for
+general information about R and the <a href="rw-FAQ.html">R Windows
+FAQ</a> for Windows-specific information, including upgrade
+advice.</p>
+
+<p> Note to webmasters: A stable link which will redirect to the
+current Windows binary release is<br>
 <a href="release.htm">&lt;CRAN MIRROR&gt/bin/windows/base/release.htm</a>.</p>
 
 <hr>
