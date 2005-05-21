@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 14:58\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
 "PO-Revision-Date: 2005-03-25 14:19+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -201,6 +201,9 @@ msgstr ""
 msgid "invalid title"
 msgstr "無効なタイトルです"
 
+msgid "'legend' is of length 0"
+msgstr ""
+
 msgid "invalid coordinate lengths"
 msgstr "無効な座標長です"
 
@@ -248,9 +251,6 @@ msgstr "'panel'関数は新規のプロットを行いました"
 
 msgid "'x' values must be positive."
 msgstr "'x' の値は正でなければなりません"
-
-msgid "'x' and 'y' lengths differ"
-msgstr "'x' と 'y' の長さが異なります"
 
 msgid "invalid table 'x'"
 msgstr "テーブル 'x' は不正です"
@@ -351,34 +351,37 @@ msgstr "y は対数スケール: yinch() はナンセンスです"
 msgid "log scale:  xyinch() is non-sense"
 msgstr "対数スケール: xyinch() はナンセンスです"
 
-msgid "invalid first argument [bad language object]"
-msgstr "最初の引数が無効です [誤った言語オブジェクトです]"
-
-msgid "at least 2 columns needed"
-msgstr "少なくとも二つの列が必要です"
-
-msgid "'x', 'y' and 'z' lengths differ"
-msgstr "'x','y' そして 'z' の長さが異なります"
-
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "一つの外れ値 (%s) が boxplot %d から除かれました"
 msgstr[1] "(複数の)外れ値 (%s) が boxplot %d から除かれました"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
-msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
+#~ msgid "'x' and 'y' lengths differ"
+#~ msgstr "'x' と 'y' の長さが異なります"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d 個の正でない y の値が対数プロットから除かれました"
-msgstr[1] "%d 個の正でない y の値が対数プロットから除かれました"
+#~ msgid "invalid first argument [bad language object]"
+#~ msgstr "最初の引数が無効です [誤った言語オブジェクトです]"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
-msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
+#~ msgid "at least 2 columns needed"
+#~ msgstr "少なくとも二つの列が必要です"
+
+#~ msgid "'x', 'y' and 'z' lengths differ"
+#~ msgstr "'x','y' そして 'z' の長さが異なります"
+
+#~ msgid "%d x value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
+#~ msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
+
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d 個の正でない y の値が対数プロットから除かれました"
+#~ msgstr[1] "%d 個の正でない y の値が対数プロットから除かれました"
+
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "%d 個の正でない x の値が対数プロットから除かれました"
+#~ msgstr[1] "%d 個の正でない x の値が対数プロットから除かれました"
 
 #~ msgid "incorrect color specification"
 #~ msgstr "不正確な色の指定です"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-08 21:44\n"
+"POT-Creation-Date: 2005-05-21 08:11\n"
 "PO-Revision-Date: 2005-04-17 16:57+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -441,6 +441,17 @@ msgstr "il pacchetto non contiene codice R"
 
 msgid "package seems to be using lazy loading already"
 msgstr "il pacchetto sembra usare già il lazy loading"
+
+#, fuzzy
+msgid "cannot update HTML package index"
+msgstr "impossibile leggere codice sorgente del pacchetto"
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+
+#, fuzzy
+msgid "cannot create HTML package index"
+msgstr "impossibile leggere codice sorgente del pacchetto"
 
 msgid "argument 'pkg' must be of length 1"
 msgstr "l'argomento 'pkg' deve avere lunghezza 1"

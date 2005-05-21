@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-29 08:52+0100\n"
+"POT-Creation-Date: 2005-05-21 08:10+0100\n"
 "PO-Revision-Date: 2005-02-27 14:01+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -425,74 +425,74 @@ msgstr "Gli appunti possono memorizzare una sola figura."
 msgid "metafile '%s' could not be created"
 msgstr ""
 
-#: devWindows.c:2440 devWindows.c:2972
+#: devWindows.c:2421 devWindows.c:2990
 msgid "R Graphics"
 msgstr "R Graphics"
 
-#: devWindows.c:2638
+#: devWindows.c:2656
 msgid "option 'windowsTimeouts' should be integer"
 msgstr "l'opzione 'windowsTimeouts' dovrebbe essere un intero"
 
-#: devWindows.c:2659
+#: devWindows.c:2677
 msgid "invalid device number in savePlot"
 msgstr "numero dispositivo non valido in savePlot"
 
-#: devWindows.c:2661
+#: devWindows.c:2679
 msgid "invalid device in savePlot"
 msgstr "dispositivo non valido in savePlot"
 
-#: devWindows.c:2664
+#: devWindows.c:2682
 msgid "invalid filename argument in savePlot"
 msgstr "nome file non valido in savePlot"
 
-#: devWindows.c:2669
+#: devWindows.c:2687
 msgid "invalid type argument in savePlot"
 msgstr "argomento type non valido in savePlot"
 
-#: devWindows.c:2691
+#: devWindows.c:2709
 msgid "unknown type in savePlot"
 msgstr "type sconosciuto in savePlot"
 
-#: devWindows.c:2766 devWindows.c:2802 devWindows.c:2834 devWindows.c:2869
+#: devWindows.c:2784 devWindows.c:2820 devWindows.c:2852 devWindows.c:2887
 msgid "processing of the plot ran out of memory"
 msgstr "mancanza di memoria nel processare il grafico"
 
-#: devWindows.c:2782 devWindows.c:2815 devWindows.c:2848
+#: devWindows.c:2800 devWindows.c:2833 devWindows.c:2866
 msgid "Impossible to load Rbitmap.dll"
 msgstr "Impossibile caricare Rbitmap.dll"
 
-#: devWindows.c:2854
+#: devWindows.c:2872
 msgid "Impossible to open "
 msgstr "Impossibile aprire "
 
-#: devWindows.c:2894
+#: devWindows.c:2912
 msgid "invalid width or height in devWindows"
 msgstr "'width' o 'height' non validi in devWindows"
 
-#: devWindows.c:2899
+#: devWindows.c:2917
 msgid "invalid value of 'recording' in devWindows"
 msgstr "valore 'recording' non valido in devWindows"
 
-#: devWindows.c:2903
+#: devWindows.c:2921
 msgid "invalid value of 'resize' in devWindows"
 msgstr "valore di 'resize' non valido in devWindows"
 
-#: devWindows.c:2911
+#: devWindows.c:2929
 msgid "invalid value of 'canvas' in devWindows"
 msgstr "valore di 'canvas' non valido in devWindows"
 
-#: devWindows.c:2922
+#: devWindows.c:2940
 msgid "invalid value of 'buffered' in devWindows"
 msgstr "valore di 'buffered' non valido in devWindows"
 
-#: devWindows.c:2928
+#: devWindows.c:2946
 msgid "invalid value of 'bg' in devWindows"
 msgstr "valore di 'bg' non valido in devWindows"
 
-#: devWindows.c:2947
+#: devWindows.c:2965
 msgid "unable to start device devWindows"
 msgstr "impossibile aprire devWindows"
 
-#: devWindows.c:3017
+#: devWindows.c:3035
 msgid "recursive use of getGraphicsEvent not supported"
 msgstr "l'uso ricorsivo di getGraphicsEvent non è ammesso"

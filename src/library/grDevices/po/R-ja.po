@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:50\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -137,6 +137,25 @@ msgstr "pre-2.0.0 R バージョンからのスナップショットが読み込
 msgid "loading snapshot from different R version"
 msgstr "異なった R バージョンからのスナップショットが読み込まれています"
 
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr ""
+
+#, fuzzy
+msgid "invalid first argument"
+msgstr "不正な 'family' 引数です"
+
+msgid "'x' and 'y' lengths differ"
+msgstr ""
+
+msgid "invalid first argument [bad language object]"
+msgstr ""
+
+msgid "at least 2 columns needed"
+msgstr ""
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr ""
+
 msgid "'file' is missing with no default"
 msgstr "'file' はデフォルトなしで欠損となっています"
 
@@ -204,3 +223,18 @@ msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "が新しいものと古いもので異なります"
 msgstr[1] "が新しいものと古いもので異なります"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] ""
+msgstr[1] ""

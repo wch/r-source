@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 14:58\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -206,6 +206,9 @@ msgstr ""
 msgid "invalid title"
 msgstr "'title' non valido"
 
+msgid "'legend' is of length 0"
+msgstr ""
+
 msgid "invalid coordinate lengths"
 msgstr "lunghezza delle coordinate non valida"
 
@@ -253,9 +256,6 @@ msgstr "La funzione 'panel' ha generato un nuovo grafico"
 
 msgid "'x' values must be positive."
 msgstr "i valori di 'x' devono essere positiv"
-
-msgid "'x' and 'y' lengths differ"
-msgstr "le lunghezze di 'x' e 'y' differiscono"
 
 msgid "invalid table 'x'"
 msgstr "table 'x' non valida"
@@ -356,31 +356,34 @@ msgstr "y log scale: yinch() è non-sense"
 msgid "log scale:  xyinch() is non-sense"
 msgstr "log scale: xyinch() è non-sense"
 
-msgid "invalid first argument [bad language object]"
-msgstr "primo argomento non valido [oggetto sbagliato]"
-
-msgid "at least 2 columns needed"
-msgstr "necessarie almeno 2 colonne"
-
-msgid "'x', 'y' and 'z' lengths differ"
-msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
-
 msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Dato anomale (%s) nel boxplot %d non disegnato"
 msgstr[1] "Dati anomali (%s) nel boxplot %d non disegnati"
 
-msgid "%d x value <= 0 omitted from logarithmic plot"
-msgid_plural "%d x values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+#~ msgid "'x' and 'y' lengths differ"
+#~ msgstr "le lunghezze di 'x' e 'y' differiscono"
 
-msgid "%d y value <= 0 omitted from logarithmic plot"
-msgid_plural "%d y values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
+#~ msgid "invalid first argument [bad language object]"
+#~ msgstr "primo argomento non valido [oggetto sbagliato]"
 
-msgid "%d z value <= 0 omitted from logarithmic plot"
-msgid_plural "%d z values <= 0 omitted from logarithmic plot"
-msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
-msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+#~ msgid "at least 2 columns needed"
+#~ msgstr "necessarie almeno 2 colonne"
+
+#~ msgid "'x', 'y' and 'z' lengths differ"
+#~ msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
+
+#~ msgid "%d x value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "%d y value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
+
+#~ msgid "%d z value <= 0 omitted from logarithmic plot"
+#~ msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+#~ msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
+#~ msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"

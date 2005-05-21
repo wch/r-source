@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:50\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -139,6 +139,25 @@ msgstr "carico snapshot di una versione di R pre-2.0.0"
 msgid "loading snapshot from different R version"
 msgstr "carico uno snapshot da una versione differente di R"
 
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr ""
+
+#, fuzzy
+msgid "invalid first argument"
+msgstr "argomento 'family' non valido"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "le lunghezze di 'x' e 'y' differiscono"
+
+msgid "invalid first argument [bad language object]"
+msgstr "primo argomento non valido [oggetto sbagliato]"
+
+msgid "at least 2 columns needed"
+msgstr "necessarie almeno 2 colonne"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
+
 msgid "'file' is missing with no default"
 msgstr "'file' manca senza valore di default"
 
@@ -194,7 +213,8 @@ msgid "invalid arguments in 'windowsFonts' (must be font names)"
 msgstr "argomenti non validi in 'windowsFonts' (deve essere 'font names')"
 
 msgid "invalid arguments in 'windowsFonts' (need named args)"
-msgstr "argomenti non validi in 'windowsFonts' (necessita di argomenti con nome)"
+msgstr ""
+"argomenti non validi in 'windowsFonts' (necessita di argomenti con nome)"
 
 msgid "invalid argument name %s in '%s'"
 msgid_plural "invalid argument names %s in '%s'"
@@ -205,6 +225,22 @@ msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "differisce tra nuovo e vecchio"
 msgstr[1] "differiscono tra nuovi e vecchi"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
+msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "omesso %d valore di y <= 0 dal grafico su scala logaritmica"
+msgstr[1] "omessi %d valori di y <= 0 dal grafico su scala logaritmica"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
+msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
+
 
 #~ msgid "invalid arguments in"
 #~ msgstr "argomenti non validi in"

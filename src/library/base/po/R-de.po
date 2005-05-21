@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-11 15:39\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
 "PO-Revision-Date: 2005-04-18 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -450,6 +450,9 @@ msgstr "nicht definiert für \"POSIXt\" Objekte"
 
 msgid "not defined for POSIXt objects"
 msgstr "nicht definiert für \"POSIXt\" Objekte"
+
+msgid "'tzone' attributes are inconsistent"
+msgstr ""
 
 msgid "not defined for \"POSIXct\" objects"
 msgstr "nicht definiert für \"POSIXct\" Objekte"

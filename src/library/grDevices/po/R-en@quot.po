@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-03 12:50\n"
-"PO-Revision-Date: 2005-03-03 12:50\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
+"PO-Revision-Date: 2005-05-21 08:10\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -156,6 +156,24 @@ msgstr "loading snapshot from pre-2.0.0 R version"
 msgid "loading snapshot from different R version"
 msgstr "loading snapshot from different R version"
 
+msgid "'r' must be a \"range\", hence of length 2"
+msgstr "‘r’ must be a “range”, hence of length 2"
+
+msgid "invalid first argument"
+msgstr "invalid first argument"
+
+msgid "'x' and 'y' lengths differ"
+msgstr "‘x’ and ‘y’ lengths differ"
+
+msgid "invalid first argument [bad language object]"
+msgstr "invalid first argument [bad language object]"
+
+msgid "at least 2 columns needed"
+msgstr "at least 2 columns needed"
+
+msgid "'x', 'y' and 'z' lengths differ"
+msgstr "'x', ‘y’ and ‘z’ lengths differ"
+
 msgid "'file' is missing with no default"
 msgstr "‘file’ is missing with no default"
 
@@ -222,3 +240,18 @@ msgid "differs between new and previous"
 msgid_plural "differ between new and previous"
 msgstr[0] "differs between new and previous"
 msgstr[1] "differ between new and previous"
+
+msgid "%d x value <= 0 omitted from logarithmic plot"
+msgid_plural "%d x values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d x value <= 0 omitted from logarithmic plot"
+msgstr[1] "%d x values <= 0 omitted from logarithmic plot"
+
+msgid "%d y value <= 0 omitted from logarithmic plot"
+msgid_plural "%d y values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d y value <= 0 omitted from logarithmic plot"
+msgstr[1] "%d y values <= 0 omitted from logarithmic plot"
+
+msgid "%d z value <= 0 omitted from logarithmic plot"
+msgid_plural "%d z values <= 0 omitted from logarithmic plot"
+msgstr[0] "%d z value <= 0 omitted from logarithmic plot"
+msgstr[1] "%d z values <= 0 omitted from logarithmic plot"
