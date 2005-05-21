@@ -20,7 +20,8 @@ packageDescription <- function(pkg, lib.loc=NULL, fields=NULL, drop=TRUE,
         enc <- desc[["Encoding"]]
         if(!is.null(enc) && !is.na(encoding)) {
             ## Determine encoding and re-encode if necessary and possible.
-            if((Sys.getlocale("LC_CTYPE") != "C") && capabilities("iconv")) {
+            if((encoding != "" || Sys.getlocale("LC_CTYPE") != "C") 
+	       && capabilities("iconv")) {
                 ## might have an invalid encoding ...
                 newdesc <- try(lapply(desc, iconv, from=enc, to=encoding))
                 if(!inherits(newdesc, "try-error")) desc <- newdesc
