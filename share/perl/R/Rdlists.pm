@@ -356,6 +356,9 @@ sub build_index { # lib, dest, version, [chmdir]
 	}
     }
 
+    $pkg_encoding = "iso-8859-1" if lc($pkg_encoding) eq "latin1";
+    $pkg_encoding = "iso-8859-2" if lc($pkg_encoding) eq "latin2";
+
     my $tdir = file_path($dest, "help");
     if(! -d $tdir) {
 	mkdir($tdir, $dir_mod) or die "Could not create " . $tdir.": $!\n";
