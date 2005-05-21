@@ -221,10 +221,15 @@ function(x, main = deparse(substitute(x)), sub = NULL, xlab = NULL,
     if(is.null(xlab)) xlab <- nam.dn[1]
     if(is.null(ylab)) ylab <- nam.dn[2]
 
-    if (is.null(off) || length(off) != dimd) { # Initialize spacing.
-        off <- rep.int(10, dimd)
-    }
-    if (is.null(dir) || length(dir) != dimd) { # Initialize directions.
+    ## Initialize spacing.
+    if(is.null(off))
+        off <- if(dimd == 2) 2 * (dx - 1) else rep.int(10, dimd)
+    if(length(off) != dimd)
+        off <- rep(off, length.out = dimd)
+    if(any(off > 50))
+        off <- off * 50/max(off)
+    ## Initialize directions.
+    if (is.null(dir) || length(dir) != dimd) {
         dir <- rep(c("v","h"), length.out = dimd)
     }
     if (!is.null(sort)) {
