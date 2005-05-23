@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-21
+@set FAQ_DATE @value{FAQ_YEAR}-05-22
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -3232,6 +3232,8 @@ Functions for optimal design of two-stage-studies using the Mean Score
 method.
 @item udunits
 Interface to Unidata's routines to convert units.
+@item ump
+Uniformly Most Powerful tests.
 @item urca
 Unit root and cointegration tests for time series data.
 @item urn
