@@ -299,6 +299,11 @@ BUG FIXES
     o	proj.aovlist() did not work correctly on objects fitted from a
 	data frame with row names.
 
+    o	The coding standards recommendations had nuke-trailing-whitespace where
+	newer versions of ESS need ess-nuke-trailing-whitespace.  (PR#7888)
+
+    o	package.sceleton() missed the first newline in the DESCRIPTION file.
+
 
 
 		CHANGES IN R VERSION 2.1.0
