@@ -39,7 +39,7 @@ package.skeleton <-
     ## DESCRIPTION
     cat("Creating DESCRIPTION ...\n")
     description <- file(file.path(path, name, "DESCRIPTION"), "wt")
-    cat("Package: ", name,
+    cat("Package: ", name, "\n",
 	"Type: Package\n",
 	"Title: What the package does (short line)\n",
 	"Version: 1.0\n",

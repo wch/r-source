@@ -20,7 +20,7 @@ NEW FEATURES
 	dropping them to a vector whilst preserving names.
 
     o	df() with one infinite df now works (to match pf()).
-	
+
     o	Added tclServiceMode() function to the tcltk package to allow
     	updating to be suspended.
 
@@ -132,7 +132,7 @@ BUG FIXES
 	even if 'file' was a filepath.
 
     o	Hershey fonts were being sized based on pixels not points so came
-        out too small on devices where pixels were noticeably different 
+        out too small on devices where pixels were noticeably different
 	from points (e.g., win.printer() and high-resolution screens).
 
 	Fix means that default size of Hershey fonts may be slightly
@@ -148,6 +148,11 @@ BUG FIXES
 
     o	proj.aovlist() did not work correctly on objects fitted from a
 	data frame with row names.
+
+    o	The coding standards recommendations had nuke-trailing-whitespace where
+	newer versions of ESS need ess-nuke-trailing-whitespace.  (PR#7888)
+
+    o	package.skeleton() missed the first newline in the DESCRIPTION file.
 
 
 
