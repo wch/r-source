@@ -2422,6 +2422,8 @@ static void donelocator(void *data)
     xd->locator = FALSE;
 }
 
+static void GA_onExit(NewDevDesc *dd);
+
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
@@ -2447,12 +2449,19 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
 	         R_NilValue, R_NilValue);
     cntxt.cend = &donelocator;
     cntxt.cenddata = xd;
+    xd->cntxt = &cntxt;
+    
+    /* and an exit handler in case the window gets closed */
+    dd->onExit = GA_onExit;
     
     while (!xd->clicked) {
 	if(xd->buffered) SHOW;
         WaitMessage();
 	R_ProcessEvents();
     }
+    
+    dd->onExit = NULL;
+    xd->cntxt = NULL;
     
     endcontext(&cntxt);
     donelocator((void *)xd);
@@ -2586,6 +2595,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     dd->hold = GA_Hold;
     dd->metricInfo = GA_MetricInfo;
     xd->newFrameConfirm = GA_NewFrameConfirm;
+    xd->cntxt = NULL;
 
     /* set graphics parameters that must be set by device driver */
     /* Window Dimensions in Pixels */
@@ -2982,6 +2992,9 @@ static void GA_onExit(NewDevDesc *dd)
     xd->confirmation = FALSE;
     dd->gettingEvent = FALSE;
     xd->eventRho = NULL;
+    
+    if (xd->cntxt) endcontext(xd->cntxt);
+    if (xd->locator) donelocator((void *)xd);
     
     addto(xd->gawin);
     gchangemenubar(xd->mbar);

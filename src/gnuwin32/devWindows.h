@@ -97,4 +97,5 @@ typedef struct {
     SEXP eventResult;  /* Result of event handler */
     Rboolean (*newFrameConfirm)();
     double lwdscale;   /* scale factor for lwd */
+    RCNTXT *cntxt;     /* context for unwinding on error */
 } gadesc;
