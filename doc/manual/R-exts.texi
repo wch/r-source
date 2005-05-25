@@ -7873,7 +7873,10 @@ customization to set the @code{c-default-style} to @code{"bsd"} and
             ;; ess-close-brace-offset            0   0   0   0   0
             (add-hook 'local-write-file-hooks
                       (lambda ()
-                        (nuke-trailing-whitespace)))))
+                        (ess-nuke-trailing-whitespace)))))
+(setq ess-nuke-trailing-whitespace-p 'ask)
+;; or even
+;; (setq ess-nuke-trailing-whitespace-p t)
 @end group
 @group
 ;;; Perl
