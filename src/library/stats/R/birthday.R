@@ -19,12 +19,11 @@ pbirthday<-function(n,classes=365,coincident=2){
     c<-classes
     if (coincident<2) return(1)
     if (coincident>n) return(0)
-    if (n>classes) return(1)
+    if (n>classes*(coincident-1)) return(1)
     eps<-1e-14
     if (qbirthday(1-eps,classes,coincident)<=n)
         return(1-eps)
     f<-function(p) qbirthday(p,c,k)-n
-    ##lower<-min(n/(c^(k-1)),1-10*eps)
     lower<-0
     upper<-min(n^k/(c^(k-1)),1)
     nmin<-uniroot(f,c(lower,upper),tol=eps)

@@ -304,6 +304,8 @@ BUG FIXES
 
     o	package.sceleton() missed the first newline in the DESCRIPTION file.
 
+    o   pbirthday reported p=1 too often when coincident>2
+
 
 
 		CHANGES IN R VERSION 2.1.0
