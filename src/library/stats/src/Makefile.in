@@ -21,12 +21,12 @@ SOURCES_C = init.c kmeans.c \
   dblcen.c distance.c hclust-utils.c \
   nls.c \
   HoltWinters.c PPsum.c arima.c burg.c carray.c filter.c \
-  mburg.c myw.c pacf.c qr.c starma.c
+  mburg.c myw.c pacf.c qr.c starma.c port.c
 
 SOURCES_F = bsplvd.f bvalue.f bvalus.f loessf.f ppr.f qsbart.f sbart.f \
   sgram.f sinerp.f sslvrg.f stxwx.f \
   hclust.f kmns.f \
-  eureka.f stl.f
+  eureka.f stl.f portsrc.f
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o) $(SOURCES_F:.f=.o)
 

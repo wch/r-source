@@ -25,6 +25,7 @@
 #include "modreg.h"
 #include "mva.h"
 #include "nls.h"
+#include "port.h"
 #include "stats.h"
 #include "ts.h"
 #include <R_ext/Rdynload.h>
@@ -127,6 +128,8 @@ static R_CallMethodDef CallEntries[] = {
     {"ARIMA_CSS", (DL_FUNC) &ARIMA_CSS, 6},
     {"TSconv", (DL_FUNC) &TSconv, 2},
     {"getQ0", (DL_FUNC) &getQ0, 2},
+    {"port_ivset", (DL_FUNC) &port_ivset, 2},
+    {"port_nlminb", (DL_FUNC) &port_nlminb, 9},
     {NULL, NULL, 0}
 };
 
