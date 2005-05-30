@@ -2418,6 +2418,8 @@ coordinate displays by some merit index.
 @item gcmrec
 Parameters estimation of the general semiparametric model for recurrent
 event data proposed by Pe@~na and Hollander.
+@item gdata
+Various functions to manipulate data.
 @item gee
 An implementation of the Liang/Zeger generalized estimating equation
 approach to GLMs for dependent data.
@@ -2458,6 +2460,8 @@ library.
 @item gpls
 Classification using generalized partial least squares for two-group and
 multi-group (more than 2 group) classification.
+@item gplots
+Various functions to draw plots.
 @item grasper
 Generalized Regression Analysis and Spatial Predictions for R.
 @item gregmisc
@@ -2478,6 +2482,8 @@ point or block (co)kriging, sequential Gaussian or indicator
 GTK graphics device driver that may be used independently of the R-GNOME
 interface and can be used to create R devices as embedded components in
 a GUI using a Gtk drawing area widget, e.g., using RGtk.
+@item gtools
+Various functions to help manipulate data.
 @item hapassoc
 Likelihood inference of trait associations with SNP haplotypes and other 
 attributes using the EM Algorithm.
@@ -3244,6 +3250,8 @@ Functions for sampling without replacement (simulated urns).
 Unit root tests and graphics for seasonal time series.
 @item vabayelMix
 Variational Bayesian mixture model.
+@item varSelRF
+Variable selection using random forests.
 @item vardiag
 Interactive variogram diagnostics.
 @item vcd
