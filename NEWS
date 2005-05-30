@@ -31,6 +31,8 @@ NEW FEATURES
     o	R.home() has been expanded to return the paths to components
 	(which can as from this version be installed elsewhere).
 
+    o   nlminb(), similar to that in S-PLUS, added to package 'stats'.
+
     o	Added tclServiceMode() function to the tcltk package to allow
 	updating to be suspended.
 
