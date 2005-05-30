@@ -531,7 +531,7 @@ SEXP do_plot_new(SEXP call, SEXP op, SEXP args, SEXP env)
     dd = CurrentDevice();
     /*
      * If user is prompted before new page, user has opportunity
-     * to kill current device.  GNewPlot returns (potentially new) 
+     * to kill current device.  GNewPlot returns (potentially new)
      * current device.
      */
     dd = GNewPlot(GRecording(call, dd));
@@ -747,7 +747,7 @@ SEXP labelformat(SEXP labels)
 	formatComplex(COMPLEX(labels), n, &w, &d, &e, &wi, &di, &ei, 0);
 	PROTECT(ans = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
-	    strp = EncodeComplex(COMPLEX(labels)[i], 0, d, e, 0, di, ei, 
+	    strp = EncodeComplex(COMPLEX(labels)[i], 0, d, e, 0, di, ei,
 				 OutDec);
 	    SET_STRING_ELT(ans, i, mkChar(strp));
 	}
@@ -773,8 +773,8 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
  *	when none has been specified (= default).
  *
  *	axp[0:2] = (x1, x2, nInt), where x1..x2 are the extreme tick marks
- *                 {unless in log case, where nint \in {1,2,3 ; -1,-2,....}
- *                  and the `nint' argument is used.
+ *		   {unless in log case, where nint \in {1,2,3 ; -1,-2,....}
+ *		    and the `nint' argument is used.
 
  *	The resulting REAL vector must have length >= 1, ideally >= 2
  */
@@ -794,16 +794,31 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	}
     }
     else { /* ------ log axis ----- */
+	Rboolean reversed = FALSE;
+
 	n = (axp[2] + 0.5);
 	/* {xy}axp[2] for 'log': GLpretty() [./graphics.c] sets
 	   n < 0: very small scale ==> linear axis, above, or
 	   n = 1,2,3.  see switch() below */
 	umin = usr[0];
 	umax = usr[1];
-	/* Debugging: When does the following happen... ? */
-	if (umin > umax)
-	    warning("CreateAtVector \"log\"(from axis()): "
-		    "usr[0] = %g > %g = usr[1] !", umin, umax);
+	if (umin > umax) {
+	    reversed = (axp[0] > axp[1]);
+	    if (reversed) {
+		/* have *reversed* log axis -- whereas
+		 * the switch(n) { .. } below assumes *increasing* values
+		 * --> reverse axis direction here, and reverse back at end */
+		umin = usr[1];
+		umax = usr[0];
+		dn = axp[0]; axp[0] = axp[1]; axp[1] = dn;
+	    }
+	    else {
+		/* can the following still happen... ? */
+		warning("CreateAtVector \"log\"(from axis()): "
+			"usr[0] = %g > %g = usr[1] !", umin, umax);
+	    }
+	}
+
 	dn = axp[0];
 	if (dn < DBL_MIN) {/* was 1e-300; now seems too cautious */
 	    warning("CreateAtVector \"log\"(from axis()): axp[0] = %g !", dn);
@@ -899,7 +914,15 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
 	    error("log - axis(), 'at' creation: INVALID {xy}axp[3] = %g",
 		  axp[2]);
 	}
-    }
+
+	if (reversed) {/* reverse back again - last assignment was at[n++]= . */
+	    for (i = 0; i < n/2; i++) { /* swap( at[i], at[n-i-1] ) : */
+		dn = REAL(at)[i];
+		REAL(at)[i] = REAL(at)[n-i-1];
+		REAL(at)[n-i-1] = dn;
+	    }
+	}
+    } /* linear / log */
     return at;
 }
 

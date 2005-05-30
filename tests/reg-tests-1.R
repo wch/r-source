@@ -3649,13 +3649,18 @@ N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
 P <- c(1,1,0,0,0,1,0,1,1,1,0,0,0,1,0,1,1,0,0,1,0,1,1,0)
 K <- c(1,0,0,1,0,1,1,0,0,1,0,1,0,1,1,0,0,0,1,1,1,0,1,0)
 yield <- c(49.5,62.8,46.8,57.0,59.8,58.5,55.5,56.0,62.8,55.8,69.5,
-  55.0, 62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
+	   55.0, 62.0,48.8,45.5,44.2,52.0,51.5,49.8,48.8,57.2,59.0,53.2,56.0)
 npk <- data.frame(block=gl(6,4), N=factor(N), P=factor(P),
 		  K=factor(K), yield=yield)
 row.names(npk) <- letters[2:25]
 npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 pr <- proj(npk.aovE)
-## failed in 2.1.1
+## failed in 2.1.0
+
+## PR#7894: Reversing axis in a log plot
+x <- 1:3
+plot(x, exp(x), log = "y", ylim = c(30,1))
+## gave error (and warning) in  log - axis(), 'at' creation
 
 ### end of tests added in 2.1.0 patched ###
 
