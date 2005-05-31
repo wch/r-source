@@ -22,6 +22,7 @@
 
 #include "ctest.h"
 #include "eda.h"
+#include "family.h"
 #include "modreg.h"
 #include "mva.h"
 #include "nls.h"
@@ -130,6 +131,10 @@ static R_CallMethodDef CallEntries[] = {
     {"getQ0", (DL_FUNC) &getQ0, 2},
     {"port_ivset", (DL_FUNC) &port_ivset, 2},
     {"port_nlminb", (DL_FUNC) &port_nlminb, 9},
+    {"logit_link", (DL_FUNC) &logit_link, 1},
+    {"logit_linkinv", (DL_FUNC) &logit_linkinv, 1},
+    {"logit_mu_eta", (DL_FUNC) &logit_mu_eta, 1},
+    {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
     {NULL, NULL, 0}
 };
 

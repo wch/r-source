@@ -33,19 +33,21 @@ make.link <- function (link)
     else
         switch(link,
                "logit" = {
-                   linkfun <- function(mu) log(mu/(1 - mu))
-                   linkinv <- function(eta) {
-                       thresh <- -log(.Machine$double.eps)
-                       eta <- pmin(pmax(eta, -thresh), thresh)
-                       exp(eta)/(1 + exp(eta))
-                   }
-                   mu.eta <- function(eta) {
-                       thresh <- -log(.Machine$double.eps)
-                       res <- rep.int(.Machine$double.eps, length(eta))
-                       res[abs(eta) < thresh] <-
-                           (exp(eta)/(1 + exp(eta))^2)[abs(eta) < thresh]
-                       res
-                   }
+                   linkfun <- function(mu) .Call("logit_link", mu)
+                   linkinv <- function(eta) .Call("logit_linkinv", eta)
+##               {
+##                   thresh <- -log(.Machine$double.eps)
+##                   eta <- pmin(pmax(eta, -thresh), thresh)
+##                   exp(eta)/(1 + exp(eta))
+##               }
+                   mu.eta <- function(eta) .Call("logit_mu_eta", eta)
+##                   {
+##                       thresh <- -log(.Machine$double.eps)
+##                       res <- rep.int(.Machine$double.eps, length(eta))
+##                       res[abs(eta) < thresh] <-
+##                           (exp(eta)/(1 + exp(eta))^2)[abs(eta) < thresh]
+##                       res
+##                   }
                    valideta <- function(eta) TRUE
                },
                "probit" = {
@@ -137,7 +139,7 @@ poisson <- function (link = "log")
     variance <- function(mu) mu
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)
-	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+        2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
     aic <- function(y, n, mu, wt, dev)
 #	2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
 	-2*sum(dpois(y, mu, log=TRUE)*wt)
@@ -249,8 +251,9 @@ binomial <- function (link = "logit")
     variance <- function(mu) mu * (1 - mu)
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)
-	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
-		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+        .Call("binomial_dev_resids", y, mu, wt)
+#	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
+#		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
     aic <- function(y, n, mu, wt, dev) {
 #	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
         m <- if(any(n > 1)) n else wt
