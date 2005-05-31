@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-05-25
+@set FAQ_DATE @value{FAQ_YEAR}-05-31
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2756,6 +2756,8 @@ estimation.
 @c Functions for hierarchical clustering, partitioning, bond energy
 @c algorithm, Sammon mapping, PCA and correspondence analysis.
 @c </COMMENT>
+@item multtest
+Resampling-based multiple hypothesis testing.
 @item mvbutils
 Utilities by Mark V. Bravington for project organization, editing and
 backup, sourcing, documentation (formal and informal), package
@@ -2917,6 +2919,9 @@ Fits a principal curve to a matrix of points in arbitrary dimension.
 @item proto
 An object oriented system using prototype or object-based (rather than
 class-based) object oriented ideas.
+@item pscl
+R in the Political Science Computational Laboratory, Stanford
+University.
 @item pspline
 Smoothing splines with penalties on order @math{m} derivatives.
 @item psy
