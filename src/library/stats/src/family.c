@@ -69,8 +69,8 @@ SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt)
     
     if (!isReal(y)) {y = PROTECT(coerceVector(y, REALSXP)); nprot++;}
     ans = PROTECT(duplicate(y));
-    if (!isReal(mu) {mu = PROTECT(coerceVector(mu, REALSXP)); nprot++;}
-    if (!isReal(wt) {wt = PROTECT(coerceVector(wt, REALSXP)); nprot++;}
+    if (!isReal(mu)) {mu = PROTECT(coerceVector(mu, REALSXP)); nprot++;}
+    if (!isReal(wt)) {wt = PROTECT(coerceVector(wt, REALSXP)); nprot++;}
     if (lmu != n && lmu != 1)
 	error(_("argument %s must be a numeric vector of length 1 or length %d"),
 	      "mu", n);
