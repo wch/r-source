@@ -148,6 +148,9 @@ BUG FIXES
 	subsetting) try harder to preserve time zones and warn if
 	inconsistent time zones are used.
 
+    o   File creation errors in pdf(), postscript(), xfig() resulted
+        in a pointer being freed twice. (reported by Matt McCall)
+
 
 
 
