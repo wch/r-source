@@ -12,6 +12,16 @@ install.packages <-
                                 paste(contains[[x]], " (", x, ")", sep="")))
         sort(as.vector(c(a[, 1], extras)))
     }
+    
+    implode_bundles <- function(pkgs)
+    {
+    	bundled <- grep(".* \\(.*\\)$", pkgs)
+    	if (length(bundled)) {
+    	    bundles <- unique(gsub(".* \\((.*)\\)$", "\\1", pkgs[bundled]))
+    	    pkgs <- c(pkgs[-bundled], bundles)
+    	}
+    	pkgs 
+    }
 
     if(missing(pkgs) || !length(pkgs)) {
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
@@ -20,7 +30,7 @@ install.packages <-
                                                 method = method)
             if(NROW(available)) {
                 a <- explode_bundles(available)
-                pkgs <- select.list(a, multiple = TRUE, title = "Packages")
+                pkgs <- implode_bundles(select.list(a, multiple = TRUE, title = "Packages"))
             }
             if(!length(pkgs)) stop("no packages were specified")
         } else if(.Platform$OS.type == "unix" &&
@@ -30,8 +40,8 @@ install.packages <-
                                                 method = method)
             if(NROW(available)) {
                 a <- explode_bundles(available)
-                pkgs <- tcltk::tk_select.list(a, multiple = TRUE,
-                                              title ="Packages")
+                pkgs <- implode_bundles(tcltk::tk_select.list(a, multiple = TRUE,
+                                              title ="Packages"))
             }
             if(!length(pkgs)) stop("no packages were specified")
         } else
