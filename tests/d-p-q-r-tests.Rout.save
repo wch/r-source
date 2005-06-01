@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-02-12), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-06-01 r34519)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -923,13 +924,31 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 [1] TRUE
 > All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
 [1] TRUE
-> for(x in 10^c(15,25,50,100,200))
-+     print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
+> x <- 10^(ex <- c(1,2,5*(1:5),50,100,200,300,Inf))
+> for(a in x[ex > 10]) ## improve pt() : cbind(x,t= pt(-x, df=1), C=pcauchy(-x))
++     print(all.equal(pt(-a, df=1), pcauchy(-a), tol = 1e-15))
 [1] TRUE
 [1] TRUE
 [1] TRUE
 [1] TRUE
 [1] TRUE
+[1] TRUE
+[1] TRUE
+[1] TRUE
+> ## for PR#7902:
+> ex <- -c(rev(1/x), ex)
+> All.eq(-x, qcauchy(pcauchy(-x)))
+[1] TRUE
+> All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
+[1] TRUE
+> All.eq(1/x, pcauchy(qcauchy(1/x)))
+[1] TRUE
+> All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
+[1] TRUE
+> II <- c(-Inf,Inf)
+> stopifnot(pcauchy(II) == 0:1, ## qcauchy(0:1) == II,
++           pcauchy(II, log=TRUE) == c(-Inf,0),
++           qcauchy(c(-Inf,0), log=TRUE) == II)
 > 
 > pr <- 1e-23 ## PR#6757
 > stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
@@ -964,5 +983,5 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  7.38 0.07 7.64 0 0 
+Time elapsed:  1.8 0.01 1.81 0 0 
 > 
