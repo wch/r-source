@@ -31,7 +31,7 @@ NEW FEATURES
     o	R.home() has been expanded to return the paths to components
 	(which can as from this version be installed elsewhere).
 
-    o   nlminb(), similar to that in S-PLUS, added to package 'stats'.
+    o	nlminb(), similar to that in S-PLUS, added to package 'stats'.
 
     o	Added tclServiceMode() function to the tcltk package to allow
 	updating to be suspended.
@@ -82,6 +82,8 @@ NEW FEATURES
 
     o	New functions trans3d(), the 3D -> 2D utility from persp()'s example,
 	and extendrange(), both in package 'grDevices'.
+
+    o	pie() has new optional arguments 'clockwise' and 'init.angle'.
 
 
 DEPRECATED & DEFUNCT
@@ -309,7 +311,7 @@ BUG FIXES
 
     o	package.skeleton() missed the first newline in the DESCRIPTION file.
 
-    o   pbirthday() reported p=1 too often when coincident>2
+    o	pbirthday() reported p=1 too often when coincident>2
 
     o	plot(1:3, exp(1:3), log = "y", ylim = c(30,1)) {reversed log-scale axis}
 	now works, based on Uwe Ligges' suggestions.  (PR#7894)
