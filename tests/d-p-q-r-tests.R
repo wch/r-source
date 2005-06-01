@@ -444,8 +444,19 @@ All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
 abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
 All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
 All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
-for(x in 10^c(15,25,50,100,200))
-    print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
+x <- 10^(ex <- c(1,2,5*(1:5),50,100,200,300,Inf))
+for(a in x[ex > 10]) ## improve pt() : cbind(x,t= pt(-x, df=1), C=pcauchy(-x))
+    print(all.equal(pt(-a, df=1), pcauchy(-a), tol = 1e-15))
+## for PR#7902:
+ex <- -c(rev(1/x), ex)
+All.eq(-x, qcauchy(pcauchy(-x)))
+All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
+All.eq(1/x, pcauchy(qcauchy(1/x)))
+All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
+II <- c(-Inf,Inf)
+stopifnot(pcauchy(II) == 0:1, ## qcauchy(0:1) == II,
+          pcauchy(II, log=TRUE) == c(-Inf,0),
+          qcauchy(c(-Inf,0), log=TRUE) == II)
 
 pr <- 1e-23 ## PR#6757
 stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),

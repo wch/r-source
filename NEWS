@@ -318,6 +318,8 @@ BUG FIXES
 
     o	install.packages() was aborting when a package in a bundle was chosen.
 
+    o	qcauchy() suffered from underflow in the extreme tails.  (PR#7902)
+
 
 
 		CHANGES IN R VERSION 2.1.0
