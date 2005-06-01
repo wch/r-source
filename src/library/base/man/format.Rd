@@ -66,10 +66,12 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{width}{the returned vector has elements of at most \code{width}.}
   \item{\dots}{further arguments passed to or from other methods.}
 }
+\value{
+  A vector (or array) of character strings displaying the elements of 
+  the first argument \code{x} in a common format. 
+}
 \details{
-  These functions convert their first argument to a vector (or array) of
-  character strings which have a common format (as is done by
-  \code{\link{print}}), fulfilling \code{length(format*(x, *)) ==
+  The value of these functions satisfies \code{length(format*(x, *)) ==
     length(x)}.  The trimming with \code{trim = TRUE} is useful
   when the strings are to be used for plot \code{\link{axis}} annotation.
 
@@ -112,7 +114,7 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 \seealso{
   \code{\link{format.info}} indicates how something would be formatted;
   \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
-  \code{\link{sprintf}}.
+  \code{\link{sprintf}}, \code{\link{print}}.
 }
 \examples{
 format(1:10)
