@@ -606,6 +606,8 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
     case RAWSXP:
 	printRawMatrix(x, offset, r, c, rl, cl, rn, cn);
 	break;
+    default:
+	UNIMPLEMENTED_TYPE("printMatrix", x);
     }
 }
 
