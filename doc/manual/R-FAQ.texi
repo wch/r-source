@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-01
+@set FAQ_DATE @value{FAQ_YEAR}-06-02
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -723,8 +723,8 @@ To cite R in publications, use
 @example
 @group
 @@Manual@{,
-  title        = @{R: A language and environment for statistical
-                  computing@},
+  title        = @{R: A Language and Environment for Statistical
+                  Computing@},
   author       = @{@{R Development Core Team@}@},
   organization = @{R Foundation for Statistical Computing@},
   address      = @{Vienna, Austria@},
@@ -2034,7 +2034,7 @@ Functions, classes & methods for estimation, prediction, and simulation
 @item VaR
 Methods for calculation of Value at Risk (VaR).
 @item XML
-Facilities for reading @XML{} documents and DTDs.
+Tools for reading @XML{} documents and DTDs.
 @item Zelig
 Everyone's statistical software: an easy-to-use program that can
 estimate, and help interpret the results of, an enormous range of
@@ -2233,6 +2233,9 @@ control, and full keyboard input.
 @item deldir
 Calculates the  Delaunay triangulation and the Dirichlet or Voronoi
 tesselation (with respect to the entire plane) of a planar point set.
+@item depmix
+Dependent Mixture Models: fit (multi-group) mixtures of latent Markov
+models on mixed categorical and continuous (time series) data.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
@@ -3404,6 +3407,9 @@ Dynamic CORBA client/server facilities for R.  Connects to other
 CORBA-aware applications developed in arbitrary languages, on different
 machines and allows R functionality to be exported in the same way to
 other applications.
+@item Combinations
+Compute the combinations of choosing @math{r} items from @math{n}
+elements.
 @item IDocs
 Infrastructure for interactive documents.
 @item OOP
@@ -3416,6 +3422,9 @@ process the results returned by the Web server.
 @item RDCOMClient
 Provides dynamic client-side access to (D)COM applications from within
 R.
+@item RDCOMEvents
+Provides facilities to use R functions and objects as handlers for DCOM
+events.
 @item RDCOMServer
 Facilities for exporting S objects and functions as COM objects.
 @item REmbeddedPostgres
@@ -3491,10 +3500,6 @@ A client interface to SOAP (Simple Object Access Protocol) servers from
 within S.
 @item SWinRegistry
 Provides access from within R to read and write the Windows registry.
-@item SWinTypeLibs
-Provides ways to extract type information from type libraries and/or
-DCOM objects that describes the methods, properties, etc.@: of an
-interface.
 @item SXalan
 Process @XML{} documents using @XSL{} functions implemented in R and
 dynamically substituting output from R.
@@ -3506,6 +3511,8 @@ from C objects, call graphs, etc.
 @item Sxslt
 An extension module for libxslt, the @XML{}-@XSL{} document translator,
 that allows @XSL{} functions to be implemented via R functions.
+@item XML
+Tools for reading @XML{} documents and DTDs.
 @end table
 
 @node Add-on packages from Bioconductor, Other add-on packages, Add-on packages from Omegahat, Which add-on packages exist for R?
