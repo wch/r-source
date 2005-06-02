@@ -13,7 +13,7 @@ install.packages <-
                                 paste(contains[[x]], " (", x, ")", sep="")))
         sort(as.vector(c(a[, 1], extras)))
     }
-    
+
     implode_bundles <- function(pkgs)
     {
     	bundled <- grep(".* \\(.*\\)$", pkgs)
@@ -21,7 +21,7 @@ install.packages <-
     	    bundles <- unique(gsub(".* \\((.*)\\)$", "\\1", pkgs[bundled]))
     	    pkgs <- c(pkgs[-bundled], bundles)
     	}
-    	pkgs 
+    	pkgs
     }
 
     if(missing(pkgs) || !length(pkgs)) {
@@ -161,6 +161,7 @@ install.packages <-
         }
     }
 
+    pkgs <- unique(pkgs) # in case ask for more than one from a bundle
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
                                    type = "source")
