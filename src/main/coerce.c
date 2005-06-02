@@ -1292,7 +1292,7 @@ SEXP do_asvector(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP arglist, envir, names, pargs;
+	SEXP arglist, envir, names, pargs, body;
     int i, n;
 
     checkArity(op, args);
@@ -1321,8 +1321,21 @@ SEXP do_asfunction(SEXP call, SEXP op, SEXP args, SEXP rho)
 	pargs = CDR(pargs);
     }
     CheckFormals(args);
-    args =  mkCLOSXP(args, VECTOR_ELT(arglist, n - 1), envir);
-    UNPROTECT(1);
+    PROTECT(body = VECTOR_ELT(arglist, n-1));
+    /* the main (only?) thing to rule out is body being 
+       a function already. If we test here then
+       mkCLOSXP can continue to overreact when its 
+       test fails (PR#1880, 7535, 7702) */
+    if(isList(body) || isLanguage(body) || isSymbol(body)
+       || isExpression(body) || isVector(body)
+#ifdef BYTECODE
+       || isByteCode(body)
+#endif
+       )
+	    args =  mkCLOSXP(args, body, envir);
+    else
+	    errorcall(call, _("invalid body for function"));
+    UNPROTECT(2);
     return args;
 }
 
