@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-05-18 r34393)
+Version 2.2.0 Under development (unstable) (2005-06-02 r34537)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4707,4 +4707,42 @@ NaNs produced in: pf(q, df1, df2, lower.tail, log.p)
 > atan(0.9999+0i)
 [1] 0.7853482+0i
 > ## previously not as in Abramowitz & Stegun.
+> 
+> 
+> ## printing RAW matrices/arrays was not implemented
+> s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))
+> s
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]   6d   da   b4   68   d0   a0   40   80
+[2,]   79   f2   e4   c8   90   20   40   80
+[3,]   20   40   80   00   00   00   00   00
+[4,]   74   e8   d0   a0   40   80   00   00
+[5,]   65   ca   94   28   50   a0   40   80
+[6,]   78   f0   e0   c0   80   00   00   00
+[7,]   74   e8   d0   a0   40   80   00   00
+> dim(s) <- c(7,4,2)
+> s
+, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]   6d   da   b4   68
+[2,]   79   f2   e4   c8
+[3,]   20   40   80   00
+[4,]   74   e8   d0   a0
+[5,]   65   ca   94   28
+[6,]   78   f0   e0   c0
+[7,]   74   e8   d0   a0
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]   d0   a0   40   80
+[2,]   90   20   40   80
+[3,]   00   00   00   00
+[4,]   40   80   00   00
+[5,]   50   a0   40   80
+[6,]   80   00   00   00
+[7,]   40   80   00   00
+
+> ## empty < 2.1.1
 > 

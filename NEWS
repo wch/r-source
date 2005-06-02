@@ -324,6 +324,8 @@ BUG FIXES
 
     o	qcauchy() suffered from underflow in the extreme tails.  (PR#7902)
 
+    o	Printing of raw matrices/arrays was not implemented. (PR#7912)
+
 
 
 		CHANGES IN R VERSION 2.1.0

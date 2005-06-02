@@ -1614,3 +1614,11 @@ tan(atan(2+0i))
 atan(1.0001+0i)
 atan(0.9999+0i)
 ## previously not as in Abramowitz & Stegun.
+
+
+## printing RAW matrices/arrays was not implemented
+s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))
+s
+dim(s) <- c(7,4,2)
+s
+## empty < 2.1.1
