@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-28 07:48+0100\n"
+"POT-Creation-Date: 2005-06-02 13:02+0100\n"
 "PO-Revision-Date: 2005-03-14 11.49+0000\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: Japanese\n"
@@ -1004,7 +1004,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
 #: ../library/grDevices/src/devWindows.c:900
-#: ../library/grDevices/src/devWindows.c:2679
+#: ../library/grDevices/src/devWindows.c:2709
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "選択されたファイルパスが長すぎます: 512 バイトまでです"
 
@@ -1178,15 +1178,15 @@ msgstr "メタファイルに保存..."
 msgid "Save as postscript..."
 msgstr "ポストスクリプトに保存..."
 
-#: ../library/grDevices/src/devWindows.c:2423
+#: ../library/grDevices/src/devWindows.c:2445
 msgid "Locator is active"
 msgstr "Locator はアクティブです"
 
-#: ../library/grDevices/src/devWindows.c:2983
+#: ../library/grDevices/src/devWindows.c:3016
 msgid "Waiting to confirm page change..."
 msgstr "ページ変更を確認するまで待機中..."
 
-#: ../library/grDevices/src/devWindows.c:2995
+#: ../library/grDevices/src/devWindows.c:3028
 msgid "Click or hit ENTER for next page"
 msgstr "クリックまたは ENTER キーを押すことで次のページに移ります"
 

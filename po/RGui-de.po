@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: RGui\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-28 07:48+0100\n"
+"POT-Creation-Date: 2005-06-02 13:02+0100\n"
 "PO-Revision-Date: 2005-03-22 19:27+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -1001,7 +1001,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced Metafiles"
 
 #: ../library/grDevices/src/devWindows.c:900
-#: ../library/grDevices/src/devWindows.c:2679
+#: ../library/grDevices/src/devWindows.c:2709
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "ausgewählter Pfadname zu lang: nur 512 Bytes erlaubt"
 
@@ -1175,15 +1175,15 @@ msgstr "Speichere als Metafile..."
 msgid "Save as postscript..."
 msgstr "Speichere als Postscript..."
 
-#: ../library/grDevices/src/devWindows.c:2423
+#: ../library/grDevices/src/devWindows.c:2445
 msgid "Locator is active"
 msgstr "locator() ist aktiv"
 
-#: ../library/grDevices/src/devWindows.c:2983
+#: ../library/grDevices/src/devWindows.c:3016
 msgid "Waiting to confirm page change..."
 msgstr "Warte auf Bestätigung des Seitenwechsels..."
 
-#: ../library/grDevices/src/devWindows.c:2995
+#: ../library/grDevices/src/devWindows.c:3028
 msgid "Click or hit ENTER for next page"
 msgstr "Klicke oder Return für die nächste Seite"
 
