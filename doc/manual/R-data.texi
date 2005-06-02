@@ -2080,9 +2080,8 @@ spreadsheet file.
 
 @code{Perl} users have contributed a module
 @code{OLE::SpreadSheet::ParseExcel} and a program @code{xls2csv.pl} to
-convert Excel spreadsheets to CSV files.  Bundle @pkg{gregmisc}
-provides a basic wrapper in its @code{read.xls} function in package
-@pkg{gdata}.
+convert Excel spreadsheets to CSV files.  Package @pkg{gdata} provides a
+basic wrapper in its @code{read.xls} function.
 
 
 
