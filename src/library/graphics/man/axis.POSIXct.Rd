@@ -10,9 +10,9 @@
   \code{"POSIXct"} and \code{"Date"}  representing calendar dates and times. 
 }
 \usage{
-axis.POSIXct(side, x, at, format, \dots)
+axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
 
-axis.Date(side, x, at, format, \dots)
+axis.Date(side, x, at, format, labels = TRUE, \dots)
 
 \method{plot}{POSIXct}(x, y, xlab = "", \dots)
 
@@ -24,8 +24,8 @@ axis.Date(side, x, at, format, \dots)
 plot.POSIXct(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
 plot.POSIXlt(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
 plot.Date(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
-axis.POSIXct(side, x, at, format, ...)
-axis.Date(side, x, at, format, ...)
+axis.POSIXct(side, x, at, format, labels = TRUE, ...)
+axis.Date(side, x, at, format, labels = TRUE, ...)
 }
 \arguments{
   \item{x, at}{A date-time object.}
@@ -33,6 +33,9 @@ axis.Date(side, x, at, format, ...)
   \item{xlab}{a character string giving the label for the x axis.}
   \item{side}{See \code{\link{axis}}.}
   \item{format}{See \code{\link{strptime}}.}
+  \item{labels}{Either a logical value specifying whether
+  annotations are to be made at the tickmarks, or a vector of character
+  strings to be placed at the tickpoints.}
   \item{\dots}{Further arguments to be passed from or to other methods,
     typically graphical parameters or arguments of
     \code{\link{plot.default}}.}
@@ -46,7 +49,8 @@ axis.Date(side, x, at, format, ...)
 
   If \code{at} is supplied it specifies the locations of the ticks
   and labels whereas if \code{x} is specified a suitable grid of labels
-  is chosen. 
+  is chosen. Printing of tick labels can be suppressed by using
+  \code{labels = FALSE}.
 }
 \seealso{
   \link{DateTimeClasses}, \link{Dates} for details of the classes.
@@ -77,6 +81,8 @@ plot(random.dates, 1:100)
 # or for a better axis labelling
 plot(random.dates, 1:100, xaxt="n")
 axis.Date(1, at=seq(as.Date("2001/1/1"), max(random.dates)+6, "weeks"))
+axis.Date(1, at=seq(as.Date("2001/1/1"), max(random.dates)+6, "days"),
+     labels = FALSE, tcl = -0.2)
 }
 \keyword{utilities}
 \keyword{chron}

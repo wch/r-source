@@ -84,6 +84,9 @@ NEW FEATURES
 	and extendrange(), both in package 'grDevices'.
 
     o	pie() has new optional arguments 'clockwise' and 'init.angle'.
+    
+    o	axis.Date() and axis.POSIXct() now accept a 'label' argument 
+    	(contributed by Gavin Simpson).
 
 
 DEPRECATED & DEFUNCT
