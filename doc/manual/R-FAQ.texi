@@ -2454,6 +2454,8 @@ including some latent class models via EM and Fisher scoring approaches.
 @item glmmML
 A Maximum Likelihood approach to generalized linear models with random
 intercept.
+@item gmodels
+Various functions to manipulate models.
 @item gmp
 Arithmetic ``without limitations'' using the @acronym{GNU} Multiple
 Precision library.
