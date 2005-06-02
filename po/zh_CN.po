@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:28+0100\n"
-"PO-Revision-Date: 2005-02-10 09:29+0000\n"
-"Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
+"POT-Creation-Date: 2005-06-02 12:55+0100\n"
+"PO-Revision-Date: 2005-05-20 18:26+0800\n"
+"Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -407,7 +407,7 @@ msgstr "产生了NaNs"
 msgid "Non-numeric argument to mathematical function"
 msgstr "数学函数中用了非数值变元"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3673
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3696
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "变元不对"
@@ -631,7 +631,7 @@ msgstr "没有载入动态/共享图书馆'%s' "
 
 #: src/main/Rdynload.c:1010
 msgid "must pass package name or DllInfo reference"
-msgstr "必需传给程辑包名字或DllInfo引用"
+msgstr "必需传给程序包名字或DllInfo引用"
 
 #: src/main/Rdynload.c:1091
 #, c-format
@@ -988,7 +988,7 @@ msgstr "\"%1$s\"槽名不存在于\"%2$s\"类别目标对象中"
 
 #: src/main/attrib.c:1231
 msgid "formal classes cannot be used without the methods package"
-msgstr "一定要有方法程辑包才能用正式类别"
+msgstr "一定要有方法程序包才能用正式类别"
 
 #: src/main/attrib.c:1255
 #, c-format
@@ -2216,11 +2216,11 @@ msgstr "无法为'read.dcf'分配内存"
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr "无法为read.dcf分配内存"
 
-#: src/main/deparse.c:184 src/main/plot.c:958 src/main/plot.c:1454
-#: src/main/plot.c:1740 src/main/plot.c:1805 src/main/plot.c:1893
-#: src/main/plot.c:2018 src/main/plot.c:2108 src/main/plot.c:2398
-#: src/main/plot.c:2598 src/main/plot.c:2841 src/main/plot.c:3435
-#: src/main/plot.c:3511 src/main/plot.c:3764 src/main/plot3d.c:1383
+#: src/main/deparse.c:184 src/main/plot.c:981 src/main/plot.c:1477
+#: src/main/plot.c:1763 src/main/plot.c:1828 src/main/plot.c:1916
+#: src/main/plot.c:2041 src/main/plot.c:2131 src/main/plot.c:2421
+#: src/main/plot.c:2621 src/main/plot.c:2864 src/main/plot.c:3458
+#: src/main/plot.c:3534 src/main/plot.c:3787 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "变元数目太少"
@@ -2313,7 +2313,7 @@ msgstr "无法分辨本机例行程序"
 #: src/main/dotcode.c:172
 #, c-format
 msgid "\"%s\" function name not in DLL for package '%s'"
-msgstr "程辑包'%2$s'的DLL没有\"%1$s\"这个函数"
+msgstr "程序包'%2$s'的DLL没有\"%1$s\"这个函数"
 
 #: src/main/dotcode.c:176
 #, c-format
@@ -3629,7 +3629,7 @@ msgstr "语法错误"
 
 #: src/main/main.c:536
 msgid "unable to open the base package\n"
-msgstr "无法打开基本程辑包\n"
+msgstr "无法打开基本程序包\n"
 
 #: src/main/main.c:575
 msgid "WARNING: UTF-8 locales are not supported in this build of R\n"
@@ -3641,7 +3641,7 @@ msgstr "无法用.Rdata来復原保存数据\n"
 
 #: src/main/main.c:651
 msgid "During startup - "
-msgstr ""
+msgstr "在启动过程中 - "
 
 #: src/main/main.c:858
 msgid "cannot quit from browser"
@@ -3735,7 +3735,7 @@ msgstr "cons内存用完了(达到了极限?)"
 #: src/main/memory.c:1540 src/main/memory.c:1543
 #, c-format
 msgid "cannot allocate memory block of size %.0f"
-msgstr ""
+msgstr "不能分配大小为%.0f的内存"
 
 #: src/main/memory.c:1738
 msgid "negative length vectors are not allowed"
@@ -4723,260 +4723,260 @@ msgstr "对数座标不能有负的极限"
 msgid "invalid type for axis labels"
 msgstr "座标標記种类不对"
 
-#: src/main/plot.c:967
+#: src/main/plot.c:990
 #, c-format
 msgid "invalid axis number %d"
 msgstr "座标数目%d不对"
 
-#: src/main/plot.c:1064 src/main/plot.c:2451
+#: src/main/plot.c:1087 src/main/plot.c:2474
 msgid "zero length 'padj' specified"
 msgstr "'padj'长度不能为0"
 
-#: src/main/plot.c:1115
+#: src/main/plot.c:1138
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "'at'和'label'的长度不同，%d!=%d"
 
-#: src/main/plot.c:1133
+#: src/main/plot.c:1156
 msgid "no locations are finite"
 msgstr "不存在有限的位置"
 
-#: src/main/plot.c:1470
+#: src/main/plot.c:1493
 msgid "invalid plotting structure"
 msgstr "绘图结构不对"
 
-#: src/main/plot.c:1472
+#: src/main/plot.c:1495
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "%s()里的'x'和'y'的长度不一样"
 
-#: src/main/plot.c:1484
+#: src/main/plot.c:1507
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "绘图种类'%s'被缩短成第一个字符"
 
-#: src/main/plot.c:1488 src/main/plot.c:3101
+#: src/main/plot.c:1511 src/main/plot.c:3124
 msgid "invalid plot type"
 msgstr "绘图种类不对"
 
-#: src/main/plot.c:1664
+#: src/main/plot.c:1687
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "绘图种类'%c'不对"
 
-#: src/main/plot.c:1705
+#: src/main/plot.c:1728
 msgid "first argument invalid"
 msgstr "第一个变元不对"
 
-#: src/main/plot.c:1711
+#: src/main/plot.c:1734
 msgid "second argument invalid"
 msgstr "第二个变元不对"
 
-#: src/main/plot.c:1717
+#: src/main/plot.c:1740
 msgid "third argument invalid"
 msgstr "第三个变元不对"
 
-#: src/main/plot.c:1723
+#: src/main/plot.c:1746
 msgid "fourth argument invalid"
 msgstr "第四个变元不对"
 
-#: src/main/plot.c:1905
+#: src/main/plot.c:1928
 msgid "invalid arrow head length"
 msgstr "箭头长度不对"
 
-#: src/main/plot.c:1910
+#: src/main/plot.c:1933
 msgid "invalid arrow head angle"
 msgstr "箭头角度不对"
 
-#: src/main/plot.c:1915
+#: src/main/plot.c:1938
 msgid "invalid arrow head specification"
 msgstr "箭头设定不对"
 
-#: src/main/plot.c:1935
+#: src/main/plot.c:1958
 msgid "'lwd' must be numeric of length >=1"
 msgstr "'lwd'必需是长度大于1的数值"
 
-#: src/main/plot.c:2120
+#: src/main/plot.c:2143
 msgid "zero length 'labels'"
 msgstr "'labels'的长度不能为0"
 
-#: src/main/plot.c:2148
+#: src/main/plot.c:2171
 msgid "invalid 'adj' value"
 msgstr "'adj'值不对"
 
-#: src/main/plot.c:2155
+#: src/main/plot.c:2178
 msgid "invalid 'pos' value"
 msgstr "'pos'值不对"
 
-#: src/main/plot.c:2198
+#: src/main/plot.c:2221
 msgid "no coordinates were supplied"
 msgstr "没有座标"
 
-#: src/main/plot.c:2409
+#: src/main/plot.c:2432
 msgid "zero length 'text' specified"
 msgstr "'text'长度不能设成0"
 
-#: src/main/plot.c:2415
+#: src/main/plot.c:2438
 msgid "zero length 'side' specified"
 msgstr "'side'长度不能设成0"
 
-#: src/main/plot.c:2422
+#: src/main/plot.c:2445
 msgid "zero length 'line' specified"
 msgstr "'line'长度不能设成0"
 
-#: src/main/plot.c:2430
+#: src/main/plot.c:2453
 msgid "zero length 'outer' specified"
 msgstr "'outer'长度不能设成0"
 
-#: src/main/plot.c:2437
+#: src/main/plot.c:2460
 msgid "zero length 'at' specified"
 msgstr "'at'长度不能设成0"
 
-#: src/main/plot.c:2444
+#: src/main/plot.c:2467
 msgid "zero length 'adj' specified"
 msgstr "'adj'长度不能设成0"
 
-#: src/main/plot.c:2458
+#: src/main/plot.c:2481
 msgid "zero length 'cex' specified"
 msgstr "'cex'长度不能设成0"
 
-#: src/main/plot.c:2466
+#: src/main/plot.c:2489
 msgid "zero length 'col' specified"
 msgstr "'col'长度不能设成0"
 
-#: src/main/plot.c:2473
+#: src/main/plot.c:2496
 msgid "zero length 'font' specified"
 msgstr "'font'长度不能设成0"
 
-#: src/main/plot.c:2546
+#: src/main/plot.c:2569
 msgid "Hershey fonts not yet implemented for mtext()"
 msgstr "mtext()还没有实现Hershey字形"
 
-#: src/main/plot.c:2882
+#: src/main/plot.c:2905
 msgid "invalid a=, b= specification"
 msgstr "a=, b= 设定不对"
 
-#: src/main/plot.c:2891
+#: src/main/plot.c:2914
 msgid "'a' and 'b' must be finite"
 msgstr "'a'和'b'的值必需是有限的"
 
-#: src/main/plot.c:3023
+#: src/main/plot.c:3046
 msgid "invalid 'which' specification"
 msgstr "'which'设定不对"
 
-#: src/main/plot.c:3096
+#: src/main/plot.c:3119
 msgid "invalid number of points in locator()"
 msgstr "locator()里点的数目不对"
 
-#: src/main/plot.c:3217
+#: src/main/plot.c:3240
 msgid "invalid number of points in identify()"
 msgstr "identify()里点的数目不对"
 
-#: src/main/plot.c:3219
+#: src/main/plot.c:3242
 msgid "incorrect argument type"
 msgstr "变元种类不对"
 
-#: src/main/plot.c:3221
+#: src/main/plot.c:3244
 msgid "different argument lengths"
 msgstr "变元长度不一样"
 
-#: src/main/plot.c:3256
+#: src/main/plot.c:3279
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "警告: 没有%.2f英尺的点\n"
 
-#: src/main/plot.c:3261
+#: src/main/plot.c:3284
 msgid "warning: nearest point already identified\n"
 msgstr "警告: 已经找到了最近的点\n"
 
-#: src/main/plot.c:3336
+#: src/main/plot.c:3359
 msgid "invalid units"
 msgstr "单位不对"
 
-#: src/main/plot.c:3342
+#: src/main/plot.c:3365
 msgid "invalid 'cex' value"
 msgstr "'cex'值不对"
 
-#: src/main/plot.c:3495 src/main/plot.c:3604
+#: src/main/plot.c:3518 src/main/plot.c:3627
 msgid "invalid dendrogram input"
 msgstr "dendrogram输入不对"
 
-#: src/main/plot.c:3635
+#: src/main/plot.c:3658
 msgid "cannot take snapshot of old-style device"
 msgstr "无法取旧式设备快照"
 
-#: src/main/plot.c:3648
+#: src/main/plot.c:3671
 msgid "cannot play snapshot on old-style device"
 msgstr "无法在旧式设备上放快照"
 
-#: src/main/plot.c:3704
+#: src/main/plot.c:3727
 msgid "invalid graphics parameter list"
 msgstr "图形参数串列不对"
 
-#: src/main/plot.c:3746
+#: src/main/plot.c:3769
 msgid "invalid symbol parameter vector"
 msgstr "符号参数向量不对"
 
-#: src/main/plot.c:3769
+#: src/main/plot.c:3792
 msgid "invalid symbol coordinates"
 msgstr "符号座标不对"
 
-#: src/main/plot.c:3777
+#: src/main/plot.c:3800
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/参数长度不一样"
 
-#: src/main/plot.c:3796
+#: src/main/plot.c:3819
 msgid "invalid circles data"
 msgstr "圆圈数据不对"
 
-#: src/main/plot.c:3798 src/main/plot.c:3816 src/main/plot.c:3842
-#: src/main/plot.c:3871
+#: src/main/plot.c:3821 src/main/plot.c:3839 src/main/plot.c:3865
+#: src/main/plot.c:3894
 msgid "invalid symbol parameter"
 msgstr "符号参数不对"
 
-#: src/main/plot.c:3814
+#: src/main/plot.c:3837
 msgid "invalid squares data"
 msgstr "正方形数据不对"
 
-#: src/main/plot.c:3840
+#: src/main/plot.c:3863
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "长方形数据不对(需要两个列)"
 
-#: src/main/plot.c:3869
+#: src/main/plot.c:3892
 msgid "invalid stars data"
 msgstr "星形数据不对"
 
-#: src/main/plot.c:3911
+#: src/main/plot.c:3934
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
-#: src/main/plot.c:3914
+#: src/main/plot.c:3937
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "温度计[,%s]不对"
 
-#: src/main/plot.c:3918
+#: src/main/plot.c:3941
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "温度计[,%s]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:3921
+#: src/main/plot.c:3944
 msgid "invalid thermometers[,1:2]"
 msgstr "温度计[,1:2]"
 
-#: src/main/plot.c:3960
+#: src/main/plot.c:3983
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplots数据不对(需要五个列)"
 
-#: src/main/plot.c:3970
+#: src/main/plot.c:3993
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:3972
+#: src/main/plot.c:3995
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4]不对"
 
-#: src/main/plot.c:4018
+#: src/main/plot.c:4041
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
@@ -5170,14 +5170,15 @@ msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK 例行程序'%6s'产生了错误%d信息"
 
 #: src/main/printarray.c:68
+#, fuzzy
 msgid "allocation failure in strwidth"
-msgstr "分配strwidth失败"
+msgstr "分配GVStrWidth失败"
 
-#: src/main/printarray.c:507
+#: src/main/printarray.c:582
 msgid "too few row labels"
 msgstr "行標記不够"
 
-#: src/main/printarray.c:509
+#: src/main/printarray.c:584
 msgid "too few column labels"
 msgstr "列標記不够"
 
@@ -6486,7 +6487,7 @@ msgid ""
 msgstr ""
 "R是个合作计划，有许多人为之做出了贡献.\n"
 "用'contributors()'来看详细的情况\n"
-"用'citation()'会告诉你如何在出版物中正确地引用R或R程辑包。\n"
+"用'citation()'会告诉你如何在出版物中正确地引用R或R程序包。\n"
 "\n"
 
 #: src/main/version.c:40
