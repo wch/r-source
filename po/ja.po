@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10+0100\n"
+"POT-Creation-Date: 2005-06-02 12:57+0100\n"
 "PO-Revision-Date: 2005-03-19 00:03+0009\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -409,7 +409,7 @@ msgstr "NaN が生成されました"
 msgid "Non-numeric argument to mathematical function"
 msgstr "数学関数に非数値引数が渡されました"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3674
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3697
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "引数が不正です"
@@ -2244,11 +2244,11 @@ msgstr "'read.dcf' のためのメモリを割り当てられませんでした"
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr ""
 
-#: src/main/deparse.c:184 src/main/plot.c:959 src/main/plot.c:1455
-#: src/main/plot.c:1741 src/main/plot.c:1806 src/main/plot.c:1894
-#: src/main/plot.c:2019 src/main/plot.c:2109 src/main/plot.c:2399
-#: src/main/plot.c:2599 src/main/plot.c:2842 src/main/plot.c:3436
-#: src/main/plot.c:3512 src/main/plot.c:3765 src/main/plot3d.c:1383
+#: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
+#: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
+#: src/main/plot.c:2042 src/main/plot.c:2132 src/main/plot.c:2422
+#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3459
+#: src/main/plot.c:3535 src/main/plot.c:3788 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "引数が足りません"
@@ -4782,260 +4782,260 @@ msgstr "対数軸は正の限界を持たなければなりません"
 msgid "invalid type for axis labels"
 msgstr "軸のラベルの型が不正です"
 
-#: src/main/plot.c:968
+#: src/main/plot.c:991
 #, c-format
 msgid "invalid axis number %d"
 msgstr "軸の番号 %d が不正です"
 
-#: src/main/plot.c:1065 src/main/plot.c:2452
+#: src/main/plot.c:1088 src/main/plot.c:2475
 msgid "zero length 'padj' specified"
 msgstr "長さゼロの 'padj' が指定されています"
 
-#: src/main/plot.c:1116
+#: src/main/plot.c:1139
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "'at' と 'label' の長さが違います。 %d != %d"
 
-#: src/main/plot.c:1134
+#: src/main/plot.c:1157
 msgid "no locations are finite"
 msgstr "どの位置も有限ではありません"
 
-#: src/main/plot.c:1471
+#: src/main/plot.c:1494
 msgid "invalid plotting structure"
 msgstr "不正なプロット構造です"
 
-#: src/main/plot.c:1473
+#: src/main/plot.c:1496
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "%s() において 'x' と 'y' の長さが異なります"
 
-#: src/main/plot.c:1485
+#: src/main/plot.c:1508
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "plot タイプ '%s' は最初の一文字に切りつめられます"
 
-#: src/main/plot.c:1489 src/main/plot.c:3102
+#: src/main/plot.c:1512 src/main/plot.c:3125
 msgid "invalid plot type"
 msgstr "プロットのタイプが不正です"
 
-#: src/main/plot.c:1665
+#: src/main/plot.c:1688
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "プロットのタイプ '%c' が不正です"
 
-#: src/main/plot.c:1706
+#: src/main/plot.c:1729
 msgid "first argument invalid"
 msgstr "最初の引数が不正です"
 
-#: src/main/plot.c:1712
+#: src/main/plot.c:1735
 msgid "second argument invalid"
 msgstr "二番目の引数が不正です"
 
-#: src/main/plot.c:1718
+#: src/main/plot.c:1741
 msgid "third argument invalid"
 msgstr "三番目の引数が不正です"
 
-#: src/main/plot.c:1724
+#: src/main/plot.c:1747
 msgid "fourth argument invalid"
 msgstr "4番目の引数が不正です"
 
-#: src/main/plot.c:1906
+#: src/main/plot.c:1929
 msgid "invalid arrow head length"
 msgstr "矢印のやじり部分の長さが不正です"
 
-#: src/main/plot.c:1911
+#: src/main/plot.c:1934
 msgid "invalid arrow head angle"
 msgstr "矢印のやじり部分の角度が不正です"
 
-#: src/main/plot.c:1916
+#: src/main/plot.c:1939
 msgid "invalid arrow head specification"
 msgstr "矢印のやじり部分の指定が不正です"
 
-#: src/main/plot.c:1936
+#: src/main/plot.c:1959
 msgid "'lwd' must be numeric of length >=1"
 msgstr "'lwd' は長さ1以上の数値でなくてはなりません"
 
-#: src/main/plot.c:2121
+#: src/main/plot.c:2144
 msgid "zero length 'labels'"
 msgstr "長さゼロの 'labels' が指定されています"
 
-#: src/main/plot.c:2149
+#: src/main/plot.c:2172
 msgid "invalid 'adj' value"
 msgstr "'adj' の値が不正です"
 
-#: src/main/plot.c:2156
+#: src/main/plot.c:2179
 msgid "invalid 'pos' value"
 msgstr "'pos' の値が不正です"
 
-#: src/main/plot.c:2199
+#: src/main/plot.c:2222
 msgid "no coordinates were supplied"
 msgstr "座標が提供されていません"
 
-#: src/main/plot.c:2410
+#: src/main/plot.c:2433
 msgid "zero length 'text' specified"
 msgstr "長さゼロの 'text' が指定されています"
 
-#: src/main/plot.c:2416
+#: src/main/plot.c:2439
 msgid "zero length 'side' specified"
 msgstr "長さゼロの 'side' が指定されています"
 
-#: src/main/plot.c:2423
+#: src/main/plot.c:2446
 msgid "zero length 'line' specified"
 msgstr "長さゼロの 'line' が指定されています"
 
-#: src/main/plot.c:2431
+#: src/main/plot.c:2454
 msgid "zero length 'outer' specified"
 msgstr "長さゼロの 'outer' が指定されています"
 
-#: src/main/plot.c:2438
+#: src/main/plot.c:2461
 msgid "zero length 'at' specified"
 msgstr "長さゼロの 'at' が指定されています"
 
-#: src/main/plot.c:2445
+#: src/main/plot.c:2468
 msgid "zero length 'adj' specified"
 msgstr "長さゼロの 'adj' が指定されています"
 
-#: src/main/plot.c:2459
+#: src/main/plot.c:2482
 msgid "zero length 'cex' specified"
 msgstr "長さゼロの 'cex' が指定されています"
 
-#: src/main/plot.c:2467
+#: src/main/plot.c:2490
 msgid "zero length 'col' specified"
 msgstr "長さゼロの 'col' が指定されています"
 
-#: src/main/plot.c:2474
+#: src/main/plot.c:2497
 msgid "zero length 'font' specified"
 msgstr "長さゼロの 'font' が指定されています"
 
-#: src/main/plot.c:2547
+#: src/main/plot.c:2570
 msgid "Hershey fonts not yet implemented for mtext()"
 msgstr "Hershey フォントはまだ mtext 関数に実装されていません"
 
-#: src/main/plot.c:2883
+#: src/main/plot.c:2906
 msgid "invalid a=, b= specification"
 msgstr "a=, b= 指定が不正です"
 
-#: src/main/plot.c:2892
+#: src/main/plot.c:2915
 msgid "'a' and 'b' must be finite"
 msgstr "'a' と 'b'  は有限でなければなりません"
 
-#: src/main/plot.c:3024
+#: src/main/plot.c:3047
 msgid "invalid 'which' specification"
 msgstr "'which' の指定が不正です"
 
-#: src/main/plot.c:3097
+#: src/main/plot.c:3120
 msgid "invalid number of points in locator()"
 msgstr "locator 関数の点の個数が不正です"
 
-#: src/main/plot.c:3218
+#: src/main/plot.c:3241
 msgid "invalid number of points in identify()"
 msgstr "identify 関数の点の個数が不正です"
 
-#: src/main/plot.c:3220
+#: src/main/plot.c:3243
 msgid "incorrect argument type"
 msgstr "正しくない引数の型です"
 
-#: src/main/plot.c:3222
+#: src/main/plot.c:3245
 msgid "different argument lengths"
 msgstr "引数の長さが違います"
 
-#: src/main/plot.c:3257
+#: src/main/plot.c:3280
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "警告：%.2f インチ内に点はありません\n"
 
-#: src/main/plot.c:3262
+#: src/main/plot.c:3285
 msgid "warning: nearest point already identified\n"
 msgstr "警告：近傍点がすでに同定（identify）されています\n"
 
-#: src/main/plot.c:3337
+#: src/main/plot.c:3360
 msgid "invalid units"
 msgstr "単位が不正です"
 
-#: src/main/plot.c:3343
+#: src/main/plot.c:3366
 msgid "invalid 'cex' value"
 msgstr "'cex' の値が不正です"
 
-#: src/main/plot.c:3496 src/main/plot.c:3605
+#: src/main/plot.c:3519 src/main/plot.c:3628
 msgid "invalid dendrogram input"
 msgstr "デンドログラムの入力が不正です"
 
-#: src/main/plot.c:3636
+#: src/main/plot.c:3659
 msgid "cannot take snapshot of old-style device"
 msgstr "古いデバイスではスナップショットはとれません"
 
-#: src/main/plot.c:3649
+#: src/main/plot.c:3672
 msgid "cannot play snapshot on old-style device"
 msgstr "古いスタイルのデバイスではスナップショット表示はできません"
 
-#: src/main/plot.c:3705
+#: src/main/plot.c:3728
 msgid "invalid graphics parameter list"
 msgstr "グラフィックスパラメータリストが不正です"
 
-#: src/main/plot.c:3747
+#: src/main/plot.c:3770
 msgid "invalid symbol parameter vector"
 msgstr "シンボル記号パラメータベクトルが不正です"
 
-#: src/main/plot.c:3770
+#: src/main/plot.c:3793
 msgid "invalid symbol coordinates"
 msgstr "シンボル記号の座標が不正です"
 
-#: src/main/plot.c:3778
+#: src/main/plot.c:3801
 msgid "x/y/parameter length mismatch"
 msgstr "x/y もしくはパラメータの長さが不整合です"
 
-#: src/main/plot.c:3797
+#: src/main/plot.c:3820
 msgid "invalid circles data"
 msgstr "円のデータが不正です"
 
-#: src/main/plot.c:3799 src/main/plot.c:3817 src/main/plot.c:3843
-#: src/main/plot.c:3872
+#: src/main/plot.c:3822 src/main/plot.c:3840 src/main/plot.c:3866
+#: src/main/plot.c:3895
 msgid "invalid symbol parameter"
 msgstr "シンボル記号パラメータが不正です"
 
-#: src/main/plot.c:3815
+#: src/main/plot.c:3838
 msgid "invalid squares data"
 msgstr "正方形データが不正です"
 
-#: src/main/plot.c:3841
+#: src/main/plot.c:3864
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "長方形データが不正です（2列必要です）"
 
-#: src/main/plot.c:3870
+#: src/main/plot.c:3893
 msgid "invalid stars data"
 msgstr "星形データが不正です"
 
-#: src/main/plot.c:3912
+#: src/main/plot.c:3935
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "thermometers データが不正です（3または4列必要です）"
 
-#: src/main/plot.c:3915
+#: src/main/plot.c:3938
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers [,%s] が不正です"
 
-#: src/main/plot.c:3919
+#: src/main/plot.c:3942
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr " thermometers[,%s] が [0,1] 範囲外 ‐ 奇妙に見えるかも知れません"
 
-#: src/main/plot.c:3922
+#: src/main/plot.c:3945
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers [,1:2] が不正です"
 
-#: src/main/plot.c:3961
+#: src/main/plot.c:3984
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplot のデータが不正です（5列必要です）"
 
-#: src/main/plot.c:3971
+#: src/main/plot.c:3994
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] が [0,1] の範囲外にあるのは変です"
 
-#: src/main/plot.c:3973
+#: src/main/plot.c:3996
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplot[,1:4] が不正です"
 
-#: src/main/plot.c:4019
+#: src/main/plot.c:4042
 msgid "invalid symbol type"
 msgstr "シンボル記号の型が不正です"
 
@@ -5228,11 +5228,11 @@ msgstr "realpr でメモリ確保に失敗しました"
 msgid "LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK 関数 '%6s' はエラーコード %d を返しました "
 
-#: src/main/printarray.c:471
+#: src/main/printarray.c:546
 msgid "too few row labels"
 msgstr "行ラベルの数が少なすぎます"
 
-#: src/main/printarray.c:473
+#: src/main/printarray.c:548
 msgid "too few column labels"
 msgstr "列ラベルの数が少なすぎます"
 
