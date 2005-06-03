@@ -19,6 +19,8 @@ expected form is
 
 with *three* slashes.
 
+The 'head' command line utility is now needed to build R. 
+
 
 
 R 2.1.0 patched

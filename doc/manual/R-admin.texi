@@ -2857,7 +2857,7 @@ any other version of the Cygwin dlls in your path.
 You will need suitable versions of at least @code{basename}, @code{cat},
 @code{comm}, @code{cp}, @code{cut}, @code{diff}, @code{echo},
 @code{egrep}, @code{expr}, @code{find}, @code{gawk}, @code{grep},
-@code{gzip}, @code{ls}, @code{make}, @code{makeinfo}, @code{mkdir},
+@code{gzip}, @code{head}, @code{ls}, @code{make}, @code{makeinfo}, @code{mkdir},
 @code{mv}, @code{rm}, @code{sed}, @code{sh}, @code{sort},
 @code{texindex} and @code{touch}; we use those from the Cygwin
 distribution (@url{http://www.cygwin.com}) or compiled from the sources.

@@ -2939,7 +2939,8 @@ listed using @kbd{R --help}.
 All of these work under Windows. You will need the files in the @R{}
 binary Windows distribution for installing source packages to be
 installed, and for @code{R CMD Rd2dvi} also the tools to build packages
-from source as described in @file{README.packages}.
+from source as described in the ``R Installation and Administration'' 
+manual.
 
 
 @node Tidying and profiling R code, System and foreign language interfaces, Writing R documentation files, Top
