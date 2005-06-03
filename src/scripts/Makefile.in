@@ -79,11 +79,12 @@ Makerules:
 ## installed as 'R'.
 R.sh: $(srcdir)/R.sh.in $(top_builddir)/config.status
 	@cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
-R.fe: R.sh $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
+R.fe: R.sh $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
-	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
-	  y=`cut -d/ -f1 < $(top_srcdir)/date-stamp`; \
+	  dat=`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`; \
+	  v="$${v} ($${dat})"; \
+	  y=`echo $${dat} | cut -d- -f1`; \
 	  d=`echo "$(abs_top_builddir)" | sed 's,/,\\\/,g'`; \
 	  sed "s/\\(R_HOME_DIR=\\).*/\\1\"$${d}\"/; \
 	       s@REPLACE_BY_VERSION@$${v}@; \

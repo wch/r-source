@@ -64,7 +64,7 @@ $(srcdir)/stamp-h.in: @MAINTAINER_MODE_TRUE@ $(top_srcdir)/configure.ac $(top_bu
 	@echo timestamp > $@ 2> /dev/null
 Rconfig.h: config.h $(top_srcdir)/tools/GETCONFIG
 	@$(SHELL) $(top_srcdir)/tools/GETCONFIG > $@
-Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/date-stamp $(top_srcdir)/tools/GETVERSION $(top_builddir)/SVN-REVISION
+Rversion.h: $(top_srcdir)/VERSION $(top_srcdir)/tools/GETVERSION $(top_builddir)/SVN-REVISION
 	@$(SHELL) $(top_srcdir)/tools/GETVERSION > $@
 
 ## <NOTE>

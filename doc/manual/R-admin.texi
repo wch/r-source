@@ -182,6 +182,9 @@ Certificate information:
 (currently, there is no ``trusted certificate'').  You can accept this
 certificate permanently and will not be asked about it anymore.
 
+Note that retrieving the sources by e.g. @command{wget -r} from that URL
+will not work: the Subversion information is needed to build @R{}.
+
 The Subversion repository does not contain the current sources for the
 recommended packages, which can be obtained by @code{rsync} or
 downloaded from @acronym{CRAN}.  To use @code{rsync} to install the
@@ -189,8 +192,8 @@ appropriate sources for the recommended packages, run
 @command{./tools/rsync-recommended} from the top-level of the @R{}
 sources.
 
-If downloading manually from @acronym{CRAN}, do ensure that you have the correct
-versions of the recommended packages: if the number in the file
+If downloading manually from @acronym{CRAN}, do ensure that you have the
+correct versions of the recommended packages: if the number in the file
 @file{VERSION} is @samp{@var{x}.@var{y}.@var{z}} you need to download
 the contents of @samp{http://CRAN.R-project.org/src/contrib/@var{dir}},
 where @var{dir} is @samp{@var{x}.@var{y}.@var{z}/Recommended} for

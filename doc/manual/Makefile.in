@@ -143,10 +143,10 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-dvi
 
-version.tex: Makefile $(top_srcdir)/date-stamp $(top_srcdir)/VERSION
+version.tex: Makefile $(top_srcdir)/SVN-REVISION $(top_builddir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
-	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
+	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`)"; \
 	  echo "$${v}") > $@
 
 stamp-refman-dvi: $(refman_TEXINPUTS)
@@ -209,11 +209,11 @@ $(OBJECTS_DVI): $(srcdir)/texinfo.tex
 R-admin.dvi: $(texiincludes)
 R-data.dvi: $(texiincludes)
 R-exts.dvi: $(texiincludes)
-version.texi: Makefile $(top_srcdir)/VERSION $(top_srcdir)/date-stamp
+version.texi: Makefile $(top_srcdir)/VERSION $(top_builddir)/SVN-REVISION
 	@echo "creating $(subdir)/$@"
 	@(v=`sed 's/\([^ ]*\).*/\1/' $(top_srcdir)/VERSION`; \
 	  echo "@set VERSIONno $${v}" > $@; \
-	  v="$${v} (`sed 's|/|-|g' $(top_srcdir)/date-stamp`)"; \
+	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`)"; \
 	  echo "@set VERSION $${v}" >> $@; \
 	  rwv=`$(PERL) $(top_srcdir)/src/gnuwin32/fixed/rwver.pl $(top_srcdir)/VERSION`; \
 	  echo "@set RWVERSION $${rwv}" >> $@ )
