@@ -35,7 +35,7 @@ as.raw(x)
   \code{\link{rawToChar}}.
 }
 \seealso{
-  \code{\link{rawToBits}}, \code\link{packShift}}, etc.
+  \code{\link{rawToBits}}, \code{\link{packShift}}, etc.
 }
 \examples{
 xx <- raw(2)
