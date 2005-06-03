@@ -34,6 +34,9 @@ as.raw(x)
   (with escape sequences for non-printing characters) use
   \code{\link{rawToChar}}.
 }
+\seealso{
+  \code{\link{rawToBits}}, \code\link{packShift}}, etc.
+}
 \examples{
 xx <- raw(2)
 xx[1] <- as.raw(40)     # NB, not just 40.
