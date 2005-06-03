@@ -331,6 +331,9 @@ BUG FIXES
 
     o	Printing of raw matrices/arrays was not implemented. (PR#7912)
 
+    o	A typo in the routines calling external code was fixed, making
+    	checks for external entry points somewhat stricter. (PR#7917)
+
 
 
 		CHANGES IN R VERSION 2.1.0
@@ -1425,9 +1428,6 @@ BUG FIXES
 	designs with interactions (and had since unique() gained a
 	matrix method).
 	
-    o	A typo in the routines calling external code was fixed, making
-    	checks for external entry points somewhat stricter. (PR#7917)
-
 
 
 		CHANGES IN R VERSION 2.0.1
