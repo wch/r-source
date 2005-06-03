@@ -445,7 +445,8 @@ distclean veryclean: clean clean-recommended
 	$(RM) -r cran/*.html cran/*.htm cran/ReadMe cran/README* cran/*.exe \
 		cran/md5sum.txt cran/*.$(RPREFIX) 
 	$(RM) -r .vignettes # it gets left behind sometimes
-	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html # not in SVN sources
+	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html \
+	  ../../SVN-REVISION # not in SVN sources
 	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
