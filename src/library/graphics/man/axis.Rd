@@ -43,7 +43,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     perpendicular to the axis the default is to centre the string.}
   \item{\dots}{other graphical parameters may also be passed as arguments to
     this function, particularly, \code{cex.axis}, \code{col.axis} and
-    \code{font.axis} for axis annotation, \code{las} for
+    \code{font.axis} for axis annotation, \code{mgp} for positioning, \code{tck} or
+    \code{tcl} for tick mark length and direction, \code{las} for
     vertical/horizontal label orientation, or \code{fg} instead of
     \code{col}, see \code{\link{par}} on these.}
 }
@@ -65,18 +66,21 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
-  are controlled by \code{mgp}, the size of the ticks is controlled by
+  are controlled by \code{mgp}, the size and direction of the ticks is controlled by
   \code{tck} and \code{tcl} and the appearance of the tick labels by
   \code{cex.axis}, \code{col.axis} and \code{font.axis} with
   orientation controlled by \code{las} (but not \code{srt}, unlike S
   which uses \code{srt} if \code{at} is supplied and \code{las} if it is
-  not).
+  not).  See \code{\link{par}} for details.
 }
 \seealso{
   \code{\link{axTicks}} returns the axis tick locations
   corresponding to \code{at=NULL}; \code{\link{pretty}} is more flexible
   for computing pretty tick coordinates and does \emph{not} depend on
-  (nor adapt to) the coordinate system in use.
+  (nor adapt to) the coordinate system in use.  
+  
+  Several graphics parameters affecting the appearance are documented 
+  in \code{\link{par}}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
