@@ -111,7 +111,7 @@ clean:
 	rm -rf R.iss *.log $(RPREFIX) 
 
 distclean: clean
-	rm -f $(RPREFIX).exe
+	rm -f $(RPREFIX)-win32.exe
 
 myR:
 	$(CAT) $(IMAGEDIR)/library/*/CONTENTS >  \
