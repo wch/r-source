@@ -41,7 +41,7 @@ vpExists <- function(vp) {
 }
 
 vpExists.viewport <- function(vp) {
-  vp$name %in% ls(env=.Call("L_currentViewport")$children)
+  vp$name %in% ls(env=.Call("L_currentViewport", PACKAGE="grid")$children)
 }
 
 vpExists.vpStack <- function(vp) {

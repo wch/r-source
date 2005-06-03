@@ -168,6 +168,10 @@ BUG FIXES
     o	qcauchy() suffered from underflow in the extreme tails.  (PR#7902)
 
     o	Printing of raw matrices/arrays was not implemented. (PR#7912)
+    	
+    o	A typo in the routines calling external code was fixed, making
+       	checks for external entry points somewhat stricter. (PR#7917)
+
 
 
 
