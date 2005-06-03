@@ -1424,6 +1424,9 @@ BUG FIXES
     o	replications() was wrongly reporting lack of balance in
 	designs with interactions (and had since unique() gained a
 	matrix method).
+	
+    o	A typo in the routines calling external code was fixed, making
+    	checks for external entry points somewhat stricter. (PR#7917)
 
 
 

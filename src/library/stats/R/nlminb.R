@@ -17,7 +17,7 @@ nlminb <-
     n <- length(par <- as.double(start))
     iv <- integer(78 + 3 * n)
     v <- double(130 + (n * (n + 27)) / 2)
-    .Call("port_ivset", iv, v)
+    .Call("port_ivset", iv, v, PACKAGE = "stats")
     if (length(control)) {
         nms <- names(control)
         if (!is.list(control) || is.null(nms))
@@ -62,7 +62,7 @@ nlminb <-
     
     ## Do the optimization
     .Call("port_nlminb", obj, grad, hess, rho, low, upp,
-          d = rep(as.double(scale), length = length(par)), iv, v)
+          d = rep(as.double(scale), length = length(par)), iv, v, PACKAGE = "stats")
 
     ans <- list(par = get(".par", envir = rho))
     ans$objective <- v[10]

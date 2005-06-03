@@ -33,14 +33,14 @@ make.link <- function (link)
     else
         switch(link,
                "logit" = {
-                   linkfun <- function(mu) .Call("logit_link", mu)
-                   linkinv <- function(eta) .Call("logit_linkinv", eta)
+                   linkfun <- function(mu) .Call("logit_link", mu, PACKAGE="stats")
+                   linkinv <- function(eta) .Call("logit_linkinv", eta, PACKAGE="stats")
 ##               {
 ##                   thresh <- -log(.Machine$double.eps)
 ##                   eta <- pmin(pmax(eta, -thresh), thresh)
 ##                   exp(eta)/(1 + exp(eta))
 ##               }
-                   mu.eta <- function(eta) .Call("logit_mu_eta", eta)
+                   mu.eta <- function(eta) .Call("logit_mu_eta", eta, PACKAGE="stats")
 ##                   {
 ##                       thresh <- -log(.Machine$double.eps)
 ##                       res <- rep.int(.Machine$double.eps, length(eta))
@@ -251,7 +251,7 @@ binomial <- function (link = "logit")
     variance <- function(mu) mu * (1 - mu)
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)
-        .Call("binomial_dev_resids", y, mu, wt)
+        .Call("binomial_dev_resids", y, mu, wt, PACKAGE="stats")
 #	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
 #		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
     aic <- function(y, n, mu, wt, dev) {
