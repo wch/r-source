@@ -2742,8 +2742,6 @@ Environment @code{j2re 1.4.2_03} does not work under Solaris, whereas
 @code{jre 1.5.0} and @code{j2re 1.4.2_01} (available from
 @url{http://java.sun.com/products/archive/}) do.
 
-See @url{http://www.MedAnalytics.com/INSTALL} for more information.
-
 @node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
 
