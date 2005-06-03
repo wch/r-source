@@ -943,10 +943,10 @@ for testing) use
 @example
 cd installer
 make imagedir
-zip -r9X rw2010.zip rw2010  # or something similar
+zip -r9X R-2.0.0.zip R-2.2.0  # or something similar
 @end example
-Currently we have not found a reliable way to convert base to lazy-loading
-when cross-building, so it is left in the old format.
+We have not found a reliable way to convert base to lazy-loading when
+cross-building, so it is left in the old format.
 
 
 @node Installing R under Mac OS X, Add-on packages, Installing R under Windows, Top
