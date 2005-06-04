@@ -119,7 +119,7 @@ function(x, ...)
 
 
 getCallingDLL <-
-function(f = sys.function(1), doStop = FALSE)
+function(f = sys.function(-1), doStop = FALSE)
 {
     e <- environment(f)
 

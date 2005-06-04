@@ -334,6 +334,11 @@ BUG FIXES
     o	A typo in the routines calling external code was fixed, making
     	checks for external entry points somewhat stricter. (PR#7917)
 
+    o	getCallingDLL()'s default first argument did not correspond to
+	its description and has been changed.  The mismatch caused
+	symbols in .C/.Call/.Fortran calls to potentially be looked up
+	incorrectly.
+
 
 
 		CHANGES IN R VERSION 2.1.0
