@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-02
+@set FAQ_DATE @value{FAQ_YEAR}-06-04
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2713,6 +2713,8 @@ An R interface to MIM for graphical modeling in R.
 R interface for two functions from the MINPACK least squares
 optimization library, solving the nonlinear least squares problem by a
 modification of the Levenberg-Marquardt algorithm.
+@item misc3d
+A collection of miscellaneous 3d plots, including rgl-based isosurfaces.
 @item mitools
 Tools to perform analyses and combine results from multiple-imputation
 datasets.
