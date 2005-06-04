@@ -17,7 +17,7 @@
   code in the future and so should not be used by R programmers.
 }
 \usage{
-getCallingDLL(f = sys.function(1), doStop = FALSE)
+getCallingDLL(f = sys.function(-1), doStop = FALSE)
 }
 \arguments{
   \item{f}{the function whose namespace and DLL are to be found.
