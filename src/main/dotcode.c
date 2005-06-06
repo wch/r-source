@@ -144,6 +144,8 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    errorcall(call, _("too many arguments in foreign function call"));
     } else {
 	if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
+	/* This has the side effect of setting dll.type if a PACKAFE=
+	   argument if found */
 	args = pkgtrim(args, &dll);
     }
 
@@ -160,10 +162,14 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 
     if(!*fun) {
 	if(dll.type != FILENAME) {
+	    /* no PACKAGE= arg, so see if we can identify a DLL
+	       from the namespace defining the function */
 	    *fun = R_FindNativeSymbolFromDLL(buf, &dll, symbol);
-	    if(!*fun) {
-		errorcall(call, _("cannot resolve native routine"));
-	    }
+	    /* need to continue if there is no PACKAGE arg or if the
+	       namespace search failed
+	       if(!fun)
+	           errorcall(call, _("cannot resolve native routine"));
+	    */
 	}
 
 	if (!*fun && !(*fun = R_FindSymbol(buf, dll.DLLname, symbol))) {
