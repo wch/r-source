@@ -98,7 +98,7 @@ svnonly:
 	@if test ! -f "$(srcdir)/FAQ" || test -f non-tarball ; then \
 	  (cd doc/manual && $(MAKE) front-matter) ; \
 	  touch non-tarball ; \
-	  (cd $(srcdir); TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
+	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
 	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
 	    |  cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
 	  if grep unknown SVN-REVISION-tmp > /dev/null ; then \
