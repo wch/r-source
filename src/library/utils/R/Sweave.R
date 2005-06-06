@@ -354,7 +354,10 @@ RweaveLatexSetup <-
                     fig=FALSE, pdf=pdf, eps=eps,
                     width=6, height=6, term=TRUE,
                     echo=echo, results="verbatim", split=split,
-                    strip.white=TRUE, include=TRUE)
+                    strip.white="true", include=TRUE)
+
+    ## to be on the safe side: see if defaults pass the check
+    options <- RweaveLatexOptions(options)
 
     list(output=output, styfile=styfile, havesty=FALSE,
          debug=debug, quiet=quiet, syntax = syntax,
@@ -576,6 +579,10 @@ RweaveLatexFinish <- function(object, error=FALSE)
 
 RweaveLatexOptions <- function(options)
 {
+    
+    ## ATTENTION: Changes in this function have to be reflected in the
+    ## defaults in the init function!
+    
     ## convert a character string to logical
     c2l <- function(x){
         if(is.null(x)) return(FALSE)
