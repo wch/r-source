@@ -143,7 +143,7 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  $(LATEX) '\nonstopmode\input{refman.tex}'
 	@touch stamp-refman-dvi
 
-version.tex: Makefile $(top_srcdir)/SVN-REVISION $(top_builddir)/VERSION
+version.tex: Makefile $(top_builddir)/SVN-REVISION $(top_builddir)/VERSION
 	@echo "creating $(subdir)/$@"
 	@(v=`cat $(top_srcdir)/VERSION`; \
 	  v="$${v} (`sed -e 1d -e 's/^Last Changed Date: //' $(top_builddir)/SVN-REVISION`)"; \
