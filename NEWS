@@ -84,8 +84,8 @@ NEW FEATURES
 	and extendrange(), both in package 'grDevices'.
 
     o	pie() has new optional arguments 'clockwise' and 'init.angle'.
-    
-    o	axis.Date() and axis.POSIXct() now accept a 'label' argument 
+
+    o	axis.Date() and axis.POSIXct() now accept a 'label' argument
     	(contributed by Gavin Simpson).
 
 
@@ -266,8 +266,8 @@ BUG FIXES
 	deficiency in the M and X matrices (also when they are implicitly
 	generated via model.matrix()).
 
-    o	pf() with one infinite df is allowed again.  It is now more
-	accurate for extreme ratios of dfs, especially when there is a
+    o	pf() with infinite df is allowed again.	 It is now more accurate
+	for extreme ratios of dfs, especially when there is a
 	non-centrality parameter.
 
     o	df() was inaccurate for large df (1e16 or greater).
@@ -1435,7 +1435,7 @@ BUG FIXES
     o	replications() was wrongly reporting lack of balance in
 	designs with interactions (and had since unique() gained a
 	matrix method).
-	
+
 
 
 		CHANGES IN R VERSION 2.0.1
