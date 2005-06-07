@@ -483,5 +483,48 @@ All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
 ## all gave -Inf in R 2.0.1
 
 
+## Inf df in pf etc.
+# apparently pf(df2=Inf) worked in 2.0.1 (undocumented) but df did not.
+x <- c(1/pi, 1, pi)
+oo <- options(digits = 8)
+df(x, 3, 1e6)
+df(x, 3, Inf)
+pf(x, 3, 1e6)
+pf(x, 3, Inf)
+
+df(x, 1e6, 5)
+df(x, Inf, 5)
+pf(x, 1e6, 5)
+pf(x, Inf, 5)
+
+df(x, Inf, Inf)# (0, Inf, 0)  - since 2.1.1
+pf(x, Inf, Inf)# (0, 1/2, 1)
+
+pf(x, 5, Inf, ncp=0)
+pf(x, 5, 1e6, ncp=1)
+pf(x, 5, 1e7, ncp=1)
+all.equal(pf(x, 5, 1e8, ncp=1), tol = 5e-9,
+          c(0.0659330751, 0.4708802996, 0.9788764591))
+pf(x, 5, Inf, ncp=1)
+
+dt(1, Inf)
+dt(1, Inf, ncp=0)
+dt(1, Inf, ncp=1)
+dt(1, 1e6, ncp=1)
+dt(1, 1e7, ncp=1)
+dt(1, 1e8, ncp=1)
+dt(1, 1e10, ncp=1) # = Inf
+options(oo)
+## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+
+## PR#7099 : pf() with large df1 or df2:
+nu <- 2^seq(25,34, 0.5)
+y <- 1e9*(pf(1,1,nu) - 0.68268949)
+stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
+          diff(y) > 0, # i.e. pf(1,1, *) is monotone increasing
+          All.eq(y [1], -5.07420372386491),
+          All.eq(y[19],  2.12300110824515))
+## not at all in R 2.1.0 or earlier
+
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

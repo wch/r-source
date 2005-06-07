@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-02 r34537)
+Version 2.2.0 Under development (unstable) (2005-06-06 r34585)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4635,65 +4635,6 @@ Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 3))]) :
 Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) : 
 	negative values are not allowed in a matrix subscript
 > ## generally allowed in 2.1.0.
-> 
-> 
-> ## Inf df in pf etc.
-> # apparently pf(df2=Inf) worked in 2.0.1 (undocumented) but df did not.
-> x <- c(1/pi, 1, pi)
-> df(x, 3, 1e6)
-[1] 0.72553184 0.46254030 0.03300701
-> df(x, 3, Inf)
-[1] 0.72553217 0.46254099 0.03300672
-> pf(x, 3, 1e6)
-[1] 0.1878442 0.6083744 0.9758544
-> pf(x, 3, Inf)
-[1] 0.1878442 0.6083748 0.9758548
-> 
-> df(x, 1e6, 5)
-[1] 0.1586021 0.6102061 0.0610364
-> df(x, Inf, 5)
-[1] 0.15859792 0.61020761 0.06103637
-> pf(x, 1e6, 5)
-[1] 0.007729571 0.415880797 0.902269241
-> pf(x, Inf, 5)
-[1] 0.00772925 0.41588019 0.90226938
-> 
-> df(pi, Inf, Inf)
-[1] NaN
-Warning message:
-NaNs produced in: df(x, df1, df2, log) 
-> pf(pi, Inf, Inf)
-[1] NaN
-Warning message:
-NaNs produced in: pf(q, df1, df2, lower.tail, log.p) 
-> 
-> pf(x, 5, Inf, ncp=0)
-[1] 0.09773062 0.58411981 0.99227075
-> pf(x, 5, 1e6, ncp=1)
-[1] 0.0659332 0.4708800 0.9788759
-> pf(x, 5, 1e7, ncp=1)
-[1] 0.06593309 0.47088028 0.97887641
-> pf(x, 5, 1e8, ncp=1)
-[1] 0.06593308 0.47088030 0.97887646
-> pf(x, 5, Inf, ncp=1)
-[1] 0.06593308 0.47088032 0.97887647
-> 
-> dt(1, Inf)
-[1] 0.2419707
-> dt(1, Inf, ncp=0)
-[1] 0.2419707
-> dt(1, Inf, ncp=1)
-[1] 0.3989423
-> dt(1, 1e6, ncp=1)
-[1] 0.3989421
-> dt(1, 1e7, ncp=1)
-[1] 0.3989423
-> dt(1, 1e8, ncp=1)
-[1] 0.3989423
-> dt(1, 1e10, ncp=1) # = Inf
-[1] 0.3989423
-> ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
-> 
 > 
 > ## Branch cuts in complex inverse trig functions
 > atan(2)

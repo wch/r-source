@@ -24,10 +24,10 @@
  *  DESCRIPTION
  *
  *    The density function of the F distribution.
- *    To evaluate it, write it as a Binomial probability with p = x*m/(n+x*m). 
+ *    To evaluate it, write it as a Binomial probability with p = x*m/(n+x*m).
  *    For m >= 2, we use the simplest conversion.
  *    For m < 2, (m-2)/2 < 0 so the conversion will not work, and we must use
- *               a second conversion. 
+ *               a second conversion.
  *    Note the division by p; this seems unavoidable
  *    for m < 2, since the F density has a singularity as x (or p) -> 0.
  */
@@ -36,7 +36,7 @@
 #include "dpq.h"
 
 double df(double x, double m, double n, int give_log)
-{ 
+{
     double p, q, f, dens;
 
 #ifdef IEEE_754
@@ -45,8 +45,10 @@ double df(double x, double m, double n, int give_log)
 #endif
     if (m <= 0 || n <= 0) ML_ERR_return_NAN;
     if (x <= 0.) return(R_D__0);
-    if (!R_FINITE(m) && !R_FINITE(n)) /* both +Inf */
-	ML_ERR_return_NAN;
+    if (!R_FINITE(m) && !R_FINITE(n)) { /* both +Inf */
+	if(x == 1.) return ML_POSINF;
+	/* else */  return R_D__0;
+    }
     if (!R_FINITE(n)) /* must be +Inf by now */
 	return(dgamma(x, m/2, 2./m, give_log));
     if (m > 1e14) {/* includes +Inf: code below is inaccurate there */
@@ -58,11 +60,11 @@ double df(double x, double m, double n, int give_log)
     q = n*f;
     p = x*m*f;
 
-    if (m >= 2) { 
+    if (m >= 2) {
 	f = m*q/2;
 	dens = dbinom_raw((m-2)/2, (m+n-2)/2, p, q, give_log);
     }
-    else { 
+    else {
 	f = m*m*q / (2*p*(m+n));
 	dens = dbinom_raw(m/2, (m+n)/2, p, q, give_log);
     }

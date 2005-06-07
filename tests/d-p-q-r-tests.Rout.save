@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-01 r34519)
+Version 2.2.0 Under development (unstable) (2005-06-06 r34587)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -981,7 +981,72 @@ p.sI    0  0.5  0.5  0.5  0.5  0.5  0.5  0.5  0.5     1
 > ## all gave -Inf in R 2.0.1
 > 
 > 
+> ## Inf df in pf etc.
+> # apparently pf(df2=Inf) worked in 2.0.1 (undocumented) but df did not.
+> x <- c(1/pi, 1, pi)
+> oo <- options(digits = 8)
+> df(x, 3, 1e6)
+[1] 0.72553184 0.46254030 0.03300701
+> df(x, 3, Inf)
+[1] 0.725532165 0.462540989 0.033006719
+> pf(x, 3, 1e6)
+[1] 0.18784423 0.60837436 0.97585435
+> pf(x, 3, Inf)
+[1] 0.18784423 0.60837482 0.97585479
+> 
+> df(x, 1e6, 5)
+[1] 0.158602071 0.610206081 0.061036395
+> df(x, Inf, 5)
+[1] 0.15859792 0.61020761 0.06103637
+> pf(x, 1e6, 5)
+[1] 0.0077295711 0.4158807972 0.9022692409
+> pf(x, Inf, 5)
+[1] 0.0077292503 0.4158801870 0.9022693759
+> 
+> df(x, Inf, Inf)# (0, Inf, 0)  - since 2.1.1
+[1]   0 Inf   0
+> pf(x, Inf, Inf)# (0, 1/2, 1)
+[1] 0.0 0.5 1.0
+> 
+> pf(x, 5, Inf, ncp=0)
+[1] 0.097730624 0.584119813 0.992270750
+> pf(x, 5, 1e6, ncp=1)
+[1] 0.065933194 0.470879987 0.978875867
+> pf(x, 5, 1e7, ncp=1)
+[1] 0.06593309 0.47088028 0.97887641
+> all.equal(pf(x, 5, 1e8, ncp=1), tol = 5e-9,
++           c(0.0659330751, 0.4708802996, 0.9788764591))
+[1] TRUE
+> pf(x, 5, Inf, ncp=1)
+[1] 0.065933078 0.470880318 0.978876467
+> 
+> dt(1, Inf)
+[1] 0.24197072
+> dt(1, Inf, ncp=0)
+[1] 0.24197072
+> dt(1, Inf, ncp=1)
+[1] 0.39894228
+> dt(1, 1e6, ncp=1)
+[1] 0.39894208
+> dt(1, 1e7, ncp=1)
+[1] 0.39894226
+> dt(1, 1e8, ncp=1)
+[1] 0.39894227
+> dt(1, 1e10, ncp=1) # = Inf
+[1] 0.39894228
+> options(oo)
+> ## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+> 
+> ## PR#7099 : pf() with large df1 or df2:
+> nu <- 2^seq(25,34, 0.5)
+> y <- 1e9*(pf(1,1,nu) - 0.68268949)
+> stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
++           diff(y) > 0, # i.e. pf(1,1, *) is monotone increasing
++           All.eq(y [1], -5.07420372386491),
++           All.eq(y[19],  2.12300110824515))
+> ## not at all in R 2.1.0 or earlier
+> 
 > 
 > cat("Time elapsed: ", proc.time() - .ptime,"\n")
-Time elapsed:  1.8 0.01 1.81 0 0 
+Time elapsed:  5.37 0.02 5.41 0 0 
 > 
