@@ -339,6 +339,9 @@ BUG FIXES
 	symbols in .C/.Call/.Fortran calls to potentially be looked up
 	incorrectly.
 
+    o	Binary save() of raw vectors was not working correctly on
+	big-endian platforms.  (PR#7812)
+
 
 
 		CHANGES IN R VERSION 2.1.0

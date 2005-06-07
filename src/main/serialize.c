@@ -259,7 +259,7 @@ static void OutComplex(R_outpstream_t stream, Rcomplex c)
     OutReal(stream, c.i);
 }
 
-static void OutByte(R_outpstream_t stream, int i)
+static void OutByte(R_outpstream_t stream, Rbyte i)
 {
     char buf[128];
     switch (stream->type) {
