@@ -3664,6 +3664,7 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 
 ### end of tests added in 2.1.0 patched ###
 
+
 ## tests of hexadecimal constants
 x <- 0xAbc
 stopifnot(x == 2748)
@@ -3673,3 +3674,16 @@ xx <- as.numeric("0xAbc")
 stopifnot(x == xx)
 stopifnot(as.integer("13.7") == 13)
 ## new in 2.2.0
+
+
+## save() of raw vector was incorrect on big-endian system
+(y <- x <- charToRaw("12345"))
+save(x, file="x.Rda")
+rm(x)
+load("x.Rda")
+x
+stopifnot(identical(x, y))
+unlink("x.Rda")
+## 00 00 00 00 00 in 2.1.0 on MacOS X
+## fixed for 2.1.1, but test added only in 2.2.x
+
