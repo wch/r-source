@@ -27,7 +27,7 @@ SEXP logit_linkinv(SEXP eta)
     thresh = -log(DOUBLE_EPS);
     for (i = 0; i < n; i++) {
 	double etai = REAL(eta)[i];
-	
+
 	if (etai > thresh) etai = thresh;
 	if (etai < -thresh) etai = -thresh;
 	REAL(ans)[i] = exp(etai)/(1 + exp(etai));
@@ -48,7 +48,7 @@ SEXP logit_mu_eta(SEXP eta)
     for (i = 0; i < n; i++) {
 	double etai = REAL(eta)[i];
 	double opexp = 1 + exp(etai);
-	
+
 	REAL(ans)[i] = (etai > thresh || etai < -thresh) ? DOUBLE_EPS :
 	    exp(etai)/(opexp * opexp);
     }
@@ -66,7 +66,8 @@ SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt)
 {
     int i, n = LENGTH(y), lmu = LENGTH(mu), lwt = LENGTH(wt), nprot = 1;
     SEXP ans;
-    
+    double mui, yi;
+
     if (!isReal(y)) {y = PROTECT(coerceVector(y, REALSXP)); nprot++;}
     ans = PROTECT(duplicate(y));
     if (!isReal(mu)) {mu = PROTECT(coerceVector(mu, REALSXP)); nprot++;}
@@ -77,12 +78,23 @@ SEXP binomial_dev_resids(SEXP y, SEXP mu, SEXP wt)
     if (lwt != n && lwt != 1)
 	error(_("argument %s must be a numeric vector of length 1 or length %d"),
 	      "wt", n);
-    for (i = 0; i < n; i++) {
-	double mui = REAL(mu)[lmu > 1 ? i : 0], yi = REAL(y)[i];
-
-	REAL(ans)[i] = 2 * REAL(wt)[lwt > 1 ? i : 0] *
-	    (y_log_y(yi, mui) + y_log_y(1 - yi, 1 - mui));
+    /* Written separately to avoid an optimization bug on Solaris cc */
+    if(lmu > 1) {
+	for (i = 0; i < n; i++) {
+	    mui = REAL(mu)[i];
+	    yi = REAL(y)[i];
+	    REAL(ans)[i] = 2 * REAL(wt)[lwt > 1 ? i : 0] *
+		(y_log_y(yi, mui) + y_log_y(1 - yi, 1 - mui));
+	}
+    } else {
+	mui = REAL(mu)[0];
+	for (i = 0; i < n; i++) {
+	    yi = REAL(y)[i];
+	    REAL(ans)[i] = 2 * REAL(wt)[lwt > 1 ? i : 0] *
+		(y_log_y(yi, mui) + y_log_y(1 - yi, 1 - mui));
+	}
     }
+
     UNPROTECT(nprot);
     return ans;
 }
