@@ -1,7 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-02 r34537)
-ISBN 3-900051-07-0
+Version 2.1.0 Patched (2005-06-07), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -4635,7 +4634,6 @@ Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 3))]) :
 Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) : 
 	negative values are not allowed in a matrix subscript
 > ## generally allowed in 2.1.0.
-> 
 > 
 > ## Branch cuts in complex inverse trig functions
 > atan(2)

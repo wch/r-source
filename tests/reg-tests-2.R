@@ -1574,7 +1574,6 @@ try(x[rbind(c(1,1), c(2,2), c(-3,3))])
 try(x[rbind(c(1,1), c(2,2), c(-4,3))])
 ## generally allowed in 2.1.0.
 
-
 ## Branch cuts in complex inverse trig functions
 atan(2)
 atan(2+0i)

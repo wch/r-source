@@ -104,8 +104,8 @@ BUG FIXES
 	deficiency in the M and X matrices (also when they are implicitly
 	generated via model.matrix()).
 
-    o	pf() with one infinite df is allowed again.  It is now more
-	accurate for extreme ratios of dfs, especially when there is a
+    o	pf() with infinite df is allowed again.	 It is now more accurate
+	for extreme ratios of dfs, especially when there is a
 	non-centrality parameter.
 
     o	df() was inaccurate for large df (1e16 or greater).
@@ -168,7 +168,7 @@ BUG FIXES
     o	qcauchy() suffered from underflow in the extreme tails.  (PR#7902)
 
     o	Printing of raw matrices/arrays was not implemented. (PR#7912)
-    	
+
     o	A typo in the routines calling external code was fixed, making
        	checks for external entry points somewhat stricter. (PR#7917)
 
