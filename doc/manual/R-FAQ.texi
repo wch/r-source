@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-04
+@set FAQ_DATE @value{FAQ_YEAR}-06-08
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2067,6 +2067,8 @@ by S. Weisberg, 2005, Wiley.
 Another Multidimensional Analysis Package.
 @item anm
 Analog model for statistical/empirical downscaling.
+@item aod
+Analysis of Overdispersed Data.
 @item ape
 Analyses of Phylogenetics and Evolution, providing functions for reading
 and plotting phylogenetic trees in parenthetic format (standard Newick
@@ -2443,6 +2445,8 @@ Functions to perform geostatistical data analysis including model-based
 methods.
 @item geoRglm
 Functions for inference in generalised linear spatial models.
+@item geometry
+Mesh generation and surface tesselation, based on the Qhull library.
 @item ggm
 Functions for defining directed acyclic graphs and undirected graphs,
 finding induced graphs and fitting Gaussian Markov models.
@@ -2798,6 +2802,8 @@ a Gibbs sampler.
 @c @item netCDF
 @c Read data from netCDF files.
 @c </COMMENT>
+@item neural
+RBF and MLP neural networks with graphical user interface.
 @item nice
 Get or set UNIX priority (niceness) of running R process.
 @item nlme
@@ -3233,6 +3239,8 @@ Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
 @item tensor
 Tensor product of arrays.
+@item time
+Time tracking for developers.
 @item tkrplot
 Simple mechanism for placing R graphics in a Tk widget.
 @item tree
