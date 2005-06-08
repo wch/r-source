@@ -345,6 +345,9 @@ BUG FIXES
 
     o   as.Date.factor now accepts a format argument.
 
+    o	Workaround for FreeBSD which does not have alloca.h _and_ does
+	not allow alloca() to be declared.
+
 
 
 		CHANGES IN R VERSION 2.1.0
