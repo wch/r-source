@@ -15,8 +15,7 @@ NON_SVN_INSTFILES = FAQ RESOURCES SVN-REVISION
 DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL OONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	config.site configure configure.ac \
-	date-stamp
+	config.site configure configure.ac
 SUBDIRS = m4 tools doc etc share src po tests
 SUBDIRS_WITH_NO_BUILD = debian
 
