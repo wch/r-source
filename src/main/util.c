@@ -41,7 +41,7 @@
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
 #endif
-#if !HAVE_DECL_ALLOCA
+#if !HAVE_DECL_ALLOCA && !defined(__FreeBSD__)
 extern char *alloca(size_t);
 #endif
 

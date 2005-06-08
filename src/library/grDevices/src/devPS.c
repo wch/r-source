@@ -47,7 +47,7 @@ extern int errno;
 
 #ifdef HAVE_ALLOCA_H
 #include <alloca.h>
-#else
+#elif !defined (__FreeBSD__)
 extern char *alloca(size_t);
 #endif
 
