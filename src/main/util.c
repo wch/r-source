@@ -38,13 +38,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA
-extern char *alloca(size_t);
-#endif
-
 SEXP ScalarLogical(int x)
 {
     SEXP ans = allocVector(LGLSXP, 1);

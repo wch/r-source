@@ -36,13 +36,6 @@ extern void R_ProcessEvents(void);
 #include <R_ext/GraphicsEngine.h> /* for GEonExit */
 #include <Rmath.h> /* for imax2 */
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA
-extern char *alloca(size_t);
-#endif
-
 #ifndef min
 #define min(a, b) (a<b?a:b)
 #endif

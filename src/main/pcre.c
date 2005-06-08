@@ -34,13 +34,6 @@
 #include "Defn.h"
 #include <Rmath.h>		/* imax2 */
 
-#ifdef HAVE_ALLOCA_H
-# include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA
-extern char *alloca(size_t);
-#endif
-
 #ifdef HAVE_PCRE_PCRE_H
 # include <pcre/pcre.h>
 #else

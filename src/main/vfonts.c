@@ -29,13 +29,6 @@
 #include <Rdynpriv.h>
 #include <Graphics.h>
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA
-extern char *alloca(size_t);
-#endif
-
 typedef struct {
     R_GE_VTextRoutine GEVText;
     R_GE_VStrWidthRoutine GEVStrWidth;

@@ -66,13 +66,6 @@ static char *subterm(char *s)
     return q ? subterm(q) : "";
 }
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA
-extern char *alloca(size_t);
-#endif
-
 /* skip along until we find an unmatched right brace */
 static char *findRbrace(char *s)
 {

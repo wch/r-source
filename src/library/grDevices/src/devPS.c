@@ -45,12 +45,6 @@
 extern int errno;
 #endif
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#else
-extern char *alloca(size_t);
-#endif
-
 #define INVALID_COL 0xff0a0b0c
 
 /* Define this to use hyphen except in -[0-9] */
