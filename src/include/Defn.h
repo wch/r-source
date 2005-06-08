@@ -960,6 +960,7 @@ extern AccuracyInfo R_AccuracyInfo;
 /* FreeBSD defines alloca in stdlib.h, _and_ does not allow a definition
    as here.  (Since it uses GCC, it should use the first clause.) */
 #ifdef __GNUC__
+# undef alloca
 # define alloca(x) __builtin_alloca((x))
 #else
 # ifdef HAVE_ALLOCA_H
