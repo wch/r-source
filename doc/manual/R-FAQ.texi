@@ -2784,6 +2784,8 @@ covariance structure.
 Multivariate partitioning.
 @item mvtnorm
 Multivariate normal and @math{t} distributions.
+@item nFDR
+Nonparametric Estimate of FDR Based on Bernstein polynomials.
 @item ncdf
 Interface to Unidata netCDF data files.
 @item ncomplete
