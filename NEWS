@@ -19,7 +19,8 @@ USER-VISIBLE CHANGES
 	the grDevices name space (to be available in grid as well).
 
     o	The SVN revision number will appear after the date in the
-	welcome message, provided it is available.
+	welcome message, provided it is available.  The date is now
+	the date of the last change to the sources.
 
 
 NEW FEATURES
