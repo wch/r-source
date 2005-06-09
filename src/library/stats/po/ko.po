@@ -1,0 +1,231 @@
+# Korean translations for R package
+# R 패키지에 대한 한국어 번역문.
+# Copyright (C) 2005 The R Foundation
+# This file is distributed under the same license as the R package.
+# Korean <uiami@hanmail.com>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.2.0\n"
+"Report-Msgid-Bugs-To: bugs@R-project.org\n"
+"POT-Creation-Date: 2005-06-09 10:57+0100\n"
+"PO-Revision-Date: 2005-05-26 15:32+0900\n"
+"Last-Translator: Korean <uiami@hanmail.com>\n"
+"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: Srunmed.c:60
+msgid "bandwidth/span of running medians is larger than n"
+msgstr "이동 중앙값의 bandwidth/span가 n보다 큽니다"
+
+#: ansari.c:129
+msgid "probabilities outside [0,1] in qansari()"
+msgstr "qunsari()에서 확률이 [0,1]의 범위외입니다"
+
+#: arima.c:60 arima.c:153 arima.c:329
+msgid "invalid argument type"
+msgstr "부적절한 인수의 유형입니다"
+
+#: arima.c:383 arima.c:471 pacf.c:302 pacf.c:342
+msgid "can only transform 100 pars in arima0"
+msgstr "arima0에서 100개의 파라미터까지만 변환 할수 없습니다"
+
+#: distance.c:145
+msgid "dist(.,\"binary\"): treating non-finite values as NA"
+msgstr "dist(.,\"binary\"):유한하지 않은 값을 NA로서 취급합니다"
+
+#: distance.c:214
+msgid "distance(): invalid p"
+msgstr "distance(): 부적절한 p"
+
+#: distance.c:217
+msgid "distance(): invalid distance"
+msgstr "distance() : 부적절한 distance"
+
+#: family.c:12 family.c:26 family.c:46
+#, c-format
+msgid "Argument %s must be a nonempty numeric vector"
+msgstr ""
+
+#: family.c:76 family.c:79
+#, c-format
+msgid "argument %s must be a numeric vector of length 1 or length %d"
+msgstr ""
+
+#: ksmooth.c:66
+msgid "only 2500 rows are allowed for sm.method=\"spline\""
+msgstr "sm.method=\"spline\"에서는 2500행까지만 취급할수 없습니다"
+
+#: loessc.c:226
+msgid "span is too small"
+msgstr "범위(span)가 너무 작습니다"
+
+#: mburg.c:197
+msgid "Invalid vmethod"
+msgstr "부적절한 vmethod입니다"
+
+#: mburg.c:333
+msgid "Burg's algorithm failed to find partial correlation"
+msgstr "Burg의 알고니즘의 편상관을 검색되어서 결손시켰습니다"
+
+#: nls.c:75
+msgid "control must be a list"
+msgstr "control는 리스트가 아니면 되지 않습니다"
+
+#: nls.c:77
+msgid "m must be a list"
+msgstr "m는 리스트가 아니면 되지 않습니다"
+
+#: nls.c:83
+msgid "control$maxiter absent"
+msgstr "control$maxiter가 결여 되었습니다"
+
+#: nls.c:88
+msgid "control$tol absent"
+msgstr "control$tol가 결여 되었습니다"
+
+#: nls.c:93
+msgid "control$minFactor absent"
+msgstr "contril$minFactor가 결여 되었습니다"
+
+#: nls.c:102
+msgid "m$conv() absent"
+msgstr "m$conv()가  걸여 되었습니다"
+
+#: nls.c:107
+msgid "m$incr() absent"
+msgstr "m$incr()가 걸여 되었습니다"
+
+#: nls.c:112
+msgid "m$deviance() absent"
+msgstr "m$deviance()가 걸여 되었습니다"
+
+#: nls.c:117
+msgid "m$trace() absent"
+msgstr "m$trace()가 걸여 되었습니다"
+
+#: nls.c:122
+msgid "m$setPars() absent"
+msgstr "m$setPars()가 없습니다"
+
+#: nls.c:127
+msgid "m$getPars() absent"
+msgstr "m$getPars()가 없습니다"
+
+#: nls.c:154
+msgid "singular gradient"
+msgstr "구배가 특이합니다"
+
+#: nls.c:173
+#, c-format
+msgid "step factor %g reduced below 'minFactor' of %g"
+msgstr "step인자 %g는 %g의 'minFactor'이하에 감소했습니다"
+
+#: nls.c:181
+#, c-format
+msgid "number of iterations exceeded maximum of %d"
+msgstr "반복수가 최대치 %d를 넘었습니다"
+
+#: nls.c:202
+msgid "theta should be of type character"
+msgstr "theta는 문자 유형이 아니면 되지 않습니다"
+
+#: nls.c:204
+msgid "rho should be an environment"
+msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
+
+#: nls.c:221 nls.c:243
+msgid "Missing value or an infinity produced when evaluating the model"
+msgstr "model를 평가할때 결손값 또는 무한대가 생성되었습니다"
+
+#: pacf.c:72
+msgid "bad Starma struct"
+msgstr "부적절한 Starma struct입니다"
+
+#: pacf.c:218
+#, c-format
+msgid "starma error code %d"
+msgstr "starma 에러 코드는 %d입니다"
+
+#: pacf.c:281
+#, c-format
+msgid "forkal error code %d"
+msgstr "forkal 에러 code는 %d입니다"
+
+#: pacf.c:445
+msgid "invalid value of lag.max"
+msgstr "부적절한 lag.max 값입니다"
+
+#: port.c:111
+#, c-format
+msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
+msgstr ""
+
+#: port.c:297
+#, c-format
+msgid "gradient function must return a numeric vector of length %d"
+msgstr ""
+
+#: port.c:306
+#, c-format
+msgid "Hessian function must return a square numeric matrix of order %d"
+msgstr ""
+
+#: port.c:353
+#, fuzzy
+msgid "`rho' must be an environment"
+msgstr "rho는 환경이 나오지 않으면 되지 않습니다"
+
+#: port.c:355
+msgid "`d' must be a nonempty numeric vector"
+msgstr ""
+
+#: port.c:357
+msgid "When Hessian defined must also have gradient defined"
+msgstr ""
+
+#: port.c:360
+#, c-format
+msgid "environment `rho' must contain a numeric vector `.par' of length %d"
+msgstr ""
+
+#: port.c:370
+msgid "lowerb and upperb must be numeric vectors"
+msgstr ""
+
+#: qr.c:30
+msgid "assert failed in src/library/ts/src/carray.c"
+msgstr "scr/library/ts/src/carray.c에 대한 인수 정합성 검사에 실패했습니다"
+
+#: qr.c:68
+msgid "Singular matrix in qr_solve"
+msgstr "qr_solve 에서의 특이 행렬입니다"
+
+#: qr.c:111
+msgid "Singular matrix in ldet"
+msgstr "ldet에서의 특이 행렬입니다"
+
+#: smooth.c:79
+#, c-format
+msgid "invalid end-rule for running median of 3: %d"
+msgstr "3점 이동의 중앙치 계산으로 end-rule이 부적절합니다: %d"
+
+#: smooth.c:231
+msgid "allocation error in smooth(*, '3RSR')."
+msgstr "smooth(*, '3RSR')에서의 할당 에러입니다"
+
+#: smooth.c:242 smooth.c:252
+msgid "allocation error in smooth(*, '3RSS')."
+msgstr "smooth(*,'3RSS')에서의 할당 에러입니다"
+
+#: smooth.c:262
+msgid "allocation error in smooth(*, '3R')."
+msgstr "smooth(*,'3R')에서의 할당 에러입니다"
+
+#: starma.c:361
+#, c-format
+msgid "missing value in last %d observations"
+msgstr "직전의 %d개의 관측치에서 결손값이 있습니다"

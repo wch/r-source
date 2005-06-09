@@ -142,9 +142,8 @@ msgstr "carico uno snapshot da una versione differente di R"
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr ""
 
-#, fuzzy
 msgid "invalid first argument"
-msgstr "argomento 'family' non valido"
+msgstr ""
 
 msgid "'x' and 'y' lengths differ"
 msgstr "le lunghezze di 'x' e 'y' differiscono"

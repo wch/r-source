@@ -140,9 +140,8 @@ msgstr "異なった R バージョンからのスナップショットが読み
 msgid "'r' must be a \"range\", hence of length 2"
 msgstr ""
 
-#, fuzzy
 msgid "invalid first argument"
-msgstr "不正な 'family' 引数です"
+msgstr ""
 
 msgid "'x' and 'y' lengths differ"
 msgstr "'x' と 'y' の長さが異なります"

@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: R 2.2.0\n"
+"Report-Msgid-Bugs-To: bugs@r-project.org\n"
+"POT-Creation-Date: 2005-02-24 09:15\n"
+"PO-Revision-Date: 2005-05-30 21:04+0900\n"
+"Last-Translator: Korean <uiami@hanmail.com>\n"
+"Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "must have at least 'ord' knots"
+msgstr "적어도'ord'의 knots를 가지지 않으면 안됩니다"
+
+msgid "length of 'derivs' must match length of 'x'"
+msgstr "'derivs'의 길이는 'x' 길이와 match할 필요가 있습니다"
+
+msgid "'ord' must be positive integer, at most the number of knots"
+msgstr "'ord'는 positive 정수로, 대부분 konts 수입니다"
+
+msgid "need at least 2*ord -1 (=%d) knots"
+msgstr "적어도  2*ord -1 (=%d) 개의 knots 필요합니다"
+
+msgid ""
+"the 'x' data must be in the range %f to %f unless you set 'outer.ok = TRUE'"
+msgstr ""
+"outer.ok = TRUE가 나오지 않는경우 데이터 'x'는 %f로부터 %f의 범위내에 있어야"
+"만 합니다"
+
+msgid "values of 'x' must be distinct"
+msgstr "'x'의 값은 모두 다른 값이 아니면 되지 않습니다"
+
+msgid "'formula' must be of the form \"y ~ x\""
+msgstr "'formula'는 \"y ~ x\" 라고 하는 형식이 아니면 되지 않습니다"
+
+msgid "lengths of 'x' and 'y' must match"
+msgstr "'x' 그리고 'y'의 길이를 match 필요가 있습니다"
+
+msgid "values of 'x' must be strictly increasing"
+msgstr "'x'값은 단조증가가 아니면 되지 않습니다"
+
+msgid "'ord' must be >= 2"
+msgstr "'ord'는 2 이상이 아니면 되지 않습니다"
+
+msgid "the range of 'x' values exceeds one period"
+msgstr "'x'의 값 범위는 1 period를 넘고 있습니다"
+
+msgid "knot positions must be non-decreasing"
+msgstr "knot 위치는 non-decreasing가 아니면 되지 않습니다"
+
+msgid "lengths of 'x' and 'y' must be the same"
+msgstr "'x'그리고 'y'의 길이는 동일하지 않으면 되지 않습니다"
+
+msgid "'deriv' must be between 0 and %d"
+msgstr "'deriv'는 0과 %d의 사이가 아니면 되지 않습니다"
+
+msgid "knot positions must be strictly increasing"
+msgstr "knot의 위치는 정확히 단조 증가가 아니면 되지 않습니다"
+
+msgid "spline must be monotone"
+msgstr "spine는 단조롭지 않으면 되지 않습니다"
+
+msgid "'degree' must be integer >= 1"
+msgstr "'depgree'는 1 이상의 정수가 아니면 되지 않습니다"
+
+msgid "'df' was too small; have used"
+msgstr "'df'가 너무 작습니다. 대신에 이하가 사용되었습니다:"
+
+msgid "some 'x' values beyond boundary knots may cause ill-conditioned bases"
+msgstr ""
+"어떠한 'x' 값이 knots의 경계선을 넘어가 버렸기때문에, 상황을 악화하는 초래할 "
+"가능성이 있을지도 모릅니다"

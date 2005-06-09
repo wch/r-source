@@ -194,6 +194,12 @@ NEW FEATURES
     o	The Encoding: field of a DESCRIPTION file is now documented,
 	and used by packageDescription() and library(help=).
 
+    o	There has been progress on translations: existing translations
+	have been revised and expanded, and Korean has been added.
+
+	The Windows installer supports a wide range of languages for
+	installation.
+
 
 BUG FIXES
 
