@@ -27,7 +27,7 @@
         ## dir over to the appropriate install dir.
         tmpDir <- tempfile(, lib)
         if (!dir.create(tmpDir))
-            stop(sprintf(gettext("unable to create temp directory '%s'"),
+            stop(sprintf(gettext("unable to create temporary directory '%s'"),
                          tmpDir), domain = NA, call. = FALSE)
         cDir <- getwd()
         on.exit(setwd(cDir), add = TRUE)
@@ -75,7 +75,7 @@
                 ret <- file.rename(file.path(tmpDir, curPkg), instPath)
                 if(!ret)
                     warning(sprintf(gettext(
-                         "unable to move temp installation '%s' to '%s'"),
+                         "unable to move temporary installation '%s' to '%s'"),
                                     file.path(tmpDir, curPkg), instPath),
                             domain = NA, call. = FALSE)
             } else
@@ -106,7 +106,7 @@
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+            stop(gettextf("unable to create temporary directory '%s'", tmpd),
                  domain = NA)
     }
 
