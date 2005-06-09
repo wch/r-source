@@ -8,8 +8,8 @@ R 2.2.0
 =======
 
 The installer will be called R-2.2.0-win32.exe and by default install
-into C:/Program Files/R/R-2.2.0.  The 'rw2010' notation has been
-dropped.
+into (the local equivalent of) C:/Program Files/R/R-2.2.0.  The
+'rw2010' notation has been dropped.
 
 file:// URLs are now interpreted by download.file(), download.packages() 
 and url() in the same way as Mozilla-based browsers.  That is, the
@@ -21,10 +21,11 @@ with *three* slashes.
 
 
 
-R 2.1.0 patched
-===============
+R 2.1.1
+=======
 
-The installer allows a choice of languages.
+The installer allows a choice of languages.  Note that uninstallation
+will happen in the language chosen for installation.
 
 A menu item has been added for RSiteSearch().
 

@@ -124,7 +124,7 @@ fr.full=Installation utilisateur complиte
 fr.CJK=Installation chinois/japonais/corйen
 fr.custom=Installation personnalisйe
 
-de.regentries= Eintrдge in der Windows-Registrierung:
+de.regentries=Eintrдge in der Windows-Registrierung:
 de.associate=&Verknьpfe R mit .RData Dateien
 de.dcom=&Registriere den R Pfad fьr den (D)COM Server
 de.user=Benutzerinstallation
@@ -141,6 +141,15 @@ ru.compact=Минимальная пользовательская установка
 ru.full=Полная установка
 ru.CJK=Китайская/Японская/Корейская установка
 ru.custom=Выборочная установка
+
+it.regentries=Valori registri
+it.associate=Associa R ai file .RData
+it.dcom=Memorizza percorso di R per l'utilizzo tramite server (D)COM
+it.user=Installazione utente
+it.compact=Installazione utente minimale
+it.full=Installazione completa
+it.CJK=Installazione Cinese/Giapponese/Coreana
+it.custom=Installazione personalizzata
 
 [Tasks]
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
