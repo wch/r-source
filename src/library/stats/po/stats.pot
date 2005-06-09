@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-02-16 08:34+0000\n"
+"POT-Creation-Date: 2005-06-09 10:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,16 @@ msgstr ""
 
 #: distance.c:217
 msgid "distance(): invalid distance"
+msgstr ""
+
+#: family.c:12 family.c:26 family.c:46
+#, c-format
+msgid "Argument %s must be a nonempty numeric vector"
+msgstr ""
+
+#: family.c:76 family.c:79
+#, c-format
+msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr ""
 
 #: ksmooth.c:66
@@ -146,6 +156,42 @@ msgstr ""
 
 #: pacf.c:445
 msgid "invalid value of lag.max"
+msgstr ""
+
+#: port.c:111
+#, c-format
+msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
+msgstr ""
+
+#: port.c:297
+#, c-format
+msgid "gradient function must return a numeric vector of length %d"
+msgstr ""
+
+#: port.c:306
+#, c-format
+msgid "Hessian function must return a square numeric matrix of order %d"
+msgstr ""
+
+#: port.c:353
+msgid "`rho' must be an environment"
+msgstr ""
+
+#: port.c:355
+msgid "`d' must be a nonempty numeric vector"
+msgstr ""
+
+#: port.c:357
+msgid "When Hessian defined must also have gradient defined"
+msgstr ""
+
+#: port.c:360
+#, c-format
+msgid "environment `rho' must contain a numeric vector `.par' of length %d"
+msgstr ""
+
+#: port.c:370
+msgid "lowerb and upperb must be numeric vectors"
 msgstr ""
 
 #: qr.c:30

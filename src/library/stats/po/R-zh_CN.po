@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:01\n"
+"POT-Creation-Date: 2005-06-09 10:58\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1446,6 +1446,13 @@ msgstr "位于极点边的f()值之正负号不相反"
 
 msgid "_NOT_ converged in"
 msgstr "没有聚合于"
+
+#, fuzzy
+msgid "control argument must be a named list"
+msgstr "'split' 变元必需是串列"
+
+msgid "Logical `hessian' argument not allowed.  See documentation."
+msgstr ""
 
 msgid "'params' has wrong length"
 msgstr "'params'的长度不对"

@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
 "POT-Creation-Date: 2005-05-21 08:10\n"
-"PO-Revision-Date: 2005-03-26 13:36+0900\n"
+"PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "MIME-Version: 1.0\n"
@@ -702,7 +702,7 @@ msgid "package '%s' already present in search()"
 msgstr "パッケージ '%s' は既に search() 中に存在します"
 
 msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
-msgstr ""
+msgstr "'DESCRIPTION'はフィールドを'Encoding'する、再符号化は出来ない"
 
 msgid "%sPackages in library '%s':"
 msgstr "ライブラリ '%2%s' 中の %1%s パッケージ："
@@ -1291,11 +1291,13 @@ msgstr "'cmd' を実行できませんでした"
 msgid "'cmd' execution failed with error code %d"
 msgstr "'cmd' の実行はエラーコード %d で失敗しました"
 
+#, fuzzy
 msgid "package '%s' has a non-function '.First.lib'"
-msgstr ""
+msgstr "パッケージ '%s' は '%s' に併合されました"
 
+#, fuzzy
 msgid "cannot find name space environment"
-msgstr ""
+msgstr "名前空間ではありません"
 
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"

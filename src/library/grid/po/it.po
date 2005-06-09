@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-01 10:55+0100\n"
+"POT-Creation-Date: 2005-06-09 10:57+0100\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -16,23 +16,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: grid.c:213
+#: grid.c:209
 msgid "Cannot clip to rotated viewport"
 msgstr "Impossibile tagliare su una viewpoer ruotata"
 
-#: grid.c:643 grid.c:648 grid.c:745 grid.c:750
+#: grid.c:639 grid.c:644 grid.c:741 grid.c:746
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
-msgstr "Non posso mostrare la view-port di livello massimo (grid e graphics output mischiato?)"
+msgstr ""
+"Non posso mostrare la view-port di livello massimo (grid e graphics output "
+"mischiato?)"
 
-#: grid.c:941
+#: grid.c:937
 msgid "attempt to plot on null device"
 msgstr "tentativo di scrivere sul dispositivo null"
 
-#: grid.c:1221
+#: grid.c:1217
 msgid "There is no layout defined"
 msgstr "Il layout non è definito"
 
-#: grid.c:1798
+#: grid.c:1794
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "Raggio del cerchio non valido (deve essere non negativo)"
 
@@ -44,27 +46,27 @@ msgstr "layout.pos.row non valido"
 msgid "invalid layout.pos.col"
 msgstr "layout.pos.col non valido"
 
-#: state.c:170
+#: state.c:178
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Impossibile memorizzare lo stato di grid. Troppi dispositivi aperti?"
 
-#: unit.c:258 unit.c:398 unit.c:1040 unit.c:1120 unit.c:1200 unit.c:1280
+#: unit.c:258 unit.c:398 unit.c:1065 unit.c:1145 unit.c:1225 unit.c:1305
 msgid "Unimplemented unit function"
 msgstr "Funzione unit non implementata"
 
-#: unit.c:757 unit.c:1473
+#: unit.c:758 unit.c:1498
 msgid "Illegal unit or unit not yet implemented"
 msgstr "unit illegale o unit non ancora implementata"
 
-#: unit.c:1581
+#: unit.c:1628
 msgid "Invalid unit"
 msgstr "unit non valida"
 
-#: unit.c:1597
+#: unit.c:1644
 msgid "Units must be character"
 msgstr "unit devono essere di tipo character"
 
-#: unit.c:1600
+#: unit.c:1647
 msgid "Units must be of length > 0"
 msgstr "unit devono avere lunghezza > 0"
 

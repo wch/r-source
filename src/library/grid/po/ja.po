@@ -5,35 +5,35 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0 \n"
+"Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-01 10:55+0100\n"
-"PO-Revision-Date: 2005-03-31 08:00+0009\n"
+"POT-Creation-Date: 2005-06-09 10:57+0100\n"
+"PO-Revision-Date: 2005-06-02 16:09+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: grid.c:213
+#: grid.c:209
 msgid "Cannot clip to rotated viewport"
 msgstr "rotated viewport は省略することが出来ません"
 
-#: grid.c:643 grid.c:648 grid.c:745 grid.c:750
+#: grid.c:639 grid.c:644 grid.c:741 grid.c:746
 msgid "Cannot pop the top-level viewport (grid and graphics output mixed?)"
 msgstr ""
 "トップレベルの viewport は pop することが出来ません（grid と グラフィックス出"
 "力を混同していませんか？）"
 
-#: grid.c:941
+#: grid.c:937
 msgid "attempt to plot on null device"
-msgstr ""
+msgstr "ヌルデバイスに作図を試みる"
 
-#: grid.c:1221
+#: grid.c:1217
 msgid "There is no layout defined"
 msgstr "layout が定義されていません"
 
-#: grid.c:1798
+#: grid.c:1794
 msgid "Invalid circle radius (must be non-negative)"
 msgstr "不正な円の半径です（非負でなければなりません）"
 
@@ -45,29 +45,29 @@ msgstr "不正な layout.pos.row です"
 msgid "invalid layout.pos.col"
 msgstr "不正な layout.pos.col です"
 
-#: state.c:170
+#: state.c:178
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr ""
 "現在の grid の状態を保持することが出来ません．デバイスを開きすぎていません"
 "か？"
 
-#: unit.c:258 unit.c:398 unit.c:1040 unit.c:1120 unit.c:1200 unit.c:1280
+#: unit.c:258 unit.c:398 unit.c:1065 unit.c:1145 unit.c:1225 unit.c:1305
 msgid "Unimplemented unit function"
 msgstr "単位(unit)関数は推奨されていません"
 
-#: unit.c:757 unit.c:1473
+#: unit.c:758 unit.c:1498
 msgid "Illegal unit or unit not yet implemented"
 msgstr "不正な単位(unit)か，まだ推奨されていない単位(unit)です"
 
-#: unit.c:1581
+#: unit.c:1628
 msgid "Invalid unit"
 msgstr "不正な単位(unit) です"
 
-#: unit.c:1597
+#: unit.c:1644
 msgid "Units must be character"
 msgstr "単位(Units)は文字型である必要があります"
 
-#: unit.c:1600
+#: unit.c:1647
 msgid "Units must be of length > 0"
 msgstr "単位(Units)の長さは 0 より大きい必要があります"
 

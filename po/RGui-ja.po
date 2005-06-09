@@ -1,16 +1,16 @@
-# translation of RGui.po to Japanese
-# Copyright (C) 2005 The R Foundation
-# This file is distributed under the same license as the R package.
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR The R Foundation
+# This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-02 13:02+0100\n"
-"PO-Revision-Date: 2005-03-14 11.49+0000\n"
-"Last-Translator: Nobuo Funao\n"
-"Language-Team: Japanese\n"
+"POT-Creation-Date: 2005-04-28 07:48+0100\n"
+"PO-Revision-Date: 2005-06-02 13:28+0900\n"
+"Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
+"Language-Team: R-core <R-core@R-project.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CP932\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -189,9 +189,7 @@ msgstr ""
 
 #: console.c:1902
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr ""
-"標準ウインドウズ・ホットキーは,以下を切りかえるために使用することができま"
-"す:\n"
+msgstr "標準ウインドウズ・ホットキーは,以下を切りかえるために使用することができます:\n"
 
 #: console.c:1903
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
@@ -244,11 +242,11 @@ msgstr "型"
 
 #: dataentry.c:1502
 msgid "Cell width(s)"
-msgstr "セルの長さ"
+msgstr "セルの幅"
 
 #: dataentry.c:1507
 msgid "Cell width"
-msgstr "セルの長さ"
+msgstr "セルの幅"
 
 #: dataentry.c:1510
 msgid "variable"
@@ -374,8 +372,7 @@ msgstr "コマンド実行中\n"
 
 #: editor.c:543
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr ""
-"カーソル行または選択中の R コードを実行するために, コードを選択してから\n"
+msgstr "カーソル行または選択中の R コードを実行するために, コードを選択してから\n"
 
 #: editor.c:544
 msgid "     Press Ctrl-R\n"
@@ -396,8 +393,7 @@ msgstr ""
 #: editor.c:547
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
-msgstr ""
-"これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します\n"
+msgstr "これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します\n"
 
 #: editor.c:548
 msgid ""
@@ -525,11 +521,11 @@ msgstr "無題"
 
 #: extra.c:920 preferences.c:514
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: extra.c:921 preferences.c:515
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: pager.c:77
 msgid "Error opening file"
@@ -570,28 +566,34 @@ msgid ""
 "\n"
 "Save the preferences and restart Rgui to apply them.\n"
 msgstr ""
+"全体的なコンソール設定を実行中に\n"
+"変える事は出来ない\n"
+"\n"
+"設定を保存して、これらをを適用するために、Rguiを再実行しなさい。\n"
 
 #: preferences.c:259
 msgid "Changes in pager size will not apply to any open pagers"
-msgstr ""
+msgstr "ページャーサイズの変更は、オープン済みのページャーに影響をあたえない"
 
 #: preferences.c:265
 msgid ""
 "Do not change pager type if any pager is open\n"
 "Proceed?"
 msgstr ""
+"ページャーが開いているならば、ページャータイプを変えてはいけない\n"
+"続行しますか?"
 
 #: preferences.c:284
 msgid "Select directory for file 'Rconsole'"
-msgstr ""
+msgstr "ファイル'Rconsole'のディレクトリを選択"
 
 #: preferences.c:400
 msgid "Rgui Configuration Editor"
-msgstr ""
+msgstr "Rgui設定エディター"
 
 #: preferences.c:512
 msgid "Apply"
-msgstr ""
+msgstr "反映"
 
 #: rui.c:106
 msgid "Select file to source"
@@ -640,7 +642,7 @@ msgstr "ヘルプの検索"
 
 #: rui.c:494
 msgid "Search for words in help list archives and documentation"
-msgstr ""
+msgstr "ヘルプリストアーカイブとドキュメンテーションを検索をする"
 
 #: rui.c:509
 msgid "Apropos"
@@ -653,7 +655,7 @@ msgstr "ファイル %2$s の %1$d 行目でエラーが発生しました"
 
 #: rui.c:877
 msgid "Can only drag-and-drop .R, .RData and .rda files"
-msgstr ".R, .RData and .rda ファイルのみドラッグ&ドロップができます"
+msgstr ".R, .RData and .rda ファイルのみドラッグ＆ドロップができます"
 
 #: rui.c:883 rui.c:1116
 msgid "Paste commands only"
@@ -705,7 +707,7 @@ msgstr "R の FAQ"
 
 #: rui.c:961
 msgid "FAQ on R for &Windows"
-msgstr "&Windows 版 R の FAQ"
+msgstr "Windows 版 R の FAQ"
 
 #: rui.c:972 rui.c:975
 msgid "Manuals (in PDF)"
@@ -749,7 +751,7 @@ msgstr "ヘルプの検索"
 
 #: rui.c:1003
 msgid "search.r-project.org ..."
-msgstr ""
+msgstr "search.r-project.org ..."
 
 #: rui.c:1006
 msgid "Apropos..."
@@ -837,7 +839,7 @@ msgstr "全てのオブジェクトの消去"
 
 #: rui.c:1136
 msgid "List &search path"
-msgstr "&search パスの一覧"
+msgstr "search パスの一覧"
 
 #: rui.c:1143
 msgid "Console"
@@ -902,7 +904,7 @@ msgstr "メニューまたはアイテムが存在しません"
 
 #: system.c:403
 msgid "Save workspace image?"
-msgstr "作業スペース (image) を保存しますか?"
+msgstr "作業スペースを保存しますか?"
 
 #: graphapp/clipboard.c:70 graphapp/clipboard.c:74
 msgid "Insufficient memory: cell not copied to the clipboard"
@@ -1004,7 +1006,7 @@ msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
 #: ../library/grDevices/src/devWindows.c:900
-#: ../library/grDevices/src/devWindows.c:2709
+#: ../library/grDevices/src/devWindows.c:2679
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "選択されたファイルパスが長すぎます: 512 バイトまでです"
 
@@ -1178,29 +1180,20 @@ msgstr "メタファイルに保存..."
 msgid "Save as postscript..."
 msgstr "ポストスクリプトに保存..."
 
-#: ../library/grDevices/src/devWindows.c:2445
+#: ../library/grDevices/src/devWindows.c:2423
 msgid "Locator is active"
 msgstr "Locator はアクティブです"
 
-#: ../library/grDevices/src/devWindows.c:3016
+#: ../library/grDevices/src/devWindows.c:2983
 msgid "Waiting to confirm page change..."
 msgstr "ページ変更を確認するまで待機中..."
 
-#: ../library/grDevices/src/devWindows.c:3028
+#: ../library/grDevices/src/devWindows.c:2995
 msgid "Click or hit ENTER for next page"
 msgstr "クリックまたは ENTER キーを押すことで次のページに移ります"
 
 #~ msgid "Text files (*.txt)"
 #~ msgstr "テキストファイル (*.txt)"
-
-#~ msgid "All files (*.*)"
-#~ msgstr "全てのファイル (*.*)"
-
-#~ msgid "R files (*.R)"
-#~ msgstr "R ファイル (*.R)"
-
-#~ msgid "R images (*.RData)"
-#~ msgstr "R images (*.RData)"
 
 #~ msgid ""
 #~ "Font %s-%d-%d has variable width.\n"
@@ -1208,3 +1201,12 @@ msgstr "クリックまたは ENTER キーを押すことで次のページに移ります"
 #~ msgstr ""
 #~ "フォント %s-%d-%d は変数の幅を持っています.\n"
 #~ "システム固有のフォントを使用します"
+
+#~ msgid "R files (*.R)"
+#~ msgstr "R ファイル (*.R)"
+
+#~ msgid "R images (*.RData)"
+#~ msgstr "R images (*.RData)"
+
+#~ msgid "All files (*.*)"
+#~ msgstr "全てのファイル (*.*)"

@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:01\n"
-"PO-Revision-Date: 2005-05-06 13:01\n"
+"POT-Creation-Date: 2005-06-09 10:58\n"
+"PO-Revision-Date: 2005-06-09 10:58\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1466,6 +1466,12 @@ msgstr "f() values at end points not of opposite sign"
 
 msgid "_NOT_ converged in"
 msgstr "_NOT_ converged in"
+
+msgid "control argument must be a named list"
+msgstr "control argument must be a named list"
+
+msgid "Logical `hessian' argument not allowed.  See documentation."
+msgstr "Logical ‘hessian’ argument not allowed.  See documentation."
 
 msgid "'params' has wrong length"
 msgstr "‘params’ has wrong length"

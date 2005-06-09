@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-06 13:01\n"
-"PO-Revision-Date: 2005-03-23 17:00+0900\n"
+"POT-Creation-Date: 2005-06-09 10:58\n"
+"PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "MIME-Version: 1.0\n"
@@ -720,7 +720,6 @@ msgstr "因子分析法は少なくとも 3 つの変数を必要とします"
 msgid "%d factors is too many for %d variables"
 msgstr "%d個の因子は%d個の変数に対しては多すぎます"
 
-#, fuzzy
 msgid "'start' must have %d rows"
 msgstr "start は %d行 を持たなければなりません"
 
@@ -830,7 +829,6 @@ msgstr "フィルター('filter')中に欠損値があります"
 msgid "'filter' is longer than time series"
 msgstr "フィルター('filter')は時系列より長いです"
 
-#, fuzzy
 msgid "argument 'sides' must be 1 or 2"
 msgstr "引数 sides は 1 か 2 でなければなりません"
 
@@ -955,7 +953,6 @@ msgstr "空モデル中の無効な線形予測子です"
 msgid "invalid fitted means in empty model"
 msgstr "空モデル中の無効な当てはめ平均です"
 
-#, fuzzy
 msgid ""
 "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr ""
@@ -981,7 +978,7 @@ msgid "non-finite coefficients at iteration"
 msgstr "繰り返しにおいて有限でない係数が得られました"
 
 msgid "X matrix has rank %d, but only %d observations"
-msgstr ""
+msgstr "X 行列はランク%dを持つ、しかし%d観察だけをする"
 
 msgid ""
 "no valid set of coefficients has been found: please supply starting values"
@@ -1171,7 +1168,6 @@ msgstr ""
 "y を与えなければなりません。\n"
 " 密度の推定には density() を使いましょう"
 
-#, fuzzy
 msgid "'k' is not an integer"
 msgstr "k は整数でありません"
 
@@ -1206,7 +1202,7 @@ msgid "invalid 'lm' object:  no 'terms' nor 'qr' component"
 msgstr "無効な 'lm' オブジェクト: 項('terms')もしくは 'qr' 成分がありません"
 
 msgid "residual degrees of freedom in object suggest this is not an \"lm\" fit"
-msgstr ""
+msgstr "オブジェクト中の残り自由度はこの 'lm'ではないと示唆します"
 
 msgid "removed because response differs from"
 msgstr "を持つモデルを取り除きました。応答が以下と異なるからです："
@@ -1282,7 +1278,6 @@ msgstr "これはあり得ないことです"
 msgid "incorrect specification of 'table' or 'start'"
 msgstr "'table' または 'start' の不正確な指定です"
 
-#, fuzzy
 msgid "'x' is empty"
 msgstr "x は空です"
 
@@ -1290,7 +1285,7 @@ msgid "%d missing values deleted"
 msgstr "%d個の欠損値が削除されました"
 
 msgid "'X' matrix has %d responses, 'Y' has %d responses"
-msgstr ""
+msgstr "'x'行列は %dに回答,'y'は %dに回答を持っています"
 
 msgid "%d responses, but only %d variables"
 msgstr "%2$d個の変数しかありませんが、%1$dの応答があります"
@@ -1359,7 +1354,7 @@ msgid "'mlm' objects with weights are not supported"
 msgstr "重みつきの'mlm'オブジェクトはサポートされていません"
 
 msgid "X does not define a subspace of M"
-msgstr ""
+msgstr "Xは Mの部分空間を定めない"
 
 msgid "one-argument anova() not implemented for 'mlm' objects"
 msgstr "one-argument anova() は mlm のオブジェクトに対してはまだ未実装です"
@@ -1368,7 +1363,7 @@ msgid "residuals have rank"
 msgstr "残差はランクを持ちます"
 
 msgid "<"
-msgstr ""
+msgstr "<"
 
 msgid "'model.tables' is not implemented for multiple responses"
 msgstr "'model.tables' は多重応答に対してはまだ未実装です"
@@ -1381,12 +1376,14 @@ msgstr ""
 "'cterms' パラメータはモデルオブジェクト中の項に適合しなければなりません"
 
 msgid "Design is unbalanced - use se.contrast() for se's"
-msgstr ""
+msgstr "設計は均衡を失うようにできます - seのためにse.contrast()を使います"
 
 msgid ""
 "Standard error information not returned as design is unbalanced. \n"
 "Standard errors can be obtained through 'se.contrast'."
 msgstr ""
+"設計上、返されない標準エラー情報はアンバランスになる\n"
+"標準エラーは、'se.contrast'から得られることができる"
 
 msgid "SEs for type '%s' are not yet implemented"
 msgstr "型 '%s' に対する SEはまだ実装されていません"
@@ -1398,14 +1395,14 @@ msgid "non-factors ignored:"
 msgstr "因子でないものは無視されました"
 
 msgid "eff.aovlist: non-orthogonal contrasts would give an incorrect answer"
-msgstr ""
+msgstr "eff.aovlist：non-orthogonal contrasts は、誤った値でしょう"
 
 msgid "no terms component"
 msgstr "terms 成分がありません"
 
 msgid ""
 "variable '%s' was fitted with class \"%s\" but class \"%s\" was supplied"
-msgstr ""
+msgstr "変数'%s'はクラス\"%s\"を付けていた、しかしクラス\"%s\"は満たされた"
 
 msgid "variables %s were specified with different classes from the fit"
 msgstr "変数 %s は当てはめによるものとは異なったクラスとして指定されました"
@@ -1458,6 +1455,13 @@ msgstr "f() の端点での値が異なった符号を持ちません"
 
 msgid "_NOT_ converged in"
 msgstr "収束しませんでした"
+
+#, fuzzy
+msgid "control argument must be a named list"
+msgstr "'split'引数はリストでなければなりません"
+
+msgid "Logical `hessian' argument not allowed.  See documentation."
+msgstr ""
 
 msgid "'params' has wrong length"
 msgstr "'params' は 誤った長さです"
@@ -1590,16 +1594,14 @@ msgstr "PCA は数値変数にしか適用できません"
 msgid "no scores are available: refit with 'retx=TRUE'"
 msgstr "いかなるスコアも利用できません: 'retx=TRUE' で再当てはめしてください"
 
-#, fuzzy
 msgid "'newdata' must be a matrix or data frame"
 msgstr "'x' は行列かデータフレームでなければなりません"
 
 msgid ""
 "'newdata' does not have named columns matching one or more of the original "
 "columns"
-msgstr ""
+msgstr "'newdata' は、元のカラムの一つ以上と同じカラムに名前をつけなかった"
 
-#, fuzzy
 msgid "'newdata' does not have the correct number of columns"
 msgstr "'coef' の長さが正しくありません"
 
@@ -1998,7 +2000,6 @@ msgstr "ゼロ値のため、正確な p 値を計算することができませ
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "ゼロ値のため、正確な信頼区間を計算することができません"
 
-#, fuzzy
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "漸近回帰モデルの当てはめで、異なる入力値が少なすぎます"
 
