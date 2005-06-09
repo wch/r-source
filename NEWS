@@ -289,7 +289,7 @@ BUG FIXES
 	Mark, as most implementations of iconv fail to handle BOMs
 	(which are present in 'Windows Unicode' files).
 
-    o	unique() for a list was incorrectly returning `unimplemented'.
+    o	unique() for a list was incorrectly reporting `unimplemented'.
 
     o	The parser's contextstack was not protected against overflow,
 	e.g. more than 50 unmatched '('.  (PR#7859)
@@ -336,21 +336,18 @@ BUG FIXES
 
     o	Printing of raw matrices/arrays was not implemented. (PR#7912)
 
-    o	A typo in the routines calling external code was fixed, making
-    	checks for external entry points somewhat stricter. (PR#7917)
-
     o	getCallingDLL()'s default first argument did not correspond to
 	its description and has been changed.  The mismatch caused
-	symbols in .C/.Call/.Fortran calls to potentially be looked up
-	incorrectly.
+	symbols in .C/.Call/.Fortran calls without a PACKAGE= argument 
+	to be potentially looked up in the wrong namespace.
 
     o	Binary save() of raw vectors was not working correctly on
 	big-endian platforms.  (PR#7812)
 
-    o   as.Date.factor now accepts a format argument.
+    o   as.Date.factor() now accepts a format argument.
 
-    o	Workaround for FreeBSD which does not have alloca.h _and_ does
-	not allow alloca() to be declared.
+    o	Workaround added for FreeBSD which does not have alloca.h _and_
+	does not allow alloca() to be declared.
 
 
 
