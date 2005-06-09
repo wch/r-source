@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:        R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-02 12:55+0100\n"
+"POT-Creation-Date: 2005-06-09 10:41+0100\n"
 "PO-Revision-Date:          2005-03-15 00:00-0600\n"
 "Last-Translator:           Dmitri I GOULIAEV <dmitri.gouliaev@telkel.net\n"
 "Language-Team:             Russian\n"
@@ -2302,158 +2302,154 @@ msgstr ""
 msgid "invalid 'naok' value"
 msgstr ""
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:744
+#: src/main/dotcode.c:144 src/main/dotcode.c:750
 msgid "too many arguments in foreign function call"
 msgstr ""
 
-#: src/main/dotcode.c:165
-msgid "cannot resolve native routine"
-msgstr ""
-
-#: src/main/dotcode.c:172
+#: src/main/dotcode.c:178
 #, c-format
 msgid "\"%s\" function name not in DLL for package '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:176
+#: src/main/dotcode.c:182
 #, c-format
 msgid "\"%s\" function name not in load table"
 msgstr ""
 
-#: src/main/dotcode.c:239
+#: src/main/dotcode.c:245
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr ""
 
-#: src/main/dotcode.c:254
+#: src/main/dotcode.c:260
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:268
+#: src/main/dotcode.c:274
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:290
+#: src/main/dotcode.c:296
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:302
+#: src/main/dotcode.c:308
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:306
+#: src/main/dotcode.c:312
 msgid "only first string in char vector used in .Fortran"
 msgstr ""
 
-#: src/main/dotcode.c:319 src/main/dotcode.c:436
+#: src/main/dotcode.c:325 src/main/dotcode.c:442
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:333
+#: src/main/dotcode.c:339
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:340 src/main/dotcode.c:458
+#: src/main/dotcode.c:346 src/main/dotcode.c:464
 msgid "re-encoding is not supported on this system"
 msgstr ""
 
-#: src/main/dotcode.c:363 src/main/dotcode.c:375
+#: src/main/dotcode.c:369 src/main/dotcode.c:381
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr ""
 
-#: src/main/dotcode.c:450
+#: src/main/dotcode.c:456
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr ""
 
-#: src/main/dotcode.c:527
+#: src/main/dotcode.c:533
 msgid "NAOK used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:531
+#: src/main/dotcode.c:537
 msgid "DUP used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:537
+#: src/main/dotcode.c:543
 msgid "DLL name is too long"
 msgstr ""
 
-#: src/main/dotcode.c:540 src/main/dotcode.c:598 src/main/dotcode.c:604
+#: src/main/dotcode.c:546 src/main/dotcode.c:604 src/main/dotcode.c:610
 msgid "PACKAGE used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:577
+#: src/main/dotcode.c:583
 msgid "PACKAGE argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:583
+#: src/main/dotcode.c:589
 msgid "PACKAGE argument is too long"
 msgstr ""
 
-#: src/main/dotcode.c:627 src/main/dotcode.c:635
+#: src/main/dotcode.c:633 src/main/dotcode.c:641
 msgid "ENCODING used more than once"
 msgstr ""
 
-#: src/main/dotcode.c:629 src/main/dotcode.c:637
+#: src/main/dotcode.c:635 src/main/dotcode.c:643
 msgid "ENCODING argument must be a single character string"
 msgstr ""
 
-#: src/main/dotcode.c:674
+#: src/main/dotcode.c:680
 msgid "no arguments supplied"
 msgstr ""
 
-#: src/main/dotcode.c:675
+#: src/main/dotcode.c:681
 msgid "too many arguments"
 msgstr ""
 
-#: src/main/dotcode.c:715 src/main/dotcode.c:750 src/main/dotcode.c:1547
+#: src/main/dotcode.c:721 src/main/dotcode.c:756 src/main/dotcode.c:1553
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr ""
 
-#: src/main/dotcode.c:1407 src/main/dotcode.c:2177
+#: src/main/dotcode.c:1413 src/main/dotcode.c:2183
 msgid "too many arguments, sorry"
 msgstr ""
 
-#: src/main/dotcode.c:1431 src/main/dotcode.c:1453
+#: src/main/dotcode.c:1437 src/main/dotcode.c:1459
 msgid "Invalid graphics state"
 msgstr ""
 
-#: src/main/dotcode.c:1502
+#: src/main/dotcode.c:1508
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr ""
 
-#: src/main/dotcode.c:1573
+#: src/main/dotcode.c:1579
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr ""
 
-#: src/main/dotcode.c:2266
+#: src/main/dotcode.c:2272
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr ""
 
-#: src/main/dotcode.c:2278
+#: src/main/dotcode.c:2284
 msgid "invalid function in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2280
+#: src/main/dotcode.c:2286
 msgid "invalid argument count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2282
+#: src/main/dotcode.c:2288
 msgid "invalid return value count in call_R"
 msgstr ""
 
-#: src/main/dotcode.c:2327
+#: src/main/dotcode.c:2333
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr ""

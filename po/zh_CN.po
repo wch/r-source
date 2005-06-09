@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-02 12:55+0100\n"
+"POT-Creation-Date: 2005-06-09 10:41+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -2302,158 +2302,154 @@ msgstr "'name'要么是字符串(长度为1)要么是本机符号引用"
 msgid "invalid 'naok' value"
 msgstr "'naok'值不对"
 
-#: src/main/dotcode.c:144 src/main/dotcode.c:744
+#: src/main/dotcode.c:144 src/main/dotcode.c:750
 msgid "too many arguments in foreign function call"
 msgstr "外接函数调用时变元太多"
 
-#: src/main/dotcode.c:165
-msgid "cannot resolve native routine"
-msgstr "无法分辨本机例行程序"
-
-#: src/main/dotcode.c:172
+#: src/main/dotcode.c:178
 #, c-format
 msgid "\"%s\" function name not in DLL for package '%s'"
 msgstr "程序包'%2$s'的DLL没有\"%1$s\"这个函数"
 
-#: src/main/dotcode.c:176
+#: src/main/dotcode.c:182
 #, c-format
 msgid "\"%s\" function name not in load table"
 msgstr "载入表里没有这个函数\"%s\"的名字"
 
-#: src/main/dotcode.c:239
+#: src/main/dotcode.c:245
 #, c-format
 msgid ""
 "explicit request not to duplicate arguments in call to '%s', but argument %d "
 "is of the wrong type (%d != %d)"
 msgstr "调用'%s'时明确要求不要复制变元，但变元%d的种类不对(%d != %d)"
 
-#: src/main/dotcode.c:254
+#: src/main/dotcode.c:260
 #, c-format
 msgid "NAs in foreign function call (arg %d)"
 msgstr "外接函数调用时不能有NA(arg%d)"
 
-#: src/main/dotcode.c:268
+#: src/main/dotcode.c:274
 #, c-format
 msgid "NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外接函数调用时不能有NA/NaN/Inf(arg%d)"
 
-#: src/main/dotcode.c:290
+#: src/main/dotcode.c:296
 #, c-format
 msgid "complex NA/NaN/Inf in foreign function call (arg %d)"
 msgstr "外接函数调用时不能有复数的NA/NaN/Inf(arg%d)"
 
-#: src/main/dotcode.c:302
+#: src/main/dotcode.c:308
 msgid "character variables must be duplicated in .C/.Fortran"
 msgstr "在调用.C/.Fortran时字符变数必需被复制"
 
-#: src/main/dotcode.c:306
+#: src/main/dotcode.c:312
 msgid "only first string in char vector used in .Fortran"
 msgstr ".Fortran只用了字节向量中的第一个字符串"
 
-#: src/main/dotcode.c:319 src/main/dotcode.c:436
+#: src/main/dotcode.c:325 src/main/dotcode.c:442
 #, c-format
 msgid "unsupported encoding '%s'"
 msgstr "不支持这个编码'%s'"
 
-#: src/main/dotcode.c:333
+#: src/main/dotcode.c:339
 #, c-format
 msgid "conversion problem in re-encoding to '%s'"
 msgstr "转换编码'%s'时出了问题"
 
-#: src/main/dotcode.c:340 src/main/dotcode.c:458
+#: src/main/dotcode.c:346 src/main/dotcode.c:464
 msgid "re-encoding is not supported on this system"
 msgstr "本系统不支持编码转换"
 
-#: src/main/dotcode.c:363 src/main/dotcode.c:375
+#: src/main/dotcode.c:369 src/main/dotcode.c:381
 #, c-format
 msgid "invalid mode to pass to Fortran (arg %d)"
 msgstr "传给Fortran的状态出错(arg%d)"
 
-#: src/main/dotcode.c:450
+#: src/main/dotcode.c:456
 #, c-format
 msgid "conversion problem in re-encoding from '%s'"
 msgstr "转换编码成'%s'出了问题"
 
-#: src/main/dotcode.c:527
+#: src/main/dotcode.c:533
 msgid "NAOK used more than once"
 msgstr "NAOK只能用一次"
 
-#: src/main/dotcode.c:531
+#: src/main/dotcode.c:537
 msgid "DUP used more than once"
 msgstr "DUP只能用一次"
 
-#: src/main/dotcode.c:537
+#: src/main/dotcode.c:543
 msgid "DLL name is too long"
 msgstr "DLL的名字值太长"
 
-#: src/main/dotcode.c:540 src/main/dotcode.c:598 src/main/dotcode.c:604
+#: src/main/dotcode.c:546 src/main/dotcode.c:604 src/main/dotcode.c:610
 msgid "PACKAGE used more than once"
 msgstr "PACKAGE只能用一次"
 
-#: src/main/dotcode.c:577
+#: src/main/dotcode.c:583
 msgid "PACKAGE argument must be a single character string"
 msgstr "PACKAGE变元必需是单个字符串"
 
-#: src/main/dotcode.c:583
+#: src/main/dotcode.c:589
 msgid "PACKAGE argument is too long"
 msgstr "PACKAGE变元值太长"
 
-#: src/main/dotcode.c:627 src/main/dotcode.c:635
+#: src/main/dotcode.c:633 src/main/dotcode.c:641
 msgid "ENCODING used more than once"
 msgstr "ENCODING只能用一次"
 
-#: src/main/dotcode.c:629 src/main/dotcode.c:637
+#: src/main/dotcode.c:635 src/main/dotcode.c:643
 msgid "ENCODING argument must be a single character string"
 msgstr "ENCODING变元必需是单个字符串"
 
-#: src/main/dotcode.c:674
+#: src/main/dotcode.c:680
 msgid "no arguments supplied"
 msgstr "没有提供变元"
 
-#: src/main/dotcode.c:675
+#: src/main/dotcode.c:681
 msgid "too many arguments"
 msgstr "变元太多"
 
-#: src/main/dotcode.c:715 src/main/dotcode.c:750 src/main/dotcode.c:1547
+#: src/main/dotcode.c:721 src/main/dotcode.c:756 src/main/dotcode.c:1553
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "变元数目不对(%1$d), %3$s只需要%2$d个变元"
 
-#: src/main/dotcode.c:1407 src/main/dotcode.c:2177
+#: src/main/dotcode.c:1413 src/main/dotcode.c:2183
 msgid "too many arguments, sorry"
 msgstr "对不起，变元太多"
 
-#: src/main/dotcode.c:1431 src/main/dotcode.c:1453
+#: src/main/dotcode.c:1437 src/main/dotcode.c:1459
 msgid "Invalid graphics state"
 msgstr "图形狀態出错"
 
-#: src/main/dotcode.c:1502
+#: src/main/dotcode.c:1508
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "寻找DLL时DLLInfoReference的值是NULL"
 
-#: src/main/dotcode.c:1573
+#: src/main/dotcode.c:1579
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "调用%2$s时变元%1$d的种类不对"
 
-#: src/main/dotcode.c:2266
+#: src/main/dotcode.c:2272
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "多语言调用不支持这一种类\"%s\""
 
-#: src/main/dotcode.c:2278
+#: src/main/dotcode.c:2284
 msgid "invalid function in call_R"
 msgstr "call_R中的函数不对"
 
-#: src/main/dotcode.c:2280
+#: src/main/dotcode.c:2286
 msgid "invalid argument count in call_R"
 msgstr "call_R的变元数目不对"
 
-#: src/main/dotcode.c:2282
+#: src/main/dotcode.c:2288
 msgid "invalid return value count in call_R"
 msgstr "call_R的回覆值数目不对"
 
-#: src/main/dotcode.c:2327
+#: src/main/dotcode.c:2333
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R不支持'%s'型式"
@@ -7216,3 +7212,6 @@ msgstr "无法载入X11模块"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "没有X11平台这一功能"
+
+#~ msgid "cannot resolve native routine"
+#~ msgstr "无法分辨本机例行程序"
