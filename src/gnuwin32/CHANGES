@@ -4,10 +4,11 @@
 See the file NEWS for changes that affect all versions of R.
 
 
-R 2.1.0 patched
-===============
+R 2.1.1
+=======
 
-The installer allows a choice of languages.
+The installer allows a choice of languages.  Note that uninstallation
+will happen in the language chosen for installation.
 
 A menu item has been added for RSiteSearch().
 
