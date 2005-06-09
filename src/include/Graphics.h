@@ -161,7 +161,7 @@ typedef struct {
 			/* [2] = location of axis line */
     double mkh;		/* Mark size in inches */
     int	pch;		/* Plotting character */
-    int	ps;		/* Text & symbol pointsize */
+    int ps;		/* Text & symbol pointsize */
     int	smo;		/* Curve smoothness */
     double srt;		/* String Rotation */
     double tck;		/* Tick size as in S */
@@ -308,6 +308,9 @@ typedef struct {
 
     /* NOTE: if user has not set fig and/or plt then */
     /* they need to be updated per plot.new too */
+
+    double scale;       /* An internal "zoom" factor to apply to ps and lwd */
+                        /* (for fit-to-window resizing in Windows) */
 
     /* device operations */
     Rboolean (*open)();

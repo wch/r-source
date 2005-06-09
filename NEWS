@@ -160,6 +160,10 @@ BUG FIXES
     o   as.function.default no longer asks for a bug report when
 	given an invalid body. (PR#1880, PR#7535, PR#7702)
 
+    o   Hershey fonts and grid output (and therefore lattice output) 
+	now rescale correctly in fit-to-window resizing on a Windows
+	graphics device.  Line widths also scale now.
+
 
 
 	**************************************************
