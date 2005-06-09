@@ -79,7 +79,7 @@ x$name <- value
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
   elements to be replaced in the same ways as for a matrix (except that
-  missing values are not allowed at all).
+  missing values in the index are only allowed in a few special cases).
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
