@@ -394,7 +394,11 @@ be included).  Normally this file is missing, and the corresponding
 information is automatically generated from the documentation sources
 (using @code{Rdindex()} from package @pkg{tools}) when installing from
 source and when using the package builder (@pxref{Checking and building
-packages}).
+packages}).  
+
+Rather than editing this file, it is preferable to put customized 
+information about the package into an overview	man page 
+(@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package vignettes}).
 
 @node The install.R and R_PROFILE.R files, Package subdirectories, The INDEX file, Package structure
 @subsection The @file{install.R} and @file{R_PROFILE.R} files
@@ -2130,6 +2134,7 @@ should be useful for package writers.
 * Documenting functions::
 * Documenting data sets::
 * Documenting S4 classes and methods::
+* Documenting packages::
 @end menu
 
 @node Documenting functions, Documenting data sets, Rd format, Rd format
@@ -2441,7 +2446,7 @@ The @code{\keyword} entry is always @samp{datasets}.
 If @code{bar} is a data frame, documenting it as a data set can again be
 initiated via @kbd{prompt(bar)}.
 
-@node Documenting S4 classes and methods,  , Documenting data sets, Rd format
+@node Documenting S4 classes and methods,  Documenting packages, Documenting data sets, Rd format
 @subsection Documenting S4 classes and methods
 
 Structure of and special markup for documenting S4 classes and methods
@@ -2492,6 +2497,29 @@ See @kbd{help("Documentation", package = "methods")} for more
 information on using and creating on-line documentation for S4 classes and
 methods.
 
+@node Documenting packages,  , Documenting S4 classes and methods, Rd format
+@subsection Documenting packages
+
+It is recommended that packages have an overview man page with 
+@code{\alias} constructed as @code{@var{pkgname}.package},
+e.g. @code{utils.package} for the @code{utils} package.  If a topic named
+@code{@var{pkgname}} does not also exist, it is helpful to use this as
+an additional @code{\alias}.
+
+Skeletons of documentation for a package can be generated using the
+function @code{promptPackage()}.  If the @code{final = TRUE} argument
+is used, then the Rd file will be generated in final form, containing
+the information that would be produced by 
+@code{library(help = @var{pkgname})}.  Otherwise (the default) comments 
+will be inserted giving suggestions for content.
+
+The only requirement for this page is that it include a
+@code{\docType@{package@}} statement.  All other content is optional.
+We suggest that it should be a short overview, to give a reader
+unfamiliar with the package enough information to get started.  More
+extensive documentation is better placed into a package vignette
+(@pxref{Writing package vignettes}) and referenced from this page, or
+into individual man pages for the functions, datasets, or classes.
 
 @node Sectioning, Marking text, Rd format, Writing R documentation files
 @section Sectioning

@@ -11,6 +11,7 @@ Basics|classes|category: Categorical Data
 Basics|classes|NA: Missing Values # != S
 Basics|list: Lists
 Basics|chron: Dates and Times
+Basics|package: Package Summaries
 Graphics: Graphics
 Graphics|aplot: Add to Existing Plot / internal plot
 Graphics|dplot: Computations Related to Plotting

@@ -287,3 +287,85 @@ function(object, filename = NULL, name = NULL)
 
     invisible(filename)
 }
+
+promptPackage <-
+function(package, filename = NULL, name = NULL, final = FALSE)
+{
+    paste0 <- function(...) paste(..., sep = "")
+    insert1 <- function(field, new) {
+    	prev <- Rdtxt[[field]]
+    	Rdtxt[[field]] <<- c(prev[-length(prev)], new, prev[length(prev)])
+    }
+    insert2 <- function(field, new) insert1(field, paste("~~", new, "~~"))
+    tabular <- function(col1, col2) c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
+
+    if(missing(name))
+        name <- paste0(package, ".package");
+
+    if(is.null(filename))
+        filename <- paste0(name, ".Rd")
+
+    Rdtxt <-
+    	    list(name = paste0("\\name{", name, "}"),
+    	         aliases = paste0("\\alias{", name, "}"),
+    	         docType = "\\docType{package}",
+    	         title = c("\\title{", "}"),
+    	         description = c("\\description{","}"),
+    	         details = c("\\details{","}"),
+    	         author = c("\\author{","}"),
+    	         references = character(0),
+    	         
+    	         keywords = c("\\keyword{ package }")
+    	     )
+
+    desc <- packageDescription(package)  
+
+    if (length(desc) > 1) { 
+    	info <- library(help = package, character.only = TRUE)
+    
+    	if (!length(grep(paste0("^", package, " "), info$info[[2]])))
+    	    Rdtxt$aliases <- c(Rdtxt$aliases, paste0("\\alias{", package, "}"))
+
+        insert1("title", desc$Title)
+	insert1("description", desc$Description)
+	insert1("author", c(desc$Author, "", paste(gettext("Maintainer:"),desc$Maintainer)))
+
+	desc <- desc[!(names(desc) %in% c("Title", "Description", "Author", "Maintainer"))]
+	             
+	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
+		    
+	if (!is.null(info$info[[2]])) 
+	    insert1("details",  c("", gettext("Index:"), "\\preformatted{",
+	                          info$info[[2]], "}"))
+	if (!is.null(info$info[[3]]))
+	    insert1("details",  c("", gettext("Further information is available in the following vignettes:"),
+	    		          tabular(paste0("\\code{", info$info[[3]][,1], "}"), info$info[[3]][,2])))
+    }
+    
+    if (!final) {
+        insert2("title", gettext("package title"))
+        insert2("description", gettext("A concise (1-5 lines) description of the package"))
+        insert2("details", gettext("An overview of how to use the package, including the most important functions"))
+        insert2("author", gettext("The author and/or maintainer of the package"))
+        Rdtxt$references <- c("\\references{",
+             paste("~~", gettext("Literature or other references for background information"),"~~"),
+             "}")
+        Rdtxt$seealso <- c("\\seealso{", "}")
+        insert2("seealso", c(gettext("Optional links to other man pages, e.g."), 
+        		     "\\code{\\link[<pkg>:<pkg>.package]{<pkg>}}"))
+        Rdtxt$examples <- c("\\examples{","}")
+        insert2("examples", gettext("simple examples of the most important functions"))
+        Rdtxt$keywords <- c(Rdtxt$keywords, paste("~~", gettext("Optionally other keywords from doc/KEYWORDS, one per line")))
+    }
+
+    if(is.na(filename)) return(Rdtxt)
+
+    cat(unlist(Rdtxt), file = filename, sep = "\n")
+
+    message(gettextf("Created file named '%s'.", filename),
+            "\n",
+            gettext("Edit the file and move it to the appropriate directory."),
+            domain = NA)
+
+    invisible(filename)
+}
