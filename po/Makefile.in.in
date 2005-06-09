@@ -19,6 +19,7 @@ RGUI_CATALOGS = \
   RGui-de.po RGui-de.gmo \
   RGui-it.po RGui-it.gmo \
   RGui-ja.po RGui-ja.gmo \
+  RGui-ko.po RGui-ko.gmo \
   RGui-zh_CN.po RGui-zh_CN.gmo
 
 VPATH = @srcdir@

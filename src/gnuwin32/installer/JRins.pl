@@ -84,6 +84,7 @@ Name: ru; MessagesFile: "compiler:Languages\\Russian.isl"
 Name: sl; MessagesFile: "compiler:Languages\\Slovenian.isl"
 Name: chs; MessagesFile: "ChineseSimp.isl"
 Name: ja; MessagesFile: "Japanese.isl"
+Name: ko; MessagesFile: "Korean.isl"
 
 
 [CustomMessages]
