@@ -2008,6 +2008,8 @@ Collection of datasets from ``Regression Analysis, Theory, Methods and
 Applications'' by A. Sen and M. Srivastava, 1990, Springer.
 @item SeqKnn
 Sequential KNN imputation.
+@item SharedHT2
+Shared Hotelling @math{T^2} test for small sample microarray experiments.
 @item SoPhy
 Soil Physics Tools: simulation of water flux and solute transport in
 soil.
@@ -2198,6 +2200,9 @@ and multivariate problems.
 Mapping between assorted color spaces.
 @item combinat
 Combinatorics utilities.
+@item compositions
+Functions for the consistent analysis of compositional data (e.g.,
+portions of substances) and positive numbers (e.g., concentrations).
 @item concor
 Concordance, providing ``SVD by blocks''.
 @item concord
