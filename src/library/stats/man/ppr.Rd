@@ -136,7 +136,7 @@ method functions.
   The algorithm first adds up to \code{max.terms} ridge terms one at a
   time; it will use less if it is unable to find a term to add that makes
   sufficient difference.  It then removes the least
-  \dQuote{\emph{important}} term at each step until \code{nterm} terms
+  \dQuote{\emph{important}} term at each step until \code{nterms} terms
   are left.
 
   The levels of optimization (argument \code{optlevel})
