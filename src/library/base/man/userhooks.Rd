@@ -57,7 +57,7 @@ packageEvent(pkgname,
   in reverse order so the default for package events is to add hooks
   \sQuote{inside} existing ones.
   
-  Note that when an \R is finished, packages are not detached and
+  Note that when an \R session is finished, packages are not detached and
   namespaces are not unloaded, so the corresponding hooks will not be
   run.
 
