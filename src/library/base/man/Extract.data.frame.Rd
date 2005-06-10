@@ -69,17 +69,16 @@ x$name <- value
 
   For \code{[} the replacement value can be a list: each element of the
   list is used to replace (part of) one column, recycling the list as
-  necessary.  If the columns specified by number are created, the names
+  necessary.  If columns specified by number are created, the names
   (if any) of the corresponding list elements are used to name the
   columns.  If the replacement is not selecting rows, list values can
   contain \code{NULL} elements which will cause the corresponding
-  columns to be deleted.
+  columns to be deleted.  (See the Examples.)
 
   Matrixing indexing using \code{[} is not recommended, and barely
   supported.  For extraction, \code{x} is first coerced to a matrix.
   For replacement a logical matrix (only) can be used to select the
-  elements to be replaced in the same ways as for a matrix (except that
-  missing values in the index are only allowed in a few special cases).
+  elements to be replaced in the same way as for a matrix.
 }
 \section{Coercion}{
   The story over when replacement values are coerced is a complicated
@@ -145,7 +144,6 @@ sw
 sw["new1"] <- LETTERS[1:5]   # adds a character column
 sw[["new2"]] <- letters[1:5] # ditto
 sw[, "new3"] <- LETTERS[1:5] # ditto
-                             # but this got converted to a factor in 1.7.x
 sw$new4 <- 1:5
 sapply(sw, class)
 sw$new4 <- NULL              # delete the column

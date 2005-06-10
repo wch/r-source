@@ -1589,3 +1589,19 @@ s
 dim(s) <- c(7,4,2)
 s
 ## empty < 2.1.1
+
+
+## Tests of logical matrix indexing with NAs
+df1 <- data.frame(a = c(NA, 0, 3, 4)); m1 <- as.matrix(df1)
+df2 <- data.frame(a = c(NA, 0, 0, 4)); m2 <- as.matrix(df2)
+df1[df1 == 0] <- 2; df1
+m1[m1 == 0] <- 2;   m1
+df2[df2 == 0] <- 2; df2  # not allowed in 2.{0,1}.z
+m2[m2 == 0] <- 2;   m2
+df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
+df3 <- data.frame(a=1:2, b=2:3)
+df3[df3 == 2]            # had spurious names
+# but not allowed
+try(df2[df2 == 2] <- 1:2)
+try(m2[m2 == 2] <- 1:2)
+##

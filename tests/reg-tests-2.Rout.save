@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-06 r34585)
+Version 2.2.0 Under development (unstable) (2005-06-10 r34635)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4686,4 +4686,46 @@ Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) :
 [7,]   40   80   00   00
 
 > ## empty < 2.1.1
+> 
+> 
+> ## Tests of logical matrix indexing with NAs
+> df1 <- data.frame(a = c(NA, 0, 3, 4)); m1 <- as.matrix(df1)
+> df2 <- data.frame(a = c(NA, 0, 0, 4)); m2 <- as.matrix(df2)
+> df1[df1 == 0] <- 2; df1
+   a
+1 NA
+2  2
+3  3
+4  4
+> m1[m1 == 0] <- 2;   m1
+   a
+1 NA
+2  2
+3  3
+4  4
+> df2[df2 == 0] <- 2; df2  # not allowed in 2.{0,1}.z
+   a
+1 NA
+2  2
+3  2
+4  4
+> m2[m2 == 0] <- 2;   m2
+   a
+1 NA
+2  2
+3  2
+4  4
+> df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
+<NA>    2 
+  NA    2 
+> df3 <- data.frame(a=1:2, b=2:3)
+> df3[df3 == 2]            # had spurious names
+   2 <NA> 
+   2    2 
+> # but not allowed
+> try(df2[df2 == 2] <- 1:2)
+Error: NAs are not allowed in subscripted assignments
+> try(m2[m2 == 2] <- 1:2)
+Error in try(m2[m2 == 2] <- 1:2) : NAs are not allowed in subscripted assignments
+> ##
 > 
