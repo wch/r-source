@@ -3,6 +3,7 @@ Australia,Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisba
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien",CRAN@R-project.org
 "Brasil (PR)",Brasil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana??","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
 "Brasil (MG)",Brasil,Vicosa,http://www.termix.ufv.br/CRAN/,"Federal University of Vicosa",
+"Brasil (RJ)",Brasil,"Rio de Janeiro",http://cran.fiocruz.br/index.html,"Oswaldo Cruz Foundation, Rio de Janeiro",oswaldo@fiocruz.br
 "Brasil (SP 1)",Brasil,Piracicaba,http://lmq.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",jlpolize@carpa.ciagri.usp.br
 "Brasil (SP 2)",Brasil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando@vps.fmvz.usp.br>"
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
@@ -18,6 +19,7 @@ Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirr
 Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","Laszlo L Tornoci <torlasz@xenia.sote.hu>"
 "Italy (Arezzo)",Italy,Arezzo,http://cran.arsmachinandi.it/,"Ars Machinandi, Arezzo",cran.mirror@arsmachinandi.com
 "Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
+"Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
 Korea,Korea,Seoul,http://bibscvs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skon@kr.FreeBSD.org>"
