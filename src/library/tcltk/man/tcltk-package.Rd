@@ -1,5 +1,5 @@
-\name{tcltk.package}
-\alias{tcltk.package}
+\name{tcltk-package}
+\alias{tcltk-package}
 \alias{tcltk}
 \docType{package}
 \title{

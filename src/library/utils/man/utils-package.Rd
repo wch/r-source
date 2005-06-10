@@ -1,5 +1,5 @@
-\name{utils.package}
-\alias{utils.package}
+\name{utils-package}
+\alias{utils-package}
 \alias{utils}
 \docType{package}
 \title{

@@ -2501,8 +2501,9 @@ methods.
 @subsection Documenting packages
 
 It is recommended that packages have an overview man page with 
-@code{\alias} constructed as @code{@var{pkgname}.package},
-e.g. @code{utils.package} for the @code{utils} package.  If a topic named
+@code{\alias} constructed as @code{@var{pkgname}-package},
+e.g. @code{utils-package} for the @code{utils} package, so that
+@code{package?@var{pkgname}} will open the man page.  If a topic named
 @code{@var{pkgname}} does not also exist, it is helpful to use this as
 an additional @code{\alias}.
 

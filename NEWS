@@ -90,7 +90,7 @@ NEW FEATURES
     	(contributed by Gavin Simpson).
     	
     o	Added recommendation that packages have an overview man page
-	<pkg>.package.Rd, and the promptPackage() function to create a
+	<pkg>-package.Rd, and the promptPackage() function to create a
 	skeleton version.
 
     o	Replacement indexing of a data frame by a logical matrix index

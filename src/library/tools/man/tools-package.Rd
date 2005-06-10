@@ -1,5 +1,5 @@
-\name{tools.package}
-\alias{tools.package}
+\name{tools-package}
+\alias{tools-package}
 \alias{tools}
 \docType{package}
 \title{

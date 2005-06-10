@@ -1,5 +1,5 @@
-\name{grid.package}
-\alias{grid.package}
+\name{grid-package}
+\alias{grid-package}
 \docType{package}
 \title{
 The Grid Graphics Package
@@ -10,7 +10,7 @@ support for interaction.
 }
 \details{
 This package contains a new graphics system, which replaces
-(or extends) \link[graphics:graphics.package]{old-style S graphics}.
+(or extends) \link[graphics:graphics-package]{old-style S graphics}.
 
 Further information is available in the following \link[utils:vignette]{vignettes}:
 \tabular{ll}{

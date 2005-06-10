@@ -1,5 +1,5 @@
-\name{datasets.package}
-\alias{datasets.package}
+\name{datasets-package}
+\alias{datasets-package}
 \alias{datasets}
 \docType{package}
 \title{

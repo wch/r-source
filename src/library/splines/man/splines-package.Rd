@@ -1,5 +1,5 @@
-\name{splines.package}
-\alias{splines.package}
+\name{splines-package}
+\alias{splines-package}
 \alias{splines}
 \docType{package}
 \title{

@@ -1,5 +1,5 @@
-\name{stats.package}
-\alias{stats.package}
+\name{stats-package}
+\alias{stats-package}
 \alias{stats}
 \docType{package}
 \title{

@@ -1,5 +1,5 @@
-\name{methods.package}
-\alias{methods.package}
+\name{methods-package}
+\alias{methods-package}
 \docType{package}
 \title{
 Formal Methods and Classes

@@ -300,7 +300,7 @@ function(package, filename = NULL, name = NULL, final = FALSE)
     tabular <- function(col1, col2) c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
 
     if(missing(name))
-        name <- paste0(package, ".package");
+        name <- paste0(package, "-package");
 
     if(is.null(filename))
         filename <- paste0(name, ".Rd")
@@ -352,7 +352,7 @@ function(package, filename = NULL, name = NULL, final = FALSE)
              "}")
         Rdtxt$seealso <- c("\\seealso{", "}")
         insert2("seealso", c(gettext("Optional links to other man pages, e.g."), 
-        		     "\\code{\\link[<pkg>:<pkg>.package]{<pkg>}}"))
+        		     "\\code{\\link[<pkg>:<pkg>-package]{<pkg>}}"))
         Rdtxt$examples <- c("\\examples{","}")
         insert2("examples", gettext("simple examples of the most important functions"))
         Rdtxt$keywords <- c(Rdtxt$keywords, paste("~~", gettext("Optionally other keywords from doc/KEYWORDS, one per line")))
