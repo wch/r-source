@@ -178,6 +178,9 @@ BUG FIXES
     o	Plotmath has more support for multibyte characters (contributed
 	by Ei-ji Nakama).
 
+    o	The X11() device now hints the window manager so that decorations
+	appear reliably under e.g. the GNOME WM.
+
     o	Subsetting a matrix or an array as a vector used to attempt to
 	use the row names to name the result, even though the
 	array might be longer than the row names.  Now this is only

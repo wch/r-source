@@ -1089,9 +1089,6 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     /* Indicates whether the display is created within this particular call: */
     Rboolean DisplayOpened = FALSE;
     static const char *title = "R Graphics";
-    XSizeHints *size_hints;
-    Status size_hints_status;
-    long supplied_return;
     XSizeHints *hint; 
 
 #ifdef USE_FONTSET
@@ -1203,7 +1200,7 @@ newX11_Open(NewDevDesc *dd, newX11Desc *xd, char *dsp, double w, double h,
     memset(&attributes,0,sizeof(attributes));
     attributes.background_pixel = whitepixel;
     attributes.border_pixel = blackpixel;
-    attributes.backing_store = Always ;
+    attributes.backing_store = Always;
     attributes.event_mask = ButtonPressMask
       | ExposureMask
       | StructureNotifyMask;
