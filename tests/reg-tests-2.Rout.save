@@ -2138,8 +2138,7 @@ Levels: A B C
 > ## add logical matrix replacement indexing for data frames
 > TEMP <- data.frame(VAR1=c(1,2,3,4,5), VAR2=c(5,4,3,2,1), VAR3=c(1,1,1,1,NA))
 > TEMP[,c(1,3)][TEMP[,c(1,3)]==1 & !is.na(TEMP[,c(1,3)])] < -10
-    1  <NA>  <NA>  <NA>  <NA> 
-FALSE FALSE FALSE FALSE FALSE 
+[1] FALSE FALSE FALSE FALSE FALSE
 > TEMP
   VAR1 VAR2 VAR3
 1    1    5    1
@@ -4716,16 +4715,47 @@ Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) :
 3  2
 4  4
 > df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
-<NA>    2 
-  NA    2 
+[1] NA  2
 > df3 <- data.frame(a=1:2, b=2:3)
 > df3[df3 == 2]            # had spurious names
-   2 <NA> 
-   2    2 
+[1] 2 2
 > # but not allowed
 > try(df2[df2 == 2] <- 1:2)
 Error: NAs are not allowed in subscripted assignments
 > try(m2[m2 == 2] <- 1:2)
 Error in try(m2[m2 == 2] <- 1:2) : NAs are not allowed in subscripted assignments
 > ##
+> 
+> 
+> ## vector indexing of matrices: issue is when rownames are used
+> # 1D array
+> m1 <- c(0,1,2,0)
+> dim(m1) <- 4
+> dimnames(m1) <- list(1:4)
+> m1[m1 == 0]                        # has names
+1 4 
+0 0 
+> m1[which(m1 == 0)]                 # has names
+1 4 
+0 0 
+> m1[which(m1 == 0, arr.ind = TRUE)] # no names < 2.2.0 (side effect of PR#937)
+1 4 
+0 0 
+> # 2D array with 2 cols
+> m2 <- as.matrix(data.frame(a=c(0,1,2,0), b=0:3))
+> m2[m2 == 0]                        # had names < 2.2.0
+[1] 0 0 0
+> m2[which(m2 == 0)]                 # had names < 2.2.0
+[1] 0 0 0
+> m2[which(m2 == 0, arr.ind = TRUE)] # no names (PR#937)
+[1] 0 0 0
+> # 2D array with one col: could use rownames but do not.
+> m21 <- m2[, 1, drop = FALSE]
+> m21[m21 == 0]
+[1] 0 0
+> m21[which(m21 == 0)]
+[1] 0 0
+> m21[which(m21 == 0, arr.ind = TRUE)]
+[1] 0 0
+> ## not consistent < 2.2.0: S never gives names
 > 
