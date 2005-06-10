@@ -50,7 +50,7 @@
 
 static double afc(int i)
 {
-    const double al[9] =
+    const static double al[9] =
     {
 	0.0,
 	0.0,/*ln(0!)=ln(1)*/
@@ -81,10 +81,10 @@ static double afc(int i)
 
 double rhyper(double nn1in, double nn2in, double kkin)
 {
-    const double con = 57.56462733;
-    const double deltal = 0.0078;
-    const double deltau = 0.0034;
-    const double scale = 1e25;
+    const static double con = 57.56462733;
+    const static double deltal = 0.0078;
+    const static double deltau = 0.0034;
+    const static double scale = 1e25;
 
     /* extern double afc(int); */
 

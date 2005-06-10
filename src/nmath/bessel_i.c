@@ -180,7 +180,7 @@ static void I_bessel(double *x, double *alpha, long *nb,
     /*-------------------------------------------------------------------
       Mathematical constants
       -------------------------------------------------------------------*/
-    const double const__ = 1.585;
+    const static double const__ = 1.585;
 
     /* Local variables */
     long nend, intx, nbmx, k, l, n, nstart;

@@ -187,6 +187,9 @@ BUG FIXES
 	done for 1D arrays when it is done in all cases, even matrix
 	indexing.  (Tidies up after the fix to PR#937.)
 
+    o	Constants in mathlib are declared 'const static double' to
+	avoid performance issues with the Intel Compiler.
+
 
 
 	**************************************************

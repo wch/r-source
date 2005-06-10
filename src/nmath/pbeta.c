@@ -50,8 +50,8 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
     double ans, c, finsum, p, ps, p1, q, term, xb, xi, y;
     int n, i, ib, swap_tail;
 
-    const double eps = .5*DBL_EPSILON;
-    const double sml = DBL_MIN;
+    const static double eps = .5*DBL_EPSILON;
+    const static double sml = DBL_MIN;
     const double lneps = log(eps);
     const double lnsml = log(sml);
 

@@ -41,7 +41,7 @@
 
 double qt(double p, double ndf, int lower_tail, int log_p)
 {
-    const double eps = 1.e-12;
+    const static double eps = 1.e-12;
 
     double a, b, c, d, p_, P, q, x, y;
     Rboolean neg;

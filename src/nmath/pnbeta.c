@@ -22,7 +22,7 @@ double pnbeta(double x, double a, double b, double lambda,
 
     /* change errmax and itrmax if desired */
 
-    const double errmax = 1.0e-9;
+    const static double errmax = 1.0e-9;
     const int    itrmax = 100;
 
     double a0, ans, ax, lbeta, c, errbd, gx, q, sumq, temp, x0;
