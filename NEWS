@@ -97,6 +97,9 @@ NEW FEATURES
 	containing NAs is allowed in a few more cases, in particular
 	always when the replacement value has length one.
 
+    o	The X11 dataentry() now has support for X Input Methods
+	(contributed by Ei-ji Nakama).
+
 
 DEPRECATED & DEFUNCT
 
