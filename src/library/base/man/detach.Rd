@@ -65,6 +65,17 @@ detach(pos = match(pkg, search()))
 library(splines)
 detach(2)# 'pos' used for 'name'
 
+## an example of the name argument to attach
+## and of detaching a database named by a character vector
+attach_and_detach <- function(db, pos=2)
+{
+   name <- deparse(substitute(db))
+   attach(db, pos=pos, name=name)
+   print(search()[pos])
+   eval(substitute(detach(n), list(n=name)))
+}
+attach_and_detach(women, pos=3)
+
 \dontrun{## Using a versioned install
 library(ash, version="1.0-9")  # or perhaps just library(ash)
 # then one of
