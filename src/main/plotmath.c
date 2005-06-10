@@ -983,7 +983,9 @@ static BBOX RenderGap(double gap, int draw, mathContext *mc,
     return MakeBBox(0, 0, gap);
 }
 
-/* Draw a Symbol from the Special Font */
+/* Draw a Symbol from the Special Font:
+   this is assumed to be 8-bit encoded in Adobe Symbol.
+ */
 
 static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
 			     R_GE_gcontext *gc, GEDevDesc *dd)
@@ -997,7 +999,6 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
 	prev = SetFont(SymbolFont, gc);
     bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
-	/* <UTF8-FIXME> */
 	asciiStr[0] = ascii;
 	asciiStr[1] = '\0';
 	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
@@ -1009,49 +1010,90 @@ static BBOX RenderSymbolChar(int ascii, int draw, mathContext *mc,
     return bbox;
 }
 
-/* Draw a Symbol String in "Math Mode */
+/* Draw a Symbol String in "Math Mode" */
 /* This code inserts italic corrections after */
 /* every character. */
 
 static BBOX RenderSymbolStr(char *str, int draw, mathContext *mc,
 			    R_GE_gcontext *gc, GEDevDesc *dd)
 {
-    char chr[2];
+    char chr[7] = "", *s = str;
     BBOX glyphBBox;
     BBOX resultBBox = NullBBox();
     double lastItalicCorr = 0;
     FontType prevfont = GetFont(gc);
     FontType font = prevfont;
-    chr[1] = '\0';
+
     if (str) {
-	/* <UTF8-FIXME> perhaps */
-	char *s = str;
-	while (*s) {
-	    if (isdigit((int)*s) && font != PlainFont) {
-		font = PlainFont;
-		SetFont(PlainFont, gc);
+#ifdef SUPPORT_MBCS
+	if(mbcslocale) {  /* need to advance by character, not byte */
+	    wchar_t wc;
+	    mbstate_t mb_st;
+	    size_t res;
+	    
+	    memset(&mb_st, 0, sizeof(mb_st));
+	    while (*s) {
+		wc = 0;
+		res = mbrtowc(&wc, s, MB_LEN_MAX, &mb_st);
+		if (iswdigit(wc) && font != PlainFont) {
+		    font = PlainFont;
+		    SetFont(PlainFont, gc);
+		}
+		else if (font != prevfont) {
+		    font = prevfont;
+		    SetFont(prevfont, gc);
+		}
+		glyphBBox = GlyphBBox((int)wc, gc, dd);
+		if (UsingItalics(gc))
+		    bboxItalic(glyphBBox) =
+			ItalicFactor * bboxHeight(glyphBBox);
+		else
+		    bboxItalic(glyphBBox) = 0;
+		if (draw) {
+		    memset(chr, 0, sizeof(chr));
+		    wcrtomb(chr,wc,&mb_st);
+		    PMoveAcross(lastItalicCorr, mc);
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
+			   0.0, 0.0, mc->CurrentAngle, gc,
+			   dd);
+		    PMoveAcross(bboxWidth(glyphBBox), mc);
+		}
+		bboxWidth(resultBBox) += lastItalicCorr;
+		resultBBox = CombineBBoxes(resultBBox, glyphBBox);
+		lastItalicCorr = bboxItalic(glyphBBox);
+		s += res;
 	    }
-	    else if (font != prevfont) {
-		font = prevfont;
-		SetFont(prevfont, gc);
+	} else
+#endif
+	{
+	    while (*s) {
+		if (isdigit((int)*s) && font != PlainFont) {
+		    font = PlainFont;
+		    SetFont(PlainFont, gc);
+		}
+		else if (font != prevfont) {
+		    font = prevfont;
+		    SetFont(prevfont, gc);
+		}
+		glyphBBox = GlyphBBox(*s, gc, dd);
+		if (UsingItalics(gc))
+		    bboxItalic(glyphBBox) =
+			ItalicFactor * bboxHeight(glyphBBox);
+		else
+		    bboxItalic(glyphBBox) = 0;
+		if (draw) {
+		    chr[0] = *s;
+		    PMoveAcross(lastItalicCorr, mc);
+		    GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
+			   0.0, 0.0, mc->CurrentAngle, gc,
+			   dd);
+		    PMoveAcross(bboxWidth(glyphBBox), mc);
+		}
+		bboxWidth(resultBBox) += lastItalicCorr;
+		resultBBox = CombineBBoxes(resultBBox, glyphBBox);
+		lastItalicCorr = bboxItalic(glyphBBox);
+		s++;
 	    }
-	    glyphBBox = GlyphBBox(*s, gc, dd);
-	    if (UsingItalics(gc))
-		bboxItalic(glyphBBox) = ItalicFactor * bboxHeight(glyphBBox);
-	    else
-		bboxItalic(glyphBBox) = 0;
-	    if (draw) {
-		chr[0] = *s;
-		PMoveAcross(lastItalicCorr, mc);
-		GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), chr,
-		       0.0, 0.0, mc->CurrentAngle, gc,
-		       dd);
-		PMoveAcross(bboxWidth(glyphBBox), mc);
-	    }
-	    bboxWidth(resultBBox) += lastItalicCorr;
-	    resultBBox = CombineBBoxes(resultBBox, glyphBBox);
-	    lastItalicCorr = bboxItalic(glyphBBox);
-	    s++;
 	}
 	if (font != prevfont)
 	    SetFont(prevfont, gc);
@@ -1067,15 +1109,17 @@ static BBOX RenderChar(int ascii, int draw, mathContext *mc,
 		       R_GE_gcontext *gc, GEDevDesc *dd)
 {
     BBOX bbox;
-    char asciiStr[2];
+    char asciiStr[7];
+
     bbox = GlyphBBox(ascii, gc, dd);
     if (draw) {
-	/* <UTF8-FIXME> This appears only to get called with values
-	   for hat, tilde and ring.  The latter appears to be hardcoded
-	   in Latin-1.
-	 */
-	asciiStr[0] = ascii;
-	asciiStr[1] = '\0';
+        memset(asciiStr, 0, sizeof(asciiStr));
+#ifdef SUPPORT_MBCS
+	if(mbcslocale) {
+	    wcrtomb(asciiStr, ascii, NULL);
+	} else
+#endif
+	    asciiStr[0] = ascii;
 	GEText(ConvertedX(mc ,dd), ConvertedY(mc, dd), asciiStr,
 	       0.0, 0.0, mc->CurrentAngle, gc,
 	       dd);
