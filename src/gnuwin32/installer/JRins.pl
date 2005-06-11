@@ -142,7 +142,7 @@ ru.full=Полная установка
 ru.CJK=Китайская/Японская/Корейская установка
 ru.custom=Выборочная установка
 
-it.regentries=Valori registri
+it.regentries=Valori registri:
 it.associate=Associa R ai file .RData
 it.dcom=Memorizza percorso di R per l'utilizzo tramite server (D)COM
 it.user=Installazione utente
@@ -150,6 +150,25 @@ it.compact=Installazione utente minimale
 it.full=Installazione completa
 it.CJK=Installazione Cinese/Giapponese/Coreana
 it.custom=Installazione personalizzata
+
+no.regentries=Registernшkler:
+no.associate=Knytt R til .RData-filer
+no.dcom=Registrer R-sti for bruk med (D)COM-tjener
+no.user=Brukerinstallering
+no.compact=Minimal brukerinstallering
+no.full=Fullstendig installering
+no.CJK=Kinesisk/japansk/koreansk installering
+no.custom=Tilpasset installering
+
+sl.regentries=Vnosi v registru:
+sl.associate=Poveѕi datoteke .RData z R
+sl.dcom=Registriraj pot R s streѕnikom (D)COM
+sl.user=Uporabni№ka namestitev
+sl.full=Polna namestitev
+sl.compact=Najmanj№a uporabni№ka namestitev
+sl.CJK=Kitajska/Japonska/Korejska namestitev
+sl.custom=Prikrojena namestitev
+
 
 [Tasks]
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
