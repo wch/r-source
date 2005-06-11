@@ -161,13 +161,14 @@ no.CJK=Kinesisk/japansk/koreansk installering
 no.custom=Tilpasset installering
 
 sl.regentries=Vnosi v registru:
-sl.associate=Pove¾i datoteke .RData z R
-sl.dcom=Registriraj pot R s stre¾nikom (D)COM
-sl.user=Uporabni¹ka namestitev
+sl.associate=Poveži datoteke .RData z R
+sl.dcom=Registriraj pot R s strežnikom (D)COM
+sl.user=Uporabniška namestitev
+sl.compact=Najmanjša uporabniška namestitev
 sl.full=Polna namestitev
-sl.compact=Najmanj¹a uporabni¹ka namestitev
 sl.CJK=Kitajska/Japonska/Korejska namestitev
 sl.custom=Prikrojena namestitev
+
 
 
 [Tasks]
