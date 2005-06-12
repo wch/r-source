@@ -1687,8 +1687,14 @@ installed, it can be used by one of
 --with-blas=-lgoto
 @end example
 
-Multi-threaded versions of Goto's BLAS are available, so please note the
-@emph{caveat} in the previous paragraph.
+Multi-threaded versions of Goto's BLAS are available (and indeed,
+version 0.99-3 seems only to be available in a multithreaded version),
+so please note the @emph{caveat} in the previous paragraph.  These are
+likely to require
+
+@example
+--with-blas="-lgoto -lpthread"
+@end example
 
 For Intel processors under Linux, Intel's Math Kernel Library
 @url{http://www.intel.com/software/products/mkl/}
