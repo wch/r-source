@@ -3,7 +3,7 @@
 Rsharedir = ../share
 Rlocaledir = $(Rsharedir)/locale
 
-CATALOGS = de.gmo en.gmo en_GB.gmo it.gmo ja.gmo pt_BR.gmo ru.gmo zh_CN.gmo
+CATALOGS = de.gmo en.gmo en_GB.gmo fr.gmo it.gmo ja.gmo pt_BR.gmo ru.gmo zh_CN.gmo
 # no use on Windows en@quot.gmo
 RGUI-CATALOGS = $(wildcard RGui-*.gmo)
 
