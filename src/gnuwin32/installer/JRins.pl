@@ -162,13 +162,21 @@ no.custom=Tilpasset installering
 
 sl.regentries=Vnosi v registru:
 sl.associate=Poveži datoteke .RData z R
-sl.dcom=Registriraj pot R s strežnikom (D)COM
+sl.dcom=Registriraj pot do R za strežnik (D)COM
 sl.user=Uporabniška namestitev
 sl.compact=Najmanjša uporabniška namestitev
 sl.full=Polna namestitev
-sl.CJK=Kitajska/Japonska/Korejska namestitev
+sl.CJK=Namestitev v kitajskem/japonskem/korejskem jeziku
 sl.custom=Prikrojena namestitev
 
+po.regentries=Wpisy rejestru:
+po.associate=Powi¹¿ R z plikami z rozszerzeniem .RData
+po.dcom=Zarejestruj œcie¿kê polecenia R dla serwera (D)COM
+po.user=Instalacja u¿ytkownika
+po.compact=Minimalna instalacja u¿ytkownika
+po.full=Pe³na instalacja
+po.CJK=Chiñska/Japoñska/Koreañska instalacja
+po.custom=Dopasowana instalacja
 
 
 [Tasks]
