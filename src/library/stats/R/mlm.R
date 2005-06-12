@@ -31,21 +31,21 @@ summary.mlm <- function(object, ...)
 }
 
 
-### SSD(object) returns object of class "SSD": 
-###           $SSD  matrix of sums of squares  & products 
-###           $df   degrees of freedom. 
+### SSD(object) returns object of class "SSD":
+###           $SSD  matrix of sums of squares  & products
+###           $df   degrees of freedom.
 ### estVar(object)returns the estimated covariance matrix
 SSD <- function(object, ...) UseMethod("SSD")
 estVar <- function(object, ...) UseMethod("estVar")
 
 SSD.mlm <- function(object, ...){
     ## It's not all that hard to incorporate weights, but will
-    ## anyone use them? 
+    ## anyone use them?
     if (!is.null(object$weights))
         stop("'mlm' objects with weights are not supported")
     structure(list(SSD=crossprod(residuals(object)),
                    call=object$call,
-                   df=object$df.residual), class="SSD") 
+                   df=object$df.residual), class="SSD")
 }
 estVar.SSD <- function(object, ...)
     object$SSD/object$df
@@ -71,7 +71,7 @@ proj.matrix <- function(X, orth=FALSE){
     if (orth) diag(nrow=nrow(X)) - P else P
 }
 
-Rank  <- function(X, tol=1e-7) qr(X, tol=tol, LAPACK=FALSE)$rank 
+Rank  <- function(X, tol=1e-7) qr(X, tol=tol, LAPACK=FALSE)$rank
 
 Thin.row <- function(X, tol=1e-7) {
     QR <- qr(t(X), tol=tol, LAPACK=FALSE)
@@ -90,7 +90,7 @@ mauchley.test <- function(object, Sigma=diag(nrow=p),
                           idata=data.frame(index=seq(length=p)),...)
 	 UseMethod("mauchley.test")
 
-mauchley.test.mlm <- function(object, ...) 
+mauchley.test.mlm <- function(object, ...)
  	mauchley.test(SSD(object), ...)
 
 
@@ -110,7 +110,7 @@ mauchley.test.SSD <- function(object, Sigma=diag(nrow=p),
         if (class(M) == "formula") M <- model.matrix(M, idata)
         if (class(X) == "formula") X <- model.matrix(X, idata)
         if (Rank(cbind(M,X)) != Rank(M))
-            stop("X does not define a subspace of M")  
+            stop("X does not define a subspace of M")
     }
     Psi <- T %*% Sigma %*% t(T)
     B <- T %*% object$SSD %*% t(T)
@@ -119,7 +119,7 @@ mauchley.test.SSD <- function(object, Sigma=diag(nrow=p),
     lambda <- Re(eigen(U, symmetric=TRUE)$values)
     n <- object$df
     logW <- log(det(U)) - pp * log(Tr(U/pp))
-    ## Asymptotic mumbojumbo (from TWA).... 
+    ## Asymptotic mumbojumbo (from TWA)....
     rho <- 1 - (2*pp^2 + pp + 2)/(6*pp*n)
     w2 <- (pp+2)*(pp-1)*(pp-2)*(2*pp^3+6*pp^2+3*p +
                                 2)/(288*(n*pp*rho)^2)
@@ -145,7 +145,7 @@ mauchley.test.SSD <- function(object, Sigma=diag(nrow=p),
               )
             )
           )
-    
+
     retval <- list(statistic=z,p.value=pval,
                    method=c("Mauchley's test of sphericity", transformnote),
                    data.name=paste("SSD matrix from",
@@ -166,7 +166,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
         if (class(M) == "formula") M <- model.matrix(M, idata)
         if (class(X) == "formula") X <- model.matrix(X, idata)
         if (Rank(cbind(M,X)) != Rank(M))
-            stop("X does not define a subspace of M")  
+            stop("X does not define a subspace of M")
     }
     Psi <- T %*% Sigma %*% t(T)
     B <- T %*% object$SSD %*% t(T)
@@ -194,8 +194,8 @@ anova.mlm <- function(object, ...,
 {
     if(length(list(object, ...)) > 1){
         cl <- match.call()
-        cl[[1]] <- as.name("anova.mlmlist")
-        return(eval(cl))
+        cl[[1]] <- anova.mlmlist
+        return(eval.parent(cl))
     }
     stop("one-argument anova() not implemented for 'mlm' objects")
 ### This is the code for simple lm.
@@ -291,7 +291,7 @@ anova.mlmlist <- function (object, ...,
         if (class(M) == "formula") M <- model.matrix(M, idata)
         if (class(X) == "formula") X <- model.matrix(X, idata)
         if (Rank(cbind(M,X)) != Rank(M))
-            stop("X does not define a subspace of M")  
+            stop("X does not define a subspace of M")
     }
     pp <- nrow(T)
     responses <- as.character(lapply(objects,
@@ -322,7 +322,7 @@ anova.mlmlist <- function (object, ...,
                        resssd[-nmodels], resssd[-1], SIMPLIFY=FALSE)
     resdet <- sapply(resssd,
                      function(x) det(T %*% (x$SSD/x$df) %*% t(T))^(1/pp))
-                     
+
 
     ## construct table and title
 
@@ -351,19 +351,19 @@ anova.mlmlist <- function (object, ...,
             )
           )
     epsnote <- NULL
-    
-    ## calculate test statistic 
+
+    ## calculate test statistic
 
     test <- match.arg(test)
     if(test == "Spherical"){
 	bigmodel <- order(resdf)[1]
-        df.res <- resdf[bigmodel] 
+        df.res <- resdf[bigmodel]
         sph <- sphericity(resssd[[bigmodel]],T=T,Sigma=Sigma)
         epsnote <- c(paste(format(c("Greenhouse-Geisser epsilon:",
                            "Huynh-Feldt epsilon:")),
                          format(c(sph$GG.eps, sph$HF.eps),digits=4)),
                      "")
-        
+
         Psi <- T %*% Sigma %*% t(T)
         stats <- matrix(NA, nmodels, 6)
         dimnames(stats) <-  list(1:nmodels,
@@ -386,7 +386,7 @@ anova.mlmlist <- function (object, ...,
     }
     else if(!is.null(test)) {
 	bigmodel <- order(resdf)[1]
-        df.res <- resdf[bigmodel] 
+        df.res <- resdf[bigmodel]
         rss.qr <- qr(T %*% resssd[[bigmodel]]$SSD %*% t(T))
         if(rss.qr$rank < pp)
             stop("residuals have rank ", rss.qr$rank," < ", pp)
@@ -415,10 +415,10 @@ anova.mlmlist <- function (object, ...,
             ok <- !is.na(ok) & ok
             stats[ok, 5] <- pf(stats[ok, 2], stats[ok, 3], stats[ok, 4],
                                lower.tail = FALSE)
-            
+
         }
         table <- cbind(table,stats)
-        
+
     }
     structure(table, heading = c(title, topnote, transformnote, epsnote),
               class = c("anova", "data.frame"))
