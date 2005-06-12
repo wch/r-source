@@ -33,7 +33,7 @@
 R for Windows FAQ                           @*
 Frequently Asked Questions on R for Windows @*
 Version for @value{VERSION}                 @*
-B. D. Ripley                                @*
+B. D. Ripley and D. J. Murdoch              @*
 
 @sp 2
 @end ifinfo
@@ -41,7 +41,7 @@ B. D. Ripley                                @*
 @ifhtml
 @html
 <h2>Version for <tt>@value{VERSION}</tt></h2>
-<address>B. D. Ripley</address>
+<address>B. D. Ripley and D. J. Murdoch</address>
 <hr>
 @end html
 @end ifhtml
@@ -128,7 +128,7 @@ There are also links on that page to the @code{r-patched} and
 @code{r-devel} snapshots.  These are frequently updated builds of
 development versions of R.  The @code{r-patched} build includes bug
 fixes to the current release, and @code{r-devel} contains these as well
-as changes that will eventually make it into the next major @code{x.y.0}
+as changes that will eventually make it into the next @code{x.y.0}
 release.
 
 @node How do I install R for Windows?, The installer does not offer my language, Where can I find the latest version?, Installation and Usage
@@ -138,20 +138,20 @@ You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
 will not work.  Your file system must allow long file names (as is
 likely except perhaps for some network-mounted systems).  A full
 installation takes up about 50Mb of disk space and a minimal one about
-15Mb.
+18Mb.
 
-If you want to build packages from sources, we recommend that you choose
-an installation path not containing spaces.  (Using a path with spaces
-in will probably work, but is little-tested.)
+If you want to be able to build packages from sources, we recommend that
+you choose an installation path not containing spaces.  (Using a path
+with spaces in will probably work, but is little-tested.)
 
 To install use @code{@RWVER@-win32.exe}.  Just double-click on the icon and
 follow the instructions.  If you installed R this way you can uninstall
 it from the Control Panel or Start Menu (unless you supressed making a
 group for R).
 
-Choose a working directory for R.  If you installed manually, make a
-shortcut to @code{@RWVER@\bin\Rgui.exe} on your desktop or somewhere on
-the Start menu file tree.  Right-click the shortcut, select
+Choose a working directory for R.  You will have a shortcut to
+@code{@RWVER@\bin\Rgui.exe} on your desktop and/or somewhere on the
+Start menu file tree.  Right-click each shortcut, select
 Properties... and change the `Start in' field to your working directory.
 
 You may also want to add command-line arguments at the end of the Target
@@ -179,10 +179,12 @@ German,
 Hungarian,
 Italian,
 Japanese,
+Korean,
 Norwegian
 Polish,
 Portuguese,
-Russian,
+Russian
+and
 Slovenian.
 
 @node I want to run R in Chinese/Japanese/Korean, How do I check an installation?, The installer does not offer my language, Installation and Usage
@@ -208,8 +210,7 @@ replace @code{Arial} by @code{Arial Unicode MS}, and we tried
 @code{pdf}.)
 
 You do need to ensure that R is running in a suitable locale: use
-@code{Sys.getlocale()} to find out, and @code{Sys.setlocale(,
-"langname")} to set it if necessary.  (CJK users may be used to their
+@code{Sys.getlocale()} to find out.  (CJK users may be used to their
 language characters always being available, which is the case for
 so-called `Unicode' Windows applications.  However, R has to run on
 Windows 9x and is not therefore `Unicode'.)  You can find suitable
@@ -217,7 +218,11 @@ locale names from
 @uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
 beware that @code{"Chinese"} is Traditional Chinese (code page 950,
 Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
-GB2312).
+GB2312).  Note that this can be rather tricky: on Windows XP there are
+several places to select the language under the `Regional and Language
+Options' part of the control panel, and the appropriate language has to
+be set under @emph{both} the `Regional Options' and `Advanced' tabs.
+(The @code{RGui} menus may be corrupted if this is not done.)
 
 @node How do I check an installation?, Can I customize the installation?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
 @section How do I check an installation is not corrupt?
@@ -285,7 +290,7 @@ existing one and change the `Start in' field of the Properties.
 
 You may if you prefer run R from the command line of any shell you use,
 for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
-(Windows 2000/XP) or a port of a Unix shell such as @code{tcsh} or
+(NT-based versions) or a port of a Unix shell such as @code{tcsh} or
 @code{bash}. (The command line can be anything you would put in the
 Target field of a shortcut, and the starting directory will be the
 currect working directory of the shell.)
@@ -295,7 +300,7 @@ currect working directory of the shell.)
 
 Yes, with care.  A basic R installation is relocatable, so you can burn
 an image on the R installation on your hard disc or install directly
-onto a removable storage device such as a Zip drive on USB drive.  (If
+onto a removable storage device such as a flash-memory USB drive.  (If
 you have installed packages into a private library, their absolute paths
 will appear in the HTML packages list.)
 
@@ -351,9 +356,7 @@ defaults to the smaller of the amount of physical RAM in the machine and
 1Gb.  It can be set to any amount over 16M. (R will not run in less.)
 Be aware though that Windows has (in most versions) a maximum amount of
 user virtual memory of 2Gb, and parts of this can be reserved by
-processes but not used.  The version of the memory manager used from R
-1.9.0 allocates large objects in their own memory areas and so is better
-able to make use of fragmented virtual memory than that used previously.
+processes but not used.
 
 Use @code{?Memory} and @code{?memory.size} for information about memory
 usage.  The limit can be raised by calling @code{memory.limit} within a
@@ -363,17 +366,18 @@ R can be compiled to use a different memory manager which might be better
 at using large amounts of memory, but is substantially slower (making R
 several times slower on some tasks).
 
-If you are running a version of Windows which supports more than 2Gb per
-process, you can let the R executables use it by marking their headers
-suitably.  If you have Visual Studio use
+If you are running a version of Windows (see
+@uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx})
+which supports more than 2Gb per process, you can let the R executables
+use it by marking their headers suitably.  If you have Visual Studio use
 @smallexample
-editbin /LARGEADDRESSAWARE \path\to\rwxxxx\bin\Rgui.exe
-editbin /LARGEADDRESSAWARE \path\to\rwxxxx\bin\Rterm.exe
+editbin /LARGEADDRESSAWARE \path_to_R\bin\Rgui.exe
+editbin /LARGEADDRESSAWARE \path_to_R\bin\Rterm.exe
 @end smallexample
 and check this by
 @smallexample
-dumpbin /headers \path\to\rwxxxx\bin\Rgui.exe
-dumpbin /headers \path\to\rwxxxx\bin\Rterm.exe
+dumpbin /headers \path_to_R\bin\Rgui.exe
+dumpbin /headers \path_to_R\bin\Rterm.exe
 @end smallexample
 You should see a line like
 @smallexample
@@ -437,7 +441,7 @@ errors to the normal output file on such systems.)
 @node Can I use @RWVER@ with ESS and (X)emacs?, What are HOME and working directories?, Can I use R CMD BATCH?, Installation and Usage
 @section Can I use @RWVER@ with ESS and (X)emacs?
 
-Yes.  Recent versions of ESS (e.g. 5.2.0) come with support for this
+Yes.  Recent versions of ESS (e.g. 5.2.x) come with support for this
 version of R, and there is support for interrupting the R process from
 ESS (by @code{C-c C-c}).
 
@@ -463,7 +467,7 @@ directories.  It first tries to use the Windows "personal" directory
 (typically @code{C:\Documents and Settings\username\My Documents} in
 Windows XP).  If that fails, if both environment variables
 @env{HOMEDRIVE} and @env{HOMEPATH} are set (and they normally are under
-Windows NT/2000/XP), the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.
+Windows NT/2000/XP/2003), the value is @code{$@{HOMEDRIVE@}$@{HOMEPATH@}}.
 If all of these fail, the current working directory is used.
 
 You can find this from R code by @code{Sys.getenv("R_USER")}.
@@ -479,7 +483,7 @@ On the command line as name=value pairs.  For example in the shortcut to
 @code{RGui} you could have
 
 @example
-path_to_R\bin\Rgui.exe HOME=p:/ R_LIBS=p:/myRlib
+"path_to_R\bin\Rgui.exe" HOME=p:/ R_LIBS=p:/myRlib
 @end example
 
 @item
@@ -499,14 +503,14 @@ overridden in a @file{.Renviron} or on the command line.)
 See @code{?Startup} for more details of environment files.
 
 @item
-For all applications via Windows.
-How you set an environment variable is system specific: in Windows 9x
-you can set them in @file{autoexec.bat} or in an MS-DOS window from
-which you launch @code{Rgui} / @code{Rterm}.  Under Windows NT/2000/XP you
-can use the control panel or the properties of `My Computer'.  Under
-Windows ME you can use the System Configuration Utility (under
-Programs, Accessories, System Tools on the Start menu).  You may have to
-log out or reboot for such changes to take effect.
+For all applications via Windows.  How you set an environment variable
+is system specific: in Windows 9x you can set them in
+@file{autoexec.bat} or in an MS-DOS window from which you launch
+@code{Rgui} / @code{Rterm}.  Under Windows NT/2000/XP/2003 you can use
+the control panel or the properties of `My Computer'.  Under Windows ME
+you can use the System Configuration Utility (under Programs,
+Accessories, System Tools on the Start menu).  You may have to log out
+or reboot for such changes to take effect.
 @end enumerate
 
 The order of precedence for environmental variables is the order in
@@ -529,7 +533,7 @@ packages for Unix do not bother.  So it is worth trying the alternative
 short name (something like @code{PROGRA~1}; you can get it as the
 `MS-DOS name' from the Properties of the file on most versions of
 Windows, and from @code{dir /X} in a @code{Command Prompt} window on
-2000/XP).
+2000/XP/2003).
 
 
 @node Does R use the Registry?, Does R support automation?, R can't find my file, Installation and Usage
@@ -540,10 +544,10 @@ Not itself.
 The installer sets some entries to allow uninstallation.  In addition
 (by default, but this can be de-selected) they set a Registry key
 @code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
-path.  Again, this is not used by R itself, but it will be used by the
-DCOM interface (@uref{http://cran.r-project.org/other-software.html}).
-Finally, a file association for extension @code{.RData} is set in the
-Registry.
+path.  Again, this is not used by R itself, but it may be used by
+third-party front-ends such as Thomas Baier's (D)COM interface
+(@uref{http://cran.r-project.org/other-software.html}).  Finally, a file
+association for extension @code{.RData} is set in the Registry.
 
 You can add the Registry entries by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
@@ -572,7 +576,7 @@ to act as a (D)COM client.
 @node The internet download functions fail., Entering certain characters crashes Rgui., Does R support automation?, Installation and Usage
 @section The internet download functions fail.
 
-for example @code{update.packages} and the menu items on the Packages menu.
+for example @code{update.packages()} and the menu items on the Packages menu.
 
 We have had several reports of this, although they do work for us on
 @emph{all} of our machines.  There are two known possible fixes.
@@ -588,9 +592,9 @@ versions of an example (a real one, but from a machine that is only
 available locally) of a command-line in a short cut:
 
 @smallexample
-/R/@RWVER@/bin/RGui.exe http_proxy=http://user:pass@@gannet:80/
+"path_to_R\bin\RGui.exe" http_proxy=http://user:pass@@gannet:80/
 
-/R/@RWVER@/bin/RGui.exe http_proxy=http://gannet/ http_proxy_user=ask
+"path_to_R\bin\RGui.exe" http_proxy=http://gannet/ http_proxy_user=ask
 @end smallexample
 
 @noindent
@@ -612,7 +616,7 @@ the self-extracting archive
 @uref{ftp://ftp.microsoft.com/softlib/mslfiles/msvcrt.exe} and put it in
 the @code{@RWVER@\bin} directory.  Removing @samp{msvcrt.dll} from that
 directory reverts to the standard behaviour.  It seems that on some
-versions of Windows (but not 2000/XP) you also need to put the
+versions of Windows (but not 2000/XP/2003) you also need to put the
 @code{@RWVER@\bin} directory early in your path.
 
 This fix has solved other problems too, for example incorrect results in
@@ -672,7 +676,8 @@ There are menu items on the @code{Packages} menu to provide a
 point-and-click interface to package installation.  The packages for
 each minor (2.x) version will be stored in a separate area, so for R
 2.2.? the files are in @code{bin/windows/contrib/2.2}.  You can try
-those compiled for earlier versions, at your own risk.
+those compiled for earlier versions (but not before 2.0.0), at your own
+risk.
 
 Note that the pre-compiled versions on CRAN are unsupported: see
 @uref{http://cran.r-project.org/bin/windows/contrib/ReadMe}, which also
@@ -825,7 +830,7 @@ need to unset it temporarily.
 as shown in the @code{Select repositories...} item on the
 @code{Packages} menu?
 
-This read from the tab-delimited file @file{R_HOME/etc/repositories},
+This reads from the tab-delimited file @file{R_HOME/etc/repositories},
 which you can edit, or put a modified copy at @file{.R/repositories}
 in your HOME directory (@pxref{What are HOME and working directories?}).
 
@@ -870,12 +875,12 @@ of @code{shell()}.
 @node I hear about some nifty features., Circles appear as ovals on screen, What should I expect to behave differently from the Unix version, Windows Features
 @section I hear about some nifty features: please tell me about them!
 
-You have read the @code{README.@RWVER@}? There are file menus on the R console,
-pager and graphics windows.  You can source and save from those menus,
-and copy the graphics to @code{png}, @code{jpeg}, @code{bmp},
-@code{postscript}, @code{PDF} or @code{metafile}.  There are right-click
-menus giving shortcuts to menu items, and optionally toolbars with
-buttons giving shortcuts to frequent operations.
+You have read the file @file{README.@RWVER@}? There are file menus on
+the R console, pager and graphics windows.  You can source and save from
+those menus, and copy the graphics to @code{png}, @code{jpeg},
+@code{bmp}, @code{postscript}, @code{PDF} or @code{metafile}.  There are
+right-click menus giving shortcuts to menu items, and optionally
+toolbars with buttons giving shortcuts to frequent operations.
 
 If you resize the R console the @code{options(width=)} is automatically
 set to the console width (unless disabled in the configuration file).
@@ -914,9 +919,9 @@ in units of inches).  Sometimes the answer is a complete invention, and
 in any case Windows will not know exactly how the horizontal and
 vertical size have been set on a CRT.  You can specify correct values
 either in the call to @code{windows} or as options: see @code{?windows}.
-(Typically these are of the order of 80.)
+(Typically these are of the order of 100.)
 
-On one of our systems, the screen height is reported as 240mm, and the
+On one of our systems, the screen height was reported as 240mm, and the
 width as 300mm in 1280 x 1024 mode and 320mm in 1280 x 960 and 1600 x 1200
 modes.  In fact it is a 21" monitor and 400mm x 300mm!
 
@@ -1004,7 +1009,7 @@ In addition, the Hershey vector fonts (see @code{?Hershey},
 @code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
 device to display Japanese characters.
 
-To use non-Latin1 characters in the @code{postscript} graphics device,
+To use non-Latin 1 characters in the @code{postscript} graphics device,
 see its help page.
 
 
@@ -1012,7 +1017,7 @@ see its help page.
 @section I don't see characters with accents at the R console, for example in ?text.
 
 You need to specify a font in Rconsole (see Q4.2) that supports the
-encoding in use, in Western European languages Latin1.  The default
+encoding in use, in Western European languages Latin-1.  The default
 font, @code{Courier New}, does on our systems, as does @code{FixedSys}.
 This may be a problem in other locales, especially for non-Western
 European languages.
@@ -1021,7 +1026,7 @@ Support for these characters within @code{Rterm} depends on the
 environment (the terminal window and shell, including locale settings)
 within which it is run as well as the font used by the terminal window.
 
-If you are using a non-Latin1 language, you do need to ensure that the
+If you are using a non-Latin 1 language, you do need to ensure that the
 fonts you selected support the language.  For example, it was found by
 one Czech user (under Windows 98) that he had to select @code{Times New
 Roman CE} or @code{Courier} (not @code{Courier New}) to get certain
@@ -1324,14 +1329,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 Apr 12 by Professor B. D. Ripley
+Last edited 2005 June 12 by Professor B. D. Ripley
 <code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2004 Apr 12 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2005 June 12 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
 @end ifinfo
 
 @bye

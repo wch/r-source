@@ -105,7 +105,7 @@ R.iss: JRins.pl imagedir fixups md5sums
 	perl JRins.pl $(RPREFIX) $(RPREFIX)
 
 $(RPREFIX).exe: R.iss
-	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log
+	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
 
 clean:
 	rm -rf R.iss *.log $(RPREFIX) 
