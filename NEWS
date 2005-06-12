@@ -303,6 +303,8 @@ BUG FIXES
 	deficiency in the M and X matrices (also when they are implicitly
 	generated via model.matrix()).
 
+    o   anova.mlm had a scoping issue (PR#7898)
+
     o	pf() with infinite df is allowed again.	 It is now more accurate
 	for extreme ratios of dfs, especially when there is a
 	non-centrality parameter.
