@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:55+0100\n"
+"POT-Creation-Date: 2005-06-12 08:00+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -1765,11 +1765,11 @@ msgstr "파일'%s'는 bzip2으로 압축되어있지 않은것 같습니다"
 msgid "allocation of bzfile connection failed"
 msgstr "bzfile 접속의 할당에 실패했습니다"
 
-#: src/main/connections.c:1310 src/modules/X11/devX11.c:2425
+#: src/main/connections.c:1310 src/modules/X11/devX11.c:2468
 msgid "memory allocation to copy clipboard failed"
 msgstr "clipboard의 복사로 메모리 확보에 실패했습니다"
 
-#: src/main/connections.c:1315 src/modules/X11/devX11.c:2413
+#: src/main/connections.c:1315 src/modules/X11/devX11.c:2456
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard를 열수가 없거나, 내용이 없습니다"
 
@@ -3281,7 +3281,7 @@ msgid "not a simple vector"
 msgstr "단일의 벡터가 아닙니다"
 
 #: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
-#: src/main/subset.c:735
+#: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "첨자의 수가 올바르지 않습니다"
 
@@ -4723,7 +4723,7 @@ msgstr "논리적인 플롯 심벌로서는 NA만이 허용되어지고 있습�
 msgid "invalid plotting symbol"
 msgstr "플롯 기호가 부적절합니다"
 
-#: src/main/plot.c:314 src/modules/X11/devX11.c:1291
+#: src/main/plot.c:314 src/modules/X11/devX11.c:1315
 msgid "invalid font specification"
 msgstr "폰트의 지정이 부적절합니다"
 
@@ -6181,12 +6181,12 @@ msgstr "옮겨놓을수 있는 개수보다 많은 요소가 주어졌습니다"
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]]의 첨자가 없습니다"
 
-#: src/main/subassign.c:1441 src/main/subset.c:767
+#: src/main/subassign.c:1441 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "재귀적인 첨자 조작이 레벨 %d로 실패했습니다\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:771
+#: src/main/subassign.c:1446 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "레벨 %d에는 그와같는 인덱스가 없습니다\n"
@@ -6210,7 +6210,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]]의 첨자(%d)가 범위외입니다"
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:565 src/main/subset.c:904
+#: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "첨자의 형태가 부적절합니다"
 
@@ -6262,19 +6262,19 @@ msgstr "첨자가 부적절합니다"
 msgid "subscripting on non-vector"
 msgstr "벡터가 아닌것에 첨자조작"
 
-#: src/main/subset.c:239 src/main/subset.c:266 src/main/subset.c:423
+#: src/main/subset.c:244 src/main/subset.c:271 src/main/subset.c:428
 msgid "matrix subscripting not handled for this type"
 msgstr "이 데이터유형에 대해서 첨자는 사용할수가 없습니다"
 
-#: src/main/subset.c:652
+#: src/main/subset.c:657
 msgid "incorrect number of dimensions"
 msgstr "차원수가 올바르지는 않습니다"
 
-#: src/main/subset.c:731
+#: src/main/subset.c:736
 msgid "no index specified"
 msgstr "첨자가 지정되어 있지 않습니다"
 
-#: src/main/subset.c:740
+#: src/main/subset.c:745
 msgid "wrong arguments for subsetting an environment"
 msgstr "환경을 subsetting에 대한 잘못된 인수입니다"
 
@@ -6948,106 +6948,106 @@ msgstr "X11 프로토콜 에러:  %s"
 msgid "X11 fatal IO error: please save work and shut down R"
 msgstr "X11 치명적인 I/O에러입니다. 작업을 보존해 R를 종료해주십시오"
 
-#: src/modules/X11/devX11.c:1094
+#: src/modules/X11/devX11.c:1096
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "Xlib가 서포트 하지 않는 locale입니다: 몇개의 X 기능은 C locale로 동작합니다"
 
-#: src/modules/X11/devX11.c:1095
+#: src/modules/X11/devX11.c:1097
 msgid "X cannot set locale modifiers"
 msgstr "x는 locale 변경을 설정할수가 없습니다"
 
-#: src/modules/X11/devX11.c:1102
+#: src/modules/X11/devX11.c:1104
 msgid "no png support in this version of R"
 msgstr "이 R의 버전에는 png의 서포트는 없습니다"
 
-#: src/modules/X11/devX11.c:1106
+#: src/modules/X11/devX11.c:1108
 msgid "filename too long in png() call"
 msgstr "png() 함수의 호출로 파일명이 너무 깁니다"
 
-#: src/modules/X11/devX11.c:1110 src/modules/X11/devX11.c:1517
+#: src/modules/X11/devX11.c:1112 src/modules/X11/devX11.c:1554
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "PNG 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1123
+#: src/modules/X11/devX11.c:1125
 msgid "no jpeg support in this version of R"
 msgstr "이 R의 이 버전에 jpeg의 서포트는 없습니다"
 
-#: src/modules/X11/devX11.c:1129
+#: src/modules/X11/devX11.c:1131
 msgid "filename too long in jpeg() call"
 msgstr "jpeg() 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1133 src/modules/X11/devX11.c:1524
+#: src/modules/X11/devX11.c:1135 src/modules/X11/devX11.c:1561
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "JPEG 파일 '%s'를 열지 않았습니다"
 
-#: src/modules/X11/devX11.c:1154
+#: src/modules/X11/devX11.c:1156
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "X11 디스플레이 '%s'에 connection를 열수가 없습니다"
 
-#: src/modules/X11/devX11.c:1180
+#: src/modules/X11/devX11.c:1182
 msgid "jpeg() does not support transparency: using white bg"
 msgstr ""
 "jpeg 함수는 투명성을 서포트 하고 있지 않았습니다\n"
 "(bg에 흰색을 사용합니다)"
 
-#: src/modules/X11/devX11.c:1211
+#: src/modules/X11/devX11.c:1231
 msgid "unable to create X11 window"
 msgstr "X11 윈도우를 만들 수가 없습니다"
 
-#: src/modules/X11/devX11.c:1257
+#: src/modules/X11/devX11.c:1281
 msgid "unable to create pixmap"
 msgstr "pixmap를 작성할수가 없습니다"
 
-#: src/modules/X11/devX11.c:1330
+#: src/modules/X11/devX11.c:1354
 msgid "font family not found in X11 font database"
 msgstr "font family가 X11 폰트 데이타베이스에 있지 않습니다"
 
-#: src/modules/X11/devX11.c:2244
+#: src/modules/X11/devX11.c:2287
 msgid "invalid string argument"
 msgstr "문자열수가 부적절합니다"
 
-#: src/modules/X11/devX11.c:2278
+#: src/modules/X11/devX11.c:2321
 #, c-format
 msgid "unable to start device %s"
 msgstr "디바이스'%s'를 개시 할수가 없습니다"
 
-#: src/modules/X11/devX11.c:2305
+#: src/modules/X11/devX11.c:2348
 msgid "invalid width or height"
 msgstr "폭 또는 높이가 부적절합니다"
 
-#: src/modules/X11/devX11.c:2309
+#: src/modules/X11/devX11.c:2352
 msgid "invalid gamma value"
 msgstr "gama 값이 부적절합니다"
 
-#: src/modules/X11/devX11.c:2312
+#: src/modules/X11/devX11.c:2355
 msgid "invalid colortype passed to X11 driver"
 msgstr "부적절한 colortype은 X11 드라이버에 패스해졌습니다"
 
-#: src/modules/X11/devX11.c:2326
+#: src/modules/X11/devX11.c:2369
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "알수 없는 X11 color/colour model입니다(단색을 사용합니다)"
 
-#: src/modules/X11/devX11.c:2336
+#: src/modules/X11/devX11.c:2379
 msgid "invalid value of 'bg'"
 msgstr "'bg'의 값이 부적절합니다"
 
-#: src/modules/X11/devX11.c:2341
+#: src/modules/X11/devX11.c:2384
 msgid "invalid value of 'canvas'"
 msgstr "'canvas'의 값이 부적절합니다"
 
-#: src/modules/X11/devX11.c:2346
+#: src/modules/X11/devX11.c:2389
 msgid "invalid value of 'fonts'"
 msgstr "'fonts'의 값이 부적절합니다"
 
-#: src/modules/X11/devX11.c:2389
+#: src/modules/X11/devX11.c:2432
 msgid "unable to contact X11 display"
 msgstr "X11 디스플레이에 접속 할수가 없습니다"
 
-#: src/modules/X11/devX11.c:2440
+#: src/modules/X11/devX11.c:2483
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "X11Routines 구조에 메모리를 할당할수가 없습니다"
 

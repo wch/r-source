@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:55+0100\n"
+"POT-Creation-Date: 2005-06-12 08:00+0100\n"
 "PO-Revision-Date: 2005-03-05 16:03+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -1785,11 +1785,11 @@ msgstr "il file '%s' sembra non essere compresso con bzip2"
 msgid "allocation of bzfile connection failed"
 msgstr "allocazione della connessione 'bzfile' fallita"
 
-#: src/main/connections.c:1310 src/modules/X11/devX11.c:2425
+#: src/main/connections.c:1310 src/modules/X11/devX11.c:2468
 msgid "memory allocation to copy clipboard failed"
 msgstr "allocazione memoria appunti fallita"
 
-#: src/main/connections.c:1315 src/modules/X11/devX11.c:2413
+#: src/main/connections.c:1315 src/modules/X11/devX11.c:2456
 msgid "clipboard cannot be opened or contains no text"
 msgstr "la clipboard non può essere aperta o non contiene testo"
 
@@ -3293,7 +3293,7 @@ msgid "not a simple vector"
 msgstr "non è un vettore semplice"
 
 #: src/main/eval.c:2638 src/main/eval.c:2686 src/main/subassign.c:885
-#: src/main/subset.c:735
+#: src/main/subset.c:740
 msgid "incorrect number of subscripts"
 msgstr "numero di indici non corretto"
 
@@ -4744,7 +4744,7 @@ msgstr "sono ammessi solo gli NA come simboli grafici di tipo logico"
 msgid "invalid plotting symbol"
 msgstr "simbolo grafico non valido"
 
-#: src/main/plot.c:314 src/modules/X11/devX11.c:1291
+#: src/main/plot.c:314 src/modules/X11/devX11.c:1315
 msgid "invalid font specification"
 msgstr "specificazione font non valida"
 
@@ -6208,12 +6208,12 @@ msgstr "più elementi forniti di quelli da sostituire"
 msgid "[[ ]] with missing subscript"
 msgstr "[[ ]]] con indici missing"
 
-#: src/main/subassign.c:1441 src/main/subset.c:767
+#: src/main/subassign.c:1441 src/main/subset.c:772
 #, c-format
 msgid "recursive indexing failed at level %d\n"
 msgstr "indicizzazione ricorsiva falliata a livello %d\n"
 
-#: src/main/subassign.c:1446 src/main/subset.c:771
+#: src/main/subassign.c:1446 src/main/subset.c:776
 #, c-format
 msgid "no such index at level %d\n"
 msgstr "indice non trovato a livello %d\n"
@@ -6237,7 +6237,7 @@ msgid "[[ ]] subscript (%d) out of bounds"
 msgstr "[[ ]] indice (%d) fuori limiti"
 
 #: src/main/subassign.c:1695 src/main/subscript.c:110 src/main/subscript.c:175
-#: src/main/subscript.c:565 src/main/subset.c:904
+#: src/main/subscript.c:565 src/main/subset.c:909
 msgid "invalid subscript type"
 msgstr "tipo di indice non valido"
 
@@ -6291,19 +6291,19 @@ msgstr "indici non valido"
 msgid "subscripting on non-vector"
 msgstr "indicizzazione su un non vettore"
 
-#: src/main/subset.c:239 src/main/subset.c:266 src/main/subset.c:423
+#: src/main/subset.c:244 src/main/subset.c:271 src/main/subset.c:428
 msgid "matrix subscripting not handled for this type"
 msgstr "sottoindicizzazione matrice non valido per questo tipo"
 
-#: src/main/subset.c:652
+#: src/main/subset.c:657
 msgid "incorrect number of dimensions"
 msgstr "numero di dimensioni errato"
 
-#: src/main/subset.c:731
+#: src/main/subset.c:736
 msgid "no index specified"
 msgstr "nessun indice specificato"
 
-#: src/main/subset.c:740
+#: src/main/subset.c:745
 msgid "wrong arguments for subsetting an environment"
 msgstr "argomenti sbagliati per sottoindicizzare un environment"
 
@@ -6979,105 +6979,105 @@ msgstr ""
 "Errore irreversebilie di IO di X11: si prega di registrare il vostro lavoro "
 "e uscire da R"
 
-#: src/modules/X11/devX11.c:1094
+#: src/modules/X11/devX11.c:1096
 msgid "locale not supported by Xlib: some X ops will operate in C locale"
 msgstr ""
 "localizzazione non supportata da Xlib: alcune funzionalità di X "
 "lavorareranno con un locale C"
 
-#: src/modules/X11/devX11.c:1095
+#: src/modules/X11/devX11.c:1097
 msgid "X cannot set locale modifiers"
 msgstr "X non può impostare parametri locali"
 
-#: src/modules/X11/devX11.c:1102
+#: src/modules/X11/devX11.c:1104
 msgid "no png support in this version of R"
 msgstr "supporto png non disponibile in questa versione di R"
 
-#: src/modules/X11/devX11.c:1106
+#: src/modules/X11/devX11.c:1108
 msgid "filename too long in png() call"
 msgstr "nome file troppo lungo in png()"
 
-#: src/modules/X11/devX11.c:1110 src/modules/X11/devX11.c:1517
+#: src/modules/X11/devX11.c:1112 src/modules/X11/devX11.c:1554
 #, c-format
 msgid "could not open PNG file '%s'"
 msgstr "impossibile aprire file PNG '%s'"
 
-#: src/modules/X11/devX11.c:1123
+#: src/modules/X11/devX11.c:1125
 msgid "no jpeg support in this version of R"
 msgstr "supporto jpeg non disponibile in questa versione di R"
 
-#: src/modules/X11/devX11.c:1129
+#: src/modules/X11/devX11.c:1131
 msgid "filename too long in jpeg() call"
 msgstr "nome file troppo lungo in jpeg()"
 
-#: src/modules/X11/devX11.c:1133 src/modules/X11/devX11.c:1524
+#: src/modules/X11/devX11.c:1135 src/modules/X11/devX11.c:1561
 #, c-format
 msgid "could not open JPEG file '%s'"
 msgstr "impossibile aprire file JPEG '%s'"
 
-#: src/modules/X11/devX11.c:1154
+#: src/modules/X11/devX11.c:1156
 #, c-format
 msgid "unable to open connection to X11 display '%s'"
 msgstr "impossibile aprire connessione con display X11 '%s'"
 
-#: src/modules/X11/devX11.c:1180
+#: src/modules/X11/devX11.c:1182
 msgid "jpeg() does not support transparency: using white bg"
 msgstr "jpeg() non supporta la trasparenza: bg impostato su bianco"
 
-#: src/modules/X11/devX11.c:1211
+#: src/modules/X11/devX11.c:1231
 msgid "unable to create X11 window"
 msgstr "impossibile creare una finestra X11"
 
-#: src/modules/X11/devX11.c:1257
+#: src/modules/X11/devX11.c:1281
 msgid "unable to create pixmap"
 msgstr "impossibile creare una pixmap"
 
-#: src/modules/X11/devX11.c:1330
+#: src/modules/X11/devX11.c:1354
 msgid "font family not found in X11 font database"
 msgstr "famiglia font non trovata nel database font di X11"
 
-#: src/modules/X11/devX11.c:2244
+#: src/modules/X11/devX11.c:2287
 msgid "invalid string argument"
 msgstr "argomento stringa non valido"
 
-#: src/modules/X11/devX11.c:2278
+#: src/modules/X11/devX11.c:2321
 #, c-format
 msgid "unable to start device %s"
 msgstr "impossibile aprire dispositivo %s"
 
-#: src/modules/X11/devX11.c:2305
+#: src/modules/X11/devX11.c:2348
 msgid "invalid width or height"
 msgstr "larghezza o altezza non validi"
 
-#: src/modules/X11/devX11.c:2309
+#: src/modules/X11/devX11.c:2352
 msgid "invalid gamma value"
 msgstr "valore 'gamma' non valido"
 
-#: src/modules/X11/devX11.c:2312
+#: src/modules/X11/devX11.c:2355
 msgid "invalid colortype passed to X11 driver"
 msgstr "tipo colore passato al dispositivo X11 non valido"
 
-#: src/modules/X11/devX11.c:2326
+#: src/modules/X11/devX11.c:2369
 msgid "unknown X11 color/colour model -- using monochrome"
 msgstr "modello colre X11 sconosciuto -- si utilizza quello monocromatico"
 
-#: src/modules/X11/devX11.c:2336
+#: src/modules/X11/devX11.c:2379
 msgid "invalid value of 'bg'"
 msgstr "valore non valido per 'bg'"
 
-#: src/modules/X11/devX11.c:2341
+#: src/modules/X11/devX11.c:2384
 msgid "invalid value of 'canvas'"
 msgstr "valore non valido per 'canvas'"
 
-#: src/modules/X11/devX11.c:2346
+#: src/modules/X11/devX11.c:2389
 msgid "invalid value of 'fonts'"
 msgstr "valore non valido per 'fonts'"
 
-#: src/modules/X11/devX11.c:2389
+#: src/modules/X11/devX11.c:2432
 msgid "unable to contact X11 display"
 msgstr "impossibile contattare un display X11"
 
-#: src/modules/X11/devX11.c:2440
+#: src/modules/X11/devX11.c:2483
 msgid "cannot allocate memory for X11Routines structure"
 msgstr "non è possibile allocare memoria per la struttura X11Routines"
 
