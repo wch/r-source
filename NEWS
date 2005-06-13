@@ -100,6 +100,9 @@ NEW FEATURES
     o	The X11 dataentry() now has support for X Input Methods
 	(contributed by Ei-ji Nakama).
 
+    o   attach() now prints an information message when objects are
+        masked on the search path by or from a newly attached database.
+
 
 DEPRECATED & DEFUNCT
 

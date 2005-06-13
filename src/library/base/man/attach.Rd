@@ -1,7 +1,7 @@
 \name{attach}
 \title{Attach Set of R Objects to Search Path}
 \usage{
-attach(what, pos = 2, name = deparse(substitute(what)))
+attach(what, pos = 2, name = deparse(substitute(what)), warn.conflicts=TRUE)
 }
 \alias{attach}
 \arguments{
@@ -11,6 +11,9 @@ attach(what, pos = 2, name = deparse(substitute(what)))
   \item{pos}{integer specifying position in \code{\link{search}()} where
     to attach.}
   \item{name}{alternative way to specify the database to be attached.}
+  \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
+    printed about \code{\link{conflicts}} from attaching the database,
+    unless that database contains an object \code{.conflicts.OK}.}
 }
 \description{
   The database is attached to the \R search path.  This means that the
