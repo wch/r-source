@@ -100,6 +100,9 @@ NEW FEATURES
     o	The X11 dataentry() now has support for X Input Methods
 	(contributed by Ei-ji Nakama).
 
+    o	identify()'s default method has additional arguments 'atpen'
+	and 'tolerance' (following S).
+
     o   attach() now prints an information message when objects are
         masked on the search path by or from a newly attached database.
 
@@ -191,7 +194,12 @@ BUG FIXES
 	indexing.  (Tidies up after the fix to PR#937.)
 
     o	Constants in mathlib are declared 'const static double' to
-	avoid performance issues with the Intel Compiler.
+	avoid performance issues with the Intel Itaniumn compiler.
+
+    o	identify() now respects 'cex'.  (PR#660)
+
+	Warnings from identify() are now printed immediately even on
+	consoles with delayed printing.
 
 
 
