@@ -28,7 +28,7 @@ identify(x, \dots)
   \code{identify} reads the position of the graphics pointer when the
   (first) mouse button is pressed.  It then searches the coordinates
   given in \code{x} and \code{y} for the point closest to the pointer.
-  If this point is close to the pointer, its index will be returned as
+  If this point is close enough to the pointer, its index will be returned as
   part of the value of the call.
 }
 \details{
@@ -38,8 +38,9 @@ identify(x, \dots)
   
   If \code{plot} is \code{TRUE}, the point is labelled with
   the corresponding element of \code{text}.
-  The labels are placed either below, to the left, above or to the right
-  of the identified point, depending on where the cursor was.
+  The labels are placed below, to the left, above or to the right
+  of the identified point, depending on where the cursor was relative to
+  the point.
 
 #ifdef unix
   For the usual \code{\link{X11}} device the identification process is
@@ -64,6 +65,14 @@ identify(x, \dots)
   This is because the labels drawn by \code{identify} are not
   recorded in the device's display list until the identification process has
   terminated.
+}
+\note{
+  If \code{plot = TRUE} the labels are always drawn with \code{cex = 1}.
+  Any setting of \code{cex} on the call is ignored, but the units of
+  \code{offset} are scaled by the setting of \code{\link{par}("cex")}
+  used to draw the plot.
+
+  \sQuote{Close enough} is defined to be within 0.25 inch.
 }
 \value{
   If \code{pos} is \code{FALSE}, an integer
