@@ -196,11 +196,6 @@ BUG FIXES
     o	Constants in mathlib are declared 'const static double' to
 	avoid performance issues with the Intel Itaniumn compiler.
 
-    o	identify() now respects 'cex'.  (PR#660)
-
-	Warnings from identify() are now printed immediately even on
-	consoles with delayed printing.
-
 
 
 	**************************************************
@@ -849,7 +844,7 @@ INTERNATIONALIZATION
 	multi-byte locales on suitably equipped OSes if configured
 	with option --enable-mbcs (which is the default).  [The
 	changes to font handling in the X11 module are based on the
-	Japanization patches of Eiji Nakama.]
+	Japanization patches of Ei-ji Nakama.]
 
 	Windows versions of R can be used in `East Asian' locales on
 	suitable versions of Windows.
