@@ -14,7 +14,7 @@ deparse(expr, width.cutoff = 60,
   \item{width.cutoff}{integer in \eqn{[20, 500]} determining the cutoff
     at which line-breaking is tried.}
   \item{backtick}{logical indicating whether symbolic names should be
-    enclosed in backticks if they don't follow the standard syntax.}
+    enclosed in backticks if they do not follow the standard syntax.}
   \item{control}{character vector of deparsing options.  See
     \code{\link{.deparseOpts}}.}
 }
@@ -31,7 +31,7 @@ deparse(expr, width.cutoff = 60,
   to the function \code{myplot}.
 
   The default for the \code{backtick} option is not to quote single
-  symbols but only composite expressions. This is a compromise to
+  symbols but only composite expressions.  This is a compromise to
   avoid breaking existing code.
 
   Using \code{control = "all"} comes closest to making \code{deparse()}
@@ -53,6 +53,8 @@ deparse(expr, width.cutoff = 60,
   \code{\link{substitute}},
   \code{\link{parse}},
   \code{\link{expression}}.
+
+  \code{Quotes} for quoting conventions, including backticks.
 }
 \examples{
 require(stats)

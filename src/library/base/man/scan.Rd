@@ -203,6 +203,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   matrices;
   \code{\link{readLines}} to read a file a line at a time.
   \code{\link{write}}.
+
+  \code{Quotes} for the details of C-style escape sequences.
 }
 \examples{
 cat("TITLE extra line", "2 3 5 7", "11 13 17", file="ex.data", sep="\n")
