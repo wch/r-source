@@ -37,6 +37,11 @@ dQuote(x)
   ASCII quotation style.  In a UTF-8 locale (see
   \code{\link{l10n_info}}), the Unicode directional quotes are used.
 }
+\seealso{
+  \code{Quotes} for quoting \R code.
+
+  \code{\link{shQuote}} for quoting OS commands.
+}
 \references{
   Markus Kuhn, \dQuote{ASCII and Unicode quotation marks}.
   \url{http://www.cl.cam.ac.uk/~mgk25/ucs/quotes.html}

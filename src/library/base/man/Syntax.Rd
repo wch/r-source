@@ -45,7 +45,8 @@
 }
 \seealso{
   \code{\link{Arithmetic}}, \code{\link{Comparison}}, \code{\link{Control}},
-  \code{\link{Extract}}, \code{\link{Logic}}, \code{\link{Paren}}
+  \code{\link{Extract}}, \code{\link{Logic}}, \code{\link{Paren}},
+  \code{\link{Quotes}}
 
   The \emph{R Language Definition} manual.
 }
