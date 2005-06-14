@@ -11,18 +11,20 @@ identify(x, \dots)
 \arguments{
   \item{x,y}{coordinates of points in a scatter plot.  Alternatively, any
     object which defines coordinates (a plotting structure, time
-    series etc.) can be given as \code{x} and \code{y} left undefined.}
+    series etc: see \code{\link{xy.coords}}) can be given as \code{x},
+    and \code{y} left undefined.}
   \item{labels}{an optional vector, the same length as \code{x} and
     \code{y}, giving labels for the points.}
   \item{pos}{if \code{pos} is \code{TRUE}, a component is added to the
     return value which indicates where text was plotted relative to each
-    identified point (1=below, 2=left, 3=above and 4=right).}
+    identified point: see Value.}
   \item{n}{the maximum number of points to be identified.}
-  \item{plot}{if \code{plot} is \code{TRUE}, the labels are printed at
+  \item{plot}{logical: if \code{plot} is \code{TRUE}, the labels are printed at
     the points and if \code{FALSE} they are omitted.}
   \item{offset}{the distance (in character widths) which separates the
     label from identified points.}
-  \item{\dots}{further arguments to \code{par(.)}.}
+  \item{\dots}{further arguments passed to \code{\link{par}} such as
+    \code{cex}, \code{col} and \code{font}.}
 }
 \description{
   \code{identify} reads the position of the graphics pointer when the
@@ -56,7 +58,7 @@ identify(x, \dots)
  
   On most devices which support \code{identify}, successful selection of
   a point is indicated by a bell sound unless
-  \code{\link{options}(locatorBell=FALSE)} has been set.
+  \code{\link{options}(locatorBell = FALSE)} has been set.
 
   If the window is resized or hidden and then exposed before the identification
   process has terminated, any labels drawn by \code{identify}
@@ -67,10 +69,8 @@ identify(x, \dots)
   terminated.
 }
 \note{
-  If \code{plot = TRUE} the labels are always drawn with \code{cex = 1}.
-  Any setting of \code{cex} on the call is ignored, but the units of
-  \code{offset} are scaled by the setting of \code{\link{par}("cex")}
-  used to draw the plot.
+  If \code{plot = TRUE} the size of the text and the units of
+  \code{offset} are scaled by the setting of \code{\link{par}("cex")}.
 
   \sQuote{Close enough} is defined to be within 0.25 inch.
 }
@@ -81,7 +81,7 @@ identify(x, \dots)
   If \code{pos} is \code{TRUE}, a list containing a component
   \code{ind}, indicating which points were identified and a component
   \code{pos}, indicating where the labels were placed relative to the
-  identified points.
+  identified points (1=below, 2=left, 3=above and 4=right).
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

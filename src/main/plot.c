@@ -3213,14 +3213,15 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	l = CAR(args); args = CDR(args);
 	draw = CAR(args);
 	n = length(x);
-	for (i=0; i<n; i++) {
+	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
+	offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
+	for (i = 0; i < n; i++) {
 	    plot = LOGICAL(ind)[i];
 	    if (LOGICAL(draw)[0] && plot) {
 		xi = REAL(x)[i];
 		yi = REAL(y)[i];
 		GConvert(&xi, &yi, USER, INCHES, dd);
 		posi = INTEGER(pos)[i];
-		offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
 		drawLabel(xi, yi, posi, offset, CHAR(STRING_ELT(l, i)), dd);
 	    }
 	}
@@ -3240,6 +3241,8 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("invalid number of points in identify()"));
 	if (!isReal(x) || !isReal(y) || !isString(l) || !isReal(Offset))
 	    errorcall(call, _("incorrect argument type"));
+	if (plot == NA_LOGICAL)
+	    errorcall(call, _("invalid value for 'plot'"));	    
 	if (LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
 	    errorcall(call, _("different argument lengths"));
 	n = LENGTH(x);
@@ -3248,6 +3251,7 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return NULL;
 	}
 
+	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
 	offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
 	PROTECT(ind = allocVector(LGLSXP, n));
 	PROTECT(pos = allocVector(INTSXP, n));
@@ -3275,13 +3279,17 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* might want to handle warn=2? */
 	    warn = asInteger(GetOption(install("warn"), R_NilValue));
 	    if (dmin > THRESHOLD) {
-	        if(warn >= 0)
+	        if(warn >= 0) {
 		    REprintf(_("warning: no point with %.2f inches\n"),
-                                        THRESHOLD);
+			     THRESHOLD);
+		    R_FlushConsole();
+		}
 	    }
 	    else if (LOGICAL(ind)[imin]) {
-	        if(warn >= 0 )
+	        if(warn >= 0 ) {
 		    REprintf(_("warning: nearest point already identified\n"));
+		    R_FlushConsole();
+		}
 	    }
 	    else {
 		k++;
