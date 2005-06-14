@@ -194,7 +194,7 @@ BUG FIXES
 	indexing.  (Tidies up after the fix to PR#937.)
 
     o	Constants in mathlib are declared 'const static double' to
-	avoid performance issues with the Intel Itaniumn compiler.
+	avoid performance issues with the Intel Itanium compiler.
 
 
 
