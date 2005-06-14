@@ -20,7 +20,7 @@
   normally only used to delimit character constants containing double
   quotes.
 
-  Backslash is used as an escape sequence inside character constants
+  Backslash is used as an escape sequence inside character constants.
   Unless specified in the follow table, an escaped character is
   interpreted as the character itself.
   Single quotes need to be escaped by backslash in single-quoted
