@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-12 08:00+0100\n"
+"POT-Creation-Date: 2005-06-14 08:40+0100\n"
 "PO-Revision-Date: 2005-05-31 10:36+0900\n"
 "Last-Translator: park ui-il <uiami@hanmail.com> \n"
 "Language-Team: South Korea\n"
@@ -411,7 +411,7 @@ msgstr "NANs가 작성되었습니다"
 msgid "Non-numeric argument to mathematical function"
 msgstr "수학 함수에 비수치(non-numeric)인수를 건네 받았습니다"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3697
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3717
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "부적절한 인수입니다"
@@ -2252,8 +2252,8 @@ msgstr "C 함수 'R_AllocStringBuffer'중의 메모리를 할당할수가 없었
 #: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
 #: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
 #: src/main/plot.c:2042 src/main/plot.c:2132 src/main/plot.c:2422
-#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3459
-#: src/main/plot.c:3535 src/main/plot.c:3788 src/main/plot3d.c:1383
+#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3479
+#: src/main/plot.c:3555 src/main/plot.c:3808 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "인수가 충분하지 않습니다"
@@ -4933,115 +4933,127 @@ msgstr "'which'의 지정이 부적절합니다"
 msgid "invalid number of points in locator()"
 msgstr "locator()함수로 점의 개수가 부적절합니다"
 
-#: src/main/plot.c:3241
+#: src/main/plot.c:3246
 msgid "invalid number of points in identify()"
 msgstr "identify()함수로 점의 개수가 부적절합니다"
 
-#: src/main/plot.c:3243
+#: src/main/plot.c:3248
 msgid "incorrect argument type"
 msgstr "정확하지 않는 인수의 유형입니다"
 
-#: src/main/plot.c:3245
+#: src/main/plot.c:3250
+msgid "invalid value for 'tolerance'"
+msgstr "'tolerance'의 값이 부적절합니다"
+
+#: src/main/plot.c:3252
+msgid "invalid value for 'plot'"
+msgstr "'plot'의 값이 부적절합니다"
+
+#: src/main/plot.c:3254
+msgid "invalid value for 'atpen'"
+msgstr "'atpen'의 값이 부적절합니다"
+
+#: src/main/plot.c:3256
 msgid "different argument lengths"
 msgstr "인수의 길이가 다릅니다"
 
-#: src/main/plot.c:3280
+#: src/main/plot.c:3293
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "경고:  %.2f inches내에 점은 없습니다\n"
 
-#: src/main/plot.c:3285
+#: src/main/plot.c:3299
 msgid "warning: nearest point already identified\n"
 msgstr "경고:  근방점이 이미 분류(identify)되어 있습니다\n"
 
-#: src/main/plot.c:3360
+#: src/main/plot.c:3380
 msgid "invalid units"
 msgstr "단위가 적절하지 않는다"
 
-#: src/main/plot.c:3366
+#: src/main/plot.c:3386
 msgid "invalid 'cex' value"
 msgstr "'cex'의 값이 적절하지 않는다"
 
-#: src/main/plot.c:3519 src/main/plot.c:3628
+#: src/main/plot.c:3539 src/main/plot.c:3648
 msgid "invalid dendrogram input"
 msgstr "dendrogram 입력이 적절하지 않는다"
 
-#: src/main/plot.c:3659
+#: src/main/plot.c:3679
 msgid "cannot take snapshot of old-style device"
 msgstr "오래된 디바이스에서 snapshot를 사용할수가 없습니다"
 
-#: src/main/plot.c:3672
+#: src/main/plot.c:3692
 msgid "cannot play snapshot on old-style device"
 msgstr "오래된 디바이스에서 snapshot표시는 할수가 없습니다"
 
-#: src/main/plot.c:3728
+#: src/main/plot.c:3748
 msgid "invalid graphics parameter list"
 msgstr "graphics 파라미터 리스트가 부적절합니다"
 
-#: src/main/plot.c:3770
+#: src/main/plot.c:3790
 msgid "invalid symbol parameter vector"
 msgstr "심벌 파라미터 벡터가 부적절합니다"
 
-#: src/main/plot.c:3793
+#: src/main/plot.c:3813
 msgid "invalid symbol coordinates"
 msgstr "심벌의 좌표가 부적절합니다"
 
-#: src/main/plot.c:3801
+#: src/main/plot.c:3821
 msgid "x/y/parameter length mismatch"
 msgstr "x/y 또는 파라미터의 길이가 부적절합니다"
 
-#: src/main/plot.c:3820
+#: src/main/plot.c:3840
 msgid "invalid circles data"
 msgstr "엔의 데이터가 부적절합니다"
 
-#: src/main/plot.c:3822 src/main/plot.c:3840 src/main/plot.c:3866
-#: src/main/plot.c:3895
+#: src/main/plot.c:3842 src/main/plot.c:3860 src/main/plot.c:3886
+#: src/main/plot.c:3915
 msgid "invalid symbol parameter"
 msgstr "심벌 파라미터가 부적절합니다"
 
-#: src/main/plot.c:3838
+#: src/main/plot.c:3858
 msgid "invalid squares data"
 msgstr "정방형 데이터가 부적절합니다"
 
-#: src/main/plot.c:3864
+#: src/main/plot.c:3884
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "직사각형 데이터가 부적절합니다 (2열이 필요합니다)"
 
-#: src/main/plot.c:3893
+#: src/main/plot.c:3913
 msgid "invalid stars data"
 msgstr "성형데이터가 부적절합니다"
 
-#: src/main/plot.c:3935
+#: src/main/plot.c:3955
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "thermometers 데이터가 부적절합니다 (3또는 4열 필요합니다)"
 
-#: src/main/plot.c:3938
+#: src/main/plot.c:3958
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers[, %s]가 부적절합니다"
 
-#: src/main/plot.c:3942
+#: src/main/plot.c:3962
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "thermometers[, %s]가 [0,1] 범위외 -- 이상하게 보일지도 모릅니다"
 
-#: src/main/plot.c:3945
+#: src/main/plot.c:3965
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers[,1:2]가 부적절합니다"
 
-#: src/main/plot.c:3984
+#: src/main/plot.c:4004
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplots의 데이터가 부적절합니다(5열이 필요합니다)"
 
-#: src/main/plot.c:3994
+#: src/main/plot.c:4014
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[, 5]가 [0,1]의 범위외에 있는것이 이상합니다"
 
-#: src/main/plot.c:3996
+#: src/main/plot.c:4016
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4]가 부적절합니다"
 
-#: src/main/plot.c:4042
+#: src/main/plot.c:4062
 msgid "invalid symbol type"
 msgstr "심벌의 유형이 부적절합니다"
 

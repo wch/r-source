@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 12:02\n"
-"PO-Revision-Date: 2005-06-09 12:02\n"
+"POT-Creation-Date: 2005-06-14 08:41\n"
+"PO-Revision-Date: 2005-06-14 08:41\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -486,6 +486,41 @@ msgstr "Created file named '%s'."
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Edit the file and move it to the appropriate directory."
+
+msgid "Maintainer:"
+msgstr "Maintainer:"
+
+msgid "Index:"
+msgstr "Index:"
+
+msgid "Further information is available in the following vignettes:"
+msgstr "Further information is available in the following vignettes:"
+
+msgid "package title"
+msgstr "package title"
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr "A concise (1-5 lines) description of the package"
+
+msgid ""
+"An overview of how to use the package, including the most important functions"
+msgstr ""
+"An overview of how to use the package, including the most important functions"
+
+msgid "The author and/or maintainer of the package"
+msgstr "The author and/or maintainer of the package"
+
+msgid "Literature or other references for background information"
+msgstr "Literature or other references for background information"
+
+msgid "Optional links to other man pages, e.g."
+msgstr "Optional links to other man pages, e.g."
+
+msgid "simple examples of the most important functions"
+msgstr "simple examples of the most important functions"
+
+msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+msgstr "Optionally other keywords from doc/KEYWORDS, one per line"
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"

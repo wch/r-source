@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 12:02\n"
+"POT-Creation-Date: 2005-06-14 08:41\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -479,6 +479,41 @@ msgstr "'%s' 라고 하는 이름으로 작성된 파일입니다"
 
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "파일을 편집하고 적절한 디렉토리에 그것을 이동시켜 주십시오"
+
+msgid "Maintainer:"
+msgstr ""
+
+msgid "Index:"
+msgstr ""
+
+msgid "Further information is available in the following vignettes:"
+msgstr ""
+
+#, fuzzy
+msgid "package title"
+msgstr "패키지"
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr ""
+
+msgid ""
+"An overview of how to use the package, including the most important functions"
+msgstr ""
+
+msgid "The author and/or maintainer of the package"
+msgstr ""
+
+msgid "Literature or other references for background information"
+msgstr ""
+
+msgid "Optional links to other man pages, e.g."
+msgstr ""
+
+msgid "simple examples of the most important functions"
+msgstr ""
+
+msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+msgstr ""
 
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"

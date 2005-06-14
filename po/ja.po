@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-12 08:00+0100\n"
+"POT-Creation-Date: 2005-06-14 08:40+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -409,7 +409,7 @@ msgstr "計算結果が NaN になりました"
 msgid "Non-numeric argument to mathematical function"
 msgstr "数学関数に非数値引数が渡されました"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3697
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3717
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "引数が不正です"
@@ -2250,8 +2250,8 @@ msgstr "C関数'R_AllocStringBuffer'中のメモリを割り付けることが�
 #: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
 #: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
 #: src/main/plot.c:2042 src/main/plot.c:2132 src/main/plot.c:2422
-#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3459
-#: src/main/plot.c:3535 src/main/plot.c:3788 src/main/plot3d.c:1383
+#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3479
+#: src/main/plot.c:3555 src/main/plot.c:3808 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "引数が足りません"
@@ -4926,115 +4926,127 @@ msgstr "'which' の指定が不正です"
 msgid "invalid number of points in locator()"
 msgstr "locator 関数の点の個数が不正です"
 
-#: src/main/plot.c:3241
+#: src/main/plot.c:3246
 msgid "invalid number of points in identify()"
 msgstr "identify 関数の点の個数が不正です"
 
-#: src/main/plot.c:3243
+#: src/main/plot.c:3248
 msgid "incorrect argument type"
 msgstr "正しくない引数の型です"
 
-#: src/main/plot.c:3245
+#: src/main/plot.c:3250
+msgid "invalid value for 'tolerance'"
+msgstr "'tolerance' の値が不正です"
+
+#: src/main/plot.c:3252
+msgid "invalid value for 'plot'"
+msgstr "'plot' の値が不正です"
+
+#: src/main/plot.c:3254
+msgid "invalid value for 'atpen'"
+msgstr "'atpen' の値が不正です"
+
+#: src/main/plot.c:3256
 msgid "different argument lengths"
 msgstr "引数の長さが違います"
 
-#: src/main/plot.c:3280
+#: src/main/plot.c:3293
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "警告：%.2f インチ内に点はありません\n"
 
-#: src/main/plot.c:3285
+#: src/main/plot.c:3299
 msgid "warning: nearest point already identified\n"
 msgstr "警告：近傍点がすでに同定（identify）されています\n"
 
-#: src/main/plot.c:3360
+#: src/main/plot.c:3380
 msgid "invalid units"
 msgstr "単位が不正です"
 
-#: src/main/plot.c:3366
+#: src/main/plot.c:3386
 msgid "invalid 'cex' value"
 msgstr "'cex' の値が不正です"
 
-#: src/main/plot.c:3519 src/main/plot.c:3628
+#: src/main/plot.c:3539 src/main/plot.c:3648
 msgid "invalid dendrogram input"
 msgstr "デンドログラムの入力が不正です"
 
-#: src/main/plot.c:3659
+#: src/main/plot.c:3679
 msgid "cannot take snapshot of old-style device"
 msgstr "古いデバイスではスナップショットはとれません"
 
-#: src/main/plot.c:3672
+#: src/main/plot.c:3692
 msgid "cannot play snapshot on old-style device"
 msgstr "古いスタイルのデバイスではスナップショット表示はできません"
 
-#: src/main/plot.c:3728
+#: src/main/plot.c:3748
 msgid "invalid graphics parameter list"
 msgstr "グラフィックスパラメータリストが不正です"
 
-#: src/main/plot.c:3770
+#: src/main/plot.c:3790
 msgid "invalid symbol parameter vector"
 msgstr "シンボル記号パラメータベクトルが不正です"
 
-#: src/main/plot.c:3793
+#: src/main/plot.c:3813
 msgid "invalid symbol coordinates"
 msgstr "シンボル記号の座標が不正です"
 
-#: src/main/plot.c:3801
+#: src/main/plot.c:3821
 msgid "x/y/parameter length mismatch"
 msgstr "x/y もしくはパラメータの長さが不整合です"
 
-#: src/main/plot.c:3820
+#: src/main/plot.c:3840
 msgid "invalid circles data"
 msgstr "円のデータが不正です"
 
-#: src/main/plot.c:3822 src/main/plot.c:3840 src/main/plot.c:3866
-#: src/main/plot.c:3895
+#: src/main/plot.c:3842 src/main/plot.c:3860 src/main/plot.c:3886
+#: src/main/plot.c:3915
 msgid "invalid symbol parameter"
 msgstr "シンボル記号パラメータが不正です"
 
-#: src/main/plot.c:3838
+#: src/main/plot.c:3858
 msgid "invalid squares data"
 msgstr "正方形データが不正です"
 
-#: src/main/plot.c:3864
+#: src/main/plot.c:3884
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "長方形データが不正です（2列必要です）"
 
-#: src/main/plot.c:3893
+#: src/main/plot.c:3913
 msgid "invalid stars data"
 msgstr "星形データが不正です"
 
-#: src/main/plot.c:3935
+#: src/main/plot.c:3955
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "thermometers データが不正です（3または4列必要です）"
 
-#: src/main/plot.c:3938
+#: src/main/plot.c:3958
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "thermometers [,%s] が不正です"
 
-#: src/main/plot.c:3942
+#: src/main/plot.c:3962
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr " thermometers[,%s] が [0,1] 範囲外 ‐ 奇妙に見えるかも知れません"
 
-#: src/main/plot.c:3945
+#: src/main/plot.c:3965
 msgid "invalid thermometers[,1:2]"
 msgstr "thermometers [,1:2] が不正です"
 
-#: src/main/plot.c:3984
+#: src/main/plot.c:4004
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplot のデータが不正です（5列必要です）"
 
-#: src/main/plot.c:3994
+#: src/main/plot.c:4014
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] が [0,1] の範囲外にあるのは変です"
 
-#: src/main/plot.c:3996
+#: src/main/plot.c:4016
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplot[,1:4] が不正です"
 
-#: src/main/plot.c:4042
+#: src/main/plot.c:4062
 msgid "invalid symbol type"
 msgstr "シンボル記号の型が不正です"
 
