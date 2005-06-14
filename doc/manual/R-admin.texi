@@ -2896,13 +2896,34 @@ this is available from
 @section The MinGW compilers
 
 You need a recent version of the MinGW port of @code{gcc} from
-@url{http://sourceforge.net/projects/mingw/}.  There will be a
-distribution called something like @file{MinGW-3.2.0-rc-3.exe} (which is
-built from @code{gcc-3.4.2}).  See the notes on
+@url{http://sourceforge.net/projects/mingw/}.  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools} for updates.
 
-The MinGW project is experimenting with other installers: if you use one
-do check that you have installed @code{g77}.
+The most recent installer is called @file{MinGW-4.1.0.exe}, which
+downloads components for SourgeForge. We suggest you select the core
+packages and the candidate compilers (@code{gcc-3.4.4}), and then at the
+next screen select just @code{gcc-core}, @code{gcc-g++} and
+@code{gcc-g77} (and no compilers in the code list).  The screen showing
+confirmation of the selections will then look like:
+
+@example
+Selected components:
+      The minimal set of packages required to build C/C++
+         Install a Current version of CORE files
+      The full set of compilers packages
+         Install a Candidate version of Compilers files
+
+Additional tasks:
+      Current
+         Install Current Version Files
+            Current/runtime
+            Current/w32api
+            Current/binutils
+      Candidate
+            Candidate/gcc-core
+            Candidate/gcc-g++
+            Candidate/gcc-g77
+@end example
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
