@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:41+0100\n"
+"POT-Creation-Date: 2005-06-14 08:21+0100\n"
 "PO-Revision-Date: 2005-03-14 19:27+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -409,7 +409,7 @@ msgstr "NaNs wurden erzeugt"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Nicht-numerisches Argument für mathematische Funktion"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3696
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3704
 #: src/main/scan.c:1475
 msgid "invalid argument"
 msgstr "ungültiges Argument"
@@ -2249,8 +2249,8 @@ msgstr "konnte Speicher in C Funktion 'R_AllocStringBuffer' nicht allokieren"
 #: src/main/deparse.c:184 src/main/plot.c:981 src/main/plot.c:1477
 #: src/main/plot.c:1763 src/main/plot.c:1828 src/main/plot.c:1916
 #: src/main/plot.c:2041 src/main/plot.c:2131 src/main/plot.c:2421
-#: src/main/plot.c:2621 src/main/plot.c:2864 src/main/plot.c:3458
-#: src/main/plot.c:3534 src/main/plot.c:3787 src/main/plot3d.c:1383
+#: src/main/plot.c:2621 src/main/plot.c:2864 src/main/plot.c:3466
+#: src/main/plot.c:3542 src/main/plot.c:3795 src/main/plot3d.c:1383
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "zu wenig Argumente"
@@ -4930,115 +4930,119 @@ msgstr "ungültige 'which' Spezifikation"
 msgid "invalid number of points in locator()"
 msgstr "ungültige Anzahl von Punkten in locator()"
 
-#: src/main/plot.c:3240
+#: src/main/plot.c:3241
 msgid "invalid number of points in identify()"
 msgstr "ungültige Anzahl von Punkten in identify()"
 
-#: src/main/plot.c:3242
+#: src/main/plot.c:3243
 msgid "incorrect argument type"
 msgstr "falscher Argumenttyp"
 
-#: src/main/plot.c:3244
+#: src/main/plot.c:3245
+msgid "invalid value for 'plot'"
+msgstr "ungültiger Wert für 'plot'"
+
+#: src/main/plot.c:3247
 msgid "different argument lengths"
 msgstr "unterschiedliche Argumentlängen"
 
-#: src/main/plot.c:3279
+#: src/main/plot.c:3283
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "Warnung: kein Punkt mit %.2f inches\n"
 
-#: src/main/plot.c:3284
+#: src/main/plot.c:3290
 msgid "warning: nearest point already identified\n"
 msgstr "Warnung: nächster Punkt bereits identifiziert\n"
 
-#: src/main/plot.c:3359
+#: src/main/plot.c:3367
 msgid "invalid units"
 msgstr "ungültige Einheiten"
 
-#: src/main/plot.c:3365
+#: src/main/plot.c:3373
 msgid "invalid 'cex' value"
 msgstr "ungültiger 'cex' Wert"
 
-#: src/main/plot.c:3518 src/main/plot.c:3627
+#: src/main/plot.c:3526 src/main/plot.c:3635
 msgid "invalid dendrogram input"
 msgstr "ungültige Eingabe für Dendrogramm"
 
-#: src/main/plot.c:3658
+#: src/main/plot.c:3666
 msgid "cannot take snapshot of old-style device"
 msgstr "kann von altmodischem Device keinen Schnappschuss machen"
 
-#: src/main/plot.c:3671
+#: src/main/plot.c:3679
 msgid "cannot play snapshot on old-style device"
 msgstr "kann Schnappschuss auf altmodischem Device nicht abspielen"
 
-#: src/main/plot.c:3727
+#: src/main/plot.c:3735
 msgid "invalid graphics parameter list"
 msgstr "ungültige Grafikparameterliste"
 
-#: src/main/plot.c:3769
+#: src/main/plot.c:3777
 msgid "invalid symbol parameter vector"
 msgstr "ungültiger Symbolparametervektor"
 
-#: src/main/plot.c:3792
+#: src/main/plot.c:3800
 msgid "invalid symbol coordinates"
 msgstr "ungültige Symbolkoordinaten"
 
-#: src/main/plot.c:3800
+#: src/main/plot.c:3808
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/Parameter haben unterschiedliche Längen"
 
-#: src/main/plot.c:3819
+#: src/main/plot.c:3827
 msgid "invalid circles data"
 msgstr "ungültige Daten für Kreise"
 
-#: src/main/plot.c:3821 src/main/plot.c:3839 src/main/plot.c:3865
-#: src/main/plot.c:3894
+#: src/main/plot.c:3829 src/main/plot.c:3847 src/main/plot.c:3873
+#: src/main/plot.c:3902
 msgid "invalid symbol parameter"
 msgstr "ungültiger Symbolparameter"
 
-#: src/main/plot.c:3837
+#: src/main/plot.c:3845
 msgid "invalid squares data"
 msgstr "ungültige Daten für Quadrate"
 
-#: src/main/plot.c:3863
+#: src/main/plot.c:3871
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "ungültige Daten für Rechtecke (zwei Spalten nötig)"
 
-#: src/main/plot.c:3892
+#: src/main/plot.c:3900
 msgid "invalid stars data"
 msgstr "ungültige Daten für Sterne"
 
-#: src/main/plot.c:3934
+#: src/main/plot.c:3942
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "ungültige Daten für Thermometer (3 oder 4 Spalten nötig)"
 
-#: src/main/plot.c:3937
+#: src/main/plot.c:3945
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "ungültige Thermometer[,%s]"
 
-#: src/main/plot.c:3941
+#: src/main/plot.c:3949
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "Thermometer[,%s] nicht in [0,1] -- sieht evtl. lustig aus"
 
-#: src/main/plot.c:3944
+#: src/main/plot.c:3952
 msgid "invalid thermometers[,1:2]"
 msgstr "ungültige Thermometer[,1:2]"
 
-#: src/main/plot.c:3983
+#: src/main/plot.c:3991
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "ungültige Daten für boxplot (5 Spalten nötig)"
 
-#: src/main/plot.c:3993
+#: src/main/plot.c:4001
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] außerhalb von [0,1] -- sieht evtl. lustig aus"
 
-#: src/main/plot.c:3995
+#: src/main/plot.c:4003
 msgid "invalid boxplots[, 1:4]"
 msgstr "ungültige boxplots[, 1:4]"
 
-#: src/main/plot.c:4041
+#: src/main/plot.c:4049
 msgid "invalid symbol type"
 msgstr "ungültiger Symboltyp"
 
