@@ -1671,7 +1671,7 @@ static int StringValue(int c)
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\u{xxxx} sequence"));
 		res = wcrtomb(buff, val, NULL); /* should always be valid */
-		if(res <= 0) error(_("invalid \\uxxxx sequence"));
+		if((int)res <= 0) error(_("invalid \\uxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
 	    }
@@ -1692,7 +1692,7 @@ static int StringValue(int c)
 		    if((c = xxgetc()) != '}')
 			error(_("invalid \\U{xxxxxxxx} sequence"));
 		res = wcrtomb(buff, val, NULL); /* should always be valid */
-		if(res <= 0) error(("invalid \\Uxxxxxxxx sequence"));
+		if((int)res <= 0) error(("invalid \\Uxxxxxxxx sequence"));
 		for(i = 0; i <  res - 1; i++) YYTEXT_PUSH(buff[i], yyp);
 		c = buff[res - 1]; /* pushed below */
 	    }
