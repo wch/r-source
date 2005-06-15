@@ -20918,20 +20918,33 @@ fi
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
 ## Note: earlier versions used LIBS rather than LDFLAGS.
-for arg in ${LDFLAGS}; do
-  case "${arg}" in
-    -L*)
-      lib=`echo ${arg} | sed "s/^-L//"`
-      separator="${PATH_SEPARATOR}"
+case "${host_os}" in
+  darwin*)
+    ## Darwin provides a full path in the ID of each library such
+    ## that the linker can add library's path to the binary at link time.
+    ## This allows the dyld to find libraries even without xx_LIBRARY_PATH.
+    ## No paths should be added to R_LD_LIBRARY_PATH (which in turn
+    ## changes DYLD_LIBRARY_PATH), because they override the system
+    ## look-up sequence. Such automatic override has proven to break things
+    ## like system frameworks (e.g. ImageIO or OpenGL framework).
+    ;;
+  *)
+    for arg in ${LDFLAGS}; do
+      case "${arg}" in
+        -L*)
+	  lib=`echo ${arg} | sed "s/^-L//"`
+	  separator="${PATH_SEPARATOR}"
 test -z "${separator}" && separator=" "
 if test -z "${R_LD_LIBRARY_PATH}"; then
   R_LD_LIBRARY_PATH="${lib}"
 else
   R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}${separator}${lib}"
 fi
-      ;;
-  esac
-done
+	  ;;
+      esac
+    done
+    ;;
+esac
 ## </FIXME>
 
 ## Record name of environment variable which tells the dynamic linker
@@ -25880,7 +25893,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:25883: \"$ac_link\") >&5
+(eval echo $as_me:25896: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -25958,7 +25971,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:25961: \"$ac_link\") >&5
+(eval echo $as_me:25974: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26204,7 +26217,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26207: \"$ac_link\") >&5
+(eval echo $as_me:26220: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26286,7 +26299,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26289: \"$ac_link\") >&5
+(eval echo $as_me:26302: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -39276,6 +39289,8 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
       r_want_lib=true
+      ## don't add anything for Darwin
+      case "${host_os}" in darwin*) r_want_lib=false ;; esac
       ## Do not add non-existent directories.
       test -d "${lib}" || continue
       ## Canonicalize (/usr/lib/gcc-lib/i486-linux/3.3.4/../../..).

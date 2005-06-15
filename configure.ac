@@ -510,14 +510,27 @@ R_PROG_MAKEINFO
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
 ## Note: earlier versions used LIBS rather than LDFLAGS.
-for arg in ${LDFLAGS}; do
-  case "${arg}" in
-    -L*)
-      lib=`echo ${arg} | sed "s/^-L//"`
-      R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
-      ;;
-  esac
-done
+case "${host_os}" in
+  darwin*)
+    ## Darwin provides a full path in the ID of each library such 
+    ## that the linker can add library's path to the binary at link time.
+    ## This allows the dyld to find libraries even without xx_LIBRARY_PATH.
+    ## No paths should be added to R_LD_LIBRARY_PATH (which in turn
+    ## changes DYLD_LIBRARY_PATH), because they override the system
+    ## look-up sequence. Such automatic override has proven to break things
+    ## like system frameworks (e.g. ImageIO or OpenGL framework).
+    ;;
+  *)
+    for arg in ${LDFLAGS}; do
+      case "${arg}" in
+        -L*)
+	  lib=`echo ${arg} | sed "s/^-L//"`
+	  R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+	  ;;
+      esac
+    done
+    ;;
+esac
 ## </FIXME>
 
 ## Record name of environment variable which tells the dynamic linker
@@ -1467,6 +1480,8 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
       r_want_lib=true
+      ## don't add anything for Darwin
+      case "${host_os}" in darwin*) r_want_lib=false ;; esac
       ## Do not add non-existent directories.
       test -d "${lib}" || continue
       ## Canonicalize (/usr/lib/gcc-lib/i486-linux/3.3.4/../../..).
