@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-28 07:48+0100\n"
+"POT-Creation-Date: 2005-06-15 09:06+0100\n"
 "PO-Revision-Date: 2005-05-31 10:39+0900\n"
 "Last-Translator: park ui il <uiami@hanmail.com>\n"
 "Language-Team: South Korea\n"
@@ -164,7 +164,9 @@ msgstr "Ctrl+T: 현재의 문자 또는 한 문자전의 문자를 교체할수 있습니다.\n"
 msgid ""
 "\n"
 "Note: Console is updated only when some input is required.\n"
-msgstr "\n주의(Note): 어떠한 입력이 요구될 경우에만,console이 갱신되어집니다.\n"
+msgstr ""
+"\n"
+"주의(Note): 어떠한 입력이 요구될 경우에만,console이 갱신되어집니다.\n"
 
 #: console.c:1900
 msgid ""
@@ -282,7 +284,8 @@ msgstr ""
 "Ctrl-L으로 스크린(screen)의 재묘사하여서 셀의 size를 자동 조절이 됩니다\n"
 "Ctrl-C으로 선택한 셀을 복사가 됩니다\n"
 "Ctrl-V으로 선택한 셀에 붙여넣기가 됩니다\n"
-"우측을 클릭(click)하면 메뉴가 표시 되어지고,복사,붙여넣기,셀 size의 자동조절을 할수 있습니다\n"
+"우측을 클릭(click)하면 메뉴가 표시 되어지고,복사,붙여넣기,셀 size의 자동조절"
+"을 할수 있습니다\n"
 "\n"
 
 #: dataentry.c:1555 dataentry.c:1649 editor.c:715 rui.c:1142
@@ -302,7 +305,7 @@ msgid "Autosize column"
 msgstr "셀 사이즈의 자동조절"
 
 #: dataentry.c:1561 pager.c:293 rui.c:891
-#: ../library/grDevices/src/devWindows.c:1589
+#: ../library/grDevices/src/devWindows.c:1588
 msgid "Stay on top"
 msgstr "윈도우즈를 항상 맨 앞에 툽니다"
 
@@ -315,7 +318,7 @@ msgid "Data Editor"
 msgstr "자료 에디터"
 
 #: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
-#: ../library/grDevices/src/devWindows.c:1534
+#: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "파일"
 
@@ -430,7 +433,7 @@ msgstr "스크립트(script)를 열기"
 msgid "Save script"
 msgstr "스크립트(script)를 저장하다"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1502
+#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "Console으로 돌아가다"
 
@@ -439,7 +442,7 @@ msgid "Print script"
 msgstr "스크립트(script)를 인쇄하다"
 
 #: editor.c:645 pager.c:429 rui.c:1073
-#: ../library/grDevices/src/devWindows.c:1496
+#: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "인쇄"
 
@@ -460,7 +463,7 @@ msgid "Save as..."
 msgstr "다른 이름으로 저장..."
 
 #: editor.c:673 pager.c:453 rui.c:1108
-#: ../library/grDevices/src/devWindows.c:1592
+#: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "인쇄..."
 
@@ -700,30 +703,6 @@ msgstr "\"&윈도우즈판 R의 FAQ"
 msgid "Manuals (in PDF)"
 msgstr "메뉴얼 (PDF)"
 
-#: rui.c:976
-msgid "An &Introduction to R"
-msgstr "R의 소개 "
-
-#: rui.c:979
-msgid "R &Reference Manual"
-msgstr "R의 메뉴얼 참고"
-
-#: rui.c:982
-msgid "R Data Import/Export"
-msgstr "R 데이타의 Import/Export"
-
-#: rui.c:985
-msgid "R Language Definition"
-msgstr "R 언어 정의"
-
-#: rui.c:988
-msgid "Writing R Extensions"
-msgstr "R 확장을 쓰기"
-
-#: rui.c:991
-msgid "R Installation and Administration"
-msgstr "R의 설치 그리고 관리"
-
 #: rui.c:999
 msgid "R functions (text)..."
 msgstr "R의 함수 (텍스트)..."
@@ -943,240 +922,258 @@ msgstr "타이틀 패턴"
 msgid "Arrange Icons"
 msgstr "아이콘의 배열"
 
-#: ../library/grDevices/src/devWindows.c:841
+#: ../library/grDevices/src/devWindows.c:840
 msgid "Png files (*.png)"
 msgstr "Png 파일(*.png)"
 
-#: ../library/grDevices/src/devWindows.c:842
+#: ../library/grDevices/src/devWindows.c:841
 msgid "Portable network graphics file"
 msgstr "휴대용, 네트워크 도표 파일"
 
-#: ../library/grDevices/src/devWindows.c:844
+#: ../library/grDevices/src/devWindows.c:843
 msgid "Windows bitmap files (*.bmp)"
 msgstr "윈도우즈는 bitmap 파일 (*.bmp)"
 
-#: ../library/grDevices/src/devWindows.c:845
+#: ../library/grDevices/src/devWindows.c:844
 msgid "Windows bitmap file"
 msgstr "윈도우즈는 bitmap 파일"
 
-#: ../library/grDevices/src/devWindows.c:847
+#: ../library/grDevices/src/devWindows.c:846
 msgid "Jpeg files (*.jpeg,*jpg)"
 msgstr "Jpeg 파일 (*.jpeg,*jpg)"
 
-#: ../library/grDevices/src/devWindows.c:848
+#: ../library/grDevices/src/devWindows.c:847
 msgid "Jpeg file"
 msgstr "Jpeg 파일"
 
-#: ../library/grDevices/src/devWindows.c:869
+#: ../library/grDevices/src/devWindows.c:868
 msgid "Postscript files (*.ps)"
 msgstr "Postscript 파일 (*.ps)"
 
-#: ../library/grDevices/src/devWindows.c:870
+#: ../library/grDevices/src/devWindows.c:869
 msgid "Postscript file"
 msgstr "Postscript 파일"
 
-#: ../library/grDevices/src/devWindows.c:882
+#: ../library/grDevices/src/devWindows.c:881
 msgid "PDF files (*.pdf)"
 msgstr "PDF 파일(*.pdf)"
 
-#: ../library/grDevices/src/devWindows.c:883
+#: ../library/grDevices/src/devWindows.c:882
 msgid "PDF file"
 msgstr "PDF 파일"
 
-#: ../library/grDevices/src/devWindows.c:895
+#: ../library/grDevices/src/devWindows.c:894
 msgid "Enhanced metafiles (*.emf)"
 msgstr "강화된 metafiles(*.emf)"
 
-#: ../library/grDevices/src/devWindows.c:896
+#: ../library/grDevices/src/devWindows.c:895
 msgid "Enhanced metafiles"
 msgstr "강화된 metafiles"
 
-#: ../library/grDevices/src/devWindows.c:900
-#: ../library/grDevices/src/devWindows.c:2679
+#: ../library/grDevices/src/devWindows.c:899
+#: ../library/grDevices/src/devWindows.c:2702
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "선택되어져 있는 파일경로는 너무 큽니다: 512의 바이트만 허용됩니다"
 
-#: ../library/grDevices/src/devWindows.c:1116
+#: ../library/grDevices/src/devWindows.c:1115
 msgid "No plot to replace!"
 msgstr "치환할 plot가 없습니다!"
 
-#: ../library/grDevices/src/devWindows.c:1162
+#: ../library/grDevices/src/devWindows.c:1161
 msgid "Variable name"
 msgstr "변수 이름"
 
-#: ../library/grDevices/src/devWindows.c:1169
+#: ../library/grDevices/src/devWindows.c:1168
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "변수에 저장하지않거나, plot에 포함되어져 있지 않습니다!"
 
-#: ../library/grDevices/src/devWindows.c:1185
+#: ../library/grDevices/src/devWindows.c:1184
 msgid "Name of variable to save to"
 msgstr "변수 이름에 저장"
 
-#: ../library/grDevices/src/devWindows.c:1490
+#: ../library/grDevices/src/devWindows.c:1489
 msgid "Copy to the clipboard as a metafile"
 msgstr "metafile경우 clipboard에 복사합니다"
 
-#: ../library/grDevices/src/devWindows.c:1508
-#: ../library/grDevices/src/devWindows.c:1519
+#: ../library/grDevices/src/devWindows.c:1507
+#: ../library/grDevices/src/devWindows.c:1518
 msgid "Stop locator"
 msgstr "locator를 정지시켜주십시오"
 
-#: ../library/grDevices/src/devWindows.c:1518
-#: ../library/grDevices/src/devWindows.c:1522
+#: ../library/grDevices/src/devWindows.c:1517
+#: ../library/grDevices/src/devWindows.c:1521
 msgid "Stop"
 msgstr "정지"
 
-#: ../library/grDevices/src/devWindows.c:1524
+#: ../library/grDevices/src/devWindows.c:1523
 msgid "Continue"
 msgstr "계속"
 
-#: ../library/grDevices/src/devWindows.c:1528
+#: ../library/grDevices/src/devWindows.c:1527
 msgid "Next"
 msgstr "다음"
 
-#: ../library/grDevices/src/devWindows.c:1529
+#: ../library/grDevices/src/devWindows.c:1528
 msgid "Next plot"
 msgstr "다음 plot"
 
-#: ../library/grDevices/src/devWindows.c:1535
+#: ../library/grDevices/src/devWindows.c:1534
 msgid "Save as"
 msgstr "다른 이를으로 저장"
 
-#: ../library/grDevices/src/devWindows.c:1536
+#: ../library/grDevices/src/devWindows.c:1535
 msgid "Metafile..."
 msgstr "Metafile..."
 
-#: ../library/grDevices/src/devWindows.c:1537
+#: ../library/grDevices/src/devWindows.c:1536
 msgid "Postscript..."
 msgstr "Postscript..."
 
-#: ../library/grDevices/src/devWindows.c:1538
+#: ../library/grDevices/src/devWindows.c:1537
 msgid "PDF..."
 msgstr "PDF..."
 
-#: ../library/grDevices/src/devWindows.c:1539
+#: ../library/grDevices/src/devWindows.c:1538
 msgid "Png..."
 msgstr "Png..."
 
-#: ../library/grDevices/src/devWindows.c:1540
+#: ../library/grDevices/src/devWindows.c:1539
 msgid "Bmp..."
 msgstr "Bmp..."
 
-#: ../library/grDevices/src/devWindows.c:1541
+#: ../library/grDevices/src/devWindows.c:1540
 msgid "Jpeg"
 msgstr "Jpeg"
 
-#: ../library/grDevices/src/devWindows.c:1542
+#: ../library/grDevices/src/devWindows.c:1541
 msgid "50% quality..."
 msgstr "50퍼센트 품질..."
 
-#: ../library/grDevices/src/devWindows.c:1543
+#: ../library/grDevices/src/devWindows.c:1542
 msgid "75% quality..."
 msgstr "75퍼센트 품질..."
 
-#: ../library/grDevices/src/devWindows.c:1544
+#: ../library/grDevices/src/devWindows.c:1543
 msgid "100% quality..."
 msgstr "100퍼센트 품질..."
 
-#: ../library/grDevices/src/devWindows.c:1545
+#: ../library/grDevices/src/devWindows.c:1544
 msgid "Copy to the clipboard"
 msgstr "clipboard에 복사"
 
-#: ../library/grDevices/src/devWindows.c:1546
+#: ../library/grDevices/src/devWindows.c:1545
 msgid "as a Bitmap\tCTRL+C"
 msgstr "Bitmap\\CTRL+C"
 
-#: ../library/grDevices/src/devWindows.c:1547
+#: ../library/grDevices/src/devWindows.c:1546
 msgid "as a Metafile\tCTRL+W"
 msgstr "Metafile\\CTRL+W"
 
-#: ../library/grDevices/src/devWindows.c:1550
+#: ../library/grDevices/src/devWindows.c:1549
 msgid "Print...\tCTRL+P"
 msgstr "인쇄... CTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1552
+#: ../library/grDevices/src/devWindows.c:1551
 msgid "close Device"
 msgstr "디바이스를 닫는다"
 
-#: ../library/grDevices/src/devWindows.c:1553
+#: ../library/grDevices/src/devWindows.c:1552
 msgid "History"
 msgstr "이력"
 
-#: ../library/grDevices/src/devWindows.c:1554
+#: ../library/grDevices/src/devWindows.c:1553
 msgid "Recording"
 msgstr "기록"
 
-#: ../library/grDevices/src/devWindows.c:1557
+#: ../library/grDevices/src/devWindows.c:1556
 msgid "Add\tINS"
 msgstr "추가\\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1558
+#: ../library/grDevices/src/devWindows.c:1557
 msgid "Replace"
 msgstr "변경"
 
-#: ../library/grDevices/src/devWindows.c:1560
+#: ../library/grDevices/src/devWindows.c:1559
 msgid "Previous\tPgUp"
 msgstr "되돌아가다\\PgUp"
 
-#: ../library/grDevices/src/devWindows.c:1561
+#: ../library/grDevices/src/devWindows.c:1560
 msgid "Next\tPgDown"
 msgstr "앞으로\\tPgDown"
 
-#: ../library/grDevices/src/devWindows.c:1563
+#: ../library/grDevices/src/devWindows.c:1562
 msgid "Save to variable..."
 msgstr "변수의 저장..."
 
-#: ../library/grDevices/src/devWindows.c:1564
+#: ../library/grDevices/src/devWindows.c:1563
 msgid "Get from variable..."
 msgstr "변수에서... 얻습니다"
 
-#: ../library/grDevices/src/devWindows.c:1566
+#: ../library/grDevices/src/devWindows.c:1565
 msgid "Clear history"
 msgstr "이력을 소거"
 
-#: ../library/grDevices/src/devWindows.c:1567
+#: ../library/grDevices/src/devWindows.c:1566
 msgid "Resize"
 msgstr "사이즈 변경"
 
-#: ../library/grDevices/src/devWindows.c:1568
+#: ../library/grDevices/src/devWindows.c:1567
 msgid "R mode"
 msgstr "R 모드"
 
-#: ../library/grDevices/src/devWindows.c:1570
+#: ../library/grDevices/src/devWindows.c:1569
 msgid "Fit to window"
 msgstr "윈도우에 고정시키다"
 
-#: ../library/grDevices/src/devWindows.c:1572
+#: ../library/grDevices/src/devWindows.c:1571
 msgid "Fixed size"
 msgstr "고정 사이즈"
 
-#: ../library/grDevices/src/devWindows.c:1579
+#: ../library/grDevices/src/devWindows.c:1578
 msgid "Copy as metafile"
 msgstr "metafile에 복사"
 
-#: ../library/grDevices/src/devWindows.c:1581
+#: ../library/grDevices/src/devWindows.c:1580
 msgid "Copy as bitmap"
 msgstr "bitmap에 복사"
 
-#: ../library/grDevices/src/devWindows.c:1584
+#: ../library/grDevices/src/devWindows.c:1583
 msgid "Save as metafile..."
 msgstr "metafile에 저장..."
 
-#: ../library/grDevices/src/devWindows.c:1586
+#: ../library/grDevices/src/devWindows.c:1585
 msgid "Save as postscript..."
 msgstr "postscript에 저장..."
 
-#: ../library/grDevices/src/devWindows.c:2423
+#: ../library/grDevices/src/devWindows.c:2438
 msgid "Locator is active"
 msgstr "전파이(가) 활발합니다"
 
-#: ../library/grDevices/src/devWindows.c:2983
+#: ../library/grDevices/src/devWindows.c:3009
 msgid "Waiting to confirm page change..."
 msgstr "페이지 변경을 확인하는까지 기다리는 중..."
 
-#: ../library/grDevices/src/devWindows.c:2995
+#: ../library/grDevices/src/devWindows.c:3021
 msgid "Click or hit ENTER for next page"
 msgstr "click 또는 ENTER 키를 누르는 것으로 다음 페이지로 이동됩니다"
+
+#~ msgid "An &Introduction to R"
+#~ msgstr "R의 소개 "
+
+#~ msgid "R &Reference Manual"
+#~ msgstr "R의 메뉴얼 참고"
+
+#~ msgid "R Data Import/Export"
+#~ msgstr "R 데이타의 Import/Export"
+
+#~ msgid "R Language Definition"
+#~ msgstr "R 언어 정의"
+
+#~ msgid "Writing R Extensions"
+#~ msgstr "R 확장을 쓰기"
+
+#~ msgid "R Installation and Administration"
+#~ msgstr "R의 설치 그리고 관리"
 
 #~ msgid "Text files (*.txt)"
 #~ msgstr "Text 파일 (* txt)"

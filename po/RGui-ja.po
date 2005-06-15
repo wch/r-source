@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-04-28 07:48+0100\n"
+"POT-Creation-Date: 2005-06-15 09:06+0100\n"
 "PO-Revision-Date: 2005-06-02 13:28+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -189,7 +189,9 @@ msgstr ""
 
 #: console.c:1902
 msgid "Standard Windows hotkeys can be used to switch to the\n"
-msgstr "標準ウインドウズ・ホットキーは,以下を切りかえるために使用することができます:\n"
+msgstr ""
+"標準ウインドウズ・ホットキーは,以下を切りかえるために使用することができま"
+"す:\n"
 
 #: console.c:1903
 msgid "graphics device (Ctrl+Tab or Ctrl+F6 in MDI, Alt+Tab in SDI)"
@@ -313,7 +315,7 @@ msgid "Autosize column"
 msgstr "セルサイズの自動調節"
 
 #: dataentry.c:1561 pager.c:293 rui.c:891
-#: ../library/grDevices/src/devWindows.c:1589
+#: ../library/grDevices/src/devWindows.c:1588
 msgid "Stay on top"
 msgstr "ウインドウを常にトップに置く"
 
@@ -326,7 +328,7 @@ msgid "Data Editor"
 msgstr "データエディタ"
 
 #: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
-#: ../library/grDevices/src/devWindows.c:1534
+#: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "ファイル"
 
@@ -372,7 +374,8 @@ msgstr "コマンド実行中\n"
 
 #: editor.c:543
 msgid "To run a line or section of R code, select the code and either\n"
-msgstr "カーソル行または選択中の R コードを実行するために, コードを選択してから\n"
+msgstr ""
+"カーソル行または選択中の R コードを実行するために, コードを選択してから\n"
 
 #: editor.c:544
 msgid "     Press Ctrl-R\n"
@@ -393,7 +396,8 @@ msgstr ""
 #: editor.c:547
 msgid ""
 "This will copy the selected commands to the console and evaluate them.\n"
-msgstr "これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します\n"
+msgstr ""
+"これは選択されたコマンドをコンソールにコピーし,そのコマンドを評価します\n"
 
 #: editor.c:548
 msgid ""
@@ -441,7 +445,7 @@ msgstr "スクリプトを開く"
 msgid "Save script"
 msgstr "スクリプトを保存する"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1502
+#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "コンソールに戻る"
 
@@ -450,7 +454,7 @@ msgid "Print script"
 msgstr "スクリプトを印刷する"
 
 #: editor.c:645 pager.c:429 rui.c:1073
-#: ../library/grDevices/src/devWindows.c:1496
+#: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "印刷"
 
@@ -471,7 +475,7 @@ msgid "Save as..."
 msgstr "別名で保存..."
 
 #: editor.c:673 pager.c:453 rui.c:1108
-#: ../library/grDevices/src/devWindows.c:1592
+#: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "印刷..."
 
@@ -713,30 +717,6 @@ msgstr "Windows 版 R の FAQ"
 msgid "Manuals (in PDF)"
 msgstr "マニュアル (PDF)"
 
-#: rui.c:976
-msgid "An &Introduction to R"
-msgstr "An &Introduction to R"
-
-#: rui.c:979
-msgid "R &Reference Manual"
-msgstr "R &Reference Manual"
-
-#: rui.c:982
-msgid "R Data Import/Export"
-msgstr "R Data Import/Export"
-
-#: rui.c:985
-msgid "R Language Definition"
-msgstr "R Language Definition"
-
-#: rui.c:988
-msgid "Writing R Extensions"
-msgstr "Writing R Extensions"
-
-#: rui.c:991
-msgid "R Installation and Administration"
-msgstr "R Installation and Administration"
-
 #: rui.c:999
 msgid "R functions (text)..."
 msgstr "R の関数 (テキスト)..."
@@ -957,240 +937,258 @@ msgstr "タイルパターン"
 msgid "Arrange Icons"
 msgstr "アイコンの並べ替え"
 
-#: ../library/grDevices/src/devWindows.c:841
+#: ../library/grDevices/src/devWindows.c:840
 msgid "Png files (*.png)"
 msgstr "Png ファイル (*.png)"
 
-#: ../library/grDevices/src/devWindows.c:842
+#: ../library/grDevices/src/devWindows.c:841
 msgid "Portable network graphics file"
 msgstr "ポータブル・ネットワークグラフィックファイル"
 
-#: ../library/grDevices/src/devWindows.c:844
+#: ../library/grDevices/src/devWindows.c:843
 msgid "Windows bitmap files (*.bmp)"
 msgstr "Windows ビットマップファイル (*.bmp)"
 
-#: ../library/grDevices/src/devWindows.c:845
+#: ../library/grDevices/src/devWindows.c:844
 msgid "Windows bitmap file"
 msgstr "Windows ビットマップファイル"
 
-#: ../library/grDevices/src/devWindows.c:847
+#: ../library/grDevices/src/devWindows.c:846
 msgid "Jpeg files (*.jpeg,*jpg)"
 msgstr "Jpeg ファイル (*.jpeg,*jpg)"
 
-#: ../library/grDevices/src/devWindows.c:848
+#: ../library/grDevices/src/devWindows.c:847
 msgid "Jpeg file"
 msgstr "Jpeg ファイル"
 
-#: ../library/grDevices/src/devWindows.c:869
+#: ../library/grDevices/src/devWindows.c:868
 msgid "Postscript files (*.ps)"
 msgstr "ポストスクリプトファイル (*.ps)"
 
-#: ../library/grDevices/src/devWindows.c:870
+#: ../library/grDevices/src/devWindows.c:869
 msgid "Postscript file"
 msgstr "ポストスクリプトファイル"
 
-#: ../library/grDevices/src/devWindows.c:882
+#: ../library/grDevices/src/devWindows.c:881
 msgid "PDF files (*.pdf)"
 msgstr "PDF ファイル (*.pdf)"
 
-#: ../library/grDevices/src/devWindows.c:883
+#: ../library/grDevices/src/devWindows.c:882
 msgid "PDF file"
 msgstr "PDF ファイル"
 
-#: ../library/grDevices/src/devWindows.c:895
+#: ../library/grDevices/src/devWindows.c:894
 msgid "Enhanced metafiles (*.emf)"
 msgstr "Enhanced metafiles (*.emf)"
 
-#: ../library/grDevices/src/devWindows.c:896
+#: ../library/grDevices/src/devWindows.c:895
 msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
-#: ../library/grDevices/src/devWindows.c:900
-#: ../library/grDevices/src/devWindows.c:2679
+#: ../library/grDevices/src/devWindows.c:899
+#: ../library/grDevices/src/devWindows.c:2702
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "選択されたファイルパスが長すぎます: 512 バイトまでです"
 
-#: ../library/grDevices/src/devWindows.c:1116
+#: ../library/grDevices/src/devWindows.c:1115
 msgid "No plot to replace!"
 msgstr "置換すべきプロットがありません!"
 
-#: ../library/grDevices/src/devWindows.c:1162
+#: ../library/grDevices/src/devWindows.c:1161
 msgid "Variable name"
 msgstr "変数名"
 
-#: ../library/grDevices/src/devWindows.c:1169
+#: ../library/grDevices/src/devWindows.c:1168
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "変数が存在しないか,プロットに含まれていません!"
 
-#: ../library/grDevices/src/devWindows.c:1185
+#: ../library/grDevices/src/devWindows.c:1184
 msgid "Name of variable to save to"
 msgstr "変数名の保存"
 
-#: ../library/grDevices/src/devWindows.c:1490
+#: ../library/grDevices/src/devWindows.c:1489
 msgid "Copy to the clipboard as a metafile"
 msgstr "メタファイルとしてクリップボードにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1508
-#: ../library/grDevices/src/devWindows.c:1519
+#: ../library/grDevices/src/devWindows.c:1507
+#: ../library/grDevices/src/devWindows.c:1518
 msgid "Stop locator"
 msgstr "locator を停止"
 
-#: ../library/grDevices/src/devWindows.c:1518
-#: ../library/grDevices/src/devWindows.c:1522
+#: ../library/grDevices/src/devWindows.c:1517
+#: ../library/grDevices/src/devWindows.c:1521
 msgid "Stop"
 msgstr "停止"
 
-#: ../library/grDevices/src/devWindows.c:1524
+#: ../library/grDevices/src/devWindows.c:1523
 msgid "Continue"
 msgstr "続く"
 
-#: ../library/grDevices/src/devWindows.c:1528
+#: ../library/grDevices/src/devWindows.c:1527
 msgid "Next"
 msgstr "次"
 
-#: ../library/grDevices/src/devWindows.c:1529
+#: ../library/grDevices/src/devWindows.c:1528
 msgid "Next plot"
 msgstr "次のプロット"
 
-#: ../library/grDevices/src/devWindows.c:1535
+#: ../library/grDevices/src/devWindows.c:1534
 msgid "Save as"
 msgstr "別名で保存"
 
-#: ../library/grDevices/src/devWindows.c:1536
+#: ../library/grDevices/src/devWindows.c:1535
 msgid "Metafile..."
 msgstr "Metafile..."
 
-#: ../library/grDevices/src/devWindows.c:1537
+#: ../library/grDevices/src/devWindows.c:1536
 msgid "Postscript..."
 msgstr "Postscript..."
 
-#: ../library/grDevices/src/devWindows.c:1538
+#: ../library/grDevices/src/devWindows.c:1537
 msgid "PDF..."
 msgstr "PDF..."
 
-#: ../library/grDevices/src/devWindows.c:1539
+#: ../library/grDevices/src/devWindows.c:1538
 msgid "Png..."
 msgstr "Png..."
 
-#: ../library/grDevices/src/devWindows.c:1540
+#: ../library/grDevices/src/devWindows.c:1539
 msgid "Bmp..."
 msgstr "Bmp..."
 
-#: ../library/grDevices/src/devWindows.c:1541
+#: ../library/grDevices/src/devWindows.c:1540
 msgid "Jpeg"
 msgstr "Jpeg"
 
-#: ../library/grDevices/src/devWindows.c:1542
+#: ../library/grDevices/src/devWindows.c:1541
 msgid "50% quality..."
 msgstr "50% の品質..."
 
-#: ../library/grDevices/src/devWindows.c:1543
+#: ../library/grDevices/src/devWindows.c:1542
 msgid "75% quality..."
 msgstr "75% の品質..."
 
-#: ../library/grDevices/src/devWindows.c:1544
+#: ../library/grDevices/src/devWindows.c:1543
 msgid "100% quality..."
 msgstr "100% の品質..."
 
-#: ../library/grDevices/src/devWindows.c:1545
+#: ../library/grDevices/src/devWindows.c:1544
 msgid "Copy to the clipboard"
 msgstr "クリップボードにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1546
+#: ../library/grDevices/src/devWindows.c:1545
 msgid "as a Bitmap\tCTRL+C"
 msgstr "ビットマップ\tCTRL+C"
 
-#: ../library/grDevices/src/devWindows.c:1547
+#: ../library/grDevices/src/devWindows.c:1546
 msgid "as a Metafile\tCTRL+W"
 msgstr "メタファイル\tCTRL+W"
 
-#: ../library/grDevices/src/devWindows.c:1550
+#: ../library/grDevices/src/devWindows.c:1549
 msgid "Print...\tCTRL+P"
 msgstr "印刷...\tCTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1552
+#: ../library/grDevices/src/devWindows.c:1551
 msgid "close Device"
 msgstr "デバイスを閉じる"
 
-#: ../library/grDevices/src/devWindows.c:1553
+#: ../library/grDevices/src/devWindows.c:1552
 msgid "History"
 msgstr "履歴"
 
-#: ../library/grDevices/src/devWindows.c:1554
+#: ../library/grDevices/src/devWindows.c:1553
 msgid "Recording"
 msgstr "記録"
 
-#: ../library/grDevices/src/devWindows.c:1557
+#: ../library/grDevices/src/devWindows.c:1556
 msgid "Add\tINS"
 msgstr "追加\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1558
+#: ../library/grDevices/src/devWindows.c:1557
 msgid "Replace"
 msgstr "置換"
 
-#: ../library/grDevices/src/devWindows.c:1560
+#: ../library/grDevices/src/devWindows.c:1559
 msgid "Previous\tPgUp"
 msgstr "戻る\tPgUp"
 
-#: ../library/grDevices/src/devWindows.c:1561
+#: ../library/grDevices/src/devWindows.c:1560
 msgid "Next\tPgDown"
 msgstr "進む\tPgDown"
 
-#: ../library/grDevices/src/devWindows.c:1563
+#: ../library/grDevices/src/devWindows.c:1562
 msgid "Save to variable..."
 msgstr "変数の保存..."
 
-#: ../library/grDevices/src/devWindows.c:1564
+#: ../library/grDevices/src/devWindows.c:1563
 msgid "Get from variable..."
 msgstr "変数から取得..."
 
-#: ../library/grDevices/src/devWindows.c:1566
+#: ../library/grDevices/src/devWindows.c:1565
 msgid "Clear history"
 msgstr "履歴の消去"
 
-#: ../library/grDevices/src/devWindows.c:1567
+#: ../library/grDevices/src/devWindows.c:1566
 msgid "Resize"
 msgstr "サイズ変更"
 
-#: ../library/grDevices/src/devWindows.c:1568
+#: ../library/grDevices/src/devWindows.c:1567
 msgid "R mode"
 msgstr "R モード"
 
-#: ../library/grDevices/src/devWindows.c:1570
+#: ../library/grDevices/src/devWindows.c:1569
 msgid "Fit to window"
 msgstr "ウインドウに合わせる"
 
-#: ../library/grDevices/src/devWindows.c:1572
+#: ../library/grDevices/src/devWindows.c:1571
 msgid "Fixed size"
 msgstr "固定サイズ"
 
-#: ../library/grDevices/src/devWindows.c:1579
+#: ../library/grDevices/src/devWindows.c:1578
 msgid "Copy as metafile"
 msgstr "メタファイルにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1581
+#: ../library/grDevices/src/devWindows.c:1580
 msgid "Copy as bitmap"
 msgstr "ビットマップにコピー"
 
-#: ../library/grDevices/src/devWindows.c:1584
+#: ../library/grDevices/src/devWindows.c:1583
 msgid "Save as metafile..."
 msgstr "メタファイルに保存..."
 
-#: ../library/grDevices/src/devWindows.c:1586
+#: ../library/grDevices/src/devWindows.c:1585
 msgid "Save as postscript..."
 msgstr "ポストスクリプトに保存..."
 
-#: ../library/grDevices/src/devWindows.c:2423
+#: ../library/grDevices/src/devWindows.c:2438
 msgid "Locator is active"
 msgstr "Locator はアクティブです"
 
-#: ../library/grDevices/src/devWindows.c:2983
+#: ../library/grDevices/src/devWindows.c:3009
 msgid "Waiting to confirm page change..."
 msgstr "ページ変更を確認するまで待機中..."
 
-#: ../library/grDevices/src/devWindows.c:2995
+#: ../library/grDevices/src/devWindows.c:3021
 msgid "Click or hit ENTER for next page"
 msgstr "クリックまたは ENTER キーを押すことで次のページに移ります"
+
+#~ msgid "An &Introduction to R"
+#~ msgstr "An &Introduction to R"
+
+#~ msgid "R &Reference Manual"
+#~ msgstr "R &Reference Manual"
+
+#~ msgid "R Data Import/Export"
+#~ msgstr "R Data Import/Export"
+
+#~ msgid "R Language Definition"
+#~ msgstr "R Language Definition"
+
+#~ msgid "Writing R Extensions"
+#~ msgstr "Writing R Extensions"
+
+#~ msgid "R Installation and Administration"
+#~ msgstr "R Installation and Administration"
 
 #~ msgid "Text files (*.txt)"
 #~ msgstr "テキストファイル (*.txt)"

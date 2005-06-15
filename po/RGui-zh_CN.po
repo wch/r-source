@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-02 13:02+0100\n"
+"POT-Creation-Date: 2005-06-15 09:06+0100\n"
 "PO-Revision-Date: 2005-05-20 18:16+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -301,7 +301,7 @@ msgid "Autosize column"
 msgstr "自动调节列的大小"
 
 #: dataentry.c:1561 pager.c:293 rui.c:891
-#: ../library/grDevices/src/devWindows.c:1589
+#: ../library/grDevices/src/devWindows.c:1588
 msgid "Stay on top"
 msgstr "窗口保持在最上面"
 
@@ -314,7 +314,7 @@ msgid "Data Editor"
 msgstr "数据编辑器"
 
 #: dataentry.c:1639 editor.c:663 pager.c:450 rui.c:1092
-#: ../library/grDevices/src/devWindows.c:1534
+#: ../library/grDevices/src/devWindows.c:1533
 msgid "File"
 msgstr "文件"
 
@@ -425,7 +425,7 @@ msgstr "打开程序脚本"
 msgid "Save script"
 msgstr "保存程序脚本"
 
-#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1502
+#: editor.c:640 pager.c:434 ../library/grDevices/src/devWindows.c:1501
 msgid "Return focus to Console"
 msgstr "集中焦点到控制台"
 
@@ -434,7 +434,7 @@ msgid "Print script"
 msgstr "打印程序脚本"
 
 #: editor.c:645 pager.c:429 rui.c:1073
-#: ../library/grDevices/src/devWindows.c:1496
+#: ../library/grDevices/src/devWindows.c:1495
 msgid "Print"
 msgstr "打印"
 
@@ -455,7 +455,7 @@ msgid "Save as..."
 msgstr "保存为..."
 
 #: editor.c:673 pager.c:453 rui.c:1108
-#: ../library/grDevices/src/devWindows.c:1592
+#: ../library/grDevices/src/devWindows.c:1591
 msgid "Print..."
 msgstr "打印..."
 
@@ -691,30 +691,6 @@ msgstr "关于Windows上R的FAQ"
 msgid "Manuals (in PDF)"
 msgstr "手册(PDF文件)"
 
-#: rui.c:976
-msgid "An &Introduction to R"
-msgstr "R入门"
-
-#: rui.c:979
-msgid "R &Reference Manual"
-msgstr "R参考手册"
-
-#: rui.c:982
-msgid "R Data Import/Export"
-msgstr "R数据导入/导出"
-
-#: rui.c:985
-msgid "R Language Definition"
-msgstr "R语言定义"
-
-#: rui.c:988
-msgid "Writing R Extensions"
-msgstr "如何写R扩展程序"
-
-#: rui.c:991
-msgid "R Installation and Administration"
-msgstr "R安装和管理"
-
 #: rui.c:999
 msgid "R functions (text)..."
 msgstr "R函数(文本文件)..."
@@ -934,240 +910,258 @@ msgstr "平铺"
 msgid "Arrange Icons"
 msgstr "安排按钮"
 
-#: ../library/grDevices/src/devWindows.c:841
+#: ../library/grDevices/src/devWindows.c:840
 msgid "Png files (*.png)"
 msgstr "Png文件(*.png)"
 
-#: ../library/grDevices/src/devWindows.c:842
+#: ../library/grDevices/src/devWindows.c:841
 msgid "Portable network graphics file"
 msgstr "Portable network graphics文件"
 
-#: ../library/grDevices/src/devWindows.c:844
+#: ../library/grDevices/src/devWindows.c:843
 msgid "Windows bitmap files (*.bmp)"
 msgstr "Windows bitmap文件(*.bmp)"
 
-#: ../library/grDevices/src/devWindows.c:845
+#: ../library/grDevices/src/devWindows.c:844
 msgid "Windows bitmap file"
 msgstr "Windows bitmap文件"
 
-#: ../library/grDevices/src/devWindows.c:847
+#: ../library/grDevices/src/devWindows.c:846
 msgid "Jpeg files (*.jpeg,*jpg)"
 msgstr "Jpeg文件(*.jpeg,*jpg)"
 
-#: ../library/grDevices/src/devWindows.c:848
+#: ../library/grDevices/src/devWindows.c:847
 msgid "Jpeg file"
 msgstr "Jpeg文件"
 
-#: ../library/grDevices/src/devWindows.c:869
+#: ../library/grDevices/src/devWindows.c:868
 msgid "Postscript files (*.ps)"
 msgstr "Postscript文件(*.ps)"
 
-#: ../library/grDevices/src/devWindows.c:870
+#: ../library/grDevices/src/devWindows.c:869
 msgid "Postscript file"
 msgstr "Postscript文件"
 
-#: ../library/grDevices/src/devWindows.c:882
+#: ../library/grDevices/src/devWindows.c:881
 msgid "PDF files (*.pdf)"
 msgstr "PDF文件(*.pdf)"
 
-#: ../library/grDevices/src/devWindows.c:883
+#: ../library/grDevices/src/devWindows.c:882
 msgid "PDF file"
 msgstr "PDF文件"
 
-#: ../library/grDevices/src/devWindows.c:895
+#: ../library/grDevices/src/devWindows.c:894
 msgid "Enhanced metafiles (*.emf)"
 msgstr "Enhanced metafiles(*.emf)"
 
-#: ../library/grDevices/src/devWindows.c:896
+#: ../library/grDevices/src/devWindows.c:895
 msgid "Enhanced metafiles"
 msgstr "Enhanced metafiles"
 
-#: ../library/grDevices/src/devWindows.c:900
-#: ../library/grDevices/src/devWindows.c:2709
+#: ../library/grDevices/src/devWindows.c:899
+#: ../library/grDevices/src/devWindows.c:2702
 msgid "file path selected is too long: only 512 bytes are allowed"
 msgstr "选择的文件路径太长：最多只能有512字节"
 
-#: ../library/grDevices/src/devWindows.c:1116
+#: ../library/grDevices/src/devWindows.c:1115
 msgid "No plot to replace!"
 msgstr "没有可替换的图表!"
 
-#: ../library/grDevices/src/devWindows.c:1162
+#: ../library/grDevices/src/devWindows.c:1161
 msgid "Variable name"
 msgstr "变量名"
 
-#: ../library/grDevices/src/devWindows.c:1169
+#: ../library/grDevices/src/devWindows.c:1168
 msgid "Variable doesn't exist or doesn't contain any plots!"
 msgstr "变量不存在或不包含任何图表!"
 
-#: ../library/grDevices/src/devWindows.c:1185
+#: ../library/grDevices/src/devWindows.c:1184
 msgid "Name of variable to save to"
 msgstr "要保存到的变量名"
 
-#: ../library/grDevices/src/devWindows.c:1490
+#: ../library/grDevices/src/devWindows.c:1489
 msgid "Copy to the clipboard as a metafile"
 msgstr "作为metafile复制到剪贴板"
 
-#: ../library/grDevices/src/devWindows.c:1508
-#: ../library/grDevices/src/devWindows.c:1519
+#: ../library/grDevices/src/devWindows.c:1507
+#: ../library/grDevices/src/devWindows.c:1518
 msgid "Stop locator"
 msgstr "停止定位器"
 
-#: ../library/grDevices/src/devWindows.c:1518
-#: ../library/grDevices/src/devWindows.c:1522
+#: ../library/grDevices/src/devWindows.c:1517
+#: ../library/grDevices/src/devWindows.c:1521
 msgid "Stop"
 msgstr "停止"
 
-#: ../library/grDevices/src/devWindows.c:1524
+#: ../library/grDevices/src/devWindows.c:1523
 msgid "Continue"
 msgstr "继续"
 
-#: ../library/grDevices/src/devWindows.c:1528
+#: ../library/grDevices/src/devWindows.c:1527
 msgid "Next"
 msgstr "下一个"
 
-#: ../library/grDevices/src/devWindows.c:1529
+#: ../library/grDevices/src/devWindows.c:1528
 msgid "Next plot"
 msgstr "下一个图表"
 
-#: ../library/grDevices/src/devWindows.c:1535
+#: ../library/grDevices/src/devWindows.c:1534
 msgid "Save as"
 msgstr "保存为"
 
-#: ../library/grDevices/src/devWindows.c:1536
+#: ../library/grDevices/src/devWindows.c:1535
 msgid "Metafile..."
 msgstr "Metafile..."
 
-#: ../library/grDevices/src/devWindows.c:1537
+#: ../library/grDevices/src/devWindows.c:1536
 msgid "Postscript..."
 msgstr "Postscript..."
 
-#: ../library/grDevices/src/devWindows.c:1538
+#: ../library/grDevices/src/devWindows.c:1537
 msgid "PDF..."
 msgstr "PDF..."
 
-#: ../library/grDevices/src/devWindows.c:1539
+#: ../library/grDevices/src/devWindows.c:1538
 msgid "Png..."
 msgstr "Png..."
 
-#: ../library/grDevices/src/devWindows.c:1540
+#: ../library/grDevices/src/devWindows.c:1539
 msgid "Bmp..."
 msgstr "Bmp..."
 
-#: ../library/grDevices/src/devWindows.c:1541
+#: ../library/grDevices/src/devWindows.c:1540
 msgid "Jpeg"
 msgstr "Jpeg"
 
-#: ../library/grDevices/src/devWindows.c:1542
+#: ../library/grDevices/src/devWindows.c:1541
 msgid "50% quality..."
 msgstr "50% 印刷质量..."
 
-#: ../library/grDevices/src/devWindows.c:1543
+#: ../library/grDevices/src/devWindows.c:1542
 msgid "75% quality..."
 msgstr "75% 印刷质量..."
 
-#: ../library/grDevices/src/devWindows.c:1544
+#: ../library/grDevices/src/devWindows.c:1543
 msgid "100% quality..."
 msgstr "100% 印刷质量..."
 
-#: ../library/grDevices/src/devWindows.c:1545
+#: ../library/grDevices/src/devWindows.c:1544
 msgid "Copy to the clipboard"
 msgstr "复制到剪贴板"
 
-#: ../library/grDevices/src/devWindows.c:1546
+#: ../library/grDevices/src/devWindows.c:1545
 msgid "as a Bitmap\tCTRL+C"
 msgstr "为Bitmap\tCTRL+C"
 
-#: ../library/grDevices/src/devWindows.c:1547
+#: ../library/grDevices/src/devWindows.c:1546
 msgid "as a Metafile\tCTRL+W"
 msgstr "为Metafile\tCTRL+W"
 
-#: ../library/grDevices/src/devWindows.c:1550
+#: ../library/grDevices/src/devWindows.c:1549
 msgid "Print...\tCTRL+P"
 msgstr "打印...\tCTRL+P"
 
-#: ../library/grDevices/src/devWindows.c:1552
+#: ../library/grDevices/src/devWindows.c:1551
 msgid "close Device"
 msgstr "关闭设备"
 
-#: ../library/grDevices/src/devWindows.c:1553
+#: ../library/grDevices/src/devWindows.c:1552
 msgid "History"
 msgstr "历史"
 
-#: ../library/grDevices/src/devWindows.c:1554
+#: ../library/grDevices/src/devWindows.c:1553
 msgid "Recording"
 msgstr "记录"
 
-#: ../library/grDevices/src/devWindows.c:1557
+#: ../library/grDevices/src/devWindows.c:1556
 msgid "Add\tINS"
 msgstr "加入\tINS"
 
-#: ../library/grDevices/src/devWindows.c:1558
+#: ../library/grDevices/src/devWindows.c:1557
 msgid "Replace"
 msgstr "替换"
 
-#: ../library/grDevices/src/devWindows.c:1560
+#: ../library/grDevices/src/devWindows.c:1559
 msgid "Previous\tPgUp"
 msgstr "上一个\tPgUp"
 
-#: ../library/grDevices/src/devWindows.c:1561
+#: ../library/grDevices/src/devWindows.c:1560
 msgid "Next\tPgDown"
 msgstr "下一个\tPgDown"
 
-#: ../library/grDevices/src/devWindows.c:1563
+#: ../library/grDevices/src/devWindows.c:1562
 msgid "Save to variable..."
 msgstr "保存到变量..."
 
-#: ../library/grDevices/src/devWindows.c:1564
+#: ../library/grDevices/src/devWindows.c:1563
 msgid "Get from variable..."
 msgstr "取于变量..."
 
-#: ../library/grDevices/src/devWindows.c:1566
+#: ../library/grDevices/src/devWindows.c:1565
 msgid "Clear history"
 msgstr "清除历史"
 
-#: ../library/grDevices/src/devWindows.c:1567
+#: ../library/grDevices/src/devWindows.c:1566
 msgid "Resize"
 msgstr "重设大小"
 
-#: ../library/grDevices/src/devWindows.c:1568
+#: ../library/grDevices/src/devWindows.c:1567
 msgid "R mode"
 msgstr "R模式"
 
-#: ../library/grDevices/src/devWindows.c:1570
+#: ../library/grDevices/src/devWindows.c:1569
 msgid "Fit to window"
 msgstr "变为与窗口同样大小"
 
-#: ../library/grDevices/src/devWindows.c:1572
+#: ../library/grDevices/src/devWindows.c:1571
 msgid "Fixed size"
 msgstr "固定的大小"
 
-#: ../library/grDevices/src/devWindows.c:1579
+#: ../library/grDevices/src/devWindows.c:1578
 msgid "Copy as metafile"
 msgstr "复制成metafile"
 
-#: ../library/grDevices/src/devWindows.c:1581
+#: ../library/grDevices/src/devWindows.c:1580
 msgid "Copy as bitmap"
 msgstr "复制成bitmap"
 
-#: ../library/grDevices/src/devWindows.c:1584
+#: ../library/grDevices/src/devWindows.c:1583
 msgid "Save as metafile..."
 msgstr "保存成metafile..."
 
-#: ../library/grDevices/src/devWindows.c:1586
+#: ../library/grDevices/src/devWindows.c:1585
 msgid "Save as postscript..."
 msgstr "保存成postscript..."
 
-#: ../library/grDevices/src/devWindows.c:2445
+#: ../library/grDevices/src/devWindows.c:2438
 msgid "Locator is active"
 msgstr "定位器待用"
 
-#: ../library/grDevices/src/devWindows.c:3016
+#: ../library/grDevices/src/devWindows.c:3009
 msgid "Waiting to confirm page change..."
 msgstr "等待页面改变的确认..."
 
-#: ../library/grDevices/src/devWindows.c:3028
+#: ../library/grDevices/src/devWindows.c:3021
 msgid "Click or hit ENTER for next page"
 msgstr "按ENTER来看下一页"
+
+#~ msgid "An &Introduction to R"
+#~ msgstr "R入门"
+
+#~ msgid "R &Reference Manual"
+#~ msgstr "R参考手册"
+
+#~ msgid "R Data Import/Export"
+#~ msgstr "R数据导入/导出"
+
+#~ msgid "R Language Definition"
+#~ msgstr "R语言定义"
+
+#~ msgid "Writing R Extensions"
+#~ msgstr "如何写R扩展程序"
+
+#~ msgid "R Installation and Administration"
+#~ msgstr "R安装和管理"
 
 #~ msgid ""
 #~ "Font %s-%d-%d has variable width.\n"
