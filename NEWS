@@ -205,7 +205,7 @@ BUG FIXES
 	**************************************************
 
 
-		CHANGES IN R VERSION 2.1.0 patched
+		CHANGES IN R VERSION 2.1.1
 
 
 NEW FEATURES
@@ -227,7 +227,8 @@ NEW FEATURES
 	and used by packageDescription() and library(help=).
 
     o	There has been progress on translations: existing translations
-	have been revised and expanded, and Korean has been added.
+	have been revised and expanded, and French and Korean have
+	been added.
 
 	The Windows installer supports a wide range of languages for
 	installation.
