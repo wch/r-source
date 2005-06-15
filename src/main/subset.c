@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997-2004   The R Development Core Team
+ *  Copyright (C) 1997-2005   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -96,6 +96,7 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 		SET_VECTOR_ELT(result, i, R_NilValue);
 	    break;
 	case LISTSXP:
+	    /* cannot happen: pairlists are coerced to lists */
 	case LANGSXP:
 	    if (0 <= ii && ii < nx && ii != NA_INTEGER) {
 		tmp2 = nthcdr(x, ii);
@@ -120,14 +121,14 @@ static SEXP ExtractSubset(SEXP x, SEXP result, SEXP indx, SEXP call)
 }
 
 
+/* This is for all cases with a single index, including 1D arrays and
+   matrix indexing of arrays */
 static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 {
     int n, mode, stretch = 1;
     SEXP indx, result, attrib, nattrib;
-    /* Rboolean isMatrixSubscript = FALSE; */
 
-    if (s == R_MissingArg)
-	return duplicate(x);
+    if (s == R_MissingArg) return duplicate(x);
 
     PROTECT(s);
     attrib = getAttrib(x, R_DimSymbol);
@@ -137,7 +138,6 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     if (isMatrix(s) && isArray(x) && (isInteger(s) || isReal(s)) &&
 	    ncols(s) == length(attrib)) {
-	/* isMatrixSubscript = TRUE; */
 	s = mat2indsub(attrib, s);
 	UNPROTECT(1);
 	PROTECT(s);
@@ -152,6 +152,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
     /* Allocate the result. */
 
     mode = TYPEOF(x);
+    /* No protection needed as ExtractSubset does not allocate */
     result = allocVector(mode, n);
     if (mode == VECSXP || mode == EXPRSXP)
 	/* we do not duplicate the values when extracting the subset,
@@ -160,7 +161,6 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 
     PROTECT(result = ExtractSubset(x, result, indx, call));
     if (result != R_NilValue &&
-	/* !isMatrixSubscript && */
 	(
 	    ((attrib = getAttrib(x, R_NamesSymbol)) != R_NilValue) ||
 	    ( /* here we might have an array.  Use row names if 1D */
@@ -170,7 +170,7 @@ static SEXP VectorSubset(SEXP x, SEXP s, SEXP call)
 		)
 	    )) {
 	nattrib = allocVector(TYPEOF(attrib), n);
-	PROTECT(nattrib);
+	PROTECT(nattrib); /* seems unneeded */
 	nattrib = ExtractSubset(attrib, nattrib, indx, call);
 	setAttrib(result, R_NamesSymbol, nattrib);
 	UNPROTECT(1);
@@ -425,7 +425,7 @@ static SEXP ArraySubset(SEXP x, SEXP s, SEXP call, int drop)
 		RAW(result)[i] = (Rbyte) 0;
 	    break;
 	default:
-	    error(_("matrix subscripting not handled for this type"));
+	    error(_("array subscripting not handled for this type"));
 	    break;
 	}
 	if (n > 1) {

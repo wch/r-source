@@ -79,7 +79,7 @@ x$name
   numeric codes (see \code{\link{factor}}) and not by the character
   values which are printed (for which use \code{[as.character(i)]}).
 
-  An empty index select all values: this is most often used to replace
+  An empty index selects all values: this is most often used to replace
   all the entries but keep the \code{\link{attributes}}.
 }
 \section{Matrices and arrays}{
@@ -116,7 +116,9 @@ x$name
   to \code{x[["name"]]}.
 
   \code{[} and \code{[[} are sometimes applied to other recursive
-  objects such as \link{call}s and \link{expression}s.
+  objects such as \link{call}s and \link{expression}s.  Pairlists are
+  coerced to lists for extraction by \code{[}, but all three operators
+  can be used for replacement.
 
   As from \R 1.7.0 \code{[[} can be applied recursively to lists, so
   that if the single index \code{i} is a vector of length \code{p},
