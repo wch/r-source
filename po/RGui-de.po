@@ -723,7 +723,7 @@ msgstr "R Data Import/Export"
 
 #: rui.c:985
 msgid "R Language Definition"
-msgstr "R Language Definiton"
+msgstr "R Language Definition"
 
 #: rui.c:988
 msgid "Writing R Extensions"
