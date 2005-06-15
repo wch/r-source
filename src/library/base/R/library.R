@@ -925,8 +925,8 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
                     if(nchar(pfile) == 0)
-                        stop(gettext("package '%s' required by '%s' could not be found",
-                                     pkg, pkgname),
+                        stop(gettextf("package '%s' required by '%s' could not be found",
+                                      pkg, pkgname),
                              call. = FALSE, domain = NA)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
                     if (!eval(parse(text=paste("current", z$op, "z$version"))))
