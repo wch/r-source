@@ -151,7 +151,7 @@ PACKAGE INSTALLATION CHANGES
 
 C-LEVEL FACILITIES
 
-    o	C function massdist() {called from density()} has new 2nd argument
+    o	C function massdist() {called from density()} has new argument
 	'xmass' (= weights).
 
     o	Raw vectors passed to .C() are now passed as unsigned char * rather
@@ -195,6 +195,10 @@ BUG FIXES
 
     o	Constants in mathlib are declared 'const static double' to
 	avoid performance issues with the Intel Itanium compiler.
+
+    o	The parser checks the format of numeric constants more
+	thoroughly so for example '123E-' is no longer valid.
+
 
 
 

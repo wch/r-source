@@ -1567,6 +1567,7 @@ static int NumericValue(int c)
     int seendot = (c == '.');
     int seenexp = 0;
     int last = c;
+    int nd = 0;
     DECLARE_YYTEXT_BUFP(yyp);
     YYTEXT_PUSH(c, yyp);
     /* We don't care about other than ASCII digits */
@@ -1577,7 +1578,11 @@ static int NumericValue(int c)
 	    if (last != '0') break;
 	    YYTEXT_PUSH(c, yyp);
 	    while(isdigit(c = xxgetc()) || ('a' <= c && c <= 'f') ||
-		  ('A' <= c && c <= 'F')) YYTEXT_PUSH(c, yyp);
+		  ('A' <= c && c <= 'F')) {
+		YYTEXT_PUSH(c, yyp);
+		nd++;
+	    }
+	    if(nd == 0) return ERROR;
 	    break;
 	}
 	if (c == 'E' || c == 'e') {
@@ -1587,8 +1592,12 @@ static int NumericValue(int c)
 	    seendot = 1;
 	    YYTEXT_PUSH(c, yyp);
 	    c = xxgetc();
-	    if (!isdigit(c) && c != '+' && c != '-')
-		break;
+	    if (!isdigit(c) && c != '+' && c != '-') return ERROR;
+	    if (c == '+' || c == '-') {
+		YYTEXT_PUSH(c, yyp);
+		c = xxgetc();
+		if (!isdigit(c)) return ERROR;
+	    }
 	}
 	if (c == '.') {
 	    if (seendot)
