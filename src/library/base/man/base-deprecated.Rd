@@ -1,5 +1,6 @@
 \name{base-deprecated}
 \alias{base-deprecated}
+\alias{write.table0}
 %------ NOTE:  ../R/Deprecated.R   must be synchronized with this!
 \title{Deprecated Functions in Base package}
 %------ PLEASE: put \alias{.} here for EACH !
@@ -13,6 +14,9 @@
 %%\arguments{
 %%}
 \details{
+  \code{write.table0} is an \R-level version of \code{write.table}
+  provided for temporary back-compatibility.
+  
   The original help page for these functions is often
   available at \code{help("oldName-deprecated")} (note the quotes).
   Functions in packages other than the base package are listed in

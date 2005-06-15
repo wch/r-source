@@ -119,6 +119,9 @@ DEPRECATED & DEFUNCT
 	new.packages(), download.packages() and install.packages() is
 	defunct in favour of 'repos'.
 
+    o	write.table0() is deprecated in favour of the much faster
+	write.table().
+
 
 INSTALLATION
 
