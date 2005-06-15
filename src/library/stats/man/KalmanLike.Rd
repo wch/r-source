@@ -51,8 +51,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
       uncertainty matrix}
   }
 
-  \code{KalmanSmooth} is the workhorse function for
-  \code{\link{tsSmooth}}.
+  \code{KalmanSmooth} is the workhorse function for \code{\link{tsSmooth}}.
 
   \code{makeARIMA} constructs the state-space model for an ARIMA model.
 }
@@ -85,6 +84,10 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
   These functions are designed to be called from other functions which
   check the validity of the arguments passed, so very little checking is
   done.
+
+  In particular, \code{KalmanLike} alters the objects passed as
+  the elements \code{a}, \code{P} and \code{Pn} of \code{mod}, so these
+  should not be shared.
 }
 
 \references{
