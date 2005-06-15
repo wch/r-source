@@ -8,9 +8,11 @@ RGUI-CATALOGS = $(wildcard RGui-*.gmo)
 CATALOGS = $(filter-out en@quot.gmo $(RGUI-CATALOGS), $(wildcard *.gmo))
 
 all:
+	@echo
+	@echo "---------- Installing translations ------------"
 	@mkdir -p $(Rsharedir)
 	@catalogs='$(CATALOGS)'; \
-	echo -n "installing msgs translation: "; \
+	echo -n "msgs: "; \
 	for cat in $$catalogs; do \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
 	  echo -n "$$lang "; \
@@ -20,7 +22,7 @@ all:
 	done
 	@echo
 	@catalogs='$(RGUI-CATALOGS)'; \
-	echo -n "installing RGui translation: "; \
+	echo -n "RGui: "; \
 	for cat in $$catalogs; do \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//' -e 's/^RGui-//'`; \
 	  echo -n "$$lang "; \
@@ -28,6 +30,7 @@ all:
 	  mkdir -p $$dir; \
 	  cp -p $$cat $$dir/RGui.mo; \
 	done
+	@echo
 	@echo
 
 clean:
