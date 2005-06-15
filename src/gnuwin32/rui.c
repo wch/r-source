@@ -973,23 +973,23 @@ int RguiCommonHelp(menu m)
 	disable(mman0);
     } else {
 	MCHECK(mman = newsubmenu(m, G_("Manuals (in PDF)")));
-	MCHECK(mmanintro = newmenuitem(G_("An &Introduction to R"), 0, 
+	MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, 
 				       menumainman));
 	if (!lmanintro) disable(mmanintro);
-	MCHECK(mmanref = newmenuitem(G_("R &Reference Manual"), 0, 
+	MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, 
 				     menumainref));
 	if (!lmanref) disable(mmanref);
-	MCHECK(mmandata = newmenuitem(G_("R Data Import/Export"), 0, 
+	MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, 
 				      menumaindata));
 	if (!lmandata) disable(mmandata);
-	MCHECK(mmanlang = newmenuitem(G_("R Language Definition"), 0, 
+	MCHECK(mmanlang = newmenuitem("R Language Definition", 0, 
 				      menumainlang));
 	if (!lmanlang) disable(mmanlang);
-	MCHECK(mmanext = newmenuitem(G_("Writing R Extensions"), 0, 
+	MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, 
 				     menumainext));
 	if (!lmanext) disable(mmanext);
-	MCHECK(mmanadmin = newmenuitem(G_("R Installation and Administration"), 0, 
-				     menumainadmin));	
+	MCHECK(mmanadmin = newmenuitem("R Installation and Administration", 0, 
+				       menumainadmin));	
 	if (!lmanadmin) disable(mmanadmin);
     }
     
