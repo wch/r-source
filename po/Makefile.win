@@ -3,29 +3,32 @@
 Rsharedir = ../share
 Rlocaledir = $(Rsharedir)/locale
 
-CATALOGS = de.gmo en.gmo en_GB.gmo fr.gmo it.gmo ja.gmo ko.gmo \
-  pt_BR.gmo ru.gmo zh_CN.gmo
-# no use on Windows en@quot.gmo
 RGUI-CATALOGS = $(wildcard RGui-*.gmo)
+# no use on Windows en@quot.gmo
+CATALOGS = $(filter-out en@quot.gmo $(RGUI-CATALOGS), $(wildcard *.gmo))
 
 all:
 	@mkdir -p $(Rsharedir)
 	@catalogs='$(CATALOGS)'; \
+	echo -n "installing msgs translation: "; \
 	for cat in $$catalogs; do \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
+	  echo -n "$$lang "; \
 	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
 	  mkdir -p $$dir; \
 	  cp -p $$cat $$dir/R.mo; \
-	  echo "installing $$cat as $$dir/R.mo"; \
 	done
+	@echo
 	@catalogs='$(RGUI-CATALOGS)'; \
+	echo -n "installing RGui translation: "; \
 	for cat in $$catalogs; do \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//' -e 's/^RGui-//'`; \
+	  echo -n "$$lang "; \
 	  dir=$(Rlocaledir)/$$lang/LC_MESSAGES; \
 	  mkdir -p $$dir; \
 	  cp -p $$cat $$dir/RGui.mo; \
-	  echo "installing $$cat as $$dir/RGui.mo"; \
 	done
+	@echo
 
 clean:
 	rm -rf $(Rlocaledir)
