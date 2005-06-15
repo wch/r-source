@@ -1612,17 +1612,32 @@ try(m2[m2 == 2] <- 1:2)
 m1 <- c(0,1,2,0)
 dim(m1) <- 4
 dimnames(m1) <- list(1:4)
-m1[m1 == 0]                        # has names
-m1[which(m1 == 0)]                 # has names
+m1[m1 == 0]                        # has rownames
+m1[which(m1 == 0)]                 # has rownames
 m1[which(m1 == 0, arr.ind = TRUE)] # no names < 2.2.0 (side effect of PR#937)
+
 # 2D array with 2 cols
 m2 <- as.matrix(data.frame(a=c(0,1,2,0), b=0:3))
-m2[m2 == 0]                        # had names < 2.2.0
-m2[which(m2 == 0)]                 # had names < 2.2.0
+m2[m2 == 0]                        # a vector, had names < 2.2.0
+m2[which(m2 == 0)]                 # a vector, had names < 2.2.0
 m2[which(m2 == 0, arr.ind = TRUE)] # no names (PR#937)
+
 # 2D array with one col: could use rownames but do not.
 m21 <- m2[, 1, drop = FALSE]
 m21[m21 == 0]
 m21[which(m21 == 0)]
 m21[which(m21 == 0, arr.ind = TRUE)]
 ## not consistent < 2.2.0: S never gives names
+
+
+## tests of indexing as quoted in Extract.Rd
+x <- NULL
+x$foo <- 2
+x # length-1 vector
+x <- NULL
+x[[2]] <- pi
+x # numeric vector
+x <- NULL
+x[[1]] <- 1:3
+x # list
+##
