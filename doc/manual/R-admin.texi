@@ -1555,7 +1555,7 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.
 
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora Core
-2 Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
+Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
 RPMs, for example.  Older Linuxen used @samp{XFree86-}.)  If you
 really do not want these you will need to explicitly configure
 @R{} without X11, using @option{--with-x=no}.
@@ -2053,7 +2053,9 @@ problem with using the dynamic version of the Fortran runtime
 workaround is to set the environment variable @env{GFORTRAN_STDIN_UNIT}
 to @code{-1}, but versions before 10 April 2005 had a bug causing the
 setting to be ignored.  This problem has been fixed for @code{gcc 4.0.1}
-and the workaround will become unnecessary.
+and the workaround will become unnecessary.  The version of
+@command{gfortran} shipping with Fedora Core 4 seems to have the
+workaround in place.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
@@ -2188,12 +2190,11 @@ this was really an alias for the linker flag @option{-lieee}.  Neither
 are needed for a modern Linux (e.g.@: using @code{glibc} 2.2 or 2.3) but
 could conceivably be needed on an older version.
 
-Several Linux distributions have shipped unreleased versions of 
-@code{gcc 4.0.0} and its Fortran compiler @command{gfortran}
-(see the separate comments).  Some versions of @code{gcc4} such as that
-in Fedora Core 3 produce incorrect code.  In our
-experiments @code{gcc 3.4.3} always produced faster and more reliable
-code.
+Several Linux distributions have shipped unreleased versions of
+@code{gcc 4.0.0} and its Fortran compiler @command{gfortran} (see the
+separate comments).  Some versions of @code{gcc4} (such as that in
+Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
+3.4.x} always produced faster and more reliable code.
 
 For some comments on building on an Itanium (@code{ia64}) Linux system
 with @command{gcc} and Intel compilers see
