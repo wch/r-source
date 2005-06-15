@@ -51,9 +51,10 @@ write.csv2(\dots, col.names = NA, dec = ",", sep = ";", qmethod = "double")
 }
 \details{
   By default there is no column name for a column of row names.  If
-  \code{col.names = NA} a blank column name is added.  This can be used to
-  write CSV files for input to spreadsheets.  \code{write.csv} and
-  \code{write.csv2} provide convenience wrappers for doing so.
+  \code{col.names = NA} and \code{row.names = TRUE} a blank column name
+  is added.  This can be used to write CSV files for input to
+  spreadsheets.  \code{write.csv} and \code{write.csv2} provide
+  convenience wrappers for doing so.
 
   If the table has no columns the rownames will be written only if
   \code{row.names=TRUE}, and \emph{vice versa}.

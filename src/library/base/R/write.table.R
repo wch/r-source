@@ -73,10 +73,12 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     if(!is.null(quote) && rn) # quote the row names
 	quote <- c(0, quote) + 1
 
-    if(is.logical(col.names))
+    if(is.logical(col.names)) {
+        if(!rn && is.na(col.names))
+            error("col.names = NA makes no sense when row.names = FALSE")
         col.names <- if(is.na(col.names) && rn) c("", d[[2]])
         else if(col.names) d[[2]] else NULL
-    else {
+    } else {
 	col.names <- as.character(col.names)
 	if(length(col.names) != p)
 	    stop("invalid 'col.names' specification")
@@ -176,10 +178,12 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     if(!is.null(quote) && rn) # quote the row names
 	quote <- c(0, quote)
 
-    if(is.logical(col.names))
+    if(is.logical(col.names)) {
+        if(!rn && is.na(col.names))
+            stop("col.names = NA makes no sense when row.names = FALSE")
         col.names <- if(is.na(col.names) && rn) c("", d[[2]])
         else if(col.names) d[[2]] else NULL
-    else {
+    } else {
 	col.names <- as.character(col.names)
 	if(length(col.names) != p)
 	    stop("invalid 'col.names' specification")
