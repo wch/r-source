@@ -86,10 +86,11 @@ x$name
   argument.  It is translated to a string and that string is used to
   locate the correct component of the first argument.
 
-  When \code{$<-} is applied to a \code{NULL} \code{x}, it coerces
-  \code{x} to \code{list()}.  This is what happens with \code{[[<-} is
-  \code{y} is of length greater than one: if \code{y} has length 1 or 0,
-  \code{x} is coerced to a zero-length vector of the type of \code{value},
+  When \code{$<-} is applied to a \code{NULL} \code{x}, it first coerces
+  \code{x} to \code{list()}.  This is what also happens with \code{[[<-}
+  if the replacement value \code{value} is of length greater than one:
+  if \code{value} has length 1 or 0, \code{x} is first coerced to a
+  zero-length vector of the type of \code{value}.
 
   As from \R 1.9.0 both \code{$} and \code{[[} can be applied to
   environments.  Only character arguments are allowed and no partial
