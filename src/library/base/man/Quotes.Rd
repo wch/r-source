@@ -1,6 +1,8 @@
 \name{Quotes}
 \alias{Quotes}
 \alias{backtick}
+\alias{'}%'
+\alias{"}%"
 \alias{`}%`
 \concept{quotes}
 \concept{backslash}

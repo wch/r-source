@@ -20,8 +20,9 @@ function(package, dir, lib.loc = NULL)
             character()
         else {
             ## Find all documented topics from the help index.
+            ## May contain quotes!
             sort(scan(file = helpIndex, what = list("", ""), sep = "\t",
-                      quiet = TRUE, na.strings = character())[[1]])
+                      quote="", quiet = TRUE, na.strings = character())[[1]])
             ## <NOTE>
             ## This gets all topics the same way as index.search() would
             ## find individual ones.  We could also use
