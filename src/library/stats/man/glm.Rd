@@ -91,7 +91,8 @@ glm.fit(x, y, weights = rep(1, nobs),
   \item{type}{character, partial matching allowed.  Type of weights to
     extract from the fitted model object.}
 
-  \item{intercept}{logical. Should an intercept be included?}
+  \item{intercept}{logical. Should an intercept be included in the
+    \emph{null} model?}
 
   \item{\dots}{further arguments passed to or from other methods.}
 }
