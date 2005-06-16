@@ -492,7 +492,7 @@ void Rvprintf(const char *format, va_list arg)
 
     do{
       con = getConnection(con_num);
-      con->vfprintf(con, format, arg);
+      (con->vfprintf)(con, format, arg);
       con->fflush(con);
       con_num = getActiveSink(i++);
     } while(con_num>0);
@@ -517,7 +517,7 @@ void REvprintf(const char *format, va_list arg)
 	    /* should never happen, but in case of corruption... */
 	    R_ErrorCon = 2;
 	} else {
-	    con->vfprintf(con, format, arg);
+	    (con->vfprintf)(con, format, arg);
 	    con->fflush(con);
 	    return;
 	}

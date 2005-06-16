@@ -2334,7 +2334,7 @@ int Rconn_printf(Rconnection con, const char *format, ...)
     va_list(ap);
 
     va_start(ap, format);
-    res = con->vfprintf(con, format, ap);
+    res = (con->vfprintf)(con, format, ap);
     va_end(ap);
     return res;
 }
@@ -2432,7 +2432,7 @@ static void writecon(Rconnection con, char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
-    con->vfprintf(con, format, ap);
+    (con->vfprintf)(con, format, ap);
     va_end(ap);
 }
 
