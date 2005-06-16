@@ -1666,7 +1666,7 @@ static void writecon(Rconnection con, char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
-    con->vfprintf(con, format, ap);
+    (con->vfprintf)(con, format, ap);
     va_end(ap);
 }
 
