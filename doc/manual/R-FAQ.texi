@@ -2142,6 +2142,9 @@ Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
 @item caMassClass
 Processing and Classification of protein mass spectra (SELDI) data.
+@item caTools
+Miscellaneous utility functions, including reading/writing ENVI binary
+files, a LogitBoost classifier, and a base64 encoder/decoder.
 @item car
 Companion to Applied Regression, containing functions for applied
 regession, linear models, and generalized linear models, with an
