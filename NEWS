@@ -152,6 +152,19 @@ PACKAGE INSTALLATION CHANGES
 	packages which may be installed.
 
 
+UTILITIES
+
+    o	checkFF() used by R CMD check has since R 2.0.0 not reported
+	missing PACKAGE arguments when testing installed packages with
+	namespaces.  It now
+
+	- treats installed and source packages in the same way.
+
+	- reports missing arguments unless they are in a top-level
+	  function in the namespace (as the appropriate DLL for only
+	  such calls are currently looked up correctly).
+
+
 C-LEVEL FACILITIES
 
     o	C function massdist() {called from density()} has new argument

@@ -1618,8 +1618,12 @@ function(package, dir, file, lib.loc = NULL,
         if(basename(dir) != "base")
             .load_package_quietly(package, lib.loc)
         code_env <- if(packageHasNamespace(package, dirname(dir))) {
-            hasNamespace <- TRUE
-            asNamespace(package)
+            ce <- asNamespace(package)
+            if(exists("DLLs", envir = ce$.__NAMESPACE__.)) {
+                DLLs <- get("DLLs", envir = ce$.__NAMESPACE__.)
+                hasNamespace <- length(DLLs) > 0
+            }
+            ce
         } else
             .package_env(package)
     }
@@ -1630,6 +1634,10 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
+        if(file.exists(NMfile <- file.path(dir, "NAMESPACE"))) {
+            nm <- parseNamespaceFile(basename(dir), dirname(dir))
+            hasNamespace <- length(nm$dynlibs)
+        }
         code_dir <- file.path(dir, "R")
         if(!file_test("-d", code_dir))
             stop(gettextf("directory '%s' does not contain R code",
@@ -1664,7 +1672,7 @@ function(package, dir, file, lib.loc = NULL,
     bad_exprs <- list()
     FF_funs <- c(".C", ".Fortran", ".Call", ".External",
                  ".Call.graphics", ".External.graphics")
-    find_bad_exprs <- function(e) {
+    find_bad_exprs <- function(e, level) {
         if(is.call(e) || is.expression(e)) {
             ## <NOTE>
             ## This picks up all calls, e.g. a$b, and they may convert
@@ -1673,18 +1681,18 @@ function(package, dir, file, lib.loc = NULL,
             ## BDR 2002-11-28
             ## </NOTE>
             if(as.character(e[[1]])[1] %in% FF_funs) {
-                parg <- if(is.null(e[["PACKAGE"]]) && !hasNamespace) {
+                parg <- if(!is.null(e[["PACKAGE"]])) "OK"
+                ## level 0 will be setMethod calls etc
+                else if(((level != 1) || !hasNamespace)) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
-                }
-                else
-                    "OK"
+                } else "MISSING but top-level in a namespace"
                 if(verbose) {
                     cat(e[[1]], "(", deparse(e[[2]]), ", ...): ", parg,
                         "\n", sep = "")
                 }
             }
-            for(i in seq(along = e)) Recall(e[[i]])
+            for(i in seq(along = e)) Recall(e[[i]], level+1)
         }
     }
 
@@ -1709,14 +1717,16 @@ function(package, dir, file, lib.loc = NULL,
                       lapply(methods::slot(meths, "methods"), body))
             }
         }
+        base_level <- 0
     }
     else {
         exprs <- try(parse(file = file, n = -1))
         if(inherits(exprs, "try-error"))
             stop(gettextf("parse error in file '%s'", file),
                  domain = NA)
+        base_level <- -2
     }
-    for(i in seq(along = exprs)) find_bad_exprs(exprs[[i]])
+    for(i in seq(along = exprs)) find_bad_exprs(exprs[[i]], base_level)
     class(bad_exprs) <- "checkFF"
     if(verbose)
         invisible(bad_exprs)
