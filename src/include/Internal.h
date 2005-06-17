@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,9 @@
  * Must all return SEXP because of CCODE in Defn.h.
  * The do_math.(), etc are in ../main/arithmetic.h
  */
+
+#ifndef R_INTERNAL_H
+#define R_INTERNAL_H
 
 
 /* Device drivers here (for ease of access) */
@@ -540,3 +543,6 @@ SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+
+#endif /* not R_INTERNAL_H */
