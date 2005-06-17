@@ -1712,9 +1712,36 @@ function(package, dir, file, lib.loc = NULL,
             for(f in methods::getGenerics(code_env)) {
                 meths <-
                     methods::linearizeMlist(methods::getMethodsMetaData(f, code_env))
-                exprs <-
-                    c(exprs,
-                      lapply(methods::slot(meths, "methods"), body))
+                bodies <- lapply(methods::slot(meths, "methods"), body)
+                ## Exclude methods inherited from the 'appropriate'
+                ## parent environment.
+                ## <FIXME>
+                ## Basically the same as in undoc(), unify the exclusion
+                ## into a helper function.
+                ## Note that direct comparison of
+                ##   lapply(methods::slot(meths, "methods"),
+                ##          environment)
+                ## to code_env is not quite right ...
+                make_sigs <- function(cls)
+                    unlist(lapply(cls, paste, collapse = "#"))
+                penv <- .Internal(getRegisteredNamespace(as.name(package)))
+                if(is.environment(penv))
+                    penv <- parent.env(penv)
+                else
+                    penv <- parent.env(code_env)
+                if((f %in% methods::getGenerics(penv))
+                    && !is.null(mlistFromPenv <-
+                                methods::getMethodsMetaData(f, penv))) {
+                    classes_from_cenv <-
+                        methods::slot(meths, "classes")
+                    classes_from_penv <-
+                        methods::slot(methods::linearizeMlist(mlistFromPenv),
+                                      "classes")
+                    ind <- is.na(match(make_sigs(classes_from_cenv),
+                                       make_sigs(classes_from_penv)))
+                    bodies <- bodies[ind]
+                }
+                exprs <- c(exprs, bodies)
             }
         }
         base_level <- 0
