@@ -34,6 +34,7 @@ extern "C" {
 #ifndef STRICT_R_HEADERS
 
 #define R_PROBLEM_BUFSIZE	4096
+/* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
 #define PROBLEM			{char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
 #define MESSAGE                 {char R_problem_buf[R_PROBLEM_BUFSIZE];(sprintf)(R_problem_buf,
 #define ERROR			),error(R_problem_buf);}
