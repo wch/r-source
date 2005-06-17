@@ -32,7 +32,7 @@ A menu item has been added for RSiteSearch().
 localeToCharset() was failing on some unknown (to the maintainers)
 locales such as
 
-	LC_TYPE=Chinese_People's Republic of China.936
+	LC_CTYPE=Chinese_People's Republic of China.936
 
 and that affected example().
 
