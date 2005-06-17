@@ -1,5 +1,5 @@
-#ifndef _CONFIG_H
-#define _CONFIG_H
+#ifndef R_CONFIG_H
+#define R_CONFIG_H
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
@@ -815,4 +815,4 @@
 /* #undef uintmax_t */
 
 
-#endif /* not _CONFIG_H */
+#endif /* not R_CONFIG_H */
