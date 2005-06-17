@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-4 The R Development Core Team.
+ *  Copyright (C) 2001-5 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -18,6 +18,13 @@
  */
 
 /* Used by third-party graphics devices */
+
+#ifndef R_GRAPHICSENGINE_H_
+#define R_GRAPHICSENGINE_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*
  * The current graphics engine (including graphics device) API version
@@ -375,3 +382,10 @@ SEXP GEcreateSnapshot(GEDevDesc *dd);
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);
 void GEonExit();
 void GEnullDevice();
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* R_GRAPHICSENGINE_ */
