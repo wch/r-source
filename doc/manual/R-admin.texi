@@ -1064,14 +1064,7 @@ and toolset (see @ref{The Windows toolset}) installed.
 @findex install.packages
 Alternatively, packages can be downloaded and installed from within
 @R{}.  First set the option @code{CRAN} to your nearest @acronym{CRAN}
-mirror, for example
-
-@example
-> options(CRAN = "http://cran.us.r-project.org/")
-@end example
-
-@noindent
-(You can also supply this as the @code{repos} argument.)  Then download
+mirror using @command{choooseCRANmirror()}.  Then download
 and install packages @pkg{pkg1} and @pkg{pkg2} by
 
 @example
@@ -1087,15 +1080,15 @@ all those it depends on that are not already installed, use e.g.
 @end example
 
 
-What @code{install.packages} does is different on Unix and Windows.  On
-Unix-alikes (include MacOS X unless running from the `AQUA' console) it
-consults the list of available @emph{source} packages on @acronym{CRAN}
-(or other repository/ies), downloads the latest version of the package
-sources, and installs them (via @code{R CMD INSTALL}).  On Windows it
-looks (by default) at the list of @emph{binary} versions of packages
-available for your version of @R{} and downloads the latest versions (if
-any), although optionally it will also download and install a source
-package by setting the @code{type} argument.
+What @code{install.packages} does by default is different on Unix and
+Windows.  On Unix-alikes (include MacOS X unless running from the `AQUA'
+console) it consults the list of available @emph{source} packages on
+@acronym{CRAN} (or other repository/ies), downloads the latest version
+of the package sources, and installs them (via @code{R CMD INSTALL}).
+On Windows it looks (by default) at the list of @emph{binary} versions
+of packages available for your version of @R{} and downloads the latest
+versions (if any), although optionally it will also download and install
+a source package by setting the @code{type} argument.
 
 @code{install.packages} can install a source package from a local
 @file{.tar.gz} file by setting argument @code{repos} to @code{NULL}.
