@@ -3003,6 +3003,8 @@ Fitting Gaussian linear models where the covariance structure is a
 linear combination of known matrices by maximising the residual log
 likelihood.  Can be used for multivariate models and random effects
 models.
+@item relax
+Functions for report writing, presentation, and programming.
 @item reldist
 Functions for the comparison of distributions, including nonparametric
 estimation of the relative distribution PDF and CDF and numerical
