@@ -49,11 +49,6 @@ SEXP det_ge_real(SEXP, SEXP);
 
 void signrank_free();
 void wilcox_free();
-void band_ucv_bin(int *, int *, double *, int *, double *, double *);
-void band_bcv_bin(int *, int *, double *, int *, double *, double *);
-void band_phi4_bin(int *, int *, double *, int *, double *, double *);
-void band_phi6_bin(int *, int *, double *, int *, double *, double *);
-void band_den_bin(int *, int *, double *, int *, double *, double *);
 
 SEXP R_getTaskCallbackNames();
 SEXP R_removeTaskCallback(SEXP);

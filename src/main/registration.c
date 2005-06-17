@@ -117,12 +117,6 @@ static R_NativePrimitiveArgType Rsockclose_t[] = {INTSXP};
 static R_NativePrimitiveArgType Rsockread_t[] = {INTSXP, STRSXP, INTSXP};
 static R_NativePrimitiveArgType Rsockwrite_t[] = {INTSXP, STRSXP, INTSXP, INTSXP, INTSXP};
 
-static R_NativePrimitiveArgType band_ucv_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType band_bcv_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType band_phi4_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType band_phi6_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
-static R_NativePrimitiveArgType band_den_bin_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
-
 
 #ifdef PROBLEMS
 static R_NativePrimitiveArgType fft_factor_t[] = {REALSXP, INTSXP, REALSXP, INTSXP, INTSXP, INTSXP, INTSXP};
@@ -170,13 +164,6 @@ static R_CMethodDef cMethods [] = {
     /* nmath cleanup */
     {"signrank_free", (DL_FUNC)&signrank_free, 0, NULL},
     {"wilcox_free", (DL_FUNC)&wilcox_free, 0, NULL},
-
-    /* bandwidth selectors */
-    CDEF(band_ucv_bin),
-    CDEF(band_bcv_bin),
-    CDEF(band_phi4_bin),
-    CDEF(band_phi6_bin),
-    CDEF(band_den_bin),
 
     {"InitGraphics", (DL_FUNC)&Rf_InitGraphics, 0, NULL},
     {"InitColors", (DL_FUNC)&Rf_InitColors, 0, NULL},

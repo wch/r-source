@@ -14,7 +14,7 @@ R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
 
 SOURCES_C = init.c kmeans.c \
-  ansari.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
+  ansari.c bandwidths.c chisqsim.c d2x2xk.c fexact.c kendall.c ks.c \
   line.c smooth.c \
   prho.c swilk.c \
   ksmooth.c loessc.c isoreg.c Srunmed.c Trunmed.c \
