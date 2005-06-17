@@ -636,7 +636,7 @@ function(expr)
                                     tb <- lapply(calls, deparse)
                                     stop(conditionMessage(e),
                                          "\nCall sequence:\n",
-                                         paste(capture.output(traceback(tb)),
+                                         paste(utils::capture.output(traceback(tb)),
                                                collapse = "\n"),
                                          call. = FALSE)
                                 }),
