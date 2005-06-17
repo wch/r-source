@@ -1666,6 +1666,7 @@ static void writecon(Rconnection con, char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
+    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
     (con->vfprintf)(con, format, ap);
     va_end(ap);
 }
