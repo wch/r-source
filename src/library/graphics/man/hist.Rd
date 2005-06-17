@@ -28,9 +28,9 @@ hist(x, \dots)
   }
   \item{freq}{logical; if \code{TRUE}, the histogram graphic is a
     representation of frequencies, the \code{counts} component of
-    the result; if \code{FALSE}, \emph{relative} frequencies
-    (\dQuote{probabilities}), component \code{density},
-    are plotted.   Defaults to \code{TRUE} \emph{iff} \code{breaks} are
+    the result; if \code{FALSE}, probability densities, component
+    \code{density}, are plotted (so that the histogram has a total area
+    of one).  Defaults to \code{TRUE} \emph{iff} \code{breaks} are
     equidistant (and \code{probability} is not specified).}
   \item{probability}{an \emph{alias} for \code{!freq}, for S compatibility.}
   \item{include.lowest}{logical; if \code{TRUE}, an \code{x[i]} equal to
