@@ -144,7 +144,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    errorcall(call, _("too many arguments in foreign function call"));
     } else {
 	if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
-	/* This has the side effect of setting dll.type if a PACKAFE=
+	/* This has the side effect of setting dll.type if a PACKAGE=
 	   argument if found */
 	args = pkgtrim(args, &dll);
     }
