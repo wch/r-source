@@ -117,6 +117,13 @@ function(x, ...)
     invisible(x)
 }
 
+getCallingDLLe <- function(e)
+{
+    if(exists("DLLs", envir = e$".__NAMESPACE__.") &&
+       length(e$".__NAMESPACE__."$DLLs))
+        return(e$".__NAMESPACE__."$DLLs[[1]])
+    NULL
+}
 
 getCallingDLL <-
 function(f = sys.function(-1), doStop = FALSE)

@@ -3294,9 +3294,10 @@ specific shared object (or use @code{"base"} for code compiled into
 @R{}).  Its use is highly desirable, as there is no way to avoid two
 package writers using the same symbol name, and such name clashes are
 normally sufficient to cause @R{} to crash.  (If it is not present and
-the function containing the call is defined at top level in a package
-with a namespace, the shared object loaded by the first (if any)
-@code{useDynLib} directive will be used.)
+the call is from a function is defined in a package with a namespace,
+the shared object loaded by the first (if any) @code{useDynLib}
+directive will be used.  Note that this does not include most functions
+defined in @code{setMethod} calls.)
 
 For @code{.C} only you can specify an @code{ENCODING} argument: this
 requests that (unless @code{DUP = FALSE}) character vectors be

@@ -144,7 +144,7 @@ resolveNativeRoutine(SEXP args, DL_FUNC *fun,
 	    errorcall(call, _("too many arguments in foreign function call"));
     } else {
 	if (PkgSymbol == NULL) PkgSymbol = install("PACKAGE");
-	/* This has the side effect of setting dll.type if a PACKAFE=
+	/* This has the side effect of setting dll.type if a PACKAGE=
 	   argument if found */
 	args = pkgtrim(args, &dll);
     }
@@ -1485,10 +1485,33 @@ static SEXP
 Rf_getCallingDLL()
 {
     SEXP e, ans;
-    PROTECT(e = allocVector(LANGSXP, 1));
-    SETCAR(e, Rf_install("getCallingDLL"));
-    ans = eval(e,  R_GlobalEnv);
+    RCNTXT *cptr;
+    SEXP rho = R_NilValue;
+    Rboolean found = FALSE;
 
+    /* first find the environment of the caller */
+    for (cptr = R_GlobalContext->nextcontext;
+	 cptr != NULL && cptr->callflag != CTXT_TOPLEVEL;
+	 cptr = cptr->nextcontext)
+	    if (cptr->callflag & CTXT_FUNCTION) {
+		rho = cptr->cloenv;
+		break;
+	    }
+    /* Then search up until we hit a namespace or globalenv.
+       The idea is that we will not find a namespace unless the caller
+       was defined in one. */
+    while(rho != R_NilValue) {
+	if (rho == R_GlobalEnv) break;
+	else if (R_IsNamespaceEnv(rho)) {
+	    found = TRUE;
+	    break;
+	}
+	rho = ENCLOS(rho);
+    }
+    if(!found) return R_NilValue;
+
+    PROTECT(e = lang2(Rf_install("getCallingDLLe"), rho));
+    ans = eval(e,  R_GlobalEnv);
     UNPROTECT(1);
     return(ans);
 }

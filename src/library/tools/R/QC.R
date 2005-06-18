@@ -1634,7 +1634,7 @@ function(package, dir, file, lib.loc = NULL,
                  domain = NA)
         else
             dir <- file_path_as_absolute(dir)
-        if(file.exists(NMfile <- file.path(dir, "NAMESPACE"))) {
+        if(file.exists(file.path(dir, "NAMESPACE"))) {
             nm <- parseNamespaceFile(basename(dir), dirname(dir))
             hasNamespace <- length(nm$dynlibs)
         }
@@ -1683,10 +1683,10 @@ function(package, dir, file, lib.loc = NULL,
             if(as.character(e[[1]])[1] %in% FF_funs) {
                 parg <- if(!is.null(e[["PACKAGE"]])) "OK"
                 ## level 0 will be setMethod calls etc
-                else if(((level != 1) || !hasNamespace)) {
+                else if(((level < 1) || !hasNamespace)) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
-                } else "MISSING but top-level in a namespace"
+                } else "MISSING but in a function in a namespace"
                 if(verbose) {
                     cat(e[[1]], "(", deparse(e[[2]]), ", ...): ", parg,
                         "\n", sep = "")

@@ -160,9 +160,9 @@ UTILITIES
 
 	- treats installed and source packages in the same way.
 
-	- reports missing arguments unless they are in a top-level
-	  function in the namespace (as the appropriate DLL for only
-	  such calls are currently looked up correctly).
+	- reports missing arguments unless they are in a function in
+	  the namespace with a useDynLib declaration (as the
+	  appropriate DLL for such calls can be searched for).
 
 
 C-LEVEL FACILITIES
@@ -172,6 +172,10 @@ C-LEVEL FACILITIES
 
     o	Raw vectors passed to .C() are now passed as unsigned char * rather
 	than as SEXPs.	(Wish of Keith Frost, PR#7853)
+
+    o	The search for symbols in a .C/.Call/... call without a
+	package argument now searches for an enclosing namespace and
+	so finds functions defined within functions in a namespace.
 
 
 BUG FIXES

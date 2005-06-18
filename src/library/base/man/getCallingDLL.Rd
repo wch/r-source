@@ -1,5 +1,6 @@
 \name{getCallingDLL}
 \alias{getCallingDLL}
+\alias{getCallingDLLe}
 \title{Compute DLL for native interface call}
 \description{
 
@@ -18,6 +19,7 @@
 }
 \usage{
 getCallingDLL(f = sys.function(-1), doStop = FALSE)
+getCallingDLLe(e)
 }
 \arguments{
   \item{f}{the function whose namespace and DLL are to be found.
@@ -32,6 +34,7 @@ getCallingDLL(f = sys.function(-1), doStop = FALSE)
     call,  no error occurs and
     the regular lookup is performed by searching all DLLs in order.
   }
+  \item{e}{an environment.}
 }
 
 \seealso{
@@ -41,7 +44,7 @@ getCallingDLL(f = sys.function(-1), doStop = FALSE)
 \code{\link{.External}}
 }
 \examples{
- if(exists("ansari.test"))
+if(exists("ansari.test"))
    getCallingDLL(ansari.test)
 }
 \keyword{programming}
