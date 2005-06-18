@@ -1683,7 +1683,7 @@ function(package, dir, file, lib.loc = NULL,
             if(as.character(e[[1]])[1] %in% FF_funs) {
                 parg <- if(!is.null(e[["PACKAGE"]])) "OK"
                 ## level 0 will be setMethod calls etc
-                else if(((level < 1) || !hasNamespace)) {
+                else if(!hasNamespace) {
                     bad_exprs <<- c(bad_exprs, e)
                     "MISSING"
                 } else "MISSING but in a function in a namespace"
