@@ -174,8 +174,8 @@ sub('[[:space:]]+$', '', str) ## white space, POSIX-style
 sub('\\\\s+$', '', str, perl = TRUE) ## Perl-style white space
 
 ## capitalizing
-gsub("(\\w)(\\w*)", "\\U\\1\\L\\2", "a test of capitalizing", perl=TRUE)
-gsub("\\b(\\w)", "\\U\\1", "a test of capitalizing", perl=TRUE)
+gsub("(\\\\w)(\\\\w*)", "\\\\U\\\\1\\\\L\\\\2", "a test of capitalizing", perl=TRUE)
+gsub("\\\\b(\\\\w)", "\\\\U\\\\1", "a test of capitalizing", perl=TRUE)
 }
 \keyword{character}
 \keyword{utilities}
