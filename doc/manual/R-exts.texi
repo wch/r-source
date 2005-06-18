@@ -3297,7 +3297,10 @@ normally sufficient to cause @R{} to crash.  (If it is not present and
 the call is from a function is defined in a package with a namespace,
 the shared object loaded by the first (if any) @code{useDynLib}
 directive will be used.  Note that this does not include most functions
-defined in @code{setMethod} calls.)
+defined in @code{setMethod} calls.  The checking heuristics used by
+@command{R CMD check} are only heuristics, and may flag some calls which
+would be looked up correctly: a known example is a function body that
+consists only of a @code{.Call} statement without enclosing braces.)
 
 For @code{.C} only you can specify an @code{ENCODING} argument: this
 requests that (unless @code{DUP = FALSE}) character vectors be
