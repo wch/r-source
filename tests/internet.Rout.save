@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 beta (2005-04-09), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-06-17 r34755)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -30,7 +31,7 @@ Type 'q()' to quit R.
 > 
 > # test do_download.
 > nrow(CRAN.packages())
-[1] 490
+[1] 547
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
