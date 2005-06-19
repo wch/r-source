@@ -122,6 +122,10 @@
 \seealso{
   \code{\link{.Last}} for final actions before termination.
 
+  \emph{An Introduction to R} for more command-line options: those
+  affecting memory management are covered in the help file for
+  \link{Memory}.
+
   For profiling code, see \code{\link{Rprof}}.
 }
 \examples{

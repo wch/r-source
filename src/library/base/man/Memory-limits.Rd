@@ -18,14 +18,14 @@
 #ifdef unix
     \item There is a limit on the address space of a single process such
     as the \R executable.  This is system-specific, but for 32-bit OSes
-    imposes a limit of no more than 4Gb.  It is often rather less.
+    imposes a limit of no more than 4Gb.  It is often 3Gb or less.
     \item The environment may impose limitations on the resources
     available to a single process -- see the OS/shell's help on commands such
     as \code{limit} or \code{ulimit}.
 #endif
 #ifdef windows
     \item There is a limit on the address space of a single process such
-    as the \R executable.  This is 2Gb under Windows unless both the OS
+    as the \R executable.  This is 2Gb under 32-bit Windows unless both the OS
     and the \R executable have been changed to allow more (up to 3Gb?).
     See the \file{rw-FAQ} for how to do so.
     \item Under Windows, \R does impose limits on the total memory

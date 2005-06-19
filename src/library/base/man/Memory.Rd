@@ -7,18 +7,19 @@
 }
 \usage{
 #ifdef unix
-R --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu
+R --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu --max-ppsize=N
 #endif
 #ifdef windows
-Rgui --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu
-Rterm --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu
+Rgui --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu --max-ppsize=N
+Rterm --min-vsize=vl --max-vsize=vu --min-nsize=nl --max-nsize=nu --max-ppsize=N
 #endif
 
 mem.limits(nsize = NA, vsize = NA)
 }
 \arguments{
   \item{vl, vu, vsize}{Heap memory in bytes.}
-  \item{nl, nu, nsize}{Number of cons cells.} 
+  \item{nl, nu, nsize}{Number of cons cells.}
+  \item{N}{Number of nested \code{PROTECT} calls.}.
 }
 \details{
   \R has a variable-sized workspace (from version 1.2.0). There is now
@@ -49,7 +50,8 @@ mem.limits(nsize = NA, vsize = NA)
   know what they are, others may think of them as the building blocks of
   the language itself, parse trees, etc.), and the second are thrown on a
   \dQuote{\emph{heap}} of \dQuote{Vcells} of 8 bytes each.  Effectively,
-  the input \code{v} is rounded up to the nearest multiple of 8.
+  the inputs \code{vl} and \code{vu} are rounded up to the next
+  multiple of 8.
 
   Each cons cell occupies 28 bytes on a 32-bit machine, (usually) 56 bytes
   on a 64-bit machine.
@@ -70,7 +72,7 @@ mem.limits(nsize = NA, vsize = NA)
 
   The default values are currently minima of 350k cons cells,
   6Mb of vector heap
-  and no maxima (other than machine resources). The maxima can be
+  and no maxima (other than machine resources).  The maxima can be
   changed during an \R session by calling \code{mem.limits}. (If this is
   called with the default values, it reports the current settings.)
 
@@ -82,16 +84,10 @@ mem.limits(nsize = NA, vsize = NA)
   never be reduced below the current values for triggering garbage
   collection, and attempts to do so will be silently ignored.
 
-%  The defaults for \option{--min-nsize} and \option{--min-vsize} can be
-%  changed by setting the environment variables \env{R\_NSIZE} and
-%  \env{R\_VSIZE} respectively, perhaps most conveniently in the file
-%  \file{.Renviron} or \file{\eqn{\sim}{~}/.Renviron}.  There should no
-%  longer be any need to do so.
-
-  When using \code{\link{read.table}}, the memory requirements are in
-  fact higher than anticipated, because the file is first read in as one
-  long string which is then split again.  Use \code{\link{scan}} if
-  possible in case you run out of memory when reading in a large table.
+  The option \option{-max-ppsize} controls the maximum size of the
+  pointer protection stack.  This defaults to 10000, but can be
+  increased to allow large and complicated calculations to be done.
+  Currently the maximum value accepted is 100000.
 }
 
 \value{
@@ -100,6 +96,8 @@ mem.limits(nsize = NA, vsize = NA)
 }
 
 \seealso{
+  \emph{An Introduction to R} for more command-line options
+
   \code{\link{Memory-limits}} for the design limitations.
   
   \code{\link{gc}} for information on the garbage collector and total
@@ -110,17 +108,6 @@ mem.limits(nsize = NA, vsize = NA)
 
   \code{\link{memory.size}} to monitor total memory usage,
   \code{\link{memory.limit}} for the current limit.
-#endif
-}
-
-\note{
-  For backwards compatibility, options \option{--nsize} and
-  \option{--vsize} are equivalent to \option{--min-nsize} and
-  \option{--min-vsize}.
-#ifdef windows
-
-  When using the \code{Rgui} console it is simplest to make a shortcut and
-  put these command-line flags at the end of the Target field.
 #endif
 }
 
