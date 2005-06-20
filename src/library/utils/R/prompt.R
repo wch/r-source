@@ -26,7 +26,7 @@ function(object, filename = NULL, name = NULL,
             ## object, and surely we cannot use that as the name (even
             ## if the subsequent as.character() does not fail ...)
             ## Better to be defensive about this, and handle only cases
-            ## we know will make sense ... 
+            ## we know will make sense ...
             if(is.name(name))
                 as.character(name)
             else if(is.call(name)
@@ -289,8 +289,12 @@ function(object, filename = NULL, name = NULL)
 }
 
 promptPackage <-
-function(package, filename = NULL, name = NULL, final = FALSE)
+function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 {
+    ## need to do this as packageDescription and library(help=) have
+    ## different conventions
+    if (is.null(lib.loc)) lib.loc <- .libPaths()
+
     paste0 <- function(...) paste(..., sep = "")
     insert1 <- function(field, new) {
     	prev <- Rdtxt[[field]]
@@ -314,15 +318,16 @@ function(package, filename = NULL, name = NULL, final = FALSE)
     	         details = c("\\details{","}"),
     	         author = c("\\author{","}"),
     	         references = character(0),
-    	         
+
     	         keywords = c("\\keyword{ package }")
     	     )
 
-    desc <- packageDescription(package)  
+    desc <- packageDescription(package, lib.loc)
 
-    if (length(desc) > 1) { 
-    	info <- library(help = package, character.only = TRUE)
-    
+    if (length(desc) > 1) {
+    	info <- library(help = package, lib.loc = lib.loc,
+                        character.only = TRUE)
+
     	if (!length(grep(paste0("^", package, " "), info$info[[2]])))
     	    Rdtxt$aliases <- c(Rdtxt$aliases, paste0("\\alias{", package, "}"))
 
@@ -331,17 +336,17 @@ function(package, filename = NULL, name = NULL, final = FALSE)
 	insert1("author", c(desc$Author, "", paste(gettext("Maintainer:"),desc$Maintainer)))
 
 	desc <- desc[!(names(desc) %in% c("Title", "Description", "Author", "Maintainer"))]
-	             
+
 	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
-		    
-	if (!is.null(info$info[[2]])) 
+
+	if (!is.null(info$info[[2]]))
 	    insert1("details",  c("", gettext("Index:"), "\\preformatted{",
 	                          info$info[[2]], "}"))
 	if (!is.null(info$info[[3]]))
 	    insert1("details",  c("", gettext("Further information is available in the following vignettes:"),
 	    		          tabular(paste0("\\code{", info$info[[3]][,1], "}"), info$info[[3]][,2])))
     }
-    
+
     if (!final) {
         insert2("title", gettext("package title"))
         insert2("description", gettext("A concise (1-5 lines) description of the package"))
@@ -351,7 +356,7 @@ function(package, filename = NULL, name = NULL, final = FALSE)
              paste("~~", gettext("Literature or other references for background information"),"~~"),
              "}")
         Rdtxt$seealso <- c("\\seealso{", "}")
-        insert2("seealso", c(gettext("Optional links to other man pages, e.g."), 
+        insert2("seealso", c(gettext("Optional links to other man pages, e.g."),
         		     "\\code{\\link[<pkg>:<pkg>-package]{<pkg>}}"))
         Rdtxt$examples <- c("\\examples{","}")
         insert2("examples", gettext("simple examples of the most important functions"))
