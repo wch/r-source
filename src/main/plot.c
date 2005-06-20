@@ -3216,6 +3216,15 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	l = CAR(args); args = CDR(args);
 	draw = CAR(args);
 	n = length(x);
+	/*
+	 * Most of the appropriate settings have been set up in
+	 * R code by par(...)
+	 * Hence no GSavePars() or ProcessInlinePars() here
+	 * (also because this function is unusual in that it does
+	 *  different things when run by a user compared to when
+	 *  run from the display list)
+	 * BUT par(cex) only sets cexbase, so here we set cex from cexbase
+	 */
 	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
 	offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
 	for (i = 0; i < n; i++) {
@@ -3260,6 +3269,15 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    return NULL;
 	}
 
+	/*
+	 * Most of the appropriate settings have been set up in
+	 * R code by par(...)
+	 * Hence no GSavePars() or ProcessInlinePars() here
+	 * (also because this function is unusual in that it does
+	 *  different things when run by a user compared to when
+	 *  run from the display list)
+	 * BUT par(cex) only sets cexbase, so here we set cex from cexbase
+	 */
 	Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
 	offset = GConvertXUnits(asReal(Offset), CHARS, INCHES, dd);
 	PROTECT(ind = allocVector(LGLSXP, n));
@@ -3272,6 +3290,14 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	PROTECT(y = duplicate(y));
 	while (k < npts) {
 	    if (!GLocator(&xp, &yp, INCHES, dd)) break;
+	    /*
+	     * Repeat cex setting from cexbase within loop
+	     * so that if window is redrawn 
+	     * (e.g., conver/uncover window)
+	     * during identifying (i.e., between clicks) 
+	     * we reset cex properly.
+	     */
+	    Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
 	    dmin = DBL_MAX;
 	    imin = -1;
 	    for (i = 0; i < n; i++) {
