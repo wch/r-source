@@ -25,7 +25,7 @@ require  Exporter;
 @ISA     = qw(Exporter);
 @EXPORT  = qw(buildinit read_titles read_htmlindex read_htmlpkgindex
 	      read_anindex build_htmlpkglist build_index fileolder
-	      foldorder);
+	      foldorder aliasorder);
 
 use Cwd;
 use File::Basename;
@@ -296,6 +296,11 @@ sub encodealias { # text
 
 sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 
+## Put -package topic first
+
+sub aliasorder {($b =~ /-package$/) cmp ($a =~ /-package$/) or uc($a) cmp uc($b) or $a cmp $b;}
+
+
 sub isNonASCII {
     return $_[0] =~ /[^A-Za-z0-9[:punct:][:space:]]/
 }
@@ -446,7 +451,7 @@ sub build_index { # lib, dest, version, [chmdir]
     }
 
     open(anindex, "> ${anindex}") or die "Could not open ${anindex}";
-    foreach $alias (sort foldorder keys %main::aliasnm) {
+    foreach $alias (sort aliasorder keys %main::aliasnm) {
 	print anindex "$alias\t$main::aliasnm{$alias}\n";
     }
     close anindex;
@@ -557,14 +562,17 @@ sub fileolder {
 
 
 ## Return the first letter in uppercase, empty string for <=A and
-## "misc" for >=Z 
+## or "*-package" and "misc" for >=Z 
 ## used for indexing various HTML lists.
 sub firstLetterCategory {
     my ($x) = @_;
     
-    $x = uc substr($x, 0, 1);
-    if($x lt "A") { $x = ""; }
-    if($x gt "Z") { $x = "misc"; }
+    if ($x =~ /-package$/) { $x = " "; }
+    else {
+    	$x = uc substr($x, 0, 1);
+    	if($x lt "A") { $x = ""; }
+    	if($x gt "Z") { $x = "misc"; }
+    }
     $x;
 }
 
