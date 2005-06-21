@@ -220,6 +220,8 @@ BUG FIXES
     o	The parser checks the format of numeric constants more
 	thoroughly so for example '123E-' is no longer valid.
 
+    o   contourLines() no longer requires an open device (used to
+	start a device unnecessarily).  Fix suggested by Barry Rowlingson.
 
 
 

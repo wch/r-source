@@ -37,9 +37,10 @@ extern "C" {
  * can detect any version mismatch.
  *
  * Version 1:  Introduction of the version number.
+ * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  */
 
-#define R_GE_version 1
+#define R_GE_version 2
 
 int R_GE_getVersion();
 
@@ -330,8 +331,7 @@ void GEMathText(double x, double y, SEXP expr,
  * From plot3d.c 
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
-		    double *z, double *levels, int nl,
-		    GEDevDesc *dd);
+		    double *z, double *levels, int nl);
 /* 
  * (End from plot3d.c)
  */

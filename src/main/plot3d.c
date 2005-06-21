@@ -782,8 +782,7 @@ int addContourLines(double *x, int nx, double *y, int ny,
  *     sub-list = x vector, y vector, and cut-value.
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
-		    double *z, double *levels, int nl,
-		    GEDevDesc *dd)
+		    double *z, double *levels, int nl)
 {
     char *vmax;
     int i, nlines, len;
@@ -876,7 +875,6 @@ SEXP do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP oargs, c, x, y, z;
     int nx, ny, nc;
-    GEDevDesc *dd = GEcurrentDevice();
 
     oargs = args;
 
@@ -900,7 +898,7 @@ SEXP do_contourLines(SEXP call, SEXP op, SEXP args, SEXP env)
     nc = LENGTH(c);
     args = CDR(args);
 
-    return GEcontourLines(REAL(x), nx, REAL(y), ny, REAL(z), REAL(c), nc, dd);
+    return GEcontourLines(REAL(x), nx, REAL(y), ny, REAL(z), REAL(c), nc);
 }
 
 /*
