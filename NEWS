@@ -6,6 +6,15 @@
 	**************************************************
 
 
+		CHANGES IN R VERSION 2.1.1 patched
+
+
+BUG FIXES
+
+    o	runmed(x, k = -1) now gives an error instead of a seg.fault.
+
+
+
 		CHANGES IN R VERSION 2.1.1
 
 
@@ -180,7 +189,7 @@ BUG FIXES
 
     o	getCallingDLL()'s default first argument did not correspond to
 	its description and has been changed.  The mismatch caused
-	symbols in .C/.Call/.Fortran calls without a PACKAGE= argument 
+	symbols in .C/.Call/.Fortran calls without a PACKAGE= argument
 	to be potentially looked up in the wrong namespace.
 
     o	Binary save() of raw vectors was not working correctly on
