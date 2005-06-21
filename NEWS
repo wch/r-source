@@ -227,6 +227,10 @@ BUG FIXES
     o   contourLines() no longer requires an open device (used to
 	start a device unnecessarily).  Fix suggested by Barry Rowlingson.
 
+    o	capabilities() used partial matching but was not documented
+	to: it no longer does so.
+
+
 
 
 	**************************************************

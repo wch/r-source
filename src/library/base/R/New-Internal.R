@@ -163,10 +163,10 @@ memory.profile <- function() .Internal(memory.profile())
 
 capabilities <- function(what = NULL)
 {
-    z  <- .Internal(capabilities())
+    z  <- .Internal(capabilities(what))
     if(is.null(what)) return(z)
     nm <- names(z)
-    i <- pmatch(what, nm)
+    i <- match(what, nm)
     if(is.na(i)) logical(0) else z[i]
 }
 
