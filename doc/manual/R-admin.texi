@@ -1673,7 +1673,7 @@ use a multi-threaded ATLAS by specifying
 Another tuned BLAS which is available for some processors under Linux is
 by Kazushige Goto, currently available at
 @url{http://www.cs.utexas.edu/users/flame/goto/}.  Once this is is
-installed, it can be used by one of
+installed, it can be used by configuring with one of
 
 @example
 --with-blas=goto
@@ -1681,13 +1681,19 @@ installed, it can be used by one of
 @end example
 
 Multi-threaded versions of Goto's BLAS are available (and indeed,
-version 0.99-3 seems only to be available in a multithreaded version),
-so please note the @emph{caveat} in the previous paragraph.  These are
-likely to require
+version 0.99-3 seems only to be available in a multi-threaded version).
+These are likely to require
 
 @example
 --with-blas="-lgoto -lpthread"
 @end example
+
+@noindent
+It has been reported that on some RedHat-based Linux systems it is
+necessary to set @code{OMP_NUM_THREADS=1} (to disable multiple threads)
+in the environment when using a multi-threaded Goto BLAS, but others run
+happily with multiple threads.  That environment variable should be set
+when using @R{} profiling.
 
 For Intel processors under Linux, Intel's Math Kernel Library
 @url{http://www.intel.com/software/products/mkl/}
