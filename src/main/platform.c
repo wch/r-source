@@ -1217,6 +1217,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP what, ans, ansnames;
     int i = 0;
 #ifdef Unix
+    int j = 0;
     Rboolean X11 = FALSE;
 #endif
 
@@ -1226,22 +1227,24 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 	error(_("invalid value of 'what' argument"));
 
 #if defined(Unix) && defined(HAVE_X11)
-    /* Don't load the module and contact the X11 display 
+    /* Don't load the module and contact the X11 display
        unless it is necessary.
     */
-    for (i = 0; i < LENGTH(what); i++)
-	if(streql(CHAR(STRING_ELT(input, i)), "X11") 
+    if(isNull(what)) X11 = R_can_use_X11();
+    else
+        for (j = 0; j < LENGTH(what); j++)
+       	    if(streql(CHAR(STRING_ELT(what, j)), "X11")
 #ifdef HAVE_JPEG
-	   || streql(CHAR(STRING_ELT(input, i)), "jpeg")
+	       || streql(CHAR(STRING_ELT(what, j)), "jpeg")
 #endif
 #ifdef HAVE_PNG
-	   || streql(CHAR(STRING_ELT(input, i)), "png")
+	       || streql(CHAR(STRING_ELT(what, j)), "png")
 #endif
-	    ) {
-	    X11 = R_can_use_X11();
-	    break;
-	}
-#endif    
+	        ) {
+	        X11 = R_can_use_X11();
+	        break;
+	    }
+#endif
     PROTECT(ans = allocVector(LGLSXP, 10));
     PROTECT(ansnames = allocVector(STRSXP, 10));
 
