@@ -88,7 +88,7 @@ NEW FEATURES
 
     o	axis.Date() and axis.POSIXct() now accept a 'label' argument
     	(contributed by Gavin Simpson).
-    	
+
     o	Added recommendation that packages have an overview man page
 	<pkg>-package.Rd, and the promptPackage() function to create a
 	skeleton version.
@@ -106,7 +106,7 @@ NEW FEATURES
     o   attach() now prints an information message when objects are
         masked on the search path by or from a newly attached database.
 
-    o   scatter.smooth() now works a bit more like other plotting 
+    o   scatter.smooth() now works a bit more like other plotting
         functions (e.g., accepts a data frame for argument 'x').
 	Improvements suggested by Kevin Wright.
 
@@ -201,7 +201,7 @@ BUG FIXES
     o   as.function.default() no longer asks for a bug report when
 	given an invalid body. (PR#1880, PR#7535, PR#7702)
 
-    o   Hershey fonts and grid output (and therefore lattice output) 
+    o   Hershey fonts and grid output (and therefore lattice output)
 	now rescale correctly in fit-to-window resizing on a Windows
 	graphics device.  Line widths also scale now.
 
@@ -238,6 +238,17 @@ BUG FIXES
 	*	       2.1 SERIES NEWS			 *
 	*						 *
 	**************************************************
+
+
+
+
+		CHANGES IN R VERSION 2.1.1 patched
+
+
+BUG FIXES
+
+    o	runmed(x, k = -1) now gives an error instead of a seg.fault.
+
 
 
 		CHANGES IN R VERSION 2.1.1
@@ -414,7 +425,7 @@ BUG FIXES
 
     o	getCallingDLL()'s default first argument did not correspond to
 	its description and has been changed.  The mismatch caused
-	symbols in .C/.Call/.Fortran calls without a PACKAGE= argument 
+	symbols in .C/.Call/.Fortran calls without a PACKAGE= argument
 	to be potentially looked up in the wrong namespace.
 
     o	Binary save() of raw vectors was not working correctly on
