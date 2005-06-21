@@ -42,9 +42,9 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480,
 }
 \details{
   Plots in PNG and JPEG format can easily be converted to many other
-  bitmap formats, and both can be displayed in most modern web
-  browsers. The PNG format is lossless and is best for line
-  diagrams and blocks of solid colour. The JPEG format is lossy,
+  bitmap formats, and both can be displayed in modern web
+  browsers.  The PNG format is lossless and is best for line
+  diagrams and blocks of solid colour.  The JPEG format is lossy,
   but may be useful for image plots, for example.
 
   \code{png} supports transparent backgrounds: use \code{bg = "transparent"}.
@@ -55,10 +55,8 @@ png(filename ="Rplot\%03d.png", width = 480, height = 480,
 
   \R can be compiled without support for either or both of these
   devices: this will be reported if you attempt to use them on a system
-  where they are not supported.  They will not be available if \R has
-  been started with \samp{--gui=none} (and will give a different error
-  message), and they may not be usable unless the X11 display is
-  available to the owner of the \R process.
+  where they are not supported.  They may not be usable unless the X11
+  display is available to the owner of the \R process.
 
   By default no resolution is recorded in the file.  Readers will often
   assume nominal resolution of 72dpi when none is recorded.  As
