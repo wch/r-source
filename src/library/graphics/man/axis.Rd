@@ -49,7 +49,10 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     \code{col}, see \code{\link{par}} on these.}
 }
 \value{
-  This function is invoked for its side effect, which is to add an axis
+  The numeric locations on the axis scale at which tick marks were drawn.
+  
+  This function is usually
+  invoked for its side effect, which is to add an axis
   to an already existing plot.
 }
 \details{

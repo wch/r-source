@@ -1448,13 +1448,13 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	break;
     } /* end  switch(side, ..) */
-    UNPROTECT(5); /* lab, vfont, at, lab, padj again */
     GMode(0, dd);
     GRestorePars(dd);
     /* NOTE: only record operation if no "error"  */
     if (GRecording(call, dd))
 	recordGraphicOperation(op, originalArgs, dd);
-    return R_NilValue;
+    UNPROTECT(5); /* lab, vfont, at, lab, padj again */
+    return at;
 }/* do_axis */
 
 

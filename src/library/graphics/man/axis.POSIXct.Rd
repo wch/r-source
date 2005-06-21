@@ -52,6 +52,9 @@ axis.Date(side, x, at, format, labels = TRUE, ...)
   is chosen. Printing of tick labels can be suppressed by using
   \code{labels = FALSE}.
 }
+\value{
+  The locations on the axis scale at which tick marks were drawn.
+}
 \seealso{
   \link{DateTimeClasses}, \link{Dates} for details of the classes.
 }

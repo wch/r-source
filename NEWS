@@ -110,6 +110,8 @@ NEW FEATURES
         functions (e.g., accepts a data frame for argument 'x').
 	Improvements suggested by Kevin Wright.
 
+    o   axis() now returns 'at' positions.
+
 
 DEPRECATED & DEFUNCT
 
