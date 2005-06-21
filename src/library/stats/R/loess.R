@@ -403,19 +403,19 @@ print.summary.loess <- function(x, digits=max(3, getOption("digits")-3), ...)
 }
 
 scatter.smooth <-
-    function(x, y, span = 2/3, degree = 1,
+    function(x, y = NULL, span = 2/3, degree = 1,
 	     family = c("symmetric", "gaussian"),
-	     xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
+	     xlab = NULL, ylab = NULL,
 	     ylim = range(y, prediction$y, na.rm = TRUE),
              evaluation = 50, ...)
 {
-    if(inherits(x, "formula")) {
-	if(length(x) < 3) stop("need response in formula")
-	thiscall <- match.call()
-	thiscall$x <- x[[3]]
-	thiscall$y <- x[[2]]
-	return(invisible(eval(thiscall, sys.parent())))
-    }
+    xlabel <- if (!missing(x)) deparse(substitute(x))
+    ylabel <- if (!missing(y)) deparse(substitute(y))
+    xy <- xy.coords(x, y, xlabel, ylabel)
+    x <- xy$x
+    y <- xy$y
+    xlab <- if (is.null(xlab)) xy$xlab else xlab
+    ylab <- if (is.null(ylab)) xy$ylab else ylab
     prediction <- loess.smooth(x, y, span, degree, family, evaluation)
     plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, ...)
     lines(prediction)

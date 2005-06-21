@@ -106,6 +106,10 @@ NEW FEATURES
     o   attach() now prints an information message when objects are
         masked on the search path by or from a newly attached database.
 
+    o   scatter.smooth() now works a bit more like other plotting 
+        functions (e.g., accepts a data frame for argument 'x').
+	Improvements suggested by Kevin Wright.
+
 
 DEPRECATED & DEFUNCT
 
