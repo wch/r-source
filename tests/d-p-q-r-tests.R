@@ -503,7 +503,7 @@ pf(x, Inf, Inf)# (0, 1/2, 1)
 pf(x, 5, Inf, ncp=0)
 pf(x, 5, 1e6, ncp=1)
 pf(x, 5, 1e7, ncp=1)
-all.equal(pf(x, 5, 1e8, ncp=1), tol = 5e-9,
+all.equal(pf(x, 5, 1e8, ncp=1), tol = 1e-6,
           c(0.0659330751, 0.4708802996, 0.9788764591))
 pf(x, 5, Inf, ncp=1)
 
