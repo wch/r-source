@@ -2926,7 +2926,7 @@ the declared encoding.
 The @LaTeX{} conversion indicates the encoding of the file via a
 
 @example
-\inputencoding{some_encoding}
+\inputencoding@{some_encoding@}
 @end example
 
 @noindent
@@ -2935,7 +2935,7 @@ command, and this needs to be matched by a suitable invocation of the
 utility @command{R CMD Rd2dvi} uses
 
 @example
-\usepackage[latin1,latin2,latin9,utf8]{inputenc}
+\usepackage[latin1,latin2,latin9,utf8]@{inputenc@}
 @end example
 
 @noindent
