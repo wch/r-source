@@ -35,9 +35,6 @@ La.svd(x, nu = min(n, p), nv = min(n, p),
   if singular vectors are required: see
   \url{http://www.cs.berkeley.edu/~demmel/DOE2000/Report0100.html}.
   Most benefit is seen with an optimized BLAS system.
-  Using \code{method="dgesdd"} requires IEEE 754 arithmetic.  Should
-  this not be supported on your platform, \code{method="dgesvd"} is
-  used, with a warning.
 
   Computing the singular vectors is the slow part for large matrices.
 
