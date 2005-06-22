@@ -2910,12 +2910,10 @@ encoding they are written in: ASCII, UTF-8, Latin-1, Latin-9 @emph{etc}.
 So the @code{\encoding@{@}} directive can be used to specify the
 encoding: if not present the processing assumes that the file is in
 Latin-1 (ISO-8859-1).  This is used when creating the header of the
-@HTML{} conversion and to make a comment in the examples file.  It may
-in future be used to convert the encoding of the output files.
+@HTML{} conversion and to make a comment in the examples file.  It is
+also used to indicate to @LaTeX{} how to process the file (see below).
 
-Wherever possible, avoid non-ASCII chars in @code{Rd} files.  At present
-Latin-1 files work reasonably well, but other encodings will definitely
-give problems with the @LaTeX{} conversion and may with others.
+Wherever possible, avoid non-ASCII chars in @code{Rd} files.
 
 For convenience, encoding names @code{latin1} and @code{latin2} are
 always recognized: these and @code{UTF-8} are likely to work fairly
@@ -2924,6 +2922,29 @@ widely.
 The @code{\enc} command (@pxref{Insertions}) can be used to provide
 transliterations which will be used in conversions that do not support
 the declared encoding.
+
+The @LaTeX{} conversion indicates the encoding of the file via a
+
+@example
+\inputencoding{some_encoding}
+@end example
+
+@noindent
+command, and this needs to be matched by a suitable invocation of the
+@command{\usepackage@{inputenc@}} command.  For example, the @R{}
+utility @command{R CMD Rd2dvi} uses
+
+@example
+\usepackage[latin1,latin2,latin9,utf8]{inputenc}
+@end example
+
+@noindent
+to cover the most common cases and does require @LaTeX{} of 2003/12/01
+or later.  (It is likely that in future other files will be re-encoded
+to UTF-8.)  Note that this mechanism works best with letters and for
+example the copyright symbol may be rendered as a subscript and the
+plus-minus symbol cannot be used in text.
+
 
 
 @node Processing Rd format,  , Encoding, Writing R documentation files

@@ -98,6 +98,7 @@ refman.dvi: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
@@ -126,8 +127,9 @@ fullrefman.dvi: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
-	  echo "\\part{}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat refman.top; \
+	  echo "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
 	  for f in $${texinputs}; do echo "\\input{$${f}}"; done; \
@@ -201,6 +203,7 @@ refman.pdf: $(refman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
@@ -232,6 +235,7 @@ fullrefman.pdf: $(fullrefman_TEXINPUTS) $(refman_DEPENDENCIES) \
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat refman.top; \
 	  echo "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \

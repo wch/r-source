@@ -103,14 +103,17 @@ NEW FEATURES
     o	identify()'s default method has additional arguments 'atpen'
 	and 'tolerance' (following S).
 
-    o   attach() now prints an information message when objects are
+    o	attach() now prints an information message when objects are
         masked on the search path by or from a newly attached database.
 
-    o   scatter.smooth() now works a bit more like other plotting
+    o	scatter.smooth() now works a bit more like other plotting
         functions (e.g., accepts a data frame for argument 'x').
 	Improvements suggested by Kevin Wright.
 
-    o   axis() now returns 'at' positions.
+    o	axis() now returns 'at' positions.
+
+    o	Conversion of .Rd files to latex now handles encoding more
+	comprehensively, including some support for UTF-8.
 
 
 DEPRECATED & DEFUNCT

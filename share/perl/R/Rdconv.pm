@@ -33,6 +33,7 @@ use Text::Wrap;
 use R::Utils;
 use R::Vars;
 
+
 if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
 ## Names of unique text blocks, these may NOT appear MORE THAN ONCE!
@@ -675,9 +676,8 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
-    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
-    $encoding = "iso-8859-1" if lc($encoding) eq "latin1";
-    $encoding = "iso-8859-2" if lc($encoding) eq "latin2";
+    $encoding = mime_canonical_encoding($blocks{"encoding"}) 
+	if defined $blocks{"encoding"};
     print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
 				      $pkgname, 
 				      &html_escape_name($blocks{"name"}),
@@ -2425,8 +2425,12 @@ sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 sub rdoc2latex {# (filename)
 
     my $c, $a, $blname;
+    local $encoding = "unknown";
+    $encoding = latex_canonical_encoding($blocks{"encoding"})
+	if defined $blocks{"encoding"};
 
     local $latexout;
+
     if($_[0]) {
 	$latexout = new FileHandle;
 	open $latexout, "> $_[0]";  # will be closed when goes out of scope
@@ -2434,6 +2438,7 @@ sub rdoc2latex {# (filename)
 	$latexout = "STDOUT";
     }
     $blname = &latex_escape_name($blocks{"name"});
+    print $latexout "\\inputencoding{$encoding}\n" if $encoding ne "unknown";
     print $latexout "\\HeaderA\{";
     print $latexout $blname;
     print $latexout "\}\{";
@@ -2518,8 +2523,10 @@ sub text2latex {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
 	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
-	## $enc = $ascii if $ascii; # not clear which we want here
-	$enc =~ s/\\([^&])/$1/go;
+	if($encoding eq "unknown") { # \enc withou \encoding
+	    $enc = $ascii if $ascii;
+	    $enc =~ s/\\([^&])/$1/go;
+	}
 	$text =~ s/\\enc(.*)$id/$enc/s;
     }
 

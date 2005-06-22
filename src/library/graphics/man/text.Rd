@@ -95,7 +95,7 @@ K <- 16; text(exp(1i * 2 * pi * (1:K) / K), col = 2)
 ## appear correctly (or be omitted entirely).
 plot(1:10, 1:10, main = "text(...) examples\n~~~~~~~~~~~~~~",
      sub = "R is GNU ©, but not ® ...")
-mtext("«ISO-accents»: ± éè øØ å<Å æ<Æ", side=3)
+mtext("«ISO-accents»: éè øØ å<Å æ<Æ", side=3)
 points(c(6,2), c(2,1), pch = 3, cex = 4, col = "red")
 text(6, 2, "the text is CENTERED around (x,y) = (6,2) by default",
      cex = .8)

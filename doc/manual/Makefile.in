@@ -130,6 +130,7 @@ refman.dvi: $(refman_DEPENDENCIES) stamp-refman-dvi
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
@@ -184,6 +185,7 @@ fullrefman.dvi: $(refman_DEPENDENCIES) stamp-fullrefman-dvi
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4DVI)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  echo "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
@@ -260,6 +262,7 @@ refman.pdf: $(refman_DEPENDENCIES) stamp-refman-pdf
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \
 	    do echo $${f}; done) | LC_COLLATE=C sort`; \
@@ -290,6 +293,7 @@ fullrefman.pdf: $(refman_DEPENDENCIES) stamp-fullrefman-pdf
 	  echo "\\documentclass[$${opt}]{book}"; \
 	  opt="$(R_RD4PDF)"; \
 	  echo "\\usepackage[$${opt}]{Rd}"; \
+	  echo "\\usepackage[latin1]{inputenc}"; \
 	  cat $(srcdir)/refman.top; \
 	  echo "\\part{}"; \
 	  texinputs=`(for f in $(refman_TEXINPUTS); \

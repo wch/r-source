@@ -238,6 +238,7 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
+\\usepackage[latin1,latin2,latin9,utf8]{inputenc}
 \\makeindex{}
 \\begin{document}
 EOF
