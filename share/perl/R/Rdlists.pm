@@ -1,6 +1,6 @@
 ## Subroutines for building R documentation
 
-## Copyright (C) 1997-2003 R Development Core Team
+## Copyright (C) 1997-2005 R Development Core Team
 ##
 ## This program is free software; you can redistribute it and/or modify
 ## it under the terms of the GNU General Public License as published by
@@ -23,9 +23,8 @@ package R::Rdlists;
 
 require  Exporter;
 @ISA     = qw(Exporter);
-@EXPORT  = qw(buildinit read_titles read_htmlindex read_htmlpkgindex
-	      read_anindex build_htmlpkglist build_index fileolder
-	      foldorder aliasorder);
+@EXPORT  = qw(buildinit read_htmlindex read_htmlpkgindex read_anindex
+	      build_index fileolder foldorder aliasorder);
 
 use Cwd;
 use File::Basename;
@@ -124,47 +123,6 @@ sub buildinit {
     ($pkg_name, $version, $lib, @mandir);
 }
 
-
-### Read the titles of all installed packages into an hash array
-
-sub read_titles {
-
-    my $lib = $_[0];
-
-    my %tit;
-    my $pkg;
-
-    opendir lib, $lib;
-    my @libs = readdir(lib);
-    closedir lib;
-
-    foreach $pkg (@libs) {
-	if(-d file_path($lib, $pkg)){
-	    if(! ( ($pkg =~ /^CVS$/) || ($pkg =~ /^\.+$/))){
-		if(-r file_path($lib, $pkg, "DESCRIPTION")){
-		    my $rdcf = R::Dcf->new(file_path($lib, $pkg, "DESCRIPTION"));
-		    my $pkgname = $pkg;
-		    if($rdcf->{"Package"}) {
-			 $pkgname = $rdcf->{"Package"};
-		    }
-		    if($rdcf->{"Title"}) {
-			$tit{$pkgname} = $rdcf->{"Title"};
-		    } else {
-			$tit{$pkgname} = "-- Title is missing --";
-		    }
-		    if($rdcf->{"Encoding"}) {
-			## decide what to do
-		    }
-		}
-	    }
-	}
-    }
-
-    close titles;
-    %tit;
-}
-
-
 ### Read all aliases into two hash arrays with basenames and
 ### (relative) html-paths.
 
@@ -239,43 +197,6 @@ sub read_anindex {
 	}
     }
     %anindex;
-}
-
-
-
-### Build $R_HOME/doc/html/packages.html from the $pkg/DESCRIPTION files
-
-sub build_htmlpkglist {
-
-    my $lib = $_[0];
-
-    my %htmltitles = read_titles($lib);
-    my $key;
-
-    open(htmlfile, ">". file_path($main::R_HOME, "doc", "html", 
-				  "packages".$HTML)) or
-	die "Could not open " . 
-	    file_path($main::R_HOME, "doc", "html", "packages".$HTML);
-
-    print htmlfile html_pagehead("Package Index", ".",
-				 "index$HTML", "Top",
-				 "", "",
-				 "", "", "./R.css", "iso-8859-1");
-
-    print htmlfile "<p><h3>Packages in the standard library</h3>\n", 
-    "<p>\n<table width=\"100%\" summary=\"R Package list\">\n";
-
-    foreach $key (sort(keys %htmltitles)) {
-	print htmlfile "<tr align=\"left\" valign=\"top\">\n";
-	print htmlfile "<td width=\"25%\"><a href=\"../../library/$key/html/00Index$HTML\">";
-	print htmlfile encodealias($key), "</a></td><td>";
-	print htmlfile $htmltitles{$key}, "</td></tr>\n";
-    }
-
-    print htmlfile "</table>\n\n";
-    print htmlfile "</body></html>\n";
-
-    close htmlfile;
 }
 
 sub striptitle { # text

@@ -319,10 +319,6 @@ remove.packages <- function(pkgs, lib, version) {
         ## This should eventually be made public, as it could also be
         ## used by install.packages() && friends.
         if(lib == .Library) {
-            ## R version of
-            ##   ${R_HOME}/bin/build-help --htmllists
-            ##   cat ${R_HOME}/library/*/CONTENTS \
-            ##     > ${R_HOME}/doc/html/search/index.txt
             if(exists("link.html.help", mode = "function"))
                 link.html.help()
         }

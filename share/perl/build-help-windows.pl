@@ -1,6 +1,6 @@
 #-*- mode: perl; perl-indent-level: 4; cperl-indent-level: 4 -*-
 
-# Copyright (C) 1997-2004 R Development Core Team
+# Copyright (C) 1997-2005 R Development Core Team
 #
 # This document is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ use R::Utils;
 fileparse_set_fstype; # Unix, in case one gets anything else.
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "chm", "index");
+		 "dosnames", "chm", "index");
 GetOptions (@knownoptions) || usage();
 
 $OSdir = "windows";
@@ -52,17 +52,6 @@ print STDERR "Current directory (cwd): '$current'\n" if $opt_debug;
 
 my $mainlib = file_path($R_HOME, "library");
 
-# if option --htmllists is set we only rebuild some list files and
-# exit
-
-if($opt_htmllists){
-    build_htmlpkglist($mainlib);
-
-    %anindex = read_anindex($mainlib);
-    %htmlindex = read_htmlindex($mainlib);
-
-    exit 0;
-}
 
 # default is to build all documentation formats
 if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example && !$opt_chm){
@@ -284,8 +273,9 @@ if($opt_chm){
 }
 
 sub usage {
-    print "Usage:  build-help [--rhome dir] [--html] [--txt] [--latex]\n" .
-      "                   [--example] [--dosnames] [--htmllists] [--debug]\n" .
+    print "Usage:  build-help-windows.pl [--rhome dir] [--html] [--txt]\n" .
+      "                   [--latex] [--example] [--chm]\n" .
+      "                   [--dosnames] [--debug] [--index]\n" .
       "                   [pkg] [lib]\n";
 
     exit 0;
