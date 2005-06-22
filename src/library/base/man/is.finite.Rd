@@ -36,7 +36,9 @@ is.nan(x)
 
   \code{is.infinite} returns a vector of the same length as \code{x}
   the jth element of which is \code{TRUE} if \code{x[j]} is
-  infinite (i.e., equal to one of \code{Inf} or \code{-Inf}).
+  infinite (i.e., equal to one of \code{Inf} or \code{-Inf}). This will
+  be false unless \code{x} is numeric or complex.  Complex numbers are
+  infinite if either the real and imaginary part is.
 
   \code{is.nan} tests if a numeric value is \code{NaN}.  Do not test
   equality to \code{NaN}, or even use \code{\link{identical}},
@@ -59,12 +61,17 @@ is.nan(x)
   modes, not just numeric.
 }
 \references{
-%%- better ones ?!??
-    ANSI/IEEE 754 Floating-Point Standard.
+  The IEC 60559 standard, also know as the
+  ANSI/IEEE 754 Floating-Point Standard.
 
- This link does not work any more (2003/12)
-    Currently (6/2002), Bill Metzenthen's \email{billm@suburbia.net} tutorial
-    and examples at \cr \url{http://www.suburbia.net/~billm/}
+  D. Goldberg (1991) \emph{What Every Computer Scientist Should Know
+    about Floating-Point Arithmetic}  ACM Computing Surveys, \bold{23(1)}.\cr
+  Postscript version available at
+  \url{http://www.validlab.com/goldberg/paper.ps}
+  
+  \url{http://grouper.ieee.org/groups/754/} for accessible information.
+
+  The C99 function \code{isfinite} is used for \code{is.finite} if available.
 }
 \examples{
 pi / 0 ## = Inf a non-zero number divided by zero creates infinity
