@@ -21,6 +21,14 @@ with *three* slashes.
 
 
 
+R 2.1.1 patched
+===============
+
+The progress bar was being left behind when a download was aborted.
+(PR#7964).
+
+
+
 R 2.1.1
 =======
 
