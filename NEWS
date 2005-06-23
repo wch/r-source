@@ -203,9 +203,6 @@ BUG FIXES
 	subsetting) try harder to preserve time zones and warn if
 	inconsistent time zones are used.
 
-    o   File creation errors in pdf(), postscript(), xfig() resulted
-        in a pointer being freed twice.  (Reported by Matt McCall)
-
     o   as.function.default() no longer asks for a bug report when
 	given an invalid body. (PR#1880, PR#7535, PR#7702)
 
@@ -248,8 +245,6 @@ BUG FIXES
 	**************************************************
 
 
-
-
 		CHANGES IN R VERSION 2.1.1 patched
 
 
@@ -257,8 +252,12 @@ BUG FIXES
 
     o	runmed(x, k = -1) now gives an error instead of a seg.fault.
 
+    o   File creation errors in pdf(), postscript(), xfig() resulted
+        in a pointer being freed twice.  (Reported by Matt McCall)
+
     o	model.matrix(~ .^2, data=foo) now works as most people would
 	expect (it used to expand '.' after using the a^2 = a rule).
+
 
 
 		CHANGES IN R VERSION 2.1.1
@@ -445,6 +444,11 @@ BUG FIXES
 
     o	Workaround added for FreeBSD which does not have alloca.h _and_
 	does not allow alloca() to be declared.
+
+    o	identify() now respects 'cex'.  (PR#660)
+
+	Warnings from identify() are now printed immediately even on
+	consoles with delayed printing.
 
 
 

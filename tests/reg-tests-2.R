@@ -1591,6 +1591,14 @@ s
 ## empty < 2.1.1
 
 
+## interpretation of '.' directly by model.matrix
+dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+model.matrix(~ .^2, data = dd)
+## lost ^2 in 2.1.1
+
+### end of tests added in 2.1.1 patched ###
+
+
 ## Tests of logical matrix indexing with NAs
 df1 <- data.frame(a = c(NA, 0, 3, 4)); m1 <- as.matrix(df1)
 df2 <- data.frame(a = c(NA, 0, 0, 4)); m2 <- as.matrix(df2)
@@ -1605,13 +1613,6 @@ df3[df3 == 2]            # had spurious names
 try(df2[df2 == 2] <- 1:2)
 try(m2[m2 == 2] <- 1:2)
 ##
-
-## interpretation of '.' directly by model.matrix
-dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
-model.matrix(~ .^2, data = dd)
-## lost ^2 in 2.1.1
-
-### end of tests added in 2.1.1 patched ###
 
 
 ## vector indexing of matrices: issue is when rownames are used
