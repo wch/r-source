@@ -1589,3 +1589,11 @@ s
 dim(s) <- c(7,4,2)
 s
 ## empty < 2.1.1
+
+
+## interpretation of '.' directly by model.matrix
+dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+model.matrix(~ .^2, data = dd)
+## lost ^2 in 2.1.1
+
+### end of tests added in 2.1.1 patched ###

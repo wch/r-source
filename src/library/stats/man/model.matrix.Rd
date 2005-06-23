@@ -12,9 +12,10 @@ model.matrix(object, \dots)
              contrasts.arg = NULL, xlev = NULL, \dots)
 }
 \arguments{
-  \item{object}{an object of an appropriate class. For the default
+  \item{object}{an object of an appropriate class.  For the default
     method, a model formula or terms object.}
-  \item{data}{a data frame created with \code{\link{model.frame}}.}
+  \item{data}{a data frame created with \code{\link{model.frame}}.  If
+    another sort of object, \code{model.frame} is called first.}
   \item{contrasts.arg}{A list, whose entries are contrasts suitable for
     input to the \code{\link{contrasts}} replacement function and
     whose names are the names of columns of \code{data} containing
@@ -28,19 +29,20 @@ model.matrix(object, \dots)
 }
 \details{
   \code{model.matrix} creates a design matrix from the description given
-  in \code{terms(formula)}, using the data in \code{data} which must
-  contain columns with the same names as would be created by a call to
-  \code{model.frame(formula)} or, more precisely, by evaluating
-  \code{attr(terms(formula), "variables")}.  There may be other columns
-  and the order is not important.
+  in \code{terms(object)}, using the data in \code{data} which must
+  contain variables with the same names as would be created by a call to
+  \code{model.frame(object)} or, more precisely, by evaluating
+  \code{attr(terms(object), "variables")}.  If it is a data frame,
+  there may be other columns and the order of columns is not important.
 
   If \code{contrasts.arg} is specified for a factor it overrides the
   default factor coding for that variable and any \code{"contrasts"}
   attribute set by \code{\link{C}} or \code{\link{contrasts}}.
 
-  In interactions, the variable whose levels vary fastest is the first
-  one to appear in the formula (and not in the term), so in \code{~ a +
-    b + b:a} the interaction will have \code{a} varying fastest.
+  In an interaction term, the variable whose levels vary fastest is the
+  first one to appear in the formula (and not in the term), so in
+  \code{~ a + b + b:a} the interaction will have \code{a} varying
+  fastest.
 
   By convention, if the response variable also appears on the
   right-hand side of the formula it is dropped (with a warning),

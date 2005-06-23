@@ -385,7 +385,7 @@ model.matrix <- function(object, ...) UseMethod("model.matrix")
 model.matrix.default <- function(object, data = environment(object),
 				 contrasts.arg = NULL, xlev = NULL, ...)
 {
-    t <- terms(object)
+    t <- if(missing(data)) terms(object) else terms(object, data=data)
     if (is.null(attr(data, "terms")))
 	data <- model.frame(object, data, xlev=xlev)
     else {
@@ -397,7 +397,7 @@ model.matrix.default <- function(object, data = environment(object),
 	data <- data[,reorder, drop=FALSE]
     }
     int <- attr(t, "response")
-    if(length(data)) { # no rhs terms, so skip all this
+    if(length(data)) { # otherwise no rhs terms, so skip all this
         contr.funs <- as.character(getOption("contrasts"))
         isF <- sapply(data, function(x) is.factor(x) || is.logical(x) )
         isF[int] <- FALSE
