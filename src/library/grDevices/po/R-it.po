@@ -160,7 +160,7 @@ msgstr "le lunghezze di 'x', 'y' e 'z' differiscono"
 msgid "'file' is missing with no default"
 msgstr "'file' manca senza valore di default"
 
-msgid "'file' is must be a non-empty character string"
+msgid "'file' must be a non-empty character string"
 msgstr "'file' deve essere una stringa carattere non vuota"
 
 msgid "sorry, 'gs' cannot be found"

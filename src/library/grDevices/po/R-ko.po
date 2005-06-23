@@ -158,7 +158,7 @@ msgstr "'x', 'y' 그리고 'z'의 길이가 다릅니다"
 msgid "'file' is missing with no default"
 msgstr "'file'는 default가 없음으로 결손이 되고 있습니다"
 
-msgid "'file' is must be a non-empty character string"
+msgid "'file' must be a non-empty character string"
 msgstr "'file'는 비어 있지 않은 문자열이 아니면 되지 않습니다"
 
 msgid "sorry, 'gs' cannot be found"
