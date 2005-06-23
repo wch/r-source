@@ -227,13 +227,12 @@ typedef struct {
     RCNTXT cntxt;
 } winprogressbar;
 
+static winprogressbar pbar = {NULL, NULL, NULL};
+
 static void doneprogressbar(void *data)
 {
     winprogressbar *pbar = data;
     hide(pbar->wprog);
-    del(pbar->l_url);
-    del(pbar->pb);
-    del(pbar->wprog);    
 }
 #endif
 
@@ -246,9 +245,6 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, scmd, sfile, smode;
     char *url, *file, *mode;
     int quiet, status = 0, cacheOK;
-#ifdef Win32
-    winprogressbar pbar;
-#endif
 
     checkArity(op, args);
     scmd = CAR(args); args = CDR(args);
@@ -273,7 +269,15 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     cacheOK = asLogical(CAR(args));
     if(cacheOK == NA_LOGICAL)
 	error(_("invalid 'cacheOK' argument"));
-
+#ifdef Win32
+    if (!pbar.wprog) {
+	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
+		      Titlebar | Centered);
+	setbackground(pbar.wprog, dialog_bg());
+	pbar.l_url = newlabel(" ", rect(10, 15, 520, 25), AlignCenter);
+	pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, 1024, 1024, 1);	    	
+    }
+#endif
     if(strncmp(url, "file://", 7) == 0) {
 	FILE *in, *out;
 	static char buf[CPBUFSIZE];
@@ -315,16 +319,13 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
 	    R_FlushConsole();
-	    pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
-			      Titlebar | Centered);
-	    setbackground(pbar.wprog, dialog_bg());
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
 		strcat(buf, "... ");
 		strcat(buf, url + (strlen(url) - 60));
 	    } else strcat(buf, url);
-	    pbar.l_url = newlabel(buf, rect(10, 15, 520, 25), AlignCenter);
-	    pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, guess, 1024, 1);
+	    settext(pbar.l_url, buf);
+	    setprogressbarrange(pbar.pb, 0, guess);
 	    show(pbar.wprog);
 	    begincontext(&(pbar.cntxt), CTXT_CCODE, R_NilValue, R_NilValue,
 			 R_NilValue, R_NilValue, R_NilValue);
@@ -360,8 +361,8 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    doneprogressbar(&pbar);
 	    endcontext(&(pbar.cntxt));
+	    doneprogressbar(&pbar);	    
 #endif
 	    if (total > 0 && total != nbytes)
 		warning(_("downloaded length %d != reported length %d"),
@@ -396,16 +397,13 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 #ifdef Win32
 	    if (guess <= 0) guess = 100 * 1024;
 	    R_FlushConsole();
-	    pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),
-			      Titlebar | Centered);
-	    setbackground(pbar.wprog, LightGrey);
 	    strcpy(buf, "URL: ");
 	    if(strlen(url) > 60) {
 		strcat(buf, "... ");
 		strcat(buf, url + (strlen(url) - 60));
 	    } else strcat(buf, url);
-	    pbar.l_url = newlabel(buf, rect(10, 15, 520, 25), AlignCenter);
-	    pbar.pb = newprogressbar(rect(20, 50, 500, 20), 0, guess, 1024, 1);
+	    settext(pbar.l_url, buf);
+	    setprogressbarrange(pbar.pb, 0, guess);
 	    show(pbar.wprog);
 
 	    /* set up a context which will close progressbar on error. */
@@ -444,8 +442,8 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 #ifdef Win32
 	    R_FlushConsole();
-	    doneprogressbar(&pbar);
 	    endcontext(&(pbar.cntxt));
+	    doneprogressbar(&pbar);	    
 #endif
 	    if (total > 0 && total != nbytes)
 		warning(_("downloaded length %d != reported length %d"),
