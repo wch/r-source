@@ -13,8 +13,12 @@ BUG FIXES
 
     o	runmed(x, k = -1) now gives an error instead of a seg.fault.
 
+    o   File creation errors in pdf(), postscript(), xfig() resulted
+        in a pointer being freed twice.  (Reported by Matt McCall)
+
     o	model.matrix(~ .^2, data=foo) now works as most people would
 	expect (it used to expand '.' after using the a^2 = a rule).
+
 
 
 		CHANGES IN R VERSION 2.1.1
@@ -33,7 +37,7 @@ NEW FEATURES
     o	df() with one infinite df now works (to match pf()).
 
     o	Added tclServiceMode() function to the tcltk package to allow
-    	updating to be suspended.
+	updating to be suspended.
 
     o	The Encoding: field of a DESCRIPTION file is now documented,
 	and used by packageDescription() and library(help=).
@@ -152,7 +156,7 @@ BUG FIXES
 	even if 'file' was a filepath.
 
     o	Hershey fonts were being sized based on pixels not points so came
-        out too small on devices where pixels were noticeably different
+	out too small on devices where pixels were noticeably different
 	from points (e.g., win.printer() and high-resolution screens).
 
 	Fix means that default size of Hershey fonts may be slightly
@@ -1177,7 +1181,7 @@ BUG FIXES
 
     o	"dist" objects of length 0 failed to print.
 
-    o   INSTALL and the libR try harder to find a temporary directory
+    o	INSTALL and the libR try harder to find a temporary directory
 	(since there might be one left over with the same PID).
 
     o	acf() could cause a segfault with some datasets.  (PR#7771)
@@ -1511,9 +1515,9 @@ BUG FIXES
     o	Function getGroupMembers(), part of the definition of S4
 	classes, had been promised for release 2.0, but slipped through.
 
-    o   toLatex(sessionInfo()) produced incorrect LaTeX on some
-        platforms due to special characters in the platform
-        identifier.
+    o	toLatex(sessionInfo()) produced incorrect LaTeX on some
+	platforms due to special characters in the platform
+	identifier.
 
 
 
