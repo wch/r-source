@@ -1606,6 +1606,13 @@ try(df2[df2 == 2] <- 1:2)
 try(m2[m2 == 2] <- 1:2)
 ##
 
+## interpretation of '.' directly by model.matrix
+dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+model.matrix(~ .^2, data = dd)
+## lost ^2 in 2.1.1
+
+### end of tests added in 2.1.1 patched ###
+
 
 ## vector indexing of matrices: issue is when rownames are used
 # 1D array

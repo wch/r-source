@@ -257,6 +257,8 @@ BUG FIXES
 
     o	runmed(x, k = -1) now gives an error instead of a seg.fault.
 
+    o	model.matrix(~ .^2, data=foo) now works as most people would
+	expect (it used to expand '.' after using the a^2 = a rule).
 
 
 		CHANGES IN R VERSION 2.1.1

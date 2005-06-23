@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-15 r34712)
+Version 2.2.0 Under development (unstable) (2005-06-23 r34818)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4725,6 +4725,35 @@ Error: NAs are not allowed in subscripted assignments
 > try(m2[m2 == 2] <- 1:2)
 Error in try(m2[m2 == 2] <- 1:2) : NAs are not allowed in subscripted assignments
 > ##
+> 
+> ## interpretation of '.' directly by model.matrix
+> dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+> model.matrix(~ .^2, data = dd)
+   (Intercept) a2 a3 b2 b3 b4 a2:b2 a3:b2 a2:b3 a3:b3 a2:b4 a3:b4
+1            1  0  0  0  0  0     0     0     0     0     0     0
+2            1  0  0  1  0  0     0     0     0     0     0     0
+3            1  0  0  0  1  0     0     0     0     0     0     0
+4            1  0  0  0  0  1     0     0     0     0     0     0
+5            1  1  0  0  0  0     0     0     0     0     0     0
+6            1  1  0  1  0  0     1     0     0     0     0     0
+7            1  1  0  0  1  0     0     0     1     0     0     0
+8            1  1  0  0  0  1     0     0     0     0     1     0
+9            1  0  1  0  0  0     0     0     0     0     0     0
+10           1  0  1  1  0  0     0     1     0     0     0     0
+11           1  0  1  0  1  0     0     0     0     1     0     0
+12           1  0  1  0  0  1     0     0     0     0     0     1
+attr(,"assign")
+ [1] 0 1 1 2 2 2 3 3 3 3 3 3
+attr(,"contrasts")
+attr(,"contrasts")$a
+[1] "contr.treatment"
+
+attr(,"contrasts")$b
+[1] "contr.treatment"
+
+> ## lost ^2 in 2.1.1
+> 
+> ### end of tests added in 2.1.1 patched ###
 > 
 > 
 > ## vector indexing of matrices: issue is when rownames are used
