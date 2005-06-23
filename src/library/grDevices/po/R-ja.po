@@ -140,7 +140,7 @@ msgstr "異なった R バージョンからのスナップショットが読み
 msgid "'file' is missing with no default"
 msgstr "'file' はデフォルトなしで欠損となっています"
 
-msgid "'file' is must be a non-empty character string"
+msgid "'file' must be a non-empty character string"
 msgstr "'file' は空でない文字列でなければなりません"
 
 msgid "sorry, 'gs' cannot be found"
