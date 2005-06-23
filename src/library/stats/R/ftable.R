@@ -69,8 +69,11 @@ ftable.formula <- function(formula, data = NULL, subset, na.action, ...)
         stop("'formula' missing or incorrect")
     if(length(formula) != 3)
         stop("'formula' must have both left and right hand sides")
-    if(any(attr(terms(formula), "order") > 1))
+    ## need to cope with '.' in formula
+    tt <- if(is.data.frame(data)) terms(formula, data=data) else terms(formula)
+    if(any(attr(tt, "order") > 1))
         stop("interactions are not allowed")
+    ## here we do NOT want '.' expanded
     rvars <- attr(terms(formula[-2]), "term.labels")
     cvars <- attr(terms(formula[-3]), "term.labels")
     rhs.has.dot <- any(rvars == ".")

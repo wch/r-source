@@ -3,7 +3,9 @@ xtabs <- function(formula = ~., data = parent.frame(), subset,
 {
     if(!missing(formula) && !inherits(formula, "formula"))
 	stop("'formula' missing or incorrect")
-    if(any(attr(terms(formula), "order") > 1))
+    if(missing(formula) && missing(data))
+        stop("must supply either 'formula' or 'data'")
+    if(any(attr(terms(formula, data=data), "order") > 1))
 	stop("interactions are not allowed")
     m <- match.call(expand.dots = FALSE)
     if(is.matrix(eval(m$data, parent.frame())))

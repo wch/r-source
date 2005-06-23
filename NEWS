@@ -252,11 +252,14 @@ BUG FIXES
 
     o	runmed(x, k = -1) now gives an error instead of a seg.fault.
 
-    o   File creation errors in pdf(), postscript(), xfig() resulted
+    o	File creation errors in pdf(), postscript(), xfig() resulted
         in a pointer being freed twice.  (Reported by Matt McCall)
 
     o	model.matrix(~ .^2, data=foo) now works as most people would
 	expect (it used to expand '.' after using the a^2 = a rule).
+
+    o   ftable() and xtabs() had a check for interactions that would
+	not work correctly with '.' in the formula.
 
 
 
