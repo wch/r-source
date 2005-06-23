@@ -2905,12 +2905,12 @@ can be put in a @file{unix} or @file{windows} subdirectory.
 @section Encoding
 @cindex encoding
 
-@code{Rd} files are text files and so it is impossible to deduce the
+@code{Rd} files  are text files  and so it  is impossible to  deduce the
 encoding they are written in: ASCII, UTF-8, Latin-1, Latin-9 @emph{etc}.
-So the @code{\encoding@{@}} directive can be used to specify the
-encoding: if not present the processing assumes that the file is in
-Latin-1 (ISO-8859-1).  This is used when creating the header of the
-@HTML{} conversion and to make a comment in the examples file.  It is
+So  the  @code{\encoding@{@}} directive  must  be  used  to specify  the
+encoding: if not present the processing to HTML assumes that the file is
+in Latin-1 (ISO-8859-1).   This is used when creating  the header of the
+@HTML{} conversion  and to make a  comment in the examples  file.  It is
 also used to indicate to @LaTeX{} how to process the file (see below).
 
 Wherever possible, avoid non-ASCII chars in @code{Rd} files.
@@ -2923,7 +2923,7 @@ The @code{\enc} command (@pxref{Insertions}) can be used to provide
 transliterations which will be used in conversions that do not support
 the declared encoding.
 
-The @LaTeX{} conversion indicates the encoding of the file via a
+The @LaTeX{} conversion converts an explicit encoding of the file to a
 
 @example
 \inputencoding@{some_encoding@}
@@ -2931,19 +2931,21 @@ The @LaTeX{} conversion indicates the encoding of the file via a
 
 @noindent
 command, and this needs to be matched by a suitable invocation of the
-@command{\usepackage@{inputenc@}} command.  For example, the @R{}
-utility @command{R CMD Rd2dvi} uses
+@command{\usepackage@{inputenc@}} command.  The @R{} utility @command{R
+CMD Rd2dvi} looks at the converted code and includes the encodings used:
+it might for example use
 
 @example
-\usepackage[latin1,latin2,latin9,utf8]@{inputenc@}
+\usepackage[latin1,latin9,utf8]@{inputenc@}
 @end example
 
 @noindent
-to cover the most common cases and does require @LaTeX{} of 2003/12/01
-or later.  (It is likely that in future other files will be re-encoded
-to UTF-8.)  Note that this mechanism works best with letters and for
-example the copyright symbol may be rendered as a subscript and the
-plus-minus symbol cannot be used in text.
+(Use of @code{utf8} as an encoding requires @LaTeX{} dated 2003/12/01 or
+later.)  
+
+Note that this mechanism works best with letters and for example the
+copyright symbol may be rendered as a subscript and the plus--minus
+symbol cannot be used in text.
 
 
 

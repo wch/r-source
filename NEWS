@@ -173,6 +173,9 @@ UTILITIES
 	  the namespace with a useDynLib declaration (as the
 	  appropriate DLL for such calls can be searched for).
 
+    o	Rd2dvi sets the encoding(s) used appropriately.  If UTF-8
+	encoding is used, latex >= 2003/12/01 is required.
+
 
 C-LEVEL FACILITIES
 
