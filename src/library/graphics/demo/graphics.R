@@ -1,3 +1,4 @@
+require(graphics); require(datasets)
 if(dev.cur() <= 1) get(getOption("device"))()
 
 opar <- par(ask = interactive() &&

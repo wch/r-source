@@ -1,7 +1,7 @@
-
 ### Helical Valley Function
 ### Page 362 Dennis + Schnabel
 
+require(stats); require(graphics)
 theta <- function(x1,x2) (atan(x2/x1) + (if(x1 <= 0) pi else 0))/ (2*pi)
 ## but this is easier :
 theta <- function(x1,x2) atan(x2,x1)/(2*pi)
