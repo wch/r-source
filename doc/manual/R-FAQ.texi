@@ -1819,6 +1819,9 @@ Data sets for ``Introductory Statistics with R'' by Peter Dalgaard,
 2002, Springer.
 @item Icens
 Functions for computing the NPMLE for censored and truncated data.
+@item JLLprod
+Nonparametric estimation of homothetic and generalized homothetic
+production functions.
 @item KMsurv
 Data sets and functions for ``Survival Analysis, Techniques for Censored
 and Truncated Data'' by Klein and Moeschberger, 1997, Springer.
@@ -2039,6 +2042,8 @@ Tools for reading @XML{} documents and DTDs.
 Everyone's statistical software: an easy-to-use program that can
 estimate, and help interpret the results of, an enormous range of
 statistical models.
+@item aaMI
+Mutual information for protein sequence alignments.
 @item abind
 Combine multi-dimensional arrays.
 @item accuracy
@@ -2418,6 +2423,9 @@ Genetic algorithm for curve fitting.
 Functions for fitting and working with Generalized Additive Models, as
 described in chapter 7 of the White Book, and in ``Generalized Additive
 Models'' by T. Hastie and R. Tibshirani (1990).
+@item gamlss
+Functions to fit Generalized Additive Models for Location Scale and
+Shape.
 @item gap
 Genetic analysis package for both population and family data.  Includes
 @strong{pathmix} for path analysis of pairs of relatives, and
@@ -2876,6 +2884,8 @@ Multiple imputation for multivariate panel or clustered data.
 Functions and datasets for fitting models to Panel data.
 @item papply
 Parallel apply function using MPI.
+@item party
+Unbiased recursive partitioning in a conditional inference framework.
 @item pastecs
 Package for Analysis of Space-Time Ecological Series.
 @item pcurve
