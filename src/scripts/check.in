@@ -1,4 +1,4 @@
-! @PERL@
+#! @PERL@
 #-*- perl -*-
 
 ## Copyright (C) 2000-2005 R Development Core Team
