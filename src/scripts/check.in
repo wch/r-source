@@ -1,4 +1,4 @@
-#! @PERL@
+! @PERL@
 #-*- perl -*-
 
 ## Copyright (C) 2000-2005 R Development Core Team
@@ -1638,7 +1638,8 @@ sub check_pkg {
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
 		     "for writing\n");
 	    print MANUAL "\\documentclass\{article\}\n" .
-	      "\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
+		"\\usepackage[latin1]{inputenc}\n" .
+		"\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
 	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
