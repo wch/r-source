@@ -21,6 +21,7 @@ Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","
 "Italy (Arezzo)",Italy,Arezzo,http://cran.arsmachinandi.it/,"Ars Machinandi, Arezzo",cran.mirror@arsmachinandi.com
 "Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
 "Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it
+"Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it"
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",
 "Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
 Korea,Korea,Seoul,http://bibscvs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skon@kr.FreeBSD.org>"
@@ -29,7 +30,8 @@ Korea,Korea,Seoul,http://bibscvs.snu.ac.kr/R/,"Seoul National University","SungG
 Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt
 "Slovenia (Besnica)",Slovenia,Besnica,http://www.fastmirrors.org/cran/,"Fastmirrors.org, Besnica","Tomy Kurtis <webadmin@fastmirrors.org>"
 "Slovenia (Ljubljana)",Slovenia,Ljubljana,http://www.wsection.com/cran/,"Wsection.com, Ljubljana",info@wsection.com
-"South Africa","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
+"South Africa (Cape Town)","South Africa","Cape Town",http://cbio.uct.ac.za/CRAN/,"University of Cape Town",r-project@cbio.uct.ac.za
+"South Africa (Grahamstown)","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
 Spain,Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
 "Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
 "Switzerland (Bern 1)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
