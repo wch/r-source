@@ -93,9 +93,9 @@ FILE *R_OpenSiteFile(void)
 	snprintf(buf, 256, "%s/etc/Rprofile.site", R_Home);
 	if ((fp = R_fopen(buf, "r")))
 	    return fp;
-	snprintf(buf, 256, "%s/etc/Rprofile", R_Home);
+	/* snprintf(buf, 256, "%s/etc/Rprofile", R_Home);
 	if ((fp = R_fopen(buf, "r")))
-	    return fp;
+	return fp; */
     }
     return fp;
 }

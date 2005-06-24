@@ -107,7 +107,7 @@
   Prior to \R version 1.4.0, the environment files searched were
   \file{.Renviron} in the current directory, the file pointed to by
   \env{R\_ENVIRON} if set, and \file{.Renviron} in the user's home
-  directory.
+  directory.  What is now \file{Rprofile.site} was called \file{Rprofile}.
 
   Prior to \R version 1.2.1, \file{.Rprofile} was sourced after
   \file{.RData} was loaded, although the documented order was as here.

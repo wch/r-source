@@ -131,6 +131,10 @@ DEPRECATED & DEFUNCT
     o	write.table0() is deprecated in favour of the much faster
 	write.table().
 
+    o	R_HOME/etc/Rprofile is no longer looked for if
+	R_HOME/etc/Rprofile.site does not exist.  (This has been
+	undocumented since R 1.4.0.)
+
 
 INSTALLATION
 
