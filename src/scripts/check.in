@@ -1634,13 +1634,31 @@ sub check_pkg {
                 }
             }
 	    $log->creating("${pkgname}-manual.tex");
+	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
+	    my %encodings;
+	    foreach my $file (@tex_files) {
+		open(FILE, "< $file")
+		  or die("Error: cannot open file '$file' for reading\n");
+		while(<FILE>) {
+		    if (/^\\inputencoding/) {
+			$enc = $_;
+			chomp $enc;
+			$enc =~ s/^\\inputencoding{(.*)}/\1/;
+			$encodings{$enc} = $enc;
+		    }
+		}
+		close(FILE);
+	    }
+	    my $encs = "";
+	    if (scalar(%encodings)) {
+		$encs = "\\usepackage[" . join(",", values %encodings) .
+		    "]{inputenc}";
+	    }
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
 		     "for writing\n");
-	    print MANUAL "\\documentclass\{article\}\n" .
-		"\\usepackage[latin1]{inputenc}\n" .
+	    print MANUAL "\\documentclass\{article\}\n" . $encs .
 		"\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
-	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
 		  or die("Error: cannot open file '$file' for reading\n");
