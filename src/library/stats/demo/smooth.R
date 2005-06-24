@@ -1,9 +1,10 @@
 ### This used to be in   example(smooth) before we had package-specific demos
 
+require(stats); require(graphics); require(datasets)
 op <- par(ask = interactive(), mfrow = c(1,1))
 
 ## The help(smooth) examples:
-example(smooth)
+example(smooth, package="stats")
 
 ## Didactical investigation:
 

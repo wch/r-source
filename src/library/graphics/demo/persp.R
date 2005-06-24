@@ -1,12 +1,13 @@
 ### Demos for  persp()  plots   -- things not in  example(persp)
 ### -------------------------
 
+require(graphics); require(datasets)
 ## make sure a device is open
 if(dev.cur() <= 1) get(getOption("device"))()
 ## if(dev.interactive())
 ## is FALSE in demo() {using source()}:
 ## Fix it later, copy its code for now
-is.dev.interactive <- .Device %in% c("X11", "GTK", "gnome", 
+is.dev.interactive <- .Device %in% c("X11", "GTK", "gnome",
 				"quartz", "windows", "JavaGD")
 op <- par(ask = is.dev.interactive)
 
