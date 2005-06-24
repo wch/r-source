@@ -213,7 +213,7 @@ in the following format:
 Package: pkgname
 Version: 0.5-1
 Date: 2004-01-01
-Title: My first collection of functions
+Title: My First Collection of Functions
 Author: Joe Developer <Joe.Developer@@some.domain.net>, with
   contributions from A. User <A.User@@whereever.net>.
 Maintainer: Joe Developer <Joe.Developer@@some.domain.net>
