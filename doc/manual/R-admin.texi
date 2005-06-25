@@ -2942,10 +2942,11 @@ In this case the Help Workshop will not be needed.
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
 
-The @code{fptex} distribution of @LaTeX{} (via
-@url{http://www.fptex.org}) includes a suitable port of @code{pdftex}.
-We have also used @code{miktex} (@url{http://www.miktex.org}), which
-needs some customization:  see
+The @code{fptex} distribution of @LaTeX{} (directly from any CTAN node
+such as @url{http://www.ctan.org/tex-archive/systems/windows/fptex/} or
+via XEmTeX at @url{http://www.fptex.org}) includes a suitable port of
+@code{pdftex}.  We have also used @code{miktex}
+(@url{http://www.miktex.org}), which needs some customization: see
 @url{http://www.murdoch-sutherland.com/Rtools/miktex.html}.
 
 Please read @ref{Making the manuals} about how to
