@@ -115,6 +115,12 @@ NEW FEATURES
     o	Conversion of .Rd files to latex now handles encoding more
 	comprehensively, including some support for UTF-8.
 
+    o	terms.formula() no longer allows '.' in a formula unless there
+	is a (non-empty) 'data' argument or 'allowDotAsName = TRUE' is
+	supplied.  We have found several cases where 'data' had not
+	been passed down to terms() and so '.' was interpreted as a 
+	single variable leading to incorrect results.
+
 
 DEPRECATED & DEFUNCT
 

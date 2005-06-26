@@ -8,7 +8,7 @@
 }
 \usage{
 \method{terms}{formula}(x, specials = NULL, abb = NULL, data = NULL, neg.out = TRUE,
-      keep.order = FALSE, simplify = FALSE, ...)
+      keep.order = FALSE, simplify = FALSE, \dots, allowDotAsName=FALSE)
 }
 \arguments{
   \item{x}{a formula.}
@@ -27,6 +27,9 @@
   \item{simplify}{should the formula be expanded and simplified, the
     pre-1.7.0 behaviour?}
   \item{\dots}{further arguments passed to or from other methods.}
+  \item{allowDotAsName}{normally \code{.} in a formula refers to the
+    remaining variables contained in \code{data}.  Exceptionally,
+    \code{.} can be treated as a name for non-standard uses of formulae.}
 }
 \details{
   Not all of the options work in the same way that they do in S and not

@@ -145,7 +145,7 @@ drop.terms <- function(termobj, dropx=NULL, keep.response = FALSE)
 
 terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 			  neg.out = TRUE, keep.order = FALSE,
-                          simplify = FALSE, ...)
+                          simplify = FALSE, ..., allowDotAsName = FALSE)
 {
     fixFormulaObject <- function(object) {
         Terms <- terms(object)
@@ -165,7 +165,8 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
 	data <- as.data.frame(data)
-    terms <- .Internal(terms.formula(x, specials, data, keep.order))
+    terms <- .Internal(terms.formula(x, specials, data, keep.order,
+                                     allowDotAsName))
     if (simplify) {
         a <- attributes(terms)
         terms <- fixFormulaObject(terms)
@@ -312,7 +313,7 @@ model.frame.default <-
     vars <- attr(formula, "variables")
     predvars <- attr(formula, "predvars")
     if(is.null(predvars)) predvars <- vars
-    varnames <- sapply(vars,deparse, width.cutoff=500)[-1]
+    varnames <- sapply(vars, deparse, width.cutoff=500)[-1]
     variables <- eval(predvars, data, env)
     if(is.null(rownames) && (resp <- attr(formula, "response")) > 0) {
         ## see if we can get rownames from the response
