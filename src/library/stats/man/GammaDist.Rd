@@ -32,7 +32,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
 }
 \value{
   \code{dgamma} gives the density,
-  \code{pgamma} gives the distribution function
+  \code{pgamma} gives the distribution function,
   \code{qgamma} gives the quantile function, and
   \code{rgamma} generates random deviates.
 }
@@ -45,19 +45,19 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
     f(x)= \frac{1}{{\sigma}^{\alpha}\Gamma(\alpha)} {x}^{\alpha-1} e^{-x/\sigma}%
   }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
   for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
+  (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the \code{\link{gamma}}
+  function defined in its help.)
+
   The mean and variance are
   \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
   \eqn{Var(X) = \alpha\sigma^2}{Var(X) = a*s^2}.
 
-  \code{pgamma()} uses a new algorithm (mainly by Morten Welinder) which
-  should be uniformly better or equal to AS 239, see the references.
+  The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
+  is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 }
 \note{
   The S parametrization is via \code{shape} and \code{rate}: S has no
   \code{scale} parameter.
-
-  The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}
-  is \code{-pgamma(t, ..., lower = FALSE, log = TRUE)}.
 
   \code{pgamma} is closely related to the incomplete gamma function.  As
   defined by Abramowitz and Stegun 6.5.1
@@ -66,6 +66,9 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   \eqn{P(a, x)} is \code{pgamma(x, a)}.  Other authors (for example
   Karl Pearson in his 1922 tables) omit the normalizing factor,
   defining the incomplete gamma function as \code{pgamma(x, a) * gamma(a)}.
+
+  As from \R 2.1.0 \code{pgamma()} uses a new algorithm (mainly by
+  Morten Welinder) which should be uniformly as accurate as AS 239.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -81,7 +84,7 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
   Chapter 6: Gamma and Related Functions.
 }
 \seealso{
-  \code{\link{gamma}} for the Gamma function, \code{\link{dbeta}} for
+  \code{\link{gamma}} for the gamma function, \code{\link{dbeta}} for
   the Beta distribution and \code{\link{dchisq}} for the chi-squared
   distribution which is a special case of the Gamma distribution.
 }
