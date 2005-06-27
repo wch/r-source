@@ -121,6 +121,10 @@ NEW FEATURES
 	been passed down to terms() and so '.' was interpreted as a 
 	single variable leading to incorrect results.
 
+    o	Functions utf8ToInt() and intToUtf8() to work with UTF-8
+	encoded character strings (irrespective of locale or OS-level
+	UTF-8 support).
+
 
 DEPRECATED & DEFUNCT
 

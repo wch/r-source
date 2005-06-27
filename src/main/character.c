@@ -1814,6 +1814,7 @@ SEXP do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, x = CAR(args);
     int nc;
 
+    checkArity(op, args);
     if(!isString(x) || LENGTH(x) == 0)
 	errorcall(call, _("argument must be a character vector of length 1"));
     if(LENGTH(x) > 1)
@@ -1831,6 +1832,7 @@ SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, nc = LENGTH(x), multiple, len;
     char buf[2];
 
+    checkArity(op, args);
     if(!isRaw(x))
 	errorcall(call, _("argument 'x' must be a raw vector"));
     multiple = asLogical(CADR(args));
@@ -1964,6 +1966,166 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    INTEGER(ans)[i] = (int) itmp;
 	}
+    UNPROTECT(1);
+    return ans;
+}
+
+static int mbrtoint(int *w, const char *s)
+{
+    unsigned int byte;
+    byte = *((unsigned char *)s);
+
+    if (byte == 0) {
+        *w = 0;
+        return 0;	
+    } else if (byte < 0xC0) {
+        *w = (int) byte;
+        return 1;
+    } else if (byte < 0xE0) {
+	if(strlen(s) < 2) return -2;
+        if ((s[1] & 0xC0) == 0x80) {
+            *w = (int) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+            return 2;
+        } else return -1;
+    } else if (byte < 0xF0) {
+	if(strlen(s) < 3) return -2;
+        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x0F) << 12)
+                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	    byte = *w;
+	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
+	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+            return 3;
+        } else return -1;
+    } else if (byte < 0xF8) {
+	if(strlen(s) < 4) return -2;
+        if (((s[1] & 0xC0) == 0x80) 
+	    && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x07) << 18)
+			| ((s[1] & 0x3F) << 12) 
+			| ((s[2] & 0x3F) << 6)
+			| (s[3] & 0x3F));
+	    byte = *w;
+            return 4;
+        } else return -1;
+    } else if (byte < 0xFC) {
+	if(strlen(s) < 5) return -2;
+        if (((s[1] & 0xC0) == 0x80) 
+	    && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80)
+	    && ((s[4] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x03) << 24)
+			| ((s[1] & 0x3F) << 18) 
+			| ((s[2] & 0x3F) << 12) 
+			| ((s[3] & 0x3F) << 6)
+			| (s[4] & 0x3F));
+	    byte = *w;
+            return 5;
+        } else return -1;
+    } else {
+	if(strlen(s) < 6) return -2;
+        if (((s[1] & 0xC0) == 0x80) 
+	    && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80)
+	    && ((s[4] & 0xC0) == 0x80)
+	    && ((s[5] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x01) << 30)
+			| ((s[1] & 0x3F) << 24) 
+			| ((s[2] & 0x3F) << 18) 
+			| ((s[3] & 0x3F) << 12)
+			| ((s[5] & 0x3F) << 6)
+			| (s[5] & 0x3F));
+	    byte = *w;
+            return 5;
+        } else return -1;
+    }
+    return -2;
+}
+
+SEXP do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args);
+    int i, j, nc, *ians, tmp, used;
+    char *s = CHAR(STRING_ELT(x, 0));
+
+    checkArity(op, args);
+    if(!isString(x) || LENGTH(x) == 0)
+	errorcall(call, _("argument must be a character vector of length 1"));
+    if(LENGTH(x) > 1)
+	warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
+    nc = LENGTH(STRING_ELT(x, 0)); /* ints will be shorter */
+    ians = (int *) R_alloc(nc,  sizeof(int *));
+    for(i = 0, j = 0; i < nc; i++) {
+	used = mbrtoint(&tmp, s);
+	if(used <= 0) break;
+	ians[j++] = tmp;
+	s += used;
+    }
+    if(used < 0) error("invalid UTF-8 string");
+    ans = allocVector(INTSXP, j);
+    for(i = 0; i < j; i++) INTEGER(ans)[i] = ians[i];
+    return ans;
+}
+
+/* based on pcre.c */
+static const int utf8_table1[] =
+  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
+static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+
+static size_t inttomb(char *s, const int wc)
+{
+    register int i, j;
+    unsigned int cvalue = wc;
+    char buf[10], *b;
+
+    b = s ? s : buf;
+    if(cvalue == 0) {*b = 0; return 0;}
+    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
+	if (cvalue <= utf8_table1[i]) break;
+    b += i;
+    for (j = i; j > 0; j--) {
+	*b-- = 0x80 | (cvalue & 0x3f);
+	cvalue >>= 6;
+    }
+    *b = utf8_table2[i] | cvalue;
+    return i + 1;
+}
+
+SEXP do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, c, x = CAR(args);
+    int i, nc = LENGTH(x), multiple, len, used;
+    char buf[10];
+
+    checkArity(op, args);
+    if(!isInteger(x))
+	errorcall(call, _("argument 'x' must be an integer vector"));
+    multiple = asLogical(CADR(args));
+    if(multiple == NA_LOGICAL)
+	errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
+    if(multiple) {
+	PROTECT(ans = allocVector(STRSXP, nc));
+	for(i = 0; i < nc; i++) {
+	    used = inttomb(buf, INTEGER(x)[i]);
+	    buf[used] = '\0';
+	    SET_STRING_ELT(ans, i, mkChar(buf));
+	}
+	/* do we want to copy e.g. names here? */
+    } else {
+	for(i = 0, len = 0; i < nc; i++)
+	    len += inttomb(NULL, INTEGER(x)[i]);
+	PROTECT(ans = allocVector(STRSXP, 1));
+	/* String is not necessarily 0-terminated and may contain nuls
+	   so don't use mkChar */
+	c = allocString(len); /* adds zero terminator */
+	for(i = 0, len = 0; i < nc; i++) {
+	    used = inttomb(buf, INTEGER(x)[i]);
+	    strncpy(CHAR(c) + len, buf, used);
+	    len += used;
+	}
+	SET_STRING_ELT(ans, 0, c);
+    }
     UNPROTECT(1);
     return ans;
 }
