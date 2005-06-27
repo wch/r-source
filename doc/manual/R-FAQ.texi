@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-24
+@set FAQ_DATE @value{FAQ_YEAR}-06-27
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2538,6 +2538,13 @@ significance of each F and variance components.
 @item hmm.discnp
 Hidden Markov models with discrete non-parametric observation
 distributions.
+@item hoa
+A bundle of packages for higher order likelihood-based inference.
+Contains @strong{cond} for approximate conditional inference for
+logistic and loglinear models, @strong{csampling} for conditional
+simulation in regression-scale models, @strong{marg} for approximate
+marginal inference for regression-scale models, and @strong{nlreg} for
+higher order inference for nonlinear heteroscedastic models.
 @item homals
 Homogeneity Analysis (HOMALS) package with optional Tcl/Tk interface.
 @item hopach
