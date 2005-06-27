@@ -45,8 +45,8 @@ rgamma(n, shape, rate = 1, scale = 1/rate)
     f(x)= \frac{1}{{\sigma}^{\alpha}\Gamma(\alpha)} {x}^{\alpha-1} e^{-x/\sigma}%
   }{f(x)= 1/(s^a Gamma(a)) x^(a-1) e^-(x/s)}
   for \eqn{x > 0}, \eqn{\alpha > 0}{a > 0} and \eqn{\sigma > 0}{s > 0}.
-  (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the \code{\link{gamma}}
-  function defined in its help.)
+  (Here \eqn{\Gamma(\alpha)}{Gamma(a)} is the function implemented by \R's
+  \code{\link{gamma}()} and defined in its help.)
 
   The mean and variance are
   \eqn{E(X) = \alpha\sigma}{E(X) = a*s} and
