@@ -271,6 +271,8 @@ BUG FIXES
     o   ftable() and xtabs() had a check for interactions that would
 	not work correctly with '.' in the formula.
 
+    o   The formula method for pairs() was ignoring the na.action argument.
+
 
 
 		CHANGES IN R VERSION 2.1.1

@@ -7,7 +7,7 @@ function(formula, data = NULL, ..., subset, na.action = stats::na.pass)
     if(is.matrix(eval(m$data, parent.frame())))
         m$data <- as.data.frame(data)
     m$... <- NULL
-    m$na.action <- stats::na.pass # force in this default
+    m$na.action <- na.action # force in even if  default
     m[[1]] <- as.name("model.frame")
     mf <- eval(m, parent.frame())
     pairs(mf, ...)
