@@ -160,7 +160,7 @@ $(texinputs_BASE): FORCE $(top_srcdir)/share/perl/build-help.pl
 	    "$(top_srcdir)/src/library/$${pkg}" "$@"; then \
 	  echo "collecting LaTeX docs for package '$${pkg}' ..."; \
 	  (cd $(top_builddir)/src/library && \
-	    OPTS="--latex" $(MAKE) R_PKGS_BASE="$${pkg}" Rdfiles); \
+	    $(MAKE) R_PKGS_BASE="$${pkg}" latex); \
 	  PERL5LIB=$(top_srcdir)/share/perl $(PERL) $(top_srcdir)/tools/pkg2tex.pl $${pkg}; \
 	fi)
 FORCE:
