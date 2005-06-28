@@ -19,8 +19,8 @@ acf(x, lag.max = NULL,
 
 pacf(x, lag.max, plot, na.action, \dots)
 
-\method{pacf}{default}(x, lag.max = NULL, plot = TRUE, na.action = na.fail, 
-    ...) 
+\method{pacf}{default}(x, lag.max = NULL, plot = TRUE, na.action = na.fail,
+    ...)
 
 ccf(x, y, lag.max = NULL, type = c("correlation", "covariance"),
     plot = TRUE, na.action = na.fail, \dots)
@@ -95,7 +95,8 @@ acf.obj[i, j]
   B.D. Ripley.
 }
 \seealso{
-  \code{\link{plot.acf}}
+  \code{\link{plot.acf}}, \code{\link{ARMAacf}} for the exact
+  autocorrelations of a given ARMA process.
 }
 \examples{
 ## Examples from Venables & Ripley
