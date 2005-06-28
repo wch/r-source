@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-05-13), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-06-27 r34860)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -205,5 +206,41 @@ logical(0)
 +                     encoding="UCS-2LE"), 0, quiet=TRUE))
 + } else print(1:8)
 [1] 1 2 3 4 5 6 7 8
+> 
+> ## tests of allowEscape
+> x <- "1 2 3 \\ab\\c"
+> writeLines(x, "test.dat")
+> readLines("test.dat")
+[1] "1 2 3 \\ab\\c"
+> scan("test.dat", "")
+Read 4 items
+[1] "1"    "2"    "3"    "\abc"
+> scan("test.dat", "", allowEscapes=FALSE)
+Read 4 items
+[1] "1"       "2"       "3"       "\\ab\\c"
+> read.table("test.dat", header=FALSE)
+  V1 V2 V3   V4
+1  1  2  3 \abc
+> read.table("test.dat", header=FALSE, allowEscapes=FALSE)
+  V1 V2 V3      V4
+1  1  2  3 \\ab\\c
+> x <- c("TEST", 1, 2, "\\b", 4, 5, "\\040", "\\x20",
++        "c:\\spencer\\tests",
++        "\\t", "\\n", "\\r")
+> writeLines(x, "test.dat")
+> read.table("test.dat", allowEscapes=FALSE, header = TRUE)
+                 TEST
+1                   1
+2                   2
+3                 \\b
+4                   4
+5                   5
+6               \\040
+7               \\x20
+8  c:\\spencer\\tests
+9                 \\t
+10                \\n
+11                \\r
+> unlink("test.dat")
 > ## end of tests
 > 

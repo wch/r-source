@@ -15,7 +15,7 @@ read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
-           comment.char = "#")
+           comment.char = "#", allowEscapes = TRUE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
@@ -146,6 +146,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   \item{comment.char}{character: a character vector of length one
     containing a single character or an empty string.  Use \code{""} to
     turn off the interpretation of comments altogether.}
+
+  \item{allowEscapes}{logical.  Should C-style escapes such as
+    \code{\n} be processed (the default) or read verbatim?   Note that if
+    not within quotes these could be interpreted as a delimiter (but not
+    as a comment character).}
 
   \item{\dots}{Further arguments to \code{read.table}.}
 }

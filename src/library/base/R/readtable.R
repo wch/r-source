@@ -25,7 +25,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          nrows = -1, skip = 0,
          check.names = TRUE, fill = !blank.lines.skip,
          strip.white = FALSE, blank.lines.skip = TRUE,
-         comment.char = "#")
+         comment.char = "#", allowEscapes = TRUE)
 {
     if(is.character(file)) {
         file <- file(file, "r")
@@ -65,7 +65,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                   nlines = 1, quiet = TRUE, skip = 0,
                   strip.white = TRUE,
                   blank.lines.skip = blank.lines.skip,
-                  comment.char = comment.char)
+                  comment.char = comment.char, allowEscapes = allowEscapes)
     col1 <- if(missing(col.names)) length(first) else length(col.names)
     col <- numeric(nlines - 1)
     if (nlines > 1)
@@ -75,7 +75,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                                   nlines = 1, quiet = TRUE, skip = 0,
                                   strip.white = strip.white,
                                   blank.lines.skip = blank.lines.skip,
-                                  comment.char = comment.char))
+                                  comment.char = comment.char,
+                                  allowEscapes = allowEscapes))
     cols <- max(col1, col)
 
     ##	basic column counting and header determination;
@@ -139,7 +140,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
                  strip.white = strip.white,
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE,
-                 comment.char = comment.char)
+                 comment.char = comment.char, allowEscapes = allowEscapes)
 
     nlines <- length(data[[ which(keep)[1] ]])
 

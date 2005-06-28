@@ -125,6 +125,8 @@ NEW FEATURES
 	encoded character strings (irrespective of locale or OS-level
 	UTF-8 support).
 
+    o	read.table() now passes 'allowEscapes' to scan().
+
 
 DEPRECATED & DEFUNCT
 
