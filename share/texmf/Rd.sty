@@ -348,5 +348,19 @@
   \end{center}
   \nopagebreak}
 \DeclareTextCommandDefault{\Rpercent}{\%{}}
+%% for use with the output of encoded_text_to_latex
+\ProvideTextCommandDefault{\textdegree}{\ensuremath{{^\circ}}}
+\ProvideTextCommandDefault{\textonehalf}{\ensuremath{\frac12}}
+\ProvideTextCommandDefault{\textonequarter}{\ensuremath{\frac14}}
+\ProvideTextCommandDefault{\textthreequarters}{\ensuremath{\frac34}}
+\ProvideTextCommandDefault{\textcent}{\TextSymbolUnavailable\textcent}
+\ProvideTextCommandDefault{\textyen}{\TextSymbolUnavailable\textyen}
+\ProvideTextCommandDefault{\textcurrency}{\TextSymbolUnavailable\textcurrency}
+\ProvideTextCommandDefault{\textbrokenbar}{\TextSymbolUnavailable\textbrokenbar}
+\ProvideTextCommandDefault{\texteuro}{\TextSymbolUnavailable\texteuro}
+\providecommand{\mathonesuperior}{\ensuremath{^1}}
+\providecommand{\mathtwosuperior}{\ensuremath{^2}}
+\providecommand{\maththreesuperior}{\ensuremath{^3}}
+
 \InputIfFileExists{Rd.cfg}{%
   \typeout{Reading personal defaults ...}}{}
