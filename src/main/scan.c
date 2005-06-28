@@ -1501,15 +1501,13 @@ SEXP do_menu(SEXP call, SEXP op, SEXP args, SEXP rho)
     return ans;
 }
 
-/* readTableHead(file, nlines, comment.char, blank.lines.skip, quote) */
+/* readTableHead(file, nlines, comment.char, blank.lines.skip, quote, sep) */
 /* simplified version of readLines, with skip of blank lines and
    comment-only lines */
-/* <FIXME>  This does not handle escaped quotes, nor does it appear to
-   use the blank.lines.skip arg */
 #define BUF_SIZE 1000
 SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP file, comstr, ans = R_NilValue, ans2, quotes;
+    SEXP file, comstr, ans = R_NilValue, ans2, quotes, sep;
     int nlines, i, c, quote=0, nread, nbuf, buf_size = BUF_SIZE, blskip;
     char *p, *buf;
     Rboolean empty, skip;
@@ -1523,7 +1521,8 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     nlines = asInteger(CAR(args)); args = CDR(args);
     comstr = CAR(args);		   args = CDR(args);
     blskip = asLogical(CAR(args)); args = CDR(args);
-    quotes = CAR(args);
+    quotes = CAR(args);		   args = CDR(args);
+    sep = CAR(args);
 
     if (nlines <= 0 || nlines == NA_INTEGER)
 	errorcall(call, _("invalid 'nlines' value"));
@@ -1551,6 +1550,11 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     data.comchar = NO_COMCHAR; /*  here for -Wall */
     if (strlen(p) > 1) errorcall(call, _("invalid 'comment.char' value"));
     else if (strlen(p) == 1) data.comchar = (int)*p;
+    if (isString(sep) || isNull(sep)) {
+	if (length(sep) == 0) data.sepchar = 0;
+	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
+	/* gets compared to chars: bug prior to 1.7.0 */
+    } else errorcall(call, _("invalid 'sep' value"));
 
     i = asInteger(file);
     data.con = getConnection(i);
@@ -1575,22 +1579,49 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (data.ttyflag) sprintf(ConsolePrompt, "%d: ", nread);
 	/* want to interpret comments here, not in scanchar */
 	while((c = scanchar(TRUE, &data)) != R_EOF) {
-	    if(nbuf == buf_size) {
+	    if(nbuf >= buf_size -1) {
 		buf_size *= 2;
 		buf = (char *) realloc(buf, buf_size);
 		if(!buf)
 		    error(_("cannot allocate buffer in readTableHead"));
 	    }
-	    if(quote && c == quote) quote = 0;
-	    else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
+	    /* Need to handle escaped embedded quotes, and how they are
+	       escaped depends on 'sep' */
+	    if(quote) {
+		if(data.sepchar == 0 && c == '\\') {
+		    /* all escapes should be passed through */
+		    buf[nbuf++] = c;
+		    c = scanchar(TRUE, &data);
+		    if(c == R_EOF)
+			errorcall(call, _("\\ followed by EOF"));
+		    buf[nbuf++] = c;
+		    continue;
+		} else if(quote && c == quote) {
+		    if(data.sepchar == 0)
+			quote = 0;
+		    else { /* need to check for doubled quote */
+			char c2 = scanchar(TRUE, &data);
+			if(c2 == quote)
+			    buf[nbuf++] = c; /* and c = c2 */
+			else {
+			    unscanchar(c2, &data);
+			    quote = 0;
+			}
+		    }
+		}
+	    } else if(!quote && !skip && strchr(data.quoteset, c)) quote = c;
+	    /* A line is empty only if it contains nothing before
+	       EOL, EOF or a comment char. 
+	       A line containing just white space is not empty if sep=","
+	    */
 	    if(empty && !skip)
-		if(c != ' ' && c != '\t' && c != data.comchar) empty = FALSE;
+		if(c != '\n' && c != data.comchar) empty = FALSE;
 	    if(!quote && !skip && c == data.comchar) skip = TRUE;
 	    if(quote || c != '\n') buf[nbuf++] = c; else break;
 	}
 	buf[nbuf] = '\0';
-	if(data.ttyflag && empty) break;
-	if(!empty) {
+	if(data.ttyflag && empty) goto no_more_lines;
+	if(!empty || !blskip) {
 	    SET_STRING_ELT(ans, nread, mkChar(buf));
 	    nread++;
 	}
@@ -1635,7 +1666,8 @@ static void writecon(Rconnection con, char *format, ...)
 {
     va_list(ap);
     va_start(ap, format);
-    con->vfprintf(con, format, ap);
+    /* Parentheses added for FC4 with gcc4 and -D_FORTIFY_SOURCE=2 */
+    (con->vfprintf)(con, format, ap);
     va_end(ap);
 }
 
@@ -1665,7 +1697,7 @@ static Rboolean isna(SEXP x, int indx)
     return FALSE;
 }
 
-
+#ifdef UNUSED
 static void change_dec(char *tmp, char cdec, SEXPTYPE t)
 {
     char *p;
@@ -1678,10 +1710,11 @@ static void change_dec(char *tmp, char cdec, SEXPTYPE t)
 	break;
     }
 }
+#endif
 
 /* a version of EncodeElement with different escaping of char strings */
 static char *EncodeElement2(SEXP x, int indx, Rboolean quote,
-			    Rboolean qmethod, R_StringBuffer *buff)
+			    Rboolean qmethod, R_StringBuffer *buff, char cdec)
 {
     int nbuf;
     char *p, *p0, *q;
@@ -1700,7 +1733,7 @@ static char *EncodeElement2(SEXP x, int indx, Rboolean quote,
 	*q++ = '"'; *q = '\0';
 	return buff->data;
     }
-    return EncodeElement(x, indx, quote ? '"' : 0);
+    return EncodeElement(x, indx, quote ? '"' : 0, cdec);
 }
 
 
@@ -1753,7 +1786,7 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(strlen(CHAR(STRING_ELT(dec, 0))) != 1)
 	errorcall(call, _("'dec' must be a single character"));
     cdec = CHAR(STRING_ELT(dec, 0))[0];
-    cdec = (cdec == '.') ? '\0' : cdec;
+    /* cdec = (cdec == '.') ? '\0' : cdec; */
     quote_col = (Rboolean *) R_alloc(nc, sizeof(Rboolean));
     for(j = 0; j < nc; j++) quote_col[j] = FALSE;
     for(i = 0; i < length(quote); i++) { /* NB, quote might be NULL */
@@ -1782,7 +1815,7 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!isNull(rnames))
 		writecon(con, "%s%s",
 			 EncodeElement2(rnames, i, quote_rn, qmethod,
-					&strBuf), csep);
+					&strBuf, cdec), csep);
 	    for(j = 0; j < nc; j++) {
 		xj = VECTOR_ELT(x, j);
 		if(j > 0) writecon(con, "%s", csep);
@@ -1791,12 +1824,12 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    if(!isNull(levels[j])) {
 			tmp = EncodeElement2(levels[j], INTEGER(xj)[i] - 1,
 					     quote_col[j], qmethod,
-					     &strBuf);
+					     &strBuf, cdec);
 		    } else {
 			tmp = EncodeElement2(xj, i, quote_col[j], qmethod,
-					     &strBuf);
+					     &strBuf, cdec);
 		    }
-		    if(cdec) change_dec(tmp, cdec, TYPEOF(xj));
+		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(xj)); */
 		}
 		writecon(con, "%s", tmp);
 	    }
@@ -1815,14 +1848,14 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(!isNull(rnames))
 		writecon(con, "%s%s",
 			 EncodeElement2(rnames, i, quote_rn, qmethod,
-					&strBuf), csep);
+					&strBuf, cdec), csep);
 	    for(j = 0; j < nc; j++) {
 		if(j > 0) writecon(con, "%s", csep);
 		if(isna(x, i + j*nr)) tmp = cna;
 		else {
 		    tmp = EncodeElement2(x, i + j*nr, quote_col[j], qmethod,
-					&strBuf);
-		    if(cdec) change_dec(tmp, cdec, TYPEOF(x));
+					&strBuf, cdec);
+		    /* if(cdec) change_dec(tmp, cdec, TYPEOF(x)); */
 		}
 		writecon(con, "%s", tmp);
 	    }

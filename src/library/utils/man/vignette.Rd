@@ -14,7 +14,7 @@ vignette(topic, package = NULL, lib.loc = NULL)
 }
 \arguments{
   \item{topic}{a character string giving the (base) name of the vignette
-    to view.}
+    to view. If omitted, all available vignettes are listed.}
   \item{package}{a character vector with the names of packages to
     search through, or \code{NULL} in which case \emph{all} available
     packages in the library trees specified by \code{lib.loc} are
@@ -45,8 +45,6 @@ vignette(topic, package = NULL, lib.loc = NULL)
 \examples{
 ## List vignettes in all attached packages
 vignette()
-## List vignettes in all available packages
-vignette(package = .packages(all.available = TRUE))
 
 \dontrun{
 ## Open the grid intro vignette
@@ -58,6 +56,12 @@ print(v1)
 
 ## Now let us have a closer look at the code
 edit(v1)
+
+## A package can have more than one vignette (package grid has several):
+vignette(package="grid")
+vignette("rotated")
+## The same, but without searching for it:
+vignette("rotated", package="grid")
 }
 }
 \keyword{documentation}

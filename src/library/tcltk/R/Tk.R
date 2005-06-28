@@ -268,6 +268,8 @@ as.tclObj <- function(x, drop=FALSE) {
 # Actually makes .default and .tclVar methods equivalent, the latter
 # just saves a level of function dispatching
 
+tclServiceMode <- function(on = NULL) .External("RTcl_ServiceMode", as.logical(on), PACKAGE="tcltk")
+
 #----
 
 .TkRoot <- .Tk.newwin("")

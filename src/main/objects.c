@@ -456,13 +456,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	cptr = cptr->nextcontext;
     }
     if (cptr == NULL)
-	error(_("NextMethod called from outside a function"));
+	error(_("'NextMethod' called from outside a function"));
 
     PROTECT(newcall = duplicate(cptr->call));
 
     /* eg get("print.ts")(1) */
     if (TYPEOF(CAR(cptr->call)) == LANGSXP)
-       error(_("NextMethod called from an anonymous function"));
+       error(_("'NextMethod' called from an anonymous function"));
 
     /* Find dispatching environments. Promises shouldn't occur, but
        check to be on the safe side.  If the variables are not in the

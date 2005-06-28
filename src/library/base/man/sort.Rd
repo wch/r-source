@@ -79,7 +79,9 @@ is.unsorted(x, na.rm = FALSE)
   \emph{Communications of the ACM} \bold{12}, 185--187.
 }
 \seealso{
-  \code{\link{order}}, \code{\link{rank}}.
+  \code{\link{order}} for sorting on or reordering multiple variables.
+  
+  \code{\link{rank}}.
 }
 \examples{
 require(stats)

@@ -15,7 +15,7 @@ is.primitive(x)
   specific classes of objects, see \link{InternalMethods}.
 
   \code{is.primitive(x)} tests if \code{x} is a primitive function
-  (either a \code{"builtin"} or \code{"special"}, see \code{\link{typeof}})?
+  (either a \code{"builtin"} or \code{"special"} as from \code{\link{typeof}})?
 }
 \value{
   \code{TRUE} if \code{x} is a (primitive) function, and \code{FALSE}

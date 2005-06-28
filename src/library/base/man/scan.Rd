@@ -31,6 +31,10 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     and so will match \code{sep = "\n"}.
 
     \code{file} can also be a complete URL.
+
+    To read a data file not in the current encoding (for example a
+    Latin-1 file in a UTF-8 locale or conversely) use a
+    \code{\link{file}} connection setting the \code{encoding} argument.
   }
 
   \item{what}{the type of \code{what} gives the type of data to be read.
@@ -126,7 +130,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   field is skipped (but a \code{NULL} component appears in the result).
 
   The type of \code{what} or its components can be one of the six
-  atomic types or \code{NULL},
+  atomic vector types or \code{NULL} (see \code{\link{is.atomic}}).
 
   \sQuote{White space} is defined for the purposes of this function as
   one or more contiguous characters from the set space, horizontal tab,
@@ -160,8 +164,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   If \code{comment.char} occurs (except inside a quoted character
   field), it signals that the rest of the line
   should be regarded as a comment and be discarded.  Lines beginning
-  with a comment character (possibly after white space) are treated
-  as blank lines.
+  with a comment character (possibly after white space with the default
+  separator) are treated as blank lines.
 
   As from \R 2.1.0, \code{scan} attempts to share storage with
   character strings that have already been read in the call.
@@ -199,6 +203,8 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   matrices;
   \code{\link{readLines}} to read a file a line at a time.
   \code{\link{write}}.
+
+  \code{Quotes} for the details of C-style escape sequences.
 }
 \examples{
 cat("TITLE extra line", "2 3 5 7", "11 13 17", file="ex.data", sep="\n")

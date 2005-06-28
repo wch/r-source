@@ -104,7 +104,7 @@ getOption(x)
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.
-      Valid values are 25\dots100000 with default 500.}
+      Valid values are 25\dots500000 with default 5000.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
@@ -197,6 +197,14 @@ getOption(x)
       when it controls whether input is echoed.  Command-line option
       \option{--slave} sets this initially to \code{FALSE}.}
 
+    \item{\code{max.print}:}{integer, defaulting to \code{10000}.
+      \code{\link{print}} or \code{\link{show}} methods can make use of
+      this option, to limit the amount of information that is printed,
+      typically to something in the order \code{max.print} lines.
+
+      This is not yet used in base \R.
+    }
+
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
       \option{--verbose}.}
@@ -271,6 +279,10 @@ getOption(x)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
+    \item{\code{OutDec}:}{one-character string.  The character to be
+      used as the decimal point in output conversions, that is in
+      printing, plotting and \code{as.character} but not deparsing.}
+
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
@@ -286,19 +298,21 @@ getOption(x)
     \code{continue} \tab \code{"+ "}\cr
     \code{width}  \tab \code{80} \tab
     \code{digits} \tab \code{7}\cr
-    \code{expressions} \tab \code{500} \tab
-    \code{keep.source} \tab \code{TRUE}\cr
+    \code{expressions} \tab \code{5000} \tab
+    \code{keep.source} \tab \code{interactive()}\cr
     \code{show.signif.stars} \tab \code{TRUE} \tab
     \code{show.coef.Pvalues} \tab \code{TRUE}\cr
     \code{na.action} \tab \code{na.omit} \tab
-    \code{ts.eps} \tab \code{1e-5}\cr
-    \code{error} \tab \code{NULL} \tab
-    \code{show.error.messages} \tab \code{TRUE} \cr
-    \code{warn} \tab \code{0}\tab
-    \code{warning.length} \tab \code{1000}\cr
-    \code{echo} \tab \code{TRUE} \tab
-    \code{verbose} \tab \code{FALSE} \cr
-    \code{scipen} \tab \code{0} \tab \code{locatorBell} \tab \code{TRUE}
+    \code{timeout} \tab \code{60}\cr
+    \code{ts.eps} \tab \code{1e-5}\tab
+    \code{error} \tab \code{NULL} \cr
+    \code{show.error.messages} \tab \code{TRUE} \tab
+    \code{warn} \tab \code{0}\cr
+    \code{warning.length} \tab \code{1000}\tab
+    \code{echo} \tab \code{TRUE} \cr
+    \code{verbose} \tab \code{FALSE} \tab
+    \code{scipen} \tab \code{0} \cr
+    \code{locatorBell} \tab \code{TRUE} \tab \tab \cr
   }
   Others are set from environment variables or are platform-dependent.
 }

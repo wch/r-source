@@ -284,11 +284,11 @@ grid.prompt <- function(ask) {
   # page 2)
   # This is safe because all that is done is a query and/or
   # set of grid state setting "ask"
-  old.prompt <- .Call("L_getAsk")
+  old.prompt <- .Call("L_getAsk", PACKAGE = "grid")
   if (!missing(ask)) {
     if (!is.logical(ask))
       stop("Invalid 'ask' value")
-    .Call("L_setAsk", ask)
+    .Call("L_setAsk", ask, PACKAGE = "grid")
   }
   old.prompt
 }

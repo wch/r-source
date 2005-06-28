@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2001-4 The R Development Core Team.
+ *  Copyright (C) 2001-5 The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,13 @@
 
 /* Used by third-party graphics devices */
 
+#ifndef R_GRAPHICSENGINE_H_
+#define R_GRAPHICSENGINE_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  * The current graphics engine (including graphics device) API version
  * MUST be integer
@@ -30,9 +37,10 @@
  * can detect any version mismatch.
  *
  * Version 1:  Introduction of the version number.
+ * Version 2:  GEDevDesc *dd dropped from GEcontourLines().
  */
 
-#define R_GE_version 1
+#define R_GE_version 2
 
 int R_GE_getVersion();
 
@@ -323,8 +331,7 @@ void GEMathText(double x, double y, SEXP expr,
  * From plot3d.c 
  */
 SEXP GEcontourLines(double *x, int nx, double *y, int ny,
-		    double *z, double *levels, int nl,
-		    GEDevDesc *dd);
+		    double *z, double *levels, int nl);
 /* 
  * (End from plot3d.c)
  */
@@ -375,3 +382,10 @@ SEXP GEcreateSnapshot(GEDevDesc *dd);
 void GEplaySnapshot(SEXP snapshot, GEDevDesc* dd);
 void GEonExit();
 void GEnullDevice();
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* R_GRAPHICSENGINE_ */

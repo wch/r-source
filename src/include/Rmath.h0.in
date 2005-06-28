@@ -233,7 +233,6 @@ double  Rlog1p(double);
 #define lbeta		Rf_lbeta
 #define lchoose		Rf_lchoose
 #define lgammafn	Rf_lgammafn
-/* FIXME: Add the next 4 (from ../nmath/pgamma.c) to the API */
 #define lgamma1p	Rf_lgamma1p
 #define log1pmx		Rf_log1pmx
 #define logspace_add	Rf_logspace_add
@@ -567,6 +566,19 @@ double	fprec(double, double);
 double	fround(double, double);
 double	fsign(double, double);
 double	ftrunc(double);
+
+double  log1pmx(double); /* Accurate log(1+x) - x, {care for small x} */
+double  lgamma1p(double);/* accurate log(gamma(x+1)), small x (0 < x < 0.5) */
+
+/* Compute the log of a sum or difference from logs of terms, i.e.,
+ *
+ *     log (exp (logx) + exp (logy))
+ * or  log (exp (logx) - exp (logy))
+ *
+ * without causing overflows or throwing away too much accuracy:
+ */
+double  logspace_add(double logx, double logy);
+double  logspace_sub(double logx, double logy);
 
 
 

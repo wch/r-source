@@ -66,8 +66,9 @@ RweaveLatexSetup(file, syntax, output = NULL, quiet = FALSE,
     \item{split:}{logical (\code{FALSE}). If \code{TRUE}, text output is
       written to separate files 
       for each code chunk.}
-    \item{strip.white:}{logical (\code{TRUE}). If \code{TRUE}, blank
-      lines at the beginning and end of output are removed.}
+    \item{strip.white:}{character string (\code{false}). If \code{true}, blank
+      lines at the beginning and end of output are removed. If
+      \code{all}, then all blank lines are removed from the output.}
     \item{prefix:}{logical (\code{TRUE}). If \code{TRUE} generated filenames of
       figures and output have a common prefix.}
     \item{prefix.string:}{a character string, default is the name of the

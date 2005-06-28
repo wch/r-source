@@ -6,6 +6,7 @@
 }
 \usage{
 pie(x, labels = names(x), edges = 200, radius = 0.8,
+    clockwise = FALSE, init.angle = if(clockwise) 90 else 0,
     density = NULL, angle = 45, col = NULL, border = NULL,
     lty = NULL, main = NULL, \dots)
 }
@@ -19,6 +20,13 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
   \item{radius}{the pie is drawn centered in a square box whose sides
     range from \eqn{-1} to \eqn{1}.  If the character strings labeling
     the slices are long it may be necessary to use a smaller radius.}
+  \item{clockwise}{logical indicating if slices are drawn clockwise or
+    counter clockwise (i.e., mathematically positive direction), the
+    latter is default.}
+  \item{init.angle}{number specifying the \emph{starting angle} (in
+    degrees) for the slices. Defaults to 0 (i.e., \sQuote{3 o'clock})
+    unless \code{clockwise} is true where \code{init.angle}
+    defaults to 90 (degrees), (i.e., \sQuote{12 o'clock}).}
   \item{density}{the density of shading lines, in lines per inch.
     The default value of \code{NULL} means that no shading lines
     are drawn. Non-positive values of \code{density} also inhibit the
@@ -46,7 +54,7 @@ pie(x, labels = names(x), edges = 200, radius = 0.8,
     accurate angle judgements.}
   This statement is based on the empirical investigations of Cleveland
   and McGill as well as investigations by perceptual psychologists.
-  
+
   Prior to \R 1.5.0 this was known as \code{piechart}, which is the name
   of a Trellis function, so the name was changed to be compatible with S.
 }
@@ -73,6 +81,9 @@ pie(pie.sales,
     col = c("purple", "violetred1", "green3", "cornsilk", "cyan", "white"))
 pie(pie.sales, col = gray(seq(0.4,1.0,length=6)))
 pie(pie.sales, density = 10, angle = 15 + 10 * 1:6)
+pie(pie.sales, clockwise=TRUE, main="pie(*, clockwise=TRUE)")
+segments(0,0, 0,1, col= "red", lwd = 2)
+text(0,1, "init.angle = 90", col= "red")
 
 n <- 200
 pie(rep(1,n), labels="", col=rainbow(n), border=NA,

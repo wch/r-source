@@ -10,8 +10,8 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \item{width}{The width of the plot in inches.}
   \item{height}{the height of the plot in inches.}
   \item{debug}{should debugging information be printed.}
-  \item{bg}{the background color for the plot.}
-  \item{fg}{the foreground color for the plot.}
+  \item{bg}{the background color for the plot.  Ignored.}
+  \item{fg}{the foreground color for the plot.  Ignored.}
 }
 \description{
   This function produces graphics suitable for inclusion in TeX and
@@ -22,6 +22,12 @@ pictex(file = "Rplots.tex", width = 5, height = 4, debug = FALSE,
   \code{\link{plotmath}} is not supported.
 
   Multiple plots will be placed as separate environments in the output file.
+
+  Line widths are ignored except when setting the spacing of line textures.
+  \code{pch="."} corresponds to a square of side 1pt.
+
+  This device does not support colour (nor does the PicTeX package),
+  and all colour settings are ignored.
 }
 \references{
   Knuth, D. E. (1984)
@@ -62,7 +68,7 @@ dev.off()
 \%...
 \\end{document}
 
-\%\%-- TeX Example --
+\%\%-- plain TeX Example --
 \\input pictex
 $$ \\input Rplots.tex $$
 }

@@ -6,9 +6,9 @@
   Plot and add a smooth curve computed by \code{loess} to a scatter plot.
 }
 \usage{
-scatter.smooth(x, y, span = 2/3, degree = 1,
+scatter.smooth(x, y = NULL, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"),
-    xlab = deparse(substitute(x)), ylab = deparse(substitute(y)),
+    xlab = NULL, ylab = NULL,
     ylim = range(y, prediction$y, na.rm = TRUE),
     evaluation = 50, \dots)
 
@@ -16,8 +16,10 @@ loess.smooth(x, y, span = 2/3, degree = 1,
     family = c("symmetric", "gaussian"), evaluation = 50, \dots)
 }
 \arguments{
-  \item{x}{x coordinates for scatter plot.}
-  \item{y}{y coordinates for scatter plot.}
+  \item{x,y}{the \code{x} and \code{y} arguments provide the x and y
+    coordinates for the plot.  Any reasonable way of defining the
+    coordinates is acceptable.  See the function \code{\link{xy.coords}}
+    for details.}
   \item{span}{smoothness parameter for \code{loess}.}
   \item{degree}{degree of local polynomial used.}
   \item{family}{if \code{"gaussian"} fitting is by least-squares, and if

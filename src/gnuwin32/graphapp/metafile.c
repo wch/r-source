@@ -83,14 +83,14 @@ metafile newmetafile(char *name, double width, double height)
      * use the ratio to adjust the 'reference dimension'
      * in case.... ("Importing graph in MsWord" thread)
     */
-    if (cppix<0) {
+    if (cppix < 0) {
        cppix = 25.40 * devicewidth(NULL) / devicewidthmm(NULL);
        ppix  = 100 * devicepixelsx(NULL);
        cppiy = 25.40 * deviceheight(NULL) / deviceheightmm(NULL);
        ppiy = 100 * devicepixelsy(NULL);
     }
     /* This is all very peculiar. We would really like to create 
-       a metafile measured in some snesible units, but it seems 
+       a metafile measured in some sensible units, but it seems 
        we get it in units of 0.01mm *on the current screen* with
        horizontal and vertical resolution set for that screen.
        And of course Windows is famous for getting screen sizes wrong.

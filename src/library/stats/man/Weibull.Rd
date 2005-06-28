@@ -38,11 +38,11 @@ rweibull(n, shape, scale = 1)
   \deqn{f(x) = (a/\sigma) {(x/\sigma)}^{a-1} \exp (-{(x/\sigma)}^{a})}{%
         f(x) = (a/b) (x/b)^(a-1) exp(- (x/b)^a)}
   for \eqn{x > 0}.
-  The cumulative is
+  The cumulative distribution function is
   \eqn{F(x) = 1 - \exp(-{(x/\sigma)}^a)}{F(x) = 1 - exp(- (x/b)^a)}, the
   mean is \eqn{E(X) = \sigma \Gamma(1 + 1/a)}{E(X) = b Gamma(1 + 1/a)}, and
   the \eqn{Var(X) = \sigma^2(\Gamma(1 + 2/a)-(\Gamma(1 + 1/a))^2)}{%
-           Var(X) = b^2 * (gamma(1 + 2/a) - (gamma(1 + 1/a))^2)}.
+           Var(X) = b^2 * (Gamma(1 + 2/a) - (Gamma(1 + 1/a))^2)}.
 }
 \note{
   The cumulative hazard \eqn{H(t) = - \log(1 - F(t))}{H(t) = - log(1 - F(t))}

@@ -36,7 +36,8 @@
   is used as the residual standard deviation in the computation of the
   standard errors, otherwise this is extracted from the model fit.
   Setting \code{intervals} specifies computation of confidence or
-  prediction (tolerance) intervals at the specified \code{level}.
+  prediction (tolerance) intervals at the specified \code{level}, sometimes 
+  referred to as narrow vs. wide intervals.
 
   If the fit is rank-deficient, some of the columns of the design matrix
   will have been dropped.  Prediction from such a fit only makes sense
@@ -49,7 +50,7 @@
   \code{upr} if \code{interval} is set.  If \code{se.fit} is
   \code{TRUE}, a list with the following components is returned: 
   \item{fit}{vector or matrix as above}
-  \item{se.fit}{standard error of predictions}
+  \item{se.fit}{standard error of predicted means}
   \item{residual.scale}{residual standard deviations}
   \item{df}{degrees of freedom for residual}
 }

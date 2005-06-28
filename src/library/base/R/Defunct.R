@@ -116,3 +116,11 @@ pentagamma <- function(x) .Defunct("psigamma")
 package.description <- function(pkg, lib.loc = NULL, fields = NULL)
     .Defunct("packageDescription")
 ## </entry>
+
+## <entry>
+## Deprecated in 2.1.0
+## Defunct in 2.2.0
+delay <- function(x, env=.GlobalEnv) .Defunct("delayedAssign")
+loadURL <- function (url, envir = parent.frame(), quiet = TRUE, ...)
+    .Defunct("load(url())")
+## </entry>

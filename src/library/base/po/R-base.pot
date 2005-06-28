@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-11 08:53\n"
+"POT-Creation-Date: 2005-05-21 08:10\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -434,6 +434,9 @@ msgstr ""
 msgid "not defined for POSIXt objects"
 msgstr ""
 
+msgid "'tzone' attributes are inconsistent"
+msgstr ""
+
 msgid "not defined for \"POSIXct\" objects"
 msgstr ""
 
@@ -458,7 +461,7 @@ msgstr ""
 msgid "'file' must be a character string or connection"
 msgstr ""
 
-msgid "x must be a square matrix"
+msgid "'x' must be a square matrix"
 msgstr ""
 
 msgid "determinant not currently defined for complex matrices"
@@ -674,6 +677,9 @@ msgstr ""
 msgid "package '%s' already present in search()"
 msgstr ""
 
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+
 msgid "%sPackages in library '%s':"
 msgstr ""
 
@@ -779,7 +785,7 @@ msgstr ""
 msgid "'arg' should be one of"
 msgstr ""
 
-msgid "there is more than one match in match.arg"
+msgid "there is more than one match in 'match.arg'"
 msgstr ""
 
 msgid "no match"
@@ -950,10 +956,7 @@ msgstr ""
 msgid "not defined for package_version objects"
 msgstr ""
 
-msgid "x must be numeric"
-msgstr ""
-
-msgid "invalid n value"
+msgid "invalid 'n' value"
 msgstr ""
 
 msgid "'shrink.sml' must be numeric > 0"
@@ -995,9 +998,6 @@ msgstr ""
 msgid "need larger value of 'ncol' as pivoting occurred"
 msgstr ""
 
-msgid "file' must be a character string or connection"
-msgstr ""
-
 msgid "no lines available in input"
 msgstr ""
 
@@ -1031,7 +1031,7 @@ msgstr ""
 msgid "invalid 'row.names' specification"
 msgstr ""
 
-msgid "x must be a vector"
+msgid "'x' must be a vector"
 msgstr ""
 
 msgid "invalid 'rle' structure"
@@ -1226,9 +1226,6 @@ msgstr ""
 msgid "appending column names to file"
 msgstr ""
 
-msgid "invalid 'row.names 'specification"
-msgstr ""
-
 msgid "invalid 'digits'"
 msgstr ""
 
@@ -1239,6 +1236,12 @@ msgid "'cmd' could not be run"
 msgstr ""
 
 msgid "'cmd' execution failed with error code %d"
+msgstr ""
+
+msgid "package '%s' has a non-function '.First.lib'"
+msgstr ""
+
+msgid "cannot find name space environment"
 msgstr ""
 
 msgid        "deparse option %s is not recognized"

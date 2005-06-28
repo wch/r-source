@@ -2,7 +2,7 @@ sessionInfo <- function(package=NULL)
 {
     z <- list()
     z$R.version <- R.Version()
-    z$R.version.string <- paste(R.version.string, R.version$platform, sep=", ")
+    z$R.version.string <- R.version.string
 
     if(is.null(package)){
         package <- grep("^package:", search(), value=TRUE)
@@ -23,7 +23,7 @@ sessionInfo <- function(package=NULL)
 
 print.sessionInfo <- function(x, ...)
 {
-    cat(x$R.version.string,"\n\n")
+    cat(paste(x$R.version.string, x$R.version$platform, sep=", "), "\n\n")
     cat("attached base packages:\n")
     print(x$basePkgs)
     if(!is.null(x$otherPkgs)){
@@ -38,7 +38,8 @@ toLatex.sessionInfo <- function(object, ...)
 {
     opkgver <- sapply(object$otherPkgs, function(x) x$Version)
     z <- c("\\begin{itemize}",
-           paste("  \\item", object$R.version.string),
+           paste("  \\item ", object$R.version.string,
+                 ", \\verb|", object$R.version$platform, "|", sep=""),
            strwrap(paste("\\item Base packages:",
                          paste(sort(object$basePkgs), collapse=", ")),
                    indent=2, exdent=4))

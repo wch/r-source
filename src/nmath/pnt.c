@@ -59,7 +59,7 @@ double pnt(double t, double df, double delta, int lower_tail, int log_p)
     /* note - itrmax and errmax may be changed to suit one's needs. */
 
     const int itrmax = 1000;
-    const double errmax = 1.e-12;
+    const static double errmax = 1.e-12;
 
     if (df <= 0.) ML_ERR_return_NAN;
 

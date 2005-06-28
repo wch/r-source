@@ -54,7 +54,7 @@
 double rpois(double mu)
 {
     /* Factorial Table (0:9)! */
-    const double fact[10] =
+    const static double fact[10] =
     {
 	1., 1., 2., 6., 24., 120., 720., 5040., 40320., 362880.
     };

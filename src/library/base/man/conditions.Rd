@@ -202,14 +202,18 @@ restartFormals(r)
 \examples{
 tryCatch(1, finally=print("Hello"))
 e <- simpleError("test error")
-\dontrun{stop(e)}
-\dontrun{tryCatch(stop(e), finally=print("Hello"))}
-\dontrun{tryCatch(stop("fred"), finally=print("Hello"))}
+\dontrun{
+ stop(e)
+ tryCatch(stop(e), finally=print("Hello"))
+ tryCatch(stop("fred"), finally=print("Hello"))
+}
 tryCatch(stop(e), error = function(e) e, finally=print("Hello"))
 tryCatch(stop("fred"),  error = function(e) e, finally=print("Hello"))
 withCallingHandlers({ warning("A"); 1+2 }, warning = function(w) {})
 { try(invokeRestart("tryRestart")); 1}
-\dontrun{{ withRestarts(stop("A"), abort = function() {}); 1}}
+\dontrun{
+ withRestarts(stop("A"), abort = function() {}); 1
+}
 withRestarts(invokeRestart("foo", 1, 2), foo = function(x, y) {x + y})
 }
 \keyword{programming}

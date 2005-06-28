@@ -25,11 +25,11 @@
 
 double qnchisq(double p, double df, double lambda, int lower_tail, int log_p)
 {
-    const double accu = 1e-13;
-    const double racc = 4*DBL_EPSILON;
+    const static double accu = 1e-13;
+    const static double racc = 4*DBL_EPSILON;
     /* these two are for the "search" loops, can have less accuracy: */
-    const double Eps = 1e-11; /* must be > accu */
-    const double rEps= 1e-10; /* relative tolerance ... */
+    const static double Eps = 1e-11; /* must be > accu */
+    const static double rEps= 1e-10; /* relative tolerance ... */
 
     double ux, lx, nx, pp;
 

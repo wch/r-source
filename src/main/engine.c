@@ -1812,7 +1812,22 @@ void GESymbol(double x, double y, int pch, double size,
 	     */
 	    gc->fill = gc->col;
 	    gc->col = R_TRANWHITE;
-	    GERect(x-.5, y-.5, x+.5, y+.5, gc, dd);
+	    /* 
+	       The idea here is to use a 0.01" square, but to be of
+	       at least one device unit in each direction, 
+	       assuming that corresponds to pixels. That may be odd if
+	       pixels are not square, but only on low resolution 
+	       devices where we can do nothing better.
+
+	       For this option only, size is cex (see engine.c).
+	       
+	       Prior to 2.1.0 the offsets were always 0.5.
+	    */
+	    xc = size * fabs(toDeviceWidth(0.005, GE_INCHES, dd));
+	    yc = size * fabs(toDeviceHeight(0.005, GE_INCHES, dd));
+	    if(size == 1 && xc < 0.5) xc = 0.5;
+	    if(size == 1 && yc < 0.5) yc = 0.5;
+	    GERect(x-xc, y-yc, x+xc, y+yc, gc, dd);
 	} else {
 #ifdef SUPPORT_MBCS
 	    if(mbcslocale) {

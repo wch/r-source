@@ -3,6 +3,10 @@
 ## They are used by lm and glm in base R, and by
 ## packages MASS, rpart and survival.
 
+## Comparison strictness is set at 256eps, increased from 100eps for v.2.1.0
+## May look lenient, but notice that the Ozone levels that are being modeled
+## can be more than 100.
+
 dim(airquality)
 nd <- airquality[c(6,25:27), ]
 
@@ -35,19 +39,19 @@ try(fit3 <- lm(Ozone ~ ., data=airquality, na.action=na.fail))
 f1 <- fitted(fit)
 f2 <- fitted(fit2)
 common <- match(names(f1), names(f2))
-stopifnot(max(abs(f1 - f2[common])) < 100*.Machine$double.eps)
+stopifnot(max(abs(f1 - f2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(f2[-common])))
 
 r1 <- resid(fit)
 r2 <- resid(fit2)
 common <- match(names(r1), names(r2))
-stopifnot(max(abs(r1 - r2[common])) < 100*.Machine$double.eps)
+stopifnot(max(abs(r1 - r2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(r2[-common])))
 
 p1 <- predict(fit)
 p2 <- predict(fit2)
 common <- match(names(p1), names(p2))
-stopifnot(max(abs(p1 - p2[common])) < 100*.Machine$double.eps)
+stopifnot(max(abs(p1 - p2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(p2[-common])))
 
 
@@ -72,19 +76,19 @@ stopifnot(all.equal(pp, pp2))
 f1 <- fitted(gfit)
 f2 <- fitted(gfit2)
 common <- match(names(f1), names(f2))
-stopifnot(max(abs(f1 - f2[common])) < 100*.Machine$double.eps)
+stopifnot(max(abs(f1 - f2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(f2[-common])))
 
 r1 <- resid(gfit)
 r2 <- resid(gfit2)
 common <- match(names(r1), names(r2))
-stopifnot(max(abs(r1 - r2[common])) < 100*.Machine$double.eps)
+stopifnot(max(abs(r1 - r2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(r2[-common])))
 
 p1 <- predict(gfit)
 p2 <- predict(gfit2)
 common <- match(names(p1), names(p2))
-stopifnot(max(abs(p1 - p2[common])) < 100*.Machine$double.eps)
+stopifnot(max(abs(p1 - p2[common])) <= 256*.Machine$double.eps)
 stopifnot(all(is.na(p2[-common])))
 
 ## tests of diagnostic measures.

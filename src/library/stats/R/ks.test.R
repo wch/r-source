@@ -73,7 +73,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         IND <- which(!is.na(x) & (x > 0))
         if(length(IND) > 0) {
             p[IND] <- .C("pkstwo",
-                         as.integer(length(x)),
+                         as.integer(length(x[IND])),
                          p = as.double(x[IND]),
                          as.double(tol),
                          PACKAGE = "stats")$p

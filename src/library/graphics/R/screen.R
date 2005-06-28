@@ -6,7 +6,8 @@
 .SSexists <- function(x) exists(paste(x, dev.cur(), sep=":"), envir=.SSenv, inherits=FALSE)
 .SSassign <- function(x, value) assign(paste(x, dev.cur(), sep=":"), value, envir=.SSenv)
 assign("par.list",
-       c("adj", "bty", "cex", "col", "crt", "err", "font", "lab",
+       c("xlog","ylog",
+         "adj", "bty", "cex", "col", "crt", "err", "font", "lab",
          "las", "lty", "lwd", "mar", "mex", "mfg", "mgp", "pch",
          "pty", "smo", "srt", "tck", "usr", "xaxp", "xaxs", "xaxt", "xpd",
          "yaxp", "yaxs", "yaxt", "fig"), envir=.SSenv)

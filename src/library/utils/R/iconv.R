@@ -9,9 +9,13 @@ iconvlist <- function()
     if(!nchar(icfile)) stop("'iconvlist' is not available on this system")
     ext <- readLines(icfile)
     if(!length(ext)) stop("'iconvlist' is not available on this system")
-    ## glibc has lines ending //
+    ## glibc has lines ending //, some versions with a header and some without.
     ## libiconv has lines with multiple entries separated by spaces
-    ext <- sub("//$", "", ext)
+    cnt <- grep("//$", ext)
+    if(length(cnt)/length(ext) > 0.5) {
+        ext <- grep("//$", ext, value = TRUE)
+        ext <- sub("//$", "", ext)
+    }
     sort(unlist(strsplit(ext, "[[:space:]]")))
 }
 
@@ -24,8 +28,8 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
     {
         if(en %in% c("aa", "af", "an", "br", "ca", "da", "de", "en",
                          "es", "et", "eu", "fi", "fo", "fr", "ga", "gl",
-                         "gv", "id", "is", "it", "kl", "kw", "ms", "nb",
-                         "ml", "nn", "no", "oc", "om", "pt", "so", "sq",
+                         "gv", "id", "is", "it", "kl", "kw", "ml", "ms",
+                         "nb", "nn", "no", "oc", "om", "pt", "so", "sq",
                          "st", "sv", "tl", "uz", "wa", "xh", "zu"))
                 return("ISO8859-1")
         if(en %in% c("bs", "cs", "hr", "hu", "pl", "ro", "sk", "sl"))
@@ -43,7 +47,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
         if(en %in% "ja") return("EUC-JP")
         if(en %in% "ko") return("EUC-KR")
         if(en %in% "th") return("TIS-620")
-        if(en %in% "th") return("KOI8-T")
+        if(en %in% "tg") return("KOI8-T")
         if(en %in% "ka") return("GEORGIAN-PS")
         if(en %in% "kk") return("PT154")
         ## not safe to guess for zh
@@ -70,7 +74,7 @@ localeToCharset <- function(locale = Sys.getlocale("LC_CTYPE"))
                "1254" = return("ISO 8859-9"),
                "1255" = return("ISO 8859-8"),
                "1256" = return("ISO 8859-6"),
-               "1257" = return("ISO 8859-13"),
+               "1257" = return("ISO 8859-13")
                )
         return(paste("CP", x[2], sep=""))
     } else {

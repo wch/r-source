@@ -1,5 +1,5 @@
-#ifndef _CONFIG_H
-#define _CONFIG_H
+#ifndef R_CONFIG_H
+#define R_CONFIG_H
 
 /* Define to one of `_getb67', `GETB67', `getb67' for Cray-2 and Cray-YMP
    systems. This function is required for `alloca.c' support on those systems.
@@ -340,6 +340,9 @@
 /* Define to 1 if you have the `mempcpy' function. */
 /* #undef HAVE_MEMPCPY */
 
+/* Define to 1 if you have the `mkdtemp' function. */
+/* #undef HAVE_MKDTEMP */
+
 /* Define to 1 if you have the `mkfifo' function. */
 /* #undef HAVE_MKFIFO */
 
@@ -669,13 +672,13 @@
 #define PACKAGE_NAME "R"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "R 2.1.0"
+#define PACKAGE_STRING "R 2.2.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "R"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.1.0"
+#define PACKAGE_VERSION "2.2.0"
 
 /* Define if <inttypes.h> exists and defines unusable PRI* macros. */
 /* #undef PRI_MACROS_BROKEN */
@@ -766,7 +769,7 @@
 /* #undef Unix */
 
 /* Version number of package */
-#define VERSION "2.1.0"
+#define VERSION "2.2.0"
 
 /* Define to 1 if your processor stores words with the most significant byte
    first (like Motorola and SPARC, unlike Intel and VAX). */
@@ -812,4 +815,4 @@
 /* #undef uintmax_t */
 
 
-#endif /* not _CONFIG_H */
+#endif /* not R_CONFIG_H */

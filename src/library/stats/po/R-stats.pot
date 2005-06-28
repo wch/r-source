@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-10 15:18\n"
+"POT-Creation-Date: 2005-06-09 10:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -584,10 +584,25 @@ msgstr ""
 msgid "'RowSideColors' must be a character vector of length nrow(x)"
 msgstr ""
 
+msgid "non-matched further arguments are disregarded"
+msgstr ""
+
 msgid "argument 'x' must be numeric"
 msgstr ""
 
 msgid "'x' contains missing values"
+msgstr ""
+
+msgid "'x' and 'weights' have unequal length"
+msgstr ""
+
+msgid "'weights' must all be finite"
+msgstr ""
+
+msgid "'weights' must not be negative"
+msgstr ""
+
+msgid "sum(weights) != 1  -- will not get true density"
 msgstr ""
 
 msgid "need at least 2 points to select a bandwidth automatically"
@@ -683,7 +698,7 @@ msgstr ""
 msgid "%d factors is too many for %d variables"
 msgstr ""
 
-msgid "start must have %d rows"
+msgid "'start' must have %d rows"
 msgstr ""
 
 msgid "no starting values supplied"
@@ -699,9 +714,6 @@ msgid "link \"%s\" not available for poisson family; available links are \"ident
 msgstr ""
 
 msgid "negative values not allowed for the Poisson family"
-msgstr ""
-
-msgid "non-integer counts in a Poisson glm!"
 msgstr ""
 
 msgid "link \"%s\" not available for quasipoisson family; available links are \"identity\", \"log\" and \"sqrt\""
@@ -761,7 +773,7 @@ msgstr ""
 msgid "'filter' is longer than time series"
 msgstr ""
 
-msgid "argument sides must be 1 or 2"
+msgid "argument 'sides' must be 1 or 2"
 msgstr ""
 
 msgid "length of 'init' must equal length of 'filter'"
@@ -884,7 +896,7 @@ msgstr ""
 msgid "invalid fitted means in empty model"
 msgstr ""
 
-msgid "length of start should equal %d and correspond to initial coefs for %s"
+msgid "length of 'start' should equal %d and correspond to initial coefs for %s"
 msgstr ""
 
 msgid "cannot find valid starting values: please specify some"
@@ -1091,7 +1103,7 @@ msgstr ""
 msgid "y must be supplied.\nFor density estimation use density()"
 msgstr ""
 
-msgid "k is not an integer"
+msgid "'k' is not an integer"
 msgstr ""
 
 msgid "method = '%s' is not supported. Using 'qr'"
@@ -1196,7 +1208,7 @@ msgstr ""
 msgid "incorrect specification of 'table' or 'start'"
 msgstr ""
 
-msgid "x is empty"
+msgid "'x' is empty"
 msgstr ""
 
 msgid "%d missing values deleted"
@@ -1259,9 +1271,6 @@ msgstr ""
 msgid "'x' must be square with at least two rows and columns"
 msgstr ""
 
-msgid "'if 'x' is not a matrix, 'y' must be given"
-msgstr ""
-
 msgid "'x' and 'y' must have the same number of levels (minimum 2)"
 msgstr ""
 
@@ -1271,7 +1280,19 @@ msgstr ""
 msgid "medpolish() did not converge in %d iterations"
 msgstr ""
 
-msgid "no anova method implemented for mlm models"
+msgid "'mlm' objects with weights are not supported"
+msgstr ""
+
+msgid "X does not define a subspace of M"
+msgstr ""
+
+msgid "one-argument anova() not implemented for 'mlm' objects"
+msgstr ""
+
+msgid "residuals have rank"
+msgstr ""
+
+msgid "<"
 msgstr ""
 
 msgid "'model.tables' is not implemented for multiple responses"
@@ -1358,6 +1379,12 @@ msgstr ""
 msgid "_NOT_ converged in"
 msgstr ""
 
+msgid "control argument must be a named list"
+msgstr ""
+
+msgid "Logical `hessian' argument not allowed.  See documentation."
+msgstr ""
+
 msgid "'params' has wrong length"
 msgstr ""
 
@@ -1430,7 +1457,7 @@ msgstr ""
 msgid "use only with \"lm\" objects"
 msgstr ""
 
-msgid "'which' must be in 1:4"
+msgid "'which' must be in 1:6"
 msgstr ""
 
 msgid "'id.n' must be in {1,..,%d}"
@@ -1473,6 +1500,15 @@ msgid "PCA applies only to numerical variables"
 msgstr ""
 
 msgid "no scores are available: refit with 'retx=TRUE'"
+msgstr ""
+
+msgid "'newdata' must be a matrix or data frame"
+msgstr ""
+
+msgid "'newdata' does not have named columns matching one or more of the original columns"
+msgstr ""
+
+msgid "'newdata' does not have the correct number of columns"
 msgstr ""
 
 msgid "wrong number of predictors"
@@ -1623,6 +1659,9 @@ msgid "NA lev[]; probably smoothing parameter 'spar' way too large!"
 msgstr ""
 
 msgid "setting df = 1  __use with care!__"
+msgstr ""
+
+msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr ""
 
 msgid "not a valid \"smooth.spline\" object"
@@ -1859,7 +1898,7 @@ msgstr ""
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr ""
 
-msgid "too few distinct input values to fit a asymptotic regression model"
+msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
 
 msgid "cannot fit an asymptotic regression model to these data"

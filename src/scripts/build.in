@@ -74,6 +74,7 @@ $ENV{"R_DEFAULT_PACKAGES"} = "";
 
 my $startdir = R_cwd();
 my $R_platform = R_getenv("R_PLATFORM", "unknown-binary");
+my $gzip = R_getenv("R_GZIPCMD", "gzip");
 my $tar = R_getenv("TAR", "tar");
 my $libdir = &file_path(${R::Vars::TMPDIR}, "Rinst.$$");
 
@@ -328,7 +329,7 @@ foreach my $pkg (@ARGV) {
 			   &shell_quote_file_path($filepath),
 			   @bundlepkgs, "DESCRIPTION")));
 	    R_system(join(" ",
-			  ("gzip -9f ",
+			  ("$gzip -9f ",
 			   &shell_quote_file_path($filepath))));
 	    chdir($startdir);
 	    $log->message("packaged bundle '$pkgname' as '$binfilename.gz'");
@@ -348,7 +349,7 @@ foreach my $pkg (@ARGV) {
 		       &shell_quote_file_path($filepath),
 		       "$pkgname")));
 	R_system(join(" ",
-		      ("gzip -9f",
+		      ("$gzip -9f",
 		       &shell_quote_file_path($origfilepath))));
     }
     chdir($startdir);
@@ -387,7 +388,7 @@ sub prepare_pkg {
 
     chdir($pkg);
     my $pkgdir = R_cwd();
-    my $pkgname = basename($pkg);
+    my $pkgname = basename($pkgdir);
 
     &R::Utils::check_package_description($pkgdir, $pkgname, $log,
 					 $in_bundle, 0, 1);
@@ -471,6 +472,7 @@ sub cleanup_pkg {
 
     chdir($pkg);
     my $pkgdir = R_cwd();
+    my $pkgname = basename($pkgdir);    
 
     if(-d "src") {
 	chdir("src");
@@ -495,10 +497,11 @@ sub cleanup_pkg {
 		$makefiles .= " -f Makefile";
 		R_system("${R::Vars::MAKE} $makefiles clean");
 	    } else {
-		foreach my $file (<*.o *.s[lo] .dylib>) {
-		    unlink($file);
-		}
+		## Also cleanup possible Windows leftovers ...
+		unlink((<*.o *.s[lo] *.dylib>, 
+			"$pkgname.a", "$pkgname.dll", "$pkgname.def"));
 		rmtree(".libs") if (-d ".libs");
+		rmtree("_libs") if (-d "_libs");		
 	    }
 	}
     }

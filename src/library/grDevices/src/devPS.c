@@ -32,7 +32,7 @@
 #endif
 
 #include "Defn.h"
-#include "Rmath.h" /* for rround */
+#include <Rmath.h>		/* for rround */
 #include "Graphics.h"
 #include <R_ext/Error.h>
 #include "Fileio.h"
@@ -43,12 +43,6 @@
 #include <errno.h>
 #else
 extern int errno;
-#endif
-
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#else
-extern char *alloca(size_t);
 #endif
 
 #define INVALID_COL 0xff0a0b0c
@@ -636,7 +630,12 @@ PostScriptStringWidth(unsigned char *str, FontMetricInfo *metrics, int face)
 
 #ifdef SUPPORT_MBCS
     char *buff;
-    if(utf8locale && !utf8strIsASCII((char *) str) && face != 5) {
+    if(utf8locale && !utf8strIsASCII((char *) str) && 
+       /* 
+	* Every fifth font is a symbol font
+	* See postscriptFonts()
+	*/
+       (face % 5) != 0) {
 	    buff = alloca(strlen((char *)str)+1);
 	    /* Output string cannot be longer */
 	    if(!buff) error(_("allocation failure in PS_Text"));
@@ -2871,7 +2870,11 @@ static void PS_Text(double x, double y, char *str,
 	SetColor(gc->col, dd);
 #ifdef SUPPORT_MBCS
 	if(utf8locale && !utf8strIsASCII(str) && 
-	   pd->current.font != 5) {
+	   /* 
+	    * Every fifth font is a symbol font
+	    * See postscriptFonts()
+	    */
+	   (pd->current.font % 5) != 0) {
 	    buff = alloca(strlen(str)+1); /* Output string cannot be longer */
 	    if(!buff) error(_("allocation failure in PS_Text"));
 	    mbcsToLatin1(str, buff); 
@@ -3671,6 +3674,9 @@ static void XFig_MetricInfo(int c,
 typedef struct {
     char filename[PATH_MAX];
 
+    char papername[64];	/* paper name */
+    int paperwidth;	/* paper width in big points (1/72 in) */
+    int paperheight;	/* paper height in big points */
     int pageno;		/* page number */
     int fileno;		/* file number */
 
@@ -3678,6 +3684,9 @@ typedef struct {
 
     double width;	/* plot width in inches */
     double height;	/* plot height in inches */
+    double pagewidth;	 /* page width in inches */
+    double pageheight;	 /* page height in inches */
+    Rboolean pagecentre;      /* centre image on page? */
     Rboolean onefile;	/* one file or one file per page? */
 
     FILE *pdffp;		/* output file */
@@ -3818,9 +3827,11 @@ static Rboolean addPDFfont(type1fontfamily family,
 }
 
 Rboolean
-PDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
+PDFDeviceDriver(NewDevDesc* dd, char *file, char *paper,
+		char *family, char *encoding,
 		char *bg, char *fg, double width, double height,
-		double ps, int onefile, char *title, SEXP fonts,
+		double ps, int onefile, int pagecentre, 
+		char *title, SEXP fonts,
 		int versionMajor, int versionMinor)
 {
     /* If we need to bail out with some sort of "error" */
@@ -3864,7 +3875,11 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
 
     /* initialize PDF device description */
     strcpy(pd->filename, file);
+    strcpy(pd->papername, paper);
     strncpy(pd->title, title, 1024);
+
+    pd->width = width;
+    pd->height = height;
 
     if(strlen(encoding) > PATH_MAX - 1) {
 	free(dd);
@@ -3936,8 +3951,64 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
 	pd->fillAlpha[i] = -1;
     }
 
-    pd->width = width;
-    pd->height = height;
+    /* Deal with paper and plot size and orientation */
+
+    if(!strcmp(pd->papername, "Default") ||
+       !strcmp(pd->papername, "default")) {
+	SEXP s = STRING_ELT(GetOption(install("papersize"), R_NilValue), 0);
+	if(s != NA_STRING && strlen(CHAR(s)) > 0)
+	    strcpy(pd->papername, CHAR(s));
+	else strcpy(pd->papername, "a4");
+    }
+    if(!strcmp(pd->papername, "A4") ||
+       !strcmp(pd->papername, "a4")) {
+	pd->pagewidth  = 21.0 / 2.54;
+	pd->pageheight = 29.7  /2.54;
+    }
+    else if(!strcmp(pd->papername, "Letter") ||
+	    !strcmp(pd->papername, "letter")) {
+	pd->pagewidth  =  8.5;
+	pd->pageheight = 11.0;
+    }
+    else if(!strcmp(pd->papername, "Legal") ||
+	    !strcmp(pd->papername, "legal")) {
+	pd->pagewidth  =  8.5;
+	pd->pageheight = 14.0;
+    }
+    else if(!strcmp(pd->papername, "Executive") ||
+	    !strcmp(pd->papername, "executive")) {
+	pd->pagewidth  =  7.25;
+	pd->pageheight = 10.5;
+    }
+    else if(!strcmp(pd->papername, "special")) {
+      pd->pagewidth  =  width;
+      pd->pageheight = height;
+    }
+    else {
+	freeDeviceFontList(pd->fonts);
+	pd->fonts = NULL;
+	free(dd);
+	free(pd);
+	error(_("invalid paper type '%s' (pdf)"), pd->papername);
+    }
+    pd->pagecentre = pagecentre;
+    pd->paperwidth = 72 * pd->pagewidth;
+    pd->paperheight = 72 * pd->pageheight;
+    if(strcmp(pd->papername, "special"))
+    {
+	if(pd->width < 0.1 || pd->width > pd->pagewidth-0.5)
+	    pd->width = pd->pagewidth-0.5;
+	if(pd->height < 0.1 || pd->height > pd->pageheight-0.5)
+	    pd->height = pd->pageheight-0.5;
+    }
+    if(pagecentre)
+    {
+	xoff = (pd->pagewidth - pd->width)/2.0;
+	yoff = (pd->pageheight - pd->height)/2.0;
+    } else {
+	xoff = yoff = 0.0;
+    }
+
     pointsize = floor(ps);
     if(R_TRANSPARENT(setbg) && R_TRANSPARENT(setfg)) {
 	freeDeviceFontList(pd->fonts);
@@ -3950,7 +4021,8 @@ PDFDeviceDriver(NewDevDesc* dd, char *file, char *family, char *encoding,
     }
 
     pd->onefile = onefile;
-    pd->maxpointsize = 72.0 * ((height > width) ? height : width);
+    pd->maxpointsize = 72.0 * ((pd->pageheight > pd->pagewidth) ?
+			       pd->pageheight : pd->pagewidth);
     pd->pageno = pd->fileno = 0;
     /* Base Pointsize */
     /* Nominal Character Sizes in Pixels */
@@ -4335,7 +4407,7 @@ static void PDF_endfile(PDFDesc *pd)
     fprintf(pd->pdffp,
 	    "]\n/Count %d\n/MediaBox [0 0 %d %d]\n>>\nendobj\n",
 	    pd->pageno,
-	    (int) (0.5 + 72*pd->width), (int) (0.5 + 72*pd->height));
+	    (int) (0.5 + pd->paperwidth), (int) (0.5 + pd->paperheight));
 
     /* Object 4 is the standard resources dict for each page */
 
@@ -5012,13 +5084,13 @@ SEXP PostScript(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
-    paper = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    file = CHAR(asChar(CAR(args)));  args = CDR(args);
+    paper = CHAR(asChar(CAR(args))); args = CDR(args);
 
     /* 'family' can be either one string or a 5-vector of afmpaths. */
     fam = CAR(args); args = CDR(args);
     if(length(fam) == 1) 
-	family = CHAR(STRING_ELT(fam, 0));
+	family = CHAR(asChar(fam));
     else if(length(fam) == 5) {
 	if(!isString(fam)) error(_("invalid 'family' parameter in %s"), call);
 	family = "User";
@@ -5026,9 +5098,9 @@ SEXP PostScript(SEXP args)
     } else 
 	error(_("invalid 'family' parameter in %s"), call);
     
-    encoding = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
-    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
-    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    encoding = CHAR(asChar(CAR(args)));    args = CDR(args);
+    bg = CHAR(asChar(CAR(args)));    args = CDR(args);
+    fg = CHAR(asChar(CAR(args)));    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
     horizontal = asLogical(CAR(args));args = CDR(args);
@@ -5038,8 +5110,8 @@ SEXP PostScript(SEXP args)
     onefile = asLogical(CAR(args));   args = CDR(args);
     pagecentre = asLogical(CAR(args));args = CDR(args);
     printit = asLogical(CAR(args));   args = CDR(args);
-    cmd = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
-    title = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);    
+    cmd = CHAR(asChar(CAR(args)));    args = CDR(args);
+    title = CHAR(asChar(CAR(args)));  args = CDR(args);    
     fonts = CAR(args); 
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
@@ -5057,7 +5129,7 @@ SEXP PostScript(SEXP args)
 	if(!PSDeviceDriver(dev, file, paper, family, afms, encoding, bg, fg,
 			   width, height, (double)horizontal, ps, onefile,
 			   pagecentre, printit, cmd, title, fonts)) {
-	    free(dev);
+	    /* free(dev); No, dev freed inside PSDeviceDrive */
 	    error(_("unable to start device PostScript"));
 	}
 	gsetVar(install(".Device"), mkString("postscript"), R_BaseEnv);
@@ -5097,11 +5169,11 @@ SEXP XFig(SEXP args)
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
-    paper = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
-    family = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
-    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
-    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    file = CHAR(asChar(CAR(args)));  args = CDR(args);
+    paper = CHAR(asChar(CAR(args))); args = CDR(args);
+    family = CHAR(asChar(CAR(args)));  args = CDR(args);
+    bg = CHAR(asChar(CAR(args)));    args = CDR(args);
+    fg = CHAR(asChar(CAR(args)));    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
     horizontal = asLogical(CAR(args));args = CDR(args);
@@ -5123,7 +5195,7 @@ SEXP XFig(SEXP args)
 	dev->savedSnapshot = R_NilValue;
 	if(!XFigDeviceDriver(dev, file, paper, family, bg, fg, width, height,
 			     (double) horizontal, ps, onefile, pagecentre)) {
-	    free(dev);
+	    /* free(dev); No, freed inside XFigDeviceDriver */
 	    error(_("unable to start device xfig"));
 	}
 	gsetVar(install(".Device"), mkString("xfig"), R_BaseEnv);
@@ -5158,23 +5230,25 @@ SEXP PDF(SEXP args)
     NewDevDesc *dev = NULL;
     GEDevDesc *dd;
     char *vmax;
-    char *file, *encoding, *family, *bg, *fg, *title, call[] = "PDF";
+    char *file, *paper, *encoding, *family, *bg, *fg, *title, call[] = "PDF";
     double height, width, ps;
-    int onefile, major, minor;
+    int onefile, pagecentre, major, minor;
     SEXP fonts;
 
     vmax = vmaxget();
     args = CDR(args); /* skip entry point name */
-    file = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
-    family = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
-    encoding = CHAR(STRING_ELT(CAR(args), 0));  args = CDR(args);
-    bg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
-    fg = CHAR(STRING_ELT(CAR(args), 0));    args = CDR(args);
+    file = CHAR(asChar(CAR(args)));  args = CDR(args);
+    paper = CHAR(asChar(CAR(args))); args = CDR(args);    
+    family = CHAR(asChar(CAR(args)));  args = CDR(args);
+    encoding = CHAR(asChar(CAR(args)));  args = CDR(args);
+    bg = CHAR(asChar(CAR(args)));    args = CDR(args);
+    fg = CHAR(asChar(CAR(args)));    args = CDR(args);
     width = asReal(CAR(args));	      args = CDR(args);
     height = asReal(CAR(args));	      args = CDR(args);
     ps = asReal(CAR(args));           args = CDR(args);
     onefile = asLogical(CAR(args)); args = CDR(args);
-    title = CHAR(STRING_ELT(CAR(args), 0)); args = CDR(args);
+    pagecentre = asLogical(CAR(args));args = CDR(args);
+    title = CHAR(asChar(CAR(args))); args = CDR(args);
     fonts = CAR(args); args = CDR(args);
     if (!isNull(fonts) && !isString(fonts))
 	error(_("invalid 'fonts' parameter in %s"), call);
@@ -5191,10 +5265,10 @@ SEXP PDF(SEXP args)
 	 * This (and displayList) get protected during GC
 	 */
 	dev->savedSnapshot = R_NilValue;
-	if(!PDFDeviceDriver(dev, file, family, encoding, bg, fg, 
-			    width, height, ps, onefile, title, fonts,
-			    major, minor)) {
-	    free(dev);
+	if(!PDFDeviceDriver(dev, file, paper, family, encoding, bg, fg, 
+			    width, height, ps, onefile, pagecentre,
+			    title, fonts, major, minor)) {
+	    /* free(dev); PDFDeviceDriver now frees */
 	    error(_("unable to start device pdf"));
 	}
 	gsetVar(install(".Device"), mkString("pdf"), R_BaseEnv);

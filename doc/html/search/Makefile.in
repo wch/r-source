@@ -65,21 +65,21 @@ index.txt:
 
 install: install-message installdirs install-sources
 	@for f in $(OBJECTS); do \
-	  $(INSTALL_DATA) $${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $${f} "$(rdocdir)/html/search"; \
 	done
 installdirs:
-	@$(MKINSTALLDIRS) "$(rhome)/$(subdir)"
+	@$(MKINSTALLDIRS) "$(rdocdir)/html/search"
 install-message:
 	@echo "installing $(subdir) ..."
 install-sources:
 	@for f in $(INSTFILES); do \
-	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rhome)/$(subdir)"; \
+	  $(INSTALL_DATA) $(srcdir)/$${f} "$(rdocdir)/html/search"; \
 	done
 install-strip: install
 
 uninstall:
 	@echo "uninstalling $(subdir) ..."
-	@rm -rf "$(rhome)/$(subdir)"
+	@rm -rf "$(rdocdir)/html/search"
 
 mostlyclean:
 clean:

@@ -155,3 +155,8 @@ cm.colors <- function (n)
 	  hsv(h = 10/12, s= seq(0, 0.5, length = l2)[-1], v = 1))
     } else character(0)
 }
+
+gray.colors <-
+function(n, start = 0.3, end = 0.9, gamma = 2.2)
+    gray(seq(from = start^gamma, to = end^gamma, length = n)^(1/gamma))
+grey.colors <- gray.colors

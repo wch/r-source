@@ -56,8 +56,8 @@ isIncomplete(con)
   \item{description}{character. A description of the connection. For
     \code{file} and \code{pipe} this is a path to the file to be opened.
     For \code{url} it is a complete URL, including schemes
-    (\code{http://}, \code{ftp://} or \code{file://}).  \code{file} also
-    accepts complete URLs.
+    (\code{http://}, \code{ftp://} or \code{file://} -- see Details).
+    \code{file} also accepts complete URLs.
   }
   \item{filename}{a filename within a zip file.}
   \item{con}{a connection.}
@@ -131,8 +131,30 @@ isIncomplete(con)
   write/append (where implemented).
 
   If for a \code{file} connection the description is \code{""}, the file
-  is immediately opened in \code{"w+"} mode and unlinked from the file
-  system.  This provides a temporary file to write to and then read from.
+  is immediately opened (in \code{"w+"} mode unless \code{open="w+b"} is
+  specified) and unlinked from the file system.  This provides a
+  temporary file to write to and then read from.
+
+  A note on \code{file://} URLs.  The most general form (from RFC1738) is
+  \code{file://host/path/to/file}, but \R only accepts the form with an
+  empty \code{host} field referring to the local machine.
+#ifdef unix
+  This is then \code{file:///path/to/file}, where \code{path/to/file} is
+  relative to \code{/}.  So although the third slash is strictly part of
+  the specification not part of the path, this can be regarded as a way
+  to specify the file \file{/path/to/file}.  It is not possible to
+  specify a relative path using a file URL.
+#endif
+#ifdef windows
+  In this form the path is relative to the root of the filesystem, not a
+  Windows concept.  The standard form is \code{file://d:/R/repos}: for
+  compatibility with earlier versions of \R and Unix versions,
+  any other form is parsed as \R as \code{file://} plus \code{/path/to/file}.
+  Also, backslashes are accepted within the path even though
+  RFC1738 does not allow them.
+#endif
+  Also, no attempt is made to decode an encoded URL: call
+  \code{\link{URLdecode}} if necessary.
 }
 \value{
   \code{file}, \code{pipe}, \code{fifo}, \code{url}, \code{gzfile},
@@ -165,6 +187,20 @@ isIncomplete(con)
 #endif
 
   Re-encoding only works for connections in text mode.
+
+  The encoding \code{"UCS-2LE"} is treated specially, as it is the
+  appropriate value for Windows \sQuote{Unicode} text files.  If the
+  first two bytes are the Byte Order Mark \code{0xFFFE} then these are
+  removed as most implementations of \code{\link{iconv}} do not accept
+  BOMs.  Note that some implementations
+#ifdef windows
+  (including that used on Windows)
+#endif
+  will handle BOMs using encoding \code{"UCS2"} but many
+#ifdef windows
+  (including that in \code{glibc})
+#endif
+  will not.
 
   Exactly what happens when the requested translation cannot be done is
   in general undocumented.  Requesting a conversion that is not supported is
@@ -364,7 +400,8 @@ close(con2)
 
 \dontrun{ ## examples of use of encodings
 cat(x, file = file("foo", "w", encoding="UTF-8"))
-}
-}
+# read a 'Windows Unicode' file including names
+A <- read.table(file("students", encoding="UCS-2LE"))
+}}
 \keyword{file}
 \keyword{connection}

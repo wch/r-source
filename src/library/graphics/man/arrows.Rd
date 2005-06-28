@@ -23,8 +23,8 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
   For each \code{i}, an arrow is drawn between the point \code{(x0[i],
     y0[i])} and the point \code{(x1[i],y1[i])}.
 
-  If \code{code=2} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
-  \code{code=1} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
+  If \code{code=1} an arrowhead is drawn at \code{(x0[i],y0[i])} and if
+  \code{code=2} an arrowhead is drawn at \code{(x1[i],y1[i])}.  If
   \code{code=3} a head is drawn at both ends of the arrow.  Unless
   \code{length = 0}, when no head is drawn.
 
@@ -44,6 +44,9 @@ arrows(x0, y0, x1, y1, length = 0.25, angle = 30, code = 2,
 }
 \seealso{
   \code{\link{segments}} to draw segments.
+}
+\note{The first four arguments in the comparable S function are named
+  \code{x1,y1,x2,y2}.
 }
 \examples{
 x <- runif(12); y <- rnorm(12)

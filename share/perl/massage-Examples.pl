@@ -77,7 +77,7 @@ assign("cleanEx",
        env = .CheckExEnv)
 assign("..nameEx", "__{must remake R-ex/*.R}__", env = .CheckExEnv) # for now
 assign("ptime", proc.time(), env = .CheckExEnv)
-grDevices::postscript("$PKG-Examples.ps")
+grDevices::postscript("$PKG-Ex.ps")
 assign("par.postscript", graphics::par(no.readonly = TRUE), env = .CheckExEnv)
 options(contrasts = c(unordered = "contr.treatment", ordered = "contr.poly"))
 options(warn = 1)    

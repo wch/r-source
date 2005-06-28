@@ -5,13 +5,13 @@
 ## Examples:
 ##  R CMD Rd2dvi /path/to/Rsrc/src/library/base/man/Normal.Rd
 ##  R CMD Rd2dvi `grep -l "\\keyword{distr" \
-##                  /path/to/Rsrc/src/library/base/man/*.Rd | sort | uniq`
+##                  /path/to/Rsrc/src/library/stats/man/*.Rd | sort | uniq`
 
-revision='$Revision: 1.40 $'
+revision='$Revision: 1.41 $'
 version=`set - ${revision}; echo ${2}`
 version="Rd2dvi ${version}
 
-Copyright (C) 2000-2001 The R Core Development Team.
+Copyright (C) 2000-2005 The R Core Development Team.
 This is free software; see the GNU General Public Licence version 2
 or later for copying conditions.  There is NO warranty." 
 
@@ -52,9 +52,10 @@ preview=xdvi
 verbose=false
 OSdir=${R_OSTYPE-"unix"}
 
+: ${R_SHARE_DIR}=${R_HOME}/share
 ## Need a `safe' echo which does not interpret backslash-escaped
 ## characters in SysV style.
-echo="sh ${R_HOME}/share/sh/echo.sh"
+echo="sh ${R_SHARE_DIR}/sh/echo.sh"
 
 while test -n "${1}"; do
   case ${1} in
@@ -99,7 +100,7 @@ done
 
 if ${debug}; then set -x; fi
 
-. ${R_HOME}/share/sh/dcf.sh	# get_dcf_field()
+. ${R_SHARE_DIR}/sh/dcf.sh	# get_dcf_field()
 
 Rdconv_dir_or_files_to_LaTeX () {
   ## Convert Rd files in a dir or a list of Rd files to LaTeX, appending
@@ -142,7 +143,9 @@ Rd_DESCRIPTION_to_LaTeX () {
   ${echo} "\\begin{description}"
   ${echo} "\\raggedright{}"
   for f in `${echo} "${fields}" | sed '/Package/d; /Bundle/d;'`; do
-    text=`get_dcf_field ${f} ${1}`
+    text=`get_dcf_field ${f} ${1} | \
+      tr '\n' ' ' | \
+      sed "s/\"\([^\"]*\)\"/\\\`\\\`\\1''/g"`
     ${echo} "\\item[${f}] \\AsIs{${text}}"
   done
   ${echo} "\\end{description}"
@@ -228,6 +231,7 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\documentclass[${R_PAPERSIZE}paper]{book}
 \\usepackage[${R_RD4DVI-ae}]{Rd}
 \\usepackage{makeidx}
+\\usepackage[@ENC@]{inputenc}
 \\makeindex{}
 \\begin{document}
 EOF
@@ -298,6 +302,24 @@ cat >> ${build_dir}/Rd2.tex <<EOF
 \\printindex{}
 \\end{document}
 EOF
+
+## Look for encodings
+ENCS=`grep '^\\\\inputencoding' ${build_dir}/Rd2.tex | uniq |\
+  sed -e 's/^\\\\inputencoding{\(.*\)}/\1/'`
+ENCS=`grep '^\\\\\inputencoding' ${build_dir}/Rd2.tex |  uniq | \
+  sed -e 's/^\\\\inputencoding{\(.*\)}/\1/' | \
+  tr '\na-z0-9' ',a-z0-9' | sed -e s/,$//`
+echo "ENCS is ${ENCS}"
+
+## substitute for the encodings used
+mv ${build_dir}/Rd2.tex ${build_dir}/Rd2.tex.pre
+if test -z "${ENCS}"; then
+  sed -e '/^\\usepackage\[@ENC@\]{inputenc}$/d' \
+    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
+else
+  sed -e s/^\\\\usepackage\\[@ENC@\\]/\\\\usepackage[${ENCS}]/ \
+    ${build_dir}/Rd2.tex.pre > ${build_dir}/Rd2.tex
+fi
 
 ## <FIXME>
 ## Need to do something smarter about the exit status in batch mode.

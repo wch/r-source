@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 2000--2002	The R Development Core Team.
+ *  Copyright (C) 2000--2005	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,8 @@
  *  See ./format.c	 for the  format_FOO_  functions used below.
  */
 
-/* <UTF8> char here is handled as a whole */
+/* <UTF8> char here is handled as a whole, 
+   but lengths were used as display widths */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -35,6 +36,10 @@
 
 #include "Defn.h"
 #include "Print.h"
+
+/* We need display width of a string */
+int Rstrwid(char *str, int slen, int quote);  /* from printutils.c */
+#define strwidth(x) Rstrwid(x, strlen(x), 0)
 
 static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 			       SEXP rl, SEXP cl, char *rn, char *cn)
@@ -50,7 +55,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -68,7 +73,7 @@ static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -126,7 +131,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -143,7 +148,7 @@ static void printIntegerMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -202,7 +207,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -225,7 +230,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -261,7 +266,7 @@ static void printRealMatrix(SEXP sx, int offset, int r, int c,
 	for (i = 0; i < r; i++) {
 	    MatrixRowLabel(rl, i, rlabw, lbloff);
 	    for (j = jmin; j < jmax; j++) {
-		Rprintf("%s", EncodeReal(x[i + j * r], w[j], d[j], e[j]));
+		Rprintf("%s", EncodeReal(x[i + j * r], w[j], d[j], e[j], OutDec));
 	    }
 	}
 	Rprintf("\n");
@@ -284,7 +289,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -319,7 +324,7 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	w[j] = wr[j] + wi[j] + 2;
@@ -358,12 +363,12 @@ static void printComplexMatrix(SEXP sx, int offset, int r, int c,
 	    MatrixRowLabel(rl, i, rlabw, lbloff);
 	    for (j = jmin; j < jmax; j++) {
 		if (ISNA(x[i + j * r].r) || ISNA(x[i + j * r].i))
-		    Rprintf("%s", EncodeReal(NA_REAL, w[j], 0, 0));
+		    Rprintf("%s", EncodeReal(NA_REAL, w[j], 0, 0, OutDec));
 		else
 		    Rprintf("%s",
 			    EncodeComplex(x[i + j * r],
 					  wr[j] + R_print.gap, dr[j], er[j],
-					  wi[j], di[j], ei[j]));
+					  wi[j], di[j], ei[j], OutDec));
 	    }
 	}
 	Rprintf("\n");
@@ -387,7 +392,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
 	rlabw = IndexWidth(r + 1) + 3;
 
     if (rn) {
-	rnw = strlen(rn);
+	rnw = strwidth(rn);
 	if ( rnw < rlabw + R_MIN_LBLOFF )
 	    lbloff = R_MIN_LBLOFF;
 	else
@@ -404,7 +409,7 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
 	if (!isNull(cl)) {
 	    if(STRING_ELT(cl, j) == NA_STRING) 
 		clabw = R_print.na_width_noquote;
-	    else clabw = strlen(CHAR(STRING_ELT(cl, j)));
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
 	} else
 	    clabw = IndexWidth(j + 1) + 3;
 	if (w[j] < clabw)
@@ -454,6 +459,81 @@ static void printStringMatrix(SEXP sx, int offset, int r, int c,
     }
 }
 
+static void printRawMatrix(SEXP sx, int offset, int r, int c,
+			   SEXP rl, SEXP cl, char *rn, char *cn)
+{
+    SEXP sw;
+    int *w;
+    Rbyte *x;
+    int width, rlabw, clabw, rnw;
+    int i, j, jmin, jmax, lbloff = 0;
+
+    if (!isNull(rl))
+	formatString(STRING_PTR(rl), r, &rlabw, 0);
+    else
+	rlabw = IndexWidth(r + 1) + 3;
+
+    if (rn) {
+	rnw = strwidth(rn);
+	if ( rnw < rlabw + R_MIN_LBLOFF )
+	    lbloff = R_MIN_LBLOFF;
+	else
+	    lbloff = rnw - rlabw;
+
+	rlabw += lbloff;
+    }
+
+    sw = allocVector(INTSXP, c);
+    x = RAW(sx) + offset;
+    w = INTEGER(sw);
+    for (j = 0; j < c; j++) {
+	formatRaw(&x[j * r], r, &w[j]);
+	if (!isNull(cl)) {
+	    if(STRING_ELT(cl, j) == NA_STRING) 
+		clabw = R_print.na_width_noquote;
+	    else clabw = strwidth(CHAR(STRING_ELT(cl, j)));
+	} else
+	    clabw = IndexWidth(j + 1) + 3;
+	if (w[j] < clabw)
+	    w[j] = clabw;
+	w[j] += R_print.gap;
+    }
+    jmin = 0;
+    jmax = 0;
+    if (c == 0) {
+	for (i = 0; i < r; i++)
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	Rprintf("\n");
+	return;
+    }
+    while (jmin < c) {
+	width = rlabw;
+	do {
+	    width += w[jmax];
+	    jmax++;
+	}
+	while (jmax < c && width + w[jmax] < R_print.width);
+
+	if (cn != NULL)
+	    Rprintf("%*s%s\n", rlabw, "", cn);
+
+	if (rn != NULL)
+	    Rprintf("%*s", -rlabw, rn);
+	else
+	    Rprintf("%*s", rlabw, "");
+
+	for (j = jmin; j < jmax ; j++)
+	    MatrixColumnLabel(cl, j, w[j]);
+	for (i = 0; i < r; i++) {
+	    MatrixRowLabel(rl, i, rlabw, lbloff);
+	    for (j = jmin; j < jmax; j++)
+		Rprintf("%*s%s", w[j]-2, "", EncodeRaw(x[i + j * r]));
+	}
+	Rprintf("\n");
+	jmin = jmax;
+    }
+}
+
 void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 		 SEXP rl, SEXP cl, char *rn, char *cn)
 {
@@ -487,6 +567,11 @@ void printMatrix(SEXP x, int offset, SEXP dim, int quote, int right,
 	if (quote) quote = '"';
 	printStringMatrix(x, offset, r, c, quote, right, rl, cl, rn, cn);
 	break;
+    case RAWSXP:
+	printRawMatrix(x, offset, r, c, rl, cl, rn, cn);
+	break;
+    default:
+	UNIMPLEMENTED_TYPE("printMatrix", x);
     }
 }
 
@@ -566,6 +651,9 @@ static void printArrayGeneral(SEXP x, SEXP dim, int quote, int right,
 	    case STRSXP:
 		if (quote) quote = '"';
 		printStringMatrix(x, i * b, nr, nc, quote, right, dn0, dn1, rn, cn);
+		break;
+	    case RAWSXP:
+		printRawMatrix(x, i * b, nr, nc, dn0, dn1, rn, cn);
 		break;
 	    }
 	    Rprintf("\n");

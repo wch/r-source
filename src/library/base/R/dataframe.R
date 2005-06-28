@@ -114,7 +114,7 @@ as.data.frame.list <- function(x, row.names = NULL, optional = FALSE)
 as.data.frame.vector <- function(x, row.names = NULL, optional = FALSE)
 {
     nrows <- length(x)
-    nm <- deparse(substitute(x))
+    nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
     if(is.null(row.names)) {
 	if (nrows == 0)
 	    row.names <- character(0)
@@ -235,7 +235,7 @@ as.data.frame.AsIs <- function(x, row.names = NULL, optional = FALSE)
 	as.data.frame.model.matrix(x, row.names, optional)
     else { # as.data.frame.vector without removing names
         nrows <- length(x)
-        nm <- deparse(substitute(x))
+        nm <- paste(deparse(substitute(x), width.cutoff=500), collapse=" ")
         if(is.null(row.names)) {
             if (nrows == 0)
                 row.names <- character(0)
@@ -500,9 +500,9 @@ data.frame <-
                 if(!nreplace) return(x) # nothing to replace
                 ## allow replication of length(value) > 1 in 1.8.0
                 N <- length(value)
-                if(N > 0 && N < nreplace && (nreplace %% N) == 0)
+                if(N > 1 && N < nreplace && (nreplace %% N) == 0)
                     value <- rep(value, length.out = nreplace)
-                if(length(value) != nreplace)
+                if(N > 1 && (length(value) != nreplace))
                     stop("rhs is the wrong length for indexing by a logical matrix")
                 n <- 0
                 nv <- nrow(x)
@@ -511,9 +511,9 @@ data.frame <-
                     nv <- sum(thisvar, na.rm = TRUE)
                     if(nv) {
                         if(is.matrix(x[[v]]))
-                            x[[v]][thisvar, ] <- value[n+(1:nv)]
+                            x[[v]][thisvar, ] <- if(N > 1) value[n+(1:nv)] else value
                         else
-                            x[[v]][thisvar] <- value[n+(1:nv)]
+                            x[[v]][thisvar] <- if(N > 1) value[n+(1:nv)] else value
                     }
                     n <- n+nv
                 }

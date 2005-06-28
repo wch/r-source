@@ -38,13 +38,6 @@
 #include <unistd.h>
 #endif
 
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA
-extern char *alloca(size_t);
-#endif
-
 SEXP ScalarLogical(int x)
 {
     SEXP ans = allocVector(LGLSXP, 1);
@@ -229,10 +222,10 @@ SEXP asChar(SEXP x)
 	    return mkChar(buf);
 	case REALSXP:
 	    formatReal(REAL(x), 1, &w, &d, &e, 0);
-	    return mkChar(EncodeReal(REAL(x)[0], w, d, e));
+	    return mkChar(EncodeReal(REAL(x)[0], w, d, e, OutDec));
         case CPLXSXP:
 	    formatComplex(COMPLEX(x), 1, &w, &d, &e, &wi, &di, &ei, 0);
-	    return mkChar(EncodeComplex(COMPLEX(x)[0], w, d, e, wi, di, ei));
+	    return mkChar(EncodeComplex(COMPLEX(x)[0], w, d, e, wi, di, ei, OutDec));
 	case STRSXP:
 	    return STRING_ELT(x, 0);
 	default:

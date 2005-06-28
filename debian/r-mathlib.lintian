@@ -1,1 +1,2 @@
 r-mathlib: non-dev-pkg-with-shlib-symlink usr/lib/libRmath.so.1.0.0 usr/lib/libRmath.so
+r-mathlib: missing-depends-line

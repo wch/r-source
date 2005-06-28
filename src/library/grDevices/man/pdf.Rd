@@ -10,13 +10,14 @@
 \synopsis{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family,
-    title = "R Graphics Output", fonts = NULL, version = "1.1", \dots)
+    title = "R Graphics Output", fonts = NULL, version = "1.1",
+    paper = "special", \dots)
 }
 \usage{
 pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     width = 6, height = 6, onefile = TRUE, family = "Helvetica",
     title = "R Graphics Output", fonts = NULL, version = "1.1",
-    encoding, bg, fg, pointsize)
+    paper, encoding, bg, fg, pointsize)
 }
 \arguments{
   \item{file}{a character string giving the name of the file.}
@@ -32,6 +33,14 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     specifications allowed for \code{\link{postscript}} are \bold{not}
     available.}
   \item{title}{title string to embed in the file.}
+  \item{paper}{the size of paper in the printer.  The choices are
+    \code{"a4"}, \code{"letter"}, \code{"legal"} and
+    \code{"executive"} (and these can be capitalized).
+    The default is \code{"special"}, which means that the \code{width}
+    and \code{height} specify the paper size.  A further choice is
+    \code{"default"}; if this is selected, the
+    papersize is taken from the option \code{"papersize"}
+    if that is set and to \code{"a4"} if it is unset or empty.}
   \item{encoding}{the name of an encoding file.  Defaults to
 #ifdef unix
 \code{"ISOLatin1.enc"}
@@ -95,6 +104,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   transparent output to be produced.  Specifying a lower version
   number may be useful if you want to produce PDF output that can be
   viewed on older PDF viewers.
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of
+  1/96inch.  Multiples less than 1 are allowed.  \code{pch="."} with
+  \code{cex = 1} corresponds to a square of side 1/72 inch.
 }
 \note{
   Acrobat Reader does not use the fonts specified but rather emulates

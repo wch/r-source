@@ -45,7 +45,7 @@
 
 double lgammacor(double x)
 {
-    const double algmcs[15] = {
+    const static double algmcs[15] = {
 	+.1666389480451863247205729650822e+0,
 	-.1384948176067563840732986059135e-4,
 	+.9810825646924729426157171547487e-8,

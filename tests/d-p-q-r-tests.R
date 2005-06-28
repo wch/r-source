@@ -444,8 +444,19 @@ All.eq(1, -1e-17/ pexp(qexp(-1e-17, log=TRUE),log=TRUE))
 abs(pgamma(30,100, lower=FALSE, log=TRUE) + 7.3384686328784e-24) < 1e-36
 All.eq(1, pcauchy(-1e20)           /  3.18309886183791e-21)
 All.eq(1, pcauchy(+1e15, log=TRUE) / -3.18309886183791e-16)## PR#6756
-for(x in 10^c(15,25,50,100,200))
-    print(all.equal(pt(-x, df=1), pcauchy(-x), tol = 1e-15))
+x <- 10^(ex <- c(1,2,5*(1:5),50,100,200,300,Inf))
+for(a in x[ex > 10]) ## improve pt() : cbind(x,t= pt(-x, df=1), C=pcauchy(-x))
+    print(all.equal(pt(-a, df=1), pcauchy(-a), tol = 1e-15))
+## for PR#7902:
+ex <- -c(rev(1/x), ex)
+All.eq(-x, qcauchy(pcauchy(-x)))
+All.eq(+x, qcauchy(pcauchy(+x, log=TRUE), log=TRUE))
+All.eq(1/x, pcauchy(qcauchy(1/x)))
+All.eq(ex,  pcauchy(qcauchy(ex, log=TRUE), log=TRUE))
+II <- c(-Inf,Inf)
+stopifnot(pcauchy(II) == 0:1, ## qcauchy(0:1) == II,
+          pcauchy(II, log=TRUE) == c(-Inf,0),
+          qcauchy(c(-Inf,0), log=TRUE) == II)
 
 pr <- 1e-23 ## PR#6757
 stopifnot(all.equal(pr^ 12, pbinom(11, 12, prob= pr,lower=FALSE),
@@ -471,6 +482,49 @@ All.eq(dpois(  20, 3e-308, log=TRUE), -14204.2875435307)
 All.eq(dpois(1e20, 1e-290, log=TRUE), -7.12801378828154e+22)
 ## all gave -Inf in R 2.0.1
 
+
+## Inf df in pf etc.
+# apparently pf(df2=Inf) worked in 2.0.1 (undocumented) but df did not.
+x <- c(1/pi, 1, pi)
+oo <- options(digits = 8)
+df(x, 3, 1e6)
+df(x, 3, Inf)
+pf(x, 3, 1e6)
+pf(x, 3, Inf)
+
+df(x, 1e6, 5)
+df(x, Inf, 5)
+pf(x, 1e6, 5)
+pf(x, Inf, 5)
+
+df(x, Inf, Inf)# (0, Inf, 0)  - since 2.1.1
+pf(x, Inf, Inf)# (0, 1/2, 1)
+
+pf(x, 5, Inf, ncp=0)
+pf(x, 5, 1e6, ncp=1)
+pf(x, 5, 1e7, ncp=1)
+all.equal(pf(x, 5, 1e8, ncp=1), tol = 1e-6,
+          c(0.0659330751, 0.4708802996, 0.9788764591))
+pf(x, 5, Inf, ncp=1)
+
+dt(1, Inf)
+dt(1, Inf, ncp=0)
+dt(1, Inf, ncp=1)
+dt(1, 1e6, ncp=1)
+dt(1, 1e7, ncp=1)
+dt(1, 1e8, ncp=1)
+dt(1, 1e10, ncp=1) # = Inf
+options(oo)
+## Inf valid as from 2.1.1: df(x, 1e16, 5) was way off in 2.0.1.
+
+## PR#7099 : pf() with large df1 or df2:
+nu <- 2^seq(25,34, 0.5)
+y <- 1e9*(pf(1,1,nu) - 0.68268949)
+stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
+          diff(y) > 0, # i.e. pf(1,1, *) is monotone increasing
+          All.eq(y [1], -5.07420372386491),
+          All.eq(y[19],  2.12300110824515))
+## not at all in R 2.1.0 or earlier
 
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

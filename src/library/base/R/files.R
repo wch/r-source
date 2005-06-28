@@ -1,9 +1,15 @@
 #Platform <- function()
 #.Internal(Platform())
 
-R.home <- function()
-.Internal(R.home())
-
+R.home <- function(component="home")
+{
+    rh <- .Internal(R.home())
+    switch(component,
+           "home" = rh,
+           "share"= if(nchar(p <- as.vector(Sys.getenv("R_SHARE_DIR")))) p else file.path(rh, component),
+	   "doc"=if(nchar(p <- as.vector(Sys.getenv("R_DOC_DIR")))) p else file.path(rh, component),
+           file.path(rh, component))
+}
 file.show <-
 function (..., header=rep("", nfiles), title="R Information",
           delete.file=FALSE, pager=getOption("pager"))

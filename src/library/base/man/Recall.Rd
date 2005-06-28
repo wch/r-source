@@ -15,7 +15,15 @@ Recall(\dots)
 % \details{
 % 
 % }
-\seealso{\code{\link{do.call}} and \code{\link{call}}.}
+\note{
+\code{Recall} will not work correctly when passed as a function
+argument, eg to the \code{apply} family of functions.
+  }
+  \seealso{\code{\link{do.call}} and \code{\link{call}}.
+    
+           \code{\link{local}} for another way to write anonymous
+	   recursive functions
+  }
 \examples{
 ## A trivial (but inefficient!) example:
 fib <- function(n) if(n<=2) {if(n>=0) 1 else 0} else Recall(n-1) + Recall(n-2)

@@ -58,7 +58,7 @@
 
 double dnbeta(double x, double a, double b, double lambda, int give_log)
 {
-    const double eps = 1.e-14;
+    const static double eps = 1.e-14;
     const int maxiter = 200;
 
     double k, lambda2, psum, sum, term, weight;

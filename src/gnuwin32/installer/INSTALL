@@ -1,9 +1,9 @@
 Making the standard installer
 =============================
 
-You can make an install package (rw????.exe) in the current Windows
-style by using the installer kit Inno Setup 4.1.5 or later (preferably
-5.0.6 or later) from jrsoftware.org.
+You can make an install package (R-x.y.z-win32.exe) in the current
+Windows style by using the installer kit Inno Setup 5.1.2 or later
+from jrsoftware.org.
 
 You need the R installation built completely (see ../INSTALL: this
 includes making bitmap and Tcl/Tk support and the manuals).
@@ -14,10 +14,9 @@ Go to the parent of this directory and edit ISDIR in ../MkRules and run
 make distribution
 make clean
 
-You will have rw????.exe and a set of files miniR* for the floppy-sized
-distribution, both in the ../cran directory.
+You will have R-x.y.z-win32.exe both in this dir and in the cran dir.
 
-Note that building the installers need ca 85Mb of free memory.
+Note that building the installer needs ca 85Mb of free memory.
 
 
 Making a custom installer
@@ -27,8 +26,6 @@ Making a custom installer
 replace `make distribution' by something like
 
 	make distribution EXTRA_PKGS='pkg1 pkg2 pkg3'
-
-(Note these packages will also be added to the miniR installer.)
 
 
 2) If you don't want to make R from the sources yourself, make a full

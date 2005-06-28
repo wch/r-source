@@ -1,17 +1,18 @@
 
-R : Copyright 2001, The R Development Core Team
-Version 1.2.0 Patched (2001-01-06)
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.0 Under development (unstable) (2005-03-22), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
-Type `license()' or `licence()' for distribution details.
+Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
-Type `contributors()' for more information.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
 
-Type `demo()' for some demos, `help()' for on-line help, or
-`help.start()' for a HTML browser interface to help.
-Type `q()' to quit R.
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
 
 > ##
 > ## RNG tests using DKW inequality for rate of convergence
@@ -254,8 +255,18 @@ weibull(shape = 1) PASSED
 weibull(shape = 4, scale = 4) PASSED
 [1] TRUE
 > 
-> 
+> ## regression test for PR#7314
+> dkwtest("hyper", m=60, n=100, k=50)
+hyper(m = 60, n = 100, k = 50) PASSED
+[1] TRUE
+> dkwtest("hyper", m=6, n=10, k=5)
+hyper(m = 6, n = 10, k = 5) PASSED
+[1] TRUE
+> dkwtest("hyper", m=600, n=1000, k=500)
+hyper(m = 600, n = 1000, k = 500) PASSED
+[1] TRUE
+>         
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  22.67 0.15 22.82 0 0 
+Time elapsed:  2.55 0.03 10.05 0 0 
 > 
 > 

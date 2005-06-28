@@ -33,7 +33,7 @@ $version = $1;
 ($name = $0) =~ s|.*/||;
 
 @knownoptions = ("rhome:s", "html", "txt", "latex", "example", "debug|d",
-		 "dosnames", "htmllists", "help|h", "version|v", "os|OS:s", 
+		 "dosnames", "help|h", "version|v", "os|OS:s", 
 		 "index");
 GetOptions (@knownoptions) || usage();
 &R_version($name, $version) if $opt_version;
@@ -66,17 +66,6 @@ print STDERR "Current directory (cwd): '$current'\n" if $opt_debug;
 
 my $mainlib = file_path($R_HOME, "library");
 
-# if option --htmllists is set we only rebuild some list files and
-# exit
-
-if($opt_htmllists){
-    build_htmlpkglist($mainlib);
-
-    %anindex = read_anindex($mainlib);
-    %htmlindex = read_htmlindex($mainlib);
-
-    exit 0;
-}
 
 # default is to build all documentation formats
 if(!$opt_html && !$opt_txt && !$opt_latex && !$opt_example){
@@ -271,7 +260,6 @@ Options:
   --txt                 build text files    (default is all)
   --latex               build LaTeX files   (default is all)
   --example             build example files (default is all)
-  --htmllists           build HTML function and package lists
   --dosnames            use 8.3 filenames
   --index               build index file only
 

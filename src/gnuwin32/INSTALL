@@ -11,9 +11,8 @@ Building From Source on Windows
 ===============================
 
 Details on building R are given in the `R Installation and
-Administration' manual in the doc/manual directory.  This is in
-texinfo format (R-admin.texi) in the source distribution, and in HTML
-and PDF formats in a binary distribution.
+Administration Manual' in the doc/manual directory.  An HTML version
+is at doc/html/R-admin.html, unless you obtained R using Subversion.
 
 
 Feedback

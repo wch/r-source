@@ -78,16 +78,16 @@ tclVar(init="")
 \method{tclvalue}{tclVar}(x) <- value
 
 tclArray()
-% These do not work yet
-%\method{[[}{tclArray}(x,...)
-%\method{[[}{tclArray}(x,...) <- value
-%\method{$}{tclArray}(x, i)
-%\method{$}{tclArray}(x, i) <- value
-# S3 methods for tclArray objects
-x[[...]]
-x[[...]] <- value
-x$name
-x$name <- value
+\method{[[}{tclArray}(x,...)
+\method{[[}{tclArray}(x,...) <- value
+\method{$}{tclArray}(x, i)
+\method{$}{tclArray}(x, i) <- value
+% When the above did not yet work  ...
+%# S3 methods for tclArray objects
+%x[[...]]
+%x[[...]] <- value
+%x$name
+%x$name <- value
 
 \method{names}{tclArray}(x)
 \method{length}{tclArray}(x)
@@ -116,7 +116,7 @@ tclRequire(package, warn = TRUE)
   \item{objv}{a named vector of Tcl objects}
   \item{win}{a window structure}
   \item{x}{an object}
-  \item{name}{character or (unquoted) name}
+  \item{i}{character or (unquoted) name}
   \item{drop}{logical. Indicates whether a single-element vector should
     be made into a simple Tcl object or a list of length one}
   \item{value}{For \code{tclvalue} assignments, a character string. For

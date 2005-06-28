@@ -10,16 +10,33 @@ tk_select.list <-
     tkfocus(dlg)
     if(!is.null(title) && nchar(title)) {
         lab <- tklabel(dlg, text = title, fg = "blue")
-        tkgrid.configure(lab, columnspan = 2)
+        tkpack(lab, side="top")
     }
-    scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 100
-                                        # allow for win furniture and buttons
+    onOK <- function() {
+        res <- 1+as.integer(tkcurselection(box))
+        ans.select_list <<- list[res]
+        tkgrab.release(dlg)
+        tkdestroy(dlg)
+    }
+    onCancel <- function() {
+        tkgrab.release(dlg)
+        tkdestroy(dlg)
+    }
+    buttons <- tkframe(dlg)
+    tkpack(buttons, side="bottom")
+    OK <- tkbutton(buttons, text = "OK", width = 6, command = onOK)
+    Cancel <- tkbutton(buttons, text = "Cancel", command = onCancel)
+    tkpack(OK, Cancel, side="left", fill="x", padx="2m")
+
+    scht <- as.numeric(tclvalue(tkwinfo("screenheight", dlg))) - 200
+    ## allow for win furniture and buttons, and for e.g. KDE panel
     ht <- min(length(list), scht %/% 20) # a guess of font height
     box <- tklistbox(dlg, height = ht,
                      listvariable = lvar, bg = "white",
                      selectmode = ifelse(multiple, "multiple", "single"))
     tmp <- tcl("font", "metrics", tkcget(box, font=NULL))
-    tmp <- as.numeric(sub(".*linespace ([0-9]+) .*", "\\1", tclvalue(tmp)))+1
+    ## fudge factor here seems to be 1 on Windows, 3 on X11.
+    tmp <- as.numeric(sub(".*linespace ([0-9]+) .*", "\\1", tclvalue(tmp)))+3
     ht <- min(length(list), scht %/% tmp)
     tkdestroy(box)
     if(ht < length(list)) {
@@ -29,33 +46,19 @@ tk_select.list <-
                          listvariable = lvar, bg = "white",
                          selectmode = ifelse(multiple, "multiple", "single"),
                          yscrollcommand = function(...)tkset(scr,...))
-        tkgrid.configure(box, scr, columnspan = 2)
-        tkgrid.configure(scr, rowspan = ht, sticky = "nsw")
+        tkpack(box, side="left", fill="both", expand=TRUE)
+        tkpack(scr, side="right", fill="y")
     } else {
         box <- tklistbox(dlg, height = ht,
                          listvariable = lvar, bg = "white",
                          selectmode = ifelse(multiple, "multiple", "single"))
-        tkgrid.configure(box, columnspan = 2)
+        tkpack(box, side="left", fill="both")
     }
     preselect <- match(preselect, list)
     ans.select_list <- character(0) # avoid name conflicts
     for(i in preselect[preselect > 0])
         tkselection.set(box, i - 1) # 0-based
 
-    onOK <- function() {
-        res <- 1+as.integer(tkcurselection(box))
-        ans.select_list <<- list[res]
-        tkgrab.release(dlg)
-        tkdestroy(dlg)
-    }
-    onCancel <- function() {
-        ans <<- character(0)
-        tkgrab.release(dlg)
-        tkdestroy(dlg)
-    }
-    OK <- tkbutton(dlg, text = "OK", width = 6, command = onOK)
-    Cancel <- tkbutton(dlg, text = "Cancel", command = onCancel)
-    tkgrid(OK, Cancel)
     tkbind(dlg, "<Destroy>", onCancel)
     tkfocus(box)
     tkwait.window(dlg)

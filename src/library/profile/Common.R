@@ -37,6 +37,8 @@ options(scipen = 0)
 options(locatorBell = TRUE)
 options(ts.eps = 1e-5)   # default as S
 options(pkgType = .Platform$pkgType)
+options(max.print = 10000)
+
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))
        if(identical(dp, "")) # marginally faster to do methods last
            dp <- c("datasets", "utils", "grDevices", "graphics",

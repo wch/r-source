@@ -144,7 +144,7 @@
 
 void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 {
-    const double bvalues[] = {	/* Bernoulli Numbers */
+    const static double bvalues[] = {	/* Bernoulli Numbers */
 	 1.00000000000000000e+00,
 	-5.00000000000000000e-01,
 	 1.66666666666666667e-01,
@@ -168,7 +168,7 @@ void dpsifn(double x, int n, int kode, int m, double *ans, int *nz, int *ierr)
 	 4.88332318973593167e+14,
 	-1.92965793419400681e+16
     };
-    const double *b = (double *)&bvalues -1; /* ==> b[1] = bvalues[0], etc */
+    const static double *b = (double *)&bvalues -1; /* ==> b[1] = bvalues[0], etc */
     const int nmax = n_max;
 
     int i, j, k, mm, mx, nn, np, nx, fn;

@@ -2,7 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  file preferences.c
  *  Copyright (C) 2000  Guido Masarotto and Brian Ripley
- *                2004  R Core Development Team
+ *                2004-5  R Core Development Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -82,7 +82,7 @@ static int cmatch(char *col, char **list)
 
 static char *StyleList[] = {"normal", "bold", "italic", NULL};
 static char *PointsList[] = {"6", "7", "8", "9", "10", "11", "12", "14", "16", "18", NULL};
-static char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", NULL};
+static char *FontsList[] = {"Courier", "Courier New", "FixedSys", "FixedFont", "Lucida Console", "Terminal", "BatangChe", "DotumChe", "GulimChe", "MingLiU", "MS Gothic", "MS Mincho", "NSimSun", NULL};
 
 
 static window wconfig;
@@ -190,7 +190,7 @@ static void do_apply()
 
     if(newGUI.MDI != curGUI.MDI || newGUI.toolbar != curGUI.toolbar ||
        newGUI.statusbar != curGUI.statusbar)
-	askok("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n");
+	askok(G_("The overall console properties cannot be changed\non a running console.\n\nSave the preferences and restart Rgui to apply them.\n"));
 
 
 /*  Set a new font? */
@@ -207,6 +207,7 @@ static void do_apply()
 	if (!strcmp(newGUI.style, "italic")) sty = Italic;
 	pointsize = newGUI.pointsize;
 	fontsty = sty;
+
 	/* Don't delete font: open pagers may be using it */
 	if (strcmp(fontname, "FixedFont"))
 	    consolefn = gnewfont(NULL, fontname, fontsty, pointsize, 0.0);
@@ -218,13 +219,13 @@ static void do_apply()
 	    R_ShowMessage(msg);
 	    consolefn = FixedFont;
 	}
-	if (!ghasfixedwidth(consolefn)) {
+	/* if (!ghasfixedwidth(consolefn)) {
 	    sprintf(msg,
 		    G_("Font %s-%d-%d has variable width.\nUsing system fixed font"),
 		    fontname, fontsty, pointsize);
 	    R_ShowMessage(msg);
 	    consolefn = FixedFont;
-	}
+	    } */
 	p->f = consolefn;
 	FH = fontheight(p->f);
 	FW = fontwidth(p->f);
@@ -255,13 +256,13 @@ static void do_apply()
 
     if(haveusedapager &&
        (newGUI.prows != curGUI.prows || newGUI.pcols != curGUI.pcols))
-	askok("Changes in pager size will not apply to any open pagers");
+	askok(G_("Changes in pager size will not apply to any open pagers"));
     pagerrow = newGUI.prows;
     pagercol = newGUI.pcols;
 
     if(newGUI.pagerMultiple != pagerMultiple) {
 	if(!haveusedapager ||
-	   askokcancel("Do not change pager type if any pager is open\nProceed?")
+	   askokcancel(G_("Do not change pager type if any pager is open\nProceed?"))
 	   == YES)
 	    pagerMultiple = newGUI.pagerMultiple;
 	if(pagerMultiple) {
@@ -280,7 +281,7 @@ static void save(button b)
 
     setuserfilter("All files (*.*)\0*.*\0\0");
     strcpy(buf, getenv("R_USER"));
-    file = askfilesavewithdir("Select directory for Rconsole",
+    file = askfilesavewithdir(G_("Select directory for file 'Rconsole'"),
 			      "Rconsole", buf);
     if(!file) return;
     strcpy(buf, file);
@@ -396,7 +397,7 @@ void Rgui_configure()
     rect r;
     ConsoleData p = (ConsoleData) getdata(RConsole);
 
-    wconfig = newwindow("Rgui Configuration Editor", rect(0, 0, 550, 450),
+    wconfig = newwindow(G_("Rgui Configuration Editor"), rect(0, 0, 550, 450),
 			Titlebar | Centered | Modal);
     setbackground(wconfig, dialog_bg());
     l_mdi = newlabel("Single or multiple windows",
@@ -508,10 +509,10 @@ void Rgui_configure()
     setlistitem(usercol, rgbtonum(consoleuser));
     setlistitem(highlightcol, rgbtonum(pagerhighlight));
 
-    bApply = newbutton("Apply", rect(50, 410, 70, 25), apply);
-    bSave = newbutton("Save", rect(130, 410, 70, 25), save);
-    bOK = newbutton("OK", rect(350, 410, 70, 25), ok);
-    bCancel = newbutton("Cancel", rect(430, 410, 70, 25), cancel);
+    bApply = newbutton(G_("Apply"), rect(50, 410, 70, 25), apply);
+    bSave = newbutton(G_("Save"), rect(130, 410, 70, 25), save);
+    bOK = newbutton(G_("OK"), rect(350, 410, 70, 25), ok);
+    bCancel = newbutton(G_("Cancel"), rect(430, 410, 70, 25), cancel);
     show(wconfig);
     getGUIstate(&curGUI);
 }

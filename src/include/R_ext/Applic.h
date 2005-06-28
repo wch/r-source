@@ -104,7 +104,7 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 	    double *eps, double *epsneg, double *xmin, double *xmax);
 
 /* massdist.c */
-void massdist(double *x, int *nx, double *xlow, double *xhigh,
+void massdist(double *x, double *xmass, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny);
 
 /* pretty.c */

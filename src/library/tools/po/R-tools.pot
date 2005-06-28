@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-02 09:34\n"
+"POT-Creation-Date: 2005-05-21 13:29\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,10 +26,76 @@ msgstr ""
 msgid "neither code nor data objects found"
 msgstr ""
 
+msgid "Undocumented code objects:"
+msgstr ""
+
+msgid "Undocumented data sets:"
+msgstr ""
+
+msgid "Undocumented S4 classes:"
+msgstr ""
+
+msgid "Undocumented S4 methods:"
+msgstr ""
+
+msgid "Undocumented %s:"
+msgstr ""
+
 msgid "directory '%s' does not contain R code"
 msgstr ""
 
 msgid "directory '%s' does not contain Rd sources"
+msgstr ""
+
+msgid "Functions/methods with usage in documentation object '%s' but not in code:"
+msgstr ""
+
+msgid "Codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Code: %s"
+msgstr ""
+
+msgid "code"
+msgstr ""
+
+msgid "Docs: %s"
+msgstr ""
+
+msgid "docs"
+msgstr ""
+
+msgid "S4 class codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Slots for class '%s'"
+msgstr ""
+
+msgid "name"
+msgstr ""
+
+msgid "Data codoc mismatches from documentation object '%s':"
+msgstr ""
+
+msgid "Variables in data frame '%s'"
+msgstr ""
+
+msgid "Undocumented arguments in documentation object '%s'"
+msgstr ""
+
+msgid "Duplicated \\argument entries in documentation object '%s':"
+msgstr ""
+
+msgid "Documented arguments not in \\usage in documentation object '%s':"
+msgstr ""
+
+msgid "Objects in \\usage without \\alias in documentation object '%s':"
+msgstr ""
+
+msgid "Bad \\usage lines found in documentation object '%s':"
+msgstr ""
+
+msgid "S3 methods shown with full name in documentation object '%s':"
 msgstr ""
 
 msgid "unable to create"
@@ -47,6 +113,9 @@ msgstr ""
 msgid "parse error in file '%s'"
 msgstr ""
 
+msgid "Foreign function calls without 'PACKAGE' argument:"
+msgstr ""
+
 msgid "declared S3 method '%s' not found"
 msgstr ""
 
@@ -56,10 +125,160 @@ msgstr ""
 msgid "parse error in examples from file '%s'"
 msgstr ""
 
+msgid "File '%s':"
+msgstr ""
+
+msgid "found T/F in %s"
+msgstr ""
+
+msgid "Packages required but not available:"
+msgstr ""
+
+msgid "Former standard packages required but now defunct:"
+msgstr ""
+
+msgid "Vignette dependencies not required:"
+msgstr ""
+
+msgid "Vignette dependencies (\\VignetteDepends{} entries) must be contained in the DESCRIPTION Depends/Suggests/Imports entries."
+msgstr ""
+
+msgid "Namespace dependencies not required:"
+msgstr ""
+
 msgid "Package Rd sources were installed without preserving Rd file names."
 msgstr ""
 
 msgid "Please reinstall using a current version of R."
+msgstr ""
+
+msgid "Rd files with syntax errors:"
+msgstr ""
+
+msgid "Rd files with likely Rd problems:"
+msgstr ""
+
+msgid "Unaccounted top-level text in file '%s':"
+msgstr ""
+
+msgid "Following section '%s'"
+msgstr ""
+
+msgid "Rd files with unknown encoding:"
+msgstr ""
+
+msgid "Rd files with invalid non-ASCII meta data:"
+msgstr ""
+
+msgid "Rd files with non-ASCII section titles:"
+msgstr ""
+
+msgid "Rd files with missing or empty '\\name':"
+msgstr ""
+
+msgid "Rd files with missing or empty '\\title':"
+msgstr ""
+
+msgid "Rd files without '%s':"
+msgstr ""
+
+msgid "These entries are required in an Rd file."
+msgstr ""
+
+msgid "Rd files with duplicate '%s':"
+msgstr ""
+
+msgid "These entries must be unique in an Rd file."
+msgstr ""
+
+msgid "Rd files with non-standard keywords:"
+msgstr ""
+
+msgid "Each '\\keyword' entry should specify one of the standard keywords (as listed in file 'KEYWORDS.db' in the 'doc' subdirectory of the R home directory)."
+msgstr ""
+
+msgid "Rd files with duplicated alias '%s':"
+msgstr ""
+
+msgid "Found invalid multi-byte character data."
+msgstr ""
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr ""
+
+msgid "Try running R in a single-byte locale."
+msgstr ""
+
+msgid "Malformed package name"
+msgstr ""
+
+msgid "Invalid package name."
+msgstr ""
+
+msgid "This is the name of a base package."
+msgstr ""
+
+msgid "This name was used for a base package and is remapped by library()."
+msgstr ""
+
+msgid "Unknown encoding"
+msgstr ""
+
+msgid "Fields with non-ASCII tags:"
+msgstr ""
+
+msgid "All field tags must be ASCII."
+msgstr ""
+
+msgid "Fields with non-ASCII values:"
+msgstr ""
+
+msgid "These fields must have ASCII values."
+msgstr ""
+
+msgid "Required fields missing:"
+msgstr ""
+
+msgid "Malformed package version."
+msgstr ""
+
+msgid "Malformed maintainer field."
+msgstr ""
+
+msgid "Malformed Depends or Suggests or Imports field."
+msgstr ""
+
+msgid "Offending entries:"
+msgstr ""
+
+msgid "Entries must be names of packages optionally followed by '<=' or '>=', white space, and a valid version number in parentheses."
+msgstr ""
+
+msgid "Entries with infeasible comparison operator:"
+msgstr ""
+
+msgid "Only operators '<=' and '>=' are possible."
+msgstr ""
+
+msgid "Entries with infeasible version number:"
+msgstr ""
+
+msgid "Version numbers must be sequences of at least two non-negative integers, separated by single '.' or '-'."
+msgstr ""
+
+msgid "Package name and namespace differ."
+msgstr ""
+
+msgid "Invalid Priority field."
+msgstr ""
+
+msgid "Packages with priorities 'base' or 'recommended' or 'defunct-base' must already be known to R."
+msgstr ""
+
+msgid "See the information on DESCRIPTION files in section 'Creating R packages' of the 'Writing R Extensions' manual."
+msgstr ""
+
+msgid "Non-portable flags in variable '%s':"
 msgstr ""
 
 msgid "argument 'lines' must be a character vector"
@@ -110,10 +329,7 @@ msgstr ""
 msgid "unmatched \\item description for item '%s'"
 msgstr ""
 
-msgid "unclosed \\dontrun"
-msgstr ""
-
-msgid "unclosed \\dontshow or \\testonly"
+msgid "unclosed \\%s"
 msgstr ""
 
 msgid "Rd syntax errors found"
@@ -152,25 +368,22 @@ msgstr ""
 msgid "cannot open directory '%s'"
 msgstr ""
 
-msgid "*** someone has corrupted the Built field in package"
-msgstr ""
-
-msgid "Package"
-msgstr ""
-
-msgid "***"
-msgstr ""
-
 msgid "cannot turn off locale-specific sorting via LC_COLLATE"
+msgstr ""
+
+msgid "duplicated files in '%s' field:"
+msgstr ""
+
+msgid "files in '%s' field missing from '%s':"
+msgstr ""
+
+msgid "files in '%s' missing from '%s' field:"
 msgstr ""
 
 msgid "unable to create '%s'"
 msgstr ""
 
-msgid "unable to copy INDEX to"
-msgstr ""
-
-msgid "INDEX"
+msgid "unable to copy INDEX to '%s'"
 msgstr ""
 
 msgid "cannot create directory '%s'"
@@ -200,13 +413,7 @@ msgstr ""
 msgid "package seems to be using lazy loading for data already"
 msgstr ""
 
-msgid "object(s)"
-msgstr ""
-
-msgid ","
-msgstr ""
-
-msgid "are created by more than one data call"
+msgid "object(s) %s are created by more than one data call"
 msgstr ""
 
 msgid "source list must have names for all elements"
@@ -224,6 +431,15 @@ msgstr ""
 msgid "package seems to be using lazy loading already"
 msgstr ""
 
+msgid "cannot update HTML package index"
+msgstr ""
+
+msgid "'DESCRIPTION' has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+
+msgid "cannot create HTML package index"
+msgstr ""
+
 msgid "argument 'pkg' must be of length 1"
 msgstr ""
 
@@ -233,7 +449,7 @@ msgstr ""
 msgid "bad operand"
 msgstr ""
 
-msgid "had its dependencies reduced to a minimal set."
+msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
 
 msgid "argument '%s' must be a character string or connection"

@@ -333,7 +333,7 @@ f2xact(int nrow, int ncol, int *table, int ldtabl,
      *  (*does* change results very slightly on i386 linux) */
     int i, ii, j, k, n,
 	iflag,ifreq, ikkey, ikstp, ikstp2, ipn, ipo, itop, itp = 0,
-	jkey, jstp, jstp2, jstp3, jstp4, k1, kb, kd, ks, kval, kmax, last,
+	jkey, jstp, jstp2, jstp3, jstp4, k1, kb, kd, ks, kval = 0, kmax, last,
 	ncell, ntot, nco, nro, nro2, nrb,
 	i31, i32, i33, i34, i35, i36, i37, i38, i39,
 	i41, i42, i43, i44, i45, i46, i47, i48, i310, i311;
@@ -993,8 +993,8 @@ LoopNode: /* Generate a node */
     } else { /* Column marginals are new node */
 
 	for (i = 1; i <= nco; ++i)
-	    it[i] = ico[i] - lb[i];
-
+	    it[i] = imax2(ico[i] - lb[i], 0);
+	
 	/* Sort column marginals it[] : */
 	if (nco == 2) {
 	    if (it[1] > it[2]) { /* swap */

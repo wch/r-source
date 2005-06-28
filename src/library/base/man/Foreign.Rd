@@ -87,6 +87,7 @@
     complex \tab Rcomplex * \tab double complex\cr
     logical \tab int * \tab integer \cr
     character \tab char ** \tab [see below]\cr
+    raw \tab unsigned char * \tab not allowed\cr
     list \tab SEXP *\tab not allowed\cr
     other \tab SEXP\tab not allowed\cr
   }

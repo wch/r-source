@@ -1,6 +1,7 @@
-rle <- function(x) {
+rle <- function(x)
+{
     if (!is.vector(x))
-        stop("x must be a vector")
+        stop("'x' must be a vector")
     n <- length(x)
     if (n == 0)
         return(list(lengths = integer(0), values = x))

@@ -13,13 +13,16 @@ add1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 #     data <- model.frame(update(object, newform)) # remove NAs
 #     object <- update(object, data = data)
     ns <- length(scope)
-    ans <- matrix(nrow = ns + 1, ncol = 2)
-    dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
-    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    ans <- matrix(nrow = ns + 1, ncol = 2,
+                  dimnames = list(c("<none>", scope), c("df", "AIC")))
+    ans[1,  ] <- extractAIC(object, scale, k = k, ...)
     n0 <- length(object$residuals)
     for(i in seq(ns)) {
 	tt <- scope[i]
-	if(trace > 1) cat("trying +", tt, "\n")
+	if(trace > 1) {
+            cat("trying +", tt, "\n")
+	    flush.console()
+        }
 	nfit <- update(object, as.formula(paste("~ . +", tt)),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
@@ -102,8 +105,12 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
     dfs[1] <- z$rank
     RSS[1] <- deviance.lm(z)
+    ## workaround for PR#7842. terms.formula may have flipped interactions
+    sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
+                     function(x) paste(sort(x), collapse=":"))
     for(tt in scope) {
-	usex <- match(asgn, match(tt, Terms), 0) > 0
+        stt <- paste(sort(strsplit(tt, ":")[[1]]), collapse=":")
+	usex <- match(asgn, match(stt, sTerms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
 	z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
 	dfs[tt] <- z$rank
@@ -197,8 +204,12 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
                   family=object$family, control=object$control)
     dfs[1] <- z$rank
     dev[1] <- z$deviance
+    ## workaround for PR#7842. terms.formula may have flipped interactions
+    sTerms <- sapply(strsplit(Terms, ":", fixed=TRUE),
+                     function(x) paste(sort(x), collapse=":"))
     for(tt in scope) {
-	usex <- match(asgn, match(tt, Terms), 0) > 0
+        stt <- paste(sort(strsplit(tt, ":")[[1]]), collapse=":")
+	usex <- match(asgn, match(stt, sTerms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
 	z <-  glm.fit(X, y, wt, offset=object$offset,
 		      family=object$family, control=object$control)
@@ -263,14 +274,17 @@ drop1.default <- function(object, scope, scale = 0, test=c("none", "Chisq"),
 #    data <- model.frame(object) # remove NAs
 #    object <- update(object, data = data)
     ns <- length(scope)
-    ans <- matrix(nrow = ns + 1, ncol = 2)
-    dimnames(ans) <- list(c("<none>", scope), c("df", "AIC"))
-    ans[1, ] <- extractAIC(object, scale, k = k, ...)
+    ans <- matrix(nrow = ns + 1, ncol = 2,
+                  dimnames =  list(c("<none>", scope), c("df", "AIC")))
+    ans[1,  ] <- extractAIC(object, scale, k = k, ...)
     n0 <- length(object$residuals)
     for(i in seq(ns)) {
 	tt <- scope[i]
-	if(trace > 1) cat("trying -", tt, "\n")
-	nfit <- update(object, as.formula(paste("~ . -", tt)),
+	if(trace > 1) {
+            cat("trying -", tt, "\n")
+	    flush.console()
+        }
+        nfit <- update(object, as.formula(paste("~ . -", tt)),
                        evaluate = FALSE)
         nfit <- eval.parent(nfit)
 	ans[i+1, ] <- extractAIC(nfit, scale, k = k, ...)

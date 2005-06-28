@@ -259,6 +259,7 @@ static Rboolean unz_open(Rconnection con)
     }
     if (unzLocateFile(uf, p+1, 1) != UNZ_OK) {
 	warning(_("cannot locate file '%s' in zip file '%s'"), p+1, path);
+	unzClose(uf);
 	return FALSE;
     }
     unzOpenCurrentFile(uf);

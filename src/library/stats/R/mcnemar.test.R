@@ -10,7 +10,7 @@ mcnemar.test <- function(x, y = NULL, correct = TRUE)
     }
     else {
         if (is.null(y))
-            stop("'if 'x' is not a matrix, 'y' must be given")
+            stop("if 'x' is not a matrix, 'y' must be given")
         if (length(x) != length(y))
             stop("'x' and 'y' must have the same length")
         DNAME <- paste(deparse(substitute(x)), "and",

@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # debian/rules file for the Debian GNU/Linux r-base package
 # Copyright 1997-2004 by Douglas Bates <bates@stat.wisc.edu> 
-#                    and Dirk Eddelbuettel <edd@debian.org>
+#		     and Dirk Eddelbuettel <edd@debian.org>
 
 # $Id: rules,v 1.56 2004/04/09 13:32:46 bates Exp $
 
@@ -30,9 +30,10 @@ debinf		:= $(debbase)/$(infopackage)
 arch		:= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
 # set this to 1 (default) if you want the Gnome GUI package
-gnome		= 1
+# edd 27 Feb 2005  as of R 2.1.0, the Gnome GUI is no longer included
+gnome		= 0
 ifeq ($(gnome),0)
-gnomeconfig 	= --without-gnome
+gnomeconfig	= --without-gnome
 else
 gnomeconfig	= --with-gnome
 endif
@@ -42,13 +43,13 @@ endif
 export DH_COMPAT  = 3
 
 # edd 15 Aug 2001  default to blas, atlas can override it 
-#atlas 		= --with-blas=blas
+#atlas		= --with-blas=blas
 # dmb 04 Apr 2003  better to use no specify blas
-# atlas 		= --with-blas
+# atlas			= --with-blas
 # edd 28 Apr 2003  try configuring with atlas
 # atlas		= --with-blas=atlas
 # edd 16 Oct 2003  back to older default
-#atlas 		= --with-blas=blas
+#atlas		= --with-blas=blas
 # edd 26 Feb 2004  point to refblas3 
 atlas		= --with-blas=-lblas-3
 
@@ -56,11 +57,13 @@ atlas		= --with-blas=-lblas-3
 # edd 27 Apr 2003  Set this to =no as we currently see numerical errors
 #lapack		= --with-lapack=no
 # edd 26 Feb 2004  point to lapack3 
-lapack		= --with-lapack=-llapack-3
+#lapack		= --with-lapack=-llapack-3
+# edd 13 Oct 2004  Set this once again to =no as we still see numerical errors
+lapack		= --with-lapack=no
 
 # edd 02 Sep 2001  default to g77 but let m68k use f2c
 # edd 06 Mar 2003  enforce 3.2 versions explicitly 
-#                  so that on testing we will pick them over 2.95
+#		   so that on testing we will pick them over 2.95
 # edd 07 Jun 2003  let's fall back to the default compilers
 fortrancompiler	= F77=g77
 compiler	= gcc
@@ -80,7 +83,7 @@ endif
 
 # edd 14 Nov 2003  turn blas off on arm
 ifeq ($(arch),arm-linux)
-atlas 		= --without-blas
+atlas		= --without-blas
 endif
 
 ## edd 09 Nov 2001  ia64 needs gcc-3.0, hppa gets it by default
@@ -93,10 +96,10 @@ endif
 
 ## lamont@debian.org 06 Dec 2001  hppa needs -ffunction-sections  
 ifeq ($(arch),hppa-linux)
-compilerflags   = -O2 -ffunction-sections
+compilerflags	= -O2 -ffunction-sections
 endif
 
-## edd 20 Jun 2002      no optimisation or debugging on baby systems
+## edd 20 Jun 2002	no optimisation or debugging on baby systems
 ## edd 02 Jun 2003	use this on arm only 
 ##ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
 ifneq "$(findstring $(arch), arm-linux)" ""
@@ -105,7 +108,7 @@ endif
 
 get-orig-source: upstream
 upstream:
-	#links http://cran.us.r-project.org/src/base
+        #links http://cran.us.r-project.org/src/base
 	links http://cran.r-project.org/src/base/?M=D
 
 upstreamdevel:
@@ -113,11 +116,15 @@ upstreamdevel:
         #links http://cran.us.r-project.org/src/base
         #rsync -vaC rsync.r-project.org::r-devel .
 
+upstreamprerelease:
+	links http://cran.r-project.org/src/base-prerelease
+
+
 ## edd 24 Oct 2003  build is invoked by the buildd, so we would prefer to
-##  		    not imply build-indep; unfortunately R does not build
+##		    not imply build-indep; unfortunately R does not build
 ##		    properly without it, so we have to stick with it
 ## edd 15 Jan 2004  trying again on build only build: build-arch build-indep
-##                  the main hook is to then have binary depend on both
+##		    the main hook is to then have binary depend on both
 ##		    binary-arch and binary-indep, and those on their builds
 build: build-arch 
 
@@ -159,7 +166,7 @@ configure-stamp:
 		    --with-zlib				\
 		    --mandir=/usr/share/man		\
 		    --infodir=/usr/share/info		\
-		    $(atlas) 		\
+		    $(atlas)		\
 		    $(lapack)		\
 		    $(gnomeconfig)			\
 		    --enable-R-profiling		\
@@ -175,7 +182,7 @@ make-arch-stamp:
 	$(MAKE)		CFLAGS="$(compilerflags)"		\
 			CXXFLAGS="$(compilerflags)"		\
 			FFLAGS="$(compilerflags)"		\
-			CC=${compiler} 				\
+			CC=${compiler}				\
 			CXX=${cxxcompiler}			\
 			${fortrancompiler}			\
 			R
@@ -186,18 +193,18 @@ make-arch-stamp:
 #	$(MAKE)		CFLAGS="$(compilerflags)"		\
 #			CXXFLAGS="$(compilerflags)"		\
 #			FFLAGS="$(compilerflags)"		\
-#			CC=${compiler} 				\
+#			CC=${compiler}				\
 #			CXX=${cxxcompiler}			\
 #			${fortrancompiler}			\
 #			stamp-recommended
 
         # make standalone math lib
-	(cd src/nmath/standalone; 				\
+	(cd src/nmath/standalone;				\
 		$(MAKE)	CFLAGS="$(compilerflags) -D_REENTRANT"	\
 			CXXFLAGS="$(compilerflags) -D_REENTRANT"\
 			FFLAGS="$(compilerflags) -D_REENTRANT"	\
-			CC=${compiler} 				\
-			CXX=${cxxcompiler} 			\
+			CC=${compiler}				\
+			CXX=${cxxcompiler}			\
 			${fortrancompiler}			\
 			libRmath_la_LDFLAGS=-Wl,-soname,libRmath.so.$(somaj) \
 			)
@@ -216,10 +223,10 @@ make-indep: configure make-indep-stamp
 make-indep-stamp:
 	@echo "*** make-indep ***"
         ## edd 12 Jan 2004 uncommenting 'make docs' to split binary all/any
-        ##        now that recommended packages aren't made
+        ##	  now that recommended packages aren't made
         ## edd 25 Jan 2004 make docs and make html are made in make-arch
         ## edd 05 Feb 2004 finally, this works in pre-1.9.0 with Kurt's
-        ##                 R_CMD_BUILD_HELP_OPTS
+        ##		   R_CMD_BUILD_HELP_OPTS
 	$(MAKE) docs
 	$(MAKE) html
 	$(MAKE) help
@@ -233,16 +240,16 @@ make-stamp: make-arch make-indep
 check: make-arch check-stamp
 check-stamp: 
 	@echo "*** check ***"
-#ifneq	($(arch),arm-linux)
-#	-make check
-#endif
+ifneq	($(arch),arm-linux)
+	-make check
+endif
 	touch check-stamp
 
 clean:
 	@echo "*** clean ***"
 	dh_testdir
 	dh_testroot
-	rm -f 	configure-stamp \
+	rm -f	configure-stamp \
 		build-stamp build-indep-stamp build-arch-stamp \
 		make-stamp make-arch-stamp make-indep-stamp \
 		install-indep-stamp install-arch-stamp \
@@ -267,11 +274,11 @@ install-arch-stamp:
 	dh_clean -a -k
 	dh_installdirs -A
 
-	$(MAKE) prefix=$(debtmp)/usr   	 		\
+	$(MAKE) prefix=$(debtmp)/usr			\
 		mandir=$(debtmp)/usr/share/man		install
 
         # link $R_HOME/bin/R to real one, and set R_HOME_DIR env.var. 
-	(cd $(debtmp)/usr/lib/R/bin/; 					\
+	(cd $(debtmp)/usr/lib/R/bin/;					\
 		ln -svf ../../../bin/R R;				\
 		cd ../../../bin;					\
 		perl -p -i -e						\
@@ -285,12 +292,12 @@ install-arch-stamp:
 #			Renviron)
 
         # fix permissions (Lintian)
-	chmod a+x 	$(debtmp)/usr/lib/R/share/sh/echo.sh 		\
+	chmod a+x	$(debtmp)/usr/lib/R/share/sh/echo.sh		\
 			$(debtmp)/usr/lib/R/share/sh/help-links.sh	\
 			$(debtmp)/usr/lib/R/share/sh/help-print.sh
 
         # remove unneeded license files, but link them back
-	rm -v 	$(debtmp)/usr/lib/R/COPYING 		\
+	rm -v	$(debtmp)/usr/lib/R/COPYING		\
 		$(debtmp)/usr/lib/R/COPYING.LIB 
 	(cd $(debtmp)/usr/lib/R/; \
 		ln -s ../../share/common-licenses/GPL COPYING; \
@@ -302,18 +309,18 @@ ifneq "$(findstring $(arch), m68k-linux arm-linux)" ""
 endif
 
         # edd 10 Jan 2003 fix Perl interpreter path
-	(cd $(debtmp)/usr/lib/R/bin; 					\
-	    for file in Rdconv Rdindex Rprof Sd2Rd build check; do 	\
-		perl -p -i -e "s|/usr/local/bin/perl|/usr/bin/perl|" 	\
+	(cd $(debtmp)/usr/lib/R/bin;					\
+	    for file in Rdconv Rprof Sd2Rd build check; do	\
+		perl -p -i -e "s|/usr/local/bin/perl|/usr/bin/perl|"	\
 		   $${file};						\
 	done)
 
         # that being done, now install in different sub-packages
 
         # move the GNOME version to the r-gnome package
-ifneq ($(gnome),0)
-	dh_movefiles	-p$(gnomepackage) 	usr/lib/R/modules/R_gnome.so
-endif
+#ifeq ($(gnome),1)
+#	dh_movefiles	-p$(gnomepackage)	usr/lib/R/modules/R_gnome.so
+#endif
 
         # move files for r-recommended
         # doing this before html/latex moves ensure they keep their tex/latex
@@ -327,10 +334,10 @@ endif
         # move files for r-base-latex
 	dh_movefiles	-pr-base-latex
 
-	make    	prefix=$(debtmp)/usr   	 		install-pdf
+	make		prefix=$(debtmp)/usr			install-pdf
 
         # the indep package r-doc-info is made now 
-	make    	prefix=$(debtmp)/usr  \
+	make		prefix=$(debtmp)/usr  \
 			infodir=$(debtmp)/usr/share/info	install-info
 
         # move the pdf manual files listed in r-doc-pdf.files into r-doc-pdf 
@@ -341,37 +348,45 @@ endif
         # move files for r-doc-info
 	dh_movefiles	-p$(infopackage)
         # deal with stupid automake / install-info issue (cf #235713)
-	rm -vf	$(debinf)/usr/share/info/dir 		\
-		$(debinf)/usr/share/info/dir.old 	
+	rm -vf	$(debinf)/usr/share/info/dir		\
+		$(debinf)/usr/share/info/dir.old	
 
         # move all the rest into r-base-core
 	dh_movefiles	-p$(corepackage)
 
         # for the standalone library package, move the two libs
         # as 'make install' ignores these, we have to do it by hand
+#ifeq ($(gnome),1)
+#	dh_installdirs -p$(gnomepackage) usr/share/lintian/overrides
+#endif
 	dh_installdirs -p$(nmathpackage) usr/include usr/lib \
-					usr/share/lintian/overrides
-	install -m 0644 src/nmath/standalone/libRmath.a     \
+					usr/share/lintian/overrides 
+	install -m 0644 src/nmath/standalone/libRmath.a		\
 			$(debmat)/usr/lib
-	install -m 0644 src/nmath/standalone/libRmath.so    \
+	install -m 0644 src/nmath/standalone/libRmath.so	\
 			$(debmat)/usr/lib/libRmath.so.$(libver)
 	(cd $(debmat)/usr/lib; \
 			ln -s libRmath.so.$(libver) libRmath.so.$(somaj); \
 			ln -s libRmath.so.$(somaj)  libRmath.so)
         # and create a link for Rmath.h 
-	(cd $(debmat)/usr/include; \
-			ln -s ../lib/R/include/Rmath.h .)
-
+        #(cd $(debmat)/usr/include; \
+        #		ln -s ../lib/R/include/Rmath.h .)
+        # rather copy directly into the more independent package r-mathlib
+	install -m 0644 src/include/Rmath.h			\
+			$(debmat)/usr/include
         # now deal with $R_HOME/etc <--> /etc/R
         # edd 03 Apr 2003  patch Renviron for new R_LIBS standard
         # edd 24 Apr 2004  patch Renviron for R_PAPERSIZE (bug #245525)
-        # edd 16 Jun 2004        nope, doesn't work
+        # edd 16 Jun 2004	 nope, doesn't work
+	# edd 09 Apr 2005  also move the new file repositories to /etc/R
 	(cd $(debetc); \
 		cat $(debbase)/Renviron-R_LIBS.patch | patch --verbose;	\
-		mv Makeconf Renviron	../../../../etc/R/; 		\
-		ln -s  /etc/R/Makeconf  .; 				\
-		ln -s  /etc/R/Renviron  .  				)
-        ##	cat $(debbase)/Renviron-R_PAPERSIZE.patch | patch --verbose; 
+		mv Makeconf Renviron repositories \
+					../../../../etc/R/;		\
+		ln -s  /etc/R/Makeconf	.;				\
+		ln -s  /etc/R/Renviron	.;				\
+		ln -s  /etc/R/repositories .				)
+	##	cat $(debbase)/Renviron-R_PAPERSIZE.patch | patch --verbose; 
 
 	touch install-arch-stamp
 
@@ -384,23 +399,29 @@ install-indep-stamp:
 	dh_clean -a -k
 	dh_installdirs -A
 
-#	make    	prefix=$(debtmp)/usr   	 		install-pdf
+#	make		prefix=$(debtmp)/usr			install-pdf
 #
-#        # the indep package r-doc-info is made now 
-#	make    	prefix=$(debtmp)/usr  \
+#	 # the indep package r-doc-info is made now 
+#	make		prefix=$(debtmp)/usr  \
 #			infodir=$(debtmp)/usr/share/info	install-info
 #
-#        # move the pdf manual files listed in r-doc-pdf.files into r-doc-pdf 
+#	 # move the pdf manual files listed in r-doc-pdf.files into r-doc-pdf 
 #	dh_movefiles	-p$(pdfpackage)		
-#        # move the html manual files in r-doc-html.files into r-doc-html 
+#	 # move the html manual files in r-doc-html.files into r-doc-html 
 #	dh_movefiles	-p$(htmlpackage)		
 #	touch install-indep-stamp
-#        # move files for r-doc-info
+#	 # move files for r-doc-info
 #	dh_movefiles	-p$(infopackage)
 
         # but clean up dir and old.dir	
-	rm -vf 		$(debbase)/$(infopackage)/usr/share/info/dir \
+	rm -vf		$(debbase)/$(infopackage)/usr/share/info/dir \
 			$(debbase)/$(infopackage)/usr/share/info/dir.old
+
+	dh_installdirs $(gnomepackage)
+	dh_installchangelogs -p$(gnomepackage) 
+
+	touch install-indep-stamp
+
 
 # Build architecture-independent files here.
 # edd 5 Feb 2004 binary-indep: build-indep install-indep
@@ -408,7 +429,7 @@ binary-indep: build-indep install-indep
 	@echo "*** binary-indep ***"
 	dh_testdir -i
 	dh_testroot -i
-	dh_link -i
+	dh_link -i -N$(gnomepackage)
         #dh_installdebconf -i
 	dh_installdocs -i
         #dh_installexamples -i
@@ -440,13 +461,20 @@ binary-arch: build-arch check install-arch
 	dh_testdir -a
 	dh_testroot -a
         #dh_installdebconf -a
-	dh_link -a
-	dh_installdocs -p$(corepackage) AUTHORS BUGS  NEWS ONEWS README \
+	#dh_link -a
+#ifeq ($(gnome),1)
+#	dh_link -p$(gnomepackage)
+#endif
+	dh_installdocs -p$(corepackage) AUTHORS NEWS ONEWS README \
 					RESOURCES THANKS Y2K \
 					debian/README.Atlas \
 					debian/README.mathlib
-	dh_installexamples -a
-	dh_installexamples -p$(corepackage)	src/nmath/standalone/test.c
+	dh_installdocs -p$(nmathpackage) AUTHORS NEWS ONEWS README \
+					RESOURCES THANKS Y2K \
+					debian/README.mathlib
+        #dh_installexamples -a
+        #dh_installexamples -p$(corepackage)	src/nmath/standalone/test.c
+	dh_installexamples -p$(nmathpackage)	src/nmath/standalone/test.c
 	dh_installmenu -a
         #dh_installemacsen -a
         #dh_installpam -a
@@ -454,7 +482,7 @@ binary-arch: build-arch check install-arch
         #dh_installinit -a
         #dh_installcron -a
         #dh_installmanpages -a	-N$(gnomepackage) -p$(corepackage) getline.3
-        #dh_installman 		-p$(corepackage) doc/R.1
+        #dh_installman		-p$(corepackage) doc/R.1
         ## dh_installinfo -a	-n doc/manual/R-*.info*
         ## edd 04 Apr 2004 manual is dangling unless r-doc-pdf is installed ...
         ##(cd $(debdoc)/doc && ln -s ../../../../lib/R/doc/html .)
@@ -469,6 +497,10 @@ binary-arch: build-arch check install-arch
 #	   $(debbase)/$(recdpackage)/usr/share/lintian/overrides/$(recdpackage)
 	install -p -m 0644  debian/$(nmathpackage).lintian \
 	   $(debbase)/$(nmathpackage)/usr/share/lintian/overrides/$(nmathpackage)
+#ifeq ($(gnome),1)
+#	install -p -m 0644  debian/$(gnomepackage).lintian \
+#	   $(debbase)/$(gnomepackage)/usr/share/lintian/overrides/$(gnomepackage)
+#endif
         #dh_undocumented -a
 	dh_installchangelogs -a	-k NEWS 
 	dh_strip -a

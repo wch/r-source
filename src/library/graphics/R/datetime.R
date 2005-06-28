@@ -1,4 +1,4 @@
-axis.POSIXct <- function(side, x, at, format, ...)
+axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
 {
     mat <- missing(at)
     if(!mat) x <- as.POSIXct(at) else x <- as.POSIXct(x)
@@ -49,7 +49,10 @@ axis.POSIXct <- function(side, x, at, format, ...)
     }
     if(!mat) z <- x[is.finite(x)] # override changes
     z <- z[z >= range[1] & z <= range[2]]
-    labels <- format(z, format = format)
+    if (identical(labels, TRUE))
+	labels <- format(z, format = format)
+    else if (identical(labels, FALSE))
+	labels <- rep("", length(z)) # suppress labelling of ticks
     axis(side, at = z, labels = labels, ...)
 }
 
@@ -154,7 +157,7 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
 
 ## methods for class "Date"
 
-axis.Date <- function(side, x, at, format, ...)
+axis.Date <- function(side, x, at, format, labels = TRUE, ...)
 {
     mat <- missing(at)
     if(!mat) x <- as.Date(at) else x <- as.Date(x)
@@ -189,7 +192,10 @@ axis.Date <- function(side, x, at, format, ...)
     if(!mat) z <- x[is.finite(x)] # override changes
     z <- z[z >= range[1] & z <= range[2]]
     z <- sort(unique(z))
-    labels <- format.Date(z, format = format)
+    if (identical(labels, TRUE))
+	labels <- format.Date(z, format = format)
+    else if (identical(labels, FALSE))
+	labels <- rep("", length(z)) # suppress labelling of ticks
     axis(side, at = z, labels = labels, ...)
 }
 

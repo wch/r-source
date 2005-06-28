@@ -73,7 +73,7 @@ print.isList <- function(x, ..., verbose = getOption("verbose"))
     if(is.list(x)) {
         if(verbose) cat("print.isList(): list case (length=",length(x),")\n")
 	nm <- format(names(x))
-	rr <- lapply(x, symnum, na = "NA")
+	rr <- lapply(x, stats::symnum, na = "NA")
 	for(i in seq(along=x)) cat(nm[i],":",rr[[i]],"\n", ...)
     } else NextMethod("print", ...)
 }

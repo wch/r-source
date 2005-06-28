@@ -1,7 +1,6 @@
 install.packages <-
-    function(pkgs, lib, repos = CRAN,
+    function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos, type),
-             CRAN = getOption("repos"),
              method, available = NULL, destdir = NULL,
              installWithVers = FALSE, dependencies = FALSE,
              type = getOption("pkgType"))
@@ -14,6 +13,16 @@ install.packages <-
         sort(as.vector(c(a[, 1], extras)))
     }
 
+    implode_bundles <- function(pkgs)
+    {
+    	bundled <- grep(".* \\(.*\\)$", pkgs)
+    	if (length(bundled)) {
+    	    bundles <- unique(gsub(".* \\((.*)\\)$", "\\1", pkgs[bundled]))
+    	    pkgs <- c(pkgs[-bundled], bundles)
+    	}
+    	pkgs
+    }
+
     if(missing(pkgs) || !length(pkgs)) {
         if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA") {
             if(is.null(available))
@@ -21,7 +30,7 @@ install.packages <-
                                                 method = method)
             if(NROW(available)) {
                 a <- explode_bundles(available)
-                pkgs <- select.list(a, multiple = TRUE, title = "Packages")
+                pkgs <- implode_bundles(select.list(a, multiple = TRUE, title = "Packages"))
             }
             if(!length(pkgs)) stop("no packages were specified")
         } else if(.Platform$OS.type == "unix" &&
@@ -31,8 +40,8 @@ install.packages <-
                                                 method = method)
             if(NROW(available)) {
                 a <- explode_bundles(available)
-                pkgs <- tcltk::tk_select.list(a, multiple = TRUE,
-                                              title ="Packages")
+                pkgs <- implode_bundles(tcltk::tk_select.list(a, multiple = TRUE,
+                                              title ="Packages"))
             }
             if(!length(pkgs)) stop("no packages were specified")
         } else
@@ -73,13 +82,13 @@ install.packages <-
         if(type == "win.binary")
             stop("cannot install Windows binary packages on this plaform")
 
-        if(!file.exists(file.path(R.home(), "bin", "INSTALL")))
+        if(!file.exists(file.path(R.home("bin"), "INSTALL")))
             stop("This version of R is not set up to install source packages\nIf it was installed from an RPM, you may need the R-devel RPM")
     }
 
     if(is.null(repos) & missing(contriburl)) {
         update <- cbind(pkgs, lib) # for side-effect of recycling to same length
-        cmd0 <- paste(file.path(R.home(),"bin","R"), "CMD INSTALL")
+        cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         for(i in 1:nrow(update)) {
@@ -120,23 +129,23 @@ install.packages <-
     if(depends) { # check for dependencies, recursively
         p0 <- p1 <- unique(pkgs) # this is ok, as 1 lib only
         have <- .packages(all.available = TRUE)
-        repeat {
-            if(any(miss <- ! p1 %in% row.names(available))) {
-                cat(sprintf(ngettext(sum(miss),
-                                     "dependency %s is not available",
-                                     "dependencies %s are not available"),
-                    paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
-                flush.console()
-            }
-            p1 <- p1[!miss]
-            deps <- as.vector(available[p1, dependencies])
-            deps <- .clean_up_dependencies(deps, available)
-            if(!length(deps)) break
-            toadd <- deps[! deps %in% c("R", have, pkgs)]
-            if(length(toadd) == 0) break
-            pkgs <- c(toadd, pkgs)
-            p1 <- toadd
-        }
+	repeat {
+	    if(any(miss <- ! p1 %in% row.names(available))) {
+		cat(sprintf(ngettext(sum(miss),
+				     "dependency %s is not available",
+				     "dependencies %s are not available"),
+		    paste(sQuote(p1[miss]), collapse=", ")), "\n\n", sep ="")
+		flush.console()
+	    }
+	    p1 <- p1[!miss]
+	    deps <- as.vector(available[p1, dependencies])
+	    deps <- .clean_up_dependencies(deps, available)
+	    if(!length(deps)) break
+	    toadd <- deps[! deps %in% c("R", have, pkgs)]
+	    if(length(toadd) == 0) break
+	    pkgs <- c(toadd, pkgs)
+	    p1 <- toadd
+	}
         for(bundle in names(bundles))
             pkgs[ pkgs %in% bundles[[bundle]] ] <- bundle
         pkgs <- unique(pkgs)
@@ -151,6 +160,7 @@ install.packages <-
         }
     }
 
+    pkgs <- unique(pkgs) # in case ask for more than one from a bundle
     foundpkgs <- download.packages(pkgs, destdir = tmpd, available = available,
                                    contriburl = contriburl, method = method,
                                    type = "source")
@@ -170,7 +180,7 @@ install.packages <-
             ## can't use update[p0, ] due to possible multiple matches
             update <- update[sort.list(match(pkgs, p0)), ]
         }
-        cmd0 <- paste(file.path(R.home(),"bin","R"), "CMD INSTALL")
+        cmd0 <- paste(file.path(R.home("bin"),"R"), "CMD INSTALL")
         if (installWithVers)
             cmd0 <- paste(cmd0, "--with-package-versions")
         for(i in 1:nrow(update)) {

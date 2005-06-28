@@ -22,16 +22,17 @@ browse.update.pkgs(where = c("CRAN", "BIOC"), type = c("binary", "source"), in.p
   \item{in.place}{Put the new package in the same directory as the old version}
 }
 \details{
-The \code{CRAN} and \code{BIOC} URLs are set in R with Aqua GUI
-Preferences. Packages are install in \code{.libPaths()[1]}, which is
-typically \code{~/Library/R/library}.
+  The \code{CRAN} and \code{BIOC} URLs are set in R with Aqua GUI
+  Preferences. Packages are install in \code{.libPaths()[1]}, which is
+  typically \file{~/Library/R/library}.
 }
 \value{
   Used for its side effects
 }
-\seealso{\code{install.binaries}, \code{install.packages}, \code{update. }
-\examples{
-
+\seealso{
+  \code{install.binaries},
+  \code{install.packages},
+  \code{update}.
 }
 \keyword{connection}% at least one, from doc/KEYWORDS
 \keyword{utilities}% __ONLY ONE__ keyword per line

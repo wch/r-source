@@ -60,8 +60,12 @@ summary.factor <- function(object, maxsum = 100, ...)
     if(any(nas)) c(tt, "NA's" = sum(nas)) else tt
 }
 
-summary.matrix <- function(object, ...)
+summary.matrix <- function(object, ...) {
+    ## a cautious version of unclass():
+    cl <- class(object)
+    class(object) <- if(!identical(cl, "AsIs")) cl[cl != "AsIs"]
     summary.data.frame(data.frame(object), ...)
+}
 
 ## <FIXME> use encodeString here, and its justify options
 summary.data.frame <-

@@ -330,6 +330,9 @@ my $text = "";
 my $fun;
 my $InArgs = 0;
 
+my $nalias = 0;
+my $nexamples = 0;
+
 sub doS4 {
   foreach $_ (@lines) {
     # skip header
@@ -349,7 +352,7 @@ sub doS4 {
 
   ($type, $text, $rest) = get_group($text); # s-function-doc or whatever
   if($type ne "function-doc" && $type ne "method-doc") {
-    die "Document class `s-$type' is not supported";
+    die "Document class 's-$type' is not supported";
   }
 
   chomp $text;
@@ -377,7 +380,7 @@ sub get_group
 	$body = $1;
 	$rest = $2;
     } else { 
-	warn "no match for `s-$tt'";
+	warn "no match for 's-$tt'";
 	$text =~ /^\s*<s-\Q$type\E>\s*(.*)/s;
 	$body = $1;
 	$rest = "";
@@ -515,12 +518,13 @@ sub process_group {
 	process_sub_groups($text, "keyword");
 
     } else {
-	warn "unknown SGML entity `$type'";
+	warn "unknown SGML entity '$type'";
 	print "%type:\n%$text\n";
     }
 }
 
-sub process_sub_groups{
+sub process_sub_groups {
+  
     my $text = $_[0];
     my $topic = $_[1];
 
@@ -531,11 +535,10 @@ sub process_sub_groups{
     }
 }
 
-sub process_sub_group{
+sub process_sub_group {
+  
     my $topic = $_[0];
     my $text = $_[1];
-    my $nalias = 0;
-    my $example = 0;
 
     $text =~ s/^\n*//;
     $text =~ s/\n*$//;
@@ -562,7 +565,7 @@ sub process_sub_group{
 	$name =~ s/\.\.\./\\dots/;
 	print "\\item{$name}{\n", sub4($text), "\n}\n";	
     } else {
-	warn "unknown SGML entity `$type'";
+	warn "unknown SGML entity '$type'";
 	print "%type:\n%$text\n";
     }
 }

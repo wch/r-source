@@ -67,7 +67,8 @@ DISTFILES = Makefile.in Makefile.win README \
 	  reg-win.R encodings.R \
 	$(test-src-ts) \
 	gct-foot.R \
-	nanbug.rda
+	nanbug.rda \
+	WinUnicode.dat
 SUBDIRS = Embedding Examples Native
 
 R = LC_ALL=C SRCDIR=$(srcdir) R_DEFAULT_PACKAGES= $(top_builddir)/bin/R --vanilla

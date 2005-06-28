@@ -92,7 +92,7 @@ factanal <-
     }
     start <- as.matrix(start)
     if(nrow(start) != p)
-        stop(gettextf("start must have %d rows", p), domain = NA)
+        stop(gettextf("'start' must have %d rows", p), domain = NA)
     nc <- ncol(start)
     if(nc < 1) stop("no starting values supplied")
 

@@ -159,6 +159,7 @@ if($opt_library) {
 }
 
 my $tar = R_getenv("TAR", "tar");
+my $gzip = R_getenv("R_GZIPCMD", "gzip");
 
 my $R_opts = "--vanilla";
 
@@ -221,7 +222,7 @@ foreach my $pkg (@ARGV) {
 	    ## workaround for paths in Cygwin tar
 	    $pkg =~ s+^([A-Za-x]):+/cygdrive/\1+;
 	}
-	if(system("$tar -zxf '$pkg' -C $dir")) {
+	if(R_system("$gzip -dc '$pkg' | $tar -xf - -C $dir")) {
 	    die "Error: cannot untar $pkg\n";}
 	$pkg = &file_path($dir, $pkgname);
     }
@@ -410,8 +411,14 @@ foreach my $pkg (@ARGV) {
 			copy(substr($opt_install, 6), $out);
 			$opt_install = "check";
 			@lines = &read_lines($out);
+			## <NOTE>
+			## We used to have
+			## $install_error =
+			##    ($lines[$#lines] !~ /^\* DONE/);
+			## but what if there is output from do_cleanup
+			## in (Unix) R CMD INSTALL?
 			$install_error =
-			    ($lines[$#lines] !~ /^\* DONE/);
+			    (scalar(grep(/^\* DONE/, @lines)) == 0);
 		    }
 		    else {
 			$cmd .= " >" .
@@ -1256,7 +1263,9 @@ sub check_pkg {
 	my @msg_doc_files =
 	  ("Functions with \\usage entries",
 	   "need to have the appropriate \\alias entries,",
-	   "and all their arguments documented.\n");
+	   "and all their arguments documented.\n",
+	   "The \\usage entries must correspond to syntactically",
+	   "valid R code.\n");
 
 	my $Rcmd = "options(warn=1)\n";
 	if($opt_install) {
@@ -1376,8 +1385,8 @@ sub check_pkg {
 		join(" ",
 		     (&shell_quote_file_path(${R::Vars::R_EXE}),
 		      "CMD perl",
-		      &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-							"share", "perl",
+		      &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+							"perl",
 							"massage-Examples.pl")),
 		      "${pkgname}",
 		      &shell_quote_file_path(${Rexdir}),
@@ -1486,11 +1495,10 @@ sub check_pkg {
 	    copy($file, basename($file));
 	}
         my $makefiles = "-f " .
-	    &shell_quote_file_path(&file_path(${R::Vars::R_HOME},
-					      "share", "make",
-					      "tests.mk"));
+	    &shell_quote_file_path(&file_path(${R::Vars::R_SHARE_DIR},
+					      "make", "tests.mk"));
         if($WINDOWS) {
-            $makefiles = "-f ${R::Vars::R_HOME}/share/make/wintests.mk";}
+            $makefiles = "-f ${R::Vars::R_SHARE_DIR}/make/wintests.mk";}
         my $makevars = "";
         if($WINDOWS && (-r "$testsrcdir/Makefile.win")) {
             $makefiles .= " -f $testsrcdir/Makefile.win";
@@ -1569,7 +1577,7 @@ sub check_pkg {
 	}
 
 	## Can we run the code in the vignettes?
-	if($opt_vignettes) {
+	if($opt_install && $opt_vignettes) {
 	    ## Should checking the vignettes assume the system default
 	    ## packages, or just base?
 	    my $Rcmd = "options(warn=1)\nlibrary(tools)\n";
@@ -1606,7 +1614,7 @@ sub check_pkg {
         my $latex_dir = &file_path($library, $pkgname, "latex");
 	if(-d $latex_dir) {
 	    $ENV{'TEXINPUTS'} =
-	      env_path(&file_path($R::Vars::R_HOME, "share", "texmf"),
+	      env_path(&file_path($R::Vars::R_SHARE_DIR, "texmf"),
 		       $ENV{'TEXINPUTS'});
             my $is_zipped = 0;
             # latex files might have been zipped
@@ -1626,12 +1634,31 @@ sub check_pkg {
                 }
             }
 	    $log->creating("${pkgname}-manual.tex");
+	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
+	    my %encodings;
+	    foreach my $file (@tex_files) {
+		open(FILE, "< $file")
+		  or die("Error: cannot open file '$file' for reading\n");
+		while(<FILE>) {
+		    if (/^\\inputencoding/) {
+			$enc = $_;
+			chomp $enc;
+			$enc =~ s/^\\inputencoding{(.*)}/\1/;
+			$encodings{$enc} = $enc;
+		    }
+		}
+		close(FILE);
+	    }
+	    my $encs = "";
+	    if (scalar(%encodings)) {
+		$encs = "\\usepackage[" . join(",", values %encodings) .
+		    "]{inputenc}";
+	    }
 	    open(MANUAL, "> ${pkgname}-manual.tex")
 	      or die("Error: cannot open file '${pkgname}-manual.tex'" .
 		     "for writing\n");
-	    print MANUAL "\\documentclass\{article\}\n" .
-	      "\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
-	    my @tex_files = &list_files_with_exts($latex_dir, "tex");
+	    print MANUAL "\\documentclass\{article\}\n" . $encs .
+		"\\usepackage[ae,hyper]\{Rd\}\n\\begin\{document\}\n";
 	    foreach my $file (@tex_files) {
 		open(FILE, "< $file")
 		  or die("Error: cannot open file '$file' for reading\n");

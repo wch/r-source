@@ -43,7 +43,7 @@
 
 double gammafn(double x)
 {
-    const double gamcs[42] = {
+    const static double gamcs[42] = {
 	+.8571195590989331421920062399942e-2,
 	+.4415381324841006757191315771652e-2,
 	+.5685043681599363378632664588789e-1,

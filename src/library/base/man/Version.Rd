@@ -18,21 +18,29 @@ R.version.string
     \code{\link{character}} string, useful for plotting, etc.
 }
 \value{
- \code{R.Version} returns a list with components
-  \item{platform}{the platform for which \R was built.  Under Unix, a
-    triplet of the form CPU-VENDOR-OS, as determined by the configure
-    script.  E.g, \code{"i586-unknown-linux"}.}
+ \code{R.Version} returns a list with character-string components
+ \item{platform}{the platform for which \R was built.  A triplet of the
+   form CPU-VENDOR-OS, as determined by the configure script.  E.g,
+   \code{"i586-unknown-linux"} or \code{"i386-pc-mingw32"}.
+ }
   \item{arch}{the architecture (CPU) \R was built on/for.}
   \item{os}{the underlying operating system}
-  \item{system}{CPU and OS.}
+  \item{system}{CPU and OS, separated by a comma.}
   \item{status}{the status of the version (e.g., \code{"Alpha"})}
-  \item{status.rev}{the status revision level}
   \item{major}{the major version number}
-  \item{minor}{the minor version number}
+  \item{minor}{the minor version number, including the patchlevel}
   \item{year}{the year the version was released}
   \item{month}{the month the version was released}
   \item{day}{the day the version was released}
+  \item{svn rev}{the Subversion revision number, which should be either
+    \code{"unknown"} or a single number. (A range of numbers or a number
+    with \code{M} or \code{S} appended indicates inconsistencies in the
+    sources used to build this version of \R.)
+  }
   \item{language}{always \code{"R"}.}
+
+  \code{R.version} and \code{version} are lists of class
+  \code{"simple.list"} which has a \code{print} method.
 }
 \note{
   Do \emph{not} use \code{R.version$os} to test the platform the

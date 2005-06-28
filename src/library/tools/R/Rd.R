@@ -13,7 +13,8 @@ function(lines)
         .get_Rd_metadata_from_Rd_lines(lines[!is.na(nchar(lines, "c"))],
                                        "encoding")
     if(length(encoding)) {
-        if(Sys.getlocale("LC_CTYPE") != "C") {
+        if((Sys.getlocale("LC_CTYPE") != "C")
+           && capabilities("iconv")) {
             encoding <- encoding[1]     # Just making sure ...
             if(.is_ASCII(encoding))
                 lines <- utils::iconv(lines, encoding, "")
@@ -29,8 +30,12 @@ function(lines)
         ## Ouch, invalid in the current locale.
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
-        ## Could this fail in a non-C locale?
-        lines <- utils::iconv(lines, "latin1", "")
+        if(capabilities("iconv"))
+            lines <- utils::iconv(lines, "latin1", "")
+        else
+            stop("Found invalid multi-byte character data.", "\n",
+                 "Cannot re-encode because iconv is not available.", "\n",
+                 "Try running R in a single-byte locale.")
     }
 
     ## Strip Rd first.
@@ -145,7 +150,7 @@ function(file)
               gettext("See chapter 'Writing R documentation' in manual 'Writing R Extensions'."))
         stop(paste(msg, collapse = "\n"), domain = NA)
     }
-        
+
     Rd_title <- .get_Rd_title(txt)
     if(!length(Rd_title)) {
         msg <-
@@ -206,8 +211,8 @@ function(RdFiles)
     title <- gsub("\\\\\&", "&", title)
     title <- gsub("---", "--", title)
     ## Also remove leading and trailing whitespace.
-    title <- sub("^[[:space:]]*", "", title)
-    title <- sub("[[:space:]]*$", "", title)
+    title <- sub("^[[:space:]]+", "", title)
+    title <- sub("[[:space:]]+$", "", title)
 
     data.frame(File = I(basename(RdFiles)),
                Name = I(unlist(contents[ , "Name"])),
@@ -371,8 +376,7 @@ function(package, dir, lib.loc = NULL)
         ## Using package installed in @code{dir} ...
         docsDir <- file.path(dir, "man")
         if(!file_test("-d", docsDir))
-            stop(gettextf("directory '%s' does not contain Rd objects",
-                          dir),
+            stop(gettextf("directory '%s' does not contain Rd objects", dir),
                  domain = NA)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- list()
@@ -403,13 +407,12 @@ function(package, dir, lib.loc = NULL)
         ## Using sources from directory @code{dir} ...
         if(!file_test("-d", dir))
             stop(gettextf("directory '%s' does not exist", dir),
-                 domain = NA) 
+                 domain = NA)
         else
             dir <- file_path_as_absolute(dir)
         docsDir <- file.path(dir, "man")
         if(!file_test("-d", docsDir))
-            stop(gettextf("directory '%s' does not contain Rd sources",
-                          dir),
+            stop(gettextf("directory '%s' does not contain Rd sources", dir),
                  domain = NA)
         docsFiles <- list_files_with_type(docsDir, "docs")
         db <- lapply(docsFiles, .read_Rd_lines_quietly)
@@ -503,8 +506,7 @@ function(file, text = NULL)
                      domain = NA)
             pos <- delimMatch(txt)
             if(pos == -1)
-                stop(gettextf("unterminated section 'section{%s}'",
-                              tmp),
+                stop(gettextf("unterminated section 'section{%s}'", tmp),
                      domain = NA)
             tag <- c(tag, tmp)
         }
@@ -598,7 +600,7 @@ function(txt)
         txt <- substring(txt, pos + attr(pos, "match.length") - 1)
         if((pos <- delimMatch(txt)) == -1)
             stop(gettextf("unmatched \\item name in '\\item{%s'",
-                                sub("\n.*$", "", txt)),
+                          sub("\n.*$", "", txt)),
                  domain = NA,
                  call. = FALSE)
         out <- c(out,
@@ -647,8 +649,8 @@ function(txt)
     if(!length(txt)) return(character())
     txt <- unlist(strsplit(txt, ", *"))
     txt <- gsub("\\\\l?dots", "...", txt)
-    txt <- sub("^[[:space:]]*", "", txt)
-    txt <- sub("[[:space:]]*$", "", txt)
+    txt <- sub("^[[:space:]]+", "", txt)
+    txt <- sub("[[:space:]]+$", "", txt)
     txt
 }
 
@@ -659,7 +661,7 @@ function(txt)
 {
     start <- regexpr("\\\\name\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
-    Rd_name <- gsub("[[:space:]]*", " ",
+    Rd_name <- gsub("[[:space:]]+", " ",
                     substr(txt,
                            start + 6,
                            start + attr(start, "match.length") - 2))
@@ -673,7 +675,7 @@ function(txt)
 {
     start <- regexpr("\\\\title\\{[[:space:]]*([^\}]+)[[:space:]]*\\}", txt)
     if(start == -1) return(character())
-    Rd_title <- gsub("[[:space:]]*", " ",
+    Rd_title <- gsub("[[:space:]]+", " ",
                      substr(txt,
                             start + 7,
                             start + attr(start, "match.length") - 2))
@@ -687,37 +689,53 @@ function(txt)
 {
     txt <- get_Rd_section(txt, "examples")
     if(length(txt) != 1) return(character())
+    
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
 
-    ## Now try removing \dontrun{}.
-    ## Simple version of R::Rdconv::undefine_command().
-    out <- character()
-    pattern <- "\\\\dontrun\\{"
-    while((pos <- regexpr(pattern, txt)) != -1) {
-        out <- c(out, substring(txt, 1, pos - 1))
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- delimMatch(txt)) == -1)
-            stop("unclosed \\dontrun")
-        txt <- substring(txt, pos + attr(pos, "match.length"))
-    }
-    txt <- paste(c(out, txt), collapse = "")
-    ## Now try removing \dontshow{} and \testonly{}.
-    ## Simple version of R::Rdconv::replace_command().
-    out <- character()
-    pattern <- "\\\\(testonly|dontshow)\\{"
-    while((pos <- regexpr(pattern, txt)) != -1) {
-        out <- c(out, substring(txt, 1, pos - 1))
-        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
-        if((pos <- delimMatch(txt)) == -1)
-            stop("unclosed \\dontshow or \\testonly")
-        out <- c(out,
-                 substring(txt, 2, pos + attr(pos, "match.length") - 2))
-        txt <- substring(txt, pos + attr(pos, "match.length"))
-    }
-    paste(c(out, txt), collapse = "")
+    ## Version of [Perl] R::Rdconv::drop_full_command().    
+    txt <- .Rd_transform_command(txt, "dontrun",
+                                 function(u) NULL)
+    ## Version of [Perl] R::Rdconv::undefine_command().
+    txt <- .Rd_transform_command(txt, c("dontshow", "testonly"),
+                                 function(u) u)
+    txt
 }
 
+### .Rd_transform_command
+
+.Rd_transform_command <-
+function(txt, cmd, FUN)
+{
+    ## In Rd text, replace markup of the form \cmd{something} by the
+    ## result of applying FUN to something.  Covers several separate
+    ## functions in the R::Rdconv Perl code:
+    ##   drop_full_command      FUN = function(u) NULL
+    ##   undefine_command       FUN = function(u) u
+    ##   replace_command        FUN = function(u) sprintf("Bef%sAft", u)
+    ## Currently, optional arguments to \cmd are not supported.
+
+    if(length(txt) != 1) return(character())
+
+    ## Vectorized in 'cmd':
+    pattern <- sprintf("\\\\%s\\{", paste(cmd, collapse = "|"))
+    
+    out <- character()
+    while((pos <- regexpr(pattern, txt)) != -1) {
+        out <- c(out, substring(txt, 1, pos - 1))
+        cmd <- substring(txt, pos, pos + attr(pos, "match.length") - 2)
+        txt <- substring(txt, pos + attr(pos, "match.length") - 1)
+        if((pos <- delimMatch(txt)) == -1)
+            stop(sprintf("unclosed \\%s", cmd))
+        out <- c(out,
+                 FUN(substring(txt, 2,
+                               pos + attr(pos, "match.length") - 2)))
+        txt <- substring(txt, pos + attr(pos, "match.length"))
+    }
+    
+    paste(c(out, txt), collapse = "")
+}
+    
 ### .apply_Rd_filter_to_Rd_db
 
 .apply_Rd_filter_to_Rd_db <-
@@ -726,14 +744,14 @@ function(db, FUN, ...)
     db <- lapply(db, function(t) try(FUN(t, ...), silent = TRUE))
     idx <- as.logical(sapply(db, inherits, "try-error"))
     if(any(idx)) {
-        msg <- gettext("Rd syntax errors found")
-        for(i in which(idx))
-            msg <-
-                c(msg,
-                  paste(gettextf("Syntax error in documentation object '%s':"),
-                        names(db)[i]),
-                  db[[i]])
-        stop(paste(msg, collapse = "\n"), call. = FALSE, domain = NA)
+	msg <- gettext("Rd syntax errors found")
+	for(i in which(idx))
+	    msg <-
+		c(msg,
+		  gettextf("Syntax error in documentation object '%s':",
+			   names(db)[i]),
+		  db[[i]])
+	stop(paste(msg, collapse = "\n"), call. = FALSE, domain = NA)
     }
     db
 }

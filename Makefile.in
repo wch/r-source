@@ -10,13 +10,12 @@ top_builddir = .
 include $(top_builddir)/Makeconf
 
 distdir = $(PACKAGE)-$(VERSION)
-INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS NEWS ONEWS THANKS
-NON_SVN_INSTFILES = FAQ RESOURCES
+INSTFILES = AUTHORS COPYING COPYING.LIB COPYRIGHTS NEWS THANKS
+NON_SVN_INSTFILES = FAQ RESOURCES SVN-REVISION
 DISTFILES = $(INSTFILES) \
-	ChangeLog INSTALL OONEWS README VERSION Y2K \
+	ChangeLog INSTALL ONEWS OONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
-	config.site configure configure.ac \
-	date-stamp
+	config.site configure configure.ac
 SUBDIRS = m4 tools doc etc share src po tests
 SUBDIRS_WITH_NO_BUILD = debian
 
@@ -96,8 +95,21 @@ install: installdirs svnonly
 
 svnonly:
 	@if test ! -f "$(srcdir)/FAQ" || test -f non-tarball ; then \
-	  cd doc/manual && $(MAKE) front-matter ; \
+	  (cd doc/manual && $(MAKE) front-matter) ; \
 	  touch non-tarball ; \
+	  (cd $(srcdir); LC_ALL=C TZ=GMT svn info || echo "Revision: unknown") 2> /dev/null \
+	    | sed -n -e '/^Revision/p' -e '/^Last Changed Date/'p \
+	    |  cut -d' ' -f1,2,3,4 > SVN-REVISION-tmp ; \
+	  if grep unknown SVN-REVISION-tmp > /dev/null ; then \
+	    echo "Last Changed Date: Today" >> SVN-REVISION-tmp ; \
+	    if test -f "$(srcdir)/.svn/entries" ; then \
+	      rev=`grep committed-rev "$(srcdir)/.svn/entries" | head -1 | sed -e 's/^ *committed-rev=\"//' -e 's/\"//'`; \
+	      cdate=`grep committed-date "$(srcdir)/.svn/entries" | head -1 | sed -e 's/^ *committed-date=\"//' -e 's/T.*//'`; \
+	      sed -e "s/unknown/$${rev}/" -e "s/Today/$${cdate}/" SVN-REVISION-tmp > SVN-REVISION-tmp2; mv SVN-REVISION-tmp2 SVN-REVISION-tmp ; \
+	    fi ; \
+	  fi ; \
+	  $(top_srcdir)/tools/move-if-change SVN-REVISION-tmp SVN-REVISION ; \
+	  rm -f SVN-REVISION-tmp ; \
 	else \
 	  if test "$(BUILDDIR_IS_SRCDIR)" = no ; then \
 	    for f in $(NON_SVN_INSTFILES); do \
@@ -106,6 +118,13 @@ svnonly:
 	  fi \
 	fi
 
+libR_la = lib/libR$(DYLIB_EXT)
+install-libR:
+	@if test -f $(libR_la); then $(MAKE) install-libR-exists; fi
+install-libR-exists:
+	@$(MKINSTALLDIRS) "${libdir}"
+	@$(INSTALL_DATA) -m755 $(libR_la) "${libdir}"
+
 installdirs:
 	@$(MKINSTALLDIRS) "$(rhome)"
 install-strip:
@@ -113,13 +132,13 @@ install-strip:
 uninstall:
 	@(for d in $(SUBDIRS); do rsd="$${d} $${rsd}"; done; \
 	  for d in $${rsd}; do (cd $${d} && $(MAKE) $@); done)
-	@for f in $(INSTFILES); do \
+	@for f in $(INSTFILES) $(NON_SVN_INSTFILES); do \
 	  rm -f "$(rhome)/$${f}"; \
 	done
 	@rm -rf "$(Rexecbindir)" "$(Rexeclibdir)"
-	@rm -rf "$(rhome)/demos"
-	@rm -rf "$(rhome)/gnome"
-
+	@rmdir "$(rhome)" 2>/dev/null \
+          || echo "  dir $(rhome) not removed"
+	@rm -f "${libdir}/libR$(DYLIB_EXT)"
 
 mostlyclean: clean
 clean:
@@ -166,7 +185,7 @@ distdir: $(DISTFILES) vignettes
 	    || ln $(srcdir)/$${f} $(distdir)/$${f} 2>/dev/null \
 	    || cp -p $(srcdir)/$${f} $(distdir)/$${f}; \
 	done
-	@for f in $(NON_SVN_INSTFILES); do \
+	@for f in $(NON_SVN_INSTFILES) ; do \
 	  cp -p $${f} $(distdir)/$${f}; \
 	done
 	@for d in $(SUBDIRS); do \

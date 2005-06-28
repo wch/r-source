@@ -2,7 +2,7 @@
 \alias{fligner.test}
 \alias{fligner.test.default}
 \alias{fligner.test.formula}
-\title{Fligner-Killeen Test for Homogeneity of Variances}
+\title{Fligner-Killeen Test of Homogeneity of Variances}
 \description{
   Performs a Fligner-Killeen (median) test of the null that the
   variances in each of the groups (samples) are the same.
@@ -58,7 +58,7 @@ fligner.test(x, \dots)
     distribution of the test statistic.}
   \item{p.value}{the p-value of the test.}
   \item{method}{the character string
-    \code{"Fligner-Killeen test for homogeneity of variances"}.}
+    \code{"Fligner-Killeen test of homogeneity of variances"}.}
   \item{data.name}{a character string giving the names of the data.}
 }
 \references{

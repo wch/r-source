@@ -10,7 +10,7 @@ mosaicplot(x, \dots)
 \method{mosaicplot}{default}(x, main = deparse(substitute(x)), 
            sub = NULL, xlab = NULL, ylab = NULL,
            sort = NULL, off = NULL, dir = NULL,
-           color = FALSE, shade = FALSE, margin = NULL,
+           color = NULL, shade = FALSE, margin = NULL,
            cex.axis = 0.66, las = par("las"),
            type = c("pearson", "deviance", "FT"), \dots)
 
@@ -31,16 +31,19 @@ mosaicplot(x, \dots)
     of the integers \code{1:length(dim(x))} (the default).}
   \item{off}{vector of offsets to determine percentage spacing at each
     level of the mosaic (appropriate values are between 0 and 20,
-    and the default is 10 at each level).  There should be one
-    offset for each dimension of the contingency table.}
+    and the default is 20 times the number of splits for 2-dimensional
+    tables, and 10 otherwise.  Rescaled to maximally 50, and recycled if
+    necessary.}
   \item{dir}{vector of split directions (\code{"v"} for vertical and
     \code{"h"} for horizontal) for each level of the mosaic, one
     direction for each dimension of the contingency table.  The
     default consists of alternating directions, beginning with a
     vertical split.}
   \item{color}{logical or (recycling) vector of colors for color
-    shading, used only when \code{shade} is \code{FALSE}.  The default
-    \code{color=FALSE} gives empty boxes with no shading.}
+    shading, used only when \code{shade} is \code{FALSE}, or \code{NULL}
+    (default).  By default, grey boxes are drawn.  \code{color=TRUE}
+    uses a gamma-corrected grey palette.  \code{color=FALSE} gives empty
+    boxes with no shading.}
   \item{shade}{a logical indicating whether to produce extended mosaic
     plots, or a numeric vector of at most 5 distinct positive numbers
     giving the absolute values of the cut points for the residuals.  By

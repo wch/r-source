@@ -109,7 +109,8 @@ AC_DEFUN([AM_GNU_GETTEXT],
     ifelse(gt_included_intl, yes, [
       AC_MSG_CHECKING([whether included gettext is requested])
       AC_ARG_WITH(included-gettext,
-        [  --with-included-gettext use the GNU gettext library included here],
+        [AC_HELP_STRING([--with-included-gettext],
+                        [use the GNU gettext library included here])],
         nls_cv_force_use_gnu_gettext=$withval,
         nls_cv_force_use_gnu_gettext=no)
       AC_MSG_RESULT($nls_cv_force_use_gnu_gettext)
@@ -896,10 +897,7 @@ with_gnu_ld=$acl_cv_prog_gnu_ld
 
 dnl From libtool-1.4. Sets the variable LD.
 AC_DEFUN([AC_LIB_PROG_LD],
-[AC_ARG_WITH(gnu-ld,
-[  --with-gnu-ld           assume the C compiler uses GNU ld [default=no]],
-test "$withval" = no || with_gnu_ld=yes, with_gnu_ld=no)
-AC_REQUIRE([AC_PROG_CC])dnl
+[AC_REQUIRE([AC_PROG_CC])dnl
 AC_REQUIRE([AC_CANONICAL_HOST])dnl
 # Prepare PATH_SEPARATOR.
 # The user is always right.
@@ -1098,7 +1096,8 @@ AC_DEFUN([AC_LIB_RPATH],
   hardcode_minus_L="$acl_cv_hardcode_minus_L"
   dnl Determine whether the user wants rpath handling at all.
   AC_ARG_ENABLE(rpath,
-    [  --disable-rpath         do not hardcode runtime library paths],
+    [AC_HELP_STRING([--disable-rpath],
+                    [do not hardcode runtime library paths])],
     :, enable_rpath=yes)
 ])
 
@@ -1768,7 +1767,8 @@ AC_DEFUN([AM_NLS],
   AC_MSG_CHECKING([whether NLS is requested])
   dnl Default is enabled NLS
   AC_ARG_ENABLE(nls,
-    [  --disable-nls           do not use Native Language Support],
+    [AC_HELP_STRING([--disable-nls],
+                    [do not use Native Language Support])],
     USE_NLS=$enableval, USE_NLS=yes)
   AC_MSG_RESULT($USE_NLS)
   AC_SUBST(USE_NLS)

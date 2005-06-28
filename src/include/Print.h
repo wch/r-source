@@ -55,7 +55,7 @@ void formatString(SEXP*, int, int*, int);
 
 /* Formating of values */
 char *EncodeFactor(int, int, int, SEXP);
-char *EncodeElement(SEXP, int, int);
+char *EncodeElement(SEXP, int, int, char);
 
 /* Printing */
 void MatrixColumnLabel(SEXP, int, int);

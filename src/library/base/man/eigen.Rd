@@ -20,7 +20,7 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   Computes eigenvalues and eigenvectors.
 }
 \details{
-  By default \code{eigen} uses the LAPACK routines DSYEVR/DSYEV,
+  By default \code{eigen} uses the LAPACK routines DSYEVR,
   DGEEV, ZHEEV and ZGEEV whereas \code{eigen(EISPACK=TRUE)} provides an
   interface to the EISPACK routines \code{RS}, \code{RG}, \code{CH}
   and \code{CG}.
@@ -33,10 +33,6 @@ eigen(x, symmetric, only.values = FALSE, EISPACK = FALSE)
   for new projects, but its eigenvectors may differ in sign and
   (in the asymmetric case) in normalization. (They may also differ
   between methods and between platforms.)
-
-  In the real symmetric case, LAPACK routine DSYEVR is used which
-  requires IEEE 754 arithmetic.  Should this not be supported on
-  your platform, DSYEV is used, with a warning.
 
   Computing the eigenvectors is the slow part for large matrices.
 }

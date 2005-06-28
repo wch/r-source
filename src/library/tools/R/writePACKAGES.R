@@ -7,9 +7,9 @@ write_PACKAGES <-
     type <- match.arg(type)
     files <- list.files(dir,
                         pattern = switch(type,
-                        "source" = "\.tar\.gz$",
-                        "mac.binary" = "\.tgz$",
-                        "win.binary" = "\.zip$")
+                        "source" = "\\.tar\\.gz$",
+                        "mac.binary" = "\\.tgz$",
+                        "win.binary" = "\\.zip$")
                         )
     if(length(files)) {
         ## Standard set of fields required to build a
@@ -30,12 +30,12 @@ write_PACKAGES <-
                 ## for bundles:
                 con <- unz(files[i], "DESCRIPTION")
                 temp <- try(read.dcf(con, fields = fields), silent = TRUE)
-                if(identical(class(temp), "try-error")) {
+                if(inherits(temp, "try-error")) {
                     close(con)
                     ## for regular packages:
                     con <- unz(files[i], file.path(packages[i], "DESCRIPTION"))
                     temp <- try(read.dcf(con, fields = fields), silent = TRUE)
-                    if(identical(class(temp), "try-error")) {
+                    if(inherits(temp, "try-error")) {
                         close(con)
                         next
                     }
@@ -47,8 +47,8 @@ write_PACKAGES <-
             dir <- file_path_as_absolute(dir)
             files <- list.files(dir,
                                 pattern=switch(type,
-                                "source" = "\.tar\.gz$",
-                                "mac.binary" = "\.tgz$"),
+                                "source" = "\\.tar\\.gz$",
+                                "mac.binary" = "\\.tgz$"),
                                 full.names=TRUE)
             cwd <- getwd()
             td <- tempfile("PACKAGES")
@@ -59,9 +59,9 @@ write_PACKAGES <-
                 if(verbose) cat("  ", files[i], "\n", sep ="")
                 p <- file.path(packages[i], "DESCRIPTION")
                 temp <- try(system(paste("tar zxf", files[i], p)))
-                if(!identical(class(temp), "try-error")) {
+                if(!inherits(temp, "try-error")) {
                     temp <- try(read.dcf(p, fields = fields), silent = TRUE)
-                    if(!identical(class(temp), "try-error"))
+                    if(!inherits(temp, "try-error"))
                         desc[[i]] <- temp
                 }
                 unlink(packages[i], recursive = TRUE)

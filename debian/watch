@@ -1,0 +1,5 @@
+# format version number, currently 2; this line is compulsory!
+version=2
+
+# This is one format for an HTTP site, which is the same as the FTP format
+http://cran.r-project.org/src/base/R-2/R-([-0-9\.]*).tar.gz

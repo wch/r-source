@@ -1,7 +1,13 @@
+## called as
+# .install.winbinary(pkgs = pkgs, lib = lib, contriburl = contriburl,
+#                    method = method, available = available,
+#                    destdir = destdir,
+#                    installWithVers = installWithVers,
+#                    dependencies = dependencies)
+
 .install.winbinary <-
-    function(pkgs, lib, repos = CRAN,
+    function(pkgs, lib, repos = getOption("repos"),
              contriburl = contrib.url(repos),
-             CRAN = getOption("repos"),
              method, available = NULL, destdir = NULL,
              installWithVers = FALSE, dependencies = FALSE)
 {
@@ -12,8 +18,8 @@
         ## dir over to the appropriate install dir.
         tmpDir <- tempfile(, lib)
         if (!dir.create(tmpDir))
-            stop(sprintf(gettext("unable to create temp directory '%s'"),
-                         tmpDir), domain = NA, call. = FALSE)
+            stop(sprintf(gettext("unable to create temporary directory '%s'"),
+                         normalizePath(tmpDir)), domain = NA, call. = FALSE)
         cDir <- getwd()
         on.exit(setwd(cDir), add = TRUE)
         res <- zip.unpack(pkg, tmpDir)
@@ -52,7 +58,7 @@
                     for(lang in langs) {
                         path0 <- file.path(fp, lang, "LC_MESSAGES")
                         mos <- dir(path0, full.names = TRUE)
-                        path <- file.path(R.home(), "share", "locale", lang,
+                        path <- file.path(R.home("share"), "locale", lang,
                                           "LC_MESSAGES")
                         if(!file.exists(path))
                             if(!dir.create(path, FALSE, TRUE))
@@ -105,8 +111,9 @@
                     ret <- file.rename(file.path(tmpDir, curPkg), instPath)
                     if(!ret)
                         warning(sprintf(gettext(
-                             "unable to move temp installation '%d' to '%s'"),
-                                        file.path(tmpDir, curPkg), instPath),
+                             "unable to move temporary installation '%s' to '%s'"),
+                                        normalizePath(file.path(tmpDir, curPkg)),
+                                        normalizePath(instPath)),
                                 domain = NA, call. = FALSE)
                 } else
                 stop(sprintf(gettext(
@@ -151,7 +158,8 @@
     if(is.null(destdir) && nonlocalcran) {
         tmpd <- file.path(tempdir(), "downloaded_packages")
         if (!file.exists(tmpd) && !dir.create(tmpd))
-            stop(gettextf("Unable to create temporary directory '%s'", tmpd),
+            stop(gettextf("unable to create temporary directory '%s'",
+                          normalzePath(tmpd)),
                  domain = NA)
     }
 
@@ -241,14 +249,6 @@ menuInstallLocal <- function()
     install.packages(choose.files('',filters=Filters[c('zip','All'),]),
                      .libPaths()[1], repos = NULL)
 }
-
-# menuInstallBioc <- function()
-# {
-#     a <- available.packages(contrib.url(getOption("BIOC")))
-#     install.packages(select.list(a[,1], , TRUE), .libPaths()[1],
-#                      available = a, repos = getOption("BIOC"),
-#                      dependencies = TRUE)
-# }
 
 ### the following function supports .install.winbinaries()
 

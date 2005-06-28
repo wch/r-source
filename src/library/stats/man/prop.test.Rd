@@ -1,5 +1,5 @@
 \name{prop.test}
-\title{Test for Equal or Given Proportions}
+\title{Test of Equal or Given Proportions}
 \usage{
 prop.test(x, n, p = NULL,
           alternative = c("two.sided", "less", "greater"),

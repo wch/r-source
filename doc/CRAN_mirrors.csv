@@ -3,37 +3,50 @@ Australia,Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisba
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien",CRAN@R-project.org
 "Brasil (PR)",Brasil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana??","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
 "Brasil (MG)",Brasil,Vicosa,http://www.termix.ufv.br/CRAN/,"Federal University of Vicosa",
-"Brasil (SP)",Brasil,Piracicaba,http://lmq.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",jlpolize@carpa.ciagri.usp.br
+"Brasil (RJ)",Brasil,"Rio de Janeiro",http://cran.fiocruz.br/,"Oswaldo Cruz Foundation, Rio de Janeiro",oswaldo@fiocruz.br
+"Brasil (SP 1)",Brasil,Piracicaba,http://lmq.esalq.usp.br/CRAN/,"University of Sao Paulo, Piracicaba",jlpolize@carpa.ciagri.usp.br
+"Brasil (SP 2)",Brasil,"Sao Paulo",http://www.vps.fmvz.usp.br/CRAN/,"University of Sao Paulo, Sao Paulo","Fernando Ferreira <fernando@vps.fmvz.usp.br>"
 "Canada (BC)",Canada,Burnaby,http://cran.stat.sfu.ca/,"Simon Fraser University, Burnaby","Brad McNeney <mcneney@sfu.ca>"
 "Canada (ON)",Canada,Toronto,http://probability.ca/cran/,"University of Toronto","Jeffrey S. Rosenthal <jeff at math.toronto.edu>"
-Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,SunSITE,mirror@sunsite.dk
+China,China,Nanjing,http://www.lmbe.seu.edu.cn/CRAN/,"Southeast University, Nanjing",xsun@seu.edu.cn
+Denmark,Denmark,Aalborg,http://cran.dk.r-project.org/,"dotsrc.org, Aalborg",mirror@dotsrc.org
 "France (Toulouse)",France,Toulouse,http://cran.fr.r-project.org/,"CICT, Toulouse","David Allouche <allouche@tlse.toulouse.inra.fr>"
 "France (Lyon)",France,Lyon,http://cran.univ-lyon1.fr/,"Dept. of Biometry & Evol. Biology, University of Lyon","Jean Thioulouse <jthioulouse@biomserv.univ-lyon1.fr>"
 "France (Paris)",France,Paris,http://mirror.internet.tp/cran/,"Boese Internet, Paris","Pelle Boese <pelle@boese.biz>"
 "Germany (Berlin)",Germany,Berlin,http://cran.r-mirror.de/,"Stefan Drees, Berlin","Stefan Drees <sdrees@ieee.org>"
 "Germany (Koeln)",Germany,Koeln,http://cran.miscellaneousmirror.org/,"Miscellaneousdata.de, Koeln","Simon Hardy-Francis <simonhf@gmail.com>"
 "Germany (Mainz)",Germany,Mainz,http://umfragen.sowi.uni-mainz.de/CRAN/,"University of Mainz",
+"Germany (Muenchen)",Germany,Muenchen,http://cran.mirrorplus.org/,"mirrorplus.org, Muenchen",admin@mirrorplus.org
 Hungary,Hungary,Budapest,http://cran.hu.r-project.org/,"Semmelweis University","Laszlo L Tornoci <torlasz@xenia.sote.hu>"
-Italy,Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
+"Italy (Arezzo)",Italy,Arezzo,http://cran.arsmachinandi.it/,"Ars Machinandi, Arezzo",cran.mirror@arsmachinandi.com
+"Italy (Ferrara)",Italy,Ferrara,http://microarrays.unife.it/CRAN/,"Universita di Ferrara","Stefano Volinia <s.volinia@unife.it>"
+"Italy (Milano)",Italy,Milano,http://rm.mirror.garr.it/mirrors/CRAN/,"Garr Mirror, Milano",mirror-service@garr.it
+"Italy (Palermo)",Italy,Palermo,http://dssm.unipa.it/CRAN/,"Universita degli Studi di Palermo","elio.mineo@dssm.unipa.it, alf@dssm.unipa.it"
 "Japan (Aizu)",Japan,Aizu,ftp://ftp.u-aizu.ac.jp/pub/lang/R/CRAN,"University of Aizu",
-"Japan (Tsukaba)",Japan,Tsukaba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
-Poland,Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Pawel Netzel <netzel@meteo.uni.wroc.pl>"
+"Japan (Tsukuba)",Japan,Tsukuba,http://cran.md.tsukuba.ac.jp/,"University of Tsukuba",
+Korea,Korea,Seoul,http://bibscvs.snu.ac.kr/R/,"Seoul National University","SungGON Yi <skon@kr.FreeBSD.org>"
+"Poland (Lublin)",Poland,Lublin,http://novum.am.lublin.pl/CRAN/,"Skubiszewski Medical University, Lublin","Lukasz Komsta <luke@novum.am.lublin.pl>"
+"Poland (Wroclaw)",Poland,Wroclaw,http://r.meteo.uni.wroc.pl/,"University of Wroclaw","Pawel Netzel <netzel@meteo.uni.wroc.pl>"
 Portugal,Portugal,Porto,http://cran.pt.r-project.org/,"Universidade do Porto",neacm@fe.up.pt
 "Slovenia (Besnica)",Slovenia,Besnica,http://www.fastmirrors.org/cran/,"Fastmirrors.org, Besnica","Tomy Kurtis <webadmin@fastmirrors.org>"
 "Slovenia (Ljubljana)",Slovenia,Ljubljana,http://www.wsection.com/cran/,"Wsection.com, Ljubljana",info@wsection.com
-"South Africa","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
+"South Africa (Cape Town)","South Africa","Cape Town",http://cbio.uct.ac.za/CRAN/,"University of Cape Town",r-project@cbio.uct.ac.za
+"South Africa (Grahamstown)","South Africa",Grahamstown,http://cran.za.r-project.org/,"Rhodes University","Jeremy Baxter <J.Baxter at ru.ac.za>"
 Spain,Spain,Madrid,http://cran.es.r-project.org/,"Spanish National Research Network, Madrid","Jose Manuel Macias <jmanuel.macias@rediris.es>"
 "Switzerland (Zuerich)",Switzerland,Zuerich,http://cran.ch.r-project.org/,"ETH Zuerich",Martin.Maechler@R-project.org
 "Switzerland (Bern 1)",Switzerland,Bern,http://www.imsv.unibe.ch/cran/,"Universitaet Bern","Thomas Schweizer <Thomas.Schweizer@stat.unibe.ch>"
 "Switzerland (Bern 2)",Switzerland,Bern,http://cran.prokmu.com/,"Prokmu Hosting, Bern",info@prokmu.com
 Turkey,Turkey,Istanbul,http://godel.cs.bilgi.edu.tr/mirror/cran/,"Istanbul Bilgi University","Vehbi Sinan TUNALIOGLU <vst@bilgi.edu.tr>"
-Taiwan,Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>"
+"Taiwan (Taichung)",Taiwan,Taichung,http://cran.cs.pu.edu.tw/,"Providence University, Taichung",hcchang@cs.pu.edu.tw
+"Taiwan (Taipeh)",Taiwan,Taipei,http://cran.csie.ntu.edu.tw/,"National Taiwan University, Taipei","Rong-En Fan  <rafan@infor.org>"
 "UK (Bristol)",UK,Bristol,http://cran.uk.r-project.org/,"University of Bristol","Guy Nason <G.P.Nason@bristol.ac.uk>"
 "UK (London)",UK,London,http://www.sourcekeg.co.uk/cran/,"Sourcekeg, London",mirrors@sourcekeg.co.uk
 "USA (CA 1)",USA,Berkeley,http://cran.cnr.Berkeley.edu,"University of California, Berkeley, CA",casterln@nature.berkeley.edu
 "USA (CA 2)",USA,"Los Angeles",http://cran.stat.ucla.edu/,"University of California, Los Angeles, CA",
-"USA (MA)",USA,Boston,http://www.bioconductor.org/CRAN/,"Dana Farber Cancer Institute, Boston, MA","Jeff Gentry <jgentry@jimmy.harvard.edu>"
+"USA (IA)",USA,Ames,http://rh-mirror.linux.iastate.edu/CRAN/,"Iowa State University, Ames, IA","Dave Edsall <edsall@iastate.edu>"
 "USA (MI)",USA,Houghton,http://www.biometrics.mtu.edu/CRAN/,"Michigan Technological University, Houghton, MI","Robert Froese <froese@mtu.edu>"
+"USA (MO)",USA,"St. Louis",http://cran.wustl.edu/,"Washington University, St. Louis, MO",admartin@wustl.edu
 "USA (NC)",USA,"Chapel Hill",http://www.ibiblio.org/pub/languages/R/CRAN/,"University of North Carolina, Chapel Hill, NC","""Nancy C. Wilson"" <nancy@metalab.unc.edu>"
 "USA (PA 1)",USA,Pittsburgh,http://cran.us.r-project.org/,"Pair Networks, Pittsburgh, PA",sigma@pair.com
 "USA (PA 2)",USA,Pittsburgh,http://lib.stat.cmu.edu/R/CRAN/,"Statlib, Carnegie Mellon University, Pittsburgh, PA",
+"USA (WA)",USA,Seattle,http://cran.fhcrc.org/,"Fred Hutchinson Cancer Research Center, Seattle, WA",sfalcon@fhcrc.org

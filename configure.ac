@@ -112,6 +112,21 @@ if test -r "${cfile}"; then
   . "${cfile}"
 fi
 
+## We need to establish suitable defaults for a 64-bit OS
+libnn=lib
+case "${host_os}" in
+  linux*)
+    case "${host_cpu}" in
+      x86_64|mips64|ppc64|sparc64|s390x)
+        libnn=lib64
+      ;;
+    esac
+    ;;
+  solaris*)
+    ## libnn=lib/sparcv9 ## on 64-bit only, but that's compiler-specific
+    ;;  
+esac
+: ${LIBnn=$libnn}
 ## We provide these defaults so that headers and libraries in
 ## '/usr/local' are found (by the native tools, mostly).
 if test -f "/sw/etc/fink.conf"; then
@@ -119,8 +134,36 @@ if test -f "/sw/etc/fink.conf"; then
   : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
 else
   : ${CPPFLAGS="-I/usr/local/include"}
-  : ${LDFLAGS="-L/usr/local/lib"}
+  : ${LDFLAGS="-L/usr/local/${LIBnn}"}
 fi
+AC_SUBST(LIBnn)
+## take care not to  override the command-line setting
+if test "${libdir}" = '${exec_prefix}/lib'; then
+  libdir='${exec_prefix}/${LIBnn}'
+fi
+
+## R installation directories
+m4_divert_once([HELP_BEGIN], [
+R installation directories:
+  --libdir=DIR        R files to R_HOME=DIR/R @<:@EPREFIX/$LIBnn@:>@
+    rdocdir=DIR       R doc files to DIR      @<:@R_HOME/doc@:>@
+    rincludedir=DIR   R include files to DIR  @<:@R_HOME/include@:>@
+    rsharedir=DIR     R share files to DIR    @<:@R_HOME/share@:>@])dnl
+
+if test -z ${rdocdir}; then
+  rdocdir='${rhome}/doc'
+fi
+AC_SUBST([rdocdir])
+
+if test -z ${rincludedir}; then
+  rincludedir='${rhome}/include'
+fi
+AC_SUBST([rincludedir])
+
+if test -z ${rsharedir}; then
+  rsharedir='${rhome}/share'
+fi
+AC_SUBST([rsharedir])
 
 ### ** Handle arguments to configure.
 
@@ -145,8 +188,8 @@ fi],
 ## Allow the user to specify building an R framework (Darwin).
 AC_ARG_ENABLE([R-framework],
 [AC_HELP_STRING([--enable-R-framework@<:@=DIR@:>@],
-                [build R framework (if possible), and specify its
-                 installation prefix @<:@yes, /Library/Frameworks@:>@])],
+                [MacOS X only: build R framework (if possible), and specify
+                 its installation prefix @<:@yes, /Library/Frameworks@:>@])],
 [want_R_framework="${enableval}"],
 [want_R_framework=yes])
 ## Can only build frameworks on Darwin.
@@ -182,7 +225,7 @@ AM_CONDITIONAL(WANT_R_FRAMEWORK, [test "x${want_R_framework}" = xyes])
 ## </NOTE>
 AC_ARG_ENABLE([R-shlib],
 [AC_HELP_STRING([--enable-R-shlib],
-                [build R as a shared library @<:@no@:>@])],
+                [build the shared/dynamic library 'libR' @<:@no@:>@])],
 [want_R_shlib="${enableval}"],
 [want_R_shlib="${want_R_framework}"])
 ## processed after GNOME, which can set this.
@@ -211,13 +254,13 @@ fi
 
 AC_ARG_ENABLE([linux-lfs],
 [AC_HELP_STRING([--enable-linux-lfs],
-                [Enable support for > 2GB files on Linux @<:@no@:>@])],
+                [enable support for > 2GB files on Linux @<:@no@:>@])],
 [want_linux_lfs="${enableval}"],
 [want_linux_lfs=no])
 
 AC_ARG_ENABLE([mbcs],
 [AC_HELP_STRING([--enable-mbcs],
-                [Enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
+                [enable support for UTF-8 and other MBCS locales @<:@yes@:>@])],
 [want_mbcs_support="${enableval}"],
 [want_mbcs_support=yes])
 
@@ -248,7 +291,7 @@ AC_ARG_WITH([readline],
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AC_HELP_STRING([--with-aqua],
-                [use Aqua (if available) @<:@no@:>@])],
+                [MacOS X only: use Aqua (if available) @<:@no@:>@])],
 [want_aqua=yes])
 
 ## Tcl/Tk.
@@ -387,6 +430,7 @@ AC_ARG_VAR([BLAS_LIBS],
            [flags needed for linking against external BLAS libraries])
 AC_ARG_VAR([LAPACK_LIBS],
            [flags needed for linking against external LAPACK libraries])
+AC_ARG_VAR([LIBnn], ['lib' or 'lib64' for dynamic libraries])
 
 ### ** Check whether we build in srcdir.
 
@@ -466,14 +510,27 @@ R_PROG_MAKEINFO
 ## Make sure that non-standard directories specified via '-L' are really
 ## searched in the tests.
 ## Note: earlier versions used LIBS rather than LDFLAGS.
-for arg in ${LDFLAGS}; do
-  case "${arg}" in
-    -L*)
-      lib=`echo ${arg} | sed "s/^-L//"`
-      R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
-      ;;
-  esac
-done
+case "${host_os}" in
+  darwin*)
+    ## Darwin provides a full path in the ID of each library such 
+    ## that the linker can add library's path to the binary at link time.
+    ## This allows the dyld to find libraries even without xx_LIBRARY_PATH.
+    ## No paths should be added to R_LD_LIBRARY_PATH (which in turn
+    ## changes DYLD_LIBRARY_PATH), because they override the system
+    ## look-up sequence. Such automatic override has proven to break things
+    ## like system frameworks (e.g. ImageIO or OpenGL framework).
+    ;;
+  *)
+    for arg in ${LDFLAGS}; do
+      case "${arg}" in
+        -L*)
+	  lib=`echo ${arg} | sed "s/^-L//"`
+	  R_SH_VAR_ADD(R_LD_LIBRARY_PATH, [${lib}], [${PATH_SEPARATOR}])
+	  ;;
+      esac
+    done
+    ;;
+esac
 ## </FIXME>
 
 ## Record name of environment variable which tells the dynamic linker
@@ -1207,10 +1264,13 @@ fi
 
 AC_CHECK_TYPES([off_t])
 AC_FUNC_ALLOCA
-AC_CHECK_DECLS([alloca], , , [#include <alloca.h>])
+AC_CHECK_DECLS([alloca], , , 
+[#ifdef HAVE_ALLOCA_H
+# include <alloca.h>
+#endif])
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii log1p \
-  matherr mkfifo popen putenv realpath rint \
+  matherr mkdtemp mkfifo popen putenv realpath rint \
   setenv strcoll stat strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
@@ -1288,7 +1348,7 @@ if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
 if test "${acx_lapack_ok}" != "yes"; then
-  LAPACK_LIBS="-L\${R_HOME}/lib -lRlapack"
+  LAPACK_LIBS="-L\$(R_HOME)/lib -lRlapack"
 fi
 AC_SUBST(LAPACK_LIBS)
 AM_CONDITIONAL(USE_EXTERNAL_LAPACK, [test "${acx_lapack_ok}" = "yes"])
@@ -1401,9 +1461,14 @@ LIBS="${LIBS1} ${LIBS2}"
 ## On Linux, do not add the ld.so system directories '/lib' and
 ## '/usr/lib', so that the entries from '/etc/ld.so.conf' are not
 ## shadowed (otherwise, e.g. optimized ATLAS libs would not be used).
+## On OS X (Darwin) /usr/X11R6/lib shadows OpenGL framework and is not
+## needed in DYLD_LIBRARY_PATH.
 case "${host_os}" in
   linux* | solaris*)
     r_ld_library_defaults="/usr/lib:/lib"
+    ;;
+  darwin*)
+    r_ld_library_defaults="/usr/X11R6/lib"
     ;;
   *)
     r_ld_library_defaults=
@@ -1415,6 +1480,8 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
       r_want_lib=true
+      ## don't add anything for Darwin
+      case "${host_os}" in darwin*) r_want_lib=false ;; esac
       ## Do not add non-existent directories.
       test -d "${lib}" || continue
       ## Canonicalize (/usr/lib/gcc-lib/i486-linux/3.3.4/../../..).

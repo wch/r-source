@@ -53,7 +53,9 @@ shQuote(string, type = c("sh", "csh", "cmd"))
   \url{http://www.mhuffman.com/notes/dos/bash_cmd.htm}
 }
 \seealso{
-  \code{\link{sQuote}} for quoting in text.
+  \code{Quotes} for quoting \R code.
+
+  \code{\link{sQuote}} for quoting English text.
 }
 \examples{
 test <- "abc$def`gh`i\\j"

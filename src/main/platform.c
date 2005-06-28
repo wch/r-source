@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2001-4 The R Development Core Team
+ *  Copyright (C) 1998, 2001-5 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -149,11 +149,12 @@ static void Init_R_Platform(SEXP rho)
 #endif
 #ifdef Win32
     SET_VECTOR_ELT(value, 5, mkString("win.binary"));
-#else
+#else /* not Win32 */
 #ifdef HAVE_AQUA
     SET_VECTOR_ELT(value, 5, mkString("mac.binary"));
-#endif
+#else /* not Win32 nor Aqua */
     SET_VECTOR_ELT(value, 5, mkString("source"));
+#endif
 #endif
     setAttrib(value, R_NamesSymbol, names);
     defineVar(install(".Platform"), value, rho);
@@ -383,7 +384,7 @@ SEXP do_fileappend(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    if(PRIMVAL(op) == 1 && buf[nchar - 1] != '\n') {
 		if(fwrite("\n", 1, 1, fp1) != 1) goto append_error;
 	    }
-	    
+
 	    status = 1;
 	append_error:
 	    if (status == 0)
@@ -1039,23 +1040,48 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 #ifdef HAVE_LOCALE_H
     SEXP locale = CADR(args), ans;
     int cat;
-    char *p;
+    char *p = "";
 
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	error(_("invalid 'category' argument"));
+	errorcall(call, _("invalid 'category' argument"));
     if(!isString(locale) || LENGTH(locale) != 1)
-	error(_("invalid 'locale' argument"));
+	errorcall(call, _("invalid 'locale' argument"));
     switch(cat) {
-    case 1: cat = LC_ALL; break;
-    case 2: cat = LC_COLLATE; break;
-    case 3: cat = LC_CTYPE; break;
-    case 4: cat = LC_MONETARY; break;
-    case 5: cat = LC_NUMERIC; break;
-    case 6: cat = LC_TIME; break;
+    case 1:
+	cat = LC_ALL;
+	p = CHAR(STRING_ELT(locale, 0));
+	setlocale(LC_COLLATE, p);
+	setlocale(LC_CTYPE, p);
+	setlocale(LC_MONETARY, p);
+	setlocale(LC_TIME, p);
+	p = setlocale(cat, NULL);
+	break;
+    case 2:
+	cat = LC_COLLATE;
+	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	break;
+    case 3:
+	cat = LC_CTYPE;
+	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	break;
+    case 4:
+	cat = LC_MONETARY;
+	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	break;
+    case 5:
+	cat = LC_NUMERIC;
+	warningcall(call, _("setting 'LC_NUMERIC' may cause R to function strangely"));
+	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	break;
+    case 6:
+	cat = LC_TIME;
+	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
+	break;
+    default:
+	errorcall(call, _("invalid 'category' argument"));
     }
-    p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
     PROTECT(ans = allocVector(STRSXP, 1));
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
     else  {
@@ -1188,19 +1214,43 @@ static Rboolean R_can_use_X11()
 
 SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP ans, ansnames;
+    SEXP what, ans, ansnames;
     int i = 0;
 #ifdef Unix
-    Rboolean X11 = R_can_use_X11();
+    int j = 0;
+    Rboolean X11 = FALSE;
 #endif
 
     checkArity(op, args);
-    PROTECT(ans = allocVector(LGLSXP, 11));
-    PROTECT(ansnames = allocVector(STRSXP, 11));
+    what = CAR(args);
+    if(!isNull(what) && !isString(what))
+	error(_("invalid value of 'what' argument"));
+
+#if defined(Unix) && defined(HAVE_X11)
+    /* Don't load the module and contact the X11 display
+       unless it is necessary.
+    */
+    if(isNull(what)) X11 = R_can_use_X11();
+    else
+        for (j = 0; j < LENGTH(what); j++)
+       	    if(streql(CHAR(STRING_ELT(what, j)), "X11")
+#ifdef HAVE_JPEG
+	       || streql(CHAR(STRING_ELT(what, j)), "jpeg")
+#endif
+#ifdef HAVE_PNG
+	       || streql(CHAR(STRING_ELT(what, j)), "png")
+#endif
+	        ) {
+	        X11 = R_can_use_X11();
+	        break;
+	    }
+#endif
+    PROTECT(ans = allocVector(LGLSXP, 10));
+    PROTECT(ansnames = allocVector(STRSXP, 10));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
-#ifdef Unix 
+#ifdef Unix
     LOGICAL(ans)[i++] = X11;
 #else /* Windows */
     LOGICAL(ans)[i++] = TRUE;
@@ -1211,7 +1261,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     SET_STRING_ELT(ansnames, i, mkChar("png"));
 #ifdef HAVE_PNG
-#ifdef Unix 
+#ifdef Unix
     LOGICAL(ans)[i++] = X11;
 #else /* Windows */
     LOGICAL(ans)[i++] = TRUE;
@@ -1232,7 +1282,7 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #if defined(Unix) && !defined(__APPLE_CC__)
     LOGICAL(ans)[i++] = X11;
 #else
-	LOGICAL(ans)[i++] = TRUE;
+    LOGICAL(ans)[i++] = TRUE;
 #endif
 #else
     LOGICAL(ans)[i++] = FALSE;
@@ -1286,12 +1336,6 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     i++;
 
-    SET_STRING_ELT(ansnames, i, mkChar("IEEE754"));
-#if defined(IEEE_754)
-    LOGICAL(ans)[i++] = TRUE;
-#else
-    LOGICAL(ans)[i++] = FALSE;
-#endif
     SET_STRING_ELT(ansnames, i, mkChar("iconv"));
 #if defined(HAVE_ICONV) && defined(ICONV_LATIN1)
     LOGICAL(ans)[i++] = TRUE;

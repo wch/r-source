@@ -3,6 +3,9 @@ include ../../share/make/vars.mk
 
 all:
 	@$(MAKE) --no-print-directory Rpwd.exe
+	@if test -f  ../../SVN-REVISION ; then \
+	  cp ../../SVN-REVISION ../../SVN-REVISION.bak ; \
+	fi
 	@$(MAKE) --no-print-directory rbuild
 	@$(MAKE) --no-print-directory rpackage
 	@$(MAKE) --no-print-directory htmldocs
@@ -173,7 +176,7 @@ COPYRIGHTS: $(RHOME)/COPYRIGHTS COPYRIGHTS.win
 	cat $^ > $@
 
 
-fixfiles: docfiles
+fixfiles: docfiles 
 	@$(MKDIR) -p ../../bin
 	@$(MAKE) --no-print-directory -C ./fixed BUILD=$(BUILD)
 
@@ -440,9 +443,10 @@ distclean veryclean: clean clean-recommended
 	done
 	$(RM) rw-FAQ fixed/html/rw-FAQ.html
 	$(RM) -r cran/*.html cran/*.htm cran/ReadMe cran/README* cran/*.exe \
-		cran/md5sum.txt cran/*.$(RPREFIX) cran/mini
+		cran/md5sum.txt cran/*.$(RPREFIX) 
 	$(RM) -r .vignettes # it gets left behind sometimes
-	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html # not in SVN sources
+	$(RM) ../../FAQ ../../RESOURCES ../../doc/html/resources.html \
+	  ../../SVN-REVISION # not in SVN sources
 	$(RM) -r ../../share/locale
 	$(RM) XINSTALL # from cross-building
 	$(RM) Rpwd.exe # do this last of all
@@ -504,8 +508,7 @@ vignettes:
 ## ===================== Maintainer targets ========================
 
 RVER = $(shell cut -d' ' -f1 ../../VERSION | sed -n 1p)
-RVER-PAT = $(shell if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then echo "-patched"; else echo ""; fi)
-
+RVER-PAT = $(shell version=`cut -d' ' -f1 ../../VERSION | sed -n 1p`; if test "`cut -f2 -d' ' ../../VERSION`" = "Patched"; then version=`echo $${version} | sed 's/\.[0-9]*$$//'`; echo "$${version}-patched"; else echo "$${version}"; fi)
 
 docfiles:
 	$(MAKE) -f Makefile.docfiles
@@ -513,9 +516,9 @@ docfiles:
 bitmapdll:
 	$(MAKE) -C bitmap
 
-CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER)$(RVER-PAT)/Recommended
+CRANREC = cran.r-project.org::CRAN/src/contrib/$(RVER-PAT)/Recommended
 
-## Use -c her eto avoid re-downloading the same versions of files
+## Use -c here to avoid re-downloading the same versions of files
 rsync-recommended:
 	@(cd ../library; \
 	rsync -rcvC --delete --exclude=Makefile.in --exclude=.cvsignore \
@@ -566,18 +569,13 @@ rinstaller:
 	@$(MAKE) -C installer clean
 
 crandir:
-#	$(MKDIR) -p cran/mini
-	$(CP) installer/rw*.exe cran
+	$(CP) installer/$(RPREFIX)-win32.exe cran
 	$(CP) CHANGES cran/CHANGES.$(RPREFIX)
 	$(CP) ../../NEWS cran/NEWS.$(RPREFIX)
 	(cd cran;\
-	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX).exe")' \
+	 $(ECHO) 'cat(md5sum("$(RPREFIX).exe"),"*$(RPREFIX)-win32.exe")' \
          | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
-#	$(CP) installer/mini*.* cran/mini
 	$(CP) ../../doc/html/rw-FAQ.html cran
-	(cd cran/mini;\
-	 $(ECHO) 'fn <- dir(pattern="mini*"); cat(paste(md5sum(fn)," *",fn,sep=""),sep="\n")' \
-	 | $(RHOME)/bin/rterm --vanilla --slave R_DEFAULT_PACKAGES=tools >md5sum.txt)
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
 	  -e s/@RVER@/$(RVER)/g \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" README > cran/README.$(RPREFIX)
@@ -597,10 +595,6 @@ crandir:
 	  -e "s/@DATE@/$(DATE)/g" \
 	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/rpatched.in > cran/rpatched.html	  
 	$(SED) -e s/@RWVER@/$(RPREFIX)/g cran/release.in > cran/release.htm
-#	$(SED) -e s/@RWVER@/$(RPREFIX)/g \
-#	  -e s/@RVER@/$(RVER)/g \
-#	  -e "s/@DATE@/$(DATE)/g" \
-#	  -e "s/@FULLVERSION@/$(FULLVERSION)/g" cran/mini.in > cran/mini/index.html
 
 rbuild-no-mbcs:
 	@$(MAKE) --no-print-directory fixfiles
@@ -614,6 +608,7 @@ rbuild-no-mbcs:
 
 distribution:
 	@$(MAKE) Rpwd.exe
+	-mv ../../SVN-REVISION ../../SVN-REVISION.bak 2> /dev/null
 	@$(MAKE) rbuild-no-mbcs
 	@$(MAKE) rbuild
 	@$(MAKE) rpackage
@@ -625,6 +620,7 @@ distribution:
 	$(MAKE) manuals
 	$(MAKE) rinstaller
 	$(MAKE) crandir
+	@$(RM) -f $(RHOME)/SVN-REVISION.bak
 
 
 ## ============= End of maintainer targets ========================

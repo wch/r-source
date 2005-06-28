@@ -50,15 +50,6 @@
 #define GN_(String) String
 #endif
 
-Rboolean 
-PSDeviceDriver(NewDevDesc*, char*, char*, char*, char**,
-	       char*, char*, char*, double, double, Rboolean, double, 
-	       Rboolean, Rboolean, Rboolean, char*, char*, SEXP);
-
-Rboolean
-PDFDeviceDriver(NewDevDesc* dd, char *, char *, char *, 
-		char *, char *, double, double, double,
-		int, char*, SEXP, int, int);
 static
 Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
 			double height, double pointsize,
@@ -121,7 +112,7 @@ static drawing _d;
         /********************************************************/
 	/* Each driver can have its own device-specic graphical */
 	/* parameters and resources.  these should be wrapped	*/
-	/* in a structure (like the gadesc structure below)    */
+	/* in a structure (gadesc in devWindows.h)              */
 	/* and attached to the overall device description via 	*/
 	/* the dd->deviceSpecific pointer			*/
 	/* NOTE that there are generic graphical parameters	*/
@@ -401,13 +392,13 @@ static void SaveAsPDF(NewDevDesc *dd, char *fn)
 	    }
 	}
     }
-    if (PDFDeviceDriver(ndd, fn, family, encoding, bg, fg,
+    if (PDFDeviceDriver(ndd, fn, "special", family, encoding, bg, fg,
 			fromDeviceWidth(toDeviceWidth(1.0, GE_NDC, gdd),
 					GE_INCHES, gdd),
 			fromDeviceHeight(toDeviceHeight(-1.0, GE_NDC, gdd),
 					 GE_INCHES, gdd),
 			((gadesc*) dd->deviceSpecific)->basefontsize,
-			1, "R Graphics Output", R_NilValue, 1, 4))
+			1, 0, "R Graphics Output", R_NilValue, 1, 4))
 	PrivateCopyDevice(dd, ndd, "PDF");
 }
 
@@ -519,7 +510,7 @@ static int SetBaseFont(gadesc *xd)
     xd->usefixed = FALSE;
     xd->fontfamily[0] = '\0';
     xd->font = gnewfont(xd->gawin, fontname[0], fontstyle[0],
-			MulDiv(xd->fontsize, xd->wanteddpi, xd->truedpi), 0.0);
+			xd->fontsize, 0.0);
     if (!xd->font) {
 	xd->usefixed= TRUE;
 	xd->font = xd->fixedfont = FixedFont;
@@ -599,7 +590,6 @@ static void SetFont(char *family, int face, int size, double rot,
 	face = 1;
     if (size < SMALLEST) size = SMALLEST;
     if (size > LARGEST) size = LARGEST;
-    size = MulDiv(size, xd->wanteddpi, xd->truedpi);
     if (!xd->usefixed &&
 	(size != xd->fontsize || face != xd->fontface ||
 	 rot != xd->fontangle || strcmp(family, xd->fontfamily))) {
@@ -681,6 +671,7 @@ static void SetColor(int color, double gamma, NewDevDesc *dd)
  *	dots which are more widely spaced.  Previously, such a line
  *	would have "dots" which were wide, but not long, nor widely
  *	spaced.
+ *      In this driver, done in graphapp/gdraw.c
  */
 
 static void SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
@@ -688,7 +679,11 @@ static void SetLineStyle(R_GE_gcontext *gc, NewDevDesc *dd)
     gadesc *xd = (gadesc *) dd->deviceSpecific;
 
     xd->lty = gc->lty;
-    xd->lwd = gc->lwd < 1 ? 1 : gc->lwd;
+    if(xd->lwdscale != 1.0)
+	/* will round to nearest integer */
+	xd->lwd = xd->lwdscale * gc->lwd + 0.5;
+    else xd->lwd = gc->lwd;
+    if(xd->lwd < 1) xd->lwd = 1;
     switch (gc->lend) {
     case GE_ROUND_CAP:
 	xd->lend = PS_ENDCAP_ROUND;
@@ -1284,7 +1279,7 @@ static void CHelpKeyIn(control w, int key)
     }
 }
 
-extern Rboolean UserBreak;
+__declspec(dllimport) extern int UserBreak;
 
 static void NHelpKeyIn(control w, int key)
 {
@@ -1673,7 +1668,9 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
     xd->bgcolor = xd->canvascolor = GArgb(canvascolor, gamma);
     xd->outcolor = myGetSysColor(COLOR_APPWORKSPACE);
     xd->rescale_factor = 1.0;
-    xd->fast = 1;  /* Use 'cosmetic pens' if available */
+    xd->fast = 1;  /* Use 'cosmetic pens' if available.
+		      Overridden for printers and metafiles.
+		    */
     xd->xshift = xd->yshift = 0;
     xd->npage = 0;
     if (!dsp[0]) {
@@ -1681,6 +1678,7 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	    return FALSE;
     } else if (!strncmp(dsp, "win.print:", 10)) {
 	xd->kind = PRINTER;
+	xd->fast = 0; /* use scalable line widths */
 	xd->gawin = newprinter(MM_PER_INCH * w, MM_PER_INCH * h, &dsp[10]);
 	if (!xd->gawin)
 	    return FALSE;
@@ -1778,6 +1776,8 @@ static Rboolean GA_Open(NewDevDesc *dd, gadesc *xd, char *dsp,
 	if (xd->kind == SCREEN) del(xd->bm);
 	return FALSE;
     }
+    xd->lwdscale = xd->truedpi/96.0; /* matches ps/pdf */
+    if(xd->lwdscale < 1.0) xd->lwdscale = 1.0; /* at least one pixel */
     rr = getrect(xd->gawin);
     xd->origWidth = xd->showWidth = xd->windowWidth = rr.width;
     xd->origHeight = xd->showHeight = xd->windowHeight = rr.height;
@@ -1883,16 +1883,10 @@ static void GA_Size(double *left, double *right,
 		     double *bottom, double *top,
 		     NewDevDesc *dd)
 {
-    gadesc *xd = (gadesc *) dd->deviceSpecific;
-
-    int   iw, ih;
-
-    iw = xd->windowWidth;
-    ih = xd->windowHeight;
-    *left = 0.0;
-    *top = 0.0;
-    *right = iw;
-    *bottom = ih;
+    *left = dd->left;
+    *top = dd->top;
+    *right = dd->right;
+    *bottom = dd->bottom;
 }
 
 static void GA_Resize(NewDevDesc *dd)
@@ -2003,6 +1997,8 @@ static void GA_NewPage(R_GE_gcontext *gc,
 	    del(xd->gawin);
 	    snprintf(buf, 600, xd->filename, xd->npage);
 	    xd->gawin = newmetafile(buf, xd->w, xd->h);
+	    if(!xd->gawin)
+		error(_("metafile '%s' could not be created"), buf);
 	}
     }
     if ((xd->kind == PNG || xd->kind == JPEG || xd->kind == BMP)
@@ -2084,7 +2080,7 @@ static void GA_Close(NewDevDesc *dd)
 	deleteGraphMenus(devNumber((DevDesc*) dd) + 1);
     } else if ((xd->kind == PNG) || (xd->kind == JPEG) || (xd->kind == BMP)) {
       SaveAsBitmap(dd, xd->res_dpi);
-    }
+    } 
     del(xd->font);
     del(xd->gawin);
 /*
@@ -2402,9 +2398,29 @@ static void GA_Text(double x, double y, char *str,
 	/* not all devices will do anything (e.g., postscript)	*/
 	/********************************************************/
 
+static void donelocator(void *data)
+{
+    gadesc *xd;
+    xd = (gadesc *)data;
+    addto(xd->gawin);
+    gchangemenubar(xd->mbar);
+    if (xd->stoploc) {
+      hide(xd->stoploc);
+      show(xd->gawin);
+    }
+    gsetcursor(xd->gawin, ArrowCursor);
+    gchangepopup(xd->gawin, xd->grpopup);
+    addto(xd->gawin);
+    setstatus(_("R Graphics"));
+    xd->locator = FALSE;
+}
+
+static void GA_onExit(NewDevDesc *dd);
+
 static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
 {
     gadesc *xd = (gadesc *) dd->deviceSpecific;
+    RCNTXT cntxt;
 
     if (xd->kind != SCREEN)
 	return FALSE;
@@ -2420,22 +2436,29 @@ static Rboolean GA_Locator(double *x, double *y, NewDevDesc *dd)
     gchangepopup(xd->gawin, xd->locpopup);
     gsetcursor(xd->gawin, CrossCursor);
     setstatus(G_("Locator is active"));
+
+    /* set up a context which will clean up if there's an error */
+    begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+	         R_NilValue, R_NilValue);
+    cntxt.cend = &donelocator;
+    cntxt.cenddata = xd;
+    xd->cntxt = &cntxt;
+    
+    /* and an exit handler in case the window gets closed */
+    dd->onExit = GA_onExit;
+    
     while (!xd->clicked) {
 	if(xd->buffered) SHOW;
         WaitMessage();
 	R_ProcessEvents();
     }
-    addto(xd->gawin);
-    gchangemenubar(xd->mbar);
-    if (xd->stoploc) {
-      hide(xd->stoploc);
-      show(xd->gawin);
-    }
-    gsetcursor(xd->gawin, ArrowCursor);
-    gchangepopup(xd->gawin, xd->grpopup);
-    addto(xd->gawin);
-    setstatus(_("R Graphics"));
-    xd->locator = FALSE;
+    
+    dd->onExit = NULL;
+    xd->cntxt = NULL;
+    
+    endcontext(&cntxt);
+    donelocator((void *)xd);
+    
     if (xd->clicked == 1) {
 	*x = xd->px;
 	*y = xd->py;
@@ -2565,6 +2588,7 @@ Rboolean GADeviceDriver(NewDevDesc *dd, char *display, double width,
     dd->hold = GA_Hold;
     dd->metricInfo = GA_MetricInfo;
     xd->newFrameConfirm = GA_NewFrameConfirm;
+    xd->cntxt = NULL;
 
     /* set graphics parameters that must be set by device driver */
     /* Window Dimensions in Pixels */
@@ -2961,6 +2985,9 @@ static void GA_onExit(NewDevDesc *dd)
     xd->confirmation = FALSE;
     dd->gettingEvent = FALSE;
     xd->eventRho = NULL;
+    
+    if (xd->cntxt) endcontext(xd->cntxt);
+    if (xd->locator) donelocator((void *)xd);
     
     addto(xd->gawin);
     gchangemenubar(xd->mbar);

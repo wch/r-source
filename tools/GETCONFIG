@@ -3,10 +3,10 @@
 # ${RHOME}/tools/GETCONFIG
 
 echo "/* Rconfig.h.  Generated automatically */"
-echo "#ifndef R_CONFIG_H"
-echo "#define R_CONFIG_H"
+echo "#ifndef R_RCONFIG_H"
+echo "#define R_RCONFIG_H"
 echo
-echo "#ifndef _CONFIG_H"
+echo "#ifndef R_CONFIG_H"
 echo
 line=`grep "HAVE_F77_UNDERSCORE" config.h`
 echo "${line}"
@@ -26,6 +26,6 @@ echo "${line}"
 line=`grep "ENABLE_NLS" config.h`
 echo "${line}"
 echo
-echo "#endif /* not _CONFIG_H */"
-echo
 echo "#endif /* not R_CONFIG_H */"
+echo
+echo "#endif /* not R_RCONFIG_H */"

@@ -22,10 +22,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: R 2.1.0\n"
+"Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-11 08:07\n"
-"PO-Revision-Date: 2005-03-11 08:07\n"
+"POT-Creation-Date: 2005-06-14 08:41\n"
+"PO-Revision-Date: 2005-06-14 08:41\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -55,8 +55,29 @@ msgstr "The results page should open in your browser shortly"
 msgid "reference to unknown chunk %s"
 msgstr "reference to unknown chunk %s"
 
+msgid "no Sweave file with name '%s' found"
+msgstr "no Sweave file with name ‘%s’ found"
+
+msgid "%s Sweave files for basename '%s' found:"
+msgstr "%s Sweave files for basename ‘%s’ found:"
+
+msgid "Found invalid multi-byte character data."
+msgstr "Found invalid multi-byte character data."
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr "Cannot re-encode because iconv is not available."
+
+msgid "Try running R in a single-byte locale."
+msgstr "Try running R in a single-byte locale."
+
+msgid "more than one syntax specification found, using the first one"
+msgstr "more than one syntax specification found, using the first one"
+
 msgid "object '%s' does not have class \"SweaveSyntax\""
 msgstr "object ‘%s’ does not have class “SweaveSyntax”"
+
+msgid "recursive Sweave input '%s' in stack"
+msgstr "recursive Sweave input ‘%s’ in stack"
 
 msgid "target syntax not of class \"SweaveSyntax\""
 msgstr "target syntax not of class “SweaveSyntax”"
@@ -297,6 +318,9 @@ msgstr "could not find package ‘%s’"
 msgid "no Rd contents for package '%s' in '%s'"
 msgstr "no Rd contents for package ‘%s’ in ‘%s’"
 
+msgid "removing all entries with invalid multi-byte character data"
+msgstr "removing all entries with invalid multi-byte character data"
+
 msgid "incorrect 'agrep' specification"
 msgstr "incorrect ‘agrep’ specification"
 
@@ -305,6 +329,10 @@ msgstr "‘iconvlist’ is not available on this system"
 
 msgid "no package '%s' was found"
 msgstr "no package ‘%s’ was found"
+
+msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
+msgstr ""
+"‘DESCRIPTION’ file has ‘Encoding’ field and re-encoding is not possible"
 
 msgid "DESCRIPTION file of package '%d' is missing or broken"
 msgstr "DESCRIPTION file of package ‘%d’ is missing or broken"
@@ -459,6 +487,41 @@ msgstr "Created file named '%s'."
 msgid "Edit the file and move it to the appropriate directory."
 msgstr "Edit the file and move it to the appropriate directory."
 
+msgid "Maintainer:"
+msgstr "Maintainer:"
+
+msgid "Index:"
+msgstr "Index:"
+
+msgid "Further information is available in the following vignettes:"
+msgstr "Further information is available in the following vignettes:"
+
+msgid "package title"
+msgstr "package title"
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr "A concise (1-5 lines) description of the package"
+
+msgid ""
+"An overview of how to use the package, including the most important functions"
+msgstr ""
+"An overview of how to use the package, including the most important functions"
+
+msgid "The author and/or maintainer of the package"
+msgstr "The author and/or maintainer of the package"
+
+msgid "Literature or other references for background information"
+msgstr "Literature or other references for background information"
+
+msgid "Optional links to other man pages, e.g."
+msgstr "Optional links to other man pages, e.g."
+
+msgid "simple examples of the most important functions"
+msgstr "simple examples of the most important functions"
+
+msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+msgstr "Optionally other keywords from doc/KEYWORDS, one per line"
+
 msgid ""
 "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
@@ -541,6 +604,9 @@ msgstr "select.list() cannot be used non-interactively"
 msgid "Enter zero or more numbers separated by space"
 msgstr "Enter zero or more numbers separated by space"
 
+msgid "Invalid input, please try again"
+msgstr "Invalid input, please try again"
+
 msgid "'subject' missing"
 msgstr "‘subject’ missing"
 
@@ -600,8 +666,8 @@ msgstr "fixing URLs in non-standard libraries"
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr "If nothing happens, you should open ‘%s’ yourself"
 
-msgid "unable to create temp directory '%s'"
-msgstr "unable to create temp directory ‘%s’"
+msgid "unable to create temporary directory '%s'"
+msgstr "unable to create temporary directory ‘%s’"
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
 msgstr "package ‘%s’ successfully unpacked and MD5 sums checked"
@@ -615,8 +681,8 @@ msgstr "bundle ‘%s’ successfully unpacked and MD5 sums checked"
 msgid "failed to create '%s'"
 msgstr "failed to create ‘%s’"
 
-msgid "unable to move temp installation '%d' to '%s'"
-msgstr "unable to move temp installation ‘%d’ to ‘%s’"
+msgid "unable to move temporary installation '%s' to '%s'"
+msgstr "unable to move temporary installation ‘%s’ to ‘%s’"
 
 msgid "cannot remove prior installation of package '%s'"
 msgstr "cannot remove prior installation of package ‘%s’"
@@ -650,6 +716,9 @@ msgstr "Download of package ‘%s’ failed"
 
 msgid "cannot remove prior installation of package"
 msgstr "cannot remove prior installation of package"
+
+msgid "'tar' returned non-zero exit code %d"
+msgstr "‘tar’ returned non-zero exit code %d"
 
 msgid "object %s not found"
 msgid_plural "objects %s not found"

@@ -8,7 +8,7 @@ srcdir = .
 test-src = $(test-src-1) $(test-src-auto)
 test-out = $(test-src:.R=.Rout)
 
-R = srcdir=$(srcdir) $(R_HOME)/bin/R --vanilla
+R = srcdir=$(srcdir) LANGUAGE=C $(R_HOME)/bin/R --vanilla
 RDIFF = $(R_HOME)/bin/R CMD Rdiff
 USE_GCT = 0
 R_OPTS =
@@ -37,7 +37,7 @@ R_OPTS =
 all:
 	@(out=`echo "$(test-out)" | sed 's/ $$//g'`; \
 	  if test -n "$${out}"; then \
-	    $(MAKE) -f $(R_HOME)/share/make/tests.mk $(makevars) $${out}; \
+	    $(MAKE) -f $(R_SHARE_DIR)/make/tests.mk $(makevars) $${out}; \
 	  fi)
 
 clean:

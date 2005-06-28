@@ -52,3 +52,4 @@ SEXP RTcl_ObjFromIntVector(SEXP args);
 SEXP RTcl_GetArrayElem(SEXP args);
 SEXP RTcl_SetArrayElem(SEXP args);
 SEXP RTcl_RemoveArrayElem(SEXP args);
+SEXP RTcl_ServiceMode(SEXP args);

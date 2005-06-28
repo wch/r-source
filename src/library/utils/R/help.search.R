@@ -196,8 +196,9 @@ function(pattern, fields = c("alias", "concept", "title"),
         if(verbose)
 	    cat(ifelse(np %% 5 == 0, "\n", "\n\n"))
 
-        ## Create the global base, aliases and keywords tables via calls
-        ## to rbind() on the columns of the matrix used for aggregating.
+        ## Create the global base, aliases, keywords and concepts tables
+        ## via calls to rbind() on the columns of the matrix used for
+        ## aggregating.
         db <- list(Base = do.call("rbind", dbMat[, 1]),
                    Aliases = do.call("rbind", dbMat[, 2]),
                    Keywords = do.call("rbind", dbMat[, 3]),
@@ -217,7 +218,8 @@ function(pattern, fields = c("alias", "concept", "title"),
                       sep = "/")
         }
         ## And maybe re-encode ...
-        if(!identical(Sys.getlocale("LC_CTYPE"), "C")) {
+        if(!identical(Sys.getlocale("LC_CTYPE"), "C")
+           && capabilities("iconv")) {
             encoding <- db$Base[, "Encoding"]
             IDs_to_iconv <- db$Base[encoding != "", "ID"]
             encoding <- encoding[encoding != ""]
@@ -225,10 +227,24 @@ function(pattern, fields = c("alias", "concept", "title"),
             ## over groups of identical encodings.
             for(enc in unique(encoding)) {
                 IDs <- IDs_to_iconv[encoding == enc]
-                for(i in seq(along = hDB)) {
+                for(i in seq(along = db)) {
                     ind <- db[[i]][, "ID"] %in% IDs
                     db[[i]][ind, ] <- iconv(db[[i]][ind, ], enc, "")
                 }
+            }
+        }
+        ## Let us be defensive about invalid multi-byte character data
+        ## here.  We simple remove all Rd objects with at least one
+        ## invalid entry, and warn in case we found one.
+        bad_IDs <-
+            unlist(sapply(db,
+                          function(u)
+                          u[rowSums(is.na(nchar(u, "c"))) > 0, "ID"]))
+        if(length(bad_IDs)) {
+            warning("removing all entries with invalid multi-byte character data")
+            for(i in seq(along = db)) {
+                ind <- db[[i]][, "ID"] %in% bad_IDs
+                db[[i]] <- db[[i]][!ind, ]
             }
         }
 

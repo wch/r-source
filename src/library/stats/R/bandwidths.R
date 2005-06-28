@@ -37,7 +37,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
            x,
            as.double(h),
            u = double(1),
-           PACKAGE="base")$u
+           PACKAGE="stats")$u
     TDh <- function(x, h, n, d)
         .C("band_phi6_bin",
            as.integer(n),
@@ -46,7 +46,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
            x,
            as.double(h),
            u = double(1),
-           PACKAGE="base")$u
+           PACKAGE="stats")$u
 
     Z <- .C("band_den_bin",
             as.integer(n),
@@ -54,7 +54,7 @@ bw.SJ <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax,
             d = double(1),
             x,
             cnt = integer(nb),
-            PACKAGE="base")
+            PACKAGE="stats")
     d <- Z$d; cnt <- as.integer(Z$cnt)
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     scale <- min(sqrt(var(x)), IQR(x)/1.349)
@@ -93,7 +93,7 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
            x,
            as.double(h),
            u = double(1),
-           PACKAGE="base")$u
+           PACKAGE="stats")$u
 
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
@@ -103,8 +103,7 @@ bw.ucv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
             d = double(1),
             x,
             cnt = integer(nb),
-            PACKAGE="base"
-            )
+            PACKAGE="stats")
     d <- Z$d; cnt <- as.integer(Z$cnt)
     h <- optimize(fucv, c(lower, upper), tol=0.1*lower,
                   x=cnt, n=n, d=d)$minimum
@@ -126,7 +125,7 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
            x,
            as.double(h),
            u = double(1),
-           PACKAGE="base")$u
+           PACKAGE="stats")$u
 
     hmax <- 1.144 * sqrt(var(x)) * n^(-1/5)
     storage.mode(x) <- "double"
@@ -136,7 +135,7 @@ bw.bcv <- function(x, nb = 1000, lower = 0.1*hmax, upper = hmax)
             d = double(1),
             x,
             cnt = integer(nb),
-            PACKAGE="base"
+            PACKAGE="stats"
             )
     d <- Z$d; cnt <- as.integer(Z$cnt)
     h <- optimize(fbcv, c(lower, upper), tol=0.1*lower,

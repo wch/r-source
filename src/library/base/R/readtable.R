@@ -25,14 +25,14 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          nrows = -1, skip = 0,
          check.names = TRUE, fill = !blank.lines.skip,
          strip.white = FALSE, blank.lines.skip = TRUE,
-         comment.char = "#")
+         comment.char = "#", allowEscapes = TRUE)
 {
     if(is.character(file)) {
         file <- file(file, "r")
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))
-        stop("file' must be a character string or connection")
+        stop("'file' must be a character string or connection")
     if(!isOpen(file)) {
         open(file, "r")
         on.exit(close(file))
@@ -40,10 +40,10 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 
     if(skip > 0) readLines(file, skip)
     ## read a few lines to determine header, no of cols.
-    nlines <- if (nrows < 0) 5 else min(5, (header + nrows))
+    nlines <- n0lines <- if (nrows < 0) 5 else min(5, (header + nrows))
 
     lines <- .Internal(readTableHead(file, nlines, comment.char,
-                                     blank.lines.skip, quote))
+                                     blank.lines.skip, quote, sep))
     nlines <- length(lines)
     if(!nlines) {
         if(missing(col.names))
@@ -56,12 +56,16 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
         }
     }
     if(all(nchar(lines) == 0)) stop("empty beginning of file")
-    pushBack(c(lines, lines), file)
+    if(nlines < n0lines && file == 0)  {# stdin() has reached EOF
+        pushBack(c(lines, lines, ""), file)
+        on.exit(.Internal(clearPushback(stdin())))
+    } else
+        pushBack(c(lines, lines), file)
     first <- scan(file, what = "", sep = sep, quote = quote,
                   nlines = 1, quiet = TRUE, skip = 0,
                   strip.white = TRUE,
                   blank.lines.skip = blank.lines.skip,
-                  comment.char = comment.char)
+                  comment.char = comment.char, allowEscapes = allowEscapes)
     col1 <- if(missing(col.names)) length(first) else length(col.names)
     col <- numeric(nlines - 1)
     if (nlines > 1)
@@ -71,7 +75,8 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
                                   nlines = 1, quiet = TRUE, skip = 0,
                                   strip.white = strip.white,
                                   blank.lines.skip = blank.lines.skip,
-                                  comment.char = comment.char))
+                                  comment.char = comment.char,
+                                  allowEscapes = allowEscapes))
     cols <- max(col1, col)
 
     ##	basic column counting and header determination;
@@ -135,7 +140,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
 		 na.strings = na.strings, quiet = TRUE, fill = fill,
                  strip.white = strip.white,
                  blank.lines.skip = blank.lines.skip, multi.line = FALSE,
-                 comment.char = comment.char)
+                 comment.char = comment.char, allowEscapes = allowEscapes)
 
     nlines <- length(data[[ which(keep)[1] ]])
 

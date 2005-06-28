@@ -18,10 +18,12 @@ grep(pattern, x, ignore.case = FALSE, extended = TRUE, perl = FALSE,
      value = FALSE, fixed = FALSE, useBytes = FALSE)
 
 sub(pattern, replacement, x,
-    ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
+    ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE,
+    useBytes = FALSE)
 
 gsub(pattern, replacement, x,
-     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE)
+     ignore.case = FALSE, extended = TRUE, perl = FALSE, fixed = FALSE,
+     useBytes = FALSE)
 
 regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
         useBytes = FALSE)
@@ -29,8 +31,9 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
 \arguments{
   \item{pattern}{character string containing a \link{regular expression}
     (or character string for \code{fixed = TRUE}) to be matched
-    in the given character vector.}
-  \item{x, text}{a character vector where matches are sought.}
+    in the given character vector.  Coerced to character if possible.}
+  \item{x, text}{a character vector where matches are sought.
+    Coerced to character if possible.}
   \item{ignore.case}{if \code{FALSE}, the pattern matching is \emph{case
       sensitive} and if \code{TRUE}, case is ignored during matching.}
   \item{extended}{if \code{TRUE}, extended regular expression matching
@@ -42,11 +45,16 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
     \code{TRUE}, a vector containing the matching elements themselves is
     returned.}
   \item{fixed}{logical.  If \code{TRUE}, \code{pattern} is a string to be
-    matched as is.  Overrides all other arguments.}
+    matched as is.  Overrides all conflicting arguments.}
   \item{useBytes}{logical.  If \code{TRUE} the matching is done
     byte-by-byte rather than character-by-character.  See Details.}
   \item{replacement}{a replacement for matched pattern in \code{sub} and
-    \code{gsub}.}
+    \code{gsub}.  Coerced to character if possible.  This can include
+    backreferences \code{"\\1"} to \code{"\\9"} to parenthesized
+    subexpressions of \code{pattern}.  For \code{perl = TRUE} only, it
+    can also contain \code{"\\U"} or \code{"\\L"} to convert the rest of
+    the replacement to upper or lower case.
+  }
 }
 \details{
   Arguments which should be character strings or character vectors are
@@ -97,7 +105,12 @@ regexpr(pattern, text, extended = TRUE, perl = FALSE, fixed = FALSE,
   The standard regular-expression code has been reported to be very slow
   when applied to extremely long character strings
   (tens of thousands of characters or more): the code used when
-  \code{perl = TRUE} seems much faster and more reliable for such usages.
+  \code{perl = TRUE} seems much faster and more reliable for such
+  usages.
+
+  The standard version of \code{gsub} does not substitute correctly
+  repeated word-boundaries (e.g. \code{pattern = "\\b"}).
+  Use \code{perl = TRUE} for such matches.
 
   The \code{perl = TRUE} option is only implemented for single-byte and
   UTF-8 encodings, and will warn if used in a non-UTF-8 multi-byte
@@ -159,6 +172,10 @@ str = 'Now is the time      '
 sub(' +$', '', str)  ## spaces only
 sub('[[:space:]]+$', '', str) ## white space, POSIX-style
 sub('\\\\s+$', '', str, perl = TRUE) ## Perl-style white space
+
+## capitalizing
+gsub("(\\\\w)(\\\\w*)", "\\\\U\\\\1\\\\L\\\\2", "a test of capitalizing", perl=TRUE)
+gsub("\\\\b(\\\\w)", "\\\\U\\\\1", "a test of capitalizing", perl=TRUE)
 }
 \keyword{character}
 \keyword{utilities}

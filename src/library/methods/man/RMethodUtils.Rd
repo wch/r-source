@@ -141,20 +141,22 @@ addNextMethod(method, f, mlist, optional, envir)
       actual generic functions.
 
       Note that members that are not defined as generic functions will
-    \emph{not} be included in the returned value.  To see the raw data,
-    use \code{getGeneric(group)@groupMembers}.
+      \emph{not} be included in the returned value.  To see the raw data,
+      use \code{getGeneric(group)@groupMembers}.
     }
 
     \item{\code{getMethodsMetaData},
       \code{assignMethodsMetaData},
-      \code{mlistMetaName}:}{
-      Utilities to get (\code{getMethodsMetaData}) and assign  (\code{assignMethodsMetaData}) the metadata object recording the
-      methods defined in a particular package, or to return the
-      mangled name for that object  (\code{mlistMetaName}).
+      \code{mlistMetaName}:}{Utilities to get
+      (\code{getMethodsMetaData}) and assign
+      (\code{assignMethodsMetaData}) the metadata object recording the
+      methods defined in a particular package, or to return the mangled
+      name for that object  (\code{mlistMetaName}).
 
       The assign function should not be used directly.  The get
-    function may be useful if you want explicitly only the outcome of
-    the methods assigned in this package.  Otherwise, use \code{\link{getMethods}}.
+      function may be useful if you want explicitly only the outcome of
+      the methods assigned in this package.  Otherwise, use
+      \code{\link{getMethods}}.
     }
 
     \item{\code{matchSignature}:}{
@@ -362,5 +364,15 @@ addNextMethod(method, f, mlist, optional, envir)
     }
 
   }
+}
+\seealso{\code{\link{setGeneric}}, \code{\link{setClass}},
+  \code{\link{showMethods}}.
+}
+\examples{
+getGroup("exp")
+getGroup("==", recursive = TRUE)
+
+getGroupMembers("Arith")
+getGroupMembers("Math")
 }
 \keyword{internal}

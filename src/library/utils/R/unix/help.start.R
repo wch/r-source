@@ -16,7 +16,7 @@ help.start <- function (gui = "irrelevant", browser = getOption("browser"),
     .Script("sh", "help-links.sh",
             paste(tempdir(), paste(.libPaths(), collapse = " ")))
     make.packages.html()
-    tmpdir <- paste("file://", tempdir(), "/.R", sep = "")
+    tmpdir <- paste("file://", URLencode(tempdir()), "/.R", sep = "")
     url <- paste(if (is.null(remote)) tmpdir else remote,
 		 "/doc/html/index.html", sep = "")
     writeLines(strwrap(gettextf("If '%s' is already running, it is *not* restarted, and you must switch to its window.",
@@ -77,12 +77,21 @@ make.packages.html <- function(lib.loc=.libPaths())
         warning("cannot create HTML search index")
         return(FALSE)
     }
-    file.append(f.tg, file.path(R.home(), "doc/html/packages-head.html"))
+    ## First we need to fathom out what encoding to use.
+    ## For now we assume that if we have iconv then UTF-8 is OK.
+    useUTF8 <- capabilities("iconv")
+    if(useUTF8)
+        file.append(f.tg, file.path(R.home("doc"), "html",
+                                    "packages-head-utf8.html"))
+    else
+        file.append(f.tg, file.path(R.home("doc"), "html",
+                                    "packages-head.html"))
     out <- file(f.tg, open="a")
     search <- file(searchindex, open="w")
     known <- character(0)
     for (lib in lib.loc) {
-        cat("<p><h3>Packages in ", lib, '</h3>\n<p><table width="100%">\n',
+        cat("<p><h3>Packages in ", lib,
+            '</h3>\n<p><table width="100%" summary="R Package list">\n',
             sep = "", file=out)
         pg <- sort(.packages(all.available = TRUE, lib.loc = lib))
         for (i in pg) {
@@ -92,7 +101,8 @@ make.packages.html <- function(lib.loc=.libPaths())
             from <- file.path(lib, i)
             to <- file.path(tempdir(), ".R", "library", link)
             file.symlink(from, to)
-            title <- packageDescription(i, lib.loc = lib, field="Title")
+            title <- packageDescription(i, lib.loc = lib, field = "Title",
+                                        encoding = ifelse(useUTF8,"UTF-8",""))
             if (is.na(title)) title <- "-- Title is missing --"
             cat('<tr align="left" valign="top">\n',
                 '<td width="25%"><a href="../../library/', link,
@@ -101,10 +111,13 @@ make.packages.html <- function(lib.loc=.libPaths())
             contentsfile <- file.path(from, "CONTENTS")
             if(!file.exists(contentsfile)) next
             contents <- readLines(contentsfile)
-            contents <- gsub(paste("/library/", i, sep = ""),
-                             paste("/library/", link, sep = ""),
-                             contents)
-            writeLines(contents, search)
+            isURL <- grep("URL:", contents, fixed = TRUE, useBytes = TRUE)
+            if(length(isURL) && link != i)
+                contents[isURL] <-
+                    gsub(paste("/library/", i, sep = ""),
+                         paste("/library/", link, sep = ""),
+                         contents[isURL], fixed = TRUE, useBytes = TRUE)
+            writeLines(c(contents, ""), search)  # space between packages
         }
         cat("</table>\n\n", file=out)
         known <- c(known, pg)

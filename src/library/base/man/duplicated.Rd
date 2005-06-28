@@ -41,8 +41,8 @@ duplicated(x, incomparables = FALSE, \dots)
 }
 \section{Warning}{
   Using this for lists is potentially slow, especially if the elements
-  are not atomic vectors or differ only in their attributes.
-  In the worst case it is \eqn{O(n^2)}.
+  are not atomic vectors (see \code{\link{vector}}) or differ only
+  in their attributes.  In the worst case it is \eqn{O(n^2)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

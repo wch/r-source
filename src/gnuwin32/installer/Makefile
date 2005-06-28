@@ -11,9 +11,9 @@ FULLVERSION=`cat ../../../VERSION`
 RPREFIX = $(shell perl ../fixed/rwver.pl $(R_HOME)/VERSION)
 LIBFILES = $(foreach i, $(R_PKGS_BASE) $(R_PKGS_RECOMMENDED) $(EXTRA_PKGS), $(R_HOME)/library/$i) $(R_HOME)/library/R.css
 
-INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ NEWS ONEWS README RESOURCES \
+INFO_FILES = AUTHORS COPYING COPYING.LIB FAQ NEWS README RESOURCES \
 	THANKS Y2K
-GW_INFO_FILES = CHANGES CHANGES1 COPYRIGHTS README.Rterm rw-FAQ
+GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 
 ETC_FILES = Rprofile Rconsole Rdevga rgb.txt repositories
 
@@ -23,14 +23,16 @@ GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf
 
-all: $(RPREFIX).exe # miniR.exe
+all: $(RPREFIX).exe
 
 imagedir:
 	$(RM) -r $(RPREFIX)
 	$(MKDIR) $(RPREFIX)
 	$(CP) -pr $(R_HOME)/bin $(R_HOME)/modules $(RPREFIX)
+ifneq ($(strip $(BUILD)),CROSS)
 	mv $(RPREFIX)/bin/R.dll $(RPREFIX)/bin/Rmbcs.dll 
-	mv $(RPREFIX)/bin/Rnombcs.dll $(RPREFIX)/bin/R.dll 
+	mv $(RPREFIX)/bin/Rnombcs.dll $(RPREFIX)/bin/R.dll
+endif
 # copy base and recommended packages
 	$(MKDIR) -p $(RPREFIX)/library
 	$(CP) -pr $(LIBFILES) $(RPREFIX)/library
@@ -99,19 +101,17 @@ fixups:
 	echo "make.packages.html(.Library)" | $(RPREFIX)/bin/rterm --vanilla --slave LC_COLLATE=C
 	$(CP) -pr $(R_HOME)/Tcl $(RPREFIX)
 
-R.iss Rsmall.iss: JRins.pl imagedir fixups md5sums
+R.iss: JRins.pl imagedir fixups md5sums
 	perl JRins.pl $(RPREFIX) $(RPREFIX)
 
 $(RPREFIX).exe: R.iss
-	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log
-miniR.exe: Rsmall.iss
-	"$(ISDIR)/iscc" Rsmall.iss > miniR.log
+	"$(ISDIR)/iscc" R.iss > $(RPREFIX).log 2>&1
 
 clean:
-	rm -rf R.iss Rsmall.iss *.log $(RPREFIX) 
+	rm -rf R.iss *.log $(RPREFIX) 
 
 distclean: clean
-	rm -f $(RPREFIX).exe miniR*
+	rm -f $(RPREFIX)-win32.exe
 
 myR:
 	$(CAT) $(IMAGEDIR)/library/*/CONTENTS >  \

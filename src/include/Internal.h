@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -24,6 +24,9 @@
  * Must all return SEXP because of CCODE in Defn.h.
  * The do_math.(), etc are in ../main/arithmetic.h
  */
+
+#ifndef R_INTERNAL_H
+#define R_INTERNAL_H
 
 
 /* Device drivers here (for ease of access) */
@@ -247,6 +250,7 @@ SEXP do_image(SEXP, SEXP, SEXP, SEXP);
 SEXP do_indexsearch(SEXP, SEXP, SEXP, SEXP);
 SEXP do_inherits(SEXP, SEXP, SEXP, SEXP);
 SEXP do_int_unzip(SEXP, SEXP, SEXP, SEXP);
+SEXP do_intToUtf8(SEXP, SEXP, SEXP, SEXP);
 SEXP do_interactive(SEXP, SEXP, SEXP, SEXP);
 SEXP do_internal(SEXP, SEXP, SEXP, SEXP);
 SEXP do_intToBits(SEXP, SEXP, SEXP, SEXP);
@@ -467,6 +471,7 @@ SEXP do_unlist(SEXP, SEXP, SEXP, SEXP);
 SEXP do_unserializeFromConn(SEXP, SEXP, SEXP, SEXP);
 SEXP do_updateform(SEXP, SEXP, SEXP, SEXP);
 SEXP do_usemethod(SEXP, SEXP, SEXP, SEXP);
+SEXP do_utf8ToInt(SEXP, SEXP, SEXP, SEXP);
 SEXP do_version(SEXP, SEXP, SEXP, SEXP);
 SEXP do_warning(SEXP, SEXP, SEXP, SEXP);
 SEXP do_while(SEXP, SEXP, SEXP, SEXP);
@@ -519,6 +524,7 @@ SEXP do_seek(SEXP, SEXP, SEXP, SEXP);
 SEXP do_truncate(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pushback(SEXP, SEXP, SEXP, SEXP);
 SEXP do_pushbacklength(SEXP, SEXP, SEXP, SEXP);
+SEXP do_clearpushback(SEXP, SEXP, SEXP, SEXP);
 SEXP do_textconnection(SEXP, SEXP, SEXP, SEXP);
 SEXP do_getallconnections(SEXP, SEXP, SEXP, SEXP);
 SEXP do_sumconnection(SEXP, SEXP, SEXP, SEXP);
@@ -541,3 +547,6 @@ SEXP do_unregNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getRegNS(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_getNSRegistry(SEXP call, SEXP op, SEXP args, SEXP rho);
 SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho);
+
+
+#endif /* not R_INTERNAL_H */

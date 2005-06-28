@@ -443,12 +443,15 @@ static int DeleteDLL(char *path)
 	LoadedDLL[i - 1].path = LoadedDLL[i].path;
 	LoadedDLL[i - 1].name = LoadedDLL[i].name;
 	LoadedDLL[i - 1].handle = LoadedDLL[i].handle;
+	LoadedDLL[i - 1].useDynamicLookup = LoadedDLL[i].useDynamicLookup;
 	LoadedDLL[i - 1].numCSymbols = LoadedDLL[i].numCSymbols;
 	LoadedDLL[i - 1].numCallSymbols = LoadedDLL[i].numCallSymbols;
 	LoadedDLL[i - 1].numFortranSymbols = LoadedDLL[i].numFortranSymbols;
+	LoadedDLL[i - 1].numExternalSymbols = LoadedDLL[i].numExternalSymbols;
 	LoadedDLL[i - 1].CSymbols = LoadedDLL[i].CSymbols;
 	LoadedDLL[i - 1].CallSymbols = LoadedDLL[i].CallSymbols;
 	LoadedDLL[i - 1].FortranSymbols = LoadedDLL[i].FortranSymbols;
+	LoadedDLL[i - 1].ExternalSymbols = LoadedDLL[i].ExternalSymbols;
     }
     CountDLL--;
     return 1;

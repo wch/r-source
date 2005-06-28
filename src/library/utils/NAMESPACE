@@ -1,7 +1,7 @@
 export(.helpForCall, .tryHelp)
 
-export("?", CRAN.packages, Rprof, RSiteSearch, alarm, apropos,
-       assignInNamespace, as.person, as.personList,
+export("?", CRAN.packages, Rprof, RSiteSearch, URLdecode, URLencode,
+       alarm, apropos, assignInNamespace, as.person, as.personList,
        available.packages, browseEnv, browseURL, bug.report,
        capture.output, checkCRAN, chooseCRANmirror, citation,
        citEntry, citHeader, citFooter, close.socket, compareVersion,
@@ -17,7 +17,7 @@ export("?", CRAN.packages, Rprof, RSiteSearch, alarm, apropos,
        new.packages, normalizePath, object.size, old.packages,
        package.contents, package.skeleton, packageDescription,
        packageStatus, page, person, personList, pico, prompt,
-       promptData, readCitationFile, read.fwf, read.fortran,
+       promptData, promptPackage, readCitationFile, read.fwf, read.fortran,
        read.socket, recover, remove.packages, savehistory,
        select.list, sessionInfo, setRepositories, str, summaryRprof,
        tail, topicName, toBibtex, toLatex, update.packageStatus,

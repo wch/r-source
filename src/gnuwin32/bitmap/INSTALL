@@ -4,18 +4,5 @@ IMPORTANT: Tested only with
            jpeg ver. 6b
 ==============================================
 
-1) You need libpng and jpeg sources (available, e.g., from
-   www.libpng.org, ftp.uu.net/graphics/[png,jpeg].
-
-2) Their sources must be unpacked in sub-directories of this dir.
-   The libpng sources must be in sub-dir named 'libpng' (as required 
-   by the libpng documentation).
-   Example:
-   > mv libpng-1.2.8 libpng
-   > tar xzvf jpegsrc.v6b.tar.gz
-   If jpeg version is different from 6b, edit 'Makefile' and change 
-   the definition of JPEGDIR.
-
-3) Then,
-   > make
-   should build  Rbitmap.dll and install it in R_HOME/bin.
+Instructions for building Rbitmap.dll are in the R Installation and
+Administration manual, R-admin.{pdf|html|texi}.

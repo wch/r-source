@@ -1,7 +1,8 @@
 \name{localeconv}
 \alias{localeconv}
 \alias{Sys.localeconv}
-\title{Find Details of the Numerical Representations in the Current Locale}
+\title{Find Details of the Numerical and Monetary Representations
+  in the Current Locale}
 \description{
   Get details of the numerical and monetary representations in the
   current locale.
@@ -20,7 +21,7 @@ Sys.localeconv()
   the current \R session.
 }
 \value{
-  A character vector with 18 named components. See your ISO C
+  A character vector with 18 named components.  See your ISO C
   documentation for details of the meaning.
 
   It is possible to compile \R without support for locales, in which

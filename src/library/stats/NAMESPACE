@@ -5,34 +5,34 @@ export(.checkMFClasses, .getXlevels, .MFclass)
 
 export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        aggregate.default, aggregate.ts, AIC, alias, anova, anova.glm,
-       anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov,
-       approx, approxfun,
-       as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd, bw.nrd0,
-       bw.SJ, bw.ucv, C, case.names, cbind.ts, coef, coefficients,
-       complete.cases, confint, constrOptim, contr.SAS, contr.helmert,
-       contr.poly, contr.sum, contr.treatment, contrasts,
-       "contrasts<-", convolve, cooks.distance, cor, cov, cov.wt,
-       cov2cor, covratio, cycle, D, dbeta, dbinom, dcauchy, dchisq,
-       delete.response, deltat, density, deriv, deriv.default,
-       deriv.formula, deriv3, deriv3.default, deriv3.formula,
-       deviance, dexp, df, df.residual, dfbeta, dfbetas, dffits,
-       dgamma, dgeom, dhyper, diff.ts, dlnorm, dlogis, dmultinom,
-       dnbinom, dnorm, dpois, drop.scope, drop.terms, drop1,
-       dsignrank, dt, dummy.coef, dunif, dweibull, dwilcox,
-       eff.aovlist, effects, end, expand.model.frame, extractAIC,
-       factor.scope, family, fft, fitted, fitted.values, fivenum,
-       formula, frequency, ftable, Gamma, gaussian, glm, glm.control,
-       glm.fit, hasTsp, hat, hatvalues, hatvalues.lm, influence,
-       influence.measures, integrate, interaction.plot,
-       inverse.gaussian, IQR, is.empty.model, is.mts, is.ts, lines.ts,
-       lm, lm.fit, lm.influence, lm.wfit, logLik, loglin, lowess,
-       ls.diag, ls.print, lsfit, mad, mahalanobis, make.link,
-       makepredictcall, manova, median, model.extract, model.frame,
+       anova.glmlist, anova.lm, anova.lmlist, anova.mlm, aov, approx,
+       approxfun, as.formula, as.ts, ave, binomial, bw.bcv, bw.nrd,
+       bw.nrd0, bw.SJ, bw.ucv, C, case.names, cbind.ts, coef,
+       coefficients, complete.cases, confint, confint.default,
+       constrOptim, contr.SAS, contr.helmert, contr.poly, contr.sum,
+       contr.treatment, contrasts, "contrasts<-", convolve,
+       cooks.distance, cor, cov, cov.wt, cov2cor, covratio, cycle, D,
+       dbeta, dbinom, dcauchy, dchisq, delete.response, deltat,
+       density, density.default, deriv, deriv.default, deriv.formula, deriv3,
+       deriv3.default, deriv3.formula, deviance, dexp, df,
+       df.residual, dfbeta, dfbetas, dffits, dgamma, dgeom, dhyper,
+       diff.ts, dlnorm, dlogis, dmultinom, dnbinom, dnorm, dpois,
+       drop.scope, drop.terms, drop1, dsignrank, dt, dummy.coef,
+       dunif, dweibull, dwilcox, eff.aovlist, effects, estVar, end,
+       expand.model.frame, extractAIC, factor.scope, family, fft,
+       fitted, fitted.values, fivenum, formula, frequency, ftable,
+       Gamma, gaussian, glm, glm.control, glm.fit, hasTsp, hat,
+       hatvalues, hatvalues.lm, influence, influence.measures,
+       integrate, interaction.plot, inverse.gaussian, IQR,
+       is.empty.model, is.mts, is.ts, lines.ts, lm, lm.fit,
+       lm.influence, lm.wfit, logLik, loglin, lowess, ls.diag,
+       ls.print, lsfit, mad, mahalanobis, make.link, makepredictcall,
+       manova, mauchley.test, median, model.extract, model.frame,
        model.frame.aovlist, model.frame.default, model.frame.glm,
        model.frame.lm, model.matrix, model.matrix.default,
        model.matrix.lm, model.offset, model.response, model.tables,
        model.weights, mvfft, na.action, na.exclude, na.fail, na.omit,
-       na.pass, napredict, naprint, naresid, nextn, nlm, offset,
+       na.pass, napredict, naprint, naresid, nextn, nlm, nlminb, offset,
        optim, optimise, optimize, p.adjust, p.adjust.methods, pbeta,
        pbinom, pcauchy, pchisq, pexp, pf, pgamma, pgeom, phyper,
        plnorm, plogis, plot.density, plot.lm, plot.mlm, plot.ts,
@@ -53,7 +53,7 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        rmultinom, rnbinom, rnorm, rpois, rsignrank, rstandard,
        rstandard.glm, rstandard.lm, rstudent, rstudent.glm,
        rstudent.lm, rt, runif, rweibull, rwilcox, sd, se.contrast,
-       spline, splinefun, start, stat.anova, step, summary.aov,
+       spline, splinefun, SSD, start, stat.anova, step, summary.aov,
        summary.aovlist, summary.glm, summary.infl, summary.lm,
        summary.manova, summary.mlm, symnum, termplot, terms,
        terms.aovlist, terms.default, terms.formula, terms.terms, time,
@@ -64,7 +64,9 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
 
 
 import(graphics)
-importFrom(grDevices, dev.interactive, palette)
+## 'graphics' imports 'grDevices' completely; hence this is currently a noop:
+importFrom(grDevices, dev.interactive, palette, extendrange, xy.coords)
+
 importFrom(utils, str)
 
 ## register all the methods for generics elsewhere in case namespace is
@@ -90,7 +92,10 @@ S3method(coef, aov)
 S3method(coef, default)
 S3method(coef, listof)
 S3method(coef, summary.nls)
+S3method(confint, default)
+S3method(confint, glm)
 S3method(confint, lm)
+S3method(confint, nls)
 S3method(cooks.distance, glm)
 S3method(cooks.distance, lm)
 S3method(cycle, default)
@@ -112,6 +117,8 @@ S3method(dummy.coef, lm)
 S3method(effects, glm)
 S3method(effects, lm)
 S3method(end, default)
+S3method(estVar, SSD)
+S3method(estVar, mlm)
 S3method(extractAIC, aov)
 S3method(extractAIC, coxph)
 S3method(extractAIC, glm)
@@ -132,12 +139,15 @@ S3method(ftable, default)
 S3method(ftable, formula)
 S3method(influence, glm)
 S3method(influence, lm)
+S3method(labels, dist)
 S3method(labels, lm)
 S3method(labels, terms)
 S3method(logLik, glm)
 S3method(logLik, lm)
 S3method(makepredictcall, default)
 S3method(makepredictcall, poly)
+S3method(mauchley.test, SSD)
+S3method(mauchley.test, mlm)
 S3method(model.tables, aov)
 S3method(model.tables, aovlist)
 S3method(na.action, default)
@@ -213,6 +223,7 @@ S3method(summary, infl)
 S3method(summary, lm)
 S3method(summary, manova)
 S3method(summary, mlm)
+S3method(SSD, mlm)
 S3method(start, default)
 S3method(str, logLik)
 S3method(t, ts)
@@ -226,6 +237,7 @@ S3method(variable.names, lm)
 S3method(vcov, glm)
 S3method(vcov, gls)
 S3method(vcov, lm)
+S3method(vcov, mlm)
 S3method(vcov, lme)
 S3method(weights, default)
 S3method(weights, glm)
@@ -287,6 +299,7 @@ export(isoreg, ksmooth, loess, loess.control, loess.smooth, ppr,
 
 S3method(anova, loess)
 S3method(fitted, isoreg)
+S3method(fitted, smooth.spline)
 S3method(plot, isoreg)
 S3method(plot, ppr)
 S3method(ppr, default)
@@ -302,6 +315,7 @@ S3method(print, smooth.spline)
 S3method(print, summary.loess)
 S3method(print, summary.ppr)
 S3method(residuals, isoreg)
+S3method(residuals, smooth.spline)
 S3method(summary, loess)
 S3method(summary, ppr)
 

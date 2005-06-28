@@ -39,6 +39,5 @@ src/loessf.f
 
   The files are unchanged apart from the insertion of that statement.
 
-
-All other files are copyright the R Core Developement Team and/or B. D. Ripley.
+All other files are copyright the R Core Development Team and/or B. D. Ripley.
 

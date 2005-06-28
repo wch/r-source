@@ -48,7 +48,7 @@ SSasymp <- # selfStart(~ Asym + (R0 - Asym) * exp(-exp(lrc) * input),
           {
               xy <- sortedXyData(mCall[["input"]], LHS, data)
               if (nrow(xy) < 3) {
-                  stop("too few distinct input values to fit a asymptotic regression model")
+                  stop("too few distinct input values to fit an asymptotic regression model")
               }
               if(nrow(xy) > 3) {
                   xy$ydiff <- abs(xy$y - NLSstRtAsymptote(xy))

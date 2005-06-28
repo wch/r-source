@@ -59,6 +59,8 @@ extern int wcswidth(const wchar_t *s, size_t n);
 
 /* The next must come after other header files to redefine RE_DUP_MAX */
 #ifdef USE_SYSTEM_REGEX
+/* for 2.1.0, this option is not functional */
+#error USE_SYSTEM_REGEX is no longer supported
 # include <regex.h>
 #else
 # include "Rregex.h"
@@ -180,7 +182,7 @@ static void substr(char *buf, char *str, int sa, int so)
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !utf8strIsASCII(str)) {
 	int j, used;
-	mbstate_t mb_st;    
+	mbstate_t mb_st;
 	mbs_init(&mb_st);
 	for(i = 1; i < sa; i++) str += Mbrtowc(NULL, str, MB_CUR_MAX, &mb_st);
 	for(i = sa; i <= so; i++) {
@@ -330,7 +332,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, t, tok, x;
     int i, j, len, tlen, ntok, slen;
-    int extended_opt, eflags, fixed, perl;
+    int extended_opt, cflags, fixed, perl;
     char *buf, *pt = NULL, *split = "", *bufp, *laststart;
     regex_t reg;
     regmatch_t regmatch[1];
@@ -362,8 +364,8 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
     }
 #endif
 
-    eflags = 0;
-    if(extended_opt) eflags = eflags | REG_EXTENDED;
+    cflags = 0;
+    if(extended_opt) cflags = cflags | REG_EXTENDED;
 
     len = LENGTH(x);
     tlen = LENGTH(tok);
@@ -432,11 +434,11 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		   the empty string (not a ``token'' in the strict sense).
 		*/
 		usedRegex = TRUE;
-		if(regcomp(&reg, split, eflags))
+		if(regcomp(&reg, split, cflags))
 		    errorcall(call, _("invalid split pattern '%s'"), split);
 		bufp = buf;
 		if(*bufp != '\0') {
-		    while(regexec(&reg, bufp, 1, regmatch, eflags) == 0) {
+		    while(regexec(&reg, bufp, 1, regmatch, 0) == 0) {
 			/* Empty matches get the next char, so move by
 			   one. */
 			bufp += MAX(regmatch[0].rm_eo, 1);
@@ -490,7 +492,7 @@ SEXP do_strsplit(SEXP call, SEXP op, SEXP args, SEXP env)
 		    }
 		    SET_STRING_ELT(t, j, mkChar(pt));
 		} else {
-		    regexec(&reg, bufp, 1, regmatch, eflags);
+		    regexec(&reg, bufp, 1, regmatch, 0);
 		    if(regmatch[0].rm_eo > 0) {
 			/* Match was non-empty. */
 			if(regmatch[0].rm_so > 0)
@@ -747,7 +749,7 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int nc = l, used;
 	    wchar_t wc;
 	    mbstate_t mb_st;
-	    
+
 	    p = this;
 	    mbs_init(&mb_st);
 	    used = Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st); p += used; nc -= used;
@@ -829,7 +831,7 @@ static int fgrep_one(char *pat, char *target, int useBytes)
 	    used = Mbrtowc(NULL,  target+ib, MB_CUR_MAX, &mb_st);
 	    if(used <= 0) break;
 	    ib += used;
-	}	
+	}
     } else
 #endif
 	for(i = 0; i <= len-plen; i++)
@@ -842,7 +844,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, vec, ind, ans;
     regex_t reg;
     int i, j, n, nmatches;
-    int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, eflags;
+    int igcase_opt, extended_opt, value_opt, fixed_opt, useBytes, cflags;
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -858,8 +860,11 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
-    if (!isString(pat) || length(pat) < 1 || !isString(vec))
-	errorcall(call, R_MSG_IA);
+    if (length(pat) < 1) errorcall(call, R_MSG_IA);
+    if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
+    else PROTECT(pat);
+    if (!isString(vec)) PROTECT(vec = coerceVector(vec, STRSXP));
+    else PROTECT(vec);
 
 #ifdef SUPPORT_MBCS
     if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
@@ -880,11 +885,11 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 	/* end NA pattern handling */
     } else {
-	eflags = 0;
-	if (extended_opt) eflags = eflags | REG_EXTENDED;
-	if (igcase_opt) eflags = eflags | REG_ICASE;
+	cflags = 0;
+	if (extended_opt) cflags = cflags | REG_EXTENDED;
+	if (igcase_opt) cflags = cflags | REG_ICASE;
 
-	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+	if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
 	    errorcall(call, _("invalid regular expression '%s'"),
 		      CHAR(STRING_ELT(pat, 0)));
 
@@ -892,9 +897,9 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	    LOGICAL(ind)[i] = 0;
 	    if (STRING_ELT(vec, i) != NA_STRING) {
 #ifdef SUPPORT_MBCS
-		if(!useBytes && mbcslocale && 
+		if(!useBytes && mbcslocale &&
 		   !mbcsValid(CHAR(STRING_ELT(vec, i)))) {
-		    warningcall(call, 
+		    warningcall(call,
 				_("input string %d is invalid in this locale"),
 				i+1);
 		    continue;
@@ -932,7 +937,7 @@ SEXP do_grep(SEXP call, SEXP op, SEXP args, SEXP env)
 	for (i = 0 ; i < n ; i++)
 	    if (LOGICAL(ind)[i]) INTEGER(ans)[j++] = i + 1;
     }
-    UNPROTECT(1);
+    UNPROTECT(3);
     return ans;
 }
 
@@ -969,7 +974,7 @@ static int length_adj(char *repl, regmatch_t *regmatch, int nsubexpr)
 }
 
 static char *string_adj(char *target, char *orig, char *repl,
-			regmatch_t *regmatch, int nsubexpr)
+			regmatch_t *regmatch)
 {
     int i, k;
     char *p = repl, *t = target;
@@ -1001,7 +1006,8 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     regex_t reg;
     regmatch_t regmatch[10];
     int i, j, n, ns, nmatch, offset;
-    int global, igcase_opt, extended_opt, fixed_opt, eflags;
+    int global, igcase_opt, extended_opt, fixed_opt, useBytes,
+	cflags, eflags, last_end;
     char *s, *t, *u;
     char *spat = NULL; /* -Wall */
     int patlen = 0, replen = 0, st, nr = 1;
@@ -1015,10 +1021,12 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     vec = CAR(args); args = CDR(args);
     igcase_opt = asLogical(CAR(args)); args = CDR(args);
     extended_opt = asLogical(CAR(args)); args = CDR(args);
-    fixed_opt = asLogical(CAR(args));
+    fixed_opt = asLogical(CAR(args)); args = CDR(args);
     if (igcase_opt == NA_INTEGER) igcase_opt = 0;
     if (extended_opt == NA_INTEGER) extended_opt = 1;
     if (fixed_opt == NA_INTEGER) fixed_opt = 0;
+    useBytes = asLogical(CAR(args)); args = CDR(args);
+    if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
     if (length(pat) < 1 || length(rep) < 1)
 	errorcall(call, R_MSG_IA);
@@ -1030,9 +1038,9 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(vec)) PROTECT(vec = coerceVector(vec, STRSXP));
     else PROTECT(vec);
 
-    eflags = 0;
-    if (extended_opt) eflags = eflags | REG_EXTENDED;
-    if (igcase_opt) eflags = eflags | REG_ICASE;
+    cflags = 0;
+    if (extended_opt) cflags = cflags | REG_EXTENDED;
+    if (igcase_opt) cflags = cflags | REG_ICASE;
 
 #ifdef SUPPORT_MBCS
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
@@ -1040,7 +1048,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
     if(mbcslocale && !mbcsValid(CHAR(STRING_ELT(rep, 0))))
 	errorcall(call, _("'replacement' is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
 	errorcall(call, _("invalid regular expression '%s'"),
 		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) {
@@ -1056,7 +1064,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for (i = 0 ; i < n ; i++) {
       /* NA `pat' are removed in R code */
-      /* the C code is left in case we change our minds again, 
+      /* the C code is left in case we change our minds again,
 	 but this code _is_ used if 'x' contains NAs */
       /* NA matches only itself */
         if (STRING_ELT(vec,i) == NA_STRING) {
@@ -1082,7 +1090,7 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, ("input string %d is invalid in this locale"), i+1);
 #endif
 	if(fixed_opt) {
-	    st = fgrep_one(spat, s, 0);
+	    st = fgrep_one(spat, s, useBytes);
 	    if(st < 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
 	    else if (STRING_ELT(rep, 0) == NA_STRING)
@@ -1093,10 +1101,10 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    do {
 			nr++;
 			s += st+patlen;
-		    } while((st = fgrep_one(spat, s, 0)) >= 0);
+		    } while((st = fgrep_one(spat, s, useBytes)) >= 0);
 		    /* and reset */
 		    s = CHAR(STRING_ELT(vec, i));
-		    st = fgrep_one(spat, s, 0);
+		    st = fgrep_one(spat, s, useBytes);
 		}
 		SET_STRING_ELT(ans, i, allocString(ns + nr*(replen - patlen)));
 		u = CHAR(STRING_ELT(ans, i)); *u ='\0';
@@ -1104,20 +1112,30 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		    nr = strlen(u);
 		    strncat(u, s, st); u[nr+st] = '\0'; s += st+patlen;
 		    strcat(u, t);
-		} while(global && (st = fgrep_one(spat, s, 0)) >= 0);
+		} while(global && (st = fgrep_one(spat, s, useBytes)) >= 0);
 		strcat(u, s);
 	    }
 	} else {
-	    while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
+	    /* Looks like REG_NOTBOL is no longer needed in this version,
+	       but leave in as a precaution */
+	    eflags = 0; last_end = -1;
+	    /* We need to use private version of regexec here, as
+	       head-chopping the string does not work with e.g. \b.
+	     */
+	    while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
 		nmatch += 1;
-		if (regmatch[0].rm_eo == 0)
-		    offset++;
-		else {
+		offset = regmatch[0].rm_eo;
+		/* Do not repeat a 0-length match after a match, so
+		   gsub("a*", "x", "baaac") is "xbxcx" not "xbxxcx" */
+		if(offset > last_end) {
 		    ns += length_adj(t, regmatch, reg.re_nsub);
-		    offset += regmatch[0].rm_eo;
+		    last_end = offset;
 		}
-		if (s[offset] == '\0' || !global)
-		    break;
+		if (s[offset] == '\0' || !global) break;
+		/* If we have a 0-length match, move on */
+		/* <MBCS FIXME> advance by a char */
+		if (regmatch[0].rm_eo == regmatch[0].rm_so) offset++;
+		eflags = REG_NOTBOL;
 	    }
 	    if (nmatch == 0)
 		SET_STRING_ELT(ans, i, STRING_ELT(vec, i));
@@ -1131,20 +1149,21 @@ SEXP do_gsub(SEXP call, SEXP op, SEXP args, SEXP env)
 		t = CHAR(STRING_ELT(rep, 0));
 		u = CHAR(STRING_ELT(ans, i));
 		ns = strlen(s);
-		while (regexec(&reg, &s[offset], 10, regmatch, 0) == 0) {
-		    for (j = 0; j < regmatch[0].rm_so ; j++)
-			*u++ = s[offset+j];
-		    if (regmatch[0].rm_eo == 0) {
-			*u++ = s[offset];
-			offset++;
+		eflags = 0; last_end = -1;
+		while (Rregexec(&reg, s, 10, regmatch, eflags, offset) == 0) {
+		    /* printf("%s, %d %d\n", &s[offset],
+		       regmatch[0].rm_so, regmatch[0].rm_eo); */
+		    for (j = offset; j < regmatch[0].rm_so ; j++) *u++ = s[j];
+		    if(regmatch[0].rm_eo > last_end) {
+			u = string_adj(u, s, t, regmatch);
+			last_end = regmatch[0].rm_eo;
 		    }
-		    else {
-			u = string_adj(u, &s[offset], t, regmatch,
-				       reg.re_nsub);
-			offset += regmatch[0].rm_eo;
-		    }
-		    if (s[offset] == '\0' || !global)
-			break;
+		    offset = regmatch[0].rm_eo;
+		    if (s[offset] == '\0' || !global) break;
+		    /* <MBCS FIXME> advance by a char */
+		    if (regmatch[0].rm_eo == regmatch[0].rm_so) 
+			*u++ = s[offset++];
+		    eflags = REG_NOTBOL;
 		}
 		if (offset < ns)
 		    for (j = offset ; s[j] ; j++)
@@ -1163,7 +1182,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP pat, text, ans, matchlen;
     regex_t reg;
     regmatch_t regmatch[10];
-    int i, n, st, extended_opt, fixed_opt, useBytes, eflags;
+    int i, n, st, extended_opt, fixed_opt, useBytes, cflags;
     char *spat = NULL; /* -Wall */
 
     checkArity(op, args);
@@ -1176,8 +1195,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     useBytes = asLogical(CAR(args)); args = CDR(args);
     if (useBytes == NA_INTEGER || !fixed_opt) useBytes = 0;
 
-    if (length(pat) < 1 || length(text) < 1 ||
-	STRING_ELT(pat,0) == NA_STRING)
+    if (length(pat) < 1 || length(text) < 1 || STRING_ELT(pat,0) == NA_STRING)
 	errorcall(call, R_MSG_IA);
 
     if (!isString(pat)) PROTECT(pat = coerceVector(pat, STRSXP));
@@ -1185,13 +1203,13 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(text)) PROTECT(text = coerceVector(text, STRSXP));
     else PROTECT(text);
 
-    eflags = extended_opt ? REG_EXTENDED : 0;
+    cflags = extended_opt ? REG_EXTENDED : 0;
 
 #ifdef SUPPORT_MBCS
     if(!useBytes && mbcslocale && !mbcsValid(CHAR(STRING_ELT(pat, 0))))
 	errorcall(call, _("regular expression is invalid in this locale"));
 #endif
-    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), eflags))
+    if (!fixed_opt && regcomp(&reg, CHAR(STRING_ELT(pat, 0)), cflags))
 	errorcall(call, _("invalid regular expression '%s'"),
 		  CHAR(STRING_ELT(pat, 0)));
     if (fixed_opt) spat = CHAR(STRING_ELT(pat, 0));
@@ -1207,7 +1225,7 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!useBytes && mbcslocale &&
 	       !mbcsValid(CHAR(STRING_ELT(text, i)))) {
 		warningcall(call,
-			    _("input string %d is invalid in this locale"), 
+			    _("input string %d is invalid in this locale"),
 			    i+1);
 		INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 		continue;
@@ -1225,12 +1243,13 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(matchlen)[i] = INTEGER(ans)[i] >= 0 ?
 			strlen(spat):-1;
 	    } else {
-		if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1,
-			   regmatch, 0) == 0) {
+		if(regexec(&reg, CHAR(STRING_ELT(text, i)), 1, regmatch, 0)
+		   == 0) {
 		    st = regmatch[0].rm_so;
 		    INTEGER(ans)[i] = st + 1; /* index from one */
+		    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 #ifdef SUPPORT_MBCS
-		    if(mbcslocale) {
+		    if(!useBytes && mbcslocale) {
 			int mlen = regmatch[0].rm_eo - st;
 			/* Unfortunately these are in bytes, so we need to
 			   use chars instead */
@@ -1248,9 +1267,8 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 			INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
 			if(INTEGER(matchlen)[i] < 0) /* an invalid string */
 			    INTEGER(matchlen)[i] = NA_INTEGER;
-		    } else
+		    }
 #endif
-			INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 		} else INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	    }
 	}
@@ -1579,7 +1597,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 		if(nc < 0)
-		    errorcall(call, _("invalid input multibyte string %d"), 
+		    errorcall(call, _("invalid input multibyte string %d"),
 			      i+1);
 		AllocBuffer((nc+1)*sizeof(wchar_t));
 		wc = (wchar_t *) cbuff.data;
@@ -1796,6 +1814,7 @@ SEXP do_charToRaw(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP ans, x = CAR(args);
     int nc;
 
+    checkArity(op, args);
     if(!isString(x) || LENGTH(x) == 0)
 	errorcall(call, _("argument must be a character vector of length 1"));
     if(LENGTH(x) > 1)
@@ -1813,6 +1832,7 @@ SEXP do_rawToChar(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, nc = LENGTH(x), multiple, len;
     char buf[2];
 
+    checkArity(op, args);
     if(!isRaw(x))
 	errorcall(call, _("argument 'x' must be a raw vector"));
     multiple = asLogical(CADR(args));
@@ -1946,6 +1966,166 @@ SEXP do_packBits(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	    INTEGER(ans)[i] = (int) itmp;
 	}
+    UNPROTECT(1);
+    return ans;
+}
+
+static int mbrtoint(int *w, const char *s)
+{
+    unsigned int byte;
+    byte = *((unsigned char *)s);
+
+    if (byte == 0) {
+        *w = 0;
+        return 0;	
+    } else if (byte < 0xC0) {
+        *w = (int) byte;
+        return 1;
+    } else if (byte < 0xE0) {
+	if(strlen(s) < 2) return -2;
+        if ((s[1] & 0xC0) == 0x80) {
+            *w = (int) (((byte & 0x1F) << 6) | (s[1] & 0x3F));
+            return 2;
+        } else return -1;
+    } else if (byte < 0xF0) {
+	if(strlen(s) < 3) return -2;
+        if (((s[1] & 0xC0) == 0x80) && ((s[2] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x0F) << 12)
+                    | ((s[1] & 0x3F) << 6) | (s[2] & 0x3F));
+	    byte = *w;
+	    if(byte >= 0xD800 && byte <= 0xDFFF) return -1; /* surrogate */
+	    if(byte == 0xFFFE || byte == 0xFFFF) return -1;
+            return 3;
+        } else return -1;
+    } else if (byte < 0xF8) {
+	if(strlen(s) < 4) return -2;
+        if (((s[1] & 0xC0) == 0x80) 
+	    && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x07) << 18)
+			| ((s[1] & 0x3F) << 12) 
+			| ((s[2] & 0x3F) << 6)
+			| (s[3] & 0x3F));
+	    byte = *w;
+            return 4;
+        } else return -1;
+    } else if (byte < 0xFC) {
+	if(strlen(s) < 5) return -2;
+        if (((s[1] & 0xC0) == 0x80) 
+	    && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80)
+	    && ((s[4] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x03) << 24)
+			| ((s[1] & 0x3F) << 18) 
+			| ((s[2] & 0x3F) << 12) 
+			| ((s[3] & 0x3F) << 6)
+			| (s[4] & 0x3F));
+	    byte = *w;
+            return 5;
+        } else return -1;
+    } else {
+	if(strlen(s) < 6) return -2;
+        if (((s[1] & 0xC0) == 0x80) 
+	    && ((s[2] & 0xC0) == 0x80)
+	    && ((s[3] & 0xC0) == 0x80)
+	    && ((s[4] & 0xC0) == 0x80)
+	    && ((s[5] & 0xC0) == 0x80)) {
+            *w = (int) (((byte & 0x01) << 30)
+			| ((s[1] & 0x3F) << 24) 
+			| ((s[2] & 0x3F) << 18) 
+			| ((s[3] & 0x3F) << 12)
+			| ((s[5] & 0x3F) << 6)
+			| (s[5] & 0x3F));
+	    byte = *w;
+            return 5;
+        } else return -1;
+    }
+    return -2;
+}
+
+SEXP do_utf8ToInt(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, x = CAR(args);
+    int i, j, nc, *ians, tmp, used;
+    char *s = CHAR(STRING_ELT(x, 0));
+
+    checkArity(op, args);
+    if(!isString(x) || LENGTH(x) == 0)
+	errorcall(call, _("argument must be a character vector of length 1"));
+    if(LENGTH(x) > 1)
+	warningcall(call, _("argument should be a character vector of length 1\nall but the first element will be ignored"));
+    nc = LENGTH(STRING_ELT(x, 0)); /* ints will be shorter */
+    ians = (int *) R_alloc(nc,  sizeof(int *));
+    for(i = 0, j = 0; i < nc; i++) {
+	used = mbrtoint(&tmp, s);
+	if(used <= 0) break;
+	ians[j++] = tmp;
+	s += used;
+    }
+    if(used < 0) error("invalid UTF-8 string");
+    ans = allocVector(INTSXP, j);
+    for(i = 0; i < j; i++) INTEGER(ans)[i] = ians[i];
+    return ans;
+}
+
+/* based on pcre.c */
+static const int utf8_table1[] =
+  { 0x7f, 0x7ff, 0xffff, 0x1fffff, 0x3ffffff, 0x7fffffff};
+static const int utf8_table2[] = { 0, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc};
+
+static size_t inttomb(char *s, const int wc)
+{
+    register int i, j;
+    unsigned int cvalue = wc;
+    char buf[10], *b;
+
+    b = s ? s : buf;
+    if(cvalue == 0) {*b = 0; return 0;}
+    for (i = 0; i < sizeof(utf8_table1)/sizeof(int); i++)
+	if (cvalue <= utf8_table1[i]) break;
+    b += i;
+    for (j = i; j > 0; j--) {
+	*b-- = 0x80 | (cvalue & 0x3f);
+	cvalue >>= 6;
+    }
+    *b = utf8_table2[i] | cvalue;
+    return i + 1;
+}
+
+SEXP do_intToUtf8(SEXP call, SEXP op, SEXP args, SEXP env)
+{
+    SEXP ans, c, x = CAR(args);
+    int i, nc = LENGTH(x), multiple, len, used;
+    char buf[10];
+
+    checkArity(op, args);
+    if(!isInteger(x))
+	errorcall(call, _("argument 'x' must be an integer vector"));
+    multiple = asLogical(CADR(args));
+    if(multiple == NA_LOGICAL)
+	errorcall(call, _("argument 'multiple' must be TRUE or FALSE"));
+    if(multiple) {
+	PROTECT(ans = allocVector(STRSXP, nc));
+	for(i = 0; i < nc; i++) {
+	    used = inttomb(buf, INTEGER(x)[i]);
+	    buf[used] = '\0';
+	    SET_STRING_ELT(ans, i, mkChar(buf));
+	}
+	/* do we want to copy e.g. names here? */
+    } else {
+	for(i = 0, len = 0; i < nc; i++)
+	    len += inttomb(NULL, INTEGER(x)[i]);
+	PROTECT(ans = allocVector(STRSXP, 1));
+	/* String is not necessarily 0-terminated and may contain nuls
+	   so don't use mkChar */
+	c = allocString(len); /* adds zero terminator */
+	for(i = 0, len = 0; i < nc; i++) {
+	    used = inttomb(buf, INTEGER(x)[i]);
+	    strncpy(CHAR(c) + len, buf, used);
+	    len += used;
+	}
+	SET_STRING_ELT(ans, 0, c);
+    }
     UNPROTECT(1);
     return ans;
 }

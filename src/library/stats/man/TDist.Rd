@@ -21,7 +21,9 @@ rt(n, df)
   \item{p}{vector of probabilities.}
   \item{n}{number of observations. If \code{length(n) > 1}, the length
     is taken to be the number required.}
-  \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).}
+  \item{df}{degrees of freedom (\eqn{> 0}, maybe non-integer).  \code{df
+      = Inf} is allowed.  For \code{qt} only values of at least one are
+    currently supported.}
   \item{ncp}{non-centrality parameter \eqn{\delta};
     currently for \code{pt()} and \code{dt()}, only for \code{ncp <= 37.62}.}
   \item{log, log.p}{logical; if TRUE, probabilities p are given as log(p).}

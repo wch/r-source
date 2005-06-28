@@ -66,10 +66,9 @@ packageStatus <- function(lib.loc = NULL, repositories = NULL, method,
     }
 
     y$LibPath <- factor(y$LibPath, levels=lib.loc)
-    y$Status <- factor(y$Status, levels=c("ok", "upgrade"))
+    y$Status <- factor(y$Status, levels=c("ok", "upgrade", "unavailable"))
     z$Repository <- factor(z$Repository, levels=repositories)
-    z$Status <- factor(z$Status,
-                       levels=c("installed", "not installed", "unavailable"))
+    z$Status <- factor(z$Status, levels=c("installed", "not installed"))
 
     retval <- list(inst=y, avail=z)
     class(retval) <- "packageStatus"
@@ -153,7 +152,11 @@ upgrade.packageStatus <- function(object, ask=TRUE, ...)
             cat(pkg, ":\n")
             askprint(object$inst[k,c("Version", "LibPath")])
             askprint(object$avail[pkg, c("Version", "Repository")])
-            answer <- substr(readline("Update (y/N)?  "), 1, 1)
+            answer <- substr(readline("Update (y/N/x)?  "), 1, 1)
+            if(answer == "c" | answer == "c") {
+                cat("cancelled by user\n")
+                return(invisible())
+            }
             if(answer == "y" | answer == "Y")
                 update <-
                     rbind(update,

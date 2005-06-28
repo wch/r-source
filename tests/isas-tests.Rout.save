@@ -1,6 +1,6 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2004-11-27), ISBN 3-900051-07-0
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.1.0 alpha (2005-03-24), ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -246,6 +246,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -542,6 +543,7 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -833,6 +835,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -1138,6 +1141,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -1453,6 +1457,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -1763,7 +1768,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
-Error in strptime(tim, format = format) : invalid 'x' argument
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -2065,6 +2070,7 @@ IS: [1] TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -2362,6 +2368,7 @@ Error: x is not TRUE
 [1] TRUE
 > f <- try(as.difftime( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.difftime( f )))
+[1] TRUE
 > f <- try(as.double( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.double( f )))
 [1] TRUE
@@ -2437,6 +2444,6 @@ non-square matrix in: as.dist.default(x)
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.35 0.01 0.45 0 0 
+Time elapsed:  0.31 0 0.31 NA NA 
 > 
 > 

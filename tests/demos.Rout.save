@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-02-05), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-05-31 r34513)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -56,8 +57,8 @@ Type 'q()' to quit R.
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1013 
-Number of builtin functions:	 1003 
+Number of base objects:		 1022 
+Number of builtin functions:	 1012 
 	 starting with 'is.' :	  46 
 
 > is.method <- function(fname) {
@@ -719,7 +720,7 @@ In addition: Warning messages:
 
 > y <- 10 * 1:ncol(volcano)
 
-> l <- pretty(range(volcano), 10)
+> lev <- pretty(range(volcano), 10)
 
 > par(bg = "lightcyan")
 
@@ -733,7 +734,7 @@ In addition: Warning messages:
 
 > yscale <- pin[2]/ydelta
 
-> scale <- if (xscale < yscale) xscale else yscale
+> scale <- min(xscale, yscale)
 
 > xadd <- 0.5 * (pin[1]/scale - xdelta)
 
@@ -747,7 +748,7 @@ In addition: Warning messages:
 
 > rect(usr[1], usr[3], usr[2], usr[4], col = "green3")
 
-> contour(x, y, volcano, levels = l, col = "yellow", 
+> contour(x, y, volcano, levels = lev, col = "yellow", 
     lty = "solid", add = TRUE)
 
 > box()
@@ -1239,5 +1240,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  3.02 0.17 3.19 0 0 
+Time elapsed:  2.15 0.05 2.41 0 0 
 > 

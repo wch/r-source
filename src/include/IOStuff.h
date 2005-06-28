@@ -1,6 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1997  Robert Gentleman and Ross Ihaka
+ *  Copyright (C) 2005  R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +17,9 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
+#ifndef R_IOSTUFF_H
+#define R_IOSTUFF_H
 
 /*
  *  I/O Support for Consoles and Character Vectors
@@ -73,3 +77,5 @@ int R_IoBufferPuts(char*, IoBuffer*);
 int R_TextBufferInit(TextBuffer*, SEXP);
 int R_TextBufferFree(TextBuffer*);
 int R_TextBufferGetc(TextBuffer*);
+
+#endif /* not R_IOSTUFF_H */

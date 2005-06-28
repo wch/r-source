@@ -6,7 +6,9 @@
   using \code{dyn.load} or \code{library.dynam}.
 }
 \alias{SHLIB}
-\usage{R CMD SHLIB [options] [-o dllname] files}
+\usage{
+\special{R CMD SHLIB [options] [-o dllname] files}
+}
 \arguments{
   \item{files}{a list of names of (typically) source files to be
     compiled and included in the library.  You can also include the names

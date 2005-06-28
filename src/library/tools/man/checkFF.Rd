@@ -27,6 +27,12 @@ checkFF(package, dir, file, lib.loc = NULL,
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed (and the result is returned invisibly).}
 }
+\details{
+  \emph{If} the package has a namespace and \emph{if} that contains a
+  \code{useDynLib} directive, calls in top-level functions in the
+  package are not reported as their symbols will be preferentially
+  looked up in the DLL named in the first \code{useDynLib} directive.
+}
 \value{
   An object of class \code{"checkFF"}, which currently is a list of the
   (parsed) foreign function calls with no \code{PACKAGE} argument.

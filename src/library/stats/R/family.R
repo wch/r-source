@@ -25,34 +25,36 @@ make.link <- function (link)
     else if(!is.character(link) && !is.na(lambda <- as.numeric(link))) {
         linkfun <- function(mu) mu^lambda
         linkinv <- function(eta)
-            pmax(.Machine$double.eps, eta^(1/lambda))
+            pmax(eta^(1/lambda), .Machine$double.eps)
         mu.eta <- function(eta)
-            pmax(.Machine$double.eps, (1/lambda) * eta^(1/lambda - 1))
+            pmax((1/lambda) * eta^(1/lambda - 1), .Machine$double.eps)
         valideta <- function(eta) all(eta>0)
     }
     else
         switch(link,
                "logit" = {
-                   linkfun <- function(mu) log(mu/(1 - mu))
-                   linkinv <- function(eta) {
-                       thresh <- -log(.Machine$double.eps)
-                       eta <- pmin(thresh, pmax(eta, -thresh))
-                       exp(eta)/(1 + exp(eta))
-                   }
-                   mu.eta <- function(eta) {
-                       thresh <- -log(.Machine$double.eps)
-                       res <- rep.int(.Machine$double.eps, length(eta))
-                       res[abs(eta) < thresh] <-
-                           (exp(eta)/(1 + exp(eta))^2)[abs(eta) < thresh]
-                       res
-                   }
+                   linkfun <- function(mu) .Call("logit_link", mu, PACKAGE="stats")
+                   linkinv <- function(eta) .Call("logit_linkinv", eta, PACKAGE="stats")
+##               {
+##                   thresh <- -log(.Machine$double.eps)
+##                   eta <- pmin(pmax(eta, -thresh), thresh)
+##                   exp(eta)/(1 + exp(eta))
+##               }
+                   mu.eta <- function(eta) .Call("logit_mu_eta", eta, PACKAGE="stats")
+##                   {
+##                       thresh <- -log(.Machine$double.eps)
+##                       res <- rep.int(.Machine$double.eps, length(eta))
+##                       res[abs(eta) < thresh] <-
+##                           (exp(eta)/(1 + exp(eta))^2)[abs(eta) < thresh]
+##                       res
+##                   }
                    valideta <- function(eta) TRUE
                },
                "probit" = {
                    linkfun <- function(mu) qnorm(mu)
                    linkinv <- function(eta) {
                        thresh <- - qnorm(.Machine$double.eps)
-                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       eta <- pmin(pmax(eta, -thresh), thresh)
                        pnorm(eta)
                    }
                    mu.eta <- function(eta)
@@ -63,7 +65,7 @@ make.link <- function (link)
          	   linkfun <- function(mu) qcauchy(mu)
          	   linkinv <- function(eta) {
                        thresh <- -qcauchy(.Machine$double.eps)
-                       eta <- pmin(thresh, pmax(eta, -thresh))
+                       eta <- pmin(pmax(eta, -thresh), thresh)
                        pcauchy(eta)
          	   }
          	   mu.eta <- function(eta)
@@ -73,11 +75,11 @@ make.link <- function (link)
                "cloglog" = {
                    linkfun <- function(mu) log(-log(1 - mu))
                    linkinv <- function(eta)
-                       pmax(.Machine$double.eps,
-                            pmin(1 - .Machine$double.eps, - expm1(-exp(eta))))
+                       pmax(pmin(-expm1(-exp(eta)), 1 - .Machine$double.eps),
+                            .Machine$double.eps)
                    mu.eta <- function(eta) {
                        eta <- pmin(eta, 700)
-                       pmax(.Machine$double.eps, exp(eta) * exp(-exp(eta)))
+                       pmax(exp(eta) * exp(-exp(eta)), .Machine$double.eps)
                    }
                    valideta <- function(eta) TRUE
                },
@@ -90,9 +92,9 @@ make.link <- function (link)
                "log" = {
                    linkfun <- function(mu) log(mu)
                    linkinv <- function(eta)
-                       pmax(.Machine$double.eps, exp(eta))
+                       pmax(exp(eta), .Machine$double.eps)
                    mu.eta <- function(eta)
-                       pmax(.Machine$double.eps, exp(eta))
+                       pmax(exp(eta), .Machine$double.eps)
                    valideta <- function(eta) TRUE
                },
                "sqrt" = {
@@ -137,19 +139,15 @@ poisson <- function (link = "log")
     variance <- function(mu) mu
     validmu <- function(mu) all(mu>0)
     dev.resids <- function(y, mu, wt)
-	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
+        2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) - (y - mu))
     aic <- function(y, n, mu, wt, dev)
 #	2*sum((mu-y*log(mu)+lgamma(y+1))*wt)
-#	-2*sum(dpois(y, mu, log=TRUE)*wt)
-        -2*sum(dpois(round(y*wt), mu*wt, log=TRUE))
+	-2*sum(dpois(y, mu, log=TRUE)*wt)
     initialize <- expression({
 	if (any(y < 0))
 	    stop("negative values not allowed for the Poisson family")
 	n <- rep.int(1, nobs)
 	mustart <- y + 0.1
-        m <- weights * y
-        if (any(abs(m - round(m)) > 0.001))
-          warning("non-integer counts in a Poisson glm!")
     })
     structure(list(family = "poisson",
 		   link = linktemp,
@@ -253,8 +251,9 @@ binomial <- function (link = "logit")
     variance <- function(mu) mu * (1 - mu)
     validmu <- function(mu) all(mu>0) && all(mu<1)
     dev.resids <- function(y, mu, wt)
-	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
-		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
+        .Call("binomial_dev_resids", y, mu, wt, PACKAGE="stats")
+#	2 * wt * (y * log(ifelse(y == 0, 1, y/mu)) +
+#		  (1 - y) * log(ifelse(y == 1, 1, (1 - y)/(1 - mu))))
     aic <- function(y, n, mu, wt, dev) {
 #	-2*sum((lchoose(n, n*y) + n*(y*log(mu) + (1-y)*log(1-mu)))*wt/n)
         m <- if(any(n > 1)) n else wt

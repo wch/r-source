@@ -18,7 +18,7 @@ points(x, \dots)
   \item{type}{character indicating the type of plotting; actually any of
     the \code{type}s as in \code{\link{plot}}.}
   \item{pch}{plotting \dQuote{character}, i.e., symbol to use.  \code{pch} can
-    either be a single character or an integer code for a set of
+    either be a single character or an integer code for one of a set of
     graphics symbols.  The full set of S symbols is available with
     \code{pch=0:18}, see the last picture from \code{example(points)},
     i.e., the examples below.
@@ -37,16 +37,23 @@ points(x, \dots)
       \item \code{pch=25}: triangle point down.
     }
     Values \code{pch=26:32} are currently unused, and \code{pch=32:255}
-    give the text symbol in a single-byte locale. In a multi-byte locale
+    give the text symbol in a single-byte locale.  In a multi-byte locale
     such as UTF-8, numeric values of \code{pch} greater than or equal to
     32 specify a Unicode code point.
     
     If \code{pch} is an integer or character \code{NA} or an empty
     character string, the point is omitted from the plot.
+
+    Value \code{pch="."} is handled specially.  It is a rectangle of
+    side 0.01 inch (scaled by \code{cex}).  In addition, if \code{cex =
+      1} (the default), each side is at least one pixel (1/72 inch on
+    the \code{\link{pdf}}, \code{\link{postscript}} and
+    \code{\link{xfig}} devices).  The details here have been changed
+    for 2.1.0 and are subject to change.
   }
   \item{col}{color code or name, see \code{\link{par}}.}
   \item{bg}{background (\dQuote{fill}) color for open plot symbols}
-  \item{cex}{character expansion: a numerical vector.}
+  \item{cex}{character (or symbol) expansion: a numerical vector.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
     and \code{\link{par}}) may also be supplied as arguments.}
 }

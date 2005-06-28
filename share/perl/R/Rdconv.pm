@@ -33,6 +33,7 @@ use Text::Wrap;
 use R::Utils;
 use R::Vars;
 
+
 if($main::opt_dosnames) { $HTML = ".htm"; } else { $HTML = ".html"; }
 
 ## Names of unique text blocks, these may NOT appear MORE THAN ONCE!
@@ -617,6 +618,23 @@ sub transform_S3method {
 	}
 	$text =~ s/$S3method_RE/$str/s;
     }
+    ## Also try to handle markup for S3 methods for binary ops.
+    $S3method_RE = "([ \t]*)\\\\(S3)?method" .
+	"\{(" .
+	join("|",
+	     ("\\\+", "\\\-", "\\\*", "\\\/", "\\\^",
+	      "<=?", ">=?", "!=", "==", "\\\&", "\\\|",
+	      "\\\%[[:alnum:][:punct:]]*\\\%")) .
+	")\}\{([\\w.]+)\}\\\(([^)]+)\\\)";
+    while($text =~ /$S3method_RE/) {
+	$str = "$1\#\# S3 method for class '$4':\n$1";
+	$name = $3;
+	@args = split(/,\s*/, $5);
+	## These are all binary ops, so we should really check on
+	## scalar(@args) to be 2 ...
+	$str .= "$args[0] $name $args[1]";
+	$text =~ s/$S3method_RE/$str/s;
+    }
     $text;
 }
 
@@ -658,9 +676,8 @@ sub rdoc2html { # (filename) ; 0 for STDOUT
 	$htmlout = "STDOUT";
     }
     $using_chm = 0;
-    $encoding = $blocks{"encoding"} if defined $blocks{"encoding"};
-    $encoding = "iso-8859-1" if lc($encoding) eq "latin1";
-    $encoding = "iso-8859-2" if lc($encoding) eq "latin2";
+    $encoding = mime_canonical_encoding($blocks{"encoding"}) 
+	if defined $blocks{"encoding"};
     print $htmlout (html_functionhead(html_striptitle($blocks{"title"}),
 				      $pkgname, 
 				      &html_escape_name($blocks{"name"}),
@@ -762,6 +779,8 @@ sub text2html {
 	$text =~ s/$EOB/\{/go;
 	$text =~ s/$ECB/\}/go;
     }
+
+    $text = undefine_command($text, "special");
 
     $text = replace_command($text, "emph", "<EM>", "</EM>");
     $text = replace_command($text, "bold", "<B>", "</B>");
@@ -938,6 +957,8 @@ sub code2html {
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
+
+    $text = undefine_command($text, "special");
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")
@@ -1418,6 +1439,8 @@ sub text2txt {
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
+    $text = undefine_command($text, "special");
+    
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "textbf");
     $text = undefine_command($text, "mathbf");
@@ -1525,6 +1548,8 @@ sub code2txt {
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
+
+    $text = undefine_command($text, "special");    
 
     $text = undefine_command($text, "link");
     $text = replace_addnl_command($text, "dontrun",
@@ -2106,6 +2131,8 @@ sub text2nroff {
     $text =~ s/$EOB/\{/go;
     $text =~ s/$ECB/\}/go;
 
+    $text = undefine_command($text, "special");
+
     $text = undefine_command($text, "link");
     $text = undefine_command($text, "textbf");
     $text = undefine_command($text, "mathbf");
@@ -2226,6 +2253,8 @@ sub code2nroff {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
     $text =~ s/\\n/\\\\n/g;
+
+    $text = undefine_command($text, "special");    
 
     $text = undefine_command($text, "link");
     $text = replace_addnl_command($text, "dontrun",
@@ -2361,6 +2390,8 @@ sub code2examp {
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
 
+    $text = undefine_command($text, "special");
+    
     $text = undefine_command($text, "link");
 
     $text = replace_prepend_command($text, "dontshow",
@@ -2394,8 +2425,12 @@ sub foldorder {uc($a) cmp uc($b) or $a cmp $b;}
 sub rdoc2latex {# (filename)
 
     my $c, $a, $blname;
+    local $encoding = "unknown";
+    $encoding = latex_canonical_encoding($blocks{"encoding"})
+	if defined $blocks{"encoding"};
 
     local $latexout;
+
     if($_[0]) {
 	$latexout = new FileHandle;
 	open $latexout, "> $_[0]";  # will be closed when goes out of scope
@@ -2403,6 +2438,7 @@ sub rdoc2latex {# (filename)
 	$latexout = "STDOUT";
     }
     $blname = &latex_escape_name($blocks{"name"});
+    print $latexout "\\inputencoding{$encoding}\n" if $encoding ne "unknown";
     print $latexout "\\HeaderA\{";
     print $latexout $blname;
     print $latexout "\}\{";
@@ -2461,6 +2497,8 @@ sub text2latex {
     $text =~ s/$EOB/\\\{/go;
     $text =~ s/$ECB/\\\}/go;
 
+    $text = undefine_command($text, "special");   
+
     $text =~ s/\\cite/\\Cite/go;
 
     $text =~ s/\\itemize/\\Itemize/go;
@@ -2485,8 +2523,10 @@ sub text2latex {
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\enc") &&  $text =~ /\\enc/){
 	my ($id, $enc, $ascii) = get_arguments("enc", $text, 2);
-	## $enc = $ascii if $ascii; # not clear which we want here
-	$enc =~ s/\\([^&])/$1/go;
+	if($encoding eq "unknown") { # \enc withou \encoding
+	    $enc = $ascii if $ascii;
+	    $enc =~ s/\\([^&])/$1/go;
+	}
 	$text =~ s/\\enc(.*)$id/$enc/s;
     }
 
@@ -2541,6 +2581,8 @@ sub code2latex {
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
+
+    $text = undefine_command($text, "special");    
 
     ##    $text =~ s/\\\\/\\bsl{}/go;
     if($hyper) {
@@ -2954,6 +2996,8 @@ sub text2Ssgm {
 	$text =~ s/$ECB/\}/go;
     }
 
+    $text = undefine_command($text, "special");
+
     $text = replace_command($text, "emph", "<em>", "</em>");
     $text = replace_command($text, "bold", "<bf>", "</bf>");
     $text = replace_command($text, "strong", "<bf>", "</bf>");
@@ -3062,6 +3106,8 @@ sub code2Ssgm {
     $text =~ s/\\%/%/go;
     $text =~ s/\\ldots/.../go;
     $text =~ s/\\dots/.../go;
+
+    $text = undefine_command($text, "special");    
 
     my $loopcount = 0;
     while(checkloop($loopcount++, $text, "\\link")

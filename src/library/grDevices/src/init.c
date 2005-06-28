@@ -19,6 +19,8 @@
 
 #include <R.h>
 #include <Rinternals.h>
+#include <Graphics.h>
+#include <Rdevices.h>
 
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>

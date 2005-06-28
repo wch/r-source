@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 Under development (unstable) (2005-03-09), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-06-23 r34818)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2137,8 +2138,7 @@ Levels: A B C
 > ## add logical matrix replacement indexing for data frames
 > TEMP <- data.frame(VAR1=c(1,2,3,4,5), VAR2=c(5,4,3,2,1), VAR3=c(1,1,1,1,NA))
 > TEMP[,c(1,3)][TEMP[,c(1,3)]==1 & !is.na(TEMP[,c(1,3)])] < -10
-    1  <NA>  <NA>  <NA>  <NA> 
-FALSE FALSE FALSE FALSE FALSE 
+[1] FALSE FALSE FALSE FALSE FALSE
 > TEMP
   VAR1 VAR2 VAR3
 1    1    5    1
@@ -4515,4 +4515,299 @@ Error in stats:::add1.default(fit, ~. + x2) :
 	number of rows in use has changed: remove missing values?
 > stopifnot(inherits(res, "try-error"))
 > ## 2.0.1 ran and gave incorrect answers.
+> 
+> 
+> ## (PR#7789) escaped quotes in the first five lines for read.table
+> tf <- tempfile()
+> x <- c("6 'TV2  Shortland Street'",
++        "2 'I don\\\'t watch TV at 7'",
++        "1 'I\\\'m not bothered, whatever that looks good'",
++        "2 'I channel surf'")
+> writeLines(x, tf)
+> read.table(tf)
+  V1                                         V2
+1  6                      TV2  Shortland Street
+2  2                      I don't watch TV at 7
+3  1 I'm not bothered, whatever that looks good
+4  2                             I channel surf
+> x <- c("6 'TV2  Shortland Street'",
++        "2 'I don''t watch TV at 7'",
++        "1 'I''m not bothered, whatever that looks good'",
++        "2 'I channel surf'")
+> writeLines(x, tf)
+> read.table(tf, sep=" ")
+  V1                                         V2
+1  6                      TV2  Shortland Street
+2  2                      I don't watch TV at 7
+3  1 I'm not bothered, whatever that looks good
+4  2                             I channel surf
+> unlink(tf)
+> ## mangled in 2.0.1
+> 
+> 
+> ## (PR#7802) printCoefmat(signif.legend =FALSE) failed
+> set.seed(123)
+> cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
+> cmat <- cbind(cmat, cmat[,1]/cmat[,2])
+> cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+> colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
+> printCoefmat(cmat, signif.stars = TRUE)
+     Estimate Std.Err Z value    Pr(>z)    
+[1,]  11.3092  2.8636  3.9493 7.837e-05 ***
+[2,]  11.2301  3.5301  3.1812  0.001467 ** 
+[3,]   9.9161  3.0927  3.2063  0.001344 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+> printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
+     Estimate Std.Err Z value    Pr(>z)    
+[1,]  11.3092  2.8636  3.9493 7.837e-05 ***
+[2,]  11.2301  3.5301  3.1812  0.001467 ** 
+[3,]   9.9161  3.0927  3.2063  0.001344 ** 
+> # no stars, so no legend
+> printCoefmat(cmat, signif.stars = FALSE)
+     Estimate Std.Err Z value    Pr(>z)
+[1,]  11.3092  2.8636  3.9493 7.837e-05
+[2,]  11.2301  3.5301  3.1812  0.001467
+[3,]   9.9161  3.0927  3.2063  0.001344
+> printCoefmat(cmat, signif.stars = TRUE, signif.legend = TRUE)
+     Estimate Std.Err Z value    Pr(>z)    
+[1,]  11.3092  2.8636  3.9493 7.837e-05 ***
+[2,]  11.2301  3.5301  3.1812  0.001467 ** 
+[3,]   9.9161  3.0927  3.2063  0.001344 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+> ## did not work in 2.1.0
+> 
+> 
+> ## PR#7824 subscripting an array by a matrix
+> x <- matrix(1:6, ncol=2)
+> x[rbind(c(1,1), c(2,2))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,1))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,0))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,2))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(0,3))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(1,0))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(2,0))]
+[1] 1 5
+> x[rbind(c(1,1), c(2,2), c(3,0))]
+[1] 1 5
+> x[rbind(c(1,0), c(0,2), c(3,0))]
+numeric(0)
+> x[rbind(c(1,0), c(0,0), c(3,0))]
+numeric(0)
+> x[rbind(c(1,1), c(2,2), c(1,2))]
+[1] 1 5 4
+> x[rbind(c(1,1), c(2,NA), c(1,2))]
+[1]  1 NA  4
+> x[rbind(c(1,0), c(2,NA), c(1,2))]
+[1] NA  4
+> try(x[rbind(c(1,1), c(2,2), c(-1,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-2,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-2, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-3,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-4,2))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 2))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-1, -1))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1,1), c(2,2,2))])
+[1] 1 2 1 2 1 2
+> 
+> # verify that range checks are applied to negative indices
+> x <- matrix(1:6, ncol=3)
+> try(x[rbind(c(1,1), c(2,2), c(-3,3))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-3, 3))]) : 
+	negative values are not allowed in a matrix subscript
+> try(x[rbind(c(1,1), c(2,2), c(-4,3))])
+Error in try(x[rbind(c(1, 1), c(2, 2), c(-4, 3))]) : 
+	negative values are not allowed in a matrix subscript
+> ## generally allowed in 2.1.0.
+> 
+> ## Branch cuts in complex inverse trig functions
+> atan(2)
+[1] 1.107149
+> atan(2+0i)
+[1] 1.107149+0i
+> tan(atan(2+0i))
+[1] 2+0i
+> atan(1.0001+0i)
+[1] 0.7854482+0i
+> atan(0.9999+0i)
+[1] 0.7853482+0i
+> ## previously not as in Abramowitz & Stegun.
+> 
+> 
+> ## printing RAW matrices/arrays was not implemented
+> s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))
+> s
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8]
+[1,]   6d   da   b4   68   d0   a0   40   80
+[2,]   79   f2   e4   c8   90   20   40   80
+[3,]   20   40   80   00   00   00   00   00
+[4,]   74   e8   d0   a0   40   80   00   00
+[5,]   65   ca   94   28   50   a0   40   80
+[6,]   78   f0   e0   c0   80   00   00   00
+[7,]   74   e8   d0   a0   40   80   00   00
+> dim(s) <- c(7,4,2)
+> s
+, , 1
+
+     [,1] [,2] [,3] [,4]
+[1,]   6d   da   b4   68
+[2,]   79   f2   e4   c8
+[3,]   20   40   80   00
+[4,]   74   e8   d0   a0
+[5,]   65   ca   94   28
+[6,]   78   f0   e0   c0
+[7,]   74   e8   d0   a0
+
+, , 2
+
+     [,1] [,2] [,3] [,4]
+[1,]   d0   a0   40   80
+[2,]   90   20   40   80
+[3,]   00   00   00   00
+[4,]   40   80   00   00
+[5,]   50   a0   40   80
+[6,]   80   00   00   00
+[7,]   40   80   00   00
+
+> ## empty < 2.1.1
+> 
+> 
+> ## interpretation of '.' directly by model.matrix
+> dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+> model.matrix(~ .^2, data = dd)
+   (Intercept) a2 a3 b2 b3 b4 a2:b2 a3:b2 a2:b3 a3:b3 a2:b4 a3:b4
+1            1  0  0  0  0  0     0     0     0     0     0     0
+2            1  0  0  1  0  0     0     0     0     0     0     0
+3            1  0  0  0  1  0     0     0     0     0     0     0
+4            1  0  0  0  0  1     0     0     0     0     0     0
+5            1  1  0  0  0  0     0     0     0     0     0     0
+6            1  1  0  1  0  0     1     0     0     0     0     0
+7            1  1  0  0  1  0     0     0     1     0     0     0
+8            1  1  0  0  0  1     0     0     0     0     1     0
+9            1  0  1  0  0  0     0     0     0     0     0     0
+10           1  0  1  1  0  0     0     1     0     0     0     0
+11           1  0  1  0  1  0     0     0     0     1     0     0
+12           1  0  1  0  0  1     0     0     0     0     0     1
+attr(,"assign")
+ [1] 0 1 1 2 2 2 3 3 3 3 3 3
+attr(,"contrasts")
+attr(,"contrasts")$a
+[1] "contr.treatment"
+
+attr(,"contrasts")$b
+[1] "contr.treatment"
+
+> ## lost ^2 in 2.1.1
+> 
+> ### end of tests added in 2.1.1 patched ###
+> 
+> 
+> ## Tests of logical matrix indexing with NAs
+> df1 <- data.frame(a = c(NA, 0, 3, 4)); m1 <- as.matrix(df1)
+> df2 <- data.frame(a = c(NA, 0, 0, 4)); m2 <- as.matrix(df2)
+> df1[df1 == 0] <- 2; df1
+   a
+1 NA
+2  2
+3  3
+4  4
+> m1[m1 == 0] <- 2;   m1
+   a
+1 NA
+2  2
+3  3
+4  4
+> df2[df2 == 0] <- 2; df2  # not allowed in 2.{0,1}.z
+   a
+1 NA
+2  2
+3  2
+4  4
+> m2[m2 == 0] <- 2;   m2
+   a
+1 NA
+2  2
+3  2
+4  4
+> df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
+[1] NA  2
+> df3 <- data.frame(a=1:2, b=2:3)
+> df3[df3 == 2]            # had spurious names
+[1] 2 2
+> # but not allowed
+> try(df2[df2 == 2] <- 1:2)
+Error: NAs are not allowed in subscripted assignments
+> try(m2[m2 == 2] <- 1:2)
+Error in try(m2[m2 == 2] <- 1:2) : NAs are not allowed in subscripted assignments
+> ##
+> 
+> 
+> ## vector indexing of matrices: issue is when rownames are used
+> # 1D array
+> m1 <- c(0,1,2,0)
+> dim(m1) <- 4
+> dimnames(m1) <- list(1:4)
+> m1[m1 == 0]                        # has rownames
+1 4 
+0 0 
+> m1[which(m1 == 0)]                 # has rownames
+1 4 
+0 0 
+> m1[which(m1 == 0, arr.ind = TRUE)] # no names < 2.2.0 (side effect of PR#937)
+1 4 
+0 0 
+> 
+> # 2D array with 2 cols
+> m2 <- as.matrix(data.frame(a=c(0,1,2,0), b=0:3))
+> m2[m2 == 0]                        # a vector, had names < 2.2.0
+[1] 0 0 0
+> m2[which(m2 == 0)]                 # a vector, had names < 2.2.0
+[1] 0 0 0
+> m2[which(m2 == 0, arr.ind = TRUE)] # no names (PR#937)
+[1] 0 0 0
+> 
+> # 2D array with one col: could use rownames but do not.
+> m21 <- m2[, 1, drop = FALSE]
+> m21[m21 == 0]
+[1] 0 0
+> m21[which(m21 == 0)]
+[1] 0 0
+> m21[which(m21 == 0, arr.ind = TRUE)]
+[1] 0 0
+> ## not consistent < 2.2.0: S never gives names
+> 
+> 
+> ## tests of indexing as quoted in Extract.Rd
+> x <- NULL
+> x$foo <- 2
+> x # length-1 vector
+$foo
+[1] 2
+
+> x <- NULL
+> x[[2]] <- pi
+> x # numeric vector
+[1]       NA 3.141593
+> x <- NULL
+> x[[1]] <- 1:3
+> x # list
+[[1]]
+[1] 1 2 3
+
+> ##
 > 

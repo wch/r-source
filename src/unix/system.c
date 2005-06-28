@@ -49,7 +49,7 @@
 
 #include "Defn.h"
 #include "Fileio.h"
-#include "Rdevices.h"		/* KillAllDevices() [nothing else?] */
+#include <Rdevices.h>		/* KillAllDevices() [nothing else?] */
 
 #define __SYSTEM__
 #define R_INTERFACE_PTRS 1
@@ -144,7 +144,16 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef ENABLE_NLS
     setlocale(LC_MESSAGES,"");
     textdomain(PACKAGE);
-    strcpy(localedir, R_Home); strcat(localedir, "/share/locale");
+    {
+	char *p = getenv("R_SHARE_DIR");
+	if(p) {
+	    strcpy(localedir, p);
+	    strcat(localedir, "/locale");
+	} else {
+	    strcpy(localedir, R_Home);
+	    strcat(localedir, "/share/locale");
+	}
+    }
     bindtextdomain(PACKAGE, localedir);
 #endif
 
@@ -181,7 +190,7 @@ int Rf_initialize_R(int ac, char **av)
 #ifdef HAVE_AQUA
 	    else if(!strcmp(p, "aqua") || !strcmp(p, "AQUA"))
 		useaqua = TRUE;
-	    else if(!strcmp(p, "cocoa") || !strcmp(p, "COCOA"))
+	    else if(!strcmp(p, "cocoa") || !strcmp(p, "Cocoa"))
 		useaqua = TRUE;
 #endif
 	    else if(!strcmp(p, "X11") || !strcmp(p, "x11"))

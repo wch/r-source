@@ -26,7 +26,7 @@ on the internet.
 Installation
 ============
 
-The distribution is distributed as a 25Mb installer @RWVER@.exe.
+The distribution is distributed as a 25Mb installer @RWVER@-win32.exe.
 
 Just run this for a Windows-XP style installer.  It contains all the R
 components, and you can select what want installed.  If you are using
@@ -234,8 +234,8 @@ add the line
 to your .Rprofile or at the end of R_HOME\etc\Rprofile.
 
 To install a package from source code you need the source-package
-distribution installed from @RWVER@.exe (but not the R sources).  The
-`R Installation and Administration' manual contains detailed
+distribution installed from @RWVER@-win32.exe (but not the R sources).
+The `R Installation and Administration' manual contains detailed
 instructions.
 
 
@@ -274,8 +274,8 @@ rw-FAQ.
 Building From Source
 ====================
 
-See the file @RWVER@\src\gnuwin32\INSTALL in the source distribution
-and the rw-FAQ.
+See the `R Installation and Adminstration' Manual
+(doc\manual\R-admin.html) and the rw-FAQ.
 
 
 Feedback

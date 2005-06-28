@@ -38,8 +38,9 @@ rug(x, ticksize=0.03, side=1, lwd=0.5, col,
 }
 \seealso{\code{\link{jitter}} which you may want for ties in \code{x}.}
 \examples{
+require(stats)# both 'density' and its default method
 with(faithful, {
-    plot(stats::density(eruptions, bw=0.15))
+    plot(density(eruptions, bw=0.15))
     rug(eruptions)
     rug(jitter(eruptions, amount = .01), side = 3, col = "light blue")
 })

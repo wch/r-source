@@ -24,8 +24,12 @@ select.list <- function(list, preselect=NULL, multiple=FALSE, title=NULL)
                             sep ="", collapse="")
             cat("", op, sep="\n")
         } else cat("", op, "", sep="\n")
-        cat(gettext("Enter zero or more numbers separated by space\n"))
-        res <- scan("", what=0, quiet=TRUE, nlines=1)
+	cat(gettext("Enter zero or more numbers separated by space\n"))
+	repeat {
+            res <- try(scan("", what=0, quiet=TRUE, nlines=1), silent=TRUE)
+	    if(!inherits(res, "try-error")) break
+	    cat(gettext("Invalid input, please try again\n"))
+	}
         if(!length(res) || (length(res) == 1 && !res[1])) return(character(0))
         res <- sort(res[1 <= res && res <= nc])
         return(list[res])

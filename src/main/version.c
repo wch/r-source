@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998, 2000  The R Development Core Team
+ *  Copyright (C) 1998-2005   The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -29,8 +29,14 @@ void PrintGreeting(void)
 {
     Rprintf("\nR : Copyright %s, The R Foundation for Statistical Computing\n",
 	    R_YEAR);
-    Rprintf("Version %s.%s %s (%s-%s-%s), ISBN 3-900051-07-0\n\n",
-	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+    if (strcmp(R_SVN_REVISION, "unknown"))
+        Rprintf("Version %s.%s %s (%s-%s-%s r%s)\n",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
+		R_SVN_REVISION);
+    else
+        Rprintf("Version %s.%s %s (%s-%s-%s)\n",
+                R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+    Rprintf("ISBN 3-900051-07-0\n\n");
     Rprintf(_("R is free software and comes with ABSOLUTELY NO WARRANTY.\n\
 You are welcome to redistribute it under certain conditions.\n\
 Type 'license()' or 'licence()' for distribution details.\n\n"));
@@ -48,8 +54,8 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     char buf[128];
     checkArity(op, args);
     sprintf(buf,"%s, %s", R_CPU, R_OS);
-    PROTECT(value = allocVector(VECSXP,11));
-    PROTECT(names = allocVector(STRSXP,11));
+    PROTECT(value = allocVector(VECSXP,12));
+    PROTECT(names = allocVector(STRSXP,12));
     SET_STRING_ELT(names, 0, mkChar("platform"));
     SET_VECTOR_ELT(value, 0, mkString(R_PLATFORM));
     SET_STRING_ELT(names, 1, mkChar("arch"));
@@ -70,8 +76,10 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
     SET_VECTOR_ELT(value, 8, mkString(R_MONTH));
     SET_STRING_ELT(names, 9, mkChar("day"));
     SET_VECTOR_ELT(value, 9, mkString(R_DAY));
-    SET_STRING_ELT(names, 10, mkChar("language"));
-    SET_VECTOR_ELT(value, 10, mkString("R"));
+    SET_STRING_ELT(names, 10, mkChar("svn rev"));
+    SET_VECTOR_ELT(value, 10, mkString(R_SVN_REVISION));
+    SET_STRING_ELT(names, 11, mkChar("language"));
+    SET_VECTOR_ELT(value, 11, mkString("R"));
     setAttrib(value, R_NamesSymbol, names);
     UNPROTECT(2);
     return value;
@@ -80,8 +88,13 @@ SEXP do_version(SEXP call, SEXP op, SEXP args, SEXP env)
 void PrintVersion(char *s)
 {
     char tmp[50];
-    sprintf(s, "R %s.%s %s (%s-%s-%s)\n",
-	    R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
+    if (strcmp(R_SVN_REVISION, "unknown"))
+	sprintf(s, "R %s.%s %s (%s-%s-%s r%s)\n",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY,
+		R_SVN_REVISION);
+    else
+	sprintf(s, "R %s.%s %s (%s-%s-%s)\n",
+		R_MAJOR, R_MINOR, R_STATUS, R_YEAR, R_MONTH, R_DAY);
     sprintf(tmp, "Copyright (C) %s R Development Core Team\n\n", R_YEAR);
     strcat(s, tmp);
     strcat(s, "R is free software and comes with ABSOLUTELY NO WARRANTY.\n");

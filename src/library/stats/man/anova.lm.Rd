@@ -8,7 +8,6 @@ anova.lmlist(object, \dots, scale = 0, test = "F")
 \alias{anova.lm}
 %\alias{anova.lm.null}
 \alias{anova.lmlist}
-\alias{anova.mlm}
 \description{
   Compute an analysis of variance table for one or more linear model fits.
 }

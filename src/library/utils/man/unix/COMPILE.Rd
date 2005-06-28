@@ -6,7 +6,9 @@
   into a shared library using \code{R CMD SHLIB} and be loaded into R
   using \code{dyn.load()}.
 }
-\usage{R CMD COMPILE [options] srcfiles}
+\usage{
+\special{R CMD COMPILE [options] srcfiles}
+}
 \arguments{
   \item{srcfiles}{A list of the names of source files to be compiled.
     Currently, C, C++ and FORTRAN are supported; the corresponding files

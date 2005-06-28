@@ -8,7 +8,9 @@
 \description{
   The file \file{Rconsole} configures the R GUI console in this
   Windows port. The file \file{Rdevga} configures the graphics devices
-  \code{windows}, \code{win.graph}, \code{win.metafile} and \code{win.print}.
+  \code{windows}, \code{win.graph}, \code{win.metafile} and
+  \code{win.print}, as well as the bitmap devices \code{bmp},
+  \code{jpeg} and \code{png} (which use \code{windows} internally).
 }
 \value{
   Each of the files contains details in its comments of how to set the

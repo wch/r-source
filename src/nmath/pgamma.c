@@ -668,7 +668,7 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 
 double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 {
-    const double
+    const static double
 	xbig = 1.0e+8,
 	xlarge = 1.0e+37,
 

@@ -15,7 +15,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
   \item{list}{character. The names of one or more \R objects to be dumped.}
 
   \item{file}{either a character string naming a file or a
-    connection. \code{""} indicates output to the console.}
+    connection.  \code{""} indicates output to the console.}
 
   \item{append}{if \code{TRUE}, output will be appended to
     \code{file}; otherwise, it will overwrite the contents of
@@ -29,6 +29,10 @@ dump(list, file = "dumpdata.R", append = FALSE,
   \item{evaluate}{logical.  Should promises be evaluated?}
 }
 \details{
+  If some of the objects named do not exist (in scope), they are
+  omitted, with a warning.  If \code{file} is a file and no objects
+  exist then no file is created.
+  
   At present \code{source}ing may not produce an identical copy of
   \code{dump}ed objects. A warning is issued if it is likely that
   problems will arise, for example when dumping exotic objects such
@@ -55,8 +59,12 @@ dump(list, file = "dumpdata.R", append = FALSE,
 
   Promises will normally only be encountered by users as a result of
   lazy-loading (when the default \code{evaluate = TRUE} is essential)
-  and after the use of \code{\link{delayedAssign}}, when \code{evaluate = FALSE}
-  might be intended.
+  and after the use of \code{\link{delayedAssign}},
+  when \code{evaluate = FALSE} might be intended.
+}
+\value{
+  An invisible character vector containing the names of the objects
+  which were dumped.
 }
 \note{
   The \code{envir} argument was added at version 1.7.0, and changed the
@@ -85,6 +93,7 @@ dump(list, file = "dumpdata.R", append = FALSE,
 \examples{
 x <- 1; y <- 1:10
 dump(ls(patt='^[xyz]'), "xyz.Rdmped")
+print(.Last.value)
 unlink("xyz.Rdmped")
 }
 \keyword{file}

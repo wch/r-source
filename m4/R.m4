@@ -669,30 +669,47 @@ fi
 ##
 ## If we have not been forced to use a particular Fortran compiler, try
 ## to find one using one of the several common names.  The list is based
-## on what the current autoconf CVS contains.  This says,
+## on what the current autoconf CVS contains (2005-05-21).  This says,
 ##
-## <Quote>
-## Compilers are ordered by
-##  1. F77, F90, F95
-##  2. Good/tested native compilers, bad/untested native compilers
-##  3. Wrappers around f2c go last.
+## <QUOTE>
+## Known compilers:
+##  f77/f90/f95: generic compiler names
+##  g77: GNU Fortran 77 compiler
+##  gfortran: putative GNU Fortran 95+ compiler (in progress)
+##  ftn: native Fortran 95 compiler on Cray X1
+##  cf77: native F77 compiler under older Crays (prefer over fort77)
+##  fort77: native F77 compiler under HP-UX (and some older Crays)
+##  frt: Fujitsu F77 compiler
+##  pgf77/pgf90/pghpf/pgf95: Portland Group F77/F90/F95 compilers
+##  xlf/xlf90/xlf95: IBM (AIX) F77/F90/F95 compilers
+##  lf95: Lahey-Fujitsu F95 compiler
+##  fl32: Microsoft Fortran 77 "PowerStation" compiler
+##  af77: Apogee F77 compiler for Intergraph hardware running CLIX
+##  epcf90: "Edinburgh Portable Compiler" F90
+##  fort: Compaq (now HP) Fortran 90/95 compiler for Tru64 and Linux/Alpha
+##  ifort, previously ifc: Intel Fortran 95 compiler for Linux/x86
+##  efc: Intel Fortran 95 compiler for IA64
+## </QUOTE>
 ##
-## 'fort77' and fc' are wrappers around 'f2c', 'fort77' being better.
-## It is believed that under HP-UX 'fort77' is the name of the native
-## compiler.  On some Cray systems, fort77 is a native compiler.
-## frt is the Fujitsu F77 compiler.
-## pgf77 and pgf90 are the Portland Group F77 and F90 compilers.
-## xlf/xlf90/xlf95 are IBM (AIX) F77/F90/F95 compilers.
-## lf95 is the Lahey-Fujitsu compiler.
-## fl32 is the Microsoft Fortran "PowerStation" compiler.
-## af77 is the Apogee F77 compiler for Intergraph hardware running CLIX.
-## epcf90 is the "Edinburgh Portable Compiler" F90.
-## fort is the Compaq Fortran 90 (now 95) compiler for Tru64 and
-## Linux/Alpha.
-## </Quote>
+## and uses the following lists:
+##   F95: f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn
+##   F90: f90 xlf90 pgf90 pghpf epcf90
+##   F77: g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
 ##
-## In fact, on HP-UX fort77 is the POSIX-compatible native compiler and
-## f77 is not: hence we need look for fort77 first!
+## We use these in the order F77 F95 F90, with the following exceptions:
+## * On HP-UX fort77 is the POSIX-compatible native compiler and
+##   f77 is not: hence we need look for fort77 first!
+## <FIXME>
+##   Is this still true?
+## </FIXME>
+## * It seems that g95 has been resurrected, see www.g95.org, hence we
+##   add this to the list of F95 compilers.
+## * Older versions of the Autoconf code used to have 'fc' as a wrapper
+##   around f2c (last in the list).  It no longer has, but we still do.
+## <FIXME>
+##   Is this still needed?
+## </FIXME>
+
 AC_DEFUN([R_PROG_F77_OR_F2C],
 [AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 if test -n "${F77}" && test -n "${F2C}"; then
@@ -707,12 +724,18 @@ elif test -z "${F2C}"; then
   F77=
   case "${host_os}" in
     hpux*)
-      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf frt pgf77 fl32 af77 f90 \
-                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc])
+      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf frt pgf77 cf77 fl32 af77 \
+			   f95 fort xlf95 ifort ifc efc pgf95 lf95 \
+			     gfortran ftn g95 \
+			   f90 xlf90 pgf90 pghpf epcf90 \
+			   fc])
       ;;
     *)
-      AC_CHECK_PROGS(F77, [g77 f77 xlf frt pgf77 fl32 af77 fort77 f90 \
-                           xlf90 pgf90 epcf90 f95 fort xlf95 lf95 g95 fc])
+      AC_CHECK_PROGS(F77, [g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77 \
+			   f95 fort xlf95 ifort ifc efc pgf95 lf95 \
+			     gfortran ftn g95 \
+			   f90 xlf90 pgf90 pghpf epcf90 \
+			   fc])
       ;;
   esac
   if test -z "${F77}"; then

@@ -21,7 +21,7 @@ oneway.test(formula, data, subset, na.action, var.equal = FALSE)
   \item{var.equal}{a logical variable indicating whether to treat the
     variances in the samples as equal.  If \code{TRUE}, then a simple F
     test for the equality of means in a one-way analysis of variance is 
-    preformed.  If \code{FALSE}, an approximate method of Welch (1951)
+    performed.  If \code{FALSE}, an approximate method of Welch (1951)
     is used, which generalizes the commonly known 2-sample Welch test to
     the case of arbitrarily many samples.}
 }

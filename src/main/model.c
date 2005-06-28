@@ -181,6 +181,7 @@ static void ExtractVars(SEXP formula, int checkonly)
     if (isNull(formula) || isZeroOne(formula))
 	return;
     if (isSymbol(formula)) {
+	if (formula == dotSymbol) haveDot = TRUE;
 	if (!checkonly) {
 	    if (formula == dotSymbol && framenames != R_NilValue) {
 		haveDot = TRUE;
@@ -705,7 +706,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP a, ans, v, pattern, formula, varnames, term, termlabs;
     SEXP specials, t, data, rhs;
-    int i, j, k, l, n, keepOrder;
+    int i, j, k, l, n, keepOrder, allowDot;
 
     checkArity(op, args);
 
@@ -764,6 +765,10 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     keepOrder = asLogical(CAR(a));
     if (keepOrder == NA_LOGICAL)
 	keepOrder = 0;
+
+    a = CDR(a);
+    allowDot = asLogical(CAR(a));
+    if (allowDot == NA_LOGICAL) allowDot = 0;
 
     if (specials == R_NilValue) {
 	a = allocList(8);
@@ -990,22 +995,26 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     /* Step 6: Fix up the formula by substituting for dot, which should be 
        the framenames joined by + */
 
-    if (haveDot && LENGTH(framenames)) {
-	PROTECT_INDEX ind;
-	PROTECT_WITH_INDEX(rhs = install(CHAR(STRING_ELT(framenames, 0))), 
-			   &ind);
-	for (i = 1; i < LENGTH(framenames); i++) {
-	    REPROTECT(rhs = lang3(plusSymbol, rhs, 
-				  install(CHAR(STRING_ELT(framenames, i)))),
-		      ind);
+    if (haveDot) {
+	if(length(framenames)) {
+	    PROTECT_INDEX ind;
+	    PROTECT_WITH_INDEX(rhs = install(CHAR(STRING_ELT(framenames, 0))), 
+			       &ind);
+	    for (i = 1; i < LENGTH(framenames); i++) {
+		REPROTECT(rhs = lang3(plusSymbol, rhs, 
+				      install(CHAR(STRING_ELT(framenames, i)))),
+			  ind);
+	    }
+	    if (!isNull(CADDR(ans)))
+		SETCADDR(ans, ExpandDots(CADDR(ans), rhs));
+	    else
+		SETCADR(ans, ExpandDots(CADR(ans), rhs));
+	    UNPROTECT(1);
+	} else if(!allowDot) {
+	    error(_("'.' in formula and no 'data' argument"));
 	}
-	if (!isNull(CADDR(ans)))
-	    SETCADDR(ans, ExpandDots(CADDR(ans), rhs));
-	else
-	    SETCADR(ans, ExpandDots(CADR(ans), rhs));
-	UNPROTECT(1);
     }
-
+    
     SETCAR(a, allocVector(INTSXP, nterm));
     n = 0;
     for (call = formula; call != R_NilValue; call = CDR(call))

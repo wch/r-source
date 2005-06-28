@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-03-11 08:07\n"
+"POT-Creation-Date: 2005-06-14 08:41\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,28 @@ msgstr ""
 msgid "reference to unknown chunk %s"
 msgstr ""
 
+msgid "no Sweave file with name '%s' found"
+msgstr ""
+
+msgid "%s Sweave files for basename '%s' found:"
+msgstr ""
+
+msgid "Found invalid multi-byte character data."
+msgstr ""
+
+msgid "Cannot re-encode because iconv is not available."
+msgstr ""
+
+msgid "Try running R in a single-byte locale."
+msgstr ""
+
+msgid "more than one syntax specification found, using the first one"
+msgstr ""
+
 msgid "object '%s' does not have class \"SweaveSyntax\""
+msgstr ""
+
+msgid "recursive Sweave input '%s' in stack"
 msgstr ""
 
 msgid "target syntax not of class \"SweaveSyntax\""
@@ -242,6 +263,9 @@ msgstr ""
 msgid "no Rd contents for package '%s' in '%s'"
 msgstr ""
 
+msgid "removing all entries with invalid multi-byte character data"
+msgstr ""
+
 msgid "incorrect 'agrep' specification"
 msgstr ""
 
@@ -249,6 +273,9 @@ msgid "'iconvlist' is not available on this system"
 msgstr ""
 
 msgid "no package '%s' was found"
+msgstr ""
+
+msgid "'DESCRIPTION' file has 'Encoding' field and re-encoding is not possible"
 msgstr ""
 
 msgid "DESCRIPTION file of package '%d' is missing or broken"
@@ -392,6 +419,39 @@ msgstr ""
 msgid "Edit the file and move it to the appropriate directory."
 msgstr ""
 
+msgid "Maintainer:"
+msgstr ""
+
+msgid "Index:"
+msgstr ""
+
+msgid "Further information is available in the following vignettes:"
+msgstr ""
+
+msgid "package title"
+msgstr ""
+
+msgid "A concise (1-5 lines) description of the package"
+msgstr ""
+
+msgid "An overview of how to use the package, including the most important functions"
+msgstr ""
+
+msgid "The author and/or maintainer of the package"
+msgstr ""
+
+msgid "Literature or other references for background information"
+msgstr ""
+
+msgid "Optional links to other man pages, e.g."
+msgstr ""
+
+msgid "simple examples of the most important functions"
+msgstr ""
+
+msgid "Optionally other keywords from doc/KEYWORDS, one per line"
+msgstr ""
+
 msgid "no documentation of type '%s' and topic '%s' (or error in processing help)"
 msgstr ""
 
@@ -464,6 +524,9 @@ msgstr ""
 msgid "Enter zero or more numbers separated by space"
 msgstr ""
 
+msgid "Invalid input, please try again"
+msgstr ""
+
 msgid "'subject' missing"
 msgstr ""
 
@@ -515,7 +578,7 @@ msgstr ""
 msgid "If nothing happens, you should open '%s' yourself"
 msgstr ""
 
-msgid "unable to create temp directory '%s'"
+msgid "unable to create temporary directory '%s'"
 msgstr ""
 
 msgid "package '%s' successfully unpacked and MD5 sums checked"
@@ -530,7 +593,7 @@ msgstr ""
 msgid "failed to create '%s'"
 msgstr ""
 
-msgid "unable to move temp installation '%d' to '%s'"
+msgid "unable to move temporary installation '%s' to '%s'"
 msgstr ""
 
 msgid "cannot remove prior installation of package '%s'"
@@ -564,6 +627,9 @@ msgid "Download of package '%s' failed"
 msgstr ""
 
 msgid "cannot remove prior installation of package"
+msgstr ""
+
+msgid "'tar' returned non-zero exit code %d"
 msgstr ""
 
 msgid        "object %s not found"

@@ -368,6 +368,14 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
         readDocFile <- function(f) {
             if(basename(f) %in% "package.rds") {
                 txt <- .readRDS(f)$DESCRIPTION
+                if("Encoding" %in% names(txt)) {
+                    to <- if(Sys.getlocale("LC_CTYPE") == "C") "ASCII//TRANSLIT"else ""
+                    tmp <- try(iconv(txt, from=txt["Encoding"], to=to))
+                    if(!inherits(tmp, "try-error"))
+                        txt <- tmp
+                    else
+                        warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                }
                 nm <- paste(names(txt), ":", sep="")
                 formatDL(nm, txt, indent = max(nchar(nm, type="w")) + 3)
             } else if(basename(f) %in% "vignette.rds") {
@@ -412,9 +420,18 @@ function(package, help, pos = 2, lib.loc = NULL, character.only = FALSE,
                 file <- system.file("Meta", "package.rds", package = i,
                                     lib.loc = lib)
                 title <- if(file != "") {
-                    tmp <- .readRDS(file)
-                    if(is.list(tmp)) tmp <- tmp$DESCRIPTION
-                    tmp["Title"]
+                    txt <- .readRDS(file)
+                    if(is.list(txt)) txt <- txt$DESCRIPTION
+                    ## we may need to re-encode here.
+                    if("Encoding" %in% names(txt)) {
+                        to <- if(Sys.getlocale("LC_CTYPE") == "C") "ASCII//TRANSLIT" else ""
+                        tmp <- try(iconv(txt, txt["Encoding"], to, "?"))
+                        if(!inherits(tmp, "try-error"))
+                            txt <- tmp
+                        else
+                            warning("'DESCRIPTION' has 'Encoding' field and re-encoding is not possible", call.=FALSE)
+                    }
+                    txt["Title"]
                 } else NA
                 if(is.na(title))
                     title <- " ** No title available (pre-2.0.0 install?)  ** "
@@ -908,8 +925,8 @@ function(pkgInfo, quietly = FALSE, lib.loc = NULL, useImports = FALSE)
                     pfile <- system.file("Meta", "package.rds",
                                          package = pkg, lib.loc = lib.loc)
                     if(nchar(pfile) == 0)
-                        stop(gettext("package '%s' required by '%s' could not be found",
-                                     pkg, pkgname),
+                        stop(gettextf("package '%s' required by '%s' could not be found",
+                                      pkg, pkgname),
                              call. = FALSE, domain = NA)
                     current <- .readRDS(pfile)$DESCRIPTION["Version"]
                     if (!eval(parse(text=paste("current", z$op, "z$version"))))

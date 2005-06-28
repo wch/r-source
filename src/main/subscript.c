@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2003  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -181,30 +181,43 @@ int get1index(SEXP s, SEXP names, int len, Rboolean pok, int pos)
 /* x is an n-way array and i is a matrix with n columns. */
 /* This code returns a vector containing the integer subscripts */
 /* to be extracted when x is regarded as unravelled. */
+/* Negative indices are not allowed. */
+/* A zero anywhere in a row will cause a zero in the same */
+/* position in the result. */
 
 SEXP mat2indsub(SEXP dims, SEXP s)
 {
-    int tdim, j, i, nrs = nrows(s);
+    int tdim, j, i, k, nrs = nrows(s);
     SEXP rvec;
 
+    if (ncols(s) != LENGTH(dims))
+	error(_("incorrect number of columns in matrix subscript"));
     PROTECT(rvec = allocVector(INTSXP, nrs));
     s = coerceVector(s, INTSXP);
     setIVector(INTEGER(rvec), nrs, 0);
 
-    /* compute 0-based subscripts */
     for (i = 0; i < nrs; i++) {
 	tdim = 1;
+	/* compute 0-based subscripts for a row (0 in the input gets -1
+	   in the output here) */
 	for (j = 0; j < LENGTH(dims); j++) {
-	    if(INTEGER(s)[i + j * nrs] == NA_INTEGER) {
+	    k = INTEGER(s)[i + j * nrs];
+	    if(k == NA_INTEGER) {
 		INTEGER(rvec)[i] = NA_INTEGER;
 		break;
 	    }
-	    if (INTEGER(s)[i + j * nrs] > INTEGER(dims)[j])
+	    if(k < 0) error(_("negative values are not allowed in a matrix subscript"));
+	    if(k == 0) {
+		INTEGER(rvec)[i] = -1;
+		break;
+	    }
+	    if (k > INTEGER(dims)[j])
 		error(_("subscript out of bounds"));
-	    INTEGER(rvec)[i] += (INTEGER(s)[i+j*nrs] - 1) * tdim;
+	    INTEGER(rvec)[i] += (k - 1) * tdim;
 	    tdim *= INTEGER(dims)[j];
 	}
-	/* transform to 1 based subscripting */
+	/* transform to 1 based subscripting (0 in the input gets 0 
+	   in the output here) */
 	if(INTEGER(rvec)[i] != NA_INTEGER)
 	    INTEGER(rvec)[i]++;
     }

@@ -1512,3 +1512,140 @@ add1(fit, ~ . +x2)
 res <-  try(stats:::add1.default(fit, ~ . +x2))
 stopifnot(inherits(res, "try-error"))
 ## 2.0.1 ran and gave incorrect answers.
+
+
+## (PR#7789) escaped quotes in the first five lines for read.table
+tf <- tempfile()
+x <- c("6 'TV2  Shortland Street'",
+       "2 'I don\\\'t watch TV at 7'",
+       "1 'I\\\'m not bothered, whatever that looks good'",
+       "2 'I channel surf'")
+writeLines(x, tf)
+read.table(tf)
+x <- c("6 'TV2  Shortland Street'",
+       "2 'I don''t watch TV at 7'",
+       "1 'I''m not bothered, whatever that looks good'",
+       "2 'I channel surf'")
+writeLines(x, tf)
+read.table(tf, sep=" ")
+unlink(tf)
+## mangled in 2.0.1
+
+
+## (PR#7802) printCoefmat(signif.legend =FALSE) failed
+set.seed(123)
+cmat <- cbind(rnorm(3, 10), sqrt(rchisq(3, 12)))
+cmat <- cbind(cmat, cmat[,1]/cmat[,2])
+cmat <- cbind(cmat, 2*pnorm(-cmat[,3]))
+colnames(cmat) <- c("Estimate", "Std.Err", "Z value", "Pr(>z)")
+printCoefmat(cmat, signif.stars = TRUE)
+printCoefmat(cmat, signif.stars = TRUE, signif.legend = FALSE)
+# no stars, so no legend
+printCoefmat(cmat, signif.stars = FALSE)
+printCoefmat(cmat, signif.stars = TRUE, signif.legend = TRUE)
+## did not work in 2.1.0
+
+
+## PR#7824 subscripting an array by a matrix
+x <- matrix(1:6, ncol=2)
+x[rbind(c(1,1), c(2,2))]
+x[rbind(c(1,1), c(2,2), c(0,1))]
+x[rbind(c(1,1), c(2,2), c(0,0))]
+x[rbind(c(1,1), c(2,2), c(0,2))]
+x[rbind(c(1,1), c(2,2), c(0,3))]
+x[rbind(c(1,1), c(2,2), c(1,0))]
+x[rbind(c(1,1), c(2,2), c(2,0))]
+x[rbind(c(1,1), c(2,2), c(3,0))]
+x[rbind(c(1,0), c(0,2), c(3,0))]
+x[rbind(c(1,0), c(0,0), c(3,0))]
+x[rbind(c(1,1), c(2,2), c(1,2))]
+x[rbind(c(1,1), c(2,NA), c(1,2))]
+x[rbind(c(1,0), c(2,NA), c(1,2))]
+try(x[rbind(c(1,1), c(2,2), c(-1,2))])
+try(x[rbind(c(1,1), c(2,2), c(-2,2))])
+try(x[rbind(c(1,1), c(2,2), c(-3,2))])
+try(x[rbind(c(1,1), c(2,2), c(-4,2))])
+try(x[rbind(c(1,1), c(2,2), c(-1,-1))])
+try(x[rbind(c(1,1,1), c(2,2,2))])
+
+# verify that range checks are applied to negative indices
+x <- matrix(1:6, ncol=3)
+try(x[rbind(c(1,1), c(2,2), c(-3,3))])
+try(x[rbind(c(1,1), c(2,2), c(-4,3))])
+## generally allowed in 2.1.0.
+
+## Branch cuts in complex inverse trig functions
+atan(2)
+atan(2+0i)
+tan(atan(2+0i))
+atan(1.0001+0i)
+atan(0.9999+0i)
+## previously not as in Abramowitz & Stegun.
+
+
+## printing RAW matrices/arrays was not implemented
+s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))
+s
+dim(s) <- c(7,4,2)
+s
+## empty < 2.1.1
+
+
+## interpretation of '.' directly by model.matrix
+dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
+model.matrix(~ .^2, data = dd)
+## lost ^2 in 2.1.1
+
+### end of tests added in 2.1.1 patched ###
+
+
+## Tests of logical matrix indexing with NAs
+df1 <- data.frame(a = c(NA, 0, 3, 4)); m1 <- as.matrix(df1)
+df2 <- data.frame(a = c(NA, 0, 0, 4)); m2 <- as.matrix(df2)
+df1[df1 == 0] <- 2; df1
+m1[m1 == 0] <- 2;   m1
+df2[df2 == 0] <- 2; df2  # not allowed in 2.{0,1}.z
+m2[m2 == 0] <- 2;   m2
+df1[df1 == 2] # this is first coerced to a matrix, and drops to a vector
+df3 <- data.frame(a=1:2, b=2:3)
+df3[df3 == 2]            # had spurious names
+# but not allowed
+try(df2[df2 == 2] <- 1:2)
+try(m2[m2 == 2] <- 1:2)
+##
+
+
+## vector indexing of matrices: issue is when rownames are used
+# 1D array
+m1 <- c(0,1,2,0)
+dim(m1) <- 4
+dimnames(m1) <- list(1:4)
+m1[m1 == 0]                        # has rownames
+m1[which(m1 == 0)]                 # has rownames
+m1[which(m1 == 0, arr.ind = TRUE)] # no names < 2.2.0 (side effect of PR#937)
+
+# 2D array with 2 cols
+m2 <- as.matrix(data.frame(a=c(0,1,2,0), b=0:3))
+m2[m2 == 0]                        # a vector, had names < 2.2.0
+m2[which(m2 == 0)]                 # a vector, had names < 2.2.0
+m2[which(m2 == 0, arr.ind = TRUE)] # no names (PR#937)
+
+# 2D array with one col: could use rownames but do not.
+m21 <- m2[, 1, drop = FALSE]
+m21[m21 == 0]
+m21[which(m21 == 0)]
+m21[which(m21 == 0, arr.ind = TRUE)]
+## not consistent < 2.2.0: S never gives names
+
+
+## tests of indexing as quoted in Extract.Rd
+x <- NULL
+x$foo <- 2
+x # length-1 vector
+x <- NULL
+x[[2]] <- pi
+x # numeric vector
+x <- NULL
+x[[1]] <- 1:3
+x # list
+##

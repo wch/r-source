@@ -15,9 +15,15 @@ available.packages <-
     colnames(res) <- c(flds, "Repository")
     for(repos in contriburl) {
         localcran <- length(grep("^file:", repos)) > 0
-        if(localcran)
-            tmpf <- paste(substring(repos,6), "PACKAGES", sep = "/")
-        else{
+        if(localcran) {
+            ## see note in download.packages
+            tmpf <- paste(substring(repos, 6), "PACKAGES", sep = "/")
+            tmpf <- sub("^//", "", tmpf)
+            if(.Platform$OS.type == "windows") {
+                if(length(grep("[A-Za-z]:", tmpf)))
+                    tmpf <- substring(tmpf, 2)
+            }
+        } else {
             tmpf <- tempfile()
             on.exit(unlink(tmpf))
             z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
@@ -64,9 +70,8 @@ simplifyRepos <- function(repos, type)
     substr(repos, 1, ind)
 }
 
-update.packages <- function(lib.loc = NULL, repos = CRAN,
+update.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                             contriburl = contrib.url(repos, type),
-                            CRAN = getOption("repos"),
                             method, instlib = NULL, ask = TRUE,
                             available = NULL, destdir = NULL,
 			    installWithVers = FALSE,
@@ -109,7 +114,7 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
 
     if(is.null(old)) return(invisible())
     if(is.character(ask) && ask == "graphics") {
-        if(.Platform$OS.type == "unix"
+        if(.Platform$OS.type == "unix" && .Platform$GUI != "AQUA"
            && capabilities("tcltk") && capabilities("X11")) {
             k <- tcltk::tk_select.list(old[,1], old[,1], multiple = TRUE,
                                        title = "Packages to be updated")
@@ -131,13 +136,12 @@ update.packages <- function(lib.loc = NULL, repos = CRAN,
                          contriburl = contriburl,
                          method = method,
                          available = available, destdir = destdir,
-                         installWithVers = installWithVers, type)
+                         installWithVers = installWithVers, type = type)
     }
 }
 
-old.packages <- function(lib.loc = NULL, repos = CRAN,
+old.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
-                         CRAN = getOption("repos"),
                          method, available = NULL, checkBuilt = FALSE)
 {
     if(is.null(lib.loc))
@@ -201,9 +205,8 @@ old.packages <- function(lib.loc = NULL, repos = CRAN,
     update
 }
 
-new.packages <- function(lib.loc = NULL, repos = CRAN,
+new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
                          contriburl = contrib.url(repos),
-                         CRAN = getOption("repos"),
                          method, available = NULL, ask = FALSE)
 {
     if(is.null(lib.loc)) lib.loc <- .libPaths()
@@ -259,9 +262,13 @@ new.packages <- function(lib.loc = NULL, repos = CRAN,
         update <- res[match(select.list(res, multiple = TRUE,
                                         title = "New packages to be installed")
                             , res)]
-    if(length(update))
+    if(length(update)) {
         install.packages(update, lib = lib.loc[1], repos = repos,
                          method = method, available = available)
+        # now check if they were installed and update 'res'
+        updated <- update[update %in%  list.files(lib.loc[1])]
+        res <- res[!res %in% update]
+    }
     res
 }
 
@@ -282,7 +289,8 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
         # this excludes packages without DESCRIPTION files
         pkgs <- .packages(all.available = TRUE, lib.loc = lib)
         for(p in pkgs){
-            desc <- packageDescription(p, lib = lib, fields = pkgFlds)
+            desc <- packageDescription(p, lib = lib, fields = pkgFlds,
+                                       encoding = NA)
             ## this gives NA if the package has no Version field
             if (is.logical(desc)) {
                 desc <- rep(as.character(NA), length(pkgFlds))
@@ -311,10 +319,6 @@ remove.packages <- function(pkgs, lib, version) {
         ## This should eventually be made public, as it could also be
         ## used by install.packages() && friends.
         if(lib == .Library) {
-            ## R version of
-            ##   ${R_HOME}/bin/build-help --htmllists
-            ##   cat ${R_HOME}/library/*/CONTENTS \
-            ##     > ${R_HOME}/doc/html/search/index.txt
             if(exists("link.html.help", mode = "function"))
                 link.html.help()
         }
@@ -353,9 +357,8 @@ remove.packages <- function(pkgs, lib, version) {
 }
 
 download.packages <- function(pkgs, destdir, available = NULL,
-                              repos = CRAN,
+                              repos = getOption("repos"),
                               contriburl = contrib.url(repos, type),
-                              CRAN = getOption("repos"),
                               method, type = getOption("pkgType"))
 {
     dirTest <- function(x) !is.na(isdir <- file.info(x)$isdir) & isdir
@@ -389,7 +392,17 @@ download.packages <- function(pkgs, destdir, available = NULL,
                         sep="")
             repos <- available[ok, "Repository"]
             if(length(grep("^file:", repos)) > 0) { # local repository
+                ## We need to derive the file name from the URL
+                ## This is tricky as so many forms have been allowed,
+                ## and indeed external methods may do even more.
                 fn <- paste(substring(repos, 6), fn, sep = "/")
+                fn <- sub("^//", "", fn)
+                fn <- URLdecode(fn)
+                ## This should leave us with a path beginning with /
+                if(.Platform$OS.type == "windows") {
+                    if(length(grep("[A-Za-z]:", fn)))
+                        fn <- substring(fn, 2)
+                }
                 retval <- rbind(retval, c(p, fn))
             } else {
                 url <- paste(repos, fn, sep="/")
@@ -438,21 +451,10 @@ contrib.url <- function(repos, type = getOption("pkgType"))
 chooseCRANmirror <- function(graphics = TRUE)
 {
     if(!interactive()) stop("cannot choose a CRAN mirror non-interactively")
-    m <- read.csv(file.path(R.home(), "doc/CRAN_mirrors.csv"), as.is=TRUE)
-    if(graphics) {
-        ## return a character vector of URLs
-        if(.Platform$OS.type == "windows" || .Platform$GUI == "AQUA")
-            URL <- m[m[,1] == select.list(m[,1],, FALSE, "CRAN mirror"), "URL"]
-        else if(.Platform$OS.type == "unix" &&
-                 capabilities("tcltk") && capabilities("X11"))
-                URL <- m[m[,1] == tcltk::tk_select.list(m[,1],, FALSE,
-                          "CRAN mirror"), "URL"]
-    } else {
-        ## text-mode fallback
-        res <- menu(m[,1], , "CRAN mirror")
+    m <- read.csv(file.path(R.home("doc"), "CRAN_mirrors.csv"), as.is=TRUE)
+    res <- menu(m[,1], graphics, "CRAN mirror")
+    if(res > 0) {
         URL <- m[res, "URL"]
-    }
-    if(length(URL)) {
         repos <- getOption("repos")
         repos["CRAN"] <- gsub("/$", "", URL[1])
         options(repos = repos)
@@ -465,11 +467,11 @@ setRepositories <- function(graphics=TRUE)
     if(!interactive()) stop("cannot set repositories non-interactively")
     p <- file.path(Sys.getenv("HOME"), ".R", "repositories")
     if(!file.exists(p))
-        p <- file.path(R.home(), "etc", "repositories")
+        p <- file.path(R.home("etc"), "repositories")
     a <- read.delim(p, header=TRUE,
                     colClasses=c(rep("character", 3), rep("logical", 4)))
     thisType <- a[[getOption("pkgType")]]
-    a <- a[thisType, 1:4]
+    a <- a[thisType, 1:3]
     repos <- getOption("repos")
     ## Now look for CRAN and any others in getOptions("repos")
     if("CRAN" %in% row.names(a) && !is.na(CRAN <- repos["CRAN"]))

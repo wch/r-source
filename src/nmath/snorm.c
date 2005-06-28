@@ -60,7 +60,7 @@ extern DL_FUNC  User_norm_fun; /* declared and set in ../main/RNG.c */
 double norm_rand(void)
 {
 
-    const double a[32] =
+    const static double a[32] =
     {
 	0.0000000, 0.03917609, 0.07841241, 0.1177699,
 	0.1573107, 0.19709910, 0.23720210, 0.2776904,
@@ -72,7 +72,7 @@ double norm_rand(void)
 	1.5341210, 1.67594000, 1.86273200, 2.1538750
     };
 
-    const double d[31] =
+    const static double d[31] =
     {
 	0.0000000, 0.0000000, 0.0000000, 0.0000000,
 	0.0000000, 0.2636843, 0.2425085, 0.2255674,
@@ -84,7 +84,7 @@ double norm_rand(void)
 	0.1134023, 0.1114027, 0.1095039
     };
 
-    const double t[31] =
+    const static double t[31] =
     {
 	7.673828e-4, 0.002306870, 0.003860618, 0.005438454,
 	0.007050699, 0.008708396, 0.010423570, 0.012209530,
@@ -96,7 +96,7 @@ double norm_rand(void)
 	0.227624100, 0.330498000, 0.584703100
     };
 
-    const double h[31] =
+    const static double h[31] =
     {
 	0.03920617, 0.03932705, 0.03950999, 0.03975703,
 	0.04007093, 0.04045533, 0.04091481, 0.04145507,
@@ -121,7 +121,7 @@ double norm_rand(void)
 #define C2		0.180025191068563
 #define g(x)		(C1*exp(-x*x/2.0)-C2*(A-x))
 
-    const double A =  2.216035867166471;
+    const static double A =  2.216035867166471;
 
     double s, u1, w, y, u2, u3, aa, tt, theta, R;
     int i;

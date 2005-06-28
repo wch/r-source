@@ -21,11 +21,16 @@ atanh(x)
   etc).
 }
 \arguments{
-  \item{x}{a numeric vector}
+   \item{x}{a numeric or complex vector}
 }
 \details{
-  These are generic functions: methods can be defined for them
-  individually or via the \code{\link{Math}} group generic.
+   These are generic functions: methods can be defined for them
+   individually or via the \code{\link{Math}} group generic.
+
+   Branch cuts are consistent with the inverse trigonometric functions
+   \code{asin()} et seq, and agree with those defined in Abramowitz and
+   Stegun, figure 4.7, page 86.
+
 }
 \seealso{
   The trigonometric functions, \code{\link{cos}}, \code{\link{sin}},
@@ -33,6 +38,12 @@ atanh(x)
   \code{\link{acos}}, \code{\link{asin}}, \code{\link{atan}}.
 
   The logistic distribution function \code{\link{plogis}} is a shifted
-  version of \code{tanh()}.
+  version of \code{tanh()} for numeric \code{x}.
+}
+\references{
+  Abramowitz, M. and Stegun, I. A. (1972)
+  \emph{Handbook of Mathematical Functions.} New York: Dover.\cr
+  Chapter 4. Elementary Transcendental Functions: Logarithmic,
+  Exponential, Circular and Hyperbolic Functions
 }
 \keyword{math}

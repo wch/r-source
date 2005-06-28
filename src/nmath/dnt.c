@@ -74,9 +74,11 @@ double dnt(double x, double df, double ncp, int give_log)
     if(!R_FINITE(x))
 	return R_D__0;
 
-    /* If infinite df then the density is identical to a  */
-    /* normal distribution with mean = ncp */
-    if(!R_FINITE(df))
+    /* If infinite df then the density is identical to a
+       normal distribution with mean = ncp.  However, the formula
+       loses a lot of accuracy around df=1e9
+    */
+    if(!R_FINITE(df) || df > 1e8)
 	return dnorm(x, ncp, 1., give_log);
 
     /* Consider two cases: x==0 or not */

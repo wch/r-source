@@ -15,7 +15,13 @@
 
 ## add other languages for the R domain to LINGUAS
 ## add both RGui-ll.po and RGui-ll.gmo files to RGUI_CATALOGS
-RGUI_CATALOGS = RGui-it.po RGui-it.gmo
+RGUI_CATALOGS = \
+  RGui-de.po RGui-de.gmo \
+  RGui-fr.po RGui-fr.gmo \
+  RGui-it.po RGui-it.gmo \
+  RGui-ja.po RGui-ja.gmo \
+  RGui-ko.po RGui-ko.gmo \
+  RGui-zh_CN.po RGui-zh_CN.gmo
 
 VPATH = @srcdir@
 srcdir = @srcdir@
@@ -25,7 +31,7 @@ top_builddir = ..
 
 include $(top_builddir)/Makeconf
 
-Rsharedir = ${rhome}/share
+Rsharedir = ${rsharedir}
 Rlocaledir = $(Rsharedir)/locale
 
 mkinstalldirs = $(MKINSTALLDIRS)
@@ -122,13 +128,13 @@ $(DOMAIN).pot-update: $(POTFILES) $(srcdir)/POTFILES.in remove-potcdate.sed
 	  fi; \
 	}
 
-RGui.pot-update:
+RGui.pot-update: remove-potcdate.sed
 	(cd $(top_srcdir)/src/gnuwin32; $(XGETTEXT) --default-domain=RGui \
 	  --keyword= --keyword=G_ --keyword=GN_ \
 	  --add-comments=TRANSLATORS: \
 	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
 	  --msgid-bugs-address='$(MSGID_BUGS_ADDRESS)' \
-	   -o - console.c dataentry.c editor.c pager.c preferences.c rui.c \
+	   -o - console.c dataentry.c editor.c extra.c pager.c preferences.c rui.c \
 	    system.c \
 	    graphapp/clipboard.c graphapp/dialogs.c graphapp/gmenus.c \
 	    graphapp/metafile.c graphapp/printer.c \
@@ -260,7 +266,7 @@ uninstall-exec:
 uninstall-data: uninstall-data-@USE_NLS@
 uninstall-data-no:
 uninstall-data-yes:
-	catalogs='$(CATALOGS)'; \
+	@catalogs='$(CATALOGS)'; \
 	for cat in $$catalogs; do \
 	  cat=`basename $$cat`; \
 	  lang=`echo $$cat | sed -e 's/\.gmo$$//'`; \
@@ -309,7 +315,7 @@ update-po: Makefile
 	$(MAKE) $(DOMAIN).pot-update
 	test -z "$(UPDATEPOFILES)" || $(MAKE) $(UPDATEPOFILES)
 	$(MAKE) update-gmo
-	$(MAKE) RGui.pot-update
+	#$(MAKE) RGui.pot-update
 
 ## NB datasets does not have any po, tcltk has src but no tcltk.pot
 R_PKGS_PO = base grDevices graphics grid methods splines stats stats4 tcltk tools utils
@@ -317,7 +323,7 @@ DUMMYPKGFILES= $(R_PKGS_PO:=.nop)
 UPDATEPKGFILES=$(R_PKGS_PO:=.pkg-update)
 $(DUMMYPKGFILES):
 
-update-pkg-po: Makefile $(UPDATEPKGFILES)
+update-pkg-po: Makefile remove-potcdate.sed en@quot.insert-header $(UPDATEPKGFILES)
 
 R_EXE = $(top_builddir)/bin/R --vanilla
 

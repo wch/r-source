@@ -325,8 +325,8 @@ SEXP do_dput(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
-    SEXP file, names, o, objs, tval, source;
-    int i, j, nobjs, res;
+    SEXP file, names, o, objs, tval, source, outnames;
+    int i, j, nobjs, nout, res;
     Rboolean wasopen, havewarned = FALSE, evaluate;
     Rconnection con;
     int opts;
@@ -352,53 +352,61 @@ SEXP do_dump(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     PROTECT(o = objs = allocList(nobjs));
 
-    for (j = 0; j < nobjs; j++, o = CDR(o)) {
+    for (j = 0, nout = 0; j < nobjs; j++, o = CDR(o)) {
 	SET_TAG(o, install(CHAR(STRING_ELT(names, j))));
 	SETCAR(o, findVar(TAG(o), source));
 	if (CAR(o) == R_UnboundValue)
-	    error(_("Object \"%s\" not found"), CHAR(PRINTNAME(TAG(o))));
+	    warning(_("Object \"%s\" not found"), CHAR(PRINTNAME(TAG(o))));
+	else nout++;
     }
     o = objs;
-    if(INTEGER(file)[0] == 1) {
-	for (i = 0; i < nobjs; i++) {
-	    obj_name = CHAR(STRING_ELT(names, i));
-	    /* figure out if we need to quote the name */
-	    if(!isValidName(obj_name))
-		Rprintf("\"%s\" <-\n", obj_name);
-	    else
-		Rprintf("%s <-\n", obj_name);
-	    tval = deparse1(CAR(o), 0, opts);
-	    for (j = 0; j < LENGTH(tval); j++) {
-		Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));
+    PROTECT(outnames = allocVector(STRSXP, nout));
+    if(nout > 0) {
+	if(INTEGER(file)[0] == 1) {
+	    for (i = 0, nout = 0; i < nobjs; i++) {
+		if (CAR(o) == R_UnboundValue) continue;
+		obj_name = CHAR(STRING_ELT(names, i));
+		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
+		/* figure out if we need to quote the name */
+		if(!isValidName(obj_name))
+		    Rprintf("\"%s\" <-\n", obj_name);
+		else
+		    Rprintf("%s <-\n", obj_name);
+		tval = deparse1(CAR(o), 0, opts);
+		for (j = 0; j < LENGTH(tval); j++)
+		    Rprintf("%s\n", CHAR(STRING_ELT(tval, j)));
+		o = CDR(o);
 	    }
-	    o = CDR(o);
 	}
-    }
-    else {
-	con = getConnection(INTEGER(file)[0]);
-	wasopen = con->isopen;
-	if (!wasopen)
-	    if(!con->open(con)) error(_("cannot open the connection"));
-	for (i = 0; i < nobjs; i++) {
-	    res = Rconn_printf(con, "\"%s\" <-\n", CHAR(STRING_ELT(names, i)));
-	    if(!havewarned &&
-	       res < strlen(CHAR(STRING_ELT(names, i))) + 4)
-		warningcall(call, _("wrote too few characters"));
-	    tval = deparse1(CAR(o), 0, opts);
-	    for (j = 0; j < LENGTH(tval); j++) {
-		res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
+	else {
+	    con = getConnection(INTEGER(file)[0]);
+	    wasopen = con->isopen;
+	    if (!wasopen)
+		if(!con->open(con)) error(_("cannot open the connection"));
+	    for (i = 0, nout = 0; i < nobjs; i++) {
+		if (CAR(o) == R_UnboundValue) continue;
+		SET_STRING_ELT(outnames, nout++, STRING_ELT(names, i));
+		res = Rconn_printf(con, "\"%s\" <-\n", 
+				   CHAR(STRING_ELT(names, i)));
 		if(!havewarned &&
-		   res < strlen(CHAR(STRING_ELT(tval, j))) + 1)
+		   res < strlen(CHAR(STRING_ELT(names, i))) + 4)
 		    warningcall(call, _("wrote too few characters"));
+		tval = deparse1(CAR(o), 0, opts);
+		for (j = 0; j < LENGTH(tval); j++) {
+		    res = Rconn_printf(con, "%s\n", CHAR(STRING_ELT(tval, j)));
+		    if(!havewarned &&
+		       res < strlen(CHAR(STRING_ELT(tval, j))) + 1)
+			warningcall(call, _("wrote too few characters"));
+		}
+		o = CDR(o);
 	    }
-	    o = CDR(o);
+	    if (!wasopen) con->close(con);
 	}
-	if (!wasopen) con->close(con);
     }
 
-    UNPROTECT(1);
+    UNPROTECT(2);
     R_Visible = 0;
-    return names;
+    return outnames;
 }
 
 static void linebreak(Rboolean *lbreak, LocalParseData *d)
@@ -1122,7 +1130,7 @@ static void print2buff(char *strng, LocalParseData *d)
 static void scalar2buff(SEXP inscalar, LocalParseData *d)
 {
     char *strp;
-    strp = EncodeElement(inscalar, 0, '"');
+    strp = EncodeElement(inscalar, 0, '"', '.');
     print2buff(strp, d);
 }
 
@@ -1156,7 +1164,7 @@ static void vector2buff(SEXP vector, LocalParseData *d)
 	if((d->opts & KEEPINTEGER) && TYPEOF(vector) == INTSXP) print2buff("as.integer(", d);
 	print2buff("c(", d);
 	for (i = 0; i < tlen; i++) {
-	    strp = EncodeElement(vector, i, quote);
+	    strp = EncodeElement(vector, i, quote, '.');
 	    print2buff(strp, d);
 	    if (i < (tlen - 1))
 		print2buff(", ", d);

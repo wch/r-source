@@ -1,6 +1,6 @@
-#include "R_ext/RStartup.h"
+#include <R_ext/RStartup.h>
 
-void fpu_setup(Rboolean);/* ./sys-unix.c */
+void fpu_setup(Rboolean);	/* ./sys-unix.c */
 
 void Rstd_read_history(char *s);
 

@@ -111,6 +111,12 @@ static void naRealCheck(double x, char *s)
 	par_error(s);
 }
 
+static void logAxpCheck(int x, char *s)
+{
+    if (x == NA_INTEGER || x == 0 || x > 4)
+	par_error(s);
+}
+
 
 static void BoundsCheck(double x, double a, double b, char *s)
 {

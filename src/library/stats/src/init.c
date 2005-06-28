@@ -22,9 +22,11 @@
 
 #include "ctest.h"
 #include "eda.h"
+#include "family.h"
 #include "modreg.h"
 #include "mva.h"
 #include "nls.h"
+#include "port.h"
 #include "stats.h"
 #include "ts.h"
 #include <R_ext/Rdynload.h>
@@ -52,6 +54,14 @@ static R_NativePrimitiveArgType Srunmed_t[6] = {REALSXP,REALSXP,INTSXP,INTSXP,
 					 INTSXP,LGLSXP};
 static R_NativePrimitiveArgType Trunmed_t[9] = {INTSXP,INTSXP, REALSXP,REALSXP,
 					 INTSXP,INTSXP, REALSXP,INTSXP,INTSXP};
+
+static R_NativePrimitiveArgType band_ucv_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType band_bcv_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType band_phi4_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType band_phi6_bin_t[] = {INTSXP, INTSXP, REALSXP, INTSXP, REALSXP, REALSXP};
+static R_NativePrimitiveArgType band_den_bin_t[] = {INTSXP, INTSXP, REALSXP, REALSXP, INTSXP};
+
+#define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
 
 
 static const R_CMethodDef CEntries[]  = {
@@ -96,6 +106,11 @@ static const R_CMethodDef CEntries[]  = {
     {"HoltWinters", (DL_FUNC) &HoltWinters, 15},
     {"kmeans_Lloyd", (DL_FUNC) &kmeans_Lloyd, 9},
     {"kmeans_MacQueen", (DL_FUNC) &kmeans_MacQueen, 9},
+    CDEF(band_ucv_bin),
+    CDEF(band_bcv_bin),
+    CDEF(band_phi4_bin),
+    CDEF(band_phi6_bin),
+    CDEF(band_den_bin),
     {NULL, NULL, 0}
 };
 
@@ -127,6 +142,12 @@ static R_CallMethodDef CallEntries[] = {
     {"ARIMA_CSS", (DL_FUNC) &ARIMA_CSS, 6},
     {"TSconv", (DL_FUNC) &TSconv, 2},
     {"getQ0", (DL_FUNC) &getQ0, 2},
+    {"port_ivset", (DL_FUNC) &port_ivset, 2},
+    {"port_nlminb", (DL_FUNC) &port_nlminb, 9},
+    {"logit_link", (DL_FUNC) &logit_link, 1},
+    {"logit_linkinv", (DL_FUNC) &logit_linkinv, 1},
+    {"logit_mu_eta", (DL_FUNC) &logit_mu_eta, 1},
+    {"binomial_dev_resids", (DL_FUNC) &binomial_dev_resids, 3},
     {NULL, NULL, 0}
 };
 

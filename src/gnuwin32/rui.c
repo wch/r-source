@@ -66,7 +66,7 @@ static menuitem msource, mdisplay, mload, msave, mloadhistory,
     msavehistory, mpaste, mpastecmds, mcopy, mcopypaste, mlazy, mconfig,
     mls, mrm, msearch, mhelp, mmanintro, mmanref, mmandata,
     mmanext, mmanlang, mmanadmin, mman0, mapropos, mhelpstart, mhelpsearch, 
-    mFAQ, mrwFAQ, mpkgl, mpkgm, mpkgi, mpkgil, mpkgu, /*mpkgb, mpkgbu,*/
+    msearchRsite, mFAQ, mrwFAQ, mpkgl, mpkgm, mpkgi, mpkgil, mpkgu,
     mde, mCRAN, mrepos;
 static int lmanintro, lmanref, lmandata, lmanlang, lmanext, lmanadmin;
 static menu m, mman;
@@ -102,7 +102,7 @@ static void menusource(control m)
     char *fn;
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter(G_("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select file to source"), "");
     Rwin_fpset();
 /*    show(RConsole); */
@@ -124,7 +124,7 @@ static void menuloadimage(control m)
     char *fn;
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter(G_("R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("R images (*.RData)\0*.RData\0R images - old extension (*.rda)\0*.rda\0All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select image to load"), "");
     Rwin_fpset();
 /*    show(RConsole); */
@@ -140,7 +140,7 @@ static void menusaveimage(control m)
     char *fn;
 
     if (!ConsoleAcceptCmd) return;
-    setuserfilter(G_("R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("R images (*.RData)\0*.RData\0All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Save image in"), ".RData");
     Rwin_fpset();
 /*    show(RConsole); */
@@ -155,7 +155,7 @@ static void menuloadhistory(control m)
 {
     char *fn;
 
-    setuserfilter(G_("All files (*.*)\0*.*\0\0"));
+    setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Load history from"), R_HistoryFile);
     Rwin_fpset();
 /*    show(RConsole); */
@@ -169,7 +169,7 @@ static void menusavehistory(control m)
 {
     char *fn;
 
-    setuserfilter(G_("All files (*.*)\0*.*\0\0"));
+    setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilesave(G_("Save history in"), R_HistoryFile);
     Rwin_fpset();
 /*    show(RConsole); */
@@ -485,6 +485,21 @@ static void menuhelpsearch(control m)
     }
 }
 
+static void menusearchRsite(control m)
+{
+    char *s;
+    static char olds[256] = "";
+
+    if (!ConsoleAcceptCmd) return;
+    s = askstring(G_("Search for words in help list archives and documentation"), olds);
+    if (s && strlen(s)) {
+	snprintf(cmd, 1024, "RSiteSearch(\"%s\")", s);
+	if (strlen(s) > 255) s[255] = '\0';
+	strcpy(olds, s);
+	consolecmd(RConsole, cmd);
+    }
+}
+
 static void menuapropos(control m)
 {
     char *s;
@@ -560,13 +575,13 @@ static void menuact(control m)
 	enable(msearch);
 	enable(mhelp);
 	enable(mhelpsearch);
+	enable(msearchRsite);
 	enable(mapropos);
 	enable(mpkgl);
 	enable(mpkgm);
 	enable(mpkgi);
 	enable(mpkgil);
 	enable(mpkgu);
-	/* enable(mpkgb); enable(mpkgbu); */
 	enable(mde);
 	enable(mCRAN);
 	enable(mrepos);
@@ -579,13 +594,13 @@ static void menuact(control m)
 	disable(msearch);
 	disable(mhelp);
 	disable(mhelpsearch);
+	disable(msearchRsite);
 	disable(mapropos);
 	disable(mpkgl);
 	disable(mpkgm);
 	disable(mpkgi);
 	disable(mpkgil);
 	disable(mpkgu);
-	/* disable(mpkgb); disable(mpkgbu); */
 	disable(mde);
 	disable(mCRAN);
 	disable(mrepos);
@@ -921,7 +936,7 @@ int RguiPackageMenu()
 				menupkgrepos));
     MCHECK(mpkgi = newmenuitem(G_("Install package(s)..."), 0,
 			       menupkginstallpkgs));
-    MCHECK(mpkgu = newmenuitem(G_("Update packages"), 0,
+    MCHECK(mpkgu = newmenuitem(G_("Update packages..."), 0,
 			       menupkgupdate));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mpkgil = newmenuitem(G_("Install package(s) from local zip files..."),
@@ -958,23 +973,23 @@ int RguiCommonHelp(menu m)
 	disable(mman0);
     } else {
 	MCHECK(mman = newsubmenu(m, G_("Manuals (in PDF)")));
-	MCHECK(mmanintro = newmenuitem(G_("An &Introduction to R"), 0, 
+	MCHECK(mmanintro = newmenuitem("An &Introduction to R", 0, 
 				       menumainman));
 	if (!lmanintro) disable(mmanintro);
-	MCHECK(mmanref = newmenuitem(G_("R &Reference Manual"), 0, 
+	MCHECK(mmanref = newmenuitem("R &Reference Manual", 0, 
 				     menumainref));
 	if (!lmanref) disable(mmanref);
-	MCHECK(mmandata = newmenuitem(G_("R Data Import/Export"), 0, 
+	MCHECK(mmandata = newmenuitem("R Data Import/Export", 0, 
 				      menumaindata));
 	if (!lmandata) disable(mmandata);
-	MCHECK(mmanlang = newmenuitem(G_("R Language Definition"), 0, 
+	MCHECK(mmanlang = newmenuitem("R Language Definition", 0, 
 				      menumainlang));
 	if (!lmanlang) disable(mmanlang);
-	MCHECK(mmanext = newmenuitem(G_("Writing R Extensions"), 0, 
+	MCHECK(mmanext = newmenuitem("Writing R Extensions", 0, 
 				     menumainext));
 	if (!lmanext) disable(mmanext);
-	MCHECK(mmanadmin = newmenuitem(G_("R Installation and Administration"), 0, 
-				     menumainadmin));	
+	MCHECK(mmanadmin = newmenuitem("R Installation and Administration", 0, 
+				       menumainadmin));	
 	if (!lmanadmin) disable(mmanadmin);
     }
     
@@ -985,6 +1000,8 @@ int RguiCommonHelp(menu m)
     MCHECK(mhelpstart = newmenuitem(G_("Html help"), 0, menuhelpstart));
     if (!check_doc_file("doc\\html\\rwin.html")) disable(mhelpstart);
     MCHECK(mhelpsearch = newmenuitem(G_("Search help..."), 0, menuhelpsearch));
+    MCHECK(msearchRsite = newmenuitem(G_("search.r-project.org ..."), 0, 
+				      menusearchRsite));
     MCHECK(newmenuitem("-", 0, NULL));
     MCHECK(mapropos = newmenuitem(G_("Apropos..."), 0, menuapropos));
     MCHECK(newmenuitem("-", 0, NULL));
@@ -1157,7 +1174,7 @@ int DialogSelectFile(char *buf, int len)
 {
     char *fn;
 
-    setuserfilter(G_("All files (*.*)\0*.*\0\0"));
+    setuserfilter("All files (*.*)\0*.*\0\0");
     fn = askfilename(G_("Select file"), "");
     Rwin_fpset();
 /*    if (!CharacterMode)

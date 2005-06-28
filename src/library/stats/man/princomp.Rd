@@ -43,8 +43,13 @@ princomp(x, \dots)
   \item{\dots}{arguments passed to or from other methods. If \code{x} is
     a formula one might specify \code{cor} or \code{scores}.}
   \item{object}{Object of class inheriting from \code{"princomp"}}
-  \item{newdata}{An optional data frame in which to look for variables with
-    which to predict.  If omitted, the scores are used.}
+  \item{newdata}{An optional data frame or matrix in which to look for
+    variables with which to predict.  If omitted, the scores are used.
+    If the original fit used a formula or a data frame or a matrix with
+    column names, \code{newdata} must contain columns with the same
+    names. Otherwise it must contain the same number of columns, to be
+    used in the same order.
+  }
 }
 \description{
   \code{princomp} performs a principal components analysis on the given

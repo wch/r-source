@@ -42,6 +42,12 @@ glm <- function(formula, family = gaussian, data, weights,
     mt <- attr(mf, "terms") # allow model.frame to update it
 
     Y <- model.response(mf, "numeric")
+    ## avoid problems with 1D arrays, but keep names
+    if(length(dim(Y)) == 1) {
+        nm <- rownames(Y)
+        dim(Y) <- NULL
+        if(!is.null(nm)) names(Y) <- nm
+    }
     ## null model support
     X <- if (!is.empty.model(mt)) model.matrix(mt, mf, contrasts) else matrix(,NROW(Y),0)
     weights <- model.weights(mf)
@@ -156,7 +162,7 @@ glm.fit <-
             if(!is.null(etastart)) etastart
             else if(!is.null(start))
                 if (length(start) != nvars)
-                    stop(gettextf("length of start should equal %d and correspond to initial coefs for %s", nvars, paste(deparse(xnames), collapse=", ")),
+                    stop(gettextf("length of 'start' should equal %d and correspond to initial coefs for %s", nvars, paste(deparse(xnames), collapse=", ")),
                          domain = NA)
                 else {
                     coefold <- start

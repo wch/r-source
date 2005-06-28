@@ -47,7 +47,7 @@ function(x, g, ...)
     PVAL <- pchisq(STATISTIC, PARAMETER, lower = FALSE)
     names(STATISTIC) <- "Fligner-Killeen:med chi-squared"
     names(PARAMETER) <- "df"
-    METHOD <- "Fligner-Killeen test for homogeneity of variances"
+    METHOD <- "Fligner-Killeen test of homogeneity of variances"
 
     RVAL <- list(statistic = STATISTIC,
                  parameter = PARAMETER,

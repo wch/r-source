@@ -4,8 +4,7 @@
 \title{Use C-style String Formatting Commands}
 \description{
   A wrapper for the C function \code{sprintf}, that returns a character
-  vector of length one containing a formatted combination of text and
-  variable values.
+  vector containing a formatted combination of text and variable values.
 }
 \usage{
 sprintf(fmt, \dots)
@@ -41,31 +40,26 @@ gettextf(fmt, \dots, domain = NULL)
 
   \describe{
     \item{\code{d, i, x, X}}{Integer value, \code{x} and \code{X}
-      being hexadecimal. Numeric variables with exactly integer values
-      will be coerced to integer.
+      being hexadecimal (using the same case for \code{a-f} as the code).
+      Numeric variables with exactly integer values will be coerced to integer.
     }
-
     \item{\code{f}}{Double precision value, in decimal notation of the
       form "[-]mmm.ddd".  The number of decimal places is specified by
       the precision: the default is 6; a precision of 0 suppresses the
       decimal point.
     }
-    
     \item{\code{e, E}}{Double precision value, in decimal notation of the
       form \code{[-]m.ddde[+-]xx} or \code{[-]m.dddE[+-]xx}.
     }
-
     \item{\code{g, G}}{Double precision value, in \code{\%e} or
       \code{\%E} format if the exponent is less than -4 or greater than or
       equal to the precision, and \code{\%f} format otherwise.
     }
-
     \item{\code{s}}{Character string.}
-
     \item{\code{\%}}{Literal \code{\%} (none of the formatting
       characters given below are permitted in this case).}
   }
-  \code{\link{as.character}} is used for non-character argument with
+  \code{\link{as.character}} is used for non-character arguments with
   \code{s} and \code{\link{as.double}} for non-double arguments with
   \code{f, e, E, g, G}.  NB: the length is determined before conversion,
   so do not rely on the internal coercion if this would change the

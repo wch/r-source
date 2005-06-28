@@ -6,7 +6,9 @@
   files into a shared library which can be loaded into R using
   \code{dyn.load} or \code{library.dynam}.
 }
-\usage{R CMD SHLIB [options] [-o libname] files}
+\usage{
+\special{R CMD SHLIB [options] [-o libname] files}
+}
 \arguments{
   \item{files}{a list specifying the object files to be included in the
     shared library.  You can also include the name of source files, for

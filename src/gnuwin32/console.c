@@ -517,11 +517,41 @@ static int writeline(ConsoleData p, int i, int j)
     }
     if (i == y0) {
 	if (FC + COLS < x0) return len;
+#ifdef SUPPORT_MBCS
+	if(mbcslocale) {
+	    int w0, used = 0, w1=1;
+	    wchar_t wc;
+	    char *P = s;
+	    mbs_init(&mb_st);
+	    for (w0 = 0; w0 < x0; ) {
+		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		w1 = wcwidth(wc);
+		w0 += w1;
+		P += used;
+	    }
+	    if(w0 > x0) x0 = w0 - w1;
+	}
+#endif
 	c1 = (x0 > FC) ? (x0 - FC) : 0;
     } else
 	c1 = 0;
     if (i == y1) {
 	if (FC > x1) return len;
+#ifdef SUPPORT_MBCS
+	if(mbcslocale) {
+	    int w0, used = 0, wl = 1;
+	    wchar_t wc;
+	    char *P = s;
+	    mbs_init(&mb_st);
+	    for (w0 = 0; w0 <= x1; ) {
+		used = mbrtowc(&wc, P, MB_CUR_MAX, &mb_st);
+		wl = wcwidth(wc);
+		w0 += wl;
+		P += used;
+	    }
+	    x1 = w0-1;
+	}
+#endif
 	c2 = (x1 > FC + COLS) ? (COLS - 1) : (x1 - FC);
     } else
 	c2 = COLS - 1;
@@ -1740,7 +1770,7 @@ void consolesavefile(console c, int pager)
     int x0, y0, x1, y1, cl;
     char *s, buf[1024];
 
-    setuserfilter(G_("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0"));
+    setuserfilter("Text files (*.txt)\0*.txt\0All files (*.*)\0*.*\0\0");
     if(p->sel)
         fn = askfilesave(G_("Save selection to"), "lastsave.txt");
     else

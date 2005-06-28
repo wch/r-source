@@ -253,23 +253,43 @@ SEXP do_system(SEXP call, SEXP op, SEXP args, SEXP rho)
 void InitTempDir()
 {
     char *tmp, *tm, tmp1[PATH_MAX+10], *p;
-    int len, res;
+    int len;
+#ifndef HAVE_MKDTEMP
+    int res;
+#endif
 
     tmp = getenv("R_SESSION_TMPDIR");
     if (!tmp) {
         /* This looks like it will only be called in the embedded case
            since this is done in the script. Also should test if directory
-           exists rather than just attempting to remove it. */
+           exists rather than just attempting to remove it. 
+	*/
 	char *buf;
 	tm = getenv("TMPDIR");
 	if (!tm) tm = getenv("TMP");
 	if (!tm) tm = getenv("TEMP");
 	if (!tm) tm = "/tmp";
+#ifdef HAVE_MKDTEMP
+	sprintf(tmp1, "%s/RtmpXXXXXX", tm);
+	tmp = mkdtemp(tmp1);
+	if(!tmp) R_Suicide(_("cannot mkdir R_TempDir"));
+#else
 	sprintf(tmp1, "rm -rf %s/Rtmp%u", tm, (unsigned int)getpid());
 	R_system(tmp1);
 	sprintf(tmp1, "%s/Rtmp%u", tm, (unsigned int)getpid());
 	res = mkdir(tmp1, 0755);
+	if(res) {
+	    /* Try one more time, in case a dir left around from that
+	       process number from another user */
+	    sprintf(tmp1, "rm -rf %s/Rtmp%u-%d", tm, (unsigned int)getpid(), 
+		    rand() % 1000);
+	    R_system(tmp1);
+	    sprintf(tmp1, "%s/Rtmp%u-%d", tm, (unsigned int)getpid(), 
+		    rand() % 1000);
+	    res = mkdir(tmp1, 0755);
+	}
 	if(res) R_Suicide(_("cannot mkdir R_TempDir"));
+#endif
 	tmp = tmp1;
 	buf = (char *) malloc((strlen(tmp) + 20) * sizeof(char));
 	if(buf) {

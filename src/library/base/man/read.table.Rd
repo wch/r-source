@@ -15,7 +15,7 @@ read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
-           comment.char = "#")
+           comment.char = "#", allowEscapes = TRUE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
@@ -39,10 +39,15 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     Alternatively, \code{file} can be a \code{\link{connection}}, which
     will be opened if necessary, and if so closed at the end of the
     function call.  (If \code{stdin()} is used, the prompts for lines
-    may be somewhat confusing.  Terminate input with an EOF
-    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.)
+    may be somewhat confusing.  Terminate input with a blank line or an EOF
+    signal, \code{Ctrl-D} on Unix and \code{Ctrl-Z} on Windows.  Any
+    pushback on \code{stdin()} will be cleared before return.)
 
     \code{file} can also be a complete URL.
+
+    To read a data file not in the current encoding (for example a
+    Latin-1 file in a UTF-8 locale or conversely) use a
+    \code{\link{file}} connection setting the \code{encoding} argument.
   }
 
   \item{header}{a logical value indicating whether the file contains the
@@ -142,6 +147,11 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     containing a single character or an empty string.  Use \code{""} to
     turn off the interpretation of comments altogether.}
 
+  \item{allowEscapes}{logical.  Should C-style escapes such as
+    \code{\n} be processed (the default) or read verbatim?   Note that if
+    not within quotes these could be interpreted as a delimiter (but not
+    as a comment character).}
+
   \item{\dots}{Further arguments to \code{read.table}.}
 }
 \value{
@@ -153,6 +163,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   This function is the principal means of reading tabular data into \R.
 }
 \details{
+  A field or line is \sQuote{blank} if it contains nothing (except
+  whitespace is no separator is specified) before a comment character or
+  the end of the field or line.
+  
   If \code{row.names} is not specified and the header line has one less
   entry than the number of columns, the first column is taken to be the
   row names.  This allows data frames to be read in from the format in

@@ -11,7 +11,7 @@ subdir = src/library/stats
 include $(top_builddir)/Makeconf
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = COPYRIGHTS.modreg DESCRIPTION.in Makefile.in \
+DISTFILES = COPYRIGHTS.modreg COPYRIGHTS.portsrc DESCRIPTION.in Makefile.in \
   NAMESPACE SOURCES.ts
 
 pkg = stats

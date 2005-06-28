@@ -38,6 +38,9 @@ quartz(display = "", width = 5, height = 5, pointsize = 12,
   to a Quartz-specific font family description.  
   
   Calling \code{quartz()} sets \code{\link{.Device}} to \code{"quartz"}.
+
+  Line widths as controlled by \code{par(lwd=)} are in multiples of the
+  1/72 inch, and multiples < 1 are silently converted to 1.
 }
 \seealso{
   \code{\link{quartzFonts}},

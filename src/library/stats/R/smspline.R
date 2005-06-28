@@ -1,7 +1,7 @@
 smooth.spline <-
-  function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
-	   all.knots = FALSE, nknots = NULL,
-           df.offset = 0, penalty = 1, control.spar = list())
+    function(x, y = NULL, w = NULL, df, spar = NULL, cv = FALSE,
+             all.knots = FALSE, nknots = NULL, keep.data = TRUE,
+             df.offset = 0, penalty = 1, control.spar = list())
 {
     sknotl <- function(x, nk = NULL)
     {
@@ -152,6 +152,7 @@ smooth.spline <-
     class(fit.object) <- "smooth.spline.fit"
     ## parms :  c(low = , high = , tol = , eps = )
     object <- list(x = ux, y = fit$ty, w = wbar, yin = ybar,
+                   data = if(keep.data) list(x = x, y = y, w = w),
 		   lev = lev, cv.crit = cv.crit, pen.crit = pen.crit,
                    crit = fit$crit,
                    df = df, spar = fit$spar,
@@ -161,6 +162,36 @@ smooth.spline <-
     class(object) <- "smooth.spline"
     object
 }
+
+fitted.smooth.spline <- function(object, ...) {
+    if(!is.list(dat <- object$data))
+        stop("need result of smooth.spline(*, keep.data=TRUE)")
+    ## note that object$x == unique(sort(object$data$x))
+    object$y[match(dat$x, object$x)]
+}
+
+residuals.smooth.spline <-
+    function (object, type = c("working", "response", "deviance",
+                      "pearson", "partial"), ...)
+{
+    type <- match.arg(type)
+    if(!is.list(dat <- object$data))
+        stop("need result of smooth.spline(*, keep.data=TRUE)")
+    r <- dat$y - object$y[match(dat$x, object$x)]
+    ## this rest is `as' residuals.lm() :
+    res <- switch(type,
+                  working = ,
+                  response = r,
+                  deviance = ,
+                  pearson = if (is.null(dat$w)) r else r * sqrt(dat$w),
+                  partial = r)
+    res <- naresid(object$na.action, res)
+    if (type == "partial")
+        .NotYetImplemented("type = \"partial\"")
+        ## res <- res + predict(object, type = "terms")
+    res
+}
+
 
 print.smooth.spline <- function(x, digits = getOption("digits"), ...)
 {
@@ -209,6 +240,16 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 			      n	  = as.integer(n),
 			      knot= as.double(object$knot),
 			      coef= as.double(object$coef),
+
+
+
+
+
+
+
+
+
+
 			      nk  = as.integer(object$nk),
 			      x	  = as.double(xs[interp]),
 			      s	  = double(n),
