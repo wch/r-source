@@ -421,8 +421,11 @@ fillBuffer(SEXPTYPE type, int strip, int *bch, LocalData *d,
 		    R_AllocStringBuffer(nbuf, buffer);
 		}
 		if (c == '\\') {
+		    /* If this is an embedded quote, unquote it, but 
+		       otherwise keep backslashes */
 		    c = scanchar(TRUE, d);
 		    if (c == R_EOF) break;
+		    if(c != quote) buffer->data[m++] = '\\';
 		}
 		buffer->data[m++] = c;
 #ifdef SUPPORT_MBCS
