@@ -283,6 +283,9 @@ BUG FIXES
 
     o   The formula method for pairs() was ignoring the na.action argument.
 
+    o	scan() with the default separator (pnly) was stripping backslashes
+	inside quoted string inputs even if allowEscapes = FALSE.
+
 
 
 		CHANGES IN R VERSION 2.1.1
