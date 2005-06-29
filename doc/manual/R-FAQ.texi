@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-27
+@set FAQ_DATE @value{FAQ_YEAR}-06-29
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2385,6 +2385,8 @@ on spatial data.  The major methods implemented include cubic and thin
 plate splines, universal Kriging and Kriging for large data sets.  The
 main feature is that any covariance function implemented in R can be
 used for spatial prediction.
+@item filehash
+Simple file-based hash table.
 @item flexmix
 Flexible Mixture Modeling: a general framework for finite mixtures of
 regression models using the EM algorithm.
@@ -2484,6 +2486,10 @@ Various functions to manipulate models.
 @item gmp
 Arithmetic ``without limitations'' using the @acronym{GNU} Multiple
 Precision library.
+@item gnm
+Functions to specify and fit generalized nonlinear models, including
+models with multiplicative interaction terms such as the UNIDIFF model
+from sociology and the AMMI model from crop science.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
