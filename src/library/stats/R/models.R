@@ -42,7 +42,7 @@ formula.data.frame <- function (x, ...)
 }
 
 print.formula <- function(x, ...) {
-    attr(x, ".Environment") <- baseenv()
+    attr(x, ".Environment") <- NULL
     print.default(unclass(x), ...)
 }
 
