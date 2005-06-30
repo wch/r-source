@@ -24,7 +24,7 @@ BUG FIXES
 
     o   The formula method for pairs() was ignoring the na.action argument.
 
-    o	scan() with the default separator (pnly) was stripping backslashes
+    o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
 
 
