@@ -127,7 +127,7 @@ NEW FEATURES
 
     o	read.table() now passes 'allowEscapes' to scan().
 
-    o	Functions encoded_text_to_latex() in package tools translates
+    o	Function encoded_text_to_latex() in package tools translates
 	Latin 1,2,9 and UTF-8 encoded character vectors to LaTeX
 	escape sequences where appropriate.
 
@@ -285,7 +285,7 @@ BUG FIXES
 
     o   The formula method for pairs() was ignoring the na.action argument.
 
-    o	scan() with the default separator (pnly) was stripping backslashes
+    o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
 
 
