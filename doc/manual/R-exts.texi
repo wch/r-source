@@ -5775,6 +5775,19 @@ enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 
 @comment MM: FIXME   void rmultinom() is different, returning a vector!
 
+In addition, there is an interface (defined in header
+@file{R_ext/Applic.h}) to the generation of random 2-dimensional tables
+with given row and column totals using Patefield's algorithm.
+
+@deftypefun void rcont2 (int* @var{nrow}, int* @var{ncol}, int* @var{nrowt}, int* @var{ncolt}, int* @var{ntotal}, double* @var{fact}, int* @var{jwork}, int* @var{matrix})
+Here, @var{nrow} and @var{ncol} give the numbers @math{nr} and @math{nc}
+of rows and columns and @var{nrowt} and @var{ncolt} the corresponding
+row and column totals, respectively, @var{ntotal} gives the sum of the
+row (or columns) totals, @var{jwork} is a workspace of length @math{nc},
+and on output @var{matrix} a contains the @math{nr * nc} generated
+random counts in the usual column-major order.
+@end deftypefun
+
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
 @cindex Missing values
