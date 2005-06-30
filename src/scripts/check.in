@@ -1690,6 +1690,22 @@ sub check_pkg {
 		    $log->error();
 		    $log->print("LaTeX errors when creating DVI version.\n");
 		    $log->print("This typically indicates Rd problems.\n");
+		    ## If possible, indicate the problems found.
+		    ## GNU grep rather usefully has a '-A' option for
+		    ## controlling the number of lines of trailing
+		    ## context after matching lines (not POSIX; maybe
+		    ## sed could do this?).  Not sure how to do this in
+		    ## Perl.  For the time being, try 'grep -A', and
+		    ## give no additional info if this fails.
+		    my $out = R_tempfile("gout");
+		    my $cmd = "grep -A4 '^!' ${pkgname}-manual.log";
+		    $cmd .= " > ${out} 2>/dev/null";
+		    if(!R_system($cmd)) {
+			$log->print("LaTeX errors found:\n\n");
+			$log->print(join("\n", &read_lines("${out}")) .
+				    "\n");
+		    }
+		    unlink($out);
 		    exit(1);
 		}
 		$log->result("OK");
