@@ -51,10 +51,10 @@ AC_DEFINE_UNQUOTED(VERSION, "${VERSION}", [Version number of package])
 AC_SUBST(VERSION)
 
 ## Autoheader initialization.
-AH_TOP([#ifndef _CONFIG_H
-#define _CONFIG_H])
+AH_TOP([#ifndef R_CONFIG_H
+#define R_CONFIG_H])
 AH_BOTTOM([
-#endif /* not _CONFIG_H */])
+#endif /* not R_CONFIG_H */])
 
 ### ** Platform.
 
