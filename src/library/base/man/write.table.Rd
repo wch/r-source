@@ -13,8 +13,8 @@ write.table(x, file = "", append = FALSE, quote = TRUE, sep = " ",
             eol = "\n", na = "NA", dec = ".", row.names = TRUE,
 	    col.names = TRUE, qmethod = c("escape", "double"))
 
-write.csv(\dots, col.names = NA, sep = ",", qmethod = "double")
-write.csv2(\dots, col.names = NA, dec = ",", sep = ";", qmethod = "double")
+write.csv(\dots)
+write.csv2(\dots)
 }
 \arguments{
   \item{x}{the object to be written, preferably a matrix or data frame.
@@ -39,22 +39,19 @@ write.csv2(\dots, col.names = NA, dec = ",", sep = ";", qmethod = "double")
     character vector of row names to be written.}
   \item{col.names}{either a logical value indicating whether the column
     names of \code{x} are to be written along with \code{x}, or a
-    character vector of column names to be written.}
+    character vector of column names to be written.  See the section on
+    \sQuote{CSV files} for the meaning of \code{col.names=NA}.}
   \item{qmethod}{a character string specifying how to deal with embedded
     double quote characters when quoting strings.  Must be one of
     \code{"escape"} (default), in which case the quote character is
     escaped in C style by a backslash, or \code{"double"}, in which case
     it is doubled.  You can specify just the initial letter.}
 
-  \item{\dots}{further arguments to \code{write.table}.}
+  \item{\dots}{arguments to \code{write.table}: \code{col.names},
+    \code{sep}, \code{dec} and \code{qmethod} cannot be altered.
+  }
 }
 \details{
-  By default there is no column name for a column of row names.  If
-  \code{col.names = NA} and \code{row.names = TRUE} a blank column name
-  is added.  This can be used to write CSV files for input to
-  spreadsheets.  \code{write.csv} and \code{write.csv2} provide
-  convenience wrappers for doing so.
-
   If the table has no columns the rownames will be written only if
   \code{row.names=TRUE}, and \emph{vice versa}.
 
@@ -74,7 +71,29 @@ write.csv2(\dots, col.names = NA, dec = ",", sep = ";", qmethod = "double")
   The \code{dec} argument only applies to columns that are not subject
   to conversion to character because they have a class or are part of a
   matrix-like column, in particular to columns protected by
-  \code{\link{I}()}.
+  \code{\link{I}()}.  Use \code{\link{options}("OutDec")} to control
+  such conversions.
+}
+\section{CSV files}{
+  By default there is no column name for a column of row names.  If
+  \code{col.names = NA} and \code{row.names = TRUE} a blank column name
+  is added, which is the convention for CSV files to be read by
+  spreadsheets
+
+  \code{write.csv} and \code{write.csv2} provide convenience wrappers
+  for doing writing CSV files. They set \code{sep}, \code{dec} and
+  \code{qmethod}, and \code{col.names} to \code{NA} if \code{row.names =
+    TRUE} and \code{TRUE} otherwise.
+
+  \code{write.csv} uses \code{"."} for the decimal point and a comma for
+  the separator.
+
+  \code{write.csv2} uses a comma for the decimal point and a semicolon for
+  the separator, the Excel convention for CSV files in some Western
+  European locales.
+
+  These wrappers are deliberately inflexible: they are designed to
+  ensure that the correct conventions are used to write a valid file.
 }
 \note{
   \code{write.table} can be slow for data frames with large numbers

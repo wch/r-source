@@ -131,6 +131,8 @@ NEW FEATURES
 	Latin 1,2,9 and UTF-8 encoded character vectors to LaTeX
 	escape sequences where appropriate.
 
+    o	write.csv[2] now also support row.names = FALSE.
+
 
 DEPRECATED & DEFUNCT
 
