@@ -591,7 +591,16 @@ do_install_source () {
       if test -f NAMESPACE; then
         (echo; echo ".onLoad <- .onAttach <- function(lib, pkg) NULL") >> \
 	  "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
-	sed -e '/useDynLib/d' NAMESPACE > "${R_PACKAGE_DIR}/NAMESPACE"
+	## <NOTE>
+	## Tweak fake installation to provide an 'empty' useDynLib() for
+	## the time being.  Completely removing the directive results in
+	## checkFF() being too aggresive in the case where the presence
+	## of the directive enables unambiguous symbol resolution w/out
+	## 'PACKAGE' arguments.  However, empty directives are not
+	## really meant to work ...
+	sed -e 's/useDynLib.*/useDynLib("")/' NAMESPACE > \
+	  "${R_PACKAGE_DIR}/NAMESPACE"
+        ## </NOTE>
       else
         (echo; echo ".First.lib <- function(lib, pkg) NULL") >> \
           "${R_PACKAGE_DIR}/R/${R_PACKAGE_NAME}"
