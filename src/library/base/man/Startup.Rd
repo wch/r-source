@@ -121,6 +121,7 @@
 }
 \seealso{
   \code{\link{.Last}} for final actions before termination.
+  \code{\link{commandArgs}} for accessing the command line arguments.
 
   \emph{An Introduction to R} for more command-line options: those
   affecting memory management are covered in the help file for

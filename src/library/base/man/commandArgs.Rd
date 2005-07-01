@@ -26,9 +26,11 @@ commandArgs()
   application.
 }
 %\author{DTL}
+\seealso{\code{\link{Startup}}
 #ifdef unix
-\seealso{\code{\link{BATCH}}}
+\code{\link{BATCH}}
 #endif
+}
 \examples{
 commandArgs()
 ## Spawn a copy of this application as it was invoked.
