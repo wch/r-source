@@ -367,6 +367,7 @@ SEXP classgets(SEXP vec, SEXP class)
     return R_NilValue;/*- just for -Wall */
 }
 
+/* oldClass() : */
 SEXP do_classgets(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     checkArity(op, args);
@@ -409,11 +410,10 @@ static SEXP lang2str(SEXP obj, SEXPTYPE t)
   return PRINTNAME(call_sym);
 }
 
-/* the S4-style class: for dispatch  required to be a single string;
-   for the newClass function, keeps S3-style multiple classes.
-
+/* the S4-style class: for dispatch required to be a single string;
+   for the new class() function;
+   if(singleString) , keeps S3-style multiple classes.
  */
-
 SEXP R_data_class(SEXP obj, Rboolean singleString)
 {
     SEXP class, value; int n;
@@ -422,11 +422,11 @@ SEXP R_data_class(SEXP obj, Rboolean singleString)
     if(n == 1 || (n > 0 && !singleString))
 	return(class);
     if(n == 0) {
-	SEXP dim; int n;
+	SEXP dim; int nd;
 	dim = getAttrib(obj, R_DimSymbol);
-	n = length(dim);
-	if(n > 0) {
-	    if(n == 2)
+	nd = length(dim);
+	if(nd > 0) {
+	    if(nd == 2)
 		class = mkChar("matrix");
 	    else
 		class = mkChar("array");
@@ -493,7 +493,7 @@ SEXP R_data_class2 (SEXP obj)
 	}
 	else {
 	    PROTECT(value = allocVector(STRSXP, 3));
-	    SET_STRING_ELT(value, 0, class0);	
+	    SET_STRING_ELT(value, 0, class0);
 	    SET_STRING_ELT(value, 1, type2str(t));
 	    SET_STRING_ELT(value, 2, mkChar("numeric"));
 	    UNPROTECT(2);
@@ -515,8 +515,8 @@ SEXP R_data_class2 (SEXP obj)
 	SET_STRING_ELT(value, 0, class);
     } else {
 	PROTECT(value = allocVector(STRSXP, 2));
-	SET_STRING_ELT(value, 0, class0);	
-	SET_STRING_ELT(value, 1, class);	
+	SET_STRING_ELT(value, 0, class0);
+	SET_STRING_ELT(value, 1, class);
     }
     UNPROTECT(3);
     return value;
@@ -648,7 +648,7 @@ SEXP do_dimnamesgets(SEXP call, SEXP op, SEXP args, SEXP env)
 static SEXP dimnamesgets1(SEXP val1)
 {
     SEXP this2;
-    
+
     if (LENGTH(val1) == 0) return R_NilValue;
     /* if (isObject(val1)) dispatch on as.character.foo, but we don't
        have the context at this point to do so */
@@ -657,7 +657,7 @@ static SEXP dimnamesgets1(SEXP val1)
 	SEXP labels = getAttrib(val1, install("levels"));
 	PROTECT(this2 = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
-	    SET_STRING_ELT(this2, i, 
+	    SET_STRING_ELT(this2, i,
 			   STRING_ELT(labels, INTEGER(val1)[i] - 1));
 	}
 	UNPROTECT(1);
@@ -690,7 +690,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
 	error(_("'dimnames' must be a list"));
     dims = getAttrib(vec, R_DimSymbol);
     if ((k = LENGTH(dims)) != length(val))
-	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"), 
+	error(_("length of 'dimnames' [%d] must match that of 'dims' [%d]"),
 	      length(val), k);
     /* Old list to new list */
     if (isList(val)) {
@@ -705,7 +705,7 @@ SEXP dimnamesgets(SEXP vec, SEXP val)
     }
     for (i = 0; i < k; i++) {
 	SEXP this = VECTOR_ELT(val, i);
-	if (this != R_NilValue) {   
+	if (this != R_NilValue) {
 	    if (!isVector(this))
 		error(_("invalid type for 'dimnames' (must be a vector)"));
 	    if (INTEGER(dims)[i] != LENGTH(this) && LENGTH(this) != 0)
@@ -1130,7 +1130,7 @@ SEXP R_do_slot(SEXP obj, SEXP name) {
  	/* not there.  But since even NULL really does get stored, this
 	   implies that there is no slot of this name.  Or somebody
 	   screwed up by using atttr(..) <- NULL */
-	
+
 	error(_("no slot of name \"%s\" for this object of class \"%s\""),
 	      CHAR(asChar(input)), CHAR(asChar(classString)));
     }
@@ -1147,20 +1147,20 @@ SEXP R_do_slot_assign(SEXP obj, SEXP name, SEXP value) {
 	name = install(CHAR(STRING_ELT(name, 0)));
     if(TYPEOF(name) == CHARSXP)
 	name = install(CHAR(name));
-    if(!isSymbol(name) ) 
+    if(!isSymbol(name) )
 	error(_("invalid type or length for slot name"));
-			
+
     if(!s_dot_Data)		/* initialize */
 	init_slot_handling();
 
     if(name == s_dot_Data) {	/* special handling */
 	obj = set_data_part(obj, value);
         UNPROTECT(2);
-	return obj; 
+	return obj;
     }
     if(isNull(value))		/* Slots, but not attributes, can be NULL.*/
-	value = pseudo_NULL;	/* Store a special symbol instead. */ 
-    
+	value = pseudo_NULL;	/* Store a special symbol instead. */
+
     setAttrib(obj, name, value);
     UNPROTECT(2);
     return obj;
@@ -1180,7 +1180,7 @@ SEXP R_pseudo_null() {
 SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans;
- 
+
     nlist = CADR(args);
     PROTECT(object = eval(CAR(args), env));
     ans = R_do_slot(object, nlist);
@@ -1188,7 +1188,7 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 #endif
- 
+
 #ifndef noSlotCheck
 
 /* This does not get used anymore (commented out in the code below).
@@ -1196,7 +1196,7 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
    KH 2003-06-07.
 
 static SEXP class_meta_data_env = NULL;
-   
+
 static int make_class_meta_data_env()
 {
     class_meta_data_env = findVar(install("__ClassMetaData"), R_GlobalEnv);
@@ -1227,7 +1227,7 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP  nlist, object, ans, class;
 
-    if(!isMethodsDispatchOn()) 
+    if(!isMethodsDispatchOn())
 	error(_("formal classes cannot be used without the methods package"));
     nlist = CADR(args);
     /* Do some checks here -- repeated in R_do_slot, but on repeat the
@@ -1260,7 +1260,7 @@ SEXP do_AT(SEXP call, SEXP op, SEXP args, SEXP env)
 		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(R_data_class(object, FALSE), 0)));
     else
 	    error(_("trying to get slot \"%s\" from an object with S3 class c(\"%s\", \"%s\", ...) (not a formally defined class)"),
-		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)), 
+		  CHAR(PRINTNAME(nlist)), CHAR(STRING_ELT(class, 0)),
 		  CHAR(STRING_ELT(class, 1)));
     ans = R_do_slot(object, nlist);
     UNPROTECT(1);
