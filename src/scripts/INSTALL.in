@@ -94,7 +94,7 @@ startdir=`${GETWD}`
 : ${TMPDIR=/tmp}
 { tmpdir=`(mktemp -d -q "${TMPDIR}/R.INSTALL.XXXXXX") 2>/dev/null` \
     && test -n "${tmpdir}" && test -d "${tmpdir}" ; } ||
-  { test -n "${RANDOM}" && tmp=${TMPDIR}/R.INSTALL$$-${RANDOM} \
+  { test -n "${RANDOM}" && tmpdir=${TMPDIR}/R.INSTALL$$-${RANDOM} \
       && (${MKDIR_P} "${tmpdir}") ; } ||
   { tmpdir=${TMPDIR}/R.INSTALL.$$ && (${MKDIR_P} "${tmpdir}") ; } ||
   (error "cannot create temporary directory" && exit 1)
