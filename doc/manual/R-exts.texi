@@ -394,10 +394,10 @@ be included).  Normally this file is missing, and the corresponding
 information is automatically generated from the documentation sources
 (using @code{Rdindex()} from package @pkg{tools}) when installing from
 source and when using the package builder (@pxref{Checking and building
-packages}).  
+packages}).
 
-Rather than editing this file, it is preferable to put customized 
-information about the package into an overview	man page 
+Rather than editing this file, it is preferable to put customized
+information about the package into an overview	man page
 (@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package vignettes}).
 
 @node The install.R and R_PROFILE.R files, Package subdirectories, The INDEX file, Package structure
@@ -2500,7 +2500,7 @@ methods.
 @node Documenting packages,  , Documenting S4 classes and methods, Rd format
 @subsection Documenting packages
 
-It is recommended that packages have an overview man page with 
+It is recommended that packages have an overview man page with
 @code{\alias} constructed as @code{@var{pkgname}-package},
 e.g. @code{utils-package} for the @code{utils} package, so that
 @code{package?@var{pkgname}} will open the man page.  If a topic named
@@ -2510,8 +2510,8 @@ an additional @code{\alias}.
 Skeletons of documentation for a package can be generated using the
 function @code{promptPackage()}.  If the @code{final = TRUE} argument
 is used, then the Rd file will be generated in final form, containing
-the information that would be produced by 
-@code{library(help = @var{pkgname})}.  Otherwise (the default) comments 
+the information that would be produced by
+@code{library(help = @var{pkgname})}.  Otherwise (the default) comments
 will be inserted giving suggestions for content.
 
 The only requirement for this page is that it include a
@@ -2941,7 +2941,7 @@ it might for example use
 
 @noindent
 (Use of @code{utf8} as an encoding requires @LaTeX{} dated 2003/12/01 or
-later.)  
+later.)
 
 Note that this mechanism works best with letters and for example the
 copyright symbol may be rendered as a subscript and the plus--minus
@@ -2991,7 +2991,7 @@ listed using @kbd{R --help}.
 All of these work under Windows. You will need the files in the @R{}
 binary Windows distribution for installing source packages to be
 installed, and for @code{R CMD Rd2dvi} also the tools to build packages
-from source as described in the ``R Installation and Administration'' 
+from source as described in the ``R Installation and Administration''
 manual.
 
 
@@ -6516,12 +6516,15 @@ The FORTRAN interface routines for sorting double precision vectors are
 @code{R_qsort_I}, respectively.
 @end deftypefun
 
-@deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
+@deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes}, int* @var{ties_meth})
 Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
 (``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
-@R{}'s @code{max.col()} function).
+@R{}'s @code{max.col()} function).  In the case of ties (multiple maxima),
+@code{*ties_meth} is an integer code in @code{1:3} determining the method:
+1 = ``random'', 2 = ``first'' and 3 = ``last''.
+See @R{}'s help page @code{?max.col}.
 @end deftypefun
 
 @deftypefun int findInterval (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})

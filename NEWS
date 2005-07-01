@@ -118,7 +118,7 @@ NEW FEATURES
     o	terms.formula() no longer allows '.' in a formula unless there
 	is a (non-empty) 'data' argument or 'allowDotAsName = TRUE' is
 	supplied.  We have found several cases where 'data' had not
-	been passed down to terms() and so '.' was interpreted as a 
+	been passed down to terms() and so '.' was interpreted as a
 	single variable leading to incorrect results.
 
     o	Functions utf8ToInt() and intToUtf8() to work with UTF-8
@@ -132,6 +132,12 @@ NEW FEATURES
 	escape sequences where appropriate.
 
     o	write.csv[2] now also support row.names = FALSE.
+
+    o	max.col() has a new argument for non-random behavior in the
+	case of ties.
+
+    o	new function glob2rx() fortranslating `wildcard' aka `globbing'
+	to regular expressions.
 
 
 DEPRECATED & DEFUNCT
@@ -210,6 +216,9 @@ C-LEVEL FACILITIES
     o	The search for symbols in a .C/.Call/... call without a
 	package argument now searches for an enclosing namespace and
 	so finds functions defined within functions in a namespace.
+
+    o	R_max_col() has new (5th) argument '*ties_meth' allowing non-random
+        behavior in the case of ties.
 
 
 BUG FIXES
