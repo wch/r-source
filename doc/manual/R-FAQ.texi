@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-29
+@set FAQ_DATE @value{FAQ_YEAR}-07-01
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1986,6 +1986,9 @@ especially for the wavelet and Gabor transforms of noisy signals), based
 on the book ``Practical Time-Frequency Analysis: Gabor and Wavelet
 Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
 and Bruno Torresani, 1998, Academic Press.
+@item SAGx
+Retrieval, preparation and analysis of data from the Affymetrix
+GeneChip.
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
@@ -3458,6 +3461,8 @@ R package repository is available via @url{http://www.omegahat.org/R/}.
 Currently, there are the following packages.
 
 @table @strong
+@item Aspell
+An interface to facilities in the aspell library.
 @item CORBA
 Dynamic CORBA client/server facilities for R.  Connects to other
 CORBA-aware applications developed in arbitrary languages, on different
