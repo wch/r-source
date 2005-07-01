@@ -1,5 +1,4 @@
-.InitBasicClasses <-
-  function(envir)
+.InitBasicClasses <- function(envir)
 {
     ## setClass won't allow redefining basic classes,
     ## so make the list of these empty for now.
@@ -7,9 +6,10 @@
     ## hide some functions that would break because the basic
     ## classes are not yet defined
     real.reconcileP <- reconcilePropertiesAndPrototype
-    assign("reconcilePropertiesAndPrototype", function(name, properties, prototype, extends, where) {
-        list(properties=properties, prototype = prototype, extends = extends)
-    }, envir)
+    assign("reconcilePropertiesAndPrototype",
+           function(name, properties, prototype, extends, where) {
+               list(properties=properties, prototype = prototype, extends = extends)
+           }, envir)
     clList = character()
     setClass("VIRTUAL", where = envir); clList <- c(clList, "VIRTUAL")
     setClass("oldClass", where = envir); clList <- c(clList, "oldClass")
@@ -17,8 +17,8 @@
     setClass("vector", where = envir); clList <- c(clList, "vector")
     setClass("missing", where = envir); clList <- c(clList, "missing")
     vClasses <- c("logical", "numeric", "character",
-                "complex", "integer", "single", "double", "raw",
-                "expression", "list")
+                  "complex", "integer", "single", "double", "raw",
+                  "expression", "list")
     for(.class in vClasses) {
         setClass(.class, prototype = newBasic(.class), where = envir)
     }
@@ -128,7 +128,7 @@
 ### consistency of new().  Relevant when new class has basic class as its data part.
 ###
 ### To install the methods below, uncomment the last line of the function
-### .InitMethodDefinitions
+### .InitMethodDefinitions in ./MethodsListClass.R
 .InitBasicClassMethods <- function(where) {
     ## methods to initialize "informal" classes by using the
     ## functions of the same name.
