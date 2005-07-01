@@ -56,7 +56,7 @@
     TRUE
 }
 
-## some intiializations that need to be done late
+## some initializations that need to be done late
 .InitMethodDefinitions <- function(envir) {
     assign("asMethodDefinition",  function(def, signature = list(), sealed = FALSE) {
         ## primitives can't take slots, but they are only legal as default methods
