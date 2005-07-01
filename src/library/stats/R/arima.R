@@ -455,3 +455,5 @@ logLik.Arima <- function (object, ...) {
     class(res) <- "logLik"
     res
 }
+
+## arima.sim() is in ./ts.R
