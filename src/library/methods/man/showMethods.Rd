@@ -89,5 +89,14 @@ Function "plot":
 x = ANY, y = track
 x = track, y = missing
 x = track, y = ANY}
+
+## Show all methods from the same place that a class is defined:
+%% FIXME: should improve the default of 'where'
+not.there <- !any("package:stats4" == search())
+if(not.there) library(stats4)
+showMethods(class = "mle")                           # not really helpful
+showMethods(class = "mle", where = "package:stats4") # much better
+%% FIXME(2): rather don't show those with  <Empty Methods List>
+if(not.there) detach("package:stats4")
 }
 \keyword{methods}
