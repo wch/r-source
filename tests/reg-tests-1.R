@@ -3687,3 +3687,6 @@ unlink("x.Rda")
 ## 00 00 00 00 00 in 2.1.0 on MacOS X
 ## fixed for 2.1.1, but test added only in 2.2.x
 
+## PR#7922:  Could not use expression() as an initial expression value
+setClass("test2", representation(bar = "expression"))
+new("test2", bar = expression())

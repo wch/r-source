@@ -22,13 +22,7 @@
     for(.class in vClasses) {
         setClass(.class, prototype = newBasic(.class), where = envir)
     }
-    ## there is a bug that makes is.null(expression()) TRUE.  Until it's fixed,
-    ## the following kludge
-    { setClass("expression", prototype = expression(TRUE), where = envir)
-      .class <- getClass("expression", where = envir)
-      .class@prototype <- newBasic("expression")
-      assignClassDef("expression", .class, envir)
-    }
+    setClass("expression", prototype = expression(), where = envir)
     clList <- c(clList, vClasses)
     nullF <- function()NULL; environment(nullF) <- .GlobalEnv
     setClass("function", prototype = nullF, where = envir); clList <- c(clList, "function")

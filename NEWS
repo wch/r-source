@@ -21,6 +21,9 @@ USER-VISIBLE CHANGES
     o	The SVN revision number will appear after the date in the
 	welcome message, provided it is available.  The date is now
 	the date of the last change to the sources.
+	
+    o	is.null(expression()) now returns FALSE.  Only NULL gives TRUE
+    	in is.null().
 
 
 NEW FEATURES
