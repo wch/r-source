@@ -1,6 +1,6 @@
-/*
+/*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999--2001 Thomas Baier
+ *  Copyright (C) 1999--2005 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,8 +17,11 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
+ *  ---------------------------------------------------------------------------
+ *
  *  $Id: rproxy.c,v 1.14 2003/09/13 15:14:09 murdoch Exp $
- */
+ *
+ ******************************************************************************/
 
 #define NONAMELESSUNION
 #include <windows.h>
@@ -26,7 +29,10 @@
 #include <config.h>
 #include <Rversion.h>
 #include "bdx.h"
+#include "bdx_util.h"
+#include "bdx_com.h"
 #include "SC_proxy.h"
+#include "rproxy.h"
 #include "rproxy_impl.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -38,10 +44,10 @@
 /* static connector information */
 #define CONNECTOR_NAME          "R Statistics Interpreter Connector"
 #define CONNECTOR_DESCRIPTION   "Implements abstract connector interface to R"
-#define CONNECTOR_COPYRIGHT     "(C) 1999-2001, Thomas Baier"
+#define CONNECTOR_COPYRIGHT     "(C) 1999-2005, Thomas Baier"
 #define CONNECTOR_LICENSE       "GNU General Public License version 2 or greater"
 #define CONNECTOR_VERSION_MAJOR "1"
-#define CONNECTOR_VERSION_MINOR "0"
+#define CONNECTOR_VERSION_MINOR "1"
 
 /* interpreter information here at the moment until I know better... */
 #define INTERPRETER_NAME        "R"
@@ -52,7 +58,8 @@
 typedef enum
 {
   ps_none,
-  ps_initialized
+  ps_initialized,
+  ps_reuser
 } R_Proxy_Object_State;
 
 SC_CharacterDevice* __output_device;
@@ -79,6 +86,7 @@ int SYSCALL R_get_version (R_Proxy_Object_Impl* object,unsigned long* version)
 }
 
 /* 00-02-18 | baier | R_init(), R_Proxy_init() now take parameter-string */
+/* 04-10-20 | baier | special state to reuse a running R (rgui) */
 int SYSCALL R_init (R_Proxy_Object_Impl* object,char const* parameters)
 {
   int lRc = SC_PROXY_ERR_UNKNOWN;
@@ -93,6 +101,11 @@ int SYSCALL R_init (R_Proxy_Object_Impl* object,char const* parameters)
       return SC_PROXY_ERR_INITIALIZED;
     }
 
+  if(strcmp(parameters,"REUSER") == 0) {
+    RPROXY_TRACE(printf("R_init: re-use R for proxy DLL (inproc RCOM)\n"));
+    object->state = ps_reuser;
+    return SC_PROXY_OK;
+  }
   lRc = R_Proxy_init (parameters);
 
   if (lRc == SC_PROXY_OK)
@@ -103,6 +116,7 @@ int SYSCALL R_init (R_Proxy_Object_Impl* object,char const* parameters)
   return lRc;
 }
 
+/* 04-10-20 | baier | special state to reuse a running R (rgui) */
 int SYSCALL R_terminate (R_Proxy_Object_Impl* object)
 {
   int lRc = SC_PROXY_ERR_UNKNOWN;
@@ -111,6 +125,10 @@ int SYSCALL R_terminate (R_Proxy_Object_Impl* object)
     {
       return SC_PROXY_ERR_INVALIDARG;
     }
+
+  if(object->state == ps_reuser) {
+    return SC_PROXY_OK;
+  }
 
   if (object->state != ps_initialized)
     {
@@ -181,6 +199,7 @@ int SYSCALL R_release (R_Proxy_Object_Impl* object)
   return SC_PROXY_OK;
 }
 
+/* 04-10-20 | baier | special state to reuse a running R (rgui) */
 int SYSCALL R_set_symbol (R_Proxy_Object_Impl* object,
 			  char const* symbol,
 			  BDX_Data* data)
@@ -198,14 +217,21 @@ int SYSCALL R_set_symbol (R_Proxy_Object_Impl* object,
 
   if (data->version != BDX_VERSION)
     {
+      RPROXY_TRACE(printf("R_set_symbol: BDX_Data with version %d, expected %d\n",
+			  data->version,BDX_VERSION));
       return SC_PROXY_ERR_INVALIDFORMAT;
     }
+
+  if ((object->state != ps_initialized) && (object->state != ps_reuser)) {
+    return SC_PROXY_ERR_NOTINITIALIZED;
+  }
 
   lRc = R_Proxy_set_symbol (symbol,data);
 
   return lRc;
 }
 
+/* 04-10-20 | baier | special state to reuse a running R (rgui) */
 int SYSCALL R_get_symbol (R_Proxy_Object_Impl* object,
 			  char const* symbol,
 			  BDX_Data** data)
@@ -221,8 +247,11 @@ int SYSCALL R_get_symbol (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDARG;
     }
 
-  lRc = R_Proxy_get_symbol (symbol,data);
+  if ((object->state != ps_initialized) && (object->state != ps_reuser)) {
+    return SC_PROXY_ERR_NOTINITIALIZED;
+  }
 
+  lRc = R_Proxy_get_symbol (symbol,data);
   if (lRc == SC_PROXY_OK)
     {
       (*data)->version = BDX_VERSION;
@@ -231,6 +260,7 @@ int SYSCALL R_get_symbol (R_Proxy_Object_Impl* object,
   return lRc;
 }
 
+/* 04-10-20 | baier | special state to reuse a running R (rgui) */
 int SYSCALL R_evaluate (R_Proxy_Object_Impl* object,
 			char const* command,
 			BDX_Data** data )
@@ -243,14 +273,14 @@ int SYSCALL R_evaluate (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDARG;
     }
 
-  if (object->state != ps_initialized)
-    {
-      return SC_PROXY_ERR_NOTINITIALIZED;
-    }
+  if ((object->state != ps_initialized) && (object->state != ps_reuser)) {
+    return SC_PROXY_ERR_NOTINITIALIZED;
+  }
 
   return R_Proxy_evaluate (command,data);
 }
 
+/* 04-10-20 | baier | special state to reuse a running R (rgui) */
 int SYSCALL R_evaluate_noreturn (R_Proxy_Object_Impl* object,
 				 char const* command)
 {
@@ -261,10 +291,9 @@ int SYSCALL R_evaluate_noreturn (R_Proxy_Object_Impl* object,
       return SC_PROXY_ERR_INVALIDARG;
     }
 
-  if (object->state != ps_initialized)
-    {
-      return SC_PROXY_ERR_NOTINITIALIZED;
-    }
+  if ((object->state != ps_initialized) && (object->state != ps_reuser)) {
+    return SC_PROXY_ERR_NOTINITIALIZED;
+  }
 
   return R_Proxy_evaluate_noreturn (command);
 }
@@ -556,6 +585,34 @@ int SYSCALL EXPORT SC_Proxy_get_object (SC_Proxy_Object** obj,
   proxy_object->ref_count = 1;
 
   *obj = (SC_Proxy_Object*) proxy_object;
+
+  return SC_PROXY_OK;
+}
+
+
+/* global object table */
+BDX_Vtbl global_bdx_object_vtbl =
+{
+  (BDX_FREE) bdx_free,
+  (BDX_TRACE) bdx_trace,
+  (BDX_VARIANT2BDX) Variant2BDX,
+  (BDX_BDX2VARIANT) BDX2Variant
+};
+
+int SYSCALL EXPORT BDX_get_vtbl (BDX_Vtbl** obj,
+				   unsigned long version)
+{
+  if (obj == NULL)
+    {
+      return SC_PROXY_ERR_INVALIDARG;
+    }
+
+  if (version != BDX_VTBL_VERSION)
+    {
+      return SC_PROXY_ERR_INVALIDINTERFACEVERSION;
+    }
+
+  *obj = &global_bdx_object_vtbl;
 
   return SC_PROXY_OK;
 }

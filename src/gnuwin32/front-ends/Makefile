@@ -15,7 +15,8 @@ CFLAGS=$(OPTFLAGS) -I../../include
 all: $(R_HOME)/bin/Rgui.exe $(R_HOME)/bin/Rterm.exe \
      $(R_HOME)/bin/Rcmd.exe  $(R_HOME)/bin/RSetReg.exe  \
      $(R_HOME)/bin/Rproxy.dll $(R_HOME)/bin/R.exe \
-     $(R_HOME)/bin/md5check.exe
+     $(R_HOME)/bin/md5check.exe \
+     ../librproxy.a
 
 $(R_HOME)/bin/Rgui.exe: Rgui.exe
 	$(MKDIR) -p $(R_HOME)/bin
@@ -74,13 +75,22 @@ Rpwd.exe: rpwd.o rcico.o
 rcmd.o R.o rgui.o rterm.o RSetReg.o rproxy_impl.o rgico.o rtico.o rcico.o: ../../include/Rversion.h
 
 clean:
-	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib
+	$(RM) *.o *.obj *.exe *~ *.exp *.def *.dll *.lib *.a
 
-bdx-CFLAGS=-I../../include
+bdx_util-CFLAGS=-D_IN_RPROXY_
+bdx_com-CFLAGS=-D_IN_RPROXY_
+bdx_SEXP-CFLAGS=-D_IN_RPROXY_
 rproxy-DLLFLAGS=-mwindows
-rproxy-DLLLIBS=-L.. $(LIBUNICOWS) -lR
-rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o bdx.o rtico.o
+rproxy-DLLLIBS=-L.. $(LIBUNICOWS) -lR -lole32 -luuid -loleaut32
+rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
+	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
 
-$(R_HOME)/bin/Rproxy.dll: rproxy.dll
+librproxy.a: rproxy.dll rproxy.df
+	dlltool --as=as $(DLLTOOLFLAGS) $(RPROXY-DLLTOOLFLAGS) --dllname rproxy.dll --def rproxy.df --output-lib $@
+
+../librproxy.a: librproxy.a
+	@$(CP) $< $@
+
+$(R_HOME)/bin/Rproxy.dll: rproxy.dll librproxy.a
 	$(MKDIR) -p $(R_HOME)/bin
-	$(CP) $^ $@	
+	$(CP) rproxy.dll $@	

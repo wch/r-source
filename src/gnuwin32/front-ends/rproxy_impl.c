@@ -1,6 +1,6 @@
-/*
+/*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 1999--2001 Thomas Baier
+ *  Copyright (C) 1999--2005 Thomas Baier
  *
  *  R_Proxy_init based on rtest.c,  Copyright (C) 1998--2000
  *                                  R Development Core Team
@@ -21,8 +21,11 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
+ *  ---------------------------------------------------------------------------
+ *
  *  $Id: rproxy_impl.c,v 1.24 2004/06/09 13:35:32 ripley Exp $
- */
+ *
+ ******************************************************************************/
 
 #define NONAMELESSUNION
 #include <windows.h>
@@ -35,8 +38,9 @@
 #include <config.h>
 #include <Rversion.h>
 #include <Startup.h>
-#include "bdx.h"
+#include "bdx_SEXP.h"
 #include "SC_proxy.h"
+#include "rproxy.h"
 #include "rproxy_impl.h"
 #include <IOStuff.h>
 #include <Parse.h>
@@ -81,9 +85,8 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
 extern SC_CharacterDevice* __output_device;
 
 /* trace to DebugView */
-int RPROXYTRACE(char const* pFormat,...);
 
-int RPROXYTRACE(char const* pFormat,...)
+int R_Proxy_printf(char const* pFormat,...)
 {
   static char __tracebuf[2048];
 
@@ -128,226 +131,6 @@ void R_Proxy_CallBack()
 void R_Proxy_Busy(int which)
 {
     /* set a busy cursor ... in which = 1, unset if which = 0 */
-}
-
-
-int SEXP2BDX_Data (SEXP pExpression,BDX_Data** pData)
-{
-  BDX_Data* lData = 0;
-
-  /* allocate buffer */
-  lData = (BDX_Data*) malloc (sizeof (BDX_Data));
-  *pData = lData;
-  assert (*pData != NULL);
-
-  /*
-   * we support the following types at the moment
-   *
-   *  integer (scalar, vectors and arrays)
-   *  real (scalars, vectors and arrays)
-   *  logical (scalars, vectors and arrays)
-   *  string (scalars, vectors and arrays)
-   *  null
-   *
-   * we should support soon
-   *
-   *  complex vectors
-   *  generic vectors
-   */
-  switch (TYPEOF (pExpression))
-    {
-    case NILSXP	 :
-      lData->type = BDX_NULL;
-
-      /* dimensions: 1 */
-      lData->dim_count = 1;
-      lData->dimensions =
-	(BDX_Dimension*) malloc (sizeof (BDX_Dimension));
-      lData->dimensions[0] = 0;
-
-      /* data: empty (just a dummy data record) */
-      lData->raw_data =
-	(BDX_RawData*) malloc (sizeof (BDX_RawData));
-
-      /*      UNPROTECT (1); */
-
-      return SC_PROXY_OK;
-
-      break;
-    case LGLSXP	 :
-      lData->type = BDX_BOOL;
-      break;
-    case INTSXP	 :
-      lData->type = BDX_INT;
-      break;
-    case REALSXP	 :
-      lData->type = BDX_DOUBLE;
-      break;
-    case STRSXP	 :
-      lData->type = BDX_STRING;
-      break;
-      /*
-       case VECSXP	 : printf ("type: generic vectors\n");
-       break;
-       case CPLXSXP	 : printf ("type: complex variables\n");
-       break;
-      */
-    default:
-      /*      UNPROTECT (1); */
-      free (lData);
-      *pData = NULL;
-      return SC_PROXY_ERR_UNSUPPORTEDTYPE;
-    }
-
-  /* the type is set now. NULL values have already returned */
-
-  /* is it a scalar, a vector or an array? */
-
-  /* bug: no dimensions stored */
-  if (LENGTH (pExpression) == 0)
-    {
-      free (lData);
-      *pData = NULL;
-      return SC_PROXY_ERR_UNKNOWN;
-    }
-
-  /* scalar: length 1 */
-  if (LENGTH (pExpression) == 1)
-    {
-      lData->type |= BDX_SCALAR;
-      lData->dim_count = 1;
-      lData->dimensions =
-	(BDX_Dimension*) malloc (sizeof (BDX_Dimension));
-      lData->dimensions[0] = 1;
-      lData->raw_data =
-	(BDX_RawData*) malloc (sizeof (BDX_RawData));
-      switch (lData->type & BDX_SMASK)
-	{
-	case BDX_BOOL:
-	  lData->raw_data[0].bool_value = LOGICAL (pExpression)[0];
-	  break;
-	case BDX_INT:
-	  lData->raw_data[0].int_value = INTEGER (pExpression)[0];
-	  break;
-	case BDX_DOUBLE:
-	  lData->raw_data[0].double_value = REAL (pExpression)[0];
-	  break;
-	case BDX_STRING:
-	  lData->raw_data[0].string_value = strdup (CHAR (STRING_ELT(pExpression, 0)));
-	  break;
-	}
-    }
-  else
-    {
-      /* is it a vector or an array? */
-      SEXP lDimension;
-
-      lDimension = getAttrib (pExpression,R_DimSymbol);
-
-      PROTECT (lDimension);
-
-      if (TYPEOF (lDimension) == NILSXP)
-	{
-	  /* vector */
-	  int i;
-
-	  lData->type |= BDX_VECTOR;
-	  lData->dim_count = 1;
-	  lData->dimensions =
-	    (BDX_Dimension*) malloc (sizeof (BDX_Dimension));
-	  lData->dimensions[0] = LENGTH (pExpression);
-	  lData->raw_data =
-	    (BDX_RawData*) malloc (sizeof (BDX_RawData)
-				   * lData->dimensions[0]);
-
-	  /* copy the data */
-	  for (i = 0; i < lData->dimensions[0];i++)
-	    {
-	      switch (lData->type & BDX_SMASK)
-		{
-		case BDX_BOOL:
-		  lData->raw_data[i].bool_value = LOGICAL (pExpression)[i];
-		  break;
-		case BDX_INT:
-		  lData->raw_data[i].int_value = INTEGER (pExpression)[i];
-		  break;
-		case BDX_DOUBLE:
-		  lData->raw_data[i].double_value = REAL (pExpression)[i];
-		  break;
-		case BDX_STRING:
-		  lData->raw_data[i].string_value = strdup (CHAR (STRING_ELT(pExpression, i)));
-		  break;
-		}
-	    }
-
-	  UNPROTECT (1); /* dimension */
-
-	  return SC_PROXY_OK;
-	}
-      else
-	{
-	  /* array with LENGTH(lDimension) dimensions */
-	  if (TYPEOF (lDimension) == INTSXP)
-	    {
-	      int i;
-	      int lTotalSize = 1;
-
-	      lData->type |= BDX_ARRAY;
-	      lData->dim_count = LENGTH (lDimension);
-
-	      lData->dimensions =
-		(BDX_Dimension*) malloc (sizeof (BDX_Dimension)
-					 * lData->dim_count);
-
-	      /* compute the total number of data elements */
-	      for (i = 0;i < lData->dim_count;i++)
-		{
-		  lData->dimensions[i] = INTEGER (lDimension)[i];
-		  lTotalSize *= lData->dimensions[i];
-		}
-
-	      lData->raw_data =
-		(BDX_RawData*) malloc (sizeof (BDX_RawData)
-				       * lTotalSize);
-
-	      /* copy the data */
-	      for (i = 0; i < lTotalSize;i++)
-		{
-		  switch (lData->type & BDX_SMASK)
-		    {
-		    case BDX_BOOL:
-		      lData->raw_data[i].bool_value = LOGICAL (pExpression)[i];
-		      break;
-		    case BDX_INT:
-		      lData->raw_data[i].int_value = INTEGER (pExpression)[i];
-		      break;
-		    case BDX_DOUBLE:
-		      lData->raw_data[i].double_value = REAL (pExpression)[i];
-		      break;
-		    case BDX_STRING:
-		      lData->raw_data[i].string_value = strdup (CHAR (STRING_ELT(pExpression, i)));
-		      break;
-		    }
-		}
-
-	      UNPROTECT (1); /* dimension */
-
-	      return SC_PROXY_OK;
-	    }
-	  else
-	    {
-	      /* unknown error */
-	      free (lData);
-	      *pData = NULL;
-
-	      UNPROTECT (1); /* dimension */
-
-	      return SC_PROXY_ERR_UNKNOWN;
-	    }
-	}
-    }
-
-  return SC_PROXY_OK;
 }
 
 /* 00-02-18 | baier | parse parameter string and fill parameter structure */
@@ -471,28 +254,29 @@ int R_Proxy_init (char const* pParameterString)
   }
 
   Rp->rhome = RHome;
-/*
- * try R_USER then HOME then Windows homes then working directory
- */
 
-    if ((p = getenv("R_USER"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
-	strcpy(RUser, p);
-    } else if ((p = getenv("HOME"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
-	strcpy(RUser, p);
-    } else if (ShellGetPersonalDirectory(RUser)) {
-	/* nothing to do */;
-    } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
-	if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
-	strcpy(RUser, p);
-	if(strlen(RUser) + strlen(q) >= MAX_PATH)
-	    R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
-	strcat(RUser, q);
-    } else {
-	GetCurrentDirectory(MAX_PATH, RUser);
-    }
+  /*
+   * try R_USER then HOME then Windows homes then working directory
+   */
 
+  if ((p = getenv("R_USER"))) {
+    if(strlen(p) >= MAX_PATH) R_Suicide("Invalid R_USER");
+    strcpy(RUser, p);
+  } else if ((p = getenv("HOME"))) {
+    if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOME");
+    strcpy(RUser, p);
+  } else if (ShellGetPersonalDirectory(RUser)) {
+    /* nothing to do */;
+  } else if ((p = getenv("HOMEDRIVE")) && (q = getenv("HOMEPATH"))) {
+    if(strlen(p) >= MAX_PATH) R_Suicide("Invalid HOMEDRIVE");
+    strcpy(RUser, p);
+    if(strlen(RUser) + strlen(q) >= MAX_PATH)
+      R_Suicide("Invalid HOMEDRIVE+HOMEPATH");
+    strcat(RUser, q);
+  } else {
+    GetCurrentDirectory(MAX_PATH, RUser);
+  }
+  
   p = RUser + (strlen(RUser) - 1);
 
   if (*p == '/' || *p == '\\') *p = '\0';
@@ -555,6 +339,7 @@ int R_Proxy_init (char const* pParameterString)
 /* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 /* 04-08-01 | baier | ref-counting in case of error */
 /* 04-10-11 | baier | restore original ref-counting */
+/* 05-05-15 | baier | rework SETJMP code (store/restore jmp_buf) */
 int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
 {
   SEXP rho = R_GlobalEnv;
@@ -589,6 +374,8 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
       R_EvalDepth = 0;
       PROTECT(lSexp);
       {
+	JMP_BUF lJmpBuf;
+	memcpy(lJmpBuf,R_Toplevel.cjmpbuf,sizeof(lJmpBuf));
 	SETJMP (R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 
@@ -596,14 +383,16 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
 	  {
 	    s_EvalInProgress = 1;
 	    lResult = eval (lSexp,rho);
+	    memcpy(R_Toplevel.cjmpbuf,lJmpBuf,sizeof(lJmpBuf));
 	    s_EvalInProgress = 0;
 	  }
 	else
 	  {
+	    memcpy(R_Toplevel.cjmpbuf,lJmpBuf,sizeof(lJmpBuf));
 	    return SC_PROXY_ERR_EVALUATE_STOP;
 	  }
       }
-      lRc = SEXP2BDX_Data (lResult,pData);
+      lRc = SEXP2BDX(lResult,pData);
       /* no last value */
       UNPROTECT(1);
       break;
@@ -628,6 +417,7 @@ int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData)
 /* 01-06-05 | baier | SETJMP and fatal error handling around eval() */
 /* 04-08-01 | baier | ref-counting in case of error */
 /* 04-10-11 | baier | restore original ref-counting */
+/* 05-05-15 | baier | rework SETJMP code (store/restore jmp_buf) */
 int R_Proxy_evaluate_noreturn (char const* pCmd)
 {
   SEXP rho = R_GlobalEnv;
@@ -662,6 +452,8 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
       PROTECT(lSexp);
       /* at the moment, discard the result of the eval */
       {
+	JMP_BUF lJmpBuf;
+	memcpy(lJmpBuf,R_Toplevel.cjmpbuf,sizeof(lJmpBuf));
 	SETJMP (R_Toplevel.cjmpbuf);
 	R_GlobalContext = R_ToplevelContext = &R_Toplevel;
 
@@ -669,10 +461,12 @@ int R_Proxy_evaluate_noreturn (char const* pCmd)
 	  {
 	    s_EvalInProgress = 1;
 	    eval (lSexp,rho);
+	    memcpy(R_Toplevel.cjmpbuf,lJmpBuf,sizeof(lJmpBuf));
 	    s_EvalInProgress = 0;
 	  }
 	else
 	  {
+	    memcpy(R_Toplevel.cjmpbuf,lJmpBuf,sizeof(lJmpBuf));
 	    return SC_PROXY_ERR_EVALUATE_STOP;
 	  }
       }
@@ -725,7 +519,7 @@ int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
       /* check for valid symbol... */
       if (TYPEOF (lSexp) != SYMSXP)
 	{
-	  printf (">> %s is not a symbol\n",pSymbol);
+	  RPROXY_TRACE(printf(">> %s is not a symbol\n",pSymbol));
 	  UNPROTECT (1);
 	  return SC_PROXY_ERR_INVALIDSYMBOL;
 	}
@@ -734,149 +528,45 @@ int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData)
 
       if (lVar == R_UnboundValue)
 	{
-	  printf (">> %s is an unbound value\n",pSymbol);
+	  RPROXY_TRACE(printf(">> %s is an unbound value\n",pSymbol));
 	  UNPROTECT (1);
 	  return SC_PROXY_ERR_INVALIDSYMBOL;
 	}
-
       {
-	int lRc = SEXP2BDX_Data (lVar,pData);
+	int lRc = SEXP2BDX(lVar,pData);
 	UNPROTECT (1);
 
-	return lRc;
+	if(lRc == 0) {
+	  return SC_PROXY_OK;
+	} else {
+	  return SC_PROXY_ERR_UNSUPPORTEDTYPE;
+	}
       }
     }
-
   return SC_PROXY_OK;
 }
 
-/* 04-02-19 | baier | don't PROTECT strings in a vector */
+/* 04-02-19 | baier | don't PROTECT strings in a vector, new data structs */
 /* 04-03-02 | baier | removed traces */
+/* 04-10-15 | baier | no more BDX_VECTOR (only BDX_ARRAY) */
+/* 05-05-16 | baier | use BDX2SEXP, clean-up */
 int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData)
 {
   SEXP lSymbol = 0;
   SEXP lData = 0;
-  int lProtectCount = 1;
-  int lRet = SC_PROXY_OK;
 
-  switch (pData->type & BDX_CMASK)
-    {
-      /* scalar? */
-    case BDX_SCALAR:
-      {
-	switch (pData->type & BDX_SMASK)
-	  {
-	  case BDX_BOOL:
-	    lData = PROTECT (allocVector (LGLSXP,1));
-	    LOGICAL(lData)[0] = pData->raw_data[0].bool_value;
-	    break;
-	  case BDX_INT:
-	    lData = PROTECT (allocVector (INTSXP,1));
-	    INTEGER(lData)[0] = pData->raw_data[0].int_value;
-	    break;
-	  case BDX_DOUBLE:
-	    lData = PROTECT (allocVector (REALSXP,1));
-	    REAL(lData)[0] = pData->raw_data[0].double_value;
-	    break;
-	  case BDX_STRING:
-	    {
-	      SEXP lStringSExp =
-		allocString (strlen (pData->raw_data[0].string_value));
-	      PROTECT (lStringSExp); lProtectCount++;
-	      strcpy (CHAR(lStringSExp),pData->raw_data[0].string_value);
-	      lData = PROTECT (allocVector (STRSXP,1));
-	      SET_STRING_ELT(lData, 0, lStringSExp);
-	    }
-	    break;
-	  default:
-	    lRet = SC_PROXY_ERR_UNSUPPORTEDTYPE;
-	  }
-      }
-
-      break;
-      /* vectors or arrays */
-    case BDX_VECTOR:
-    case BDX_ARRAY:
-      {
-	/* allocate a dimensions vector */
-	SEXP lDimensions;
-	unsigned int i;
-	unsigned int lTotalSize = 1;
-
-	PROTECT (lDimensions = allocVector (INTSXP,pData->dim_count));
-	lProtectCount++;
-
-	for (i = 0;i < pData->dim_count;i++)
-	  {
-	    INTEGER (lDimensions)[i] = pData->dimensions[i];
-	    lTotalSize *= pData->dimensions[i];
-	  }
-
-	switch (pData->type & BDX_SMASK)
-	  {
-	  case BDX_BOOL:
-	    lData = PROTECT (allocVector (LGLSXP,lTotalSize));
-	    setAttrib (lData,R_DimSymbol,lDimensions);
-
-	    for (i = 0;i < lTotalSize;i++)
-	      {
-		LOGICAL(lData)[i] = pData->raw_data[i].bool_value;
-	      }
-	    break;
-	  case BDX_INT:
-	    lData = PROTECT (allocVector (INTSXP,lTotalSize));
-	    setAttrib (lData,R_DimSymbol,lDimensions);
-
-	    for (i = 0;i < lTotalSize;i++)
-	      {
-		INTEGER(lData)[i] = pData->raw_data[i].int_value;
-	      }
-	    break;
-	  case BDX_DOUBLE:
-	    lData = PROTECT (allocVector (REALSXP,lTotalSize));
-	    setAttrib (lData,R_DimSymbol,lDimensions);
-
-	    for (i = 0;i < lTotalSize;i++)
-	      {
-		REAL(lData)[i] = pData->raw_data[i].double_value;
-	      }
-	    break;
-	  case BDX_STRING:
-	    {
-	      lData = PROTECT (allocVector (STRSXP,lTotalSize));
-	      setAttrib (lData,R_DimSymbol,lDimensions);
-
-	      for (i = 0;i < lTotalSize;i++)
-		{
-		  SEXP lStringSExp;
-		  lStringSExp =
-		    allocString (strlen (pData->raw_data[i].string_value));
-		  strcpy (CHAR(lStringSExp),pData->raw_data[i].string_value);
-		  SET_STRING_ELT(lData, i, lStringSExp);
-		}
-	    }
-	    break;
-	  default:
-	    lRet = SC_PROXY_ERR_UNSUPPORTEDTYPE;
-	  }
-      }
-      break;
-    default:
-      lRet = SC_PROXY_ERR_UNSUPPORTEDTYPE;
-    }
-
-  if (lRet != SC_PROXY_OK)
-    {
-      return lRet;
-    }
+  /*  RPROXY_TRACE(printf("calling BDX2SEXP\n")); */
+  if(BDX2SEXP(pData,&lData) != 0) {
+    /*    RPROXY_TRACE(printf("error BDX2SEXP\n")); */
+    return SC_PROXY_ERR_UNSUPPORTEDTYPE;
+  }
+  /*  RPROXY_TRACE(printf("ok BDX2SEXP\n")); */
 
   /* install a new symbol or get the existing symbol */
   lSymbol = install ((char*) pSymbol);
 
   /* and set the data to the symbol */
   setVar(lSymbol,lData,R_GlobalEnv);
-
-  UNPROTECT (lProtectCount);
 
   return SC_PROXY_OK;
 }

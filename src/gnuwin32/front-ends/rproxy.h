@@ -23,24 +23,27 @@
  *
  ******************************************************************************/
 
-#ifndef _RPROXY_IMPL_H_
-#define _RPROXY_IMPL_H_
+#ifndef _RPROXY_H_
+#define _RPROXY_H_
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "bdx.h"
+/* tracing */
+#ifdef NDEBUG
+#define RPROXY_ERR(x) R_Proxy_ ## x
+#define RPROXY_TRACE(x)
+#else
+#define RPROXY_ERR(x) R_Proxy_ ## x
+#define RPROXY_TRACE(x) R_Proxy_ ## x
+#endif
+
 
 /* exported functions for implementation */
 
-/* 00-02-18 | baier | init() now receives parameter-string */
-int R_Proxy_init (char const* pParameters);
-int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData);
-int R_Proxy_evaluate_noreturn (char const* pCmd);
-int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData);
-int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData);
-int R_Proxy_term ();
+/* 05-05-12 | baier | tracing function new (replaces RPROXYTRACE) */
+int R_Proxy_printf(char const* pFormat,...);
 
 #ifdef __cplusplus
 }

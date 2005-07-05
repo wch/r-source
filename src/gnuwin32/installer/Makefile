@@ -18,7 +18,8 @@ GW_INFO_FILES = CHANGES COPYRIGHTS README.Rterm rw-FAQ
 ETC_FILES = Rprofile Rconsole Rdevga rgb.txt repositories
 
 GW32_FILES = R.exp Rblas.def MkRules MakePkg MakeDll \
-	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh
+	  Rpwd.exe pwd.pl makeDllRes.pl install-save.sh man-install.sh \
+	  librproxy.a
 
 # we don't want share/{Makefile.in,sh} installed
 SHARE_DIRS = R licenses locale make perl texmf

@@ -6,12 +6,12 @@
  *  modify it under the terms of the GNU Library General Public
  *  License as published by the Free Software Foundation; either
  *  version 2 of the License, or (at your option) any later version.
- *
+ * 
  *  This library is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  *  Library General Public License for more details.
- *
+ * 
  *  You should have received a copy of the GNU Library General Public
  *  License along with this library; if not, write to the Free
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
@@ -19,28 +19,41 @@
  *
  *  ---------------------------------------------------------------------------
  *
- *  $Id: rproxy_impl.h,v 1.6 2003/09/13 15:14:09 murdoch Exp $
+ *  $Id: StatConnector.cpp 1.8 2003/04/15 21:05:35 baier Exp $
+ *
+ *  Conversion functions from SEXP to BDX and vice versa.
  *
  ******************************************************************************/
 
-#ifndef _RPROXY_IMPL_H_
-#define _RPROXY_IMPL_H_
+#ifndef _COM_UTIL_H_
+#define _COM_UTIL_H_
 
 #ifdef __cplusplus
-extern "C" {
+      extern "C" {
 #endif
 
-#include "bdx.h"
+#define RCOM_CLSNAME "COMObject"
 
-/* exported functions for implementation */
+typedef void* RCOM_OBJHANDLE;
+#define RCOM_NULLHANDLE NULL
 
-/* 00-02-18 | baier | init() now receives parameter-string */
-int R_Proxy_init (char const* pParameters);
-int R_Proxy_evaluate (char const* pCmd,BDX_Data** pData);
-int R_Proxy_evaluate_noreturn (char const* pCmd);
-int R_Proxy_get_symbol (char const* pSymbol,BDX_Data** pData);
-int R_Proxy_set_symbol (char const* pSymbol,BDX_Data const* pData);
-int R_Proxy_term ();
+#undef Free
+#undef ERROR
+#include <windows.h>
+#include <ole2.h>
+#undef Free
+#undef ERROR
+#include <R.h>
+#include <Rinternals.h>
+
+/** get the COM object by handle */
+LPDISPATCH com_getObject(RCOM_OBJHANDLE handle);
+/** get the COM object index by handle */
+RCOM_OBJHANDLE com_getHandle(SEXP handle);
+/** add the COM object and return the new handle */
+RCOM_OBJHANDLE com_addObject(LPDISPATCH object);
+/** create an SEXP for a handle */
+SEXP com_createSEXP(RCOM_OBJHANDLE handle);
 
 #ifdef __cplusplus
 }

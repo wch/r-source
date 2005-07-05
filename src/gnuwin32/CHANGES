@@ -19,6 +19,10 @@ expected form is
 
 with *three* slashes.
 
+The (D)COM support has been updated, and header files and an import 
+library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
+package for usage.
+
 
 
 R 2.1.1 patched
