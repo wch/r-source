@@ -142,6 +142,9 @@ NEW FEATURES
     o	new function glob2rx() fortranslating `wildcard' aka `globbing'
 	to regular expressions.
 
+    o   KalmanFore, KalmanLike now have an option fast=FALSE to
+        to prevent their arguments being modified.
+
 
 DEPRECATED & DEFUNCT
 

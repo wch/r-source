@@ -4,7 +4,8 @@ StructTS <- function(x, type = c("level", "trend", "BSM"),
     KalmanLike2 <- function (y, mod, nit = 0)
     {
         x <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V,
-                   mod$h, mod$Pn, as.integer(nit), FALSE, PACKAGE = "stats")
+                   mod$h, mod$Pn, as.integer(nit), FALSE, fast=TRUE,
+                   PACKAGE = "stats")
         0.5 * sum(x)/length(y)
     }
     makeLevel <- function(x)

@@ -1,19 +1,19 @@
 
-KalmanLike <- function(y, mod, nit = 0)
+KalmanLike <- function(y, mod, nit = 0, fast=TRUE)
 {
-    ## next call changes objects a, P, Pn: beware!
+    ## next call changes objects a, P, Pn if fast==TRUE: beware!
     x <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, as.integer(nit), FALSE, PACKAGE = "stats")
+               mod$Pn, as.integer(nit), FALSE, fast=fast, PACKAGE = "stats")
     names(x) <- c("ssq", "sumlog")
     s2 <- x[1]/length(y)
     list(Lik = 0.5*(log(x[1]/length(y)) + x[2]/length(y)), s2 = s2)
 }
 
-KalmanRun <- function(y, mod, nit = 0)
+KalmanRun <- function(y, mod, nit = 0, fast=TRUE)
 {
-    ## next call changes objects a, P, Pn: beware!
+    ## next call changes objects a, P, Pn if fast==TRUE: beware!
     z <- .Call("KalmanLike", y, mod$Z, mod$a, mod$P, mod$T, mod$V, mod$h,
-               mod$Pn, as.integer(nit), TRUE, PACKAGE = "stats")
+               mod$Pn, as.integer(nit), TRUE, fast=fast, PACKAGE = "stats")
     names(z) <- c("values", "resid", "states")
     x <- z$values
     s2 <- x[1]/length(y)
@@ -21,15 +21,15 @@ KalmanRun <- function(y, mod, nit = 0)
     z
 }
 
-KalmanForecast <- function(n.ahead = 10, mod)
+KalmanForecast <- function(n.ahead = 10, mod, fast=TRUE)
 {
     a <- numeric(p <- length(mod$a))
     P <- matrix(0, p, p)
     a[] <- mod$a
     P[] <- mod$P
-    ## next call changes objects a, P
+    ## next call changes objects a, P if fast==TRUE
     x <- .Call("KalmanFore", as.integer(n.ahead), mod$Z, a, P,
-               mod$T, mod$V, mod$h, PACKAGE = "stats")
+               mod$T, mod$V, mod$h, fast=fast, PACKAGE = "stats")
     names(x) <- c("pred", "var")
     x
 }

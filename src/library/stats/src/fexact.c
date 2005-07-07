@@ -1008,7 +1008,7 @@ LoopNode: /* Generate a node */
 	for (i = 3; i <= nco; ++i) {
 	    key = it[i] + key * kyy;
 	}
-	if(key < 0)
+	if (key < -1)
 	    PROBLEM "Bug in FEXACT: gave negative key" RECOVER(NULL_ENTRY);
 	/* Table index */
 	ipn = key % ldst + 1;
