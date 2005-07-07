@@ -1,32 +1,33 @@
 \name{SSD}
 \alias{SSD}
 \alias{estVar}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{SSD matrix and estimated variance matrix in multivariate models}
+\title{SSD Matrix and Estimated Variance Matrix in Multivariate Models}
 \description{
   Functions to compute matrix of residual sums of squares and products,
-  or the estimated varianve matrix for multivariate linear models.
+  or the estimated variance matrix for multivariate linear models.
 }
 \usage{
-# S3 method for class 'mlm' 
+% Cheating! - the S3 methods are hidden ... \method{SSD}{mlm}(object, ...)
+# S3 method for class 'mlm'
 SSD(object, ...)
 
 # S3 methods for class 'SSD' and 'mlm'
 estVar(object, ...)
 }
 \arguments{
-  \item{object}{\code{object} of class 'mlm', or 'SSD' in the case of 'estVar'}
+  \item{object}{\code{object} of class \code{"mlm"}, or \code{"SSD"} in
+    the case of \code{estVar}.}
   \item{\dots}{Unused}
 }
 \value{
-  \code{SSD} returns an list of class \code{"SSD"} containing the
-  followint components
+  \code{SSD()} returns a list of class \code{"SSD"} containing the
+  following components
   \item{SSD}{The residual sums of squares and products matrix}
   \item{df}{Degrees of freedom}
   \item{call}{Copied from \code{object}}
 
   \code{estVar} returns a matrix with the estimated variances and
-  covariances. 
+  covariances.
 }
 \seealso{\code{\link{mauchley.test}}, \code{\link{anova.mlm}}}
 %% TODO: Have this in datasets w/full docs
@@ -45,10 +46,10 @@ reacttime <- matrix(c(
 480, 600, 660, 540, 720, 900,
 540, 600, 540, 480, 720, 780,
 480, 420, 540, 540, 660, 780),
-ncol = 6, byrow = TRUE, 
+ncol = 6, byrow = TRUE,
 dimnames=list(subj=1:10,
-              cond=c("deg0NA", "deg4NA", "deg8NA", 
-                     "deg0NP", "deg4NP", "deg8NP"))) 
+              cond=c("deg0NA", "deg4NA", "deg8NA",
+                     "deg0NP", "deg4NP", "deg8NP")))
 
 mlmfit <- lm(reacttime~1)
 SSD(mlmfit)
