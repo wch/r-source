@@ -302,6 +302,10 @@ BUG FIXES
 
     o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
+	
+    o 	The "col" parameter to pairs() is now treated consistently with 
+    	plot():  it affects the data, not the axes.  (Patch submitted
+    	by Olaf Mersmann)
 
 
 
