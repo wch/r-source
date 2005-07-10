@@ -109,3 +109,4 @@ endif
 
 distclean:
 	$(RM) -f Rmath.h0 fixh
+	$(RM) $(RPROXY_HEADERS)
