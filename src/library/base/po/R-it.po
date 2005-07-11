@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-06-30 16:04\n"
 "PO-Revision-Date: 2005-02-16 08:34\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -36,6 +36,24 @@ msgstr "Si veda help(\"Deprecated\") e help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Si veda help(\"Deprecated\")"
+
+msgid "invalid numbers in 'quote'"
+msgstr "numeri non validi in 'quote'"
+
+msgid "invalid 'quote' specification"
+msgstr "specificazione di 'quote' non valida"
+
+msgid "invalid 'row.names' specification"
+msgstr "specificazione di 'row.names' non valida"
+
+msgid "invalid 'col.names' specification"
+msgstr "specificazione di 'col.names' non valida"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' deve essere una string di caratteri o una connessione"
+
+msgid "appending column names to file"
+msgstr "accodo nomi colonna al file"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "l'argomento di 'La.svd' deve essere numeric o complex"
@@ -478,9 +496,6 @@ msgstr "'from' deve essere un oggetto POSIXt"
 
 msgid "'to' must be a POSIXt object"
 msgstr "'to' deve essere un oggetto POSIXt"
-
-msgid "'file' must be a character string or connection"
-msgstr "'file' deve essere una string di caratteri o una connessione"
 
 msgid "'x' must be a square matrix"
 msgstr "'x' deve essere una matrice quadrata"
@@ -1081,9 +1096,6 @@ msgstr "non tutte le colonne nominati in 'as.is' esistono"
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is' ha la lunghezza sbagliata %d  != cols = %d"
 
-msgid "invalid 'row.names' specification"
-msgstr "specificazione di 'row.names' non valida"
-
 msgid "'x' must be a vector"
 msgstr "'x' deve essere un vettore"
 
@@ -1268,17 +1280,11 @@ msgstr "Nessun traceback disponibile"
 msgid "argument to 'which' is not logical"
 msgstr "l'argomento di 'which' non è di tipo logico"
 
-msgid "invalid numbers in 'quote'"
-msgstr "numeri non validi in 'quote'"
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
 
-msgid "invalid 'quote' specification"
-msgstr "specificazione di 'quote' non valida"
-
-msgid "invalid 'col.names' specification"
-msgstr "specificazione di 'col.names' non valida"
-
-msgid "appending column names to file"
-msgstr "accodo nomi colonna al file"
+msgid "attempt to change '%s' ignored"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "'digits' non valido"

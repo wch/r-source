@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-06-30 16:04\n"
 "PO-Revision-Date: 2005-04-18 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -36,6 +36,24 @@ msgstr "Siehe help(\"Deprecated\") und help(\"%s-deprecated\")."
 
 msgid "See help(\"Deprecated\")"
 msgstr "Siehe help(\"Deprecated\")"
+
+msgid "invalid numbers in 'quote'"
+msgstr "ungültige Zahlen in 'quote'"
+
+msgid "invalid 'quote' specification"
+msgstr "ungültige 'quote' Spezifikation"
+
+msgid "invalid 'row.names' specification"
+msgstr "ungültige 'row.names' Spezifikation"
+
+msgid "invalid 'col.names' specification"
+msgstr "ungültige 'col.names' Spezifikation"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
+
+msgid "appending column names to file"
+msgstr "hänge Spaltennamen an Datei an"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "Argument zu 'La.svd' muss numerisch oder komplex sein"
@@ -474,9 +492,6 @@ msgstr "'from' muss ein \"POSIXt\" Objekt sein"
 
 msgid "'to' must be a POSIXt object"
 msgstr "'to' muss ein \"POSIXt\" Objekt sein"
-
-msgid "'file' must be a character string or connection"
-msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "'x' must be a square matrix"
 msgstr "'x' muss eine quadratische Matrix sein"
@@ -1070,9 +1085,6 @@ msgstr "nicht alle Spalten, die in 'as.is' benannt wurden, existieren"
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is' hat die falsche Länge %d != cols = %d"
 
-msgid "invalid 'row.names' specification"
-msgstr "ungültige 'row.names' Spezifikation"
-
 msgid "'x' must be a vector"
 msgstr "'x' muss ein Vektor sein"
 
@@ -1256,17 +1268,11 @@ msgstr "Kein traceback vefügbar"
 msgid "argument to 'which' is not logical"
 msgstr "Argument zu 'which' ist nicht boolesch"
 
-msgid "invalid numbers in 'quote'"
-msgstr "ungültige Zahlen in 'quote'"
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
 
-msgid "invalid 'quote' specification"
-msgstr "ungültige 'quote' Spezifikation"
-
-msgid "invalid 'col.names' specification"
-msgstr "ungültige 'col.names' Spezifikation"
-
-msgid "appending column names to file"
-msgstr "hänge Spaltennamen an Datei an"
+msgid "attempt to change '%s' ignored"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "ungültige 'digits'"

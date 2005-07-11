@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 13:29\n"
+"POT-Creation-Date: 2005-06-30 15:58\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -453,6 +453,9 @@ msgid "Package '%s' had its dependencies reduced to a minimal set."
 msgstr ""
 
 msgid "argument '%s' must be a character string or connection"
+msgstr ""
+
+msgid "unimplemented encoding"
 msgstr ""
 
 msgid "test '%s' is not available"
