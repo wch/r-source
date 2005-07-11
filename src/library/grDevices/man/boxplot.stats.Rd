@@ -18,7 +18,7 @@ boxplot.stats(x, coef = 1.5, do.conf = TRUE, do.out = TRUE)
     \code{out} component respectively will be empty in the result.}
 }
 \description{
-  This function is typically called by \code{\link{boxplot}} to
+  This function is typically called by another function to
   gather the statistics necessary for producing box plots,
   but may be invoked separately.
 }

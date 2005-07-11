@@ -69,24 +69,6 @@ boxplot.formula <-
     boxplot(split(mf[[response]], mf[-response]), ...)
 }
 
-boxplot.stats <- function(x, coef = 1.5, do.conf=TRUE, do.out=TRUE)
-{
-    nna <- !is.na(x)
-    n <- sum(nna)                       # including +/- Inf
-    stats <- stats::fivenum(x, na.rm = TRUE)
-    iqr <- diff(stats[c(2, 4)])
-    if(coef < 0) stop("'coef' must not be negative")
-    if(coef == 0)
-	do.out <- FALSE
-    else {                              # coef > 0
-	out <- x < (stats[2] - coef * iqr) | x > (stats[4] + coef * iqr)
-	if(any(out[nna])) stats[c(1, 5)] <- range(x[!out], na.rm = TRUE)
-    }
-    conf <- if(do.conf) stats[3] + c(-1.58, 1.58) * iqr / sqrt(n)
-    list(stats = stats, n = n, conf = conf,
-	 out = if(do.out) x[out & nna] else numeric(0))
-}
-
 bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 		notch.frac = 0.5, log = "", border=par("fg"), col=par("bg"),
                 pars = NULL, frame.plot = axes, horizontal = FALSE,

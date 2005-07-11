@@ -7,8 +7,7 @@
 Compute the Number of Classes for a Histogram
 }
 \description{
-  Compute the number of classes for a histogram, for use internally in
-  \code{\link{hist}}.
+  Compute the number of classes for a histogram.
 }
 \usage{
 nclass.Sturges(x)

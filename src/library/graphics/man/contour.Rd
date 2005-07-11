@@ -1,7 +1,6 @@
 \name{contour}
 \alias{contour}
 \alias{contour.default}
-\alias{contourLines}
 \title{Display Contours}
 \description{
   Create a contour plot, or add contour lines to an existing plot.
@@ -21,11 +20,6 @@ contour(x, \dots)
         axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
-
-contourLines(x = seq(0, 1, len = nrow(z)),
-             y = seq(0, 1, len = ncol(z)),
-	     z, nlevels = 10,
-             levels = pretty(range(z, na.rm=TRUE), nlevels))
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -68,11 +62,6 @@ contourLines(x = seq(0, 1, len = nrow(z)),
   \code{contour} is a generic function with only a default method in
   base \R.
 
-  \code{contourLines} draws nothing, but returns a set of contour lines.
-  
-  There is currently no documentation about the algorithm.
-  The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
-
   The methods for positioning the labels on contours are \code{"simple"}
   (draw at the edge of the plot, overlaying the contour line),
   \code{"edge"} (draw at the edge of the plot, embedded in the contour
@@ -102,7 +91,8 @@ contourLines(x = seq(0, 1, len = nrow(z)),
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{filled.contour}} for \dQuote{color-filled} contours,
+  \code{\link[grDevices]{contourLines}},
+    \code{\link{filled.contour}} for \dQuote{color-filled} contours,
   \code{\link{image}} and the graphics demo which can be invoked as
   \code{demo(graphics)}.
 }
