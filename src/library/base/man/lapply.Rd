@@ -4,13 +4,13 @@
 lapply(X, FUN, \dots)
 sapply(X, FUN, \dots, simplify = TRUE, USE.NAMES = TRUE)
 
-replicate(n, expr, simplify = TRUE) 
+replicate(n, expr, simplify = TRUE)
 }
 \alias{lapply}
 \alias{sapply}
 \alias{replicate}
 \arguments{
-  \item{X}{list or vector to be used.}
+  \item{X}{list or (atomic) vector to be used.}
   \item{FUN}{the function to be applied.
     In the case of functions like \code{+},
     \code{\%*\%}, etc., the function name must be quoted.}
@@ -20,8 +20,8 @@ replicate(n, expr, simplify = TRUE)
   \item{USE.NAMES}{logical; if \code{TRUE} and if \code{X} is character,
     use \code{X} as \code{\link{names}} for the result unless it had names
     already.}
-  \item{n}{Number of replications.}
-  \item{expr}{Expression to evaluate repeatedly.}
+  \item{n}{number of replications.}
+  \item{expr}{expression to evaluate repeatedly.}
 }
 \description{
   \code{lapply} returns a list of the same length as \code{X}.  Each
@@ -29,12 +29,15 @@ replicate(n, expr, simplify = TRUE)
   corresponding element of \code{X}.
 
   \code{sapply} is a \dQuote{user-friendly} version of \code{lapply}
-  also accepting vectors as \code{X}, and returning a vector or matrix
-  with \code{dimnames} if appropriate.
+  returning a vector or matrix with \code{dimnames} if appropriate.
 
   \code{replicate} is a wrapper for the common use of \code{sapply} for
   repeated evaluation of an expression (which will usually involve
   random number generation).
+}
+\note{
+  \code{sapply(*, simplify = FALSE, USE.NAMES = FALSE)} is
+  equivalent to \code{lapply(*)}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
