@@ -78,10 +78,10 @@ write.csv2(\dots)
   By default there is no column name for a column of row names.  If
   \code{col.names = NA} and \code{row.names = TRUE} a blank column name
   is added, which is the convention for CSV files to be read by
-  spreadsheets
+  spreadsheets.
 
   \code{write.csv} and \code{write.csv2} provide convenience wrappers
-  for doing writing CSV files. They set \code{sep}, \code{dec} and
+  for writing CSV files.  They set \code{sep}, \code{dec} and
   \code{qmethod}, and \code{col.names} to \code{NA} if \code{row.names =
     TRUE} and \code{TRUE} otherwise.
 
@@ -94,6 +94,8 @@ write.csv2(\dots)
 
   These wrappers are deliberately inflexible: they are designed to
   ensure that the correct conventions are used to write a valid file.
+  Attempts to change \code{col.names}, \code{sep}, \code{dec} or
+  \code{qmethod} are ignored, with a warning.
 }
 \note{
   \code{write.table} can be slow for data frames with large numbers
@@ -123,6 +125,9 @@ read.table("foo.csv", header = TRUE, sep = ",", row.names = 1)
 ### Alternatively
 write.csv(x, file = "foo.csv")
 read.csv("foo.csv", row.names = 1)
+## or without row names
+write.csv(x, file = "foo.csv", row.names = FALSE)
+read.csv("foo.csv")
 }}
 \keyword{print}
 \keyword{file}

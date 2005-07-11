@@ -111,6 +111,10 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 write.csv <- function(...)
 {
     Call <- match.call(expand.dots = TRUE)
+    for(argname in c("col.names", "sep", "dec", "qmethod"))
+        if(!is.null(Call[[argname]]))
+            warning(gettextf("attempt to change '%s' ignored", argname),
+                    domain = NA)
     rn <- Call$row.names
     Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
     Call$sep <- ","
@@ -123,6 +127,10 @@ write.csv <- function(...)
 write.csv2 <- function(...)
 {
     Call <- match.call(expand.dots = TRUE)
+    for(argname in c("col.names", "sep", "dec", "qmethod"))
+        if(!is.null(Call[[argname]]))
+            warning(gettextf("attempt to change '%s' ignored", argname),
+                    domain = NA)
     rn <- Call$row.names
     Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
     Call$sep <- ";"
