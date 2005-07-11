@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-23 r34818)
+Version 2.2.0 Under development (unstable) (2005-07-11 r34924)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1150,7 +1150,7 @@ coef[ 3] = 0.10
 coef[ 4] = 0.10
 coef[ 5] = 0.05
 > kernel("daniell", m=c(3,5,7))
-unknown 
+Daniell(3,5,7) 
 coef[-15] = 0.0008658
 coef[-14] = 0.0025974
 coef[-13] = 0.0051948
@@ -4810,4 +4810,9 @@ $foo
 [1] 1 2 3
 
 > ##
+> 
+> kernel(1,0)
+unknown 
+coef[0] = 1
+> ## printed wrongly in R <= 2.1.1
 > 

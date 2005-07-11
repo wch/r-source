@@ -1649,3 +1649,6 @@ x <- NULL
 x[[1]] <- 1:3
 x # list
 ##
+
+kernel(1,0)
+## printed wrongly in R <= 2.1.1

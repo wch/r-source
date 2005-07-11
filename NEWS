@@ -21,7 +21,7 @@ USER-VISIBLE CHANGES
     o	The SVN revision number will appear after the date in the
 	welcome message, provided it is available.  The date is now
 	the date of the last change to the sources.
-	
+
     o	is.null(expression()) now returns FALSE.  Only NULL gives TRUE
     	in is.null().
 
@@ -277,6 +277,9 @@ BUG FIXES
     o	capabilities() used partial matching but was not documented
 	to: it no longer does so.
 
+    o	kernel(1,0) printed wrongly;  kernel(<name-string>, *) now returns
+	a named kernel in all cases.
+
 
 
 
@@ -307,8 +310,8 @@ BUG FIXES
 
     o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
-	
-    o 	The "col" parameter to pairs() is now treated consistently with 
+
+    o 	The "col" parameter to pairs() is now treated consistently with
     	plot():  it affects the data, not the axes.  (Patch submitted
     	by Olaf Mersmann)
 

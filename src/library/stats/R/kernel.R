@@ -1,31 +1,34 @@
 # Copyright (C) 1997-1999  Adrian Trapletti
 #
+### Copyright (C) 1999-2005  The R Development Core Team
+
 
 kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 {
+    mkName <- function(name, args)
+        paste(name,"(", paste(args, collapse=","), ")", sep="")
+
     modified.daniell.kernel <- function (m)
     {
-        if (any(m) < 0) stop ("'m' is negative")
         if(length(m) == 1)
-            return (kernel(c(rep(1, m), 0.5)/(2*m), m,
-                           name=paste("mDaniell(",m,")",sep="")))
+            k <- kernel(c(rep(1, m), 0.5)/(2*m), m)
         else {
             k <- Recall(m[1])
             for(i in 2:length(m)) k <- kernapply(k,  Recall(m[i]))
         }
+        attr(k,"name") <- mkName("mDaniell", m)
         k
     }
 
     daniell.kernel <- function (m)
     {
-        if (any(m) < 0) stop ("'m' is negative")
         if(length(m) == 1)
-            return (kernel(rep(1/(2*m+1),m+1),m,
-                           name=paste("Daniell(",m,")",sep="")))
+            k <- kernel(rep(1/(2*m+1),m+1), m)
         else {
             k <- Recall(m[1])
             for(i in 2:length(m)) k <- kernapply(k,  Recall(m[i]))
         }
+        attr(k,"name") <- mkName("Daniell", m)
         k
     }
 
@@ -35,15 +38,11 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
         if (m < 1) stop ("'m' is less than 1")
         n <- 2*m+1
         wn <- double(m+1)
-        for (j in (1:m))
-        {
-            wj <- 2*pi*j/n
-            wn[j+1] <- sin(r*wj/2)^2/sin(wj/2)^2
-        }
-        wn <- wn/(n*r)
-        wn[1] <- r/n
-        wn <- wn/sum(c(rev(wn[2:(m+1)]),wn))
-        kernel(wn, m, name=paste("Fejer(",m,",",r,")", sep=""))
+        wj <- 2*pi*(1:m)/n
+        wn[2:(m+1)] <- sin(r*wj/2)^2 / sin(wj/2)^2 / r
+        wn[1] <- r
+        wn <- wn / (wn[1] + 2*sum(wn[2:(m+1)]))
+        kernel(wn, m, name = mkName("Fejer", c(m,r)))
     }
 
     dirichlet.kernel <- function (m, r)
@@ -52,16 +51,16 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
         if (m < 1) stop ("'m' is less than 1")
         n <- 2*m+1
         wn <- double(m+1)
-        for (j in (1:m))
-        {
-            wj <- 2*pi*j/n
-            wn[j+1] <- sin((r+0.5)*wj)/sin(wj/2)
-        }
-        wn <- wn/n
-        wn[1] <- (2*r+1)/n
-        wn <- wn/sum(c(rev(wn[2:(m+1)]),wn))
-        return (kernel(wn, m, name=paste("Dirichlet(",m,",",r,")",sep="")))
+        wj <- 2*pi*(1:m)/n
+        wn[2:(m+1)] <- sin((r+0.5)*wj) / sin(wj/2)
+        wn[1] <- 2*r+1
+        wn <- wn / (wn[1] + 2*sum(wn[2:(m+1)]))
+        kernel(wn, m, name = mkName("Dirichlet", c(m,r)))
     }
+
+    if(!missing(m))
+	if(!is.numeric(m) || length(m) < 1 || m != round(m) || any(m) < 0)
+	    stop("'m' must be numeric with non-negative integers")
 
     if(is.character(coef)) {
         switch(coef,
@@ -78,8 +77,8 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
         kernel <- list (coef=coef, m=m)
         attr(kernel, "name") <- name
         class(kernel) <- "tskernel"
-        eps <- getOption("ts.eps")
-        if ((sum(kernel[-m:m]) > 1.0+eps) || (sum(kernel[-m:m]) < 1.0-eps))
+        sk <- sum(kernel[-m:m]) # via '[.kernel' !
+        if (abs(sk - 1) > getOption("ts.eps"))
             stop ("coefficients do not add to 1")
         kernel
     }
@@ -87,17 +86,19 @@ kernel <- function (coef, m = length(coef)+1, r, name="unknown")
 
 print.tskernel <- function (x, digits = max(3,getOption("digits")-3), ...)
 {
-    y <- c(rev(x$coef[2:(x$m + 1)]), x$coef)
-    i <- -x$m:x$m
+    m <- x$m
+    y <- x[i <- -m:m]
     cat(attr(x, "name"), "\n")
-    cat(paste("coef[", format(i), "] = ", format(y, digits = digits),
-              sep = ""), sep = "\n")
+    cat(paste("coef[", format(i), "] = ", format(y, digits = digits), sep = ""),
+        sep = "\n")
+    invisible(x)
 }
 
-plot.tskernel <- function (x, ...)
+plot.tskernel <-
+    function(x, type = "h", xlab = "k", ylab = "W[k]", main=attr(x,"name"), ...)
 {
-    y <- c(rev(x$coef[2:(x$m+1)]),x$coef)
-    plot ((-x$m:x$m), y, xlab="k", ylab="W[k]", type="h", main=attr(x,"name"))
+    i <- -x$m:x$m
+    plot(i, x[i], type = type, xlab = xlab, ylab = ylab, main = main, ...)
 }
 
 df.kernel <- function (k)
@@ -107,14 +108,16 @@ df.kernel <- function (k)
 
 bandwidth.kernel <- function (k)
 {
-    sqrt(sum((1/12 + (-k$m:k$m)^2) * k[-k$m:k$m]))
+    i <- -k$m:k$m
+    sqrt(sum((1/12 + i^2) * k[i]))
 }
 
 
 "[.tskernel" <- function (k, i)
 {
-    y <- c(rev(k$coef[2:(k$m+1)]), k$coef)
-    y[i+k$m+1]
+    m1 <- k$m + 1
+    y <- k$coef[c(m1:2, 1:m1)]
+    y[i+m1]
 }
 
 is.tskernel <- function (k)
@@ -131,20 +134,21 @@ kernapply.vector <- function (x, k, circular = FALSE, ...)
 {
     if (!is.vector(x)) stop ("'x' is not a vector")
     if (!is.tskernel(k)) stop ("'k' is not a kernel")
-    if (length(x) <= 2*k$m)
+    m <- k$m
+    if (length(x) <= 2*m)
         stop ("'x' is shorter than kernel 'k'")
-    if (k$m == 0)
+    if (m == 0)
         return (x)
     else
     {
         n <- length(x)
-        w <- c(k[0:k$m], rep(0,n-2*k$m-1), k[-k$m:-1])
+        w <- c(k[0:m], rep(0,n-2*m-1), k[-m:-1])
         y <- fft(fft(x)*fft(w), inverse = TRUE)/n
         if (is.numeric(x)) y <- Re(y)
         if (circular)
             return (y)
         else
-            return (y[(1+k$m):(n-k$m)])
+            return (y[(1+m):(n-m)])
     }
 }
 
@@ -181,10 +185,3 @@ kernapply.tskernel <- function (x, k2, ...)
            paste("Composite(", attr(x, "name"), ",",
                  attr(k2, "name"), ")", sep=""))
 }
-
-
-
-
-
-
-
