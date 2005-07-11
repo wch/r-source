@@ -1,7 +1,7 @@
 read.dcf <- function(file, fields = NULL)
 {
     if(is.character(file)){
-        file <- file(file, "r")
+        file <- gzfile(file, "r")
         on.exit(close(file))
     }
     if(!inherits(file, "connection"))

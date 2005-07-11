@@ -139,11 +139,13 @@ NEW FEATURES
     o	max.col() has a new argument for non-random behavior in the
 	case of ties.
 
-    o	new function glob2rx() fortranslating `wildcard' aka `globbing'
+    o	New function glob2rx() for translating `wildcard' aka `globbing'
 	to regular expressions.
 
-    o   KalmanFore, KalmanLike now have an option fast=FALSE to
-        to prevent their arguments being modified.
+    o	KalmanForecast() and KalmanLike() now have an optional argument
+        fast=FALSE to prevent their arguments being modified.
+
+    o	read.dcf() can now read gzipped files.
 
 
 DEPRECATED & DEFUNCT
@@ -193,6 +195,9 @@ PACKAGE INSTALLATION CHANGES
 
     o	The return value of new.packages() is now updated for any
 	packages which may be installed.
+
+    o	available.packages() will read a compressed PACKAGES.gz file in
+	preference to PACKAGES if available on the repository.
 
 
 UTILITIES

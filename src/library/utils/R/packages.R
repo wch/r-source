@@ -26,10 +26,16 @@ available.packages <-
         } else {
             tmpf <- tempfile()
             on.exit(unlink(tmpf))
-            z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
+            z <- try(download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
                                    destfile = tmpf, method = method,
                                    cacheOK = FALSE, quiet = TRUE),
                        silent = TRUE)
+            if(inherits(z, "try-error")) {
+                z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                                       destfile = tmpf, method = method,
+                                       cacheOK = FALSE, quiet = TRUE),
+                         silent = TRUE)
+            }
             if(inherits(z, "try-error")) {
                 warning(gettextf("unable to access index for repository %s", repos),
                         call. = FALSE, immediate. = TRUE, domain = NA)

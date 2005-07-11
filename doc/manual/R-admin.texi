@@ -1327,7 +1327,9 @@ can be a concatenation of the @file{DESCRIPTION} files of the packages
 separated by blank lines (provided there are no bundles), but only a few
 of the fields are needed.  The simplest way to set up such a file is to
 use function @code{write_PACKAGES} in the @pkg{tools} package, and its
-help explains which fields are needed.
+help explains which fields are needed.  Optionally there can also be
+a @file{PACKAGES.gz} file, a @command{gzip}-compressed version of
+@file{PACKAGES}.
 
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
