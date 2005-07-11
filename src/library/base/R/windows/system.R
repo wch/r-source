@@ -61,6 +61,7 @@ shell.exec <- function(file) invisible(.Internal(shell.exec(file)))
 Sys.timezone <- function()
 {
     z <- as.POSIXlt(Sys.time())
-    attr(z, "tzone")[2 + z$isdst]
+    zz <- attr(z, "tzone")
+    if(length(zz) == 3) zz[2 + z$isdst] else zz[1]
 }
 

@@ -32,6 +32,9 @@ The progress bar was being left behind when a download was aborted.
 (PR#7964).  In addition, it now retains its position from one download
 to the next, rather than always moving back to the center of the screen.
 
+Added workaround in Sys.timezone() for Windows' confusion over the GMT
+timezone.
+
 
 
 R 2.1.1
