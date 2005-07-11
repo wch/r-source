@@ -26,16 +26,23 @@ available.packages <-
         } else {
             tmpf <- tempfile()
             on.exit(unlink(tmpf))
-            z <- try(download.file(url = paste(repos, "PACKAGES.gz", sep = "/"),
+            op <- options("warn")
+            options(warn = -1)
+            ## This is a binary file
+            z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
                                    destfile = tmpf, method = method,
-                                   cacheOK = FALSE, quiet = TRUE),
-                       silent = TRUE)
+                                   cacheOK = FALSE, quiet = TRUE, mode = "wb"),
+                     silent = TRUE)
             if(inherits(z, "try-error")) {
-                z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
+                ## read.dcf is going to interpret CRLF as LF, so use
+                ## binary mode to avoid CRCRLF.
+                z <- try(download.file(url=paste(repos, "PACKAGES", sep = "/"),
                                        destfile = tmpf, method = method,
-                                       cacheOK = FALSE, quiet = TRUE),
+                                       cacheOK = FALSE, quiet = TRUE,
+                                       mode = "wb"),
                          silent = TRUE)
             }
+            options(op)
             if(inherits(z, "try-error")) {
                 warning(gettextf("unable to access index for repository %s", repos),
                         call. = FALSE, immediate. = TRUE, domain = NA)
