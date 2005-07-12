@@ -322,6 +322,9 @@ BUG FIXES
     	plot():  it affects the data, not the axes.  (Patch submitted
     	by Olaf Mersmann)
 
+    o   Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
+        contained a print() statement that is no longer needed.
+
 
 
 		CHANGES IN R VERSION 2.1.1

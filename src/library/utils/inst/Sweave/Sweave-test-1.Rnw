@@ -39,18 +39,15 @@ third element of vector \texttt{x} is \Sexpr{x[3]}, the
 $p$-value of the test is \Sexpr{format.pval(t1$p.value)}. % $
 
 Now we look at a summary of the famous iris data set, and we want to
-see the commands in the code chunks.  Note that the summary needs to
-be \texttt{print()}ed explicitly, because eval would discard it otherwise. I
-consider this a feature, because it allows for much finer control on
-what gets into the final report.
+see the commands in the code chunks:
 
 \SweaveOpts{echo=true}
 
-% the following code is R-specific, as data(iris) will not run in Splus.
-% Hence, we mark it as R code.
+% the following code is R-specific, as data(iris) will not run in Splus. 
+% Hence, we mark it as R code. 
 <<engine=R>>=
 data(iris)
-print(summary(iris))
+summary(iris)
 @ %def
 
 
