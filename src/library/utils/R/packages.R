@@ -23,34 +23,47 @@ available.packages <-
                 if(length(grep("[A-Za-z]:", tmpf)))
                     tmpf <- substring(tmpf, 2)
             }
+            res0 <- read.dcf(file = tmpf, fields = flds)
+            if(length(res0)) rownames(res0) <- res0[, "Package"]
         } else {
-            tmpf <- tempfile()
-            on.exit(unlink(tmpf))
-            op <- options("warn")
-            options(warn = -1)
-            ## This is a binary file
-            z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
-                                   destfile = tmpf, method = method,
-                                   cacheOK = FALSE, quiet = TRUE, mode = "wb"),
-                     silent = TRUE)
-            if(inherits(z, "try-error")) {
-                ## read.dcf is going to interpret CRLF as LF, so use
-                ## binary mode to avoid CRCRLF.
-                z <- try(download.file(url=paste(repos, "PACKAGES", sep = "/"),
+            dest <- file.path(tempdir(),
+                              paste("repos",
+                                    URLencode(repos, TRUE),
+                                    ".rds", sep=""))
+            if(file.exists(dest)) {
+                res0 <- .readRDS(dest)
+            } else {
+                tmpf <- tempfile()
+                on.exit(unlink(tmpf))
+                op <- options("warn")
+                options(warn = -1)
+                ## This is a binary file
+                z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
                                        destfile = tmpf, method = method,
-                                       cacheOK = FALSE, quiet = TRUE,
-                                       mode = "wb"),
+                                       cacheOK = FALSE, quiet = TRUE, mode = "wb"),
                          silent = TRUE)
-            }
-            options(op)
-            if(inherits(z, "try-error")) {
-                warning(gettextf("unable to access index for repository %s", repos),
-                        call. = FALSE, immediate. = TRUE, domain = NA)
-                next
-            }
-        }
-        res0 <- read.dcf(file = tmpf, fields = flds)
-        if(length(res0)) rownames(res0) <- res0[, "Package"]
+                if(inherits(z, "try-error")) {
+                    ## read.dcf is going to interpret CRLF as LF, so use
+                    ## binary mode to avoid CRCRLF.
+                    z <- try(download.file(url=paste(repos, "PACKAGES", sep = "/"),
+                                           destfile = tmpf, method = method,
+                                           cacheOK = FALSE, quiet = TRUE,
+                                           mode = "wb"),
+                             silent = TRUE)
+                }
+                options(op)
+                if(inherits(z, "try-error")) {
+                    warning(gettextf("unable to access index for repository %s", repos),
+                            call. = FALSE, immediate. = TRUE, domain = NA)
+                    next
+                }
+                res0 <- read.dcf(file = tmpf, fields = flds)
+                if(length(res0)) rownames(res0) <- res0[, "Package"]
+                .saveRDS(res0, dest, compress = TRUE)
+                unlink(tmpf)
+                on.exit()
+            } # end of download vs cached
+        } # end of localcran vs online
         res0 <- cbind(res0, Repository = repos)
         res <- rbind(res, res0)
     }

@@ -200,7 +200,11 @@ PACKAGE INSTALLATION CHANGES
 	packages which may be installed.
 
     o	available.packages() will read a compressed PACKAGES.gz file in
-	preference to PACKAGES if available on the repository.
+	preference to PACKAGES if available on the repository: this
+	will reduce considerably the download time on a dialup connection.
+
+	The downloaded information about a repository is cached for the
+	current R session.
 
 
 UTILITIES
