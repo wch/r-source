@@ -14,7 +14,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
   }
   \item{objective}{
     function to be minimized.  Must return a scalar value (possibly
-    NA/Inf?).  The first argument to \code{objective} is the vector of
+    NA/Inf).  The first argument to \code{objective} is the vector of
     parameters to be optimized, whose initial values are supplied
     through \code{start}.  Further arguments (fixed during the course of
     the optimization) to \code{objective} may be specified as well (see
@@ -53,6 +53,26 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
   }
   \item{iterations}{Number of iterations performed.}
   \item{evaluations}{Number of objective function and gradient function evaluations}
+}
+\section{Control parameters}{
+  Possible names in the \code{control} list and their default values
+  are:
+  \itemize{
+    \item{eval.max}{Maximum number of evaluations of the objective
+      function allowed. Defaults to 200.}
+    \item{iter.max}{Maximum number of iterations allowed. Defaults to 150.}
+    \item{trace}{The value of the objective function and the parameters
+      is printed every trace'th iteration.  Defaults to 0 which
+      indicates no trace information is to be printed.}
+    \item{abs.tol}{Absolute tolerance. Defaults to \code{1e-20}.}
+    \item{rel.tol}{Relative tolerance. Defaults to \code{1e-10}.}
+    \item{x.tol}{X tolerance. Defaults to \code{1.5e-8}.}
+    \item{step.min}{Minimum step size. Defaults to \code{2.2e-14}.}
+    \item{step.max}{}
+    \item{scale.init}{}
+    \item{sing.tol}{}
+    \item{diff.g}{}
+  }
 }
 \references{ \url{http://netlib.bell-labs.com/netlib/port/} }
 \author{
