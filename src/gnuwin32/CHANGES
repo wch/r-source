@@ -35,6 +35,9 @@ to the next, rather than always moving back to the center of the screen.
 Added workaround in Sys.timezone() for Windows' confusion over the GMT
 timezone.
 
+Windows was sometimes leaving behind temporary files associated with
+anonymous file() connections - we now try to clean up after it.
+
 
 
 R 2.1.1

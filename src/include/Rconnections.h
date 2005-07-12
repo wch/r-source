@@ -71,6 +71,10 @@ typedef struct fileconn {
 #endif
 #endif
     Rboolean last_was_write;
+#ifdef Win32
+    Rboolean anon_file;
+    char name[PATH_MAX+1];
+#endif
 } *Rfileconn;
 
 typedef struct fifoconn {
