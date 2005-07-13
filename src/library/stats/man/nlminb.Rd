@@ -57,21 +57,22 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
 \section{Control parameters}{
   Possible names in the \code{control} list and their default values
   are:
-  \itemize{
-    \item{eval.max}{Maximum number of evaluations of the objective
-      function allowed. Defaults to 200.}
-    \item{iter.max}{Maximum number of iterations allowed. Defaults to 150.}
-    \item{trace}{The value of the objective function and the parameters
+  \describe{
+    \item{\code{eval.max}}{Maximum number of evaluations of the objective
+      function allowed.  Defaults to 200.}
+    \item{\code{iter.max}}{Maximum number of iterations allowed.
+      Defaults to 150.}
+    \item{\code{trace}}{The value of the objective function and the parameters
       is printed every trace'th iteration.  Defaults to 0 which
       indicates no trace information is to be printed.}
-    \item{abs.tol}{Absolute tolerance. Defaults to \code{1e-20}.}
-    \item{rel.tol}{Relative tolerance. Defaults to \code{1e-10}.}
-    \item{x.tol}{X tolerance. Defaults to \code{1.5e-8}.}
-    \item{step.min}{Minimum step size. Defaults to \code{2.2e-14}.}
-    \item{step.max}{}
-    \item{scale.init}{}
-    \item{sing.tol}{}
-    \item{diff.g}{}
+    \item{\code{abs.tol}}{Absolute tolerance.  Defaults to \code{1e-20}.}
+    \item{\code{rel.tol}}{Relative tolerance.  Defaults to \code{1e-10}.}
+    \item{\code{x.tol}}{X tolerance.  Defaults to \code{1.5e-8}.}
+    \item{\code{step.min}}{Minimum step size.  Defaults to \code{2.2e-14}.}
+    \item{\code{step.max}}{}
+    \item{\code{scale.init}}{}
+    \item{\code{sing.tol}}{}
+    \item{\code{diff.g}}{}
   }
 }
 \references{ \url{http://netlib.bell-labs.com/netlib/port/} }
