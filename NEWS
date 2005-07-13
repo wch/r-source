@@ -28,6 +28,13 @@ USER-VISIBLE CHANGES
     o	graphics::boxplot.stats, contourLines, nclass.*, and chull
 	have been moved to the grDevices name space.
 
+    o	split(x, f), split<-() and unsplit() now by default split by all
+	levels of a factor f, even when some are empty.
+	Use split(x, f, drop = TRUE) if you want the old behavior of
+	dropping empty levels.	Note that split() and split<-() are S3
+	generic functions and hence all methods now also need to allow a
+	'drop' argument.
+
 
 NEW FEATURES
 
@@ -149,6 +156,9 @@ NEW FEATURES
 	fast=FALSE to prevent their arguments being modified.
 
     o	read.dcf() can now read gzipped files.
+
+    o	split(), split<-(), unsplit() now have a new argument 'drop = FALSE',
+	by default not dropping empty levels; this is *not* back compatible.
 
 
 DEPRECATED & DEFUNCT

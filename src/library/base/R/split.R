@@ -1,11 +1,12 @@
-split <- function(x, f) UseMethod("split")
+split <- function(x, f, drop = FALSE) UseMethod("split")
 
-split.default <- function(x, f)
+split.default <- function(x, f, drop = FALSE)
 {
-    if (is.list(f)) f <- interaction(f)
-    f <- factor(f)                  # drop extraneous levels
+    if (is.list(f)) f <- interaction(f, drop = drop)
+    else if (drop || !is.factor(f)) # drop extraneous levels
+	f <- factor(f)
     if (is.null(attr(x, "class")))
-        return(.Internal(split(x, f)))
+	return(.Internal(split(x, f)))
     ## else
     lf <- levels(f)
     y <- vector("list", length(lf))
@@ -14,20 +15,21 @@ split.default <- function(x, f)
     y
 }
 
-split.data.frame <- function(x, f)
-    lapply(split(seq(length=nrow(x)), f), function(ind) x[ind, , drop = FALSE ])
+split.data.frame <- function(x, f, drop = FALSE)
+    lapply(split(seq(length=nrow(x)), f, drop = drop),
+           function(ind) x[ind, , drop = FALSE ])
 
-"split<-" <- function(x, f, value) UseMethod("split<-")
+"split<-" <- function(x, f, drop = FALSE, value) UseMethod("split<-")
 
 #"split<-.default" <- function(x, f, value)
 #{
-#    x[unlist(plit(seq(along=x), f))] <- unlist(value)
+#    x[unlist(split(seq(along=x), f))] <- unlist(value)
 #    x
 #}
 
-"split<-.default" <- function(x, f, value)
+"split<-.default" <- function(x, f, drop = FALSE, value)
 {
-    ix <- split(seq(along = x), f)
+    ix <- split(seq(along = x), f, drop = drop)
     n <- length(value)
     j <- 0
     for (i in ix) {
@@ -38,16 +40,15 @@ split.data.frame <- function(x, f)
 }
 
 
-
 #"split<-.data.frame" <- function(x, f, value)
 #{
 #    x[unlist(split(seq(length=nrow(x)), f)),] <- do.call("rbind", value)
 #    x
 #}
 
-"split<-.data.frame" <- function(x, f, value)
+"split<-.data.frame" <- function(x, f, drop = FALSE, value)
 {
-    ix <- split(seq(along = x), f)
+    ix <- split(seq(along = x), f, drop = drop)
     n <- length(value)
     j <- 0
     for (i in ix) {
@@ -57,10 +58,10 @@ split.data.frame <- function(x, f)
     x
 }
 
-unsplit <- function(value, f)
+unsplit <- function(value, f, drop = FALSE)
 {
     len <- length(if (is.list(f)) f[[1]] else f)
     x <- vector(mode = typeof(value[[1]]), length = len)
-    split(x, f) <- value
+    split(x, f, drop = drop) <- value
     x
 }

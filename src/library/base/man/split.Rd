@@ -14,17 +14,19 @@
   \code{split}.
 }
 \usage{
-split(x, f)
-split(x, f) <- value
-unsplit(value, f)
+split(x, f, drop = FALSE)
+split(x, f, drop = FALSE) <- value
+unsplit(value, f, drop = FALSE)
 }
 \arguments{
   \item{x}{vector or data frame containing values to be divided into groups.}
-  \item{f}{a \dQuote{factor} such that \code{factor(f)} defines the
-    grouping, or a list of such factors in which case their interaction
-    is used for the grouping.}
+  \item{f}{a \dQuote{factor} in the sense that \code{\link{as.factor}(f)}
+    defines the grouping, or a list of such factors in which case their
+    interaction is used for the grouping.}
+  \item{drop}{logical indicating if levels that do not occur should be dropped
+    (if \code{f} is a \code{factor} or a list).}
   \item{value}{a list of vectors or data frames compatible with a
-    splitting of \code{x}. Recycling applies if the lengths do not match.} 
+    splitting of \code{x}. Recycling applies if the lengths do not match.}
 }
 \details{
   \code{split} and \code{split<-} are generic functions with default and
@@ -32,7 +34,7 @@ unsplit(value, f)
 
   \code{f} is recycled as necessary and if the length of \code{x} is not
   a multiple of the length of \code{f} a warning is printed.
-  \code{unsplit} works only with  lists of vectors. The data frame
+  \code{unsplit} works only with lists of vectors.  The data frame
   method can also be used to split a matrix into a list of matrices,
   and the assignment form likewise, provided they are invoked
   explicitly.
