@@ -38,7 +38,7 @@ is.tskernel(k)
   \item{name}{the name the kernel will be called.}
   \item{r}{the kernel order for a Fejer kernel.}
 %  \item{digits}{the number of digits to format real numbers.}
-  \item{k}{a \code{"tskernel"} object.}
+  \item{k,x}{a \code{"tskernel"} object.}
   \item{type, xlab, ylab, main, \dots}{arguments passed to
     \code{\link{plot.default}}.}
 }
