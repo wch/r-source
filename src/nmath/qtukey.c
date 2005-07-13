@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
- *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 1998 	     Ross Ihaka
+ *  Copyright (C) 2000--2005 The R Development Core Team
  *  based in part on AS70 (C) 1974 Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -132,15 +132,10 @@ double qtukey(double p, double rr, double cc, double df,
     }
 #endif
 
-    R_Q_P01_check(p);
-    if (p == 1) ML_ERR_return_NAN;
-
-    /* df must be > 1 */
-    /* there must be at least two values */
-
+    /* df must be > 1 ; there must be at least two values */
     if (df < 2 || rr < 1 || cc < 2) ML_ERR_return_NAN;
 
-    if (p == R_DT_0) return 0;
+    R_Q_P01_boundaries(p, 0, ML_POSINF);
 
     p = R_DT_qIv(p); /* lower_tail,non-log "p" */
 

@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2001  The R Development Core Team
+ *  Copyright (C) 1998--2005  The R Development Core Team
  *  based on code (C) 1979 and later Royal Statistical Society
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -55,25 +55,21 @@ double qbeta(double alpha, double p, double q, int lower_tail, int log_p)
     double acu;
     volatile double xinbta;
 
-    /* define accuracy and initialize */
-
-    xinbta = alpha;
-
     /* test for admissibility of parameters */
 
 #ifdef IEEE_754
     if (ISNAN(p) || ISNAN(q) || ISNAN(alpha))
 	return p + q + alpha;
 #endif
-    R_Q_P01_check(alpha);
-
     if(p < 0. || q < 0.) ML_ERR_return_NAN;
+
+    R_Q_P01_boundaries(alpha, 0, 1);
 
     p_ = R_DT_qIv(alpha);/* lower_tail prob (in any case) */
 
-    if (p_ == 0. || p_ == 1.)
-	return p_;
+    /* initialize */
 
+    xinbta = alpha;
     logbeta = lbeta(p, q);
 
     /* change tail if necessary;  afterwards   0 < a <= 1/2	 */

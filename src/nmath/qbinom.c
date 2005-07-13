@@ -44,15 +44,14 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
 #endif
     if(!R_FINITE(p) || !R_FINITE(n) || !R_FINITE(pr))
 	ML_ERR_return_NAN;
-    R_Q_P01_check(p);
 
     if(n != floor(n + 0.5)) ML_ERR_return_NAN;
     if (pr < 0 || pr > 1 || n < 0)
 	ML_ERR_return_NAN;
 
+    R_Q_P01_boundaries(p, 0, n);
+
     if (pr == 0. || n == 0) return 0.;
-    if (p == R_DT_0) return 0.;
-    if (p == R_DT_1) return n;
 
     q = 1 - pr;
     if(q == 0.) return n; /* covers the full range of the distribution */
@@ -77,6 +76,7 @@ double qbinom(double p, double n, double pr, int lower_tail, int log_p)
     /* y := approx.value (Cornish-Fisher expansion) :  */
     z = qnorm(p, 0., 1., /*lower_tail*/TRUE, /*log_p*/FALSE);
     y = floor(mu + sigma * (z + gamma * (z*z - 1) / 6) + 0.5);
+
     if(y > n) /* way off */ y = n;
 
 #ifdef DEBUG_qbinom

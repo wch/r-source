@@ -56,11 +56,10 @@ for(n in rbinom(n1, size = 2*n0, p = .4)) {
 	    tst <- all.equal(if(k==n || p==0) 1 else
 			     pf((k+1)/(n-k)*(1-p)/p, df1=2*(n-k), df2=2*(k+1)),
 			     sum(dbinom(0:k, size = n, prob = p)))
-	    if(!(is.logical(tst1) && tst1) ||
-	       !(is.logical(tst)  && tst ) ) {
+	    if(!isTRUE(tst1) || !isTRUE(tst)) {
 		cat("n=", n,"; p =",format(p),".  k =",k)
-		if(!is.logical(tst1)) cat("; tst1=",tst1)
-		if(!is.logical(tst )) cat("; tst=", tst)
+		if(!isTRUE(tst1)) cat("; tst1=",tst1)
+		if(!isTRUE(tst )) cat("; tst=", tst)
 		cat("\n")
 	    }
 	}
@@ -103,13 +102,13 @@ for(lambda in rexp(n1))
     for(k in rpois(n2, lambda)) {
 	tst <- all.equal(1 - pchisq(2*lambda, 2*(1+ 0:k)),
 			 pp <- cumsum(dpois(0:k, lambda=lambda)), tol= 100*Meps)
-	if(!(is.logical(tst) && tst))
+	if(!isTRUE(tst))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst=", tst,"\n")
 	tst2 <- all.equal(pp, ppois(0:k, lambda=lambda), tol = 100*Meps)
-	if(!(is.logical(tst2) && tst2))
+	if(!isTRUE(tst2))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst2=", tst2,"\n")
 	tst3 <- all.equal(1 - pp, ppois(0:k, lambda=lambda, lower.tail=FALSE))
-	if(!(is.logical(tst3) && tst3))
+	if(!isTRUE(tst3))
 	    cat("lambda=", format(lambda),".  k =",k, " --> tst3=", tst3,"\n")
     }
 
@@ -117,8 +116,8 @@ for(lambda in rexp(n1))
 ##__ 6. SignRank __
 for(n in rpois(32, lam=8)) {
     x <- -1:(n + 4)
-    eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))
-    if(!is.logical(eq) || !eq) print(eq)
+    if(!isTRUE(eq <- All.eq(psignrank(x, n), cumsum(dsignrank(x, n)))))
+        print(eq)
 }
 
 ##__ 7. Wilcoxon (symmetry & cumulative) __
@@ -129,8 +128,8 @@ for(n in rpois(5, lam=6))
 	fx <- dwilcox(x, n, m)
 	Fx <- pwilcox(x, n, m)
 	is.sym <- is.sym & all(fx == dwilcox(x, m, n))
-	eq <- All.eq(Fx, cumsum(fx))
-	if(!is.logical(eq) || !eq) print(eq)
+	if(!isTRUE(eq <- All.eq(Fx, cumsum(fx))))
+            print(eq)
     }
 is.sym
 
@@ -145,11 +144,11 @@ for(sh in round(rlnorm(30),2)) {
 	tst <- all.equal((d1 <- dgamma(	 x,   shape = sh, scale = sig)),
 			 (d2 <- dgamma(x/sig, shape = sh, scale = 1) / sig),
 			 tol = 1e-14)## __ad interim__ was 1e-15
-	if(!(is.logical(tst) && tst))
+	if(!isTRUE(tst))
 	    cat("ERROR: dgamma() doesn't scale:",tst,"\n",
 		"  x =", formatC(x),"\n	 shape,scale=",formatC(c(sh, sig)),"\n")
 	tst <- All.eq(d1, (d3 <- 1/(Ga * sig^sh) * x^(sh-1) * exp(-x/sig)))
-	if(!(is.logical(tst) && tst))
+	if(!isTRUE(tst))
 	    cat("NOT Equal:",tst,"\n x =", formatC(x),
 		"\n  shape,scale=",formatC(c(sh, sig)),"\n")
     }
@@ -233,7 +232,7 @@ all.equal(qnorm(-1e5, log = TRUE), -447.1974945)
 z <- rnorm(1000); all.equal(pnorm(z),  1 - pnorm(-z), tol= 1e-15)
 z <- c(-Inf,Inf,NA,NaN, rt(1000, df=2))
 z.ok <- z > -37.5 | !is.finite(z)
-for(df in 1:10) if(!is.logical(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
+for(df in 1:10) if(!isTRUE(all.equal(pt(z, df), 1 - pt(-z,df), tol= 1e-15)))
     cat("ERROR -- df = ", df, "\n")
 All.eq(pz <- pnorm(z), 1 - pnorm(z, lower=FALSE))
 All.eq(pz,		 pnorm(-z, lower=FALSE))
@@ -526,5 +525,10 @@ stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
           All.eq(y[19],  2.12300110824515))
 ## not at all in R 2.1.0 or earlier
 
+## qgamma(q, *) should give {0,Inf} for q={0,1}
+sh <- c(1.1, 0.5, 0.2, 0.15, 1e-2, 1e-10)
+stopifnot(Inf == qgamma(1, sh))
+stopifnot(0   == qgamma(0, sh))
+## the first gave Inf, NaN, and 99.425 in R 2.1.1 and earlier
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")

@@ -49,6 +49,36 @@
 	(!log_p && (p < 0 || p > 1)) )		\
 	ML_ERR_return_NAN
 
+/* Do the boundaries exactly for q*() functions :
+ * Often  _LEFT_ = ML_NEGINF , and very often _RIGHT_ = ML_POSINF;
+ *
+ * R_Q_P01_boundaries(p, _LEFT_, _RIGHT_)  :<==>
+ *
+ *     R_Q_P01_check(p);
+ *     if (p == R_DT_0) return _LEFT_ ;
+ *     if (p == R_DT_1) return _RIGHT_;
+ *
+ * the following implementation should be more efficient (less tests):
+ */
+#define R_Q_P01_boundaries(p, _LEFT_, _RIGHT_)		\
+    if (log_p) {					\
+	if(p > 0)					\
+	    ML_ERR_return_NAN;				\
+	if(p == 0) /* upper bound*/			\
+	    return lower_tail ? _RIGHT_ : _LEFT_;	\
+	if(p == ML_NEGINF)				\
+	    return lower_tail ? _LEFT_ : _RIGHT_;	\
+    }							\
+    else { /* !log_p */					\
+	if(p < 0 || p > 1)				\
+	    ML_ERR_return_NAN;				\
+	if(p == 0)					\
+	    return lower_tail ? _LEFT_ : _RIGHT_;	\
+	if(p == 1)					\
+	    return lower_tail ? _RIGHT_ : _LEFT_;	\
+    }
+
+
 
 /* additions for density functions (C.Loader) */
 #define R_D_fexp(f,x)     (give_log ? -0.5*log(f)+(x) : exp(x)/sqrt(f))

@@ -37,7 +37,6 @@ double qhyper(double p, double NR, double NB, double n,
 #endif
     if(!R_FINITE(p) || !R_FINITE(NR) || !R_FINITE(NB) || !R_FINITE(n))
 	ML_ERR_return_NAN;
-    R_Q_P01_check(p);
 
     NR = floor(NR + 0.5);
     NB = floor(NB + 0.5);
@@ -52,8 +51,8 @@ double qhyper(double p, double NR, double NB, double n,
 
     xstart = fmax2(0, n - NB);
     xend = fmin2(n, NR);
-    if(p == R_DT_0) return xstart;
-    if(p == R_DT_1) return xend;
+
+    R_Q_P01_boundaries(p, xstart, xend);
 
     xr = xstart;
     xb = n - xr;/* always ( = #{black balls in sample} ) */

@@ -23,9 +23,9 @@ USER-VISIBLE CHANGES
 	the date of the last change to the sources.
 
     o	is.null(expression()) now returns FALSE.  Only NULL gives TRUE
-    	in is.null().
+	in is.null().
 
-    o   graphics::boxplot.stats, contourLines, nclass.*, and chull
+    o	graphics::boxplot.stats, contourLines, nclass.*, and chull
 	have been moved to the grDevices name space.
 
 
@@ -93,7 +93,7 @@ NEW FEATURES
     o	pie() has new optional arguments 'clockwise' and 'init.angle'.
 
     o	axis.Date() and axis.POSIXct() now accept a 'label' argument
-    	(contributed by Gavin Simpson).
+	(contributed by Gavin Simpson).
 
     o	Added recommendation that packages have an overview man page
 	<pkg>-package.Rd, and the promptPackage() function to create a
@@ -110,10 +110,10 @@ NEW FEATURES
 	and 'tolerance' (following S).
 
     o	attach() now prints an information message when objects are
-        masked on the search path by or from a newly attached database.
+	masked on the search path by or from a newly attached database.
 
     o	scatter.smooth() now works a bit more like other plotting
-        functions (e.g., accepts a data frame for argument 'x').
+	functions (e.g., accepts a data frame for argument 'x').
 	Improvements suggested by Kevin Wright.
 
     o	axis() now returns 'at' positions.
@@ -146,7 +146,7 @@ NEW FEATURES
 	to regular expressions.
 
     o	KalmanForecast() and KalmanLike() now have an optional argument
-        fast=FALSE to prevent their arguments being modified.
+	fast=FALSE to prevent their arguments being modified.
 
     o	read.dcf() can now read gzipped files.
 
@@ -219,7 +219,7 @@ UTILITIES
 	  the namespace with a useDynLib declaration (as the
 	  appropriate DLL for such calls can be searched for).
 
-    o	Rd2dvi sets the encoding(s) used appropriately.  If UTF-8
+    o	Rd2dvi sets the encoding(s) used appropriately.	 If UTF-8
 	encoding is used, latex >= 2003/12/01 is required.
 
 
@@ -236,7 +236,7 @@ C-LEVEL FACILITIES
 	so finds functions defined within functions in a namespace.
 
     o	R_max_col() has new (5th) argument '*ties_meth' allowing non-random
-        behavior in the case of ties.
+	behavior in the case of ties.
 
 
 BUG FIXES
@@ -252,10 +252,10 @@ BUG FIXES
 	subsetting) try harder to preserve time zones and warn if
 	inconsistent time zones are used.
 
-    o   as.function.default() no longer asks for a bug report when
+    o	as.function.default() no longer asks for a bug report when
 	given an invalid body. (PR#1880, PR#7535, PR#7702)
 
-    o   Hershey fonts and grid output (and therefore lattice output)
+    o	Hershey fonts and grid output (and therefore lattice output)
 	now rescale correctly in fit-to-window resizing on a Windows
 	graphics device.  Line widths also scale now.
 
@@ -263,7 +263,7 @@ BUG FIXES
 	by Ei-ji Nakama).
 
     o	The X11() device now hints the window manager so that decorations
-	appear reliably under e.g. the GNOME WM  (contributed
+	appear reliably under e.g. the GNOME WM	 (contributed
 	by Ei-ji Nakama).
 
     o	Subsetting a matrix or an array as a vector used to attempt to
@@ -278,14 +278,16 @@ BUG FIXES
     o	The parser checks the format of numeric constants more
 	thoroughly so for example '123E-' is no longer valid.
 
-    o   contourLines() no longer requires an open device (used to
-	start a device unnecessarily).  Fix suggested by Barry Rowlingson.
+    o	contourLines() no longer requires an open device (used to
+	start a device unnecessarily).	Fix suggested by Barry Rowlingson.
 
     o	capabilities() used partial matching but was not documented
 	to: it no longer does so.
 
     o	kernel(1,0) printed wrongly;  kernel(<name-string>, *) now returns
-	a named kernel in all cases.
+	a named kernel in all cases; plot(kernel(.),..) is more flexible.
+
+    o	qgamma(1,s) didn't give +Inf for some s.
 
 
 
@@ -305,27 +307,27 @@ BUG FIXES
     o	runmed(x, k = -1) now gives an error instead of a seg.fault.
 
     o	File creation errors in pdf(), postscript(), xfig() resulted
-        in a pointer being freed twice.  (Reported by Matt McCall)
+	in a pointer being freed twice.	 (Reported by Matt McCall)
 
     o	model.matrix(~ .^2, data=foo) now works as most people would
 	expect (it used to expand '.' after using the a^2 = a rule).
 
-    o   ftable() and xtabs() had a check for interactions that would
+    o	ftable() and xtabs() had a check for interactions that would
 	not work correctly with '.' in the formula.
 
-    o   The formula method for pairs() was ignoring the na.action argument.
+    o	The formula method for pairs() was ignoring the na.action argument.
 
     o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
 
-    o 	The "col" parameter to pairs() is now treated consistently with
-    	plot():  it affects the data, not the axes.  (Patch submitted
-    	by Olaf Mersmann)
+    o	The "col" parameter to pairs() is now treated consistently with
+	plot():	 it affects the data, not the axes.  (Patch submitted
+	by Olaf Mersmann)
 
-    o   Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
-        contained a print() statement that is no longer needed.
+    o	Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
+	contained a print() statement that is no longer needed.
 
-    o   Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
+    o	Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
 	builds of R.
 
 
@@ -435,7 +437,7 @@ BUG FIXES
 	deficiency in the M and X matrices (also when they are implicitly
 	generated via model.matrix()).
 
-    o   anova.mlm had a scoping issue (PR#7898)
+    o	anova.mlm had a scoping issue (PR#7898)
 
     o	pf() with infinite df is allowed again.	 It is now more accurate
 	for extreme ratios of dfs, especially when there is a
@@ -498,7 +500,7 @@ BUG FIXES
 	chosen from a menu.  It failed if more than one package in a
 	bundle was chosen from the command line.
 
-    o	qcauchy() suffered from underflow in the extreme tails.  (PR#7902)
+    o	qcauchy() suffered from underflow in the extreme tails.	 (PR#7902)
 
     o	Printing of raw matrices/arrays was not implemented. (PR#7912)
 
@@ -510,12 +512,12 @@ BUG FIXES
     o	Binary save() of raw vectors was not working correctly on
 	big-endian platforms.  (PR#7812)
 
-    o   as.Date.factor() now accepts a format argument.
+    o	as.Date.factor() now accepts a format argument.
 
     o	Workaround added for FreeBSD which does not have alloca.h _and_
 	does not allow alloca() to be declared.
 
-    o	identify() now respects 'cex'.  (PR#660)
+    o	identify() now respects 'cex'.	(PR#660)
 
 	Warnings from identify() are now printed immediately even on
 	consoles with delayed printing.

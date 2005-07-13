@@ -2,6 +2,7 @@
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
  *  Copyright (C) 2000 The R Development Core Team
+ *  Copyright (C) 2005 The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,9 +32,7 @@ double qlnorm(double p, double logmean, double logsd, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(logmean) || ISNAN(logsd))
 	return p + logmean + logsd;
 #endif
-    R_Q_P01_check(p);
+    R_Q_P01_boundaries(p, 0, ML_POSINF);
 
-    if (p == R_DT_1)	return ML_POSINF;
-    if (p == R_DT_0)	return 0;
     return exp(qnorm(p, logmean, logsd, lower_tail, log_p));
 }

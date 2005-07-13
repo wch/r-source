@@ -138,7 +138,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(alpha) || ISNAN(scale))
 	return p + alpha + scale;
 #endif
-    R_Q_P01_check(p);
+    R_Q_P01_boundaries(p, 0., ML_POSINF);
+
     if (alpha <= 0) ML_ERR_return_NAN;
 
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */

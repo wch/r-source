@@ -42,12 +42,10 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 #endif
     if(!R_FINITE(lambda))
 	ML_ERR_return_NAN;
-    R_Q_P01_check(p);
+
+    R_Q_P01_boundaries(p, 0, ML_POSINF);
+
     if(lambda < 0) ML_ERR_return_NAN;
-
-    if (p == R_DT_0) return 0;
-    if (p == R_DT_1) return ML_POSINF;
-
     if(lambda == 0) return 0;
 
     mu = lambda;
