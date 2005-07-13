@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:57+0100\n"
-"PO-Revision-Date: 2005-06-09 10:57+0100\n"
+"POT-Creation-Date: 2005-07-13 11:08+0100\n"
+"PO-Revision-Date: 2005-07-13 11:08+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -46,11 +46,11 @@ msgstr "bandwidth/span of running medians is larger than n"
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "probabilities outside [0,1] in qansari()"
 
-#: arima.c:60 arima.c:153 arima.c:329
+#: arima.c:60 arima.c:167 arima.c:343
 msgid "invalid argument type"
 msgstr "invalid argument type"
 
-#: arima.c:383 arima.c:471 pacf.c:302 pacf.c:342
+#: arima.c:402 arima.c:490 pacf.c:302 pacf.c:342
 msgid "can only transform 100 pars in arima0"
 msgstr "can only transform 100 pars in arima0"
 
@@ -66,12 +66,17 @@ msgstr "distance(): invalid p"
 msgid "distance(): invalid distance"
 msgstr "distance(): invalid distance"
 
-#: family.c:12 family.c:26 family.c:46
+#: family.c:20
+#, c-format
+msgid "Value %d out of range (0, 1)"
+msgstr "Value %d out of range (0, 1)"
+
+#: family.c:40 family.c:53 family.c:70
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr "Argument %s must be a nonempty numeric vector"
 
-#: family.c:76 family.c:79
+#: family.c:99 family.c:102
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr "argument %s must be a numeric vector of length 1 or length %d"

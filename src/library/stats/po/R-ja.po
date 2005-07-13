@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1077,9 +1077,6 @@ msgstr "無効なパラメータ値です"
 msgid "a limit is missing"
 msgstr "限界がありません"
 
-msgid "'m' is negative"
-msgstr "'m' は負です"
-
 msgid "'r' is less than 1"
 msgstr "'r' は 1 未満です"
 
@@ -1088,6 +1085,10 @@ msgstr "'m' は 1 未満です"
 
 msgid "'r' is less than 0"
 msgstr "'r' は 0 未満です"
+
+#, fuzzy
+msgid "'m' must be numeric with non-negative integers"
+msgstr "'x' は非負整数でなければなりません"
 
 msgid "unknown named kernel"
 msgstr "未知の名前のカーネルです"
@@ -1259,9 +1260,6 @@ msgstr "最初の引数は \"loess\" オブジェクトでなければなりま�
 
 msgid "'newdata' does not contain the variables needed"
 msgstr "'newdata' は必要とされる変数を含んでいません"
-
-msgid "need response in formula"
-msgstr "モデル式に応答が必要です"
 
 msgid "no models to compare"
 msgstr "比較すべきモデルがありません"
@@ -1459,6 +1457,12 @@ msgstr "収束しませんでした"
 #, fuzzy
 msgid "control argument must be a named list"
 msgstr "'split'引数はリストでなければなりません"
+
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr ""
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
 msgstr ""
@@ -1689,6 +1693,10 @@ msgstr "次の定数変数 (%s) は実際は変化しています"
 
 msgid "no 'time' or 'id' specified"
 msgstr "時間('time')も 'id' も指定されていません"
+
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max' は正でなければなりません"
 
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k' は奇数でなければなりません! 'k' を以下のように変更します："
@@ -2000,6 +2008,10 @@ msgstr "ゼロ値のため、正確な p 値を計算することができませ
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "ゼロ値のため、正確な信頼区間を計算することができません"
 
+#, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "1 つ以上のベクトルを与えなければなりません"
+
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "漸近回帰モデルの当てはめで、異なる入力値が少なすぎます"
 
@@ -2051,6 +2063,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "'m' is negative"
+#~ msgstr "'m' は負です"
+
+#~ msgid "need response in formula"
+#~ msgstr "モデル式に応答が必要です"
 
 #~ msgid "non-integer counts in a Poisson glm!"
 #~ msgstr "ポアソン glm 中に整数でないカウントがありました!"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-03-31 08:00+0009\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -10,6 +10,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'coef' must not be negative"
+msgstr ""
+
+msgid "no 'z' matrix specified"
+msgstr ""
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr ""
+
+msgid "no proper 'z' matrix specified"
+msgstr ""
 
 msgid "'bias' must be positive"
 msgstr "'bias' は正の値でなければなりません"

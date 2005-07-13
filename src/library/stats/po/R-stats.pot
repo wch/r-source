@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1016,9 +1016,6 @@ msgstr ""
 msgid "a limit is missing"
 msgstr ""
 
-msgid "'m' is negative"
-msgstr ""
-
 msgid "'r' is less than 1"
 msgstr ""
 
@@ -1026,6 +1023,9 @@ msgid "'m' is less than 1"
 msgstr ""
 
 msgid "'r' is less than 0"
+msgstr ""
+
+msgid "'m' must be numeric with non-negative integers"
 msgstr ""
 
 msgid "unknown named kernel"
@@ -1188,9 +1188,6 @@ msgid "first argument must be a \"loess\" object"
 msgstr ""
 
 msgid "'newdata' does not contain the variables needed"
-msgstr ""
-
-msgid "need response in formula"
 msgstr ""
 
 msgid "no models to compare"
@@ -1380,6 +1377,12 @@ msgid "_NOT_ converged in"
 msgstr ""
 
 msgid "control argument must be a named list"
+msgstr ""
+
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
 msgstr ""
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
@@ -1593,6 +1596,9 @@ msgid "some constant variables (%s) are really varying"
 msgstr ""
 
 msgid "no 'time' or 'id' specified"
+msgstr ""
+
+msgid "'k' must be positive"
 msgstr ""
 
 msgid "'k' must be odd!  Changing 'k' to"
@@ -1896,6 +1902,9 @@ msgid "cannot compute exact p-value with zeroes"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with zeroes"
+msgstr ""
+
+msgid "must supply either 'formula' or 'data'"
 msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"

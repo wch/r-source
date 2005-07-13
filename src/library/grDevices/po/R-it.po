@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-02-27 13:33+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -15,6 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "'coef' must not be negative"
+msgstr "'coef' deve essere non negativo"
+
+msgid "no 'z' matrix specified"
+msgstr "la matrice 'z' non è stata specificata"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "i valori di 'x' e 'y' devono essere crescenti"
+
+msgid "no proper 'z' matrix specified"
+msgstr "nessuna matrice 'z' opportuna specificata"
 
 msgid "'bias' must be positive"
 msgstr "'bias' deve essere positivo"
@@ -239,7 +251,6 @@ msgid "%d z value <= 0 omitted from logarithmic plot"
 msgid_plural "%d z values <= 0 omitted from logarithmic plot"
 msgstr[0] "omesso %d valore di x <= 0 dal grafico su scala logaritmica"
 msgstr[1] "omessi %d valori di x <= 0 dal grafico su scala logaritmica"
-
 
 #~ msgid "invalid arguments in"
 #~ msgstr "argomenti non validi in"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1094,9 +1094,6 @@ msgstr "valori dei parametri non validi"
 msgid "a limit is missing"
 msgstr "manca un limite"
 
-msgid "'m' is negative"
-msgstr "'m' è negativo"
-
 msgid "'r' is less than 1"
 msgstr "'r' è minori di 1"
 
@@ -1105,6 +1102,10 @@ msgstr "'m' è minore di 1"
 
 msgid "'r' is less than 0"
 msgstr "'r' è minori di 0"
+
+#, fuzzy
+msgid "'m' must be numeric with non-negative integers"
+msgstr "'x' deve essere un intero non negativo"
 
 msgid "unknown named kernel"
 msgstr "nome kernel sconosciuto"
@@ -1277,9 +1278,6 @@ msgstr "il primo argomento deve essere un oggetto \"loess\""
 
 msgid "'newdata' does not contain the variables needed"
 msgstr "'newdata' non contiene le variabili necessarie"
-
-msgid "need response in formula"
-msgstr "serve la risposta in formula"
 
 msgid "no models to compare"
 msgstr "nessun modello da confrontare"
@@ -1481,6 +1479,12 @@ msgstr "_NON_ converge in"
 #, fuzzy
 msgid "control argument must be a named list"
 msgstr "l'argomento 'split' deve essere di tipo list"
+
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr ""
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
 msgstr ""
@@ -1710,6 +1714,10 @@ msgstr "alcune variabili 'constant' (%s) sono in realtà 'varying'"
 
 msgid "no 'time' or 'id' specified"
 msgstr "nessun 'time' o 'id' specificati"
+
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max' deve essere positivo"
 
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k' deve essere dispari! Cambio 'k' in"
@@ -2023,6 +2031,10 @@ msgid "cannot compute exact confidence interval with zeroes"
 msgstr ""
 "impossibile calcolar eintervalli di confidenza esatti in presenza di zeri"
 
+#, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "fornire uno o più vettori"
+
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
 "troppi pochi valori distinti in input per stimare un modello di regressione "
@@ -2089,6 +2101,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 msgstr[1] ""
+
+#~ msgid "'m' is negative"
+#~ msgstr "'m' è negativo"
+
+#~ msgid "need response in formula"
+#~ msgstr "serve la risposta in formula"
 
 #~ msgid "non-integer counts in a Poisson glm!"
 #~ msgstr "frequenze non interne nel modello glm Poisson!"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1087,9 +1087,6 @@ msgstr "무효인 파라미터 값입니다"
 msgid "a limit is missing"
 msgstr "한계가 없습니다"
 
-msgid "'m' is negative"
-msgstr "'m'은 negative입니다"
-
 msgid "'r' is less than 1"
 msgstr "'r'은 1미만입니다"
 
@@ -1098,6 +1095,10 @@ msgstr "'m'은 1미만입니다"
 
 msgid "'r' is less than 0"
 msgstr "'r'은 0미만입니다"
+
+#, fuzzy
+msgid "'m' must be numeric with non-negative integers"
+msgstr "'x'는 non-negative 정수가 아니면 되지 않습니다"
 
 msgid "unknown named kernel"
 msgstr "알수 없는 이름의 kernel입니다"
@@ -1276,9 +1277,6 @@ msgstr "최초의 인수는\"loess\" 오브젝트가 아니면 되지 않습니�
 
 msgid "'newdata' does not contain the variables needed"
 msgstr "'newdata'는 필요로 하는 변수를 포함하고 있지 않습니다"
-
-msgid "need response in formula"
-msgstr "모델식에 응답이 필요합니다"
 
 msgid "no models to compare"
 msgstr "비교해야할 모델이 없습니다"
@@ -1480,6 +1478,12 @@ msgstr "연속으로 묶지 않았습니다"
 #, fuzzy
 msgid "control argument must be a named list"
 msgstr "'split' 인수는 리스트가 아니면 되지 않습니다"
+
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr ""
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
 msgstr ""
@@ -1714,6 +1718,10 @@ msgstr "다음의 정수 변수(%s)s는 실제로 변화하고 있습니다"
 
 msgid "no 'time' or 'id' specified"
 msgstr "'time' 또는 'id'도 지정되어 있지 않습니다"
+
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max'는 positive이 아니면 되지 않습니다"
 
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k'는 홀수가 아니면 되지 않습니다! 'k' 이하와 같이 변경합니다"
@@ -2027,6 +2035,10 @@ msgstr "zeroes 값 때문에 수가 없습니다, 정확한 p 값을 계산할 �
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "zeroes 값 때문에, 정확한 신뢰 구간을 계산할 수 없습니다"
 
+#, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "하나 이상의 벡터를 주지 않으면 되지 않습니다"
+
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "점근회귀 모델이 적용시키고자, 다른 입력값이 너무 적습니다"
 
@@ -2080,6 +2092,12 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "'m' is negative"
+#~ msgstr "'m'은 negative입니다"
+
+#~ msgid "need response in formula"
+#~ msgstr "모델식에 응답이 필요합니다"
 
 #~ msgid "non-integer counts in a Poisson glm!"
 #~ msgstr "포아송 glm에서 정수가 아닌 카운터가 있었습니다!"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-02-26 22:56+0100\n"
 "Last-Translator: Stefano M. Iacus <Stefano.Iacus@R-project.org>\n"
 "Language-Team: Italian\n"
@@ -66,9 +66,6 @@ msgstr "primo argomento non valido"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula' mancante o sbagliata"
-
-msgid "'coef' must not be negative"
-msgstr "'coef' deve essere non negativo"
 
 msgid "'at' must have same length as 'z$n', i.e."
 msgstr "'at' deve avere la stessa lunghezza di 'z$n', ovvero"
@@ -360,6 +357,9 @@ msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "Dato anomale (%s) nel boxplot %d non disegnato"
 msgstr[1] "Dati anomali (%s) nel boxplot %d non disegnati"
+
+#~ msgid "'coef' must not be negative"
+#~ msgstr "'coef' deve essere non negativo"
 
 #~ msgid "'x' and 'y' lengths differ"
 #~ msgstr "le lunghezze di 'x' e 'y' differiscono"

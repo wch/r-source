@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1072,9 +1072,6 @@ msgstr "参数值不对"
 msgid "a limit is missing"
 msgstr "極限有遺漏"
 
-msgid "'m' is negative"
-msgstr "'m'是负数"
-
 msgid "'r' is less than 1"
 msgstr "'r'小于1"
 
@@ -1083,6 +1080,10 @@ msgstr "'m'小于1"
 
 msgid "'r' is less than 0"
 msgstr "'r'小于0"
+
+#, fuzzy
+msgid "'m' must be numeric with non-negative integers"
+msgstr "'x'必需是非负的整数"
 
 msgid "unknown named kernel"
 msgstr "没有这样的内核名"
@@ -1252,9 +1253,6 @@ msgstr "第一个变元必需为\"loess\"目标对象"
 
 msgid "'newdata' does not contain the variables needed"
 msgstr "'newdata'不包含需要的变量"
-
-msgid "need response in formula"
-msgstr "公式里没有反应"
 
 msgid "no models to compare"
 msgstr "没有可用来比较的模型"
@@ -1450,6 +1448,12 @@ msgstr "没有聚合于"
 #, fuzzy
 msgid "control argument must be a named list"
 msgstr "'split' 变元必需是串列"
+
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
+msgstr ""
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
 msgstr ""
@@ -1674,6 +1678,10 @@ msgstr "某些恆量变量(%s) 其实在变动"
 
 msgid "no 'time' or 'id' specified"
 msgstr "没有设定'time'或'id'"
+
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max'必需是正数"
 
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k'只能是奇数! 把'k'改成"
@@ -1981,6 +1989,10 @@ msgid "cannot compute exact confidence interval with zeroes"
 msgstr "有0时无法計算精確的置信区间"
 
 #, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "至少要提供一或多个向量"
+
+#, fuzzy
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "无法拟合渐近迴歸模型，因为相互不同的输入值太少"
 
@@ -2032,6 +2044,12 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "'m' is negative"
+#~ msgstr "'m'是负数"
+
+#~ msgid "need response in formula"
+#~ msgstr "公式里没有反应"
 
 #~ msgid "non-integer counts in a Poisson glm!"
 #~ msgstr "Poisson通用线性模型里不能有负计数!"

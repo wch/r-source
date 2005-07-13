@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:57+0100\n"
+"POT-Creation-Date: 2005-07-13 11:08+0100\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -23,11 +23,11 @@ msgstr "移動中央値のバンド幅・バンド範囲(span)が n より大き
 msgid "probabilities outside [0,1] in qansari()"
 msgstr "qansari() 中で確率が [0,1] の範囲外です"
 
-#: arima.c:60 arima.c:153 arima.c:329
+#: arima.c:60 arima.c:167 arima.c:343
 msgid "invalid argument type"
 msgstr "不正な引数の型です"
 
-#: arima.c:383 arima.c:471 pacf.c:302 pacf.c:342
+#: arima.c:402 arima.c:490 pacf.c:302 pacf.c:342
 msgid "can only transform 100 pars in arima0"
 msgstr "arima0 では 100 個のパラメータまでしか変換出来ません"
 
@@ -43,12 +43,17 @@ msgstr "distance(): 不正な p"
 msgid "distance(): invalid distance"
 msgstr "distance(): 不正な距離"
 
-#: family.c:12 family.c:26 family.c:46
+#: family.c:20
+#, c-format
+msgid "Value %d out of range (0, 1)"
+msgstr ""
+
+#: family.c:40 family.c:53 family.c:70
 #, c-format
 msgid "Argument %s must be a nonempty numeric vector"
 msgstr ""
 
-#: family.c:76 family.c:79
+#: family.c:99 family.c:102
 #, c-format
 msgid "argument %s must be a numeric vector of length 1 or length %d"
 msgstr ""
