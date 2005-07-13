@@ -325,6 +325,9 @@ BUG FIXES
     o   Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
         contained a print() statement that is no longer needed.
 
+    o   Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
+	builds of R.
+
 
 
 		CHANGES IN R VERSION 2.1.1

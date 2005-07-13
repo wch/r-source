@@ -1531,7 +1531,7 @@ char *R_alloc(long nelem, int eltsize)
     double dsize = nelem * eltsize;
     if (dsize > 0) { /* precaution against integer overflow */
 	SEXP s;
-#if SIZE_LONG > 4
+#if SIZEOF_LONG > 4
 	if(dsize < R_LEN_T_MAX)
 	    s = allocString(size); /**** avoid extra null byte?? */
 	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
