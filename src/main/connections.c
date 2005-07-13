@@ -381,8 +381,14 @@ static Rboolean file_open(Rconnection con)
     }
     if(temp) {
 	unlink(name);
+#ifdef Win32
+	strncpy(this->name, name, PATH_MAX);
+#endif
 	free(name);
     }
+#ifdef Win32
+    this->anon_file = temp;
+#endif
     this->fp = fp;
     con->isopen = TRUE;
     con->canwrite = (con->mode[0] == 'w' || con->mode[0] == 'a');
@@ -410,8 +416,12 @@ static Rboolean file_open(Rconnection con)
 
 static void file_close(Rconnection con)
 {
-    fclose(((Rfileconn)(con->private))->fp);
+    Rfileconn this = con->private;
+    fclose(this->fp);
     con->isopen = FALSE;
+#ifdef Win32
+    if(this->anon_file) unlink(this->name);
+#endif
 }
 
 static int file_vfprintf(Rconnection con, const char *format, va_list ap)
