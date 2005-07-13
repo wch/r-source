@@ -12,16 +12,16 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "'coef' must not be negative"
-msgstr ""
+msgstr "'coef' は負にはなれません"
 
 msgid "no 'z' matrix specified"
-msgstr ""
+msgstr "'z' 行列が指定されていません"
 
 msgid "increasing 'x' and 'y' values expected"
-msgstr ""
+msgstr "'x' と 'y' の値は昇順でなければなりません"
 
 msgid "no proper 'z' matrix specified"
-msgstr ""
+msgstr "適切な 'z' 行列が指定されていません"
 
 msgid "'bias' must be positive"
 msgstr "'bias' は正の値でなければなりません"
