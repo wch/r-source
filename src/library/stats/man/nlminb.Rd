@@ -69,17 +69,14 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
     \item{\code{rel.tol}}{Relative tolerance.  Defaults to \code{1e-10}.}
     \item{\code{x.tol}}{X tolerance.  Defaults to \code{1.5e-8}.}
     \item{\code{step.min}}{Minimum step size.  Defaults to \code{2.2e-14}.}
-    \item{\code{step.max}}{}
-    \item{\code{scale.init}}{}
-    \item{\code{sing.tol}}{}
-    \item{\code{diff.g}}{}
+%    \item{\code{step.max}}{Defaults to \code{1}.}
+%    \item{\code{scale.init}}{Defaults to \code{-1}.}
+%    \item{\code{sing.tol}}{Defaults to \code{1e-10}.}
+%    \item{\code{diff.g}}{Defaults to \code{2.2e-13}.}
   }
 }
 \references{ \url{http://netlib.bell-labs.com/netlib/port/} }
-\author{
-  Deepayan Sarkar \email{deepayan@stat.wisc.edu},
-  Douglas Bates \email{bates@stat.wisc.edu}
-}
+\author{Douglas Bates, Deepayan Sarkar}
 \examples{
 x <- rnbinom(100, mu = 10, size = 10)
 hdev <- function(par) {
