@@ -55,7 +55,9 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   A list with one component for each term requested in \code{which}.
   Each component is a matrix with columns \code{diff} giving the
   difference in the observed means, \code{lwr} giving the lower
-  end point of the interval, and \code{upr} giving the upper end point.
+  end point of the interval, \code{upr} giving the upper end point
+  and \code{p adj} giving the p-value after adjustment for the multiple
+  comparisons. 
 }
 \references{
   Miller, R. G. (1981)
@@ -69,7 +71,8 @@ TukeyHSD(x, which, ordered = FALSE, conf.level = 0.95, \dots)
   Douglas Bates
 }
 \seealso{
-  \code{\link{aov}}, \code{\link{qtukey}}, \code{\link{model.tables}}
+  \code{\link{aov}}, \code{\link{qtukey}}, \code{\link{model.tables}},
+  \code{\link[multcomp]{simint}}
 }
 \examples{
 summary(fm1 <- aov(breaks ~ wool + tension, data = warpbreaks))

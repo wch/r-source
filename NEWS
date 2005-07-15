@@ -160,6 +160,9 @@ NEW FEATURES
     o	split(), split<-(), unsplit() now have a new argument 'drop = FALSE',
 	by default not dropping empty levels; this is *not* back compatible.
 
+    o	TukeyHSD() now returns p-values adjusted for multiple comparisons
+	(based on a patch contributed by Fernando Henrique Ferraz P. da Rosa).
+
 
 DEPRECATED & DEFUNCT
 
