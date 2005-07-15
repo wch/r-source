@@ -26,8 +26,8 @@ BUG FIXES
 
     o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
-	
-    o 	The "col" parameter to pairs() is now treated consistently with 
+
+    o 	The "col" parameter to pairs() is now treated consistently with
     	plot():  it affects the data, not the axes.  (Patch submitted
     	by Olaf Mersmann)
 
@@ -36,6 +36,8 @@ BUG FIXES
 
     o   Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
 	builds of R.
+
+    o	pgamma(Inf, 1.1) did not terminate (PR#8001).
 
 
 

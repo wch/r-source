@@ -367,6 +367,9 @@ pd_lower_cf (double i, double d)
     REprintf("pd_lower_cf(i=%.14g, d=%.14g)\n", i, d);
 #endif
 
+    if (i < d * 1e-20) /* includes d = Inf,  or i = 0 < d */
+	return (i/d);
+
     while NEEDED_SCALE
 
     if(a2 == 0)

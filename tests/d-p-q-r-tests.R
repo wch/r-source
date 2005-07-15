@@ -526,5 +526,7 @@ stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
           All.eq(y[19],  2.12300110824515))
 ## not at all in R 2.1.0 or earlier
 
+stopifnot(pgamma(Inf, 1.1) == 1)
+## didn't not terminate in R 2.1.[01] (only)
 
 cat("Time elapsed: ", proc.time() - .ptime,"\n")
