@@ -642,7 +642,7 @@ showMethods <-
     if(is(f, "function"))
         f <- as.character(substitute(f))
     if(!is(f, "character"))
-        stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\)", class(f)), domain = NA)
+        stop(gettextf("first argument should be the name(s) of generic functions (got object of class \"%s\")", class(f)), domain = NA)
     if(length(f)==0) {
         f <- if(missing(where)) getGenerics() else getGenerics(where)
     }

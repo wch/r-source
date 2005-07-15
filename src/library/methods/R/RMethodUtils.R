@@ -893,7 +893,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         else if(is(mi, "MethodsList"))
             mi <- Recall(mi, f)
         else
-            stop(gettextf("internal error: Bad methods list object in fixing methods for prmitive function '%s'", f), domain = NA)
+            stop(gettextf("internal error: Bad methods list object in fixing methods for primitive function '%s'", f), domain = NA)
         methods[[i]] <- mi
     }
     mlist@methods <- methods

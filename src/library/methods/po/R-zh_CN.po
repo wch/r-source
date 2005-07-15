@@ -171,7 +171,7 @@ msgstr "为單元%d所设定的类别不对(应当是条单字符字串)"
 
 msgid ""
 "first argument should be the name(s) of generic functions (got object of "
-"class \"%s)"
+"class \"%s\")"
 msgstr "第一个变元应当为同屬函数的名称(现在却是类别为\"%s\"的目标对象)"
 
 msgid ""
@@ -298,7 +298,7 @@ msgid ""
 msgstr "方法(%s)标记里的名字同函数变元(%s) 不相对应"
 
 msgid ""
-"'NextMethod' not defined because the the current method is not a "
+"'NextMethod' not defined because the current method is not a "
 "'MethodDefinition' object"
 msgstr "'NextMethod'没有设定，因为目前的方法不是'MethodDefinition'这种目标对象"
 
@@ -415,7 +415,7 @@ msgid "class \"%s\" extends an undefined class (\"%s\")"
 msgstr "类别\"%s\"擴充不存在的类别(\"%s\")"
 
 msgid ""
-"%s\" is not eligible to be the data part of another class (must be a basic "
+"\"%s\" is not eligible to be the data part of another class (must be a basic "
 "class or a virtual class with no slots)"
 msgstr ""
 "%s\"不可以成为另外一个类别的数据部分(必需是没有槽的基本类别或虛擬类别才可以)"
@@ -587,7 +587,7 @@ msgid ""
 msgstr "所提供的同屬函数定义没有調用'standardGeneric'；因此无法分配任何方法!"
 
 msgid ""
-"internal error: Bad methods list object in fixing methods for prmitive "
+"internal error: Bad methods list object in fixing methods for primitive "
 "function '%s'"
 msgstr "内部出错: 在修正基元函数'%s'的方法时方法串列目标对象出错"
 

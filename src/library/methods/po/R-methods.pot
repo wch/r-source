@@ -116,7 +116,7 @@ msgstr ""
 msgid "bad class specified for element %d (should be a single character string)"
 msgstr ""
 
-msgid "first argument should be the name(s) of generic functions (got object of class \"%s)"
+msgid "first argument should be the name(s) of generic functions (got object of class \"%s\")"
 msgstr ""
 
 msgid "the environment/package '%s' is locked; cannot remove methods data for '%s'"
@@ -209,7 +209,7 @@ msgstr ""
 msgid "the names in signature for method (%s) do not match function's arguments (%s)"
 msgstr ""
 
-msgid "'NextMethod' not defined because the the current method is not a 'MethodDefinition' object"
+msgid "'NextMethod' not defined because the current method is not a 'MethodDefinition' object"
 msgstr ""
 
 msgid "expected a list of signature objects, got \"%s\""
@@ -281,7 +281,7 @@ msgstr ""
 msgid "class \"%s\" extends an undefined class (\"%s\")"
 msgstr ""
 
-msgid "%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)"
+msgid "\"%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)"
 msgstr ""
 
 msgid "prototype is a list with named elements (could be ambiguous):  better to use function prototype() to avoid trouble."
@@ -404,7 +404,7 @@ msgstr ""
 msgid "the supplied generic function definition does not seem to call 'standardGeneric'; no methods will be dispatched!"
 msgstr ""
 
-msgid "internal error: Bad methods list object in fixing methods for prmitive function '%s'"
+msgid "internal error: Bad methods list object in fixing methods for primitive function '%s'"
 msgstr ""
 
 msgid "trying to change the formal arguments in %s, in an object of class \"%s\"; expected a function definition"

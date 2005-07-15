@@ -643,7 +643,7 @@ reconcilePropertiesAndPrototype <-
           if((is.na(match(dataPartClass, .BasicClasses)) &&
              !isVirtualClass(dataPartDef)) ||
              length(dataPartDef@slots) > 0)
-              stop(gettextf("\%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)", dataPartClass),
+              stop(gettextf("\"%s\" is not eligible to be the data part of another class (must be a basic class or a virtual class with no slots)", dataPartClass),
                    domain = NA)
           if(extends(prototypeClass, "classPrototypeDef"))
           {}
