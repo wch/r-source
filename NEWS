@@ -14,27 +14,27 @@ BUG FIXES
     o	runmed(x, k = -1) now gives an error instead of a seg.fault.
 
     o	File creation errors in pdf(), postscript(), xfig() resulted
-        in a pointer being freed twice.  (Reported by Matt McCall)
+	in a pointer being freed twice.	 (Reported by Matt McCall)
 
     o	model.matrix(~ .^2, data=foo) now works as most people would
 	expect (it used to expand '.' after using the a^2 = a rule).
 
-    o   ftable() and xtabs() had a check for interactions that would
+    o	ftable() and xtabs() had a check for interactions that would
 	not work correctly with '.' in the formula.
 
-    o   The formula method for pairs() was ignoring the na.action argument.
+    o	The formula method for pairs() was ignoring the na.action argument.
 
     o	scan() with the default separator (only) was stripping backslashes
 	inside quoted string inputs even if allowEscapes = FALSE.
 
-    o 	The "col" parameter to pairs() is now treated consistently with
-    	plot():  it affects the data, not the axes.  (Patch submitted
-    	by Olaf Mersmann)
+    o	The "col" parameter to pairs() is now treated consistently with
+	plot():	 it affects the data, not the axes.  (Patch submitted
+	by Olaf Mersmann)
 
-    o   Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
-        contained a print() statement that is no longer needed.
+    o	Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
+	contained a print() statement that is no longer needed.
 
-    o   Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
+    o	Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
 	builds of R.
 
     o	pgamma(Inf, 1.1) did not terminate (PR#8001).
@@ -146,7 +146,7 @@ BUG FIXES
 	deficiency in the M and X matrices (also when they are implicitly
 	generated via model.matrix()).
 
-    o   anova.mlm had a scoping issue (PR#7898)
+    o	anova.mlm had a scoping issue (PR#7898)
 
     o	pf() with infinite df is allowed again.	 It is now more accurate
 	for extreme ratios of dfs, especially when there is a
@@ -209,7 +209,7 @@ BUG FIXES
 	chosen from a menu.  It failed if more than one package in a
 	bundle was chosen from the command line.
 
-    o	qcauchy() suffered from underflow in the extreme tails.  (PR#7902)
+    o	qcauchy() suffered from underflow in the extreme tails.	 (PR#7902)
 
     o	Printing of raw matrices/arrays was not implemented. (PR#7912)
 
@@ -221,12 +221,12 @@ BUG FIXES
     o	Binary save() of raw vectors was not working correctly on
 	big-endian platforms.  (PR#7812)
 
-    o   as.Date.factor() now accepts a format argument.
+    o	as.Date.factor() now accepts a format argument.
 
     o	Workaround added for FreeBSD which does not have alloca.h _and_
 	does not allow alloca() to be declared.
 
-    o	identify() now respects 'cex'.  (PR#660)
+    o	identify() now respects 'cex'.	(PR#660)
 
 	Warnings from identify() are now printed immediately even on
 	consoles with delayed printing.
