@@ -82,10 +82,6 @@ available.packages <-
     res
 }
 
-CRAN.packages <- function(CRAN = getOption("repos"), method,
-                          contriburl = contrib.url(CRAN))
-    available.packages(contriburl = contriburl, method = method)
-
 
 ## unexported helper function
 simplifyRepos <- function(repos, type)

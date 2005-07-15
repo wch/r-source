@@ -1,7 +1,6 @@
 \name{update.packages}
 \alias{update.packages}
 \alias{available.packages}
-\alias{CRAN.packages}
 \alias{old.packages}
 \alias{new.packages}
 \alias{download.packages}
@@ -22,9 +21,6 @@ update.packages(lib.loc = NULL, repos = getOption("repos"),
                 type = getOption("pkgType"))
 
 available.packages(contriburl = contrib.url(getOption("repos")), method)
-
-CRAN.packages(CRAN = getOption("repos"), method,
-              contriburl = contrib.url(CRAN))
 
 old.packages(lib.loc = NULL, repos = getOption("repos"),
              contriburl = contrib.url(repos),
@@ -72,10 +68,9 @@ contrib.url(repos, type = getOption("pkgType"))
     Can also be \code{NULL} to install from local \code{.zip} files.
 #endif
   }
-  \item{CRAN}{character, an earlier way to specify \code{repos}.}
   \item{method}{Download method, see \code{\link{download.file}}.}
   \item{pkgs}{character vector of the short names of packages/bundles whose
-    current versions should be downloaded from \code{CRAN}.
+    current versions should be downloaded from the repositories.
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
     \code{.zip} files.
@@ -90,7 +85,7 @@ contrib.url(repos, type = getOption("pkgType"))
   }
   \item{destdir}{directory where downloaded packages are stored.}
   \item{available}{an object listing packages available at the repositories
-    as returned by \code{CRAN.packages}.}
+    as returned by \code{available.packages}.}
   \item{lib}{character vector giving the library directories where to
     install the packages.  Recycled as needed.}
   \item{ask}{logical indicating whether to ask user before packages
@@ -134,13 +129,11 @@ contrib.url(repos, type = getOption("pkgType"))
   \code{install.packages} if the repository provides the necessary
   information).
   
-  \code{CRAN.packages} returns a matrix of details corresponding to
-  packages/bundles currently available in the \code{contrib} section of
-  CRAN, the comprehensive R archive network.  The current list of
-  packages is downloaded over the internet (or copied from a local CRAN
-  mirror).  \code{available.packages} does the same for one or more
-  repositories with a similar structure.  Both return only packages
-  whose version requirements are met by the running version of \R.
+  \code{available.packages} returns a matrix of details corresponding to
+  packages/bundles currently available at  one or more repositories. The
+  current list of packages is downloaded over the internet (or copied
+  from a local mirror).  It returns only packages whose version
+  requirements are met by the running version of \R.
   
   \code{old.packages} compares the information from
   \code{available.packages} with that from
@@ -219,7 +212,7 @@ contrib.url(repos, type = getOption("pkgType"))
   repository on the list within which it is found.
 }
 \value{
-  For \code{CRAN.packages} and \code{available.packages}, a matrix
+  For \code{available.packages}, a matrix
   with one row per package/bundle, row names the package names and
   column names \code{"Package"}, \code{"Version"}, \code{"Priority"},
   \code{"Bundle"}, \code{"Depends"}, \code{"Imports"}, \code{"Suggests"}
