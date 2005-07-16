@@ -3690,3 +3690,6 @@ unlink("x.Rda")
 ## PR#7922:  Could not use expression() as an initial expression value
 setClass("test2", representation(bar = "expression"))
 new("test2", bar = expression())
+
+## Multibyte character set regular expressions had buffer overrun
+regexpr("[a-z]", NA)

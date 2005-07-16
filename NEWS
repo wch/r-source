@@ -346,6 +346,9 @@ BUG FIXES
 	builds of R.
 
     o	pgamma(Inf, 1.1) did not terminate (PR#8001).
+    
+    o	regexpr("[a-z]", ...) could cause a buffer overrun with multi-byte
+    	character sets, leading to random errors later.
 
 
 
