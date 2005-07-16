@@ -136,11 +136,12 @@ double  bd0(double, double);
 double	dbinom_raw(double, double, double, double, int);
 double	dpois_raw (double, double, int);
 double  pnchisq_raw(double, double, double, double, double, int);
+double  pgamma_raw(double, double, int, int);
 
 int	i1mach(int);
 
 /* From toms708.c */
-void bratio(double a, double b, double x, double y, 
+void bratio(double a, double b, double x, double y,
 	    double *w, double *w1, int *ierr);
 
 

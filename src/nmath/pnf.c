@@ -39,8 +39,7 @@ double pnf(double x, double n1, double n2, double ncp,
     if (!R_FINITE(n1) && !R_FINITE(n2)) /* both +Inf */
 	ML_ERR_return_NAN;
 
-    if (x < 0.0)
-	return R_DT_0;
+    R_P_bounds_01(x, 0., ML_POSINF);
 
     if (n2 > 1e8) /* avoid problems with +Inf and loss of accuracy */
 	return pnchisq(x * n1, n1, ncp, lower_tail, log_p);

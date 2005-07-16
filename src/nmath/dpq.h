@@ -78,6 +78,17 @@
 	    return lower_tail ? _RIGHT_ : _LEFT_;	\
     }
 
+#define R_P_bounds_01(x, x_min, x_max) 	\
+    if(x <= x_min) return R_DT_0;		\
+    if(x >= x_max) return R_DT_1
+/* is typically not quite optimal for (-Inf,Inf) where
+ * you'd rather have */
+#define R_P_bounds_Inf_01(x)			\
+    if(!R_FINITE(x)) {				\
+	if (x > 0) return R_DT_1;		\
+	/* x < 0 */return R_DT_0;		\
+    }
+
 
 
 /* additions for density functions (C.Loader) */

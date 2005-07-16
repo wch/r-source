@@ -33,8 +33,7 @@ double pf(double x, double n1, double n2, int lower_tail, int log_p)
 #endif
     if (n1 <= 0. || n2 <= 0.) ML_ERR_return_NAN;
 
-    if (x <= 0.)
-	return R_DT_0;
+    R_P_bounds_01(x, 0., ML_POSINF);
 
     /* move to pchisq for very large values - was 'n1 > 4e5' in 2.0.x,
        now only needed for n1 = Inf or n2 = Inf {since pbeta(0,*)=0} : */

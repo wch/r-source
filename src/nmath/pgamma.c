@@ -348,10 +348,7 @@ static double
 pd_lower_cf (double i, double d)
 {
     double f = 0, of;
-
-    double c1 = 0, c2, c3, c4;
-    double a1 = 0, b1 = 1;
-    double a2 = i, b2 = d;
+    double c1, c2, c3, c4,  a1, b1,  a2, b2;
 
 #define	NEEDED_SCALE				\
 	  (b2 > scalefactor) {			\
@@ -367,26 +364,27 @@ pd_lower_cf (double i, double d)
     REprintf("pd_lower_cf(i=%.14g, d=%.14g)\n", i, d);
 #endif
 
+    if (i < d * 1e-20) /* includes d = Inf,  or i = 0 < d */
+	return (i/d);
+
+    a1 = 0; b1 = 1;
+    a2 = i; b2 = d;
+
     while NEEDED_SCALE
 
-    if(a2 == 0)
-	return 0;/* when   d >>>> i  originally */
+    if(a2 == 0) return 0;/* just in case, e.g. d=i=0 */
 
     c2 = a2;
     c4 = b2;
 
+    c1 = 0;
     while (c1 < max_it) {
-	c1++;
-	c2--;
-	c3 = c1 * c2;
-	c4 += 2;
+
+	c1++;	c2--;	c3 = c1 * c2;	c4 += 2;
 	a1 = c4 * a2 + c3 * a1;
 	b1 = c4 * b2 + c3 * b1;
 
-	c1++;
-	c2--;
-	c3 = c1 * c2;
-	c4 += 2;
+	c1++;	c2--;	c3 = c1 * c2;	c4 += 2;
 	a2 = c4 * a1 + c3 * a2;
 	b2 = c4 * b1 + c3 * b2;
 
@@ -437,6 +435,8 @@ pd_lower_series (double lambda, double y)
 #ifdef DEBUG_p
 	REprintf(" y not int: add another term ");
 #endif
+	/* FIXME: in quite few cases, adding  term*f  has no effect (f too small)
+	 *        and unnecessary e.g. for pgamma(4e12, 121.1) */
 	f = pd_lower_cf (y, lambda + 1 - y);
 #ifdef DEBUG_p
 	REprintf("  (= %.14g) * term = %.14g to sum %g\n", f, term * f, sum);
@@ -531,15 +531,18 @@ ppois_asymp (double x, double lambda, int lower_tail, int log_p)
 } /* ppois_asymp() */
 
 
-static double
-pgamma_raw (double x, double alph, int lower_tail, int log_p)
+double pgamma_raw (double x, double alph, int lower_tail, int log_p)
 {
+/* Here, assume that  (x,alph) are not NA  &  alph > 0 . */
+
     double res;
 
 #ifdef DEBUG_p
     REprintf("pgamma_raw(x=%.14g, alph=%.14g, low=%d, log=%d)\n",
 	     x, alph, lower_tail, log_p);
 #endif
+    R_P_bounds_01(x, 0., ML_POSINF);
+
     if (x < 1) {
 	res = pgamma_smallx (x, alph, lower_tail, log_p);
     } else if (x <= alph - 1 && x < 0.8 * (alph + 50)) {/* incl. large alph */
@@ -561,7 +564,6 @@ pgamma_raw (double x, double alph, int lower_tail, int log_p)
 #ifdef DEBUG_p
 	REprintf(" x `large': d=dpois_w(*)= %.14g ", d);
 #endif
-
 	if (alph < 1) {
 	    if (x * DBL_EPSILON > 1 - alph)
 		sum = R_D__1;
@@ -619,9 +621,6 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
     if (ISNAN(x)) /* eg. original x = scale = +Inf */
 	return x;
 #endif
-    if (x <= 0.) /* also for scale=Inf and finite x */
-	return R_DT_0;
-
     return pgamma_raw (x, alph, lower_tail, log_p);
 }
 /* From: terra@gnome.org (Morten Welinder)
@@ -665,6 +664,11 @@ double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
  *	Algorithm AS 239, Incomplete Gamma Function
  *	Applied Statistics 37, 1988.
  */
+
+/* now would need this here: */
+double pgamma_raw(x, alph, lower_tail, log_p) {
+    return pgamma(x, alph, 1, lower_tail, log_p);
+}
 
 double pgamma(double x, double alph, double scale, int lower_tail, int log_p)
 {

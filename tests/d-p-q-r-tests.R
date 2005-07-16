@@ -154,8 +154,8 @@ for(sh in round(rlnorm(30),2)) {
     }
 }
 pgamma(1,Inf,scale=Inf) == 0
+## Also pgamma(Inf,Inf) == 1 for which NaN was slightly more appropriate
 all(is.nan(c(pgamma(Inf,  1,scale=Inf),
-             pgamma(Inf,Inf,scale=1),
              pgamma(Inf,Inf,scale=Inf))))
 scLrg <- c(2,100, 1e300*c(.1, 1,10,100), 1e307, xMax, Inf)
 stopifnot(pgamma(Inf, 1, scale=xMax) == 1,
@@ -524,6 +524,9 @@ stopifnot(All.eq(pf(1,1,Inf), 0.68268949213708596),
           All.eq(y [1], -5.07420372386491),
           All.eq(y[19],  2.12300110824515))
 ## not at all in R 2.1.0 or earlier
+
+stopifnot(pgamma(Inf, 1.1) == 1)
+## didn't not terminate in R 2.1.x (only)
 
 ## qgamma(q, *) should give {0,Inf} for q={0,1}
 sh <- c(1.1, 0.5, 0.2, 0.15, 1e-2, 1e-10)
