@@ -3664,3 +3664,6 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 
 ### end of tests added in 2.1.0 patched ###
 
+
+## Multibyte character set regular expressions had buffer overrun
+regexpr("[a-z]", NA)
