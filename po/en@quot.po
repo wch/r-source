@@ -29,8 +29,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-18 08:34+0100\n"
-"PO-Revision-Date: 2005-06-18 08:34+0100\n"
+"POT-Creation-Date: 2005-07-18 08:22+0100\n"
+"PO-Revision-Date: 2005-07-18 08:22+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgid "invalid 'names' in R_unlink"
 msgstr "invalid ‘names’ in R_unlink"
 
 #: src/gnuwin32/extra.c:140 src/main/datetime.c:522 src/main/datetime.c:587
-#: src/main/datetime.c:696 src/main/datetime.c:811 src/main/plot3d.c:2477
+#: src/main/datetime.c:696 src/main/datetime.c:811 src/main/plot3d.c:2475
 msgid "invalid 'x' argument"
 msgstr "invalid ‘x’ argument"
 
@@ -227,7 +227,7 @@ msgid "cannot decrease memory limit"
 msgstr "cannot decrease memory limit"
 
 #: src/gnuwin32/extra.c:790 src/main/platform.c:891 src/main/platform.c:1180
-#: src/main/platform.c:1391 src/main/platform.c:1426
+#: src/main/platform.c:1415 src/main/platform.c:1450
 msgid "invalid 'path' argument"
 msgstr "invalid ‘path’ argument"
 
@@ -243,11 +243,11 @@ msgstr "invalid ‘preselect’ argument"
 msgid "argument must be a character vector"
 msgstr "argument must be a character vector"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1354
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1364
 msgid "Unable to open the clipboard"
 msgstr "Unable to open the clipboard"
 
-#: src/gnuwin32/extra.c:1076 src/main/connections.c:1358
+#: src/gnuwin32/extra.c:1076 src/main/connections.c:1368
 msgid "Unable to write to the clipboard"
 msgstr "Unable to write to the clipboard"
 
@@ -345,9 +345,9 @@ msgid "truncate not enabled for this connection"
 msgstr "truncate not enabled for this connection"
 
 #: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
-#: src/gnuwin32/run.c:541 src/main/connections.c:821
-#: src/main/connections.c:825 src/main/connections.c:831
-#: src/main/connections.c:845
+#: src/gnuwin32/run.c:541 src/main/connections.c:831
+#: src/main/connections.c:835 src/main/connections.c:841
+#: src/main/connections.c:855
 msgid "allocation of pipe connection failed"
 msgstr "allocation of pipe connection failed"
 
@@ -430,8 +430,8 @@ msgstr "NaNs produced"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Non-numeric argument to mathematical function"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3717
-#: src/main/scan.c:1475
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3743
+#: src/main/scan.c:1478
 msgid "invalid argument"
 msgstr "invalid argument"
 
@@ -634,7 +634,7 @@ msgstr "DLLname ‘%s’ is too long"
 msgid "could not allocate space for 'name'"
 msgstr "could not allocate space for ‘name’"
 
-#: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:993
+#: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:992
 msgid "character argument expected"
 msgstr "character argument expected"
 
@@ -868,7 +868,7 @@ msgstr "value out of range in ‘perm’"
 msgid "invalid permutation ('perm')"
 msgstr "invalid permutation ('perm')"
 
-#: src/main/array.c:1028 src/main/connections.c:2534
+#: src/main/array.c:1028 src/main/connections.c:2544
 msgid "invalid value of 'n'"
 msgstr "invalid value of ‘n’"
 
@@ -1313,11 +1313,11 @@ msgstr "could not allocate memory for approximate matching"
 msgid "could not perform case insensitive matching"
 msgstr "could not perform case insensitive matching"
 
-#: src/main/character.c:1818
+#: src/main/character.c:1819 src/main/character.c:2054
 msgid "argument must be a character vector of length 1"
 msgstr "argument must be a character vector of length 1"
 
-#: src/main/character.c:1820
+#: src/main/character.c:1821 src/main/character.c:2056
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1325,45 +1325,49 @@ msgstr ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 
-#: src/main/character.c:1835 src/main/character.c:1867
-#: src/main/character.c:1888
+#: src/main/character.c:1837 src/main/character.c:1869
+#: src/main/character.c:1890
 msgid "argument 'x' must be a raw vector"
 msgstr "argument ‘x’ must be a raw vector"
 
-#: src/main/character.c:1838
+#: src/main/character.c:1840 src/main/character.c:2106
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "argument ‘multiple’ must be TRUE or FALSE"
 
-#: src/main/character.c:1869
+#: src/main/character.c:1871
 msgid "argument 'shift' must be a small integer"
 msgstr "argument ‘shift’ must be a small integer"
 
-#: src/main/character.c:1906
+#: src/main/character.c:1908
 msgid "argument 'x' must be a integer vector"
 msgstr "argument ‘x’ must be a integer vector"
 
-#: src/main/character.c:1926
+#: src/main/character.c:1928
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "argument ‘x’ must be raw, integer or logical"
 
-#: src/main/character.c:1928
+#: src/main/character.c:1930
 msgid "argument 'type' must be a character string"
 msgstr "argument ‘type’ must be a character string"
 
-#: src/main/character.c:1932
+#: src/main/character.c:1934
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "argument ‘x’ must be a multiple of %d long"
 
-#: src/main/character.c:1946 src/main/character.c:1961
+#: src/main/character.c:1948 src/main/character.c:1963
 msgid "argument 'x' must not contain NAs"
 msgstr "argument ‘x’ must not contain NAs"
 
-#: src/main/character.c:1986
+#: src/main/character.c:2103
+msgid "argument 'x' must be an integer vector"
+msgstr "argument ‘x’ must be an integer vector"
+
+#: src/main/character.c:2148
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() requires a character vector"
 
-#: src/main/character.c:1991 src/main/character.c:1995
+#: src/main/character.c:2153 src/main/character.c:2157
 msgid "invalid 'width' argument"
 msgstr "invalid ‘width’ argument"
 
@@ -1579,10 +1583,10 @@ msgstr "all connections are in use"
 msgid "connection not found"
 msgstr "connection not found"
 
-#: src/main/connections.c:95 src/main/connections.c:2527
-#: src/main/connections.c:2950 src/main/connections.c:2999
-#: src/main/connections.c:3121 src/main/connections.c:3161
-#: src/main/connections.c:3175
+#: src/main/connections.c:95 src/main/connections.c:2537
+#: src/main/connections.c:2960 src/main/connections.c:3009
+#: src/main/connections.c:3131 src/main/connections.c:3171
+#: src/main/connections.c:3185
 msgid "invalid connection"
 msgstr "invalid connection"
 
@@ -1604,7 +1608,7 @@ msgstr "open/close not enabled for this connection"
 msgid "printing not enabled for this connection"
 msgstr "printing not enabled for this connection"
 
-#: src/main/connections.c:200 src/main/connections.c:1802
+#: src/main/connections.c:200 src/main/connections.c:1812
 msgid "printing of extremely long output is truncated"
 msgstr "printing of extremely long output is truncated"
 
@@ -1638,524 +1642,524 @@ msgstr "write not enabled for this connection"
 msgid "cannot open file '%s'"
 msgstr "cannot open file ‘%s’"
 
-#: src/main/connections.c:463
+#: src/main/connections.c:473
 msgid "connection is not open for reading"
 msgstr "connection is not open for reading"
 
-#: src/main/connections.c:468
+#: src/main/connections.c:478
 msgid "connection is not open for writing"
 msgstr "connection is not open for writing"
 
-#: src/main/connections.c:501 src/main/connections.c:1409
+#: src/main/connections.c:511 src/main/connections.c:1419
 msgid "can only truncate connections open for writing"
 msgstr "can only truncate connections open for writing"
 
-#: src/main/connections.c:506
+#: src/main/connections.c:516
 msgid "file truncation failed"
 msgstr "file truncation failed"
 
-#: src/main/connections.c:508
+#: src/main/connections.c:518
 msgid "file truncation unavailable on this platform"
 msgstr "file truncation unavailable on this platform"
 
-#: src/main/connections.c:553 src/main/connections.c:557
-#: src/main/connections.c:563 src/main/connections.c:580
+#: src/main/connections.c:563 src/main/connections.c:567
+#: src/main/connections.c:573 src/main/connections.c:590
 msgid "allocation of file connection failed"
 msgstr "allocation of file connection failed"
 
-#: src/main/connections.c:623
+#: src/main/connections.c:633
 #, c-format
 msgid "cannot create fifo '%s'"
 msgstr "cannot create fifo ‘%s’"
 
-#: src/main/connections.c:628
+#: src/main/connections.c:638
 #, c-format
 msgid "'%s' exists but is not a fifo"
 msgstr "‘%s’ exists but is not a fifo"
 
-#: src/main/connections.c:641
+#: src/main/connections.c:651
 #, c-format
 msgid "fifo '%s' is not ready"
 msgstr "fifo ‘%s’ is not ready"
 
-#: src/main/connections.c:642
+#: src/main/connections.c:652
 #, c-format
 msgid "cannot open fifo '%s'"
 msgstr "cannot open fifo ‘%s’"
 
-#: src/main/connections.c:693 src/main/connections.c:697
-#: src/main/connections.c:703 src/main/connections.c:719
+#: src/main/connections.c:703 src/main/connections.c:707
+#: src/main/connections.c:713 src/main/connections.c:729
 msgid "allocation of fifo connection failed"
 msgstr "allocation of fifo connection failed"
 
-#: src/main/connections.c:736 src/main/connections.c:866
-#: src/main/connections.c:1052 src/main/connections.c:1234
-#: src/main/connections.c:1914 src/main/connections.c:2033
-#: src/main/connections.c:3367
+#: src/main/connections.c:746 src/main/connections.c:876
+#: src/main/connections.c:1062 src/main/connections.c:1244
+#: src/main/connections.c:1924 src/main/connections.c:2043
+#: src/main/connections.c:3377
 msgid "invalid 'description' argument"
 msgstr "invalid ‘description’ argument"
 
-#: src/main/connections.c:738 src/main/connections.c:868
-#: src/main/connections.c:1054 src/main/connections.c:1236
-#: src/main/connections.c:2035 src/main/connections.c:3369
+#: src/main/connections.c:748 src/main/connections.c:878
+#: src/main/connections.c:1064 src/main/connections.c:1246
+#: src/main/connections.c:2045 src/main/connections.c:3379
 msgid "only first element of 'description' argument used"
 msgstr "only first element of ‘description’ argument used"
 
-#: src/main/connections.c:742 src/main/connections.c:872
-#: src/main/connections.c:1058 src/main/connections.c:1240
-#: src/main/connections.c:1921 src/main/connections.c:1984
-#: src/main/connections.c:2039 src/main/connections.c:2091
-#: src/main/connections.c:3378
+#: src/main/connections.c:752 src/main/connections.c:882
+#: src/main/connections.c:1068 src/main/connections.c:1250
+#: src/main/connections.c:1931 src/main/connections.c:1994
+#: src/main/connections.c:2049 src/main/connections.c:2101
+#: src/main/connections.c:3388
 msgid "invalid 'open' argument"
 msgstr "invalid ‘open’ argument"
 
-#: src/main/connections.c:745 src/main/connections.c:3382
+#: src/main/connections.c:755 src/main/connections.c:3392
 msgid "invalid 'block' argument"
 msgstr "invalid ‘block’ argument"
 
-#: src/main/connections.c:749 src/main/connections.c:877
-#: src/main/connections.c:1062 src/main/connections.c:1244
-#: src/main/connections.c:1990 src/main/connections.c:2043
-#: src/main/connections.c:3386
+#: src/main/connections.c:759 src/main/connections.c:887
+#: src/main/connections.c:1072 src/main/connections.c:1254
+#: src/main/connections.c:2000 src/main/connections.c:2053
+#: src/main/connections.c:3396
 msgid "invalid 'encoding' argument"
 msgstr "invalid ‘encoding’ argument"
 
-#: src/main/connections.c:761 src/main/connections.c:896
-#: src/main/connections.c:1077 src/main/connections.c:1255
-#: src/main/connections.c:2003 src/main/connections.c:2054
-#: src/main/connections.c:2101 src/main/connections.c:3439
+#: src/main/connections.c:771 src/main/connections.c:906
+#: src/main/connections.c:1087 src/main/connections.c:1265
+#: src/main/connections.c:2013 src/main/connections.c:2064
+#: src/main/connections.c:2111 src/main/connections.c:3449
 msgid "unable to open connection"
 msgstr "unable to open connection"
 
-#: src/main/connections.c:775
+#: src/main/connections.c:785
 msgid "fifo connections are not available on this system"
 msgstr "fifo connections are not available on this system"
 
-#: src/main/connections.c:797
+#: src/main/connections.c:807
 #, c-format
 msgid "cannot open pipe() cmd '%s'"
 msgstr "cannot open pipe() cmd ‘%s’"
 
-#: src/main/connections.c:914
+#: src/main/connections.c:924
 msgid "pipe connections are not available on this system"
 msgstr "pipe connections are not available on this system"
 
-#: src/main/connections.c:927
+#: src/main/connections.c:937
 #, c-format
 msgid "cannot open compressed file '%s'"
 msgstr "cannot open compressed file ‘%s’"
 
-#: src/main/connections.c:968
+#: src/main/connections.c:978
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence = “end” is not implemented for gzfile connections"
 
-#: src/main/connections.c:974
+#: src/main/connections.c:984
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "seek on a gzfile connection returned an internal error"
 
-#: src/main/connections.c:1008 src/main/connections.c:1012
-#: src/main/connections.c:1018 src/main/connections.c:1037
+#: src/main/connections.c:1018 src/main/connections.c:1022
+#: src/main/connections.c:1028 src/main/connections.c:1047
 msgid "allocation of gzfile connection failed"
 msgstr "allocation of gzfile connection failed"
 
-#: src/main/connections.c:1065
+#: src/main/connections.c:1075
 msgid "invalid 'compress' argument"
 msgstr "invalid ‘compress’ argument"
 
-#: src/main/connections.c:1110
+#: src/main/connections.c:1120
 #, c-format
 msgid "cannot open bzip2-ed file '%s'"
 msgstr "cannot open bzip2-ed file ‘%s’"
 
-#: src/main/connections.c:1119 src/main/connections.c:1128
+#: src/main/connections.c:1129 src/main/connections.c:1138
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "file ‘%s’ appears not to be compressed by bzip2"
 
-#: src/main/connections.c:1191 src/main/connections.c:1195
-#: src/main/connections.c:1201 src/main/connections.c:1219
+#: src/main/connections.c:1201 src/main/connections.c:1205
+#: src/main/connections.c:1211 src/main/connections.c:1229
 msgid "allocation of bzfile connection failed"
 msgstr "allocation of bzfile connection failed"
 
-#: src/main/connections.c:1310 src/modules/X11/devX11.c:2468
+#: src/main/connections.c:1320 src/modules/X11/devX11.c:2468
 msgid "memory allocation to copy clipboard failed"
 msgstr "memory allocation to copy clipboard failed"
 
-#: src/main/connections.c:1315 src/modules/X11/devX11.c:2456
+#: src/main/connections.c:1325 src/modules/X11/devX11.c:2456
 msgid "clipboard cannot be opened or contains no text"
 msgstr "clipboard cannot be opened or contains no text"
 
-#: src/main/connections.c:1326
+#: src/main/connections.c:1336
 msgid "memory allocation to open clipboard failed"
 msgstr "memory allocation to open clipboard failed"
 
-#: src/main/connections.c:1398
+#: src/main/connections.c:1408
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "attempt to seek outside the range of the clipboard"
 
-#: src/main/connections.c:1438
+#: src/main/connections.c:1448
 msgid "clipboard connection is open for reading only"
 msgstr "clipboard connection is open for reading only"
 
-#: src/main/connections.c:1456
+#: src/main/connections.c:1466
 msgid "clipboard buffer is full and output lost"
 msgstr "clipboard buffer is full and output lost"
 
-#: src/main/connections.c:1471
+#: src/main/connections.c:1481
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "‘mode’ for the clipboard must be ‘r’ or ‘w’"
 
-#: src/main/connections.c:1474
+#: src/main/connections.c:1484
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "‘mode’ for the clipboard must be ‘r’ on Unix"
 
-#: src/main/connections.c:1477 src/main/connections.c:1483
-#: src/main/connections.c:1489 src/main/connections.c:1506
+#: src/main/connections.c:1487 src/main/connections.c:1493
+#: src/main/connections.c:1499 src/main/connections.c:1516
 msgid "allocation of clipboard connection failed"
 msgstr "allocation of clipboard connection failed"
 
-#: src/main/connections.c:1576 src/main/connections.c:1580
-#: src/main/connections.c:1586
+#: src/main/connections.c:1586 src/main/connections.c:1590
+#: src/main/connections.c:1596
 msgid "allocation of terminal connection failed"
 msgstr "allocation of terminal connection failed"
 
-#: src/main/connections.c:1660
+#: src/main/connections.c:1670
 msgid "cannot allocate memory for text connection"
 msgstr "cannot allocate memory for text connection"
 
-#: src/main/connections.c:1705
+#: src/main/connections.c:1715
 msgid "seek is not relevant for text connection"
 msgstr "seek is not relevant for text connection"
 
-#: src/main/connections.c:1713 src/main/connections.c:1717
-#: src/main/connections.c:1723 src/main/connections.c:1736
-#: src/main/connections.c:1869 src/main/connections.c:1873
-#: src/main/connections.c:1879 src/main/connections.c:1892
-#: src/main/connections.c:1898
+#: src/main/connections.c:1723 src/main/connections.c:1727
+#: src/main/connections.c:1733 src/main/connections.c:1746
+#: src/main/connections.c:1879 src/main/connections.c:1883
+#: src/main/connections.c:1889 src/main/connections.c:1902
+#: src/main/connections.c:1908
 msgid "allocation of text connection failed"
 msgstr "allocation of text connection failed"
 
-#: src/main/connections.c:1849
+#: src/main/connections.c:1859
 msgid "text connection: appending to a non-existent char vector"
 msgstr "text connection: appending to a non-existent char vector"
 
-#: src/main/connections.c:1918 src/main/connections.c:2451
+#: src/main/connections.c:1928 src/main/connections.c:2461
 msgid "invalid 'text' argument"
 msgstr "invalid ‘text’ argument"
 
-#: src/main/connections.c:1925
+#: src/main/connections.c:1935
 msgid "invalid 'environment' argument"
 msgstr "invalid ‘environment’ argument"
 
-#: src/main/connections.c:1939
+#: src/main/connections.c:1949
 msgid "unsupported mode"
 msgstr "unsupported mode"
 
-#: src/main/connections.c:1967
+#: src/main/connections.c:1977
 msgid "invalid 'host' argument"
 msgstr "invalid ‘host’ argument"
 
-#: src/main/connections.c:1972
+#: src/main/connections.c:1982
 msgid "invalid 'port' argument"
 msgstr "invalid ‘port’ argument"
 
-#: src/main/connections.c:1976
+#: src/main/connections.c:1986
 msgid "invalid 'server' argument"
 msgstr "invalid ‘server’ argument"
 
-#: src/main/connections.c:1980 src/main/connections.c:2094
+#: src/main/connections.c:1990 src/main/connections.c:2104
 msgid "invalid 'blocking' argument"
 msgstr "invalid ‘blocking’ argument"
 
-#: src/main/connections.c:2015
+#: src/main/connections.c:2025
 msgid "sockets are not available on this system"
 msgstr "sockets are not available on this system"
 
-#: src/main/connections.c:2081 src/main/connections.c:2135
-#: src/main/connections.c:2150 src/main/connections.c:2199
-#: src/main/connections.c:2221 src/main/connections.c:2240
-#: src/main/connections.c:2252 src/main/connections.c:2356
-#: src/main/connections.c:2453 src/main/connections.c:3745
+#: src/main/connections.c:2091 src/main/connections.c:2145
+#: src/main/connections.c:2160 src/main/connections.c:2209
+#: src/main/connections.c:2231 src/main/connections.c:2250
+#: src/main/connections.c:2262 src/main/connections.c:2366
+#: src/main/connections.c:2463 src/main/connections.c:3755
 msgid "'con' is not a connection"
 msgstr "‘con’ is not a connection"
 
-#: src/main/connections.c:2084
+#: src/main/connections.c:2094
 msgid "cannot open standard connections"
 msgstr "cannot open standard connections"
 
-#: src/main/connections.c:2086
+#: src/main/connections.c:2096
 msgid "connection is already open"
 msgstr "connection is already open"
 
-#: src/main/connections.c:2120
+#: src/main/connections.c:2130
 msgid "unknown 'rw' value"
 msgstr "unknown ‘rw’ value"
 
-#: src/main/connections.c:2201
+#: src/main/connections.c:2211
 msgid "cannot close standard connections"
 msgstr "cannot close standard connections"
 
-#: src/main/connections.c:2204
+#: src/main/connections.c:2214
 msgid "cannot close output sink connection"
 msgstr "cannot close output sink connection"
 
-#: src/main/connections.c:2206
+#: src/main/connections.c:2216
 msgid "cannot close messages sink connection"
 msgstr "cannot close messages sink connection"
 
-#: src/main/connections.c:2223 src/main/connections.c:3460
+#: src/main/connections.c:2233 src/main/connections.c:3470
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "connection is not open"
 
-#: src/main/connections.c:2312 src/main/connections.c:2324
+#: src/main/connections.c:2322 src/main/connections.c:2334
 msgid "Line longer than buffer size"
 msgstr "Line longer than buffer size"
 
-#: src/main/connections.c:2360 src/main/context.c:488 src/main/context.c:558
+#: src/main/connections.c:2370 src/main/context.c:488 src/main/context.c:558
 msgid "invalid value for 'n'"
 msgstr "invalid value for ‘n’"
 
-#: src/main/connections.c:2363
+#: src/main/connections.c:2373
 msgid "invalid value for 'ok'"
 msgstr "invalid value for ‘ok’"
 
-#: src/main/connections.c:2365 src/main/connections.c:2543
-#: src/main/connections.c:2952 src/main/dcf.c:56 src/main/serialize.c:1580
+#: src/main/connections.c:2375 src/main/connections.c:2553
+#: src/main/connections.c:2962 src/main/dcf.c:56 src/main/serialize.c:1580
 msgid "cannot read from this connection"
 msgstr "cannot read from this connection"
 
-#: src/main/connections.c:2368 src/main/connections.c:2462
-#: src/main/connections.c:2547 src/main/connections.c:2736
-#: src/main/connections.c:2959 src/main/connections.c:3031
-#: src/main/connections.c:3208 src/main/dcf.c:59 src/main/deparse.c:311
-#: src/main/deparse.c:385 src/main/saveload.c:2202 src/main/scan.c:1010
-#: src/main/scan.c:1115 src/main/scan.c:1565 src/main/scan.c:1762
+#: src/main/connections.c:2378 src/main/connections.c:2472
+#: src/main/connections.c:2557 src/main/connections.c:2746
+#: src/main/connections.c:2969 src/main/connections.c:3041
+#: src/main/connections.c:3218 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/deparse.c:385 src/main/saveload.c:2202 src/main/scan.c:1013
+#: src/main/scan.c:1118 src/main/scan.c:1568 src/main/scan.c:1765
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "cannot open the connection"
 
-#: src/main/connections.c:2378 src/main/connections.c:2397
+#: src/main/connections.c:2388 src/main/connections.c:2407
 msgid "cannot allocate buffer in readLines"
 msgstr "cannot allocate buffer in readLines"
 
-#: src/main/connections.c:2414
+#: src/main/connections.c:2424
 #, c-format
 msgid "incomplete final line found by readLines on '%s'"
 msgstr "incomplete final line found by readLines on ‘%s’"
 
-#: src/main/connections.c:2424
+#: src/main/connections.c:2434
 msgid "too few lines read in readLines"
 msgstr "too few lines read in readLines"
 
-#: src/main/connections.c:2456 src/main/platform.c:897
+#: src/main/connections.c:2466 src/main/platform.c:897
 msgid "invalid 'sep' argument"
 msgstr "invalid ‘sep’ argument"
 
-#: src/main/connections.c:2458 src/main/connections.c:2730
-#: src/main/connections.c:3001 src/main/connections.c:3461
-#: src/main/scan.c:1758 src/main/serialize.c:1588
+#: src/main/connections.c:2468 src/main/connections.c:2740
+#: src/main/connections.c:3011 src/main/connections.c:3471
+#: src/main/scan.c:1761 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "cannot write to this connection"
 
-#: src/main/connections.c:2497
+#: src/main/connections.c:2507
 msgid "incomplete string at end of file has been discarded"
 msgstr "incomplete string at end of file has been discarded"
 
-#: src/main/connections.c:2509
+#: src/main/connections.c:2519
 msgid "null terminator not found: breaking string at 10000 chars"
 msgstr "null terminator not found: breaking string at 10000 chars"
 
-#: src/main/connections.c:2528
+#: src/main/connections.c:2538
 msgid "can only read from a binary connection"
 msgstr "can only read from a binary connection"
 
-#: src/main/connections.c:2531
+#: src/main/connections.c:2541
 msgid "invalid value of 'what'"
 msgstr "invalid value of ‘what’"
 
-#: src/main/connections.c:2538
+#: src/main/connections.c:2548
 msgid "invalid value of 'signed'"
 msgstr "invalid value of ‘signed’"
 
-#: src/main/connections.c:2541 src/main/connections.c:2728
+#: src/main/connections.c:2551 src/main/connections.c:2738
 msgid "invalid value of 'swap'"
 msgstr "invalid value of ‘swap’"
 
-#: src/main/connections.c:2562 src/main/connections.c:2782
+#: src/main/connections.c:2572 src/main/connections.c:2792
 msgid "size changing is not supported for complex vectors"
 msgstr "size changing is not supported for complex vectors"
 
-#: src/main/connections.c:2586 src/main/connections.c:2604
-#: src/main/connections.c:2630 src/main/connections.c:2671
-#: src/main/connections.c:2691 src/main/connections.c:2763
-#: src/main/connections.c:2776 src/main/connections.c:2835
-#: src/main/connections.c:2864
+#: src/main/connections.c:2596 src/main/connections.c:2614
+#: src/main/connections.c:2640 src/main/connections.c:2681
+#: src/main/connections.c:2701 src/main/connections.c:2773
+#: src/main/connections.c:2786 src/main/connections.c:2845
+#: src/main/connections.c:2874
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "size %d is unknown on this machine"
 
-#: src/main/connections.c:2615
+#: src/main/connections.c:2625
 msgid "raw is always of size 1"
 msgstr "raw is always of size 1"
 
-#: src/main/connections.c:2720
+#: src/main/connections.c:2730
 msgid "'x' is not an atomic vector type"
 msgstr "‘x’ is not an atomic vector type"
 
-#: src/main/connections.c:2724
+#: src/main/connections.c:2734
 msgid "can only write to a binary connection"
 msgstr "can only write to a binary connection"
 
-#: src/main/connections.c:2743 src/main/connections.c:2888
-#: src/main/connections.c:3070
+#: src/main/connections.c:2753 src/main/connections.c:2898
+#: src/main/connections.c:3080
 msgid "problem writing to connection"
 msgstr "problem writing to connection"
 
-#: src/main/connections.c:2787
+#: src/main/connections.c:2797
 msgid "size changing is not supported for raw vectors"
 msgstr "size changing is not supported for raw vectors"
 
-#: src/main/connections.c:2915 src/main/connections.c:2918
+#: src/main/connections.c:2925 src/main/connections.c:2928
 msgid "invalid UTF-8 input in readChar()"
 msgstr "invalid UTF-8 input in readChar()"
 
-#: src/main/connections.c:2965
+#: src/main/connections.c:2975
 msgid "supplied length is invalid"
 msgstr "supplied length is invalid"
 
-#: src/main/connections.c:3011
+#: src/main/connections.c:3021
 msgid "invalid value of 'sep'"
 msgstr "invalid value of ‘sep’"
 
-#: src/main/connections.c:3043
+#: src/main/connections.c:3053
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 
-#: src/main/connections.c:3095 src/main/connections.c:3098
-#: src/main/connections.c:3137 src/main/connections.c:3142
+#: src/main/connections.c:3105 src/main/connections.c:3108
+#: src/main/connections.c:3147 src/main/connections.c:3152
 msgid "could not allocate space for pushBack"
 msgstr "could not allocate space for pushBack"
 
-#: src/main/connections.c:3118
+#: src/main/connections.c:3128
 msgid "invalid 'data' argument"
 msgstr "invalid ‘data’ argument"
 
-#: src/main/connections.c:3124
+#: src/main/connections.c:3134
 msgid "invalid 'newLine' argument"
 msgstr "invalid ‘newLine’ argument"
 
-#: src/main/connections.c:3126
+#: src/main/connections.c:3136
 msgid "can only push back on open readable connections"
 msgstr "can only push back on open readable connections"
 
-#: src/main/connections.c:3128
+#: src/main/connections.c:3138
 msgid "can only push back on text-mode connections"
 msgstr "can only push back on text-mode connections"
 
-#: src/main/connections.c:3196 src/main/connections.c:3256
+#: src/main/connections.c:3206 src/main/connections.c:3266
 msgid "sink stack is full"
 msgstr "sink stack is full"
 
-#: src/main/connections.c:3199
+#: src/main/connections.c:3209
 msgid "cannot switch output to stdin"
 msgstr "cannot switch output to stdin"
 
-#: src/main/connections.c:3216
+#: src/main/connections.c:3226
 msgid "no sink to remove"
 msgstr "no sink to remove"
 
-#: src/main/connections.c:3247
+#: src/main/connections.c:3257
 msgid "invalid value for 'closeOnExit'"
 msgstr "invalid value for ‘closeOnExit’"
 
-#: src/main/connections.c:3249 src/main/connections.c:3277
+#: src/main/connections.c:3259 src/main/connections.c:3287
 msgid "invalid value for 'type'"
 msgstr "invalid value for ‘type’"
 
-#: src/main/connections.c:3251
+#: src/main/connections.c:3261
 msgid "invalid value for 'split'"
 msgstr "invalid value for ‘split’"
 
-#: src/main/connections.c:3410
+#: src/main/connections.c:3420
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 "file(\"\") only supports open = “w+” and open = “w+b”: using the former"
 
-#: src/main/connections.c:3426 src/modules/internet/internet.c:445
+#: src/main/connections.c:3436 src/modules/internet/internet.c:463
 msgid "unsupported URL scheme"
 msgstr "unsupported URL scheme"
 
-#: src/main/connections.c:3513
+#: src/main/connections.c:3523
 msgid "file stream does not have gzip magic number"
 msgstr "file stream does not have gzip magic number"
 
-#: src/main/connections.c:3524
+#: src/main/connections.c:3534
 msgid "file stream does not have valid gzip header"
 msgstr "file stream does not have valid gzip header"
 
-#: src/main/connections.c:3590
+#: src/main/connections.c:3600
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "writing error whilst flushing ‘gzcon’ connection"
 
-#: src/main/connections.c:3690
+#: src/main/connections.c:3700
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc error %x %x\n"
 
-#: src/main/connections.c:3715
+#: src/main/connections.c:3725
 msgid "write error on 'gzcon' connection"
 msgstr "write error on ‘gzcon’ connection"
 
-#: src/main/connections.c:3749
+#: src/main/connections.c:3759
 msgid "'level' must be one of 0 ... 9"
 msgstr "‘level’ must be one of 0 ... 9"
 
-#: src/main/connections.c:3752
+#: src/main/connections.c:3762
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "‘allowNonCompression’ must be TRUE or FALSE"
 
-#: src/main/connections.c:3755
+#: src/main/connections.c:3765
 msgid "this is already a gzcon connection"
 msgstr "this is already a gzcon connection"
 
-#: src/main/connections.c:3761
+#: src/main/connections.c:3771
 msgid "can only use read- or write- binary connections"
 msgstr "can only use read- or write- binary connections"
 
-#: src/main/connections.c:3765 src/main/connections.c:3769
-#: src/main/connections.c:3776 src/main/connections.c:3790
+#: src/main/connections.c:3775 src/main/connections.c:3779
+#: src/main/connections.c:3786 src/main/connections.c:3800
 msgid "allocation of 'gzcon' connection failed"
 msgstr "allocation of ‘gzcon’ connection failed"
 
-#: src/main/connections.c:3835
+#: src/main/connections.c:3845
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1 requires a scalar string"
 
-#: src/main/connections.c:3842
+#: src/main/connections.c:3852
 msgid "internal error in R_compress1"
 msgstr "internal error in R_compress1"
 
-#: src/main/connections.c:3857
+#: src/main/connections.c:3867
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1 requires a scalar string"
 
-#: src/main/connections.c:3862
+#: src/main/connections.c:3872
 msgid "internal error in R_decompress1"
 msgstr "internal error in R_decompress1"
 
-#: src/main/connections.c:3879
+#: src/main/connections.c:3889
 msgid "not a list of sockets"
 msgstr "not a list of sockets"
 
-#: src/main/connections.c:3884
+#: src/main/connections.c:3894
 msgid "bad write indicators"
 msgstr "bad write indicators"
 
-#: src/main/connections.c:3895
+#: src/main/connections.c:3905
 msgid "not a socket connection"
 msgstr "not a socket connection"
 
@@ -2260,8 +2264,8 @@ msgstr "could not allocate memory in C function ‘R_AllocStringBuffer’"
 #: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
 #: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
 #: src/main/plot.c:2042 src/main/plot.c:2132 src/main/plot.c:2422
-#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3479
-#: src/main/plot.c:3555 src/main/plot.c:3808 src/main/plot3d.c:1383
+#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3505
+#: src/main/plot.c:3581 src/main/plot.c:3834 src/main/plot3d.c:1381
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "too few arguments"
@@ -2323,7 +2327,7 @@ msgstr "only the first element is used as variable name"
 msgid "invalid expression in \"%s\""
 msgstr "invalid expression in “%s”"
 
-#: src/main/deriv.c:903 src/main/model.c:1278
+#: src/main/deriv.c:903 src/main/model.c:1287
 msgid "invalid variable names"
 msgstr "invalid variable names"
 
@@ -2453,12 +2457,12 @@ msgstr "no arguments supplied"
 msgid "too many arguments"
 msgstr "too many arguments"
 
-#: src/main/dotcode.c:739 src/main/dotcode.c:774 src/main/dotcode.c:1571
+#: src/main/dotcode.c:739 src/main/dotcode.c:774 src/main/dotcode.c:1598
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "Incorrect number of arguments (%d), expecting %d for %s"
 
-#: src/main/dotcode.c:1431 src/main/dotcode.c:2201
+#: src/main/dotcode.c:1431 src/main/dotcode.c:2228
 msgid "too many arguments, sorry"
 msgstr "too many arguments, sorry"
 
@@ -2466,33 +2470,33 @@ msgstr "too many arguments, sorry"
 msgid "Invalid graphics state"
 msgstr "Invalid graphics state"
 
-#: src/main/dotcode.c:1526
+#: src/main/dotcode.c:1553
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "NULL value for DLLInfoReference when looking for DLL"
 
-#: src/main/dotcode.c:1597
+#: src/main/dotcode.c:1624
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "Wrong type for argument %d in call to %s"
 
-#: src/main/dotcode.c:2290
+#: src/main/dotcode.c:2317
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "type “%s” not supported in interlanguage calls"
 
-#: src/main/dotcode.c:2302
+#: src/main/dotcode.c:2329
 msgid "invalid function in call_R"
 msgstr "invalid function in call_R"
 
-#: src/main/dotcode.c:2304
+#: src/main/dotcode.c:2331
 msgid "invalid argument count in call_R"
 msgstr "invalid argument count in call_R"
 
-#: src/main/dotcode.c:2306
+#: src/main/dotcode.c:2333
 msgid "invalid return value count in call_R"
 msgstr "invalid return value count in call_R"
 
-#: src/main/dotcode.c:2351
+#: src/main/dotcode.c:2378
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "mode ‘%s’ is not supported in call_R"
@@ -2765,7 +2769,7 @@ msgid "remove: variable \"%s\" was not found"
 msgstr "remove: variable “%s” was not found"
 
 #: src/main/envir.c:1601 src/main/envir.c:1715 src/main/envir.c:1746
-#: src/main/envir.c:1752 src/modules/internet/internet.c:258
+#: src/main/envir.c:1752 src/modules/internet/internet.c:267
 msgid "invalid 'mode' argument"
 msgstr "invalid ‘mode’ argument"
 
@@ -3839,132 +3843,136 @@ msgstr "bad value"
 msgid "invalid term in model formula"
 msgstr "invalid term in model formula"
 
-#: src/main/model.c:200
+#: src/main/model.c:201
 msgid "invalid model formula"
 msgstr "invalid model formula"
 
-#: src/main/model.c:226 src/main/model.c:467
+#: src/main/model.c:227 src/main/model.c:468
 msgid "invalid power in formula"
 msgstr "invalid power in formula"
 
-#: src/main/model.c:262
+#: src/main/model.c:263
 msgid "invalid model formula in ExtractVars"
 msgstr "invalid model formula in ExtractVars"
 
-#: src/main/model.c:589
+#: src/main/model.c:590
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "duplicated name ‘%s’ in data frame using ‘.’"
 
-#: src/main/model.c:646
+#: src/main/model.c:647
 msgid "invalid model formula in EncodeVars"
 msgstr "invalid model formula in EncodeVars"
 
-#: src/main/model.c:735
+#: src/main/model.c:736
 msgid "argument is not a valid model"
 msgstr "argument is not a valid model"
 
-#: src/main/model.c:756
+#: src/main/model.c:757
 msgid "data argument is of the wrong type"
 msgstr "data argument is of the wrong type"
 
-#: src/main/model.c:1150
+#: src/main/model.c:1014
+msgid "'.' in formula and no 'data' argument"
+msgstr "‘.’ in formula and no ‘data’ argument"
+
+#: src/main/model.c:1159
 msgid "invalid formula in 'update'"
 msgstr "invalid formula in ‘update’"
 
-#: src/main/model.c:1188
+#: src/main/model.c:1197
 msgid "formula expected"
 msgstr "formula expected"
 
-#: src/main/model.c:1276
+#: src/main/model.c:1285
 msgid "invalid variables"
 msgstr "invalid variables"
 
-#: src/main/model.c:1280 src/main/model.c:1285
+#: src/main/model.c:1289 src/main/model.c:1294
 msgid "number of variables != number of variable names"
 msgstr "number of variables != number of variable names"
 
-#: src/main/model.c:1283
+#: src/main/model.c:1292
 msgid "invalid extra variables"
 msgstr "invalid extra variables"
 
-#: src/main/model.c:1287
+#: src/main/model.c:1296
 msgid "invalid extra variable names"
 msgstr "invalid extra variable names"
 
-#: src/main/model.c:1310
+#: src/main/model.c:1319
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "overlong names in ‘%s’"
 
-#: src/main/model.c:1330 src/main/model.c:1632
+#: src/main/model.c:1339 src/main/model.c:1641
 msgid "invalid variable type"
 msgstr "invalid variable type"
 
-#: src/main/model.c:1332 src/main/model.c:1596
+#: src/main/model.c:1341 src/main/model.c:1605
 msgid "variable lengths differ"
 msgstr "variable lengths differ"
 
-#: src/main/model.c:1385
+#: src/main/model.c:1394
 msgid "invalid result from na.action"
 msgstr "invalid result from na.action"
 
-#: src/main/model.c:1559 src/main/model.c:1567
+#: src/main/model.c:1568 src/main/model.c:1576
 msgid "invalid 'terms' argument"
 msgstr "invalid ‘terms’ argument"
 
-#: src/main/model.c:1578
+#: src/main/model.c:1587
 msgid "invalid model frame"
 msgstr "invalid model frame"
 
-#: src/main/model.c:1580
+#: src/main/model.c:1589
 msgid "do not know how many cases"
 msgstr "do not know how many cases"
 
-#: src/main/model.c:1606 src/main/model.c:1613
+#: src/main/model.c:1615 src/main/model.c:1622
 #, c-format
 msgid "variable %d has no levels"
 msgstr "variable %d has no levels"
 
-#: src/main/model.c:1721
+#: src/main/model.c:1730
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "the response appeared on the right-hand side and was dropped"
 
-#: src/main/model.c:1753
+#: src/main/model.c:1762
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "problem with term %d in model.matrix: no columns are assigned"
 
-#: src/main/model.c:1801 src/main/model.c:1806 src/main/model.c:1812
-#: src/main/model.c:1822 src/main/model.c:1828 src/main/model.c:1834
+#: src/main/model.c:1810 src/main/model.c:1815 src/main/model.c:1821
+#: src/main/model.c:1831 src/main/model.c:1837 src/main/model.c:1843
 msgid "term names will be truncated"
 msgstr "term names will be truncated"
 
-#: src/main/names.c:916
+#: src/main/names.c:918
 msgid "string argument required"
 msgstr "string argument required"
 
-#: src/main/names.c:924
+#: src/main/names.c:926
 msgid "no such primitive function"
 msgstr "no such primitive function"
 
-#: src/main/names.c:1037
+#: src/main/names.c:1039
 msgid "attempt to use zero-length variable name"
 msgstr "attempt to use zero-length variable name"
 
-#: src/main/names.c:1039
+#: src/main/names.c:1041
 msgid "symbol print-name too long"
 msgstr "symbol print-name too long"
 
-#: src/main/names.c:1065
+#: src/main/names.c:1067
 msgid "invalid .Internal() argument"
 msgstr "invalid .Internal() argument"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1070
 msgid "invalid internal function"
 msgstr "invalid internal function"
 
-#: src/main/names.c:1070
+#: src/main/names.c:1072
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "no internal function “%s”"
@@ -4673,24 +4681,28 @@ msgstr "setting ‘LC_NUMERIC’ may cause R to function strangely"
 msgid "OS reports request cannot be honored"
 msgstr "OS reports request cannot be honored"
 
-#: src/main/platform.c:1340
+#: src/main/platform.c:1227
+msgid "invalid value of 'what' argument"
+msgstr "invalid value of ‘what’ argument"
+
+#: src/main/platform.c:1364
 msgid "'hostname' must be a character vector of length 1"
 msgstr "‘hostname’ must be a character vector of length 1"
 
-#: src/main/platform.c:1346
+#: src/main/platform.c:1370
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl() was unable to resolve host ‘%s’"
 
-#: src/main/platform.c:1353
+#: src/main/platform.c:1377
 msgid "unknown format returned by gethostbyname"
 msgstr "unknown format returned by gethostbyname"
 
-#: src/main/platform.c:1364
+#: src/main/platform.c:1388
 msgid "nsl() is not supported on this platform"
 msgstr "nsl() is not supported on this platform"
 
-#: src/main/platform.c:1408 src/main/platform.c:1445
+#: src/main/platform.c:1432 src/main/platform.c:1469
 #, c-format
 msgid "'%s' already exists"
 msgstr "‘%s’ already exists"
@@ -4925,263 +4937,263 @@ msgstr "invalid ‘which’ specification"
 msgid "invalid number of points in locator()"
 msgstr "invalid number of points in locator()"
 
-#: src/main/plot.c:3246
+#: src/main/plot.c:3255
 msgid "invalid number of points in identify()"
 msgstr "invalid number of points in identify()"
 
-#: src/main/plot.c:3248
+#: src/main/plot.c:3257
 msgid "incorrect argument type"
 msgstr "incorrect argument type"
 
-#: src/main/plot.c:3250
+#: src/main/plot.c:3259
 msgid "invalid value for 'tolerance'"
 msgstr "invalid value for ‘tolerance’"
 
-#: src/main/plot.c:3252
+#: src/main/plot.c:3261
 msgid "invalid value for 'plot'"
 msgstr "invalid value for ‘plot’"
 
-#: src/main/plot.c:3254
+#: src/main/plot.c:3263
 msgid "invalid value for 'atpen'"
 msgstr "invalid value for ‘atpen’"
 
-#: src/main/plot.c:3256
+#: src/main/plot.c:3265
 msgid "different argument lengths"
 msgstr "different argument lengths"
 
-#: src/main/plot.c:3293
+#: src/main/plot.c:3319
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "warning: no point with %.2f inches\n"
 
-#: src/main/plot.c:3299
+#: src/main/plot.c:3325
 msgid "warning: nearest point already identified\n"
 msgstr "warning: nearest point already identified\n"
 
-#: src/main/plot.c:3380
+#: src/main/plot.c:3406
 msgid "invalid units"
 msgstr "invalid units"
 
-#: src/main/plot.c:3386
+#: src/main/plot.c:3412
 msgid "invalid 'cex' value"
 msgstr "invalid ‘cex’ value"
 
-#: src/main/plot.c:3539 src/main/plot.c:3648
+#: src/main/plot.c:3565 src/main/plot.c:3674
 msgid "invalid dendrogram input"
 msgstr "invalid dendrogram input"
 
-#: src/main/plot.c:3679
+#: src/main/plot.c:3705
 msgid "cannot take snapshot of old-style device"
 msgstr "cannot take snapshot of old-style device"
 
-#: src/main/plot.c:3692
+#: src/main/plot.c:3718
 msgid "cannot play snapshot on old-style device"
 msgstr "cannot play snapshot on old-style device"
 
-#: src/main/plot.c:3748
+#: src/main/plot.c:3774
 msgid "invalid graphics parameter list"
 msgstr "invalid graphics parameter list"
 
-#: src/main/plot.c:3790
+#: src/main/plot.c:3816
 msgid "invalid symbol parameter vector"
 msgstr "invalid symbol parameter vector"
 
-#: src/main/plot.c:3813
+#: src/main/plot.c:3839
 msgid "invalid symbol coordinates"
 msgstr "invalid symbol coordinates"
 
-#: src/main/plot.c:3821
+#: src/main/plot.c:3847
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/parameter length mismatch"
 
-#: src/main/plot.c:3840
+#: src/main/plot.c:3866
 msgid "invalid circles data"
 msgstr "invalid circles data"
 
-#: src/main/plot.c:3842 src/main/plot.c:3860 src/main/plot.c:3886
-#: src/main/plot.c:3915
+#: src/main/plot.c:3868 src/main/plot.c:3886 src/main/plot.c:3912
+#: src/main/plot.c:3941
 msgid "invalid symbol parameter"
 msgstr "invalid symbol parameter"
 
-#: src/main/plot.c:3858
+#: src/main/plot.c:3884
 msgid "invalid squares data"
 msgstr "invalid squares data"
 
-#: src/main/plot.c:3884
+#: src/main/plot.c:3910
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "invalid rectangles data (need 2 columns)"
 
-#: src/main/plot.c:3913
+#: src/main/plot.c:3939
 msgid "invalid stars data"
 msgstr "invalid stars data"
 
-#: src/main/plot.c:3955
+#: src/main/plot.c:3981
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "invalid thermometers data (need 3 or 4 columns)"
 
-#: src/main/plot.c:3958
+#: src/main/plot.c:3984
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "invalid thermometers[,%s]"
 
-#: src/main/plot.c:3962
+#: src/main/plot.c:3988
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "thermometers[,%s] not in [0,1] -- may look funny"
 
-#: src/main/plot.c:3965
+#: src/main/plot.c:3991
 msgid "invalid thermometers[,1:2]"
 msgstr "invalid thermometers[,1:2]"
 
-#: src/main/plot.c:4004
+#: src/main/plot.c:4030
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "invalid boxplots data (need 5 columns)"
 
-#: src/main/plot.c:4014
+#: src/main/plot.c:4040
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] outside [0,1] -- may look funny"
 
-#: src/main/plot.c:4016
+#: src/main/plot.c:4042
 msgid "invalid boxplots[, 1:4]"
 msgstr "invalid boxplots[, 1:4]"
 
-#: src/main/plot.c:4062
+#: src/main/plot.c:4088
 msgid "invalid symbol type"
 msgstr "invalid symbol type"
 
-#: src/main/plot3d.c:724 src/main/plot3d.c:1019
+#: src/main/plot3d.c:724 src/main/plot3d.c:1017
 msgid "contour(): circular/long seglist -- bug.report()!"
 msgstr "contour(): circular/long seglist -- bug.report()!"
 
-#: src/main/plot3d.c:806 src/main/plot3d.c:1480
+#: src/main/plot3d.c:805 src/main/plot3d.c:1478
 msgid "all z values are equal"
 msgstr "all z values are equal"
 
-#: src/main/plot3d.c:808 src/main/plot3d.c:1482
+#: src/main/plot3d.c:807 src/main/plot3d.c:1480
 msgid "all z values are NA"
 msgstr "all z values are NA"
 
-#: src/main/plot3d.c:1420
+#: src/main/plot3d.c:1418
 msgid "invalid value for 'method'"
 msgstr "invalid value for ‘method’"
 
-#: src/main/plot3d.c:1444 src/main/plot3d.c:1696
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
 msgid "insufficient 'x' or 'y' values"
 msgstr "insufficient ‘x’ or ‘y’ values"
 
-#: src/main/plot3d.c:1447 src/main/plot3d.c:1699
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
 msgid "dimension mismatch"
 msgstr "dimension mismatch"
 
-#: src/main/plot3d.c:1450 src/main/plot3d.c:1702
+#: src/main/plot3d.c:1448 src/main/plot3d.c:1700
 msgid "no contour values"
 msgstr "no contour values"
 
-#: src/main/plot3d.c:1454
+#: src/main/plot3d.c:1452
 msgid "missing 'x' values"
 msgstr "missing ‘x’ values"
 
-#: src/main/plot3d.c:1456
+#: src/main/plot3d.c:1454
 msgid "increasing 'x' values expected"
 msgstr "increasing ‘x’ values expected"
 
-#: src/main/plot3d.c:1461
+#: src/main/plot3d.c:1459
 msgid "missing 'y' values"
 msgstr "missing ‘y’ values"
 
-#: src/main/plot3d.c:1463
+#: src/main/plot3d.c:1461
 msgid "increasing 'y' values expected"
 msgstr "increasing ‘y’ values expected"
 
-#: src/main/plot3d.c:1468
+#: src/main/plot3d.c:1466
 msgid "invalid NA contour values"
 msgstr "invalid NA contour values"
 
-#: src/main/plot3d.c:1767 src/main/plot3d.c:1852
+#: src/main/plot3d.c:1765 src/main/plot3d.c:1850
 msgid "invalid x / y values or limits"
 msgstr "invalid x / y values or limits"
 
-#: src/main/plot3d.c:1769
+#: src/main/plot3d.c:1767
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "invalid contour levels: must be strictly increasing"
 
-#: src/main/plot3d.c:2023
+#: src/main/plot3d.c:2021
 msgid "coordinates outsize specified range"
 msgstr "coordinates outsize specified range"
 
-#: src/main/plot3d.c:2441 src/main/plot3d.c:2454
+#: src/main/plot3d.c:2439 src/main/plot3d.c:2452
 msgid "Axis orientation not calculated"
 msgstr "Axis orientation not calculated"
 
-#: src/main/plot3d.c:2472
+#: src/main/plot3d.c:2470
 msgid "too few parameters"
 msgstr "too few parameters"
 
-#: src/main/plot3d.c:2481
+#: src/main/plot3d.c:2479
 msgid "invalid 'y' argument"
 msgstr "invalid ‘y’ argument"
 
-#: src/main/plot3d.c:2486
+#: src/main/plot3d.c:2484
 msgid "invalid 'z' argument"
 msgstr "invalid ‘z’ argument"
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2488
 msgid "invalid 'xlim' argument"
 msgstr "invalid ‘xlim’ argument"
 
-#: src/main/plot3d.c:2494
+#: src/main/plot3d.c:2492
 msgid "invalid 'ylim' argument"
 msgstr "invalid ‘ylim’ argument"
 
-#: src/main/plot3d.c:2498
+#: src/main/plot3d.c:2496
 msgid "invalid 'zlim' argument"
 msgstr "invalid ‘zlim’ argument"
 
-#: src/main/plot3d.c:2504
+#: src/main/plot3d.c:2502
 msgid "invalid 'x' limits"
 msgstr "invalid ‘x’ limits"
 
-#: src/main/plot3d.c:2506
+#: src/main/plot3d.c:2504
 msgid "invalid 'y' limits"
 msgstr "invalid ‘y’ limits"
 
-#: src/main/plot3d.c:2508
+#: src/main/plot3d.c:2506
 msgid "invalid 'z' limits"
 msgstr "invalid ‘z’ limits"
 
-#: src/main/plot3d.c:2529
+#: src/main/plot3d.c:2527
 msgid "'xlab' must be a character vector of length 1"
 msgstr "‘xlab’ must be a character vector of length 1"
 
-#: src/main/plot3d.c:2531
+#: src/main/plot3d.c:2529
 msgid "'ylab' must be a character vector of length 1"
 msgstr "‘ylab’ must be a character vector of length 1"
 
-#: src/main/plot3d.c:2533
+#: src/main/plot3d.c:2531
 msgid "'zlab' must be a character vector of length 1"
 msgstr "‘zlab’ must be a character vector of length 1"
 
-#: src/main/plot3d.c:2553
+#: src/main/plot3d.c:2551
 msgid "invalid viewing parameters"
 msgstr "invalid viewing parameters"
 
-#: src/main/plot3d.c:2555
+#: src/main/plot3d.c:2553
 msgid "invalid 'expand' value"
 msgstr "invalid ‘expand’ value"
 
-#: src/main/plot3d.c:2559
+#: src/main/plot3d.c:2557
 msgid "invalid 'nticks' value"
 msgstr "invalid ‘nticks’ value"
 
-#: src/main/plot3d.c:2561
+#: src/main/plot3d.c:2559
 msgid "invalid 'ticktype' value"
 msgstr "invalid ‘ticktype’ value"
 
-#: src/main/plot3d.c:2569
+#: src/main/plot3d.c:2567
 msgid "invalid 'col' specification"
 msgstr "invalid ‘col’ specification"
 
-#: src/main/plot3d.c:2572
+#: src/main/plot3d.c:2570
 msgid "invalid 'border' specification"
 msgstr "invalid ‘border’ specification"
 
@@ -5607,149 +5619,149 @@ msgstr "error writing to connection"
 msgid "invalid envir argument"
 msgstr "invalid envir argument"
 
-#: src/main/scan.c:551
+#: src/main/scan.c:554
 #, c-format
 msgid "scan() expected '%s', got '%s'"
 msgstr "scan() expected '%s', got ‘%s’"
 
-#: src/main/scan.c:746
+#: src/main/scan.c:749
 msgid "empty 'what' specified"
 msgstr "empty ‘what’ specified"
 
-#: src/main/scan.c:760 src/main/scan.c:1037
+#: src/main/scan.c:763 src/main/scan.c:1040
 msgid "invalid 'what' specified"
 msgstr "invalid ‘what’ specified"
 
-#: src/main/scan.c:805
+#: src/main/scan.c:808
 #, c-format
 msgid "line %d did not have %d elements"
 msgstr "line %d did not have %d elements"
 
-#: src/main/scan.c:857
+#: src/main/scan.c:860
 msgid "number of items read is not a multiple of the number of columns"
 msgstr "number of items read is not a multiple of the number of columns"
 
-#: src/main/scan.c:942
+#: src/main/scan.c:945
 msgid "invalid 'strip.white' value"
 msgstr "invalid ‘strip.white’ value"
 
-#: src/main/scan.c:944
+#: src/main/scan.c:947
 msgid "invalid 'strip.white' length"
 msgstr "invalid ‘strip.white’ length"
 
-#: src/main/scan.c:946 src/main/scan.c:1251
+#: src/main/scan.c:949 src/main/scan.c:1254
 msgid "invalid 'na.strings' value"
 msgstr "invalid ‘na.strings’ value"
 
-#: src/main/scan.c:948 src/main/scan.c:994 src/main/scan.c:1075
-#: src/main/scan.c:1078 src/main/scan.c:1548 src/main/scan.c:1551
+#: src/main/scan.c:951 src/main/scan.c:997 src/main/scan.c:1078
+#: src/main/scan.c:1081 src/main/scan.c:1551 src/main/scan.c:1554
 msgid "invalid 'comment.char' value"
 msgstr "invalid ‘comment.char’ value"
 
-#: src/main/scan.c:955
+#: src/main/scan.c:958
 msgid "invalid 'sep' value: must be one byte"
 msgstr "invalid ‘sep’ value: must be one byte"
 
-#: src/main/scan.c:959 src/main/scan.c:1088 src/main/scan.c:1557
+#: src/main/scan.c:962 src/main/scan.c:1091 src/main/scan.c:1560
 msgid "invalid 'sep' value"
 msgstr "invalid ‘sep’ value"
 
-#: src/main/scan.c:968
+#: src/main/scan.c:971
 msgid "invalid decimal separator: must be one byte"
 msgstr "invalid decimal separator: must be one byte"
 
-#: src/main/scan.c:973
+#: src/main/scan.c:976
 msgid "invalid decimal separator"
 msgstr "invalid decimal separator"
 
-#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1539
+#: src/main/scan.c:987 src/main/scan.c:1100 src/main/scan.c:1542
 msgid "out of memory"
 msgstr "out of memory"
 
-#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1545
+#: src/main/scan.c:993 src/main/scan.c:1106 src/main/scan.c:1548
 msgid "invalid quote symbol set"
 msgstr "invalid quote symbol set"
 
-#: src/main/scan.c:997
+#: src/main/scan.c:1000
 msgid "invalid 'allowEscapes' value"
 msgstr "invalid ‘allowEscapes’ value"
 
-#: src/main/scan.c:1159 src/main/scan.c:1178
+#: src/main/scan.c:1162 src/main/scan.c:1181
 msgid "string terminated by newline or EOF"
 msgstr "string terminated by newline or EOF"
 
-#: src/main/scan.c:1247
+#: src/main/scan.c:1250
 msgid "the first argument must be of mode character"
 msgstr "the first argument must be of mode character"
 
-#: src/main/scan.c:1477
+#: src/main/scan.c:1480
 #, c-format
 msgid "Selection: "
 msgstr "Selection: "
 
-#: src/main/scan.c:1528
+#: src/main/scan.c:1531
 msgid "invalid 'nlines' value"
 msgstr "invalid ‘nlines’ value"
 
-#: src/main/scan.c:1574 src/main/scan.c:1586
+#: src/main/scan.c:1577 src/main/scan.c:1589
 msgid "cannot allocate buffer in readTableHead"
 msgstr "cannot allocate buffer in readTableHead"
 
-#: src/main/scan.c:1596
+#: src/main/scan.c:1599
 msgid "\\ followed by EOF"
 msgstr "\\ followed by EOF"
 
-#: src/main/scan.c:1640 src/main/scan.c:1643
+#: src/main/scan.c:1643 src/main/scan.c:1646
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "incomplete final line found by readTableHeader on ‘%s’"
 
-#: src/main/scan.c:1755
+#: src/main/scan.c:1758
 msgid "'file' is not a connection"
 msgstr "‘file’ is not a connection"
 
-#: src/main/scan.c:1774
+#: src/main/scan.c:1777
 msgid "invalid value for 'nr'"
 msgstr "invalid value for ‘nr’"
 
-#: src/main/scan.c:1775
+#: src/main/scan.c:1778
 msgid "invalid value for 'nc'"
 msgstr "invalid value for ‘nc’"
 
-#: src/main/scan.c:1777
+#: src/main/scan.c:1780
 msgid "invalid value for 'rnames'"
 msgstr "invalid value for ‘rnames’"
 
-#: src/main/scan.c:1778
+#: src/main/scan.c:1781
 msgid "invalid value for 'sep'"
 msgstr "invalid value for ‘sep’"
 
-#: src/main/scan.c:1779
+#: src/main/scan.c:1782
 msgid "invalid value for 'eol'"
 msgstr "invalid value for ‘eol’"
 
-#: src/main/scan.c:1780 src/main/util.c:1107
+#: src/main/scan.c:1783 src/main/util.c:1106
 msgid "invalid value for 'na'"
 msgstr "invalid value for ‘na’"
 
-#: src/main/scan.c:1781
+#: src/main/scan.c:1784
 msgid "invalid value for 'dec'"
 msgstr "invalid value for ‘dec’"
 
-#: src/main/scan.c:1782
+#: src/main/scan.c:1785
 msgid "invalid value for 'qmethod'"
 msgstr "invalid value for ‘qmethod’"
 
-#: src/main/scan.c:1787
+#: src/main/scan.c:1790
 msgid "'dec' must be a single character"
 msgstr "‘dec’ must be a single character"
 
-#: src/main/scan.c:1808
+#: src/main/scan.c:1811
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "corrupt data frame -- length of column %d does not not match nrows"
 
-#: src/main/scan.c:1845
+#: src/main/scan.c:1848
 msgid "corrupt matrix -- dims not not match length"
 msgstr "corrupt matrix -- dims not not match length"
 
@@ -6430,111 +6442,111 @@ msgstr "vector size cannot be negative"
 msgid "vector size specified is too large"
 msgstr "vector size specified is too large"
 
-#: src/main/util.c:516 src/main/util.c:534
+#: src/main/util.c:515 src/main/util.c:533
 msgid "object is not a matrix"
 msgstr "object is not a matrix"
 
-#: src/main/util.c:694
+#: src/main/util.c:693
 #, c-format
 msgid "type %d is unimplemented in type2str"
 msgstr "type %d is unimplemented in type2str"
 
-#: src/main/util.c:708
+#: src/main/util.c:707
 #, c-format
 msgid "type %d is unimplemented in type2symbol"
 msgstr "type %d is unimplemented in type2symbol"
 
-#: src/main/util.c:718
+#: src/main/util.c:717
 #, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr "unimplemented type ‘%s’ in ‘%s’\n"
 
-#: src/main/util.c:720
+#: src/main/util.c:719
 #, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr "unimplemented type (%d) in ‘%s’\n"
 
-#: src/main/util.c:790
+#: src/main/util.c:789
 msgid "invalid tag in name extraction"
 msgstr "invalid tag in name extraction"
 
-#: src/main/util.c:799
+#: src/main/util.c:798
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] "%d argument passed to ‘%s’ which requires %d"
 msgstr[1] "%d arguments passed to ‘%s’ which requires %d"
 
-#: src/main/util.c:811
+#: src/main/util.c:810
 #, c-format
 msgid "\"nthcdr\" list shorter than %d"
 msgstr "“nthcdr” list shorter than %d"
 
-#: src/main/util.c:816
+#: src/main/util.c:815
 msgid "\"nthcdr\" needs a list to CDR down"
 msgstr "“nthcdr” needs a list to CDR down"
 
-#: src/main/util.c:904
+#: src/main/util.c:903
 msgid "invalid 'xinds' argument"
 msgstr "invalid ‘xinds’ argument"
 
-#: src/main/util.c:907
+#: src/main/util.c:906
 msgid "invalid 'yinds' argument"
 msgstr "invalid ‘yinds’ argument"
 
-#: src/main/util.c:909
+#: src/main/util.c:908
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "‘all.x’ must be TRUE or FALSE"
 
-#: src/main/util.c:911
+#: src/main/util.c:910
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "‘all.y’ must be TRUE or FALSE"
 
-#: src/main/util.c:998
+#: src/main/util.c:997
 msgid "cannot change working directory"
 msgstr "cannot change working directory"
 
-#: src/main/util.c:1012 src/main/util.c:1046 src/main/util.c:1090
+#: src/main/util.c:1011 src/main/util.c:1045 src/main/util.c:1089
 msgid "a character vector argument expected"
 msgstr "a character vector argument expected"
 
-#: src/main/util.c:1017 src/main/util.c:1051
+#: src/main/util.c:1016 src/main/util.c:1050
 msgid "path too long"
 msgstr "path too long"
 
-#: src/main/util.c:1093
+#: src/main/util.c:1092
 msgid "invalid value for 'w'"
 msgstr "invalid value for ‘w’"
 
-#: src/main/util.c:1097
+#: src/main/util.c:1096
 msgid "invalid value for 'quote'"
 msgstr "invalid value for ‘quote’"
 
-#: src/main/util.c:1102
+#: src/main/util.c:1101
 msgid "only the first character of 'quote' will be used"
 msgstr "only the first character of ‘quote’ will be used"
 
-#: src/main/util.c:1105
+#: src/main/util.c:1104
 msgid "invalid value for 'justify'"
 msgstr "invalid value for ‘justify’"
 
-#: src/main/util.c:1158
+#: src/main/util.c:1157
 msgid "invalid multibyte string"
 msgstr "invalid multibyte string"
 
-#: src/main/util.c:1175 src/main/util.c:1183
+#: src/main/util.c:1174 src/main/util.c:1182
 msgid "invalid input in mbcsToLatin1"
 msgstr "invalid input in mbcsToLatin1"
 
-#: src/main/util.c:1180
+#: src/main/util.c:1179
 msgid "allocation failure in mbcsToLatin1"
 msgstr "allocation failure in mbcsToLatin1"
 
-#: src/main/util.c:1282
+#: src/main/util.c:1281
 msgid "error message truncated to 255 chars"
 msgstr "error message truncated to 255 chars"
 
-#: src/main/util.c:1295
+#: src/main/util.c:1294
 msgid "warning message truncated to 255 chars"
 msgstr "warning message truncated to 255 chars"
 
@@ -6603,80 +6615,80 @@ msgstr "unknown URL scheme"
 msgid "allocation of url connection failed"
 msgstr "allocation of url connection failed"
 
-#: src/modules/internet/internet.c:243
+#: src/modules/internet/internet.c:252
 msgid "invalid 'url' argument"
 msgstr "invalid ‘url’ argument"
 
-#: src/modules/internet/internet.c:245
+#: src/modules/internet/internet.c:254
 msgid "only first element of 'url' argument used"
 msgstr "only first element of ‘url’ argument used"
 
-#: src/modules/internet/internet.c:249
+#: src/modules/internet/internet.c:258
 msgid "invalid 'destfile' argument"
 msgstr "invalid ‘destfile’ argument"
 
-#: src/modules/internet/internet.c:251
+#: src/modules/internet/internet.c:260
 msgid "only first element of 'destfile' argument used"
 msgstr "only first element of ‘destfile’ argument used"
 
-#: src/modules/internet/internet.c:255
+#: src/modules/internet/internet.c:264
 msgid "invalid 'quiet' argument"
 msgstr "invalid ‘quiet’ argument"
 
-#: src/modules/internet/internet.c:262
+#: src/modules/internet/internet.c:271
 msgid "invalid 'cacheOK' argument"
 msgstr "invalid ‘cacheOK’ argument"
 
-#: src/modules/internet/internet.c:277 src/modules/internet/internet.c:362
-#: src/modules/internet/internet.c:441
+#: src/modules/internet/internet.c:274
+msgid "Download progress"
+msgstr "Download progress"
+
+#: src/modules/internet/internet.c:294 src/modules/internet/internet.c:378
+#: src/modules/internet/internet.c:459
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "cannot open URL ‘%s’"
 
-#: src/modules/internet/internet.c:279 src/modules/internet/internet.c:296
-#: src/modules/internet/internet.c:375
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:313
+#: src/modules/internet/internet.c:391
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "cannot open destfile ‘%s’"
 
-#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:378
+#: src/modules/internet/internet.c:316 src/modules/internet/internet.c:394
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "trying URL ‘%s’\n"
 
-#: src/modules/internet/internet.c:306 src/modules/internet/internet.c:385
+#: src/modules/internet/internet.c:323 src/modules/internet/internet.c:401
 msgid "opened URL\n"
 msgstr "opened URL\n"
 
-#: src/modules/internet/internet.c:311 src/modules/internet/internet.c:390
-msgid "Download progress"
-msgstr "Download progress"
-
-#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:437
+#: src/modules/internet/internet.c:374 src/modules/internet/internet.c:455
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "downloaded length %d != reported length %d"
 
-#: src/modules/internet/internet.c:472 src/modules/internet/internet.c:698
+#: src/modules/internet/internet.c:490 src/modules/internet/internet.c:716
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "cannot open: HTTP status was ‘%d %s’"
 
-#: src/modules/internet/internet.c:642 src/modules/internet/internet.c:798
+#: src/modules/internet/internet.c:660 src/modules/internet/internet.c:816
 msgid "InternetOpenUrl timed out"
 msgstr "InternetOpenUrl timed out"
 
-#: src/modules/internet/internet.c:669 src/modules/internet/internet.c:683
-#: src/modules/internet/internet.c:820 src/modules/internet/internet.c:829
+#: src/modules/internet/internet.c:687 src/modules/internet/internet.c:701
+#: src/modules/internet/internet.c:838 src/modules/internet/internet.c:847
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "InternetOpenUrl failed: ‘%s’"
 
-#: src/modules/internet/internet.c:733
+#: src/modules/internet/internet.c:751
 msgid "Internet read timed out"
 msgstr "Internet read timed out"
 
-#: src/modules/internet/internet.c:912
+#: src/modules/internet/internet.c:930
 msgid "cannot allocate memory for InternetRoutines structure"
 msgstr "cannot allocate memory for InternetRoutines structure"
 

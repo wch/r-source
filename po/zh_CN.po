@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-18 08:34+0100\n"
+"POT-Creation-Date: 2005-07-18 08:22+0100\n"
 "PO-Revision-Date: 2005-05-20 18:26+0800\n"
 "Last-Translator: ronggui\n"
 "Language-Team: Chinese\n"
@@ -83,7 +83,7 @@ msgid "invalid 'names' in R_unlink"
 msgstr "R_unlink的'names'不对"
 
 #: src/gnuwin32/extra.c:140 src/main/datetime.c:522 src/main/datetime.c:587
-#: src/main/datetime.c:696 src/main/datetime.c:811 src/main/plot3d.c:2477
+#: src/main/datetime.c:696 src/main/datetime.c:811 src/main/plot3d.c:2475
 msgid "invalid 'x' argument"
 msgstr "'x'变元不对"
 
@@ -205,7 +205,7 @@ msgid "cannot decrease memory limit"
 msgstr "无法减少内存极限"
 
 #: src/gnuwin32/extra.c:790 src/main/platform.c:891 src/main/platform.c:1180
-#: src/main/platform.c:1391 src/main/platform.c:1426
+#: src/main/platform.c:1415 src/main/platform.c:1450
 msgid "invalid 'path' argument"
 msgstr "'path'变元不对"
 
@@ -221,11 +221,11 @@ msgstr "'preselect'变元不对"
 msgid "argument must be a character vector"
 msgstr "变元必需为字符向量"
 
-#: src/gnuwin32/extra.c:1071 src/main/connections.c:1354
+#: src/gnuwin32/extra.c:1071 src/main/connections.c:1364
 msgid "Unable to open the clipboard"
 msgstr "无法打开裁剪板"
 
-#: src/gnuwin32/extra.c:1076 src/main/connections.c:1358
+#: src/gnuwin32/extra.c:1076 src/main/connections.c:1368
 msgid "Unable to write to the clipboard"
 msgstr "无法写入裁剪板"
 
@@ -323,9 +323,9 @@ msgid "truncate not enabled for this connection"
 msgstr "这个链结不能缩短"
 
 #: src/gnuwin32/run.c:515 src/gnuwin32/run.c:519 src/gnuwin32/run.c:525
-#: src/gnuwin32/run.c:541 src/main/connections.c:821
-#: src/main/connections.c:825 src/main/connections.c:831
-#: src/main/connections.c:845
+#: src/gnuwin32/run.c:541 src/main/connections.c:831
+#: src/main/connections.c:835 src/main/connections.c:841
+#: src/main/connections.c:855
 msgid "allocation of pipe connection failed"
 msgstr "管道链结分配失败"
 
@@ -407,8 +407,8 @@ msgstr "产生了NaNs"
 msgid "Non-numeric argument to mathematical function"
 msgstr "数学函数中用了非数值变元"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3717
-#: src/main/scan.c:1475
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3743
+#: src/main/scan.c:1478
 msgid "invalid argument"
 msgstr "变元不对"
 
@@ -611,7 +611,7 @@ msgstr "DLLname '%s'太长"
 msgid "could not allocate space for 'name'"
 msgstr "无法为'name'分配空间"
 
-#: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:993
+#: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:992
 msgid "character argument expected"
 msgstr "需要字符变元"
 
@@ -843,7 +843,7 @@ msgstr "'perm'里的值在范围外"
 msgid "invalid permutation ('perm')"
 msgstr "permutation不对('perm')"
 
-#: src/main/array.c:1028 src/main/connections.c:2534
+#: src/main/array.c:1028 src/main/connections.c:2544
 msgid "invalid value of 'n'"
 msgstr "'n'的值不对"
 
@@ -1284,55 +1284,60 @@ msgstr "做近似比较时无法分配足够内存"
 msgid "could not perform case insensitive matching"
 msgstr "无法进行不区分字体大小写的比较"
 
-#: src/main/character.c:1818
+#: src/main/character.c:1819 src/main/character.c:2054
 msgid "argument must be a character vector of length 1"
 msgstr "变元必需是长度为1的字符向量"
 
-#: src/main/character.c:1820
+#: src/main/character.c:1821 src/main/character.c:2056
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
 msgstr "变元应当是长度为1的字节向量，除第一个单元外其他所有的单元都略过不用"
 
-#: src/main/character.c:1835 src/main/character.c:1867
-#: src/main/character.c:1888
+#: src/main/character.c:1837 src/main/character.c:1869
+#: src/main/character.c:1890
 msgid "argument 'x' must be a raw vector"
 msgstr "变元'x'必需是原始向量"
 
-#: src/main/character.c:1838
+#: src/main/character.c:1840 src/main/character.c:2106
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "变元'multiple'的值要么是TRUE要么是FALSE"
 
-#: src/main/character.c:1869
+#: src/main/character.c:1871
 msgid "argument 'shift' must be a small integer"
 msgstr "变元'shift'必需数值不是太大的整数"
 
-#: src/main/character.c:1906
+#: src/main/character.c:1908
 msgid "argument 'x' must be a integer vector"
 msgstr "变元'x'必需是整数向量"
 
-#: src/main/character.c:1926
+#: src/main/character.c:1928
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "变元'x'必需是原始值, 整数值或逻辑值"
 
-#: src/main/character.c:1928
+#: src/main/character.c:1930
 msgid "argument 'type' must be a character string"
 msgstr "变元’type’必需是字符串"
 
-#: src/main/character.c:1932
+#: src/main/character.c:1934
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "变元'x'必需是%d值的整倍数"
 
-#: src/main/character.c:1946 src/main/character.c:1961
+#: src/main/character.c:1948 src/main/character.c:1963
 msgid "argument 'x' must not contain NAs"
 msgstr "变元'x'不能含NA值"
 
-#: src/main/character.c:1986
+#: src/main/character.c:2103
+#, fuzzy
+msgid "argument 'x' must be an integer vector"
+msgstr "变元'x'必需是整数向量"
+
+#: src/main/character.c:2148
 msgid "strtrim() requires a character vector"
 msgstr "strtrim()需要字符向量"
 
-#: src/main/character.c:1991 src/main/character.c:1995
+#: src/main/character.c:2153 src/main/character.c:2157
 msgid "invalid 'width' argument"
 msgstr "'width'这个变元不对"
 
@@ -1545,10 +1550,10 @@ msgstr "所有链结都已在使用"
 msgid "connection not found"
 msgstr "找不到链结"
 
-#: src/main/connections.c:95 src/main/connections.c:2527
-#: src/main/connections.c:2950 src/main/connections.c:2999
-#: src/main/connections.c:3121 src/main/connections.c:3161
-#: src/main/connections.c:3175
+#: src/main/connections.c:95 src/main/connections.c:2537
+#: src/main/connections.c:2960 src/main/connections.c:3009
+#: src/main/connections.c:3131 src/main/connections.c:3171
+#: src/main/connections.c:3185
 msgid "invalid connection"
 msgstr "链结不对"
 
@@ -1570,7 +1575,7 @@ msgstr "开/关不适用于此链结"
 msgid "printing not enabled for this connection"
 msgstr "此链结无法打印"
 
-#: src/main/connections.c:200 src/main/connections.c:1802
+#: src/main/connections.c:200 src/main/connections.c:1812
 msgid "printing of extremely long output is truncated"
 msgstr "缩短了需要打印的极长输出"
 
@@ -1604,522 +1609,522 @@ msgstr "无法对这个链结书写"
 msgid "cannot open file '%s'"
 msgstr "无法打开文件'%s'"
 
-#: src/main/connections.c:463
+#: src/main/connections.c:473
 msgid "connection is not open for reading"
 msgstr "链结没有打开，不能读"
 
-#: src/main/connections.c:468
+#: src/main/connections.c:478
 msgid "connection is not open for writing"
 msgstr "链结没有打开，不能写"
 
-#: src/main/connections.c:501 src/main/connections.c:1409
+#: src/main/connections.c:511 src/main/connections.c:1419
 msgid "can only truncate connections open for writing"
 msgstr "只能缩短已经打开了的可以写的链结"
 
-#: src/main/connections.c:506
+#: src/main/connections.c:516
 msgid "file truncation failed"
 msgstr "未能缩短文件"
 
-#: src/main/connections.c:508
+#: src/main/connections.c:518
 msgid "file truncation unavailable on this platform"
 msgstr "本平台上没有文件缩短功能"
 
-#: src/main/connections.c:553 src/main/connections.c:557
-#: src/main/connections.c:563 src/main/connections.c:580
+#: src/main/connections.c:563 src/main/connections.c:567
+#: src/main/connections.c:573 src/main/connections.c:590
 msgid "allocation of file connection failed"
 msgstr "文件链结分配失败"
 
-#: src/main/connections.c:623
+#: src/main/connections.c:633
 #, c-format
 msgid "cannot create fifo '%s'"
 msgstr "无法建立先进先出'%s'"
 
-#: src/main/connections.c:628
+#: src/main/connections.c:638
 #, c-format
 msgid "'%s' exists but is not a fifo"
 msgstr "'%s'存在但不是先进先出"
 
-#: src/main/connections.c:641
+#: src/main/connections.c:651
 #, c-format
 msgid "fifo '%s' is not ready"
 msgstr "先进先出'%s'还没有准备好"
 
-#: src/main/connections.c:642
+#: src/main/connections.c:652
 #, c-format
 msgid "cannot open fifo '%s'"
 msgstr "无法打开先进先出'%s'"
 
-#: src/main/connections.c:693 src/main/connections.c:697
-#: src/main/connections.c:703 src/main/connections.c:719
+#: src/main/connections.c:703 src/main/connections.c:707
+#: src/main/connections.c:713 src/main/connections.c:729
 msgid "allocation of fifo connection failed"
 msgstr "先进先出链结分配失败"
 
-#: src/main/connections.c:736 src/main/connections.c:866
-#: src/main/connections.c:1052 src/main/connections.c:1234
-#: src/main/connections.c:1914 src/main/connections.c:2033
-#: src/main/connections.c:3367
+#: src/main/connections.c:746 src/main/connections.c:876
+#: src/main/connections.c:1062 src/main/connections.c:1244
+#: src/main/connections.c:1924 src/main/connections.c:2043
+#: src/main/connections.c:3377
 msgid "invalid 'description' argument"
 msgstr "'description'变元不对"
 
-#: src/main/connections.c:738 src/main/connections.c:868
-#: src/main/connections.c:1054 src/main/connections.c:1236
-#: src/main/connections.c:2035 src/main/connections.c:3369
+#: src/main/connections.c:748 src/main/connections.c:878
+#: src/main/connections.c:1064 src/main/connections.c:1246
+#: src/main/connections.c:2045 src/main/connections.c:3379
 msgid "only first element of 'description' argument used"
 msgstr "只用了'description'变元的第一个单元"
 
-#: src/main/connections.c:742 src/main/connections.c:872
-#: src/main/connections.c:1058 src/main/connections.c:1240
-#: src/main/connections.c:1921 src/main/connections.c:1984
-#: src/main/connections.c:2039 src/main/connections.c:2091
-#: src/main/connections.c:3378
+#: src/main/connections.c:752 src/main/connections.c:882
+#: src/main/connections.c:1068 src/main/connections.c:1250
+#: src/main/connections.c:1931 src/main/connections.c:1994
+#: src/main/connections.c:2049 src/main/connections.c:2101
+#: src/main/connections.c:3388
 msgid "invalid 'open' argument"
 msgstr "'open'变元不对"
 
-#: src/main/connections.c:745 src/main/connections.c:3382
+#: src/main/connections.c:755 src/main/connections.c:3392
 msgid "invalid 'block' argument"
 msgstr "'block'变元不对"
 
-#: src/main/connections.c:749 src/main/connections.c:877
-#: src/main/connections.c:1062 src/main/connections.c:1244
-#: src/main/connections.c:1990 src/main/connections.c:2043
-#: src/main/connections.c:3386
+#: src/main/connections.c:759 src/main/connections.c:887
+#: src/main/connections.c:1072 src/main/connections.c:1254
+#: src/main/connections.c:2000 src/main/connections.c:2053
+#: src/main/connections.c:3396
 msgid "invalid 'encoding' argument"
 msgstr "'encoding'变元不对"
 
-#: src/main/connections.c:761 src/main/connections.c:896
-#: src/main/connections.c:1077 src/main/connections.c:1255
-#: src/main/connections.c:2003 src/main/connections.c:2054
-#: src/main/connections.c:2101 src/main/connections.c:3439
+#: src/main/connections.c:771 src/main/connections.c:906
+#: src/main/connections.c:1087 src/main/connections.c:1265
+#: src/main/connections.c:2013 src/main/connections.c:2064
+#: src/main/connections.c:2111 src/main/connections.c:3449
 msgid "unable to open connection"
 msgstr "无法打开链结"
 
-#: src/main/connections.c:775
+#: src/main/connections.c:785
 msgid "fifo connections are not available on this system"
 msgstr "本系统没有先进先出链结这个功能"
 
-#: src/main/connections.c:797
+#: src/main/connections.c:807
 #, c-format
 msgid "cannot open pipe() cmd '%s'"
 msgstr "无法打开pipe()命令'%s'"
 
-#: src/main/connections.c:914
+#: src/main/connections.c:924
 msgid "pipe connections are not available on this system"
 msgstr "本系统没有管道链结这个功能"
 
-#: src/main/connections.c:927
+#: src/main/connections.c:937
 #, c-format
 msgid "cannot open compressed file '%s'"
 msgstr "无法打开压缩文件'%s'"
 
-#: src/main/connections.c:968
+#: src/main/connections.c:978
 msgid "whence = \"end\" is not implemented for gzfile connections"
 msgstr "whence = \"end\"不适用于gz文件链结"
 
-#: src/main/connections.c:974
+#: src/main/connections.c:984
 msgid "seek on a gzfile connection returned an internal error"
 msgstr "读取gz文件链结时内部出错"
 
-#: src/main/connections.c:1008 src/main/connections.c:1012
-#: src/main/connections.c:1018 src/main/connections.c:1037
+#: src/main/connections.c:1018 src/main/connections.c:1022
+#: src/main/connections.c:1028 src/main/connections.c:1047
 msgid "allocation of gzfile connection failed"
 msgstr "分配gz文件链结失败"
 
-#: src/main/connections.c:1065
+#: src/main/connections.c:1075
 msgid "invalid 'compress' argument"
 msgstr "'compress'变元不对"
 
-#: src/main/connections.c:1110
+#: src/main/connections.c:1120
 #, c-format
 msgid "cannot open bzip2-ed file '%s'"
 msgstr "无法打开bzip2文件'%s'"
 
-#: src/main/connections.c:1119 src/main/connections.c:1128
+#: src/main/connections.c:1129 src/main/connections.c:1138
 #, c-format
 msgid "file '%s' appears not to be compressed by bzip2"
 msgstr "文件'%s'看起来不象是bzip2类"
 
-#: src/main/connections.c:1191 src/main/connections.c:1195
-#: src/main/connections.c:1201 src/main/connections.c:1219
+#: src/main/connections.c:1201 src/main/connections.c:1205
+#: src/main/connections.c:1211 src/main/connections.c:1229
 msgid "allocation of bzfile connection failed"
 msgstr "分配bz文件链结失败"
 
-#: src/main/connections.c:1310 src/modules/X11/devX11.c:2468
+#: src/main/connections.c:1320 src/modules/X11/devX11.c:2468
 msgid "memory allocation to copy clipboard failed"
 msgstr "抄写裁剪板时内存分配失败"
 
-#: src/main/connections.c:1315 src/modules/X11/devX11.c:2456
+#: src/main/connections.c:1325 src/modules/X11/devX11.c:2456
 msgid "clipboard cannot be opened or contains no text"
 msgstr "打不开裁剪板，或是裁剪板不含文字"
 
-#: src/main/connections.c:1326
+#: src/main/connections.c:1336
 msgid "memory allocation to open clipboard failed"
 msgstr "打开裁剪板时内存分配失败"
 
-#: src/main/connections.c:1398
+#: src/main/connections.c:1408
 msgid "attempt to seek outside the range of the clipboard"
 msgstr "无法读取裁剪板范围外的内容"
 
-#: src/main/connections.c:1438
+#: src/main/connections.c:1448
 msgid "clipboard connection is open for reading only"
 msgstr "打开了只读裁剪板链结"
 
-#: src/main/connections.c:1456
+#: src/main/connections.c:1466
 msgid "clipboard buffer is full and output lost"
 msgstr "裁剪板缓冲区已满，输出丢失了"
 
-#: src/main/connections.c:1471
+#: src/main/connections.c:1481
 msgid "'mode' for the clipboard must be 'r' or 'w'"
 msgstr "裁剪板'mode'必需是'r'或'w'"
 
-#: src/main/connections.c:1474
+#: src/main/connections.c:1484
 msgid "'mode' for the clipboard must be 'r' on Unix"
 msgstr "Unix操作系统上裁剪板'mode'必需是'r'"
 
-#: src/main/connections.c:1477 src/main/connections.c:1483
-#: src/main/connections.c:1489 src/main/connections.c:1506
+#: src/main/connections.c:1487 src/main/connections.c:1493
+#: src/main/connections.c:1499 src/main/connections.c:1516
 msgid "allocation of clipboard connection failed"
 msgstr "裁剪板链结分配失败"
 
-#: src/main/connections.c:1576 src/main/connections.c:1580
-#: src/main/connections.c:1586
+#: src/main/connections.c:1586 src/main/connections.c:1590
+#: src/main/connections.c:1596
 msgid "allocation of terminal connection failed"
 msgstr "终端链结分配失败"
 
-#: src/main/connections.c:1660
+#: src/main/connections.c:1670
 msgid "cannot allocate memory for text connection"
 msgstr "无法给文字链结分配内存"
 
-#: src/main/connections.c:1705
+#: src/main/connections.c:1715
 msgid "seek is not relevant for text connection"
 msgstr "读取对文字链结无用"
 
-#: src/main/connections.c:1713 src/main/connections.c:1717
-#: src/main/connections.c:1723 src/main/connections.c:1736
-#: src/main/connections.c:1869 src/main/connections.c:1873
-#: src/main/connections.c:1879 src/main/connections.c:1892
-#: src/main/connections.c:1898
+#: src/main/connections.c:1723 src/main/connections.c:1727
+#: src/main/connections.c:1733 src/main/connections.c:1746
+#: src/main/connections.c:1879 src/main/connections.c:1883
+#: src/main/connections.c:1889 src/main/connections.c:1902
+#: src/main/connections.c:1908
 msgid "allocation of text connection failed"
 msgstr "文字链结分配失败"
 
-#: src/main/connections.c:1849
+#: src/main/connections.c:1859
 msgid "text connection: appending to a non-existent char vector"
 msgstr "文字链结: 不能符加给不存在的字符向量"
 
-#: src/main/connections.c:1918 src/main/connections.c:2451
+#: src/main/connections.c:1928 src/main/connections.c:2461
 msgid "invalid 'text' argument"
 msgstr "'text'变元不对"
 
-#: src/main/connections.c:1925
+#: src/main/connections.c:1935
 msgid "invalid 'environment' argument"
 msgstr "'environment'变元不对"
 
-#: src/main/connections.c:1939
+#: src/main/connections.c:1949
 msgid "unsupported mode"
 msgstr "不支持此状态"
 
-#: src/main/connections.c:1967
+#: src/main/connections.c:1977
 msgid "invalid 'host' argument"
 msgstr "'host'变元不对"
 
-#: src/main/connections.c:1972
+#: src/main/connections.c:1982
 msgid "invalid 'port' argument"
 msgstr "'port'变元不对"
 
-#: src/main/connections.c:1976
+#: src/main/connections.c:1986
 msgid "invalid 'server' argument"
 msgstr "'server'变元不对"
 
-#: src/main/connections.c:1980 src/main/connections.c:2094
+#: src/main/connections.c:1990 src/main/connections.c:2104
 msgid "invalid 'blocking' argument"
 msgstr "'blocking'变元不对"
 
-#: src/main/connections.c:2015
+#: src/main/connections.c:2025
 msgid "sockets are not available on this system"
 msgstr "本系统没有插坐这个功能"
 
-#: src/main/connections.c:2081 src/main/connections.c:2135
-#: src/main/connections.c:2150 src/main/connections.c:2199
-#: src/main/connections.c:2221 src/main/connections.c:2240
-#: src/main/connections.c:2252 src/main/connections.c:2356
-#: src/main/connections.c:2453 src/main/connections.c:3745
+#: src/main/connections.c:2091 src/main/connections.c:2145
+#: src/main/connections.c:2160 src/main/connections.c:2209
+#: src/main/connections.c:2231 src/main/connections.c:2250
+#: src/main/connections.c:2262 src/main/connections.c:2366
+#: src/main/connections.c:2463 src/main/connections.c:3755
 msgid "'con' is not a connection"
 msgstr "'con'不是链结"
 
-#: src/main/connections.c:2084
+#: src/main/connections.c:2094
 msgid "cannot open standard connections"
 msgstr "无法打开标准链结"
 
-#: src/main/connections.c:2086
+#: src/main/connections.c:2096
 msgid "connection is already open"
 msgstr "链结已打开"
 
-#: src/main/connections.c:2120
+#: src/main/connections.c:2130
 msgid "unknown 'rw' value"
 msgstr "没有这样的'rw'值"
 
-#: src/main/connections.c:2201
+#: src/main/connections.c:2211
 msgid "cannot close standard connections"
 msgstr "无法关闭标准链结"
 
-#: src/main/connections.c:2204
+#: src/main/connections.c:2214
 msgid "cannot close output sink connection"
 msgstr "无法关闭外输汇集链结"
 
-#: src/main/connections.c:2206
+#: src/main/connections.c:2216
 msgid "cannot close messages sink connection"
 msgstr "无法关闭信息汇集链结"
 
-#: src/main/connections.c:2223 src/main/connections.c:3460
+#: src/main/connections.c:2233 src/main/connections.c:3470
 #: src/main/serialize.c:1578 src/main/serialize.c:1586
 msgid "connection is not open"
 msgstr "链结没有打开"
 
-#: src/main/connections.c:2312 src/main/connections.c:2324
+#: src/main/connections.c:2322 src/main/connections.c:2334
 msgid "Line longer than buffer size"
 msgstr "行要比缓冲区大"
 
-#: src/main/connections.c:2360 src/main/context.c:488 src/main/context.c:558
+#: src/main/connections.c:2370 src/main/context.c:488 src/main/context.c:558
 msgid "invalid value for 'n'"
 msgstr "'n'的值不对"
 
-#: src/main/connections.c:2363
+#: src/main/connections.c:2373
 msgid "invalid value for 'ok'"
 msgstr "'ok'的值不对"
 
-#: src/main/connections.c:2365 src/main/connections.c:2543
-#: src/main/connections.c:2952 src/main/dcf.c:56 src/main/serialize.c:1580
+#: src/main/connections.c:2375 src/main/connections.c:2553
+#: src/main/connections.c:2962 src/main/dcf.c:56 src/main/serialize.c:1580
 msgid "cannot read from this connection"
 msgstr "无法从此链结读取"
 
-#: src/main/connections.c:2368 src/main/connections.c:2462
-#: src/main/connections.c:2547 src/main/connections.c:2736
-#: src/main/connections.c:2959 src/main/connections.c:3031
-#: src/main/connections.c:3208 src/main/dcf.c:59 src/main/deparse.c:311
-#: src/main/deparse.c:385 src/main/saveload.c:2202 src/main/scan.c:1010
-#: src/main/scan.c:1115 src/main/scan.c:1565 src/main/scan.c:1762
+#: src/main/connections.c:2378 src/main/connections.c:2472
+#: src/main/connections.c:2557 src/main/connections.c:2746
+#: src/main/connections.c:2969 src/main/connections.c:3041
+#: src/main/connections.c:3218 src/main/dcf.c:59 src/main/deparse.c:311
+#: src/main/deparse.c:385 src/main/saveload.c:2202 src/main/scan.c:1013
+#: src/main/scan.c:1118 src/main/scan.c:1568 src/main/scan.c:1765
 #: src/main/source.c:76
 msgid "cannot open the connection"
 msgstr "无法打开链结"
 
-#: src/main/connections.c:2378 src/main/connections.c:2397
+#: src/main/connections.c:2388 src/main/connections.c:2407
 msgid "cannot allocate buffer in readLines"
 msgstr "无法给readLines分配缓冲区"
 
-#: src/main/connections.c:2414
+#: src/main/connections.c:2424
 #, c-format
 msgid "incomplete final line found by readLines on '%s'"
 msgstr "readLines读'%s'时最后一行未遂"
 
-#: src/main/connections.c:2424
+#: src/main/connections.c:2434
 msgid "too few lines read in readLines"
 msgstr "readLines读的行数不够"
 
-#: src/main/connections.c:2456 src/main/platform.c:897
+#: src/main/connections.c:2466 src/main/platform.c:897
 msgid "invalid 'sep' argument"
 msgstr "'sep'变元不对"
 
-#: src/main/connections.c:2458 src/main/connections.c:2730
-#: src/main/connections.c:3001 src/main/connections.c:3461
-#: src/main/scan.c:1758 src/main/serialize.c:1588
+#: src/main/connections.c:2468 src/main/connections.c:2740
+#: src/main/connections.c:3011 src/main/connections.c:3471
+#: src/main/scan.c:1761 src/main/serialize.c:1588
 msgid "cannot write to this connection"
 msgstr "无法写入此链结"
 
-#: src/main/connections.c:2497
+#: src/main/connections.c:2507
 msgid "incomplete string at end of file has been discarded"
 msgstr "略过文件末不完整的字符串"
 
-#: src/main/connections.c:2509
+#: src/main/connections.c:2519
 msgid "null terminator not found: breaking string at 10000 chars"
 msgstr "没有null终止符: 字符串截断于10000个字节"
 
-#: src/main/connections.c:2528
+#: src/main/connections.c:2538
 msgid "can only read from a binary connection"
 msgstr "无法读二进列链结"
 
-#: src/main/connections.c:2531
+#: src/main/connections.c:2541
 msgid "invalid value of 'what'"
 msgstr "'what'的值不对"
 
-#: src/main/connections.c:2538
+#: src/main/connections.c:2548
 msgid "invalid value of 'signed'"
 msgstr "'signed'的值不对"
 
-#: src/main/connections.c:2541 src/main/connections.c:2728
+#: src/main/connections.c:2551 src/main/connections.c:2738
 msgid "invalid value of 'swap'"
 msgstr "'swap'的值不对"
 
-#: src/main/connections.c:2562 src/main/connections.c:2782
+#: src/main/connections.c:2572 src/main/connections.c:2792
 msgid "size changing is not supported for complex vectors"
 msgstr "不支持复数向量大小的改变"
 
-#: src/main/connections.c:2586 src/main/connections.c:2604
-#: src/main/connections.c:2630 src/main/connections.c:2671
-#: src/main/connections.c:2691 src/main/connections.c:2763
-#: src/main/connections.c:2776 src/main/connections.c:2835
-#: src/main/connections.c:2864
+#: src/main/connections.c:2596 src/main/connections.c:2614
+#: src/main/connections.c:2640 src/main/connections.c:2681
+#: src/main/connections.c:2701 src/main/connections.c:2773
+#: src/main/connections.c:2786 src/main/connections.c:2845
+#: src/main/connections.c:2874
 #, c-format
 msgid "size %d is unknown on this machine"
 msgstr "本系统没有%d这样大小的值"
 
-#: src/main/connections.c:2615
+#: src/main/connections.c:2625
 msgid "raw is always of size 1"
 msgstr "raw的大小只能是1"
 
-#: src/main/connections.c:2720
+#: src/main/connections.c:2730
 msgid "'x' is not an atomic vector type"
 msgstr "'x'非基元向量种类"
 
-#: src/main/connections.c:2724
+#: src/main/connections.c:2734
 msgid "can only write to a binary connection"
 msgstr "只能写入二进列链结"
 
-#: src/main/connections.c:2743 src/main/connections.c:2888
-#: src/main/connections.c:3070
+#: src/main/connections.c:2753 src/main/connections.c:2898
+#: src/main/connections.c:3080
 msgid "problem writing to connection"
 msgstr "写入链结有问题"
 
-#: src/main/connections.c:2787
+#: src/main/connections.c:2797
 msgid "size changing is not supported for raw vectors"
 msgstr "不支持原始向量大小的改变"
 
-#: src/main/connections.c:2915 src/main/connections.c:2918
+#: src/main/connections.c:2925 src/main/connections.c:2928
 msgid "invalid UTF-8 input in readChar()"
 msgstr "readChar()的UTF-8输入有错"
 
-#: src/main/connections.c:2965
+#: src/main/connections.c:2975
 msgid "supplied length is invalid"
 msgstr "长度不对"
 
-#: src/main/connections.c:3011
+#: src/main/connections.c:3021
 msgid "invalid value of 'sep'"
 msgstr "'sep'的值不对"
 
-#: src/main/connections.c:3043
+#: src/main/connections.c:3053
 msgid ""
 "writeChar: more characters requested than are in the string - will zero-pad"
 msgstr "writeChar：字符串的长度比需要的字节数目短-用0来补上"
 
-#: src/main/connections.c:3095 src/main/connections.c:3098
-#: src/main/connections.c:3137 src/main/connections.c:3142
+#: src/main/connections.c:3105 src/main/connections.c:3108
+#: src/main/connections.c:3147 src/main/connections.c:3152
 msgid "could not allocate space for pushBack"
 msgstr "无法为pushBack分配空间"
 
-#: src/main/connections.c:3118
+#: src/main/connections.c:3128
 msgid "invalid 'data' argument"
 msgstr "'data'变元有错"
 
-#: src/main/connections.c:3124
+#: src/main/connections.c:3134
 msgid "invalid 'newLine' argument"
 msgstr "'newLine'变元有错"
 
-#: src/main/connections.c:3126
+#: src/main/connections.c:3136
 msgid "can only push back on open readable connections"
 msgstr "只能推回已打开的可读链结"
 
-#: src/main/connections.c:3128
+#: src/main/connections.c:3138
 msgid "can only push back on text-mode connections"
 msgstr "只能推回文字状态的链结"
 
-#: src/main/connections.c:3196 src/main/connections.c:3256
+#: src/main/connections.c:3206 src/main/connections.c:3266
 msgid "sink stack is full"
 msgstr "汇集堆叠满了"
 
-#: src/main/connections.c:3199
+#: src/main/connections.c:3209
 msgid "cannot switch output to stdin"
 msgstr "无法将输出转到stdin"
 
-#: src/main/connections.c:3216
+#: src/main/connections.c:3226
 msgid "no sink to remove"
 msgstr "没有可以除去的汇集"
 
-#: src/main/connections.c:3247
+#: src/main/connections.c:3257
 msgid "invalid value for 'closeOnExit'"
 msgstr "'closeOnExit'的值不对"
 
-#: src/main/connections.c:3249 src/main/connections.c:3277
+#: src/main/connections.c:3259 src/main/connections.c:3287
 msgid "invalid value for 'type'"
 msgstr "'type'的值不对"
 
-#: src/main/connections.c:3251
+#: src/main/connections.c:3261
 msgid "invalid value for 'split'"
 msgstr "'split'的值不对"
 
-#: src/main/connections.c:3410
+#: src/main/connections.c:3420
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
 msgstr ""
 
-#: src/main/connections.c:3426 src/modules/internet/internet.c:445
+#: src/main/connections.c:3436 src/modules/internet/internet.c:463
 msgid "unsupported URL scheme"
 msgstr "不支持这种URL方案"
 
-#: src/main/connections.c:3513
+#: src/main/connections.c:3523
 msgid "file stream does not have gzip magic number"
 msgstr "文件串流没有gzip幻数"
 
-#: src/main/connections.c:3524
+#: src/main/connections.c:3534
 msgid "file stream does not have valid gzip header"
 msgstr "文件串流的gzip表头有错"
 
-#: src/main/connections.c:3590
+#: src/main/connections.c:3600
 msgid "writing error whilst flushing 'gzcon' connection"
 msgstr "清除'gzcon'链结时书写出错"
 
-#: src/main/connections.c:3690
+#: src/main/connections.c:3700
 #, c-format
 msgid "crc error %x %x\n"
 msgstr "crc错误%x%x\n"
 
-#: src/main/connections.c:3715
+#: src/main/connections.c:3725
 msgid "write error on 'gzcon' connection"
 msgstr "'gzcon'链结书写出错"
 
-#: src/main/connections.c:3749
+#: src/main/connections.c:3759
 msgid "'level' must be one of 0 ... 9"
 msgstr "'level’必需是0 ... 9之一"
 
-#: src/main/connections.c:3752
+#: src/main/connections.c:3762
 msgid "'allowNonCompression' must be TRUE or FALSE"
 msgstr "'allowNonCompression'的值要么是TRUE要么是FALSE"
 
-#: src/main/connections.c:3755
+#: src/main/connections.c:3765
 msgid "this is already a gzcon connection"
 msgstr "这已经是gzcon链结"
 
-#: src/main/connections.c:3761
+#: src/main/connections.c:3771
 msgid "can only use read- or write- binary connections"
 msgstr "只用读或写的二进列链结"
 
-#: src/main/connections.c:3765 src/main/connections.c:3769
-#: src/main/connections.c:3776 src/main/connections.c:3790
+#: src/main/connections.c:3775 src/main/connections.c:3779
+#: src/main/connections.c:3786 src/main/connections.c:3800
 msgid "allocation of 'gzcon' connection failed"
 msgstr "分配'gzcon'链结失败"
 
-#: src/main/connections.c:3835
+#: src/main/connections.c:3845
 msgid "R_compress1 requires a scalar string"
 msgstr "R_compress1需要纯量字符串"
 
-#: src/main/connections.c:3842
+#: src/main/connections.c:3852
 msgid "internal error in R_compress1"
 msgstr "内部错误R_compress1"
 
-#: src/main/connections.c:3857
+#: src/main/connections.c:3867
 msgid "R_decompress1 requires a scalar string"
 msgstr "R_decompress1需要纯量字符串"
 
-#: src/main/connections.c:3862
+#: src/main/connections.c:3872
 msgid "internal error in R_decompress1"
 msgstr "内部错误R_decompress1"
 
-#: src/main/connections.c:3879
+#: src/main/connections.c:3889
 msgid "not a list of sockets"
 msgstr "非插坐串列"
 
-#: src/main/connections.c:3884
+#: src/main/connections.c:3894
 msgid "bad write indicators"
 msgstr "书写指示器有错"
 
-#: src/main/connections.c:3895
+#: src/main/connections.c:3905
 msgid "not a socket connection"
 msgstr "非插坐链结"
 
@@ -2224,8 +2229,8 @@ msgstr "无法为read.dcf分配内存"
 #: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
 #: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
 #: src/main/plot.c:2042 src/main/plot.c:2132 src/main/plot.c:2422
-#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3479
-#: src/main/plot.c:3555 src/main/plot.c:3808 src/main/plot3d.c:1383
+#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3505
+#: src/main/plot.c:3581 src/main/plot.c:3834 src/main/plot3d.c:1381
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "变元数目太少"
@@ -2287,7 +2292,7 @@ msgstr "只用了第一个单元作为变数名"
 msgid "invalid expression in \"%s\""
 msgstr "\"%s\"的表达式不对"
 
-#: src/main/deriv.c:903 src/main/model.c:1278
+#: src/main/deriv.c:903 src/main/model.c:1287
 msgid "invalid variable names"
 msgstr "变数名字不对"
 
@@ -2415,12 +2420,12 @@ msgstr "没有提供变元"
 msgid "too many arguments"
 msgstr "变元太多"
 
-#: src/main/dotcode.c:739 src/main/dotcode.c:774 src/main/dotcode.c:1571
+#: src/main/dotcode.c:739 src/main/dotcode.c:774 src/main/dotcode.c:1598
 #, c-format
 msgid "Incorrect number of arguments (%d), expecting %d for %s"
 msgstr "变元数目不对(%1$d), %3$s只需要%2$d个变元"
 
-#: src/main/dotcode.c:1431 src/main/dotcode.c:2201
+#: src/main/dotcode.c:1431 src/main/dotcode.c:2228
 msgid "too many arguments, sorry"
 msgstr "对不起，变元太多"
 
@@ -2428,33 +2433,33 @@ msgstr "对不起，变元太多"
 msgid "Invalid graphics state"
 msgstr "图形狀態出错"
 
-#: src/main/dotcode.c:1526
+#: src/main/dotcode.c:1553
 msgid "NULL value for DLLInfoReference when looking for DLL"
 msgstr "寻找DLL时DLLInfoReference的值是NULL"
 
-#: src/main/dotcode.c:1597
+#: src/main/dotcode.c:1624
 #, c-format
 msgid "Wrong type for argument %d in call to %s"
 msgstr "调用%2$s时变元%1$d的种类不对"
 
-#: src/main/dotcode.c:2290
+#: src/main/dotcode.c:2317
 #, c-format
 msgid "type \"%s\" not supported in interlanguage calls"
 msgstr "多语言调用不支持这一种类\"%s\""
 
-#: src/main/dotcode.c:2302
+#: src/main/dotcode.c:2329
 msgid "invalid function in call_R"
 msgstr "call_R中的函数不对"
 
-#: src/main/dotcode.c:2304
+#: src/main/dotcode.c:2331
 msgid "invalid argument count in call_R"
 msgstr "call_R的变元数目不对"
 
-#: src/main/dotcode.c:2306
+#: src/main/dotcode.c:2333
 msgid "invalid return value count in call_R"
 msgstr "call_R的回覆值数目不对"
 
-#: src/main/dotcode.c:2351
+#: src/main/dotcode.c:2378
 #, c-format
 msgid "mode '%s' is not supported in call_R"
 msgstr "call_R不支持'%s'型式"
@@ -2725,7 +2730,7 @@ msgid "remove: variable \"%s\" was not found"
 msgstr "remove: 找不到\"%s\"这个变数"
 
 #: src/main/envir.c:1601 src/main/envir.c:1715 src/main/envir.c:1746
-#: src/main/envir.c:1752 src/modules/internet/internet.c:258
+#: src/main/envir.c:1752 src/modules/internet/internet.c:267
 msgid "invalid 'mode' argument"
 msgstr "'mode'变元不对"
 
@@ -3797,132 +3802,137 @@ msgstr "值不对"
 msgid "invalid term in model formula"
 msgstr "模型公式项不对"
 
-#: src/main/model.c:200
+#: src/main/model.c:201
 msgid "invalid model formula"
 msgstr "模型公式不对"
 
-#: src/main/model.c:226 src/main/model.c:467
+#: src/main/model.c:227 src/main/model.c:468
 msgid "invalid power in formula"
 msgstr "公式里的幂不对"
 
-#: src/main/model.c:262
+#: src/main/model.c:263
 msgid "invalid model formula in ExtractVars"
 msgstr "ExtractVars里的模型公式不对"
 
-#: src/main/model.c:589
+#: src/main/model.c:590
 #, c-format
 msgid "duplicated name '%s' in data frame using '.'"
 msgstr "在数据框里用'.'时不能有重复的名字’%s'"
 
-#: src/main/model.c:646
+#: src/main/model.c:647
 msgid "invalid model formula in EncodeVars"
 msgstr "EncodeVars中的模型公式不对"
 
-#: src/main/model.c:735
+#: src/main/model.c:736
 msgid "argument is not a valid model"
 msgstr "变元不是正确的模型"
 
-#: src/main/model.c:756
+#: src/main/model.c:757
 msgid "data argument is of the wrong type"
 msgstr "数据变元种类有错"
 
-#: src/main/model.c:1150
+#: src/main/model.c:1014
+#, fuzzy
+msgid "'.' in formula and no 'data' argument"
+msgstr "'data'变元有错"
+
+#: src/main/model.c:1159
 msgid "invalid formula in 'update'"
 msgstr "'update'里的公式不对"
 
-#: src/main/model.c:1188
+#: src/main/model.c:1197
 msgid "formula expected"
 msgstr "需要公式"
 
-#: src/main/model.c:1276
+#: src/main/model.c:1285
 msgid "invalid variables"
 msgstr "变数不对"
 
-#: src/main/model.c:1280 src/main/model.c:1285
+#: src/main/model.c:1289 src/main/model.c:1294
 msgid "number of variables != number of variable names"
 msgstr "变数数目!= 变数名字数目"
 
-#: src/main/model.c:1283
+#: src/main/model.c:1292
 msgid "invalid extra variables"
 msgstr "額外变数不对"
 
-#: src/main/model.c:1287
+#: src/main/model.c:1296
 msgid "invalid extra variable names"
 msgstr "额外变数名字不对"
 
-#: src/main/model.c:1310
+#: src/main/model.c:1319
 #, c-format
 msgid "overlong names in '%s'"
 msgstr "'%s'里的名字太长"
 
-#: src/main/model.c:1330 src/main/model.c:1632
+#: src/main/model.c:1339 src/main/model.c:1641
 msgid "invalid variable type"
 msgstr "变数种类不对"
 
-#: src/main/model.c:1332 src/main/model.c:1596
+#: src/main/model.c:1341 src/main/model.c:1605
 msgid "variable lengths differ"
 msgstr "变数的长度不一样"
 
-#: src/main/model.c:1385
+#: src/main/model.c:1394
 msgid "invalid result from na.action"
 msgstr "na.action的结果有错"
 
-#: src/main/model.c:1559 src/main/model.c:1567
+#: src/main/model.c:1568 src/main/model.c:1576
 msgid "invalid 'terms' argument"
 msgstr "'terms'变元不对"
 
-#: src/main/model.c:1578
+#: src/main/model.c:1587
 msgid "invalid model frame"
 msgstr "模型框不对"
 
-#: src/main/model.c:1580
+#: src/main/model.c:1589
 msgid "do not know how many cases"
 msgstr "案例数目不清"
 
-#: src/main/model.c:1606 src/main/model.c:1613
+#: src/main/model.c:1615 src/main/model.c:1622
 #, c-format
 msgid "variable %d has no levels"
 msgstr "变数%d没有因子层"
 
-#: src/main/model.c:1721
+#: src/main/model.c:1730
 msgid "the response appeared on the right-hand side and was dropped"
 msgstr "公式右手有反应，略过不用"
 
-#: src/main/model.c:1753
+#: src/main/model.c:1762
 #, c-format
 msgid "problem with term %d in model.matrix: no columns are assigned"
 msgstr "模型矩阵的%d项有问题: 没有指定的列"
 
-#: src/main/model.c:1801 src/main/model.c:1806 src/main/model.c:1812
-#: src/main/model.c:1822 src/main/model.c:1828 src/main/model.c:1834
+#: src/main/model.c:1810 src/main/model.c:1815 src/main/model.c:1821
+#: src/main/model.c:1831 src/main/model.c:1837 src/main/model.c:1843
 msgid "term names will be truncated"
 msgstr "项名字太长，被缩短了"
 
-#: src/main/names.c:916
+#: src/main/names.c:918
 msgid "string argument required"
 msgstr "需要字符串变元"
 
-#: src/main/names.c:924
+#: src/main/names.c:926
 msgid "no such primitive function"
 msgstr "没有这一原始函数"
 
-#: src/main/names.c:1037
+#: src/main/names.c:1039
 msgid "attempt to use zero-length variable name"
 msgstr "不能用0长度变数名"
 
-#: src/main/names.c:1039
+#: src/main/names.c:1041
 msgid "symbol print-name too long"
 msgstr "符号print-name太长了"
 
-#: src/main/names.c:1065
+#: src/main/names.c:1067
 msgid "invalid .Internal() argument"
 msgstr ".Internal()变元不对"
 
-#: src/main/names.c:1068
+#: src/main/names.c:1070
 msgid "invalid internal function"
 msgstr "内部函数不对"
 
-#: src/main/names.c:1070
+#: src/main/names.c:1072
 #, c-format
 msgid "no internal function \"%s\""
 msgstr "没有\"%s\"这个内部函数"
@@ -4617,24 +4627,29 @@ msgstr ""
 msgid "OS reports request cannot be honored"
 msgstr "操作系统报告无法承兌执行请求"
 
-#: src/main/platform.c:1340
+#: src/main/platform.c:1227
+#, fuzzy
+msgid "invalid value of 'what' argument"
+msgstr "'what'的值不对"
+
+#: src/main/platform.c:1364
 msgid "'hostname' must be a character vector of length 1"
 msgstr "'hostname'必需是长度为1的字符向量"
 
-#: src/main/platform.c:1346
+#: src/main/platform.c:1370
 #, c-format
 msgid "nsl() was unable to resolve host '%s'"
 msgstr "nsl()无法分辨主机'%s'"
 
-#: src/main/platform.c:1353
+#: src/main/platform.c:1377
 msgid "unknown format returned by gethostbyname"
 msgstr "gethostbyname回覆了错误的格式"
 
-#: src/main/platform.c:1364
+#: src/main/platform.c:1388
 msgid "nsl() is not supported on this platform"
 msgstr "本平台不支持nsl()"
 
-#: src/main/platform.c:1408 src/main/platform.c:1445
+#: src/main/platform.c:1432 src/main/platform.c:1469
 #, c-format
 msgid "'%s' already exists"
 msgstr "'%s'已存在"
@@ -4869,266 +4884,266 @@ msgstr "'which'设定不对"
 msgid "invalid number of points in locator()"
 msgstr "locator()里点的数目不对"
 
-#: src/main/plot.c:3246
+#: src/main/plot.c:3255
 msgid "invalid number of points in identify()"
 msgstr "identify()里点的数目不对"
 
-#: src/main/plot.c:3248
+#: src/main/plot.c:3257
 msgid "incorrect argument type"
 msgstr "变元种类不对"
 
-#: src/main/plot.c:3250
+#: src/main/plot.c:3259
 #, fuzzy
 msgid "invalid value for 'tolerance'"
 msgstr "'tolerance'值不对"
 
-#: src/main/plot.c:3252
+#: src/main/plot.c:3261
 #, fuzzy
 msgid "invalid value for 'plot'"
 msgstr "'plot'的值不对"
 
-#: src/main/plot.c:3254
+#: src/main/plot.c:3263
 #, fuzzy
 msgid "invalid value for 'atpen'"
 msgstr "'atpen'的值不对"
 
-#: src/main/plot.c:3256
+#: src/main/plot.c:3265
 msgid "different argument lengths"
 msgstr "变元长度不一样"
 
-#: src/main/plot.c:3293
+#: src/main/plot.c:3319
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "警告: 没有%.2f英尺的点\n"
 
-#: src/main/plot.c:3299
+#: src/main/plot.c:3325
 msgid "warning: nearest point already identified\n"
 msgstr "警告: 已经找到了最近的点\n"
 
-#: src/main/plot.c:3380
+#: src/main/plot.c:3406
 msgid "invalid units"
 msgstr "单位不对"
 
-#: src/main/plot.c:3386
+#: src/main/plot.c:3412
 msgid "invalid 'cex' value"
 msgstr "'cex'值不对"
 
-#: src/main/plot.c:3539 src/main/plot.c:3648
+#: src/main/plot.c:3565 src/main/plot.c:3674
 msgid "invalid dendrogram input"
 msgstr "dendrogram输入不对"
 
-#: src/main/plot.c:3679
+#: src/main/plot.c:3705
 msgid "cannot take snapshot of old-style device"
 msgstr "无法取旧式设备快照"
 
-#: src/main/plot.c:3692
+#: src/main/plot.c:3718
 msgid "cannot play snapshot on old-style device"
 msgstr "无法在旧式设备上放快照"
 
-#: src/main/plot.c:3748
+#: src/main/plot.c:3774
 msgid "invalid graphics parameter list"
 msgstr "图形参数串列不对"
 
-#: src/main/plot.c:3790
+#: src/main/plot.c:3816
 msgid "invalid symbol parameter vector"
 msgstr "符号参数向量不对"
 
-#: src/main/plot.c:3813
+#: src/main/plot.c:3839
 msgid "invalid symbol coordinates"
 msgstr "符号座标不对"
 
-#: src/main/plot.c:3821
+#: src/main/plot.c:3847
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/参数长度不一样"
 
-#: src/main/plot.c:3840
+#: src/main/plot.c:3866
 msgid "invalid circles data"
 msgstr "圆圈数据不对"
 
-#: src/main/plot.c:3842 src/main/plot.c:3860 src/main/plot.c:3886
-#: src/main/plot.c:3915
+#: src/main/plot.c:3868 src/main/plot.c:3886 src/main/plot.c:3912
+#: src/main/plot.c:3941
 msgid "invalid symbol parameter"
 msgstr "符号参数不对"
 
-#: src/main/plot.c:3858
+#: src/main/plot.c:3884
 msgid "invalid squares data"
 msgstr "正方形数据不对"
 
-#: src/main/plot.c:3884
+#: src/main/plot.c:3910
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "长方形数据不对(需要两个列)"
 
-#: src/main/plot.c:3913
+#: src/main/plot.c:3939
 msgid "invalid stars data"
 msgstr "星形数据不对"
 
-#: src/main/plot.c:3955
+#: src/main/plot.c:3981
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "温度计数据不对(需要三或四个列)"
 
-#: src/main/plot.c:3958
+#: src/main/plot.c:3984
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "温度计[,%s]不对"
 
-#: src/main/plot.c:3962
+#: src/main/plot.c:3988
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "温度计[,%s]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:3965
+#: src/main/plot.c:3991
 msgid "invalid thermometers[,1:2]"
 msgstr "温度计[,1:2]"
 
-#: src/main/plot.c:4004
+#: src/main/plot.c:4030
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "boxplots数据不对(需要五个列)"
 
-#: src/main/plot.c:4014
+#: src/main/plot.c:4040
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5]在[0,1]范围外--看起来会有点不对"
 
-#: src/main/plot.c:4016
+#: src/main/plot.c:4042
 msgid "invalid boxplots[, 1:4]"
 msgstr "boxplots[, 1:4]不对"
 
-#: src/main/plot.c:4062
+#: src/main/plot.c:4088
 msgid "invalid symbol type"
 msgstr "符号种类不对"
 
-#: src/main/plot3d.c:724 src/main/plot3d.c:1019
+#: src/main/plot3d.c:724 src/main/plot3d.c:1017
 msgid "contour(): circular/long seglist -- bug.report()!"
 msgstr "contour():圆的/长的seglist -- bug.report()!"
 
-#: src/main/plot3d.c:806 src/main/plot3d.c:1480
+#: src/main/plot3d.c:805 src/main/plot3d.c:1478
 msgid "all z values are equal"
 msgstr "所有的z值都一样"
 
-#: src/main/plot3d.c:808 src/main/plot3d.c:1482
+#: src/main/plot3d.c:807 src/main/plot3d.c:1480
 msgid "all z values are NA"
 msgstr "所有的z值都是NA"
 
-#: src/main/plot3d.c:1420
+#: src/main/plot3d.c:1418
 msgid "invalid value for 'method'"
 msgstr "'method'值不对"
 
-#: src/main/plot3d.c:1444 src/main/plot3d.c:1696
+#: src/main/plot3d.c:1442 src/main/plot3d.c:1694
 msgid "insufficient 'x' or 'y' values"
 msgstr "'x'或'y'值大小不够"
 
-#: src/main/plot3d.c:1447 src/main/plot3d.c:1699
+#: src/main/plot3d.c:1445 src/main/plot3d.c:1697
 msgid "dimension mismatch"
 msgstr "量度不相符"
 
-#: src/main/plot3d.c:1450 src/main/plot3d.c:1702
+#: src/main/plot3d.c:1448 src/main/plot3d.c:1700
 msgid "no contour values"
 msgstr "无等高值"
 
-#: src/main/plot3d.c:1454
+#: src/main/plot3d.c:1452
 msgid "missing 'x' values"
 msgstr "缺少'x'值"
 
-#: src/main/plot3d.c:1456
+#: src/main/plot3d.c:1454
 msgid "increasing 'x' values expected"
 msgstr "'x'值应加大"
 
-#: src/main/plot3d.c:1461
+#: src/main/plot3d.c:1459
 msgid "missing 'y' values"
 msgstr "缺少'y'值"
 
-#: src/main/plot3d.c:1463
+#: src/main/plot3d.c:1461
 msgid "increasing 'y' values expected"
 msgstr "'y'值应加大"
 
-#: src/main/plot3d.c:1468
+#: src/main/plot3d.c:1466
 msgid "invalid NA contour values"
 msgstr "NA等高值不对"
 
-#: src/main/plot3d.c:1767 src/main/plot3d.c:1852
+#: src/main/plot3d.c:1765 src/main/plot3d.c:1850
 msgid "invalid x / y values or limits"
 msgstr "x/y的值或极限不对"
 
-#: src/main/plot3d.c:1769
+#: src/main/plot3d.c:1767
 msgid "invalid contour levels: must be strictly increasing"
 msgstr "等高层次不对: 必需严格增加"
 
-#: src/main/plot3d.c:2023
+#: src/main/plot3d.c:2021
 msgid "coordinates outsize specified range"
 msgstr "座标比设定的范围要大"
 
-#: src/main/plot3d.c:2441 src/main/plot3d.c:2454
+#: src/main/plot3d.c:2439 src/main/plot3d.c:2452
 msgid "Axis orientation not calculated"
 msgstr "无法计算座标方位"
 
-#: src/main/plot3d.c:2472
+#: src/main/plot3d.c:2470
 msgid "too few parameters"
 msgstr "参数太少"
 
-#: src/main/plot3d.c:2481
+#: src/main/plot3d.c:2479
 msgid "invalid 'y' argument"
 msgstr "'y'变元不对"
 
-#: src/main/plot3d.c:2486
+#: src/main/plot3d.c:2484
 msgid "invalid 'z' argument"
 msgstr "'z'变元不对"
 
-#: src/main/plot3d.c:2490
+#: src/main/plot3d.c:2488
 msgid "invalid 'xlim' argument"
 msgstr "'xlim'变元不对"
 
-#: src/main/plot3d.c:2494
+#: src/main/plot3d.c:2492
 msgid "invalid 'ylim' argument"
 msgstr "'ylim'变元不对"
 
-#: src/main/plot3d.c:2498
+#: src/main/plot3d.c:2496
 msgid "invalid 'zlim' argument"
 msgstr "'zlim'变元不对"
 
-#: src/main/plot3d.c:2504
+#: src/main/plot3d.c:2502
 msgid "invalid 'x' limits"
 msgstr "'x'极限不对"
 
-#: src/main/plot3d.c:2506
+#: src/main/plot3d.c:2504
 msgid "invalid 'y' limits"
 msgstr "'y'极限不对"
 
-#: src/main/plot3d.c:2508
+#: src/main/plot3d.c:2506
 msgid "invalid 'z' limits"
 msgstr "'z'极限不对"
 
-#: src/main/plot3d.c:2529
+#: src/main/plot3d.c:2527
 msgid "'xlab' must be a character vector of length 1"
 msgstr "'xlab'必需是长度为1的字符向量"
 
-#: src/main/plot3d.c:2531
+#: src/main/plot3d.c:2529
 msgid "'ylab' must be a character vector of length 1"
 msgstr "'ylab'必需是长度为1的字符向量"
 
-#: src/main/plot3d.c:2533
+#: src/main/plot3d.c:2531
 msgid "'zlab' must be a character vector of length 1"
 msgstr "'zlab'必需是长度为1的字符向量"
 
-#: src/main/plot3d.c:2553
+#: src/main/plot3d.c:2551
 msgid "invalid viewing parameters"
 msgstr "viewing参数不对"
 
-#: src/main/plot3d.c:2555
+#: src/main/plot3d.c:2553
 msgid "invalid 'expand' value"
 msgstr "'z'值不对"
 
-#: src/main/plot3d.c:2559
+#: src/main/plot3d.c:2557
 msgid "invalid 'nticks' value"
 msgstr "'nticks'值不对"
 
-#: src/main/plot3d.c:2561
+#: src/main/plot3d.c:2559
 msgid "invalid 'ticktype' value"
 msgstr "'ticktype'值不对"
 
-#: src/main/plot3d.c:2569
+#: src/main/plot3d.c:2567
 msgid "invalid 'col' specification"
 msgstr "'col'设定不对"
 
-#: src/main/plot3d.c:2572
+#: src/main/plot3d.c:2570
 msgid "invalid 'border' specification"
 msgstr "'border'设定不对"
 
@@ -5550,149 +5565,149 @@ msgstr "链结书写发生了错误"
 msgid "invalid envir argument"
 msgstr "envir变元不对"
 
-#: src/main/scan.c:551
+#: src/main/scan.c:554
 #, c-format
 msgid "scan() expected '%s', got '%s'"
 msgstr "scan()需要'%s', 而不是'%s'"
 
-#: src/main/scan.c:746
+#: src/main/scan.c:749
 msgid "empty 'what' specified"
 msgstr "'what'设定不能是空的"
 
-#: src/main/scan.c:760 src/main/scan.c:1037
+#: src/main/scan.c:763 src/main/scan.c:1040
 msgid "invalid 'what' specified"
 msgstr "'what'设定不对"
 
-#: src/main/scan.c:805
+#: src/main/scan.c:808
 #, c-format
 msgid "line %d did not have %d elements"
 msgstr "%d行没有%d单元"
 
-#: src/main/scan.c:857
+#: src/main/scan.c:860
 msgid "number of items read is not a multiple of the number of columns"
 msgstr "读取的项目数必需是列数的倍数"
 
-#: src/main/scan.c:942
+#: src/main/scan.c:945
 msgid "invalid 'strip.white' value"
 msgstr "'strip.white'值不对"
 
-#: src/main/scan.c:944
+#: src/main/scan.c:947
 msgid "invalid 'strip.white' length"
 msgstr "'strip.white'的长度不对"
 
-#: src/main/scan.c:946 src/main/scan.c:1251
+#: src/main/scan.c:949 src/main/scan.c:1254
 msgid "invalid 'na.strings' value"
 msgstr "'na.strings'值不对"
 
-#: src/main/scan.c:948 src/main/scan.c:994 src/main/scan.c:1075
-#: src/main/scan.c:1078 src/main/scan.c:1548 src/main/scan.c:1551
+#: src/main/scan.c:951 src/main/scan.c:997 src/main/scan.c:1078
+#: src/main/scan.c:1081 src/main/scan.c:1551 src/main/scan.c:1554
 msgid "invalid 'comment.char' value"
 msgstr "'comment.char'值不对"
 
-#: src/main/scan.c:955
+#: src/main/scan.c:958
 msgid "invalid 'sep' value: must be one byte"
 msgstr "'sep'值不对: 大小只能为一拜"
 
-#: src/main/scan.c:959 src/main/scan.c:1088 src/main/scan.c:1557
+#: src/main/scan.c:962 src/main/scan.c:1091 src/main/scan.c:1560
 msgid "invalid 'sep' value"
 msgstr "'sep'值不对"
 
-#: src/main/scan.c:968
+#: src/main/scan.c:971
 msgid "invalid decimal separator: must be one byte"
 msgstr "十进位分隔符不对: 大小只能为一拜"
 
-#: src/main/scan.c:973
+#: src/main/scan.c:976
 msgid "invalid decimal separator"
 msgstr "十进位分隔符不对"
 
-#: src/main/scan.c:984 src/main/scan.c:1097 src/main/scan.c:1539
+#: src/main/scan.c:987 src/main/scan.c:1100 src/main/scan.c:1542
 msgid "out of memory"
 msgstr "内存用完了"
 
-#: src/main/scan.c:990 src/main/scan.c:1103 src/main/scan.c:1545
+#: src/main/scan.c:993 src/main/scan.c:1106 src/main/scan.c:1548
 msgid "invalid quote symbol set"
 msgstr "引号符号集不对"
 
-#: src/main/scan.c:997
+#: src/main/scan.c:1000
 msgid "invalid 'allowEscapes' value"
 msgstr "'allowEscapes'值不对"
 
-#: src/main/scan.c:1159 src/main/scan.c:1178
+#: src/main/scan.c:1162 src/main/scan.c:1181
 msgid "string terminated by newline or EOF"
 msgstr "字符串尾是新的一行或是EOF"
 
-#: src/main/scan.c:1247
+#: src/main/scan.c:1250
 msgid "the first argument must be of mode character"
 msgstr "第一变元的状态必需是字符"
 
-#: src/main/scan.c:1477
+#: src/main/scan.c:1480
 #, c-format
 msgid "Selection: "
 msgstr "选择: "
 
-#: src/main/scan.c:1528
+#: src/main/scan.c:1531
 msgid "invalid 'nlines' value"
 msgstr "'nlines'值不对"
 
-#: src/main/scan.c:1574 src/main/scan.c:1586
+#: src/main/scan.c:1577 src/main/scan.c:1589
 msgid "cannot allocate buffer in readTableHead"
 msgstr "读取TableHead时无法分配缓冲区"
 
-#: src/main/scan.c:1596
+#: src/main/scan.c:1599
 msgid "\\ followed by EOF"
 msgstr ""
 
-#: src/main/scan.c:1640 src/main/scan.c:1643
+#: src/main/scan.c:1643 src/main/scan.c:1646
 #, c-format
 msgid "incomplete final line found by readTableHeader on '%s'"
 msgstr "读取'%s'的TableHeader时遇到了不完全的最后一行"
 
-#: src/main/scan.c:1755
+#: src/main/scan.c:1758
 msgid "'file' is not a connection"
 msgstr "'file'不是链结"
 
-#: src/main/scan.c:1774
+#: src/main/scan.c:1777
 msgid "invalid value for 'nr'"
 msgstr "'nr'值不对"
 
-#: src/main/scan.c:1775
+#: src/main/scan.c:1778
 msgid "invalid value for 'nc'"
 msgstr "'nc'值不对"
 
-#: src/main/scan.c:1777
+#: src/main/scan.c:1780
 msgid "invalid value for 'rnames'"
 msgstr "'rnames'值不对"
 
-#: src/main/scan.c:1778
+#: src/main/scan.c:1781
 msgid "invalid value for 'sep'"
 msgstr "'sep'值不对"
 
-#: src/main/scan.c:1779
+#: src/main/scan.c:1782
 msgid "invalid value for 'eol'"
 msgstr "'eol'值不对"
 
-#: src/main/scan.c:1780 src/main/util.c:1107
+#: src/main/scan.c:1783 src/main/util.c:1106
 msgid "invalid value for 'na'"
 msgstr "'na'值不对"
 
-#: src/main/scan.c:1781
+#: src/main/scan.c:1784
 msgid "invalid value for 'dec'"
 msgstr "'dec'值不对"
 
-#: src/main/scan.c:1782
+#: src/main/scan.c:1785
 msgid "invalid value for 'qmethod'"
 msgstr "'qmethod'值不对"
 
-#: src/main/scan.c:1787
+#: src/main/scan.c:1790
 msgid "'dec' must be a single character"
 msgstr "'dec'必需为单节字符"
 
-#: src/main/scan.c:1808
+#: src/main/scan.c:1811
 #, c-format
 msgid "corrupt data frame -- length of column %d does not not match nrows"
 msgstr "数据框损坏了--列的长度%d同nrows不相等"
 
-#: src/main/scan.c:1845
+#: src/main/scan.c:1848
 msgid "corrupt matrix -- dims not not match length"
 msgstr "矩阵损坏了--dims同长度不相等"
 
@@ -6375,110 +6390,110 @@ msgstr "向量size不能是负的"
 msgid "vector size specified is too large"
 msgstr "向量size的设定太大了"
 
-#: src/main/util.c:516 src/main/util.c:534
+#: src/main/util.c:515 src/main/util.c:533
 msgid "object is not a matrix"
 msgstr "目标对象不是矩阵"
 
-#: src/main/util.c:694
+#: src/main/util.c:693
 #, c-format
 msgid "type %d is unimplemented in type2str"
 msgstr "type2str目前没有实现种类%d"
 
-#: src/main/util.c:708
+#: src/main/util.c:707
 #, c-format
 msgid "type %d is unimplemented in type2symbol"
 msgstr "type2symbol目前没有实现种类%d"
 
-#: src/main/util.c:718
+#: src/main/util.c:717
 #, c-format
 msgid "unimplemented type '%s' in '%s'\n"
 msgstr "种类'%s'目前没有在'%s'里实现\n"
 
-#: src/main/util.c:720
+#: src/main/util.c:719
 #, c-format
 msgid "unimplemented type (%d) in '%s'\n"
 msgstr "(%d)种类目前没有在'%s'里实现\n"
 
-#: src/main/util.c:790
+#: src/main/util.c:789
 msgid "invalid tag in name extraction"
 msgstr "抽取名字的标记不对"
 
-#: src/main/util.c:799
+#: src/main/util.c:798
 #, c-format
 msgid "%d argument passed to '%s' which requires %d"
 msgid_plural "%d arguments passed to '%s' which requires %d"
 msgstr[0] "%d个变元传给了'%s'，但后者只需要%d个变元"
 
-#: src/main/util.c:811
+#: src/main/util.c:810
 #, c-format
 msgid "\"nthcdr\" list shorter than %d"
 msgstr "\"nthcdr\"串列比%d要短"
 
-#: src/main/util.c:816
+#: src/main/util.c:815
 msgid "\"nthcdr\" needs a list to CDR down"
 msgstr "\"nthcdr\"需要CDR串列"
 
-#: src/main/util.c:904
+#: src/main/util.c:903
 msgid "invalid 'xinds' argument"
 msgstr "'xinds'变元不对"
 
-#: src/main/util.c:907
+#: src/main/util.c:906
 msgid "invalid 'yinds' argument"
 msgstr "'yinds'变元不对"
 
-#: src/main/util.c:909
+#: src/main/util.c:908
 msgid "'all.x' must be TRUE or FALSE"
 msgstr "'all.x'必需是TRUE或FALSE"
 
-#: src/main/util.c:911
+#: src/main/util.c:910
 msgid "'all.y' must be TRUE or FALSE"
 msgstr "'all.y'必需是TRUE或FALSE"
 
-#: src/main/util.c:998
+#: src/main/util.c:997
 msgid "cannot change working directory"
 msgstr "无法改变工作目录"
 
-#: src/main/util.c:1012 src/main/util.c:1046 src/main/util.c:1090
+#: src/main/util.c:1011 src/main/util.c:1045 src/main/util.c:1089
 msgid "a character vector argument expected"
 msgstr "需要字符向量变元"
 
-#: src/main/util.c:1017 src/main/util.c:1051
+#: src/main/util.c:1016 src/main/util.c:1050
 msgid "path too long"
 msgstr "路径太长"
 
-#: src/main/util.c:1093
+#: src/main/util.c:1092
 msgid "invalid value for 'w'"
 msgstr "'w'值不对"
 
-#: src/main/util.c:1097
+#: src/main/util.c:1096
 msgid "invalid value for 'quote'"
 msgstr "'quote'值不对"
 
-#: src/main/util.c:1102
+#: src/main/util.c:1101
 msgid "only the first character of 'quote' will be used"
 msgstr "只用了'quote'的第一个字符"
 
-#: src/main/util.c:1105
+#: src/main/util.c:1104
 msgid "invalid value for 'justify'"
 msgstr "'justify'值不对"
 
-#: src/main/util.c:1158
+#: src/main/util.c:1157
 msgid "invalid multibyte string"
 msgstr "多字节字符串不对"
 
-#: src/main/util.c:1175 src/main/util.c:1183
+#: src/main/util.c:1174 src/main/util.c:1182
 msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1输入不对"
 
-#: src/main/util.c:1180
+#: src/main/util.c:1179
 msgid "allocation failure in mbcsToLatin1"
 msgstr "分配mbcsToLatin1失败"
 
-#: src/main/util.c:1282
+#: src/main/util.c:1281
 msgid "error message truncated to 255 chars"
 msgstr "错误信息缩短到255个字节"
 
-#: src/main/util.c:1295
+#: src/main/util.c:1294
 msgid "warning message truncated to 255 chars"
 msgstr "警告信息缩短到255个字节"
 
@@ -6547,80 +6562,80 @@ msgstr "没有这种URL格式"
 msgid "allocation of url connection failed"
 msgstr "url链结分配失败"
 
-#: src/modules/internet/internet.c:243
+#: src/modules/internet/internet.c:252
 msgid "invalid 'url' argument"
 msgstr "'url'变元不对"
 
-#: src/modules/internet/internet.c:245
+#: src/modules/internet/internet.c:254
 msgid "only first element of 'url' argument used"
 msgstr "只用'url'变元的第一个单元"
 
-#: src/modules/internet/internet.c:249
+#: src/modules/internet/internet.c:258
 msgid "invalid 'destfile' argument"
 msgstr "'destfile'变元不对"
 
-#: src/modules/internet/internet.c:251
+#: src/modules/internet/internet.c:260
 msgid "only first element of 'destfile' argument used"
 msgstr "只用'destfile'变元的第一个单元"
 
-#: src/modules/internet/internet.c:255
+#: src/modules/internet/internet.c:264
 msgid "invalid 'quiet' argument"
 msgstr "'quiet'变元不对"
 
-#: src/modules/internet/internet.c:262
+#: src/modules/internet/internet.c:271
 msgid "invalid 'cacheOK' argument"
 msgstr "'cacheOK'变元不对"
 
-#: src/modules/internet/internet.c:277 src/modules/internet/internet.c:362
-#: src/modules/internet/internet.c:441
+#: src/modules/internet/internet.c:274
+msgid "Download progress"
+msgstr "正在下载"
+
+#: src/modules/internet/internet.c:294 src/modules/internet/internet.c:378
+#: src/modules/internet/internet.c:459
 #, c-format
 msgid "cannot open URL '%s'"
 msgstr "无法打开URL'%s'"
 
-#: src/modules/internet/internet.c:279 src/modules/internet/internet.c:296
-#: src/modules/internet/internet.c:375
+#: src/modules/internet/internet.c:296 src/modules/internet/internet.c:313
+#: src/modules/internet/internet.c:391
 #, c-format
 msgid "cannot open destfile '%s'"
 msgstr "无法打开destfile'%s'"
 
-#: src/modules/internet/internet.c:299 src/modules/internet/internet.c:378
+#: src/modules/internet/internet.c:316 src/modules/internet/internet.c:394
 #, c-format
 msgid "trying URL '%s'\n"
 msgstr "试开URL’%s'\n"
 
-#: src/modules/internet/internet.c:306 src/modules/internet/internet.c:385
+#: src/modules/internet/internet.c:323 src/modules/internet/internet.c:401
 msgid "opened URL\n"
 msgstr "打开了URL\n"
 
-#: src/modules/internet/internet.c:311 src/modules/internet/internet.c:390
-msgid "Download progress"
-msgstr "正在下载"
-
-#: src/modules/internet/internet.c:358 src/modules/internet/internet.c:437
+#: src/modules/internet/internet.c:374 src/modules/internet/internet.c:455
 #, c-format
 msgid "downloaded length %d != reported length %d"
 msgstr "下载的长度%d != 报告的长度%d"
 
-#: src/modules/internet/internet.c:472 src/modules/internet/internet.c:698
+#: src/modules/internet/internet.c:490 src/modules/internet/internet.c:716
 #, c-format
 msgid "cannot open: HTTP status was '%d %s'"
 msgstr "无法打开: HTTP状态是'%d%s'"
 
-#: src/modules/internet/internet.c:642 src/modules/internet/internet.c:798
+#: src/modules/internet/internet.c:660 src/modules/internet/internet.c:816
 msgid "InternetOpenUrl timed out"
 msgstr "互联网暂停打开Url"
 
-#: src/modules/internet/internet.c:669 src/modules/internet/internet.c:683
-#: src/modules/internet/internet.c:820 src/modules/internet/internet.c:829
+#: src/modules/internet/internet.c:687 src/modules/internet/internet.c:701
+#: src/modules/internet/internet.c:838 src/modules/internet/internet.c:847
 #, c-format
 msgid "InternetOpenUrl failed: '%s'"
 msgstr "互联网打开Url失败:’%s'"
 
-#: src/modules/internet/internet.c:733
+#: src/modules/internet/internet.c:751
 msgid "Internet read timed out"
 msgstr "互联网暂停读取"
 
-#: src/modules/internet/internet.c:912
+#: src/modules/internet/internet.c:930
 msgid "cannot allocate memory for InternetRoutines structure"
 msgstr "无法为InternetRoutines结构分配内存"
 
