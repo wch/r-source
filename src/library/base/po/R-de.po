@@ -70,8 +70,8 @@ msgstr "'nu' muss entweder 0, nrow(x) oder ncol(x) sein"
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' muss entweder 0, nrow(x) oder ncol(x) sein"
 
-msgid "all can not be used with other deparse options"
-msgstr "all kann nicht mit anderen deparse Optionen zusammen benutzt werden"
+msgid "'all' can not be used with other deparse options"
+msgstr "'all' kann nicht mit anderen deparse Optionen zusammen benutzt werden"
 
 msgid "second argument must be a list"
 msgstr "das zweite Argument muss eine Liste sein"
@@ -190,8 +190,8 @@ msgstr "keine interaktive Sitzung"
 msgid "not a valid restart specification"
 msgstr "keine gültige restart Spezifikation"
 
-msgid "argument where of length 0"
-msgstr "Argument where hat Länge 0"
+msgid "argument 'where' of length 0"
+msgstr "Argument 'where' hat Länge 0"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "'origin' muss entweder 'start', 'current' oder 'end' sein"
@@ -820,7 +820,7 @@ msgstr "'file' muss nicht-leere Zeichenkette sein"
 msgid "can only save to a binary connection"
 msgstr "kann nur in binäre Verbindung speichern"
 
-msgid "`file' must be non-empty string"
+msgid "'file' must be non-empty string"
 msgstr "'file' muss nicht-leere Zeichenkette sein"
 
 msgid "image could not be renamed and is left in"

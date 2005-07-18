@@ -80,7 +80,7 @@ rbind <- function(..., deparse.level=1) {
              call. = FALSE, domain = NA)
     if (any(opts == 6)) {
 	if (length(opts) != 1)
-	    stop("all can not be used with other deparse options",
+	    stop("'all' can not be used with other deparse options",
 	       	call. = FALSE)
 	else
 	    return(31)

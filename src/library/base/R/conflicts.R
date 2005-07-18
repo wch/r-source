@@ -1,6 +1,6 @@
 conflicts <- function(where=search(), detail = FALSE)
 {
-    if(length(where) < 1) stop("argument where of length 0")
+    if(length(where) < 1) stop("argument 'where' of length 0")
     z <- vector(length(where), mode="list")
     names(z) <- where
     for(i in seq(along=where))

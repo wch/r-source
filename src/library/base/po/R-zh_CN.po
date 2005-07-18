@@ -70,8 +70,8 @@ msgstr "'nu'的值必需是0，nrow(x) 或ncol(x)"
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv'的值必需是0，nrow(x)或ncol(x)"
 
-msgid "all can not be used with other deparse options"
-msgstr "all不能和deparse的其他选项同时共存"
+msgid "'all' can not be used with other deparse options"
+msgstr "'all'不能和deparse的其他选项同时共存"
 
 msgid "second argument must be a list"
 msgstr "第二个变元必需为串列"
@@ -190,7 +190,7 @@ msgstr "非交互运行式"
 msgid "not a valid restart specification"
 msgstr "重新开始的规格不对"
 
-msgid "argument where of length 0"
+msgid "argument 'where' of length 0"
 msgstr "变元长度为0"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
@@ -802,8 +802,8 @@ msgstr "'file'的值必需是长度大于0的字符串"
 msgid "can only save to a binary connection"
 msgstr "只能保存到二进列链结"
 
-msgid "`file' must be non-empty string"
-msgstr "`file'的值必需是长度大于0的字符串"
+msgid "'file' must be non-empty string"
+msgstr "'file'的值必需是长度大于0的字符串"
 
 msgid "image could not be renamed and is left in"
 msgstr "映像无法被重新命名，因此被留在"

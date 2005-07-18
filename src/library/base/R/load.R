@@ -68,7 +68,7 @@ save <- function(..., list = character(0),
 save.image <- function (file = ".RData", version = NULL, ascii = FALSE,
                         compress = FALSE, safe = TRUE) {
     if (! is.character(file) || file == "")
-        stop("`file' must be non-empty string")
+        stop("'file' must be non-empty string")
 
     opts <- getOption("save.image.defaults")
     if(is.null(opts)) opts <- getOption("save.defaults")
