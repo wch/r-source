@@ -31,9 +31,9 @@ USER-VISIBLE CHANGES
     o	split(x, f), split<-() and unsplit() now by default split by all
 	levels of a factor f, even when some are empty.
 	Use split(x, f, drop = TRUE) if you want the old behavior of
-	dropping empty levels.	Note that split() and split<-() are S3
-	generic functions and hence all methods now also need to allow a
-	'drop' argument.
+	dropping empty levels.	split() and split<-() are S3 generic
+	functions with new arguments 'drop' and '...' and all methods now
+	should have 'drop' and '...' arguments as well.
 
 
 NEW FEATURES
@@ -183,7 +183,7 @@ DEPRECATED & DEFUNCT
 	R_HOME/etc/Rprofile.site does not exist.  (This has been
 	undocumented since R 1.4.0.)
 
-    o	CRAM.packages() is deprecated in favour of available.packages().
+    o	CRAN.packages() is deprecated in favour of available.packages().
 
 
 INSTALLATION
@@ -346,7 +346,7 @@ BUG FIXES
 	builds of R.
 
     o	pgamma(Inf, 1.1) did not terminate (PR#8001).
-    
+
     o	regexpr("[a-z]", ...) could cause a buffer overrun with multi-byte
     	character sets, leading to random errors later.
 

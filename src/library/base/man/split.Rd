@@ -14,8 +14,8 @@
   \code{split}.
 }
 \usage{
-split(x, f, drop = FALSE)
-split(x, f, drop = FALSE) <- value
+split(x, f, drop = FALSE, ...)
+split(x, f, drop = FALSE, ...) <- value
 unsplit(value, f, drop = FALSE)
 }
 \arguments{
@@ -27,6 +27,7 @@ unsplit(value, f, drop = FALSE)
     (if \code{f} is a \code{factor} or a list).}
   \item{value}{a list of vectors or data frames compatible with a
     splitting of \code{x}. Recycling applies if the lengths do not match.}
+  \item{\dots}{further potential arguments passed to methods.}
 }
 \details{
   \code{split} and \code{split<-} are generic functions with default and

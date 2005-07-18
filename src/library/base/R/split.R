@@ -1,7 +1,9 @@
-split <- function(x, f, drop = FALSE) UseMethod("split")
+split <- function(x, f, drop = FALSE, ...) UseMethod("split")
 
-split.default <- function(x, f, drop = FALSE)
+split.default <- function(x, f, drop = FALSE, ...)
 {
+    if(length(list(...))) .NotYetUsed(deparse(...), error = FALSE)
+
     if (is.list(f)) f <- interaction(f, drop = drop)
     else if (drop || !is.factor(f)) # drop extraneous levels
 	f <- factor(f)
@@ -15,11 +17,11 @@ split.default <- function(x, f, drop = FALSE)
     y
 }
 
-split.data.frame <- function(x, f, drop = FALSE)
-    lapply(split(seq(length=nrow(x)), f, drop = drop),
-           function(ind) x[ind, , drop = FALSE ])
+split.data.frame <- function(x, f, drop = FALSE, ...)
+    lapply(split(seq(length=nrow(x)), f, drop = drop, ...),
+           function(ind) x[ind, , drop = FALSE])
 
-"split<-" <- function(x, f, drop = FALSE, value) UseMethod("split<-")
+"split<-" <- function(x, f, drop = FALSE, ..., value) UseMethod("split<-")
 
 #"split<-.default" <- function(x, f, value)
 #{
@@ -27,9 +29,9 @@ split.data.frame <- function(x, f, drop = FALSE)
 #    x
 #}
 
-"split<-.default" <- function(x, f, drop = FALSE, value)
+"split<-.default" <- function(x, f, drop = FALSE, ..., value)
 {
-    ix <- split(seq(along = x), f, drop = drop)
+    ix <- split(seq(along = x), f, drop = drop, ...)
     n <- length(value)
     j <- 0
     for (i in ix) {
@@ -46,9 +48,9 @@ split.data.frame <- function(x, f, drop = FALSE)
 #    x
 #}
 
-"split<-.data.frame" <- function(x, f, drop = FALSE, value)
+"split<-.data.frame" <- function(x, f, drop = FALSE, ..., value)
 {
-    ix <- split(seq(along = x), f, drop = drop)
+    ix <- split(seq(along = x), f, drop = drop, ...)
     n <- length(value)
     j <- 0
     for (i in ix) {
