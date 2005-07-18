@@ -163,6 +163,10 @@ NEW FEATURES
     o	TukeyHSD() now returns p-values adjusted for multiple comparisons
 	(based on a patch contributed by Fernando Henrique Ferraz P. da Rosa).
 
+    o	The internal regex code has to be upgraded to glibc-2.3.5.
+	Apart from a number of bug fixes, this should be somewhat
+	faster, especially in UTF-8 locales.
+
 
 DEPRECATED & DEFUNCT
 

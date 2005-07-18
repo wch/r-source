@@ -184,6 +184,11 @@ typedef unsigned long int reg_syntax_t;
    some interfaces).  When a regexp is compiled, the syntax used is
    stored in the pattern buffer, so changing this does not affect
    already-compiled regexps.  */
+
+/* If this bit is set, then no_sub will be set to 1 during
+   re_compile_pattern.  */
+
+#define RE_NO_SUB (RE_CONTEXT_INVALID_DUP << 1)
 extern reg_syntax_t re_syntax_options;
 #endif
 
@@ -300,6 +305,10 @@ extern reg_syntax_t re_syntax_options;
 /* Like REG_NOTBOL, except for the end-of-line.  */
 #define REG_NOTEOL (1 << 1)
 
+/* Use PMATCH[0] to delimit the start and end of the search in the
+   buffer.  */
+#define REG_STARTEND (1 << 2)
+
 
 /* If any error codes are removed, changed, or added, update the
    `re_error_msg' table in regex.c.  */
@@ -315,7 +324,7 @@ typedef enum
   /* POSIX regcomp return error codes.  (In the order listed in the
      standard.)  */
   REG_BADPAT,		/* Invalid pattern.  */
-  REG_ECOLLATE,		/* Not implemented.  */
+  REG_ECOLLATE,		/* Inalid collating element.  */
   REG_ECTYPE,		/* Invalid character class name.  */
   REG_EESCAPE,		/* Trailing backslash.  */
   REG_ESUBREG,		/* Invalid back reference.  */
@@ -547,6 +556,14 @@ extern int re_exec _RE_ARGS ((const char *));
 #  else
 #   define __restrict
 #  endif
+# endif
+#endif
+/* gcc 3.1 and up support the [restrict] syntax.  */
+#ifndef __restrict_arr
+# if __GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 1)
+#  define __restrict_arr __restrict
+# else
+#  define __restrict_arr
 # endif
 #endif
 
