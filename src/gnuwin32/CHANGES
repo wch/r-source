@@ -23,6 +23,8 @@ The (D)COM support has been updated, and header files and an import
 library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
 package for usage.
 
+There is now a Brazilian Portuguese translations of the RGui menus.
+
 
 
 R 2.1.1 patched
