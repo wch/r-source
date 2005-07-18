@@ -820,9 +820,6 @@ msgid "can only save to a binary connection"
 msgstr "binary connection만 저장할수가 없습니다"
 
 msgid "'file' must be non-empty string"
-msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
-
-msgid "image could not be renamed and is left in"
 msgstr "image는 이름을 변경할수가 없기 때문에, 이하에 남겨집니다"
 
 msgid "[Previously saved workspace restored]"

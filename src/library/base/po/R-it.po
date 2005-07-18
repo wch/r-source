@@ -829,9 +829,6 @@ msgstr "'file' deve essere una stringa non vuota"
 msgid "can only save to a binary connection"
 msgstr "posso salvare solo su connessioni di tipo binario"
 
-msgid "'file' must be non-empty string"
-msgstr "'file' deve essere una stringa non vuota"
-
 msgid "image could not be renamed and is left in"
 msgstr "l'immagine non può essere rinominata ed è stata lasciata in"
 

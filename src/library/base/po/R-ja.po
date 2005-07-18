@@ -823,9 +823,6 @@ msgstr "'file' は空でない文字列でなければなりません"
 msgid "can only save to a binary connection"
 msgstr "バイナリコネクションへしかセーブできません"
 
-msgid "'file' must be non-empty string"
-msgstr "'file' は空でない文字列でなければなりません"
-
 msgid "image could not be renamed and is left in"
 msgstr "イメージは改名できませんので、以下に残されます："
 

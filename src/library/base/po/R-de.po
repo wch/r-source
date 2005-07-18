@@ -820,9 +820,6 @@ msgstr "'file' muss nicht-leere Zeichenkette sein"
 msgid "can only save to a binary connection"
 msgstr "kann nur in binäre Verbindung speichern"
 
-msgid "'file' must be non-empty string"
-msgstr "'file' muss nicht-leere Zeichenkette sein"
-
 msgid "image could not be renamed and is left in"
 msgstr "Bild konnte nicht umbenannt werden und ist geblieben in"
 

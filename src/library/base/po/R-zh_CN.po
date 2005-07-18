@@ -802,9 +802,6 @@ msgstr "'file'的值必需是长度大于0的字符串"
 msgid "can only save to a binary connection"
 msgstr "只能保存到二进列链结"
 
-msgid "'file' must be non-empty string"
-msgstr "'file'的值必需是长度大于0的字符串"
-
 msgid "image could not be renamed and is left in"
 msgstr "映像无法被重新命名，因此被留在"
 
