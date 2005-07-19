@@ -48,7 +48,7 @@ filter(x, filter, method = c("convolution", "recursive"),
   the output may diverge if it is not.
 
   The convolution filter is
-  \deqn{y_i = f_1x_{i+o} + \cdots + f_px_{i+o-p-1}}{\code{y[i] = f[1]*x[i+o] + \dots + f[p]*x[i+o-p-1]}}
+  \deqn{y_i = f_1x_{i+o} + \cdots + f_px_{i+o-(p-1)}}{\code{y[i] = f[1]*x[i+o] + \dots + f[p]*x[i+o-(p-1)]}}
 
   where \code{o} is the offset: see \code{sides} for how it is determined.
 }

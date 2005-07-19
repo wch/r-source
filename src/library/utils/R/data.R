@@ -58,8 +58,12 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
                     entries <- cbind(entries, "")
                 }
             }
-            if(NROW(entries) > 0)
-                db <- rbind(db, cbind(packageName, dirname(path), entries))
+            if(NROW(entries) > 0) {
+                if(is.matrix(entries) && ncol(entries) == 2)
+                    db <- rbind(db, cbind(packageName, dirname(path), entries))
+                else
+                    warning(gettextf("data index for package '%s' is invalid and will be ignored", packageName), domain=NA, call.=FALSE)
+            }
         }
         colnames(db) <- c("Package", "LibPath", "Item", "Title")
 
