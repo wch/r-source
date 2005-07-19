@@ -357,6 +357,11 @@ BUG FIXES
     o	regexpr("[a-z]", ...) could cause a buffer overrun with multi-byte
     	character sets, leading to random errors later.
 
+    o	Installing a package with a 'data' directory which contains
+	files but those files generate no objects (e.g. the BioC
+	package	makecdfenv) created an incorrectly formatted data
+	index that data(package="pkg") could not read.
+
 
 
 		CHANGES IN R VERSION 2.1.1
