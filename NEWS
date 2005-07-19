@@ -167,6 +167,9 @@ NEW FEATURES
 	Apart from a number of bug fixes, this should be somewhat
 	faster, especially in UTF-8 locales.
 
+    o	Attempting source(file, chdir=TRUE) with a URL or connection
+	for'file' now gives a warning and ignores 'chdir'.
+
 
 DEPRECATED & DEFUNCT
 
