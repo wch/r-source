@@ -170,6 +170,9 @@ NEW FEATURES
     o	Attempting source(file, chdir=TRUE) with a URL or connection
 	for'file' now gives a warning and ignores 'chdir'.
 
+    o	The plot method for stl() now allows the colour of the range
+	bars to be set (default unchanged at "light gray").
+
 
 DEPRECATED & DEFUNCT
 

@@ -110,7 +110,8 @@ summary.stl <- function(object, digits = getOption("digits"), ...)
 plot.stl <- function(x, labels = colnames(X),
 		     set.pars = list(mar = c(0, 6, 0, 6), oma = c(6, 0, 4, 0),
 				     tck = -0.01, mfrow = c(nplot, 1)),
-		     main = NULL, range.bars = TRUE, ...)
+		     main = NULL, range.bars = TRUE, ...,
+                     col.range = "light gray")
 {
     sers <- x$time.series
     ncomp <- ncol(sers)
@@ -132,7 +133,7 @@ plot.stl <- function(x, labels = colnames(X),
 	    dx <- 1/64 * diff(ux <- par("usr")[1:2])
 	    y <- mean(rx[,i])
 	    rect(ux[2] - dx, y + mx/2, ux[2] - 0.4*dx, y - mx/2,
-		 col = "light gray", xpd = TRUE)
+		 col = col.range, xpd = TRUE)
 	}
 	if(i == 1 && !is.null(main))
 	    title(main, line = 2, outer = par("oma")[3] > 0)
