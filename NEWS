@@ -231,6 +231,11 @@ PACKAGE INSTALLATION CHANGES
 	The downloaded information about a repository is cached for the
 	current R session.
 
+    o	The information about library trees found by
+	installed.packages() is cached for the current session, and
+	updated only if the modification date of the top-level
+	directory has been changed.
+
     o	A data index is now installed for a package with a 'data' dir
 	but no 'man' dir (even though it will have undocumented data objects).
 
@@ -316,6 +321,10 @@ BUG FIXES
 	a named kernel in all cases; plot(kernel(.),..) is more flexible.
 
     o	qgamma(1,s) didn't give +Inf for some s.
+
+    o	installed.packages() now always returns a matrix as
+	documented, possibly with 0 rows (rather than a 0-length
+	character vector).
 
 
 
