@@ -231,6 +231,9 @@ PACKAGE INSTALLATION CHANGES
 	The downloaded information about a repository is cached for the
 	current R session.
 
+    o	A data index is now installed for a package with a 'data' dir
+	but no 'man' dir (even though it will have undocumented data objects).
+
 
 UTILITIES
 

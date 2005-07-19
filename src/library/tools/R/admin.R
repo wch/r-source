@@ -304,10 +304,17 @@ function(dir, outDir)
 {
     dir <- file_path_as_absolute(dir)
     docsDir <- file.path(dir, "man")
-    if(!file_test("-d", docsDir)) return(invisible())
-
     dataDir <- file.path(outDir, "data")
     outDir <- file_path_as_absolute(outDir)
+
+    ## allow for a data dir but no man pages
+    if(!file_test("-d", docsDir)) {
+        if(file_test("-d", dataDir))
+            .saveRDS(.build_data_index(dataDir, NULL),
+                     file.path(outDir, "Meta", "data.rds"))
+        return(invisible())
+    }
+
     ## <FIXME>
     ## Not clear whether we should use the basename of the directory we
     ## install to, or the package name as obtained from the DESCRIPTION
