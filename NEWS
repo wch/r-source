@@ -329,6 +329,9 @@ BUG FIXES
     o	Arithmetic operations on data frames no longer coerce the
 	names to syntatically valid names.
 
+    o   Units are now properly recycled in grid layouts 
+	when 'widths' or 'heights' are shorter than the number of 
+	columns or rows (PR#8014).
 
 
 

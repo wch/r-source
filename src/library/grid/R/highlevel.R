@@ -135,20 +135,24 @@ grid.show.layout <- function(l, newpage=TRUE,
       if (cell.label)
         grid.text(paste("(", i, ", ", j, ")", sep=""), gp=gpar(col=label.col))
       if (j==1)
-        grid.text(as.character(l$heights[i]), gp=gp.red,
+        # recycle heights if necessary 
+        grid.text(as.character("["(l$heights, i, top=FALSE)), gp=gp.red,
               just=c("right", "centre"),
               x=unit(-.05, "inches"), y=unit(.5, "npc"), rot=0)
       if (i==l$nrow)
-        grid.text(as.character(l$widths[j]), gp=gp.red,
+        # recycle widths if necessary
+        grid.text(as.character("["(l$widths, j, top=FALSE)), gp=gp.red,
               just=c("centre", "top"),
               x=unit(.5, "npc"), y=unit(-.05, "inches"), rot=0)
       if (j==l$ncol)
-        grid.text(as.character(l$heights[i]), gp=gp.red,
+        # recycle heights if necessary
+        grid.text(as.character("["(l$heights, i, top=FALSE)), gp=gp.red,
               just=c("left", "centre"),
               x=unit(1, "npc") + unit(.05, "inches"), y=unit(.5, "npc"),
               rot=0)
       if (i==1)
-        grid.text(as.character(l$widths[j]), gp=gp.red,
+        # recycle widths if necessary
+        grid.text(as.character("["(l$widths, j, top=FALSE)), gp=gp.red,
               just=c("centre", "bottom"),
               x=unit(.5, "npc"), y=unit(1, "npc") + unit(.05, "inches"),
               rot=0)
