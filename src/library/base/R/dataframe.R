@@ -1193,9 +1193,10 @@ Ops.data.frame <- function(e1, e2 = NULL)
 	right <-if(!rscalar) e2[[j]] else e2
 	value[[j]] <- eval(f)
     }
-    if(any(.Generic == c("+","-","*","/","%%","%/%"))) {
+    if(.Generic %in% c("+","-","*","/","%%","%/%") ) {
 	names(value) <- cn
-	data.frame(value, row.names=rn)
+	data.frame(value, row.names = rn, check.names = FALSE,
+                   check.rows = FALSE)
     }
     else matrix(unlist(value,recursive = FALSE, use.names=FALSE),
 		nrow=length(rn), dimnames=list(rn,cn))

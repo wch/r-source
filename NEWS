@@ -326,6 +326,9 @@ BUG FIXES
 	documented, possibly with 0 rows (rather than a 0-length
 	character vector).
 
+    o	Arithmetic operations on data frames no longer coerce the
+	names to syntatically valid names.
+
 
 
 
