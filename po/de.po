@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
 "POT-Creation-Date: 2005-07-18 08:22+0100\n"
-"PO-Revision-Date: 2005-03-14 19:27+0200\n"
+"PO-Revision-Date: 2005-07-20 15:00+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
 "MIME-Version: 1.0\n"
@@ -602,7 +602,7 @@ msgstr "maximale Zahl von DLLs erreicht..."
 
 #: src/main/Rdynload.c:551
 msgid "could not allocate space for 'path'"
-msgstr "konnte keinen Speicher für 'path' allokieren"
+msgstr "konnte keinen Speicher für 'path' zuteilen"
 
 #: src/main/Rdynload.c:564
 #, c-format
@@ -611,7 +611,7 @@ msgstr "DLLname '%s' ist zu lang"
 
 #: src/main/Rdynload.c:585
 msgid "could not allocate space for 'name'"
-msgstr "konnte keinen Speicher für 'name' allokieren"
+msgstr "konnte keinen Speicher für 'name' zuteilen"
 
 #: src/main/Rdynload.c:845 src/main/Rdynload.c:861 src/main/util.c:992
 msgid "character argument expected"
@@ -655,21 +655,19 @@ msgstr "keine dyn.load Unterstützung in dieser R Version"
 
 #: src/main/Rstrptime.h:1090
 msgid "input string is too long"
-msgstr ""
+msgstr "Eingabe-Zeichenkette ist zu lang"
 
 #: src/main/Rstrptime.h:1092
-#, fuzzy
 msgid "invalid multibyte input string"
-msgstr "ungültige multi-byte Zeichenkette"
+msgstr "ungültige multi-byte Eingabe-Zeichenkette"
 
 #: src/main/Rstrptime.h:1095
 msgid "format string is too long"
-msgstr ""
+msgstr "Formattierungs-Zeichenkette ist zu lang"
 
 #: src/main/Rstrptime.h:1097
-#, fuzzy
 msgid "invalid multibyte format string"
-msgstr "ungültige multi-byte Zeichenkette"
+msgstr "ungültige multi-byte Formattierungs-Zeichenkette"
 
 #: src/main/apply.c:39 src/main/envir.c:2336
 msgid "arguments must be symbolic"
@@ -1294,7 +1292,7 @@ msgstr ""
 
 #: src/main/character.c:1752
 msgid "could not allocate memory for approximate matching"
-msgstr "konnte keinen Speicher für approximate matching allokieren"
+msgstr "konnte keinen Speicher für approximate matching zuteilen"
 
 #: src/main/character.c:1776
 msgid "could not perform case insensitive matching"
@@ -1347,7 +1345,6 @@ msgid "argument 'x' must not contain NAs"
 msgstr "Argument 'x' darf keine NAs enthalten"
 
 #: src/main/character.c:2103
-#, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
@@ -1419,7 +1416,7 @@ msgstr "Argument muss mindestens Länge 1 haben"
 #: src/main/coerce.c:1337
 #, fuzzy
 msgid "invalid body for function"
-msgstr "ungültige interne Funktion"
+msgstr "ungültige Funktions-Inhalt ('body')"
 
 #: src/main/coerce.c:1356
 msgid "invalid length 0 argument"
@@ -1657,7 +1654,7 @@ msgstr "Abschneiden einer Datei auf dieser Platform nicht verfügbar"
 #: src/main/connections.c:563 src/main/connections.c:567
 #: src/main/connections.c:573 src/main/connections.c:590
 msgid "allocation of file connection failed"
-msgstr "Allokieren einer Dateiverbindung fehlgeschlagen"
+msgstr "Allokation einer Dateiverbindung fehlgeschlagen"
 
 #: src/main/connections.c:633
 #, c-format
@@ -1817,7 +1814,7 @@ msgstr "Allokation einer Terminal Verbindung fehlgeschlagen"
 
 #: src/main/connections.c:1670
 msgid "cannot allocate memory for text connection"
-msgstr "kann keine Speicher für Textverbindung allokieren"
+msgstr "kann keinen Speicher für Textverbindung zuweisen"
 
 #: src/main/connections.c:1715
 msgid "seek is not relevant for text connection"
@@ -1933,7 +1930,7 @@ msgstr "kann Verbindung nicht öffnen"
 
 #: src/main/connections.c:2388 src/main/connections.c:2407
 msgid "cannot allocate buffer in readLines"
-msgstr "kann Buffer in readLines nicht allokieren"
+msgstr "kann Buffer in readLines nicht allozieren"
 
 #: src/main/connections.c:2424
 #, c-format
@@ -2035,7 +2032,7 @@ msgstr ""
 #: src/main/connections.c:3105 src/main/connections.c:3108
 #: src/main/connections.c:3147 src/main/connections.c:3152
 msgid "could not allocate space for pushBack"
-msgstr "konnte keinen Speicher für pushBack allokieren"
+msgstr "konnte keinen Speicher für pushBack zuteilen"
 
 #: src/main/connections.c:3128
 msgid "invalid 'data' argument"
@@ -2080,7 +2077,7 @@ msgstr "ungültiger Wert für 'split'"
 #: src/main/connections.c:3420
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
-msgstr ""
+msgstr "Datei(\\\"\\\") erlaubt nur open = \\\"w+\\\" und open = \\\"w+b\\\": Ersteres wird verwendet"
 
 #: src/main/connections.c:3436 src/modules/internet/internet.c:463
 msgid "unsupported URL scheme"
@@ -2248,11 +2245,11 @@ msgstr "ungültiges 'usetz' Argument"
 
 #: src/main/dcf.c:67 src/main/dcf.c:71 src/main/dcf.c:112 src/main/dcf.c:161
 msgid "could not allocate memory for 'read.dcf'"
-msgstr "konnte Speicher für 'read.dcf' nicht allokieren"
+msgstr "konnte Speicher für 'read.dcf' nicht zuteilen"
 
 #: src/main/deparse.c:158
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
-msgstr "konnte Speicher in C Funktion 'R_AllocStringBuffer' nicht allokieren"
+msgstr "konnte Speicher in C Funktion 'R_AllocStringBuffer' nicht zuteilen"
 
 #: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
 #: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
@@ -2585,11 +2582,11 @@ msgstr "Grafik-API Version passt nicht"
 
 #: src/main/engine.c:87
 msgid "not enough memory to allocate device (in addDevice)"
-msgstr "kann nicht genug Speicher für Device allokieren (in addDevice)"
+msgstr "kann nicht genug Speicher für Device zuteilen (in addDevice)"
 
 #: src/main/engine.c:148 src/main/engine.c:214
 msgid "unable to allocate memory (in GEregister)"
-msgstr "kann nicht genug Speicher allokieren (in GEregister)"
+msgstr "kann nicht genug Speicher zuteilen (in GEregister)"
 
 #: src/main/engine.c:186
 msgid "too many graphics systems registered"
@@ -2841,7 +2838,7 @@ msgstr "ungültiges 'pos' Argument"
 #: src/main/envir.c:2539
 #, c-format
 msgid "no item called \"%s\" on the search list"
-msgstr "keine Eintrag names \"%s\" im Suchpfad"
+msgstr "kein Eintrag names \"%s\" im Suchpfad"
 
 #: src/main/envir.c:2556
 msgid "invalid object for as.environment"
@@ -3533,7 +3530,7 @@ msgstr "Treiber dieses Devices hat keine Möglichkeit locator zu nutzen"
 
 #: src/main/graphics.c:2805 src/main/graphics.c:2841
 msgid "unable to allocate memory (in GPolygon)"
-msgstr "kann keinen Speicher allokieren (in GPolygon)"
+msgstr "kann keinen Speicher zuteilen (in GPolygon)"
 
 #: src/main/graphics.c:2992
 msgid "zero-length arrow is of indeterminate angle and so skipped"
@@ -3715,7 +3712,7 @@ msgstr "ungültiger Wert für 'runLast', nehme FALSE an"
 
 #: src/main/main.c:923
 msgid "cannot allocate space for toplevel callback element"
-msgstr "kann keinen Speicher für toplevel callback allokieren"
+msgstr "kann keinen Speicher für toplevel callback zuteilen"
 
 #: src/main/main.c:1001
 msgid "negative index passed to R_removeTaskCallbackByIndex"
@@ -3781,7 +3778,7 @@ msgstr "Cons-Speicher erschöpft (Limit erreicht?)"
 #: src/main/memory.c:1540 src/main/memory.c:1543
 #, c-format
 msgid "cannot allocate memory block of size %.0f"
-msgstr "kann Speicherblock der Größe %.0f nicht allokieren"
+msgstr "kann Speicherblock der Größe %.0f nicht zuteilen"
 
 #: src/main/memory.c:1738
 msgid "negative length vectors are not allowed"
@@ -3791,7 +3788,7 @@ msgstr "Vektoren negativer Länge sind nicht erlaubt"
 #: src/main/memory.c:1788
 #, c-format
 msgid "cannot allocate vector of length %d"
-msgstr "kann Vektor der Länge %d nicht allokieren"
+msgstr "kann Vektor der Länge %d nicht allozieren"
 
 #: src/main/memory.c:1800
 #, c-format
@@ -3801,7 +3798,7 @@ msgstr "ungültiger Typ/Länge (%d/%d) bei der Vektorallokation"
 #: src/main/memory.c:1856
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
-msgstr "kann Vektor der Größe %lu Kb nicht allokieren"
+msgstr "kann Vektor der Größe %lu Kb nicht allozieren"
 
 #: src/main/memory.c:1937
 msgid "gc.time() is not implemented on this system"
@@ -3822,12 +3819,12 @@ msgstr "unprotect_ptr: Zeiger nicht gefunden"
 #: src/main/memory.c:2195
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
-msgstr "Calloc konnte nicht (%d von %d) Speicher allokieren"
+msgstr "Calloc konnte nicht (%d von %d) Speicher zuteilen"
 
 #: src/main/memory.c:2204
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
-msgstr "Realloc konnte nicht (size %d) Speicher re-allokieren"
+msgstr "Realloc konnte nicht (size %d) Speicher re-allozieren"
 
 #: src/main/memory.c:2323
 msgid "not safe to return vector pointer"
@@ -3872,9 +3869,8 @@ msgid "data argument is of the wrong type"
 msgstr "Datenargument hat falschen Typ"
 
 #: src/main/model.c:1014
-#, fuzzy
 msgid "'.' in formula and no 'data' argument"
-msgstr "ungültiges 'data' Argument"
+msgstr "'.' erscheint in der Formel und 'data' Argument ist ungültig"
 
 #: src/main/model.c:1159
 msgid "invalid formula in 'update'"
@@ -4625,7 +4621,7 @@ msgstr "Pfadname des Verzeichnisses bzw. des Ordners zu lang"
 #: src/main/platform.c:711
 #, c-format
 msgid "list.files: '%s' is not a readable directory"
-msgstr "list.files: '%s' ist keine lesbares Verzeichnis"
+msgstr "list.files: '%s' ist kein lesbares Verzeichnis"
 
 #: src/main/platform.c:793
 msgid "invalid 'directory' argument"
@@ -4685,14 +4681,13 @@ msgstr "ungültiges Argument für 'locale'"
 
 #: src/main/platform.c:1075
 msgid "setting 'LC_NUMERIC' may cause R to function strangely"
-msgstr ""
+msgstr "das Setzen von 'LC_NUMERIC' kann bewirken, dass R sich komisch benimmt"
 
 #: src/main/platform.c:1089
 msgid "OS reports request cannot be honored"
 msgstr "OS sagt: Anfrage kann nicht beachtet werden"
 
 #: src/main/platform.c:1227
-#, fuzzy
 msgid "invalid value of 'what' argument"
 msgstr "ungültiger Wert von 'what'"
 
@@ -5254,7 +5249,7 @@ msgstr "ungültige Charakterlänge in realpr"
 
 #: src/main/print.c:871
 msgid "memory allocation error in realpr"
-msgstr "Speicherallokierungsfehler in realpr"
+msgstr "Speicherallokationsfehler in realpr"
 
 #: src/main/print.c:887
 #, c-format
@@ -5359,7 +5354,7 @@ msgstr "kein Gegenstück zu( oder \\("
 
 #: src/main/regex.c:2563
 msgid "Unmatched \\{"
-msgstr "keine Gegenstück zu \\{"
+msgstr "kein Gegenstück zu \\{"
 
 #: src/main/regex.c:2566
 msgid "Invalid content of \\{\\}"
@@ -5463,9 +5458,7 @@ msgstr ""
 
 #: src/main/saveload.c:687
 msgid "cannot restore file position while restoring data"
-msgstr ""
-"kann Position in Datei nicht wiederherstellen, während ich Daten "
-"wiederherstelle"
+msgstr "kann Position in Datei nicht wiederherstellen, während ich Daten wiederherstelle"
 
 #: src/main/saveload.c:918
 msgid "base namespace is not preserved in version 1 workspaces"
@@ -5721,11 +5714,11 @@ msgstr "ungültiger Wert für 'nlines'"
 
 #: src/main/scan.c:1577 src/main/scan.c:1589
 msgid "cannot allocate buffer in readTableHead"
-msgstr "kann keinen Zwischenspeicher in readTableHead allokieren"
+msgstr "kann keinen Zwischenspeicher in readTableHead zuteilen"
 
 #: src/main/scan.c:1599
 msgid "\\ followed by EOF"
-msgstr ""
+msgstr "\\ gefolgt von EOF"
 
 #: src/main/scan.c:1643 src/main/scan.c:1646
 #, c-format
@@ -5927,7 +5920,7 @@ msgstr "nur ASCII kann in Verbindung im Textmodus gelesen werden"
 
 #: src/main/serialize.c:1833
 msgid "cannot allocate buffer"
-msgstr "kann Zwischenspeicher nicht allokieren"
+msgstr "kann Zwischenspeicher nicht zuteilen"
 
 #: src/main/serialize.c:1999 src/main/serialize.c:2062
 msgid "not a proper file name"
@@ -6260,14 +6253,12 @@ msgid "internal error in use of recursive indexing"
 msgstr "interner Fehler bei rekursiver Indizierung"
 
 #: src/main/subscript.c:194
-#, fuzzy
 msgid "incorrect number of columns in matrix subscript"
-msgstr "falsche Anzahl von subscripts"
+msgstr "falsche Anzahl Spalten in Matrixindizierung"
 
 #: src/main/subscript.c:209
-#, fuzzy
 msgid "negative values are not allowed in a matrix subscript"
-msgstr "Vektoren negativer Länge sind nicht erlaubt"
+msgstr "negative Werte sind nicht erlaubt in Matrixindizierung"
 
 #: src/main/subscript.c:244
 msgid "(subscript) logical subscript too long"
@@ -6298,9 +6289,8 @@ msgid "matrix subscripting not handled for this type"
 msgstr "Matrixindizierung für diesen Typ nicht möglich"
 
 #: src/main/subset.c:428
-#, fuzzy
 msgid "array subscripting not handled for this type"
-msgstr "Matrixindizierung für diesen Typ nicht möglich"
+msgstr "Array-Indizierung für diesen Typ nicht möglich"
 
 #: src/main/subset.c:657
 msgid "incorrect number of dimensions"
@@ -6714,7 +6704,7 @@ msgstr "Lesen vom Internet: Time-Out"
 
 #: src/modules/internet/internet.c:930
 msgid "cannot allocate memory for InternetRoutines structure"
-msgstr "Kann Speicher für InternetRoutines Struktur nicht allokieren"
+msgstr "Kann Speicher für InternetRoutines Struktur nicht zuteilen"
 
 #: src/modules/internet/nanoftp.c:372
 msgid "removing FTP proxy info"
@@ -6953,7 +6943,7 @@ msgid ""
 "Error: X11 cannot allocate additional graphics colors.\n"
 "Consider using X11 with colortype=\"pseudo.cube\" or \"gray\"."
 msgstr ""
-"Fehler: X11 kann keine weiteren Grafikfarben allokieren.\n"
+"Fehler: X11 kann keine weiteren Grafikfarben allozieren.\n"
 "Evtl. X11 mit colortype=\"pseudo.cube\" oder \"gray\" benutzen."
 
 #: src/modules/X11/devX11.c:816
@@ -7083,7 +7073,7 @@ msgstr "konnte Verbindung zu X11 Display nicht herstellen"
 
 #: src/modules/X11/devX11.c:2483
 msgid "cannot allocate memory for X11Routines structure"
-msgstr "kann Speicher für X11Routines-Struktur nicht allokieren"
+msgstr "kann Speicher für X11Routines-Struktur nicht zuteilen"
 
 #: src/nmath/bessel_i.c:64
 msgid "bessel_i allocation error"
@@ -7310,7 +7300,7 @@ msgstr "mkdir R_TempDir geht nicht"
 
 #: src/unix/sys-unix.c:304
 msgid "cannot allocate R_TempDir"
-msgstr "kann R_TempDir nicht allokieren"
+msgstr "kann R_TempDir nicht allozieren"
 
 #: src/unix/sys-unix.c:386
 msgid "Sys.info() is not implemented on this system"
