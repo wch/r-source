@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-07-11
+@set FAQ_DATE @value{FAQ_YEAR}-07-18
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2029,6 +2029,10 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item TeachingDemos
+A set of demonstration functions that can be used in a classroom to
+demonstrate statistical concepts, or on your own to better understand
+the concepts or the programming.
 @item UNF
 Tools for creating universal numeric fingerprints for data.
 @item UsingR
@@ -2318,6 +2322,9 @@ A package for survival and event history analysis.
 Elastic net regularization and variable selection.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
+@item elliptic
+A suite of elliptic and related functions including Weierstrass and
+Jacobi forms.
 @item emme2
 Functions to read from and write to an EMME/2 databank.
 @item emplik
@@ -3029,6 +3036,8 @@ running BUGS from R.  Support for Linux systems with Wine is emphasized.
 @item rcdd
 C Double Description for R, an interface to the CDD computational
 geometry library.
+@item rcom
+R COM Client Interface and internal COM Server.
 @item ref
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
@@ -3415,9 +3424,6 @@ time series package.  Contains PADI, juice and monitoring extensions.
 
 @item ensemble
 Ensembles of tree classifiers.
-
-@item rcom
-R COM Client Interface and internal COM Server.
 
 @c <COMMENT>
 @c Moved to Devel for 1.5 as it fails R CMD check.
