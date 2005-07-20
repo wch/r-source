@@ -1,3 +1,4 @@
+
 row.names <- function(x) UseMethod("row.names")
 row.names.data.frame <- function(x) attr(x, "row.names")
 row.names.default <- function(x) if(!is.null(dim(x))) rownames(x)# else NULL
@@ -629,7 +630,7 @@ data.frame <-
             names(value) <- NULL
             value <- list(value)
          } else {
-            if(m < n*p && (n*p) %% m)
+            if(m < n*p && (m == 0 || (n*p) %% m))
                 stop(gettextf("replacement has %d items, need %d", m, n*p),
                      domain = NA)
             value <- matrix(value, n, p)  ## will recycle
@@ -1062,13 +1063,14 @@ as.matrix.data.frame <- function (x)
     p <- dm[2]
     n <- dm[1]
     collabs <- as.list(dn[[2]])
-    X <- x
+    X <- x # will contain the result;
+    ## the "big question" is if we return a numeric or a character matrix
     class(X) <- NULL
     non.numeric <- non.atomic <- FALSE
     all.logical <- TRUE
     for (j in 1:p) {
 	xj <- X[[j]]
-	if(length(dj <- dim(xj)) == 2 && dj[2] > 1) {
+	if(length(dj <- dim(xj)) == 2 && dj[2] > 1) {# matrix with >=2 col
 	    if(inherits(xj, "data.frame"))
 		xj <- X[[j]] <- as.matrix(X[[j]])
 	    dnj <- dimnames(xj)[[2]]
@@ -1076,8 +1078,9 @@ as.matrix.data.frame <- function (x)
 				  if(length(dnj) > 0) dnj else 1:dj[2],
 				  sep = ".")
 	}
-        if(!is.logical(xj)) all.logical <- FALSE
-	if(length(levels(xj)) > 0 || !(is.numeric(xj) || is.complex(xj))
+        j.logic <- is.logical(xj)
+        if(all.logical && !j.logic) all.logical <- FALSE
+	if(length(levels(xj)) > 0 || !(j.logic || is.numeric(xj) || is.complex(xj))
 	   || (!is.null(cl <- attr(xj, "class")) && # numeric classed objects to format:
 	       any(cl %in% c("Date", "POSIXct", "POSIXlt"))))
 	    non.numeric <- TRUE
@@ -1087,9 +1090,8 @@ as.matrix.data.frame <- function (x)
     if(non.atomic) {
 	for (j in 1:p) {
 	    xj <- X[[j]]
-	    if(is.recursive(xj)) {
-	    }
-	    else X[[j]] <- as.list(as.vector(xj))
+	    if(!is.recursive(xj))
+		X[[j]] <- as.list(as.vector(xj))
 	}
     } else if(all.logical) {
         ## do nothing for logical columns if a logical matrix will result.
@@ -1098,9 +1100,9 @@ as.matrix.data.frame <- function (x)
 	    if (is.character(X[[j]]))
 		next
 	    xj <- X[[j]]
-            miss<-is.na(xj)
+            miss <- is.na(xj)
 	    xj <- if(length(levels(xj))) as.vector(xj) else format(xj)
-            is.na(xj)<-miss
+            is.na(xj) <- miss
             X[[j]]<-xj
 	}
     }

@@ -1652,3 +1652,7 @@ x # list
 
 kernel(1,0)
 ## printed wrongly in R <= 2.1.1
+
+DF <- data.frame(A=1:2, B=3:4)
+try(DF[2, 1:3] <- NULL)
+## wrong error message in R < 2.2.0

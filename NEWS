@@ -329,9 +329,12 @@ BUG FIXES
     o	Arithmetic operations on data frames no longer coerce the
 	names to syntatically valid names.
 
-    o   Units are now properly recycled in grid layouts 
-	when 'widths' or 'heights' are shorter than the number of 
+    o	Units are now properly recycled in grid layouts
+	when 'widths' or 'heights' are shorter than the number of
 	columns or rows (PR#8014).
+
+    o	DF <- data.frame(A=1:2, B=3:4); DF[1, 1:3] <- NULL gave wrong
+	error message.
 
 
 
