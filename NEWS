@@ -196,6 +196,8 @@ DEPRECATED & DEFUNCT
 
     o	CRAN.packages() is deprecated in favour of available.packages().
 
+    o	Rd.sty no longer processes pre-2.0.0 conversions containing \Link.
+
 
 INSTALLATION
 
