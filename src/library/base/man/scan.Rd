@@ -157,7 +157,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 
   Note that since \code{sep} is a separator and not a terminator,
   reading a file by \code{scan("foo", sep="\\n", blank.lines.skip=FALSE)}
-  will give an empty file line if the file ends in a linefeed and not if
+  will give an empty final line if the file ends in a linefeed and not if
   it does not.  This might not be what you expected; see also
   \code{\link{readLines}}.
 
@@ -182,6 +182,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
 \note{
   The default for \code{multi.line} differs from S.  To read one record
   per line, use \code{flush = TRUE} and \code{multi.line = FALSE}.
+  (Note that quoted character strings can still include embedded new lines.)
 
   If number of items is not specified, the internal
   mechanism re-allocates memory in powers of two and so could use up
