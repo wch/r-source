@@ -13,7 +13,7 @@ R_HOME = $(top_builddir)
 R_SHARE_DIR = $(R_HOME)/share
 R_INCLUDE_DIR = $(R_HOME)/include
 
-SOURCES_C = devNull.c devPicTeX.c devPS.c devQuartz.c init.c
+SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devQuartz.c init.c
 
 DEPENDS = $(SOURCES_C:.c=.d)
 OBJECTS = $(SOURCES_C:.c=.o)

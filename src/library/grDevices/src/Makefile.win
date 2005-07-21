@@ -13,7 +13,7 @@ else
   DEBUGFLAG=-Wall
 endif
 
-SOURCES_C = devNull.c devPicTeX.c devPS.c devWindows.c init.c
+SOURCES_C = chull.c devNull.c devPicTeX.c devPS.c devWindows.c init.c
 
 DEPS = $(SOURCES_C:.c=.d)
 OBJS = $(SOURCES_C:.c=.o)

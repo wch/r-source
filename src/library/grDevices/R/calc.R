@@ -69,7 +69,7 @@ chull <- function(x, y=NULL)
 	    ih=integer(n),
 	    nh=integer(1),
 	    il=integer(n),
-	    PACKAGE="base")
+	    PACKAGE="grDevices")
     rev(z$ih[1:z$nh])
 }
 
