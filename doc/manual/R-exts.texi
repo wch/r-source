@@ -3239,12 +3239,9 @@ example C++ (@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string given the
 symbol name as known to C or FORTRAN, that is the function or subroutine
-name.  (The mapping to the symbol name in the load table is given by the
-functions @code{symbol.C} and @code{symbol.For};
-@findex symbol.C
-@findex symbol.For
-that the symbol is loaded can be tested by, for example,
-@code{is.loaded(symbol.C("loglin"))}.)
+name.  (That the symbol is loaded can be tested by, for example,
+@code{is.loaded("cg")}: it is no longer necessary or correct to use
+@code{symbol.For}.)
 
 There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and
