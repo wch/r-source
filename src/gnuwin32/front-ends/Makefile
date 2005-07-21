@@ -86,7 +86,7 @@ rproxy.dll: rproxy.o rproxy_dev.o rproxy_impl.o com_util.o \
 	bdx_util.o bdx_SEXP.o bdx_com.o rtico.o
 
 librproxy.a: rproxy.dll rproxy.df
-	dlltool --as=as $(DLLTOOLFLAGS) $(RPROXY-DLLTOOLFLAGS) --dllname rproxy.dll --def rproxy.df --output-lib $@
+	$(DLLTOOL) $(DLLTOOLFLAGS) $(RPROXY-DLLTOOLFLAGS) --dllname rproxy.dll --def rproxy.df --output-lib $@
 
 ../librproxy.a: librproxy.a
 	@$(CP) $< $@
