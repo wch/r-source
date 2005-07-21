@@ -25,6 +25,8 @@
 /* This header file contains routines which are in the R API and ones which
    are not.
 
+   Those which are not can be used only at the user's risk and may change
+   or disappear in a future release of R.
 */
 
 
@@ -84,19 +86,29 @@ void samin(int n, double *pb, double *yb, optimfn fn, int maxit,
 	   int tmax, double ti, int trace, void *ex);
 
 
+
 /* Entry points NOT in the R API */
 
+/* appl/approx.c */
 void R_approx(double *, double *, int *, double *, int *,
 	      int *, double *, double *, double *);
 
+/* appl/bakslv.c */
 void bakslv(double *, int *, int *,
 	    double *, int *, int *,
 	    double *, int *, int *);
 
+/* appl/binning.c */
 void bincode (double *x, int *n, double *breaks, int *nb,
 	      int *code, int *right, int *include_border, int *naok);
 void bincount(double *x, int *n, double *breaks, int *nb, int *count,
 	      int *right, int *include_border, int *naok);
+
+/* appl/ch2inv.f */
+void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
+
+/* appl/chol.f */
+void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
 
 /* appl/cpoly.c : */
 void R_cpolyroot(double *opr, double *opi, int *degree,
@@ -114,7 +126,7 @@ void R_cpolyroot(double *opr, double *opi, int *degree,
 /* appl/cumsum.c : */
 void R_cumsum(double *, int *, double *, double *);
 
-/* appl/eigen.c */
+/* appl/eigen.f */
 int F77_NAME(cg)(int *nm, int *n, double *ar, double *ai,
 		 double *wr, double *wi, int *matz, double *zr, double *zi,
 		 double *fv1, double *fv2, double *fv3, int *ierr);
@@ -136,13 +148,30 @@ void fft_factor(int n, int *pmaxf, int *pmaxp);
 Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 /* TRUE: success */ int isn, double *work, int *iwork);
 
-/* appl/fortran.c   is covered by ./Fortran.h */
+/* appl/fmin.c */
+double Brent_fmin(double ax, double bx, double (*f)(double, void *),
+		  void *info, double tol);
+
+/* appl/interv.c */
+int F77_SUB(interv)(double *xt, int *n, double *x,
+		    Rboolean *rightmost_closed, Rboolean *all_inside,
+		    int *ilo, int *mflag);
+void find_interv_vec(double *xt, int *n, double *x, int *nx,
+		     int *rightmost_closed, int *all_inside, int *indx);
+int findInterval(double *xt, int n, double x,
+		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
+		 int *mflag);
 
 /* appl/lbfgsb.c */
 void setulb(int n, int m, double *x, double *l, double *u, int *nbd,
 	    double *f, double *g, double factr, double *pgtol,
 	    double *wa, int * iwa, char *task, int iprint,
 	    int *lsave, int *isave, double *dsave);
+
+/* appl/lminfl.c */
+void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
+		      double *resid, double *hat, double *coef, double *sigma);
+
 
 /* appl/loglin.c */
 void loglin(int *nvar, int *dim, int *ncon, int *config, int *ntab,
@@ -163,6 +192,10 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 /* appl/massdist.c */
 void massdist(double *x, double *xmass, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny);
+
+/* appl/maxcol.c */
+void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
+    
 
 /* appl/pretty.c */
 double R_pretty0(double *lo, double *up, int *ndiv, int min_n,
@@ -230,24 +263,34 @@ double R_zeroin(double ax, double bx, double (*f)(double, void *), void *info,
 /* ALL appl/<foobar>.f	[semi-automatically by
  *				 f2c -A -P *.f; cat *.P > all.h	 and editing]
  */
-typedef double (*D_fp)();
-typedef /* Subroutine */ int (*S_fp)();
 
-extern int
-F77_NAME(lsame)(char *, char *);
+/* This is not in the applications but in the BLAS, and defined in Linpack.h
+extern int F77_NAME(lsame)(char *, char *);
+*/
 
-/*----*/
-void F77_NAME(ch2inv)(double *x, int *ldx, int *n, double *v, int *info);
-void F77_NAME(chol)(double *a, int *lda, int *n, double *v, int *info);
-
+/* LINPACK routines also declared in Linpack.h
 void F77_NAME(dpoco)(double *a, int *lda, int *n, double *rcond,
 		     double *z__, int *info);
 void F77_NAME(dpodi)(double *a, int *lda, int *n, double *det, int *job);
 void F77_NAME(dpofa)(double *a, int *lda, int *n, int *info);
 void F77_NAME(dposl)(double *a, int *lda, int *n, double *b);
-/* find qr decomposition, dqrdc2() is basis of R's qr() */
 void F77_NAME(dqrdc)(double *x, int *ldx, int *n, int *p,
 		     double *qraux, int *jpvt, double *work, int *job);
+void F77_NAME(dqrsl)(double *x, int *ldx, int *n, int *k,
+		     double *qraux, double *y,
+		     double *qy, double *qty, double *b,
+		     double *rsd, double *xb, int *job, int *info);
+void F77_NAME(dsvdc)(double *x, int *ldx, int *n, int *p,
+		     double *s, double *e,
+		     double *u, int *ldu, double *v, int *ldv,
+		     double *work, int *job, int *info);
+void F77_NAME(dtrco)(double *t, int *ldt, int *n, double *rcond,
+		     double *z__, int *job);
+void F77_NAME(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
+		     int *info);
+*/
+
+/* find qr decomposition, dqrdc2() is basis of R's qr(), also used by nlme */
 void F77_NAME(dqrdc2)(double *x, int *ldx, int *n, int *p,
 		      double *tol, int *rank,
 		      double *qraux, int *pivot, double *work);
@@ -255,13 +298,8 @@ void F77_NAME(dqrls)(double *x, int *n, int *p, double *y, int *ny,
 		     double *tol, double *b, double *rsd,
 		     double *qty, int *k,
 		     int *jpvt, double *qraux, double *work);
-/* solve for QR coefficients */
-void F77_NAME(dqrsl)(double *x, int *ldx, int *n, int *k,
-		     double *qraux, double *y,
-		     double *qy, double *qty, double *b,
-		     double *rsd, double *xb, int *job, int *info);
 
-/* appl/dqrutl.f */
+/* appl/dqrutl.f: interfaces to dqrsl */
 void F77_NAME(dqrqty)(double *x, int *n, int *k, double *qraux,
 		      double *y, int *ny, double *qty);
 void F77_NAME(dqrqy)(double *x, int *n, int *k, double *qraux,
@@ -272,21 +310,6 @@ void F77_NAME(dqrrsd)(double *x, int *n, int *k, double *qraux,
 		     double *y, int *ny, double *rsd);
 void F77_NAME(dqrxb)(double *x, int *n, int *k, double *qraux,
 		     double *y, int *ny, double *xb);
-/*---*/
-
-void F77_NAME(dsvdc)(double *x, int *ldx, int *n, int *p,
-		     double *s, double *e,
-		     double *u, int *ldu, double *v, int *ldv,
-		     double *work, int *job, int *info);
-void F77_NAME(dtrco)(double *t, int *ldt, int *n, double *rcond,
-		     double *z__, int *job);
-void F77_NAME(dtrsl)(double *t, int *ldt, int *n, double *b, int *job,
-		     int *info);
-
-double Brent_fmin(double ax, double bx, double (*f)(double, void *),
-		  void *info, double tol);
-void F77_NAME(lminfl)(double *x, int *ldx, int *n, int *k, double *qraux,
-		      double *resid, double *hat, double *coef, double *sigma);
 
 
 #ifdef  __cplusplus

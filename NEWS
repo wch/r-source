@@ -15,9 +15,6 @@ USER-VISIBLE CHANGES
 	'which' is not specified.
 	___ may change before release ___
 
-    o	graphics::xy.coords, xyz.coords and n2mfrow have been moved to
-	the grDevices name space (to be available in grid as well).
-
     o	The SVN revision number will appear after the date in the
 	welcome message, provided it is available.  The date is now
 	the date of the last change to the sources.
@@ -25,8 +22,12 @@ USER-VISIBLE CHANGES
     o	is.null(expression()) now returns FALSE.  Only NULL gives TRUE
 	in is.null().
 
-    o	graphics::boxplot.stats, contourLines, nclass.*, and chull
-	have been moved to the grDevices name space.
+    o	graphics::xy.coords, xyz.coords and n2mfrow have been moved to
+	the grDevices name space (to be available in grid as well).
+
+	graphics::boxplot.stats, contourLines, nclass.*, and chull
+	have been moved to the grDevices name space.  The C code
+	underlying chull() has been moved to package grDevices.
 
     o	split(x, f), split<-() and unsplit() now by default split by all
 	levels of a factor f, even when some are empty.
@@ -270,6 +271,11 @@ C-LEVEL FACILITIES
 
     o	R_max_col() has new (5th) argument '*ties_meth' allowing non-random
 	behavior in the case of ties.
+
+    o	The header files have been rationalized: the BLAS routine
+	LSAME is now declared in BLAS.h not Linpack.h, Applic.h no
+	longer duplicates routines from Linpack.h, and Applic.h is
+	divided into API and non-API sections.
 
 
 BUG FIXES

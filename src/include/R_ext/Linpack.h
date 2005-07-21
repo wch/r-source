@@ -27,9 +27,6 @@
 extern "C" {
 #endif
 
-extern int
-F77_NAME(lsame)(char *, char *);
-
 	/* Double Precision Linpack */
 
 extern void F77_NAME(dchdc)(double*, int*, int*, double*, int*, int*, int*);
