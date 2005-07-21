@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-07-18
+@set FAQ_DATE @value{FAQ_YEAR}-07-21
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2095,7 +2095,11 @@ Mining association rules and frequent itemsets with R.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
 @item assist
-A suite of functions implementing smoothing splines. 
+A suite of functions implementing smoothing splines.
+@item aster
+Functions and datasets for Aster modeling (forest graph exponential
+family conditional or unconditional canonical statistic models for life
+history trait modeling).
 @item asypow
 A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
@@ -2391,6 +2395,8 @@ Functional Data Analysis: analysis of data where the basic observation
 is a function of some sort.
 @item fdim
 Functions for calculating fractal dimension.
+@item fgac
+Families of Generalized Archimedean Copulas.
 @item fields
 A collection of programs for curve and function fitting with an emphasis
 on spatial data.  The major methods implemented include cubic and thin
