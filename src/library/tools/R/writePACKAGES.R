@@ -80,10 +80,14 @@ write_PACKAGES <-
         ## Writing PACKAGES file from matrix desc linewise in order to omit
         ## NA entries appropriately:
         out <- file(file.path(dir, "PACKAGES"), "wt")
-        for(i in seq(length = nrow(desc)))
-            write.dcf(desc[i, !(is.na(desc[i, ]) | (desc[i, ] == "")),
-                           drop = FALSE], file = out)
+        outgz <- gzfile(file.path(dir, "PACKAGES.gz"), "wt")
+        for(i in seq(length = nrow(desc))){
+            desci <- desc[i, !(is.na(desc[i, ]) | (desc[i, ] == "")), drop = FALSE]
+            write.dcf(desci, file = out)
+            write.dcf(desci, file = outgz)
+        }
         close(out)
+        close(outgz)
         invisible(nrow(desc))
     }
     else invisible(0)
