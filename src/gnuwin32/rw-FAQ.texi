@@ -96,6 +96,7 @@ The information here applies only to recent versions of R for Windows,
 * How do I check an installation?::  
 * Can I customize the installation?::  
 * How do I run it?::            
+* I selected English for Installation but R runs in Chinese::  
 * Can I run R from a CD or USB drive?::  
 * How do I UNinstall R?::       
 * What's the best way to upgrade?::  
@@ -280,7 +281,7 @@ We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation
 and Administration' manual in the subsection `Building the installers'.
 
-@node How do I run it?, Can I run R from a CD or USB drive?, Can I customize the installation?, Installation and Usage
+@node How do I run it?, I selected English for Installation but R runs in Chinese, Can I customize the installation?, Installation and Usage
 @section How do I run it?
 
 Just double-click on the shortcut you prepared at installation.
@@ -295,7 +296,21 @@ for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
 Target field of a shortcut, and the starting directory will be the
 currect working directory of the shell.)
 
-@node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
+@node I selected English for Installation but R runs in Chinese, Can I run R from a CD or USB drive?, How do I run it?, Installation and Usage
+@section I selected English for Installation but R runs in Chinese
+
+Precisely, you selected English @strong{for installation}!  The language
+of the installer has nothing to do with the language used to run R: this
+is completely standard Windows practice (and necessary as different
+users of the computer may use different languages).
+
+The language R uses for menus and messages is determined by the
+@emph{locale}: please read the appropriate manual (the @emph{R
+Installation and Administration Manual}) for the details.  You can
+ensure that R uses English messages by appending @code{LANGUAGE=en} to
+the shortcut you use to start R.
+
+@node Can I run R from a CD or USB drive?, How do I UNinstall R?, I selected English for Installation but R runs in Chinese, Installation and Usage
 @section Can I run R from a CD or USB drive?
 
 Yes, with care.  A basic R installation is relocatable, so you can burn
@@ -336,7 +351,7 @@ was installed.
 That's a matter of taste.  For most people the best thing to do is to
 uninstall R (see the previous Q), install the new version, copy any
 installed packages to the library folder in the new installation, run
-@code{update.packages()} in the new R (`Update packages from CRAN' from
+@code{update.packages()} in the new R (`Update packages...' from
 the Packages menu, if you prefer) and then delete anything left of the
 old installation.  Different versions of R are quite deliberately
 installed in parallel folders so you can keep old versions around if you
@@ -430,6 +445,7 @@ batch file might contain (as one line)
 @example
 path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
+
 @noindent
 The purpose of @code{2>&1} is to redirect warnings and errors to the
 same file as normal output, and users of Windows 95/98/ME's default
@@ -629,12 +645,12 @@ re-installing Windows.
 @section Other strange crashes.
 
 Some users have found that @code{Rgui.exe} fails to start, exiting with
-a ``Floating- point invalid operation'' or other low level error.  This
+a ``Floating-point invalid operation'' or other low level error.  This
 error may also happen in the middle of a session.  In some cases where
 we have tracked this down, it was due to bugs in the video driver on the
 system in question: it makes changes to the floating point control word
 which are incompatible with R.  (Good practice would restore the control
-word to the state it was in when the driver code was called.) For
+word to the state it was in when the driver code was called.)  For
 example, one user reported that the virtual screen manager JSP2 caused
 this crash.
 
@@ -748,6 +764,7 @@ The following conditions need to hold for functions in a package you installed.
 @item you updated the indices as described in the answer to Q3.3 after
 installing the package.
 @end itemize
+
 @noindent
 If those hold, this works for us.  Note that if you were unable to
 update the indices (for which you need write permission in the
@@ -900,6 +917,7 @@ variable in the global environment.
 
 There is only one graphics history shared by all the windows devices.'
 @end quotation
+
 @noindent
 The R console and graphics windows have configuration files stored in
 the @file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga};
@@ -1082,6 +1100,7 @@ tar zxvf R-@value{RVERSION}.tgz
 cd R-@value{RVERSION}
 cd src\gnuwin32
 @end example
+
 @noindent
 Now read the `R Installation and Administration' manual and set up all
 the tools needed.  Then you can just use @code{make all bitmapdll
@@ -1165,16 +1184,16 @@ First, build a version of the R system with debugging information by
 make clean
 make DEBUG=T
 @end example
-@noindent
 
+@noindent
 and make a debug version of your package by either
 
 @example
 make pkgclean-mypkg
 make DEBUG=T pkg-mypkg
 @end example
-@noindent
 
+@noindent
 or
 
 @example
@@ -1182,15 +1201,15 @@ Rcmd install -c mypkg
 set DEBUG=T
 Rcmd install mypkg
 @end example
-@noindent
 
+@noindent
 Then you can debug by
 
 @example
 gdb /path/to/@RWVER@/bin/Rgui.exe
 @end example
-@noindent
 
+@noindent
 However, note
 
 @itemize @bullet
@@ -1222,8 +1241,8 @@ package @code{stats} might be
      (gdb) clear R_ReadConsole
      (gdb) continue
 @end example
-@noindent
 
+@noindent
 Alternatively, in Rgui you can use the `Misc|Break to debugger' menu item
 after your DLL is loaded.  The C function call @code{breaktodebugger()}
 will do the same thing.
@@ -1262,6 +1281,7 @@ as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 @example
 ...\bin\R CMD SHLIB X.cc X_main.cc
 @end example
+
 @noindent
 or (VC++, which requires extension @code{.cpp})
 
@@ -1269,12 +1289,14 @@ or (VC++, which requires extension @code{.cpp})
 cl /MT /c X.cpp X_main.cpp
 link /dll /out:X.dll /export:X_main X.obj X_main.obj
 @end example
+
 @noindent
 or (Borland C++, which also requires extension @code{.cpp})
 
 @example
 bcc32 -u- -WDE X.cpp X_main.cpp
 @end example
+
 @noindent
 and call the entry point(s) in @code{X_R}, such as @code{X_main}.
 Construction of static variables will occur when the DLL is loaded, and
