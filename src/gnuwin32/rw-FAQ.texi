@@ -385,19 +385,19 @@ If you are running a version of Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx})
 which supports more than 2Gb per process, you can let the R executables
 use it by marking their headers suitably.  If you have Visual Studio use
-@smallexample
+@example
 editbin /LARGEADDRESSAWARE \path_to_R\bin\Rgui.exe
 editbin /LARGEADDRESSAWARE \path_to_R\bin\Rterm.exe
-@end smallexample
+@end example
 and check this by
-@smallexample
+@example
 dumpbin /headers \path_to_R\bin\Rgui.exe
 dumpbin /headers \path_to_R\bin\Rterm.exe
-@end smallexample
+@end example
 You should see a line like
-@smallexample
+@example
                    Application can handle large (>2GB) addresses
-@end smallexample
+@end example
 
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
@@ -607,11 +607,11 @@ authentication.
 versions of an example (a real one, but from a machine that is only
 available locally) of a command-line in a short cut:
 
-@smallexample
+@example
 "path_to_R\bin\RGui.exe" http_proxy=http://user:pass@@gannet:80/
 
 "path_to_R\bin\RGui.exe" http_proxy=http://gannet/ http_proxy_user=ask
-@end smallexample
+@end example
 
 @noindent
 The second version will prompt the user for the proxy username and
@@ -798,9 +798,9 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
 installed.  This is an optional part of the installation although it is
 selected by default.  If the message is
-@smallexample
+@example
 Tcl/Tk support files were not installed
-@end smallexample
+@end example
 the optional files were not installed, and you need to go back to the
 installer and install them.
 
@@ -1351,14 +1351,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 June 12 by Professor B. D. Ripley
-<code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
+Last edited 2005 July 22 by Professor B. D. Ripley
+<code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 June 12 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2005 July 22 by Professor B. D. Ripley <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
