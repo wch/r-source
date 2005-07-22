@@ -30,7 +30,7 @@ iconv.h: ../gnuwin32/fixed/h/iconv.h
 
 psignal.h: ../gnuwin32/fixed/h/psignal.h
 	@cp $< $@
-	
+
 SC_proxy.h: ../gnuwin32/front-ends/SC_proxy.h
 	@cp $< $@
 
@@ -54,7 +54,7 @@ bdx_util.h: ../gnuwin32/front-ends/bdx_util.h
 
 com_util.h: ../gnuwin32/front-ends/com_util.h
 	@cp $< $@
-	
+
 Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
 	@$(SED) -e 1d $(R_HOME)/tools/GETCONFIG > GC
 	@sh GC > Rconfig.h
@@ -80,6 +80,7 @@ Rmath.h: Rmath.h0
 ## <FIXME> USE_SVNVERSION does not work if there is no 'svnversion'
 FORCE:
 $(R_HOME)/SVN-REVISION: FORCE
+	@cp -p $(R_HOME)/SVN-REVISION $(R_HOME)/SVN-REVISION.bak 
 ifdef USE_SVNVERSION
 	@svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
 	@grep -v exported svn-tmp > /dev/null || rm -f svn-tmp
@@ -101,7 +102,7 @@ endif
 	    cp svn-tmp $@; \
 	  fi ; \
 	else \
-	  cp $(R_HOME)/SVN-REVISION.bak $@ 2> /dev/null || \
+	  cp -p $(R_HOME)/SVN-REVISION.bak $@ 2> /dev/null || \
 	  (echo "Revision: unknown" > $@; \
 	   echo "Last Changed Date: Today" >> $@) ; \
 	fi 
