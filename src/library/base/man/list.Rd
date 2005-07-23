@@ -34,9 +34,8 @@ alist(\dots)
     \code{as.list.environment}/}
 }
 \details{
-  Most lists in \R internally are \emph{Generic
-    Vectors}, whereas traditional \emph{dotted pair} lists (as in LISP)
-  are still available.
+  Most lists in \R internally are \emph{Generic Vectors}, whereas
+  traditional \emph{dotted pair} lists (as in LISP) are still available.
 
   The arguments to \code{list} or \code{pairlist} are of the form
   \code{value} or \code{tag=value}.
@@ -61,9 +60,10 @@ alist(\dots)
   \code{is.list} and \code{is.pairlist} are generic: you can write
   methods to handle specific classes of objects, see \link{InternalMethods}.
 
-  \code{as.list.environment} copies the named values from an environment to a list. The 
-  user can request that all named objects are copied (normally names that begin with a dot 
-  are not). The output is not sorted and no parent environments are searched.
+  \code{as.list.environment} copies the named values from an environment
+  to a list.  The user can request that all named objects are copied
+  (normally names that begin with a dot are not).  The output is not
+  sorted and no parent environments are searched.
 
   An empty pairlist, \code{pairlist()} is the same as \code{NULL}.  This
   is different from \code{list()}.
@@ -74,13 +74,16 @@ alist(\dots)
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-\code{\link{vector}(., mode="list")}, \code{\link{c}}, for concatenation;
-\code{\link{formals}}.
+  \code{\link{vector}("list", length)} for creation of a list with empty
+  components; \code{\link{c}}, for concatenation; \code{\link{formals}}.
 }
 \examples{
 # create a plotting structure
 pts <- list(x=cars[,1], y=cars[,2])
 plot(pts)
+
+## "pre-allocate" an empty list of length 5
+vector("list", 5)
 
 # Argument lists
 f <- function()x
@@ -89,7 +92,7 @@ formals(f) <- al <- alist(x=, y=2, \dots=)
 f
 al
 
-##environment->list coercion
+## environment->list coercion
 
 e1 <- new.env()
 e1$a <- 10
