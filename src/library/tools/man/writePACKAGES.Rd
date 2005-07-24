@@ -6,7 +6,7 @@
   repository of source or Mac/Windows binary packages.
 }
 \usage{
-write_PACKAGES(dir, fields,
+write_PACKAGES(dir, fields = NULL,
                type = c("source", "mac.binary", "win.binary"),
                verbose = FALSE)
 }
@@ -16,9 +16,10 @@ write_PACKAGES(dir, fields,
     \file{PACKAGES} and \file{PACKAGES.gz} files from and write them to.
   }
   \item{fields}{
-    Optional, the fields to be used in the \file{PACKAGES} and
-    \file{PACKAGES.gz} files.
-    The default are those needed by \code{\link{available.packages}}:
+    a character vector giving the fields to be used in the
+    \file{PACKAGES} and \file{PACKAGES.gz} files, or \code{NULL}
+    (default).  The default corresponds to the fields needed by
+    \code{\link{available.packages}}:
     \dQuote{Package}, \dQuote{Bundle}, \dQuote{Priority},
     \dQuote{Version}, \dQuote{Depends}, \dQuote{Suggests},
     \dQuote{Imports} and \dQuote{Contains}.
