@@ -41,6 +41,8 @@ static R_NativePrimitiveArgType qansari_t[4] = {INTSXP, REALSXP, INTSXP, INTSXP}
 static R_NativePrimitiveArgType fexact_t[11] = {INTSXP, INTSXP, INTSXP, INTSXP, REALSXP,
 					 REALSXP, REALSXP, REALSXP, REALSXP, INTSXP, INTSXP};
 
+static R_NativePrimitiveArgType pkolmogorov2x_t[2] = {REALSXP, INTSXP};
+
 static R_NativePrimitiveArgType pkendall_t[3] = {INTSXP, REALSXP, INTSXP};
 
 static R_NativePrimitiveArgType pkstwo_t[3] = {INTSXP, REALSXP, REALSXP};
@@ -70,6 +72,7 @@ static const R_CMethodDef CEntries[]  = {
     {"dansari", (DL_FUNC) &dansari, 4, dansari_t},
     {"fexact",   (DL_FUNC) &fexact, 11, fexact_t},
     {"pansari",  (DL_FUNC)&pansari, 4, pansari_t},
+    {"pkolmogorov2x", (DL_FUNC) &pkolmogorov2x, 2, pkolmogorov2x_t},
     {"pkendall", (DL_FUNC)  &pkendall, 3, pkendall_t},
     {"pkstwo", (DL_FUNC) &pkstwo, 3, pkstwo_t},
     {"prho", (DL_FUNC) &prho, 5, prho_t},

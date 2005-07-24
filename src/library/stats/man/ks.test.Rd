@@ -18,8 +18,8 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
     one of \code{"two.sided"} (default), \code{"less"}, or
     \code{"greater"}.  You can specify just the initial letter.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
-    p-value should be computed.  See Details for the meaning of \code{NULL}.
-    Only used in the two-sided two-sample case.}
+    p-value should be computed.  See Details for the meaning of
+    \code{NULL}.  Only used in the two-sided cases.}
   
 }
 \details{
@@ -30,10 +30,11 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   Alternatively, \code{y} can be a character string naming a continuous
   distribution function.  In this case, a one-sample test is carried
   out of the null that the distribution function which generated
-  \code{x} is distribution \code{y} with parameters specified by \code{\dots}.
+  \code{x} is distribution \code{y} with parameters specified by
+  \code{\dots}.
 
-  The presence of ties generates a warning, since continuous distributions
-  do not generate them.
+  The presence of ties generates a warning, since continuous
+  distributions do not generate them.
 
   The possible values \code{"two.sided"}, \code{"less"} and
   \code{"greater"} of \code{alternative} specify the null hypothesis
@@ -42,11 +43,14 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   (one-sample case) or the distribution function of \code{y} (two-sample
   case), respectively.
 
-  Exact p-values are only available for the two-sided two-sample test
-  with no ties.  In that case, if \code{exact = NULL} (the default) an
-  exact p-value is computed if the product of the sample sizes is less
-  than 10000.  Otherwise, asymptotic distributions are used whose
-  approximations may be inaccurate in small samples.
+  Exact p-values are available for the two-sided tests with no ties.  In
+  that case.  If \code{exact = NULL} (the default), an exact p-value is
+  computed if the sample size if less than 100 in the one-sample case,
+  and if the product of the sample sizes is less than 10000 in the
+  two-sample case.  Otherwise, asymptotic distributions are used whose
+  approximations may be inaccurate in small samples.  In the one-sample
+  two-sided case, exact p-values are obtained as described in Marsaglia,
+  Tsang & Wang (2003).
 
   If a single-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
@@ -74,6 +78,12 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   Durbin, J. (1973)
   \emph{Distribution theory for tests based on the sample distribution
     function}.  SIAM.
+
+  George Marsaglia, Wai Wan Tsang & Jingbo Wang (2003),
+  Evaluating Kolmogorov's distribution.
+  \emph{Journal of Statistical Software}, \bold{8}/18.
+  \url{http://www.jstatsoft.org/v08/i18/}.
+  
 }
 \seealso{
   \code{\link{shapiro.test}} which performs the Shapiro-Wilk test for
@@ -85,7 +95,8 @@ y <- runif(30)
 # Do x and y come from the same distribution?
 ks.test(x, y)
 # Does x come from a shifted gamma distribution with shape 3 and scale 2?
-ks.test(x+2, "pgamma", 3, 2) # two-sided
+ks.test(x+2, "pgamma", 3, 2) # two-sided, exact
+ks.test(x+2, "pgamma", 3, 2, exact = FALSE)
 ks.test(x+2, "pgamma", 3, 2, alternative = "gr")
 }
 \keyword{htest}

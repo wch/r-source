@@ -33,7 +33,7 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                             "two.sided" = max(abs(z)),
                             "greater" = max(z),
                             "less" = - min(z))
-        if(exact && alternative == "two.sided" && !TIES)
+        if(exact && (alternative == "two.sided") && !TIES)
             PVAL <- 1 - .C("psmirnov2x",
                            p = as.double(STATISTIC),
                            as.integer(n.x),
@@ -45,14 +45,24 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
             y <- get(y, mode="function")
         if(mode(y) != "function")
             stop("'y' must be numeric or a string naming a valid function")
+        if(is.null(exact))
+            exact <- (n < 100)
         METHOD <- "One-sample Kolmogorov-Smirnov test"
-        if(length(unique(x)) < n)
+        TIES <- FALSE
+        if(length(unique(x)) < n) {
             warning("cannot compute correct p-values with ties")
+            TIES <- TRUE
+        }
         x <- y(sort(x), ...) - (0 : (n-1)) / n
         STATISTIC <- switch(alternative,
                             "two.sided" = max(c(x, 1/n - x)),
                             "greater" = max(1/n - x),
                             "less" = max(x))
+        if(exact && (alternative == "two.sided") && !TIES)
+            PVAL <- 1 - .C("pkolmogorov2x",
+                           p = as.double(STATISTIC),
+                           as.integer(n),
+                           PACKAGE = "stats")$p
     }
 
     names(STATISTIC) <- switch(alternative,
@@ -91,8 +101,6 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
         ## (1973), if m < n / 10, we should use the
         ## * Kolmogorov approximation with c.c. -1/(2*n) if 1 < m < 80;
         ## * Smirnov approximation with c.c. 1/(2*sqrt(n)) if m >= 80.
-        ## Also, we should use exact values in the two-sided one-sample
-        ## case if the sample size is small (< 80).
         PVAL <- ifelse(alternative == "two.sided",
                        1 - pkstwo(sqrt(n) * STATISTIC),
                        exp(- 2 * n * STATISTIC^2))
