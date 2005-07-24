@@ -519,6 +519,7 @@ are installed.
 
 The configure option @option{--libdir} controls where the main @R{} files
 are installed: the default is in fact
+
 @example
 libdir=EPREFIX/$@{LIBnn@}
 @end example
@@ -573,6 +574,7 @@ You can uninstall @R{} by
 @example
 make uninstall
 @end example
+
 @noindent
 specifying @code{prefix} etc in the same way as specified for
 installation.
@@ -645,9 +647,12 @@ Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from
 @acronym{CRAN}.  Open a commands window (or another shell) at a
 directory @emph{whose path does not contain spaces}.  We will call this
 directory @var{R_HOME} below.  Run
+
 @example
 tar zxvf R-@value{VERSIONno}.tgz
 @end example
+
+@noindent
 to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
 @code{tar} to extract the sources rather than broken tools such as
 WinZip that don't understand about symbolic links.
@@ -674,6 +679,7 @@ You need to obtain copies of the recommended packages from
 @acronym{CRAN}.  Put the @file{.tar.gz} files in
 @file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync}
 and an Internet connection, you can do this automatically using
+
 @example
 make rsync-recommended
 @end example
@@ -715,8 +721,9 @@ lower case) did not work.
 Open a commands window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
 @file{MkRules} to set the appropriate paths as needed and to set the
 type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
-contains tabs and some editors (e.g. WinEdt) silently remove them.  Then
-run
+contains tabs and some editors (e.g., WinEdt) silently remove them.
+Then run
+
 @example
 make
 @end example
@@ -747,9 +754,11 @@ imposes a considerable performance penalty.
 
 @item
 You can run a parallel make by e.g.
+
 @example
 make -j2
 @end example
+
 @noindent
 but this is only likely to be worthwhile on a dual-processor (or
 perhaps a hyperthreaded P4) machine with ample (at least 384Mb) of
@@ -772,6 +781,7 @@ version 6b is named @file{jpeg-6b}; if you use a different version, edit
 @file{Makefile} and change the definition of @code{JPEGDIR}.
 
 Example:
+
 @example
 > tar xzvf libpng-1.2.8.tar.gz
 > mv libpng-1.2.8 libpng
@@ -815,10 +825,14 @@ by an Internet search.
 @subsection Building the recommended packages
 
 The recommended packages can be built by
+
 @example
 make recommended
 @end example
+
+@noindent
 and checked by
+
 @example
 make check-recommended
 @end example
@@ -827,19 +841,27 @@ make check-recommended
 @subsection Building the manuals
 
 The pdf manuals can be made by
+
 @example
 make manuals
 @end example
+
+@noindent
 If you want to make the info versions (not the Reference Manual), use
+
 @example
 cd ../../doc/manual
 make -f Makefile.win info
 @end example
+
+@noindent
 To make DVI versions of the manuals use
+
 @example
 cd ../../doc/manual
 make -f Makefile.win dvi
 @end example
+
 @noindent
 (all assuming you have @command{tex} and @command{latex} installed and
 in your path).
@@ -855,10 +877,12 @@ complete R build, including bitmap and Tcl/Tk support and the manuals,
 as well as the recommended packages.
 
 Once everything is set up
+
 @example
 make distribution
 make check-all
 @end example
+
 @noindent
 will make all the pieces and the installers and put them in the
 @file{gnuwin32/cran} subdirectory, then check the build.  This works by
@@ -889,11 +913,12 @@ be run first.
 
 If you want to customize the installation by adding extra packages,
 replace @code{make rinstaller} by something like
+
 @example
 make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 @end example
-@noindent
 
+@noindent
 An alternative way to customize the installer starting with a binary
 distribution is given in file @file{installer/INSTALL}.
 
@@ -924,6 +949,7 @@ Then: untar @file{R-2.x.y.tgz} somewhere, and
 @example
 cd /somewhere/R-2.x.y/src/gnuwin32
 @end example
+
 Edit @file{MkRules} to set @code{BUILD=CROSS} and the appropriate
 paths (including @code{HEADER}) as needed.
 
@@ -943,11 +969,13 @@ leave as an exercise for the reader.)
 
 To distribute a cross-build (or just to transfer it to a Windows machine
 for testing) use
+
 @example
 cd installer
 make imagedir
 zip -r9X R-2.0.0.zip R-2.2.0  # or something similar
 @end example
+
 We have not found a reliable way to convert base to lazy-loading when
 cross-building, so it is left in the old format.
 
@@ -1075,6 +1103,7 @@ and install packages @pkg{pkg1} and @pkg{pkg2} by
 Unless the library is specified (argument @code{lib}) the first library
 in the library search path is used.  If you want to fetch a package and
 all those it depends on that are not already installed, use e.g.
+
 @example
 > install.packages("Rcmdr", dependencies = TRUE)
 @end example
@@ -1137,19 +1166,25 @@ compilation steps is to set variables in a file
 @file{src/Makevars.win}, which will automatically be included by
 @file{MakeDLL}. For example, for RODBC @file{src/Makevars.win} could
 include the line
+
 @example
 DLLLIBS+=-lodbc32
 @end example
+
 @noindent
 or, equivalently,
+
 @example
 RODBC-DLLLIBS=-lodbc32
 @end example
+
 @noindent
 but in fact contains the single line
+
 @example
 PKG_LIBS=-lodbc32
 @end example
+
 @noindent
 If you have a file @file{src/Makefile.win}, that will be used as the
 makefile for source compilation in place of our makefile and
@@ -1207,10 +1242,13 @@ few large data files.
 @item
 @code{pkgcheck-foo} to check the package (like @code{R CMD CHECK foo}).
 @end itemize
+
 Using this approach allows variables to be set during the build, e.g.
+
 @example
 make PKGDIR=/mysources RLIB=/R/library pkg-foo
 @end example
+
 Some variables that may be used include:
 @itemize
 @item
@@ -1877,9 +1915,12 @@ underlying OS has insufficiently standard C functions to support it.
 The @code{configure} report will show @code{NLS} as one of the 
 `Additional capabilities' if support has been compiled in, and running
 in an English locale (but not the @code{C} locale) will include
+
 @example
   Natural language support but running in an English locale
 @end example
+
+@noindent
 in the greeting on starting R.
 
 
@@ -2172,9 +2213,12 @@ might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
 
 For versions with both 64- and 32-bit support, it is likely that
+
 @example
 LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 @end example
+
+@noindent
 is appropriate since most (but not all) software installs its 64-bit
 libraries in @file{/usr/local/lib64}.
 
@@ -2466,6 +2510,7 @@ zones (see below).  A 64-bit executable has not been successfully
 built.
 
 To build @R{} with @command{gcc} use the following configuration flags
+
 @example
 CPPFLAGS="-I/usr/freeware/include" 
 LDFLAGS="-L/usr/freeware/lib32"
@@ -2478,9 +2523,11 @@ To build the Tcl/Tk package you need to add
 --with-tkconfig=/usr/freeware/lib/tkConfig.sh
 @end example
 
-@noindent since these configuration scripts are not on your path.
+@noindent
+since these configuration scripts are not on your path.
 
-To build @R{} with the native compilers, use the following configuration flags
+To build @R{} with the native compilers, use the following configuration
+flags
 
 @example
 CC=cc F77=f77 CXX=CC 
@@ -2590,15 +2637,17 @@ CXXFLAGS='-O -qstrict'
 and the @code{X11()} device worked.  [His system required the
 @file{Makeconf} file to be edited to replace @file{/lib/crt0.o} by
 @file{/lib/crt0_64.o} in @code{R_XTRA_LIBS}, but @command{configure} now
-tries to detect this.]  
+tries to detect this.]
 
 Paul Boutros reported success building @R{} 2.0.1 under AIX 5.2 with
 @code{gcc 3.3.2} using
+
 @example
 OBJECT_MODE=64
 MAIN_LDFLAGS=-Wl,-brtl
 SHLIB_LDFLAGS=-Wl,-G
 @end example
+
 @noindent
 (note it is @code{Wl} (W ell) not @code{W1} (W one)).
 
@@ -2622,6 +2671,7 @@ device used the @acronym{GNOME} canvas, and is not currently available.
 
 The sources for the @acronym{GNOME} console for @R{} are now available
 as package @pkg{gnomeGUI} on @acronym{CRAN} and @emph{via} Subversion by
+
 @example
 svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
 @end example
