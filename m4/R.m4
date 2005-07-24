@@ -308,11 +308,23 @@ if test "${GCC}" = yes; then
   AC_LANG_POP(C)
 fi])# R_PROG_CPP_CPPFLAGS
 
+## R_PROG_CC_VERSION
+## -----------------
+## Determine the version of the C compiler (currently only for gcc).
+AC_DEFUN([R_PROG_CC_VERSION],
+[AC_REQUIRE([AC_PROG_CC])
+CC_VERSION=
+if test "${GCC}" = yes; then
+  CC_VERSION=`${CC} -v 2>&1 | grep "^.*g.. version" | \
+    sed -e 's/^.*g.. version *//'`
+fi])# R_PROG_CC_VERSION
+
 ## R_PROG_CC_M
 ## -----------
 ## Check whether we can figure out C Make dependencies.
 AC_DEFUN([R_PROG_CC_M],
-[AC_MSG_CHECKING([whether we can compute C Make dependencies])
+[AC_REQUIRE([R_PROG_CC_VERSION])
+AC_MSG_CHECKING([whether we can compute C Make dependencies])
 AC_CACHE_VAL([r_cv_prog_cc_m],
 [echo "#include <math.h>" > conftest.c
 ## No real point in using AC_LANG_* and ${ac_ext}, as we need to create
@@ -326,9 +338,7 @@ AC_CACHE_VAL([r_cv_prog_cc_m],
 ## For gcc 3.2 or better, we want to use '-MM' in case this works.
 cc_minus_MM=false
 if test "${GCC}" = yes; then
-  gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
-    sed -e 's/^.*g.. version *//'`
-  case "${gcc_version}" in
+  case "${CC_VERSION}" in
     1.*|2.*|3.[[01]]*) ;;
     *) cc_minus_MM="${CC} -MM" ;;
   esac
@@ -696,7 +706,7 @@ fi
 ##   F90: f90 xlf90 pgf90 pghpf epcf90
 ##   F77: g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77
 ##
-## We use these in the order F77 F95 F90, with the following exceptions:
+## We use basically the same, with the following exceptions:
 ## * On HP-UX fort77 is the POSIX-compatible native compiler and
 ##   f77 is not: hence we need look for fort77 first!
 ## <FIXME>
@@ -708,6 +718,10 @@ fi
 ##   around f2c (last in the list).  It no longer has, but we still do.
 ## <FIXME>
 ##   Is this still needed?
+## Earlier versions used the order F77 F95 F90, which gives trouble if
+## GCC 4.x and 3.x suites are installed with gcc being from 4.0, as then
+## g77 is picked up ahead of gfortran (and according to Bill Northcott
+## <w.northcott@unsw.edu.au> this actually happens on OSX).
 ## </FIXME>
 
 AC_DEFUN([R_PROG_F77_OR_F2C],
@@ -724,17 +738,17 @@ elif test -z "${F2C}"; then
   F77=
   case "${host_os}" in
     hpux*)
-      AC_CHECK_PROGS(F77, [g77 fort77 f77 xlf frt pgf77 cf77 fl32 af77 \
-			   f95 fort xlf95 ifort ifc efc pgf95 lf95 \
+      AC_CHECK_PROGS(F77, [f95 fort xlf95 ifort ifc efc pgf95 lf95 \
 			     gfortran ftn g95 \
 			   f90 xlf90 pgf90 pghpf epcf90 \
+                           g77 fort77 f77 xlf frt pgf77 cf77 fl32 af77 \
 			   fc])
       ;;
     *)
-      AC_CHECK_PROGS(F77, [g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77 \
-			   f95 fort xlf95 ifort ifc efc pgf95 lf95 \
+      AC_CHECK_PROGS(F77, [f95 fort xlf95 ifort ifc efc pgf95 lf95 \
 			     gfortran ftn g95 \
 			   f90 xlf90 pgf90 pghpf epcf90 \
+                           g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77 \
 			   fc])
       ;;
   esac
