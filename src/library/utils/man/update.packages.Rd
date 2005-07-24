@@ -51,10 +51,10 @@ contrib.url(repos, type = getOption("pkgType"))
     \code{"http://cran.r-project.org"} or its Statlib mirror,
     \code{"http://lib.stat.cmu.edu/R/CRAN"}.
 #ifdef unix
-    Can be \code{NULL} to install from local \code{.tar.gz} files.
+    Can be \code{NULL} to install from local \file{.tar.gz} files.
 #endif
 #ifdef windows
-    Can be \code{NULL} to install from local \code{.zip} files.
+    Can be \code{NULL} to install from local \file{.zip} files.
 #endif
   }
   \item{contriburl}{URL(s) of the contrib section of the
@@ -62,10 +62,10 @@ contrib.url(repos, type = getOption("pkgType"))
     incomplete, e.g., because you burned only the \file{contrib} section on a
     CD.  Overrides argument \code{repos}.
 #ifdef unix
-    Can be \code{NULL} to install from local \code{.tar.gz} files.
+    Can be \code{NULL} to install from local \file{.tar.gz} files.
 #endif
 #ifdef windows
-    Can also be \code{NULL} to install from local \code{.zip} files.
+    Can also be \code{NULL} to install from local \file{.zip} files.
 #endif
   }
   \item{method}{Download method, see \code{\link{download.file}}.}
@@ -73,10 +73,10 @@ contrib.url(repos, type = getOption("pkgType"))
     current versions should be downloaded from the repositories.
     If \code{repos = NULL}, a character vector of file paths of
 #ifdef windows
-    \code{.zip} files.
+    \file{.zip} files.
 #endif
 #ifdef unix
-    \code{.tar.gz} files.  These can be source archives or binary
+    \file{.tar.gz} files.  These can be source archives or binary
     package/bundle archive files (as created by \code{R CMD build --binary}).
 #endif
     If this is a zero-length character vector, a listbox of available
