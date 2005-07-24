@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2004 R Core Team
+### Copyright (C) 1998-2005 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -571,9 +571,15 @@ case "${host_os}" in
     ## MacOS 10.3 and 10.4 do
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
-    ## http://developer.apple.com /documentation/MacOSX/ has nothing
-    ## official.
-    AC_CHECK_LIB(cc_dynamic, main)
+    ## http://developer.apple.com/documentation/MacOSX/ has nothing
+    ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
+    ## that it is only needed to GCC 3.x ...
+    if test "${GCC}" = yes; then
+      case "${CC_VERSION}" in
+        3.*)
+          AC_CHECK_LIB(cc_dynamic, main) ;;
+      esac
+    fi
     ;;
   *)
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
@@ -955,16 +961,10 @@ case "${host_os}" in
     ## main_ldflags="-framework Carbon"
     ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
     if test "${GCC}" = yes; then
-      ## <FIXME>
-      ## R_PROG_CC_M() has the same code for determining the gcc
-      ## version.  Move this into e.g. _R_PROG_CC_VERSION.
-      gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
-        sed -e 's/^.*g.. version *//'`
-      case "${gcc_version}" in
+      case "${CC_VERSION}" in
         3.*)
           R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic]) ;;
       esac
-      ## </FIXME>
     fi
     case "${host_os}" in
       ## According to Jan de Leeuw, OS X 10.1 is darwin 5, OS X 10.2 is
