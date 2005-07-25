@@ -2038,23 +2038,28 @@ variable @code{MAKE} at configure time, for example
 
 To compile @R{}, you need a FORTRAN compiler or @command{f2c}, the
 FORTRAN-to-C converter (@url{http://www.netlib.org/f2c}).  The default
-is to search for @command{g77}, @command{f77}, @command{xlf},
-@command{frt}, @command{pgf77}, @command{fort77}, @command{fl32},
-@command{af77},@command{f90}, @command{xlf90}, @command{pgf90},
-@command{epcf90}, @command{f95}, @command{fort}, @command{xlf95},
-@command{ifc}, @command{efc}, @command{pgf95} @command{lf95}, and
-@command{gfortran} (in that order)@footnote{On HP-UX @command{fort77} is
-the @acronym{POSIX} compliant FORTRAN compiler, and comes second in the
-search list.}, and then for @command{f2c}, and use whichever is found
-first; if none is found, @R{} cannot be compiled.  The search mechanism
-can be changed using the configure variables @code{F77} and @code{F2C}
-which specify the commands that run the FORTRAN 77 compiler and
-FORTRAN-to-C converter, respectively.  If @code{F77} is given, it is
-used to compile FORTRAN; otherwise, if @code{F2C} is given, f2c is used
-even if a FORTRAN compiler would be be available.  If your FORTRAN
-compiler is in a non-standard location, you should set the environment
-variable @env{PATH} accordingly before running @command{configure}, or
-use the configure variable @code{F77} to specify its full path.
+is to search for @command{f95}, @command{fort}, @command{xlf95},
+@command{ifc}, @command{efc}, @command{pgf95} @command{lf95},
+@command{gfortran}, @command{ftn} @command{f90}, @command{xlf90},
+@command{pgf90}, @command{epcf90}, @command{g77}, @command{f77},
+@command{xlf}, @command{frt}, @command{pgf77}, @command{fort77},
+@command{fl32}, @command{af77} (in that order)@footnote{On HP-UX
+@command{fort77} is the @acronym{POSIX} compliant FORTRAN compiler, and
+comes after @command{g77}.}, and then for @command{f2c}, and use
+whichever is found first; if none is found, @R{} cannot be compiled.
+However, if @command{CC} is @command{gcc}, the matching Fortran compiler
+(@command{g77} for @command{gcc 3} and @code{gfortran} for @command{gcc 4})
+is used if available.
+
+The search mechanism can be changed using the configure variables
+@code{F77} and @code{F2C} which specify the commands that run the
+FORTRAN 77 compiler and FORTRAN-to-C converter, respectively.  If
+@code{F77} is given, it is used to compile FORTRAN; otherwise, if
+@code{F2C} is given, f2c is used even if a FORTRAN compiler would be be
+available.  If your FORTRAN compiler is in a non-standard location, you
+should set the environment variable @env{PATH} accordingly before
+running @command{configure}, or use the configure variable @code{F77} to
+specify its full path.
 
 If your FORTRAN libraries are in slightly peculiar places, you should
 also look at @env{LD_LIBRARY_PATH} or your system's equivalent to make
@@ -2087,17 +2092,22 @@ on a 32-bit platform but not on a 64-bit platform.
 @node Using gfortran,  , Using FORTRAN, Using FORTRAN
 @subsection Using gfortran
 
-@command{gfortran} is the F95 compiler that is part of @code{gcc 4.0.0}.
-At least on @code{ix86} and @code{x86_64} Linux and MacOS X there is a
-problem with using the dynamic version of the Fortran runtime
-@code{libgfortran}: if this is loaded redirection of C @file{stdin}
+@command{gfortran} is the F95 compiler that is part of @code{gcc 4.x.y}.
+
+There was a problem with the version in the @code{gcc 4.0.0} release and
+most pre-releases.  At least on @code{ix86} and @code{x86_64} Linux and
+MacOS X the dynamic version of the Fortran runtime @code{libgfortran}
+could not be used: if this is loaded redirection of C @file{stdin}
 (which @R{} uses in many of its scripts) becomes non-functional.  A
 workaround is to set the environment variable @env{GFORTRAN_STDIN_UNIT}
-to @code{-1}, but versions before 10 April 2005 had a bug causing the
-setting to be ignored.  This problem has been fixed for @code{gcc 4.0.1}
-and the workaround will become unnecessary.  The version of
-@command{gfortran} shipping with Fedora Core 4 seems to have the
-workaround in place.
+to @code{-1}, but versions before 10 April 2005 had another bug causing
+the setting to be ignored.  Both problems have been fixed for @code{gcc
+4.0.1}.  The version of @command{gfortran} shipping with Fedora Core 4
+seems to have the fixes in place.
+
+Some versions of @command{g95} (from @url{www.g95.org}) have the same
+problem.
+ 
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
