@@ -38,7 +38,7 @@ BUG FIXES
 	builds of R.
 
     o	pgamma(Inf, 1.1) did not terminate (PR#8001).
-    
+
     o	regexpr("[a-z]", ...) could cause a buffer overrun with multi-byte
     	character sets, leading to random errors later.
 
@@ -46,6 +46,8 @@ BUG FIXES
 	files but those files generate no objects (e.g. the BioC
 	package	makecdfenv) created an incorrectly formatted data
 	index that data(package="pkg") could not read.
+
+    o	density(1/(0:2)) now works again (PR#8033).
 
 
 

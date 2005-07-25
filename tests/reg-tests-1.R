@@ -3667,3 +3667,8 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 
 ## Multibyte character set regular expressions had buffer overrun
 regexpr("[a-z]", NA)
+
+## PR#8033: density with 'Inf' in x:
+d <- density(1/0:2, kern = "rect", bw=1, from=0, to=1, n=2)
+stopifnot(all.equal(rep(2/(9*sqrt(3)), 2), d$y, tol=1e-14))
+## failed in R 2.1.1 (since about 1.9.0)
