@@ -3665,6 +3665,16 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 ### end of tests added in 2.1.0 patched ###
 
 
+## Multibyte character set regular expressions had buffer overrun
+regexpr("[a-z]", NA)
+## crashed on 2.1.1 on Windows in MBCS build.
+
+## PR#8033: density with 'Inf' in x:
+d <- density(1/0:2, kern = "rect", bw=1, from=0, to=1, n=2)
+stopifnot(all.equal(rep(2/(9*sqrt(3)), 2), d$y, tol=1e-14))
+## failed in R 2.1.1 (since about 1.9.0)
+
+
 ## tests of hexadecimal constants
 x <- 0xAbc
 stopifnot(x == 2748)
@@ -3690,10 +3700,6 @@ unlink("x.Rda")
 ## PR#7922:  Could not use expression() as an initial expression value
 setClass("test2", representation(bar = "expression"))
 new("test2", bar = expression())
-
-## Multibyte character set regular expressions had buffer overrun
-regexpr("[a-z]", NA)
-## crashed on 2.1.1 on Windows in MBCS build.
 
 ## Ops.data.frame had the default check.names=TRUE
 DF <- data.frame("100"=1:2, "200"=3:4, check.names=FALSE)

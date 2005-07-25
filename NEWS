@@ -400,6 +400,8 @@ BUG FIXES
 	package	makecdfenv) created an incorrectly formatted data
 	index that data(package="pkg") could not read.
 
+    o	density(1/(0:2)) now works again (PR#8033).
+
 
 
 		CHANGES IN R VERSION 2.1.1
