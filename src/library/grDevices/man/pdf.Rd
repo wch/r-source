@@ -20,7 +20,10 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
     paper, encoding, bg, fg, pointsize)
 }
 \arguments{
-  \item{file}{a character string giving the name of the file.}
+  \item{file}{a character string giving the name of the file.
+    For use with \code{onefile=FALSE} give a \code{printf} format such
+    as \code{"Rplot\%03d.pdf"} (the default in that case).
+  }
   \item{width, height}{the width and height of the graphics region in
     inches.}
   \item{onefile}{logical: if true (the default) allow multiple figures
@@ -68,6 +71,11 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   \code{pdf()} opens the file \code{file} and the PDF commands needed to
   plot any graphics requested are sent to that file.
 
+  The \code{file} argument is interpreted as a C integer format as used
+  by \code{\link{sprintf}}, with integer argument the page number.
+  The default gives files \file{Rplot001.pdf}, \dots, \file{Rplot999.pdf},
+  \file{Rplot1000.pdf}, \dots.
+  
   The \code{family} argument can be used to specify either a
   device-independent R graphics font family (see
   \code{postscriptFonts}) or a PDF-specific

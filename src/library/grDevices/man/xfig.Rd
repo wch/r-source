@@ -14,11 +14,9 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
      onefile = FALSE, \dots)
 }
 \arguments{
-  \item{file}{a character string giving the name of the file.  If it is
-    \code{""}, the output is piped to the command given by the argument
-    \code{command}.  For use with \code{onefile = FALSE} give a
-    \code{printf} format such as \code{"Rplot\%d.fig"} (the default in
-    that case).}
+  \item{file}{a character string giving the name of the file.   For use
+    with \code{onefile = FALSE} give a \code{printf} format such as
+    \code{"Rplot\%d.fig"} (the default in that case).}
   \item{onefile}{logical: if true allow multiple figures
     in one file. If false, assume only one page per file and generate a
     file number containing the page number.}
@@ -54,6 +52,11 @@ xfig(file = ifelse(onefile, "Rplots.fig", "Rplot\%03d.fig"),
   Although \code{xfig} can produce multiple plots in one file, the XFig
   format does not say how to separate or view them.  So
   \code{onefile = FALSE} is the default.
+
+  The \code{file} argument is interpreted as a C integer format as used
+  by \code{\link{sprintf}}, with integer argument the page number.
+  The default gives files \file{Rplot001.fig}, \dots, \file{Rplot999.fig},
+  \file{Rplot1000.fig}, \dots.  
 
   Line widths as controlled by \code{par(lwd=)} are in multiples of
   5/6*1/72 inch.  Multiples less than 1 are allowed.  \code{pch="."} with
