@@ -728,6 +728,7 @@ fi
 ##   F90 in use).
 AC_DEFUN([R_PROG_F77_OR_F2C],
 [AC_BEFORE([$0], [AC_PROG_LIBTOOL])
+AC_REQUIRE([R_PROG_CC_VERSION])
 if test -n "${F77}" && test -n "${F2C}"; then
   warn_F77_and_F2C="both 'F77' and 'F2C' given.
 Using the given Fortran 77 compiler ..."
@@ -749,8 +750,8 @@ elif test -z "${F2C}"; then
   GCC_Fortran_compiler=
   if test "${GCC}" = yes; then
     case "${CC_VERSION}" in
-      3.*) GCC_FORTRAN_compiler=g77 ;;
-      4.*) GCC_FORTRAN_compiler=gfortran ;;
+      3.*) GCC_Fortran_compiler=g77 ;;
+      4.*) GCC_Fortran_compiler=gfortran ;;
     esac
   fi
   AC_CHECK_PROGS(F77, [ ${GCC_Fortran_compiler} ${F95_compilers} \
