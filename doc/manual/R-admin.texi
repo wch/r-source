@@ -150,6 +150,7 @@ built in exactly the same way as distributions of R releases.
 
 @node Using Subversion and rsync,  , Getting patched and development versions, Getting patched and development versions
 @subsection Using Subversion and rsync
+@cindex Subversion
 
 Sources are also available via @url{https://svn.R-project.org/R/}, the
 R Subversion repository.  If you have a Subversion client (see
@@ -182,8 +183,8 @@ Certificate information:
 (currently, there is no ``trusted certificate'').  You can accept this
 certificate permanently and will not be asked about it anymore.
 
-Note that retrieving the sources by e.g. @command{wget -r} from that URL
-will not work: the Subversion information is needed to build @R{}.
+Note that retrieving the sources by e.g. @command{wget -r} or @command{svn export}
+from that URL will not work: the Subversion information is needed to build @R{}.
 
 The Subversion repository does not contain the current sources for the
 recommended packages, which can be obtained by @code{rsync} or
@@ -338,6 +339,7 @@ documentation files via @acronym{CRAN}.
 For those obtaining @R{} @emph{via} Subversion, one additional step is
 necessary:
 @cindex Vignettes
+@cindex Subversion
 
 @example
 make vignettes
@@ -656,6 +658,9 @@ tar zxvf R-@value{VERSIONno}.tgz
 to create the source tree in @var{R_HOME}.  @strong{Beware}: do use
 @code{tar} to extract the sources rather than broken tools such as
 WinZip that don't understand about symbolic links.
+
+It is also possible to obtain the source code using Subversion; see 
+@ref{Obtaining R} for details.
 
 @item
 Extract the international character support file @file{iconv.dll} from
@@ -1614,6 +1619,7 @@ The typeset documentation and building vignettes needs @command{tex} and
 
 If you want to build from the R Subversion repository you need Perl,
 @command{makeinfo} and @command{pdflatex}.
+@cindex Subversion
 
 
 @node Useful libraries and programs,  , Essential programs, Essential and useful other programs in Unix
@@ -2681,6 +2687,7 @@ device used the @acronym{GNOME} canvas, and is not currently available.
 
 The sources for the @acronym{GNOME} console for @R{} are now available
 as package @pkg{gnomeGUI} on @acronym{CRAN} and @emph{via} Subversion by
+@cindex Subversion
 
 @example
 svn co https://svn.r-project.org/R-packages/trunk/gnomeGUI
