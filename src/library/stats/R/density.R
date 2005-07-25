@@ -34,7 +34,7 @@ density <-
     x.finite <- is.finite(x)
     if(any(!x.finite)) {
         x <- x[x.finite]
-        nx <- sum(x.finite)
+        nx <- length(x) # == sum(x.finite)
     }
     n.user <- n
     n <- max(n, 512)
