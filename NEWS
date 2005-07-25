@@ -347,6 +347,9 @@ BUG FIXES
     o	DF <- data.frame(A=1:2, B=3:4); DF[1, 1:3] <- NULL gave wrong
 	error message.
 
+    o	spline()/spinefun()'s C code had a memory access buglet which
+	never lead incorrect results (PR#8030).
+
 
 
 	**************************************************
