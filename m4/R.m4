@@ -718,12 +718,14 @@ fi
 ##   around f2c (last in the list).  It no longer has, but we still do.
 ## <FIXME>
 ##   Is this still needed?
-## Earlier versions used the order F77 F95 F90, which gives trouble if
-## GCC 4.x and 3.x suites are installed with gcc being from 4.0, as then
-## g77 is picked up ahead of gfortran (and according to Bill Northcott
-## <w.northcott@unsw.edu.au> this actually happens on OSX).
 ## </FIXME>
-
+## * If the C compiler is gcc, we try looking for a matching GCC Fortran
+##   compiler (gfortran for 4.x, g77 for 3.x) first.  This should handle
+##   problems if GCC 4.x and 3.x suites are installed and, depending on
+##   the gcc default, the "wrong" GCC Fortran compiler is picked up (as
+##   reported by Bill Northcott <w.northcott@unsw.edu.au> for OSX with
+##   4.0 as default and g77 around and the "old" search order F77 F95
+##   F90 in use).
 AC_DEFUN([R_PROG_F77_OR_F2C],
 [AC_BEFORE([$0], [AC_PROG_LIBTOOL])
 if test -n "${F77}" && test -n "${F2C}"; then
@@ -736,22 +738,23 @@ if test -n "${F77}"; then
   AC_MSG_RESULT([defining F77 to be ${F77}])
 elif test -z "${F2C}"; then
   F77=
+  F95_compilers="f95 fort xlf95 ifort ifc efc pgf95 lf95 gfortran ftn g95"
+  F90_compilers="f90 xlf90 pgf90 pghpf epcf90"
   case "${host_os}" in
     hpux*)
-      AC_CHECK_PROGS(F77, [f95 fort xlf95 ifort ifc efc pgf95 lf95 \
-			     gfortran ftn g95 \
-			   f90 xlf90 pgf90 pghpf epcf90 \
-                           g77 fort77 f77 xlf frt pgf77 cf77 fl32 af77 \
-			   fc])
-      ;;
+      F77_compilers="g77 fort77 f77 xlf frt pgf77 cf77 fl32 af77" ;;
     *)
-      AC_CHECK_PROGS(F77, [f95 fort xlf95 ifort ifc efc pgf95 lf95 \
-			     gfortran ftn g95 \
-			   f90 xlf90 pgf90 pghpf epcf90 \
-                           g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77 \
-			   fc])
-      ;;
+      F77_compilers="g77 f77 xlf frt pgf77 cf77 fort77 fl32 af77" ;;
   esac
+  GCC_Fortran_compiler=
+  if test "${GCC}" = yes; then
+    case "${CC_VERSION}" in
+      3.*) GCC_FORTRAN_compiler=g77 ;;
+      4.*) GCC_FORTRAN_compiler=gfortran ;;
+    esac
+  fi
+  AC_CHECK_PROGS(F77, [ ${GCC_Fortran_compiler} ${F95_compilers} \
+                        ${F90_compilers} ${F77_compilers} fc ])
   if test -z "${F77}"; then
     AC_CHECK_PROG(F2C, f2c, f2c, [])
   fi
