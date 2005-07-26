@@ -17,9 +17,9 @@ sum(\dots, na.rm = FALSE)
   \item{na.rm}{logical. Should missing values be removed?}
 }
 \value{
-  The sum. If all of \code{\dots} are of type integer, then so is the
-  sum, and in that case the result will be \code{NA} (with a warning)
-  if integer overflow occurs.
+  The sum. If all of \code{\dots} are of type integer or logical, then
+  so is the sum, and in that case the result will be \code{NA} (with a
+  warning) if integer overflow occurs.
 
   NB: the sum of an empty set is zero, by definition.
 }

@@ -3706,3 +3706,11 @@ DF <- data.frame("100"=1:2, "200"=3:4, check.names=FALSE)
 DF/DF
 stopifnot(identical(names(DF), names(DF/DF)))
 ## DF/DF names had X prepended < 2.2.0
+
+
+## sum(T) was double
+x <- 1:10
+stopifnot(typeof(sum(x)) == "integer")
+x <- c(TRUE, FALSE)
+stopifnot(typeof(sum(x)) == "integer")
+## double < 2.2.0
