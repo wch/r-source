@@ -85,7 +85,8 @@ is.data.frame(x)
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{data.frame}}
+  \code{\link{data.frame}}, \code{\link{as.data.frame.table}} for the
+  \code{table} method (which has additional arguments if called directly).
 }
 \keyword{classes}
 \keyword{methods}
