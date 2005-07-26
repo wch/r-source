@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-07-22
+@set FAQ_DATE @value{FAQ_YEAR}-07-26
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2232,6 +2232,10 @@ Measures of concordance and reliability.
 @item conf.design
 A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
+@item copula
+Classes of commonly used copulas (including elliptical and Archimedian),
+and methods for density, distribution, random number generators, and
+plotting.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
 @item cramer
@@ -3308,6 +3312,8 @@ Task-Parallel R package.
 @item tdist
 Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
+@item tdthap
+Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
 Tensor product of arrays.
 @item time
@@ -3323,6 +3329,8 @@ assessment from tree-rings.
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
+@item tseriesChaos
+Routines for the analysis of non-linear time series.
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
