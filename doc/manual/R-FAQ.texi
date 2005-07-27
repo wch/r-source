@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-07-26
+@set FAQ_DATE @value{FAQ_YEAR}-07-27
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2699,6 +2699,9 @@ Logspline density estimation.
 @item lokern
 Kernel regression smoothing with adaptive local or global plug-in
 bandwidth selection.
+@item longmemo
+Datasets and Functionality from the textbook ``Statistics for
+Long-Memory Processes'' by J. Beran, 1994, Chapman & Hall.
 @item lpSolve
 Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
