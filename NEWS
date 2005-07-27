@@ -353,6 +353,9 @@ BUG FIXES
     o	sum() was promoting logical arguments to double not integer
 	(as min() and other members of its group do).
 
+    o   loess() had a bug causing it to occasionally miscalculate 
+        standard errors (PR#7956). Reported by Benjamin Tyner, fixed 
+        by Berwin Turlach.
 
 
 
