@@ -17,9 +17,9 @@ write_PACKAGES(dir, fields = NULL,
   }
   \item{fields}{
     a character vector giving the fields to be used in the
-    \file{PACKAGES} and \file{PACKAGES.gz} files, or \code{NULL}
-    (default).  The default corresponds to the fields needed by
-    \code{\link{available.packages}}:
+    \file{PACKAGES} and \file{PACKAGES.gz} files in addition to the
+    default ones, or \code{NULL} (default).  The default corresponds to
+    the fields needed by \code{\link{available.packages}}:
     \dQuote{Package}, \dQuote{Bundle}, \dQuote{Priority},
     \dQuote{Version}, \dQuote{Depends}, \dQuote{Suggests},
     \dQuote{Imports} and \dQuote{Contains}.

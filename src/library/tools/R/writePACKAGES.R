@@ -51,11 +51,11 @@ function(dir, fields = NULL,
     if(!length(files))
         return(list())
     
-    ## Standard set of fields required to build a repository's PACKAGES
-    ## file:
-    if(is.null(fields))
-        fields <- c("Package", "Bundle", "Priority", "Version",
-                    "Depends", "Suggests", "Imports", "Contains")
+    ## Add the standard set of fields required to build a repository's
+    ## PACKAGES file:
+    fields <- unique(c("Package", "Bundle", "Priority", "Version",
+                       "Depends", "Suggests", "Imports", "Contains", 
+                       fields))
     packages <- sapply(strsplit(files, "_"), "[", 1)
     files <- file.path(dir, files)
     db <- vector(length(files), mode = "list")
