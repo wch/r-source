@@ -406,6 +406,8 @@ BUG FIXES
 
     o	density(1/(0:2)) now works again (PR#8033).
 
+    o	make.names() was not respecting the allow_=FALSE argument.
+
 
 
 		CHANGES IN R VERSION 2.1.1
