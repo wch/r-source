@@ -721,7 +721,6 @@ SEXP do_abbrev(SEXP call, SEXP op, SEXP args, SEXP env)
     return(ans);
 }
 
-
 SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP arg, ans;
@@ -784,18 +783,22 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	    wchar_t *wstr = Calloc(nc+1, wchar_t), *wc;
 	    if(nc >= 0) {
 		mbstowcs(wstr, this, nc+1);
-		for(wc = wstr; *wc; wc++)
-		    if (!iswalnum(*wc) && *wc != L'.' &&
-			(allow_ && *wc != L'_')) *wc = L'.';
+		for(wc = wstr; *wc; wc++) {
+		    if (*wc == L'.' || (allow_ && *wc == L'_')) 
+			/* leave alone */;
+		    else if(!isalnum((int)*wc)) *wc = L'.';
+		}
 		wcstombs(this, wstr, strlen(this)+1);
 		Free(wstr);
 	    } else errorcall(call, _("invalid multibyte string %d"), i+1);
 	} else
 #endif
 	{
-	    for (p = this; *p; p++)
-		if (!isalnum((int)*p) && *p != '.' && (allow_ && *p != '_'))
-		    *p = '.';
+	    for (p = this; *p; p++) {
+		if (*p == '.' || (allow_ && *p == '_')) /* leave alone */;
+		else if(!isalnum((int)*p)) *p = '.';
+		/* else leave alone */
+	    }
 	}
 	/* do we have a reserved word?  If so the name is invalid */
 	if (!isValidName(this)) {
