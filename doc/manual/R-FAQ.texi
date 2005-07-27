@@ -2809,8 +2809,12 @@ Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
 @item modeltools
 A collection of tools to deal with statistical models.
-@item mscalib
-Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
+@c <COMMENT>
+@c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
+@c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
+@c @item mscalib
+@c Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
+@c </COMMENT>
 @item msm
 Functions for fitting continuous-time Markov multi-state models to
 categorical processes observed at arbitrary times, optionally with
