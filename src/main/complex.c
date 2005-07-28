@@ -2,6 +2,7 @@
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996, 1997  Robert Gentleman and Ross Ihaka
  *  Copyright (C) 2000-5       	    The R Development Core Team.
+ *  Copyright (C) 2005		    The R Foundation
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -123,11 +124,11 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
     n1 = LENGTH(s1);
     n2 = LENGTH(s2);
      /* S4-compatibility change: if n1 or n2 is 0, result is of length 0 */
-    if (n1 == 0 || n2 == 0) return(allocVector(CPLXSXP, 0)); 
+    if (n1 == 0 || n2 == 0) return(allocVector(CPLXSXP, 0));
 
     n = (n1 > n2) ? n1 : n2;
     ans = allocVector(CPLXSXP, n);
-    
+
     switch (code) {
     case PLUSOP:
 	for (i = 0; i < n; i++) {
@@ -249,8 +250,10 @@ SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 	    for(i=0 ; i<n ; i++)
 		if(ISNAN(REAL(x)[i]))
 		    REAL(y)[i] = REAL(x)[i];
-		else
+		else if (REAL(x)[i] >= 0)
 		    REAL(y)[i] = 0;
+		else
+		    REAL(y)[i] = M_PI;
 	    break;
 	case 3:	/* Mod */
 	case 6:	/* abs */
@@ -345,7 +348,7 @@ static void z_tan(Rcomplex *r, Rcomplex *z)
     y2 = 2.0 * z->i;
     den = cos(x2) + cosh(y2);
     r->r = sin(x2)/den;
-    /* any threshold between -log(DBL_EPSILON) 
+    /* any threshold between -log(DBL_EPSILON)
        and log(DBL_XMAX) will do*/
     if (ISNAN(y2) || fabs(y2) < 50.0)
 	r->i = sinh(y2)/den;
