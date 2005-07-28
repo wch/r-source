@@ -51,6 +51,8 @@ BUG FIXES
 
     o	make.names() was not respecting the allow_=FALSE argument.
 
+    o	Arg(-1) now gives -pi, not 0; Arg(0i + -1) always worked.
+
 
 
 		CHANGES IN R VERSION 2.1.1
