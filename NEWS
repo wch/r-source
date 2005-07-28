@@ -177,6 +177,9 @@ NEW FEATURES
     o	Exact p-values are available for the two-sided one-sample
 	Kolmogorov-Smirnov test.
 
+    o	library() now explicitly checks for the existence of
+	directories in 'lib.loc': this avoids some warning messages.
+
 
 DEPRECATED & DEFUNCT
 
@@ -348,7 +351,7 @@ BUG FIXES
 	error message.
 
     o	spline()/spinefun()'s C code had a memory access buglet which
-	never lead to incorrect results (PR#8030).
+	never lead to incorrect results.  (PR#8030)
 
     o	sum() was promoting logical arguments to double not integer
 	(as min() and other members of its group do).
@@ -356,6 +359,10 @@ BUG FIXES
     o   loess() had a bug causing it to occasionally miscalculate 
         standard errors (PR#7956). Reported by Benjamin Tyner, fixed 
         by Berwin Turlach.
+
+    o	library(keep.source=) was ignored if the package had a
+	namespace (the setting of options("keep.source.pkgs") was
+	always used).
 
 
 

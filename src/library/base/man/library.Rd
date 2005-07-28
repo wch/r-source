@@ -41,7 +41,8 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     search list as given by \code{\link{search}()}.}
   \item{lib.loc}{a character vector describing the location of \R
     library trees to search through, or \code{NULL}.  The default value
-    of \code{NULL} corresponds to all libraries currently known.}
+    of \code{NULL} corresponds to all libraries currently known.
+    Non-existent library trees are silently ignored.}
   \item{character.only}{a logical indicating whether \code{package} or
     \code{help} can be assumed to be character strings.}
   \item{version}{A character string denoting a version number of the
@@ -52,9 +53,14 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   \item{warn.conflicts}{logical.  If \code{TRUE}, warnings are
     printed about \code{\link{conflicts}} from attaching the new
     package, unless that package contains an object \code{.conflicts.OK}.}
-  \item{keep.source}{logical.  If \code{TRUE}, functions \dQuote{keep their
-    source} including comments, see argument \code{keep.source} to
-    \code{\link{options}}.}
+  \item{keep.source}{logical.  If \code{TRUE}, functions
+    \dQuote{keep their source} including comments, see argument
+    \code{keep.source} to \code{\link{options}}.
+
+    Note this does not apply to packages using lazy-loading or saved
+    images.  Whether they have kept source is determined when they are
+    installed (and is almost certainly false). 
+  }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
   \item{quietly}{a logical.  If \code{TRUE}, no message confirming
@@ -79,9 +85,6 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
   (rather than an error as \code{library()} does) if the package does
   not exist.  Both functions check and update the list of currently
   loaded packages and do not reload code that is already loaded.
-
-  For large packages, setting \code{keep.source = FALSE} may save quite
-  a bit of memory.
 
   If \code{library} is called with no \code{package} or \code{help}
   argument, it lists all available packages in the libraries specified

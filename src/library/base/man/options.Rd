@@ -118,7 +118,12 @@ getOption(x)
       functions in packages loaded by \code{\link{library}} or
       \code{\link{require}}.  Defaults to \code{FALSE} unless the
       environment variable \env{R\_KEEP\_PKG\_SOURCE} is set to
-      \code{yes}.}
+      \code{yes}.
+
+      Note this does not apply to packages using lazy-loading or saved
+      images.  Whether they have kept source is determined when they are
+      installed (and is almost certainly false). 
+    }
 
     \item{\code{na.action}:}{the name of a function for treating missing
       values (\code{\link{NA}}'s) for certain situations.}
