@@ -6,8 +6,10 @@
 polygon <-
   function(x, y = NULL, density = NULL, angle = 45,
            border = NULL, col = NA, lty = NULL,
-           xpd = NULL, ..debug.hatch = FALSE, ...)
+           xpd = NULL, ...)
 {
+    ## FIXME: remove this eventually
+    ..debug.hatch <- FALSE
     ##-- FIXME: what if `log' is active, for x or y?
     xy <- xy.coords(x, y)
 
