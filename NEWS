@@ -174,8 +174,8 @@ NEW FEATURES
     o	The plot method for stl() now allows the colour of the range
 	bars to be set (default unchanged at "light gray").
 
-    o	Exact p-values are available for the two-sided one-sample
-	Kolmogorov-Smirnov test.
+    o	Exact p-values are available for the one-sided and two-sided
+	one-sample Kolmogorov-Smirnov tests.
 
     o	library() now explicitly checks for the existence of
 	directories in 'lib.loc': this avoids some warning messages.

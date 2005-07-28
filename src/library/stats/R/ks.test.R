@@ -2,6 +2,18 @@ ks.test <-
 function(x, y, ..., alternative = c("two.sided", "less", "greater"),
          exact = NULL)
 {
+
+    pkolmogorov1x <- function(x, n) {
+        ## Probability function for the one-sided one-sample Kolmogorov
+        ## statistics, based on the formula of Birnbaum & Tingey (1951).
+        if(x <= 0) return(0)
+        if(x >= 1) return(1)
+        j <- seq(from = 0, to = floor(n * (1 - x)))
+        1 - x * sum(exp(lchoose(n, j)
+                        + (n - j) * log(1 - x - j / n)
+                        + (j - 1) * log(x + j / n)))
+    }
+    
     alternative <- match.arg(alternative)
     DNAME <- deparse(substitute(x))
     x <- x[!is.na(x)]
@@ -58,11 +70,15 @@ function(x, y, ..., alternative = c("two.sided", "less", "greater"),
                             "two.sided" = max(c(x, 1/n - x)),
                             "greater" = max(1/n - x),
                             "less" = max(x))
-        if(exact && (alternative == "two.sided") && !TIES)
-            PVAL <- 1 - .C("pkolmogorov2x",
+        if(exact && !TIES) {
+            PVAL <- if(alternative == "two.sided")
+                1 - .C("pkolmogorov2x",
                            p = as.double(STATISTIC),
                            as.integer(n),
                            PACKAGE = "stats")$p
+            else
+                1 - pkolmogorov1x(STATISTIC, n)
+        }
     }
 
     names(STATISTIC) <- switch(alternative,

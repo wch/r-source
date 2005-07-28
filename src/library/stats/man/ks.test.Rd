@@ -19,7 +19,7 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
     \code{"greater"}.  You can specify just the initial letter.}
   \item{exact}{\code{NULL} or a logical indicating whether an exact
     p-value should be computed.  See Details for the meaning of
-    \code{NULL}.  Only used in the two-sided cases.}
+    \code{NULL}.  Not used for the one-sided two-sample case.}
   
 }
 \details{
@@ -43,14 +43,15 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   (one-sample case) or the distribution function of \code{y} (two-sample
   case), respectively.
 
-  Exact p-values are available for the two-sided tests with no ties.  In
-  that case.  If \code{exact = NULL} (the default), an exact p-value is
-  computed if the sample size if less than 100 in the one-sample case,
-  and if the product of the sample sizes is less than 10000 in the
-  two-sample case.  Otherwise, asymptotic distributions are used whose
-  approximations may be inaccurate in small samples.  In the one-sample
-  two-sided case, exact p-values are obtained as described in Marsaglia,
-  Tsang & Wang (2003).
+  Exact p-values are not available for the one-sided two-sample case, or
+  in the case of ties.  \code{exact = NULL} (the default), an exact
+  p-value is computed if the sample size if less than 100 in the
+  one-sample case, and if the product of the sample sizes is less than
+  10000 in the two-sample case.  Otherwise, asymptotic distributions are
+  used whose approximations may be inaccurate in small samples.  In the
+  one-sample two-sided case, exact p-values are obtained as described in
+  Marsaglia, Tsang & Wang (2003).  The formula of Birnbaum & Tingey
+  (1951) is used for the one-sample one-sided case.
 
   If a single-sample test is used, the parameters specified in
   \code{\dots} must be pre-specified and not estimated from the data.
@@ -69,6 +70,10 @@ ks.test(x, y, \dots, alternative = c("two.sided", "less", "greater"),
   \item{data.name}{a character string giving the name(s) of the data.}
 }
 \references{
+  Z. W. Birnbaum & Fred H. Tingey (1951),
+  One-sided confidence contours for probability distribution functions.
+  \emph{The Annals of Mathematical Statistics}, \bold{22}/4, 592--596.
+  
   William J. Conover (1971),
   \emph{Practical nonparametric statistics}.
   New York: John Wiley & Sons.
