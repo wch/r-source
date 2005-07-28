@@ -56,28 +56,37 @@ axis.POSIXct <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.POSIXct <- function(x, y, xlab = "", axes = TRUE, frame.plot = axes,
-                         xaxt = par("xaxt"), ...)
+plot.POSIXct <- function(x, y, xlab = "", ...)
 {
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
-                        xlim, ylim, bg, pch, log, asp, ...)
+                        xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
         axis.POSIXct(1, x, ...)
-    plot.default(x, y, xaxt = "n", xlab = xlab, axes = axes,
-                 frame.plot = frame.plot, ...)
+
+    dots <- list(...)
+    Call <- match.call()
+    Call[[1]] <- as.name("plot.default")
+    Call$xaxt <- "n"
+    eval(Call)
+    axes <- if("axes" %in% names(dots)) dots$axes else TRUE
+    xaxt <- if("xaxt" %in% names(dots)) dots$xaxt else par("xaxt")
     if(axes && xaxt != "n") axisInt(x, ...)
 }
 
-plot.POSIXlt <- function(x, y, xlab = "",  axes = TRUE, frame.plot = axes,
-                         xaxt = par("xaxt"), ...)
+plot.POSIXlt <- function(x, y, xlab = "", ...)
 {
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
-                        xlim, ylim, bg, pch, log, asp, ...)
+                        xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
         axis.POSIXct(1, x, ...)
-    x <- as.POSIXct(x)
-    plot.default(x, y, xaxt = "n", xlab = xlab, axes = axes,
-                 frame.plot = frame.plot, ...)
+    dots <- list(...)
+    Call <- match.call()
+    Call[[1]] <- as.name("plot.default")
+    Call$x <- as.POSIXct(x)
+    Call$xaxt <- "n"
+    eval(Call)
+    axes <- if("axes" %in% names(dots)) dots$axes else TRUE
+    xaxt <- if("xaxt" %in% names(dots)) dots$xaxt else par("xaxt")
     if(axes && xaxt != "n") axisInt(x, ...)
 }
 
@@ -138,11 +147,11 @@ hist.POSIXt <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         ## trick to swallow arguments for hist.default, separate out 'axes'
         myplot <- function(res, xlab, freq, format, breaks,
                            right, include.lowest, labels = FALSE,
-                           axes = TRUE, ...)
+                           axes = TRUE, xaxt = par("xaxt"), ...)
         {
             plot(res, xlab = xlab, axes = FALSE, freq = freq,
                  labels = labels, ...)
-            if(axes) {
+            if(axes && xaxt != "n") {
                 axis(2, ...)
                 if(num.br) breaks <- c.POSIXct(res$breaks)
                 axis.POSIXct(1, at = breaks,  format = format, ...)
@@ -199,15 +208,20 @@ axis.Date <- function(side, x, at, format, labels = TRUE, ...)
     axis(side, at = z, labels = labels, ...)
 }
 
-plot.Date <- function(x, y, xlab = "", axes = TRUE, frame.plot = axes,
-                         xaxt = par("xaxt"), ...)
+plot.Date <- function(x, y, xlab = "", ...)
 {
     ## trick to remove arguments intended for title() or plot.default()
     axisInt <- function(x, main, sub, xlab, ylab, col, lty, lwd,
-                        xlim, ylim, bg, pch, log, asp, ...)
+                        xlim, ylim, bg, pch, log, asp, axes, frame.plot, ...)
         axis.Date(1, x, ...)
-    plot.default(x, y, xaxt = "n", xlab = xlab, axes = axes,
-                 frame.plot = frame.plot, ...)
+
+    dots <- list(...)
+    Call <- match.call()
+    Call[[1]] <- as.name("plot.default")
+    Call$xaxt <- "n"
+    eval(Call)
+    axes <- if("axes" %in% names(dots)) dots$axes else TRUE
+    xaxt <- if("xaxt" %in% names(dots)) dots$xaxt else par("xaxt")
     if(axes && xaxt != "n") axisInt(x, ...)
 }
 
@@ -260,11 +274,11 @@ hist.Date <- function(x, breaks, ..., xlab = deparse(substitute(x)),
         ## trick to swallow arguments for hist.default, separate out 'axes'
         myplot <- function(res, xlab, freq, format, breaks,
                            right, include.lowest, labels = FALSE,
-                           axes = TRUE, ...)
+                           axes = TRUE, xaxt = par("xaxt"), ...)
         {
             plot(res, xlab = xlab, axes = FALSE, freq = freq,
                  labels = labels, ...)
-            if(axes) {
+            if(axes && xaxt != "n") {
                 axis(2, ...)
                 if(num.br) breaks <- c.Date(res$breaks)
                 axis.Date(1, at = breaks,  format = format, ...)

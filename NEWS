@@ -368,6 +368,9 @@ BUG FIXES
 	namespace (the setting of options("keep.source.pkgs") was
 	always used).
 
+    o   hist.POSIXct() and hist.Date() now respect par("xaxt").
+
+
 
 
 	**************************************************

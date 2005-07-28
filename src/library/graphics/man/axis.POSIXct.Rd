@@ -7,25 +7,15 @@
 \title{Date and Date-time Plotting Functions}
 \description{
   Functions to plot objects of classes \code{"POSIXlt"},
-  \code{"POSIXct"} and \code{"Date"}  representing calendar dates and times. 
+  \code{"POSIXct"} and \code{"Date"} representing calendar dates and times. 
 }
 \usage{
 axis.POSIXct(side, x, at, format, labels = TRUE, \dots)
-
 axis.Date(side, x, at, format, labels = TRUE, \dots)
 
 \method{plot}{POSIXct}(x, y, xlab = "", \dots)
-
 \method{plot}{POSIXlt}(x, y, xlab = "", \dots)
-
 \method{plot}{Date}(x, y, xlab = "", \dots)
-}
-\synopsis{
-plot.POSIXct(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
-plot.POSIXlt(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
-plot.Date(x, y, xlab = "", axes = TRUE, frame.plot = axes, xaxt = par("xaxt"), ...)
-axis.POSIXct(side, x, at, format, labels = TRUE, ...)
-axis.Date(side, x, at, format, labels = TRUE, ...)
 }
 \arguments{
   \item{x, at}{A date-time object.}

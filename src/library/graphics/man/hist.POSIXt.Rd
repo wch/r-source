@@ -6,18 +6,15 @@
   Method for \code{\link{hist}} applied to date or date-time objects.
 }
 \usage{
-\method{hist}{POSIXt}(x, breaks, \dots, plot = TRUE, freq = FALSE,
+\method{hist}{POSIXt}(x, breaks, \dots,
+     xlab = deparse(substitute(x)),
+     plot = TRUE, freq = FALSE,
      start.on.monday = TRUE, format)
 
-\method{hist}{Date}(x, breaks, \dots, plot = TRUE, freq = FALSE,
+\method{hist}{Date}(x, breaks, \dots,
+     xlab = deparse(substitute(x)),
+     plot = TRUE, freq = FALSE,
      start.on.monday = TRUE, format)
-}
-\synopsis{
-hist.POSIXt(x, breaks, ..., xlab = deparse(substitute(x)),
-            plot = TRUE, freq = FALSE,
-            start.on.monday = TRUE, format)
-hist.Date(x, breaks, ..., xlab = deparse(substitute(x)),
-          plot = TRUE, freq = FALSE, start.on.monday = TRUE, format)
 }
 \arguments{
   \item{x}{an object inheriting from class \code{"POSIXt"} or \code{"Date"}.}
@@ -31,6 +28,7 @@ hist.Date(x, breaks, ..., xlab = deparse(substitute(x)),
   \item{\dots}{graphical parameters, or arguments to
     \code{\link{hist.default}} such as \code{include.lowest},
       \code{right} and \code{labels}.}
+  \item{xlab}{a character string giving the label for the x axis, if plotted.}
   \item{plot}{logical.  If \code{TRUE} (default), a histogram is
     plotted, otherwise a list of breaks and counts is returned.}
   \item{freq}{logical; if \code{TRUE}, the
