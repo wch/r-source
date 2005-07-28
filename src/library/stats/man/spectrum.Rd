@@ -7,22 +7,13 @@
   time series.
 }
 \usage{
-spectrum(x, method = c("pgram", "ar"), plot = TRUE,
-         na.action = na.fail, \dots)
-}
-%% spectrum() dispatches to spec.pgram() or spec.ar() which have quite
-%%            different extra arguments
-\synopsis{
-spectrum(\dots, method = c("pgram", "ar"))
+spectrum(x, \dots, method = c("pgram", "ar"))
 }
 \arguments{
   \item{x}{A univariate or multivariate time series.}
   \item{method}{String specifying the method used to estimate the
     spectral density.  Allowed methods are \code{"pgram"} (the default)
     and \code{"ar"}.} 
-  \item{plot}{logical. If \code{TRUE} then the spectral density is
-    plotted.}
-  \item{na.action}{\code{NA} action function.}
   \item{\dots}{Further arguments to specific spec methods or
     \code{plot.spec}.}
 }

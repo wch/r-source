@@ -6,25 +6,19 @@
 \alias{bw.SJ}
 \concept{bandwidth}
 \title{Bandwidth Selectors for Kernel Density Estimation}
-\synopsis{
+\usage{
 bw.nrd0(x)
 bw.nrd(x)
 bw.ucv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax)
 bw.bcv(x, nb = 1000, lower = 0.1 * hmax, upper = hmax)
 bw.SJ(x, nb = 1000, lower = 0.1 * hmax, upper = hmax, method=c("ste", "dpi"))
 }
-\usage{
-bw.nrd0(x)
-bw.nrd(x)
-bw.ucv(x, nb = 1000, lower, upper)
-bw.bcv(x, nb = 1000, lower, upper)
-bw.SJ(x, nb = 1000, lower, upper, method = c("ste", "dpi"))
-}
 \arguments{
   \item{x}{A data vector.}
   \item{nb}{number of bins to use.}
   \item{lower, upper}{Range over which to minimize.  The default is
-    almost always satisfactory.}
+    almost always satisfactory.  \code{hmax} is calculated internally
+    from a normal reference bandwidth.}
   \item{method}{Either \code{"ste"} ("solve-the-equation") or
     \code{"dpi"} ("direct plug-in").}
 }
