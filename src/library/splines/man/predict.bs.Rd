@@ -7,18 +7,15 @@
 }
 \usage{
 \method{predict}{bs}(object, newx, \dots)
-%% the 'ns' one now looks identical
+
+\method{predict}{ns}(object, newx, \dots)
 }
-% \synopsis{
-% predict.bs(object, newx, \dots)
-% predict.ns(object, newx, \dots)
-% }
 \arguments{
   \item{object}{the result of a call to \code{\link{bs}} or
     \code{\link{ns}} having attributes describing \code{knots},
     \code{degree}, etc.}
   \item{newx}{the \code{x} values at which evaluations are required.}
-  \item{\dots}{Optional additional arguments.  Presently no additional
+  \item{\dots}{Optional additional arguments.  At present no additional
     arguments are used.}
 }
 \value{
@@ -31,7 +28,6 @@
 }
 \seealso{
   \code{\link{bs}}, \code{\link{ns}}, \code{\link{poly}}.
-  %%-- FIXME: These are not in R (and wont ever ?!): \code{lo}, \code{s}
 }
 \examples{
 basis <- ns(women$height, df = 5)
