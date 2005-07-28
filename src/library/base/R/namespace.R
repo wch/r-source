@@ -232,22 +232,21 @@ loadNamespace <- function (package, lib.loc = NULL,
         # process imports
         for (i in nsInfo$imports) {
             if (is.character(i))
-                namespaceImport(ns, loadNamespace(i, c(lib.loc, .libPaths()),
-                                                  keep.source))
+                namespaceImport(ns, loadNamespace(i, c(lib.loc, .libPaths())))
             else
                 namespaceImportFrom(ns,
                                     loadNamespace(i[[1]],
-                                                  c(lib.loc, .libPaths()),
-                                                  keep.source), i[[2]])
+                                                  c(lib.loc, .libPaths())),
+                                    i[[2]])
         }
         for(imp in nsInfo$importClasses)
             namespaceImportClasses(ns, loadNamespace(imp[[1]],
-                                                     c(lib.loc, .libPaths()),
-                                                     keep.source), imp[[2]])
+                                                     c(lib.loc, .libPaths())),
+                                   imp[[2]])
         for(imp in nsInfo$importMethods)
             namespaceImportMethods(ns, loadNamespace(imp[[1]],
-                                                     c(lib.loc, .libPaths()),
-                                                     keep.source), imp[[2]])
+                                                     c(lib.loc, .libPaths())),
+                                   imp[[2]])
 
 
         # dynamic variable to allow/disable .Import and friends
@@ -858,14 +857,14 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
     if (is.character(method)) {
         assignWrapped <- function(x, method, home, envir) {
             method <- method            # force evaluation
-            home <- home                # force evaluation 
+            home <- home                # force evaluation
             delayedAssign(x, get(method, env = home), assign.env = envir)
         }
         if(!exists(method, env = envir)) {
             warning(gettextf("S3 method '%s' was declared in NAMESPACE but not found",
                              method), call. = FALSE)
         } else {
-	    assignWrapped(paste(genname, class, sep = "."), method, home = envir, 
+	    assignWrapped(paste(genname, class, sep = "."), method, home = envir,
 	    	    envir = table)
         }
     }
@@ -907,7 +906,7 @@ registerS3methods <- function(info, package, env)
 {
     assignWrapped <- function(x, method, home, envir) {
 	method <- method            # force evaluation
-	home <- home                # force evaluation 
+	home <- home                # force evaluation
 	delayedAssign(x, get(method, env = home), assign.env = envir)
     }
     .registerS3method <- function(genname, class, method, nm, envir)

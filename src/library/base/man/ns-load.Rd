@@ -24,7 +24,13 @@ unloadNamespace(ns)
     be lazy-loaded into the attached environment.}
   \item{package}{string naming the package/name space to load.}
   \item{lib.loc}{character vector specifying library search path.}
-  \item{keep.source}{logical specifying whether to retain source.}
+  \item{keep.source}{
+    logical specifying whether to retain source.
+    This applies only to the specified name space, and not to other name spaces
+    which might be loaded to satisfy imports.
+
+    For more details see this argument to \code{\link{library}}.
+  }
   \item{partial}{logical; if true, stop just after loading code.}
   \item{declarativeOnly}{logical; disables \code{.Import}, etc, if true.}
 }

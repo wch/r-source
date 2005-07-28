@@ -180,6 +180,10 @@ NEW FEATURES
     o	library() now explicitly checks for the existence of
 	directories in 'lib.loc': this avoids some warning messages.
 
+    o	loadNamespace(keep.source=) now applies only to that namespace
+	and not others it might load to satisfy imports: this is now
+	consistent with library().
+
 
 DEPRECATED & DEFUNCT
 

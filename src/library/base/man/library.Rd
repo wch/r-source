@@ -55,11 +55,13 @@ require(package, quietly = FALSE, warn.conflicts = TRUE,
     package, unless that package contains an object \code{.conflicts.OK}.}
   \item{keep.source}{logical.  If \code{TRUE}, functions
     \dQuote{keep their source} including comments, see argument
-    \code{keep.source} to \code{\link{options}}.
+    \code{keep.source} to \code{\link{options}}.  This applies only to
+    the named package, and not to any packages or namespaces which might be
+    loaded to satisfy dependencies or imports.
 
-    Note this does not apply to packages using lazy-loading or saved
+    This argument does not apply to packages using lazy-loading or saved
     images.  Whether they have kept source is determined when they are
-    installed (and is almost certainly false). 
+    installed (and is most likely false).
   }
   \item{verbose}{a logical.  If \code{TRUE}, additional diagnostics are
     printed.}
