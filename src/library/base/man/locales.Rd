@@ -48,7 +48,7 @@ Sys.setlocale(category = "LC_ALL", locale = "")
 
   For \code{category = "LC_ALL"} the details of the string are
   system-specific: it might be a single locale or a set of locales
-  separated by \code{"/"} (Solaris) or \code{";"} (Windows).  For
+  separated by \code{"/"} (Solaris) or \code{";"} (Windows, Linux).  For
   portability, it is best to query categories individually.  It is
   guaranteed that the result of \code{foo <- Sys.getlocale()} can be
   used in \code{Sys.setlocale("LC_ALL", locale = foo)} on the same
@@ -71,7 +71,7 @@ Sys.getlocale()
 Sys.getlocale("LC_TIME")
 \dontrun{
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
-Sys.setlocale("LC_TIME", "German") # Windows}
+Sys.setlocale("LC_TIME", "German") # Windows
 
 Sys.setlocale("LC_COLLATE", "C")  # turn off locale-specific sorting
 }
