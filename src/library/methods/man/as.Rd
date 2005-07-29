@@ -128,8 +128,8 @@ setAs(from, to, def, replace, where = topenv(parent.frame()))
   that objects from one class can turn into objects from another class
   either automatically or by an explicit call to the \code{as}
   function. Automatic conversion is special, and comes from the
-  designer of one class of objects asserting that this class extends a
-  another class  (see \code{\link{setClass}} and \code{\link{setIs}}).
+  designer of one class of objects asserting that this class extends
+  another class (see \code{\link{setClass}} and \code{\link{setIs}}).
 
   Because inheritance is a powerful assertion, it should be used
   sparingly (otherwise your computations may produce unexpected, and
