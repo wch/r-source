@@ -72,6 +72,7 @@ Sys.getlocale("LC_TIME")
 \dontrun{
 Sys.setlocale("LC_TIME", "de")     # Solaris: details are OS-dependent
 Sys.setlocale("LC_TIME", "German") # Windows
+}
 
 Sys.setlocale("LC_COLLATE", "C")  # turn off locale-specific sorting
 }
