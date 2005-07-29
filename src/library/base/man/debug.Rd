@@ -30,11 +30,16 @@ undebug(fun)
   If you have variables with names that are identical to the controls
   (eg. \code{c} or \code{n} ) then you need to use \code{print(c)} and
   \code{print(n)} to evaluate them.
+
+  In order to debug S4 methods (see \code{\link[methods]{Methods}}), you
+  need to use \code{\link{trace}}, typically calling \code{\link{browser}},
+  e.g., as \cr
+  \code{trace("plot", browser, exit=browser, signature = c("track", "missing"))}
 }
 \seealso{
-  \code{\link{browser}}, \code{\link{traceback}} to see the stack after
-  an \code{Error: \dots} message; \code{\link{recover}} for another
-  debugging approach.
+  \code{\link{browser}}, \code{\link{trace}};
+  \code{\link{traceback}} to see the stack after an \code{Error: \dots}
+  message; \code{\link{recover}} for another debugging approach.
 }
 \keyword{programming}
 \keyword{environment}
