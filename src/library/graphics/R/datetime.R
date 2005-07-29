@@ -66,6 +66,7 @@ plot.POSIXct <- function(x, y, xlab = "", ...)
     dots <- list(...)
     Call <- match.call()
     Call[[1]] <- as.name("plot.default")
+    Call$x <- x; Call$y <- y
     Call$xaxt <- "n"
     eval(Call)
     axes <- if("axes" %in% names(dots)) dots$axes else TRUE
@@ -82,7 +83,7 @@ plot.POSIXlt <- function(x, y, xlab = "", ...)
     dots <- list(...)
     Call <- match.call()
     Call[[1]] <- as.name("plot.default")
-    Call$x <- as.POSIXct(x)
+    Call$x <- as.POSIXct(x); Call$y <- y
     Call$xaxt <- "n"
     eval(Call)
     axes <- if("axes" %in% names(dots)) dots$axes else TRUE
@@ -218,6 +219,7 @@ plot.Date <- function(x, y, xlab = "", ...)
     dots <- list(...)
     Call <- match.call()
     Call[[1]] <- as.name("plot.default")
+    Call$x <- x; Call$y <- y
     Call$xaxt <- "n"
     eval(Call)
     axes <- if("axes" %in% names(dots)) dots$axes else TRUE
