@@ -38,10 +38,12 @@
   exports have not been processed at the point it is run.)
 
   When the package is attached (via \code{\link{library}}), the hook
-  function \code{.onAttach} is called after the exported functions are
-  attached.  This is less likely to be useful than \code{.onLoad}, which
-  should be seen as the analogue of \code{\link{.First.lib}} (which is only
-  used for packages without a name space).
+  function \code{.onAttach} is looked for and if found is called
+  after the exported functions are attached and before the package
+  environment is sealed.  This is less likely to be useful than
+  \code{.onLoad}, which should be seen as the analogue of
+  \code{\link{.First.lib}} (which is only used for packages without a
+  name space).
 
   \code{.onLoad}, \code{.onUnload} and \code{.onAttach} are looked for
   as internal variables in the name space and should not be exported.

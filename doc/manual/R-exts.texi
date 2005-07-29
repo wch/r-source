@@ -1473,13 +1473,16 @@ the search path if the methods are to be found.
 @node Load hooks, An example, Registering S3 methods, Package name spaces
 @subsection Load hooks
 
+There are a number of hooks that apply to packages with name spaces.
+See @code{help(".onLoad")} for more details.
+
 @findex .onLoad
 @findex .onAttach
 Packages with name spaces do not use the @code{.First.lib} function.
 Since loading and attaching are distinct operations when a name space is
 used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
-arguments as @code{.First.lib}; they should be defined in the package
+arguments as @code{.First.lib}; they should be defined in the name space
 but not exported.
 
 @findex .Last.lib
@@ -1488,15 +1491,17 @@ However, packages with name spaces @emph{do} use the @code{.Last.lib}
 function.  There is also a hook @code{.onUnload} which is called when
 the name space is unloaded (via a call to @code{unloadNamespace}) with
 argument the full path to the directory in which the package was
-installed.
+installed.  @code{.onUnload} should be defined in the name space and not
+exported, but @code{.Last.lib} does need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
 placed in a @code{.onLoad} function, or use made of the @code{useDynLib}
 directive described next.
 
-The @code{useDynLib} directive allows shared objects that need to be
-loaded to be specified in the @file{NAMESPACE} file.  The directive
+There can be one or more @code{useDynLib} directives which allow shared
+objects that need to be loaded to be specified in the @file{NAMESPACE}
+file.  The directive
 
 @findex useDynLib
 @example
@@ -1505,7 +1510,7 @@ useDynLib(foo)
 
 @noindent
 registers the shared object @code{foo} for loading with
-@code{library.dynam}.  Loading of registered objects occurs after the
+@code{library.dynam}.  Loading of registered object(s) occurs after the
 package code has been loaded and before running the load hook function.
 Packages that would only need a load hook function to load a shared
 object can use the @code{useDynLib} directive instead.
