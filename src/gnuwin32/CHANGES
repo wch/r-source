@@ -25,6 +25,10 @@ package for usage.
 
 There is now a Brazilian Portuguese translations of the RGui menus.
 
+win.graph(), x11() and X11() now behave in the same way as windows()
+in respect of the xpinch, ypinch, graphics.record, gamma and
+windowsBuffered options.
+
 
 
 R 2.1.1 patched

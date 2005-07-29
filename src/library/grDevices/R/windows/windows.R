@@ -22,9 +22,18 @@ windows <- function(width = 7, height = 7, pointsize = 12,
 }
 
 win.graph <- function(width = 7, height = 7, pointsize = 12)
-    invisible(.External("devga", "", width, height, pointsize, FALSE, 1,
-                        NA, NA, "white", 1, as.integer(NA), as.integer(NA),
-                        TRUE, .PSenv, NA, PACKAGE = "grDevices"))
+{
+    gamma <- getOption("gamma")
+    if(!length(xpinch <- getOption("xpinch"))) xpinch <- NA
+    if(!length(ypinch <- getOption("ypinch"))) ypinch <- NA
+    invisible(.External("devga", "", width, height, pointsize,
+                        getOption("graphics.record"), 1,
+                        as.double(xpinch), as.double(ypinch), "white",
+                        if(is.null(gamma)) 1 else gamma,
+                        as.integer(NA), as.integer(NA),
+                        getOption("windowsBuffered"),
+                        .PSenv, NA, PACKAGE = "grDevices"))
+}
 
 win.print <- function(width = 7, height = 7, pointsize = 12, printer = "")
     invisible(.External("devga", paste("win.print:", printer, sep=""),

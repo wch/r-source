@@ -21,18 +21,12 @@ windows(width = 7, height = 7, pointsize = 12,
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
+
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
 win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \arguments{
-  \item{filename}{the name of the output file: it will be an enhanced
-    Windows metafile, usually given extension \code{.emf} or
-    \code{.wmf}. Up to 511 characters are allowed.
-    The page number is substituted if an integer format is included
-    in the character string. (The result must be less than 600
-    characters long.)  The default, \code{""}, means the clipboard.
-  }
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text. The allowed
@@ -57,6 +51,13 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
     \code{xpos=-25, ypos=0}: this puts the right edge of the window 25
     pixels from the right edge of the monitor.}
   \item{buffered}{logical.  Should the screen output be double-buffered?}
+  \item{filename}{the name of the output file: it will be an enhanced
+    Windows metafile, usually given extension \code{.emf} or
+    \code{.wmf}. Up to 511 characters are allowed.
+    The page number is substituted if an integer format is included
+    in the character string. (The result must be less than 600
+    characters long.)  The default, \code{""}, means the clipboard.
+  }
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
 }
@@ -65,7 +66,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   A graphics device is opened. For \code{windows}, \code{win.graph},
   \code{x11} and \code{X11} this is a graphics window on the current
   Windows display: the multiple names are for compatibility with other
-  systems. \code{win.metafile} prints to a file and \code{win.print} to
+  systems.  \code{win.metafile} prints to a file and \code{win.print} to
   the Windows print system.
 }
 
