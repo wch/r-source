@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-07-27
+@set FAQ_DATE @value{FAQ_YEAR}-07-30
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2032,6 +2032,8 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item SwissAir
+Air quality data of Switzerland for one year in 30 min resolution.
 @item TeachingDemos
 A set of demonstration functions that can be used in a classroom to
 demonstrate statistical concepts, or on your own to better understand
