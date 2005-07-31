@@ -36,9 +36,14 @@ getOption(x)
   however.
 }
 \value{
-  For \code{options}, a list with the previous values of
-  the options changed (returned invisibly), or a list of all options
-  when no arguments were given.
+  For \code{getOption}, the current value set for option \code{x}, or
+  \code{NULL} if the option is unset.
+
+  For \code{options()}, a list of all set options sorted by name.  For
+  \code{options(name)}, a list of length one containing the set value,
+  or \code{NULL} if it is unset.  For uses setting one or more options,
+  a list with the previous values of the options changed (returned
+  invisibly).
 }
 \section{Options used in base \R}{
   \describe{
@@ -175,9 +180,9 @@ getOption(x)
       printed as they occur.  If \code{warn} is two or larger all
       warnings are turned into errors.}
 
-    \item{\code{warning.length}:}{sets the truncation limit for error
+    \item{\code{warnings.length}:}{sets the truncation limit for error
       and warning messages.  A non-negative integer, with allowed values
-      100--8192, default 1000.}
+      100\dots8192, default 1000.}
 
     \item{\code{warning.expression}:}{an \R code expression to be called
       if a warning is generated, replacing the standard message.  If
@@ -313,7 +318,7 @@ getOption(x)
     \code{error} \tab \code{NULL} \cr
     \code{show.error.messages} \tab \code{TRUE} \tab
     \code{warn} \tab \code{0}\cr
-    \code{warning.length} \tab \code{1000}\tab
+    \code{warnings.length} \tab \code{1000}\tab
     \code{echo} \tab \code{TRUE} \cr
     \code{verbose} \tab \code{FALSE} \tab
     \code{scipen} \tab \code{0} \cr
@@ -342,7 +347,7 @@ pi
 old.o <- options(editor="nedit")
 old.o
 
-options(check.bounds = TRUE)
+options(check.bounds = TRUE, warn = 1)
 x <- NULL; x[4] <- "yes" # gives a warning
 
 options(digits=5)
