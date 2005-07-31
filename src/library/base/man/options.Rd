@@ -95,9 +95,10 @@ getOption(x)
 
     \item{\code{defaultPackages}:}{the packages that are attached by
       default when \R starts up.  Initially set from value of the
-      environment variables \env{R\_DefaultPackages}, or if that is unset
+      environment variable \env{R\_DEFAULT\_PACKAGES}, or if that is unset
       %%  default is set in ../../profile/Common.R :
-      to \code{c("utils", "stats", "graphics", "methods")}.  (Set
+      to \code{c("datasets", "utils", "grDevices", "graphics", "stats",
+	"methods")}.  (Set
       \env{R\_DEFAULT\_PACKAGES} to \code{NULL} or a comma-separated list
       of package names.)  A call to \code{options} should be in your
       \file{.Rprofile} file to ensure that the change takes effect
@@ -196,7 +197,7 @@ getOption(x)
 
     \item{\code{echo}:}{logical.  Only used in non-interactive mode,
       when it controls whether input is echoed.  Command-line option
-      \option{--slave} sets this initially to \code{FALSE}.}
+      \code{--slave} sets this initially to \code{FALSE}.}
 
     \item{\code{max.print}:}{integer, defaulting to \code{10000}.
       \code{\link{print}} or \code{\link{show}} methods can make use of
