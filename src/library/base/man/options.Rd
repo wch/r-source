@@ -36,8 +36,9 @@ getOption(x)
   however.
 }
 \value{
-  For \code{options}, a list (in any case) with the previous values of
-  the options changed, or all options when no arguments were given.
+  For \code{options}, a list with the previous values of
+  the options changed (returned invisibly), or a list of all options
+  when no arguments were given.
 }
 \section{Options used in base \R}{
   \describe{
@@ -202,8 +203,7 @@ getOption(x)
       this option, to limit the amount of information that is printed,
       typically to something in the order \code{max.print} lines.
 
-      This is not yet used in base \R.
-    }
+      This is not yet used in base \R.}
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
@@ -261,9 +261,8 @@ getOption(x)
       If this is unset, 0, negative or \code{NA}, variable cell widths
       are used.}
 
-    \item{\code{encoding}:}{An integer vector of length 256 holding an
-      input encoding.  Defaults to \code{native.enc} (= \code{0:255}).
-      See \code{\link{connections}}.}
+    \item{\code{encoding}:}{The name of an encoding, default
+      \code{"native.enc"}).  See \code{\link{connections}}.}
 
     \item{\code{timeout}:}{integer.  The timeout for some Internet
       operations, in seconds.  Default 60 seconds.
@@ -282,10 +281,19 @@ getOption(x)
     \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
       and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
       Honoured at least on \code{X11} and \code{windows} devices.}
+
 #ifdef unix
     \item{\code{X11fonts}:}{character vector of length 2.
       See \code{\link{X11}}.}
 #endif
+
+    \item{\code{help.try.all.packages}:}{default for an argument of
+      \code{\link{help}}.}
+
+    \item{\code{ts.S.compat}:}{logical.  Used to select S compatibility
+      for plotting time-series spectra.  See the description of argument
+      \code{log} in \code{\link{plot.spec}}.}
+
   }
 
   The default settings of some of these options are
