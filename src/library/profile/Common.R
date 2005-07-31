@@ -27,7 +27,7 @@ options(keep.source = interactive())
 options(warn = 0)
 options(help.try.all.packages = FALSE)
 options(repos = c(CRAN="@CRAN@"))
-options(BIOC = "http://www.bioconductor.org")
+# options(BIOC = "http://www.bioconductor.org")
 
 options(timeout = 60)
 options(internet.info = 2)

@@ -184,6 +184,11 @@ NEW FEATURES
 	and not others it might load to satisfy imports: this is now
 	consistent with library().
 
+    o	options() now returns its result in alphabetical order, and is
+	documented more comprehensively and accurately.  (Now all
+	options used in base R are documented, including
+	platform-specific ones.)
+
 
 DEPRECATED & DEFUNCT
 

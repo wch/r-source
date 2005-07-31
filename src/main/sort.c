@@ -621,8 +621,8 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 		}
 
 
-static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-			 Rboolean decreasing)
+void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
+		  Rboolean decreasing)
 {
     int c, i, j, h, t, lo = 0, hi = n-1;
     int itmp, *isna, numna = 0;

@@ -286,11 +286,16 @@ void InitOptions(void)
     UNPROTECT(2);
 }
 
+/* from sort.c */
+void orderVector1(int *indx, int n, SEXP key, Rboolean nalast, 
+		  Rboolean decreasing);
+
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP argi= R_NilValue, argnames= R_NilValue, namei= R_NilValue,
 	names, options, s, tag, value; /* = R_Nil..: -Wall */
-    int i, k, n;
+    SEXP sind, names2, value2;
+    int i, k, n, *indx;
 
     /* Locate the options values in the symbol table.
        This will need to change if options are to live in the session
@@ -312,9 +317,18 @@ SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    SET_VECTOR_ELT(value, i, duplicate(CAR(options)));
 	    options = CDR(options); i++;
 	}
-	setAttrib(value, R_NamesSymbol, names);
-	UNPROTECT(2);
-	return value;
+	PROTECT(sind = allocVector(INTSXP, n));  indx = INTEGER(sind);
+	for (i = 0; i < n; i++) indx[i] = i;
+	orderVector1(indx, n, names, TRUE, FALSE);
+	PROTECT(value2 = allocVector(VECSXP, n));
+	PROTECT(names2 = allocVector(STRSXP, n));
+	for(i = 0; i < n; i++) {
+	    SET_VECTOR_ELT(names2, i, VECTOR_ELT(names, indx[i]));
+	    SET_VECTOR_ELT(value2, i, VECTOR_ELT(value, indx[i]));
+	}
+	setAttrib(value2, R_NamesSymbol, names2);
+	UNPROTECT(5);
+	return value2;
     }
 
     /* The arguments to "options" can either be a sequence of
