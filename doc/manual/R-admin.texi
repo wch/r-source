@@ -2968,8 +2968,8 @@ You need a recent version of the MinGW port of @code{gcc} from
 @url{http://sourceforge.net/projects/mingw/}.  See the notes on
 @url{http://www.murdoch-sutherland.com/Rtools} for updates.
 
-The most recent installer is called @file{MinGW-4.1.0.exe}, which
-downloads components for SourgeForge. We suggest you select the core
+A recent installer is called @file{MinGW-4.1.0.exe}, which
+downloads components for SourgeForge.  We suggest you select the core
 packages and the candidate compilers (@code{gcc-3.4.4}), and then at the
 next screen select just @code{gcc-core}, @code{gcc-g++} and
 @code{gcc-g77} (and no compilers in the code list).  The screen showing
@@ -2993,6 +2993,22 @@ Additional tasks:
             Candidate/gcc-g++
             Candidate/gcc-g77
 @end example
+
+Users have found this did not work with @file{MinGW-4.1.1.exe}: an
+alternative is to download the components individually, currently
+
+@example
+gcc-core-3.4.4-20050522-1.tar.gz
+gcc-g++-3.4.4-20050522-1.tar.gz
+gcc-g77-3.4.4-20050522-1.tar.gz
+binutils-2.15.94-20050118-1.tar.gz
+mingw-runtime-3.7.tar.gz
+w32api-3.2.tar.gz
+@end example
+
+@noindent
+and unpack these into the same directory (using @command{tar zxf
+tarball_name}).
 
 @node The Microsoft HTML Help Workshop, LaTeX, The MinGW compilers, The Windows toolset
 @section The Microsoft @HTML{} Help Workshop
