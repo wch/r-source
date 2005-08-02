@@ -10,7 +10,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
      skip = 0, nlines = 0, na.strings = "NA",
      flush = FALSE, fill = FALSE, strip.white = FALSE,
      quiet = FALSE, blank.lines.skip = TRUE, multi.line = TRUE,
-     comment.char = "", allowEscapes = TRUE)
+     comment.char = "", allowEscapes = FALSE)
 }
 \arguments{
   \item{file}{the name of a file to read data values from.  If the
@@ -120,7 +120,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{allowEscapes}{logical.  Should C-style escapes such as
     \code{\n} be processed (the default) or read verbatim?   Note that if
     not within quotes these could be interpreted as a delimiter (but not
-    as a comment character).}
+    as a comment character).
+
+    The escapes which are interpreted are the control characters 
+    \code{\a, \b, \f, \n, \r, \t, \v} and octal and
+    hexadecimal representatons like \code{\040} and \code{\0x2A}.  Any
+    other escaped character is treated as itself, including backslash.
+  }
 }
 \details{
   The value of \code{what} can be a list of types, in which case

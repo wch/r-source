@@ -36,6 +36,9 @@ USER-VISIBLE CHANGES
 	functions with new arguments 'drop' and '...' and all methods now
 	should have 'drop' and '...' arguments as well.
 
+    o	The default for 'allowEscapes' in both read.table() and scan()
+	has been changed to FALSE.
+
 
 NEW FEATURES
 
