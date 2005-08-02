@@ -107,9 +107,9 @@ if(capabilities("iconv")) {
 x <- "1 2 3 \\ab\\c"
 writeLines(x, "test.dat")
 readLines("test.dat")
-scan("test.dat", "")
+scan("test.dat", "", allowEscapes=TRUE)
 scan("test.dat", "", allowEscapes=FALSE)
-read.table("test.dat", header=FALSE)
+read.table("test.dat", header=FALSE, allowEscapes=TRUE)
 read.table("test.dat", header=FALSE, allowEscapes=FALSE)
 x <- c("TEST", 1, 2, "\\b", 4, 5, "\\040", "\\x20",
        "c:\\spencer\\tests",
