@@ -19,13 +19,8 @@
    02111-1307 USA.  */
 
 /* constructed from glibc 2.3.5 via
-   cat regex_internal.h regex_internal.c regcomp.c regexec.c > regex.c
+   cat regec.c regex_internal.h regex_internal.c regcomp.c regexec.c > Rregex.c
    and hand-editing */
-
-/* AIX requires this to be the first thing in the file. */
-#if defined _AIX && !defined REGEX_MALLOC
-  #pragma alloca
-#endif
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
@@ -49,17 +44,32 @@
 # define assert(e)
 #endif
 
-/* Make alloca work the best possible way.  */
-/* glibc has already included alloca.h */
-#ifndef _ALLOCA_H
+#ifdef _AIX
+#pragma alloca
+#else
+# ifndef allocax           /* predefined by HP cc +Olibcalls */
 #  ifdef __GNUC__
-#   define alloca __builtin_alloca
-#  else /* not __GNUC__ */
-#   ifdef HAVE_ALLOCA_H
+#   ifndef alloca  /* may have been done in stdlib.h */
+#    define alloca(size) __builtin_alloca (size)
+#   endif
+#  else
+#   if HAVE_ALLOCA_H
 #    include <alloca.h>
-#   endif /* HAVE_ALLOCA_H */
-#  endif /* not __GNUC__ */
+#   else
+#    ifdef __hpux
+        void *alloca ();
+#    else
+#     if !defined __OS2__ && !defined WIN32
+        char *alloca ();
+#     else
+#      include <malloc.h>       /* OS/2 defines alloca in here */
+#     endif
+#    endif
+#   endif
+#  endif
+# endif
 #endif
+
 
 /* POSIX says that <sys/types.h> must be included (by the caller) before
    <regex.h>.  */
