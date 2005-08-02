@@ -31,7 +31,8 @@ Sys.timezone()
 }
 \seealso{
   \code{\link{date}} for the system time in a fixed-format character
-  string; \code{\link{proc.time}} for finer resolution.
+  string; the elapsed time component of \code{\link{proc.time}} 
+  for finer resolution in changes in time.
 }
 \examples{
 Sys.time()
