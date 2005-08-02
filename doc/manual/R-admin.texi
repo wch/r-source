@@ -2228,7 +2228,7 @@ Tcl/Tk libraries, @code{libpng}, @code{libjpeg} and @code{zlib}) which
 might be linked against.  Fortunately these are normally built as shared
 libraries with the exception of the ATLAS BLAS libraries.
 
-For versions with both 64- and 32-bit support, it is likely that
+For platforms with both 64- and 32-bit support, it is likely that
 
 @example
 LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
@@ -2236,7 +2236,23 @@ LDFLAGS="-L/usr/local/lib64 -L/usr/local/lib"
 
 @noindent
 is appropriate since most (but not all) software installs its 64-bit
-libraries in @file{/usr/local/lib64}.
+libraries in @file{/usr/local/lib64}.  To build a 32-bit version of @R{}
+on AMD64 we used
+
+@example
+CFLAGS="-m32 -O2 -g -Wall -pedantic -std=gnu99" 
+CXXFLAGS="-m32 -O2 -g" 
+FFLAGS="-m32 -O2 -g"
+LDFLAGS=-m32
+LIBnn=lib
+--x-libraries=/usr/X11R6/lib
+@end example
+
+@noindent
+and had to build @code{readline} ourselves as Fedora Core 3 only shipped
+a 64-bit version.
+
+
 
 64-bit versions of Linux are built with support for files > 2Gb, but
 32-bit versions usually are not.  This can be enabled for Linux kernels
