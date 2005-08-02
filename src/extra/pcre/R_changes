@@ -1,0 +1,9 @@
+We make chartables.h rather than pcre_chartables.c, and include in 
+pcre_compile.c.  This makes the standard dependency mechanism work.
+
+pcre_dfa_exec.c had two unused variables.
+
+pcre_internal.h includes the relevant definitions that configure would
+make.
+
+In pcre.h, we don't want to make a DLL on Windows, and we don't allow C++.

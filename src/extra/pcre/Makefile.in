@@ -26,7 +26,7 @@ DEPENDS = $(SOURCES:.c=.d)
 @WANT_R_SHLIB_TRUE@OBJECTS = $(SOURCES:.c=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
-DISTFILES = LICENCE Makefile.in Makefile.win dftables.c \
+DISTFILES = LICENCE Makefile.in Makefile.win R_changes dftables.c \
   chartables.h.win $(SOURCES) $(HEADERS)
 noinst_LIBRARIES = @BUILD_PCRE_TRUE@ libpcre.a
 libpcre_a_SOURCES = $(SOURCES)
