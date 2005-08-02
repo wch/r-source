@@ -20,7 +20,7 @@ SOURCES = pcre_compile.c pcre_config.c pcre_dfa_exec.c pcre_exec.c \
 	pcre_study.c pcre_tables.c pcre_try_flipped.c pcre_ucp_findchar.c \
 	pcre_valid_utf8.c pcre_version.c pcre_xclass.c
 
-HEADERS = pcre_internal.h ucp.h ucptable.c ucpinternal.h pcre.h
+HEADERS = pcre_internal.h ucp.h ucp_findchar.c ucptable.c ucpinternal.h pcre.h
 DEPENDS = $(SOURCES:.c=.d)
 @WANT_R_SHLIB_FALSE@OBJECTS = $(SOURCES:.c=.o)
 @WANT_R_SHLIB_TRUE@OBJECTS = $(SOURCES:.c=.lo)
