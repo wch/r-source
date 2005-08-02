@@ -152,7 +152,7 @@ Rboolean fft_work(double *a, double *b, int nseg, int n, int nspn,
 double Brent_fmin(double ax, double bx, double (*f)(double, void *),
 		  void *info, double tol);
 
-/* appl/interv.c */
+/* appl/interv.c: also in Utils.h */
 int F77_SUB(interv)(double *xt, int *n, double *x,
 		    Rboolean *rightmost_closed, Rboolean *all_inside,
 		    int *ilo, int *mflag);
@@ -193,7 +193,7 @@ void machar(int *ibeta, int *it, int *irnd, int *ngrd, int *machep,
 void massdist(double *x, double *xmass, int *nx, double *xlow, double *xhigh,
 	      double *y, int *ny);
 
-/* appl/maxcol.c */
+/* appl/maxcol.c: also in Utils.h */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
     
 

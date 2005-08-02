@@ -84,7 +84,7 @@ void	rgb2hsv(double r, double g, double b,
 
 void R_CheckUserInterrupt(void);
 
-/* ../../appl/interv.c */
+/* ../../appl/interv.c: also in Applic.h */
 int findInterval(double *xt, int n, double x,
 		 Rboolean rightmost_closed,  Rboolean all_inside, int ilo,
 		 int *mflag);
@@ -96,7 +96,7 @@ int F77_SUB(interv)(double *xt, int *n, double *x,
 void find_interv_vec(double *xt, int *n,	double *x,   int *nx,
 		     int *rightmost_closed, int *all_inside, int *indx);
 
-/* ../../appl/maxcol.c */
+/* ../../appl/maxcol.c: also in Applic.h */
 void R_max_col(double *matrix, int *nr, int *nc, int *maxes, int *ties_meth);
 
 #ifdef  __cplusplus
