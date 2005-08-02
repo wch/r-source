@@ -286,9 +286,6 @@ void InitOptions(void)
     UNPROTECT(2);
 }
 
-/* from sort.c */
-void orderVector1(int *indx, int n, SEXP key, Rboolean nalast, 
-		  Rboolean decreasing);
 
 SEXP do_options(SEXP call, SEXP op, SEXP args, SEXP rho)
 {

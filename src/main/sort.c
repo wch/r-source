@@ -589,6 +589,7 @@ static int listgreater(int i, int j, SEXP key, Rboolean nalast,
     if (c == 0 && i < j) return 0; else return 1;
 }
 
+/* Needs indx set to 1...n initially */
 static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 			Rboolean decreasing, int greater_sub())
 {
@@ -621,6 +622,9 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 		}
 
 
+/* Needs indx set to 1...n initially.
+   Also used by do_options.
+ */
 void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 		  Rboolean decreasing)
 {

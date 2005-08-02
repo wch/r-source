@@ -873,6 +873,10 @@ int	Rstrlen(SEXP, int);
 char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
 
+/* main/sort.c */
+void orderVector1(int *indx, int n, SEXP key, Rboolean nalast, 
+		  Rboolean decreasing);
+
 
 #if defined(HAVE_WCHAR_H) && defined(SUPPORT_MBCS)
 #include <wchar.h>
