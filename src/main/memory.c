@@ -1536,8 +1536,10 @@ char *R_alloc(long nelem, int eltsize)
 	    s = allocString(size); /**** avoid extra null byte?? */
 	else if(dsize < sizeof(double) * (R_LEN_T_MAX - 1))
 	    s = allocVector(REALSXP, (int)(0.99+dsize/sizeof(double)));
-	else
+	else {
+	    s = R_NilValue; /* -Wall */
 	    error(_("cannot allocate memory block of size %.0f"), dsize);
+	}
 #else
 	if(dsize > R_LEN_T_MAX)
 	    error(_("cannot allocate memory block of size %.0f"), dsize);
