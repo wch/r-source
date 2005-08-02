@@ -1,4 +1,4 @@
-There are a very few to the source code of zlib-1.2.2 used here.
+There are a very few to the source code of zlib-1.2.3 used here.
 
 - zconf.h includes R's config.h
 - gzio.c has been amended to allow LFS using fseeko/ftello where these
