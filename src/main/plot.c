@@ -774,7 +774,7 @@ SEXP CreateAtVector(double *axp, double *usr, int nint, Rboolean logflag)
  *
  *	axp[0:2] = (x1, x2, nInt), where x1..x2 are the extreme tick marks
  *		   {unless in log case, where nint \in {1,2,3 ; -1,-2,....}
- *		    and the `nint' argument is used.
+ *		    and the `nint' argument is used.}
 
  *	The resulting REAL vector must have length >= 1, ideally >= 2
  */
@@ -3228,24 +3228,24 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	GCheckState(dd);
 
 	checkArity(op, args);
-	x = CAR(args); args = CDR(args); 
-	y = CAR(args); args = CDR(args); 
-	l = CAR(args); args = CDR(args); 
-	npts = asInteger(CAR(args)); args = CDR(args); 
-	plot = asLogical(CAR(args)); args = CDR(args); 
-	Offset = CAR(args); args = CDR(args); 
-	tol = asReal(CAR(args)); args = CDR(args); 
+	x = CAR(args); args = CDR(args);
+	y = CAR(args); args = CDR(args);
+	l = CAR(args); args = CDR(args);
+	npts = asInteger(CAR(args)); args = CDR(args);
+	plot = asLogical(CAR(args)); args = CDR(args);
+	Offset = CAR(args); args = CDR(args);
+	tol = asReal(CAR(args)); args = CDR(args);
 	atpen = asLogical(CAR(args));
 	if (npts <= 0 || npts == NA_INTEGER)
 	    error(_("invalid number of points in identify()"));
 	if (!isReal(x) || !isReal(y) || !isString(l) || !isReal(Offset))
 	    errorcall(call, _("incorrect argument type"));
 	if (tol <= 0 || ISNAN(tol))
-	    errorcall(call, _("invalid value for 'tolerance'"));	    
+	    errorcall(call, _("invalid value for 'tolerance'"));
 	if (plot == NA_LOGICAL)
-	    errorcall(call, _("invalid value for 'plot'"));	    
+	    errorcall(call, _("invalid value for 'plot'"));
 	if (atpen == NA_LOGICAL)
-	    errorcall(call, _("invalid value for 'atpen'"));	    
+	    errorcall(call, _("invalid value for 'atpen'"));
 	if (LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
 	    errorcall(call, _("different argument lengths"));
 	n = LENGTH(x);
@@ -3277,9 +3277,9 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if (!GLocator(&xp, &yp, INCHES, dd)) break;
 	    /*
 	     * Repeat cex setting from cexbase within loop
-	     * so that if window is redrawn 
+	     * so that if window is redrawn
 	     * (e.g., conver/uncover window)
-	     * during identifying (i.e., between clicks) 
+	     * during identifying (i.e., between clicks)
 	     * we reset cex properly.
 	     */
 	    Rf_gpptr(dd)->cex = Rf_gpptr(dd)->cexbase;
