@@ -220,6 +220,8 @@ plot.Date <- function(x, y, xlab = "", ...)
     Call <- match.call()
     Call[[1]] <- as.name("plot.default")
     Call$x <- x; Call$y <- y
+    Call$xlab <- xlab
+    Call$ylab <- if("ylab" %in% names(dots)) dots$ylab else deparse(substitute(y))
     Call$xaxt <- "n"
     eval.parent(Call)
     axes <- if("axes" %in% names(dots)) dots$axes else TRUE
