@@ -445,14 +445,15 @@ char *EncodeElement(SEXP x, int indx, int quote, char dec)
 
 char *Rsprintf(char *format, ...)
 {
+    static char buffer[1001]; /* unsafe, as assuming max length, but all 
+				 internal uses are for a few characters */
     va_list(ap);
 
-    R_AllocStringBuffer(0, buffer); /* unsafe, as assuming length, but all internal
- 		                       uses are for a few characters */
     va_start(ap, format);
-    vsprintf(buffer->data, format, ap);
+    vsnprintf(buffer, 1000, format, ap);
     va_end(ap);
-    return buffer->data;
+    buffer[1000] = '\0';
+    return buffer;
 }
 
 void Rprintf(char *format, ...)
