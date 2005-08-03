@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R-2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-07-18 08:22+0100\n"
+"POT-Creation-Date: 2005-08-03 13:17+1200\n"
 "PO-Revision-Date: 2005-07-20 15:00+0200\n"
 "Last-Translator: Detlef Steuer <Detlef Steuer@gmx.de>\n"
 "Language-Team: R-core <R-core@r-project.org>\n"
@@ -366,7 +366,6 @@ msgid "WARNING: no max-mem-size given\n"
 msgstr "Warnung: max-mem-size nicht gegeben\n"
 
 #: src/gnuwin32/system.c:880
-#, c-format
 msgid "WARNING: --max-mem-size value is invalid: ignored\n"
 msgstr "Warnung: --max-mem-size Wert ist ungültig: wird ignoriert\n"
 
@@ -409,7 +408,7 @@ msgstr "NaNs wurden erzeugt"
 msgid "Non-numeric argument to mathematical function"
 msgstr "Nicht-numerisches Argument für mathematische Funktion"
 
-#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3743
+#: src/include/Errormsg.h:35 src/main/plot.c:77 src/main/plot.c:3728
 #: src/main/scan.c:1478
 msgid "invalid argument"
 msgstr "ungültiges Argument"
@@ -497,7 +496,6 @@ msgid "WARNING: no 'vsize' given\n"
 msgstr "Warnung: kein Wert für 'vsize' angegeben\n"
 
 #: src/main/CommandLineArgs.c:253
-#, c-format
 msgid "WARNING: '--vsize' value is invalid: ignored\n"
 msgstr "Warnung: ungültiger Wert für '--vsize': wird ignoriert\n"
 
@@ -511,7 +509,6 @@ msgid "WARNING: no 'nsize' given\n"
 msgstr "Warnung: kein Wert für 'nsize' angegeben\n"
 
 #: src/main/CommandLineArgs.c:276
-#, c-format
 msgid "WARNING: '--nsize' value is invalid: ignored\n"
 msgstr "Warnung: ungültiger Wert für '--nsize': wird ignoriert\n"
 
@@ -673,7 +670,7 @@ msgstr "ungültige multi-byte Formattierungs-Zeichenkette"
 msgid "arguments must be symbolic"
 msgstr "Argumente müssen symbolisch sein"
 
-#: src/main/apply.c:42 src/main/complex.c:621
+#: src/main/apply.c:42 src/main/complex.c:624
 msgid "invalid length"
 msgstr "ungültige Länge"
 
@@ -1201,108 +1198,108 @@ msgstr "Das erste Argument muss eine Zeichenkette sein"
 msgid "abbreviate used with non-ASCII chars"
 msgstr "abbreviate mit nicht-ASCII Zeichen genutzt"
 
-#: src/main/character.c:735
+#: src/main/character.c:734
 msgid "non-character names"
 msgstr "Nicht-Charakter Namen"
 
-#: src/main/character.c:739
+#: src/main/character.c:738
 msgid "invalid value of 'allow_'"
 msgstr "ungültiger Wert von 'allow_'"
 
-#: src/main/character.c:792 src/main/character.c:1321
+#: src/main/character.c:794 src/main/character.c:1325
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "ungültige multibyte Zeichenkette %d"
 
-#: src/main/character.c:871 src/main/character.c:1210 src/main/pcre.c:114
+#: src/main/character.c:875 src/main/character.c:1214 src/main/pcre.c:114
 #: src/main/pcre.c:487
 msgid "regular expression is invalid in this locale"
 msgstr "regular expression ist in dieser Lokalisierung ungültig"
 
-#: src/main/character.c:893 src/main/character.c:1052
-#: src/main/character.c:1213 src/main/pcre.c:121 src/main/pcre.c:333
+#: src/main/character.c:897 src/main/character.c:1056
+#: src/main/character.c:1217 src/main/pcre.c:121 src/main/pcre.c:333
 #: src/main/pcre.c:492
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "ungültige regular expression '%s'"
 
-#: src/main/character.c:903 src/main/character.c:1228 src/main/pcre.c:136
+#: src/main/character.c:907 src/main/character.c:1232 src/main/pcre.c:136
 #: src/main/pcre.c:366 src/main/pcre.c:507
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "Eingabezeichenkette %d ungültig in dieser locale"
 
-#: src/main/character.c:958 src/main/pcre.c:185
+#: src/main/character.c:962 src/main/pcre.c:185
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "ungültige Rückreferenz %d in regular expression"
 
-#: src/main/character.c:1047 src/main/pcre.c:314
+#: src/main/character.c:1051 src/main/pcre.c:314
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' ist ungültig in dieser locale"
 
-#: src/main/character.c:1049 src/main/pcre.c:316
+#: src/main/character.c:1053 src/main/pcre.c:316
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' ist ungültig in dieser locale"
 
-#: src/main/character.c:1058
+#: src/main/character.c:1062
 msgid "zero-length pattern"
 msgstr "Muster mit Länge 0"
 
-#: src/main/character.c:1297
+#: src/main/character.c:1301
 msgid "non-character argument to tolower()"
 msgstr "Nicht-Charakter Argument für tolower()"
 
-#: src/main/character.c:1371
+#: src/main/character.c:1375
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "abnehmende Bereichsspezifikation ('%lc-%lc')"
 
-#: src/main/character.c:1457
+#: src/main/character.c:1461
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "abnehmende Bereichsspezifikation ('%c-%c')"
 
-#: src/main/character.c:1535
+#: src/main/character.c:1539
 msgid "invalid (NA) arguments."
 msgstr "ungültige (NA) Argumente."
 
-#: src/main/character.c:1557
+#: src/main/character.c:1561
 msgid "invalid multibyte string 'old'"
 msgstr "ungültige multibyte Zeichenkette 'old'"
 
-#: src/main/character.c:1564
+#: src/main/character.c:1568
 msgid "invalid multibyte string 'new'"
 msgstr "ungültige multibyte Zeichenkette 'new'"
 
-#: src/main/character.c:1583 src/main/character.c:1644
+#: src/main/character.c:1587 src/main/character.c:1648
 msgid "'old' is longer than 'new'"
 msgstr "'old' ist länger als 'new'"
 
-#: src/main/character.c:1600
+#: src/main/character.c:1604
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "ungültige multibyte Eingabezeichenkette %d"
 
-#: src/main/character.c:1743
+#: src/main/character.c:1747
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "Benutzung von agrep() in einer UTF-8 Lokalisierung arbeitet wahrscheinlich "
 "nur für ASCII Zeichenketten"
 
-#: src/main/character.c:1752
+#: src/main/character.c:1756
 msgid "could not allocate memory for approximate matching"
 msgstr "konnte keinen Speicher für approximate matching zuteilen"
 
-#: src/main/character.c:1776
+#: src/main/character.c:1780
 msgid "could not perform case insensitive matching"
 msgstr "konnte case insensitive matching nicht durchführen"
 
-#: src/main/character.c:1819 src/main/character.c:2054
+#: src/main/character.c:1823 src/main/character.c:2058
 msgid "argument must be a character vector of length 1"
 msgstr "Argument muss ein Charakter-Vektor der Länge 1 sein"
 
-#: src/main/character.c:1821 src/main/character.c:2056
+#: src/main/character.c:1825 src/main/character.c:2060
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1310,49 +1307,49 @@ msgstr ""
 "Argument sollte ein Charakter-Vektor der Länge 1 sein\n"
 "alle Argumente bis auf das erste werden ignoriert"
 
-#: src/main/character.c:1837 src/main/character.c:1869
-#: src/main/character.c:1890
+#: src/main/character.c:1841 src/main/character.c:1873
+#: src/main/character.c:1894
 msgid "argument 'x' must be a raw vector"
 msgstr "Argument 'x' muss ein raw Vektor sein"
 
-#: src/main/character.c:1840 src/main/character.c:2106
+#: src/main/character.c:1844 src/main/character.c:2110
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "Argument 'multiple' muss TRUE oder FALSE sein"
 
-#: src/main/character.c:1871
+#: src/main/character.c:1875
 msgid "argument 'shift' must be a small integer"
 msgstr "Argument 'shift' muss eine kleine ganze Zahl sein"
 
-#: src/main/character.c:1908
+#: src/main/character.c:1912
 msgid "argument 'x' must be a integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
-#: src/main/character.c:1928
+#: src/main/character.c:1932
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "Argument 'x' muss entweder raw, ganzzahlig oder logisch sein"
 
-#: src/main/character.c:1930
+#: src/main/character.c:1934
 msgid "argument 'type' must be a character string"
 msgstr "Argument 'type' muss eine Zeichenkette sein"
 
-#: src/main/character.c:1934
+#: src/main/character.c:1938
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "Länge des Argumentes 'x' muss ein Vielfaches von %d sein"
 
-#: src/main/character.c:1948 src/main/character.c:1963
+#: src/main/character.c:1952 src/main/character.c:1967
 msgid "argument 'x' must not contain NAs"
 msgstr "Argument 'x' darf keine NAs enthalten"
 
-#: src/main/character.c:2103
+#: src/main/character.c:2107
 msgid "argument 'x' must be an integer vector"
 msgstr "Argument 'x' muss ein Vektor ganzer Zahlen sein"
 
-#: src/main/character.c:2148
+#: src/main/character.c:2152
 msgid "strtrim() requires a character vector"
 msgstr "strtrim() benötigt Charakter-Vektor"
 
-#: src/main/character.c:2153 src/main/character.c:2157
+#: src/main/character.c:2157 src/main/character.c:2161
 msgid "invalid 'width' argument"
 msgstr "ungültiges 'width' Argument"
 
@@ -1535,31 +1532,31 @@ msgstr "rgb ist keine Matrix (intern)"
 msgid "rgb must have 3 rows (internally)"
 msgstr "rgb muss 3 Zeilen haben (intern)"
 
-#: src/main/complex.c:55
+#: src/main/complex.c:56
 msgid "invalid complex unary operator"
 msgstr "ungültiger, komplexer, unärer Operator"
 
-#: src/main/complex.c:171
+#: src/main/complex.c:172
 msgid "unimplemented complex operation"
 msgstr "nicht implementierte komplexe Operation"
 
-#: src/main/complex.c:265
+#: src/main/complex.c:268
 msgid "non-numeric argument to function"
 msgstr "nicht-numerisches Argument für Funktion"
 
-#: src/main/complex.c:538 src/main/complex.c:610
+#: src/main/complex.c:541 src/main/complex.c:613
 msgid "unimplemented complex function"
 msgstr "nicht implementierte komplexe Funktion"
 
-#: src/main/complex.c:675
+#: src/main/complex.c:678
 msgid "polynomial degree too high (49 max)"
 msgstr "Grad des Polynoms zu hoch (max. 49)"
 
-#: src/main/complex.c:688
+#: src/main/complex.c:691
 msgid "invalid polynomial coefficient"
 msgstr "ungültiger Polynomialkoeffizient"
 
-#: src/main/complex.c:693
+#: src/main/complex.c:696
 msgid "root finding code failed"
 msgstr "Nullstellensuche fehlgeschlagen"
 
@@ -2077,7 +2074,9 @@ msgstr "ungültiger Wert für 'split'"
 #: src/main/connections.c:3420
 msgid ""
 "file(\"\") only supports open = \"w+\" and open = \"w+b\": using the former"
-msgstr "Datei(\\\"\\\") erlaubt nur open = \\\"w+\\\" und open = \\\"w+b\\\": Ersteres wird verwendet"
+msgstr ""
+"Datei(\\\"\\\") erlaubt nur open = \\\"w+\\\" und open = \\\"w+b\\\": "
+"Ersteres wird verwendet"
 
 #: src/main/connections.c:3436 src/modules/internet/internet.c:463
 msgid "unsupported URL scheme"
@@ -2251,11 +2250,11 @@ msgstr "konnte Speicher für 'read.dcf' nicht zuteilen"
 msgid "could not allocate memory in C function 'R_AllocStringBuffer'"
 msgstr "konnte Speicher in C Funktion 'R_AllocStringBuffer' nicht zuteilen"
 
-#: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1478
-#: src/main/plot.c:1764 src/main/plot.c:1829 src/main/plot.c:1917
-#: src/main/plot.c:2042 src/main/plot.c:2132 src/main/plot.c:2422
-#: src/main/plot.c:2622 src/main/plot.c:2865 src/main/plot.c:3505
-#: src/main/plot.c:3581 src/main/plot.c:3834 src/main/plot3d.c:1381
+#: src/main/deparse.c:184 src/main/plot.c:982 src/main/plot.c:1479
+#: src/main/plot.c:1765 src/main/plot.c:1830 src/main/plot.c:1918
+#: src/main/plot.c:2043 src/main/plot.c:2133 src/main/plot.c:2422
+#: src/main/plot.c:2607 src/main/plot.c:2850 src/main/plot.c:3490
+#: src/main/plot.c:3566 src/main/plot.c:3819 src/main/plot3d.c:1381
 #: src/main/sprintf.c:117
 msgid "too few arguments"
 msgstr "zu wenig Argumente"
@@ -2977,7 +2976,6 @@ msgid "Error in "
 msgstr "Fehler in "
 
 #: src/main/errors.c:454 src/main/errors.c:457
-#, c-format
 msgid "Error: "
 msgstr "Fehler: "
 
@@ -3775,63 +3773,63 @@ msgstr "Vektorspeicher erschöpft (Limit erreicht?)"
 msgid "cons memory exhausted (limit reached?)"
 msgstr "Cons-Speicher erschöpft (Limit erreicht?)"
 
-#: src/main/memory.c:1540 src/main/memory.c:1543
+#: src/main/memory.c:1541 src/main/memory.c:1545
 #, c-format
 msgid "cannot allocate memory block of size %.0f"
 msgstr "kann Speicherblock der Größe %.0f nicht zuteilen"
 
-#: src/main/memory.c:1738
+#: src/main/memory.c:1740
 msgid "negative length vectors are not allowed"
 msgstr "Vektoren negativer Länge sind nicht erlaubt"
 
-#: src/main/memory.c:1756 src/main/memory.c:1766 src/main/memory.c:1776
-#: src/main/memory.c:1788
+#: src/main/memory.c:1758 src/main/memory.c:1768 src/main/memory.c:1778
+#: src/main/memory.c:1790
 #, c-format
 msgid "cannot allocate vector of length %d"
 msgstr "kann Vektor der Länge %d nicht allozieren"
 
-#: src/main/memory.c:1800
+#: src/main/memory.c:1802
 #, c-format
 msgid "invalid type/length (%d/%d) in vector allocation"
 msgstr "ungültiger Typ/Länge (%d/%d) bei der Vektorallokation"
 
-#: src/main/memory.c:1856
+#: src/main/memory.c:1858
 #, c-format
 msgid "cannot allocate vector of size %lu Kb"
 msgstr "kann Vektor der Größe %lu Kb nicht allozieren"
 
-#: src/main/memory.c:1937
+#: src/main/memory.c:1939
 msgid "gc.time() is not implemented on this system"
 msgstr "gc.time() ist auf diesem System nicht implementiert"
 
-#: src/main/memory.c:2123
+#: src/main/memory.c:2125
 msgid "protect(): protection stack overflow"
 msgstr "protect(): protection stack Überlauf"
 
-#: src/main/memory.c:2139
+#: src/main/memory.c:2141
 msgid "unprotect(): stack imbalance"
 msgstr "unprotect(): unbalancierter Stack"
 
-#: src/main/memory.c:2152
+#: src/main/memory.c:2154
 msgid "unprotect_ptr: pointer not found"
 msgstr "unprotect_ptr: Zeiger nicht gefunden"
 
-#: src/main/memory.c:2195
+#: src/main/memory.c:2197
 #, c-format
 msgid "Calloc could not allocate (%d of %d) memory"
 msgstr "Calloc konnte nicht (%d von %d) Speicher zuteilen"
 
-#: src/main/memory.c:2204
+#: src/main/memory.c:2206
 #, c-format
 msgid "Realloc could not re-allocate (size %d) memory"
 msgstr "Realloc konnte nicht (size %d) Speicher re-allozieren"
 
-#: src/main/memory.c:2323
+#: src/main/memory.c:2325
 msgid "not safe to return vector pointer"
 msgstr "Vektorzeigerrückgabe ist unsicher"
 
-#: src/main/memory.c:2351 src/main/memory.c:2360 src/main/memory.c:2371
-#: src/main/memory.c:2384 src/main/memory.c:2400 src/main/memory.c:2417
+#: src/main/memory.c:2353 src/main/memory.c:2362 src/main/memory.c:2373
+#: src/main/memory.c:2386 src/main/memory.c:2402 src/main/memory.c:2419
 msgid "bad value"
 msgstr "unbrauchbarer Wert"
 
@@ -4803,87 +4801,87 @@ msgstr "ungültiger Typ für die Achsen-Label"
 msgid "invalid axis number %d"
 msgstr "ungültige Achsnummer %d"
 
-#: src/main/plot.c:1088 src/main/plot.c:2475
+#: src/main/plot.c:1089 src/main/plot.c:2475
 msgid "zero length 'padj' specified"
 msgstr "'padj' mit Länge 0 angegeben"
 
-#: src/main/plot.c:1139
+#: src/main/plot.c:1140
 #, c-format
 msgid "'at' and 'label' lengths differ, %d != %d"
 msgstr "Länge von 'at' und 'label' unterschiedlich %d != %d"
 
-#: src/main/plot.c:1157
+#: src/main/plot.c:1158
 msgid "no locations are finite"
 msgstr "keine endlichen Positionen"
 
-#: src/main/plot.c:1494
+#: src/main/plot.c:1495
 msgid "invalid plotting structure"
 msgstr "ungültige Plotstruktur"
 
-#: src/main/plot.c:1496
+#: src/main/plot.c:1497
 #, c-format
 msgid "'x' and 'y' lengths differ in %s()"
 msgstr "Längen von 'x' und 'y' sind unterschiedlich in %s()"
 
-#: src/main/plot.c:1508
+#: src/main/plot.c:1509
 #, c-format
 msgid "plot type '%s' will be truncated to first character"
 msgstr "Plottyp '%s' wird nach dem ersten Buchstaben abgeschnitten"
 
-#: src/main/plot.c:1512 src/main/plot.c:3125
+#: src/main/plot.c:1513 src/main/plot.c:3110
 msgid "invalid plot type"
 msgstr "ungültiger Plottyp"
 
-#: src/main/plot.c:1688
+#: src/main/plot.c:1689
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "ungültiger Plottyp in '%c'"
 
-#: src/main/plot.c:1729
+#: src/main/plot.c:1730
 msgid "first argument invalid"
 msgstr "erstes Argument ungültig"
 
-#: src/main/plot.c:1735
+#: src/main/plot.c:1736
 msgid "second argument invalid"
 msgstr "zweites Argument ungültig"
 
-#: src/main/plot.c:1741
+#: src/main/plot.c:1742
 msgid "third argument invalid"
 msgstr "drittes Argument ungültig"
 
-#: src/main/plot.c:1747
+#: src/main/plot.c:1748
 msgid "fourth argument invalid"
 msgstr "viertes Argument ungültig"
 
-#: src/main/plot.c:1929
+#: src/main/plot.c:1930
 msgid "invalid arrow head length"
 msgstr "ungültige Pfeilspitzenlänge"
 
-#: src/main/plot.c:1934
+#: src/main/plot.c:1935
 msgid "invalid arrow head angle"
 msgstr "ungültiger Pfeilspitzenwinkel"
 
-#: src/main/plot.c:1939
+#: src/main/plot.c:1940
 msgid "invalid arrow head specification"
 msgstr "ungültige Pfeilsitzenspezifikation"
 
-#: src/main/plot.c:1959
+#: src/main/plot.c:1960
 msgid "'lwd' must be numeric of length >=1"
 msgstr "'lwd' muss numerisch mit Länge >=1 sein"
 
-#: src/main/plot.c:2144
+#: src/main/plot.c:2145
 msgid "zero length 'labels'"
 msgstr "'labels' mit Länge 0"
 
-#: src/main/plot.c:2172
+#: src/main/plot.c:2173
 msgid "invalid 'adj' value"
 msgstr "unültiger 'adj' Wert"
 
-#: src/main/plot.c:2179
+#: src/main/plot.c:2180
 msgid "invalid 'pos' value"
 msgstr "ungültiger 'pos' Wert"
 
-#: src/main/plot.c:2222
+#: src/main/plot.c:2223
 msgid "no coordinates were supplied"
 msgstr "keine Koordinaten angegeben"
 
@@ -4923,147 +4921,143 @@ msgstr "'col' mit Länge 0 angegeben"
 msgid "zero length 'font' specified"
 msgstr "'font' mit Länge 0 angegeben"
 
-#: src/main/plot.c:2570
-msgid "Hershey fonts not yet implemented for mtext()"
-msgstr "Hershey fonts noch nicht für mtext() implementiert"
-
-#: src/main/plot.c:2906
+#: src/main/plot.c:2891
 msgid "invalid a=, b= specification"
 msgstr "ungültige a=, b= Angabe"
 
-#: src/main/plot.c:2915
+#: src/main/plot.c:2900
 msgid "'a' and 'b' must be finite"
 msgstr "'a' und 'b' müssen endlich sein"
 
-#: src/main/plot.c:3047
+#: src/main/plot.c:3032
 msgid "invalid 'which' specification"
 msgstr "ungültige 'which' Spezifikation"
 
-#: src/main/plot.c:3120
+#: src/main/plot.c:3105
 msgid "invalid number of points in locator()"
 msgstr "ungültige Anzahl von Punkten in locator()"
 
-#: src/main/plot.c:3255
+#: src/main/plot.c:3240
 msgid "invalid number of points in identify()"
 msgstr "ungültige Anzahl von Punkten in identify()"
 
-#: src/main/plot.c:3257
+#: src/main/plot.c:3242
 msgid "incorrect argument type"
 msgstr "falscher Argumenttyp"
 
-#: src/main/plot.c:3259
+#: src/main/plot.c:3244
 msgid "invalid value for 'tolerance'"
 msgstr "ungültiger Wert für 'tolerance'"
 
-#: src/main/plot.c:3261
+#: src/main/plot.c:3246
 msgid "invalid value for 'plot'"
 msgstr "ungültiger Wert für 'plot'"
 
-#: src/main/plot.c:3263
+#: src/main/plot.c:3248
 msgid "invalid value for 'atpen'"
 msgstr "ungültiger Wert für 'atpen'"
 
-#: src/main/plot.c:3265
+#: src/main/plot.c:3250
 msgid "different argument lengths"
 msgstr "unterschiedliche Argumentlängen"
 
-#: src/main/plot.c:3319
+#: src/main/plot.c:3304
 #, c-format
 msgid "warning: no point with %.2f inches\n"
 msgstr "Warnung: kein Punkt mit %.2f inches\n"
 
-#: src/main/plot.c:3325
+#: src/main/plot.c:3310
 msgid "warning: nearest point already identified\n"
 msgstr "Warnung: nächster Punkt bereits identifiziert\n"
 
-#: src/main/plot.c:3406
+#: src/main/plot.c:3391
 msgid "invalid units"
 msgstr "ungültige Einheiten"
 
-#: src/main/plot.c:3412
+#: src/main/plot.c:3397
 msgid "invalid 'cex' value"
 msgstr "ungültiger 'cex' Wert"
 
-#: src/main/plot.c:3565 src/main/plot.c:3674
+#: src/main/plot.c:3550 src/main/plot.c:3659
 msgid "invalid dendrogram input"
 msgstr "ungültige Eingabe für Dendrogramm"
 
-#: src/main/plot.c:3705
+#: src/main/plot.c:3690
 msgid "cannot take snapshot of old-style device"
 msgstr "kann von altmodischem Device keinen Schnappschuss machen"
 
-#: src/main/plot.c:3718
+#: src/main/plot.c:3703
 msgid "cannot play snapshot on old-style device"
 msgstr "kann Schnappschuss auf altmodischem Device nicht abspielen"
 
-#: src/main/plot.c:3774
+#: src/main/plot.c:3759
 msgid "invalid graphics parameter list"
 msgstr "ungültige Grafikparameterliste"
 
-#: src/main/plot.c:3816
+#: src/main/plot.c:3801
 msgid "invalid symbol parameter vector"
 msgstr "ungültiger Symbolparametervektor"
 
-#: src/main/plot.c:3839
+#: src/main/plot.c:3824
 msgid "invalid symbol coordinates"
 msgstr "ungültige Symbolkoordinaten"
 
-#: src/main/plot.c:3847
+#: src/main/plot.c:3832
 msgid "x/y/parameter length mismatch"
 msgstr "x/y/Parameter haben unterschiedliche Längen"
 
-#: src/main/plot.c:3866
+#: src/main/plot.c:3851
 msgid "invalid circles data"
 msgstr "ungültige Daten für Kreise"
 
-#: src/main/plot.c:3868 src/main/plot.c:3886 src/main/plot.c:3912
-#: src/main/plot.c:3941
+#: src/main/plot.c:3853 src/main/plot.c:3871 src/main/plot.c:3897
+#: src/main/plot.c:3926
 msgid "invalid symbol parameter"
 msgstr "ungültiger Symbolparameter"
 
-#: src/main/plot.c:3884
+#: src/main/plot.c:3869
 msgid "invalid squares data"
 msgstr "ungültige Daten für Quadrate"
 
-#: src/main/plot.c:3910
+#: src/main/plot.c:3895
 msgid "invalid rectangles data (need 2 columns)"
 msgstr "ungültige Daten für Rechtecke (zwei Spalten nötig)"
 
-#: src/main/plot.c:3939
+#: src/main/plot.c:3924
 msgid "invalid stars data"
 msgstr "ungültige Daten für Sterne"
 
-#: src/main/plot.c:3981
+#: src/main/plot.c:3966
 msgid "invalid thermometers data (need 3 or 4 columns)"
 msgstr "ungültige Daten für Thermometer (3 oder 4 Spalten nötig)"
 
-#: src/main/plot.c:3984
+#: src/main/plot.c:3969
 #, c-format
 msgid "invalid thermometers[,%s]"
 msgstr "ungültige Thermometer[,%s]"
 
-#: src/main/plot.c:3988
+#: src/main/plot.c:3973
 #, c-format
 msgid "thermometers[,%s] not in [0,1] -- may look funny"
 msgstr "Thermometer[,%s] nicht in [0,1] -- sieht evtl. lustig aus"
 
-#: src/main/plot.c:3991
+#: src/main/plot.c:3976
 msgid "invalid thermometers[,1:2]"
 msgstr "ungültige Thermometer[,1:2]"
 
-#: src/main/plot.c:4030
+#: src/main/plot.c:4015
 msgid "invalid boxplots data (need 5 columns)"
 msgstr "ungültige Daten für boxplot (5 Spalten nötig)"
 
-#: src/main/plot.c:4040
+#: src/main/plot.c:4025
 msgid "boxplots[,5] outside [0,1] -- may look funny"
 msgstr "boxplots[,5] außerhalb von [0,1] -- sieht evtl. lustig aus"
 
-#: src/main/plot.c:4042
+#: src/main/plot.c:4027
 msgid "invalid boxplots[, 1:4]"
 msgstr "ungültige boxplots[, 1:4]"
 
-#: src/main/plot.c:4088
+#: src/main/plot.c:4073
 msgid "invalid symbol type"
 msgstr "ungültiger Symboltyp"
 
@@ -5316,75 +5310,75 @@ msgstr "ungültiges erstes Argument 'n'"
 msgid "invalid second argument 'size'"
 msgstr "ungültiges zweites Argument 'size'"
 
-#: src/main/regex.c:2536
+#: src/main/regex.c:2647
 msgid "Success"
 msgstr "Erfolg"
 
-#: src/main/regex.c:2539
+#: src/main/regex.c:2650
 msgid "No match"
 msgstr "nichts Passendes gefunden"
 
-#: src/main/regex.c:2542
+#: src/main/regex.c:2653
 msgid "Invalid regular expression"
 msgstr "ungültiger regulärer Ausdruck"
 
-#: src/main/regex.c:2545
+#: src/main/regex.c:2656
 msgid "Invalid collation character"
 msgstr "ungültiges collation Zeichen"
 
-#: src/main/regex.c:2548
+#: src/main/regex.c:2659
 msgid "Invalid character class name"
 msgstr "ungültiger Zeichenklassenname"
 
-#: src/main/regex.c:2551
+#: src/main/regex.c:2662
 msgid "Trailing backslash"
 msgstr "Backslash am Ende"
 
-#: src/main/regex.c:2554
+#: src/main/regex.c:2665
 msgid "Invalid back reference"
 msgstr "ungültige Rückreferenz"
 
-#: src/main/regex.c:2557
+#: src/main/regex.c:2668
 msgid "Unmatched [ or [^"
 msgstr "kein Gegenstück zu [ oder [^"
 
-#: src/main/regex.c:2560
+#: src/main/regex.c:2671
 msgid "Unmatched ( or \\("
 msgstr "kein Gegenstück zu( oder \\("
 
-#: src/main/regex.c:2563
+#: src/main/regex.c:2674
 msgid "Unmatched \\{"
 msgstr "kein Gegenstück zu \\{"
 
-#: src/main/regex.c:2566
+#: src/main/regex.c:2677
 msgid "Invalid content of \\{\\}"
 msgstr "ungültiger Inhalt von }}{\\}"
 
-#: src/main/regex.c:2569
+#: src/main/regex.c:2680
 msgid "Invalid range end"
 msgstr "ungültiges Bereichsende"
 
-#: src/main/regex.c:2572
+#: src/main/regex.c:2683
 msgid "Memory exhausted"
 msgstr "Speicher erschöpft"
 
-#: src/main/regex.c:2575
+#: src/main/regex.c:2686
 msgid "Invalid preceding regular expression"
 msgstr "ungültiger vorhergehender regulärer Ausdruck"
 
-#: src/main/regex.c:2578
+#: src/main/regex.c:2689
 msgid "Premature end of regular expression"
 msgstr "Vorzeitiges Ende eines regulären Ausdrucks"
 
-#: src/main/regex.c:2581
+#: src/main/regex.c:2692
 msgid "Regular expression too big"
 msgstr "Regulärer Ausdruck zu groß"
 
-#: src/main/regex.c:2584
+#: src/main/regex.c:2695
 msgid "Unmatched ) or \\)"
 msgstr "kein Gegenstück zu ) oder \\)"
 
-#: src/main/regex.c:3053
+#: src/main/regex.c:3189
 msgid "No previous regular expression"
 msgstr "kein vorhergehender regulärer Ausdruck"
 
@@ -5458,7 +5452,9 @@ msgstr ""
 
 #: src/main/saveload.c:687
 msgid "cannot restore file position while restoring data"
-msgstr "kann Position in Datei nicht wiederherstellen, während ich Daten wiederherstelle"
+msgstr ""
+"kann Position in Datei nicht wiederherstellen, während ich Daten "
+"wiederherstelle"
 
 #: src/main/saveload.c:918
 msgid "base namespace is not preserved in version 1 workspaces"
@@ -5704,7 +5700,6 @@ msgid "the first argument must be of mode character"
 msgstr "erstes Argument muss Charakter Mode haben"
 
 #: src/main/scan.c:1480
-#, c-format
 msgid "Selection: "
 msgstr "Auswahl: "
 
@@ -5970,7 +5965,7 @@ msgstr "unbrauchbarer Variablenname"
 msgid "only atomic vectors can be tested to be sorted"
 msgstr "nur atomare Vektoren können auf Sortiertheit getestet werden"
 
-#: src/main/sort.c:266 src/main/sort.c:722 src/main/sort.c:821
+#: src/main/sort.c:266 src/main/sort.c:726 src/main/sort.c:825
 msgid "'decreasing' must be TRUE or FALSE"
 msgstr "'decreasing' muss TRUE oder FALSE sein"
 
@@ -5978,7 +5973,7 @@ msgstr "'decreasing' muss TRUE oder FALSE sein"
 msgid "only atomic vectors can be sorted"
 msgstr "nur atomare Vektoren können sortiert werden"
 
-#: src/main/sort.c:271 src/main/sort.c:483 src/main/sort.c:764
+#: src/main/sort.c:271 src/main/sort.c:483 src/main/sort.c:768
 msgid "raw vectors cannot be sorted"
 msgstr "raw vectors können nicht sortiert werden"
 
@@ -5991,32 +5986,32 @@ msgstr "NA Index"
 msgid "index %d outside bounds"
 msgstr "Index %d ist außerhalb der Grenzen"
 
-#: src/main/sort.c:718 src/main/sort.c:818
+#: src/main/sort.c:722 src/main/sort.c:822
 msgid "'na.last' is invalid"
 msgstr "'na.last' ist ungültig"
 
-#: src/main/sort.c:731
+#: src/main/sort.c:735
 #, c-format
 msgid "argument %d is not a vector"
 msgstr "Argument %d ist kein Vektor"
 
-#: src/main/sort.c:733
+#: src/main/sort.c:737
 msgid "argument lengths differ"
 msgstr "Länge der Argumente unterschiedlich"
 
-#: src/main/sort.c:762
+#: src/main/sort.c:766
 msgid "argument is not an atomic vector"
 msgstr "Argument ist keine atomarer Vektor"
 
-#: src/main/sort.c:773
+#: src/main/sort.c:777
 msgid "invalid ties.method for rank() [should never happen]"
 msgstr "ungültige ties.method für rank() [sollte nie vorkommen]"
 
-#: src/main/sort.c:828
+#: src/main/sort.c:832
 msgid "negative value in 'x'"
 msgstr "negativer Wert in 'x'"
 
-#: src/main/sort.c:839
+#: src/main/sort.c:843
 msgid "too large a range of values in 'x'"
 msgstr "zu großer Wertebereich in 'x'"
 
@@ -6983,7 +6978,7 @@ msgstr ""
 msgid "X cannot set locale modifiers"
 msgstr "X kann Locales nicht setzen"
 
-#: src/modules/X11/devX11.c:1104
+#: src/modules/X11/devX11.c:1102
 msgid "no png support in this version of R"
 msgstr "png wird in dieser Version von R nicht unterstützt"
 
@@ -6996,7 +6991,7 @@ msgstr "Dateiname zu lang im png() Aufruf"
 msgid "could not open PNG file '%s'"
 msgstr "konnte PNG Datei '%s' nicht öffnen"
 
-#: src/modules/X11/devX11.c:1125
+#: src/modules/X11/devX11.c:1123
 msgid "no jpeg support in this version of R"
 msgstr "jpeg wird in dieser Version von R nicht unterstützt"
 
@@ -7307,7 +7302,6 @@ msgid "Sys.info() is not implemented on this system"
 msgstr "Sys.info() ist auf diesem System nicht implementiert"
 
 #: src/unix/system.c:181
-#, c-format
 msgid "WARNING: --gui or -g without value ignored"
 msgstr "Warnung: --gui oder -g ohne Wert ignoriert"
 
@@ -7340,6 +7334,9 @@ msgstr "X11 Modul kann nicht geladen werden"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 nicht verfügbar"
+
+#~ msgid "Hershey fonts not yet implemented for mtext()"
+#~ msgstr "Hershey fonts noch nicht für mtext() implementiert"
 
 #~ msgid "cannot resolve native routine"
 #~ msgstr "kann native Routine nicht auflösen"

@@ -965,7 +965,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     int i, n, nint = 0, ntmp, side, *ind, outer, lineoff = 0;
     int istart, iend, incr;
     Rboolean dolabels, doticks, logflag = FALSE;
-    Rboolean create_at, vectorFonts = FALSE;
+    Rboolean create_at;
     double x, y, temp, tnew, tlast;
     double axp[3], usr[2];
     double gap, labw, low, high, line, pos, lwd;
@@ -1066,8 +1066,9 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
     /* Optional argument: "vfont" */
     /* Allows Hershey vector fonts to be used */
     PROTECT(vfont = FixupVFont(CAR(args)));
-    if (!isNull(vfont))
-	vectorFonts = TRUE;
+    if (!isNull(vfont)) {
+      warning("vfont not supported for axis();  use par(family) instead");
+    }
     args = CDR(args);
 
     /* Optional argument: "lty" */
@@ -2410,7 +2411,6 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
     SEXP rawcol;
     int ntext, nside, nline, nouter, nat, nadj, npadj, ncex, ncol, nfont;
     Rboolean dirtyplot = FALSE, gpnewsave = FALSE, dpnewsave = FALSE;
-    Rboolean vectorFonts = FALSE;
     int i, n, fontsave, colsave;
     double cexsave;
     SEXP originalArgs = args;
@@ -2500,8 +2500,9 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 
     /* Arg11 : vfont */
     PROTECT(vfont = FixupVFont(CAR(args)));
-    if (!isNull(vfont))
-	vectorFonts = TRUE;
+    if (!isNull(vfont)) {
+      warning("vfont not supported for mtext();  use par(family) instead");
+    }
     args = CDR(args);
 
     GSavePars(dd);
@@ -2557,23 +2558,7 @@ SEXP do_mtext(SEXP call, SEXP op, SEXP args, SEXP env)
 	atval = ComputeAtValue(atval, Rf_gpptr(dd)->adj, sideval, Rf_gpptr(dd)->las,
 			       outerval, dd);
 
-	if (vectorFonts) {
-	    string = STRING_ELT(text, i%ntext);
-#ifdef GMV_implemented
-	    if(string != NA_STRING)
-		GMVText(CHAR(string),
-			INTEGER(vfont)[0], INTEGER(vfont)[1],
-			sideval, lineval, outerval, atval,
-			Rf_gpptr(dd)->las, padjval, dd);
-#else
-	    warningcall(call,
-			_("Hershey fonts not yet implemented for mtext()"));
-	    if(string != NA_STRING)
-		GMtext(CHAR(string), sideval, lineval, outerval, atval,
-		       Rf_gpptr(dd)->las, padjval, dd);
-#endif
-	}
-	else if (isExpression(text))
+	if (isExpression(text))
 	    GMMathText(VECTOR_ELT(text, i%ntext),
 		       sideval, lineval, outerval, atval, Rf_gpptr(dd)->las,
 		       padjval, dd);

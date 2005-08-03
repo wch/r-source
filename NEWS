@@ -382,6 +382,11 @@ BUG FIXES
 
     o   hist.POSIXct() and hist.Date() now respect par("xaxt").
 
+    o   The 'vfont' argument was not supported correctly in title(),
+	mtext(), and axis().  The 'vfont' argument is superseded by
+	the par(family=) approach introduced in 2.0.0.  This bug-fix
+	just updates the warning messages and documentation to 
+	properly reflect the new order of things.
 
 
 

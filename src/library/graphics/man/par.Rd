@@ -216,7 +216,8 @@ par(\dots, no.readonly = FALSE)
       The default value is \code{""} which means that the
       default device font will be used.
       Standard values are \code{"serif"}, \code{"sans"},
-      \code{"mono"}, and \code{"symbol"}.  Different devices
+      \code{"mono"}, and \code{"symbol"} and the \link{Hershey}
+      font families are also available.  Different devices
       may define others.  Some devices will ignore this setting
       completely.}
     \item{\code{fg}}{The color to be used for the foreground of plots.
