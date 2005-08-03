@@ -100,6 +100,7 @@ src/appl/maxcol.c
 
 src/appl/interv.c : moved to API from code originally in
 		    src/library/stats/src/bvalue.f, see the following
+
 src/library/stats:
 
 	See the file src/library/stats/COPYRIGHTS.modreg for details
@@ -204,7 +205,7 @@ src/main/vsnprintf.c
 
 
 src/main/regex.c
-   Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
 src/main/Rregex.h
    Copyright (C) 1985,1989-93,1995-98,2000,2001,2002,2003
    Free Software Foundation, Inc.
@@ -231,7 +232,7 @@ src/main/dounzip.c, unzip.h
 
 src/main/acosh.c, asinh.c, atanh.c
 
-used on Windows mainly.  Based on
+used as substitution code only.  Based on
 
   Cephes Math Library Release 2.8:  June, 2000
   Copyright 1984, 1995, 2000 by Stephen L. Moshier
@@ -291,7 +292,7 @@ src/extra/bzip2/decompress.c
 src/extra/bzip2/huffman.c
 src/extra/bzip2/randtable.c
 
-   copyright (C) 1996-2002 Julian R Seward.
+   copyright (C) 1996-2005 Julian R Seward.
 
 
 src/library/tools/src/md5.[ch]
