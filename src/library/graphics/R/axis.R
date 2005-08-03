@@ -12,6 +12,10 @@ axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=NA, pos=NA,
                    lty, lwd, col, padj, ...))
 }
 
+
+## Note that axTicks() can be used without any graphics device
+## when (axp, usr, log) are specified.  However, axTicks() should
+## *really* just call .Internal(createAtVector(axp,usr,nint,log))
 axTicks <- function(side, axp=NULL, usr=NULL, log=NULL) {
     ## Compute tickmark "at" values which axis(side) would use by default;
     ## using par("Xaxp") , par("usr") & par("Xlog") where X = x|y
@@ -29,7 +33,9 @@ axTicks <- function(side, axp=NULL, usr=NULL, log=NULL) {
             stop("invalid positive 'axp[3]'")
         if(is.null(usr)) usr <- par("usr")[if(is.x) 1:2 else 3:4]
         else if(!is.numeric(usr) || length(usr) != 2) stop("invalid 'usr'")
-        ii <- round(log10(axp[1:2]))
+        ## need sorting for the case of reverse axes
+        ii <- round(log10(sort(axp[1:2])))
+        usr <- sort(usr)
         x10 <- 10^((ii[1] - (iC >= 2)):ii[2])
 	r <- switch(iC,				## axp[3]
 		    x10,			## 1

@@ -390,9 +390,10 @@ BUG FIXES
     o   The 'vfont' argument was not supported correctly in title(),
 	mtext(), and axis().  The 'vfont' argument is superseded by
 	the par(family=) approach introduced in 2.0.0.  This bug-fix
-	just updates the warning messages and documentation to 
+	just updates the warning messages and documentation to
 	properly reflect the new order of things.
 
+    o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
 
 
