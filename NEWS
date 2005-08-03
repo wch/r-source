@@ -23,7 +23,7 @@ USER-VISIBLE CHANGES
 	in is.null().
 
     o	graphics::xy.coords, xyz.coords and n2mfrow have been moved to
-	the grDevices name space (to be available in grid as well).
+	the grDevices name space (to be available for grid as well).
 
 	graphics::boxplot.stats, contourLines, nclass.*, and chull
 	have been moved to the grDevices name space.  The C code
@@ -309,9 +309,6 @@ C-LEVEL FACILITIES
 
 BUG FIXES
 
-    o	Printing was not allowing for double-width characters in its
-	layout.
-
     o	%/% has been adjusted to make x == (x %% y) + y * ( x %/% y )
 	more likely in cases when extended-precision registers were
 	interfering.
@@ -395,6 +392,7 @@ BUG FIXES
 
 
 
+
 	**************************************************
 	*						 *
 	*	       2.1 SERIES NEWS			 *
@@ -450,6 +448,9 @@ BUG FIXES
     o	Arg(-1) now gives -pi, not 0; Arg(0i + -1) always worked.
 
     o   --enable-linux-lfs had been broken at 2.1.0.
+
+    o	Printing was not allowing for double-width characters in its
+	layout.
 
     o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
