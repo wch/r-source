@@ -393,8 +393,6 @@ BUG FIXES
 	just updates the warning messages and documentation to
 	properly reflect the new order of things.
 
-    o	axTicks() is now also correct for reverse axis.	 (PR#7973)
-
 
 
 	**************************************************
@@ -452,6 +450,8 @@ BUG FIXES
     o	Arg(-1) now gives -pi, not 0; Arg(0i + -1) always worked.
 
     o   --enable-linux-lfs had been broken at 2.1.0.
+
+    o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
 
 
