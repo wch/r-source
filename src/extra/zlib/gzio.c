@@ -12,7 +12,7 @@
 #include "zutil.h"
 
 /* R ADDITION */
-#if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
+#if defined(HAVE_OFF_T) && defined(_LARGEFILE_SOURCE)
 #define f_seek fseeko
 #define f_tell ftello
 #else

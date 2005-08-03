@@ -392,6 +392,7 @@ BUG FIXES
 
 
 
+
 	**************************************************
 	*						 *
 	*	       2.1 SERIES NEWS			 *
@@ -445,6 +446,8 @@ BUG FIXES
     o	make.names() was not respecting the allow_=FALSE argument.
 
     o	Arg(-1) now gives -pi, not 0; Arg(0i + -1) always worked.
+
+    o   --enable-linux-lfs had been broken at 2.1.0.
 
 
 
