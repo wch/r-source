@@ -53,6 +53,8 @@ BUG FIXES
 
     o	Arg(-1) now gives -pi, not 0; Arg(0i + -1) always worked.
 
+    o   --enable-linux-lfs had been broken at 2.1.0.
+
 
 
 		CHANGES IN R VERSION 2.1.1

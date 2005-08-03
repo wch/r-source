@@ -39064,7 +39064,7 @@ echo "${ECHO_T}always enabled on > 32-bit machine" >&6
 	${LX_MAJOR_VER} -eq 2 -a ${LX_MINOR_VER} -ge 4; then
 	echo "$as_me:$LINENO: result: enabled" >&5
 echo "${ECHO_T}enabled" >&6
-	CFLAGS="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE $CFLAGS"
+	CFLAGS_KEEP="-D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE $CFLAGS_KEEP"
       else
 	echo "$as_me:$LINENO: result: disabled" >&5
 echo "${ECHO_T}disabled" >&6

@@ -61,7 +61,7 @@ struct Rconn {
 
 typedef struct fileconn {
     FILE *fp;
-#if defined(HAVE_OFF_T) && defined(__USE_LARGEFILE)
+#if defined(HAVE_OFF_T) && defined(_LARGEFILE_SOURCE)
     off_t rpos, wpos;
 #else
 #ifdef Win32
