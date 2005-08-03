@@ -1271,7 +1271,7 @@ AC_CHECK_DECLS([alloca], , ,
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii log1p \
   matherr mkdtemp mkfifo popen putenv realpath rint \
-  setenv strcoll stat strptime symlink system times unsetenv)
+  setenv strcoll stat strerror strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## <NOTE>

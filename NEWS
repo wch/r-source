@@ -198,6 +198,9 @@ NEW FEATURES
 
     o	bzip2 has been updated to version 1.0.3.
 
+    o   file(), fifo() and pipe() now (if possible) report a reason
+        if they fail to open a connection.
+
 
 DEPRECATED & DEFUNCT
 
