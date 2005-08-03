@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-11 15:43\n"
+"POT-Creation-Date: 2005-08-03 08:35\n"
 "PO-Revision-Date: 2005-04-18 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -1264,6 +1264,9 @@ msgstr "ungültige 'col.names' Spezifikation"
 
 msgid "appending column names to file"
 msgstr "hänge Spaltennamen an Datei an"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "ungültige 'digits'"

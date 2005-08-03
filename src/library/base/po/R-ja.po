@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-11 15:43\n"
+"POT-Creation-Date: 2005-08-03 08:35\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1275,6 +1275,9 @@ msgstr "無効な 'col.names' 指定です"
 
 msgid "appending column names to file"
 msgstr "ファイルへの列名を加えます"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "無効な 'digits' です"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02\n"
+"POT-Creation-Date: 2005-08-03 08:35\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1663,6 +1663,10 @@ msgstr "次の定数変数 (%s) は実際は変化しています"
 msgid "no 'time' or 'id' specified"
 msgstr "時間('time')も 'id' も指定されていません"
 
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max' は正でなければなりません"
+
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k' は奇数でなければなりません! 'k' を以下のように変更します："
 
@@ -1969,6 +1973,10 @@ msgstr "ゼロ値のため、正確な p 値を計算することができませ
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "ゼロ値のため、正確な信頼区間を計算することができません"
+
+#, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "1 つ以上のベクトルを与えなければなりません"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "漸近回帰モデルの当てはめで、異なる入力値が少なすぎます"

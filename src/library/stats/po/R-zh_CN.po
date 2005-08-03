@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02\n"
+"POT-Creation-Date: 2005-08-03 08:35\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1648,6 +1648,10 @@ msgstr "某些恆量变量(%s) 其实在变动"
 msgid "no 'time' or 'id' specified"
 msgstr "没有设定'time'或'id'"
 
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max'必需是正数"
+
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k'只能是奇数! 把'k'改成"
 
@@ -1949,6 +1953,10 @@ msgstr "有0时无法計算精確的p值"
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "有0时无法計算精確的置信区间"
+
+#, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "至少要提供一或多个向量"
 
 #, fuzzy
 msgid "too few distinct input values to fit an asymptotic regression model"

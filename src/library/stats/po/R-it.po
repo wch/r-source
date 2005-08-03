@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-04-27 15:02\n"
+"POT-Creation-Date: 2005-08-03 08:35\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -1684,6 +1684,10 @@ msgstr "alcune variabili 'constant' (%s) sono in realtà 'varying'"
 msgid "no 'time' or 'id' specified"
 msgstr "nessun 'time' o 'id' specificati"
 
+#, fuzzy
+msgid "'k' must be positive"
+msgstr "'iter.max' deve essere positivo"
+
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "'k' deve essere dispari! Cambio 'k' in"
 
@@ -1992,6 +1996,10 @@ msgstr "impossibile calcolare p-valu esatti in presenza di zeri"
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr ""
 "impossibile calcolar eintervalli di confidenza esatti in presenza di zeri"
+
+#, fuzzy
+msgid "must supply either 'formula' or 'data'"
+msgstr "fornire uno o più vettori"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr ""
