@@ -440,7 +440,7 @@ char *EncodeElement(SEXP x, int indx, int quote)
 
 char *Rsprintf(char *format, ...)
 {
-    static char buffer[1001]; /* unsafe, as assuming max length, but all 
+    static char buffer[1001]; /* unsafe, as assuming max length, but most 
 				 internal uses are for a few characters */
     va_list(ap);
 

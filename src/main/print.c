@@ -289,6 +289,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 		break;
 	    case STRSXP:
 		if (LENGTH(tmp) == 1) {
+		    /* This could truncate silently */
 		    pbuf = Rsprintf("\"%s\"", CHAR(STRING_ELT(tmp, 0)));
 		} else
 		pbuf = Rsprintf("Character,%d", LENGTH(tmp));
