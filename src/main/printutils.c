@@ -443,6 +443,7 @@ char *EncodeElement(SEXP x, int indx, int quote, char dec)
     return buffer->data;
 }
 
+#if 0
 char *Rsprintf(char *format, ...)
 {
     static char buffer[1001]; /* unsafe, as assuming max length, but all 
@@ -455,6 +456,7 @@ char *Rsprintf(char *format, ...)
     buffer[1000] = '\0';
     return buffer;
 }
+#endif
 
 void Rprintf(char *format, ...)
 {

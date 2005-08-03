@@ -390,6 +390,11 @@ BUG FIXES
 	just updates the warning messages and documentation to
 	properly reflect the new order of things.
 
+    o   The C-level function PrintGenericVector could overflow if
+	asked to print a length-1 character vector of several thousand
+	characters.  This could happen when printing a list matrix,
+	and was fatal in 2.1.1 and silently truncated in 2.1.1 patched.
+
 
 
 

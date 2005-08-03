@@ -3717,7 +3717,14 @@ x <- c(TRUE, FALSE)
 stopifnot(typeof(sum(x)) == "integer")
 ## double < 2.2.0
 
+
 ## PR#7973: reversed log-scaled axis
 plot(1:100, log="y", ylim=c(100,10))
 stopifnot(axTicks(2) == 10*c(1,2,5,10))
 ## empty < 2.2.0
+
+
+## Overflow in PrintGenericVector
+x <- paste(1:5000, collapse="+")
+as.matrix(list(a=1:2, b=2:3, c=x))
+## segfault in 2.1.1, silent truncation in 2.1.1 patched
