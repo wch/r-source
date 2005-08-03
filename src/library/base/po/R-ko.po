@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-30 16:04\n"
+"POT-Creation-Date: 2005-08-02 18:26\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -690,6 +690,9 @@ msgstr "'%s'와 이름의 패키지(%s 버전)가 없습니다"
 msgid "there is no package called '%s'"
 msgstr "'%s'라는 이름의 패키지는 없습니다"
 
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
+
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr ""
 "'%s'는 유효한 패키지가 아닙니다. 버전 < 2.0.0으로 인스톨 되어있을지도 모릅니"
@@ -819,8 +822,8 @@ msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니�
 msgid "can only save to a binary connection"
 msgstr "binary connection만 저장할수가 없습니다"
 
-msgid "'file' must be non-empty string"
-msgstr "image는 이름을 변경할수가 없기 때문에, 이하에 남겨집니다"
+msgid "image could not be renamed and is left in"
+msgstr ""
 
 msgid "[Previously saved workspace restored]"
 msgstr "[이전에 저장된 workspace를 복귀합니다]"
@@ -1187,6 +1190,12 @@ msgstr ""
 
 msgid "unable to find a plausible encoding"
 msgstr "그럴듯한 인코딩을 검색할수가 없습니다"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
 
 msgid "'%s' is not an existing file"
 msgstr "'%s'는 기존의 파일이 아닙니다"

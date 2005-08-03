@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-30 16:04\n"
+"POT-Creation-Date: 2005-08-02 18:26\n"
 "PO-Revision-Date: 2005-04-18 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -694,6 +694,9 @@ msgstr "es gibt kein Paket '%s', Version %s"
 msgid "there is no package called '%s'"
 msgstr "es gibt kein Paket '%s'"
 
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
+
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr "'%s' ist kein gültiges Paket -- vor 2.0.0 installiert?"
 
@@ -1183,6 +1186,12 @@ msgstr "'verbose' ist TRUE, 'echo' nicht; ... erzwinge 'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "kann keine plausible Kodierung finden"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
 
 msgid "'%s' is not an existing file"
 msgstr "'%s' ist keine existierende Datei"

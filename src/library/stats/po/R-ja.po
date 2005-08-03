@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-08-02 18:27\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -656,6 +656,10 @@ msgstr "ラグ('lag')や階差('differences')には不適切な値です"
 
 msgid "'xi' has not the right length"
 msgstr "'xi' は正しい長さを持っていません"
+
+#, fuzzy
+msgid "incorrect dimensions for 'xi'"
+msgstr "'x' の長さが不正確です"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' はベクトルでも行列でもありません"

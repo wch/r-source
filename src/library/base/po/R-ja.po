@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-30 16:04\n"
+"POT-Creation-Date: 2005-08-02 18:26\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -693,6 +693,9 @@ msgstr "'%s' と名前のパッケージ(%s 版)がありません"
 msgid "there is no package called '%s'"
 msgstr "'%s' という名前のパッケージはありません"
 
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
+
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr ""
 "'%s' は有効なパッケージではありません。バージョン < 2.0.0 でインストールされ"
@@ -1194,6 +1197,12 @@ msgstr ""
 
 msgid "unable to find a plausible encoding"
 msgstr "もっともらしいエンコーディングを見つけられません"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
 
 msgid "'%s' is not an existing file"
 msgstr "'%s' は既存のファイルではありません"

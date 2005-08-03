@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:57+0100\n"
+"POT-Creation-Date: 2005-08-02 18:26+0100\n"
 "PO-Revision-Date: 2005-04-17 17:30+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -50,23 +50,23 @@ msgstr "layout.pos.col non valido"
 msgid "Unable to store grid state.  Too many devices open?"
 msgstr "Impossibile memorizzare lo stato di grid. Troppi dispositivi aperti?"
 
-#: unit.c:258 unit.c:398 unit.c:1065 unit.c:1145 unit.c:1225 unit.c:1305
+#: unit.c:258 unit.c:408 unit.c:1075 unit.c:1155 unit.c:1235 unit.c:1315
 msgid "Unimplemented unit function"
 msgstr "Funzione unit non implementata"
 
-#: unit.c:758 unit.c:1498
+#: unit.c:768 unit.c:1508
 msgid "Illegal unit or unit not yet implemented"
 msgstr "unit illegale o unit non ancora implementata"
 
-#: unit.c:1628
+#: unit.c:1638
 msgid "Invalid unit"
 msgstr "unit non valida"
 
-#: unit.c:1644
+#: unit.c:1654
 msgid "Units must be character"
 msgstr "unit devono essere di tipo character"
 
-#: unit.c:1647
+#: unit.c:1657
 msgid "Units must be of length > 0"
 msgstr "unit devono avere lunghezza > 0"
 

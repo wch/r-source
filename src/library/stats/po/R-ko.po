@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-08-02 18:27\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -657,6 +657,10 @@ msgstr "'lag' 또는 'differences'에는 부적절한 값입니다"
 
 msgid "'xi' has not the right length"
 msgstr "'xi'는 정확한 길이를 가지고 있지 않습니다"
+
+#, fuzzy
+msgid "incorrect dimensions for 'xi'"
+msgstr "'x'의 길이가 정확하지 않습니다"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'는 벡터 또는 행렬이 아닙니다"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-08-02 18:27\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -653,6 +653,10 @@ msgstr "'lag'或'differences'的值有错"
 
 msgid "'xi' has not the right length"
 msgstr "'xi'的长度不对"
+
+#, fuzzy
+msgid "incorrect dimensions for 'xi'"
+msgstr "'x'长度不对"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x'不是向量或矩阵"

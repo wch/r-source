@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08\n"
+"POT-Creation-Date: 2005-08-02 18:27\n"
 "PO-Revision-Date: 2005-04-14 18:07+0200\n"
 "Last-Translator: stefano iacus <>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -668,6 +668,10 @@ msgstr "valore sbagliato per 'lag' o 'differences'"
 
 msgid "'xi' has not the right length"
 msgstr "'xi' non ha la lunghezza giusta"
+
+#, fuzzy
+msgid "incorrect dimensions for 'xi'"
+msgstr "lunghezza di 'x' sbagliata"
 
 msgid "'x' is not a vector or matrix"
 msgstr "'x' non è un vettore o una matrice"

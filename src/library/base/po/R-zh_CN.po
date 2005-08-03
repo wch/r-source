@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-30 16:04\n"
+"POT-Creation-Date: 2005-08-02 18:26\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -680,6 +680,9 @@ msgstr "不存在名称为'%s'，版本为%s的程辑包"
 msgid "there is no package called '%s'"
 msgstr "不存在叫'%s'这个名称的程辑包"
 
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
+
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr "'%s'不是正当的程辑包--是不是在R版本2.0.0之前装的？"
 
@@ -1160,6 +1163,12 @@ msgstr "'verbose'是TRUE，但'echo'不是；... 强迫'echo <- TRUE'"
 
 msgid "unable to find a plausible encoding"
 msgstr "找不到合理的编码"
+
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
 
 msgid "'%s' is not an existing file"
 msgstr "'%s'不是已经存在的文件"
