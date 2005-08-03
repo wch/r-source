@@ -24,10 +24,15 @@ dirname(path)
   Trailing file separators are removed before dissecting the path,
   and for \code{dirname} any trailing file separators are removed
   from the result.
+#ifdef windows
+
+  On Windows this will accept either \code{\\} or \code{/} as the directory
+  separator, but \code{dirname} will return a path using \code{/}.
+#endif
 }
 \value{
   A character vector of the same length as \code{path}.  A zero-length
-  input will give a zero-length output with no error (unlike \R < 1.7.0). 
+  input will give a zero-length output with no error. 
 }
 \seealso{
   \code{\link{file.path}}, \code{\link{path.expand}}.
