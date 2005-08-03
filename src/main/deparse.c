@@ -216,16 +216,11 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
 {
 /* Arg. abbrev:
 	If abbrev is TRUE, then the returned value
-	is a STRSXP of length 1 with at most 10 characters.
+	is a STRSXP of length 1 with at most 13 characters.
 	This is used for plot labelling etc.
 */
     SEXP svec;
     int savedigits;
-    /* The following gives warning (when "-pedantic" is used):
-       In function `deparse1WithCutoff': initializer element
-       is not computable at load time -- and its because of R_NilValue
-       (RH 7.1 gcc 2.96  wrongly gives an error with "-pedantic")
-    */
     LocalParseData localData =
 	    {0, 0, 0, 0, /*startline = */TRUE, 0,
 	     NULL,
@@ -247,15 +242,12 @@ static SEXP deparse1WithCutoff(SEXP call, Rboolean abbrev, int cutoff,
     deparse2(call, svec, &localData);
     UNPROTECT(1);
     if (abbrev) {
-	R_AllocStringBuffer(0, buffer);
-	buffer->data[0] = '\0';
-	strncat(buffer->data, CHAR(STRING_ELT(svec, 0)), 10);
-	if (strlen(CHAR(STRING_ELT(svec, 0))) > 10)
-	    strcat(buffer->data, "...");
-	svec = mkString(buffer->data);
+	char data[14];
+	strncpy(data, CHAR(STRING_ELT(svec, 0)), 10);
+	if (strlen(CHAR(STRING_ELT(svec, 0))) > 10) strcat(data, "...");
+	svec = mkString(data);
     }
     R_print.digits = savedigits;
-    R_FreeStringBuffer(buffer);
     if ((opts & WARNINCOMPLETE) && !localData.sourceable)
     	warning(_("deparse may be incomplete"));
     return svec;
