@@ -3676,3 +3676,8 @@ stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
 
 stopifnot(all.equal(Arg(-1), pi))
 ## failed in R <= 2.1.1
+
+## PR#7973: reversed log-scaled axis
+plot(1:100, log="y", ylim=c(100,10))
+stopifnot(axTicks(2) == 10*c(1,2,5,10))
+## empty < 2.2.0
