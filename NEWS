@@ -55,6 +55,9 @@ BUG FIXES
 
     o   --enable-linux-lfs had been broken at 2.1.0.
 
+    o	Printing was not allowing for double-width characters in its
+	layout.
+
     o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
 

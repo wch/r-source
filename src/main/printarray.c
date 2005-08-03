@@ -28,7 +28,7 @@
  */
 
 /* <UTF8> char here is handled as a whole, 
-   but lengths are used as display widths */
+   but lengths were used as display widths */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -38,44 +38,8 @@
 #include "Print.h"
 
 /* We need display width of a string */
-
-
-#ifdef SUPPORT_MBCS
-
-#ifdef HAVE_ALLOCA_H
-#include <alloca.h>
-#endif
-#if !HAVE_DECL_ALLOCA && !defined(__FreeBSD__)
-extern char *alloca(size_t);
-#endif
-
-# include <wchar.h>
-# include <wctype.h>
-#if !HAVE_DECL_WCSWIDTH
-extern int wcswidth(const wchar_t *s, size_t n);
-#endif
-#endif
-
-static int strwidth(const char *str)
-{
-#ifdef SUPPORT_MBCS
-    if(mbcslocale) {
-	int nc = mbstowcs(NULL, str, 0);
-#ifdef HAVE_WCSWIDTH
-	wchar_t *wc;
-	if(nc == 0) return 0;
-	wc = (wchar_t *) alloca((nc+1) * sizeof(wchar_t));
-	if(!wc) error(_("allocation failure in strwidth"));
-	mbstowcs(wc, str, nc + 1);
-	return wcswidth(wc, 2147483647);
-#else
-	return nc;
-#endif
-    } else
-#endif
-	return strlen(str);
-}
-
+int Rstrwid(char *str, int slen, int quote);  /* from printutils.c */
+#define strwidth(x) Rstrwid(x, strlen(x), 0)
 
 static void printLogicalMatrix(SEXP sx, int offset, int r, int c,
 			       SEXP rl, SEXP cl, char *rn, char *cn)
