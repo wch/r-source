@@ -78,6 +78,7 @@ test-out-strict = $(test-src-strict:.R=.Rout)
 test-out-sloppy = $(test-src-sloppy:.R=.Rout)
 
 test-out-gct = $(test-src-gct:.R=.Rout-gct)
+test-out-valgct = $(test-src-gct:.R=.Rout-valgct)
 
 test-out-demo = $(test-src-demo:.R=.Rout)
 test-out-internet = $(test-src-internet:.R=.Rout)
@@ -98,7 +99,7 @@ test-out = $(test-src:.R=.Rout) $(test-out-demo) $(test-out-gct) \
 	$(test-out-reg3) $(test-out-segfault) $(test-out-ts) $(test-out-isas)
 
 .SUFFIXES:
-.SUFFIXES: .R .Rin .Rout .Rout-gct
+.SUFFIXES: .R .Rin .Rout .Rout-gct .Rout-valgct
 
 all-basic-tests = Examples Specific Reg Internet
 all-devel-tests = IsAs Lapack Nafns Postscript Random Demo Segfault \
@@ -185,6 +186,16 @@ reg-plot.Rout: reg-plot.R
 	  mv $@.fail $@; \
 	  echo "$(ECHO_T) OK"
 
+R-valgrind = $(R) --debugger="valgrind --tool=memcheck"
+
+.R.Rout-valgct:
+	@echo "running gctorture() + valgrind + '$<'"
+	@(echo '.ptime <- proc.time(); gctorture()' ; \
+	  cat $< $(srcdir)/gct-foot.R) | $(R-valgrind) > $@ 2>&1
+	grep "==[0-9]*==" $@
+
+
+
 test-all-basics: Makefile
 	@for name in $(all-basic-tests); do \
 	  $(MAKE) test-$${name} || exit 1; \
@@ -218,6 +229,8 @@ test-Packages:
 	done
 
 test-Gct: $(test-out-gct)
+
+test-Vgct: $(test-out-valgct)
 
 test-Demo:
 	@echo "running demos from base and stats"

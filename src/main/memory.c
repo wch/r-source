@@ -31,6 +31,7 @@
 
 #define USE_RINTERNALS
 
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -47,9 +48,45 @@ extern void *Rm_realloc(void * p, size_t n);
 #define free Rm_free
 #endif
 
+/* Declarations for Valgrind. The macros in memcheck.h are 
+   defined out if it doesn't recognize the architecture or
+   if NVALGRIND is defined, so we can always include them
+   here.
+
+   It may be necessary to define NVALGRIND for a non-gcc
+   compiler on a supported architecture if it has different
+   syntax for inline assembly language from gcc.
+
+   For Win32, Valgrind is useful only if running under Wine,
+   so we may as well not compile in the instrumentation
+*/
+#ifdef Win32
+# ifndef USE_VALGRIND_FOR_WINE
+# define NVALGRIND
+#endif
+#endif
+
+#include "memcheck.h"
+
+/*
+   level 0 is no additional instrumentation
+   level 1 marks uninitialized numeric, logical, integer vectors 
+           and R_alloc memory
+   level 2 marks free memory as inaccessible
+
+   Level 1 doesn't slow Valgrind prohibitively and adds only 9 cpu
+   instructions to each numeric/logical/integer allocation when running
+   under Linux and not using Valgrind. In the long run level 1 
+   should probably be the default
+*/
+#ifndef VALGRIND_LEVEL 
+#define VALGRIND_LEVEL 0
+#endif
+
 #include <Defn.h>
 #include <Graphics.h> /* display lists */
 #include <Rdevices.h> /* GetDevice */
+
 
 /* malloc uses size_t.  We are assuming here that size_t is at least
    as large as unsigned long.  Changed from int at 1.6.0 to (i) allow
@@ -584,6 +621,10 @@ static void GetNewPage(int node_class)
 	s = (SEXP) data;
 	R_GenHeap[node_class].AllocCount++;
 	SNAP_NODE(s, base);
+#if  VALGRIND_LEVEL > 1
+	if (NodeClassSize[node_class]>0)
+	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[node_class]*sizeof(VECREC));	
+#endif
 	s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	SET_NODE_CLASS(s, node_class);
 	base = s;
@@ -1291,10 +1332,23 @@ static void RunGenCollect(R_size_t size_needed)
 
     DEBUG_CHECK_NODE_COUNTS("after releasing large allocated nodes");
 
+    /* tell Valgrind about free nodes */
+#if VALGRIND_LEVEL > 1
+    for(i=1; i< NUM_NODE_CLASSES;i++){
+	for(s=NEXT_NODE(R_GenHeap[i].New); s!=R_GenHeap[i].Free; s=NEXT_NODE(s)){
+	    VALGRIND_MAKE_NOACCESS(DATAPTR(s), NodeClassSize[i]*sizeof(VECREC));
+# if VALGRIND_LEVEL > 2
+	    VALGRIND_MAKE_NOACCESS(s,4); /* sizeof sxpinfo_struct */
+# endif
+	}
+    }
+#endif
+
     /* reset Free pointers */
     for (i = 0; i < NUM_NODE_CLASSES; i++)
 	R_GenHeap[i].Free = NEXT_NODE(R_GenHeap[i].New);
 
+ 
     /* update heap statistics */
     R_Collected = R_NSize;
     R_SmallVallocSize = 0;
@@ -1441,7 +1495,9 @@ void InitMemory()
     if (!(R_PPStack = (SEXP *) malloc(R_RealPPStackSize * sizeof(SEXP))))
 	R_Suicide("couldn't allocate memory for pointer stack");
     R_PPStackTop = 0;
-
+#if VALGRIND_LEVEL > 1
+    VALGRIND_MAKE_NOACCESS(R_PPStackTop+R_PPStackSize,PP_REDZONE_SIZE);
+#endif
     vsfac = sizeof(VECREC);
     R_VSize = (((R_VSize + 1)/ vsfac));
 
@@ -1547,6 +1603,9 @@ char *R_alloc(long nelem, int eltsize)
 #endif
 	ATTRIB(s) = R_VStack;
 	R_VStack = s;
+#if VALGRIND_LEVEL > 0
+	VALGRIND_MAKE_WRITABLE(CHAR(s), (int) dsize);
+#endif
 	return CHAR(s);
     }
     else return NULL;
@@ -1599,6 +1658,9 @@ SEXP allocSExp(SEXPTYPE t)
     CDR(s) = R_NilValue;
     TAG(s) = R_NilValue;
     ATTRIB(s) = R_NilValue;
+#if VALGRIND_LEVEL > 2
+    VALGRIND_MAKE_READABLE(s, sizeof(*s));
+#endif
     return s;
 }
 
@@ -1615,6 +1677,9 @@ static SEXP allocSExpNonCons(SEXPTYPE t)
     TYPEOF(s) = t;
     TAG(s) = R_NilValue;
     ATTRIB(s) = R_NilValue;
+#if VALGRIND_LEVEL > 2
+    VALGRIND_MAKE_READABLE(s, sizeof(*s)); 
+#endif
     return s;
 }
 
@@ -1632,6 +1697,9 @@ SEXP cons(SEXP car, SEXP cdr)
 	mem_err_cons();
     }
     GET_FREE_NODE(s);
+#if VALGRIND_LEVEL > 2
+    VALGRIND_MAKE_READABLE(s, sizeof(*s)); 
+#endif
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = LISTSXP;
     CAR(s) = car;
@@ -1673,6 +1741,9 @@ SEXP NewEnvironment(SEXP namelist, SEXP valuelist, SEXP rho)
 	mem_err_cons();
     }
     GET_FREE_NODE(newrho);
+#if VALGRIND_LEVEL > 2
+    VALGRIND_MAKE_READABLE(newrho, sizeof(*newrho));
+#endif
     newrho->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(newrho) = ENVSXP;
     FRAME(newrho) = valuelist;
@@ -1704,6 +1775,9 @@ SEXP mkPROMISE(SEXP expr, SEXP rho)
 	mem_err_cons();
     }
     GET_FREE_NODE(s);
+#if VALGRIND_LEVEL > 2
+    VALGRIND_MAKE_READABLE(s,sizeof(*s));
+#endif
     s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
     TYPEOF(s) = PROMSXP;
     PRCODE(s) = expr;
@@ -1834,6 +1908,12 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     if (size > 0) {
 	if (node_class < NUM_SMALL_NODE_CLASSES) {
 	    CLASS_GET_FREE_NODE(node_class, s);
+#if VALGRIND_LEVEL > 2	    
+	    VALGRIND_MAKE_WRITABLE(s, 4); /* sizeof sxpinfo_struct */
+#endif
+#if VALGRIND_LEVEL > 1
+	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), size*sizeof(VECREC));
+#endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    SET_NODE_CLASS(s, node_class);
 	    R_SmallVallocSize += alloc_size;
@@ -1880,16 +1960,37 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     /* so is at least as new as R_NilValue and R_BlankString */
     if (type == EXPRSXP || type == VECSXP) {
 	SEXP *data = STRING_PTR(s);
+#if VALGRIND_LEVEL > 1
+	VALGRIND_MAKE_READABLE(STRING_PTR(s), size*sizeof(VECREC));
+#endif
 	for (i = 0; i < length; i++)
 	    data[i] = R_NilValue;
     }
     else if(type == STRSXP) {
 	SEXP *data = STRING_PTR(s);
-	for (i = 0; i < length; i++)
+#if VALGRIND_LEVEL > 1
+	VALGRIND_MAKE_READABLE(STRING_PTR(s), size*sizeof(VECREC));
+#endif
+	for (i = 0; i < length; i++){
 	    data[i] = R_BlankString;
+	}
     }
-    else if (type == CHARSXP)
+    else if (type == CHARSXP){
+#if VALGRIND_LEVEL > 0
+ 	VALGRIND_MAKE_WRITABLE(CHAR(s), size*sizeof(VECREC));
+#endif
 	CHAR(s)[length] = 0;
+    } 
+    else if (type == REALSXP){
+#if VALGRIND_LEVEL > 0
+	VALGRIND_MAKE_WRITABLE(REAL(s), size*sizeof(VECREC));
+#endif
+    } 
+    else if (type == INTSXP){
+#if VALGRIND_LEVEL > 0
+	VALGRIND_MAKE_WRITABLE(INTEGER(s), size*sizeof(VECREC));
+#endif
+    }
     return s;
 }
 

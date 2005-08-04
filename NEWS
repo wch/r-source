@@ -308,6 +308,14 @@ C-LEVEL FACILITIES
 	longer duplicates routines from Linpack.h, and Applic.h is
 	divided into API and non-API sections.
 
+    o   memory.c has been instrumented so that Valgrind can track R's
+        internal memory management. Details are likely to change before
+        release.
+	Add -DVALGRIND_LEVEL=1 to CFLAGS for simple checks,
+	-DVALGRIND_LEVEL=2 for more thorough checks.  Both levels will
+	find more bugs with gctorture(TRUE). Level 2 makes Valgrind
+	run extremely slowly. 
+
 
 BUG FIXES
 
