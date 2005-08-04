@@ -3627,9 +3627,11 @@ as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
                   x3 = c("a", "b"), x4 = c("a", "b")))
 ## failed in 2.1.0
 
+
 ## PR#7797 citation() chops "Roeland "
 stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
 ## was empty in 2.1.0.
+
 
 ## runmed()'s Turlach algorithm seg.faulted in rare cases:
 t2 <- c(-2,-7,5,2,-3, 0,1,3,2,-1,2,1,2,1,1,1,-2,4, 1,1,1, 32)
@@ -3638,11 +3640,13 @@ rT <- runmed(t2, k=21, algorithm= "Turlach")
 stopifnot(identical(rS, rT))
 ## seg.fault in 2.1.0
 
+
 ## duplicated and unique on a list
 x <- list(1, 2, 3, 2)
 duplicated(x)
 unique(x)
 ## unique failed in 2.1.0
+
 
 ## prog.aovlist on data with row.names
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
@@ -3657,6 +3661,7 @@ npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 pr <- proj(npk.aovE)
 ## failed in 2.1.0
 
+
 ## PR#7894: Reversing axis in a log plot
 x <- 1:3
 plot(x, exp(x), log = "y", ylim = c(30,1))
@@ -3669,6 +3674,7 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 regexpr("[a-z]", NA)
 ## crashed on 2.1.1 on Windows in MBCS build.
 
+
 ## PR#8033: density with 'Inf' in x:
 d <- density(1/0:2, kern = "rect", bw=1, from=0, to=1, n=2)
 stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
@@ -3676,6 +3682,7 @@ stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
 
 stopifnot(all.equal(Arg(-1), pi))
 ## failed in R <= 2.1.1
+
 
 ## tests of hexadecimal constants
 x <- 0xAbc
@@ -3699,9 +3706,12 @@ unlink("x.Rda")
 ## 00 00 00 00 00 in 2.1.0 on MacOS X
 ## fixed for 2.1.1, but test added only in 2.2.x
 
+
 ## PR#7922:  Could not use expression() as an initial expression value
 setClass("test2", representation(bar = "expression"))
 new("test2", bar = expression())
+## failed
+
 
 ## Ops.data.frame had the default check.names=TRUE
 DF <- data.frame("100"=1:2, "200"=3:4, check.names=FALSE)
@@ -3739,3 +3749,12 @@ r1 <- weighted.residuals(lm(y ~ x, weights = w))
 r2 <- weighted.residuals(glm(y ~ x, weights = w))
 stopifnot(all.equal(r1, r2))
 ## different in 2.1.1
+
+
+## rounding errors in window.default (reported by Stefano Iacus)
+x <- ts(rnorm(50001), start=0, deltat=0.1)
+length(window(x, deltat=0.4))
+length(window(x, deltat=1))
+length(window(x, deltat=4.9))
+length(window(x, deltat=5))
+## last failed in 2.1.1

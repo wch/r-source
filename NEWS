@@ -384,28 +384,31 @@ BUG FIXES
 	namespace (the setting of options("keep.source.pkgs") was
 	always used).
 
-    o   hist.POSIXct() and hist.Date() now respect par("xaxt").
+    o	hist.POSIXct() and hist.Date() now respect par("xaxt").
 
-    o   The 'vfont' argument was not supported correctly in title(),
+    o	The 'vfont' argument was not supported correctly in title(),
 	mtext(), and axis().  The 'vfont' argument is superseded by
 	the par(family=) approach introduced in 2.0.0.  This bug-fix
 	just updates the warning messages and documentation to
 	properly reflect the new order of things.
 
-    o   The C-level function PrintGenericVector could overflow if
+    o	The C-level function PrintGenericVector could overflow if
 	asked to print a length-1 character vector of several thousand
 	characters.  This could happen when printing a list matrix,
 	and was fatal up to 2.1.1 and silently truncated in 2.1.1 patched.
 
-    o   What happened for proc.time() and system.time() on
+    o	What happened for proc.time() and system.time() on
 	(Unix-alike) systems which do not support timing was
 	incorrectly documented.  (They both exist but throw an error.)
 	Further, systen.time() would give an error in its on.exit
 	expression.
 
-    o   weighted.residuals() now does sensible things for glm() fits:
+    o	weighted.residuals() now does sensible things for glm() fits:
 	in particular it now agrees with an lm() fit for a Gaussian glm()
 	fit.  (PR#7961).
+
+    o   window() was failing incorrectly due to representation errors
+	when the new and old deltat were not both integers (e.g. 0.1).
 
 
 
