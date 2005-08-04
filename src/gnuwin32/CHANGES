@@ -48,6 +48,9 @@ The default type of file for saving a script was not being set by the
 contributed C code for the script editor, so it reverted to the type
 of the last file dialog (PR#8018).
 
+Yet another Windows' unreliability in seek() has been worked around
+(PR#7896).
+
 
 
 R 2.1.1

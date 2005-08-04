@@ -462,17 +462,22 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
     Rfileconn this = con->private;
     FILE *fp = this->fp;
 #if defined(HAVE_OFF_T) && defined(_LARGEFILE_SOURCE)
-    off_t pos = f_tell(fp);
+    off_t pos;
 #else
 #ifdef Win32
-    off64_t pos = f_tell(fp);
+    off64_t pos;
 #else
-    long pos = f_tell(fp);
+    long pos;
 #endif
 #endif
     int whence = SEEK_SET;
 
     /* make sure both positions are set */
+#ifdef Win32
+    /* workaround a Windows bug - PR#7896 */
+    fflush(fp);
+#endif
+    pos = f_tell(fp);
     if(this->last_was_write) this->wpos = pos; else this->rpos = pos;
     if(rw == 1) {
 	if(!con->canread) error(_("connection is not open for reading"));
