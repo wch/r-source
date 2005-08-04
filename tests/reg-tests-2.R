@@ -1665,7 +1665,7 @@ try(DF[2, 1:3] <- NULL)
 ## tests of signif
 ob <- 0:9 * 2000
 print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
-signif(1.2345e-305, 4)
-signif(1.2345e-306, 4)  # only 3 digits in 2.1.1
-signif(1.2345e-307, 4)
+signif(1.2347e-305, 4)
+signif(1.2347e-306, 4)  # only 3 digits in 2.1.1
+signif(1.2347e-307, 4)
 ##

@@ -4831,11 +4831,11 @@ Error in "[<-.data.frame"(`*tmp*`, 2, 1:3, value = NULL) :
 > ob <- 0:9 * 2000
 > print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
  [1]     0  2000  4000  6000  8000 10000 12000 14000 16000 18000
-> signif(1.2345e-305, 4)
+> signif(1.2347e-305, 4)
 [1] 1.235e-305
-> signif(1.2345e-306, 4)  # only 3 digits in 2.1.1
+> signif(1.2347e-306, 4)  # only 3 digits in 2.1.1
 [1] 1.235e-306
-> signif(1.2345e-307, 4)
+> signif(1.2347e-307, 4)
 [1] 1.235e-307
 > ##
 > 
