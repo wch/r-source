@@ -39,6 +39,8 @@ USER-VISIBLE CHANGES
     o	The default for 'allowEscapes' in both read.table() and scan()
 	has been changed to FALSE.
 
+    o	The default for 'gcFirst' in system.time() is now TRUE.
+
 
 NEW FEATURES
 
@@ -375,7 +377,7 @@ BUG FIXES
 	(as min() and other members of its group do).
 
     o   loess() had a bug causing it to occasionally miscalculate
-        standard errors (PR#7956). Reported by Benjamin Tyner, fixed
+        standard errors (PR#7956).  Reported by Benjamin Tyner, fixed
         by Berwin Turlach.
 
     o	library(keep.source=) was ignored if the package had a
@@ -393,7 +395,13 @@ BUG FIXES
     o   The C-level function PrintGenericVector could overflow if
 	asked to print a length-1 character vector of several thousand
 	characters.  This could happen when printing a list matrix,
-	and was fatal in 2.1.1 and silently truncated in 2.1.1 patched.
+	and was fatal up to 2.1.1 and silently truncated in 2.1.1 patched.
+
+    o   What happened for proc.time() and system.time() on
+	(Unix-alike) systems which do not support timing was
+	incorrectly documented.  (They both exist but throw an error.)
+	Further, systen.time() would give an error in its on.exit
+	expression.
 
 
 
