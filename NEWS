@@ -474,6 +474,10 @@ BUG FIXES
 
     o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
+    o   signif() rounded some numnbers near 1e-308 to the wrong
+	number of places (this showed up in the print-tests.R), and made 
+	unnecessary rounding errors on some platforms on e.g. signif(18000, 3).
+
 
 
 		CHANGES IN R VERSION 2.1.1

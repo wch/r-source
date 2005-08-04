@@ -1,6 +1,7 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 2.0.0 Under development (unstable) (2004-08-23), ISBN 3-900051-00-3
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 Under development (unstable) (2005-08-04 r35143)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +9,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -282,10 +283,10 @@ Type 'q()' to quit R.
        [,1]   [,2]     [,3]      [,4]       [,5]        [,6]         [,7]
 [1,] 2e-308 2e-308 2.0e-308 2.00e-308 2.003e-308 2.0026e-308 2.00257e-308
 [2,] 2e-308 2e-308 2.4e-308 2.45e-308 2.448e-308 2.4476e-308 2.44758e-308
-[3,] 1e-306 1e-306 1.3e-306 1.28e-306 1.280e-306 1.2820e-306 1.28160e-306
-[4,] 2e-306 2e-306 1.6e-306 1.57e-306 1.570e-306 1.5660e-306 1.56650e-306
-[5,] 1e-305 1e-305 1.0e-305 1.03e-305 1.025e-305 1.0250e-305 1.02530e-305
-[6,] 1e-305 1e-305 1.3e-305 1.25e-305 1.253e-305 1.2530e-305 1.25320e-305
+[3,] 1e-306 1e-306 1.3e-306 1.28e-306 1.282e-306 1.2816e-306 1.28164e-306
+[4,] 2e-306 2e-306 1.6e-306 1.57e-306 1.566e-306 1.5665e-306 1.56645e-306
+[5,] 1e-305 1e-305 1.0e-305 1.03e-305 1.025e-305 1.0253e-305 1.02531e-305
+[6,] 1e-305 1e-305 1.3e-305 1.25e-305 1.253e-305 1.2532e-305 1.25316e-305
 > 
 > olddig <- options(digits=14) # RH6.0 fails at 15
 > z <- 1.234567891234567e27

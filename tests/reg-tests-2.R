@@ -1650,9 +1650,22 @@ x[[1]] <- 1:3
 x # list
 ##
 
-kernel(1,0)
+
+## printing of a kernel:
+kernel(1, 0)
 ## printed wrongly in R <= 2.1.1
 
+
+## using NULL as a replacement value
 DF <- data.frame(A=1:2, B=3:4)
 try(DF[2, 1:3] <- NULL)
 ## wrong error message in R < 2.2.0
+
+
+## tests of signif
+ob <- 0:9 * 2000
+print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
+signif(1.2345e-305, 4)
+signif(1.2345e-306, 4)  # only 3 digits in 2.1.1
+signif(1.2345e-307, 4)
+##
