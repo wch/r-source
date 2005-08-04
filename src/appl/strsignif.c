@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) Martin Maechler, 1994, 1998
- *  Copyright (C) 2001-2002 the R Development Core Team
+ *  Copyright (C) 2001-2005 the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -199,14 +199,13 @@ void str_signif(char *x, int *n, char **type, int *width, int *digits,
 		    {
 			/* change e+/-00n to e+/-0n etc */
 			char *p = result[i];
-			int len = strlen(p);
+			int ii, len = strlen(p);
 			if (tolower(p[len-5]) == 'e' &&
-			   (p[len-4] == '+' || p[len-4] == '-') &&
-			   p[len-3] == '0' &&
-			   isdigit(p[len-2]) && isdigit(p[len-1])) {
-			    p[len-3] = p[len-2];
-			    p[len-2] = p[len-1];
-			    p[len-1] = '\0';
+			    (p[len-4] == '+' || p[len-4] == '-') &&
+			    p[len-3] == '0' &&
+			    isdigit(p[len-2]) && isdigit(p[len-1])) {
+			    for(ii = len-3; ii > 0; ii--) p[ii] = p[ii-1];
+			    p[0] = ' ';
 			}
 		    }
 #endif
