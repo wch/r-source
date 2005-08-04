@@ -3728,3 +3728,14 @@ stopifnot(axTicks(2) == 10*c(1,2,5,10))
 x <- paste(1:5000, collapse="+")
 as.matrix(list(a=1:2, b=2:3, c=x))
 ## segfault in 2.1.1, silent truncation in 2.1.1 patched
+
+
+## weighted.residuals for glm fits (PR#7961)
+set.seed(1)
+x <- runif(10)
+y <- x + rnorm(10)
+w <- 0:9
+r1 <- weighted.residuals(lm(y ~ x, weights = w))
+r2 <- weighted.residuals(glm(y ~ x, weights = w))
+stopifnot(all.equal(r1, r2))
+## different in 2.1.1

@@ -403,6 +403,10 @@ BUG FIXES
 	Further, systen.time() would give an error in its on.exit
 	expression.
 
+    o   weighted.residuals() now does sensible things for glm() fits:
+	in particular it now agrees with an lm() fit for a Gaussian glm()
+	fit.  (PR#7961).
+
 
 
 

@@ -39,7 +39,8 @@ weights(object, \dots)
   square root of the weights used in fitting.  The partial residuals
   are a matrix with each column formed by omitting a term from the
   model.  In all these, zero weight cases are never omitted (as opposed
-  to the standardized \code{\link{rstudent}} residuals).
+  to the standardized \code{\link{rstudent}} residuals, and the
+  \code{\link{weighted.residuals}}).
 
   The \code{"lm"} method for generic \code{\link{labels}} returns the
   term labels for estimable terms, that is the names of the terms with

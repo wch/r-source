@@ -14,8 +14,9 @@ weighted.residuals(obj, drop0 = TRUE)
   Computed weighted residuals from a linear model fit.
 }
 \details{
-  Weighted residuals are the usual residuals \eqn{R_i}{Ri}, multiplied
-  by \eqn{\sqrt{w_i}}{wi^0.5}, where \eqn{w_i}{wi} are the
+  Weighted residuals are based on the deviance residuals, which for
+  a \code{\link{lm}} fit are the raw residuals \eqn{R_i}{Ri}
+  multiplied by \eqn{\sqrt{w_i}}{wi^0.5}, where \eqn{w_i}{wi} are the
   \code{weights} as specified in \code{\link{lm}}'s call.
 
   Dropping cases with weights zero is compatible with
