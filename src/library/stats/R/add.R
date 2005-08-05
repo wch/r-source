@@ -88,6 +88,7 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
+        offset <- model.offset(m)
         oldn <- length(y)
         y <- model.response(m, "numeric")
         newn <- length(y)
@@ -102,7 +103,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     if(int) ousex[1] <- TRUE
     iswt <- !is.null(wt <- object$weights)
     X <- x[, ousex, drop = FALSE]
-    z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
+    z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
+    else lm.fit(X, y, offset=offset)
     dfs[1] <- z$rank
     RSS[1] <- deviance.lm(z)
     ## workaround for PR#7842. terms.formula may have flipped interactions
@@ -112,7 +114,8 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         stt <- paste(sort(strsplit(tt, ":")[[1]]), collapse=":")
 	usex <- match(asgn, match(stt, sTerms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
-	z <- if(iswt) lm.wfit(X, y, wt) else lm.fit(X, y)
+	z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
+        else lm.fit(X, y, offset=offset)
 	dfs[tt] <- z$rank
 	RSS[tt] <- deviance.lm(z)
     }
@@ -315,6 +318,7 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 		     test=c("none", "Chisq", "F"), k = 2, ...)
 {
     x <- model.matrix(object)
+    offset <- model.offset(model.frame(object))
     iswt <- !is.null(wt <- object$weights)
     n <- nrow(x)
     asgn <- attr(x, "assign")
@@ -338,8 +342,8 @@ drop1.lm <- function(object, scope, scale = 0, all.cols = TRUE,
 	ii <- seq(along=asgn)[asgn == ndrop[i]]
 	if(all.cols) jj <- setdiff(seq(ncol(x)), ii)
 	else jj <- setdiff(na.coef, ii)
-	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt)
-	else lm.fit(x[, jj, drop = FALSE], y)
+	z <- if(iswt) lm.wfit(x[, jj, drop = FALSE], y, wt, offset=offset)
+	else lm.fit(x[, jj, drop = FALSE], y, offset=offset)
 	dfs[i] <- z$rank
 	RSS[i] <- deviance.lm(z)
     }

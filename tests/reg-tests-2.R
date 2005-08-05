@@ -1596,6 +1596,21 @@ dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
 model.matrix(~ .^2, data = dd)
 ## lost ^2 in 2.1.1
 
+
+## add1.lm and drop.lm did not know about offsets (PR#8049)
+set.seed(2)
+y <- rnorm(10)
+z <- 1:10
+lm0 <- lm(y ~ 1)
+lm1 <- lm(y ~ 1, offset = 1:10)
+lm2 <- lm(y ~ z, offset = 1:10)
+
+add1(lm0, scope = ~ z)
+anova(lm1, lm2)
+add1(lm1, scope = ~ z)
+drop1(lm2)
+## Last two ignored the offset in 2.1.1
+
 ### end of tests added in 2.1.1 patched ###
 
 
