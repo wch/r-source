@@ -314,9 +314,9 @@ C-LEVEL FACILITIES
 
     o   memory.c has been instrumented so that Valgrind can track R's
         internal memory management. Details are likely to change before
-        release.
-	Add -DVALGRIND_LEVEL=1 to CFLAGS for simple checks,
-	-DVALGRIND_LEVEL=2 for more thorough checks.  Both levels will
+        release. To use this, configure using 
+               --with-valgrind-instrumentation=level
+        where level is 1 or 2. Both levels will
 	find more bugs with gctorture(TRUE). Level 2 makes Valgrind
 	run extremely slowly. 
 

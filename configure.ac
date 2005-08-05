@@ -346,6 +346,13 @@ AC_ARG_WITH([pcre],
 [R_ARG_USE(pcre)],
 [use_pcre=no])
 
+## Valgrind instrumentation
+AC_ARG_WITH([valgrind-instrumentation],
+[AC_HELP_STRING([--with-valgrind-instrumentation],
+                [Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
+[valgrind_level=${withval}],
+[valgrind_level=0])
+
 ## needs to come after GNOME
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
 if test "${want_R_shlib}" = yes; then
@@ -1398,10 +1405,10 @@ R_BZLIB
 
 ## PCRE headers and libraries.
 R_PCRE
-
+ 
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
-
+ 
 ## R profiling.
 if test "${want_R_profiling}" = yes; then
   AC_CHECK_FUNCS(setitimer,
@@ -1415,6 +1422,12 @@ AC_SUBST(R_PROFILING)
 if test "x${want_linux_lfs}" = xyes; then
 R_LARGE_FILES
 fi
+
+## Valgrind instrumentation
+if test ${valgrind_level} -eq 0; then
+  AC_DEFINE(NVALGRIND) 
+fi
+AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level})
 
 
 ### * Miscellaneous.

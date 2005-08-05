@@ -48,17 +48,24 @@ extern void *Rm_realloc(void * p, size_t n);
 #define free Rm_free
 #endif
 
-/* Declarations for Valgrind. The macros in memcheck.h are 
-   defined out if it doesn't recognize the architecture or
-   if NVALGRIND is defined, so we can always include them
-   here.
+/* Declarations for Valgrind.
+
+   These are controlled by the 
+     --with-valgrind-instrumentation=
+   option to configure, which sets VALGRIND_LEVEL to the
+   supplied value (default 0) and defines NVALGRIND if
+   the value is 0.
+
+   level 0 is no additional instrumentation
+   level 1 marks uninitialized numeric, logical, integer vectors 
+           and R_alloc memory
+   level 2 marks free memory as inaccessible
 
    It may be necessary to define NVALGRIND for a non-gcc
    compiler on a supported architecture if it has different
    syntax for inline assembly language from gcc.
 
    For Win32, Valgrind is useful only if running under Wine,
-   so we may as well not compile in the instrumentation
 */
 #ifdef Win32
 # ifndef USE_VALGRIND_FOR_WINE
@@ -70,17 +77,7 @@ extern void *Rm_realloc(void * p, size_t n);
 # include "memcheck.h"
 #endif
 
-/*
-   level 0 is no additional instrumentation
-   level 1 marks uninitialized numeric, logical, integer vectors 
-           and R_alloc memory
-   level 2 marks free memory as inaccessible
 
-   Level 1 doesn't slow Valgrind prohibitively and adds only 9 cpu
-   instructions to each numeric/logical/integer allocation when running
-   under Linux and not using Valgrind. In the long run level 1 
-   should probably be the default
-*/
 #ifndef VALGRIND_LEVEL 
 #define VALGRIND_LEVEL 0
 #endif

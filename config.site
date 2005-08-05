@@ -47,7 +47,7 @@
 ## specified above.
 ## If unspecified, defaults to '-g -O2' for gcc, and '-g' in all other
 ## cases.
-## CFLAGS=
+## CFLAGS="-g -DVALGRIND_LEVEL=2"
 
 ## The following additional CFLAGS to be used only in the main
 ## compilation and only in building shared libraries respectively.
