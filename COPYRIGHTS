@@ -312,3 +312,9 @@ src/extra/intl/*
 Based on gettextize from gettext 0.14.1
    Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
 
+src/include/memcheck.h
+src/include/valgrind.h
+
+From valgrind,
+
+   Copyright (C) 2000-2005 Julian Seward.  All rights reserved.

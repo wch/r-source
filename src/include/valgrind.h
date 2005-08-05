@@ -251,7 +251,7 @@ typedef
           /* Stack support. */
           VG_USERREQ__STACK_REGISTER   = 0x1501,
           VG_USERREQ__STACK_DEREGISTER = 0x1502,
-          VG_USERREQ__STACK_CHANGE     = 0x1503,
+          VG_USERREQ__STACK_CHANGE     = 0x1503  /* removed incorrect comma */
    } Vg_ClientRequest;
 
 #ifndef __GNUC__

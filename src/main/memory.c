@@ -62,11 +62,13 @@ extern void *Rm_realloc(void * p, size_t n);
 */
 #ifdef Win32
 # ifndef USE_VALGRIND_FOR_WINE
-# define NVALGRIND
+# define NVALGRIND 1
 #endif
 #endif
 
-#include "memcheck.h"
+#ifndef NVALGRIND
+# include "memcheck.h"
+#endif
 
 /*
    level 0 is no additional instrumentation
