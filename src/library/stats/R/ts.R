@@ -578,8 +578,8 @@ window.default <- function(x, start = NULL, end = NULL,
     if (is.null(frequency) && is.null(deltat)) yfreq <- xfreq
     else if (is.null(deltat)) yfreq <- frequency
     else if (is.null(frequency)) yfreq <- 1/deltat
-    if (yfreq > 0 && xfreq%%yfreq < ts.eps) {
-        thin <- round(xfreq/yfreq)
+    thin <- round(xfreq/yfreq)
+    if (yfreq > 0 && abs(xfreq/yfreq -thin) < ts.eps) {
         yfreq <- xfreq/thin
     } else {
         thin <- 1

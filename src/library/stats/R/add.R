@@ -95,6 +95,9 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         if(newn < oldn)
             warning(gettextf("using the %d/%d rows from a combined fit",
                              newn, oldn), domain = NA)
+    } else {
+        ## need to get offset from somewhere
+        offset <- object$offset
     }
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")

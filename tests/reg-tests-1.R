@@ -3627,9 +3627,11 @@ as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
                   x3 = c("a", "b"), x4 = c("a", "b")))
 ## failed in 2.1.0
 
+
 ## PR#7797 citation() chops "Roeland "
 stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
 ## was empty in 2.1.0.
+
 
 ## runmed()'s Turlach algorithm seg.faulted in rare cases:
 t2 <- c(-2,-7,5,2,-3, 0,1,3,2,-1,2,1,2,1,1,1,-2,4, 1,1,1, 32)
@@ -3638,11 +3640,13 @@ rT <- runmed(t2, k=21, algorithm= "Turlach")
 stopifnot(identical(rS, rT))
 ## seg.fault in 2.1.0
 
+
 ## duplicated and unique on a list
 x <- list(1, 2, 3, 2)
 duplicated(x)
 unique(x)
 ## unique failed in 2.1.0
+
 
 ## prog.aovlist on data with row.names
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
@@ -3657,6 +3661,7 @@ npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 pr <- proj(npk.aovE)
 ## failed in 2.1.0
 
+
 ## PR#7894: Reversing axis in a log plot
 x <- 1:3
 plot(x, exp(x), log = "y", ylim = c(30,1))
@@ -3667,8 +3672,9 @@ plot(x, exp(x), log = "y", ylim = c(30,1))
 
 ## Multibyte character set regular expressions had buffer overrun
 regexpr("[a-z]", NA)
+## crashed on 2.1.1 on Windows in MBCS build.
 
-### This test is broken.
+
 ## PR#8033: density with 'Inf' in x:
 d <- density(1/0:2, kern = "rect", bw=1, from=0, to=1, n=2)
 stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
@@ -3677,7 +3683,19 @@ stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
 stopifnot(all.equal(Arg(-1), pi))
 ## failed in R <= 2.1.1
 
+
 ## PR#7973: reversed log-scaled axis
 plot(1:100, log="y", ylim=c(100,10))
 stopifnot(axTicks(2) == 10*c(1,2,5,10))
 ## empty < 2.2.0
+
+
+## rounding errors in window.default (reported by Stefano Iacus)
+x <- ts(rnorm(50001), start=0, deltat=0.1)
+length(window(x, deltat=0.4))
+length(window(x, deltat=1))
+length(window(x, deltat=4.9))
+length(window(x, deltat=5))
+## last failed in 2.1.1
+
+### end of tests added in 2.1.1 patched ###

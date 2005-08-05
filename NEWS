@@ -64,6 +64,9 @@ BUG FIXES
 	number of places (this showed up in the print-tests.R), and made 
 	unnecessary rounding errors on some platforms on e.g. signif(18000, 3).
 
+    o   window() was failing incorrectly due to representation errors
+	when the new and old deltat were not both integers (e.g. 0.1).
+
     o   The 'lm' methods for add1() and drop1() ignored offsets (which
 	were added for lm() after they written).  (PR#8049)
 
