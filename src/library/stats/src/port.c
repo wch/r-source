@@ -178,6 +178,13 @@ void F77_NAME(dn2cvp)(const int iv[], int *liv, int *lv, int *p,
 				/* Done elsewhere */
 }
 
+/* dn2rdp... prints regression diagnostics for mlpsl and nl2s1. */
+void F77_NAME(dn2rdp)(const int iv[], int *liv, int *lv, int *n,
+		      const double rd[], const double v[])
+{
+				/* Done elsewhere */
+}
+
 /* ds7cpr... prints linear parameters at solution. */
 void F77_NAME(ds7cpr)(const double c[], const int iv[], int *l, int *liv)
 {
