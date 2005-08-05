@@ -50,8 +50,8 @@ drop1(object, scope, \dots)
   \item{trace}{if \code{TRUE}, print out progress reports.}
   \item{x}{a model matrix containing columns for the fitted model and all
     terms in the upper scope.  Useful if \code{add1} is to be called
-    repeatedly.}
-  \item{all.cols}{(Provided for compatibility with S.) Logical to specify
+    repeatedly.  \bold{Warning:} no checks are done on its validity.}
+  \item{all.cols}{(Provided for compatibility with S.)  Logical to specify
     whether all columns of the design matrix should be used. If
     \code{FALSE} then non-estimable columns are dropped, but the result
     is not usually statistically meaningful.}

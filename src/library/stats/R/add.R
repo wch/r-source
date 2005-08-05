@@ -89,19 +89,24 @@ add1.lm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
 	m <- model.frame(fob, xlev = object$xlevels)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
         offset <- model.offset(m)
+        wt <- model.weights(m)
         oldn <- length(y)
         y <- model.response(m, "numeric")
         newn <- length(y)
         if(newn < oldn)
             warning(gettextf("using the %d/%d rows from a combined fit",
                              newn, oldn), domain = NA)
+    } else {
+        ## need to get offset and weights from somewhere
+        wt <- object$weights
+        offset <- object$offset
     }
     n <- nrow(x)
     Terms <- attr(Terms, "term.labels")
     asgn <- attr(x, "assign")
     ousex <- match(asgn, match(oTerms, Terms), 0) > 0
     if(int) ousex[1] <- TRUE
-    iswt <- !is.null(wt <- object$weights)
+    iswt <- !is.null(wt)
     X <- x[, ousex, drop = FALSE]
     z <- if(iswt) lm.wfit(X, y, wt, offset=offset)
     else lm.fit(X, y, offset=offset)
@@ -179,22 +184,32 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     new.form <- update.formula(object, add.rhs)
     Terms <- terms(new.form)
     y <- object$y
-    wt <- object$prior.weights
     if(is.null(x)) {
 	fc <- object$call
 	fc$formula <- Terms
 	fob <- list(call = fc)
 	class(fob) <- oldClass(object)
 	m <- model.frame(fob, xlev = object$xlevels)
+        offset <- model.offset(m)
+        wt <- model.weights(m)
 	x <- model.matrix(Terms, m, contrasts = object$contrasts)
         oldn <- length(y)
         y <- model.response(m, "numeric")
-        ## binomial case has adjusted y.
-        if(NCOL(y) == 2) y <- y[, 1]/(y[, 1] + y[,2])
+        ## binomial case has adjusted y and weights
+        if(NCOL(y) == 2) {
+            n <- y[, 1] + y[, 2]
+            y <- ifelse(n == 0, 0, y[, 1]/n)
+            if(is.null(wt)) wt <- rep.int(1, length(y))
+            wt <- wt * n
+        }
         newn <- length(y)
         if(newn < oldn)
             warning(gettextf("using the %d/%d rows from a combined fit",
                              newn, oldn), domain = NA)
+    } else {
+        ## need to get offset and weights from somewhere
+        wt <- object$prior.weights
+        offset <- object$offset
     }
     n <- nrow(x)
     if(is.null(wt)) wt <- rep.int(1, n)
@@ -203,7 +218,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
     ousex <- match(asgn, match(oTerms, Terms), 0) > 0
     if(int) ousex[1] <- TRUE
     X <- x[, ousex, drop = FALSE]
-    z <-  glm.fit(X, y, wt, offset=object$offset,
+    z <-  glm.fit(X, y, wt, offset=offset,
                   family=object$family, control=object$control)
     dfs[1] <- z$rank
     dev[1] <- z$deviance
@@ -214,7 +229,7 @@ add1.glm <- function(object, scope, scale = 0, test=c("none", "Chisq", "F"),
         stt <- paste(sort(strsplit(tt, ":")[[1]]), collapse=":")
 	usex <- match(asgn, match(stt, sTerms), 0) > 0
 	X <- x[, usex|ousex, drop = FALSE]
-	z <-  glm.fit(X, y, wt, offset=object$offset,
+	z <-  glm.fit(X, y, wt, offset=offset,
 		      family=object$family, control=object$control)
 	dfs[tt] <- z$rank
 	dev[tt] <- z$deviance

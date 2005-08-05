@@ -415,8 +415,11 @@ BUG FIXES
 	in particular it now agrees with an lm() fit for a Gaussian glm()
 	fit.  (PR#7961).
 
-    o   window() was failing incorrectly due to representation errors
-	when the new and old deltat were not both integers (e.g. 0.1).
+    o   The 'lm' and 'glm' methods for add1() took the weights and
+	offset from the original fit, and so gave errors in the
+	(dubious) usage where the upper scope resulted in a smaller
+	number of cases to fit (e.g. by omitting missing values in new
+	variables).  (PR#8049)
 
 
 
@@ -485,6 +488,9 @@ BUG FIXES
     o   signif() rounded some numnbers near 1e-308 to the wrong
 	number of places (this showed up in the print-tests.R), and made 
 	unnecessary rounding errors on some platforms on e.g. signif(18000, 3).
+
+    o   window() was failing incorrectly due to representation errors
+	when the new and old deltat were not both integers (e.g. 0.1).
 
     o   The 'lm' methods for add1() and drop1() ignored offsets (which
 	were added for lm() after they written).  (PR#8049)

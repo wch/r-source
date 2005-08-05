@@ -3684,6 +3684,24 @@ stopifnot(all.equal(Arg(-1), pi))
 ## failed in R <= 2.1.1
 
 
+## PR#7973: reversed log-scaled axis
+plot(1:100, log="y", ylim=c(100,10))
+stopifnot(axTicks(2) == 10*c(1,2,5,10))
+## empty < 2.2.0
+
+
+## rounding errors in window.default (reported by Stefano Iacus)
+x <- ts(rnorm(50001), start=0, deltat=0.1)
+length(window(x, deltat=0.4))
+length(window(x, deltat=1))
+length(window(x, deltat=4.9))
+length(window(x, deltat=5))
+## last failed in 2.1.1
+
+### end of tests added in 2.1.1 patched ###
+
+
+
 ## tests of hexadecimal constants
 x <- 0xAbc
 stopifnot(x == 2748)
@@ -3728,12 +3746,6 @@ stopifnot(typeof(sum(x)) == "integer")
 ## double < 2.2.0
 
 
-## PR#7973: reversed log-scaled axis
-plot(1:100, log="y", ylim=c(100,10))
-stopifnot(axTicks(2) == 10*c(1,2,5,10))
-## empty < 2.2.0
-
-
 ## Overflow in PrintGenericVector
 x <- paste(1:5000, collapse="+")
 as.matrix(list(a=1:2, b=2:3, c=x))
@@ -3751,10 +3763,23 @@ stopifnot(all.equal(r1, r2))
 ## different in 2.1.1
 
 
-## rounding errors in window.default (reported by Stefano Iacus)
-x <- ts(rnorm(50001), start=0, deltat=0.1)
-length(window(x, deltat=0.4))
-length(window(x, deltat=1))
-length(window(x, deltat=4.9))
-length(window(x, deltat=5))
-## last failed in 2.1.1
+## errors in add1.{lm,glm} when adding vars with missing values
+set.seed(2)
+y <- rnorm(10)
+x <- 1:10
+is.na(x[9]) <- TRUE
+
+lm0 <- lm(y ~ 1)
+lm1 <- lm(y ~ 1, weights = rep(1, 10))
+
+add1(lm0, scope = ~ x)
+add1(lm1, scope = ~ x)  ## error in 2.1.1
+
+glm0 <- glm(y ~ 1)
+glm1 <- glm(y ~ 1, weights = rep(1, 10))
+glm2 <- glm(y ~ 1, offset = rep(0, 10))
+
+add1(glm0, scope = ~ x)  ## error in 2.1.1
+add1(glm1, scope = ~ x)  ## error in 2.1.1
+add1(glm2, scope = ~ x)  ## error in 2.1.1
+##
