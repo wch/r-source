@@ -2854,14 +2854,27 @@ AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
                wcswidth wctrans wcwidth)
 AC_CHECK_DECLS([wcwidth, wcswidth], , , [#include <wchar.h>])
 ## can manage without wc[s]width
-for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-               wctrans
+for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
 do
 this=`echo "ac_cv_func_$ac_func"`
 if test "x$this" = xno; then
   want_mbcs_support=no
 fi
 done
+fi
+## it seems IRIX has wctrans but not wctrans_t: we check this when we
+## know we have the headers and wctrans().
+if test "$want_mbcs_support" = yes ; then
+  AC_CACHE_CHECK([for wctrans_t], r_cv_c_wctrans_t,
+    [AC_TRY_COMPILE([#include <wchar.h>
+       #include <wctype.h>
+       wctrans_t tr;], ,
+       r_cv_c_wctrans_t=yes, r_cv_c_wctrans_t=no)])
+  if test $r_cv_c_wctrans_t = yes; then
+    AC_DEFINE(HAVE_WCTRANS_T, 1, [Define if you have the 'wctrans_t' type.])
+  else
+    want_mbcs_support=no
+  fi 
 fi
 if test "x${want_mbcs_support}" = xyes; then
 AC_DEFINE(SUPPORT_UTF8, 1, [Define this to enable support for UTF-8 locales.])

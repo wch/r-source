@@ -241,6 +241,10 @@ INSTALLATION
     o	The places where the doc, include and share directory trees are
 	installed can be specified independently: see the R-admin manual.
 
+    o	We now test for wctrans_t, as apparently some broken OSes have
+	wctrans but not wctrans_t (which is required by the relevant
+	standards) .
+
 
 PACKAGE INSTALLATION CHANGES
 

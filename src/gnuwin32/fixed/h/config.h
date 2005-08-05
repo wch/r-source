@@ -568,6 +568,9 @@
 /* Define to 1 if you have the `wctrans' function. */
 #define HAVE_WCTRANS 1
 
+/* Define if you have the 'wctrans_t' type. */
+#define HAVE_WCTRANS_T 1
+
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
 
