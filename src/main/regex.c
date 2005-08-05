@@ -49,7 +49,9 @@
 /* glibc has already included alloca.h */
 #ifndef _ALLOCA_H
 #  ifdef __GNUC__
-#   define alloca __builtin_alloca
+#   ifndef alloca  /* may have been done in stdlib.h */
+#    define alloca __builtin_alloca
+#   endif
 #  else /* not __GNUC__ */
 #   ifdef HAVE_ALLOCA_H
 #    include <alloca.h>
