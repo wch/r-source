@@ -2123,7 +2123,7 @@ the setting to be ignored.  Both problems have been fixed for @code{gcc
 4.0.1}.  The version of @command{gfortran} shipping with Fedora Core 4
 seems to have the fixes in place.
 
-Some versions of @command{g95} (from @url{www.g95.org}) have the same
+Some versions of @command{g95} (from @url{http://www.g95.org}) have the same
 problem.
 
 There appears to be an incompatibility in the handling of double-complex
@@ -2789,6 +2789,9 @@ specify location of @acronym{GNOME} libs
 specify location of @command{libglade-config}
 @end table
 
+How to invoke the GNOME console is described under @ref{Invoking R, , ,
+R-intro, R Introduction and Administration}: in brief, use command-line
+option @option{--gui=gnome}.
 
 @node Enabling search in HTML help, The Windows toolset, Building the GNOME console, Top
 @appendix Enabling search in @HTML{} help
