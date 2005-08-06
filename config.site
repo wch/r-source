@@ -31,9 +31,12 @@
 ## If left blank the system will use 'a4'.
 ## R_PAPERSIZE=a4
 
-## The default behavior of R if it encounters EOF in batch mode.
+## Set the default behavior of R when ending a session
 ## Set this to one of '--save' or '--no-save' depending whether you
 ## want automatic saving of '.RData' or not.
+## Note that this applies to interactive and batch use, 
+## but NOT to the utility R CMD BATCH 
+## (which defaults to --save irrespective of this setting)
 ## R_BATCHSAVE=
 
 ## The command which runs the C compiler.

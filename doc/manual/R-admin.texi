@@ -412,9 +412,8 @@ Modern fonts.  We have provided four alternatives:
 @table @code
 @item times
 Using standard PostScript fonts.  This works well both for on-screen
-viewing and for printing, and is the default from @R{} 2.0.0.  The one
-disadvantage is that the Usage and Examples sections may come out rather
-wide.
+viewing and for printing, and is the default.  The one disadvantage is
+that the Usage and Examples sections may come out rather wide.
 
 @item @code{lm}
 Using the @emph{Latin Modern} fonts.  These are not often installed as
@@ -520,7 +519,7 @@ govern where a copy of the @command{R} script and the @code{man} page
 are installed.
 
 The configure option @option{--libdir} controls where the main @R{} files
-are installed: the default is in fact
+are installed: the default is
 
 @example
 libdir=EPREFIX/$@{LIBnn@}
@@ -603,7 +602,9 @@ perhaps for some network-mounted systems).
 
 Installation is @emph{via} the installer @file{@value{RWVERSION}.exe}.
 Just double-click on the icon and follow the instructions.  You can
-uninstall @R{} from the Control Panel.
+uninstall @R{} from the Control Panel.  (Note that you will probably be
+asked to choose a language for installation, and that choice applies to
+both installation and un-installation but not to running @R{} itself.)
 
 See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 @acronym{FAQ}} for more details.
@@ -621,10 +622,10 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 * Building the core files::     
 * Building the bitmap files::   
 * Windows internationalization::  
+* Checking the build::          
 * Building the recommended packages::  
 * Building the manuals::        
 * Building the installers::     
-* Checking the build::          
 * Cross-building on ix86 Linux::  
 @end menu
 
@@ -633,7 +634,7 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 
 If you want to build @R{} from the sources, you will first need
 to collect, install and test an extensive set of tools.  See
-@ref{The Windows toolset} (and updates in
+@ref{The Windows toolset} (and perhaps updates in
 @url{http://www.murdoch-sutherland.com/Rtools/}) for details.
 
 Be sure to set your path in the order given in the appendix.
@@ -646,7 +647,7 @@ You need to collect the following sets of files:
 
 @item
 Get the @R{} source code @file{R-@value{VERSIONno}.tgz} from
-@acronym{CRAN}.  Open a commands window (or another shell) at a
+@acronym{CRAN}.  Open a command window (or another shell) at a
 directory @emph{whose path does not contain spaces}.  We will call this
 directory @var{R_HOME} below.  Run
 
@@ -680,17 +681,18 @@ You will need files @file{libpng-1.2.8.tar.gz} and
 @file{jpegsrc.v6b.tar.gz} or later.
 
 @item
-You need to obtain copies of the recommended packages from
-@acronym{CRAN}.  Put the @file{.tar.gz} files in
-@file{@var{R_HOME}/src/library/Recommended}.  If you have @code{rsync}
-and an Internet connection, you can do this automatically using
+If you are not using a tarball you need to obtain copies of the
+recommended packages from @acronym{CRAN}.  Put the @file{.tar.gz} files
+in @file{@var{R_HOME}/src/library/Recommended} and run @code{make
+link-recommended}.  If you have @code{rsync} and an Internet connection,
+you can do this automatically using
 
 @example
 make rsync-recommended
 @end example
 
 @item
-Optionally, you can install an ATLAS
+Optionally, you can install a version of ATLAS
 (@url{http://math-atlas.sourceforge.net/}) tuned to your system for fast
 linear algebra routines. Prebuilt @code{Rblas.dll} for various Pentium
 and AthlonXP chips are available in the @file{windows/contrib/ATLAS}
@@ -704,15 +706,18 @@ use of this, put the @file{DLL} somewhere in your path or in
 @file{@var{R_HOME}/bin}, and edit
 @file{@var{R_HOME}/src/gnuwin32/MkRules} to define @code{USE_GOTO=YES}
 and the name of the @file{DLL} (something like
-@file{libgoto_p4_512-r0.9.dll}).
+@file{libgoto_prescott-r0.99.3.dll}).
 
-Goto's BLAS takes preference over ATLAS, and seems a little faster.
-However, as it is compiled for MSVC, we have been unable to make it
-work for complex arithmetic and so it is only used for real linear
-algebra.
+Specifying a Goto BLAS takes preference over ATLAS, and seems a little
+faster.  However, as it is compiled for MSVC, we have been unable to
+make it work for complex arithmetic and so it is only used for real
+linear algebra.
 
-Dr. Goto supplies DLLs for PIII, P4 and Opteron processors: that for
-PIIIs runs on AthlonXP as well.
+Dr. Goto currently supplies DLLs for P4 and Opteron/Athlon64
+processors.  Previously there were versions for PIII (that also worked
+on Athlon XP).  (@uref{http://en.wikipedia.org/wiki/Pentium_4} may help
+decipher the P4 code names used.)
+
 
 @end itemize
 
@@ -723,7 +728,7 @@ You may need to compile under a case-honouring file system: we found
 that a @command{samba}-mounted file system (which maps all file names to
 lower case) did not work.
 
-Open a commands window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
+Open a command window at @file{@var{R_HOME}/src/gnuwin32}.  Edit
 @file{MkRules} to set the appropriate paths as needed and to set the
 type(s) of help that you want built.  @strong{Beware}: @file{MkRules}
 contains tabs and some editors (e.g., WinEdt) silently remove them.
@@ -740,7 +745,7 @@ Notes:
 @itemize
 @item
 The file @file{bin/Rchtml.dll} is only built if CHM help is specified in
-@file{MkRules}. Its source is the help directory, and you need the
+@file{MkRules}. Its source is in the help directory, and you need the
 @HTML{} Help Workshop files to build it.  You can just copy this from a
 binary distribution.
 
@@ -797,36 +802,45 @@ Once everything is set up in directory @file{bitmap}, @code{make}
 in that directory or @code{make bitmapdll} in the parent directory
 should build @file{Rbitmap.dll} and install it in @file{@var{R_HOME}/bin}.
 
-@node Windows internationalization, Building the recommended packages, Building the bitmap files, Building from source
+@node Windows internationalization, Checking the build, Building the bitmap files, Building from source
 @subsection Windows internationalization
 
 This version of @R{} can be built with support for some multibyte
 character sets such those used in Chinese, Japanese and Korean.
 
-Define @code{SUPPORT_MBCS} in config.h to enable support in the @R{}
-engine for multi-byte character sets.  This is only useful if you have
-an `East Asian' version of Windows, as only those versions have
-multi-byte locales.  We have only tested this under Windows XP, but it
-is expected to work under Windows 95/98/ME as well as NT-based versions
-of Windows.
+Define @code{SUPPORT_MBCS} in @file{config.h} to enable support in the
+@R{} engine for multi-byte character sets.  This is only useful if you
+have an `East Asian' version of Windows, as only those versions have
+multi-byte locales.  (This is the default in the sources, but the
+distribution builds two versions of @file{R.dll}, the default choice
+being that without @code{SUPPORT_MBCS}.)
 
-This also enables support for multi-byte locales in the RGui console,
-pager, data and script editors (this is based loosely on the
-Japanization patches by Nakama and Okada).  The Rterm command-line
-editor is not supported in such locales.
+This also enables support for multi-byte locales in the @code{RGui}
+console, pager, data and script editors (this is based loosely on the
+Japanization patches by Nakama and Okada).  The @code{Rterm}
+command-line editor is not supported in such locales.
 
 Define both @code{SUPPORT_MBCS} and @code{SUPPORT_UTF8} in
 @file{config.h} to enable support in the R engine and in the Windows
 graphics device for UTF-8 character sets.  Since there are no UTF-8
 locales on Windows, this sets the locale to be UTF-8 and expects
-input/output in UTF-8 so is only useful with a customized front-end to
-@file{R.dll}.
+input/output in UTF-8.  It would only be useful with a customized
+front-end to @file{R.dll}.
 
 If any of these is defined you need the DLL @file{msvcp60.dll} to be
 installed.  It is on recent versions of Windows, and can be obtained
 by an Internet search.
 
-@node Building the recommended packages, Building the manuals, Windows internationalization, Building from source
+@node Checking the build, Building the recommended packages, Windows internationalization, Building from source
+@subsection Checking the build
+
+You can test a build by (optionally) building the recommended packages
+(see below) and running @code{make check}.  You may need to set
+@code{TMPDIR} to the absolute path to a suitable temporary directory:
+the default is @file{c:/TEMP}.  (Use forward slashes and do not use a
+path including spaces.)
+
+@node Building the recommended packages, Building the manuals, Checking the build, Building from source
 @subsection Building the recommended packages
 
 The recommended packages can be built by
@@ -874,10 +888,10 @@ in your path).
 See the @ref{Making the manuals} section in the Unix section for
 setting options such as the paper size.
 
-@node Building the installers, Checking the build, Building the manuals, Building from source
+@node Building the installers, Cross-building on ix86 Linux, Building the manuals, Building from source
 @subsection Building the installers
 
-See @file{installer/INSTALL}.  You need to have the files for a
+See the file @file{installer/INSTALL}.  You need to have the files for a
 complete R build, including bitmap and Tcl/Tk support and the manuals,
 as well as the recommended packages.
 
@@ -927,16 +941,8 @@ make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 An alternative way to customize the installer starting with a binary
 distribution is given in file @file{installer/INSTALL}.
 
-@node Checking the build, Cross-building on ix86 Linux, Building the installers, Building from source
-@subsection Checking the build
 
-You can test a build by (optionally) building the recommended packages
-(see below) and running @code{make check}.  You may need to set
-@code{TMPDIR} to the absolute path to a suitable temporary directory:
-the default is @file{c:/TEMP}.  (Use forward slashes and do not use a
-path including spaces.)
-
-@node Cross-building on ix86 Linux,  , Checking the build, Building from source
+@node Cross-building on ix86 Linux,  , Building the installers, Building from source
 @subsection Cross-building on ix86 Linux
 
 You will need i386-mingw32 cross-compilers installed and in your path.
@@ -1082,8 +1088,8 @@ R CMD INSTALL -l /path/to/library @var{pkg1} @var{pkg2} @dots{}
 The part @samp{-l /path/to/library} can be omitted, in which case the
 first library in @env{R_LIBS} is used if set, otherwise the main library
 @file{@var{R_HOME}/library} is used.  (@env{R_LIBS} is looked for in the
-environment: @file{.Renviron} is not read by @command{R CMD}.)  Ensure
-that the environment variable @env{TMPDIR} is either unset (and
+environment: note that @file{.Renviron} is not read by @command{R CMD}.)
+Ensure that the environment variable @env{TMPDIR} is either unset (and
 @file{/tmp} exists and can be written in and executed from) or points to
 a valid temporary directory.
 
@@ -1133,10 +1139,10 @@ from a local @file{zip} file by setting argument @code{repos} to
 interface to @code{install.packages}, @code{update.packages} and
 @code{library}.
 
-As from @R{} 2.1.0, @code{install.packages} can look in several
-repositories, specified as a character vector by the argument
-@code{repos}: these can include a @acronym{CRAN} mirror, Bioconductor,
-Omegahat, local archives, local files, @dots{}).
+@code{install.packages} can look in several repositories, specified as a
+character vector by the argument @code{repos}: these can include a
+@acronym{CRAN} mirror, Bioconductor, Omegahat, local archives, local
+files, @dots{}).
 
 @findex install.binaries
 On Mac OS X @code{install.packages} works as it does on other Unix-like
@@ -1147,11 +1153,26 @@ Aqua GUI provides for installation of either binary or source packages,
 from @acronym{CRAN} or local files.
 
 @menu
-* Customising compilation in Windows::  
 * Customizing compilation under Unix::  
+* Customising compilation in Windows::  
 @end menu
 
-@node Customising compilation in Windows, Customizing compilation under Unix, Installing packages, Installing packages
+@node Customizing compilation under Unix, Customising compilation in Windows, Installing packages, Installing packages
+@subsection Customizing compilation under Unix
+
+The R system and package-specific compilation flags can be overridden or
+added to by setting the appropriate Make variables in the personal file
+@file{$HOME/.R/Makevars-$R_PLATFORM}, or if that does not exist,
+@file{$HOME/.R/Makevars}, where @samp{R_PLATFORM} is the platform for
+which R was built, as available in the @code{platform} component of the
+R variable @code{R.version}.
+
+Package developers are encouraged to use this mechanism to enable a
+reasonable amount of diagnostic messaging (``warnings'') when compiling,
+such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
+Compiler Collection.
+
+@node Customising compilation in Windows,  , Customizing compilation under Unix, Installing packages
 @subsection Customising compilation in Windows
 @findex MakeDll
 @findex Makevars.win
@@ -1278,20 +1299,6 @@ For a complete list of variables, see the @file{M*} files in
 @file{@var{R_HOME}/src/gnuwin32}.  The @code{PKG_*} flags are those
 typically included in @file{Makevars} files.
 
-@node Customizing compilation under Unix,  , Customising compilation in Windows, Installing packages
-@subsection Customizing compilation under Unix
-
-The R system and package-specific compilation flags can be overridden or
-added to by setting the appropriate Make variables in the personal file
-@file{$HOME/.R/Makevars-$R_PLATFORM}, or if that does not exist,
-@file{$HOME/.R/Makevars}, where @samp{R_PLATFORM} is the platform for
-which R was built, as available in the @code{platform} component of the
-R variable @code{R.version}.
-
-Package developers are encouraged to use this mechanism to enable a
-reasonable amount of diagnostic messaging (``warnings'') when compiling,
-such as e.g.@: @option{-Wall -pedantic} for tools from GCC, the Gnu
-Compiler Collection.
 
 @node Updating packages, Removing packages, Installing packages, Add-on packages
 @section Updating packages
@@ -1594,9 +1601,10 @@ FORTRAN}).  Some add-on packages also need a C++ compiler.
 Unless you do not want to view graphs on-screen you need @samp{X11}
 installed, including its headers and client libraries.  (On Fedora Core
 Linux this means the @samp{xorg-x11-devel} and @samp{xorg-x11-libs}
-RPMs, for example.  Older Linuxen used @samp{XFree86-}.)  If you
-really do not want these you will need to explicitly configure
-@R{} without X11, using @option{--with-x=no}.
+RPMs, for example.  Older Linuxen used @samp{XFree86-}.  Sone Debian
+derivatives apparently also require @samp{libxt-dev}.)  If you really do
+not want these you will need to explicitly configure @R{} without X11,
+using @option{--with-x=no}.
 
 The command-line editing depends on the @code{readline} library
 available from any @acronym{GNU} mirror: you will need a fairly recent
@@ -1654,7 +1662,7 @@ if specified by @option{--with-zlib}, @option{--with-bzlib} or
 @option{--with-pcre}: otherwise versions in the @R{} sources will be
 compiled in.  As the latter suffice and are tested with @R{} you should
 not need to change this.  In particular, the version of @code{zlib}
-1.2.2 in the @R{} sources has enhancements to work with large file
+1.2.3 in the @R{} sources has enhancements to work with large file
 systems on 32-bit platforms.
 
 @menu
@@ -2548,6 +2556,9 @@ LDFLAGS=/opt/fortran90/lib}).
 version has passed @command{make check} due to a problem with time
 zones (see below).  A 64-bit executable has not been successfully
 built.
+
+It appears that some (bit not all) versions of IRIX have broken
+wide-character header files and so need @code{--disable-mbcs}.
 
 To build @R{} with @command{gcc} use the following configuration flags
 

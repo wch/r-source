@@ -1201,7 +1201,7 @@ Optional Packages:
 Some influential environment variables:
   R_PRINTCMD  command used to spool PostScript files to the printer
   R_PAPERSIZE paper size for the local (PostScript) printer
-  R_BATCHSAVE default behavior of R if it encounters EOF in batch mode
+  R_BATCHSAVE set default behavior of R when ending a session
   MAIN_CFLAGS additional CFLAGS used when compiling the main binary
   SHLIB_CFLAGS
               additional CFLAGS used when building shared libraries

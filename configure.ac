@@ -388,7 +388,7 @@ AC_ARG_VAR([R_PRINTCMD],
 AC_ARG_VAR([R_PAPERSIZE],
            [paper size for the local (PostScript) printer])
 AC_ARG_VAR([R_BATCHSAVE],
-           [default behavior of R if it encounters EOF in batch mode])
+           [set default behavior of R when ending a session])
 AC_ARG_VAR([MAIN_CFLAGS],
            [additional CFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_CFLAGS],
