@@ -6914,7 +6914,8 @@ starting the @R{} executable from inside the debugger.
 also includes interactive graphics).  Currently, possible values for
 @var{type} are @samp{X11} (the default), provided that @samp{Tcl/Tk}
 support is available, @samp{Tk} and @samp{gnome} provided that package
-@pkg{gnomeGUI} is installed.
+@pkg{gnomeGUI} is installed (@pxref{Building the GNOME console, , ,
+R-admin, R Installation and Adminstration}).
 
 @item --args
 This flag does nothing except cause the rest of the command line to be
