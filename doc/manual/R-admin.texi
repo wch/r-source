@@ -708,7 +708,7 @@ and the name of the @file{DLL} (something like
 
 Goto's BLAS takes preference over ATLAS, and seems a little faster.
 However, as it is compiled for MSVC, we have been unable to make it
-work for complex arithmetic and so it is only used in for real linear
+work for complex arithmetic and so it is only used for real linear
 algebra.
 
 Dr. Goto supplies DLLs for PIII, P4 and Opteron processors: that for
@@ -1764,6 +1764,10 @@ position-independent code.
 You will need double-precision and double-complex versions of the BLAS,
 but not single-precision nor complex routines.
 
+On some systems it is necessary that an external BLAS was built with the
+same FORTRAN compiler used to build @R{}: known problems are with @R{}
+built with @command{gfortran}  @pxref{Using gfortran}.
+
 
 @cindex LAPACK library
 Provision is made for using an external LAPACK library, principally to
@@ -2091,7 +2095,7 @@ For performance reasons@footnote{e.g., to use an optimized BLAS on
 Sun/Sparc} you may want to choose a FORTRAN 90/95 compiler.
 
 If you use @command{f2c} you may need to ensure that the FORTRAN type
-@code{integer} is translated to the C type @code{int}.  Normally
+@code{intger} is translated to the C type @code{int}.  Normally
 @file{f2c.h} contains @samp{typedef long int integer;}, which will work
 on a 32-bit platform but not on a 64-bit platform.
 
@@ -2113,7 +2117,11 @@ seems to have the fixes in place.
 
 Some versions of @command{g95} (from @url{www.g95.org}) have the same
 problem.
- 
+
+There appears to be an incompatibility in the handling of double-complex
+arithmetic between @command{gfortran} and @command{g77}, with reports
+of the final example in @code{example(eigen)} hanging under some
+external BLASs built under @command{g77}.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags

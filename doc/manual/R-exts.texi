@@ -870,7 +870,7 @@ this by running @command{autoconf} in the top-level package directory
 @quotation
 @cartouche
 @smallexample
-AC_INIT([RODBC]) dnl package name
+AC_INIT([RODBC], 1.1.4) dnl package name, version
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
