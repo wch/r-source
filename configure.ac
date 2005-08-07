@@ -1425,9 +1425,9 @@ fi
 
 ## Valgrind instrumentation
 if test ${valgrind_level} -eq 0; then
-  AC_DEFINE(NVALGRIND) 
+  AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
 fi
-AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level})
+AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
 
 ### * Miscellaneous.
