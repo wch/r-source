@@ -668,6 +668,9 @@
    used anymore. */
 /* #undef NEED___SETFPUCW */
 
+/* Define to disable Valgrind instrumentation */
+/* #undef NVALGRIND */
+
 /* Name of package */
 #define PACKAGE "R"
 
@@ -773,6 +776,9 @@
 
 /* Define according to your operating system type. */
 /* #undef Unix */
+
+/* Define as 1 or 2 to specify levels of Valgrind instrumentation */
+/* #undef VALGRIND_LEVEL */
 
 /* Version number of package */
 #define VERSION "2.2.0"
