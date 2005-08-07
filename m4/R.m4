@@ -2847,20 +2847,29 @@ fi
 ## locales - support for MBCS and specifically UTF-8
 AC_DEFUN([R_MBCS],
 [
+## Wide character support -- first test for headers (which are assumed in code)
 if test "$want_mbcs_support" = yes ; then
-## Wide character support -- need to include headers in case of macros?
-AC_CHECK_HEADERS(wchar.h wctype.h)
-AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
-               wcswidth wctrans wcwidth)
-AC_CHECK_DECLS([wcwidth, wcswidth], , , [#include <wchar.h>])
-## can manage without wc[s]width
-for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
-do
-this=`echo "ac_cv_func_$ac_func"`
-if test "x$this" = xno; then
-  want_mbcs_support=no
+  AC_CHECK_HEADERS(wchar.h wctype.h)
+  ac_cv_header_wchar_h
+  for ac_header in wchar wctype; do
+    this=`echo "ac_cv_heasder_$ac_header_h"`
+    if test "x$this" = xno; then
+      want_mbcs_support=no
+    fi
+  done
 fi
-done
+if test "$want_mbcs_support" = yes ; then
+  AC_CHECK_FUNCS(mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs \
+		 wcswidth wctrans wcwidth)
+  AC_CHECK_DECLS([wcwidth, wcswidth], , , [#include <wchar.h>])
+  ## can manage without wc[s]width
+  for ac_func in mbrtowc mbstowcs wcrtomb wcscoll wcsftime wcstombs wctrans
+  do
+    this=`echo "ac_cv_func_$ac_func"`
+    if test "x$this" = xno; then
+      want_mbcs_support=no
+    fi
+  done
 fi
 ## it seems IRIX has wctrans but not wctrans_t: we check this when we
 ## know we have the headers and wctrans().

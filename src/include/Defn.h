@@ -878,7 +878,7 @@ void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 		  Rboolean decreasing);
 
 
-#if defined(HAVE_WCHAR_H) && defined(SUPPORT_MBCS)
+#ifdef SUPPORT_MBCS /* implies we have this header */
 #include <wchar.h>
 #endif
 
