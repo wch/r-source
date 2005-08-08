@@ -2850,7 +2850,6 @@ AC_DEFUN([R_MBCS],
 ## Wide character support -- first test for headers (which are assumed in code)
 if test "$want_mbcs_support" = yes ; then
   AC_CHECK_HEADERS(wchar.h wctype.h)
-  ac_cv_header_wchar_h
   for ac_header in wchar wctype; do
     this=`echo "ac_cv_heasder_$ac_header_h"`
     if test "x$this" = xno; then
