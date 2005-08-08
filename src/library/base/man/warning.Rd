@@ -60,6 +60,7 @@ suppressWarnings(expr)
 }
 \seealso{
   \code{\link{stop}} for fatal errors,
+  \code{\link{message}} for diagnostic messages,
   \code{\link{warnings}},
   and \code{\link{options}} with argument \code{warn=}.
 
