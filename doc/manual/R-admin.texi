@@ -2126,10 +2126,11 @@ seems to have the fixes in place.
 Some versions of @command{g95} (from @url{http://www.g95.org}) have the same
 problem.
 
-There appears to be an incompatibility in the handling of double-complex
-arithmetic between @command{gfortran} and @command{g77}, with reports
-of the final example in @code{example(eigen)} hanging under some
-external BLASs built under @command{g77}.
+On @code{x86_64} systems there is an incompatibility in the return
+conventions for double-complex functions between @command{gfortran} and
+@command{g77} which result in the final example in @code{example(eigen)}
+hanging or segfaulting under external BLASs built under @command{g77},
+as well as with Dr Goto's BLAS.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags
@@ -2268,8 +2269,6 @@ LIBnn=lib
 and had to build @code{readline} ourselves as Fedora Core 3 only shipped
 a 64-bit version.
 
-
-
 64-bit versions of Linux are built with support for files > 2Gb, but
 32-bit versions usually are not.  This can be enabled for Linux kernels
 2.4.x or later by the configure option @option{--enable-linux-lfs}: it
@@ -2290,7 +2289,7 @@ Fedora Core 3) produce incorrect code.  In our experiments @code{gcc
 3.4.x} always produced faster and more reliable code.
 
 For some comments on building on an Itanium (@code{ia64}) Linux system
-with @command{gcc} and Intel compilers see
+with @command{gcc} or the Intel compilers see
 @uref{http://www.nakama.ne.jp/memo/ia64_linux/}.
 
 @node Mac OS X, Solaris, Linux, Platform notes
