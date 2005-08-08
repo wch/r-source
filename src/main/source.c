@@ -55,6 +55,8 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(ifile);
     wasopen = con->isopen;
     num = asInteger(CAR(args));				args = CDR(args);
+    if (num == 0)
+        return(allocVector(EXPRSXP, 0));
     PROTECT(text = coerceVector(CAR(args), STRSXP));	args = CDR(args);
     prompt = CAR(args);					args = CDR(args);
     if (prompt == R_NilValue)

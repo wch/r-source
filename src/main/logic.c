@@ -291,6 +291,9 @@ static SEXP binaryLogic(int code, SEXP s1, SEXP s2)
 		LOGICAL(ans)[i] = NA_LOGICAL;
 	}
 	break;
+    case 3:
+	error(_("Unary operator `!' called with two arguments"));
+	break;
     }
     return ans;
 }
