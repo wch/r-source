@@ -48,11 +48,9 @@
  *
  *	"prompt"
  *	"continue"
- *	"editor"
  *	"expressions"
  *	"width"
  *	"digits"
- *	"contrasts"
  *	"echo"
  *	"verbose"
  *	"keep.source"
@@ -206,10 +204,10 @@ int R_SetOptionWarn(int w)
 
 void InitOptions(void)
 {
-    SEXP t, val, v;
+    SEXP val, v;
     char *p;
 
-    PROTECT(v = val = allocList(14));
+    PROTECT(v = val = allocList(12));
 
     SET_TAG(v, install("prompt"));
     SETCAR(v, mkString("> "));
@@ -217,10 +215,6 @@ void InitOptions(void)
 
     SET_TAG(v, install("continue"));
     SETCAR(v, mkString("+ "));
-    v = CDR(v);
-
-    SET_TAG(v, install("editor"));
-    SETCAR(v, mkString("vi"));
     v = CDR(v);
 
     SET_TAG(v, install("expressions"));
@@ -233,16 +227,6 @@ void InitOptions(void)
 
     SET_TAG(v, install("digits"));
     SETCAR(v, ScalarInteger(7));
-    v = CDR(v);
-
-    SET_TAG(v, install("contrasts"));
-    SETCAR(v, allocVector(STRSXP, 2));
-    SET_STRING_ELT(CAR(v), 0, mkChar("contr.treatment"));
-    SET_STRING_ELT(CAR(v), 1, mkChar("contr.poly"));
-    PROTECT(t = allocVector(STRSXP, 2));
-    SET_STRING_ELT(t, 0, mkChar("unordered"));
-    SET_STRING_ELT(t, 1, mkChar("ordered"));
-    namesgets(CAR(v), t);
     v = CDR(v);
 
     SET_TAG(v, install("echo"));
@@ -263,7 +247,7 @@ void InitOptions(void)
     p = getenv("R_KEEP_PKG_SOURCE");
     R_KeepSource = (p && (strcmp(p, "yes") == 0)) ? 1 : 0;
 
-    SET_TAG(v, install("keep.source"));
+    SET_TAG(v, install("keep.source")); /* overridden in common.R */
     SETCAR(v, allocVector(LGLSXP, 1));
     LOGICAL(CAR(v))[0] = R_KeepSource;
     v = CDR(v);
@@ -283,7 +267,7 @@ void InitOptions(void)
     SET_STRING_ELT(CAR(v), 0, mkChar("."));
 
     SET_SYMVALUE(install(".Options"), val);
-    UNPROTECT(2);
+    UNPROTECT(1);
 }
 
 

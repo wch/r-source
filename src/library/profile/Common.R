@@ -20,23 +20,15 @@ R.version.string <-
           paste(version[c("year", "month","day")], collapse = "-"),
           sep=", ", collapse=" ")
 
-options(na.action = "na.omit")
-options(show.signif.stars = TRUE)
-options(show.coef.Pvalues = TRUE)
 options(keep.source = interactive())
 options(warn = 0)
-options(help.try.all.packages = FALSE)
-options(repos = c(CRAN="@CRAN@"))
+# options(repos = c(CRAN="@CRAN@"))
 # options(BIOC = "http://www.bioconductor.org")
 
 options(timeout = 60)
-options(internet.info = 2)
 options(encoding = "native.enc")
 options(show.error.messages = TRUE)
 options(scipen = 0)
-options(locatorBell = TRUE)
-options(ts.eps = 1e-5)   # default as S
-options(pkgType = .Platform$pkgType)
 options(max.print = 10000)
 
 local({dp <- as.vector(Sys.getenv("R_DEFAULT_PACKAGES"))

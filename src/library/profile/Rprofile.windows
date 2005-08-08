@@ -1,25 +1,16 @@
 ###-*- R -*-
 
-.Library <- file.path(gsub("\\\\", "/", R.home()), "library")
-invisible(.libPaths(unlist(strsplit(gsub("\\\\", "/",
-                                         Sys.getenv("R_LIBS")), ";"))))
+.Library <- file.path(chartr("\\", "/", R.home()), "library")
+invisible(.libPaths(unlist(strsplit(chartr("\\", "/", Sys.getenv("R_LIBS")),
+                                    ";"))))
+
 if(nchar(Sys.getenv("R_PAPERSIZE")) > 0) {
     options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
-}else  {
+} else {
     if(any(grep("united.states", Sys.getlocale("LC_CTYPE"), TRUE)) ||
        any(grep("canada", Sys.getlocale("LC_CTYPE"), TRUE)))
         options(papersize = "letter")
     else options(papersize = "a4")
 }
-if(interactive()) options(device="windows") else options(device = "postscript")
-options(graphics.record=FALSE)
-if(any(grep("Rgui", commandArgs(), TRUE))) options(editor="internal") else options(editor="notepad")
-if(any(grep("--ess", commandArgs()))) options(pager="console") else options(pager="internal")
-options(unzip="internal")
-options(mailer="none")
-options(width=80)
-options(windowsBuffered=TRUE)
-options(windowsTimeouts=as.integer(c(100,500)))
 
-options(repos = c(CRAN="@CRAN@",
-        CRANextra="http://www.stats.ox.ac.uk/pub/RWin"))
+options(pager = if(any(grep("--ess", commandArgs()))) "console" else "internal")

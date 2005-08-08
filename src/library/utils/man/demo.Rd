@@ -6,8 +6,7 @@
   \R scripts.  \code{demo()} gives the list of available topics.
 }
 \usage{
-demo(topic, device = getOption("device"),
-     package = NULL, lib.loc = NULL,
+demo(topic, package = NULL, lib.loc = NULL,
      character.only = FALSE, verbose = getOption("verbose"))
 }
 \arguments{
@@ -16,7 +15,6 @@ demo(topic, device = getOption("device"),
     depending on whether \code{character.only} is \code{FALSE} (default)
     or \code{TRUE}.  If omitted, the list of available topics is
     displayed.}
-  \item{device}{the graphics device to be used.}
   \item{package}{a character vector giving the packages to look into for
     demos, or \code{NULL}.  By default, all packages in the search path
     are used.}

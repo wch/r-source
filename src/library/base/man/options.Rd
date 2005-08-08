@@ -32,8 +32,8 @@ getOption(x)
   \code{options("width")} which is a \emph{list} of length one.
 
   \code{.Options} also always contains the \code{options()} list (as a
-  pairlist, unsorted), for S compatibility.
-  You must use it \dQuote{read only}.
+  pairlist, unsorted), for S compatibility.  Assigning to it will make a
+  local copy and not change the original.
 }
 \value{
   For \code{getOption}, the current value set for option \code{x}, or
@@ -42,15 +42,11 @@ getOption(x)
   For \code{options()}, a list of all set options sorted by name.  For
   \code{options(name)}, a list of length one containing the set value,
   or \code{NULL} if it is unset.  For uses setting one or more options,
-  a a list with the previous values of the options changed (returned
+  a list with the previous values of the options changed (returned
   invisibly).
 }
 \section{Options used in base \R}{
   \describe{
-    \item{\code{browser}:}{default HTML browser used by
-      \code{\link{help.start}()} on UNIX, or a non-default browser on
-      Windows.}
-
     \item{\code{check.bounds}:}{logical, defaulting to \code{FALSE}.  If
       true, a \link{warning} is produced whenever a \dQuote{generalized
       vector} (atomic or \code{\link{list}}) is extended, by something
@@ -58,17 +54,6 @@ getOption(x)
 
     \item{\code{continue}:}{a string setting the prompt used for lines
       which continue over one line.}
-
-    \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
-      model fitting such as with \code{\link{aov}} or \code{\link{lm}}.
-      A character vector of length two, the first giving the function to
-      be used with unordered factors and the second the function to be
-      used with ordered factors.}
-
-    \item{\code{de.cellwidth}:}{integer: the cell widths (number of
-      characters) to be used in the data editor \code{\link{dataentry}}.
-      If this is unset (the default), 0, negative or \code{NA}, variable
-      cell widths are used.}
 
     \item{\code{defaultPackages}:}{the packages that are attached by
       default when \R starts up.  Initially set from value of the
@@ -80,12 +65,6 @@ getOption(x)
       \code{options} should be in your \file{.Rprofile} file to ensure
       that the change takes effect before the base package is
       initialized (see \code{\link{Startup}}).}
-
-    \item{\code{device}:}{a character string giving the default device
-      for that session.  This defaults to the normal screen device
-      (e.g., \code{x11}, \code{windows} or \code{quartz}) for an
-      interactive session, and \code{postscript} in batch use or if a
-      screen is not available.}
 
     \item{\code{digits}:}{controls the number of digits to print when
       printing numeric values.  It is a suggestion only.  Valid values
@@ -102,10 +81,6 @@ getOption(x)
       when it controls whether input is echoed.  Command-line option
       \code{--slave} sets this initially to \code{FALSE}.}
 
-    \item{\code{editor}:}{sets the default text editor, e.g., for
-      \code{\link{edit}}.  Set from the environment variable
-      \code{VISUAL} on UNIX.}
-
     \item{\code{encoding}:}{The name of an encoding, default
       \code{"native.enc"}).  See \code{\link{connections}}.}
 
@@ -121,13 +96,6 @@ getOption(x)
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.
       Valid values are 25\dots500000 with default 5000.}
-
-    \item{\code{help.try.all.packages}:}{default for an argument of
-      \code{\link{help}}.}
-
-    \item{\code{internet.info}:}{The minimum level of information to be
-      printed on URL downloads etc.  Default is 2, for failure causes.
-      Set to 1 or 0 to get more information.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their
@@ -147,10 +115,6 @@ getOption(x)
       images.  Whether they have kept source is determined when they are
       installed (and is almost certainly false).}
 
-    \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
-      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
-      Honoured at least on \code{X11} and \code{windows} devices.}
-
     \item{\code{mailer}:}{default mailer used by
       \code{\link{bug.report}()}.  Can be \code{"none"}.}
 
@@ -160,9 +124,6 @@ getOption(x)
       typically to something in the order \code{max.print} lines.
 
       This is not yet used in base \R.}
-
-    \item{\code{na.action}:}{the name of a function for treating missing
-      values (\code{\link{NA}}'s) for certain situations.}
 
     \item{\code{OutDec}:}{one-character string.  The character to be
       used as the decimal point in output conversions, that is in
@@ -182,18 +143,13 @@ getOption(x)
 
     \item{\code{papersize}:}{the default paper format used by
       \code{\link{postscript}};  set by environment variable
-      \env{R\_PAPERSIZE} when \R is started and defaulting to
-      \code{"a4"} if that is unset or invalid.}
-
-    \item{\code{pkgType}:}{The default type of packages to be downloaded
-      and installed -- see \code{\link{install.packages}}.
-#ifdef windows
-      Possible values are \code{"win.binary"} (the default) and
-      \code{"source"}.}
-#endif
+      \env{R\_PAPERSIZE} when \R is started: if that is unset or invalid
+      it defaults to
 #ifdef unix
-      Possible values are \code{"source"} (the default except under the
-      CRAN Mac OS X build) and \code{"mac.binary"}.}
+      \code{"a4"}.}
+#endif
+#ifdef windows
+    \code{"a4"}, or \code{"letter"} in US and Canadian locales.}
 #endif
 
     \item{\code{printcmd}:}{the command used by \code{\link{postscript}}
@@ -205,12 +161,6 @@ getOption(x)
     \item{\code{prompt}:}{a string, used for \R's prompt; should usually
       end in a blank (\code{" "}).}
 
-    \item{\code{repos}:}{URLs of the repositories for use by
-      \code{\link{update.packages}}.  Defaults to
-      \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
-      prompt for a CRAN mirror.  To avoid this, use something like
-      \code{options(repos=c(CRAN="http://my.local.cran/R"))}.}
-
     \item{\code{save.defaults}, \code{save.image.defaults}:}{
       see \code{\link{save}}.}
 
@@ -220,18 +170,9 @@ getOption(x)
       scientific notation: fixed notation will be preferred unless it is
       more than \code{scipen} digits wider.}
 
-    \item{\code{show.coef.Pvalues}:}{logical, affecting whether P
-      values are printed in summary tables of coefficients.  See
-      \code{\link{printCoefmat}}.}
-
     \item{\code{show.error.messages}:}{a logical.  Should error messages
       be printed?  Intended for use with \code{\link{try}} or a
       user-installed error handler.}
-
-    \item{\code{show.signif.stars}:}{logical, should stars be printed on
-      summary tables of coefficients?  See \code{\link{printCoefmat}}.}
-
-    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
     \item{\code{texi2dvi}:}{used by the unexported function
       \code{texi2dvi} in namespace \pkg{tools}.}
@@ -242,24 +183,6 @@ getOption(x)
 
     \item{\code{topLevelEnvironment}:}{see \code{\link{topenv}} and
       \code{\link{sys.source}}.}
-
-    \item{\code{ts.eps}:}{the relative tolerance for certain time series
-      (\code{\link{ts}}) computations.  Default \code{1e-05}.}
-
-    \item{\code{ts.S.compat}:}{logical.  Used to select S compatibility
-      for plotting time-series spectra.  See the description of argument
-      \code{log} in \code{\link{plot.spec}}.}
-
-    \item{\code{unzip}:}{the command used for unzipping help files.
-#ifdef unix
-      Defaults to the value of \env{R\_UNZIPCMD}, which is set in
-      \file{etc/Renviron} if an \code{unzip} command was found during
-      configuration.}
-#endif
-#ifdef windows
-      Defaults to \code{"internal"} when the internal unzip code is
-      used.}
-#endif
 
     \item{\code{verbose}:}{logical.  Should \R report extra information
       on progress?  Set to \code{TRUE} by the command-line option
@@ -296,28 +219,19 @@ getOption(x)
   \tabular{ll}{
     \code{check.bounds} \tab \code{FALSE}\cr
     \code{continue} \tab \code{"+ "}\cr
-    \code{contrasts} \tab \code{c("contr.treatment", "contr.poly")}\cr
     \code{digits} \tab \code{7}\cr
     \code{echo} \tab \code{TRUE}\cr
     \code{encoding} \tab \code{"native.enc"}\cr
     \code{error} \tab \code{NULL}\cr
     \code{expressions} \tab \code{5000}\cr
-    \code{help.try.all.packages} \tab \code{FALSE}\cr
-    \code{internet.info} \tab \code{2}\cr
     \code{keep.source} \tab \code{interactive()}\cr
     \code{keep.source.pkgs} \tab \code{FALSE}\cr
-    \code{locatorBell} \tab \code{TRUE}\cr
     \code{max.print} \tab \code{1000}\cr
-    \code{na.action} \tab \code{na.omit}\cr
     \code{OutDec} \tab \code{"."}\cr
     \code{prompt} \tab \code{"> "}\cr
     \code{scipen} \tab \code{0} \cr
-    \code{show.coef.Pvalues} \tab \code{TRUE}\cr
     \code{show.error.messages} \tab \code{TRUE}\cr
-    \code{show.signif.stars} \tab \code{TRUE}\cr
     \code{timeout} \tab \code{60}\cr
-    \code{ts.eps} \tab \code{1e-5}\cr
-    \code{ts.S.compat} \tab \code{FALSE}\cr
     \code{verbose} \tab \code{FALSE}\cr
     \code{warn} \tab \code{0}\cr
     \code{warnings.length} \tab \code{1000}\cr
@@ -325,29 +239,28 @@ getOption(x)
   }
   Others are set from environment variables or are platform-dependent.
 }
-#ifdef unix
-\section{Options used on Unix only}{
+\section{Options set in package grDevices}{
+  These will be set when package \pkg{grDevices} (or its name space)
+  is loaded if not already set.
   \describe{
+    \item{\code{device}:}{a character string giving the default device
+      for that session.  This defaults to the normal screen device
+      (e.g., \code{x11}, \code{windows} or \code{quartz}) for an
+      interactive session, and \code{postscript} in batch use or if a
+      screen is not available.}
+
+    \item{\code{locatorBell}:}{logical.  Should selection in \code{locator}
+      and \code{identify} be confirmed by a bell.  Default \code{TRUE}.
+      Honoured at least on \code{X11} and \code{windows} devices.}
+
+#ifdef unix
     \item{\code{X11colortype}:}{The default colour type for
       \code{\link{X11}} devices.  Default \code{"true"}.}
 
     \item{\code{X11fonts}:}{character vector of length 2.
       See \code{\link{X11}}.}
-
-    \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
-      to be used in off-line printing of help pages.}
-
-    \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
-      environment variable \env{R\_PDFVIEWER}.}
-
-  }
-}
 #endif
 #ifdef windows
-\section{Options used on Windows only}{
-  The graphics options are used by the \code{\link{windows}},
-  \code{win.graph}, \code{x11} and \code{X11} devices.
-  \describe{
     \item{\code{gamma}:}{double. The default value of
       \code{gamma} for \code{\link{windows}} devices, defaulting to 1
       if unset (the default).}
@@ -355,10 +268,6 @@ getOption(x)
     \item{\code{graphics.record}:}{logical.  The default value of
       \code{record} for \code{\link{windows}} devices.  Default
       \code{FALSE}.}
-
-    \item{\code{warn.FPU}:}{logical, by default undefined.  If true,
-      a \link{warning} is produced whenever \link{dyn.load} repairs the
-      control word damaged by a buggy DLL.}
 
     \item{\code{windowsBuffered}:}{logical.  Should
       \code{\link{windows}} devices be double-buffered?.  Default
@@ -373,6 +282,111 @@ getOption(x)
 
     \item{\code{xpinch, ypinch}:}{double.  Pixels per inch, horizontally and
       vertically.  If unset (the default), taken from Windows.}
+#endif 
+  }
+}
+\section{Options set in package stats}{
+  These will be set when package \pkg{stats} (or its name space)
+  is loaded if not already set.
+  \describe{
+    \item{\code{contrasts}:}{the default \code{\link{contrasts}} used in
+      model fitting such as with \code{\link{aov}} or \code{\link{lm}}.
+      A character vector of length two, the first giving the function to
+      be used with unordered factors and the second the function to be
+      used with ordered factors.  By default the elements are named
+      \code{c("unordered", "ordered")}, but the names are unused.}
+
+    \item{\code{na.action}:}{the name of a function for treating missing
+      values (\code{\link{NA}}'s) for certain situations.}
+
+    \item{\code{show.coef.Pvalues}:}{logical, affecting whether P
+      values are printed in summary tables of coefficients.  See
+      \code{\link{printCoefmat}}.}
+
+    \item{\code{show.signif.stars}:}{logical, should stars be printed on
+      summary tables of coefficients?  See \code{\link{printCoefmat}}.}
+
+    \item{\code{ts.eps}:}{the relative tolerance for certain time series
+      (\code{\link{ts}}) computations.  Default \code{1e-05}.}
+
+    \item{\code{ts.S.compat}:}{logical.  Used to select S compatibility
+      for plotting time-series spectra.  See the description of argument
+      \code{log} in \code{\link{plot.spec}}.}
+  }
+}
+\section{Options set in package utils}{
+  These will be set when package \pkg{utils} (or its name space)
+  is loaded if not already set.
+  \describe{
+    \item{\code{browser}:}{default HTML browser used by
+      \code{\link{help.start}()} on UNIX, or a non-default browser on
+      Windows.}
+
+    \item{\code{de.cellwidth}:}{integer: the cell widths (number of
+      characters) to be used in the data editor \code{\link{dataentry}}.
+      If this is unset (the default), 0, negative or \code{NA}, variable
+      cell widths are used.}
+
+    \item{\code{editor}:}{sets the default text editor, e.g., for
+      \code{\link{edit}}.  Set from the environment variable
+      \code{VISUAL} on UNIX.}
+
+    \item{\code{help.try.all.packages}:}{default for an argument of
+      \code{\link{help}}.}
+
+    \item{\code{internet.info}:}{The minimum level of information to be
+      printed on URL downloads etc.  Default is 2, for failure causes.
+      Set to 1 or 0 to get more information.}
+
+    \item{\code{pkgType}:}{The default type of packages to be downloaded
+      and installed -- see \code{\link{install.packages}}.
+#ifdef windows
+      Possible values are \code{"win.binary"} (the default) and
+      \code{"source"}.}
+#endif
+#ifdef unix
+      Possible values are \code{"source"} (the default except under the
+      CRAN Mac OS X build) and \code{"mac.binary"}.}
+#endif
+
+    \item{\code{repos}:}{URLs of the repositories for use by
+      \code{\link{update.packages}}.  Defaults to
+      \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
+      prompt for a CRAN mirror.  To avoid this, use something like
+      \code{options(repos=c(CRAN="http://my.local.cran/R"))}.}
+
+    \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
+
+    \item{\code{unzip}:}{the command used for unzipping help files.
+#ifdef unix
+      Defaults to the value of \env{R\_UNZIPCMD}, which is set in
+      \file{etc/Renviron} if an \code{unzip} command was found during
+      configuration.}
+#endif
+#ifdef windows
+      Defaults to \code{"internal"} when the internal unzip code is
+      used.}
+#endif
+  }
+}
+
+#ifdef unix
+\section{Options used on Unix only}{
+  \describe{
+    \item{\code{latexcmd, dvipscmd}:}{character strings giving commands
+      to be used in off-line printing of help pages.}
+
+    \item{\code{pdfviewer}:}{default PDF viewer.  Set from the
+      environment variable \env{R\_PDFVIEWER}.}
+  }
+}
+#endif
+#ifdef windows
+\section{Options used on Windows only}{
+  \describe{
+    \item{\code{warn.FPU}:}{logical, by default undefined.  If true,
+      a \link{warning} is produced whenever \link{dyn.load} repairs the
+      control word damaged by a buggy DLL.}
   }
 }
 #endif

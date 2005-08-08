@@ -194,6 +194,10 @@ NEW FEATURES
 	options used in base R are documented, including
 	platform-specific ones.)
 
+	Some options are now set in the package which makes use of
+	them (grDevices, stats or utils) if not already set when the
+	package is loaded.
+
     o	PCRE has been updated to version 6.2.
 
     o	zlib has been updated to version 1.2.3.
@@ -424,6 +428,9 @@ BUG FIXES
 	(dubious) usage where the upper scope resulted in a smaller
 	number of cases to fit (e.g. by omitting missing values in new
 	variables).  (PR#8049)
+
+    o	demo() had a 'device' argument that did nothing (although it
+	was documented to): it has been removed.
 
 
 
