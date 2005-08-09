@@ -205,11 +205,14 @@ NEW FEATURES
 
     o	bzip2 has been updated to version 1.0.3.
 
-    o   file(), fifo() and pipe() now (if possible) report a reason
+    o	file(), fifo() and pipe() now (if possible) report a reason
         if they fail to open a connection.
 
     o	object.size() now supports more types, including external
 	pointers and weak references.
+
+    o	Platform has a new component 'path.sep', the separator used
+	between paths in environment variables such as PATH and TEXINPUTS.
 
 
 DEPRECATED & DEFUNCT

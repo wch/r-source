@@ -38,6 +38,12 @@
     Values \code{"source"}, \code{"mac.binary"} and \code{"win.binary"}
     are currently in use.
   }
+  \item{path.sep}{
+    character, giving the \bold{path} \bold{sep}arator,
+    used on your platform, e.g., \code{":"} on Unix alikes and
+    \code{";"} on Windows.  Used to separate paths in variables
+    such as \code{PATH} and \code{TEXINPUTS}.
+  }
 }
 \seealso{
   \code{\link{R.version}} and \code{\link{Sys.info}} give more details
