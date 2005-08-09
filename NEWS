@@ -214,6 +214,8 @@ NEW FEATURES
     o	Platform has a new component 'path.sep', the separator used
 	between paths in environment variables such as PATH and TEXINPUTS.
 
+    o	capabilities() has a new component 'NLS'.
+
 
 DEPRECATED & DEFUNCT
 

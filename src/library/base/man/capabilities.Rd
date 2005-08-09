@@ -39,6 +39,7 @@ capabilities(what = NULL)
       }
     \item{iconv}{is internationalization conversion via
       \code{\link{iconv}} supported?}
+    \item{NLS}{is there Natural Language Support (for message translations)?}
 }
 \seealso{\code{\link{.Platform}}}
 
