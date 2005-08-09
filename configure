@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA JAVAC SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_DOUBLE_COMPLEX COMPILE_DOUBLE_COMPLEX_TRUE COMPILE_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG1P USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE SET_MAKE MKINSTALLDIRS USE_NLS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA JAVAC SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_DOUBLE_COMPLEX COMPILE_DOUBLE_COMPLEX_TRUE COMPILE_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG1P USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
 ac_subst_files='r_cc_rules_frag r_f77_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
@@ -39521,7 +39521,22 @@ fi
 # i18n support.  To update to a new version of gettext, run:
 # gettextize -f -c --intl
 
-echo "$as_me:$LINENO: checking whether ${MAKE-make} sets \$(MAKE)" >&5
+  echo "$as_me:$LINENO: checking whether NLS is requested" >&5
+echo $ECHO_N "checking whether NLS is requested... $ECHO_C" >&6
+    # Check whether --enable-nls or --disable-nls was given.
+if test "${enable_nls+set}" = set; then
+  enableval="$enable_nls"
+  USE_NLS=$enableval
+else
+  USE_NLS=yes
+fi;
+  echo "$as_me:$LINENO: result: $USE_NLS" >&5
+echo "${ECHO_T}$USE_NLS" >&6
+
+
+if test "${USE_NLS}" = "yes"; then
+
+  echo "$as_me:$LINENO: checking whether ${MAKE-make} sets \$(MAKE)" >&5
 echo $ECHO_N "checking whether ${MAKE-make} sets \$(MAKE)... $ECHO_C" >&6
 set dummy ${MAKE-make}; ac_make=`echo "$2" | sed 'y,:./+-,___p_,'`
 if eval "test \"\${ac_cv_prog_make_${ac_make}_set+set}\" = set"; then
@@ -39561,20 +39576,6 @@ fi
   if test -z "$MKINSTALLDIRS"; then
     MKINSTALLDIRS="\$(top_srcdir)/mkinstalldirs"
   fi
-
-
-
-  echo "$as_me:$LINENO: checking whether NLS is requested" >&5
-echo $ECHO_N "checking whether NLS is requested... $ECHO_C" >&6
-    # Check whether --enable-nls or --disable-nls was given.
-if test "${enable_nls+set}" = set; then
-  enableval="$enable_nls"
-  USE_NLS=$enableval
-else
-  USE_NLS=yes
-fi;
-  echo "$as_me:$LINENO: result: $USE_NLS" >&5
-echo "${ECHO_T}$USE_NLS" >&6
 
 
 
@@ -44919,19 +44920,6 @@ echo "${ECHO_T}$ac_prog_version" >&6
 
 
 
-  echo "$as_me:$LINENO: checking whether NLS is requested" >&5
-echo $ECHO_N "checking whether NLS is requested... $ECHO_C" >&6
-    # Check whether --enable-nls or --disable-nls was given.
-if test "${enable_nls+set}" = set; then
-  enableval="$enable_nls"
-  USE_NLS=$enableval
-else
-  USE_NLS=yes
-fi;
-  echo "$as_me:$LINENO: result: $USE_NLS" >&5
-echo "${ECHO_T}$USE_NLS" >&6
-
-
 
 
     BUILD_INCLUDED_LIBINTL=no
@@ -44967,7 +44955,7 @@ echo "${ECHO_T}$nls_cv_force_use_gnu_gettext" >&6
 
         echo "$as_me:$LINENO: checking for GNU gettext in libc" >&5
 echo $ECHO_N "checking for GNU gettext in libc... $ECHO_C" >&6
-if test "${gt_cv_func_gnugettext1_libc+set}" = set; then
+if test "${gt_cv_func_gnugettext2_libc+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -44991,7 +44979,7 @@ int
 main ()
 {
 bindtextdomain ("", "");
-return (int) gettext ("") + _nl_msg_cat_cntr + *_nl_domain_bindings
+return (int) gettext ("") + (int) ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_domain_bindings
   ;
   return 0;
 }
@@ -45018,20 +45006,20 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  gt_cv_func_gnugettext1_libc=yes
+  gt_cv_func_gnugettext2_libc=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-gt_cv_func_gnugettext1_libc=no
+gt_cv_func_gnugettext2_libc=no
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $gt_cv_func_gnugettext1_libc" >&5
-echo "${ECHO_T}$gt_cv_func_gnugettext1_libc" >&6
+echo "$as_me:$LINENO: result: $gt_cv_func_gnugettext2_libc" >&5
+echo "${ECHO_T}$gt_cv_func_gnugettext2_libc" >&6
 
-        if test "$gt_cv_func_gnugettext1_libc" != "yes"; then
+        if test "$gt_cv_func_gnugettext2_libc" != "yes"; then
 
 
 
@@ -45413,7 +45401,7 @@ fi;
 
           echo "$as_me:$LINENO: checking for GNU gettext in libintl" >&5
 echo $ECHO_N "checking for GNU gettext in libintl... $ECHO_C" >&6
-if test "${gt_cv_func_gnugettext1_libintl+set}" = set; then
+if test "${gt_cv_func_gnugettext2_libintl+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   gt_save_CPPFLAGS="$CPPFLAGS"
@@ -45445,7 +45433,7 @@ int
 main ()
 {
 bindtextdomain ("", "");
-return (int) gettext ("") + _nl_msg_cat_cntr + *_nl_expand_alias (0)
+return (int) gettext ("") + (int) ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_expand_alias (0)
   ;
   return 0;
 }
@@ -45472,16 +45460,16 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  gt_cv_func_gnugettext1_libintl=yes
+  gt_cv_func_gnugettext2_libintl=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-gt_cv_func_gnugettext1_libintl=no
+gt_cv_func_gnugettext2_libintl=no
 fi
 rm -f conftest.err conftest.$ac_objext \
       conftest$ac_exeext conftest.$ac_ext
-                        if test "$gt_cv_func_gnugettext1_libintl" != yes && test -n "$LIBICONV"; then
+                        if test "$gt_cv_func_gnugettext2_libintl" != yes && test -n "$LIBICONV"; then
               LIBS="$LIBS $LIBICONV"
               cat >conftest.$ac_ext <<_ACEOF
 /* confdefs.h.  */
@@ -45508,7 +45496,7 @@ int
 main ()
 {
 bindtextdomain ("", "");
-return (int) gettext ("") + _nl_msg_cat_cntr + *_nl_expand_alias (0)
+return (int) gettext ("") + (int) ngettext ("", "", 0) + _nl_msg_cat_cntr + *_nl_expand_alias (0)
   ;
   return 0;
 }
@@ -45537,7 +45525,7 @@ if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
   (exit $ac_status); }; }; then
   LIBINTL="$LIBINTL $LIBICONV"
                 LTLIBINTL="$LTLIBINTL $LTLIBICONV"
-                gt_cv_func_gnugettext1_libintl=yes
+                gt_cv_func_gnugettext2_libintl=yes
 
 else
   echo "$as_me: failed program was:" >&5
@@ -45550,12 +45538,12 @@ rm -f conftest.err conftest.$ac_objext \
             CPPFLAGS="$gt_save_CPPFLAGS"
             LIBS="$gt_save_LIBS"
 fi
-echo "$as_me:$LINENO: result: $gt_cv_func_gnugettext1_libintl" >&5
-echo "${ECHO_T}$gt_cv_func_gnugettext1_libintl" >&6
+echo "$as_me:$LINENO: result: $gt_cv_func_gnugettext2_libintl" >&5
+echo "${ECHO_T}$gt_cv_func_gnugettext2_libintl" >&6
         fi
 
-                                        if test "$gt_cv_func_gnugettext1_libc" = "yes" \
-           || { test "$gt_cv_func_gnugettext1_libintl" = "yes" \
+                                        if test "$gt_cv_func_gnugettext2_libc" = "yes" \
+           || { test "$gt_cv_func_gnugettext2_libintl" = "yes" \
                 && test "$PACKAGE" != gettext-runtime \
                 && test "$PACKAGE" != gettext-tools; }; then
           gt_use_preinstalled_gnugettext=yes
@@ -45605,7 +45593,7 @@ echo "${ECHO_T}$USE_NLS" >&6
     echo "$as_me:$LINENO: checking where the gettext function comes from" >&5
 echo $ECHO_N "checking where the gettext function comes from... $ECHO_C" >&6
     if test "$gt_use_preinstalled_gnugettext" = "yes"; then
-      if test "$gt_cv_func_gnugettext1_libintl" = "yes"; then
+      if test "$gt_cv_func_gnugettext2_libintl" = "yes"; then
         gt_source="external libintl"
       else
         gt_source="libc"
@@ -45620,7 +45608,7 @@ echo "${ECHO_T}$gt_source" >&6
   if test "$USE_NLS" = "yes"; then
 
     if test "$gt_use_preinstalled_gnugettext" = "yes"; then
-      if test "$gt_cv_func_gnugettext1_libintl" = "yes"; then
+      if test "$gt_cv_func_gnugettext2_libintl" = "yes"; then
         echo "$as_me:$LINENO: checking how to link with libintl" >&5
 echo $ECHO_N "checking how to link with libintl... $ECHO_C" >&6
         echo "$as_me:$LINENO: result: $LIBINTL" >&5
@@ -45702,6 +45690,18 @@ _ACEOF
 
 
 
+else
+  USE_INCLUDED_LIBINTL=no
+fi
+
+
+if test "x${USE_NLS}" = xyes; then
+  USE_NLS_TRUE=
+  USE_NLS_FALSE='#'
+else
+  USE_NLS_TRUE='#'
+  USE_NLS_FALSE=
+fi
 
 
 ### * Win32 overrides
@@ -45987,6 +45987,13 @@ if test -z "${USE_RECOMMENDED_PACKAGES_TRUE}" && test -z "${USE_RECOMMENDED_PACK
   { { echo "$as_me:$LINENO: error: conditional \"USE_RECOMMENDED_PACKAGES\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"USE_RECOMMENDED_PACKAGES\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${USE_NLS_TRUE}" && test -z "${USE_NLS_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"USE_NLS\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"USE_NLS\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -46787,9 +46794,9 @@ s,@PAPERCONF@,$PAPERCONF,;t t
 s,@R_LD_LIBRARY_PATH@,$R_LD_LIBRARY_PATH,;t t
 s,@USE_RECOMMENDED_PACKAGES_TRUE@,$USE_RECOMMENDED_PACKAGES_TRUE,;t t
 s,@USE_RECOMMENDED_PACKAGES_FALSE@,$USE_RECOMMENDED_PACKAGES_FALSE,;t t
+s,@USE_NLS@,$USE_NLS,;t t
 s,@SET_MAKE@,$SET_MAKE,;t t
 s,@MKINSTALLDIRS@,$MKINSTALLDIRS,;t t
-s,@USE_NLS@,$USE_NLS,;t t
 s,@MSGFMT@,$MSGFMT,;t t
 s,@GMSGFMT@,$GMSGFMT,;t t
 s,@XGETTEXT@,$XGETTEXT,;t t
@@ -46814,6 +46821,8 @@ s,@INTLLIBS@,$INTLLIBS,;t t
 s,@LIBINTL@,$LIBINTL,;t t
 s,@LTLIBINTL@,$LTLIBINTL,;t t
 s,@POSUB@,$POSUB,;t t
+s,@USE_NLS_TRUE@,$USE_NLS_TRUE,;t t
+s,@USE_NLS_FALSE@,$USE_NLS_FALSE,;t t
 s,@LTLIBOBJS@,$LTLIBOBJS,;t t
 /@r_cc_rules_frag@/r $r_cc_rules_frag
 s,@r_cc_rules_frag@,,;t t

@@ -264,6 +264,9 @@ INSTALLATION
 	routine zdotu works correctly: this provides a compatibility
 	test of compiler return conventions.
 
+    o	Installation without NLS is now cleaner, and does not install
+	any message catalogues.
+
 
 PACKAGE INSTALLATION CHANGES
 

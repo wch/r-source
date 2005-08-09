@@ -1526,9 +1526,14 @@ AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
 
 # i18n support.  To update to a new version of gettext, run:
 # gettextize -f -c --intl
-AM_GNU_GETTEXT_VERSION(0.14.1)
-AM_GNU_GETTEXT(, , [../extra/intl])
-
+AM_NLS
+if test "${USE_NLS}" = "yes"; then
+  AM_GNU_GETTEXT_VERSION(0.14.1)
+  AM_GNU_GETTEXT(, [need-ngettext], [../extra/intl])
+else
+  USE_INCLUDED_LIBINTL=no
+fi
+AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 
 ### * Win32 overrides
 case "${host_os}" in

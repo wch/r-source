@@ -16,7 +16,7 @@ DISTFILES = $(INSTFILES) \
 	ChangeLog INSTALL ONEWS OONEWS README VERSION Y2K \
 	Makeconf.in Makefile.in \
 	config.site configure configure.ac
-SUBDIRS = m4 tools doc etc share src po tests
+SUBDIRS = m4 tools doc etc share src tests @USE_NLS_TRUE@ po
 SUBDIRS_WITH_NO_BUILD = debian
 
 all: Makefile Makeconf R docs recommended
