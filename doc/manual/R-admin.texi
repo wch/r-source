@@ -2710,14 +2710,14 @@ We understand that @option{--enable-R-shlib} does not work under AIX.
 This interface is experimental and incomplete.  The console offers a
 basic command line editing and history mechanism, along with tool and
 button bars that give a point-and-click console to some @R{} commands.
-Many of the features of the console are currently stubs.
+Many of the features of the console are currently stubs, and the console
+is no longer under development: it has been kept available as an example
+of adding a front-end to @R{}.
 
-Two graphics devices have been available but are currently unbundled.
-The @code{gtk()} graphics device is a port of the @code{x11()} device to
-@acronym{GDK} (the GIMP Drawing Kit), and is available from
-@acronym{CRAN} as package @pkg{gtkDevice}: this cooperates rather better
-with the console than the @code{x11()} device.  The @code{gnome()}
-device used the @acronym{GNOME} canvas, and is not currently available.
+A @code{gtk()} graphics device (a port of the @code{x11()} device to
+@acronym{GDK} (the GIMP Drawing Kit)) is available from @acronym{CRAN}
+as package @pkg{gtkDevice}: this cooperates rather better with the
+console than the @code{x11()} device.
 
 The sources for the @acronym{GNOME} console for @R{} are now available
 as package @pkg{gnomeGUI} on @acronym{CRAN} and @emph{via} Subversion by
@@ -2731,7 +2731,7 @@ You need to have built @R{} first with the @option{--enable-R-shlib}
 option, and installed @R{} to where you are going to use it from.
 
 Please check you have all the requirements.  You need at least the
-following packages (or later) installed
+following packages or later installed:
 
 @example
 audiofile-0.2.1
@@ -2753,9 +2753,9 @@ with your distribution.
 Remember that some package management systems (such as @acronym{RPM} and
 deb) make a distinction between the user version of a package and the
 developer version.  The latter usually has the same name but with the
-extension @samp{-devel}.  If you use a pre-packaged version of
-@acronym{GNOME} then you must have the developer versions of the above
-packages in order to compile the R-GNOME console.
+extension @samp{-devel} or @samp{-dev}.  If you use a pre-packaged
+version of @acronym{GNOME} then you must have the developer versions of
+the above packages in order to compile the R-GNOME console.
 
 It is possible to install the front-end in the same way as an @R{}
 package, via @code{R CMD INSTALL} or @code{install.packages}.
@@ -2857,19 +2857,19 @@ for Debian GNU/Linux
 @node Java Virtual Machines on Unix, Java Virtual Machines on Windows, Java Virtual Machines on Linux , Enabling search in HTML help
 @section Java Virtual Machines on Unix
 
-We have much less experience, but we do know that Sun's Run-time
-Environment @code{j2re 1.4.2_03} does not work under Solaris, whereas
-@code{jre 1.5.0} and @code{j2re 1.4.2_01} (available from
+We have much less experience than under Linux, but we do know that Sun's
+Run-time Environment @code{j2re 1.4.2_03} does not work under Solaris,
+whereas @code{jre 1.5.0} and @code{j2re 1.4.2_01} (available from
 @url{http://java.sun.com/products/archive/}) do.
 
 @node Java Virtual Machines on Windows, Java Virtual Machines on Mac OS X, Java Virtual Machines on Unix, Enabling search in HTML help
 @section Java Virtual Machines on Windows
 
 We have not seen any problems on Windows provided a Java Virtual Machine
-has been installed and is operational: Sun's current @code{j2re
-1.5.0} works in Internet Explorer, Netscape 7.1, Mozilla 1.6/7 and
-Mozilla FireFox on Windows XP.  Note that a recent Windows system
-may not have Java installed at all.  For Netscape/Mozilla/FireFox visit
+has been installed and is operational: Sun's current @code{j2re 1.5.0}
+works in Internet Explorer, Netscape 7.x, Mozilla 1.6/7 and Mozilla
+FireFox on Windows XP.  Note that a recent Windows system may not have a
+JVM installed at all.  For Netscape/Mozilla/FireFox visit
 @url{http://java.sun.com/getjava/manual.html} to install a Sun JVM.
 Which (if any) JVM is enabled can be set in `Set Program Access and
 Defaults' in Windows XP (SP1 or later), and which JVM is used by browser
