@@ -207,6 +207,9 @@ NEW FEATURES
     o   file(), fifo() and pipe() now (if possible) report a reason
         if they fail to open a connection.
 
+    o	object.size() now supports more types, including external
+	pointers and weak references.
+
 
 DEPRECATED & DEFUNCT
 

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 2000, 2001, 2004  the R Development Core Team
+ *  Copyright (C) 2000, 2001, 2004-5  the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -60,14 +60,9 @@ static unsigned long objectsize(SEXP s)
 	/* no charge for the environment */
 	break;
     case ENVSXP:
-	break;
     case PROMSXP:
-	break;
     case SPECIALSXP:
     case BUILTINSXP:
-	break;
-    case RAWSXP:
-	vcnt = BYTE2VEC(length(s));
 	break;
     case CHARSXP:
 	vcnt = BYTE2VEC(length(s)+1);
@@ -92,16 +87,30 @@ static unsigned long objectsize(SEXP s)
 	}
 	break;
     case DOTSXP:
+    case ANYSXP:
+	/* we don't know about these */
 	break;
     case VECSXP:
     case EXPRSXP:
+    case WEAKREFSXP:
 	/* Generic Vector Objects */
 	vcnt = PTR2VEC(length(s));
 	for (i = 0; i < length(s); i++)
 	    cnt += objectsize(VECTOR_ELT(s, i));
 	break;
+    case BCODESXP:
+	break;
+    case EXTPTRSXP:
+	cnt += sizeof(void *);  /* the actual pointer */
+	cnt += objectsize(EXTPTR_PROT(s));
+	cnt += objectsize(EXTPTR_TAG(s));
+	break;
+    /* WEAKREFSXP is internally a vector */
+    case RAWSXP:
+	vcnt = BYTE2VEC(length(s));
+	break;
     default:
-	error("object.size: unknown type %d", TYPEOF(s));
+	UNIMPLEMENTED_TYPE("object.size", s);
     }
     cnt += 8 * vcnt;
     /* add in node space */
