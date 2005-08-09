@@ -265,12 +265,10 @@ setDataPart(object, value)
     }
 
     \item{\code{showExtends}:}{
-      Print the elements of the list of extensions.
-
-      (Used also by \code{\link{promptClass}} to get the list of what
-      and how for the extensions.)
+      Print the elements of the list of extensions; for \code{printTo = FALSE},
+      returns a list with components \code{what} and \code{how}; this is
+      used e.g., by \code{\link{promptClass}()}.
     }
-
 
     \item{\code{possibleExtends}:}{
       Find the information that says whether class1 extends class2,
