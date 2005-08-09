@@ -2130,7 +2130,8 @@ On @code{x86_64} systems there is an incompatibility in the return
 conventions for double-complex functions between @command{gfortran} and
 @command{g77} which result in the final example in @code{example(eigen)}
 hanging or segfaulting under external BLASs built under @command{g77},
-as well as with Dr Goto's BLAS.
+as well as with Dr Goto's BLAS.  As from @R{} 2.2.0 this should be
+detected by a @command{configure} test.
 
 @node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
 @section Compile and load flags

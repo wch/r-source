@@ -16,8 +16,9 @@ USER-VISIBLE CHANGES
 	___ may change before release ___
 
     o	The SVN revision number will appear after the date in the
-	welcome message, provided it is available.  The date is now
-	the date of the last change to the sources.
+	welcome message.  The date shown is now the date of the last
+	change to the sources rather than the date the sources were
+	prepared.
 
     o	is.null(expression()) now returns FALSE.  Only NULL gives TRUE
 	in is.null().
@@ -179,8 +180,8 @@ NEW FEATURES
     o	The plot method for stl() now allows the colour of the range
 	bars to be set (default unchanged at "light gray").
 
-    o	Exact p-values are available for the one-sided and two-sided
-	one-sample Kolmogorov-Smirnov tests.
+    o	Exact p-values are available in ks.test() for the one-sided and
+	two-sided one-sample Kolmogorov-Smirnov tests.
 
     o	library() now explicitly checks for the existence of
 	directories in 'lib.loc': this avoids some warning messages.
@@ -253,6 +254,10 @@ INSTALLATION
     o	We now test for wctrans_t, as apparently some broken OSes have
 	wctrans but not wctrans_t (which is required by the relevant
 	standards) .
+
+    o	Any external BLAS found is now tested to see is the complex
+	routine zdotu works correctly: this provides a compatibility
+	test of compiler return conventions.
 
 
 PACKAGE INSTALLATION CHANGES
