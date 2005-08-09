@@ -2359,6 +2359,81 @@ if test "${acx_blas_ok}" = no; then
                [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
 
+## Now check if zdotu works (fails on AMD64 with the wrong compiler)
+if test "${acx_blas_ok}" = yes; then
+  AC_MSG_CHECKING([whether double complex BLAS can be used])
+  AC_CACHE_VAL([r_cv_zdotu_is_usable],
+  [cat > conftestf.f <<EOF
+c Goto's BLAS at least needs a XERBLA
+      subroutine xerbla(srname, info)
+      character*6 srname
+      integer info
+      end
+
+      subroutine test1(iflag)
+      double complex zx(2), ztemp, zres, zdotu
+      integer iflag
+      zx(1) = (3.1d0,1.7d0)
+      zx(2) = (1.6d0,-0.6d0)
+      zres = zdotu(2, zx, 1, zx, 1)
+      ztemp = (0.0d0,0.0d0)
+      do 10 i = 1,2
+ 10      ztemp = ztemp + zx(i)*zx(i)
+      if(abs(zres - ztemp) > 1.0d-10) then
+        iflag = 1
+      else
+        iflag = 0
+      endif
+      end
+EOF
+${F77} ${FFLAGS} -c conftestf.f 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD
+## Yes we need to double quote this ...
+[cat > conftest.c <<EOF
+#include <stdlib.h>
+#include "confdefs.h"
+#ifdef HAVE_F77_UNDERSCORE
+# define F77_SYMBOL(x)   x ## _
+#else
+# define F77_SYMBOL(x)   x
+#endif
+extern void F77_SYMBOL(test1)(int *iflag);
+
+int main () {
+  int iflag;
+  F77_SYMBOL(test1)(&iflag);
+  exit(iflag);
+}
+EOF]
+if ${CC} ${CFLAGS} -c conftest.c 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD; then
+  ## <NOTE>
+  ## This should really use MAIN_LD, and hence come after this is
+  ## determined (and necessary additions to MAIN_LDFLAGS were made).
+  ## But it seems that we currently can always use the C compiler.
+  ## Also, to be defensive there should be a similar test with SHLIB_LD
+  ## and SHLIB_LDFLAGS (and note that on HPUX with native cc we have to
+  ## use ld for SHLIB_LD) ...
+  if ${CC} ${LDFLAGS} ${MAIN_LDFLAGS} -o conftest${ac_exeext} \
+       conftest.${ac_objext} conftestf.${ac_objext} ${FLIBS} \
+       ${LIBM} ${BLAS_LIBS} 1>&AS_MESSAGE_LOG_FD 2>&AS_MESSAGE_LOG_FD;
+  ## </NOTE>
+  then
+    output=`./conftest${ac_exeext} 2>&1`
+    if test ${?} = 0; then
+      r_cv_zdotu_is_usable=yes
+    fi
+  fi
+fi
+])
+  rm -rf conftest conftest.* conftestf.* core
+  if test -n "${r_cv_zdotu_is_usable}"; then
+    AC_MSG_RESULT([yes])
+  else
+    AC_MSG_RESULT([no])
+    BLAS_LIBS=
+    acx_blas_ok="no"
+  fi
+fi
+
 LIBS="${acx_blas_save_LIBS}"
 
 AC_SUBST(BLAS_LIBS)
