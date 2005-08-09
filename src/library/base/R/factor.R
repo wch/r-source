@@ -50,7 +50,14 @@ nlevels <- function(x) length(levels(x))
             stop("number of levels differs")
         nlevs <- xlevs <- as.character(value)
     }
-    factor(xlevs[x], levels = unique(nlevs))
+    ## take care here not to drop attributes, including class.
+    ## factor(xlevs[x], levels = unique(nlevs))
+    nlevs <- unique(nlevs)
+    at <- attributes(x)
+    at$levels <- nlevs
+    y <- match(xlevs[x], nlevs)
+    attributes(y) <- at
+    y
 }
 
 as.vector.factor <- function(x, mode="any")

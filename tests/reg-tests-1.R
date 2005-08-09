@@ -3763,7 +3763,7 @@ stopifnot(all.equal(r1, r2))
 ## different in 2.1.1
 
 
-## errors in add1.{lm,glm} when adding vars with missing values
+## errors in add1.{lm,glm} when adding vars with missing values(PR#8049)
 set.seed(2)
 y <- rnorm(10)
 x <- 1:10
@@ -3783,3 +3783,16 @@ add1(glm0, scope = ~ x)  ## error in 2.1.1
 add1(glm1, scope = ~ x)  ## error in 2.1.1
 add1(glm2, scope = ~ x)  ## error in 2.1.1
 ##
+
+
+## levels<-.factor dropped other attributes.
+## Heinz Tuechler, R-help, 2005-07-18
+f1 <- factor(c("level c", "level b", "level a", "level c"), ordered=TRUE)
+attr(f1, "testattribute") <- "teststring"
+(old <- attributes(f1))
+levels(f1) <- c("L-A", "L-B", "L-C")
+f1
+(new <- attributes(f1))
+new$levels <- old$levels <- NULL
+stopifnot(identical(old, new))
+## dropped other attributes < 2.2.0.

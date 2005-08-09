@@ -437,6 +437,9 @@ BUG FIXES
     o	demo() had a 'device' argument that did nothing (although it
 	was documented to): it has been removed.
 
+    o	Setting new levels on a factor dropped all existing
+	attributes, including class "ordered".
+
 
 
 
