@@ -231,6 +231,8 @@ DEPRECATED & DEFUNCT
 
     o	Rd.sty no longer processes pre-2.0.0 conversions containing \Link.
 
+    o	The stubs for the defunct device GNOME/gnome have been removed.
+
 
 INSTALLATION
 

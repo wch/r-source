@@ -14,20 +14,18 @@ export(Hershey, boxplot.stats, check.options, chull,
        postscriptFonts, ps.options, rainbow, recordGraphics, recordPlot,
        replayPlot, rgb, rgb2hsv, terrain.colors, topo.colors, trans3d,
        xfig, xy.coords, xyz.coords)
+export(X11, x11, bitmap, dev2bitmap, jpeg, png)
 
 S3method(print, recordedplot)
 S3method(print, colorConverter)
 S3method(print, RGBcolorConverter)
 
-## some of the following are now in common
 if(tools:::.OStype() == "unix") {
-export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11,
-       X11Font, X11Fonts, quartzFont, quartzFonts)
+export(X11Font, X11Fonts, quartz, quartzFont, quartzFonts)
 }
 
 if(tools:::.OStype() == "windows") {
-export(X11, bitmap, bmp, bringToTop, dev2bitmap, jpeg, png, savePlot,
-       win.graph, win.metafile, win.print, windows, x11,
+export(bmp, bringToTop, savePlot, win.graph, win.metafile, win.print, windows,
        windowsFont, windowsFonts)
 
 S3method("[", SavedPlots)
