@@ -412,7 +412,7 @@ static void z_atan2(Rcomplex *r, Rcomplex *csn, Rcomplex *ccs)
 {
     Rcomplex tmp;
     if (ccs->r == 0 && ccs->i == 0) {
-	if(csn->r == 0 && csn->r == 0) {
+	if(csn->r == 0 && csn->i == 0) {
 	    r->r = NA_REAL;
 	    r->i = NA_REAL;
 	}
