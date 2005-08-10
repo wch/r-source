@@ -216,6 +216,12 @@ NEW FEATURES
 
     o	capabilities() has a new component 'NLS'.
 
+    o	Complex arithmetic is now done by C99 complex types where
+	supported.  This is likely to boost performance, but is
+	subject to the accuracy with which it has been implemented.
+	(On MinGW this is currently poor, and R's own complex trig
+	functions are still used.)
+
 
 DEPRECATED & DEFUNCT
 
