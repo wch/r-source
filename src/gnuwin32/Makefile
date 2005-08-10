@@ -32,7 +32,7 @@ DATE = $(shell date +%F)
 RLIB = $(RHOME)/library
 PKGDIR = $(RHOME)/src/library
 
-OPTFLAGS=-O2 -Wall -pedantic
+OPTFLAGS=-O2 -Wall -pedantic --std=gnu99
 ## use FOPTFLAGS where complex*16 is used.
 FOPTFLAGS=-O2 -Wall
 ifdef DEBUG
