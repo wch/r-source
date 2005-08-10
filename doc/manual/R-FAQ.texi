@@ -3192,6 +3192,8 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item simex
+SIMEX and MCSIMEX algorithms for measurement error models.
 @item simpleboot
 Simple bootstrap routines.
 @item skewt
