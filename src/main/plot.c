@@ -1461,7 +1461,7 @@ SEXP do_axis(SEXP call, SEXP op, SEXP args, SEXP env)
 
 SEXP do_plot_xy(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-/*	plot.xy(xy, type, pch, lty, col, cex, lwd, ...)
+/*	plot.xy(xy, type, pch, lty, col, bg, cex, lwd, ...)
 
  *	plot points or lines of various types
  */
