@@ -54,6 +54,9 @@ Yet another Windows' unreliability in seek() has been worked around
 formatC() with an exponential format sometimes did not line the fields
 up correctly.
 
+The 'Open Script' button shown from the pager toolbar in MDI mode was
+set up incorrectly and liable to crash R.  (PR#8060)
+
 
 
 R 2.1.1

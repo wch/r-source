@@ -340,6 +340,9 @@ void menueditoropen(control m)
 {
     editor c = getdata(m);
     char *default_name = "";
+    /* It really is not clear what is meant here: seems to assume an 
+       editor window but is called from elsewhere, hopefully with NULL 
+       (since 2.1.1 patched). */
     if (c) {
 	textbox t = getdata(c);
 	EditorData p = getdata(t);
