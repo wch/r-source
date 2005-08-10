@@ -530,6 +530,9 @@ BUG FIXES
 
     o   atan2(0+1i, 0+0i) was incorrectly NA (from a typo in complex.c).
 
+    o	The POSIXct method for as.Date() was rounding part days 
+	before 1970-01-01 upwards rather than discarding them.
+
 
 
 		CHANGES IN R VERSION 2.1.1
