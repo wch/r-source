@@ -694,10 +694,10 @@ namespaceExport <- function(ns, vars) {
             objs <- .Internal(ls(exports, TRUE))
             ex <- expnames %in% objs
             if(any(ex))
-                warning(sprintf(ngettext(sum(notex),
+                warning(sprintf(ngettext(sum(ex),
                                          "previous export %s is being replaced",
                                          "previous exports %s are being replaced"),
-                                paste(sQuote(info[notex, 3]), collapse=", ")),
+                                paste(sQuote(expnames[ex]), collapse=", ")),
                         call. = FALSE, domain = NA)
             for (i in seq(along = new))
                 assign(expnames[i], intnames[i], env = exports)

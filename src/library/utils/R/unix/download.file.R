@@ -13,7 +13,7 @@ download.file <- function(url, destfile, method,
             method <- "internal"
         else if(length(grep("^file:", url))) {
             method <- "internal"
-            url <- URLdecode(URL)
+            url <- URLdecode(url)
         } else if(system("wget --help > /dev/null")==0)
             method <- "wget"
         else if(system("lynx -help > /dev/null")==0)

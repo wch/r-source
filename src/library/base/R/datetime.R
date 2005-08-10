@@ -294,7 +294,7 @@ c.POSIXlt <- function(..., recursive=FALSE)
 ## force absolute comparisons
 all.equal.POSIXct <- function(target, current, ..., scale=1)
 {
-    check_tzone(target, current)
+    check_tzones(target, current)
     NextMethod("all.equal")
 }
 
