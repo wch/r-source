@@ -2926,7 +2926,7 @@ AC_DEFUN([R_MBCS],
 if test "$want_mbcs_support" = yes ; then
   AC_CHECK_HEADERS(wchar.h wctype.h)
   for ac_header in wchar wctype; do
-    this=`echo "ac_cv_heasder_$ac_header_h"`
+    this=`echo "ac_cv_header_$ac_header_h"`
     if test "x$this" = xno; then
       want_mbcs_support=no
     fi
@@ -2967,6 +2967,71 @@ AC_SUBST(SUPPORT_MBCS)
 fi
 ])# R_MBCS
 
+
+## R_C99_COMPLEX
+## -------------
+## C99 complex
+AC_DEFUN([R_C99_COMPLEX],
+[
+  AC_CACHE_CHECK([whether C99 double complex is supported],
+  [r_cv_c99_complex],
+[ AC_MSG_RESULT([])
+  AC_CHECK_HEADERS(complex.h)
+  r_cv_c99_complex=${ac_cv_header_complex_h}
+  if test "${r_cv_c99_complex}" = "yes"; then
+    AC_CHECK_TYPE([double complex], , r_cv_c99_complex=no, 
+                  [#include <complex.h>])
+  fi
+  if test "${r_cv_c99_complex}" = "yes"; then
+    AC_CHECK_FUNCS(cexp clog csqrt cpow ccos csin ctan cacos casin catan \
+		   ccosh csinh ctanh cacosh casinh catanh)
+    for ac_func in cexp clog csqrt cpow ccos csin ctan cacos casin catan \
+		   ccosh csinh ctanh cacosh casinh catanh
+    do
+      this=`echo "ac_cv_func_$ac_func"`
+      if test "x$this" = xno; then
+	r_cv_c99_complex=no
+      fi
+    done
+  fi
+  dnl Now check if the representation is the same as Rcomplex
+  if test "${r_cv_c99_complex}" = "yes"; then
+  AC_MSG_CHECKING([whether C99 double complex is compatible with Rcomplex])
+AC_RUN_IFELSE([AC_LANG_SOURCE([[
+#include "confdefs.h"
+#include <complex.h>
+#include <stdlib.h>
+typedef struct {
+        double r;
+        double i;
+} Rcomplex;
+
+void set_it(Rcomplex *z)
+{
+    z[0].r = 3.14159265;
+    z[0].i = 2.172;
+    z[1].i = 3.14159265;
+    z[1].r = 2.172;
+    z[2].r = 123.456;
+    z[2].i = 0.123456;
+}
+int main () {
+    double complex z[3];
+
+    set_it(z);
+    if(cabs(z[2] - 123.456 - 0.123456 * _Complex_I) < 1e-4) exit(0);
+    else exit(1);
+}
+]])], [r_c99_complex=yes], [r_c99_complex=no], [r_c99_complex=no])
+  AC_MSG_RESULT(${r_c99_complex})
+  r_cv_c99_complex=${r_c99_complex}
+  fi
+])
+if test "${r_cv_c99_complex}" = "yes"; then
+AC_DEFINE(HAVE_C99_COMPLEX, 1, [Define this if you have support for C99 complex types.])
+AC_SUBST(HAVE_C99_COMPLEX)
+fi
+])# R_COMPLEX
 
 ### Local variables: ***
 ### mode: outline-minor ***

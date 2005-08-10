@@ -1340,6 +1340,8 @@ R_FUNC_LOG1P
 R_FUNC_STRPTIME
 R_FUNC_FTELL
 
+R_C99_COMPLEX
+
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
