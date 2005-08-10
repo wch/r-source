@@ -283,7 +283,12 @@ int Rstrwid(char *str, int slen, int quote)
 #else
 		    1
 #endif
-		    : (wc > 0xffff ? 10 : 6);
+		    : 
+#ifdef Win32
+		    6;
+#else
+		    (wc > 0xffff ? 10 : 6);
+#endif
 		i += (res - 1);
 		p += res;
 	    } else {
