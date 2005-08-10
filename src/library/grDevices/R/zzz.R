@@ -20,6 +20,7 @@
         else if (Sys.getenv("DISPLAY") != "")
             switch(.Platform$GUI, "Tk" = "X11",
                     "X11" = "X11", "GNOME" = "X11", "postscript")
+	else "postscript"
     } else "postscript"
 
     op.utils <- c(list(locatorBell = TRUE), extras, device=device)
