@@ -55,18 +55,21 @@
     specified so that each point can be given its own color.  If there
     are fewer colors than points they are recycled in the standard
     fashion.  Lines will all be plotted in the first colour specified.}
-  \item{bg}{background color for open plot symbols, see
-    \code{\link{points}}.}
-  \item{pch}{a vector of plotting characters or symbols: see \code{\link{points}}.}
+  \item{bg}{a vector of background colors for open plot symbols, see
+    \code{\link{points}}.  Note: this is \bold{not} the same setting
+    as \code{\link{par}("bg")}.}
+  \item{pch}{a vector of plotting characters or symbols:
+    see \code{\link{points}}.}
   \item{cex}{a numerical vector giving the amount by which plotting text
-    and symbols should be scaled relative to the default.}
+    and symbols should be scaled relative to the default.  This works in
+    as an additional multiple of \code{\link{par}("cex")}.}
   \item{lty}{the line type, see \code{\link{par}}.}
   \item{lab}{the specification for the (approximate) numbers of tick
-    marks on the x and y axes.}
-  \item{lwd}{the positive line width.}
+    marks on the x and y axes, see \code{\link{par}}.}
+  \item{lwd}{the line width, see \code{\link{par}}.}
   \item{asp}{the \eqn{y/x} aspect ratio, see \code{\link{plot.window}}.}
-  \item{\dots}{graphical parameters as in \code{\link{par}} may also be
-    passed as arguments.}
+  \item{\dots}{other graphical parameters as in \code{\link{par}}
+    may also be passed as arguments.}
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
