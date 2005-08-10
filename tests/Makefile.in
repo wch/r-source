@@ -26,6 +26,7 @@ test-src-strict-1 = \
 	d-p-q-r-tests.R
 test-src-strict-auto =
 test-src-sloppy-1 = \
+	complex.R \
 	print-tests.R
 test-src-sloppy-auto =
 

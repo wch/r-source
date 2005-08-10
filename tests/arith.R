@@ -1,10 +1,7 @@
 options(digits=7)
 
-## powers, including complex ones
+## powers
 outer(a <- -4:12,     -2:7, "^")
-m <- outer(-4:12 +0i, b <- seq(-.5,2, by=.5), "^")
-dimnames(m) <- list(paste(a), "^" = sapply(b,format))
-round(m,3)
 
 for (n1 in 1:7)
     print(zapsmall(polyroot(1:n1), digits = 10))
@@ -29,4 +26,4 @@ y <- c(18,2,15,6,10,4,16,11,7,3,14,17,20,12,9,13,1,8,5,19)
 lowess(x,y, f = .25, iter = 0, delta = 0)$y
 lowess(x,y, f = .25, iter = 0, delta = 3)$y
 lowess(x,y, f = .25, iter = 2, delta = 0)$y
-       
+

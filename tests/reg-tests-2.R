@@ -1574,14 +1574,6 @@ try(x[rbind(c(1,1), c(2,2), c(-3,3))])
 try(x[rbind(c(1,1), c(2,2), c(-4,3))])
 ## generally allowed in 2.1.0.
 
-## Branch cuts in complex inverse trig functions
-atan(2)
-atan(2+0i)
-tan(atan(2+0i))
-atan(1.0001+0i)
-atan(0.9999+0i)
-## previously not as in Abramowitz & Stegun.
-
 
 ## printing RAW matrices/arrays was not implemented
 s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))

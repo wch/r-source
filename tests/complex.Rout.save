@@ -1,0 +1,119 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 Under development (unstable) (2005-08-10 r35224)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### Tests of complex arithemetic.
+> 
+> ## complex
+> z <- 0i ^ (-3:3)
+> stopifnot(Re(z) == 0 ^ (-3:3))
+> set.seed(123)
+> z <- complex(real = rnorm(100), imag = rnorm(100))
+> stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
++ 	  < 20 * .Machine$double.eps)
+> ## end of moved from complex.Rd
+> 
+> 
+> ## powers, including complex ones
+> a <- -4:12
+> m <- outer(a +0i, b <- seq(-.5,2, by=.5), "^")
+> dimnames(m) <- list(paste(a), "^" = sapply(b,format))
+> round(m,3)
+    ^
+             -0.5    0          0.5     1           1.5      2
+  -4 0.000-0.500i 1+0i 0.000+2.000i -4+0i  0.000-8.000i  16+0i
+  -3 0.000-0.577i 1+0i 0.000+1.732i -3+0i  0.000-5.196i   9+0i
+  -2 0.000-0.707i 1+0i 0.000+1.414i -2+0i  0.000-2.828i   4+0i
+  -1 0.000-1.000i 1+0i 0.000+1.000i -1+0i  0.000-1.000i   1+0i
+  0    Inf+0.000i 1+0i 0.000+0.000i  0+0i  0.000+0.000i   0+0i
+  1  1.000+0.000i 1+0i 1.000+0.000i  1+0i  1.000+0.000i   1+0i
+  2  0.707+0.000i 1+0i 1.414+0.000i  2+0i  2.828+0.000i   4+0i
+  3  0.577+0.000i 1+0i 1.732+0.000i  3+0i  5.196+0.000i   9+0i
+  4  0.500+0.000i 1+0i 2.000+0.000i  4+0i  8.000+0.000i  16+0i
+  5  0.447+0.000i 1+0i 2.236+0.000i  5+0i 11.180+0.000i  25+0i
+  6  0.408+0.000i 1+0i 2.449+0.000i  6+0i 14.697+0.000i  36+0i
+  7  0.378+0.000i 1+0i 2.646+0.000i  7+0i 18.520+0.000i  49+0i
+  8  0.354+0.000i 1+0i 2.828+0.000i  8+0i 22.627+0.000i  64+0i
+  9  0.333+0.000i 1+0i 3.000+0.000i  9+0i 27.000+0.000i  81+0i
+  10 0.316+0.000i 1+0i 3.162+0.000i 10+0i 31.623+0.000i 100+0i
+  11 0.302+0.000i 1+0i 3.317+0.000i 11+0i 36.483+0.000i 121+0i
+  12 0.289+0.000i 1+0i 3.464+0.000i 12+0i 41.569+0.000i 144+0i
+> 
+> 
+> ## Complex Trig.:
+> Meps <- .Machine$double.eps
+> abs(Im(cos(acos(1i))) -	 1) < 2*Meps
+[1] TRUE
+> abs(Im(sin(asin(1i))) -	 1) < 2*Meps
+[1] TRUE
+> ##P (1 - Im(sin(asin(Ii))))/Meps
+> ##P (1 - Im(cos(acos(Ii))))/Meps
+> abs(Im(asin(sin(1i))) -	 1) < 2*Meps
+[1] TRUE
+> cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
+[1] TRUE
+> abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
+[1] TRUE
+> 
+> 
+> .Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
+> Isi <- Im(sin(asin(1i + rnorm(100))))
+> all(abs(Isi-1) < 100* Meps)
+[1] TRUE
+> ##P table(2*abs(Isi-1)	/ Meps)
+> Isi <- Im(cos(acos(1i + rnorm(100))))
+> all(abs(Isi-1) < 100* Meps)
+[1] TRUE
+> ##P table(2*abs(Isi-1)	/ Meps)
+> Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
+> all(abs(Isi-1) < 100* Meps)
+[1] TRUE
+> ##P table(2*abs(Isi-1)	/ Meps)
+> 
+> 
+> ## polyroot():
+> all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
+[1] TRUE
+> 
+> 
+> ## PR#7781
+> ## This is not as given by e.g. glibc on AMD64
+> (z <- tan(1+1000i)) # 0+1i from R's own code.
+[1] 0+1i
+> stopifnot(is.finite(z))
+> ##
+> 
+> 
+> ## Branch cuts in complex inverse trig functions
+> atan(2)
+[1] 1.107149
+> atan(2+0i)
+[1] 1.107149+0i
+> tan(atan(2+0i))
+[1] 2+0i
+> atan(1.0001+0i)
+[1] 0.7854482+0i
+> atan(0.9999+0i)
+[1] 0.7853482+0i
+> ## previously not as in Abramowitz & Stegun.
+> 
+> 
+> ## typo in z_atan2.
+> (z <- atan2(0+1i, 0+0i))
+[1] 1.570796+0i
+> stopifnot(all.equal(z, pi/2+0i))
+> ## was NA in 2.1.1
+> 

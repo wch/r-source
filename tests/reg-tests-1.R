@@ -184,16 +184,6 @@ colnames(m0, do.NULL = FALSE)
 ## end of moved from colnames.Rd
 
 
-## complex
-z <- 0i ^ (-3:3)
-stopifnot(Re(z) == 0 ^ (-3:3))
-set.seed(123)
-z <- complex(real = rnorm(100), imag = rnorm(100))
-stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-	  < 20 * .Machine$double.eps)
-## end of moved from complex.Rd
-
-
 ## Constants
 stopifnot(
  nchar(letters) == 1,
@@ -3600,11 +3590,6 @@ colSums(x); rowSums(x)
 ## not allowed in 2.0.1
 
 
-## PR#7781
-stopifnot(is.finite(tan(1+1000i)))
-##
-
-
 ## infinite recursion in 2.0.1 (and R-beta 2005-04-11):
 summary(data.frame(mat = I(matrix(1:8, 2))))
 summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
@@ -3697,11 +3682,6 @@ length(window(x, deltat=1))
 length(window(x, deltat=4.9))
 length(window(x, deltat=5))
 ## last failed in 2.1.1
-
-## typo in z_atan2.
-(z <- atan2(0+1i, 0+0i))
-stopifnot(all.equal(z, pi/2+0i))
-## was NA in 2.1.1
 
 
 ### end of tests added in 2.1.1 patched ###
