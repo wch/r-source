@@ -55,8 +55,9 @@ stopifnot(is.finite(z))
 atan(2)
 atan(2+0i)
 tan(atan(2+0i))
-atan(1.0001+0i)
-atan(0.9999+0i)
+## should not expect exactly 0i in result
+round(atan(1.0001+0i), 7)
+round(atan(0.9999+0i), 7)
 ## previously not as in Abramowitz & Stegun.
 
 

@@ -32,12 +32,6 @@
 #ifdef HAVE_C99_COMPLEX
 # include <complex.h>
 # define C99_COMPLEX(x)	((double complex *) DATAPTR(x))
-# define HAVE_C99_COMPLEX_FNS
-#endif
-
-#ifdef Win32
-/* These are unreliable in marginal cases */
-# undef HAVE_C99_COMPLEX_FNS
 #endif
 
 #ifndef HAVE_HYPOT
@@ -97,15 +91,10 @@ static void complex_div(Rcomplex *c, Rcomplex *a, Rcomplex *b)
 	c->i = (a->i - a->r*ratio) / den;
     }
 }
-#elif !defined(HAVE_C99_COMPLEX_FNS)
-static void complex_div(double complex *c, double complex *a, 
-			double complex *b)
-{
-    *c = *a / *b;
-}
 #endif
 
 #ifndef HAVE_C99_COMPLEX
+
 static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
 {
 /* r := a^b */
@@ -137,9 +126,11 @@ static void complex_pow(Rcomplex *r, Rcomplex *a, Rcomplex *b)
     r->r = x * cos(y);
     r->i = x * sin(y);
 }
+
 #else /* HAVE_C99_COMPLEX */
+
 #ifdef Win32
-/* need this because the system one is explicitly linked 
+/* Need this because the system one is explicitly linked 
    against MSVCRT's pow, and gets (0+0i)^Y as 0+0i for all Y */
 double complex mycpow (double complex X, double complex Y)
 {
@@ -167,8 +158,7 @@ double complex mycpow (double complex X, double complex Y)
   return  Res;
 }
 #else /* not Win32 */
-/* reason for this:
-   glibc's gets (0+0i)^y = Inf+NaNi for y < 0
+/* reason for this: glibc gets (0+0i)^y = Inf+NaNi for y < 0
 */
 double complex mycpow (double complex X, double complex Y)
 {
@@ -180,13 +170,18 @@ double complex mycpow (double complex X, double complex Y)
 	return cpow(X, Y);
 }
 #endif
+
 #endif /* HAVE_C99_COMPLEX */
 
-/* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */
+/* See arithmetic.c */
+#define mod_iterate(n1,n2,i1,i2) for (i=i1=i2=0; i<n; \
+	i1 = (++i1 == n1) ? 0 : i1,\
+	i2 = (++i2 == n2) ? 0 : i2,\
+	++i)
 
 SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 {
-    int i, n, n1, n2;
+    int i,i1, i2, n, n1, n2;
 #ifndef HAVE_C99_COMPLEX
     Rcomplex x1, x2;
 #endif
@@ -203,64 +198,60 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 
     switch (code) {
     case PLUSOP:
-	for (i = 0; i < n; i++) {
+	mod_iterate(n1, n2, i1, i2) {
 #ifdef HAVE_C99_COMPLEX
-	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i % n1] + 
-		C99_COMPLEX(s2)[i % n2];
+	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] + C99_COMPLEX(s2)[i2];
 #else
-	    x1 = COMPLEX(s1)[i % n1];
-	    x2 = COMPLEX(s2)[i % n2];
+	    x1 = COMPLEX(s1)[i1];
+	    x2 = COMPLEX(s2)[i2];
 	    COMPLEX(ans)[i].r = x1.r + x2.r;
 	    COMPLEX(ans)[i].i = x1.i + x2.i;
 #endif
 	}
 	break;
     case MINUSOP:
-	for (i = 0; i < n; i++) {
+	mod_iterate(n1, n2, i1, i2) {
 #ifdef HAVE_C99_COMPLEX
-	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i % n1] - 
-		C99_COMPLEX(s2)[i % n2];
+	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] - C99_COMPLEX(s2)[i2];
 #else
-	    x1 = COMPLEX(s1)[i % n1];
-	    x2 = COMPLEX(s2)[i % n2];
+	    x1 = COMPLEX(s1)[i1];
+	    x2 = COMPLEX(s2)[i2];
 	    COMPLEX(ans)[i].r = x1.r - x2.r;
 	    COMPLEX(ans)[i].i = x1.i - x2.i;
 #endif
 	}
 	break;
     case TIMESOP:
-	for (i = 0; i < n; i++) {
+	mod_iterate(n1, n2, i1, i2) {
 #ifdef HAVE_C99_COMPLEX
-	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i % n1] * 
-		C99_COMPLEX(s2)[i % n2];
+	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] * C99_COMPLEX(s2)[i2];
 #else
-	    x1 = COMPLEX(s1)[i % n1];
-	    x2 = COMPLEX(s2)[i % n2];
+	    x1 = COMPLEX(s1)[i1];
+	    x2 = COMPLEX(s2)[i2];
 	    COMPLEX(ans)[i].r = x1.r * x2.r - x1.i * x2.i;
 	    COMPLEX(ans)[i].i = x1.r * x2.i + x1.i * x2.r;
 #endif
 	}
 	break;
     case DIVOP:
-	for (i = 0; i < n; i++) {
+	mod_iterate(n1, n2, i1, i2) {
 #ifdef HAVE_C99_COMPLEX
-	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i % n1] / 
-		C99_COMPLEX(s2)[i % n2];
+	    C99_COMPLEX(ans)[i] = C99_COMPLEX(s1)[i1] / C99_COMPLEX(s2)[i2];
 #else
-	    x1 = COMPLEX(s1)[i % n1];
-	    x2 = COMPLEX(s2)[i % n2];
+	    x1 = COMPLEX(s1)[i1];
+	    x2 = COMPLEX(s2)[i2];
 	    complex_div(&COMPLEX(ans)[i], &x1, &x2);
 #endif
 	}
 	break;
     case POWOP:
-	for (i = 0; i < n; i++) {
+	mod_iterate(n1, n2, i1, i2) {
 #ifdef HAVE_C99_COMPLEX
-	    C99_COMPLEX(ans)[i] = mycpow(C99_COMPLEX(s1)[i % n1],
-					 C99_COMPLEX(s2)[i % n2]);
+	    C99_COMPLEX(ans)[i] = 
+		mycpow(C99_COMPLEX(s1)[i1], C99_COMPLEX(s2)[i2]);
 #else
-	    x1 = COMPLEX(s1)[i % n1];
-	    x2 = COMPLEX(s2)[i % n2];
+	    x1 = COMPLEX(s1)[i1];
+	    x2 = COMPLEX(s2)[i2];
 	    complex_pow(&COMPLEX(ans)[i], &x1, &x2);
 #endif
 	}
@@ -284,8 +275,6 @@ SEXP complex_binary(ARITHOP_TYPE code, SEXP s1, SEXP s2)
 	copyMostAttrib(s2, ans);
     return ans;
 }
-
-/* FIXME : Use the trick in arithmetic.c to eliminate "modulo" ops */
 
 SEXP do_cmathfuns(SEXP call, SEXP op, SEXP args, SEXP env)
 {
@@ -404,7 +393,10 @@ static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 }
 
 #ifdef HAVE_C99_COMPLEX
-static void z_log(double complex *r, double complex *z) {*r = clog(*z);}
+static void z_log(double complex *r, double complex *z) 
+{
+    *r = clog(*z);
+}
 
 static void z_logbase(double complex *r, double complex *z, 
 		      double complex *base)
@@ -463,7 +455,7 @@ static void z_sqrt(Rcomplex *r, Rcomplex *z)
 }
 #endif
 
-#ifdef HAVE_C99_COMPLEX_FNS
+#ifdef HAVE_C99_COMPLEX
 static void z_cos(double complex *r, double complex *z)
 {
     *r = ccos(*z);
@@ -476,7 +468,17 @@ static void z_sin(double complex *r, double complex *z)
 
 static void z_tan(double complex *r, double complex *z)
 {
+    double y = cimag(*z);
     *r = ctan(*z);
+    if(R_FINITE(y) && fabs(y) > 25.0) { 
+	/* at this point the real part is nearly zero, and the
+	   imaginary part is one: but some OSes get the imag wrong */
+#if __GNUC__
+	__imag__ *r = y < 0 ? -1.0 : 1.0;
+#else
+	*r = creal(*r) + (y < 0 ? -1.0 : 1.0) * I;
+#endif
+    }
 }
 
 static void z_atan2(double complex *r, double complex *csn,
@@ -501,12 +503,30 @@ static void z_atan2(double complex *r, double complex *csn,
 
 static void z_asin(double complex *r, double complex *z)
 {
+#ifdef Win32
+    /* broken for cabs(*z) >= 1 */
+    double alpha, t1, t2, x = __real__ *z, y = __imag__ *z;
+    t1 = 0.5 * hypot(x + 1, y);
+    t2 = 0.5 * hypot(x - 1, y);
+    alpha = t1 + t2;
+    __real__ *r = asin(t1 - t2);
+    __imag__ *r = log(alpha + sqrt(alpha*alpha - 1));
+    if(y < 0 || (y == 0 && x > 1)) __imag__ *r *= -1;
+#else
     *r = casin(*z);
+#endif
 }
 
 static void z_acos(double complex *r, double complex *z)
 {
+#ifdef Win32
+    /* broken for cabs(*z) >= 1 */
+    double complex Asin;
+    z_asin(&Asin, z);
+    *r = M_PI_2 - Asin;
+#else
     *r = cacos(*z);
+#endif
 }
 
 static void z_atan(double complex *r, double complex *z)
@@ -543,7 +563,9 @@ static void z_tanh(double complex *r, double complex *z)
 {
     *r = ctanh(*z);
 }
-#else
+
+#else /* not HAVE_C99_COMPLEX */
+
 static void z_cos(Rcomplex *r, Rcomplex *z)
 {
     r->r = cos(z->r) * cosh(z->i);

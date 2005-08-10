@@ -104,9 +104,10 @@ Type 'q()' to quit R.
 [1] 1.107149+0i
 > tan(atan(2+0i))
 [1] 2+0i
-> atan(1.0001+0i)
+> ## should not expect exactly 0i in result
+> round(atan(1.0001+0i), 7)
 [1] 0.7854482+0i
-> atan(0.9999+0i)
+> round(atan(0.9999+0i), 7)
 [1] 0.7853482+0i
 > ## previously not as in Abramowitz & Stegun.
 > 
