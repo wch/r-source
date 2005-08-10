@@ -415,7 +415,7 @@ static void matprod(double *x, int nrx, int ncx,
 	for(i = 0; i < nrx*ncy; i++) z[i] = 0;
 }
 
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
 /* ZGEMM - perform one of the matrix-matrix operations    */
 /* C := alpha*op( A )*op( B ) + beta*C */
 extern void
@@ -429,7 +429,7 @@ F77_NAME(zgemm)(const char *transa, const char *transb, const int *m,
 static void cmatprod(Rcomplex *x, int nrx, int ncx,
 		     Rcomplex *y, int nry, int ncy, Rcomplex *z)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     char *transa = "N", *transb = "N";
     int i;
     Rcomplex one, zero;

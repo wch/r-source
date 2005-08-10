@@ -345,7 +345,7 @@ static SEXP modLa_rg(SEXP x, SEXP only_values)
 
 static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, p, info, *ipiv, *Adims, *Bdims;
     Rcomplex *avals;
     SEXP B;
@@ -387,7 +387,7 @@ static SEXP modLa_zgesv(SEXP A, SEXP Bin)
 
 static SEXP modLa_zgeqp3(SEXP Ain)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int i, m, n, *Adims, info, lwork;
     Rcomplex *work, tmp;
     double *rwork;
@@ -438,7 +438,7 @@ static SEXP modLa_zgeqp3(SEXP Ain)
 
 static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims;
     SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
     Rcomplex *work, tmp;
@@ -481,7 +481,7 @@ static SEXP modqr_coef_cmplx(SEXP Q, SEXP Bin)
 
 static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int n, nrhs, lwork, info, k, *Bdims, *Qdims, tr;
     SEXP B, qr=VECTOR_ELT(Q, 0), tau=VECTOR_ELT(Q, 2);
     Rcomplex *work, tmp;
@@ -522,7 +522,7 @@ static SEXP modqr_qy_cmplx(SEXP Q, SEXP Bin, SEXP trans)
 
 static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP xin, SEXP s, SEXP u, SEXP v)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int *xdims, n, p, lwork, info;
     double *rwork;
     Rcomplex *work, tmp;
@@ -571,7 +571,7 @@ static SEXP modLa_svd_cmplx(SEXP jobu, SEXP jobv, SEXP xin, SEXP s, SEXP u, SEXP
 
 static SEXP modLa_rs_cmplx(SEXP xin, SEXP only_values)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int *xdims, n, lwork, info, ov;
     char jobv[1], uplo[1];
     SEXP values, ret, nm, x;
@@ -627,7 +627,7 @@ static SEXP modLa_rs_cmplx(SEXP xin, SEXP only_values)
 
 static SEXP modLa_rg_cmplx(SEXP x, SEXP only_values)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     int  n, lwork, info, *xdims, ov;
     Rcomplex *work, *left, *right, *xvals, tmp;
     double *rwork;

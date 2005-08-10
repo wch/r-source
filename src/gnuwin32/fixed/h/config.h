@@ -151,10 +151,6 @@
 /* Define to 1 if you have the <dl.h> header file. */
 /* #undef HAVE_DL_H */
 
-/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
-   can do arithmetic on the latter. */
-#define HAVE_DOUBLE_COMPLEX 1
-
 /* Define to 1 if you have the <elf.h> header file. */
 /* #undef HAVE_ELF_H */
 
@@ -178,6 +174,10 @@
 
 /* Define to 1 if you have the <floatingpoint.h> header file. */
 /* #undef HAVE_FLOATINGPOINT_H */
+
+/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
+   can do arithmetic on the latter. */
+#define HAVE_FORTRAN_DOUBLE_COMPLEX 1
 
 /* Define to 1 if you have the <fpu_control.h> header file. */
 /* #undef HAVE_FPU_CONTROL_H */

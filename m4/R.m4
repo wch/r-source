@@ -1161,14 +1161,14 @@ fi
 rm -rf conftest conftest.* conftestf.* core
 if test -n "${r_cv_prog_f77_cc_compat_complex}"; then
   AC_MSG_RESULT([yes])
-  AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1,
+  AC_DEFINE(HAVE_FORTRAN_DOUBLE_COMPLEX, 1,
             [Define if C's Rcomplex and Fortran's COMPLEX*16 can be
              interchanged, and can do arithmetic on the latter.])
 else
   warn_f77_cc_double_complex="${F77} and ${CC} disagree on double complex"
   AC_MSG_WARN([${warn_f77_cc_double_complex}])
 fi
-AC_SUBST(HAVE_DOUBLE_COMPLEX)
+AC_SUBST(HAVE_FORTRAN_DOUBLE_COMPLEX)
 ])# R_PROG_F77_CC_COMPAT_COMPLEX
 
 ## R_PROG_F77_C_O_LO

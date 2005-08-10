@@ -20,7 +20,7 @@ OBJECTS = $(SOURCES_C:.c=.lo) $(SOURCES_F:.f=.lo)
 HEADERS = Lapack.h
 
 LIBSOURCES = dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
-  @COMPILE_DOUBLE_COMPLEX_FALSE@ cmplx.f @USE_EXTERNAL_BLAS_FALSE@ cmplxblas.f
+  @COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE@ cmplx.f @USE_EXTERNAL_BLAS_FALSE@ cmplxblas.f
 LIBOBJECTS = $(LIBSOURCES:.f=.lo)
 
 distdir = $(top_builddir)/$(PACKAGE)-$(VERSION)/$(subdir)
