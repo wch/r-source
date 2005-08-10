@@ -9,7 +9,7 @@ Sys.Date <- function() .Internal(POSIXlt2Date(as.POSIXlt(Sys.time())))
 as.Date <- function(x, ...) UseMethod("as.Date")
 
 as.Date.POSIXct <- function(x, ...) {
-    z <- trunc(unclass(x)/86400)
+    z <- floor(unclass(x)/86400)
     attr(z, "tzone") <- NULL
     structure(z, class="Date")
 }
