@@ -95,7 +95,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if(is.logical(col.names)) {
         if(!rn && is.na(col.names))
-            error("col.names = NA makes no sense when row.names = FALSE")
+            stop("col.names = NA makes no sense when row.names = FALSE")
         col.names <- if(is.na(col.names) && rn) c("", d[[2]])
         else if(col.names) d[[2]] else NULL
     } else {
