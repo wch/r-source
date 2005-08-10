@@ -71,6 +71,11 @@ image(x, \dots)
   or \code{y}, the whole user area in the corresponding direction is
   filled.
 
+  Rectangles corresponding to missing values are not plotted (and so are
+  transparent and (unless \code{add=TRUE}) the default background painted
+  in \code{par("bg")} will show though and if that is transparent, the
+  canvas colour will be seen).
+
   If \code{breaks} is specified then \code{zlim} is unused and the
   algorithm used follows \code{\link{cut}}, so intervals are closed on
   the right and open on the left except for the lowest interval.
@@ -78,7 +83,8 @@ image(x, \dots)
   Notice that \code{image} interprets the \code{z} matrix as a table of
   \code{f(x[i], y[j])} values, so that the x axis corresponds to row
   number and the y axis to column number, with column 1 at the bottom,
-  i.e. a 90 degree clockwise rotation of the conventional textual layout.
+  i.e. a 90 degree counter-clockwise rotation of the conventional
+  printed layout of a matrix.
 }
 \note{
   Based on a function by Thomas Lumley
