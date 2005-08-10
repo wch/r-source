@@ -187,7 +187,7 @@ residuals.smooth.spline <-
                   partial = r)
     res <- naresid(object$na.action, res)
     if (type == "partial")
-        .NotYetImplemented("type = \"partial\"")
+        stop('type = "partial" is not yet implemented')
         ## res <- res + predict(object, type = "terms")
     res
 }
