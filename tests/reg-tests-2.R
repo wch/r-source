@@ -1446,7 +1446,7 @@ str(factor(x, exclude=""))
 
 
 ## print.factor(quote=TRUE) was not quoting levels
-x <- c("a", NA, "b", 'a " test')
+x <- c("a", NA, "b", 'a " test') #" (comment for fontification)
 factor(x)
 factor(x, exclude="")
 print(factor(x), quote=TRUE)
@@ -1668,7 +1668,6 @@ DF <- data.frame(A=1:2, B=3:4)
 try(DF[2, 1:3] <- NULL)
 ## wrong error message in R < 2.2.0
 
-
 ## tests of signif
 ob <- 0:9 * 2000
 print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
@@ -1676,3 +1675,4 @@ signif(1.2347e-305, 4)
 signif(1.2347e-306, 4)  # only 3 digits in 2.1.1
 signif(1.2347e-307, 4)
 ##
+
