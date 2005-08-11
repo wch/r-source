@@ -41,7 +41,9 @@ format.default <-
 				.Internal(format(unlist(x), trim=trim))),
 			 paste, collapse=", "),
 	   call=, expression=, "function"=, "(" = deparse(x),
-	   ## else: numeric, complex, .. :
+	   ## else: logical, numeric, complex, .. :
+           ## character would be accepted, but prettyNum is inappropriate
+           ## others are an error.
 	   { r <- prettyNum(.Internal(format(x, trim = trim, small=nsmall)),
                             big.mark = big.mark, big.interval = big.interval,
                             small.mark = small.mark,
