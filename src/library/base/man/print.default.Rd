@@ -13,9 +13,9 @@
 \arguments{
   \item{x}{the object to be printed.}
   \item{digits}{a non-null value for \code{digits} specifies the minimum
-    number of significant digits to be printed in values.  If
-    \code{digits} is \code{NULL}, the value of \code{digits} set by
-    \code{options} is used.}
+    number of significant digits to be printed in values.   The default,
+    \code{NULL}, uses \code{\link{getOption}(digits)}.  (For the
+    intepretation for complex numbers see \code{\link{signif}}.)}
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{na.print}{a character string which is used to indicate

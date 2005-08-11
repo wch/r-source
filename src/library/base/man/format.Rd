@@ -39,9 +39,10 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     strings.}
   \item{digits}{how many significant digits are to be used for
     \code{\link{numeric} x}.  The default, \code{NULL}, uses
-    \code{\link{options}()$digits}.  This is a suggestion: enough decimal
+    \code{\link{getOption}(digits)}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
-    this many significant digits.}
+    this many significant digits. (For the intepretation for complex
+    numbers see \code{\link{signif}}.)}
   \item{nsmall}{number of digits which will always appear to the right of
     the decimal point in formatting real/complex numbers in
     non-scientific formats. Allowed values \code{0 <= nsmall <= 20}.}

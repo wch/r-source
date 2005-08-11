@@ -3,9 +3,10 @@
 \usage{
 ceiling(x)
 floor(x)
+trunc(x)
+
 round(x, digits = 0)
 signif(x, digits = 6)
-trunc(x)
 zapsmall(x, digits = getOption("digits"))
 }
 \alias{ceiling}
@@ -23,40 +24,43 @@ zapsmall(x, digits = getOption("digits"))
   numeric vector containing the largest integers not greater than the
   corresponding elements of \code{x}.
 
+  \code{trunc} takes a single numeric argument \code{x} and returns a
+  numeric vector containing the integers formed by truncating the values in
+  \code{x} toward \code{0}.
+
   \code{round} rounds the values in its first argument to the specified
   number of decimal places (default 0).
-  Note that for rounding off a 5, the IEEE standard is used,
-  \dQuote{\emph{go to the even digit}}.
-  Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is \code{-2}.
 
   \code{signif} rounds the values in its first argument to the specified
   number of significant digits.
 
-  \code{trunc} takes a single numeric argument \code{x} and returns a
-  numeric vector containing the integers by truncating the values in
-  \code{x} toward \code{0}.
-
   \code{zapsmall} determines a \code{digits} argument \code{dr} for
   calling \code{round(x, digits = dr)} such that values \dQuote{close to
-    zero} (compared with the maximal absolute one) are \dQuote{zapped},
+    zero} (compared with the maximal absolute value) are \dQuote{zapped},
   i.e., treated as \code{0}.
 }
 \arguments{
-  \item{x}{a numeric vector.}
+  \item{x}{a numeric vector.  A complex vector is allowed for
+    \code{round}, \code{signif} and \code{zapsmall}.}
   \item{digits}{integer indicating the precision to be used.}
 }
 \details{
   All but \code{zapsmall} are generic functions: methods can be
   defined for them individually or via the \code{\link{Math}} group generic.
 
+  Note that for rounding off a 5, the IEC 60559 standard is used,
+  \dQuote{\emph{go to the even digit}}.
+  Therefore \code{round(0.5)} is \code{0} and \code{round(-1.5)} is \code{-2}.
+
   For \code{signif} the recognized values of \code{digits} are
   \code{1...22}.  As from \R 2.2.0 complex numbers are rounded to retain
-  the specified number of digits in the larger of the components. 
+  the specified number of digits in the larger of the components.  Each
+  element of the vector is rounded individually, unlike printing.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
-  Wadsworth \& Brooks/Cole. (except \code{zapsmall}.)
+  Wadsworth \& Brooks/Cole. (Except \code{zapsmall}.)
 
   Chambers, J. M. (1998)
   \emph{Programming with Data. A Guide to the S Language}.
