@@ -1,7 +1,7 @@
 /*
  *  Mathlib : A C Library of Special Functions
  *  Copyright (C) 1998 Ross Ihaka
- *  Copyright (C) 2000-2001 The R Development Core Team
+ *  Copyright (C) 2000-2001, 2005 The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -28,23 +28,12 @@
  *
  */
 
-#include <config.h> /* needed for HAVE_RINT */
+#include <config.h> /* needed for HAVE_RINT and USE_BUILTIN_RINT */
 #include "nmath.h"
 
+/* USE_BUILTIN_RINT could also be defined by a configure test */
 #ifndef HAVE_RINT
 #define USE_BUILTIN_RINT
-#endif
-
-#ifdef WIN32
-/* earlier Windows headers did not include rint */
-#if __MINGW32_MAJOR_VERSION < 2
-static __inline__ double rint (double x)
-{
-    double retval;
-    __asm__ ("frndint;": "=t" (retval) : "0" (x));
-    return retval;
-}
-#endif
 #endif
 
 #ifdef USE_BUILTIN_RINT
