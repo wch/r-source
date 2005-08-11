@@ -52,7 +52,8 @@ double qpois(double p, double lambda, int lower_tail, int log_p)
 
     mu = lambda;
     sigma = sqrt(lambda);
-    gamma = sigma;
+    /* gamma = sigma; PR#8058 should be kurtosis which is mu^-0.5 */
+    gamma = 1.0/sigma;
 
     /* Note : "same" code in qpois.c, qbinom.c, qnbinom.c --
      * FIXME: This is far from optimal [cancellation for p ~= 1, etc]: */
