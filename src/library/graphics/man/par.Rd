@@ -117,7 +117,7 @@ par(\dots, no.readonly = FALSE)
   may only be used in queries, i.e., they do \emph{not} set anything.
 
   All but these \emph{\bold{R.O.}} and the following
-  \emph{\bold{low-level arguments}} can be set as well in high-level and
+  \emph{\bold{low-level parameters}} can be set as well in high-level and
   mid-level plot functions, such as \code{\link{plot}},
   \code{\link{points}}, \code{\link{lines}}, \code{\link{axis}},
   \code{\link{title}}, \code{\link{text}}, \code{\link{mtext}}:
@@ -133,6 +133,9 @@ par(\dots, no.readonly = FALSE)
     \item \code{"usr"}
     \item \code{"xlog"}, \code{"ylog"}
   }
+  However, see the comments on \code{bg} and \code{cex}, which may be
+  taken as arguments to certain plot functions rather than as
+  graphical parameters.
 }
 
 \value{
@@ -166,7 +169,10 @@ par(\dots, no.readonly = FALSE)
     \item{\code{ask}}{logical.  If \code{TRUE}, the user is asked for
       input, before a new figure is drawn.}
     \item{\code{bg}}{The color to be used for the background of plots.
-      A description of how colors are specified is given below.}
+      A description of how colors are specified is given below.
+      Note that some graphics functions such as
+      \code{\link{plot.default}} and \code{\link{points}} have an
+      \emph{argument} of this name with a different meaning.}
     \item{\code{bty}}{A character string which determined the type of
       box which is drawn about plots.  If \code{bty} is one of
       \code{"o"}, \code{"l"}, \code{"7"}, \code{"c"}, \code{"u"}, or
@@ -174,15 +180,17 @@ par(\dots, no.readonly = FALSE)
       case letter.  A value of \code{"n"} suppresses the box.}
     \item{\code{cex}}{A numerical value giving the amount by which
       plotting text and symbols should be scaled relative to the
-      default.}
+      default.  Note that some graphics functions such as
+      \code{\link{plot.default}} have an \emph{argument} of this name
+      which multiplies this graphical parameter.}
     \item{\code{cex.axis}}{The magnification to be used for axis
-      annotation relative to the current.}
+      annotation relative to the current setting of \code{cex}.}
     \item{\code{cex.lab}}{The magnification to be used for x and y
-      labels relative to the current.}
+      labels relative to the current setting of \code{cex}.}
     \item{\code{cex.main}}{The magnification to be used for main titles
-      relative to the current.}
+      relative to the current setting of \code{cex}.}
     \item{\code{cex.sub}}{The magnification to be used for sub-titles
-      relative to the current.}
+      relative to the current setting of \code{cex}.}
     \item{\code{cin}}{\emph{\bold{R.O.}}; character size
       \code{(width,height)} in inches.}
     \item{\code{col}}{A specification for the default plotting color.  A

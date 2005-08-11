@@ -61,8 +61,9 @@
   \item{pch}{a vector of plotting characters or symbols:
     see \code{\link{points}}.}
   \item{cex}{a numerical vector giving the amount by which plotting text
-    and symbols should be scaled relative to the default.  This works in
-    as an additional multiple of \code{\link{par}("cex")}.}
+    and symbols should be scaled relative to the default.  This works
+    as a multiple of \code{\link{par}("cex")}.  \code{NULL} and \code{NA}
+    are equivalent to \code{1.0}.}
   \item{lty}{the line type, see \code{\link{par}}.}
   \item{lab}{the specification for the (approximate) numbers of tick
     marks on the x and y axes, see \code{\link{par}}.}
