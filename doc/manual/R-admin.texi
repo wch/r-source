@@ -69,12 +69,13 @@ The current version of this document is @value{VERSION}.
 * Installing R under Mac OS X::  
 * Add-on packages::             
 * Internationalization::        
+* Choosing between 32- and 64-bit builds::  
 * Essential and useful other programs in Unix::  
 * Configuration on Unix::       
+* Platform notes::              
 * Building the GNOME console::  
 * Enabling search in HTML help::  
 * The Windows toolset::         
-* New platforms::               
 * Function and variable index::  
 * Concept index::               
 @end menu
@@ -1384,7 +1385,7 @@ a @file{PACKAGES.gz} file, a @command{gzip}-compressed version of
 To add your repository to the list offered by @code{setRepositories()},
 see the help file for that function.
 
-@node Internationalization, Essential and useful other programs in Unix, Add-on packages, Top
+@node Internationalization, Choosing between 32- and 64-bit builds, Add-on packages, Top
 @chapter Internationalization and Localization
 @cindex Internationalization
 @cindex Localization
@@ -1573,8 +1574,82 @@ not translated in any suitable catalogue, English is used.
 See @uref{http://developer.r-project.org/Translations.html} for how to
 prepare and install translation catalogues.
 
+@node Choosing between 32- and 64-bit builds, Essential and useful other programs in Unix, Internationalization, Top
+@chapter Choosing between 32- and 64-bit builds
 
-@node Essential and useful other programs in Unix, Configuration on Unix, Internationalization, Top
+@menu
+* Windows::                     
+@end menu
+
+Many current CPUs have both 32- and 64-bit sets of instructions: this
+has long been true for UltraSparc and more recently for MIPS, PPC and
+AMD64.   Many OSes running on such CPUs offer the choice of building a
+32-bit or a 64-bit version of R (and details are given below under
+specific OSes).  For most a 32-bit version is the default, but for some
+(e.g. AMD64) 64-bit is.
+
+All current versions of @R{} use 32-bit integers and IEC
+60559@footnote{also known as IEC 559 and IEEE 754} double-precision
+reals, and so compute to the same accuracy and with the same limits on
+the sizes of numerical quantities.  The principal difference is in the
+size of the pointers.
+
+64-bit builds have both advantages and disadvantages:
+@itemize
+@item
+The total virtual memory space made available to a 32-bit
+process@footnote{until recently this limit applied to all processes, not
+just to one process} is limited to 4GB, and on most OSes to 3GB (or even
+2GB).  The limits for 64-bit processes are much larger.
+
+@R{} allocates memory for large objects as needed, and removes any
+unused ones at garbage collection.  When the sizes of objects become an
+appreciable fraction of the address limit, fragmentation of the address
+space becomes an issue and there may be no hole available that is the
+size requested.  This can cause more frequent garbage collection or the
+inability to allocate large objects.  As a guide, this will become an
+issue with objects more than 10% of the size of the address space
+(around 300Mb) or when the total size of objects in use is around one
+third (around 1Gb).
+
+@item
+32-bit OSes by default limit file sizes to 2GB.  This can often be worked
+around: see the comments on Linux and Solaris below.  (We have also
+largely worked around that limit on Windows.)  64-bit builds have much
+larger limits.
+
+@item
+Because the pointers are larger, @R{}'s basic structure (the cons cell)
+is larger (normally twice the size).  This means that @R{} objects take
+more space and more time to manipulate, especially during garbage
+collection. So 64-bit versions of @R{} will typically run slower than
+32-bit versions. (On Sparc Solaris the difference was 15-20%, on AMD64
+around 10%.)
+
+@end itemize
+
+So, for speed you may want to use a 32-bit build, but to handle large
+datasets (and perhaps large files) a 64-bit build.
+
+Even on 64-bit builds of @R{} there are limits on the size of @R{}
+objects (see @code{help("Memory-limits")}, some of which stem from the
+use of 32-bit integers (especially in FORTRAN code).  On all versions of
+@R{}, the maximum length (number of elements) of a vector is 2^31 -1,
+about 2 billion, and on 64-bit systems the size of a block of memory
+allocated is limited to 2^34 -1 bytes (8GB).  It is anticipated these
+will be raised eventually but routine use of 8GB objects is (in 2005)
+several years off.
+
+@node Windows,  , Choosing between 32- and 64-bit builds, Choosing between 32- and 64-bit builds
+@section Windows
+
+Currently the Windows build of @R{} is a 32-bit executable.  This runs
+happily on Windows 64 on AMD64 and EMT64, but is limited to a 2GB (or,
+see the rw-FAQ, 3GB) address space.  It will not be possible to build a
+native version for Windows 64 until suitable compilers are available,
+and currently (mid-2005) that is not in prospect.
+
+@node Essential and useful other programs in Unix, Configuration on Unix, Choosing between 32- and 64-bit builds, Top
 @appendix Essential and useful other programs in Unix
 
 This appendix gives details of programs you will need to build @R{} on
@@ -1836,7 +1911,7 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 @pkg{quantreg} will need to be re-installed.
 
 
-@node Configuration on Unix, Building the GNOME console, Essential and useful other programs in Unix, Top
+@node Configuration on Unix, Platform notes, Essential and useful other programs in Unix, Top
 @appendix Configuration on Unix
 
 @menu
@@ -1846,7 +1921,6 @@ So if @R{} is re-built after ATLAS is installed, then packages such as
 * Using make::                  
 * Using FORTRAN::               
 * Compile and load flags::      
-* Platform notes::              
 @end menu
 
 @node Configuration options, Internationalization support, Configuration on Unix, Configuration on Unix
@@ -2133,7 +2207,7 @@ hanging or segfaulting under external BLASs built under @command{g77},
 as well as with Dr Goto's BLAS.  As from @R{} 2.2.0 this should be
 detected by a @command{configure} test.
 
-@node Compile and load flags, Platform notes, Using FORTRAN, Configuration on Unix
+@node Compile and load flags,  , Using FORTRAN, Configuration on Unix
 @section Compile and load flags
 
 A wide range of flags can be set in the file @file{config.site} or as
@@ -2191,8 +2265,8 @@ structures are passed.
 
 
 
-@node Platform notes,  , Compile and load flags, Configuration on Unix
-@section Platform notes
+@node Platform notes, Building the GNOME console, Configuration on Unix, Top
+@appendix Platform notes
 
 This section provides some notes on building @R{} on different Unix-like
 platforms.  These notes are based on tests run on one or two systems in
@@ -2215,10 +2289,11 @@ However, this is only covered under Linux and Solaris.
 * Alpha/OSF1::                  
 * Alpha/FreeBSD::               
 * AIX::                         
+* New platforms::               
 @end menu
 
 @node Linux, Mac OS X, Platform notes, Platform notes
-@subsection Linux
+@section Linux
 @cindex Linux
 
 Linux is the main development platform for @R{}, so compilation from the
@@ -2294,7 +2369,7 @@ with @command{gcc} or the Intel compilers see
 @uref{http://www.nakama.ne.jp/memo/ia64_linux/}.
 
 @node Mac OS X, Solaris, Linux, Platform notes
-@subsection Mac OS X
+@section Mac OS X
 @cindex Mac OS X
 
 You can build @R{} as a Unix application on Mac OS X using the Apple
@@ -2333,7 +2408,7 @@ failure with @command{gcc 3.3}.)
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
-@subsection Solaris on Sparc
+@section Solaris on Sparc
 @cindex Solaris
 
 @R{} has been built successfully on Solaris 8 aka Solaris 2.8 aka SunOS
@@ -2450,7 +2525,7 @@ only with the Forte compiler (and not with @command{gcc}) as of Tcl/Tk 8.4.5.
 
 
 @node HP-UX, IRIX, Solaris, Platform notes
-@subsection HP-UX
+@section HP-UX
 @cindex HP-UX
 
 The reports on HP-UX here predate @R{} 2.0.0.
@@ -2548,7 +2623,7 @@ LDFLAGS=/opt/fortran90/lib}).
 
 
 @node IRIX, Alpha/OSF1, HP-UX, Platform notes
-@subsection IRIX
+@section IRIX
 @cindex IRIX
 
 @R{} 2.1.0 has been successfully built on IRIX64 6.5 using both
@@ -2603,7 +2678,7 @@ environment variable @env{LIBS}).
 
 
 @node Alpha/OSF1, Alpha/FreeBSD, IRIX, Platform notes
-@subsection Alpha/OSF1
+@section Alpha/OSF1
 
 @R{} has been built successfully on an Alpha running OSF1 V4.0 / V5.1
 using @command{gcc}/@command{g77} and @command{cc}/@command{f77}.
@@ -2623,7 +2698,7 @@ for the Fortran compiler (and @option{-mieee-with-inexact} and
 
 
 @node Alpha/FreeBSD, AIX, Alpha/OSF1, Platform notes
-@subsection Alpha/FreeBSD
+@section Alpha/FreeBSD
 
 Attempts to build @R{} on an Alpha with FreeBSD 4.3 have been only
 partly successful.  Configuring with @option{-mieee} added to both
@@ -2633,8 +2708,8 @@ rather than suppressing them entirely.  Advice on how to complete this
 port would be greatly appreciated.
 
 
-@node AIX,  , Alpha/FreeBSD, Platform notes
-@subsection AIX
+@node AIX, New platforms, Alpha/FreeBSD, Platform notes
+@section AIX
 @cindex AIX
 
 On AIX 4.3.3 and AIX 5.1, it was found that the use of ``run time
@@ -2704,8 +2779,64 @@ SHLIB_LDFLAGS=-Wl,-G
 
 We understand that @option{--enable-R-shlib} does not work under AIX.
 
+@node New platforms,  , AIX, Platform notes
+@section New platforms
 
-@node Building the GNOME console, Enabling search in HTML help, Configuration on Unix, Top
+There are a number of sources of problems when installing @R {} on a new
+hardware/OS platform.  These include
+
+@strong{Floating Point Arithmetic}: @R{} supports the @acronym{POSIX},
+SVID and @acronym{IEEE} models for floating point arithmetic.  The
+@acronym{POSIX} and SVID models provide no problems.  The @acronym{IEEE}
+model however can be a pain.  The problem is that there is no agreement
+on how to set the signalling behaviour; Sun/Sparc, SGI/IRIX and ix86
+Linux require no special action, FreeBSD requires a call to (the macro)
+@code{fpsetmask(0)} and OSF1 requires that computation be done with a
+@option{-ieee_with_inexact} flag etc.  On a new platform you must find
+out the magic recipe and add some code to make it work.  This can often
+be done via the file @file{config.site} which resides in the top level
+directory.
+
+Beware of using high levels of optimization, at least initially.  On
+many compilers these reduce the degree of compliance to the
+@acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
+SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
+
+@strong{Shared Libraries}: There seems to be very little agreement
+across platforms on what needs to be done to build shared libraries.
+there are many different combinations of flags for the compilers and
+loaders.  @acronym{GNU} libtool cannot be used (yet), as it currently
+does not fully support FORTRAN (and will most likely never support
+@command{f2c}:  one would need a shell wrapper for this).  The technique
+we use is to first interrogate the X window system about what it does
+(using @command{xmkmf}), and then override this in situations where we
+know better (for tools from the @acronym{GNU} Compiler Collection and/or
+platforms we know about).  This typically works, but you may have to
+manually override the results.  Scanning the manual entries for
+@command{cc} and @command{ld} usually reveals the correct incantation.
+Once you know the recipe you can modify the file @file{config.site}
+(following the instructions therein) so that the build will use these
+options.
+
+It seems that @samp{gcc 3.4.x} and later on @samp{ix86} Linux defeat
+attempts by the LAPACK code to avoid computations entirely in
+extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
+may need to be compiled without optimization.  If configure detects
+@acronym{GNU} Fortran it adds flag @option{-ffloat-store} which
+suffices, but it is possible that @file{src/modules/lapack/Makefile}
+will need to be edited to remove optimization on other platforms.
+
+If you do manage to get @R{} running on a new platform please let us
+know about it so we can modify the configuration procedures to include
+that platform.
+
+If you are having trouble getting @R{} to work on your platform please
+feel free to get in touch to ask questions.  We have had a fair amount
+of practice at porting @R{} to new platforms @enddots{}
+
+
+
+@node Building the GNOME console, Enabling search in HTML help, Platform notes, Top
 @appendix Building the @acronym{GNOME} console
 
 This interface is experimental and incomplete.  The console offers a
@@ -2890,7 +3021,7 @@ Embedding Plugin @url{http://javaplugin.sourceforge.net/} is used.
 The Aqua GUI provides an interface to @code{help.search} that may
 substitute for the Java search.
 
-@node The Windows toolset, New platforms, Enabling search in HTML help, Top
+@node The Windows toolset, Function and variable index, Enabling search in HTML help, Top
 @appendix The Windows toolset
 
 If you want to build @R{} from the sources in Windows, you will need
@@ -3084,64 +3215,7 @@ current Windows style we require Inno Setup 5.1.2 or later from
 @url{http://jrsoftware.org}.
 
 
-@node New platforms, Function and variable index, The Windows toolset, Top
-@appendix New platforms
-
-There are a number of sources of problems when installing @R
-{} on a new
-hardware/OS platform.  These include
-
-@strong{Floating Point Arithmetic}: @R{} supports the @acronym{POSIX},
-SVID and @acronym{IEEE} models for floating point arithmetic.  The
-@acronym{POSIX} and SVID models provide no problems.  The @acronym{IEEE}
-model however can be a pain.  The problem is that there is no agreement
-on how to set the signalling behaviour; Sun/Sparc, SGI/IRIX and ix86
-Linux require no special action, FreeBSD requires a call to (the macro)
-@code{fpsetmask(0)} and OSF1 requires that computation be done with a
-@option{-ieee_with_inexact} flag etc.  On a new platform you must find
-out the magic recipe and add some code to make it work.  This can often
-be done via the file @file{config.site} which resides in the top level
-directory.
-
-Beware of using high levels of optimization, at least initially.  On
-many compilers these reduce the degree of compliance to the
-@acronym{IEEE} model.  For example, using @option{-fast} on the Solaris
-SunPro compilers causes @R{}'s @code{NaN} to be set incorrectly.
-
-@strong{Shared Libraries}: There seems to be very little agreement
-across platforms on what needs to be done to build shared libraries.
-there are many different combinations of flags for the compilers and
-loaders.  @acronym{GNU} libtool cannot be used (yet), as it currently
-does not fully support FORTRAN (and will most likely never support
-@command{f2c}:  one would need a shell wrapper for this).  The technique
-we use is to first interrogate the X window system about what it does
-(using @command{xmkmf}), and then override this in situations where we
-know better (for tools from the @acronym{GNU} Compiler Collection and/or
-platforms we know about).  This typically works, but you may have to
-manually override the results.  Scanning the manual entries for
-@command{cc} and @command{ld} usually reveals the correct incantation.
-Once you know the recipe you can modify the file @file{config.site}
-(following the instructions therein) so that the build will use these
-options.
-
-It seems that @samp{gcc 3.4.x} and later on @samp{ix86} Linux defeat
-attempts by the LAPACK code to avoid computations entirely in
-extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
-may need to be compiled without optimization.  If configure detects
-@acronym{GNU} Fortran it adds flag @option{-ffloat-store} which
-suffices, but it is possible that @file{src/modules/lapack/Makefile}
-will need to be edited to remove optimization on other platforms.
-
-If you do manage to get @R{} running on a new platform please let us
-know about it so we can modify the configuration procedures to include
-that platform.
-
-If you are having trouble getting @R{} to work on your platform please
-feel free to get in touch to ask questions.  We have had a fair amount
-of practice at porting @R{} to new platforms @enddots{}
-
-
-@node Function and variable index, Concept index, New platforms, Top
+@node Function and variable index, Concept index, The Windows toolset, Top
 @unnumbered Function and variable index
 
 @printindex vr
