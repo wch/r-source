@@ -840,6 +840,10 @@ start R with @option{--vanilla} to be able to update package @code{foo}.
 If you set @code{R_DEFAULT_PACKAGES} to include @code{foo}, you will
 need to unset it temporarily.
 
+It has been reported that some other software has interfered with the
+installation process by preventing the renaming of temporary files,
+@emph{Google Desktop} being a known example.
+
 
 @node How do I add to the list of repositories?,  , update.packages() fails, Packages
 @section How do I add to the list of repositories?
@@ -1351,14 +1355,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 July 22 by Professor B. D. Ripley
+Last edited 2005 August 10 by Professor B. D. Ripley
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 July 22 by Professor B. D. Ripley <Rwindows@@r-project.org>
+Last edited 2005 August 10 by Professor B. D. Ripley <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
