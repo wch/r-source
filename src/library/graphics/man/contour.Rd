@@ -37,7 +37,8 @@ contour(x, \dots)
     lines.}
   \item{labels}{a vector giving the labels for the contour lines.  If
     \code{NULL} then the levels are used as labels.}
-  \item{labcex}{\code{cex} for contour labelling.}
+  \item{labcex}{\code{cex} for contour labelling.  This is an absolute
+    size, not a multiple of \code{par("cex")}.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
   \item{method}{character string specifying where the labels will be
     located. Possible values are \code{"simple"}, \code{"edge"} and
@@ -101,8 +102,6 @@ x <- -6:16
 op <- par(mfrow = c(2, 2))
 contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))
 z <- outer(x, sqrt(abs(x)), FUN = "/")
-## Should not be necessary:
-z[!is.finite(z)] <- NA
 image(x, x, z)
 contour(x, x, z, col = "pink", add = TRUE, method = "edge",
 	vfont = c("sans serif", "plain"))
