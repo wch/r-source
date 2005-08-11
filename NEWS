@@ -51,7 +51,7 @@ BUG FIXES
 
     o	make.names() was not respecting the allow_=FALSE argument.
 
-    o	Arg(-1) now gives -pi, not 0; Arg(0i + -1) always worked.
+    o	Arg(-1) now gives pi, not 0; Arg(0i + -1) always worked.
 
     o   --enable-linux-lfs had been broken at 2.1.0.
 
@@ -61,7 +61,7 @@ BUG FIXES
     o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
     o   signif() rounded some numnbers near 1e-308 to the wrong
-	number of places (this showed up in the print-tests.R), and made 
+	number of places (this showed up in the print-tests.R), and made
 	unnecessary rounding errors on some platforms on e.g. signif(18000, 3).
 
     o	window() was sometimes failing incorrectly due to representation
@@ -73,11 +73,14 @@ BUG FIXES
 
     o   atan2(0+1i, 0+0i) was incorrectly NA (from a typo in complex.c).
 
-    o	The POSIXct method for as.Date() was rounding part days 
+    o	The POSIXct method for as.Date() was rounding part days
 	before 1970-01-01 upwards rather than discarding them.
 
     o   qpois() was using an incorrect starting point and so could be
-	unnecessrily slow for large lambda.  (PR#8058)
+	unnecessarily slow for large lambda.  (PR#8058)
+
+    o	Formatting of complex numbers with nsmall > 0 could be
+	incorrect (and was in print-tests.Rout) because of a typo.
 
 
 

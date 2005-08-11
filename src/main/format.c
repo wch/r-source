@@ -432,7 +432,7 @@ void formatComplex(Rcomplex *x, int l, int *mr, int *nr, int *er,
 	    *ei = 0;
 	    if (nsmall > i_rt) {
 		i_rt = nsmall;
-		mF = mxsl + i_rt + (i_rt != 0);
+		mF = i_mxsl + i_rt + (i_rt != 0);
 	    }
 	    *ni = i_rt;
 	    *mi = mF;
