@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-08-09
+@set FAQ_DATE @value{FAQ_YEAR}-08-11
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2754,6 +2754,9 @@ Emulate MATLAB code using R.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
+@item mblm
+Median-based Linear models, using Theil-Sen single or Siegel repeated
+medians.
 @item mcgibbsit
 Warnes and Raftery's MCGibbsit MCMC diagnostic.
 @item mclust
