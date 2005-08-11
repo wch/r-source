@@ -220,6 +220,10 @@ NEW FEATURES
 	supported.  This is likely to boost performance, but is
 	subject to the accuracy with which it has been implemented.
 
+    o	signif() on complex numbers now rounds jointly to give the
+	requested number of digits in the large component, not
+	independently for each component.
+
 
 DEPRECATED & DEFUNCT
 
@@ -323,15 +327,15 @@ C-LEVEL FACILITIES
     o	C function massdist() {called from density()} has new argument
 	'xmass' (= weights).
 
-    o	Raw vectors passed to .C() are now passed as unsigned char * rather
-	than as SEXPs.	(Wish of Keith Frost, PR#7853)
+    o	Raw vectors passed to .C() are now passed as unsigned char *
+	rather than as SEXPs.  (Wish of Keith Frost, PR#7853)
 
     o	The search for symbols in a .C/.Call/... call without a
 	package argument now searches for an enclosing namespace and
 	so finds functions defined within functions in a namespace.
 
-    o	R_max_col() has new (5th) argument '*ties_meth' allowing non-random
-	behavior in the case of ties.
+    o	R_max_col() has new (5th) argument '*ties_meth' allowing
+	non-random behavior in the case of ties.
 
     o	The header files have been rationalized: the BLAS routine
 	LSAME is now declared in BLAS.h not Linpack.h, Applic.h no
@@ -339,12 +343,11 @@ C-LEVEL FACILITIES
 	divided into API and non-API sections.
 
     o   memory.c has been instrumented so that Valgrind can track R's
-        internal memory management. Details are likely to change before
-        release. To use this, configure using 
+        internal memory management.  Details are likely to change before
+        release.  To use this, configure using
                --with-valgrind-instrumentation=level
-        where level is 1 or 2. Both levels will
-	find more bugs with gctorture(TRUE). Level 2 makes Valgrind
-	run extremely slowly. 
+        where level is 1 or 2.  Both levels will find more bugs with
+        gctorture(TRUE).  Level 2 makes Valgrind run extremely slowly.
 
 
 BUG FIXES
@@ -522,7 +525,7 @@ BUG FIXES
     o	axTicks() is now also correct for reverse axis.	 (PR#7973)
 
     o   signif() rounded some numnbers near 1e-308 to the wrong
-	number of places (this showed up in the print-tests.R), and made 
+	number of places (this showed up in the print-tests.R), and made
 	unnecessary rounding errors on some platforms on e.g. signif(18000, 3).
 
     o	window() was sometimes failing incorrectly due to representation
@@ -534,11 +537,11 @@ BUG FIXES
 
     o   atan2(0+1i, 0+0i) was incorrectly NA (from a typo in complex.c).
 
-    o	The POSIXct method for as.Date() was rounding part days 
+    o	The POSIXct method for as.Date() was rounding part days
 	before 1970-01-01 upwards rather than discarding them.
 
     o   qpois() was using an incorrect starting point and so could be
-	unnecessrily slow for large lambda.  (PR#8058)
+	unnecessarily slow for large lambda.  (PR#8058)
 
 
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-10 r35224)
+Version 2.2.0 Under development (unstable) (2005-08-11 r35246)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -117,4 +117,40 @@ Type 'q()' to quit R.
 [1] 1.570796+0i
 > stopifnot(all.equal(z, pi/2+0i))
 > ## was NA in 2.1.1
+> 
+> 
+> ## precision of complex numbers
+> signif(1.678932e80+0i, 5)
+[1] 1.6789e+80+0i
+> signif(1.678932e-300+0i, 5)
+[1] 1.6789e-300+0i
+> signif(1.678932e-302+0i, 5)
+[1] 1.6789e-302+0i
+> signif(1.678932e-303+0i, 5)
+[1] 1.6789e-303+0i
+> signif(1.678932e-304+0i, 5)
+[1] 1.6789e-304+0i
+> signif(1.678932e-305+0i, 5)
+[1] 1.6789e-305+0i
+> signif(1.678932e-306+0i, 5)
+[1] 1.6789e-306+0i
+> signif(1.678932e-307+0i, 5)
+[1] 1.6789e-307+0i
+> signif(1.678932e-308+0i, 5)
+[1] 1.6789e-308+0i
+> signif(1.678932-1.238276i, 5)
+[1] 1.6789-1.2383i
+> signif(1.678932-1.238276e-1i, 5)
+[1] 1.6789-0.1238i
+> signif(1.678932-1.238276e-2i, 5)
+[1] 1.6789-0.0124i
+> signif(1.678932-1.238276e-3i, 5)
+[1] 1.6789-0.0012i
+> signif(1.678932-1.238276e-4i, 5)
+[1] 1.6789-1e-04i
+> signif(1.678932-1.238276e-5i, 5)
+[1] 1.6789+0i
+> signif(8.678932-9.238276i, 5)
+[1] 8.6789-9.2383i
+> ## prior to 2.2.0 rounded real and imaginary parts separately.
 > 

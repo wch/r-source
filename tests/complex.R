@@ -65,3 +65,23 @@ round(atan(0.9999+0i), 7)
 (z <- atan2(0+1i, 0+0i))
 stopifnot(all.equal(z, pi/2+0i))
 ## was NA in 2.1.1
+
+
+## precision of complex numbers
+signif(1.678932e80+0i, 5)
+signif(1.678932e-300+0i, 5)
+signif(1.678932e-302+0i, 5)
+signif(1.678932e-303+0i, 5)
+signif(1.678932e-304+0i, 5)
+signif(1.678932e-305+0i, 5)
+signif(1.678932e-306+0i, 5)
+signif(1.678932e-307+0i, 5)
+signif(1.678932e-308+0i, 5)
+signif(1.678932-1.238276i, 5)
+signif(1.678932-1.238276e-1i, 5)
+signif(1.678932-1.238276e-2i, 5)
+signif(1.678932-1.238276e-3i, 5)
+signif(1.678932-1.238276e-4i, 5)
+signif(1.678932-1.238276e-5i, 5)
+signif(8.678932-9.238276i, 5)
+## prior to 2.2.0 rounded real and imaginary parts separately.

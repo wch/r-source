@@ -48,6 +48,10 @@ zapsmall(x, digits = getOption("digits"))
 \details{
   All but \code{zapsmall} are generic functions: methods can be
   defined for them individually or via the \code{\link{Math}} group generic.
+
+  For \code{signif} the recognized values of \code{digits} are
+  \code{1...22}.  As from \R 2.2.0 complex numbers are rounded to retain
+  the specified number of digits in the larger of the components. 
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

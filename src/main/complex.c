@@ -383,13 +383,31 @@ static void z_rround(Rcomplex *r, Rcomplex *x, Rcomplex *p)
     r->i = rround(x->i, p->r);
 }
 
-/* Question:  This treats real and imaginary parts separately.  Should
-   it do them jointly? */
-
+#define MAX_DIGITS 22
 static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 {
-    r->r = prec(x->r, p->r);
-    r->i = prec(x->i, p->r);
+    double m = fmax2(fabs(x->r), fabs(x->i)), digits = p->r;
+    int dig, mag;
+
+    r->r = x->r; r->i = x->i;
+    if (m == 0.0) return;
+    if (!R_FINITE(digits)) {
+	if(digits > 0) return; else {r->r = r->i = 0.0; return ;}
+    }
+    dig = (int)floor(digits+0.5);
+    if (dig > MAX_DIGITS) return; else if (dig < 1) dig = 1;
+    mag = (int)floor(log10(m));
+    dig = dig - mag - 1;
+    if (dig > 306) {
+	double pow10 = 1.0e4;
+	digits = (double)(dig - 4);
+	r->r = rround(pow10 * x->r, digits)/pow10;
+	r->i = rround(pow10 * x->i, digits)/pow10;	
+    } else {
+	digits = (double)(dig);
+	r->r = rround(x->r, digits);
+	r->i = rround(x->i, digits);
+    }
 }
 
 #ifdef HAVE_C99_COMPLEX
