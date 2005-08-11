@@ -224,6 +224,14 @@ NEW FEATURES
 	requested number of digits in the large component, not
 	independently for each component.
 
+    o	The printing of complex numbers has changed, handling numbers
+	as a whole rather than in two parts.  So both real and
+	imaginary parts are shown to the same accuracy, with the
+	'digits' parameter referring to the accuracy of the large
+	component, and both components are shown in fixed or
+	scientific notation (unless one is entirely zero when it is
+	always shown in fixed notation).
+
 
 DEPRECATED & DEFUNCT
 
@@ -542,6 +550,9 @@ BUG FIXES
 
     o   qpois() was using an incorrect starting point and so could be
 	unnecessarily slow for large lambda.  (PR#8058)
+
+    o	Formatting of complex numbers with nsmall > 0 could be
+	incorrect (and was in print-tests.Rout) because of a typo.
 
 
 

@@ -6,9 +6,6 @@ outer(a <- -4:12,     -2:7, "^")
 for (n1 in 1:7)
     print(zapsmall(polyroot(1:n1), digits = 10))
 
-## fft():
-for(n in 1:30) cat("\nn=",n,":", round(fft(1:n), 8),"\n")
-
 ## lowess() {incl. sort, etc}:
 options(digits = 5)
 

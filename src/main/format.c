@@ -213,7 +213,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
 	/* compute number of digits */
 
 	*nsig = R_print.digits;
-	for (j=1; j <= *nsig; j++) {
+	for (j = 1; j <= *nsig; j++) {
 	    if (fabs(alpha - floor(alpha+0.5)) < eps * alpha) {
 		*nsig = j;
 		break;
@@ -227,7 +227,7 @@ static void scientific(double *x, int *sgn, int *kpower, int *nsig, double eps)
    The return values are
      w : the required field width
      d : use %w.df in fixed format, %#w.de in scientific format
-     e : use scientific format if != 0
+     e : use scientific format if != 0, value is number of exp digits - 1
 
    nsmall specifies the minimum number of decimal digits in fixed format:
    it is 0 except when called from do_format.  
@@ -283,7 +283,7 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
 
     /*-- These	'mxsl' & 'rgt'	are used in F Format
      *	 AND in the	____ if(.) "F" else "E" ___   below: */
-    if (mxl < 0) mxsl = 1 + neg;
+    if (mxl < 0) mxsl = 1 + neg;  /* we use %#w.dg, so have leading zero */ 
 
     /* use nsmall only *after* comparing "F" vs "E": */
     if (rgt < 0) rgt = 0;
@@ -312,17 +312,23 @@ void formatReal(double *x, int n, int *w, int *d, int *e, int nsmall)
 }
 
 
+/* As from 2.2.0 the number of digits applies to real and imaginary parts
+   together, not separately */
+void z_prec_r(Rcomplex *r, Rcomplex *x, double digits);
+
 void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 		   int *wi, int *di, int *ei, int nsmall)
 {
 /* format.info() or  x[1..l] for both Re & Im */
     int left, right, sleft;
-    int rt, mnl, mxl, mxsl, mxns, wF;
+    int rt, mnl, mxl, mxsl, mxns, wF, i_wF;
     int i_rt, i_mnl, i_mxl, i_mxsl, i_mxns;
     int neg, sgn;
     int i, kpower, nsig;
     int naflag;
     int rnanflag, rposinf, rneginf, inanflag, iposinf;
+    Rcomplex tmp;
+    Rboolean all_re_zero = TRUE, all_im_zero = TRUE;
 
     double eps = pow(10.0, -(double)R_print.digits);
 
@@ -339,17 +345,20 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
     i_mnl = mnl = INT_MAX;
 
     for (i = 0; i < n; i++) {
-	if(ISNA(x[i].r) || ISNA(x[i].i)) {
+	/* Now round */
+	z_prec_r(&tmp, &(x[i]), R_print.digits);
+	if(ISNA(tmp.r) || ISNA(tmp.i)) {
 	    naflag = 1;
 	} else {
 	    /* real part */
 
-	    if(!R_FINITE(x[i].r)) {
-		if (ISNAN(x[i].r)) rnanflag = 1;
-		else if (x[i].r > 0) rposinf = 1;
+	    if(!R_FINITE(tmp.r)) {
+		if (ISNAN(tmp.r)) rnanflag = 1;
+		else if (tmp.r > 0) rposinf = 1;
 		else rneginf = 1;
 	    } else {
-		scientific(&(x[i].r), &sgn, &kpower, &nsig, eps);
+		if(tmp.r != 0) all_re_zero = FALSE;
+		scientific(&(tmp.r), &sgn, &kpower, &nsig, eps);
 
 		left = kpower + 1;
 		sleft = sgn + ((left <= 0) ? 1 : left); /* >= 1 */
@@ -368,11 +377,12 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 	    /* this is always unsigned */
 	    /* we explicitly put the sign in when we print */
 
-	    if(!R_FINITE(x[i].i)) {
-		if (ISNAN(x[i].i)) inanflag = 1;
+	    if(!R_FINITE(tmp.i)) {
+		if (ISNAN(tmp.i)) inanflag = 1;
 		else iposinf = 1;
 	    } else {
-		scientific(&(x[i].i), &sgn, &kpower, &nsig, eps);
+		if(tmp.i != 0) all_im_zero = FALSE;
+		scientific(&(tmp.i), &sgn, &kpower, &nsig, eps);
 
 		left = kpower + 1;
 		sleft = ((left <= 0) ? 1 : left);
@@ -401,53 +411,73 @@ void formatComplex(Rcomplex *x, int n, int *wr, int *dr, int *er,
 	else *er = 1;
 	*dr = mxns - 1;
 	*wr = neg + (*dr > 0) + *dr + 4 + *er;
-        if (wF <= *wr + R_print.scipen) { /* Fixpoint if it needs less space */
-	    *er = 0;
-	    if (nsmall > rt) {
-		rt = nsmall;
-		wF = mxsl + rt + (rt != 0);
-	    }
-	    *dr = rt;
-	    *wr = wF;
-	}
     } else {
 	*er = 0;
 	*wr = 0;
 	*dr = 0;
+	wF = 0;
     }
-    if (rnanflag && *wr < 3) *wr = 3;
-    if (rposinf && *wr < 3) *wr = 3;
-    if (rneginf && *wr < 4) *wr = 4;
 
     /* overall format for imaginary part */
 
     if (i_mxl != INT_MIN) {
 	if (i_mxl < 0) i_mxsl = 1;
 	if (i_rt < 0) i_rt = 0;
-	wF = i_mxsl + i_rt + (i_rt != 0);
+	i_wF = i_mxsl + i_rt + (i_rt != 0);
 
 	if (i_mxl > 100 || i_mnl < -99) *ei = 2;
 	else *ei = 1;
 	*di = i_mxns - 1;
 	*wi = (*di > 0) + *di + 4 + *ei;
-        if (wF <= *wi + R_print.scipen) { /* Fixpoint if it needs less space */
-	    *ei = 0;
-	    if (nsmall > i_rt) {
-		i_rt = nsmall;
-		wF = mxsl + i_rt + (i_rt != 0);
-	    }
-	    *di = i_rt;
-	    *wi = wF;
-	}
     } else {
 	*ei = 0;
 	*wi = 0;
 	*di = 0;
+	i_wF = 0;
     }
-    if (inanflag && *wi < 3) *wi = 3;
-    if (iposinf  && *wi < 3) *wi = 3;
+
+    /* Now make the fixed/scientific decision */
+    if(all_re_zero) {
+	*er = *dr = 0;
+	*wr = wF;
+	if (i_wF <= *wi + R_print.scipen) {
+	    *ei = 0;
+	    if (nsmall > i_rt) {i_rt = nsmall; i_wF = i_mxsl + i_rt + (i_rt != 0);}
+	    *di = i_rt;
+	    *wi = i_wF;
+	}    
+    } else if(all_im_zero) {
+	if (wF <= *wr + R_print.scipen) {
+	    *er = 0;
+	    if (nsmall > rt) {rt = nsmall; wF = mxsl + rt + (rt != 0);}
+	    *dr = rt;
+	    *wr = wF;
+	    }	
+	*ei = *di = 0;
+	*wi = i_wF;
+    } else if(wF + i_wF < *wr + *wi + 2*R_print.scipen) {
+	    *er = 0;
+	    if (nsmall > rt) {rt = nsmall; wF = mxsl + rt + (rt != 0);}
+	    *dr = rt;
+	    *wr = wF;
+
+	    *ei = 0;
+	    if (nsmall > i_rt) {
+		i_rt = nsmall; 
+		i_wF = i_mxsl + i_rt + (i_rt != 0);
+	    }
+	    *di = i_rt;
+	    *wi = i_wF;
+    } /* else scientific for both */
     if(*wr < 0) *wr = 0;
     if(*wi < 0) *wi = 0;
+
+    /* Ensure space for Inf and NaN */
+    if (rnanflag && *wr < 3) *wr = 3;
+    if (rposinf && *wr < 3) *wr = 3;
+    if (rneginf && *wr < 4) *wr = 4;
+    if (inanflag && *wi < 3) *wi = 3;
+    if (iposinf  && *wi < 3) *wi = 3;
 
     /* finally, ensure that there is space for NA */
 

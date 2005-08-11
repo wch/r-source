@@ -384,12 +384,15 @@ static void z_rround(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 }
 
 #define MAX_DIGITS 22
-static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
+void z_prec_r(Rcomplex *r, Rcomplex *x, double digits)
 {
-    double m = fmax2(fabs(x->r), fabs(x->i)), digits = p->r;
+    double m = 0.0, m1, m2;
     int dig, mag;
 
     r->r = x->r; r->i = x->i;
+    m1 = fabs(x->r); m2 = fabs(x->i);
+    if(R_FINITE(m1)) m = m1;
+    if(R_FINITE(m2) && m2 > m) m = m2;
     if (m == 0.0) return;
     if (!R_FINITE(digits)) {
 	if(digits > 0) return; else {r->r = r->i = 0.0; return ;}
@@ -408,6 +411,10 @@ static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
 	r->r = rround(x->r, digits);
 	r->i = rround(x->i, digits);
     }
+}
+static void z_prec(Rcomplex *r, Rcomplex *x, Rcomplex *p)
+{
+    z_prec_r(r, x, p->r);
 }
 
 #ifdef HAVE_C99_COMPLEX

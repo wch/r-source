@@ -16,6 +16,9 @@ m <- outer(a +0i, b <- seq(-.5,2, by=.5), "^")
 dimnames(m) <- list(paste(a), "^" = sapply(b,format))
 round(m,3)
 
+## fft():
+for(n in 1:30) cat("\nn=",n,":", round(fft(1:n), 8),"\n")
+
 
 ## Complex Trig.:
 Meps <- .Machine$double.eps
