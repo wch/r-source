@@ -29,6 +29,9 @@ win.graph(), x11() and X11() now behave in the same way as windows()
 in respect of the xpinch, ypinch, graphics.record, gamma and
 windowsBuffered options.
 
+The script editor menu no longer has an option to exit R (as the pager
+and graphics menus do not).
+
 
 
 R 2.1.1 patched
