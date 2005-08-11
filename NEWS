@@ -537,6 +537,9 @@ BUG FIXES
     o	The POSIXct method for as.Date() was rounding part days 
 	before 1970-01-01 upwards rather than discarding them.
 
+    o   qpois() was using an incorrect starting point and so could be
+	unnecessrily slow for large lambda.  (PR#8058)
+
 
 
 		CHANGES IN R VERSION 2.1.1
