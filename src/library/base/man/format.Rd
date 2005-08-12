@@ -1,4 +1,13 @@
 \name{format}
+\alias{format}
+\alias{format.AsIs}
+\alias{format.data.frame}
+\alias{format.default}
+\alias{format.factor}
+\alias{prettyNum}
+\description{
+  Format an \R object for pretty printing..
+}
 \title{Encode in a Common Format}
 \usage{
 format(x, \dots)
@@ -15,28 +24,15 @@ format(x, \dots)
 
 \method{format}{factor}(x, \dots)
 
-format.pval(pv, digits = max(1, getOption("digits") - 2),
-            eps = .Machine$double.eps, na.form = "NA")
-
 prettyNum(x, big.mark = "",   big.interval = 3,
            small.mark = "", small.interval = 5,
          decimal.mark = ".", \dots)
 }
-\alias{format}
-\alias{format.AsIs}
-\alias{format.data.frame}
-\alias{format.default}
-\alias{format.factor}
-\alias{format.pval}
-\alias{prettyNum}
-\description{
-  Format an \R object for pretty printing: \code{format.pval} is
-  intended for formatting p-values.
-}
 \arguments{
   \item{x}{any \R object (conceptually); typically numeric.}
-  \item{trim}{logical; if \code{TRUE}, leading blanks are trimmed off the
-    strings.}
+  \item{trim}{logical; if \code{FALSE}, logical, numeric and complex
+    values are right-justified to a common width: if \code{TRUE} the
+    leading blanks are suppressed.}
   \item{digits}{how many significant digits are to be used for
     \code{\link{numeric} x}.  The default, \code{NULL}, uses
     \code{\link{getOption}(digits)}.  This is a suggestion: enough decimal
@@ -49,6 +45,8 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{justify}{should character vector be left-justified,
     right-justified or left alone.  When justifying, the field width is
     that of the longest string.}
+  \item{width}{the returned vector has elements of at most \code{width}.}
+  \item{\dots}{further arguments passed to or from other methods.}
 
   \item{big.mark}{character; if not empty used as mark between every
     \code{big.interval} decimals \emph{before} (hence \code{big}) the
@@ -60,12 +58,6 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{small.interval}{see \code{small.mark} above; defaults to 5.}
   \item{decimal.mark}{the character used to indicate the numeric
     decimal point.}
-
-  \item{pv}{a numeric vector.}
-  \item{eps}{a numerical tolerance: see Details.}
-  \item{na.form}{character representation of \code{NA}s.}
-  \item{width}{the returned vector has elements of at most \code{width}.}
-  \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
   A vector (or array) of character strings displaying the elements of 
@@ -78,12 +70,6 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 
   \code{format.AsIs} deals with columns of complicated objects that
   have been extracted from a data frame.
-
-  \code{format.pval} is mainly an auxiliary function for
-  \code{\link{print.summary.lm}} etc., and does separate formatting for
-  fixed, floating point and very small values; those less than
-  \code{eps} are formatted as \code{"< [eps]"} (where \dQuote{[eps]}
-  stands for \code{format(eps, digits)}.
 
   The function \code{\link{formatC}} provides a rather more flexible
   formatting facility for numbers, but does \emph{not} provide a common
@@ -119,14 +105,15 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 }
 \examples{
 format(1:10)
+format(1:10, trim = TRUE)
 
 zz <- data.frame("(row names)"= c("aaaaa", "b"), check.names=FALSE)
 format(zz)
-format(zz, justify="left")
+format(zz, justify = "left")
 
 ## use of nsmall
 format(13.7)
-format(13.7, nsmall=3)
+format(13.7, nsmall = 3)
 
 r <- c("76491283764.97430", "29.12345678901", "-7.1234", "-100.1","1123")
 ## American:

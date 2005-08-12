@@ -38,13 +38,13 @@ format.default <-
                   	      left = f.char(x, "left"),
                               right= f.char(x, "right")),
 	   list = sapply(lapply(x, function(x)
-				.Internal(format(unlist(x), trim=trim))),
+				.Internal(format(unlist(x), trim, 0))),
 			 paste, collapse=", "),
 	   call=, expression=, "function"=, "(" = deparse(x),
 	   ## else: logical, numeric, complex, .. :
            ## character would be accepted, but prettyNum is inappropriate
            ## others are an error.
-	   { r <- prettyNum(.Internal(format(x, trim = trim, small=nsmall)),
+	   { r <- prettyNum(.Internal(format(x, trim, nsmall)),
                             big.mark = big.mark, big.interval = big.interval,
                             small.mark = small.mark,
                             small.interval = small.interval,
