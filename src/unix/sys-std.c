@@ -898,7 +898,7 @@ void Rstd_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid 'file' argument"));
+	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(CHAR(STRING_ELT(sfile, 0)));
     if(strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
@@ -920,7 +920,7 @@ void Rstd_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
 
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid 'file' argument"));
+	errorcall(call, _("invalid '%s' argument"), "file");
     p = R_ExpandFileName(CHAR(STRING_ELT(sfile, 0)));
     if(strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("'file' argument is too long"));
@@ -970,7 +970,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     timeint = asReal(CAR(args));
     if (ISNAN(timeint) || timeint < 0)
-	errorcall(call, _("invalid 'time' value"));
+	errorcall(call, _("invalid '%s' value"), "time");
     tm = timeint * 1e6;
 
     start = times(&timeinfo);

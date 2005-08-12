@@ -942,13 +942,13 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (nmax < 0 || nmax == NA_INTEGER)		nmax = 0;
 
     if (TYPEOF(stripwhite) != LGLSXP)
-	errorcall(call, _("invalid 'strip.white' value"));
+	errorcall(call, _("invalid '%s' value"), "strip.white");
     if (length(stripwhite) != 1 && length(stripwhite) != length(what))
 	errorcall(call, _("invalid 'strip.white' length"));
     if (TYPEOF(data.NAstrings) != STRSXP)
-	errorcall(call, _("invalid 'na.strings' value"));
+	errorcall(call, _("invalid '%s' value"), "na.strings");
     if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
-	errorcall(call, _("invalid 'comment.char' value"));
+	errorcall(call, _("invalid '%s' value"), "comment.char");
 
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
@@ -959,7 +959,7 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    data.sepchar = (unsigned char) sc[0];
 	}
 	/* gets compared to chars: bug prior to 1.7.0 */
-    } else errorcall(call, _("invalid 'sep' value"));
+    } else errorcall(call, _("invalid '%s' value"), "sep");
 
     if (isString(dec) || isNull(dec)) {
 	if (length(dec) == 0)
@@ -994,10 +994,11 @@ SEXP do_scan(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
-    if (strlen(p) > 1) errorcall(call, _("invalid 'comment.char' value"));
+    if (strlen(p) > 1) 
+	errorcall(call, _("invalid '%s' value"), "comment.char");
     else if (strlen(p) == 1) data.comchar = (unsigned char)*p;
     if(escapes == NA_LOGICAL)
-	errorcall(call, _("invalid 'allowEscapes' value"));
+	errorcall(call, _("invalid '%s' value"), "allowEscapes");
     data.escapes = escapes != 0;
 
     i = asInteger(file);
@@ -1075,10 +1076,11 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
     blskip = asLogical(CAR(args)); args = CDR(args);
     comstr = CAR(args);
     if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
-	errorcall(call, _("invalid 'comment.char' value"));
+	errorcall(call, _("invalid '%s' value"), "comment.char");
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
-    if (strlen(p) > 1) errorcall(call, _("invalid 'comment.char' value"));
+    if (strlen(p) > 1)
+	errorcall(call, _("invalid '%s' value"), "comment.char");
     else if (strlen(p) == 1) data.comchar = (unsigned char)*p;
 
     if (nskip < 0 || nskip == NA_INTEGER) nskip = 0;
@@ -1088,7 +1090,7 @@ SEXP do_countfields(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (length(sep) == 0) data.sepchar = 0;
 	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
 	/* gets compared to chars: bug prior to 1.7.0 */
-    } else errorcall(call, _("invalid 'sep' value"));
+    } else errorcall(call, _("invalid '%s' value"), "sep");
 
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
@@ -1251,7 +1253,7 @@ SEXP do_typecvt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     data.NAstrings = CADR(args);
     if (TYPEOF(data.NAstrings) != STRSXP)
-	errorcall(call, _("invalid 'na.strings' value"));
+	errorcall(call, _("invalid '%s' value"), "na.strings");
 
     asIs = asLogical(CADDR(args));
     if (asIs == NA_LOGICAL) asIs = 0;
@@ -1528,7 +1530,7 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
     sep = CAR(args);
 
     if (nlines <= 0 || nlines == NA_INTEGER)
-	errorcall(call, _("invalid 'nlines' value"));
+	errorcall(call, _("invalid '%s' value"), "nlines");
     if (blskip == NA_LOGICAL) blskip = 1;
     if (isString(quotes)) {
 	/* This appears to be necessary to protect quoteset against GC */
@@ -1548,16 +1550,17 @@ SEXP do_readtablehead(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("invalid quote symbol set"));
 
     if (TYPEOF(comstr) != STRSXP || length(comstr) != 1)
-	errorcall(call, _("invalid 'comment.char' value"));
+	errorcall(call, _("invalid '%s' value"), "comment.char");
     p = CHAR(STRING_ELT(comstr, 0));
     data.comchar = NO_COMCHAR; /*  here for -Wall */
-    if (strlen(p) > 1) errorcall(call, _("invalid 'comment.char' value"));
+    if (strlen(p) > 1) 
+	errorcall(call, _("invalid '%s' value"), "comment.char");
     else if (strlen(p) == 1) data.comchar = (int)*p;
     if (isString(sep) || isNull(sep)) {
 	if (length(sep) == 0) data.sepchar = 0;
 	else data.sepchar = (unsigned char) CHAR(STRING_ELT(sep, 0))[0];
 	/* gets compared to chars: bug prior to 1.7.0 */
-    } else errorcall(call, _("invalid 'sep' value"));
+    } else errorcall(call, _("invalid '%s' value"), "sep");
 
     i = asInteger(file);
     data.con = getConnection(i);

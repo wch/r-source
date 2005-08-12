@@ -2550,13 +2550,13 @@ SEXP do_persp(SEXP call, SEXP op, SEXP args, SEXP env)
 	d < 0 || r < 0)
 	errorcall(call, _("invalid viewing parameters"));
     if (!R_FINITE(expand) || expand < 0)
-	errorcall(call, _("invalid 'expand' value"));
+	errorcall(call, _("invalid '%s' value"), "expand");
     if (scale == NA_LOGICAL)
 	scale = 0;
     if ((nTicks == NA_INTEGER) || (nTicks < 0))
-	errorcall(call, _("invalid 'nticks' value"));
+	errorcall(call, _("invalid '%s' value"), "nticks");
     if ((tickType == NA_INTEGER) || (tickType < 1) || (tickType > 2))
-	errorcall(call, _("invalid 'ticktype' value"));
+	errorcall(call, _("invalid '%s' value"), "ticktype");
 
     dd = CurrentDevice();
 

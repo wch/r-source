@@ -984,7 +984,7 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
         errorcall(call, _("invalid '%s' argument"), "names");
     n = length(fn);
     mode = asInteger(CADR(args));
-    if(mode < 0 || mode > 7) error(_("invalid 'mode' value"));
+    if(mode < 0 || mode > 7) error(_("invalid '%s' value"), "mode");
     modemask = 0;
     if (mode & 1) modemask |= X_OK;
     if (mode & 2) modemask |= W_OK;

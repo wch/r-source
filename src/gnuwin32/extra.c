@@ -708,7 +708,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     time = asReal(CAR(args));
     if (ISNAN(time) || time < 0)
-	errorcall(call, _("invalid 'time' value"));
+	errorcall(call, _("invalid '%s' value"), "time");
     ntime = 1000*(time) + 0.5;
     while (ntime > 0) {
 	mtime = min(500, ntime);

@@ -3012,7 +3012,7 @@ SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(expenv) != ENVSXP && expenv != R_NilValue)
 	errorcall(call, _("bad export environment argument"));
     if (TYPEOF(impnames) != STRSXP || TYPEOF(expnames) != STRSXP)
-	errorcall(call, _("invalid 'names' argument"), "names");
+	errorcall(call, _("invalid '%s' argument"), "names");
     if (LENGTH(impnames) != LENGTH(expnames))
 	errorcall(call, _("length of import and export names must match"));
 
