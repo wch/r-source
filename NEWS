@@ -232,7 +232,10 @@ NEW FEATURES
 	scientific notation (unless one is entirely zero when it is
 	always shown in fixed notation).
 
-    o	How format() works on a list is now documented, and uses
+    o	format.default() now has a 'width' argument, and 'justify' can
+	now centre character strings.
+
+	How format() works on a list is now documented, and uses
 	arguments consistently with usage on an atomic vector.
 
 
@@ -470,6 +473,9 @@ BUG FIXES
 
     o	Setting new levels on a factor dropped all existing
 	attributes, including class "ordered".
+
+    o	format(justify="left"/"right") no longer convert NA
+	character strings, as justify="none" always did not.
 
 
 

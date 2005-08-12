@@ -12,7 +12,8 @@
 format(x, \dots)
 
 \method{format}{default}(x, trim = FALSE, digits = NULL,
-       nsmall = 0, justify = c("left", "right", "none"),
+       nsmall = 0, justify = c("left", "right", "centre", "none"),
+       width = NULL,
        big.mark = "",   big.interval = 3,
      small.mark = "", small.interval = 5,
    decimal.mark = ".", \dots)
@@ -38,8 +39,12 @@ format(x, \dots)
     the decimal point in formatting real/complex numbers in
     non-scientific formats.  Allowed values are \code{0 <= nsmall <= 20}.}
   \item{justify}{should a \emph{character} vector be left-justified (the
-    default), right-justified or left alone.}
-  \item{width}{the returned vector has elements of at most \code{width}.}
+    default), right-justified, centred or left alone.}
+  \item{width}{\code{default} method: the \emph{minimum} field width or
+    \code{NULL} or \code{0} for no restriction.
+
+    \code{AsIs} method: the \emph{maximum} field width.
+  }
   \item{\dots}{further arguments passed to or from other methods.}
 
   \item{big.mark, big.interval,
@@ -71,7 +76,8 @@ format(x, \dots)
   character vectors by their methods) is done on display width (see
   \code{\link{nchar}}, taking double-width characters into account.
   Character strings are padded with blanks to the display width of the
-  widest.
+  widest.  (Missing character strings are not included in the width
+  computations.)
 }
 \value{
   An object of similar struture to \code{x} containing character

@@ -1,35 +1,18 @@
 format <- function(x, ...) UseMethod("format")
 
-###	 -----
-###----- FIXME ----- the digits handling should rather happen in
-###	 -----	     in .Internal(format(...))	in ../../../main/paste.c !
-###
 ### The new (1.2) switch "character" would be faster in .Internal()
 ### combine with "width = ", and format.char() below!
 
 format.default <-
     function(x, trim = FALSE, digits = NULL, nsmall = 0,
-             justify = c("left", "right", "none"),
+             justify = c("left", "right", "centre", "none"), width = NULL,
              big.mark = "", big.interval = 3,
              small.mark = "", small.interval = 5, decimal.mark = ".",
              ...)
 {
-    f.char <- function(x, justify) {
-	if(length(x) <= 1) return(x)
-	nc <- nchar(x, type="w")
-        nc[is.na(nc)] <- 2
-	w <- max(nc)
-	sp <- substring(paste(rep.int(" ", w), collapse=""), 1, w-nc)
-        res <- x
-	res[] <-
-	    if(justify == "left") paste(x, sp, sep="") else paste(sp, x, sep="")
-	res
-    }
-    if(!is.null(digits)) {
-	op <- options(digits=digits)
-	on.exit(options(op))
-    }
     justify <- match.arg(justify)
+    adj <- match(justify, c("left", "right", "centre", "none"))
+    adj <- c(0,1,2,-1)[adj] # to match prt_adj values.
     if(is.list(x)) {
         Call <- match.call()
         Call[[1]] <- as.name("lapply")
@@ -41,15 +24,12 @@ format.default <-
     } else {
         switch(mode(x),
                NULL = "NULL",
-               character = switch(justify,
-                                  none = x,
-                                  left = f.char(x, "left"),
-                                  right= f.char(x, "right")),
+               character = .Internal(format(x, trim, digits, nsmall, width, adj)),
                call=, expression=, "function"=, "(" = deparse(x),
                ## else: logical, numeric, complex, .. :
                ## character would be accepted, but prettyNum is inappropriate
                ## others are an error.
-               prettyNum(.Internal(format(x, trim, nsmall)),
+               prettyNum(.Internal(format(x, trim, digits, nsmall, width, -1)),
                          big.mark = big.mark, big.interval = big.interval,
                          small.mark = small.mark,
                          small.interval = small.interval,
