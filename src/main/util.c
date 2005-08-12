@@ -1089,11 +1089,11 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 	errorcall(call, _("a character vector argument expected"));
     w = asInteger(CADR(args));
     if(w != NA_INTEGER && w < 0)
-	errorcall(call, _("invalid value for 'w'"));
+	errorcall(call, _("invalid '%s' value"), "w");
     findWidth = (w == NA_INTEGER);
     s = CADDR(args);
     if(LENGTH(s) != 1 || TYPEOF(s) != STRSXP)
-	errorcall(call, _("invalid value for 'quote'"));
+	errorcall(call, _("invalid '%s' value"), "quote");
     cs = CHAR(STRING_ELT(s, 0));
     if(strlen(cs) > 0) quote = cs[0];
     if(strlen(cs) > 1)
@@ -1101,9 +1101,9 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
 		    _("only the first character of 'quote' will be used"));
     justify = asInteger(CADDDR(args));
     if(justify == NA_INTEGER) 
-	errorcall(call, _("invalid value for 'justify'"));
+	errorcall(call, _("invalid '%s' value"), "justify");
     na = asLogical(CAD4R(args));
-    if(na == NA_LOGICAL) errorcall(call, _("invalid value for 'na'"));
+    if(na == NA_LOGICAL) errorcall(call, _("invalid '%s' value"), "na");
 
     len = LENGTH(x);
     if(findWidth) {

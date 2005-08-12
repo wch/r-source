@@ -2345,11 +2345,11 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     width = asReal(CAR(args));	args = CDR(args);
     height = asReal(CAR(args)); args = CDR(args);
     if (width <= 0 || height <= 0)
-	errorcall(call, _("invalid width or height"));
+	errorcall(call, _("invalid 'width' or 'height'"));
     ps = asReal(CAR(args)); args = CDR(args);
     gamma = asReal(CAR(args)); args = CDR(args);
     if (gamma < 0 || gamma > 100)
-	errorcall(call, _("invalid gamma value"));
+	errorcall(call, _("invalid '%s' value"), "gamma");
 
     if (!isValidString(CAR(args)))
 	error(_("invalid colortype passed to X11 driver"));
@@ -2376,17 +2376,17 @@ SEXP in_do_X11(SEXP call, SEXP op, SEXP args, SEXP env)
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, _("invalid value of 'bg'"));
+	errorcall(call, _("invalid '%s' value"), "bg");
     bgcolor = RGBpar(sc, 0);
     args = CDR(args);
     sc = CAR(args);
     if (!isString(sc) && !isInteger(sc) && !isLogical(sc) && !isReal(sc))
-	errorcall(call, _("invalid value of 'canvas'"));
+	errorcall(call, _("invalid '%s' value"), "canvas");
     canvascolor = RGBpar(sc, 0);
     args = CDR(args);
     sfonts = CAR(args);
     if (!isString(sfonts) || LENGTH(sfonts) != 2)
-	errorcall(call, _("invalid value of 'fonts'"));
+	errorcall(call, _("invalid '%s' value"), "fonts");
     args = CDR(args);
     res = asInteger(CAR(args));
 

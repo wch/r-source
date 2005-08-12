@@ -1777,15 +1777,15 @@ SEXP do_writetable(SEXP call, SEXP op, SEXP args, SEXP rho)
     quote = CAR(args);		   args = CDR(args);
     qmethod = asLogical(CAR(args));
 
-    if(nr == NA_INTEGER) errorcall(call, _("invalid value for 'nr'"));
-    if(nc == NA_INTEGER) errorcall(call, _("invalid value for 'nc'"));
+    if(nr == NA_INTEGER) errorcall(call, _("invalid '%s' value"), "nr");
+    if(nc == NA_INTEGER) errorcall(call, _("invalid '%s' value"), "nc");
     if(!isNull(rnames) && !isString(rnames))
-	errorcall(call, _("invalid value for 'rnames'"));
-    if(!isString(sep)) errorcall(call, _("invalid value for 'sep'"));
-    if(!isString(eol)) errorcall(call, _("invalid value for 'eol'"));
-    if(!isString(na)) errorcall(call, _("invalid value for 'na'"));
-    if(!isString(dec)) errorcall(call, _("invalid value for 'dec'"));
-    if(qmethod == NA_LOGICAL) errorcall(call, _("invalid value for 'qmethod'"));
+	errorcall(call, _("invalid '%s' value"), "rnames");
+    if(!isString(sep)) errorcall(call, _("invalid '%s' value"), "sep");
+    if(!isString(eol)) errorcall(call, _("invalid '%s' value"), "eol");
+    if(!isString(na)) errorcall(call, _("invalid '%s' value"), "na");
+    if(!isString(dec)) errorcall(call, _("invalid '%s' value"), "dec");
+    if(qmethod == NA_LOGICAL) errorcall(call, _("invalid '%s' value"), "qmethod");
     csep = CHAR(STRING_ELT(sep, 0));
     ceol = CHAR(STRING_ELT(eol, 0));
     cna = CHAR(STRING_ELT(na, 0));

@@ -587,12 +587,12 @@ SEXP do_plot_window(SEXP call, SEXP op, SEXP args, SEXP env)
 
     xlim = CAR(args);
     if (!isNumeric(xlim) || LENGTH(xlim) != 2)
-	errorcall(call, _("invalid 'xlim'"));
+	errorcall(call, _("invalid '%s' value"), "ylim");
     args = CDR(args);
 
     ylim = CAR(args);
     if (!isNumeric(ylim) || LENGTH(ylim) != 2)
-	errorcall(call, _("invalid 'ylim'"));
+	errorcall(call, _("invalid '%s' value"), "xlim");
     args = CDR(args);
 
     logscale = FALSE;
@@ -1727,25 +1727,25 @@ static void xypoints(SEXP call, SEXP args, int *n)
     int k=0;/* -Wall */
 
     if (!isNumeric(CAR(args)) || (k = LENGTH(CAR(args))) <= 0)
-	errorcall(call, _("first argument invalid"));
+	errorcall(call, _("invalid first argument"));
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     *n = k;
     args = CDR(args);
 
     if (!isNumeric(CAR(args)) || (k = LENGTH(CAR(args))) <= 0)
-	errorcall(call, _("second argument invalid"));
+	errorcall(call, _("invalid second argument"));
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     if (k > *n) *n = k;
     args = CDR(args);
 
     if (!isNumeric(CAR(args)) || (k = LENGTH(CAR(args))) <= 0)
-	errorcall(call, _("third argument invalid"));
+	errorcall(call, _("invalid third argument"));
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     if (k > *n) *n = k;
     args = CDR(args);
 
     if (!isNumeric(CAR(args)) || (k = LENGTH(CAR(args))) <= 0)
-	errorcall(call, _("fourth argument invalid"));
+	errorcall(call, _("invalid fourth argument"));
     SETCAR(args, coerceVector(CAR(args), REALSXP));
     if (k > *n) *n = k;
     args = CDR(args);
@@ -3241,11 +3241,11 @@ SEXP do_identify(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isReal(x) || !isReal(y) || !isString(l) || !isReal(Offset))
 	    errorcall(call, _("incorrect argument type"));
 	if (tol <= 0 || ISNAN(tol))
-	    errorcall(call, _("invalid value for 'tolerance'"));
+	    errorcall(call, _("invalid '%s' value"), "tolerance");
 	if (plot == NA_LOGICAL)
-	    errorcall(call, _("invalid value for 'plot'"));
+	    errorcall(call, _("invalid '%s' value"), "plot");
 	if (atpen == NA_LOGICAL)
-	    errorcall(call, _("invalid value for 'atpen'"));
+	    errorcall(call, _("invalid '%s' value"), "atpen");
 	if (LENGTH(x) != LENGTH(y) || LENGTH(x) != LENGTH(l))
 	    errorcall(call, _("different argument lengths"));
 	n = LENGTH(x);

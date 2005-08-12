@@ -1415,7 +1415,7 @@ SEXP do_contour(SEXP call, SEXP op, SEXP args, SEXP env)
 
     method = asInteger(CAR(args)); args = CDR(args);
     if (method < 1 || method > 3)
-	errorcall(call, _("invalid value for 'method'"));
+	errorcall(call, _("invalid '%s' value"), "method");
 
     PROTECT(vfont = FixupVFont(CAR(args)));
     if (!isNull(vfont)) {

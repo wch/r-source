@@ -140,7 +140,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pattern))
         errorcall(call, _("invalid filename pattern"));
     if (!isString(tempdir))
-        errorcall(call, _("invalid 'tempdir'"));
+        errorcall(call, _("invalid '%s' value"), "tempdir");
     if (n1 < 1)
 	errorcall(call, _("no 'pattern'"));
     if (n2 < 1)

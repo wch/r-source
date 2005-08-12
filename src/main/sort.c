@@ -719,7 +719,7 @@ SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nalast = asLogical(CAR(args));
     if(nalast == NA_LOGICAL)
-	error(_("'na.last' is invalid"));
+	error(_("invalid '%s' value"), "na.last");
     args = CDR(args);
     decreasing = asLogical(CAR(args));
     if(decreasing == NA_LOGICAL)
@@ -819,7 +819,7 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     nalast = asLogical(CADR(args));
     if(nalast == NA_LOGICAL)
-	error(_("'na.last' is invalid"));
+	error(_("invalid '%s' value"), "na.last");
     decreasing = asLogical(CADDR(args));
     if(decreasing == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
