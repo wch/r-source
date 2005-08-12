@@ -249,7 +249,7 @@ SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     checkArity(op, args);
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
-	errorcall(call, _("invalid 'filename' argument"));
+	errorcall(call, _("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     dinterval = asReal(CADDR(args));
     filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));

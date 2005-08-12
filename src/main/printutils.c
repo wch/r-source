@@ -329,7 +329,7 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
 	cnt = LENGTH(s);
     }
 
-    R_AllocStringBuffer(imax2(i+2, w), buffer); /* +2 allows for quotes */
+    R_AllocStringBuffer(imax2(cnt+2, w), buffer); /* +2 allows for quotes */
     q = buffer->data;
     b = w - i - (quote ? 2 : 0); /* total amount of padding */
     if(b > 0 && justify != Rprt_adj_left) {

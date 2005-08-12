@@ -585,7 +585,7 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_target = LENGTH(target);
     dups_ok = asLogical(CADDR(args));
     if (dups_ok == NA_LOGICAL)
-	errorcall(call, _("invalid 'duplicates.ok' argument"));
+	errorcall(call, _("invalid '%s' argument"), "duplicates.ok");
 
     if (!isString(input) || !isString(target))
 	errorcall(call, _("argument is not of mode character"));

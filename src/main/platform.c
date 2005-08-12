@@ -229,7 +229,7 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(tl))
 	errorcall(call, _("invalid 'title'"));
     if (!isString(pg))
-        errorcall(call, _("invalid 'pager' specification"));
+        errorcall(call, _("invalid '%s' specification"), "pager");
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -278,10 +278,10 @@ SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = length(fn);
     if (!isString(ed))
-	errorcall(call, _("invalid 'editor' specification"));
+	errorcall(call, _("invalid '%s' specification"), "editor");
     if (n > 0) {
 	if (!isString(fn))
-	    errorcall(call, _("invalid filename specification"));
+	    errorcall(call, _("invalid '%s' specification"), "filename");
 	f = (char**) R_alloc(n, sizeof(char*));
 	title = (char**) R_alloc(n, sizeof(char*));
 	for (i = 0; i < n; i++) {
@@ -796,13 +796,13 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d))
-	errorcall(call, _("invalid 'directory' argument"));
+	errorcall(call, _("invalid '%s' argument"), "directory");
     p = CAR(args);  args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != R_NilValue)
 	pattern = 1;
     else if (!isNull(p) && !(isString(p) && length(p) < 1))
-	errorcall(call, _("invalid 'pattern' argument"));
+	errorcall(call, _("invalid '%s' argument"), "pattern");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args)); args = CDR(args);
     recursive = asLogical(CAR(args));
@@ -854,7 +854,7 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, nfile;
     checkArity(op, args);
     if (!isString(file = CAR(args)))
-        errorcall(call, _("invalid 'file' argument"));
+        errorcall(call, _("invalid '%s' argument"), "file");
     nfile = length(file);
     ans = allocVector(LGLSXP, nfile);
     for(i = 0; i < nfile; i++) {
@@ -891,19 +891,19 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     topic = CAR(args); args = CDR(args);
     if(!isString(topic) || length(topic) < 1 || isNull(topic))
-	error(_("invalid 'topic' argument"));
+	error(_("invalid '%s' argument"), "topic");
     path = CAR(args); args = CDR(args);
     if(!isString(path) || length(path) < 1 || isNull(path))
-	error(_("invalid 'path' argument"));
+	error(_("invalid '%s' argument"), "path");
     indexname = CAR(args); args = CDR(args);
     if(!isString(indexname) || length(indexname) < 1 || isNull(indexname))
-	error(_("invalid 'indexname' argument"));
+	error(_("invalid '%s' argument"), "indexname");
     sep = CAR(args); args = CDR(args);
     if(!isString(sep) || length(sep) < 1 || isNull(sep))
-	error(_("invalid 'sep' argument"));
+	error(_("invalid '%s' argument"), "sep");
     type = CAR(args);
     if(!isString(type) || length(type) < 1 || isNull(type))
-	error(_("invalid 'type' argument"));
+	error(_("invalid '%s' argument"), "type");
     strcpy(ctype, CHAR(STRING_ELT(type, 0)));
     snprintf(topicbuf, 256, "%s\t", CHAR(STRING_ELT(topic, 0)));
     ltopicbuf = strlen(topicbuf);
@@ -981,7 +981,7 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid 'names' argument"));
+        errorcall(call, _("invalid '%s' argument"), "names");
     n = length(fn);
     mode = asInteger(CADR(args));
     if(mode < 0 || mode > 7) error(_("invalid 'mode' value"));
@@ -1021,7 +1021,7 @@ SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	error(_("invalid 'category' argument"));
+	error(_("invalid '%s' argument"), "category");
     switch(cat) {
     case 1: cat = LC_ALL; break;
     case 2: cat = LC_COLLATE; break;
@@ -1051,9 +1051,9 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	errorcall(call, _("invalid 'category' argument"));
+	errorcall(call, _("invalid '%s' argument"), "category");
     if(!isString(locale) || LENGTH(locale) != 1)
-	errorcall(call, _("invalid 'locale' argument"));
+	errorcall(call, _("invalid '%s' argument"), "locale");
     switch(cat) {
     case 1:
 	cat = LC_ALL;
@@ -1086,7 +1086,7 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
     default:
-	errorcall(call, _("invalid 'category' argument"));
+	errorcall(call, _("invalid '%s' argument"), "category");
     }
     PROTECT(ans = allocVector(STRSXP, 1));
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
@@ -1183,7 +1183,7 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid 'path' argument"));
+        errorcall(call, _("invalid '%s' argument"), "path");
     n = length(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++)
@@ -1426,7 +1426,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid 'path' argument"));
+	errorcall(call, _("invalid '%s' argument"), "path");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
@@ -1461,7 +1461,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid 'path' argument"));
+	errorcall(call, _("invalid '%s' argument"), "path");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));

@@ -1689,9 +1689,9 @@ Levels: NA a b
 > paste(x)
 [1] "a"  "NA" "NA" "b" 
 > format(x)
-[1] "a " "NA" "NA" "b "
+[1] "a " "NA" NA   "b "
 > format(x, justify = "right")
-[1] " a" "NA" "NA" " b"
+[1] " a" "NA" NA   " b"
 > format(x, justify = "none")
 [1] "a"  "NA" NA   "b" 
 > ## not ideal.

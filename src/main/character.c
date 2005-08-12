@@ -118,7 +118,7 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     len = LENGTH(x);
     stype = CADR(args);
     if(!isString(stype) || LENGTH(stype) != 1)
-	errorcall(call, _("invalid 'type' arg"));
+	errorcall(call, _("invalid '%s' argument"), "type");
     type = CHAR(STRING_ELT(stype, 0));
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
@@ -2155,11 +2155,11 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(width = coerceVector(CADR(args), INTSXP));
     nw = LENGTH(width);
     if(!nw || (nw < len && len % nw))
-	errorcall(call, _("invalid 'width' argument"));
+	errorcall(call, _("invalid '%s' argument"), "width");
     for(i = 0; i < nw; i++)
 	if(INTEGER(width)[i] == NA_INTEGER ||
 	   INTEGER(width)[i] < 0)
-	    errorcall(call, _("invalid 'width' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "width");
     PROTECT(s = allocVector(STRSXP, len));
     for (i = 0; i < len; i++) {
 	if(STRING_ELT(x, i) == NA_STRING) {

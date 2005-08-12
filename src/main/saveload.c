@@ -2025,7 +2025,7 @@ SEXP do_load(SEXP call, SEXP op, SEXP args, SEXP env)
 
     aenv = CADR(args);
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
-	error(_("invalid 'envir' argument"));
+	error(_("invalid '%s' argument"), "envir");
 
     /* Process the saved file to obtain a list of saved objects. */
     fp = R_fopen(R_ExpandFileName(CHAR(STRING_ELT(fname, 0))), "rb");
@@ -2258,7 +2258,7 @@ SEXP do_loadFromConn(SEXP call, SEXP op, SEXP args, SEXP env)
     con = getConnection(asInteger(CAR(args)));
     aenv = CADR(args);
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
-	error(_("invalid envir argument"));
+	error(_("invalid '%s' argument"), "envir");
 
     R_InitConnInPStream(&in, con, R_pstream_any_format, NULL, NULL);
     return RestoreToEnv(R_Unserialize(&in), aenv);

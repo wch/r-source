@@ -900,10 +900,10 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     xi = CAR(args);
     if ( !isInteger(xi) || !(nx = LENGTH(xi)) )
-	error(_("invalid 'xinds' argument"));
+	error(_("invalid '%s' argument"), "xinds");
     yi = CADR(args);
     if ( !isInteger(yi) || !(ny = LENGTH(yi)) )
-	error(_("invalid 'yinds' argument"));
+	error(_("invalid '%s' argument"), "yinds");
     if(!LENGTH(ans = CADDR(args)) || NA_LOGICAL == (all_x = asLogical(ans)))
 	errorcall(call, _("'all.x' must be TRUE or FALSE"));
     if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))

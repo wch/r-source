@@ -85,7 +85,7 @@ SEXP do_onexit(SEXP call, SEXP op, SEXP args, SEXP rho)
 	code = CAR(args);
 	add = eval(CADR(args), rho);
 	if ( TYPEOF(add) != LGLSXP || length(add) != 1 )
-	    errorcall(call, _("invalid add argument"));
+	    errorcall(call, _("invalid '%s' argument"), "add");
 	addit = (LOGICAL(add)[0] == 1);
 	break;
     default:
@@ -304,7 +304,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     sepr = CAR(args);
     if (!isString(sepr))
-	errorcall(call, _("invalid 'sep=' specification"));
+	errorcall(call, _("invalid '%s' specification"), "sep");
     nlsep = 0;
     for (i = 0; i < LENGTH(sepr); i++)
 	if (strstr(CHAR(STRING_ELT(sepr, i)), "\n")) nlsep = 1;
@@ -312,7 +312,7 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     fill = CAR(args);
     if ((!isNumeric(fill) && !isLogical(fill)) || (length(fill) != 1))
-	errorcall(call, _("invalid 'fill' argument"));
+	errorcall(call, _("invalid '%s' argument"), "fill");
     if (isLogical(fill)) {
 	if (asLogical(fill) == 1)
 	    pwidth = R_print.width;
@@ -324,13 +324,13 @@ SEXP do_cat(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     labs = CAR(args);
     if (!isString(labs) && labs != R_NilValue)
-	errorcall(call, _("invalid 'label' argument"));
+	errorcall(call, _("invalid '%s' argument"), "label");
     lablen = length(labs);
     args = CDR(args);
 
     append = asLogical(CAR(args));
     if (append == NA_LOGICAL)
-	errorcall(call, _("invalid 'append' specification"));
+	errorcall(call, _("invalid '%s' specification"), "append");
 
     ci.wasopen = con->isopen;
 

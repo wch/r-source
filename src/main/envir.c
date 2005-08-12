@@ -1421,11 +1421,11 @@ SEXP do_assign(SEXP call, SEXP op, SEXP args, SEXP rho)
     R_Visible = 0;
     aenv = CAR(CDDR(args));
     if (TYPEOF(aenv) != ENVSXP && aenv != R_NilValue)
-	errorcall(call, _("invalid 'envir' argument"));
+	errorcall(call, _("invalid '%s' argument"), "envir");
     if (isLogical(CAR(nthcdr(args, 3))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
     else
-	errorcall(call, _("invalid 'inherits' argument"));
+	errorcall(call, _("invalid '%s' argument"), "inherits");
     if (ginherits)
 	setVar(name, val, aenv);
     else
@@ -1510,7 +1510,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     envarg = CAR(args);
     if (envarg != R_NilValue) {
 	if (TYPEOF(envarg) != ENVSXP)
-	    errorcall(call, _("invalid 'envir' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "envir");
     }
     else envarg = R_GlobalContext->sysparent;
     args = CDR(args);
@@ -1518,7 +1518,7 @@ SEXP do_remove(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isLogical(CAR(args)))
 	ginherits = asLogical(CAR(args));
     else
-	errorcall(call, _("invalid 'inherits' argument"));
+	errorcall(call, _("invalid '%s' argument"), "inherits");
 
     for (i = 0; i < LENGTH(name); i++) {
 	done = 0;
@@ -1582,7 +1582,7 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (TYPEOF(CADR(args)) == ENVSXP || CADR(args) == R_NilValue)
 	genv = CADR(args);
     else {
-	errorcall(call, _("invalid 'envir' argument"));
+	errorcall(call, _("invalid 'inherits' argument"), "envir");
 	genv = R_NilValue;  /* -Wall */
     }
 
@@ -1598,14 +1598,14 @@ SEXP do_get(SEXP call, SEXP op, SEXP args, SEXP rho)
 	else
 	    gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), 0)));
     } else {
-	errorcall(call, _("invalid 'mode' argument"));
+	errorcall(call, _("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
     }
 
     if (isLogical(CAR(nthcdr(args, 3))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 3)))[0];
     else
-	errorcall(call, _("invalid 'inherits' argument"));
+	errorcall(call, _("invalid '%s' argument"), "inherits");
 
     /* Search for the object */
     rval = findVar1mode(t1, genv, gmode, ginherits, PRIMVAL(op));
@@ -1712,7 +1712,7 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     mode = CAR(nthcdr(args, 2));
     nmode = length(mode);
     if( !isString(mode) )
-      errorcall(call, _("invalid 'mode' argument"));
+      errorcall(call, _("invalid '%s' argument"), "mode");
 
     if( nmode != nvals && nmode != 1 )
       errorcall(call, _("wrong length for 'mode' argument"));
@@ -1720,7 +1720,7 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     ifnotfound = CAR(nthcdr(args, 3));
     nifnfnd = length(ifnotfound);
     if( !isVector(ifnotfound) )
-      errorcall(call, _("invalid 'ifnotfound' argument"));
+      errorcall(call, _("invalid '%s' argument"), "ifnotfound");
 
     if( nifnfnd != nvals && nifnfnd != 1 )
       errorcall(call, _("wrong length for 'ifnotfound' argument"));
@@ -1728,7 +1728,7 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (isLogical(CAR(nthcdr(args, 4))))
 	ginherits = LOGICAL(CAR(nthcdr(args, 4)))[0];
     else
-	errorcall(call, _("invalid 'inherits' argument"));
+	errorcall(call, _("invalid '%s' argument"), "inherits");
 
     PROTECT(ans = allocVector(VECSXP, nvals));
 
@@ -1743,13 +1743,13 @@ SEXP do_mget(SEXP call, SEXP op, SEXP args, SEXP rho)
 	  gmode = str2type(CHAR(STRING_ELT(CAR(CDDR(args)), i % nmode )));
       } 
       else {
-	errorcall(call, _("invalid 'mode' argument"));
+	errorcall(call, _("invalid '%s' argument"), "mode");
 	gmode = FUNSXP;/* -Wall */
       }
 
       /* is the mode provided one of the real modes */
       if( gmode < 0 ) 
-	errorcall(call, _("invalid 'mode' argument"));
+	errorcall(call, _("invalid '%s' argument"), "mode");
 
 
       if( nifnfnd == 1 ) {
@@ -2246,7 +2246,7 @@ SEXP R_lsInternal(SEXP env, Rboolean all)
 	    k += FrameSize(FRAME(env), all);
     }
     else 
-        error(_("invalid 'envir' argument"));
+        error(_("invalid '%s' argument"), "envir");
 
     /* Step 2 : Allocate and Fill the Result */
     PROTECT(ans = allocVector(STRSXP, k));
@@ -2512,7 +2512,7 @@ SEXP do_pos2env(SEXP call, SEXP op, SEXP args, SEXP rho)
     PROTECT(pos = coerceVector(CAR(args), INTSXP));
     npos = length(pos);
     if (npos <= 0)
-	errorcall(call, _("invalid 'pos' argument"));
+	errorcall(call, _("invalid '%s' argument"), "pos");
     PROTECT(env = allocVector(VECSXP, npos));
     for (i = 0; i < npos; i++) {
 	SET_VECTOR_ELT(env, i, pos2env(INTEGER(pos)[i], call));
@@ -3012,7 +3012,7 @@ SEXP do_importIntoEnv(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (TYPEOF(expenv) != ENVSXP && expenv != R_NilValue)
 	errorcall(call, _("bad export environment argument"));
     if (TYPEOF(impnames) != STRSXP || TYPEOF(expnames) != STRSXP)
-	errorcall(call, _("bad 'names' argument"));
+	errorcall(call, _("invalid 'names' argument"), "names");
     if (LENGTH(impnames) != LENGTH(expnames))
 	errorcall(call, _("length of import and export names must match"));
 

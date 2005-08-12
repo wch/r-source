@@ -169,13 +169,13 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_print.digits == NA_INTEGER ||
 	    R_print.digits < R_MIN_DIGITS_OPT ||
 	    R_print.digits > R_MAX_DIGITS_OPT)
-		errorcall(call, _("invalid 'digits' argument"));
+		errorcall(call, _("invalid '%s' argument"), "digits");
     }
     args = CDR(args);
 
     R_print.quote = asLogical(CAR(args));
     if(R_print.quote == NA_LOGICAL)
-	errorcall(call, _("invalid 'quote' argument"));
+	errorcall(call, _("invalid '%s' argument"), "quote");
     args = CDR(args);
 
     naprint = CAR(args);
@@ -197,7 +197,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     R_print.right = asLogical(CAR(args));
     if(R_print.right == NA_LOGICAL)
-	errorcall(call, _("invalid 'right' argument"));
+	errorcall(call, _("invalid '%s' argument"), "right");
     args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
