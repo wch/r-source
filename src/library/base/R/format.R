@@ -3,7 +3,6 @@ format <- function(x, ...) UseMethod("format")
 ###	 -----
 ###----- FIXME ----- the digits handling should rather happen in
 ###	 -----	     in .Internal(format(...))	in ../../../main/paste.c !
-### also the 'names' should be kept dealt with there (dim, dimnames *are*) !
 ###
 ### The new (1.2) switch "character" would be faster in .Internal()
 ### combine with "width = ", and format.char() below!
@@ -21,9 +20,9 @@ format.default <-
         nc[is.na(nc)] <- 2
 	w <- max(nc)
 	sp <- substring(paste(rep.int(" ", w), collapse=""), 1, w-nc)
-	res <-
+        res <- x
+	res[] <-
 	    if(justify == "left") paste(x, sp, sep="") else paste(sp, x, sep="")
-	attributes(res) <- attributes(x) ## at least names, dim, dimnames
 	res
     }
     if(!is.null(digits)) {
@@ -31,31 +30,33 @@ format.default <-
 	on.exit(options(op))
     }
     justify <- match.arg(justify)
-    switch(mode(x),
-	   NULL = "NULL",
-	   character = switch(justify,
-                              none = x,
-                  	      left = f.char(x, "left"),
-                              right= f.char(x, "right")),
-	   list = sapply(lapply(x, function(x)
-				.Internal(format(unlist(x), trim, 0))),
-			 paste, collapse=", "),
-	   call=, expression=, "function"=, "(" = deparse(x),
-	   ## else: logical, numeric, complex, .. :
-           ## character would be accepted, but prettyNum is inappropriate
-           ## others are an error.
-	   { r <- prettyNum(.Internal(format(x, trim, nsmall)),
-                            big.mark = big.mark, big.interval = big.interval,
-                            small.mark = small.mark,
-                            small.interval = small.interval,
-                            decimal.mark = decimal.mark)
-             if(!is.null(a <- attributes(x)) &&
-                !is.null(a <- a[names(a) != "class"]))
-                 attributes(r) <- a
-             r })
+    if(is.list(x)) {
+        Call <- match.call()
+        Call[[1]] <- as.name("lapply")
+        names(Call)[2] <- ""
+        if(is.null(Call$trim)) Call$trim <- TRUE
+        if(is.null(Call$justify)) Call$justify <- "none"
+        Call$FUN <- quote(function(xx, ...) format.default(unlist(xx), ...))
+        sapply(eval(Call), paste, collapse=", ")
+    } else {
+        switch(mode(x),
+               NULL = "NULL",
+               character = switch(justify,
+                                  none = x,
+                                  left = f.char(x, "left"),
+                                  right= f.char(x, "right")),
+               call=, expression=, "function"=, "(" = deparse(x),
+               ## else: logical, numeric, complex, .. :
+               ## character would be accepted, but prettyNum is inappropriate
+               ## others are an error.
+               prettyNum(.Internal(format(x, trim, nsmall)),
+                         big.mark = big.mark, big.interval = big.interval,
+                         small.mark = small.mark,
+                         small.interval = small.interval,
+                         decimal.mark = decimal.mark)
+               )
+    }
 }
-## NOTE: Currently need non-default format.dist() -> ../../stats/R/dist.R
-
 
 ## MM: This should also happen in C(.) :
 ##	.Internal(format(..) should work  with	'width =' and 'flag=.."

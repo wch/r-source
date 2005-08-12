@@ -452,7 +452,7 @@ FUNTAB R_FunTab[] =
 {"as.character",do_ascharacter,	0,	0,	1,	{PP_FUNCALL, PREC_FN,	0}},
 {"as.vector",	do_asvector,	0,	10,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"paste",	do_paste,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
-{"format",	do_format,	0,	11,	-1,	{PP_FUNCALL, PREC_FN,	0}},
+{"format",	do_format,	0,	11,	3,	{PP_FUNCALL, PREC_FN,	0}},
 {"format.info",	do_formatinfo,	0,	11,	2,	{PP_FUNCALL, PREC_FN,	0}},
 {"cat",		do_cat,		0,	111,	6,	{PP_FUNCALL, PREC_FN,	0}},
 {"call",	do_call,	0,	0,	-1,	{PP_FUNCALL, PREC_FN,	0}},

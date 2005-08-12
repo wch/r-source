@@ -227,10 +227,13 @@ NEW FEATURES
     o	The printing of complex numbers has changed, handling numbers
 	as a whole rather than in two parts.  So both real and
 	imaginary parts are shown to the same accuracy, with the
-	'digits' parameter referring to the accuracy of the large
+	'digits' parameter referring to the accuracy of the larger
 	component, and both components are shown in fixed or
 	scientific notation (unless one is entirely zero when it is
 	always shown in fixed notation).
+
+    o	How format() works on a list is now documented, and uses
+	arguments consistently with usage on an atomic vector.
 
 
 DEPRECATED & DEFUNCT
