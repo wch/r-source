@@ -179,17 +179,14 @@ sphericity <- function(object, Sigma=diag(nrow=p),
     return(list(GG.eps=GG.eps,HF.eps=HF.eps,sigma=sigma))
 }
 
-
-
-
-anova.mlm <- function(object, ...,
-                      test=c("Pillai", "Wilks",
-                      "Hotelling-Lawley", "Roy","Spherical"),
-                      Sigma=diag(nrow=p),
-                      T = Thin.row(proj(M)-proj(X)),
-                      M = diag(nrow=p),
-                      X = ~0,
-                      idata=data.frame(index=seq(length=p)))
+anova.mlm <-
+    function(object, ...,
+             test = c("Pillai", "Wilks", "Hotelling-Lawley", "Roy", "Spherical"),
+             Sigma = diag(nrow = p),
+             T = Thin.row(proj(M) - proj(X)),
+             M = diag(nrow = p),
+             X = ~0,
+             idata = data.frame(index = seq(length=p)))
 {
     if(length(list(object, ...)) > 1){
         cl <- match.call()
