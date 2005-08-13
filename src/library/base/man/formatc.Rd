@@ -1,11 +1,9 @@
 \name{formatC}
 \alias{formatC}
-\alias{format.char}
 \alias{prettyNum}
 \description{
     Formatting numbers individually and flexibly, using \code{C} style
-    format specifications.  \code{format.char} is a helper function for
-    \code{formatC}.
+    format specifications.
 }
 \title{Formatting Using C-style Formats}
 \usage{
@@ -18,8 +16,6 @@ formatC(x, digits = NULL, width = NULL,
 prettyNum(x, big.mark = "",   big.interval = 3,
            small.mark = "", small.interval = 5,
          decimal.mark = ".", \dots)
-
-format.char(x, width = NULL, flag = "-")
 }
 \arguments{
   \item{x}{an atomic numerical or character object, typically a vector
@@ -60,9 +56,6 @@ format.char(x, width = NULL, flag = "-")
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
     others are \code{"+"}, \code{" "}, and \code{"#"}.  There can be
     more than one of these, in any order.
-
-    For \code{format.char}, a character string.  Value \code{"-"} means
-    left justification, and any other value right justification.
   }
 
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
@@ -79,14 +72,15 @@ format.char(x, width = NULL, flag = "-")
   \item{small.interval}{see \code{small.mark} above; defaults to 5.}
   \item{decimal.mark}{the character to be used to indicate the numeric
     decimal point.}
+  \item{\dots}{arguments passed to \code{format}.}
 }
 \value{
   A character object of same size and attributes as \code{x}.
   Unlike \code{\link{format}}, each number is formatted individually.
-  Looping over each element of \code{x}, \code{sprintf(\dots)} is
-  called (inside the C function \code{str_signif}).
+  Looping over each element of \code{x}, the C function
+  \code{sprintf(\dots)} is called (inside the C function \code{str_signif}).
 
-  \code{format.char(x)} and \code{formatC}, for character \code{x}, do
+  \code{formatC}: for character \code{x}, do
   simple (left or right) padding with white space.
 }
 \details{
@@ -130,7 +124,6 @@ cbind(formatC(xx, wid = 9, flag = "-"))
 cbind(formatC(xx, dig = 5, wid = 8, format = "f", flag = "0"))
 cbind(format(xx, digits=4), formatC(xx, dig = 4, format = "fg"))
 
-format.char(c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 formatC(    c("a", "Abc", "no way"), wid = -7)  # <=> flag = "-"
 formatC(c((-1:1)/0,c(1,100)*pi), wid=8, dig=1)
 

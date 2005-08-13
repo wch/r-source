@@ -74,10 +74,11 @@ format(x, \dots)
 
   Justification for character vectors (and objects converted to
   character vectors by their methods) is done on display width (see
-  \code{\link{nchar}}, taking double-width characters into account.
-  Character strings are padded with blanks to the display width of the
-  widest.  (Missing character strings are not included in the width
-  computations.)
+  \code{\link{nchar}}, taking double-width characters and the rendering
+  of special characters (as escapes, including escaping backslash) into
+  account. Character strings are padded with blanks to the display width
+  of the widest.  (Missing character strings are not included in the
+  width computations and are not encoded.)
 }
 \value{
   An object of similar struture to \code{x} containing character

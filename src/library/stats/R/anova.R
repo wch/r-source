@@ -54,16 +54,20 @@ printCoefmat <-
         }
     }
     if(length(tst.ind)>0)
-	Cf[, tst.ind]<- format(round(xm[, tst.ind], dig=dig.tst), digits=digits)
+	Cf[, tst.ind]<- format(round(xm[, tst.ind], dig = dig.tst),
+                               digits = digits)
     if(length(zap.ind)>0)
-	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], dig=digits),digits=digits)
-    if(any(r.ind <- !((1:nc) %in% c(cs.ind,tst.ind,zap.ind, if(has.Pvalue)nc))))
+	Cf[, zap.ind]<- format(zapsmall(xm[,zap.ind], dig = digits),
+                               digits = digits)
+    if(any(r.ind <- !((1:nc) %in%
+                      c(cs.ind, tst.ind, zap.ind, if(has.Pvalue)nc))))
 	Cf[, r.ind] <- format(xm[, r.ind], digits=digits)
     okP <- if(has.Pvalue) ok[, -nc] else ok
     x0 <- (xm[okP]==0) != (as.numeric(Cf[okP])==0)
     if(length(not.both.0 <- which(x0 & !is.na(x0)))) {
 	## not.both.0==TRUE:  xm !=0, but Cf[] is: --> fix these:
-	Cf[okP][not.both.0] <- format(xm[okP][not.both.0], digits= max(1,digits-1))
+	Cf[okP][not.both.0] <- format(xm[okP][not.both.0],
+                                      digits = max(1, digits-1))
     }
     if(any(ina)) Cf[ina] <- na.print
     if(P.values) {
@@ -80,7 +84,7 @@ printCoefmat <-
 		Signif <- symnum(pv, corr = FALSE, na = FALSE,
 				 cutpoints = c(0,  .001,.01,.05, .1, 1),
 				 symbols   =  c("***","**","*","."," "))
-		Cf <- cbind(Cf, format.char(Signif)) #format.ch: right=TRUE
+		Cf <- cbind(Cf, format(Signif)) #format.ch: right=TRUE
 	    }
 	} else signif.stars <- FALSE
     } else signif.stars <- FALSE

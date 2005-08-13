@@ -42,7 +42,6 @@ USER-VISIBLE CHANGES
 
     o	The default for 'gcFirst' in system.time() is now TRUE.
 
-    o   anova.mlm() now handles single-model case
 
 NEW FEATURES
 
@@ -239,6 +238,8 @@ NEW FEATURES
 	How format() works on a list is now documented, and uses
 	arguments consistently with usage on an atomic vector.
 
+    o   anova.mlm() now handles single-model case.
+
 
 DEPRECATED & DEFUNCT
 
@@ -254,6 +255,8 @@ DEPRECATED & DEFUNCT
 
     o	write.table0() is deprecated in favour of the much faster
 	write.table().
+
+    o	format.char() is deprecated in favour of format.default().
 
     o	R_HOME/etc/Rprofile is no longer looked for if
 	R_HOME/etc/Rprofile.site does not exist.  (This has been
