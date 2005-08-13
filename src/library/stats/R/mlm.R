@@ -116,7 +116,6 @@ mauchley.test.SSD <- function(object, Sigma=diag(nrow=p),
     B <- T %*% object$SSD %*% t(T)
     pp <- nrow(T)
     U <- solve(Psi,B)
-    lambda <- Re(eigen(U, symmetric=TRUE)$values)
     n <- object$df
     logW <- log(det(U)) - pp * log(Tr(U/pp))
     ## Asymptotic mumbojumbo (from TWA)....
@@ -185,7 +184,7 @@ sphericity <- function(object, Sigma=diag(nrow=p),
 
 anova.mlm <- function(object, ...,
                       test=c("Pillai", "Wilks",
-                      "Hotelling-Lawley", "Roy"," Spherical"),
+                      "Hotelling-Lawley", "Roy","Spherical"),
                       Sigma=diag(nrow=p),
                       T = Thin.row(proj(M)-proj(X)),
                       M = diag(nrow=p),
@@ -196,35 +195,130 @@ anova.mlm <- function(object, ...,
         cl <- match.call()
         cl[[1]] <- anova.mlmlist
         return(eval.parent(cl))
+    } else {
+        p <- ncol(SSD(object)$SSD)
+        Xmis <- missing(X)
+        Mmis <- missing(M)
+        if (missing(T)){
+            orig.M <- M # keep for printing
+            orig.X <- X
+            if (class(M) == "formula") M <- model.matrix(M, idata)
+            if (class(X) == "formula") X <- model.matrix(X, idata)
+            if (Rank(cbind(M,X)) != Rank(M))
+                stop("X does not define a subspace of M")
+        }
+        title <- "Analysis of Variance Table\n"
+        transformnote <- if (!missing(T))
+            c("\nContrast matrix", apply(format(T),1,paste, collapse=" "))
+        else
+            c(
+              if (!Xmis)
+              c("\nContrasts orthogonal to",
+                if (is.matrix(orig.X))
+                apply(format(X), 2,paste, collapse=" ")
+                else deparse(formula(orig.X)),"",
+                if (!Mmis)
+                c("\nContrasts spanned by",
+                  if (is.matrix(orig.M))
+                  apply(format(M), 2,paste, collapse=" ")
+                  else deparse(formula(orig.M)),""
+                  )
+                )
+              )
+        epsnote <- NULL
+
+        ssd <- SSD(object)
+        rk <- object$rank
+        pp <- nrow(T)
+        if(rk > 0) {
+            p1 <- 1:rk
+            comp <- object$effects[p1,]
+            asgn <- object$assign[object$qr$pivot][p1]
+            nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
+            tlabels <- nmeffects[1 + unique(asgn)]
+            ss <- lapply(split(comp,asgn), function(x) crossprod(t(x)))
+            df <- sapply(split(asgn,  asgn), length)
+        } else {
+#            ss <- ssr
+#            df <- dfr
+#            tlabels <- character(0)
+        }
+        test <- match.arg(test)
+        nmodels <- length(ss)
+        if(test == "Spherical"){
+            df.res <- ssd$df
+            sph <- sphericity(ssd, T=T, Sigma=Sigma)
+            epsnote <- c(paste(format(c("Greenhouse-Geisser epsilon:",
+                                        "Huynh-Feldt epsilon:")),
+                               format(c(sph$GG.eps, sph$HF.eps),digits=4)),
+                         "")
+
+            Psi <- T %*% Sigma %*% t(T)
+            stats <- matrix(NA, nmodels+1, 6)
+            colnames(stats) <- c("F", "num Df", "den Df",
+                                 "Pr(>F)", "G-G Pr", "H-F Pr")
+            for(i in 1:nmodels) {
+                s2 <- Tr(solve(Psi,T %*% ss[[i]] %*% t(T)))/pp/df[i]
+                Fval <- s2/sph$sigma
+                stats[i,1:3] <- abs(c(Fval, df[i]*pp, df.res*pp))
+            }
+            stats[,4] <- pf(stats[,1], stats[,2], stats[,3], lower.tail=FALSE)
+            stats[,5] <- pf(stats[,1],
+                            stats[,2]*sph$GG.eps, stats[,3]*sph$GG.eps,
+                            lower.tail=FALSE)
+            stats[,6] <- pf(stats[,1],
+                            stats[,2]*min(1,sph$HF.eps),
+                            stats[,3]*min(1,sph$HF.eps),
+                            lower.tail=FALSE)
+        } else {
+            df.res <- ssd$df
+            rss.qr <- qr(T %*% ssd$SSD %*% t(T))
+            if(rss.qr$rank < pp)
+                stop("residuals have rank ", rss.qr$rank," < ", pp)
+            eigs <- array(NA, c(nmodels, pp))
+            stats <- matrix(NA, nmodels+1, 5)
+            colnames(stats) <- c(test, "approx F", "num Df", "den Df",
+                                       "Pr(>F)")
+
+            for(i in 1:nmodels) {
+                eigs[i, ] <- Re(eigen(qr.coef(rss.qr,
+                                              T %*% ss[[i]] %*% t(T)),
+                                      symmetric = FALSE)$values)
+                stats[i, 1:4] <-
+                    switch(test,
+                           "Pillai" = Pillai(eigs[i,  ],
+                           df[i], df.res),
+                           "Wilks" = Wilks(eigs[i,  ],
+                           df[i], df.res),
+                           "Hotelling-Lawley" = HL(eigs[i,  ],
+                           df[i], df.res),
+                           "Roy" = Roy(eigs[i,  ],
+                           df[i], df.res))
+                ok <- stats[, 2] >= 0 & stats[, 3] > 0 & stats[, 4] > 0
+                ok <- !is.na(ok) & ok
+                stats[ok, 5] <- pf(stats[ok, 2], stats[ok, 3], stats[ok, 4],
+                                   lower.tail = FALSE)
+
+            }
+
+        }
+        table <- data.frame(Df=c(df,ssd$df), stats)
+        row.names(table) <- c(tlabels, "Residuals")
+#        if(attr(object$terms,"intercept")) table <- table[-1, ]
+        structure(table, heading = c(title, transformnote, epsnote),
+                  class = c("anova", "data.frame"))
+
+#        f <- ms/(ssr/dfr)
+#        P <- pf(f, df, dfr, lower.tail = FALSE)
+#        table <- data.frame(df, ss, ms, f, P)
+#        table[length(P), 4:5] <- NA
+#        dimnames(table) <- list(c(tlabels, "Residuals"),
+#                                c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
+#        if(attr(object$terms,"intercept")) table <- table[-1, ]
+#        structure(table, heading = c("Analysis of Variance Table\n",
+#                         paste("Response:", deparse(formula(object)[[2]]))),
+#                  class= c("anova", "data.frame"))# was "tabular"
     }
-    stop("one-argument anova() not implemented for 'mlm' objects")
-### This is the code for simple lm.
-#     ssd <- SSD(object)
-#     p <- object$rank
-#     if(p > 0) {
-#         p1 <- 1:p
-#         comp <- object$effects[p1]
-#         asgn <- object$assign[object$qr$pivot][p1]
-#         nmeffects <- c("(Intercept)", attr(object$terms, "term.labels"))
-#         tlabels <- nmeffects[1 + unique(asgn)]
-#         ss <- c(unlist(lapply(split(comp^2,asgn), sum)), ssr)
-#         df <- c(unlist(lapply(split(asgn,  asgn), length)), dfr)
-#     } else {
-#         ss <- ssr
-#         df <- dfr
-#         tlabels <- character(0)
-#     }
-#     ms <- ss/df
-#     f <- ms/(ssr/dfr)
-#     P <- pf(f, df, dfr, lower.tail = FALSE)
-#     table <- data.frame(df, ss, ms, f, P)
-#     table[length(P), 4:5] <- NA
-#     dimnames(table) <- list(c(tlabels, "Residuals"),
-#                             c("Df","Sum Sq", "Mean Sq", "F value", "Pr(>F)"))
-#     if(attr(object$terms,"intercept")) table <- table[-1, ]
-#     structure(table, heading = c("Analysis of Variance Table\n",
-# 		     paste("Response:", deparse(formula(object)[[2]]))),
-# 	      class= c("anova", "data.frame"))# was "tabular"
 }
 
 Pillai <- function(eig, q, df.res)
@@ -311,7 +405,7 @@ anova.mlmlist <- function (object, ...,
     ## calculate the number of models
     nmodels <- length(objects)
     if (nmodels == 1)
-	return(anova.lm(object))
+	return(anova.mlm(object))
 
     ## extract statistics
 

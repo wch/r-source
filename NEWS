@@ -42,6 +42,7 @@ USER-VISIBLE CHANGES
 
     o	The default for 'gcFirst' in system.time() is now TRUE.
 
+    o   anova.mlm() now handles single-model case
 
 NEW FEATURES
 
