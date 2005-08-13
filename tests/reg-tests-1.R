@@ -3781,4 +3781,8 @@ f1
 (new <- attributes(f1))
 new$levels <- old$levels <- NULL
 stopifnot(identical(old, new))
+f2 <- factor(letters[1:4])
+levels(f2) <- as.character(c(1:3, NA))
+f2
+stopifnot(nlevels(f2) == 3)
 ## dropped other attributes < 2.2.0.

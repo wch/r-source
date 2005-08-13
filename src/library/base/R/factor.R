@@ -49,6 +49,7 @@ nlevels <- function(x) length(levels(x))
         if (length(xlevs) > length(value))
             stop("number of levels differs")
         nlevs <- xlevs <- as.character(value)
+        nlevs <- nlevs[!is.na(nlevs)]
     }
     ## take care here not to drop attributes, including class.
     ## factor(xlevs[x], levels = unique(nlevs))
