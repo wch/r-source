@@ -11,13 +11,14 @@ format.default <-
     adj <- match(justify, c("left", "right", "centre", "none"))
     adj <- c(0,1,2,-1)[adj] # to match prt_adj values.
     if(is.list(x)) {
-        Call <- match.call()
-        Call[[1]] <- as.name("lapply")
-        names(Call)[2] <- ""
-        if(is.null(Call$trim)) Call$trim <- TRUE
-        if(is.null(Call$justify)) Call$justify <- "none"
-        Call$FUN <- quote(function(xx, ...) format.default(unlist(xx), ...))
-        sapply(eval(Call), paste, collapse=", ")
+        ## do it this way to force evaluation
+        res <- lapply(x, FUN=function(xx, ...) format.default(unlist(xx),...),
+                      trim = TRUE, digits = digits, nsmall = nsmall,
+                      justify = "none", width = width, big.mark = big.mark,
+                      big.interval = big.internal, small.mark = small.mark,
+                      small.interval = small.interval,
+                      decimal.mark = decimal.mark, ...)
+        sapply(res, paste, collapse=", ")
     } else {
         switch(mode(x),
                NULL = "NULL",
