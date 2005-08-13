@@ -843,7 +843,7 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(xmax > 100000) errorcall(call, _("too large a range of values in 'x'"));
     napos = off ? 0 : xmax + 1;
     off -= xmin;
-    cnts = Calloc(xmax+1, unsigned int);
+    cnts = (unsigned int *) alloca((xmax+1)*sizeof(unsigned int));
 
     for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
     for(i = 0; i < n; i++) {
@@ -863,7 +863,6 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = i+1;
 	}
 
-    Free(cnts);
     UNPROTECT(1);
     return ans;
 }
