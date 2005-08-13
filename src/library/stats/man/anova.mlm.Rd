@@ -3,8 +3,8 @@
 \alias{anova.mlmlist}
 \title{Comparisons between Multivariate Linear Models}
 \description{
-  Compute gereralized analysis of variance table for a list of
-  multivariate linear models.
+  Compute gereralized analysis of variance table for one or more 
+  multivariate linear models. 
 }
 \usage{
 \method{anova}{mlm}(object, ...,
@@ -53,6 +53,11 @@
   
   As with \code{anova.lm}, all test statistics use the SSD matrix from
   the largest model considered as the (generalized) denominator.
+
+  Contrary to other \code{anova} methods, the intercept is not excluded
+  from the display in the single-model case. When contrast
+  transformations are involved, it often makes good sense to test for a
+  zero intercept.
 }
 \value{
    An object of class \code{"anova"} inheriting from class \code{"data.frame"}
@@ -72,7 +77,7 @@
 \examples{
 example(SSD) # Brings in the mlmfit and reacttime objects
 
-mlmfit0 <- update(mlmfit,~0)
+mlmfit0 <- update(mlmfit, ~0)
 
 ### Traditional tests of intrasubj. contrasts
 ## Using MANOVA techniques on contrasts:
@@ -91,6 +96,11 @@ anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ noise, idata = idata,
           test="Spherical" )
 anova(mlmfit, mlmfit0, M = ~ deg + noise, X = ~ deg, idata = idata,
           test="Spherical" )
+
+f <- factor(rep(1:2,5)) # bogus, just for illustration
+mlmfit2 <- update(mlmfit, ~f)
+anova(mlmfit2, mlmfit, mlmfit0, X=~1, test="Spherical")
+anova(mlmfit2, X=~1, test="Spherical") # one-model form, eqiv. to previous 
 
 ### There seems to be a strong interaction in these data
 plot(colMeans(reacttime))
