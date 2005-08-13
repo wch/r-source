@@ -1087,7 +1087,7 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    int *Cnt = NULL, *c;
 	    rx = REAL(x);
 	    if (!keepNA && OP == 3) {
-		Cnt = (double *) alloca(n*sizeof(int));
+		Cnt = (int *) alloca(n*sizeof(int));
 		memset(Cnt, 0, n*sizeof(int));
 	    }
 	    memset(rans, 0, n*sizeof(double));
