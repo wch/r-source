@@ -643,7 +643,8 @@ print.summary.glm <-
     ##
     cat("\n(Dispersion parameter for ", x$family$family,
 	" family taken to be ", format(x$dispersion), ")\n\n",
-	apply(cbind(paste(format(c("Null","Residual"), width=8,), "deviance:"),
+	apply(cbind(paste(format(c("Null","Residual"), justify="right"),
+                          "deviance:"),
 		    format(unlist(x[c("null.deviance","deviance")]),
 			   digits= max(5, digits+1)), " on",
 		    format(unlist(x[c("df.null","df.residual")])),
