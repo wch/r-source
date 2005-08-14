@@ -313,16 +313,32 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x;
-    int n, nsmall, w, d, e;
-    int wi, di, ei;
+    int n, digits, nsmall, no = 1, w, d, e, wi, di, ei;
+
     checkArity(op, args);
     x = CAR(args);
     n = LENGTH(x);
-    nsmall = asInteger(CADR(args));
+    PrintDefaults(env);
+
+    digits = asInteger(CADR(args));
+    if (!isNull(CADR(args))) {
+	digits = asInteger(CADR(args));
+	if (digits == NA_INTEGER || digits < 0)
+	    errorcall(call, _("invalid '%s' argument"), "digits");
+	R_print.digits = digits;
+    }
+    nsmall = asInteger(CADDR(args));
+    if (nsmall == NA_INTEGER || nsmall < 0 || nsmall > 20)
+	errorcall(call, _("invalid '%s' argument"), "nsmall");
+
     w = 0;
     d = 0;
     e = 0;
     switch (TYPEOF(x)) {
+
+    case RAWSXP:
+	formatRaw(RAW(x), n, &w);
+	break;
 
     case LGLSXP:
 	formatLogical(LOGICAL(x), n, &w);
@@ -333,27 +349,37 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
 	break;
 
     case REALSXP:
+	no = 3;
 	formatReal(REAL(x), n, &w, &d, &e, nsmall);
 	break;
 
     case CPLXSXP:
+	no = 6;
 	wi = di = ei = 0;
 	formatComplex(COMPLEX(x), n, &w, &d, &e, &wi, &di, &ei, nsmall);
-	n = -1;/* complex 'code' */
 	break;
 
     case STRSXP:
-	formatString(STRING_PTR(x), n, &w, 0);
+    {
+	int i, il;
+	for (i = 0; i < n; i++)
+	    if (STRING_ELT(x, i) != NA_STRING) {
+		il = Rstrlen(STRING_ELT(x, i), 0);
+		if (il > w) w = il;
+	    }
+    }
 	break;
 
     default:
-	errorcall(call, _("vector arguments only"));
+	errorcall(call, _("atomic vector arguments only"));
     }
-    x = allocVector(INTSXP, (n >= 0) ? 3 : 6);
+    x = allocVector(INTSXP, no);
     INTEGER(x)[0] = w;
-    INTEGER(x)[1] = d;
-    INTEGER(x)[2] = e;
-    if(n < 0) { /*- complex -*/
+    if(no > 1) {
+	INTEGER(x)[1] = d;
+	INTEGER(x)[2] = e;
+    }
+    if(no > 3) {
 	INTEGER(x)[3] = wi;
 	INTEGER(x)[4] = di;
 	INTEGER(x)[5] = ei;

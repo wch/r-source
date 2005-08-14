@@ -35,8 +35,10 @@
 
   The same number of decimal places is used throughout a vector,  This
   means that \code{digits} specifies the minimum number of significant
-  digits to be used, and that at least one entry will be printed with
-  that minimum number.
+  digits to be used, and that at least one entry will be encoded with
+  that minimum number.  However, if all the encoded elements then have
+  trailing zeroes, the number of decimal places is reduced until at
+  least one element has a non-zero final digit.
 
   Attributes are printed respecting their class(es), using the values of
   \code{digits} to \code{print.default}, but using the default values

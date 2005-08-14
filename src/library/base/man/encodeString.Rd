@@ -9,25 +9,29 @@
   strings within a field width.
 }
 \usage{
-encodeString(x, w = 0, quote = "", na = TRUE,
-             justify = c("left", "right", "centre"))
+encodeString(x, width = 0, quote = "", na.encode = TRUE,
+             justify = c("left", "right", "centre", "none"))
 }
 \arguments{
   \item{x}{A character vector, or an object that can be coerced to one
     by \code{\link{as.character}}.}
-  \item{w}{integer: the minimum field width.  If \code{NA}, this is
-    taken to be the largest field width needed for any element of \code{x}.}
+  \item{width}{integer: the minimum field width.  If \code{NULL} or
+    \code{NA}, this is taken to be the largest field width needed for
+    any element of \code{x}.}
   \item{quote}{character: quoting character, if any.}
-  \item{na}{logical: should \code{NA} strings be encoded?}
+  \item{na.encode}{logical: should \code{NA} strings be encoded?}
   \item{justify}{character: partial matches are allowed.  If padding to
-    the minimum field width is needed, how should spaces be inserted?}
+    the minimum field width is needed, how should spaces be inserted?
+    \code{justify == "none"} is equivalent to \code{width = 0}, for
+    consistency with \code{format.default}.}
 }
 \details{
   This escapes backslash and the control characters \code{\a} (bell),
   \code{\b} (backspace), \code{\f} (formfeed), \code{\n} (line feed),
   \code{\r} (carriage return), \code{\t} (tab), \code{\v} (vertical tab)
-  and \code{\0} (nul) as well as any non-printable characters, which are
-  printed in octal notation (\code{\xyz} with leading zeroes).
+  and \code{\0} (nul) as well as any non-printable characters in a
+  single-byte locale, which are printed in octal notation
+  (\code{\xyz} with leading zeroes).
 #ifdef unix
   (Which characters are non-printable depends on the current locale.)
 #endif
@@ -36,10 +40,16 @@ encodeString(x, w = 0, quote = "", na = TRUE,
   other control characters are regarded as non-printable, and all
   characters with codes 32--255 as printable.)
 #endif
+  See \code{\link{print.default}} for how non-printable characters are
+  handled in multi-byte locales.
 
   If \code{quote} is a single or double quote any embedded quote of the
   same type is escaped.  Note that justification is of the quoted
   string, hence spaces are added outside the quotes.
+}
+\note{
+  The default for \code{width} is different from \code{format.default},
+  which as of \R 2.2.0 does similar things for character vectors.
 }
 \value{
   A character vector of the same length as \code{x}, with the same

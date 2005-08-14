@@ -240,6 +240,14 @@ NEW FEATURES
 
     o   anova.mlm() now handles single-model case.
 
+    o	encodeString() allows justify = "none" for consistency with
+	format.default().  Some argument names have been lengthened
+	for clarity.
+
+    o	format.info() now has a 'digits' argument, and is documented
+	to work for all atomic vectors (it used to work for all but
+	raw vectors.).
+
 
 DEPRECATED & DEFUNCT
 
@@ -480,6 +488,10 @@ BUG FIXES
 
     o	format(justify="left"/"right") no longer convert NA
 	character strings, as justify="none" always did not.
+
+    o	format.info() often gave a different field width from format()
+	for character vectors (e.g. including missing values or
+	non-printable characters).
 
 
 

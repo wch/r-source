@@ -866,7 +866,8 @@ int yywrap(void);
 typedef enum {
     Rprt_adj_left = 0,
     Rprt_adj_right = 1,
-    Rprt_adj_centre = 2
+    Rprt_adj_centre = 2,
+    Rprt_adj_none = 3
 } Rprt_adj;
 
 int	Rstrlen(SEXP, int);

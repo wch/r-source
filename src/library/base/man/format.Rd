@@ -61,7 +61,7 @@ format(x, \dots)
 
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
-  Methodd for columns are often similar to \code{as.character} but offer
+  Methods for columns are often similar to \code{as.character} but offer
   more control.
 
   \code{format.factor} converts the factor to a character vector and
@@ -70,32 +70,39 @@ format(x, \dots)
   \code{format.AsIs} deals with columns of complicated objects that
   have been extracted from a data frame.  Character objects are passed
   to the default method (and so \code{width} does not apply).
-  Otherwise it calls \code{\link{toString}} to convert to the object
+  Otherwise it calls \code{\link{toString}} to convert the object
   to character (if a vector or list, element by element) and then
   right-justifies the result.
 
   Justification for character vectors (and objects converted to
   character vectors by their methods) is done on display width (see
   \code{\link{nchar}}, taking double-width characters and the rendering
-  of special characters (as escapes, including escaping backslash) into
-  account. Character strings are padded with blanks to the display width
-  of the widest.  (Missing character strings are not included in the
-  width computations and are not encoded.)
+  of special characters (as escape sequences, including escaping
+  backslash: see \code{\link{print.default}}) into account.  Character
+  strings are padded with blanks to the display width of the widest.
+  (Missing character strings are not included in the width computations
+  and are not encoded.)
+
+  Numeric vectors are encoded with the minimum number of decimal places
+  needed to display all the elements to at least the \code{digit}
+  significant digits.  However, if all the elements then have trailing
+  zeroes, the number of decimal places is reduced until at least one
+  element has a non-zero final digit.
 }
 \value{
-  An object of similar struture to \code{x} containing character
+  An object of similar structure to \code{x} containing character
   representations of the elements of the first argument \code{x}
   in a common format.
 
   For numeric or complex \code{x}, dims and dimnames are preserved on
-  arrays and names on vectors: as from \R 2.2.0 no other attributes
-  are copied.
+  matrices/arrays and names on vectors: as from \R 2.2.0 no other
+  attributes are copied.
 
   If \code{x} is a list, the result is a character vector obtained by
   applying \code{format.default(x, \dots)} to each element of the list
   (after \code{\link{unlist}}ing elements which are themselves lists),
   and then collapsing the result for each element with
-  \code{paste(collapse=", ")}.  The defaults in this case are
+  \code{paste(collapse = ", ")}.  The defaults in this case are
   \code{trim = TRUE, justify = "none"} since one does not usually want
   alignment in the collapsed strings.
 }
@@ -106,9 +113,10 @@ format(x, \dots)
 }
 
 \seealso{
-  \code{\link{format.info}} indicates how something would be formatted;
+  \code{\link{format.info}} indicates how an atomic vector would be formatted;
   \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
-  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}}.
+  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}},
+  \code{\link{encodeString}}.
 }
 \examples{
 format(1:10)

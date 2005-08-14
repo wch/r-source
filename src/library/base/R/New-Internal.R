@@ -103,7 +103,10 @@ do.call <- function(what,args,quote=FALSE) {
 }
 
 drop <- function(x).Internal(drop(x))
-format.info <- function(x, nsmall=0).Internal(format.info(x, nsmall))
+
+format.info <- function(x, digits=NULL, nsmall=0)
+    .Internal(format.info(x, digits, nsmall))
+
 gc <- function(verbose = getOption("verbose"),  reset=FALSE)
 {
     res <-.Internal(gc(verbose,reset))/c(1, 1, 10, 10, 1, 1, rep(10,4),rep(1,2),rep(10,2))
@@ -191,13 +194,14 @@ is.numeric.factor <- function(x) FALSE
 is.integer.factor <- function(x) FALSE
 
 encodeString <- function(x, w = 0, quote = "", na = TRUE,
-                         justify = c("left", "right", "centre"))
+                         justify = c("left", "right", "centre", "none"))
 {
     at <- attributes(x)
     x <- as.character(x) # we want e.g. NULL to work
     attributes(x) <- at  # preserve names, dim etc
     oldClass(x) <- NULL  # but not class
-    justify <- match(match.arg(justify), c("left", "right", "centre")) - 1
+    justify <- match(match.arg(justify),
+                     c("left", "right", "centre", "none")) -1
     .Internal(encodeString(x, w, quote, justify, na))
 }
 
