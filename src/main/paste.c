@@ -141,13 +141,11 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* format.default(x, trim, nsmall) : ../library/base/R/format.R
- * --------------   See "FIXME" in that file !
- */
+/* format.default(x, trim, digits, nsmall, width, justify, na.encode) */
 SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
-    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1;
+    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na;
     int w, d, e;
     int wi, di, ei;
     char *strp;
@@ -166,7 +164,8 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 
     if (!isNull(CAR(args))) {
 	digits = asInteger(CAR(args));
-	if (digits == NA_INTEGER || digits < 0)
+	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
+	    || digits > R_MAX_DIGITS_OPT)
 	    errorcall(call, _("invalid '%s' argument"), "digits");
 	R_print.digits = digits;
     }
@@ -185,6 +184,10 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     adj = asInteger(CAR(args));
     if(adj == NA_INTEGER || adj < -1 || adj > 2)
 	errorcall(call, _("invalid '%s' argument"), "justify");
+    args = CDR(args);
+
+    na = asLogical(CAR(args));
+    if(na == NA_LOGICAL) errorcall(call, _("invalid '%s' value"), "na.encode");
 
     if ((n = LENGTH(x)) <= 0)
 	return allocVector(STRSXP, 0);
@@ -244,38 +247,39 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 	   we don't actually want to encode here */
 	char *s, *buff, *q;
 	int b, b0, cnt = 0, j;
+	SEXP s0;
 
-	w = 0; 
-	if (adj >= 0)
+	w = wd; 
+	if (adj >= 0) {
 	    for (i = 0; i < n; i++)
-		if (STRING_ELT(x, i) != NA_STRING) {
-		    il = Rstrlen(STRING_ELT(x, i), 0);
-		    if (il > w) w = il;
-		}
-	w = imax2(w, wd);
+		if (STRING_ELT(x, i) != NA_STRING)
+		    w = imax2(w, Rstrlen(STRING_ELT(x, i), 0));
+		else if (na) w = imax2(w, R_print.na_width);
+	}
 	/* now calculate the buffer size needed, in bytes */
 	for (i = 0; i < n; i++)
 	    if (STRING_ELT(x, i) != NA_STRING) {
 		il = Rstrlen(STRING_ELT(x, i), 0);
 		cnt = imax2(cnt, LENGTH(STRING_ELT(x, i)) + imax2(0, w-il));
-	    }
+	    } else if (na) cnt  = imax2(cnt, R_print.na_width);
 	buff = alloca(cnt+1);
 	PROTECT(y = allocVector(STRSXP, n));
 	for (i = 0; i < n; i++) {
-	    if(STRING_ELT(x, i) == NA_STRING) {
+	    if(!na && STRING_ELT(x, i) == NA_STRING) {
 		SET_STRING_ELT(y, i, NA_STRING);
 	    } else {
 		q = buff;
-		s = CHAR(STRING_ELT(x, i));
-		cnt = LENGTH(STRING_ELT(x, i));
-		il = Rstrlen(STRING_ELT(x, i), 0);
+		if(STRING_ELT(x, i) == NA_STRING) s0 = R_print.na_string;
+		else s0 = STRING_ELT(x, i) ;
+		s = CHAR(s0);
+		il = Rstrlen(s0, 0);
 		b = w - il;
 		if(b > 0 && adj != Rprt_adj_left) {
 		    b0 = (adj == Rprt_adj_centre) ? b/2 : b;
 		    for(j = 0 ; j < b0 ; j++) *q++ = ' ';
 		    b -= b0;
 		}
-		for(j = 0; j < cnt; j++) *q++ = *s++;
+		for(j = 0; j < LENGTH(s0); j++) *q++ = *s++;
 		if(b > 0 && adj != Rprt_adj_right) {
 		    for(j = 0 ; j < b ; j++) *q++ = ' ';
 		}
@@ -323,7 +327,8 @@ SEXP do_formatinfo(SEXP call, SEXP op, SEXP args, SEXP env)
     digits = asInteger(CADR(args));
     if (!isNull(CADR(args))) {
 	digits = asInteger(CADR(args));
-	if (digits == NA_INTEGER || digits < 0)
+	if (digits == NA_INTEGER || digits < R_MIN_DIGITS_OPT 
+	    || digits > R_MAX_DIGITS_OPT)
 	    errorcall(call, _("invalid '%s' argument"), "digits");
 	R_print.digits = digits;
     }

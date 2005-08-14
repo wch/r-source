@@ -2,7 +2,8 @@ format <- function(x, ...) UseMethod("format")
 
 format.default <-
     function(x, trim = FALSE, digits = NULL, nsmall = 0,
-             justify = c("left", "right", "centre", "none"), width = NULL,
+             justify = c("left", "right", "centre", "none"),
+             width = NULL, na.encode = TRUE,
              big.mark = "", big.interval = 3,
              small.mark = "", small.interval = 5, decimal.mark = ".",
              ...)
@@ -14,18 +15,21 @@ format.default <-
         ## do it this way to force evaluation
         res <- lapply(x, FUN=function(xx, ...) format.default(unlist(xx),...),
                       trim = TRUE, digits = digits, nsmall = nsmall,
-                      justify = "none", width = width, big.mark = big.mark,
+                      justify = "none", width = width, na.encode = na.encode,
+                      big.mark = big.mark,
                       big.interval = big.internal, small.mark = small.mark,
                       small.interval = small.interval,
                       decimal.mark = decimal.mark, ...)
-        sapply(res, paste, collapse=", ")
+        sapply(res, paste, collapse = ", ")
     } else {
         switch(mode(x),
                NULL = "NULL",
-               character = .Internal(format(x, trim, digits, nsmall, width, adj)),
+               character = .Internal(format(x, trim, digits, nsmall, width,
+                                            adj, na.encode)),
                call=, expression=, "function"=, "(" = deparse(x),
                ## else: logical, numeric, complex, .. :
-               prettyNum(.Internal(format(x, trim, digits, nsmall, width, -1)),
+               prettyNum(.Internal(format(x, trim, digits, nsmall, width,
+                                          -1, na.encode)),
                          big.mark = big.mark, big.interval = big.interval,
                          small.mark = small.mark,
                          small.interval = small.interval,

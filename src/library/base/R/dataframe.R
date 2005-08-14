@@ -1048,8 +1048,8 @@ print.data.frame <-
 	cat("<0 rows> (or 0-length row.names)\n")
     } else {
 	## avoiding picking up e.g. format.AsIs
-	print(as.matrix(format.data.frame(x, digits=digits)), ...,
-              quote = quote, right = right)
+	print(as.matrix(format.data.frame(x, digits=digits, na.encode=FALSE)),
+              ..., quote = quote, right = right)
     }
     invisible(x)
 }

@@ -13,7 +13,7 @@ format(x, \dots)
 
 \method{format}{default}(x, trim = FALSE, digits = NULL,
        nsmall = 0, justify = c("left", "right", "centre", "none"),
-       width = NULL,
+       width = NULL, na.encode = TRUE,
        big.mark = "",   big.interval = 3,
      small.mark = "", small.interval = 5,
    decimal.mark = ".", \dots)
@@ -42,6 +42,7 @@ format(x, \dots)
     default), right-justified, centred or left alone.}
   \item{width}{\code{default} method: the \emph{minimum} field width or
     \code{NULL} or \code{0} for no restriction.
+  \item{na.encode}{logical: should \code{NA} strings be encoded?}
 
     \code{AsIs} method: the \emph{maximum} field width for non-character
     objects.  \code{NULL} corresponds to the default 12.
@@ -80,8 +81,8 @@ format(x, \dots)
   of special characters (as escape sequences, including escaping
   backslash: see \code{\link{print.default}}) into account.  Character
   strings are padded with blanks to the display width of the widest.
-  (Missing character strings are not included in the width computations
-  and are not encoded.)
+  (If \code{na.encode = FALSE} missing character strings are not
+  included in the width computations and are not encoded.)
 
   Numeric vectors are encoded with the minimum number of decimal places
   needed to display all the elements to at least the \code{digit}

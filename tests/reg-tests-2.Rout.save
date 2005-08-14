@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-09 r35203)
+Version 2.2.0 Under development (unstable) (2005-08-13 r35278)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -1689,11 +1689,11 @@ Levels: NA a b
 > paste(x)
 [1] "a"  "NA" "NA" "b" 
 > format(x)
-[1] "a " "NA" NA   "b "
+[1] "a " "NA" "NA" "b "
 > format(x, justify = "right")
-[1] " a" "NA" NA   " b"
+[1] " a" "NA" "NA" " b"
 > format(x, justify = "none")
-[1] "a"  "NA" NA   "b" 
+[1] "a"  "NA" "NA" "b" 
 > ## not ideal.
 > 
 > 

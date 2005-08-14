@@ -235,8 +235,11 @@ NEW FEATURES
     o	format.default() now has a 'width' argument, and 'justify' can
 	now centre character strings.
 
+	format.default() has a new argument 'na.encode' to control
+	whether NA character strings are encoded (true by default).
+
 	How format() works on a list is now documented, and uses
-	arguments consistently with usage on an atomic vector.
+	arguments consistently with their usage on an atomic vector.
 
     o   anova.mlm() now handles single-model case.
 
@@ -486,8 +489,8 @@ BUG FIXES
     o	Setting new levels on a factor dropped all existing
 	attributes, including class "ordered".
 
-    o	format(justify="left"/"right") no longer convert NA
-	character strings, as justify="none" always did not.
+    o	format.default(justify="none") now by default converts NA
+	character strings, as the other values always did.
 
     o	format.info() often gave a different field width from format()
 	for character vectors (e.g. including missing values or
