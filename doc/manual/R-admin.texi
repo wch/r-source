@@ -278,7 +278,10 @@ make check
 @noindent
 Failures are not necessarily problems as they might be caused by missing
 functionality, but you should look carefully at any reported
-discrepancies.  To re-run the tests you would need
+discrepancies.  (Also, the @file{d-p-q-r-tests.R} is random and will
+fail about 1 in 50 runs, so if this fails please re-run @command{make
+check}.)  To re-run the tests including those successfully run you would
+need
 
 @example
 make check FORCE=FORCE
@@ -300,8 +303,9 @@ make check-all
 @noindent
 see @file{tests/README}.
 
-If these commands execute successfully, the @R{} binary will be copied
-to the @file{@var{R_HOME}/bin} directory.  In addition, a shell-script
+If the command @command{configure} and @command{make} commmands execute
+successfully, the @R{} binary will be copied to the
+@file{@var{R_HOME}/bin} directory.  In addition, a shell-script
 front-end called @file{R} will be created and copied to the same
 directory.  You can copy this script to a place where users can invoke
 it, for example to @file{/usr/local/bin/R}.  You could also copy the man
