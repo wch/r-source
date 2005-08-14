@@ -43,7 +43,8 @@ format(x, \dots)
   \item{width}{\code{default} method: the \emph{minimum} field width or
     \code{NULL} or \code{0} for no restriction.
 
-    \code{AsIs} method: the \emph{maximum} field width.
+    \code{AsIs} method: the \emph{maximum} field width for non-character
+    objects.  \code{NULL} corresponds to the default 12.
   }
   \item{\dots}{further arguments passed to or from other methods.}
 
@@ -55,7 +56,7 @@ format(x, \dots)
 \details{
   \code{format} is a generic function.  Apart from the methods described
   here there are methods for dates (see \code{\link{format.Date}}),
-  date-times (see \code{\link{format.POSIXct}})) and other classes such
+  date-times (see \code{\link{format.POSIXct}})) and for other classes such
   as \code{format.octmode} and \code{format.dist}.
 
   \code{format.data.frame} formats the data frame column by column,
@@ -67,10 +68,11 @@ format(x, \dots)
   then calls the default method (and so \code{justify} applies).
   
   \code{format.AsIs} deals with columns of complicated objects that
-  have been extracted from a data frame.  It calls
-  \code{\link{toString}} to convert to the object to character (if a
-  vector or list, element by element) and then right-justifies the
-  result.
+  have been extracted from a data frame.  Character objects are passed
+  to the default method (and so \code{width} does not apply).
+  Otherwise it calls \code{\link{toString}} to convert to the object
+  to character (if a vector or list, element by element) and then
+  right-justifies the result.
 
   Justification for character vectors (and objects converted to
   character vectors by their methods) is done on display width (see
