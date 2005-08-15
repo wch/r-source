@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,9 @@ msgstr ""
 msgid "invalid 'row.names' specification"
 msgstr ""
 
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
 msgid "invalid 'col.names' specification"
 msgstr ""
 
@@ -48,6 +51,9 @@ msgid "'file' must be a character string or connection"
 msgstr ""
 
 msgid "appending column names to file"
+msgstr ""
+
+msgid "format.char: coercing 'x' to 'character'"
 msgstr ""
 
 msgid "argument to 'La.svd' must be numeric or complex"
@@ -582,9 +588,6 @@ msgid "'vec' contains NAs"
 msgstr ""
 
 msgid "'vec' must be sorted non-decreasingly"
-msgstr ""
-
-msgid "format.char: coercing 'x' to 'character'"
 msgstr ""
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
@@ -1230,9 +1233,6 @@ msgid "No traceback available"
 msgstr ""
 
 msgid "argument to 'which' is not logical"
-msgstr ""
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
 msgstr ""
 
 msgid "attempt to change '%s' ignored"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:27\n"
+"POT-Creation-Date: 2005-08-15 11:45\n"
 "PO-Revision-Date: 2005-04-08 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -1351,9 +1351,6 @@ msgstr "目前不支持带重量的'mlm'目标对象"
 msgid "X does not define a subspace of M"
 msgstr "X不设定M的子空间"
 
-msgid "one-argument anova() not implemented for 'mlm' objects"
-msgstr "没有为'mlm'目标对象实现单变元的anova()功能"
-
 msgid "residuals have rank"
 msgstr "残差有秩"
 
@@ -1756,6 +1753,10 @@ msgstr "设定df = 1  小心使用!"
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr ""
 
+#, fuzzy
+msgid "type = \"partial\" is not yet implemented"
+msgstr "还没有为'%s'种类实现标准误的算法"
+
 msgid "not a valid \"smooth.spline\" object"
 msgstr " \"smooth.spline\"目标对象不对"
 
@@ -2048,6 +2049,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "参数%s没有在模型公式里出现过"
 msgstr[1] ""
+
+#~ msgid "one-argument anova() not implemented for 'mlm' objects"
+#~ msgstr "没有为'mlm'目标对象实现单变元的anova()功能"
 
 #~ msgid "'m' is negative"
 #~ msgstr "'m'是负数"

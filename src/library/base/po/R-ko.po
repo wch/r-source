@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -41,6 +41,9 @@ msgstr "무효인 'quote' 지정입니다"
 msgid "invalid 'row.names' specification"
 msgstr "무효인 'row.names'의 지정입니다"
 
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
 msgid "invalid 'col.names' specification"
 msgstr "무효인 'col.names' 지정입니다"
 
@@ -49,6 +52,9 @@ msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
 
 msgid "appending column names to file"
 msgstr "파일에서 열명을 추가합니다"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'의 인수는 수치나 복소수가 아니면 안됩니다"
@@ -597,9 +603,6 @@ msgstr "'vec'는 NA값을 포함하고 있습니다"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'는 비감소순서에 소트되어 있지 않으면 안됩니다"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr ""
@@ -1277,9 +1280,6 @@ msgstr "이용 할수 있는 traceback가 없습니다"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which'에서 인수는 논리값이 아닙니다"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
 
 msgid "attempt to change '%s' ignored"
 msgstr ""

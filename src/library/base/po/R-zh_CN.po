@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-02-04 08:37+0000\n"
 "Last-Translator: 陈斐 <FeiChen@FairIsaac.com>\n"
 "Language-Team: Chinese\n"
@@ -46,6 +46,9 @@ msgstr "'quote'的设定不对"
 msgid "invalid 'row.names' specification"
 msgstr "'row.names'的设定不对"
 
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
 msgid "invalid 'col.names' specification"
 msgstr "'col.names'的设定不对"
 
@@ -54,6 +57,9 @@ msgstr "'file'要么是字符串，要么是连接"
 
 msgid "appending column names to file"
 msgstr "把列名附加到文件上"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char：'x'被强迫转成'character'"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'的变元必需是数值或是复数"
@@ -591,9 +597,6 @@ msgstr "'vec'内有NA值"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'的顺序一定得从小到大"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char：'x'被强迫转成'character'"
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "'mode'的值必需是\"double\" (\"real\")或者 \"integer\"中的一个"
@@ -1250,9 +1253,6 @@ msgstr "无traceback"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which'的变元不是逻辑值"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
 
 msgid "attempt to change '%s' ignored"
 msgstr ""

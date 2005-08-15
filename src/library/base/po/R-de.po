@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-04-18 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -46,6 +46,9 @@ msgstr "ungültige 'quote' Spezifikation"
 msgid "invalid 'row.names' specification"
 msgstr "ungültige 'row.names' Spezifikation"
 
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
 msgid "invalid 'col.names' specification"
 msgstr "ungültige 'col.names' Spezifikation"
 
@@ -54,6 +57,9 @@ msgstr "'file' muss eine Zeichenkette oder eine Verbindung sein"
 
 msgid "appending column names to file"
 msgstr "hänge Spaltennamen an Datei an"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: wandle 'x' in 'character' um"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "Argument zu 'La.svd' muss numerisch oder komplex sein"
@@ -604,9 +610,6 @@ msgstr "'vec' enthält NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' muss nicht-abfallend sortiert werden"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: wandle 'x' in 'character' um"
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "'mode' muss \"double\" (\"real\") oder \"integer\" sein"
@@ -1273,9 +1276,6 @@ msgstr "Kein traceback vefügbar"
 
 msgid "argument to 'which' is not logical"
 msgstr "Argument zu 'which' ist nicht boolesch"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
 
 msgid "attempt to change '%s' ignored"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -41,6 +41,9 @@ msgstr "無効な 'quote' 指定です"
 msgid "invalid 'row.names' specification"
 msgstr "無効な 'row.names' の指定です"
 
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
 msgid "invalid 'col.names' specification"
 msgstr "無効な 'col.names' 指定です"
 
@@ -49,6 +52,9 @@ msgstr "'file' は文字列かコネクションでなければなりません"
 
 msgid "appending column names to file"
 msgstr "ファイルへの列名を加えます"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: 'x' を強 'character' へ強制変換します"
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd' への引数は数値か複素数でなければなりません"
@@ -600,9 +606,6 @@ msgstr "'vec' は NA 値を含んでいます"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' は非減少順にソートされていなければいけません"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: 'x' を強 'character' へ強制変換します"
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr ""
@@ -1284,9 +1287,6 @@ msgstr "利用できる traceback がありません"
 
 msgid "argument to 'which' is not logical"
 msgstr "'which' への引数は論理値ではありません"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr ""
 
 msgid "attempt to change '%s' ignored"
 msgstr ""

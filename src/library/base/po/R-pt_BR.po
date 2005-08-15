@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:26\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-05-13 02:57-0300\n"
 "Last-Translator: Fernando Henrique Ferraz P. da Rosa <feferraz@ime.usp.br>\n"
 "Language-Team: Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -46,6 +46,9 @@ msgstr "especificação de 'quote' inválida"
 msgid "invalid 'row.names' specification"
 msgstr "especificação de 'row.names' inválida"
 
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
+
 msgid "invalid 'col.names' specification"
 msgstr "especificação de 'col.names' inválida"
 
@@ -54,6 +57,9 @@ msgstr "'file' deve ser uma string de caracteres ou uma conexão"
 
 msgid "appending column names to file"
 msgstr "acrescentando nomes de coluna no arquivo"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: fazendo coerção de 'x' para 'character' "
 
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argumento de 'La.svd' deve ser numérico ou complexo"
@@ -611,9 +617,6 @@ msgstr "'vec' contem NAs"
 
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' deve ser ordenado de forma não-decrescente"
-
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: fazendo coerção de 'x' para 'character' "
 
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "'mode' deve ser \"double\" (\"real\") ou \"integer\""
@@ -1281,9 +1284,6 @@ msgstr "Nenhum rastreamento disponível"
 
 msgid "argument to 'which' is not logical"
 msgstr "argumento para 'which' não é lógico"
-
-msgid "col.names = NA makes no sense when row.names = FALSE"
-msgstr "col.names = NA não faz sentido com quando row.names = FALSE"
 
 msgid "attempt to change '%s' ignored"
 msgstr "tentativa de mudar '%s' ignorada"

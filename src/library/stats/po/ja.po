@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-07-13 11:08+0100\n"
+"POT-Creation-Date: 2005-08-15 11:45+0100\n"
 "PO-Revision-Date: 2005-06-02 16:10+0900\n"
 "Last-Translator: Nobuo Funao\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -167,35 +167,35 @@ msgstr "不正な lag.max 値です"
 msgid "Rf_divset: alg = %d must be 1, 2, 3, or 4"
 msgstr ""
 
-#: port.c:297
+#: port.c:304
 #, c-format
 msgid "gradient function must return a numeric vector of length %d"
 msgstr ""
 
-#: port.c:306
+#: port.c:313
 #, c-format
 msgid "Hessian function must return a square numeric matrix of order %d"
 msgstr ""
 
-#: port.c:353
+#: port.c:360
 #, fuzzy
 msgid "`rho' must be an environment"
 msgstr "rho は環境(environment)でなければなりません"
 
-#: port.c:355
+#: port.c:362
 msgid "`d' must be a nonempty numeric vector"
 msgstr ""
 
-#: port.c:357
+#: port.c:364
 msgid "When Hessian defined must also have gradient defined"
 msgstr ""
 
-#: port.c:360
+#: port.c:367
 #, c-format
 msgid "environment `rho' must contain a numeric vector `.par' of length %d"
 msgstr ""
 
-#: port.c:370
+#: port.c:377
 msgid "lowerb and upperb must be numeric vectors"
 msgstr ""
 

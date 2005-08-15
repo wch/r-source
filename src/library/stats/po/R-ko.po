@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:27\n"
+"POT-Creation-Date: 2005-08-15 11:45\n"
 "PO-Revision-Date: 2005-05-26 15:05+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -1376,10 +1376,6 @@ msgstr "중량감 포함의 'mlm' 오브젝트는 서포트 되고 있지 않습
 msgid "X does not define a subspace of M"
 msgstr "x는 m의 부분 공간을 정의 하지 않습니다"
 
-msgid "one-argument anova() not implemented for 'mlm' objects"
-msgstr ""
-"one-argument anova()는 mlm의 오브젝트에 대해서는 실제 적용되지 않습니다"
-
 msgid "residuals have rank"
 msgstr "나머지는 link를 가집니다"
 
@@ -1798,6 +1794,10 @@ msgstr "df = 1의 설정은 주의해서 사용하지 않으면 안됩니다!"
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr ""
 
+#, fuzzy
+msgid "type = \"partial\" is not yet implemented"
+msgstr "형태'%s'에 대한 SEs는 실제 적요되지 않습니다"
+
 msgid "not a valid \"smooth.spline\" object"
 msgstr "유효한 \"smooth.spline\" 오브젝트가 아닙니다"
 
@@ -2096,6 +2096,10 @@ msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] ""
 "모델식에서 파라미터 %s가 없습니다\n"
 "모델식에서 파라미터(복수) %s가 없습니다"
+
+#~ msgid "one-argument anova() not implemented for 'mlm' objects"
+#~ msgstr ""
+#~ "one-argument anova()는 mlm의 오브젝트에 대해서는 실제 적용되지 않습니다"
 
 #~ msgid "'m' is negative"
 #~ msgstr "'m'은 negative입니다"

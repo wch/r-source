@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:27\n"
-"PO-Revision-Date: 2005-08-02 18:27\n"
+"POT-Creation-Date: 2005-08-15 11:45\n"
+"PO-Revision-Date: 2005-08-15 11:45\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -1369,9 +1369,6 @@ msgstr "‘mlm’ objects with weights are not supported"
 msgid "X does not define a subspace of M"
 msgstr "X does not define a subspace of M"
 
-msgid "one-argument anova() not implemented for 'mlm' objects"
-msgstr "one-argument anova() not implemented for ‘mlm’ objects"
-
 msgid "residuals have rank"
 msgstr "residuals have rank"
 
@@ -1772,6 +1769,9 @@ msgstr "setting df = 1  __use with care!__"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr "need result of smooth.spline(*, keep.data=TRUE)"
+
+msgid "type = \"partial\" is not yet implemented"
+msgstr "type = “partial” is not yet implemented"
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr "not a valid “smooth.spline” object"

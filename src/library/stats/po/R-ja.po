@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:27\n"
+"POT-Creation-Date: 2005-08-15 11:45\n"
 "PO-Revision-Date: 2005-06-02 16:05+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -1358,9 +1358,6 @@ msgstr "重みつきの'mlm'オブジェクトはサポートされていませ�
 msgid "X does not define a subspace of M"
 msgstr "Xは Mの部分空間を定めない"
 
-msgid "one-argument anova() not implemented for 'mlm' objects"
-msgstr "one-argument anova() は mlm のオブジェクトに対してはまだ未実装です"
-
 msgid "residuals have rank"
 msgstr "残差はランクを持ちます"
 
@@ -1771,6 +1768,10 @@ msgstr "設定 df = 1 は注意して使わなければなりません！"
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr ""
 
+#, fuzzy
+msgid "type = \"partial\" is not yet implemented"
+msgstr "型 '%s' に対する SEはまだ実装されていません"
+
 msgid "not a valid \"smooth.spline\" object"
 msgstr "有効な \"smooth.spline\" オブジェクトではありません"
 
@@ -2067,6 +2068,9 @@ msgid "parameter %s does not occur in the model formula"
 msgid_plural "parameters %s do not occur in the model formula"
 msgstr[0] "モデル式中にパラメータ %s がありません"
 msgstr[1] "モデル式中にパラメータ(複数) %s がありません"
+
+#~ msgid "one-argument anova() not implemented for 'mlm' objects"
+#~ msgstr "one-argument anova() は mlm のオブジェクトに対してはまだ未実装です"
 
 #~ msgid "'m' is negative"
 #~ msgstr "'m' は負です"
