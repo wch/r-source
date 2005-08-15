@@ -42,11 +42,11 @@ format(x, \dots)
     default), right-justified, centred or left alone.}
   \item{width}{\code{default} method: the \emph{minimum} field width or
     \code{NULL} or \code{0} for no restriction.
-  \item{na.encode}{logical: should \code{NA} strings be encoded?}
 
     \code{AsIs} method: the \emph{maximum} field width for non-character
     objects.  \code{NULL} corresponds to the default 12.
   }
+  \item{na.encode}{logical: should \code{NA} strings be encoded?}
   \item{\dots}{further arguments passed to or from other methods.}
 
   \item{big.mark, big.interval,
@@ -63,7 +63,9 @@ format(x, \dots)
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
   Methods for columns are often similar to \code{as.character} but offer
-  more control.
+  more control.  Matrix and data-frame columns will be converted to
+  separate columns in the result, and character columns (normally all)
+  will be given class \code{\link{"AsIs"}}.
 
   \code{format.factor} converts the factor to a character vector and
   then calls the default method (and so \code{justify} applies).

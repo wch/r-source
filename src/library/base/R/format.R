@@ -9,16 +9,16 @@ format.default <-
              ...)
 {
     justify <- match.arg(justify)
-    adj <- match(justify, c("left", "right", "centre", "none"))
-    adj <- c(0,1,2,-1)[adj] # to match prt_adj values.
+    adj <- match(justify, c("left", "right", "centre", "none")) - 1
     if(is.list(x)) {
-        ## do it this way to force evaluation
+        ## do it this way to force evaluation of args
+        if(missing(trim)) trim <- TRUE
+        if(missing(justify)) justify <- "none"
         res <- lapply(x, FUN=function(xx, ...) format.default(unlist(xx),...),
-                      trim = TRUE, digits = digits, nsmall = nsmall,
-                      justify = "none", width = width, na.encode = na.encode,
-                      big.mark = big.mark,
-                      big.interval = big.internal, small.mark = small.mark,
-                      small.interval = small.interval,
+                      trim = trim, digits = digits, nsmall = nsmall,
+                      justify = justify, width = width, na.encode = na.encode,
+                      big.mark = big.mark, big.interval = big.internal,
+                      small.mark = small.mark, small.interval = small.interval,
                       decimal.mark = decimal.mark, ...)
         sapply(res, paste, collapse = ", ")
     } else {
@@ -29,7 +29,7 @@ format.default <-
                call=, expression=, "function"=, "(" = deparse(x),
                ## else: logical, numeric, complex, .. :
                prettyNum(.Internal(format(x, trim, digits, nsmall, width,
-                                          -1, na.encode)),
+                                          3, na.encode)),
                          big.mark = big.mark, big.interval = big.interval,
                          small.mark = small.mark,
                          small.interval = small.interval,
@@ -199,6 +199,10 @@ format.data.frame <- function(x, ..., justify = "none")
                 else rval[[i]][1:nr]
             }
         }
+    }
+    for(i in 1:nc) {
+        if(is.character(rval[[i]]) && class(rval[[i]]) == "character")
+            oldClass(rval[[i]]) <- "AsIs"
     }
     dn <- dimnames(x)
     cn <- dn[[2]]
