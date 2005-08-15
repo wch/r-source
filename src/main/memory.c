@@ -1805,7 +1805,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
     R_len_t i;
-    R_size_t size = 0, alloc_size, old_R_VSize;
+    R_size_t size = 0, actual_size, alloc_size, old_R_VSize;
     int node_class;
 
     if (length < 0 )
@@ -1817,51 +1817,57 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	return R_NilValue;
     case RAWSXP:
 	size = BYTE2VEC(length);
+	actual_size=length;
 	break;
     case CHARSXP:
 	size = BYTE2VEC(length + 1);
+	actual_size=length+1;
 	break;
     case LGLSXP:
     case INTSXP:
 	if (length <= 0)
-	    size = 0;
+	    actual_size = size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(int))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = INT2VEC(length);
+	    actual_size = length*sizeof(int);
 	}
 	break;
     case REALSXP:
 	if (length <= 0)
-	    size = 0;
+	    actual_size = size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(double))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = FLOAT2VEC(length);
+	    actual_size = length * sizeof(double);
 	}
 	break;
     case CPLXSXP:
 	if (length <= 0)
-	    size = 0;
+	    actual_size = size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(Rcomplex))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = COMPLEX2VEC(length);
+	    actual_size = length * sizeof(Rcomplex);
 	}
 	break;
     case STRSXP:
     case EXPRSXP:
     case VECSXP:
 	if (length <= 0)
-	    size = 0;
+	    actual_size = size = 0;
 	else {
 	    if (length > R_SIZE_T_MAX / sizeof(SEXP))
 		errorcall(R_GlobalContext->call,
 			  _("cannot allocate vector of length %d"), length);
 	    size = PTR2VEC(length);
+	    actual_size = length * sizeof(SEXP);
 	}
 	break;
     case LANGSXP:
@@ -1911,7 +1917,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 	    VALGRIND_MAKE_WRITABLE(s, 4); /* sizeof sxpinfo_struct */
 #endif
 #if VALGRIND_LEVEL > 1
-	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), size*sizeof(VECREC));
+	    VALGRIND_MAKE_WRITABLE(DATAPTR(s), actual_size);
 #endif
 	    s->sxpinfo = UnmarkedNodeTemplate.sxpinfo;
 	    SET_NODE_CLASS(s, node_class);
@@ -1960,7 +1966,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     if (type == EXPRSXP || type == VECSXP) {
 	SEXP *data = STRING_PTR(s);
 #if VALGRIND_LEVEL > 1
-	VALGRIND_MAKE_READABLE(STRING_PTR(s), size*sizeof(VECREC));
+	VALGRIND_MAKE_READABLE(STRING_PTR(s), actual_size);
 #endif
 	for (i = 0; i < length; i++)
 	    data[i] = R_NilValue;
@@ -1968,7 +1974,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     else if(type == STRSXP) {
 	SEXP *data = STRING_PTR(s);
 #if VALGRIND_LEVEL > 1
-	VALGRIND_MAKE_READABLE(STRING_PTR(s), size*sizeof(VECREC));
+	VALGRIND_MAKE_READABLE(STRING_PTR(s), actual_size);
 #endif
 	for (i = 0; i < length; i++){
 	    data[i] = R_BlankString;
@@ -1976,18 +1982,18 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
     }
     else if (type == CHARSXP){
 #if VALGRIND_LEVEL > 0
- 	VALGRIND_MAKE_WRITABLE(CHAR(s), size*sizeof(VECREC));
+ 	VALGRIND_MAKE_WRITABLE(CHAR(s), actual_size);
 #endif
 	CHAR(s)[length] = 0;
     } 
     else if (type == REALSXP){
 #if VALGRIND_LEVEL > 0
-	VALGRIND_MAKE_WRITABLE(REAL(s), size*sizeof(VECREC));
+	VALGRIND_MAKE_WRITABLE(REAL(s), actual_size);
 #endif
     } 
     else if (type == INTSXP){
 #if VALGRIND_LEVEL > 0
-	VALGRIND_MAKE_WRITABLE(INTEGER(s), size*sizeof(VECREC));
+	VALGRIND_MAKE_WRITABLE(INTEGER(s), actual_size);
 #endif
     }
     return s;
