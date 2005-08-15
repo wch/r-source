@@ -65,7 +65,7 @@ format(x, \dots)
   Methods for columns are often similar to \code{as.character} but offer
   more control.  Matrix and data-frame columns will be converted to
   separate columns in the result, and character columns (normally all)
-  will be given class \code{\link{"AsIs"}}.
+  will be given class \code{"\link{AsIs}"}.
 
   \code{format.factor} converts the factor to a character vector and
   then calls the default method (and so \code{justify} applies).

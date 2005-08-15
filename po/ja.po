@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@R-project.org\n"
-"POT-Creation-Date: 2005-08-12 22:19+0100\n"
+"POT-Creation-Date: 2005-08-15 16:49+0100\n"
 "PO-Revision-Date: 2005-06-02 15:24+0900\n"
 "Last-Translator: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
 "Language-Team: R-core <R-core@R-project.org>\n"
@@ -91,8 +91,8 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/gnuwin32/extra.c:588 src/gnuwin32/extra.c:596 src/gnuwin32/extra.c:623
 #: src/gnuwin32/extra.c:639 src/gnuwin32/extra.c:790 src/gnuwin32/extra.c:874
 #: src/gnuwin32/extra.c:877 src/gnuwin32/extra.c:882 src/main/builtin.c:88
-#: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:121
-#: src/main/character.c:2158 src/main/character.c:2162
+#: src/main/builtin.c:315 src/main/builtin.c:327 src/main/character.c:108
+#: src/main/character.c:2130 src/main/character.c:2134
 #: src/main/connections.c:762 src/main/connections.c:768
 #: src/main/connections.c:771 src/main/connections.c:775
 #: src/main/connections.c:898 src/main/connections.c:904
@@ -119,10 +119,12 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/envir.c:1608 src/main/envir.c:1715 src/main/envir.c:1723
 #: src/main/envir.c:1731 src/main/envir.c:1746 src/main/envir.c:1752
 #: src/main/envir.c:2249 src/main/envir.c:2515 src/main/envir.c:3015
-#: src/main/eval.c:252 src/main/model.c:1568 src/main/model.c:1576
-#: src/main/optim.c:224 src/main/paste.c:71 src/main/paste.c:164
-#: src/main/paste.c:170 src/main/paste.c:177 src/main/paste.c:182
-#: src/main/paste.c:187 src/main/platform.c:799 src/main/platform.c:805
+#: src/main/eval.c:252 src/main/eval.c:1534 src/main/eval.c:1558
+#: src/main/eval.c:1562 src/main/model.c:1568 src/main/model.c:1576
+#: src/main/optim.c:224 src/main/paste.c:71 src/main/paste.c:162
+#: src/main/paste.c:169 src/main/paste.c:176 src/main/paste.c:181
+#: src/main/paste.c:186 src/main/paste.c:191 src/main/paste.c:332
+#: src/main/paste.c:337 src/main/platform.c:799 src/main/platform.c:805
 #: src/main/platform.c:857 src/main/platform.c:894 src/main/platform.c:897
 #: src/main/platform.c:900 src/main/platform.c:903 src/main/platform.c:906
 #: src/main/platform.c:984 src/main/platform.c:1024 src/main/platform.c:1054
@@ -130,7 +132,8 @@ msgstr "R_unlink の 'names' が不正です"
 #: src/main/platform.c:1429 src/main/platform.c:1464 src/main/plot3d.c:2475
 #: src/main/plot3d.c:2479 src/main/plot3d.c:2484 src/main/plot3d.c:2488
 #: src/main/plot3d.c:2492 src/main/plot3d.c:2496 src/main/print.c:172
-#: src/main/print.c:178 src/main/print.c:200 src/main/saveload.c:2028
+#: src/main/print.c:178 src/main/print.c:200 src/main/random.c:401
+#: src/main/random.c:403 src/main/random.c:405 src/main/saveload.c:2028
 #: src/main/saveload.c:2261 src/main/sysutils.c:390 src/main/sysutils.c:392
 #: src/main/sysutils.c:394 src/main/unique.c:588 src/main/util.c:903
 #: src/main/util.c:906 src/modules/internet/internet.c:252
@@ -227,8 +230,8 @@ msgstr "loadhistory は Rgui と Rterm の中でだけ使えます"
 #: src/main/scan.c:1783 src/main/scan.c:1784 src/main/scan.c:1785
 #: src/main/scan.c:1786 src/main/scan.c:1787 src/main/scan.c:1788
 #: src/main/sort.c:722 src/main/sort.c:822 src/main/sysutils.c:143
-#: src/main/util.c:1092 src/main/util.c:1096 src/main/util.c:1104
-#: src/main/util.c:1106 src/modules/X11/devX11.c:2352
+#: src/main/util.c:1094 src/main/util.c:1099 src/main/util.c:1107
+#: src/main/util.c:1110 src/modules/X11/devX11.c:2352
 #: src/modules/X11/devX11.c:2379 src/modules/X11/devX11.c:2384
 #: src/modules/X11/devX11.c:2389 src/unix/sys-std.c:973
 #, c-format
@@ -778,31 +781,31 @@ msgid "%d arguments passed to 'log' which requires 1 or 2"
 msgstr ""
 "'log' 関数に %d 個の引数が渡されましたが，1つまたは2つでなくてはなりません"
 
-#: src/main/array.c:71
+#: src/main/array.c:70
 msgid "matrix: invalid 'byrow' value"
 msgstr "matrix 関数：'byrow' の値が不正です"
 
-#: src/main/array.c:81
+#: src/main/array.c:80
 msgid "non-numeric matrix extent"
 msgstr "配列の大きさが数値ではありません"
 
-#: src/main/array.c:86
+#: src/main/array.c:85
 msgid "matrix: invalid 'nrow' value (too large or NA)"
 msgstr "matrix 関数：'nrow' の値が不正です（大きすぎるか NA です）"
 
-#: src/main/array.c:88
+#: src/main/array.c:87
 msgid "matrix: invalid 'nrow' value (< 0)"
 msgstr "matrix 関数：'nrow' の値が不正です（負の値です）"
 
-#: src/main/array.c:91 src/main/array.c:95
+#: src/main/array.c:90 src/main/array.c:94
 msgid "matrix: invalid 'ncol' value (< 0)"
 msgstr "matrix 関数：'ncol' の値が不正です（負の値です）"
 
-#: src/main/array.c:93
+#: src/main/array.c:92
 msgid "matrix: invalid 'ncol' value (too large or NA)"
 msgstr "matrix 関数：'ncol' の値が不正です（大きすぎるか NA です）"
 
-#: src/main/array.c:101
+#: src/main/array.c:100
 #, c-format
 msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of rows [%"
@@ -811,7 +814,7 @@ msgstr ""
 "行列のデータ長 [%d] が行数  [%d] を整数で割った、もしくは掛けた値ではありませ"
 "ん "
 
-#: src/main/array.c:104
+#: src/main/array.c:103
 #, c-format
 msgid ""
 "data length [%d] is not a sub-multiple or multiple of the number of columns "
@@ -820,79 +823,79 @@ msgstr ""
 "行列のデータ長 [%d] が列数  [%d] を整数で割った、もしくは掛けた値ではありませ"
 "ん "
 
-#: src/main/array.c:107
+#: src/main/array.c:106
 msgid "data length exceeds size of matrix"
 msgstr "データの長さが行列の大きさを超えています"
 
-#: src/main/array.c:112
+#: src/main/array.c:111
 msgid "matrix: too many elements specified"
 msgstr "matrix 関数：指定された要素数が多すぎます"
 
-#: src/main/array.c:174
+#: src/main/array.c:173
 msgid "negative extents to matrix"
 msgstr "行列の大きさが負の値になっています"
 
-#: src/main/array.c:176
+#: src/main/array.c:175
 msgid "allocMatrix: too many elements specified"
 msgstr "allocMatrix において，指定された要素数が多すぎます"
 
-#: src/main/array.c:198
+#: src/main/array.c:197
 msgid "allocArray: too many elements specified by 'dims'"
 msgstr "allocArray：'dims' によって指定された要素数が多すぎます"
 
-#: src/main/array.c:343
+#: src/main/array.c:342
 msgid "incorrect number of args to 'length'"
 msgstr "'length' に対する引数の個数が正しくありません"
 
-#: src/main/array.c:362
+#: src/main/array.c:361
 msgid "incorrect number of arguments to 'row/col'"
 msgstr "'row/col' への引数の個数が正しくありません"
 
-#: src/main/array.c:364
+#: src/main/array.c:363
 msgid "a matrix is required as argument to 'row/col'"
 msgstr "'row/col' 関数の引数は行列でなければなりません"
 
-#: src/main/array.c:535
+#: src/main/array.c:534
 msgid "requires numeric matrix/vector arguments"
 msgstr "数値行列またはベクトルが要求されます"
 
-#: src/main/array.c:608 src/main/array.c:612
+#: src/main/array.c:607 src/main/array.c:611
 msgid "non-conformable arguments"
 msgstr "適切な引数ではありません"
 
-#: src/main/array.c:834
+#: src/main/array.c:833
 msgid "argument is not a matrix"
 msgstr "引数が行列ではありません"
 
-#: src/main/array.c:872
+#: src/main/array.c:871
 msgid "invalid first argument, must be an array"
 msgstr "一番目の引数が不正です。配列でなくてはなりません"
 
-#: src/main/array.c:889
+#: src/main/array.c:888
 msgid "'perm' is of wrong length"
 msgstr "'perm' の長さが誤っています"
 
-#: src/main/array.c:897
+#: src/main/array.c:896
 msgid "value out of range in 'perm'"
 msgstr "'perm' 中の値が範囲を超えています"
 
-#: src/main/array.c:900
+#: src/main/array.c:899
 msgid "invalid permutation ('perm')"
 msgstr "不正な置換です ('perm') "
 
-#: src/main/array.c:1028 src/main/connections.c:2566
+#: src/main/array.c:1027 src/main/connections.c:2566
 msgid "invalid value of 'n'"
 msgstr "'n' の値が不正です"
 
-#: src/main/array.c:1030
+#: src/main/array.c:1029
 msgid "invalid value of 'p'"
 msgstr "'p' の値が不正です"
 
-#: src/main/array.c:1031
+#: src/main/array.c:1030
 msgid "invalid value of 'na.rm'"
 msgstr "'na.rm' の値が不正です"
 
-#: src/main/array.c:1040
+#: src/main/array.c:1039
 msgid "'x' must be numeric"
 msgstr "'x' は数値でなければなりません"
 
@@ -1076,9 +1079,11 @@ msgid "argument not a list"
 msgstr "引数はリストではありません"
 
 #: src/main/bind.c:873 src/main/eval.c:1834 src/main/eval.c:1844
+#: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
+#: src/main/objects.c:681
 #, c-format
-msgid "class name too long in %s"
-msgstr "%s のクラス名が長すぎます"
+msgid "class name too long in '%s'"
+msgstr "'%s' のクラス名が長すぎます"
 
 #: src/main/bind.c:999
 msgid "cannot create a matrix from these types"
@@ -1096,7 +1101,6 @@ msgstr "行列の列数は一致していなければなりません（%d 番目
 
 #: src/main/builtin.c:51 src/main/envir.c:1417 src/main/envir.c:1570
 #: src/main/envir.c:1701 src/main/paste.c:60 src/main/plot.c:1730
-#: src/main/random.c:403
 msgid "invalid first argument"
 msgstr "一番目の引数が不正です"
 
@@ -1158,9 +1162,6 @@ msgid "length<- missing value for 'length'"
 msgstr "length <- で，'length' の値がありません"
 
 #: src/main/builtin.c:678 src/main/coerce.c:1976 src/main/coerce.c:2007
-#: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
-#: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
-#: src/main/eval.c:3036 src/main/eval.c:3128
 msgid "... used in an incorrect context"
 msgstr "... が不適切な文脈で使われました"
 
@@ -1172,153 +1173,153 @@ msgstr "'switch' 関数のパラメータが不正です"
 msgid "switch: EXPR must return a length 1 vector"
 msgstr "switch：EXPRは長さ1のベクトルを返すべきです"
 
-#: src/main/character.c:117
+#: src/main/character.c:104
 msgid "nchar() requires a character vector"
 msgstr "nchar 関数は文字ベクトルを必要とします"
 
-#: src/main/character.c:212
+#: src/main/character.c:195
 msgid "extracting substrings from a non-character object"
 msgstr "文字列でないオブジェクトから部分文字列を抽出しようとしました"
 
-#: src/main/character.c:217
+#: src/main/character.c:200
 msgid "invalid substring argument(s) in substr()"
 msgstr "substrt 関数の部分文字列引数(一つもしくは複数)が不正です"
 
-#: src/main/character.c:280
+#: src/main/character.c:261
 msgid "replacing substrings in a non-character object"
 msgstr "文字列でないオブジェクトの部分文字列の置き換えです"
 
-#: src/main/character.c:285
+#: src/main/character.c:266
 msgid "invalid substring argument(s) in substr<-()"
 msgstr "substrt <- () 関数の部分文字列引数(一つもしくは複数)が不正です"
 
-#: src/main/character.c:289
+#: src/main/character.c:270
 msgid "invalid right-hand side in substr<-()"
 msgstr "substr <- () において右辺が不正です"
 
-#: src/main/character.c:355
+#: src/main/character.c:335
 msgid "non-character argument in strsplit()"
 msgstr "strplit 関数の引数が文字列ではありません"
 
-#: src/main/character.c:363 src/main/pcre.c:112 src/main/pcre.c:312
+#: src/main/character.c:343 src/main/pcre.c:112 src/main/pcre.c:312
 #: src/main/pcre.c:482
 msgid "perl = TRUE is only fully implemented in UTF-8 locales"
 msgstr "perl=TRUE は UTF-8 ロケールに対してのみ完全実装されています"
 
-#: src/main/character.c:416 src/main/character.c:438
+#: src/main/character.c:396 src/main/character.c:418
 #, c-format
 msgid "invalid split pattern '%s'"
 msgstr "分割パターン '%s' が不正です"
 
-#: src/main/character.c:704
+#: src/main/character.c:684
 msgid "the first argument must be a string"
 msgstr "最初の引数は文字列でなくてはいけません"
 
-#: src/main/character.c:719
+#: src/main/character.c:699
 msgid "abbreviate used with non-ASCII chars"
 msgstr "ASCII 文字でないものが省略名として使われました"
 
-#: src/main/character.c:734
+#: src/main/character.c:714
 msgid "non-character names"
 msgstr "名前が文字列ではありません"
 
-#: src/main/character.c:738
+#: src/main/character.c:718
 msgid "invalid value of 'allow_'"
 msgstr "'allow_' の値が不正です"
 
-#: src/main/character.c:794 src/main/character.c:1326
+#: src/main/character.c:774 src/main/character.c:1303
 #, c-format
 msgid "invalid multibyte string %d"
 msgstr "%d は不正なマルチバイト文字です"
 
-#: src/main/character.c:875 src/main/character.c:1215 src/main/pcre.c:114
+#: src/main/character.c:855 src/main/character.c:1195 src/main/pcre.c:114
 #: src/main/pcre.c:487
 msgid "regular expression is invalid in this locale"
 msgstr "このロケールでは，正規表現は無効です"
 
-#: src/main/character.c:897 src/main/character.c:1056
-#: src/main/character.c:1218 src/main/pcre.c:121 src/main/pcre.c:333
+#: src/main/character.c:877 src/main/character.c:1036
+#: src/main/character.c:1198 src/main/pcre.c:121 src/main/pcre.c:333
 #: src/main/pcre.c:492
 #, c-format
 msgid "invalid regular expression '%s'"
 msgstr "'%s' の正規表現が不正です"
 
-#: src/main/character.c:907 src/main/character.c:1233 src/main/pcre.c:136
+#: src/main/character.c:887 src/main/character.c:1213 src/main/pcre.c:136
 #: src/main/pcre.c:366 src/main/pcre.c:507
 #, c-format
 msgid "input string %d is invalid in this locale"
 msgstr "入力文字列 %d はこのロケールでは不適切です"
 
-#: src/main/character.c:962 src/main/pcre.c:185
+#: src/main/character.c:942 src/main/pcre.c:185
 #, c-format
 msgid "invalid backreference %d in regular expression"
 msgstr "正規表現における後方参照 %d が不正です"
 
-#: src/main/character.c:1051 src/main/pcre.c:314
+#: src/main/character.c:1031 src/main/pcre.c:314
 msgid "'pattern' is invalid in this locale"
 msgstr "'pattern' は現在のロケールでは不正です"
 
-#: src/main/character.c:1053 src/main/pcre.c:316
+#: src/main/character.c:1033 src/main/pcre.c:316
 msgid "'replacement' is invalid in this locale"
 msgstr "'replacement' は現在のロケールでは不正です"
 
-#: src/main/character.c:1062
+#: src/main/character.c:1042
 msgid "zero-length pattern"
 msgstr "長さゼロのパターン"
 
-#: src/main/character.c:1302
+#: src/main/character.c:1280
 msgid "non-character argument to tolower()"
 msgstr "tolower 関数の引数が文字列ではありません"
 
-#: src/main/character.c:1376
+#: src/main/character.c:1352
 #, c-format
 msgid "decreasing range specification ('%lc-%lc')"
 msgstr "範囲指定を縮小します ('%lc-%lc') "
 
-#: src/main/character.c:1462
+#: src/main/character.c:1438
 #, c-format
 msgid "decreasing range specification ('%c-%c')"
 msgstr "範囲指定を縮小します ('%c-%c') "
 
-#: src/main/character.c:1540
+#: src/main/character.c:1516
 msgid "invalid (NA) arguments."
 msgstr "引数が不正(NA)です"
 
-#: src/main/character.c:1562
+#: src/main/character.c:1538
 msgid "invalid multibyte string 'old'"
 msgstr "'old' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1569
+#: src/main/character.c:1544
 msgid "invalid multibyte string 'new'"
 msgstr "'new' は不正なマルチバイト文字です"
 
-#: src/main/character.c:1588 src/main/character.c:1649
+#: src/main/character.c:1562 src/main/character.c:1621
 msgid "'old' is longer than 'new'"
 msgstr "'old' が 'new' より長いです"
 
-#: src/main/character.c:1605
+#: src/main/character.c:1579
 #, c-format
 msgid "invalid input multibyte string %d"
 msgstr "不正なマルチバイト文字列入力 %d です"
 
-#: src/main/character.c:1748
+#: src/main/character.c:1720
 msgid "use of agrep() in a UTF-8 locale may only work for ASCII strings"
 msgstr ""
 "UTF-8 ロケールにおける agrep 関数の使用は ASCII 文字列以外では保証されません"
 
-#: src/main/character.c:1757
+#: src/main/character.c:1729
 msgid "could not allocate memory for approximate matching"
 msgstr "近似マッチングのためのメモリを割り当てられませんでした"
 
-#: src/main/character.c:1781
+#: src/main/character.c:1753
 msgid "could not perform case insensitive matching"
 msgstr "大小文字を無視したマッチングを行なえませんでした"
 
-#: src/main/character.c:1824 src/main/character.c:2059
+#: src/main/character.c:1796 src/main/character.c:2031
 msgid "argument must be a character vector of length 1"
 msgstr "引数は長さ1の文字ベクトルでなくてはなりません"
 
-#: src/main/character.c:1826 src/main/character.c:2061
+#: src/main/character.c:1798 src/main/character.c:2033
 msgid ""
 "argument should be a character vector of length 1\n"
 "all but the first element will be ignored"
@@ -1326,46 +1327,46 @@ msgstr ""
 "引数は長さ1の文字ベクトルであるべきです\n"
 "最初の要素以外は無視されます"
 
-#: src/main/character.c:1842 src/main/character.c:1874
-#: src/main/character.c:1895
+#: src/main/character.c:1814 src/main/character.c:1846
+#: src/main/character.c:1867
 msgid "argument 'x' must be a raw vector"
 msgstr "引数 'x' は raw ベクトルでなくてはなりません"
 
-#: src/main/character.c:1845 src/main/character.c:2111
+#: src/main/character.c:1817 src/main/character.c:2083
 msgid "argument 'multiple' must be TRUE or FALSE"
 msgstr "引数 'multiple' は TRUE か FALSE でなくてはなりません"
 
-#: src/main/character.c:1876
+#: src/main/character.c:1848
 msgid "argument 'shift' must be a small integer"
 msgstr "引数 'shift' は小さな整数でなくてはなりません"
 
-#: src/main/character.c:1913
+#: src/main/character.c:1885
 msgid "argument 'x' must be a integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
-#: src/main/character.c:1933
+#: src/main/character.c:1905
 msgid "argument 'x' must be raw, integer or logical"
 msgstr "引数'x'は，raw, 整数，論理値でなくてはいけません"
 
-#: src/main/character.c:1935
+#: src/main/character.c:1907
 msgid "argument 'type' must be a character string"
 msgstr "引数 'type' は文字列でなくてはなりません"
 
-#: src/main/character.c:1939
+#: src/main/character.c:1911
 #, c-format
 msgid "argument 'x' must be a multiple of %d long"
 msgstr "引数 'x' は長さ %d の整数倍でなくてはなりません"
 
-#: src/main/character.c:1953 src/main/character.c:1968
+#: src/main/character.c:1925 src/main/character.c:1940
 msgid "argument 'x' must not contain NAs"
 msgstr "引数 'x' は，NA を含んではいけません"
 
-#: src/main/character.c:2108
+#: src/main/character.c:2080
 #, fuzzy
 msgid "argument 'x' must be an integer vector"
 msgstr "引数 'x' は整数ベクトルでなくてはなりません"
 
-#: src/main/character.c:2153
+#: src/main/character.c:2125
 msgid "strtrim() requires a character vector"
 msgstr "strtrim 関数は文字ベクトルを要求します"
 
@@ -1417,8 +1418,7 @@ msgstr "ベクトルに変換できません"
 msgid "list argument expected"
 msgstr "リスト引数が期待されています"
 
-#: src/main/coerce.c:1308 src/main/eval.c:1558 src/main/eval.c:3382
-#: src/main/eval.c:3385
+#: src/main/coerce.c:1308 src/main/eval.c:3382 src/main/eval.c:3385
 msgid "invalid environment"
 msgstr "不正な環境です"
 
@@ -2231,8 +2231,7 @@ msgstr "長さゼロの引数です"
 msgid "bad environment"
 msgstr "不正な環境です"
 
-#: src/main/deparse.c:352 src/main/eval.c:338 src/main/eval.c:784
-#: src/main/eval.c:2471
+#: src/main/deparse.c:352 src/main/eval.c:2471
 #, c-format
 msgid "Object \"%s\" not found"
 msgstr "オブジェクト \"%s\" は存在しません"
@@ -2988,8 +2987,8 @@ msgid "not in a try context"
 msgstr "トライ (try) 文脈ではありません"
 
 #: src/main/eval.c:213
-#, c-format
-msgid "Rprof: can't open profile file '%s'"
+#, fuzzy, c-format
+msgid "Rprof: cannot open profile file '%s'"
 msgstr "Rprof: プロファイル・ファイル '%s' を開くことができません"
 
 #: src/main/eval.c:246
@@ -3005,6 +3004,18 @@ msgid ""
 "evaluation nested too deeply: infinite recursion / options(expressions=)?"
 msgstr ""
 "評価があまりに深く入れ子になっています。無限の再帰か options(expressions=)？"
+
+#: src/main/eval.c:332 src/main/eval.c:425 src/main/eval.c:1380
+#: src/main/eval.c:1429 src/main/eval.c:1483 src/main/eval.c:1701
+#: src/main/eval.c:3036 src/main/eval.c:3128
+#, fuzzy
+msgid "'...' used in an incorrect context"
+msgstr "... が不適切な文脈で使われました"
+
+#: src/main/eval.c:338 src/main/eval.c:784
+#, fuzzy, c-format
+msgid "object \"%s\" not found"
+msgstr "オブジェクト \"%s\" は存在しません"
 
 #: src/main/eval.c:344 src/main/eval.c:2475
 msgid "argument is missing, with no default"
@@ -3024,8 +3035,8 @@ msgid "could not find symbol \"%s\" in environment of the generic function"
 msgstr "ジエネリック関数の環境中に \"%s\" というシンボルが見つかりませんでした"
 
 #: src/main/eval.c:730
-#, c-format
-msgid "Symbol \"%s\" not in environment of method"
+#, fuzzy, c-format
+msgid "symbol \"%s\" not in environment of method"
 msgstr "シンボル \"%s\" がメソッドの環境の中にありません"
 
 #: src/main/eval.c:840
@@ -3049,11 +3060,13 @@ msgid "non-symbol loop variable"
 msgstr "ループ変数がシンボルではありません"
 
 #: src/main/eval.c:951
-msgid "bad for() loop sequence"
+#, fuzzy
+msgid "invalid for() loop sequence"
 msgstr "for() ループが不正です"
 
 #: src/main/eval.c:1080
-msgid "... not allowed in return"
+#, fuzzy
+msgid "'...' not allowed in return"
 msgstr "... は返り値として許されません"
 
 #: src/main/eval.c:1094
@@ -3069,7 +3082,8 @@ msgid "invalid (NULL) left side of assignment"
 msgstr "代入の左辺が不正(NULL)です"
 
 #: src/main/eval.c:1175
-msgid "Target of assignment expands to non-language object"
+#, fuzzy
+msgid "target of assignment expands to non-language object"
 msgstr "付値対象は非言語オブジェクトに展開されます"
 
 #: src/main/eval.c:1214
@@ -3101,20 +3115,13 @@ msgstr "左辺への代入が不正です"
 msgid "invalid formal argument list for \"function\""
 msgstr "\"function\" の仮引数リストが不正です"
 
-#: src/main/eval.c:1534 src/main/plot.c:1742 src/main/random.c:401
-msgid "invalid third argument"
-msgstr "三番目の引数が不正です"
-
 #: src/main/eval.c:1555
 msgid "numeric 'envir' arg not of length one"
 msgstr "数値の 'envir'  引数の長さが1ではありません"
 
-#: src/main/eval.c:1562 src/main/plot.c:1736 src/main/random.c:405
-msgid "invalid second argument"
-msgstr "二番目の引数が不正です"
-
 #: src/main/eval.c:1573 src/main/eval.c:1592
-msgid "restarts not supported in eval"
+#, fuzzy
+msgid "restarts not supported in 'eval'"
 msgstr "再実行機能は eval 関数に対してはサポートされていません"
 
 #: src/main/eval.c:1639
@@ -3122,17 +3129,18 @@ msgid "'Recall' called from outside a closure"
 msgstr "クロージャの外部から 'Recall' が呼び出されました。"
 
 #: src/main/eval.c:1695
-msgid "value in ... is not a promise"
+#, fuzzy
+msgid "value in '...' is not a promise"
 msgstr "... の中の値は promise ではありません"
 
-#: src/main/eval.c:1887
+#: src/main/eval.c:1887 src/main/objects.c:655
 #, c-format
-msgid "call name too long in %s"
-msgstr "%s 中の呼び出し名が長すぎます"
+msgid "call name too long in '%s'"
+msgstr "'%s' 中の呼び出し名が長すぎます"
 
 #: src/main/eval.c:1908
-#, c-format
-msgid "generic name too long in %s"
+#, fuzzy, c-format
+msgid "generic name too long in '%s'"
 msgstr "%s のジェネリック名が長すぎます"
 
 #: src/main/eval.c:1940
@@ -3892,12 +3900,6 @@ msgstr "'UseMethod' が不適切な仕方で使われています"
 msgid "Invalid generic function in 'usemethod'"
 msgstr "'usemethod' 中に無効なジェネリック関数があります"
 
-#: src/main/objects.c:270 src/main/objects.c:309 src/main/objects.c:663
-#: src/main/objects.c:681
-#, c-format
-msgid "class name too long in '%s'"
-msgstr "'%s' のクラス名が長すぎます"
-
 #: src/main/objects.c:352
 msgid "corrupt internals!"
 msgstr "内部関数が壊れています!"
@@ -3973,11 +3975,6 @@ msgstr "\"%s\" のメソッド名が長すぎます"
 #: src/main/objects.c:650
 msgid "Incompatible methods ignored"
 msgstr "相容れないメソッドが無視されました"
-
-#: src/main/objects.c:655
-#, c-format
-msgid "call name too long in '%s'"
-msgstr "'%s' 中の呼び出し名が長すぎます"
 
 #: src/main/objects.c:714 src/main/objects.c:719
 msgid "no method to invoke"
@@ -4391,16 +4388,17 @@ msgstr "区切り文字が不正です"
 msgid "non-string argument to Internal paste"
 msgstr "内部関数 paste への引数が文字列ではありません"
 
-#: src/main/paste.c:159
+#: src/main/paste.c:157
 msgid "first argument must be atomic"
 msgstr "最初の引数はアトムでなくてはなりません"
 
-#: src/main/paste.c:290
+#: src/main/paste.c:294
 msgid "Impossible mode ( x )"
 msgstr "不可能なモード（x）です"
 
-#: src/main/paste.c:350
-msgid "vector arguments only"
+#: src/main/paste.c:379
+#, fuzzy
+msgid "atomic vector arguments only"
 msgstr "引数はベクトルのみです"
 
 #: src/main/platform.c:226
@@ -4648,6 +4646,14 @@ msgstr "プロットのタイプが不正です"
 #, c-format
 msgid "invalid plot type '%c'"
 msgstr "プロットのタイプ '%c' が不正です"
+
+#: src/main/plot.c:1736
+msgid "invalid second argument"
+msgstr "二番目の引数が不正です"
+
+#: src/main/plot.c:1742
+msgid "invalid third argument"
+msgstr "三番目の引数が不正です"
 
 #: src/main/plot.c:1748
 #, fuzzy
@@ -6068,15 +6074,15 @@ msgstr "rowsum の引数が数値データフレームではありません"
 msgid "this cannot happen"
 msgstr "このようなことは起き得ないはずです"
 
-#: src/main/unique.c:1097
+#: src/main/unique.c:1095
 msgid "'names' must be a character vector"
 msgstr "'names' は文字ベクトルでなければなりません"
 
-#: src/main/unique.c:1101
+#: src/main/unique.c:1099
 msgid "'sep' must be a character string"
 msgstr "'sep' は文字列でなければなりません"
 
-#: src/main/unique.c:1170
+#: src/main/unique.c:1165
 msgid "csduplicated not called on a STRSXP"
 msgstr "csduplicated は STRSXP に対して呼び出されていません"
 
@@ -6155,27 +6161,33 @@ msgstr "文字ベクトルの引数が期待されています"
 msgid "path too long"
 msgstr "パスが長すぎます"
 
-#: src/main/util.c:1101
+#: src/main/util.c:1104
 msgid "only the first character of 'quote' will be used"
 msgstr "'quote' の最初の文字だけが使われました"
 
-#: src/main/util.c:1157
+#: src/main/util.c:1164
 msgid "invalid multibyte string"
 msgstr "マルチバイト文字列が不正です"
 
-#: src/main/util.c:1174 src/main/util.c:1182
+#: src/main/util.c:1181
 msgid "invalid input in mbcsToLatin1"
 msgstr "mbcsToLatin1  への入力が不正です"
 
-#: src/main/util.c:1179
-msgid "allocation failure in mbcsToLatin1"
+#: src/main/util.c:1186
+#, fuzzy
+msgid "allocation failure in 'mbcsToLatin1'"
 msgstr "mbcsToLatin1 で割り当てに失敗しました"
 
-#: src/main/util.c:1281
+#: src/main/util.c:1189
+#, fuzzy
+msgid "invalid input in 'mbcsToLatin1'"
+msgstr "mbcsToLatin1  への入力が不正です"
+
+#: src/main/util.c:1288
 msgid "error message truncated to 255 chars"
 msgstr "エラーメッセージは255文字に切りつめられました"
 
-#: src/main/util.c:1294
+#: src/main/util.c:1301
 msgid "warning message truncated to 255 chars"
 msgstr "警告メッセージは255文字に切り詰められました"
 
@@ -6917,6 +6929,12 @@ msgstr "X11 モジュールをロードできません"
 #: src/unix/X11.c:129 src/unix/X11.c:136 src/unix/X11.c:143 src/unix/X11.c:149
 msgid "X11 is not available"
 msgstr "X11 が利用できません"
+
+#~ msgid "class name too long in %s"
+#~ msgstr "%s のクラス名が長すぎます"
+
+#~ msgid "call name too long in %s"
+#~ msgstr "%s 中の呼び出し名が長すぎます"
 
 #~ msgid "invalid 'xlim'"
 #~ msgstr "'xlm' が不正です"
