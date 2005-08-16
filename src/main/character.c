@@ -230,7 +230,7 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 		cbuff.data[0] = '\0';
 	    }
 	    else {
-		AllocBuffer(slen);
+		AllocBuffer(slen + 1);
 		if (stop > slen) stop = slen;
 		substr(cbuff.data, CHAR(STRING_ELT(x, i)), start, stop);
 	    }
