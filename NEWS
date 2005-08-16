@@ -101,8 +101,8 @@ NEW FEATURES
 
     o	write() has a new argument 'sep'.
 
-    o	New functions trans3d(), the 3D -> 2D utility from persp()'s example,
-	and extendrange(), both in package 'grDevices'.
+    o	New functions trans3d(), the 3D -> 2D utility from persp()'s
+	example, and extendrange(), both in package 'grDevices'.
 
     o	pie() has new optional arguments 'clockwise' and 'init.angle'.
 
@@ -241,7 +241,7 @@ NEW FEATURES
 	How format() works on a list is now documented, and uses
 	arguments consistently with their usage on an atomic vector.
 
-    o   anova.mlm() now handles single-model case.
+    o   anova.mlm() now handles the single-model case.
 
     o	encodeString() allows justify = "none" for consistency with
 	format.default().  Some argument names have been lengthened
@@ -250,6 +250,8 @@ NEW FEATURES
     o	format.info() now has a 'digits' argument, and is documented
 	to work for all atomic vectors (it used to work for all but
 	raw vectors.).
+
+    o   Added "POSIXlt" methods for duplicated() and unique().
 
 
 DEPRECATED & DEFUNCT
