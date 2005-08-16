@@ -45,10 +45,15 @@ format.char(x, width = NULL, flag = "-")
     \code{\link{signif}} this prints large numbers with
     more significant digits than \code{digits}.}
 
-  \item{flag}{format modifier as in Kernighan and Ritchie (1988, page 243).
+  \item{flag}{For \code{formatC}, a character string giving a
+    format modifier as in Kernighan and Ritchie (1988, page 243).
     \code{"0"}  pads leading zeros; \code{"-"} does left adjustment,
     others are \code{"+"}, \code{" "}, and \code{"#"}.  There can be
-    more than one of these, in any order.}
+    more than one of these, in any order.
+
+    For \code{format.char}, a character string.  Value \code{"-"} means
+    left justification, and any other value right justification.
+  }
 
   \item{mode}{\code{"double"} (or \code{"real"}), \code{"integer"} or
     \code{"character"}.

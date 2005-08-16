@@ -34,16 +34,17 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     values are right-justified to a common width: if \code{TRUE} the
     leading blanks are suppressed.}
   \item{digits}{how many significant digits are to be used for
-    \code{\link{numeric} x}.  The default, \code{NULL}, uses
+    numeric and complex \code{x}.  The default, \code{NULL}, uses
     \code{\link{options}()$digits}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
-    this many significant digits.}
+    this many significant digits.  (For complex numbers this applies
+    separately to their real and imaginary components.)}
   \item{nsmall}{number of digits which will always appear to the right of
     the decimal point in formatting real/complex numbers in
-    non-scientific formats. Allowed values \code{0 <= nsmall <= 20}.}
+    non-scientific formats.  Allowed values are \code{0 <= nsmall <= 20}.}
   \item{justify}{should character vector be left-justified,
     right-justified or left alone.  When justifying, the field width is
-    that of the longest string.}
+    that of the widest string.}
   \item{width}{the returned vector has elements of at most \code{width}.}
   \item{\dots}{further arguments passed to or from other methods.}
 
@@ -59,23 +60,38 @@ prettyNum(x, big.mark = "",   big.interval = 3,
     decimal point.}
 }
 \value{
-  A vector (or array) of character strings displaying the elements of 
-  the first argument \code{x} in a common format. 
+  An object of similar struture to \code{x} containing character
+  representations of the elements of the first argument \code{x}
+  in a common format.
 }
 \details{
-  The value of these functions satisfies \code{length(format*(x, *)) ==
-    length(x)}.  The trimming with \code{trim = TRUE} is useful
-  when the strings are to be used for plot \code{\link{axis}} annotation.
-
-  \code{format.AsIs} deals with columns of complicated objects that
-  have been extracted from a data frame.
-
-  The function \code{\link{formatC}} provides a rather more flexible
-  formatting facility for numbers, but does \emph{not} provide a common
-  format for several numbers, nor it is platform-independent.
+  \code{format} is a generic function.  Apart from the methods described
+  here there are methods for dates (see \code{\link{format.Date}}),
+  date-times (see \code{\link{format.POSIXct}})) and other classes such
+  as \code{format.octmode} and \code{format.dist}.
 
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
+  Methodd for columns are often similar to \code{as.character} but offer
+  more control.
+
+  \code{format.factor} converts the factor to a character vector and
+  then calls the default method (and so \code{justify} applies).
+
+  \code{format.AsIs} deals with columns of complicated objects that
+  have been extracted from a data frame.  It calls
+  \code{\link{toString}} to convert to the object to character (if a
+  vector or list, element by element) and then right-justifies the result.
+
+  Justification for character vectors (and objects converted to
+  character vectors by their methods) is done on display width (see
+  \code{\link{nhar}}, taking double-width characters into account.
+
+  If \code{x} is a list, the result is a character vector obtained by
+  applying \code{format.default(x, trim)} to each element of the list
+  (after \code{\link{unlist}}ing elements which are themselves lists),
+  and then collapsing the result for each element with
+  \code{paste(collapse=", ")}.
 
   \code{prettyNum} is the utility function for prettifying \code{x}. If
   \code{x} is not a character, \code{format(x[i], ...)} is applied to
@@ -88,8 +104,6 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   Currently \code{format} drops trailing zeroes, so \code{format(6.001,
     digits=2)} gives \code{"6"} and \code{format(c(6.0, 13.1),
     digits=2)} gives \code{c(" 6", "13")}.
-
-  Character(s) \code{"} in input strings \code{x} are escaped to \code{\\"}.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
@@ -100,7 +114,7 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 \seealso{
   \code{\link{format.info}} indicates how something would be formatted;
   \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
-  \code{\link{sprintf}}, \code{\link{print}}.
+  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}}.
 }
 \examples{
 format(1:10)
