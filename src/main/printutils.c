@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1999--2004  The R Development Core Team
+ *  Copyright (C) 1999--2005  The R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@
  * string in its escaped rather than literal form.
  *
  * Finally there is a routine called EncodeElement which will encode
- * a single R-vector element.  This is mainly used in gizmos like deparse.
+ * a single R-vector element.  This is used in deparse and write.table.
  */
 
 /* if ESC_BARE_QUOTE is defined, " in an unquoted string is replaced
@@ -79,9 +79,6 @@ extern int R_OutputCon; /* from connections.c */
 
 
 #define BUFSIZE 8192  /* used by Rprintf etc */
-static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
-static R_StringBuffer *buffer = &gBuffer; /*XX Add appropriate const here
-                                            and in the routines that use it. */
 
 R_size_t R_Decode2Long(char *p, int *ierr)
 {
@@ -318,6 +315,12 @@ char *EncodeString(SEXP s, int w, int quote, Rprt_adj justify)
     int b, b0, i, j, cnt;
     char *p, *q, buf[11];
 
+    /* We have to do something like this as the result is returned, and
+       passed on by EncodeElement -- so no way could be enduser be
+       responsible for freeing it.  However, this is not thread-safe. */
+    static R_StringBuffer gBuffer = {NULL, 0, BUFSIZE};
+    R_StringBuffer *buffer = &gBuffer;
+    
     if (s == NA_STRING) {
 	p = quote ? CHAR(R_print.na_string) : CHAR(R_print.na_string_noquote);
 	cnt = i = quote ? strlen(CHAR(R_print.na_string)) :
