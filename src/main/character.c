@@ -43,8 +43,8 @@
 
 #include "Defn.h"
 #include <R_ext/RS.h>  /* for Calloc/Free */
+#include <Rmath.h>     /* for imax2 */
 
-#define Alloca(n, t) (t *)alloca((n)*sizeof(t))
 
 #ifdef SUPPORT_MBCS
 # include <wchar.h>
@@ -81,6 +81,18 @@ extern int wcswidth(const wchar_t *s, size_t n);
 # define MAX(a, b) ((a) > (b) ? (a) : (b))
 #endif
 
+/* We use a shared buffer here to avoid reallocing small buffers, and keep a
+   standard-size (8192) buffer allocated.
+ */
+
+#include "RBufferUtils.h"
+static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
+static void AllocBuffer(int len)
+{
+    if(len >= 0) R_AllocStringBuffer(len, &cbuff);
+    else if(cbuff.bufsize != MAXELTSIZE) R_FreeStringBuffer(&cbuff);
+}
+
 
 /* Functions to perform analogues of the standard C string library. */
 /* Most are vectorized */
@@ -110,14 +122,11 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
     PROTECT(s = allocVector(INTSXP, len));
     for (i = 0; i < len; i++) {
 	if(strcmp(type, "bytes") == 0) {
-	/* NA_STRINGS are treated the same way, for now
-	ch = STRING_ELT(x, i);
-	give print width for an NA_STRING
-	INTEGER(s)[i] = (ch == NA_STRING) ? R_print.na_width : length(ch); */
+	    /* This works for NA strings too */
 	    INTEGER(s)[i] = length(STRING_ELT(x, i));
 	} else if(strcmp(type, "chars") == 0) {
 	    if(STRING_ELT(x, i) == NA_STRING) {
-		INTEGER(s)[i] = 2 /* NA_INTEGER */;
+		INTEGER(s)[i] = 2;
 	    } else {
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
@@ -127,9 +136,9 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 #endif
 		    INTEGER(s)[i] = strlen(CHAR(STRING_ELT(x, i)));
 	    }
-	} else {
+	} else { /* display width */
 	    if(STRING_ELT(x, i) == NA_STRING) {
-		INTEGER(s)[i] = 2 /* NA_INTEGER */;
+		INTEGER(s)[i] = 2;
 	    } else {
 #ifdef SUPPORT_MBCS
 		if(mbcslocale) {
@@ -137,7 +146,8 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 		nc = mbstowcs(NULL, xi, 0);
 #ifdef HAVE_WCSWIDTH
 		if(nc >= 0) {
-		    wc = Alloca(nc+1, wchar_t);
+		    AllocBuffer((nc+1)*sizeof(wchar_t));
+		    wc = (wchar_t *) cbuff.data;
 		    mbstowcs(wc, xi, nc + 1);
 		    INTEGER(s)[i] = wcswidth(wc, 2147483647);
 		    if(INTEGER(s)[i] < 1) INTEGER(s)[i] = nc;
@@ -150,6 +160,9 @@ SEXP do_nchar(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
+#if defined(SUPPORT_MBCS) && defined(HAVE_WCSWIDTH)
+    AllocBuffer(-1);
+#endif
     if ((d = getAttrib(x, R_DimSymbol)) != R_NilValue)
 	setAttrib(s, R_DimSymbol, d);
     if ((d = getAttrib(x, R_DimNamesSymbol)) != R_NilValue)
@@ -199,9 +212,18 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (!isInteger(sa) || !isInteger(so) || k == 0 || l == 0)
 	    errorcall(call, _("invalid substring argument(s) in substr()"));
 
+	/* Calculate the buffer size needed.  The substring could be a lot
+	   shorter, but in an MBCS locale it is tedious to calculate how long.
+	*/
+	slen = 0;
+	for (i = 0; i < len; i++) 
+	    if (STRING_ELT(x,i) != NA_STRING)
+		slen = imax2(slen, strlen(CHAR(STRING_ELT(x, i))) + 1);
+	buff = Calloc(slen, char);
+
 	for (i = 0; i < len; i++) {
-	    if (STRING_ELT(x,i)==NA_STRING){
-		SET_STRING_ELT(s,i,NA_STRING);
+	    if (STRING_ELT(x,i) == NA_STRING) {
+		SET_STRING_ELT(s, i, NA_STRING);
 		continue;
 	    }
 	    start = INTEGER(sa)[i % k];
@@ -209,15 +231,14 @@ SEXP do_substr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    slen = strlen(CHAR(STRING_ELT(x, i)));
 	    if (start < 1) start = 1;
 	    if (start > stop || start > slen) {
-		buff = "";
-	    }
-	    else {
-		buff = alloca(slen);
+		buff[0] = '\0';
+	    } else {
 		if (stop > slen) stop = slen;
 		substr(buff, CHAR(STRING_ELT(x, i)), start, stop);
 	    }
 	    SET_STRING_ELT(s, i, mkChar(buff));
 	}
+	Free(buff);
     }
     UNPROTECT(1);
     return s;
@@ -284,19 +305,20 @@ SEXP do_substrgets(SEXP call, SEXP op, SEXP args, SEXP env)
 		/* just copy element across */
 		SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    } else {
-		char *buff;
 		vlen = strlen(CHAR(STRING_ELT(value, i % v)));
 #ifdef SUPPORT_MBCS
-		buff = alloca(slen+vlen);  /* might expand under MBCS */
+		AllocBuffer(slen+vlen);  /* might expand under MBCS */
 #else
-		buff = alloca(slen);
+		AllocBuffer(slen);
 #endif
-		strcpy(buff, CHAR(STRING_ELT(x, i)));
+		strcpy(cbuff.data, CHAR(STRING_ELT(x, i)));
 		if(stop > start + vlen - 1) stop = start + vlen - 1;
-		substrset(buff, CHAR(STRING_ELT(value, i % v)), start, stop);
-		SET_STRING_ELT(s, i, mkChar(buff));
+		substrset(cbuff.data, CHAR(STRING_ELT(value, i % v)), 
+			  start, stop);
+		SET_STRING_ELT(s, i, mkChar(cbuff.data));
 	    }
 	}
+	AllocBuffer(-1);
     }
     UNPROTECT(1);
     return s;
@@ -760,17 +782,16 @@ SEXP do_makenames(SEXP call, SEXP op, SEXP args, SEXP env)
 	       Would also be possible a char at a time.
 	     */
 	    int nc = mbstowcs(NULL, this, 0);
-	    wchar_t *wstr, *wc;
-	    wstr = Alloca(nc+1, wchar_t);
+	    wchar_t *wstr = Calloc(nc+1, wchar_t), *wc;
 	    if(nc >= 0) {
 		mbstowcs(wstr, this, nc+1);
 		for(wc = wstr; *wc; wc++) {
 		    if (*wc == L'.' || (allow_ && *wc == L'_')) 
 			/* leave alone */;
 		    else if(!isalnum((int)*wc)) *wc = L'.';
-		    /* else leave alone */
 		}
 		wcstombs(this, wstr, strlen(this)+1);
+		Free(wstr);
 	    } else errorcall(call, _("invalid multibyte string %d"), i+1);
 	} else
 #endif
@@ -1235,22 +1256,21 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 		    INTEGER(matchlen)[i] = regmatch[0].rm_eo - st;
 #ifdef SUPPORT_MBCS
 		    if(!useBytes && mbcslocale) {
-			char *buff;
 			int mlen = regmatch[0].rm_eo - st;
 			/* Unfortunately these are in bytes, so we need to
 			   use chars instead */
 			if(st > 0) {
-			    buff = alloca(st+1);
-			    memcpy(buff, CHAR(STRING_ELT(text, i)), st);
-			    buff[st] = '\0';
-			    INTEGER(ans)[i] = 1 + mbstowcs(NULL, buff, 0);
+			    AllocBuffer(st);
+			    memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+			    cbuff.data[st] = '\0';
+			    INTEGER(ans)[i] = 1+mbstowcs(NULL, cbuff.data, 0);
 			    if(INTEGER(ans)[i] <= 0) /* an invalid string */
 				INTEGER(ans)[i] = NA_INTEGER;
 			}
-			buff = alloca(mlen+1);
-			memcpy(buff, CHAR(STRING_ELT(text, i))+st, mlen);
-			buff[mlen] = '\0';
-			INTEGER(matchlen)[i] = mbstowcs(NULL, buff, 0);
+			AllocBuffer(mlen+1);
+			memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
+			cbuff.data[mlen] = '\0';
+			INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
 			if(INTEGER(matchlen)[i] < 0) /* an invalid string */
 			    INTEGER(matchlen)[i] = NA_INTEGER;
 		    }
@@ -1259,6 +1279,9 @@ SEXP do_regexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    }
 	}
     }
+#ifdef SUPPORT_MBCS
+    AllocBuffer(-1);
+#endif
     if (!fixed_opt) regfree(&reg);
     setAttrib(ans, install("match.length"), matchlen);
     UNPROTECT(4);
@@ -1285,6 +1308,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 	int nb, nc, j;
 	wctrans_t tr = wctrans(ul ? "toupper" : "tolower");
 	wchar_t * wc;
+
 	/* the translated string need not be the same length in bytes */
 	for(i = 0; i < n; i++) {
 	    if (STRING_ELT(x, i) == NA_STRING)
@@ -1293,7 +1317,8 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 		if(nc >= 0) {
-		    wc = Alloca(nc+1, wchar_t);
+		    AllocBuffer((nc+1)*sizeof(wchar_t));
+		    wc = (wchar_t *) cbuff.data;
 		    mbstowcs(wc, xi, nc + 1);
 		    for(j = 0; j < nc; j++) wc[j] = towctrans(wc[j], tr);
 		    nb = wcstombs(NULL, wc, 0);
@@ -1304,6 +1329,7 @@ do_tolower(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    }
 	}
+	AllocBuffer(-1);
     } else
 #endif
     {
@@ -1536,13 +1562,15 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	/* Build the old and new wtr_spec lists. */
 	nc = mbstowcs(NULL, CHAR(STRING_ELT(old, 0)), 0);
 	if(nc < 0) errorcall(call, _("invalid multibyte string 'old'"));
-	wc = Alloca(nc+1, wchar_t);
+	AllocBuffer((nc+1)*sizeof(wchar_t));
+	wc = (wchar_t *) cbuff.data;
 	mbstowcs(wc, CHAR(STRING_ELT(old, 0)), nc + 1);
 	wtr_build_spec(wc, trs_old);
 
 	nc = mbstowcs(NULL, CHAR(STRING_ELT(new, 0)), 0);
 	if(nc < 0) errorcall(call, _("invalid multibyte string 'new'"));
-	wc = Alloca(nc+1, wchar_t);
+	AllocBuffer((nc+1)*sizeof(wchar_t));
+	wc = (wchar_t *) cbuff.data;
 	mbstowcs(wc, CHAR(STRING_ELT(new, 0)), nc + 1);
 	wtr_build_spec(wc, trs_new);
 
@@ -1571,14 +1599,16 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 	n = LENGTH(x);
 	PROTECT(y = allocVector(STRSXP, n));
 	for(i = 0; i < n; i++) {
-	    if (STRING_ELT(x,i) == NA_STRING) SET_STRING_ELT(y, i, NA_STRING);
+	    if (STRING_ELT(x,i) == NA_STRING)
+		SET_STRING_ELT(y, i, NA_STRING);
 	    else {
 		xi = CHAR(STRING_ELT(x, i));
 		nc = mbstowcs(NULL, xi, 0);
 		if(nc < 0)
 		    errorcall(call, _("invalid input multibyte string %d"),
 			      i+1);
-		wc = Alloca(nc+1, wchar_t);
+		AllocBuffer((nc+1)*sizeof(wchar_t));
+		wc = (wchar_t *) cbuff.data;
 		mbstowcs(wc, xi, nc + 1);
 		for(j = 0; j < nc; j++) wc[j] = xtable[wc[j]];
 		nb = wcstombs(NULL, wc, 0);
@@ -1586,6 +1616,7 @@ do_chartr(SEXP call, SEXP op, SEXP args, SEXP env)
 		wcstombs(CHAR(STRING_ELT(y, i)), wc, nb + 1);
 	    }
 	}
+	AllocBuffer(-1);
     } else
 #endif
     {
@@ -2111,7 +2142,7 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP s, x, width;
     int i, len, nw, w, nc;
-    char *this, *buff;
+    char *this;
 #if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
     char *p, *q;
     int w0, wsum, k, nb;
@@ -2141,11 +2172,11 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	w = INTEGER(width)[i % nw];
 	this = CHAR(STRING_ELT(x, i));
 	nc = strlen(this);
-	buff = alloca(nc);
+	AllocBuffer(nc);
 #if defined(SUPPORT_MBCS) && defined(HAVE_WCWIDTH)
 	wsum = 0;
 	mbs_init(&mb_st);
-	for(p = this, w0 = 0, q = buff; *p ;) {
+	for(p = this, w0 = 0, q = cbuff.data; *p ;) {
 	    nb =  Mbrtowc(&wc, p, MB_CUR_MAX, &mb_st);
 	    w0 = wcwidth(wc);
 	    if(w0 < 0) { p += nb; continue; }/* skip non-printable chars */
@@ -2161,11 +2192,12 @@ SEXP do_strtrim(SEXP call, SEXP op, SEXP args, SEXP env)
 	    SET_STRING_ELT(s, i, STRING_ELT(x, i));
 	    continue;
 	}
-	strncpy(buff, this, w);
-	buff[w] = '\0';
+	strncpy(cbuff.data, this, w);
+	cbuff.data[w] = '\0';
 #endif
-	SET_STRING_ELT(s, i, mkChar(buff));
+	SET_STRING_ELT(s, i, mkChar(cbuff.data));
     }
+    if(len > 0) AllocBuffer(-1);
     copyMostAttrib(CAR(args), s);
     UNPROTECT(3);
     return s;

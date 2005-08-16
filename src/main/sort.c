@@ -843,6 +843,7 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(xmax > 100000) errorcall(call, _("too large a range of values in 'x'"));
     napos = off ? 0 : xmax + 1;
     off -= xmin;
+    /* alloca is fine here: we know this is small */
     cnts = (unsigned int *) alloca((xmax+1)*sizeof(unsigned int));
 
     for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
