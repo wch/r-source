@@ -454,6 +454,7 @@ SEXP do_pgsub(SEXP call, SEXP op, SEXP args, SEXP env)
 }
 
 
+#include "RBufferUtils.h"
 SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP pat, text, ans, matchlen;
@@ -462,6 +463,9 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
     const char *errorptr;
     pcre *re_pcre;
     const unsigned char *tables;
+    /* To make this thread-safe remove static here and remove
+       test on R_FreeStringBuffer below */
+    static R_StringBuffer cbuff = {NULL, 0, MAXELTSIZE};
 
     checkArity(op, args);
     pat = CAR(args); args = CDR(args);
@@ -517,21 +521,20 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    INTEGER(matchlen)[i] = ovector[1] - st;
 #ifdef SUPPORT_UTF8
 	    if(!useBytes && mbcslocale) {
-		char *buff;
 		int mlen = ovector[1] - st;
 		/* Unfortunately these are in bytes, so we need to
 		   use chars instead */
-		buff = alloca(imax2(st, mlen+1));
+		R_AllocStringBuffer(imax2(st, mlen+1), &cbuff);
 		if(st > 0) {
-		    memcpy(buff, CHAR(STRING_ELT(text, i)), st);
-		    buff[st] = '\0';
-		    INTEGER(ans)[i] = 1 + mbstowcs(NULL, buff, 0);
+		    memcpy(cbuff.data, CHAR(STRING_ELT(text, i)), st);
+		    cbuff.data[st] = '\0';
+		    INTEGER(ans)[i] = 1 + mbstowcs(NULL, cbuff.data, 0);
 		    if(INTEGER(ans)[i] <= 0) /* an invalid string */
 			INTEGER(ans)[i] = NA_INTEGER;
 		}
-		memcpy(buff, CHAR(STRING_ELT(text, i))+st, mlen);
-		buff[mlen] = '\0';
-		INTEGER(matchlen)[i] = mbstowcs(NULL, buff, 0);
+		memcpy(cbuff.data, CHAR(STRING_ELT(text, i))+st, mlen);
+		cbuff.data[mlen] = '\0';
+		INTEGER(matchlen)[i] = mbstowcs(NULL, cbuff.data, 0);
 		if(INTEGER(matchlen)[i] < 0) /* an invalid string */
 		    INTEGER(matchlen)[i] = NA_INTEGER;
 	    }
@@ -540,6 +543,8 @@ SEXP do_pregexpr(SEXP call, SEXP op, SEXP args, SEXP env)
 	    INTEGER(ans)[i] = INTEGER(matchlen)[i] = -1;
 	}
     }
+    /* see comment above */
+    if(cbuff.bufsize != MAXELTSIZE) R_FreeStringBuffer(&cbuff);
     (pcre_free)(re_pcre);
     pcre_free((void *)tables);
     setAttrib(ans, install("match.length"), matchlen);
