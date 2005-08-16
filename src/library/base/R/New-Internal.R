@@ -193,7 +193,7 @@ data.class <- function(x) {
 is.numeric.factor <- function(x) FALSE
 is.integer.factor <- function(x) FALSE
 
-encodeString <- function(x, w = 0, quote = "", na = TRUE,
+encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
                          justify = c("left", "right", "centre", "none"))
 {
     at <- attributes(x)
@@ -201,8 +201,8 @@ encodeString <- function(x, w = 0, quote = "", na = TRUE,
     attributes(x) <- at  # preserve names, dim etc
     oldClass(x) <- NULL  # but not class
     justify <- match(match.arg(justify),
-                     c("left", "right", "centre", "none")) -1
-    .Internal(encodeString(x, w, quote, justify, na))
+                     c("left", "right", "centre", "none")) - 1
+    .Internal(encodeString(x, width, quote, justify, na.encode))
 }
 
 l10n_info <- function() .Internal(l10n_info())

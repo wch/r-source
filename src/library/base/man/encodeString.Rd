@@ -49,11 +49,12 @@ encodeString(x, width = 0, quote = "", na.encode = TRUE,
 }
 \note{
   The default for \code{width} is different from \code{format.default},
-  which as of \R 2.2.0 does similar things for character vectors.
+  which as of \R 2.2.0 does similar things for character vectors (but
+  without encoding using escapes).
 }
 \value{
   A character vector of the same length as \code{x}, with the same
-  attributes (including names and dimensions).
+  attributes (including names and dimensions) but with no class set.
 }
 \seealso{
   \code{\link{print.default}}
