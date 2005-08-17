@@ -5057,17 +5057,19 @@ information, as needed.
 Certain forms of nonlinear model can be fitted by Generalized Linear
 Models (@code{glm()}).  But in the majority of cases we have to approach
 the nonlinear curve fitting problem as one of nonlinear optimization.
-@R{}'s nonlinear optimization routines are @code{optim()} and @code{nlm()},
+@R{}'s nonlinear optimization routines are @code{optim()}, @code{nlm()}
+and (from @R{} 2.2.0) @code{nlminb()},
 @findex nlm
 @findex optim
-which take the place of @SPLUS{}'s @code{ms()} and @code{nlminb()}.  We
-seek the parameter values that minimize some index of lack-of-fit, and
-@code{nlm()} does that by trying out various parameter values
+@findex nlminb
+which provide the functionality (and more) of @SPLUS{}'s @code{ms()} and
+@code{nlminb()}.  We seek the parameter values that minimize some index
+of lack-of-fit, and they do this by trying out various parameter values
 iteratively.  Unlike linear regression for example, there is no
 guarantee that the procedure will converge on satisfactory estimates.
-@code{nlm()} requires initial guesses about what parameter values to
-try, and convergence depends critically upon the quality of the initial
-guesses.
+All the methods require initial guesses about what parameter values to
+try, and convergence may depend critically upon the quality of the
+starting values.
 
 @menu
 * Least squares::               
