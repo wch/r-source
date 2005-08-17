@@ -28,7 +28,7 @@ format(x, \dots)
   \item{x}{any \R object (conceptually); typically numeric.}
   \item{trim}{logical; if \code{FALSE}, logical, numeric and complex
     values are right-justified to a common width: if \code{TRUE} the
-    leading blanks for justifcation are suppressed.}
+    leading blanks for justification are suppressed.}
   \item{digits}{how many significant digits are to be used for
     numeric and complex \code{x}.  The default, \code{NULL}, uses
     \code{\link{getOption}(digits)}.  This is a suggestion: enough decimal
@@ -79,7 +79,7 @@ format(x, \dots)
 
   Justification for character vectors (and objects converted to
   character vectors by their methods) is done on display width (see
-  \code{\link{nchar}}, taking double-width characters and the rendering
+  \code{\link{nchar}}), taking double-width characters and the rendering
   of special characters (as escape sequences, including escaping
   backslash: see \code{\link{print.default}}) into account.  Character
   strings are padded with blanks to the display width of the widest.
@@ -116,7 +116,9 @@ format(x, \dots)
 }
 
 \seealso{
-  \code{\link{format.info}} indicates how an atomic vector would be formatted;
+  \code{\link{format.info}} indicates how an atomic vector would be
+  formatted.
+
   \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
   \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}},
   \code{\link{encodeString}}.
