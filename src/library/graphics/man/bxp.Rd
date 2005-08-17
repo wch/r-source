@@ -142,7 +142,7 @@ par(op)
 ## Mimic S-Plus:
 splus <- list(boxwex=0.4, staplewex=1, outwex=1, boxfill="grey40",
               medlwd=3, medcol="white", whisklty=3, outlty=1, outpch=NA)
-boxplot(z, pars=splus)o
+boxplot(z, pars=splus)
 ## Recycled and "sweeping" parameters
 op <- par(mfrow=c(1,2))
  boxplot(z, border=1:5, lty = 3, medlty = 1, medlwd = 2.5)
