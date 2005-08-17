@@ -587,6 +587,8 @@ BUG FIXES
     o	The test for new levels when predicting using model.frame
 	sometimes reported levels that were not actually used.
 
+    o	order(c("5","6",NA,"4",NA), na.last=FALSE) was incorrect.
+
 
 
 		CHANGES IN R VERSION 2.1.1

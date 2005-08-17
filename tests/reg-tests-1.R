@@ -3684,6 +3684,13 @@ length(window(x, deltat=5))
 ## last failed in 2.1.1
 
 
+## incorrect sort in order with na.last != NA
+x <- c("5","6",NA,"4",NA)
+y <- x[order(x,na.last=FALSE)]
+stopifnot(identical(y, c(NA, NA, "4", "5", "6")))
+## 2.1.1 sorted "4" first: the fence was wrong.
+
+
 ### end of tests added in 2.1.1 patched ###
 
 
