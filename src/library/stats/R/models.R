@@ -349,6 +349,7 @@ model.frame.default <-
                             domain = NA)
 		else {
 		    xi <- xi[, drop = TRUE] # drop unused levels
+                    nxl <- levels(xi)
 		    if(any(m <- is.na(match(nxl, xl))))
 			stop(gettextf("factor '%s' has new level(s) %s",
                                       nm, paste(nxl[m], collapse=", ")),

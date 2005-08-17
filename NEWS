@@ -533,7 +533,7 @@ BUG FIXES
 	plot():	 it affects the data, not the axes.  (Patch submitted
 	by Olaf Mersmann)
 
-    o	Sweave failed for \Sexpr{character(0)}. Sweave-test-1.Rnw
+    o	Sweave failed for \Sexpr{character(0)}.  Sweave-test-1.Rnw
 	contained a print() statement that is no longer needed.
 
     o	Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
@@ -583,6 +583,9 @@ BUG FIXES
 
     o	Formatting of complex numbers with nsmall > 0 could be
 	incorrect (and was in print-tests.Rout) because of a typo.
+
+    o	The test for new levels when predicting using model.frame
+	sometimes reported levels that were not actually used.
 
 
 
