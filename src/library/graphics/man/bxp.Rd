@@ -88,7 +88,7 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
       \item{outlty, outlwd, outpch, outcex, outcol, outbg:}{outlier line
 	type, line width, point character, point size expansion, color, and
 	background color.  The default \code{outlty= "blank"} suppresses the
-	lines and \code{outpch=" "} suppresses points.}
+	lines and \code{outpch=NA} suppresses points.}
     }
   }%.../pars
 }
@@ -141,8 +141,8 @@ par(op)
 
 ## Mimic S-Plus:
 splus <- list(boxwex=0.4, staplewex=1, outwex=1, boxfill="grey40",
-              medlwd=3, medcol="white", whisklty=3, outlty=1, outpch=" ")
-boxplot(z, pars=splus)
+              medlwd=3, medcol="white", whisklty=3, outlty=1, outpch=NA)
+boxplot(z, pars=splus)o
 ## Recycled and "sweeping" parameters
 op <- par(mfrow=c(1,2))
  boxplot(z, border=1:5, lty = 3, medlty = 1, medlwd = 2.5)
