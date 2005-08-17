@@ -3698,10 +3698,18 @@ length(window(x, deltat=4.9))
 length(window(x, deltat=5))
 ## last failed in 2.1.1
 
+
 ## typo in z_atan2.
 (z <- atan2(0+1i, 0+0i))
 stopifnot(all.equal(z, pi/2+0i))
 ## was NA in 2.1.1
+
+
+## incorrect sort in order with na.last != NA
+x <- c("5","6",NA,"4",NA)
+y <- x[order(x,na.last=FALSE)]
+stopifnot(identical(y, c(NA, NA, "4", "5", "6")))
+## 2.1.1 sorted "4" first: the fence was wrong.
 
 
 ### end of tests added in 2.1.1 patched ###

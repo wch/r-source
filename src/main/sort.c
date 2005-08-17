@@ -615,7 +615,7 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
-		    while (j >= h && less(indx[j - h], itmp)) { \
+		    while (j >= lo + h && less(indx[j - h], itmp)) { \
 			indx[j] = indx[j - h]; j -= h; } \
 		    indx[j] = itmp; \
 		}
