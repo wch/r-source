@@ -32,10 +32,10 @@ prettyNum(x, big.mark = "",   big.interval = 3,
   \item{x}{any \R object (conceptually); typically numeric.}
   \item{trim}{logical; if \code{FALSE}, logical, numeric and complex
     values are right-justified to a common width: if \code{TRUE} the
-    leading blanks are suppressed.}
+    leading blanks for justification are suppressed.}
   \item{digits}{how many significant digits are to be used for
     numeric and complex \code{x}.  The default, \code{NULL}, uses
-    \code{\link{options}()$digits}.  This is a suggestion: enough decimal
+    \code{\link{getOption}(digits)}.  This is a suggestion: enough decimal
     places will be used so that the smallest (in magnitude) number has
     this many significant digits.  (For complex numbers this applies
     separately to their real and imaginary components.)}
@@ -67,25 +67,29 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 \details{
   \code{format} is a generic function.  Apart from the methods described
   here there are methods for dates (see \code{\link{format.Date}}),
-  date-times (see \code{\link{format.POSIXct}})) and other classes such
+  date-times (see \code{\link{format.POSIXct}})) and for other classes such
   as \code{format.octmode} and \code{format.dist}.
 
   \code{format.data.frame} formats the data frame column by column,
   applying the appropriate method of \code{format} for each column.
-  Methodd for columns are often similar to \code{as.character} but offer
+  Methods for columns are often similar to \code{as.character} but offer
   more control.
 
   \code{format.factor} converts the factor to a character vector and
   then calls the default method (and so \code{justify} applies).
 
   \code{format.AsIs} deals with columns of complicated objects that
-  have been extracted from a data frame.  It calls
-  \code{\link{toString}} to convert to the object to character (if a
-  vector or list, element by element) and then right-justifies the result.
+  have been extracted from a data frame.  Character objects are passed
+  to the default method (and so \code{width} does not apply).
+  Otherwise it calls \code{\link{toString}} to convert the object
+  to character (if a vector or list, element by element) and then
+  right-justifies the result.
 
   Justification for character vectors (and objects converted to
   character vectors by their methods) is done on display width (see
-  \code{\link{nhar}}, taking double-width characters into account.
+  \code{\link{nchar}}), taking double-width characters and the rendering
+  of special characters (as escape sequences, including escaping
+  backslash: see \code{\link{print.default}}) into account.
 
   If \code{x} is a list, the result is a character vector obtained by
   applying \code{format.default(x, trim)} to each element of the list
@@ -112,9 +116,12 @@ prettyNum(x, big.mark = "",   big.interval = 3,
 }
 
 \seealso{
-  \code{\link{format.info}} indicates how something would be formatted;
+  \code{\link{format.info}} indicates how an atomic vector would be
+  formatted.
+
   \code{\link{formatC}}, \code{\link{paste}}, \code{\link{as.character}},
-  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}}.
+  \code{\link{sprintf}}, \code{\link{print}}, \code{\link{toString}},
+  \code{\link{encodeString}}.
 }
 \examples{
 format(1:10)
