@@ -5031,11 +5031,11 @@ $$ y = {1 \over \beta_1x_1 + \beta_2x_2} + e $$
 @end tex
 where
 @ifnottex
-x_1 = z_2/z_1, x_2 = -1/x_1, beta_1 = 1/theta_1, and beta_2 =
+x_1 = z_2/z_1, x_2 = -1/z_1, beta_1 = 1/theta_1, and beta_2 =
 theta_2/theta_1.
 @end ifnottex
 @tex
-$x_1 = z_2/z_1$, $x_2=-1/x_1$, $\beta_1=1/\theta_1$ and
+$x_1 = z_2/z_1$, $x_2=-1/z_1$, $\beta_1=1/\theta_1$ and
 $\beta_2=\theta_2/\theta_1$.
 @end tex
 Supposing a suitable data frame to be set up we could fit this
