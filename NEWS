@@ -306,6 +306,9 @@ INSTALLATION
     o	Installation without NLS is now cleaner, and does not install
 	any message catalogues.
 
+    o	src/modules/lapack/dlamc.f is now compiled with -ffloat-store
+	if f2c/gcc are used, as well as if g77 is used.
+
 
 PACKAGE INSTALLATION CHANGES
 

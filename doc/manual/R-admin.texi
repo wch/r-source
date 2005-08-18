@@ -2827,9 +2827,10 @@ It seems that @samp{gcc 3.4.x} and later on @samp{ix86} Linux defeat
 attempts by the LAPACK code to avoid computations entirely in
 extended-precision registers, so file @file{src/modules/lapack/dlamc.f}
 may need to be compiled without optimization.  If configure detects
-@acronym{GNU} Fortran it adds flag @option{-ffloat-store} which
-suffices, but it is possible that @file{src/modules/lapack/Makefile}
-will need to be edited to remove optimization on other platforms.
+@acronym{GNU} Fortran or the use of @command{f2c} it adds flag
+@option{-ffloat-store} which suffices, but it is possible that
+@file{src/modules/lapack/Makefile} will need to be edited to remove
+optimization on other platforms.
 
 If you do manage to get @R{} running on a new platform please let us
 know about it so we can modify the configuration procedures to include

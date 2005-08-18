@@ -768,9 +768,12 @@ if test -n "${F77}"; then
   AC_PROG_F77
 elif test -z "${F2C}"; then
   AC_MSG_ERROR([Neither an F77 compiler nor f2c found])
+elif test "${GCC}" = yes; then
+  using_f2c=yes
 fi
-## record if we are using g77, so we can use -ffloat-store
+## record if we are using g77 or f2c/gcc, so we can use -ffloat-store
 AM_CONDITIONAL(USING_G77, [test "x${ac_cv_f77_compiler_gnu}" = xyes])
+AM_CONDITIONAL(USING_F2C, [test "x${using_f2c}" = xyes])
 ])# R_PROG_F77_OR_F2C
 
 ## R_PROG_F77_FLIBS
