@@ -624,7 +624,7 @@
 /* Define to 1 if you have the `wctrans' function. */
 #undef HAVE_WCTRANS
 
-/* Define if you have the 'wctrans_t' type. */
+/* Define to 1 if the system has the type `wctrans_t'. */
 #undef HAVE_WCTRANS_T
 
 /* Define to 1 if you have the <wctype.h> header file. */

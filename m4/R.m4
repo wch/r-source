@@ -2948,14 +2948,9 @@ fi
 ## it seems IRIX has wctrans but not wctrans_t: we check this when we
 ## know we have the headers and wctrans().
 if test "$want_mbcs_support" = yes ; then
-  AC_CACHE_CHECK([for wctrans_t], r_cv_c_wctrans_t,
-    [AC_TRY_COMPILE([#include <wchar.h>
-       #include <wctype.h>
-       wctrans_t tr;], ,
-       r_cv_c_wctrans_t=yes, r_cv_c_wctrans_t=no)])
-  if test $r_cv_c_wctrans_t = yes; then
-    AC_DEFINE(HAVE_WCTRANS_T, 1, [Define if you have the 'wctrans_t' type.])
-  else
+  AC_CHECK_TYPES([wctrans_t], , , [#include <wchar.h>
+       #include <wctype.h>])
+  if test $ac_cv_type_wctrans_t != yes; then
     want_mbcs_support=no
   fi 
 fi

@@ -34650,7 +34650,7 @@ fi
 if test "$want_mbcs_support" = yes ; then
   echo "$as_me:$LINENO: checking for wctrans_t" >&5
 echo $ECHO_N "checking for wctrans_t... $ECHO_C" >&6
-if test "${r_cv_c_wctrans_t+set}" = set; then
+if test "${ac_cv_type_wctrans_t+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
   cat >conftest.$ac_ext <<_ACEOF
@@ -34661,7 +34661,7 @@ cat >>conftest.$ac_ext <<_ACEOF
 /* end confdefs.h.  */
 #include <wchar.h>
        #include <wctype.h>
-       wctrans_t tr;
+
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -34673,7 +34673,10 @@ cat >>conftest.$ac_ext <<_ACEOF
 int
 main ()
 {
-
+if ((wctrans_t *) 0)
+  return 0;
+if (sizeof (wctrans_t))
+  return 0;
   ;
   return 0;
 }
@@ -34700,24 +34703,27 @@ if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   ac_status=$?
   echo "$as_me:$LINENO: \$? = $ac_status" >&5
   (exit $ac_status); }; }; then
-  r_cv_c_wctrans_t=yes
+  ac_cv_type_wctrans_t=yes
 else
   echo "$as_me: failed program was:" >&5
 sed 's/^/| /' conftest.$ac_ext >&5
 
-r_cv_c_wctrans_t=no
+ac_cv_type_wctrans_t=no
 fi
 rm -f conftest.err conftest.$ac_objext conftest.$ac_ext
 fi
-echo "$as_me:$LINENO: result: $r_cv_c_wctrans_t" >&5
-echo "${ECHO_T}$r_cv_c_wctrans_t" >&6
-  if test $r_cv_c_wctrans_t = yes; then
+echo "$as_me:$LINENO: result: $ac_cv_type_wctrans_t" >&5
+echo "${ECHO_T}$ac_cv_type_wctrans_t" >&6
+if test $ac_cv_type_wctrans_t = yes; then
 
-cat >>confdefs.h <<\_ACEOF
+cat >>confdefs.h <<_ACEOF
 #define HAVE_WCTRANS_T 1
 _ACEOF
 
-  else
+
+fi
+
+  if test $ac_cv_type_wctrans_t != yes; then
     want_mbcs_support=no
   fi
 fi
