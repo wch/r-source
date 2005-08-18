@@ -253,6 +253,9 @@ NEW FEATURES
 
     o   Added "POSIXlt" methods for duplicated() and unique().
 
+    o	[dqp]wilcox and wilcox.test work better with one very large sample
+	size and an extreme first argument.
+
 
 DEPRECATED & DEFUNCT
 

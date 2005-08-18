@@ -1,6 +1,6 @@
 /*
   Mathlib : A C Library of Special Functions
-  Copyright (C) 1999-2003  The R Development Core Team
+  Copyright (C) 1999-2005  The R Development Core Team
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -92,6 +92,8 @@ w_free_maybe(int m, int n)
 	w_free(m, n);
 }
 
+
+/* This counts the number of choices with statistic = k */
 static double
 cwilcox(int k, int m, int n)
 {
@@ -106,25 +108,37 @@ cwilcox(int k, int m, int n)
 	return(0);
     c = (int)(u / 2);
     if (k > c)
-	k = u - k; /* hence  k < floor(u / 2) */
+	k = u - k; /* hence  k <= floor(u / 2) */
     if (m < n) {
 	i = m; j = n;
     } else {
 	i = n; j = m;
     } /* hence  i <= j */
 
+    if (j == 0) /* and hence i == 0 */
+	return (k == 0);
+
+
+    /* We can simplify things if k is small.  Consider the Mann-Whitney 
+       definition, and sort y.  Then if the statistic is k, no more 
+       than k of the y's can be <= any x[i], and since they are sorted 
+       these can only be in the first k.  So the count is the same as
+       if there were just k y's. 
+    */
+    if (j > 0 && k < j) return cwilcox(k, i, k);    
+    
     if (w[i][j] == 0) {
 	w[i][j] = (double *) calloc(c + 1, sizeof(double));
 	if (!w[i][j])
-		MATHLIB_ERROR(_("wilcox allocation error %d"), 3);
+	    MATHLIB_ERROR(_("wilcox allocation error %d"), 3);
 	for (l = 0; l <= c; l++)
 	    w[i][j][l] = -1;
     }
     if (w[i][j][k] < 0) {
-	if ((i == 0) || (j == 0))
+	if (j == 0) /* and hence i == 0 */
 	    w[i][j][k] = (k == 0);
 	else
-	    w[i][j][k] = cwilcox(k - n, m - 1, n) + cwilcox(k, m, n - 1);
+	    w[i][j][k] = cwilcox(k - j, i - 1, j) + cwilcox(k, i, j - 1);
 
     }
     return(w[i][j][k]);
@@ -158,14 +172,15 @@ double dwilcox(double x, double m, double n, int give_log)
     return(d);
 }
 
-double pwilcox(double x, double m, double n, int lower_tail, int log_p)
+/* args have the same meaning as R function pwilcox */
+double pwilcox(double q, double m, double n, int lower_tail, int log_p)
 {
     int i;
     double c, p;
 
 #ifdef IEEE_754
-    if (ISNAN(x) || ISNAN(m) || ISNAN(n))
-	return(x + m + n);
+    if (ISNAN(q) || ISNAN(m) || ISNAN(n))
+	return(q + m + n);
 #endif
     if (!R_FINITE(m) || !R_FINITE(n))
 	ML_ERR_return_NAN;
@@ -174,29 +189,32 @@ double pwilcox(double x, double m, double n, int lower_tail, int log_p)
     if (m <= 0 || n <= 0)
 	ML_ERR_return_NAN;
 
-    x = floor(x + 1e-7);
+    q = floor(q + 1e-7);
 
-    if (x < 0.0)
+    if (q < 0.0)
 	return(R_DT_0);
-    if (x >= m * n)
+    if (q >= m * n)
 	return(R_DT_1);
 
     w_init_maybe(m, n);
     c = choose(m + n, n);
     p = 0;
-    if (x <= (m * n / 2)) {
-	for (i = 0; i <= x; i++)
+    /* Use summation of probs over the shorter range */
+    if (q <= (m * n / 2)) {
+	for (i = 0; i <= q; i++)
 	    p += cwilcox(i, m, n) / c;
     }
     else {
-	x = m * n - x;
-	for (i = 0; i < x; i++)
+	q = m * n - q;
+	for (i = 0; i < q; i++)
 	    p += cwilcox(i, m, n) / c;
 	lower_tail = !lower_tail; /* p = 1 - p; */
     }
 
     return(R_DT_val(p));
 } /* pwilcox */
+
+/* x is 'p' in R function qwilcox */
 
 double qwilcox(double x, double m, double n, int lower_tail, int log_p)
 {

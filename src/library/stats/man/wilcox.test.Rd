@@ -109,6 +109,11 @@ wilcox.test(x, \dots)
   \code{(x[i], y[j])} for which \code{y[j]} is not greater than
   \code{x[i]}, the most common definition of the Mann-Whitney test.
 }
+\section{Warning}{
+  This function can use large amounts of memory and stack (and even crash
+  \R if the stack limit is exceeded) if \code{exact = TRUE} and one sample 
+  is large (several thousands or more). 
+}
 \references{
   Myles Hollander & Douglas A. Wolfe (1973),
   \emph{Nonparametric statistical inference}.
@@ -123,6 +128,10 @@ wilcox.test(x, \dots)
 }
 \seealso{
   \code{\link{psignrank}}, \code{\link{pwilcox}}.
+
+  \code{\link[exactRankTests]{wilcox.exact}}
+  in \pkg{exactRankTests} covers much of the same ground, but also
+  produces exact p-values in the presence of ties.
   
   \code{\link{kruskal.test}} for testing homogeneity in location
   parameters in the case of two or more samples;
