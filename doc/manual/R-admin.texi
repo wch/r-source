@@ -1025,21 +1025,23 @@ for Mac OS X @acronym{FAQ}} for full details. You will need to collect
 and install some tools as explained in the document. Than you have to
 expand the @R{} sources and configure @R{} appropriately, for example
 
-
 @example
 tar zxvf R-@value{VERSIONno}.tgz
 cd R-@value{VERSIONno}
-./configure --with-blas='-framework vecLib' --with-lapack --with-aqua
+./configure --with-blas='-framework vecLib' --with-lapack \
+  --with-aqua --enable-R-framework
 make
 @end example
 
 @noindent
-sit back and wait. The last option @option{--with-aqua} is needed only
-if you want a Console GUI.
-The first two options are strongly recommended.
+and then sit back and wait.  The first two options are strongly
+recommended, and with some toolsets have been essential.  The second
+line of options is needed only if you want to build @R{} for use with
+@code{R.app} Console, and imply @option{--enable-R-shlib} to build @R{}
+as a shared library.
 
-@R{} is by default configured and installed as a framework called
-@file{R.framework}. The default path for @file{R.framework} is
+These options configure @R{} to be built and installed as a framework
+called @file{R.framework}.  The default path for @file{R.framework} is
 @file{/Library/Frameworks} but this can be changed at configure time
 specifying the flag @option{--enable-R-framework[=DIR]} or at install
 time as
@@ -2405,10 +2407,9 @@ configuration options
 
 @noindent
 to provide higher-performance versions of the BLAS and LAPACK
-routines.  With @command{gcc 3.1} that appears to be the only way to
-build @R{}, as the Fortran support routines in @code{libg2c} cannot be
-linked into a dynamic library.  (We have had reports of success and of
-failure with @command{gcc 3.3}.)
+routines.  Building @R{} without these options used not to work with
+earlier versions of @command{gcc}, but can be done with @command{gcc
+3.3} and later.
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
