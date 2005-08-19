@@ -458,10 +458,10 @@ for system datasets that are not intended to be user-accessible via
 Various @R{} functions in a package can be used to initialize and clean
 up.  For packages without a name space, these are @code{.First.lib} and
 @code{.Last.lib}.  (For packages with a name space, @xref{Load hooks}.)
-It is conventional to define these function in a file called
+It is conventional to define these functions in a file called
 @file{zzz.R}.  If @code{.First.lib} is defined in a package, it is
 called with arguments @code{libname} and @code{pkgname} after the
-packages is loaded and attached.  (If a package is installed with
+package is loaded and attached.  (If a package is installed with
 version information, the package name includes the version information,
 e.g.@: @samp{ash_1.0.9}.)  A common use is to call
 @code{library.dynam()} inside @code{.First.lib()} to load compiled code:
@@ -470,7 +470,7 @@ another use is to call those functions with side effects.  If
 full path to the installed package) just before the package is detached.
 It is uncommon to detach packages and rare to have a @code{.Last.lib}
 function: one use is to call @code{library.dynam.unload} to unload
-compiled code.)
+compiled code.
 
 
 The @file{man} subdirectory should contain documentation files for the
