@@ -135,11 +135,13 @@ release.
 @node How do I install R for Windows?, The installer does not offer my language, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
-will not work.  Your file system must allow long file names (as is
-likely except perhaps for some network-mounted systems).  A full
-installation takes up about 50Mb of disk space and a minimal one about
-18Mb.
+You need Windows 95 or later: Windows 3.11+win32s will not work.  There
+is no specific version for Windows64, but the standard 32-bit version
+should work.
+
+Your file system must allow case-honouring long file names (as is likely
+except perhaps for some network-mounted systems).  A full installation
+takes up about 50Mb of disk space and a minimal one about 18Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -158,7 +160,9 @@ Properties... and change the `Start in' field to your working directory.
 You may also want to add command-line arguments at the end of the Target
 field (@emph{after} any final double quote), for example @code{--sdi
 --max-mem-size=1Gb}.  You can also set environment variables at the end
-of the Target field, for example @code{R_LIBS=p:/myRlib}.
+of the Target field, for example @code{R_LIBS=p:/myRlib}, and if you
+want to ensure that menus and messages are in (American) English,
+@code{LANGUAGE=en}.
 
 @node The installer does not offer my language, I want to run R in Chinese/Japanese/Korean, How do I install R for Windows?, Installation and Usage
 @section The installer does not offer my language
@@ -337,7 +341,7 @@ was installed.
 That's a matter of taste.  For most people the best thing to do is to
 uninstall R (see the previous Q), install the new version, copy any
 installed packages to the library folder in the new installation, run
-@code{update.packages()} in the new R (`Update packages from CRAN' from
+@code{update.packages()} in the new R (`Update packages...' from
 the Packages menu, if you prefer) and then delete anything left of the
 old installation.  Different versions of R are quite deliberately
 installed in parallel folders so you can keep old versions around if you
@@ -371,19 +375,19 @@ If you are running a version of Windows (see
 @uref{http://www.microsoft.com/whdc/system/platform/server/PAE/PAEmem.mspx})
 which supports more than 2Gb per process, you can let the R executables
 use it by marking their headers suitably.  If you have Visual Studio use
-@smallexample
+@example
 editbin /LARGEADDRESSAWARE \path_to_R\bin\Rgui.exe
 editbin /LARGEADDRESSAWARE \path_to_R\bin\Rterm.exe
-@end smallexample
+@end example
 and check this by
-@smallexample
+@example
 dumpbin /headers \path_to_R\bin\Rgui.exe
 dumpbin /headers \path_to_R\bin\Rterm.exe
-@end smallexample
+@end example
 You should see a line like
-@smallexample
+@example
                    Application can handle large (>2GB) addresses
-@end smallexample
+@end example
 
 
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
@@ -431,6 +435,7 @@ batch file might contain (as one line)
 @example
 path_to_R\bin\Rterm.exe --no-restore --no-save < %1 > %1.out 2>&1
 @end example
+
 @noindent
 The purpose of @code{2>&1} is to redirect warnings and errors to the
 same file as normal output, and users of Windows 95/98/ME's default
@@ -592,11 +597,11 @@ authentication.
 versions of an example (a real one, but from a machine that is only
 available locally) of a command-line in a short cut:
 
-@smallexample
+@example
 "path_to_R\bin\RGui.exe" http_proxy=http://user:pass@@gannet:80/
 
 "path_to_R\bin\RGui.exe" http_proxy=http://gannet/ http_proxy_user=ask
-@end smallexample
+@end example
 
 @noindent
 The second version will prompt the user for the proxy username and
@@ -630,12 +635,12 @@ re-installing Windows.
 @section Other strange crashes.
 
 Some users have found that @code{Rgui.exe} fails to start, exiting with
-a ``Floating- point invalid operation'' or other low level error.  This
+a ``Floating-point invalid operation'' or other low level error.  This
 error may also happen in the middle of a session.  In some cases where
 we have tracked this down, it was due to bugs in the video driver on the
 system in question: it makes changes to the floating point control word
 which are incompatible with R.  (Good practice would restore the control
-word to the state it was in when the driver code was called.) For
+word to the state it was in when the driver code was called.)  For
 example, one user reported that the virtual screen manager JSP2 caused
 this crash.
 
@@ -749,6 +754,7 @@ The following conditions need to hold for functions in a package you installed.
 @item you updated the indices as described in the answer to Q3.3 after
 installing the package.
 @end itemize
+
 @noindent
 If those hold, this works for us.  Note that if you were unable to
 update the indices (for which you need write permission in the
@@ -782,9 +788,9 @@ For package @code{tcltk} to work (try @code{demo(tkdensity)} or
 @code{demo(tkttest)} after @code{library(tcltk)}) you need to have Tcl
 installed.  This is an optional part of the installation although it is
 selected by default.  If the message is
-@smallexample
+@example
 Tcl/Tk support files were not installed
-@end smallexample
+@end example
 the optional files were not installed, and you need to go back to the
 installer and install them.
 
@@ -823,6 +829,10 @@ If you put @code{library(foo)} in your @file{.Rprofile} you will need to
 start R with @option{--vanilla} to be able to update package @code{foo}.
 If you set @code{R_DEFAULT_PACKAGES} to include @code{foo}, you will
 need to unset it temporarily.
+
+It has been reported that some other software has interfered with the
+installation process by preventing the renaming of temporary files,
+@emph{Google Desktop} being a known example.
 
 
 @node How do I add to the list of repositories?,  , update.packages() fails, Packages
@@ -901,6 +911,7 @@ variable in the global environment.
 
 There is only one graphics history shared by all the windows devices.'
 @end quotation
+
 @noindent
 The R console and graphics windows have configuration files stored in
 the @file{RHOME\etc} directory called @file{Rconsole} and @file{Rdevga};
@@ -1083,6 +1094,7 @@ tar zxvf R-@value{RVERSION}.tgz
 cd R-@value{RVERSION}
 cd src\gnuwin32
 @end example
+
 @noindent
 Now read the `R Installation and Administration' manual and set up all
 the tools needed.  Then you can just use @code{make all bitmapdll
@@ -1166,16 +1178,16 @@ First, build a version of the R system with debugging information by
 make clean
 make DEBUG=T
 @end example
-@noindent
 
+@noindent
 and make a debug version of your package by either
 
 @example
 make pkgclean-mypkg
 make DEBUG=T pkg-mypkg
 @end example
-@noindent
 
+@noindent
 or
 
 @example
@@ -1183,15 +1195,15 @@ Rcmd install -c mypkg
 set DEBUG=T
 Rcmd install mypkg
 @end example
-@noindent
 
+@noindent
 Then you can debug by
 
 @example
 gdb /path/to/@RWVER@/bin/Rgui.exe
 @end example
-@noindent
 
+@noindent
 However, note
 
 @itemize @bullet
@@ -1223,8 +1235,8 @@ package @code{stats} might be
      (gdb) clear R_ReadConsole
      (gdb) continue
 @end example
-@noindent
 
+@noindent
 Alternatively, in Rgui you can use the `Misc|Break to debugger' menu item
 after your DLL is loaded.  The C function call @code{breaktodebugger()}
 will do the same thing.
@@ -1263,6 +1275,7 @@ as in the example in @emph{`Writing R Extensions'}.  Then build the DLL by
 @example
 ...\bin\R CMD SHLIB X.cc X_main.cc
 @end example
+
 @noindent
 or (VC++, which requires extension @code{.cpp})
 
@@ -1270,12 +1283,14 @@ or (VC++, which requires extension @code{.cpp})
 cl /MT /c X.cpp X_main.cpp
 link /dll /out:X.dll /export:X_main X.obj X_main.obj
 @end example
+
 @noindent
 or (Borland C++, which also requires extension @code{.cpp})
 
 @example
 bcc32 -u- -WDE X.cpp X_main.cpp
 @end example
+
 @noindent
 and call the entry point(s) in @code{X_R}, such as @code{X_main}.
 Construction of static variables will occur when the DLL is loaded, and
@@ -1330,14 +1345,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 June 12 by Professor B. D. Ripley
-<code><a href="mailto:ripley@@stats.ox.ac.uk">ripley@@stats.ox.ac.uk</a></code>
+Last edited 2005 August 19 by Professor B. D. Ripley
+<code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 June 12 by Professor B. D. Ripley <ripley@@stats.ox.ac.uk>
+Last edited 2005 August 19 by Professor B. D. Ripley <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
