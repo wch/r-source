@@ -60,7 +60,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     \code{fg} instead of \code{col}, see \code{\link{par}} on these.}
 }
 \value{
-  The numeric locations on the axis scale at which tick marks were drawn.
+  The numeric locations on the axis scale at which tick marks were drawn
+  when the plot was first drawn (see Details).
   
   This function is usually invoked for its side effect, which is to add
   an axis to an already existing plot.
@@ -76,7 +77,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   (the same way \code{\link{axTicks}(side)} would) from
   \code{\link{par}("usr", "lab")} and \code{\link{par}("xlog")} (or
   \code{"ylog"}).  Note that these may change if an on-screen plot is
-  resized.
+  resized (for example, if \code{plot} argument
+  \code{\link[graphics:plot.window]{asp}} is set).
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
@@ -85,7 +87,8 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   labels by \code{cex.axis}, \code{col.axis} and \code{font.axis} with
   orientation controlled by \code{las} (but not \code{srt}, unlike S
   which uses \code{srt} if \code{at} is supplied and \code{las} if it is
-  not).  See \code{\link{par}} for details.
+  not).  Note that \code{adj} is not supported.
+  See \code{\link{par}} for details.
 }
 \seealso{
   \code{\link{axTicks}} returns the axis tick locations
