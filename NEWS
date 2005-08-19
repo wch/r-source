@@ -256,6 +256,9 @@ NEW FEATURES
     o	[dqp]wilcox and wilcox.test work better with one very large sample
 	size and an extreme first argument.
 
+    o   axis() has a new argument 'hadj' to control horizontal
+	adjustment of labels.
+
 
 DEPRECATED & DEFUNCT
 
@@ -503,6 +506,9 @@ BUG FIXES
     o	format.info() often gave a different field width from format()
 	for character vectors (e.g. including missing values or
 	non-printable characters).
+
+    o	axis() now ensures that if 'labels' are supplied as character
+	strings or expressions then so is 'at'.
 
 
 

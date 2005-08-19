@@ -1,6 +1,8 @@
-axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=NA, pos=NA,
-                 outer=FALSE, font=NA, vfont=NULL,
-                 lty = "solid", lwd = 1, col=NULL, padj=NA, ...) {
+axis <- function(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
+                 pos = NA, outer = FALSE, font = NA, vfont = NULL,
+                 lty = "solid", lwd = 1, col = NULL,
+                 hadj = NA, padj = NA, ...)
+{
     if (!is.null(vfont))
 	vfont <- c(typeface = pmatch(vfont[1], Hershey$typeface) - 1,
 		   fontindex= pmatch(vfont[2], Hershey$fontindex))
@@ -9,7 +11,7 @@ axis <- function(side, at=NULL, labels=TRUE, tick=TRUE, line=NA, pos=NA,
         col <- fg
     }
     .Internal(axis(side, at, labels, tick, line, pos, outer, font, vfont,
-                   lty, lwd, col, padj, ...))
+                   lty, lwd, col, hadj, padj, ...))
 }
 
 
