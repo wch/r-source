@@ -135,11 +135,13 @@ release.
 @node How do I install R for Windows?, The installer does not offer my language, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
-You need Windows 95/98/ME/NT4/2000/XP/2003 Server: Windows 3.11+win32s
-will not work.  Your file system must allow long file names (as is
-likely except perhaps for some network-mounted systems).  A full
-installation takes up about 50Mb of disk space and a minimal one about
-18Mb.
+You need Windows 95 or later: Windows 3.11+win32s will not work.  There
+is no specific version for Windows64, but the standard 32-bit version
+should work.
+
+Your file system must allow case-honouring long file names (as is likely
+except perhaps for some network-mounted systems).  A full installation
+takes up about 50Mb of disk space and a minimal one about 18Mb.
 
 If you want to be able to build packages from sources, we recommend that
 you choose an installation path not containing spaces.  (Using a path
@@ -158,7 +160,9 @@ Properties... and change the `Start in' field to your working directory.
 You may also want to add command-line arguments at the end of the Target
 field (@emph{after} any final double quote), for example @code{--sdi
 --max-mem-size=1Gb}.  You can also set environment variables at the end
-of the Target field, for example @code{R_LIBS=p:/myRlib}.
+of the Target field, for example @code{R_LIBS=p:/myRlib}, and if you
+want to ensure that menus and messages are in (American) English,
+@code{LANGUAGE=en}.
 
 @node The installer does not offer my language, I want to run R in Chinese/Japanese/Korean, How do I install R for Windows?, Installation and Usage
 @section The installer does not offer my language
