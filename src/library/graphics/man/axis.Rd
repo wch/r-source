@@ -18,7 +18,9 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
     when \code{NULL}, tickmark locations are computed, see Details below.}
   \item{labels}{this can either be a logical value specifying whether
     (numerical) annotations are to be made at the tickmarks, or a vector
-    of character strings to be placed at the tickpoints.}
+    of character strings or expressions to be placed at the tickpoints.
+    If this is specified as strings or expressions, \code{at} should be
+    supplied and they should be the same length.}
   \item{tick}{a logical value specifying whether tickmarks should be
     drawn}.
   \item{line}{the number of lines into the margin which the axis will
@@ -35,18 +37,21 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   \item{lty, lwd}{line type, width for the axis line and the tick marks.}
   \item{col}{color for the axis line and the tick marks.  The default
     \code{NULL} means to use \code{par("fg")}.}
-  \item{padj}{adjustment for each string perpendicular to the reading direction.
-    For strings parallel to the axes, \code{padj=0} means right or top alignment, 
-    and \code{padj=1} means left or bottom alignment.
+  \item{padj}{adjustment for each tick label \emph{perpendicular} to the
+    reading direction.  For labels parallel to the axes, \code{padj=0}
+    means right or top alignment, and \code{padj=1} means left or bottom
+    alignment.  This can be a vector given a value for each string, and
+    will be recycled as necessary.
+    
     If \code{padj} is not a finite value (the default), the value of
     \code{par("las")} determines the adjustment.  For strings plotted
     perpendicular to the axis the default is to centre the string.}
-  \item{\dots}{other graphical parameters may also be passed as arguments to
-    this function, particularly, \code{cex.axis}, \code{col.axis} and
-    \code{font.axis} for axis annotation, \code{mgp} for positioning, \code{tck} or
-    \code{tcl} for tick mark length and direction, \code{las} for
-    vertical/horizontal label orientation, or \code{fg} instead of
-    \code{col}, see \code{\link{par}} on these.}
+  \item{\dots}{other graphical parameters may also be passed as
+    arguments to this function, particularly, \code{cex.axis},
+    \code{col.axis} and \code{font.axis} for axis annotation, \code{mgp}
+    for positioning, \code{tck} or \code{tcl} for tick mark length and
+    direction, \code{las} for vertical/horizontal label orientation, or
+    \code{fg} instead of \code{col}, see \code{\link{par}} on these.}
 }
 \value{
   This function is invoked for its side effect, which is to add an axis
@@ -62,16 +67,19 @@ axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA,
   When \code{at = NULL}, pretty tick mark locations are computed internally
   (the same way \code{\link{axTicks}(side)} would) from
   \code{\link{par}("usr", "lab")} and \code{\link{par}("xlog")} (or
-  \code{"ylog"}).
+  \code{"ylog"}).  Note that these may change if an on-screen plot is
+  resized (for example, if \code{plot} argument
+  \code{\link[graphics:plot.window]{asp}} is set).
 
   Several of the graphics parameters affect the way axes are drawn. The
   vertical (for sides 1 and 3) positions of the axis and the tick labels
-  are controlled by \code{mgp}, the size and direction of the ticks is controlled by
-  \code{tck} and \code{tcl} and the appearance of the tick labels by
-  \code{cex.axis}, \code{col.axis} and \code{font.axis} with
+  are controlled by \code{mgp}, the size and direction of the ticks is
+  controlled by \code{tck} and \code{tcl} and the appearance of the tick
+  labels by \code{cex.axis}, \code{col.axis} and \code{font.axis} with
   orientation controlled by \code{las} (but not \code{srt}, unlike S
   which uses \code{srt} if \code{at} is supplied and \code{las} if it is
-  not).  See \code{\link{par}} for details.
+  not).  Note that \code{adj} is not supported.
+  See \code{\link{par}} for details.
 }
 \seealso{
   \code{\link{axTicks}} returns the axis tick locations
