@@ -1,6 +1,7 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.1.0 alpha (2005-03-24), ISBN 3-900051-07-0
+Version 2.2.0 Under development (unstable) (2005-08-20 r35340)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -2412,6 +2413,8 @@ Error: x is not TRUE
 > f <- try(as.qr( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.qr( f )))
 > f <- try(as.raw( x ), silent = TRUE)
+Warning message:
+out-of-range values treated as 0 in coercion to raw 
 >   if(!inherits(f, 'try-error')) report(identical(f, as.raw( f )))
 [1] TRUE
 > f <- try(as.real( x ), silent = TRUE)
@@ -2444,6 +2447,6 @@ non-square matrix in: as.dist.default(x)
 > f <- try(as.ts( x ), silent = TRUE)
 >   if(!inherits(f, 'try-error')) report(identical(f, as.ts( f )))
 > cat('Time elapsed: ', proc.time() - .proctime00,'\n')
-Time elapsed:  0.31 0 0.31 NA NA 
+Time elapsed:  0.35 0.02 0.38 0 0 
 > 
 > 
