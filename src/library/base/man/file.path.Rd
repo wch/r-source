@@ -19,7 +19,7 @@ file.path(\dots, fsep = .Platform$file.sep)
 }
 #ifdef windows
 \note{
-  The components are separated by \code{/} (not \code{\}) on Windows.
+  The components are separated by \code{/} (not \code{\\}) on Windows.
 }
 #endif
 \keyword{file}
