@@ -259,6 +259,9 @@ NEW FEATURES
     o   axis() has a new argument 'hadj' to control horizontal
 	adjustment of labels.
 
+    o   memory.profile() now uses the type names returned by typeof()
+	and no longer has two unlabelled entries.
+
 
 DEPRECATED & DEFUNCT
 

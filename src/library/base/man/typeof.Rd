@@ -12,7 +12,18 @@ typeof(x)
   \item{x}{any \R object.}
 }
 \value{
-  A character string.
+  A character string.  The possible values are listed in the structure
+  \code{TypeTable} in \file{src/main/util.c}. Current values are
+  the vector types \code{"logical"}, \code{"integer"}, \code{"double"},
+  \code{"complex"}, \code{"character"}, \code{"raw"} and \code{"list"},
+  \code{"NULL"},
+  \code{"closure"} (function), \code{"special"} and \code{"builtin"}
+  (basic functions and operators), \code{"environment"}, and others that
+  are unlikely to be seen at user level (\code{"symbol"},
+  \code{"pairlist"}, \code{"environment"}, \code{"promise"},
+  \code{"language"}, \code{"char"}, \code{"..."}, \code{"any"},
+  \code{"expression"}, \code{"externalptr"}, \code{"bytecode"} and
+  \code{"weakref"}).
 }
 \seealso{
   \code{\link{mode}}, \code{\link{storage.mode}}.

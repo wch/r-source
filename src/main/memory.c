@@ -2146,39 +2146,14 @@ SEXP do_memlimits(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans, nms;
-    int i;
+    int i, tmp;
 
-    PROTECT(ans = allocVector(INTSXP, 25));
-    PROTECT(nms = allocVector(STRSXP, 25));
-    for (i = 0; i < 25; i++) {
+    PROTECT(ans = allocVector(INTSXP, 23));
+    PROTECT(nms = allocVector(STRSXP, 23));
+    for (i = 0; i < 23; i++) {
         INTEGER(ans)[i] = 0;
-        SET_STRING_ELT(nms, i, R_BlankString);
+	SET_STRING_ELT(nms, i, type2str(i > LGLSXP? i+2 : i));
     }
-    SET_STRING_ELT(nms, NILSXP, mkChar("NILSXP"));
-    SET_STRING_ELT(nms, SYMSXP, mkChar("SYMSXP"));
-    SET_STRING_ELT(nms, LISTSXP, mkChar("LISTSXP"));
-    SET_STRING_ELT(nms, CLOSXP, mkChar("CLOSXP"));
-    SET_STRING_ELT(nms, ENVSXP, mkChar("ENVSXP"));
-    SET_STRING_ELT(nms, PROMSXP, mkChar("PROMSXP"));
-    SET_STRING_ELT(nms, LANGSXP, mkChar("LANGSXP"));
-    SET_STRING_ELT(nms, SPECIALSXP, mkChar("SPECIALSXP"));
-    SET_STRING_ELT(nms, BUILTINSXP, mkChar("BUILTINSXP"));
-    SET_STRING_ELT(nms, CHARSXP, mkChar("CHARSXP"));
-    SET_STRING_ELT(nms, RAWSXP, mkChar("RAWSXP"));
-    SET_STRING_ELT(nms, LGLSXP, mkChar("LGLSXP"));
-    SET_STRING_ELT(nms, INTSXP, mkChar("INTSXP"));
-    SET_STRING_ELT(nms, REALSXP, mkChar("REALSXP"));
-    SET_STRING_ELT(nms, CPLXSXP, mkChar("CPLXSXP"));
-    SET_STRING_ELT(nms, STRSXP, mkChar("STRSXP"));
-    SET_STRING_ELT(nms, DOTSXP, mkChar("DOTSXP"));
-    SET_STRING_ELT(nms, ANYSXP, mkChar("ANYSXP"));
-    SET_STRING_ELT(nms, VECSXP, mkChar("VECSXP"));
-    SET_STRING_ELT(nms, EXPRSXP, mkChar("EXPRSXP"));
-#ifdef BYTECODE
-    SET_STRING_ELT(nms, BCODESXP, mkChar("BCODESXP"));
-#endif
-    SET_STRING_ELT(nms, EXTPTRSXP, mkChar("EXTPTRSXP"));
-    SET_STRING_ELT(nms, WEAKREFSXP, mkChar("WEAKREFSXP"));
     setAttrib(ans, R_NamesSymbol, nms);
 
     BEGIN_SUSPEND_INTERRUPTS {
@@ -2192,8 +2167,11 @@ SEXP do_memoryprofile(SEXP call, SEXP op, SEXP args, SEXP env)
 	  SEXP s;
 	  for (s = NEXT_NODE(R_GenHeap[i].Old[gen]);
 	       s != R_GenHeap[i].Old[gen];
-	       s = NEXT_NODE(s))
-	    INTEGER(ans)[TYPEOF(s)]++;
+	       s = NEXT_NODE(s)) {
+	      tmp = TYPEOF(s);
+	      if(tmp > LGLSXP) tmp -= 2;
+	      INTEGER(ans)[tmp]++;
+	  }
 	}
       }
     } END_SUSPEND_INTERRUPTS;
