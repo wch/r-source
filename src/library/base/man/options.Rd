@@ -282,7 +282,7 @@ getOption(x)
 
     \item{\code{xpinch, ypinch}:}{double.  Pixels per inch, horizontally and
       vertically.  If unset (the default), taken from Windows.}
-#endif 
+#endif
   }
 }
 \section{Options set in package stats}{
@@ -352,9 +352,12 @@ getOption(x)
     \item{\code{repos}:}{URLs of the repositories for use by
       \code{\link{update.packages}}.  Defaults to
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
-      prompt for a CRAN mirror.  To avoid this, use something like
-      \code{options(repos=c(CRAN="http://my.local.cran/R"))}.}
-
+      prompt for a CRAN mirror.  To avoid this do set the CRAN mirror,
+      and to also add two other prominent repositories, use something like
+      \code{options(repos=c(CRAN = "http://my.local.cran/R",
+	    BioC = "http://www.bioconductor.org",
+        Omegahat = "http://www.omegahat.org/R"))}.
+    }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
     \item{\code{unzip}:}{the command used for unzipping help files.
