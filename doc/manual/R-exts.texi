@@ -7361,7 +7361,7 @@ the @pkg{tcltk} package.
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
 during events of the second type.  This is not handled very well in the
-existing examples.  The GNOME front-end runs its own handler for polled
+existing examples.  The GNOME front-end can run a own handler for polled
 events by setting
 
 @example
@@ -7378,7 +7378,9 @@ whilst it is waiting for console input.  This obviously handles events
 for Gtk windows (such as the graphics device in the @pkg{gtkDevice}
 package), but not X11 events (such as the @code{X11()} device) or for
 other event handlers that might have been registered with @R{}.  It does
-not attempt to keep itself alive whilst @R{} is waiting on sockets.
+not attempt to keep itself alive whilst @R{} is waiting on sockets.  The
+ability to add a polled handler as @code{R_timeout_handler} is used by
+the @pkg{tcltk} package.
 
 
 
