@@ -29,10 +29,11 @@ setRepositories(graphics = TRUE)
   list of known repositories.
 }
 \value{
-  None.  This function is invoked for its side effect of updating
-  \code{options("repos")}
+  This function is invoked mainly for its side effect of updating
+  \code{options("repos")}.  It returns (invisibly) the previous
+  \code{repos} options setting (as a \code{\link{list}} with component
+  \code{repos}) or \code{\link{NULL}} if no changes were applied.
 }
-
 \seealso{
   \code{\link{chooseCRANmirror}}, \code{\link{install.packages}}.
 }
