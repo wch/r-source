@@ -17,4 +17,9 @@ file.path(\dots, fsep = .Platform$file.sep)
   separated by \code{fsep} if all arguments have positive length;
   otherwise, an empty character vector.
 }
+#ifdef windows
+\note{
+  The components are separated by \code{/} (not \code{\}) on Windows.
+}
+#endif
 \keyword{file}

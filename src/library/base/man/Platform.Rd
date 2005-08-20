@@ -6,7 +6,7 @@
 \alias{.Platform}
 \description{
   \code{.Platform} is a list with some details of the platform under
-  which \R was built.  This provides means to write OS portable \R
+  which \R was built.  This provides means to write OS-portable \R
   code.
 }
 \value{
@@ -17,13 +17,16 @@
     (family) of the computer.  One of \code{"unix"} or \code{"windows"}.
   }
   \item{file.sep}{
-    character, giving the \bold{file} \bold{sep}arator,
-    used on your platform, e.g., \code{"/"} on Unix alikes.
+    character, giving the \bold{file} \bold{sep}arator used on your
+    platform: \code{"/"} on both Unix-alikes \emph{and} on Windows (but
+    not on the now abandoned port to Classic MacOS).
   }
   \item{dynlib.ext}{
     character, giving the file name \bold{ext}ension of
     \bold{dyn}amically loadable \bold{lib}raries, e.g., \code{".dll"} on
-    Windows.
+    Windows and \code{".so"} or \code{".sl"} on Unix-alikes.  (Note for
+    MacOS X users: these are shared objects as loaded by
+    \code{\link{dyn.load}} and not dylibs.)
   }
   \item{GUI}{
     character, giving the type of GUI in use, or
@@ -31,7 +34,9 @@
   }
   \item{endian}{
     character, \code{"big"} or \code{"little"}, giving the
-    endianness of the processor in use.
+    endianness of the processor in use.  This is relevant when it is
+    necessary to know the order to read/write bytes of e.g. an integer or
+    double from/to a connection: see \code{\link{readBin}}. 
   }
   \item{pkgType}{
     character, the preferred setting for \code{\link{options}("pkgType")}.
@@ -40,7 +45,7 @@
   }
   \item{path.sep}{
     character, giving the \bold{path} \bold{sep}arator,
-    used on your platform, e.g., \code{":"} on Unix alikes and
+    used on your platform, e.g., \code{":"} on Unix-alikes and
     \code{";"} on Windows.  Used to separate paths in variables
     such as \code{PATH} and \code{TEXINPUTS}.
   }
@@ -53,6 +58,7 @@
   \code{\link{.Machine}} for details of the arithmetic used, and
   \code{\link{system}} for invoking platform-specific system commands.
 }
+
 \examples{
 ## Note: this can be done in a system-independent way by file.info()$isdir
 if(.Platform$OS.type == "unix") {
