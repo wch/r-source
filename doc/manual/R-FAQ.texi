@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-08-12
+@set FAQ_DATE @value{FAQ_YEAR}-08-20
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1735,6 +1735,9 @@ A set of functions for the detection of spatial clusters of diseases
 using count data.
 @item DEoptim
 Differential Evolution Optimization.
+@item DICOM
+Import and manipulate medical imaging data using the Digital Imaging and
+Communications in Medicine (DICOM) Standard.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
@@ -2240,6 +2243,8 @@ and fractional factorial designs.
 Classes of commonly used copulas (including elliptical and Archimedian),
 and methods for density, distribution, random number generators, and
 plotting.
+@item corpcor
+Efficient estimation of covariance and (partial) correlation.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
 @item cramer
@@ -2892,6 +2897,9 @@ a Gibbs sampler.
 @c @item netCDF
 @c Read data from netCDF files.
 @c </COMMENT>
+@item network
+Tools to create and modify network objects, which can represent a range
+of relational data types.
 @item neural
 RBF and MLP neural networks with graphical user interface.
 @item nice
@@ -2964,6 +2972,9 @@ Periodic Autoregression Analysis.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item permtest
+Permutation test to compare variability within and distance between two
+groups.
 @item perturb
 Perturbation analysis for evaluating collinearity.
 @item pgam
