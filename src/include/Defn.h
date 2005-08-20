@@ -83,6 +83,10 @@ void R_ProcessEvents(void);
 
 /*  Heap and Pointer Protection Stack Sizes.  */
 
+/* These are for future protection: will need to be different on Win64 */
+typedef unsigned long R_ulong_t;
+typedef long R_long_t;
+
 /* NB: will need a 64-bit type, ULONG64 or size_t, for Win64 */
 #if defined HAVE_DECL_SIZE_MAX && HAVE_DECL_SIZE_MAX
 # ifdef HAVE_INTTYPES_H
@@ -848,7 +852,7 @@ void R_SetMaxVSize(R_size_t);
 R_size_t R_GetMaxNSize(void);
 void R_SetMaxNSize(R_size_t);
 R_size_t R_Decode2Long(char *p, int *ierr);
-void R_SetPPSize(unsigned long);
+void R_SetPPSize(R_size_t);
 
 void R_run_onexits(RCNTXT *);
 void R_restore_globals(RCNTXT *);

@@ -1,6 +1,6 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
- *  Copyright (C) 1998-2001    Robert Gentleman, Ross Ihaka 
+ *  Copyright (C) 1998-2005    Robert Gentleman, Ross Ihaka 
  *                             and the R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -33,6 +33,9 @@ void	vmaxset(char*);
 
 void	R_gc(void);
 
+/* <FIXME> this really needs to be R_size_t, since Win64 has a 32-bit
+   long.  See comments in memory.c
+*/
 char*	R_alloc(long, int);
 char*	S_alloc(long, int);
 char*	S_realloc(char*, long, long, int);

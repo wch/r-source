@@ -36,10 +36,10 @@
 */
 SEXP csduplicated(SEXP x);  /* from unique.c */
 
-static unsigned long objectsize(SEXP s)
+static R_size_t objectsize(SEXP s)
 {
     int i;
-    unsigned long cnt = 0, vcnt = 0;
+    R_size_t cnt = 0, vcnt = 0;
     SEXP tmp, dup;
     
     switch (TYPEOF(s)) {
@@ -124,12 +124,12 @@ static unsigned long objectsize(SEXP s)
 SEXP do_objectsize(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans;
-    unsigned long cnt = 0;
+    R_size_t cnt = 0;
     
     checkArity(op, args);
     cnt = objectsize(CAR(args));
     PROTECT(ans = allocVector(REALSXP, 1));
-    REAL(ans)[0] = cnt;
+    REAL(ans)[0] = (double) cnt;
     UNPROTECT(1);
     return ans;
 }

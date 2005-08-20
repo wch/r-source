@@ -41,6 +41,7 @@ int R_OutputCon;		/* used in printutils.c */
 # include <fcntl.h>
 #endif
 
+/* This should work on Win64, as long is 4 bytes but long long is 8 bytes. */
 #if defined __GNUC__ && __GNUC__ >= 2
 __extension__ typedef long long int _lli_t;
 #else

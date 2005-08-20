@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004  The R Development Core Team.
+ *  Copyright (C) 1998--2005  The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -231,7 +231,7 @@ void R_SetMaxNSize(R_size_t size)
     if (size >= R_NSize) R_MaxNSize = size;
 }
 
-void R_SetPPSize(unsigned long size)
+void R_SetPPSize(R_size_t size)
 {
     R_PPStackSize = size;
 }
@@ -1580,6 +1580,9 @@ void vmaxset(char *ovmax)
     R_VStack = (SEXP) ovmax;
 }
 
+/* <FIXME> this really needs to be R_size_t with an appropriate test.
+   That would mean exporting R_size_t.
+ */
 char *R_alloc(long nelem, int eltsize)
 {
     R_size_t size = nelem * eltsize;

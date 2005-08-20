@@ -29,7 +29,7 @@ Array make_identity_matrix(int n);
 
 Array subarray(Array a, int index);
 
-long vector_length(Array a);
+int vector_length(Array a);
 
 void set_array_to_zero(Array arr);
 void copy_array (Array orig, Array ans);
