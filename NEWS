@@ -596,10 +596,16 @@ BUG FIXES
     o	Formatting of complex numbers with nsmall > 0 could be
 	incorrect (and was in print-tests.Rout) because of a typo.
 
-    o	The test for new levels when predicting using model.frame
+    o	The test for new levels when predicting using model.frame()
 	sometimes reported levels that were not actually used.
 
     o	order(c("5","6",NA,"4",NA), na.last=FALSE) was incorrect.
+
+    o	Coercion to raw could give spurious messages about discarding
+	imaginary parts.
+
+	Coercion of a list to raw was behaving inconsistently for
+	out-of-range values (and not warning).
 
 
 

@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-13 r35278)
+Version 2.2.0 Under development (unstable) (2005-08-20 r35327)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -4745,6 +4745,19 @@ y ~ z
 <none>               6.316 -0.595
 z       1    82.814 89.130 23.875
 > ## Last two ignored the offset in 2.1.1
+> 
+> 
+> ## tests of raw conversion
+> as.raw(1234)
+[1] 00
+Warning message:
+out-of-range values treated as 0 in coercion to raw 
+> as.raw(list(a=1234))
+[1] 00
+Warning message:
+out-of-range values treated as 0 in coercion to raw 
+> ## 2.1.1: spurious and missing messages, wrong result for second.
+> 
 > 
 > ### end of tests added in 2.1.1 patched ###
 > 

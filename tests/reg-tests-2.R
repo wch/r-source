@@ -1603,6 +1603,13 @@ add1(lm1, scope = ~ z)
 drop1(lm2)
 ## Last two ignored the offset in 2.1.1
 
+
+## tests of raw conversion
+as.raw(1234)
+as.raw(list(a=1234))
+## 2.1.1: spurious and missing messages, wrong result for second.
+
+
 ### end of tests added in 2.1.1 patched ###
 
 
