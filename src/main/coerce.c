@@ -54,7 +54,7 @@ const static char * const falsenames[] = {
 #define WARN_NA	   1
 #define WARN_INACC 2
 #define WARN_IMAG  4
-#define WARN_RAW  4
+#define WARN_RAW  8
 
 /* The following two macros copy or clear the attributes.  They also
    ensure that the object bit is properly set.  They avoid calling the
@@ -903,7 +903,7 @@ static SEXP coercePairList(SEXP v, SEXPTYPE type)
 
 static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 {
-    int i, n;
+    int i, n, warn = 0, tmp;
     SEXP rval, names;
 
     names = v;
@@ -958,8 +958,14 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 		COMPLEX(rval)[i] = asComplex(VECTOR_ELT(v, i));
 	    break;
 	case RAWSXP:
-	    for (i = 0; i < n; i++)
-		RAW(rval)[i] = (Rbyte) asInteger(VECTOR_ELT(v, i));
+	    for (i = 0; i < n; i++) {
+		tmp = asInteger(VECTOR_ELT(v, i));
+		if (tmp < 0 || tmp > 255) { /* includes NA_INTEGER */
+		    tmp = 0;
+		    warn |= WARN_RAW;
+		}
+		RAW(rval)[i] = (Rbyte) tmp;
+	    }
 	    break;
 	default:
 	    UNIMPLEMENTED_TYPE("coerceVectorList", v);
@@ -969,6 +975,7 @@ static SEXP coerceVectorList(SEXP v, SEXPTYPE type)
 	error(_("(list) object cannot be coerced to '%s'"),
 	      CHAR(type2str(type)));
 
+    if (warn) CoercionWarning(warn);
     names = getAttrib(v, R_NamesSymbol);
     if (names != R_NilValue)
 	setAttrib(rval, R_NamesSymbol, names);
