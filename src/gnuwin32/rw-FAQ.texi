@@ -1100,24 +1100,10 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 @node How can I compile R from source?, Can I use a fast BLAS?, Building from Source, Building from Source
 @section How can I compile R from source?
 
-Get the R sources.  Suppose you want to compile R-@value{RVERSION}.
-Start in a directory whose path does not contain spaces, and run
+See the `R Installation and Administration' manual.
 
-@example
-tar zxvf R-@value{RVERSION}.tgz
-cd R-@value{RVERSION}
-cd src\gnuwin32
-@end example
-
-@noindent
-Now read the `R Installation and Administration' manual and set up all
-the tools needed.  Then you can just use @code{make all bitmapdll
-recommended vignettes}, sit back and wait.  (A complete build takes
-about 20 minutes on a 2.6GHz P4 with a fast local disc.)
-
-You may need to compile under a case-honouring file system: we found
-that a @code{samba}-mounted file system (which maps all file names to lower
-case) did not work.
+Note that building under Windows 64 is not supported as no suitable
+compiler is available.
 
 @node Can I use a fast BLAS?, How do I include compiled C code?, How can I compile R from source?, Building from Source
 @section  Can I use a fast BLAS?
@@ -1359,14 +1345,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 August 10 by Professor B. D. Ripley
+Last edited 2005 August 19 by Professor B. D. Ripley
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 August 10 by Professor B. D. Ripley <Rwindows@@r-project.org>
+Last edited 2005 August 19 by Professor B. D. Ripley <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
