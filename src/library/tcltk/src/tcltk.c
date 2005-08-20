@@ -585,7 +585,7 @@ static void callback_closure(char * buf, SEXP closure)
 
     formals = FORMALS(closure);
 
-    sprintf(buf, "R_call %p", closure);
+    sprintf(buf, "R_call %p", (void *) closure);
 
     while ( formals != R_NilValue )
     {
@@ -598,7 +598,7 @@ static void callback_closure(char * buf, SEXP closure)
 
 static void callback_lang(char *buf, SEXP call, SEXP env)
 {
-    sprintf(buf, "R_call_lang %p %p", call, env);
+    sprintf(buf, "R_call_lang %p %p", (void *) call, (void *) env);
 
 }
 
