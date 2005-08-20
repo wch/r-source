@@ -54,6 +54,7 @@
 #define AS_COMPLEX(x)		coerceVector(x,CPLXSXP)
 #define AS_VECTOR(x)		coerceVector(x,VECSXP)
 #define AS_LIST(x)		coerceVector(x,VECSXP)
+#define AS_RAW(x)		coerceVector(x,RAWSXP)
 
 #define IS_LOGICAL(x)		isLogical(x)
 #define IS_INTEGER(x)		isInteger(x)
@@ -62,6 +63,7 @@
 #define IS_COMPLEX(x)		isComplex(x)
 #define IS_VECTOR(x)		isVector(x)
 #define IS_LIST(x)		IS_VECTOR(x)
+#define IS_RAW(x)		(TYPEOF(x) == RAWSXP)
 
 #define NEW_LOGICAL(n)		allocVector(LGLSXP,n)
 #define NEW_INTEGER(n)		allocVector(INTSXP,n)
@@ -70,6 +72,7 @@
 #define NEW_COMPLEX(n)		allocVector(CPLXSXP,n)
 #define NEW_LIST(n)		allocVector(VECSXP,n)
 #define NEW_STRING(n)		NEW_CHARACTER(n)
+#define NEW_RAW(n)		allocVector(RAWSXP,n)
 
 #define LOGICAL_POINTER(x)	LOGICAL(x)
 #define INTEGER_POINTER(x)	INTEGER(x)
@@ -77,12 +80,13 @@
 #define CHARACTER_POINTER(x)	STRING_PTR(x)
 #define COMPLEX_POINTER(x)	COMPLEX(x)
 #define LIST_POINTER(x)		VECTOR_PTR(x)
+#define RAW_POINTER(x)		RAW(x)
 
 /* The following are not defined in `Programming with Data' but are
    defined in S.h in Svr4 */
 
 /*
- * Note that LIST_DATA is missing.
+ * Note that LIST_DATA and RAW_DATA are missing.
  * This is consistent with Svr4.
  */
 
@@ -101,6 +105,7 @@
 #define CHARACTER_VALUE(x)	CHAR(asChar(x))
 #define STRING_VALUE(x)		CHAR(asChar(x))
 #define LIST_VALUE(x)		error("the `value' of a list object is not defined")
+#define RAW_VALUE(x)		error("the `value' of a raw object is not defined")
 
 #define SET_ELEMENT(x, i, val)	SET_VECTOR_ELT(x, i, val)
 #define GET_ATTR(x,what)       	getAttrib(x, what)

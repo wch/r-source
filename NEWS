@@ -389,6 +389,8 @@ C-LEVEL FACILITIES
         where level is 1 or 2.  Both levels will find more bugs with
         gctorture(TRUE).  Level 2 makes Valgrind run extremely slowly.
 
+    o	Some support for raw vectors has been added to Rdefines.h.
+
 
 BUG FIXES
 
