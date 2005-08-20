@@ -353,10 +353,12 @@ getOption(x)
       \code{\link{update.packages}}.  Defaults to
       \code{c(CRAN="@CRAN@")}, a value that causes some utilities to
       prompt for a CRAN mirror.  To avoid this do set the CRAN mirror,
-      and to also add two other prominent repositories, use something like
-      \code{options(repos=c(CRAN = "http://my.local.cran/R",
-	    BioC = "http://www.bioconductor.org",
-        Omegahat = "http://www.omegahat.org/R"))}.
+      by something like
+      \code{local({r <- getOption("repos"); r["CRAN"] <- "http://my.local.cran";
+                   options(repos=r)})}.
+
+      Note that you can add more repositories (Bioconductor and
+      Omegahat, notably) using \code{\link{setRepositories}()}.
     }
     \item{\code{SweaveHooks}, \code{SweaveSyntax}:}{see \code{\link{Sweave}}.}
 
