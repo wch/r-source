@@ -10722,4 +10722,7 @@ Rregexec (const regex_t *__restrict preg, const char *__restrict string,
 			      length, nmatch, pmatch, eflags);
   return err != REG_NOERROR;
 }
-#endif /* not USE_SYSTEM_REGEX */
+#else /* not USE_SYSTEM_REGEX */
+/* for 2.1.0, this option is not functional */
+#error USE_SYSTEM_REGEX is no longer supported
+#endif
