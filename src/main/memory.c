@@ -1808,7 +1808,7 @@ SEXP allocVector(SEXPTYPE type, R_len_t length)
 		   work in terms of a VECSEXP here, but that would
 		   require several casts below... */
     R_len_t i;
-    R_size_t size = 0, actual_size, alloc_size, old_R_VSize;
+    R_size_t size = 0, actual_size = 0, alloc_size, old_R_VSize;
     int node_class;
 
     if (length < 0 )
