@@ -3177,8 +3177,8 @@ gcc-core-3.4.4-20050522-1.tar.gz
 gcc-g++-3.4.4-20050522-1.tar.gz
 gcc-g77-3.4.4-20050522-1.tar.gz
 binutils-2.15.94-20050118-1.tar.gz
-mingw-runtime-3.7.tar.gz
-w32api-3.2.tar.gz
+mingw-runtime-3.8.tar.gz
+w32api-3.3.tar.gz
 @end example
 
 @noindent
