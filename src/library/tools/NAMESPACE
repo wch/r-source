@@ -13,11 +13,6 @@ export("Rdindex",
 
 export("Rd_db", "Rd_parse", "package.dependencies", "read.00Index")
 
-## Defunct in 2.1.0.
-## To be removed in 2.2.0.
-export("filePathAsAbsolute", "filePathSansExt", "fileTest",
-       "listFilesWithExts", "listFilesWithType")
-
 S3method("print", "checkDocFiles")
 S3method("print", "checkDocStyle")
 S3method("print", "checkFF")
