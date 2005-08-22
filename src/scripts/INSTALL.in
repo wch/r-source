@@ -836,13 +836,13 @@ do_install_source () {
 
   ## <NOTE>
   ## Remove stuff we should not have installed in the first place.
-  ## When installing from a source directory under CVS control, we
-  ## should really exclude the CVS subdirs.  The same applies for the
-  ## .svn Subversion subdirs.
-  find "${R_PACKAGE_DIR}" -name CVS -type d -prune \
-    -exec rm -rf \{\} \; 2>/dev/null
-  find "${R_PACKAGE_DIR}" -name .svn -type d -prune \
-    -exec rm -rf \{\} \; 2>/dev/null
+  ## When installing from a source directory under version control, we
+  ## should really exclude the subdirs CVS, .svn (Subversion) and
+  ## .arch-ids (arch).
+  for d in CVS .svn .arch-ids; do
+    find "${R_PACKAGE_DIR}" -name ${d} -type d -prune \
+      -exec rm -rf \{\} \; 2>/dev/null
+  done
   ## </NOTE>
 
   if ${clean}; then

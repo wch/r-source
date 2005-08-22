@@ -180,6 +180,7 @@ foreach my $pkg (@ARGV) {
 	print EXCLUDE "$File::Find::name\n" if /^GNUMakefile$/;
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^CVS$/);
 	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.svn$/);
+	print EXCLUDE "$File::Find::name\n" if(-d $_ && /^\.arch-ids$/);
 	if($WINDOWS) {
 	    ## exclude stray dependency files
 	    print EXCLUDE "$File::Find::name\n" if /\.d$/;

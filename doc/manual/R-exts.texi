@@ -1094,10 +1094,10 @@ To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl regexps, one per line, to be
 matched against the file names relative to the top-level source
-directory.  In addition, directories called @file{CVS} or @file{.svn}
-and files @file{GNUMakefile} or with base names starting with @samp{.#},
-or starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak}
-or @samp{.swp}, are excluded by default.
+directory.  In addition, directories called @file{CVS} or @file{.svn} or
+@file{.arch-ids} and files @file{GNUMakefile} or with base names
+starting with @samp{.#}, or starting and ending with @samp{#}, or ending
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.
 
 @c <FIXME>
 @c From 1.8.0 on, the build code removes exclude files itself, rather
