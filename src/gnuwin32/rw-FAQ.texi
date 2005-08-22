@@ -60,10 +60,11 @@ B. D. Ripley and D. J. Murdoch              @*
 @menu
 * Introduction::                
 * Installation and Usage::      
+* Languages and Internationalization::  
 * Packages::                    
 * Windows Features::            
 * Workspaces::                  
-* The R Console and Fonts::     
+* The R Console::               
 * Building from Source::        
 @end menu
 
@@ -85,18 +86,15 @@ The information here applies only to recent versions of R for Windows,
 
 
 @newchap{}
-@node Installation and Usage, Packages, Introduction, Top
+@node Installation and Usage, Languages and Internationalization, Introduction, Top
 @chapter Installation and Usage
 
 @menu
 * Where can I find the latest version?::  
 * How do I install R for Windows?::  
-* The installer does not offer my language::  
-* I want to run R in Chinese/Japanese/Korean::  
 * How do I check an installation?::  
 * Can I customize the installation?::  
 * How do I run it?::            
-* I selected English for Installation but R runs in Chinese::  
 * Can I run R from a CD or USB drive?::  
 * How do I UNinstall R?::       
 * What's the best way to upgrade?::  
@@ -132,7 +130,7 @@ fixes to the current release, and @code{r-devel} contains these as well
 as changes that will eventually make it into the next @code{x.y.0}
 release.
 
-@node How do I install R for Windows?, The installer does not offer my language, Where can I find the latest version?, Installation and Usage
+@node How do I install R for Windows?, How do I check an installation?, Where can I find the latest version?, Installation and Usage
 @section How do I install R for Windows?
 
 You need Windows 95 or later: Windows 3.11+win32s will not work.  There
@@ -164,72 +162,8 @@ of the Target field, for example @code{R_LIBS=p:/myRlib}, and if you
 want to ensure that menus and messages are in (American) English,
 @code{LANGUAGE=en}.
 
-@node The installer does not offer my language, I want to run R in Chinese/Japanese/Korean, How do I install R for Windows?, Installation and Usage
-@section The installer does not offer my language
 
-Two things may be happening.  First, only languages which can be
-displayed using the current codepage are offered so you cannot install
-in Japanese unless running Windows in Japanese.
-
-Second, only a limited range of languages is supported (but still wider
-than those for which R has translations), currently
-Brazilian Portuguese,
-Catalan,
-(Simplified) Chinese,
-Czech,
-Danish,
-Dutch,
-French,
-German,
-Hungarian,
-Italian,
-Japanese,
-Korean,
-Norwegian
-Polish,
-Portuguese,
-Russian
-and
-Slovenian.
-
-@node I want to run R in Chinese/Japanese/Korean, How do I check an installation?, The installer does not offer my language, Installation and Usage
-@section I want to run R in Chinese/Japanese/Korean
-
-This is possible by installing R with support for `East Asian' languages
-(with a suitable version of Windows -- Western installations of Windows
-XP do not by default have such support).  You will need
-@file{msvcp60.dll} installed: it is part of modern versions of Windows,
-and is often installed by other programs.  So if it is not found
-automatically it is worth searching your machine and copying it from
-another program's directory to R's @file{bin} directory.
-
-In such locales @file{Rterm.exe} should be used for batch use only, but
-@file{RGui.exe} will support single- and double-width characters.
-
-It will be necessary to select suitable fonts in @file{Rconsole} and
-@file{Rdevga} (see @code{?Rconsole} or the comments in the files: the
-system versions are in the @file{etc} folder); in the latter you can
-replace @code{Arial} by @code{Arial Unicode MS}, and we tried
-@code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.  (Note that
-@file{Rdevga} only applies to Windows graphics devices and not, say, to
-@code{pdf}.)
-
-You do need to ensure that R is running in a suitable locale: use
-@code{Sys.getlocale()} to find out.  (CJK users may be used to their
-language characters always being available, which is the case for
-so-called `Unicode' Windows applications.  However, R has to run on
-Windows 9x and is not therefore `Unicode'.)  You can find suitable
-locale names from
-@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
-beware that @code{"Chinese"} is Traditional Chinese (code page 950,
-Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
-GB2312).  Note that this can be rather tricky: on Windows XP there are
-several places to select the language under the `Regional and Language
-Options' part of the control panel, and the appropriate language has to
-be set under @emph{both} the `Regional Options' and `Advanced' tabs.
-(The @code{RGui} menus may be corrupted if this is not done.)
-
-@node How do I check an installation?, Can I customize the installation?, I want to run R in Chinese/Japanese/Korean, Installation and Usage
+@node How do I check an installation?, Can I customize the installation?, How do I install R for Windows?, Installation and Usage
 @section How do I check an installation is not corrupt?
 
 Run the program @file{bin\md5check.exe}.
@@ -285,7 +219,7 @@ We have some facilities for building a customized installer, in
 particular to add packages to the installer.  See the `R Installation
 and Administration' manual in the subsection `Building the installers'.
 
-@node How do I run it?, I selected English for Installation but R runs in Chinese, Can I customize the installation?, Installation and Usage
+@node How do I run it?, Can I run R from a CD or USB drive?, Can I customize the installation?, Installation and Usage
 @section How do I run it?
 
 Just double-click on the shortcut you prepared at installation.
@@ -300,21 +234,7 @@ for example an `MS-DOS window' (Windows 9x/ME), a `Command Prompt'
 Target field of a shortcut, and the starting directory will be the
 currect working directory of the shell.)
 
-@node I selected English for Installation but R runs in Chinese, Can I run R from a CD or USB drive?, How do I run it?, Installation and Usage
-@section I selected English for Installation but R runs in Chinese
-
-Precisely, you selected English @strong{for installation}!  The language
-of the installer has nothing to do with the language used to run R: this
-is completely standard Windows practice (and necessary as different
-users of the computer may use different languages).
-
-The language R uses for menus and messages is determined by the
-@emph{locale}: please read the appropriate manual (the @emph{R
-Installation and Administration Manual}) for the details.  You can
-ensure that R uses English messages by appending @code{LANGUAGE=en} to
-the shortcut you use to start R.
-
-@node Can I run R from a CD or USB drive?, How do I UNinstall R?, I selected English for Installation but R runs in Chinese, Installation and Usage
+@node Can I run R from a CD or USB drive?, How do I UNinstall R?, How do I run it?, Installation and Usage
 @section Can I run R from a CD or USB drive?
 
 Yes, with care.  A basic R installation is relocatable, so you can burn
@@ -407,7 +327,7 @@ You should see a line like
 @node How can I keep workspaces for different projects in different directories?, How do I print from R?, There seems to be a limit on the memory it uses!, Installation and Usage
 @section How can I keep workspaces for different projects in different directories?
 
-Create a separate shortcut for each project: see Q2.4.  All the paths to
+Create a separate shortcut for each project: see Q2.5.  All the paths to
 files used by R are relative to the starting directory, so setting the
 `Start in' field automatically helps separate projects.
 
@@ -520,7 +440,8 @@ the same way.  This is useful for variables which should be set for all
 users and all usages of this R installation.  (Their values can be
 overridden in a @file{.Renviron} or on the command line.)
 
-See @code{?Startup} for more details of environment files.
+See @code{?Startup} for more details of environment files, include
+the site-wide environment file @file{Renviron.site}.
 
 @item
 For all applications via Windows.  How you set an environment variable
@@ -663,9 +584,167 @@ The only solution we know of is for the user to replace the buggy driver
 that is causing the error.
 
 
+@newchap{}
+@node Languages and Internationalization, Packages, Installation and Usage, Top
+@chapter Languages and Internationalization
+
+@menu
+* The installer does not offer my language::  
+* I want R in English!::        
+* I want to run R in Chinese/Japanese/Korean::  
+* I selected English for Installation but R runs in Chinese::  
+* I would like to be able to use Japanese fonts::  
+* I don't see characters with accents at the R console::  
+* The dialog buttons are not translated::  
+@end menu
+
+@node The installer does not offer my language, I want R in English!, Languages and Internationalization, Languages and Internationalization
+@section The installer does not offer my language
+
+Two things may be happening.  First, only languages which can be
+displayed using the current codepage are offered so you cannot install
+in Japanese unless running Windows in Japanese.
+
+Second, only a limited range of languages is supported (but still wider
+than those for which R has translations), currently
+Brazilian Portuguese,
+Catalan,
+(Simplified) Chinese,
+Czech,
+Danish,
+Dutch,
+French,
+German,
+Hungarian,
+Italian,
+Japanese,
+Korean,
+Norwegian
+Polish,
+Portuguese,
+Russian
+and
+Slovenian.
+
+@node I want R in English!, I want to run R in Chinese/Japanese/Korean, The installer does not offer my language, Languages and Internationalization
+@section I want R in English (and not in French/Chinese/...)!
+
+The default behaviour of R is to try to run in the language you run
+Windows in.  Apparently some users want Windows in their native language,
+but not R.  To do so, set @code{LANAGUAGE=en} as discussed in Q2.2 and Q2.15.
+
+@node I want to run R in Chinese/Japanese/Korean, I selected English for Installation but R runs in Chinese, I want R in English!, Languages and Internationalization
+@section I want to run R in Chinese/Japanese/Korean
+
+This is possible by installing R with support for `East Asian' languages
+(with a suitable version of Windows -- Western installations of Windows
+XP do not by default have such support).  You will need
+@file{msvcp60.dll} installed: it is part of modern versions of Windows,
+and is often installed by other programs.  So if it is not found
+automatically it is worth searching your machine and copying it from
+another program's directory to R's @file{bin} directory.
+
+In such locales @file{Rterm.exe} should be used for batch use only, but
+@file{RGui.exe} will support single- and double-width characters.
+
+It will be necessary to select suitable fonts in @file{Rconsole} and
+@file{Rdevga} (see @code{?Rconsole} or the comments in the files: the
+system versions are in the @file{etc} folder); in the latter you can
+replace @code{Arial} by @code{Arial Unicode MS}, and we tried
+@code{FixedSys} and @code{MS Mincho} in @file{Rconsole}.  (Note that
+@file{Rdevga} only applies to Windows graphics devices and not, say, to
+@code{pdf}.)
+
+You do need to ensure that R is running in a suitable locale: use
+@code{Sys.getlocale()} to find out.  (CJK users may be used to their
+language characters always being available, which is the case for
+so-called `Unicode' Windows applications.  However, R has to run on
+Windows 9x and is not therefore `Unicode'.)  You can find suitable
+locale names from
+@uref{http://msdn.microsoft.com/library/default.asp?url=/library/en-us/vccore98/html/_crt_language_and_country_strings.asp}:
+beware that @code{"Chinese"} is Traditional Chinese (code page 950,
+Big5) and @code{"chs"} is needed for Simplified Chinese (code page 936,
+GB2312).  Note that this can be rather tricky: on Windows XP there are
+several places to select the language under the `Regional and Language
+Options' part of the control panel, and the appropriate language has to
+be set under @emph{both} the `Regional Options' and `Advanced' tabs.
+(The @code{RGui} menus may be corrupted if this is not done.)
+
+@node I selected English for Installation but R runs in Chinese, I would like to be able to use Japanese fonts, I want to run R in Chinese/Japanese/Korean, Languages and Internationalization
+@section I selected English for Installation but R runs in Chinese
+
+Precisely, you selected English @strong{for installation}!  The language
+of the installer has nothing to do with the language used to run R: this
+is completely standard Windows practice (and necessary as different
+users of the computer may use different languages).
+
+The language R uses for menus and messages is determined by the
+@emph{locale}: please read the appropriate manual (the @emph{R
+Installation and Administration Manual}) for the details.  You can
+ensure that R uses English messages by appending @code{LANGUAGE=en} to
+the shortcut you use to start R.
+
+@node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, I selected English for Installation but R runs in Chinese, Languages and Internationalization
+@section I would like to be able to use Japanese fonts
+
+for example, in the console and to annotate graphs.  Similar comments
+apply to any non-Western European language.
+
+We believe this is possible by setting suitable fonts in the @file{Rconsole}
+and @file{Rdevga} configuration files (see Q3.2 and the next Q).  You can
+specify additional fonts in Rdevga, and use them by
+
+@example
+par(font=, font.lab=, font.main=, font.sub=)
+@end example
+
+Nineteen fonts are specified (as 1 to 19) by default: you can add to these
+(up to 13 more) or replace them.
+
+In addition, the Hershey vector fonts (see @code{?Hershey},
+@code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
+device to display Japanese characters.
+
+To use non-Latin 1 characters in the @code{postscript} graphics device,
+see its help page.
+
+@node I don't see characters with accents at the R console, The dialog buttons are not translated, I would like to be able to use Japanese fonts, Languages and Internationalization
+@section I don't see characters with accents at the R console, for example in ?text.
+
+You need to specify a font in Rconsole (see Q3.5) that supports the
+encoding in use, in Western European languages Latin-1.  The default
+font, @code{Courier New}, does on our systems, as does @code{FixedSys}.
+This may be a problem in other locales, especially for non-Western
+European languages.
+
+Support for these characters within @code{Rterm} depends on the
+environment (the terminal window and shell, including locale settings)
+within which it is run as well as the font used by the terminal window.
+
+If you are using a non-Latin 1 language, you do need to ensure that the
+fonts you selected support the language.  For example, it was found by
+one Czech user (under Windows 98) that he had to select @code{Times New
+Roman CE} or @code{Courier} (not @code{Courier New}) to get certain
+Czech characters displayed correctly.
+
+@node The dialog buttons are not translated,  , I don't see characters with accents at the R console, Languages and Internationalization
+@section The dialog buttons are not translated
+
+In most cases they actually are, but but Windows.  Setting the locale or
+the @code{LANGUAGE} environment variable does not change the Windows
+setting of its `UI language'.  Under Windows XP there are three tabs on
+the @emph{Regional and Language Options} applet in the Control Panel.
+The first tab controls the locale, the second the UI and the third the
+fonts used for `non-Unicode' programs (but apparently also for Unicode
+ones in may cases): see Q3.3.
+
+If you have Windows running completely in say French or Chinese these
+settings are likely to be consistent.  However, if you try to run
+Windows in one language and R in another, you may find the way Windoes
+handles internationalization slightly odd.
 
 @newchap{}
-@node Packages, Windows Features, Installation and Usage, Top
+@node Packages, Windows Features, Languages and Internationalization, Top
 @chapter Packages
 
 
@@ -765,7 +844,7 @@ The following conditions need to hold for functions in a package you installed.
 
 @itemize @bullet
 @item the package contains a @file{CONTENTS} file in its top-level directory.
-@item you updated the indices as described in the answer to Q3.3 after
+@item you updated the indices as described in the answer to Q4.3 after
 installing the package.
 @end itemize
 
@@ -965,7 +1044,7 @@ graphics windows from @samp{Rterm.exe} (although Windows may not always
 act on it).
 
 @newchap{}
-@node Workspaces, The R Console and Fonts, Windows Features, Top
+@node Workspaces, The R Console, Windows Features, Top
 @chapter Workspaces
 
 
@@ -979,7 +1058,7 @@ act on it).
 @node My workspace gets saved in a strange place.  How do I stop this?, How do I store my workspace in a different place?, Workspaces, Workspaces
 @section My workspace gets saved in a strange place: how do I stop this?
 
-Have you changed the working directory?: see Q5.2.
+Have you changed the working directory?: see Q6.2.
 
 
 @node How do I store my workspace in a different place?, Can I load workspaces saved under Unix/GNU-Linux or MacOS?, My workspace gets saved in a strange place.  How do I stop this?, Workspaces
@@ -1002,63 +1081,19 @@ interchangeable (for the same 2.x.? version of R, at least).
 
 
 @newchap{}
-@node The R Console and Fonts, Building from Source, Workspaces, Top
-@chapter The R Console and Fonts
+@node The R Console, Building from Source, Workspaces, Top
+@chapter The R Console
 
 
 @menu
-* I would like to be able to use Japanese fonts::  
-* I don't see characters with accents at the R console::  
 * The output to the console seems to be delayed::  
 * Long lines seem to be truncated.::  
 @end menu
 
 
-@node I would like to be able to use Japanese fonts, I don't see characters with accents at the R console, The R Console and Fonts, The R Console and Fonts
-@section I would like to be able to use Japanese fonts
-
-for example, in the console and to annotate graphs.  Similar comments
-apply to any non-Western European language.
-
-We believe this is possible by setting suitable fonts in the @file{Rconsole}
-and @file{Rdevga} configuration files (see Q4.2 and the next Q).  You can
-specify additional fonts in Rdevga, and use them by
-
-@example
-par(font=, font.lab=, font.main=, font.sub=)
-@end example
-
-Nineteen fonts are specified (as 1 to 19) by default: you can add to these
-(up to 13 more) or replace them.
-
-In addition, the Hershey vector fonts (see @code{?Hershey},
-@code{?Japanese} and @code{demo(Japanese)}) can be used on any graphics
-device to display Japanese characters.
-
-To use non-Latin 1 characters in the @code{postscript} graphics device,
-see its help page.
 
 
-@node I don't see characters with accents at the R console, The output to the console seems to be delayed, I would like to be able to use Japanese fonts, The R Console and Fonts
-@section I don't see characters with accents at the R console, for example in ?text.
-
-You need to specify a font in Rconsole (see Q4.2) that supports the
-encoding in use, in Western European languages Latin-1.  The default
-font, @code{Courier New}, does on our systems, as does @code{FixedSys}.
-This may be a problem in other locales, especially for non-Western
-European languages.
-
-Support for these characters within @code{Rterm} depends on the
-environment (the terminal window and shell, including locale settings)
-within which it is run as well as the font used by the terminal window.
-
-If you are using a non-Latin 1 language, you do need to ensure that the
-fonts you selected support the language.  For example, it was found by
-one Czech user (under Windows 98) that he had to select @code{Times New
-Roman CE} or @code{Courier} (not @code{Courier New}) to get certain
-Czech characters displayed correctly.
-
-@node The output to the console seems to be delayed, Long lines seem to be truncated., I don't see characters with accents at the R console, The R Console and Fonts
+@node The output to the console seems to be delayed, Long lines seem to be truncated., The R Console, The R Console
 @section When using Rgui the output to the console seems to be delayed.
 
 This is deliberate: the console output is buffered and re-written in
@@ -1071,7 +1106,7 @@ option.  A call to the R function @code{flush.console()} will write out
 the buffer and so update the console.
 
 
-@node Long lines seem to be truncated.,  , The output to the console seems to be delayed, The R Console and Fonts
+@node Long lines seem to be truncated.,  , The output to the console seems to be delayed, The R Console
 @section Long lines in the console or pager are truncated.
 
 They only @strong{seem} to be truncated: that $ at the end indicates you
@@ -1082,7 +1117,7 @@ horizontally. (The @key{left/right arrow} keys work in the pager too.)
 
 
 @newchap{}
-@node Building from Source,  , The R Console and Fonts, Top
+@node Building from Source,  , The R Console, Top
 @chapter Building from Source
 
 @menu
@@ -1345,14 +1380,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 August 19 by Professor B. D. Ripley
+Last edited 2005 August 21: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 August 19 by Professor B. D. Ripley <Rwindows@@r-project.org>
+Last edited 2005 August 21: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
