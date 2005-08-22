@@ -943,9 +943,11 @@ size_t Rwcstombs(char *s, const wchar_t *wc, size_t n);
 #endif
 #define gettext_noop(String) String
 #define N_(String) gettext_noop (String)
+#define P_(StringS, StringP, N) ngettext (StringS, StringP, N)
 #else /* not NLS */
 #define _(String) (String)
 #define N_(String) String
+#define P_(String, StringP, N) StringP
 #endif
 
 
