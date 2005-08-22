@@ -1,5 +1,6 @@
 \name{typeof}
 \alias{typeof}
+\alias{type}
 \title{The Type of an Object}
 \description{
   \code{typeof} determines the (\R internal)
