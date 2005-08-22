@@ -53,14 +53,13 @@ bxp(z, notch = FALSE, width = NULL, varwidth = FALSE, outline = TRUE,
     this function, either as a list (\code{pars}) or
     normally(\code{\dots}), see the following.
 
-    Currently, \code{ylim} is used \sQuote{along the boxplot}, i.e.,
-    vertically, when \code{horizontal} is false.
-    \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis},
-    and \code{col.axis} are passed to \code{\link{axis}}, and
-    \code{main}, \code{cex.main}, \code{col.main}, \code{sub},
-    \code{cex.sub}, \code{col.sub}, \code{xlab}, \code{ylab},
-    \code{cex.lab}, and \code{col.lab} are passed to
-    \code{\link{title}}.
+    Currently, \code{yaxs} and \code{ylim} are used \sQuote{along the
+      boxplot}, i.e., vertically, when \code{horizontal} is
+    false. \code{xaxt}, \code{yaxt}, \code{las}, \code{cex.axis}, and
+    \code{col.axis} are passed to \code{\link{axis}}, and \code{main},
+    \code{cex.main}, \code{col.main}, \code{sub}, \code{cex.sub},
+    \code{col.sub}, \code{xlab}, \code{ylab}, \code{cex.lab}, and
+    \code{col.lab} are passed to \code{\link{title}}.
 
     The following arguments (or \code{pars} components) allow further
     customization of the boxplot graphics.  Their defaults are typically

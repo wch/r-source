@@ -262,6 +262,9 @@ NEW FEATURES
     o   memory.profile() now uses the type names returned by typeof()
 	and no longer has two unlabelled entries.
 
+    o   boxplots now responds to supplying 'yaxs' (via bxp()).
+	(Wish of PR#8072.)
+
 
 DEPRECATED & DEFUNCT
 
@@ -317,6 +320,10 @@ INSTALLATION
 
     o	src/modules/lapack/dlamc.f is now compiled with -ffloat-store
 	if f2c/gcc are used, as well as if g77 is used.
+
+    o	All the Fortran code has been checked to be fully F77
+	compliant so there are no longer any warnings from F95
+	compilers such as gfortran.
 
 
 PACKAGE INSTALLATION CHANGES
@@ -513,7 +520,8 @@ BUG FIXES
 	non-printable characters).
 
     o	axis() now ensures that if 'labels' are supplied as character
-	strings or expressions then so is 'at'.
+	strings or expressions then 'at' is also supplied (since the
+	calculated value for 'at' can change under resizing).
 
 
 

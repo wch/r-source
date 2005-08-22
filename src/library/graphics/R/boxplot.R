@@ -166,9 +166,11 @@ bxp <- function(z, notch=FALSE, width=NULL, varwidth=FALSE, outline = TRUE,
 	## shall we switch log for horizontal with
 	## switch(log, x="y", y="x", log) ??
 	if (horizontal)
-	    plot.window(ylim = c(0.5, n + 0.5), xlim = ylim, log = log)
+	    plot.window(ylim = c(0.5, n + 0.5), xlim = ylim, log = log,
+                        xaxs=pars$yaxs)
 	else
-	    plot.window(xlim = c(0.5, n + 0.5), ylim = ylim, log = log)
+	    plot.window(xlim = c(0.5, n + 0.5), ylim = ylim, log = log,
+                        yaxs = pars$yaxs)
     }
     xlog <- (par("ylog") && horizontal) || (par("xlog") && !horizontal)
 
