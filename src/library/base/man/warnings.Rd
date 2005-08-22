@@ -17,7 +17,7 @@ warnings(\dots)
   Wadsworth \& Brooks/Cole.
 }
 \details{
-  See the decription of \code{\link{option}("warn")} for the
+  See the decription of \code{\link{options}("warn")} for the
   circumstances under which there is a \code{last.warning} variable and
   \code{warnings()} is used.  In essence this is if \code{options(warn =
     0)} and \code{warning} has been called at least once.
