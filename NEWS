@@ -325,6 +325,13 @@ INSTALLATION
 	compliant so there are no longer any warnings from F95
 	compilers such as gfortran.
 
+    o	The (not-recommended) options --with-system-zlib,
+	--with-system-bzlib and -with-system-pcre now have 'system' in
+	the name.
+
+    o	On MacOS X, --with-blas="-framework vecLib" --with-lapack are
+	now the default configure options.
+
 
 PACKAGE INSTALLATION CHANGES
 

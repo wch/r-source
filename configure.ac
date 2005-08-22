@@ -272,14 +272,16 @@ AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
                 [use BLAS library, or specify it @<:@yes@:>@])],
 [R_ARG_USE(blas)],
-[use_blas=yes])
+[use_blas=unset])
+# default is "yes" except on MacOS X
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AC_HELP_STRING([--with-lapack],
                 [use LAPACK library, or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
-[use_lapack=no])
+[use_lapack=unset])
+# default is "no" except on MacOS X
 
 ## Readline.
 AC_ARG_WITH([readline],
@@ -330,21 +332,21 @@ AC_ARG_WITH([jpeglib],
                 [use jpeglib library (if available) @<:@yes@:>@])],
 [R_ARG_USE(jpeglib)],
 [use_jpeglib=yes])
-AC_ARG_WITH([zlib],
-[AC_HELP_STRING([--with-zlib],
+AC_ARG_WITH([system-zlib],
+[AC_HELP_STRING([--with-system-zlib],
                 [use system zlib library (if available) @<:@no@:>@])],
-[R_ARG_USE(zlib)],
-[use_zlib=no])
-AC_ARG_WITH([bzlib],
-[AC_HELP_STRING([--with-bzlib],
+[R_ARG_USE_SYSTEM(zlib)],
+[use_system_zlib=no])
+AC_ARG_WITH([system-bzlib],
+[AC_HELP_STRING([--with-system-bzlib],
                 [use system bzlib library (if available) @<:@no@:>@])],
-[R_ARG_USE(bzlib)],
-[use_bzlib=no])
-AC_ARG_WITH([pcre],
-[AC_HELP_STRING([--with-pcre],
+[R_ARG_USE_SYSTEM(bzlib)],
+[use_system_bzlib=no])
+AC_ARG_WITH([system-pcre],
+[AC_HELP_STRING([--with-system-pcre],
                 [use system PCRE library (if available) @<:@no@:>@])],
-[R_ARG_USE(pcre)],
-[use_pcre=no])
+[R_ARG_USE_SYSTEM(pcre)],
+[use_system_pcre=no])
 
 ## Valgrind instrumentation
 AC_ARG_WITH([valgrind-instrumentation],
@@ -1346,13 +1348,30 @@ R_C99_COMPLEX
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
+## </NOTE>
+## The defaults are different on MacOS X
+if test "${use_blas}" = "unset"; then
+  use_blas=yes
+  case "${host_os}" in
+    darwin*)
+      with_blas="-framework vecLib"
+      if test "${use_lapack}" = "unset"; then
+        use_lapack="yes"
+        with_lapack=""
+      fi
+      ;;
+    *)
+      ;;
+  esac
+fi
 if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
-## </NOTE>
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
+## The default has already been set on MacOS X: otherwise it is "no"
+## and so this test fails.
 if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi

@@ -32,6 +32,16 @@ else
 fi
 ])# R_ARG_USE
 
+## R_ARG_USE_SYSTEM
+## ----------------
+AC_DEFUN([R_ARG_USE_SYSTEM],
+[if test "${withval}" = no; then
+  use_system_$1=no
+else
+  use_system_$1=yes
+fi
+])# R_ARG_USE_SYSTEM
+
 ## R_SH_VAR_ADD(VARIABLE, VALUE, [SEPARATOR = " "])
 ## ------------------------------------------------
 ## Set sh variable VARIABLE to VALUE if empty (or undefined), or append
@@ -2564,7 +2574,7 @@ AM_CONDITIONAL(BUILD_XDR, [test "x${r_cv_xdr}" = xno])
 ## and that gzeof is in the library (which suggests the library
 ## is also recent enough).
 AC_DEFUN([R_ZLIB],
-[if test "x${use_zlib}" = xyes; then
+[if test "x${use_system_zlib}" = xyes; then
   AC_CHECK_LIB(z, gzeof, [have_zlib=yes], [have_zlib=no])
   if test "${have_zlib}" = yes; then
     AC_CHECK_HEADER(zlib.h, [have_zlib=yes], [have_zlib=no])
@@ -2635,7 +2645,7 @@ caddr_t hello() {
 ## Try finding pcre library and headers.
 ## RedHat puts the headers in /usr/include/pcre.
 AC_DEFUN([R_PCRE],
-[if test "x${use_pcre}" = xyes; then
+[if test "x${use_system_pcre}" = xyes; then
   AC_CHECK_LIB(pcre, pcre_fullinfo, [have_pcre=yes], [have_pcre=no])
   if test "${have_pcre}" = yes; then
     AC_CHECK_HEADERS(pcre.h pcre/pcre.h)
@@ -2684,7 +2694,7 @@ AM_CONDITIONAL(BUILD_PCRE, [test "x${r_have_pcre4}" != xyes])
 ## We check that both are installed,
 ## and that BZ2_bzlibVersion is in the library.
 AC_DEFUN([R_BZLIB],
-[if test "x${use_bzlib}" = xyes; then
+[if test "x${use_system_bzlib}" = xyes; then
   AC_CHECK_LIB(bz2, BZ2_bzlibVersion, [have_bzlib=yes], [have_bzlib=no])
   if test "${have_bzlib}" = yes; then
     AC_CHECK_HEADER(bzlib.h, [have_bzlib=yes], [have_bzlib=no])

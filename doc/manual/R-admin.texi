@@ -1034,11 +1034,11 @@ make
 @end example
 
 @noindent
-and then sit back and wait.  The first two options are strongly
-recommended, and with some toolsets have been essential.  The second
-line of options is needed only if you want to build @R{} for use with
-@code{R.app} Console, and imply @option{--enable-R-shlib} to build @R{}
-as a shared library.
+and then sit back and wait.  The first two options are the default (and
+strongly recommended), and with some toolsets have been essential.  The
+second line of options is needed only if you want to build @R{} for use
+with @code{R.app} Console, and imply @option{--enable-R-shlib} to build
+@R{} as a shared library.
 
 These options configure @R{} to be built and installed as a framework
 called @file{R.framework}.  The default path for @file{R.framework} is
@@ -1738,13 +1738,13 @@ The @code{bitmap} and @code{dev2bitmap} devices use ghostscript
 (@url{http://www.cs.wisc.edu/~ghost}).
 
 If you have them installed (including the appropriate headers and of
-recent enough versions), @code{zlib}, @code{libbz2} and PCRE will be used
-if specified by @option{--with-zlib}, @option{--with-bzlib} or
-@option{--with-pcre}: otherwise versions in the @R{} sources will be
-compiled in.  As the latter suffice and are tested with @R{} you should
-not need to change this.  In particular, the version of @code{zlib}
-1.2.3 in the @R{} sources has enhancements to work with large file
-systems on 32-bit platforms.
+recent enough versions), @code{zlib}, @code{libbz2} and PCRE will be
+used if specified by @option{--with-system-zlib},
+@option{--with-system-bzlib} or @option{--with-system-pcre}: otherwise
+versions in the @R{} sources will be compiled in.  As the latter suffice
+and are tested with @R{} you should not need to change this.  In
+particular, the version of @code{zlib} 1.2.3 in the @R{} sources has
+enhancements to work with large file systems on 32-bit platforms.
 
 @menu
 * Tcl/Tk::                      
@@ -2399,7 +2399,7 @@ of the @code{png()} and @code{jpeg} devices.
 @cindex BLAS library
 @cindex LAPACK library
 The @code{vecLib} library of Mac OS X >= 10.2.2 can be used @emph{via} the
-configuration options
+(default) configuration options
 
 @example
 --with-blas="-framework vecLib" --with-lapack
@@ -2407,9 +2407,15 @@ configuration options
 
 @noindent
 to provide higher-performance versions of the BLAS and LAPACK
-routines.  Building @R{} without these options used not to work with
-earlier versions of @command{gcc}, but can be done with @command{gcc
-3.3} and later.
+routines.  Building @R{} without these options @emph{via}
+
+@example
+--without-blas --without-lapack
+@end example
+
+@noindent
+used not to work with earlier versions of @command{gcc}, but can be done
+with @command{gcc 3.3} and later.
 
 
 @node Solaris, HP-UX, Mac OS X, Platform notes
@@ -2576,13 +2582,14 @@ BLAS                   @r{use @option{--without-blas}}
 Tcl/Tk                 @r{use @option{--without-tcltk}}
 libpng                 @r{use @option{--without-libpng}}
 jpeg                   @r{use @option{--without-jpeglib}}
-zlib                   @r{use @option{--without-zlib}}
+zlib                   @r{use @option{--without-system-zlib}}
 @end example
 
 @noindent
 and @code{bzip2} and @code{pcre} are problematic when building
-@file{libR.so}, only.  These can be avoided by @option{--without-bzlib}
-and @option{--without-pcre} respectively, but these are the defaults.
+@file{libR.so}, only.  These can be avoided by
+@option{--without-system-bzlib} and @option{--without-system-pcre}
+respectively, but these are the defaults.
 
 Some versions of @command{gcc} may contain what appears to be a bug at
 the @option{-O2} optimization level that causes
@@ -2973,7 +2980,7 @@ enabling the Java search engine.
 
 We are aware of problems with certain Java installations.  In
 particular, Sun's Java Run-time Environment @code{j2re 1.4.2_02} to
-@code{_05} do not work under Linux.  Version @code{jre 1.5.0} is
+@code{_05} do not work under ix86 Linux.  Version @code{jre 1.5.0} is
 strongly recommended for Mozilla-based browsers.
 
 This and @code{j2re 1.4.2_01} do work: the latter can be found in Sun's
@@ -2990,6 +2997,11 @@ for Konqueror @url{http://www.konqueror.org/javahowto/}, for Opera
 @url{http://www.opera.com/support/search/supsearch.dml?index=459} and
 for Debian GNU/Linux
 @url{http://www.debian.org/doc/manuals/debian-java-faq/}.
+
+Note that there appears not to be a Sun Java plugin for 64-bit browsers
+on AMD64 Linux:
+@url{http://forum.java.sun.com/thread.jspa?threadID=568127&tstart=75},
+but 32-bit browsers have been used on that platform.
 
 
 @node Java Virtual Machines on Unix, Java Virtual Machines on Windows, Java Virtual Machines on Linux , Enabling search in HTML help

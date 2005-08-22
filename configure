@@ -1175,9 +1175,9 @@ Optional Packages:
                           specify location of tkConfig.sh []
   --with-libpng           use libpng library (if available) [yes]
   --with-jpeglib          use jpeglib library (if available) [yes]
-  --with-zlib             use system zlib library (if available) [no]
-  --with-bzlib            use system bzlib library (if available) [no]
-  --with-pcre             use system PCRE library (if available) [no]
+  --with-system-zlib      use system zlib library (if available) [no]
+  --with-system-bzlib     use system bzlib library (if available) [no]
+  --with-system-pcre      use system PCRE library (if available) [no]
   --with-valgrind-instrumentation
                           Level of additional instrumentation for Valgrind
                           (0/1/2) [0]
@@ -2070,8 +2070,9 @@ else
 fi
 
 else
-  use_blas=yes
+  use_blas=unset
 fi;
+# default is "yes" except on MacOS X
 
 ## LAPACK.
 
@@ -2085,8 +2086,9 @@ else
 fi
 
 else
-  use_lapack=no
+  use_lapack=unset
 fi;
+# default is "no" except on MacOS X
 
 ## Readline.
 
@@ -2173,43 +2175,43 @@ else
   use_jpeglib=yes
 fi;
 
-# Check whether --with-zlib or --without-zlib was given.
-if test "${with_zlib+set}" = set; then
-  withval="$with_zlib"
+# Check whether --with-system-zlib or --without-system-zlib was given.
+if test "${with_system_zlib+set}" = set; then
+  withval="$with_system_zlib"
   if test "${withval}" = no; then
-  use_zlib=no
+  use_system_zlib=no
 else
-  use_zlib=yes
+  use_system_zlib=yes
 fi
 
 else
-  use_zlib=no
+  use_system_zlib=no
 fi;
 
-# Check whether --with-bzlib or --without-bzlib was given.
-if test "${with_bzlib+set}" = set; then
-  withval="$with_bzlib"
+# Check whether --with-system-bzlib or --without-system-bzlib was given.
+if test "${with_system_bzlib+set}" = set; then
+  withval="$with_system_bzlib"
   if test "${withval}" = no; then
-  use_bzlib=no
+  use_system_bzlib=no
 else
-  use_bzlib=yes
+  use_system_bzlib=yes
 fi
 
 else
-  use_bzlib=no
+  use_system_bzlib=no
 fi;
 
-# Check whether --with-pcre or --without-pcre was given.
-if test "${with_pcre+set}" = set; then
-  withval="$with_pcre"
+# Check whether --with-system-pcre or --without-system-pcre was given.
+if test "${with_system_pcre+set}" = set; then
+  withval="$with_system_pcre"
   if test "${withval}" = no; then
-  use_pcre=no
+  use_system_pcre=no
 else
-  use_pcre=yes
+  use_system_pcre=yes
 fi
 
 else
-  use_pcre=no
+  use_system_pcre=no
 fi;
 
 ## Valgrind instrumentation
@@ -5351,7 +5353,7 @@ fi
 
 
 # Provide some information about the compiler.
-echo "$as_me:5354:" \
+echo "$as_me:5356:" \
      "checking for Fortran 77 compiler version" >&5
 ac_compiler=`set X $ac_compile; echo $2`
 { (eval echo "$as_me:$LINENO: \"$ac_compiler --version </dev/null >&5\"") >&5
@@ -6640,7 +6642,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 6643 "configure"' > conftest.$ac_ext
+  echo '#line 6645 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -8081,11 +8083,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8084: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8086: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8088: \$? = $ac_status" >&5
+   echo "$as_me:8090: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8314,11 +8316,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8317: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8319: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:8321: \$? = $ac_status" >&5
+   echo "$as_me:8323: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -8374,11 +8376,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:8377: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:8379: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:8381: \$? = $ac_status" >&5
+   echo "$as_me:8383: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -10558,7 +10560,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10561 "configure"
+#line 10563 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -10656,7 +10658,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 10659 "configure"
+#line 10661 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12835,11 +12837,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12838: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12840: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12842: \$? = $ac_status" >&5
+   echo "$as_me:12844: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -12895,11 +12897,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12898: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12900: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12902: \$? = $ac_status" >&5
+   echo "$as_me:12904: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -14256,7 +14258,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14259 "configure"
+#line 14261 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -14354,7 +14356,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 14357 "configure"
+#line 14359 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15181,11 +15183,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15184: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15186: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15188: \$? = $ac_status" >&5
+   echo "$as_me:15190: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -15241,11 +15243,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15244: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15246: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15248: \$? = $ac_status" >&5
+   echo "$as_me:15250: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17275,11 +17277,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17278: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17280: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17282: \$? = $ac_status" >&5
+   echo "$as_me:17284: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17508,11 +17510,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17511: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17513: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17515: \$? = $ac_status" >&5
+   echo "$as_me:17517: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings
@@ -17568,11 +17570,11 @@ else
    -e 's:.*FLAGS}? :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17571: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17573: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17575: \$? = $ac_status" >&5
+   echo "$as_me:17577: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19752,7 +19754,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19755 "configure"
+#line 19757 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -19850,7 +19852,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 19853 "configure"
+#line 19855 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -25892,7 +25894,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_verb"
-(eval echo $as_me:25895: \"$ac_link\") >&5
+(eval echo $as_me:25897: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -25970,7 +25972,7 @@ _ACEOF
 # flags.
 ac_save_FFLAGS=$FFLAGS
 FFLAGS="$FFLAGS $ac_cv_prog_f77_v"
-(eval echo $as_me:25973: \"$ac_link\") >&5
+(eval echo $as_me:25975: \"$ac_link\") >&5
 ac_f77_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$ac_f77_v_output" >&5
 FFLAGS=$ac_save_FFLAGS
@@ -26216,7 +26218,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_verb"
-(eval echo $as_me:26219: \"$ac_link\") >&5
+(eval echo $as_me:26221: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -26298,7 +26300,7 @@ _ACEOF
 # flags.
 r_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS $r_cv_prog_c_v"
-(eval echo $as_me:26301: \"$ac_link\") >&5
+(eval echo $as_me:26303: \"$ac_link\") >&5
 r_c_v_output=`eval $ac_link 5>&1 2>&1 | grep -v 'Driving:'`
 echo "$r_c_v_output" >&5
 CFLAGS=$r_save_CFLAGS
@@ -32882,6 +32884,22 @@ fi
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
+## </NOTE>
+## The defaults are different on MacOS X
+if test "${use_blas}" = "unset"; then
+  use_blas=yes
+  case "${host_os}" in
+    darwin*)
+      with_blas="-framework vecLib"
+      if test "${use_lapack}" = "unset"; then
+        use_lapack="yes"
+        with_lapack=""
+      fi
+      ;;
+    *)
+      ;;
+  esac
+fi
 if test "${use_blas}" = yes; then
 
 
@@ -33874,7 +33892,6 @@ LIBS="${acx_blas_save_LIBS}"
 
 
 fi
-## </NOTE>
 
 
 if test "${acx_blas_ok}" = "yes"; then
@@ -33887,6 +33904,8 @@ fi
 
 
 ## LAPACK.
+## The default has already been set on MacOS X: otherwise it is "no"
+## and so this test fails.
 if test "${use_lapack}" = "yes"; then
 
 
@@ -38590,7 +38609,7 @@ fi
 
 
 ## zlib headers and libraries.
-if test "x${use_zlib}" = xyes; then
+if test "x${use_system_zlib}" = xyes; then
   echo "$as_me:$LINENO: checking for gzeof in -lz" >&5
 echo $ECHO_N "checking for gzeof in -lz... $ECHO_C" >&6
 if test "${ac_cv_lib_z_gzeof+set}" = set; then
@@ -38955,7 +38974,7 @@ fi
 
 
 ## bzlib headers and libraries.
-if test "x${use_bzlib}" = xyes; then
+if test "x${use_system_bzlib}" = xyes; then
   echo "$as_me:$LINENO: checking for BZ2_bzlibVersion in -lbz2" >&5
 echo $ECHO_N "checking for BZ2_bzlibVersion in -lbz2... $ECHO_C" >&6
 if test "${ac_cv_lib_bz2_BZ2_bzlibVersion+set}" = set; then
@@ -39206,7 +39225,7 @@ fi
 
 
 ## PCRE headers and libraries.
-if test "x${use_pcre}" = xyes; then
+if test "x${use_system_pcre}" = xyes; then
   echo "$as_me:$LINENO: checking for pcre_fullinfo in -lpcre" >&5
 echo $ECHO_N "checking for pcre_fullinfo in -lpcre... $ECHO_C" >&6
 if test "${ac_cv_lib_pcre_pcre_fullinfo+set}" = set; then
