@@ -93,6 +93,9 @@ BUG FIXES
 	Coercion of a list to raw was behaving inconsistently for
 	out-of-range values (and not warning).
 
+    o	cor.test(*, method="spearman") no longer gives integer overflow for
+	large sample size. (PR#8087)
+
 
 
 		CHANGES IN R VERSION 2.1.1
