@@ -1344,6 +1344,11 @@ R_FUNC_FTELL
 
 R_C99_COMPLEX
 
+## check for vecLib framework (potentially to be used for BLAS)
+## in theory vecLib is platform-independent, in practice only
+## Apple's Mac OS X is known to provide it
+R_CHECK_FRAMEWORK(vIsamin, vecLib)
+
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
@@ -1354,10 +1359,12 @@ if test "${use_blas}" = "unset"; then
   use_blas=yes
   case "${host_os}" in
     darwin*)
-      with_blas="-framework vecLib"
-      if test "${use_lapack}" = "unset"; then
-        use_lapack="yes"
-        with_lapack=""
+      if test "${have_vecLib_fw}" = "yes"; then
+        with_blas="-framework vecLib"
+        if test "${use_lapack}" = "unset"; then
+          use_lapack="yes"
+          with_lapack=""
+        fi
       fi
       ;;
     *)
@@ -1400,6 +1407,10 @@ else
 fi
 ## check if X11 typedefs KeySym
 R_TYPE_KEYSYM
+
+## check for CoreFoundation framework (chances are much higher
+## that we can build AQUA if this one is present)
+R_CHECK_FRAMEWORK(CFStringGetSystemEncoding, CoreFoundation)
 
 ## Aqua
 R_AQUA

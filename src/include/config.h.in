@@ -103,6 +103,9 @@
 /* Define to 1 if you have the <complex.h> header file. */
 #undef HAVE_COMPLEX_H
 
+/* Defined if framework CoreFoundation is present */
+#undef HAVE_COREFOUNDATION_FW
+
 /* Define to 1 if you have the `cpow' function. */
 #undef HAVE_CPOW
 
@@ -593,6 +596,9 @@
 
 /* Define if you have the 'unsigned long long' type. */
 #undef HAVE_UNSIGNED_LONG_LONG
+
+/* Defined if framework vecLib is present */
+#undef HAVE_VECLIB_FW
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #undef HAVE_VSNPRINTF

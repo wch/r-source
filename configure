@@ -32880,6 +32880,92 @@ _ACEOF
 fi
 
 
+## check for vecLib framework (potentially to be used for BLAS)
+## in theory vecLib is platform-independent, in practice only
+## Apple's Mac OS X is known to provide it
+r_check_fw_save_LIBS=$LIBS
+  echo "$as_me:$LINENO: checking for vIsamin in vecLib framework" >&5
+echo $ECHO_N "checking for vIsamin in vecLib framework... $ECHO_C" >&6
+  r_check_fw_vecLib=no
+  LIBS="-framework vecLib  $LIBS"
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char vIsamin ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+vIsamin ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_check_fw_vecLib="-framework vecLib"
+                 echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+  LIBS=$r_check_fw_save_LIBS
+  if test "$r_check_fw_vecLib" != no; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_VECLIB_FW 1
+_ACEOF
+
+	have_vecLib_fw=yes
+else
+  have_vecLib_fw=no
+fi
+
+
+
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
@@ -32890,10 +32976,12 @@ if test "${use_blas}" = "unset"; then
   use_blas=yes
   case "${host_os}" in
     darwin*)
-      with_blas="-framework vecLib"
-      if test "${use_lapack}" = "unset"; then
-        use_lapack="yes"
-        with_lapack=""
+      if test "${have_vecLib_fw}" = "yes"; then
+        with_blas="-framework vecLib"
+        if test "${use_lapack}" = "unset"; then
+          use_lapack="yes"
+          with_lapack=""
+        fi
       fi
       ;;
     *)
@@ -36979,12 +37067,101 @@ _ACEOF
   fi
 fi
 
+## check for CoreFoundation framework (chances are much higher
+## that we can build AQUA if this one is present)
+r_check_fw_save_LIBS=$LIBS
+  echo "$as_me:$LINENO: checking for CFStringGetSystemEncoding in CoreFoundation framework" >&5
+echo $ECHO_N "checking for CFStringGetSystemEncoding in CoreFoundation framework... $ECHO_C" >&6
+  r_check_fw_CoreFoundation=no
+  LIBS="-framework CoreFoundation  $LIBS"
+  cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any gcc2 internal prototype to avoid an error.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+/* We use char because int might match the return type of a gcc2
+   builtin and then its argument prototype would still apply.  */
+char CFStringGetSystemEncoding ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+CFStringGetSystemEncoding ();
+  ;
+  return 0;
+}
+_ACEOF
+rm -f conftest.$ac_objext conftest$ac_exeext
+if { (eval echo "$as_me:$LINENO: \"$ac_link\"") >&5
+  (eval $ac_link) 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag"
+			 || test ! -s conftest.err'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (eval echo "$as_me:$LINENO: \"$ac_try\"") >&5
+  (eval $ac_try) 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  r_check_fw_CoreFoundation="-framework CoreFoundation"
+                 echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+fi
+rm -f conftest.err conftest.$ac_objext \
+      conftest$ac_exeext conftest.$ac_ext
+  LIBS=$r_check_fw_save_LIBS
+  if test "$r_check_fw_CoreFoundation" != no; then
+
+cat >>confdefs.h <<_ACEOF
+#define HAVE_COREFOUNDATION_FW 1
+_ACEOF
+
+	have_CoreFoundation_fw=yes
+else
+  have_CoreFoundation_fw=no
+fi
+
+
+
 ## Aqua
 use_aqua=no
 if test "${want_aqua}" = yes; then
   case "${host_os}" in
     darwin*)
-      use_aqua=yes
+      ## we can build AQUA only with CoreFoundation, otherwise
+      ## Quartz device won't build
+      if test "${have_CoreFoundation_fw}" = yes; then
+        use_aqua=yes
+      fi
       ;;
   esac
 fi
