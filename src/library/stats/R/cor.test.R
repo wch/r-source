@@ -120,11 +120,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                            integer(1),
                            as.logical(lower.tail),
                            PACKAGE = "stats")$p
-                    else { # for large n: aymptotic t_{n-2}
-                        r <- 1 - 6 * q / (n*(n*n - 1))
-                        pt(r / sqrt((1 - r^2)/(n-2)), df = n-2,
-                           lower.tail= !lower.tail)
-                    }
+		    else { # for large n: aymptotic t_{n-2}
+			r <- 1 - 6 * q / (n*(n-1)*(n+1))
+			pt(r / sqrt((1 - r^2)/(n-2)), df = n-2,
+			   lower.tail= !lower.tail)
+		    }
                 }
                 q <- round((n^3 - n) * (1 - r) / 6)
                 STATISTIC <- c(S = q)
