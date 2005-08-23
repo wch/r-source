@@ -583,8 +583,8 @@ Sometimes it is convenient to distribute several packages as a
 The installation procedures on both Unix and Windows can handle package
 bundles.
 
-The @file{DESCRIPTION} file of a bundle has an extra @samp{Bundle}
-field, as in
+The @file{DESCRIPTION} file of a bundle has a @samp{Bundle}
+field and no @samp{Package} field, as in
 
 @quotation
 @cartouche
@@ -631,6 +631,11 @@ Title: Functions for Kriging and Point Pattern Analysis
 
 Any files in the package bundle except the @file{DESCRIPTION} file and
 the named packages will be ignored.
+
+The @samp{Depends} field in the bundle's @file{DESCRIPTION} file should
+list the dependencies of all the constituent packages (and similarly for
+@samp{Imports} and @samp{Suggests}), and then @file{DESCRIPTION.in}
+files should not contain these fields.
 
 @node Configure and cleanup, Checking and building packages, Package structure, Creating R packages
 @section Configure and cleanup
