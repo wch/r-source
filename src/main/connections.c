@@ -475,8 +475,9 @@ static double file_seek(Rconnection con, double where, int origin, int rw)
 
     /* make sure both positions are set */
 #ifdef Win32
-    /* workaround a Windows bug - PR#7896 */
-    fflush(fp);
+    /* workaround a Windows bug - PR#7896
+       unfortunately the suggested fix breaks the foreign package's tests.
+    fflush(fp); */
 #endif
     pos = f_tell(fp);
     if(this->last_was_write) this->wpos = pos; else this->rpos = pos;
