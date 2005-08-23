@@ -453,7 +453,7 @@ function(package, dir, lib.loc = NULL,
             c(objects_in_code,
               objects_in_base[sapply(objects_in_base,
                                      .is_primitive,
-                                     NULL)],
+                                     baseenv())],
               c(".First.lib", ".Last.lib", ".Random.seed",
                 ".onLoad", ".onAttach", ".onUnload"))
         objects_in_code_or_namespace <- objects_in_code
@@ -2008,7 +2008,7 @@ function(package, dir, lib.loc = NULL)
             internal_S3_generics <-
                 internal_S3_generics[sapply(internal_S3_generics,
                                             .is_primitive,
-                                            NULL)
+                                            baseenv())
                                      == FALSE]
             S3_generics <- c(S3_generics, internal_S3_generics)
         }
