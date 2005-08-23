@@ -257,7 +257,12 @@ double pureNullUnitValue(SEXP unit, int index)
 	else 
 	    error(_("Unimplemented unit function"));
     } else if (isUnitList(unit)) {
-	result = unitValue(VECTOR_ELT(unit, index), 0);
+	/*
+	 * Recycle if necessary;  it is up to the calling code
+	 * to limit indices to unit length if desired
+	 */
+	int n = unitLength(unit);
+	result = unitValue(VECTOR_ELT(unit, index % n), 0);
     } else
 	result = unitValue(unit, index);
     return result;
@@ -270,7 +275,12 @@ int pureNullUnit(SEXP unit, int index, GEDevDesc *dd) {
     if (isUnitArithmetic(unit)) 
 	result = pureNullUnitArithmetic(unit, index, dd);
     else if (isUnitList(unit)) {
-	result = pureNullUnit(VECTOR_ELT(unit, index), 0, dd);
+	/*
+	 * Recycle if necessary;  it is up to the calling code
+	 * to limit indices to unit length if desired
+	 */
+	int n = unitLength(unit);
+	result = pureNullUnit(VECTOR_ELT(unit, index % n), 0, dd);
     } else {  /* Just a plain unit */
 	/* Special case:  if "grobwidth" or "grobheight" unit
 	 * and width/height(grob) is pure null

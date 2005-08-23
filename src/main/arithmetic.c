@@ -569,7 +569,7 @@ static SEXP real_unary(ARITHOP_TYPE code, SEXP s1, SEXP lcall)
    OK. */
 
 #ifndef INT_32_BITS
-/* configure checks whehter int is 32 bits.  If not this code will
+/* configure checks whether int is 32 bits.  If not this code will
    need to be rewritten.  Since 32 bit ints are pretty much universal,
    we can worry about writing alternate code when the need arises.
    To be safe, we signal a compiler error if int is not 32 bits. */

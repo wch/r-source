@@ -24,7 +24,7 @@ DISTFILES = Makefile.in $(INSTFILES) index-default.html
 SUBDIRS = search
 OBJECTS = index.html
 ## <FIXME>
-## build-help really should not create packages.html in *this* directory.
+## We really should not create packages.html in *this* directory.
 CLEANFILES = packages.html packages-foot.html $(OBJECTS)
 ## </FIXME>
 DISTCLEANFILES = Makefile $(NON_SVN_INSTFILES)

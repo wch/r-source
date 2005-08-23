@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-17 r34755)
+Version 2.2.0 Under development (unstable) (2005-07-12 r34938)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -27,11 +27,9 @@ Type 'q()' to quit R.
 > if(.Platform$OS.type == "unix" &&
 +    is.null(nsl("cran.r-project.org"))) q()
 > 
-> options(repos="http://cran.r-project.org")
-> 
 > # test do_download.
-> nrow(CRAN.packages())
-[1] 547
+> nrow(available.packages(contrib.url("http://cran.r-project.org")))
+[1] 560
 > 
 > # test url connections on http
 > zz <- url("http://cran.r-project.org/")
@@ -277,8 +275,8 @@ unable to resolve 'foo.bar'.
 99   99 308  150 38.04  1
 100 100 308  200 38.07  1
 > 
-> 
-> if(!capabilities()["sockets"]) stop("no socket capabilities")
+> ## everything from here on is directly over sockets
+> if(!capabilities("sockets")) stop("no socket capabilities")
 > 
 > # do the same thing via sockets (cut-down httpclient)
 > httpget <- function (url, port = 80)

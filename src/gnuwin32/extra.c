@@ -137,10 +137,10 @@ SEXP do_unlink(SEXP call, SEXP op, SEXP args, SEXP env)
     nfiles = length(fn);
     if (nfiles > 0) {
     	if (!isString(fn))
-	    errorcall(call, _("invalid 'x' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "x");
 	recursive = asLogical(CADR(args));
     	if (recursive == NA_LOGICAL)
-	    errorcall(call, _("invalid 'recursive' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "recursive");
     	for(i = 0; i < nfiles; i++)
 	    failures += R_unlink(CHAR(STRING_ELT(fn, i)), recursive);
     }
@@ -196,7 +196,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if (!isString(CAR(args)))
-	errorcall(call, _("invalid 'topic' argument"));
+	errorcall(call, _("invalid '%s' argument"), "topic");
     item = CHAR(STRING_ELT(CAR(args), 0));
     type = asInteger(CADR(args));
     if (type == 1) {
@@ -212,7 +212,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	ShellExecute(NULL, "open", item, NULL, home, SW_SHOW);
     } else if (type == 2) {
 	if (!isString(CADDR(args)))
-	    errorcall(call, _("invalid 'hlpfile' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "hlpfile");
 	hfile = CHAR(STRING_ELT(CADDR(args), 0));
 	if (!WinHelp((HWND) 0, hfile, HELP_KEY, (DWORD) item))
 	    warning(_("WinHelp call failed"));
@@ -224,7 +224,7 @@ SEXP do_helpitem(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
     } else if (type == 3) {
 	if (!isString(CADDR(args)))
-	    warningcall(call, _("invalid 'hlpfile' argument"));
+	    warningcall(call, _("invalid '%s' argument"), "hlpfile");
 	hfile = CHAR(STRING_ELT(CADDR(args), 0));
 	if (!WinHelp((HWND) 0, hfile, HELP_QUIT, (DWORD) 0))
 	    error(_("WinHelp call failed"));
@@ -403,7 +403,7 @@ SEXP do_shellexec(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     file = CAR(args);
     if (!isString(file) || length(file) != 1)
-	errorcall(call, _("invalid 'file' argument"));
+	errorcall(call, _("invalid '%s' argument"), "file");
     internal_shellexec(CHAR(STRING_ELT(file, 0)));
     return R_NilValue;
 }
@@ -434,7 +434,7 @@ SEXP do_windialog(SEXP call, SEXP op, SEXP args, SEXP env)
     message = CADR(args);
     if(!isString(message) || length(message) != 1 || 
        strlen(CHAR(STRING_ELT(message, 0))) > 255)
-	error(_("invalid 'message' argument"));
+	error(_("invalid '%s' argument"), "message");
     if (strcmp(type, "ok")  == 0) {
 	askok(CHAR(STRING_ELT(message, 0)));
 	res = 10;
@@ -461,10 +461,10 @@ SEXP do_windialogstring(SEXP call, SEXP op, SEXP args, SEXP env)
     message = CAR(args);
     if(!isString(message) || length(message) != 1 || 
        strlen(CHAR(STRING_ELT(message, 0))) > 255)
-	error(_("invalid 'message' argument"));
+	error(_("invalid '%s' argument"), "message");
     def = CADR(args);
     if(!isString(def) || length(def) != 1)
-	error(_("invalid 'default' argument"));
+	error(_("invalid '%s' argument"), "default");
     string = askstring(CHAR(STRING_ELT(message, 0)), CHAR(STRING_ELT(def, 0)));
     if (string) {
 	ans = allocVector(STRSXP, 1);
@@ -513,7 +513,7 @@ SEXP do_wingetmenuitems(SEXP call, SEXP op, SEXP args, SEXP env)
 
     mname = CAR(args);
     if (!isString(mname) || length(mname) != 1)
-	error(_("invalid 'menuname' argument"));
+	error(_("invalid '%s' argument"), "menuname");
 
     items = wingetmenuitems(CHAR(STRING_ELT(mname,0)), errmsg);
     if (items->numItems == 0) {
@@ -550,7 +550,7 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("Menu functions can only be used in the GUI"));
     smenu = CAR(args);
     if(!isString(smenu) || length(smenu) != 1)
-	error(_("invalid 'menuname' argument"));
+	error(_("invalid '%s' argument"), "menuname");
     sitem = CADR(args);
     if (isNull(sitem)) { /* add a menu */
 	res = winaddmenu (CHAR(STRING_ELT(smenu, 0)), errmsg);
@@ -561,7 +561,7 @@ SEXP do_winmenuadd(SEXP call, SEXP op, SEXP args, SEXP env)
 
     } else { /* add an item */
 	if(!isString(sitem) || length(sitem) != 1)
-	    error(_("invalid 'itemname' argument"));
+	    error(_("invalid '%s' argument"), "itemname");
 	res = winaddmenuitem (CHAR(STRING_ELT(sitem, 0)),
 			      CHAR(STRING_ELT(smenu, 0)),
 			      CHAR(STRING_ELT(CADDR(args), 0)),
@@ -585,7 +585,7 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 	errorcall(call, _("Menu functions can only be used in the GUI"));
     smenu = CAR(args);
     if(!isString(smenu) || length(smenu) != 1)
-	error(_("invalid 'menuname' argument"));
+	error(_("invalid '%s' argument"), "menuname");
     sitem = CADR(args);
     if (isNull(sitem)) { /* delete a menu */
 	res = windelmenu (CHAR(STRING_ELT(smenu, 0)), errmsg);
@@ -593,7 +593,7 @@ SEXP do_winmenudel(SEXP call, SEXP op, SEXP args, SEXP env)
 	    errorcall(call, _("menu does not exist"));
     } else { /* delete an item */
 	if(!isString(sitem) || length(sitem) != 1)
-	    error(_("invalid 'itemname' argument"));
+	    error(_("invalid '%s' argument"), "itemname");
 	res = windelmenuitem (CHAR(STRING_ELT(sitem, 0)),
 			      CHAR(STRING_ELT(smenu, 0)), errmsg);
 	if (res > 0) {
@@ -620,7 +620,7 @@ SEXP do_savehistory(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid 'file' argument"));
+	errorcall(call, _("invalid '%s' argument"), "file");
     if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm)) {
 	R_setupHistory(); /* re-read the history size */
 	gl_savehistory(CHAR(STRING_ELT(sfile, 0)), R_HistorySize);
@@ -636,7 +636,7 @@ SEXP do_loadhistory(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     sfile = CAR(args);
     if (!isString(sfile) || LENGTH(sfile) < 1)
-	errorcall(call, _("invalid 'file' argument"));
+	errorcall(call, _("invalid '%s' argument"), "file");
     if (CharacterMode == RGui || (R_Interactive && CharacterMode == RTerm))
 	gl_loadhistory(CHAR(STRING_ELT(sfile, 0)));
     else
@@ -708,7 +708,7 @@ SEXP do_syssleep(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     time = asReal(CAR(args));
     if (ISNAN(time) || time < 0)
-	errorcall(call, _("invalid 'time' value"));
+	errorcall(call, _("invalid '%s' value"), "time");
     ntime = 1000*(time) + 0.5;
     while (ntime > 0) {
 	mtime = min(500, ntime);
@@ -787,7 +787,7 @@ SEXP do_dllversion(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     path = CAR(args);
     if(!isString(path) || LENGTH(path) != 1)
-	errorcall(call, _("invalid 'path' argument"));
+	errorcall(call, _("invalid '%s' argument"), "path");
     dll = CHAR(STRING_ELT(path, 0));
     dwVerInfoSize = GetFileVersionInfoSize(dll, &dwVerHnd);
     PROTECT(ans = allocVector(STRSXP, 2));
@@ -871,15 +871,15 @@ SEXP do_selectlist(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     checkArity(op, args);
     list = CAR(args);
-    if(!isString(list)) error(_("invalid 'list' argument"));
+    if(!isString(list)) error(_("invalid '%s' argument"), "list");
     preselect = CADR(args);
     if(!isNull(preselect) && !isString(preselect))
-	error(_("invalid 'preselect' argument"));
+	error(_("invalid '%s' argument"), "preselect");
     multiple = asLogical(CADDR(args));
     if(multiple == NA_LOGICAL) multiple = 0;
     haveTitle = isString(CADDDR(args));
     if(!multiple && isString(preselect) && LENGTH(preselect) != 1)
-	error(_("invalid 'preselect' argument"));
+	error(_("invalid '%s' argument"), "preselect");
 
     n = LENGTH(list);
     clist = (char **) R_alloc(n + 1, sizeof(char *));

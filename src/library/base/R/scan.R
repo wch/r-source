@@ -4,7 +4,7 @@ function(file = "", what = double(0), nmax = -1, n = -1, sep = "",
          dec = ".", skip = 0, nlines = 0,
          na.strings = "NA", flush = FALSE, fill = FALSE,
          strip.white = FALSE, quiet = FALSE, blank.lines.skip = TRUE,
-         multi.line = TRUE, comment.char = "", allowEscapes = TRUE)
+         multi.line = TRUE, comment.char = "", allowEscapes = FALSE)
 {
     na.strings <- as.character(na.strings)# allow it to be NULL
     if(!missing(n)) {

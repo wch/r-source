@@ -36,8 +36,7 @@ double pnbeta(double x, double a, double b, double lambda,
 
     if (lambda < 0. || a <= 0. || b <= 0.) ML_ERR_return_NAN;
 
-    if(x <= 0.) return R_DT_0;
-    if(x >= 1.) return R_DT_1;
+    R_P_bounds_01(x, 0., 1.);
 
     c = lambda / 2.;
 
@@ -57,7 +56,7 @@ double pnbeta(double x, double a, double b, double lambda,
     ans = ax = q * temp;
 
 	/* recur over subsequent terms until convergence is achieved */
-    j = x0; 
+    j = x0;
     do {
 	j++;
 	temp -= gx;

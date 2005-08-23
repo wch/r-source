@@ -1,96 +1,42 @@
 format <- function(x, ...) UseMethod("format")
 
-###	 -----
-###----- FIXME ----- the digits handling should rather happen in
-###	 -----	     in .Internal(format(...))	in ../../../main/paste.c !
-### also the 'names' should be kept dealt with there (dim, dimnames *are*) !
-###
-### The new (1.2) switch "character" would be faster in .Internal()
-### combine with "width = ", and format.char() below!
-
 format.default <-
     function(x, trim = FALSE, digits = NULL, nsmall = 0,
-             justify = c("left", "right", "none"),
+             justify = c("left", "right", "centre", "none"),
+             width = NULL, na.encode = TRUE,
              big.mark = "", big.interval = 3,
              small.mark = "", small.interval = 5, decimal.mark = ".",
              ...)
 {
-    f.char <- function(x, justify) {
-	if(length(x) <= 1) return(x)
-	nc <- nchar(x, type="w")
-        nc[is.na(nc)] <- 2
-	w <- max(nc)
-	sp <- substring(paste(rep.int(" ", w), collapse=""), 1, w-nc)
-	res <-
-	    if(justify == "left") paste(x, sp, sep="") else paste(sp, x, sep="")
-	attributes(res) <- attributes(x) ## at least names, dim, dimnames
-	res
-    }
-    if(!is.null(digits)) {
-	op <- options(digits=digits)
-	on.exit(options(op))
-    }
     justify <- match.arg(justify)
-    switch(mode(x),
-	   NULL = "NULL",
-	   character = switch(justify,
-                              none = x,
-                  	      left = f.char(x, "left"),
-                              right= f.char(x, "right")),
-	   list = sapply(lapply(x, function(x)
-				.Internal(format(unlist(x), trim=trim))),
-			 paste, collapse=", "),
-	   call=, expression=, "function"=, "(" = deparse(x),
-	   ## else: numeric, complex, .. :
-	   { r <- prettyNum(.Internal(format(x, trim = trim, small=nsmall)),
-                            big.mark = big.mark, big.interval = big.interval,
-                            small.mark = small.mark,
-                            small.interval = small.interval,
-                            decimal.mark = decimal.mark)
-             if(!is.null(a <- attributes(x)) &&
-                !is.null(a <- a[names(a) != "class"]))
-                 attributes(r) <- a
-             r })
-}
-## NOTE: Currently need non-default format.dist() -> ../../stats/R/dist.R
-
-
-## MM: This should also happen in C(.) :
-##	.Internal(format(..) should work  with	'width =' and 'flag=.."
-##		at least for the case of character arguments.
-## Note that format.default now has a `justify' argument
-format.char <- function(x, width = NULL, flag = "-")
-{
-    ## Character formatting, flag: if "-" LEFT-justify
-    if (is.null(x)) return("")
-    if(!is.character(x)) {
-	warning("format.char: coercing 'x' to 'character'")
-	x <- as.character(x)
+    adj <- match(justify, c("left", "right", "centre", "none")) - 1
+    if(is.list(x)) {
+        ## do it this way to force evaluation of args
+        if(missing(trim)) trim <- TRUE
+        if(missing(justify)) justify <- "none"
+        res <- lapply(x, FUN=function(xx, ...) format.default(unlist(xx),...),
+                      trim = trim, digits = digits, nsmall = nsmall,
+                      justify = justify, width = width, na.encode = na.encode,
+                      big.mark = big.mark, big.interval = big.internal,
+                      small.mark = small.mark, small.interval = small.interval,
+                      decimal.mark = decimal.mark, ...)
+        sapply(res, paste, collapse = ", ")
+    } else {
+        switch(mode(x),
+               NULL = "NULL",
+               character = .Internal(format(x, trim, digits, nsmall, width,
+                                            adj, na.encode)),
+               call=, expression=, "function"=, "(" = deparse(x),
+               ## else: logical, numeric, complex, .. :
+               prettyNum(.Internal(format(x, trim, digits, nsmall, width,
+                                          3, na.encode)),
+                         big.mark = big.mark, big.interval = big.interval,
+                         small.mark = small.mark,
+                         small.interval = small.interval,
+                         decimal.mark = decimal.mark)
+               )
     }
-    if(is.null(width) && flag == "-")
-	return(format(x))		# Left justified; width= max.width
-
-    at <- attributes(x)
-    nc <- nchar(x, type="w")	       	#-- string widths
-    nc[is.na(nc)] <- 2
-    if(is.null(width)) width <- max(nc)
-    else if(width<0) { flag <- "-"; width <- -width }
-    ##- 0.90.1 and earlier:
-    ##- pad <- sapply(pmax(0,width - nc),
-    ##-			function(no) paste(character(no+1), collapse =" "))
-    ## Speedup by Jens Oehlschlaegel:
-    tab <- unique(no <- pmax(0, width - nc))
-    tabpad <- sapply(tab+1, function(n) paste(character(n), collapse = " "))
-    pad <- tabpad[match(no, tab)]
-
-    r <-
-	if(flag=="-")	paste(x, pad, sep="")#-- LEFT  justified
-	else		paste(pad, x, sep="")#-- RIGHT justified
-    if(!is.null(at))
-	attributes(r) <- at
-    r
 }
-
 
 format.pval <- function(pv, digits = max(1, getOption("digits")-2),
 			eps = .Machine$double.eps, na.form = "NA")
@@ -135,6 +81,13 @@ formatC <- function (x, digits = NULL, width = NULL,
                      small.mark = "", small.interval = 5,
                      decimal.mark = ".")
 {
+    format.char <- function (x, width, flag)
+    {
+        if(is.null(width)) width <- 0
+        else if(width < 0) { flag <- "-"; width <- -width }
+        format.default(x, width=width,
+                       justify = if(flag=="-") "left" else "right")
+    }
     blank.chars <- function(no)
 	sapply(no+1, function(n) paste(character(n), collapse=" "))
 
@@ -167,6 +120,7 @@ formatC <- function (x, digits = NULL, width = NULL,
     some.special <- !all(Ok <- is.finite(x))
     if (some.special) {
 	rQ <- as.character(x[!Ok])
+        rQ[is.na(rQ)] <- "NA"
 	x[!Ok] <- as.vector(0, mode = mode)
     }
     if(is.null(width) && is.null(digits))
@@ -246,6 +200,10 @@ format.data.frame <- function(x, ..., justify = "none")
             }
         }
     }
+    for(i in 1:nc) {
+        if(is.character(rval[[i]]) && class(rval[[i]]) == "character")
+            oldClass(rval[[i]]) <- "AsIs"
+    }
     dn <- dimnames(x)
     cn <- dn[[2]]
     m <- match(c("row.names", "check.rows", "check.names"), cn, 0)
@@ -262,11 +220,10 @@ format.data.frame <- function(x, ..., justify = "none")
 format.AsIs <- function(x, width = 12, ...)
 {
     if(is.character(x)) return(format.default(x, ...))
+    if(is.null(width)) width = 12
     n <- length(x)
     rvec <- rep.int(as.character(NA), n)
-    for(i in 1:n)
-	rvec[i] <- toString(x[[i]], width, ...)
-#    return(format.char(rvec, flag = "+"))
+    for(i in 1:n) rvec[i] <- toString(x[[i]], width = width, ...)
     ## AsIs might be around a matrix, which is not a class.
     dim(rvec) <- dim(x)
     format.default(rvec, justify = "right")
@@ -280,7 +237,7 @@ prettyNum <-
 {
     ## be fast in trivial case:
     if(!is.character(x))
-        x <- sapply(x,format, ...)
+        x <- sapply(x, format, ...)
     if(big.mark == "" && small.mark == "" && decimal.mark == ".")
         return(x)
     ## else

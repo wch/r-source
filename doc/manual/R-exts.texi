@@ -394,10 +394,10 @@ be included).  Normally this file is missing, and the corresponding
 information is automatically generated from the documentation sources
 (using @code{Rdindex()} from package @pkg{tools}) when installing from
 source and when using the package builder (@pxref{Checking and building
-packages}).  
+packages}).
 
-Rather than editing this file, it is preferable to put customized 
-information about the package into an overview	man page 
+Rather than editing this file, it is preferable to put customized
+information about the package into an overview	man page
 (@pxref{Documenting packages}) and/or a vignette (@pxref{Writing package vignettes}).
 
 @node The install.R and R_PROFILE.R files, Package subdirectories, The INDEX file, Package structure
@@ -458,10 +458,10 @@ for system datasets that are not intended to be user-accessible via
 Various @R{} functions in a package can be used to initialize and clean
 up.  For packages without a name space, these are @code{.First.lib} and
 @code{.Last.lib}.  (For packages with a name space, @xref{Load hooks}.)
-It is conventional to define these function in a file called
+It is conventional to define these functions in a file called
 @file{zzz.R}.  If @code{.First.lib} is defined in a package, it is
 called with arguments @code{libname} and @code{pkgname} after the
-packages is loaded and attached.  (If a package is installed with
+package is loaded and attached.  (If a package is installed with
 version information, the package name includes the version information,
 e.g.@: @samp{ash_1.0.9}.)  A common use is to call
 @code{library.dynam()} inside @code{.First.lib()} to load compiled code:
@@ -470,7 +470,7 @@ another use is to call those functions with side effects.  If
 full path to the installed package) just before the package is detached.
 It is uncommon to detach packages and rare to have a @code{.Last.lib}
 function: one use is to call @code{library.dynam.unload} to unload
-compiled code.)
+compiled code.
 
 
 The @file{man} subdirectory should contain documentation files for the
@@ -870,7 +870,7 @@ this by running @command{autoconf} in the top-level package directory
 @quotation
 @cartouche
 @smallexample
-AC_INIT([RODBC]) dnl package name
+AC_INIT([RODBC], 1.1.4) dnl package name, version
 
 dnl Select an optional include path, from a configure option
 dnl or from an environment variable.
@@ -1094,10 +1094,10 @@ To exclude files from being put into the package, one can specify a list
 of exclude patterns in file @file{.Rbuildignore} in the top-level source
 directory.  These patterns should be Perl regexps, one per line, to be
 matched against the file names relative to the top-level source
-directory.  In addition, directories called @file{CVS} or @file{.svn}
-and files @file{GNUMakefile} or with base names starting with @samp{.#},
-or starting and ending with @samp{#}, or ending in @samp{~}, @samp{.bak}
-or @samp{.swp}, are excluded by default.
+directory.  In addition, directories called @file{CVS} or @file{.svn} or
+@file{.arch-ids} and files @file{GNUMakefile} or with base names
+starting with @samp{.#}, or starting and ending with @samp{#}, or ending
+in @samp{~}, @samp{.bak} or @samp{.swp}, are excluded by default.
 
 @c <FIXME>
 @c From 1.8.0 on, the build code removes exclude files itself, rather
@@ -1473,13 +1473,16 @@ the search path if the methods are to be found.
 @node Load hooks, An example, Registering S3 methods, Package name spaces
 @subsection Load hooks
 
+There are a number of hooks that apply to packages with name spaces.
+See @code{help(".onLoad")} for more details.
+
 @findex .onLoad
 @findex .onAttach
 Packages with name spaces do not use the @code{.First.lib} function.
 Since loading and attaching are distinct operations when a name space is
 used, separate hooks are provided for each.  These hook functions are
 called @code{.onLoad} and @code{.onAttach}.  They take the same
-arguments as @code{.First.lib}; they should be defined in the package
+arguments as @code{.First.lib}; they should be defined in the name space
 but not exported.
 
 @findex .Last.lib
@@ -1488,15 +1491,17 @@ However, packages with name spaces @emph{do} use the @code{.Last.lib}
 function.  There is also a hook @code{.onUnload} which is called when
 the name space is unloaded (via a call to @code{unloadNamespace}) with
 argument the full path to the directory in which the package was
-installed.
+installed.  @code{.onUnload} should be defined in the name space and not
+exported, but @code{.Last.lib} does need to be exported.
 
 Packages are not likely to need @code{.onAttach} (except perhaps for a
 start-up banner); code to set options and load shared objects should be
 placed in a @code{.onLoad} function, or use made of the @code{useDynLib}
 directive described next.
 
-The @code{useDynLib} directive allows shared objects that need to be
-loaded to be specified in the @file{NAMESPACE} file.  The directive
+There can be one or more @code{useDynLib} directives which allow shared
+objects that need to be loaded to be specified in the @file{NAMESPACE}
+file.  The directive
 
 @findex useDynLib
 @example
@@ -1505,7 +1510,7 @@ useDynLib(foo)
 
 @noindent
 registers the shared object @code{foo} for loading with
-@code{library.dynam}.  Loading of registered objects occurs after the
+@code{library.dynam}.  Loading of registered object(s) occurs after the
 package code has been loaded and before running the load hook function.
 Packages that would only need a load hook function to load a shared
 object can use the @code{useDynLib} directive instead.
@@ -2500,7 +2505,7 @@ methods.
 @node Documenting packages,  , Documenting S4 classes and methods, Rd format
 @subsection Documenting packages
 
-It is recommended that packages have an overview man page with 
+It is recommended that packages have an overview man page with
 @code{\alias} constructed as @code{@var{pkgname}-package},
 e.g. @code{utils-package} for the @code{utils} package, so that
 @code{package?@var{pkgname}} will open the man page.  If a topic named
@@ -2510,8 +2515,8 @@ an additional @code{\alias}.
 Skeletons of documentation for a package can be generated using the
 function @code{promptPackage()}.  If the @code{final = TRUE} argument
 is used, then the Rd file will be generated in final form, containing
-the information that would be produced by 
-@code{library(help = @var{pkgname})}.  Otherwise (the default) comments 
+the information that would be produced by
+@code{library(help = @var{pkgname})}.  Otherwise (the default) comments
 will be inserted giving suggestions for content.
 
 The only requirement for this page is that it include a
@@ -2941,7 +2946,7 @@ it might for example use
 
 @noindent
 (Use of @code{utf8} as an encoding requires @LaTeX{} dated 2003/12/01 or
-later.)  
+later.)
 
 Note that this mechanism works best with letters and for example the
 copyright symbol may be rendered as a subscript and the plus--minus
@@ -2991,7 +2996,7 @@ listed using @kbd{R --help}.
 All of these work under Windows. You will need the files in the @R{}
 binary Windows distribution for installing source packages to be
 installed, and for @code{R CMD Rd2dvi} also the tools to build packages
-from source as described in the ``R Installation and Administration'' 
+from source as described in the ``R Installation and Administration''
 manual.
 
 
@@ -3239,12 +3244,9 @@ example C++ (@pxref{Interfacing C++ code}).
 
 The first argument to each function is a character string given the
 symbol name as known to C or FORTRAN, that is the function or subroutine
-name.  (The mapping to the symbol name in the load table is given by the
-functions @code{symbol.C} and @code{symbol.For};
-@findex symbol.C
-@findex symbol.For
-that the symbol is loaded can be tested by, for example,
-@code{is.loaded(symbol.C("loglin"))}.)
+name.  (That the symbol is loaded can be tested by, for example,
+@code{is.loaded("cg")}: it is no longer necessary or correct to use
+@code{symbol.For}.)
 
 There can be up to 65 further arguments giving @R{} objects to be passed
 to compiled code.  Normally these are copied before being passed in, and
@@ -3450,7 +3452,8 @@ unload routines for the @code{mylib} DLL.
 @quotation
 @cartouche
 @example
-#include <Rdefines.h>
+#include <R.h>
+#include <Rinternals.h>
 #include <R_ext/Rdynload.h>
 
 void
@@ -3884,7 +3887,7 @@ arguments can be extracted.
 
 In each case the @R{} objects are available for manipulation via a set
 of functions and macros defined in the header file @file{Rinternals.h}
-or some higher-level macros defined in @file{Rdefines.h}.  See
+or some S4-compatibility macros defined in @file{Rdefines.h}.  See
 @ref{Interface functions .Call and .External} for details on
 @code{.Call} and @code{.External}.
 
@@ -3912,9 +3915,11 @@ be available on any @R{} installation.
 Another approach is to use @R{} versions of the macros and functions
 defined for the @Sl{} version 4 interface @code{.Call}, which are
 defined in the header file @file{Rdefines.h}.  This is a somewhat
-simpler approach, and is certainly to be preferred if the code might be
-shared with @Sl{} at any stage.  However, it is less well documented and
-less tested.
+simpler approach, and is to be preferred if the code is intended to be
+shared with @Sl{}.  However, it is less well documented and even less
+tested.  Note too that some idionatic S4 constructions with these macros
+(such as assigning elements of character vectors or lists) are invalid
+in @R{} since version 1.2.0.
 
 A substantial amount of @R{} is implemented using the functions and
 macros described here, so the @R{} source code provides a rich source of
@@ -3989,24 +3994,7 @@ warn about @code{"stack imbalance in .Call"} (or @code{.External}) if
 the housekeeping is wrong.
 
 Here is a small example of creating an @R{} numeric vector in C code.
-First we use the macros in @file{Rdefines.h}:
-
-@example
-@group
-#include <R.h>
-#include <Rdefines.h>
-
-  SEXP ab;
-    ....
-  PROTECT(ab = NEW_NUMERIC(2));
-  NUMERIC_POINTER(ab)[0] = 123.45;
-  NUMERIC_POINTER(ab)[1] = 67.89;
-  UNPROTECT(1);
-@end group
-@end example
-
-@noindent
-and then those in @file{Rinternals.h}:
+First we use the macros in @file{Rinternals.h}:
 
 @example
 @group
@@ -4018,6 +4006,23 @@ and then those in @file{Rinternals.h}:
   PROTECT(ab = allocVector(REALSXP, 2));
   REAL(ab)[0] = 123.45;
   REAL(ab)[1] = 67.89;
+  UNPROTECT(1);
+@end group
+@end example
+
+@noindent
+and then those in @file{Rdefines.h}:
+
+@example
+@group
+#include <R.h>
+#include <Rdefines.h>
+
+  SEXP ab;
+    ....
+  PROTECT(ab = NEW_NUMERIC(2));
+  NUMERIC_POINTER(ab)[0] = 123.45;
+  NUMERIC_POINTER(ab)[1] = 67.89;
   UNPROTECT(1);
 @end group
 @end example
@@ -4075,7 +4080,7 @@ For many purposes it is sufficient to allocate @R{} objects and
 manipulate those.  There are quite a few @code{alloc@var{Xxx}} functions
 defined in @file{Rinternals.h}---you may want to explore them.  These
 allocate @R{} objects of various types, and for the standard vector
-types there are @code{NEW_@var{XXX}} macros defined in
+types there are equlvalent @code{NEW_@var{XXX}} macros defined in
 @file{Rdefines.h}.
 
 If storage is required for C objects during the calculations this is
@@ -4089,8 +4094,8 @@ if the memory cannot be allocated.
 @cindex Details of R types
 
 Users of the @file{Rinternals.h} macros will need to know how the @R{}
-types are known internally: this is more or less completely hidden if
-the @file{Rdefines.h} macros are used.
+types are known internally: if the @file{Rdefines.h} macros are used
+then S4-compatible names are used.
 
 The different @R{} data types are represented in C by @dfn{SEXPTYPE}.
 Some of these are familiar from @R{} and some are internal data types.
@@ -4131,7 +4136,7 @@ these take a @code{SEXP} as argument and return 1 or 0 to indicate
 @var{TRUE} or @var{FALSE}.  Once again there are two ways to do this,
 and @file{Rdefines.h} has macros such as @code{IS_NUMERIC}.
 
-What happens if the @code{SEXP} is not of the correct type? Sometimes
+What happens if the @code{SEXP} is not of the correct type?  Sometimes
 you have no other option except to generate an error.  You can use the
 function @code{error} for this.  It is usually better to coerce the
 object to the correct type.  For example, if you find that an
@@ -5266,6 +5271,7 @@ An example of the usage can be found in the (example) Windows package
 
 @example
 @group
+#include <R.h>
 #include <Rinternals.h>
 #include <R_ext/Parse.h>
 
@@ -5774,6 +5780,19 @@ functions}.  Those calls generate a single variate and should also be
 enclosed in calls to @code{GetRNGstate} and @code{PutRNGstate}.
 
 @comment MM: FIXME   void rmultinom() is different, returning a vector!
+
+In addition, there is an interface (defined in header
+@file{R_ext/Applic.h}) to the generation of random 2-dimensional tables
+with given row and column totals using Patefield's algorithm.
+
+@deftypefun void rcont2 (int* @var{nrow}, int* @var{ncol}, int* @var{nrowt}, int* @var{ncolt}, int* @var{ntotal}, double* @var{fact}, int* @var{jwork}, int* @var{matrix})
+Here, @var{nrow} and @var{ncol} give the numbers @math{nr} and @math{nc}
+of rows and columns and @var{nrowt} and @var{ncolt} the corresponding
+row and column totals, respectively, @var{ntotal} gives the sum of the
+row (or columns) totals, @var{jwork} is a workspace of length @math{nc},
+and on output @var{matrix} a contains the @math{nr * nc} generated
+random counts in the usual column-major order.
+@end deftypefun
 
 @node Missing and IEEE values, Printing, Random numbers, The R API
 @section Missing and @acronym{IEEE} special values
@@ -6503,12 +6522,15 @@ The FORTRAN interface routines for sorting double precision vectors are
 @code{R_qsort_I}, respectively.
 @end deftypefun
 
-@deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes})
+@deftypefun void R_max_col (double* @var{matrix}, int* @var{nr}, int* @var{nc}, int* @var{maxes}, int* @var{ties_meth})
 Given the @var{nr} by @var{nc} matrix @code{matrix} in column-major
 (``FORTRAN'')
 order, @code{R_max_col()} returns in @code{@var{maxes}[@var{i}-1]} the
 column number of the maximal element in the @var{i}-th row (the same as
-@R{}'s @code{max.col()} function).
+@R{}'s @code{max.col()} function).  In the case of ties (multiple maxima),
+@code{*ties_meth} is an integer code in @code{1:3} determining the method:
+1 = ``random'', 2 = ``first'' and 3 = ``last''.
+See @R{}'s help page @code{?max.col}.
 @end deftypefun
 
 @deftypefun int findInterval (double* @var{xt}, int @var{n}, double @var{x}, Rboolean @var{rightmost_closed}, Rboolean @var{all_inside}, int @var{ilo}, int* @var{mflag})
@@ -7343,7 +7365,7 @@ the @pkg{tcltk} package.
 An alternative front-end needs both to make provision for other @R{}
 events whilst waiting for input, and to ensure that it is not frozen out
 during events of the second type.  This is not handled very well in the
-existing examples.  The GNOME front-end runs its own handler for polled
+existing examples.  The GNOME front-end can run a own handler for polled
 events by setting
 
 @example
@@ -7360,7 +7382,9 @@ whilst it is waiting for console input.  This obviously handles events
 for Gtk windows (such as the graphics device in the @pkg{gtkDevice}
 package), but not X11 events (such as the @code{X11()} device) or for
 other event handlers that might have been registered with @R{}.  It does
-not attempt to keep itself alive whilst @R{} is waiting on sockets.
+not attempt to keep itself alive whilst @R{} is waiting on sockets.  The
+ability to add a polled handler as @code{R_timeout_handler} is used by
+the @pkg{tcltk} package.
 
 
 

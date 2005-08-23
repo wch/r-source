@@ -56,7 +56,7 @@ prcomp(x, \dots)
     With the default null setting, no components
     are omitted.  Other settings for tol could be \code{tol = 0} or
     \code{tol = sqrt(.Machine$double.eps)}, which would omit
-    essentially constant components.} 
+    essentially constant components.}
   \item{object}{Object of class inheriting from \code{"prcomp"}}
   \item{newdata}{An optional data frame or matrix in which to look for
     variables with which to predict.  If omitted, the scores are used.
@@ -78,7 +78,8 @@ prcomp(x, \dots)
     \code{princomp} returns this in the element \code{loadings}.}
   \item{x}{if \code{retx} is true the value of the rotated data (the
     centred (and scaled if requested) data multiplied by the
-    \code{rotation} matrix) is returned.}
+    \code{rotation} matrix) is returned.  Hence, \code{cov(x)} is the
+    diagonal matrix \code{diag(sdev^2)}.}
   \item{center, scale}{the centering and scaling used, or \code{FALSE}.}
 }
 \details{

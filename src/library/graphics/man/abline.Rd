@@ -47,7 +47,7 @@ abline(reg=, untf = FALSE, \dots)
   \code{h} and \code{v} parameters always refer to original coordinates.
 
   The graphical parameters \code{col} and \code{lty} can be specified as
-  arguments to \code{abline}; see \code{par} for details.
+  arguments to \code{abline}; see \code{\link{par}} for details.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

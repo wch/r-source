@@ -36,7 +36,8 @@ text(x, \dots)
   \item{cex}{numeric \bold{c}haracter \bold{ex}pansion factor; multiplied
     by \code{\link{par}("cex")} yields the final character size.}
   \item{col, font}{the color and font to be used; these default to the
-    values of the global graphical parameters in \code{\link{par}()}.}
+    values of the global graphical parameters in \code{\link{par}()}.
+    \code{NULL} and \code{NA} are equivalent to \code{1.0}.}
   \item{xpd}{(where) should clipping take place?  Defaults to
     \code{\link{par}("xpd")}.}
   \item{\dots}{further graphical parameters (from \code{\link{par}}).}

@@ -45,10 +45,7 @@ double qnchisq(double p, double df, double lambda, int lower_tail, int log_p)
      */
     if (df < 0 || lambda < 0) ML_ERR_return_NAN;
 
-    R_Q_P01_check(p);
-
-    if (p == R_DT_0) return 0;
-    if (p == R_DT_1) return ML_POSINF;
+    R_Q_P01_boundaries(p, 0, ML_POSINF);
 
     p = R_D_qIv(p);
 

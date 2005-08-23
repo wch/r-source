@@ -190,7 +190,7 @@ static int validate_tm (struct tm *tm)
 /* Substitute for mktime -- no checking, always in GMT */
 static double mktime00 (struct tm *tm)
 {
-    long day = 0;
+    int day = 0;
     int i, year, year0;
 
     day = tm->tm_mday - 1;
@@ -292,7 +292,7 @@ static double mktime0 (struct tm *tm, const int local)
 static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 {
     double d = *tp;
-    long day;
+    int day;
     int y, tmp, mon, left, diff;
     struct tm *res= ltm;
     time_t t;
@@ -305,7 +305,7 @@ static struct tm * localtime0(const double *tp, const int local, struct tm *ltm)
 	return local ? localtime(&t) : gmtime(&t);
     }
 
-    day = (long) floor(d/86400.0);
+    day = (int) floor(d/86400.0);
     left = (int) (d - day * 86400.0 + 0.5);
 
     /* hour, min, and sec */
@@ -455,7 +455,7 @@ SEXP do_asPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     PROTECT(x = coerceVector(CAR(args), REALSXP));
     if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
-	error(_("invalid 'tz' value"));
+	error(_("invalid '%s' value"), "tz");
     tz = CHAR(STRING_ELT(stz, 0));
     if(strlen(tz) == 0) {
 	/* do a direct look up here as this does not otherwise
@@ -519,9 +519,9 @@ SEXP do_asPOSIXct(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args);
     if(!isVectorList(x) || LENGTH(x) != 9)
-	error(_("invalid 'x' argument"));
+	error(_("invalid '%s' argument"), "x");
     if(!isString((stz = CADR(args))) || LENGTH(stz) != 1)
-	error(_("invalid 'tz' value"));
+	error(_("invalid '%s' value"), "tz");
 
     tz = CHAR(STRING_ELT(stz, 0));
     if(strlen(tz) == 0) {
@@ -584,13 +584,13 @@ SEXP do_formatPOSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args);
     if(!isVectorList(x) || LENGTH(x) != 9)
-	error(_("invalid 'x' argument"));
+	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
-	error(_("invalid 'format' argument"));
+	error(_("invalid '%s' argument"), "format");
     m = LENGTH(sformat);
     UseTZ = asLogical(CADDR(args));
     if(UseTZ == NA_LOGICAL)
-	error(_("invalid 'usetz' argument"));
+	error(_("invalid '%s' argument"), "usetz");
     tz = getAttrib(x, install("tzone"));
 
     /* workaround for glibc & MacOS X bugs in strftime: they have
@@ -693,9 +693,9 @@ SEXP do_strptime(SEXP call, SEXP op, SEXP args, SEXP env)
 
     checkArity(op, args);
     if(!isString((x= CAR(args))))
-	error(_("invalid 'x' argument"));
+	error(_("invalid '%s' argument"), "x");
     if(!isString((sformat = CADR(args))) || LENGTH(sformat) == 0)
-	error(_("invalid 'format' argument"));
+	error(_("invalid '%s' argument"), "x");
     n = LENGTH(x); m = LENGTH(sformat);
     if(n > 0) N = (m > n)?m:n; else N = 0;
 
@@ -744,7 +744,7 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP x, ans, ansnames, class;
     int n, i, valid;
-    long day;
+    int day;
     int y, tmp, mon;
     struct tm tm;
 
@@ -761,7 +761,7 @@ SEXP do_D2POSIXlt(SEXP call, SEXP op, SEXP args, SEXP env)
 
     for(i = 0; i < n; i++) {
 	if(R_FINITE(REAL(x)[i])) {
-	    day = (long) REAL(x)[i];
+	    day = (int) REAL(x)[i];
 	    tm.tm_hour = tm.tm_min = tm.tm_sec = 0;
 	    /* weekday: 1970-01-01 was a Thursday */
 	    if ((tm.tm_wday = ((4 + day) % 7)) < 0) tm.tm_wday += 7;
@@ -808,7 +808,7 @@ SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     x = CAR(args);
     if(!isVectorList(x) || LENGTH(x) != 9)
-	error(_("invalid 'x' argument"));
+	error(_("invalid '%s' argument"), "x");
 
     for(i = 3; i < 6; i++)
 	if((nlen[i] = LENGTH(VECTOR_ELT(x, i))) > n) n = nlen[i];

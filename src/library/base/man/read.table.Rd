@@ -15,19 +15,19 @@ read.table(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
            colClasses = NA, nrows = -1,
            skip = 0, check.names = TRUE, fill = !blank.lines.skip,
            strip.white = FALSE, blank.lines.skip = TRUE,
-           comment.char = "#", allowEscapes = TRUE)
+           comment.char = "#", allowEscapes = FALSE)
 
 read.csv(file, header = TRUE, sep = ",", quote="\"", dec=".",
          fill = TRUE, \dots)
 
 read.csv2(file, header = TRUE, sep = ";", quote="\"", dec=",",
-         fill = TRUE, \dots)
+          fill = TRUE, \dots)
 
 read.delim(file, header = TRUE, sep = "\t", quote="\"", dec=".",
-         fill = TRUE, \dots)
+           fill = TRUE, \dots)
 
 read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
-         fill = TRUE, \dots)
+            fill = TRUE, \dots)
 }
 \arguments{
   \item{file}{the name of the file which the data are to be read from.
@@ -148,9 +148,9 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     turn off the interpretation of comments altogether.}
 
   \item{allowEscapes}{logical.  Should C-style escapes such as
-    \code{\n} be processed (the default) or read verbatim?   Note that if
+    \code{\n} be processed or read verbatim (the default)?   Note that if
     not within quotes these could be interpreted as a delimiter (but not
-    as a comment character).}
+    as a comment character).  For more details see \code{\link{scan}}.}
 
   \item{\dots}{Further arguments to \code{read.table}.}
 }
@@ -181,7 +181,8 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
   
   \code{read.csv} and \code{read.csv2} are identical to
   \code{read.table} except for the defaults.  They are intended for
-  reading \dQuote{comma separated value} files (\file{.csv}) or the variant
+  reading \dQuote{comma separated value} files (\file{.csv}) or
+  (\code{read.csv2}) the variant
   used in countries that use a comma as decimal point and a semicolon
   as field separator.  Similarly, \code{read.delim} and
   \code{read.delim2} are for reading delimited files, defaulting to the

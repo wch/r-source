@@ -88,7 +88,9 @@ symbols(x, y = NULL, circles, squares, rectangles, stars,
   Monterey, California: Wadsworth.
 }
 \seealso{\code{\link{stars}} for drawing \emph{stars} with a bit more
-  flexibility; \code{\link{sunflowerplot}}.
+  flexibility.  If are about doing \dQuote{bubble plots} by
+  \code{symbols(*,circles=*)}, you should \emph{really} consider using
+  \code{\link{sunflowerplot}} instead.
 }
 \examples{
 x <- 1:10

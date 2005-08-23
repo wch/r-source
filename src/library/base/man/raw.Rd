@@ -33,9 +33,14 @@ as.raw(x)
   pair of hex digits.  If you want to see a character representation
   (with escape sequences for non-printing characters) use
   \code{\link{rawToChar}}.
+
+  Coercion to raw treats the input values as representing a small
+  (decimal) integers, so the input is first coerced to integer, and then
+  values which are outside the range \code{[0 \dots 255]} or are
+  \code{NA} are set to \code{0} (the \code{nul} byte).
 }
 \seealso{
-  \code{\link{rawToBits}}, \code{\link{rawShift}}, etc.
+  \code{\link{charToRaw}}, \code{\link{rawShift}}, etc.
 }
 \examples{
 xx <- raw(2)

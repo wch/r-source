@@ -62,8 +62,62 @@
 /* Define if you have BSD networking headers and libraries. */
 /* #undef HAVE_BSD_NETWORKING */
 
+/* Define this if you have support for C99 complex types. */
+#define HAVE_C99_COMPLEX 1
+
+/* Define to 1 if you have the `cacos' function. */
+#define HAVE_CACOS 1
+
+/* Define to 1 if you have the `cacosh' function. */
+#define HAVE_CACOSH 1
+
+/* Define to 1 if you have the `casin' function. */
+#define HAVE_CASIN 1
+
+/* Define to 1 if you have the `casinh' function. */
+#define HAVE_CASINH 1
+
+/* Define to 1 if you have the `catan' function. */
+#define HAVE_CATAN 1
+
+/* Define to 1 if you have the `catanh' function. */
+#define HAVE_CATANH 1
+
+/* Define to 1 if you have the `ccos' function. */
+#define HAVE_CCOS 1
+
+/* Define to 1 if you have the `ccosh' function. */
+#define HAVE_CCOSH 1
+
+/* Define to 1 if you have the `cexp' function. */
+#define HAVE_CEXP 1
+
 /* Define to 1 if you have the `chdir' function. */
 #define HAVE_CHDIR 1
+
+/* Define to 1 if you have the `clog' function. */
+#define HAVE_CLOG 1
+
+/* Define to 1 if you have the <complex.h> header file. */
+#define HAVE_COMPLEX_H 1
+
+/* Define to 1 if you have the `cpow' function. */
+#define HAVE_CPOW 1
+
+/* Define to 1 if you have the `csin' function. */
+#define HAVE_CSIN 1
+
+/* Define to 1 if you have the `csinh' function. */
+#define HAVE_CSINH 1
+
+/* Define to 1 if you have the `csqrt' function. */
+#define HAVE_CSQRT 1
+
+/* Define to 1 if you have the `ctan' function. */
+#define HAVE_CTAN 1
+
+/* Define to 1 if you have the `ctanh' function. */
+#define HAVE_CTANH 1
 
 /* Define if the GNU dcgettext() function is already present or preinstalled.
    */
@@ -151,10 +205,6 @@
 /* Define to 1 if you have the <dl.h> header file. */
 /* #undef HAVE_DL_H */
 
-/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
-   can do arithmetic on the latter. */
-#define HAVE_DOUBLE_COMPLEX 1
-
 /* Define to 1 if you have the <elf.h> header file. */
 /* #undef HAVE_ELF_H */
 
@@ -178,6 +228,10 @@
 
 /* Define to 1 if you have the <floatingpoint.h> header file. */
 /* #undef HAVE_FLOATINGPOINT_H */
+
+/* Define if C's Rcomplex and Fortran's COMPLEX*16 can be interchanged, and
+   can do arithmetic on the latter. */
+#define HAVE_FORTRAN_DOUBLE_COMPLEX 1
 
 /* Define to 1 if you have the <fpu_control.h> header file. */
 /* #undef HAVE_FPU_CONTROL_H */
@@ -457,6 +511,9 @@
 /* Define to 1 if you have the `strdup' function. */
 #define HAVE_STRDUP 1
 
+/* Define to 1 if you have the `strerror' function. */
+#define HAVE_STRERROR 1 
+
 /* Define to 1 if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H 1
 
@@ -565,6 +622,9 @@
 /* Define to 1 if you have the `wctrans' function. */
 #define HAVE_WCTRANS 1
 
+/* Define to 1 if the system has the type `wctrans_t'. */
+#define HAVE_WCTRANS_T 1
+
 /* Define to 1 if you have the <wctype.h> header file. */
 #define HAVE_WCTYPE_H 1
 
@@ -661,6 +721,9 @@
    exceptions on older Linux systems. As of GLIBC 2.1 this function is not
    used anymore. */
 /* #undef NEED___SETFPUCW */
+
+/* Define to disable Valgrind instrumentation */
+#define NVALGRIND 1
 
 /* Name of package */
 #define PACKAGE "R"
@@ -767,6 +830,9 @@
 
 /* Define according to your operating system type. */
 /* #undef Unix */
+
+/* Define as 1 or 2 to specify levels of Valgrind instrumentation */
+#define VALGRIND_LEVEL 0
 
 /* Version number of package */
 #define VERSION "2.2.0"

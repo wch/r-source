@@ -271,7 +271,7 @@ reduceDepends <- function(depMtrx, quietly=TRUE) {
             }
             if(quietly == FALSE)
                 warning(gettextf("Package '%s' had its dependencies reduced to a minimal set.",
-                                 pkg),
+                                 pkgMtrx[1,]),
                         domain = NA)
         }
 	pkgMtrx[outRow,]

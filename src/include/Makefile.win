@@ -7,18 +7,19 @@ SRC_HEADERS = R.h S.h Rdefines.h Rdevices.h Rgraphics.h Rinternals.h
 ## this deliberately does not include Rinterfaces.h, which is Unix-only
 OBJ_HEADERS = Rconfig.h Rmath.h Rversion.h
 GW32_HEADERS = config.h iconv.h psignal.h
+RPROXY_HEADERS = SC_proxy.h SC_system.h rproxy.h bdx.h bdx_SEXP.h bdx_com.h bdx_util.h com_util.h
 
 all: fixh
 	@echo 'installing C headers'
 	@mkdir -p $(R_HOME)/include/R_ext
-	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(R_HOME)/include
+	@cp -p $(SRC_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS) $(R_HOME)/include
 	@cp -p R_ext/*.h $(R_HOME)/include/R_ext
 	@cp -p ../gnuwin32/graphapp/graphapp.h ../gnuwin32/graphapp/ga.h \
 	  $(R_HOME)/include
 
 version: Rversion.h
 
-fixh: $(GW32_HEADERS) $(OBJ_HEADERS)
+fixh: $(GW32_HEADERS) $(OBJ_HEADERS) $(RPROXY_HEADERS)
 	@$(ECHO) done > fixh
 
 config.h: ../gnuwin32/fixed/h/config.h
@@ -28,6 +29,30 @@ iconv.h: ../gnuwin32/fixed/h/iconv.h
 	@cp $< $@
 
 psignal.h: ../gnuwin32/fixed/h/psignal.h
+	@cp $< $@
+
+SC_proxy.h: ../gnuwin32/front-ends/SC_proxy.h
+	@cp $< $@
+
+SC_system.h: ../gnuwin32/front-ends/SC_system.h
+	@cp $< $@
+
+rproxy.h: ../gnuwin32/front-ends/rproxy.h
+	@cp $< $@
+
+bdx.h: ../gnuwin32/front-ends/bdx.h
+	@cp $< $@
+
+bdx_SEXP.h: ../gnuwin32/front-ends/bdx_SEXP.h
+	@cp $< $@
+
+bdx_com.h: ../gnuwin32/front-ends/bdx_com.h
+	@cp $< $@
+
+bdx_util.h: ../gnuwin32/front-ends/bdx_util.h
+	@cp $< $@
+
+com_util.h: ../gnuwin32/front-ends/com_util.h
 	@cp $< $@
 
 Rconfig.h: config.h $(R_HOME)/tools/GETCONFIG
@@ -55,6 +80,7 @@ Rmath.h: Rmath.h0
 ## <FIXME> USE_SVNVERSION does not work if there is no 'svnversion'
 FORCE:
 $(R_HOME)/SVN-REVISION: FORCE
+	@-cp -p $(R_HOME)/SVN-REVISION $(R_HOME)/SVN-REVISION.bak
 ifdef USE_SVNVERSION
 	@svnversion ../.. | sed -n 's/^/Revision: /p' > svn-tmp || rm -f svn-tmp
 	@grep -v exported svn-tmp > /dev/null || rm -f svn-tmp
@@ -76,11 +102,12 @@ endif
 	    cp svn-tmp $@; \
 	  fi ; \
 	else \
-	  cp $(R_HOME)/SVN-REVISION.bak $@ 2> /dev/null || \
-	  (echo "Revision: unknown" > $@; \
-	   echo "Last Changed Date: Today" >> $@) ; \
+	  cp -p $(R_HOME)/SVN-REVISION.bak $@ 2> /dev/null || \
+	  (echo "Revision: 00000" > $@; \
+	   echo "Last Changed Date: 2005-00-00" >> $@) ; \
 	fi 
 	@rm -f svn-tmp $(R_HOME)/SVN-REVISION.bak
 
 distclean:
 	$(RM) -f Rmath.h0 fixh
+	$(RM) $(RPROXY_HEADERS)

@@ -10,11 +10,12 @@
 \arguments{
   \item{x}{object of class \code{data.frame}.}
   \item{\dots}{optional arguments to \code{print} or \code{plot} methods.}
-  \item{digits}{the minimum number of significant digits to be used.}
+  \item{digits}{the minimum number of significant digits to be used: see
+    \code{\link{print.default}}.}
   \item{quote}{logical, indicating whether or not entries should be
     printed with surrounding quotes.}
   \item{right}{logical, indicating whether or not strings should be
-    right-aligned. The default is left-alignment.}
+    right-aligned.  The default is left-alignment.}
 }
 \details{
   This calls \code{\link{format}} which formats the data frame

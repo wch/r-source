@@ -244,7 +244,8 @@ C
  40   G1 = IV(G)
       Y1 = IV(Y)
       CALL DG7LIT(D, V(G1), IV, LIV, LV, P, P, V, X, V(Y1))
-      IF (IV(1) - 2) 50, 60, 220
+      IF (IV(1) .EQ. 2) GO TO 60
+      IF (IV(1) .GT. 2) GO TO 220
 C
  50   V(F) = ZERO
       IF (IV(NF1) .EQ. 0) GO TO 260
@@ -1448,7 +1449,7 @@ C
       LOGICAL HAVQTR
       INTEGER K, P
       DOUBLE PRECISION QTR(P), R(1), W(P)
-C     DIMSNSION R(P*(P+1)/2)
+C     DIMENSION R(P*(P+1)/2)
 C
       DOUBLE PRECISION DH2RFG
       EXTERNAL DH2RFA, DH2RFG,DV7CPY
@@ -1595,7 +1596,8 @@ C
  10   G1 = IV(G)
 C
  20   CALL DRMNG(D, FX, V(G1), IV, LIV, LV, N, V, X)
-      IF (IV(1) - 2) 999, 30, 70
+      IF (IV(1) .LT. 2) GO TO 999
+      IF (IV(1) .GT. 2) GO TO 70   
 C
 C  ***  COMPUTE GRADIENT  ***
 C
@@ -2307,44 +2309,6 @@ C
 C
 C     LAST CARD OF SUBROUTINE S7ETR.
 C
-      END
-      SUBROUTINE DN2RDP(IV, LIV, LV, N, RD, V)
-C
-C  ***  PRINT REGRESSION DIAGNOSTICS FOR MLPSL AND NL2S1 ***
-C
-      INTEGER LIV, LV, N
-      INTEGER IV(LIV)
-      DOUBLE PRECISION RD(N), V(LV)
-C
-C     ***  NOTE -- V IS PASSED FOR POSSIBLE USE BY REVISED VERSIONS OF
-C     ***  THIS ROUTINE.
-C
-      INTEGER PU
-C
-C  ***  IV AND V SUBSCRIPTS  ***
-C
-      INTEGER COVPRT, F, NEEDHD, PRUNIT, REGD
-C
-      PARAMETER (COVPRT=14, F=10, NEEDHD=36, PRUNIT=21, REGD=67)
-C
-C+++++++++++++++++++++++++++++++  BODY  ++++++++++++++++++++++++++++++++
-C
-      PU = IV(PRUNIT)
-      IF (PU .EQ. 0) GO TO 999
-      IF (IV(COVPRT) .LT. 2) GO TO 999
-      IF (IV(REGD) .LE. 0) GO TO 999
-      IV(NEEDHD) = 1
-      IF (V(F)) 10, 30, 10
- 10   WRITE(PU,20) RD
- 20   FORMAT(/70H REGRESSION DIAGNOSTIC = SQRT( G(I)**T * H(I)**-1 * G(I
-     1) / ABS(F) ).../(6D12.3))
-      GO TO 999
- 30   WRITE(PU,40) RD
- 40   FORMAT(/61H REGRESSION DIAGNOSTIC = SQRT( G(I)**T * H(I)**-1 * G(I
-     1) ).../(6D12.3))
-C
- 999  RETURN
-C  ***  LAST LINE OF DN2RDP FOLLOWS  ***
       END
       SUBROUTINE DG7QSB(B, D, DIHDI, G, IPIV, IPIV1, IPIV2, KA, L, LV,
      1                  P, P0, PC, STEP, TD, TG, V, W, X, X0)
@@ -4928,7 +4892,8 @@ C
       IF (IABS(IV(RESTOR)-2) .EQ. 1 .AND. L .GT. 0)
      1        CALL DV7CPY(L, C, V(CSAVE1))
       IV1 = IV(1)
-      IF (IV1-2) 40, 150, 230
+      IF (IV1 .EQ. 2) GO TO 150
+      IF (IV1 .GT. 2) GO TO 230
 C
 C  ***  NEW FUNCTION VALUE (RESIDUAL) NEEDED  ***
 C
@@ -5317,7 +5282,8 @@ C     ***  WE RECOMPUTE STEP AND IT DOES NOT CHANGE, THEN WE ACCEPT IT.
 C
 C  ***  START OR RESTART, DEPENDING ON KA  ***
 C
-      IF (KA) 10, 20, 370
+      IF (KA .EQ. 0) GO TO 20
+      IF (KA .GT. 0) GO TO 370
 C
 C  ***  FRESH START -- COMPUTE V(NREDUC)  ***
 C
@@ -5701,7 +5667,8 @@ C
  10   G1 = IV(G)
 C
  20   CALL DRMNGB(B, D, FX, V(G1), IV, LIV, LV, P, V, X)
-      IF (IV(1) - 2) 999, 30, 80
+      IF (IV(1) .LT. 2) GO TO 999
+      IF (IV(1) .GT. 2) GO TO 80
 C
 C  ***  COMPUTE GRADIENT  ***
 C
@@ -8649,7 +8616,8 @@ C
       IF (IABS(IV(RESTOR)-2) .EQ. 1 .AND. L .GT. 0)
      1        CALL DV7CPY(L, C, V(CSAVE1))
       IV1 = IV(1)
-      IF (IV1-2) 40, 150, 230
+      IF (IV1 .EQ. 2) GO TO 150
+      IF (IV1 .GT. 2) GO TO 230
 C
 C  ***  NEW FUNCTION VALUE (RESIDUAL) NEEDED  ***
 C
@@ -9558,7 +9526,8 @@ C
 C
 C---------------------------------  BODY  ------------------------------
 C
-      IF (IRC) 140, 100, 210
+      IF (IRC .LT. 0) GO TO 140
+      IF (IRC .GT. 0) GO TO 210
 C
 C     ***  FRESH START -- GET MACHINE-DEPENDENT CONSTANTS  ***
 C
@@ -10696,7 +10665,8 @@ C
 C
 C---------------------------------  BODY  ------------------------------
 C
-      IF (IRC) 80, 10, 210
+      IF (IRC .LT. 0) GO TO 80
+      IF (IRC .GT. 0) GO TO 210
 C
 C     ***  FRESH START -- GET MACHINE-DEPENDENT CONSTANTS  ***
 C
@@ -11637,7 +11607,8 @@ C
  40   G1 = IV(G)
       Y1 = G1 + P
       CALL DG7ITB(B, D, V(G1), IV, LIV, LV, P, P, V, X, V(Y1))
-      IF (IV(1) - 2) 50, 60, 260
+      IF (IV(1) .EQ. 2) GO TO 60
+      IF (IV(1) .GT. 2) GO TO 260
 C
  50   V(F) = ZERO
       IF (IV(NF1) .EQ. 0) GO TO 240

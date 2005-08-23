@@ -98,3 +98,6 @@ legend(1,10, c("A","bcd"), lwd = 2:3, pch= 21:22, pt.bg="skyblue",
 x <- 2^seq(1,1001, length=20)
 plot(x, x^0.9, type="l", log="xy")
 ## gave error 'Infinite axis extents [GEPretty(1.87013e-12,inf,5)]' for R 2.0.1
+
+plot(as.Date("2001/1/1") + 12*(1:9), 1:9)
+## used bad 'xlab/ylab' in some versions of R 2.2.0(unstable)

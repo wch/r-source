@@ -36,31 +36,33 @@ density.default <-
     }
     N <- nx <- length(x)
     x.finite <- is.finite(x)
+    if(any(!x.finite)) {
+        x <- x[x.finite]
+        nx <- length(x) # == sum(x.finite)
+    }
 
     ## Handle 'weights'
     if(is.null(weights))  {
         weights <- rep.int(1/nx, nx)
-        wsum <- 1
+        totMass <- nx/N
     }
     else {
-        if(length(weights) != nx)
+        if(length(weights) != N)
             stop("'x' and 'weights' have unequal length")
         if(!all(is.finite(weights)))
             stop("'weights' must all be finite")
         if(any(weights < 0))
             stop("'weights' must not be negative")
         wsum <- sum(weights)
-        ## FIXME: Shouldn't we rather signal an error?
+        if(any(!x.finite)) {
+            weights <- weights[x.finite]
+            totMass <- sum(weights) / wsum
+        } else totMass <- 1
+
+        ## No error, since user may have wanted "sub-density"
         if (!isTRUE(all.equal(1, wsum)))
             warning("sum(weights) != 1  -- will not get true density")
     }
-
-    if(any(!x.finite)) {
-        x <- x[x.finite]
-        weights <- weights[x.finite]
-        nx <- length(x) # == sum(x.finite)
-        wsum.fini <- sum(weights)
-    } else wsum.fini <- wsum
 
     n.user <- n
     n <- max(n, 512)
@@ -116,7 +118,7 @@ density.default <-
 	    xhi = as.double(up),
 	    y = double(2 * n),
 	    ny = as.integer(n),
-            PACKAGE = "base" )$y * (wsum.fini/wsum)
+            PACKAGE = "base" )$y * totMass
     kords <- seq(0, 2*(up-lo), length = 2 * n)
     kords[(n + 2):(2 * n)] <- -kords[n:2]
     kords <- switch(kernel,

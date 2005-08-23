@@ -95,7 +95,7 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
 
     if(is.logical(col.names)) {
         if(!rn && is.na(col.names))
-            error("col.names = NA makes no sense when row.names = FALSE")
+            stop("col.names = NA makes no sense when row.names = FALSE")
         col.names <- if(is.na(col.names) && rn) c("", d[[2]])
         else if(col.names) d[[2]] else NULL
     } else {
@@ -135,5 +135,40 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
     writeLines(paste(c(t(x)), c(rep.int(sep, ncol(x) - 1), eol),
                      sep = "", collapse = ""),
                file, sep = "")
+}
+## </entry>
+
+## <entry>
+format.char <- function(x, width = NULL, flag = "-")
+{
+    .Deprecated("format.default")
+    ## Character formatting, flag: if "-" LEFT-justify
+    if (is.null(x)) return("")
+    if(!is.character(x)) {
+	warning("format.char: coercing 'x' to 'character'")
+	x <- as.character(x)
+    }
+    if(is.null(width) && flag == "-")
+	return(format(x))		# Left justified; width= max.width
+
+    at <- attributes(x)
+    nc <- nchar(x, type="w")	       	#-- string widths
+    nc[is.na(nc)] <- 2
+    if(is.null(width)) width <- max(nc)
+    else if(width<0) { flag <- "-"; width <- -width }
+    ##- 0.90.1 and earlier:
+    ##- pad <- sapply(pmax(0,width - nc),
+    ##-			function(no) paste(character(no+1), collapse =" "))
+    ## Speedup by Jens Oehlschlaegel:
+    tab <- unique(no <- pmax(0, width - nc))
+    tabpad <- sapply(tab+1, function(n) paste(character(n), collapse = " "))
+    pad <- tabpad[match(no, tab)]
+
+    r <-
+	if(flag=="-")	paste(x, pad, sep="")#-- LEFT  justified
+	else		paste(pad, x, sep="")#-- RIGHT justified
+    if(!is.null(at))
+	attributes(r) <- at
+    r
 }
 ## </entry>

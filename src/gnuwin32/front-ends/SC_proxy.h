@@ -1,6 +1,6 @@
-/*
+/*******************************************************************************
  *  StatConn: Connector interface between application and interpreter language
- *  Copyright (C) 1999--2001 Thomas Baier
+ *  Copyright (C) 1999--2005 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,18 +17,23 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
+ *  ---------------------------------------------------------------------------
+ *
  *  $Id: SC_proxy.h,v 1.6 2003/09/13 15:14:09 murdoch Exp $
- */
+ *
+ ******************************************************************************/
 
 #ifndef _STATCONN_H_
 #define _STATCONN_H_
 
-#include "bdx.h"
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/* system-specifics should be moved to some include file */
-#include <windows.h>
-#define SYSCALL WINAPI
-#define EXPORT
+/* system specifics */
+#include "SC_system.h"
+
+#include "bdx.h"
 
 /* forward definition */
 struct _SC_Proxy_Object;
@@ -502,7 +507,8 @@ typedef struct _SC_GraphicsDevice
 /* entry point: retrieve a proxy object with a given version */
 typedef int (SYSCALL* SC_PROXY_GET_OBJECT) (SC_Proxy_Object**,unsigned long);
 
-/* this is valid for Windows only */
-#define SC_PROXY_GET_OBJECT_FUN "SC_Proxy_get_object@8"
+#ifdef __cplusplus
+}
+#endif
 
 #endif

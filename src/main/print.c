@@ -1,7 +1,14 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995-1998	Robert Gentleman and Ross Ihaka.
- *  Copyright (C) 2000-2004	The R Development Core Team.RR_
+ *  Copyright (C) 2000-2005	The R Development Core Team.
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
  *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *  GNU General Public License for more details.
@@ -162,13 +169,13 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 	if (R_print.digits == NA_INTEGER ||
 	    R_print.digits < R_MIN_DIGITS_OPT ||
 	    R_print.digits > R_MAX_DIGITS_OPT)
-		errorcall(call, _("invalid 'digits' argument"));
+		errorcall(call, _("invalid '%s' argument"), "digits");
     }
     args = CDR(args);
 
     R_print.quote = asLogical(CAR(args));
     if(R_print.quote == NA_LOGICAL)
-	errorcall(call, _("invalid 'quote' argument"));
+	errorcall(call, _("invalid '%s' argument"), "quote");
     args = CDR(args);
 
     naprint = CAR(args);
@@ -190,7 +197,7 @@ SEXP do_printdefault(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     R_print.right = asLogical(CAR(args));
     if(R_print.right == NA_LOGICAL)
-	errorcall(call, _("invalid 'right' argument"));
+	errorcall(call, _("invalid '%s' argument"), "right");
     args = CDR(args);
 
     tryS4 = asLogical(CAR(args));
@@ -230,7 +237,7 @@ static void PrintGenericVector(SEXP s, SEXP env)
 {
     int i, taglen, ns, w, d, e, wr, dr, er, wi, di, ei;
     SEXP dims, t, names, newcall, tmp;
-    char *pbuf, *ptag, *rn, *cn, save[TAGBUFLEN + 5];
+    char pbuf[115], *ptag, *rn, *cn, save[TAGBUFLEN + 5];
 
     ns = length(s);
     if((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
@@ -239,70 +246,81 @@ static void PrintGenericVector(SEXP s, SEXP env)
 	for (i = 0 ; i < ns ; i++) {
 	    switch(TYPEOF(PROTECT(tmp = VECTOR_ELT(s, i)))) {
 	    case NILSXP:
-		pbuf = Rsprintf("NULL");
+		snprintf(pbuf, 115, "NULL");
 		break;
 	    case LGLSXP:
 		if (LENGTH(tmp) == 1) {
 		    formatLogical(LOGICAL(tmp), 1, &w);
-		    pbuf = Rsprintf("%s", EncodeLogical(LOGICAL(tmp)[0], w));
+		    snprintf(pbuf, 115, "%s", 
+			     EncodeLogical(LOGICAL(tmp)[0], w));
 		} else
-		    pbuf = Rsprintf("Logical,%d", LENGTH(tmp));
+		    snprintf(pbuf, 115, "Logical,%d", LENGTH(tmp));
 		break;
 	    case INTSXP:
 		/* factors are stored as integers */
 		if (inherits(tmp, "factor")) {
-		    pbuf = Rsprintf("factor,%d", LENGTH(tmp));
+		    snprintf(pbuf, 115, "factor,%d", LENGTH(tmp));
 		} else {
 		    if (LENGTH(tmp) == 1) {
 			formatInteger(INTEGER(tmp), 1, &w);
-			pbuf = Rsprintf("%s", EncodeInteger(INTEGER(tmp)[0],
-							    w));
+			snprintf(pbuf, 115, "%s",
+				 EncodeInteger(INTEGER(tmp)[0], w));
 		    } else
-			pbuf = Rsprintf("Integer,%d", LENGTH(tmp));
+			snprintf(pbuf, 115, "Integer,%d", LENGTH(tmp));
 		}
 		break;
 	    case REALSXP:
 		if (LENGTH(tmp) == 1) {
 		    formatReal(REAL(tmp), 1, &w, &d, &e, 0);
-		    pbuf = Rsprintf("%s", EncodeReal(REAL(tmp)[0], w, d, e,
-						     OutDec));
+		    snprintf(pbuf, 115, "%s", 
+			     EncodeReal(REAL(tmp)[0], w, d, e, OutDec));
 		} else
-		    pbuf = Rsprintf("Numeric,%d", LENGTH(tmp));
+		    snprintf(pbuf, 115, "Numeric,%d", LENGTH(tmp));
 		break;
 	    case CPLXSXP:
 		if (LENGTH(tmp) == 1) {
 		    Rcomplex *x = COMPLEX(tmp);
 		    formatComplex(x, 1, &wr, &dr, &er, &wi, &di, &ei, 0);
 		    if (ISNA(x[0].r) || ISNA(x[0].i))
-			pbuf = Rsprintf("%s", EncodeReal(NA_REAL, w, 0, 0,
-							 OutDec));
+			snprintf(pbuf, 115, "%s", 
+				 EncodeReal(NA_REAL, w, 0, 0, OutDec));
 		    else
-			pbuf = Rsprintf("%s", EncodeComplex(x[0],
+			snprintf(pbuf, 115, "%s", EncodeComplex(x[0],
 			wr, dr, er, wi, di, ei, OutDec));
 		} else
-		pbuf = Rsprintf("Complex,%d", LENGTH(tmp));
+		snprintf(pbuf, 115, "Complex,%d", LENGTH(tmp));
 		break;
 	    case STRSXP:
 		if (LENGTH(tmp) == 1) {
-		    pbuf = Rsprintf("\"%s\"", CHAR(STRING_ELT(tmp, 0)));
+		    /* This can potentially overflow */
+		    char *ctmp = CHAR(STRING_ELT(tmp, 0));
+		    int len = strlen(ctmp);
+		    if(len < 100)
+			snprintf(pbuf, 115, "\"%s\"", ctmp);
+		    else {
+			snprintf(pbuf, 101, "\"%s\"", ctmp);
+			pbuf[100] = '"'; pbuf[101] = '\0';
+			strcat(pbuf, " [truncated]");
+		    }
 		} else
-		pbuf = Rsprintf("Character,%d", LENGTH(tmp));
+		snprintf(pbuf, 115, "Character,%d", LENGTH(tmp));
 		break;
 	    case RAWSXP:
-		pbuf = Rsprintf("Raw,%d", LENGTH(tmp));
+		snprintf(pbuf, 115, "Raw,%d", LENGTH(tmp));
 		break;
 	    case LISTSXP:
 	    case VECSXP:
-		pbuf = Rsprintf("List,%d", length(tmp));
+		snprintf(pbuf, 115, "List,%d", length(tmp));
 		break;
 	    case LANGSXP:
-		pbuf = Rsprintf("Expression");
+		snprintf(pbuf, 115, "Expression");
 		break;
 	    default:
-		pbuf = Rsprintf("?");
+		snprintf(pbuf, 115, "?");
 		break;
 	    }
 	    UNPROTECT(1); /* tmp */
+	    pbuf[115] = '\0';
 	    SET_STRING_ELT(t, i, mkChar(pbuf));
 	}
 	if (LENGTH(dims) == 2) {
@@ -392,7 +410,7 @@ static void printList(SEXP s, SEXP env)
 {
     int i, taglen;
     SEXP dims, dimnames, t, newcall;
-    char *pbuf, *ptag, *rn, *cn;
+    char pbuf[101], *ptag, *rn, *cn;
 
     if ((dims = getAttrib(s, R_DimSymbol)) != R_NilValue && length(dims) > 1) {
 	PROTECT(dims);
@@ -402,42 +420,43 @@ static void printList(SEXP s, SEXP env)
 	    switch(TYPEOF(CAR(s))) {
 
 	    case NILSXP:
-		pbuf = Rsprintf("NULL");
+		snprintf(pbuf, 100, "NULL");
 		break;
 
 	    case LGLSXP:
-		pbuf = Rsprintf("Logical,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "Logical,%d", LENGTH(CAR(s)));
 		break;
 
 	    case INTSXP:
 	    case REALSXP:
-		pbuf = Rsprintf("Numeric,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "Numeric,%d", LENGTH(CAR(s)));
 		break;
 
 	    case CPLXSXP:
-		pbuf = Rsprintf("Complex,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "Complex,%d", LENGTH(CAR(s)));
 		break;
 
 	    case STRSXP:
-		pbuf = Rsprintf("Character,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "Character,%d", LENGTH(CAR(s)));
 		break;
 
 	    case RAWSXP:
-		pbuf = Rsprintf("Raw,%d", LENGTH(CAR(s)));
+		snprintf(pbuf, 100, "Raw,%d", LENGTH(CAR(s)));
 		break;
 
 	    case LISTSXP:
-		pbuf = Rsprintf("List,%d", length(CAR(s)));
+		snprintf(pbuf, 100, "List,%d", length(CAR(s)));
 		break;
 
 	    case LANGSXP:
-		pbuf = Rsprintf("Expression");
+		snprintf(pbuf, 100, "Expression");
 		break;
 
 	    default:
-		pbuf = Rsprintf("?");
+		snprintf(pbuf, 100, "?");
 		break;
 	    }
+	    pbuf[100] ='\0';
 	    SET_STRING_ELT(t, i++, mkChar(pbuf));
 	    s = CDR(s);
 	}

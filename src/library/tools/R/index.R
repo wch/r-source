@@ -33,6 +33,9 @@ function(dataDir, contents)
     if(!length(dataTopics)) return(matrix("", 0, 2))
     names(dataTopics) <- paste(names(dataTopics), "/", sep="")
     datasets <- unlist(dataTopics)
+    ## it is possible to have topics that create no object:
+    ## BioC's makecdfenv did.
+    if(!length(datasets)) return(matrix("", 0, 2))
     names(datasets) <- sub("/[^/]*$", "", names(datasets))
     datasets <- sort(datasets)
     dataIndex <- cbind(datasets, "")

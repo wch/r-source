@@ -109,7 +109,7 @@ str.default <-
 		nam.ob <-
 		    if(is.null(nam.ob <- names(object))) rep.int("", le)
 		    else { max.ncnam <- max(nchar(nam.ob, type="w"))
-			   format.char(nam.ob, width = max.ncnam, flag = '-')
+			   format(nam.ob, width = max.ncnam, justify="left")
 		       }
 		for(i in 1:le) {
 		    cat(indent.str, comp.str, nam.ob[i], ":", sep="")
@@ -118,10 +118,11 @@ str.default <-
 			    structure(object, nam= as.name(nam.ob[i]))
 			} # else NULL
 		    str(object[[i]], nest.lev = nest.lev + 1,
-			indent.str= paste(indent.str,".."), nchar.max=nchar.max,
-			max.level=max.level, vec.len=vec.len, digits.d=digits.d,
-			give.attr= give.attr, give.length= give.length, wid=wid,
-			envir = envir)
+                        indent.str = paste(indent.str,".."),
+                        nchar.max = nchar.max, max.level = max.level,
+                        vec.len = vec.len, digits.d = digits.d,
+                        give.attr = give.attr, give.length = give.length,
+                        wid = wid, envir = envir)
 		}
 	    }
 	}

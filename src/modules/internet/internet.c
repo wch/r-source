@@ -249,26 +249,26 @@ static SEXP in_do_download(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     scmd = CAR(args); args = CDR(args);
     if(!isString(scmd) || length(scmd) < 1)
-	error(_("invalid 'url' argument"));
+	error(_("invalid '%s' argument"), "url");
     if(length(scmd) > 1)
 	warning(_("only first element of 'url' argument used"));
     url = CHAR(STRING_ELT(scmd, 0));
     sfile = CAR(args); args = CDR(args);
     if(!isString(sfile) || length(sfile) < 1)
-	error(_("invalid 'destfile' argument"));
+	error(_("invalid '%s' argument"), "destfile");
     if(length(sfile) > 1)
 	warning(_("only first element of 'destfile' argument used"));
     file = CHAR(STRING_ELT(sfile, 0));
     IDquiet = quiet = asLogical(CAR(args)); args = CDR(args);
     if(quiet == NA_LOGICAL)
-	error(_("invalid 'quiet' argument"));
+	error(_("invalid '%s' argument"), "quiet");
     smode =  CAR(args); args = CDR(args);
     if(!isString(smode) || length(smode) != 1)
-	error(_("invalid 'mode' argument"));
+	error(_("invalid '%s' argument"), "mode");
     mode = CHAR(STRING_ELT(smode, 0));
     cacheOK = asLogical(CAR(args));
     if(cacheOK == NA_LOGICAL)
-	error(_("invalid 'cacheOK' argument"));
+	error(_("invalid '%s' argument"), "cacheOK");
 #ifdef Win32
     if (!pbar.wprog) {
 	pbar.wprog = newwindow(_("Download progress"), rect(0, 0, 540, 100),

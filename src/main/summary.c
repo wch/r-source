@@ -301,12 +301,12 @@ SEXP do_summary(SEXP call, SEXP op, SEXP args, SEXP env)
     iop = PRIMVAL(op);
     switch(iop) {
     case 0:/* sum */
-    /* we need to find out if _all_ the arguments are integer in advance,
-       as we might overflow before we find out */
+    /* we need to find out if _all_ the arguments are integer or logical
+       in advance, as we might overflow before we find out */
 	a = args;
 	int_a = 1;
 	while (a != R_NilValue) {
-	    if(!isInteger(CAR(a))) {
+	    if(!isInteger(CAR(a)) &&  !isLogical(CAR(a))) {
 		int_a = 0;
 		break;
 	    }

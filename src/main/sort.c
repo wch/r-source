@@ -589,6 +589,7 @@ static int listgreater(int i, int j, SEXP key, Rboolean nalast,
     if (c == 0 && i < j) return 0; else return 1;
 }
 
+/* Needs indx set to 1...n initially */
 static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 			Rboolean decreasing, int greater_sub())
 {
@@ -615,14 +616,17 @@ static void orderVector(int *indx, int n, SEXP key, Rboolean nalast,
 		for (i = lo + h; i <= hi; i++) { \
 		    itmp = indx[i]; \
 		    j = i; \
-		    while (j >= h && less(indx[j - h], itmp)) { \
+		    while (j >= lo + h && less(indx[j - h], itmp)) { \
 			indx[j] = indx[j - h]; j -= h; } \
 		    indx[j] = itmp; \
 		}
 
 
-static void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
-			 Rboolean decreasing)
+/* Needs indx set to 1...n initially.
+   Also used by do_options.
+ */
+void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
+		  Rboolean decreasing)
 {
     int c, i, j, h, t, lo = 0, hi = n-1;
     int itmp, *isna, numna = 0;
@@ -715,7 +719,7 @@ SEXP do_order(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     nalast = asLogical(CAR(args));
     if(nalast == NA_LOGICAL)
-	error(_("'na.last' is invalid"));
+	error(_("invalid '%s' value"), "na.last");
     args = CDR(args);
     decreasing = asLogical(CAR(args));
     if(decreasing == NA_LOGICAL)
@@ -815,7 +819,7 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     x = CAR(args);
     nalast = asLogical(CADR(args));
     if(nalast == NA_LOGICAL)
-	error(_("'na.last' is invalid"));
+	error(_("invalid '%s' value"), "na.last");
     decreasing = asLogical(CADDR(args));
     if(decreasing == NA_LOGICAL)
 	error(_("'decreasing' must be TRUE or FALSE"));
@@ -839,7 +843,8 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
     if(xmax > 100000) errorcall(call, _("too large a range of values in 'x'"));
     napos = off ? 0 : xmax + 1;
     off -= xmin;
-    cnts = Calloc(xmax+1, unsigned int);
+    /* alloca is fine here: we know this is small */
+    cnts = (unsigned int *) alloca((xmax+1)*sizeof(unsigned int));
 
     for(i = 0; i <= xmax+1; i++) cnts[i] = 0;
     for(i = 0; i < n; i++) {
@@ -859,7 +864,6 @@ SEXP do_radixsort(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    INTEGER(ans)[--cnts[(tmp==NA_INTEGER) ? napos : off+tmp]] = i+1;
 	}
 
-    Free(cnts);
     UNPROTECT(1);
     return ans;
 }

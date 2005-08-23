@@ -127,7 +127,7 @@ function(x, ...)
     cat("\n    ", x$method, "\n\n")
     note <- x$note
     x[c("method","note")] <- NULL
-    cat(paste(format.char(names(x), width= 15, flag="+"),
+    cat(paste(format(names(x), width= 15, justify = "right"),
 	      format(x), sep= " = "), sep= "\n")
     if(!is.null(note))
 	cat("\n", "NOTE:", note, "\n\n")

@@ -85,29 +85,6 @@ all(abs(1 - x / atan(tan(x))) <  2*Meps)
 ## Sun has asin(.) = acos(.) = 0 for these:
 ##	is.nan(acos(1.1)) && is.nan(asin(-2)) [!]
 
-## Complex Trig.:
-abs(Im(cos(acos(1i))) -	 1) < 2*Meps
-abs(Im(sin(asin(1i))) -	 1) < 2*Meps
-##P (1 - Im(sin(asin(Ii))))/Meps
-##P (1 - Im(cos(acos(Ii))))/Meps
-abs(Im(asin(sin(1i))) -	 1) < 2*Meps
-cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
-abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
-
-.Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
-Isi <- Im(sin(asin(1i + rnorm(100))))
-all(abs(Isi-1) < 100* Meps)
-##P table(2*abs(Isi-1)	/ Meps)
-Isi <- Im(cos(acos(1i + rnorm(100))))
-all(abs(Isi-1) < 100* Meps)
-##P table(2*abs(Isi-1)	/ Meps)
-Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
-all(abs(Isi-1) < 100* Meps)
-##P table(2*abs(Isi-1)	/ Meps)
-
-## polyroot():
-all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
-
 ## gamma()
 abs(gamma(1/2)^2 - pi) < 4* Meps
 r <- rlnorm(5000)

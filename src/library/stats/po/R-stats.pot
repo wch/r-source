@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-08-15 11:45\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -635,6 +635,9 @@ msgstr ""
 msgid "'xi' has not the right length"
 msgstr ""
 
+msgid "incorrect dimensions for 'xi'"
+msgstr ""
+
 msgid "'x' is not a vector or matrix"
 msgstr ""
 
@@ -1016,9 +1019,6 @@ msgstr ""
 msgid "a limit is missing"
 msgstr ""
 
-msgid "'m' is negative"
-msgstr ""
-
 msgid "'r' is less than 1"
 msgstr ""
 
@@ -1026,6 +1026,9 @@ msgid "'m' is less than 1"
 msgstr ""
 
 msgid "'r' is less than 0"
+msgstr ""
+
+msgid "'m' must be numeric with non-negative integers"
 msgstr ""
 
 msgid "unknown named kernel"
@@ -1190,9 +1193,6 @@ msgstr ""
 msgid "'newdata' does not contain the variables needed"
 msgstr ""
 
-msgid "need response in formula"
-msgstr ""
-
 msgid "no models to compare"
 msgstr ""
 
@@ -1286,9 +1286,6 @@ msgstr ""
 msgid "X does not define a subspace of M"
 msgstr ""
 
-msgid "one-argument anova() not implemented for 'mlm' objects"
-msgstr ""
-
 msgid "residuals have rank"
 msgstr ""
 
@@ -1380,6 +1377,12 @@ msgid "_NOT_ converged in"
 msgstr ""
 
 msgid "control argument must be a named list"
+msgstr ""
+
+msgid "unrecognized control element(s) named `"
+msgstr ""
+
+msgid "' ignored"
 msgstr ""
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
@@ -1595,6 +1598,9 @@ msgstr ""
 msgid "no 'time' or 'id' specified"
 msgstr ""
 
+msgid "'k' must be positive"
+msgstr ""
+
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr ""
 
@@ -1662,6 +1668,9 @@ msgid "setting df = 1  __use with care!__"
 msgstr ""
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
+msgstr ""
+
+msgid "type = \"partial\" is not yet implemented"
 msgstr ""
 
 msgid "not a valid \"smooth.spline\" object"
@@ -1896,6 +1905,9 @@ msgid "cannot compute exact p-value with zeroes"
 msgstr ""
 
 msgid "cannot compute exact confidence interval with zeroes"
+msgstr ""
+
+msgid "must supply either 'formula' or 'data'"
 msgstr ""
 
 msgid "too few distinct input values to fit an asymptotic regression model"

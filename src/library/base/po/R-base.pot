@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,6 +32,30 @@ msgstr ""
 msgid "See help(\"Deprecated\")"
 msgstr ""
 
+msgid "invalid numbers in 'quote'"
+msgstr ""
+
+msgid "invalid 'quote' specification"
+msgstr ""
+
+msgid "invalid 'row.names' specification"
+msgstr ""
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr ""
+
+msgid "'file' must be a character string or connection"
+msgstr ""
+
+msgid "appending column names to file"
+msgstr ""
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr ""
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr ""
 
@@ -47,7 +71,7 @@ msgstr ""
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr ""
 
-msgid "all can not be used with other deparse options"
+msgid "'all' can not be used with other deparse options"
 msgstr ""
 
 msgid "second argument must be a list"
@@ -167,7 +191,7 @@ msgstr ""
 msgid "not a valid restart specification"
 msgstr ""
 
-msgid "argument where of length 0"
+msgid "argument 'where' of length 0"
 msgstr ""
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
@@ -458,9 +482,6 @@ msgstr ""
 msgid "'to' must be a POSIXt object"
 msgstr ""
 
-msgid "'file' must be a character string or connection"
-msgstr ""
-
 msgid "'x' must be a square matrix"
 msgstr ""
 
@@ -569,9 +590,6 @@ msgstr ""
 msgid "'vec' must be sorted non-decreasingly"
 msgstr ""
 
-msgid "format.char: coercing 'x' to 'character'"
-msgstr ""
-
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr ""
 
@@ -654,6 +672,9 @@ msgid "there is no package called '%s', version %s"
 msgstr ""
 
 msgid "there is no package called '%s'"
+msgstr ""
+
+msgid "no library trees found in 'lib.loc'"
 msgstr ""
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
@@ -768,9 +789,6 @@ msgid "'file' must be non-empty string"
 msgstr ""
 
 msgid "can only save to a binary connection"
-msgstr ""
-
-msgid "`file' must be non-empty string"
 msgstr ""
 
 msgid "image could not be renamed and is left in"
@@ -1028,9 +1046,6 @@ msgstr ""
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr ""
 
-msgid "invalid 'row.names' specification"
-msgstr ""
-
 msgid "'x' must be a vector"
 msgstr ""
 
@@ -1133,6 +1148,12 @@ msgstr ""
 msgid "unable to find a plausible encoding"
 msgstr ""
 
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
+
 msgid "'%s' is not an existing file"
 msgstr ""
 
@@ -1214,16 +1235,7 @@ msgstr ""
 msgid "argument to 'which' is not logical"
 msgstr ""
 
-msgid "invalid numbers in 'quote'"
-msgstr ""
-
-msgid "invalid 'quote' specification"
-msgstr ""
-
-msgid "invalid 'col.names' specification"
-msgstr ""
-
-msgid "appending column names to file"
+msgid "attempt to change '%s' ignored"
 msgstr ""
 
 msgid "invalid 'digits'"

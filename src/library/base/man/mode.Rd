@@ -25,9 +25,13 @@ storage.mode(x) <- value
   below.
 
   The two assignment versions are currently identical.  Both
-  \code{mode(x) <- newmode} and \code{storage.mode(x) <- newmode} change
+  \code{mode(x) <- "newmode"} and \code{storage.mode(x) <- "newmode"} change
   the \code{mode} or \code{storage.mode} of object \code{x} to
-  \code{newmode}.
+  \code{newmode}.  This is only supported if there is an appropriate
+  \code{as.newmode} function, for example
+  \code{"logical"}, \code{"integer"}, \code{"double"}, \code{"complex"},
+  \code{"raw"}, \code{"character"}, \code{"list"}, \code{"expression"},
+  \code{"name"}, \code{"symbol"} and \code{"function"}.
 
   As storage mode \code{"single"} is only a pseudo-mode in \R, it will
   not be reported by \code{mode} or \code{storage.mode}: use
@@ -39,6 +43,18 @@ storage.mode(x) <- value
 
   Note (in the examples below) that some \code{\link{call}}s have mode
   \code{"("} which is S compatible.
+}
+\section{Mode names}{
+  Modes have the same set of names as types (see \code{\link{typeof}})
+  except that
+  \itemize{
+    \item types \code{"integer"} and \code{"double"} are
+    returned as \code{"numeric"}.
+    \item types \code{"special"} and \code{"builtin"} are returned as
+    \code{"function"}.
+    \item type \code{"symbol"} is called mode \code{"name"}.
+    \item type \code{"language"} is returned as \code{"("} or \code{"call"}.
+  }
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)

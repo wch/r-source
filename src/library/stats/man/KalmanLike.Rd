@@ -10,10 +10,10 @@
   forecasting or smoothing.
 }
 \usage{
-KalmanLike(y, mod, nit = 0)
-KalmanRun(y, mod, nit = 0)
+KalmanLike(y, mod, nit = 0, fast=TRUE)
+KalmanRun(y, mod, nit = 0, fast=TRUE)
 KalmanSmooth(y, mod, nit = 0)
-KalmanForecast(n.ahead = 10, mod)
+KalmanForecast(n.ahead = 10, mod, fast=TRUE)
 makeARIMA(phi, theta, Delta, kappa = 1e6)
 }
 \arguments{
@@ -30,6 +30,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
     fitted to \code{y[t] - Delta[1]*y[t-1] - \dots}.}
   \item{kappa}{the prior variance (as a multiple of the innovations
     variance) for the past observations in a differenced model.}
+  \item{fast}{If \code{TRUE} the \code{mod} object may be modified.}
 }
 \details{
   These functions work with a general univariate state-space model
@@ -87,7 +88,7 @@ makeARIMA(phi, theta, Delta, kappa = 1e6)
 
   In particular, \code{KalmanLike} alters the objects passed as
   the elements \code{a}, \code{P} and \code{Pn} of \code{mod}, so these
-  should not be shared.
+  should not be shared. Use \code{fast=FALSE} to prevent this.
 }
 
 \references{

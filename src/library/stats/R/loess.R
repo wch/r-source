@@ -178,7 +178,7 @@ simpleLoess <-
 		as.integer(nonparametric),
 		as.integer(order.drop.sqr),
 		as.integer(sum.drop.sqr),
-		as.integer(span*cell),
+		as.double(span*cell),
 		as.character(surf.stat),
 		temp = double(N),
 		parameter = integer(7),

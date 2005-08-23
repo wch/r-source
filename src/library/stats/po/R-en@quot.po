@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-09 10:58\n"
-"PO-Revision-Date: 2005-06-09 10:58\n"
+"POT-Creation-Date: 2005-08-15 11:45\n"
+"PO-Revision-Date: 2005-08-15 11:45\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -670,6 +670,9 @@ msgstr "bad value for ‘lag’ or ‘differences’"
 msgid "'xi' has not the right length"
 msgstr "‘xi’ has not the right length"
 
+msgid "incorrect dimensions for 'xi'"
+msgstr "incorrect dimensions for ‘xi’"
+
 msgid "'x' is not a vector or matrix"
 msgstr "‘x’ is not a vector or matrix"
 
@@ -1089,9 +1092,6 @@ msgstr "invalid parameter values"
 msgid "a limit is missing"
 msgstr "a limit is missing"
 
-msgid "'m' is negative"
-msgstr "‘m’ is negative"
-
 msgid "'r' is less than 1"
 msgstr "‘r’ is less than 1"
 
@@ -1100,6 +1100,9 @@ msgstr "‘m’ is less than 1"
 
 msgid "'r' is less than 0"
 msgstr "‘r’ is less than 0"
+
+msgid "'m' must be numeric with non-negative integers"
+msgstr "‘m’ must be numeric with non-negative integers"
 
 msgid "unknown named kernel"
 msgstr "unknown named kernel"
@@ -1273,9 +1276,6 @@ msgstr "first argument must be a “loess” object"
 msgid "'newdata' does not contain the variables needed"
 msgstr "‘newdata’ does not contain the variables needed"
 
-msgid "need response in formula"
-msgstr "need response in formula"
-
 msgid "no models to compare"
 msgstr "no models to compare"
 
@@ -1368,9 +1368,6 @@ msgstr "‘mlm’ objects with weights are not supported"
 
 msgid "X does not define a subspace of M"
 msgstr "X does not define a subspace of M"
-
-msgid "one-argument anova() not implemented for 'mlm' objects"
-msgstr "one-argument anova() not implemented for ‘mlm’ objects"
 
 msgid "residuals have rank"
 msgstr "residuals have rank"
@@ -1469,6 +1466,12 @@ msgstr "_NOT_ converged in"
 
 msgid "control argument must be a named list"
 msgstr "control argument must be a named list"
+
+msgid "unrecognized control element(s) named `"
+msgstr "unrecognized control element(s) named `"
+
+msgid "' ignored"
+msgstr "' ignored"
 
 msgid "Logical `hessian' argument not allowed.  See documentation."
 msgstr "Logical ‘hessian’ argument not allowed.  See documentation."
@@ -1695,6 +1698,9 @@ msgstr "some constant variables (%s) are really varying"
 msgid "no 'time' or 'id' specified"
 msgstr "no ‘time’ or ‘id’ specified"
 
+msgid "'k' must be positive"
+msgstr "‘k’ must be positive"
+
 msgid "'k' must be odd!  Changing 'k' to"
 msgstr "‘k’ must be odd!  Changing ‘k’ to"
 
@@ -1763,6 +1769,9 @@ msgstr "setting df = 1  __use with care!__"
 
 msgid "need result of smooth.spline(*, keep.data=TRUE)"
 msgstr "need result of smooth.spline(*, keep.data=TRUE)"
+
+msgid "type = \"partial\" is not yet implemented"
+msgstr "type = “partial” is not yet implemented"
 
 msgid "not a valid \"smooth.spline\" object"
 msgstr "not a valid “smooth.spline” object"
@@ -2001,6 +2010,9 @@ msgstr "cannot compute exact p-value with zeroes"
 
 msgid "cannot compute exact confidence interval with zeroes"
 msgstr "cannot compute exact confidence interval with zeroes"
+
+msgid "must supply either 'formula' or 'data'"
+msgstr "must supply either ‘formula’ or ‘data’"
 
 msgid "too few distinct input values to fit an asymptotic regression model"
 msgstr "too few distinct input values to fit an asymptotic regression model"

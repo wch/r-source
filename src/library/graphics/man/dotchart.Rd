@@ -27,7 +27,8 @@ dotchart(x, labels = NULL, groups = NULL, gdata = NULL,
     of each group.}
   \item{cex}{the character size to be used.  Setting \code{cex}
     to a value smaller than one can be a useful way of avoiding label
-    overlap.}
+    overlap.  Unlike many other graphics functions, this sets the actual
+    size, not a multiplet of \code{par("cex")}.}
   \item{pch}{the plotting character or symbol to be used.}
   \item{gpch}{the plotting character or symbol to be used for group
     values.}

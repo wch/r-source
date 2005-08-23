@@ -138,7 +138,8 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(alpha) || ISNAN(scale))
 	return p + alpha + scale;
 #endif
-    R_Q_P01_check(p);
+    R_Q_P01_boundaries(p, 0., ML_POSINF);
+
     if (alpha <= 0) ML_ERR_return_NAN;
 
     p_ = R_DT_qIv(p);/* lower_tail prob (in any case) */
@@ -183,7 +184,7 @@ double qgamma(double p, double alpha, double scale, int lower_tail, int log_p)
     for(i=1; i <= MAXIT; i++ ) {
 	q = ch;
 	p1 = 0.5*ch;
-	p2 = p_ - pgamma(p1, alpha, 1, /*lower_tail*/TRUE, /*log_p*/FALSE);
+	p2 = p_ - pgamma_raw(p1, alpha, /*lower_tail*/TRUE, /*log_p*/FALSE);
 #ifdef DEBUG_qgamma
 	if(i == 1) REprintf(" Ph.II iter; ch=%g, p2=%g\n", ch, p2);
 	if(i >= 2) REprintf("     it=%d,  ch=%g, p2=%g\n", i, p2);

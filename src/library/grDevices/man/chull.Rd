@@ -40,9 +40,13 @@ chull(x, y = NULL)
 
 \examples{
 X <- matrix(rnorm(2000), ncol = 2)
-plot(X, cex = 0.5)
-hpts <- chull(X)
-hpts <- c(hpts, hpts[1])
-lines(X[hpts, ])
+chull(X)
+\dontrun{
+  # Example usage from graphics package
+  plot(X, cex = 0.5)
+  hpts <- chull(X)
+  hpts <- c(hpts, hpts[1])
+  lines(X[hpts, ])
+}
 }
 \keyword{graphs}

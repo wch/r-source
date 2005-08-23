@@ -754,7 +754,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     else if (isFrame(data))
 	framenames = getAttrib(data, R_NamesSymbol);
     else
-	errorcall(call, _("data argument is of the wrong type"));
+	errorcall(call, _("'data' argument is of the wrong type"));
 
     if (framenames != R_NilValue)
 	if (length(CAR(args))== 3)
@@ -1565,7 +1565,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
 	nVar = nrows(factors);
 	nterms = ncols(factors);
     }
-    else errorcall(call, _("invalid 'terms' argument"));
+    else errorcall(call, _("invalid '%s' argument"), "terms");
 
     /* Get the variable names from the factor matrix */
 
@@ -1573,7 +1573,7 @@ SEXP do_modelmatrix(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (length(factors) > 0) {
 	if (length(vnames) < 1 ||
 	    (nVar - intrcept > 0 && !isString(VECTOR_ELT(vnames, 0))))
-	    errorcall(call, _("invalid 'terms' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "terms");
 	vnames = VECTOR_ELT(vnames, 0);
     }
 

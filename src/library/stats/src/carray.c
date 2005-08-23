@@ -55,10 +55,9 @@ static Array init_array()
     return a;
 }
 
-long int vector_length(Array a)
+int vector_length(Array a)
 {
-    int i;
-    long len;
+    int i, len;
 
     for (i = 0, len = 1; i < DIM_LENGTH(a); i++) {
 	len *= DIM(a)[i];
@@ -71,7 +70,7 @@ long int vector_length(Array a)
 Array make_array(double vec[], int dim[], int ndim)
 {
     int d, i, j;
-    long len[MAX_DIM_LENGTH + 1];
+    int len[MAX_DIM_LENGTH + 1];
     Array a;
 
     assert(ndim <= MAX_DIM_LENGTH);
@@ -122,7 +121,7 @@ Array make_array(double vec[], int dim[], int ndim)
 Array make_zero_array(int dim[], int ndim)
 {
     int i;
-    long len;
+    int len;
     double *vec;
 
     for (i = 0, len = 1; i < ndim; i++) {
@@ -165,8 +164,7 @@ Array subarray(Array a, int index)
       subarray will affect the original array.
 */
 {
-    int i;
-    long offset;
+    int i, offset;
     Array b;
 
     b = init_array();

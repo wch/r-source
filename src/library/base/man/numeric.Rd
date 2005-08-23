@@ -31,13 +31,14 @@ is.numeric(x)
   \code{numeric} creates a real vector of the specified length.  The
   elements of the vector are all equal to \code{0}.
 
-  \code{as.numeric} attempts to coerce its argument to numeric type
+  \code{as.numeric} attempts to coerce its argument to a numeric \link{type}
   (either integer or real).
   \code{as.numeric} for factors yields the codes underlying the factor
-    levels, not the numeric representation of the labels.
-
-  \code{is.numeric} returns \code{TRUE} if its argument is of type numeric
-  or type integer and \code{FALSE} otherwise.
+  levels, not the numeric representation of the labels.
+    
+  \code{is.numeric} returns \code{TRUE} if its argument is of
+  \link{mode} \code{"numeric"} (\link{type} \code{"double"} or type
+  \code{"integer"}) and not a factor, and \code{FALSE} otherwise.
 }
 
 \note{

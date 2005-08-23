@@ -102,7 +102,7 @@ typedef unsigned int SEXPTYPE;
 #define WEAKREFSXP  23    /* weak reference */
 #define RAWSXP      24    /* raw bytes */
 
-#define FUNSXP      99    /* Closure or Builtin */
+#define FUNSXP      99    /* Closure or Builtin or Special */
 
 
 #else /* NOT YET */

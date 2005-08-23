@@ -80,7 +80,7 @@ rbind <- function(..., deparse.level=1) {
              call. = FALSE, domain = NA)
     if (any(opts == 6)) {
 	if (length(opts) != 1)
-	    stop("all can not be used with other deparse options",
+	    stop("'all' can not be used with other deparse options",
 	       	call. = FALSE)
 	else
 	    return(31)
@@ -103,7 +103,10 @@ do.call <- function(what,args,quote=FALSE) {
 }
 
 drop <- function(x).Internal(drop(x))
-format.info <- function(x, nsmall=0).Internal(format.info(x, nsmall))
+
+format.info <- function(x, digits=NULL, nsmall=0)
+    .Internal(format.info(x, digits, nsmall))
+
 gc <- function(verbose = getOption("verbose"),  reset=FALSE)
 {
     res <-.Internal(gc(verbose,reset))/c(1, 1, 10, 10, 1, 1, rep(10,4),rep(1,2),rep(10,2))
@@ -190,15 +193,16 @@ data.class <- function(x) {
 is.numeric.factor <- function(x) FALSE
 is.integer.factor <- function(x) FALSE
 
-encodeString <- function(x, w = 0, quote = "", na = TRUE,
-                         justify = c("left", "right", "centre"))
+encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
+                         justify = c("left", "right", "centre", "none"))
 {
     at <- attributes(x)
     x <- as.character(x) # we want e.g. NULL to work
     attributes(x) <- at  # preserve names, dim etc
     oldClass(x) <- NULL  # but not class
-    justify <- match(match.arg(justify), c("left", "right", "centre")) - 1
-    .Internal(encodeString(x, w, quote, justify, na))
+    justify <- match(match.arg(justify),
+                     c("left", "right", "centre", "none")) - 1
+    .Internal(encodeString(x, width, quote, justify, na.encode))
 }
 
 l10n_info <- function() .Internal(l10n_info())

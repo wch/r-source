@@ -82,6 +82,8 @@ x \%/\% y
   mathematical functions.
 
   \code{\link{Syntax}} for operator precedence.
+  
+  \code{\link{\%*\%}} for matrix multiplication.
 }
 \examples{
 x <- -1:12

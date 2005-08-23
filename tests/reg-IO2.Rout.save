@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-06-27 r34860)
+Version 2.2.0 Under development (unstable) (2005-08-02 r35106)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -212,13 +212,13 @@ logical(0)
 > writeLines(x, "test.dat")
 > readLines("test.dat")
 [1] "1 2 3 \\ab\\c"
-> scan("test.dat", "")
+> scan("test.dat", "", allowEscapes=TRUE)
 Read 4 items
 [1] "1"    "2"    "3"    "\abc"
 > scan("test.dat", "", allowEscapes=FALSE)
 Read 4 items
 [1] "1"       "2"       "3"       "\\ab\\c"
-> read.table("test.dat", header=FALSE)
+> read.table("test.dat", header=FALSE, allowEscapes=TRUE)
   V1 V2 V3   V4
 1  1  2  3 \abc
 > read.table("test.dat", header=FALSE, allowEscapes=FALSE)

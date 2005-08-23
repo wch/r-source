@@ -6,37 +6,44 @@
 \alias{monthplot.StructTS}
 
 \title{
-  Plot a Seasonal or other Subseries
+  Plot a Seasonal or other Subseries from a Time Series
 }
 \description{
   These functions plot seasonal (or other) subseries of a time series.
   For each season (or other category), a time series is plotted.
 }
-\synopsis{
-monthplot(x, \dots)
-monthplot.StructTS(x, labels = NULL, ylab = choice, choice = "sea", \dots)
-monthplot.stl(x, labels = NULL, ylab = choice, choice = "seasonal", \dots)
-monthplot.ts(x, labels = NULL, times = time(x), phase = cycle(x),
-             ylab = deparse(substitute(x)), \dots)
-monthplot.default(x, labels = 1:12,
-              times = 1:length(x),
-              phase = (times - 1)\%\%length(labels) + 1,
-              base = mean,
-              xlim = c(0.55, f + 0.45), ylim = range(x, na.rm = TRUE),
-              axes = TRUE, xlab = "", ylab = deparse(substitute(x)),
-              type = "l", box = TRUE, add = FALSE, \dots)
-}
 \usage{
-monthplot(x, labels = NULL, times, phase, base, choice, \ldots)
+monthplot(x, \dots)
+
+\method{monthplot}{stl}(x, labels = NULL, ylab = choice, choice = "seasonal", \dots)
+
+\method{monthplot}{StructTS}(x, labels = NULL, ylab = choice, choice = "sea", \dots)
+
+\method{monthplot}{ts}(x, labels = NULL, times = time(x), phase = cycle(x),
+             ylab = deparse(substitute(x)), \dots)
+
+\method{monthplot}{default}(x, labels = 1:12,
+          ylab = deparse(substitute(x)),
+          times = 1:length(x),
+          phase = (times - 1)\%\%length(labels) + 1, base = mean,
+          axes = TRUE, type = c("l", "h"), box = TRUE, add = FALSE,
+          \dots)
 }
 \arguments{
   \item{x}{Time series or related object.}
   \item{labels}{Labels to use for each \dQuote{season}.}
+  \item{ylab}{y label.}
   \item{times}{Time of each observation.}
   \item{phase}{Indicator for each \dQuote{season}.}
   \item{base}{Function to use for reference line for subseries.}
   \item{choice}{Which series of an \code{stl} or \code{StructTS} object?}
-  \item{\dots}{Graphical parameters.}
+  \item{\dots}{Arguments to be passed to the default method or
+    graphical parameters.}
+  \item{axes}{Should axes be drawn (ignored if \code{add=TRUE})?}
+  \item{type}{Type of plot.  The default is to join the points with
+    lines, and \code{"h"} is for histogram-like vertical lines.}
+  \item{box}{Should a box be drawn (ignored if \code{add=TRUE}?}
+  \item{add}{Should thus just add on an existing plot.}
 }
 \details{
   These functions extract subseries from a time series and plot them

@@ -29,7 +29,10 @@ mtext(text, side = 3, line = 0, outer = FALSE, at = NA,
     perpendicular to the axis the default is to centre the string.}
   \item{\dots}{Further graphical parameters (see \code{\link{text}} and
     \code{\link{par}}) ; currently supported are:}
-  \item{cex}{character expansion factor (default = 1).}
+  \item{cex}{character expansion factor.  \code{NULL} and \code{NA}
+    are equivalent to \code{1.0}.  This is an absolute measure, not
+    scaled by \code{par("cex")} or by setting \code{par("mfrow")}
+    or \code{par("mfcol")}.}
   \item{col}{color to use.}
   \item{font}{font for text.}
   \item{vfont}{vector font for text.}

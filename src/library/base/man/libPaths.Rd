@@ -21,7 +21,7 @@
   \code{.libPaths} is used for getting or setting the library trees that
   \R knows about (and hence uses when looking for packages).  If called
   with argument \code{new}, the library search path is set to
-  the existing files in \code{unique(new, .Library)} and this is
+  the existing files in \code{unique(c(new, .Library))} and this is
   returned.  If given no argument, a character vector with the currently
   known library trees is returned.
 

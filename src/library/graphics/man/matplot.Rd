@@ -44,7 +44,9 @@ matlines (x, y, type = "l", lty = 1:5, lwd = 1, pch = NULL,
 %  \code{pch=c(88,2)}.
   }
   \item{col}{vector of colors.  Colors are used cyclically.}
-  \item{cex}{vector of character expansion sizes, used cyclically.}
+  \item{cex}{vector of character expansion sizes, used cyclically.
+    This works as a multiple of \code{\link{par}("cex")}.  \code{NULL} is
+    equivalent to \code{1.0}. }
   \item{xlab, ylab}{titles for x and y axes, as in \code{\link{plot}}.}
   \item{xlim, ylim}{ranges of x and y axes, as in \code{\link{plot}}.}
   \item{\dots}{Graphical parameters (see \code{\link{par}}) and any further

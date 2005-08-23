@@ -45,7 +45,7 @@ is.integer(x)
   Like \code{\link{as.vector}} it strips attributes including names.
 
   \code{is.integer} returns \code{TRUE} or \code{FALSE} depending on
-  whether its argument is of integer type or not.
+  whether its argument is of integer \link{type} or not.
   \code{is.integer} is generic: you can write methods to handle
   specific classes of objects, see \link{InternalMethods}.
   There is a method for factors which returns \code{FALSE}.

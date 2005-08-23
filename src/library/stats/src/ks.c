@@ -1,13 +1,17 @@
 /* ks.c
    Compute the asymptotic distribution of the one- and two-sample
-   two-sided Kolmogorov-Smirnov statistics, and the exact distribution
-   in the two-sided two-sample case.
-   */
+   two-sided Kolmogorov-Smirnov statistics, and the exact distributions
+   in the two-sided one-sample and two-sample cases.
+*/
 
 #include <R.h>
 #include <Rmath.h>		/* constants */
 
 #include "ctest.h"
+
+static double K(int n, double d);
+static void m_multiply(double *A, double *B, double *C, int m);
+static void m_power(double *A, int eA, double *V, int *eV, int m, int n);
 
 void
 pkstwo(Sint *n, double *x, double *tol)
@@ -95,4 +99,116 @@ psmirnov2x(double *x, Sint *m, Sint *n)
 	}
     }
     *x = u[*n];
+}
+
+void
+pkolmogorov2x(double *x, Sint *n)
+{
+    /* x is input and output. */
+
+    *x = K(*n, *x);
+}
+    
+static double
+K(int n, double d)
+{
+    /* Compute Kolmogorov's distribution.
+       Code published in
+         George Marsaglia and Wai Wan Tsang and Jingbo Wang (2003),
+	 "Evaluating Kolmogorov's distribution".
+	 Journal of Statistical Software, Volume 8, 2003, Issue 18.
+	 URL: http://www.jstatsoft.org/v08/i18/.
+    */
+    
+   int k, m, i, j, g, eH, eQ;
+   double h, s, *H, *Q;
+
+   k = (int) (n * d) + 1;
+   m = 2 * k - 1;
+   h = k - n * d;
+   H = (double*) Calloc(m * m, double);
+   Q = (double*) Calloc(m * m, double);
+   for(i = 0; i < m; i++)
+       for(j = 0; j < m; j++)
+           if(i - j + 1 < 0)
+	       H[i * m + j] = 0;
+	   else
+	       H[i * m + j] = 1;
+   for(i = 0; i < m; i++) {
+       H[i * m] -= pow(h, i + 1);
+       H[(m - 1) * m + i] -= pow(h, (m - i));
+   }
+   H[(m - 1) * m] += ((2 * h - 1 > 0) ? pow(2 * h - 1, m) : 0);
+   for(i = 0; i < m; i++)
+       for(j=0; j < m; j++)
+	   if(i - j + 1 > 0)
+	       for(g = 1; g <= i - j + 1; g++)
+		   H[i * m + j] /= g;
+   eH = 0;
+   m_power(H, eH, Q, &eQ, m, n);
+   s = Q[(k - 1) * m + k - 1];
+   for(i = 1; i <= n; i++) {
+       s = s * i / n;
+       if(s < 1e-140) {
+	   s *= 1e140;
+	   eQ -= 140;
+       }
+   }
+   s *= pow(10., eQ);
+   Free(H);
+   Free(Q);
+   return(s);
+}
+
+static void
+m_multiply(double *A, double *B, double *C, int m)
+{
+    /* Auxiliary routine used by K().
+       Matrix multiplication.
+    */
+    int i, j, k;
+    double s;
+    for(i = 0; i < m; i++)
+	for(j = 0; j < m; j++) {
+	    s = 0.;
+	    for(k = 0; k < m; k++)
+		s+= A[i * m + k] * B[k * m + j];
+	    C[i * m + j] = s;
+	}
+}
+
+static void
+m_power(double *A, int eA, double *V, int *eV, int m, int n)
+{
+    /* Auxiliary routine used by K().
+       Matrix power.
+    */
+    double *B;
+    int eB , i;
+
+    if(n == 1) {
+        for(i = 0; i < m * m; i++)
+	    V[i] = A[i];
+        *eV = eA;
+        return;
+    }
+    m_power(A, eA, V, eV, m, n / 2);
+    B = (double*) Calloc(m * m, double);
+    m_multiply(V, V, B, m);
+    eB = 2 * (*eV);
+    if((n % 2) == 0) {
+	for(i = 0; i < m * m; i++)
+	    V[i] = B[i];
+	*eV = eB;
+    }
+    else {
+	m_multiply(A, B, V, m);
+	*eV = eA + eB;
+    }
+    if(V[(m / 2) * m + (m / 2)] > 1e140) {
+	for(i = 0; i < m * m; i++)
+	    V[i] = V[i] * 1e-140;
+	*eV += 140;
+    }
+    Free(B);
 }

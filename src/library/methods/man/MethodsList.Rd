@@ -105,19 +105,26 @@ loadMethod(method, fname, envir)
       Prints the contents of the MethodsList.  If \code{includeDefs} the
       signatures and the corresonding definitions will be printed;
       otherwise, only the signatures.
-
-      The function calls itself recursively: \code{prev} is the
-      previously selected classes.
     }
 
-    \item{\code{listFromMlistForPrint}:}{
+    \item{\code{listFromMlist}:}{
       Undo the recursive nature of the methods list, making a list of
-      function defintions, with the names of the list being the
-      corresponding signatures (designed for printing; for looping over
-      the methods, use \code{\link{listFromMlist}} instead).
+      function definitions, with the names of the list being the
+      corresponding signatures
+      \code{prefix} is the partial signature (a named list of classes)
+      to be prepended to the signatures in this object.
 
-      The function calls itself recursively: \code{prev} is the
-      previously selected classes.
+      A utility function used to iterate over all the individual methods
+      in the object, it calls itself recursively.
+    }
+
+    \item{\code{linearizeMlist}:}{
+      Undo the recursive nature of the methods list, making a list of
+      function definitions, with the names of the list being the
+      corresponding signatures.
+
+      Designed for printing; for looping over the methods, use the above
+      \code{listFromMlist} instead.
     }
 
     \item{\code{finalDefaultMethod}:}{

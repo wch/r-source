@@ -184,16 +184,6 @@ colnames(m0, do.NULL = FALSE)
 ## end of moved from colnames.Rd
 
 
-## complex
-z <- 0i ^ (-3:3)
-stopifnot(Re(z) == 0 ^ (-3:3))
-set.seed(123)
-z <- complex(real = rnorm(100), imag = rnorm(100))
-stopifnot(Mod ( 1 -  sin(z) / ( (exp(1i*z)-exp(-1i*z))/(2*1i) ))
-	  < 20 * .Machine$double.eps)
-## end of moved from complex.Rd
-
-
 ## Constants
 stopifnot(
  nchar(letters) == 1,
@@ -3600,11 +3590,6 @@ colSums(x); rowSums(x)
 ## not allowed in 2.0.1
 
 
-## PR#7781
-stopifnot(is.finite(tan(1+1000i)))
-##
-
-
 ## infinite recursion in 2.0.1 (and R-beta 2005-04-11):
 summary(data.frame(mat = I(matrix(1:8, 2))))
 summary(data.frame(x = gl(2,2), I(matrix(1:8, 4))))
@@ -3627,9 +3612,11 @@ as.data.frame(FUN(x1[1:3,,], x2 = c("a", "b"),
                   x3 = c("a", "b"), x4 = c("a", "b")))
 ## failed in 2.1.0
 
+
 ## PR#7797 citation() chops "Roeland "
 stopifnot(as.personList("Roeland Lastname")[[1]]$name[1] == "Roeland")
 ## was empty in 2.1.0.
+
 
 ## runmed()'s Turlach algorithm seg.faulted in rare cases:
 t2 <- c(-2,-7,5,2,-3, 0,1,3,2,-1,2,1,2,1,1,1,-2,4, 1,1,1, 32)
@@ -3638,11 +3625,13 @@ rT <- runmed(t2, k=21, algorithm= "Turlach")
 stopifnot(identical(rS, rT))
 ## seg.fault in 2.1.0
 
+
 ## duplicated and unique on a list
 x <- list(1, 2, 3, 2)
 duplicated(x)
 unique(x)
 ## unique failed in 2.1.0
+
 
 ## prog.aovlist on data with row.names
 N <- c(0,1,0,1,1,1,0,0,0,1,1,0,1,1,0,0,1,0,1,0,1,1,0,0)
@@ -3657,12 +3646,53 @@ npk.aovE <- aov(yield ~  N*P*K + Error(block), npk)
 pr <- proj(npk.aovE)
 ## failed in 2.1.0
 
+
 ## PR#7894: Reversing axis in a log plot
 x <- 1:3
 plot(x, exp(x), log = "y", ylim = c(30,1))
 ## gave error (and warning) in  log - axis(), 'at' creation
 
 ### end of tests added in 2.1.0 patched ###
+
+
+## Multibyte character set regular expressions had buffer overrun
+regexpr("[a-z]", NA)
+## crashed on 2.1.1 on Windows in MBCS build.
+
+
+## PR#8033: density with 'Inf' in x:
+d <- density(1/0:2, kern = "rect", bw=1, from=0, to=1, n=2)
+stopifnot(all.equal(rep(1/sqrt(27), 2), d$y, tol=1e-14))
+## failed in R 2.1.1 (since about 1.9.0)
+
+stopifnot(all.equal(Arg(-1), pi))
+## failed in R <= 2.1.1
+
+
+## PR#7973: reversed log-scaled axis
+plot(1:100, log="y", ylim=c(100,10))
+stopifnot(axTicks(2) == 10*c(1,2,5,10))
+## empty < 2.2.0
+
+
+## rounding errors in window.default (reported by Stefano Iacus)
+x <- ts(rnorm(50001), start=0, deltat=0.1)
+length(window(x, deltat=0.4))
+length(window(x, deltat=1))
+length(window(x, deltat=4.9))
+length(window(x, deltat=5))
+## last failed in 2.1.1
+
+
+## incorrect sort in order with na.last != NA
+x <- c("5","6",NA,"4",NA)
+y <- x[order(x,na.last=FALSE)]
+stopifnot(identical(y, c(NA, NA, "4", "5", "6")))
+## 2.1.1 sorted "4" first: the fence was wrong.
+
+
+### end of tests added in 2.1.1 patched ###
+
 
 
 ## tests of hexadecimal constants
@@ -3687,3 +3717,79 @@ unlink("x.Rda")
 ## 00 00 00 00 00 in 2.1.0 on MacOS X
 ## fixed for 2.1.1, but test added only in 2.2.x
 
+
+## PR#7922:  Could not use expression() as an initial expression value
+setClass("test2", representation(bar = "expression"))
+new("test2", bar = expression())
+## failed
+
+
+## Ops.data.frame had the default check.names=TRUE
+DF <- data.frame("100"=1:2, "200"=3:4, check.names=FALSE)
+DF/DF
+stopifnot(identical(names(DF), names(DF/DF)))
+## DF/DF names had X prepended < 2.2.0
+
+
+## sum(T) was double
+x <- 1:10
+stopifnot(typeof(sum(x)) == "integer")
+x <- c(TRUE, FALSE)
+stopifnot(typeof(sum(x)) == "integer")
+## double < 2.2.0
+
+
+## Overflow in PrintGenericVector
+x <- paste(1:5000, collapse="+")
+as.matrix(list(a=1:2, b=2:3, c=x))
+## segfault in 2.1.1, silent truncation in 2.1.1 patched
+
+
+## weighted.residuals for glm fits (PR#7961)
+set.seed(1)
+x <- runif(10)
+y <- x + rnorm(10)
+w <- 0:9
+r1 <- weighted.residuals(lm(y ~ x, weights = w))
+r2 <- weighted.residuals(glm(y ~ x, weights = w))
+stopifnot(all.equal(r1, r2))
+## different in 2.1.1
+
+
+## errors in add1.{lm,glm} when adding vars with missing values(PR#8049)
+set.seed(2)
+y <- rnorm(10)
+x <- 1:10
+is.na(x[9]) <- TRUE
+
+lm0 <- lm(y ~ 1)
+lm1 <- lm(y ~ 1, weights = rep(1, 10))
+
+add1(lm0, scope = ~ x)
+add1(lm1, scope = ~ x)  ## error in 2.1.1
+
+glm0 <- glm(y ~ 1)
+glm1 <- glm(y ~ 1, weights = rep(1, 10))
+glm2 <- glm(y ~ 1, offset = rep(0, 10))
+
+add1(glm0, scope = ~ x)  ## error in 2.1.1
+add1(glm1, scope = ~ x)  ## error in 2.1.1
+add1(glm2, scope = ~ x)  ## error in 2.1.1
+##
+
+
+## levels<-.factor dropped other attributes.
+## Heinz Tuechler, R-help, 2005-07-18
+f1 <- factor(c("level c", "level b", "level a", "level c"), ordered=TRUE)
+attr(f1, "testattribute") <- "teststring"
+(old <- attributes(f1))
+levels(f1) <- c("L-A", "L-B", "L-C")
+f1
+(new <- attributes(f1))
+new$levels <- old$levels <- NULL
+stopifnot(identical(old, new))
+f2 <- factor(letters[1:4])
+levels(f2) <- as.character(c(1:3, NA))
+f2
+stopifnot(nlevels(f2) == 3)
+## dropped other attributes < 2.2.0.

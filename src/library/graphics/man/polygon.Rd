@@ -5,11 +5,6 @@
   \code{polygon} draws the polygons whose vertices are
   given in \code{x} and \code{y}.
 }
-\synopsis{
-polygon(x, y = NULL, density = NULL, angle = 45,
-        border = NULL, col = NA, lty = NULL, xpd = NULL,
-        ..debug.hatch = FALSE, \dots)
-}
 \usage{
 polygon(x, y = NULL, density = NULL, angle = 45,
         border = NULL, col = NA, lty = NULL, xpd = NULL, \dots)
@@ -44,7 +39,7 @@ polygon(x, y = NULL, density = NULL, angle = 45,
   (a list with \code{x} and \code{y} components), a two-column matrix,
   \dots.  See \code{\link{xy.coords}}.
 
-  It is assumed that the polygon is closed by joining the last point to
+  It is assumed that the polygon is to be closed by joining the last point to
   the first point.
  
   The coordinates can contain missing values.  The behaviour is similar

@@ -137,7 +137,9 @@ static void editorsaveas(editor c) {
     textbox t = getdata(c);
     EditorData p = getdata(t);
     char *current_name = (p->file ? p->filename : "");
-    char *name = askfilesave("Save script as", current_name);
+    char *name;
+    setuserfilter("R files (*.R)\0*.R\0S files (*.q)\0*.q\0All files (*.*)\0*.*\0\0");
+    name = askfilesave("Save script as", current_name);
     if (name == NULL)
 	return;
     else {
@@ -338,6 +340,9 @@ void menueditoropen(control m)
 {
     editor c = getdata(m);
     char *default_name = "";
+    /* It really is not clear what is meant here: seems to assume an 
+       editor window but is called from elsewhere, hopefully with NULL 
+       (since 2.1.1 patched). */
     if (c) {
 	textbox t = getdata(c);
 	EditorData p = getdata(t);
@@ -675,9 +680,9 @@ static editor neweditor()
     MCHECK(m = newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem(G_("Close script"), 0, menueditorclose));
     setdata(m, c);
-    MCHECK(m = newmenuitem("-", 0, NULL));
+    /* MCHECK(m = newmenuitem("-", 0, NULL));
     MCHECK(m = newmenuitem(G_("Exit"), 0, closeconsole));
-    setdata(m, c);
+    setdata(m, c); */
     MCHECK(newmenu(G_("Edit")));
     MCHECK(m = newmenuitem(G_("Undo"), 'Z', editorundo));
     setdata(m, t);

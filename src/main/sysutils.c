@@ -140,7 +140,7 @@ SEXP do_tempfile(SEXP call, SEXP op, SEXP args, SEXP env)
     if (!isString(pattern))
         errorcall(call, _("invalid filename pattern"));
     if (!isString(tempdir))
-        errorcall(call, _("invalid 'tempdir'"));
+        errorcall(call, _("invalid '%s' value"), "tempdir");
     if (n1 < 1)
 	errorcall(call, _("no 'pattern'"));
     if (n2 < 1)
@@ -387,11 +387,11 @@ SEXP do_iconv(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(TYPEOF(x) != STRSXP)
 	    errorcall(call, _("'x' must be a character vector"));
 	if(!isString(CADR(args)) || length(CADR(args)) != 1)
-	    errorcall(call, _("invalid 'from' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "from");
 	if(!isString(CADDR(args)) || length(CADDR(args)) != 1)
-	    errorcall(call, _("invalid 'to' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "to");
 	if(!isString(CADDDR(args)) || length(CADDDR(args)) != 1)
-	    errorcall(call, _("invalid 'sub' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "sub");
 	if(STRING_ELT(CADDDR(args), 0) == NA_STRING) sub = NULL;
 	else sub = CHAR(STRING_ELT(CADDDR(args), 0));
 

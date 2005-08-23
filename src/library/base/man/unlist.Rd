@@ -11,9 +11,9 @@ unlist(x, recursive = TRUE, use.names = TRUE)
 \alias{unlist}
 \arguments{
   \item{x}{A list or vector.}
-  \item{recursive}{logical. Should unlisting be applied to list
+  \item{recursive}{logical.  Should unlisting be applied to list
     components of \code{x}?}
-  \item{use.names}{logical. Should names be preserved?}
+  \item{use.names}{logical.  Should names be preserved?}
 }
 \details{
   \code{unlist} is generic: you can write methods to handle
@@ -30,14 +30,16 @@ unlist(x, recursive = TRUE, use.names = TRUE)
   If \code{use.names = FALSE} all naming information is dropped.
 
   Where possible the list elements are coerced to a common mode during
-  the unlisting, and so the result often ends up as a character vector.
+  the unlisting, and so the result often ends up as a character
+  vector.  Raw and logical vectors can be coerced to integer, integer to
+  double, double to complex and any other atomic mode to character.
 
   A list is a (generic) vector, and the simplified vector might still be
   a list (and might be unchanged).  Non-vector elements of the list
   (for example language elements such as names, formulas and calls)
   are not coerced, and so a list containing one or more of these remains a
   list.  (The effect of unlisting an \code{\link{lm}} fit is a list which
-  has individual residuals as components,)
+  has individual residuals as components.)
 }
 \value{
   A vector of an appropriate mode to hold the list components.

@@ -10,7 +10,7 @@ This file is #included in the compilation of pcre.c to build the default
 character tables which are used when no tables are passed to the compile
 function. */
 
-static unsigned char pcre_default_tables[] = {
+unsigned char pcre_default_tables[] = {
 
 /* This table is a lower casing table. */
 

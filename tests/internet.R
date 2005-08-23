@@ -10,10 +10,8 @@ if(!capabilities()["http/ftp"]) {
 if(.Platform$OS.type == "unix" &&
    is.null(nsl("cran.r-project.org"))) q()
 
-options(repos="http://cran.r-project.org")
-
 # test do_download.
-nrow(CRAN.packages())
+nrow(available.packages(contrib.url("http://cran.r-project.org")))
 
 # test url connections on http
 zz <- url("http://cran.r-project.org/")
@@ -28,8 +26,8 @@ try(zz <- url("http://foo.bar", "r"))
 read.table("http://www.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
 read.table("ftp://ftp.stats.ox.ac.uk/pub/datasets/csb/ch11b.dat")
 
-
-if(!capabilities()["sockets"]) stop("no socket capabilities")
+## everything from here on is directly over sockets
+if(!capabilities("sockets")) stop("no socket capabilities")
 
 # do the same thing via sockets (cut-down httpclient)
 httpget <- function (url, port = 80)

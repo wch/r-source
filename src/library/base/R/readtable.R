@@ -25,7 +25,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
          nrows = -1, skip = 0,
          check.names = TRUE, fill = !blank.lines.skip,
          strip.white = FALSE, blank.lines.skip = TRUE,
-         comment.char = "#", allowEscapes = TRUE)
+         comment.char = "#", allowEscapes = FALSE)
 {
     if(is.character(file)) {
         file <- file(file, "r")

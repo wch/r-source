@@ -6,6 +6,7 @@
 \alias{as.matrix.dist}
 \alias{as.dist}
 \alias{as.dist.default}
+\concept{dissimilarity}
 \title{Distance Matrix Computation}
 \description{
   This function computes and returns the distance matrix computed by

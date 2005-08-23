@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996	Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1998--2004	The R Development Core Team.
+ *  Copyright (C) 1998--2005	The R Development Core Team.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -210,7 +210,7 @@ static void R_InitProfiling(char * filename, int append, double dinterval)
     if(R_ProfileOutfile != NULL) R_EndProfiling();
     R_ProfileOutfile = fopen(filename, append ? "a" : "w");
     if (R_ProfileOutfile == NULL)
-	error(_("Rprof: can't open profile file '%s'"), filename);
+	error(_("Rprof: cannot open profile file '%s'"), filename);
     fprintf(R_ProfileOutfile, "sample.interval=%d\n", interval);
 
 #ifdef Win32
@@ -249,7 +249,7 @@ SEXP do_Rprof(SEXP call, SEXP op, SEXP args, SEXP rho)
 #endif
     checkArity(op, args);
     if (!isString(CAR(args)) || (LENGTH(CAR(args))) != 1)
-	errorcall(call, _("invalid 'filename' argument"));
+	errorcall(call, _("invalid '%s' argument"), "filename");
     append_mode = asLogical(CADR(args));
     dinterval = asReal(CADDR(args));
     filename = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
@@ -329,13 +329,13 @@ _("evaluation nested too deeply: infinite recursion / options(expressions=)?"));
     case SYMSXP:
 	R_Visible = 1;
 	if (e == R_DotsSymbol)
-	    error(_("... used in an incorrect context"));
+	    error(_("'...' used in an incorrect context"));
 	if( DDVAL(e) )
 		tmp = ddfindVar(e,rho);
 	else
 		tmp = findVar(e, rho);
 	if (tmp == R_UnboundValue)
-	    error(_("Object \"%s\" not found"), CHAR(PRINTNAME(e)));
+	    error(_("object \"%s\" not found"), CHAR(PRINTNAME(e)));
 	/* if ..d is missing then ddfindVar will signal */
 	else if (tmp == R_MissingArg && !DDVAL(e) ) {
 	    char *n = CHAR(PRINTNAME(e));
@@ -422,7 +422,7 @@ _("evaluation nested too deeply: infinite recursion / options(expressions=)?"));
 	UNPROTECT(1);
 	break;
     case DOTSXP:
-	error(_("... used in an incorrect context"));
+	error(_("'...' used in an incorrect context"));
     default:
 	UNIMPLEMENTED_TYPE("eval", e);
     }
@@ -727,7 +727,7 @@ SEXP R_execMethod(SEXP op, SEXP rho)
 		        break;
 		}
 		if(deflt == R_NilValue)
-		    error(_("Symbol \"%s\" not in environment of method"),
+		    error(_("symbol \"%s\" not in environment of method"),
 			  CHAR(PRINTNAME(symbol)));
 		SET_PRCODE(val, CAR(deflt));
 	    }
@@ -781,7 +781,7 @@ static SEXP EnsureLocal(SEXP symbol, SEXP rho)
 
     vl = eval(symbol, ENCLOS(rho));
     if (vl == R_UnboundValue)
-	error(_("Object \"%s\" not found"), CHAR(PRINTNAME(symbol)));
+	error(_("object \"%s\" not found"), CHAR(PRINTNAME(symbol)));
 
     PROTECT(vl = duplicate(vl));
     defineVar(symbol, vl, rho);
@@ -948,7 +948,7 @@ SEXP do_for(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    setVar(sym, CAR(val), rho);
 	    val = CDR(val);
 	    break;
-	default: errorcall(call, _("bad for() loop sequence"));
+	default: errorcall(call, _("invalid for() loop sequence"));
 	}
 	REPROTECT(ans = eval(body, rho), api);
     for_next:
@@ -1077,7 +1077,7 @@ SEXP do_return(SEXP call, SEXP op, SEXP args, SEXP rho)
     while (!isNull(a)) {
 	nv += 1;
 	if (CAR(a) == R_DotsSymbol)
-	    error(_("... not allowed in return"));
+	    error(_("'...' not allowed in return"));
 	if (isNull(TAG(a)) && isSymbol(CAR(a)))
 	    SET_TAG(v, CAR(a));
 	a = CDR(a);
@@ -1172,7 +1172,7 @@ static SEXP evalseq(SEXP expr, SEXP rho, int forcelocal,  R_varloc_t tmploc)
 	UNPROTECT(4);
 	return CONS(nval, val);
     }
-    else error(_("Target of assignment expands to non-language object"));
+    else error(_("target of assignment expands to non-language object"));
     return R_NilValue;	/*NOTREACHED*/
 }
 
@@ -1377,7 +1377,7 @@ SEXP evalList(SEXP el, SEXP rho)
 		}
 	    }
 	    else if (h != R_MissingArg)
-		error(_("... used in an incorrect context"));
+		error(_("'...' used in an incorrect context"));
 	}
 	else if (CAR(el) != R_MissingArg) {
 	    SETCDR(tail, CONS(eval(CAR(el), rho), R_NilValue));
@@ -1426,7 +1426,7 @@ SEXP evalListKeepMissing(SEXP el, SEXP rho)
 		}
 	    }
 	    else if(h != R_MissingArg)
-		error(_("... used in an incorrect context"));
+		error(_("'...' used in an incorrect context"));
 	}
 	else if (CAR(el) == R_MissingArg) {
 	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
@@ -1480,7 +1480,7 @@ SEXP promiseArgs(SEXP el, SEXP rho)
 		}
 	    }
 	    else if (h != R_MissingArg)
-		error(_("... used in an incorrect context"));
+		error(_("'...' used in an incorrect context"));
 	}
 	else if (CAR(el) == R_MissingArg) {
 	    SETCDR(tail, CONS(R_MissingArg, R_NilValue));
@@ -1531,7 +1531,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
     env = CADR(args);
     encl = CADDR(args);
     if ( !isEnvironment(encl) )
-	errorcall(call, _("invalid third argument"));
+	errorcall(call, _("invalid '%s' argument"), "enclos");
     switch(TYPEOF(env)) {
     case NILSXP:
         env = encl;     /* so eval(expr, NULL, encl) works */
@@ -1555,11 +1555,11 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    errorcall(call, _("numeric 'envir' arg not of length one"));
 	frame = asInteger(env);
 	if (frame == NA_INTEGER)
-	    errorcall(call, _("invalid environment"));
+	    errorcall(call, _("invalid '%s' argument"), "envir");
 	PROTECT(env = R_sysframe(frame, R_GlobalContext));
 	break;
     default:
-	errorcall(call, _("invalid second argument"));
+	errorcall(call, _("invalid '%s' argument"), "envir");
     }
     if(isLanguage(expr) || isSymbol(expr) || isByteCode(expr)) {
 	PROTECT(expr);
@@ -1570,7 +1570,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    expr = R_ReturnedValue;
 	    if (expr == R_RestartToken) {
 		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		errorcall(call, _("restarts not supported in eval"));
+		errorcall(call, _("restarts not supported in 'eval'"));
 	    }
 	}
 	endcontext(&cntxt);
@@ -1589,7 +1589,7 @@ SEXP do_eval(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    tmp = R_ReturnedValue;
 	    if (tmp == R_RestartToken) {
 		cntxt.callflag = CTXT_RETURN;  /* turn restart off */
-		errorcall(call, _("restarts not supported in eval"));
+		errorcall(call, _("restarts not supported in 'eval'"));
 	    }
 	}
 	endcontext(&cntxt);
@@ -1692,13 +1692,13 @@ int DispatchOrEval(SEXP call, SEXP op, char *generic, SEXP args, SEXP rho,
 		if (TYPEOF(h) == DOTSXP) {
 		    /* just a consistency check */
 		    if (TYPEOF(CAR(h)) != PROMSXP)
-			error(_("value in ... is not a promise"));
+			error(_("value in '...' is not a promise"));
 		    dots = TRUE;
 		    x = eval(CAR(h), rho);
 		break;
 		}
 		else if (h != R_NilValue && h != R_MissingArg)
-		    error(_("... used in an incorrect context"));
+		    error(_("'...' used in an incorrect context"));
 	    }
 	    else {
 		dots = FALSE;
@@ -1831,7 +1831,7 @@ static void findmethod(SEXP class, char *group, char *generic,
     for (whichclass = 0 ; whichclass < len ; whichclass++) {
 	if(strlen(generic) +
 	   strlen(CHAR(STRING_ELT(class, whichclass))) + 2 > 512)
-	    error(_("class name too long in %s"), generic);
+	    error(_("class name too long in '%s'"), generic);
 	sprintf(buf, "%s.%s", generic, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
 	*sxp = R_LookupMethod(*meth, rho, rho, R_BaseEnv);
@@ -1841,7 +1841,7 @@ static void findmethod(SEXP class, char *group, char *generic,
 	}
 	if(strlen(group) +
 	   strlen(CHAR(STRING_ELT(class, whichclass))) + 2 > 512)
-	    error(_("class name too long in %s"), group);
+	    error(_("class name too long in '%s'"), group);
 	sprintf(buf, "%s.%s", group, CHAR(STRING_ELT(class, whichclass)));
 	*meth = install(buf);
 	*sxp = R_LookupMethod(*meth, rho, rho, R_BaseEnv);
@@ -1884,7 +1884,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
     /* check whether we are processing the default method */
     if ( isSymbol(CAR(call)) ) {
 	if(strlen(CHAR(PRINTNAME(CAR(call)))) >= 512)
-	   error(_("call name too long in %s"), CHAR(PRINTNAME(CAR(call))));
+	   error(_("call name too long in '%s'"), CHAR(PRINTNAME(CAR(call))));
 	sprintf(lbuf, "%s", CHAR(PRINTNAME(CAR(call))) );
 	pt = strtok(lbuf, ".");
 	pt = strtok(NULL, ".");
@@ -1905,7 +1905,7 @@ int DispatchGroup(char* group, SEXP call, SEXP op, SEXP args, SEXP rho,
 	return 0;
 
     if(strlen(PRIMNAME(op)) >= 128)
-	error(_("generic name too long in %s"), PRIMNAME(op));
+	error(_("generic name too long in '%s'"), PRIMNAME(op));
     sprintf(generic, "%s", PRIMNAME(op) );
 
     lclass = getAttrib(CAR(args), R_ClassSymbol);
@@ -3033,7 +3033,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
 	    }
 	  }
 	  else if (h != R_MissingArg)
-	    error(_("... used in an incorrect context"));
+	    error(_("'...' used in an incorrect context"));
 	}
 	NEXT();
       }
@@ -3125,7 +3125,7 @@ static SEXP bcEval(SEXP body, SEXP rho)
     OP(AND, 0): Builtin2(do_logic, R_AndSym);
     OP(OR, 0): Builtin2(do_logic, R_OrSym);
     OP(NOT, 0): Builtin1(do_logic, R_NotSym);
-    OP(DOTSERR, 0): error(_("... used in an incorrect context"));
+    OP(DOTSERR, 0): error(_("'...' used in an incorrect context"));
     OP(STARTASSIGN, 2):
       {
 	SEXP symbol = VECTOR_ELT(constants, GETOP());

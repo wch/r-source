@@ -1,7 +1,6 @@
 \name{contour}
 \alias{contour}
 \alias{contour.default}
-\alias{contourLines}
 \title{Display Contours}
 \description{
   Create a contour plot, or add contour lines to an existing plot.
@@ -21,11 +20,6 @@ contour(x, \dots)
         axes = TRUE, frame.plot = axes,
         col = par("fg"), lty = par("lty"), lwd = par("lwd"),
 	add = FALSE, \dots)
-
-contourLines(x = seq(0, 1, len = nrow(z)),
-             y = seq(0, 1, len = ncol(z)),
-	     z, nlevels = 10,
-             levels = pretty(range(z, na.rm=TRUE), nlevels))
 }
 \arguments{
   \item{x,y}{locations of grid lines at which the values in \code{z} are
@@ -43,7 +37,8 @@ contourLines(x = seq(0, 1, len = nrow(z)),
     lines.}
   \item{labels}{a vector giving the labels for the contour lines.  If
     \code{NULL} then the levels are used as labels.}
-  \item{labcex}{\code{cex} for contour labelling.}
+  \item{labcex}{\code{cex} for contour labelling.  This is an absolute
+    size, not a multiple of \code{par("cex")}.}
   \item{drawlabels}{logical.  Contours are labelled if \code{TRUE}.}
   \item{method}{character string specifying where the labels will be
     located. Possible values are \code{"simple"}, \code{"edge"} and
@@ -67,11 +62,6 @@ contourLines(x = seq(0, 1, len = nrow(z)),
 \details{
   \code{contour} is a generic function with only a default method in
   base \R.
-
-  \code{contourLines} draws nothing, but returns a set of contour lines.
-  
-  There is currently no documentation about the algorithm.
-  The source code is in \file{\$R\_HOME/src/main/plot3d.c}.
 
   The methods for positioning the labels on contours are \code{"simple"}
   (draw at the edge of the plot, overlaying the contour line),
@@ -102,7 +92,8 @@ contourLines(x = seq(0, 1, len = nrow(z)),
   Wadsworth \& Brooks/Cole.
 }
 \seealso{
-  \code{\link{filled.contour}} for \dQuote{color-filled} contours,
+  \code{\link[grDevices]{contourLines}},
+    \code{\link{filled.contour}} for \dQuote{color-filled} contours,
   \code{\link{image}} and the graphics demo which can be invoked as
   \code{demo(graphics)}.
 }
@@ -111,8 +102,6 @@ x <- -6:16
 op <- par(mfrow = c(2, 2))
 contour(outer(x, x), method = "edge", vfont = c("sans serif", "plain"))
 z <- outer(x, sqrt(abs(x)), FUN = "/")
-## Should not be necessary:
-z[!is.finite(z)] <- NA
 image(x, x, z)
 contour(x, x, z, col = "pink", add = TRUE, method = "edge",
 	vfont = c("sans serif", "plain"))

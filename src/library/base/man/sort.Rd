@@ -4,7 +4,8 @@
 \title{Sorting or Ordering Vectors}
 \description{
   Sort (or \emph{order}) a vector or factor (partially) into
-  ascending (or descending) order.
+  ascending (or descending) order.  For ordering along more than one
+  variable, e.g., for sorting data frames, see \code{\link{order}}.
 }
 \usage{
 sort(x, partial = NULL, na.last = NA, decreasing = FALSE,
@@ -19,7 +20,7 @@ is.unsorted(x, na.rm = FALSE)
     If \code{TRUE}, missing values in the data are put last; if
     \code{FALSE}, they are put first; if \code{NA}, they are removed.}
   \item{decreasing}{logical.  Should the sort be increasing or decreasing?
-     Not available for partial sorting.} 
+     Not available for partial sorting.}
   \item{method}{character specifying the algorithm used.}
   \item{index.return}{logical indicating if the ordering index vector should
     be returned as well; this is only available for a few cases, the default
@@ -80,7 +81,7 @@ is.unsorted(x, na.rm = FALSE)
 }
 \seealso{
   \code{\link{order}} for sorting on or reordering multiple variables.
-  
+
   \code{\link{rank}}.
 }
 \examples{

@@ -333,6 +333,7 @@ foreach $pkg (@ARGV){
 #	print "make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname\n";
     	$res = system("make --no-print-directory -C $R_HOME/src/gnuwin32 PKGDIR=$pkgdir RLIB=$library $pkgname-SAVE=$save $opt $helpflags $makecmd-$pkgname");
 	if($res == 0) {
+	    if(! -f "$library/$decpkgname/R/$pkgname") {$lazyload = 0;}
 	    if($lazyload == -1) { # choose based on code size
 		my $codesize = `wc -c $library/$decpkgname/R/$pkgname`;
 		$codesize =~ / *([0-9]+)/;

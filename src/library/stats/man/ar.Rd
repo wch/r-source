@@ -130,8 +130,10 @@ ar.mle(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     are set to \code{NA}. If \code{x} is a time series, so is \code{resid}.}
   \item{method}{The value of the \code{method} argument.}
   \item{series}{The name(s) of the time series.}
-  \item{asy.var.coef}{(univariate case.) The asymptotic-theory
-    variance matrix of the coefficient estimates.}
+  \item{frequency}{The frequency of the time series.}
+  \item{call}{The matched call.}
+  \item{asy.var.coef}{(univariate case, \code{order > 0}.)
+    The asymptotic-theory variance matrix of the coefficient estimates.}
 
   For \code{predict.ar}, a time series of predictions, or if
   \code{se.fit = TRUE}, a list with components \code{pred}, the

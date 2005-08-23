@@ -6,7 +6,7 @@
     ## were not there.  The definition is applied literally by deleting the given
     ## method and then calling MethodListSelect.
     if(!is(method, "MethodDefinition"))
-        stop("'NextMethod' not defined because the the current method is not a 'MethodDefinition' object")
+        stop("'NextMethod' not defined because the current method is not a 'MethodDefinition' object")
     ## remove all cached methods
     mlist@allMethods <- mlist@methods
     ## delete the excluded method(s)

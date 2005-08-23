@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -32,6 +32,30 @@ msgstr "help(\\\"Deprecated\\\")와 help(\\\"%s-deprecate\\\")를 보아 주십�
 msgid "See help(\"Deprecated\")"
 msgstr "help(\\\"Deprecated\\\")를 보아 주십시오"
 
+msgid "invalid numbers in 'quote'"
+msgstr "'quote'에서 무효인 수치가 있습니다"
+
+msgid "invalid 'quote' specification"
+msgstr "무효인 'quote' 지정입니다"
+
+msgid "invalid 'row.names' specification"
+msgstr "무효인 'row.names'의 지정입니다"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr "무효인 'col.names' 지정입니다"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
+
+msgid "appending column names to file"
+msgstr "파일에서 열명을 추가합니다"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd'의 인수는 수치나 복소수가 아니면 안됩니다"
 
@@ -47,7 +71,7 @@ msgstr "'nu'는 0, nrow(x) 또는 ncol(x)가 아니면 안됩니다"
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv'는 0, nrow(x) 또는 nod(x)가 아니면 안됩니다"
 
-msgid "all can not be used with other deparse options"
+msgid "'all' can not be used with other deparse options"
 msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
 
 msgid "second argument must be a list"
@@ -167,7 +191,7 @@ msgstr "대화적인 session이 아닙니다"
 msgid "not a valid restart specification"
 msgstr "유효한 재기동 지정이 아닙니다"
 
-msgid "argument where of length 0"
+msgid "argument 'where' of length 0"
 msgstr "길이 0의 인수"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
@@ -466,9 +490,6 @@ msgstr "'from'는 POSIXt 오브젝트가 아니면 되지 않습니다"
 msgid "'to' must be a POSIXt object"
 msgstr "'to'는  POSIXt 오브젝트가 아니면 되지 않습니다"
 
-msgid "'file' must be a character string or connection"
-msgstr "'file'는 문자열 또는 connection가 아니면 되지 않습니다"
-
 msgid "'x' must be a square matrix"
 msgstr "'x' 정방 행렬이 아니면 되지 않습니다"
 
@@ -583,9 +604,6 @@ msgstr "'vec'는 NA값을 포함하고 있습니다"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec'는 비감소순서에 소트되어 있지 않으면 안됩니다"
 
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: 'x'를 'character' 로 강제 변환합니다"
-
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr ""
 "'mode'는 \"double\" (\"real\") 또는 \"integer\"가 나오지 않으면 되지 않습니다"
@@ -674,6 +692,9 @@ msgstr "'%s'와 이름의 패키지(%s 버전)가 없습니다"
 
 msgid "there is no package called '%s'"
 msgstr "'%s'라는 이름의 패키지는 없습니다"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr ""
@@ -804,11 +825,8 @@ msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니�
 msgid "can only save to a binary connection"
 msgstr "binary connection만 저장할수가 없습니다"
 
-msgid "`file' must be non-empty string"
-msgstr "'file'는 비어 있지 않는 문자열이 아니면 되지 않습니다"
-
 msgid "image could not be renamed and is left in"
-msgstr "image는 이름을 변경할수가 없기 때문에, 이하에 남겨집니다"
+msgstr ""
 
 msgid "[Previously saved workspace restored]"
 msgstr "[이전에 저장된 workspace를 복귀합니다]"
@@ -1071,9 +1089,6 @@ msgstr "'as.is'에 이름을 들 수 있던 열에 존재하지 않는 것이 �
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is'는 잘못된 길이 %d !=cols = %d를 가집니다"
 
-msgid "invalid 'row.names' specification"
-msgstr "무효인 'row.names'의 지정입니다"
-
 msgid "'x' must be a vector"
 msgstr "'x'는 벡터가 아니면 되지 않습니다"
 
@@ -1179,6 +1194,12 @@ msgstr ""
 msgid "unable to find a plausible encoding"
 msgstr "그럴듯한 인코딩을 검색할수가 없습니다"
 
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
+
 msgid "'%s' is not an existing file"
 msgstr "'%s'는 기존의 파일이 아닙니다"
 
@@ -1260,17 +1281,8 @@ msgstr "이용 할수 있는 traceback가 없습니다"
 msgid "argument to 'which' is not logical"
 msgstr "'which'에서 인수는 논리값이 아닙니다"
 
-msgid "invalid numbers in 'quote'"
-msgstr "'quote'에서 무효인 수치가 있습니다"
-
-msgid "invalid 'quote' specification"
-msgstr "무효인 'quote' 지정입니다"
-
-msgid "invalid 'col.names' specification"
-msgstr "무효인 'col.names' 지정입니다"
-
-msgid "appending column names to file"
-msgstr "파일에서 열명을 추가합니다"
+msgid "attempt to change '%s' ignored"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "무효인 'digits'입니다"

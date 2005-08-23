@@ -4,7 +4,7 @@
 \alias{predict.pbSpline}
 \alias{predict.npolySpline}
 \alias{predict.ppolySpline}
-%\alias{plot.spline}
+
 \title{Evaluate a Spline at New Values of x}
 \description{
   The \code{predict} methods for the classes that inherit from the
@@ -15,35 +15,24 @@
   \code{type = "l"}.}
 \usage{
 \method{predict}{bSpline}(object, x, nseg=50, deriv=0, \dots)
-%plot.spline(x, \dots)
+\method{predict}{nbSpline}(object, x, nseg=50, deriv=0, \dots)
+\method{predict}{pbSpline}(object, x, nseg=50, deriv=0, \dots)
+\method{predict}{npolySpline}(object, x, nseg=50, deriv=0, \dots)
+\method{predict}{ppolySpline}(object, x, nseg=50, deriv=0, \dots)
 }
-% \synopsis{
-% predict.bSpline(object, x, nseg=50, deriv=0, \dots)
-% predict.nbSpline(object, x, nseg=50, deriv=0, \dots)
-% predict.pbSpline(object, x, nseg=50, deriv=0, \dots)
-% predict.npolySpline(object, x, nseg=50, deriv=0, \dots)
-% predict.ppolySpline(object, x, nseg=50, deriv=0, \dots)
-% plot.spline(x, \dots)
-% }
 \arguments{
   \item{object}{An object that inherits from the \code{bSpline} or the
-    \code{polySpline} class.  For \code{plot.spline} this argument is
-    called \code{x}.}
+    \code{polySpline} class.}
   \item{x}{A numeric vector of \code{x} values at which to evaluate the
     spline.  If this argument is missing a suitable set of \code{x}
     values is generated as a sequence of \code{nseq} segments spanning
-    the range of the knots.  For \code{plot.spline} the \code{x}
-    argument is as described under \code{object} above.}
+    the range of the knots.}
   \item{nseg}{A positive integer giving the number of segments in a set
     of equally-spaced \code{x} values spanning the range of the knots
     in \code{object}.  This value is only used if \code{x} is missing.}
   \item{deriv}{An integer between 0 and \code{splineOrder(object) - 1}
     specifying the derivative to evaluate.}
-  \item{\dots}{
-    \code{predict}: further arguments passed to or from other methods.
-
-    \code{plot}: additional graphical parameters (see \code{link{par}}).
-  }
+  \item{\dots}{further arguments passed to or from other methods.}
 }
 \value{
   an \code{xyVector} with components

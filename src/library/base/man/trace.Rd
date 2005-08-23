@@ -168,9 +168,9 @@ tracingState(on = NULL)
 }
 \note{
   The version of function tracing that includes any of the arguments
-  except for the function name requires the methods package (because it
-  uses special classes of objects to store and restore versions of the
-  traced functions).
+  except for the function name requires the \pkg{methods} package
+  (because it uses special classes of objects to store and restore
+  versions of the traced functions).
 
   If methods dispatch is not currently on, \code{trace} will load the
   methods namespace, but will not put the methods package on the search
@@ -192,40 +192,45 @@ tracingState(on = NULL)
   constructing general expressions.
 }
 \examples{
-if(.isMethodsDispatchOn()) { # trace needs method package attached.
+##  Very simple use
+trace(sum)
+hist(rnorm(100)) # shows about 3-4 calls to sum()
+untrace(sum)
 
-f <- function(x, y) {
-    y <- pmax(y, .001)
-    x ^ y
-}
+if(.isMethodsDispatchOn()) { # non-simple use needs 'methods' package
 
-## arrange to call the browser on entering and exiting
-## function f
-trace("f", browser, exit = browser)
+ f <- function(x, y) {
+     y <- pmax(y, .001)
+     x ^ y
+ }
 
-## instead, conditionally assign some data, and then browse
-## on exit, but only then.  Don't bother me otherwise
+ ## arrange to call the browser on entering and exiting
+ ## function f
+ trace("f", browser, exit = browser)
 
-trace("f", quote(if(any(y < 0)) yOrig <- y),
-      exit = quote(if(exists("yOrig")) browser()),
-      print = FALSE)
+ ## instead, conditionally assign some data, and then browse
+ ## on exit, but only then.  Don't bother me otherwise
 
-## trace a utility function, with recover so we
-## can browse in the calling functions as well.
+ trace("f", quote(if(any(y < 0)) yOrig <- y),
+       exit = quote(if(exists("yOrig")) browser()),
+       print = FALSE)
 
-trace("as.matrix", recover)
+ ## trace a utility function, with recover so we
+ ## can browse in the calling functions as well.
 
-## turn off the tracing
+ trace("as.matrix", recover)
 
-untrace(c("f", "as.matrix"))
+ ## turn off the tracing
 
-\dontrun{
-## trace calls to the function lm() that come from the nlme package
-## (The function nlme is in that package, and the package has a namespace,
-## so the where= argument must be used to get the right version of lm)
+ untrace(c("f", "as.matrix"))
 
-trace(lm, exit = recover, where = nlme)
-}
+ \dontrun{
+ ## trace calls to the function lm() that come from the nlme package
+ ## (The function nlme is in that package, and the package has a namespace,
+ ## so the where= argument must be used to get the right version of lm)
+
+ trace(lm, exit = recover, where = nlme)
+ }
 }
 }
 \keyword{programming}

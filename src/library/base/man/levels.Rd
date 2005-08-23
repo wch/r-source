@@ -25,6 +25,11 @@ levels(x) <- value
     least the number of levels of \code{x}, or a named list specifying how to
     rename the levels.}
 }
+\details{
+  For the factor assignment method, a \code{NA} in \code{value}
+  causes that level to be removed from the levels and the elements
+  formerly with that level to be replaced by \code{NA}.
+}
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.

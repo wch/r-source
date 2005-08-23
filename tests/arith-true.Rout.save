@@ -1,6 +1,7 @@
 
-R : Copyright 2004, The R Foundation for Statistical Computing
-Version 1.9.0 Under development (unstable) (2004-03-05), ISBN 3-900051-00-3
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 Under development (unstable) (2005-08-10 r35224)
+ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -8,7 +9,7 @@ Type 'license()' or 'licence()' for distribution details.
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
-'citation()' on how to cite R in publications.
+'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for a HTML browser interface to help.
@@ -94,7 +95,7 @@ Type 'q()' to quit R.
 [1] TRUE
 > is.nan(log(-1))# TRUE and warning
 [1] TRUE
-Warning message: 
+Warning message:
 NaNs produced in: log(x) 
 > 
 > rp <- c(1:2,Inf); rn <- rev(- rp)
@@ -139,38 +140,6 @@ NaNs produced in: log(x)
 > ## Sun has asin(.) = acos(.) = 0 for these:
 > ##	is.nan(acos(1.1)) && is.nan(asin(-2)) [!]
 > 
-> ## Complex Trig.:
-> abs(Im(cos(acos(1i))) -	 1) < 2*Meps
-[1] TRUE
-> abs(Im(sin(asin(1i))) -	 1) < 2*Meps
-[1] TRUE
-> ##P (1 - Im(sin(asin(Ii))))/Meps
-> ##P (1 - Im(cos(acos(Ii))))/Meps
-> abs(Im(asin(sin(1i))) -	 1) < 2*Meps
-[1] TRUE
-> cos(1i) == cos(-1i)# i.e. Im(acos(*)) gives + or - 1i:
-[1] TRUE
-> abs(abs(Im(acos(cos(1i)))) - 1) < 4*Meps
-[1] TRUE
-> 
-> .Random.seed <- c(0, 629, 6137, 22167) # want reproducible output
-> Isi <- Im(sin(asin(1i + rnorm(100))))
-> all(abs(Isi-1) < 100* Meps)
-[1] TRUE
-> ##P table(2*abs(Isi-1)	/ Meps)
-> Isi <- Im(cos(acos(1i + rnorm(100))))
-> all(abs(Isi-1) < 100* Meps)
-[1] TRUE
-> ##P table(2*abs(Isi-1)	/ Meps)
-> Isi <- Im(atan(tan(1i + rnorm(100)))) #-- tan(atan(..)) does NOT work (Math!)
-> all(abs(Isi-1) < 100* Meps)
-[1] TRUE
-> ##P table(2*abs(Isi-1)	/ Meps)
-> 
-> ## polyroot():
-> all(abs(1 + polyroot(choose(8, 0:8))) < 1e-10)# maybe smaller..
-[1] TRUE
-> 
 > ## gamma()
 > abs(gamma(1/2)^2 - pi) < 4* Meps
 [1] TRUE
@@ -198,7 +167,7 @@ NaNs produced in: log(x)
 > 
 > all(is.nan(gamma(0:-47))) # + warn.
 [1] TRUE
-Warning message: 
+Warning message:
 NaNs produced in: gamma(x) 
 > 
 > ## choose() {and lchoose}:
@@ -230,7 +199,7 @@ NaNs produced in: gamma(x)
 > x <- c(-100,-3:2, -99.9, -7.7, seq(-3,3, length=61), 5.1, 77)
 > stopifnot(identical( digamma(x), psigamma(x,0)),
 +           identical(trigamma(x), psigamma(x,1)))# TRUE (+ NaN warnings)
-Warning messages: 
+Warning messages:
 1: NaNs produced in: digamma(x) 
 2: NaNs produced in: psigamma(x, deriv) 
 > 

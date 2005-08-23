@@ -398,11 +398,11 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
     replace = asLogical(CAR(args)); args = CDR(args);
     prob = CAR(args);
     if (replace == NA_LOGICAL)
-	errorcall(call, _("invalid third argument"));
+	errorcall(call, _("invalid '%s' argument"), "replace");
     if (n == NA_INTEGER || n < 1)
-	errorcall(call, _("invalid first argument"));
+	errorcall(call, _("invalid '%s' argument"), "x");
     if (k == NA_INTEGER || k < 0)
-	errorcall(call, _("invalid second argument"));
+	errorcall(call, _("invalid '%s' argument"), "size");
     if (!replace && k > n)
 	errorcall(call, _("cannot take a sample larger than the population\n when 'replace = FALSE'"));
     GetRNGstate();

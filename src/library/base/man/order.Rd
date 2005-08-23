@@ -2,10 +2,13 @@
 \title{Ordering Permutation}
 \alias{order}
 \alias{sort.list}
+\concept{sort data frame}
 \description{
   \code{order} returns a permutation which rearranges its first
   argument into ascending or descending order, breaking ties by further
-  arguments. \code{sort.list} is the same, using only one argument.
+  arguments. \code{sort.list} is the same, using only one argument.\cr
+  See the examples for how to use these functions to sort data frames,
+  etc.
 }
 \usage{
 order(\dots, na.last = TRUE, decreasing = FALSE)
@@ -60,6 +63,21 @@ rbind(x,y,z)[, order(x, -y, z)]
 ## For character vectors we can make use of rank:
 cy <- as.character(y)
 rbind(x,y,z)[, order(x, -rank(y), z)]
+
+## Sorting data frames:
+dd <- transform(data.frame(x,y,z),
+                z = factor(z, labels=LETTERS[9:1]))
+## Either as above {for factor 'z' : using internal coding}:
+dd[ order(x, -y, z) ,]
+## or along 1st column, ties along 2nd, ... *arbitrary* no.{columns}:
+dd[ do.call(order, dd) ,]
+
+set.seed(1)# reproducible example:
+d4 <- data.frame(x = round(   rnorm(100)), y = round(10*runif(100)),
+                 z = round( 8*rnorm(100)), u = round(50*runif(100)))
+(d4s <- d4[ do.call(order, d4) ,])
+(i <- which(diff(d4s[,3]) == 0))# in 2 places, needed 3 cols to break ties:
+d4s[ rbind(i,i+1), ]
 
 ## rearrange matched vectors so that the first is in ascending order
 x <- c(5:1, 6:8, 12:9)

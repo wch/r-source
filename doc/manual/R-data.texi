@@ -520,6 +520,22 @@ treated as blank lines.
 
 If it is known that there will be no comments in the data file, it is
 safer (and may be faster) to use @code{comment.char = ""}.
+
+@item @strong{Escapes}
+
+Many OSes have conventions for using backslash as an escape character in
+text files, but Windows does not (and uses backslash in path names).
+It is optional in @R{} whether such conventions are applied to data files.
+
+Both @code{read.table} and @code{scan} have a logical argument
+@code{allowEscapes}.  As from @R{} 2.2.0 this is false by default, and
+backslashes are then only interpreted as (under circumstances described
+above) escaping quotes.  If this set to be true, C-style escapes are
+interpreted, namely the control characters @code{\a, \b, \f, \n, \r, \t,
+\v} and octal and hexadecimal representatons like @code{\040} and
+@code{\0x2A}.  Any other escaped character is treated as itself,
+including backslash.
+
 @end enumerate
 
 @findex read.csv

@@ -50,6 +50,11 @@ rwilcox(nn, m, n)
   S-PLUS uses a different (but equivalent) definition of the Wilcoxon
   statistic: see \code{\link{wilcox.test}} for details.
 }
+\section{Warning}{
+  These functions can use large amounts of memory and stack (and even crash
+  \R if the stack limit is exceeded) if and one sample is large
+  (several thousands or more).
+}
 \author{Kurt Hornik}
 \seealso{
   \code{\link{wilcox.test}} to calculate the statistic from data, find p

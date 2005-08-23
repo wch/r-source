@@ -1,0 +1,42 @@
+;
+; RProxy: Connector implementation between application and R language
+; Copyright (C) 1999--2005 Thomas Baier
+;
+; This library is free software; you can redistribute it and/or
+; modify it under the terms of the GNU Library General Public
+; License as published by the Free Software Foundation; either
+; version 2 of the License, or (at your option) any later version.
+;
+; This library is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+; Library General Public License for more details.
+;
+; You should have received a copy of the GNU Library General Public
+; License along with this library; if not, write to the Free
+; Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
+; MA 02111-1307, USA
+;
+; $Id: rproxy.c,v 1.14 2003/09/13 15:14:09 murdoch Exp $
+;
+
+LIBRARY rproxy
+EXPORTS
+; COM helper functions
+	com_getHandle
+	com_getObject
+	com_addObject
+	com_createSEXP
+	com_getOLECHAR
+	ANSI2BSTR
+	BSTR2ANSI
+
+; BDX functions
+	bdx_free@4
+	BDX2SEXP
+	SEXP2BDX
+	Variant2BDX@20
+	BDX2Variant@8
+	bdx_trace@4
+; Tracing
+	R_Proxy_printf

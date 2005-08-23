@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-06-27
+@set FAQ_DATE @value{FAQ_YEAR}-08-20
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1733,6 +1733,11 @@ various DBMS implementations.
 @item DCluster
 A set of functions for the detection of spatial clusters of diseases
 using count data.
+@item DEoptim
+Differential Evolution Optimization.
+@item DICOM
+Import and manipulate medical imaging data using the Digital Imaging and
+Communications in Medicine (DICOM) Standard.
 @item Davies
 Functions for the Davies quantile function and the Generalized Lambda
 distribution.
@@ -1900,6 +1905,9 @@ Perturbation method introduced by Gel, Raftery and Gneiting (2004).
 Read and write of MAT files together with R-to-Matlab connectivity.
 @item R.oo
 R object-oriented programming with or without references.
+@item R.utils
+Utility classes and methods useful when programming in R and developing
+R packages.
 @item R2HTML
 Functions for exporting R objects & graphics in an @HTML{} document.
 @item R2WinBUGS
@@ -1986,6 +1994,9 @@ especially for the wavelet and Gabor transforms of noisy signals), based
 on the book ``Practical Time-Frequency Analysis: Gabor and Wavelet
 Transforms with an Implementation in S'' by Rene Carmona, Wen L. Hwang
 and Bruno Torresani, 1998, Academic Press.
+@item SAGx
+Retrieval, preparation and analysis of data from the Affymetrix
+GeneChip.
 @item SASmixed
 Data sets and sample linear mixed effects analyses corresponding to the
 examples in ``SAS System for Mixed Models'' by R. C. Littell,
@@ -2026,6 +2037,12 @@ Kruskal-Wallis, Kendall's Tau, Friedman's chi squared, Spearman's rho,
 maximum F ratio, the Pearson product moment correlation coefficiant,
 Johnson distributions, normal scores and generalized hypergeometric
 distributions).
+@item SwissAir
+Air quality data of Switzerland for one year in 30 min resolution.
+@item TeachingDemos
+A set of demonstration functions that can be used in a classroom to
+demonstrate statistical concepts, or on your own to better understand
+the concepts or the programming.
 @item UNF
 Tools for creating universal numeric fingerprints for data.
 @item UsingR
@@ -2088,7 +2105,11 @@ Mining association rules and frequent itemsets with R.
 @item ash
 David Scott's ASH routines for 1D and 2D density estimation.
 @item assist
-A suite of functions implementing smoothing splines. 
+A suite of functions implementing smoothing splines.
+@item aster
+Functions and datasets for Aster modeling (forest graph exponential
+family conditional or unconditional canonical statistic models for life
+history trait modeling).
 @item asypow
 A set of routines that calculate power and related quantities utilizing
 asymptotic likelihood ratio methods.
@@ -2218,6 +2239,12 @@ Measures of concordance and reliability.
 @item conf.design
 A series of simple tools for constructing and manipulating confounded
 and fractional factorial designs.
+@item copula
+Classes of commonly used copulas (including elliptical and Archimedian),
+and methods for density, distribution, random number generators, and
+plotting.
+@item corpcor
+Efficient estimation of covariance and (partial) correlation.
 @item covRobust
 Robust covariance estimation via nearest neighbor cleaning.
 @item cramer
@@ -2272,6 +2299,8 @@ Functions for modelling dispersion in GLMs.
 @item distr
 An object orientated implementation of distributions and some additional
 functionality.
+@item dprep
+Data preprocessing and visualization functions for classification.
 @item dr
 Functions, methods, and datasets for fitting dimension reduction
 regression, including pHd and inverse regression methods SIR and SAVE.
@@ -2313,6 +2342,9 @@ A package for survival and event history analysis.
 Elastic net regularization and variable selection.
 @item ellipse
 Package for drawing ellipses and ellipse-like confidence regions.
+@item elliptic
+A suite of elliptic and related functions including Weierstrass and
+Jacobi forms.
 @item emme2
 Functions to read from and write to an EMME/2 databank.
 @item emplik
@@ -2379,12 +2411,16 @@ Functional Data Analysis: analysis of data where the basic observation
 is a function of some sort.
 @item fdim
 Functions for calculating fractal dimension.
+@item fgac
+Families of Generalized Archimedean Copulas.
 @item fields
 A collection of programs for curve and function fitting with an emphasis
 on spatial data.  The major methods implemented include cubic and thin
 plate splines, universal Kriging and Kriging for large data sets.  The
 main feature is that any covariance function implemented in R can be
 used for spatial prediction.
+@item filehash
+Simple file-based hash table.
 @item flexmix
 Flexible Mixture Modeling: a general framework for finite mixtures of
 regression models using the EM algorithm.
@@ -2484,6 +2520,10 @@ Various functions to manipulate models.
 @item gmp
 Arithmetic ``without limitations'' using the @acronym{GNU} Multiple
 Precision library.
+@item gnm
+Functions to specify and fit generalized nonlinear models, including
+models with multiplicative interaction terms such as the UNIDIFF model
+from sociology and the AMMI model from crop science.
 @item gpclib
 General polygon clipping routines for R based on Alan Murta's C
 library.
@@ -2498,6 +2538,9 @@ Generalized Regression Analysis and Spatial Predictions for R.
 Miscellaneous functions written/maintained by Gregory R. Warnes.
 @item gridBase
 Integration of base and grid graphics.
+@item grouped
+Regression models for grouped and coarse data, under the Coarsened At
+Random assumption.
 @item gsl
 Wrapper for special functions of the Gnu Scientific Library (GSL).
 @item gss
@@ -2523,6 +2566,8 @@ is ambiguous.
 @item haplo.stats
 Statistical analysis of haplotypes with traits and covariates when
 linkage phase is ambiguous.
+@item hapsim
+Haplotype data simulation.
 @item hdf5
 Interface to the @acronym{NCSA} HDF5 library.
 @item hett
@@ -2557,6 +2602,8 @@ Models and tests for departure from Hardy-Weinberg equilibrium and
 independence between loci.
 @item ifs
 Iterated Function Systems distribution function estimator.
+@item iid.test
+Testing whether data is independent and identically distributed.
 @item impute
 Imputation for microarray data (currently KNN only).
 @item ineq
@@ -2581,6 +2628,10 @@ The functions may be divided into the following groups; maxima/minima,
 order statistics, peaks over thresholds and point processes.
 @item its
 An S4 class for handling irregular time series.
+@item kappalab
+The ``laboratory for capacities'', an S4 tool box for capacity (or
+non-additive measure, fuzzy measure) and integral manipulation on a
+finite setting.
 @item kernlab
 Kernel-based machine learning methods including support vector machines.
 @item kinship
@@ -2664,6 +2715,9 @@ Logspline density estimation.
 @item lokern
 Kernel regression smoothing with adaptive local or global plug-in
 bandwidth selection.
+@item longmemo
+Datasets and Functionality from the textbook ``Statistics for
+Long-Memory Processes'' by J. Beran, 1994, Chapman & Hall.
 @item lpSolve
 Functions that solve general linear/integer problems, assignment
 problems, and transportation problems via interfacing Lp_solve.
@@ -2707,6 +2761,9 @@ Emulate MATLAB code using R.
 @item maxstat
 Maximally selected rank and Gauss statistics with several p-value
 approximations.
+@item mblm
+Median-based Linear models, using Theil-Sen single or Siegel repeated
+medians.
 @item mcgibbsit
 Warnes and Raftery's MCGibbsit MCMC diagnostic.
 @item mclust
@@ -2771,8 +2828,14 @@ Fits a variety of mixtures models for multivariate observations with
 user-difined distributions and curves.
 @item modeltools
 A collection of tools to deal with statistical models.
-@item mscalib
-Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
+@item moments
+Moments, skewness, kurtosis and related tests.
+@c <COMMENT>
+@c Moved to the Archive on 2005-07-27 as requested by Witold Eryk Wolski
+@c <W.E.Wolski@ncl.ac.uk> (package now in BioC).
+@c @item mscalib
+@c Calibration and filtering of MALDI-TOF Peptide Mass Fingerprint data.
+@c </COMMENT>
 @item msm
 Functions for fitting continuous-time Markov multi-state models to
 categorical processes observed at arbitrary times, optionally with
@@ -2834,6 +2897,9 @@ a Gibbs sampler.
 @c @item netCDF
 @c Read data from netCDF files.
 @c </COMMENT>
+@item network
+Tools to create and modify network objects, which can represent a range
+of relational data types.
 @item neural
 RBF and MLP neural networks with graphical user interface.
 @item nice
@@ -2906,6 +2972,9 @@ Periodic Autoregression Analysis.
 Functions intended to facilitate certain basic analyses of DNA array
 data, especially with regard to comparing expression levels between two
 types of tissue.
+@item permtest
+Permutation test to compare variability within and distance between two
+groups.
 @item perturb
 Perturbation analysis for evaluating collinearity.
 @item pgam
@@ -2951,6 +3020,8 @@ Polychoric and polyserial correlations.
 @item polynom
 A collection of functions to implement a class for univariate polynomial
 manipulations.
+@item powerpkg
+Power analyses for the affected sib pair and the TDT design.
 @item ppc
 Sample classification of protein mass spectra by peak probabilty
 contrasts.
@@ -3014,6 +3085,8 @@ running BUGS from R.  Support for Linux systems with Wine is emphasized.
 @item rcdd
 C Double Description for R, an interface to the CDD computational
 geometry library.
+@item rcom
+R COM Client Interface and internal COM Server.
 @item ref
 Functions for creating references, reading from and writing ro
 references and a memory efficient refdata type that transparently
@@ -3035,6 +3108,8 @@ Functions to facilitate inference on the relative importance of
 predictors in a linear or generalized linear model.
 @item relsurv
 Various functions for regression in relative survival.
+@item reshape
+Flexibly reshape data.
 @item resper
 Sampling from restricted permutations.
 @item rgdal
@@ -3135,6 +3210,8 @@ Routines for the statistical analysis of shapes, including procrustes
 analysis, displaying shapes and principal components, testing for mean
 shape difference, thin-plate spline transformation grids and edge
 superimposition methods.
+@item simex
+SIMEX and MCSIMEX algorithms for measurement error models.
 @item simpleboot
 Simple bootstrap routines.
 @item skewt
@@ -3275,6 +3352,8 @@ Task-Parallel R package.
 @item tdist
 Computes the distribution of a linear combination of independent
 Student's @math{t} variables.
+@item tdthap
+Transmission/disequilibrium tests for extended marker haplotypes.
 @item tensor
 Tensor product of arrays.
 @item time
@@ -3290,6 +3369,8 @@ assessment from tree-rings.
 A constrained two-dimensional Delaunay triangulation package.
 @item tseries
 Package for time series analysis with emphasis on non-linear modelling.
+@item tseriesChaos
+Routines for the analysis of non-linear time series.
 @item tuneR
 Collection of tools to analyze music, handle wave files, transcription,
 etc.
@@ -3401,9 +3482,6 @@ time series package.  Contains PADI, juice and monitoring extensions.
 @item ensemble
 Ensembles of tree classifiers.
 
-@item rcom
-R COM Client Interface and internal COM Server.
-
 @c <COMMENT>
 @c Moved to Devel for 1.5 as it fails R CMD check.
 @c Moved to Attic for 1.5.1 as apparently no longer actively
@@ -3452,6 +3530,8 @@ R package repository is available via @url{http://www.omegahat.org/R/}.
 Currently, there are the following packages.
 
 @table @strong
+@item Aspell
+An interface to facilities in the aspell library.
 @item CORBA
 Dynamic CORBA client/server facilities for R.  Connects to other
 CORBA-aware applications developed in arbitrary languages, on different

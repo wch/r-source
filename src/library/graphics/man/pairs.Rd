@@ -7,22 +7,11 @@
 \description{
   A matrix of scatterplots is produced.
 }
-\synopsis{
-pairs(x, \dots)
-pairs.formula(formula, data = NULL, \dots, subset, na.action = stats::na.pass)
-pairs.default(x, labels, panel = points, \dots,
-              main = NULL, oma = NULL,
-              font.main = par("font.main"), cex.main = par("cex.main"),
-              lower.panel = panel, upper.panel = panel,
-              diag.panel = NULL, text.panel = textPanel,
-              label.pos = 0.5 + has.diag/3,
-              cex.labels = NULL, font.labels = 1,
-              row1attop = TRUE, gap = 1)
-}
 \usage{
 pairs(x, \dots)
 
-\method{pairs}{formula}(formula, data = NULL, \dots, subset, na.action = na.pass)
+\method{pairs}{formula}(formula, data = NULL, \dots, subset,
+      na.action = stats::na.pass)
 
 \method{pairs}{default}(x, labels, panel = points, \dots,
       lower.panel = panel, upper.panel = panel,
@@ -52,8 +41,13 @@ pairs(x, \dots)
   \item{labels}{the names of the variables.}
   \item{panel}{\code{function(x,y,\dots)} which is used to plot
     the contents of each panel of the display.}
-  \item{\dots}{graphical parameters can be given as arguments to
-    \code{plot}.}
+  \item{\dots}{
+    arguments to be passed to or from methods.
+    
+    Also, graphical parameters can be given as can arguments to
+    \code{plot} such as \code{main}.  \code{par("oma")} will be set
+    appropriately unless specified.
+  }
   \item{lower.panel, upper.panel}{separate panel functions to be used
     below and above the diagonal respectively.}
   \item{diag.panel}{optional \code{function(x, \dots)} to be

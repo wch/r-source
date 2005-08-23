@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-06-02 15:33+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -62,9 +62,6 @@ msgstr "最初の引数が無効です"
 
 msgid "'formula' missing or incorrect"
 msgstr "'formula'が無いか不正確です"
-
-msgid "'coef' must not be negative"
-msgstr "'coef' は負にはなれません"
 
 msgid "'at' must have same length as 'z$n', i.e."
 msgstr "'at' は 'z$n' と同じ長さを持たなければなりません。すなわち "
@@ -355,6 +352,9 @@ msgid "Outlier (%s) in boxplot %d is not drawn"
 msgid_plural "Outliers (%s) in boxplot %d are not drawn"
 msgstr[0] "一つの外れ値 (%s) が boxplot %d から除かれました"
 msgstr[1] "(複数の)外れ値 (%s) が boxplot %d から除かれました"
+
+#~ msgid "'coef' must not be negative"
+#~ msgstr "'coef' は負にはなれません"
 
 #~ msgid "'x' and 'y' lengths differ"
 #~ msgstr "'x' と 'y' の長さが異なります"

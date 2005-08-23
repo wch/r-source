@@ -108,7 +108,34 @@ function (x, file = "", append = FALSE, quote = TRUE, sep = " ",
                           as.integer(quote), qmethod != "double"))
 }
 
-write.csv <- function(..., col.names=NA, sep=",", qmethod="double")
-    write.table(..., col.names=NA, sep=",", qmethod="double")
-write.csv2 <- function(..., col.names=NA, dec=",", sep=";", qmethod="double")
-    write.table(..., col.names=NA, dec=",", sep=";", qmethod="double")
+write.csv <- function(...)
+{
+    Call <- match.call(expand.dots = TRUE)
+    for(argname in c("col.names", "sep", "dec", "qmethod"))
+        if(!is.null(Call[[argname]]))
+            warning(gettextf("attempt to change '%s' ignored", argname),
+                    domain = NA)
+    rn <- Call$row.names
+    Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
+    Call$sep <- ","
+    Call$dec <- "."
+    Call$qmethod <- "double"
+    Call[[1]] <- as.name("write.table")
+    eval.parent(Call)
+}
+
+write.csv2 <- function(...)
+{
+    Call <- match.call(expand.dots = TRUE)
+    for(argname in c("col.names", "sep", "dec", "qmethod"))
+        if(!is.null(Call[[argname]]))
+            warning(gettextf("attempt to change '%s' ignored", argname),
+                    domain = NA)
+    rn <- Call$row.names
+    Call$col.names <- if(is.logical(rn) && !rn) TRUE else NA
+    Call$sep <- ";"
+    Call$dec <- ","
+    Call$qmethod <- "double"
+    Call[[1]] <- as.name("write.table")
+    eval.parent(Call)
+}

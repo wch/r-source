@@ -214,6 +214,12 @@ F77_NAME(dsyr2k)(const char *uplo, const char *trans,
 		 const double *alpha, const double *a, const int *lda,
 		 const double *b, const int *ldb,
 		 const double *beta, double *c, const int *ldc);
+
+/*  LSAME returns .TRUE. if CA is the same letter as CB regardless of
+    case. */
+extern int
+F77_NAME(lsame)(char *ca, char *cb);
+
 #ifdef  __cplusplus
 }
 #endif

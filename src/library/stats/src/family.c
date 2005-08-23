@@ -3,6 +3,34 @@
 #include <R_ext/Constants.h>
 #include "family.h"
 
+static const double THRESH = 30.;
+static const double MTHRESH = -30.;
+static const double INVEPS = 1/DOUBLE_EPS;
+
+/** 
+ * Evaluate x/(1 - x). An inline function is used so that x is
+ * evaluated once only. 
+ * 
+ * @param x input in the range (0, 1)
+ * 
+ * @return x/(1 - x) 
+ */
+static R_INLINE double x_d_omx(double x) {
+    if (x < 0 || x > 1)
+	error(_("Value %d out of range (0, 1)"), x);
+    return x/(1 - x);
+}
+
+/** 
+ * Evaluate x/(1 + x). An inline function is used so that x is
+ * evaluated once only. 
+ * 
+ * @param x input
+ * 
+ * @return x/(1 + x) 
+ */
+static R_INLINE double x_d_opx(double x) {return x/(1 + x);}
+
 SEXP logit_link(SEXP mu)
 {
     int i, n = LENGTH(mu);
@@ -11,7 +39,7 @@ SEXP logit_link(SEXP mu)
     if (!n || !isReal(mu))
 	error(_("Argument %s must be a nonempty numeric vector"), "mu");
     for (i = 0; i < n; i++)
-	REAL(ans)[i] = log(REAL(mu)[i]/(1 - REAL(mu)[i]));
+	REAL(ans)[i] = log(x_d_omx(REAL(mu)[i]));
     UNPROTECT(1);
     return ans;
 }
@@ -20,17 +48,14 @@ SEXP logit_linkinv(SEXP eta)
 {
     SEXP ans = PROTECT(duplicate(eta));
     int i, n = LENGTH(eta);
-    double thresh;
 
     if (!n || !isReal(eta))
 	error(_("Argument %s must be a nonempty numeric vector"), "eta");
-    thresh = -log(DOUBLE_EPS);
     for (i = 0; i < n; i++) {
 	double etai = REAL(eta)[i];
 
-	if (etai > thresh) etai = thresh;
-	if (etai < -thresh) etai = -thresh;
-	REAL(ans)[i] = exp(etai)/(1 + exp(etai));
+	REAL(ans)[i] = x_d_opx((etai < MTHRESH) ? DOUBLE_EPS :
+			       ((etai > THRESH) ? INVEPS : exp(etai)));
     }
     UNPROTECT(1);
     return ans;
@@ -40,16 +65,14 @@ SEXP logit_mu_eta(SEXP eta)
 {
     SEXP ans = PROTECT(duplicate(eta));
     int i, n = LENGTH(eta);
-    double thresh;
 
     if (!n || !isReal(eta))
 	error(_("Argument %s must be a nonempty numeric vector"), "eta");
-    thresh = -log(DOUBLE_EPS);
     for (i = 0; i < n; i++) {
 	double etai = REAL(eta)[i];
 	double opexp = 1 + exp(etai);
 
-	REAL(ans)[i] = (etai > thresh || etai < -thresh) ? DOUBLE_EPS :
+	REAL(ans)[i] = (etai > THRESH || etai < MTHRESH) ? DOUBLE_EPS :
 	    exp(etai)/(opexp * opexp);
     }
     UNPROTECT(1);

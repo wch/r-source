@@ -13,9 +13,9 @@
 \arguments{
   \item{x}{the object to be printed.}
   \item{digits}{a non-null value for \code{digits} specifies the minimum
-    number of significant digits to be printed in values.  If
-    \code{digits} is \code{NULL}, the value of \code{digits} set by
-    \code{options} is used.}
+    number of significant digits to be printed in values.   The default,
+    \code{NULL}, uses \code{\link{getOption}(digits)}.  (For the
+    intepretation for complex numbers see \code{\link{signif}}.)}
   \item{quote}{logical, indicating whether or not strings
     (\code{\link{character}}s) should be printed with surrounding quotes.}
   \item{na.print}{a character string which is used to indicate
@@ -35,8 +35,10 @@
 
   The same number of decimal places is used throughout a vector,  This
   means that \code{digits} specifies the minimum number of significant
-  digits to be used, and that at least one entry will be printed with
-  that minimum number.
+  digits to be used, and that at least one entry will be encoded with
+  that minimum number.  However, if all the encoded elements then have
+  trailing zeroes, the number of decimal places is reduced until at
+  least one element has a non-zero final digit.
 
   Attributes are printed respecting their class(es), using the values of
   \code{digits} to \code{print.default}, but using the default values

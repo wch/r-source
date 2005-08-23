@@ -27,9 +27,9 @@ nlminb <-
                   scale.init = 38, sing.tol = 37, diff.g = 42)
         pos <- pmatch(nms, names(cpos))
         if (any(nap <- is.na(pos))) {
-            warn(paste("unrecognized control element(s) named `",
-                       paste(nms[nap], collapse = ", "),
-                       "' ignored", sep = ""))
+            warning(paste("unrecognized control element(s) named `",
+                          paste(nms[nap], collapse = ", "),
+                          "' ignored", sep = ""))
             pos <- pos[!nap]
             control <- control[!nap]
         }

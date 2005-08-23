@@ -66,10 +66,12 @@ TukeyHSD.aov <-
         center <- center[keep]
         width <- qtukey(conf.level, length(means), x$df.residual) *
             sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep]
-        dnames <- list(NULL, c("diff", "lwr", "upr"))
+        est <- center/(sqrt((MSE/2) * outer(1/n, 1/n, "+"))[keep])
+        pvals <- ptukey(abs(est),length(means),x$df.residual,lower.tail=FALSE)
+        dnames <- list(NULL, c("diff", "lwr", "upr","p adj"))
         if (!is.null(nms)) dnames[[1]] <- outer(nms, nms, paste, sep = "-")[keep]
-        out[[nm]] <- array(c(center, center - width, center + width),
-                           c(length(width), 3), dnames)
+        out[[nm]] <- array(c(center, center - width, center + width,pvals),
+                           c(length(width), 4), dnames)
     }
     class(out) <- c("multicomp", "TukeyHSD")
     attr(out, "orig.call") <- x$call
@@ -78,7 +80,7 @@ TukeyHSD.aov <-
     out
 }
 
-print.TukeyHSD <- function(x, ...)
+print.TukeyHSD <- function(x, digits=getOption("digits"), ...)
 {
     cat("  Tukey multiple comparisons of means\n")
     cat("    ", format(100*attr(x, "conf.level"), 2),
@@ -86,8 +88,13 @@ print.TukeyHSD <- function(x, ...)
     if (attr(x, "ordered"))
         cat("    factor levels have been ordered\n")
     cat("\nFit: ", deparse(attr(x, "orig.call"), 500), "\n\n", sep="")
-    attr(x, "orig.call") <- attr(x, "conf.level") <- attr(x, "ordered") <- NULL
-    print.default(unclass(x), ...)
+    xx <- unclass(x)
+    attr(xx, "orig.call") <- attr(xx, "conf.level") <- attr(xx, "ordered") <- NULL
+    xx[] <- lapply(xx, function(z, digits)
+               {z[, "p adj"] <- round(z[, "p adj"], digits); z},
+                   digits=digits)
+    print.default(xx, digits, ...)
+    x
 }
 
 plot.TukeyHSD <- function (x, ...)

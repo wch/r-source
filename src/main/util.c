@@ -306,8 +306,7 @@ Rboolean isUserBinop(SEXP s)
 
 Rboolean isNull(SEXP s)
 {
-    return (s == R_NilValue ||
-	    (TYPEOF(s) == EXPRSXP && LENGTH(s) == 0));
+    return (s == R_NilValue);
 }
 
 
@@ -901,10 +900,10 @@ SEXP do_merge(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     xi = CAR(args);
     if ( !isInteger(xi) || !(nx = LENGTH(xi)) )
-	error(_("invalid 'xinds' argument"));
+	error(_("invalid '%s' argument"), "xinds");
     yi = CADR(args);
     if ( !isInteger(yi) || !(ny = LENGTH(yi)) )
-	error(_("invalid 'yinds' argument"));
+	error(_("invalid '%s' argument"), "yinds");
     if(!LENGTH(ans = CADDR(args)) || NA_LOGICAL == (all_x = asLogical(ans)))
 	errorcall(call, _("'all.x' must be TRUE or FALSE"));
     if(!LENGTH(ans = CADDDR(args))|| NA_LOGICAL == (all_y = asLogical(ans)))
@@ -1088,29 +1087,36 @@ SEXP do_encodeString(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if (TYPEOF(x = CAR(args)) != STRSXP)
 	errorcall(call, _("a character vector argument expected"));
-    w = asInteger(CADR(args));
-    if(w != NA_INTEGER && w < 0)
-	errorcall(call, _("invalid value for 'w'"));
+    if(isNull(CADR(args))) w = NA_INTEGER;
+    else {
+	w = asInteger(CADR(args));
+	if(w != NA_INTEGER && w < 0)
+	    errorcall(call, _("invalid '%s' value"), "width");
+    }
     findWidth = (w == NA_INTEGER);
     s = CADDR(args);
     if(LENGTH(s) != 1 || TYPEOF(s) != STRSXP)
-	errorcall(call, _("invalid value for 'quote'"));
+	errorcall(call, _("invalid '%s' value"), "quote");
     cs = CHAR(STRING_ELT(s, 0));
     if(strlen(cs) > 0) quote = cs[0];
     if(strlen(cs) > 1)
 	warningcall(call, 
 		    _("only the first character of 'quote' will be used"));
     justify = asInteger(CADDDR(args));
-    if(justify == NA_INTEGER) 
-	errorcall(call, _("invalid value for 'justify'"));
+    if(justify == NA_INTEGER || justify < 0 || justify > 3) 
+	errorcall(call, _("invalid '%s' value"), "justify");
+    if(justify == 3) w = 0;
     na = asLogical(CAD4R(args));
-    if(na == NA_LOGICAL) errorcall(call, _("invalid value for 'na'"));
+    if(na == NA_LOGICAL) errorcall(call, _("invalid '%s' value"), "na.encode");
 
     len = LENGTH(x);
-    if(findWidth) {
+    if(findWidth && justify < 3) {
 	w  = 0;
-	for(i = 0; i < len; i++)
-	    w = imax2(w, Rstrlen(STRING_ELT(x, i), quote));
+	for(i = 0; i < len; i++) {
+	    s = STRING_ELT(x, i);
+	    if(na || s != NA_STRING)
+		w = imax2(w, Rstrlen(s, quote));
+	}
 	if(quote) w +=2; /* for surrounding quotes */
     }
     PROTECT(ans = duplicate(x));
@@ -1177,10 +1183,10 @@ void mbcsToLatin1(char *in, char *out)
 	return;
     }
     wbuff = (wchar_t *) alloca((res+1) * sizeof(wchar_t));
-    if(!wbuff) error(_("allocation failure in mbcsToLatin1"));
+    if(!wbuff) error(_("allocation failure in 'mbcsToLatin1'"));
     mres = mbstowcs(wbuff, in, res+1);
     if(mres == (size_t)-1)
-	error(_("invalid input in mbcsToLatin1"));
+	error(_("invalid input in 'mbcsToLatin1'"));
     for(i = 0; i < res; i++) {
 	/* here we do assume Unicode wchars */
 	if(wbuff[i] > 0xFF) out[i] = '.'; 

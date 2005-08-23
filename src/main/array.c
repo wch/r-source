@@ -28,7 +28,7 @@
 
 #include <Defn.h>
 #include <Rmath.h>
-#include <R_ext/RS.h>
+#include <R_ext/RS.h>     /* for Calloc/Free */
 #include <R_ext/Applic.h> /* for dgemm */
 
 /* "GetRowNames" and "GetColNames" are utility routines which
@@ -415,7 +415,7 @@ static void matprod(double *x, int nrx, int ncx,
 	for(i = 0; i < nrx*ncy; i++) z[i] = 0;
 }
 
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
 /* ZGEMM - perform one of the matrix-matrix operations    */
 /* C := alpha*op( A )*op( B ) + beta*C */
 extern void
@@ -429,7 +429,7 @@ F77_NAME(zgemm)(const char *transa, const char *transb, const int *m,
 static void cmatprod(Rcomplex *x, int nrx, int ncx,
 		     Rcomplex *y, int nry, int ncy, Rcomplex *z)
 {
-#ifdef HAVE_DOUBLE_COMPLEX
+#ifdef HAVE_FORTRAN_DOUBLE_COMPLEX
     char *transa = "N", *transb = "N";
     int i;
     Rcomplex one, zero;
@@ -1084,10 +1084,11 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 
 	/* reverse summation order to improve cache hits */
 	if (type == REALSXP) {
-	    double *rans = REAL(ans), *ra = rans, *Cnt = NULL, *c;
+	    double *rans = REAL(ans), *ra = rans;
+	    int *Cnt = NULL, *c;
 	    rx = REAL(x);
-	    if (!keepNA && OP == 3) Cnt = Calloc(n, double);
-	    for (ra = rans, i = 0; i < n; i++) *ra++ = 0.0;
+	    if (!keepNA && OP == 3) Cnt = Calloc(n, int);
+	    memset(rans, 0, n*sizeof(double));
 	    for (j = 0; j < p; j++) {
 		ra = rans;
 		if (keepNA)
@@ -1101,8 +1102,7 @@ SEXP do_colsum(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    }
 	    if (OP == 3) {
 		if (keepNA)
-		    for (ra = rans, i = 0; i < n; i++)
-			*ra++ /= p;
+		    for (ra = rans, i = 0; i < n; i++) *ra++ /= p;
 		else {
 		    for (ra = rans, c = Cnt, i = 0; i < n; i++, c++)
 			if (*c > 0) *ra++ /= *c; else *ra++ = NA_REAL;

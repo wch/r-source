@@ -41,7 +41,7 @@ else
 endif
 
 # data
-DSOURCES=$(filter-out $(SPKG)/data/CVS $(SPKG)/data/.svn, $(wildcard $(SPKG)/data/*))
+DSOURCES=$(filter-out $(SPKG)/data/CVS $(SPKG)/data/.svn $(SPKG)/data/.arch-ids, $(wildcard $(SPKG)/data/*))
 ifeq ($(strip $(DSOURCES)),)
   DATA= 
 else
@@ -60,10 +60,10 @@ endif
 
 # demos
 PKGDEMOS0=$(wildcard $(SPKG)/demo/*)
-PKGDEMOS=$(filter-out $(SPKG)/demo/CVS $(SPKG)/demo/.svn $(SPKG)/demo/00Index, $(PKGDEMOS0))
+PKGDEMOS=$(filter-out $(SPKG)/demo/CVS $(SPKG)/demo/.svn $(SPKG)/demo/.arch-ids $(SPKG)/demo/00Index, $(PKGDEMOS0))
 
 # exec
-EXECFILES=$(filter-out $(SPKG)/exec/CVS $(SPKG)/exec/.svn, $(wildcard $(SPKG)/exec/*))
+EXECFILES=$(filter-out $(SPKG)/exec/CVS $(SPKG)/exec/.svn $(SPKG)/exec/.arch-ids, $(wildcard $(SPKG)/exec/*))
 
 # Others: we will remove CVS and subversion files later.
 INSTFILES=$(wildcard $(SPKG)/inst/*)
@@ -156,6 +156,7 @@ ifneq ($(strip $(INSTFILES)),)
 	-@$(CP) -r inst/* $(DPKG)
 	@find $(DPKG) -name CVS -type d -prune -exec rm -rf {} \;
 	@find $(DPKG) -name .svn -type d -prune -exec rm -rf {} \;
+	@find $(DPKG) -name .arch-ids -type d -prune -exec rm -rf {} \;
 endif
 
 

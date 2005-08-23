@@ -62,6 +62,10 @@ unit(x, units, data=NULL)
       specified in the \code{data} argument.}
   }
 
+  A special \code{units} value of \code{"null"} is also allowed,
+  but only makes sense when used in specifying widths of columns
+  or heights of rows in grid layouts (see \code{\link{grid.layout}}).
+  
   The \code{data} argument must be a list when the \code{unit.length()}
   is greater than 1.  For example,
   \code{unit(rep(1, 3), c("npc", "strwidth", "inches"),

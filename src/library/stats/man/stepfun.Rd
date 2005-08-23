@@ -68,15 +68,13 @@ as.stepfun(x, \dots)
 
   The \code{\link{environment}} of \code{fn} contains all the
   information needed;
-  \itemize{
     \item{"x","y"}{the original arguments}
     \item{"n"}{number of knots (x values)}
     \item{"f"}{continuity parameter}
-    \item{"yleft", "yright"}{the function values \emph{outside} the knots;}
+    \item{"yleft", "yright"}{the function values \emph{outside} the knots}
     \item{"method"}{(always \code{== "constant"}, from
       \code{\link{approxfun}(.)}).}
-  }
-  The knots are also available by \code{\link{knots}(fn)}.
+  The knots are also available via \code{\link{knots}(fn)}.
 }
 \author{
   Martin Maechler, \email{maechler@stat.math.ethz.ch} with some basic

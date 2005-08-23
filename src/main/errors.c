@@ -710,7 +710,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     if(isNull(string) || !n) return string;
 
-    if(!isString(string)) errorcall(call, _("invalid 'string' value"));
+    if(!isString(string)) errorcall(call, _("invalid '%s' value"), "string");
 
     if(isNull(CAR(args))) {
 	RCNTXT *cptr;
@@ -737,7 +737,7 @@ SEXP do_gettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else if(isString(CAR(args)))
 	domain = CHAR(STRING_ELT(CAR(args),0));
-    else errorcall(call, _("invalid 'domain' value"));
+    else errorcall(call, _("invalid '%s' value"), "domain");
 
     if(strlen(domain)) {
 	PROTECT(ans = allocVector(STRSXP, n));
@@ -828,7 +828,7 @@ SEXP do_ngettext(SEXP call, SEXP op, SEXP args, SEXP rho)
 	}
     } else if(isString(sdom))
 	domain = CHAR(STRING_ELT(sdom,0));
-    else errorcall(call, _("invalid 'domain' value"));
+    else errorcall(call, _("invalid '%s' value"), "domain");
 
     if(strlen(domain)) {
 	char *fmt = dngettext(domain,
@@ -853,12 +853,12 @@ SEXP do_bindtextdomain(SEXP call, SEXP op, SEXP args, SEXP rho)
     
     checkArity(op, args);
     if(!isString(CAR(args)) || LENGTH(CAR(args)) != 1) 
-	errorcall(call, _("invalid 'domain' value"));
+	errorcall(call, _("invalid '%s' value"), "domain");
     if(isNull(CADR(args))) {
 	res = bindtextdomain(CHAR(STRING_ELT(CAR(args),0)), NULL);
     } else {
 	if(!isString(CADR(args)) || LENGTH(CADR(args)) != 1) 
-	    errorcall(call, _("invalid 'dirname' value"));
+	    errorcall(call, _("invalid '%s' value"), "dirname");
 	res = bindtextdomain(CHAR(STRING_ELT(CAR(args),0)),
 			     CHAR(STRING_ELT(CADR(args),0)));
     }
@@ -1396,12 +1396,12 @@ void R_InsertRestartHandlers(RCNTXT *cptr, Rboolean browser)
     R_HandlerStack = CONS(entry, R_HandlerStack);
     UNPROTECT(1);
     PROTECT(name = ScalarString(mkChar(browser ? "browser" : "tryRestart")));
-    entry = allocVector(VECSXP, 2);
-    SET_VECTOR_ELT(entry, 0, name);
+    PROTECT(entry = allocVector(VECSXP, 2));
+    PROTECT(SET_VECTOR_ELT(entry, 0, name));
     SET_VECTOR_ELT(entry, 1, R_MakeExternalPtr(cptr, R_NilValue, R_NilValue));
     setAttrib(entry, R_ClassSymbol, ScalarString(mkChar("restart")));
     R_RestartStack = CONS(entry, R_RestartStack);
-    UNPROTECT(1);
+    UNPROTECT(3);
 }
 
 SEXP do_dfltWarn(SEXP call, SEXP op, SEXP args, SEXP rho)

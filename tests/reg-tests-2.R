@@ -1446,7 +1446,7 @@ str(factor(x, exclude=""))
 
 
 ## print.factor(quote=TRUE) was not quoting levels
-x <- c("a", NA, "b", 'a " test')
+x <- c("a", NA, "b", 'a " test') #" (comment for fontification)
 factor(x)
 factor(x, exclude="")
 print(factor(x), quote=TRUE)
@@ -1574,14 +1574,6 @@ try(x[rbind(c(1,1), c(2,2), c(-3,3))])
 try(x[rbind(c(1,1), c(2,2), c(-4,3))])
 ## generally allowed in 2.1.0.
 
-## Branch cuts in complex inverse trig functions
-atan(2)
-atan(2+0i)
-tan(atan(2+0i))
-atan(1.0001+0i)
-atan(0.9999+0i)
-## previously not as in Abramowitz & Stegun.
-
 
 ## printing RAW matrices/arrays was not implemented
 s <- sapply(0:7, function(i) rawShift(charToRaw("my text"),i))
@@ -1595,6 +1587,28 @@ s
 dd <- data.frame(a = gl(3,4), b = gl(4,1,12))
 model.matrix(~ .^2, data = dd)
 ## lost ^2 in 2.1.1
+
+
+## add1.lm and drop.lm did not know about offsets (PR#8049)
+set.seed(2)
+y <- rnorm(10)
+z <- 1:10
+lm0 <- lm(y ~ 1)
+lm1 <- lm(y ~ 1, offset = 1:10)
+lm2 <- lm(y ~ z, offset = 1:10)
+
+add1(lm0, scope = ~ z)
+anova(lm1, lm2)
+add1(lm1, scope = ~ z)
+drop1(lm2)
+## Last two ignored the offset in 2.1.1
+
+
+## tests of raw conversion
+as.raw(1234)
+as.raw(list(a=1234))
+## 2.1.1: spurious and missing messages, wrong result for second.
+
 
 ### end of tests added in 2.1.1 patched ###
 
@@ -1649,3 +1663,23 @@ x <- NULL
 x[[1]] <- 1:3
 x # list
 ##
+
+
+## printing of a kernel:
+kernel(1, 0)
+## printed wrongly in R <= 2.1.1
+
+
+## using NULL as a replacement value
+DF <- data.frame(A=1:2, B=3:4)
+try(DF[2, 1:3] <- NULL)
+## wrong error message in R < 2.2.0
+
+## tests of signif
+ob <- 0:9 * 2000
+print(signif(ob, 3), digits=17) # had rounding error in 2.1.1
+signif(1.2347e-305, 4)
+signif(1.2347e-306, 4)  # only 3 digits in 2.1.1
+signif(1.2347e-307, 4)
+##
+

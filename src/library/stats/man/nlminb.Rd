@@ -14,7 +14,7 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
   }
   \item{objective}{
     function to be minimized.  Must return a scalar value (possibly
-    NA/Inf?).  The first argument to \code{objective} is the vector of
+    NA/Inf).  The first argument to \code{objective} is the vector of
     parameters to be optimized, whose initial values are supplied
     through \code{start}.  Further arguments (fixed during the course of
     the optimization) to \code{objective} may be specified as well (see
@@ -54,11 +54,29 @@ nlminb(start, objective, gradient = NULL, hessian = NULL,
   \item{iterations}{Number of iterations performed.}
   \item{evaluations}{Number of objective function and gradient function evaluations}
 }
-\references{ \url{http://netlib.bell-labs.com/netlib/port/} }
-\author{
-  Deepayan Sarkar \email{deepayan@stat.wisc.edu},
-  Douglas Bates \email{bates@stat.wisc.edu}
+\section{Control parameters}{
+  Possible names in the \code{control} list and their default values
+  are:
+  \describe{
+    \item{\code{eval.max}}{Maximum number of evaluations of the objective
+      function allowed.  Defaults to 200.}
+    \item{\code{iter.max}}{Maximum number of iterations allowed.
+      Defaults to 150.}
+    \item{\code{trace}}{The value of the objective function and the parameters
+      is printed every trace'th iteration.  Defaults to 0 which
+      indicates no trace information is to be printed.}
+    \item{\code{abs.tol}}{Absolute tolerance.  Defaults to \code{1e-20}.}
+    \item{\code{rel.tol}}{Relative tolerance.  Defaults to \code{1e-10}.}
+    \item{\code{x.tol}}{X tolerance.  Defaults to \code{1.5e-8}.}
+    \item{\code{step.min}}{Minimum step size.  Defaults to \code{2.2e-14}.}
+%    \item{\code{step.max}}{Defaults to \code{1}.}
+%    \item{\code{scale.init}}{Defaults to \code{-1}.}
+%    \item{\code{sing.tol}}{Defaults to \code{1e-10}.}
+%    \item{\code{diff.g}}{Defaults to \code{2.2e-13}.}
+  }
 }
+\references{ \url{http://netlib.bell-labs.com/netlib/port/} }
+\author{Douglas Bates, Deepayan Sarkar}
 \examples{
 x <- rnbinom(100, mu = 10, size = 10)
 hdev <- function(par) {

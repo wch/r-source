@@ -66,7 +66,7 @@ void printIntegerVector(int *x,	   int n, int indx);
 void printRealVector   (double *x, int n, int indx);
 void printComplexVector(Rcomplex *x,int n, int indx);
 
-char *Rsprintf(char*, ...);
+/* char *Rsprintf(char*, ...); */
 #ifdef  __cplusplus
 }
 #endif

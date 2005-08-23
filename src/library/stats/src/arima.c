@@ -43,7 +43,7 @@
  */
 SEXP 
 KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
-	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op)
+	   SEXP sV, SEXP sh, SEXP sPn, SEXP sUP, SEXP op, SEXP fast)
 {
     SEXP res, ans = R_NilValue, resid = R_NilValue, states = R_NilValue;
     int n = LENGTH(sy), p = LENGTH(sa), lop = asLogical(op);
@@ -58,6 +58,16 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	TYPEOF(sa) != REALSXP || TYPEOF(sP) != REALSXP ||
 	TYPEOF(sT) != REALSXP || TYPEOF(sV) != REALSXP)
 	error(_("invalid argument type"));
+
+    /* Avoid modifying arguments unless fast=TRUE */
+    if (!LOGICAL(fast)[0]){
+	    PROTECT(sP=duplicate(sP));
+	    P=REAL(sP);
+	    PROTECT(sa=duplicate(sa));
+	    a=REAL(sa);
+	    PROTECT(sPn=duplicate(sPn));
+	    Pnew=REAL(sPn);
+    }
 
     anew = (double *) R_alloc(p, sizeof(double));
     M = (double *) R_alloc(p, sizeof(double));
@@ -124,10 +134,14 @@ KalmanLike(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 	SET_VECTOR_ELT(ans, 0, res=allocVector(REALSXP, 2));	
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
 	UNPROTECT(1);
+	if (!LOGICAL(fast)[0])
+	    UNPROTECT(3);
 	return ans;
     } else {
 	res = allocVector(REALSXP, 2);
 	REAL(res)[0] = ssq; REAL(res)[1] = sumlog;
+	if (!LOGICAL(fast)[0])
+	    UNPROTECT(3);
 	return res;
     }
 }
@@ -312,7 +326,7 @@ KalmanSmooth(SEXP sy, SEXP sZ, SEXP sa, SEXP sP, SEXP sT,
 
 SEXP 
 KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV, 
-	   SEXP sh)
+	   SEXP sh, SEXP fast)
 {
     SEXP res, forecasts, se;
     int  n = asReal(nahead), p = LENGTH(sa0);
@@ -334,7 +348,12 @@ KalmanFore(SEXP nahead, SEXP sZ, SEXP sa0, SEXP sP0, SEXP sT, SEXP sV,
     PROTECT(res = allocVector(VECSXP, 2));
     SET_VECTOR_ELT(res, 0, forecasts = allocVector(REALSXP, n));
     SET_VECTOR_ELT(res, 1, se = allocVector(REALSXP, n));
-
+    if (!LOGICAL(fast)[0]){
+	PROTECT(sa0=duplicate(sa0));
+	a=REAL(sa0);
+	PROTECT(sP0=duplicate(sP0));
+	P=REAL(sP0);
+    }
     for (l = 0; l < n; l++) {
 	fc = 0.0;
 	for (i = 0; i < p; i++) {

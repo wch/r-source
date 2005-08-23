@@ -413,7 +413,7 @@ static pager pagercreate()
         MCHECK(bt = newtoolbutton(open_image, r, menueditoropen));
         MCHECK(addtooltip(bt, G_("Open script")));
 	gsetcursor(bt, ArrowCursor);
-        setdata(bt, (void *) c);
+	/* wants NULL as data, not the pager */
         r.x += (btsize + 6) ;	
         MCHECK(bt = newtoolbutton(copy1_image, r, pagerpaste));
         MCHECK(addtooltip(bt, G_("Paste to console")));

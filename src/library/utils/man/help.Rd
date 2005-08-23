@@ -43,7 +43,7 @@ type?topic
    libraries currently known.  If the default is used, the loaded
    packages are searched before the libraries.}
  \item{verbose}{logical; if \code{TRUE}, the file name is reported.}
- \item{try.all.packages}{logical; see \code{Notes}.}
+ \item{try.all.packages}{logical; see \code{Note}.}
  \item{chmhelp}{logical (or \code{NULL}). Only relevant under Windows.
    If \code{TRUE} the Compiled HTML version of the help will be shown
    in a help viewer.}

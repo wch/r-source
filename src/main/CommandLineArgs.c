@@ -88,6 +88,8 @@ R_common_command_line(int *pac, char **argv, Rstart Rp)
 {
     int ac = *pac, newac = 1;	/* argv[0] is process name */
     int ierr;
+    /* <FIXME> 'long' would need to be something else on Win64.
+       Perhaps use doubles? */
     long lval;
     R_size_t value;
     char *p, **av = argv, msg[1024];

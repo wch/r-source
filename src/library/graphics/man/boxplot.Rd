@@ -162,7 +162,7 @@ boxplot(len ~ dose, data = ToothGrowth,
         subset = supp == "VC", col = "yellow",
         main = "Guinea Pigs' Tooth Growth",
         xlab = "Vitamin C dose mg",
-        ylab = "tooth length", ylim = c(0,35))
+        ylab = "tooth length", ylim = c(0, 35), yaxs = "i")
 boxplot(len ~ dose, data = ToothGrowth, add = TRUE,
         boxwex = 0.25, at = 1:3 + 0.2,
         subset = supp == "OJ", col = "orange")

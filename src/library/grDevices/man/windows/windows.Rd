@@ -21,18 +21,12 @@ windows(width = 7, height = 7, pointsize = 12,
 win.graph(width = 7, height = 7, pointsize = 12)
 x11(width = 7, height = 7, pointsize = 12)
 X11(width = 7, height = 7, pointsize = 12)
+
 win.metafile(filename = "", width = 7, height = 7, pointsize = 12)
 win.print(width = 7, height = 7, pointsize = 12, printer = "")
 }
 
 \arguments{
-  \item{filename}{the name of the output file: it will be an enhanced
-    Windows metafile, usually given extension \code{.emf} or
-    \code{.wmf}. Up to 511 characters are allowed.
-    The page number is substituted if an integer format is included
-    in the character string. (The result must be less than 600
-    characters long.)  The default, \code{""}, means the clipboard.
-  }
   \item{width}{the (nominal) width of the plotting window in inches.}
   \item{height}{the (nominal) height of the plotting window in inches.}
   \item{pointsize}{the default pointsize of plotted text. The allowed
@@ -48,15 +42,22 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   \item{gamma}{the gamma correction factor.  This value is used
     to ensure that the colors displayed are linearly related to
     RGB values. By default this is taken from
-    \code{\link{options}("gamma"}, or is 1 (no correction) if that is
+    \code{\link{options}("gamma")}, or is 1 (no correction) if that is
     unset.  It sets \code{par("gamma")} for the device.}
   \item{xpos, ypos}{integer.  Position of the top left of the window, in
     pixels.  Negative values are taken from the opposite edge of the
     monitor.  Missing values meant take the default from the
     \file{\link{Rconsole}} file, which in turn defaults to
-    \code{xpos=-25, ypos=0}: this puts the right edge of the windows 25
+    \code{xpos=-25, ypos=0}: this puts the right edge of the window 25
     pixels from the right edge of the monitor.}
   \item{buffered}{logical.  Should the screen output be double-buffered?}
+  \item{filename}{the name of the output file: it will be an enhanced
+    Windows metafile, usually given extension \code{.emf} or
+    \code{.wmf}. Up to 511 characters are allowed.
+    The page number is substituted if an integer format is included
+    in the character string. (The result must be less than 600
+    characters long.)  The default, \code{""}, means the clipboard.
+  }
   \item{printer}{The name of a printer as known to Windows. The default
     causes a dialog box to come for the user to choose a printer.}
 }
@@ -65,7 +66,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   A graphics device is opened. For \code{windows}, \code{win.graph},
   \code{x11} and \code{X11} this is a graphics window on the current
   Windows display: the multiple names are for compatibility with other
-  systems. \code{win.metafile} prints to a file and \code{win.print} to
+  systems.  \code{win.metafile} prints to a file and \code{win.print} to
   the Windows print system.
 }
 
@@ -128,7 +129,7 @@ win.print(width = 7, height = 7, pointsize = 12, printer = "")
   see \code{\link{recordPlot}}.  The active plot history is stored in
   variable \code{.SavedPlots} in package \pkg{base}.
 
-  When a screen device is double-buffered (the default from \R 1.8.0) the
+  When a screen device is double-buffered (the default) the
   screen is updated 100ms after last plotting call or every 500ms during
   continuous plotting.  These times can be altered by setting
   \code{options("windowsTimeout")} to a vector of two integers before

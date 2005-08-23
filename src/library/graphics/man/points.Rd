@@ -53,7 +53,8 @@ points(x, \dots)
   }
   \item{col}{color code or name, see \code{\link{par}}.}
   \item{bg}{background (\dQuote{fill}) color for open plot symbols}
-  \item{cex}{character (or symbol) expansion: a numerical vector.}
+  \item{cex}{character (or symbol) expansion: a numerical vector.
+    This works as a multiple of \code{\link{par}("cex")}.}
   \item{\dots}{Further graphical parameters (see \code{\link{plot.xy}}
     and \code{\link{par}}) may also be supplied as arguments.}
 }

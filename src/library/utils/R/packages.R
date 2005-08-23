@@ -23,21 +23,47 @@ available.packages <-
                 if(length(grep("[A-Za-z]:", tmpf)))
                     tmpf <- substring(tmpf, 2)
             }
+            res0 <- read.dcf(file = tmpf, fields = flds)
+            if(length(res0)) rownames(res0) <- res0[, "Package"]
         } else {
-            tmpf <- tempfile()
-            on.exit(unlink(tmpf))
-            z <- try(download.file(url = paste(repos, "PACKAGES", sep = "/"),
-                                   destfile = tmpf, method = method,
-                                   cacheOK = FALSE, quiet = TRUE),
-                       silent = TRUE)
-            if(inherits(z, "try-error")) {
-                warning(gettextf("unable to access index for repository %s", repos),
-                        call. = FALSE, immediate. = TRUE, domain = NA)
-                next
-            }
-        }
-        res0 <- read.dcf(file = tmpf, fields = flds)
-        if(length(res0)) rownames(res0) <- res0[, "Package"]
+            dest <- file.path(tempdir(),
+                              paste("repos_",
+                                    URLencode(repos, TRUE),
+                                    ".rds", sep=""))
+            if(file.exists(dest)) {
+                res0 <- .readRDS(dest)
+            } else {
+                tmpf <- tempfile()
+                on.exit(unlink(tmpf))
+                op <- options("warn")
+                options(warn = -1)
+                ## This is a binary file
+                z <- try(download.file(url=paste(repos, "PACKAGES.gz", sep = "/"),
+                                       destfile = tmpf, method = method,
+                                       cacheOK = FALSE, quiet = TRUE, mode = "wb"),
+                         silent = TRUE)
+                if(inherits(z, "try-error")) {
+                    ## read.dcf is going to interpret CRLF as LF, so use
+                    ## binary mode to avoid CRCRLF.
+                    z <- try(download.file(url=paste(repos, "PACKAGES", sep = "/"),
+                                           destfile = tmpf, method = method,
+                                           cacheOK = FALSE, quiet = TRUE,
+                                           mode = "wb"),
+                             silent = TRUE)
+                }
+                options(op)
+                if(inherits(z, "try-error")) {
+                    warning(gettextf("unable to access index for repository %s", repos),
+                            call. = FALSE, immediate. = TRUE, domain = NA)
+                    next
+                }
+                res0 <- read.dcf(file = tmpf, fields = flds)
+                if(length(res0)) rownames(res0) <- res0[, "Package"]
+                .saveRDS(res0, dest, compress = TRUE)
+                unlink(tmpf)
+                on.exit()
+            } # end of download vs cached
+        } # end of localcran vs online
         res0 <- cbind(res0, Repository = repos)
         res <- rbind(res, res0)
     }
@@ -55,10 +81,6 @@ available.packages <-
     }
     res
 }
-
-CRAN.packages <- function(CRAN = getOption("repos"), method,
-                          contriburl = contrib.url(CRAN))
-    available.packages(contriburl = contriburl, method = method)
 
 
 ## unexported helper function
@@ -272,7 +294,8 @@ new.packages <- function(lib.loc = NULL, repos = getOption("repos"),
     res
 }
 
-installed.packages <- function(lib.loc = NULL, priority = NULL)
+installed.packages <-
+    function(lib.loc = NULL, priority = NULL,  noCache = FALSE)
 {
     if(is.null(lib.loc))
         lib.loc <- .libPaths()
@@ -284,30 +307,46 @@ installed.packages <- function(lib.loc = NULL, priority = NULL)
         if(any(b <- priority %in% "high"))
             priority <- c(priority[!b], "recommended","base")
     }
-    retval <- character()
+    retval <- matrix("", 0, 2+length(pkgFlds))
     for(lib in lib.loc) {
-        # this excludes packages without DESCRIPTION files
-        pkgs <- .packages(all.available = TRUE, lib.loc = lib)
-        for(p in pkgs){
-            desc <- packageDescription(p, lib = lib, fields = pkgFlds,
-                                       encoding = NA)
-            ## this gives NA if the package has no Version field
-            if (is.logical(desc)) {
-                desc <- rep(as.character(NA), length(pkgFlds))
-                names(desc) <- pkgFlds
-            } else {
-                desc <- unlist(desc)
-                if(!is.null(priority)) # skip if priority does not match
-                    if(is.na(pmatch(desc["Priority"], priority))) next
-                Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
-                                 "[ \t]+")[[1]][2]
-                desc["Built"] <- Rver
+        dest <- file.path(tempdir(),
+                          paste("libloc_", URLencode(lib, TRUE), ".rds",
+                                sep=""))
+        if(!noCache && file.exists(dest) &&
+            file.info(dest)$mtime > file.info(lib.loc)$mtime) {
+            retval <- rbind(retval, .readRDS(dest))
+        } else {
+            ret0 <- character()
+            ## this excludes packages without DESCRIPTION files
+            pkgs <- .packages(all.available = TRUE, lib.loc = lib)
+            for(p in pkgs){
+                desc <- packageDescription(p, lib = lib, fields = pkgFlds,
+                                           encoding = NA)
+                ## this gives NA if the package has no Version field
+                if (is.logical(desc)) {
+                    desc <- rep(as.character(NA), length(pkgFlds))
+                    names(desc) <- pkgFlds
+                } else {
+                    desc <- unlist(desc)
+                    Rver <- strsplit(strsplit(desc["Built"], ";")[[1]][1],
+                                     "[ \t]+")[[1]][2]
+                    desc["Built"] <- Rver
+                }
+                ret0 <- rbind(ret0, c(p, lib, desc))
             }
-            retval <- rbind(retval, c(p, lib, desc))
+            if(length(ret0)) {
+                retval <- rbind(retval, ret0)
+                .saveRDS(ret0, dest, compress = TRUE)
+            }
         }
     }
+    colnames(retval) <- c("Package", "LibPath", pkgFlds)
+    if(length(retval) && !is.null(priority)) {
+        keep <- !is.na(pmatch(retval[,"Priority"], priority,
+                              duplicates.ok = TRUE))
+        retval <- retval[keep, ]
+    }
     if (length(retval)) {
-        colnames(retval) <- c("Package", "LibPath", pkgFlds)
         rownames(retval) <- retval[, "Package"]
     }
     retval

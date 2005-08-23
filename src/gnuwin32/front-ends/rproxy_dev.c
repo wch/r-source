@@ -1,6 +1,6 @@
-/*
+/*******************************************************************************
  *  RProxy: Connector implementation between application and R language
- *  Copyright (C) 2000--2001 Thomas Baier
+ *  Copyright (C) 2000--2005 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,8 +17,11 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
+ *  ---------------------------------------------------------------------------
+ *
  *  $Id: rproxy_dev.c,v 1.7 2003/11/26 20:50:15 murrell Exp $
- */
+ *
+ ******************************************************************************/
 
 /* virtual device size */
 #define DEV_X 500
@@ -507,11 +510,12 @@ int R_Proxy_Graphics_Driver (NewDevDesc* pDD,
     /* Graphics is clipped, text is not */
 
   pDD->canResizePlot = 1;
-  pDD->canChangeFont = 0;
+  pDD->canChangeFont = 1;
   pDD->canRotateText = 1;
   pDD->canResizeText = 1;
   pDD->canClip = 1;
   pDD->displayListOn = 1;
+  pDD->canChangeGamma = 1;
 
   /* initialise x11 device description (most of the work */
   /* has been done in X11_Open) */

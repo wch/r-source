@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -32,6 +32,30 @@ msgstr "help(\"Deprecated\") と help(\"%s-deprecated\") を見て下さい"
 msgid "See help(\"Deprecated\")"
 msgstr "help(\"Deprecated\") を見て下さい"
 
+msgid "invalid numbers in 'quote'"
+msgstr "'quote' 中にの無効な数値があります"
+
+msgid "invalid 'quote' specification"
+msgstr "無効な 'quote' 指定です"
+
+msgid "invalid 'row.names' specification"
+msgstr "無効な 'row.names' の指定です"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr ""
+
+msgid "invalid 'col.names' specification"
+msgstr "無効な 'col.names' 指定です"
+
+msgid "'file' must be a character string or connection"
+msgstr "'file' は文字列かコネクションでなければなりません"
+
+msgid "appending column names to file"
+msgstr "ファイルへの列名を加えます"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: 'x' を強 'character' へ強制変換します"
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "'La.svd' への引数は数値か複素数でなければなりません"
 
@@ -47,7 +71,7 @@ msgstr "'nu' は 0 , nrow(x) または ncol(x) でなければなりません"
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "'nv' は 0 , nrow(x) または ncol(x) でなければなりません"
 
-msgid "all can not be used with other deparse options"
+msgid "'all' can not be used with other deparse options"
 msgstr "deparse オプションでは、すべてを使用することはできません"
 
 msgid "second argument must be a list"
@@ -167,7 +191,7 @@ msgstr "対話的なセッションではありません"
 msgid "not a valid restart specification"
 msgstr "有効な再スタート指定ではありません"
 
-msgid "argument where of length 0"
+msgid "argument 'where' of length 0"
 msgstr "長さ 0 の引数"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
@@ -468,9 +492,6 @@ msgstr "'from' は POSIXt オブジェクトでなければなりません"
 msgid "'to' must be a POSIXt object"
 msgstr "'to' POSIXt のオブジェクトでなければなりません"
 
-msgid "'file' must be a character string or connection"
-msgstr "'file' は文字列かコネクションでなければなりません"
-
 msgid "'x' must be a square matrix"
 msgstr "'x' 正方行列でなければなりません"
 
@@ -586,9 +607,6 @@ msgstr "'vec' は NA 値を含んでいます"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "'vec' は非減少順にソートされていなければいけません"
 
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: 'x' を強 'character' へ強制変換します"
-
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr ""
 "'mode' は \"double\" (\"real\") または \"integer\" でなければなりません"
@@ -677,6 +695,9 @@ msgstr "'%s' と名前のパッケージ(%s 版)がありません"
 
 msgid "there is no package called '%s'"
 msgstr "'%s' という名前のパッケージはありません"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr ""
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr ""
@@ -807,9 +828,6 @@ msgstr "'file' は空でない文字列でなければなりません"
 
 msgid "can only save to a binary connection"
 msgstr "バイナリコネクションへしかセーブできません"
-
-msgid "`file' must be non-empty string"
-msgstr "` file' は空でない文字列でなければなりません"
 
 msgid "image could not be renamed and is left in"
 msgstr "イメージは改名できませんので、以下に残されます："
@@ -1078,9 +1096,6 @@ msgstr "'as.is' に名前があげられた列の中に存在しないものが�
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "'as.is' は間違った長さ %d != cols = %d を持ちます"
 
-msgid "invalid 'row.names' specification"
-msgstr "無効な 'row.names' の指定です"
-
 msgid "'x' must be a vector"
 msgstr "'x' はベクトルでなければなりません"
 
@@ -1186,6 +1201,12 @@ msgstr ""
 msgid "unable to find a plausible encoding"
 msgstr "もっともらしいエンコーディングを見つけられません"
 
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr ""
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr ""
+
 msgid "'%s' is not an existing file"
 msgstr "'%s' は既存のファイルではありません"
 
@@ -1267,17 +1288,8 @@ msgstr "利用できる traceback がありません"
 msgid "argument to 'which' is not logical"
 msgstr "'which' への引数は論理値ではありません"
 
-msgid "invalid numbers in 'quote'"
-msgstr "'quote' 中にの無効な数値があります"
-
-msgid "invalid 'quote' specification"
-msgstr "無効な 'quote' 指定です"
-
-msgid "invalid 'col.names' specification"
-msgstr "無効な 'col.names' 指定です"
-
-msgid "appending column names to file"
-msgstr "ファイルへの列名を加えます"
+msgid "attempt to change '%s' ignored"
+msgstr ""
 
 msgid "invalid 'digits'"
 msgstr "無効な 'digits' です"

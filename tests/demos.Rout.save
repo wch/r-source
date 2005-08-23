@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-05-31 r34513)
+Version 2.2.0 Under development (unstable) (2005-07-11 r34926)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -57,8 +57,8 @@ Type 'q()' to quit R.
     "\nNumber of builtin functions:\t", sum(base.is.f), "\n\t starting with 'is.' :\t ", 
     length(is.bi <- bi[substring(bi, 1, 3) == "is."]), "\n")
 
-Number of base objects:		 1022 
-Number of builtin functions:	 1012 
+Number of base objects:		 1024 
+Number of builtin functions:	 1014 
 	 starting with 'is.' :	  46 
 
 > is.method <- function(fname) {
@@ -598,6 +598,12 @@ In addition: Warning messages:
 	demo(graphics)
 	---- ~~~~~~~~
 
+> require(graphics)
+[1] TRUE
+
+> require(datasets)
+[1] TRUE
+
 > if (dev.cur() <= 1) get(getOption("device"))()
 
 > opar <- par(ask = interactive() && (.Device %in% c("X11", 
@@ -772,6 +778,12 @@ In addition: Warning messages:
 	demo(image)
 	---- ~~~~~
 
+> require(graphics)
+[1] TRUE
+
+> require(datasets)
+[1] TRUE
+
 > if (dev.cur() <= 1) get(getOption("device"))()
 
 > opar <- par(ask = interactive() && (.Device %in% c("X11", 
@@ -869,6 +881,12 @@ flld.c> filled.contour(cos(r^2) * exp(-r/(2 * pi)), frame.plot = FALSE,
 
 	demo(persp)
 	---- ~~~~~
+
+> require(graphics)
+[1] TRUE
+
+> require(datasets)
+[1] TRUE
 
 > if (dev.cur() <= 1) get(getOption("device"))()
 
@@ -1128,9 +1146,18 @@ Model 2: Fr ~ M.user * Temp * Soft + Brand * M.user * Temp
 	demo(smooth)
 	---- ~~~~~~
 
+> require(stats)
+[1] TRUE
+
+> require(graphics)
+[1] TRUE
+
+> require(datasets)
+[1] TRUE
+
 > op <- par(ask = interactive(), mfrow = c(1, 1))
 
-> example(smooth)
+> example(smooth, package = "stats")
 
 smooth> x1 <- c(4, 1, 3, 6, 6, 4, 1, 6, 2, 4, 2)
 
@@ -1240,5 +1267,5 @@ sm     3    3    3    3    4    4    4    4    2     2     2
 > par(op)
 > 
 > cat("Time elapsed: ", proc.time() - .ptime, "\n")
-Time elapsed:  2.15 0.05 2.41 0 0 
+Time elapsed:  3.2 0.14 3.39 0 0 
 > 

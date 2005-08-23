@@ -1,7 +1,7 @@
 /*
  *  R : A Computer Language for Statistical Data Analysis
  *  Copyright (C) 1995, 1996  Robert Gentleman and Ross Ihaka
- *  Copyright (C) 1997--2004  Robert Gentleman, Ross Ihaka and the
+ *  Copyright (C) 1997--2005  Robert Gentleman, Ross Ihaka and the
  *                            R Development Core Team
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -585,7 +585,7 @@ SEXP do_pmatch(SEXP call, SEXP op, SEXP args, SEXP env)
     n_target = LENGTH(target);
     dups_ok = asLogical(CADDR(args));
     if (dups_ok == NA_LOGICAL)
-	errorcall(call, _("invalid 'duplicates.ok' argument"));
+	errorcall(call, _("invalid '%s' argument"), "duplicates.ok");
 
     if (!isString(input) || !isString(target))
 	errorcall(call, _("argument is not of mode character"));
@@ -1082,8 +1082,6 @@ static SEXP duplicated2(SEXP x, HashData *d)
     return ans;
 }
 
-#include <R_ext/RS.h> /* for Calloc, free */
-
 SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP names, sep, ans, dup, newx;
@@ -1108,9 +1106,8 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if(n > 1) {
 	/* +2 for terminator and rounding error */
-	buf = Calloc(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2,
-		     char);
-	cnts = Calloc(n, int);
+	buf = alloca(maxlen + strlen(csep) + log((double)n)/log(10.0) + 2);
+	cnts = (int *) alloca(n * sizeof(int));
 	for(i = 0; i < n; i++) cnts[i] = 1;
 	data.nomatch = 0;
 	PROTECT(newx = allocVector(STRSXP, 1));
@@ -1129,8 +1126,6 @@ SEXP do_makeunique(SEXP call, SEXP op, SEXP args, SEXP env)
 	    /* insert it */ (void) isDuplicated(ans, i, &data);
 	    cnts[dp-1] = cnt+1; /* cache the first unused cnt value */
 	}
-	Free(cnts);
-	Free(buf);
 	UNPROTECT(3);
     }
     UNPROTECT(1);

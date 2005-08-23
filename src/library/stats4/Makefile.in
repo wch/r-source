@@ -36,10 +36,12 @@ all: Makefile DESCRIPTION
 	  R_DEFAULT_PACKAGES=NULL $(R_EXE) --slave > /dev/null ; \
 	fi
 	@if test -d $(srcdir)/inst/po; then \
+	  if test "@USE_NLS@" = "yes"; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/po; \
 	  cp -pr  $(srcdir)/inst/po/* $(top_builddir)/library/$(pkg)/po; \
 	  find "$(top_builddir)/library/$(pkg)/po" -name .svn -type d -prune \
 	    -exec rm -rf \{\} \; 2>/dev/null; \
+	  fi; \
 	fi
 	@if test -d $(srcdir)/man; then \
 	  $(MKINSTALLDIRS) $(top_builddir)/library/$(pkg)/man; \

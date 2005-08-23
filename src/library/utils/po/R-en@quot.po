@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-06-14 08:41\n"
-"PO-Revision-Date: 2005-06-14 08:41\n"
+"POT-Creation-Date: 2005-08-02 18:27\n"
+"PO-Revision-Date: 2005-08-02 18:27\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -136,6 +136,9 @@ msgstr "datasets have been moved from package ‘base’ to package ‘datasets�
 
 msgid "datasets have been moved from package 'stats' to package 'datasets'"
 msgstr "datasets have been moved from package ‘stats’ to package ‘datasets’"
+
+msgid "data index for package '%s' is invalid and will be ignored"
+msgstr "data index for package ‘%s’ is invalid and will be ignored"
 
 msgid "file 'filelist' is missing for directory '%s'"
 msgstr "file ‘filelist’ is missing for directory ‘%s’"

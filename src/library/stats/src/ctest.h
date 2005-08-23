@@ -31,6 +31,7 @@ void fexact(int *nrow, int *ncol, int *table, int *ldtabl,
 	    double *pre, int *workspace, int *mult);
 void pansari(Sint *len, double *x, Sint *m, Sint *n);
 void dansari(Sint *len, double *x, Sint *m, Sint *n);
+void pkolmogorov2x(double *x, Sint *n);
 void pkendall(Sint *len, double *x, Sint *n);
 void pkstwo(Sint *n, double *x, double *tol) ;
 void prho(int *n, double *is, double *pv, int *ifault, int *lower_tail);

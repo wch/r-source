@@ -179,13 +179,13 @@ do_int_unzip(SEXP call, SEXP op, SEXP args, SEXP env)
     ntopics = length(fn);
     if (ntopics > 0) {
 	if (!isString(fn) || ntopics > 500)
-	    errorcall(call, _("invalid 'topics' argument"));
+	    errorcall(call, _("invalid '%s' argument"), "topics");
 	for (i = 0; i < ntopics; i++)
 	    topics[i] = CHAR(STRING_ELT(fn, i));
     }
     args = CDR(args);
     if (!isString(CAR(args)) || LENGTH(CAR(args)) != 1)
-	errorcall(call, _("invalid 'destination' argument"));
+	errorcall(call, _("invalid '%s' argument"), "destination");
     p = R_ExpandFileName(CHAR(STRING_ELT(CAR(args), 0)));
     if (strlen(p) > PATH_MAX - 1)
 	errorcall(call, _("'destination' is too long"));

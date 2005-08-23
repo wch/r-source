@@ -100,6 +100,7 @@ src/appl/maxcol.c
 
 src/appl/interv.c : moved to API from code originally in
 		    src/library/stats/src/bvalue.f, see the following
+
 src/library/stats:
 
 	See the file src/library/stats/COPYRIGHTS.modreg for details
@@ -204,7 +205,7 @@ src/main/vsnprintf.c
 
 
 src/main/regex.c
-   Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+   Copyright (C) 2002, 2003, 2004 Free Software Foundation, Inc.
 src/main/Rregex.h
    Copyright (C) 1985,1989-93,1995-98,2000,2001,2002,2003
    Free Software Foundation, Inc.
@@ -219,7 +220,7 @@ src/extra/xdr/*
 
 src/extra/zlib/README, *.c, *.h
 
-  Taken from zlib-1.2.1 (C) 1995-2003 Jean-loup Gailly and Mark Adler
+  Taken from zlib-1.2.3 (C) 1995-2005 Jean-loup Gailly and Mark Adler
   See src/extra/zlib/README for the licence.
 
 
@@ -231,7 +232,7 @@ src/main/dounzip.c, unzip.h
 
 src/main/acosh.c, asinh.c, atanh.c
 
-used on Windows mainly.  Based on
+used as substitution code only.  Based on
 
   Cephes Math Library Release 2.8:  June, 2000
   Copyright 1984, 1995, 2000 by Stephen L. Moshier
@@ -244,15 +245,9 @@ src/main/apse.h
 
 
 src/extra/pcre/LICENCE
-src/extra/pcre/dftables.c
-src/extra/pcre/get.c
-src/extra/pcre/internal.h
-src/extra/pcre/maketables.c
-src/extra/pcre/pcre.c
-src/extra/pcre/pcre.h
-src/extra/pcre/study.c
+src/extra/pcre/*.[ch]
 
-   Copyright (c) 1997-2004 University of Cambridge
+   Copyright (c) 1997-2005 University of Cambridge
    All rights reserved.
 
 See file src/extra/pcre/LICENCE.  For binary builds of R that requires
@@ -268,9 +263,10 @@ us to include
 	notice, this list of conditions and the following disclaimer in the
 	documentation and/or other materials provided with the distribution.
 
-      * Neither the name of the University of Cambridge nor the names of its
-	contributors may be used to endorse or promote products derived from
-	this software without specific prior written permission.
+      * Neither the name of the University of Cambridge nor the name of Google
+	Inc. nor the names of their contributors may be used to endorse or
+	promote products derived from this software without specific prior
+	written permission.
 
   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -296,7 +292,7 @@ src/extra/bzip2/decompress.c
 src/extra/bzip2/huffman.c
 src/extra/bzip2/randtable.c
 
-   copyright (C) 1996-2002 Julian R Seward.
+   copyright (C) 1996-2005 Julian R Seward.
 
 
 src/library/tools/src/md5.[ch]
@@ -316,3 +312,9 @@ src/extra/intl/*
 Based on gettextize from gettext 0.14.1
    Copyright (C) 1995-1999, 2000-2003 Free Software Foundation, Inc.
 
+src/include/memcheck.h
+src/include/valgrind.h
+
+From valgrind,
+
+   Copyright (C) 2000-2005 Julian Seward.  All rights reserved.

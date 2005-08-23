@@ -59,6 +59,12 @@ mget(x, envir, mode = "any",
   will be called if the item is not found. The argument is the name of
   the item being requested. The default value for \code{inherits} is
   \code{FALSE}, in contrast to the default behavior for \code{get}.
+
+  \code{mode} here is a mixture of the meanings of \code{\link{typeof}}
+  and \code{\link{mode}}:  \code{"function"} covers primitive functions
+  and operators, \code{"numeric"}, \code{"integer"}, \code{"real"}
+  and \code{"double"} all refer to any numeric type, \code{"symbol"} and
+  \code{"name"} are equivalent \emph{but} \code{"language"} must be used.
 }
 \note{
   The reverse of \code{a <- get(nam)} is \code{\link{assign}(nam, a)}.

@@ -545,8 +545,11 @@ RweaveLatexWritedoc <- function(object, chunk)
         cmd <- substr(chunk[pos[1]], cmdloc,
                       cmdloc+attr(cmdloc, "match.length")-1)
         cmd <- sub(object$syntax$docexpr, "\\1", cmd)
-        if(object$options$eval)
+        if(object$options$eval){
             val <- as.character(eval(parse(text=cmd), envir=.GlobalEnv))
+            ## protect against character(0), because sub() will fail
+            if(length(val)==0) val <- ""
+        }
         else
             val <- paste("\\\\verb{<<", cmd, ">>{", sep="")
 

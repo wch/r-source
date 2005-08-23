@@ -1,9 +1,9 @@
 ## based on code by Martyn Plummer, plus kernel code by Adrian Trapletti
-spectrum <- function (..., method = c("pgram", "ar"))
+spectrum<- function (x, ..., method = c("pgram", "ar"))
 {
     switch(match.arg(method),
-	   pgram = spec.pgram(...),
-	   ar	 = spec.ar(...)
+	   pgram = spec.pgram(x, ...),
+	   ar	 = spec.ar(x, ...)
 	   )
 }
 
@@ -170,7 +170,8 @@ spec.pgram <-
 plot.spec <-
     function (x, add = FALSE, ci = 0.95, log = c("yes", "dB", "no"),
               xlab = "frequency", ylab = NULL,
-              type = "l", ci.col="blue", main = NULL, sub = NULL,
+              type = "l", ci.col = "blue", ci.lty = 3,
+              main = NULL, sub = NULL,
               plot.type = c("marginal", "coherency", "phase"), ...)
 {
     spec.ci <- function (spec.obj, coverage = 0.95)
@@ -248,7 +249,7 @@ plot.spec <-
                           x$method, sep = "\n")
         if (is.null(sub) && is.numeric(x$bandwidth))
              sub <- paste("bandwidth = ", format(x$bandwidth, digits = 3),
-                         ci.text, sep="")
+                          ci.text, sep="")
         title(main = main, sub = sub)
     }
     invisible(x)
@@ -258,7 +259,7 @@ plot.spec <-
 plot.spec.coherency <-
     function(x, ci = 0.95,
              xlab = "frequency", ylab = "squared coherency", ylim=c(0,1),
-             type = "l", main = NULL, ci.lty = 3, ci.col="blue", ...)
+             type = "l", main = NULL, ci.col="blue",  ci.lty = 3, ...)
 {
     nser <- NCOL(x$spec)
     ## Formulae from Bloomfield (1976, p.225)
@@ -307,7 +308,7 @@ plot.spec.coherency <-
 plot.spec.phase <-
     function(x, ci = 0.95,
              xlab = "frequency", ylab = "phase", ylim=c(-pi, pi),
-             type = "l", main = NULL, ci.lty = 3, ci.col="blue", ...)
+             type = "l", main = NULL, ci.col = "blue", ci.lty = 3, ...)
 {
     nser <- NCOL(x$spec)
     ## Formulae from Bloomfield (1976, p.225)

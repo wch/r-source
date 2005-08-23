@@ -20,16 +20,16 @@ To use the routines in your own C or C++ programs, include
 #define MATHLIB_STANDALONE
 #include <Rmath.h>
 
-and link against -lRmath.  The example file test.c does nothing
-useful, but is provided to test the process.  Note that you will
-probably not be able to run it unless you add the directory containing
-libRmath.so to the LD_LIBRARY_PATH.
+and link against -lRmath (and -lm if needed on your OS).  The example
+file test.c does nothing useful, but is provided to test the process.
+Note that you will probably not be able to run it unless you add the
+directory containing libRmath.so to the LD_LIBRARY_PATH.
 
 Under Windows you can also link statically against Rmath.a.
 
 
 Rmath.h contains R_VERSION_STRING, which is a character string containing
-the current R version, for example "1.9.0".
+the current R version, for example "2.2.0".
 
 
 A little care is needed to use the random-number routines. You will

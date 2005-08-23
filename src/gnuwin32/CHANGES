@@ -19,6 +19,19 @@ expected form is
 
 with *three* slashes.
 
+The (D)COM support has been updated, and header files and an import 
+library (src/gnuwin32/librproxy.a) are now installed.  See the rcom
+package for usage.
+
+There is now a Brazilian Portuguese translations of the RGui menus.
+
+win.graph(), x11() and X11() now behave in the same way as windows()
+in respect of the xpinch, ypinch, graphics.record, gamma and
+windowsBuffered options.
+
+The script editor menu no longer has an option to exit R (as the pager
+and graphics menus do not).
+
 
 
 R 2.1.1 patched
@@ -27,6 +40,25 @@ R 2.1.1 patched
 The progress bar was being left behind when a download was aborted.
 (PR#7964).  In addition, it now retains its position from one download
 to the next, rather than always moving back to the center of the screen.
+
+Added workaround in Sys.timezone() for Windows' confusion over the GMT
+timezone.
+
+Windows was sometimes leaving behind temporary files associated with
+anonymous file() connections - we now try to clean up after it.
+
+The default type of file for saving a script was not being set by the
+contributed C code for the script editor, so it reverted to the type
+of the last file dialog (PR#8018).
+
+Yet another Windows' unreliability in seek() has been worked around
+(PR#7896).
+
+formatC() with an exponential format sometimes did not line the fields
+up correctly.
+
+The 'Open Script' button shown from the pager toolbar in MDI mode was
+set up incorrectly and liable to crash R.  (PR#8060)
 
 
 

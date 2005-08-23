@@ -60,6 +60,9 @@ double pbeta_raw(double x, double pin, double qin, int lower_tail)
 	double x1 = 1 - x, w, wc;
 	int ierr;
 	bratio(pin, qin, x, x1, &w, &wc, &ierr);
+	if(ierr)
+	    MATHLIB_WARNING(_("pbeta_raw() -> bratio() gave error code %d"),
+			    ierr);
 	return lower_tail ? w : wc;
     }
 
@@ -170,5 +173,6 @@ double pbeta(double x, double pin, double qin, int lower_tail, int log_p)
 	return R_DT_0;
     if (x >= 1)
 	return R_DT_1;
+    /* FIXME: this doesn't allow an extended value range when log_p = TRUE */
     return R_D_val(pbeta_raw(x, pin, qin, lower_tail));
 }

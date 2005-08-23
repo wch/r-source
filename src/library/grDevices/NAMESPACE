@@ -1,30 +1,31 @@
 useDynLib(grDevices)
 
-export(Hershey, check.options, col2rgb, colors, colours, cm, colorRamp,
-       colorRampPalette, convertColor, colorConverter, colorspaces,
+export(Hershey, boxplot.stats, check.options, chull,
+       col2rgb, colors, colours, cm, colorRamp,
+       colorRampPalette, contourLines,
+       convertColor, colorConverter, colorspaces,
        cm.colors, dev.control, dev.copy, dev.copy2eps, dev.cur,
        dev.interactive, dev.list, dev.next, dev.off, dev.prev,
        dev.print, dev.set, extendrange,
        getGraphicsEvent, graphics.off, gray, grey,
        gray.colors, grey.colors, heat.colors, hsv, hcl, make.rgb, n2mfrow,
+       nclass.Sturges, nclass.FD, nclass.scott,
        palette, pdf, pictex, postscript, postscriptFont,
        postscriptFonts, ps.options, rainbow, recordGraphics, recordPlot,
        replayPlot, rgb, rgb2hsv, terrain.colors, topo.colors, trans3d,
        xfig, xy.coords, xyz.coords)
+export(X11, x11, bitmap, dev2bitmap, jpeg, png)
 
 S3method(print, recordedplot)
 S3method(print, colorConverter)
 S3method(print, RGBcolorConverter)
 
-## some of the following are now in common
 if(tools:::.OStype() == "unix") {
-export(GNOME, X11, bitmap, dev2bitmap, gnome, jpeg, png, quartz, x11,
-       X11Font, X11Fonts, quartzFont, quartzFonts)
+export(X11Font, X11Fonts, quartz, quartzFont, quartzFonts)
 }
 
 if(tools:::.OStype() == "windows") {
-export(X11, bitmap, bmp, bringToTop, dev2bitmap, jpeg, png, savePlot,
-       win.graph, win.metafile, win.print, windows, x11,
+export(bmp, bringToTop, savePlot, win.graph, win.metafile, win.print, windows,
        windowsFont, windowsFonts)
 
 S3method("[", SavedPlots)

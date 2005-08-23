@@ -1374,8 +1374,9 @@ C
           IF(.NOT.(INCX.EQ.INCY.AND. INCX .GT.0)) GO TO 70
 C
                NSTEPS=N*INCX
-               IF(DFLAG) 50,10,30
-   10          CONTINUE
+C               IF(DFLAG) 50,10,30
+               IF(DFLAG .GT. 0.0) GOTO 50
+               IF(DFLAG .LT. 0.0) GOTO 30
                DH12=DPARAM(4)
                DH21=DPARAM(3)
                     DO 20 I=1,NSTEPS,INCX
@@ -1413,8 +1414,9 @@ C
           IF(INCX .LT. 0) KX=1+(1-N)*INCX
           IF(INCY .LT. 0) KY=1+(1-N)*INCY
 C
-          IF(DFLAG)120,80,100
-   80     CONTINUE
+C          IF(DFLAG)120,80,100
+          IF(DFLAG. GT. ZERO) GOTO 120
+          IF(DFLAG. LT. ZERO) GOTO 100
           DH12=DPARAM(4)
           DH21=DPARAM(3)
                DO 90 I=1,N
@@ -1612,8 +1614,9 @@ C              FIX-H..
                DH22=DH22*GAM
           GO TO 200
   220 CONTINUE
-          IF(DFLAG)250,230,240
-  230     CONTINUE
+C          IF(DFLAG)250,230,240
+          IF(DFLAG .GT. ZERO) GOTO 250
+          IF(DFLAG .LT. ZERO) GOTO 240
                DPARAM(3)=DH21
                DPARAM(4)=DH12
                GO TO 260

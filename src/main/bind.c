@@ -870,7 +870,7 @@ SEXP FetchMethod(char *generic, char *classname, SEXP env)
     char buf[LNAMBUF];
     SEXP method;
     if (strlen(generic) + strlen(classname) + 2 > LNAMBUF)
-	error(_("class name too long in %s"), generic);
+	error(_("class name too long in '%s'"), generic);
     sprintf(buf, "%s.%s", generic, classname);
     method = findVar(install(buf), env);
     if (TYPEOF(method)==PROMSXP)

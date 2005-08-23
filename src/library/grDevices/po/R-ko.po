@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-07-13 11:08\n"
 "PO-Revision-Date: 2005-05-25 14:17+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -10,6 +10,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "'coef' must not be negative"
+msgstr "'coef'는 negative로는 될수 없습니다"
+
+msgid "no 'z' matrix specified"
+msgstr "'z' 행렬이 지정되어 있지 않습니다"
+
+msgid "increasing 'x' and 'y' values expected"
+msgstr "'x' 그리고 'y'의 값은 승순이 아니면 되지 않습니다"
+
+msgid "no proper 'z' matrix specified"
+msgstr "적절한 'z'행렬이 지정되어 있지 않습니다"
 
 msgid "'bias' must be positive"
 msgstr "'bias'는 poitive 값이 아니면 되지 않습니다"

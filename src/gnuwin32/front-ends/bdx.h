@@ -1,6 +1,6 @@
-/*
+/*******************************************************************************
  *  BDX: Binary Data eXchange format library
- *  Copyright (C) 1999--2001 Thomas Baier
+ *  Copyright (C) 1999--2005 Thomas Baier
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -17,11 +17,20 @@
  *  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
  *  MA 02111-1307, USA
  *
+ *  ---------------------------------------------------------------------------
+ *
  *  $Id: bdx.h,v 1.6 2003/09/13 15:14:09 murdoch Exp $
- */
+ *
+ ******************************************************************************/
 
 #ifndef _BDX_H_
 #define _BDX_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#include "SC_system.h"
 
 /* BDX: Binary Data eXchange Format */
 
@@ -30,38 +39,67 @@
  *
  * 1 ... first version, never set
  * 2 ... removed magic, added version, changed data type defines
+ * 3 ... added generic data type, special symbols (N/A, ERROR), objects
  */
-#define BDX_VERSION 2
+#define BDX_VERSION 3
+
+/*
+ * Vtbl version information:
+ *
+ * 1 ... first interface (bdx_free, bdx_trace, Variant2BDX, BDX2Variant)
+ */
+#define BDX_VTBL_VERSION 1
+
 
 #if 1
 /*
  * very simple implementation, maybe use HDF5 in the future, or expand this
  * format (see rest of file)
  *
- * supported are scalars and arrays of scalars
+ * supported are scalars, arrays, vectors and lists
  *
  * scalar types:
  *
+ *  - GENERIC (element can be any type; only supported for arrays of GENERIC)
  *  - BOOL
  *  - double
  *  - (long) integer
  *  - STRING
- *  - NULL
+ *  - SPECIAL (element is a special value, like n/a or an error code)
  *
- * arrays of scalars (of any dimension)
+ * arrays of scalars (of any dimension), this includes GENERIC, too
  */
 
+/* 04-03-02 | baier | BDX_LIST new, BDX_CMASK extended, removed BDX_VECTOR */
 #define BDX_SCALAR 0x00010000
 #define BDX_ARRAY  0x00020000
-#define BDX_VECTOR 0x00040000
-#define BDX_CMASK  0x00070000
+/* #define BDX_VECTOR 0x00040000 */
+#define BDX_LIST   0x00080000
+#define BDX_CMASK  0x000f0000
 
-#define BDX_BOOL   0x00000001
-#define BDX_INT    0x00000002
-#define BDX_DOUBLE 0x00000004
-#define BDX_STRING 0x00000008
-#define BDX_NULL   0x00000010
-#define BDX_SMASK  0x0000001f
+/* 04-03-02 | baier | BDX_GENERIC new, BDX_NULL changed to BDX_SPECIAL */
+/* 04-11-16 | baier | BDX_HANDLE new (for COM objects), BDX_POINTER new */
+#define BDX_GENERIC 0x00000000
+#define BDX_BOOL    0x00000001
+#define BDX_INT     0x00000002
+#define BDX_DOUBLE  0x00000004
+#define BDX_STRING  0x00000008
+#define BDX_SPECIAL 0x00000010
+#define BDX_HANDLE  0x00000020 /* COM object in BDX_RawData::ptr; marshalled
+				  in an IStream using
+				  CoMarshalInterThreadInterfaceInStream() */
+#define BDX_POINTER 0x00000040 /* raw pointer in BDX_RawData::ptr; reserved. */
+#define BDX_SMASK   0x0000007f
+
+/* 04-03-02 | baier | special value definitions */
+/* 04-10-15 | baier | added rest */
+#define BDX_SV_NULL 0x00000000 /* null element */
+#define BDX_SV_NA   0x00000001 /* missing value */
+#define BDX_SV_DIV0 0x00000002 /* division by zero */
+#define BDX_SV_NAN  0x00000003 /* NAN (not a number) */
+#define BDX_SV_INF  0x00000004 /* +Inf */
+#define BDX_SV_NINF 0x00000005 /* -Inf */
+#define BDX_SV_UNK  0xffffffff /* unknown code */
 
 typedef long BDX_Dimension;
 typedef unsigned long BDX_Count;
@@ -74,18 +112,56 @@ typedef union _BDX_RawData
   double        double_value;
   long int      int_value;
   char*         string_value;
+  unsigned long special_value;
+  void*         ptr;
 } BDX_RawData;
 
+/* 04-03-02 | baier | new for transfer of non-typed arrays */
+typedef struct _BDX_RawDataWithType
+{
+  BDX_Type    type;       /* data type of element (not only scalar!) */
+  BDX_RawData raw_data;
+} BDX_RawDataWithType;
+typedef struct _BDX_NamedRawDataWithType
+{
+  BDX_Type    type;       /* data type of element (not only scalar!) */
+  char*       name;       /* name for list elements */
+  BDX_RawData raw_data;
+} BDX_NamedRawDataWithType;
+
+/* 04-03-02 | baier | BDX_Data reworked, now data union with diff. members */
 typedef struct _BDX_Data
 {
   BDX_Version    version;
   BDX_Type       type;
   BDX_Count      dim_count;
   BDX_Dimension* dimensions;
-  BDX_RawData*   raw_data;
+  /* @TODO: attributes */
+  union {
+    BDX_RawData*              raw_data;
+    BDX_RawDataWithType*      raw_data_with_type;
+    BDX_NamedRawDataWithType* named_raw_data_with_type;
+  } data;
 } BDX_Data;
 
-void bdx_free (BDX_Data* data);
+/* function type-defs */
+typedef void (SYSCALL *BDX_FREE) (struct _BDX_Data* bdx);
+typedef void (SYSCALL *BDX_TRACE) (struct _BDX_Data* bdx);
+typedef int (SYSCALL *BDX_VARIANT2BDX) (VARIANT var,struct _BDX_Data** bdx);
+typedef int (SYSCALL *BDX_BDX2VARIANT) (struct _BDX_Data* bdx,VARIANT* var);
+
+/* function table for BDX library */
+typedef struct _BDX_Vtbl
+{
+  BDX_FREE bdx_free;
+  BDX_TRACE bdx_trace;
+  BDX_VARIANT2BDX Variant2BDX;
+  BDX_BDX2VARIANT BDX2Variant;
+} BDX_Vtbl;
+
+/* entry point: retrieve a proxy object with a given version */
+typedef int (SYSCALL* BDX_GET_VTBL) (BDX_Vtbl**,unsigned long);
+
 
 #else
 
@@ -247,6 +323,10 @@ typedef struct _BDX_Array_Specification
  *     }
  *     BDX_Scalar_DOUBLE[3][9][11] data follows
  */
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif

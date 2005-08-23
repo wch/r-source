@@ -83,13 +83,6 @@ stopifnot(
 all.equal(tan(d45), rep(1,10)))        # TRUE, but
 all      (tan(d45) == rep(1,10))       # FALSE, since not exactly
 all.equal(tan(d45), rep(1,10), tol=0)  # to see difference
-
-all.equal(options(), .Options)           # no
-all.equal(options(), as.list(.Options))  # TRUE
-.Options $ myopt <- TRUE
-   all.equal(options(), as.list(.Options)) #-> "see" the difference
-isTRUE(all.equal(options(), as.list(.Options))) # FALSE
-rm(.Options)
 }
 \keyword{programming}% is.*
 \keyword{utilities}

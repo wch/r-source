@@ -2,31 +2,14 @@
 
 .Library <- file.path(R.home(), "library")
 invisible(.libPaths(unlist(strsplit(Sys.getenv("R_LIBS"), ":"))))
-options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")))
-options(printcmd = as.vector(Sys.getenv("R_PRINTCMD")))
-options(latexcmd = as.vector(Sys.getenv("R_LATEXCMD")))
-options(dvipscmd = as.vector(Sys.getenv("R_DVIPSCMD")))
-options(unzip = as.vector(Sys.getenv("R_UNZIPCMD")))
-options(browser = as.vector(Sys.getenv("R_BROWSER")))
-options(editor = as.vector(Sys.getenv("EDITOR")))
-options(pager = file.path(R.home(), "bin", "pager"))
-options(pdfviewer = as.vector(Sys.getenv("R_PDFVIEWER")))
-if(interactive()) {
-    if (.Platform$GUI == "AQUA")
-	options(device = "quartz")
-    else if (!is.null(Sys.info) && (Sys.info()["sysname"] == "Darwin") && (Sys.getenv("DISPLAY") != ""))
-	options(device = "X11")
-    else if (Sys.getenv("DISPLAY") != "")
-	options(device = switch(.Platform$GUI, "Tk" = "X11",
-		"X11" = "X11", "GNOME" = "X11", "postscript"))
-    else options(device = "postscript")
-} else options(device = "postscript")
-## the next two must be set for x11 to be used, even non-interactively
-options(X11colortype = "true")
-options(X11fonts = c("-adobe-helvetica-%s-%s-*-*-%d-*-*-*-*-*-*-*",
-	"-adobe-symbol-medium-r-*-*-%d-*-*-*-*-*-*-*"))
-options(mailer = "mailx")
 
+options(papersize = as.vector(Sys.getenv("R_PAPERSIZE")),
+        printcmd = as.vector(Sys.getenv("R_PRINTCMD")),
+        latexcmd = as.vector(Sys.getenv("R_LATEXCMD")),
+        dvipscmd = as.vector(Sys.getenv("R_DVIPSCMD")),
+        browser = as.vector(Sys.getenv("R_BROWSER")),
+        pager = file.path(R.home(), "bin", "pager"),
+        pdfviewer = as.vector(Sys.getenv("R_PDFVIEWER")))
 
 ## non standard settings for the R.app GUI of the Mac OS X port
 if(.Platform$GUI == "AQUA") {

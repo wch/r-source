@@ -130,14 +130,15 @@ static void Init_R_Platform(SEXP rho)
 {
     SEXP value, names;
 
-    PROTECT(value = allocVector(VECSXP, 6));
-    PROTECT(names = allocVector(STRSXP, 6));
+    PROTECT(value = allocVector(VECSXP, 7));
+    PROTECT(names = allocVector(STRSXP, 7));
     SET_STRING_ELT(names, 0, mkChar("OS.type"));
     SET_STRING_ELT(names, 1, mkChar("file.sep"));
     SET_STRING_ELT(names, 2, mkChar("dynlib.ext"));
     SET_STRING_ELT(names, 3, mkChar("GUI"));
     SET_STRING_ELT(names, 4, mkChar("endian"));
     SET_STRING_ELT(names, 5, mkChar("pkgType"));
+    SET_STRING_ELT(names, 6, mkChar("path.sep"));
     SET_VECTOR_ELT(value, 0, mkString(R_OSType));
     SET_VECTOR_ELT(value, 1, mkString(R_FileSep));
     SET_VECTOR_ELT(value, 2, mkString(SHLIB_EXT));
@@ -155,6 +156,11 @@ static void Init_R_Platform(SEXP rho)
 #else /* not Win32 nor Aqua */
     SET_VECTOR_ELT(value, 5, mkString("source"));
 #endif
+#endif
+#ifdef Win32
+    SET_VECTOR_ELT(value, 6, mkString(";"));
+#else /* not Win32 */
+    SET_VECTOR_ELT(value, 6, mkString(":"));
 #endif
     setAttrib(value, R_NamesSymbol, names);
     defineVar(install(".Platform"), value, rho);
@@ -223,7 +229,7 @@ SEXP do_fileshow(SEXP call, SEXP op, SEXP args, SEXP rho)
     if (!isString(tl))
 	errorcall(call, _("invalid 'title'"));
     if (!isString(pg))
-        errorcall(call, _("invalid 'pager' specification"));
+        errorcall(call, _("invalid '%s' specification"), "pager");
     f = (char**)R_alloc(n, sizeof(char*));
     h = (char**)R_alloc(n, sizeof(char*));
     for (i = 0; i < n; i++) {
@@ -272,10 +278,10 @@ SEXP do_fileedit(SEXP call, SEXP op, SEXP args, SEXP rho)
 
     n = length(fn);
     if (!isString(ed))
-	errorcall(call, _("invalid 'editor' specification"));
+	errorcall(call, _("invalid '%s' specification"), "editor");
     if (n > 0) {
 	if (!isString(fn))
-	    errorcall(call, _("invalid filename specification"));
+	    errorcall(call, _("invalid '%s' specification"), "filename");
 	f = (char**) R_alloc(n, sizeof(char*));
 	title = (char**) R_alloc(n, sizeof(char*));
 	for (i = 0; i < n; i++) {
@@ -790,13 +796,13 @@ SEXP do_listfiles(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     d = CAR(args);  args = CDR(args);
     if (!isString(d))
-	errorcall(call, _("invalid 'directory' argument"));
+	errorcall(call, _("invalid '%s' argument"), "directory");
     p = CAR(args);  args = CDR(args);
     pattern = 0;
     if (isString(p) && length(p) >= 1 && STRING_ELT(p, 0) != R_NilValue)
 	pattern = 1;
     else if (!isNull(p) && !(isString(p) && length(p) < 1))
-	errorcall(call, _("invalid 'pattern' argument"));
+	errorcall(call, _("invalid '%s' argument"), "pattern");
     allfiles = asLogical(CAR(args)); args = CDR(args);
     fullnames = asLogical(CAR(args)); args = CDR(args);
     recursive = asLogical(CAR(args));
@@ -848,7 +854,7 @@ SEXP do_fileexists(SEXP call, SEXP op, SEXP args, SEXP rho)
     int i, nfile;
     checkArity(op, args);
     if (!isString(file = CAR(args)))
-        errorcall(call, _("invalid 'file' argument"));
+        errorcall(call, _("invalid '%s' argument"), "file");
     nfile = length(file);
     ans = allocVector(LGLSXP, nfile);
     for(i = 0; i < nfile; i++) {
@@ -885,19 +891,19 @@ SEXP do_indexsearch(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     topic = CAR(args); args = CDR(args);
     if(!isString(topic) || length(topic) < 1 || isNull(topic))
-	error(_("invalid 'topic' argument"));
+	error(_("invalid '%s' argument"), "topic");
     path = CAR(args); args = CDR(args);
     if(!isString(path) || length(path) < 1 || isNull(path))
-	error(_("invalid 'path' argument"));
+	error(_("invalid '%s' argument"), "path");
     indexname = CAR(args); args = CDR(args);
     if(!isString(indexname) || length(indexname) < 1 || isNull(indexname))
-	error(_("invalid 'indexname' argument"));
+	error(_("invalid '%s' argument"), "indexname");
     sep = CAR(args); args = CDR(args);
     if(!isString(sep) || length(sep) < 1 || isNull(sep))
-	error(_("invalid 'sep' argument"));
+	error(_("invalid '%s' argument"), "sep");
     type = CAR(args);
     if(!isString(type) || length(type) < 1 || isNull(type))
-	error(_("invalid 'type' argument"));
+	error(_("invalid '%s' argument"), "type");
     strcpy(ctype, CHAR(STRING_ELT(type, 0)));
     snprintf(topicbuf, 256, "%s\t", CHAR(STRING_ELT(topic, 0)));
     ltopicbuf = strlen(topicbuf);
@@ -975,10 +981,10 @@ SEXP do_fileaccess(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid 'names' argument"));
+        errorcall(call, _("invalid '%s' argument"), "names");
     n = length(fn);
     mode = asInteger(CADR(args));
-    if(mode < 0 || mode > 7) error(_("invalid 'mode' value"));
+    if(mode < 0 || mode > 7) error(_("invalid '%s' value"), "mode");
     modemask = 0;
     if (mode & 1) modemask |= X_OK;
     if (mode & 2) modemask |= W_OK;
@@ -1015,7 +1021,7 @@ SEXP do_getlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	error(_("invalid 'category' argument"));
+	error(_("invalid '%s' argument"), "category");
     switch(cat) {
     case 1: cat = LC_ALL; break;
     case 2: cat = LC_COLLATE; break;
@@ -1045,9 +1051,9 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     cat = asInteger(CAR(args));
     if(cat == NA_INTEGER || cat < 0)
-	errorcall(call, _("invalid 'category' argument"));
+	errorcall(call, _("invalid '%s' argument"), "category");
     if(!isString(locale) || LENGTH(locale) != 1)
-	errorcall(call, _("invalid 'locale' argument"));
+	errorcall(call, _("invalid '%s' argument"), "locale");
     switch(cat) {
     case 1:
 	cat = LC_ALL;
@@ -1080,7 +1086,7 @@ SEXP do_setlocale(SEXP call, SEXP op, SEXP args, SEXP rho)
 	p = setlocale(cat, CHAR(STRING_ELT(locale, 0)));
 	break;
     default:
-	errorcall(call, _("invalid 'category' argument"));
+	errorcall(call, _("invalid '%s' argument"), "category");
     }
     PROTECT(ans = allocVector(STRSXP, 1));
     if(p) SET_STRING_ELT(ans, 0, mkChar(p));
@@ -1177,7 +1183,7 @@ SEXP do_pathexpand(SEXP call, SEXP op, SEXP args, SEXP rho)
     checkArity(op, args);
     fn = CAR(args);
     if (!isString(fn))
-        errorcall(call, _("invalid 'path' argument"));
+        errorcall(call, _("invalid '%s' argument"), "path");
     n = length(fn);
     PROTECT(ans = allocVector(STRSXP, n));
     for (i = 0; i < n; i++)
@@ -1245,8 +1251,8 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 	        break;
 	    }
 #endif
-    PROTECT(ans = allocVector(LGLSXP, 10));
-    PROTECT(ansnames = allocVector(STRSXP, 10));
+    PROTECT(ans = allocVector(LGLSXP, 11));
+    PROTECT(ansnames = allocVector(STRSXP, 11));
 
     SET_STRING_ELT(ansnames, i, mkChar("jpeg"));
 #ifdef HAVE_JPEG
@@ -1342,6 +1348,14 @@ SEXP do_capabilities(SEXP call, SEXP op, SEXP args, SEXP rho)
 #else
     LOGICAL(ans)[i++] = FALSE;
 #endif
+
+    SET_STRING_ELT(ansnames, i, mkChar("NLS"));
+#ifdef ENABLE_NLS
+    LOGICAL(ans)[i++] = TRUE;
+#else
+    LOGICAL(ans)[i++] = FALSE;
+#endif
+
     setAttrib(ans, R_NamesSymbol, ansnames);
     UNPROTECT(2);
     return ans;
@@ -1412,7 +1426,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid 'path' argument"));
+	errorcall(call, _("invalid '%s' argument"), "path");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));
@@ -1447,7 +1461,7 @@ SEXP do_dircreate(SEXP call, SEXP op, SEXP args, SEXP env)
     checkArity(op, args);
     path = CAR(args);
     if (!isString(path) || length(path) != 1)
-	errorcall(call, _("invalid 'path' argument"));
+	errorcall(call, _("invalid '%s' argument"), "path");
     show = asLogical(CADR(args));
     if(show == NA_LOGICAL) show = 0;
     recursive = asLogical(CADDR(args));

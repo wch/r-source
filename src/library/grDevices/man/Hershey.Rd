@@ -7,11 +7,10 @@
 Hershey
 }
 \description{
-  If the \code{vfont} argument to one of the text-drawing functions
-  (\code{\link{text}}, \code{\link{mtext}}, \code{\link{title}},
-  \code{\link{axis}}, and \code{\link{contour}}) is a character vector
-  of length 2, Hershey vector fonts are used to render the text.
-
+  If the \code{family} graphical parameter (see \code{\link{par}})
+  has been set to one of the Hershey fonts (see below)
+  Hershey vector fonts are used to render text.
+  
   These fonts have two advantages:\cr
   \enumerate{
     \item vector fonts describe each
@@ -26,12 +25,36 @@ Hershey
     Japanese characters.
   }
 
+  For historical reasons,
+  when using the \code{\link{text}} function, Hershey fonts may also be
+  selected via the \code{vfont} argument, which is a character vector
+  of length 2 (see below for valid values).
+
   Drawback:\cr
 You cannot use mathematical expressions (\code{\link{plotmath}}) with
   Hershey fonts.
 }
 \details{
-  The Hershey characters are organised into a set of fonts, which are
+  The Hershey characters are organised into a set of fonts.  A
+  particular font is selected by specifying one of the following
+  font families via \code{par(family)} and specifying the desired font
+  face (plain, bold, italic, bold-italic) via \code{par(font)}.
+
+%% The basic "table" is in  ../../../main/engine.c
+  \tabular{ll}{
+    family \tab faces available \cr
+    "HersheySerif" \tab plain, bold, italic, bold-italic \cr
+    "HersheySans" \tab plain, bold, italic, bold-italic \cr
+    "HersheyScript" \tab plain, bold \cr
+    "HersheyGothicEnglish" \tab plain \cr
+    "HersheyGothicGerman" \tab plain \cr
+    "HersheyGothicItalian" \tab plain \cr
+    "HersheySymbol" \tab plain, bold, italic, bold-italic \cr
+    "HersheySansSymbol" \tab plain, italic \cr
+  }
+
+  In the old, \code{vfont} specification for the \code{text} function,
+  the Hershey font is 
   specified by a typeface (e.g., \code{serif} or \code{sans serif})
   and a fontindex or \dQuote{style} (e.g., \code{plain} or \code{italic}).
   The first element of \code{vfont} specifies the typeface and the second
@@ -171,7 +194,8 @@ You cannot use mathematical expressions (\code{\link{plotmath}}) with
   \url{http://www.gnu.org/software/plotutils/plotutils.html}
 }
 \seealso{
-  \code{demo(Hershey)}, \code{\link{text}}, \code{\link{contour}}.
+  \code{demo(Hershey)}, \code{\link{par}}, \code{\link{text}}, 
+  \code{\link{contour}}.
 
   \code{\link{Japanese}} for the Japanese characters in the Hershey fonts.
 }

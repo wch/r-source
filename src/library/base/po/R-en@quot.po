@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-05-21 08:10\n"
-"PO-Revision-Date: 2005-05-21 08:10\n"
+"POT-Creation-Date: 2005-08-15 11:44\n"
+"PO-Revision-Date: 2005-08-15 11:44\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,30 @@ msgstr "See help(“Deprecated”) and help(“%s-deprecated”)."
 msgid "See help(\"Deprecated\")"
 msgstr "See help(“Deprecated”)"
 
+msgid "invalid numbers in 'quote'"
+msgstr "invalid numbers in ‘quote’"
+
+msgid "invalid 'quote' specification"
+msgstr "invalid ‘quote’ specification"
+
+msgid "invalid 'row.names' specification"
+msgstr "invalid ‘row.names’ specification"
+
+msgid "col.names = NA makes no sense when row.names = FALSE"
+msgstr "col.names = NA makes no sense when row.names = FALSE"
+
+msgid "invalid 'col.names' specification"
+msgstr "invalid ‘col.names’ specification"
+
+msgid "'file' must be a character string or connection"
+msgstr "‘file’ must be a character string or connection"
+
+msgid "appending column names to file"
+msgstr "appending column names to file"
+
+msgid "format.char: coercing 'x' to 'character'"
+msgstr "format.char: coercing ‘x’ to ‘character’"
+
 msgid "argument to 'La.svd' must be numeric or complex"
 msgstr "argument to ‘La.svd’ must be numeric or complex"
 
@@ -69,8 +93,8 @@ msgstr "‘nu’ must be 0, nrow(x) or ncol(x)"
 msgid "'nv' must be 0, nrow(x) or ncol(x)"
 msgstr "‘nv’ must be 0, nrow(x) or ncol(x)"
 
-msgid "all can not be used with other deparse options"
-msgstr "all can not be used with other deparse options"
+msgid "'all' can not be used with other deparse options"
+msgstr "‘all’ can not be used with other deparse options"
 
 msgid "second argument must be a list"
 msgstr "second argument must be a list"
@@ -189,8 +213,8 @@ msgstr "not an interactive session"
 msgid "not a valid restart specification"
 msgstr "not a valid restart specification"
 
-msgid "argument where of length 0"
-msgstr "argument where of length 0"
+msgid "argument 'where' of length 0"
+msgstr "argument ‘where’ of length 0"
 
 msgid "'origin' must be one of 'start', 'current' or 'end'"
 msgstr "‘origin’ must be one of 'start', ‘current’ or ‘end’"
@@ -484,9 +508,6 @@ msgstr "‘from’ must be a POSIXt object"
 msgid "'to' must be a POSIXt object"
 msgstr "‘to’ must be a POSIXt object"
 
-msgid "'file' must be a character string or connection"
-msgstr "‘file’ must be a character string or connection"
-
 msgid "'x' must be a square matrix"
 msgstr "‘x’ must be a square matrix"
 
@@ -597,9 +618,6 @@ msgstr "‘vec’ contains NAs"
 msgid "'vec' must be sorted non-decreasingly"
 msgstr "‘vec’ must be sorted non-decreasingly"
 
-msgid "format.char: coercing 'x' to 'character'"
-msgstr "format.char: coercing ‘x’ to ‘character’"
-
 msgid "'mode' must be \"double\" (\"real\") or \"integer\""
 msgstr "‘mode’ must be “double” (“real”) or “integer”"
 
@@ -683,6 +701,9 @@ msgstr "there is no package called '%s', version %s"
 
 msgid "there is no package called '%s'"
 msgstr "there is no package called ‘%s’"
+
+msgid "no library trees found in 'lib.loc'"
+msgstr "no library trees found in ‘lib.loc’"
 
 msgid "'%s' is not a valid package -- installed < 2.0.0?"
 msgstr "‘%s’ is not a valid package -- installed < 2.0.0?"
@@ -809,9 +830,6 @@ msgstr "‘file’ must be non-empty string"
 
 msgid "can only save to a binary connection"
 msgstr "can only save to a binary connection"
-
-msgid "`file' must be non-empty string"
-msgstr "‘file’ must be non-empty string"
 
 msgid "image could not be renamed and is left in"
 msgstr "image could not be renamed and is left in"
@@ -1072,9 +1090,6 @@ msgstr "not all columns named in ‘as.is’ exist"
 msgid "'as.is' has the wrong length %d  != cols = %d"
 msgstr "‘as.is’ has the wrong length %d  != cols = %d"
 
-msgid "invalid 'row.names' specification"
-msgstr "invalid ‘row.names’ specification"
-
 msgid "'x' must be a vector"
 msgstr "‘x’ must be a vector"
 
@@ -1177,6 +1192,12 @@ msgstr "‘verbose’ is TRUE, ‘echo’ not; ... coercing ‘echo <- TRUE’"
 msgid "unable to find a plausible encoding"
 msgstr "unable to find a plausible encoding"
 
+msgid "'chdir = TRUE' makes no sense for a URL"
+msgstr "‘chdir = TRUE’ makes no sense for a URL"
+
+msgid "'chdir = TRUE' makes no sense for a connection"
+msgstr "‘chdir = TRUE’ makes no sense for a connection"
+
 msgid "'%s' is not an existing file"
 msgstr "‘%s’ is not an existing file"
 
@@ -1258,17 +1279,8 @@ msgstr "No traceback available"
 msgid "argument to 'which' is not logical"
 msgstr "argument to ‘which’ is not logical"
 
-msgid "invalid numbers in 'quote'"
-msgstr "invalid numbers in ‘quote’"
-
-msgid "invalid 'quote' specification"
-msgstr "invalid ‘quote’ specification"
-
-msgid "invalid 'col.names' specification"
-msgstr "invalid ‘col.names’ specification"
-
-msgid "appending column names to file"
-msgstr "appending column names to file"
+msgid "attempt to change '%s' ignored"
+msgstr "attempt to change ‘%s’ ignored"
 
 msgid "invalid 'digits'"
 msgstr "invalid ‘digits’"

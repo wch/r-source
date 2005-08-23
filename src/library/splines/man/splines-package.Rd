@@ -10,11 +10,10 @@ Regression spline functions and classes.
 }
 \details{
 This package provides functions for working with regression
-splines using the \link{splines:bs}{B-spline} basis, the
-\link{splines:ns}{natural cubic spline} basis.  
+splines using the \link[splines:bs]{B-spline} basis, the
+\link[splines:ns]{natural cubic spline} basis.  
 
-For a complete
-list of functions, use \code{library(help="splines")}.
+For a complete list of functions, use \code{library(help="splines")}.
 
 }
 \author{

@@ -28,6 +28,10 @@
 #define _(String) (String)
 #endif
 
+void R_chull(int *n, double *x, int *m, int *in,
+	   int *ia, int *ib,
+	   int *ih, int *nh, int *il);
+
 SEXP PicTeX(SEXP);
 
 SEXP PostScript(SEXP);
@@ -53,3 +57,4 @@ PDFDeviceDriver(NewDevDesc*, char *, char *, char *, char *,
 SEXP devga(SEXP);
 SEXP savePlot(SEXP);
 #endif
+

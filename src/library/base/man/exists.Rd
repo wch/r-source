@@ -16,7 +16,8 @@ exists(x, where = -1, envir = , frame, mode = "any", inherits = TRUE)
     but it's usually simpler to just use the \code{where} argument.}
   \item{frame}{a frame in the calling list.  Equivalent to giving
     \code{where} as \code{sys.frame(frame)}.}
-  \item{mode}{the mode of object sought.}
+  \item{mode}{the mode of object sought.  For the meaning, see the
+    Details section of the help for \code{\link{exists}}.}
   \item{inherits}{should the enclosing frames of the environment be
     searched?}
 }

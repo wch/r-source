@@ -81,6 +81,8 @@ ar.ols(x, aic = TRUE, order.max = NULL, na.action = na.fail,
     \code{resid}.}
   \item{method}{The character string \code{"Unconstrained LS"}.}
   \item{series}{The name(s) of the time series.}
+  \item{frequency}{The frequency of the time series.}
+  \item{call}{The matched call.}
   \item{asy.se.coef}{The asymptotic-theory standard errors of the
     coefficient estimates.}
 }

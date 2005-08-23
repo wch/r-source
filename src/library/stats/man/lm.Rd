@@ -119,6 +119,7 @@ lm(formula, data, subset, weights, na.action,
   \item{contrasts}{(only where relevant) the contrasts used.}
   \item{xlevels}{(only where relevant) a record of the levels of the
     factors used in fitting.}
+  \item{offset}{the offset used (missing if none were used).}
   \item{y}{if requested, the response used.}
   \item{x}{if requested, the model matrix used.}
   \item{model}{if requested (the default), the model frame used.}

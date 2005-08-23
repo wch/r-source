@@ -136,6 +136,11 @@ ps.options(paper, horizontal, width, height, family, encoding,
   GhostScript version 6.0 or later).
 #endif
 
+  The \code{file} argument is interpreted as a C integer format as used
+  by \code{\link{sprintf}}, with integer argument the page number.
+  The default gives files \file{Rplot001.ps}, \dots, \file{Rplot999.ps},
+  \file{Rplot1000.ps}, \dots.
+
   The postscript produced by \R is EPS (\emph{Encapsulated PostScript})
   compatible, and can be included into other documents, e.g., into
   LaTeX, using \code{\includegraphics{<filename>}}.  For use in this way

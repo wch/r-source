@@ -17,8 +17,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef R_STATS_LOGIT_H
-#define R_STATS_LOGIT_H
+#ifndef R_STATS_FAMILY_H
+#define R_STATS_FAMILY_H
 
 #ifdef ENABLE_NLS
 #include <libintl.h>

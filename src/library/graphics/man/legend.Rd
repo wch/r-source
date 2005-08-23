@@ -41,7 +41,8 @@ legend(x, y = NULL, legend, fill = NULL, col = "black",
     values are \code{"o"} (the default) and \code{"n"}.}
   \item{bg}{the background color for the legend box.  (Note that this is
     only used if \code{bty != "n"}.)}
-  \item{pt.bg}{the background color for the \code{\link{points}}.}
+  \item{pt.bg}{the background color for the \code{\link{points}},
+    corresponding to its argument \code{bg}.}
   \item{cex}{character expansion factor \bold{relative} to current
     \code{par("cex")}.}
   \item{pt.cex}{expansion factor(s) for the points.}

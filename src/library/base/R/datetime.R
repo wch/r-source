@@ -294,7 +294,7 @@ c.POSIXlt <- function(..., recursive=FALSE)
 ## force absolute comparisons
 all.equal.POSIXct <- function(target, current, ..., scale=1)
 {
-    check_tzone(target, current)
+    check_tzones(target, current)
     NextMethod("all.equal")
 }
 
@@ -746,3 +746,14 @@ diff.POSIXt <- function (x, lag = 1, differences = 1, ...)
         r <- r[i1] - r[-length(r):-(length(r) - lag + 1)]
     r
 }
+
+# ---- additions in 2.2.0 -----
+
+duplicated.POSIXlt <- function(x, incomparables = FALSE, ...)
+{
+    x <- as.POSIXct(x)
+    NextMethod("duplicated", x)
+}
+
+unique.POSIXlt <- function(x, incomparables = FALSE, ...)
+    x[!duplicated(x, incomparables, ...)]

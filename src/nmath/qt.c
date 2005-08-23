@@ -50,9 +50,8 @@ double qt(double p, double ndf, int lower_tail, int log_p)
     if (ISNAN(p) || ISNAN(ndf))
 	return p + ndf;
 #endif
-    if (p == R_DT_0) return ML_NEGINF;
-    if (p == R_DT_1) return ML_POSINF;
-    R_Q_P01_check(p);
+
+    R_Q_P01_boundaries(p, ML_NEGINF, ML_POSINF);
 
     if (ndf < 1) /* FIXME:  not yet treated here */
 	ML_ERR_return_NAN;

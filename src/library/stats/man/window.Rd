@@ -5,23 +5,15 @@
 \alias{window<-}
 \alias{window<-.ts}
 \title{Time Windows}
-\synopsis{
-window(x, \dots)
-window(x, ...) <- value
 
-\method{window}{ts}(x, \dots)
-
-\method{window}{default}(x, start = NULL, end = NULL,
-       frequency = NULL, deltat = NULL, extend = FALSE, \dots)
-}
 \usage{
 window(x, \dots)
-window(x, start, end, frequency, deltat, ...) <- value
-
 \method{window}{ts}(x, \dots)
-
 \method{window}{default}(x, start = NULL, end = NULL,
       frequency = NULL, deltat = NULL, extend = FALSE, \dots)
+
+window(x, \dots) <- value
+\method{window}{ts}(x, start, end, frequency, deltat, \dots) <- value
 }
 \arguments{
   \item{x}{a time-series (or other object if not replacing values).}
@@ -30,7 +22,7 @@ window(x, start, end, frequency, deltat, ...) <- value
   \item{frequency, deltat}{the new frequency can be specified by either
     (or both if they are consistent).}
   \item{extend}{logical.  If true, the \code{start} and \code{end} values
-    are allowed to extend the series. If false, attempts to extend the
+    are allowed to extend the series.  If false, attempts to extend the
     series give a warning and are ignored.}
   \item{\dots}{further arguments passed to or from other methods.}
   \item{value}{replacement values.}
@@ -48,8 +40,9 @@ window(x, start, end, frequency, deltat, ...) <- value
   the immediately following (\code{start}) or preceding (\code{end})
   observation time is used.
 
-  The replacement function only has a method for \code{ts} objects, and
-  is allowed to extend the series, with a warning.
+  The replacement function has a method for \code{ts} objects, and
+  is allowed to extend the series (with a warning).  There is no default
+  method.
 }
 \value{
   The value depends on the method. \code{window.default} will return a

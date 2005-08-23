@@ -12,23 +12,17 @@ hat <- function(x, intercept = TRUE)
     rowSums(qr.qy(x, diag(1, nrow = n, ncol = x$rank))^2)
 }
 
+## see PR#7961
 weighted.residuals <- function(obj, drop0 = TRUE)
 {
     w <- weights(obj)
-    r <- residuals(obj)
-    if(is.null(w))
-	r
-    else if(drop0)
-	(sqrt(w)*r)[w != 0]
-    else
-	sqrt(w)*r
+    r <- residuals(obj, type="deviance")
+    if(drop0 && !is.null(w)) r[w != 0] else r
 }
 
 lm.influence <- function (model, do.coef = TRUE)
 {
-    wt.res <- if(inherits(model, "glm"))
-        residuals(model, type="deviance")[model$prior.weights != 0]
-    else weighted.residuals(model)
+    wt.res <- weighted.residuals(model)
     e <- na.omit(wt.res)
 
     if (model$rank == 0) {

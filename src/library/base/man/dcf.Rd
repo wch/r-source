@@ -13,7 +13,8 @@ write.dcf(x, file = "", append = FALSE,
 }
 \arguments{
   \item{file}{either a character string naming a file or a connection.
-    \code{""} indicates output to the console.}
+    \code{""} indicates output to the console.  For \code{read.dcf} this
+    can name a \code{gzip}-compressed file.}
   \item{fields}{Fields to read from the DCF file. Default is to read all
     fields.}
   \item{x}{the object to be written, typically a data frame.  If not, it

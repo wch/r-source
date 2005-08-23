@@ -25,6 +25,15 @@
 #include "grDevices.h"
 #include <R_ext/Rdynload.h>
 
+static R_NativePrimitiveArgType R_chull_t[] = {INTSXP, REALSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP, INTSXP};
+
+#define CDEF(name)  {#name, (DL_FUNC) &name, sizeof(name ## _t)/sizeof(name ## _t[0]), name ##_t}
+
+static R_CMethodDef CEntries [] = {
+    CDEF(R_chull),
+    {NULL, NULL, 0}
+};
+
 #define CALLDEF(name, n)  {#name, (DL_FUNC) &name, n}
 
 static R_CallMethodDef CallEntries[] = {
@@ -51,6 +60,6 @@ static R_ExternalMethodDef ExtEntries[] = {
 
 void R_init_grDevices(DllInfo *dll)
 {
-    R_registerRoutines(dll, NULL, CallEntries, NULL, ExtEntries);
+    R_registerRoutines(dll, CEntries, CallEntries, NULL, ExtEntries);
     R_useDynamicSymbols(dll, FALSE);
 }

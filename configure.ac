@@ -2,7 +2,7 @@
 ###
 ### Process this file with autoconf to produce a configure script.
 ###
-### Copyright (C) 1998-2004 R Core Team
+### Copyright (C) 1998-2005 R Core Team
 ###
 ### This file is part of R.
 ###
@@ -51,10 +51,10 @@ AC_DEFINE_UNQUOTED(VERSION, "${VERSION}", [Version number of package])
 AC_SUBST(VERSION)
 
 ## Autoheader initialization.
-AH_TOP([#ifndef _CONFIG_H
-#define _CONFIG_H])
+AH_TOP([#ifndef R_CONFIG_H
+#define R_CONFIG_H])
 AH_BOTTOM([
-#endif /* not _CONFIG_H */])
+#endif /* not R_CONFIG_H */])
 
 ### ** Platform.
 
@@ -272,14 +272,16 @@ AC_ARG_WITH([blas],
 [AC_HELP_STRING([--with-blas],
                 [use BLAS library, or specify it @<:@yes@:>@])],
 [R_ARG_USE(blas)],
-[use_blas=yes])
+[use_blas=unset])
+# default is "yes" except on MacOS X
 
 ## LAPACK.
 AC_ARG_WITH([lapack],
 [AC_HELP_STRING([--with-lapack],
                 [use LAPACK library, or specify it @<:@no@:>@])],
 [R_ARG_USE(lapack)],
-[use_lapack=no])
+[use_lapack=unset])
+# default is "no" except on MacOS X
 
 ## Readline.
 AC_ARG_WITH([readline],
@@ -330,21 +332,28 @@ AC_ARG_WITH([jpeglib],
                 [use jpeglib library (if available) @<:@yes@:>@])],
 [R_ARG_USE(jpeglib)],
 [use_jpeglib=yes])
-AC_ARG_WITH([zlib],
-[AC_HELP_STRING([--with-zlib],
+AC_ARG_WITH([system-zlib],
+[AC_HELP_STRING([--with-system-zlib],
                 [use system zlib library (if available) @<:@no@:>@])],
-[R_ARG_USE(zlib)],
-[use_zlib=no])
-AC_ARG_WITH([bzlib],
-[AC_HELP_STRING([--with-bzlib],
+[R_ARG_USE_SYSTEM(zlib)],
+[use_system_zlib=no])
+AC_ARG_WITH([system-bzlib],
+[AC_HELP_STRING([--with-system-bzlib],
                 [use system bzlib library (if available) @<:@no@:>@])],
-[R_ARG_USE(bzlib)],
-[use_bzlib=no])
-AC_ARG_WITH([pcre],
-[AC_HELP_STRING([--with-pcre],
+[R_ARG_USE_SYSTEM(bzlib)],
+[use_system_bzlib=no])
+AC_ARG_WITH([system-pcre],
+[AC_HELP_STRING([--with-system-pcre],
                 [use system PCRE library (if available) @<:@no@:>@])],
-[R_ARG_USE(pcre)],
-[use_pcre=no])
+[R_ARG_USE_SYSTEM(pcre)],
+[use_system_pcre=no])
+
+## Valgrind instrumentation
+AC_ARG_WITH([valgrind-instrumentation],
+[AC_HELP_STRING([--with-valgrind-instrumentation],
+                [Level of additional instrumentation for Valgrind (0/1/2) @<:@0@:>@])],
+[valgrind_level=${withval}],
+[valgrind_level=0])
 
 ## needs to come after GNOME
 AM_CONDITIONAL(WANT_R_SHLIB, [test "x${want_R_shlib}" = xyes])
@@ -381,7 +390,7 @@ AC_ARG_VAR([R_PRINTCMD],
 AC_ARG_VAR([R_PAPERSIZE],
            [paper size for the local (PostScript) printer])
 AC_ARG_VAR([R_BATCHSAVE],
-           [default behavior of R if it encounters EOF in batch mode])
+           [set default behavior of R when ending a session])
 AC_ARG_VAR([MAIN_CFLAGS],
            [additional CFLAGS used when compiling the main binary])
 AC_ARG_VAR([SHLIB_CFLAGS],
@@ -571,9 +580,15 @@ case "${host_os}" in
     ## MacOS 10.3 and 10.4 do
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
     ## SI says we want '-lcc_dynamic' on Darwin, although currently
-    ## http://developer.apple.com /documentation/MacOSX/ has nothing
-    ## official.
-    AC_CHECK_LIB(cc_dynamic, main)
+    ## http://developer.apple.com/documentation/MacOSX/ has nothing
+    ## official.  Bill Northcott <w.northcott@unsw.edu.au> points out
+    ## that it is only needed to GCC 3.x ...
+    if test "${GCC}" = yes; then
+      case "${CC_VERSION}" in
+        3.*)
+          AC_CHECK_LIB(cc_dynamic, main) ;;
+      esac
+    fi
     ;;
   *)
     AM_CONDITIONAL(BUILD_DLFCN_DARWIN, false)
@@ -699,14 +714,14 @@ else
   fi
   R_PROG_F2C_FLIBS
   AC_DEFINE(HAVE_F77_UNDERSCORE, 1)
-  AC_DEFINE(HAVE_DOUBLE_COMPLEX, 1)
+  AC_DEFINE(HAVE_FORTRAN_DOUBLE_COMPLEX, 1)
   R_PROG_F2C_MAKEFRAG
   F77="\$(SHELL) \$(R_HOME)/bin/f77"
 fi
 
 AC_SUBST(F2C)
-AM_CONDITIONAL(COMPILE_DOUBLE_COMPLEX,
-               [test "x${HAVE_DOUBLE_COMPLEX}" != x])
+AM_CONDITIONAL(COMPILE_FORTRAN_DOUBLE_COMPLEX,
+               [test "x${HAVE_FORTRAN_DOUBLE_COMPLEX}" != x])
 
 ### *** C++ compiler.
 
@@ -955,16 +970,10 @@ case "${host_os}" in
     ## main_ldflags="-framework Carbon"
     ## Want '-mdynamic-no-pic' for GCC 3, says Jan de Leeuw.
     if test "${GCC}" = yes; then
-      ## <FIXME>
-      ## R_PROG_CC_M() has the same code for determining the gcc
-      ## version.  Move this into e.g. _R_PROG_CC_VERSION.
-      gcc_version=`${CC} -v 2>&1 | grep "^.*g.. version" | \
-        sed -e 's/^.*g.. version *//'`
-      case "${gcc_version}" in
+      case "${CC_VERSION}" in
         3.*)
           R_SH_VAR_ADD(main_ldflags, [-mdynamic-no-pic]) ;;
       esac
-      ## </FIXME>
     fi
     case "${host_os}" in
       ## According to Jan de Leeuw, OS X 10.1 is darwin 5, OS X 10.2 is
@@ -1271,7 +1280,7 @@ AC_CHECK_DECLS([alloca], , ,
 AC_CHECK_FUNCS(access chdir expm1 fcntl finite fseeko ftello ftruncate \
   getcwd getgrgid getpwuid getuid hypot isascii log1p \
   matherr mkdtemp mkfifo popen putenv realpath rint \
-  setenv strcoll stat strptime symlink system times unsetenv)
+  setenv strcoll stat strerror strptime symlink system times unsetenv)
 ## isfinite and isnan are in math.h but might be macros
 AC_CHECK_DECLS([isfinite, isnan], , , [#include <math.h>])
 ## <NOTE>
@@ -1333,17 +1342,36 @@ R_FUNC_LOG1P
 R_FUNC_STRPTIME
 R_FUNC_FTELL
 
+R_C99_COMPLEX
+
 ## BLAS.
 ## <NOTE>
 ## This has to come *after* checking for Fortran 77 compiler/converter
 ## characteristics (notably name mangling and FLIBS).
+## </NOTE>
+## The defaults are different on MacOS X
+if test "${use_blas}" = "unset"; then
+  use_blas=yes
+  case "${host_os}" in
+    darwin*)
+      with_blas="-framework vecLib"
+      if test "${use_lapack}" = "unset"; then
+        use_lapack="yes"
+        with_lapack=""
+      fi
+      ;;
+    *)
+      ;;
+  esac
+fi
 if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
-## </NOTE>
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.
+## The default has already been set on MacOS X: otherwise it is "no"
+## and so this test fails.
 if test "${use_lapack}" = "yes"; then
   R_LAPACK_LIBS
 fi
@@ -1398,10 +1426,10 @@ R_BZLIB
 
 ## PCRE headers and libraries.
 R_PCRE
-
+ 
 ## POSIX times.
 R_SYS_POSIX_LEAPSECONDS
-
+ 
 ## R profiling.
 if test "${want_R_profiling}" = yes; then
   AC_CHECK_FUNCS(setitimer,
@@ -1415,6 +1443,12 @@ AC_SUBST(R_PROFILING)
 if test "x${want_linux_lfs}" = xyes; then
 R_LARGE_FILES
 fi
+
+## Valgrind instrumentation
+if test ${valgrind_level} -eq 0; then
+  AC_DEFINE(NVALGRIND, 1, [Define to disable Valgrind instrumentation])
+fi
+AC_DEFINE_UNQUOTED(VALGRIND_LEVEL, ${valgrind_level}, [Define as 1 or 2 to specify levels of Valgrind instrumentation])
 
 
 ### * Miscellaneous.
@@ -1513,9 +1547,14 @@ AM_CONDITIONAL(USE_RECOMMENDED_PACKAGES,
 
 # i18n support.  To update to a new version of gettext, run:
 # gettextize -f -c --intl
-AM_GNU_GETTEXT_VERSION(0.14.1)
-AM_GNU_GETTEXT(, , [../extra/intl])
-
+AM_NLS
+if test "${USE_NLS}" = "yes"; then
+  AM_GNU_GETTEXT_VERSION(0.14.1)
+  AM_GNU_GETTEXT(, [need-ngettext], [../extra/intl])
+else
+  USE_INCLUDED_LIBINTL=no
+fi
+AM_CONDITIONAL(USE_NLS, [test "x${USE_NLS}" = xyes])
 
 ### * Win32 overrides
 case "${host_os}" in
