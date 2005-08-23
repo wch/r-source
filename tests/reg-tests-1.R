@@ -3691,6 +3691,12 @@ stopifnot(identical(y, c(NA, NA, "4", "5", "6")))
 ## 2.1.1 sorted "4" first: the fence was wrong.
 
 
+## integer overflow in cor.test (PR#8087)
+n <- 46341
+(z <- cor.test(runif(n), runif(n), method = "spearman"))
+stopifnot(!is.na(z$p.value))
+##
+
 ### end of tests added in 2.1.1 patched ###
 
 
