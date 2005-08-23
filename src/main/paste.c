@@ -141,11 +141,12 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
     return ans;
 }
 
-/* format.default(x, trim, digits, nsmall, width, justify, na.encode) */
+/* format.default(x, trim, digits, nsmall, width, justify, na.encode, 
+                  scientific) */
 SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
-    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na;
+    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci;
     int w, d, e;
     int wi, di, ei;
     char *strp;
@@ -189,6 +190,18 @@ SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
     na = asLogical(CAR(args));
     if(na == NA_LOGICAL)
 	errorcall(call, _("invalid '%s' argument"), "na.encode");
+    args = CDR(args);
+    if(LENGTH(CAR(args)) != 1)
+	errorcall(call, _("invalid '%s' argument"), "scientific");
+    if(isLogical(CAR(args))) {
+	int tmp = LOGICAL(CAR(args))[0];
+	if(tmp == NA_LOGICAL) sci = NA_INTEGER;
+	else sci = tmp > 0 ?-100 : 100;
+    } else if (isNumeric(CAR(args))) {
+	sci = asInteger(CAR(args));
+    } else
+	errorcall(call, _("invalid '%s' argument"), "scientific");
+    if(sci != NA_INTEGER) R_print.scipen = sci;
 
     if ((n = LENGTH(x)) <= 0)
 	return allocVector(STRSXP, 0);

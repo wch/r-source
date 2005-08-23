@@ -13,7 +13,7 @@ format(x, \dots)
 
 \method{format}{default}(x, trim = FALSE, digits = NULL,
        nsmall = 0, justify = c("left", "right", "centre", "none"),
-       width = NULL, na.encode = TRUE,
+       width = NULL, na.encode = TRUE, scientific = NA,
        big.mark = "",   big.interval = 3,
      small.mark = "", small.interval = 5,
    decimal.mark = ".", \dots)
@@ -47,6 +47,10 @@ format(x, \dots)
     objects.  \code{NULL} corresponds to the default 12.
   }
   \item{na.encode}{logical: should \code{NA} strings be encoded?}
+  \item{scientific}{Either a logical specifiying whether 
+    elements of a real or complex vector should be encoded in scientific
+    format, or an integer penalty (see \code{\link{options}("scipen")}.
+    Missing values correspond to the current default penalty.}
   \item{\dots}{further arguments passed to or from other methods.}
 
   \item{big.mark, big.interval,
@@ -136,6 +140,10 @@ format(13.7)
 format(13.7, nsmall = 3)
 format(c(6.0, 13.1), digits = 2)
 format(c(6.0, 13.1), digits = 2, nsmall = 1)
+
+## use of scientific
+format(2^31-1)
+format(2^31-1, sci = TRUE)
 
 ## a list
 z <- list(a=letters[1:3], b=(-pi+0i)^((-2:2)/2), c=c(1,10,100,1000),

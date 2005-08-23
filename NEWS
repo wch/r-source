@@ -235,8 +235,10 @@ NEW FEATURES
     o	format.default() now has a 'width' argument, and 'justify' can
 	now centre character strings.
 
-	format.default() has a new argument 'na.encode' to control
-	whether NA character strings are encoded (true by default).
+	format.default() has new arguments 'na.encode' to control
+	whether NA character strings are encoded (true by default),
+	and 'scientific' to control the use of fixed/scientific
+	notation for real/complex numbers.
 
 	How format() works on a list is now documented, and uses
 	arguments consistently with their usage on an atomic vector.
@@ -262,7 +264,7 @@ NEW FEATURES
     o   memory.profile() now uses the type names returned by typeof()
 	and no longer has two unlabelled entries.
 
-    o   boxplots now responds to supplying 'yaxs' (via bxp()).
+    o   boxplot() now responds to supplying 'yaxs' (via bxp()).
 	(Wish of PR#8072.)
 
 

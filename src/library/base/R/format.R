@@ -3,7 +3,7 @@ format <- function(x, ...) UseMethod("format")
 format.default <-
     function(x, trim = FALSE, digits = NULL, nsmall = 0,
              justify = c("left", "right", "centre", "none"),
-             width = NULL, na.encode = TRUE,
+             width = NULL, na.encode = TRUE, scientific = NA,
              big.mark = "", big.interval = 3,
              small.mark = "", small.interval = 5, decimal.mark = ".",
              ...)
@@ -17,6 +17,7 @@ format.default <-
         res <- lapply(x, FUN=function(xx, ...) format.default(unlist(xx),...),
                       trim = trim, digits = digits, nsmall = nsmall,
                       justify = justify, width = width, na.encode = na.encode,
+                      scientific = scientific,
                       big.mark = big.mark, big.interval = big.internal,
                       small.mark = small.mark, small.interval = small.interval,
                       decimal.mark = decimal.mark, ...)
@@ -25,11 +26,11 @@ format.default <-
         switch(mode(x),
                NULL = "NULL",
                character = .Internal(format(x, trim, digits, nsmall, width,
-                                            adj, na.encode)),
+                                            adj, na.encode, scientific)),
                call=, expression=, "function"=, "(" = deparse(x),
                ## else: logical, numeric, complex, .. :
                prettyNum(.Internal(format(x, trim, digits, nsmall, width,
-                                          3, na.encode)),
+                                          3, na.encode, scientific)),
                          big.mark = big.mark, big.interval = big.interval,
                          small.mark = small.mark,
                          small.interval = small.interval,
