@@ -3,19 +3,21 @@ setGeneric <-
   ## Define `name' to be a generic  function, for which methods will be defined.
   ##
   ## If there is already a non-generic function of this name, it will be used
-  ## to define the generic unless `def' is supplied, and the current function will
-  ## become the default method for the generic.
+  ## to define the generic unless `def' is supplied, and the current
+  ## function will become the default method for the generic.
   ##
-  ## If `def' is supplied, this defines the generic function.  The default method for
-  ## a new generic will usually be an existing non-generic.  See the .Rd page
+  ## If `def' is supplied, this defines the generic function.  The
+  ## default method for a new generic will usually be an existing
+  ## non-generic.  See the .Rd page
   ##
-    function(name, def = NULL, group = list(), valueClass = character(), where = topenv(parent.frame()),
+    function(name, def = NULL, group = list(), valueClass = character(),
+             where = topenv(parent.frame()),
              package = NULL, signature = NULL,
-             useAsDefault = NULL,
-             genericFunction = NULL)
+             useAsDefault = NULL, genericFunction = NULL)
 {
     if(exists(name, "package:base") &&
        typeof(get(name, "package:base")) != "closure") {
+
         getGeneric(name) # will fail if this can't have methods
         msg <- gettextf("'%s' is a primitive function;  methods can be defined, but the generic function is implicit, and cannot be changed.", name)
         if(nargs() == 1)
@@ -148,19 +150,21 @@ removeGeneric <-
 
 
 getMethods <-
-## The list of methods for the specified generic.  If the function is not
-## a generic function, returns NULL.
-## The `f' argument can be either the character string name of the generic
-## or the object itself.
-##
-## The `where' argument optionally says where to look for the function, if
-## `f' is given as the name.
-  ## Methods objects are kept during the session in a special environment.  Inside
-  ## this environment, individual methods are added and updated as they are found (for
-  ## example, a method that is inherited is stored, again, under the actual signature).
-  ## These updates speed up the method search; however, they are not stored with
-  ## the original generic function, since they might change in future sessions.
-  function(f, where = topenv(parent.frame()))
+    ## The list of methods for the specified generic.  If the function is not
+    ## a generic function, returns NULL.
+    ## The `f' argument can be either the character string name of the generic
+    ## or the object itself.
+    ##
+    ## The `where' argument optionally says where to look for the function, if
+    ## `f' is given as the name.
+    ## Methods objects are kept during the session in a special environment.
+    ## Inside this environment, individual methods are added and updated as
+    ## they are found (for example, a method that is inherited is stored,
+    ## again, under the actual signature).  These updates speed up the
+    ## method search; however, they are not stored with the original generic
+    ## function, since they might change in future sessions.
+
+    function(f, where = topenv(parent.frame()))
 {
     if(is.character(f))
         fdef <- getGeneric(f, where = where)
@@ -168,24 +172,18 @@ getMethods <-
         fdef <- f
     else
         stop(gettextf("invalid argument 'f', expected function or its name, got an object of class \"%s\"", class(f)), domain = NA)
-    if(is.null(fdef))
-        NULL
-    else
-        getMethodsForDispatch(f, fdef)
-
+    if(!is.null(fdef))
+        getMethodsForDispatch(f, fdef) # else NULL
 }
 
-getMethodsForDispatch <-
-  function(f, fdef)
+getMethodsForDispatch <- function(f, fdef)
 {
     if(is(fdef, "genericMethods"))
         fdef@.Methods
     else {
         ev <- environment(fdef)
         if(exists(".Methods", envir = ev, inherits = FALSE))
-            get(".Methods", envir = ev)
-        else
-            NULL
+            get(".Methods", envir = ev) ## else NULL
     }
 }
 
@@ -631,8 +629,10 @@ showMethods <-
     ## optionally include the method definitions, if `includeDefs == TRUE'.
     ##
     function(f = character(), where = topenv(parent.frame()), classes = NULL,
-             includeDefs = FALSE, inherited = TRUE, printTo = stdout())
+             includeDefs = FALSE, inherited = TRUE,
+             showEmpty = TRUE, printTo = stdout())
 {
+## FIXME: improve default for 'where'  and 'showEmpty' (to FALSE)
     if(identical(printTo, FALSE)) {
         tmp <- tempfile()
         on.exit(unlink(tmp))
@@ -647,7 +647,7 @@ showMethods <-
         f <- if(missing(where)) getGenerics() else getGenerics(where)
     }
     if(length(f) == 0)
-        cat(file = con, "No applicable functions")
+	cat(file = con, "No applicable functions\n")
     else if(length(f) > 1) {
         value <- character()
         for(ff in f) { ## recall for each
@@ -655,23 +655,34 @@ showMethods <-
             if(length(mlist@methods) == 0)
                 next
             value <- c(value,
-                       Recall(ff, where, classes, includeDefs, inherited, printTo))
+                       Recall(ff, where=where, classes=classes,
+                              includeDefs=includeDefs, inherited=inherited,
+                              showEmpty=showEmpty, printTo=printTo))
         }
         if(length(value) > 0)
             return(value)
         else
             return()
     }
-    else { ## f of length 1
-        cat(file= con, "\nFunction \"", f, "\":\n", sep="")
+    else { ## f of length 1 --- the "working horse" :
+        out <- paste("\nFunction \"", f, "\":\n", sep="")
         if(!isGeneric(f, where))
-            cat(file = con, "<not a generic function>\n")
+            cat(file = con, out, "<not a generic function>\n")
         else {
             mlist <-  getMethods(f, where)
             if(is.null(mlist))
-                cat(file = con, "<no applicable methods>\n")
-            else
+                cat(file = con, out, "<no applicable methods>\n")
+            else {
+##NotYet         linML <- linearizeMlist(mlist, inherited,
+##NotYet                                  drop.empty4class = classes)
+##NotYet         ##_ if(showEmpty || length(linML@methods) > 0) {
+##NotYet             cat(file = con, out)
+##NotYet             showMlist(linML = linML, includeDefs = includeDefs,
+##NotYet                       printTo = con)
+##NotYet         ##_ }
+                cat(file = con, out)
                 showMlist(mlist, includeDefs, inherited, classes, printTo = con)
+            }
         }
     }
     if(identical(printTo, FALSE)) {

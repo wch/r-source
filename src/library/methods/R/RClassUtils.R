@@ -683,39 +683,37 @@ tryNew <-
   ##
   ## This is inefficient and also not a good idea when actually generating objects,
   ## but is useful in the initial definition of classes.
-  function(Class, where) {
-      ClassDef <- getClassDef(Class, where)
+  function(Class, where)
+{
+    ClassDef <- getClassDef(Class, where)
     if(is.null(ClassDef) || isVirtualClass(ClassDef))
-      return(NULL)
+        return(NULL)
     value <- trySilent(new(ClassDef))
     if(is(value, "try-error"))
-      NULL
+        NULL
     else
-      value
-  }
+        value
+}
 
-empty.dump <-
-  function()
-  list()
+empty.dump <- function() list()
 
-isClassDef <-
-    function(object)
-    is(object, "classRepresentation")
+isClassDef <- function(object) is(object, "classRepresentation")
 
 showClass <-
-  ## print the information about a class definition.  If complete==TRUE, include the
-  ## indirect information about extensions.
-  function(Class, complete = TRUE, propertiesAreCalled = "Slots") {
+    ## print the information about a class definition.  If complete==TRUE, include the
+    ## indirect information about extensions.
+    function(Class, complete = TRUE, propertiesAreCalled = "Slots")
+{
     if(isClassDef(Class)) {
-      ClassDef <- Class
-      Class <- ClassDef@className
+        ClassDef <- Class
+        Class <- ClassDef@className
     }
     else if(complete)
-      ClassDef <- getClass(Class)
+        ClassDef <- getClass(Class)
     else
-      ClassDef <- getClassDef(Class)
+        ClassDef <- getClassDef(Class)
     if(identical(ClassDef@virtual, TRUE))
-      cat("Virtual Class\n")
+        cat("Virtual Class\n")
     x <- ClassDef@slots
     if(length(x)>0) {
         n <- length(x)
@@ -726,57 +724,58 @@ showClass <-
         print(text, quote = FALSE)
     }
     else
-      cat("\nNo ", propertiesAreCalled, ", prototype of class \"",
-          .class1(ClassDef@prototype), "\"\n", sep="")
+        cat("\nNo ", propertiesAreCalled, ", prototype of class \"",
+            .class1(ClassDef@prototype), "\"\n", sep="")
     ext <- ClassDef@contains
     if(length(ext)>0) {
-      cat("\nExtends: ")
-      showExtends(ext)
+        cat("\nExtends: ")
+        showExtends(ext)
     }
     ext <- ClassDef@subclasses
     if(length(ext)>0) {
-      cat("\nKnown Subclasses: ")
-      showExtends(ext)
+        cat("\nKnown Subclasses: ")
+        showExtends(ext)
     }
-  }
+}
 
 showExtends <-
-  ## print the elements of the list of extensions.  Also used to print
-  ## extensions recorded in the opposite direction, via a subclass list
-  function(ext, printTo = stdout()) {
-      what <- names(ext)
-      how <- character(length(ext))
-      for(i in seq(along=ext)) {
-          eli <- el(ext, i)
-          if(is(eli, "SClassExtension")) {
-              if(length(eli@by) > 0)
-                  how[i] <- paste("by class", paste("\"", eli@by, "\"", sep="", collapse = ", "))
-              else if(identical(eli@dataPart, TRUE))
-                  how[i] <- "from data part"
-              else
-                  how[i] <- "directly"
-              if(!eli@simple) {
-                  if(is.function(eli@test) && !identical(body(eli@test), TRUE)) {
-                      if(is.function(eli@coerce))
-                          how[i] <- paste(how[i], ", with explicit test and coerce", sep="")
-                      else
-                          how[i] <- paste(how[i], ", with explicit test", sep="")
-                  }
-                  else if(is.function(eli@coerce))
-                      how[i] <- paste(how[i], ", with explicit coerce", sep="")
-              }
-          }
-      }
-      if(identical(printTo, FALSE))
-          list(what = what, how = how)
-      else if(all(nchar(how)==0)|| all(how == "directly")) {
-          what <- paste('"', what, '"', sep="")
-          if(length(what)>1)
-              what <- c(paste(what[-length(what)], ",", sep=""), what[[length(what)]])
-          cat(file = printTo, what, fill=TRUE)
-      }
-      else cat(file = printTo, "\n", paste("Class \"", what, "\", ", how, "\n", sep=""), sep="")
-  }
+    ## print the elements of the list of extensions.  Also used to print
+    ## extensions recorded in the opposite direction, via a subclass list
+    function(ext, printTo = stdout())
+{
+    what <- names(ext)
+    how <- character(length(ext))
+    for(i in seq(along=ext)) {
+        eli <- el(ext, i)
+        if(is(eli, "SClassExtension")) {
+            how[i] <-
+                if(length(eli@by) > 0)
+                    paste("by class", paste("\"", eli@by, "\"", sep="", collapse = ", "))
+                else if(identical(eli@dataPart, TRUE))
+                    "from data part"
+                else "directly"
+            if(!eli@simple) {
+                if(is.function(eli@test) && !identical(body(eli@test), TRUE)) {
+                    how[i] <-
+                        paste(how[i], if(is.function(eli@coerce))
+                              ", with explicit test and coerce" else
+                              ", with explicit test", sep="")
+                }
+                else if(is.function(eli@coerce))
+                    how[i] <- paste(how[i], ", with explicit coerce", sep="")
+            }
+        }
+    }
+    if(identical(printTo, FALSE))
+        list(what = what, how = how)
+    else if(all(nchar(how)==0)|| all(how == "directly")) {
+        what <- paste('"', what, '"', sep="")
+        if(length(what)>1)
+            what <- c(paste(what[-length(what)], ",", sep=""), what[[length(what)]])
+        cat(file = printTo, what, fill=TRUE)
+    }
+    else cat(file = printTo, "\n", paste("Class \"", what, "\", ", how, "\n", sep=""), sep="")
+}
 
 
 
