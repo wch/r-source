@@ -18,7 +18,7 @@ format.default <-
                       trim = trim, digits = digits, nsmall = nsmall,
                       justify = justify, width = width, na.encode = na.encode,
                       scientific = scientific,
-                      big.mark = big.mark, big.interval = big.internal,
+                      big.mark = big.mark, big.interval = big.interval,
                       small.mark = small.mark, small.interval = small.interval,
                       decimal.mark = decimal.mark, ...)
         sapply(res, paste, collapse = ", ")
