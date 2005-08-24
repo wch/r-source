@@ -87,7 +87,8 @@ static int R_call(ClientData clientData,
 		  CONST84 char *argv[])
 {
     int i;
-    SEXP expr, fun, alist, ans;
+    SEXP expr, alist, ans;
+    void *fun;
 
     alist = R_NilValue;
     for (i = argc - 1 ; i > 1 ; i--){
@@ -98,7 +99,7 @@ static int R_call(ClientData clientData,
 
     sscanf(argv[1], "%p", &fun);
 
-    expr = LCONS(fun, alist);
+    expr = LCONS( (SEXP)fun, alist);
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
     ans = eval(expr, R_GlobalEnv);
@@ -115,14 +116,15 @@ static int R_call_lang(ClientData clientData,
 		       int argc,
 		       CONST84 char *argv[])
 {
-    SEXP expr, env, ans;
+    void *expr, *env; 
+    SEXP ans;
 
     sscanf(argv[1], "%p", &expr);
     sscanf(argv[2], "%p", &env);
 
     expr = LCONS(install("try"), LCONS(expr, R_NilValue));
 
-    ans = eval(expr, env);
+    ans = eval((SEXP)expr, (SEXP)env);
 
     /* If return value is of class tclObj, use as Tcl result */
     if (inherits(ans, "tclObj"))
