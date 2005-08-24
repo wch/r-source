@@ -630,7 +630,7 @@ See the @url{http://CRAN.R-project.org/bin/windows/base/rw-FAQ.html, R Windows
 * Checking the build::          
 * Building the recommended packages::  
 * Building the manuals::        
-* Building the installers::     
+* Building the installer::      
 * Cross-building on ix86 Linux::  
 @end menu
 
@@ -861,7 +861,7 @@ and checked by
 make check-recommended
 @end example
 
-@node Building the manuals, Building the installers, Building the recommended packages, Building from source
+@node Building the manuals, Building the installer, Building the recommended packages, Building from source
 @subsection Building the manuals
 
 The pdf manuals can be made by
@@ -893,12 +893,12 @@ in your path).
 See the @ref{Making the manuals} section in the Unix section for
 setting options such as the paper size.
 
-@node Building the installers, Cross-building on ix86 Linux, Building the manuals, Building from source
-@subsection Building the installers
+@node Building the installer, Cross-building on ix86 Linux, Building the manuals, Building from source
+@subsection Building the installer
 
-See the file @file{installer/INSTALL}.  You need to have the files for a
-complete R build, including bitmap and Tcl/Tk support and the manuals,
-as well as the recommended packages.
+You need to have the files for a complete R build, including bitmap and
+Tcl/Tk support and the manuals, as well as the recommended packages and
+Inno Setup (@pxref{The Inno Setup installer}).
 
 Once everything is set up
 
@@ -942,12 +942,26 @@ replace @code{make rinstaller} by something like
 make rinstaller EXTRA_PKGS='pkg1 pkg2 pkg3'
 @end example
 
-@noindent
+
 An alternative way to customize the installer starting with a binary
-distribution is given in file @file{installer/INSTALL}.
+distribution is to first make a full installation of R from the standard
+installer (that is, select @samp{Full Installation} from the
+@samp{Select Components} screen), then add packages and make other
+customizations to that installation.  Then in
+@file{src/gnuwin32/installer} run
+
+@example
+make myR IMAGEDIR=rootdir
+@end example
+
+@noindent
+where @file{rootdir} is the path to the root of the customized
+installation (forward slashes and no spaces, please).  This creates an
+executable with the standard name, @file{@value{RWVERSION}.exe}, so
+please rename it to indicate that it is customized.
 
 
-@node Cross-building on ix86 Linux,  , Building the installers, Building from source
+@node Cross-building on ix86 Linux,  , Building the installer, Building from source
 @subsection Cross-building on ix86 Linux
 
 You will need i386-mingw32 cross-compilers installed and in your path.
@@ -3215,22 +3229,24 @@ In this case the Help Workshop will not be needed.
 @section @LaTeX{}
 
 The @code{fptex} distribution of @LaTeX{} (directly from any CTAN node
-such as @url{http://www.ctan.org/tex-archive/systems/windows/fptex/} or
-via XEmTeX at @url{http://www.fptex.org}) includes a suitable port of
-@code{pdftex}.  We have also used @code{miktex}
-(@url{http://www.miktex.org}), which needs some customization: see
+such as @url{http://www.ctan.org/tex-archive/systems/windows/fptex/})
+includes a suitable port of @code{pdftex}.  We have also used
+@code{miktex} (@url{http://www.miktex.org}), which needs some
+customization: see
 @url{http://www.murdoch-sutherland.com/Rtools/miktex.html}.
 
-Please read @ref{Making the manuals} about how to
-make @file{refman.pdf} and set the environment variables @code{R_RD4DVI} and
-@code{R_RD4PDF} suitably; ensure you have the required fonts installed.
+Please read @ref{Making the manuals} about how to make @file{refman.pdf}
+and set the environment variables @code{R_RD4DVI} and @code{R_RD4PDF}
+suitably; ensure you have the required fonts installed.
 
 @node The Inno Setup installer,  , LaTeX, The Windows toolset
 @section The Inno Setup installer
 
-To make the install package (@file{@value{RWVERSION}.exe}) in the
-current Windows style we require Inno Setup 5.1.2 or later from
-@url{http://jrsoftware.org}.
+To make the installer package (@file{@value{RWVERSION}.exe}) we require
+Inno Setup 5.1.5 or later from @url{http://jrsoftware.org}.
+
+Edit file @file{src/gnuwin32/MkRules} and change @code{ISDIR} to the
+location where Inno Setup was installed.
 
 
 @node Function and variable index, Concept index, The Windows toolset, Top

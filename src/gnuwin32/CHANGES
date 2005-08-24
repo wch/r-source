@@ -32,6 +32,8 @@ windowsBuffered options.
 The script editor menu no longer has an option to exit R (as the pager
 and graphics menus do not).
 
+Installation is now available in Finnish.
+
 
 
 R 2.1.1 patched

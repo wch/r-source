@@ -613,6 +613,7 @@ Catalan,
 Czech,
 Danish,
 Dutch,
+Finnish,
 French,
 German,
 Hungarian,
@@ -1380,14 +1381,14 @@ If you want output to be updated on the console, call
 @html
 <hr WIDTH="100%">
 <address>
-Last edited 2005 August 21: comments to
+Last edited 2005 August 24: comments to
 <code><a href="mailto:Rwindows@@R-project.org">Rwindows@@r-project.org</a></code>
 </address>
 @end html
 @end ifhtml
 @ifinfo
 @sp 2
-Last edited 2005 August 21: comments to <Rwindows@@r-project.org>
+Last edited 2005 August 24: comments to <Rwindows@@r-project.org>
 @end ifinfo
 
 @bye
