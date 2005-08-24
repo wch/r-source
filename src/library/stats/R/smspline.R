@@ -240,16 +240,6 @@ predict.smooth.spline.fit <- function(object, x, deriv = 0, ...)
 			      n	  = as.integer(n),
 			      knot= as.double(object$knot),
 			      coef= as.double(object$coef),
-
-
-
-
-
-
-
-
-
-
 			      nk  = as.integer(object$nk),
 			      x	  = as.double(xs[interp]),
 			      s	  = double(n),
