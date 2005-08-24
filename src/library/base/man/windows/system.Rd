@@ -75,12 +75,12 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
   backwards compatibility.
 }
 \section{Warning}{
-    The command cannot be interrupted by the \R process.
+  The command cannot be interrupted by the \R process.
 
-    Do not run console applications that require user
-    input from \code{Rgui} setting \code{intern = TRUE} and/or
-    \code{show.output.on.console = TRUE}. They will not work,
-    may hang and then will probably hang \code{Rgui} too.
+  Do not run console applications that require user
+  input from \code{Rgui} setting \code{intern = TRUE} and/or
+  \code{show.output.on.console = TRUE}. They will not work,
+  may hang and then will probably hang \code{Rgui} too.
 }
 
 \seealso{
@@ -96,7 +96,8 @@ system(command, intern = FALSE, wait = TRUE, input = NULL,
 # launch your favourite shell:
 \dontrun{system(Sys.getenv("COMSPEC"))}
 \dontrun{
-system(paste('"c:/Program Files/Netscape/Netscape 6/netscp6.exe"',
+## note the two sets of quotes here:
+system(paste('"c:/Program Files/Mozilla Firefox/firefox.exe"',
              '-url cran.r-project.org'), wait = FALSE)}
 }
 \keyword{interface}
