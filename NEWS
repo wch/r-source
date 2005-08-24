@@ -295,6 +295,9 @@ DEPRECATED & DEFUNCT
 
     o	The stubs for the defunct device GNOME/gnome have been removed.
 
+    o	print.matrix() (which has been identical to print.default since
+	R 1.7.0) has been removed.
+
 
 INSTALLATION
 

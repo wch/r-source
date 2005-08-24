@@ -71,12 +71,6 @@
   encoded Unicode character it is printed in hex in the form \code{<xx>}
   and the next character is tried.
 }
-\note{
-  \code{print.matrix} is currently identical to \code{print.default},
-  but was prior to \code{1.7.0} did not print attributes and did not
-  have a \code{digits} argument.  It is provided only because some
-  packages call it explicitly.
-}
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.
   The \code{"\link{noquote}"} class and print method.
