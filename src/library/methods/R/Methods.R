@@ -466,17 +466,20 @@ getMethod <-
 dumpMethod <-
   ## Dump the method for this generic function and signature.
   ## The resulting source file will recreate the method.
-  function(f, signature=character(), file = defaultDumpName(f, signature), where = -1, def = getMethod(f, signature, where=where, optional = TRUE)) {
-  if(!is.function(def))
-    def <- getMethod(f, character(), where=where, optional = TRUE)
-  if(file != "")
-    sink(file)
-  cat("setMethod(\"", f, "\", ", deparse(signature), ",\n", sep="")
-  dput(def)
-  cat(")\n", sep="")
-  if(file != "")
-    sink()
-  file
+  function(f, signature=character(), file = defaultDumpName(f, signature),
+           where = -1,
+           def = getMethod(f, signature, where=where, optional = TRUE))
+{
+    if(!is.function(def))
+        def <- getMethod(f, character(), where=where, optional = TRUE)
+    if(file != "")
+        sink(file)
+    cat("setMethod(\"", f, "\", ", deparse(signature), ",\n", sep="")
+    dput(def)
+    cat(")\n", sep="")
+    if(file != "")
+        sink()
+    file
 }
 
 

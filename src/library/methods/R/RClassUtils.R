@@ -700,8 +700,8 @@ empty.dump <- function() list()
 isClassDef <- function(object) is(object, "classRepresentation")
 
 showClass <-
-    ## print the information about a class definition.  If complete==TRUE, include the
-    ## indirect information about extensions.
+    ## print the information about a class definition.
+    ## If complete==TRUE, include the indirect information about extensions.
     function(Class, complete = TRUE, propertiesAreCalled = "Slots")
 {
     if(isClassDef(Class)) {
