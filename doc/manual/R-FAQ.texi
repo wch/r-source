@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-08-20
+@set FAQ_DATE @value{FAQ_YEAR}-08-25
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -801,6 +801,13 @@ the R mailing lists.
 
 The R Core Team can be reached at @email{R-core@@lists.R-project.org}
 for comments and reports.
+
+Many of the R project's mailing lists are also available via
+@url{http://gmane.org, Gmane}, from which they can be read on the web,
+using an NNTP newsreader, or via RSS feeds.  See
+@uref{http://dir.gmane.org/index.php?prefix=gmane.comp.lang.r.} for the
+available mailing lists, and @uref{http://www.gmane.org/rss.php} for
+details on RSS feeds.
 
 @node What is CRAN?, Can I use R for commercial purposes?, What mailing lists exist for R?, R Basics
 @section What is @acronym{CRAN}?
@@ -1600,6 +1607,9 @@ Currently, a modified version of @strong{Rcgi} by
 @email{mai@@ms.uky.edu, Mai Zhou} (actually, two versions: one with
 (bitmap) graphics and one without) as well as the original code are
 available from @url{http://www.ms.uky.edu/~statweb/}.
+
+See also @url{http://franklin.imgen.bcm.tmc.edu/R.web.servers/} for more
+information on R web interface projects.
 
 @node R Add-On Packages, R and Emacs, R Web Interfaces, Top
 @chapter R Add-On Packages
@@ -2671,6 +2681,8 @@ single least squares fit.
 Routines and documentation for solving regression problems while
 imposing an L1 constraint on the estimates, based on the algorithm of
 Osborne et al.@: (1998).
+@item latentnet
+Latent position and cluster models for statistical networks.
 @item lattice
 Lattice graphics, an implementation of Trellis Graphics functions.
 @emph{Recommended}.
@@ -4316,6 +4328,7 @@ dir /opt/R/src/unix
 * What is the difference between package and library?::  
 * I installed a package but the functions are not there::  
 * Why doesn't R think these numbers are equal?::  
+* How can I capture or ignore errors in a long simulation?::  
 @end menu
 
 @c @node Why does R run out of memory?, Why does sourcing a correct file fail?, R Miscellanea, R Miscellanea
@@ -5088,7 +5101,7 @@ To actually @emph{use} the package, it needs to be @emph{loaded} using
 See @ref{R Add-On Packages} and @ref{What is the difference between
 package and library?} for more information.
 
-@node Why doesn't R think these numbers are equal?,  , I installed a package but the functions are not there, R Miscellanea
+@node Why doesn't R think these numbers are equal?, How can I capture or ignore errors in a long simulation?, I installed a package but the functions are not there, R Miscellanea
 @section Why doesn't R think these numbers are equal?
 
 The only numbers that can be represented exactly in R's numeric type 
@@ -5110,6 +5123,28 @@ The function @code{all.equal()} compares two objects using a numeric
 tolerance of @code{.Machine$double.eps ^ 0.5}.  If you want much greater
 accuracy than this you will need to consider error propagation
 carefully.
+
+For more information, see e.g.@: David Goldberg (1991), ``What Every
+Computer Scientist Should Know About Floating-Point Arithmetic'',
+@emph{ACM Computing Surveys}, @strong{23/1}, 5--48, also available via
+@url{http://docs.sun.com/source/806-3568/ncg_goldberg.html}.
+
+@node How can I capture or ignore errors in a long simulation?,  , Why doesn't R think these numbers are equal?, R Miscellanea
+@section How can I capture or ignore errors in a long simulation?
+
+Use @code{try()}, which returns an object of class @code{"try-error"}
+instead of an error, or preferably @code{tryCatch()}, where the return
+value can be configured more flexibly.  For example
+
+@example
+beta[i,] <- tryCatch(coef(lm(formula, data)),
+                     error = function(e) rep(NaN, 4))
+@end example
+
+@noindent
+would return the coefficients if the @code{lm()} call succeeded and
+would return @code{c(NaN, NaN, NaN, NaN)} if it failed (presumably there
+are supposed to be 4 coefficients in this example).
 
 @node R Programming, R Bugs, R Miscellanea, Top
 @chapter R Programming
