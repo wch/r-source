@@ -1,0 +1,439 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.2.0 Under development (unstable) (2005-08-24 r35393)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ##--- S4 Methods (and Classes)
+> library(methods)
+> showMethods(where = "package:methods")
+
+Function "addNextMethod":
+method = "MethodDefinition"
+method = "MethodWithNext"
+
+Function "body<-":
+fun = "ANY"
+fun = "MethodDefinition"
+fun = "function"
+    (inherited from fun = "ANY")
+
+Function "cbind2":
+x = "ANY", y = "ANY"
+x = "ANY", y = "missing"
+
+Function "coerce":
+from = "ANY", to = "array"
+from = "ANY", to = "call"
+from = "ANY", to = "character"
+from = "ANY", to = "complex"
+from = "ANY", to = "environment"
+from = "ANY", to = "expression"
+from = "ANY", to = "function"
+from = "ANY", to = "integer"
+from = "ANY", to = "list"
+from = "ANY", to = "logical"
+from = "ANY", to = "matrix"
+from = "ANY", to = "name"
+from = "ANY", to = "numeric"
+from = "ANY", to = "single"
+from = "ANY", to = "ts"
+from = "ANY", to = "vector"
+from = "ANY", to = "NULL"
+from = "NULL", to = "OptionalFunction"
+
+Function "initialize":
+.Object = "ANY"
+.Object = "traceable"
+.Object = "signature"
+.Object = "environment"
+.Object = "derivedDefaultMethod"
+    (inherited from .Object = "ANY")
+.Object = "standardGeneric"
+    (inherited from .Object = "ANY")
+.Object = "MethodsList"
+    (inherited from .Object = "ANY")
+.Object = "MethodDefinition"
+    (inherited from .Object = "ANY")
+.Object = "classPrototypeDef"
+    (inherited from .Object = "ANY")
+.Object = "SClassExtension"
+    (inherited from .Object = "ANY")
+.Object = "classRepresentation"
+    (inherited from .Object = "ANY")
+.Object = "ClassUnionRepresentation"
+    (inherited from .Object = "ANY")
+.Object = "ObjectsWithPackage"
+    (inherited from .Object = "ANY")
+.Object = "LinearMethodsList"
+    (inherited from .Object = "ANY")
+
+Function "loadMethod":
+method = "ANY"
+method = "MethodDefinition"
+method = "MethodWithNext"
+
+Function "show":
+object = "ANY"
+object = "traceable"
+object = "ObjectsWithPackage"
+object = "MethodDefinition"
+object = "MethodWithNext"
+object = "genericFunction"
+object = "classRepresentation"
+NULL
+> 
+> ## print/show dispatch  [moved from  ./reg-tests-2.R ]
+> setClass("bar", representation(a="numeric"))
+[1] "bar"
+> foo <- new("bar", a=pi)
+> foo
+An object of class "bar"
+Slot "a":
+[1] 3.141593
+
+> show(foo)
+An object of class "bar"
+Slot "a":
+[1] 3.141593
+
+> print(foo)
+An object of class "bar"
+Slot "a":
+[1] 3.141593
+
+> 
+> setMethod("show", "bar", function(object){cat("show method\n")})
+[1] "show"
+> show(foo)
+show method
+> foo
+show method
+> print(foo)
+show method
+> print(foo, digits = 4)
+An object of class "bar"
+Slot "a":
+[1] 3.142
+> 
+> print.bar <- function(x, ...) cat("print method\n")
+> foo
+print method
+> print(foo)
+print method
+> show(foo)
+show method
+> 
+> setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
+Creating a new generic function for 'print' in '.GlobalEnv'
+[1] "print"
+> foo
+S4 print method
+> print(foo)
+S4 print method
+> show(foo)
+show method
+> print(foo, digits = 4)
+S4 print method
+> 
+> setClassUnion("integer or NULL", members = c("integer","NULL"))
+[1] "integer or NULL"
+> setClass("c1", representation(x = "integer", code = "integer or NULL"))
+[1] "c1"
+> nc <- new("c1", x = 1:2)
+> str(nc)# gave ^ANULL^A in 2.0.0
+Formal class 'c1' [package ".GlobalEnv"] with 2 slots
+  ..@ x   : int [1:2] 1 2
+  ..@ code: NULL
+> ##
+> 
+> 
+> library(stats4)
+> showMethods(where = "package:stats4")
+
+Function "AIC":
+object = "ANY"
+
+Function "BIC":
+object = "logLik"
+object = "ANY"
+
+Function "coef":
+object = "ANY"
+object = "mle"
+object = "summary.mle"
+
+Function "confint":
+object = "ANY"
+object = "profile.mle"
+object = "mle"
+
+Function "logLik":
+object = "ANY"
+object = "mle"
+
+Function "plot":
+x = "ANY", y = "ANY"
+x = "profile.mle", y = "missing"
+
+Function "profile":
+fitted = "ANY"
+fitted = "mle"
+
+Function "show":
+object = "ANY"
+object = "traceable"
+object = "ObjectsWithPackage"
+object = "MethodDefinition"
+object = "MethodWithNext"
+object = "genericFunction"
+object = "classRepresentation"
+object = "mle"
+object = "summary.mle"
+object = "bar"
+
+Function "summary":
+object = "ANY"
+object = "mle"
+
+Function "update":
+object = "ANY"
+object = "mle"
+
+Function "vcov":
+object = "ANY"
+object = "mle"
+NULL
+> showMethods("show")
+
+Function "show":
+object = "ANY"
+object = "traceable"
+object = "ObjectsWithPackage"
+object = "MethodDefinition"
+object = "MethodWithNext"
+object = "genericFunction"
+object = "classRepresentation"
+object = "mle"
+object = "summary.mle"
+object = "bar"
+> showMethods("show")
+
+Function "show":
+object = "ANY"
+object = "traceable"
+object = "ObjectsWithPackage"
+object = "MethodDefinition"
+object = "MethodWithNext"
+object = "genericFunction"
+object = "classRepresentation"
+object = "mle"
+object = "summary.mle"
+object = "bar"
+> showMethods("plot") # (ANY,ANY) and (profile.mle, missing)
+
+Function "plot":
+x = "ANY", y = "ANY"
+x = "profile.mle", y = "missing"
+> showMethods(classes="mle")
+
+Function "addNextMethod":
+<Empty Methods List>
+
+Function "body<-":
+<Empty Methods List>
+
+Function "cbind2":
+<Empty Methods List>
+
+Function "coerce":
+<Empty Methods List>
+
+Function "initialize":
+<Empty Methods List>
+
+Function "loadMethod":
+<Empty Methods List>
+
+Function "show":
+object = "mle"
+NULL
+> showMethods(classes="matrix")
+
+Function "addNextMethod":
+<Empty Methods List>
+
+Function "body<-":
+<Empty Methods List>
+
+Function "cbind2":
+<Empty Methods List>
+
+Function "coerce":
+from = "ANY", to = "matrix"
+
+Function "initialize":
+<Empty Methods List>
+
+Function "loadMethod":
+<Empty Methods List>
+
+Function "show":
+<Empty Methods List>
+NULL
+> showMethods(classes=c("matrix", "numeric"))
+
+Function "addNextMethod":
+<Empty Methods List>
+
+Function "body<-":
+<Empty Methods List>
+
+Function "cbind2":
+<Empty Methods List>
+
+Function "coerce":
+from = "ANY", to = "matrix"
+from = "ANY", to = "numeric"
+
+Function "initialize":
+.Object = "numeric"
+    (inherited from .Object = "ANY")
+
+Function "loadMethod":
+<Empty Methods List>
+
+Function "show":
+<Empty Methods List>
+NULL
+> showMethods(where = "package:methods")
+
+Function "addNextMethod":
+method = "MethodDefinition"
+method = "MethodWithNext"
+
+Function "body<-":
+fun = "ANY"
+fun = "MethodDefinition"
+fun = "function"
+    (inherited from fun = "ANY")
+
+Function "cbind2":
+x = "ANY", y = "ANY"
+x = "ANY", y = "missing"
+
+Function "coerce":
+from = "ANY", to = "array"
+from = "ANY", to = "call"
+from = "ANY", to = "character"
+from = "ANY", to = "complex"
+from = "ANY", to = "environment"
+from = "ANY", to = "expression"
+from = "ANY", to = "function"
+from = "ANY", to = "integer"
+from = "ANY", to = "list"
+from = "ANY", to = "logical"
+from = "ANY", to = "matrix"
+from = "ANY", to = "name"
+from = "ANY", to = "numeric"
+from = "ANY", to = "single"
+from = "ANY", to = "ts"
+from = "ANY", to = "vector"
+from = "ANY", to = "NULL"
+from = "NULL", to = "OptionalFunction"
+
+Function "initialize":
+.Object = "ANY"
+.Object = "traceable"
+.Object = "signature"
+.Object = "environment"
+.Object = "derivedDefaultMethod"
+    (inherited from .Object = "ANY")
+.Object = "standardGeneric"
+    (inherited from .Object = "ANY")
+.Object = "MethodsList"
+    (inherited from .Object = "ANY")
+.Object = "MethodDefinition"
+    (inherited from .Object = "ANY")
+.Object = "classPrototypeDef"
+    (inherited from .Object = "ANY")
+.Object = "SClassExtension"
+    (inherited from .Object = "ANY")
+.Object = "classRepresentation"
+    (inherited from .Object = "ANY")
+.Object = "ClassUnionRepresentation"
+    (inherited from .Object = "ANY")
+.Object = "ObjectsWithPackage"
+    (inherited from .Object = "ANY")
+.Object = "LinearMethodsList"
+    (inherited from .Object = "ANY")
+.Object = "numeric"
+    (inherited from .Object = "ANY")
+.Object = "bar"
+    (inherited from .Object = "ANY")
+.Object = "integer"
+    (inherited from .Object = "ANY")
+.Object = "c1"
+    (inherited from .Object = "ANY")
+
+Function "loadMethod":
+method = "ANY"
+method = "MethodDefinition"
+method = "MethodWithNext"
+
+Function "show":
+object = "ANY"
+object = "traceable"
+object = "ObjectsWithPackage"
+object = "MethodDefinition"
+object = "MethodWithNext"
+object = "genericFunction"
+object = "classRepresentation"
+object = "mle"
+object = "summary.mle"
+object = "bar"
+NULL
+> 
+> ## stopifnot(require(Matrix),
+> ##           require(lme4)) # -> S4  plot
+> ## showMethods("plot") # more than last time
+> ## showMethods("show", classes = c("dgeMatrix","Matrix","matrix"))
+> ## showMethods("show")
+> ## showMethods(classes = c("dgeMatrix","matrix"))
+> 
+> ##--- "[" fiasco before R 2.2.0 :
+> d2 <- data.frame(b= I(matrix(1:6,3,2)))
+> ## all is well:
+> d2[2,]
+     [,1] [,2]
+[1,]    2    5
+> stopifnot(identical(d2[-1,], d2[2:3,]))
+> ## Now make "[" into S4 generic by defining a trivial method
+> setClass("Mat", representation(Dim = "integer", "VIRTUAL"))
+[1] "Mat"
+> setMethod("[", signature(x = "Mat",
++ 			 i = "missing", j = "missing", drop = "ANY"),
++ 	  function (x, i, j, drop) x)
+[1] "["
+> ## Can even remove the method: it doesn't help
+> removeMethod("[", signature(x = "Mat",
++                             i = "missing", j = "missing", drop = "ANY"))
+[1] TRUE
+> d2[1:2,] ## used to fail badly; now okay
+     [,1] [,2]
+[1,]    1    4
+[2,]    2    5
+> stopifnot(identical(d2[-1,], d2[2:3,]))
+> ## failed in R <= 2.1.x
+> 

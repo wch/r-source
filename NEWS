@@ -267,6 +267,10 @@ NEW FEATURES
     o   boxplot() now responds to supplying 'yaxs' (via bxp()).
 	(Wish of PR#8072.)
 
+    o	experimental version of cbind() in methods package, based on new
+	generic function cbind2(x,y).  This will allow the equivalent of S4
+	methods for cbind().
+
 
 DEPRECATED & DEFUNCT
 
@@ -534,6 +538,9 @@ BUG FIXES
     o	axis() now ensures that if 'labels' are supplied as character
 	strings or expressions then 'at' is also supplied (since the
 	calculated value for 'at' can change under resizing).
+
+    o	Defining S4 methods for "[" had resulted in changed behavior of S3
+	dispatch in a very rare case which no longer happens.
 
 
 

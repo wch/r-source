@@ -240,6 +240,7 @@ export(newBasic)
 export(newClassRepresentation)
 export(newEmptyObject)
 export(packageSlot)
+export("packageSlot<-")
 export(possibleExtends)
 export(promptClass)
 export(promptMethods)
@@ -297,3 +298,6 @@ export(validSlotNames)
 ## the next 2 would not be needed if R_initMethods looked in the namespace, not globalenv
 export(.ShortPrimitiveSkeletons)
 export(.EmptyPrimitiveSkeletons)
+
+## experimental
+export(cbind2)

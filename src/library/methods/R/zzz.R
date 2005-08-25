@@ -1,5 +1,5 @@
 ..First.lib  <-
-  ## Initialize the methods library:  the session table of method
+  ## Initialize the methods package:  the session table of method
   ## definitions.
   ##
   ## run the initial computations for the methods package, if this
@@ -38,8 +38,8 @@
         assign("newClassRepresentation", .newClassRepresentation, envir = where)
         assign(".mergeClassDefSlots", ..mergeClassDefSlots, envir = where)
         .makeBasicFuns(where)
-        rm(.makeGeneric, .newClassRepresentation, .possibleExtends, ..mergeClassDefSlots,
-           envir = where)
+        rm(.makeGeneric, .newClassRepresentation, .possibleExtends,
+           ..mergeClassDefSlots, envir = where)
         .InitMethodDefinitions(where)
         .InitShowMethods(where)
         assign(".isPrototype", ..isPrototype, envir = where)
@@ -54,20 +54,28 @@
         cat("done\n")
     }
     else {
-        if(!identical(saved, TRUE))
-            stop("looks like the methods library was not installed correctly; check the make results!", domain = NA)
-        ## assign the environment of a function from the methods package--
-        ## the namespace of the methods package, if it has one, or the global environment
-        assign(".methodsNamespace", environment(get("setGeneric", where)), where)
-        ## cache metadata for all environments in search path.  The assumption is that
-        ## this has not been done, since cacheMetaData is in this package.  library, attach,
-        ## and detach functions look for cacheMetaData and call it if it's found.
+        if(!isTRUE(saved))
+            stop("maybe the methods package was not installed correctly; check the make results!",
+                 domain = NA)
+
+        ## assign the environment of a function from the methods
+        ## package-- the namespace of the methods package, if it has
+        ## one, or the global environment
+
+        assign(".methodsNamespace",
+               environment(get("setGeneric", where)), where)
+        ## cache metadata for all environments in search path.  The
+        ## assumption is that this has not been done, since
+        ## cacheMetaData is in this package.  library, attach, and
+        ## detach functions look for cacheMetaData and call it if it's
+        ## found.
+
         sch <- rev(search())[-(1:2)]  # skip base and autoloads
         sch <- sch[! sch %in% paste("package", c("utils", "graphics", "stats"),
                                     sep=":")]
         for(i in sch) {
             nev <- ev <- as.environment(i)
-#            try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
+##            try(nev <- asNamespace(getPackageName(ev)), silent = TRUE)
             ns <- .Internal(getRegisteredNamespace(as.name(getPackageName(ev))))
             if(!is.null(ns)) nev <- asNamespace(ns)
             if(!exists(".noGenerics", where = nev, inherits = FALSE) &&
@@ -87,11 +95,23 @@
         ns <- asNamespace(pkgName)
         tools:::makeLazyLoadDB(ns, dbbase)
     }
+
+    if(FALSE) {
+	## Experimental: works around namespace-protection on purpose:
+	utils::assignInNamespace(".__H__.cbind", base::cbind, ns = "base")
+	utils::assignInNamespace("cbind", cbind, ns = "base")
+    }
 }
 
 .onUnload <- function(libpath) {
     .isMethodsDispatchOn(FALSE)
     library.dynam.unload("methods", libpath)
+
+    if(!inherits(try(getFromNamespace(".__H__.cbind", ns = "base"),
+                     silent = TRUE), "try-error")) {
+        ## Experimental: revert those in .onLoad():
+        utils::assignInNamespace("cbind", base::.__H__.cbind, ns = "base")
+    }
 }
 
 
@@ -104,6 +124,8 @@
 .Last.lib <- function(libpath) {
     methods:::.onUnload(libpath)
 }
+## redefining the above invalidates it..
+## this is used only when the namespace is (temporarily) disabled, right?
 .Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
