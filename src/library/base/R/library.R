@@ -783,7 +783,7 @@ function(package = NULL, lib.loc = NULL, quiet = FALSE,
                                     sep = ""),
                               search()))) {
             dirs <- sapply(pos, function(i) {
-                if(is.null(env <- as.environment(i)))
+                if(identical(env <- as.environment(i), baseenv()))
                     system.file()
                 else
                     attr(env, "path")

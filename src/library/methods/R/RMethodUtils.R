@@ -960,7 +960,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         ## the static environments for this namespace, ending with the base namespace
         value <- list(env)
         repeat {
-            if(is.null(env))
+            if(identical(env, emptyenv()))
                 stop("botched namespace: failed to find 'base' namespace in its parents")
             env <- parent.env(env)
             value <- c(value, list(env))

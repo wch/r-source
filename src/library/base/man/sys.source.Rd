@@ -6,8 +6,8 @@
   them in the specified environment.
 }
 \usage{
-sys.source(file, envir = NULL, chdir = FALSE,
-           keep.source = getOption("keep.source.pkgs"))
+sys.source(file, envir = baseenv(), chdir = FALSE,
+	   keep.source = getOption("keep.source.pkgs"))
 }
 \arguments{
   \item{file}{a character string naming the file to be read from}
