@@ -59,6 +59,8 @@ up correctly.
 The 'Open Script' button shown from the pager toolbar in MDI mode was
 set up incorrectly and liable to crash R.  (PR#8060)
 
+seek(origin = "end") was repositioning to the wrong location. (PR#7896)
+
 
 
 R 2.1.1

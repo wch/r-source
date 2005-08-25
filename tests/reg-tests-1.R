@@ -3697,6 +3697,20 @@ n <- 46341
 stopifnot(!is.na(z$p.value))
 ##
 
+## seek on a file messed up in Windows (PR#7896)
+tf <- tempfile()
+f <- file(tf, "w+b")
+writeChar("abcdefghijklmnopqrstuvwxyz", f, eos=NULL)
+seek(f, 0, "end", rw="r")
+stopifnot(seek(f, NA, rw="r") == 26) # MinGW messed up seek to end of file that was open for writing
+close(f)
+f <- file(tf, "rb")
+seek(f, 12)
+stopifnot(readChar(f, 1) == "m")  # First patch messed up on read-only files
+close(f)
+unlink(tf)
+##
+
 ### end of tests added in 2.1.1 patched ###
 
 
