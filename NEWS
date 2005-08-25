@@ -642,6 +642,13 @@ BUG FIXES
     o	cor.test(method = "spearman") gave NA p-values for _very_ long
 	vectors. (PR#8087)
 
+    o	Switching to the Mersenne-Twister RNG could cause a segfault on
+	first used.
+
+	A user-supplied RNG without user_unif_{nseed,seedloc} was
+	being re-initialized at each call.
+
+
 
 
 		CHANGES IN R VERSION 2.1.1

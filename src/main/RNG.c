@@ -141,17 +141,19 @@ double unif_rand(void)
     }
 }
 
-static void FixupSeeds(RNGtype kind, int initial)
+/* we must mask global variable here, as I1-I3 hide RNG_kind
+   and we want the argument */
+static void FixupSeeds(RNGtype RNG_kind, int initial)
 {
 /* Depending on RNG, set 0 values to non-0, etc. */
 
     int j, notallzero = 0;
 
     /* Set 0 to 1 :
-       for(j = 0; j <= RNG_Table[kind].n_seed - 1; j++)
-       if(!RNG_Table[kind].i_seed[j]) RNG_Table[kind].i_seed[j]++; */
+       for(j = 0; j <= RNG_Table[RNG_kind].n_seed - 1; j++)
+       if(!RNG_Table[RNG_kind].i_seed[j]) RNG_Table[RNG_kind].i_seed[j]++; */
 
-    switch(kind) {
+    switch(RNG_kind) {
     case WICHMANN_HILL:
 	I1 = I1 % 30269; I2 = I2 % 30307; I3 = I3 % 30323;
 
@@ -178,11 +180,11 @@ static void FixupSeeds(RNGtype kind, int initial)
 	if(I1 <= 0) I1 = 624; 
 	/* check for all zeroes */
 	for (j = 1; j <= 624; j++)
-	    if(RNG_Table[kind].i_seed[j] != 0) {
+	    if(RNG_Table[RNG_kind].i_seed[j] != 0) {
 		notallzero = 1;
 		break;
 	    }
-	if(!notallzero) Randomize(kind);
+	if(!notallzero) Randomize(RNG_kind);
 	break;
 
     case KNUTH_TAOCP:
@@ -190,16 +192,16 @@ static void FixupSeeds(RNGtype kind, int initial)
 	if(KT_pos <= 0) KT_pos = 100;
 	/* check for all zeroes */
 	for (j = 0; j < 100; j++)
-	    if(RNG_Table[kind].i_seed[j] != 0) {
+	    if(RNG_Table[RNG_kind].i_seed[j] != 0) {
 		notallzero = 1;
 		break;
 	    }
-	if(!notallzero) Randomize(kind);	
+	if(!notallzero) Randomize(RNG_kind);	
 	break;
     case USER_UNIF:
 	break;
     default:
-	error(_("FixupSeeds: unimplemented RNG kind %d"), kind);
+	error(_("FixupSeeds: unimplemented RNG kind %d"), RNG_kind);
     }
 }
 
@@ -219,6 +221,7 @@ static void RNG_Init(RNGtype kind, Int32 seed)
     case MARSAGLIA_MULTICARRY:
     case SUPER_DUPER:
     case MERSENNE_TWISTER:
+	/* i_seed[0] is mti, *but* this is needed for historical consistency */
 	for(j = 0; j < RNG_Table[kind].n_seed; j++) {
 	    seed = (69069 * seed + 1);
 	    RNG_Table[kind].i_seed[j] = seed;
@@ -313,9 +316,10 @@ void GetRNGstate()
 	}
 	RNG_kind = newRNG; N01_kind = newN01;
 	len_seed = RNG_Table[RNG_kind].n_seed;
+	/* Not sure whether this test is needed: wrong for USER_UNIF */
 	if(LENGTH(seeds) > 1 && LENGTH(seeds) < len_seed + 1)
 	    error(_(".Random.seed has wrong length"));
-	if(LENGTH(seeds) == 1)
+	if(LENGTH(seeds) == 1 && RNG_kind != USER_UNIF)
 	    Randomize(RNG_kind);
 	else {
 	    for(j = 1; j <= len_seed; j++) {
