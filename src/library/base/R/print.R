@@ -10,8 +10,6 @@ print.default <- function(x, digits = NULL, quote = TRUE, na.print = NULL,
                             noOpt))
 }
 
-print.matrix <- print.default  ## back-compatibility
-
 prmatrix <-
     function (x, rowlab = dn[[1]], collab = dn[[2]],
               quote = TRUE, right = FALSE,
