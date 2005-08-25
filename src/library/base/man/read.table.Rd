@@ -99,9 +99,10 @@ read.delim2(file, header = TRUE, sep = "\t", quote="\"", dec=",",
     columns to be skipped.
   }
 
-  \item{na.strings}{a vector of strings which are to be interpreted as
-    \code{\link{NA}} values.  Blank fields are also considered to be
-    missing values.}
+  \item{na.strings}{a character vector of strings which are to be
+    interpreted as \code{\link{NA}} values.  Blank fields are also
+    considered to be missing values in logical, integer, numeric and
+    complex fields.}
 
   \item{colClasses}{character.  A vector of classes to be assumed for
     the columns.  Recycled as necessary, or if the character vector is
