@@ -1,42 +1,7 @@
-Making the standard installer
-=============================
+Making the installer
+===================
 
-You can make an install package (R-x.y.z-win32.exe) in the current
-Windows style by using the installer kit Inno Setup 5.1.2 or later
-from jrsoftware.org.
-
-You need the R installation built completely (see ../INSTALL: this
-includes making bitmap and Tcl/Tk support and the manuals).
-It's worthwhile testing it too!
-
-Go to the parent of this directory and edit ISDIR in ../MkRules and run
-
-make distribution
-make clean
-
-You will have R-x.y.z-win32.exe both in this dir and in the cran dir.
-
-Note that building the installer needs ca 85Mb of free memory.
-
-
-Making a custom installer
-=========================
-
-1) If you want to customize the installation by adding extra packages,
-replace `make distribution' by something like
-
-	make distribution EXTRA_PKGS='pkg1 pkg2 pkg3'
-
-
-2) If you don't want to make R from the sources yourself, make a full
-installation of R from the standard installer (that is, select 'Full
-Installation' from the 'Select Components' screen), then add packages
-and make other customizations.
-
-Edit ISDIR in ../MkRules if you have not already done so.  Then in
-this directory run
-
-	make myR IMAGEDIR=rootdir
-
-where `rootdir' is the path to the root of the customized installation
-(forward slashes and no spaces, please).
+Details on building the installer are now given in the `R Installation
+and Administration Manual' in the doc/manual directory.  An HTML
+version is at doc/html/R-admin.html, unless you obtained R using
+Subversion.

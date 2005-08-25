@@ -78,7 +78,9 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   \item{nlines}{if positive, the maximum number of lines of data to be read.}
 
   \item{na.strings}{character vector.  Elements of this vector are to be
-    interpreted as missing (\code{\link{NA}}) values.}
+    interpreted as missing (\code{\link{NA}}) values. Blank fields are
+    also considered to be missing values in logical, integer, numeric
+    and complex fields.}
 
   \item{flush}{logical: if \code{TRUE}, \code{scan} will flush to the
     end of the line after reading the last of the fields requested.

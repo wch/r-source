@@ -52,7 +52,7 @@ lm(formula, data, subset, weights, na.action,
     not in \R) a singular fit is an error.}
 
   \item{contrasts}{an optional list. See the \code{contrasts.arg}
-    of \code{model.matrix.default}.}
+    of \code{\link{model.matrix.default}}.}
 
   \item{offset}{this can be used to specify an \emph{a priori}
     known component to be included in the linear predictor

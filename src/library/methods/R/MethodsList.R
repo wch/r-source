@@ -212,6 +212,8 @@ MethodsListSelect <-
             thisClass <- "missing"
         else {
             arg <- eval(as.name(argName), env) ## DO use instance-specific inheritance
+	    if(missing(arg)) ## S3 weird R code? Bail out!
+		return(finalDefault)
             thisClass <- .class1(arg)
         }
     }

@@ -1,6 +1,5 @@
 \name{print.default}
 \alias{print.default}
-\alias{print.matrix}
 \description{
   \code{print.default} is the \emph{default} method of the generic
   \code{\link{print}} function which prints its argument.
@@ -70,12 +69,6 @@
   valid UTF-8.  If a byte is encountered that is not part of an
   encoded Unicode character it is printed in hex in the form \code{<xx>}
   and the next character is tried.
-}
-\note{
-  \code{print.matrix} is currently identical to \code{print.default},
-  but was prior to \code{1.7.0} did not print attributes and did not
-  have a \code{digits} argument.  It is provided only because some
-  packages call it explicitly.
 }
 \seealso{
   The generic \code{\link{print}}, \code{\link{options}}.

@@ -235,8 +235,10 @@ NEW FEATURES
     o	format.default() now has a 'width' argument, and 'justify' can
 	now centre character strings.
 
-	format.default() has a new argument 'na.encode' to control
-	whether NA character strings are encoded (true by default).
+	format.default() has new arguments 'na.encode' to control
+	whether NA character strings are encoded (true by default),
+	and 'scientific' to control the use of fixed/scientific
+	notation for real/complex numbers.
 
 	How format() works on a list is now documented, and uses
 	arguments consistently with their usage on an atomic vector.
@@ -262,8 +264,12 @@ NEW FEATURES
     o   memory.profile() now uses the type names returned by typeof()
 	and no longer has two unlabelled entries.
 
-    o   boxplots now responds to supplying 'yaxs' (via bxp()).
+    o   boxplot() now responds to supplying 'yaxs' (via bxp()).
 	(Wish of PR#8072.)
+
+    o	experimental version of cbind() in methods package, based on new
+	generic function cbind2(x,y).  This will allow the equivalent of S4
+	methods for cbind().
 
 
 DEPRECATED & DEFUNCT
@@ -292,6 +298,9 @@ DEPRECATED & DEFUNCT
     o	Rd.sty no longer processes pre-2.0.0 conversions containing \Link.
 
     o	The stubs for the defunct device GNOME/gnome have been removed.
+
+    o	print.matrix() (which has been identical to print.default since
+	R 1.7.0) has been removed.
 
 
 INSTALLATION
@@ -530,6 +539,9 @@ BUG FIXES
 	strings or expressions then 'at' is also supplied (since the
 	calculated value for 'at' can change under resizing).
 
+    o	Defining S4 methods for "[" had resulted in changed behavior of S3
+	dispatch in a very rare case which no longer happens.
+
 
 
 
@@ -626,6 +638,9 @@ BUG FIXES
 
 	Coercion of a list to raw was behaving inconsistently for
 	out-of-range values (and not warning).
+
+    o	cor.test(method = "spearman") gave NA p-values for _very_ long
+	vectors. (PR#8087)
 
 
 

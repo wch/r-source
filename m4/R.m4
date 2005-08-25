@@ -1704,6 +1704,29 @@ fi
   AC_MSG_RESULT([using X11 ... ${use_X11}])
 ])# R_X11
 
+# R_CHECK_FRAMEWORK(function, framework,
+#                   [action-if-found], [action-if-not-found],
+#                   [other-libs])
+# generic check for a framework, a function should be supplied to
+# make sure the proper framework is found.
+# default action is to set have_..._fw to yes/no and to define
+# HAVE_..._FW if present
+
+AC_DEFUN([R_CHECK_FRAMEWORK],
+[r_check_fw_save_LIBS=$LIBS
+  AC_MSG_CHECKING([for $1 in $2 framework])
+  r_check_fw_$2=no
+  LIBS="-framework $2 $5 $LIBS"
+  AC_LINK_IFELSE([AC_LANG_CALL([],[$1])],
+                 [r_check_fw_$2="-framework $2"
+                 AC_MSG_RESULT(yes)],[AC_MSG_RESULT(no)])
+  LIBS=$r_check_fw_save_LIBS
+  AS_IF([test "$r_check_fw_$2" != no],
+        [m4_default([$3], [AC_DEFINE_UNQUOTED(AS_TR_CPP(HAVE_$2_FW), 1, [Defined if framework $2 is present])
+	AS_TR_SH(have_$2_fw)=yes])],
+	[m4_default([$4], AS_TR_SH(have_$2_fw)=no)])
+])# R_CHECK_FRAMEWORK
+
 ## R_AQUA
 ## ------
 AC_DEFUN([R_AQUA],
@@ -1711,7 +1734,11 @@ AC_DEFUN([R_AQUA],
 if test "${want_aqua}" = yes; then
   case "${host_os}" in
     darwin*)
-      use_aqua=yes
+      ## we can build AQUA only with CoreFoundation, otherwise
+      ## Quartz device won't build
+      if test "${have_CoreFoundation_fw}" = yes; then
+        use_aqua=yes
+      fi
       ;;
   esac
 fi

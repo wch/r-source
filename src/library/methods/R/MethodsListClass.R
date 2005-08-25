@@ -1,5 +1,4 @@
-.InitMethodsListClass <-
-  function(envir)
+.InitMethodsListClass <- function(envir)
 {
     if(exists(classMetaName("MethodsList"), envir))
         return(FALSE)
@@ -58,7 +57,8 @@
 
 ## some initializations that need to be done late
 .InitMethodDefinitions <- function(envir) {
-    assign("asMethodDefinition",  function(def, signature = list(), sealed = FALSE) {
+    assign("asMethodDefinition",
+           function(def, signature = list(), sealed = FALSE) {
         ## primitives can't take slots, but they are only legal as default methods
         ## and the code will just have to accomodate them in that role, w/o the
         ## MethodDefinition information.
@@ -176,10 +176,20 @@
                   }
                   else {
                       mat <- rbind(data, pkg)
-                      dimnames(mat) <- list(c("Object:", "From:"), rep("", length(data)))
+		      dimnames(mat) <- list(c("Object:", "From:"),
+					    rep("", length(data)))
                       show(mat)
                   }
               }, where = envir)
+
+    setGeneric("cbind2", function(x, y) standardGeneric("cbind2"),
+	       where = envir)
+    ## and its default methods:
+    setMethod("cbind2", signature(x = "ANY", y = "ANY"),
+	      function(x,y) .Internal(cbind(x,y)))
+    setMethod("cbind2", signature(x = "ANY", y = "missing"),
+	      function(x,y) .Internal(cbind(x)))
+
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }

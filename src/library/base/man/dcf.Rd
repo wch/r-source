@@ -15,7 +15,7 @@ write.dcf(x, file = "", append = FALSE,
   \item{file}{either a character string naming a file or a connection.
     \code{""} indicates output to the console.  For \code{read.dcf} this
     can name a \code{gzip}-compressed file.}
-  \item{fields}{Fields to read from the DCF file. Default is to read all
+  \item{fields}{Fields to read from the DCF file.  Default is to read all
     fields.}
   \item{x}{the object to be written, typically a data frame.  If not, it
     is attempted to coerce \code{x} to a data frame.}
@@ -28,11 +28,11 @@ write.dcf(x, file = "", append = FALSE,
 }
 \details{
   DCF is a simple format for storing databases in plain text files that
-  can easily be directly read and written by humans. DCF is used in
-  various places to store R system information, like descriptions and
+  can easily be directly read and written by humans.  DCF is used in
+  various places to store \R system information, like descriptions and
   contents of packages.
 
-  The DCF rules as implemented in R are:
+  The DCF rules as implemented in \R are:
   \enumerate{
     \item A database consists of one or more records, each with one or
     more named fields. Not every record must contain each field, a
@@ -43,8 +43,7 @@ write.dcf(x, file = "", append = FALSE,
     by \code{:} (only the first \code{:} counts). The value can be
     empty (=whitespace only).
     \item Lines starting with whitespace are continuation lines (to the
-    preceding field) if at least one character
-    in the line is non-whitespace.
+    preceding field) if at least one character in the line is non-whitespace.
     \item Records are separated by one or more empty (=whitespace only)
     lines.
   }
@@ -54,7 +53,8 @@ write.dcf(x, file = "", append = FALSE,
   values is ignored. If a tag name is specified, but the corresponding
   value is empty, then an empty string of length 0 is returned. If the
   tag name of a fields is never used in a record, then \code{NA} is
-  returned.
+  returned.  If there are multiple records with the same tag name, the
+  last one encountered is returned.
 }    
 \seealso{
   \code{\link{write.table}}.

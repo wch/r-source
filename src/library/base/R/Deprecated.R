@@ -1,5 +1,5 @@
-###----- NOTE:	../man/Deprecated.Rd   must be synchronized with this!
-###		--------------------
+###----- NOTE:	../man/base-deprecated.Rd   must be synchronized with this file!
+###		-------------------------
 .Deprecated <- function(new, package=NULL) {
     msg <- gettextf("'%s' is deprecated.\n",
                     as.character(sys.call(sys.parent())[[1]]))

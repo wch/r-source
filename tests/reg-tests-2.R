@@ -832,41 +832,6 @@ par(mfrow = c(1,1))
 ## end of PR 390
 
 
-## print/show dispatch
-hasMethods <- .isMethodsDispatchOn()
-require(methods)
-setClass("bar", representation(a="numeric"))
-foo <- new("bar", a=pi)
-foo
-show(foo)
-print(foo)
-
-setMethod("show", "bar", function(object){cat("show method\n")})
-show(foo)
-foo
-print(foo)
-print(foo, digits = 4)
-
-print.bar <- function(x, ...) cat("print method\n")
-foo
-print(foo)
-show(foo)
-
-setMethod("print", "bar", function(x, ...){cat("S4 print method\n")})
-foo
-print(foo)
-show(foo)
-print(foo, digits = 4)
-
-setClassUnion("integer or NULL", members = c("integer","NULL"))
-setClass("c1", representation(x = "integer", code = "integer or NULL"))
-nc <- new("c1", x = 1:2)
-str(nc)# gave ^ANULL^A in 2.0.0
-
-if(!hasMethods) detach("package:methods")
-##
-
-
 ## scoping rules calling step inside a function
 "cement" <-
     structure(list(x1 = c(7, 1, 11, 11, 7, 11, 3, 1, 2, 21, 1, 11, 10),

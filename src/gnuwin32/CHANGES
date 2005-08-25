@@ -32,6 +32,8 @@ windowsBuffered options.
 The script editor menu no longer has an option to exit R (as the pager
 and graphics menus do not).
 
+Installation is now available in Finnish.
+
 
 
 R 2.1.1 patched
@@ -51,14 +53,13 @@ The default type of file for saving a script was not being set by the
 contributed C code for the script editor, so it reverted to the type
 of the last file dialog (PR#8018).
 
-Yet another Windows' unreliability in seek() has been worked around
-(PR#7896).
-
 formatC() with an exponential format sometimes did not line the fields
 up correctly.
 
 The 'Open Script' button shown from the pager toolbar in MDI mode was
 set up incorrectly and liable to crash R.  (PR#8060)
+
+seek(origin = "end") was repositioning to the wrong location. (PR#7896)
 
 
 
