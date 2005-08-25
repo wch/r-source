@@ -131,7 +131,9 @@ static int WhichEvent(DEEvent ioevent);
 static char *get_col_name(int col);
 static int  get_col_width(int col);
 static CellType get_col_type(int col);
+#ifdef USE_FONTSET
 static void calc_pre_edit_pos(void);
+#endif
 static int last_wchar_bytes(char *);
 static SEXP work, names, lens;
 static PROTECT_INDEX wpi, npi, lpi;
@@ -184,8 +186,8 @@ static Window           iowindow, menuwindow, menupanes[4];
 static GC               iogc;
 static XFontStruct      *font_info;
 static char             *font_name="9x15";
-static Status           status;
 #ifdef USE_FONTSET
+static Status           status;
 static XFontSet         font_set;
 static XFontStruct	**fs_list;
 static int		font_set_cnt;
@@ -1114,9 +1116,9 @@ static void handlechar(char *text)
     int i, c = text[0];
 #ifdef USE_FONTSET
     wchar_t wcs[BOOSTED_BUF_SIZE];
-#endif
 
     memset(wcs,0,sizeof(wcs));
+#endif
 
     if ( c == '\033' ) { /* ESC */
 	CellModified = FALSE;
@@ -1647,9 +1649,9 @@ static Rboolean initwin(void) /* TRUE = Error */
     XSetWindowAttributes winattr;
     XWindowAttributes attribs;
     XSizeHints *hint;
+    unsigned long fevent=0UL;
 #ifdef USE_FONTSET
     int j,k;
-    unsigned long fevent=0UL;
     XVaNestedList   xva_nlist;
     XPoint xpoint;
 #endif
@@ -2258,9 +2260,9 @@ static void pastecell(int row, int col)
     highlightrect();
 }
 
+#ifdef USE_FONTSET
 static void calc_pre_edit_pos(void)
 {
-#ifdef USE_FONTSET
     XVaNestedList   xva_nlist;
     XPoint          xpoint;
     int i;
@@ -2293,9 +2295,9 @@ static void calc_pre_edit_pos(void)
     XSetICValues(ioic, XNPreeditAttributes, xva_nlist, NULL);
 
     XFree(xva_nlist);
-#endif /* USE_FONTSET */
     return;
 }
+#endif
 
 /* last character bytes */
 static int last_wchar_bytes(char *str)
