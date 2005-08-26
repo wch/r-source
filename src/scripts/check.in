@@ -1124,6 +1124,34 @@ sub check_pkg {
 	}
     }
 
+    ## Check R code for possible problems using LT's codetools package
+    ## available from http://www.stat.uiowa.edu/~luke/R/codetools, and
+    ## scheduled for integration into base R eventually).
+
+    ## Activated only via setting the internal environment variable
+    ## _R_CHECK_USE_CODETOOLS_ to something "true".
+
+    my $R_check_use_codetools = 
+	&R_getenv("_R_CHECK_USE_CODETOOLS_", "FALSE");
+    $R_check_use_codetools =
+	&config_val_to_logical($R_check_use_codetools);
+
+    if($R_check_use_codetools && $opt_install && (-d "R")) {
+	$log->checking("R code for possible problems");
+
+	my $Rcmd = "tools:::.check_code_usage_in_package(package = \"${pkgname}\")\n";
+	my @out = R_runR($Rcmd, "${R_opts} --quiet",
+                         "R_DEFAULT_PACKAGES='utils,grDevices,graphics,stats'");
+	@out = grep(!/^\>/, @out);
+	if(scalar(@out) > 0) {
+	    $log->warning();
+	    $log->print(join("\n", @out) . "\n");
+	}
+	else {
+	    $log->result("OK");
+	}
+    }
+
     ## Check R documentation files.
 
     my @msg_writing_Rd
