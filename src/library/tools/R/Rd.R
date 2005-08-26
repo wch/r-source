@@ -17,7 +17,7 @@ function(lines)
            && capabilities("iconv")) {
             encoding <- encoding[1]     # Just making sure ...
             if(.is_ASCII(encoding))
-                lines <- utils::iconv(lines, encoding, "")
+                lines <- iconv(lines, encoding, "")
         }
     }
     else {
@@ -31,7 +31,7 @@ function(lines)
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
         if(capabilities("iconv"))
-            lines <- utils::iconv(lines, "latin1", "")
+            lines <- iconv(lines, "latin1", "")
         else
             stop("Found invalid multi-byte character data.", "\n",
                  "Cannot re-encode because iconv is not available.", "\n",
@@ -689,11 +689,11 @@ function(txt)
 {
     txt <- get_Rd_section(txt, "examples")
     if(length(txt) != 1) return(character())
-    
+
     txt <- gsub("\\\\l?dots", "...", txt)
     txt <- gsub("\\\\%", "%", txt)
 
-    ## Version of [Perl] R::Rdconv::drop_full_command().    
+    ## Version of [Perl] R::Rdconv::drop_full_command().
     txt <- .Rd_transform_command(txt, "dontrun",
                                  function(u) NULL)
     ## Version of [Perl] R::Rdconv::undefine_command().
@@ -719,7 +719,7 @@ function(txt, cmd, FUN)
 
     ## Vectorized in 'cmd':
     pattern <- sprintf("\\\\%s\\{", paste(cmd, collapse = "|"))
-    
+
     out <- character()
     while((pos <- regexpr(pattern, txt)) != -1) {
         out <- c(out, substring(txt, 1, pos - 1))
@@ -732,10 +732,10 @@ function(txt, cmd, FUN)
                                pos + attr(pos, "match.length") - 2)))
         txt <- substring(txt, pos + attr(pos, "match.length"))
     }
-    
+
     paste(c(out, txt), collapse = "")
 }
-    
+
 ### .apply_Rd_filter_to_Rd_db
 
 .apply_Rd_filter_to_Rd_db <-

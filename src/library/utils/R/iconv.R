@@ -1,24 +1,3 @@
-iconv <- function(x, from, to, sub = NA)
-    .Internal(iconv(x, from, to, as.character(sub)))
-
-iconvlist <- function()
-{
-    int <- .Internal(iconv(NULL, "", "", ""))
-    if(length(int)) return(sort(int))
-    icfile <- system.file("iconvlist", package="utils")
-    if(!nchar(icfile)) stop("'iconvlist' is not available on this system")
-    ext <- readLines(icfile)
-    if(!length(ext)) stop("'iconvlist' is not available on this system")
-    ## glibc has lines ending //, some versions with a header and some without.
-    ## libiconv has lines with multiple entries separated by spaces
-    cnt <- grep("//$", ext)
-    if(length(cnt)/length(ext) > 0.5) {
-        ext <- grep("//$", ext, value = TRUE)
-        ext <- sub("//$", "", ext)
-    }
-    sort(unlist(strsplit(ext, "[[:space:]]")))
-}
-
 
 ## If you were wondering what these language codes stand for, see
 ## ftp://ftp.ilog.fr/pub/Users/haible/utf8/ISO_639

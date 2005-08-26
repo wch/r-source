@@ -207,6 +207,27 @@ encodeString <- function(x, width = 0, quote = "", na.encode = TRUE,
 
 l10n_info <- function() .Internal(l10n_info())
 
+iconv <- function(x, from, to, sub = NA)
+    .Internal(iconv(x, from, to, as.character(sub)))
+
+iconvlist <- function()
+{
+    int <- .Internal(iconv(NULL, "", "", ""))
+    if(length(int)) return(sort(int))
+    icfile <- system.file("iconvlist", package="utils")
+    if(!nchar(icfile)) stop("'iconvlist' is not available on this system")
+    ext <- readLines(icfile)
+    if(!length(ext)) stop("'iconvlist' is not available on this system")
+    ## glibc has lines ending //, some versions with a header and some without.
+    ## libiconv has lines with multiple entries separated by spaces
+    cnt <- grep("//$", ext)
+    if(length(cnt)/length(ext) > 0.5) {
+        ext <- grep("//$", ext, value = TRUE)
+        ext <- sub("//$", "", ext)
+    }
+    sort(unlist(strsplit(ext, "[[:space:]]")))
+}
+
 
 ## base has no S4 generics
 .noGenerics <- TRUE

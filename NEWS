@@ -267,9 +267,11 @@ NEW FEATURES
     o   boxplot() now responds to supplying 'yaxs' (via bxp()).
 	(Wish of PR#8072.)
 
-    o	experimental version of cbind() in methods package, based on new
+    o	Experimental version of cbind() in methods package, based on new
 	generic function cbind2(x,y).  This will allow the equivalent of S4
 	methods for cbind().
+
+    o   iconv() has been moved from 'utils' to 'base'.
 
 
 DEPRECATED & DEFUNCT
