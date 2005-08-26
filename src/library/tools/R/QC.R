@@ -3057,6 +3057,33 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_code_usage_in_package
+
+.check_code_usage_in_package <-
+function(package, lib.loc = NULL)
+{
+    is_base <- package == "base"
+    if(!is_base)
+        .load_package_quietly(package, lib.loc)
+    ## <FIXME>
+    ## * For the time being, everything is printed on the fly.
+    ## If we want to capture the output for further analysis, we could
+    ## use a variant of
+    ##   capture.output(codetools:::checkUsagePackage(package, args),
+    ##                  file = NULL)
+    ## (not directly for bootstrapping reasons, similar to what is done
+    ## in .capture_output_from_print()), and follow the usual QC design
+    ## to return an object of a suitable class with a print method.  It
+    ## would be nice to have codetools *return* a suitably structured
+    ## result, but we should in any case be able to change the report
+    ## function in checkUsage to write to a text connection ...
+    ## * Eventually, we should be able to specify a codetools "profile"
+    ## for checking.
+    codetools::checkUsagePackage(package,
+                                 suppressLocalUnused = TRUE,
+                                 skipWith = TRUE)
+    ## </FIXME>
+}
 
 ### * as.alist.call
 
@@ -3266,4 +3293,3 @@ function(x)
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
 ### End: ***
-
