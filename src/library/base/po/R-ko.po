@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:44\n"
+"POT-Creation-Date: 2005-08-26 09:41\n"
 "PO-Revision-Date: 2005-05-31 09:39+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -76,6 +76,9 @@ msgstr "deparse 옵션에서 모든것을 사용할수가 없습니다"
 
 msgid "second argument must be a list"
 msgstr "제 2 인수는 리스트가 아니면 안됩니다"
+
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind'는 길이 1의 문자열(사용되어야할 RNG명)가 아니면 안됩니다"

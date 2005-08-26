@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.2.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:27\n"
+"POT-Creation-Date: 2005-08-26 09:42\n"
 "PO-Revision-Date: 2005-05-31 09:50+0900\n"
 "Last-Translator: Korean <uiami@hanmail.com>\n"
 "Language-Team: Korean <translation-team-ko@lists.sourceforge.net>\n"
@@ -314,9 +314,6 @@ msgstr "무효의 다중 바이트 문자 데이터를 갖춘 엔트리가 모�
 
 msgid "incorrect 'agrep' specification"
 msgstr "'agrep' 명세는 적적하지 않습니다"
-
-msgid "'iconvlist' is not available on this system"
-msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
 
 msgid "no package '%s' was found"
 msgstr "패키지 '%s'는 검색되지 않았습니다"
@@ -749,6 +746,9 @@ msgid_plural "packages %s are in use and will not be installed"
 msgstr[0] ""
 "package %s는 사용되고 있어 인스톨 되지 않을 것입니다\n"
 "packages %s는 사용되고 있어 인스톨 되지 않을 것입니다"
+
+#~ msgid "'iconvlist' is not available on this system"
+#~ msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
 
 #~ msgid "unable to create temp directory '%s'"
 #~ msgstr "임시 디렉토리 '%s'를 작성할수가 없습니다"

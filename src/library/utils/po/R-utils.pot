@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-02 18:27\n"
+"POT-Creation-Date: 2005-08-26 09:42\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,9 +270,6 @@ msgid "removing all entries with invalid multi-byte character data"
 msgstr ""
 
 msgid "incorrect 'agrep' specification"
-msgstr ""
-
-msgid "'iconvlist' is not available on this system"
 msgstr ""
 
 msgid "no package '%s' was found"
