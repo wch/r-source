@@ -656,6 +656,9 @@ BUG FIXES
 	A user-supplied RNG without user_unif_{nseed,seedloc} was
 	being re-initialized at each call.
 
+    o	Reading very short tables from stdin() with read.table would
+	fail because of a typo.
+
 
 
 
