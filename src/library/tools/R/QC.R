@@ -382,6 +382,7 @@ function(package, dir, lib.loc = NULL,
         }
         else
             objects_in_code_or_namespace <- objects_in_code
+        package_name <- package
     }
     else {
         if(missing(dir))
@@ -402,7 +403,8 @@ function(package, dir, lib.loc = NULL,
             stop(gettextf("directory '%s' does not contain Rd sources",
                           dir),
                  domain = NA)
-        is_base <- basename(dir) == "base"
+        package_name <- basename(dir)
+        is_base <- package_name == "base"
 
         code_env <- new.env()
         yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
@@ -547,11 +549,12 @@ function(package, dir, lib.loc = NULL,
 
     db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
-    if(is_base) {
-        ind <- db_names %in% c("base-defunct")
-        db <- db[!ind]
-        db_names <- db_names[!ind]
-    }
+
+    ## pkg-defunct.Rd is not expected to list arguments
+    ind <- db_names %in% paste(package_name, "defunct", sep="-")
+    db <- db[!ind]
+    db_names <- db_names[!ind]
+
     db_usage_texts <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     db_synopses <-

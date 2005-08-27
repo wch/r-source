@@ -392,6 +392,9 @@ UTILITIES
     o	Rd2dvi sets the encoding(s) used appropriately.	 If UTF-8
 	encoding is used, latex >= 2003/12/01 is required.
 
+    o	codoc() allows help files named pkg_name-defunct.Rd to have
+	undocumented arguments (and not just base-defunct.Rd).
+
 
 C-LEVEL FACILITIES
 

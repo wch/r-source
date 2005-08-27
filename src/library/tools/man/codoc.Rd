@@ -74,6 +74,10 @@ codocData(package, lib.loc = NULL)
   frame (i.e., only has one alias).  \code{codocClasses} analogously
   handles slot names for classes in documentation objects obtained by
   editing shells created by \code{\link{promptClass}}.
+
+  Help files named \code{pkg_name-defunct.Rd} for the appropriate
+  \code{pkg_name} are checked more loosely, as they may have
+  undocumented arguments.
 }
 \value{
   \code{codoc} returns an object of class \code{"codoc"}.  Currently,
