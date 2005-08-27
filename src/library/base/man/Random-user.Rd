@@ -75,7 +75,7 @@ double * user_norm_rand()
 }
 
 ## Use under Unix:
-R SHLIB urand.c
+R CMD SHLIB urand.c
 R
 > dyn.load("urand.so")
 > RNGkind("user")
