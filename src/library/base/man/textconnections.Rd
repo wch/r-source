@@ -61,6 +61,12 @@ textConnection(object, open = "r", local = FALSE)
   with a warning.
 }
  
+\references{
+  Chambers, J. M. (1998)
+  \emph{Programming with Data. A Guide to the S Language.} Springer.\cr
+[S has input text conections only.]
+}
+
 \seealso{
   \code{\link{connections}}, \code{\link{showConnections}},
   \code{\link{pushBack}}, \code{\link{capture.output}}.
