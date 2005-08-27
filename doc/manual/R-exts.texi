@@ -377,6 +377,10 @@ and may in the future be taken as the encoding for other documentation
 in the package.  Only encoding names @code{latin1}, @code{latin2} and
 @code{UTF-8} are known to be portable.
 
+
+The optional @samp{Type} field specifies the type of the package:
+@pxref{Package types}.
+
 @quotation Note
 There should be no @samp{Built} or @samp{Packaged} fields, as these are
 added by the package management tools.
