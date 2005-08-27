@@ -97,7 +97,7 @@ BUG FIXES
 	vectors. (PR#8087)
 
     o	Switching to the Mersenne-Twister RNG could cause a segfault on
-	first used.
+	first use.
 
 	A user-supplied RNG without user_unif_{nseed,seedloc} was
 	being re-initialized at each call.
