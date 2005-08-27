@@ -1307,6 +1307,9 @@ msgstr "패케지'%s'는 '%s'에 병합되었습니다"
 msgid "cannot find name space environment"
 msgstr "이름 공간이 아닙니다"
 
+msgid "'iconvlist' is not available on this system"
+msgstr "'iconvlist'는 이 시스템으로 이용 가능하지는 않습니다"
+
 msgid "deparse option %s is not recognized"
 msgid_plural "deparse options %s are not recognized"
 msgstr[0] ""
