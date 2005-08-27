@@ -273,6 +273,9 @@ NEW FEATURES
 
     o   iconv() has been moved from 'utils' to 'base'.
 
+    o   readbin() and writeBin() now support raw vectors as well as
+	filenames and connections.
+
 
 DEPRECATED & DEFUNCT
 

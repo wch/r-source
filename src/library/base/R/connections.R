@@ -188,7 +188,7 @@ writeBin <- function(object, con, size = NA, endian = .Platform$endian)
         con <- file(con, "wb")
         on.exit(close(con))
     }
-    invisible(.Internal(writeBin(object, con, size, swap)))
+    .Internal(writeBin(object, con, size, swap))
 }
 
 readChar <- function(con, nchars)
@@ -209,7 +209,7 @@ writeChar <- function(object, con, nchars = nchar(object, type="chars"),
         con <- file(con, "wb")
         on.exit(close(con))
     }
-    invisible(.Internal(writeChar(object, con, as.integer(nchars), eos)))
+    .Internal(writeChar(object, con, as.integer(nchars), eos))
 }
 
 gzcon <- function(con, level = 6, allowNonCompressed = TRUE)
