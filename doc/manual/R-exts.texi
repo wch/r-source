@@ -540,11 +540,11 @@ The contents of the @file{inst} subdirectory will be copied recursively
 to the installation directory.  Subdirectories of @file{inst} should not
 interfere with those used by R (currently, @file{R}, @file{data},
 @file{demo}, @file{exec}, @file{libs}, @file{man}, @file{help},
-@file{html}, @file{latex}, @file{R-ex}, and @file{Meta}).  As from @R{}
-1.8.1 the copying of the @file{inst} happens after @file{src} is built
-so its @file{Makefile} can create files to be installed.  Note that with
-the exceptions of @file{INDEX} and @file{COPYING}, information files at
-the top level of the package will @emph{not} be installed and so not be
+@file{html}, @file{latex}, @file{R-ex}, @file{chtml}, and @file{Meta}).
+The copying of the @file{inst} happens after @file{src} is built so its
+@file{Makefile} can create files to be installed.  Note that with the
+exceptions of @file{INDEX} and @file{COPYING}, information files at the
+top level of the package will @emph{not} be installed and so not be
 known to users of Windows and MacOS X compiled packages (and not seen by
 those who use @command{R CMD INSTALL} or @command{install.packages} on
 the tarball).  So any information files you wish an end user to see
