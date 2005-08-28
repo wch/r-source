@@ -1188,10 +1188,12 @@ Values @samp{1} or a string with lower-cased version @samp{"yes"} or
 @samp{"false"} give false.
 
 For example, a configuration file containing
+
 @example
 $R_check_use_install_log = "TRUE";
 $R_check_weave_vignettes = 0;
 @end example
+
 @noindent
 results in using install logs and turning off weaving.
 
