@@ -1952,6 +1952,10 @@ for or set @code{Inf}, @code{-Inf} and @code{NaN} values.  On such
 platforms @code{NA} is represented by the @code{NaN} value with low-word
 @code{0x7a2} (1954 in decimal).
 
+Character missing values are written as @code{NA}, and there are no
+provision to recognize character values as missing (as this can be done
+by re-assigning them once read).
+
 
 @node Network interfaces, Reading Excel spreadsheets, Connections, Top
 @chapter Network interfaces
