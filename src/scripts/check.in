@@ -445,6 +445,7 @@ foreach my $pkg (@ARGV) {
 					 ": warning: .*ISO C",
 					 "missing link\\(s\\):")) . ")";
 		    @lines = grep(/$warn_re/, @lines);
+
 		    ## Ignore install time readLines() warnings about
 		    ## files with incomplete final lines.  Most of these
 		    ## come from .install_package_indices(), and should be
@@ -452,6 +453,7 @@ foreach my $pkg (@ARGV) {
 		    $warn_re = "Warning: incomplete final line " .
 			"found by readLines";
 		    @lines = grep(!/$warn_re/, @lines);
+
 		    ## Package writers cannot really do anything about
 		    ## non ISO C code in *system* headers.  Also, GCC
 		    ## 3.4 or better warns about function pointers
@@ -467,6 +469,22 @@ foreach my $pkg (@ARGV) {
 			    "function pointer";
 			@lines = grep(!/$warn_re/, @lines);
 		    }
+
+		    ## Warnings spotted by gfortran 4.0 or better with
+		    ## -Wall.  Justified in principle, it seems.  Let's
+		    ## ignore them for the time being, and maybe revert
+		    ## this lateron ...
+		    my $warn_re =
+			"(" .
+			join("|",
+			     ("Label .* at \\(1\\) defined but not used",
+			      "Line truncated at \\(1\\)",
+			      "ASSIGN statement at \\(1\\)",
+			      "Assigned GOTO statement at \\(1\\)",
+			      "arithmetic IF statement at \\(1\\)")) .
+			")";
+		    @lines = grep(!/$warn_re/, @lines);
+		    
 		    if(scalar(@lines) > 0) {
 			$log->warning();
 			$log->print("Found the following " .
