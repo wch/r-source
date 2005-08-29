@@ -282,6 +282,13 @@ NEW FEATURES
     o	baseenv() has been added, to return the base environment.  This
     	is currently still NULL, but will change in a future release
 
+    o	sample(x, size, prob, replace = TRUE) now uses a faster
+	algorithm if there are many reasonably probable values.  (This
+	does mean the results will be different from earlier versions
+	of R.)  The speedup is modest unless 'x' is very large _and_
+	'prob' is very diffuse so that thousands of distinct values
+	will be generated with an appreciable frequency.
+
 
 DEPRECATED & DEFUNCT
 

@@ -305,6 +305,54 @@ static void ProbSampleReplace(int n, double *p, int *perm, int nans, int *ans)
     }
 }
 
+static Rboolean Walker_warn = FALSE;
+
+/* A  version using Walker's alias method, based on Alg 3.13B in
+   Ripley (1987).
+ */
+static void 
+walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans) 
+{
+    double *q, rU;
+    int i, j, k;
+    int *HL = (int *)alloca(n * sizeof(int)), *H = HL - 1, *L = HL + n;
+
+    if (!Walker_warn) {
+	Walker_warn = TRUE;
+	warning("Walker's alias method used: results are different from R < 2.2.0");
+    }
+    
+    /* Create the alias tables.
+       The idea is that for HL[0] ... L-1 label the entries with q < 1
+       and L ... H[n-1] label those >= 1.
+       By rounding error we could have q[i] < 1. or > 1. for all entries.
+     */
+    q = (double *) alloca(n * sizeof(double));
+    for (i = 0; i < n; i++) {
+	q[i] = p[i] * n;
+	if (q[i] < 1.) *++H = i; else *--L = i;
+    }
+    if (H >= HL && L < HL + n) { /* So some q[i] are >= 1 and some < 1 */
+	for (k = 0; k < n - 1; k++) {
+	    i = HL[k];
+	    j = *L;
+	    a[i] = j;
+	    q[j] += q[i] - 1;
+	    if (q[j] < 1.) L++;
+	    if(L >= HL + n) break; /* now all are >= 1 */
+	}
+    }
+    for (i = 0; i < n; i++) q[i] += i;
+
+    /* generate sample */
+    for (i = 0; i < nans; i++) {
+	rU = unif_rand() * n;
+	k = (int) rU;
+	ans[i] = (rU < q[k]) ? k+1 : a[k]+1;
+    }
+}
+
+
 /* Unequal probability sampling; without-replacement case */
 
 static void ProbSampleNoReplace(int n, double *p, int *perm,
@@ -392,6 +440,8 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 {
     SEXP x, y, prob;
     int k, n, replace;
+    double *p;
+
     checkArity(op, args);
     n = asInteger(CAR(args)); args = CDR(args);
     k = asInteger(CAR(args)); args = CDR(args);
@@ -411,14 +461,20 @@ SEXP do_sample(SEXP call, SEXP op, SEXP args, SEXP rho)
 	prob = coerceVector(prob, REALSXP);
 	if (NAMED(prob)) prob = duplicate(prob);
 	PROTECT(prob);
+	p = REAL(prob);
 	if (length(prob) != n)
 	    errorcall(call, _("incorrect number of probabilities"));
-	FixupProb(call, REAL(prob), n, k, replace);
+	FixupProb(call, p, n, k, replace);
 	PROTECT(x = allocVector(INTSXP, n));
-	if (replace)
-	    ProbSampleReplace(n, REAL(prob), INTEGER(x), k, INTEGER(y));
-	else
-	    ProbSampleNoReplace(n, REAL(prob), INTEGER(x), k, INTEGER(y));
+	if (replace) {
+	    int i, nc = 0;
+	    for (i = 0; i < n; i++) if(n * p[i] > 0.1) nc++;
+	    if (nc > 200)
+		walker_ProbSampleReplace(n, p, INTEGER(x), k, INTEGER(y));
+	    else
+		ProbSampleReplace(n, p, INTEGER(x), k, INTEGER(y));
+	} else
+	    ProbSampleNoReplace(n, p, INTEGER(x), k, INTEGER(y));
 	UNPROTECT(2);
     }
     else {

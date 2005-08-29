@@ -29,7 +29,12 @@ sample(x, size, replace = FALSE, prob = NULL)
   The optional \code{prob} argument can be used to give a vector
   of weights for obtaining the elements of the vector being
   sampled. They need not sum to one, but they should be nonnegative
-  and not all zero.
+  and not all zero.  If \code{replace} is true, Walker's alias method
+  (Ripley, 1987) is used when there are more that 250 reasonably
+  probable values: this gives results incompatible with those from \R <
+  2.2.0, and there will be a warning the first time this happens in a
+  session.
+
   If \code{replace} is false, these probabilities are applied
   sequentially, that is the probability of choosing the next item is
   proportional to the probabilities amongst the remaining items. The number
@@ -39,6 +44,8 @@ sample(x, size, replace = FALSE, prob = NULL)
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
   \emph{The New S Language}.
   Wadsworth \& Brooks/Cole.
+
+  Ripley, B. D. (1987) \emph{Stochastic Simulation}. Wiley.
 }
 \examples{
 x <- 1:12
