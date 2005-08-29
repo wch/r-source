@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-08-25
+@set FAQ_DATE @value{FAQ_YEAR}-08-29
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -3181,6 +3181,9 @@ Model-robust standard error estimators for time series and longitudinal
 data.
 @item sca
 Simple Component Analysis.
+@item scape
+functions to import and plot results from statistical catch-at-age
+models, used in fisheries stock assessments.
 @item scatterplot3d
 Plots a three dimensional (3D) point cloud perspectively.
 @item seacarb
