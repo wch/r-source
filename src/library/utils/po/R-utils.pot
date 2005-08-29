@@ -26,19 +26,19 @@ msgstr ""
 msgid "The results page should open in your browser shortly"
 msgstr ""
 
-msgid "reference to unknown chunk %s"
+msgid "reference to unknown chunk '%s'"
 msgstr ""
 
 msgid "no Sweave file with name '%s' found"
 msgstr ""
 
-msgid "%s Sweave files for basename '%s' found:"
+msgid "%d Sweave files for basename '%s' found:"
 msgstr ""
 
 msgid "Found invalid multi-byte character data."
 msgstr ""
 
-msgid "Cannot re-encode because iconv is not available."
+msgid "Cannot re-encode because 'iconv' is not available."
 msgstr ""
 
 msgid "Try running R in a single-byte locale."
@@ -632,13 +632,13 @@ msgstr ""
 msgid "'tar' returned non-zero exit code %d"
 msgstr ""
 
-msgid        "object %s not found"
-msgid_plural "objects %s not found"
+msgid        "object '%s' not found"
+msgid_plural "objects '%s' not found"
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "dependency %s is not available"
-msgid_plural "dependencies %s are not available"
+msgid        "dependency '%s' is not available"
+msgid_plural "dependencies '%s' are not available"
 msgstr[0]    ""
 msgstr[1]    ""
 
@@ -647,7 +647,7 @@ msgid_plural "also installing the dependencies "
 msgstr[0]    ""
 msgstr[1]    ""
 
-msgid        "package %s is in use and will not be installed"
-msgid_plural "packages %s are in use and will not be installed"
+msgid        "package '%s' is in use and will not be installed"
+msgid_plural "packages '%s' are in use and will not be installed"
 msgstr[0]    ""
 msgstr[1]    ""

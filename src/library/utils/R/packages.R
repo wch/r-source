@@ -408,14 +408,14 @@ download.packages <- function(pkgs, destdir, available = NULL,
     if(is.null(available))
         available <- available.packages(contriburl=contriburl, method=method)
 
-    retval <- NULL
+    retval <- matrix(character(0), 0, 2)
     for(p in unique(pkgs))
     {
         ok <- (available[,"Package"] == p) | (available[,"Bundle"] == p)
         ok <- ok & !is.na(ok)
         if(!any(ok))
             warning(gettextf("no package '%s' at the repositories", p),
-                    domain = NA)
+                    domain = NA, immediate = TRUE)
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -447,11 +447,12 @@ download.packages <- function(pkgs, destdir, available = NULL,
                 url <- paste(repos, fn, sep="/")
                 destfile <- file.path(destdir, fn)
 
-                if(download.file(url, destfile, method, mode="wb") == 0)
+                res <- try(download.file(url, destfile, method, mode="wb"))
+                if(!inherits(res, "try-error") && res == 0)
                     retval <- rbind(retval, c(p, destfile))
                 else
                     warning(gettextf("download of package '%s' failed", p),
-                            domain = NA)
+                            domain = NA, immediate = TRUE)
             }
         }
     }

@@ -17,9 +17,9 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 
   \item{method}{Method to be used for downloading files.  Currently
     download methods \code{"internal"}, \code{"wget"} and \code{"lynx"}
-    are available.  The default is to choose the first of these which
-    will be \code{"internal"}. The method can also be set through the
-    option \code{"download.file.method"}: see \code{\link{options}()}.}
+    are available, and there is a value \code{"auto"}: see Details.  The
+    method can also be set through the option
+    \code{"download.file.method"}: see \code{\link{options}()}.}
 
   \item{quiet}{If \code{TRUE}, suppress status messages (if any).}
 
@@ -27,7 +27,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
     values are \code{"w"}, \code{"wb"} (binary), \code{"a"} (append) and
     \code{"ab"}.  Only used for the \code{"internal"} method.}
 
-  \item{cacheOK}{logical. Is a server-side cached value acceptable?
+  \item{cacheOK}{logical.  Is a server-side cached value acceptable?
     Implemented for the \code{"internal"} and \code{"wget"} methods.}
 }
 \details{
@@ -36,6 +36,17 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   \code{destfile}.
   The \code{url} must start with a scheme such as
   \code{"http://"}, \code{"ftp://"} or \code{"file://"}.
+
+#ifdef unix
+  If \code{method = "auto"} is chosen (the default), the internal method
+  is chosen for \code{"file://"} URLs, and for the others provided
+  \code{\link{capabilities}("http/ftp")} is true (which it almost always
+  is).  Otherwise methods \code{"wget"} and \code{"lynx"} are tried in turn.
+#endif
+#ifdef windows
+  If \code{method = "auto"} is chosen (the default), the internal method
+  is used on Windows.
+#endif
 
   \code{cacheOK = FALSE} is useful for \code{"http://"} URLs, and will
   attempt to get a copy directly from the site rather than from an
@@ -81,7 +92,7 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
 }
 \note{
   Methods \code{"wget"} and \code{"lynx"} are for historical
-  compatibility. They will block all other activity on the \R process.
+  compatibility.  They will block all other activity on the \R process.
 
   For methods \code{"wget"} and \code{"lynx"} a system call is made to
   the tool given by \code{method}, and the respective program must be
@@ -118,6 +129,12 @@ download.file(url, destfile, method, quiet = FALSE, mode = "w",
   but if proxy authentication is required and fails there will be one
   further prompt per download.
 #endif
+}
+\value{
+  An (invisible) integer code, \code{0} for success and non-zero for
+  failure.  For the \code{"wget"} and \code{"lynx"} methods this is the
+  status code returned by the external program.  The \code{"internal"}
+  method can return \code{1}, but will in most cases throw an error.
 }
 \seealso{
   \code{\link{options}} to set the \code{timeout} and

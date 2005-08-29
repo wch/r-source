@@ -140,10 +140,10 @@
     inuse <- pkgnames %in% inuse
     if(any(inuse)) {
         warning(sprintf(ngettext(sum(inuse),
-                "package %s is in use and will not be installed",
-                "packages %s are in use and will not be installed"),
+                "package '%s' is in use and will not be installed",
+                "packages '%s' are in use and will not be installed"),
                         paste(pkgnames[inuse], collapse=", ")),
-                call. = FALSE, domain = NA)
+                call. = FALSE, domain = NA, immediate = TRUE)
         pkgs <- pkgs[!inuse]
         pkgnames <- pkgnames[!inuse]
     }

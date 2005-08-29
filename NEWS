@@ -276,6 +276,9 @@ NEW FEATURES
     o   readbin() and writeBin() now support raw vectors as well as
 	filenames and connections.
 
+    o	download.packages() now carries on if it encounters a download
+	error (e.g. a repository with a corrupt index).
+
 
 DEPRECATED & DEFUNCT
 
@@ -473,9 +476,9 @@ BUG FIXES
 
     o	qgamma(1,s) didn't give +Inf for some s.
 
-    o	installed.packages() now always returns a matrix as
-	documented, possibly with 0 rows (rather than a 0-length
-	character vector).
+    o	installed.packages() and download.packages() now always
+	return a matrix as documented, possibly with 0 rows (rather than
+	a 0-length character vector or NULL).
 
     o	Arithmetic operations on data frames no longer coerce the
 	names to syntatically valid names.
