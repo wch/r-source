@@ -4958,8 +4958,8 @@ msgid "memory allocation error in realpr"
 msgstr "memory allocation error in realpr"
 
 #: src/main/print.c:899
-#, c-format
-msgid "LAPACK routine '%6s' gave error code %d"
+#, fuzzy, c-format
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr "LAPACK routine ‘%6s’ gave error code %d"
 
 #: src/main/printarray.c:546
