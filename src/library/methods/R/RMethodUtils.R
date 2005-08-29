@@ -171,7 +171,7 @@ generic.skeleton <-
       fdefault <- fdef
       body(fdefault) <- substitute(stop(MESSAGE, domain = NA), list(MESSAGE=
           gettextf("invalid call in method dispatch to '%s' (no default method)", name)))
-      environment(fdefault) <- NULL
+      environment(fdefault) <- baseenv()
     }
     skeleton[[1]] <- fdefault
     as.call(skeleton)
@@ -413,7 +413,7 @@ getGeneric <-
   function(f, mustFind = FALSE, where = .genEnv(f, topenv(parent.frame()))) {
     if(is.function(f) && is(f, "genericFunction"))
         return(f)
-    value <- if(is.null(where))
+    value <- if(identical(where, baseenv()))
         NULL
       else
           .getGeneric( f, as.environment(where))
@@ -960,7 +960,7 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
         ## the static environments for this namespace, ending with the base namespace
         value <- list(env)
         repeat {
-            if(is.null(env))
+            if(identical(env, baseenv()))
                 stop("botched namespace: failed to find 'base' namespace in its parents")
             env <- parent.env(env)
             value <- c(value, list(env))
@@ -1019,13 +1019,13 @@ metaNameUndo <- function(strings, prefix = "M", searchForm = FALSE) {
     ev
 }
 
-## a list of environments, starting from ev, going back to NULL (the base package),
+## a list of environments, starting from ev, going back to the base package,
 ## or else terminated by finding a namespace
 .parentEnvList <- function(ev) {
     ev <- as.environment(ev)
     value <- list(ev)
     while(!isNamespace(ev)) {
-        if(is.null(ev)) {
+        if(identical(ev, baseenv())) {
             value[[length(value)]] <- .BaseNamespaceEnv
             break
         }

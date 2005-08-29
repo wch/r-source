@@ -623,6 +623,7 @@ extern int R_dec_min_exponent		INI_as(-308);
 # define InitConnections	Rf_InitConnections
 # define InitEd			Rf_InitEd
 # define InitFunctionHashing	Rf_InitFunctionHashing
+# define InitBaseEnv		Rf_InitBaseEnv
 # define InitGlobalEnv		Rf_InitGlobalEnv
 # define InitMemory		Rf_InitMemory
 # define InitNames		Rf_InitNames
@@ -753,6 +754,7 @@ void InitColors(void);
 void InitConnections(void);
 void InitEd(void);
 void InitFunctionHashing(void);
+void InitBaseEnv(void);
 void InitGlobalEnv(void);
 Rboolean R_current_trace_state();
 Rboolean R_has_methods(SEXP);

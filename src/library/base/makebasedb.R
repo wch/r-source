@@ -108,15 +108,15 @@ local({
     if (file.info(baseFileBase)["size"] < 20000) # crude heuristic
         stop("may already be using lazy loading on base");
 
-    basevars <- ls(NULL,all=TRUE)
+    basevars <- ls(baseenv(), all=TRUE)
     basevars <- basevars[! basevars %in% omit]
 
 # **** need prims too since some prims have several names (is.name, is.symbol)
-#    basevars <- ls(NULL,all=TRUE)
+#    basevars <- ls(baseenv(), all=TRUE)
 #    notPrim <- sapply(basevars, function(n)
-#        ! typeof(get(n, NULL)) %in% c("builtin","special"))
-#    makeLazyLoadDB(NULL, baseFileBase, variables = basevars[notPrim])
+#        ! typeof(get(n, baseenv())) %in% c("builtin","special"))
+#    makeLazyLoadDB(baseenv(), baseFileBase, variables = basevars[notPrim])
 
-    makeLazyLoadDB(NULL, baseFileBase, variables = basevars)
+    makeLazyLoadDB(baseenv(), baseFileBase, variables = basevars)
 #    q(save = "no", runLast = FALSE)
 })

@@ -9,7 +9,8 @@
 }
 \usage{
 eval(expr, envir = parent.frame(),
-     enclos = if(is.list(envir) || is.pairlist(envir)) parent.frame())
+    	   enclos = if(is.list(envir) || is.pairlist(envir))
+                       parent.frame() else baseenv())
 evalq(expr, envir, enclos)
 eval.parent(expr, n = 1)
 local(expr, envir = new.env())

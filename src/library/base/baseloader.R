@@ -12,7 +12,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
         if (! is.character(file)) halt("bad file name")
         con <- gzfile(file, "rb")
         on.exit(close(con))
-        .Internal(unserializeFromConn(con, NULL))
+        .Internal(unserializeFromConn(con, baseenv()))
     }
     "parent.env<-" <-
         function (env, value) .Internal("parent.env<-"(env, value))
@@ -21,7 +21,7 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
     getFromFrame <- function (x, env) .Internal(get(x, env, "any", FALSE))
     set <- function (x, value, env) .Internal(assign(x, value, env, FALSE))
     environment <- function () .Internal(environment(NULL))
-    mkenv <- function() .Internal(new.env(TRUE, NULL))
+    mkenv <- function() .Internal(new.env(TRUE, baseenv()))
     names <- function(x) .Internal(names(x))
     lazyLoadDBfetch <- function(key, file, compressed, hook)
         .Call("R_lazyLoadDBfetch", key, file, compressed, hook, PACKAGE="base")
@@ -91,6 +91,6 @@ lazyLoad <- function(filebase, envir = parent.frame(), filter) {
     basedb <- glue(.Internal(R.home()), "library", "base", "R",
                    "base", sep= .Platform$file.sep)
 
-    lazyLoad(basedb, NULL, filter)
+    lazyLoad(basedb, baseenv(), filter)
 
-}), .Internal(new.env(FALSE, NULL)), NULL))
+}), .Internal(new.env(FALSE, baseenv())), baseenv()))

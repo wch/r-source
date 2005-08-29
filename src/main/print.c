@@ -538,6 +538,8 @@ static void PrintEnvir(SEXP rho)
 {
     if (rho == R_GlobalEnv)
 	Rprintf("<environment: R_GlobalEnv>\n");
+    else if (rho == R_BaseEnv)
+    	Rprintf("<environment: base>\n");	
     else if (R_IsPackageEnv(rho))
 	Rprintf("<environment: %s>\n",
 		CHAR(STRING_ELT(R_PackageEnvName(rho), 0)));
@@ -808,7 +810,7 @@ void PrintValueEnv(SEXP s, SEXP env)
 
 void PrintValue(SEXP s)
 {
-    PrintValueEnv(s, R_NilValue);
+    PrintValueEnv(s, R_BaseEnv);
 }
 
 
@@ -816,7 +818,7 @@ void PrintValue(SEXP s)
 
 void R_PV(SEXP s)
 {
-    if(isObject(s)) PrintValueEnv(s, R_NilValue);
+    if(isObject(s)) PrintValueEnv(s, R_BaseEnv);
 }
 
 

@@ -284,7 +284,7 @@ getAnywhere <- function(x)
             cl <- paste(parts[i:np], collapse=".")
             if (gen == "" || cl == "") next
             if(!is.null(f <- getS3method(gen, cl, TRUE))) {
-                ev <- topenv(environment(f), NULL)
+                ev <- topenv(environment(f), baseenv())
                 nmev <- if(isNamespace(ev)) getNamespaceName(ev) else NULL
                 objs <- c(objs, f)
                 msg <- paste("registered S3 method for", gen)
@@ -309,7 +309,7 @@ getAnywhere <- function(x)
     ln <- length(objs)
     dups <- rep.int(FALSE, ln)
     objs2 <- lapply(objs, function(x) {
-        if(is.function(x)) environment(x) <- NULL
+        if(is.function(x)) environment(x) <- baseenv()
         x
     })
     if(ln > 1)

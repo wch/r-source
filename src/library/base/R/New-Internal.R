@@ -156,7 +156,7 @@ searchpaths <- function()
 sprintf <- function(fmt, ...) .Internal(sprintf(fmt, ...))
 
 ##-- DANGER ! ---   substitute(list(...))  inside functions !!!
-##substitute <- function(expr, env=NULL).Internal(substitute(expr, env))
+##substitute <- function(expr, env=baseenv()).Internal(substitute(expr, env))
 
 t.default <- function(x).Internal(t.default(x))
 typeof <- function(x).Internal(typeof(x))

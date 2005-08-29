@@ -8,7 +8,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
     eval.with.vis <-
 	function (expr, envir = parent.frame(),
 		  enclos = if (is.list(envir) || is.pairlist(envir))
-		  parent.frame())
+		  parent.frame() else baseenv())
 	.Internal(eval.with.vis(expr, envir, enclos))
 
     envir <- if (local) parent.frame() else .GlobalEnv
@@ -123,7 +123,7 @@ function(file, local = FALSE, echo = verbose, print.eval = echo,
 }
 
 sys.source <-
-function(file, envir = NULL, chdir = FALSE,
+function(file, envir = baseenv(), chdir = FALSE,
 	 keep.source = getOption("keep.source.pkgs"))
 {
     if(!(is.character(file) && file.exists(file)))

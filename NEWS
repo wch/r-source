@@ -278,6 +278,9 @@ NEW FEATURES
 
     o	download.packages() now carries on if it encounters a download
 	error (e.g. a repository with a corrupt index).
+	
+    o	baseenv() has been added, to return the base environment.  This
+    	is currently still NULL, but will change in a future release
 
 
 DEPRECATED & DEFUNCT
@@ -427,6 +430,10 @@ C-LEVEL FACILITIES
         gctorture(TRUE).  Level 2 makes Valgrind run extremely slowly.
 
     o	Some support for raw vectors has been added to Rdefines.h.
+    
+    o	R_BaseEnv has been added, to refer to the base environment.
+    	This is currently equal to R_NilValue, but it will change in
+    	a future release.
 
 
 BUG FIXES

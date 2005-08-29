@@ -94,7 +94,7 @@ static SEXP EnlargeVector(SEXP x, R_len_t newlen)
 
     /* Enlarge the vector itself. */
     len = length(x);
-    if (LOGICAL(GetOption(install("check.bounds"), R_NilValue))[0])
+    if (LOGICAL(GetOption(install("check.bounds"), R_BaseEnv))[0])
 	warning(_("assignment outside vector/list limits (extending from %d to %d)"),
 		len, newlen);
     PROTECT(x);

@@ -88,7 +88,7 @@ pushedvp <- function(vp) {
                     parent = NULL,
                     # Children of this pushedvp will be stored
                     # in an environment
-                    children = new.env(hash=TRUE, parent=NULL),
+                    children = new.env(hash=TRUE, parent=baseenv()),
                     # Initial value of 0 means that the viewport will
                     # be pushed "properly" the first time, calculating
                     # transformations, etc ...

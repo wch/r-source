@@ -1,6 +1,6 @@
 .saveRDS <-
 function(object, file = "", ascii = FALSE, version = NULL,
-         compress = FALSE, refhook = NULL)
+         compress = FALSE, refhook = baseenv())
 {
     if(is.character(file)) {
         if(file == "") stop("'file' must be non-empty string")
@@ -31,7 +31,7 @@ function(file, refhook = NULL)
     .Internal(unserializeFromConn(con, refhook))
 }
 
-serialize <- function(object, connection, ascii = FALSE, refhook = NULL) {
+serialize <- function(object, connection, ascii = FALSE, refhook = baseenv()) {
     if (! is.null(connection)) {
         if (!inherits(connection, "connection"))
             stop("'connection' must be a connection")
@@ -44,7 +44,7 @@ serialize <- function(object, connection, ascii = FALSE, refhook = NULL) {
               PACKAGE="base")
 }
 
-unserialize <- function(connection, refhook = NULL) {
+unserialize <- function(connection, refhook = baseenv()) {
     if (! is.character(connection) && !inherits(connection, "connection"))
         stop("'connection' must be a connection")
     .Call("R_unserialize", connection, refhook, PACKAGE="base")

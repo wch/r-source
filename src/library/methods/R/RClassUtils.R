@@ -1511,7 +1511,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
 ## find a generic function reference, using the package slot if present
 ## FIXME:  this and .classEnv should be combined and implemented in C for speed
 ## They differ in that  .classEnv uses the class metaname when it searches; i.e.,
-## they use getClassDef and .getGeneric resp.  Also, .getEnv returns NULL rather
+## they use getClassDef and .getGeneric resp.  Also, .getEnv returns baseenv() rather
 ## than generating an error if no generic found (so getGeneric can return gen'c for prim'ves)
 
 .genEnv <-  function(f, default = .requirePackage("methods")) {
@@ -1531,7 +1531,7 @@ substituteFunctionArgs <- function(def, newArgs, args = formalArgs(def), silent 
                 }
             }
             if(is.null(def))
-                NULL
+                baseenv()
             else
                 value
         }

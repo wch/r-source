@@ -1063,7 +1063,7 @@ static Rboolean RunFinalizers(void)
 	       insure that any errors that might occur do not spill
 	       into the call that triggered the collection. */
 	    begincontext(&thiscontext, CTXT_TOPLEVEL, R_NilValue, R_GlobalEnv,
-			 R_NilValue, R_NilValue, R_NilValue);
+			 R_BaseEnv, R_NilValue, R_NilValue);
 	    saveToplevelContext = R_ToplevelContext;
 	    PROTECT(topExp = R_CurrentExpr);
 	    savestack = R_PPStackTop;
@@ -2202,7 +2202,7 @@ SEXP protect(SEXP s)
 	RCNTXT cntxt;
 	R_size_t oldpps = R_PPStackSize;
 
-	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_NilValue, R_NilValue,
+	begincontext(&cntxt, CTXT_CCODE, R_NilValue, R_BaseEnv, R_BaseEnv,
 		     R_NilValue, R_NilValue);
 	cntxt.cend = &reset_pp_stack;
 	cntxt.cenddata = &oldpps;

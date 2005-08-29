@@ -87,7 +87,7 @@ static SEXP GetObject(RCNTXT *cptr)
     UNPROTECT(2);
     if (TYPEOF(s) == PROMSXP) {
 	if (PRVALUE(s) == R_UnboundValue)
-	    s = eval(s, R_NilValue);
+	    s = eval(s, R_BaseEnv);
 	else
 	    s = PRVALUE(s);
     }
@@ -173,11 +173,11 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
     SEXP val;
 
     if (R_UseNamespaceDispatch) {
-	if (TYPEOF(callrho) != ENVSXP && callrho != R_NilValue)
+	if (TYPEOF(callrho) != ENVSXP && callrho != R_BaseEnv)
 	    error(_("bad generic call environment"));
-	if (TYPEOF(defrho) != ENVSXP && defrho != R_NilValue)
+	if (TYPEOF(defrho) != ENVSXP && defrho != R_BaseEnv)
 	    error(_("bad generic definition environment"));
-	if (defrho == R_NilValue)
+	if (defrho == R_BaseEnv)
 	    defrho = R_BaseNamespace;
 
 	val = findVar(method, callrho);
@@ -190,7 +190,7 @@ SEXP R_LookupMethod(SEXP method, SEXP rho, SEXP callrho, SEXP defrho)
 					 install(".__S3MethodsTable__."),
 					 TRUE);
 	    if (TYPEOF(table) == PROMSXP)
-		table = eval(table, R_NilValue);
+		table = eval(table, R_BaseEnv);
 	    if (TYPEOF(table) == ENVSXP) {
 		val = findVarInFrame3(table, method, TRUE);
 		if (TYPEOF(val)==PROMSXP)
@@ -358,7 +358,7 @@ SEXP do_usemethod(SEXP call, SEXP op, SEXP args, SEXP env)
     if ( !(cptr->callflag & CTXT_FUNCTION) || cptr->cloenv != env)
 	error(_("'UseMethod' used in an inappropriate fashion"));
     callenv = cptr->sysparent;
-    defenv = TYPEOF(env) == ENVSXP ? ENCLOS(env) : R_NilValue;
+    defenv = TYPEOF(env) == ENVSXP ? ENCLOS(env) : R_BaseEnv;
 
     if (nargs)
 	PROTECT(generic = eval(CAR(args), env));
@@ -472,13 +472,13 @@ SEXP do_nextmethod(SEXP call, SEXP op, SEXP args, SEXP env)
 	callenv = findVarInFrame3(R_GlobalContext->sysparent,
 				  install(".GenericCallEnv"), TRUE);
 	if (TYPEOF(callenv) == PROMSXP)
-	    callenv = eval(callenv, R_NilValue);
+	    callenv = eval(callenv, R_BaseEnv);
 	else if (callenv == R_UnboundValue)
 	    callenv = env;
 	defenv = findVarInFrame3(R_GlobalContext->sysparent,
 				 install(".GenericDefEnv"), TRUE);
 	if (TYPEOF(defenv) == PROMSXP)
-	    defenv = eval(defenv, R_NilValue);
+	    defenv = eval(defenv, R_BaseEnv);
 	else if (defenv == R_UnboundValue)
 	    defenv = R_GlobalEnv;
     }
@@ -929,7 +929,7 @@ static SEXP dispatchNonGeneric(SEXP name, SEXP env, SEXP fdef)
     /* find a non-generic function */
     symbol = install(CHAR(asChar(name)));
     dot_Generic = install(".Generic");
-    for(rho = ENCLOS(env); rho != R_NilValue && isEnvironment(rho);
+    for(rho = ENCLOS(env); rho != R_BaseEnv && isEnvironment(rho);
 	rho = ENCLOS(rho)) {
 	fun = findVarInFrame3(rho, symbol, TRUE);
 	if(fun == R_UnboundValue) continue;
@@ -1251,7 +1251,7 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    return(NULL);
 	if(isFunction(value))
 	    /* found a method, call it */
-	    return applyClosure(call, value, args, rho, R_NilValue);
+	    return applyClosure(call, value, args, rho, R_BaseEnv);
 	/* else, need to perform full method search */
     }
     fundef = prim_generics[offset];
@@ -1260,7 +1260,7 @@ SEXP R_possible_dispatch(SEXP call, SEXP op, SEXP args, SEXP rho)
 	      PRIMNAME(op));
     /* To do:  arrange for the setting to be restored in case of an
        error in method search */
-    value = applyClosure(call, fundef, args, rho, R_NilValue);
+    value = applyClosure(call, fundef, args, rho, R_BaseEnv);
     prim_methods[offset] = current;
     if(value == deferred_default_object)
 	return NULL;

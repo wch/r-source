@@ -320,9 +320,9 @@ setAs <-
         if(!prevIs)
             warning(gettextf("methods currently exist for coercing from \"%s\" to \"%s\"; they will be replaced.", from, to), domain = NA)
         if(prevCoerce)
-            setMethod(cdef, sig, NULL, where = NULL)
+            setMethod(cdef, sig, NULL, where = baseenv())
         if(prevRepl)
-            setMethod(rdef, sig, NULL, where = NULL)
+            setMethod(rdef, sig, NULL, where = baseenv())
         TRUE
     }
     else

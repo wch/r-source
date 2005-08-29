@@ -267,14 +267,14 @@ setMethod <-
     else {
         where <- as.environment(where)
         gwhere <- .genEnv(f, where)
-        fdef <- getGeneric(f, where = if(is.null(gwhere)) where else gwhere)
+        fdef <- getGeneric(f, where = if(identical(gwhere, baseenv())) where else gwhere)
     }
     if(.lockedForMethods(fdef, where))
         stop(gettextf("the environment '%s' is locked; cannot assign methods for function '%s'", getPackageName(where), f), domain = NA)
     hasMethods <- !is.null(fdef)
     deflt <- getFunction(f, generic = FALSE, mustFind = FALSE, where = where)
     ## where to insert the methods in generic
-    if(is.null(gwhere)) {
+    if(identical(gwhere, baseenv())) {
         allWhere <- findFunction(f, where = where)
         generics <-logical(length(allWhere))
         if(length(allWhere)>0) { # put methods into existing generic
@@ -364,7 +364,7 @@ setMethod <-
     resetGeneric(f, fdef, allMethods, gwhere, deflt) # Note: gwhere not used by resetGeneric
     ## assigns the methodslist object
     ## and deals with flags for primitives & for updating group members
-    if(!is.null(where))
+    if(!identical(where, baseenv()))
         assignMethodsMetaData(f, whereMethods, fdef, where, deflt)
     f
 }

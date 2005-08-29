@@ -26,7 +26,7 @@
 
     pf<-parent.frame()
     evalVis<-function(expr)
-      .Internal(eval.with.vis(expr, pf, NULL))
+      .Internal(eval.with.vis(expr, pf, baseenv()))
 
     for(i in seq(length=length(args))){
       expr<-args[[i]]

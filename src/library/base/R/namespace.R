@@ -1,5 +1,5 @@
 ## give the base namespace a table for registered methods
-".__S3MethodsTable__." <- new.env(hash = TRUE, parent = NULL)
+".__S3MethodsTable__." <- new.env(hash = TRUE, parent = baseenv())
 
 getNamespace <- function(name) {
     ns <- .Internal(getRegisteredNamespace(as.name(name)))
@@ -164,15 +164,15 @@ loadNamespace <- function (package, lib.loc = NULL,
             env <- new.env(parent = impenv, hash = TRUE)
             name <- as.character(as.name(name))
             version <- as.character(version)
-            info <- new.env(hash = TRUE, parent = NULL)
+            info <- new.env(hash = TRUE, parent = baseenv())
             assign(".__NAMESPACE__.", info, env = env)
             assign("spec", c(name=name,version=version), env = info)
-            setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = NULL))
+            setNamespaceInfo(env, "exports", new.env(hash = TRUE, parent = baseenv()))
             setNamespaceInfo(env, "imports", list("base"=TRUE))
             setNamespaceInfo(env, "path", file.path(lib, name))
             setNamespaceInfo(env, "dynlibs", NULL)
             setNamespaceInfo(env, "S3methods", matrix(as.character(NA), 0, 3))
-            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
+            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
                    envir = env)
             .Internal(registerNamespace(name, env))
             env
@@ -397,7 +397,7 @@ saveNamespaceImage <- function (package, rdafile, lib.loc = NULL,
 
 topenv <- function(envir = parent.frame(),
                    matchThisEnv = getOption("topLevelEnvironment")) {
-    while (! is.null(envir)) {
+    while (! identical(envir, baseenv())) {
         if (! is.null(attr(envir, "name")) ||
             identical(envir, matchThisEnv) ||
             identical(envir, .GlobalEnv) ||
@@ -851,7 +851,7 @@ registerS3method <- function(genname, class, method, envir = parent.frame()) {
         else .BaseNamespaceEnv
     }
     if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
-        assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
+        assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
                envir = defenv)
     table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
     if (is.character(method)) {
@@ -933,7 +933,7 @@ registerS3methods <- function(info, package, env)
             else .BaseNamespaceEnv
         }
         if (! exists(".__S3MethodsTable__.", envir = defenv, inherits = FALSE))
-            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = NULL),
+            assign(".__S3MethodsTable__.", new.env(hash = TRUE, parent = baseenv()),
                    envir = defenv)
         table <- get(".__S3MethodsTable__.", envir = defenv, inherits = FALSE)
 	assignWrapped(nm, method, home = envir, envir = table)

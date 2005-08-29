@@ -161,7 +161,7 @@ MethodsListSelect <-
   ## is returned as the value.  If matching fails,  NULL is returned.
     function(f, env,
              mlist = NULL,
-             fEnv = if(is(fdef, "genericFunction")) environment(fdef) else NULL,
+             fEnv = if(is(fdef, "genericFunction")) environment(fdef) else baseenv(),
              finalDefault = finalDefaultMethod(mlist, f),
              evalArgs = TRUE,
              useInherited = TRUE,  ## supplied when evalArgs is FALSE
@@ -410,7 +410,7 @@ matchSignature <-
   ## arguments of `fun', and return a vector of all the classes in the order specified
   ## by the signature slot of the generic.  The classes not specified by `signature
   ##' will be `"ANY"' in the value.
-  function(signature, fun, where = NULL)
+  function(signature, fun, where = baseenv())
 {
     if(!is(fun, "genericFunction"))
         stop(gettextf("trying to match a method signature to an object (of class \"%s\") that is not a generic function", class(fun)), domain = NA)
@@ -420,7 +420,7 @@ matchSignature <-
     if(length(signature) == 0)
         return(character())
     sigClasses <- as.character(signature)
-    if(!is.null(where)) {
+    if(!identical(where, baseenv())) {
         unknown <- !sapply(sigClasses, function(x, where)isClass(x, where=where), where = where)
         if(any(unknown)) {
             unknown <- unique(sigClasses[unknown])

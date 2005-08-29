@@ -9,7 +9,7 @@ str(object, \dots)
     nchar.max = 128, give.attr = TRUE, give.length = TRUE,
     wid = getOption("width"), nest.lev = 0,
     indent.str = paste(rep.int(" ", max(0, nest.lev + 1)), collapse = ".."),
-    comp.str="$ ", no.list = FALSE, envir = NULL,
+    comp.str="$ ", no.list = FALSE, envir = baseenv(),
     \dots)
 }
 \alias{str}

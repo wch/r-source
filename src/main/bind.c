@@ -948,7 +948,7 @@ SEXP do_bind(SEXP call, SEXP op, SEXP args, SEXP env)
     }
     if (method != R_NilValue) {
 	PROTECT(method);
-	args = applyClosure(call, method, args, env, R_NilValue);
+	args = applyClosure(call, method, args, env, R_BaseEnv);
 	UNPROTECT(2);
 	return args;
     }
