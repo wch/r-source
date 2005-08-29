@@ -472,18 +472,27 @@ foreach my $pkg (@ARGV) {
 
 		    ## Warnings spotted by gfortran 4.0 or better with
 		    ## -Wall.  Justified in principle, it seems.  Let's
-		    ## ignore them for the time being, and maybe revert
-		    ## this lateron ...
-		    my $warn_re =
-			"(" .
-			join("|",
-			     ("Label .* at \\(1\\) defined but not used",
-			      "Line truncated at \\(1\\)",
-			      "ASSIGN statement at \\(1\\)",
-			      "Assigned GOTO statement at \\(1\\)",
-			      "arithmetic IF statement at \\(1\\)")) .
-			")";
-		    @lines = grep(!/$warn_re/, @lines);
+		    ## filter them for the time being, and maybe revert
+		    ## this lateron ... but make it possible to suppress
+		    ## filtering out by setting the internal environment
+		    ## variable _R_CHECK_WALL_FORTRAN_ to something
+		    ## "true".
+		    my $R_check_Wall_FORTRAN = 
+			&R_getenv("_R_CHECK_WALL_FORTRAN_", "FALSE");
+		    $R_check_Wall_FORTRAN =
+			&config_val_to_logical($R_check_Wall_FORTRAN);
+		    if(!$$R_check_Wall_FORTRAN) {
+			my $warn_re =
+			    "(" .
+			    join("|",
+				 ("Label .* at \\(1\\) defined but not used",
+				  "Line truncated at \\(1\\)",
+				  "ASSIGN statement at \\(1\\)",
+				  "Assigned GOTO statement at \\(1\\)",
+				  "arithmetic IF statement at \\(1\\)")) .
+			    ")";
+			@lines = grep(!/$warn_re/, @lines);
+		    }
 		    
 		    if(scalar(@lines) > 0) {
 			$log->warning();
