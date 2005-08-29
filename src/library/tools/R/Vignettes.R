@@ -39,13 +39,13 @@ function(package, dir, lib.loc = NULL,
 
     for(f in vigns$docs) {
         if(tangle) {
-            yy <- try(Stangle(f, quiet=TRUE))
+            yy <- try(utils::Stangle(f, quiet=TRUE))
             if(inherits(yy, "try-error"))
                 result$tangle[[f]] <- yy
         }
 
         if(weave) {
-            yy <- try(Sweave(f, quiet=TRUE))
+            yy <- try(utils::Sweave(f, quiet=TRUE))
             if(inherits(yy, "try-error"))
                 result$weave[[f]] <- yy
         }
@@ -145,7 +145,7 @@ buildVignettes <-function(package, dir, lib.loc = NULL, quiet=TRUE)
         bft <- paste(bf, ".tex", sep="")
         pdfs <- c(pdfs, paste(bf, ".pdf", sep=""))
 
-        yy <- try(Sweave(f, quiet=quiet))
+        yy <- try(utils::Sweave(f, quiet=quiet))
         if(inherits(yy, "try-error")) stop(yy)
         if(!have.makefile){
             texi2dvi(file=bft, pdf=TRUE, clean=FALSE, quiet=quiet)

@@ -58,7 +58,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
     if(all(nchar(lines) == 0)) stop("empty beginning of file")
     if(nlines < n0lines && file == 0)  {# stdin() has reached EOF
         pushBack(c(lines, lines, ""), file)
-        on.exit(.Internal(clearPushback(stdin())))
+        on.exit(.Internal(clearPushBack(stdin())))
     } else
         pushBack(c(lines, lines), file)
     first <- scan(file, what = "", sep = sep, quote = quote,
@@ -185,7 +185,7 @@ function(file, header = FALSE, sep = "", quote = "\"'", dec = ".",
             else if (colClasses[i] == "factor") as.factor(data[[i]])
             else if (colClasses[i] == "Date") as.Date(data[[i]])
             else if (colClasses[i] == "POSIXct") as.POSIXct(data[[i]])
-            else as(data[[i]], colClasses[i])
+            else methods::as(data[[i]], colClasses[i])
     }
 
     ##	now determine row names

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.0\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:44\n"
+"POT-Creation-Date: 2005-08-26 09:41\n"
 "PO-Revision-Date: 2005-04-18 18:00+02:00\n"
 "Last-Translator: Detlef Steuer <detlef.steuer@gmx.de>\n"
 "Language-Team: R-core <r-core@r-project.org>\n"
@@ -81,6 +81,9 @@ msgstr "'all' kann nicht mit anderen deparse Optionen zusammen benutzt werden"
 
 msgid "second argument must be a list"
 msgstr "das zweite Argument muss eine Liste sein"
+
+msgid "'iconvlist' is not available on this system"
+msgstr ""
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind' muss eine Zeichenkette der Länge 1 sein (zu nutzender RNG)."

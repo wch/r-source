@@ -13,11 +13,11 @@ function(height, width = 1, space = NULL, names.arg = NULL,
 {
     if (!missing(inside)) .NotYetUsed("inside", error = FALSE)# -> help(.)
 
-    if (missing(space))
+    if (is.null(space))
 	space <- if (is.matrix(height) && beside) c(0, 1) else 0.2
     space <- space * mean(width)
 
-    if (plot && axisnames && missing(names.arg))
+    if (plot && axisnames && is.null(names.arg))
 	names.arg <-
 	    if(is.matrix(height)) colnames(height) else names(height)
 
@@ -98,11 +98,11 @@ function(height, width = 1, space = NULL, names.arg = NULL,
     w.m <- w.r - delta
     w.l <- w.m - delta
     if (horiz) {
-	if (missing(xlim)) xlim <- range(rAdj, height + offset, na.rm = TRUE)
-	if (missing(ylim)) ylim <- c(min(w.l), max(w.r))
+	if (is.null(xlim)) xlim <- range(rAdj, height + offset, na.rm = TRUE)
+	if (is.null(ylim)) ylim <- c(min(w.l), max(w.r))
     } else {
-	if (missing(xlim)) xlim <- c(min(w.l), max(w.r))
-	if (missing(ylim)) ylim <- range(rAdj, height + offset, na.rm = TRUE)
+	if (is.null(xlim)) xlim <- c(min(w.l), max(w.r))
+	if (is.null(ylim)) ylim <- range(rAdj, height + offset, na.rm = TRUE)
     }
     if (beside)
 	w.m <- matrix(w.m, nc = NC)

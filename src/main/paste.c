@@ -146,7 +146,7 @@ SEXP do_paste(SEXP call, SEXP op, SEXP args, SEXP env)
 SEXP do_format(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP l, x, y, swd;
-    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci;
+    int i, il, n, digits, trim = 0, nsmall = 0, wd = 0, adj = -1, na, sci = 0;
     int w, d, e;
     int wi, di, ei;
     char *strp;

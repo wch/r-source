@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: R 2.1.1\n"
 "Report-Msgid-Bugs-To: bugs@r-project.org\n"
-"POT-Creation-Date: 2005-08-15 11:44\n"
+"POT-Creation-Date: 2005-08-26 09:41\n"
 "PO-Revision-Date: 2005-06-02 15:29+0900\n"
 "Last-Translator: Shigeru Mase\n"
 "Language-Team: RjpWiki Message Translation Team <mokada@md.tsukuba.ac.jp>\n"
@@ -76,6 +76,9 @@ msgstr "deparse オプションでは、すべてを使用することはでき�
 
 msgid "second argument must be a list"
 msgstr "第二引数はリストでなければなりません"
+
+msgid "'iconvlist' is not available on this system"
+msgstr ""
 
 msgid "'kind' must be a character string of length 1 (RNG to be used)."
 msgstr "'kind' は長さ 1 の文字列(使用されるべき RNG 名) でなければなりません"

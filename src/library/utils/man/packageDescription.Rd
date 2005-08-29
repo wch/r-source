@@ -20,8 +20,10 @@ packageDescription(pkg, lib.loc = NULL, fields = NULL, drop = TRUE,
   \item{drop}{If \code{TRUE} and the length of \code{fields} is 1, then
     a single character string with the value of the respective field is
     returned instead of an object of class \code{"packageDescription"}.}
-  \item{encoding}{If there is an \code{Encoding} field, what re-encoding
-    should be attempted?  If \code{NA}, no re-encoding.}
+  \item{encoding}{If there is an \code{Encoding} field, to what encoding
+    should re-encodong be attempted?  If \code{NA}, no re-encoding.  The
+    other values are as used by \code{\link{iconv}}, so the default
+    \code{""} indicates the encoding of the current locale.}
 }
 \details{
   A package will not be \sQuote{found} unless it has a \file{DESCRIPTION} file

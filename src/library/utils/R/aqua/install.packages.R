@@ -130,8 +130,8 @@
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
                 cat(sprintf(ngettext(sum(miss),
-                                     "dependency %s is not available",
-                                     "dependencies %s are not available"),
+                                     "dependency '%s' is not available",
+                                     "dependencies '%s' are not available"),
                     paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
                 flush.console()
             }

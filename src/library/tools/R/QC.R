@@ -382,6 +382,7 @@ function(package, dir, lib.loc = NULL,
         }
         else
             objects_in_code_or_namespace <- objects_in_code
+        package_name <- package
     }
     else {
         if(missing(dir))
@@ -402,7 +403,8 @@ function(package, dir, lib.loc = NULL,
             stop(gettextf("directory '%s' does not contain Rd sources",
                           dir),
                  domain = NA)
-        is_base <- basename(dir) == "base"
+        package_name <- basename(dir)
+        is_base <- package_name == "base"
 
         code_env <- new.env()
         yy <- try(.source_assignments_in_code_dir(code_dir, code_env))
@@ -547,11 +549,12 @@ function(package, dir, lib.loc = NULL,
 
     db <- lapply(db, function(f) paste(Rd_pp(f), collapse = "\n"))
     names(db) <- db_names <- .get_Rd_names_from_Rd_db(db)
-    if(is_base) {
-        ind <- db_names %in% c("base-defunct")
-        db <- db[!ind]
-        db_names <- db_names[!ind]
-    }
+
+    ## pkg-defunct.Rd is not expected to list arguments
+    ind <- db_names %in% paste(package_name, "defunct", sep="-")
+    db <- db[!ind]
+    db_names <- db_names[!ind]
+
     db_usage_texts <-
         .apply_Rd_filter_to_Rd_db(db, get_Rd_section, "usage")
     db_synopses <-
@@ -2801,7 +2804,7 @@ function(dfile)
         encoding <- db["Encoding"]
         if((Sys.getlocale("LC_CTYPE") != "C")
            && capabilities("iconv"))
-            db <- utils::iconv(db, encoding, "")
+            db <- iconv(db, encoding, "")
     }
     else if(!all(.is_ISO_8859(db))) {
         ## No valid Encoding meta-data.
@@ -2814,7 +2817,7 @@ function(dfile)
         ## (Can only happen in a MBCS locale.)
         ## Try re-encoding from Latin1.
         if(capabilities("iconv"))
-            db <- utils::iconv(db, "latin1", "")
+            db <- iconv(db, "latin1", "")
         else
             stop("Found invalid multi-byte character data.", "\n",
                  "Cannot re-encode because iconv is not available.", "\n",
@@ -3057,7 +3060,45 @@ function(x, ...)
     invisible(x)
 }
 
+### * .check_code_usage_in_package
 
+.check_code_usage_in_package <-
+function(package, lib.loc = NULL)
+{
+    is_base <- package == "base"
+    if(!is_base)
+        .load_package_quietly(package, lib.loc)
+
+    ## A simple function for catching the output from the codetools
+    ## analysis using the checkUsage report mechanism.
+    out <- character()
+    foo <- function(x) out <<- c(out, x)
+    ## (Simpler than using a variant of capture.output().)
+    ## Of course, it would be nice to return a suitably structured
+    ## result, but we can always do this by suitably splitting the
+    ## messages on the double colons ...
+
+    ## <NOTE>
+    ## Eventually, we should be able to specify a codetools "profile"
+    ## for checking.
+    ## </NOTE>
+
+    codetools::checkUsagePackage(package,
+                                 report = foo,
+                                 suppressLocalUnused = TRUE,
+                                 skipWith = TRUE)
+    class(out) <- "check_code_usage_in_package"
+    out
+}
+
+print.check_code_usage_in_package <-
+function(x, ...)
+{
+    if(length(x) > 0)
+        writeLines(strwrap(x, indent = 0, exdent = 2))
+    invisible(x)
+}
+    
 ### * as.alist.call
 
 as.alist.call <-
@@ -3266,4 +3307,3 @@ function(x)
 ### mode: outline-minor ***
 ### outline-regexp: "### [*]+" ***
 ### End: ***
-

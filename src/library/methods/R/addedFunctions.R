@@ -41,8 +41,9 @@ getFunction <-  function(name, generic = TRUE, mustFind = TRUE,
         where <- parent.env(where)
     }
     if(!found && mustFind)
-        if(generic) stop(gettextf("no function '%s' found"), domain = NA)
-        else stop(gettextf("no non-generic function '%s' found"), domain = NA)
+	if(generic) stop(gettextf("no function '%s' found", name), domain = NA)
+	else stop(gettextf("no non-generic function '%s' found", name),
+		  domain = NA)
     f
 }
 

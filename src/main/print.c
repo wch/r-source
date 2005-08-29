@@ -900,5 +900,5 @@ void F77_NAME(xerbla)(char *srname, int *info)
     char buf[7];
     strncpy(buf, srname, 6);
     buf[6] = '\0';
-    error(_("LAPACK routine '%6s' gave error code %d"), buf, -(*info));
+    error(_("BLAS/LAPACK routine '%6s' gave error code %d"), buf, -(*info));
 }

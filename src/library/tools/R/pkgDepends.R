@@ -130,9 +130,9 @@ getRemotePkgDepends <- function(pkg, contriburl=getOption("repos")) {
     ## by available.packages().
 
     if(is.null(contriburl))
-        contriburl <- contrib.url(getOption("repos"))
+        contriburl <- utils::contrib.url(getOption("repos"))
 
-    cran <- available.packages(contriburl=contriburl)
+    cran <- utils::available.packages(contriburl=contriburl)
     whichRow <- which(pkg == cran[,"Package"])
     if (length(whichRow) > 0) {
         return(package.dependencies(cran[whichRow,])[[1]])
@@ -176,13 +176,14 @@ foundDepends <- function(depMtrx, contriburl=getOption("repos")) {
     foundRows <- numeric()
 
     if(is.null(contriburl))
-        contriburl <- contrib.url(c(CRAN = getOption("repos")["CRAN"],
-                                    BIOC = getOption("BIOC")))
+        contriburl <-
+            utils::contrib.url(c(CRAN = getOption("repos")["CRAN"],
+                                 BIOC = getOption("BIOC")))
 
 
     for (j in 1:length(contriburl)) {
         cur <- character()
-        cran <- available.packages(contriburl=contriburl[j])
+        cran <- utils::available.packages(contriburl=contriburl[j])
 
         if (nrow(depMtrx) > 0) {
             for (i in 1:nrow(depMtrx)) {
@@ -297,7 +298,9 @@ installFoundDepends <- function(depPkgList, ...) {
     urls <- names(depPkgList)
     for (i in seq(along=depPkgList)) {
         if (length(depPkgList[[i]]) > 0)
-            install.packages(depPkgList[[i]], contriburl=urls[i],...)
+            utils::install.packages(depPkgList[[i]],
+                                    contriburl = urls[i],
+                                    ...)
     }
 
     NULL

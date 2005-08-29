@@ -1787,7 +1787,7 @@ or use the configure variables @code{TCLTK_LIBS} and
 the Tcl and Tk libraries and for finding the @file{tcl.h} and
 @file{tk.h} headers, respectively.
 
-Versions of Tcl/Tk from 8.3 to 8.4.9 have been used successfully: 8.0 is
+Versions of Tcl/Tk from 8.3 to 8.4.11 have been used successfully: 8.0 is
 no longer supported.
 
 

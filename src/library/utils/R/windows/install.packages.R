@@ -140,10 +140,10 @@
     inuse <- pkgnames %in% inuse
     if(any(inuse)) {
         warning(sprintf(ngettext(sum(inuse),
-                "package %s is in use and will not be installed",
-                "packages %s are in use and will not be installed"),
+                "package '%s' is in use and will not be installed",
+                "packages '%s' are in use and will not be installed"),
                         paste(pkgnames[inuse], collapse=", ")),
-                call. = FALSE, domain = NA)
+                call. = FALSE, domain = NA, immediate = TRUE)
         pkgs <- pkgs[!inuse]
         pkgnames <- pkgnames[!inuse]
     }
@@ -183,8 +183,8 @@
         repeat {
             if(any(miss <- ! p1 %in% row.names(available))) {
                 cat(sprintf(ngettext(sum(miss),
-                                     "dependency %s is not available",
-                                     "dependencies %s are not available"),
+                                     "dependency '%s' is not available",
+                                     "dependencies '%s' are not available"),
                     paste(sQuote(p1[miss]), sep=", ")), "\n\n", sep ="")
                 flush.console()
             }

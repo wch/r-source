@@ -17,8 +17,8 @@ package.skeleton <-
     have <- sapply(list, exists)
     if(any(!have))
 	warning(sprintf(ngettext(sum(!have),
-				 "object %s not found",
-				 "objects %s not found"),
+				 "object '%s' not found",
+				 "objects '%s' not found"),
 			paste(sQuote(list[!have]), collapse=", ")),
 		domain = NA)
     list <- list[have]

@@ -2544,22 +2544,75 @@ static SEXP readOneString(Rconnection con)
     return mkChar(buf);
 }
 
+static int
+rawRead(char *p, int size, int n, Rbyte *bytes, int nbytes, int *np) 
+{
+    int avail, m;
+
+    avail = (nbytes - n*size);
+    if (avail < 0) avail = 0;
+    avail = avail/size;
+    m = n;
+    if (m > avail) m = avail;
+    if (m > 0) {
+	memcpy(p, bytes + *(np), m*size);
+	*np += m*size;
+    }
+    return m;
+}
+
+static SEXP rawOneString(Rbyte *bytes, int nbytes, int *np)
+{
+    Rbyte *p;
+    int i;
+    char *buf;
+    SEXP res;
+
+    /* just look for null terminator */
+    for(i = *np, p = bytes+(*np); i < nbytes; p++, i++)
+	if(*p == '\0') break;
+    if(i < nbytes) { /* has terminator */
+	p = bytes+(*np);
+	*np = i+1;
+	return mkChar((char *)p);
+    }
+    /* so no terminator */
+    buf = R_chk_calloc(nbytes - (*np) + 1, 1);
+    memcpy(buf, bytes+(*np), nbytes-(*np));
+    res = mkChar(buf);
+    Free(buf);
+    *np = nbytes;
+    return res;
+}
+
+
 /* readBin(con, what, n, swap) */
 SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
     SEXP ans = R_NilValue, swhat;
-    int i, size, signd, swap, n, m = 0, sizedef= 4, mode = 1;
+    int i, size, signd, swap, n, m = 0, sizedef= 4, mode = 1,
+	nbytes = 0, np = 0;
     char *what;
     void *p = NULL;
-    Rboolean wasopen;
+    Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
     char *vmax = vmaxget();
+    Rbyte *bytes = NULL;
 
     checkArity(op, args);
-    i = asInteger(CAR(args)); args = CDR(args);
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error(_("invalid connection"));
-    if(con->text) error(_("can only read from a binary connection"));
+    
+    if(TYPEOF(CAR(args)) == RAWSXP) {
+	isRaw = TRUE;
+	bytes = RAW(CAR(args));
+	nbytes = LENGTH(CAR(args));
+    } else {
+	i = asInteger(CAR(args)); 
+	if(i == NA_INTEGER || !(con = Connections[i]))
+	    error(_("invalid connection"));
+	if(con->text) error(_("can only read from a binary connection"));
+    }
+    
+    args = CDR(args);
     swhat = CAR(args); args = CDR(args);
     if(!isString(swhat) || length(swhat) != 1)
 	error(_("invalid value of 'what'"));
@@ -2573,18 +2626,20 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
     swap = asLogical(CAR(args));
     if(swap == NA_LOGICAL)
 	error(_("invalid value of 'swap'"));
-    if(!con->canread)
-	error(_("cannot read from this connection"));
-
-    wasopen = con->isopen;
-    if(!wasopen)
-	if(!con->open(con)) error(_("cannot open the connection"));
-
+    if(!isRaw) {
+	if(!con->canread)
+	    error(_("cannot read from this connection"));
+	wasopen = con->isopen;
+	if(!wasopen)
+	    if(!con->open(con)) error(_("cannot open the connection"));
+    }
+    
     if(!strcmp(what, "character")) {
 	SEXP onechar;
 	PROTECT(ans = allocVector(STRSXP, n));
 	for(i = 0, m = i+1; i < n; i++) {
-	    onechar = readOneString(con);
+	    onechar = isRaw ? rawOneString(bytes, nbytes, &np) 
+		: readOneString(con);
 	    if(onechar != R_NilValue) {
 		SET_STRING_ELT(ans, i, onechar);
 		m++;
@@ -2596,7 +2651,8 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    error(_("size changing is not supported for complex vectors"));
 	PROTECT(ans = allocVector(CPLXSXP, n));
 	p = (void *) COMPLEX(ans);
-	m = con->read(p, size, n, con);
+	m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np) 
+	    : con->read(p, size, n, con);
 	if(swap)
 	    for(i = 0; i < m; i++) {
 		swapb(&(COMPLEX(ans)[i].r), sizeof(double));
@@ -2667,7 +2723,8 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    p = (void *) REAL(ans);
 	}
 	if(size == sizedef) {
-	    m = con->read(p, size, n, con);
+	    m = isRaw ? rawRead(p, size, n, bytes, nbytes, &np) 
+		: con->read(p, size, n, con);
 	    if(swap && size > 1)
 		for(i = 0; i < m; i++) swapb((char *)p+i*size, size);
 	} else {
@@ -2675,7 +2732,8 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 	    int s;
 	    if(mode == 1) {
 		for(i = 0, m = 0; i < n; i++) {
-		    s = con->read(buf, size, 1, con);
+		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np) 
+			: con->read(buf, size, 1, con);
 		    if(s) m++; else break;
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
@@ -2708,7 +2766,8 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 		}
 	    } else if (mode == 2) {
 		for(i = 0, m = 0; i < n; i++) {
-		    s = con->read(buf, size, 1, con);
+		    s = isRaw ? rawRead(buf, size, 1, bytes, nbytes, &np) 
+			: con->read(buf, size, 1, con);
 		    if(s) m++; else break;
 		    if(swap && size > 1) swapb(buf, size);
 		    switch(size) {
@@ -2742,40 +2801,63 @@ SEXP do_readbin(SEXP call, SEXP op, SEXP args, SEXP env)
 /* writeBin(object, con, swap) */
 SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 {
-    SEXP object;
-    int i, j, size, swap, len, n=0;
+    SEXP object, ans = R_NilValue;
+    int i, j, size, swap, len, n = 0;
     char *s, *buf;
-    Rboolean wasopen;
+    Rboolean wasopen = TRUE, isRaw = FALSE;
     Rconnection con = NULL;
 
     checkArity(op, args);
     object = CAR(args);
     if(!isVectorAtomic(object))
 	error(_("'x' is not an atomic vector type"));
-    i = asInteger(CADR(args));
-    if(i == NA_INTEGER || !(con = Connections[i]))
-	error("invalid connection");
-    if(con->text) error(_("can only write to a binary connection"));
+    
+    if(TYPEOF(CADR(args)) == RAWSXP) {
+	isRaw = TRUE;
+    } else {
+	i = asInteger(CADR(args));
+	if(i == NA_INTEGER || !(con = Connections[i]))
+	    error("invalid connection");
+	if(con->text) error(_("can only write to a binary connection"));
+	wasopen = con->isopen;
+	if(!con->canwrite)
+	    error(_("cannot write to this connection"));
+    }
+    
     size = asInteger(CADDR(args));
     swap = asLogical(CADDDR(args));
     if(swap == NA_LOGICAL)
 	error(_("invalid value of 'swap'"));
-    if(!con->canwrite)
-	error(_("cannot write to this connection"));
     len = LENGTH(object);
-    if(len == 0) return R_NilValue;
+    if(len == 0) {
+	if(isRaw) return allocVector(RAWSXP, 0); else return R_NilValue;
+    }
 
-    wasopen = con->isopen;
     if(!wasopen)
 	if(!con->open(con)) error(_("cannot open the connection"));
 
+
     if(TYPEOF(object) == STRSXP) {
-	for(i = 0; i < len; i++) {
-	    s = CHAR(STRING_ELT(object, i));
-	    n = con->write(s, sizeof(char), strlen(s) + 1, con);
-	    if(!n) {
-		warning(_("problem writing to connection"));
-		break;
+	if(isRaw) {
+	    Rbyte *bytes;
+	    int np, outlen;
+	    for(i = 0, outlen = 0; i < len; i++) 
+		outlen += strlen(CHAR(STRING_ELT(object, i))) + 1;
+	    PROTECT(ans = allocVector(RAWSXP, outlen));
+	    bytes = RAW(ans);
+	    for(i = 0, np = 0; i < len; i++) {
+		s = CHAR(STRING_ELT(object, i));
+		memcpy(bytes+np, s, strlen(s) + 1);
+		np +=  strlen(s) + 1;
+	    }
+	} else {
+	    for(i = 0; i < len; i++) {
+		s = CHAR(STRING_ELT(object, i));
+		n = con->write(s, sizeof(char), strlen(s) + 1, con);
+		if(!n) {
+		    warning(_("problem writing to connection"));
+		    break;
+		}
 	    }
 	}
     } else {
@@ -2918,13 +3000,20 @@ SEXP do_writebin(SEXP call, SEXP op, SEXP args, SEXP env)
 	}
 
 	/* write it now */
-	n = con->write(buf, size, len, con);
-	if(n < len) warning(_("problem writing to connection"));
+	if(isRaw) {
+	    PROTECT(ans = allocVector(RAWSXP, size*len));
+	    memcpy(RAW(ans), buf, size*len);
+	} else {
+	    n = con->write(buf, size, len, con);
+	    if(n < len) warning(_("problem writing to connection"));
+	}
 	Free(buf);
     }
 
     if(!wasopen) con->close(con);
-    return R_NilValue;
+    if(isRaw) UNPROTECT(1);
+    else R_Visible = 0;
+    return ans;
 }
 
 static SEXP readFixedString(Rconnection con, int len)

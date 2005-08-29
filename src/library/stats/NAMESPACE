@@ -62,6 +62,9 @@ export(add.scope, add1, addmargins, aggregate, aggregate.data.frame,
        weighted.mean, weighted.residuals, weights, window, "window<-",
        write.ftable, xtabs, pbirthday, qbirthday)
 
+# defunct
+export(reshapeWide, reshapeLong, print.coefmat, anovalist.lm, lm.fit.null,
+       lm.wfit.null, glm.fit.null)
 
 import(graphics)
 ## 'graphics' imports 'grDevices' completely; hence this is currently a noop:

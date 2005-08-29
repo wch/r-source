@@ -515,7 +515,8 @@ function(dir, outDir)
     for(srcfile in vignetteFiles[!upToDate]) {
         base <- basename(file_path_sans_ext(srcfile))
         texfile <- paste(base, ".tex", sep = "")
-        yy <- try(Sweave(srcfile, pdf = TRUE, eps = FALSE, quiet = TRUE))
+        yy <- try(utils::Sweave(srcfile, pdf = TRUE, eps = FALSE,
+                                quiet = TRUE)) 
         if(inherits(yy, "try-error"))
             stop(yy)
         ## In case of an error, do not clean up: should we point to

@@ -64,8 +64,8 @@ Sweave <- function(file, driver=RweaveLatex(),
             if(mode=="code" && any(grep(syntax$coderef, line))){
                 chunkref <- sub(syntax$coderef, "\\1", line)
                 if(!(chunkref %in% names(namedchunks)))
-                    warning(gettextf("reference to unknown chunk %s", chunkref),
-                            domain = NA)
+                    warning(gettextf("reference to unknown chunk '%s'",
+                                     chunkref), domain = NA)
                 line <- namedchunks[[chunkref]]
             }
 
@@ -102,8 +102,8 @@ SweaveReadFile <- function(file, syntax)
             stop(gettextf("no Sweave file with name '%s' found", file[1]),
                  domain = NA)
         }
-        else if(length(f)>1){
-            stop(paste(gettextf("%s Sweave files for basename '%s' found:",
+        else if(length(f) > 1){
+            stop(paste(gettextf("%d Sweave files for basename '%s' found:",
                                 length(f), file),
                        paste("\n         ", f, collapse="")),
                  domain = NA)
@@ -121,7 +121,7 @@ SweaveReadFile <- function(file, syntax)
             text <- iconv(text, "latin1", "")
         else
             stop("Found invalid multi-byte character data.", "\n",
-                 "Cannot re-encode because iconv is not available.", "\n",
+                 "Cannot re-encode because 'iconv' is not available.", "\n",
                  "Try running R in a single-byte locale.")
     }
     ## </FIXME>
@@ -582,10 +582,10 @@ RweaveLatexFinish <- function(object, error=FALSE)
 
 RweaveLatexOptions <- function(options)
 {
-    
+
     ## ATTENTION: Changes in this function have to be reflected in the
     ## defaults in the init function!
-    
+
     ## convert a character string to logical
     c2l <- function(x){
         if(is.null(x)) return(FALSE)

@@ -212,6 +212,9 @@ function(x, ...)
 {
     ## Better to provide a simple variant of utils::capture.output()
     ## ourselves (so that bootstrapping R only needs base and tools).
+    out <- NULL # Prevent codetools warning about "no visible binding
+                # for global variable out".  Maybe there will eventually
+                # be a better design for output text connections ...
     file <- textConnection("out", "w", local = TRUE)
     sink(file)
     on.exit({ sink(); close(file) })
@@ -491,7 +494,8 @@ function(packages = NULL, FUN, ...)
     ## The default corresponds to all installed packages with high
     ## priority.
     if(is.null(packages))
-        packages <- unique(installed.packages(priority = "high")[ , 1])
+        packages <-
+            unique(utils::installed.packages(priority = "high")[ , 1])
     out <- lapply(packages, FUN, ...)
     names(out) <- packages
     out

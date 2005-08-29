@@ -1,5 +1,6 @@
 Name,Country,City,URL,Host,Maintainer
-Australia,Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisbane",hostmaster@iseek.com.au
+"Australia (QLD)",Australia,Brisbane,http://cran.au.r-project.org/,"PlanetMirror, Brisbane",hostmaster@iseek.com.au
+"Australia (VIC)",Australia,Melbourne,http://cran.ms.unimelb.edu.au/,"University of Melbourne",cran@ms.unimelb.edu.au
 Austria,Austria,Wien,http://cran.at.r-project.org/,"Technische Universitaet Wien",CRAN@R-project.org
 "Brasil (PR)",Brasil,Curitiba,http://cran.br.r-project.org/,"Universidade Federal do Parana??","Paulo J. Ribeiro Jr <paulojus@est.ufpr.br>"
 "Brasil (MG)",Brasil,Vicosa,http://www.termix.ufv.br/CRAN/,"Federal University of Vicosa",

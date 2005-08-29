@@ -228,7 +228,9 @@ contrib.url(repos, type = getOption("pkgType"))
   \emph{after} any have been installed.
 
   For \code{download.packages}, a two-column matrix of names and
-  destination file names, for those packages/bundles successfully downloaded.
+  destination file names, for those packages/bundles successfully
+  downloaded.  If packages are not available or there is a problem with
+  the download, suitable warnings are given.
 
   \code{install.packages} and \code{update.packages} have no return value.
 }
