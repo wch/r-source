@@ -5048,8 +5048,8 @@ msgstr "erreur d'affectation mémoire dans realpr"
 
 #: src/main/print.c:899
 #, c-format
-msgid "LAPACK routine '%6s' gave error code %d"
-msgstr "la procédure LAPACK '%6s' a produit le code d'erreur %d"
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
+msgstr "la procédure BLAS/LAPACK '%6s' a produit le code d'erreur %d"
 
 #: src/main/printarray.c:546
 msgid "too few row labels"

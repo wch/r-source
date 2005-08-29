@@ -4982,7 +4982,7 @@ msgstr "erro de alocação de memória em realpr"
 #: src/main/print.c:899
 #, c-format
 msgid "LAPACK routine '%6s' gave error code %d"
-msgstr "rotina LAPACK '%6s' teve um erro de código %d"
+msgstr "rotina BLAS/LAPACK '%6s' teve um erro de código %d"
 
 #: src/main/printarray.c:546
 msgid "too few row labels"

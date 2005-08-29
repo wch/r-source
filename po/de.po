@@ -4971,8 +4971,8 @@ msgstr "Speicherallokationsfehler in realpr"
 
 #: src/main/print.c:899
 #, c-format
-msgid "LAPACK routine '%6s' gave error code %d"
-msgstr "LAPACK-Routine '%6s' gab Fehlercode %d"
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
+msgstr "BLAS/LAPACK-Routine '%6s' gab Fehlercode %d"
 
 #: src/main/printarray.c:546
 msgid "too few row labels"

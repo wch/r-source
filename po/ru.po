@@ -4903,7 +4903,7 @@ msgstr ""
 
 #: src/main/print.c:899
 #, c-format
-msgid "LAPACK routine '%6s' gave error code %d"
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
 msgstr ""
 
 #: src/main/printarray.c:546

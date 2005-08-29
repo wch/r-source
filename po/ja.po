@@ -4975,8 +4975,8 @@ msgstr "realpr でメモリ確保に失敗しました"
 
 #: src/main/print.c:899
 #, c-format
-msgid "LAPACK routine '%6s' gave error code %d"
-msgstr "LAPACK 関数 '%6s' はエラーコード %d を返しました "
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
+msgstr "BLAS/LAPACK 関数 '%6s' はエラーコード %d を返しました "
 
 #: src/main/printarray.c:546
 msgid "too few row labels"

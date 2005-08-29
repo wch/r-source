@@ -4918,8 +4918,8 @@ msgstr "realpr内存分配错误"
 
 #: src/main/print.c:899
 #, c-format
-msgid "LAPACK routine '%6s' gave error code %d"
-msgstr "LAPACK 例行程序'%6s'产生了错误%d信息"
+msgid "BLAS/LAPACK routine '%6s' gave error code %d"
+msgstr "BLAS/LAPACK 例行程序'%6s'产生了错误%d信息"
 
 #: src/main/printarray.c:546
 msgid "too few row labels"
