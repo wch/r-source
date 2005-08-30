@@ -583,9 +583,10 @@ looks up the value for a symbol the frame is examined and if a
 matching symbol is found its value will be returned.  If not, the
 enclosing environment is then accessed and the process repeated.
 Environments form a tree structure in which the enclosures play the
-role of parents. 
-The environment of the base package has the special value
-@code{NULL}; it forms the root of this tree.
+role of parents. The environment of the base package is available
+through the @code{baseenv()} function.  It forms the root of the tree
+of environments.  Currently it has the special value @code{NULL}, but
+this will change in the next major release.
 
 Environments are created implicitly by function calls, as described
 in @ref{Function objects} and @ref{Lexical environment}.  In this case
