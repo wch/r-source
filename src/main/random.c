@@ -315,19 +315,29 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
 {
     double *q, rU;
     int i, j, k;
-    int *HL = (int *)alloca(n * sizeof(int)), *H = HL - 1, *L = HL + n;
+    int *HL, *H, *L;
 
     if (!Walker_warn) {
 	Walker_warn = TRUE;
 	warning("Walker's alias method used: results are different from R < 2.2.0");
     }
     
+    
     /* Create the alias tables.
        The idea is that for HL[0] ... L-1 label the entries with q < 1
        and L ... H[n-1] label those >= 1.
        By rounding error we could have q[i] < 1. or > 1. for all entries.
      */
-    q = (double *) alloca(n * sizeof(double));
+    if(n <= 100000) {
+	/* might do this repeatedly, so speed matters */
+	HL = (int *)alloca(n * sizeof(int));
+	q = (double *) alloca(n * sizeof(double));
+    } else {
+	/* Slow enough anyway not to risk overflow */
+	HL = Calloc(n, int);
+	q = Calloc(n, double);
+    }
+    H = HL - 1; L = HL + n;
     for (i = 0; i < n; i++) {
 	q[i] = p[i] * n;
 	if (q[i] < 1.) *++H = i; else *--L = i;
@@ -349,6 +359,10 @@ walker_ProbSampleReplace(int n, double *p, int *a, int nans, int *ans)
 	rU = unif_rand() * n;
 	k = (int) rU;
 	ans[i] = (rU < q[k]) ? k+1 : a[k]+1;
+    }
+    if(n > 100000) {
+	Free(HL);
+	Free(q);
     }
 }
 
