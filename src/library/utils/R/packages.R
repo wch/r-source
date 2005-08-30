@@ -415,7 +415,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
         ok <- ok & !is.na(ok)
         if(!any(ok))
             warning(gettextf("no package '%s' at the repositories", p),
-                    domain = NA, immediate = TRUE)
+                    domain = NA, immediate. = TRUE)
         else {
             if(sum(ok) > 1) { # have multiple copies
                 vers <- package_version(available[ok, "Version"])
@@ -452,7 +452,7 @@ download.packages <- function(pkgs, destdir, available = NULL,
                     retval <- rbind(retval, c(p, destfile))
                 else
                     warning(gettextf("download of package '%s' failed", p),
-                            domain = NA, immediate = TRUE)
+                            domain = NA, immediate. = TRUE)
             }
         }
     }

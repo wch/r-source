@@ -163,7 +163,7 @@
                                    contriburl = contriburl, method = method,
                                    type = "mac.binary")
 
-    if(!is.null(foundpkgs)) {
+    if(length(foundpkgs)) {
         update <- unique(cbind(pkgs, lib))
         colnames(update) <- c("Package", "LibPath")
         for(lib in unique(update[,"LibPath"])) {

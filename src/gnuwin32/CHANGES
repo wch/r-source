@@ -34,6 +34,9 @@ and graphics menus do not).
 
 Installation is now available in Finnish.
 
+install.packages() now detect members of a bundle which are in use
+and so skips the bundle (as it does for packages).
+
 
 
 R 2.1.1 patched
