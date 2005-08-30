@@ -25,7 +25,8 @@ object.size(x)
   calculation.
 
   Object sizes are larger on 64-bit platforms than 32-bit ones, but will
-  very likely be the same on different platforms with the same word length.
+  very likely be the same on different platforms with the same word
+  length and pointer size.
 }
 \value{
   An estimate of the memory allocation attributable to the object, in bytes.
@@ -38,7 +39,8 @@ object.size(x)
 object.size(letters)
 object.size(ls)
 ## find the 10 largest objects in the base package
-z <- sapply(ls("package:base"), function(x) object.size(get(x, envir=baseenv())))
+z <- sapply(ls("package:base"), function(x)
+            object.size(get(x, envir = baseenv())))
 as.matrix(rev(sort(z))[1:10])
 }
 \keyword{utilities}
