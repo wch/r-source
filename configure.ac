@@ -293,7 +293,12 @@ AC_ARG_WITH([readline],
 ## Aqua.
 AC_ARG_WITH([aqua],
 [AC_HELP_STRING([--with-aqua],
-                [MacOS X only: use Aqua (if available) @<:@no@:>@])],
+                [MacOS X only: use Aqua (if available) @<:@yes@:>@])],
+[if test "${withval}" = no; then
+  want_aqua=no
+else
+  want_aqua=yes
+fi],
 [want_aqua=yes])
 
 ## Tcl/Tk.
