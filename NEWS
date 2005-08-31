@@ -608,7 +608,9 @@ BUG FIXES
     o	Typo meant that R_alloc was limited to 2^31 not 2^34 on 64-bit
 	builds of R.
 
-    o	pgamma(Inf, 1.1) did not terminate (PR#8001).
+    o	pgamma(Inf, shape) did not terminate for shape = 1.1 and some
+	other values (but not all) (PR#8001).  This affected
+	pchisq(Inf, df1) and pf(Inf, df1, Inf) for some values of df1.
 
     o	regexpr("[a-z]", ...) could cause a buffer overrun with multi-byte
     	character sets, leading to random errors later.
