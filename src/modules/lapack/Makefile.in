@@ -11,8 +11,9 @@ R_HOME = $(top_builddir)
 
 include $(top_builddir)/Makeconf
 
-SOURCES_C = Lapack.c
+SOURCES_C = Lapack.c @USE_VECLIB_G95FIX_TRUE@ vecLibg95c.c
 SOURCES_F = @USE_EXTERNAL_LAPACK_FALSE@ rgeev.f rsyev.f
+@USE_VECLIB_G95FIX_TRUE@SOURCES_F = vecLibg95f.f
 
 DEPENDS = $(SOURCES_C:.c=.d)
 SOURCES = $(SOURCES_C) $(SOURCES_F) @USE_EXTERNAL_BLAS_FALSE@ $(SOURCES_BLAS)

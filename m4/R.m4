@@ -2399,7 +2399,9 @@ if test "${acx_blas_ok}" = no; then
                [acx_blas_ok=yes; BLAS_LIBS="-lblas"])
 fi
 
-## Now check if zdotu works (fails on AMD64 with the wrong compiler)
+## Now check if zdotu works (fails on AMD64 with the wrong compiler;
+## also fails on OS X with vecLib and gfortran; but in that case we
+## have a work-around using USE_VECLIB_G95FIX)
 if test "${acx_blas_ok}" = yes; then
   AC_MSG_CHECKING([whether double complex BLAS can be used])
   AC_CACHE_VAL([r_cv_zdotu_is_usable],
@@ -2469,10 +2471,22 @@ fi
     AC_MSG_RESULT([yes])
   else
     AC_MSG_RESULT([no])
-    BLAS_LIBS=
-    acx_blas_ok="no"
+    if test "${have_vecLib_fw}" = "yes"; then
+      ## for vecLib we have a work-around by using cblas_..._sub
+      use_veclib_g95fix=yes
+      ## The fix may not work with internal lapack, because
+      ## the lapack dylib won't have the fixed functions.
+      ## those are available to the lapack module only.
+      #      use_lapack=yes
+      #	     with_lapack=""
+    else
+      BLAS_LIBS=
+      acx_blas_ok="no"
+    fi
   fi
 fi
+
+AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 
 LIBS="${acx_blas_save_LIBS}"
 
