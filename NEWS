@@ -359,8 +359,8 @@ INSTALLATION
 	--with-system-bzlib and -with-system-pcre now have 'system' in
 	the name.
 
-    o	On MacOS X, --with-blas="-framework vecLib" --with-lapack are
-	now the default configure options.
+    o	On MacOS X, --with-blas="-framework vecLib" --with-lapack and
+	--with-aqua are now the default configure options.
 
 
 PACKAGE INSTALLATION CHANGES
