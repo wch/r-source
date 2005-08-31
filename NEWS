@@ -45,6 +45,9 @@ USER-VISIBLE CHANGES
 
 NEW FEATURES
 
+    o   New generic function simulate() in the 'stats' package with
+        methods for some classes of fitted models.
+
     o	The specification of the substitutions done when processing
 	Renviron files is more liberal: see ?Startup.  It now
 	accepts forms like R_LIBS=${HOME}/Rlibrary:${WORKGRP}/R/lib .

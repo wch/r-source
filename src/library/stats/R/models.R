@@ -210,6 +210,11 @@ variable.names.default <- function(object, ...) colnames(object)
 case.names <- function(object, ...) UseMethod("case.names")
 case.names.default <- function(object, ...) rownames(object)
 
+simulate <-
+    function(object, nsim = 1,
+             seed = as.integer(runif(1, 0, .Machine$integer.max)),
+             ...) UseMethod("simulate")
+
 offset <- function(object) object
 ## ?
 
