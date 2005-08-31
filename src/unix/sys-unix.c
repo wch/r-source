@@ -126,7 +126,12 @@ extern Rboolean UsingReadline;
 char *R_ExpandFileName(char *s)
 {
 #ifdef HAVE_LIBREADLINE
-    if(UsingReadline) return R_ExpandFileName_readline(s, newFileName);
+    if(UsingReadline) {
+        char * c = R_ExpandFileName_readline(s, newFileName);
+	/* we can return the result only if tilde_expand is not broken */
+	if (!c || c[0]!='~' || (c[1]!='\0' && c[1]!='/'))
+	    return c;
+    }
 #endif
     return R_ExpandFileName_unix(s, newFileName);
 }
