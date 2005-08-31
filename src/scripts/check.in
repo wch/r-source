@@ -481,7 +481,7 @@ foreach my $pkg (@ARGV) {
 			&R_getenv("_R_CHECK_WALL_FORTRAN_", "FALSE");
 		    $R_check_Wall_FORTRAN =
 			&config_val_to_logical($R_check_Wall_FORTRAN);
-		    if(!$$R_check_Wall_FORTRAN) {
+		    if(!$R_check_Wall_FORTRAN) {
 			my $warn_re =
 			    "(" .
 			    join("|",
