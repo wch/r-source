@@ -2173,6 +2173,8 @@ Includes maximum likelihood and Bayesian tools.
 @item brlr
 Bias-reduced logistic regression: fits logistic regression models by
 maximum penalized likelihood.
+@item butler
+Unit testing, profiling and benchmarking for R.
 @item caMassClass
 Processing and Classification of protein mass spectra (SELDI) data.
 @item caTools
