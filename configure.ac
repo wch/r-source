@@ -1379,6 +1379,8 @@ fi
 if test "${use_blas}" = yes; then
   R_BLAS_LIBS
 fi
+
+AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
 AM_CONDITIONAL(USE_EXTERNAL_BLAS, [test "${acx_blas_ok}" = "yes"])
 
 ## LAPACK.

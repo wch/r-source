@@ -2486,8 +2486,6 @@ fi
   fi
 fi
 
-AM_CONDITIONAL(USE_VECLIB_G95FIX, [test "x${use_veclib_g95fix}" = xyes])
-
 LIBS="${acx_blas_save_LIBS}"
 
 AC_SUBST(BLAS_LIBS)

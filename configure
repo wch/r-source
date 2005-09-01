@@ -33991,6 +33991,12 @@ echo "${ECHO_T}no" >&6
   fi
 fi
 
+LIBS="${acx_blas_save_LIBS}"
+
+
+
+fi
+
 
 
 if test "x${use_veclib_g95fix}" = xyes; then
@@ -34001,12 +34007,6 @@ else
   USE_VECLIB_G95FIX_FALSE=
 fi
 
-
-LIBS="${acx_blas_save_LIBS}"
-
-
-
-fi
 
 
 if test "${acx_blas_ok}" = "yes"; then
