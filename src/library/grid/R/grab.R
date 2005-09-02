@@ -8,20 +8,6 @@ rootVP <- function(pvp) {
   match(pvp$name, "ROOT", nomatch=FALSE)
 }
 
-# Return the full vpPath to the current viewport
-current.vpPath <- function() {
-  names <- NULL
-  pvp <- grid.Call("L_currentViewport")
-  while (!rootVP(pvp)) {
-    names <- c(names, pvp$name)
-    pvp <- pvp$parent
-  }
-  if (!is.null(names))
-    vpPathFromVector(rev(names))
-  else
-    names
-}
-
 # List the children of the current vp (as a vpList)
 current.vpList <- function() {
   cpvp <- grid.Call("L_currentViewport")

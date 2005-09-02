@@ -11,7 +11,7 @@ export(
        "grid.convertWidth", "grid.convertX", "grid.convertY",
        "grid.convert", "grid.convertHeight",
 
-       "current.viewport", "current.vpTree",
+       "current.viewport", "current.vpPath", "current.vpTree",
        "current.transform",
        "engine.display.list",
        "gpar", "get.gpar",

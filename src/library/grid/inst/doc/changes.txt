@@ -1,3 +1,9 @@
+Changes from grid_2.1.0 to grid_2.2.0:
+------------------------------------
+
+1.  current.vpPath() now exported.
+
+
 Changes from grid_2.0.1 to grid_2.1.0:
 ------------------------------------
 
