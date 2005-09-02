@@ -76,9 +76,8 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   The default gives files \file{Rplot001.pdf}, \dots, \file{Rplot999.pdf},
   \file{Rplot1000.pdf}, \dots.
   
-  The \code{family} argument can be used to specify either a
-  device-independent R graphics font family (see
-  \code{postscriptFonts}) or a PDF-specific
+  The \code{family} argument can be used to specify 
+  a PDF-specific
   font family as the initial/default font for the device.
 
   If a device-independent R graphics font family is specified
@@ -86,12 +85,18 @@ pdf(file = ifelse(onefile, "Rplots.pdf", "Rplot\%03d.pdf"),
   the PDF device makes use of the PostScript font mappings to
   convert the R graphics font family
   to a PDF-specific font family description.  R does \emph{not}
-  embed fonts in the PDF file though, so it is only possible to
+  embed fonts in the PDF file though, so it is only possible
+  straightforward to
   use mappings to the font families that are
   assumed to be available in a PDF viewer: \code{"Times"} or
   \code{"Times New Roman"},
   \code{"Helvetica"} or \code{"Arial"}, \code{"Courier"},
-  \code{"Symbol"}, and \code{"ZapfDingbats"}.
+  \code{"Symbol"}, and \code{"ZapfDingbats"}.  Other fonts may
+  be specified, but it is the user's responsibility to ensure
+  that these fonts are available on the system and third-party
+  software, e.g., ghostscript,
+  may be required to embed the fonts so that the PDF
+  can be included in other documents (e.g., LaTeX).
   
   See \code{\link{postscript}} for details of encodings, as the internal
   code is shared between the drivers.  The native PDF encoding is given

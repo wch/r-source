@@ -570,7 +570,9 @@ BUG FIXES
     o	Defining S4 methods for "[" had resulted in changed behavior of S3
 	dispatch in a very rare case which no longer happens.
 
-
+    o   Fixed segfault when PostScript font loading fails, e.g., when
+        R is unable to find afm files (reported by Ivo Welch).
+    
 
 
 	**************************************************

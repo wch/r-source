@@ -67,6 +67,12 @@ postscriptFonts(...)
 
   The specification of font metrics and encodings is described in the help
   for the \code{postscript} function.
+
+  The fonts are not embedded in the resulting PostScript file, so
+  software including the PostScript plot
+  file should either embed the font outlines (usually from \file{.pfb}
+  or \file{.pfa} files) or use DSC comments to instruct the print
+  spooler to do so.
 }
 \value{
   \code{postscriptFont} returns a PostScript
