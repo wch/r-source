@@ -882,14 +882,14 @@ function(package, lib.loc = NULL)
     names(db) <- .get_Rd_names_from_Rd_db(db)
 
     .get_slot_names_from_slot_section_text <- function(txt) {
-        ## Get \describe (inside user-defined section 'Slots'
+        ## Get \describe (inside user-defined section 'Slots')
         txt <- unlist(sapply(txt, get_Rd_section, "describe"))
         ## Suppose this worked ...
         ## Get the \items inside \describe
         txt <- unlist(sapply(txt, get_Rd_items))
         if(!length(txt)) return(character())
         ## And now strip enclosing '\code{...}:'
-        txt <- gsub("\\\\code\\{(.*)\\}:?", "\\1", as.character(txt))
+        txt <- gsub("\\\\code\\{([^\}]*)\\}:?", "\\1", as.character(txt))
         txt <- unlist(strsplit(txt, ", *"))
         txt <- sub("^[[:space:]]+", "", txt)
         txt <- sub("[[:space:]]+$", "", txt)
