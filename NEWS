@@ -280,7 +280,7 @@ NEW FEATURES
 	error (e.g. a repository with a corrupt index).
 
     o	baseenv() has been added, to return the base environment.  This
-    	is currently still NULL, but will change in a future release
+    	is currently still NULL, but will change in a future release.
 
     o	sample(x, size, prob, replace = TRUE) now uses a faster
 	algorithm if there are many reasonably probable values.  (This
