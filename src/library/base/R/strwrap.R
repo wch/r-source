@@ -53,7 +53,7 @@ function(x, width = 0.9 * getOption("width"), indent = 0, exdent = 0,
             ## such that the words in line k are the ones in the k-th
             ## index block.
             while(length(lens) > 0) {
-                k <- max(sum(lens < maxLength), 1)
+                k <- max(sum(lens <= maxLength), 1)
                 if(first) {
                     first <- FALSE
                     maxLength <- maxLength + indent - exdent
