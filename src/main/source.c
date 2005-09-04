@@ -68,8 +68,7 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	if (num == NA_INTEGER)
 	    num = -1;
 	s = R_ParseVector(text, num, &status);
-	if (status != PARSE_OK)
-	    errorcall(call, _("parse error"));
+	if (status != PARSE_OK) parseError(call, 0);
     }
     else if (ifile >= 3) {/* file != "" */
 	if (num == NA_INTEGER)
@@ -78,15 +77,13 @@ SEXP do_parse(SEXP call, SEXP op, SEXP args, SEXP env)
 	    if(!con->open(con)) error(_("cannot open the connection"));
 	s = R_ParseConn(con, num, &status);
 	if(!wasopen) con->close(con);
-	if (status != PARSE_OK)
-	    errorcall(call, _("syntax error on line %d"), R_ParseError);
+	if (status != PARSE_OK) parseError(call, R_ParseError);
     }
     else {
 	if (num == NA_INTEGER)
 	    num = 1;
 	s = R_ParseBuffer(&R_ConsoleIob, num, &status, prompt);
-	if (status != PARSE_OK)
-	    errorcall(call, _("parse error"));
+	if (status != PARSE_OK) parseError(call, 0);
     }
     UNPROTECT(2);
     return s;
