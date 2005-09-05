@@ -523,9 +523,6 @@ extern SEXP	R_CommentSxp;	    /* Comments accumulate here */
 extern SEXP	R_ParseText;	    /* Text to be parsed */
 extern int	R_ParseCnt;	    /* Count of lines of text to be parsed */
 extern int	R_ParseError	INI_as(0); /* Line where parse error occured */
-#define PARSE_CONTEXT_SIZE 256	    /* Recent parse context kept in a circular buffer */
-extern char	R_ParseContext[PARSE_CONTEXT_SIZE] INI_as("");
-extern int	R_ParseContextLast INI_as(0); /* last character in context buffer */
 
 /* Image Dump/Restore */
 extern int	R_DirtyImage	INI_as(0);	/* Current image dirty */

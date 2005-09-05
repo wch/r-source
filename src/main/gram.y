@@ -349,9 +349,6 @@ static int xxgetc(void)
         EndOfFile = 1;
         return R_EOF;
     }
-    R_ParseContextLast = (R_ParseContextLast + 1) % PARSE_CONTEXT_SIZE;
-    R_ParseContext[R_ParseContextLast] = c;
-    
     if (c == '\n') R_ParseError += 1;
     if ( KeepSource && GenerateCode && FunctionLevel > 0 ) {
 	if(SourcePtr <  FunctionSource + MAXFUNSIZE)
@@ -368,8 +365,6 @@ static int xxungetc(int c)
     if ( KeepSource && GenerateCode && FunctionLevel > 0 )
 	SourcePtr--;
     xxcharcount--;
-    R_ParseContext[R_ParseContextLast--] = '\0';
-    R_ParseContextLast = R_ParseContextLast % PARSE_CONTEXT_SIZE;
     if(npush >= 16) return EOF;
     pushback[npush++] = c;
     return c;
@@ -1001,14 +996,8 @@ static void ParseInit()
     FunctionLevel=0;
     SourcePtr = FunctionSource;
     xxcharcount = 0;
-    KeepSource = *LOGICAL(GetOption(install("keep.source"), R_BaseEnv));
+    KeepSource = *LOGICAL(GetOption(install("keep.source"), R_NilValue));
     npush = 0;
-}
-
-static void ParseContextInit()
-{
-    R_ParseContextLast = 0;
-    R_ParseContext[0] = '\0';
 }
 
 static SEXP R_Parse1(ParseStatus *status)
@@ -1043,7 +1032,6 @@ static int file_getc(void)
 SEXP R_Parse1File(FILE *fp, int gencode, ParseStatus *status)
 {
     ParseInit();
-    ParseContextInit();
     GenerateCode = gencode;
     fp_parse = fp;
     ptr_getc = file_getc;
@@ -1061,7 +1049,6 @@ static int buffer_getc()
 SEXP R_Parse1Buffer(IoBuffer *buffer, int gencode, ParseStatus *status)
 {
     ParseInit();
-    ParseContextInit();
     GenerateCode = gencode;
     iob = buffer;
     ptr_getc = buffer_getc;
@@ -1079,7 +1066,6 @@ static int text_getc()
 SEXP R_Parse1Vector(TextBuffer *textb, int gencode, ParseStatus *status)
 {
     ParseInit();
-    ParseContextInit();
     GenerateCode = gencode;
     txtb = textb;
     ptr_getc = text_getc;
@@ -1094,7 +1080,6 @@ SEXP R_Parse1General(int (*g_getc)(), int (*g_ungetc)(),
 		     int gencode, ParseStatus *status)
 {
     ParseInit();
-    ParseContextInit();
     GenerateCode = gencode;
     ptr_getc = g_getc;
     R_Parse1(status);
@@ -1106,7 +1091,6 @@ SEXP R_Parse(int n, ParseStatus *status)
 {
     int i;
     SEXP t, rval;
-    ParseContextInit();
     if (n >= 0) {
         PROTECT(rval = allocVector(EXPRSXP, n));
         for (i = 0 ; i < n ; i++) {
@@ -1224,14 +1208,14 @@ static char *Prompt(SEXP prompt, int type)
     if(type == 1) {
 	if(length(prompt) <= 0) {
 	    return (char*)CHAR(STRING_ELT(GetOption(install("prompt"),
-						    R_BaseEnv), 0));
+						    R_NilValue), 0));
 	}
 	else
 	    return CHAR(STRING_ELT(prompt, 0));
     }
     else {
 	return (char*)CHAR(STRING_ELT(GetOption(install("continue"),
-						R_BaseEnv), 0));
+						R_NilValue), 0));
     }
 }
 
