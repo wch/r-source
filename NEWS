@@ -292,6 +292,9 @@ NEW FEATURES
     o   New generic function simulate() in the 'stats' package with
         methods for some classes of fitted models.
 
+    o   New algorithm "port" (the nl2sol algorithm available in the
+        Port library on netlib) added to the nls() function in the
+        'stats' package.
 
 DEPRECATED & DEFUNCT
 

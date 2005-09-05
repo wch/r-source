@@ -19,9 +19,8 @@
   parameters and return a class \code{nls} object.
 }
 \usage{
-nls(formula, data = parent.frame(), start, control = nls.control(),
-    algorithm = "default", trace = FALSE, subset,
-    weights, na.action, model = FALSE)
+nls(formula, data, start, control, algorithm,
+    trace, subset, weights, na.action, model, upper, lower)
 }
 \arguments{
  \item{formula}{a nonlinear model formula including variables and parameters}
@@ -32,15 +31,18 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
      \code{nls.control} for the names of the settable control values and
      their effect.}
  \item{algorithm}{character string specifying the algorithm to use.
-     The default algorithm is a Gauss-Newton algorithm. The other 
-     alternative is "plinear", the Golub-Pereyra algorithm for
-     partially linear least-squares models.}
+     The default algorithm is a Gauss-Newton algorithm. Other possible
+     values are \code{"plinear"} for the Golub-Pereyra algorithm for
+     partially linear least-squares models and \code{"port"} for the
+     "nl2sol" algorithm from the Port package.}
  \item{trace}{logical value indicating if a trace of the iteration
      progress should be printed.  Default is \code{FALSE}.  If
      \code{TRUE} the residual sum-of-squares and the parameter values
      are printed at the conclusion of each iteration.  When the
      \code{"plinear"} algorithm is used, the conditional estimates of
-     the linear parameters are printed after the nonlinear parameters.}
+     the linear parameters are printed after the nonlinear
+     parameters.  When the \code{"port"} algorithms are used the
+     objective function value printed is half the residual sum-of-squares.}
  \item{subset}{an optional vector specifying a subset of observations
    to be used in the fitting process.}
  \item{weights}{an optional numeric vector of (fixed) weights.  When
@@ -49,7 +51,13 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
 \item{na.action}{a function which indicates what should happen
     when the data contain \code{NA}s.}
 \item{model}{logical.  If true, the model frame is returned as part of
-  the object.}
+  the object. Default is \code{FALSE}}
+\item{lower, upper}{
+    vector of lower and upper bounds, replicated to be as long as
+    \code{start}.  If unspecified, all parameters are assumed to be
+    unconstrained.  Bounds can only be used with the \code{"port"}
+    algorithm.  They are ignored, with a warning, if given for other
+    algorithms.}
 }
 \details{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}
@@ -92,26 +100,34 @@ nls(formula, data = parent.frame(), start, control = nls.control(),
   \emph{Nonlinear models.}
   Chapter 10 of \emph{Statistical Models in S}
   eds J. M. Chambers and T. J. Hastie, Wadsworth \& Brooks/Cole.
+
+  \url{http://netlib.bell-labs.com/netlib/port/} for the Port library
 }
 \author{Douglas M. Bates and Saikat DebRoy}
 \seealso{\code{\link{nlsModel}}}
 \examples{
-DNase1 <- DNase[ DNase$Run == 1, ]
+DNase1 <- subset(DNase, Run == 1)
 ## using a selfStart model
-fm1DNase1 <- nls( density ~ SSlogis( log(conc), Asym, xmid, scal ), DNase1 )
+fm1DNase1 <- nls( density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
 summary( fm1DNase1 )
 ## using conditional linearity
-fm2DNase1 <- nls( density ~ 1/(1 + exp(( xmid - log(conc) )/scal ) ),
+fm2DNase1 <- nls( density ~ 1/(1 + exp((xmid - log(conc))/scal)),
                   data = DNase1,
-                  start = list( xmid = 0, scal = 1 ),
-                  alg = "plinear", trace = TRUE )
+                  start = list(xmid = 0, scal = 1),
+                  alg = "plinear", trace = TRUE)
 summary( fm2DNase1 )
 ## without conditional linearity
-fm3DNase1 <- nls( density ~ Asym/(1 + exp(( xmid - log(conc) )/scal ) ),
+fm3DNase1 <- nls( density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
                   data = DNase1,
-                  start = list( Asym = 3, xmid = 0, scal = 1 ),
-                  trace = TRUE )
+                  start = list(Asym = 3, xmid = 0, scal = 1),
+                  trace = TRUE)
 summary( fm3DNase1 )
+## using the nl2sol algorithm
+fm4DNase1 <- nls( density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
+                  data = DNase1,
+                  start = list(Asym = 3, xmid = 0, scal = 1),
+                  trace = TRUE, algorithm = "port")
+summary(fm4DNase1)
 
 ## weighted nonlinear regression
 Treated <- Puromycin[Puromycin$state == "treated", ]

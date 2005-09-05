@@ -17,7 +17,7 @@ nlminb <-
     n <- length(par <- as.double(start))
     iv <- integer(78 + 3 * n)
     v <- double(130 + (n * (n + 27)) / 2)
-    .Call("port_ivset", iv, v, PACKAGE = "stats")
+    .Call("port_ivset", 2, iv, v, PACKAGE = "stats")
     if (length(control)) {
         nms <- names(control)
         if (!is.list(control) || is.null(nms))
