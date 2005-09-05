@@ -291,6 +291,9 @@ NEW FEATURES
 
     o   New generic function simulate() in the 'stats' package with
         methods for some classes of fitted models.
+        
+    o	Error messages from .C() and .Fortran(), and from parsing errors,
+    	are now more informative.
 
     o   New algorithm "port" (the nl2sol algorithm available in the
         Port library on netlib) added to the nls() function in the
