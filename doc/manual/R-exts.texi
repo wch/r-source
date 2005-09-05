@@ -1481,7 +1481,7 @@ Since the generic @code{print} is defined in @pkg{base} it does not need
 to be imported explicitly.  This mechanism is intended for use with
 generics that are defined in a name space.  Any methods for a generic
 defined in a package that does not use a name space should be exported,
-and the package defining and exporting the method should be attached to
+and the package defining and exporting the methods should be attached to
 the search path if the methods are to be found.
 
 
