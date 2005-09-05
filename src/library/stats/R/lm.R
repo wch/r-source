@@ -423,7 +423,8 @@ simulate.lm <-
              seed = as.integer(runif(1, 0, .Machine$integer.max)),
              ...)
 {
-    runif(1)                         # initialize the RNG if necessary
+    if(!exists(".Random.seed", envir = .GlobalEnv))
+	runif(1)		     # initialize the RNG if necessary
     RNGstate <- .Random.seed
     set.seed(seed)
 
@@ -431,12 +432,12 @@ simulate.lm <-
     ans <-
         as.data.frame(ftd +
                       matrix(rnorm(length(ftd) * nsim,
-                                      sd = sqrt(deviance(object)/
-                                      df.residual(object))),
+                                   sd = sqrt(deviance(object)/
+                                   df.residual(object))),
                              nr = length(ftd)))
     attr(ans, "seed") <- seed
     assign(".Random.seed", RNGstate, envir = .GlobalEnv)
-    ans 
+    ans
 }
 
 #fitted.lm <- function(object, ...)
