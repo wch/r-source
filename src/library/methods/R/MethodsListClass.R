@@ -186,9 +186,9 @@
 	       where = envir)
     ## and its default methods:
     setMethod("cbind2", signature(x = "ANY", y = "ANY"),
-	      function(x,y) .Internal(cbind(x,y)))
+	      function(x,y) .Internal(cbind(deparse.level = 0, x,y)))
     setMethod("cbind2", signature(x = "ANY", y = "missing"),
-	      function(x,y) .Internal(cbind(x)))
+	      function(x,y) .Internal(cbind(deparse.level = 0, x)))
 
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)

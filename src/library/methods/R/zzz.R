@@ -95,23 +95,15 @@
         ns <- asNamespace(pkgName)
         tools:::makeLazyLoadDB(ns, dbbase)
     }
-
-    if(FALSE) {
-	## Experimental: works around namespace-protection on purpose:
-	utils::assignInNamespace(".__H__.cbind", base::cbind, ns = "base")
-	utils::assignInNamespace("cbind", cbind, ns = "base")
-    }
+    if(Sys.getenv("R_S4_BIND") == "active")
+        methods:::bind_activation(TRUE)
 }
 
 .onUnload <- function(libpath) {
+    cat("unloading 'methods' package ...\n")# see when this is called
     .isMethodsDispatchOn(FALSE)
+    methods:::bind_activation(FALSE)
     library.dynam.unload("methods", libpath)
-
-    if(!inherits(try(getFromNamespace(".__H__.cbind", ns = "base"),
-                     silent = TRUE), "try-error")) {
-        ## Experimental: revert those in .onLoad():
-        utils::assignInNamespace("cbind", base::.__H__.cbind, ns = "base")
-    }
 }
 
 
@@ -124,8 +116,8 @@
 .Last.lib <- function(libpath) {
     methods:::.onUnload(libpath)
 }
-## redefining the above invalidates it..
-## this is used only when the namespace is (temporarily) disabled, right?
+## redefining it here, invalidates the one above:
+## Why don't we unload "methods" on detach() ?
 .Last.lib <- function(libpath) .isMethodsDispatchOn(FALSE)
 
 .saveImage <- FALSE
