@@ -3,6 +3,11 @@ Changes from grid_2.1.0 to grid_2.2.0:
 
 1.  current.vpPath() now exported.
 
+2.  Grid now uses the 'fg' and 'bg' settings (if any) for
+    graphics devices to set the initial graphical parameter
+    settings of the top-level viewport (i.e., the 'gp' arg
+    of viewport[ROOT]).
+
 
 Changes from grid_2.0.1 to grid_2.1.0:
 ------------------------------------
