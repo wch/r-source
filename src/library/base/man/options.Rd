@@ -90,8 +90,9 @@ getOption(x)
       errors.  If the option is a function, a call to that function,
       with no arguments, is generated as the expression.  The default
       value is \code{NULL}: see \code{\link{stop}} for the behaviour in
-      that case.  The function \code{\link{dump.frames}} provides one
-      alternative that allows post-mortem debugging.}
+      that case.  The functions \code{\link{dump.frames}} and
+      \code{\link{recover}} provide alternatives that allow post-mortem
+      debugging.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
       expressions that will be evaluated.
@@ -430,7 +431,10 @@ options(contrasts = c("contr.helmert", "contr.poly"))
 options(error = quote(q("no", status=66, runLast=FALSE)))
 stop("test it")
 }
-\dontrun{## set an error action for debugging: see ?debugger.
+\dontrun{## Set error actions for debugging:
+## enter browser on error, see ?recover:
+options(error = recover)
+## allows to call debugger() afterwards, see ?debugger:
 options(error = dump.frames)
 ## A possible setting for non-interactive sessions
 options(error = quote({dump.frames(to.file=TRUE); q()}))
