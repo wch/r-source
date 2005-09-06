@@ -164,7 +164,7 @@ terms.formula <- function(x, specials = NULL, abb = NULL, data = NULL,
     }
 
     if (!is.null(data) && !is.environment(data) && !is.data.frame(data))
-	data <- as.data.frame(data)
+	data <- as.data.frame(data, optional=TRUE)
     terms <- .Internal(terms.formula(x, specials, data, keep.order,
                                      allowDotAsName))
     if (simplify) {

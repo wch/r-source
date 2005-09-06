@@ -90,7 +90,26 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                                "less" = pkendall(q, n))
                     STATISTIC <- c(T = q)
                 } else {
-                    STATISTIC <- c(z = r / sqrt((4 * n + 10) / (9 * n*(n-1))))
+                    xties <- table(x[duplicated(x)]) + 1
+                    yties <- table(y[duplicated(y)]) + 1
+                    T0 <- n * (n - 1)/2
+                    T1 <- sum(xties * (xties - 1))/2
+                    T2 <- sum(yties * (yties - 1))/2
+                    S <- r * sqrt((T0 - T1) * (T0 - T2))
+                    v0 <- n * (n - 1) * (2 * n + 5)
+                    vt <- sum(xties * (xties - 1) * (2 * xties + 5))
+                    vu <- sum(yties * (yties - 1) * (2 * yties + 5))
+                    v1 <- sum(xties * (xties - 1)) * sum(yties * (yties - 1))
+                    v2 <- sum(xties * (xties - 1) * (xties - 2)) *
+                        sum(yties * (yties - 1) * (yties - 2))
+
+                    var_S <- (v0 - vt - vu) / 18 +
+                        v1 / (2 * n * (n - 1)) +
+                            v2 / (9 * n * (n - 1) * (n - 2))
+
+
+#                    STATISTIC <- c(z = r / sqrt((4 * n + 10) / (9 * n*(n-1))))
+                    STATISTIC <- c(z = S / sqrt(var_S))
                     p <- pnorm(STATISTIC)
                     if(exact && TIES)
                         warning("Cannot compute exact p-value with ties")
@@ -98,6 +117,8 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
             }
 	} else {
 	    method <- "Spearman's rank correlation rho"
+            if (is.null(exact))
+                exact <- TRUE
 	    names(NVAL) <- "rho"
 	    r <- cor(rank(x), rank(y))
 	    ESTIMATE <- c(rho = r)
@@ -112,10 +133,10 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
                 ## simple normal approximation.
                 ## In the case of no ties, S = (1-rho) * (n^3-n)/6.
                 pspearman <- function(q, n, lower.tail = TRUE) {
-                    if(n <= 1290) # n*(n^2 - 1) does not overflow
+                    if(n <= 1290 && exact) # n*(n^2 - 1) does not overflow
                         .C("prho",
                            as.integer(n),
-                           as.double(q + 1),
+                           as.double(round(q) + lower.tail),
                            p = double(1),
                            integer(1),
                            as.logical(lower.tail),
@@ -126,21 +147,23 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 			   lower.tail= !lower.tail)
 		    }
                 }
-                q <- round((n^3 - n) * (1 - r) / 6)
+                q <- (n^3 - n) * (1 - r) / 6
                 STATISTIC <- c(S = q)
+                if(TIES && exact){
+                    exact <- FALSE
+                    warning("Cannot compute exact p-values with ties")
+                }
                 PVAL <-
                     switch(alternative,
                            "two.sided" = {
                                p <- if(q > (n^3 - n) / 6)
-                                   pspearman(q - 1, n, lower.tail = FALSE)
+                                   pspearman(q, n, lower.tail = FALSE)
                                else
 				   pspearman(q, n, lower.tail = TRUE)
 			       min(2 * p, 1)
 			   },
 			   "greater" = pspearman(q, n, lower.tail = TRUE),
-			   "less" = pspearman(q - 1, n, lower.tail = FALSE))
-                if(TIES)
-                    warning("p-values may be incorrect due to ties")
+			   "less" = pspearman(q, n, lower.tail = FALSE))
             }
         }
     }

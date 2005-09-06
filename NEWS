@@ -296,6 +296,12 @@ NEW FEATURES
     o	Error messages from .C() and .Fortran(), and from parsing errors,
 	are now more informative.
 
+    o   The nonparametric variants of cor.test() now behave better in
+	the presence of ties. The "spearman" method uses the asymptotic
+	approximation in that case, and the "kendall" method likewise, 
+	but adds a correction for ties (this is not necessary in the
+	Spearman case).
+
     o	New algorithm "port" (the nl2sol algorithm available in the
 	Port library on netlib) added to the nls() function in the
 	'stats' package.
