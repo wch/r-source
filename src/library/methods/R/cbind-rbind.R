@@ -21,7 +21,7 @@ cbind <- function(..., deparse.level = 1)
     } else { ## >= 3 arguments: recurse but
         ## should find nrow(<result>)  for e.g.,  cbind(diag(2), 1, 2)
         nrow <- -1
-        for(a in list(...)[-1]) if(!is.null(dim(a)))
+        ## for(a in list(...)[-1]) if(!is.null(dim(a)))
         r <- do.call(cbind, c(list(...)[-1], list(deparse.level=deparse.level)))
     }
 
