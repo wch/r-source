@@ -20,7 +20,8 @@
 }
 \usage{
 nls(formula, data, start, control, algorithm,
-    trace, subset, weights, na.action, model, upper, lower)
+    trace, subset, weights, na.action, model,
+    lower, upper, \dots)
 }
 \arguments{
  \item{formula}{a nonlinear model formula including variables and parameters}
@@ -58,6 +59,7 @@ nls(formula, data, start, control, algorithm,
     unconstrained.  Bounds can only be used with the \code{"port"}
     algorithm.  They are ignored, with a warning, if given for other
     algorithms.}
+\item{\dots}{Additional optional arguments.  None are used at present.}
 }
 \details{
   \bold{Do not use \code{nls} on artificial "zero-residual" data.}
