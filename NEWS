@@ -269,7 +269,8 @@ NEW FEATURES
 
     o	Experimental version of cbind() in methods package, based on new
 	generic function cbind2(x,y).  This will allow the equivalent of S4
-	methods for cbind().
+	methods for cbind() --- currently only after an explicit activation
+	call, see ?cbind2.
 
     o   iconv() has been moved from 'utils' to 'base'.
 
@@ -289,15 +290,20 @@ NEW FEATURES
 	'prob' is very diffuse so that thousands of distinct values
 	will be generated with an appreciable frequency.
 
-    o   New generic function simulate() in the 'stats' package with
-        methods for some classes of fitted models.
-        
-    o	Error messages from .C() and .Fortran(), and from parsing errors,
-    	are now more informative.
+    o	New generic function simulate() in the 'stats' package with
+	methods for some classes of fitted models.
 
-    o   New algorithm "port" (the nl2sol algorithm available in the
-        Port library on netlib) added to the nls() function in the
-        'stats' package.
+    o	Error messages from .C() and .Fortran(), and from parsing errors,
+	are now more informative.
+
+    o	New algorithm "port" (the nl2sol algorithm available in the
+	Port library on netlib) added to the nls() function in the
+	'stats' package.
+
+    o	cbind() and rbind() now react to 'deparse.level = 0' (as in another
+	system not unlike R).
+
+
 
 DEPRECATED & DEFUNCT
 

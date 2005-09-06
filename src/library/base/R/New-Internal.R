@@ -59,12 +59,12 @@ args <- function(name).Internal(args(name))
 ##- "attr<-" <- function(x, which, value).Internal("attr<-"(x, which, value))
 
 cbind <- function(..., deparse.level=1) {
-    if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
-    .Internal(cbind(...))
+    if(deparse.level > 1) .NotYetUsed("deparse.level > 1")
+    .Internal(cbind(deparse.level, ...))
 }
 rbind <- function(..., deparse.level=1) {
-    if(deparse.level != 1) .NotYetUsed("deparse.level != 1")
-    .Internal(rbind(...))
+    if(deparse.level > 1) .NotYetUsed("deparse.level > 1")
+    .Internal(rbind(deparse.level, ...))
 }
 
 # convert deparsing options to bitmapped integer
