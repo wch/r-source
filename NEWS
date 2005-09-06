@@ -594,6 +594,9 @@ BUG FIXES
     o	R CMD BATCH <file> now also works when <file> does not end in a
 	newline on unix-alike platforms.
 
+    o   terms.formula() got confused if 'data' argument was a list with
+	non-syntactic names.
+
 
 
 	**************************************************
