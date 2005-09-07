@@ -32890,8 +32890,8 @@ fi
 ## in theory vecLib is platform-independent, in practice only
 ## Apple's Mac OS X is known to provide it
 r_check_fw_save_LIBS=$LIBS
-  echo "$as_me:$LINENO: checking for vIsamin in vecLib framework" >&5
-echo $ECHO_N "checking for vIsamin in vecLib framework... $ECHO_C" >&6
+  echo "$as_me:$LINENO: checking for cblas_cdotu_sub in vecLib framework" >&5
+echo $ECHO_N "checking for cblas_cdotu_sub in vecLib framework... $ECHO_C" >&6
   r_check_fw_vecLib=no
   LIBS="-framework vecLib  $LIBS"
   cat >conftest.$ac_ext <<_ACEOF
@@ -32907,7 +32907,7 @@ extern "C"
 #endif
 /* We use char because int might match the return type of a gcc2
    builtin and then its argument prototype would still apply.  */
-char vIsamin ();
+char cblas_cdotu_sub ();
 #ifdef F77_DUMMY_MAIN
 
 #  ifdef __cplusplus
@@ -32919,7 +32919,7 @@ char vIsamin ();
 int
 main ()
 {
-vIsamin ();
+cblas_cdotu_sub ();
   ;
   return 0;
 }
