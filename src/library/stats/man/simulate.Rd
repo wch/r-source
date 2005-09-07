@@ -14,9 +14,11 @@ simulate(object, nsim, seed, \dots)
   \item{\dots}{additional optional arguments.}
 }
 \value{
-  A list of length \code{nsim} of simulated response vectors.  When
-  appropriate the result can be a data frame (which is a special type of
-  list). 
+  Typically, a list of length \code{nsim} of simulated response vectors.
+  When appropriate the result can be a data frame (which is a special
+  type of list).
+  %% a *matrix* seems very natural and is more efficient
+  %% for large-scale simulation, already for stats:::simulate.lm (in ../R/lm.R )
 }
 \description{
   Simulate one or more response vectors from the theoretical distribution
@@ -32,6 +34,6 @@ simulate(object, nsim, seed, \dots)
 }
 \examples{
 x <- 1:5; simulate(lm(c(1:3,7,6) ~ x), nsim = 4)
-}  
+}
 \keyword{models}
 \keyword{datagen}
