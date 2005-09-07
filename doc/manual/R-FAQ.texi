@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-06
+@set FAQ_DATE @value{FAQ_YEAR}-09-07
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2105,6 +2105,8 @@ Another Multidimensional Analysis Package.
 Analog model for statistical/empirical downscaling.
 @item aod
 Analysis of Overdispersed Data.
+@item apTreeshape
+Analyses of phylogenetic treeshape.
 @item ape
 Analyses of Phylogenetics and Evolution, providing functions for reading
 and plotting phylogenetic trees in parenthetic format (standard Newick
@@ -2193,6 +2195,9 @@ methods.
 Analysis of categorical-variable datasets with missing values.
 @item catspec
 Special models for categorical variables.
+@item cba
+Clustering for Business Analytics, including implementations of Proximus
+and Rock.
 @item cclust
 Convex clustering methods, including @math{k}-means algorithm, on-line
 update algorithm (Hard Competitive Learning) and Neural Gas algorithm
