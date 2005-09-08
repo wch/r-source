@@ -14,12 +14,12 @@ cdplot(x, \dots)
   plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
-  \dots)
+  yaxlabels = NULL, \dots)
 \method{cdplot}{formula}(formula, data = list(),
   plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
-  \dots)
+  yaxlabels = NULL, \dots)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single numerical variable.}
@@ -36,6 +36,8 @@ cdplot(x, \dots)
     The default is to call \code{\link{gray.colors}}.}  
   \item{border}{border color of shaded polygons.}  
   \item{main, xlab, ylab}{character strings for annotation}
+  \item{yaxlabels}{character vector for annotation of y axis, defaults to
+    \code{levels(y)}.}
 }
 \details{
   \code{cdplot} computes the conditional densities of \code{x} given

@@ -7,7 +7,8 @@ cdplot <- function(x, ...) {
 
 cdplot.formula <- function(formula, data = list(), plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
-  col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL, ...)
+  col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
+  yaxlabels = NULL, ...)
 {
   ## extract x, y from formula
   mf <- model.frame(formula, data = data)
@@ -20,15 +21,18 @@ cdplot.formula <- function(formula, data = list(), plot = TRUE, tol.ylab = 0.05,
   ## graphical parameters
   if(is.null(xlab)) xlab <- names(mf)[2]
   if(is.null(ylab)) ylab <- names(mf)[1]
+  if(is.null(yaxlabels)) yaxlables <- levels(y)
 
   ## call default interface
   cdplot(x, y, plot = plot, tol.ylab = tol.ylab, bw = bw, n = n, from = from, to = to,
-    col = col, border = border, main = main, xlab = xlab, ylab = ylab, ...)
+    col = col, border = border, main = main, xlab = xlab, ylab = ylab,
+    yaxlabels = yaxlabels, ...)
 }
 
 cdplot.default <- function(x, y, plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
-  col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL, ...)
+  col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
+  yaxlabels = NULL, ...)
 {
   ## check x and y
   if(!is.numeric(x)) stop("explanatory variable should be numeric")
@@ -39,6 +43,7 @@ cdplot.default <- function(x, y, plot = TRUE, tol.ylab = 0.05,
   if(is.null(ylab)) ylab <- deparse(substitute(y))
   if(is.null(col)) col <- gray.colors(length(levels(y)))
   col <- rep(col, length.out = length(levels(y)))
+  if(is.null(yaxlabels)) yaxlabels <- levels(y)
 
   ## unconditional density of x
   dx <- if(is.null(from) & is.null(to)) density(x, bw = bw, n = n, ...)
@@ -76,9 +81,9 @@ cdplot.default <- function(x, y, plot = TRUE, tol.ylab = 0.05,
     
     equidist <- any(diff(y1[,1]) < tol.ylab)
     if(equidist)
-      axis(2, at = seq(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = levels(y), tick = FALSE)
+      axis(2, at = seq(1/(2*ny), 1-1/(2*ny), by = 1/ny), labels = yaxlabels, tick = FALSE)
     else
-      axis(2, at = (y1[-1,1] + y1[-NROW(y1), 1])/2, labels = levels(y), tick = FALSE)
+      axis(2, at = (y1[-1,1] + y1[-NROW(y1), 1])/2, labels = yaxlabels, tick = FALSE)
     axis(4)
     box()
   }

@@ -13,11 +13,11 @@ spineplot(x, \dots)
 \method{spineplot}{default}(x, y = NULL,
   breaks = NULL, tol.ylab = 0.05, off = NULL,
   col = NULL, main = "", xlab = NULL, ylab = NULL,
-  \dots)
+  xaxlabels = NULL, yaxlabels = NULL, \dots)
 \method{spineplot}{formula}(formula, data = list(),
   breaks = NULL, tol.ylab = 0.05, off = NULL,
   col = NULL, main = "", xlab = NULL, ylab = NULL,
-  \dots)
+  xaxlabels = NULL, yaxlabels = NULL, \dots)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single variable
@@ -37,6 +37,9 @@ spineplot(x, \dots)
   \item{col}{a vector of fill colors of the same length as \code{levels(y)}.
     The default is to call \code{\link{gray.colors}}.}  
   \item{main, xlab, ylab}{character strings for annotation}
+  \item{xaxlabels, yaxlabels}{character vectors for annotation of x and y axis.
+    Default to \code{levels(y)} and \code{levels(x)}, respectively for the
+    spine plot. For \code{xaxlabels} in the spinogram, the breaks are used.}
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
 }
 \details{
@@ -95,7 +98,7 @@ improved <- factor(rep(c(1, 2, 3, 1, 2, 3), c(29, 7, 7, 13, 7, 21)),
 ## (dependence on a categorical variable)
 (spineplot(improved ~ treatment))
 
-## applications at admissions by department at UC Berkeley
+## applications and admissions by department at UC Berkeley
 ## (two-way tables)
 (spineplot(margin.table(UCBAdmissions, c(3, 2)), main = "Applications at UCB"))
 (spineplot(margin.table(UCBAdmissions, c(3, 1)), main = "Admissions at UCB"))

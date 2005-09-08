@@ -7,7 +7,8 @@ spineplot <- function(x, ...) {
 
 spineplot.formula <- function(formula, data = list(),
   breaks = NULL, tol.ylab = 0.05, off = NULL,
-  col = NULL, main = "", xlab = NULL, ylab = NULL, ...)
+  col = NULL, main = "", xlab = NULL, ylab = NULL,
+  xaxlabels = NULL, yaxlabels = NULL, ...)
 {
   ## extract x, y from formula
   mf <- model.frame(formula, data = data)
@@ -15,17 +16,21 @@ spineplot.formula <- function(formula, data = list(),
   y <- mf[,1]
   if(!is.factor(y)) stop("dependent variable should be a factor")
   x <- mf[,2]	
+  
+  ## graphical parameters
   if(is.null(xlab)) xlab <- names(mf)[2]
   if(is.null(ylab)) ylab <- names(mf)[1]
      
   spineplot(x, y,
     breaks = breaks, tol.ylab = tol.ylab, off = off,
-    col = col, main = main, xlab = xlab, ylab = ylab, ...)
+    col = col, main = main, xlab = xlab, ylab = ylab,
+    xaxlabels = xaxlabels, yaxlabels = yaxlabels, ...)
 }
 
 spineplot.default <- function(x, y = NULL,
   breaks = NULL, tol.ylab = 0.05, off = NULL,
-  col = NULL, main = "", xlab = NULL, ylab = NULL, ...)
+  col = NULL, main = "", xlab = NULL, ylab = NULL,
+  xaxlabels = NULL, yaxlabels = NULL, ...)
 {
   ## either supply a 2-way table (i.e., both y and x are categorical)
   ## or two variables (y has to be categorical - x can be categorical or numerical)
@@ -58,10 +63,12 @@ spineplot.default <- function(x, y = NULL,
   if(is.null(col)) col <- gray.colors(ny)
   col <- rep(col, length.out = ny)
   off <- if(!x.categorical) 0 else if(is.null(off)) 0.02 else off/100
+  yaxlabels <- if(is.null(yaxlabels)) ynam else rep(yaxlabels, length.out = ny)
 
   if(x.categorical) {
     ## compute rectangle positions on x axis
     xat <- c(0, cumsum(prop.table(margin.table(tab, 1)) + off))
+    xaxlabels <- if(is.null(xaxlabels)) xnam else rep(xaxlabels, length.out = nx)
   } else {
     ## compute breaks for x
     if(is.null(breaks)) breaks <- list()
@@ -76,6 +83,7 @@ spineplot.default <- function(x, y = NULL,
     ## construct table
     tab <- table(x1, y)
     nx <- NROW(tab)
+    xaxlabels <- if(is.null(xaxlabels)) breaks else rep(xaxlabels, length.out = (nx+1))
   }
   
   ## compute rectangle positions on y axis
@@ -98,16 +106,16 @@ spineplot.default <- function(x, y = NULL,
   ## axes
   ## 1: either numeric or level names
   if(x.categorical)
-    axis(1, at = (xat[1:nx] + xat[2:(nx+1)] - off)/2, labels = xnam, tick = FALSE)
+    axis(1, at = (xat[1:nx] + xat[2:(nx+1)] - off)/2, labels = xaxlabels, tick = FALSE)
   else
-    axis(1, at = xat, labels = breaks)
+    axis(1, at = xat, labels = xaxlabels)
     
   ## 2: axis with level names of y
   yat <- yat[,1]
   equidist <- any(diff(yat) < tol.ylab)
   yat <- if(equidist) seq(1/(2*ny), 1-1/(2*ny), by = 1/ny)
            else (yat[-1] + yat[-length(yat)])/2
-  axis(2, at = yat, labels = ynam, tick = FALSE)
+  axis(2, at = yat, labels = yaxlabels, tick = FALSE)
   
   ## 3: none
   ## 4: simple numeric  
