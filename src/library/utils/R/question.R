@@ -40,7 +40,7 @@ topicName <- function(type, topic)
     where <- topenv(envir)              # typically .GlobalEnv
     if(is.name(f))
         f <- as.character(f)
-    if(!.isMethodsDispatchOn() || !isGeneric(f, where = where)) {
+    if(!.isMethodsDispatchOn() || !methods::isGeneric(f, where = where)) {
         if(!is.character(f) || length(f) != 1)
             stop(gettextf("the object of class \"%s\" in the function call '%s' could not be used as a documentation topic",
                           class(f), deparse(expr)), domain = NA)
@@ -50,19 +50,19 @@ topicName <- function(type, topic)
     }
     else {
         ## allow generic function objects or names
-        if(is(f, "genericFunction")) {
+        if(methods::is(f, "genericFunction")) {
             fdef <- f
             f <- fdef@generic
         }
         else
-            fdef <- getGeneric(f, where = where)
+            fdef <- methods::getGeneric(f, where = where)
         call <- match.call(fdef, expr)
         ## make the signature
         sigNames <- fdef@signature
         sigClasses <- rep.int("missing", length(sigNames))
         names(sigClasses) <- sigNames
         for(arg in sigNames) {
-            argExpr <- elNamed(call, arg)
+            argExpr <- methods::elNamed(call, arg)
             if(!is.null(argExpr)) {
                 simple <- (is.character(argExpr) || is.name(argExpr))
                 ## TODO:  ideally, if doEval is TRUE, we would like to
@@ -75,18 +75,21 @@ topicName <- function(type, topic)
                 ## the evaluator.
                 if(doEval || !simple) {
                     argVal <- try(eval(argExpr, envir))
-                    if(is(argVal, "try-error"))
-                        stop(gettextf(
-        "error in trying to evaluate the expression for argument '%s' (%s)",
-                                      arg, deparse(argExpr)), domain = NA)
-                    elNamed(sigClasses, arg) <- class(argVal)
+                    if(methods::is(argVal, "try-error"))
+                        stop(gettextf("error in trying to evaluate the expression for argument '%s' (%s)",
+                                      arg, deparse(argExpr)),
+                             domain = NA)
+                    methods::"elNamed<-"(sigClasses, arg,
+                                         class(argVal))
                 }
                 else
-                    elNamed(sigClasses, arg) <- as.character(argExpr)
+                    methods::"elNamed<-"(sigClasses, arg,
+                                         as.character(argExpr))
             }
         }
-        method <- selectMethod(f, sigClasses, optional=TRUE, fdef = fdef)
-        if(is(method, "MethodDefinition"))
+        method <- methods::selectMethod(f, sigClasses, optional=TRUE,
+                                        fdef = fdef) 
+        if(methods::is(method, "MethodDefinition"))
             sigClasses <- method@defined
         else
             warning(gettextf("no method defined for function '%s' and signature %s",
@@ -94,7 +97,7 @@ topicName <- function(type, topic)
                                       sep = "", collapse = ", ")), domain = NA)
         topic <- topicName("method", c(f,sigClasses))
         h <- .tryHelp(topic)
-        if(is(h, "try-error"))
+        if(methods::is(h, "try-error"))
             stop(gettextf("no documentation for function '%s' and signature %s",
                  f, paste(sigNames, " = ", dQuote(sigClasses), sep = "",
                           collapse = ", ")), domain = NA)
