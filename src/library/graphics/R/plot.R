@@ -58,20 +58,28 @@ plot.default <- function(x, y=NULL, type="p", xlim=NULL, ylim=NULL,
     invisible()
 }
 
-plot.factor <- function(x, y, legend.text=levels(y), ...)
+plot.factor <- function(x, y, legend.text = NULL, ...) 
 {
-    if(missing(y) || is.factor(y)) {## <==> will do barplot(.)
+    if (missing(y) || is.factor(y)) {
         dargs <- list(...)
-        axisnames <- if (!is.null(dargs$axes)) dargs$axes
-            else if (!is.null(dargs$xaxt)) dargs$xaxt != "n"
-            else TRUE
+        axisnames <- if (!is.null(dargs$axes)) 
+            dargs$axes
+        else if (!is.null(dargs$xaxt)) 
+            dargs$xaxt != "n"
+        else TRUE
     }
     if (missing(y)) {
-	barplot(table(x), axisnames=axisnames, ...)
-    } else if (is.factor(y)) {
-	barplot(table(y, x), legend.text=legend.text, axisnames=axisnames, ...)
-    } else if (is.numeric(y))
-	boxplot(y ~ x, ...)
+        barplot(table(x), axisnames = axisnames, ...)
+    }
+    else if (is.factor(y)) {
+        if(is.null(legend.text)) spineplot(x, y, ...) else {
+	  args <- c(list(x = x, y = y), list(...))
+	  args$yaxlabels <- legend.text
+	  do.call("spineplot", args)
+	}
+    }
+    else if (is.numeric(y)) 
+        boxplot(y ~ x, ...)
     else NextMethod("plot")
 }
 
