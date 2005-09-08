@@ -30,6 +30,13 @@ The files are as follows.
   copy-if-change
 	copy a file if changed; otherwise, do nothing.
 
+  getsp.class
+  getsp.java
+	Java class (source and compiled bytecode) used for extracting
+	system properties when detecting Java support in configure.
+	We don't require the existence of a Java compiler, so we need
+	to supply the compiled version as well.
+
   help2man.pl
 	generate simple manual pages from program output.  Taken from
 	the GNU help2man package (ftp://ftp.gnu.org/gnu/help2man/).
