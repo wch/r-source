@@ -480,7 +480,7 @@ contrib.url <- function(repos, type = getOption("pkgType"))
     res <-
         switch(type,
                "source" = paste(gsub("/$", "", repos), "src", "contrib", sep="/"),
-               "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", ver, sep = "/"),
+               "mac.binary" = paste(gsub("/$", "", repos), "bin", "macosx", R.version$arch, "contrib", ver, sep = "/"),
                "win.binary" = paste(gsub("/$", "", repos), "bin", "windows", "contrib", ver, sep="/")
                )
     names(res) <- names(repos)

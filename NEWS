@@ -309,6 +309,15 @@ NEW FEATURES
     o	cbind() and rbind() now react to 'deparse.level' = {0,1,2}
 	(as in another system not unlike R).
 
+    o	If Java runtime environment is detected at configure time
+    	its library path is appended to LD_LIBRARY_PATH or equivalent.
+	New Java-related variables JAVA_HOME (path to JRE/JDK), JAVA_PROG
+	(path to Java interpreter) and JAVA_LD_PATH (Java library path)
+	are made available in Makeconf.
+
+    o	contrib.url path for type="mac.binary" has changed from
+    	bin/macosx/<version> to	bin/macosx/<arch>/contrib/<version>
+	where <arch> corresponds to R.version$arch
 
 
 DEPRECATED & DEFUNCT
