@@ -708,6 +708,8 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     SEXP specials, t, data, rhs;
     int i, j, k, l, n, keepOrder, allowDot;
 
+    Rboolean hadFrameNames = FALSE;
+
     checkArity(op, args);
 
     /* Always fetch these values rather than trying */
@@ -756,9 +758,11 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
     else
 	errorcall(call, _("'data' argument is of the wrong type"));
 
-    if (framenames != R_NilValue)
+    if (framenames != R_NilValue) {
+	if(length(framenames)) hadFrameNames = TRUE;
 	if (length(CAR(args))== 3)
 	    CheckRHS(CADR(CAR(args)));
+    }
 
     /* Preserve term order? */
 
@@ -1010,7 +1014,7 @@ SEXP do_termsform(SEXP call, SEXP op, SEXP args, SEXP rho)
 	    else
 		SETCADR(ans, ExpandDots(CADR(ans), rhs));
 	    UNPROTECT(1);
-	} else if(!allowDot) {
+	} else if(!allowDot && !hadFrameNames) {
 	    error(_("'.' in formula and no 'data' argument"));
 	}
     }
