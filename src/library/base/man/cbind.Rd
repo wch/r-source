@@ -66,7 +66,7 @@ rbind(\dots, deparse.level = 1)
   matrix-like. Otherwise from the names of the arguments or where those
   are not supplied and \code{deparse.level > 0}, by deparsing the
   expressions given, for \code{deparse.level = 1} only if that gives a
-  sensible name (a \code{\link{symbol}}).
+  sensible name (a \sQuote{symbol}, see \code{\link{is.symbol}}).
 
   The names will depend on whether data frames are included:
   see the examples.
