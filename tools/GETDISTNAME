@@ -11,14 +11,15 @@ TOOLS_DIR=`echo ${0} | sed 's%/[^/][^/]*$%%'`
     res=R-${maj}.${min}
   else
     dat=`sed  -e 1d -e 's/^Last Changed Date: //' SVN-REVISION`
+    svn=`sed  -e 2d -e 's/^Revision: //' SVN-REVISION`
     y=`echo ${dat} | cut -d- -f1`
     m=`echo ${dat} | cut -d- -f2`
     d=`echo ${dat} | cut -d- -f3`
     if test "${rev}" = "Under development (unstable)"; then
-      res="R-devel_"${y}-${m}-${d}
+      res="R-devel_"${y}-${m}-${d}_r${svn}
     else
       rev=`echo ${rev} | tr [A-Z] [a-z]`
-      res="R-${rev}_"${y}-${m}-${d}
+      res="R-${rev}_"${y}-${m}-${d}_r${svn}
     fi
   fi
   echo ${res}
