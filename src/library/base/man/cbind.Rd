@@ -16,17 +16,21 @@ rbind(\dots, deparse.level = 1)
 }
 \arguments{
   \item{\dots}{vectors or matrices.  These can be given as named arguments.}
-  \item{deparse.level}{integer controlling the construction of labels;
-    currently, \code{1} is the only possible value.}
+  \item{deparse.level}{integer controlling the construction of labels in
+    the case of \dQuote{non-matrix-like} arguments (i.e., for the
+    default method):\cr
+    \code{deparse.level = 0} constructs no labels; the default,
+    \code{deparse.level = 1 or 2} constructs labels from the argument
+    names, see the \sQuote{Value} section below.}
 }
 \details{
-  The functions \code{cbind} and \code{rbind} are generic, with methods
+  The functions \code{cbind} and \code{rbind} are S3 generic, with methods
   for data frames.  The data frame method will be used if an argument is
   a data frame and the rest are vectors or matrices.  There can be other
   methods; in particular, there is one for time series objects.
 
   In the matrix case, all the vectors/matrices must be atomic (see
-  \code{\link{vector}}) or lists (e.g., not expressions). 
+  \code{\link{vector}}) or lists (e.g., not expressions).
 
   The \code{rbind} data frame method takes the classes of the columns
   from the first
@@ -58,8 +62,12 @@ rbind(\dots, deparse.level = 1)
   column-wise or row-wise.
 
   For \code{cbind} (\code{rbind}) the column (row) names are taken from
-  the names of the arguments, or where those are not supplied by
-  deparsing the expressions given (if that gives a sensible name).
+  the \code{colnames} (\code{rownames}) of the arguments if these are
+  matrix-like. Otherwise from the names of the arguments or where those
+  are not supplied and \code{deparse.level > 0}, by deparsing the
+  expressions given, for \code{deparse.level = 1} only if that gives a
+  sensible name (a \code{\link{symbol}}).
+
   The names will depend on whether data frames are included:
   see the examples.
 }
@@ -102,7 +110,7 @@ rbind(\dots, deparse.level = 1)
 \examples{
 m <- cbind(1, 1:7) # the '1' (= shorter vector) is recycled
 m
-m <- cbind(m, 8:14)[, c(1, 3, 2)] # insert a column 
+m <- cbind(m, 8:14)[, c(1, 3, 2)] # insert a column
 m
 cbind(1:7, diag(3))# vector is subset -> warning
 
@@ -113,6 +121,12 @@ cbind(xx, X=rbind(a=1, b=1:3))   # named differently
 
 cbind(0, matrix(1, nrow=0, ncol=4))#> Warning (making sense)
 dim(cbind(0, matrix(1, nrow=2, ncol=0)))#-> 2 x 1
+
+## deparse.level
+dd <- 10
+rbind(1:4, c=2, "a++" = 10, dd, deparse.level=0)# middle 2 rownames
+rbind(1:4, c=2, "a++" = 10, dd, deparse.level=1)# 3 rownames (default)
+rbind(1:4, c=2, "a++" = 10, dd, deparse.level=2)# 4 rownames
 }
 \keyword{array}
 \keyword{manip}

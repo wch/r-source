@@ -298,7 +298,7 @@ NEW FEATURES
 
     o   The nonparametric variants of cor.test() now behave better in
 	the presence of ties. The "spearman" method uses the asymptotic
-	approximation in that case, and the "kendall" method likewise, 
+	approximation in that case, and the "kendall" method likewise,
 	but adds a correction for ties (this is not necessary in the
 	Spearman case).
 
@@ -306,8 +306,8 @@ NEW FEATURES
 	Port library on netlib) added to the nls() function in the
 	'stats' package.
 
-    o	cbind() and rbind() now react to 'deparse.level = 0' (as in another
-	system not unlike R).
+    o	cbind() and rbind() now react to 'deparse.level' = {0,1,2}
+	(as in another system not unlike R).
 
 
 

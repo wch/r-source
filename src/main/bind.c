@@ -1230,11 +1230,16 @@ static SEXP cbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 
 		if (TAG(t) != R_NilValue)
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
-		else if ((deparse_level == 1) &&
-			 isSymbol(expr = substitute(CAR(t), R_NilValue)))
-		    SET_STRING_ELT(nam, j++, PRINTNAME(expr));
-		else if (have_cnames)
-		    SET_STRING_ELT(nam, j++, R_BlankString);
+		else {
+		    expr = substitute(CAR(t), R_NilValue);
+		    if (deparse_level == 1 && isSymbol(expr))
+			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
+		    else if (deparse_level == 2)
+			SET_STRING_ELT(nam, j++,
+				       STRING_ELT(deparse1line(expr, TRUE), 0));
+		    else if (have_cnames)
+			SET_STRING_ELT(nam, j++, R_BlankString);
+		}
 	    }
 	}
 	setAttrib(result, R_DimNamesSymbol, dn);
@@ -1457,11 +1462,16 @@ static SEXP rbind(SEXP call, SEXP args, SEXPTYPE mode, SEXP rho,
 
 		if (TAG(t) != R_NilValue)
 		    SET_STRING_ELT(nam, j++, PRINTNAME(TAG(t)));
-		else if ((deparse_level == 1) &&
-			 isSymbol(expr = substitute(CAR(t), R_NilValue)))
-		    SET_STRING_ELT(nam, j++, PRINTNAME(expr));
-		else if (have_rnames)
-		    SET_STRING_ELT(nam, j++, R_BlankString);
+		else {
+		    expr = substitute(CAR(t), R_NilValue);
+		    if (deparse_level == 1 && isSymbol(expr))
+			SET_STRING_ELT(nam, j++, PRINTNAME(expr));
+		    else if (deparse_level == 2)
+			SET_STRING_ELT(nam, j++,
+				       STRING_ELT(deparse1line(expr, TRUE), 0));
+		    else if (have_rnames)
+			SET_STRING_ELT(nam, j++, R_BlankString);
+		}
 	    }
 	}
 	setAttrib(result, R_DimNamesSymbol, dn);
