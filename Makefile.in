@@ -85,9 +85,9 @@ install: installdirs svnonly
 	  $(INSTALL_DATA) $${f} "$(rhome)"; \
 	done
 @WANT_R_FRAMEWORK_TRUE@		$(MAKE) install-R-framework
-@WANT_R_FRAMEWORK_TRUE@		@(sed 's/^LIBR =.*/LIBR = -framework R/' \
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's|^LIBR =.*|LIBR = -F$(R_FRAMEWORK_DIR)/.. -framework R|' \
 @WANT_R_FRAMEWORK_TRUE@		  $(top_builddir)/etc/Makeconf > "$(rhome)/etc/Makeconf")
-@WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(VERSION)\/Resources/Resources/' \
+@WANT_R_FRAMEWORK_TRUE@		@(sed 's/Versions\/$(FW_VERSION)\/Resources/Resources/' \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/R > \
 @WANT_R_FRAMEWORK_TRUE@		  $(R_FRAMEWORK_DIR)/Resources/bin/RR)
 @WANT_R_FRAMEWORK_TRUE@		@(mv $(R_FRAMEWORK_DIR)/Resources/bin/RR $(R_FRAMEWORK_DIR)/Resources/bin/R)
@@ -220,25 +220,28 @@ reset-recommended:
 	@(cd src/library/Recommended && $(MAKE) clean)
 
 install-R-framework:
-	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)" && \
+	@(cd "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)" && \
 	  ln -f -s -n Resources/include Headers && \
 	  ln -f -s -n Resources/lib/libR.dylib R && \
 	  test -d "Resources/bin/Frameworks" || mkdir -p "Resources/bin/Frameworks" && \
 	  cd Resources/bin/exec && \
 	  ln -f -s -n ../Frameworks Frameworks)
 	@(cd "$(R_FRAMEWORK_DIR)/Versions" && \
-	  ln -f -s -n $(VERSION) Current)
+	  ln -f -s -n $(FW_VERSION) Current)
 	@(cd "$(R_FRAMEWORK_DIR)"  && \
 	  ln -f -s -n Versions/Current/PrivateHeaders PrivateHeaders&& \
 	  ln -f -s -n Versions/Current/Headers Headers&& \
 	  ln -f -s -n Versions/Current/R R && \
 	  ln -f -s -n Versions/Current/Resources Resources)
 	@(cd "$(R_FRAMEWORK_DIR)/Resources/lib" && \
-	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" ../lib/libR.dylib)
-	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders)
-	@(install_name_tool -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" \
-	  $(R_FRAMEWORK_DIR)/Resources/bin/exec/R)
+	  install_name_tool -id "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" ../lib/libR.dylib)
+	@(cp -R $(srcdir)/src/include $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders && \
+	  find $(R_FRAMEWORK_DIR)/Versions/Current/PrivateHeaders -name .svn | xargs rm -rf)
+
+	@(install_name_tool -change libR.dylib \
+	    "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \
+	    $(R_FRAMEWORK_DIR)/Resources/bin/exec/R)
 	@(find "$(R_FRAMEWORK_DIR)/Resources/" -name '*.so' -exec install_name_tool \
-	  -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libR.dylib" \{\} \;)
+	  -change libR.dylib "$(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libR.dylib" \{\} \;)
 
 TAGS:

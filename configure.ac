@@ -208,6 +208,10 @@ if test "${want_R_framework}" != no; then
 	prefix="${want_R_framework}"
 	want_R_framework=yes
       fi
+      ## FW_VERSION is the sub-directory name used in R.framework/Version
+      ## By default it's the a.b form of the full a.b.c version to simplify
+      ## binary updates.
+      : ${FW_VERSION=`echo "${PACKAGE_VERSION}" | sed -e "s/[[\.]][[0-9]]$//"`}
       ;;
     *)
       want_R_framework=no
@@ -1256,6 +1260,7 @@ AC_SUBST(DYLIB_EXT)
 AC_SUBST(LIBR_LDFLAGS)
 AC_SUBST(RLAPACK_LDFLAGS)
 AC_SUBST(LAPACK_LDFLAGS)
+AC_SUBST(FW_VERSION)
 
 ### Now we have found all the flags, we need to use them to test appropriately.
 ### We don't currently have any C++ tests, but future-proof.

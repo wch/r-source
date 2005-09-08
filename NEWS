@@ -309,16 +309,6 @@ NEW FEATURES
     o	cbind() and rbind() now react to 'deparse.level' = {0,1,2}
 	(as in another system not unlike R).
 
-    o	If Java runtime environment is detected at configure time
-    	its library path is appended to LD_LIBRARY_PATH or equivalent.
-	New Java-related variables JAVA_HOME (path to JRE/JDK), JAVA_PROG
-	(path to Java interpreter) and JAVA_LD_PATH (Java library path)
-	are made available in Makeconf.
-
-    o	contrib.url path for type="mac.binary" has changed from
-    	bin/macosx/<version> to	bin/macosx/<arch>/contrib/<version>
-	where <arch> corresponds to R.version$arch
-
 
 DEPRECATED & DEFUNCT
 
@@ -389,6 +379,17 @@ INSTALLATION
     o	On MacOS X, --with-blas="-framework vecLib" --with-lapack and
 	--with-aqua are now the default configure options.
 
+    o	If Java runtime environment is detected at configure time
+	its library path is appended to LD_LIBRARY_PATH or equivalent.
+	New Java-related variables JAVA_HOME (path to JRE/JDK), JAVA_PROG
+	(path to Java interpreter) and JAVA_LD_PATH (Java library path)
+	are made available in Makeconf.
+
+    o	On Mac OS X the default framework version name was changed to
+	not contain the patch level (i.e. it is now 2.2 instead of 2.2.0).
+	Also it can be overridden at configure time by setting FW_VERSION
+	to the desired name.
+
 
 PACKAGE INSTALLATION CHANGES
 
@@ -418,6 +419,10 @@ PACKAGE INSTALLATION CHANGES
 
     o	A data index is now installed for a package with a 'data' dir
 	but no 'man' dir (even though it will have undocumented data objects).
+
+    o	contrib.url path for type="mac.binary" has changed from
+	bin/macosx/<version> to	bin/macosx/<arch>/contrib/<version>
+	where <arch> corresponds to R.version$arch
 
 
 UTILITIES
