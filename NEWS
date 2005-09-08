@@ -309,6 +309,10 @@ NEW FEATURES
     o	cbind() and rbind() now react to 'deparse.level' = {0,1,2}
 	(as in another system not unlike R).
 
+    o	New functions cdplot() and spineplot() for conditional density
+        plots and spine plots or spinograms.  Spine plots are now used
+        instead of bar plots for x-y scatterplots where y is a factor.
+
 
 DEPRECATED & DEFUNCT
 
