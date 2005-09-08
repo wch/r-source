@@ -11,18 +11,27 @@ cbind <- function(..., deparse.level = 1)
     deparse.level <- as.integer(deparse.level)
     stopifnot(0 <= deparse.level, deparse.level <= 2)
 
-    if(na <= 1) return(.Internal(cbind(deparse.level, ...)))
+    if(na <= 1)
+        ## FIXME(?) what if  ..1  is an ``object''?
+        ## -------  in that case  call  cbind2(<object>, NULL) ?
+        return(.Internal(cbind(deparse.level, ...)))
 
     ## else :
     larg <- as.list(sys.call()[-1])
     ism1 <- !is.null(d1 <- dim(..1)) && length(d1) == 2
     if(na == 2) {
         r <- ..2
-    } else { ## >= 3 arguments: recurse but
-        ## should find nrow(<result>)  for e.g.,  cbind(diag(2), 1, 2)
-        nrow <- -1
-        ## for(a in list(...)[-1]) if(!is.null(dim(a)))
-        r <- do.call(cbind, c(list(...)[-1], list(deparse.level=deparse.level)))
+    } else { ## na >= 3 arguments: recurse but need care
+        ## determine nrow(<result>)  for e.g.,  cbind(diag(2), 1, 2)
+        ## only when the last two argument have *no* dim attribute:
+        rest <- list(...)[-1]
+        nrs <- lapply(rest, nrow) # of length (na - 1)
+        if(identical(nrs[(na-2):(na-1)], list(NULL,NULL))) {
+            nr <- max(nrs[!sapply(nrs, is.null)])
+            ## use 1-column `matrix'; but no special name
+            rest[[na - 1]] <- cbind(rest[[na - 1]], deparse.level = 0)
+        }
+        r <- do.call(cbind, c(rest, list(deparse.level=deparse.level)))
     }
 
     ism2 <- !is.null(d2 <- dim( r )) && length(d2) == 2
