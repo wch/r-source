@@ -386,8 +386,9 @@ INSTALLATION
     o	If Java runtime environment is detected at configure time
 	its library path is appended to LD_LIBRARY_PATH or equivalent.
 	New Java-related variables JAVA_HOME (path to JRE/JDK), JAVA_PROG
-	(path to Java interpreter) and JAVA_LD_PATH (Java library path)
-	are made available in Makeconf.
+	(path to Java interpreter), JAVA_LD_PATH (Java library path)
+	and JAVA_LIBS (flags to link against JNI) are made available
+	in Makeconf.
 
     o	On Mac OS X the default framework version name was changed to
 	not contain the patch level (i.e. it is now 2.2 instead of 2.2.0).

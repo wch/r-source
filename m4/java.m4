@@ -20,17 +20,18 @@
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
-## R_FIND_JAVA
+## R_JAVA
 ## -----------
 ## Looks for Java JRE/JDK and sets:
 ## have_java to yes/no; if it is yes then also sets:
 ## JAVA_PROG to Java interpreter path
 ## JAVA_HOME to the home directory of the Java runtime/jdk
 ## JAVA_LD_PATH to the path necessary for Java runtime
+## JAVA_LIBS to flags necessary to link JNI programs (*)
 ##
 ## JAVA_HOME env var is honored during the search and the search
 ## will fail if it is set incorrectly.
-AC_DEFUN([R_FIND_JAVA],
+AC_DEFUN([R_JAVA],
 [
 have_java=no
 
@@ -44,15 +45,17 @@ fi
 ## where java could live
 JAVA_PATH=${JAVA_PATH}:/usr/java/bin:/usr/jdk/bin:/usr/lib/java/bin:/usr/lib/jdk/bin:/usr/local/java/bin:/usr/local/jdk/bin:/usr/local/lib/java/bin:/usr/local/lib/jdk/bin
 AC_PATH_PROGS(JAVA_PROG,java,,${JAVA_PATH})
+## FIXME: we may want to check for jikes, kaffe and others...
+AC_PATH_PROGS(JAVAC,javac,,${JAVA_PATH})
 
-AC_MSG_CHECKING([Java environment home])
+AC_MSG_CHECKING([for Java environment])
 
 ## this is where our test-class lives (in tools directory)
 getsp_cp=${ac_aux_dir}
 
 ## retrieve JAVA_HOME from Java itself if not set and we found
-## the `java' program 
-if test ! -z "${JAVA_PROG}" ; then
+## the `java' interpreter
+if test -n "${JAVA_PROG}" ; then
   if test -z "${JAVA_HOME}" ; then
     JAVA_HOME=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.home`
   fi
@@ -75,11 +78,14 @@ else
       JAVA_LD_PATH=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.library.path`
       ;;
   esac
+  
+  ## note that we actually don't test JAVA_LIBS - we hope that the detection
+  ## was correct.
+
   have_java=yes
 fi
 AC_SUBST(JAVA_HOME)
 AC_SUBST(JAVA_PROG)
 AC_SUBST(JAVA_LD_PATH)
-## should we add JAVA_LIBS too? R doesn't need it and we don't cover
-## JDK here, so the headers may not even be present...
+AC_SUBST(JAVA_LIBS)
 ])

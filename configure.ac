@@ -476,7 +476,7 @@ AC_PROG_RANLIB
 AC_PROG_YACC
 R_PROG_AR
 R_PROG_INSTALL
-AC_PATH_PROG(JAVAC, javac)
+
 ## we would like a POSIX sed, and need one on Solaris
 AC_PATH_PROGS(SED, sed, /bin/sed, [/usr/xpg4/bin:$PATH])
 ## Make
@@ -1497,7 +1497,7 @@ AC_SUBST(R_PAPERSIZE)
 AC_SUBST(R_BATCHSAVE)
 
 ## Java support
-R_FIND_JAVA
+R_JAVA
 
 ## Make sure -L terms come first in LIBS.
 LIBS1=""
@@ -1535,7 +1535,7 @@ case "${host_os}" in
     ;;
 esac
 for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
-           ${TCLTK_LIBS} ${GNOME_LIBS}; do
+           ${TCLTK_LIBS} ${GNOME_LIBS} ${JAVA_LIBS}; do
   case "${arg}" in
     -L*)
       lib=`echo ${arg} | sed "s/^-L//"`
@@ -1562,11 +1562,6 @@ for arg in ${LDFLAGS} ${FLIBS} ${BLAS_LIBS} ${LAPACK_LIBS} ${X_LIBS} \
   esac
 done
 ## </FIXME>
-
-## Append JAVA_LD_PATH if existent (set by R_FIND_JAVA if Java was found)
-if test ! -z "${JAVA_LD_PATH}" ; then
-   R_LD_LIBRARY_PATH="${R_LD_LIBRARY_PATH}${PATH_SEPARATOR}${JAVA_LD_PATH}"
-fi
 
 AC_SUBST(R_LD_LIBRARY_PATH)
 
