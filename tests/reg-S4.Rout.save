@@ -1,6 +1,6 @@
 
 R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.2.0 Under development (unstable) (2005-08-24 r35393)
+Version 2.2.0 alpha (2005-09-09 r35538)
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -83,6 +83,10 @@ Function "loadMethod":
 method = "ANY"
 method = "MethodDefinition"
 method = "MethodWithNext"
+
+Function "rbind2":
+x = "ANY", y = "ANY"
+x = "ANY", y = "missing"
 
 Function "show":
 object = "ANY"
@@ -266,6 +270,9 @@ Function "initialize":
 Function "loadMethod":
 <Empty Methods List>
 
+Function "rbind2":
+<Empty Methods List>
+
 Function "show":
 object = "mle"
 NULL
@@ -287,6 +294,9 @@ Function "initialize":
 <Empty Methods List>
 
 Function "loadMethod":
+<Empty Methods List>
+
+Function "rbind2":
 <Empty Methods List>
 
 Function "show":
@@ -312,6 +322,9 @@ Function "initialize":
     (inherited from .Object = "ANY")
 
 Function "loadMethod":
+<Empty Methods List>
+
+Function "rbind2":
 <Empty Methods List>
 
 Function "show":
@@ -391,6 +404,10 @@ Function "loadMethod":
 method = "ANY"
 method = "MethodDefinition"
 method = "MethodWithNext"
+
+Function "rbind2":
+x = "ANY", y = "ANY"
+x = "ANY", y = "missing"
 
 Function "show":
 object = "ANY"
