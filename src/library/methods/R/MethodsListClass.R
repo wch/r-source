@@ -190,6 +190,14 @@
     setMethod("cbind2", signature(x = "ANY", y = "missing"),
 	      function(x,y) .Internal(cbind(deparse.level = 0, x)))
 
+    setGeneric("rbind2", function(x, y) standardGeneric("rbind2"),
+	       where = envir)
+    ## and its default methods:
+    setMethod("rbind2", signature(x = "ANY", y = "ANY"),
+	      function(x,y) .Internal(rbind(deparse.level = 0, x,y)))
+    setMethod("rbind2", signature(x = "ANY", y = "missing"),
+	      function(x,y) .Internal(rbind(deparse.level = 0, x)))
+
 ### Uncomment next line if we want special initialize methods for basic classes
 ###    .InitBasicClassMethods(where)
 }
