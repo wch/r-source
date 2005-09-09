@@ -80,6 +80,9 @@ function(object, filename = NULL, name = NULL,
     if(any(br <- substr(x.def, 1, 1) == "}"))
         x.def[br] <- paste(" ", x.def[br])
 
+    ## escape "%" :
+    x.def <- gsub("%", "\\\\%", x.def)
+
     Rdtxt <-
         list(name = paste0("\\name{", name, "}"),
              aliases = c(paste0("\\alias{", name, "}"),
@@ -96,7 +99,7 @@ function(object, filename = NULL, name = NULL,
              arguments = NULL,
              details = c("\\details{",
              paste("  ~~ If necessary, more details than the",
-                   "__description__  above ~~"),
+                   "description above ~~"),
              "}"),
              value = c("\\value{",
              "  ~Describe the value returned",
@@ -108,13 +111,13 @@ function(object, filename = NULL, name = NULL,
              references = paste("\\references{ ~put references to the",
              "literature/web site here ~ }"),
              author = "\\author{ ~~who you are~~ }",
-             note = c("\\note{ ~~further notes~~ }",
+             note = c("\\note{ ~~further notes~~ ",
              "",
              paste(" ~Make other sections like Warning with",
                    "\\section{Warning }{....} ~"),
-             ""),
+             "}"),
              seealso = paste("\\seealso{ ~~objects to See Also as",
-             "\\code{\\link{~~fun~~}}, ~~~ }"),
+             "\\code{\\link{help}}, ~~~ }"),
              examples = c("\\examples{",
              "##---- Should be DIRECTLY executable !! ----",
              "##-- ==>  Define data, use random,",
@@ -301,7 +304,8 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
     	Rdtxt[[field]] <<- c(prev[-length(prev)], new, prev[length(prev)])
     }
     insert2 <- function(field, new) insert1(field, paste("~~", new, "~~"))
-    tabular <- function(col1, col2) c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
+    tabular <- function(col1, col2)
+        c("\\tabular{ll}{", paste0(col1, " \\tab ", col2, "\\cr"), "}")
 
     if(missing(name))
         name <- paste0(package, "-package");
@@ -333,9 +337,11 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 
         insert1("title", desc$Title)
 	insert1("description", desc$Description)
-	insert1("author", c(desc$Author, "", paste(gettext("Maintainer:"),desc$Maintainer)))
+	insert1("author", c(desc$Author, "",
+                            paste(gettext("Maintainer:"),desc$Maintainer)))
 
-	desc <- desc[!(names(desc) %in% c("Title", "Description", "Author", "Maintainer"))]
+	desc <- desc[!(names(desc) %in%
+                       c("Title", "Description", "Author", "Maintainer"))]
 
 	insert1("details", tabular(paste0(names(desc), ":"), unlist(desc)))
 
@@ -343,24 +349,36 @@ function(package, lib.loc = NULL, filename = NULL, name = NULL, final = FALSE)
 	    insert1("details",  c("", gettext("Index:"), "\\preformatted{",
 	                          info$info[[2]], "}"))
 	if (!is.null(info$info[[3]]))
-	    insert1("details",  c("", gettext("Further information is available in the following vignettes:"),
-	    		          tabular(paste0("\\code{", info$info[[3]][,1], "}"), info$info[[3]][,2])))
+	    insert1("details",
+                    c("",
+        gettext("Further information is available in the following vignettes:"),
+                      tabular(paste0("\\code{", info$info[[3]][,1], "}"),
+                              info$info[[3]][,2])))
     }
 
     if (!final) {
         insert2("title", gettext("package title"))
-        insert2("description", gettext("A concise (1-5 lines) description of the package"))
-        insert2("details", gettext("An overview of how to use the package, including the most important functions"))
+        insert2("description",
+                gettext("A concise (1-5 lines) description of the package"))
+        insert2("details",
+                gettext("An overview of how to use the package, including the most important functions"))
         insert2("author", gettext("The author and/or maintainer of the package"))
-        Rdtxt$references <- c("\\references{",
-             paste("~~", gettext("Literature or other references for background information"),"~~"),
-             "}")
+        Rdtxt$references <-
+            c("\\references{",
+              paste("~~",
+                    gettext("Literature or other references for background information"),
+                    "~~"),
+              "}")
         Rdtxt$seealso <- c("\\seealso{", "}")
         insert2("seealso", c(gettext("Optional links to other man pages, e.g."),
         		     "\\code{\\link[<pkg>:<pkg>-package]{<pkg>}}"))
         Rdtxt$examples <- c("\\examples{","}")
-        insert2("examples", gettext("simple examples of the most important functions"))
-        Rdtxt$keywords <- c(Rdtxt$keywords, paste("~~", gettext("Optionally other keywords from doc/KEYWORDS, one per line")))
+        insert2("examples",
+                gettext("simple examples of the most important functions"))
+        Rdtxt$keywords <-
+            c(Rdtxt$keywords,
+              paste("~~",
+                    gettext("Optionally other keywords from doc/KEYWORDS, one per line")))
     }
 
     if(is.na(filename)) return(Rdtxt)

@@ -267,10 +267,10 @@ NEW FEATURES
     o   boxplot() now responds to supplying 'yaxs' (via bxp()).
 	(Wish of PR#8072.)
 
-    o	Experimental version of cbind() in methods package, based on new
-	generic function cbind2(x,y).  This will allow the equivalent of S4
-	methods for cbind() --- currently only after an explicit activation
-	call, see ?cbind2.
+    o	Experimental versions of cbind() and rbind() in methods package,
+	based on new generic function cbind2(x,y) and rbind2().	 This will
+	allow the equivalent of S4 methods for cbind() and rbind() ---
+	currently only after an explicit activation call, see ?cbind2.
 
     o   iconv() has been moved from 'utils' to 'base'.
 
@@ -615,6 +615,9 @@ BUG FIXES
 
     o   terms.formula() got confused if 'data' argument was a list with
 	non-syntactic names.
+
+    o	prompt() and hence package.skeleton() now produce *.Rd files that
+	give no errors (but warnings) when not edited, much more often.
 
 
 
