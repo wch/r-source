@@ -120,19 +120,19 @@ test: $(srcdir)/test.c
 install: installdirs install-header
 @WANT_R_FRAMEWORK_FALSE@	@!(test -f $(libRmath_la)) || $(SHELL) $(top_srcdir)/tools/copy-if-change $(libRmath_la) $(libdir)/$(libRmath_la)
 @WANT_R_FRAMEWORK_FALSE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(libdir)/libRmath.a
-@WANT_R_FRAMEWORK_TRUE@	@!(test -f $(libRmath_la)) || cp $(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/$(libRmath_la) && install_name_tool -id $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/$(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/$(libRmath_la)
-@WANT_R_FRAMEWORK_TRUE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib/libRmath.a
+@WANT_R_FRAMEWORK_TRUE@	@!(test -f $(libRmath_la)) || cp $(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la) && install_name_tool -id $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/$(libRmath_la)
+@WANT_R_FRAMEWORK_TRUE@	@!(test -f libRmath.a) || $(SHELL) $(top_srcdir)/tools/copy-if-change libRmath.a $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib/libRmath.a
 
 install-header:
 	@(cd ../../include; $(MAKE) Rmath.h)
 @WANT_R_FRAMEWORK_FALSE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(includedir)/Rmath.h
-@WANT_R_FRAMEWORK_TRUE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/include/Rmath.h
+@WANT_R_FRAMEWORK_TRUE@	@$(SHELL) $(top_srcdir)/tools/copy-if-change ../../include/Rmath.h $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include/Rmath.h
 
 installdirs:
 @WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(includedir)
 @WANT_R_FRAMEWORK_FALSE@	@$(MKINSTALLDIRS) $(libdir)
-@WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/include
-@WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(VERSION)/Resources/lib
+@WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/include
+@WANT_R_FRAMEWORK_TRUE@	@$(MKINSTALLDIRS) $(R_FRAMEWORK_DIR)/Versions/$(FW_VERSION)/Resources/lib
 
 RMATH_FRAMEWORK_DIR ?= /Library/Frameworks/Rmath.framework
 install-Rmath-framework: $(libRmath_la)
