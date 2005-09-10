@@ -336,11 +336,11 @@ status=0
 
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
-${R_LATEXCMD-latex} Rd2 || status=1
+${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2 || status=1
 ${R_MAKEINDEXCMD-makeindex} Rd2
-${R_LATEXCMD-latex} Rd2
+${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 if test "${out_ext}" = pdf; then
-  ${R_LATEXCMD-latex} Rd2
+  ${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2
 fi
 cd ${start_dir}
 echo "Saving output to '${output}' ..."

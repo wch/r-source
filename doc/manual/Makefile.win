@@ -18,10 +18,10 @@ OBJECTS_INFO = $(SOURCES_TEXI:.texi=.info)
 OBJECTS_PDF = $(SOURCES_TEXI:.texi=.pdf)
 
 MAKEINFO = LC_ALL=C makeinfo
-PDFLATEX = pdflatex
-LATEX = latex
-PDFTEX = pdftex
-TEX = tex
+PDFLATEX = pdflatex $(R_TEXOPTS)
+LATEX = latex $(R_TEXOPTS)
+PDFTEX = pdftex $(R_TEXOPTS)
+TEX = tex $(R_TEXOPTS)
 
 
 MAKEINDEX = LC_ALL=C makeindex

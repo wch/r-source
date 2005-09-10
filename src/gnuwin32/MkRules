@@ -41,6 +41,21 @@ TCL_VERSION = 84
 # than without it because mixed or modified revisions will be indicated)
 # USE_SVNVERSION = YES
 
+# The R_TEXOPTS macro is used only for building R manuals.  The 
+# src/gnuwin32/R_TEXOPTS file specifies the options used when building packages.
+#
+ifneq ($(strip $(BUILD)),CROSS)
+# Define to use MikTeX
+#
+R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+#
+# Define to use other TeX
+#
+# R_TEXOPTS=
+else # cross-builds
+R_TEXOPTS=
+endif
+
 ## ====== configuration macros for building installers ===========
 
 # location where Inno Setup 5.1.x was installed. Spaces allowed.

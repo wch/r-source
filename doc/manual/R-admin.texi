@@ -3234,12 +3234,11 @@ In this case the Help Workshop will not be needed.
 @node LaTeX, The Inno Setup installer, The Microsoft HTML Help Workshop, The Windows toolset
 @section @LaTeX{}
 
-The @code{fptex} distribution of @LaTeX{} (directly from any CTAN node
-such as @url{http://www.ctan.org/tex-archive/systems/windows/fptex/})
-includes a suitable port of @code{pdftex}.  We have also used
-@code{miktex} (@url{http://www.miktex.org}), which needs some
-customization: see
-@url{http://www.murdoch-sutherland.com/Rtools/miktex.html}.
+The @code{miktex} (@url{http://www.miktex.org}) distribution of @LaTeX{}
+includes a suitable port of @code{pdftex}.  We have also used the
+@code{fptex} distribution (available directly from any CTAN node
+such as @url{http://www.ctan.org/tex-archive/systems/windows/fptex/}), 
+which will require @file{MkRules} and @file{R_TEXOPTS} to be edited.
 
 Please read @ref{Making the manuals} about how to make @file{refman.pdf}
 and set the environment variables @code{R_RD4DVI} and @code{R_RD4PDF}
