@@ -1,17 +1,17 @@
+#### cbind() and rbind()  which build on  cbind2() / rbind2()
+#### --------------------------------------------------------
+### NOTE: We rely on
+### o	dim(.) working reliably for all arguments of [cr]bind2()
+### o	All [cr]bind2() methods are assumed to
+###	       1) correctly set (row/col)names
+###	       2) correctly set (col/row)names for *matrix*(like) arguments
 
-### Experimental {similar c() code: MM's ~/R/MM/Pkg-ex/methods/cbind-etc.R}
+### Note that this
+### 1) is namespace-hidden usually,
+### 2) cbind / rbind are almost never called in 'methods' itself
+### hence, the following has almost no effect unless ``activated'' (see below)
 
-## NOTE: We rely on
-##
-## o   dim(.) working reliably for all arguments of cbind2()
-## o   All cbind2() methods are assumed to
-##	       1) correctly set rownames
-##	       2) correctly set colnames for *matrix*(like) arguments
-
-## Note that this
-## 1) is namespace-hidden usually,
-## 2) cbind / rbind are almost never called in 'methods' itself
-## hence, the following has almost no effect unless ``activated'' (see below)
+## rbind() is in ./rbind.R  {so it's easier to keep them 100% - synchronized !}
 
 cbind <- function(..., deparse.level = 1)
 {
@@ -93,7 +93,7 @@ cbind <- function(..., deparse.level = 1)
 	if(is.null(colnames(r)))
 	    colnames(r) <- rep.int("", ncol(r))
 	setN <- function(i, nams)
-            colnames(r)[i] <<- if(is.null(nams)) "" else nams
+	    colnames(r)[i] <<- if(is.null(nams)) "" else nams
 	if(nn1) setN(1,	 N1)
 	if(nn2) setN(1+l1, N2)
 	if(fix.na) setN(ncol(r), Nna)
@@ -103,19 +103,19 @@ cbind <- function(..., deparse.level = 1)
 
 ## To be active, the above cbind() must "replace" cbind() in "base" :
 bind_activation <- function(on = TRUE) {
-    ## 'bind' : cbind && rbind (eventually)
+    ## 'bind' : cbind && rbind
     base.ns <- getNamespace("base")
     if(on) {
 	utils::assignInNamespace(".__H__.cbind", base::cbind, ns = base.ns)
 	utils::assignInNamespace("cbind", cbind, ns = base.ns)
-##	utils::assignInNamespace(".__H__.rbind", base::rbind, ns = base.ns)
-##	utils::assignInNamespace("rbind", rbind, ns = base.ns)
+	utils::assignInNamespace(".__H__.rbind", base::rbind, ns = base.ns)
+	utils::assignInNamespace("rbind", rbind, ns = base.ns)
     }
     else { # turn it off
 	if(!inherits(try(getFromNamespace(".__H__.cbind", ns = base.ns),
 			 silent = TRUE), "try-error"))
 	    utils::assignInNamespace("cbind", base::.__H__.cbind, ns = base.ns)
-##	    utils::assignInNamespace("rbind", base::.__H__.rbind, ns = base.ns)
+	    utils::assignInNamespace("rbind", base::.__H__.rbind, ns = base.ns)
     }
 }
 
