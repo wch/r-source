@@ -43,7 +43,7 @@ available <a href="rpatched.html">here</a>.</p>
   <tr>
     <td width="19%" valign="top"><a
 href="@RWVER@-win32.exe">@RWVER@-win32.exe</a></td>
-    <td width="81%">Setup program (about 25 megabytes). Please download this
+    <td width="81%">Setup program (about 26 megabytes). Please download this
     from a <a href="http://cran.r-project.org/mirrors.html">mirror near you</a>. <br>
     This corresponds to the file named <b>SetupR.exe</b> or
     <b>rwXXXX.exe</b> in pre-2.2.0 releases.</td>
