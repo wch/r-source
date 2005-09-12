@@ -1750,8 +1750,8 @@ corresponds to @code{int} in C on all @R{} platforms.
 @item
 Errors in memory allocation and reading/writing outside arrays are very
 common causes of crashes (e.g., segfaults) on some machines.  If you
-have access to Linux on an @code{ix86} platform you can use
-@code{valgrind} (@url{http://valgrind.kde.org/}) to look out for
+have access to Linux on an @code{ix86} or @code{x86_64} platform you can use
+@code{valgrind} (@url{http://www.valgrind.org/}) to look out for
 possible problems.  To run some examples under @code{valgrind} use
 something like
 
@@ -1770,7 +1770,16 @@ the @R{} session.  Expect this to run around 20x slower than without
 @code{valgrind}, and in some cases even slower than that.
 @code{valgrind} is not happy with many optimized BLASes that use
 cpu-specific instructions (3D now, SSE2 and similar) so you may need to
-build a version of @R{} specifically to use with @code{valgrind}.
+build a version of @R{} specifically to use with @code{valgrind}. 
+
+On platforms supported by @code{valgrind} you can build a version of @R{} with
+extra instrumentation to help @code{valgrind} detect errors in the use of
+memory allocated from the @R{} heap.  The configure option is
+@option{--with-valgrind-instrumentation=level}, where @code{level} is 0,
+1, or 2. Level 0 is the default and does not add any anything. Level 1
+will detect use of initialised memory and has little impact on
+speed. Level 2 will detect many other memory use bugs but makes @R{}
+much slower when running under @code{valgrind}.
 
 
 It is possible to run all the examples, tests and vignettes covered by
