@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-10
+@set FAQ_DATE @value{FAQ_YEAR}-09-12
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2775,12 +2775,9 @@ ESRI shapefiles.
 @item maptree
 Functions with example data for graphing and mapping models from
 hierarchical clustering and classification and regression trees.
-@c <COMMENT>
-@c Moved to the Archive on 2005-04-29.
-@c @item mathgraph
-@c Tools for constructing and manipulating objects from a class of directed
-@c and undirected graphs.
-@c </COMMENT>
+@item mathgraph
+Tools for constructing and manipulating objects from a class of directed
+and undirected graphs.
 @item matlab
 Emulate MATLAB code using R.
 @item maxstat
@@ -3089,6 +3086,8 @@ Analysis of experimental crosses to identify QTLs.
 Tools for the design of QTL experiments.
 @item quadprog
 For solving quadratic programming problems.
+@item quantchem
+Quantitative chemical analysis: calibration and evaluation of results.
 @item quantreg
 Quantile regression and related methods.
 @item qvalue
