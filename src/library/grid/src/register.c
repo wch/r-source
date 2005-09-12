@@ -73,6 +73,8 @@ static const R_CallMethodDef callMethods[] = {
     {"validUnits", (DL_FUNC) &validUnits, 1},
     {"L_getGPar", (DL_FUNC) &L_getGPar, 0},
     {"L_setGPar", (DL_FUNC) &L_setGPar, 1},
+    {"L_circleBounds", (DL_FUNC) &L_circleBounds, 3},
+    {"L_locnBounds", (DL_FUNC) &L_locnBounds, 2},
     {"L_rectBounds", (DL_FUNC) &L_rectBounds, 6},
     {"L_textBounds", (DL_FUNC) &L_textBounds, 6},
     { NULL, NULL, 0 }

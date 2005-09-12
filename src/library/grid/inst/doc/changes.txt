@@ -8,6 +8,17 @@ Changes from grid_2.1.0 to grid_2.2.0:
     settings of the top-level viewport (i.e., the 'gp' arg
     of viewport[ROOT]).
 
+3.  Fixed bug in evaluation of grobWidth(polygonGrob()).
+    The C function L_locnBounds was not exported AND
+    the widthDetails.polygon method was not exposed properly
+    via the NAMESPACE.
+
+    Reported in private correspondence by Deepayan Sarkar.
+
+    Also corrected export of heightDetails, validDetails, and	
+    widthDetails for arrows, circle, polygon, points, rect, and
+    segments primitives.
+
 
 Changes from grid_2.0.1 to grid_2.1.0:
 ------------------------------------
