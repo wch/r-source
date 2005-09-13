@@ -483,17 +483,24 @@ Windows, and from @code{dir /X} in a @code{Command Prompt} window on
 Not itself.
 
 The installer sets some entries to allow uninstallation.  In addition
-(by default, but this can be de-selected) they set a Registry key
-@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install
-path.  Again, this is not used by R itself, but it may be used by
-third-party front-ends such as Thomas Baier's (D)COM interface
-(@uref{http://cran.r-project.org/other-software.html}).  Finally, a file
+(by default, but this can be de-selected) it sets a Registry key
+@code{LOCAL_MACHINE\Software\R-core\R} giving the version and install path.
+Again, this is not used by R itself, but it may be used by third-party
+front-ends such as Thomas Baier's (D)COM interface
+(@uref{http://cran.r-project.org/other-software.html}).  As from version 2.2.0,
+a Registry key @code{LOCAL_MACHINE\Software\R-core\R\[version]} will be set
+to hold the install path; third-party utilities may use this to detect
+multiple R installations on the same machine.  Finally, a file
 association for extension @code{.RData} is set in the Registry.
 
 You can add the Registry entries by running @code{RSetReg.exe} in the
 @code{bin} folder, and remove them by running this with argument
-@code{/U}.  Note that the settings are all per machine and not per user,
+@code{/U}.  Note that these settings are all per machine and not per user,
 and that this neither sets up nor removes the file associations.
+
+In the case of a user running the installer without administrative
+privileges, a key @code{CURRENT_USER\Software\R-core\R\[version]} will be
+set giving the install path, but the other keys will not be set.
 
 
 @node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage

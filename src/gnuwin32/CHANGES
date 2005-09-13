@@ -42,6 +42,11 @@ installing packages.  If you are using another version of LaTeX you
 will likely need to edit the MkRules file and the (new) R_TEXOPTS
 file.
 
+If the user chooses to register R during installation, a registry entry
+HKEY_LOCAL_MACHINE\Software\R-core\R\{version}\InstallPath will be added.
+Users require administrative privileges to create this key.  For others,
+the same key will be put under the HKEY_CURRENT_USER root.
+
 
 
 R 2.1.1 patched

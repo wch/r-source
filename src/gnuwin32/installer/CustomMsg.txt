@@ -1,0 +1,122 @@
+; Custom messages for R
+
+[CustomMessages]
+en.regentries=Registry entries:
+en.associate=&Associate R with .RData files
+en.dcom=&Register R path for use by the (D)COM server
+en.user=User installation
+en.compact=Minimal user installation
+en.full=Full installation
+en.CJK=Chinese/Japanese/Korean installation
+en.custom=Custom installation
+en.adminprivilegesrequired=You should be logged in as an administrator when installing R
+en.adminexplanation=Note:  A full R installation requires administrative privileges, and it appears that those are not available.  If you continue with this installation, you will not be able to install DCOM support nor associate R with .RData files.  Installation must be made to a directory where you have write permission.
+en.recordversion=Save version number in registry
+
+br.regentries=Entradas no registro:
+br.associate=&Associar arquivos .RData ao R
+br.dcom=&Registrar o caminho do R para uso pelo servidor (D)COM
+br.user=Instalação modo usuário
+br.compact=Instalação modo usuário mínima
+br.full=Instalação completa
+br.CJK=Instalação em chinês/japonês/coreano
+br.custom=Instalação personalizada
+
+dk.regentries=Indgange i registreringsdatabasen:
+dk.associate=&Associere R med .Rdata filer
+dk.dcom=&Registrer R til brug for (D)COM server
+dk.user=Brugerinstallation
+dk.compact=Minimal brugerinstallation
+dk.full=Luld installation
+dk.CJK=Kinesisk/Japansk/Koreansk installation
+dk.custom=Brugerdefinet installation
+
+fr.regentries=Entrées dans le registre:
+fr.associate=&Associer R avec les fichiers .RData
+fr.dcom=&Enregistrer R pour l'utiliser avec '(D)COM server'
+fr.user=Installation utilisateur
+fr.compact=Installation utilisateur minimale
+fr.full=Installation utilisateur complète
+fr.CJK=Installation chinois/japonais/coréen
+fr.custom=Installation personnalisée
+
+de.regentries=Einträge in der Windows-Registrierung:
+de.associate=&Verknüpfe R mit .RData Dateien
+de.dcom=&Registriere den R Pfad für den (D)COM Server
+de.user=Benutzerinstallation
+de.compact=Minimale Installation
+de.full=Vollständige Installation
+de.CJK=Chinesische/Japanische/Koreanische Installation
+de.custom=Benutzerdefinierte Installation
+
+ru.regentries=Çàïèñè â ñèñòåìíîì ğåãèñòğå:
+ru.associate=Ñâÿçàòü R ñ ôàéëàìè .RData
+ru.dcom=Çàğåãèñòğèğîâàòü ïóòü ê R äëÿ èñïîëüçîâàíèÿ (D)COM-ñåğâåğîì
+ru.user=Ïîëüçîâàòåëüñêàÿ óñòàíîâêà
+ru.compact=Ìèíèìàëüíàÿ ïîëüçîâàòåëüñêàÿ óñòàíîâêà
+ru.full=Ïîëíàÿ óñòàíîâêà
+ru.CJK=Êèòàéñêàÿ/ßïîíñêàÿ/Êîğåéñêàÿ óñòàíîâêà
+ru.custom=Âûáîğî÷íàÿ óñòàíîâêà
+
+it.regentries=Valori registri:
+it.associate=Associa R ai file .RData
+it.dcom=Memorizza percorso di R per l'utilizzo tramite server (D)COM
+it.user=Installazione utente
+it.compact=Installazione utente minimale
+it.full=Installazione completa
+it.CJK=Installazione Cinese/Giapponese/Coreana
+it.custom=Installazione personalizzata
+
+no.regentries=Registernøkler:
+no.associate=Knytt R til .RData-filer
+no.dcom=Registrer R-sti for bruk med (D)COM-tjener
+no.user=Brukerinstallering
+no.compact=Minimal brukerinstallering
+no.full=Fullstendig installering
+no.CJK=Kinesisk/japansk/koreansk installering
+no.custom=Tilpasset installering
+
+sl.regentries=Vnosi v registru:
+sl.associate=Povei datoteke .RData z R
+sl.dcom=Registriraj pot do R za strenik (D)COM
+sl.user=Uporabniška namestitev
+sl.compact=Najmanjša uporabniška namestitev
+sl.full=Polna namestitev
+sl.CJK=Namestitev v kitajskem/japonskem/korejskem jeziku
+sl.custom=Prikrojena namestitev
+
+po.regentries=Wpisy rejestru:
+po.associate=Powi¹¿ R z plikami z rozszerzeniem .RData
+po.dcom=Zarejestruj œcie¿kê polecenia R dla serwera (D)COM
+po.user=Instalacja u¿ytkownika
+po.compact=Minimalna instalacja u¿ytkownika
+po.full=Pe³na instalacja
+po.CJK=Chiñska/Japoñska/Koreañska instalacja
+po.custom=Dopasowana instalacja
+
+chs.regentries=µÇÓ›ƒÔ¼ÇÂ¼í—:
+chs.associate=&°ÑR³ÌĞòÍ¬.RDataÎÄ¼şÁªºÏÆğÀ´
+chs.dcom=&½«R³ÌĞòÂ·½½øĞĞµÇÓ›ÕâÑù(D)COM·şÎñÆ÷¿ÉÒÔÊ¹ÓÃ
+chs.user=ÓÃ»§°²×°
+chs.compact=×îÉÙÓÃ»§°²×°
+chs.full=È«²¿°²×°
+chs.CJK=ÖĞÎÄ/ÈÕÎÄ/º«ÎÄ°²×°
+chs.custom=×Ô¶¨Áx°²×°
+
+ja.regentries=ƒŒƒWƒXƒgƒŠ€–Ú:
+ja.associate=R ‚ğ Šg’£q .RData ‚ÉŠÖ˜A‚Ã‚¯‚é
+ja.dcom=(D)COM ƒT[ƒo‚ªg—p‚·‚é‚½‚ß‚ÉƒŒƒWƒXƒgƒŠ‚É R ‚ÌƒpƒX‚ğ“o˜^‚·‚é
+ja.user=—˜—pÒŒü‚¯ƒCƒ“ƒXƒg[ƒ‹
+ja.compact=—˜—pÒŒü‚¯Å¬ƒCƒ“ƒXƒg[ƒ‹
+ja.full=‘S‚ÄƒCƒ“ƒXƒg[ƒ‹
+ja.CJK=’†‘Œê/“ú–{Œê/ŠØ‘Œê Œü‚¯ƒCƒ“ƒXƒg[ƒ‹
+ja.custom=ƒJƒXƒ^ƒ€ƒCƒ“ƒXƒg[ƒ‹
+
+ko.regentries=·¹Áö½ºÆ®¸® Ç×¸ñ:
+ko.associate=R¸¦ È®ÀåÀÚ .Rdata¿¡ °ü·Ã Áı´Ï´Ù
+ko.dcom=(D)COM ¼­¹ö°¡ »ç¿ëÇÏ±â À§ÇØ¼­ ·¹Áö½ºÆ®¸®¿¡ RÀÇ ÆĞ½º¸¦ µî·ÏÇÕ´Ï´Ù
+ko.user=ÀÌ¿ëÀÚ¸¦ À§ÇÑ ÀÎ½ºÅç
+ko.compact=ÀÌ¿ëÀÚ¸¦ À§ÇÑ ÃÖ¼Ò ÀÎ½ºÅç
+ko.full=ÀüºÎ ÀÎ½ºÅç
+ko.CJK=Áß±¹¾î/ÀÏº»¾î/ÇÑ±¹¾î¸¦ À§ÇÑ ÀÎ½ºÅç
+ko.custom=Ä¿½ºÅÒ ÀÎ½ºÅç
