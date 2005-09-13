@@ -29,6 +29,7 @@ DISTFILES = \
 	README Makefile.in Makefile.win \
 	Rlapackrc.rc dllversion.rc \
 	$(HEADERS) $(SOURCES_C) \
+	vecLibg95c.c vecLibg95f.f \
 	cmplx.f cmplxblas.f \
 	dlamc.f dlapack0.f dlapack1.f dlapack2.f dlapack3.f \
 	rgeev.f rsyev.f
