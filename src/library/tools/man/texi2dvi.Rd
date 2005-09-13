@@ -22,8 +22,8 @@ texi2dvi(file, pdf = FALSE, clean = FALSE, quiet = TRUE,
     \command{texi2dvi} is in the search path.}
 }
 \details{
-  Some TeX installations on Windows do not have \file{texi2dvi.exe}.  If
-  \file{texify.exe} is present (e.g., part of MikTeX), then it can be 
+  Some TeX installations do not have \file{texi2dvi.exe}.  If
+  \file{texify.exe} is present, then it can be 
   used instead: set \code{options(texi2dvi="texify.exe")} or to the full
   path of the program.
 }
