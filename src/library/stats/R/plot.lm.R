@@ -156,24 +156,28 @@ function (x, which = c(1:3,5), ## was which = 1:4,
         abline(h = 0, v = 0, lty = 3, col = "gray")
 	if (one.fig)
 	    title(sub = sub.caption, ...)
-	p <- length(coef(x))
-        hh <- seq(min(r.hat[1], r.hat[2]/100), r.hat[2], length = 101)
-	for(crit in cook.levels) {
-            cl.h <- sqrt(crit*p*(1-hh)/hh)
-	    lines(hh, cl.h, lty=2)
-	    lines(hh,-cl.h, lty=2)
+	if(length(cook.levels)) {
+	    p <- length(coef(x))
+	    hh <- seq(min(r.hat[1], r.hat[2]/100), par("usr")[2], length = 101)
+	    for(crit in cook.levels) {
+		cl.h <- sqrt(crit*p*(1-hh)/hh)
+		lines(hh, cl.h, lty = 2, col = 2)
+		lines(hh,-cl.h, lty = 2, col = 2)
+	    }
+	    legend("bottomleft", legend = "Cook's distance",
+		   lty = 2, col = 2, bty = "n")
+	    xmax <- par("usr")[2]
+	    ymult <- sqrt(p*(1-xmax)/xmax)
+	    aty <- c(-sqrt(rev(cook.levels))*ymult, sqrt(cook.levels)*ymult)
+	    axis(4, at = aty, labels = paste(c(rev(cook.levels), cook.levels)),
+		 mgp = c(.25,.25,0), las = 2, tck = 0,
+		 cex.axis = cex.id, col.axis = 2)
 	}
-	xmax <- par("usr")[2]
-	ymult <- sqrt(p*(1-xmax)/xmax)
-	aty <- c(-sqrt(rev(cook.levels))*ymult, sqrt(cook.levels)*ymult)
-	axis(4, at = aty, labels = paste(c(rev(cook.levels), cook.levels)),
-	     mgp = c(.25,.25,0), las = 2, tck = 0, cex.axis = cex.id)
 	mtext(caption[5], 3, 0.25)
 	if (id.n > 0) {
 	    y.id <- rs[show.r]
 	    y.id[y.id < 0] <- y.id[y.id < 0] - strheight(" ")/3
-	    text(hatval[show.r], y.id, paste(show.r),
-		 cex = cex.id, pos = 2, offset = 0.25)
+	    text.id(hatval[show.r], y.id, show.r)
 	}
     }
     if (show[6]) {
