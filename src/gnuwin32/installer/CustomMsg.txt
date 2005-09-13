@@ -48,6 +48,9 @@ de.compact=Minimale Installation
 de.full=Vollständige Installation
 de.CJK=Chinesische/Japanische/Koreanische Installation
 de.custom=Benutzerdefinierte Installation
+de.adminprivilegesrequired=Sie sollten als Administrator angemeldet sein, um R zu installieren
+de.adminexplanation=Eine vollständige R Installation verlangt Administratorrechte und diese scheinen nicht vorhanden zu sein. Wenn Sie die Installation fortsetzen, können die DCOM Unterstützung und die Verknüpfung von R mit .RData Dateien nicht installiert werden. Die Installation muss in ein Verzeichnis geschehen, für das sie Schreibrechte besitzen.
+de.recordversion=Speichere Versionsnummer in der Registry
 
 ru.regentries=Çàïèñè â ñèñòåìíîì ğåãèñòğå:
 ru.associate=Ñâÿçàòü R ñ ôàéëàìè .RData

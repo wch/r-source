@@ -499,8 +499,8 @@ You can add the Registry entries by running @code{RSetReg.exe} in the
 and that this neither sets up nor removes the file associations.
 
 In the case of a user running the installer without administrative
-privileges, a key @code{CURRENT_USER\Software\R-core\R\[version]} will be
-set giving the install path, but the other keys will not be set.
+privileges, the installer will set keys under the @code{CURRENT_USER} root giving
+the install path, but the other keys will not be set.  
 
 
 @node Does R support automation?, The internet download functions fail., Does R use the Registry?, Installation and Usage
