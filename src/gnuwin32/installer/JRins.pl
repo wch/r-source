@@ -110,13 +110,13 @@ Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: 
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdminLoggedOn
 Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: IsAdminLoggedOn
 
-Root: HKLM; Subkey: "Software\\R-core\\R\\${RW}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdminLoggedOn
-Root: HKLM; Subkey: "Software\\R-core\\R\\${RW}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdminLoggedOn
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdminLoggedOn
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdminLoggedOn
 
 Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdminLoggedOn
 Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdminLoggedOn
-Root: HKCU; Subkey: "Software\\R-core\\R\\${RW}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdminLoggedOn
-Root: HKCU; Subkey: "Software\\R-core\\R\\${RW}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdminLoggedOn
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdminLoggedOn
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdminLoggedOn
 
 Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdminLoggedOn
 Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdminLoggedOn
