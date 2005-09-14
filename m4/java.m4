@@ -20,6 +20,25 @@
 ### Software Foundation, 59 Temple Place -- Suite 330, Boston, MA
 ### 02111-3307, USA.
 
+
+## R_RUN_JAVA(variable for the result, parameters)
+## ----------
+## runs the java interpreter ${JAVA_PROG} with specified parameters and
+## saves the output to the supplied variable. The exit value is ignored.
+AC_DEFUN([R_RUN_JAVA],
+[
+  acx_java_result=
+  if test -z "${JAVA_PROG}"; then
+    echo "$as_me:$LINENO: JAVA_PROG is not set, cannot run java $2" >&AS_MESSAGE_LOG_FD
+  else
+    echo "$as_me:$LINENO: running ${JAVA_PROG} $2" >&AS_MESSAGE_LOG_FD
+    acx_java_result=`${JAVA_PROG} $2 2>&AS_MESSAGE_LOG_FD`
+    echo "$as_me:$LINENO: output: '$acx_java_result'" >&AS_MESSAGE_LOG_FD
+  fi
+  AC_SUBST([$1], [$acx_java_result])
+])
+
+
 ## R_JAVA
 ## -----------
 ## Looks for Java JRE/JDK and sets:
@@ -48,42 +67,61 @@ AC_PATH_PROGS(JAVA_PROG,java,,${JAVA_PATH})
 ## FIXME: we may want to check for jikes, kaffe and others...
 AC_PATH_PROGS(JAVAC,javac,,${JAVA_PATH})
 
-AC_MSG_CHECKING([for Java environment])
-
 ## this is where our test-class lives (in tools directory)
 getsp_cp=${ac_aux_dir}
 
-## retrieve JAVA_HOME from Java itself if not set and we found
-## the `java' interpreter
+AC_MSG_CHECKING([whether Java interpreter works])
+acx_java_works=no
 if test -n "${JAVA_PROG}" ; then
-  if test -z "${JAVA_HOME}" ; then
-    JAVA_HOME=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.home`
+  R_RUN_JAVA(jc_result,[-classpath ${getsp_cp} getsp -test])
+  if test "${jc_result}" = "Test1234OK"; then
+    acx_java_works=yes
   fi
 fi
 
-## the availability of JAVA_HOME will tell us whether it's supported
-if test -z "${JAVA_HOME}" ; then
-  AC_MSG_RESULT([not found])
-else
-  AC_MSG_RESULT([in ${JAVA_HOME}])
+if test ${acx_java_works} = yes; then
+  AC_MSG_RESULT([yes])
 
-  case "${host_os}" in
-    darwin*)
-      JAVA_LIBS="-framework JavaVM"
-      JAVA_LD_PATH=
-      ;;
-    *)
-      JAVA_LIBS=`${JAVA_PROG} -classpath ${getsp_cp} getsp -libs`
-      JAVA_LIBS="${JAVA_LIBS} -ljvm"
-      JAVA_LD_PATH=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.library.path`
-      ;;
-  esac
+  AC_MSG_CHECKING([for Java environment])
+
+
+  ## retrieve JAVA_HOME from Java itself if not set 
+  if test -z "${JAVA_HOME}" ; then
+    R_RUN_JAVA(JAVA_HOME,[-classpath ${getsp_cp} getsp java.home])
+  fi
+
+  ## the availability of JAVA_HOME will tell us whether it's supported
+  if test -z "${JAVA_HOME}" ; then
+    if test x$acx_java_env_msg != xyes; then
+      AC_MSG_RESULT([not found])
+    fi
+  else
+    AC_MSG_RESULT([in ${JAVA_HOME}])
+
+    case "${host_os}" in
+      darwin*)
+        JAVA_LIBS="-framework JavaVM"
+        JAVA_LD_PATH=
+        ;;
+      *)
+        R_RUN_JAVA(JAVA_LIBS, [-classpath ${getsp_cp} getsp -libs])
+        JAVA_LIBS="${JAVA_LIBS} -ljvm"
+        R_RUN_JAVA(JAVA_LD_PATH, [-classpath ${getsp_cp} getsp java.library.path])
+        ;;
+    esac
   
-  ## note that we actually don't test JAVA_LIBS - we hope that the detection
-  ## was correct.
+    ## note that we actually don't test JAVA_LIBS - we hope that the detection
+    ## was correct. We should also test the functionality for javac.
 
-  have_java=yes
+    have_java=yes
+  fi
+else
+  AC_MSG_RESULT([no])
+  JAVA_PROG=
+  JAVAC=
+  JAVA_HOME=
 fi
+
 AC_SUBST(JAVA_HOME)
 AC_SUBST(JAVA_PROG)
 AC_SUBST(JAVA_LD_PATH)

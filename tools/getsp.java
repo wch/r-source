@@ -1,6 +1,9 @@
 public class getsp {
     public static void main(String[] args) {
 	if (args!=null && args.length>0) {
+	    if (args[0].compareTo("-test")==0) {
+		System.out.println("Test1234OK");
+	    } else
 	    if (args[0].compareTo("-libs")==0) {
 		String prefix="-L";
 		if (args.length>1) prefix=args[1];

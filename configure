@@ -465,7 +465,7 @@ ac_includes_default="\
 # include <unistd.h>
 #endif"
 
-ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE USING_F2C_TRUE USING_F2C_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC JAVA_HOME JAVA_LD_PATH JAVA_LIBS R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
+ac_subst_vars='SHELL PATH_SEPARATOR PACKAGE_NAME PACKAGE_TARNAME PACKAGE_VERSION PACKAGE_STRING PACKAGE_BUGREPORT exec_prefix prefix program_transform_name bindir sbindir libexecdir datadir sysconfdir sharedstatedir localstatedir libdir includedir oldincludedir infodir mandir build_alias host_alias target_alias DEFS ECHO_C ECHO_N ECHO_T LIBS PACKAGE VERSION build build_cpu build_vendor build_os host host_cpu host_vendor host_os R_PLATFORM R_OSTYPE LIBnn rdocdir rincludedir rsharedir config_opts WANT_R_FRAMEWORK_TRUE WANT_R_FRAMEWORK_FALSE MAINTAINER_MODE_TRUE MAINTAINER_MODE_FALSE WANT_R_SHLIB_TRUE WANT_R_SHLIB_FALSE LIBR USE_LIBTOOL_TRUE USE_LIBTOOL_FALSE R_PRINTCMD R_PAPERSIZE R_BATCHSAVE MAIN_CFLAGS SHLIB_CFLAGS MAIN_FFLAGS SHLIB_FFLAGS MAIN_LD MAIN_LDFLAGS CPICFLAGS FPICFLAGS SHLIB_LD SHLIB_LDFLAGS DYLIB_LD DYLIB_LDFLAGS CXXPICFLAGS SHLIB_CXXLD SHLIB_CXXLDFLAGS TCLTK_LIBS TCLTK_CPPFLAGS MAKE F2C R_BROWSER BLAS_LIBS LAPACK_LIBS GETWD BUILDDIR_IS_SRCDIR ACLOCAL AUTOCONF AUTOMAKE AUTOHEADER MAKEINFO AWK EGREP LN_S RANLIB ac_ct_RANLIB YACC AR ARFLAGS INSTALL_PROGRAM INSTALL_SCRIPT INSTALL_DATA SED PAGER PERL FALSE NO_PERL5 TAR DVIPS TEX LATEX MAKEINDEX PDFTEX PDFLATEX MAKEINFO_CMD INSTALL_INFO R_RD4DVI R_RD4PDF R_UNZIPCMD R_ZIPCMD R_GZIPCMD R_PDFVIEWER CC CFLAGS LDFLAGS CPPFLAGS ac_ct_CC EXEEXT OBJEXT CPP F77 FFLAGS ac_ct_F77 USING_G77_TRUE USING_G77_FALSE USING_F2C_TRUE USING_F2C_FALSE CXX CXXFLAGS ac_ct_CXX CXXCPP ECHO ac_ct_AR STRIP ac_ct_STRIP LIBTOOL LIBTOOL_DEPS shlibpath_var LIBM BUILD_DLFCN_DARWIN_TRUE BUILD_DLFCN_DARWIN_FALSE READLINE_LIBS FLIBS HAVE_FORTRAN_DOUBLE_COMPLEX COMPILE_FORTRAN_DOUBLE_COMPLEX_TRUE COMPILE_FORTRAN_DOUBLE_COMPLEX_FALSE SHLIB_CXXFLAGS F2CFLAGS R_XTRA_CFLAGS R_XTRA_CPPFLAGS R_XTRA_CXXFLAGS R_XTRA_FFLAGS R_XTRA_LIBS XMKMF SHLIB_LIBADD SHLIB_EXT USE_EXPORTFILES_TRUE USE_EXPORTFILES_FALSE DYLIB_EXT LIBR_LDFLAGS RLAPACK_LDFLAGS LAPACK_LDFLAGS FW_VERSION ALLOCA RMATH_HAVE_EXPM1 RMATH_HAVE_LOG1P LIBOBJS RMATH_HAVE_WORKING_LOG1P HAVE_C99_COMPLEX USE_VECLIB_G95FIX_TRUE USE_VECLIB_G95FIX_FALSE USE_EXTERNAL_BLAS_TRUE USE_EXTERNAL_BLAS_FALSE USE_EXTERNAL_LAPACK_TRUE USE_EXTERNAL_LAPACK_FALSE R_MODULES SUPPORT_UTF8 SUPPORT_MBCS X_CFLAGS X_PRE_LIBS X_LIBS X_EXTRA_LIBS BUILD_AQUA_TRUE BUILD_AQUA_FALSE use_aqua TCL_CONFIG TK_CONFIG use_tcltk BITMAP_LIBS BUILD_XDR_TRUE BUILD_XDR_FALSE BUILD_ZLIB_TRUE BUILD_ZLIB_FALSE USE_MMAP_ZLIB_TRUE USE_MMAP_ZLIB_FALSE BUILD_BZLIB_TRUE BUILD_BZLIB_FALSE BUILD_PCRE_TRUE BUILD_PCRE_FALSE R_PROFILING PAPERCONF JAVA_PROG JAVAC jc_result JAVA_HOME JAVA_LIBS JAVA_LD_PATH R_LD_LIBRARY_PATH USE_RECOMMENDED_PACKAGES_TRUE USE_RECOMMENDED_PACKAGES_FALSE USE_NLS SET_MAKE MKINSTALLDIRS MSGFMT GMSGFMT XGETTEXT MSGMERGE GLIBC21 HAVE_POSIX_PRINTF HAVE_ASPRINTF HAVE_SNPRINTF HAVE_WPRINTF LIBICONV LTLIBICONV INTLBISON BUILD_INCLUDED_LIBINTL USE_INCLUDED_LIBINTL CATOBJEXT DATADIRNAME INSTOBJEXT GENCAT INTLOBJS INTL_LIBTOOL_SUFFIX_PREFIX INTLLIBS LIBINTL LTLIBINTL POSUB USE_NLS_TRUE USE_NLS_FALSE LTLIBOBJS'
 ac_subst_files='r_cc_rules_frag r_f77_rules_frag r_cxx_rules_frag'
 
 # Initialize some variables set by options.
@@ -40148,41 +40148,110 @@ fi
 done
 
 
-echo "$as_me:$LINENO: checking for Java environment" >&5
-echo $ECHO_N "checking for Java environment... $ECHO_C" >&6
-
 getsp_cp=${ac_aux_dir}
 
+echo "$as_me:$LINENO: checking whether Java interpreter works" >&5
+echo $ECHO_N "checking whether Java interpreter works... $ECHO_C" >&6
+acx_java_works=no
 if test -n "${JAVA_PROG}" ; then
-  if test -z "${JAVA_HOME}" ; then
-    JAVA_HOME=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.home`
+
+  acx_java_result=
+  if test -z "${JAVA_PROG}"; then
+    echo "$as_me:$LINENO: JAVA_PROG is not set, cannot run java -classpath ${getsp_cp} getsp -test" >&5
+  else
+    echo "$as_me:$LINENO: running ${JAVA_PROG} -classpath ${getsp_cp} getsp -test" >&5
+    acx_java_result=`${JAVA_PROG} -classpath ${getsp_cp} getsp -test 2>&5`
+    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
+  fi
+  jc_result=$acx_java_result
+
+
+  if test "${jc_result}" = "Test1234OK"; then
+    acx_java_works=yes
   fi
 fi
 
-if test -z "${JAVA_HOME}" ; then
-  echo "$as_me:$LINENO: result: not found" >&5
+if test ${acx_java_works} = yes; then
+  echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6
+
+  echo "$as_me:$LINENO: checking for Java environment" >&5
+echo $ECHO_N "checking for Java environment... $ECHO_C" >&6
+
+
+  ## retrieve JAVA_HOME from Java itself if not set
+  if test -z "${JAVA_HOME}" ; then
+
+  acx_java_result=
+  if test -z "${JAVA_PROG}"; then
+    echo "$as_me:$LINENO: JAVA_PROG is not set, cannot run java -classpath ${getsp_cp} getsp java.home" >&5
+  else
+    echo "$as_me:$LINENO: running ${JAVA_PROG} -classpath ${getsp_cp} getsp java.home" >&5
+    acx_java_result=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.home 2>&5`
+    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
+  fi
+  JAVA_HOME=$acx_java_result
+
+
+  fi
+
+  ## the availability of JAVA_HOME will tell us whether it's supported
+  if test -z "${JAVA_HOME}" ; then
+    if test x$acx_java_env_msg != xyes; then
+      echo "$as_me:$LINENO: result: not found" >&5
 echo "${ECHO_T}not found" >&6
-else
-  echo "$as_me:$LINENO: result: in ${JAVA_HOME}" >&5
+    fi
+  else
+    echo "$as_me:$LINENO: result: in ${JAVA_HOME}" >&5
 echo "${ECHO_T}in ${JAVA_HOME}" >&6
 
-  case "${host_os}" in
-    darwin*)
-      JAVA_LIBS="-framework JavaVM"
-      JAVA_LD_PATH=
-      ;;
-    *)
-      JAVA_LIBS=`${JAVA_PROG} -classpath ${getsp_cp} getsp -libs`
-      JAVA_LIBS="${JAVA_LIBS} -ljvm"
-      JAVA_LD_PATH=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.library.path`
-      ;;
-  esac
+    case "${host_os}" in
+      darwin*)
+        JAVA_LIBS="-framework JavaVM"
+        JAVA_LD_PATH=
+        ;;
+      *)
 
-  ## note that we actually don't test JAVA_LIBS - we hope that the detection
-  ## was correct.
+  acx_java_result=
+  if test -z "${JAVA_PROG}"; then
+    echo "$as_me:$LINENO: JAVA_PROG is not set, cannot run java -classpath ${getsp_cp} getsp -libs" >&5
+  else
+    echo "$as_me:$LINENO: running ${JAVA_PROG} -classpath ${getsp_cp} getsp -libs" >&5
+    acx_java_result=`${JAVA_PROG} -classpath ${getsp_cp} getsp -libs 2>&5`
+    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
+  fi
+  JAVA_LIBS=$acx_java_result
 
-  have_java=yes
+
+        JAVA_LIBS="${JAVA_LIBS} -ljvm"
+
+  acx_java_result=
+  if test -z "${JAVA_PROG}"; then
+    echo "$as_me:$LINENO: JAVA_PROG is not set, cannot run java -classpath ${getsp_cp} getsp java.library.path" >&5
+  else
+    echo "$as_me:$LINENO: running ${JAVA_PROG} -classpath ${getsp_cp} getsp java.library.path" >&5
+    acx_java_result=`${JAVA_PROG} -classpath ${getsp_cp} getsp java.library.path 2>&5`
+    echo "$as_me:$LINENO: output: '$acx_java_result'" >&5
+  fi
+  JAVA_LD_PATH=$acx_java_result
+
+
+        ;;
+    esac
+
+    ## note that we actually don't test JAVA_LIBS - we hope that the detection
+    ## was correct. We should also test the functionality for javac.
+
+    have_java=yes
+  fi
+else
+  echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6
+  JAVA_PROG=
+  JAVAC=
+  JAVA_HOME=
 fi
+
 
 
 
@@ -47608,9 +47677,10 @@ s,@R_PROFILING@,$R_PROFILING,;t t
 s,@PAPERCONF@,$PAPERCONF,;t t
 s,@JAVA_PROG@,$JAVA_PROG,;t t
 s,@JAVAC@,$JAVAC,;t t
+s,@jc_result@,$jc_result,;t t
 s,@JAVA_HOME@,$JAVA_HOME,;t t
-s,@JAVA_LD_PATH@,$JAVA_LD_PATH,;t t
 s,@JAVA_LIBS@,$JAVA_LIBS,;t t
+s,@JAVA_LD_PATH@,$JAVA_LD_PATH,;t t
 s,@R_LD_LIBRARY_PATH@,$R_LD_LIBRARY_PATH,;t t
 s,@USE_RECOMMENDED_PACKAGES_TRUE@,$USE_RECOMMENDED_PACKAGES_TRUE,;t t
 s,@USE_RECOMMENDED_PACKAGES_FALSE@,$USE_RECOMMENDED_PACKAGES_FALSE,;t t
