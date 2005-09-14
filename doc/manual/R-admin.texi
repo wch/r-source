@@ -2391,8 +2391,29 @@ For some comments on building on an Itanium (@samp{ia64}) Linux system
 with @command{gcc} or the Intel compilers see
 @uref{http://www.nakama.ne.jp/memo/ia64_linux/}.
 
-Attempts to use the Portland Group compilers on @samp{x86_64} have been
-unsuccessful: it seems their libc is not PIC.
+Jennifer Lai used the Portland Group compilers on @samp{x86_64} to build
+pre-2.2.0 with settings
+
+@example
+PG_HOME=/usr/pgi/linux86-64/6.0
+CC=$PG_HOME/bin/pgcc
+CFLAGS="-g -O2 -mieee-fp"
+CPPFLAGS="-I$PG_HOME/include -I$PG_HOME/include/CC"
+CPICFLAGS=-fpic
+F77=$PG_HOME/bin/pgf77
+FFLAGS=-O2
+FPICFLAGS=-fpic
+CXX=$PG_HOME/bin/pgCC
+CXXPICFLAGS=-fpic
+SHLIB_CXXLDFLAGS=-shared
+SHLIB_LDFLAGS=-shared
+LDFLAGS="-L$PG_HOME/libso -L/usr/lib64"
+@end example
+
+@noindent
+Note particularly the last, which is need to ensure that a shared
+version of @code{libc} is found.
+
 
 @node Mac OS X, Solaris, Linux, Platform notes
 @section Mac OS X
