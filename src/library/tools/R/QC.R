@@ -1879,13 +1879,13 @@ function(package, dir, lib.loc = NULL)
     methods_stop_list <- .make_S3_methods_stop_list(basename(dir))
     S3_group_generics <- .get_S3_group_generics()
 
-    checkArgs <- function(g, m, env) {
+    checkArgs <- function(g, m) {
         ## Do the arguments of method m (in code_env) 'extend' those of
-        ## the generic g from environment env?  The method must have all
+        ## the generic g as seen from code_env?  The method must have all
         ## arguments the generic has, with positional arguments of g in
         ## the same positions for m.
         ## Exception: '...' in the method swallows anything.
-        genfun <- get(g, envir = env)
+        genfun <- get(g, envir = code_env)
         gArgs <- names(formals(genfun))
         if(g == "plot") gArgs <- gArgs[-2]
         ogArgs <- gArgs
@@ -1895,7 +1895,8 @@ function(package, dir, lib.loc = NULL)
                 if (g %in% S3_group_generics) .BaseNamespaceEnv
                 else if (typeof(genfun) == "closure") environment(genfun)
                 else .BaseNamespaceEnv
-            S3Table <- get(".__S3MethodsTable__.", envir = defenv)
+            S3Table <- get(".__S3MethodsTable__.", envir = defenv,
+                           inherits = FALSE)
             if(!exists(m, envir = S3Table)) {
                 warning(gettextf("declared S3 method '%s' not found",
                                  m),
@@ -1990,6 +1991,14 @@ function(package, dir, lib.loc = NULL)
             }
         }
     }
+
+    ## Also want the internal S3 generics from base which are not
+    ## .Primitive (as checkArgs() cannot deal with primitives).
+    all_S3_generics <- .get_internal_S3_generics()
+    all_S3_generics <- all_S3_generics[sapply(all_S3_generics,
+                                              .is_primitive,
+                                              baseenv())
+                                       == FALSE]
     for(env in env_list) {
         ## Find all available S3 generics.
         objects_in_env <- if(identical(env, code_env)) {
@@ -2003,45 +2012,36 @@ function(package, dir, lib.loc = NULL)
             objects_in_env[sapply(objects_in_env, .is_S3_generic, env)
                            == TRUE]
         else character(0)
+        all_S3_generics <- c(all_S3_generics, S3_generics)
+    }
+    all_S3_generics <- unique(all_S3_generics)
 
-        ## For base, also add the internal S3 generics which are not
-        ## .Primitive (as checkArgs() does not deal with these).
-        if(identical(env, baseenv())) {
-            internal_S3_generics <- .get_internal_S3_generics()
-            internal_S3_generics <-
-                internal_S3_generics[sapply(internal_S3_generics,
-                                            .is_primitive,
-                                            baseenv())
-                                     == FALSE]
-            S3_generics <- c(S3_generics, internal_S3_generics)
+    for(g in all_S3_generics) {
+        if(!exists(g, envir = code_env)) next
+        ## Find all methods in functions_in_code for S3 generic g.
+        ## <FIXME>
+        ## We should really determine the name g dispatches for, see
+        ## a current version of methods() [2003-07-07].  (Care is
+        ## needed for internal generics and group generics.)
+        ## Matching via grep() is tricky with e.g. a '$' in the name
+        ## of the generic function ... hence substr().
+        name <- paste(g, ".", sep = "")
+        methods <-
+            functions_in_code[substr(functions_in_code, 1,
+                                     nchar(name, type="c")) == name]
+        ## </FIXME>
+        methods <- methods %w/o% methods_stop_list
+        if(has_namespace) {
+            ## Find registered methods for generic g.
+            methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
         }
-
-        for(g in S3_generics) {
-            ## Find all methods in functions_in_code for S3 generic g.
-            ## <FIXME>
-            ## We should really determine the name g dispatches for, see
-            ## a current version of methods() [2003-07-07].  (Care is
-            ## needed for internal generics and group generics.)
-            ## Matching via grep() is tricky with e.g. a '$' in the name
-            ## of the generic function ... hence substr().
-            name <- paste(g, ".", sep = "")
-            methods <-
-                functions_in_code[substr(functions_in_code, 1,
-                                         nchar(name, type="c")) == name]
-            ## </FIXME>
-            methods <- methods %w/o% methods_stop_list
-            if(has_namespace) {
-                ## Find registered methods for generic g.
-                methods <- c(methods, ns_S3_methods[ns_S3_generics == g])
-            }
-
-            for(m in methods)
-                ## both all() and all.equal() are generic.
-                bad_methods <- if(g == "all") {
-                    m1 <- m[-grep("^all\\.equal", m)]
-                    c(bad_methods, if(length(m1)) checkArgs(g, m1, env))
-                } else c(bad_methods, checkArgs(g, m, env))
-        }
+        
+        for(m in methods)
+            ## both all() and all.equal() are generic.
+            bad_methods <- if(g == "all") {
+                m1 <- m[-grep("^all\\.equal", m)]
+                c(bad_methods, if(length(m1)) checkArgs(g, m1))
+            } else c(bad_methods, checkArgs(g, m))
     }
 
     class(bad_methods) <- "checkS3methods"
@@ -2374,6 +2374,11 @@ function(package)
     }
     else
         imports <- character()
+    ## Need this to handle bundles ...
+    if("Contains" %in% names(db))
+        contains <- unlist(strsplit(db["Contains"], " +"))
+    else
+        contains <- character()
 
     standard_package_names <- .get_standard_package_names()
 
@@ -2415,7 +2420,11 @@ function(package)
         ## Not clear whether we want to require *all* namespace package
         ## dependencies listed in DESCRIPTION, or e.g. just the ones on
         ## non-base packages.  Do the latter for time being ...
-        reqs <- reqs %w/o% c(imports, depends, standard_package_names$base)
+        reqs <- reqs %w/o% c(contains, imports, depends,
+                             standard_package_names$base)
+        ## Note that for bundles we currently cannot have package
+        ## dependencies different from bundle ones, and clearly a bundle
+        ## cannot depend on something it contains ...
         ## </FIXME>
         if(length(reqs))
             bad_depends$missing_namespace_depends <- reqs
