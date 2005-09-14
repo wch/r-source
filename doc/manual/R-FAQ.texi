@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-12
+@set FAQ_DATE @value{FAQ_YEAR}-09-14
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -1931,6 +1931,8 @@ Functions to import Arc/Info V7.x coverages and data.
 @item RColorBrewer
 ColorBrewer palettes for drawing nice maps shaded according to a
 variable.
+@item RFA
+Regional Frequency Analysis.
 @item RGrace
 Mouse/menu driven interactive plotting application.
 @item RGraphics
