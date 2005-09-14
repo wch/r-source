@@ -619,6 +619,11 @@ BUG FIXES
 	give no errors (but warnings) when not edited, much more often.
 
 
+    o   wilcox.test() now warns when conf.level is set higher than 
+        achievable, preventing errors (PR#3666) and incorrect answers
+        with extremely small sample sizes.
+
+
 
 	**************************************************
 	*						 *

@@ -59,8 +59,9 @@ wilcox.test(x, \dots)
   Otherwise, if both \code{x} and \code{y} are given and \code{paired}
   is \code{FALSE}, a Wilcoxon rank sum test (equivalent to the
   Mann-Whitney test: see the Note) is carried out.  In this case, the
-  null hypothesis is that the location of the distributions of \code{x}
-  and \code{y} differ by \code{mu}.
+  null hypothesis is that the distributions of \code{x} and \code{y}
+  differ by a location shift of \code{mu} and the alternative is that
+  they differ by some other location shift.
 
   By default (if \code{exact} is not specified), an exact p-value is
   computed if the samples contain less than 50 finite values and there
@@ -78,6 +79,11 @@ wilcox.test(x, \dots)
   (1972), and the Hodges-Lehmann estimator is employed.  Otherwise, the
   returned confidence interval and point estimate are based on normal
   approximations.
+  
+  With small samples it may not be possible to achieve very high
+  confidence interval coverages. If this happens a warning will be given
+  and an interval with lower coverage will be substituted. 
+  
 }
 \value{
   A list with class \code{"htest"} containing the following components:
@@ -135,8 +141,8 @@ wilcox.test(x, \dots)
   
   \code{\link{kruskal.test}} for testing homogeneity in location
   parameters in the case of two or more samples;
-  \code{\link{t.test}} for a parametric alternative under normality
-  assumptions.
+  \code{\link{t.test}} for an alternative under normality
+  assumptions [or large samples]
 }
 \examples{
 ## One-sample test.
