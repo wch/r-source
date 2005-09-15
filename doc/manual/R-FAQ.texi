@@ -4,7 +4,7 @@
 @settitle R FAQ
 @setchapternewpage on
 @set FAQ_YEAR 2005
-@set FAQ_DATE @value{FAQ_YEAR}-09-14
+@set FAQ_DATE @value{FAQ_YEAR}-09-15
 @set REL_YEAR 2005
 @set REL_MAJOR 2
 @set REL_MINOR 1
@@ -2306,6 +2306,8 @@ tesselation (with respect to the entire plane) of a planar point set.
 @item depmix
 Dependent Mixture Models: fit (multi-group) mixtures of latent Markov
 models on mixed categorical and continuous (time series) data.
+@item dglm
+Double generalized linear models.
 @item diamonds
 Functions for illustrating aperture-4 diamond partitions in the plane,
 or on the surface of an octahedron or icosahedron, for use as analysis
@@ -2734,6 +2736,8 @@ and H. Sonnberger, 1986, Physica.
 Computation of local false discovery rates.
 @item locfit
 Local Regression, likelihood and density estimation.
+@item lodplot
+Assorted plots of location score versus genetic map position.
 @item logistf
 Firth's bias reduced logistic regression approach with penalized profile
 likelihood based confidence intervals for parameter estimates.
