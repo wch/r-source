@@ -192,11 +192,18 @@ static double mktime00 (struct tm *tm)
 {
     int day = 0;
     int i, year, year0;
+    double excess = 0.0;
 
     day = tm->tm_mday - 1;
     year0 = 1900 + tm->tm_year;
     /* safety check for unbounded loops */
-    if (abs(year0 - 1970) > 5000) return (double)(-1);
+    if (year0 > 3000) {
+	excess = (int)(year0/2000) - 1;
+	year0 -= excess * 2000;
+    } else if (year0 < 0) {
+	excess = -1 - (int)(-year0/2000);
+	year0 -= excess * 2000;
+    }
 
     for(i = 0; i < tm->tm_mon; i++) day += days_in_month[i];
     if (tm->tm_mon > 1 && isleap(year0)) day++;
@@ -214,7 +221,7 @@ static double mktime00 (struct tm *tm)
     if ((tm->tm_wday = (day + 4) % 7) < 0) tm->tm_wday += 7;
 
     return tm->tm_sec + (tm->tm_min * 60) + (tm->tm_hour * 3600)
-	+ (day * 86400.0);
+	+ (day + excess * 730485) * 86400.0;
 }
 
 static double guess_offset (struct tm *tm)
@@ -279,6 +286,7 @@ static double mktime0 (struct tm *tm, const int local)
 #endif
     if(OK) {
 	res = (double) mktime(tm);
+	if (res == (double)-1) return res;
 #ifndef HAVE_POSIX_LEAPSECONDS
         for(i = 0; i < 22; i++)
             if(res > leapseconds[i]) res -= 1.0;
@@ -836,7 +844,10 @@ SEXP do_POSIXlt2D(SEXP call, SEXP op, SEXP args, SEXP env)
 	if(tm.tm_mday == NA_INTEGER || tm.tm_mon == NA_INTEGER ||
 	   tm.tm_year == NA_INTEGER || validate_tm(&tm) < 0)
 	    REAL(ans)[i] = NA_REAL;
-	else REAL(ans)[i] = mktime00(&tm)/86400;
+	else {
+	    double tmp = mktime00(&tm);
+	    REAL(ans)[i] = (tmp==-1) ? NA_REAL : tmp/86400;
+	}
     }
 
     PROTECT(class = allocVector(STRSXP, 1));

@@ -313,6 +313,10 @@ NEW FEATURES
         plots and spine plots or spinograms.  Spine plots are now used
         instead of bar plots for x-y scatterplots where y is a factor.
 
+    o	The date and date-time functions work better with dates more
+	than 5000 years away from 1970-01-01 (by making dubious
+	assumptions about the calendar in use).
+
 
 DEPRECATED & DEFUNCT
 
