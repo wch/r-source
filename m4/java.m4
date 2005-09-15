@@ -35,7 +35,7 @@ AC_DEFUN([R_RUN_JAVA],
     acx_java_result=`${JAVA_PROG} $2 2>&AS_MESSAGE_LOG_FD`
     echo "$as_me:$LINENO: output: '$acx_java_result'" >&AS_MESSAGE_LOG_FD
   fi
-  AC_SUBST([$1], [$acx_java_result])
+  $1=$acx_java_result
 ])
 
 
@@ -73,10 +73,11 @@ getsp_cp=${ac_aux_dir}
 AC_MSG_CHECKING([whether Java interpreter works])
 acx_java_works=no
 if test -n "${JAVA_PROG}" ; then
-  R_RUN_JAVA(jc_result,[-classpath ${getsp_cp} getsp -test])
-  if test "${jc_result}" = "Test1234OK"; then
+  R_RUN_JAVA(acx_jc_result,[-classpath ${getsp_cp} getsp -test])
+  if test "${acx_jc_result}" = "Test1234OK"; then
     acx_java_works=yes
   fi
+  acx_jc_result=
 fi
 
 if test ${acx_java_works} = yes; then
