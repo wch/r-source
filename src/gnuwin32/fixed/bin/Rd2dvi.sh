@@ -334,6 +334,13 @@ fi
 status=0
 ## <FIXME>
 
+miktex=`latex --version | grep ^MiKTeX | wc -l`
+if test "${miktex}" eq "1"; then
+R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
+else
+R_TEXOPTS=
+fi
+
 echo "Creating ${out_ext} output from LaTeX ..."
 cd ${build_dir}
 ${R_LATEXCMD-latex} ${R_TEXOPTS} Rd2 || status=1

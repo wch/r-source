@@ -37,10 +37,7 @@ Installation is now available in Finnish.
 install.packages() now detect members of a bundle which are in use
 and so skips the bundle (as it does for packages).
 
-MikTeX is now the default version of LaTeX assumed when building R or
-installing packages.  If you are using another version of LaTeX you
-will likely need to edit the MkRules file and the (new) R_TEXOPTS
-file.
+MiKTeX is now recognised and the command-line set suitably for it.
 
 If the user chooses to register R during installation, a registry entry
 HKEY_LOCAL_MACHINE\Software\R-core\R\{version}\InstallPath will be added.

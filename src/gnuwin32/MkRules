@@ -45,13 +45,12 @@ TCL_VERSION = 84
 # src/gnuwin32/R_TEXOPTS file specifies the options used when building packages.
 #
 ifneq ($(strip $(BUILD)),CROSS)
-# Define to use MikTeX
-#
+ifeq ($(strip $(shell latex --version | grep ^MiKTeX | wc -l)),1)
+# MiKTeX
 R_TEXOPTS=--include-directory=$(RHOME)/share/texmf
-#
-# Define to use other TeX
-#
-# R_TEXOPTS=
+else
+R_TEXOPTS=
+endif
 else # cross-builds
 R_TEXOPTS=
 endif
