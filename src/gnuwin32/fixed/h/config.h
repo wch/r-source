@@ -101,6 +101,9 @@
 /* Define to 1 if you have the <complex.h> header file. */
 #define HAVE_COMPLEX_H 1
 
+/* Defined if framework CoreFoundation is present */
+/* #undef HAVE_COREFOUNDATION_FW */
+
 /* Define to 1 if you have the `cpow' function. */
 #define HAVE_CPOW 1
 
@@ -212,7 +215,7 @@
 #define HAVE_ERRNO_H 1
 
 /* Define to 1 if you have the `expm1' function. */
-/* #undef HAVE_EXPM1 */
+/* #undef HAVE_EXPM1 - in fact recent mingw-runtime >= 3.8 does have it */
 
 /* Define if your Fortran compiler appends an underscore to external names. */
 #define HAVE_F77_UNDERSCORE 1
@@ -512,7 +515,7 @@
 #define HAVE_STRDUP 1
 
 /* Define to 1 if you have the `strerror' function. */
-#define HAVE_STRERROR 1 
+#define HAVE_STRERROR 1
 
 /* Define to 1 if you have the <strings.h> header file. */
 #define HAVE_STRINGS_H 1
@@ -591,6 +594,9 @@
 
 /* Define if you have the 'unsigned long long' type. */
 #define HAVE_UNSIGNED_LONG_LONG 1
+
+/* Defined if framework vecLib is present */
+/* #undef HAVE_VECLIB_FW */
 
 /* Define to 1 if you have the `vsnprintf' function. */
 #define HAVE_VSNPRINTF 1
