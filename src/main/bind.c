@@ -47,7 +47,7 @@ struct BindData {
  int  ans_length;
  SEXP ans_names;
  int  ans_nnames;
-/* int  deparse_level; /* Initialize to 1. */
+/* int  deparse_level; Initialize to 1. */
 };
 
 static int HasNames(SEXP x)
@@ -610,7 +610,7 @@ SEXP do_c_dflt(SEXP call, SEXP op, SEXP args, SEXP env)
     struct BindData data;
     struct NameData nameData;
 
-/*    data.deparse_level = 1; /* Initialize this early. */
+/*    data.deparse_level = 1;  Initialize this early. */
     R_Visible = 1;
 
     /* Method dispatch has failed; run the default code. */
