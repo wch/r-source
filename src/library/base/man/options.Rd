@@ -95,8 +95,10 @@ getOption(x)
       debugging.}
 
     \item{\code{expressions}:}{sets a limit on the number of nested
-      expressions that will be evaluated.
-      Valid values are 25\dots500000 with default 5000.}
+      expressions that will be evaluated.  Valid values are
+      25\dots500000 with default 5000.  If you increase it, you may
+      also want to start \R with a larger stack; see \code{--max-ppsize}
+      in \code{\link{Memory}}.}
 
     \item{\code{keep.source}:}{When \code{TRUE}, the source code for
       functions (newly defined or loaded) is stored in their

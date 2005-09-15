@@ -120,7 +120,7 @@ typedef long R_long_t;
     The maxima and minima are in ../unix/sys-common.c */
 
 #ifndef R_PPSSIZE
-#define	R_PPSSIZE	10000L
+#define	R_PPSSIZE	50000L
 #endif
 #ifndef R_NSIZE
 #define	R_NSIZE		350000L
@@ -884,7 +884,7 @@ char *EncodeRaw(Rbyte);
 char *EncodeString(SEXP, int, int, Rprt_adj);
 
 /* main/sort.c */
-void orderVector1(int *indx, int n, SEXP key, Rboolean nalast, 
+void orderVector1(int *indx, int n, SEXP key, Rboolean nalast,
 		  Rboolean decreasing);
 
 

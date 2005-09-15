@@ -618,10 +618,14 @@ BUG FIXES
     o	prompt() and hence package.skeleton() now produce *.Rd files that
 	give no errors (but warnings) when not edited, much more often.
 
+    o	wilcox.test() now warns when conf.level is set higher than
+	achievable, preventing errors (PR#3666) and incorrect answers
+	with extremely small sample sizes.
 
-    o   wilcox.test() now warns when conf.level is set higher than 
-        achievable, preventing errors (PR#3666) and incorrect answers
-        with extremely small sample sizes.
+    o	The default (protection pointer) stack size (the default for
+	'--max-ppsize') has been increased from 10000 to 50000 in order to
+	match the increased default options("expressions") (in R 2.1.0).
+
 
 
 

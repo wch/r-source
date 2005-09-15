@@ -84,10 +84,11 @@ mem.limits(nsize = NA, vsize = NA)
   never be reduced below the current values for triggering garbage
   collection, and attempts to do so will be silently ignored.
 
-  The option \option{-max-ppsize} controls the maximum size of the
-  pointer protection stack.  This defaults to 10000, but can be
-  increased to allow large and complicated calculations to be done.
-  Currently the maximum value accepted is 100000.
+  The option \option{--max-ppsize} controls the maximum size of the
+  pointer protection stack.  This defaults to 50000, but can be
+  increased to allow deep recursion or large and complicated
+  calculations to be done.
+  Currently the maximum value accepted is 500000.
 }
 
 \value{
@@ -99,7 +100,7 @@ mem.limits(nsize = NA, vsize = NA)
   \emph{An Introduction to R} for more command-line options
 
   \code{\link{Memory-limits}} for the design limitations.
-  
+
   \code{\link{gc}} for information on the garbage collector and total
   memory usage,  \code{\link{object.size}(a)} for the (approximate)
   size of \R object \code{a}.  \code{\link{memory.profile}} for
