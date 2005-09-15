@@ -93,7 +93,7 @@ Name: ko; MessagesFile: "Korean.isl"
 Name: "desktopicon"; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4
 Name: "quicklaunchicon"; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; MinVersion: 4,4; Flags: unchecked 
 Name: "recordversion"; Description: {cm:recordversion}; GroupDescription: {cm:regentries}; MinVersion: 4,4
-Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4; Check: IsAdminLoggedOn
+Name: "associate"; Description: {cm:associate}; GroupDescription: {cm:regentries}; MinVersion: 4,4; Check: IsAdmin
 
 
 [Icons]
@@ -104,26 +104,26 @@ Name: "{userappdata}\\Microsoft\\Internet Explorer\\Quick Launch\\R $RVER"; File
 
 
 [Registry] 
-Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdminLoggedOn
-Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdminLoggedOn
-Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdminLoggedOn
-Root: HKLM; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: IsAdminLoggedOn
+Root: HKLM; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: IsAdmin
 
-Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdminLoggedOn
-Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdminLoggedOn
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: IsAdmin
+Root: HKLM; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: IsAdmin
 
-Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdminLoggedOn
-Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdminLoggedOn
-Root: HKCU; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdminLoggedOn
-Root: HKCU; Subkey: "Software\\R-core\\R"; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: NonAdminLoggedOn
+Root: HKCU; Subkey: "Software\\R-core"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletekeyifempty; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R"; Flags: uninsdeletevalue; ValueType: string; ValueName: "Current Version"; ValueData: "${RVER}"; Check: NonAdmin
 
-Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdminLoggedOn
-Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdminLoggedOn
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; Flags: uninsdeletekey; Tasks: recordversion; Check: NonAdmin
+Root: HKCU; Subkey: "Software\\R-core\\R\\${RVER}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{app}"; Check: NonAdmin
 
-Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdminLoggedOn
-Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdminLoggedOn
-Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate; Check: IsAdminLoggedOn 
-Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdminLoggedOn
+Root: HKCR; Subkey: ".RData"; ValueType: string; ValueName: ""; ValueData: "RWorkspace"; Flags: uninsdeletevalue; Tasks: associate; Check: IsAdmin
+Root: HKCR; Subkey: "RWorkspace"; ValueType: string; ValueName: ""; ValueData: "R Workspace"; Flags: uninsdeletekey; Tasks: associate; Check: IsAdmin
+Root: HKCR; Subkey: "RWorkspace\\DefaultIcon"; ValueType: string; ValueName: ""; ValueData: "{app}\\bin\\RGui.exe,0"; Tasks: associate; Check: IsAdmin 
+Root: HKCR; Subkey: "RWorkspace\\shell\\open\\command"; ValueType: string; ValueName: ""; ValueData: """{app}\\bin\\RGui.exe"" ""%1"""; Tasks: associate; Check: IsAdmin
 END
 
 print insfile $lines;
@@ -159,7 +159,17 @@ Name: "Rd"; Description: "Source Files for Help Pages"; Types: full custom
 
 var
   NoAdminPage: TOutputMsgWizardPage;
-  
+
+function IsAdmin: boolean;
+begin
+  Result := IsAdminLoggedOn or IsPowerUserLoggedOn;
+end;
+
+function NonAdmin: boolean;
+begin
+  Result := not IsAdmin;
+end;
+
 procedure InitializeWizard;
 begin
   NoAdminPage := CreateOutputMsgPage(wpWelcome, SetupMessage(msgInformationTitle), 
@@ -168,18 +178,13 @@ end;
 
 function ShouldSkipPage(PageID: Integer): boolean;
 begin
-  if PageID = NoAdminPage.ID then Result := IsAdminLoggedOn
+  if PageID = NoAdminPage.ID then Result := IsAdmin
   else Result := false;
-end;
-
-function NonAdminLoggedOn: boolean;
-begin
-  Result := not IsAdminLoggedOn;
 end;
 
 function UserPF(Param:String): String;
 begin
-  if IsAdminLoggedOn then Result := ExpandConstant(\'{pf}\')
+  if IsAdmin then Result := ExpandConstant(\'{pf}\')
   else Result := ExpandConstant('\{userdocs}\');
 end;
 

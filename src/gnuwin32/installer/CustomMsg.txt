@@ -1,4 +1,5 @@
 ; Custom messages for R
+; These are encoded in code page 1252 (Windows version of Latin1, 8859-1) except as noted
 
 [CustomMessages]
 en.regentries=Registry entries:
@@ -21,6 +22,9 @@ br.compact=Instalação modo usuário mínima
 br.full=Instalação completa
 br.CJK=Instalação em chinês/japonês/coreano
 br.custom=Instalação personalizada
+br.adminprivilegesrequired=Você deve fazer logon como Administrador para instalar o R
+br.adminexplanation=Observação: Uma instalação completa do R requer privilégios de administrador, e aparentemente estes não estão disponíveis. Se você continuar com a instalação, você não vai poder instalar o suporte a DCOM nem associar o R com arquivos do tipo .RData. A instalação deve ser feita em um diretório no qual você tenha direitos de escrita.
+br.recordversion=Salvar número da versão no registro
 
 dk.regentries=Indgange i registreringsdatabasen:
 dk.associate=&Associere R med .Rdata filer
@@ -39,6 +43,9 @@ fr.compact=Installation utilisateur minimale
 fr.full=Installation utilisateur complète
 fr.CJK=Installation chinois/japonais/coréen
 fr.custom=Installation personnalisée
+fr.adminprivilegesrequired=Vous devez être loggé avec des droits d'administrateur pour installer R
+fr.adminexplanation=Note : une installation complète de R nécessite des privilèges d'administrateur, et il semble que ceux-ci ne soient pas disponibles. Si vous continuer l'installation, vous ne pourrez pas installer DCOM, ni associer R avec les fichiers .RData. L'installation doit se faire dans un répertoire où vous avez des droits en écriture.
+fr.recordversion=Enregistrer le numéro de version dans le registre
 
 de.regentries=Einträge in der Windows-Registrierung:
 de.associate=&Verknüpfe R mit .RData Dateien
@@ -51,6 +58,8 @@ de.custom=Benutzerdefinierte Installation
 de.adminprivilegesrequired=Sie sollten als Administrator angemeldet sein, um R zu installieren
 de.adminexplanation=Eine vollständige R Installation verlangt Administratorrechte und diese scheinen nicht vorhanden zu sein. Wenn Sie die Installation fortsetzen, können die DCOM Unterstützung und die Verknüpfung von R mit .RData Dateien nicht installiert werden. Die Installation muss in ein Verzeichnis geschehen, für das sie Schreibrechte besitzen.
 de.recordversion=Speichere Versionsnummer in der Registry
+
+; Russian is encoded in code page 1251
 
 ru.regentries=Çàïèñè â ñèñòåìíîì ğåãèñòğå:
 ru.associate=Ñâÿçàòü R ñ ôàéëàìè .RData
@@ -88,6 +97,8 @@ sl.full=Polna namestitev
 sl.CJK=Namestitev v kitajskem/japonskem/korejskem jeziku
 sl.custom=Prikrojena namestitev
 
+; Polish is in code page 1250
+
 po.regentries=Wpisy rejestru:
 po.associate=Powi¹¿ R z plikami z rozszerzeniem .RData
 po.dcom=Zarejestruj œcie¿kê polecenia R dla serwera (D)COM
@@ -97,6 +108,8 @@ po.full=Pe³na instalacja
 po.CJK=Chiñska/Japoñska/Koreañska instalacja
 po.custom=Dopasowana instalacja
 
+; Simplified Chinese is in code page 936, but iconv wants GB18030
+
 chs.regentries=µÇÓ›ƒÔ¼ÇÂ¼í—:
 chs.associate=&°ÑR³ÌĞòÍ¬.RDataÎÄ¼şÁªºÏÆğÀ´
 chs.dcom=&½«R³ÌĞòÂ·½½øĞĞµÇÓ›ÕâÑù(D)COM·şÎñÆ÷¿ÉÒÔÊ¹ÓÃ
@@ -105,6 +118,11 @@ chs.compact=×îÉÙÓÃ»§°²×°
 chs.full=È«²¿°²×°
 chs.CJK=ÖĞÎÄ/ÈÕÎÄ/º«ÎÄ°²×°
 chs.custom=×Ô¶¨Áx°²×°
+chs.adminprivilegesrequired=ÔÚ°²×°RµÄÊ±ºòÄã±ØĞèÒÔ¹ÜÀíÔ±Éí·İµÇä›¡£
+chs.adminexplanation=Çë×¢Òâ£ºÔÚÈ«²¿°²×°RÊ±Äã±ØĞè¾ßÓĞ¹ÜÀíÔ±µÄÌØÈ¨£¬µ«Ä¿Ç°¿´ÆğÀ´ÄãºÃÏóÃ»ÓĞÕâÑùµÄÈ¨Àû¡£Äã¿ÉÒÔ¼ÌĞø°²×°R£¬µ«Ëü»áÃ»ÓĞDCOMÕâÒ»¹¦ÄÜ£¬Ò²²»»á×Ô¶¯½«.RDataÎÄ¼şÍ¬RÏàÁª½Ó¡£ÄãÖ»ÄÜÔÚÓĞÊéĞ´Ğí¿ÉµÄÎÄ¼şÄ¿Â¼ÏÂ°²×°R¡£
+chs.recordversion=°æ±¾ĞÅÏ¢±£´æÓÚ×¢²á±íÄÚ¡£
+
+; Japanese is in code page 932, which extends Shift_JIS
 
 ja.regentries=ƒŒƒWƒXƒgƒŠ€–Ú:
 ja.associate=R ‚ğ Šg’£q .RData ‚ÉŠÖ˜A‚Ã‚¯‚é
@@ -114,6 +132,8 @@ ja.compact=—˜—pÒŒü‚¯Å¬ƒCƒ“ƒXƒg[ƒ‹
 ja.full=‘S‚ÄƒCƒ“ƒXƒg[ƒ‹
 ja.CJK=’†‘Œê/“ú–{Œê/ŠØ‘Œê Œü‚¯ƒCƒ“ƒXƒg[ƒ‹
 ja.custom=ƒJƒXƒ^ƒ€ƒCƒ“ƒXƒg[ƒ‹
+
+; Korean is in code page 949, which extends EUC-KR
 
 ko.regentries=·¹Áö½ºÆ®¸® Ç×¸ñ:
 ko.associate=R¸¦ È®ÀåÀÚ .Rdata¿¡ °ü·Ã Áı´Ï´Ù
