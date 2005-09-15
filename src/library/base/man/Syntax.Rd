@@ -9,7 +9,7 @@
   in precedence groups, from highest to lowest.
   \tabular{ll}{
     \code{[ [[}\tab indexing\cr
-    \code{::}\tab name space/variable name separator\cr
+    \code{:: :::}\tab access variables in a name space\cr
     \code{$ @}\tab component / slot extraction\cr
     \code{^}\tab exponentiation (right to left)\cr
     \code{- +}\tab unary minus and plus\cr
@@ -35,8 +35,8 @@
 }
 \note{
   There are substantial precedence differences between \R and S.  In
-  particular, in S \code{?} has the same precedence as \code{+ -} and
-  \code{& && | ||} have equal precedence.
+  particular, in S \code{?} has the same precedence as (binary) \code{+ -}
+  and \code{& && | ||} have equal precedence.
 }
 \references{
   Becker, R. A., Chambers, J. M. and Wilks, A. R. (1988)
