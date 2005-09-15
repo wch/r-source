@@ -38,12 +38,13 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
   }
 
   \item{what}{the type of \code{what} gives the type of data to be read.
-    If \code{what} is a list, it is assumed that the lines of the data file
-    are records each containing \code{length(what)} items (\dQuote{fields}).
     The supported types are \code{logical}, \code{integer}, \code{numeric},
-    \code{complex}, \code{character}, \code{raw} and \code{list}:
-    \code{list} values should have elements which are one of the first six
-    types listed or \code{NULL}.}
+    \code{complex}, \code{character}, \code{raw} and \code{\link{list}}.
+    If \code{what} is a list, it is assumed that the lines of the data file
+    are records each containing \code{length(what)} items
+    (\dQuote{fields}) and the list components should have elements which
+    are one of the first six types listed or \code{NULL}, see section
+    \sQuote{Details} below.}
 
   \item{nmax}{the maximum number of data values to be read, or if
     \code{what} is a list, the maximum number of records to be read.  If
@@ -124,7 +125,7 @@ scan(file = "", what = double(0), nmax = -1, n = -1, sep = "",
     not within quotes these could be interpreted as a delimiter (but not
     as a comment character).
 
-    The escapes which are interpreted are the control characters 
+    The escapes which are interpreted are the control characters
     \code{\a, \b, \f, \n, \r, \t, \v} and octal and
     hexadecimal representatons like \code{\040} and \code{\0x2A}.  Any
     other escaped character is treated as itself, including backslash.
