@@ -432,7 +432,7 @@ distclean veryclean: clean clean-recommended
 	$(RM) ../../doc/html/search/index.txt ../../doc/html/index.html \
 	../../doc/html/packages.html ../../doc/html/rwin.html \
 	../../doc/html/rw-FAQ.html ../../doc/html/search/SearchEngine.html
-	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile \
+	$(RM) ../../etc/Rconsole ../../etc/Rdevga ../../etc/Rprofile.site \
 	../../etc/rgb.txt ../../share/make/wintests.mk \
 	../include/Platform.h ../../tests/*.Rout ../../tests/*.Rout.fail
 	$(MAKE) -C fixed distclean
