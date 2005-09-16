@@ -184,8 +184,15 @@ end;
 
 function UserPF(Param:String): String;
 begin
-  if IsAdmin then Result := ExpandConstant(\'{pf}\')
-  else Result := ExpandConstant('\{userdocs}\');
+  Result := ExpandConstant(\'{pf}\');
+  if (not IsAdmin) then 
+  begin
+    try
+      Result := ExpandConstant('\{userdocs}\');
+    except
+    // Do nothing, user doesn't have a My Documents folder
+    end;
+  end;
 end;
 
 [Files]  
