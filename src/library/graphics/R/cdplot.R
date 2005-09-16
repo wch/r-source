@@ -10,10 +10,14 @@ function(formula, data = list(),
          plot = TRUE, tol.ylab = 0.05,
          bw = "nrd0", n = 512, from = NULL, to = NULL,
          col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
-         yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...)
+         yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), ...,
+         subset = NULL)
 {
     ## extract x, y from formula
-    mf <- model.frame(formula, data = data)
+    m <- match.call(expand.dots = FALSE)
+    m <- m[c(1, match(c("formula", "data", "subset"), names(m), 0))]
+    m[[1]] <- as.name("model.frame")
+    mf <- eval.parent(m)
     if(NCOL(mf) != 2)
         stop("'formula' should specify exactly two variables")
     y <- mf[,1]

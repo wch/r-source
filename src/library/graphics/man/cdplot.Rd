@@ -19,7 +19,8 @@ cdplot(x, \dots)
   plot = TRUE, tol.ylab = 0.05,
   bw = "nrd0", n = 512, from = NULL, to = NULL,
   col = NULL, border = 1, main = "", xlab = NULL, ylab = NULL,
-  yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots)
+  yaxlabels = NULL, xlim = NULL, ylim = c(0, 1), \dots,
+  subset = NULL)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single numerical variable.}
@@ -39,6 +40,8 @@ cdplot(x, \dots)
   \item{yaxlabels}{character vector for annotation of y axis, defaults to
     \code{levels(y)}.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used for plotting.}
 }
 \details{
   \code{cdplot} computes the conditional densities of \code{x} given

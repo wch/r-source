@@ -19,7 +19,8 @@ spineplot(x, \dots)
   breaks = NULL, tol.ylab = 0.05, off = NULL,
   col = NULL, main = "", xlab = NULL, ylab = NULL,
   xaxlabels = NULL, yaxlabels = NULL,
-  xlim = NULL, ylim = c(0, 1), \dots)
+  xlim = NULL, ylim = c(0, 1), \dots,
+  subset = NULL)
 }
 \arguments{
   \item{x}{an object, the default method expects either a single variable
@@ -45,6 +46,8 @@ spineplot(x, \dots)
     used.}
   \item{xlim, ylim}{the range of x and y values with sensible defaults.}  
   \item{\dots}{additional arguments passed to \code{\link{rect}}.}
+  \item{subset}{an optional vector specifying a subset of observations
+    to be used for plotting.  }
 }
 \details{
   \code{spineplot} creates either a spinogram or a spine plot. It can be called
